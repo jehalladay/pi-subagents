@@ -1,5 +1,8 @@
 # @tintinweb/pi-subagents
 
+
+> **Fork development plan (not yet implemented):** [Pi Workflow Workbench developer specifications](docs/workbench/README.md). Pi remains the interactive designer/observer/operator; workflows are planned to use the actual Claude Agent SDK for agent execution, with optional native SDK-backed nodes and a terminal inspector. The existing upstream implementation below remains the current runtime until the documented vertical cuts are delivered.
+
 A [pi](https://pi.dev) extension that brings **Claude Code-style autonomous sub-agents and workflow orchestration** to pi. Spawn specialized agents that run in isolated sessions — each with its own tools, system prompt, model, and thinking level. Run them in the background (the default) or block on them, steer them mid-run, resume completed sessions, and define your own custom agent types. When the orchestration shouldn't be improvised, hand a deterministic JavaScript script to the `SubagentWorkflow` tool — `agent()`, `parallel()`, `pipeline()` — and scripts written for Claude Code's `Workflow` tool run here unchanged.
 
 <img width="600" alt="pi-subagents screenshot" src="https://github.com/tintinweb/pi-subagents/raw/master/media/screenshot.png" />

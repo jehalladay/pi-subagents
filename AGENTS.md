@@ -152,3 +152,17 @@ Before a release:
 ## User Override
 
 If the user's instructions conflict with any rule in this document, ask for explicit confirmation before overriding. Only then execute their instructions.
+
+
+## Fork-specific Pi Workflow Workbench architecture
+
+This fork now includes a complete **proposed** implementation program under [docs/workbench/README.md](docs/workbench/README.md). Read [docs/workbench/IMPLEMENTATION_GUIDE.md](docs/workbench/IMPLEMENTATION_GUIDE.md), the relevant subsystem spec, and current MechanicalWorkflows/native SDK source before work on these features.
+
+- Pi stays the interactive designer, observer and controller. **Workflow script agent()**, once Workbench mode is implemented, must execute with the actual Claude Agent SDK; do not quietly substitute Pi's agent runtime.
+- Keep the existing Pi extension and its non-workflow agent features; avoid a broad upstream rewrite. Preserve saved Claude-compatible workflow scripts and their tested semantics.
+- Add native SDK operations via host-side, authorized node() providers. MechanicalWorkflows remains ordinary exported functions with injected dependencies; do not give it a required registry or scheduler.
+- Preserve Forge/Furnace/HyperUnix/ReactiveFiberCLI/Beads/RCP native authority and evidence. Furnace Run/Work/Attempt and effects remain native; unknown or ambiguous results must never become PASS.
+- Build UI from incremental read-only observation projections; no full event-log fold per redraw. Keyboard-first, responsive Unicode/ASCII rendering; no browser requirement.
+- Use Forge for project build/test/package integration, do not add GitHub CI, and do not introduce Library as a dependency.
+- All workbench APIs/types/examples in these specifications are **planned** until code and real tests prove them. Report missing SDK surfaces as blocked instead of inventing methods.
+- The upstream AGENTS.md guidance about code quality, explicit authorizations, licensing, and measured tests continues to apply. The user's explicit request to place documentation in the fork authorizes documentation commits only; it is not permission to publish or make unrelated source changes.
