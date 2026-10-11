@@ -1,0 +1,84 @@
+# 19 — Worked usage examples and expected outcomes
+
+Examples are **proposed** until provider code exists. Existing upstream docs/workflows.md remains normative for currently working Pi workflows. Do not run these samples assuming SDK calls are already implemented.
+
+## Example A: unchanged Claude-style script
+
+    export const meta = {
+      name: "review-changes",
+      description: "Review changed code independently",
+      phases: [{ title: "Review" }, { title: "Verify" }]
+    };
+
+    phase("Review");
+    const reviews = await parallel([
+      () => agent("Review changes for correctness", { label: "bugs" }),
+      () => agent("Review changes for latency", { label: "performance" })
+    ]);
+
+    phase("Verify");
+    return await agent("Challenge these findings: " + JSON.stringify(reviews));
+
+Expected in Workbench mode: agent() launches *actual Claude Agent SDK* sessions; Pi displays their status and transcript refs. In explicit legacy mode, upstream Pi AgentManager path may remain; must be visibly differentiated.
+
+## Example B: typed deterministic provider call
+
+    export const meta = {
+      name: "scope-and-review",
+      description: "Use HX scope before agent review",
+      phases: [{ title: "Scope" }, { title: "Review" }]
+    };
+
+    phase("Scope");
+    const scope = await node("hyperunix.query", {
+      query: args.query
+    });
+
+    phase("Review");
+    return await agent("Review scoped files: " + JSON.stringify(scope));
+
+Expected: node() calls trusted host-side HX SDK provider without any Claude token spend for the query; HX partial/unknown coverage remains a typed result that script should handle explicitly. Representative names are proposed.
+
+## Example C: native MechanicalWorkflows invocation
+
+    const outcome = await node("mechanical.development.develop.v1", {
+      task: args.task,
+      workspaceId: args.workspaceId,
+      baseRevision: args.baseRevision
+    });
+
+The host resolves a pinned @mechanical/workflows-development export and injected services discover, compileContext, implement, verify. Outcome could be verified_candidate, verification_failed, needs_evidence or indeterminate; invocation transport success does not turn latter three into PASS. Currently MechanicalWorkflows live bindings are unfinished.
+
+## Example D: observer-only external Furnace attachment
+
+    Pi operator: "Inspect Furnace Run R123; show current tasks
+    and evidence without controlling it."
+
+Expected: workbench calls native Furnace get/status/events, projects real Run/Work/Attempt refs, shows last-observed timestamp and coverage, offers controls only when authorized. If Run info is inaccessible, a clear error; do not invent state.
+
+## Example E: interactive optimization cycle
+
+    Pi operator: "Compare five executions of parser repair before
+    and after the new Forge affected selection."
+
+Expected: Pi catalogs source revisions, uses workflow_compare over actual runs with comparable inputs/caches, extracts critical-path evidence and reports p50/p95, failure rate and cost when available. If cohorts differ in model/config/source basis, comparison discloses confounders.
+
+## Example F: terminal inspector
+
+    /workflows
+    > package-improvement
+      Overview [Tab Graph] [Tab Timeline] [Tab Details]
+      > Implementation  82/140  2 blocked
+          Agent Group B (Claude)  27/40
+      Forge Verify: evidence link / candidate basis
+      Furnace Run: last observed 2s ago
+
+This is a conceptual layout, not a screenshot or implementation claim. Closing does not stop native work.
+
+## Example G: ambiguous side effect
+
+A Furnace runs.start request is accepted by producer but the response is lost. Node call returns uncertain-effect with reconciliation target; Pi displays uncertainty. Workbench MUST NOT simply retry and create a second Run until Furnace's native idempotent establishment/reconciliation capability proves equivalence.
+
+## Example H: native evidence refusal
+
+Forge gate reports partial/unknown evidence after change of candidate basis. Pi must show "verification indeterminate", not success, even if host RPC returned normally and text says "build completed".
