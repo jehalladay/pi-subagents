@@ -107,7 +107,7 @@ describe("R1 docs/workbench/20 § Producer mapping (furnace run): bounded read, 
     expect(content).toStrictEqual({
       contract: "workbench.furnace-evidence/v1", kind: "furnace.attempt.log", provider: "furnace",
       nativeRef: { provider: "furnace", type: "attempt", id: ATTEMPT, scope: WORKSPACE },
-      stream: "stderr", capturedAt: CLOCK, bytes: 120, truncated: false, preview: ["first line", "second line"],
+      stream: "stderr", capturedAt: CLOCK, lineCount: 120, truncated: false, preview: ["first line", "second line"],
       producerReceipt: { requestId: "req-logs", complete: true, lossy: false, nextCursor: null }, freshness: "current",
     });
     expect(FURNACE_EVIDENCE_CONTRACT).toBe("workbench.furnace-evidence/v1");
@@ -115,10 +115,19 @@ describe("R1 docs/workbench/20 § Producer mapping (furnace run): bounded read, 
     expect(made.read).toHaveBeenCalledWith(RUN, { attempt: ATTEMPT, limit: 4096, stream: "stderr" }, { timeoutMs: 2000 });
   });
 
+  // wb-8zn: the Furnace JSON protocol documents `returned` on a logs read as a whole-line count while `limit` is the
+  // byte bound, so the carried count must never be labelled bytes.
+  it("reports the producer's returned count as lines, never as bytes: a 3-line reply under a 4096-byte bound is lineCount 3", async () => {
+    const made = fixture(async () => envelope(logsData({ limit: 4096, returned: 3, lines: ["one", "two", "three"] })));
+    const content = await readFurnaceAttemptLogEvidence(request(made.client, { maxBytes: 4096 }));
+    expect(content).toMatchObject({ lineCount: 3 });
+    expect(Object.hasOwn(content, "bytes")).toBe(false);
+  });
+
   it("reads the stdout stream when stdout is requested, with the request's own byte and time bounds", async () => {
     const made = fixture(async () => envelope(logsData({ stream: "stdout", returned: 2 })));
     const content = await readFurnaceAttemptLogEvidence(request(made.client, { stream: "stdout", maxBytes: 65_536, timeoutMs: 2_147_483_647 }));
-    expect(content).toMatchObject({ stream: "stdout", bytes: 2, truncated: false });
+    expect(content).toMatchObject({ stream: "stdout", lineCount: 2, truncated: false });
     expect(made.read).toHaveBeenCalledWith(RUN, { attempt: ATTEMPT, limit: 65_536, stream: "stdout" }, { timeoutMs: 2_147_483_647 });
   });
 
@@ -155,7 +164,7 @@ describe("R1 docs/workbench/20 § Producer mapping (furnace run): bounded read, 
 
   it("an empty incomplete read still says it is truncated rather than presenting an empty log", async () => {
     const content = await load({ complete: false, next_cursor: "5", returned: 0, lines: [] });
-    expect(content).toMatchObject({ bytes: 0, truncated: true, preview: ["… truncated (producer: incomplete, paged)"] });
+    expect(content).toMatchObject({ lineCount: 0, truncated: true, preview: ["… truncated (producer: incomplete, paged)"] });
   });
 
   it.each([
@@ -515,7 +524,7 @@ describe("docs/workbench/13 § Key validations: request shape and budgets are va
       runId, attemptId, maxBytes: 1, maxLines: 1, timeoutMs: 1,
       owningRunNode: { nativeRef: { provider: "furnace", type: "run", id: runId, scope: WORKSPACE }, evidenceRefs: [attemptId] },
     }));
-    expect(content).toMatchObject({ bytes: 1, preview: ["second line", "… truncated (producer: budget)"] });
+    expect(content).toMatchObject({ lineCount: 1, preview: ["second line", "… truncated (producer: budget)"] });
     expect(made.read).toHaveBeenCalledWith(runId, { attempt: attemptId, limit: 1, stream: "stderr" }, { timeoutMs: 1 });
   });
 });

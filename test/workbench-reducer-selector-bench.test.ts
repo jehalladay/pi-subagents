@@ -1,0 +1,487 @@
+/** W21 (wb-9x5.4): reducer-update and UI selector time receipt under live churn on the grouped-10k fixture.
+ * Measurement-only: the bench drives compiled dist/ over the wb-9x5.1 fixture, and no production cap moves.
+ * This guard checks receipt completeness, determinism of the measured path, the fold falsifier, the exit
+ * semantics, and that src/ stays untouched. It never asserts a measured latency value.
+ */
+import { readdirSync, readFileSync } from "node:fs";
+import { join } from "node:path";
+import { describe, expect, it } from "vitest";
+import {
+  assessFixtureShape,
+  BENCH_ONLY_LIMITS,
+  buildGroupedFixture,
+  NAVIGATION_TARGET_MS,
+  SCOPE,
+} from "../qa/workbench/grouped-fixture.mjs";
+import {
+  assessReducerSelectorReceipt,
+  BANDS,
+  FOLD_THRESHOLD_EVENTS,
+  REDRAW_MAX_HZ,
+  REDUCER_SELECTOR_CONTRACT,
+  runReducerSelectorBench,
+  SELECTOR_TARGET_MS,
+  VIEW_NAMES,
+} from "../qa/workbench/reducer-selector-bench.mjs";
+import { initialInspectorState, layoutInspector, reduceInspectorKey } from "../src/ui/workflow-inspector.js";
+import { type ObservationEvent, ObservationProjection } from "../src/workbench/observation.js";
+
+interface Distribution {
+  samples: number;
+  p50: number | null;
+  p95: number | null;
+  max: number | null;
+}
+interface Band {
+  label: string;
+  minChanges: number;
+  maxChanges: number;
+  ticks: number;
+  updates: number;
+  reducer: Distribution;
+  selectors: Record<string, Distribution>;
+  redraws: number;
+}
+interface Receipt {
+  contract: string;
+  benchmark: string;
+  measured: boolean;
+  utc: string;
+  revision: string;
+  node: string;
+  arch: string;
+  platform: string;
+  cpus: number;
+  cpuModel: string;
+  toolchain: Record<string, string>;
+  command: string;
+  fixture: Record<string, unknown> & { updates: number; ticks: number };
+  limits: Record<string, number>;
+  offered: { nodes: number; edges: number; updates: number };
+  retained: { nodes: number; events: number; edges: number };
+  apply: { ingestApplied: number; ingestDuplicate: number; ingestOutOfOrder: number };
+  reducer: { all: Distribution; firstTenth: Distribution; lastTenth: Distribution; growthRatio: number | null; judged: boolean };
+  bands: Band[];
+  exactChurn: Band[];
+  selectors: Record<string, Distribution>;
+  folds: {
+    redraws: number;
+    layoutCalls: number;
+    readCalls: Record<string, number>;
+    ingestCalls: number;
+    maxTouchedPerRedraw: number;
+    maxEventsRequested: number;
+    fullFoldRedraws: number;
+    threshold: number;
+  };
+  cadence: {
+    capHz: number;
+    minIntervalMs: number;
+    redraws: number;
+    skipped: number;
+    fixtureSpanMs: number;
+    effectiveHz: number;
+    maxRedrawsInOneSecond: number;
+  };
+  outliers: { reducer: unknown[]; selector: unknown[] };
+  bounds: { selectorTargetMs: number; redrawMaxHz: number; foldThresholdEvents: number };
+  realised: boolean;
+  violations: Array<{ rule: string; detail: string }>;
+  over: string[];
+  pass: boolean;
+  verdict: string;
+  exitCode: number;
+}
+interface Inspector {
+  initialInspectorState: typeof initialInspectorState;
+  layoutInspector: typeof layoutInspector;
+  reduceInspectorKey: typeof reduceInspectorKey;
+}
+interface Host {
+  utc: string;
+  revision: string;
+  node: string;
+  arch: string;
+  platform: string;
+  cpus: number;
+  cpuModel: string;
+  toolchain: Record<string, string>;
+  command: string;
+}
+interface GroupedFixture {
+  snapshots: unknown[];
+  relations: unknown[];
+  updates: ObservationEvent[];
+  shape: Record<string, unknown>;
+}
+
+const run = runReducerSelectorBench as (input: {
+  Projection: typeof ObservationProjection;
+  inspector: Inspector;
+  fixture: GroupedFixture;
+  host: Host;
+}) => Receipt;
+const assess = assessReducerSelectorReceipt as (receipt: Receipt) => {
+  realised: boolean;
+  violations: Array<{ rule: string; detail: string }>;
+  over: string[];
+  pass: boolean;
+  exitCode: number;
+};
+const build = buildGroupedFixture as (options?: { seed: number; nodes: number; depth: number; ticks: number }) => GroupedFixture;
+const shapeOf = assessFixtureShape as (shape: Record<string, unknown>) => { realised: boolean };
+
+const inspector: Inspector = { initialInspectorState, layoutInspector, reduceInspectorKey };
+const HOST: Host = {
+  utc: "2026-10-15T00:00:00.000Z",
+  revision: "test-revision",
+  node: process.version,
+  arch: process.arch,
+  platform: process.platform,
+  cpus: 1,
+  cpuModel: "test-cpu",
+  toolchain: { node: process.version, typescript: "test", piTui: "test" },
+  command: "vitest test/workbench-reducer-selector-bench.test.ts",
+};
+const VIEWS = ["overview", "graph", "timeline", "details"];
+const readRepo = (path: string): string => readFileSync(new URL(`../${path}`, import.meta.url), "utf8");
+const clone = (receipt: Receipt): Receipt => structuredClone(receipt);
+
+const finite = (value: Distribution): boolean =>
+  value.samples > 0 &&
+  [value.p50, value.p95, value.max].every(n => typeof n === "number" && Number.isFinite(n) && n >= 0) &&
+  (value.p50 ?? 0) <= (value.p95 ?? 0) &&
+  (value.p95 ?? 0) <= (value.max ?? 0);
+
+let cached: { receipt: Receipt; constructed: unknown[][] } | undefined;
+const smallRun = () => {
+  if (cached) return cached;
+  const constructed: unknown[][] = [];
+  class SpyProjection extends ObservationProjection {
+    constructor(...args: ConstructorParameters<typeof ObservationProjection>) {
+      super(...args);
+      constructed.push(args);
+    }
+  }
+  const fixture = build({ seed: 9, nodes: 900, depth: 5, ticks: 140 });
+  cached = { receipt: run({ Projection: SpyProjection, inspector, fixture, host: HOST }), constructed };
+  return cached;
+};
+
+/** A receipt that is the W21 claim, measured and under target, derived from the real small run. */
+const realisedReceipt = (): Receipt => {
+  const receipt = clone(smallRun().receipt);
+  receipt.fixture = {
+    ...receipt.fixture,
+    nodes: 10_000,
+    depth: 5,
+    minDepth: 5,
+    groupingEdges: 12_000,
+    dependencyEdges: 1_400,
+    hypothesisEdges: 700,
+    ownershipEdges: 0,
+    updates: 101_000,
+    ticks: 2_000,
+    minChangesPerTick: 1,
+    maxChangesPerTick: 100,
+  };
+  receipt.offered = { ...receipt.offered, updates: 101_000 };
+  receipt.apply = { ...receipt.apply, ingestApplied: 101_000, ingestDuplicate: 0, ingestOutOfOrder: 0 };
+  receipt.retained = { ...receipt.retained, nodes: receipt.offered.nodes, edges: receipt.offered.edges };
+  const quick: Distribution = { samples: 50, p50: 0.1, p95: 0.2, max: 0.3 };
+  for (const band of [...receipt.bands, ...receipt.exactChurn]) {
+    band.reducer = { ...quick };
+    for (const view of VIEWS) band.selectors[view] = { ...quick };
+  }
+  for (const view of VIEWS) receipt.selectors[view] = { ...quick };
+  receipt.folds = { ...receipt.folds, fullFoldRedraws: 0, maxEventsRequested: 40, maxTouchedPerRedraw: 400 };
+  receipt.cadence = { ...receipt.cadence, redraws: 2_000, maxRedrawsInOneSecond: 1 };
+  return receipt;
+};
+
+describe("W21 reducer/selector receipt: contract and completeness (C1, C4)", () => {
+  it("names the frozen contract and states every bound as an exported constant", () => {
+    expect(REDUCER_SELECTOR_CONTRACT).toBe("workbench.reducer-selector/v1");
+    expect(REDRAW_MAX_HZ).toBe(4);
+    expect(SELECTOR_TARGET_MS).toBe(NAVIGATION_TARGET_MS);
+    expect(FOLD_THRESHOLD_EVENTS).toBe(100_000);
+    expect(VIEW_NAMES).toEqual(VIEWS);
+    expect(BANDS.map((band: { label: string }) => band.label)).toEqual(["1", "10", "100"]);
+  });
+
+  it("covers churn 1..100 with disjoint bands labelled 1, 10 and 100", () => {
+    const bands = BANDS as Array<{ label: string; min: number; max: number }>;
+    expect(bands[0].min).toBe(1);
+    expect(bands[bands.length - 1].max).toBe(100);
+    for (let i = 1; i < bands.length; i++) expect(bands[i].min).toBe(bands[i - 1].max + 1);
+    for (const nominal of [1, 10, 100]) {
+      const home = bands.filter(band => band.min <= nominal && nominal <= band.max);
+      expect(home.map(band => band.label)).toEqual([String(nominal)]);
+    }
+  });
+
+  it("emits host, toolchain, fixture shape, limits and every per-band latency", () => {
+    const { receipt } = smallRun();
+    expect(receipt.contract).toBe("workbench.reducer-selector/v1");
+    expect(receipt.measured).toBe(true);
+    for (const key of ["utc", "revision", "node", "arch", "platform", "cpuModel", "command"] as const) {
+      expect(typeof receipt[key]).toBe("string");
+      expect(receipt[key].length).toBeGreaterThan(0);
+    }
+    expect(receipt.cpus).toBeGreaterThan(0);
+    expect(Object.keys(receipt.toolchain).sort()).toEqual(["node", "piTui", "typescript"]);
+    expect(receipt.limits).toEqual(BENCH_ONLY_LIMITS);
+    expect(receipt.fixture.updates).toBeGreaterThan(0);
+    expect(receipt.bands.map(band => band.label)).toEqual(["1", "10", "100"]);
+    for (const band of receipt.bands) {
+      expect(band.ticks).toBeGreaterThan(0);
+      expect(band.updates).toBeGreaterThanOrEqual(band.ticks * band.minChanges);
+      expect(band.updates).toBeLessThanOrEqual(band.ticks * band.maxChanges);
+      expect(finite(band.reducer)).toBe(true);
+      expect(band.reducer.samples).toBe(band.updates);
+      expect(Object.keys(band.selectors)).toEqual(VIEWS);
+      for (const view of VIEWS) {
+        expect(finite(band.selectors[view])).toBe(true);
+        expect(band.selectors[view].samples).toBe(band.redraws);
+      }
+    }
+    expect(receipt.exactChurn.map(band => [band.minChanges, band.maxChanges])).toEqual([
+      [1, 1],
+      [10, 10],
+      [100, 100],
+    ]);
+    for (const band of receipt.exactChurn) expect(band.ticks).toBeGreaterThan(0);
+    expect(finite(receipt.reducer.all)).toBe(true);
+    expect(receipt.reducer.all.samples).toBe(receipt.apply.ingestApplied);
+    expect(receipt.reducer.judged).toBe(false);
+    expect(Object.keys(receipt.selectors)).toEqual(VIEWS);
+    for (const view of VIEWS) expect(finite(receipt.selectors[view])).toBe(true);
+    expect(receipt.bounds).toEqual({ selectorTargetMs: 20, redrawMaxHz: 4, foldThresholdEvents: 100_000 });
+    expect(receipt.outliers.reducer.length).toBeGreaterThan(0);
+    expect(receipt.outliers.selector.length).toBeGreaterThan(0);
+  }, 120_000);
+
+  it("constructs the projection exactly once, with exactly the bench-only limits", () => {
+    expect(smallRun().constructed).toEqual([[{ maxNodes: 12_000, maxEdges: 24_000, maxEvents: 128, maxQuery: 40 }]]);
+  }, 120_000);
+
+  it("applies every update through the reducer and truncates nothing, and flags a small fixture as not W21", () => {
+    const { receipt } = smallRun();
+    expect(receipt.apply.ingestApplied).toBe(receipt.offered.updates);
+    expect(receipt.apply.ingestDuplicate).toBe(0);
+    expect(receipt.apply.ingestOutOfOrder).toBe(0);
+    expect(receipt.retained.nodes).toBe(receipt.offered.nodes);
+    expect(receipt.retained.edges).toBe(receipt.offered.edges);
+    expect(receipt.realised).toBe(false);
+    expect(receipt.exitCode).toBe(2);
+    expect(receipt.violations.map(violation => violation.rule)).toContain("updates-below-100000");
+  }, 120_000);
+});
+
+describe("W21 fold falsifier and redraw cadence (C2)", () => {
+  it("accounts reducer calls and bounded reads, and records no full fold per redraw", () => {
+    const { receipt } = smallRun();
+    expect(receipt.folds.ingestCalls).toBe(receipt.offered.updates);
+    expect(receipt.folds.redraws).toBe(receipt.cadence.redraws);
+    expect(receipt.folds.layoutCalls).toBe(receipt.folds.redraws * VIEWS.length);
+    expect(receipt.folds.readCalls.window).toBeGreaterThan(0);
+    expect(receipt.folds.threshold).toBe(100_000);
+    expect(receipt.folds.fullFoldRedraws).toBe(0);
+    expect(receipt.folds.maxTouchedPerRedraw).toBeLessThan(receipt.folds.threshold);
+    expect(receipt.folds.maxEventsRequested).toBeLessThan(receipt.folds.threshold);
+  }, 120_000);
+
+  it("keeps the redraw cadence at or below 4 Hz from fixture time, never the wall clock", () => {
+    const { cadence } = smallRun().receipt;
+    expect(cadence.capHz).toBe(4);
+    expect(cadence.minIntervalMs).toBe(250);
+    expect(cadence.redraws).toBeGreaterThan(0);
+    expect(cadence.maxRedrawsInOneSecond).toBeLessThanOrEqual(4);
+    expect(cadence.effectiveHz).toBeLessThanOrEqual(4);
+    expect(cadence.fixtureSpanMs).toBeGreaterThan(0);
+  }, 120_000);
+
+  it("records a full fold per redraw as a finding with exit 1, never tuned away", () => {
+    const fixture = build({ seed: 3, nodes: 200, depth: 5, ticks: 6 });
+    const folding: Inspector = {
+      ...inspector,
+      layoutInspector: (model, state, size) => {
+        model.projection.events({ scope: SCOPE, limit: 100_000 });
+        return layoutInspector(model, state, size);
+      },
+    };
+    const receipt = run({ Projection: ObservationProjection, inspector: folding, fixture, host: HOST });
+    expect(receipt.folds.fullFoldRedraws).toBe(receipt.folds.redraws);
+    expect(receipt.folds.maxEventsRequested).toBeGreaterThanOrEqual(100_000);
+    expect(receipt.over).toContain("full-fold-per-redraw");
+  }, 60_000);
+
+  it("counts rows examined by a query toward the same falsifier", () => {
+    const fixture = build({ seed: 3, nodes: 200, depth: 5, ticks: 4 });
+    class ScanningProjection extends ObservationProjection {
+      override query(filter: Parameters<ObservationProjection["query"]>[0]) {
+        return { ...super.query(filter), examined: 100_000 };
+      }
+    }
+    const scanning: Inspector = {
+      ...inspector,
+      layoutInspector: (model, state, size) => {
+        model.projection.query({ scope: SCOPE, limit: 5 });
+        return layoutInspector(model, state, size);
+      },
+    };
+    const receipt = run({ Projection: ScanningProjection, inspector: scanning, fixture, host: HOST });
+    expect(receipt.folds.fullFoldRedraws).toBe(receipt.folds.redraws);
+  }, 60_000);
+});
+
+describe("W21 reducer/selector exit semantics (C2, C3, C4)", () => {
+  it("exits 0 only for a realised W21 receipt with every judged series under target", () => {
+    const receipt = realisedReceipt();
+    expect(shapeOf(receipt.fixture).realised).toBe(true);
+    const verdict = assess(receipt);
+    expect(verdict.violations).toEqual([]);
+    expect(verdict.over).toEqual([]);
+    expect(verdict.exitCode).toBe(0);
+    expect(verdict.pass).toBe(true);
+  }, 120_000);
+
+  it("exits 1 and names the series when a selector p95 is over 20 ms, and never judges the reducer", () => {
+    const receipt = realisedReceipt();
+    receipt.bands[2].selectors.graph.p95 = 20.5;
+    receipt.bands[2].selectors.graph.max = 21;
+    const verdict = assess(receipt);
+    expect(verdict.exitCode).toBe(1);
+    expect(verdict.over).toEqual(["selector:band-100:graph"]);
+    const slowReducer = realisedReceipt();
+    slowReducer.bands[0].reducer = { samples: 50, p50: 90, p95: 95, max: 99 };
+    expect(assess(slowReducer).exitCode).toBe(0);
+  }, 120_000);
+
+  it("exits 1 for a redraw cadence above 4 Hz or a full fold, and 2 beats 1", () => {
+    const fast = realisedReceipt();
+    fast.cadence.maxRedrawsInOneSecond = 5;
+    expect(assess(fast).over).toEqual(["redraw-cadence-over-4hz"]);
+    expect(assess(fast).exitCode).toBe(1);
+    const folded = realisedReceipt();
+    folded.folds.fullFoldRedraws = 3;
+    expect(assess(folded).over).toEqual(["full-fold-per-redraw"]);
+    folded.fixture.updates = 99_999;
+    expect(assess(folded).exitCode).toBe(2);
+  }, 120_000);
+
+  it("exits 2 for a wrong-shape fixture, a truncated projection, unapplied updates or an unsampled series", () => {
+    const shape = realisedReceipt();
+    shape.fixture.updates = 99_999;
+    expect(assess(shape).violations.map(violation => violation.rule)).toContain("updates-below-100000");
+    expect(assess(shape).exitCode).toBe(2);
+    const truncated = realisedReceipt();
+    truncated.retained.nodes -= 1;
+    expect(assess(truncated).violations.map(violation => violation.rule)).toContain("projection-truncated");
+    const unapplied = realisedReceipt();
+    unapplied.apply.ingestOutOfOrder = 1;
+    unapplied.apply.ingestApplied -= 1;
+    expect(assess(unapplied).violations.map(violation => violation.rule)).toContain("updates-not-applied");
+    const unsampled = realisedReceipt();
+    unsampled.bands[1].selectors.timeline = { samples: 0, p50: null, p95: null, max: null };
+    expect(assess(unsampled).violations.map(violation => violation.rule)).toContain("series-not-sampled");
+    expect(assess(unsampled).exitCode).toBe(2);
+    const idle = realisedReceipt();
+    idle.cadence.redraws = 0;
+    expect(assess(idle).violations.map(violation => violation.rule)).toContain("no-redraws");
+  }, 120_000);
+
+  it("recomputes the verdict from the measured fields, ignoring any stored verdict", () => {
+    const receipt = realisedReceipt();
+    receipt.exitCode = 0;
+    receipt.pass = true;
+    receipt.bands[1].selectors.overview.p95 = 50;
+    expect(assess(receipt).exitCode).toBe(1);
+  }, 120_000);
+});
+
+describe("W21 reducer/selector determinism and fixture reuse (C5)", () => {
+  it("repeats every non-timing field of the receipt exactly", () => {
+    const fixture = build({ seed: 4, nodes: 300, depth: 5, ticks: 110 });
+    const a = run({ Projection: ObservationProjection, inspector, fixture, host: HOST });
+    const b = run({ Projection: ObservationProjection, inspector, fixture, host: HOST });
+    const stable = (receipt: Receipt) => ({
+      fixture: receipt.fixture,
+      offered: receipt.offered,
+      retained: receipt.retained,
+      apply: receipt.apply,
+      bands: receipt.bands.map(({ label, ticks, updates, redraws }) => ({ label, ticks, updates, redraws })),
+      exact: receipt.exactChurn.map(({ ticks, updates, redraws }) => ({ ticks, updates, redraws })),
+      folds: receipt.folds,
+      cadence: { ...receipt.cadence },
+    });
+    expect(stable(b)).toEqual(stable(a));
+  }, 120_000);
+
+  it("reads no wall clock and draws no randomness anywhere in the module", () => {
+    const text = readRepo("qa/workbench/reducer-selector-bench.mjs");
+    expect(text).not.toMatch(/Date\.now|Math\.random|crypto\.random/);
+    const calls = [...text.matchAll(/new Date\(\s*\)/g)];
+    expect(calls.length).toBeLessThanOrEqual(1);
+    for (const call of calls) expect(call.index).toBeGreaterThan(text.indexOf("async function main"));
+  });
+
+  it("reuses the grouped fixture builder and forks no second fixture or limits literal", () => {
+    const text = readRepo("qa/workbench/reducer-selector-bench.mjs");
+    const specifiers = [...text.matchAll(/^import\s[^'"]*['"]([^'"]+)['"]/gm)].map(match => match[1]).sort();
+    expect(specifiers).toEqual(["./grouped-fixture.mjs", "node:fs", "node:os", "node:url"].sort());
+    expect(text).toMatch(/buildGroupedFixture/);
+    expect(text).toMatch(/BENCH_ONLY_LIMITS/);
+    expect(text).not.toMatch(/function\s+(?:buildGroupedFixture|seeded|mulberry32)\b|maxNodes|maxEdges/);
+    const dynamic = [...text.matchAll(/\bimport\s*\(\s*['"]([^'"]+)['"]/g)].map(match => match[1]).sort();
+    expect(dynamic).toEqual(["../../dist/ui/workflow-inspector.js", "../../dist/workbench/observation.js"]);
+    expect(text).not.toMatch(/\brequire\s*\(/);
+  });
+
+  it("prints the receipt, writes it when asked, and sets the exit code only after both", () => {
+    const text = readRepo("qa/workbench/reducer-selector-bench.mjs");
+    expect(text).toMatch(/W21_REDUCER_RECEIPT/);
+    const written = text.indexOf("writeFileSync(process.env.W21_REDUCER_RECEIPT");
+    const printed = text.indexOf("console.log(JSON.stringify(receipt))");
+    const exit = text.indexOf("process.exitCode = receipt.exitCode");
+    expect(written).toBeGreaterThan(-1);
+    expect(printed).toBeGreaterThan(written);
+    expect(exit).toBeGreaterThan(printed);
+  });
+
+  it("leaves the existing bench, the fixture semantics and the perf test files as they were", () => {
+    const fixtureText = readRepo("qa/workbench/grouped-fixture.mjs");
+    expect(fixtureText).toMatch(/export function buildGroupedFixture\(options = \{\}\)/);
+    expect(fixtureText).toMatch(/export const BENCH_ONLY_LIMITS = Object\.freeze\(\{maxNodes: 12_000, maxEdges: 24_000, maxEvents: 128, maxQuery: 40\}\)/);
+  });
+});
+
+describe("W21 production caps and Forge registration (C3, C6)", () => {
+  it("keeps the default caps and lets no src/ file name the bench or its limits", () => {
+    const projection = new ObservationProjection();
+    expect(projection.stats()).toEqual({ nodes: 0, events: 0, edges: 0 });
+    const root = new URL("../src/", import.meta.url);
+    const named: string[] = [];
+    for (const entry of readdirSync(root, { recursive: true })) {
+      const file = String(entry);
+      if (!file.endsWith(".ts")) continue;
+      const text = readFileSync(join(root.pathname, file), "utf8");
+      if (/reducer-selector|BENCH_ONLY_LIMITS|workbench\.reducer-selector/.test(text)) named.push(file);
+      for (const match of text.matchAll(/\bmax(Nodes|Edges)\s*:\s*([\d_]+)/g)) {
+        const value = Number(match[2].replaceAll("_", ""));
+        if ((match[1] === "Nodes" && value > 2_000) || (match[1] === "Edges" && value > 4_000)) named.push(`${file}: ${match[0]}`);
+      }
+    }
+    expect(named).toEqual([]);
+  });
+
+  it("registers reducer-selector-bench as a Forge command outside the default gate", () => {
+    const toml = readRepo("forge.toml");
+    expect(toml).toMatch(
+      /\[build\.commands\.reducer-selector-bench\]\ncommand = "node qa\/workbench\/reducer-selector-bench\.mjs"\ntimeout = 300\n/,
+    );
+    const gate = /^gate = \[([^\]]*)\]/m.exec(toml)?.[1] ?? "";
+    expect(gate.length).toBeGreaterThan(0);
+    expect(gate).not.toMatch(/reducer-selector/);
+  });
+});
