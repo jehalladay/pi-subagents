@@ -14,7 +14,9 @@ import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { SDKMessage } from "@anthropic-ai/claude-agent-sdk";
+import { CapabilityRegistry } from "../../src/workbench/capability-registry.js";
 import { createClaudeWorkflowHost } from "../../src/workbench/claude-host.js";
+import type { WorkflowJournalEntry } from "../../src/workflow/journal.js";
 import { buildPhaseGroups, collapse } from "../../src/workflow/progress.js";
 import {
   runWorkflow,
@@ -53,6 +55,13 @@ export const goldenScripts: GoldenScript[] = [
   ...listJs(LIB_DIR).map(file => ({ id: `lib/${file}`, dir: LIB_DIR, file, args: { root: "src/" } })),
 ];
 
+/** The discovered script with this file name; throws when it is absent so a rename cannot hide behind a cast. */
+export function scriptNamed(file: string): GoldenScript {
+  const found = goldenScripts.find(script => script.file === file);
+  if (found === undefined) throw new Error(`golden script ${file} is not discovered`);
+  return found;
+}
+
 /** Byte-for-byte: no rewriting, no injected globals. */
 export const readScript = (script: GoldenScript): string =>
   script.source ?? readFileSync(join(script.dir, script.file), "utf-8");
@@ -89,8 +98,44 @@ export const goldenAnswerFor: AnswerTable = (label, schemaBearing) => {
  * Running
  * ------------------------------------------------------------------------- */
 
+/**
+ * An SDK node() capability that DECLARES its effect class (docs/workbench/08
+ * "Side-effect replay policy on resume"). The stub host declares it through
+ * describeNodeEffect, the Claude host through a CapabilityRegistry descriptor,
+ * so the W12 tripwire is driven by the same declaration on both backends.
+ */
+export interface NodeFixture {
+  id: string;
+  effect: "read" | "write";
+}
+
+/** An inline script that makes one node() call; the capability id comes from the fixture. */
+export function nodeScript(capabilityId: string): GoldenScript {
+  return {
+    id: `inline-node:${capabilityId}`,
+    dir: "",
+    file: "inline-node.js",
+    args: undefined,
+    source: `export const meta = { name: "node-probe", description: "one declared-effect node call" };\nreturn await node(${JSON.stringify(capabilityId)}, { value: "x" });\n`,
+  };
+}
+
+const NODE_GRANT = "golden:grant";
+const NODE_SCHEMA = {
+  type: "object",
+  properties: { value: { type: "string" } },
+  required: ["value"],
+  additionalProperties: false,
+};
+/** The replay basis the stub host declares, as the Claude host declares its own. */
+const STUB_BASIS = "golden-stub-basis";
+
 export interface RunOptions {
   answers?: AnswerTable;
+  /** A previous run's journal of THIS backend: the run resumes from it. */
+  resume?: readonly WorkflowJournalEntry[];
+  /** Registers a node() capability that declares its effect class. */
+  node?: NodeFixture;
   agentCap?: number;
   /** Order in which concurrent calls settle: immediately, call order, or last call first. */
   completion?: "immediate" | "forward" | "reverse";
@@ -102,6 +147,8 @@ export interface SdkCallRecord {
   model: string | undefined;
   permissionMode: string | undefined;
   effort: string | undefined;
+  allowedTools: unknown;
+  mcpServers: unknown;
 }
 
 export interface BackendRun {
@@ -111,6 +158,19 @@ export interface BackendRun {
   sdkCalls: SdkCallRecord[];
   /** How many spawn/resume calls reached the host. */
   hostCalls: number;
+  /** Every journal entry this run appended, in order (settled agents, then nodes as they settle). */
+  journal: WorkflowJournalEntry[];
+  /** How many times the node() capability itself was invoked. */
+  nodeInvocations: number;
+}
+
+/** One journal recorder per run; `entries` is the previous journal to resume from. */
+function journalFor(options: RunOptions) {
+  const appended: WorkflowJournalEntry[] = [];
+  return {
+    appended,
+    journal: { entries: options.resume ?? [], append: (entry: WorkflowJournalEntry) => void appended.push(entry) },
+  };
 }
 
 const delayFor = (completion: RunOptions["completion"], index: number): number => {
@@ -125,7 +185,20 @@ export async function runUpstream(script: GoldenScript, _cwd: string, options: R
   const answers = options.answers ?? goldenAnswerFor;
   const labels = new Map<string, string>();
   let hostCalls = 0;
+  let nodeInvocations = 0;
+  const recorder = journalFor(options);
+  const fixture = options.node;
   const host: WorkflowHost = {
+    replayBasis: STUB_BASIS,
+    ...(fixture !== undefined
+      ? {
+          async callNode(request) {
+            nodeInvocations++;
+            return { echoed: request.input };
+          },
+          describeNodeEffect: (capabilityId: string) => (capabilityId === fixture.id ? fixture.effect : undefined),
+        }
+      : {}),
     async spawnAgent(request: WorkflowSpawnRequest) {
       hostCalls++;
       labels.set(request.agentId, request.label);
@@ -153,9 +226,10 @@ export async function runUpstream(script: GoldenScript, _cwd: string, options: R
     script: readScript(script),
     host,
     args: script.args,
+    journal: recorder.journal,
     ...(options.agentCap !== undefined ? { agentCap: options.agentCap } : {}),
   });
-  return { script, result, sdkCalls: [], hostCalls };
+  return { script, result, sdkCalls: [], hostCalls, journal: recorder.appended, nodeInvocations };
 }
 
 /**
@@ -190,10 +264,32 @@ export async function runClaude(script: GoldenScript, cwd: string, options: RunO
       }, delayFor(options.completion, call.index));
     },
   });
+  let nodeInvocations = 0;
+  const recorder = journalFor(options);
+  const fixture = options.node;
+  const registry = new CapabilityRegistry();
+  if (fixture !== undefined) {
+    registry.register({
+      descriptor: {
+        id: fixture.id,
+        version: "1.0.0",
+        description: "golden fixture capability",
+        inputSchema: NODE_SCHEMA,
+        effectClass: fixture.effect,
+        permissions: [NODE_GRANT],
+        supportedModes: ["invoke"],
+      },
+      async invoke(input) {
+        nodeInvocations++;
+        return { echoed: input };
+      },
+    });
+  }
   const inner = createClaudeWorkflowHost({
     cwd,
     model: "fixture-model",
     tools: [],
+    ...(fixture !== undefined ? { capabilities: registry, grants: [NODE_GRANT] } : {}),
     // A Claude-native role for the Plan agent type review-panel.js names; never a Pi agent config.
     roles: { Plan: { prompt: "Plan the work." } },
     query: sdk.query,
@@ -211,6 +307,7 @@ export async function runClaude(script: GoldenScript, cwd: string, options: RunO
     script: readScript(script),
     host,
     args: script.args,
+    journal: recorder.journal,
     ...(options.agentCap !== undefined ? { agentCap: options.agentCap } : {}),
   });
   sdk.release();
@@ -220,8 +317,10 @@ export async function runClaude(script: GoldenScript, cwd: string, options: RunO
     model: call.options.model,
     permissionMode: call.options.permissionMode,
     effort: call.options.effort,
+    allowedTools: call.options.allowedTools,
+    mcpServers: call.options.mcpServers,
   }));
-  return { script, result, sdkCalls, hostCalls };
+  return { script, result, sdkCalls, hostCalls, journal: recorder.appended, nodeInvocations };
 }
 
 /* ------------------------------------------------------------------------- *
@@ -248,6 +347,15 @@ export interface NormalizedRun {
   agentCount: number;
   hostCalls: number;
   replayedCount: number;
+  replayedNodeCount: number;
+  reconciledNodeCount: number;
+  /** Journal entries modulo the Claude-only `basis` field; compared, never persisted. */
+  journal: Array<Record<string, unknown>>;
+  nodeInvocations: number;
+  /** The capability diagnostic category a failed run carries (the W12 tripwire's `uncertain-effect`). */
+  capabilityCategory: string | undefined;
+  /** SDK node() rows: what they were and whether a replayed answer is marked stale. */
+  nodes: Array<{ capabilityId: string; state: string; freshness: string | undefined }>;
   meta: { keys: string[]; name: string; description: string; phases: string[] };
   phases: Array<{
     title: string;
@@ -278,6 +386,17 @@ export function normalizeRun(run: BackendRun): NormalizedRun {
     agentCount: result.agentCount,
     hostCalls: run.hostCalls,
     replayedCount: result.replayedCount,
+    replayedNodeCount: result.replayedNodeCount,
+    reconciledNodeCount: result.reconciledNodeCount,
+    // Append order is settle order; position (index) is the contract, so completion order never enters.
+    journal: [...run.journal].sort((a, b) => a.index - b.index).map(withoutBasis),
+    nodeInvocations: run.nodeInvocations,
+    capabilityCategory: result.capabilityError?.category,
+    nodes: collapsed.nodes.map(node => ({
+      capabilityId: node.capabilityId,
+      state: node.state,
+      freshness: node.freshness,
+    })),
     meta: {
       keys: Object.keys(result.meta).sort(),
       name: result.meta.name,
@@ -297,6 +416,27 @@ export function normalizeRun(run: BackendRun): NormalizedRun {
       .map(agent => ({ label: agent.label, errorClass: errorClassOf(agent.error) }))
       .sort(byLabel),
     nested: run.script.file === "compose.js" ? json(result.value) : undefined,
+  };
+}
+
+/** A journal entry without the host-declared replay basis, the one field the two contracts legitimately differ on. */
+function withoutBasis(entry: WorkflowJournalEntry): Record<string, unknown> {
+  return Object.fromEntries(Object.entries(entry).filter(([key]) => key !== "basis"));
+}
+
+/**
+ * For runs whose completion order differs. Dispatch positions follow settle order inside a
+ * pipeline, so a journal entry's index and key are not part of that contract (docs/workbench/14:
+ * "Do not require arbitrary nondeterministic completion order to match"); the SET of settled
+ * calls is. Everything else stays compared as-is.
+ */
+export function orderInsensitive(run: NormalizedRun): NormalizedRun {
+  const key = (entry: Record<string, unknown>) => JSON.stringify(entry);
+  return {
+    ...run,
+    journal: run.journal
+      .map(entry => Object.fromEntries(Object.entries(entry).filter(([name]) => name !== "index" && name !== "key")))
+      .sort((a, b) => (key(a) < key(b) ? -1 : key(a) > key(b) ? 1 : 0)),
   };
 }
 
