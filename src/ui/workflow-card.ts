@@ -251,9 +251,11 @@ export const REPLAYED_ANNOTATION = "from resume journal";
  */
 export function agentStatSegments(entry: WorkflowAgentEntry): string[] {
   const parts: string[] = [];
-  if (entry.agentType) parts.push(entry.agentType);
+  // The agent type is author text from agent() and the model is the script's
+  // seed or the provider session's name: both are stripped like the label.
+  if (entry.agentType) parts.push(safeWorkflowTerminalText(entry.agentType));
   const model = formatModel(entry);
-  if (model) parts.push(model);
+  if (model) parts.push(safeWorkflowTerminalText(model));
   if (entry.tokens) parts.push(formatCompactTokens(entry.tokens));
   if (entry.toolCalls) parts.push(`${entry.toolCalls} tool call${entry.toolCalls === 1 ? "" : "s"}`);
   if (entry.durationMs) parts.push(formatDuration(entry.durationMs));

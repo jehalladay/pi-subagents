@@ -185,6 +185,16 @@ describe("untrusted workflow terminal rows", () => {
       }
     }
   });
+  it("sanitizes the inline card agent-row stat tail: agent type and model strings", () => {
+    const rendered = plainWorkflowCardLines(layoutWorkflowCard({
+      task: { status: "running", workflowName: "safe", startTime: 1 }, now: 2, width: 240,
+      progress: [{ type: "workflow_phase", index: 0, title: "safe" }, agent("done", { agentType: hostile, resultPreview: "ok" })],
+    })).join("\n");
+    expect(rendered).toContain("row");
+    expect(rendered).not.toMatch(/[\u001b\u202a-\u202e\u2066-\u2069]/u);
+    expect(rendered).not.toContain("w19-terminal-secret");
+    expect(rendered).toContain("[REDACTED]");
+  });
   it("sanitizes every card log line while preserving multiline layout", () => {
     const rendered = plainWorkflowCardLines(layoutWorkflowCard({
       task: { status: "running", workflowName: "safe", startTime: 1 }, now: 2, width: 240,
