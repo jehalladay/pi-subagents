@@ -77,14 +77,16 @@ function host(answers: { cancel?: Answer; shutdown?: Answer } = {}) {
     inspect: vi.fn((): unknown => { throw new Error("the adapter must never poll"); }),
     execute: vi.fn((): unknown => { throw new Error("the adapter must never execute"); }),
   };
-  return { ...calls, client: calls as unknown as DetachedControlClient, total: () => Object.values(calls).reduce((sum, spy) => sum + spy.mock.calls.length, 0) };
+  const client = calls as unknown as DetachedControlClient;
+  const connect = vi.fn((_invocationId: string): DetachedControlClient => client);
+  return { ...calls, client, connect, total: () => Object.values(calls).reduce((sum, spy) => sum + spy.mock.calls.length, 0) };
 }
 type Host = ReturnType<typeof host>;
 const rejecting = (error: unknown): Answer => async () => { throw error; };
 
 function run(overrides: Partial<NativeControlRequest> = {}, fake: Host = host(), projection: ObservationProjection = detached(),
   now: () => string = () => NOW): Promise<DetachedControlExecution> {
-  return executeDetachedControl({ request: request(overrides), deps: { projection }, client: fake.client, now });
+  return executeDetachedControl({ request: request(overrides), deps: { projection }, connect: fake.connect, now });
 }
 function phased(): () => string {
   return vi.fn<() => string>().mockReturnValueOnce(NOW).mockReturnValueOnce(ACKED).mockReturnValueOnce(SETTLED);
@@ -186,7 +188,7 @@ describe("A2: a denied decision is the core's typed denial and never opens the s
       const fake = host();
       const expected = decideControl(request(overrides), { projection, now: () => NOW });
       expect(expected).toMatchObject({ decision: "denied", policy });
-      const execution = await executeDetachedControl({ request: request(overrides), deps: { projection }, client: fake.client, now: () => NOW });
+      const execution = await executeDetachedControl({ request: request(overrides), deps: { projection }, connect: fake.connect, now: () => NOW });
       expect(execution).toStrictEqual({ status: "denied", decision: expected, clientCalls: 0 });
       expectDeepFrozen(execution);
       expect(fake.total()).toBe(0);
@@ -388,6 +390,43 @@ describe("A4: a refusal before acceptance stays requested; a transport failure i
 });
 
 describe("A5: observers and non-owners never control", () => {
+  it("C1 (owner ruling 18:18Z): the handle comes from the wiring's connect(invocationId) factory, called only after admission with the target id", async () => {
+    // decide-then-act: no denial and no adapter precondition refusal ever builds a handle, so nothing can bind a connection first.
+    const preconditions: Partial<NativeControlRequest>[] = [{ action: "inspect" }, { params: {} }, { params: { confirmed: true, reason: 42 } },
+      { grants: ["observe:local-detached.invocation"] }, { principal: { id: "someone-else", role: "local-operator" } }];
+    for (const overrides of preconditions) {
+      const fake = host();
+      expect((await run(overrides, fake)).clientCalls).toBe(0);
+      expect(fake.connect).not.toHaveBeenCalled();
+    }
+    const lookalike: NativeRef = { provider: "forge", type: "invocation", id: INVOCATION.id };
+    const forgeOwned = observe(SCOPE, [lookalike, HOST_PROCESS], [owns(lookalike, HOST_PROCESS)]);
+    const other = host();
+    expect((await run({ target: lookalike, grants: ["control:forge.cancel"] }, other, forgeOwned)).clientCalls).toBe(0);
+    expect(other.connect).not.toHaveBeenCalled();
+    for (const action of ["cancel", "shutdown"] as const) {
+      const fake = host();
+      expectStatus(await run({ action }, fake), "settled");
+      expect(fake.connect.mock.calls).toStrictEqual([[INVOCATION.id]]);
+      expect(fake.total()).toBe(1);
+    }
+  });
+
+  it("C1: a factory that throws, or returns a handle without cancel and shutdown, is a refusal before any verb is called", async () => {
+    const half = { cancel: vi.fn() } as unknown as DetachedControlClient;
+    const factories: DetachedControlInput["connect"][] = [
+      () => { throw new Error("connect exploded Bearer sk-ant-api03-SECRETPART0123456789"); },
+      () => undefined as unknown as DetachedControlClient,
+      () => half,
+    ];
+    for (const connect of factories) {
+      const execution = expectStatus(await executeDetachedControl({ request: request(), deps: { projection: detached() }, connect, now: () => NOW }), "refused");
+      expect(execution).toMatchObject({ clientCalls: 0, refusal: { category: "validation" }, receipt: { phase: "requested" } });
+      expect(JSON.stringify(execution)).not.toContain("SECRETPART");
+    }
+    expect(half.cancel).not.toHaveBeenCalled();
+  });
+
   it("observe:/inspect:/discover:-only grants are denied observer-only before any projection read or client call", async () => {
     const projection = detached();
     const query = vi.spyOn(projection, "query");
@@ -475,10 +514,10 @@ describe("adapter preconditions: a permit the detached host cannot carry is refu
     const projection = detached();
     const query = vi.spyOn(projection, "query");
     const now = vi.fn(() => NOW);
-    const good: DetachedControlInput = { request: request(), deps: { projection }, client: fake.client, now };
+    const good: DetachedControlInput = { request: request(), deps: { projection }, connect: fake.connect, now };
     const broken: unknown[] = [undefined, null, {}, { ...good, request: undefined }, { ...good, deps: undefined }, { ...good, deps: {} },
-      { ...good, deps: { projection: { query: () => ({ nodes: [] }) } } }, { ...good, client: undefined }, { ...good, client: { cancel: fake.cancel } },
-      { ...good, client: { shutdown: fake.shutdown } }, { ...good, client: { cancel: "x", shutdown: fake.shutdown } }, { ...good, now: undefined }, { ...good, now: NOW }];
+      { ...good, deps: { projection: { query: () => ({ nodes: [] }) } } }, { ...good, connect: undefined }, { ...good, connect: fake.client },
+      { ...good, connect: "x" }, { ...good, client: fake.client, connect: undefined }, { ...good, now: undefined }, { ...good, now: NOW }];
     for (const input of broken) {
       let failure: unknown;
       try { await executeDetachedControl(input as DetachedControlInput); } catch (error) { failure = error; }
@@ -527,7 +566,7 @@ describe("A6: never kills by pid and never reaches the host module at runtime", 
 
 describe("A7: reasons, diagnostics and echoed host text route through the shared sanitizers", () => {
   const SECRET = "sk-ant-api03-SECRETPART0123456789";
-  const adversarial = `\u001b[31mplease\u001b[0m stop​ now ‮evil‬\u0007 Bearer sk-ant-api03-SECRET​PART0123456789 then ${SECRET.slice(0, 20)}­${SECRET.slice(20)}⁦ tail\u001b]0;title\u0007`;
+  const adversarial = `\u001b[31mplease\u001b[0m stop\u200b now \u202eevil\u202c\u0007 Bearer sk-ant-api03-SECRET\u200bPART0123456789 then ${SECRET.slice(0, 20)}\u00ad${SECRET.slice(20)}\u2066 tail\u001b]0;title\u0007`;
 
   it("an adversarial operator reason never reaches a receipt, and the client frame carries only its sanitized, bounded form", async () => {
     for (const action of ["cancel", "shutdown"] as const) {
@@ -535,7 +574,7 @@ describe("A7: reasons, diagnostics and echoed host text route through the shared
       const execution = expectStatus(await run({ action, params: { confirmed: true, reason: adversarial } }, fake), "settled");
       const sent = (action === "cancel" ? fake.cancel : fake.shutdown).mock.calls[0][0];
       expect(decodeDetachedCommand({ command: action, invocationId: INVOCATION.id, reason: sent })).toStrictEqual({ command: action, invocationId: INVOCATION.id, reason: sent });
-      expect(sent).not.toMatch(/[\u0000-\u001f\u007f-\u009f‪-‮⁦-⁩]/);
+      expect(sent).not.toMatch(/[\u0000-\u001f\u007f-\u009f\u202a-\u202e\u2066-\u2069]/);
       expect(sent).not.toMatch(/\p{Default_Ignorable_Code_Point}/u);
       expect(sent).not.toContain("SECRETPART");
       expect(sent).not.toContain("0123456789");
@@ -547,8 +586,28 @@ describe("A7: reasons, diagnostics and echoed host text route through the shared
     }
   });
 
+  it("whitespace controls separate a credential from its scheme instead of being deleted, through params.reason and both diagnostic paths", async () => {
+    // Gate mutant G3 (stripUnsafeText(value) with no replacement) deletes LF/TAB/VT/CR first and glues "x" to "sk-ant-", defeating the word-boundary redactor.
+    const TAIL = "SECRETPART0123456789";
+    const GLUE = ["token: x\nsk-ant-api03-", "see\nghp_", "auth\nBearer ", "Bearer\ttok", "Basic\vtok", "Authorization: Bearer\ntok", "x\rsk-ant-api03-"]
+      .map(prefix => `${prefix}${TAIL}`);
+    for (const glued of GLUE) {
+      const fake = host();
+      expectStatus(await run({ params: { confirmed: true, reason: glued } }, fake), "settled");
+      const sent = fake.cancel.mock.calls[0][0];
+      expect(sent).not.toContain(TAIL);
+      expect(sent).toContain("[REDACTED]");
+      const refused = expectStatus(await run({}, host({ cancel: rejecting(new Error(`Detached authorization: ${glued}`)) })), "refused");
+      expect(refused.refusal.diagnostic).not.toContain(TAIL);
+      expect(refused.refusal.diagnostic).toContain("[REDACTED]");
+      const lost = expectStatus(await run({}, host({ cancel: rejecting(new Error(`Detached host disconnected before reply. ${glued}`)) })), "uncertain");
+      expect(lost.diagnostic ?? "").not.toContain(TAIL);
+      expect(lost.diagnostic ?? "").toContain("[REDACTED]");
+    }
+  });
+
   it("an absent or blank reason sends the fixed attributable reason; a non-string or accessor reason is refused before any client call", async () => {
-    for (const params of [{ confirmed: true }, { confirmed: true, reason: "" }, { confirmed: true, reason: "   " }, { confirmed: true, reason: "\u001b[2J​\u0007" },
+    for (const params of [{ confirmed: true }, { confirmed: true, reason: "" }, { confirmed: true, reason: "   " }, { confirmed: true, reason: "\u001b[2J\u200b\u0007" },
       Object.assign(Object.create({ reason: "inherited text" }), { confirmed: true })]) {
       const fake = host();
       const execution = expectStatus(await run({ params }, fake), "settled");
@@ -580,13 +639,13 @@ describe("A7: reasons, diagnostics and echoed host text route through the shared
   });
 
   it("host diagnostics in refusals and transport failures are redacted and stripped before they reach the execution", async () => {
-    const hostText = `\u001b[2Jdenied​ for Bearer sk-ant-api03-HOST​SECRET99 ‮override\u0007 password=hunter2`;
+    const hostText = `\u001b[2Jdenied\u200b for Bearer sk-ant-api03-HOST\u200bSECRET99 \u202eoverride\u0007 password=hunter2`;
     const refused = expectStatus(await run({}, host({ cancel: rejecting(new Error(`Detached authorization: ${hostText}`)) })), "refused");
     const lost = expectStatus(await run({}, host({ cancel: rejecting(new Error(`Detached host disconnected before reply. ${hostText}`)) })), "uncertain");
     for (const diagnostic of [refused.refusal.diagnostic, lost.diagnostic ?? ""]) {
       expect(diagnostic).toContain("denied");
       expect(diagnostic).toContain("[REDACTED]");
-      for (const text of ["HOSTSECRET", "HOST", "hunter2", "\u001b", "​", "‮", "\u0007"]) expect(diagnostic).not.toContain(text);
+      for (const text of ["HOSTSECRET", "HOST", "hunter2", "\u001b", "\u200b", "\u202e", "\u0007"]) expect(diagnostic).not.toContain(text);
       expect(diagnostic.length).toBeLessThanOrEqual(300);
     }
   });

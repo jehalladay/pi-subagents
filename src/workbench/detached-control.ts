@@ -2,14 +2,16 @@
  * Local-detached native control adapter (W16-J, VC-7; docs/workbench/11 § "First public Pi tools (proposed)",
  * docs/workbench/08 § "Optional local detached profile"). It executes ONE workbench.control/v1 decision of the landed
  * core (control.ts) through the Workbench-owned detached host's own control verbs, the reason-carrying members of the
- * DetachedCommand union (hosts/local-detached.ts:103-105), on the client the caller injects for the request's target
- * invocation (the connectDetachedWorkflow handle, which opens no socket until one of its verbs is called).
+ * DetachedCommand union (hosts/local-detached.ts:103-105), on the handle the wiring's connect(invocationId) factory builds
+ * for the request's target invocation (the connectDetachedWorkflow handle, which opens no socket until one of its verbs is
+ * called). The factory runs only after admission (decide-then-act, owner ruling C1): a denial or a precondition refusal
+ * never builds a handle.
  *
  * It decides nothing: grants, scope, lifecycle ownership and operator confirmation are the core's ladder, consumed and
  * never re-derived. It launches and connects nothing, resolves no path and signals no process. Pi tool registration and
  * the launch permission list stay with the host wiring.
  *
- * - denied: the core's own denial, returned as-is. No client method is called, so the socket never opens.
+ * - denied: the core's own denial, returned as-is. No factory or client method is called, so the socket never opens.
  * - refused: a permit the detached host cannot carry (refused before any client call), or a refusal the host or the
  *   client raised before acceptance (authorization or validation). The receipt stays requested; nothing is acknowledged.
  * - not-accepted: the host answered accepted false. The receipt stays requested and the outcome is failed.
@@ -39,6 +41,8 @@ import { sanitizeWorkbenchText, stripUnsafeText } from "./redaction.js";
 export type DetachedControlVerb = Extract<DetachedCommand, { reason: string }>["command"];
 /** Exactly the handle's methods for those verbs; inspect and execute are unreachable through this type. */
 export type DetachedControlClient = Pick<ReturnType<typeof connectDetachedWorkflow>, DetachedControlVerb>;
+/** The wiring's factory, bound to the workspace root: builds the handle for one invocation id. Opens no socket by itself. */
+export type DetachedControlConnect = (invocationId: string) => DetachedControlClient;
 
 interface DetachedVerbRow {
   /** The host's answer field that settles the verb (hosts/local-detached.ts:653). */
@@ -68,8 +72,8 @@ export interface DetachedControlInput {
   readonly request: NativeControlRequest;
   /** The projection the core decides against, read only through the core. */
   readonly deps: { readonly projection: ObservationProjection };
-  /** The detached handle for the request's target invocation. Only the permitted verb is called, at most once. */
-  readonly client: DetachedControlClient;
+  /** Builds the detached handle for the request's target invocation, called once and only after admission with the receipt's target id. */
+  readonly connect: DetachedControlConnect;
   /** The host clock for decidedAt, acknowledgedAt and settledAt. */
   readonly now: () => string;
 }
@@ -135,7 +139,8 @@ const SCAN = 4096;
 const INVISIBLE = /\p{Default_Ignorable_Code_Point}/gu;
 /** A UTF-16 code unit orphaned when a length bound cuts through a surrogate pair. */
 const LONE_SURROGATE = /[\ud800-\udbff](?![\udc00-\udfff])|(?<![\ud800-\udbff])[\udc00-\udfff]/g;
-const MISWIRED = "Detached control requires a request, a projection, a client with cancel and shutdown, and a host clock.";
+const MISWIRED = "Detached control requires a request, a projection, a connect factory and a host clock.";
+const NO_HANDLE = "Detached control could not build a detached client with cancel and shutdown for the invocation.";
 const NOT_DETACHED = "Detached control executes only a decision for a local-detached control verb.";
 const NOT_INVOCATION = "Detached control acts only on a local-detached invocation whose id the host admits.";
 const NO_HOST_INSTANCE = "Detached control requires the reader's ownership confirmation naming the host instance, process and owner.";
@@ -194,7 +199,7 @@ function diagnosticOf(error: unknown): string {
 }
 function wired(input: DetachedControlInput): DetachedControlInput {
   if (!plain(input) || !plain(input.request) || !plain(input.deps) || !method(input.deps.projection, "query") || !method(input.deps.projection, "relations")
-    || !method(input.client, "cancel") || !method(input.client, "shutdown") || typeof input.now !== "function") {
+    || typeof input.connect !== "function" || typeof input.now !== "function") {
     throw new CapabilityError("validation", MISWIRED);
   }
   return input;
@@ -261,7 +266,7 @@ function conclude(verb: DetachedControlVerb, requested: RequestedControlReceipt,
  * decision time. Every other path resolves, and calls at most one client verb at most once.
  */
 export async function executeDetachedControl(input: DetachedControlInput): Promise<DetachedControlExecution> {
-  const { request, deps, client, now } = wired(input);
+  const { request, deps, connect, now } = wired(input);
   const decision = decideControl(request, { projection: deps.projection, now });
   if (decision.decision === "denied") return Object.freeze({ status: "denied", decision, clientCalls: 0 });
   const requested = decision.receipt;
@@ -278,5 +283,14 @@ export async function executeDetachedControl(input: DetachedControlInput): Promi
   if (note === undefined) return refused(requested, action, { category: "validation", diagnostic: MALFORMED_REASON }, 0);
   // The host audits the reason with its owner; the request id makes that row attributable to this receipt.
   const reason = note === "" ? `${CONTROL_CONTRACT_VERSION} ${requested.requestId}` : `${CONTROL_CONTRACT_VERSION} ${requested.requestId}: ${note}`;
-  return conclude(action, requested, `${PROVIDER}:${target.id}:${hostInstanceId}`, await callOnce(client, action, reason), now);
+  // Decide-then-act: the handle is built only now, after every refusal above. A factory that fails or builds a handle
+  // without both verbs has called nothing, so this is a refusal with zero client calls.
+  let client: DetachedControlClient | undefined;
+  try {
+    client = connect(target.id);
+  } catch {
+    client = undefined;
+  }
+  if (!method(client, "cancel") || !method(client, "shutdown")) return refused(requested, action, { category: "validation", diagnostic: NO_HANDLE }, 0);
+  return conclude(action, requested, `${PROVIDER}:${target.id}:${hostInstanceId}`, await callOnce(client as DetachedControlClient, action, reason), now);
 }
