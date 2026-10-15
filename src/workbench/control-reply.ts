@@ -13,6 +13,7 @@
 import type { CapabilityErrorCategory, JsonValue } from "./capability-registry.js";
 import {
   CONTROL_CONTRACT_VERSION,
+  CONTROL_PERMIT_POLICY,
   type ControlDecision,
   type ControlDenyPolicy,
   type ControlOutcome,
@@ -20,7 +21,7 @@ import {
   NATIVE_CONTROL_ACTIONS,
   type NativeControlReceipt,
 } from "./control.js";
-import { sanitizeWorkbenchJson } from "./redaction.js";
+import { redactWorkbenchText, sanitizeWorkbenchJson, stripUnsafeText } from "./redaction.js";
 
 export const CONTROL_REPLY_CONTRACT_VERSION = "workbench.control-reply/v1";
 export const DEFAULT_CONTROL_REPLY_BYTES = 4096;
@@ -42,7 +43,7 @@ export interface ControlReply {
 }
 
 type Body = { [key: string]: JsonValue };
-type Detail = "full" | "compact" | "minimal";
+type Detail = "full" | "compact";
 
 /** A refusal policy of the decision core, or this builder's own malformed-input for input that is not a core product. */
 type ReplyPolicy = ControlDenyPolicy | "malformed-input";
@@ -71,8 +72,12 @@ const NOTICES = {
   result: "The outcome is producer-reported and observed, not verified by Workbench; transport success is not domain verification.",
 } as const;
 const MISSING_GRANT = /^missing exact grant control:([a-z][a-z0-9-]*)\.([a-z][a-z0-9-]*)$/;
-/** Zero-width and BOM characters survive the shared terminal strip; they never belong in a model-facing reply. */
-const ZERO_WIDTH = /[​-‏⁠﻿]/g;
+/**
+ * Zero-width, soft-hyphen and BOM code points survive the shared terminal strip. They are deleted BEFORE the shared
+ * sanitizer (strip, redact, strip) so an invisible character inside a credential can never split it past redaction and be
+ * glued back together afterwards.
+ */
+const INVISIBLE = /[\u00AD\u061C\u180E\u200B-\u200F\u2060-\u2064\uFEFF]/g;
 const REF_TEXT_LIMIT = 4200;
 const CLIP = { compact: 64 } as const;
 
@@ -113,7 +118,7 @@ function wellFormed(receipt: unknown): receipt is NativeControlReceipt {
   if (!plain(receipt) || receipt.contractVersion !== CONTROL_CONTRACT_VERSION) return false;
   const { target } = receipt;
   const core = [receipt.requestId, receipt.grant, receipt.policy, receipt.action, receipt.invocationId, receipt.ownershipConfirmationRef, receipt.requestedAt, receipt.decidedAt];
-  if (!core.every(text) || !plain(target) || !text(target.provider) || !text(target.type) || !text(target.id)) return false;
+  if (!core.every(text) || receipt.policy !== CONTROL_PERMIT_POLICY || !plain(target) || !text(target.provider) || !text(target.type) || !text(target.id)) return false;
   if (target.scope !== undefined && !text(target.scope)) return false;
   if (receipt.phase === "requested") return true;
   if (!text(receipt.acknowledgedAt) || !text(receipt.nativeAckRef)) return false;
@@ -137,14 +142,14 @@ function phased(receipt: NativeControlReceipt, detail: Detail): Body {
   const body: Body = { status: receipt.phase, phase: receipt.phase, requested: requestedBlock(receipt, detail) };
   if (receipt.phase !== "requested") body.acknowledged = { acknowledgedAt: receipt.acknowledgedAt, nativeAckRef: clip(receipt.nativeAckRef, detail) };
   if (receipt.phase === "result") body.result = { outcome: receipt.outcome, nativeResultRef: clip(receipt.nativeResultRef, detail), settledAt: receipt.settledAt };
-  body.completion = receipt.phase === "result" ? "producer-reported" : "not-established";
+  body.completionBasis = receipt.phase === "result" ? "producer-reported" : "not-established";
   body.verification = "not-performed";
   body.notice = NOTICES[receipt.phase];
   return body;
 }
 /** The smallest honest reply: identity of the outcome with every echo dropped. */
 function minimal(body: Body): Body {
-  const keep = ["status", "phase", "category", "policy", "completion", "verification", "effect"];
+  const keep = ["status", "phase", "category", "policy", "completionBasis", "verification", "effect"];
   return Object.fromEntries(keep.filter(key => key in body).map(key => [key, body[key]]));
 }
 function bodyOf(source: ControlDecision | NativeControlReceipt, detail: Detail): Body {
@@ -159,33 +164,49 @@ function effectiveBudget(maxBytes: number | undefined): number {
   if (maxBytes === undefined || !Number.isFinite(maxBytes)) return DEFAULT_CONTROL_REPLY_BYTES;
   return Math.min(MAX_CONTROL_REPLY_BYTES, Math.max(MIN_CONTROL_REPLY_BYTES, Math.floor(maxBytes)));
 }
-/** Sanitize every string through the shared sanitizers, then serialize compactly. */
-function serialize(body: Body): string {
-  const clean = sanitizeWorkbenchJson(body, REF_TEXT_LIMIT);
-  return JSON.stringify(clean).replace(ZERO_WIDTH, "");
+/**
+ * Pass one of strip, redact, strip: delete the invisible set and the terminal-unsafe set from every string and key, and
+ * record whether the shared redactor's text cap will cut any of them after redaction expansion.
+ */
+function prepared(value: JsonValue, state: { cut: boolean }): JsonValue {
+  if (typeof value === "string") {
+    const cleaned = stripUnsafeText(value.replace(INVISIBLE, ""));
+    if (redactWorkbenchText(cleaned, Number.POSITIVE_INFINITY).length > REF_TEXT_LIMIT) state.cut = true;
+    return cleaned;
+  }
+  if (Array.isArray(value)) return value.map(child => prepared(child, state));
+  if (value && typeof value === "object") {
+    const result: Body = Object.create(null);
+    for (const [key, child] of Object.entries(value)) result[prepared(key, state) as string] = prepared(child, state);
+    return result;
+  }
+  return value;
+}
+/** Renders one shaped body: pass one, the envelope, then the shared sanitizers (redact, strip) and compact JSON. */
+function render(shaped: Body, byteCut: boolean, maxBytes: number): ControlReply {
+  const state = { cut: false };
+  const clean = prepared(shaped, state) as Body;
+  const truncation: Body | undefined = byteCut
+    ? { reason: "byte-cap", maxBytes, ...(state.cut ? { textCap: REF_TEXT_LIMIT } : {}) }
+    : state.cut
+      ? { reason: "text-cap", maxChars: REF_TEXT_LIMIT }
+      : undefined;
+  const envelope: Body = { contractVersion: CONTROL_REPLY_CONTRACT_VERSION, kind: "control-reply", ...clean, truncated: truncation !== undefined, ...(truncation ? { truncation } : {}) };
+  const out = JSON.stringify(sanitizeWorkbenchJson(envelope, REF_TEXT_LIMIT));
+  return { text: out, bytes: Buffer.byteLength(out, "utf8"), truncated: truncation !== undefined, reply: JSON.parse(out) as { [key: string]: JsonValue } };
 }
 
 /**
  * Renders one control decision or receipt as a compact, sanitized, byte-capped JSON reply. A pure function of its
- * inputs: input that is not a core product renders a typed malformed-input refusal, never an invented phase.
+ * inputs: input that is not a core product renders a typed malformed-input refusal, never an invented phase. The
+ * truncated flag keys on the final cut: it is true whenever the byte budget forced a smaller tier or the shared text cap
+ * cut any string after redaction.
  */
 export function buildControlReply(source: ControlDecision | NativeControlReceipt, options: ControlReplyOptions = {}): ControlReply {
   const maxBytes = effectiveBudget(options.maxBytes);
-  const attempts: readonly Detail[] = ["full", "compact", "minimal"];
-  for (const detail of attempts) {
-    const shaped = detail === "minimal" ? minimal(bodyOf(source, "compact")) : bodyOf(source, detail);
-    const cut = detail !== "full";
-    const body: Body = {
-      contractVersion: CONTROL_REPLY_CONTRACT_VERSION,
-      kind: "control-reply",
-      ...shaped,
-      truncated: cut,
-      ...(cut ? { truncation: { reason: "byte-cap", maxBytes } } : {}),
-    };
-    const out = serialize(body);
-    const bytes = Buffer.byteLength(out, "utf8");
-    if (bytes <= maxBytes) return { text: out, bytes, truncated: cut, reply: JSON.parse(out) as { [key: string]: JsonValue } };
-  }
-  const stub = JSON.stringify({ kind: "control-reply", truncated: true });
-  return { text: stub, bytes: Buffer.byteLength(stub, "utf8"), truncated: true, reply: { kind: "control-reply", truncated: true } };
+  const full = render(bodyOf(source, "full"), false, maxBytes);
+  if (full.bytes <= maxBytes) return full;
+  const compact = render(bodyOf(source, "compact"), true, maxBytes);
+  if (compact.bytes <= maxBytes) return compact;
+  return render(minimal(bodyOf(source, "compact")), true, maxBytes);
 }
