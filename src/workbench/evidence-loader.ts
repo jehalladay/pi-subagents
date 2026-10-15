@@ -99,8 +99,29 @@ function safeChunks(raw: string): string[] {
   const cleaned = stripUnsafeText(redacted, " ");
   if (cleaned.length === 0) return [""];
   const chunks: string[] = [];
-  for (let at = 0; at < cleaned.length; at += EVIDENCE_LINE_CHARS) chunks.push(safeWorkflowTerminalText(cleaned.slice(at, at + EVIDENCE_LINE_CHARS)));
+  let at = 0;
+  while (at < cleaned.length) {
+    let end = Math.min(at + EVIDENCE_LINE_CHARS, cleaned.length);
+    if (end < cleaned.length && isHighSurrogate(cleaned.charCodeAt(end - 1)) && end - 1 > at) end -= 1;
+    chunks.push(safeWorkflowTerminalText(cleaned.slice(at, end)));
+    at = end;
+  }
   return chunks;
+}
+
+const isHighSurrogate = (unit: number): boolean => unit >= 0xd800 && unit <= 0xdbff;
+
+/** The longest prefix of `text` whose UTF-8 size fits `budget` bytes, cut only on code-point boundaries. */
+function prefixWithinBytes(text: string, budget: number): string {
+  let used = 0;
+  let kept = "";
+  for (const codePoint of text) {
+    const size = Buffer.byteLength(codePoint);
+    if (used + size > budget) break;
+    used += size;
+    kept += codePoint;
+  }
+  return kept;
 }
 
 /** Fit loader-supplied preview lines inside the byte and line budgets; raw payload is never retained. */
@@ -113,9 +134,9 @@ function boundPreview(preview: readonly string[], maxBytes: number): { lines: st
     for (const part of entry.split(/\r\n|\r|\n/)) {
       if (remaining <= 0 || lines.length >= EVIDENCE_MAX_PREVIEW_LINES) { clipped = true; break; }
       const size = Buffer.byteLength(part);
-      const kept = size > remaining ? Buffer.from(part).subarray(0, remaining).toString() : part;
+      const kept = size > remaining ? prefixWithinBytes(part, remaining) : part;
       if (size > remaining) clipped = true;
-      remaining -= Math.min(size, remaining);
+      remaining -= Math.min(Buffer.byteLength(kept), remaining);
       for (const chunk of safeChunks(kept)) {
         if (lines.length >= EVIDENCE_MAX_PREVIEW_LINES) { clipped = true; break; }
         lines.push(chunk);

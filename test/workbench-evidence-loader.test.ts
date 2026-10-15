@@ -438,3 +438,28 @@ describe('grant-gated producer loaders (docs/workbench/20 § Producer mapping)',
     expect(entry.producerReceipt).toBe('op-3');
   });
 });
+
+describe('preview bounding cuts on code-point boundaries (wb-v53)', () => {
+  const LONE_SURROGATE = /[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?<![\uD800-\uDBFF])[\uDC00-\uDFFF]/;
+
+  it('a multibyte preview at a small byte budget never contains U+FFFD and stays within maxBytes', async () => {
+    const s = store([counting(async () => content(['漢'.repeat(1000)], { bytes: 3000 }))], { maxBytes: 100 });
+    await s.request(scope, native('fixture'), 'ev:1');
+    const entry = s.get(scope, native('fixture'), 'ev:1');
+    if (entry.state !== 'loaded') throw new Error('expected a loaded entry');
+    const body = entry.preview.filter(line => line !== '[truncated]');
+    expect(entry.truncated).toBe(true);
+    expect(body.join('')).not.toContain('�');
+    expect(body.reduce((sum, line) => sum + Buffer.byteLength(line), 0)).toBeLessThanOrEqual(100);
+  });
+
+  it('a surrogate-pair preview is never split into lone surrogates across chunks', async () => {
+    const s = store([counting(async () => content(['a' + '😀'.repeat(130)]))]);
+    await s.request(scope, native('fixture'), 'ev:1');
+    const entry = s.get(scope, native('fixture'), 'ev:1');
+    if (entry.state !== 'loaded') throw new Error('expected a loaded entry');
+    expect(entry.preview.length).toBeGreaterThan(1);
+    for (const line of entry.preview) expect(line).not.toMatch(LONE_SURROGATE);
+    expect(entry.preview.join('')).toBe('a' + '😀'.repeat(130));
+  });
+});
