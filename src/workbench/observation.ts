@@ -132,6 +132,111 @@ function copyPresentation(value: Presentation, maxBytes: number): Presentation {
 }
 interface SourcePosition { sequence?: bigint; cursor?: string; stale: boolean }
 
+/** Nesting cap shared with the W15 tree (wb-6ze.1): a key deeper than this marks its ancestor's aggregate truncated. */
+export const AGGREGATE_DEPTH = 8;
+type StatusTone = Presentation["statusTone"];
+/** Measured roll-up of one observed node's grouping/ownership descendants (W14/VC-5); never an estimate. */
+export interface AncestorAggregate {
+  key: string;
+  /** The projection revision and relation-topology revision (relationRevision()) this copy was read at. */
+  revision: number;
+  topologyRevision: number;
+  /** Children one grouping/ownership edge away; settled counts the success and failure tones. */
+  direct: { children: number; settled: number; byTone: Record<StatusTone, number> };
+  /** Distinct keys at most AGGREGATE_DEPTH nesting edges below (set semantics, the key itself excluded).
+   * A key known only from an edge counts with tone unknown, not-current freshness and no interval. */
+  descendants: { counted: number; byTone: Record<StatusTone, number>; stale: number; depthReached: number; truncated: boolean };
+  /** Source intervals only: known has both bounds, open only a start, missing none; known + open + missing === counted.
+   * latestEndedAt is withheld while any interval is open; equal instants resolve to the smallest source string. */
+  intervals: { known: number; missing: number; open: number; earliestStartedAt?: string; latestEndedAt?: string };
+  trace: "incomplete" | "bounded";
+  criticalPath: "unestablished";
+  basis: "observed-grouping-ownership";
+}
+const NESTING_KINDS: ReadonlySet<RelationKind> = new Set<RelationKind>(["grouping","ownership"]);
+const toneTally = (): Record<StatusTone, number> => ({active:0,success:0,failure:0,waiting:0,unknown:0});
+/** What one descendant adds to an ancestor aggregate. */
+interface Contribution { tone: StatusTone; stale: boolean; startedAt?: string; endedAt?: string }
+const UNOBSERVED: Contribution = {tone:"unknown",stale:true};
+function contributionOf(node: ObservedNode | undefined): Contribution {
+  if (!node) return UNOBSERVED;
+  const interval = node.interval;
+  return {tone:node.presentation.statusTone,stale:node.freshness !== "current",
+    ...(interval ? {startedAt:interval.startedAt,...(interval.endedAt ? {endedAt:interval.endedAt} : {})} : {})};
+}
+const sameContribution = (a: Contribution, b: Contribution): boolean =>
+  a.tone === b.tone && a.stale === b.stale && a.startedAt === b.startedAt && a.endedAt === b.endedAt;
+const settledTone = (tone: StatusTone): number => tone === "success" || tone === "failure" ? 1 : 0;
+const bucketOf = (c: Contribution): "known" | "open" | "missing" => c.startedAt === undefined ? "missing" : c.endedAt === undefined ? "open" : "known";
+/** Counted source instants with the extreme cached; equal instants resolve to the smallest source string. */
+class InstantExtreme {
+  private readonly counts = new Map<string, {at: number; count: number}>();
+  private readonly latest: boolean;
+  private best: string | undefined;
+  private bestAt = 0;
+  constructor(latest: boolean) { this.latest = latest; }
+  get value(): string | undefined { return this.best; }
+  add(value: string): void {
+    const entry = this.counts.get(value);
+    if (entry) {entry.count++;return;}
+    const at = safeDate(value);
+    this.counts.set(value,{at,count:1});
+    if (this.beats(at,value)) {this.best=value;this.bestAt=at;}
+  }
+  remove(value: string): void {
+    const entry = this.counts.get(value);
+    if (!entry) return;
+    entry.count--;
+    if (entry.count > 0) return;
+    this.counts.delete(value);
+    if (value !== this.best) return;
+    // Only losing the extreme itself rescans, and only this ancestor's own distinct instants.
+    this.best = undefined;
+    for (const [candidate,row] of this.counts) if (this.beats(row.at,candidate)) {this.best=candidate;this.bestAt=row.at;}
+  }
+  private beats(at: number, value: string): boolean {
+    if (this.best === undefined) return true;
+    if (at !== this.bestAt) return this.latest ? at > this.bestAt : at < this.bestAt;
+    return value < this.best;
+  }
+}
+interface AggregateRecord {
+  directChildren: number; directSettled: number; directTones: Record<StatusTone, number>;
+  counted: number; tones: Record<StatusTone, number>; stale: number; depthReached: number; truncated: boolean;
+  known: number; open: number; missing: number; starts: InstantExtreme; ends: InstantExtreme;
+}
+const emptyRecord = (): AggregateRecord => ({directChildren:0,directSettled:0,directTones:toneTally(),counted:0,tones:toneTally(),stale:0,
+  depthReached:0,truncated:false,known:0,open:0,missing:0,starts:new InstantExtreme(false),ends:new InstantExtreme(true)});
+/** Read-only stand-in for a node without counted descendants; nothing ever writes to it. */
+const NO_DESCENDANTS = emptyRecord();
+function addContribution(record: AggregateRecord, c: Contribution, direct: boolean): void {
+  record.counted++;
+  record.tones[c.tone]++;
+  if (c.stale) record.stale++;
+  record[bucketOf(c)]++;
+  if (c.startedAt !== undefined) record.starts.add(c.startedAt);
+  if (c.endedAt !== undefined) record.ends.add(c.endedAt);
+  if (direct) {record.directChildren++;record.directTones[c.tone]++;record.directSettled+=settledTone(c.tone);}
+}
+/** Moves one already-counted descendant from `before` to `after`; membership and depth never change here. */
+function shiftContribution(record: AggregateRecord, before: Contribution, after: Contribution, direct: boolean): void {
+  if (before.tone !== after.tone) {
+    record.tones[before.tone]--;record.tones[after.tone]++;
+    if (direct) {record.directTones[before.tone]--;record.directTones[after.tone]++;record.directSettled+=settledTone(after.tone)-settledTone(before.tone);}
+  }
+  if (before.stale !== after.stale) record.stale += after.stale ? 1 : -1;
+  const from = bucketOf(before), to = bucketOf(after);
+  if (from !== to) {record[from]--;record[to]++;}
+  if (before.startedAt !== after.startedAt) {
+    if (after.startedAt !== undefined) record.starts.add(after.startedAt);
+    if (before.startedAt !== undefined) record.starts.remove(before.startedAt);
+  }
+  if (before.endedAt !== after.endedAt) {
+    if (after.endedAt !== undefined) record.ends.add(after.endedAt);
+    if (before.endedAt !== undefined) record.ends.remove(before.endedAt);
+  }
+}
+
 /** One cache per observer. It never polls, calls a producer, or cancels one. */
 export class ObservationProjection {
   private readonly limits: Required<ObservationLimits>;
@@ -160,6 +265,12 @@ export class ObservationProjection {
   private readonly edgesByScope = new Map<string, Set<string>>();
   private readonly evidence = new Map<string, Set<string>>();
   private readonly versions = new Map<string, Set<string>>();
+  /** Distinct grouping/ownership adjacency with edge multiplicity (parent -> child -> count) and its reverse. */
+  private readonly nestedChildren = new Map<string, Map<string, number>>();
+  private readonly nestedParents = new Map<string, Map<string, number>>();
+  /** Kept only for keys with at least one counted descendant, observed or not, so a later snapshot finds it ready. */
+  private readonly aggregates = new Map<string, AggregateRecord>();
+  private readonly aggregateCounters = {adjustments:0,rebuilds:0,maxVisitedPerUpdate:0};
 
   constructor(limits: ObservationLimits = {}) {
     this.limits = {...MAX_DEFAULT,...limits};
@@ -198,16 +309,20 @@ export class ObservationProjection {
   private discard(key: string): void {
     const node = this.nodes.get(key);
     if (!node) return;
+    // Found before the edges go: every ancestor whose bounded subtree, or depth-9 frontier, can hold this key.
+    const affected = this.nestedParents.has(key) ? this.ancestorsWithin(key,AGGREGATE_DEPTH+1) : [];
     this.updateIndexes(node,false);
     this.nodes.delete(key);
     this.removeViewport(key);
     this.revision++;
     this.positions.delete(key);
     this.seenEvents.delete(key);
-    for (const edgeId of [...(this.incoming.get(key) ?? []),...(this.outgoing.get(key) ?? [])]) this.removeEdge(edgeId);
+    for (const edgeId of [...(this.incoming.get(key) ?? []),...(this.outgoing.get(key) ?? [])]) this.removeEdge(edgeId,false);
+    this.aggregates.delete(key);
+    for (const ancestor of affected) this.rebuildAggregate(ancestor.key);
   }
 
-  private removeEdge(id: string): void {
+  private removeEdge(id: string, rebuild = true): void {
     const edge = this.edges.get(id);
     if (!edge) return;
     this.edges.delete(id);
@@ -217,11 +332,113 @@ export class ObservationProjection {
     this.incoming.get(edge.to)?.delete(id);
     const [workspace,principal]=JSON.parse(edge.from) as string[];
     indexed(this.edgesByScope,scopeOf({workspace,principal}),id,false);
+    if (NESTING_KINDS.has(edge.kind)) this.unnest(edge.from,edge.to,rebuild);
+  }
+
+  /** Reverse breadth-first walk over incoming grouping/ownership edges; each ancestor once, at its nearest depth. */
+  private ancestorsWithin(start: string, maxDepth: number): {key: string; depth: number}[] {
+    const visited = new Set<string>([start]);
+    const found: {key: string; depth: number}[] = [];
+    let frontier = [start];
+    for (let depth = 1; depth <= maxDepth && frontier.length > 0; depth++) {
+      const next: string[] = [];
+      for (const key of frontier) {
+        for (const parent of this.nestedParents.get(key)?.keys() ?? []) {
+          if (visited.has(parent)) continue;
+          visited.add(parent);next.push(parent);found.push({key:parent,depth});
+        }
+      }
+      frontier = next;
+    }
+    return found;
+  }
+
+  /** Hot path: a status, interval or freshness change adjusts each ancestor within the cap once; no node or event scan. */
+  private adjustAncestors(key: string, before: Contribution, after: Contribution): void {
+    if (sameContribution(before,after)) return;
+    const ancestors = this.ancestorsWithin(key,AGGREGATE_DEPTH);
+    for (const ancestor of ancestors) {
+      const record = this.aggregates.get(ancestor.key);
+      if (record) shiftContribution(record,before,after,ancestor.depth === 1);
+      else this.rebuildAggregate(ancestor.key);
+    }
+    this.aggregateCounters.adjustments += ancestors.length;
+    this.aggregateCounters.maxVisitedPerUpdate = Math.max(this.aggregateCounters.maxVisitedPerUpdate,ancestors.length);
+  }
+
+  /** Topology path: re-derive one aggregate from its bounded subtree; set semantics, a cycle stops at its first repeated key. */
+  private rebuildAggregate(root: string): void {
+    this.aggregateCounters.rebuilds++;
+    const record = emptyRecord();
+    const visited = new Set<string>([root]);
+    let frontier = [root];
+    for (let depth = 1; depth <= AGGREGATE_DEPTH && frontier.length > 0; depth++) {
+      const next: string[] = [];
+      for (const parent of frontier) {
+        for (const child of this.nestedChildren.get(parent)?.keys() ?? []) {
+          if (visited.has(child)) continue;
+          visited.add(child);next.push(child);
+          addContribution(record,contributionOf(this.nodes.get(child)),depth === 1);
+        }
+      }
+      if (next.length > 0) record.depthReached = depth;
+      frontier = next;
+    }
+    // A frontier survives only at the cap, so an unvisited child of it sits at depth AGGREGATE_DEPTH + 1.
+    record.truncated = frontier.some(parent => {
+      for (const child of this.nestedChildren.get(parent)?.keys() ?? []) if (!visited.has(child)) return true;
+      return false;
+    });
+    if (record.counted > 0) this.aggregates.set(root,record);
+    else this.aggregates.delete(root);
+  }
+
+  /** Only the aggregates of `from` and its ancestors within the cap can see an adjacency change below `from`. */
+  private rebuildAround(from: string): void {
+    this.rebuildAggregate(from);
+    for (const ancestor of this.ancestorsWithin(from,AGGREGATE_DEPTH)) this.rebuildAggregate(ancestor.key);
+  }
+
+  private nest(from: string, to: string): void {
+    const children = this.nestedChildren.get(from) ?? new Map<string, number>();
+    const count = children.get(to) ?? 0;
+    // A key with no nesting edge at all is counted nowhere yet, so it can join as a leaf without re-walking subtrees.
+    const fresh = count === 0 && from !== to && !this.nestedParents.has(to) && !this.nestedChildren.has(to);
+    children.set(to,count+1);this.nestedChildren.set(from,children);
+    const parents = this.nestedParents.get(to) ?? new Map<string, number>();
+    parents.set(from,count+1);this.nestedParents.set(to,parents);
+    if (count > 0) return;
+    if (!fresh) {this.rebuildAround(from);return;}
+    const leaf = contributionOf(this.nodes.get(to));
+    for (const level of [{key:from,depth:0},...this.ancestorsWithin(from,AGGREGATE_DEPTH)]) {
+      const record = this.aggregates.get(level.key) ?? (level.depth === 0 ? emptyRecord() : undefined);
+      if (!record) {this.rebuildAggregate(level.key);continue;}
+      this.aggregateCounters.rebuilds++;
+      this.aggregates.set(level.key,record);
+      if (level.depth < AGGREGATE_DEPTH) {
+        addContribution(record,leaf,level.depth === 0);
+        record.depthReached = Math.max(record.depthReached,level.depth+1);
+      } else record.truncated = true;
+    }
+  }
+
+  private unnest(from: string, to: string, rebuild: boolean): void {
+    const children = this.nestedChildren.get(from);
+    const count = children?.get(to) ?? 0;
+    if (!children || count === 0) return;
+    const parents = this.nestedParents.get(to);
+    if (count > 1) {children.set(to,count-1);parents?.set(from,count-1);return;}
+    children.delete(to);
+    if (children.size === 0) this.nestedChildren.delete(from);
+    parents?.delete(from);
+    if (parents?.size === 0) this.nestedParents.delete(to);
+    if (rebuild) this.rebuildAround(from);
   }
 
   private store(node: ObservedNode, sequence?: bigint, cursor?: string, stale = false): void {
     const prior = this.nodes.get(node.key);
     if (!prior && this.nodes.size >= this.limits.maxNodes) this.discard(this.nodes.keys().next().value as string);
+    const before = this.nestedParents.has(node.key) ? contributionOf(prior) : undefined;
     if (prior) this.updateIndexes(prior,false);
     const record: ObservedNode = {
       ...node, scope:{...node.scope},nativeRef:{...node.nativeRef},presentation:{...node.presentation},
@@ -232,6 +449,7 @@ export class ObservationProjection {
     this.setViewport(record);
     this.revision++;
     this.positions.set(node.key,{sequence,cursor,stale});
+    if (before) this.adjustAncestors(node.key,before,contributionOf(record));
   }
 
   private assertRef(scope: ObservationScope, ref: NativeRef, observedAt: string): string {
@@ -345,12 +563,14 @@ export class ObservationProjection {
     const key = keyOf(input.scope,input.ref);
     const node = this.nodes.get(key);
     if (!node) return;
+    const before = this.nestedParents.has(key) ? contributionOf(node) : undefined;
     node.freshness = "stale";
     node.sourceConnectionState = "disconnected";
     node.completeness = "unknown";
     const position = this.positions.get(key);
     if (position) position.stale = true;
     this.revision++;
+    if (before) this.adjustAncestors(key,before,contributionOf(node));
   }
 
   disconnect(provider: string): void {
@@ -359,10 +579,12 @@ export class ObservationProjection {
     for (const key of this.connectionsByProvider.get(provider) ?? []) {
       const node=this.nodes.get(key);
       if (!node) continue;
+      const before = this.nestedParents.has(key) ? contributionOf(node) : undefined;
       node.sourceConnectionState="disconnected";
       node.freshness="stale";
       const position = this.positions.get(node.key);
       if (position) position.stale=true;
+      if (before) this.adjustAncestors(key,before,contributionOf(node));
     }
   }
 
@@ -371,7 +593,11 @@ export class ObservationProjection {
     this.connections.set(provider,"connected");
     for (const key of this.connectionsByProvider.get(provider) ?? []) {
       const node=this.nodes.get(key);
-      if (node) {node.sourceConnectionState="connected";this.revision++;}
+      if (!node) continue;
+      // Reconnecting alone restores no freshness, so this adjusts nothing unless that rule ever changes.
+      const before = this.nestedParents.has(key) ? contributionOf(node) : undefined;
+      node.sourceConnectionState="connected";this.revision++;
+      if (before) this.adjustAncestors(key,before,contributionOf(node));
     }
   }
 
@@ -392,6 +618,7 @@ export class ObservationProjection {
     this.revision++;
     this.topologyRevision++;
     indexed(this.outgoing,from,id,true);indexed(this.incoming,to,id,true);indexed(this.edgesByScope,scopeOf(input.scope),id,true);
+    if (NESTING_KINDS.has(input.kind)) this.nest(from,to);
   }
 
   relations(input: {scope:ObservationScope;from?:string;to?:string;limit?:number}): Relation[] {
@@ -554,6 +781,29 @@ export class ObservationProjection {
     }
     return {events,truncated,completeness:"complete"};
   }
+
+  /** Copied ancestor aggregate of one observed node: an O(1) read, no traversal. Unknown and cross-scope keys are undefined. */
+  aggregate(filter: {scope: ObservationScope; key: string}): AncestorAggregate | undefined {
+    const node = this.nodes.get(filter.key);
+    if (!node || node.scope.workspace !== filter.scope.workspace || node.scope.principal !== filter.scope.principal) return undefined;
+    const record = this.aggregates.get(filter.key) ?? NO_DESCENDANTS;
+    const earliest = record.starts.value;
+    const latest = record.ends.value;
+    return {
+      key:filter.key,revision:this.revision,topologyRevision:this.topologyRevision,
+      direct:{children:record.directChildren,settled:record.directSettled,byTone:{...record.directTones}},
+      descendants:{counted:record.counted,byTone:{...record.tones},stale:record.stale,depthReached:record.depthReached,truncated:record.truncated},
+      intervals:{known:record.known,missing:record.missing,open:record.open,
+        ...(earliest === undefined ? {} : {earliestStartedAt:earliest}),...(record.open === 0 && latest !== undefined ? {latestEndedAt:latest} : {})},
+      trace:record.missing > 0 || record.truncated ? "incomplete" : "bounded",
+      criticalPath:"unestablished",
+      basis:"observed-grouping-ownership",
+    };
+  }
+
+  /** adjustments and maxVisitedPerUpdate count ancestor aggregates touched by status/interval/freshness updates;
+   * rebuilds counts aggregates re-derived because observed grouping/ownership topology changed. */
+  aggregateStats():{adjustments:number;rebuilds:number;maxVisitedPerUpdate:number} {return {...this.aggregateCounters};}
 
   stats():{nodes:number;events:number;edges:number} {return {nodes:this.nodes.size,events:this.eventsById.size,edges:this.edges.size};}
 }
