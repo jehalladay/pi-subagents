@@ -178,60 +178,155 @@ export function validateWorkflowSource(source: WorkflowSource, options: { regist
 
 export interface MeasuredMetric { name: string; unit: string; value: number; source: NativeRef; evidenceRefs: readonly string[]; subjectBasis: string; coverage: "complete" | "partial" | "unknown"; freshness: "current" | "stale" | "unknown" }
 /** Digests must be captured by the trusted receipt producer, not guessed from model names or paths. */
-export interface CompareRun { snapshot: InvocationSnapshot; inputDigest?: string; modelDigest?: string; toolsDigest?: string; environmentDigest?: string; cacheDigest?: string; nativeRefs: readonly NativeRef[]; metrics: readonly MeasuredMetric[] }
+export interface CompareRun {
+  snapshot: InvocationSnapshot; inputDigest?: string; modelDigest?: string; toolsDigest?: string; environmentDigest?: string; cacheDigest?: string;
+  /** Host-measured Git basis label. Unmeasured receipts share the host's constant placeholder basis, so only "measured" on every receipt establishes a shared workspace source state. */
+  workspaceSourceState?: "measured" | "unknown";
+  nativeRefs: readonly NativeRef[]; metrics: readonly MeasuredMetric[];
+}
 export interface MetricSummary { count: number; mean: number; median: number; min: number; max: number; standardDeviation?: number }
-export interface WorkflowComparison { status: "comparable" | "confounded" | "unknown"; diagnostics: DesignerDiagnostic[]; sourceDigests: {reference:string[];candidate:string[]}; metrics: {name:string;unit:string;reference:MetricSummary;candidate:MetricSummary;delta?:number;evidenceRefs:string[]}[]; causalClaim:false; criticalPath:"unestablished"; limitations:string[] }
+export type CohortBasisStatus = "matched" | "declared-change" | "mismatched" | "absent" | "unverified";
+export interface CohortBasisField { field: string; status: CohortBasisStatus; detail?: string }
+export type CohortConfoundKind = "absent" | "mismatched" | "refused" | "unverified";
+export interface CohortConfound { field: string; kind: CohortConfoundKind; reason: string }
+/** `matched` is false whenever any basis field is absent, mismatched, refused or unverified; each confound names its field. */
+export interface CohortAssessment { matched: boolean; basis: CohortBasisField[]; confounds: CohortConfound[] }
+/** Measured only when the cohort matched and every receipt carries the metric from receipt-bound native evidence; otherwise each reason is listed. */
+export interface MetricVerdict { name: string; unit: string; verdict: "measured" | "unknown"; reasons: string[] }
+export interface WorkflowComparison { status: "comparable" | "confounded" | "unknown"; diagnostics: DesignerDiagnostic[]; sourceDigests: {reference:string[];candidate:string[]}; metrics: {name:string;unit:string;reference:MetricSummary;candidate:MetricSummary;delta?:number;evidenceRefs:string[]}[]; causalClaim:false; criticalPath:"unestablished"; limitations:string[]; cohort: CohortAssessment; perMetric: MetricVerdict[]; claim: "association" | "none" }
 function summary(values: number[]): MetricSummary {
   const ordered = [...values].sort((a,b) => a-b); const mean = values.reduce((sum,value) => sum + value/values.length,0);
   const middle = Math.floor(ordered.length/2); const median = ordered.length%2 ? ordered[middle] : ordered[middle-1]/2 + ordered[middle]/2;
   return {count:values.length,mean,median,min:ordered[0],max:ordered[ordered.length-1],...(values.length > 1 ? {standardDeviation:Math.sqrt(values.reduce((sum,value) => sum+(value-mean)**2,0)/(values.length-1))} : {})};
 }
-/** Descriptive only. Missing, heterogeneous or stale evidence never supplies a comparable delta. */
+const DIGEST_FORMAT = /^sha256:[0-9a-f]{64}$/;
+const BASIS_DIMENSIONS = ["inputDigest","modelDigest","toolsDigest","environmentDigest","cacheDigest","configurationDigest","subjectBasis","dependencyDigest","runtimeArtifactDigest","hostImplementationDigest","hostAbiDigest","providerContractDigest"] as const;
+type BasisDimension = (typeof BASIS_DIMENSIONS)[number];
+function basisValue(run: CompareRun, dimension: BasisDimension): unknown {
+  if (dimension === "subjectBasis") return run.snapshot.identity.subjectBasis;
+  return dimension in run.snapshot ? run.snapshot[dimension as keyof InvocationSnapshot] : run[dimension as keyof CompareRun];
+}
+/** Names where a basis value varies so a confound says which cohort it taints. */
+function differenceScope(values: readonly string[], referenceCount: number): string {
+  const scopes: string[] = [];
+  if (new Set(values.slice(0,referenceCount)).size > 1) scopes.push("within the reference cohort");
+  if (new Set(values.slice(referenceCount)).size > 1) scopes.push("within the candidate cohort");
+  return scopes.length ? scopes.join(" and ") : "between the reference and candidate cohorts";
+}
+/** Descriptive only. Missing, heterogeneous or stale evidence never supplies a comparable delta, and no metric is measured until both cohorts share one basis. */
 export function compareWorkflowRuns(reference: readonly CompareRun[], candidate: readonly CompareRun[]): WorkflowComparison {
   const diagnostics: DesignerDiagnostic[] = [];
+  const basis: CohortBasisField[] = [];
+  const confounds: CohortConfound[] = [];
+  const limitations: string[] = [];
   let confounded = false;
-  function unknown(message: string): void { diagnostics.push({code:"COMPARISON_UNKNOWN",message,severity:"warning"}); }
+  let refused = false;
+  // Diagnostics and confound reasons echo producer strings (metric names/units, schema versions, definition IDs): display text, never raw.
+  function unknown(message: string): void { diagnostics.push({code:"COMPARISON_UNKNOWN",message:sanitizeWorkbenchText(message),severity:"warning"}); }
+  function confound(field: string, kind: CohortConfoundKind, reason: string): void {
+    const entry: CohortConfound = {field,kind,reason:sanitizeWorkbenchText(reason)};
+    if (!confounds.some(item => item.field === entry.field && item.kind === entry.kind && item.reason === entry.reason)) confounds.push(entry);
+  }
+  function unverified(field: string, message: string): void { unknown(message); confound(field,"unverified",message); }
   const all = [...reference,...candidate];
-  if (!reference.length || !candidate.length) unknown("Both cohorts need measured invocation receipts.");
+  if (!reference.length || !candidate.length) { unknown("Both cohorts need measured invocation receipts."); confound("cohort","absent","Both cohorts need measured invocation receipts."); }
   if (all.length > 1000) throw new Error("Comparison is bounded to 1000 total receipts.");
   const ids = new Set<string>();
+  let deploymentUnverified = false;
   for (const run of all) {
     const snapshot = run.snapshot;
-    if (!snapshot.identity.logicalInvocationId || ids.has(snapshot.identity.logicalInvocationId)) unknown("Repeated or absent logical invocation ID is not an independent run.");
+    if (!snapshot.identity.logicalInvocationId || ids.has(snapshot.identity.logicalInvocationId)) unverified("logicalInvocationId","Repeated or absent logical invocation ID is not an independent run.");
     ids.add(snapshot.identity.logicalInvocationId);
-    if (snapshot.scriptDigest !== digest(snapshot.scriptSource) || snapshot.identity.definition.artifactDigest !== snapshot.scriptDigest) unknown("Receipt source digest does not match actual captured source.");
+    if (snapshot.scriptDigest !== digest(snapshot.scriptSource) || snapshot.identity.definition.artifactDigest !== snapshot.scriptDigest) unverified("scriptDigest","Receipt source digest does not match actual captured source.");
     const deployment = identityDigest("deployment", {definition:snapshot.identity.definition,dependencyDigest:snapshot.dependencyDigest,hostImplementationDigest:snapshot.hostImplementationDigest,runtimeArtifactDigest:snapshot.runtimeArtifactDigest,configurationDigest:snapshot.configurationDigest,hostAbiDigest:snapshot.hostAbiDigest,providerContractDigest:snapshot.providerContractDigest});
-    if (deployment !== snapshot.identity.deploymentDigest) unknown("Receipt deployment components do not match pinned deployment digest.");
-    if (!run.nativeRefs.length || run.nativeRefs.some(ref => !ref.provider.trim() || !ref.type.trim() || !ref.id.trim())) unknown("Native execution reference is absent or malformed.");
+    if (deployment !== snapshot.identity.deploymentDigest) { deploymentUnverified = true; unverified("deploymentDigest","Receipt deployment components do not match pinned deployment digest."); }
+    if (!run.nativeRefs.length || run.nativeRefs.some(ref => !ref.provider.trim() || !ref.type.trim() || !ref.id.trim())) unverified("nativeRefs","Native execution reference is absent or malformed.");
   }
-  const dimensions = ["inputDigest","modelDigest","toolsDigest","environmentDigest","cacheDigest","configurationDigest","subjectBasis","dependencyDigest","runtimeArtifactDigest","hostImplementationDigest","hostAbiDigest","providerContractDigest"] as const;
   const contracts = new Set(all.map(run => canonicalJson({kind:run.snapshot.identity.definition.kind,id:run.snapshot.identity.definition.id,schemaVersion:run.snapshot.identity.definition.schemaVersion})));
   if (contracts.size > 1) { confounded = true; diagnostics.push({code:"COHORT_CONFOUND",dimension:"definition",message:"Definition identity/schema differs within or between cohorts.",severity:"warning"}); }
-  for (const dimension of dimensions) {
-    const values = all.map(run => dimension === "subjectBasis" ? run.snapshot.identity.subjectBasis : dimension in run.snapshot ? run.snapshot[dimension as keyof InvocationSnapshot] : run[dimension as keyof CompareRun]);
-    if (values.some(value => typeof value !== "string" || !/^sha256:[0-9a-f]{64}$/.test(value))) unknown(`${dimension} is not established by every receipt.`);
+  // Cohort identity: definition kind/id, then the schema contract on its own. Different schemas are refused, never coerced into one table.
+  const identities = all.map(run => `${run.snapshot.identity.definition.kind}:${run.snapshot.identity.definition.id}`);
+  const distinctIdentities = [...new Set(identities)];
+  if (distinctIdentities.length > 1) confound("definition","mismatched",`Definition kind/id differs ${differenceScope(identities,reference.length)}: ${distinctIdentities.join(" vs ")}.`);
+  basis.push({field:"definition",status:distinctIdentities.length > 1 ? "mismatched" : "matched"});
+  const schemas = all.map(run => run.snapshot.identity.definition.schemaVersion);
+  if (schemas.some(version => typeof version !== "string" || !version.trim())) { unknown("schemaVersion is not established by every receipt."); confound("schemaVersion","absent","schemaVersion is not established by every receipt."); basis.push({field:"schemaVersion",status:"absent"}); }
+  else {
+    const versions = [...new Set(schemas)];
+    if (versions.length > 1) {
+      refused = true; confounded = true;
+      const message = `Receipt schemaVersion differs (${versions.join(" vs ")}); receipts of different schemas are refused, not coerced.`;
+      diagnostics.push({code:"SCHEMA_MISMATCH",dimension:"schemaVersion",message:sanitizeWorkbenchText(message),severity:"error"});
+      confound("schemaVersion","refused",message);
+    }
+    basis.push({field:"schemaVersion",status:versions.length > 1 ? "mismatched" : "matched"});
+  }
+  for (const dimension of BASIS_DIMENSIONS) {
+    const values = all.map(run => basisValue(run,dimension));
+    const established = values.every(value => typeof value === "string" && DIGEST_FORMAT.test(value));
+    if (!established) { unknown(`${dimension} is not established by every receipt.`); confound(dimension,"absent",`${dimension} is not established by every receipt.`); }
     const known = new Set(values.filter((value): value is string => typeof value === "string" && !!value.trim()));
-    if (known.size > 1) { confounded = true; diagnostics.push({code:"COHORT_CONFOUND",dimension,message:`${dimension} differs within or between cohorts.`,severity:"warning"}); }
+    if (known.size > 1) {
+      confounded = true; diagnostics.push({code:"COHORT_CONFOUND",dimension,message:`${dimension} differs within or between cohorts.`,severity:"warning"});
+      if (established) confound(dimension,"mismatched",`${dimension} differs ${differenceScope(values.map(String),reference.length)}.`);
+    }
+    basis.push({field:dimension,status:!established ? "absent" : known.size > 1 ? "mismatched" : "matched",...(dimension === "subjectBasis" ? {detail:"Principal and workspace source basis as pinned by the host."} : {})});
   }
+  let mixedSource = false;
   for (const [label,runs] of [["reference",reference],["candidate",candidate]] as const) {
-    if (new Set(runs.map(run => run.snapshot.scriptDigest)).size > 1) { confounded = true; diagnostics.push({code:"COHORT_CONFOUND",dimension:"source",message:`${label} cohort mixes source versions.`,severity:"warning"}); }
+    if (new Set(runs.map(run => run.snapshot.scriptDigest)).size > 1) { confounded = true; mixedSource = true; diagnostics.push({code:"COHORT_CONFOUND",dimension:"source",message:`${label} cohort mixes source versions.`,severity:"warning"}); confound("definitionDigest","mismatched",`${label} cohort mixes source versions.`); }
   }
+  const sourceDigests = {reference:[...new Set(reference.map(run => run.snapshot.scriptDigest))],candidate:[...new Set(candidate.map(run => run.snapshot.scriptDigest))]};
+  // A source change between cohorts is the declared independent variable (reported in sourceDigests), not a confound; mixing within a cohort is.
+  const declaredChange = !mixedSource && reference.length > 0 && candidate.length > 0 && sourceDigests.reference[0] !== sourceDigests.candidate[0];
+  basis.push({field:"definitionDigest",status:mixedSource ? "mismatched" : !reference.length || !candidate.length ? "absent" : declaredChange ? "declared-change" : "matched",...(declaredChange ? {detail:"Reference and candidate pin different source digests; the declared definition change is the independent variable."} : {})});
+  if (declaredChange) limitations.push("Source differs between cohorts by declared digest; only that declared change varies within the matched basis.");
+  const deployments = new Set(all.map(run => run.snapshot.identity.deploymentDigest));
+  const components = new Set(all.map(run => canonicalJson({dependencyDigest:run.snapshot.dependencyDigest,hostImplementationDigest:run.snapshot.hostImplementationDigest,runtimeArtifactDigest:run.snapshot.runtimeArtifactDigest,configurationDigest:run.snapshot.configurationDigest,hostAbiDigest:run.snapshot.hostAbiDigest,providerContractDigest:run.snapshot.providerContractDigest})));
+  const deploymentStatus: CohortBasisStatus = deploymentUnverified ? "unverified" : !all.length ? "absent" : deployments.size === 1 ? "matched" : components.size === 1 && contracts.size === 1 ? "declared-change" : "mismatched";
+  basis.push({field:"deploymentDigest",status:deploymentStatus,...(deploymentStatus === "declared-change" ? {detail:"Deployment digests differ only through the declared definition digest."} : deploymentStatus === "mismatched" ? {detail:"Deployment digests differ beyond the declared definition change; see the pinned component confounds."} : {})});
+  const states = all.map(run => run.workspaceSourceState);
+  if (states.some(state => state !== undefined)) {
+    const message = states.some(state => state === undefined) ? "workspaceSourceState is not established by every receipt." : states.some(state => state !== "measured") ? "workspaceSourceState is unmeasured for a receipt; identical unmeasured basis labels are not evidence of a shared workspace source state." : undefined;
+    if (message) { unknown(message); confound("workspaceSourceState","absent",message); }
+    basis.push({field:"workspaceSourceState",status:message ? "absent" : "matched"});
+  } else limitations.push("Workspace source state was not supplied by any receipt; workspace basis rests on subjectBasis digest equality alone.");
   const metricKeys = new Set(all.flatMap(run => run.metrics.map(metric => canonicalJson([metric.name,metric.unit]))));
   if (!metricKeys.size) unknown("No measured metrics were supplied.");
+  const cohortReasons = confounds.map(item => `${item.field}: ${item.reason}`);
   const metrics: WorkflowComparison["metrics"] = [];
+  const perMetric: MetricVerdict[] = [];
   for (const key of metricKeys) {
     const [name,unit] = JSON.parse(key) as [string,string];
+    const judgement: MetricVerdict = {name:sanitizeWorkbenchText(name),unit:sanitizeWorkbenchText(unit),verdict:"unknown",reasons:[...cohortReasons]};
+    perMetric.push(judgement);
+    const withhold = (reason: string): void => { unknown(reason); judgement.reasons.push(sanitizeWorkbenchText(reason)); };
     const collected = all.map(run => run.metrics.filter(metric => metric.name === name && metric.unit === unit));
-    if (collected.some(items => items.length !== 1)) { unknown(`${name}/${unit} is missing or duplicated for a cohort member.`); continue; }
+    if (collected.some(items => items.length !== 1)) {
+      const missing = ([["reference",collected.slice(0,reference.length)],["candidate",collected.slice(reference.length)]] as const).filter(([,items]) => items.some(entries => entries.length !== 1)).map(([label]) => label);
+      unknown(`${name}/${unit} is missing or duplicated for a cohort member.`);
+      judgement.reasons.push(sanitizeWorkbenchText(`${name}/${unit} is absent or duplicated on ${missing.join(" and ")} receipts; no delta is formed over a metric only one side carries.`));
+      continue;
+    }
     const values = collected.flat();
-    if (values.some((metric,index) => !metric.name.trim() || !metric.unit.trim() || !Number.isFinite(metric.value) || metric.coverage !== "complete" || metric.freshness !== "current" || !metric.evidenceRefs.length || metric.evidenceRefs.some(ref => !ref.trim()) || metric.subjectBasis !== all[index].snapshot.identity.subjectBasis || !all[index].nativeRefs.some(ref => canonicalJson(ref) === canonicalJson(metric.source)))) { unknown(`${name}/${unit} lacks finite, complete, current, receipt-bound native evidence.`); continue; }
+    if (values.some((metric,index) => !metric.name.trim() || !metric.unit.trim() || !Number.isFinite(metric.value) || metric.coverage !== "complete" || metric.freshness !== "current" || !metric.evidenceRefs.length || metric.evidenceRefs.some(ref => !ref.trim()) || metric.subjectBasis !== all[index].snapshot.identity.subjectBasis || !all[index].nativeRefs.some(ref => canonicalJson(ref) === canonicalJson(metric.source)))) { withhold(`${name}/${unit} lacks finite, complete, current, receipt-bound native evidence.`); continue; }
+    if (!reference.length || !candidate.length) continue;
     const baseline = summary(values.slice(0,reference.length).map(item => item.value));
     const proposal = summary(values.slice(reference.length).map(item => item.value));
-    if (!reference.length || !candidate.length) continue;
-    if (![baseline.mean,proposal.mean,baseline.standardDeviation ?? 0,proposal.standardDeviation ?? 0].every(Number.isFinite)) { unknown(`${name}/${unit} numeric aggregation exceeds finite range.`); continue; }
-    metrics.push({name,unit,reference:baseline,candidate:proposal,evidenceRefs:[...new Set(values.flatMap(metric => metric.evidenceRefs))]});
+    if (![baseline.mean,proposal.mean,baseline.standardDeviation ?? 0,proposal.standardDeviation ?? 0].every(Number.isFinite)) { withhold(`${name}/${unit} numeric aggregation exceeds finite range.`); continue; }
+    // Refused schemas get no side-by-side summaries: a shared table would coerce incompatible receipts into one cohort.
+    if (refused) continue;
+    const entry: WorkflowComparison["metrics"][number] = {name:judgement.name,unit:judgement.unit,reference:baseline,candidate:proposal,evidenceRefs:[...new Set(values.flatMap(metric => metric.evidenceRefs))].map(ref => sanitizeWorkbenchText(ref))};
+    if (!judgement.reasons.length) {
+      const delta = proposal.mean-baseline.mean;
+      if (Number.isFinite(delta)) { entry.delta = delta; judgement.verdict = "measured"; }
+      else withhold(`${name}/${unit} delta exceeds finite range.`);
+    }
+    metrics.push(entry);
   }
   const status = confounded ? "confounded" : diagnostics.length ? "unknown" : "comparable";
-  if (status === "comparable") for (const metric of metrics) { const delta = metric.candidate.mean-metric.reference.mean; if (Number.isFinite(delta)) metric.delta = delta; }
-  return {status,diagnostics,sourceDigests:{reference:[...new Set(reference.map(run => run.snapshot.scriptDigest))],candidate:[...new Set(candidate.map(run => run.snapshot.scriptDigest))]},metrics,causalClaim:false,criticalPath:"unestablished",limitations:["Descriptive cohort statistics are not a causal improvement claim.","No critical path is derived without native dependency and interval evidence.",...(reference.length < 2 || candidate.length < 2 ? ["Single-run cohort: stochastic dispersion is unmeasured."] : [])]};
+  const claim = perMetric.some(metric => metric.verdict === "measured") ? "association" : "none";
+  return {status,diagnostics,sourceDigests:{reference:sourceDigests.reference.map(item => sanitizeWorkbenchText(item)),candidate:sourceDigests.candidate.map(item => sanitizeWorkbenchText(item))},metrics,causalClaim:false,criticalPath:"unestablished",
+    limitations:["Descriptive cohort statistics are not a causal improvement claim.","No critical path is derived without native dependency and interval evidence.",...(reference.length < 2 || candidate.length < 2 ? ["Single-run cohort: stochastic dispersion is unmeasured."] : []),...(claim === "association" ? ["Measured deltas are associations within the matched cohort, not causal attributions."] : []),...(confounds.length ? ["Confounds are listed in cohort.confounds; affected metrics are unknown rather than improved or regressed."] : []),...limitations],
+    cohort:{matched:confounds.length === 0,basis,confounds},perMetric,claim};
 }

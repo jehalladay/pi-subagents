@@ -58,7 +58,7 @@ No conversion to universal graph IR is required. A UI graph is an incomplete, pr
 
 ## Operating modes
 
-Embedded: Pi process owns interpreter, Claude SDK clients, SDK dependencies; Pi exit may terminate them. Detached: separate workbench service owns lifecycle and Pi acts as client; no implicit crash recovery. Furnace-hosted: an ExecutorApp callback invokes a pinned app entrypoint; Furnace owns its own retry/admission; arbitrary JS stack does not become durable.
+Embedded: Pi process owns interpreter, Claude SDK clients, SDK dependencies; Pi exit may terminate them. Detached: separate workbench service owns lifecycle and Pi acts as client; no implicit crash recovery. Furnace-hosted: an ExecutorApp callback invokes a pinned app entrypoint over the verified per-Attempt extension driver; Furnace owns admission and claims, but a failure or indeterminate terminal parks the Run for the manual operator ladder and is never auto-retried; arbitrary JS stack does not become durable, and controller or Pi death leaves running Attempts needing operator reconciliation.
 
 ## Design constraints
 

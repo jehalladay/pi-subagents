@@ -2537,7 +2537,8 @@ Terse command-style prompts produce shallow, generic work.
           const task = workflowTasks.get(id);
           if (!task?.identityReceipt || task.observationScope?.principal !== scope.principal || task.observationScope.workspace !== scope.workspace) return textResult("Comparison receipt unavailable in this operator/workspace scope.");
           const observed = projection.query({ scope, invocationId: id, limit: 40 });
-          runs.push({ snapshot: task.identityReceipt, inputDigest: task.inputDigest,
+          // The host-measured Git basis label travels with the receipt: identical unmeasured subject-basis digests must read as a confound, not a match.
+          runs.push({ snapshot: task.identityReceipt, inputDigest: task.inputDigest, workspaceSourceState: task.workspaceSourceState,
             nativeRefs: observed.nodes.map(node => node.nativeRef).filter(ref => ref.provider !== "pi-workflow"),
             metrics: [],
           });

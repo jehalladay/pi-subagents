@@ -4,7 +4,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
 import { CapabilityRegistry } from "../src/workbench/capability-registry.js";
-import { type CompareRun, catalogWorkflows, compareWorkflowRuns, inspectWorkflowSource, validateWorkflowSource, type WorkflowSource } from "../src/workbench/designer.js";
+import { type CompareRun, catalogWorkflows, compareWorkflowRuns, inspectWorkflowSource, validateWorkflowSource, type WorkflowComparison, type WorkflowSource } from "../src/workbench/designer.js";
 import { type InvocationSnapshot, identityDigest } from "../src/workbench/identity.js";
 
 const roots: string[] = [];
@@ -146,4 +146,150 @@ it("named expression scopes and destructuring mutation are not false host primit
   expect(named.projection.calls).toEqual([]);
   const mutated = validateWorkflowSource(source('({agent} = args); await agent("not proven");'));
   expect(mutated.projection.calls).toEqual([]);
+});
+
+describe("W17 cohort identity and per-metric verdicts (wb-pno)", () => {
+  const SECRET = "wb-pno-fixture-private-value";
+  const hostile = `UNTRUSTED \u001b[31mred\u001b[0m ‮evil‬ ⁦bidi⁩ api_key=${SECRET}`;
+  type Confound = { field: string; kind: string; reason: string };
+  /** Re-pin a receipt after changing snapshot or definition fields so its deployment digest stays internally consistent. */
+  function repin(base: CompareRun, snapshotChanges: Partial<InvocationSnapshot> = {}, definitionChanges: Partial<InvocationSnapshot["identity"]["definition"]> = {}, identityChanges: Partial<InvocationSnapshot["identity"]> = {}): CompareRun {
+    const merged = { ...base.snapshot, ...snapshotChanges };
+    const definition = { ...merged.identity.definition, ...definitionChanges };
+    const deploymentDigest = identityDigest("deployment", { definition, dependencyDigest: merged.dependencyDigest, hostImplementationDigest: merged.hostImplementationDigest, runtimeArtifactDigest: merged.runtimeArtifactDigest, configurationDigest: merged.configurationDigest, hostAbiDigest: merged.hostAbiDigest, providerContractDigest: merged.providerContractDigest });
+    return { ...base, snapshot: { ...merged, identity: { ...merged.identity, ...identityChanges, definition, deploymentDigest } } };
+  }
+  function withMetric(base: CompareRun, name: string, unit: string, value: number): CompareRun {
+    return { ...base, metrics: [...base.metrics, { name, unit, value, source: base.nativeRefs[0], evidenceRefs: [`fixture:${base.snapshot.identity.logicalInvocationId}:${name}`], subjectBasis: base.snapshot.identity.subjectBasis, coverage: "complete", freshness: "current" }] };
+  }
+  function measured(id: string, value: number, tokens: number): CompareRun { return withMetric(run(id, value, { workspaceSourceState: "measured" }), "tokens", "count", tokens); }
+  const confoundFor = (confounds: Confound[], field: string) => confounds.filter(item => item.field === field);
+
+  it("matched cohort yields measured deltas for every shared metric and states association, not causation", () => {
+    const result = compareWorkflowRuns([measured("a", 10, 100), measured("b", 20, 120)], [measured("c", 5, 90), measured("d", 15, 110)]);
+    expect(result.status).toBe("comparable"); expect(result.cohort.matched).toBe(true); expect(result.cohort.confounds).toEqual([]);
+    expect(result.cohort.basis.length).toBeGreaterThan(10); expect(result.cohort.basis.every(item => item.status === "matched")).toBe(true);
+    expect(result.cohort.basis.map(item => item.field)).toEqual(expect.arrayContaining(["definition", "schemaVersion", "definitionDigest", "deploymentDigest", "hostAbiDigest", "configurationDigest", "modelDigest", "subjectBasis", "workspaceSourceState"]));
+    expect(result.perMetric).toEqual([{ name: "elapsed", unit: "ms", verdict: "measured", reasons: [] }, { name: "tokens", unit: "count", verdict: "measured", reasons: [] }]);
+    expect(result.metrics.find(metric => metric.name === "elapsed")?.delta).toBe(-5); expect(result.metrics.find(metric => metric.name === "tokens")?.delta).toBe(-10);
+    expect(result.claim).toBe("association"); expect(result.causalClaim).toBe(false);
+    expect(result.limitations.some(item => /association/.test(item) && /not causal/.test(item))).toBe(true);
+  });
+  it.each(["inputDigest", "modelDigest", "toolsDigest", "environmentDigest", "cacheDigest"] as const)("names a mismatched %s confound and withholds every verdict", field => {
+    const result = compareWorkflowRuns([measured("a", 10, 100)], [{ ...measured("b", 5, 90), [field]: identityDigest("different", {}) }]);
+    expect(result.status).toBe("confounded"); expect(result.cohort.matched).toBe(false);
+    expect(confoundFor(result.cohort.confounds, field)).toEqual([{ field, kind: "mismatched", reason: expect.stringContaining(field) }]);
+    expect(result.cohort.basis.find(item => item.field === field)?.status).toBe("mismatched");
+    expect(result.perMetric.map(metric => metric.verdict)).toEqual(["unknown", "unknown"]);
+    for (const metric of result.perMetric) expect(metric.reasons.some(reason => reason.includes(field))).toBe(true);
+    expect(result.metrics.every(metric => metric.delta === undefined)).toBe(true); expect(result.claim).toBe("none");
+  });
+  it.each(["configurationDigest", "hostAbiDigest", "dependencyDigest", "runtimeArtifactDigest", "hostImplementationDigest", "providerContractDigest"] as const)("names a mismatched pinned %s as a confound even when the deployment digest is re-pinned consistently", field => {
+    const result = compareWorkflowRuns([measured("a", 10, 100)], [repin(measured("b", 5, 90), { [field]: identityDigest("changed", {}) })]);
+    expect(result.status).toBe("confounded"); expect(result.cohort.matched).toBe(false);
+    expect(confoundFor(result.cohort.confounds, field)).toEqual([{ field, kind: "mismatched", reason: expect.stringContaining(field) }]);
+    expect(result.cohort.basis.find(item => item.field === "deploymentDigest")?.status).toBe("mismatched");
+    expect(result.perMetric.every(metric => metric.verdict === "unknown" && metric.reasons.some(reason => reason.includes(field)))).toBe(true);
+    expect(result.metrics.every(metric => metric.delta === undefined)).toBe(true);
+  });
+  it("names a mismatched subject basis (principal + workspace source) as a confound", () => {
+    const result = compareWorkflowRuns([measured("a", 10, 100)], [repin(measured("b", 5, 90), {}, {}, { subjectBasis: identityDigest("other-workspace", {}) })]);
+    expect(result.status).toBe("confounded"); expect(confoundFor(result.cohort.confounds, "subjectBasis")[0]?.kind).toBe("mismatched");
+    expect(result.perMetric.every(metric => metric.verdict === "unknown")).toBe(true);
+  });
+  it.each(["inputDigest", "modelDigest", "toolsDigest", "environmentDigest", "cacheDigest"] as const)("an absent %s on either side is unknown with the absence named, never falsely equivalent", field => {
+    for (const [reference, candidate] of [[measured("a", 10, 100), { ...measured("b", 5, 90), [field]: undefined }], [{ ...measured("a", 10, 100), [field]: undefined }, { ...measured("b", 5, 90), [field]: undefined }]]) {
+      const result = compareWorkflowRuns([reference], [candidate]);
+      expect(result.status).toBe("unknown"); expect(result.cohort.matched).toBe(false);
+      expect(confoundFor(result.cohort.confounds, field)).toEqual([{ field, kind: "absent", reason: expect.stringContaining(field) }]);
+      expect(result.cohort.basis.find(item => item.field === field)?.status).toBe("absent");
+      expect(result.perMetric.every(metric => metric.verdict === "unknown" && metric.reasons.some(reason => reason.includes(field)))).toBe(true);
+      expect(result.metrics.every(metric => metric.delta === undefined)).toBe(true); expect(result.claim).toBe("none");
+    }
+  });
+  it("an unmeasured workspace source state is a named confound even when subject basis digests coincide", () => {
+    for (const [reference, candidate] of [[measured("a", 10, 100), { ...measured("b", 5, 90), workspaceSourceState: "unknown" as const }], [{ ...measured("a", 10, 100), workspaceSourceState: "unknown" as const }, { ...measured("b", 5, 90), workspaceSourceState: "unknown" as const }]]) {
+      const result = compareWorkflowRuns([reference], [candidate]);
+      expect(result.status).toBe("unknown"); expect(result.cohort.matched).toBe(false);
+      expect(result.cohort.basis.find(item => item.field === "subjectBasis")?.status).toBe("matched");
+      expect(confoundFor(result.cohort.confounds, "workspaceSourceState")).toEqual([{ field: "workspaceSourceState", kind: "absent", reason: expect.stringMatching(/unmeasured|not established/) }]);
+      expect(result.perMetric.every(metric => metric.verdict === "unknown")).toBe(true); expect(result.metrics.every(metric => metric.delta === undefined)).toBe(true);
+    }
+    const partial = compareWorkflowRuns([measured("a", 10, 100)], [{ ...measured("b", 5, 90), workspaceSourceState: undefined }]);
+    expect(partial.status).toBe("unknown"); expect(confoundFor(partial.cohort.confounds, "workspaceSourceState")[0]?.kind).toBe("absent");
+    const unsupplied = compareWorkflowRuns([run("a", 10)], [run("b", 5)]);
+    expect(unsupplied.status).toBe("comparable"); expect(unsupplied.cohort.matched).toBe(true);
+    expect(unsupplied.cohort.basis.some(item => item.field === "workspaceSourceState")).toBe(false);
+    expect(unsupplied.limitations.some(item => /workspace source state/i.test(item) && /not supplied/i.test(item))).toBe(true);
+  });
+  it("refuses cross-schema receipts with an unknown verdict naming both schema versions and never coerces them", () => {
+    const reference = repin(measured("a", 10, 100), {}, { schemaVersion: "workflow-script/v1" });
+    const detached = repin(measured("b", 5, 90), {}, { schemaVersion: "workflow/v1" });
+    const result = compareWorkflowRuns([reference], [detached]);
+    expect(result.status).toBe("confounded"); expect(result.cohort.matched).toBe(false);
+    const refusal = result.diagnostics.find(item => item.code === "SCHEMA_MISMATCH");
+    expect(refusal).toMatchObject({ severity: "error", dimension: "schemaVersion" });
+    expect(refusal?.message).toContain("workflow-script/v1"); expect(refusal?.message).toContain("workflow/v1");
+    expect(confoundFor(result.cohort.confounds, "schemaVersion")).toEqual([{ field: "schemaVersion", kind: "refused", reason: expect.stringContaining("workflow/v1") }]);
+    expect(result.cohort.basis.find(item => item.field === "schemaVersion")?.status).toBe("mismatched");
+    expect(result.metrics).toEqual([]);
+    expect(result.perMetric.map(metric => metric.verdict)).toEqual(["unknown", "unknown"]);
+    expect(result.perMetric.every(metric => metric.reasons.some(reason => /schemaVersion/.test(reason) && /workflow-script\/v1/.test(reason)))).toBe(true);
+    expect(result.claim).toBe("none");
+    // Same schema on both sides is not refused: the existing definition contract check keeps carrying kind/id.
+    expect(compareWorkflowRuns([reference], [repin(measured("b", 5, 90), {}, { schemaVersion: "workflow-script/v1" })]).diagnostics.some(item => item.code === "SCHEMA_MISMATCH")).toBe(false);
+  });
+  it("a metric absent on one side is unknown for that metric only; shared native metrics still measure", () => {
+    const result = compareWorkflowRuns([measured("a", 10, 100), measured("b", 20, 120)], [run("c", 5, { workspaceSourceState: "measured" }), run("d", 15, { workspaceSourceState: "measured" })]);
+    expect(result.cohort.matched).toBe(true); expect(result.status).toBe("unknown");
+    expect(result.perMetric.find(metric => metric.name === "elapsed")).toEqual({ name: "elapsed", unit: "ms", verdict: "measured", reasons: [] });
+    expect(result.metrics.find(metric => metric.name === "elapsed")?.delta).toBe(-5);
+    const tokens = result.perMetric.find(metric => metric.name === "tokens");
+    expect(tokens?.verdict).toBe("unknown"); expect(tokens?.reasons.some(reason => /candidate/.test(reason) && /absent/.test(reason))).toBe(true);
+    expect(result.metrics.some(metric => metric.name === "tokens")).toBe(false); expect(result.claim).toBe("association");
+    const mirrored = compareWorkflowRuns([run("a", 10, { workspaceSourceState: "measured" })], [measured("b", 5, 90)]);
+    expect(mirrored.perMetric.find(metric => metric.name === "tokens")?.reasons.some(reason => /reference/.test(reason))).toBe(true);
+  });
+  it("a declared source change is a stated basis field, not a confound", () => {
+    const base = measured("b", 5, 90); const scriptSource = `${base.snapshot.scriptSource}\n//candidate`;
+    const scriptDigest = `sha256:${createHash("sha256").update(scriptSource).digest("hex")}`;
+    const result = compareWorkflowRuns([measured("a", 10, 100)], [repin(base, { scriptSource, scriptDigest }, { artifactDigest: scriptDigest })]);
+    expect(result.status).toBe("comparable"); expect(result.cohort.matched).toBe(true);
+    expect(result.cohort.basis.find(item => item.field === "definitionDigest")).toMatchObject({ status: "declared-change" });
+    expect(result.cohort.basis.find(item => item.field === "deploymentDigest")?.status).toBe("declared-change");
+    expect(result.limitations.some(item => /declared/.test(item) && /source/i.test(item))).toBe(true);
+    const mixed = compareWorkflowRuns([measured("a", 10, 100), repin(measured("x", 12, 101), { scriptSource, scriptDigest }, { artifactDigest: scriptDigest })], [base]);
+    expect(mixed.status).toBe("confounded"); expect(confoundFor(mixed.cohort.confounds, "definitionDigest")[0]).toMatchObject({ kind: "mismatched", reason: expect.stringContaining("reference") });
+  });
+  it("receipt integrity failures are unverified confounds, never a matched cohort", () => {
+    const base = measured("a", 10, 100); const cand = measured("b", 5, 90);
+    const tampered = compareWorkflowRuns([base], [{ ...cand, snapshot: { ...cand.snapshot, scriptSource: "changed" } }]);
+    expect(tampered.cohort.matched).toBe(false); expect(confoundFor(tampered.cohort.confounds, "scriptDigest")[0]?.kind).toBe("unverified");
+    expect(tampered.perMetric.every(metric => metric.verdict === "unknown")).toBe(true);
+    const duplicate = compareWorkflowRuns([base], [base]);
+    expect(duplicate.cohort.matched).toBe(false); expect(confoundFor(duplicate.cohort.confounds, "logicalInvocationId")[0]?.kind).toBe("unverified");
+    const unpinned = compareWorkflowRuns([base], [{ ...cand, snapshot: { ...cand.snapshot, identity: { ...cand.snapshot.identity, deploymentDigest: identityDigest("forged", {}) } } }]);
+    expect(confoundFor(unpinned.cohort.confounds, "deploymentDigest")[0]?.kind).toBe("unverified");
+    expect(unpinned.cohort.basis.find(item => item.field === "deploymentDigest")?.status).toBe("unverified");
+    const empty = compareWorkflowRuns([], []);
+    expect(empty.status).toBe("unknown"); expect(empty.cohort.matched).toBe(false); expect(empty.cohort.confounds[0]).toMatchObject({ field: "cohort", kind: "absent" }); expect(empty.perMetric).toEqual([]); expect(empty.claim).toBe("none");
+  });
+  it("sanitizes hostile producer strings everywhere they can surface in compare output", () => {
+    const base = measured("a", 10, 100); const b = measured("b", 5, 90); const hostileUnit = `count ${hostile}`;
+    const hostileMetrics: CompareRun = { ...b, metrics: [{ ...b.metrics[0], evidenceRefs: [hostile] }, { ...b.metrics[1], name: hostile, unit: hostileUnit }] };
+    // Same schema: metric names, units and evidence references flow into metrics, perMetric and diagnostics.
+    const measuredText = JSON.stringify(compareWorkflowRuns([base, withMetric(run("x", 11, { workspaceSourceState: "measured" }), hostile, hostileUnit, 1)], [hostileMetrics]));
+    // Refused schema: the producer's schema version and definition id flow into the refusal diagnostic and confound reasons.
+    const refused = compareWorkflowRuns([base], [repin(hostileMetrics, {}, { id: hostile, schemaVersion: hostile })]);
+    expect(refused.diagnostics.some(item => item.code === "SCHEMA_MISMATCH")).toBe(true); expect(refused.cohort.confounds.some(item => item.field === "definition")).toBe(true);
+    for (const text of [measuredText, JSON.stringify(refused)]) {
+      expect(text).toContain("UNTRUSTED"); expect(text).toContain("[REDACTED]");
+      expect(text).not.toContain(SECRET); expect(text).not.toMatch(/\\u001b|\\u202e|\\u202c|\\u2066|\\u2069/);
+      expect(text).not.toMatch(/[\u0000-\u001f\u007f-\u009f\u202a-\u202e\u2066-\u2069]/u);
+    }
+    const parsed = JSON.parse(measuredText) as WorkflowComparison;
+    expect(parsed.metrics.find(metric => metric.name === "elapsed")?.evidenceRefs.some(ref => ref.includes("UNTRUSTED"))).toBe(true);
+    expect(parsed.perMetric.some(metric => metric.name.includes("UNTRUSTED") && metric.verdict === "unknown")).toBe(true);
+    expect(JSON.parse(JSON.stringify(JSON.parse(JSON.stringify(refused))))).toEqual(refused);
+  });
 });
