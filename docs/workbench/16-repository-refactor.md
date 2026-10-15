@@ -69,6 +69,34 @@ Do not physically create every path until an actual vertical cut needs it. Keep 
 
 Record fork divergence in this documentation. Preserve MIT copyright, license and original contributors. Prefer small, clearly bounded changes to src/workflow and src/ui over global rewrite. Keep a focused upstream sync process that checks source changes to runtime, worker, progress, dialog and SDK APIs. No force merges over local correctness contracts.
 
+
+## Measured fork divergence
+
+Pre-existing upstream paths under `src/` and `test/` (outside `src/workbench` and `test/workbench*`) that the fork has modified since the baseline fork commit. The baseline sha is carried only by the `Baseline:` line in `docs/workbench/TRACEABILITY.md`. `test/workbench-upstream-divergence.test.ts` measures `git diff --name-only --diff-filter=M <baseline> HEAD` and fails on any unrecorded, stale or misrecorded row. This table is the measured record; the source-level refactor plan above stays a plan.
+
+| path | recorded at | note |
+| --- | --- | --- |
+| `src/index.ts` | b44f1ce | +482 -18 lines against the baseline |
+| `src/settings.ts` | b44f1ce | +79 -1 lines against the baseline |
+| `src/ui/workflow-card.ts` | b44f1ce | +55 -12 lines against the baseline |
+| `src/ui/workflow-dialog.ts` | b44f1ce | +303 -62 lines against the baseline |
+| `src/ui/workflow-menu.ts` | b44f1ce | +44 -12 lines against the baseline |
+| `src/workflow/host.ts` | b44f1ce | +1 -0 lines against the baseline |
+| `src/workflow/journal.ts` | b44f1ce | +99 -1 lines against the baseline |
+| `src/workflow/meta.ts` | b44f1ce | +67 -197 lines against the baseline |
+| `src/workflow/progress.ts` | b44f1ce | +72 -5 lines against the baseline |
+| `src/workflow/runtime.ts` | b44f1ce | +448 -19 lines against the baseline |
+| `src/workflow/saved.ts` | b44f1ce | +4 -5 lines against the baseline |
+| `src/workflow/task.ts` | b44f1ce | +111 -25 lines against the baseline |
+| `src/workflow/tool-description.ts` | b44f1ce | +4 -1 lines against the baseline |
+| `src/workflow/worker-source.ts` | b44f1ce | +151 -48 lines against the baseline |
+| `test/workflow-journal.test.ts` | b44f1ce | +91 -0 lines against the baseline |
+| `test/workflow-meta.test.ts` | b44f1ce | +4 -5 lines against the baseline |
+| `test/workflow-progress.test.ts` | b44f1ce | +17 -0 lines against the baseline |
+| `test/workflow-render.test.ts` | b44f1ce | +29 -0 lines against the baseline |
+| `test/workflow-task.test.ts` | b44f1ce | +148 -0 lines against the baseline |
+| `test/workflow-tool-description.test.ts` | b44f1ce | +9 -0 lines against the baseline |
+
 ## Migration acceptance
 
 Existing upstream Pi agent workflows, script saved paths and UI work after extension reload. Claude Workbench mode can run and observe real Claude SDK agents; no accidental duplication of tools or permission escalation. Headless or detached host doesn't require launching Pi's TUI process.
