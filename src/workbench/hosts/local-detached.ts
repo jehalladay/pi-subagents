@@ -13,6 +13,7 @@ import { createHash, randomBytes } from "node:crypto";
 import { chmodSync, closeSync, constants, existsSync, fstatSync, lstatSync, mkdirSync, openSync, readdirSync, readFileSync, realpathSync, writeFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import { createConnection, createServer, type Socket } from "node:net";
+import { tmpdir } from "node:os";
 import { dirname, isAbsolute, join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
@@ -71,6 +72,8 @@ export interface DetachedReceipt {
   owner: LocalOperator;
   invocationDirectory: string;
   socketPath: string;
+  /** Directory the socket was placed under (runtime dir, /run/user/<uid>, or tmpdir). */
+  socketBase?: string;
   launchedAt: string;
   deploymentDigest: string;
   inputDigest: string;
@@ -174,9 +177,33 @@ function paths(root: string, id: string) {
   invocationId(id);
   ancestors(root); privatePath(root, "directory");
   const directory = join(root, id);
-  const socket = join(directory, "host.sock");
-  if (Buffer.byteLength(socket) > 103) throw new Error("Detached Unix socket path exceeds Linux socket path bound; use a shorter private root.");
-  return { directory, socket, boot: join(directory, "invocation.json"), receipt: join(directory, "receipt.json") };
+  return { directory, boot: join(directory, "invocation.json"), receipt: join(directory, "receipt.json") };
+}
+/** Linux sun_path holds 108 bytes including the NUL; 103 leaves headroom the host has always kept. */
+export const DETACHED_SOCKET_PATH_LIMIT = 103;
+export type DetachedSocketBaseSource = "XDG_RUNTIME_DIR" | "run-user" | "tmpdir";
+export interface DetachedSocketLocation { base: string; source: DetachedSocketBaseSource; socket: string }
+export interface DetachedSocketOptions { env?: NodeJS.ProcessEnv; tmpdir?: string; uid?: number; runUserRoot?: string }
+/** A runtime base qualifies only when absolute, a real directory (no symlink), owned by uid, mode exactly 0700. */
+function privateRuntimeBase(path: string | undefined, uid: number): path is string {
+  if (path === undefined || !isAbsolute(path) || resolve(path) !== path) return false;
+  try { const stat = lstatSync(path); return stat.isDirectory() && !stat.isSymbolicLink() && stat.uid === uid && (stat.mode & 0o7777) === 0o700; }
+  catch { return false; }
+}
+/** Choose the Unix-socket base: XDG_RUNTIME_DIR, then /run/user/<uid>, then tmpdir(). The socket name is a
+ * deterministic digest of (directory, id), so the path is short and stable; it is recorded in the boot pin and
+ * receipt, never re-derived from a later caller's environment. */
+export function resolveDetachedSocket(directory: string, id: string, options: DetachedSocketOptions = {}): DetachedSocketLocation {
+  const uid = options.uid ?? localOperator().uid; const env = options.env ?? process.env;
+  const perUser = join(options.runUserRoot ?? "/run/user", String(uid));
+  let base: string; let source: DetachedSocketBaseSource;
+  if (privateRuntimeBase(env.XDG_RUNTIME_DIR, uid)) { base = env.XDG_RUNTIME_DIR; source = "XDG_RUNTIME_DIR"; }
+  else if (privateRuntimeBase(perUser, uid)) { base = perUser; source = "run-user"; }
+  else { base = options.tmpdir ?? tmpdir(); source = "tmpdir"; }
+  const name = createHash("sha256").update(`${directory}\0${id}`).digest("hex").slice(0, 16);
+  const socket = join(base, `pw-${uid}`, `${name}.sock`);
+  if (Buffer.byteLength(socket) > DETACHED_SOCKET_PATH_LIMIT) throw new Error(`Detached Unix socket path exceeds the ${DETACHED_SOCKET_PATH_LIMIT}-byte Linux socket path bound (${Buffer.byteLength(socket)} bytes) under ${source} base ${base}; set XDG_RUNTIME_DIR to a short private directory (owner-only, mode 0700) or use a shorter TMPDIR.`);
+  return { base, source, socket };
 }
 function readPrivate(path: string, maxBytes: number): Buffer {
   privatePath(path, "file");
@@ -299,6 +326,9 @@ interface Boot {
   pin: InvocationSnapshot;
   capture: IdentityCaptureInput;
   sourcePins: FilePin[];
+  /** Socket chosen by the launcher; the child and later clients never re-derive it from their own env. */
+  socket: string;
+  socketBase: string;
   localProviderTree?: FilePin[];
   inputDigest: string;
   snapshotDigest: string;
@@ -403,8 +433,11 @@ export async function launchDetachedWorkflow(raw: DetachedLaunchRequest): Promis
   ancestors(request.directory);
   if (!existsSync(request.directory)) mkdirSync(request.directory, { mode: 0o700 });
   const p = paths(request.directory, request.invocationId);
+  const location = resolveDetachedSocket(request.directory, request.invocationId);
   // No reuse, even after a dead host. Deliberate second executions need NEW IDs.
   mkdirSync(p.directory, { mode: 0o700 }); privatePath(p.directory, "directory");
+  try { mkdirSync(dirname(location.socket), { mode: 0o700 }); } catch (error) { if ((error as NodeJS.ErrnoException).code !== "EEXIST") throw error; }
+  privatePath(dirname(location.socket), "directory");
   const registry = registryFor({ ...request, localProvider: undefined });
   // Local provider manifest + exact module bytes are pinned in config/sourcePins.
   // Registration occurs only in the child, not in the Pi caller.
@@ -423,7 +456,7 @@ export async function launchDetachedWorkflow(raw: DetachedLaunchRequest): Promis
     providerDescriptors: registry.discover({ grants: (request.providers ?? []).map(id => `discover:${NATIVE_CAPABILITIES[id]}`) }).map(d => ({ id: d.id, version: d.version, permissions: d.permissions, effectClass: d.effectClass, supportedModes: d.supportedModes, inputSchema: validatedCapabilityJson(d.inputSchema, "schema"), ...(d.outputSchema ? { outputSchema: validatedCapabilityJson(d.outputSchema, "schema") } : {}), contractSource: d.contractSource ?? "unknown" })),
   };
   const pin = captureInvocationIdentity(capture); validateScript(pin.scriptSource);
-  const boot: Boot = { contract: DETACHED_CONTRACT, request, owner, hostInstanceId: randomBytes(24).toString("hex"), pin, capture, sourcePins, ...(localProviderTree ? { localProviderTree } : {}), inputDigest: identityDigest("invocation-input", request.input), snapshotDigest: identityDigest("invocation-snapshot", pin) };
+  const boot: Boot = { contract: DETACHED_CONTRACT, request, owner, hostInstanceId: randomBytes(24).toString("hex"), pin, capture, sourcePins, socket: location.socket, socketBase: location.base, ...(localProviderTree ? { localProviderTree } : {}), inputDigest: identityDigest("invocation-input", request.input), snapshotDigest: identityDigest("invocation-snapshot", pin) };
   writePrivate(p.boot, boot);
   const bootDigest = hash(readPrivate(p.boot, 8 * DETACHED_MAX_FRAME_BYTES));
   const env = { ...process.env }; delete env.NODE_OPTIONS; delete env.NODE_PATH;
@@ -433,12 +466,12 @@ export async function launchDetachedWorkflow(raw: DetachedLaunchRequest): Promis
   for (let attempt = 0; attempt < 100; attempt++) {
     if (launchError) throw launchError;
     if (child.exitCode !== null || child.signalCode !== null) throw new Error("Detached host exited before handshake; invocation reserved, do not retry automatically.");
-    if (existsSync(p.socket)) {
+    if (existsSync(location.socket)) {
       try {
-        const reply = record(await commandAt(request.directory, request.invocationId, { command: "hello", invocationId: request.invocationId }));
+        const reply = record(await commandAt(request.directory, request.invocationId, { command: "hello", invocationId: request.invocationId }, location.socket));
         const receipt = validateReceipt(reply.receipt, request.invocationId);
         if (receipt.hostInstanceId !== boot.hostInstanceId || receipt.pid !== child.pid || receipt.snapshotDigest !== boot.snapshotDigest || receipt.owner.id !== owner.id) throw new Error("Detached handshake identity conflict.");
-        if (request.autoStart !== false && request.permissions?.includes("execute")) await commandAt(request.directory, request.invocationId, { command: "execute", invocationId: request.invocationId });
+        if (request.autoStart !== false && request.permissions?.includes("execute")) await commandAt(request.directory, request.invocationId, { command: "execute", invocationId: request.invocationId }, location.socket);
         return receipt;
       } catch (error) {
         if (error instanceof Error && !/ENOENT|ECONNREFUSED/.test(error.message)) throw error;
@@ -453,10 +486,18 @@ function validateReceipt(raw: unknown, id: string): DetachedReceipt {
   if (receipt.contract !== DETACHED_CONTRACT || receipt.invocationId !== id || typeof receipt.pid !== "number" || !Number.isSafeInteger(receipt.pid) || receipt.pid < 1 || receipt.sessionId !== receipt.pid || typeof receipt.hostInstanceId !== "string" || !/^[a-f0-9]{48}$/.test(receipt.hostInstanceId) || owner.id !== localOperator().id || owner.uid !== localOperator().uid || receipt.nativeRuntimeIdentity !== "unsupported") throw new Error("Authorization: invalid detached receipt identity.");
   return receipt as unknown as DetachedReceipt;
 }
-async function commandAt(root: string, id: string, command: DetachedCommand): Promise<JsonValue> {
-  const p = paths(root, id); privatePath(p.directory, "directory"); privatePath(p.socket, "socket");
+/** The socket the host recorded in its private receipt; a client never re-derives it from its own env. */
+function recordedSocket(p: ReturnType<typeof paths>, id: string): string {
+  const socketPath = validateReceipt(JSON.parse(readPrivate(p.receipt, DETACHED_MAX_FRAME_BYTES).toString("utf8")), id).socketPath;
+  if (typeof socketPath !== "string" || !isAbsolute(socketPath) || Buffer.byteLength(socketPath) > DETACHED_SOCKET_PATH_LIMIT || !socketPath.endsWith(".sock")) throw new Error("Authorization: receipt socket path invalid.");
+  return socketPath;
+}
+async function commandAt(root: string, id: string, command: DetachedCommand, knownSocket?: string): Promise<JsonValue> {
+  const p = paths(root, id); privatePath(p.directory, "directory");
+  const socketPath = knownSocket ?? recordedSocket(p, id);
+  privatePath(dirname(socketPath), "directory"); privatePath(socketPath, "socket");
   return new Promise((resolveReply, reject) => {
-    const socket = createConnection(p.socket); const decoder = new DetachedFrameDecoder();
+    const socket = createConnection(socketPath); const decoder = new DetachedFrameDecoder();
     let answered = false;
     const fail = (error: Error) => { if (!answered) { answered = true; socket.destroy(); reject(error); } };
     socket.setTimeout(3000, () => fail(new Error("Detached transport timeout; effects may be unresolved.")));
@@ -563,12 +604,14 @@ export async function startDetachedHost(bootPath: string, expectedDigest: string
   if (boot.contract !== DETACHED_CONTRACT || boot.owner.id !== localOperator().id) throw new Error("Authorization: boot owner conflict.");
   const request = validateRequest(boot.request); const p = paths(request.directory, request.invocationId);
   if (bootPath !== p.boot) throw new Error("Authorization: boot path mismatch.");
+  if (typeof boot.socket !== "string" || typeof boot.socketBase !== "string" || !isAbsolute(boot.socket) || !boot.socket.endsWith(".sock") || Buffer.byteLength(boot.socket) > DETACHED_SOCKET_PATH_LIMIT || dirname(dirname(boot.socket)) !== resolve(boot.socketBase)) throw new Error("Authorization: boot socket path invalid.");
+  privatePath(dirname(boot.socket), "directory");
   privatePath(p.directory, "directory"); verifyFiles(boot.sourcePins);
   if (boot.localProviderTree && identityDigest("local-provider-tree", providerTree(request.cwd)) !== identityDigest("local-provider-tree", boot.localProviderTree)) throw new Error("IDENTITY_CONFLICT: local provider tree changed.");
   const actual = captureInvocationIdentity(boot.capture);
   if (identityDigest("invocation-snapshot", actual) !== boot.snapshotDigest || identityDigest("invocation-input", request.input) !== boot.inputDigest) throw new Error("IDENTITY_CONFLICT: actual host pin differs from admission.");
   const registry = registryFor(request);
-  const receipt: DetachedReceipt = { contract: DETACHED_CONTRACT, invocationId: request.invocationId, hostInstanceId: boot.hostInstanceId, pid: process.pid, ...processIdentity(), owner: localOperator(), invocationDirectory: p.directory, socketPath: p.socket, launchedAt: new Date().toISOString(), deploymentDigest: boot.pin.identity.deploymentDigest, scriptDigest: boot.pin.scriptDigest, inputDigest: boot.inputDigest, snapshotDigest: boot.snapshotDigest, permissions: [...(request.permissions ?? [])], security: "same-machine-os-dac-only", lifetime: "survives-client-disconnect-not-host-crash", nativeRuntimeIdentity: "unsupported", evidenceClass: request.localProvider ? "local-provider" : request.backend === "claude" || request.providers?.length ? "native-client" : "local-computation" };
+  const receipt: DetachedReceipt = { contract: DETACHED_CONTRACT, invocationId: request.invocationId, hostInstanceId: boot.hostInstanceId, pid: process.pid, ...processIdentity(), owner: localOperator(), invocationDirectory: p.directory, socketPath: boot.socket, socketBase: boot.socketBase, launchedAt: new Date().toISOString(), deploymentDigest: boot.pin.identity.deploymentDigest, scriptDigest: boot.pin.scriptDigest, inputDigest: boot.inputDigest, snapshotDigest: boot.snapshotDigest, permissions: [...(request.permissions ?? [])], security: "same-machine-os-dac-only", lifetime: "survives-client-disconnect-not-host-crash", nativeRuntimeIdentity: "unsupported", evidenceClass: request.localProvider ? "local-provider" : request.backend === "claude" || request.providers?.length ? "native-client" : "local-computation" };
   writePrivate(p.receipt, receipt);
   const controller = new AbortController(); const sockets = new Set<Socket>();
   let started = false; let closing = false; let terminal: DetachedSnapshot["terminal"];
@@ -634,7 +677,7 @@ export async function startDetachedHost(bootPath: string, expectedDigest: string
         if (frames.length === 0) return;
         if (handled || frames.length !== 1) throw new Error("One bounded command per connection.");
         handled = true;
-        privatePath(p.directory, "directory"); privatePath(p.socket, "socket");
+        privatePath(p.directory, "directory"); privatePath(boot.socket, "socket");
         const command = decodeDetachedCommand(frames[0]);
         if (command.invocationId !== request.invocationId) throw new CapabilityError("authorization", "Invocation ACL mismatch.");
         const permission = command.command === "hello" ? "inspect" : command.command;
@@ -662,7 +705,7 @@ export async function startDetachedHost(bootPath: string, expectedDigest: string
   });
   const idle = setInterval(() => { if (!started && Date.now() - lastObservation > 60000) void stop(); }, 1000);
   process.once("SIGTERM", () => { void stop(); }); process.once("SIGINT", () => { void stop(); });
-  await new Promise<void>((resolveReady, reject) => { server.once("error", reject); server.listen(p.socket, () => { chmodSync(p.socket, 0o600); privatePath(p.socket, "socket"); resolveReady(); }); });
+  await new Promise<void>((resolveReady, reject) => { server.once("error", reject); server.listen(boot.socket, () => { chmodSync(boot.socket, 0o600); privatePath(boot.socket, "socket"); resolveReady(); }); });
 }
 
 // Actual compiled entrypoint: no --eval/--input-type flags reach workflow workers.
