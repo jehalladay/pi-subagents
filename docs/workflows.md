@@ -118,7 +118,7 @@ Four things it will not do:
 - **Replay a failure.** A journaled failure ends the prefix, so resuming a run that died at agent 5 retries exactly agent 5. That is the point.
 - **Replay a run that used `agent({ resume })` at all.** A replayed agent is text from a file rather than a live child, so there would be no conversation left for a later `resume` to continue.
 
-Replayed rows are annotated `from resume journal` on the card and in the inspector, and the completion notification counts them — a resume never quietly looks like a run that was simply fast. Passing only `resumeFromRunId`, with no script of its own, re-runs that run's own script.
+Replayed rows are annotated `from resume journal` on the card and in the inspector, and the completion notification counts them — a resume never quietly looks like a run that was simply fast. A journaled non-read effect is never re-executed or silently replayed: the resume stops at its position until a local operator acknowledges or overrides it with `workflow_reconcile`; an acknowledged position settles with the operator's envelope (marked stale, counted under `reconciled:`), and an override authorizes exactly one re-run and is spent by the next resume that reads the journal. Passing only `resumeFromRunId`, with no script of its own, re-runs that run's own script.
 
 ### 5. Save it
 

@@ -18,7 +18,6 @@ import { dirname, isAbsolute, join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { defineTool, type ExtensionAPI, type ExtensionCommandContext, type ExtensionContext, getAgentDir, getSettingsListTheme } from "@earendil-works/pi-coding-agent";
 import { Container, Key, matchesKey, type SettingItem, SettingsList, Spacer, Text } from "@earendil-works/pi-tui";
-import { Furnace } from "@furnace/sdk";
 import { Type } from "typebox";
 import { abortable } from "./abortable.js";
 import { hasAgentBadge, renderAgentName } from "./agent-color.js";
@@ -68,17 +67,13 @@ import { renderWorkflowCard, renderWorkflowEntryCard } from "./ui/workflow-card.
 import { openWorkflowFromFleet, showWorkflowsMenu, type WorkflowMenuDeps } from "./ui/workflow-menu.js";
 import { getLifetimeCost, getLifetimeTotal, getSessionContextPercent, type LifetimeUsage, PendingUsagePool, toReportedUsage } from "./usage.js";
 import { type CapabilityDescriptor, CapabilityRegistry } from "./workbench/capability-registry.js";
-import { createClaudeWorkflowHost } from "./workbench/claude-host.js";
-import { createClaudeObserver, readClaudeTranscript } from "./workbench/claude-transcript.js";
 import { type CompareRun, catalogWorkflows, compareWorkflowRuns, inspectWorkflowSource, validateWorkflowSource } from "./workbench/designer.js";
+import { createWorkbenchEvidenceStore } from "./workbench/evidence-wiring.js";
 import { FurnaceObserver } from "./workbench/furnace-observer.js";
-import { connectDetachedWorkflow, launchDetachedWorkflow } from "./workbench/hosts/local-detached.js";
 import { captureInvocationIdentity, type IdentityCaptureInput, identityDigest, verifyInvocationIdentity, WORKFLOW_SCRIPT_SCHEMA_VERSION } from "./workbench/identity.js";
+import { loadWorkbenchNative, workbenchNative } from "./workbench/native-modules.js";
 import { type NativeRef, ObservationProjection, type ObservationScope, type Presentation } from "./workbench/observation.js";
-import { registerNativeForgeGateStatus } from "./workbench/providers/forge.js";
-import { registerNativeFurnaceRunInspect } from "./workbench/providers/furnace.js";
-import { registerNativeHyperUnixFind } from "./workbench/providers/hyperunix.js";
-import { registerNativeReactiveFiberRender } from "./workbench/providers/reactivefiber.js";
+import { createWorkflowReconcileTool } from "./workbench/reconcile-tool.js";
 import { sanitizeWorkbenchJsonText, sanitizeWorkbenchText, stripUnsafeText } from "./workbench/redaction.js";
 import { decideWorkflowCollision, FOREIGN_WORKFLOW_TOOL_NAMES } from "./workflow/collisions.js";
 import { WORKFLOW_ENTRY_TYPE, type WorkflowEntryData, workflowEntryData } from "./workflow/entry.js";
@@ -86,6 +81,7 @@ import { createWorkflowHost } from "./workflow/host.js";
 import { appendJournal, readJournal, type WorkflowJournalEntry } from "./workflow/journal.js";
 import { extractMeta, type WorkflowMeta, workflowCallName } from "./workflow/meta.js";
 import { type ClaudeNativeObservation, elapsedMs, type WorkflowAgentEntry } from "./workflow/progress.js";
+import { consumeOverridesAtResume } from "./workflow/reconcile.js";
 import { runWorkflow } from "./workflow/runtime.js";
 import { resolveWorkflowScript } from "./workflow/saved.js";
 import { completeWorkflowTask, createWorkflowTask, describeResumeJournal, failWorkflowTask, formatWorkflowNotification, resolveResumeTarget, updateWorkflowProgressBatch, type WorkflowTask, workflowResultText, workflowRunId } from "./workflow/task.js";
@@ -911,7 +907,7 @@ export default function (pi: ExtensionAPI) {
     // extension factory has run, so this is the earliest point the real value
     // exists. Detached inside — a workflow must not hold up session startup.
     resolveWorkflowCollisions(ctx);
-    registerWorkbenchTools(ctx);
+    await registerWorkbenchTools(ctx);
     runWorkflowFlag(ctx);
   });
 
@@ -2385,10 +2381,10 @@ Terse command-style prompts produce shallow, generic work.
     let registry = registries.get(scope);
     if (!registry) {
       registry = new CapabilityRegistry();
-      registerNativeForgeGateStatus(registry, scope);
-      registerNativeHyperUnixFind(registry, scope);
-      registerNativeFurnaceRunInspect(registry, scope);
-      registerNativeReactiveFiberRender(registry, scope);
+      // Only reached behind the validated feature config, after the native
+      // modules loaded (wb-cax.10); the registration order is the one the
+      // identity capture has always digested.
+      workbenchNative().registerNativeProviders(registry, scope);
       registries.set(scope, registry);
     }
     return registry;
@@ -2476,9 +2472,24 @@ Terse command-style prompts produce shallow, generic work.
 
   // Both tools are registered through Pi, so their permissions apply on the
   // real model path; neither accepts a caller-supplied principal or workspace.
-  function registerWorkbenchTools(ctx: ExtensionContext): void {
+  async function registerWorkbenchTools(ctx: ExtensionContext): Promise<void> {
     if (workbenchToolsRegistered || sourceSettings(ctx)?.workflowAgentBackend !== "claude") return;
     workbenchToolsRegistered = true;
+    // The validated feature config is the switch (docs/workbench/17 § "Install
+    // profile"): the native SDKs and provider adapters load here, once, and
+    // nowhere earlier, so a Pi install with the Workbench off never resolves
+    // them. A load that fails leaves the standard upstream surface intact,
+    // says why, and lets the next session start try again.
+    try {
+      await loadWorkbenchNative();
+    } catch (error) {
+      workbenchToolsRegistered = false;
+      const reason = stripUnsafeText(error instanceof Error ? error.message : String(error), " ").slice(0, 300);
+      const message = `Workbench tools not registered: native modules failed to load (${reason}).`;
+      if (ctx.hasUI) ctx.ui.notify(message, "warning");
+      else console.warn(`[pi-subagents] ${message}`);
+      return;
+    }
     pi.registerTool(defineTool({
       name: "workbench_catalog",
       label: "Workbench catalog",
@@ -2555,6 +2566,7 @@ Terse command-style prompts produce shallow, generic work.
         if (!grants(ctx).includes("furnace:inspect")) return textResult("Permission denied: furnace:inspect grant required.");
         if (typeof params.runId !== "string" || !/^frn-run-[a-zA-Z0-9_-]{1,100}$/.test(params.runId)) return textResult("Invalid native Furnace Run identity.");
         const scope = observerScope(ctx);
+        const { Furnace } = workbenchNative();
         const client = new Furnace({binary:"furnace",cwd:scope.workspace,timeoutMs:10_000});
         const observer = new FurnaceObserver(client, { workspaceRoot:scope.workspace,runId:params.runId,scope,
           limits:{maxPolls:1,intervalMs:1000,maxElapsedMs:30_000,attemptLimit:20,logBytes:512,callTimeoutMs:10_000}, signal });
@@ -2578,11 +2590,11 @@ Terse command-style prompts produce shallow, generic work.
         if (!grants(ctx).includes(params.action === "launch" ? "workbench:detach" : "workbench:observe")) return textResult("Permission denied: explicit detached launch or observe grant required.");
         const directory=join(getAgentDir(),"workbench-detached");
         try {
-          if (params.action === "inspect") return textResult(sanitizeWorkbenchJsonText(await connectDetachedWorkflow(directory,params.invocationId).inspect(), 4096));
+          if (params.action === "inspect") return textResult(sanitizeWorkbenchJsonText(await workbenchNative().connectDetachedWorkflow(directory,params.invocationId).inspect(), 4096));
           if (params.trustedScript !== true || !params.scriptPath) return textResult("Launch requires an explicitly reviewed trusted scriptPath.");
           const source=inspectWorkflowSource({scriptPath:params.scriptPath},ctx.cwd);
           const settings=sourceSettings(ctx);
-          const receipt=await launchDetachedWorkflow({ directory,invocationId:params.invocationId,scriptPath:source.sourceRef,cwd:ctx.cwd,input:null,trustedScript:true,
+          const receipt=await workbenchNative().launchDetachedWorkflow({ directory,invocationId:params.invocationId,scriptPath:source.sourceRef,cwd:ctx.cwd,input:null,trustedScript:true,
             backend:params.backend ?? "deterministic",providers:[],grants:[],permissions:["inspect","execute"],sourceFiles:[source.sourceRef],
             ...(params.backend === "claude" ? {claude:{model:settings?.model,tools:settings?.tools ?? [],roles:settings?.roles}} : {}),
           });
@@ -2615,6 +2627,15 @@ Terse command-style prompts produce shallow, generic work.
           identity: task.identityReceipt?.identity ?? null, inputDigest: task.inputDigest ?? null, workspaceSourceState: task.workspaceSourceState ?? "unknown",
           nodes: compact, truncated, error: task.error ?? null }));
       },
+    }));
+    pi.registerTool(createWorkflowReconcileTool({
+      tasks: workflowTasks,
+      registryFor,
+      grants,
+      observerScope,
+      localPrincipal,
+      sessionIdOf: toolCtx => toolCtx.sessionManager.getSessionId(),
+      now: () => new Date().toISOString(),
     }));
   }
 
@@ -2674,7 +2695,10 @@ Terse command-style prompts produce shallow, generic work.
       }
       // Script labels enter the projection here; bidi marks are stripped with the control bytes.
       const clamp = (value: string) => stripUnsafeText(value, " ").slice(0, 120);
-      const observer = createClaudeObserver((call, snapshot) => {
+      // The Claude backend is the only native path of a run; the Pi backend
+      // never touches the SDKs, so nothing native is loaded for it (wb-cax.10).
+      const native = settings ? await loadWorkbenchNative() : undefined;
+      const observer = native?.createClaudeObserver((call, snapshot) => {
         nativeSnapshots.set(call.index, snapshot);
         const row = nativeRows.get(call.index);
         const live = !snapshot.terminal;
@@ -2725,8 +2749,8 @@ Terse command-style prompts produce shallow, generic work.
         script: task.identityReceipt?.scriptSource ?? task.script,
         args: task.args,
         signal: task.abortController.signal,
-        host: settings
-          ? createClaudeWorkflowHost({
+        host: settings && native && observer
+          ? native.createClaudeWorkflowHost({
               cwd: ctx.cwd,
               signal: task.abortController.signal,
               ...(settings.model ? { model: settings.model } : {}),
@@ -2895,6 +2919,9 @@ Terse command-style prompts produce shallow, generic work.
             startTime: task.startTime,
             endTime: task.endTime,
             totalPausedMs: task.totalPausedMs,
+            replayedCount: task.replayedCount,
+            replayedNodeCount: task.replayedNodeCount,
+            reconciledNodeCount: task.reconciledNodeCount,
           },
           meta: task.meta,
           agentCount: task.agentCount,
@@ -2949,6 +2976,15 @@ Terse command-style prompts produce shallow, generic work.
       }
 
       const replay = resumeFrom !== undefined ? readJournal(resumeFrom.journalPath) : undefined;
+      // Spend every live operator override in the SOURCE journal before anything
+      // runs: the runtime receives the entries as read (unspent) and may re-run
+      // once, while any second resume finds the authorization already consumed —
+      // a prompt-injected repetition of one authorization is impossible.
+      if (replay !== undefined && resumeFrom !== undefined) {
+        for (const spent of consumeOverridesAtResume(replay, { byRunId: runId, at: new Date().toISOString() })) {
+          appendJournal(resumeFrom.journalPath, spent);
+        }
+      }
 
       const task = createWorkflowTask({
         id: runId,
@@ -4394,6 +4430,17 @@ Write the file using the write tool. Only write the file, nothing else.`;
     observation: {
       projection,
       scope: task => task.observationScope ? { workspace: task.observationScope.workspace, principal: task.observationScope.principal } : undefined,
+      // Loaders exist for the landed readers; authorization is the live
+      // exact-grant check each load runs (docs/workbench/20, wb-g1g.1 ruling).
+      evidence: createWorkbenchEvidenceStore({
+        grants: () => { const c = currentCtx as unknown as ExtensionCommandContext | undefined; return c ? grants(c) : []; },
+        scope: () => { const c = currentCtx as unknown as ExtensionCommandContext | undefined; return c ? observerScope(c) : undefined; },
+        projection,
+        cwd: () => (currentCtx as unknown as ExtensionCommandContext | undefined)?.cwd,
+        // The forge evidence re-read goes through the same registry the workflow
+        // tools use, so one authorization ladder governs both (wb-6ze.17).
+        registry: workspace => registryFor(workspace),
+      }),
     },
     getRecord: id => manager.getRecord(id),
     viewAgentConversation,
@@ -4405,7 +4452,7 @@ Write the file using the write tool. Only write the file, nothing else.`;
         ctx.ui.notify("Permission denied: claude:transcript grant required.", "warning");
         return;
       }
-      const rows = await readClaudeTranscript(sessionId, ctx.cwd);
+      const rows = await (await loadWorkbenchNative()).readClaudeTranscript(sessionId, ctx.cwd);
       const text = rows.length === 0
         ? `No Claude transcript available for session ${sessionId}.`
         : rows.map(row => `${row.type}: ${row.text}`).join("\n\n");

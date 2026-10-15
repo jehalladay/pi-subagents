@@ -16,6 +16,7 @@
 
 import type { ExtensionCommandContext } from "@earendil-works/pi-coding-agent";
 import type { AgentRecord } from "../types.js";
+import type { EvidenceStore } from "../workbench/evidence-loader.js";
 import type { ObservationProjection, ObservationScope } from "../workbench/observation.js";
 import { pauseWorkflowTask, resumeWorkflowTask, type WorkflowTask } from "../workflow/task.js";
 import { WorkflowDialog } from "./workflow-dialog.js";
@@ -28,7 +29,7 @@ export interface WorkflowMenuDeps {
    * crash.
    */
   tasks: ReadonlyMap<string, WorkflowTask>;
-  observation?: { projection: ObservationProjection; scope(task: WorkflowTask): ObservationScope | undefined };
+  observation?: { projection: ObservationProjection; scope(task: WorkflowTask): ObservationScope | undefined; evidence?: EvidenceStore };
   /** The record behind an agent id, or undefined once it has been swept. */
   getRecord(id: string): AgentRecord | undefined;
   /** The conversation overlay `c` opens on an agent row. */
@@ -87,6 +88,7 @@ export async function showWorkflowDialog(
               invocationId: task.id,
               title: task.meta?.name ?? task.workflowName ?? task.id,
               status: task.status,
+              ...(deps.observation.evidence !== undefined ? { evidence: deps.observation.evidence } : {}),
             } } : {}),
             task: {
               status: task.status,
@@ -94,6 +96,9 @@ export async function showWorkflowDialog(
               startTime: task.startTime,
               endTime: task.endTime,
               totalPausedMs: task.totalPausedMs,
+              replayedCount: task.replayedCount,
+              replayedNodeCount: task.replayedNodeCount,
+              reconciledNodeCount: task.reconciledNodeCount,
             },
             meta: task.meta,
             agentCount: task.agentCount,

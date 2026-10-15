@@ -44,6 +44,7 @@ import {
   stats,
   type WorkflowAgentEntry,
   type WorkflowEntry,
+  type WorkflowNodeEntry,
   type WorkflowRunStatus,
 } from "../workflow/progress.js";
 import type { Theme } from "./agent-widget.js";
@@ -163,6 +164,8 @@ export interface WorkflowCardTask {
   replayedCount?: number;
   /** Node reads handed back stale from the resume journal rather than re-read. */
   replayedNodeCount?: number;
+  /** Positions settled by an operator acknowledgement or re-run under an operator override. */
+  reconciledNodeCount?: number;
 }
 
 export interface WorkflowCardInput {
@@ -246,6 +249,16 @@ export function formatThinking(entry: WorkflowAgentEntry): string | undefined {
  * Shared with the dialog so both views name the same thing the same way — the
  * card shows it inline while the run happens, the dialog on the agent's row.
  */
+/** Short reconcile state for a node row — display provenance, never an authority. */
+function reconcileAnnotation(node: WorkflowNodeEntry): string {
+  switch (node.reconcile?.state) {
+    case "acknowledged": return " · acknowledged by operator";
+    case "overridden": return " · re-run by operator override";
+    case "pending": return " · reconcile pending";
+    default: return "";
+  }
+}
+
 export const REPLAYED_ANNOTATION = "from resume journal";
 
 /**
@@ -412,7 +425,7 @@ export function layoutWorkflowCard(input: WorkflowCardInput): WorkflowCardLine[]
     const glyph = node.state === "error" ? glyphs.cross : verified ? glyphs.tick : node.state === "done" ? "?" : glyphs.running;
     const outcome = node.domainStatus ?? node.error ?? node.resultPreview ?? "unknown";
     lines.push(clampLine([
-      { text: `  ${glyph} ${safeWorkflowTerminalText(node.label)} · ${safeWorkflowTerminalText(node.capabilityId)} · ${safeWorkflowTerminalText(outcome)}${node.cached ? ` · ${REPLAYED_ANNOTATION}` : ""}`,
+      { text: `  ${glyph} ${safeWorkflowTerminalText(node.label)} · ${safeWorkflowTerminalText(node.capabilityId)} · ${safeWorkflowTerminalText(outcome)}${node.cached ? ` · ${REPLAYED_ANNOTATION}` : ""}${reconcileAnnotation(node)}`,
         color: node.state === "error" ? "error" : "dim" },
     ], width));
   }
