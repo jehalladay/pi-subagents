@@ -78,7 +78,7 @@ export const EVIDENCE_TRUNCATED_MARK = "[truncated]";
 const NOT_REQUESTED: EvidenceEntry = { state: "not-requested" };
 const LOADING: EvidenceEntry = { state: "loading" };
 const DIGEST = /^(?:[a-z][a-z0-9]{1,15}[:-])?[0-9a-f]{16,128}$/i;
-const ZERO_WIDTH = /[­​-‏⁠-⁤﻿]/g;
+const ZERO_WIDTH = /[\u00AD\u200B-\u200F\u2060-\u2064\uFEFF]/g;
 const MAX_RECEIPT_CHARS = 120;
 
 const scopeEquals = (left: ObservationScope, right: ObservationScope): boolean =>
