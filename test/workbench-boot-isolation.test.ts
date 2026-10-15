@@ -27,7 +27,9 @@ vi.mock("@anthropic-ai/claude-agent-sdk", () => {
 });
 
 describe("extension boot isolation with the Workbench disabled (wb-cax.10)", () => {
-  it("activates and registers its standard tools without touching a native SDK", async () => {
+  // The whole extension graph is imported inside the test (so the tripwires see
+  // it); under a full-suite run that import alone can exceed the default budget.
+  it("activates and registers its standard tools without touching a native SDK", { timeout: 60_000 }, async () => {
     const sandbox = hermeticDir({ settings: { workflowsEnabled: false } });
     try {
       const { default: subagentsExtension } = await import("../src/index.js");

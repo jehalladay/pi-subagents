@@ -42,16 +42,19 @@ let loaded: WorkbenchNativeModules | undefined;
 let loading: Promise<WorkbenchNativeModules> | undefined;
 
 async function importAll(): Promise<WorkbenchNativeModules> {
-  const [furnaceSdk, claudeHost, claudeTranscript, detached, forge, furnace, hyperunix, reactivefiber] = await Promise.all([
-    import("@furnace/sdk"),
-    import("./claude-host.js"),
-    import("./claude-transcript.js"),
-    import("./hosts/local-detached.js"),
-    import("./providers/forge.js"),
-    import("./providers/furnace.js"),
-    import("./providers/hyperunix.js"),
-    import("./providers/reactivefiber.js"),
-  ]);
+  // Sequential on purpose: the SDK packages are imported by more than one of
+  // these modules, and a concurrent first import of the same external module
+  // races module mocking in the test runner (the second importer can observe
+  // the real module while the mock's factory is still settling). Module
+  // evaluation is single-threaded anyway, so nothing is lost.
+  const furnaceSdk = await import("@furnace/sdk");
+  const claudeHost = await import("./claude-host.js");
+  const claudeTranscript = await import("./claude-transcript.js");
+  const detached = await import("./hosts/local-detached.js");
+  const forge = await import("./providers/forge.js");
+  const furnace = await import("./providers/furnace.js");
+  const hyperunix = await import("./providers/hyperunix.js");
+  const reactivefiber = await import("./providers/reactivefiber.js");
   // Getters, not captured references: every read goes to the module's live
   // binding, exactly as a static import would, so the namespace is a seam and
   // never a snapshot of the functions it fronts.

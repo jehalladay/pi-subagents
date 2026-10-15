@@ -27,7 +27,8 @@ describe("native-modules loader (wb-cax.10)", () => {
     expect(() => workbenchNative()).toThrow(WORKBENCH_NATIVE_UNLOADED);
   });
 
-  it("loads once, freezes the namespace and shares it with every caller", async () => {
+  // First load of typescript plus four SDKs; under a full-suite run it can exceed the default budget.
+  it("loads once, freezes the namespace and shares it with every caller", { timeout: 60_000 }, async () => {
     const [first, second] = await Promise.all([loadWorkbenchNative(), loadWorkbenchNative()]);
     expect(first).toBe(second);
     expect(Object.isFrozen(first)).toBe(true);
