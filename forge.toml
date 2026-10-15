@@ -85,6 +85,10 @@ timeout = 180
 command = "node qa/workbench/local-detached-faults.mjs"
 timeout = 240
 
+[build.commands.local-detached-shared-child]
+command = "node qa/workbench/local-detached-shared-child.mjs"
+timeout = 240
+
 [build.commands.local-detached-unit]
 command = "./node_modules/.bin/vitest run test/workbench-local-detached.test.ts"
 timeout = 180
