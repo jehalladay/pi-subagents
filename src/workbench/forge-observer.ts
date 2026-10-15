@@ -35,9 +35,8 @@ const identity = (value: unknown): value is string =>
   typeof value === 'string' && value.length > 0 && Buffer.byteLength(value) <= MAX_IDENTITY_BYTES && stripUnsafeText(value) === value;
 const instant = (value: unknown): value is string =>
   typeof value === 'string' && value.length <= 64 && /(?:Z|[+-]\d\d:\d\d)$/.test(value) && Number.isFinite(Date.parse(value));
-/** Producer text bound for display. Unsafe sequences become spaces BEFORE the shared redactor runs, so an escape glued
- * to a credential cannot hide it from the redactor; the shared sanitizer then redacts, bounds and strips. */
-const shown = (value: string, max: number): string => sanitizeWorkbenchText(stripUnsafeText(value, ' ').replace(/\s+/g, ' ').trim(), max);
+/** Producer text bound for display: the shared helper's label layout (normalize once, redact every reading, strip once). */
+const shown = (value: string, max: number): string => sanitizeWorkbenchText(value, max, 'label');
 /** An evidence reference is listed only when it displays exactly as stored, never as a mangled identity. */
 const exact = (value: string): boolean => identity(value) && sanitizeWorkbenchText(value, MAX_TEXT) === value;
 

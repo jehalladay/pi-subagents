@@ -12,7 +12,7 @@
  */
 import { CapabilityError } from "./capability-registry.js";
 import type { NativeRef, ObservationProjection, ObservationScope, ObservedNode, Presentation, Relation } from "./observation.js";
-import { redactWorkbenchText, stripUnsafeText } from "./redaction.js";
+import { sanitizeWorkbenchText } from "./redaction.js";
 
 export const ATTENTION_CONTRACT = "workbench.attention/v1";
 export const ATTENTION_CRITICAL_PATH_CAVEAT = "Observed dependency edges and complete source intervals only; missing edges do not imply independence.";
@@ -117,14 +117,12 @@ function spanOf(node: ObservedNode): Span | undefined {
   return endMs === undefined || endMs < startMs ? undefined : { startMs, endMs };
 }
 
-/** Producer text bound for display. Unsafe sequences become spaces BEFORE the shared redactor runs, so an escape glued
- * to a credential cannot hide it; the shared sanitizers then redact and strip, and a longer title is cut to MAX_TITLE
- * with a visible marker, never through a surrogate pair. */
+/** Producer text bound for display: the shared helper's label layout, and a longer title is cut to MAX_TITLE with a visible
+ * marker, never through a surrogate pair. */
 function titleOf(node: ObservedNode): string {
   const raw = node.presentation.title;
   if (typeof raw !== "string") return "";
-  const spaced = stripUnsafeText(raw.slice(0, MAX_TITLE_SCAN), " ").replace(/\s+/g, " ").trim();
-  const shown = stripUnsafeText(redactWorkbenchText(spaced));
+  const shown = sanitizeWorkbenchText(raw.slice(0, MAX_TITLE_SCAN), MAX_TITLE_SCAN, "label");
   if (shown.length <= MAX_TITLE) return shown;
   let end = MAX_TITLE - TRUNCATED.length;
   const last = shown.charCodeAt(end - 1);
