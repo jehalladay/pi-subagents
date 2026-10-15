@@ -36,6 +36,14 @@ export const RETAINED_BOUNDS = Object.freeze({
   /** Payload bodies still reachable from the renderer after blur. */
   reachableBodiesAfterBlur: 0,
 });
+/** Stated in the receipt header before any measurement: how the post-warmup growth is anchored. */
+export const WARMUP_ANCHOR = Object.freeze({
+  choice: 'last-warmup-sample',
+  rule: 'heap growth after warmup is the worst measured post-GC heapUsed minus the post-GC heapUsed of the final warmup sample; a different anchor (first warmup sample, baseline) would give a different figure',
+});
+/** Bench limits are not the production configuration at the same node cap, so no figure here is comparable to a production run. */
+export const COMPARABILITY = 'non-comparable to production (bench limits 12000/128/40 vs 2000/20000/100)';
+const SLOPE_LABEL = 'UNDETERMINED: least-squares post-GC heapUsed slope over the measured samples at bench limits; no significance test, not a leak claim and not a clean bill';
 export const DEFAULT_RETAINED_SAMPLING = Object.freeze({cycles: 48, warmupCycles: 8, keypressesPerCycle: 60, bodyBytesCap: 4 * MIB});
 
 const MIN_MEASURED_SAMPLES = 2;
@@ -126,11 +134,12 @@ function runCycle({projection, inspector, plan, ctx, cycle}) {
   press('k', focusedModel);
   inspector.layoutInspector(focusedModel, state, size);
   const focusedWhileHeld = state.focused !== null;
+  const detailsWhileHeld = state.view === 'details';
   // Blur: Esc clears focus, a second Esc leaves the details view. Only the plain model is used from here on.
   for (let step = 0; step < 3 && (state.focused !== null || state.view !== 'overview'); step++) press('\u001b', model);
   inspector.layoutInspector(model, state, size);
   ctx.state = {...state, focused: null};
-  return {weakBody: new WeakRef(body), weakLoaded: new WeakRef(loaded), bytes, focusedWhileHeld, blurred: state.focused === null};
+  return {weakBody: new WeakRef(body), weakLoaded: new WeakRef(loaded), bytes, focusedWhileHeld, detailsWhileHeld, blurred: state.focused === null};
 }
 
 function slope(values) {
@@ -165,6 +174,13 @@ export function assessRetainedReceipt(receipt) {
   if (receipt.gc?.available) {
     if (warmup.length === 0 || measured.length < MIN_MEASURED_SAMPLES) {
       instrument('series-too-short', `${warmup.length} warmup and ${measured.length} measured samples; need >= 1 and >= ${MIN_MEASURED_SAMPLES}`);
+    }
+    const cycles = receipt.sampling?.cycles;
+    if (receipt.falsifier && receipt.falsifier.focusedCycles !== cycles) {
+      instrument('focus-not-held-every-cycle', `focus held in ${receipt.falsifier.focusedCycles ?? 'an unrecorded number of'} of ${cycles} cycles: the falsifier did not exercise a focused payload every cycle`);
+    }
+    if (receipt.falsifier && receipt.falsifier.detailsCycles !== cycles) {
+      instrument('details-not-held-every-cycle', `details view reached in ${receipt.falsifier.detailsCycles ?? 'an unrecorded number of'} of ${cycles} cycles: the falsifier did not exercise the details view every cycle`);
     }
     const control = receipt.falsifier?.control;
     if (!control?.detectedWhileHeld) instrument('control-not-detected', 'a body deliberately held was not seen as reachable: the probe is blind');
@@ -228,6 +244,8 @@ export async function runRetainedMemoryBench({Projection, inspector, fixture, ho
     measured: false,
     heapLabel: 'post-gc-retained',
     labels: {...LABELS},
+    comparability: COMPARABILITY,
+    warmupAnchor: {...WARMUP_ANCHOR},
     aggregation: 'none: no cap change and no supernode aggregation; this receipt informs those later decisions',
     utc: host.utc,
     revision: host.revision,
@@ -272,12 +290,16 @@ export async function runRetainedMemoryBench({Projection, inspector, fixture, ho
   const ctx = {state: inspector.initialInspectorState()};
   const leakedCycles = [];
   let blurCycles = 0;
+  let focusedCycles = 0;
+  let detailsCycles = 0;
   let bodiesIssued = 0;
   let payloadBytesOffered = 0;
   for (let cycle = 0; cycle < plan.cycles; cycle++) {
     const issued = runCycle({projection, inspector, plan, ctx, cycle});
     bodiesIssued++;
     if (issued.blurred) blurCycles++;
+    if (issued.focusedWhileHeld) focusedCycles++;
+    if (issued.detailsWhileHeld) detailsCycles++;
     payloadBytesOffered += issued.bytes;
     await collect(gc);
     const usage = memory();
@@ -299,6 +321,8 @@ export async function runRetainedMemoryBench({Projection, inspector, fixture, ho
   receipt.falsifier = {
     blurCycles,
     bodiesIssued,
+    focusedCycles,
+    detailsCycles,
     reachableAfterBlur: leakedCycles.length,
     leakedCycles,
     control: {detectedWhileHeld, releasedAfterDrop},
@@ -306,6 +330,8 @@ export async function runRetainedMemoryBench({Projection, inspector, fixture, ho
   receipt.summary = {
     heapGrowthAfterWarmupBytes: anchor && measuredSamples.length > 0 ? Math.max(...measuredSamples.map(sample => sample.heapUsed)) - anchor.heapUsed : null,
     heapSlopeBytesPerCycle: slope(measuredSamples.map(sample => sample.heapUsed)),
+    heapSlopeVerdict: 'UNDETERMINED',
+    heapSlopeLabel: SLOPE_LABEL,
     arrayBufferGrowthBytes: measuredSamples.length > 0 ? Math.max(...measuredSamples.map(sample => sample.arrayBuffers)) - receipt.baseline.arrayBuffers : null,
     payloadBytesOffered,
     payloadBytesRetained: last ? Math.max(0, last.arrayBuffers - receipt.baseline.arrayBuffers) : null,

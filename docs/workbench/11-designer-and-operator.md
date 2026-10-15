@@ -12,6 +12,7 @@ Pi's existing LLM harness is the interactive programmer, not a passive dashboard
 - workflow_execute(definitionRef,input,hostMode,policy?): authorized launch; returns logical invocation and native references, not false completion.
 - workflow_observe(ref,selectors?,cursor?,limit?): bounded native snapshot, event window, aggregates, freshness, anomaly evidence.
 - workflow_control(ref,action,params?): explicit native action after permission/preconditions; returns requested/acknowledged/result distinct.
+- workflow_reconcile(taskId,action,position?,…): experimental; inspect a resume-refusing journaled effect, gather one authorized producer read as a bound receipt, and record an operator acknowledgement or single-use override (exact reconcile:<producer>.<action> grant + confirmation); records decisions, never executes or resumes anything itself.
 - workflow_compare(referenceRun,candidateRun,dimensions?): source/config/basis alignment, measured metrics and confidence/coverage limits.
 
 Use compact structured schema, discover more capability detail on demand; do not insert all SDK method signatures into every Pi prompt.

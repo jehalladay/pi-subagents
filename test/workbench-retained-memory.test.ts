@@ -14,6 +14,7 @@ import {
   RETAINED_RECEIPT_CONTRACT,
   retainedExitCodeFor,
   runRetainedMemoryBench,
+  WARMUP_ANCHOR,
 } from "../qa/workbench/retained-memory.mjs";
 import { initialInspectorState, layoutInspector, reduceInspectorKey } from "../src/ui/workflow-inspector.js";
 import { ObservationProjection } from "../src/workbench/observation.js";
@@ -47,6 +48,8 @@ interface Receipt {
   limits: { maxNodes: number; maxEdges: number; maxEvents: number; maxQuery: number };
   limitsLabel: string;
   bounds: { heapGrowthAfterWarmupBytes: number; arrayBufferGrowthBytes: number; reachableBodiesAfterBlur: number };
+  warmupAnchor?: { choice: string; rule: string };
+  comparability?: string;
   gc: { available: boolean; method: string };
   fixture: Record<string, number | string | Record<string, number>>;
   sampling: { cycles: number; warmupCycles: number; keypressesPerCycle: number; bodyBytesCap: number };
@@ -55,6 +58,9 @@ interface Receipt {
   series: Sample[];
   summary: {
     heapGrowthAfterWarmupBytes: number | null;
+    heapSlopeBytesPerCycle?: number | null;
+    heapSlopeVerdict?: string;
+    heapSlopeLabel?: string;
     arrayBufferGrowthBytes: number | null;
     payloadBytesOffered: number;
     payloadBytesRetained: number | null;
@@ -63,6 +69,8 @@ interface Receipt {
   falsifier: {
     blurCycles: number;
     bodiesIssued: number;
+    focusedCycles?: number;
+    detailsCycles?: number;
     reachableAfterBlur: number;
     leakedCycles: number[];
     control: { detectedWhileHeld: boolean; releasedAfterDrop: boolean };
@@ -158,6 +166,8 @@ function passingReceipt(): Receipt {
     falsifier: {
       blurCycles: 4,
       bodiesIssued: 4,
+      focusedCycles: 4,
+      detailsCycles: 4,
       reachableAfterBlur: 0,
       leakedCycles: [],
       control: { detectedWhileHeld: true, releasedAfterDrop: true },
@@ -251,6 +261,70 @@ describe("W21-C retained-heap series and on-blur release falsifier (wb-9x5.3)", 
     expect(receipt.violations.map((violation) => violation.rule)).toContain("operations-below-10000");
     expect(receipt.realised).toBe(false);
     expect(receipt.exitCode).toBe(2);
+  }, 120_000);
+});
+
+describe("W21-C respin folds F1/F4/F5/F7 (wb-9x5.3, owner 13:30Z rulings)", () => {
+  it("F1: records focusedCycles and detailsCycles for a real run and both equal the cycle count", async () => {
+    const receipt = await run({ Projection: ObservationProjection, inspector, fixture: small(), host: HOST, gc, sampling: SMALL });
+    expect(receipt.falsifier?.focusedCycles).toBe(SMALL.cycles);
+    expect(receipt.falsifier?.detailsCycles).toBe(SMALL.cycles);
+  }, 120_000);
+
+  it("F1: a run whose focus never takes hold is exit 2, never a pass (an inspector that ignores f/e)", async () => {
+    const deaf: Inspector = {
+      ...inspector,
+      reduceInspectorKey: (data, state, model) => (data === "f" || data === "e" ? { state } : reduceInspectorKey(data, state, model)),
+    };
+    const receipt = await run({ Projection: ObservationProjection, inspector: deaf, fixture: small(), host: HOST, gc, sampling: SMALL });
+    expect(receipt.falsifier?.focusedCycles).toBe(0);
+    expect(receipt.falsifier?.detailsCycles).toBe(0);
+    const rules = receipt.violations.map((violation) => violation.rule);
+    expect(rules).toContain("focus-not-held-every-cycle");
+    expect(rules).toContain("details-not-held-every-cycle");
+    expect(receipt.exitCode).toBe(2);
+    const shaped: Receipt = { ...receipt, fixture: passingReceipt().fixture };
+    expect(assess(shaped).exitCode).toBe(2);
+  }, 120_000);
+
+  it("F1: exit 2 when focusedCycles or detailsCycles differ from the cycle count, and absent counters are not a pass", () => {
+    const focus = passingReceipt();
+    if (focus.falsifier) focus.falsifier.focusedCycles = 3;
+    const focusVerdict = assess(focus);
+    expect(focusVerdict.exitCode).toBe(2);
+    expect(focusVerdict.violations.map((violation) => violation.rule)).toContain("focus-not-held-every-cycle");
+    const details = passingReceipt();
+    if (details.falsifier) details.falsifier.detailsCycles = 0;
+    expect(assess(details).violations.map((violation) => violation.rule)).toContain("details-not-held-every-cycle");
+    const absent = passingReceipt();
+    if (absent.falsifier) {
+      delete absent.falsifier.focusedCycles;
+      delete absent.falsifier.detailsCycles;
+    }
+    expect(assess(absent).exitCode).toBe(2);
+  });
+
+  it("F7: labels the series non-comparable to production, naming both limit triples", async () => {
+    const receipt = await run({ Projection: ObservationProjection, inspector, fixture: small(), host: HOST, gc, sampling: SMALL });
+    expect(receipt.comparability).toBe("non-comparable to production (bench limits 12000/128/40 vs 2000/20000/100)");
+  }, 120_000);
+
+  it("F5: states the warmup-anchor choice as a header constant before the measurements", async () => {
+    const receipt = await run({ Projection: ObservationProjection, inspector, fixture: small(), host: HOST, gc, sampling: SMALL });
+    expect(WARMUP_ANCHOR.choice).toBe("last-warmup-sample");
+    expect(receipt.warmupAnchor).toEqual({ ...WARMUP_ANCHOR });
+    const keys = Object.keys(receipt);
+    expect(keys.indexOf("warmupAnchor")).toBeGreaterThan(-1);
+    expect(keys.indexOf("warmupAnchor")).toBeLessThan(keys.indexOf("baseline"));
+    expect(keys.indexOf("warmupAnchor")).toBeLessThan(keys.indexOf("series"));
+    expect(keys.indexOf("comparability")).toBeLessThan(keys.indexOf("series"));
+  }, 120_000);
+
+  it("F4: the post-GC slope stays UNDETERMINED in the receipt text", async () => {
+    const receipt = await run({ Projection: ObservationProjection, inspector, fixture: small(), host: HOST, gc, sampling: SMALL });
+    expect(receipt.summary?.heapSlopeVerdict).toBe("UNDETERMINED");
+    expect(receipt.summary?.heapSlopeLabel).toMatch(/UNDETERMINED/);
+    expect(receipt.summary?.heapSlopeLabel).toMatch(/not a leak claim/);
   }, 120_000);
 });
 

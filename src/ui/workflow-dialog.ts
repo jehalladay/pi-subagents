@@ -63,6 +63,7 @@ import {
   type WorkflowEntry,
   type WorkflowNodeEntry,
 } from "../workflow/progress.js";
+import type { NodeReconcileProvenance } from "../workflow/reconcile.js";
 import { SPINNER, type Theme } from "./agent-widget.js";
 import {
   ASCII_GLYPHS,
@@ -79,7 +80,7 @@ import {
   type WorkflowCardSegment,
   type WorkflowCardTask,
 } from "./workflow-card.js";
-import { type InspectorModel, type InspectorState, initialInspectorState, layoutInspector, reduceInspectorKey } from "./workflow-inspector.js";
+import { type InspectorModel, type InspectorState, initialInspectorState, inspectorEvidenceTarget, layoutInspector, reduceInspectorKey } from "./workflow-inspector.js";
 
 /** Fallback width when the caller does not know the terminal's. */
 const DEFAULT_WIDTH = 80;
@@ -726,7 +727,38 @@ function nodeRow(node: WorkflowNodeEntry, selected: boolean, compact: boolean, w
       ...(node.sourceBasis ? [{ text: ` · ${safeWorkflowTerminalText(node.sourceBasis)}`, color: "dim" as const }] : []),
       ...(node.cached ? [{ text: ` · ${REPLAYED_ANNOTATION}`, color: "dim" as const }] : []),
     ] : []),
+    ...(node.reconcile !== undefined ? [{ text: ` · ${reconcileRowAnnotation(node.reconcile)}`, color: "dim" as const }] : []),
   ], width);
+}
+
+/** One short, fixed word per reconcile state; operator identity stays in the detail pane. */
+function reconcileRowAnnotation(reconcile: NodeReconcileProvenance): string {
+  return reconcile.state === "acknowledged" ? "acknowledged by operator"
+    : reconcile.state === "overridden" ? "re-run by operator override"
+    : "reconcile pending";
+}
+
+/** Detail-pane rows for a node's reconcile provenance; short rows so truncation never hides the state. */
+function reconcileDetailLines(reconcile: NodeReconcileProvenance, label: (value: string | undefined, fallback?: string) => string): string[] {
+  if (reconcile.state === "pending") {
+    const refs = reconcile.nativeRefs !== undefined && reconcile.nativeRefs.length > 0
+      ? reconcile.nativeRefs.map(ref => ref.id).join(", ")
+      : "none recorded";
+    return [
+      `Reconcile: pending — journaled ${label(reconcile.effectClass)} at position ${reconcile.position} (producer ${label(reconcile.producer)})`,
+      `Reconcile next: workflow_reconcile position ${reconcile.position} · native refs ${label(refs)}`,
+    ];
+  }
+  if (reconcile.state === "acknowledged") {
+    return [
+      `Reconcile: acknowledged by ${label(reconcile.principal)}`,
+      `Reconcile detail: ${reconcile.determination} · ${reconcile.evidenceClass} · at ${label(reconcile.recordedAt)}`,
+    ];
+  }
+  return [
+    `Reconcile: re-run by operator override · ${reconcile.outcome}`,
+    `Reconcile detail: ${reconcile.duplicateRisk} · by ${label(reconcile.principal)}`,
+  ];
 }
 
 /** The agent row's dot-separated tail. The model is not in it — it leads. */
@@ -932,6 +964,7 @@ export function layoutWorkflowDialog(input: WorkflowDialogInput): WorkflowCardLi
       `Last error: ${label(node.error, "none reported")}`,
       `Evidence: ${node.evidenceRefs?.length ? node.evidenceRefs.map(ref => label(ref)).join(", ") : "none reported"}`,
       ...(node.cached ? [`Provenance: ${REPLAYED_ANNOTATION} (stale read, not re-read by this run)`] : []),
+      ...(node.reconcile !== undefined ? reconcileDetailLines(node.reconcile, label) : []),
     ];
     detailRows.push(detailHeading(`Native operation · ${label(node.label)}`, [], rightWidth));
     for (const detail of details) {
@@ -1223,6 +1256,13 @@ export class WorkflowDialog implements Component {
         const item = source.observation.projection.window({scope:source.observation.scope,invocationId:source.observation.invocationId,offset:this.inspectorState.index,limit:1}).nodes[0];
         if (item?.nativeRef.provider === "claude-agent-sdk" && item.nativeRef.type === "session") this.actions.onOpenAgent?.(`claude:${item.nativeRef.id}`);
       }
+      else if (outcome.action === "load-evidence") {
+        // The reducer only names the request; the host-supplied store performs
+        // the one bounded load, and a settled slot re-renders the pane.
+        const target = inspectorEvidenceTarget(source.observation, this.inspectorState);
+        const pending = target !== undefined ? source.observation.evidence?.request(target.scope, target.nativeRef, target.evidenceRef) : undefined;
+        void pending?.then(() => { if (!this.closed) this.tui.requestRender(); });
+      }
       this.tui.requestRender();
       return;
     }
@@ -1266,7 +1306,17 @@ export class WorkflowDialog implements Component {
     this.progressSource = undefined;
   }
 
+  /** Stop local evidence reads only; a torn-down source must not block closing. */
+  private abortEvidence(): void {
+    try {
+      this.source().observation?.evidence?.abortAll();
+    } catch {
+      // The dialog may outlive its source; closing stays safe either way.
+    }
+  }
+
   dispose(): void {
+    this.abortEvidence();
     this.closed = true;
     if (this.timer) {
       clearInterval(this.timer);
@@ -1278,6 +1328,9 @@ export class WorkflowDialog implements Component {
     switch (action.kind) {
       case "cancel":
         this.closed = true;
+        // Closing the dialog stops only the local evidence reads — never the
+        // workflow and never a producer (docs/workbench/20 UI integration).
+        this.abortEvidence();
         this.done(undefined);
         return;
       case "kill":
