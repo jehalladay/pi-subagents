@@ -102,7 +102,7 @@ function safeChunks(raw: string): string[] {
   let at = 0;
   while (at < cleaned.length) {
     let end = Math.min(at + EVIDENCE_LINE_CHARS, cleaned.length);
-    if (end < cleaned.length && isHighSurrogate(cleaned.charCodeAt(end - 1)) && end - 1 > at) end -= 1;
+    if (end < cleaned.length && isHighSurrogate(cleaned.charCodeAt(end - 1))) end -= 1;
     chunks.push(safeWorkflowTerminalText(cleaned.slice(at, end)));
     at = end;
   }
@@ -136,7 +136,8 @@ function boundPreview(preview: readonly string[], maxBytes: number): { lines: st
       const size = Buffer.byteLength(part);
       const kept = size > remaining ? prefixWithinBytes(part, remaining) : part;
       if (size > remaining) clipped = true;
-      remaining -= Math.min(Buffer.byteLength(kept), remaining);
+      remaining -= Math.min(size, remaining);
+      if (kept === "" && size > 0) continue;
       for (const chunk of safeChunks(kept)) {
         if (lines.length >= EVIDENCE_MAX_PREVIEW_LINES) { clipped = true; break; }
         lines.push(chunk);

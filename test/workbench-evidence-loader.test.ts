@@ -463,3 +463,41 @@ describe('preview bounding cuts on code-point boundaries (wb-v53)', () => {
     expect(entry.preview.join('')).toBe('a' + '😀'.repeat(130));
   });
 });
+
+describe('a clipped preview is a strict prefix ending at the cut (wb-v53 respin U1/U3)', () => {
+  const TRUNCATED = '[truncated]';
+
+  async function previewOf(lines: readonly string[], maxBytes: number, bytes = 10_000): Promise<readonly string[]> {
+    const s = store([counting(async () => content(lines, { bytes }))], { maxBytes });
+    await s.request(scope, native('fixture'), 'ev:1');
+    const entry = s.get(scope, native('fixture'), 'ev:1');
+    if (entry.state !== 'loaded') throw new Error('expected a loaded entry');
+    return entry.preview;
+  }
+
+  it('C1: text after a mid-line cut is not appended (budget is exhausted on a clip)', async () => {
+    expect(await previewOf(['漢漢\nab'], 4)).toEqual(['漢', TRUNCATED]);
+  });
+
+  it('C2: a part clipped to nothing emits no line and nothing after it', async () => {
+    expect(await previewOf(['漢\nx'], 1)).toEqual([TRUNCATED]);
+  });
+
+  it('C3: blank lines after a mid-line cut are not appended', async () => {
+    expect(await previewOf(['漢漢\n\n\n\nb'], 4)).toEqual(['漢', TRUNCATED]);
+  });
+
+  it('C5: a long run of newlines after the cut does not fill the line cap', async () => {
+    expect(await previewOf(['漢漢' + '\n'.repeat(300)], 4)).toEqual(['漢', TRUNCATED]);
+  });
+
+  it('C6: later lines never appear after the cut line', async () => {
+    expect(await previewOf(['漢'.repeat(7) + '\nrm -rf /tmp/x\nok'], 20)).toEqual(['漢'.repeat(6), TRUNCATED]);
+  });
+
+  it('U3: an exactly fitting code point is kept (maxBytes 99 keeps 33 of three-byte characters)', async () => {
+    const preview = await previewOf(['漢'.repeat(100)], 99, 300);
+    expect(preview).toEqual(['漢'.repeat(33), TRUNCATED]);
+    expect(Buffer.byteLength(preview[0] ?? '')).toBe(99);
+  });
+});
