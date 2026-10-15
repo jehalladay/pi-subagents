@@ -45,6 +45,10 @@ timeout = 210
 command = "bash qa/workbench/package-smoke.sh"
 timeout = 120
 
+[build.commands.release-checklist]
+command = "node qa/workbench/release-checklist-receipt.mjs"
+timeout = 600
+
 [build.commands.install-smoke]
 command = "node qa/workbench/install-smoke.mjs"
 timeout = 240
@@ -104,7 +108,3 @@ timeout = 180
 [build.commands.status-ledger]
 command = "node qa/workbench/status-ledger.mjs"
 timeout = 60
-
-[build.commands.release-checklist]
-command = "node qa/workbench/release-checklist-receipt.mjs"
-timeout = 600
