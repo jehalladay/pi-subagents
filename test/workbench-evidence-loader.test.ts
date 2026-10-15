@@ -356,9 +356,12 @@ describe('grant-gated producer loaders (docs/workbench/20 § Producer mapping)',
   });
 
   it('claude: a uuid outside the bounded window is transport, never a fabricated row', async () => {
-    const s = store(createEvidenceLoaders({ grants: () => [CLAUDE_TRANSCRIPT_GRANT], claude: async () => [{ type: 'user', uuid: 'other', text: 'x' }] }));
+    // The clock is injected so the answer comes from the window check itself, not from the clockless refusal that precedes it.
+    const readRows = vi.fn(async () => [{ type: 'user', uuid: 'other', text: 'x' }]);
+    const s = store(createEvidenceLoaders({ grants: () => [CLAUDE_TRANSCRIPT_GRANT], claude: readRows, now: () => new Date(at) }));
     await s.request(scope, claudeRef, `claude-message:${uuid}`);
     expect(s.get(scope, claudeRef, `claude-message:${uuid}`)).toEqual({ state: 'unavailable', reason: 'transport' });
+    expect(readRows).toHaveBeenCalledTimes(1);
   });
 
   it('claude: a non-session node does not resolve claude-message refs', async () => {
