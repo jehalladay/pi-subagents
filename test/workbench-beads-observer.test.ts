@@ -275,6 +275,62 @@ describe('wb-752.6 Beads Work readiness reader', () => {
     expectTypeOf<BeadsWorkRelation>().toEqualTypeOf<Parameters<ObservationProjection['relate']>[0]>();
   });
 
+  // wb-752.11 A1 (F3): the mapped literals are compared on the RAW dependency_type, never on sanitized text.
+  it('wb-752.11 A1: a hostile type that sanitizes onto a mapped literal mints zero edges and is counted under its sanitized label', async () => {
+    const reading = await read(
+      fake(
+        ok([
+          issue({
+            dependencies: [
+              dep('wb-h.1', 'blo\u200bcks'),
+              dep('wb-h.2', '\u001b[1mblocks\u001b[0m'),
+              dep('wb-h.3', 'parent-\u200bchild'),
+              dep('wb-g1g.2', 'blocks'),
+            ],
+          }),
+        ]),
+      ),
+    );
+    const {relations} = projectBeadsWork(reading, scope);
+    expect(relations.map((relation) => [relation.kind, relation.to.id])).toEqual([['dependency', 'wb-g1g.2']]);
+    // The ANSI-wrapped literal sanitizes to 'blocks' and is counted under that label; the zero-width forms survive the shared
+    // strip (wb-952 owns widening it), fail the type shape and fall to the unrecognized bucket. None of them mints an edge.
+    expect(reading.unmappedDependencyTypes).toEqual({unrecognized: 2, blocks: 1});
+    expect(reading.work.parent).toBeUndefined();
+    expect(JSON.stringify(reading)).not.toMatch(/[\u200b\u001b]/);
+  });
+
+  // wb-752.11 A2 (F5): the parent FIELD is authoritative and a naming entry collapses into it.
+  it('wb-752.11 A2: the parent field is authoritative; a parent-child entry naming another pair adds no second grouping edge', async () => {
+    const reading = await read(fake(ok([issue({parent: 'wb-752', dependencies: [dep('wb-other.1', 'parent-child'), dep('wb-752', 'parent-child')]})])));
+    const grouping = projectBeadsWork(reading, scope).relations.filter((relation) => relation.kind === 'grouping');
+    expect(grouping.map((relation) => relation.from.id)).toEqual(['wb-752']);
+    expect(reading.work.parent).toBe('wb-752');
+  });
+
+  // wb-752.11 A3 (F4): symmetric self-reference refusal.
+  it('wb-752.11 A3: an entry or parent field naming the work itself mints no edge in either direction and is counted', async () => {
+    const reading = await read(fake(ok([issue({dependencies: [dep(workId, 'blocks'), dep(workId, 'parent-child'), dep('wb-g1g.2', 'blocks')]})])));
+    const {relations} = projectBeadsWork(reading, scope);
+    expect(relations.map((relation) => [relation.kind, relation.from.id, relation.to.id])).toEqual([['dependency', workId, 'wb-g1g.2']]);
+    expect(reading.selfReferences).toBe(2);
+    expect(reading.work.parent).toBeUndefined();
+    const field = await read(fake(ok([issue({parent: workId, dependencies: []})])));
+    expect(projectBeadsWork(field, scope).relations).toEqual([]);
+    expect(field.selfReferences).toBe(1);
+    const clean = await read(fake(ok([issue()])));
+    expect(Object.hasOwn(clean, 'selfReferences')).toBe(false);
+  });
+
+  // wb-752.11 A4 (F6): the unrecognized bucket carries an exact count.
+  it('wb-752.11 A4: types outside the bd type shape are counted exactly under the unrecognized bucket', async () => {
+    const reading = await read(
+      fake(ok([issue({dependencies: [dep('wb-u.1', 'Weird Type!'), dep('wb-u.2', 'x'.repeat(40)), dep('wb-u.3', '9lives'), dep('wb-u.4', 'related')]})])),
+    );
+    expect(reading.unmappedDependencyTypes).toEqual({unrecognized: 3, related: 1});
+    expect(projectBeadsWork(reading, scope).relations).toEqual([]);
+  });
+
   // Falsifier 4: C6 closed is never success.
   it('F4: a closed work item never renders statusTone success; statuses map as pinned', async () => {
     const tone = async (status: string): Promise<[string, string]> => {
