@@ -100,12 +100,17 @@ describe('Workbench node() host authorization',()=>{
   });
 
   it('L4: a node between identical agents invalidates downstream journal replay',async()=>{
-    const {host:base,invoke}=harness();
+    const {host:base,invoke,registry}=harness();
     const calls=vi.fn(async()=>({ok:true,text:'fresh'}));
     const host:WorkflowHost={...base,spawnAgent:calls};
     const script=HEAD+'const first=await agent("first"); await node("record.read",{value:"x"}); return await agent("second");';
     const journaled: import('../src/workflow/journal.js').WorkflowJournalEntry[]=[];
-    await runWorkflow({script,host,journal:{entries:[],append:e=>journaled.push(e)}});
+    // Recorded under the registry's declared class, as every Workbench host
+    // records it, and resumed under a host that vouches for no class: the read
+    // runs live rather than replaying, and a live node ends the replayable
+    // prefix. (A node journaled with no class at all stops the resume: wb-tu1.)
+    await runWorkflow({script,host:{...host,describeNodeEffect:id=>registry.effectClassOf(id)},journal:{entries:[],append:e=>journaled.push(e)}});
+    expect(journaled.find(e=>e.kind==='node')?.effectClass).toBe('read');
     const before=calls.mock.calls.length;
     const replay=await runWorkflow({script,host,journal:{entries:journaled}});
     expect(replay.status).toBe('completed');
