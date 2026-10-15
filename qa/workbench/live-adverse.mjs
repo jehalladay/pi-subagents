@@ -21,7 +21,7 @@
  * lookup retry are bounded by the receipt's disclosed constants and measured.
  *
  * The host is wired to the run's abort signal exactly as production wires it
- * (src/index.ts 2724-2731: one task abort signal passed both as the runWorkflow
+ * (src/index.ts 2748-2755: one task abort signal passed both as the runWorkflow
  * signal and as the createClaudeWorkflowHost signal), so the tier measures the
  * production cancellation path, not only runtime host.abortAgent. Each
  * agent's startedAt is the runtime's own stamp from its agent-started progress
@@ -35,7 +35,7 @@ import { getSessionInfo } from '@anthropic-ai/claude-agent-sdk';
 import { createClaudeWorkflowHost } from '../../dist/workbench/claude-host.js';
 import { redactWorkbenchText, stripUnsafeText } from '../../dist/workbench/redaction.js';
 import { runWorkflow } from '../../dist/workflow/runtime.js';
-import { ACK_WAIT_BOUND_MS, buildAdverseReceipt, SESSION_LOOKUP_BOUND_MS, servedModelFrom } from './live-adverse-receipt.mjs';
+import { ACK_WAIT_BOUND_MS, buildAdverseReceipt, buildPreview, SESSION_LOOKUP_BOUND_MS, servedModelFrom } from './live-adverse-receipt.mjs';
 
 const cwd = process.argv[2] ?? process.cwd();
 const MODEL = process.env.CLAUDE_ADVERSE_MODEL ?? 'claude-opus-5-5';
@@ -50,14 +50,8 @@ const MODEL_PREVIEW = 200;
 const now = () => performance.timeOrigin + performance.now();
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-/** Redact, strip control bytes, drop credential-looking key names, bound length. */
-function preview(value, max = 300) {
-  const text = stripUnsafeText(redactWorkbenchText(String(value ?? ''), max))
-    .replace(/Bearer\s+\S+/gi, '[REDACTED]')
-    .replace(/sk-ant-\S*/gi, '[REDACTED]')
-    .replace(/api[_-]?key/gi, '[REDACTED-NAME]');
-  return text.length > max ? `${text.slice(0, max - 1)}…` : text;
-}
+/** Normalize, redact, strip control bytes, drop credential-looking key names, bound length (live-adverse-receipt.mjs buildPreview). */
+const preview = (value, max = 300) => buildPreview(value, max, { redact: redactWorkbenchText, strip: stripUnsafeText });
 
 const summariseResult = (result) => ({
   ok: result.ok === true,
@@ -108,7 +102,7 @@ function recorder(onInit) {
 }
 
 /**
- * Production wiring (src/index.ts 2724-2731): the run abort signal is also
+ * Production wiring (src/index.ts 2748-2755): the run abort signal is also
  * the host's own signal. Production additionally passes an identity
  * re-verifying beforeDispatch, capabilities, grants, roles, invocationId and
  * principal built from src-only modules; this tier passes none of them.

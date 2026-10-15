@@ -7,7 +7,8 @@
  */
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import { ACK_WAIT_BOUND_MS, assessAdverseJourneys, buildAdverseReceipt, SESSION_LOOKUP_BOUND_MS, servedModelFrom } from '../qa/workbench/live-adverse-receipt.mjs';
+import { ACK_WAIT_BOUND_MS, assessAdverseJourneys, buildAdverseReceipt, buildPreview, SESSION_LOOKUP_BOUND_MS, servedModelFrom } from '../qa/workbench/live-adverse-receipt.mjs';
+import { redactWorkbenchText, stripUnsafeText } from '../src/workbench/redaction.js';
 
 const CANCELLED = 'Claude SDK query was cancelled.';
 const SID_A = '3f2a9c1e-7b64-4d0a-9e1f-0a1b2c3d4e5f';
@@ -648,5 +649,120 @@ describe('forge.toml placement', () => {
   it('leaves the default gate list byte-for-byte unchanged', () => {
     expect(toml).toContain('gate = ["lint", "typing", "build", "test", "workbench-shell", "package-smoke"]\n');
     expect((toml.match(/^gate = /gm) ?? []).length).toBe(1);
+  });
+});
+
+/**
+ * wb-a2g.1 respin (owner ruling F1, wb-952 seventeenth site): the runner's
+ * preview() must normalize -> redact -> strip, once each, so a credential split
+ * by a control byte cannot reassemble after the strip. Respin item 2: the
+ * ackToTerminalMs sign convention is stated in the receipt and pinned here.
+ * Control bytes are built with String.fromCharCode, never typed as escapes.
+ */
+describe('respin F1: preview normalizes before it redacts', () => {
+  const BEL = String.fromCharCode(7);
+  const ZWSP = String.fromCharCode(0x200b);
+  const SHY = String.fromCharCode(0xad);
+  const RLO = String.fromCharCode(0x202e);
+  const ESC = String.fromCharCode(0x1b);
+  const preview = (value: string, max = 300) => buildPreview(value, max, { redact: redactWorkbenchText, strip: stripUnsafeText });
+  const alnum36 = 'a1B2c3D4e5F6g7H8i9J0k1L2m3N4o5P6q7R8';
+  const secretKey40 = 'wJalrXUtnFEMIK7MDENGbPxRfiCYEXAMPLEKEY12';
+
+  it('redacts a ghp_ token split by a BEL byte (confirmed leak input 1)', () => {
+    const out = preview(`err ghp_${BEL}${alnum36} end`);
+    expect(out).toContain('[REDACTED]');
+    expect(out).not.toContain('ghp_');
+    expect(out).not.toContain(alnum36);
+  });
+
+  it('redacts an aws_secret_access_key assignment split by a BEL byte (confirmed leak input 2)', () => {
+    const out = preview(`aws_secret_access${BEL}_key=${secretKey40}`);
+    expect(out).toContain('[REDACTED]');
+    expect(out).not.toContain(secretKey40);
+  });
+
+  it('redacts credentials split by zero-width, soft-hyphen and bidi marks', () => {
+    for (const mark of [ZWSP, SHY, RLO]) {
+      const out = preview(`sk-ant-${mark}api03-${alnum36}`);
+      expect(out, `mark ${mark.charCodeAt(0).toString(16)}`).not.toContain(alnum36);
+      expect(out).toContain('[REDACTED]');
+    }
+  });
+
+  it('keeps the three behaving controls redacted: split Anthropic key, split Bearer, plain ghp_', () => {
+    expect(preview(`sk-ant-${BEL}api03-${alnum36}`)).not.toContain(alnum36);
+    expect(preview(`Bearer${BEL} abc123def456ghi`)).not.toContain('abc123def456ghi');
+    expect(preview(`ghp_${alnum36}`)).not.toContain(alnum36);
+  });
+
+  it('turns whitespace controls into a single space and removes terminal escapes, leaving benign text intact', () => {
+    expect(preview('line one\nline\ttwo')).toBe('line one line two');
+    expect(preview(`colour ${ESC}[31mred${ESC}[0m ok`)).toBe('colour red ok');
+    expect(preview('claude-opus-5-5-20261001')).toBe('claude-opus-5-5-20261001');
+  });
+
+  it('bounds the result and masks bare credential key names after the strip', () => {
+    expect(preview('x'.repeat(500), 50).length).toBeLessThanOrEqual(50);
+    expect(preview('the api_key name')).toContain('[REDACTED-NAME]');
+  });
+
+  it('is wired: the runner delegates to buildPreview and no longer composes strip(redact(x)) itself', () => {
+    const runner = readFileSync(new URL('../qa/workbench/live-adverse.mjs', import.meta.url), 'utf8');
+    expect(runner).toMatch(/buildPreview\(/);
+    expect(runner).not.toMatch(/stripUnsafeText\(redactWorkbenchText\(/);
+  });
+});
+
+describe('respin F1: the receipt backstop covers the shared redactor shapes', () => {
+  const shapes = ['ghp_abcdefghijklmnopqrstuvwxyz0123456789', 'github_pat_11ABCDEFG0123456789', 'sk-proj-abc123', 'Basic dXNlcjpwYXNz', 'access_token=abc', 'refresh_token: xyz', 'password=hunter2', 'secret: "s3"', 'aws_secret_access_key=AAAA', 'aws_session_token=BBBB'];
+  for (const shape of shapes) {
+    it(`refuses a receipt string carrying ${shape.split(/[=: ]/)[0]}`, () => {
+      const o = cleanObserved();
+      o.invalidModel.settled = [{ ok: false, error: `leak ${shape}` }];
+      expect(() => build(o)).toThrow(/credential/);
+    });
+  }
+
+  it('still accepts the clean receipt (no false positive on its own statements)', () => {
+    expect(() => build(cleanObserved())).not.toThrow();
+  });
+});
+
+describe('respin item 2: ackToTerminalMs states its sign convention', () => {
+  it('names terminalAt minus the last acknowledgement beside a positive value', () => {
+    const measured = build(cleanObserved()).journeys.midStreamCancel.measured;
+    expect(measured.ackToTerminalMs).toBeGreaterThan(0);
+    expect(measured.ackToTerminalConvention).toBe('terminalAt - lastAcknowledgedAt; negative means the last acknowledgement arrived after the terminal');
+  });
+
+  it('carries a negative value, with the same convention, when an acknowledgement lands after the terminal', () => {
+    const o = cleanObserved();
+    o.midStreamCancel.agents[1] = { ...o.midStreamCancel.agents[1], acknowledgedAt: 1400 };
+    const measured = build(o).journeys.midStreamCancel.measured;
+    expect(measured.ackToTerminalMs).toBeCloseTo(1300.25 - 1400, 5);
+    expect(measured.ackToTerminalMs).toBeLessThan(0);
+    expect(measured.ackToTerminalConvention).toMatch(/negative means the last acknowledgement arrived after the terminal/);
+  });
+
+  it('omits the convention when no acknowledgement was observed', () => {
+    const o = cleanObserved();
+    o.midStreamCancel.agents = o.midStreamCancel.agents.map((a) => ({ agentId: a.agentId, startedAt: a.startedAt }));
+    expect(build(o).journeys.midStreamCancel.measured).not.toHaveProperty('ackToTerminalConvention');
+  });
+});
+
+describe('respin item 3: src/index.ts line references are current', () => {
+  it('cites the trunk lines where runWorkflow and the host receive the task abort signal', () => {
+    const runner = readFileSync(new URL('../qa/workbench/live-adverse.mjs', import.meta.url), 'utf8');
+    const lines = readFileSync(new URL('../src/index.ts', import.meta.url), 'utf8').split('\n');
+    const cited = [...runner.matchAll(/src\/index\.ts (\d+)-(\d+)/g)];
+    expect(cited.length).toBeGreaterThan(0);
+    for (const [, from, to] of cited) {
+      const window = lines.slice(Number(from) - 1, Number(to)).join('\n');
+      expect(window).toMatch(/runWorkflow\(/);
+      expect(window).toMatch(/createClaudeWorkflowHost\(/);
+      expect(window.match(/signal: task\.abortController\.signal/g)?.length).toBeGreaterThanOrEqual(2);
+    }
   });
 });

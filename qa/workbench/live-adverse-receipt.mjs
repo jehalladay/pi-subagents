@@ -44,10 +44,17 @@ const SERVED_MODEL_SOURCES = new Set(['assistant', 'system/init']);
 /** Rules that mean the mid-stream journey itself was never realised. */
 const MID_UNREALISED = new Set(['no-session-started', 'no-agent-cancelled']);
 
+/** Sign convention for ackToTerminalMs: negative is a measurement (an ack after the terminal), not an error. */
+const ACK_TO_TERMINAL_CONVENTION = 'terminalAt - lastAcknowledgedAt; negative means the last acknowledgement arrived after the terminal';
 const CANCEL_ERROR = 'Claude SDK query was cancelled.';
 const KILLED_ERROR = 'Workflow aborted.';
 const SESSION_ID = /^[a-f0-9-]{36}$/;
-const SECRET = /Bearer\s+\S+|sk-ant-|api[_-]?key/i;
+/**
+ * Backstop for the shared redactor's shapes (src/workbench/redaction.ts): Bearer/Basic
+ * values, vendor token prefixes, credential key names and key=value assignments.
+ * Redaction itself is the runner's job (buildPreview); this refuses to emit a leak.
+ */
+const SECRET = /\b(?:Bearer|Basic)\s+\S+|sk-ant-|sk-proj-|ghp_|github_pat_|api[_-]?key|access[_-]?token|refresh[_-]?token|aws_secret_access_key|aws_session_token|(?:password|secret)["']?\s*[=:]/i;
 const MAX_STRING = 400;
 const CONTROL = /[\u0000-\u001f\u007f-\u009f]/;
 
@@ -197,6 +204,7 @@ export function measureMidStream(journey) {
     const lastAck = Math.max(...acks);
     measured.requestToAckMs = lastAck - requestedAt;
     measured.ackToTerminalMs = journey.terminalAt - lastAck;
+    measured.ackToTerminalConvention = ACK_TO_TERMINAL_CONVENTION;
   }
   return measured;
 }
@@ -306,6 +314,38 @@ export function assessAdverseJourneys(observed) {
   }
 
   return { findings, realised: !findings.some((finding) => UNREALISED.has(finding.rule)) };
+}
+
+const BACKSLASH_U = String.fromCharCode(92) + 'u';
+const hex4 = (code) => BACKSLASH_U + code.toString(16).padStart(4, '0');
+const classOf = (ranges) => new RegExp(`[${ranges.map(([from, to]) => `${hex4(from)}-${hex4(to)}`).join('')}]`, 'g');
+const ESC_CHAR = String.fromCharCode(0x1b);
+const BEL_CHAR = String.fromCharCode(0x07);
+/** Terminated ANSI CSI and OSC sequences, removed whole so a credential they split reassembles before redaction. */
+const TERMINAL_SEQUENCES = new RegExp(
+  `${ESC_CHAR}${/\[[0-?]*[ -/]*[@-~]/.source}|${ESC_CHAR}${/\]/.source}[^${BEL_CHAR}${ESC_CHAR}]*(?:${BEL_CHAR}|${ESC_CHAR}${/\\/.source})`,
+  'g',
+);
+/** Tab, line feed, vertical tab, form feed, carriage return: become one space. */
+const WHITESPACE_CONTROLS = classOf([[0x09, 0x0d]]);
+/** Other C0/C1 controls, soft hyphen, combining grapheme joiner, Arabic letter mark, zero-width, bidi, word-joiner, invisible operators, BOM: deleted. */
+const INVISIBLES = classOf([[0x00, 0x08], [0x0e, 0x1f], [0x7f, 0x9f], [0xad, 0xad], [0x34f, 0x34f], [0x61c, 0x61c], [0x180e, 0x180e], [0x200b, 0x200f], [0x202a, 0x202e], [0x2060, 0x206f], [0xfeff, 0xfeff]]);
+
+/**
+ * The runner's preview(), as a pure function over injected sanitizers (this
+ * module imports nothing): normalize -> redact -> strip, once each (wb-952
+ * shape, owner ruling F1). Normalizing first makes a credential that a control
+ * byte split contiguous BEFORE the redactor sees it; the old strip(redact(x))
+ * order let the strip reassemble it afterwards. `redact(text, max)` and
+ * `strip(text)` are the shared redactWorkbenchText and stripUnsafeText.
+ */
+export function buildPreview(value, max, { redact, strip }) {
+  const normalized = String(value ?? '').replace(TERMINAL_SEQUENCES, '').replace(WHITESPACE_CONTROLS, ' ').replace(INVISIBLES, '');
+  const text = strip(redact(normalized, max))
+    .replace(/Bearer\s+\S+/gi, '[REDACTED]')
+    .replace(/sk-ant-\S*/gi, '[REDACTED]')
+    .replace(/api[_-]?key/gi, '[REDACTED-NAME]');
+  return text.length > max ? `${text.slice(0, max - 1)}…` : text;
 }
 
 /** requestedModel is the alias the host was given; servedModel is present, either the native string or an explicit null. */
