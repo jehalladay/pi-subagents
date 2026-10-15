@@ -48,13 +48,14 @@ import {
   CONTROL_CONTRACT_VERSION,
   CONTROL_PERMIT_POLICY,
   type ControlDecision,
+  type ControlDenyPolicy,
   NATIVE_CONTROL_ACTIONS,
   type NativeControlReceipt,
   type RequestedControlReceipt,
   type ResultControlReceipt,
   settle,
 } from "./control.js";
-import { sanitizeWorkbenchText, stripUnsafeText } from "./redaction.js";
+import { sanitizeWorkbenchText } from "./redaction.js";
 
 /** The vendored operation client's one cancel verb. A real OperationClient satisfies it unchanged; tests inject a fake. */
 export interface ForgeCancelOperations {
@@ -133,7 +134,7 @@ export interface ForgeCancelSurface {
   readonly declaration: typeof FORGE_CANCEL_DECLARATION;
   /** Whether the injected seam carries the vendored cancel function, or its facade refused when called (nothing sent). */
   readonly seamMethod: "present" | "absent" | "refused";
-  /** The capability map's transport mode, through the shared sanitizers; null when no map was readable. */
+  /** The capability map's transport mode as the one shared helper displays it (shown); null when no map was readable. */
   readonly mode: string | null;
   /** The map's statement for the wire method (operation.cancel). */
   readonly state: ForgeSurfaceState;
@@ -152,7 +153,7 @@ export type ForgeControlStatus = "acknowledged" | "not-accepted" | "settled" | "
 /** Why the native effect is not established. Every reason is parked for operator reconciliation, never retried. */
 export type ForgeControlUncertainty = "seam-failure" | "wait-timeout" | "wait-aborted" | "unattributable-answer" | "contradictory-answer" |
   "receipt-refused" | "transport-terminal" | "no-terminal-echo";
-/** Forge's answer as observed, every string through the shared sanitizers; observed, not verified. */
+/** Forge's answer as observed, every string as the one shared helper displays it (shown); observed, not verified. */
 export interface ForgeControlEcho {
   readonly operationId?: string;
   readonly cancelIntent?: string;
@@ -198,11 +199,28 @@ const SDK_CODE = /^[A-Z][A-Z0-9_]{0,63}$/;
 const SERVER_CODE = /^[a-z][a-z0-9_]{0,63}$/;
 /** A terminal disposition in the event-delivery vocabulary (kebab-case, as "cancelled-established"). */
 const DISPOSITION = /^[a-z][a-z0-9-]{0,63}$/;
-const DENY_POLICY = /^[a-z][a-z-]{0,63}$/;
-/** Default-ignorable code points, which the shared strip keeps (owner-filed wb-952); removed before redaction, as timeline.ts does. */
-const INVISIBLE = /\p{Default_Ignorable_Code_Point}/gu;
-/** Whitespace controls, which become one space before redaction so a \b-anchored credential pattern still sees its boundary. */
-const WHITESPACE_CONTROLS = /[\t\n\v\f\r]/g;
+/** The bound a disposition is vetted under: the whole grammar fits, so the helper can only change it by redacting. */
+const DISPOSITION_TEXT = 64;
+/**
+ * What a result reference carries instead of a disposition the shared helper would change (a credential-shaped one): the
+ * disposition is withheld, never repaired. The brackets keep it outside the kebab-case grammar, so it never reads as Forge's.
+ */
+const WITHHELD_DISPOSITION = "[withheld]";
+/**
+ * The core's denial vocabulary, exactly ControlDenyPolicy (satisfies refuses a missing and an extra key alike): a denied
+ * decision's policy is echoed only when it is one of these, so a look-alike denial can never carry producer or caller text
+ * into a refusal.
+ */
+const DENY_POLICIES: Readonly<Record<ControlDenyPolicy, true>> = Object.freeze({
+  "unknown-permission-data": true,
+  "observer-only": true,
+  "malformed-request": true,
+  "unknown-action": true,
+  "missing-exact-grant": true,
+  "cross-scope": true,
+  "no-confirmed-ownership": true,
+  "operator-confirmation": true,
+} satisfies Record<ControlDenyPolicy, true>);
 const ECHO_TEXT = 256;
 const MAX_TIMER_MS = 2_147_483_647;
 const UNVETTED = "Forge control executes only a permitted workbench.control/v1 decision minted by the control core.";
@@ -227,13 +245,16 @@ function isState(value: unknown): value is CapabilityState {
 function isAcceptance(value: string): value is CancelAcceptance {
   return Object.hasOwn(INTENT_OF, value);
 }
+function isDenyPolicy(value: unknown): value is ControlDenyPolicy {
+  return typeof value === "string" && Object.hasOwn(DENY_POLICIES, value);
+}
 /**
- * Producer text bound for an operator, through the shared sanitizers in the two-pass order (strip, redact, strip), bounded.
- * The first strip normalizes in the shape BOUNDARY 12:10Z rules for wb-952: a whitespace control becomes one space, and every
- * other control, escape sequence, bidi mark and default-ignorable code point is deleted, so "line\nsk-ant-..." still redacts.
+ * Producer text bound for an operator: the one shared helper, which normalizes, redacts and strips in that order, in its "text"
+ * layout (whitespace controls become one space, every other unsafe unit vanishes), bounded. Nothing is deleted before it, so
+ * every reading of an unsafe unit reaches redaction (BOUNDARY 21:00Z display-path rule).
  */
 function shown(value: string): string {
-  return sanitizeWorkbenchText(stripUnsafeText(value.replace(WHITESPACE_CONTROLS, " ")).replace(INVISIBLE, ""), ECHO_TEXT);
+  return sanitizeWorkbenchText(value, ECHO_TEXT, "text");
 }
 
 /**
@@ -247,7 +268,7 @@ function permitted(decision: unknown): RequestedControlReceipt {
   if (verdict === "denied") {
     const policy = own(decision, "policy");
     throw new ForgeControlRefusal(own(decision, "category") === "validation" ? "validation" : "authorization", "denied-decision",
-      "Forge control refuses a denied decision; nothing was sent.", typeof policy === "string" && DENY_POLICY.test(policy) ? policy : undefined);
+      "Forge control refuses a denied decision; nothing was sent.", isDenyPolicy(policy) ? policy : undefined);
   }
   const receipt = own(decision, "receipt");
   const target = own(receipt, "target");
@@ -447,8 +468,9 @@ export async function executeForgeControl(decision: ControlDecision, deps: Forge
  * Records the operation's own end against an acknowledged cancel this module returned: a request is not an accepted action,
  * and an accepted action is not its outcome (docs/workbench/08 § "State/event semantics"). Only the terminal frame
  * establishes anything: its terminal_disposition "cancelled-established" settles cancelled; any other disposition settles
- * unknown, quoting Forge. A transport-terminal end, or a frame without the operation's own echo, parks as uncertain and
- * leaves the receipt settleable. A result is minted at most once.
+ * unknown, quoting Forge, unless the shared helper would change it (a credential-shaped disposition), which the result
+ * reference withholds rather than repairs. A transport-terminal end, or a frame without the operation's own echo, parks as
+ * uncertain and leaves the receipt settleable. A result is minted at most once.
  */
 export function settleForgeControl(execution: ForgeControlExecution, end: OperationEnd<ForgeJsonValue>, now: () => string): ForgeControlExecution {
   const acknowledged = record(execution) && awaiting.has(execution) ? execution.acknowledged : undefined;
@@ -470,10 +492,12 @@ export function settleForgeControl(execution: ForgeControlExecution, end: Operat
     !DISPOSITION.test(disposition)) {
     return parked("no-terminal-echo");
   }
+  // The reference quotes Forge's disposition only when the shared helper would display it unchanged; otherwise it is withheld.
+  const quoted = sanitizeWorkbenchText(disposition, DISPOSITION_TEXT, "label") === disposition ? disposition : WITHHELD_DISPOSITION;
   let settled: ResultControlReceipt;
   try {
     settled = settle(acknowledged, { outcome: disposition === CANCELLED_ESTABLISHED ? "cancelled" : "unknown",
-      nativeResultRef: `forge-operation:${requested.target.id}:${DISPOSITION_FIELD}=${disposition}`, settledAt: now() });
+      nativeResultRef: `forge-operation:${requested.target.id}:${DISPOSITION_FIELD}=${quoted}`, settledAt: now() });
   } catch {
     return parked("receipt-refused");
   }

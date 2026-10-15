@@ -52,6 +52,7 @@ import {
   settleForgeControl,
 } from "../src/workbench/forge-control.js";
 import { type NativeRef, ObservationProjection, type ObservationScope, type RelationKind } from "../src/workbench/observation.js";
+import { sanitizeWorkbenchText } from "../src/workbench/redaction.js";
 
 const WS = "/tmp/forge-ws";
 const SCOPE: ObservationScope = { workspace: WS, principal: "operator" };
@@ -67,6 +68,9 @@ const OTHER_OP_ID = "5f2a9c1e7b4d4e0f9a8b7c6d5e4f3a2b";
 const OPERATION: NativeRef = { provider: "forge", type: "operation", id: OP_ID, scope: WS };
 const STEP: NativeRef = { provider: "forge", type: "step", id: `${OP_ID}:lint`, scope: WS };
 const UNSAFE = /[\u0000-\u001f\u007f-\u009f\u200b\u202a-\u202e\u2066-\u2069]/;
+const cp = (code: number): string => String.fromCodePoint(code);
+const ZWSP = cp(0x200b);
+const ESC = cp(0x1b);
 
 interface Edge { from: NativeRef; to: NativeRef; kind: RelationKind; provenance: { source: string; observedAt?: string; nativeConfirmationRef?: string } }
 
@@ -301,10 +305,21 @@ describe("intake: only a permitted decision minted by decideControl reaches the 
 
   it("refuses a non-native operation id and a decision outside the workspace the seam serves; an unscoped operation as the Pi host projects it executes", async () => {
     const fake = fakeSeam();
-    for (const id of ["-rf", "op 1", "op/1", "op\u200b1", "op\\1", ".hidden", `a${"b".repeat(128)}`]) {
+    for (const id of ["-rf", "op 1", "op/1", "op\\1", ".hidden", `a${"b".repeat(128)}`]) {
       const target: NativeRef = { ...OPERATION, id };
       await refused(executeForgeControl(permit({ target }, forge(target)), deps(fake)), "invalid-target", "validation");
     }
+    // A zero-width id (wb-69g.9 U2) is refused UPSTREAM of the adapter: since wb-952 the core's cleanText denies it, and the
+    // owner-filed wb-0br will refuse it earlier still, at projection ingest. The exact upstream refusal is not pinned, only
+    // that it never reaches the seam: whatever decision comes back is refused here too.
+    const zeroWidth: NativeRef = { ...OPERATION, id: `op${ZWSP}1` };
+    let upstream: ControlDecision | undefined;
+    try {
+      upstream = decide({ target: zeroWidth }, forge(zeroWidth));
+    } catch {
+      upstream = undefined;
+    }
+    if (upstream !== undefined) await expect(executeForgeControl(upstream, deps(fake))).rejects.toBeInstanceOf(ForgeControlRefusal);
     await refused(executeForgeControl(permit(), deps(fake, { workspaceRoot: "/tmp/other-ws" })), "foreign-workspace", "authorization");
     const elsewhere: NativeRef = { ...OPERATION, scope: "/tmp/other-ws" };
     await refused(executeForgeControl(permit({ target: elsewhere }, forge(elsewhere)), deps(fake)), "foreign-workspace", "authorization");
@@ -678,8 +693,9 @@ describe("bounded, sanitized output and separation from observation", () => {
     const execution = await executeForgeControl(permit(), deps(seamOf(answer)));
     expect(execution).toMatchObject({ status: "uncertain", uncertainty: { reason: "unattributable-answer" } });
     expect(execution.echo).toStrictEqual({ operationId: "op [REDACTED]", cancelIntent: "[REDACTED]", cancelAcceptance: "api_key=[REDACTED]", establishment: "NOT_ATTEMPTED" });
-    // The ruled normalization (BOUNDARY 12:10Z, wb-952 fix shape): a whitespace control becomes one space and every other
-    // control is deleted BEFORE redaction, so neither a newline-glued credential nor a control-split keyword escapes it.
+    // The one helper (wb-952; the 21:00Z display-path rule, "text" layout): whitespace separates, every other unsafe unit is
+    // read both as a separator and as glue, and only then stripped, so neither a newline-glued credential nor a
+    // control-split keyword escapes it. Deletion never precedes redaction.
     const glued = await executeForgeControl(permit(), deps(seamOf(async () => ({ operationId: OP_ID, cancelIntent: "CANCEL_REQUESTED", cancelAcceptance: "ACCEPTED",
       cancellationEstablished: false, raw: { operation_id: OP_ID, cancel_intent: "pass\u0007word=TOPSECRET", cancel_acceptance: "ACCEPTED",
         cancellation_established: false, establishment: "line\nsk-ant-api03-TOPSECRET" } }))));
@@ -707,5 +723,188 @@ describe("bounded, sanitized output and separation from observation", () => {
     for (const path of ["../src/workbench/forge-observer.ts", "../src/workbench/providers/forge.ts", "../src/workbench/forge-evidence.ts"]) {
       expect(readFileSync(new URL(path, import.meta.url), "utf8")).not.toMatch(/forge-control|operation\.cancel|\.cancel\s*\(/);
     }
+  });
+});
+
+/**
+ * wb-69g.9 respin (gate-3 g2-gate-r2 verdict; OWNER RULING F3, BOUNDARY 22:11Z). Spec lines pinned, quoted:
+ * - BOUNDARY 21:00Z standing seat rule (F6), bound to this gate by name: a display path routes "through sanitizeWorkbenchText from
+ *   src/workbench/redaction.ts with a NAMED layout"; "never compose stripUnsafeText/redactWorkbenchText locally and never add a
+ *   local invisible-deletion regex (deletion never precedes redaction)".
+ * - U1(i): "shown(v) := sanitizeWorkbenchText(v, ECHO_TEXT, "text") and DROP the local pre-pass + the stripUnsafeText import".
+ * - U1(ii): "closed-vocabulary denial policy against the core's ControlDenyPolicy values ..., red-first with a forged frozen
+ *   denial carrying "sk-ant-qqsecretqq" (kills G11)".
+ * - U1(iii): "nativeResultRef carries the disposition only when sanitizeWorkbenchText(d, 64, "label") === d, else a fixed
+ *   placeholder (withhold, never repair)"; OWNER RULING F3: "This respin KEEPS per-adapter vetting on its own surface ... never
+ *   widen into control.ts".
+ */
+
+/**
+ * The wb-952 17:32Z acceptance set, mirrored from test/workbench-sanitizer-corpus.test.ts at trunk 4853c40 (ACCEPTANCE_CODES,
+ * BETWEEN_TOKENS, WITHIN_TOKENS and its whitespace units): 46 code points and an SGR sequence, each between two tokens (6
+ * positions) and, unless it is whitespace, inside a keyword, prefix, key or token (9 positions). 696 shapes: the set the gate
+ * measured leaking 512/696 through each free-text path of the delivered cut on the landing merge.
+ */
+const ACCEPTANCE_CODES = [
+  0x200b, 0x07, 0x1b, 0x202e, 0xad, 0x2060, 0x200d, 0x200c, 0x7f, 0x2066, 0x9b, 0x180e, 0x34f, 0xfe0f, 0x3164, 0x08, 0x00, 0xfeff, 0x85,
+  0x2061, 0x2064, 0x206a, 0x115f, 0xffa0, 0xe0020, 0x1d173, 0x200e, 0x200f, 0x61c, 0x80, 0x9f, 0x202a, 0x202c, 0x2069, 0x1160, 0x17b4,
+  0x17b5, 0x180b, 0x2062, 0x2063, 0x206f, 0xfe00, 0x1bca0, 0xe0001, 0xe007f, 0xfff0,
+];
+const ACCEPTANCE_UNITS: readonly (readonly [name: string, unit: string])[] = [
+  ...ACCEPTANCE_CODES.map(code => [`U+${code.toString(16).toUpperCase().padStart(4, "0")}`, cp(code)] as const),
+  ["SGR", `${ESC}[0m`],
+];
+type Shape = (unit: string, secret: string) => string;
+/** A unit here sits between two tokens: a separator reading exposes the credential. */
+const BETWEEN_TOKENS: readonly (readonly [position: string, shape: Shape])[] = [
+  ["before ghp_", (unit, secret) => `see${unit}ghp_${secret}`],
+  ["before sk-ant-", (unit, secret) => `key${unit}sk-ant-${secret}`],
+  ["before Bearer", (unit, secret) => `x${unit}Bearer ${secret}`],
+  ["before Basic", (unit, secret) => `x${unit}Basic ${secret}`],
+  ["as the space after Bearer", (unit, secret) => `Authorization: Bearer${unit}${secret}`],
+  ["as the space after Basic", (unit, secret) => `Authorization: Basic${unit}${secret}`],
+];
+/** A unit here sits inside a keyword, prefix, key or token (and, in the mixes, between two tokens as well). */
+const WITHIN_TOKENS: readonly (readonly [position: string, shape: Shape])[] = [
+  ["inside Bearer", (unit, secret) => `Authorization: Bea${unit}rer ${secret}`],
+  ["inside ghp_", (unit, secret) => `see gh${unit}p_${secret}`],
+  ["inside a Bearer token", (unit, secret) => `Bearer SEC${unit}${secret}`],
+  ["inside password", (unit, secret) => `pass${unit}word=${secret}`],
+  ["before and inside Bearer", (unit, secret) => `x${unit}Bea${unit}rer ${secret}`],
+  ["before and inside ghp_", (unit, secret) => `see${unit}gh${unit}p_${secret}`],
+  ["inside and after Bearer", (unit, secret) => `Authorization: Bea${unit}rer${unit}${secret}`],
+  ["before, inside and after Bearer", (unit, secret) => `x${unit}Bea${unit}rer${unit}${secret}`],
+  ["after a key token and inside the next key name", (unit, secret) => `ghp_abc${unit}pass${unit}word=${secret}`],
+];
+/** The helper's whitespace units: whitespace always separates, so it never sits inside a token (12:10Z). */
+const WHITESPACE_UNITS: ReadonlySet<string> = new Set([0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x85, 0x2028, 0x2029].map(cp));
+interface Probe {
+  readonly id: string;
+  readonly raw: string;
+  readonly secret: string;
+}
+const ACCEPTANCE: readonly Probe[] = ACCEPTANCE_UNITS.flatMap(([name, unit]) =>
+  [...BETWEEN_TOKENS, ...(WHITESPACE_UNITS.has(unit) ? [] : WITHIN_TOKENS)].map(([position, shape]) => {
+    const secret = `ACCEPT${name.replace(/[^A-Z0-9]/g, "")}${position.replace(/[^a-z]/g, "").slice(0, 24)}`;
+    return { id: `${name} ${position}`, raw: shape(unit, secret), secret };
+  }),
+);
+/** What a display string may never keep (the corpus's UNSAFE_DISPLAY). */
+const DISPLAY_UNSAFE = /[\x00-\x1f\x7f-\x9f\u{2028}\u{2029}]|\p{Default_Ignorable_Code_Point}|[\u{d800}-\u{dfff}]/u;
+
+type FreeTextPath = "surface.mode" | "echo.operationId" | "echo.cancelIntent" | "echo.cancelAcceptance" | "echo.establishment";
+const FREE_TEXT_PATHS: readonly FreeTextPath[] = ["surface.mode", "echo.operationId", "echo.cancelIntent", "echo.cancelAcceptance", "echo.establishment"];
+/**
+ * One producer string through each free-text display path, as the gate drove them: the capability map's mode on a refused
+ * connection; operation_id, cancel_intent and cancel_acceptance on an unattributable answer; establishment on Forge's
+ * REFUSED_NOT_CANCELLABLE answer through the vendored decoder. Every permit is core-minted over one shared projection.
+ */
+async function displayed(raw: string, projection: ObservationProjection): Promise<Record<FreeTextPath, string | null | undefined>> {
+  const capabilities = new CapabilityMap(raw as unknown as "app_server", { "operation.cancel": "unsupported" });
+  const refusal = await refused(executeForgeControl(permit({}, projection), deps({ operations: fakeSeam().operations, connection: { capabilities } })),
+    "capability-unavailable", "unavailable");
+  const unattributable = await executeForgeControl(permit({}, projection), deps(seamOf(async () => ({ operationId: OP_ID, cancelIntent: "CANCEL_REQUESTED",
+    cancelAcceptance: "ACCEPTED", cancellationEstablished: false, raw: { operation_id: raw, cancel_intent: raw, cancel_acceptance: raw, cancellation_established: false } }))));
+  expect(unattributable.uncertainty?.reason).toBe("unattributable-answer");
+  const notAccepted = await executeForgeControl(permit({}, projection), deps(fakeSeam(() => ({ ...REFUSED_ANSWER("REFUSED_NOT_CANCELLABLE"), establishment: raw }))));
+  expect(notAccepted.status).toBe("not-accepted");
+  return {
+    "surface.mode": refusal.surface?.mode, "echo.operationId": unattributable.echo?.operationId, "echo.cancelIntent": unattributable.echo?.cancelIntent,
+    "echo.cancelAcceptance": unattributable.echo?.cancelAcceptance, "echo.establishment": notAccepted.echo?.establishment,
+  };
+}
+
+describe("wb-69g.9 respin: every display path is the one helper with a named layout; closed vocabularies; vetted-or-withheld refs", () => {
+  it("the wb-952 17:32Z acceptance set (696 shapes) through each of the five free-text paths: exactly the helper's text layout, nothing leaked or unsafe kept", async () => {
+    expect(ACCEPTANCE).toHaveLength(696);
+    const projection = forge();
+    type Tally = { leaked: number; unsafe: number; notTextLayout: number; firstLeak?: string };
+    const tally = Object.fromEntries(FREE_TEXT_PATHS.map(path => [path, { leaked: 0, unsafe: 0, notTextLayout: 0 }])) as Record<FreeTextPath, Tally>;
+    for (const probe of ACCEPTANCE) {
+      const expected = sanitizeWorkbenchText(probe.raw, 256, "text");
+      const shown = await displayed(probe.raw, projection);
+      for (const path of FREE_TEXT_PATHS) {
+        const text = shown[path] ?? "";
+        const row = tally[path];
+        if (text.includes(probe.secret)) {
+          row.leaked += 1;
+          row.firstLeak ??= probe.id;
+        }
+        if (DISPLAY_UNSAFE.test(text)) row.unsafe += 1;
+        if (text !== expected) row.notTextLayout += 1;
+      }
+    }
+    expect(tally).toStrictEqual(Object.fromEntries(FREE_TEXT_PATHS.map(path => [path, { leaked: 0, unsafe: 0, notTextLayout: 0 }])));
+  }, 120_000);
+
+  it("named falsifiers: a zero-width before ghp_, as the scheme's space and as the position-aware mix render as the helper's text layout on every free-text path", async () => {
+    const projection = forge();
+    const cases: readonly (readonly [raw: string, expected: string])[] = [
+      [`see${ZWSP}ghp_SEESECRETQQ`, "see[REDACTED]"],
+      [`Authorization: Bearer${ZWSP}SPACESECRETQQ`, "Authorization: [REDACTED]"],
+      [`ghp_abc${ZWSP}pass${ZWSP}word=MIXSECRETQQ`, "[REDACTED]=[REDACTED]"],
+      // A BEL glued inside the keyword vanishes in the text layout (the delivered expectation, unchanged).
+      [`pass${cp(0x07)}word=BELSECRETQQ`, "password=[REDACTED]"],
+    ];
+    for (const [raw, expected] of cases) {
+      expect(sanitizeWorkbenchText(raw, 256, "text")).toBe(expected);
+      expect(await displayed(raw, projection)).toStrictEqual(Object.fromEntries(FREE_TEXT_PATHS.map(path => [path, expected])));
+    }
+  });
+
+  it("a denied decision's policy is echoed only from the core's closed ControlDenyPolicy vocabulary: a forged frozen denial's policy is withheld (kills G11)", async () => {
+    let invoked = false;
+    const accessor = Object.freeze(Object.defineProperty({ decision: "denied", category: "authorization", reason: "forged" }, "policy",
+      { enumerable: true, get: () => { invoked = true; return "observer-only"; } }));
+    const policies: unknown[] = ["sk-ant-qqsecretqq", "sk-proj-qqsecretqq", "anything-goes", "observer-only ", "Observer-only", "observer_only", "", 7, null];
+    const forgeries: unknown[] = [...policies.map(policy => Object.freeze({ decision: "denied", category: "authorization", reason: "forged", policy })), accessor];
+    for (const forged of forgeries) {
+      const fake = fakeSeam();
+      const seen = untouchable(deps(fake));
+      const failure = await refused(executeForgeControl(forged as ControlDecision, seen.proxy), "denied-decision", "authorization");
+      expect(failure.policy).toBeUndefined();
+      expect(JSON.stringify({ message: failure.message, policy: failure.policy })).not.toMatch(/qqsecretqq|anything-goes/);
+      expect(seen.touched).toStrictEqual([]);
+      expect(fake.cancel).not.toHaveBeenCalled();
+    }
+    expect(invoked).toBe(false);
+    // The vocabulary is the core's own, so a frozen denial naming one of its policies still echoes it (structural vetting
+    // only; decision provenance is wb-pjj's).
+    const named = Object.freeze({ decision: "denied", category: "validation", reason: "forged", policy: "malformed-request" }) as ControlDecision;
+    const failure = await refused(executeForgeControl(named, deps(fakeSeam())), "denied-decision", "validation");
+    expect(failure.policy).toBe("malformed-request");
+  });
+
+  it("a credential-shaped terminal_disposition settles unknown with the disposition withheld from nativeResultRef, never repaired; the echo reads [REDACTED]", async () => {
+    for (const disposition of ["sk-ant-api03-dispsecretqq", "sk-proj-dispsecretqq"]) {
+      const settled = settleForgeControl(await acknowledged(), terminal({ operation_id: OP_ID, terminal_disposition: disposition }), () => SETTLED_AT);
+      expect(settled).toMatchObject({ status: "settled", echo: { terminalDisposition: "[REDACTED]" },
+        result: { phase: "result", outcome: "unknown", nativeResultRef: `forge-operation:${OP_ID}:terminal_disposition=[withheld]` } });
+      expect(JSON.stringify(settled)).not.toContain("dispsecretqq");
+    }
+    // A plain disposition is quoted unchanged, and every reference this adapter composes is one the shared helper's label layout
+    // leaves unchanged (the property the owner-filed core-side admission will require of every adapter, OWNER RULING F3).
+    for (const disposition of ["cancelled-established", "operation-terminal", "sk-ant-api03-dispsecretqq"]) {
+      const settled = settleForgeControl(await acknowledged(), terminal({ operation_id: OP_ID, terminal_disposition: disposition }), () => SETTLED_AT);
+      const refs = [settled.acknowledged?.nativeAckRef, settled.result?.nativeResultRef];
+      expect(refs.every(ref => typeof ref === "string")).toBe(true);
+      for (const ref of refs) expect(sanitizeWorkbenchText(ref ?? "", 4096, "label")).toBe(ref);
+    }
+    // The vetting bound fits the whole grammar: a 64-character plain disposition is still quoted, never withheld.
+    for (const disposition of ["operation-terminal", `a${"-b".repeat(31)}c`]) {
+      expect(disposition.length).toBeLessThanOrEqual(64);
+      const quoted = settleForgeControl(await acknowledged(), terminal({ operation_id: OP_ID, terminal_disposition: disposition }), () => SETTLED_AT);
+      expect(quoted.result?.nativeResultRef).toBe(`forge-operation:${OP_ID}:terminal_disposition=${disposition}`);
+    }
+  });
+
+  it("composes no sanitizer of its own: no stripUnsafeText or redactWorkbenchText, no local unsafe-unit pattern, and every helper call names its layout", () => {
+    const source = readFileSync(new URL("../src/workbench/forge-control.ts", import.meta.url), "utf8");
+    expect(source).not.toMatch(/\bstripUnsafeText\b|\bredactWorkbenchText\b/);
+    expect(source).not.toMatch(/\\p\{|Default_Ignorable|\\u200b|\\x1b/i);
+    const opened = source.match(/\bsanitizeWorkbenchText\(/g) ?? [];
+    const named = source.match(/\bsanitizeWorkbenchText\([^()]*,\s*"(?:text|terminal|label|lines)"\)/g) ?? [];
+    expect(opened.length).toBeGreaterThanOrEqual(2);
+    expect(named).toHaveLength(opened.length);
   });
 });
