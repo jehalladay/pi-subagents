@@ -295,3 +295,397 @@ describe('W15 graph cache invalidation',()=>{
    expect(after).toContain('grouping -> furnace/operation/2');
  });
 });
+
+// wb-6ze.1 (W15/VC-5): overview nested tree from observed grouping/ownership edges and bounded graph fan-out.
+const nested = (provider: string, type: string, id: string): NativeRef => ({provider,type,id});
+const nestingProvenance = {source:'fixture-producer',observedAt:now};
+const phaseRef=nested('furnace','operation','phase'), step1Ref=nested('forge','operation','step-1'), opRef=nested('furnace','operation','op'),
+ leafRef=nested('forge','operation','leaf'), runRef=nested('furnace','run','run-1'), attemptRef=nested('furnace','attempt','attempt-1'),
+ looseRef=nested('forge','operation','loose'), step2Ref=nested('forge','operation','step-2');
+/** Grouping three levels deep, one natively confirmed ownership edge, one dependency edge, refreshed out of tree order. */
+function groupedFixture(): InspectorModel {
+ const projection = new ObservationProjection({maxEvents:16,maxNodes:1200,maxEdges:1200,maxQuery:40});
+ const rows: readonly [NativeRef,string][] = [[phaseRef,'Phase A'],[step1Ref,'Step A1'],[opRef,'Op A1a'],[leafRef,'Leaf A1a-i'],
+  [runRef,'Run 1'],[attemptRef,'Attempt 1'],[looseRef,'Loose op'],[step2Ref,'Step A2']];
+ for(const [source,title] of rows) projection.refresh({source,scope,capturedAt:now,observedAt:now,node:presentation(title),trace:{invocationId:'grouped'}});
+ for(const [from,to] of [[phaseRef,step1Ref],[step1Ref,opRef],[opRef,leafRef],[phaseRef,step2Ref]] as const) projection.relate({scope,from,to,kind:'grouping',provenance:nestingProvenance});
+ projection.relate({scope,from:runRef,to:attemptRef,kind:'ownership',provenance:{source:'furnace',observedAt:now,nativeConfirmationRef:'furnace://run-1/attempts/attempt-1'}});
+ projection.relate({scope,from:looseRef,to:phaseRef,kind:'dependency',provenance:{source:'forge',observedAt:now}});
+ return {projection,scope,invocationId:'grouped',title:'Grouped workflow',status:'running'};
+}
+/** Row text after the leading space, pointer and separator: the tree prefix then the row content. */
+const rowBody = (lines: readonly string[], title: string): string => {
+ const line = lines.find(item => item.includes(title));
+ expect(line,`row ${title}`).toBeDefined();
+ return (line ?? '').slice(3);
+};
+describe('W15/VC-5 overview nested tree from observed grouping/ownership edges (wb-6ze.1)',()=>{
+ it('B1 nests each row 2 columns per depth from incoming grouping/ownership edges only, in tree order, ASCII and Unicode',()=>{
+   // docs/workbench/10 "Four views" Overview: "compact nested tree".
+   // docs/workbench/09 "Relationships are typed and provenanced": "grouping only (phase, display scope)".
+   const model=groupedFixture();
+   const ascii=layoutInspector(model,initialInspectorState(),{width:120,rows:40,ascii:true});
+   expect(rowBody(ascii,'Phase A')).toMatch(/^\* Phase A/);
+   expect(rowBody(ascii,'Step A1')).toMatch(/^\|- \* Step A1/);
+   expect(rowBody(ascii,'Op A1a')).toMatch(/^ {2}\|- \* Op A1a/);
+   expect(rowBody(ascii,'Leaf A1a-i')).toMatch(/^ {4}\|- \* Leaf A1a-i/);
+   expect(rowBody(ascii,'Step A2')).toMatch(/^\|- \* Step A2/);
+   expect(rowBody(ascii,'Run 1')).toMatch(/^\* Run 1/);
+   expect(rowBody(ascii,'Attempt 1')).toMatch(/^\|- \* Attempt 1.*ownership/);
+   expect(rowBody(ascii,'Loose op')).toMatch(/^\* Loose op.*no observed parent/);
+   expect(rowBody(ascii,'Phase A')).toContain('no observed parent');
+   expect(rowBody(ascii,'Step A1')).not.toContain('no observed parent');
+   const unicode=layoutInspector(model,initialInspectorState(),{width:120,rows:40,ascii:false});
+   expect(rowBody(unicode,'Step A1')).toMatch(/^├─ ◌ Step A1/);
+   expect(rowBody(unicode,'Step A2')).toMatch(/^└─ ◌ Step A2/);
+   expect(rowBody(unicode,'Leaf A1a-i')).toMatch(/^ {4}└─ ◌ Leaf A1a-i/);
+   const order=['Phase A','Step A1','Op A1a','Leaf A1a-i','Step A2','Run 1','Attempt 1','Loose op'].map(title=>unicode.findIndex(line=>line.includes(title)));
+   expect(order.every(index=>index>=0)).toBe(true);
+   expect(order).toEqual([...order].sort((a,b)=>a-b));
+   for(const lines of [ascii,unicode]) expect(lines.join('\n')).not.toContain('not lifecycle ownership');
+ });
+ it('B1 derives depth through the relationRevision-keyed relation cache and recomputes only after a topology change',()=>{
+   const model=groupedFixture();
+   const original=model.projection.relations.bind(model.projection);let reads=0;
+   vi.spyOn(model.projection,'relations').mockImplementation(input=>{reads++;return original(input);});
+   const state=initialInspectorState();
+   layoutInspector(model,state,{width:120,rows:40,ascii:true});
+   expect(reads).toBeGreaterThan(0);
+   expect(reads).toBeLessThanOrEqual(2*8);
+   const first=reads;
+   layoutInspector(model,state,{width:120,rows:40,ascii:true});
+   expect(reads).toBe(first);
+   model.projection.relate({scope,from:runRef,to:looseRef,kind:'grouping',provenance:nestingProvenance});
+   const after=layoutInspector(model,state,{width:120,rows:40,ascii:true});
+   expect(reads).toBeGreaterThan(first);
+   expect(rowBody(after,'Loose op')).toMatch(/^\|- \* Loose op/);
+   expect(rowBody(after,'Loose op')).not.toContain('no observed parent');
+ });
+ it('B1 caps indentation at depth 8 and labels deeper rows instead of widening without bound',()=>{
+   const projection=new ObservationProjection({maxEvents:16,maxNodes:64,maxEdges:64,maxQuery:40});
+   const chain=Array.from({length:11},(_,i)=>nested('forge','operation',`c${i}`));
+   for(const [i,source] of chain.entries()) projection.refresh({source,scope,capturedAt:now,observedAt:now,node:presentation(`L${i} chain`),trace:{invocationId:'deep'}});
+   for(let i=1;i<chain.length;i++) projection.relate({scope,from:chain[i-1],to:chain[i],kind:'grouping',provenance:nestingProvenance});
+   const lines=layoutInspector({projection,scope,invocationId:'deep',title:'Deep',status:'running'},initialInspectorState(),{width:120,rows:40,ascii:true});
+   const capped=`${'  '.repeat(7)}|- * `;
+   expect(rowBody(lines,'L7 chain').startsWith(`${'  '.repeat(6)}|- * L7 chain`)).toBe(true);
+   expect(rowBody(lines,'L8 chain').startsWith(`${capped}L8 chain`)).toBe(true);
+   expect(rowBody(lines,'L9 chain').startsWith(`${capped}L9 chain`)).toBe(true);
+   expect(rowBody(lines,'L10 chain').startsWith(`${capped}L10 chain`)).toBe(true);
+   expect(rowBody(lines,'L10 chain')).toContain('depth 10, indent capped at 8');
+   expect(rowBody(lines,'L8 chain')).not.toContain('indent capped');
+   for(const line of lines){const indent=/^( *)\|- /.exec(line.slice(3)); if(indent) expect(indent[1].length).toBeLessThanOrEqual(2*7);}
+ });
+ it('B1 prefers a natively confirmed ownership parent over a grouping parent and counts the other parent',()=>{
+   const projection=new ObservationProjection({maxEvents:16,maxNodes:64,maxEdges:64,maxQuery:40});
+   const group=nested('forge','operation','display-phase'), owner=nested('furnace','run','owner-run'), child=nested('furnace','attempt','owned');
+   for(const [source,title] of [[group,'Display phase'],[owner,'Owner run'],[child,'Owned attempt']] as const) projection.refresh({source,scope,capturedAt:now,observedAt:now,node:presentation(title),trace:{invocationId:'prefer'}});
+   projection.relate({scope,from:group,to:child,kind:'grouping',provenance:nestingProvenance});
+   projection.relate({scope,from:owner,to:child,kind:'ownership',provenance:{source:'furnace',observedAt:now,nativeConfirmationRef:'furnace://owner-run/attempts/owned'}});
+   const lines=layoutInspector({projection,scope,invocationId:'prefer',title:'Prefer',status:'running'},initialInspectorState(),{width:120,rows:40,ascii:true});
+   const ownerAt=lines.findIndex(line=>line.includes('Owner run'));
+   expect(ownerAt).toBeGreaterThan(0);
+   expect(rowBody(lines,'Owned attempt')).toMatch(/^\|- \* Owned attempt .*ownership.*\+1 other observed parent/);
+   expect(lines[ownerAt+1]).toContain('Owned attempt');
+   expect(lines[lines.findIndex(line=>line.includes('Display phase'))+1]).not.toContain('Owned attempt');
+ });
+ it('B2 dependency, causation and hypothesis edges never nest; parentless rows say so explicitly',()=>{
+   // docs/workbench/09: "Missing edges do not imply independence."
+   // docs/workbench/02 WB-037: "Source-defined edges, observed edges and inferred links are distinguishable."
+   const model=fixture();
+   model.projection.relate({scope,from:ref('forge','1'),to:ref('furnace','2'),kind:'dependency',provenance:{source:'forge',observedAt:now}});
+   model.projection.relate({scope,from:ref('furnace','2'),to:ref('forge','3'),kind:'causation',provenance:{source:'furnace',observedAt:now}});
+   model.projection.relate({scope,from:ref('forge','3'),to:ref('furnace','4'),kind:'hypothesis',provenance:{source:'heuristic',observedAt:now}});
+   for(const ascii of [true,false]){
+     const lines=layoutInspector(model,initialInspectorState(),{width:120,rows:40,ascii});
+     const rows=lines.filter(line=>/Operation \d+/.test(line));
+     expect(rows.length).toBeGreaterThan(5);
+     for(const line of rows){
+       expect(line.slice(3)).toMatch(ascii?/^[*?] Operation \d+/:/^[◌?] Operation \d+/);
+       expect(line).toContain('no observed parent');
+     }
+     expect(lines.join('\n')).not.toMatch(/\|- |├─|└─/);
+     expect(lines.join('\n')).not.toMatch(/\broot\b/i);
+   }
+ });
+ it('B2 a full incoming relation page never claims "no observed parent"',()=>{
+   const projection=new ObservationProjection();
+   const busy=nested('forge','operation','busy');
+   projection.refresh({source:busy,scope,capturedAt:now,observedAt:now,node:presentation('Busy node'),trace:{invocationId:'busy'}});
+   for(let i=0;i<100;i++) projection.relate({scope,from:nested('forge','operation',`dep-${i}`),to:busy,kind:'dependency',provenance:{source:'forge',observedAt:now}});
+   projection.relate({scope,from:nested('forge','operation','group'),to:busy,kind:'grouping',provenance:nestingProvenance});
+   const text=layoutInspector({projection,scope,invocationId:'busy',title:'Busy',status:'running'},initialInspectorState(),{width:120,rows:24,ascii:true}).join('\n');
+   expect(text).toContain('parent unknown (relations partial)');
+   expect(text).not.toContain('no observed parent');
+ });
+ it('B2 a full incoming relation page with an observed parent says the parent set is partial',()=>{
+   const projection=new ObservationProjection();
+   const shared=nested('forge','operation','shared');
+   projection.refresh({source:shared,scope,capturedAt:now,observedAt:now,node:presentation('Shared node'),trace:{invocationId:'shared'}});
+   for(let i=0;i<101;i++) projection.relate({scope,from:nested('furnace','operation',`g${i}`),to:shared,kind:'grouping',provenance:nestingProvenance});
+   // Unicode tier: the ASCII tier renders every non-ASCII separator, including '·', as '?'.
+   const lines=layoutInspector({projection,scope,invocationId:'shared',title:'Shared',status:'running'},initialInspectorState(),{width:160,rows:24,ascii:false});
+   const row=rowBody(lines,'Shared node');
+   expect(row).toContain('parent furnace/operation/g0 outside view · relations partial · +99 other observed parents');
+   expect(row).not.toContain('no observed parent');
+ });
+ it('B2 an ownership parent stays distinguishable from grouping when listed flat or outside the view',()=>{
+   // docs/workbench/02 WB-037: "Source-defined edges, observed edges and inferred links are distinguishable."
+   const model=groupedFixture();
+   const flatOwned=layoutInspector(model,{...initialInspectorState(),filter:'attempt'},{width:120,rows:40,ascii:true});
+   expect(rowBody(flatOwned,'Attempt 1')).toContain('ownership parent furnace/run/run-1');
+   const flatGrouped=layoutInspector(model,{...initialInspectorState(),filter:'step a1'},{width:120,rows:40,ascii:true});
+   expect(rowBody(flatGrouped,'Step A1')).toContain('parent furnace/operation/phase');
+   expect(rowBody(flatGrouped,'Step A1')).not.toContain('ownership');
+   // An 11-row terminal fetches a two-row page; at index 6 it holds Attempt 1 and Loose op, so Run 1 is outside it.
+   const outside=layoutInspector(model,{...initialInspectorState(),index:6},{width:120,rows:11,ascii:true});
+   expect(rowBody(outside,'Attempt 1')).toContain('ownership parent furnace/run/run-1 outside view');
+   expect(outside.some(line=>line.includes('Run 1'))).toBe(false);
+ });
+ it('B3 grouping cycles terminate at the first repeated key as [ref] lines within the row budget',()=>{
+   // docs/workbench/10 "Four views" Graph: "Cycles/unknown dynamic edges represented explicitly as \"references\" rather than rendered as a fake acyclic plan."
+   const projection=new ObservationProjection({maxEvents:16,maxNodes:64,maxEdges:64,maxQuery:40});
+   const ids=['A','B','C','D','E','F','S'];
+   for(const id of ids) projection.refresh({source:nested('furnace','operation',id),scope,capturedAt:now,observedAt:now,node:presentation(`Cycle ${id}`),trace:{invocationId:'cycle'}});
+   for(const [from,to] of [['A','B'],['B','A'],['C','D'],['D','E'],['E','C'],['D','F'],['S','S']]) projection.relate({scope,from:nested('furnace','operation',from),to:nested('furnace','operation',to),kind:'grouping',provenance:nestingProvenance});
+   const model={projection,scope,invocationId:'cycle',title:'Cycles',status:'running'};
+   for(const [width,rows] of [[80,24],[32,18],[120,40]] as const) for(const view of ['overview','graph'] as const) for(const ascii of [true,false]){
+     const lines=layoutInspector(model,{...initialInspectorState(),view},{width,rows,ascii});
+     expect(lines.length).toBeLessThanOrEqual(rows);
+     expect(lines.every(line=>visibleWidth(line)<=width)).toBe(true);
+   }
+   const lines=layoutInspector(model,initialInspectorState(),{width:120,rows:40,ascii:true});
+   const refs=lines.filter(line=>line.includes('[ref '));
+   expect(refs).toHaveLength(3);
+   for(const id of ['A','C','S']) expect(refs.some(line=>line.includes(`[ref furnace/operation/${id}]`))).toBe(true);
+   for(const id of ids) expect(lines.filter(line=>line.includes(`Cycle ${id} `))).toHaveLength(1);
+   expect(rowBody(lines,'Cycle A ')).toMatch(/^\* Cycle A .*observed cycle/);
+   expect(rowBody(lines,'Cycle B ')).toMatch(/^\|- \* Cycle B /);
+   expect(rowBody(lines,'[ref furnace/operation/A]')).toMatch(/^ {2}\|- \[ref furnace\/operation\/A\]/);
+   expect(rowBody(lines,'Cycle E ')).toMatch(/^ {2}\|- \* Cycle E /);
+   expect(rowBody(lines,'[ref furnace/operation/C]')).toMatch(/^ {4}\|- \[ref furnace\/operation\/C\]/);
+   expect(rowBody(lines,'Cycle F ')).toMatch(/^ {2}\|- \* Cycle F /);
+   expect(rowBody(lines,'[ref furnace/operation/S]')).toMatch(/^\|- \[ref furnace\/operation\/S\]/);
+ });
+ it('B3 a row leading into a grouping cycle nests under the cycle entry rather than heading a cycle of its own',()=>{
+   const projection=new ObservationProjection({maxEvents:16,maxNodes:64,maxEdges:64,maxQuery:40});
+   for(const id of ['T','X','Y']) projection.refresh({source:nested('furnace','operation',id),scope,capturedAt:now,observedAt:now,node:presentation(`Rho ${id}`),trace:{invocationId:'rho'}});
+   for(const [from,to] of [['X','T'],['X','Y'],['Y','X']]) projection.relate({scope,from:nested('furnace','operation',from),to:nested('furnace','operation',to),kind:'grouping',provenance:nestingProvenance});
+   const lines=layoutInspector({projection,scope,invocationId:'rho',title:'Rho',status:'running'},initialInspectorState(),{width:120,rows:40,ascii:true});
+   expect(rowBody(lines,'Rho X ')).toMatch(/^\* Rho X .*observed cycle/);
+   expect(rowBody(lines,'Rho T ')).toMatch(/^\|- \* Rho T /);
+   expect(rowBody(lines,'Rho T ')).not.toContain('observed cycle');
+   expect(rowBody(lines,'Rho Y ')).toMatch(/^\|- \* Rho Y /);
+   const refs=lines.filter(line=>line.includes('[ref '));
+   expect(refs).toHaveLength(1);
+   expect(refs[0]).toContain('[ref furnace/operation/X] cycle via grouping');
+ });
+ it('B4 Enter collapses observed descendants within the fetched page and a second Enter restores them',()=>{
+   // docs/workbench/10 "Navigation": "Enter expands"; "Rendering pipeline": "Avoid O(allHistory) collapse per frame;
+   // maintain by-node last projection and ancestor aggregates incrementally."
+   const model=groupedFixture();
+   const phaseKey=model.projection.window({scope,invocationId:'grouped',offset:0,limit:1}).nodes[0].key;
+   let state=reduceInspectorKey('\r',initialInspectorState(),model)!.state;
+   expect(state.collapsed).toEqual([phaseKey]);
+   const collapsed=layoutInspector(model,state,{width:120,rows:40,ascii:true});
+   for(const title of ['Step A1','Op A1a','Leaf A1a-i','Step A2']) expect(collapsed.some(line=>line.includes(title))).toBe(false);
+   for(const title of ['Phase A','Run 1','Attempt 1','Loose op']) expect(collapsed.some(line=>line.includes(title))).toBe(true);
+   const phaseAt=collapsed.findIndex(line=>line.includes('Phase A'));
+   expect(collapsed[phaseAt+1]).toContain('... 4 collapsed (observed grouping)');
+   state=reduceInspectorKey('\r',state,model)!.state;
+   expect(state.collapsed).toEqual([]);
+   const restored=layoutInspector(model,state,{width:120,rows:40,ascii:true}).join('\n');
+   for(const title of ['Step A1','Op A1a','Leaf A1a-i','Step A2']) expect(restored).toContain(title);
+   expect(restored).not.toContain('collapsed (observed');
+ });
+ it('B4 counts only members of the fetched window page, never a full-projection scan',()=>{
+   const projection=new ObservationProjection({maxEvents:16,maxNodes:128,maxEdges:128,maxQuery:40});
+   const root=nested('forge','operation','root');
+   projection.refresh({source:root,scope,capturedAt:now,observedAt:now,node:presentation('Wide root'),trace:{invocationId:'wide'}});
+   for(let i=0;i<40;i++){
+     const child=nested('forge','operation',`child-${i}`);
+     projection.refresh({source:child,scope,capturedAt:now,observedAt:now,node:presentation(`Wide child ${i}`),trace:{invocationId:'wide'}});
+     projection.relate({scope,from:root,to:child,kind:'grouping',provenance:nestingProvenance});
+   }
+   const model={projection,scope,invocationId:'wide',title:'Wide',status:'running'};
+   const windows=vi.spyOn(projection,'window');
+   const scans=[vi.spyOn(projection,'query'),vi.spyOn(projection,'events'),vi.spyOn(projection,'stats')];
+   const state=reduceInspectorKey('\r',initialInspectorState(),model)!.state;
+   const text=layoutInspector(model,state,{width:80,rows:24,ascii:true}).join('\n');
+   expect(text).toContain('... 14 collapsed (observed grouping)');
+   expect(text).not.toContain('Wide child');
+   expect(text).toMatch(/Rows 1-15\/41/);
+   expect(windows.mock.calls.every(([query])=>query.limit<=32)).toBe(true);
+   for(const scan of scans) expect(scan).not.toHaveBeenCalled();
+ });
+ it('B4 keeps the selection visible on the collapsed summary when it moves into a hidden row',()=>{
+   const model=groupedFixture();
+   let state=reduceInspectorKey('\r',initialInspectorState(),model)!.state;
+   state=reduceInspectorKey('j',state,model)!.state;
+   const lines=layoutInspector(model,state,{width:120,rows:40,ascii:true});
+   const summary=lines.find(line=>line.includes('collapsed (observed grouping)'));
+   expect(summary?.startsWith(' > ')).toBe(true);
+   expect(lines.filter(line=>line.startsWith(' > '))).toHaveLength(1);
+ });
+ it('B4 keeps descendants collapsed after the collapsed parent scrolls out of the fetched page; Enter on it restores them',()=>{
+   const projection=new ObservationProjection({maxEvents:16,maxNodes:128,maxEdges:128,maxQuery:40});
+   const root=nested('forge','operation','root');
+   projection.refresh({source:root,scope,capturedAt:now,observedAt:now,node:presentation('Wide root'),trace:{invocationId:'wide'}});
+   for(let i=0;i<40;i++){
+     const child=nested('forge','operation',`child-${i}`);
+     projection.refresh({source:child,scope,capturedAt:now,observedAt:now,node:presentation(`Wide child ${i}`),trace:{invocationId:'wide'}});
+     projection.relate({scope,from:root,to:child,kind:'grouping',provenance:nestingProvenance});
+   }
+   const model={projection,scope,invocationId:'wide',title:'Wide',status:'running'};
+   let state=reduceInspectorKey('\r',initialInspectorState(),model)!.state;
+   for(let i=0;i<10;i++) state=reduceInspectorKey('j',state,model)!.state;
+   // Index 10 of 41 centres a 15-row page at offset 3: the collapsed root is no longer fetched, its children are.
+   const lines=layoutInspector(model,state,{width:120,rows:24,ascii:true});
+   expect(lines.join('\n')).toMatch(/Rows 4-18\/41/);
+   expect(lines.some(line=>line.includes('Wide child'))).toBe(false);
+   const summary=lines.filter(line=>line.includes('collapsed (observed grouping)'));
+   expect(summary).toHaveLength(1);
+   expect(summary[0]).toContain('... 15 collapsed (observed grouping)');
+   expect(summary[0]).toContain('parent forge/operation/root outside view');
+   expect(summary[0].startsWith(' > ')).toBe(true);
+   for(let i=0;i<10;i++) state=reduceInspectorKey('k',state,model)!.state;
+   state=reduceInspectorKey('\r',state,model)!.state;
+   expect(state.collapsed).toEqual([]);
+   expect(layoutInspector(model,state,{width:120,rows:24,ascii:true}).join('\n')).toContain('Wide child 0');
+ });
+});
+describe('W15/VC-5 graph fan-out collapse (wb-6ze.1)',()=>{
+ it('B5 prints the first two relations then a real "+N more" count from the bounded relation page',()=>{
+   // docs/workbench/10 "Four views" Graph: "fan-out collapsing" and
+   // "Re-layout only changed neighborhood or viewport, not the complete graph for every event."
+   const model=fixture();
+   for(const id of ['3','5','7','9']) model.projection.relate({scope,from:ref('furnace','0'),to:ref('forge',id),kind:'causation',provenance:{source:'furnace',observedAt:now}});
+   const graph=layoutInspector(model,{...initialInspectorState(),view:'graph'},{width:120,rows:40,ascii:true});
+   const at=graph.findIndex(line=>line.includes('furnace/operation/0 Operation 0'));
+   expect(at).toBeGreaterThan(0);
+   expect(graph[at+1]).toContain('dependency -> forge/operation/1');
+   expect(graph[at+2]).toContain('causation -> forge/operation/3');
+   expect(graph[at+3]).toContain('... +3 more (fan-out collapsed; bounded)');
+   expect(graph[at+3]).not.toContain('(partial)');
+ });
+ it('B5 a self-loop is listed and counted once in the graph and details views',()=>{
+   const projection=new ObservationProjection({maxEvents:16,maxNodes:64,maxEdges:64,maxQuery:40});
+   const self=nested('furnace','operation','self');
+   projection.refresh({source:self,scope,capturedAt:now,observedAt:now,node:presentation('Self loop'),trace:{invocationId:'loop'}});
+   projection.relate({scope,from:self,to:self,kind:'grouping',provenance:nestingProvenance});
+   const model={projection,scope,invocationId:'loop',title:'Loop',status:'running'};
+   const graph=layoutInspector(model,{...initialInspectorState(),view:'graph'},{width:120,rows:24,ascii:true});
+   expect(graph.filter(line=>line.includes('grouping -> furnace/operation/self'))).toHaveLength(1);
+   expect(graph.join('\n')).not.toContain('fan-out collapsed');
+   const details=layoutInspector(model,{...initialInspectorState(),view:'details'},{width:120,rows:24,ascii:true});
+   expect(details.find(line=>line.includes('Relations:'))).toMatch(/Relations: grouping$/);
+ });
+ it('B5 suffixes (partial) when the bounded relation page is full',()=>{
+   const projection=new ObservationProjection();
+   const hub=nested('furnace','operation','hub');
+   projection.refresh({source:hub,scope,capturedAt:now,observedAt:now,node:presentation('Hub'),trace:{invocationId:'hub'}});
+   for(let i=0;i<105;i++) projection.relate({scope,from:hub,to:nested('forge','operation',`t-${i}`),kind:'causation',provenance:{source:'furnace',observedAt:now}});
+   const text=layoutInspector({projection,scope,invocationId:'hub',title:'Hub',status:'running'},{...initialInspectorState(),view:'graph'},{width:120,rows:24,ascii:true}).join('\n');
+   expect(text).toContain('... +98 more (fan-out collapsed; bounded) (partial)');
+   expect(text).toContain('Topology incomplete unless native relationships are explicitly supplied.');
+ });
+});
+describe('W15/VC-5 nested tree bounds under scale (wb-6ze.1)',()=>{
+ it('B6 keeps window, relation-read, width and row bounds after 100k ingest updates on a grouped projection',()=>{
+   // docs/workbench/02 WB-029: "Over 1000 nodes: render cost scales with visible slice and changed ancestors;
+   // no full historical-log fold per frame."
+   const projection=new ObservationProjection({maxEvents:16,maxNodes:1200,maxEdges:1200,maxQuery:40});
+   for(let i=0;i<90;i++) projection.refresh({source:ref('forge',String(i)),scope,capturedAt:now,observedAt:now,node:presentation(`Grouped ${i}`),trace:{invocationId:'scale'}});
+   for(let i=1;i<90;i++) projection.relate({scope,from:ref('forge',String(Math.floor((i-1)/3))),to:ref('forge',String(i)),kind:'grouping',provenance:nestingProvenance});
+   const model={projection,scope,invocationId:'scale',title:'Scale',status:'running'};
+   const windows=vi.spyOn(projection,'window');
+   const original=projection.relations.bind(projection);let reads=0;
+   vi.spyOn(projection,'relations').mockImplementation(input=>{reads++;return original(input);});
+   let state=initialInspectorState();
+   layoutInspector(model,state,{width:80,rows:24});
+   state=reduceInspectorKey('j',state,model)!.state;
+   const topology=projection.relationRevision();
+   for(let i=0;i<100_000;i++) projection.ingest({projectionEventId:`g-${i}`,source:ref('forge',String(i%90)),scope,sourceSequence:Math.floor(i/90)+1,observedAt:now,kind:'native.status',node:{presentation:presentation(`Grouped ${i%90}`)}});
+   expect(projection.relationRevision()).toBe(topology);
+   const beforeChurn=reads;
+   for(const view of ['overview','graph'] as const) for(const width of [32,79,80,120]) for(const ascii of [true,false]){
+     const lines=layoutInspector(model,{...state,view},{width,rows:24,ascii});
+     expect(lines.length).toBeLessThanOrEqual(24);
+     expect(lines.every(line=>visibleWidth(line)<=width)).toBe(true);
+     if(view==='graph') expect(lines.some(line=>line.includes(width>=79?'Topology incomplete unless native relationships are explicitly supplied.':'Topology incomplete'))).toBe(true);
+     if(view==='overview' && width>=79) expect(lines.some(line=>/(\|-|├─|└─) . Grouped 1 /.test(line))).toBe(true);
+   }
+   expect(windows.mock.calls.every(([query])=>query.limit<=32)).toBe(true);
+   // A 24-row terminal fetches a 15-row page: at most two relations() reads per page row per topology revision,
+   // and status-only churn never re-reads relations.
+   expect(reads).toBeLessThanOrEqual(2*15);
+   expect(reads).toBe(beforeChurn);
+ });
+});
+describe('W15/VC-5 row budget honesty (wb-6ze.1)',()=>{
+ it('B6 graph blocks that do not fit are counted, never silently dropped, and the footer and key hint remain',()=>{
+   const model=groupedFixture();
+   const lines=layoutInspector(model,{...initialInspectorState(),view:'graph'},{width:80,rows:24,ascii:true});
+   expect(lines.length).toBeLessThanOrEqual(24);
+   const budget=lines.find(line=>line.includes('in this page (row budget)'));
+   expect(budget).toContain('... 2 more rows in this page (row budget)');
+   const drawn=['Phase A','Step A1','Op A1a','Leaf A1a-i','Run 1','Attempt 1','Loose op','Step A2'].filter(title=>lines.some(line=>line.includes(title)));
+   expect(drawn.length+2).toBe(8);
+   expect(lines.at(-2)).toContain('Topology incomplete unless native relationships are explicitly supplied.');
+   expect(lines.at(-1)).toContain('Esc');
+ });
+ it('B6 a filtered full overview page keeps attention, row range and Escape lines and counts rows it cannot draw',()=>{
+   const model=fixture();
+   const lines=layoutInspector(model,{...initialInspectorState(),filter:'operation'},{width:80,rows:24,ascii:true});
+   expect(lines.length).toBeLessThanOrEqual(24);
+   expect(lines.filter(line=>/Operation \d+/.test(line))).toHaveLength(13);
+   expect(lines.join('\n')).toContain('... 2 more rows in this page (row budget)');
+   for(const text of ['Attention:','Critical path: incomplete trace','Rows 1-15/90']) expect(lines.join('\n')).toContain(text);
+   expect(lines.at(-1)).toContain('Esc');
+ });
+});
+describe('W15/VC-5 row budget keeps the selection visible (wb-6ze.1)',()=>{
+ it('B6 an overview selection pushed past the row budget by cycle references marks the budget notice',()=>{
+   const projection=new ObservationProjection({maxEvents:16,maxNodes:64,maxEdges:64,maxQuery:40});
+   const ids=[...Array.from({length:7},(_,i)=>[`a${i}`,`b${i}`]).flat(),'z'];
+   for(const id of ids) projection.refresh({source:nested('forge','operation',id),scope,capturedAt:now,observedAt:now,node:presentation(`Pair ${id}`),trace:{invocationId:'pairs'}});
+   for(let i=0;i<7;i++) for(const [from,to] of [[`a${i}`,`b${i}`],[`b${i}`,`a${i}`]]) projection.relate({scope,from:nested('forge','operation',from),to:nested('forge','operation',to),kind:'grouping',provenance:nestingProvenance});
+   const model={projection,scope,invocationId:'pairs',title:'Pairs',status:'running'};
+   // 15 rows plus 7 cycle reference lines exceed the 16-line tree budget; b6 (index 13) is drawn last in tree order.
+   const lines=layoutInspector(model,{...initialInspectorState(),index:13},{width:80,rows:24,ascii:true});
+   expect(lines.length).toBeLessThanOrEqual(24);
+   expect(lines.some(line=>line.includes('Pair b6'))).toBe(false);
+   const notice=lines.find(line=>line.includes('in this page (row budget)'));
+   expect(notice).toContain('... 4 more rows in this page (row budget)');
+   expect(notice?.startsWith(' > ')).toBe(true);
+   expect(lines.filter(line=>line.startsWith(' > '))).toHaveLength(1);
+ });
+ it('B6 a graph selection in a block past the row budget marks the budget notice',()=>{
+   const model=groupedFixture();
+   const lines=layoutInspector(model,{...initialInspectorState(),view:'graph',index:7},{width:80,rows:24,ascii:true});
+   expect(lines.some(line=>line.includes('Step A2'))).toBe(false);
+   const notice=lines.find(line=>line.includes('in this page (row budget)'));
+   expect(notice?.startsWith(' > ')).toBe(true);
+   expect(lines.filter(line=>line.startsWith(' > '))).toHaveLength(1);
+ });
+});
+describe('W15/VC-5 closing the nested overview (wb-6ze.1)',()=>{
+ it('B7 Esc from the nested overview closes with zero producer or control calls',()=>{
+   // docs/workbench/10 "Navigation": "Closing view never stops workflow."
+   const model=groupedFixture(),done=vi.fn(),onKill=vi.fn();
+   const mutators=[vi.spyOn(model.projection,'refresh'),vi.spyOn(model.projection,'ingest'),vi.spyOn(model.projection,'relate'),
+     vi.spyOn(model.projection,'disconnect'),vi.spyOn(model.projection,'reconnect'),vi.spyOn(model.projection,'markStale')];
+   expect(reduceInspectorKey('\x1b',initialInspectorState(),model)?.action).toBe('close');
+   const dialog=new WorkflowDialog({requestRender:vi.fn(),terminal:{rows:24,columns:80}} as never,
+     ()=>({progress:[],task:{status:'running',workflowName:'Grouped workflow',startTime:1},observation:model}),
+     {fg:(_color:string,text:string)=>text,bold:(text:string)=>text} as never,done,{onKill});
+   const rendered=dialog.render(80).join('\n');
+   expect(rendered).toContain('OVERVIEW');
+   expect(rendered).toMatch(/[├└]─ ◌ Step A1/);
+   dialog.handleInput('\x1b');
+   expect(done).toHaveBeenCalledTimes(1);
+   expect(onKill).not.toHaveBeenCalled();
+   for(const spy of mutators) expect(spy).not.toHaveBeenCalled();
+   dialog.dispose();
+ });
+});
