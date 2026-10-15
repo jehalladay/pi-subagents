@@ -1,7 +1,9 @@
+import { readFileSync } from 'node:fs';
 import { visibleWidth } from '@earendil-works/pi-tui';
 import { describe, expect, it, vi } from 'vitest';
 import { initialWorkflowDialogState, WorkflowDialog } from '../src/ui/workflow-dialog.js';
 import { type InspectorModel, initialInspectorState, inspectorEvidenceTarget, layoutInspector, reduceInspectorKey } from '../src/ui/workflow-inspector.js';
+import { ATTENTION_CLOCK_CAVEAT, ATTENTION_CONTRACT, ATTENTION_CRITICAL_PATH_CAVEAT, type AttentionBottleneck, type AttentionReport } from '../src/workbench/attention.js';
 import { type EvidenceContent, type EvidenceLoader, EvidenceRefusal, EvidenceStore } from '../src/workbench/evidence-loader.js';
 import { CLAUDE_TRANSCRIPT_GRANT, createEvidenceLoaders } from '../src/workbench/evidence-producers.js';
 import { type NativeRef, ObservationProjection, type ObservationScope } from '../src/workbench/observation.js';
@@ -920,3 +922,665 @@ describe('W15-A lazy bounded evidence in the details view (wb-g1g.1, docs/workbe
    expect(rendered).toMatch(/loaded.*stale/);
  });
 });
+
+// wb-6ze.21 (W15-C2 / VC-5): the overview renders the optional AttentionReport the caller computed. Spec quotes are from
+// docs/workbench/10-terminal-inspector.md and docs/workbench/09-observation-and-provenance.md.
+describe('W15-C2 attention panel in the inspector overview',()=>{
+ const bottleneck=(n:number,over:Partial<AttentionBottleneck>={}):AttentionBottleneck=>({
+   key:`k${n}`,nativeRef:ref(n%2?'forge':'furnace',`b${n}`),title:`Bottleneck ${n}`,tone:'active',freshness:'current',openMs:61_000+n*1000,measured:true,...over});
+ const report=(over:Partial<AttentionReport>={}):AttentionReport=>({
+   contract:ATTENTION_CONTRACT,basis:'observed',now,examined:{nodes:6,truncated:false},
+   counts:{active:2,waiting:3,success:0,failure:0,unknown:1,stale:4,disconnected:1,withInterval:2,withoutInterval:4},
+   disconnectedProviders:['furnace'],bottlenecks:[bottleneck(1),bottleneck(2,{tone:'waiting',freshness:'stale',openMs:5_000})],
+   unmeasured:0,clockSkew:0,criticalPath:{label:'incomplete-trace',reasons:['no-dependency-edges']},clockCaveat:ATTENTION_CLOCK_CAVEAT,...over});
+ const partial:AttentionReport['criticalPath']={label:'partial-estimated',keys:['a','b','c'],measuredMs:61_000,coverage:{chainNodes:3,dependencyEdges:2},caveat:ATTENTION_CRITICAL_PATH_CAVEAT};
+ /** Six observed nodes: every tree row fits, so the panel is judged without paging. */
+ const small=(attention?:AttentionReport):InspectorModel=>{
+   const projection=new ObservationProjection({maxEvents:16,maxNodes:100,maxEdges:100,maxQuery:40});
+   for(let i=0;i<6;i++) projection.refresh({source:ref(i%2?'forge':'furnace',String(i)),scope,capturedAt:now,observedAt:now,node:presentation(`Small ${i}`),trace:{invocationId:'workflow-1'},coverage:'partial'});
+   return {projection,scope,invocationId:'workflow-1',title:'Small workflow',status:'running',...(attention?{attention}:{})};
+ };
+ const withAttention=(model:InspectorModel,attention:AttentionReport):InspectorModel=>({...model,attention});
+ const overview=(model:InspectorModel,width:number,rows:number,ascii:boolean)=>layoutInspector(model,initialInspectorState(),{width,rows,ascii});
+ const flat=(lines:readonly string[])=>lines.join('\n').replace(/\s+/g,' ');
+ const countsLine=(lines:readonly string[])=>lines.find(line=>line.trimStart().startsWith('Attention: active'));
+ const zeroWidth=/[\u200b-\u200f\u202a-\u202e\u2060-\u2064\ufeff]/u;
+
+ it('AC1 supplies the counts line, every bottleneck row and the critical-path line at 80x24 ASCII',()=>{
+   const lines=overview(small(report()),80,24,true);
+   expect(countsLine(lines)).toContain('active 2');
+   const rows=lines.filter(line=>/Bottleneck \d/.test(line));
+   expect(rows).toHaveLength(2);
+   expect(rows[0]).toMatch(/Bottleneck 1 .*forge .*open 01:02 measured .*CURRENT/);
+   expect(rows[1]).toMatch(/Bottleneck 2 .*furnace .*open 00:05 measured .*STALE/);
+   expect(flat(lines)).toContain('Critical path: incomplete trace (no-dependency-edges)');
+   expect(lines.join('\n')).not.toContain('Attention: stale/unknown is last-known state');
+ });
+ it('AC1 a partial-estimated critical path names its measured time, coverage and caveat',()=>{
+   const lines=overview(small(report({criticalPath:partial})),80,24,true);
+   const text=flat(lines);
+   expect(text).toContain('Critical path: partial-estimated 01:01 over 3 nodes/2 edges');
+   expect(text).toContain(ATTENTION_CRITICAL_PATH_CAVEAT);
+   for(const line of lines) expect(visibleWidth(line)).toBeLessThanOrEqual(80);
+ });
+ it('AC1 an incomplete-trace critical path lists every reason and nothing estimated or numeric',()=>{
+   const reasons:AttentionReport['criticalPath']={label:'incomplete-trace',reasons:['no-dependency-edges','missing-intervals','open-intervals','hypothesis-edges','cycle','truncated']};
+   const lines=overview(small(report({criticalPath:reasons,bottlenecks:[]})),80,24,true);
+   const text=flat(lines);
+   for(const reason of ['no-dependency-edges','missing-intervals','open-intervals','hypothesis-edges','cycle','truncated']) expect(text).toContain(reason);
+   expect(text).not.toContain('estimated');
+   const at=lines.findIndex(line=>line.trimStart().startsWith('Critical path:'));
+   const cp=lines.slice(at,lines.findIndex(line=>line.includes('Tab views'))).join(' ');
+   expect(cp).not.toMatch(/\d/);
+ });
+ it('AC2 renders waiting, stale, unknown, active and disconnected as five distinct labelled numbers',()=>{
+   const line=countsLine(overview(small(report()),120,40,false))!;
+   expect(line).toMatch(/active 2\b/);
+   expect(line).toMatch(/waiting 3\b/);
+   expect(line).toMatch(/stale 4\b/);
+   expect(line).toMatch(/unknown 1\b/);
+   expect(line).toMatch(/disconnected 1\b/);
+   expect(line).toContain('(providers: furnace)');
+   // Mutation: a counts line that folds waiting into active or drops its label must not satisfy the same matcher.
+   expect(line.replace('waiting 3','active 5')).not.toMatch(/waiting 3\b/);
+   expect(line.replace(/ ·? ?waiting 3/,'')).not.toMatch(/waiting/);
+ });
+ it('AC2 never folds tones: different counts move only their own label',()=>{
+   const line=countsLine(overview(small(report({counts:{...report().counts,active:0,waiting:7,stale:0,unknown:9,disconnected:0}})),120,40,true))!;
+   expect(line).toMatch(/active 0\b.*waiting 7\b.*stale 0\b.*unknown 9\b.*disconnected 0\b/);
+ });
+ it('AC2 a stale node bottleneck row carries STALE and a current one CURRENT',()=>{
+   const lines=overview(small(report()),120,40,true);
+   expect(lines.find(line=>line.includes('Bottleneck 2'))).toContain('STALE');
+   expect(lines.find(line=>line.includes('Bottleneck 1'))).not.toContain('STALE');
+ });
+ it('AC3 open time appears only on measured rows; unmeasured and skew are counted, never timed',()=>{
+   const lines=overview(small(report({unmeasured:2,clockSkew:1})),80,24,true);
+   const text=flat(lines);
+   expect(text).toContain('+2 unmeasured (no open interval)');
+   expect(text).toContain('clock skew 1 (clamped)');
+   expect(lines.filter(line=>/\b\d\d:\d\d\b/.test(line))).toHaveLength(2);
+   expect(lines.find(line=>line.includes('unmeasured'))).not.toMatch(/\d\d:\d\d|\d+ms/);
+   expect(text).toContain(ATTENTION_CLOCK_CAVEAT);
+   const quiet=flat(overview(small(report({unmeasured:0,clockSkew:0})),80,24,true));
+   expect(quiet).not.toContain('unmeasured');
+   expect(quiet).not.toContain('clock skew');
+ });
+ it('AC3 a row whose report entry is not measured renders no open time',()=>{
+   const unmeasuredRow={...bottleneck(3),measured:false} as unknown as AttentionBottleneck;
+   const row=overview(small(report({bottlenecks:[unmeasuredRow]})),80,24,true).find(line=>line.includes('Bottleneck 3'))!;
+   expect(row).toBeDefined();
+   expect(row).not.toMatch(/\d\d:\d\d/);
+   expect(row).not.toMatch(/open \S+ measured/);
+ });
+ it('AC4 compacts to the counts and critical-path lines below 80 columns or 20 rows',()=>{
+   for(const [width,rows] of [[60,18],[79,24],[80,19]] as const){
+     const lines=overview(small(report({unmeasured:2,clockSkew:1,criticalPath:partial})),width,rows,true);
+     const text=flat(lines);
+     expect(countsLine(lines)).toContain('active 2');
+     expect(text).toContain('Critical path: partial-estimated 01:01');
+     expect(text).not.toContain('Bottleneck');
+     expect(text).not.toContain('unmeasured');
+     expect(text).not.toContain('clock skew');
+     expect(text).not.toContain('caller clock');
+     expect(lines.some(line=>line.includes('Tab views'))).toBe(true);
+     for(const line of lines) expect(visibleWidth(line)).toBeLessThanOrEqual(width);
+   }
+ });
+ it.each([[80,24],[120,40],[60,18]] as const)('AC4 every line fits %ix%i in both tiers with hostile bottleneck text',(width,rows)=>{
+   const hostile=report({bottlenecks:[bottleneck(1,{title:'\x1b[31mred\u202eevil\u200bzero 漢字漢字漢字漢字漢字漢字漢字漢字漢字漢字漢字漢字漢字漢字漢字漢字漢字漢字漢字漢字漢字漢字'})],disconnectedProviders:['p\x1b[2Jq','漢字provider']});
+   for(const ascii of [true,false]){
+     const lines=overview(small(hostile),width,rows,ascii);
+     for(const line of lines) expect(visibleWidth(line)).toBeLessThanOrEqual(width);
+     expect(lines.length).toBeLessThanOrEqual(rows);
+     const text=lines.join('\n');
+     expect(text).not.toContain('\x1b');
+     expect(zeroWidth.test(text)).toBe(false);
+   }
+ });
+ it('AC4 a hostile bottleneck title keeps its row suffix visible at 80 columns',()=>{
+   const long=report({bottlenecks:[bottleneck(1,{title:'x'.repeat(300),freshness:'stale'})]});
+   const row=overview(small(long),80,24,true).find(line=>line.includes('xxx'))!;
+   expect(row).toMatch(/open 01:02 measured .*STALE$/);
+ });
+ it('AC5 layout stays synchronous and never selects attention or reads a host clock',()=>{
+   const source=readFileSync(new URL('../src/ui/workflow-inspector.ts',import.meta.url),'utf8');
+   expect(source).not.toMatch(/selectAttention/);
+   expect(source).not.toMatch(/Date\.now/);
+   expect(source).not.toMatch(/new Date\(\)/);
+   expect(layoutInspector(small(report()),initialInspectorState(),{width:80,rows:24})).toBeInstanceOf(Array);
+ });
+ it('AC5 names disconnected providers only when there are some, and shows page truncation',()=>{
+   const none=countsLine(overview(small(report({disconnectedProviders:[]})),120,40,true))!;
+   expect(none).not.toContain('providers');
+   expect(flat(overview(small(report({disconnectedProviders:['furnace','forge']})),120,40,true))).toContain('(providers: furnace, forge)');
+   expect(flat(overview(small(report({examined:{nodes:100,truncated:true}})),80,24,true))).toContain('page truncated');
+   expect(flat(overview(small(report({examined:{nodes:6,truncated:false}})),80,24,true))).not.toContain('page truncated');
+   expect(flat(overview(small(report({examined:{nodes:100,truncated:true},criticalPath:partial})),80,24,true))).toContain('page truncated');
+ });
+ it('AC6 without an attention report all four views are byte-identical to the base snapshot',()=>{
+   for(const view of ['overview','graph','timeline','details'] as const) for(const [width,rows] of [[80,24],[120,40]] as const) for(const ascii of [true,false]){
+     const key=`${view}|${width}x${rows}|${ascii?'ascii':'unicode'}`;
+     expect(layoutInspector(fixture(),{...initialInspectorState(),view},{width,rows,ascii}),key).toEqual(BASE_SNAPSHOT[key]);
+     expect(layoutInspector({...fixture(),attention:undefined},{...initialInspectorState(),view},{width,rows,ascii}),key).toEqual(BASE_SNAPSHOT[key]);
+   }
+ });
+ it('AC6 other views ignore a supplied report entirely',()=>{
+   const model=fixture();
+   for(const view of ['graph','timeline','details'] as const)
+     expect(layoutInspector(withAttention(model,report()),{...initialInspectorState(),view},{width:80,rows:24,ascii:true}))
+       .toEqual(layoutInspector(model,{...initialInspectorState(),view},{width:80,rows:24,ascii:true}));
+ });
+ it('AC7 fifteen bottlenecks at 24 rows keep the selected, row-range and key-hint lines and count the dropped rows',()=>{
+   const many=report({bottlenecks:Array.from({length:15},(_,n)=>bottleneck(n+1))});
+   const lines=overview(withAttention(fixture(),many),80,24,true);
+   expect(lines.length).toBeLessThanOrEqual(24);
+   const text=lines.join('\n');
+   expect(text).toContain('Selected furnace/operation/0');
+   expect(text).toMatch(/Rows 1-\d+\/90/);
+   expect(lines.at(-1)).toContain('Tab views');
+   const shown=lines.filter(line=>/Bottleneck \d+ /.test(line)).length;
+   expect(shown).toBeGreaterThanOrEqual(1);
+   expect(shown).toBeLessThan(15);
+   expect(text).toContain(`+${15-shown} more bottlenecks`);
+   expect(countsLine(lines)).toContain('active 2');
+   expect(text).toContain('Critical path: incomplete trace');
+ });
+ it('AC7 bottleneck rows drop from the bottom: the rows drawn are the first ones in report order',()=>{
+   const many=report({bottlenecks:Array.from({length:15},(_,n)=>bottleneck(n+1))});
+   const lines=overview(withAttention(fixture(),many),80,24,true);
+   const numbers=lines.flatMap(line=>/Bottleneck (\d+) /.exec(line)?.[1]??[]).map(Number);
+   expect(numbers).toEqual(numbers.map((_,at)=>at+1));
+ });
+ it('AC7 the tree slice and its tones are unchanged by the panel',()=>{
+   const model=small();
+   const without=overview(model,80,24,true);
+   const withPanel=overview(withAttention(model,report()),80,24,true);
+   const tree=(lines:readonly string[])=>lines.filter(line=>/Small \d/.test(line));
+   expect(tree(withPanel)).toEqual(tree(without));
+   expect(tree(withPanel)).toHaveLength(6);
+   // A paged fixture: the rows still drawn are an unchanged prefix of the rows drawn without the panel.
+   const big=fixture();
+   const bigWithout=overview(big,80,24,true).filter(line=>/Operation \d+ /.test(line));
+   const bigWith=overview(withAttention(big,report()),80,24,true).filter(line=>/Operation \d+ /.test(line));
+   expect(bigWith.length).toBeGreaterThan(0);
+   expect(bigWith).toEqual(bigWithout.slice(0,bigWith.length));
+ });
+ it('AC7 the panel replaces the two constant lines instead of adding to them',()=>{
+   const lines=overview(small(report()),80,24,true);
+   expect(lines.filter(line=>line.includes('Attention:'))).toHaveLength(1);
+   expect(lines.filter(line=>line.includes('Critical path:'))).toHaveLength(1);
+ });
+});
+
+/** Captured from layoutInspector at base b4ca4aa, before the attention panel existed: fixture() without an attention report. */
+const BASE_SNAPSHOT: Readonly<Record<string, readonly string[]>> = {
+  "overview|80x24|ascii": [
+    " [ Big workflow running ]",
+    " OVERVIEW 90 observed operations ? paused view ? 1/90",
+    " ------------------------------------------------",
+    " Observed tree ? nesting from observed grouping/ownership edges only",
+    " > * Operation 0 ? furnace ? running ? CURRENT ? no observed parent",
+    "   * Operation 1 ? forge ? running ? CURRENT ? no observed parent",
+    "   * Operation 2 ? furnace ? running ? CURRENT ? no observed parent",
+    "   * Operation 3 ? forge ? running ? CURRENT ? no observed parent",
+    "   * Operation 4 ? furnace ? running ? CURRENT ? no observed parent",
+    "   * Operation 5 ? forge ? running ? CURRENT ? no observed parent",
+    "   * Operation 6 ? furnace ? running ? CURRENT ? no observed parent",
+    "   * Operation 7 ? forge ? running ? CURRENT ? no observed parent",
+    "   * Operation 8 ? furnace ? running ? CURRENT ? no observed parent",
+    "   * Operation 9 ? forge ? running ? CURRENT ? no observed parent",
+    "   * Operation 10 ? furnace ? running ? CURRENT ? no observed parent",
+    "   * Operation 11 ? forge ? running ? CURRENT ? no observed parent",
+    "   * Operation 12 ? furnace ? running ? CURRENT ? no observed parent",
+    "   * Operation 13 ? forge ? running ? CURRENT ? no observed parent",
+    "   * Operation 14 ? furnace ? running ? CURRENT ? no observed parent",
+    " Selected furnace/operation/0 ? 0 evidence refs",
+    " Attention: stale/unknown is last-known state, not live progress.",
+    " Critical path: incomplete trace (no complete dependency/interval proof).",
+    " Rows 1-15/90 ? viewport only",
+    " Tab views ? j/k ? Esc back/close",
+  ],
+  "overview|80x24|unicode": [
+    " ╭ Big workflow running ╮",
+    " OVERVIEW 90 observed operations · paused view · 1/90",
+    " ────────────────────────────────────────────────",
+    " Observed tree · nesting from observed grouping/ownership edges only",
+    " ❯ ◌ Operation 0 · furnace · running · CURRENT · no observed parent",
+    "   ◌ Operation 1 · forge · running · CURRENT · no observed parent",
+    "   ◌ Operation 2 · furnace · running · CURRENT · no observed parent",
+    "   ◌ Operation 3 · forge · running · CURRENT · no observed parent",
+    "   ◌ Operation 4 · furnace · running · CURRENT · no observed parent",
+    "   ◌ Operation 5 · forge · running · CURRENT · no observed parent",
+    "   ◌ Operation 6 · furnace · running · CURRENT · no observed parent",
+    "   ◌ Operation 7 · forge · running · CURRENT · no observed parent",
+    "   ◌ Operation 8 · furnace · running · CURRENT · no observed parent",
+    "   ◌ Operation 9 · forge · running · CURRENT · no observed parent",
+    "   ◌ Operation 10 · furnace · running · CURRENT · no observed parent",
+    "   ◌ Operation 11 · forge · running · CURRENT · no observed parent",
+    "   ◌ Operation 12 · furnace · running · CURRENT · no observed parent",
+    "   ◌ Operation 13 · forge · running · CURRENT · no observed parent",
+    "   ◌ Operation 14 · furnace · running · CURRENT · no observed parent",
+    " Selected furnace/operation/0 · 0 evidence refs",
+    " Attention: stale/unknown is last-known state, not live progress.",
+    " Critical path: incomplete trace (no complete dependency/interval proof).",
+    " Rows 1-15/90 · viewport only",
+    " Tab views · j/k · Esc back/close",
+  ],
+  "overview|120x40|ascii": [
+    " [ Big workflow running ]",
+    " OVERVIEW 90 observed operations ? paused view ? 1/90",
+    " ------------------------------------------------",
+    " Observed tree ? nesting from observed grouping/ownership edges only",
+    " > * Operation 0 ? furnace ? running ? CURRENT ? no observed parent",
+    "   * Operation 1 ? forge ? running ? CURRENT ? no observed parent",
+    "   * Operation 2 ? furnace ? running ? CURRENT ? no observed parent",
+    "   * Operation 3 ? forge ? running ? CURRENT ? no observed parent",
+    "   * Operation 4 ? furnace ? running ? CURRENT ? no observed parent",
+    "   * Operation 5 ? forge ? running ? CURRENT ? no observed parent",
+    "   * Operation 6 ? furnace ? running ? CURRENT ? no observed parent",
+    "   * Operation 7 ? forge ? running ? CURRENT ? no observed parent",
+    "   * Operation 8 ? furnace ? running ? CURRENT ? no observed parent",
+    "   * Operation 9 ? forge ? running ? CURRENT ? no observed parent",
+    "   * Operation 10 ? furnace ? running ? CURRENT ? no observed parent",
+    "   * Operation 11 ? forge ? running ? CURRENT ? no observed parent",
+    "   * Operation 12 ? furnace ? running ? CURRENT ? no observed parent",
+    "   * Operation 13 ? forge ? running ? CURRENT ? no observed parent",
+    "   * Operation 14 ? furnace ? running ? CURRENT ? no observed parent",
+    "   * Operation 15 ? forge ? running ? CURRENT ? no observed parent",
+    "   * Operation 16 ? furnace ? running ? CURRENT ? no observed parent",
+    "   * Operation 17 ? forge ? running ? CURRENT ? no observed parent",
+    "   * Operation 18 ? furnace ? running ? CURRENT ? no observed parent",
+    "   * Operation 19 ? forge ? running ? CURRENT ? no observed parent",
+    "   * Operation 20 ? furnace ? running ? CURRENT ? no observed parent",
+    "   * Operation 21 ? forge ? running ? CURRENT ? no observed parent",
+    "   * Operation 22 ? furnace ? running ? CURRENT ? no observed parent",
+    "   * Operation 23 ? forge ? running ? CURRENT ? no observed parent",
+    "   * Operation 24 ? furnace ? running ? CURRENT ? no observed parent",
+    "   * Operation 25 ? forge ? running ? CURRENT ? no observed parent",
+    "   * Operation 26 ? furnace ? running ? CURRENT ? no observed parent",
+    "   * Operation 27 ? forge ? running ? CURRENT ? no observed parent",
+    "   * Operation 28 ? furnace ? running ? CURRENT ? no observed parent",
+    "   * Operation 29 ? forge ? running ? CURRENT ? no observed parent",
+    "   * Operation 30 ? furnace ? running ? CURRENT ? no observed parent",
+    " Selected furnace/operation/0 ? 0 evidence refs",
+    " Attention: stale/unknown is last-known state, not live progress.",
+    " Critical path: incomplete trace (no complete dependency/interval proof).",
+    " Rows 1-31/90 ? viewport only",
+    " Tab views ? j/k ? Esc back/close",
+  ],
+  "overview|120x40|unicode": [
+    " ╭ Big workflow running ╮",
+    " OVERVIEW 90 observed operations · paused view · 1/90",
+    " ────────────────────────────────────────────────",
+    " Observed tree · nesting from observed grouping/ownership edges only",
+    " ❯ ◌ Operation 0 · furnace · running · CURRENT · no observed parent",
+    "   ◌ Operation 1 · forge · running · CURRENT · no observed parent",
+    "   ◌ Operation 2 · furnace · running · CURRENT · no observed parent",
+    "   ◌ Operation 3 · forge · running · CURRENT · no observed parent",
+    "   ◌ Operation 4 · furnace · running · CURRENT · no observed parent",
+    "   ◌ Operation 5 · forge · running · CURRENT · no observed parent",
+    "   ◌ Operation 6 · furnace · running · CURRENT · no observed parent",
+    "   ◌ Operation 7 · forge · running · CURRENT · no observed parent",
+    "   ◌ Operation 8 · furnace · running · CURRENT · no observed parent",
+    "   ◌ Operation 9 · forge · running · CURRENT · no observed parent",
+    "   ◌ Operation 10 · furnace · running · CURRENT · no observed parent",
+    "   ◌ Operation 11 · forge · running · CURRENT · no observed parent",
+    "   ◌ Operation 12 · furnace · running · CURRENT · no observed parent",
+    "   ◌ Operation 13 · forge · running · CURRENT · no observed parent",
+    "   ◌ Operation 14 · furnace · running · CURRENT · no observed parent",
+    "   ◌ Operation 15 · forge · running · CURRENT · no observed parent",
+    "   ◌ Operation 16 · furnace · running · CURRENT · no observed parent",
+    "   ◌ Operation 17 · forge · running · CURRENT · no observed parent",
+    "   ◌ Operation 18 · furnace · running · CURRENT · no observed parent",
+    "   ◌ Operation 19 · forge · running · CURRENT · no observed parent",
+    "   ◌ Operation 20 · furnace · running · CURRENT · no observed parent",
+    "   ◌ Operation 21 · forge · running · CURRENT · no observed parent",
+    "   ◌ Operation 22 · furnace · running · CURRENT · no observed parent",
+    "   ◌ Operation 23 · forge · running · CURRENT · no observed parent",
+    "   ◌ Operation 24 · furnace · running · CURRENT · no observed parent",
+    "   ◌ Operation 25 · forge · running · CURRENT · no observed parent",
+    "   ◌ Operation 26 · furnace · running · CURRENT · no observed parent",
+    "   ◌ Operation 27 · forge · running · CURRENT · no observed parent",
+    "   ◌ Operation 28 · furnace · running · CURRENT · no observed parent",
+    "   ◌ Operation 29 · forge · running · CURRENT · no observed parent",
+    "   ◌ Operation 30 · furnace · running · CURRENT · no observed parent",
+    " Selected furnace/operation/0 · 0 evidence refs",
+    " Attention: stale/unknown is last-known state, not live progress.",
+    " Critical path: incomplete trace (no complete dependency/interval proof).",
+    " Rows 1-31/90 · viewport only",
+    " Tab views · j/k · Esc back/close",
+  ],
+  "graph|80x24|ascii": [
+    " [ Big workflow running ]",
+    " GRAPH 90 observed operations ? paused view ? 1/90",
+    " ------------------------------------------------",
+    " Observed reference graph ? cycles allowed; missing edges are unknown",
+    " > * furnace/operation/0 Operation 0",
+    "  dependency -> forge/operation/1 [furnace]",
+    "  * forge/operation/1 Operation 1",
+    "  dependency <- furnace/operation/0 [furnace]",
+    "  * furnace/operation/2 Operation 2",
+    "  * forge/operation/3 Operation 3",
+    "  * furnace/operation/4 Operation 4",
+    "  * forge/operation/5 Operation 5",
+    "  * furnace/operation/6 Operation 6",
+    "  * forge/operation/7 Operation 7",
+    "  * furnace/operation/8 Operation 8",
+    "  * forge/operation/9 Operation 9",
+    "  * furnace/operation/10 Operation 10",
+    "  * forge/operation/11 Operation 11",
+    "  * furnace/operation/12 Operation 12",
+    "  * forge/operation/13 Operation 13",
+    "  * furnace/operation/14 Operation 14",
+    " Topology incomplete unless native relationships are explicitly supplied.",
+    " Rows 1-15/90 ? viewport only",
+    " Tab views ? j/k ? Esc back/close",
+  ],
+  "graph|80x24|unicode": [
+    " ╭ Big workflow running ╮",
+    " GRAPH 90 observed operations · paused view · 1/90",
+    " ────────────────────────────────────────────────",
+    " Observed reference graph · cycles allowed; missing edges are unknown",
+    " ❯ ◌ furnace/operation/0 Operation 0",
+    "  dependency → forge/operation/1 [furnace]",
+    "  ◌ forge/operation/1 Operation 1",
+    "  dependency ← furnace/operation/0 [furnace]",
+    "  ◌ furnace/operation/2 Operation 2",
+    "  ◌ forge/operation/3 Operation 3",
+    "  ◌ furnace/operation/4 Operation 4",
+    "  ◌ forge/operation/5 Operation 5",
+    "  ◌ furnace/operation/6 Operation 6",
+    "  ◌ forge/operation/7 Operation 7",
+    "  ◌ furnace/operation/8 Operation 8",
+    "  ◌ forge/operation/9 Operation 9",
+    "  ◌ furnace/operation/10 Operation 10",
+    "  ◌ forge/operation/11 Operation 11",
+    "  ◌ furnace/operation/12 Operation 12",
+    "  ◌ forge/operation/13 Operation 13",
+    "  ◌ furnace/operation/14 Operation 14",
+    " Topology incomplete unless native relationships are explicitly supplied.",
+    " Rows 1-15/90 · viewport only",
+    " Tab views · j/k · Esc back/close",
+  ],
+  "graph|120x40|ascii": [
+    " [ Big workflow running ]",
+    " GRAPH 90 observed operations ? paused view ? 1/90",
+    " ------------------------------------------------",
+    " Observed reference graph ? cycles allowed; missing edges are unknown",
+    " > * furnace/operation/0 Operation 0",
+    "  dependency -> forge/operation/1 [furnace]",
+    "  * forge/operation/1 Operation 1",
+    "  dependency <- furnace/operation/0 [furnace]",
+    "  * furnace/operation/2 Operation 2",
+    "  * forge/operation/3 Operation 3",
+    "  * furnace/operation/4 Operation 4",
+    "  * forge/operation/5 Operation 5",
+    "  * furnace/operation/6 Operation 6",
+    "  * forge/operation/7 Operation 7",
+    "  * furnace/operation/8 Operation 8",
+    "  * forge/operation/9 Operation 9",
+    "  * furnace/operation/10 Operation 10",
+    "  * forge/operation/11 Operation 11",
+    "  * furnace/operation/12 Operation 12",
+    "  * forge/operation/13 Operation 13",
+    "  * furnace/operation/14 Operation 14",
+    "  * forge/operation/15 Operation 15",
+    "  * furnace/operation/16 Operation 16",
+    "  * forge/operation/17 Operation 17",
+    "  * furnace/operation/18 Operation 18",
+    "  * forge/operation/19 Operation 19",
+    "  * furnace/operation/20 Operation 20",
+    "  * forge/operation/21 Operation 21",
+    "  * furnace/operation/22 Operation 22",
+    "  * forge/operation/23 Operation 23",
+    "  * furnace/operation/24 Operation 24",
+    "  * forge/operation/25 Operation 25",
+    "  * furnace/operation/26 Operation 26",
+    "  * forge/operation/27 Operation 27",
+    "  * furnace/operation/28 Operation 28",
+    "  * forge/operation/29 Operation 29",
+    "  * furnace/operation/30 Operation 30",
+    " Topology incomplete unless native relationships are explicitly supplied.",
+    " Rows 1-31/90 ? viewport only",
+    " Tab views ? j/k ? Esc back/close",
+  ],
+  "graph|120x40|unicode": [
+    " ╭ Big workflow running ╮",
+    " GRAPH 90 observed operations · paused view · 1/90",
+    " ────────────────────────────────────────────────",
+    " Observed reference graph · cycles allowed; missing edges are unknown",
+    " ❯ ◌ furnace/operation/0 Operation 0",
+    "  dependency → forge/operation/1 [furnace]",
+    "  ◌ forge/operation/1 Operation 1",
+    "  dependency ← furnace/operation/0 [furnace]",
+    "  ◌ furnace/operation/2 Operation 2",
+    "  ◌ forge/operation/3 Operation 3",
+    "  ◌ furnace/operation/4 Operation 4",
+    "  ◌ forge/operation/5 Operation 5",
+    "  ◌ furnace/operation/6 Operation 6",
+    "  ◌ forge/operation/7 Operation 7",
+    "  ◌ furnace/operation/8 Operation 8",
+    "  ◌ forge/operation/9 Operation 9",
+    "  ◌ furnace/operation/10 Operation 10",
+    "  ◌ forge/operation/11 Operation 11",
+    "  ◌ furnace/operation/12 Operation 12",
+    "  ◌ forge/operation/13 Operation 13",
+    "  ◌ furnace/operation/14 Operation 14",
+    "  ◌ forge/operation/15 Operation 15",
+    "  ◌ furnace/operation/16 Operation 16",
+    "  ◌ forge/operation/17 Operation 17",
+    "  ◌ furnace/operation/18 Operation 18",
+    "  ◌ forge/operation/19 Operation 19",
+    "  ◌ furnace/operation/20 Operation 20",
+    "  ◌ forge/operation/21 Operation 21",
+    "  ◌ furnace/operation/22 Operation 22",
+    "  ◌ forge/operation/23 Operation 23",
+    "  ◌ furnace/operation/24 Operation 24",
+    "  ◌ forge/operation/25 Operation 25",
+    "  ◌ furnace/operation/26 Operation 26",
+    "  ◌ forge/operation/27 Operation 27",
+    "  ◌ furnace/operation/28 Operation 28",
+    "  ◌ forge/operation/29 Operation 29",
+    "  ◌ furnace/operation/30 Operation 30",
+    " Topology incomplete unless native relationships are explicitly supplied.",
+    " Rows 1-31/90 · viewport only",
+    " Tab views · j/k · Esc back/close",
+  ],
+  "timeline|80x24|ascii": [
+    " [ Big workflow running ]",
+    " TIMELINE 90 observed operations ? paused view ? 1/90",
+    " ------------------------------------------------",
+    " Source intervals only ? zoom 1x ? pan 0 ? clocks may differ",
+    " > furnace Operation 0 ## 2000ms source interval",
+    "  forge Operation 1 ## 2000ms source interval",
+    "  furnace Operation 2 ## 2000ms source interval",
+    "  forge Operation 3 timing unavailable (no complete source interval)",
+    "  furnace Operation 4 timing unavailable (no complete source interval)",
+    "  forge Operation 5 timing unavailable (no complete source interval)",
+    "  furnace Operation 6 timing unavailable (no complete source interval)",
+    "  forge Operation 7 timing unavailable (no complete source interval)",
+    "  furnace Operation 8 timing unavailable (no complete source interval)",
+    "  forge Operation 9 timing unavailable (no complete source interval)",
+    "  furnace Operation 10 timing unavailable (no complete source interval)",
+    "  forge Operation 11 timing unavailable (no complete source interval)",
+    "  furnace Operation 12 timing unavailable (no complete source interval)",
+    "  forge Operation 13 timing unavailable (no complete source interval)",
+    "  furnace Operation 14 timing unavailable (no complete source interval)",
+    " Waiting/blocked/executing lanes unavailable without producer interval kinds.",
+    " Rows 1-15/90 ? viewport only",
+    " Tab views ? j/k ? Esc back/close",
+  ],
+  "timeline|80x24|unicode": [
+    " ╭ Big workflow running ╮",
+    " TIMELINE 90 observed operations · paused view · 1/90",
+    " ────────────────────────────────────────────────",
+    " Source intervals only · zoom 1x · pan 0 · clocks may differ",
+    " ❯ furnace Operation 0 ━━ 2000ms source interval",
+    "  forge Operation 1 ━━ 2000ms source interval",
+    "  furnace Operation 2 ━━ 2000ms source interval",
+    "  forge Operation 3 timing unavailable (no complete source interval)",
+    "  furnace Operation 4 timing unavailable (no complete source interval)",
+    "  forge Operation 5 timing unavailable (no complete source interval)",
+    "  furnace Operation 6 timing unavailable (no complete source interval)",
+    "  forge Operation 7 timing unavailable (no complete source interval)",
+    "  furnace Operation 8 timing unavailable (no complete source interval)",
+    "  forge Operation 9 timing unavailable (no complete source interval)",
+    "  furnace Operation 10 timing unavailable (no complete source interval)",
+    "  forge Operation 11 timing unavailable (no complete source interval)",
+    "  furnace Operation 12 timing unavailable (no complete source interval)",
+    "  forge Operation 13 timing unavailable (no complete source interval)",
+    "  furnace Operation 14 timing unavailable (no complete source interval)",
+    " Waiting/blocked/executing lanes unavailable without producer interval kinds.",
+    " Rows 1-15/90 · viewport only",
+    " Tab views · j/k · Esc back/close",
+  ],
+  "timeline|120x40|ascii": [
+    " [ Big workflow running ]",
+    " TIMELINE 90 observed operations ? paused view ? 1/90",
+    " ------------------------------------------------",
+    " Source intervals only ? zoom 1x ? pan 0 ? clocks may differ",
+    " > furnace Operation 0 ## 2000ms source interval",
+    "  forge Operation 1 ## 2000ms source interval",
+    "  furnace Operation 2 ## 2000ms source interval",
+    "  forge Operation 3 timing unavailable (no complete source interval)",
+    "  furnace Operation 4 timing unavailable (no complete source interval)",
+    "  forge Operation 5 timing unavailable (no complete source interval)",
+    "  furnace Operation 6 timing unavailable (no complete source interval)",
+    "  forge Operation 7 timing unavailable (no complete source interval)",
+    "  furnace Operation 8 timing unavailable (no complete source interval)",
+    "  forge Operation 9 timing unavailable (no complete source interval)",
+    "  furnace Operation 10 timing unavailable (no complete source interval)",
+    "  forge Operation 11 timing unavailable (no complete source interval)",
+    "  furnace Operation 12 timing unavailable (no complete source interval)",
+    "  forge Operation 13 timing unavailable (no complete source interval)",
+    "  furnace Operation 14 timing unavailable (no complete source interval)",
+    "  forge Operation 15 timing unavailable (no complete source interval)",
+    "  furnace Operation 16 timing unavailable (no complete source interval)",
+    "  forge Operation 17 timing unavailable (no complete source interval)",
+    "  furnace Operation 18 timing unavailable (no complete source interval)",
+    "  forge Operation 19 timing unavailable (no complete source interval)",
+    "  furnace Operation 20 timing unavailable (no complete source interval)",
+    "  forge Operation 21 timing unavailable (no complete source interval)",
+    "  furnace Operation 22 timing unavailable (no complete source interval)",
+    "  forge Operation 23 timing unavailable (no complete source interval)",
+    "  furnace Operation 24 timing unavailable (no complete source interval)",
+    "  forge Operation 25 timing unavailable (no complete source interval)",
+    "  furnace Operation 26 timing unavailable (no complete source interval)",
+    "  forge Operation 27 timing unavailable (no complete source interval)",
+    "  furnace Operation 28 timing unavailable (no complete source interval)",
+    "  forge Operation 29 timing unavailable (no complete source interval)",
+    "  furnace Operation 30 timing unavailable (no complete source interval)",
+    " Waiting/blocked/executing lanes unavailable without producer interval kinds.",
+    " Rows 1-31/90 ? viewport only",
+    " Tab views ? j/k ? Esc back/close",
+  ],
+  "timeline|120x40|unicode": [
+    " ╭ Big workflow running ╮",
+    " TIMELINE 90 observed operations · paused view · 1/90",
+    " ────────────────────────────────────────────────",
+    " Source intervals only · zoom 1x · pan 0 · clocks may differ",
+    " ❯ furnace Operation 0 ━━ 2000ms source interval",
+    "  forge Operation 1 ━━ 2000ms source interval",
+    "  furnace Operation 2 ━━ 2000ms source interval",
+    "  forge Operation 3 timing unavailable (no complete source interval)",
+    "  furnace Operation 4 timing unavailable (no complete source interval)",
+    "  forge Operation 5 timing unavailable (no complete source interval)",
+    "  furnace Operation 6 timing unavailable (no complete source interval)",
+    "  forge Operation 7 timing unavailable (no complete source interval)",
+    "  furnace Operation 8 timing unavailable (no complete source interval)",
+    "  forge Operation 9 timing unavailable (no complete source interval)",
+    "  furnace Operation 10 timing unavailable (no complete source interval)",
+    "  forge Operation 11 timing unavailable (no complete source interval)",
+    "  furnace Operation 12 timing unavailable (no complete source interval)",
+    "  forge Operation 13 timing unavailable (no complete source interval)",
+    "  furnace Operation 14 timing unavailable (no complete source interval)",
+    "  forge Operation 15 timing unavailable (no complete source interval)",
+    "  furnace Operation 16 timing unavailable (no complete source interval)",
+    "  forge Operation 17 timing unavailable (no complete source interval)",
+    "  furnace Operation 18 timing unavailable (no complete source interval)",
+    "  forge Operation 19 timing unavailable (no complete source interval)",
+    "  furnace Operation 20 timing unavailable (no complete source interval)",
+    "  forge Operation 21 timing unavailable (no complete source interval)",
+    "  furnace Operation 22 timing unavailable (no complete source interval)",
+    "  forge Operation 23 timing unavailable (no complete source interval)",
+    "  furnace Operation 24 timing unavailable (no complete source interval)",
+    "  forge Operation 25 timing unavailable (no complete source interval)",
+    "  furnace Operation 26 timing unavailable (no complete source interval)",
+    "  forge Operation 27 timing unavailable (no complete source interval)",
+    "  furnace Operation 28 timing unavailable (no complete source interval)",
+    "  forge Operation 29 timing unavailable (no complete source interval)",
+    "  furnace Operation 30 timing unavailable (no complete source interval)",
+    " Waiting/blocked/executing lanes unavailable without producer interval kinds.",
+    " Rows 1-31/90 · viewport only",
+    " Tab views · j/k · Esc back/close",
+  ],
+  "details|80x24|ascii": [
+    " [ Big workflow running ]",
+    " DETAILS 90 observed operations ? paused view ? 1/90",
+    " ------------------------------------------------",
+    " Evidence / details ? producer references, not fetched payload",
+    " Native ref: furnace/operation/0",
+    " Status: running ? active",
+    " Freshness: current ? unknown ? coverage partial",
+    " Confirmed: 2026-10-15T00:00:00Z",
+    " Basis: not supplied",
+    " Definition: not supplied",
+    " Source: not supplied by observation",
+    " Evidence: 0 references",
+    " Relations: dependency",
+    " Rows 1-15/90 ? viewport only",
+    " Tab views ? j/k ? Esc back/close",
+  ],
+  "details|80x24|unicode": [
+    " ╭ Big workflow running ╮",
+    " DETAILS 90 observed operations · paused view · 1/90",
+    " ────────────────────────────────────────────────",
+    " Evidence / details · producer references, not fetched payload",
+    " Native ref: furnace/operation/0",
+    " Status: running · active",
+    " Freshness: current · unknown · coverage partial",
+    " Confirmed: 2026-10-15T00:00:00Z",
+    " Basis: not supplied",
+    " Definition: not supplied",
+    " Source: not supplied by observation",
+    " Evidence: 0 references",
+    " Relations: dependency",
+    " Rows 1-15/90 · viewport only",
+    " Tab views · j/k · Esc back/close",
+  ],
+  "details|120x40|ascii": [
+    " [ Big workflow running ]",
+    " DETAILS 90 observed operations ? paused view ? 1/90",
+    " ------------------------------------------------",
+    " Evidence / details ? producer references, not fetched payload",
+    " Native ref: furnace/operation/0",
+    " Status: running ? active",
+    " Freshness: current ? unknown ? coverage partial",
+    " Confirmed: 2026-10-15T00:00:00Z",
+    " Basis: not supplied",
+    " Definition: not supplied",
+    " Source: not supplied by observation",
+    " Evidence: 0 references",
+    " Relations: dependency",
+    " Rows 1-31/90 ? viewport only",
+    " Tab views ? j/k ? Esc back/close",
+  ],
+  "details|120x40|unicode": [
+    " ╭ Big workflow running ╮",
+    " DETAILS 90 observed operations · paused view · 1/90",
+    " ────────────────────────────────────────────────",
+    " Evidence / details · producer references, not fetched payload",
+    " Native ref: furnace/operation/0",
+    " Status: running · active",
+    " Freshness: current · unknown · coverage partial",
+    " Confirmed: 2026-10-15T00:00:00Z",
+    " Basis: not supplied",
+    " Definition: not supplied",
+    " Source: not supplied by observation",
+    " Evidence: 0 references",
+    " Relations: dependency",
+    " Rows 1-31/90 · viewport only",
+    " Tab views · j/k · Esc back/close",
+  ],
+};

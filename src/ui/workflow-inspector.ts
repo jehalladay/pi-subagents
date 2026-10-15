@@ -1,7 +1,8 @@
 /** Read-only terminal inspector over the bounded producer-qualified observation projection.
  * A row is a source observation, never an assertion of ownership or verification.
  */
-import { matchesKey, stripTerminalSequences, truncateToWidth } from '@earendil-works/pi-tui';
+import { matchesKey, stripTerminalSequences, truncateToWidth, visibleWidth } from '@earendil-works/pi-tui';
+import type { AttentionBottleneck, AttentionReport } from '../workbench/attention.js';
 import type { EvidenceEntry, EvidenceStore } from '../workbench/evidence-loader.js';
 import type { NativeRef, ObservationProjection, ObservationScope, ObservedNode, Relation } from '../workbench/observation.js';
 import { safeWorkflowTerminalText } from './workflow-card.js';
@@ -15,6 +16,9 @@ export interface InspectorModel {
   status: string;
   /** Read side of the lazy evidence store; absent means the details view renders exactly as before. */
   evidence?: Pick<EvidenceStore, 'get' | 'request' | 'abortAll'>;
+  /** Attention report the caller computed with its own clock at redraw cadence; absent means the overview renders exactly as before.
+   * The layout only draws it: it never computes attention and never reads a clock. */
+  attention?: AttentionReport;
 }
 export interface InspectorState {
   view: InspectorView;
@@ -46,9 +50,9 @@ const limitLine = (text: string, width: number, ascii: boolean): string =>
   stripTerminalSequences(truncateToWidth(safe(text,ascii), Math.max(1,width), ascii ? '~' : '…'));
 const ref = (node: ObservedNode) => `${node.nativeRef.provider}/${node.nativeRef.type}/${node.nativeRef.id}`;
 const edgeGlyph = (ascii: boolean) => ascii ? '->' : '→';
-const tone = (node: ObservedNode, ascii: boolean): string => {
-  if(node.freshness !== 'current') return '?';
-  switch(node.presentation.statusTone){
+const toneGlyph = (freshness: ObservedNode['freshness'], statusTone: ObservedNode['presentation']['statusTone'], ascii: boolean): string => {
+  if(freshness !== 'current') return '?';
+  switch(statusTone){
     case 'success': return ascii ? '+' : '✓';
     case 'failure': return ascii ? 'x' : '✘';
     case 'waiting': return ascii ? 'o' : '○';
@@ -56,6 +60,7 @@ const tone = (node: ObservedNode, ascii: boolean): string => {
     case 'unknown': return '?';
   }
 };
+const tone = (node: ObservedNode, ascii: boolean): string => toneGlyph(node.freshness,node.presentation.statusTone,ascii);
 const selected = (model: InspectorModel, state: InspectorState): {node: ObservedNode | undefined; index: number; total: number} => {
   const row=model.projection.window({scope:model.scope,invocationId:model.invocationId,offset:state.index,limit:1});
   return {node:row.nodes[0],index:state.index,total:row.total};
@@ -264,6 +269,127 @@ export function reduceInspectorKey(data:string,state:InspectorState,model:Inspec
   return undefined;
 }
 
+/** Greedy word wrap of already-sanitized text to lines of at most `width` columns; an over-long word is split by character. */
+function wrapWords(text: string, width: number): string[] {
+  const out:string[]=[];
+  let line='';
+  for(const word of text.split(' ')){
+    if(word==='') continue;
+    if(visibleWidth(word)>width){
+      if(line!==''){out.push(line);line='';}
+      for(const char of Array.from(word)){
+        if(line!=='' && visibleWidth(line+char)>width){out.push(line);line='';}
+        line+=char;
+      }
+    } else if(line==='') line=word;
+    else if(visibleWidth(`${line} ${word}`)<=width) line=`${line} ${word}`;
+    else {out.push(line);line=word;}
+  }
+  if(line!=='') out.push(line);
+  return out.length>0 ? out : [''];
+}
+/** Lays out segments joined by their `lead`, starting a new line before a segment that would not fit whole, so a count or a
+ * marker such as "page truncated" is never split across lines. A segment longer than a line is word-wrapped. */
+function wrapSegments(items: readonly {lead: string; text: string}[], width: number): string[] {
+  const out:string[]=[];
+  let line='';
+  for(const item of items){
+    if(line!=='' && visibleWidth(`${line}${item.lead}${item.text}`)<=width){line=`${line}${item.lead}${item.text}`;continue;}
+    if(line!=='') out.push(line);
+    const chunks=wrapWords(item.text,width);
+    out.push(...chunks.slice(0,-1));
+    line=chunks[chunks.length-1];
+  }
+  if(line!=='') out.push(line);
+  return out;
+}
+const clockText = (ms: number): string => {
+  if(!Number.isFinite(ms)) return '--:--';
+  const total=Math.floor(Math.max(0,ms)/1000);
+  return `${String(Math.floor(total/60)).padStart(2,'0')}:${String(total%60).padStart(2,'0')}`;
+};
+/** Zero-width and invisible format characters the shared sanitizer leaves in place; the panel removes them from every report string it draws. */
+const PANEL_INVISIBLE = /[\u200b-\u200f\u2060-\u2064\ufeff]/gu;
+const panelSafe = (text: string, ascii: boolean): string => safe(text.replace(PANEL_INVISIBLE,''),ascii);
+const MAX_PANEL_PROVIDERS = 4;
+const MAX_PANEL_PROVIDER_WIDTH = 24;
+const MAX_PANEL_TREE_MIN = 5;
+const PANEL_CONTINUATION = '  ';
+interface AttentionPanel {
+  /** The counts line(s) and the critical-path line(s): always drawn. */
+  head: string[];
+  tail: string[];
+  /** One entry per bottleneck row, in report order; dropped from the bottom first. */
+  rows: string[];
+  /** The caller-clock caveat that qualifies the open times on the rows. */
+  clock: string[];
+  /** Unmeasured and clock-skew counts. */
+  notes: string[];
+}
+/** The panel's text for one report. Every producer-supplied string is sanitized here; the report is only read, never recomputed. */
+function attentionPanel(report: AttentionReport, inner: number, ascii: boolean, compact: boolean): AttentionPanel {
+  const sep=ascii ? ' | ' : ' · ';
+  const ellipsis=ascii ? '~' : '…';
+  const { counts }=report;
+  const providers=report.disconnectedProviders.slice(0,MAX_PANEL_PROVIDERS)
+    .map(name=>truncateToWidth(panelSafe(name,ascii),MAX_PANEL_PROVIDER_WIDTH,ellipsis));
+  const hidden=report.disconnectedProviders.length-providers.length;
+  const countItems=[
+    {lead:'',text:`Attention: active ${counts.active}`},
+    {lead:sep,text:`waiting ${counts.waiting}`},
+    {lead:sep,text:`stale ${counts.stale}`},
+    {lead:sep,text:`unknown ${counts.unknown}`},
+    {lead:sep,text:`disconnected ${counts.disconnected}`},
+    ...(providers.length>0 ? [{lead:' ',text:`(providers: ${providers.join(', ')}${hidden>0?`, +${hidden} more`:''})`}] : []),
+  ];
+  const path=report.criticalPath;
+  const pathItems=[
+    path.label==='partial-estimated'
+      ? {lead:'',text:`Critical path: partial-estimated ${clockText(path.measuredMs)} over ${path.coverage.chainNodes} nodes/${path.coverage.dependencyEdges} edges`}
+      : {lead:'',text:`Critical path: incomplete trace (${path.reasons.length>0?path.reasons.map(reason=>panelSafe(reason,ascii)).join(', '):'no reason supplied'})`},
+    ...(path.label==='partial-estimated' ? [{lead:sep,text:panelSafe(path.caveat,ascii)}] : []),
+    ...(report.examined.truncated ? [{lead:sep,text:'page truncated'}] : []),
+  ];
+  // Continuation lines are indented so a wrapped line never reads as a separate fact.
+  const wrapped=(items:readonly {lead:string;text:string}[]):string[]=>wrapSegments(items,inner-PANEL_CONTINUATION.length).map((text,at)=>at===0 ? text : `${PANEL_CONTINUATION}${text}`);
+  const panel:AttentionPanel={head:wrapped(countItems),tail:wrapped(pathItems),rows:[],clock:[],notes:[]};
+  if(compact) return panel;
+  const row=(bottleneck: AttentionBottleneck):string => {
+    const glyph=toneGlyph(bottleneck.freshness,bottleneck.tone,ascii);
+    const provider=truncateToWidth(panelSafe(bottleneck.nativeRef.provider,ascii),MAX_PANEL_PROVIDER_WIDTH,ellipsis);
+    // Open time is drawn only for an entry the report states as measured.
+    const open=bottleneck.measured===true && Number.isFinite(bottleneck.openMs) ? `open ${clockText(bottleneck.openMs)} measured` : 'open unavailable';
+    const suffix=`${sep}${provider}${sep}${open}${sep}${panelSafe(bottleneck.freshness,ascii).toUpperCase()}`;
+    const room=Math.max(1,inner-visibleWidth(glyph)-1-visibleWidth(suffix));
+    return `${glyph} ${truncateToWidth(panelSafe(bottleneck.title,ascii),room,ellipsis)}${suffix}`;
+  };
+  panel.rows=report.bottlenecks.map(row);
+  if(report.bottlenecks.length>0) panel.clock=wrapWords(`Clock: ${panelSafe(report.clockCaveat,ascii)}`,inner-PANEL_CONTINUATION.length).map((text,at)=>at===0 ? text : `${PANEL_CONTINUATION}${text}`);
+  if(report.unmeasured>0) panel.notes.push(`+${report.unmeasured} unmeasured (no open interval)`);
+  if(report.clockSkew>0) panel.notes.push(`clock skew ${report.clockSkew} (clamped)`);
+  return panel;
+}
+/** The optional panel lines (bottleneck rows, a dropped-row note, the clock caveat, the unmeasured and skew notes) that fit `budget`.
+ * Notes are kept first; bottleneck rows are dropped from the bottom and the dropped ones are counted, never silent. */
+function fitAttentionPanel(panel: AttentionPanel, budget: number): string[] {
+  const notes=panel.notes.slice(0,Math.max(0,budget));
+  const room=budget-notes.length;
+  const total=panel.rows.length;
+  let shown=0;
+  let withClock=false;
+  for(const clock of [true,false]){
+    const cost=clock ? panel.clock.length : 0;
+    // k rows plus the note counting the others (when any are dropped) plus the clock caveat must fit.
+    for(let k=total;k>=1;k--){
+      if(k+(k<total?1:0)+cost<=room){shown=k;withClock=clock && cost>0;break;}
+    }
+    if(shown>0) break;
+  }
+  const dropped=total-shown;
+  const more=dropped>0 && room-shown-(withClock?panel.clock.length:0)>=1 ? [`+${dropped} more bottleneck${dropped===1?'':'s'}`] : [];
+  return [...panel.rows.slice(0,shown),...more,...(withClock ? panel.clock : []),...notes];
+}
+
 /** A node's evidence references with their per-reference load state, within `room` rows. Reads the store synchronously and never loads.
  * Preview text is read only from a `loaded` entry; every other state is a one-line label. */
 function evidenceRows(store: Pick<EvidenceStore,'get'>, node: ObservedNode, selectedIndex: number, room: number, ascii: boolean): string[] {
@@ -369,7 +495,12 @@ export function layoutInspector(model:InspectorModel,state:InspectorState,size:I
     };
     const last=lastSiblings(entries);
     // Rows never displace the selected, attention, critical-path, row-range and key-hint lines.
-    const room=height-lines.length-(current && width>=80 ? 1 : 0)-2-(paged ? 1 : 0)-1;
+    const panel=model.attention ? attentionPanel(model.attention,inner,ascii,width<80 || height<20) : undefined;
+    const available=height-lines.length-(current && width>=80 ? 1 : 0)-(paged ? 1 : 0)-1;
+    const fixed=panel ? panel.head.length+panel.tail.length : 2;
+    // The tree keeps a few rows; bottleneck rows and notes take only what remains, dropping from the bottom.
+    const optional=panel ? fitAttentionPanel(panel,Math.max(0,available-fixed-Math.min(entries.length,MAX_PANEL_TREE_MIN))) : [];
+    const room=available-fixed-optional.length;
     const shown=entries.length>room ? Math.max(0,room-1) : entries.length;
     for(let i=0;i<shown;i++){
       const entry=entries[i];
@@ -385,8 +516,15 @@ export function layoutInspector(model:InspectorModel,state:InspectorState,size:I
       add(`${holds?ascii?'> ':'❯ ':''}${ascii?'...':'…'} ${rest} more row${rest===1?'':'s'} in this page (row budget)`);
     }
     if(current && width>=80) add(`Selected  ${safe(ref(current),ascii)} · ${current.evidenceRefs.length} evidence ref${current.evidenceRefs.length===1?'':'s'}`);
-    add('Attention: stale/unknown is last-known state, not live progress.');
-    add('Critical path: incomplete trace (no complete dependency/interval proof).');
+    if(panel) for(const text of [...panel.head,...optional,...panel.tail]) {
+      // Only the producer-supplied remainder is sanitized again; the fixed continuation indent is kept.
+      const indent=text.startsWith(PANEL_CONTINUATION) ? PANEL_CONTINUATION : '';
+      addTree(indent,text.slice(indent.length));
+    }
+    else {
+      add('Attention: stale/unknown is last-known state, not live progress.');
+      add('Critical path: incomplete trace (no complete dependency/interval proof).');
+    }
   } else if(state.view==='graph'){
     add('Observed reference graph · cycles allowed; missing edges are unknown');
     // A node's block is drawn whole or not at all, so the topology footer and key hint always remain;
