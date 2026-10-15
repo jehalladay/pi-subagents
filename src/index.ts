@@ -75,6 +75,7 @@ import { loadWorkbenchNative, workbenchNative } from "./workbench/native-modules
 import { type NativeRef, ObservationProjection, type ObservationScope, type Presentation } from "./workbench/observation.js";
 import { createWorkflowReconcileTool } from "./workbench/reconcile-tool.js";
 import { sanitizeWorkbenchJsonText, sanitizeWorkbenchText, stripUnsafeText } from "./workbench/redaction.js";
+import { buildWorkflowInspectReply, INSPECT_VIEWS } from "./workbench/tool-replies.js";
 import { decideWorkflowCollision, FOREIGN_WORKFLOW_TOOL_NAMES } from "./workflow/collisions.js";
 import { WORKFLOW_ENTRY_TYPE, type WorkflowEntryData, workflowEntryData } from "./workflow/entry.js";
 import { createWorkflowHost } from "./workflow/host.js";
@@ -2500,6 +2501,19 @@ Terse command-style prompts produce shallow, generic work.
         return textResult(sanitizeWorkbenchJsonText({ capabilities: descriptors.map(({ id, version, description, effectClass, permissions, supportedModes, contractSource }) =>
           ({ id, version, description, effectClass, permissions, supportedModes, contractSource })) }));
       },
+    }));
+    // Metadata only: the reply builder applies the exact inspect:<id> grant and an advertised, implemented
+    // inspect mode, and no provider invoke() or inspect() is ever called from here.
+    pi.registerTool(defineTool({
+      name: "workflow_inspect",
+      label: "Inspect workflow capability",
+      description: "Read a bounded, static projection of one host-registered capability (definition, schema or operations). Requires the exact inspect:<capabilityId> grant and an advertised inspect mode; never invokes the capability.",
+      parameters: Type.Object({
+        target: Type.String({ minLength: 1, maxLength: 200 }),
+        view: Type.Optional(Type.Union(INSPECT_VIEWS.map(view => Type.Literal(view)))),
+      }),
+      execute: async (_id, params, _signal, _onUpdate, ctx) =>
+        textResult(sanitizeWorkbenchJsonText(buildWorkflowInspectReply(registryFor(ctx.cwd).catalogSnapshot(), grants(ctx), params.target, params.view))),
     }));
     pi.registerTool(defineTool({
       name: "workflow_validate",
