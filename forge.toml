@@ -37,6 +37,10 @@ timeout = 180
 command = "./node_modules/.bin/vitest run --config vitest.claude-live.config.ts"
 timeout = 210
 
+[build.commands.claude-adverse-live]
+command = "node qa/workbench/live-adverse.mjs"
+timeout = 300
+
 [build.commands.package-smoke]
 command = "bash qa/workbench/package-smoke.sh"
 timeout = 120
