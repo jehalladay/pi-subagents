@@ -11,7 +11,9 @@
  *   T4 production caps byte-identical; bench-only 100 is a local spread.
  *   T5 reads per slice <= 2 + cycleReads in force; rows per call <= the relationPage in force.
  */
-import { readFileSync } from "node:fs";
+import { mkdtempSync, readFileSync, rmSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { BENCH_ONLY_LIMITS, buildGroupedFixture, INVOCATION_ID, NAVIGATION_TARGET_MS, SCOPE } from "../qa/workbench/grouped-fixture.mjs";
 import {
@@ -21,6 +23,7 @@ import {
   DEFAULT_SAMPLING,
   exitCodeFor,
   PASS_SPECS,
+  publishReceipt,
   RECEIPT_CONTRACT,
   runTopologyBench,
 } from "../qa/workbench/topology-slice-grouped-bench.mjs";
@@ -398,7 +401,7 @@ describe("W21 topology honest exit semantics (T1/T2)", () => {
     expect(receipt.verdict).toBe("not-w21-shape");
     expect(receipt.exitCode).toBe(2);
     expect(exitCodeFor(receipt)).toBe(2);
-    expect(receipt.violations.map(violation => violation.rule)).toEqual(
+    expect(receipt.violations.map((violation: Violation) => violation.rule)).toEqual(
       expect.arrayContaining(["operations-below-10000", "updates-below-100000", "operation-focuses-below-1000"]),
     );
   }, 60_000);
@@ -435,7 +438,7 @@ describe("W21 topology honest exit semantics (T1/T2)", () => {
     const truncated = claimReceipt();
     truncated.passes["maxQuery-40"].retained = { ...truncated.passes["maxQuery-40"].offered, nodes: truncated.passes["maxQuery-40"].offered.nodes - 1 };
     expect(exitCodeFor(truncated)).toBe(2);
-    expect(assessTopologyReceipt(truncated).violations.map(violation => violation.rule)).toContain("pass-truncated");
+    expect(assessTopologyReceipt(truncated).violations.map((violation: Violation) => violation.rule)).toContain("pass-truncated");
 
     const fewOperations = claimReceipt();
     fewOperations.passes["maxQuery-100"].focuses.operations = 999;
@@ -444,15 +447,15 @@ describe("W21 topology honest exit semantics (T1/T2)", () => {
     const unsampledDepth = claimReceipt();
     unsampledDepth.passes["maxQuery-100"].focuses.byDepth["3"] = 0;
     expect(exitCodeFor(unsampledDepth)).toBe(2);
-    expect(assessTopologyReceipt(unsampledDepth).violations.map(violation => violation.rule)).toContain("group-depth-unsampled");
+    expect(assessTopologyReceipt(unsampledDepth).violations.map((violation: Violation) => violation.rule)).toContain("group-depth-unsampled");
 
     const unsampled = claimReceipt();
     unsampled.passes["maxQuery-40"].capSets.defaults.slice.group = { samples: 0, p50: null, p95: null, max: null };
     expect(exitCodeFor(unsampled)).toBe(2);
-    expect(assessTopologyReceipt(unsampled).violations.map(violation => violation.rule)).toContain("series-not-sampled");
+    expect(assessTopologyReceipt(unsampled).violations.map((violation: Violation) => violation.rule)).toContain("series-not-sampled");
   }, 60_000);
 
-  it("keeps the CLI thin: dist imports only inside the entry guard, receipt written and printed before the exit code, exit 3 on exception", () => {
+  it("keeps the CLI thin: dist imports only inside the entry guard, receipt printed before the file write and both before the exit code, exit 3 on exception", () => {
     const text = readRepo("qa/workbench/topology-slice-grouped-bench.mjs");
     const staticImports = [...text.matchAll(/^import\s[^'"]*['"]([^'"]+)['"]/gm)].map(match => match[1]).sort();
     expect(staticImports).toEqual(["./grouped-fixture.mjs", "node:fs", "node:os", "node:url"].sort());
@@ -461,16 +464,84 @@ describe("W21 topology honest exit semantics (T1/T2)", () => {
     expect(text).not.toMatch(/\brequire\s*\(/);
     expect(text).not.toMatch(/maxNodes|maxEdges|new ObservationProjection/);
     expect(text).toMatch(/W21_TOPOLOGY_RECEIPT/);
-    const written = text.indexOf("writeFileSync(process.env.W21_TOPOLOGY_RECEIPT");
-    const printed = text.indexOf("console.log(JSON.stringify(receipt))");
-    const exit = text.indexOf("process.exitCode = exitCodeFor(receipt)");
-    expect(written).toBeGreaterThan(-1);
-    expect(printed).toBeGreaterThan(written);
-    expect(exit).toBeGreaterThan(printed);
+    const printed = text.indexOf("log(JSON.stringify(receipt))");
+    const written = text.indexOf("writeFile(path, ");
+    const exit = text.indexOf("process.exitCode = publishReceipt(");
+    expect(printed).toBeGreaterThan(-1);
+    expect(written).toBeGreaterThan(printed);
+    expect(exit).toBeGreaterThan(written);
     expect(text).toMatch(/process\.exit\(3\)/);
     expect(text).toMatch(/W21_REVISION/);
     expect(text).toMatch(/\{\.\.\.BENCH_ONLY_LIMITS, maxQuery: 100\}/);
   });
+});
+
+describe("W21 topology receipt publication: print first, a failed file write never swallows the receipt (F1)", () => {
+  // Owner ruling 2026-10-15T21:37Z: an unwritable W21_TOPOLOGY_RECEIPT path must NEVER produce exit 1 with no receipt.
+  // Before: writeFileSync ran first and threw, so the CLI died with 0 stdout lines and a code that reads as "over target".
+  it("prints the receipt line before touching the file and returns the judged exit code when the write succeeds", () => {
+    const claim = claimReceipt();
+    const events: string[] = [];
+    const code = publishReceipt(claim, {
+      path: "ignored/receipt.json",
+      log: (line: string) => events.push(`log:${line}`),
+      logError: (line: string) => events.push(`err:${line}`),
+      writeFile: (path: string, data: string) => events.push(`write:${path}:${data}`),
+    });
+    expect(code).toBe(0);
+    expect(events).toEqual([`log:${JSON.stringify(claim)}`, `write:ignored/receipt.json:${JSON.stringify(claim)}\n`]);
+  }, 60_000);
+
+  it("writes nothing and still prints when no receipt path is set", () => {
+    const claim = claimReceipt();
+    const events: string[] = [];
+    const code = publishReceipt(claim, {
+      path: undefined,
+      log: (line: string) => events.push(`log:${line}`),
+      logError: (line: string) => events.push(`err:${line}`),
+      writeFile: () => events.push("write"),
+    });
+    expect(code).toBe(0);
+    expect(events).toEqual([`log:${JSON.stringify(claim)}`]);
+  }, 60_000);
+
+  it("keeps the receipt on stdout and exits 3 when the receipt path is unwritable (a real filesystem error)", () => {
+    const claim = claimReceipt();
+    const directory = mkdtempSync(join(tmpdir(), "w21-topology-"));
+    try {
+      const events: string[] = [];
+      const code = publishReceipt(claim, {
+        path: join(directory, "missing-directory", "receipt.json"),
+        log: (line: string) => events.push(`log:${line}`),
+        logError: (line: string) => events.push(`err:${line}`),
+      });
+      expect(code).toBe(3);
+      expect(events[0]).toBe(`log:${JSON.stringify(claim)}`);
+      expect(events).toHaveLength(2);
+      expect(events[1]).toMatch(/^err:.*receipt-write-failed/);
+    } finally {
+      rmSync(directory, { recursive: true, force: true });
+    }
+  }, 60_000);
+
+  it("exits 3 for an unwritable path even when the receipt itself judges exit 1 or 2", () => {
+    const over = claimReceipt();
+    over.passes["maxQuery-40"].capSets.defaults.slice.operation.p95 = 21;
+    const offShape = smallRun().receipt;
+    for (const receipt of [over, offShape]) {
+      const events: string[] = [];
+      const code = publishReceipt(receipt, {
+        path: "irrelevant",
+        log: (line: string) => events.push(line),
+        logError: () => undefined,
+        writeFile: () => {
+          throw new Error("EACCES: permission denied");
+        },
+      });
+      expect(code).toBe(3);
+      expect(events).toEqual([JSON.stringify(receipt)]);
+    }
+  }, 60_000);
 });
 
 describe("W21 topology production caps stay unchanged (T4)", () => {

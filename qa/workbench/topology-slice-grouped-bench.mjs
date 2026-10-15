@@ -342,6 +342,24 @@ const versionOf = path => {
   }
 };
 
+/**
+ * Prints the receipt line FIRST, then writes the optional receipt file. A failed write is reported on stderr and exits 3
+ * ("nothing durably recorded") with the receipt already on stdout; it must never surface as the over-target exit 1 with no
+ * receipt (owner ruling 2026-10-15T21:37Z).
+ */
+export function publishReceipt(receipt, {path, log = console.log, logError = console.error, writeFile = writeFileSync}) {
+  log(JSON.stringify(receipt));
+  if (path) {
+    try {
+      writeFile(path, `${JSON.stringify(receipt)}\n`);
+    } catch (error) {
+      logError(JSON.stringify({benchmark: BENCHMARK, error: 'receipt-write-failed', path, detail: error instanceof Error ? error.message : String(error)}));
+      return 3;
+    }
+  }
+  return exitCodeFor(receipt);
+}
+
 async function main() {
   let receipt;
   try {
@@ -377,9 +395,7 @@ async function main() {
     console.error(JSON.stringify({benchmark: BENCHMARK, measured: false, error: error instanceof Error ? error.stack ?? error.message : String(error)}));
     process.exit(3);
   }
-  if (process.env.W21_TOPOLOGY_RECEIPT) writeFileSync(process.env.W21_TOPOLOGY_RECEIPT, `${JSON.stringify(receipt)}\n`);
-  console.log(JSON.stringify(receipt));
-  process.exitCode = exitCodeFor(receipt);
+  process.exitCode = publishReceipt(receipt, {path: process.env.W21_TOPOLOGY_RECEIPT});
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) await main();
