@@ -33,6 +33,14 @@ timeout = 180
 command = "./node_modules/.bin/vitest run --config vitest.furnace.config.ts"
 timeout = 180
 
+[build.commands.furnace-hosted-live]
+command = "./node_modules/.bin/vitest run --config vitest.furnace-hosted.config.ts"
+timeout = 240
+
+[build.commands.furnace-vc4-live]
+command = "node qa/workbench/live-furnace-vc4.mjs"
+timeout = 240
+
 [build.commands.claude-live]
 command = "./node_modules/.bin/vitest run --config vitest.claude-live.config.ts"
 timeout = 210
@@ -73,9 +81,17 @@ timeout = 300
 command = "node qa/workbench/inspector-grouped-bench.mjs"
 timeout = 300
 
+[build.commands.reducer-selector-bench]
+command = "node qa/workbench/reducer-selector-bench.mjs"
+timeout = 300
+
 [build.commands.local-detached-shell]
 command = "bash qa/workbench/local-detached.sh"
 timeout = 180
+
+[build.commands.local-detached-faults]
+command = "node qa/workbench/local-detached-faults.mjs"
+timeout = 240
 
 [build.commands.local-detached-unit]
 command = "./node_modules/.bin/vitest run test/workbench-local-detached.test.ts"
@@ -89,6 +105,6 @@ timeout = 120
 command = "./node_modules/.bin/vitest run --config vitest.furnace-active.config.ts"
 timeout = 180
 
-[build.commands.furnace-vc4-live]
-command = "node qa/workbench/live-furnace-vc4.mjs"
-timeout = 240
+[build.commands.status-ledger]
+command = "node qa/workbench/status-ledger.mjs"
+timeout = 60
