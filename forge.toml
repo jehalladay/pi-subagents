@@ -33,6 +33,10 @@ timeout = 180
 command = "./node_modules/.bin/vitest run --config vitest.furnace.config.ts"
 timeout = 180
 
+[build.commands.furnace-hosted-live]
+command = "./node_modules/.bin/vitest run --config vitest.furnace-hosted.config.ts"
+timeout = 240
+
 [build.commands.claude-live]
 command = "./node_modules/.bin/vitest run --config vitest.claude-live.config.ts"
 timeout = 210
@@ -88,3 +92,7 @@ timeout = 120
 [build.commands.furnace-active-observe]
 command = "./node_modules/.bin/vitest run --config vitest.furnace-active.config.ts"
 timeout = 180
+
+[build.commands.status-ledger]
+command = "node qa/workbench/status-ledger.mjs"
+timeout = 60
