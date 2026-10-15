@@ -5,6 +5,7 @@ import { join } from "node:path";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { describe, expect, it } from "vitest";
 import { detectEnv } from "../src/env.js";
+import { nonRepoScratch } from "./helpers/non-repo-scratch.js";
 
 /** Minimal mock of pi.exec() that shells out via child_process. */
 function mockPi(): ExtensionAPI {
@@ -48,14 +49,14 @@ describe("detectEnv", () => {
   });
 
   it("detects non-git directory", async () => {
-    const tmpDir = mkdtempSync(join(tmpdir(), "pi-env-test-"));
+    const scratch = nonRepoScratch("pi-env-test-");
     try {
-      const env = await detectEnv(mockPi(), tmpDir);
+      const env = await detectEnv(mockPi(), scratch.dir);
       expect(env.isGitRepo).toBe(false);
       expect(env.branch).toBe("");
       expect(env.platform).toBe(process.platform);
     } finally {
-      rmSync(tmpDir, { recursive: true, force: true });
+      scratch.dispose();
     }
   });
 });
