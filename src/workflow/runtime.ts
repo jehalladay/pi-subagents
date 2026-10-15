@@ -243,14 +243,15 @@ export interface WorkflowHost {
    */
   readonly replaySafe?: boolean;
   /**
-   * Opaque digest of the host policy an agent result depends on beyond its own
-   * call payload — model pin, permission mode, tools, roles, grants, cwd.
+   * Opaque digest of the host policy an agent result or node read depends on
+   * beyond its own call payload — model pin, permission mode, tools, roles,
+   * grants, cwd, provider manifest.
    *
-   * Recorded on every entry this run writes and required to match on replay,
-   * so a resume under a changed policy declines the cache instead of handing
-   * back answers produced under another contract. A host that records none
-   * (the legacy host) matches entries that carry none, byte-for-byte as
-   * before.
+   * Recorded on every entry this run writes, agent and node alike, and
+   * required to match on replay, so a resume under a changed policy declines
+   * the cache instead of handing back answers produced under another
+   * contract. A host that records none (the legacy host) matches entries that
+   * carry none, byte-for-byte as before.
    */
   readonly replayBasis?: string;
   /** Host-only capability dispatch. The worker never receives a provider client. */
@@ -1232,8 +1233,9 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
 
     /**
      * One SDK operation. Journaled under the effect class its host declared at
-     * invoke time, and admitted on resume per that class: a "read" may come
-     * back from the journal — marked stale, never fresh — while any other
+     * invoke time and the host's replay basis, and admitted on resume per that
+     * class: a "read" may come back from the journal under the same basis —
+     * marked stale, never fresh — while any other
      * recorded effect stops the run with an uncertain-effect diagnostic naming
      * the owning producer. The one thing a resume never does is re-execute a
      * journaled effect, so a position with no safe answer fails rather than
@@ -1309,10 +1311,14 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
           };
         }
         // Replay only what BOTH sides vouch for as a read: the entry's recorded
-        // class and the current host's declaration. An entry recorded with no
-        // class keeps the pre-policy semantics — run live, never replay.
+        // class and the current host's declaration, under the same host basis.
+        // An answer read under another workspace, grant set or manifest is
+        // another contract's answer, so a basis mismatch runs live, as it does
+        // for an agent. An entry recorded with no class keeps the pre-policy
+        // semantics — run live, never replay. The refusals above are not gated
+        // on the basis: no policy change licenses re-running a journaled effect.
         if (
-          recorded.effectClass === "read" && currentEffect === "read" &&
+          recorded.effectClass === "read" && currentEffect === "read" && recorded.basis === hostBasis &&
           prefixIntact && key !== undefined && recorded.key === key &&
           recorded.ok && recorded.text !== undefined
         ) {
@@ -1363,7 +1369,7 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
           freshness: "stale",
           resultPreview: preview(JSON.stringify(admission.value) ?? "null") }]);
         recordJournal?.({ kind: "node", index, key: admission.entry.key, ok: true,
-          capabilityId: payload.capabilityId, effectClass: "read", text: admission.entry.text });
+          capabilityId: payload.capabilityId, effectClass: "read", text: admission.entry.text, ...basisMark });
         openNodes.delete(callId);
         respond(callId, true, admission.value);
         return;
@@ -1404,7 +1410,7 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
         // silent replay the policy forbids, so it is the attempt that goes on
         // record, not the answer.
         recordJournal?.({ kind: "node", index, key: key ?? "", ok: true, capabilityId: payload.capabilityId,
-          ...effectMark, ...(currentEffect === "read" ? { text: JSON.stringify(value) } : {}) });
+          ...effectMark, ...(currentEffect === "read" ? { text: JSON.stringify(value) } : {}), ...basisMark });
         openNodes.delete(callId);
         respond(callId, true, value);
       } catch (error) {
@@ -1416,7 +1422,7 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
         // would shift every later node's position on the next resume. A failed
         // read re-runs; a failed effect is still an attempted effect, and the
         // tripwire above refuses to step over it.
-        recordJournal?.({ kind: "node", index, key: key ?? "", ok: false, capabilityId: payload.capabilityId, ...effectMark });
+        recordJournal?.({ kind: "node", index, key: key ?? "", ok: false, capabilityId: payload.capabilityId, ...effectMark, ...basisMark });
         // Validation/authorization/uncertain effects cannot become null under
         // parallel()'s ordinary item-failure semantics. A failed node is a
         // failed *workflow*, so the caller must see the typed diagnostic.

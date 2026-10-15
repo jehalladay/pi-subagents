@@ -521,10 +521,12 @@ function providerManifest(registry: CapabilityRegistry, request: Pick<DetachedHo
  * recorded through this host carries the producer-declared effect class and a
  * resume refuses a journaled non-read effect with uncertain-effect instead of
  * re-running it live. Only the manifest vouches: an id outside it records no
- * class. replaySafe stays false on the deterministic backend because the runtime
- * admits a node replay on its recorded class and key, not on this basis, so a
- * read recorded under another workspace, grant set or manifest could otherwise
- * come back as this run's answer; declining costs a live re-read, never an effect. */
+ * class. The runtime stamps replayBasis on every entry and replays a node read
+ * only under an equal basis, so the Claude backend, which permits settled-agent
+ * replay, hands back a read only under the same workspace, operator, grant set,
+ * provider manifest and Claude policy. replaySafe stays false on the
+ * deterministic backend, as before effect metadata: it has no settled agents to
+ * reuse and re-observes its reads live; declining costs a live re-read, never an effect. */
 export function createDetachedWorkflowHost({ request, registry, principal, signal, beforeDispatch }: DetachedHostOptions): WorkflowHost {
   const commonHost: WorkflowHost = request.backend === "claude" ? createClaudeWorkflowHost({ cwd: request.cwd, signal, ...request.claude, settingSources: [], permissionMode: "dontAsk", capabilities: registry, grants: request.grants, invocationId: request.invocationId, principal, beforeDispatch }) : {
     replaySafe: false,

@@ -118,17 +118,15 @@ describe("detached node effect metadata comes from the provider manifest", () =>
     expect(host.describeNodeEffect?.("furnace.run.inspect")).toBeUndefined();
   });
 
-  it("journals each detached node under its declared class, keeping an answer only for a read", async () => {
+  it("journals each detached node under its declared class and basis, keeping an answer only for a read", async () => {
     const { registry } = localProvider({ "local.fixture-read": "read", "local.fixture-write": "write" });
+    const host = detachedHost(registry, localRequest(["local.fixture-read", "local.fixture-write"]));
     const journal = recorder();
 
-    const result = await run(
-      'await node("local.fixture-read", { value: "x" });\nreturn await node("local.fixture-write", { value: "y" });',
-      detachedHost(registry, localRequest(["local.fixture-read", "local.fixture-write"])),
-      journal,
-    );
+    const result = await run('await node("local.fixture-read", { value: "x" });\nreturn await node("local.fixture-write", { value: "y" });', host, journal);
 
     expect(result.status).toBe("completed");
+    expect(host.replayBasis).toMatch(/^sha256:[a-f0-9]{64}$/);
     expect(journal.entries).toEqual([
       {
         kind: "node",
@@ -138,6 +136,7 @@ describe("detached node effect metadata comes from the provider manifest", () =>
         capabilityId: "local.fixture-read",
         effectClass: "read",
         text: JSON.stringify({ id: "local.fixture-read", echoed: { value: "x" } }),
+        basis: host.replayBasis,
       },
       {
         kind: "node",
@@ -146,6 +145,7 @@ describe("detached node effect metadata comes from the provider manifest", () =>
         ok: true,
         capabilityId: "local.fixture-write",
         effectClass: "write",
+        basis: host.replayBasis,
       },
     ]);
   });
@@ -263,19 +263,23 @@ describe("a detached resume never re-runs a journaled effect", () => {
 });
 
 describe("detached reads and the replay basis", () => {
-  it("runs a journaled read live on resume rather than handing back an answer it cannot scope", async () => {
-    // The runtime admits a node replay on its recorded class and key alone, so
-    // a read recorded under another workspace, grant set or manifest could come
-    // back as this run's answer. The detached host declines replay outright:
-    // a resume costs a live re-read and never re-runs an effect.
+  it("re-observes a journaled read live on the deterministic backend, which never replays", async () => {
+    // The deterministic backend keeps its pre-policy stance: it has no settled
+    // agents to reuse, and a resume re-observes its reads live (freshness
+    // unknown) rather than handing back the earlier run's answer as stale, even
+    // under an identical basis. A resume still never re-runs an effect.
     const body = 'return await node("local.fixture-read", { value: "x" });';
     const first = localProvider({ "local.fixture-read": "read" });
     const journal = recorder();
-    await run(body, detachedHost(first.registry, localRequest(["local.fixture-read"])), journal);
-    expect(journal.entries[0]).toMatchObject({ kind: "node", effectClass: "read" });
+    const recording = detachedHost(first.registry, localRequest(["local.fixture-read"]));
+    expect(recording.replaySafe).toBe(false);
+    await run(body, recording, journal);
+    expect(journal.entries[0]).toMatchObject({ kind: "node", effectClass: "read", basis: recording.replayBasis });
 
     const second = localProvider({ "local.fixture-read": "read" });
-    const result = await run(body, detachedHost(second.registry, localRequest(["local.fixture-read"])), { entries: journal.entries });
+    const resuming = detachedHost(second.registry, localRequest(["local.fixture-read"]));
+    expect(resuming.replayBasis).toBe(recording.replayBasis);
+    const result = await run(body, resuming, { entries: journal.entries });
 
     expect(result.status).toBe("completed");
     expect(second.invocations).toHaveLength(1);
@@ -313,6 +317,77 @@ describe("detached reads and the replay basis", () => {
     expect(result.value).toBe(true);
     expect(host.replayBasis).toMatch(/^sha256:[a-f0-9]{64}$/);
     expect(journal.entries).toEqual([expect.objectContaining({ index: 0, ok: false, basis: host.replayBasis })]);
+  });
+});
+
+describe("the detached Claude backend replays a journaled read only under its own basis", () => {
+  // A controlled fixture standing in for the native Forge adapter's descriptor
+  // (never native evidence): the detached host reads only its metadata and
+  // dispatches through the Claude host, so nothing here spawns Forge.
+  function forgeFixture(version = "1.0.0") {
+    const invocations: unknown[] = [];
+    const registry = new CapabilityRegistry();
+    registry.register({
+      descriptor: {
+        id: "forge.gate.status",
+        version,
+        description: "controlled fixture standing in for the native adapter, not native",
+        inputSchema: SCHEMA,
+        effectClass: "read",
+        permissions: ["forge:inspect"],
+        supportedModes: ["invoke"],
+        contractSource: "fixture:native-stand-in",
+      },
+      async invoke(input) {
+        invocations.push(input);
+        return { version, echoed: input };
+      },
+    });
+    return { registry, invocations };
+  }
+  const request: DetachedHostRequest = {
+    backend: "claude",
+    cwd: WORKSPACE,
+    invocationId: "claude-replay",
+    providers: ["forge"],
+    grants: ["forge:inspect", "claude:invoke"],
+    claude: { model: "claude-fixture" },
+  };
+  const body = 'return await node("forge.gate.status", { value: "x" });';
+
+  it("hands back the recorded read, marked stale, under an identical basis", async () => {
+    const first = forgeFixture();
+    const recording = detachedHost(first.registry, request);
+    expect(recording.replaySafe).toBe(true);
+    const journal = recorder();
+    expect((await run(body, recording, journal)).status).toBe("completed");
+    expect(journal.entries[0]).toMatchObject({ kind: "node", capabilityId: "forge.gate.status", effectClass: "read", basis: recording.replayBasis });
+
+    const second = forgeFixture();
+    const result = await run(body, detachedHost(second.registry, request), { entries: journal.entries });
+
+    expect(result.status).toBe("completed");
+    expect(result.value).toEqual({ version: "1.0.0", echoed: { value: "x" } });
+    expect(second.invocations).toHaveLength(0);
+    expect(nodeRows(result).at(-1)).toMatchObject({ state: "done", freshness: "stale" });
+  });
+
+  it("re-reads live when the provider manifest moved, though the Claude host's own policy did not", async () => {
+    // The Claude host's basis covers model, permissions, tools, grants and cwd,
+    // not the provider manifest; the detached basis adds it, and the runtime
+    // now admits a node read only under the basis it was recorded with.
+    const journal = recorder();
+    await run(body, detachedHost(forgeFixture().registry, request), journal);
+
+    const moved = forgeFixture("1.0.1");
+    const resuming = detachedHost(moved.registry, request);
+    expect(resuming.replayBasis).not.toBe(journal.entries[0].basis);
+    const result = await run(body, resuming, { entries: journal.entries });
+
+    expect(result.status).toBe("completed");
+    expect(result.value).toEqual({ version: "1.0.1", echoed: { value: "x" } });
+    expect(moved.invocations).toEqual([{ value: "x" }]);
+    expect(nodeRows(result).at(-1)).toMatchObject({ state: "done", freshness: "unknown" });
   });
 });
 
