@@ -9,7 +9,7 @@ import type {ClaudeNativeObservation} from '../workflow/progress.js';
 import {CapabilityError} from './capability-registry.js';
 import type {ClaudeCallIdentity} from './claude-host.js';
 import type {NativeRef, NativeSnapshot, ObservationProjection, ObservationScope, Presentation} from './observation.js';
-import {redactWorkbenchText, stripUnsafeText} from './redaction.js';
+import {redactWorkbenchText, sanitizeWorkbenchText, stripUnsafeText} from './redaction.js';
 
 /** Exactly the statement ObservationProjection.relate accepts; this adapter states ownership, causation and grouping only. */
 export type ClaudeObservedRelation = Parameters<ObservationProjection['relate']>[0];
@@ -60,13 +60,11 @@ const instant = (value: unknown): value is string =>
 const exact = (value: unknown): value is string =>
   typeof value === 'string' && value.length > 0 && Buffer.byteLength(value) <= MAX_IDENTITY_BYTES && stripUnsafeText(redactWorkbenchText(value)) === value;
 
-/** Script or producer text bound for display. Unsafe sequences become spaces BEFORE the shared redactor runs, so an escape,
- * control byte or bidi mark glued to a credential cannot hide it; redactWorkbenchText then redacts and bounds, stripUnsafeText
- * strips, and a code unit the bound orphaned is dropped. Text that sanitizes to nothing shows a fixed placeholder, never an id. */
+/** Script or producer text bound for display: the shared helper's label layout, then a code unit the bound orphaned is dropped.
+ * Text that sanitizes to nothing shows a fixed placeholder, never an id. */
 function shown(value: unknown, max: number, placeholder: string): string {
   if (typeof value !== 'string') return placeholder;
-  const spaced = stripUnsafeText(value, ' ').replace(/\s+/g, ' ').trim();
-  return stripUnsafeText(redactWorkbenchText(spaced, max)).replace(LONE_SURROGATE, '').trim() || placeholder;
+  return sanitizeWorkbenchText(value, max, 'label').replace(LONE_SURROGATE, '').trim() || placeholder;
 }
 
 /** The literal terminal, or observed-running while the call is live. Active needs a live call AND a current stream: a lost

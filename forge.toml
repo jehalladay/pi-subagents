@@ -77,12 +77,20 @@ timeout = 300
 command = "node qa/workbench/inspector-grouped-bench.mjs"
 timeout = 300
 
+[build.commands.reducer-selector-bench]
+command = "node qa/workbench/reducer-selector-bench.mjs"
+timeout = 300
+
 [build.commands.local-detached-shell]
 command = "bash qa/workbench/local-detached.sh"
 timeout = 180
 
 [build.commands.local-detached-faults]
 command = "node qa/workbench/local-detached-faults.mjs"
+timeout = 240
+
+[build.commands.local-detached-shared-child]
+command = "node qa/workbench/local-detached-shared-child.mjs"
 timeout = 240
 
 [build.commands.local-detached-unit]
@@ -92,6 +100,10 @@ timeout = 180
 [build.commands.inspector-smoke]
 command = "node qa/workbench/inspector-smoke.mjs"
 timeout = 120
+
+[build.commands.attention-grouped-bench]
+command = "node qa/workbench/attention-grouped-bench.mjs"
+timeout = 300
 
 [build.commands.furnace-active-observe]
 command = "./node_modules/.bin/vitest run --config vitest.furnace-active.config.ts"
