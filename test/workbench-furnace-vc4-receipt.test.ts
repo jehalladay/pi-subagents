@@ -517,6 +517,38 @@ describe("wb-752.3 VC-4 live Furnace receipt: assessor", () => {
     expect(() => buildReceipt({ ...BUILD, toolchain: { ...BUILD.toolchain, sdk: "bearer abcdefgh12345" }, evidence: good() })).toThrow();
   });
 
+  it("C6 falsifier: a credential split by a control, line break or default-ignorable separator is still refused (separators normalise to one space; deletion never precedes the check)", () => {
+    const token = "sk-live-0123456789abcdef";
+    const sep = (code: number): string => String.fromCharCode(code);
+    const shapes: string[] = [
+      `auth${sep(10)}Bearer ${token}`,
+      `Bearer${sep(9)}${token}`,
+      `Bearer${sep(10)}${token}`,
+      `Bearer${sep(11)}${token}`,
+      `Bearer${sep(0x85)}${token}`,
+      `Bearer${sep(0)}${token}`,
+      `Bearer${sep(0x200b)}${token}`,
+      `Bearer${sep(0xfeff)}${token}`,
+      `Bearer${sep(0x2028)}${token}`,
+      `Bearer${sep(13)}${sep(10)}${token}`,
+      `bearer ${token}`,
+    ];
+    for (const shape of shapes) {
+      const evidence = { ...good(), note: shape } as Evidence;
+      let thrown: unknown;
+      try {
+        buildReceipt({ ...BUILD, evidence });
+      } catch (error) {
+        thrown = error;
+      }
+      expect(thrown, `shape ${JSON.stringify(shape)} must be refused`).toBeInstanceOf(Error);
+      expect(String((thrown as Error).message)).not.toContain(token);
+    }
+    expect(() => buildReceipt({ ...BUILD, evidence: { ...good(), nested: { list: [`Bearer${sep(0x85)}${token}`] } } as Evidence })).toThrow();
+    expect(() => buildReceipt({ ...BUILD, evidence: { ...good(), note: `Bearer${sep(0xad)}word and plain text` } as Evidence })).not.toThrow();
+    expect(() => buildReceipt({ ...BUILD, evidence: { ...good(), note: "nothing secret here, bearer of no news" } as Evidence })).not.toThrow();
+  });
+
   it("names the contract rules and steps exactly so a quiet rename is caught", () => {
     expect([...FINDING_RULES]).toEqual([
       "attach-not-external",

@@ -76,6 +76,27 @@ const TWO_WORD_COMMANDS = new Set(['run', 'attempt', 'work', 'config', 'executor
 const HALTED_RUN_STATES = new Set(['stopped', 'paused']);
 const CREDENTIAL = /\bbearer\s+[A-Za-z0-9._~+/=-]{6,}|"authorization"\s*:|\bauthorization\s*[:=]\s*\S/i;
 const SHA256 = /^[a-f0-9]{64}$/;
+/** Controls, line and paragraph separators, soft hyphen and default-ignorables that can split a credential token. */
+const SEPARATOR_RANGES = Object.freeze([[0x0, 0x20], [0x7f, 0xa0], [0xad, 0xad], [0x34f, 0x34f], [0x61c, 0x61c], [0x115f, 0x1160], [0x17b4, 0x17b5], [0x180b, 0x180f], [0x1680, 0x1680], [0x2000, 0x200f], [0x2028, 0x202f], [0x205f, 0x206f], [0x3000, 0x3000], [0x3164, 0x3164], [0xfe00, 0xfe0f], [0xfeff, 0xfeff], [0xffa0, 0xffa0]]);
+const SEPARATORS = new RegExp(`[${SEPARATOR_RANGES.map(([from, to]) => `${String.fromCodePoint(from)}-${String.fromCodePoint(to)}`).join('')}]+`, 'g');
+
+/** Every string in the value, keys included, each normalised so each separator run reads as one space (deletion never precedes the check). */
+function credentialTexts(value, out) {
+  if (typeof value === 'string') out.push(value.replace(SEPARATORS, ' '));
+  else if (Array.isArray(value)) for (const item of value) credentialTexts(item, out);
+  else if (value && typeof value === 'object') {
+    for (const [key, item] of Object.entries(value)) {
+      out.push(key.replace(SEPARATORS, ' '));
+      credentialTexts(item, out);
+    }
+  }
+  return out;
+}
+
+function carriesCredential(input) {
+  if (CREDENTIAL.test(JSON.stringify(input))) return true;
+  return credentialTexts(input, []).some((text) => CREDENTIAL.test(text));
+}
 
 /** The Furnace verb of a recorded argv, found after the global flags and their values. */
 export function verbOf(argv) {
@@ -342,7 +363,7 @@ export function assessLive(evidence) {
 
 /** Build the evidence-grade receipt. Refuses (throws, without echoing the value) any input carrying a credential. */
 export function buildReceipt(input) {
-  if (CREDENTIAL.test(JSON.stringify(input))) throw new Error('receipt input carries an Authorization credential; refusing to record it');
+  if (carriesCredential(input)) throw new Error('receipt input carries an Authorization credential; refusing to record it');
   if (input.toolchain && typeof input.toolchain === 'object' && Object.hasOwn(input.toolchain, 'furnace')) {
     throw new Error('the furnace binary identity comes from the inspect envelope (evidence.binary), never from the toolchain');
   }
