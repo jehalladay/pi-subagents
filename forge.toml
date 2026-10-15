@@ -84,3 +84,7 @@ timeout = 120
 [build.commands.furnace-active-observe]
 command = "./node_modules/.bin/vitest run --config vitest.furnace-active.config.ts"
 timeout = 180
+
+[build.commands.furnace-vc4-live]
+command = "node qa/workbench/live-furnace-vc4.mjs"
+timeout = 240
