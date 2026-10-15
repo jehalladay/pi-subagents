@@ -7,15 +7,19 @@
  * live exact-grant check governs every load. The forge reader is wb-6ze.11;
  * until it lands, a forge-operation reference renders the docs/20-sanctioned
  * visible `unavailable: no-loader` rather than anything fabricated. Wiring
- * only: the store contract and the readers themselves are untouched.
+ * only: the store contract and the readers themselves are untouched. The SDK
+ * client and the transcript reader are reached through the native-modules
+ * loader (wb-cax.10), so building this store at boot resolves no native SDK;
+ * the first furnace or claude load — already behind the live grant check —
+ * is what brings them in.
  */
 
-import { Furnace } from "@furnace/sdk";
-import { type ClaudeTranscriptRow, readClaudeTranscript } from "./claude-transcript.js";
+import type { ClaudeTranscriptRow } from "./claude-transcript.js";
 import { EvidenceRefusal, EvidenceStore } from "./evidence-loader.js";
 import { createEvidenceLoaders, type FurnaceEvidenceRead } from "./evidence-producers.js";
 import { readFurnaceAttemptLogEvidence } from "./furnace-evidence.js";
 import type { FurnaceObserverClient } from "./furnace-observer.js";
+import { loadWorkbenchNative } from "./native-modules.js";
 import type { ObservationProjection, ObservationScope } from "./observation.js";
 
 const EVIDENCE_MAX_ENTRIES = 32;
@@ -30,17 +34,22 @@ export interface WorkbenchEvidenceDeps {
   scope(): ObservationScope | undefined;
   projection: Pick<ObservationProjection, "query">;
   cwd(): string | undefined;
-  /** Test seams; the defaults are the landed readers and the real SDK client. */
+  /** Test seams; the defaults are the landed reader and the real SDK client, loaded on first use. */
   claudeRead?(sessionId: string, cwd: string): Promise<readonly ClaudeTranscriptRow[]>;
-  furnaceClient?(workspace: string): Pick<FurnaceObserverClient, "logs">;
+  furnaceClient?(workspace: string): Pick<FurnaceObserverClient, "logs"> | Promise<Pick<FurnaceObserverClient, "logs">>;
   now?(): Date;
 }
 
 export function createWorkbenchEvidenceStore(deps: WorkbenchEvidenceDeps): EvidenceStore {
-  const readTranscript = deps.claudeRead ?? readClaudeTranscript;
+  const readTranscript =
+    deps.claudeRead ??
+    (async (sessionId: string, cwd: string) => (await loadWorkbenchNative()).readClaudeTranscript(sessionId, cwd));
   const furnaceClient =
     deps.furnaceClient ??
-    ((workspace: string) => new Furnace({ binary: "furnace", cwd: workspace, timeoutMs: EVIDENCE_TIMEOUT_MS }));
+    (async (workspace: string) => {
+      const { Furnace } = await loadWorkbenchNative();
+      return new Furnace({ binary: "furnace", cwd: workspace, timeoutMs: EVIDENCE_TIMEOUT_MS });
+    });
   const loaders = createEvidenceLoaders({
     grants: deps.grants,
     ...(deps.now !== undefined ? { now: deps.now } : {}),
@@ -63,7 +72,7 @@ export function createWorkbenchEvidenceStore(deps: WorkbenchEvidenceDeps): Evide
         throw new EvidenceRefusal("unauthorized");
       }
       const content = await readFurnaceAttemptLogEvidence({
-        client: furnaceClient(scope.workspace),
+        client: await furnaceClient(scope.workspace),
         runId,
         workspaceRoot: scope.workspace,
         owningRunNode: { nativeRef: owningRunNode.nativeRef, evidenceRefs: owningRunNode.evidenceRefs },
