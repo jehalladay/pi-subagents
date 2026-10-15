@@ -592,7 +592,10 @@ function paneFrame(options: {
  * ------------------------------------------------------------------------- */
 
 /** Split a preview into lines, treating an empty preview as absent. */
-const previewLines = (preview: string | undefined) => (preview ? preview.split("\n") : []);
+/** Author or agent text shown line by line: each line is sanitized on its own so the line structure survives the control-byte strip. */
+const safeDialogLines = (text: string): string[] => text.split("\n").map(line => safeWorkflowTerminalText(line));
+const safeDialogText = (text: string): string => safeDialogLines(text).join("\n");
+const previewLines = (preview: string | undefined) => (preview ? safeDialogLines(preview) : []);
 
 /** What the Activity body says. There is a count of tool calls, never a list. */
 function activityBody(entry: WorkflowAgentEntry, state: WorkflowDisplayState): string {
@@ -614,9 +617,10 @@ function outcomeBody(entry: WorkflowAgentEntry, state: WorkflowDisplayState): st
       return WORKFLOW_DIALOG_COPY.notAvailableYet;
     case "failed":
     case "blocked":
-      return entry.error ?? WORKFLOW_DIALOG_COPY.noTranscript;
+      // The error is whatever the child threw; the result is whatever it returned. Both are untrusted terminal text.
+      return entry.error === undefined ? WORKFLOW_DIALOG_COPY.noTranscript : safeDialogText(entry.error);
     case "done":
-      return entry.resultPreview ?? WORKFLOW_DIALOG_COPY.noTranscript;
+      return entry.resultPreview === undefined ? WORKFLOW_DIALOG_COPY.noTranscript : safeDialogText(entry.resultPreview);
   }
 }
 
@@ -692,8 +696,9 @@ function agentRow(options: {
   // stat tail, and clamping one would just spend columns on a truncated word.
   if (options.compact) return clampLine(head, width);
 
+  // Model names arrive from the provider session, so they are stripped like every other reported string.
   const model = formatModel(entry);
-  if (model) head.push({ text: ` ${model}`, color: "dim" });
+  if (model) head.push({ text: ` ${safeWorkflowTerminalText(model)}`, color: "dim" });
   for (const part of [...subStatusAnnotations(entry, display, options.now), ...rowStatSegments(entry)]) {
     head.push({ text: " · ", color: "dim" }, { text: part, color: "dim" });
   }
@@ -838,7 +843,8 @@ export function layoutWorkflowDialog(input: WorkflowDialogInput): WorkflowCardLi
     const display = displayState(entry, view.workflowActive);
     // Prefers the canonical `provider/model-id` here — two providers can serve
     // models whose short names read alike, and this pane has the width for it.
-    const model = formatModel(entry, { canonical: true });
+    const reportedModel = formatModel(entry, { canonical: true });
+    const model = reportedModel === undefined ? undefined : safeWorkflowTerminalText(reportedModel);
     detailRows.push(
       clampLine(
         [
@@ -858,11 +864,11 @@ export function layoutWorkflowDialog(input: WorkflowDialogInput): WorkflowCardLi
     // per-agent configuration, which is what someone opening this pane came to
     // see, and `thinking: medium` on every row of a fan-out would be noise.
     const thinking = formatThinking(entry);
-    if (thinking) stats.push(thinking);
+    if (thinking) stats.push(safeWorkflowTerminalText(thinking));
     if (entry.tokens) stats.push(`${formatCompactTokens(entry.tokens)} tok`);
     if (entry.toolCalls) stats.push(`${entry.toolCalls} tool call${entry.toolCalls === 1 ? "" : "s"}`);
     if (entry.durationMs) stats.push(formatDuration(entry.durationMs));
-    if (entry.sessionId) stats.push(`Claude session ${entry.sessionId}`);
+    if (entry.sessionId) stats.push(`Claude session ${safeWorkflowTerminalText(entry.sessionId)}`);
     if (stats.length > 0) {
       detailRows.push(clampLine([{ text: ` ${stats.join(" · ")}`, color: "dim" }], rightWidth));
     }

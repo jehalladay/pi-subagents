@@ -3,6 +3,7 @@ import { describe, expect, it, vi } from "vitest";
 import { layoutWorkflowCard, plainWorkflowCardLines } from "../src/ui/workflow-card.js";
 import { initialWorkflowDialogState, layoutWorkflowDialog, plainWorkflowDialogLines } from "../src/ui/workflow-dialog.js";
 import { workflowCallName } from "../src/workflow/meta.js";
+import type { WorkflowAgentEntry } from "../src/workflow/progress.js";
 import { runWorkflow, type WorkflowHost } from "../src/workflow/runtime.js";
 
 const MARKER = "UNTRUSTED_SOURCE_DATA";
@@ -152,6 +153,36 @@ describe("untrusted workflow terminal rows", () => {
       expect(rendered).not.toMatch(/[\u001b\u202a-\u202e\u2066-\u2069]/u);
       expect(rendered).not.toContain("w19-terminal-secret");
       expect(rendered).toContain("[REDACTED]");
+    }
+  });
+  const agent = (state: "done" | "error", extra: Partial<WorkflowAgentEntry> = {}): WorkflowAgentEntry => ({
+    type: "workflow_agent", index: 0, label: "safe", state, phaseIndex: 0, phaseTitle: "safe",
+    promptPreview: `${hostile}\nline two ${hostile}`, model: hostile, modelId: hostile, fallbackModel: `fb ${hostile}`, requestedModel: hostile,
+    thinking: hostile, requestedThinking: hostile, sessionId: hostile, tokens: 12, toolCalls: 2, durationMs: 1500, ...extra,
+  });
+  const dialog = (entry: WorkflowAgentEntry, level: "phases" | "agent") => plainWorkflowDialogLines(layoutWorkflowDialog({
+    state: { ...initialWorkflowDialogState(), level, promptExpanded: true }, width: 240, now: 2,
+    task: { status: "running", workflowName: "safe", startTime: 1 },
+    progress: [{ type: "workflow_phase", index: 0, title: "safe" }, entry],
+  }));
+  it("sanitizes the agent detail pane: prompt lines, outcome, error, model and native session strings", () => {
+    const cases: Array<[WorkflowAgentEntry, string]> = [
+      [agent("done", { resultPreview: `${hostile}\noutcome two ${hostile}` }), "outcome two"],
+      [agent("error", { error: `${hostile}\nerror two ${hostile}` }), "error two"],
+    ];
+    for (const [entry, bodyLine] of cases) {
+      for (const level of ["phases", "agent"] as const) {
+        const lines = dialog(entry, level); const rendered = lines.join("\n");
+        expect(rendered).toContain("row");
+        expect(rendered).not.toMatch(/[\u001b\u202a-\u202e\u2066-\u2069]/u);
+        expect(rendered).not.toContain("w19-terminal-secret");
+        expect(rendered).toContain("[REDACTED]");
+        if (level === "agent") {
+          // Sanitizing must not flatten the author's line structure: each prompt and outcome line stays its own row.
+          expect(lines.some(line => /line two row/.test(line))).toBe(true);
+          expect(lines.some(line => new RegExp(`${bodyLine} row`).test(line))).toBe(true);
+        }
+      }
     }
   });
   it("sanitizes every card log line while preserving multiline layout", () => {
