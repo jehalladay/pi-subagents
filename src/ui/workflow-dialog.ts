@@ -79,6 +79,7 @@ import {
   type WorkflowCardSegment,
   type WorkflowCardTask,
 } from "./workflow-card.js";
+import { type InspectorModel, type InspectorState, initialInspectorState, layoutInspector, reduceInspectorKey } from "./workflow-inspector.js";
 
 /** Fallback width when the caller does not know the terminal's. */
 const DEFAULT_WIDTH = 80;
@@ -289,6 +290,8 @@ export function initialWorkflowDialogState(initialPhaseIndex = 0): WorkflowDialo
 export interface WorkflowDialogSource {
   progress: readonly WorkflowEntry[];
   task: WorkflowCardTask;
+  /** Present only when a producer-backed, scoped Workbench read projection exists. */
+  observation?: InspectorModel;
   meta?: WorkflowMeta;
   /** Agents the runtime has scheduled, which can exceed those that reported. */
   agentCount?: number;
@@ -1131,6 +1134,8 @@ export function plainWorkflowDialogLines(lines: readonly WorkflowCardLine[]): st
  */
 export class WorkflowDialog implements Component {
   private state: WorkflowDialogState;
+  private inspectorState: InspectorState = initialInspectorState();
+  private preferRich = false;
   private spinnerFrame = 0;
   private timer: ReturnType<typeof setInterval> | undefined;
   private closed = false;
@@ -1181,13 +1186,39 @@ export class WorkflowDialog implements Component {
     this.state = initialWorkflowDialogState(initialPhaseIndex);
     this.timer = setInterval(() => {
       this.spinnerFrame++;
-      if (!this.closed) this.tui.requestRender();
+      const status = this.source().task.status;
+      if (!this.closed && (status === "running" || status === "paused")) this.tui.requestRender();
     }, WORKFLOW_DIALOG_SPINNER_MS);
     this.timer.unref?.();
   }
 
   handleInput(data: string): void {
-    const input: WorkflowDialogInput = { ...this.snapshot(), state: this.state };
+    const source = this.snapshot();
+    const hasLegacyRows = source.progress.some(entry => entry.type === "workflow_agent");
+    const rich = source.observation?.projection.window({scope:source.observation.scope,invocationId:source.observation.invocationId,offset:0,limit:1}).total;
+    if ((matchesKey(data,"g") || matchesKey(data,"tab")) && source.observation && rich && hasLegacyRows && !this.preferRich) {
+      this.preferRich = true;
+      this.tui.requestRender();
+      return;
+    }
+    if (matchesKey(data,"g") && source.observation && rich) {
+      this.preferRich = !this.preferRich;
+      this.tui.requestRender();
+      return;
+    }
+    if (source.observation && rich && (this.preferRich || !hasLegacyRows)) {
+      const outcome = reduceInspectorKey(data, this.inspectorState, source.observation);
+      if (!outcome) return;
+      this.inspectorState = outcome.state;
+      if (outcome.action === "close") this.dispatch({kind:"cancel"});
+      else if (outcome.action === "transcript") {
+        const item = source.observation.projection.window({scope:source.observation.scope,invocationId:source.observation.invocationId,offset:this.inspectorState.index,limit:1}).nodes[0];
+        if (item?.nativeRef.provider === "claude-agent-sdk" && item.nativeRef.type === "session") this.actions.onOpenAgent?.(`claude:${item.nativeRef.id}`);
+      }
+      this.tui.requestRender();
+      return;
+    }
+    const input: WorkflowDialogInput = { ...source, state: this.state };
     const result = handleWorkflowDialogKey(data, this.state, resolveWorkflowDialog(input));
     if (!result) return;
     this.state = result.state;
@@ -1196,8 +1227,14 @@ export class WorkflowDialog implements Component {
   }
 
   render(width: number): string[] {
+    const source = this.snapshot();
+    const hasLegacyRows = source.progress.some(entry => entry.type === "workflow_agent");
+    const rich = source.observation?.projection.window({scope:source.observation.scope,invocationId:source.observation.invocationId,offset:0,limit:1}).total;
+    if (source.observation && rich && (this.preferRich || !hasLegacyRows)) {
+      return styleWorkflowCardLines(layoutInspector(source.observation,this.inspectorState,{width,rows:this.tui.terminal?.rows??24}).map(text=>[{text}]),this.theme);
+    }
     const lines = layoutWorkflowDialog({
-      ...this.snapshot(),
+      ...source,
       state: this.state,
       // Derived from what was actually injected, so the footer advertises only
       // the keys this dialog can service.
@@ -1213,6 +1250,7 @@ export class WorkflowDialog implements Component {
       terminalRows: this.tui.terminal?.rows,
       spinnerFrame: this.spinnerFrame,
     });
+    if (source.observation && rich && hasLegacyRows) lines.push([{text:" Tab inspector · g toggle view",color:"dim"}]);
     return styleWorkflowCardLines(lines, this.theme);
   }
 

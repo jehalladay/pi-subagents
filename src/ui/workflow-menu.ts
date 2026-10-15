@@ -16,6 +16,7 @@
 
 import type { ExtensionCommandContext } from "@earendil-works/pi-coding-agent";
 import type { AgentRecord } from "../types.js";
+import type { ObservationProjection, ObservationScope } from "../workbench/observation.js";
 import { pauseWorkflowTask, resumeWorkflowTask, type WorkflowTask } from "../workflow/task.js";
 import { WorkflowDialog } from "./workflow-dialog.js";
 
@@ -27,6 +28,7 @@ export interface WorkflowMenuDeps {
    * crash.
    */
   tasks: ReadonlyMap<string, WorkflowTask>;
+  observation?: { projection: ObservationProjection; scope(task: WorkflowTask): ObservationScope | undefined };
   /** The record behind an agent id, or undefined once it has been swept. */
   getRecord(id: string): AgentRecord | undefined;
   /** The conversation overlay `c` opens on an agent row. */
@@ -75,18 +77,28 @@ export async function showWorkflowDialog(
         tui,
         // Re-read on every render: the run is in the background, so the
         // dialog has to follow it rather than snapshot it at open time.
-        () => ({
-          progress: task.workflowProgress,
-          task: {
-            status: task.status,
-            workflowName: task.workflowName,
-            startTime: task.startTime,
-            endTime: task.endTime,
-            totalPausedMs: task.totalPausedMs,
-          },
-          meta: task.meta,
-          agentCount: task.agentCount,
-        }),
+        () => {
+          const observationScope = deps.observation?.scope(task);
+          return {
+            progress: task.workflowProgress,
+            ...(observationScope && deps.observation ? { observation: {
+              projection: deps.observation.projection,
+              scope: observationScope,
+              invocationId: task.id,
+              title: task.meta?.name ?? task.workflowName ?? task.id,
+              status: task.status,
+            } } : {}),
+            task: {
+              status: task.status,
+              workflowName: task.workflowName,
+              startTime: task.startTime,
+              endTime: task.endTime,
+              totalPausedMs: task.totalPausedMs,
+            },
+            meta: task.meta,
+            agentCount: task.agentCount,
+          };
+        },
         theme,
         done,
         {

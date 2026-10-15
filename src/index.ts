@@ -18,6 +18,7 @@ import { dirname, isAbsolute, join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { defineTool, type ExtensionAPI, type ExtensionCommandContext, type ExtensionContext, getAgentDir, getSettingsListTheme } from "@earendil-works/pi-coding-agent";
 import { Container, Key, matchesKey, type SettingItem, SettingsList, Spacer, Text } from "@earendil-works/pi-tui";
+import { Furnace } from "@furnace/sdk";
 import { Type } from "typebox";
 import { abortable } from "./abortable.js";
 import { hasAgentBadge, renderAgentName } from "./agent-color.js";
@@ -69,6 +70,9 @@ import { getLifetimeCost, getLifetimeTotal, getSessionContextPercent, type Lifet
 import { type CapabilityDescriptor, CapabilityRegistry } from "./workbench/capability-registry.js";
 import { createClaudeWorkflowHost } from "./workbench/claude-host.js";
 import { createClaudeObserver, readClaudeTranscript } from "./workbench/claude-transcript.js";
+import { type CompareRun, catalogWorkflows, compareWorkflowRuns, inspectWorkflowSource, validateWorkflowSource } from "./workbench/designer.js";
+import { FurnaceObserver } from "./workbench/furnace-observer.js";
+import { connectDetachedWorkflow, launchDetachedWorkflow } from "./workbench/hosts/local-detached.js";
 import { captureInvocationIdentity, type IdentityCaptureInput, identityDigest, verifyInvocationIdentity } from "./workbench/identity.js";
 import { type NativeRef, ObservationProjection, type ObservationScope, type Presentation } from "./workbench/observation.js";
 import { registerNativeForgeGateStatus } from "./workbench/providers/forge.js";
@@ -2372,7 +2376,7 @@ Terse command-style prompts produce shallow, generic work.
    * background run.
    */
   const workflowTasks = new Map<string, WorkflowTask>();
-  const projection = new ObservationProjection({ maxEvents: 4_096, maxNodes: 512, maxEdges: 512, maxQuery: 40 });
+  const projection = new ObservationProjection({ maxEvents: 4_096, maxNodes: 2_000, maxEdges: 4_000, maxQuery: 40 });
   const registries = new Map<string, CapabilityRegistry>();
   let workbenchToolsRegistered = false;
   function registryFor(cwd: string): CapabilityRegistry {
@@ -2455,6 +2459,7 @@ Terse command-style prompts produce shallow, generic work.
         workflowAgentBackend: "claude", model: settings.model ?? null,
         permissionMode: settings.permissionMode ?? "dontAsk", settingSources: settings.settingSources ?? [],
         tools: settings.tools ?? [], roles: settings.roles ?? {}, grants: settings.capabilityGrants ?? [],
+        inputDigest: identityDigest("workflow-input", task.args === undefined ? { supplied: false } : { supplied: true, value: task.args }),
       },
       hostAbi: { runtime: "node", version: process.versions.node, platform: process.platform,
         arch: process.arch, interfaceVersion: "pi-workbench/v1" },
@@ -2485,6 +2490,104 @@ Terse command-style prompts produce shallow, generic work.
       },
     }));
     pi.registerTool(defineTool({
+      name: "workflow_validate",
+      label: "Validate workflow source",
+      description: "Read and validate saved workflow syntax, literal metadata and possible calls without executing or editing source. Requires workbench:design.",
+      parameters: Type.Object({ name: Type.Optional(Type.String()), scriptPath: Type.Optional(Type.String()) }),
+      execute: async (_id, params, _signal, _onUpdate, ctx) => {
+        if (!grants(ctx).includes("workbench:design")) return textResult("Permission denied: workbench:design grant required.");
+        try {
+          if (params.scriptPath) {
+            const root = realpathSync(ctx.cwd);
+            const target = realpathSync(resolve(root, params.scriptPath));
+            if (target !== root && !target.startsWith(`${root}${sep}`)) return textResult("Source denied outside workspace.");
+          }
+          const source = inspectWorkflowSource(params, ctx.cwd);
+          return textResult(JSON.stringify(validateWorkflowSource(source, { registry: registryFor(ctx.cwd), grants: grants(ctx) })));
+        } catch (error) { return textResult(error instanceof Error ? error.message : String(error)); }
+      },
+    }));
+    pi.registerTool(defineTool({
+      name: "workflow_catalog",
+      label: "Workflow source catalog",
+      description: "Read a bounded catalog of saved workflow definitions and source digests. Requires workbench:design; does not execute source.",
+      parameters: Type.Object({ filter: Type.Optional(Type.String()), limit: Type.Optional(Type.Integer({minimum:1,maximum:20})), cursor: Type.Optional(Type.String({maxLength:2048})) }),
+      execute: async (_id, params, _signal, _onUpdate, ctx) => {
+        if (!grants(ctx).includes("workbench:design")) return textResult("Permission denied: workbench:design grant required.");
+        if (params.limit !== undefined && (!Number.isSafeInteger(params.limit) || params.limit < 1 || params.limit > 20)) return textResult("Invalid catalog limit.");
+        try {
+          const catalog = catalogWorkflows(ctx.cwd, params);
+          return textResult(JSON.stringify({ ...catalog, entries: catalog.entries.map(({name,source}) => ({name,definition:source.definition,sourceRef:source.sourceRef})) }));
+        } catch (error) { return textResult(error instanceof Error ? error.message : String(error)); }
+      },
+    }));
+    pi.registerTool(defineTool({
+      name: "workflow_compare",
+      label: "Compare workflow evidence",
+      description: "Compare captured workflow source/config/input cohorts without claiming causal gains or complete native metrics. Requires workbench:design and workbench:observe.",
+      parameters: Type.Object({ referenceTask: Type.String(), candidateTask: Type.String() }),
+      execute: async (_id, params, _signal, _onUpdate, ctx) => {
+        const rights = grants(ctx);
+        if (!rights.includes("workbench:design") || !rights.includes("workbench:observe")) return textResult("Permission denied: design and observe grants required.");
+        const scope = observerScope(ctx);
+        const runs: CompareRun[] = [];
+        for (const id of [params.referenceTask, params.candidateTask]) {
+          const task = workflowTasks.get(id);
+          if (!task?.identityReceipt || task.observationScope?.principal !== scope.principal || task.observationScope.workspace !== scope.workspace) return textResult("Comparison receipt unavailable in this operator/workspace scope.");
+          const observed = projection.query({ scope, invocationId: id, limit: 40 });
+          runs.push({ snapshot: task.identityReceipt, inputDigest: task.inputDigest,
+            nativeRefs: observed.nodes.map(node => node.nativeRef).filter(ref => ref.provider !== "pi-workflow"),
+            metrics: [],
+          });
+        }
+        return textResult(JSON.stringify(compareWorkflowRuns([runs[0]], [runs[1]])));
+      },
+    }));
+    pi.registerTool(defineTool({
+      name: "furnace_observe",
+      label: "Observe external Furnace Run",
+      description: "Read one bounded snapshot of an externally launched native Run and Attempt/log references in this workspace. Requires furnace:inspect. Never controls the Run.",
+      parameters: Type.Object({ runId: Type.String({minLength:1,maxLength:128}) }),
+      execute: async (_id, params, signal, _onUpdate, ctx) => {
+        if (!grants(ctx).includes("furnace:inspect")) return textResult("Permission denied: furnace:inspect grant required.");
+        if (typeof params.runId !== "string" || !/^frn-run-[a-zA-Z0-9_-]{1,100}$/.test(params.runId)) return textResult("Invalid native Furnace Run identity.");
+        const scope = observerScope(ctx);
+        const client = new Furnace({binary:"furnace",cwd:scope.workspace,timeoutMs:10_000});
+        const observer = new FurnaceObserver(client, { workspaceRoot:scope.workspace,runId:params.runId,scope,
+          limits:{maxPolls:1,intervalMs:1000,maxElapsedMs:30_000,attemptLimit:20,logBytes:512,callTimeoutMs:10_000}, signal });
+        try {
+          const reading = await observer.snapshot();
+          projection.refresh(observer.projectionSnapshot(reading));
+          return textResult(JSON.stringify(reading));
+        } catch (error) {
+          projection.markStale({ scope, ref: {provider:"furnace",type:"run",id:params.runId,scope:scope.workspace} });
+          return textResult(error instanceof Error ? error.message : String(error));
+        }
+        finally { observer.close(); }
+      },
+    }));
+    pi.registerTool(defineTool({
+      name: "workflow_detached",
+      label: "Local detached workflow host",
+      description: "Explicit same-machine private host launch or reattachment. Survives Pi disconnect, not host crash. Requires local-host grants; reviewed source only, never remote authentication or automatic retry.",
+      parameters: Type.Object({ action: Type.Union([Type.Literal("launch"),Type.Literal("inspect")]), invocationId:Type.String({minLength:1,maxLength:100}), scriptPath:Type.Optional(Type.String()), trustedScript:Type.Optional(Type.Boolean()), backend:Type.Optional(Type.Union([Type.Literal("deterministic"),Type.Literal("claude")])) }),
+      execute: async (_id, params, _signal, _onUpdate, ctx) => {
+        if (!grants(ctx).includes(params.action === "launch" ? "workbench:detach" : "workbench:observe")) return textResult("Permission denied: explicit detached launch or observe grant required.");
+        const directory=join(getAgentDir(),"workbench-detached");
+        try {
+          if (params.action === "inspect") return textResult(JSON.stringify(await connectDetachedWorkflow(directory,params.invocationId).inspect()));
+          if (params.trustedScript !== true || !params.scriptPath) return textResult("Launch requires an explicitly reviewed trusted scriptPath.");
+          const source=inspectWorkflowSource({scriptPath:params.scriptPath},ctx.cwd);
+          const settings=sourceSettings(ctx);
+          const receipt=await launchDetachedWorkflow({ directory,invocationId:params.invocationId,scriptPath:source.sourceRef,cwd:ctx.cwd,input:null,trustedScript:true,
+            backend:params.backend ?? "deterministic",providers:[],grants:[],permissions:["inspect","execute"],sourceFiles:[source.sourceRef],
+            ...(params.backend === "claude" ? {claude:{model:settings?.model,tools:settings?.tools ?? [],roles:settings?.roles}} : {}),
+          });
+          return textResult(JSON.stringify(receipt));
+        } catch (error) { return textResult(error instanceof Error ? error.message : String(error)); }
+      },
+    }));
+    pi.registerTool(defineTool({
       name: "workflow_observe",
       label: "Observe workflow",
       description: "Read a bounded, redacted workflow projection by task ID. Requires workbench:observe; not an execution authority.",
@@ -2505,7 +2608,7 @@ Terse command-style prompts produce shallow, generic work.
           observedAt: node.observedAt, lastConfirmedAt: node.lastConfirmedAt,
           subjectBasis: node.subjectBasis, evidenceRefs: node.evidenceRefs }));
         return textResult(JSON.stringify({ taskId: task.id, status: task.status,
-          identity: task.identityReceipt?.identity ?? null, workspaceSourceState: task.workspaceSourceState ?? "unknown",
+          identity: task.identityReceipt?.identity ?? null, inputDigest: task.inputDigest ?? null, workspaceSourceState: task.workspaceSourceState ?? "unknown",
           nodes: compact, truncated, error: task.error ?? null }));
       },
     }));
@@ -2601,6 +2704,7 @@ Terse command-style prompts produce shallow, generic work.
         ] });
         const input = invocationInput(ctx, task, settings, descriptors);
         task.identityReceipt = captureInvocationIdentity(input);
+        task.inputDigest = identityDigest("workflow-input", task.args === undefined ? { supplied: false } : { supplied: true, value: task.args });
         beforeDispatch = () => {
           // Re-read operator settings and measured candidate; pinned settings
           // alone would hide a mid-run grant revocation from verification.
@@ -4282,6 +4386,10 @@ Write the file using the write tool. Only write the file, nothing else.`;
    */
   const workflowMenuDeps: WorkflowMenuDeps = {
     tasks: workflowTasks,
+    observation: {
+      projection,
+      scope: task => task.observationScope ? { workspace: task.observationScope.workspace, principal: task.observationScope.principal } : undefined,
+    },
     getRecord: id => manager.getRecord(id),
     viewAgentConversation,
     async viewClaudeTranscript(ctx, sessionId) {

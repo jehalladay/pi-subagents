@@ -40,6 +40,8 @@ export interface WorkflowTask {
   workflowName?: string;
   /** Host-owned launch receipt, not writable by the workflow script or worker. */
   identityReceipt?: InvocationSnapshot;
+  /** Canonical input identity; absent input and explicit null remain distinct. */
+  inputDigest?: string;
   workspaceSourceState?: "measured" | "unknown";
   /** Session and workspace scope at launch; used to deny cross-session reads. */
   observationScope?: { readonly sessionId: string; readonly workspace: string; readonly principal: string };

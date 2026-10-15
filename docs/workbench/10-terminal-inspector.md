@@ -80,3 +80,9 @@ STALLED vs WAITING vs STALE vs UNKNOWN must not be confused. Spinner should not 
 The existing phase/agent inspector now permits keyboard selection of native node rows, including node-only phases. The detail view retains the capability, producer-qualified native identifier, transport state, domain outcome, source basis, freshness, last error and evidence references. Native rows do not offer Pi conversation, skip or retry actions. Closing a native detail view is observational and issues no cancellation. Terminal text is sanitized and bounded; fixture tests cover ASCII/Unicode, narrow widths and resize.
 
 This is not the proposed four-view inspector. Full graph/timeline navigation, native evidence loading, incremental viewport rendering and measured layout responsiveness remain open. The bounded observation projection benchmark is separate from terminal layout acceptance.
+
+## Four-view viewport increment
+
+A read-only rich inspector now offers overview, observed-reference graph, source-interval timeline and evidence/details. Tab cycles views; keyboard selection, focus, relation collapse and filter operate over bounded viewport windows. Legacy control navigation is still reachable with an explicit view toggle. Source-qualified native transcript access remains lazy. Missing edges, timestamps and evidence loaders are visible unknowns, never fabricated.
+
+The compiled external inspector client passed at `cmd_c56ed87b3eee`. The measured benchmark at `cmd_9572ac580306` used Linux x64, Node v24.20.0, 64 reported CPUs, a 100,000-update history and 1,000 nodes with no relation edges. Navigation p95 was 0.389 ms and maximum 17.69 ms across 1,000 samples, with at most 40 rendered rows. This establishes the measured fixture only. Relation-rich graphs, grouped swarms, live TUI execution and native evidence content loading remain separately scoped acceptance. Heap growth is transient-inclusive, not retained-memory proof.

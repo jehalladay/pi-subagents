@@ -1,0 +1,122 @@
+import assert from 'node:assert/strict';
+import {spawnSync} from 'node:child_process';
+import {mkdirSync, chmodSync, symlinkSync, mkdtempSync, writeFileSync, readFileSync, statSync, rmSync} from 'node:fs';
+import {tmpdir} from 'node:os';
+import {join} from 'node:path';
+import {createHash} from 'node:crypto';
+import {pathToFileURL} from 'node:url';
+import {createConnection} from 'node:net';
+import {launchDetachedWorkflow, connectDetachedWorkflow,detachedFrame,DetachedFrameDecoder} from '../../dist/workbench/hosts/local-detached.js';
+
+const directory = mkdtempSync(join(tmpdir(), 'wb-det-'));
+const workspace = join(directory, 'source');
+mkdirSync(workspace, {mode:0o700});
+const scriptPath=join(workspace,'workflow.js');
+const providerPath=join(workspace,'provider.mjs');
+writeFileSync(scriptPath,'export const meta={name:"detached",description:"controlled source fixture"};\nreturn await node("local.wait",args);');
+writeFileSync(providerPath,`import helper from './helper.cjs';export function register(registry){registry.register({descriptor:{id:'local.wait',version:'1.0.0',description:'controlled test provider, not native',inputSchema:{type:'object',properties:{ms:{type:'integer',minimum:1,maximum:10000}},required:['ms'],additionalProperties:false},effectClass:'read',permissions:['fixture:wait'],supportedModes:['invoke'],contractSource:'fixture:source'},async invoke(input,ctx){await new Promise((resolve,reject)=>{const t=setTimeout(resolve,input.ms);ctx.signal.addEventListener('abort',()=>{clearTimeout(t);reject(Error('fixture cancelled'));},{once:true});});return {coverage:'fixture',helper:helper.label,uid:process.getuid(),invocationId:ctx.invocationId,principal:ctx.principal.id};}});}`);
+const helperPath=join(workspace,'helper.cjs');writeFileSync(helperPath,'module.exports={label:123};');
+const localProvider={kind:'trusted-local',version:'1.0.0',capabilities:['local.wait'],modulePath:providerPath,digest:'sha256:'+createHash('sha256').update(readFileSync(providerPath)).digest('hex')};
+const request={directory:join(directory,'hosts'),invocationId:'survive-pi-exit',scriptPath,cwd:workspace,input:{ms:1600},trustedScript:true,backend:'deterministic',providers:[],grants:['fixture:wait'],localProvider,sourceFiles:[scriptPath,providerPath]};
+const moduleUrl=pathToFileURL(join(process.cwd(),'dist/workbench/hosts/local-detached.js')).href;
+const parent=spawnSync(process.execPath,['--input-type=module','-e',`import {launchDetachedWorkflow} from ${JSON.stringify(moduleUrl)};const receipt=await launchDetachedWorkflow(${JSON.stringify(request)});console.log(JSON.stringify(receipt));`],{encoding:'utf8',timeout:20000});
+assert.equal(parent.status,0,parent.stderr);
+const receipt=JSON.parse(parent.stdout.trim());
+assert.notEqual(receipt.pid,parent.pid);
+assert.equal(receipt.sessionId,receipt.pid,'actual child established a separate OS session');
+assert.equal(receipt.owner.uid,process.getuid());
+assert.equal(statSync(receipt.socketPath).mode&0o777,0o600);
+assert.equal(statSync(receipt.invocationDirectory).mode&0o777,0o700);
+const pids=new Set([receipt.pid]);
+const client=connectDetachedWorkflow(request.directory,request.invocationId);
+try {
+  let snapshot=await client.inspect();
+  assert.equal(snapshot.receipt.pid,receipt.pid);
+  for(let i=0;i<100 && !snapshot.terminal;i++){await new Promise(r=>setTimeout(r,50));snapshot=await client.inspect();}
+  assert.equal(snapshot.terminal,'completed',JSON.stringify(snapshot));
+  assert.equal(snapshot.result.coverage,'fixture');
+  assert.equal(snapshot.result.helper,123);
+  assert.equal(snapshot.result.principal,receipt.owner.id);
+  assert.equal(snapshot.result.invocationId,request.invocationId);
+  assert.equal(snapshot.nativeRuntimeIdentity,'unsupported');
+  const again=await client.execute();
+  assert.equal(again.started,false,'reattach does not rerun JS');
+  await assert.rejects(launchDetachedWorkflow(request),/exists|conflict/i);
+  await client.shutdown('dispose controlled fixture host');
+  let lost=await client.inspect();
+  for(let i=0;i<100 && lost.terminal!=='unknown';i++){await new Promise(r=>setTimeout(r,20));lost=await client.inspect();}
+  assert.equal(lost.terminal,'unknown');
+  assert.match(lost.reconcileHint,/never.*retry|do not.*retry/i);
+  const long=await launchDetachedWorkflow({...request,invocationId:'cancel-owned',input:{ms:10000}});
+  pids.add(long.pid);
+  const owned=connectDetachedWorkflow(request.directory,'cancel-owned');
+  const cancel=await owned.cancel('controlled fixture cancellation');
+  assert.equal(cancel.accepted,true);
+  assert.equal(cancel.terminalConfirmed,false);
+  for(let i=0;i<100;i++){snapshot=await owned.inspect();if(snapshot.terminal)break;await new Promise(r=>setTimeout(r,20));}
+  assert.equal(snapshot.terminal,'cancelled');
+  await owned.shutdown('dispose owned cancelled host');
+  const observerReceipt=await launchDetachedWorkflow({...request,invocationId:'observer',input:{ms:10000},permissions:['inspect']});
+  pids.add(observerReceipt.pid);
+  const observer=connectDetachedWorkflow(request.directory,'observer');
+  await assert.rejects(observer.cancel('not granted'),/authorization/i);
+  assert.equal((await observer.inspect()).receipt.pid,observerReceipt.pid);
+  process.kill(observerReceipt.pid,'SIGTERM');
+  const crashed=await launchDetachedWorkflow({...request,invocationId:'crash-no-retry',input:{ms:10000}});
+  pids.add(crashed.pid);
+  process.kill(crashed.pid,'SIGKILL');
+  const crashClient=connectDetachedWorkflow(request.directory,'crash-no-retry');
+  let crashSnapshot=await crashClient.inspect();
+  for(let i=0;i<100&&crashSnapshot.terminal!=='unknown';i++){await new Promise(r=>setTimeout(r,20));crashSnapshot=await crashClient.inspect();}
+  assert.equal(crashSnapshot.terminal,'unknown');
+  await assert.rejects(crashClient.execute());
+  await assert.rejects(launchDetachedWorkflow({...request,invocationId:'crash-no-retry'}),/exists|conflict/i);
+  const publicRoot=join(directory,'public-root');mkdirSync(publicRoot,{mode:0o755});
+  await assert.rejects(launchDetachedWorkflow({...request,directory:publicRoot,invocationId:'mode-denied'}),/Authorization/);
+  const linkRoot=join(directory,'link-root');symlinkSync(request.directory,linkRoot);
+  await assert.rejects(launchDetachedWorkflow({...request,directory:linkRoot,invocationId:'link-denied'}),/Authorization/);
+  const driftReceipt=await launchDetachedWorkflow({...request,invocationId:'source-drift',autoStart:false});
+  pids.add(driftReceipt.pid);
+  const drift=connectDetachedWorkflow(request.directory,'source-drift');
+  const source=readFileSync(scriptPath,'utf8');
+  writeFileSync(scriptPath,source+'\n// changed source');
+  await assert.rejects(drift.execute(),/IDENTITY_CONFLICT/);
+  assert.equal((await drift.inspect()).observation,'observed-started');
+  writeFileSync(scriptPath,source);
+  writeFileSync(helperPath,'module.exports={label:124};');
+  await assert.rejects(drift.execute(),/IDENTITY_CONFLICT/);
+  writeFileSync(helperPath,'module.exports={label:123};');
+  const bootPath=join(driftReceipt.invocationDirectory,'invocation.json');
+  const bootBytes=readFileSync(bootPath,'utf8');
+  const changedBoot=JSON.parse(bootBytes);changedBoot.request.input.ms=1;
+  writeFileSync(bootPath,JSON.stringify(changedBoot));
+  await assert.rejects(drift.execute(),/IDENTITY_CONFLICT/);
+  writeFileSync(bootPath,bootBytes);
+  const raw=await new Promise((resolve,reject)=>{const socket=createConnection(driftReceipt.socketPath);const decoder=new DetachedFrameDecoder();socket.on('error',reject);socket.on('connect',()=>socket.write(detachedFrame({command:'inspect',invocationId:'different-id'})));socket.on('data',chunk=>{const values=decoder.push(chunk);if(values.length){socket.destroy();resolve(values[0]);}});});
+  chmodSync(driftReceipt.socketPath,0o660);
+  await assert.rejects(drift.inspect(),/Authorization/);
+  chmodSync(driftReceipt.socketPath,0o600);
+  assert.equal(raw.ok,false); assert.equal(raw.category,'authorization');
+  const pollution=await new Promise((resolve,reject)=>{const socket=createConnection(driftReceipt.socketPath);const decoder=new DetachedFrameDecoder();socket.on('error',reject);socket.on('connect',()=>{const body=Buffer.from('{"command":"inspect","invocationId":"source-drift","principal":"pi-other-session"}');const header=Buffer.alloc(4);header.writeUInt32BE(body.length);socket.write(Buffer.concat([header,body]));});socket.on('data',chunk=>{const values=decoder.push(chunk);if(values.length){socket.destroy();resolve(values[0]);}});});
+  assert.equal(pollution.ok,false);assert.match(pollution.diagnostic,/field/);
+  await drift.shutdown('dispose refused source invocation');
+  const pureSource=join(workspace,'pure.js');
+  writeFileSync(pureSource,'export const meta={name:"pure",description:"no model or providers"};\nreturn {sum:args.a+args.b};');
+  const {localProvider:_provider,...plainRequest}=request;
+  const pureReceipt=await launchDetachedWorkflow({...plainRequest,invocationId:'pure',scriptPath:pureSource,sourceFiles:[pureSource],grants:[],input:{a:2,b:5}});
+  pids.add(pureReceipt.pid);const pure=connectDetachedWorkflow(request.directory,'pure');
+  let pureSnapshot=await pure.inspect();
+  for(let i=0;i<100&&!pureSnapshot.terminal;i++){await new Promise(r=>setTimeout(r,20));pureSnapshot=await pure.inspect();}
+  assert.equal(pureSnapshot.terminal,'completed');assert.deepEqual(pureSnapshot.result,{sum:7});
+  assert.equal(pureReceipt.evidenceClass,'local-computation');
+  await pure.shutdown('dispose pure local computation');
+  await assert.rejects(launchDetachedWorkflow({...plainRequest,invocationId:'claude-denied',backend:'claude',grants:[]}),/claude:invoke/);
+
+  await assert.rejects(launchDetachedWorkflow({...request,invocationId:'../injection'}),/invocation/i);
+  await assert.rejects(launchDetachedWorkflow({...request,invocationId:'untrusted',trustedScript:false}),/trusted/i);
+  await assert.rejects(launchDetachedWorkflow({...request,invocationId:'forge-denied',providers:['forge'],grants:[]}),/grant/i);
+  console.log('L1 detached: actual setsid process survives parent exit, reattach same UID, fixture-only node result, exact DAC modes, no rerun, owned cancel, observer denial, unknown after loss, injection denied. Other-UID denial is OS DAC, not claimed as exercised by this unprivileged test.');
+} finally {
+  for(const pid of pids){try {process.kill(pid,'SIGTERM');} catch {}}
+  rmSync(directory,{recursive:true,force:true});
+}

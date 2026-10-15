@@ -147,6 +147,11 @@ export class ObservationProjection {
   private readonly byTimeStart: {key:string;value:number}[] = [];
   private readonly byTimeEnd: {key:string;value:number}[] = [];
   private readonly invocations = new Map<string, Set<string>>();
+  /** Stable insertion-order viewport per invocation; updates never move a selected key. */
+  private readonly viewportKeys = new Map<string, string[]>();
+  private readonly viewportMembership = new Map<string, string>();
+  private revision = 0;
+  private topologyRevision = 0;
   private readonly bases = new Map<string, Set<string>>();
   private readonly statuses = new Map<string, Set<string>>();
   private readonly kinds = new Map<string, Set<string>>();
@@ -195,6 +200,8 @@ export class ObservationProjection {
     if (!node) return;
     this.updateIndexes(node,false);
     this.nodes.delete(key);
+    this.removeViewport(key);
+    this.revision++;
     this.positions.delete(key);
     this.seenEvents.delete(key);
     for (const edgeId of [...(this.incoming.get(key) ?? []),...(this.outgoing.get(key) ?? [])]) this.removeEdge(edgeId);
@@ -204,6 +211,8 @@ export class ObservationProjection {
     const edge = this.edges.get(id);
     if (!edge) return;
     this.edges.delete(id);
+    this.revision++;
+    this.topologyRevision++;
     this.outgoing.get(edge.from)?.delete(id);
     this.incoming.get(edge.to)?.delete(id);
     const [workspace,principal]=JSON.parse(edge.from) as string[];
@@ -218,9 +227,10 @@ export class ObservationProjection {
       ...node, scope:{...node.scope},nativeRef:{...node.nativeRef},presentation:{...node.presentation},
       evidenceRefs:[...node.evidenceRefs],...(node.interval ? {interval:{...node.interval}} : {}),
     };
-    this.nodes.delete(node.key);
     this.nodes.set(node.key,record);
     this.updateIndexes(record,true);
+    this.setViewport(record);
+    this.revision++;
     this.positions.set(node.key,{sequence,cursor,stale});
   }
 
@@ -310,6 +320,7 @@ export class ObservationProjection {
     safeDate(snapshot.capturedAt);
     this.assertFields({subjectBasis:snapshot.subjectBasis,sourceVersion:snapshot.sourceVersion ?? snapshot.sourceRevision,definitionDigest:snapshot.definitionDigest,trace:snapshot.trace,evidenceRefs:snapshot.evidenceRefs,payloadRef:snapshot.nativePayloadRef,interval:snapshot.interval});
     copyPresentation(snapshot.node,this.limits.maxPayloadBytes);
+    if (snapshot.cursor !== undefined) validText(snapshot.cursor,"source cursor",256);
     const sequence = numericSequence(snapshot.sequence);
     const prior = this.positions.get(key);
     const existing = this.nodes.get(key);
@@ -327,6 +338,19 @@ export class ObservationProjection {
       evidenceRefs:snapshot.evidenceRefs ?? [],interval:snapshot.interval,payloadRef:snapshot.nativePayloadRef,
     },sequence ?? prior?.sequence,snapshot.cursor,false);
     return "applied";
+  }
+
+  /** A failed native read invalidates only its own authenticated subject scope. */
+  markStale(input: {scope: ObservationScope; ref: NativeRef}): void {
+    const key = keyOf(input.scope,input.ref);
+    const node = this.nodes.get(key);
+    if (!node) return;
+    node.freshness = "stale";
+    node.sourceConnectionState = "disconnected";
+    node.completeness = "unknown";
+    const position = this.positions.get(key);
+    if (position) position.stale = true;
+    this.revision++;
   }
 
   disconnect(provider: string): void {
@@ -347,7 +371,7 @@ export class ObservationProjection {
     this.connections.set(provider,"connected");
     for (const key of this.connectionsByProvider.get(provider) ?? []) {
       const node=this.nodes.get(key);
-      if (node) node.sourceConnectionState="connected";
+      if (node) {node.sourceConnectionState="connected";this.revision++;}
     }
   }
 
@@ -365,6 +389,8 @@ export class ObservationProjection {
     if (this.edges.has(id)) return;
     if (this.edges.size >= this.limits.maxEdges) this.removeEdge(this.edges.keys().next().value as string);
     this.edges.set(id,{from,to,kind:input.kind,provenance:{...input.provenance}});
+    this.revision++;
+    this.topologyRevision++;
     indexed(this.outgoing,from,id,true);indexed(this.incoming,to,id,true);indexed(this.edgesByScope,scopeOf(input.scope),id,true);
   }
 
@@ -385,6 +411,67 @@ export class ObservationProjection {
       if (rows.length >= limit) break;
     }
     return rows;
+  }
+
+  private viewportGroup(scope: ObservationScope, invocationId: string): string {
+    return JSON.stringify([scopeOf(scope), invocationId]);
+  }
+
+  private removeViewport(key: string): void {
+    const group = this.viewportMembership.get(key);
+    if (group === undefined) return;
+    const keys = this.viewportKeys.get(group);
+    if (keys) {
+      const at = keys.indexOf(key);
+      if (at >= 0) keys.splice(at, 1);
+      if (keys.length === 0) this.viewportKeys.delete(group);
+    }
+    this.viewportMembership.delete(key);
+  }
+
+  private setViewport(node: ObservedNode): void {
+    const current = this.viewportMembership.get(node.key);
+    const next = node.invocationId === undefined ? undefined : this.viewportGroup(node.scope, node.invocationId);
+    if (current === next) return;
+    this.removeViewport(node.key);
+    if (next === undefined) return;
+    const keys = this.viewportKeys.get(next) ?? [];
+    keys.push(node.key);
+    this.viewportKeys.set(next, keys);
+    this.viewportMembership.set(node.key, next);
+  }
+
+  /** UI-only window: bounded copied rows, stable keys and a revision for change detection.
+   * Unlike model-facing query limits, this selector has an independent 100-row cap.
+   * Neither a redraw nor a keypress traverses the retained event history.
+   */
+  window(filter: {scope: ObservationScope; invocationId: string; offset: number; limit: number}): {
+    nodes: ObservedNode[]; total: number; revision: number
+  } {
+    if (!Number.isSafeInteger(filter.offset) || filter.offset < 0 ||
+      !Number.isSafeInteger(filter.limit) || filter.limit < 1 || filter.limit > 100) {
+      throw new Error("Invalid observation viewport offset or limit (1..100).");
+    }
+    const keys = this.viewportKeys.get(this.viewportGroup(filter.scope, filter.invocationId)) ?? [];
+    const nodes: ObservedNode[] = [];
+    for (const key of keys.slice(filter.offset, filter.offset + filter.limit)) {
+      const node = this.nodes.get(key);
+      if (node) nodes.push({...node, nativeRef:{...node.nativeRef},scope:{...node.scope},
+        presentation:{...node.presentation},evidenceRefs:[...node.evidenceRefs],
+        ...(node.interval ? {interval:{...node.interval}} : {})});
+    }
+    return {nodes,total:keys.length,revision:this.revision};
+  }
+
+  /** A revision only of the proven relation topology, not repeated status updates. */
+  relationRevision(): number { return this.topologyRevision; }
+
+  /** Locate a selected key without scanning event history; cross-scope keys never resolve. */
+  indexOf(filter: {scope: ObservationScope; invocationId: string; key: string}): number | undefined {
+    const group = this.viewportGroup(filter.scope, filter.invocationId);
+    if (this.viewportMembership.get(filter.key) !== group) return undefined;
+    const index = this.viewportKeys.get(group)?.indexOf(filter.key) ?? -1;
+    return index < 0 ? undefined : index;
   }
 
   query(filter: ObservationQuery): {nodes: ObservedNode[]; examined: number; truncated: boolean} {

@@ -199,14 +199,13 @@ describe("extractMeta — isolation", () => {
     )).toThrow(/PURE LITERAL/);
   });
 
-  it("bounds evaluation so a non-terminating literal cannot hang the host", () => {
-    // An IIFE resolves without any global, so the empty context does not stop
-    // it. This runs on pi's own thread, before the worker exists — unbounded, it
-    // would wedge the whole process.
+  it("refuses computation before it can hang the host", () => {
+    // Even a self-contained IIFE is computation, not metadata. AST decoding
+    // rejects it before any code runs on the host thread.
     const started = Date.now();
     expect(() => extractMeta(
       "export const meta = { name: (() => { while (true); })(), description: 'b' }\nreturn 1",
-    )).toThrow(/did not finish evaluating/);
+    )).toThrow(/PURE LITERAL/);
     expect(Date.now() - started).toBeLessThan(2000);
   });
 

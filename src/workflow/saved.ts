@@ -2,7 +2,7 @@
  * saved.ts — resolve `SubagentWorkflow({ name })` to a script on disk.
  *
  * A saved workflow is a plain `.js` file whose contents are exactly what
- * `script` would have carried. Nothing is parsed here: `extractMeta` still runs
+ * `script` would have carried. Full shape validation occurs at the call site: `extractMeta` still runs
  * over the source at the call site, so a saved file and an inline one fail the
  * same way on a bad `meta` block.
  *
@@ -18,7 +18,7 @@
  * agent loader, because a name resolves to one file — there is no map to
  * overwrite.
  *
- * Symlinks are rejected through `safeReadFile`, and the name is whitelisted
+ * Symlinks are rejected through `safeReadFile`, and the name is allowlisted
  * before it is ever joined to a path: `name` arrives from a model, and
  * `../../etc/passwd` must not become a readable workflow.
  *
@@ -29,9 +29,8 @@
  * a config, or a scratch script. A file is only treated as a workflow if it
  * carries the `export const meta =` declaration every workflow opens with.
  *
- * Nothing is ever executed to decide this — the check is a regex over the
- * source, and even the real parse only evaluates the `meta` object literal in
- * an empty vm. What the filter buys is honesty: a listing that offers `utils.js`
+ * Nothing is ever executed to decide this — the listing checks the real exported JavaScript AST declaration, and the
+ * metadata parser decodes only pure literals without evaluating source. What the filter buys is honesty: a listing that offers `utils.js`
  * as a runnable workflow invites the model to try it, and naming it should say
  * "that is not a workflow" rather than produce a parser error about a block the
  * author never intended to write.

@@ -148,3 +148,35 @@ The corrected native envelope and diagnostic suite passed at `cmd_386a32a0323b`.
 The complete no-replay Forge gate passed at `cmd_a227a5a2114e` with all six declared steps answered: lint, typing, portable tests, compilation, compiled workflow smoke and package-content smoke. The dirty overlay did not move during the run; it was not an isolated clean-tree release measurement. Forge separately reported its implicit workspace-root lock rewrite.
 
 The final integrated native-read tier passed at `cmd_c584f4f2966a`. Real registered Pi/Claude SDK parallel-schema acceptance passed at `cmd_a76cf7a24d65`. Clean external npm installation including the packaged identity lock passed at `cmd_a3b6cb72595d`. External completed Furnace inspection passed at `cmd_c762b93756fb` and initialized RF noncommitted preview at `cmd_05eea8407a4a`. These establish the experimental embedded cut only. Full TUI operator, native executable identity, live reconnect, four-view scale, designer, MechanicalWorkflows live binding and detached release claims remain open.
+
+The pushed embedded checkpoint `43ad58b` also passed a clean-source no-replay Forge gate at `cmd_f8b07a961042`. The measured source tree was `e126c49ba24c605a4c644a62eb24960170bdf6fc` with stable clean observed boundaries. This gate does not waive open program acceptance. Further inspector/designer/external-live-observer work changes the candidate and requires new gates.
+
+## Source designer increment
+
+Registered Pi source validation was red at `cmd_491d5d54787f` before its tool existed and passed at `cmd_7fcdf7518d74` after integration. The compiled external client passed at `cmd_fdf5d9317a3b`, proving source digests, AST possible-call projection and no source execution/edit. Canonical input receipts are separately pinned, including absent-versus-null distinction. The actual compare tool refuses to manufacture metrics or environment/cache identity. Full live improvement experiments remain open.
+
+## Rich inspector increment under development
+
+The inspector adds read-only overview, observed-reference graph, interval timeline and evidence/detail views over a scoped viewport projection. Native edges and intervals are displayed only when present; unlinked nodes and absent source timing remain unknown. Legacy control navigation remains reachable and view closure does not borrow native lifecycle authority. Snapshot-cursor byte limits were independently re-probed and corrected before this increment. Full native evidence content loaders remain limited to verified session/read APIs.
+
+An independently launched real-Beads active Furnace Run was observed in a disposable fixture. Closing the local observer left its native controller live and its Attempt running. The reader offers bounded polling because native lifecycle cursor events are unavailable in this installed SDK. This strengthens external observation without granting Run ownership; the complete live Pi attachment receipt and final candidate gate remain required for the increment.
+
+## External active Furnace and Pi reader receipts
+
+The bounded `furnace-observe` tier passed at `cmd_9e36a2e8b1fb`, including the actual registered Pi tool and unchanged native Run-record bytes. The separate `furnace-active-observe` tier passed at `cmd_7b1487d9a348` while an independently launched disposable real-Beads Run remained active with a live controller after local observer closure. This proves read-only live attachment, not a native lifecycle cursor stream. Native status/attempt/log snapshots remain sequential and non-atomic.
+
+## Source/runtime metadata alignment
+
+An independent audit found the old runtime scanner could treat metadata text inside comments as the exported declaration while designer validation selected the actual AST. The runtime now uses the same pure AST literal decoder. New regressions were red at `cmd_5ccee3f800cb` and green at `cmd_241ddb08d9ee`; the actual harmless-decoy workflow returns its expected value without executing the commented expression. Existing script/golden metadata compatibility tests remain the governing checks. Metadata expressions now refuse before evaluation instead of relying on an empty-VM timeout.
+
+## Additional compiled-client evidence
+
+Read-only source designer client passed at `cmd_01ea531ff355`; compiled four-view inspector client passed at `cmd_c56ed87b3eee`. Inspector benchmark passed at `cmd_9572ac580306`: 100k synthetic updates/1000 native-qualified fixture nodes, no relation edges, 1000 navigation samples, p95 0.389 ms, maximum 17.69 ms and at most 40 rendered rows on Linux x64 Node24.20.0. This is not live native topology or grouped10k acceptance.
+
+Optional same-machine detached shell passed at `cmd_c56e8a3abe1f`. Actual registered Pi pure-computation launch, Pi shutdown and reattachment passed at `cmd_bc6534564612`, returning the expected result while marking native executable identity unsupported. The profile is private Unix DAC only, not remote auth or host-crash durability.
+
+## Second audited embedded/local-host checkpoint
+
+The complete no-replay gate passed at `cmd_8b82057e039a` with all six declared steps answered and an unmoved dirty overlay. Portable suite: 142 files passed, 2436 tests passed and 7 skipped. Native-read passed at `cmd_09fd284346c2`; real registered Pi Claude SDK passed at `cmd_1463b8944ac8`; registered external Furnace tier passed at `cmd_5b01b7861f35`; detached lifecycle shell passed at `cmd_b21303c30b15`. Local-provider results in that shell are explicitly fixture-only and cannot establish native model or remote-host success.
+
+Independent audit corrections in this increment cover metadata/runtime AST agreement, scoped stale projection after failed native reads, and transitive trusted-local-provider source pins. The whole W01–W22 program is not release-complete: MechanicalWorkflows live binding, native lifecycle cursor surface, full native evidence loaders, actual Pi live terminal acceptance, cross-host authentication, Furnace-hosted execution and grouped10k profiling remain open or blocked.

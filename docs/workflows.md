@@ -376,7 +376,7 @@ See [`compose.js`](../examples/workflows/compose.js).
 The script called `Date.now()`, `new Date()` or `Math.random()`. A script that varies run to run cannot be replayed from its journal, so these throw. Use the loop index for ids, pass timestamps in through `args`, or stamp them after the workflow returns. This most often bites pasted-in helper code, and it throws at the line that calls it — *after* you have already paid for the preceding agents.
 
 **`The meta object must be a PURE LITERAL — no variables, function calls, spreads, or template interpolation.`**
-`meta` is evaluated before the script runs, in an empty context, so it cannot reference anything. Move the dynamic part into the body.
+`meta` is decoded from its real exported AST declaration before the script runs. Only pure literal syntax is accepted, without executing expressions or comment/string decoys. Move the dynamic part into the body.
 
 **`agent() opts.<key> is not a recognised option.`**
 A typo, or an option from a different tool. The supported set is `label`, `phase`, `model`, `agentType`, `isolation`, `gate`, `resume`, `effort`, `schema`.
@@ -458,3 +458,5 @@ Copy one into `.pi/workflows/` to make it yours.
 Native tiers are not part of the portable offline gate and refuse missing fixture configuration. A portable PASS does not establish a native release journey.
 
 The experimental `workbench_catalog` tool returns only contracts allowed by exact `discover:<capabilityId>` grants. A producer invocation grant does not expose catalog metadata and discovery does not permit execution. The experimental `workflow_observe` tool requires `workbench:observe` and returns bounded metadata for a task in the current local operator, Pi session and workspace. It does not accept a caller-supplied principal or read arbitrary raw transcripts. Its local identity is not remote authentication.
+
+Read-only designer tools require `workbench:design`. `workflow_catalog` lists bounded saved definitions and digests. `workflow_validate` checks exact source syntax/literal metadata and possible calls without executing or editing it. `workflow_compare` additionally requires `workbench:observe`; missing native metrics or environment/cache cohort identity yields unknown rather than a claimed improvement. Native external `furnace_observe` requires `furnace:inspect` and reads a bounded Run/Attempt/log-reference snapshot in the current workspace without controlling the Run.

@@ -57,3 +57,8 @@ Tool invocation provenance records who requested operation and what authority wa
 - Pi attaches to externally created Furnace Run, explains last-known state and observation freshness.
 - Pi generates a source diff improving redundant task, validates it, executes reproducible comparison and cites native results.
 - An observer-only Pi instance cannot stop the Run, even with a guessed action name.
+## Experimental read-only source tools
+
+Explicit `workbench:design` enables registered `workflow_catalog` and `workflow_validate` tools. Catalog replies are bounded definition/source references without eagerly returning every source body. Validation reads exact authorized source bytes, checks their digest, uses an AST to establish literal metadata before the existing parser, and compiles syntax without execution. Possible calls are declared-source observations only; dynamic branches, aliases and unavailable bindings remain uncertain. No source is edited or promoted.
+
+The experimental `workflow_compare` also requires `workbench:observe`. It compares only captured same-operator/workspace receipts. Input/model/tools/environment/cache and source cohorts must be established independently before reporting precise metric deltas. Missing native measured metrics yields unknown, not a claimed optimization. The function supports descriptive cohort dispersion but does not infer causation or critical path. A full evidence-linked native improvement experiment remains a separate acceptance journey.

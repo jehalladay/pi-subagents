@@ -61,3 +61,9 @@ Kill after Furnace side effect before returned Run ID; kill after workspace edit
 These receipts are not durable JavaScript checkpoints, signed remote authorization or proof of native resource ownership. Installed artifacts carry a validated dependency lock under `vendor/` because npm excludes the root lockfile from packed distributions. Host entrypoint integration and native source-basis authority must be verified separately.
 
 The identity audit also pins explicitly resolved loaded SDK JavaScript files, rather than assuming a lockfile/archive proves the installed bytes. Native executable identity remains a producer-specific observation. A model alias, mutable PATH or SDK default executable must not be advertised as an immutable native deployment merely because the JavaScript client is pinned. Git candidate surveys cover their bounded Git-visible source universe and label non-Git or unmeasurable workspaces unknown; they do not freeze filesystem state or include arbitrary ignored data.
+
+## Optional local detached profile
+
+The optional local detached profile launches a separate Node session with a private per-invocation directory and Unix socket. It uses stable local OS-user authority rather than the Pi viewer session. Closing or exiting Pi disconnects the client, not the execution host. Inspection after host loss reports unknown with producer reconciliation guidance; it does not replay a saved terminal verdict or rerun JavaScript. The profile is same-machine OS discretionary-access control only, not remote authentication or hostile-same-user protection.
+
+Reviewed local provider manifests have explicit version, digest and capability allowlists and cannot masquerade as native SDK or model evidence. Native factories remain producer-specific. Furnace-hosted durability and native executable identity are separate, unestablished release obligations. The local host is not a second durable Work scheduler.
