@@ -18,6 +18,12 @@
 //     ("<=20 ms per navigation/layout calculation"). A selector here is layoutInspector for one view.
 //   - redraw <= 4 Hz, measured on FIXTURE time (observedAt), so it is deterministic and never wall-clock.
 //   - no redraw may touch >= 100,000 events/rows or request an event page of that size (a full fold).
+//   - the redraw cap is a property of the fixture's 1 s tick spacing, not of the product: on that spacing it
+//     never binds (nothing is skipped), so the receipt carries REDRAW_CAP_LABEL and a bound-versus-unbound
+//     verdict (`cadence.capBound`, from skipped ticks) and the product's live redraw scheduler stays unmeasured.
+//   - every timed distribution with samples must be strictly positive in p50, p95 and max; a series with no
+//     samples is `unmeasured` (null quantiles), never zero, and a non-positive timing is an instrument fault
+//     (exit 2), never a result.
 //   - the reducer (ObservationProjection.ingest) has NO documented target: its p50/p95/max are recorded
 //     and never judged. docs/workbench/14: "No invented pass numbers."
 // The projection uses BENCH_ONLY_LIMITS from the fixture module only; production caps are never touched.
@@ -35,6 +41,7 @@ export const VIEW_NAMES = Object.freeze(['overview', 'graph', 'timeline', 'detai
 export const SELECTOR_TARGET_MS = NAVIGATION_TARGET_MS;
 export const REDRAW_MAX_HZ = 4;
 export const FOLD_THRESHOLD_EVENTS = 100_000;
+export const REDRAW_CAP_LABEL = "redraw cap never binds on 1s fixture ticks; the product's live redraw scheduler is not measured";
 /** Disjoint churn bands covering 1..100 changes per tick, split at the geometric means of 1, 10 and 100. */
 export const BANDS = Object.freeze([
   Object.freeze({label: '1', min: 1, max: 3}),
@@ -53,8 +60,8 @@ const round = value => Math.round(value * 10_000) / 10_000;
 const clock = () => performance.now();
 
 /** p50/p95/max in ms (0.1 us rounding) with the sample count; an empty series has nulls, never zeros. */
-function distribution(values) {
-  if (values.length === 0) return {samples: 0, p50: null, p95: null, max: null};
+export function distribution(values) {
+  if (values.length === 0) return {samples: 0, p50: null, p95: null, max: null, unmeasured: true};
   const sorted = Float64Array.from(values).sort();
   const at = quantile => sorted[Math.min(sorted.length - 1, Math.floor(sorted.length * quantile))];
   return {samples: sorted.length, p50: round(at(0.5)), p95: round(at(0.95)), max: round(sorted[sorted.length - 1])};
@@ -205,6 +212,7 @@ export function runReducerSelectorBench({Projection, inspector, fixture, host}) 
   const last = distribution(reducerSamples.slice(reducerSamples.length - third).map(sample => sample.ms));
   const stats = projection.stats();
   const fixtureSpanMs = ticks.length > 1 ? ticks[ticks.length - 1].atMs - ticks[0].atMs : 0;
+  const tickGaps = ticks.slice(1).map((tick, at) => tick.atMs - ticks[at].atMs);
   const aggregates = typeof projection.aggregateStats === 'function' ? projection.aggregateStats() : null;
   const receipt = {
     contract: REDUCER_SELECTOR_CONTRACT,
@@ -262,6 +270,10 @@ export function runReducerSelectorBench({Projection, inspector, fixture, host}) 
       fixtureSpanMs,
       effectiveHz: fixtureSpanMs > 0 ? round(redrawAtMs.length / (fixtureSpanMs / 1_000)) : 0,
       maxRedrawsInOneSecond: maxInOneSecond(redrawAtMs),
+      minTickIntervalMs: tickGaps.length > 0 ? tickGaps.reduce((least, gap) => Math.min(least, gap), Number.POSITIVE_INFINITY) : null,
+      capBound: skipped > 0,
+      capBinding: skipped > 0 ? 'bound' : 'unbound',
+      capLabel: REDRAW_CAP_LABEL,
     },
     outliers: {
       rule: `the ${OUTLIERS_KEPT} slowest samples of each series, with tick and churn`,
@@ -298,21 +310,34 @@ export function assessReducerSelectorReceipt(receipt) {
   );
   need(receipt.cadence.redraws > 0, 'no-redraws', 'no redraw was sampled');
   const unsampled = [];
+  const nonPositive = [];
   const over = [];
+  const timed = (name, value) => {
+    if (!value || value.samples === 0) return;
+    if (!(value.p50 > 0 && value.p95 > 0 && value.max > 0)) nonPositive.push(`${name} (p50 ${value.p50}, p95 ${value.p95}, max ${value.max})`);
+  };
+  if (!receipt.reducer.all || receipt.reducer.all.samples === 0) unsampled.push('reducer:all');
+  timed('reducer:all', receipt.reducer.all);
+  timed('reducer:firstTenth', receipt.reducer.firstTenth);
+  timed('reducer:lastTenth', receipt.reducer.lastTenth);
   for (const {scope, band} of seriesNames(receipt)) {
     if (band.reducer.samples === 0) unsampled.push(`reducer:${scope}`);
+    timed(`reducer:${scope}`, band.reducer);
     for (const view of VIEW_NAMES) {
       const value = band.selectors[view];
+      timed(`selector:${scope}:${view}`, value);
       if (!value || value.samples === 0 || value.p95 === null) unsampled.push(`selector:${scope}:${view}`);
       else if (value.p95 > receipt.bounds.selectorTargetMs && scope.startsWith('band-')) over.push(`selector:${scope}:${view}`);
     }
   }
   for (const view of VIEW_NAMES) {
     const value = receipt.selectors[view];
+    timed(`selector:all:${view}`, value);
     if (!value || value.samples === 0 || value.p95 === null) unsampled.push(`selector:all:${view}`);
     else if (value.p95 > receipt.bounds.selectorTargetMs) over.push(`selector:all:${view}`);
   }
   need(unsampled.length === 0, 'series-not-sampled', `no samples for ${unsampled.join(', ')}`);
+  need(nonPositive.length === 0, 'timing-not-positive', `non-positive timing in ${nonPositive.join(', ')}`);
   if (receipt.folds.fullFoldRedraws > 0) over.push('full-fold-per-redraw');
   if (receipt.cadence.maxRedrawsInOneSecond > receipt.bounds.redrawMaxHz) over.push('redraw-cadence-over-4hz');
   const realised = violations.length === 0;
