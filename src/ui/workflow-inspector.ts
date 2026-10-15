@@ -341,11 +341,13 @@ function noteText(note: TimelineNote): string {
 function timelineModelLines(timeline: TimelineModel, view: TimelineView, inner: number, ascii: boolean, room: number): string[] {
   const clean=(text: unknown):string=>safe(String(text).replace(INVISIBLE,''),ascii);
   const ellipsis=ascii?'...':'…';
+  /** The plain ASCII tier must stay ASCII (WB-028): separators are tier-aware instead of leaning on the '?' substitution. */
+  const sep=ascii?'-':'·';
   const span=timeline.origin.basis==='none' || timeline.span.ms===null ? 'span unknown' : `span ${clean(timeline.span.ms)}ms ${timeline.span.complete?'complete':'partial'}`;
   const zoom=Math.min(view.zoom,MAX_ZOOM);
   const head=[
-    `Lanes · ${span} · origin ${clean(timeline.origin.basis)} · ${clean(timeline.contract)}`,
-    `measured concurrency max ${clean(timeline.concurrency.maxMeasured)} (${clean(timeline.concurrency.basis)}) · zoom ${clean(zoom)}x · pan ${clean(view.pan)}`,
+    `Lanes ${sep} ${span} ${sep} origin ${clean(timeline.origin.basis)} ${sep} ${clean(timeline.contract)}`,
+    `measured concurrency max ${clean(timeline.concurrency.maxMeasured)} (${clean(timeline.concurrency.basis)}) ${sep} zoom ${clean(zoom)}x ${sep} pan ${clean(view.pan)}`,
   ].map(text=>clean(text));
   if(room<=head.length) return head.slice(0,Math.max(0,room));
   const laneCount=timeline.lanes.length;
@@ -381,7 +383,7 @@ function timelineModelLines(timeline: TimelineModel, view: TimelineView, inner: 
     const rows=lane.rows.filter(row=>(view.focused===null || row.key===view.focused) &&
       (filter==='' || `${row.title} ${row.nativeRef.provider}/${row.nativeRef.type}/${row.nativeRef.id}`.toLowerCase().includes(filter)));
     if(narrowed && rows.length===0) continue;
-    body.push({text:`${mark.lane} ${clean(lane.label)} · ${clean(lane.basis)} · ${lane.confirmed?'confirmed':'unconfirmed'} · ${plural(lane.rows.length,'row')}`,row:false,selected:false});
+    body.push({text:`${mark.lane} ${clean(lane.label)} ${sep} ${clean(lane.basis)} ${sep} ${lane.confirmed?'confirmed':'unconfirmed'} ${sep} ${plural(lane.rows.length,'row')}`,row:false,selected:false});
     for(const row of rows) body.push({text:rowLine(row),row:true,selected:row.key===view.selectedKey});
   }
   if(body.length===0) body.push({text:narrowed?'No timeline rows match the filter or focus (viewport)':'The timeline model holds no lanes',row:false,selected:false});

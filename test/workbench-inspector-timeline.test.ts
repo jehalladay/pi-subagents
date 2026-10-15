@@ -230,7 +230,7 @@ describe("T2 no timing from text", () => {
     expect(text).toMatch(/multiple observed parents/i);
     expect(text).toMatch(/outside the bar viewport/i);
     expect(text).toMatch(/phases unavailable/i);
-    const hostile = handModel({ notes: [{ code: "\x1b[31mevil‮" as never }] });
+    const hostile = handModel({ notes: [{ code: "\x1b[31mevil\u202e" as never }] });
     const hostileText = render(modelOf(projectionOf(SEEDS), hostile), timelineState()).join("\n");
     expect(hostileText).not.toContain("evil");
     expect(hostileText).not.toContain("\x1b");
@@ -326,7 +326,7 @@ describe("T5 byte-identical fallback", () => {
 
 describe("T6 geometry and sanitization", () => {
   // docs/workbench/02 WB-028: "Terminal inspector has plain ASCII tier, theme-aware color tier, and usable 80-column/24-row fallback."
-  const hostile = "\x1b[2J\x1b]0;pwn\x07 a‮b​c⁦d bearer sk-ant-api03-SECRETSECRETSECRET 漢字";
+  const hostile = "\x1b[2J\x1b]0;pwn\x07 a\u202eb\u200bc\u2066d bearer sk-ant-api03-SECRETSECRETSECRET 漢字";
   function hostileModel(): InspectorModel {
     const [a, b, c] = SEEDS;
     const timeline = handModel({
@@ -354,7 +354,7 @@ describe("T6 geometry and sanitization", () => {
     expect(lines.every((line) => visibleWidth(line) <= width)).toBe(true);
     const text = lines.join("\n");
     expect(text).toContain("Tab views");
-    expect(text).not.toMatch(/[\u0000-\u0008\u000b-\u001f\u007f-\u009f​-‏‪-‮⁦-⁩]/u);
+    expect(text).not.toMatch(/[\u0000-\u0008\u000b-\u001f\u007f-\u009f\u200b-\u200f\u202a-\u202e\u2066-\u2069]/u);
     expect(text).not.toContain("SECRETSECRET");
     expect(text).not.toContain("pwn");
   });
@@ -451,5 +451,137 @@ describe("zoom clamp (owner-approved constraint)", () => {
     expect(source).not.toMatch(/Math\.min\(16/);
     const timelineSource = readFileSync(new URL("../src/workbench/timeline.ts", import.meta.url), "utf8");
     expect(timelineSource).toMatch(/export const MAX_ZOOM = 8;/);
+  });
+});
+
+// wb-6ze.26 respin (gate verdict 2026-10-15T18:28Z, owner rulings 18:32Z). Every invisible below is built with String.fromCodePoint
+// or a source escape; the file holds no raw default-ignorable, bidi or control character.
+const cp = (...codes: number[]): string => String.fromCodePoint(...codes);
+const SECRET = "SECRETTOKENVALUE0123456789";
+const asciiOnly = (line: string): boolean => /^[\x20-\x7e]*$/.test(line);
+
+/** A hand-built one-lane, one-row model whose three producer strings (row title, lane label, timing.reason) carry `payload`. */
+function payloadModels(payload: string): Record<"title" | "label" | "reason", InspectorModel> {
+  const [a, b] = SEEDS;
+  const projection = projectionOf(SEEDS);
+  const model = (timeline: TimelineModel): InspectorModel => modelOf(projection, timeline);
+  return {
+    title: model(handModel({ lanes: [lane("t", "lane", "provider", true, [closedRow({ ...a, title: payload }, 0, 4, 4000)])] })),
+    label: model(handModel({ lanes: [lane("l", payload, "provider", true, [closedRow(a, 0, 4, 4000)])] })),
+    reason: model(handModel({ lanes: [lane("r", "lane", "provider", true, [row(b, { timing: { kind: "unavailable", reason: payload as never } })])] })),
+  };
+}
+
+describe("U3 the ascii tier carries no non-ASCII byte on any model-backed line", () => {
+  // docs/workbench/10 § ASCII glyph set and docs/workbench/02 WB-028: the plain ASCII tier is ASCII. Every base view maps non-ASCII
+  // to '?'; the lane header must not be the one line that carries a raw U+00B7.
+  const sizes: ReadonlyArray<readonly [number, number]> = [
+    [80, 24],
+    [120, 40],
+    [32, 9],
+    [60, 14],
+  ];
+  it("the real buildTimelineLanes path at every size renders only printable ASCII in the ascii tier", () => {
+    const projection = projectionOf(SEEDS);
+    for (const [width, rows] of sizes) {
+      const lines = render(modelOf(projection, realTimeline(projection)), timelineState(), width, rows, true);
+      const offenders = lines.filter((line) => !asciiOnly(line));
+      expect(offenders, `${width}x${rows}`).toEqual([]);
+      if (rows >= 14) expect(lines.some((line) => line.includes("confirmed"))).toBe(true);
+    }
+  });
+  it("hand-built unicode labels, notes and truncation render ascii-only too, and the unicode tier still uses the middle dot", () => {
+    const [a, b] = SEEDS;
+    const timeline = handModel({
+      lanes: [lane("u", "漢字 lane · dot", "ownership", false, [closedRow({ ...a, title: "café → arrow" }, 1, 5, 5000), row(b)])],
+      notes: [{ code: "clocks-may-differ" }, { code: "intervals-missing", count: 3 }],
+      truncated: { lanes: true, rows: true, relations: true, window: true },
+    });
+    for (const [width, rows] of sizes) {
+      const lines = render(modelOf(projectionOf(SEEDS), timeline), timelineState({ zoom: 4 }), width, rows, true);
+      expect(lines.filter((line) => !asciiOnly(line)), `${width}x${rows}`).toEqual([]);
+    }
+    const unicode = render(modelOf(projectionOf(SEEDS), timeline), timelineState(), 120, 40, false).join("\n");
+    expect(unicode).toContain("·");
+  });
+  it("a seeded sample of states over the real model never emits a non-ASCII byte in the ascii tier", () => {
+    const projection = projectionOf(SEEDS);
+    let seed = 0x6e26;
+    const next = (limit: number): number => {
+      seed = (seed * 1103515245 + 12345) & 0x7fffffff;
+      return seed % limit;
+    };
+    for (let i = 0; i < 300; i++) {
+      const timeline = realTimeline(projection, [1, 2, 4, 8][next(4)], next(5), 8 + next(60));
+      const lines = render(modelOf(projection, timeline), timelineState({ zoom: [1, 2, 4, 8, 16][next(5)], pan: next(6), filter: ["", "alpha", "forge"][next(3)] }), 12 + next(110), 5 + next(36), true);
+      expect(lines.filter((line) => !asciiOnly(line))).toEqual([]);
+    }
+  });
+});
+
+describe("U4 whitespace-control separators are redacted through title, lane label and timing.reason", () => {
+  // The P1-P7 glue class: a TAB/LF/VT/FF/CR as the ONLY separator between a credential keyword and its value must still be redacted
+  // (redaction sees the control before it is collapsed to a space). Deleting controls before redaction would glue
+  // "Bearer" to the token and leak it (gate mutant M21).
+  const controls: ReadonlyArray<readonly [string, string]> = [
+    ["TAB", "\t"],
+    ["LF", "\n"],
+    ["VT", "\u000b"],
+    ["FF", "\u000c"],
+    ["CR", "\r"],
+  ];
+  const keywords = ["Bearer", "Basic", "bearer"];
+  const surfaces = ["title", "label", "reason"] as const;
+  for (const surface of surfaces) {
+    it.each(controls.flatMap(([name, control]) => keywords.map((keyword) => [name, control, keyword] as const)))(
+      `${surface}: %s as the only separator after %s keeps the credential out of the frame`,
+      (_name, control, keyword) => {
+        const model = payloadModels(`${keyword}${control}${SECRET}`)[surface];
+        for (const ascii of [true, false]) {
+          const text = render(model, timelineState(), 120, 40, ascii).join("\n");
+          expect(text).not.toContain(SECRET);
+        }
+      },
+    );
+  }
+});
+
+describe("U4 the shipped clean() composition is pinned as shipped (wb-952 SITE 24 owns the redesign)", () => {
+  // Owner ruling 18:32Z Q1 = (a): composition untouched. These rows pin what the composition does TODAY so a change to the deletion
+  // or its order is visible: default-ignorables are deleted before the shared sanitizer, so an in-token split is rejoined and caught
+  // (gate mutants M1 order swap, M2 ignorables spaced). The glue residual is recorded as a known-residual row; wb-952 flips it.
+  const zwsp = cp(0x200b);
+  const inToken = [`Bea${zwsp}rer ${SECRET}`, `sk-${zwsp}ant-api03-${SECRET}`, `Bea${cp(0xfeff)}rer ${SECRET}`, `Bea${cp(0x202e)}rer ${SECRET}`];
+  for (const surface of ["title", "label", "reason"] as const) {
+    it.each(inToken.map((payload, i) => [i, payload] as const))(`${surface}: in-token split ${"%i"} is rejoined by the deletion and redacted`, (_i, payload) => {
+      const text = render(payloadModels(payload)[surface], timelineState(), 120, 40, true).join("\n");
+      expect(text).not.toContain(SECRET);
+    });
+  }
+  it("KNOWN RESIDUAL (wb-952 site 24): a default-ignorable between a prefix letter and a sk-ant- key glues and the key survives in the lane label; flips when the helper lands", () => {
+    const payload = `x${zwsp}sk-ant-api03-${SECRET}`;
+    const text = render(payloadModels(payload).label, timelineState(), 120, 40, true).join("\n");
+    expect(text).toContain(SECRET);
+  });
+});
+
+describe("U4 hostile timing.reason and unknown span", () => {
+  it("renders an unavailable-timing reason through the sanitizer: no escape, bidi, zero-width or secret survives", () => {
+    const reason = `\u001b[31mred${cp(0x202e)}${cp(0x200b)} Bearer\t${SECRET} \u001b]0;pwn\u0007`;
+    for (const ascii of [true, false]) {
+      const text = render(payloadModels(reason).reason, timelineState(), 120, 40, ascii).join("\n");
+      expect(text).not.toContain("\u001b");
+      expect(text).not.toContain(SECRET);
+      expect(text).not.toContain("pwn");
+      expect(text).not.toMatch(/[\u0000-\u0008\u000b-\u001f\u007f-\u009f\u200b-\u200f\u202a-\u202e\u2066-\u2069\ufeff]/u);
+      expect(text).toContain("red");
+    }
+  });
+  it("says 'span unknown' whenever span.ms is null, even when the origin basis is not none, and never prints 'null'", () => {
+    const unknown = handModel({ origin: { startedAt: at(0), basis: "earliest-observed-start" }, span: { ms: null, complete: false } });
+    const text = render(modelOf(projectionOf(SEEDS), unknown), timelineState(), 120, 40, true).join("\n");
+    expect(text).toMatch(/span unknown/);
+    expect(text).not.toMatch(/null/);
+    expect(text).toMatch(/origin earliest-observed-start/);
   });
 });
