@@ -10,13 +10,26 @@ import {
   CLAUDE_TRANSCRIPT_ROW_CHARS,
   readClaudeTranscript,
 } from '../src/workbench/claude-transcript.js';
-import { sanitizeWorkbenchText, stripUnsafeText } from '../src/workbench/redaction.js';
+import { redactWorkbenchText, sanitizeWorkbenchText } from '../src/workbench/redaction.js';
 
 type ReaderOptions = { dir?: string; limit?: number };
 
 function session(type: SessionMessage['type'], uuid: string, message: unknown): SessionMessage {
-  return { type, uuid, session_id: 'native-session', message, parent_tool_use_id: null } as SessionMessage;
+  return { type, uuid, session_id: 'native-session', message, parent_tool_use_id: null, parent_agent_id: null };
 }
+
+// Invisible and control characters are built from code points so this file carries none raw.
+const LF = String.fromCharCode(10);
+const TAB = String.fromCharCode(9);
+const VT = String.fromCharCode(11);
+const FF = String.fromCharCode(12);
+const CR = String.fromCharCode(13);
+const ESC = String.fromCharCode(27);
+const NEL = String.fromCharCode(0x85);
+const ZWSP = String.fromCharCode(0x200b);
+const RLO = String.fromCharCode(0x202e);
+// Everything stripUnsafeText removes, except LF which is the row structure.
+const UNSAFE_NO_LF = new RegExp(`[${String.fromCharCode(0)}-${String.fromCharCode(9)}${VT}-${String.fromCharCode(0x1f)}${String.fromCharCode(0x7f)}-${String.fromCharCode(0x9f)}${String.fromCharCode(0x202a)}-${RLO}${String.fromCharCode(0x2066)}-${String.fromCharCode(0x2069)}${ZWSP}]`);
 
 function fixtureReader(messages: SessionMessage[]) {
   const calls: Array<{ sessionId: string; options: ReaderOptions | undefined }> = [];
@@ -84,15 +97,68 @@ describe('Claude transcript adapter privacy and bounds', () => {
     }
   });
 
-  it('T3: row text routes through the shared sanitizers and is idempotent', async () => {
-    const raw = 'key api_key="w04-transcript-secret" auth Bearer w04bearertoken123 \u001b[31mred\u001b[0m rtl ‮evil';
+  const ANT = 'sk-ant-api03-W04SECRETvalue123';
+  const GHP = 'ghp_W04SECRETvalue456';
+  const TOK = 'w04bearertoken789';
+
+  /** U1 probes P1-P8 and P13 plus the glue shapes: a credential must not survive any whitespace or control separator. */
+  const probes: Array<{ name: string; text: string; secret: string }> = [
+    { name: 'P1 field then LF then sk-ant', text: `token: x${LF}${ANT}`, secret: 'W04SECRETvalue123' },
+    { name: 'P2 word then LF then ghp', text: `see${LF}${GHP}`, secret: 'W04SECRETvalue456' },
+    { name: 'P3 word then LF then Bearer', text: `auth${LF}Bearer ${TOK}`, secret: TOK },
+    { name: 'P4 Bearer TAB token', text: `Bearer${TAB}${TOK}`, secret: TOK },
+    { name: 'P5 Basic VT token', text: `Basic${VT}${TOK}`, secret: TOK },
+    { name: 'P6 Authorization Bearer LF token', text: `Authorization: Bearer${LF}${TOK}`, secret: TOK },
+    { name: 'P8 zero-width inside the prefix', text: `sk-${ZWSP}ant-api03-W04SECRETvalue123`, secret: 'W04SECRETvalue123' },
+    { name: 'P13 escape sequence between Bearer and token', text: `Bearer${ESC}[0m ${TOK}`, secret: TOK },
+    { name: 'glue CR before ghp', text: `x${CR}${GHP}`, secret: 'W04SECRETvalue456' },
+    { name: 'glue FF before sk-ant', text: `x${FF}${ANT}`, secret: 'W04SECRETvalue123' },
+    { name: 'NEL inside an unquoted secret value is redacted before it is spaced out', text: `password=w04partone${NEL}w04parttwo`, secret: 'w04parttwo' },
+    { name: 'glue VT after api_key', text: `api_key${VT}=${VT}"w04opaque"`, secret: 'w04opaque' },
+  ];
+
+  it('T3: no credential survives any separator shape, on string content and on a text part', async () => {
+    for (const probe of probes) {
+      const { read } = fixtureReader([
+        session('assistant', 'as-part', { content: [{ type: 'text', text: probe.text }] }),
+        session('assistant', 'as-string', { content: probe.text }),
+      ]);
+      for (const row of await readClaudeTranscript('native-session', '/work', 40, read)) {
+        expect(row.text, `${probe.name} (${row.uuid})`).not.toContain(probe.secret);
+        expect(row.text, `${probe.name} (${row.uuid}) marks the redaction`).toContain('[REDACTED]');
+      }
+    }
+  });
+
+  it('T3b: P7 a credential split across two text parts is redacted', async () => {
+    const { read } = fixtureReader([
+      session('assistant', 'two-parts', { content: [{ type: 'text', text: 'first part' }, { type: 'text', text: ANT }] }),
+    ]);
+    const [row] = await readClaudeTranscript('native-session', '/work', 40, read);
+    expect(row?.text).toBe(`first part${LF}[REDACTED]`);
+  });
+
+  it('T3c: line structure is preserved, parts join with LF, separators never fuse words', async () => {
+    const { read } = fixtureReader([
+      session('assistant', 'lines', { content: `line one${LF}line two` }),
+      session('assistant', 'parts', { content: [{ type: 'text', text: 'one' }, { type: 'text', text: 'two' }] }),
+      session('assistant', 'tabbed', { content: `a${TAB}b${CR}c${VT}d${FF}e` }),
+      session('assistant', 'zero-width', { content: `in${ZWSP}visible` }),
+    ]);
+    const rows = await readClaudeTranscript('native-session', '/work', 40, read);
+    expect(rows.map(row => row.text)).toEqual([`line one${LF}line two`, `one${LF}two`, 'a b c d e', 'invisible']);
+  });
+
+  it('T3d: output is display-safe, idempotent per line, and redaction is a fixed point', async () => {
+    const raw = `key api_key="w04-transcript-secret" auth Bearer ${TOK} ${ESC}[31mred${ESC}[0m rtl ${RLO}evil${LF}${LF}tail${ESC}`;
     const { read } = fixtureReader([session('assistant', 'secret-row', { content: [{ type: 'text', text: raw }] })]);
     const [row] = await readClaudeTranscript('native-session', '/work', 40, read);
-    expect(row).toBeDefined();
     const text = row?.text ?? '';
-    expect(text).toBe(sanitizeWorkbenchText(stripUnsafeText(raw.slice(0, CLAUDE_TRANSCRIPT_ROW_CHARS))));
-    for (const leaked of ['w04-transcript-secret', 'w04bearertoken123', '\u001b', '‮']) expect(text).not.toContain(leaked);
-    expect(sanitizeWorkbenchText(text)).toBe(text);
+    for (const leaked of ['w04-transcript-secret', TOK, ESC, RLO]) expect(text).not.toContain(leaked);
+    expect(text).not.toMatch(UNSAFE_NO_LF);
+    expect(text).toContain(`${LF}${LF}tail`);
+    for (const line of text.split(LF)) expect(sanitizeWorkbenchText(line)).toBe(line);
+    expect(redactWorkbenchText(text, Number.POSITIVE_INFINITY)).toBe(text);
   });
 
   it('T4 and T5: uuid and type pass through in source order as plain {type, uuid, text} rows', async () => {

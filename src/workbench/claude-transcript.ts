@@ -4,7 +4,7 @@ import { getSessionMessages, type SDKMessage, type SessionMessage } from "@anthr
 import type { ClaudeNativeObservation } from "../workflow/progress.js";
 import type { WorkflowSpawnResult } from "../workflow/runtime.js";
 import type { ClaudeCallIdentity } from "./claude-host.js";
-import { sanitizeWorkbenchText, stripUnsafeText } from "./redaction.js";
+import { redactWorkbenchText, stripUnsafeText } from "./redaction.js";
 
 /** At most 64 sampled snapshots per call plus its terminal acknowledgement. */
 export function createClaudeObserver(emit: (call: ClaudeCallIdentity, snapshot: ClaudeNativeObservation) => void) {
@@ -82,18 +82,42 @@ export interface ClaudeTranscriptRow {
   text: string;
 }
 
-function summary(message: SessionMessage): string {
+/** Upper bound on text scanned per row, so one huge message cannot make redaction cost unbounded. */
+const CLAUDE_TRANSCRIPT_SCAN_CHARS = CLAUDE_TRANSCRIPT_ROW_CHARS * 64;
+/** Zero-width and default-ignorable code points that could split a credential prefix; deleted, never spaced. */
+const INVISIBLE_TEXT = /͏|[᠋-᠏]|[︀-️]|[­ᅟᅠ឴឵​-‏⁠-⁯ㅤ﻿ﾠ]/g;
+/** Whitespace controls become one space so neighbouring words never fuse. */
+const WHITESPACE_CONTROLS = /[\t\v\f\r\u0085\u2028\u2029]/g;
+
+function rawText(message: SessionMessage): string {
   const payload = message.message;
   if (!payload || typeof payload !== "object") return "(no text)";
   const content = (payload as { content?: unknown }).content;
-  if (typeof content === "string") return content.slice(0, CLAUDE_TRANSCRIPT_ROW_CHARS);
+  if (typeof content === "string") return content;
   if (!Array.isArray(content)) return "(no text)";
   return content
     .filter((part): part is { type: "text"; text: string } =>
       typeof part === "object" && part !== null && part.type === "text" && typeof part.text === "string")
     .map(part => part.text)
-    .join("\n")
-    .slice(0, CLAUDE_TRANSCRIPT_ROW_CHARS) || "(tool or non-text content)";
+    .join("\n") || "(tool or non-text content)";
+}
+
+/** Strip per line so LF row structure survives; whitespace controls space out, invisibles and unsafe controls are deleted. */
+function stripPerLine(text: string): string {
+  return text.split("\n").map(line => stripUnsafeText(line.replace(WHITESPACE_CONTROLS, " ").replace(INVISIBLE_TEXT, ""))).join("\n");
+}
+
+/**
+ * Transcript-class sanitizer (program rule, wb-dc0.1 respin): redact the WHOLE row
+ * text first with separators intact, normalize per line with LF preserved, redact
+ * again to catch credentials a control or invisible character had split, then clip.
+ * Redaction is idempotent, so the second pass only acts on newly joined tokens.
+ */
+function summary(message: SessionMessage): string {
+  const scanned = rawText(message).slice(0, CLAUDE_TRANSCRIPT_SCAN_CHARS);
+  const redacted = redactWorkbenchText(scanned, Number.POSITIVE_INFINITY);
+  const normalized = stripPerLine(redacted);
+  return redactWorkbenchText(normalized, Number.POSITIVE_INFINITY).slice(0, CLAUDE_TRANSCRIPT_ROW_CHARS);
 }
 
 /** SDK session_id only; never reinterpret it as a Pi AgentRecord id. */
@@ -104,6 +128,6 @@ export async function readClaudeTranscript(
   read: ClaudeSessionReader = getSessionMessages,
 ): Promise<ClaudeTranscriptRow[]> {
   const messages = await read(sessionId, { dir: cwd, limit: Math.min(Math.max(1, limit), CLAUDE_TRANSCRIPT_MAX_ROWS) });
-  // Two-pass order (strip, redact, strip) via the shared sanitizers; uuid and type pass through untouched.
-  return messages.map(message => ({ type: message.type, uuid: message.uuid, text: sanitizeWorkbenchText(stripUnsafeText(summary(message))) }));
+  // Whole-text redaction before any split, then per-line strip (see summary); uuid and type pass through untouched.
+  return messages.map(message => ({ type: message.type, uuid: message.uuid, text: summary(message) }));
 }
