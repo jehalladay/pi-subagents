@@ -42,3 +42,4 @@ coverage/
 .hyperunix/
 .reactive-fiber/
 vitest.*.config.ts
+new-feedback/
