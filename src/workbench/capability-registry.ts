@@ -149,6 +149,46 @@ function assertSupportedSchema(schema: unknown, path: string): void {
 }
 
 
+/** Own keys every capability JSON boundary refuses: written by assignment, one can replace a prototype. */
+export type PrototypePollutionKey = "__proto__" | "constructor" | "prototype";
+
+/** The one prototype-pollution key predicate: the registry walk and every invoking surface call it, never a copy. */
+export function isPrototypePollutionKey(key: PropertyKey): key is PrototypePollutionKey {
+  return key === "__proto__" || key === "constructor" || key === "prototype";
+}
+
+/** The registry's refusal text for a prototype-pollution key met under a boundary path. */
+export function prototypePollutionMessage(path: string, key: PrototypePollutionKey): string {
+  return `Prototype pollution key at ${path}.${key}.`;
+}
+
+/** The boundary path the registry names when it refuses a dispatched input. */
+export function capabilityInputPath(mode: "invoke" | "inspect", id: string): string {
+  return `${mode}(${id}) input`;
+}
+
+/**
+ * The first own prototype-pollution key in a raw value, met in the registry walk's order (depth first, own keys in
+ * Reflect.ownKeys order, arrays included), for a surface whose parser would drop such a key before the registry sees
+ * it. It reads property descriptors only, so accessors are never evaluated, and it stops at the registry's depth
+ * bound: a value nested deeper than that is refused for its depth on every surface.
+ */
+export function findPrototypePollutionKey(value: unknown, maxDepth = CAPABILITY_MAX_DEPTH): PrototypePollutionKey | undefined {
+  const seen = new Set<object>();
+  const find = (current: unknown, depth: number): PrototypePollutionKey | undefined => {
+    if (current === null || typeof current !== "object" || depth > maxDepth || seen.has(current)) return undefined;
+    seen.add(current);
+    for (const key of Reflect.ownKeys(current)) {
+      if (isPrototypePollutionKey(key)) return key;
+      const property = Object.getOwnPropertyDescriptor(current, key);
+      const found = property !== undefined && "value" in property ? find(property.value, depth + 1) : undefined;
+      if (found !== undefined) return found;
+    }
+    return undefined;
+  };
+  return find(value, 0);
+}
+
 /** Strict JSON walk checks bounds before serialization and never evaluates accessors. */
 export function validatedCapabilityJson(value: unknown, path: string, maxDepth = CAPABILITY_MAX_DEPTH, maxBytes = CAPABILITY_MAX_BYTES): JsonValue {
   const seen = new Set<unknown>();
@@ -174,7 +214,7 @@ export function validatedCapabilityJson(value: unknown, path: string, maxDepth =
       for (const key of keys) {
         if (array && key === "length") continue;
         if (typeof key !== "string") throw new Error(`Symbol key at ${path}.`);
-        if (key === "__proto__" || key === "constructor" || key === "prototype") throw new Error(`Prototype pollution key at ${path}.${key}.`);
+        if (isPrototypePollutionKey(key)) throw new Error(prototypePollutionMessage(path, key));
         if (array && (!/^(0|[1-9][0-9]*)$/.test(key) || Number(key) >= current.length)) throw new Error(`Extra array property at ${path}.`);
         const property = Object.getOwnPropertyDescriptor(current, key);
         if (!property?.enumerable || !("value" in property)) throw new Error(`Accessor or hidden property at ${path}.${key}.`);
@@ -303,7 +343,7 @@ export class CapabilityRegistry {
     if (!descriptor.supportedModes.includes(mode) || (mode === "inspect" && !provider.inspect)) {
       throw new CapabilityError("unavailable", `Capability ${id} does not support ${mode}.`);
     }
-    const value = validatedCapabilityJson(input, `${mode}(${id}) input`, this.maxDepth, this.maxBytes);
+    const value = validatedCapabilityJson(input, capabilityInputPath(mode, id), this.maxDepth, this.maxBytes);
     if (mode === "invoke" && !Check(descriptor.inputSchema, value)) {
       throw new CapabilityError("validation", `Invalid input schema for capability ${id}.`);
     }
