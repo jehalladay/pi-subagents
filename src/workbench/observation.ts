@@ -91,6 +91,24 @@ export interface ObservationQuery {
   version?: string;
 }
 export interface ObservationLimits { maxEvents?: number; maxNodes?: number; maxEdges?: number; maxPayloadBytes?: number; maxQuery?: number }
+/** A nativeRef part admission reads as identity (wb-0br). */
+export type IdentityField = "provider" | "type" | "id" | "scope";
+/**
+ * One admission refused for its identity (wb-0br): closed vocabulary and the first unsafe code point only, never the
+ * refused text, so a surface can show it as-is. The refused input changed nothing: no node, event, edge or revision.
+ */
+export interface IdentityRefusal {
+  /** The admission path that refused the input. */
+  path: "ingest" | "refresh" | "relate" | "markStale";
+  /** The input's reference that carried the unit: an event or snapshot source, a relation end, or a stale ref. */
+  ref: "source" | "from" | "to" | "ref";
+  field: IdentityField;
+  /** "U+" and four to six uppercase hex digits. */
+  codePoint: string;
+  reason: "unsafe-identity";
+}
+/** Refusal rows one projection retains, the oldest dropped first; each scope's total keeps counting past them. */
+export const MAX_IDENTITY_REFUSALS = 256;
 
 const MAX_DEFAULT = {maxEvents:20_000,maxNodes:2_000,maxEdges:4_000,maxPayloadBytes:4_096,maxQuery:100};
 const keyOf = (scope: ObservationScope, ref: NativeRef): string => JSON.stringify([scope.workspace,scope.principal,ref.provider,ref.type,ref.scope ?? "",ref.id]);
@@ -121,10 +139,27 @@ function safeDate(value: string): number {
   if (!Number.isFinite(stamp)) throw new Error("Observation timestamp is invalid.");
   return stamp;
 }
+/** The projection's text rule: a nonempty string within the bound, free of C0 controls and DEL. */
+const isValidText = (value: string, bound: number): boolean =>
+  typeof value === "string" && value !== "" && Buffer.byteLength(value) <= bound && !/[\x00-\x1f\x7f]/.test(value);
 function validText(value: string, name: string, bound: number): void {
-  if (typeof value !== "string" || !value || Buffer.byteLength(value) > bound || /[\x00-\x1f\x7f]/.test(value)) {
-    throw new Error(`Observation ${name} is empty, unsafe or exceeds payload limit.`);
-  }
+  if (!isValidText(value,bound)) throw new Error(`Observation ${name} is empty, unsafe or exceeds payload limit.`);
+}
+const IDENTITY_FIELDS: readonly IdentityField[] = ["provider","type","id","scope"];
+/**
+ * A code point a nativeRef identity part may never carry (wb-0br): a C0 or C1 control (NUL, NEL and DEL included), a bidi
+ * embedding, override or isolate, a lone surrogate, or any default-ignorable code point (zero-width characters, joiners,
+ * bidi marks, the BOM, the soft hyphen, variation selectors, tags). That is redaction.ts's one unsafe set (UNSAFE_UNIT)
+ * less only the line and paragraph separators, which every display layout renders as a separator instead of deleting;
+ * each escape sequence there begins with ESC, a C0 control. This module imports nothing, because a bare Node process loads
+ * it from source (test/workbench-observation-shell.test.ts), so the set is restated here, and
+ * test/workbench-observation-identity-admission.test.ts pins it against the shared set on every code point.
+ */
+const UNSAFE_IDENTITY_UNIT = /[\x00-\x1f\x7f-\x9f\u{202a}-\u{202e}\u{2066}-\u{2069}\u{d800}-\u{dfff}]|\p{Default_Ignorable_Code_Point}/u;
+/** The first unsafe unit of a nativeRef identity part as "U+XXXX" (wb-0br), or undefined when it carries none. */
+export function unsafeIdentityUnit(value: string): string | undefined {
+  const code = UNSAFE_IDENTITY_UNIT.exec(value)?.[0].codePointAt(0);
+  return code === undefined ? undefined : `U+${code.toString(16).toUpperCase().padStart(4,"0")}`;
 }
 function copyPresentation(value: Presentation, maxBytes: number): Presentation {
   validText(value.title,"title",maxBytes);
@@ -306,6 +341,9 @@ export class ObservationProjection {
   /** Kept only for keys with at least one counted descendant, observed or not, so a later snapshot finds it ready. */
   private readonly aggregates = new Map<string, AggregateRecord>();
   private readonly aggregateCounters = {adjustments:0,rebuilds:0,maxVisitedPerUpdate:0};
+  /** Identity refusals (wb-0br), oldest first and bounded by MAX_IDENTITY_REFUSALS; totals count every one per scope. */
+  private readonly refused: {scope: string; row: IdentityRefusal}[] = [];
+  private readonly refusedTotals = new Map<string, number>();
 
   constructor(limits: ObservationLimits = {}) {
     this.limits = {...MAX_DEFAULT,...limits};
@@ -487,6 +525,28 @@ export class ObservationProjection {
     if (before) this.adjustAncestors(node.key,before,contributionOf(record));
   }
 
+  /**
+   * Admission's identity check (wb-0br): a nativeRef part carrying an unsafe unit is refused fail-closed and typed. The
+   * input changes nothing and is recorded as a row, never thrown. A subject scope outside the text rule keeps its own
+   * refusal, so no row is ever keyed by one; an empty, oversize or non-string part with no unsafe unit still throws.
+   */
+  private refusedIdentity(path: IdentityRefusal["path"], scope: ObservationScope, refs: readonly (readonly [IdentityRefusal["ref"], NativeRef])[]): boolean {
+    if (!isValidText(scope.workspace,256) || !isValidText(scope.principal,256)) return false;
+    for (const [ref,native] of refs) {
+      for (const field of IDENTITY_FIELDS) {
+        const value = native[field];
+        const codePoint = typeof value === "string" ? unsafeIdentityUnit(value) : undefined;
+        if (codePoint === undefined) continue;
+        const key = scopeOf(scope);
+        this.refused.push({scope:key,row:{path,ref,field,codePoint,reason:"unsafe-identity"}});
+        if (this.refused.length > MAX_IDENTITY_REFUSALS) this.refused.shift();
+        this.refusedTotals.set(key,(this.refusedTotals.get(key) ?? 0)+1);
+        return true;
+      }
+    }
+    return false;
+  }
+
   private assertRef(scope: ObservationScope, ref: NativeRef, observedAt: string): string {
     for (const [name,value] of [["workspace",scope.workspace],["principal",scope.principal],["provider",ref.provider],["type",ref.type],["id",ref.id]]) validText(value,name,256);
     if (ref.scope !== undefined) validText(ref.scope,"native scope",256);
@@ -511,7 +571,8 @@ export class ObservationProjection {
     }
   }
 
-  ingest(event: ObservationEvent): "applied" | "duplicate" | "out-of-order" {
+  ingest(event: ObservationEvent): "applied" | "duplicate" | "out-of-order" | "refused" {
+    if (this.refusedIdentity("ingest",event.scope,[["source",event.source]])) return "refused";
     const key = this.assertRef(event.scope,event.source,event.observedAt);
     validText(event.projectionEventId,"event id",256);validText(event.kind,"event kind",256);
     if (event.sourceTimestamp) safeDate(event.sourceTimestamp);
@@ -568,7 +629,8 @@ export class ObservationProjection {
   }
 
   /** Only an actual read-current snapshot restores source truth after a gap. */
-  refresh(snapshot: NativeSnapshot): "applied" | "out-of-order" {
+  refresh(snapshot: NativeSnapshot): "applied" | "out-of-order" | "refused" {
+    if (this.refusedIdentity("refresh",snapshot.scope,[["source",snapshot.source]])) return "refused";
     const key = this.assertRef(snapshot.scope,snapshot.source,snapshot.observedAt);
     safeDate(snapshot.capturedAt);
     this.assertFields({subjectBasis:snapshot.subjectBasis,sourceVersion:snapshot.sourceVersion ?? snapshot.sourceRevision,definitionDigest:snapshot.definitionDigest,trace:snapshot.trace,evidenceRefs:snapshot.evidenceRefs,payloadRef:snapshot.nativePayloadRef,interval:snapshot.interval});
@@ -595,6 +657,7 @@ export class ObservationProjection {
 
   /** A failed native read invalidates only its own authenticated subject scope. */
   markStale(input: {scope: ObservationScope; ref: NativeRef}): void {
+    if (this.refusedIdentity("markStale",input.scope,[["ref",input.ref]])) return;
     const key = keyOf(input.scope,input.ref);
     const node = this.nodes.get(key);
     if (!node) return;
@@ -638,6 +701,7 @@ export class ObservationProjection {
 
   /** Edges require a producer-supplied statement; absence never creates ownership. */
   relate(input: {scope:ObservationScope;from:NativeRef;to:NativeRef;kind:RelationKind;provenance:{source:string;observedAt?:string;nativeConfirmationRef?:string}}): void {
+    if (this.refusedIdentity("relate",input.scope,[["from",input.from],["to",input.to]])) return;
     const from=this.assertRef(input.scope,input.from,input.provenance.observedAt ?? "2026-01-01T00:00:00Z");
     const to=this.assertRef(input.scope,input.to,input.provenance.observedAt ?? "2026-01-01T00:00:00Z");
     if (!["dependency","causation","ownership","grouping","hypothesis"].includes(input.kind)) throw new Error("Unknown relationship kind.");
@@ -805,6 +869,20 @@ export class ObservationProjection {
       events.push({...event,source:{...event.source},scope:{...event.scope},node:event.node ? {presentation:{...event.node.presentation},definitionDigest:event.node.definitionDigest} : undefined,evidenceRefs:event.evidenceRefs ? [...event.evidenceRefs] : undefined,trace:event.trace ? {...event.trace,correlationIds:event.trace.correlationIds ? {...event.trace.correlationIds} : undefined} : undefined,interval:event.interval ? {...event.interval} : undefined});
     }
     return {events,truncated,completeness:"complete"};
+  }
+
+  /** One scope's identity refusals (wb-0br), oldest retained first, as copies; another scope's rows and totals never show. */
+  identityRefusals(filter:{scope:ObservationScope;limit:number}):{refusals:IdentityRefusal[];total:number;truncated:boolean} {
+    const limit=Math.min(filter.limit,this.limits.maxQuery);
+    if (!Number.isSafeInteger(filter.limit) || filter.limit < 1) throw new Error("Invalid identity refusal query limit.");
+    const scope=scopeOf(filter.scope);
+    const refusals:IdentityRefusal[]=[];let truncated=false;
+    for (const entry of this.refused) {
+      if (entry.scope !== scope) continue;
+      if (refusals.length >= limit) {truncated=true;break;}
+      refusals.push({...entry.row});
+    }
+    return {refusals,total:this.refusedTotals.get(scope) ?? 0,truncated};
   }
 
   /** Copied ancestor aggregate of one observed node: an O(1) read, no traversal. Unknown and cross-scope keys are undefined. */

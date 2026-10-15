@@ -31,7 +31,7 @@ export interface DetachedReading {
   stale: NativeRef[];
 }
 export interface DetachedApplyResult {
-  snapshots: Array<"applied" | "out-of-order">;
+  snapshots: Array<ReturnType<ObservationProjection["refresh"]>>;
   related: number;
   stale: number;
 }
