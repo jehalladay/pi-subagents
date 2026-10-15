@@ -8,10 +8,12 @@
  * small divergences that would have to be reconciled blind. New files use this.
  */
 
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
-import { tmpdir } from "node:os";
+import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { vi } from "vitest";
+import { installScratchLeakGuard, makeScratch, removeScratch } from "./scratch.js";
+
+installScratchLeakGuard();
 
 export interface BootedPi {
   pi: any;
@@ -116,8 +118,8 @@ export function hermeticDir(opts: {
   settings?: Record<string, unknown>;
   agentFiles?: Record<string, string>;
 } = {}): Hermetic {
-  const dir = mkdtempSync(join(tmpdir(), "pi-boot-"));
-  const agentDir = mkdtempSync(join(tmpdir(), "pi-boot-agentdir-"));
+  const dir = makeScratch("pi-boot-");
+  const agentDir = makeScratch("pi-boot-agentdir-");
   const prevCwd = process.cwd();
   const prevAgentDir = process.env.PI_CODING_AGENT_DIR;
   const prevHome = process.env.HOME;
@@ -145,8 +147,8 @@ export function hermeticDir(opts: {
       else process.env.PI_CODING_AGENT_DIR = prevAgentDir;
       if (prevHome == null) delete process.env.HOME;
       else process.env.HOME = prevHome;
-      rmSync(dir, { recursive: true, force: true });
-      rmSync(agentDir, { recursive: true, force: true });
+      removeScratch(dir);
+      removeScratch(agentDir);
     },
   };
 }

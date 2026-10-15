@@ -1,12 +1,14 @@
 /** L2: the registered Pi tools bind local scope and verify bytes before SDK dispatch. */
 import { execFileSync } from 'node:child_process';
-import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
-import { tmpdir } from 'node:os';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import subagentsExtension from '../src/index.js';
 import * as cards from '../src/ui/workflow-card.js';
 import { ctx, hermeticDir, makePi } from './helpers/boot-extension.js';
+import { installScratchLeakGuard, makeScratch, removeScratch } from './helpers/scratch.js';
+
+installScratchLeakGuard();
 
 const sdk = vi.hoisted(() => ({query:vi.fn()}));
 vi.mock('@anthropic-ai/claude-agent-sdk', async original => ({ ...await original(), query:sdk.query }));
@@ -93,7 +95,7 @@ describe('registered Workbench entrypoint identity and projection',()=>{
 
   it('does not reuse a different workspace backend or registry just because Pi changed cwd',async()=>{
     const {pi,workflow,context}=await boot({capabilityGrants:['workbench:observe']});
-    const second=mkdtempSync(join(tmpdir(),'pi-workspace-switch-'));
+    const second=makeScratch('pi-workspace-switch-');
     try {
       sdk.query.mockImplementation(()=>streamed('should-not-exist'));
       // The same extension process sees two contexts; only one workspace has
@@ -103,7 +105,7 @@ describe('registered Workbench entrypoint identity and projection',()=>{
       await waitFor(()=>pi.pi.sendMessage.mock.calls.some(([value]:[unknown])=>text(value).includes(launch.details.taskId)));
       expect(sdk.query).not.toHaveBeenCalled();
       expect(context.cwd).not.toBe(second);
-    } finally { rmSync(second,{recursive:true,force:true}); }
+    } finally { removeScratch(second); }
   });
 
   it('does not expose model Workbench tools on an ordinary Pi-only session',async()=>{
