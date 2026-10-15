@@ -4,7 +4,7 @@
  */
 import type {AttemptDto, AttemptListDto, AttemptOutcome, AttemptState, HealthyWait, LogsReadDto, ProgressUnavailable, Response, RunMode, RunState, RunStatusDto} from '@furnace/sdk';
 import {CapabilityError} from './capability-registry.js';
-import type {NativeSnapshot, ObservationScope} from './observation.js';
+import type {Interval, NativeRef, NativeSnapshot, ObservationProjection, ObservationScope, Presentation} from './observation.js';
 import {redactWorkbenchText} from './redaction.js';
 
 export interface FurnaceObserverClient {
@@ -32,7 +32,24 @@ export interface FurnaceReading {
   coherence:'sequential-non-atomic';
   error?:{category:'unavailable';message:string};
 }
+/** Exactly the statement ObservationProjection.relate accepts; this observer only states native-confirmed ownership. */
+export type FurnaceObservedRelation = Parameters<ObservationProjection['relate']>[0];
+export interface FurnaceProjectionTopology {snapshots:NativeSnapshot[];relations:FurnaceObservedRelation[]}
 const terminal = new Set<RunState>(['completed','stopped','failed']);
+/** Display tone of a native Attempt state; needs_reconciliation is unknown, never a guessed outcome. */
+const attemptTone:Readonly<Record<AttemptState,Presentation['statusTone']>>={pending:'waiting',preparing:'active',starting:'active',running:'active',completing:'active',
+  succeeded:'success',failed:'failure',timed_out:'failure',cancelled:'failure',abandoned:'failure',needs_reconciliation:'unknown'};
+/** A zone-qualified native instant; an unzoned or unparseable value names no comparable clock. */
+const instant=(value:string|undefined):number=>value!==undefined&&/(?:Z|[+-]\d\d:\d\d)$/.test(value)?Date.parse(value):Number.NaN;
+/** Source interval from native started_at/finished_at only. An end the producer's clock cannot place at or after the
+ * start withholds the whole interval: an open interval would falsely claim the finished Attempt is still running. */
+function attemptInterval(item:FurnaceAttemptReference):Interval|undefined{
+  const start=instant(item.startedAt);
+  if(item.startedAt===undefined||!Number.isFinite(start)) return undefined;
+  if(item.finishedAt===undefined) return {startedAt:item.startedAt};
+  const end=instant(item.finishedAt);
+  return Number.isFinite(end)&&end>=start ? {startedAt:item.startedAt,endedAt:item.finishedAt} : undefined;
+}
 function validateLimits(limits:FurnaceObserverLimits):void {
   for(const [key,value] of Object.entries(limits)) if(!Number.isSafeInteger(value)||value<1|| (key==='callTimeoutMs'&&value>2_147_483_647)) throw new CapabilityError('validation',`Invalid Furnace observation budget: ${key}`);
 }
@@ -131,6 +148,29 @@ export class FurnaceObserver {
       coverage:reading.completeness,sourceRevision:reading.source.producerRevision,
       node:{title:`Furnace Run ${reading.source.runId}`,type:'workflow',statusText:reading.run.state,statusTone:reading.run.state==='completed'?'success':reading.run.state==='failed'||reading.run.state==='needs_attention'?'failure':reading.run.state==='active'?'active':'waiting'},
       kind:'furnace.run.snapshot',evidenceRefs:reading.attempts.items.map(item=>item.id)};
+  }
+  /** The unchanged Run snapshot, one Attempt snapshot per returned page item and one Run->Attempt ownership edge each.
+   * Ownership is native-confirmed: the Attempt page (its request ID is the confirmation reference) asserts every
+   * attempt.run_id equals this Run. An unreturned tail yields nothing, no Work node is invented (workId is only a
+   * correlation id) and no dependency, causation or hypothesis edge is ever stated. */
+  projectionTopology(reading:FurnaceReading):FurnaceProjectionTopology{
+    const run=this.projectionSnapshot(reading);
+    const {runId,workspaceRoot,producerRevision,requestIds}=reading.source;
+    if(!requestIds.attempts||reading.attempts.items.some(item=>item.runId!==runId)) throw new CapabilityError('unavailable','Furnace Attempt page cannot confirm Run ownership.');
+    const snapshots:NativeSnapshot[]=[run];const relations:FurnaceObservedRelation[]=[];
+    for(const item of reading.attempts.items){
+      const source:NativeRef={provider:'furnace',type:'attempt',id:item.id,scope:workspaceRoot};
+      const interval=attemptInterval(item);
+      // One sequential, non-atomic reading: its completeness label covers every node it produced.
+      snapshots.push({source,scope:{...this.options.scope},capturedAt:reading.capturedAt,observedAt:reading.observedAt,coverage:reading.completeness,
+        ...(producerRevision!==undefined?{sourceRevision:producerRevision}:{}),
+        node:{title:`Furnace Attempt ${item.id}`,type:'sdk-operation',statusText:item.outcome!==undefined?`${item.state} (${item.outcome})`:item.state,
+          statusTone:Object.hasOwn(attemptTone,item.state)?attemptTone[item.state]:'unknown'},
+        kind:'furnace.attempt.snapshot',trace:{invocationId:runId,correlationIds:{runId:item.runId,workId:item.workId}},...(interval?{interval}:{})});
+      relations.push({scope:{...this.options.scope},from:{...run.source},to:{...source},kind:'ownership',
+        provenance:{source:'furnace',observedAt:reading.observedAt,nativeConfirmationRef:requestIds.attempts}});
+    }
+    return {snapshots,relations};
   }
   /** Closing stops only the local wait; it never invokes a Furnace control verb. */
   close():void {this.shutdown.abort();this.markStale();}
