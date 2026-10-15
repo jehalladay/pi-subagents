@@ -66,13 +66,14 @@ import { selectItem } from "./ui/select-item.js";
 import { renderWorkflowCard, renderWorkflowEntryCard } from "./ui/workflow-card.js";
 import { openWorkflowFromFleet, showWorkflowsMenu, type WorkflowMenuDeps } from "./ui/workflow-menu.js";
 import { getLifetimeCost, getLifetimeTotal, getSessionContextPercent, type LifetimeUsage, PendingUsagePool, toReportedUsage } from "./usage.js";
-import { type CapabilityDescriptor, CapabilityRegistry } from "./workbench/capability-registry.js";
+import { type CapabilityDescriptor, CapabilityError, CapabilityRegistry } from "./workbench/capability-registry.js";
 import { type CompareRun, catalogWorkflows, compareWorkflowRuns, inspectWorkflowSource, validateWorkflowSource } from "./workbench/designer.js";
 import { createWorkbenchEvidenceStore } from "./workbench/evidence-wiring.js";
 import { FurnaceObserver } from "./workbench/furnace-observer.js";
 import { captureInvocationIdentity, type IdentityCaptureInput, identityDigest, verifyInvocationIdentity, WORKFLOW_SCRIPT_SCHEMA_VERSION } from "./workbench/identity.js";
 import { loadWorkbenchNative, workbenchNative } from "./workbench/native-modules.js";
 import { type NativeRef, ObservationProjection, type ObservationScope, type Presentation } from "./workbench/observation.js";
+import { OBSERVE_CURSOR_MAX_BYTES, OBSERVE_DEFAULT_MAX_BYTES, OBSERVE_MAX_LIMIT, OBSERVE_MAX_MAX_BYTES, OBSERVE_MIN_MAX_BYTES, observeInvocation } from "./workbench/observe-query.js";
 import { createWorkflowReconcileTool } from "./workbench/reconcile-tool.js";
 import { sanitizeWorkbenchJsonText, sanitizeWorkbenchText, stripUnsafeText } from "./workbench/redaction.js";
 import { buildWorkflowInspectReply, INSPECT_VIEWS } from "./workbench/tool-replies.js";
@@ -2619,27 +2620,61 @@ Terse command-style prompts produce shallow, generic work.
     pi.registerTool(defineTool({
       name: "workflow_observe",
       label: "Observe workflow",
-      description: "Read a bounded, redacted workflow projection by task ID. Requires workbench:observe; not an execution authority.",
-      parameters: Type.Object({ taskId: Type.String(), limit: Type.Optional(Type.Integer({ minimum: 1, maximum: 40 })) }),
+      description: "Read a bounded, redacted workflow projection by task ID: paged nodes (cursor), tone/kind/relations/events selectors, freshness summary, anomalies and a byte cap. Requires workbench:observe; not an execution authority.",
+      parameters: Type.Object({
+        taskId: Type.String(),
+        limit: Type.Optional(Type.Integer({ minimum: 1, maximum: OBSERVE_MAX_LIMIT })),
+        cursor: Type.Optional(Type.String({ maxLength: OBSERVE_CURSOR_MAX_BYTES })),
+        maxBytes: Type.Optional(Type.Integer({ minimum: OBSERVE_MIN_MAX_BYTES, maximum: OBSERVE_MAX_MAX_BYTES })),
+        selectors: Type.Optional(Type.Object({
+          tone: Type.Optional(Type.Union([Type.Literal("active"), Type.Literal("success"), Type.Literal("failure"), Type.Literal("waiting"), Type.Literal("unknown")])),
+          kind: Type.Optional(Type.String({ minLength: 1 })),
+          relations: Type.Optional(Type.Boolean()),
+          events: Type.Optional(Type.Object({
+            limit: Type.Integer({ minimum: 1, maximum: OBSERVE_MAX_LIMIT }),
+            after: Type.Optional(Type.Object({
+              source: Type.Object({ provider: Type.String(), type: Type.String(), id: Type.String(), scope: Type.Optional(Type.String()) }),
+              projectionEventId: Type.String(),
+            })),
+          })),
+        })),
+      }),
       execute: async (_id, params, _signal, _onUpdate, ctx) => {
         if (!grants(ctx).includes("workbench:observe")) return textResult("Permission denied: workbench:observe grant required.");
         if (!/^wf_[a-z0-9-]{6,}$/.test(params.taskId)) return textResult("Invalid workflow task ID.");
-        if (params.limit !== undefined && (!Number.isSafeInteger(params.limit) || params.limit < 1 || params.limit > 40))
-          return textResult("Invalid observation limit (1..40).");
+        if (params.limit !== undefined && (!Number.isSafeInteger(params.limit) || params.limit < 1 || params.limit > OBSERVE_MAX_LIMIT))
+          return textResult(`Invalid observation limit (1..${OBSERVE_MAX_LIMIT}).`);
         const task = workflowTasks.get(params.taskId);
         const scope = observerScope(ctx);
         if (!task || task.observationScope?.sessionId !== ctx.sessionManager.getSessionId() ||
           task.observationScope.workspace !== scope.workspace || task.observationScope.principal !== scope.principal)
           return textResult("Workflow unavailable in this local operator/session/workspace scope.");
-        const { nodes, truncated } = projection.query({ scope, invocationId: task.id, limit: params.limit ?? 20 });
-        const compact = nodes.map(node => ({ nativeRef: node.nativeRef, kind: node.kind,
-          presentation: node.presentation, freshness: node.freshness, completeness: node.completeness,
-          observedAt: node.observedAt, lastConfirmedAt: node.lastConfirmedAt,
-          subjectBasis: node.subjectBasis, evidenceRefs: node.evidenceRefs }));
-        // Node labels come from the script and `error` from whatever it threw; both are redacted and stripped here.
-        return textResult(sanitizeWorkbenchJsonText({ taskId: task.id, status: task.status,
-          identity: task.identityReceipt?.identity ?? null, inputDigest: task.inputDigest ?? null, workspaceSourceState: task.workspaceSourceState ?? "unknown",
-          nodes: compact, truncated, error: task.error ?? null }));
+        // Node labels come from the script and `error` from whatever it threw; both are redacted and stripped by the shared serializer.
+        const envelopes = [
+          { taskId: task.id, status: task.status, identity: task.identityReceipt?.identity ?? null, inputDigest: task.inputDigest ?? null,
+            workspaceSourceState: task.workspaceSourceState ?? "unknown", error: task.error ?? null },
+          // A tight maxBytes cannot carry the digests and the error text: say so instead of dropping them silently.
+          { taskId: task.id, status: task.status, envelopeOmitted: ["identity", "inputDigest", "workspaceSourceState", "error"] },
+        ];
+        const requested = params.maxBytes ?? OBSERVE_DEFAULT_MAX_BYTES;
+        const request = { scope, invocationId: task.id, ...(params.cursor === undefined ? {} : { cursor: params.cursor }),
+          ...(params.limit === undefined ? {} : { limit: params.limit }), ...(params.selectors === undefined ? {} : { selectors: params.selectors }) };
+        try {
+          let floor = 0;
+          for (const envelope of envelopes) {
+            // The builder's cap leaves room for the task-level envelope, so truncatedForBytes/droppedForBytes stay the only truncation path.
+            const overhead = Buffer.byteLength(sanitizeWorkbenchJsonText(envelope), "utf8");
+            floor = OBSERVE_MIN_MAX_BYTES + overhead;
+            if (requested < floor) continue;
+            const reply = observeInvocation(projection, { ...request, maxBytes: requested - overhead });
+            const text = sanitizeWorkbenchJsonText({ ...envelope, ...reply });
+            if (Buffer.byteLength(text, "utf8") <= requested) return textResult(text);
+          }
+          return textResult(`Invalid observe request: maxBytes ${requested} leaves under ${OBSERVE_MIN_MAX_BYTES} bytes for the reply after the task envelope (at least ${floor} needed).`);
+        } catch (error) {
+          if (error instanceof CapabilityError && error.category === "validation") return textResult(`Invalid observe request: ${sanitizeWorkbenchText(error.message)}`);
+          throw error;
+        }
       },
     }));
     pi.registerTool(createWorkflowReconcileTool({
