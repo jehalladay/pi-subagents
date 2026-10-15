@@ -11,9 +11,15 @@ import { describe, expect, it } from "vitest";
 import {
   assessFaultJourneys,
   buildFaultReceipt,
+  builtinAccessViolations,
+  CLAIMS_NO_EFFECT,
+  exitCodeFor,
   FAULT_FINDING_RULES,
   FAULT_RECEIPT_CONTRACT,
   faultProviderSource,
+  reachedTerminal,
+  SURVEYED_UNIVERSE_LABEL,
+  SURVEYED_UNIVERSE_NON_CLAIM,
 } from "../qa/workbench/local-detached-faults-receipt.mjs";
 
 interface Inspect {
@@ -45,6 +51,7 @@ interface Observed {
       executeRejected: boolean;
       relaunchRejected: boolean;
       relaunchDiagnostic: string;
+      relaunchRejectedAfterSecond: boolean;
       markersAfter: { crash: number; inspect: number; execute: number; relaunch: number };
       second: { invocationId: string; accepted: boolean; markers: number };
       explicitSecondRequest: boolean;
@@ -61,6 +68,7 @@ interface Observed {
         latencyMs: number;
         cancelledAt: string;
       };
+      postCancelInspect: { terminal: string; cancellationRequested: boolean; controlAuditLength: number; hasResult: boolean };
       sibling: { invocationId: string; polls: CancelPoll[]; endedByOwnShutdown: boolean };
     };
     shutdownUnresolved: {
@@ -107,6 +115,7 @@ function clean(): Observed {
         executeRejected: true,
         relaunchRejected: true,
         relaunchDiagnostic: "invocation exists: conflict",
+        relaunchRejectedAfterSecond: true,
         markersAfter: { crash: 1, inspect: 1, execute: 1, relaunch: 1 },
         second: { invocationId: "effect-crash-second", accepted: true, markers: 1 },
         explicitSecondRequest: true,
@@ -123,6 +132,7 @@ function clean(): Observed {
           latencyMs: 30,
           cancelledAt: "2026-10-15T10:00:01.000Z",
         },
+        postCancelInspect: { terminal: "cancelled", cancellationRequested: true, controlAuditLength: 1, hasResult: false },
         sibling: {
           invocationId: "iso-b",
           polls: [
@@ -219,7 +229,7 @@ describe("detached fault-injection receipt: provider fixture", () => {
     expect(benign.match(/writeFileSync\(/g)).toHaveLength(1);
   });
 
-  it("never imports node:net or node:child_process, and uses no static or dynamic module load", () => {
+  it("surveyed source universe lint: the emitted text never imports node:net or node:child_process, and uses no static or dynamic module load", () => {
     for (const text of [crashing, benign]) {
       expect(text).not.toMatch(/node:net|node:child_process|\bnet\b['"]|child_process/);
       expect(text).not.toMatch(/\brequire\s*\(|\bimport\s*\(|^\s*import\b/m);
@@ -501,5 +511,177 @@ describe("detached fault-injection receipt: module and runner boundaries", () =>
     expect(forge).toContain('gate = ["lint", "typing", "build", "test", "workbench-shell", "package-smoke"]\n');
     const gate = /^gate = \[(.*)\]$/m.exec(forge)?.[1] ?? "";
     expect(gate).not.toContain("local-detached-faults");
+  });
+});
+
+describe("wb-0kg.10: armed on any terminal (docs/08 'does not replay a saved terminal verdict')", () => {
+  it("reachedTerminal is true for every terminal string and false for no terminal", () => {
+    for (const terminal of ["unknown", "completed", "failed", "cancelled"]) expect(reachedTerminal({ terminal })).toBe(true);
+    for (const snapshot of [{}, { terminal: "" }, { terminal: 3 }, { terminal: null }, null, undefined]) {
+      expect(reachedTerminal(snapshot as never)).toBe(false);
+    }
+  });
+
+  it("a fabricated completed terminal after the crash stays realised with fabricated-terminal and exits 1, never 2", () => {
+    const observed = clone(clean());
+    observed.journeys.effectCrash.terminals = ["completed"];
+    observed.journeys.effectCrash.inspect.terminal = "completed";
+    const receipt = buildFaultReceipt(receiptInput(observed));
+    expect(receipt.realised).toBe(true);
+    expect(receipt.findings.map((finding: { rule: string }) => finding.rule)).toContain("fabricated-terminal");
+    expect(exitCodeFor(receipt)).toBe(1);
+  });
+
+  it("the runner arms every wait on reachedTerminal and never on one literal terminal string", () => {
+    const runner = readRepo("qa/workbench/local-detached-faults.mjs");
+    expect(runner).toContain("reachedTerminal");
+    expect(runner).not.toMatch(/snapshot\.terminal === '(?:unknown|cancelled)'/);
+    expect(runner.match(/,\s*reachedTerminal\)/g)?.length ?? 0).toBeGreaterThanOrEqual(4);
+  });
+});
+
+describe("wb-0kg.10: surveyed source universe, a lint and not a sandbox (docs/12 'The VM is not a security boundary')", () => {
+  const markerDirectory = "/tmp/markers-under-test";
+  const crashing = faultProviderSource({ capabilityId: "fixture.effect", markerDirectory, crashAfterEffect: true });
+
+  it("admits exactly process.getBuiltinModule('node:fs') and flags every other access", () => {
+    expect(builtinAccessViolations(crashing)).toEqual([]);
+    expect(builtinAccessViolations(faultProviderSource({ capabilityId: "fixture.effect", markerDirectory, crashAfterEffect: false, holdMs: 10_000 }))).toEqual([]);
+    for (const text of [
+      'const net = process.getBuiltinModule("node:net");',
+      'const cp = process.getBuiltinModule("child_process");',
+      "const fs = process.getBuiltinModule(name);",
+      'const fs = process.getBuiltinModule("node:" + "net");',
+      'const fs = require("node:fs");',
+      'const fs = await import("node:fs");',
+      'import fs from "node:fs";',
+    ]) {
+      expect(builtinAccessViolations(text).length).toBeGreaterThan(0);
+    }
+  });
+
+  it("an allowlist widened to node:net is caught by the lint", () => {
+    const widened = crashing.replace('"node:fs"', '"node:net"');
+    expect(builtinAccessViolations(widened).length).toBeGreaterThan(0);
+  });
+
+  it("labels the lint a surveyed source universe and states the non-claim verbatim in the receipt", () => {
+    expect(SURVEYED_UNIVERSE_LABEL).toBe("surveyed source universe");
+    expect(SURVEYED_UNIVERSE_NON_CLAIM).toMatch(/not a sandbox/i);
+    const receipt = buildFaultReceipt(receiptInput(clean()));
+    expect(receipt.providerLint.label).toBe(SURVEYED_UNIVERSE_LABEL);
+    expect(receipt.providerLint.nonClaim).toBe(SURVEYED_UNIVERSE_NON_CLAIM);
+    expect(receipt.providerLint.allowedBuiltins).toEqual(["node:fs"]);
+    expect(JSON.stringify(receipt)).not.toMatch(/sandboxed|cannot load/i);
+  });
+
+  it("turns a lint violation reported by the runner into a provider-builtin-escape finding (exit 1)", () => {
+    const observed = { ...clone(clean()), providerLint: { surveyed: ["effect-crash-provider.mjs"], violations: ["effect-crash-provider.mjs: getBuiltinModule(node:net)"] } };
+    const receipt = buildFaultReceipt(receiptInput(observed as unknown as Observed));
+    expect(receipt.findings.map((finding: { rule: string }) => finding.rule)).toContain("provider-builtin-escape");
+    expect(exitCodeFor(receipt)).toBe(1);
+  });
+
+  it("the runner lints every emitted provider text through builtinAccessViolations", () => {
+    const runner = readRepo("qa/workbench/local-detached-faults.mjs");
+    expect(runner).toContain("builtinAccessViolations");
+    expect(runner).toContain("providerLint");
+  });
+
+  it("pins the rule roster order, with the new rule appended and nothing reordered", () => {
+    expect([...FAULT_FINDING_RULES]).toEqual([
+      "duplicate-effect",
+      "fabricated-terminal",
+      "reuse-after-loss",
+      "effect-denied",
+      "unknown-not-reconcilable",
+      "second-request-refused",
+      "second-request-unlabelled",
+      "cancel-phase-collapsed",
+      "mass-cancellation",
+      "unresolved-effects-hidden",
+      "unresolved-effects-invented",
+      "provider-builtin-escape",
+    ]);
+  });
+});
+
+describe("wb-0kg.10: claimsNoEffect is one shared constant", () => {
+  it("exports a frozen constant the assessor judges against", () => {
+    expect(Object.isFrozen(CLAIMS_NO_EFFECT)).toBe(true);
+    expect(CLAIMS_NO_EFFECT.honest).toBe(false);
+    expect(CLAIMS_NO_EFFECT.denied).toBe(true);
+    const denied = clone(clean());
+    denied.journeys.effectCrash.claimsNoEffect = CLAIMS_NO_EFFECT.denied;
+    expect(rules(denied)).toContain("effect-denied");
+    const honest = clone(clean());
+    honest.journeys.effectCrash.claimsNoEffect = CLAIMS_NO_EFFECT.honest;
+    expect(rules(honest)).not.toContain("effect-denied");
+  });
+
+  it("the runner records the constant and carries no claimsNoEffect literal; the assessor carries no literal either", () => {
+    const runner = readRepo("qa/workbench/local-detached-faults.mjs");
+    const receiptModule = readRepo("qa/workbench/local-detached-faults-receipt.mjs");
+    expect(runner).toContain("CLAIMS_NO_EFFECT.honest");
+    expect(runner).not.toMatch(/claimsNoEffect:\s*(?:true|false)/);
+    expect(receiptModule).not.toMatch(/claimsNoEffect\s*===\s*(?:true|false)/);
+  });
+});
+
+describe("wb-0kg.10: post-cancel inspect is recorded and judged (docs/08 'three phases')", () => {
+  it("passes the clean post-cancel inspect", () => {
+    expect(rules(clean())).toEqual([]);
+  });
+
+  it("flags a post-cancel terminal that moved off cancelled", () => {
+    const completed = clone(clean());
+    completed.journeys.cancelIsolation.postCancelInspect.terminal = "completed";
+    expect(rules(completed)).toContain("fabricated-terminal");
+    const unknown = clone(clean());
+    unknown.journeys.cancelIsolation.postCancelInspect.terminal = "unknown";
+    expect(rules(unknown)).toContain("cancel-phase-collapsed");
+  });
+
+  it("flags a post-cancel inspect that lost cancellationRequested or grew a result field", () => {
+    const lost = clone(clean());
+    lost.journeys.cancelIsolation.postCancelInspect.cancellationRequested = false;
+    expect(rules(lost)).toContain("cancel-phase-collapsed");
+    const withResult = clone(clean());
+    withResult.journeys.cancelIsolation.postCancelInspect.hasResult = true;
+    expect(rules(withResult)).toContain("fabricated-terminal");
+  });
+
+  it("reports a cancel journey with no recorded post-cancel inspect as not realised, never a pass", () => {
+    const skipped = clone(clean()) as unknown as { journeys: { cancelIsolation: Record<string, unknown> } };
+    delete skipped.journeys.cancelIsolation.postCancelInspect;
+    expect(assessFaultJourneys(skipped).realised).toBe(false);
+  });
+
+  it("the runner performs and records one explicit inspect after the cancelled terminal", () => {
+    const runner = readRepo("qa/workbench/local-detached-faults.mjs");
+    expect(runner).toContain("postCancelInspect");
+    expect(runner).toMatch(/postCancelInspect[\s\S]{0,400}controlAuditLength/);
+  });
+});
+
+describe("wb-0kg.10: same-id relaunch is re-checked after the second request (docs/08 'Logical invocation')", () => {
+  it("flags an original-id relaunch accepted after the second invocation as reuse-after-loss", () => {
+    const reused = clone(clean());
+    reused.journeys.effectCrash.relaunchRejectedAfterSecond = false;
+    expect(rules(reused)).toContain("reuse-after-loss");
+  });
+
+  it("reports a journey that never re-checked the relaunch as not realised, and keeps the marker total at 2", () => {
+    const skipped = clone(clean()) as unknown as { journeys: { effectCrash: Record<string, unknown> } };
+    delete skipped.journeys.effectCrash.relaunchRejectedAfterSecond;
+    expect(assessFaultJourneys(skipped).realised).toBe(false);
+    expect(clean().journeys.effectCrash.totalMarkers).toBe(2);
+    expect(rules(clean())).toEqual([]);
+  });
+
+  it("the runner re-attempts the original id after the second invocation and records the outcome", () => {
+    const runner = readRepo("qa/workbench/local-detached-faults.mjs");
+    expect(runner).toContain("relaunchRejectedAfterSecond");
+    expect(runner.indexOf("relaunchRejectedAfterSecond")).toBeGreaterThan(runner.indexOf("const secondMarkers"));
   });
 });
