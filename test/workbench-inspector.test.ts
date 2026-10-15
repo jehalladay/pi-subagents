@@ -870,7 +870,7 @@ describe('W15-A lazy bounded evidence in the details view (wb-g1g.1, docs/workbe
    expect(source.calls).toHaveLength(0);
  });
 
- it('A11 claude evidence is denied without the claude:transcript grant and loaded with it',async()=>{
+ it('A11 claude evidence is refused unauthorized without the claude:transcript grant, rendered byte-identical to a revoked grant, and loaded with it',async()=>{
    const uuid='aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee';
    const build=(grants:string[])=>{
      const projection=new ObservationProjection({maxEvents:16,maxNodes:100,maxEdges:100,maxQuery:40});
@@ -882,8 +882,12 @@ describe('W15-A lazy bounded evidence in the details view (wb-g1g.1, docs/workbe
    };
    const denied=build([]);const state=toDetails(denied.model);const node=inspectorEvidenceTarget(denied.model,state)!;
    await denied.store.request(node.scope,node.nativeRef,node.evidenceRef);
-   expect(text(denied.model,state,sizes[1],true)).toContain('unavailable: no-loader');
+   expect(text(denied.model,state,sizes[1],true)).toContain('unavailable: unauthorized');
    expect(denied.readRows).not.toHaveBeenCalled();
+   const held=[CLAUDE_TRANSCRIPT_GRANT];const revoked=build(held);held.length=0;
+   await revoked.store.request(node.scope,node.nativeRef,node.evidenceRef);
+   expect(text(denied.model,state,sizes[1],true)).toBe(text(revoked.model,toDetails(revoked.model),sizes[1],true));
+   expect(revoked.readRows).not.toHaveBeenCalled();
    const granted=build([CLAUDE_TRANSCRIPT_GRANT]);
    await granted.store.request(node.scope,node.nativeRef,node.evidenceRef);
    expect(text(granted.model,toDetails(granted.model),sizes[1],true)).toContain('claude says hi');

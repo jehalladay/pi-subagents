@@ -294,19 +294,37 @@ describe('grant-gated producer loaders (docs/workbench/20 § Producer mapping)',
   const claudeRef = native('claude-agent-sdk', 'session-1', 'session');
   const grants = (...held: string[]) => { const list = [...held]; return { list, read: () => list }; };
 
-  it('builds a loader only for a producer whose exact grant is held and whose reader was supplied', () => {
+  it('builds a loader for each supplied reader; without its exact grant every load refuses unauthorized and reads nothing', async () => {
     const readers = { claude: vi.fn(async () => []), furnace: vi.fn(), forge: vi.fn() };
-    expect(createEvidenceLoaders({ grants: () => [], ...readers })).toHaveLength(0);
-    expect(createEvidenceLoaders({ grants: () => ['claude:transcript-x', 'furnace:*', 'FORGE:INSPECT'], ...readers })).toHaveLength(0);
+    const targets: ReadonlyArray<readonly [NativeRef, string]> = [
+      [claudeRef, `claude-message:${uuid}`],
+      [native('furnace', 'run-1', 'run'), 'attempt-1'],
+      [native('forge', 'pkg', 'gate-status'), 'forge-operation:op-1'],
+    ];
+    for (const held of [[], ['claude:transcript-x', 'furnace:*', 'FORGE:INSPECT']]) {
+      const loaders = createEvidenceLoaders({ grants: () => held, ...readers });
+      expect(loaders.map(l => l.provider)).toEqual(['claude-agent-sdk', 'furnace', 'forge']);
+      const s = store(loaders);
+      for (const [ref, evidenceRef] of targets) {
+        await s.request(scope, ref, evidenceRef);
+        expect(s.get(scope, ref, evidenceRef)).toEqual({ state: 'unavailable', reason: 'unauthorized' });
+      }
+    }
+    for (const read of [readers.claude, readers.furnace, readers.forge]) expect(read).not.toHaveBeenCalled();
     expect(createEvidenceLoaders({ grants: () => [CLAUDE_TRANSCRIPT_GRANT, FURNACE_INSPECT_GRANT, FORGE_INSPECT_GRANT], ...readers }).map(l => l.provider)).toEqual(['claude-agent-sdk', 'furnace', 'forge']);
     expect(createEvidenceLoaders({ grants: () => [CLAUDE_TRANSCRIPT_GRANT] })).toHaveLength(0);
   });
 
-  it('claude: without the claude:transcript grant nothing is read and the ref is a visible no-loader', async () => {
+  it('claude: without the claude:transcript grant nothing is read and the ref refuses unauthorized, the same entry a revoked grant leaves', async () => {
     const readRows = vi.fn(async () => [{ type: 'user', uuid, text: 'hi' }]);
     const s = store(createEvidenceLoaders({ grants: () => [FORGE_INSPECT_GRANT], claude: readRows }));
     await s.request(scope, claudeRef, `claude-message:${uuid}`);
-    expect(s.get(scope, claudeRef, `claude-message:${uuid}`)).toEqual({ state: 'unavailable', reason: 'no-loader' });
+    expect(s.get(scope, claudeRef, `claude-message:${uuid}`)).toEqual({ state: 'unavailable', reason: 'unauthorized' });
+    const held = grants(CLAUDE_TRANSCRIPT_GRANT);
+    const revoked = store(createEvidenceLoaders({ grants: held.read, claude: readRows }));
+    held.list.length = 0;
+    await revoked.request(scope, claudeRef, `claude-message:${uuid}`);
+    expect(s.get(scope, claudeRef, `claude-message:${uuid}`)).toEqual(revoked.get(scope, claudeRef, `claude-message:${uuid}`));
     expect(readRows).not.toHaveBeenCalled();
   });
 
@@ -368,11 +386,11 @@ describe('grant-gated producer loaders (docs/workbench/20 § Producer mapping)',
     }
   });
 
-  it('furnace: no furnace:inspect grant means no loader and no read', async () => {
+  it('furnace: no furnace:inspect grant refuses unauthorized and reads nothing', async () => {
     const reader = vi.fn(async () => furnaceRead());
     const s = store(createEvidenceLoaders({ grants: () => [CLAUDE_TRANSCRIPT_GRANT], furnace: reader }));
     await s.request(scope, runRef, 'attempt-1');
-    expect(s.get(scope, runRef, 'attempt-1')).toEqual({ state: 'unavailable', reason: 'no-loader' });
+    expect(s.get(scope, runRef, 'attempt-1')).toEqual({ state: 'unavailable', reason: 'unauthorized' });
     expect(reader).not.toHaveBeenCalled();
   });
 

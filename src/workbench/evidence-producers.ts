@@ -1,7 +1,7 @@
 /**
  * Grant-gated producer loaders for the EvidenceStore (docs/workbench/20 § Producer mapping).
- * Each loader exists only while the host grant set holds its exact grant, and every load re-reads the
- * live grant set, so a mid-view revocation refuses with `unauthorized`. The producer reads themselves
+ * Every load re-reads the live grant set before any read, so a grant never held and one revoked mid-view
+ * refuse alike with `unauthorized` (§ Refusal rules). The producer reads themselves
  * are host-supplied narrow readers; this module never reaches a producer SDK or issues a control verb.
  */
 import { type EvidenceContent, type EvidenceLoader, EvidenceRefusal } from "./evidence-loader.js";
@@ -47,7 +47,7 @@ export interface ForgeEvidenceReader {
 }
 
 export interface EvidenceProducerOptions {
-  /** Read live on every build and every load; never captured. */
+  /** Read live on every load, before any read; never captured. */
   readonly grants: () => readonly string[];
   readonly claude?: ClaudeEvidenceReader;
   readonly furnace?: FurnaceEvidenceReader;
@@ -144,14 +144,14 @@ function forgeLoader(options: EvidenceProducerOptions, read: ForgeEvidenceReader
 }
 
 /**
- * Loaders for the producers whose exact grant the host currently holds and whose reader it supplied.
- * A producer without its grant gets no loader at all, so its refs render `unavailable: no-loader`.
+ * Loaders for the producers whose reader the host supplied; a producer without a reader gets no loader,
+ * so its refs render `unavailable: no-loader`. Authorization is the live exact-grant check each load runs
+ * first: a missing grant and a revoked one take that same path and leave the same `unauthorized` entry.
  */
 export function createEvidenceLoaders(options: EvidenceProducerOptions): readonly EvidenceLoader[] {
-  const held = new Set(options.grants());
   const loaders: EvidenceLoader[] = [];
-  if (options.claude && held.has(CLAUDE_TRANSCRIPT_GRANT)) loaders.push(claudeLoader(options, options.claude));
-  if (options.furnace && held.has(FURNACE_INSPECT_GRANT)) loaders.push(furnaceLoader(options, options.furnace));
-  if (options.forge && held.has(FORGE_INSPECT_GRANT)) loaders.push(forgeLoader(options, options.forge));
+  if (options.claude) loaders.push(claudeLoader(options, options.claude));
+  if (options.furnace) loaders.push(furnaceLoader(options, options.furnace));
+  if (options.forge) loaders.push(forgeLoader(options, options.forge));
   return loaders;
 }
