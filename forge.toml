@@ -6,7 +6,7 @@ language = "typescript"
 
 [build]
 backend = "typescript"
-gate = ["lint", "typing", "test", "build", "workbench-shell", "package-smoke"]
+gate = ["lint", "typing", "build", "test", "workbench-shell", "package-smoke"]
 
 [build.commands]
 lint = "npm run lint"
