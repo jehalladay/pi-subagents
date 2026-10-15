@@ -530,3 +530,39 @@ describe("requested < acknowledged < terminal, measured rather than assumed", ()
     expect(settled.get("wf-agent-1")?.result).toMatchObject({ ok: false, skipped: true, error: CANCELLED, sessionId: "sdk-f9-1" });
   });
 });
+
+describe("an abort that lands during the host's pre-dispatch await (wb-a2g.5, live finding init-after-abort)", () => {
+  it("F10 a run abort during beforeDispatch stops the agent before query(): no SDK call, settled as workflow aborted", async () => {
+    const sdk = fakeSdk({ policy: "reject" });
+    const run = runSignal();
+    let entered = false;
+    let release: () => void = () => {};
+    const parked = new Promise<void>(resolve => { release = resolve; });
+    const host = createClaudeWorkflowHost({ cwd: CWD, query: sdk.query, signal: run.signal, beforeDispatch: () => { entered = true; return parked; } });
+    const settled = host.spawnAgent(spawn("wf-agent-1", 1));
+    // The host has passed its first signal check and is waiting on the basis re-check.
+    for (let i = 0; i < 10 && !entered; i++) await Promise.resolve();
+    expect(entered).toBe(true);
+
+    // The sibling's init triggered the run abort while this agent sat in the await.
+    run.abort();
+    release();
+
+    const outcome = await Promise.race([settled, sdk.call(0).then(() => "query-started" as const)]);
+    expect(outcome).toEqual({ ok: false, skipped: true, error: WORKFLOW_ABORTED });
+    expect(sdk.calls).toHaveLength(0);
+  });
+
+  it("F10 control: the same sequence without the abort issues exactly one query", async () => {
+    const sdk = fakeSdk({ policy: "reject", script: call => { call.push(...sdkSuccess("sdk-f10", "done")); call.end(); } });
+    const run = runSignal();
+    let release: () => void = () => {};
+    const parked = new Promise<void>(resolve => { release = resolve; });
+    const host = createClaudeWorkflowHost({ cwd: CWD, query: sdk.query, signal: run.signal, beforeDispatch: () => parked });
+    const settled = host.spawnAgent(spawn("wf-agent-1", 1));
+    release();
+    const result = await settled;
+    expect(result).toMatchObject({ ok: true, sessionId: "sdk-f10" });
+    expect(sdk.calls).toHaveLength(1);
+  });
+});

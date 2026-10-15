@@ -153,9 +153,16 @@ export function createClaudeWorkflowHost(config: ClaudeWorkflowHostOptions): Wor
     try { await config.beforeDispatch?.(); } catch (error) {
       return { ok: false, error: error instanceof Error ? `${"code" in error ? String(error.code) + ": " : ""}${error.message}` : String(error) };
     }
+    // Re-checked after the await: a run abort that landed while the basis was
+    // being re-observed must stop this agent here, before any SDK session can
+    // start. A listener added to an already-aborted signal never fires, so the
+    // first check alone let a sibling start after the operator's cancel
+    // (wb-a2g.5, live finding init-after-abort).
+    if (config.signal?.aborted) return { ok: false, skipped: true, error: "Workflow aborted." };
     const controller = new AbortController();
     const onAbort = () => controller.abort();
     config.signal?.addEventListener("abort", onAbort, { once: true });
+    if (config.signal?.aborted) controller.abort();
     controllers.set(agentId, controller);
     const allowedTools = previous?.tools ?? role?.tools ?? tools;
     const effectiveEffort = previous?.effort ?? request?.effort ?? role?.effort;
