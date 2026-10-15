@@ -22,7 +22,7 @@ const uuid = (n: number): string => `00000000-0000-4000-8000-${n.toString(16).pa
 const TARGET = uuid(7);
 const refOf = (id: string): string => `claude-message:${id}`;
 /** Terminal escapes, C0/C1 controls, bidi marks and the zero-width set the preview pass strips. */
-const UNSAFE = /[\u0000-\u001f\u007f-\u009f‪-‮⁦-⁩​‌⁠﻿]|‍/;
+const UNSAFE = /[\u0000-\u001f\u007f-\u009f\u202a-\u202e\u2066-\u2069\u200b\u200c\u2060\ufeff]|\u200d/;
 
 const seams: Mock<Read>[] = [];
 afterEach(() => {
@@ -268,14 +268,14 @@ describe("C3 docs/workbench/09 § Data retention and privacy: bounded redacted p
   });
 
   it("strips terminal escapes, controls, bidi marks and zero-width characters from every line", async () => {
-    const content = await previewOf("\u001b[31mred\u001b[0m\u0007\tbell‮gnp​‍﻿end\nnext\u0000line");
+    const content = await previewOf("\u001b[31mred\u001b[0m\u0007\tbell\u202egnp\u200b\u200d\ufeffend\nnext\u0000line");
     for (const line of content.preview) expect(line).not.toMatch(UNSAFE);
     expect(content.preview.join("\n")).toContain("red");
     expect(content.preview.join("\n")).toContain("end");
   });
 
   it("a credential split by a zero-width character cannot reassemble past the redaction", async () => {
-    const content = await previewOf("Bea​rer abc123secret and api​_key=topsecretvalue1");
+    const content = await previewOf("Bea\u200brer abc123secret and api\u200b_key=topsecretvalue1");
     const serialized = JSON.stringify(content);
     expect(serialized).not.toContain("abc123secret");
     expect(serialized).not.toContain("topsecretvalue1");
@@ -338,7 +338,9 @@ describe("C3 docs/workbench/09 § Data retention and privacy: bounded redacted p
     expect(keysOf(content).sort()).toStrictEqual([
       "bytes", "capturedAt", "contract", "freshness", "id", "kind", "nativeRef", "preview", "provider", "provider", "truncated", "type",
     ].sort());
-    expect(Object.isFrozen(content.preview) || Array.isArray(content.preview)).toBe(true);
+    expect(Array.isArray(content.preview)).toBe(true);
+    expect(content.preview.every(line => typeof line === "string")).toBe(true);
+    expect(content.preview).toStrictEqual(["plain message"]);
   });
 
   it("the raw row object the seam returned is not retained by reference", async () => {
@@ -405,8 +407,16 @@ describe("cancellation and the caller's clock", () => {
     await new Promise<void>(resolve => setTimeout(resolve, 0));
     controller.abort();
     await pending;
-    fail(new Error("late"));
-    await new Promise<void>(resolve => setTimeout(resolve, 0));
+    const unhandled: unknown[] = [];
+    const onUnhandled = (reason: unknown): void => { unhandled.push(reason); };
+    process.on("unhandledRejection", onUnhandled);
+    try {
+      fail(new Error("late"));
+      await new Promise<void>(resolve => setTimeout(resolve, 20));
+    } finally {
+      process.off("unhandledRejection", onUnhandled);
+    }
+    expect(unhandled).toStrictEqual([]);
   });
 
   it("reads the caller's clock once, after the read answers, and rejects a non-ISO reading", async () => {
@@ -418,5 +428,59 @@ describe("cancellation and the caller's clock", () => {
       const error = await refusal(readClaudeMessageEvidence(refOf(TARGET), deps(seam(), { capturedAt: () => bad })));
       expect(error.category).toBe("validation");
     }
+  });
+});
+
+const ch = (point: number): string => String.fromCharCode(point);
+const SOFT_HYPHEN = ch(0x00ad);
+const ALM = ch(0x061c);
+const LRM = ch(0x200e);
+const RLM = ch(0x200f);
+/** Every character the preview must never carry: controls, soft hyphen, ALM, zero-width, LRM/RLM, bidi marks. */
+const HIDDEN = new RegExp(`[${["\\u0000-\\u001f", "\\u007f-\\u009f", "\\u00ad", "\\u061c", "\\u200b-\\u200f", "\\u202a-\\u202e", "\\u2060-\\u2064", "\\u2066-\\u2069", "\\ufeff"].join("")}]`);
+
+describe("wb-6ze.10 respin U4(a) docs/workbench/09 § Data retention and privacy: redact the WHOLE row once before any line split", () => {
+  const STRADDLES: readonly { label: string; text: string; secret: string }[] = [
+    { label: "Bearer then LF", text: "Authorization: Bearer\nabc123secret", secret: "abc123secret" },
+    { label: "Bearer then CRLF", text: "Authorization: Bearer\r\nabc123secret", secret: "abc123secret" },
+    { label: "password colon then LF", text: "password:\nhunter2hunter2", secret: "hunter2hunter2" },
+    { label: "api_key colon space then LF", text: "api_key: \nxyzsecretvalue", secret: "xyzsecretvalue" },
+    { label: "Basic then CR", text: "Basic\rdXNlcjpwYXNzc2VjcmV0", secret: "dXNlcjpwYXNzc2VjcmV0" },
+  ];
+  for (const { label, text, secret } of STRADDLES) {
+    it(`a credential straddling a line break does not leak its value (${label})`, async () => {
+      const content = await previewOf(text);
+      expect(JSON.stringify(content)).not.toContain(secret);
+      expect(content.preview.join("\n")).toContain(MARKER);
+    });
+  }
+
+  it("ordinary multi-line text still splits into the same lines (the whole-row pass is not a join)", async () => {
+    const content = await previewOf("alpha\r\nbeta\rgamma\ndelta");
+    expect(content.preview).toStrictEqual(["alpha", "beta", "gamma", "delta"]);
+  });
+});
+
+describe("wb-6ze.10 respin U4(b) wb-952 shape: strip default-ignorables and bidi marks BEFORE the single redaction", () => {
+  const PREFIXED: readonly { label: string; text: string; secret: string }[] = [
+    { label: "U+00AD inside Bearer", text: `Bea${SOFT_HYPHEN}rer abc123secret`, secret: "abc123secret" },
+    { label: "U+200E inside sk-ant-", text: `sk-ant-${LRM}api03-abcdef123456`, secret: "api03-abcdef123456" },
+    { label: "U+200F inside sk-ant-", text: `sk-ant-${RLM}api03-abcdef123456`, secret: "api03-abcdef123456" },
+    { label: "U+061C inside sk-ant-", text: `sk-ant-${ALM}api03-abcdef123456`, secret: "api03-abcdef123456" },
+  ];
+  for (const { label, text, secret } of PREFIXED) {
+    it(`a credential split by an invisible mark does not leak (${label})`, async () => {
+      const content = await previewOf(text);
+      const serialized = JSON.stringify(content);
+      expect(serialized).not.toContain(secret);
+      expect(content.preview.join("\n")).toContain(MARKER);
+      for (const line of content.preview) expect(line).not.toMatch(HIDDEN);
+    });
+  }
+
+  it("no preview line carries any hidden or bidi character after a mixed corpus", async () => {
+    const content = await previewOf(`a${SOFT_HYPHEN}b${ALM}c${LRM}d${RLM}e\nf${ch(0x200b)}g${ch(0x202e)}h${ch(0xfeff)}i`);
+    for (const line of content.preview) expect(line).not.toMatch(HIDDEN);
+    expect(content.preview).toStrictEqual(["abcde", "fghi"]);
   });
 });

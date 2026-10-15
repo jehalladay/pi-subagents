@@ -6,8 +6,10 @@
  * never fabricated and the window is never widened past the caller's bound. The exact `claude:transcript` grant is
  * checked against the live grant set before the read and again after it, so a mid-read revocation returns nothing.
  *
- * Preview lines are bounded in count, width and bytes and pass the shared sanitizers (redaction.ts) plus a local
- * zero-width strip; only the sanitized preview and the row's byte size leave this module, never the raw text, the
+ * Preview lines are bounded in count, width and bytes. The whole row is normalized once (wb-952 shape: whitespace
+ * controls to one space, terminal escapes, controls, bidi and every default-ignorable code point deleted), redacted
+ * once by the shared redactor (redaction.ts) and stripped once more, all BEFORE the newline split, so a credential
+ * cannot straddle a line break or hide behind an invisible mark; only the sanitized preview and the row's byte size leave this module, never the raw text, the
  * row object or any native error text. It registers nothing, states no verification, changes no node status or tone
  * and leaves the EvidenceLoader/EvidenceStore wrapper (wb-g1g.1) to consume it. An abort stops only this local wait.
  */
@@ -66,8 +68,13 @@ const MAX_LINE = 200;
 const MAX_SCAN = 4_000;
 const MARKER = "… truncated (bounded preview)";
 const MARKER_BYTES = Buffer.byteLength(MARKER, "utf8");
-/** U+200B-U+200D, U+2060 and U+FEFF as an alternation: a class holding the joiner U+200D lints as misleading. */
-const ZERO_WIDTH = /​|‌|‍|⁠|﻿/g;
+/** Every Unicode default-ignorable code point (soft hyphen, U+061C, zero-width, LRM/RLM, bidi, variation selectors). */
+const DEFAULT_IGNORABLE = /\p{Default_Ignorable_Code_Point}/gu;
+/** Whitespace controls other than the newline family, which the row split consumes later. */
+const SPACE_CONTROLS = /[\t\v\f\u0085\u2028\u2029]/g;
+const LINE_BREAKS = /\r\n|\r|\n/;
+/** The same break set as a capturing split, so the separators stay in the answer array. */
+const LINE_BREAKS_KEPT = /(\r\n|\r|\n)/;
 const ISO_INSTANT = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2}(?:\.\d{1,9})?)?(?:Z|[+-]\d{2}:\d{2})$/;
 
 const refused = (field: string): CapabilityError => new CapabilityError("validation", `Claude evidence read refused: invalid ${field}.`);
@@ -98,11 +105,25 @@ function clipBytes(value: string, bytes: number): string {
   return value.slice(0, end);
 }
 
-/** One producer line bound for display: redaction, the terminal sanitizer, the zero-width strip, then redaction once
- * more, so a credential an escape or zero-width character split from its scheme cannot reassemble past the first pass
- * (docs/20 owner ruling 2: the double redaction is deliberate and idempotent). Tabs become spaces first. */
-function sanitize(raw: string): { text: string; clipped: boolean } {
-  const text = redactWorkbenchText(stripUnsafeText(redactWorkbenchText(raw, MAX_SCAN).replace(/\t/g, " ")).replace(ZERO_WIDTH, ""), MAX_SCAN);
+/** Strip pass over a whole row: terminal escapes, controls and bidi marks by the shared stripper, then every
+ * default-ignorable code point. The newline family is kept, so the row can be split after redaction. */
+function stripRow(value: string): string {
+  return value
+    .split(LINE_BREAKS_KEPT)
+    .map((part, index) => (index % 2 === 1 ? part : stripUnsafeText(part).replace(DEFAULT_IGNORABLE, "")))
+    .join("");
+}
+
+/** One whole producer row bound for display, in the wb-952 order: normalize and strip, redact once, strip once more.
+ * Redaction sees the whole row, so a credential straddling a newline is one match; the split happens afterwards. */
+function sanitizeRow(raw: string): string {
+  const normalized = stripRow(raw.replace(SPACE_CONTROLS, " "));
+  // Redaction can lengthen a short token to the marker, so its text cap sits well above the scan bound.
+  return stripRow(redactWorkbenchText(normalized, MAX_SCAN * 4));
+}
+
+/** One display line: width-bounded, with an ellipsis when clipped. */
+function boundLine(text: string): { text: string; clipped: boolean } {
   return text.length <= MAX_LINE ? { text, clipped: false } : { text: `${clip(text, MAX_LINE - 1)}…`, clipped: true };
 }
 
@@ -205,9 +226,10 @@ export async function readClaudeMessageEvidence(ref: string, deps: ClaudeEvidenc
   if (typeof text !== "string" || typeof uuid !== "string") throw malformed();
 
   const scanned = clip(text, MAX_SCAN);
-  const rows = scanned.length === 0 ? [] : scanned.split(/\r\n|\r|\n/);
+  const sanitized = sanitizeRow(scanned);
+  const rows = sanitized.length === 0 ? [] : sanitized.split(LINE_BREAKS);
   if (rows.length > 0 && rows[rows.length - 1] === "") rows.pop();
-  const { preview, truncated } = shape(rows.map(sanitize), scanned.length !== text.length, maxLines, maxBytes);
+  const { preview, truncated } = shape(rows.map(boundLine), scanned.length !== text.length, maxLines, maxBytes);
 
   const stamp: unknown = capturedAt();
   if (typeof stamp !== "string" || stamp.length > 64 || !ISO_INSTANT.test(stamp) || !Number.isFinite(Date.parse(stamp))) throw refused("capturedAt clock reading");
