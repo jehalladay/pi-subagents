@@ -32,12 +32,21 @@ export interface FurnaceEvidenceReader {
   (input: { readonly runId: string; readonly attemptId: string; readonly maxBytes: number; readonly signal: AbortSignal }): Promise<FurnaceEvidenceRead>;
 }
 
-/** A re-read of one forge operation through the registered read capability. */
+/**
+ * A re-read of one forge operation through the registered read capability. A reader that already
+ * bounded and labelled its result (the landed forge-operation reader) hands the loader its own
+ * `preview`, `bytes`, `truncated` and `freshness`, which are carried verbatim; a reader that reports
+ * only status, verdict and lines gets the loader's synthesis with freshness "current".
+ */
 export interface ForgeEvidenceRead {
   readonly status: string;
   readonly verdict?: string;
   readonly lines?: readonly string[];
   readonly partial?: boolean;
+  readonly preview?: readonly string[];
+  readonly bytes?: number;
+  readonly truncated?: boolean;
+  readonly freshness?: EvidenceContent["freshness"];
   readonly capturedAt: string;
   readonly sourceBasis?: string;
   readonly producerReceipt?: string;
@@ -127,15 +136,18 @@ function forgeLoader(options: EvidenceProducerOptions, read: ForgeEvidenceReader
       if (operationId === undefined) throw new EvidenceRefusal("no-loader");
       const result = await read({ operationId, signal: request.signal });
       // A failed or partial domain verdict is a legitimate loaded result shown as its own status; transport success is not verification.
-      const preview = [`status: ${result.status}`, ...(result.verdict !== undefined ? [`verdict: ${result.verdict}`] : []), ...(result.lines ?? [])];
+      const preview = result.preview !== undefined
+        ? [...result.preview]
+        : [`status: ${result.status}`, ...(result.verdict !== undefined ? [`verdict: ${result.verdict}`] : []), ...(result.lines ?? [])];
       return {
         kind: "forge-operation",
         provider: "forge",
         capturedAt: result.capturedAt,
-        bytes: preview.reduce((sum, line) => sum + Buffer.byteLength(line), 0),
-        truncated: result.partial === true,
+        bytes: result.bytes ?? preview.reduce((sum, line) => sum + Buffer.byteLength(line), 0),
+        // A reader that labelled its own truncation or staleness is believed; nothing here upgrades a stale read to current.
+        truncated: result.truncated ?? result.partial === true,
         preview,
-        freshness: "current",
+        freshness: result.freshness ?? "current",
         ...(result.sourceBasis !== undefined ? { sourceBasis: result.sourceBasis } : {}),
         ...(result.producerReceipt !== undefined ? { producerReceipt: result.producerReceipt } : {}),
       } satisfies EvidenceContent;
