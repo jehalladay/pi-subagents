@@ -80,7 +80,7 @@ import {
   type WorkflowCardSegment,
   type WorkflowCardTask,
 } from "./workflow-card.js";
-import { type InspectorModel, type InspectorState, initialInspectorState, layoutInspector, reduceInspectorKey } from "./workflow-inspector.js";
+import { type InspectorModel, type InspectorState, initialInspectorState, inspectorEvidenceTarget, layoutInspector, reduceInspectorKey } from "./workflow-inspector.js";
 
 /** Fallback width when the caller does not know the terminal's. */
 const DEFAULT_WIDTH = 80;
@@ -1256,6 +1256,13 @@ export class WorkflowDialog implements Component {
         const item = source.observation.projection.window({scope:source.observation.scope,invocationId:source.observation.invocationId,offset:this.inspectorState.index,limit:1}).nodes[0];
         if (item?.nativeRef.provider === "claude-agent-sdk" && item.nativeRef.type === "session") this.actions.onOpenAgent?.(`claude:${item.nativeRef.id}`);
       }
+      else if (outcome.action === "load-evidence") {
+        // The reducer only names the request; the host-supplied store performs
+        // the one bounded load, and a settled slot re-renders the pane.
+        const target = inspectorEvidenceTarget(source.observation, this.inspectorState);
+        const pending = target !== undefined ? source.observation.evidence?.request(target.scope, target.nativeRef, target.evidenceRef) : undefined;
+        void pending?.then(() => { if (!this.closed) this.tui.requestRender(); });
+      }
       this.tui.requestRender();
       return;
     }
@@ -1299,7 +1306,17 @@ export class WorkflowDialog implements Component {
     this.progressSource = undefined;
   }
 
+  /** Stop local evidence reads only; a torn-down source must not block closing. */
+  private abortEvidence(): void {
+    try {
+      this.source().observation?.evidence?.abortAll();
+    } catch {
+      // The dialog may outlive its source; closing stays safe either way.
+    }
+  }
+
   dispose(): void {
+    this.abortEvidence();
     this.closed = true;
     if (this.timer) {
       clearInterval(this.timer);
@@ -1311,6 +1328,9 @@ export class WorkflowDialog implements Component {
     switch (action.kind) {
       case "cancel":
         this.closed = true;
+        // Closing the dialog stops only the local evidence reads — never the
+        // workflow and never a producer (docs/workbench/20 UI integration).
+        this.abortEvidence();
         this.done(undefined);
         return;
       case "kill":

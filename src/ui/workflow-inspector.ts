@@ -14,7 +14,7 @@ export interface InspectorModel {
   title: string;
   status: string;
   /** Read side of the lazy evidence store; absent means the details view renders exactly as before. */
-  evidence?: Pick<EvidenceStore, 'get'>;
+  evidence?: Pick<EvidenceStore, 'get' | 'request' | 'abortAll'>;
 }
 export interface InspectorState {
   view: InspectorView;

@@ -71,6 +71,7 @@ import { type CapabilityDescriptor, CapabilityRegistry } from "./workbench/capab
 import { createClaudeWorkflowHost } from "./workbench/claude-host.js";
 import { createClaudeObserver, readClaudeTranscript } from "./workbench/claude-transcript.js";
 import { type CompareRun, catalogWorkflows, compareWorkflowRuns, inspectWorkflowSource, validateWorkflowSource } from "./workbench/designer.js";
+import { createWorkbenchEvidenceStore } from "./workbench/evidence-wiring.js";
 import { FurnaceObserver } from "./workbench/furnace-observer.js";
 import { connectDetachedWorkflow, launchDetachedWorkflow } from "./workbench/hosts/local-detached.js";
 import { captureInvocationIdentity, type IdentityCaptureInput, identityDigest, verifyInvocationIdentity, WORKFLOW_SCRIPT_SCHEMA_VERSION } from "./workbench/identity.js";
@@ -4417,6 +4418,14 @@ Write the file using the write tool. Only write the file, nothing else.`;
     observation: {
       projection,
       scope: task => task.observationScope ? { workspace: task.observationScope.workspace, principal: task.observationScope.principal } : undefined,
+      // Loaders exist for the landed readers; authorization is the live
+      // exact-grant check each load runs (docs/workbench/20, wb-g1g.1 ruling).
+      evidence: createWorkbenchEvidenceStore({
+        grants: () => { const c = currentCtx as unknown as ExtensionCommandContext | undefined; return c ? grants(c) : []; },
+        scope: () => { const c = currentCtx as unknown as ExtensionCommandContext | undefined; return c ? observerScope(c) : undefined; },
+        projection,
+        cwd: () => (currentCtx as unknown as ExtensionCommandContext | undefined)?.cwd,
+      }),
     },
     getRecord: id => manager.getRecord(id),
     viewAgentConversation,
