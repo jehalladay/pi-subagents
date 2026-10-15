@@ -5,7 +5,7 @@ export function redactWorkbenchText(value: string, maxTextLength = 2000): string
   const redacted = value
     .replace(/\b(?:Bearer|Basic)\s+[^\s,;"']+/gi, "[REDACTED]")
     .replace(/\b(?:sk-ant-|sk-proj-|ghp_|github_pat_)[a-zA-Z0-9_-]+/g, "[REDACTED]")
-    .replace(/((?:api[_-]?key|access[_-]?token|refresh[_-]?token|password|secret|aws_secret_access_key|aws_session_token)["']?\s*[=:]\s*)(?:"[^"\n]*"|'[^'\n]*'|[^\s,;]+)/gi, "$1[REDACTED]");
+    .replace(/((?:api[_-]?key|access[_-]?token|refresh[_-]?token|password|secret|aws_secret_access_key|aws_session_token)["']?\s*[=:]\s*)(?:\[REDACTED\]|"[^"\n]*"|'[^'\n]*'|[^\s,;]+)/gi, "$1[REDACTED]");
   return redacted.length > maxTextLength ? `${redacted.slice(0, Math.max(0, maxTextLength - 20))} [truncated]` : redacted;
 }
 

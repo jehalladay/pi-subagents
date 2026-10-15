@@ -25,6 +25,32 @@ describe("Workbench credential redaction", () => {
   });
 });
 
+describe("redactWorkbenchText idempotence (wb-3l3)", () => {
+  // docs/20 ruling 2: "The double redaction in the sanitizer order is deliberate and idempotent."
+  it.each([
+    '{"password":"opaque"}',
+    '{"api_key":"private-deployment-value"}',
+    '{"aws_secret_access_key":"private-aws-value","note":"kept"}',
+    '{"a":{"secret":"x"},"b":1}',
+    "{'access_token': 'token-value'}",
+    "password: opaque",
+    "api_key=private-deployment-value; next=1",
+    "Authorization: Bearer sk-ant-audit-fake-secret",
+    "RF_WORKSPACE_NOT_FOUND: no initialized workspace",
+  ])("redact(redact(x)) equals redact(x) for %s", raw => {
+    const once = redactWorkbenchText(raw);
+    expect(redactWorkbenchText(once)).toBe(once);
+  });
+  it("keeps the closing brace of a JSON-embedded secret on the second pass", () => {
+    const once = redactWorkbenchText('{"password":"opaque"}');
+    expect(once).toBe('{"password":[REDACTED]}');
+    expect(redactWorkbenchText(once)).toBe('{"password":[REDACTED]}');
+  });
+  it("still redacts a raw value that merely follows an already-redacted marker field", () => {
+    expect(redactWorkbenchText('password=[REDACTED] secret=leaky')).toBe("password=[REDACTED] secret=[REDACTED]");
+  });
+});
+
 describe("native detail diagnostic hygiene", () => {
   it("does not render a producer credential in a selected error row", () => {
     const state = { ...initialWorkflowDialogState(), level: "node" as const, selectedNode: 0 };
