@@ -14,7 +14,7 @@
  * mutant (H4). Measurement only: nothing under src/ is touched or mocked.
  */
 import { spawnSync } from "node:child_process";
-import { cpSync, existsSync, mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdtempSync, readFileSync, realpathSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -26,6 +26,7 @@ import {
   EXPECTED_PI_TRANSITIVE,
   EXPECTED_UI_MODULES,
   exitCodeFor,
+  MEASUREMENT_BOUND,
 } from "../qa/workbench/headless-census-receipt.mjs";
 
 interface PiPackage {
@@ -38,6 +39,13 @@ interface Finding {
   rule: string;
   module: string;
   chain: string[];
+  detail?: string;
+}
+interface DistRecord {
+  root: string;
+  builtUtc: string | null;
+  olderThanSrc: boolean | null;
+  revisionDescribesDist: boolean;
 }
 interface Receipt {
   schema: string;
@@ -50,6 +58,9 @@ interface Receipt {
   uiModules: Array<{ module: string; chain: string[] }>;
   ttyFree: boolean;
   findings: Finding[];
+  measurementBound: string;
+  dist: DistRecord | null;
+  warnings: string[];
   pass: boolean;
 }
 interface Edge {
@@ -70,6 +81,7 @@ interface BuildInput {
   revision: string;
   node: string;
   allowlist?: Allowlist;
+  dist?: DistRecord;
 }
 
 const build = buildReceipt as (input: BuildInput) => Receipt;
@@ -259,6 +271,51 @@ describe("headless census receipt builder (fixture closures)", () => {
     expect(receipt.pass).toBe(false);
   });
 
+  it("fails a per-importer stale row naming dist/memory.js when MEMORY no longer imports pi-coding-agent (U3 / mutant G3)", () => {
+    const edges = baseEdges().filter(edge => !(edge.parent === MEMORY && edge.url === PI_CODING));
+    const receipt = receiptFor(edges);
+    const stale = receipt.findings.filter(entry => entry.rule === "stale-allowlist-row" && entry.module === "@earendil-works/pi-coding-agent");
+    expect(stale).toHaveLength(1);
+    expect(stale[0]?.detail).toContain("dist/memory.js");
+    expect(stale[0]?.detail).toContain("no longer imports");
+    expect(stale[0]?.chain.at(-1)).toBe("@earendil-works/pi-coding-agent");
+    expect(receipt.pass).toBe(false);
+    expect(exitFor(receipt)).toBe(1);
+  });
+
+  it("enforces the allowlist 'through' field: a row reached around its named package goes red (F5)", () => {
+    const viaTypescript = baseEdges()
+      .filter(edge => edge.url !== PI_TUI)
+      .concat([{ parent: `${ROOT}node_modules/typescript/lib/typescript.js`, url: PI_TUI }]);
+    const receipt = receiptFor(viaTypescript);
+    const finding = receipt.findings.find(entry => entry.rule === "through-chain-mismatch");
+    expect(finding?.module).toBe("@earendil-works/pi-tui");
+    expect(finding?.detail).toContain("@earendil-works/pi-coding-agent");
+    expect(finding?.chain).toEqual(["dist/workbench/hosts/local-detached.js", "typescript", "@earendil-works/pi-tui"]);
+    expect(receipt.pass).toBe(false);
+    // Reached through the named package, the same row passes.
+    expect(receiptFor(baseEdges()).findings.map(entry => entry.rule)).not.toContain("through-chain-mismatch");
+  });
+
+  it("states the per-thread measurement bound in the receipt (F8)", () => {
+    const receipt = receiptFor(baseEdges());
+    expect(receipt.measurementBound).toBe(MEASUREMENT_BOUND);
+    expect(MEASUREMENT_BOUND).toMatch(/per-thread/);
+    expect(MEASUREMENT_BOUND).toMatch(/worker-thread/);
+    expect(MEASUREMENT_BOUND).toMatch(/lazy imports/);
+  });
+
+  it("records the measured dist and surfaces a dist older than src as a non-failing warning (F4)", () => {
+    const fresh = receiptFor(baseEdges(), { dist: { root: "/repo", builtUtc: "2026-10-15T00:00:00Z", olderThanSrc: false, revisionDescribesDist: true } });
+    expect(fresh.dist).toEqual({ root: "/repo", builtUtc: "2026-10-15T00:00:00Z", olderThanSrc: false, revisionDescribesDist: true });
+    expect(fresh.warnings).toEqual([]);
+    const stale = receiptFor(baseEdges(), { dist: { root: "/elsewhere", builtUtc: "2026-10-14T00:00:00Z", olderThanSrc: true, revisionDescribesDist: false } });
+    expect(stale.warnings).toEqual([expect.stringContaining("dist-older-than-src")]);
+    expect(stale.pass).toBe(true);
+    expect(exitFor(stale)).toBe(0);
+    expect(receiptFor(baseEdges()).dist).toBeNull();
+  });
+
   it("uses the frozen default allowlist when none is injected", () => {
     const receipt = build({ edges: baseEdges(), entryUrl: ENTRY, root: ROOT, ttyFree: true, utc: "u", revision: "r", node: "n" });
     expect(receipt.pass).toBe(false);
@@ -287,7 +344,7 @@ describe("frozen allowlist (H3)", () => {
       "@earendil-works/pi-codemode",
       "@earendil-works/pi-mcp",
     ]);
-    expect(EXPECTED_PI_TRANSITIVE.some(name => name in EXPECTED_PI_CLOSURE)).toBe(false);
+    expect(EXPECTED_PI_TRANSITIVE.some((name: string) => name in EXPECTED_PI_CLOSURE)).toBe(false);
     expect(Object.isFrozen(EXPECTED_UI_MODULES)).toBe(true);
     expect(EXPECTED_UI_MODULES).toEqual([]);
   });
@@ -348,6 +405,54 @@ describe("headless census runner over the built dist (H1, H4, H5)", () => {
     }
   });
 
+  it.skipIf(!built)("records the measured dist root and provenance in the receipt (F4)", { timeout: 120_000 }, () => {
+    const { receipt } = runCensus(packageRoot);
+    expect(receipt?.dist?.root).toBe(realpathSync(packageRoot));
+    expect(receipt?.dist?.revisionDescribesDist).toBe(true);
+    expect(typeof receipt?.dist?.olderThanSrc).toBe("boolean");
+    expect(receipt?.dist?.builtUtc).toMatch(/^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\dZ$/);
+    expect(receipt?.measurementBound).toBe(MEASUREMENT_BOUND);
+  });
+
+  it.skipIf(!built)("measures a symlinked dist root as itself, not as an inactive tracer (F3)", { timeout: 120_000 }, () => {
+    const scratch = mkdtempSync(join(tmpdir(), "hc."));
+    try {
+      const link = join(scratch, "linked-root");
+      symlinkSync(packageRoot, link, "dir");
+      const { status, stderr, receipt } = runCensus(link);
+      expect(stderr).not.toMatch(/tracer not active/);
+      expect(receipt?.findings).toEqual([]);
+      expect(receipt?.pass).toBe(true);
+      expect(status).toBe(0);
+      expect(receipt?.dist?.root).toBe(realpathSync(packageRoot));
+      expect(receipt?.closure.length ?? 0).toBeGreaterThan(50);
+    } finally {
+      rmSync(scratch, { recursive: true, force: true });
+    }
+  });
+
+  it.skipIf(!built)("the child itself traces from the real path when handed a symlinked dist root (F3)", { timeout: 120_000 }, () => {
+    const scratch = mkdtempSync(join(tmpdir(), "hc."));
+    try {
+      const link = join(scratch, "linked-root");
+      symlinkSync(packageRoot, link, "dir");
+      const child = spawnSync(process.execPath, [join(packageRoot, "qa/workbench/headless-census-child.mjs"), link], {
+        cwd: packageRoot,
+        input: "",
+        encoding: "utf8",
+        maxBuffer: 64 * 1024 * 1024,
+        env: { ...process.env, PI_CODING_AGENT_DIR: "/nonexistent-pi-agent-dir" },
+      });
+      expect(child.status).toBe(0);
+      const measured = JSON.parse(child.stdout) as { entryUrl: string; edges: Edge[] };
+      const realEntry = pathToFileURL(join(realpathSync(packageRoot), "dist/workbench/hosts/local-detached.js")).href;
+      expect(measured.entryUrl).toBe(realEntry);
+      expect(measured.edges.some(edge => edge.parent === realEntry)).toBe(true);
+    } finally {
+      rmSync(scratch, { recursive: true, force: true });
+    }
+  });
+
   it("is measurement-only: never launches a session, a socket or a detached host process", () => {
     for (const file of ["headless-host-census.mjs", "headless-census-child.mjs", "headless-census-receipt.mjs"]) {
       const text = readFileSync(join(packageRoot, "qa/workbench", file), "utf8");
@@ -362,5 +467,65 @@ describe("headless census runner over the built dist (H1, H4, H5)", () => {
     expect(toml).toContain('command = "node qa/workbench/headless-host-census.mjs"');
     const gate = /^gate = (\[[^\]]*\])/m.exec(toml)?.[1] ?? "";
     expect(gate).not.toContain("headless-host-census");
+  });
+});
+
+
+describe("TTY measurement is made inside the child on all three standard streams (H1, U2)", () => {
+  const packageRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+  const child = join(packageRoot, "qa/workbench/headless-census-child.mjs");
+  const built = existsSync(join(packageRoot, "dist/workbench/hosts/local-detached.js"));
+  const hasScript = spawnSync("script", ["--version"], { encoding: "utf8" }).status === 0;
+  const quote = (text: string) => `'${text.replaceAll("'", "'\\''")}'`;
+
+  interface Attached {
+    stdin: boolean;
+    stdout: boolean;
+    stderr: boolean;
+  }
+
+  /** Runs the child under util-linux `script` so every stream left unredirected is a PTY. */
+  function measureUnderPty(attached: Attached): { ttyFree: boolean | undefined; status: number | null } {
+    const scratch = mkdtempSync(join(tmpdir(), "hc."));
+    try {
+      const outFile = join(scratch, "out.json");
+      const parts = [quote(process.execPath), quote(child), quote(packageRoot)];
+      if (!attached.stdin) parts.push("</dev/null");
+      if (!attached.stdout) parts.push(`>${quote(outFile)}`);
+      if (!attached.stderr) parts.push("2>/dev/null");
+      const run = spawnSync("script", ["-qec", parts.join(" "), "/dev/null"], {
+        cwd: packageRoot,
+        input: "",
+        encoding: "utf8",
+        maxBuffer: 64 * 1024 * 1024,
+        env: { ...process.env, PI_CODING_AGENT_DIR: "/nonexistent-pi-agent-dir" },
+      });
+      const text = (existsSync(outFile) ? readFileSync(outFile, "utf8") : run.stdout).replaceAll("\r", "");
+      const flag = /"ttyFree":(true|false)/.exec(text)?.[1];
+      const parsed = flag === undefined ? undefined : { ttyFree: flag === "true" };
+      return { ttyFree: parsed?.ttyFree, status: run.status };
+    } finally {
+      rmSync(scratch, { recursive: true, force: true });
+    }
+  }
+
+  const cases: Array<[string, Attached]> = [
+    ["stdin only", { stdin: true, stdout: false, stderr: false }],
+    ["stdout only", { stdin: false, stdout: true, stderr: false }],
+    ["stderr only", { stdin: false, stdout: false, stderr: true }],
+    ["all three", { stdin: true, stdout: true, stderr: true }],
+  ];
+  for (const [label, attached] of cases) {
+    it.skipIf(!built || !hasScript)(`the child reports ttyFree false with a PTY on ${label}`, { timeout: 120_000 }, () => {
+      const measured = measureUnderPty(attached);
+      expect(measured.status).toBe(0);
+      expect(measured.ttyFree).toBe(false);
+    });
+  }
+
+  it.skipIf(!built || !hasScript)("the child reports ttyFree true when no stream is a PTY", { timeout: 120_000 }, () => {
+    const measured = measureUnderPty({ stdin: false, stdout: false, stderr: false });
+    expect(measured.status).toBe(0);
+    expect(measured.ttyFree).toBe(true);
   });
 });

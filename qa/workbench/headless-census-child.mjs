@@ -11,15 +11,17 @@
  * a socket, never starts a detached host process and never creates a Pi session.
  */
 import { registerHooks } from "node:module";
+import { realpathSync } from "node:fs";
 import { isatty } from "node:tty";
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
 
-const distRoot = process.argv[2];
-if (!distRoot) {
+if (!process.argv[2]) {
   console.error("usage: headless-census-child.mjs <dist-root>");
   process.exit(2);
 }
+// Node resolves imports through symlinks, so the trace reports real paths; measure from the real root (F3).
+const distRoot = realpathSync(process.argv[2]);
 
 const ttyFree = [0, 1, 2].every(fd => !isatty(fd));
 const seen = new Set();

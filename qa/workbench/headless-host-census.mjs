@@ -14,7 +14,7 @@
  * qa/workbench/local-detached-client.mjs). Needs a built dist (`npm run build`).
  */
 import { spawnSync } from "node:child_process";
-import { existsSync, writeFileSync } from "node:fs";
+import { existsSync, readdirSync, realpathSync, statSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { buildReceipt, exitCodeFor } from "./headless-census-receipt.mjs";
@@ -28,8 +28,14 @@ function option(name) {
   return at === -1 ? undefined : args[at + 1];
 }
 
-const distRoot = resolve(option("--dist-root") ?? packageRoot);
+const requestedRoot = resolve(option("--dist-root") ?? packageRoot);
 const out = option("--out");
+if (!existsSync(requestedRoot)) {
+  console.error(`headless census: ${requestedRoot} not found`);
+  process.exit(2);
+}
+// Node resolves imports through symlinks, so the trace reports real paths; classify against the real root (F3).
+const distRoot = realpathSync(requestedRoot);
 const entry = join(distRoot, "dist/workbench/hosts/local-detached.js");
 if (!existsSync(entry)) {
   console.error(`headless census: ${entry} not found; run \`npm run build\` first`);
@@ -61,7 +67,29 @@ function git(...gitArgs) {
   return result.status === 0 ? result.stdout.trim() : undefined;
 }
 
+function newestSrcMtimeMs() {
+  const srcDir = join(packageRoot, "src");
+  if (!existsSync(srcDir)) return undefined;
+  let newest = 0;
+  for (const dirent of readdirSync(srcDir, { recursive: true, withFileTypes: true })) {
+    if (dirent.isFile()) newest = Math.max(newest, statSync(join(dirent.parentPath, dirent.name)).mtimeMs);
+  }
+  return newest === 0 ? undefined : newest;
+}
+
+// F4: bind the receipt to the dist it measured. `revision` describes the runner's repository, so
+// it describes the measured dist only when the dist root is that repository.
+const entryMtimeMs = statSync(entry).mtimeMs;
+const srcMtimeMs = newestSrcMtimeMs();
+const dist = {
+  root: distRoot,
+  builtUtc: new Date(entryMtimeMs).toISOString().replace(/\.\d+Z$/, "Z"),
+  olderThanSrc: srcMtimeMs === undefined ? null : entryMtimeMs < srcMtimeMs,
+  revisionDescribesDist: distRoot === realpathSync(packageRoot),
+};
+
 const receipt = buildReceipt({
+  dist,
   edges: measured.edges,
   entryUrl: measured.entryUrl,
   root: pathToFileURL(`${distRoot}/`).href,
@@ -74,6 +102,7 @@ const receipt = buildReceipt({
 const text = `${JSON.stringify(receipt, null, 2)}\n`;
 if (out) writeFileSync(resolve(out), text);
 process.stdout.write(text);
+for (const warning of receipt.warnings) console.error(`warning: ${warning}`);
 for (const finding of receipt.findings) {
   console.error(`${finding.rule}: ${finding.module}${finding.chain.length > 0 ? ` <- ${[...finding.chain].reverse().slice(1).join(" <- ")}` : ""}${finding.detail ? ` (${finding.detail})` : ""}`);
 }

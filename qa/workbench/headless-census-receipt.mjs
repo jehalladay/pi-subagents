@@ -7,6 +7,11 @@
 
 export const CENSUS_SCHEMA = "workbench.headless-census/v1";
 
+/** What this receipt does and does not measure (F8). module.registerHooks is per-thread, so the
+ * trace covers one thread's static boot only. An unstated bound reads as a claim about everything. */
+export const MEASUREMENT_BOUND =
+  "registerHooks is per-thread: worker-thread module graphs and lazy imports made at run time while a workflow script executes are outside this receipt; it covers the import, construct and validateScript boot of the detached host in one thread.";
+
 const PI_SCOPE = "@earendil-works/";
 const HEADLESS_CAVEAT =
   "A headless boot currently loads this Pi package as a library; that is a caveat to record, not a TUI launch (docs/workbench/16 Migration acceptance is about launching Pi's TUI process). Homing it out of the detached closure is owner-held W16 refactor work.";
@@ -115,7 +120,7 @@ function traceActive(edges, entryUrl) {
   return edges.some(edge => edge.parent === entryUrl);
 }
 
-export function buildReceipt({ edges, entryUrl, root, ttyFree, utc, revision, node, worktreeClean, allowlist = DEFAULT_ALLOWLIST }) {
+export function buildReceipt({ edges, entryUrl, root, ttyFree, utc, revision, node, worktreeClean, allowlist = DEFAULT_ALLOWLIST, dist = null }) {
   const graph = buildClosure({ edges, entryUrl, root });
   const findings = [];
   const present = new Set(graph.names);
@@ -167,6 +172,10 @@ export function buildReceipt({ edges, entryUrl, root, ttyFree, utc, revision, no
         findings.push({ rule: "stale-allowlist-row", module: name, chain: measured.chain, detail: `${via} no longer imports ${name}; trim the row in this commit` });
       }
     }
+    // F5: a row that names `through` is only valid while the measured first chain passes through it.
+    if (listed.through && !measured.chain.slice(0, -1).includes(listed.through)) {
+      findings.push({ rule: "through-chain-mismatch", module: name, chain: measured.chain, detail: `${name} is allowlisted as reached through ${listed.through} but the measured chain does not pass through it` });
+    }
   }
   for (const name of allowlist.piTransitive) {
     if (!present.has(name)) {
@@ -188,6 +197,11 @@ export function buildReceipt({ edges, entryUrl, root, ttyFree, utc, revision, no
     }
   }
 
+  const warnings = [];
+  if (dist?.olderThanSrc === true) {
+    warnings.push(`dist-older-than-src: the measured dist at ${dist.root} predates the newest src file; rebuild before relying on this receipt`);
+  }
+
   return {
     schema: CENSUS_SCHEMA,
     utc,
@@ -200,6 +214,9 @@ export function buildReceipt({ edges, entryUrl, root, ttyFree, utc, revision, no
     piPackages,
     uiModules,
     ttyFree: ttyFree === true,
+    measurementBound: MEASUREMENT_BOUND,
+    dist,
+    warnings,
     findings,
     pass: findings.length === 0,
   };
