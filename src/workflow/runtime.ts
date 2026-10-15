@@ -366,8 +366,15 @@ export interface RunWorkflowOptions {
   journal?: {
     /** A previous run's settled calls, in position order. Empty replays nothing. */
     entries?: readonly WorkflowJournalEntry[];
-    /** Called as each call of *this* run settles, so it can be resumed in turn. */
-    append?(entry: WorkflowJournalEntry): void;
+    /**
+     * Called for each row this run records — as each call settles, and once
+     * BEFORE a non-read node is dispatched (its `dispatched` marker) — so it
+     * can be resumed in turn. Report a row that did not reach the journal by
+     * returning `false` or throwing; any other return means written. A lost
+     * dispatch marker refuses that call fail-closed (docs/workbench/08); every
+     * other lost row costs a later resume, never this run (journal.ts).
+     */
+    append?(entry: WorkflowJournalEntry): unknown;
   };
 }
 
@@ -710,6 +717,20 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
 
   const journalEntries = options.journal?.entries ?? [];
   const recordJournal = options.journal?.append;
+  /**
+   * Hand one row to the journal; true when it was written. Never throws, so a
+   * failing journal cannot strand the call that wrote it: what a lost row
+   * costs is decided by the one caller that reads the answer (a non-read
+   * dispatch), and nowhere else.
+   */
+  const appendRow = (entry: WorkflowJournalEntry): boolean => {
+    if (recordJournal === undefined) return false;
+    try {
+      return recordJournal(entry) !== false;
+    } catch {
+      return false;
+    }
+  };
   /** Agent entries only, in position order — the prefix walk never sees nodes. */
   const agentJournal = journalEntries.filter(entry => entry.kind === undefined);
   /**
@@ -1036,7 +1057,7 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
         // Re-recorded so this run's journal is complete on its own terms: a
         // resume of a resume must not have to walk back through a chain of
         // earlier files to find the prefix.
-        recordJournal?.({ index, key: replayed.key, ok: true, text: replayedText, ...basisMark });
+        appendRow({ index, key: replayed.key, ok: true, text: replayedText, ...basisMark });
         respond(callId, true, replayedText);
         return;
       }
@@ -1046,7 +1067,7 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
 
       /** A skip the user asked for, before the child ever started. */
       const settleSkipped = (extra: Partial<WorkflowAgentEntry>) => {
-        recordJournal?.({ index, key, ok: false, ...resumeMark, ...basisMark });
+        appendRow({ index, key, ok: false, ...resumeMark, ...basisMark });
         emit([{ ...base, queuedAt, ...extra, state: "error", skipped: true, error: "Skipped by user." }]);
         // `null`, exactly as a terminal failure gives — a skipped agent is one
         // the script's `.filter(Boolean)` was already written to survive.
@@ -1222,14 +1243,14 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
           if (result.ok) {
             const text = result.text ?? "";
             emit([{ ...common, state: "done", resultPreview: preview(text) }]);
-            recordJournal?.({ index, key, ok: true, text, ...resumeMark, ...basisMark });
+            appendRow({ index, key, ok: true, text, ...resumeMark, ...basisMark });
             respond(callId, true, text);
             return;
           }
           // Recorded as a failure rather than left out: a gap would be read as an
           // unchanged prefix on the next resume, silently skipping the retry this
           // whole mechanism exists to make cheap.
-          recordJournal?.({ index, key, ok: false, ...resumeMark, ...basisMark });
+          appendRow({ index, key, ok: false, ...resumeMark, ...basisMark });
           // A dead agent is a null in the script, not a thrown error: Claude Code
           // scripts .filter(Boolean) rather than try/catch around every call.
           emit([
@@ -1260,7 +1281,9 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
      * recorded effect, and an entry recorded with no class at all, stops the run
      * with an uncertain-effect diagnostic naming the owning producer. The one
      * thing a resume never does is re-execute a journaled effect, so a position
-     * with no safe answer fails rather than runs.
+     * with no safe answer fails rather than runs. A non-read call is journaled
+     * twice — a dispatched marker before its provider acts, then its settled
+     * row — so that answer exists even when the run dies mid-call (wb-5x0.1).
      */
     async function handleNode(callId: number, payload: NodeCallPayload): Promise<void> {
       // Treat worker messages as untrusted protocol frames; an escaping script
@@ -1323,7 +1346,16 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
         const producer = producerOf(recordedCapability);
         const tail = `Reconcile with ${producer} before resuming: inspect its native evidence and acknowledge or override the position explicitly with workflow_reconcile (position ${index}), or re-run without resumeFromRunId for a fresh run.`;
         let refusal: { entry: WorkflowJournalEntry; hint: string } | undefined;
-        if (recorded.effectClass === undefined) {
+        if (recorded.dispatched === true) {
+          // wb-5x0.1: the marker a non-read call writes before its provider
+          // acts, superseded by nothing. Whatever its class, nothing recorded
+          // how the call settled, so whether its effect happened is unknown.
+          const cause = recorded.effectClass === undefined ? "with no effect class" : `with effect class "${recorded.effectClass}"`;
+          refusal = {
+            entry: recorded,
+            hint: `node(${recordedCapability}) at position ${index} was dispatched by the resumed run ${cause} (producer "${producer}") and has no settled record, so whether its effect happened is unknown. A dispatched SDK effect is never re-executed or silently replayed. ${tail}`,
+          };
+        } else if (recorded.effectClass === undefined) {
           // Fail closed (wb-tu1): an entry nobody classified — an older journal,
           // or a host that declared nothing — is an uncertain effect, not a
           // read. Today's declaration cannot vouch for what that call did then.
@@ -1429,7 +1461,7 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
         // Carried forward verbatim: the journal this run writes must stay as
         // protective as the one it read, or resuming the failed resume would
         // re-run the effect after all.
-        recordJournal?.({ ...admission.entry });
+        appendRow({ ...admission.entry });
         openNodes.delete(callId);
         respond(callId, false, undefined, admission.hint, true, { name: "CapabilityError", category: "uncertain-effect", message: admission.hint });
         return;
@@ -1448,7 +1480,7 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
           // The row reads as done because the recorded read is; `cached` says it was not this run's call.
           cached: true,
           resultPreview: preview(JSON.stringify(admission.value) ?? "null") }]);
-        recordJournal?.({ kind: "node", index, key: admission.entry.key, ok: true,
+        appendRow({ kind: "node", index, key: admission.entry.key, ok: true,
           capabilityId: payload.capabilityId, effectClass: "read", text: admission.entry.text, ...basisMark });
         openNodes.delete(callId);
         respond(callId, true, admission.value);
@@ -1473,8 +1505,8 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
           resultPreview: preview(JSON.stringify(admission.value) ?? "null") }]);
         // The tripwire stays on the record, verbatim, and the acknowledgement
         // is carried stamped applied — a resume of this resume settles again.
-        recordJournal?.({ ...admission.entry });
-        recordJournal?.(markApplied(admission.acknowledgement, { at: new Date(at).toISOString(), ...basisMark }));
+        appendRow({ ...admission.entry });
+        appendRow(markApplied(admission.acknowledgement, { at: new Date(at).toISOString(), ...basisMark }));
         openNodes.delete(callId);
         respond(callId, true, admission.value);
         return;
@@ -1494,6 +1526,27 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
       emit([{ ...base, startedAt }]);
       try {
         const input = validatedCapabilityJson(payload.input, `node(${payload.capabilityId}) input`);
+        // The tripwire exists from dispatch, not from settlement (wb-5x0.1): a
+        // non-read call — an unclassified one included, as at admission — goes
+        // on record BEFORE its provider can act, so a kill between the effect
+        // and its result, or between the result and the settled append below,
+        // still leaves a row the next resume refuses on. A marker that does not
+        // reach the journal refuses the call fail-closed: an unrecorded non-read
+        // dispatch is exactly that unprotected window. A read writes no marker
+        // and keeps "failure to write is not failure to run".
+        if (currentEffect !== "read" && recordJournal !== undefined &&
+          !appendRow({ kind: "node", index, key: key ?? "", ok: false, capabilityId: payload.capabilityId, ...effectMark, ...basisMark, dispatched: true })) {
+          const reason = `node(${payload.capabilityId}) at position ${index} was not dispatched: its dispatched journal row could not be written, and a non-read call runs only once its dispatch is on record, so a later resume can refuse it rather than repeat it.`;
+          const finishedAt = Date.now();
+          emit([{ ...base, startedAt, lastProgressAt: finishedAt, durationMs: finishedAt - startedAt, state: "error", error: reason }]);
+          // Nothing ran, so nothing new goes on record. An override's original
+          // effect row is carried forward, so a resume of this run still stops
+          // at the position instead of finding it empty.
+          if (admission.kind === "override-live") appendRow({ ...admission.entry });
+          openNodes.delete(callId);
+          respond(callId, false, undefined, reason, true, { name: "CapabilityError", category: "unavailable", message: reason });
+          return;
+        }
         const output = await callNode({
           callId, index, capabilityId: payload.capabilityId,
           input, label: payload.label,
@@ -1521,14 +1574,14 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
         // An effect keeps the producer's reference instead of its answer: what a
         // reconciliation can later bind native evidence to (docs/workbench/08).
         const nativeRef = currentEffect !== undefined && currentEffect !== "read" ? nativeRefOf(evidence) : undefined;
-        recordJournal?.({ kind: "node", index, key: key ?? "", ok: true, capabilityId: payload.capabilityId,
+        appendRow({ kind: "node", index, key: key ?? "", ok: true, capabilityId: payload.capabilityId,
           ...effectMark, ...(currentEffect === "read" ? { text: JSON.stringify(value) } : {}), ...(nativeRef ? { nativeRefs: [nativeRef] } : {}), ...basisMark });
         if (override !== undefined) {
           // Consumed on success AND failure: a re-run is itself an attempted
           // effect, so the authorization is spent either way and the tripwire
           // re-arms for the next resume. The acknowledgement is deliberately
           // not carried — the re-run invalidated its determination.
-          recordJournal?.(markConsumed(override, { at: new Date(finishedAt).toISOString(), outcome: "re-run-ok" }));
+          appendRow(markConsumed(override, { at: new Date(finishedAt).toISOString(), outcome: "re-run-ok" }));
           reconciledNodeCount++;
         }
         openNodes.delete(callId);
@@ -1545,9 +1598,9 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
         // would shift every later node's position on the next resume. A failed
         // read re-runs; a failed effect is still an attempted effect, and the
         // tripwire above refuses to step over it.
-        recordJournal?.({ kind: "node", index, key: key ?? "", ok: false, capabilityId: payload.capabilityId, ...effectMark, ...basisMark });
+        appendRow({ kind: "node", index, key: key ?? "", ok: false, capabilityId: payload.capabilityId, ...effectMark, ...basisMark });
         if (override !== undefined) {
-          recordJournal?.(markConsumed(override, { at: new Date(finishedAt).toISOString(), outcome: "re-run-failed" }));
+          appendRow(markConsumed(override, { at: new Date(finishedAt).toISOString(), outcome: "re-run-failed" }));
           reconciledNodeCount++;
         }
         // Validation/authorization/uncertain effects cannot become null under

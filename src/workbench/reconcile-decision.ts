@@ -104,6 +104,8 @@ export interface ReconcileRosterPosition {
   decisions: { acknowledged: number; overridesLive: number; overridesSpent: number };
   evidenceReads: readonly string[];
   next: string;
+  /** Present on a dispatch marker nothing settled: the call was dispatched and no row records how it settled (wb-5x0.1). */
+  dispatched?: true;
 }
 
 export interface ReconcileRoster {
@@ -173,14 +175,23 @@ function ownValue(params: Record<string, unknown>, name: string): unknown {
   return descriptor !== undefined && "value" in descriptor ? descriptor.value : undefined;
 }
 
-/** The node rows a resume would refuse at: a journaled non-read effect, or a read under a changed contract. */
+/**
+ * The node rows a resume would refuse at: a journaled non-read effect, a read
+ * under a changed contract, or a dispatch marker nothing settled (wb-5x0.1).
+ * The row consulted is the LAST node row at the position, as runtime.ts keys
+ * them: a non-read call is journaled at dispatch and again once it settles,
+ * and a decision has to bind to the row a resume compares.
+ */
 function refusingRowAt(
   entries: readonly WorkflowJournalEntry[],
   position: number,
   currentEffectClass: ReconcileDeps["currentEffectClass"],
 ): WorkflowJournalEntry | undefined {
-  const row = entries.find((entry) => entry.kind === "node" && entry.index === position);
+  let row: WorkflowJournalEntry | undefined;
+  for (const entry of entries) if (entry.kind === "node" && entry.index === position) row = entry;
   if (row === undefined || row.capabilityId === undefined) return undefined;
+  // runtime.ts refuses a dispatch marker nothing settled whatever its class.
+  if (row.dispatched === true && row.effectClass !== undefined) return row;
   if (row.effectClass !== undefined && row.effectClass !== "read") return row;
   if (row.effectClass === "read") {
     const current = currentEffectClass(row.capabilityId);
@@ -349,6 +360,7 @@ export function decideReconcile(request: ReconcileRequest, deps: ReconcileDeps):
         decisions: Object.freeze({ acknowledged: decisions.acks.length, overridesLive: decisions.overridesLive, overridesSpent: decisions.overridesSpent }),
         evidenceReads: RECONCILE_EVIDENCE_READS[producer] ?? Object.freeze([]),
         next: `workflow_reconcile {"taskId":"${request.taskId}","action":"evidence","position":${row.index}}`,
+        ...(row.dispatched === true ? { dispatched: true as const } : {}),
       }));
     }
     return Object.freeze({ decision: "inspect", roster: Object.freeze({ taskId: request.taskId, status: task.status, positions: Object.freeze(positions) }) });

@@ -117,6 +117,28 @@ describe("journal files", () => {
     writeFileSync(path, '{"index":"one","key":"k","ok":true}\n[]\nnull\n', "utf-8");
     expect(readJournal(path)).toEqual([]);
   });
+
+  it("says whether a row reached the file, and never throws (wb-5x0.1)", () => {
+    // The runtime refuses a non-read dispatch whose marker row did not land,
+    // so the writer has to be able to say so; it still never throws.
+    const path = join(dir, "run.jsonl");
+    expect(appendJournal(path, { index: 0, key: "k0", ok: true, text: "kept" })).toBe(true);
+    expect(appendJournal(join(dir, "missing", "run.jsonl"), { index: 0, key: "k0", ok: true })).toBe(false);
+    expect(appendJournal(dir, { index: 0, key: "k0", ok: true })).toBe(false);
+    expect(readJournal(path)).toEqual([{ index: 0, key: "k0", ok: true, text: "kept" }]);
+  });
+
+  it("keeps a node row's dispatched marker and drops a malformed one (wb-5x0.1)", () => {
+    const path = join(dir, "dispatched.jsonl");
+    const dispatched = { index: 0, key: "k0", ok: false, kind: "node", capabilityId: "effect.write", effectClass: "write", dispatched: true };
+    writeFileSync(path, [
+      dispatched,
+      { ...dispatched, index: 1, dispatched: false },
+      { ...dispatched, index: 2, dispatched: "true" },
+      { index: 3, key: "k3", ok: false, dispatched: true },
+    ].map(row => JSON.stringify(row)).join("\n"), "utf-8");
+    expect(readJournal(path)).toEqual([dispatched]);
+  });
 });
 
 describe("operator decision rows", () => {
