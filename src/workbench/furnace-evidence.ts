@@ -48,9 +48,10 @@ export interface FurnaceEvidenceContent {
   nativeRef: NativeRef;
   stream: "stdout" | "stderr";
   capturedAt: string;
-  /** The producer's own `returned` count, carried unchanged and never re-measured; it may not exceed the read's byte
-   * bound (`limit` = maxBytes). The Furnace JSON protocol documents `returned` on a logs read as a whole-line count. */
-  bytes: number;
+  /** The producer's own `returned` count, carried unchanged and never re-measured. The Furnace JSON protocol documents
+   * `returned` on a logs read as a whole-line count, so it is a LINE count, never a byte count; it may not exceed the
+   * read's byte bound (`limit` = maxBytes), which is a separate quantity. */
+  lineCount: number;
   truncated: boolean;
   preview: readonly string[];
   producerReceipt: { requestId: string; complete: boolean; lossy: boolean; nextCursor: string | null };
@@ -181,7 +182,7 @@ export async function readFurnaceAttemptLogEvidence(request: FurnaceEvidenceRequ
     nativeRef: { provider: "furnace", type: "attempt", id: attemptId, scope: workspaceRoot },
     stream,
     capturedAt: stamp,
-    bytes: returned,
+    lineCount: returned,
     truncated: reasons.length > 0,
     preview,
     producerReceipt: { requestId: sanitize(requestId).text, complete, lossy, nextCursor: nextCursor === null ? null : sanitize(nextCursor).text },
