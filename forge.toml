@@ -104,3 +104,7 @@ timeout = 180
 [build.commands.status-ledger]
 command = "node qa/workbench/status-ledger.mjs"
 timeout = 60
+
+[build.commands.inspector-cap-saturation-bench]
+command = "node --expose-gc qa/workbench/inspector-cap-saturation-bench.mjs"
+timeout = 600
