@@ -4,6 +4,7 @@ import { getSessionMessages, type SDKMessage, type SessionMessage } from "@anthr
 import type { ClaudeNativeObservation } from "../workflow/progress.js";
 import type { WorkflowSpawnResult } from "../workflow/runtime.js";
 import type { ClaudeCallIdentity } from "./claude-host.js";
+import { sanitizeWorkbenchText, stripUnsafeText } from "./redaction.js";
 
 /** At most 64 sampled snapshots per call plus its terminal acknowledgement. */
 export function createClaudeObserver(emit: (call: ClaudeCallIdentity, snapshot: ClaudeNativeObservation) => void) {
@@ -69,6 +70,12 @@ export function createClaudeObserver(emit: (call: ClaudeCallIdentity, snapshot: 
   };
 }
 
+export const CLAUDE_TRANSCRIPT_ROW_CHARS = 500;
+export const CLAUDE_TRANSCRIPT_MAX_ROWS = 100;
+
+/** The session reader seam; production passes the SDK function, tests inject a fixture. */
+export type ClaudeSessionReader = (sessionId: string, options?: { dir?: string; limit?: number }) => Promise<SessionMessage[]>;
+
 export interface ClaudeTranscriptRow {
   type: "user" | "assistant" | "system";
   uuid: string;
@@ -79,14 +86,14 @@ function summary(message: SessionMessage): string {
   const payload = message.message;
   if (!payload || typeof payload !== "object") return "(no text)";
   const content = (payload as { content?: unknown }).content;
-  if (typeof content === "string") return content.slice(0, 500);
+  if (typeof content === "string") return content.slice(0, CLAUDE_TRANSCRIPT_ROW_CHARS);
   if (!Array.isArray(content)) return "(no text)";
   return content
     .filter((part): part is { type: "text"; text: string } =>
       typeof part === "object" && part !== null && part.type === "text" && typeof part.text === "string")
     .map(part => part.text)
     .join("\n")
-    .slice(0, 500) || "(tool or non-text content)";
+    .slice(0, CLAUDE_TRANSCRIPT_ROW_CHARS) || "(tool or non-text content)";
 }
 
 /** SDK session_id only; never reinterpret it as a Pi AgentRecord id. */
@@ -94,7 +101,9 @@ export async function readClaudeTranscript(
   sessionId: string,
   cwd: string,
   limit = 40,
+  read: ClaudeSessionReader = getSessionMessages,
 ): Promise<ClaudeTranscriptRow[]> {
-  const messages = await getSessionMessages(sessionId, { dir: cwd, limit: Math.min(Math.max(1, limit), 100) });
-  return messages.map(message => ({ type: message.type, uuid: message.uuid, text: summary(message) }));
+  const messages = await read(sessionId, { dir: cwd, limit: Math.min(Math.max(1, limit), CLAUDE_TRANSCRIPT_MAX_ROWS) });
+  // Two-pass order (strip, redact, strip) via the shared sanitizers; uuid and type pass through untouched.
+  return messages.map(message => ({ type: message.type, uuid: message.uuid, text: sanitizeWorkbenchText(stripUnsafeText(summary(message))) }));
 }
