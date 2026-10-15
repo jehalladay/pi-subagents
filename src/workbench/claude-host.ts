@@ -17,6 +17,7 @@ import type {
 } from "../workflow/runtime.js";
 import { resolveWorkflowSource } from "../workflow/saved.js";
 import type { CapabilityRegistry } from "./capability-registry.js";
+import { CLAUDE_CAPABILITY_TOOL_NAMES, createCuratedTools } from "./claude-capability-tools.js";
 import { redactWorkbenchText } from "./redaction.js";
 
 /** SDK query injection exists for the fixture integration suite, not a fallback backend. */
@@ -32,7 +33,7 @@ export interface ClaudeWorkflowHostOptions {
   /** Privileged built-ins must be opted into by the host, not the script. */
   tools?: string[];
   /** Optional Claude-native role definitions, never Pi AgentManager configs. */
-  roles?: Record<string, { prompt: string; tools?: string[]; model?: string; effort?: EffortLevel }>;
+  roles?: Record<string, { prompt: string; tools?: string[]; capabilities?: string[]; model?: string; effort?: EffortLevel }>;
   capabilities?: CapabilityRegistry;
   grants?: readonly string[];
   invocationId?: string;
@@ -58,6 +59,7 @@ interface SessionEntry {
   model?: string;
   effort?: EffortLevel;
   tools: string[];
+  capabilities: string[];
   permissionMode: NonNullable<Options["permissionMode"]>;
   systemPrompt?: string;
   cumulativeTokens?: number;
@@ -139,6 +141,13 @@ export function createClaudeWorkflowHost(config: ClaudeWorkflowHostOptions): Wor
     controllers.set(agentId, controller);
     const allowedTools = previous?.tools ?? role?.tools ?? tools;
     const effectiveEffort = previous?.effort ?? request?.effort ?? role?.effort;
+    const exposed = previous?.capabilities ?? role?.capabilities ?? [];
+    const providerTools = exposed.length > 0 && config.capabilities ? createCuratedTools({
+      registry: config.capabilities, allowedCapabilities: exposed, grants: config.grants ?? [],
+      principal: {id:config.principal?.id ?? "local-operator",role:config.principal?.role ?? request?.agentType ?? "general-purpose"},
+      workspace: config.cwd, invocationId: config.invocationId ?? agentId, signal: controller.signal,
+      beforeDispatch: config.beforeDispatch,
+    }) : undefined;
     const options: Options = {
       cwd: config.cwd,
       abortController: controller,
@@ -146,6 +155,7 @@ export function createClaudeWorkflowHost(config: ClaudeWorkflowHostOptions): Wor
       permissionMode: previous?.permissionMode ?? permissionMode,
       permissionPrompts: "none",
       tools: allowedTools,
+      ...(providerTools ? {mcpServers:{workbench:providerTools},allowedTools:CLAUDE_CAPABILITY_TOOL_NAMES.map(name => `mcp__workbench__${name}`)} : {}),
       includePartialMessages: true,
       ...(model ? { model } : {}),
       ...(effectiveEffort ? { effort: effectiveEffort as EffortLevel } : {}),
@@ -168,7 +178,8 @@ export function createClaudeWorkflowHost(config: ClaudeWorkflowHostOptions): Wor
           onResolved?.({ sessionId, modelName: actualModel, modelId: actualModel, ...(actualEffort ? { thinking: actualEffort } : {}) });
         } else if (message.type === "assistant") {
           sessionId ??= message.session_id;
-          actualModel ??= message.message.model;
+          actualModel = message.message.model ?? actualModel;
+          if (actualModel) onResolved?.({ ...(sessionId ? { sessionId } : {}), modelName: actualModel, modelId: actualModel });
           for (const block of message.message.content) if (block.type === "tool_use") toolCalls++;
         } else if (message.type === "result") {
           sessionId ??= message.session_id;
@@ -207,7 +218,7 @@ export function createClaudeWorkflowHost(config: ClaudeWorkflowHostOptions): Wor
         call: request ?? previous!.call,
         sessionId, ...(actualModel ?? model ? { model: actualModel ?? model } : {}),
         ...(actualEffort ?? effectiveEffort ? { effort: (actualEffort ?? effectiveEffort) as EffortLevel } : {}),
-        permissionMode: options.permissionMode ?? "dontAsk", tools: [...allowedTools],
+        permissionMode: options.permissionMode ?? "dontAsk", tools: [...allowedTools], capabilities: [...exposed],
         ...(options.systemPrompt && typeof options.systemPrompt === "string" ? { systemPrompt: options.systemPrompt } : {}),
         ...(cumulative.tokens !== undefined ? { cumulativeTokens: cumulative.tokens } : {}),
         ...(cumulative.outputTokens !== undefined ? { cumulativeOutputTokens: cumulative.outputTokens } : {}),

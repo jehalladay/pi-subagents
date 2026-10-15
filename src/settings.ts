@@ -17,7 +17,7 @@ export interface WorkbenchSettings {
   tools?: string[];
   /** Explicit host-owned provider permissions. Absent means deny all native capabilities. */
   capabilityGrants?: string[];
-  roles?: Record<string, { prompt: string; tools?: string[]; model?: string; effort?: "low" | "medium" | "high" | "xhigh" | "max" }>;
+  roles?: Record<string, { prompt: string; tools?: string[]; capabilities?: string[]; model?: string; effort?: "low" | "medium" | "high" | "xhigh" | "max" }>;
 }
 
 export interface SubagentsSettings {
@@ -412,9 +412,10 @@ function sanitize(raw: unknown): SubagentsSettings {
         if (typeof role.prompt !== "string" || !role.prompt.trim() ||
           (role.model !== undefined && (typeof role.model !== "string" || !role.model.trim())) ||
           (role.tools !== undefined && (!Array.isArray(role.tools) || !role.tools.every(tool => typeof tool === "string"))) ||
+          (role.capabilities !== undefined && (!Array.isArray(role.capabilities) || role.capabilities.length > 32 || !role.capabilities.every(id => typeof id === "string" && /^[a-z][a-z0-9]*(?:[.-][a-z][a-z0-9]*)+$/.test(id)))) ||
           (role.effort !== undefined && !["low", "medium", "high", "xhigh", "max"].includes(String(role.effort))) ||
-          Object.keys(role).some(key => !["prompt", "model", "tools", "effort"].includes(key))) {
-          throw new Error(`workbench.roles.${name} must declare prompt with optional tools/model/effort.`);
+          Object.keys(role).some(key => !["prompt", "model", "tools", "capabilities", "effort"].includes(key))) {
+          throw new Error(`workbench.roles.${name} must declare prompt with optional tools/capabilities/model/effort.`);
         }
       }
     }
