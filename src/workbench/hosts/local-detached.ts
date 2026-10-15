@@ -19,7 +19,7 @@ import ts from "typescript";
 import { runWorkflow, validateScript, type WorkflowHost } from "../../workflow/runtime.js";
 import { CapabilityError, CapabilityRegistry, type JsonValue, validatedCapabilityJson } from "../capability-registry.js";
 import { type ClaudeWorkflowHostOptions, createClaudeWorkflowHost } from "../claude-host.js";
-import { captureInvocationIdentity, type IdentityCaptureInput, type InvocationSnapshot, identityDigest } from "../identity.js";
+import { captureInvocationIdentity, type IdentityCaptureInput, type InvocationSnapshot, identityDigest, WORKFLOW_SCRIPT_SCHEMA_VERSION } from "../identity.js";
 import { registerNativeForgeGateStatus } from "../providers/forge.js";
 import { registerNativeFurnaceRunInspect } from "../providers/furnace.js";
 import { registerNativeHyperUnixFind } from "../providers/hyperunix.js";
@@ -415,7 +415,7 @@ export async function launchDetachedWorkflow(raw: DetachedLaunchRequest): Promis
   const sourcePins = [...new Set([request.scriptPath, ...(request.sourceFiles ?? []), ...(localProviderTree?.map(file => file.path) ?? [])])].map(path => pinFile(path));
   const runtimeArtifacts = [fileURLToPath(import.meta.resolve("@forge/sdk")), fileURLToPath(import.meta.resolve("@furnace/sdk")), fileURLToPath(import.meta.resolve("@hyperunix/sdk")), realpathSync(process.execPath), fileURLToPath(import.meta.resolve("@anthropic-ai/claude-agent-sdk")), fileURLToPath(import.meta.resolve("typebox/value")), fileURLToPath(import.meta.resolve("typescript"))];
   const capture: IdentityCaptureInput = {
-    definition: { kind: "script", id: request.scriptPath, schemaVersion: "workflow/v1" }, scriptPath: request.scriptPath,
+    definition: { kind: "script", id: request.scriptPath, schemaVersion: WORKFLOW_SCRIPT_SCHEMA_VERSION }, scriptPath: request.scriptPath,
     packageRoot: root, hostArtifacts: implementationArtifacts(root), runtimeArtifacts: runtimeClosure(runtimeArtifacts), logicalInvocationId: request.invocationId,
     principal: { issuer: owner.issuer, subject: owner.id }, workspace: { path: request.cwd, sourceBasis: `declared-files:${identityDigest("declared-source", sourcePins)}` },
     effectiveConfig: validatedCapabilityJson(request, "configuration") ,

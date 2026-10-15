@@ -7,6 +7,8 @@ import { existsSync, readFileSync, realpathSync, statSync } from "node:fs";
 import { isAbsolute, relative, resolve, sep } from "node:path";
 
 export type IdentityJson = null | boolean | number | string | IdentityJson[] | { [key: string]: IdentityJson };
+/** The one definition schema literal every Workbench host emits for a workflow script; receipts of another schema are refused, never coerced. */
+export const WORKFLOW_SCRIPT_SCHEMA_VERSION = "workflow-script/v1";
 export interface DefinitionRef {
   readonly kind: "script" | "function" | "furnace-formula";
   readonly id: string;

@@ -73,7 +73,7 @@ import { createClaudeObserver, readClaudeTranscript } from "./workbench/claude-t
 import { type CompareRun, catalogWorkflows, compareWorkflowRuns, inspectWorkflowSource, validateWorkflowSource } from "./workbench/designer.js";
 import { FurnaceObserver } from "./workbench/furnace-observer.js";
 import { connectDetachedWorkflow, launchDetachedWorkflow } from "./workbench/hosts/local-detached.js";
-import { captureInvocationIdentity, type IdentityCaptureInput, identityDigest, verifyInvocationIdentity } from "./workbench/identity.js";
+import { captureInvocationIdentity, type IdentityCaptureInput, identityDigest, verifyInvocationIdentity, WORKFLOW_SCRIPT_SCHEMA_VERSION } from "./workbench/identity.js";
 import { type NativeRef, ObservationProjection, type ObservationScope, type Presentation } from "./workbench/observation.js";
 import { registerNativeForgeGateStatus } from "./workbench/providers/forge.js";
 import { registerNativeFurnaceRunInspect } from "./workbench/providers/furnace.js";
@@ -2451,7 +2451,7 @@ Terse command-style prompts produce shallow, generic work.
     }
     task.workspaceSourceState = basis.state;
     return {
-      definition: { kind: "script", id: task.scriptPath ?? task.id, schemaVersion: "workflow-script/v1" },
+      definition: { kind: "script", id: task.scriptPath ?? task.id, schemaVersion: WORKFLOW_SCRIPT_SCHEMA_VERSION },
       scriptPath: task.scriptPath ?? "", packageRoot, hostArtifacts, runtimeArtifacts: runtimeArtifacts(),
       logicalInvocationId: task.id,
       principal: { issuer: "pi-local-operator", subject: localPrincipal(ctx) },

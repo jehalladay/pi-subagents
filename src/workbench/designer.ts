@@ -9,7 +9,7 @@ import { decodeWorkflowLiteral, extractMeta, type WorkflowMeta } from "../workfl
 import { MAX_SCRIPT_LENGTH, type WorkflowScriptRef } from "../workflow/runtime.js";
 import { listSavedWorkflows, resolveWorkflowSource } from "../workflow/saved.js";
 import type { CapabilityRegistry, JsonValue } from "./capability-registry.js";
-import { canonicalJson, type DefinitionRef, type InvocationSnapshot, identityDigest, type NativeRef } from "./identity.js";
+import { canonicalJson, type DefinitionRef, type InvocationSnapshot, identityDigest, type NativeRef, WORKFLOW_SCRIPT_SCHEMA_VERSION } from "./identity.js";
 import { sanitizeWorkbenchText } from "./redaction.js";
 
 export interface WorkflowSource { readonly definition: DefinitionRef; readonly sourceRef: string; readonly source: string }
@@ -41,7 +41,7 @@ export function inspectWorkflowSource(ref: WorkflowScriptRef, cwd: string): Work
   if (!stats.isFile() || stats.size > MAX_SCRIPT_LENGTH * 4) throw new Error("Workflow source must be a bounded regular file.");
   const bytes = readFileSync(sourceRef);
   if (!bytes.equals(Buffer.from(result.script, "utf8"))) throw new Error("Source changed during inspection or is not valid UTF-8.");
-  return { definition: { kind: "script", id: sourceRef, schemaVersion: "workflow-script/v1", artifactDigest: digest(result.script) }, sourceRef, source: result.script };
+  return { definition: { kind: "script", id: sourceRef, schemaVersion: WORKFLOW_SCRIPT_SCHEMA_VERSION, artifactDigest: digest(result.script) }, sourceRef, source: result.script };
 }
 export interface CatalogOptions { filter?: string; limit?: number; cursor?: string }
 export interface WorkflowCatalog { entries: { name: string; source: WorkflowSource }[]; nextCursor?: string; catalogDigest: string; completeness: "saved-source-list"; diagnostics: DesignerDiagnostic[] }
