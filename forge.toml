@@ -81,9 +81,17 @@ timeout = 300
 command = "node qa/workbench/topology-slice-grouped-bench.mjs"
 timeout = 300
 
+[build.commands.reducer-selector-bench]
+command = "node qa/workbench/reducer-selector-bench.mjs"
+timeout = 300
+
 [build.commands.local-detached-shell]
 command = "bash qa/workbench/local-detached.sh"
 timeout = 180
+
+[build.commands.local-detached-faults]
+command = "node qa/workbench/local-detached-faults.mjs"
+timeout = 240
 
 [build.commands.local-detached-unit]
 command = "./node_modules/.bin/vitest run test/workbench-local-detached.test.ts"

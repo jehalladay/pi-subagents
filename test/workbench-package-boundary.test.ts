@@ -8,6 +8,9 @@ import {
   DENIED_BASENAMES,
   DENIED_PATTERNS,
   DENIED_PREFIXES,
+  missingRequiredPackedPaths,
+  REQUIRED_PACKED_PATHS,
+  REQUIRED_PACKED_PREFIXES,
   TOP_LEVEL_ALLOWLIST,
   UNKNOWN_REVISION,
 } from "../qa/workbench/package-boundary.mjs";
@@ -204,5 +207,75 @@ describe(".npmignore boundary lines", () => {
   it("keeps docs/ and qa/ shipping deliberately", () => {
     expect(lines).not.toContain("docs/");
     expect(lines).not.toContain("qa/");
+  });
+});
+
+describe("positive presence pins over the packed file list (wb-x75)", () => {
+  const missing = missingRequiredPackedPaths as (paths: string[]) => Array<{ path: string; rule: string }>;
+  const complete = [...REQUIRED_PACKED_PATHS, ...REQUIRED_PACKED_PREFIXES.map((prefix: string) => `${prefix}x.txt`)];
+
+  it("pins docs/, qa/, dist/, the vendor tarballs and the three bundled SDKs", () => {
+    for (const prefix of ["docs/", "qa/", "dist/"]) expect(REQUIRED_PACKED_PREFIXES).toContain(prefix);
+    for (const path of [
+      "vendor/forge-sdk-0.1.0.tgz",
+      "vendor/furnace-sdk-0.1.0.tgz",
+      "vendor/hyperunix-sdk-0.1.0.tgz",
+      "vendor/dependency-lock.json",
+      "node_modules/@forge/sdk/package.json",
+      "node_modules/@furnace/sdk/package.json",
+      "node_modules/@hyperunix/sdk/package.json",
+    ]) {
+      expect(REQUIRED_PACKED_PATHS).toContain(path);
+    }
+  });
+
+  it("reports nothing missing for a complete listing", () => {
+    expect(missing(complete)).toEqual([]);
+  });
+
+  it("reports an exact required file that is absent", () => {
+    const paths = complete.filter((path) => path !== "vendor/forge-sdk-0.1.0.tgz");
+    expect(missing(paths)).toEqual([{ path: "vendor/forge-sdk-0.1.0.tgz", rule: "missing-required-path" }]);
+  });
+
+  it("reports a required directory with no packed file under it", () => {
+    const paths = complete.filter((path) => !path.startsWith("docs/"));
+    expect(missing(paths)).toEqual([{ path: "docs/", rule: "missing-required-prefix" }]);
+  });
+
+  it("reports every absent pin in one listing, not just the first", () => {
+    expect(missing([]).length).toBe(REQUIRED_PACKED_PATHS.length + REQUIRED_PACKED_PREFIXES.length);
+  });
+
+  it("does not count a lookalike prefix as presence", () => {
+    const paths = [...complete.filter((path) => !path.startsWith("qa/")), "qa-notes/x.txt"];
+    expect(missing(paths)).toEqual([{ path: "qa/", rule: "missing-required-prefix" }]);
+  });
+});
+
+describe("buildPackageReceipt git failure reporting (wb-x75)", () => {
+  const measured = {
+    fileCount: 1,
+    shasum: "abc",
+    integrity: "sha512-xyz",
+    node: "v22.18.0",
+    npm: "10.9.0",
+    platform: "linux",
+    arch: "x64",
+    utc: "2026-10-15T07:00:00.000Z",
+    command: "npm pack",
+    topLevel: ["src"],
+    bundled: [],
+  };
+
+  it("reports dirty as null, not false, when HEAD is known but git status failed", () => {
+    const receipt = buildPackageReceipt({ ...measured, git: { head: "ad3cf6e908f0", porcelain: null } });
+    expect(receipt.revision).toBe("ad3cf6e908f0");
+    expect(receipt.dirty).toBeNull();
+  });
+
+  it("still reports a measured clean tree as false", () => {
+    const receipt = buildPackageReceipt({ ...measured, git: { head: "ad3cf6e908f0", porcelain: "" } });
+    expect(receipt.dirty).toBe(false);
   });
 });
