@@ -5,6 +5,8 @@ import { isAbsolute } from "node:path";
 import { type DecodedEnvelope, decodeResultEnvelope, EnvelopeDecodeError, ServerConnection } from "@forge/sdk";
 import { CapabilityError, type CapabilityRegistry, type JsonValue } from "../capability-registry.js";
 
+export const FORGE_GATE_STATUS_CONTRACT = "forge.gate.status/v1";
+
 export interface ForgeReadClient {
   gate: {
     status(input: { readonly target: string }): Promise<{ protocolMethod: string; raw: JsonValue }>;
@@ -37,7 +39,7 @@ export function registerForgeGateStatus(registry: CapabilityRegistry, client: Fo
       if (native.protocolMethod !== "gate.status") {
         throw new CapabilityError("transport", `Forge SDK returned wrong protocol method: ${native.protocolMethod}.`);
       }
-      return { contract: "forge.gate.status/v1", protocolMethod: native.protocolMethod, source: native.raw };
+      return { contract: FORGE_GATE_STATUS_CONTRACT, protocolMethod: native.protocolMethod, source: native.raw };
     },
   });
 }
@@ -118,7 +120,7 @@ export async function readForgeGateStatus(target: string, signal?: AbortSignal):
       !native.data || typeof native.data !== "object" || Array.isArray(native.data)) {
       throw new CapabilityError("transport", "Forge gate.status returned an unrecognized native envelope.");
     }
-    return { contract: "forge.gate.status/v1", protocolMethod: "gate.status", source: JSON.parse(JSON.stringify(result)) as JsonValue };
+    return { contract: FORGE_GATE_STATUS_CONTRACT, protocolMethod: "gate.status", source: JSON.parse(JSON.stringify(result)) as JsonValue };
   } finally {
     signal?.removeEventListener("abort", onAbort);
     await connection.close();
