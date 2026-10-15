@@ -31,7 +31,9 @@ const SMOKE_PATH = "qa/workbench/package-smoke.mjs";
 
 const MIT_HEADING = "MIT License";
 const COPYRIGHT_LINE = "Copyright (c) 2026 tintinweb";
-const PERMISSION_SENTENCE = "Permission is hereby granted, free of charge, to any person obtaining a copy";
+const PERMISSION_SENTENCE =
+  "Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:";
+const PERMISSION_FAILURE = `${LICENSE_PATH}:5-10: expected the full MIT permission sentence (whitespace-normalized): ${PERMISSION_SENTENCE}`;
 const FORK_ORIGIN_SENTENCE = "Fork remains jehalladay/pi-subagents based on tintinweb/pi-subagents, MIT.";
 const UPSTREAM_NOTICE = "Preserve MIT copyright, license and original contributors.";
 
@@ -52,6 +54,11 @@ function readSources(): Sources {
     docs16: read(DOCS_16_PATH),
     packageSmoke: read(SMOKE_PATH),
   };
+}
+
+/** Collapse every run of whitespace to one space so wrapped lines compare as one sentence. */
+function normalizeWhitespace(text: string): string {
+  return text.replace(/\s+/g, " ");
 }
 
 /** Return the body of the "## <title>" section, up to the next "## " heading, or undefined. */
@@ -81,13 +88,11 @@ function licenseOriginFailures(sources: Sources): string[] {
   if (!licenseLines.some((line) => line.trim() === COPYRIGHT_LINE)) {
     failures.push(`${LICENSE_PATH}:3: expected the original copyright-holder line: ${COPYRIGHT_LINE}`);
   }
-  if (!sources.license.includes(PERMISSION_SENTENCE)) {
-    failures.push(`${LICENSE_PATH}:5: expected the MIT permission sentence: ${PERMISSION_SENTENCE}`);
-  }
+  if (!normalizeWhitespace(sources.license).includes(PERMISSION_SENTENCE)) failures.push(PERMISSION_FAILURE);
 
   try {
     const parsed: unknown = JSON.parse(sources.packageJson);
-    const license = typeof parsed === "object" && parsed !== null ? (parsed as { license?: unknown }).license : undefined;
+    const license = typeof parsed === "object" && parsed !== null && "license" in parsed ? parsed.license : undefined;
     if (license !== "MIT") failures.push(`${PACKAGE_PATH}: expected "license": "MIT", found ${JSON.stringify(license)}`);
   } catch {
     failures.push(`${PACKAGE_PATH}: not parseable JSON; expected "license": "MIT"`);
@@ -128,9 +133,19 @@ describe("wb-cax.21 upstream license and fork-origin preservation census", () =>
       expected: `${LICENSE_PATH}:3: expected the original copyright-holder line: ${COPYRIGHT_LINE}`,
     },
     {
-      name: "LICENSE loses the MIT permission sentence",
-      mutate: (s) => ({ ...s, license: s.license.replace(PERMISSION_SENTENCE, "All rights reserved.") }),
-      expected: `${LICENSE_PATH}:5: expected the MIT permission sentence: ${PERMISSION_SENTENCE}`,
+      name: "LICENSE loses the full MIT permission sentence",
+      mutate: (s) => ({ ...s, license: s.license.replace(/Permission is hereby granted[\s\S]*?following conditions:/, "All rights reserved.") }),
+      expected: PERMISSION_FAILURE,
+    },
+    {
+      name: "LICENSE grant loses 'sublicense, and/or sell' (tail edit, line 8)",
+      mutate: (s) => ({ ...s, license: s.license.replace("distribute, sublicense, and/or sell", "distribute") }),
+      expected: PERMISSION_FAILURE,
+    },
+    {
+      name: "LICENSE grant becomes 'with restriction' (tail edit, line 7)",
+      mutate: (s) => ({ ...s, license: s.license.replace("in the Software without restriction", "in the Software with restriction") }),
+      expected: PERMISSION_FAILURE,
     },
     {
       name: 'package.json license is not "MIT"',
