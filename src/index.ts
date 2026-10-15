@@ -4437,6 +4437,9 @@ Write the file using the write tool. Only write the file, nothing else.`;
         scope: () => { const c = currentCtx as unknown as ExtensionCommandContext | undefined; return c ? observerScope(c) : undefined; },
         projection,
         cwd: () => (currentCtx as unknown as ExtensionCommandContext | undefined)?.cwd,
+        // The forge evidence re-read goes through the same registry the workflow
+        // tools use, so one authorization ladder governs both (wb-6ze.17).
+        registry: workspace => registryFor(workspace),
       }),
     },
     getRecord: id => manager.getRecord(id),
