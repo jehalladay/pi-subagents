@@ -304,6 +304,8 @@ interface Boot {
   snapshotDigest: string;
 }
 const NATIVE_GRANTS = { forge: "forge:inspect", hyperunix: "hyperunix:read", reactivefiber: "reactivefiber:render", "furnace-observe": "furnace:inspect" } as const;
+/** The capability each native provider registers: one source for identity capture and effect metadata. */
+const NATIVE_CAPABILITIES = { forge: "forge.gate.status", hyperunix: "hyperunix.find", reactivefiber: "reactivefiber.render.preview", "furnace-observe": "furnace.run.inspect" } as const;
 function validateRequest(raw: DetachedLaunchRequest): DetachedLaunchRequest {
   const input = record(validatedCapabilityJson(raw, "launch request", 64, DETACHED_MAX_FRAME_BYTES));
   only(input, ["directory", "invocationId", "scriptPath", "cwd", "input", "trustedScript", "backend", "providers", "grants", "permissions", "sourceFiles", "claude", "localProvider", "timeoutMs", "retentionMs", "autoStart"]);
@@ -418,7 +420,7 @@ export async function launchDetachedWorkflow(raw: DetachedLaunchRequest): Promis
     principal: { issuer: owner.issuer, subject: owner.id }, workspace: { path: request.cwd, sourceBasis: `declared-files:${identityDigest("declared-source", sourcePins)}` },
     effectiveConfig: validatedCapabilityJson(request, "configuration") ,
     hostAbi: { runtime: "node", version: process.versions.node, platform: process.platform, arch: process.arch, interfaceVersion: DETACHED_CONTRACT },
-    providerDescriptors: registry.discover({ grants: (request.providers ?? []).map(id => `discover:${id === "forge" ? "forge.gate.status" : id === "hyperunix" ? "hyperunix.find" : id === "reactivefiber" ? "reactivefiber.render.preview" : "furnace.run.inspect"}`) }).map(d => ({ id: d.id, version: d.version, permissions: d.permissions, effectClass: d.effectClass, supportedModes: d.supportedModes, inputSchema: validatedCapabilityJson(d.inputSchema, "schema"), ...(d.outputSchema ? { outputSchema: validatedCapabilityJson(d.outputSchema, "schema") } : {}), contractSource: d.contractSource ?? "unknown" })),
+    providerDescriptors: registry.discover({ grants: (request.providers ?? []).map(id => `discover:${NATIVE_CAPABILITIES[id]}`) }).map(d => ({ id: d.id, version: d.version, permissions: d.permissions, effectClass: d.effectClass, supportedModes: d.supportedModes, inputSchema: validatedCapabilityJson(d.inputSchema, "schema"), ...(d.outputSchema ? { outputSchema: validatedCapabilityJson(d.outputSchema, "schema") } : {}), contractSource: d.contractSource ?? "unknown" })),
   };
   const pin = captureInvocationIdentity(capture); validateScript(pin.scriptSource);
   const boot: Boot = { contract: DETACHED_CONTRACT, request, owner, hostInstanceId: randomBytes(24).toString("hex"), pin, capture, sourcePins, ...(localProviderTree ? { localProviderTree } : {}), inputDigest: identityDigest("invocation-input", request.input), snapshotDigest: identityDigest("invocation-snapshot", pin) };
@@ -490,6 +492,66 @@ export function connectDetachedWorkflow(root: string, id: string) {
     async shutdown(reason: string): Promise<{ accepted: boolean; unresolvedEffects: boolean }> { return await commandAt(root, id, decodeDetachedCommand({ command: "shutdown", invocationId: id, reason })) as unknown as { accepted: boolean; unresolvedEffects: boolean }; },
   };
 }
+/** The admitted launch-request fields the child's workflow host reads. */
+export type DetachedHostRequest = Pick<DetachedLaunchRequest, "backend" | "cwd" | "invocationId" | "providers" | "grants" | "localProvider" | "claude">;
+export interface DetachedHostOptions {
+  /** Already admitted by validateRequest in the child, never raw script input. */
+  request: DetachedHostRequest;
+  /** The child's registry: the enabled native adapters or the reviewed local manifest's allowlist. */
+  registry: CapabilityRegistry;
+  /** The receipt's local OS operator, bound by the host and never by the script. */
+  principal: { readonly id: string; readonly role: "local-operator" };
+  signal: AbortSignal;
+  /** Re-verifies the immutable invocation basis before every dispatch. */
+  beforeDispatch: () => void;
+}
+/** The pinned provider manifest: each capability this invocation may dispatch
+ * (the enabled native adapters, or exactly the reviewed local allowlist) with
+ * the effect class its producer declared. Prose and schemas stay out of it. */
+function providerManifest(registry: CapabilityRegistry, request: Pick<DetachedHostRequest, "providers" | "localProvider">) {
+  const ids = [...(request.providers ?? []).map(provider => NATIVE_CAPABILITIES[provider]), ...(request.localProvider?.capabilities ?? [])];
+  return registry.discover({ grants: ids.map(id => `discover:${id}`) })
+    .map(d => ({ id: d.id, version: d.version, effectClass: d.effectClass, permissions: [...d.permissions], supportedModes: [...d.supportedModes], contractSource: d.contractSource ?? null }))
+    .sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
+}
+/** The workflow host the detached child's interpreter runs against. Built only in
+ * the child (and by in-process tests); the Pi caller never constructs one.
+ *
+ * Node effect metadata comes from the pinned provider manifest, so every journal
+ * recorded through this host carries the producer-declared effect class and a
+ * resume refuses a journaled non-read effect with uncertain-effect instead of
+ * re-running it live. Only the manifest vouches: an id outside it records no
+ * class. replaySafe stays false on the deterministic backend because the runtime
+ * admits a node replay on its recorded class and key, not on this basis, so a
+ * read recorded under another workspace, grant set or manifest could otherwise
+ * come back as this run's answer; declining costs a live re-read, never an effect. */
+export function createDetachedWorkflowHost({ request, registry, principal, signal, beforeDispatch }: DetachedHostOptions): WorkflowHost {
+  const commonHost: WorkflowHost = request.backend === "claude" ? createClaudeWorkflowHost({ cwd: request.cwd, signal, ...request.claude, settingSources: [], permissionMode: "dontAsk", capabilities: registry, grants: request.grants, invocationId: request.invocationId, principal, beforeDispatch }) : {
+    replaySafe: false,
+    async spawnAgent() { return { ok: false, error: "Claude is not enabled; deterministic host never substitutes a fake model." }; },
+    abortAgent() {},
+    async callNode(node) { beforeDispatch();
+      if (request.localProvider && !request.localProvider.capabilities.includes(node.capabilityId)) throw new CapabilityError("authorization", "Capability absent from trusted local provider manifest.");
+      return registry.invoke(node.capabilityId, node.input, { grants: request.grants ?? [], signal: node.signal, invocationId: request.invocationId, callId: String(node.callId), principal, workspace: request.cwd }); },
+  };
+  // Nested filesystem resolution would load mutable, unpinned source. Refuse it.
+  const { loadWorkflow: _unboundNested, ...host } = commonHost;
+  const manifest = providerManifest(registry, request);
+  const effects = new Map(manifest.map(entry => [entry.id, entry.effectClass]));
+  const local = request.localProvider;
+  return {
+    ...host,
+    describeNodeEffect: capabilityId => effects.get(capabilityId),
+    // The policy a recorded answer depends on beyond its own payload; per-run
+    // identity (invocation, host instance, input) stays out, as in the Claude host.
+    replayBasis: identityDigest("local-detached-replay-basis", {
+      contract: DETACHED_CONTRACT, backend: request.backend, workspace: request.cwd, principal: principal.id,
+      grants: [...new Set(request.grants ?? [])].sort(), manifest,
+      localProvider: local ? { kind: local.kind, version: local.version, modulePath: local.modulePath, digest: local.digest, capabilities: [...local.capabilities].sort() } : null,
+      host: commonHost.replayBasis ?? null,
+    }),
+  };
+}
 /** Internal child entry, exported for the explicit detached Node bootstrap only. */
 export async function startDetachedHost(bootPath: string, expectedDigest: string): Promise<void> {
   process.umask(0o077);
@@ -521,16 +583,7 @@ export async function startDetachedHost(bootPath: string, expectedDigest: string
     const now = captureInvocationIdentity(boot.capture);
     if (identityDigest("invocation-snapshot", now) !== boot.snapshotDigest) throw new Error("IDENTITY_CONFLICT: implementation/config/source changed.");
   }
-  const commonHost: WorkflowHost = request.backend === "claude" ? createClaudeWorkflowHost({ cwd: request.cwd, signal: controller.signal, ...request.claude, settingSources: [], permissionMode: "dontAsk", capabilities: registry, grants: request.grants, invocationId: request.invocationId, principal: { id: receipt.owner.id, role: "local-operator" }, beforeDispatch: basis }) : {
-    replaySafe: false,
-    async spawnAgent() { return { ok: false, error: "Claude is not enabled; deterministic host never substitutes a fake model." }; },
-    abortAgent() {},
-    async callNode(node) { basis();
-      if (request.localProvider && !request.localProvider.capabilities.includes(node.capabilityId)) throw new CapabilityError("authorization", "Capability absent from trusted local provider manifest.");
-      return registry.invoke(node.capabilityId, node.input, { grants: request.grants ?? [], signal: node.signal, invocationId: request.invocationId, callId: String(node.callId), principal: { id: receipt.owner.id, role: "local-operator" }, workspace: request.cwd }); },
-  };
-  // Nested filesystem resolution would load mutable, unpinned source. Refuse it.
-  const { loadWorkflow: _unboundNested, ...host } = commonHost;
+  const host = createDetachedWorkflowHost({ request, registry, principal: { id: receipt.owner.id, role: "local-operator" }, signal: controller.signal, beforeDispatch: basis });
   function snapshot(): DetachedSnapshot {
     return { contract: DETACHED_CONTRACT, invocationId: request.invocationId, observation: terminal ? "observed-terminal" : started ? "observed-running" : "observed-started", observedAt: new Date().toISOString(), source: "live-detached-host", receipt, ...(terminal ? { terminal } : {}), ...(result !== undefined ? { result } : {}), ...(diagnostic ? { diagnostic } : {}), nativeRuntimeIdentity: "unsupported", progress: [...progress], droppedProgress, controlAudit: [...audit], cancellationRequested: controller.signal.aborted, ...(controller.signal.aborted ? { reconcileHint: "Local interpreter cancellation does not prove native effects rolled back; reconcile with their owning producer." } : {}) };
   }
