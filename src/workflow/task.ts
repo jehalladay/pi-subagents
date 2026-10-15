@@ -20,6 +20,7 @@ import { escapeXml } from "../xml.js";
 import type { WorkflowJournalEntry } from "./journal.js";
 import type { WorkflowMeta } from "./meta.js";
 import { elapsedMs, stats, type WorkflowAgentEntry, type WorkflowEntry, type WorkflowRunStatus } from "./progress.js";
+import type { EvidenceReceipt } from "./reconcile.js";
 import type { WorkflowControl, WorkflowRunResult } from "./runtime.js";
 
 /** `wf_` + hex, matching Claude Code's `^wf_[a-z0-9-]{6,}$` run ids. */
@@ -69,6 +70,10 @@ export interface WorkflowTask {
   replayedCount: number;
   /** How many node reads came back stale from {@link replay} instead of being re-read. */
   replayedNodeCount: number;
+  /** Positions settled by an operator acknowledgement or re-run under an operator override. */
+  reconciledNodeCount: number;
+  /** Session-held reconcile evidence receipts for this task (max 16, FIFO), written by workflow_reconcile. */
+  reconcile?: { receipts: EvidenceReceipt[] };
 
   /** The append-only event log, in emission order. */
   workflowProgress: WorkflowEntry[];
@@ -127,6 +132,7 @@ export function createWorkflowTask(init: {
     resumedFrom: init.resumedFrom,
     replayedCount: 0,
     replayedNodeCount: 0,
+    reconciledNodeCount: 0,
     workflowProgress: [],
     progressVersion: 0,
     agentCount: 0,
@@ -212,6 +218,7 @@ export function completeWorkflowTask(task: WorkflowTask, result: WorkflowRunResu
   task.agentCount = Math.max(task.agentCount, result.agentCount);
   task.replayedCount = result.replayedCount;
   task.replayedNodeCount = result.replayedNodeCount;
+  task.reconciledNodeCount = result.reconciledNodeCount;
   task.value = result.value;
   task.error = result.error;
   task.endTime = Date.now();
