@@ -57,6 +57,7 @@
 import { createHash } from "node:crypto";
 import { appendFileSync, readFileSync } from "node:fs";
 import type { NativeRef } from "../workbench/observation.js";
+import { isReconcileRecord, type ReconcileRecord } from "./reconcile.js";
 
 /** One settled agent call, as replayed. */
 export interface WorkflowJournalEntry {
@@ -82,8 +83,10 @@ export interface WorkflowJournalEntry {
    * Entry kind. Absent for a settled agent — the legacy shape, byte-for-byte —
    * and `"node"` for an SDK `node()` operation, which is admitted on resume by
    * the per-effect-class policy in runtime.ts, never by the agent prefix rule.
+   * `"acknowledge"` and `"override"` are operator decision rows (reconcile.ts)
+   * that ride beside the node row they bind to, in the same position space.
    */
-  kind?: "node";
+  kind?: "node" | "acknowledge" | "override";
   /** The capability a node entry invoked; names the owning producer on refusal. */
   capabilityId?: string;
   /**
@@ -111,6 +114,13 @@ export interface WorkflowJournalEntry {
    * Recorded only for non-read entries, whose answers are deliberately not kept.
    */
   nativeRefs?: readonly NativeRef[];
+  /**
+   * The operator's recorded decision, on `kind: "acknowledge" | "override"`
+   * rows only. The record binds to its node row by digest (reconcile.ts), and
+   * a row whose record does not validate drops like any mangled line, so an
+   * old binary keeps refusing and a resume never half-reads a decision.
+   */
+  reconcile?: ReconcileRecord;
 }
 
 /**
@@ -226,13 +236,27 @@ function isEntry(value: unknown): value is WorkflowJournalEntry {
     typeof entry.ok === "boolean" &&
     (entry.text === undefined || typeof entry.text === "string") &&
     (entry.resumed === undefined || entry.resumed === true) &&
-    (entry.kind === undefined || entry.kind === "node") &&
+    (entry.kind === undefined ||
+      entry.kind === "node" ||
+      entry.kind === "acknowledge" ||
+      entry.kind === "override") &&
     (entry.capabilityId === undefined || typeof entry.capabilityId === "string") &&
     (entry.effectClass === undefined || typeof entry.effectClass === "string") &&
     (entry.basis === undefined || typeof entry.basis === "string") &&
     (entry.nativeRefs === undefined || (Array.isArray(entry.nativeRefs) && entry.nativeRefs.every(isNativeRef))) &&
     // A node entry that cannot name its capability cannot name a producer to
     // reconcile with, so it is as unusable as any other mangled line.
-    (entry.kind !== "node" || typeof entry.capabilityId === "string")
+    (entry.kind !== "node" || typeof entry.capabilityId === "string") &&
+    // An operator decision row must carry a record that validates and that
+    // mirrors its own top-level fields; anything else drops like a mangled
+    // line, so a resume refuses rather than honour a half-written decision.
+    (entry.reconcile === undefined
+      ? entry.kind !== "acknowledge" && entry.kind !== "override"
+      : (entry.kind === "acknowledge" || entry.kind === "override") &&
+        typeof entry.capabilityId === "string" &&
+        isReconcileRecord(entry.reconcile) &&
+        entry.reconcile.decision === entry.kind &&
+        entry.reconcile.entry.index === entry.index &&
+        entry.reconcile.entry.key === entry.key)
   );
 }
