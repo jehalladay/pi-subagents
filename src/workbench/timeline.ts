@@ -106,7 +106,8 @@ export interface TimelineModel {
 }
 
 const MAX_WINDOW = 100;
-const MAX_ZOOM = 8;
+/** Largest zoom (cells per second) the workbench.timeline/v1 request contract accepts; the inspector zoom reducer clamps to it. */
+export const MAX_ZOOM = 8;
 const MIN_COLUMNS = 8;
 const MAX_COLUMNS = 200;
 const DEFAULT_LANES = 16;

@@ -1,9 +1,10 @@
 /** Read-only terminal inspector over the bounded producer-qualified observation projection.
  * A row is a source observation, never an assertion of ownership or verification.
  */
-import { matchesKey, stripTerminalSequences, truncateToWidth } from '@earendil-works/pi-tui';
+import { matchesKey, stripTerminalSequences, truncateToWidth, visibleWidth } from '@earendil-works/pi-tui';
 import type { EvidenceEntry, EvidenceStore } from '../workbench/evidence-loader.js';
 import type { NativeRef, ObservationProjection, ObservationScope, ObservedNode, Relation } from '../workbench/observation.js';
+import { MAX_ZOOM, type TimelineModel, type TimelineNote, type TimelineRow } from '../workbench/timeline.js';
 import { safeWorkflowTerminalText } from './workflow-card.js';
 
 export type InspectorView = 'overview' | 'graph' | 'timeline' | 'details';
@@ -15,6 +16,8 @@ export interface InspectorModel {
   status: string;
   /** Read side of the lazy evidence store; absent means the details view renders exactly as before. */
   evidence?: Pick<EvidenceStore, 'get' | 'request' | 'abortAll'>;
+  /** Lane model the host builds per redraw (buildTimelineLanes); absent means the timeline view renders exactly as before. */
+  timeline?: TimelineModel;
 }
 export interface InspectorState {
   view: InspectorView;
@@ -46,9 +49,9 @@ const limitLine = (text: string, width: number, ascii: boolean): string =>
   stripTerminalSequences(truncateToWidth(safe(text,ascii), Math.max(1,width), ascii ? '~' : '…'));
 const ref = (node: ObservedNode) => `${node.nativeRef.provider}/${node.nativeRef.type}/${node.nativeRef.id}`;
 const edgeGlyph = (ascii: boolean) => ascii ? '->' : '→';
-const tone = (node: ObservedNode, ascii: boolean): string => {
-  if(node.freshness !== 'current') return '?';
-  switch(node.presentation.statusTone){
+const toneGlyph = (freshness: ObservedNode['freshness'], statusTone: ObservedNode['presentation']['statusTone'], ascii: boolean): string => {
+  if(freshness !== 'current') return '?';
+  switch(statusTone){
     case 'success': return ascii ? '+' : '✓';
     case 'failure': return ascii ? 'x' : '✘';
     case 'waiting': return ascii ? 'o' : '○';
@@ -56,6 +59,7 @@ const tone = (node: ObservedNode, ascii: boolean): string => {
     case 'unknown': return '?';
   }
 };
+const tone = (node: ObservedNode, ascii: boolean): string => toneGlyph(node.freshness,node.presentation.statusTone,ascii);
 const selected = (model: InspectorModel, state: InspectorState): {node: ObservedNode | undefined; index: number; total: number} => {
   const row=model.projection.window({scope:model.scope,invocationId:model.invocationId,offset:state.index,limit:1});
   return {node:row.nodes[0],index:state.index,total:row.total};
@@ -249,7 +253,7 @@ export function reduceInspectorKey(data:string,state:InspectorState,model:Inspec
     return {state:{...state,selected:key,collapsed:state.collapsed.includes(key)
       ? state.collapsed.filter(item=>item!==key) : [...state.collapsed,key]}};
   }
-  if(matchesKey(data,'+') || matchesKey(data,'=')) return {state:{...state,zoom:Math.min(16,state.zoom*2)}};
+  if(matchesKey(data,'+') || matchesKey(data,'=')) return {state:{...state,zoom:Math.min(MAX_ZOOM,state.zoom*2)}};
   if(matchesKey(data,'-')) return {state:{...state,zoom:Math.max(1,state.zoom/2)}};
   if(matchesKey(data,'h') || matchesKey(data,'left')) return {state:{...state,pan:Math.max(0,state.pan-1)}};
   if(matchesKey(data,'l')) return {state:{...state,pan:Math.min(100000,state.pan+1)}};
@@ -304,6 +308,102 @@ function evidenceRows(store: Pick<EvidenceStore,'get'>, node: ObservedNode, sele
   const trimmed=draw(Math.max(1,room-1));
   const hidden=refs.length-start-trimmed.drawn;
   return hidden>0 && room>1 ? [...trimmed.rows,`${ascii?'...':'…'} ${hidden} more reference${hidden===1?'':'s'} (viewport)`] : trimmed.rows;
+}
+
+/** What the model-backed timeline view reads from the inspector state; the host rebuilds the model when these change. */
+interface TimelineView { zoom: number; pan: number; filter: string; focused: string | null; selectedKey: string | undefined }
+/** Contract ceiling on bar columns (workbench.timeline/v1 columns 8..200); a hand-built model cannot make a line longer. */
+const MAX_BAR_CELLS = 200;
+/** Default-ignorable code points (zero-width, bidi marks) render as nothing and can hide a credential from the redactor, so they go before it. */
+const INVISIBLE = /\p{Default_Ignorable_Code_Point}/gu;
+const barCells = (value: number): number => Number.isSafeInteger(value) && value > 0 ? Math.min(value, MAX_BAR_CELLS) : 0;
+const plural = (count: number, word: string): string => `${count} ${word}${count===1?'':'s'}`;
+const NOTE_PHRASES: Readonly<Record<Exclude<TimelineNote['code'],'intervals-missing'>,string>> = {
+  'clocks-may-differ': 'clocks may differ across sources',
+  'open-intervals-present': 'open intervals present (drawn open, no end observed)',
+  'stale-rows-present': 'stale rows present',
+  'window-partial': 'observation window is partial',
+  'relation-page-full': 'relation page full; lane placement may be incomplete',
+  'multiple-parents': 'rows with multiple observed parents',
+  'rows-outside-viewport': 'rows outside the bar viewport',
+  'phase-kinds-unavailable': 'waiting/blocked/executing phases unavailable without producer interval kinds',
+};
+/** One timeline note as a fixed phrase; an unrecognized code is never echoed. */
+function noteText(note: TimelineNote): string {
+  if(note.code==='intervals-missing') return `Note: ${Number.isSafeInteger(note.count) ? plural(note.count,'row') : 'rows'} without a source interval`;
+  const phrase=Object.hasOwn(NOTE_PHRASES,note.code) ? NOTE_PHRASES[note.code] : undefined;
+  return `Note: ${phrase ?? 'unrecognized note code'}`;
+}
+/** Lines of the model-backed timeline view, at most `room`. Every cell, instant and duration comes from the TimelineModel the
+ * host supplied; nothing here reads a clock, parses a timestamp or derives a bar, and each producer string is sanitized
+ * individually (the bar is built from fixed glyphs and so is never collapsed by the shared sanitizer). Truncation flags and
+ * notes are fixed phrases and survive the row budget ahead of lane and row lines. */
+function timelineModelLines(timeline: TimelineModel, view: TimelineView, inner: number, ascii: boolean, room: number): string[] {
+  const clean=(text: unknown):string=>safe(String(text).replace(INVISIBLE,''),ascii);
+  const ellipsis=ascii?'...':'…';
+  const span=timeline.origin.basis==='none' || timeline.span.ms===null ? 'span unknown' : `span ${clean(timeline.span.ms)}ms ${timeline.span.complete?'complete':'partial'}`;
+  const zoom=Math.min(view.zoom,MAX_ZOOM);
+  const head=[
+    `Lanes · ${span} · origin ${clean(timeline.origin.basis)} · ${clean(timeline.contract)}`,
+    `measured concurrency max ${clean(timeline.concurrency.maxMeasured)} (${clean(timeline.concurrency.basis)}) · zoom ${clean(zoom)}x · pan ${clean(view.pan)}`,
+  ].map(text=>clean(text));
+  if(room<=head.length) return head.slice(0,Math.max(0,room));
+  const laneCount=timeline.lanes.length;
+  const rowCount=timeline.lanes.reduce((sum,lane)=>sum+lane.rows.length,0);
+  const shown=`${plural(laneCount,'lane')}, ${plural(rowCount,'row')}`;
+  const notices:string[]=[];
+  if(timeline.truncated.lanes) notices.push(`Truncated lanes: showing ${plural(laneCount,'lane')}; further lanes are not in the model`);
+  if(timeline.truncated.rows) notices.push(`Truncated rows: showing ${plural(rowCount,'row')} in ${plural(laneCount,'lane')}; further rows are not in the model`);
+  if(timeline.truncated.relations) notices.push(`Truncated relations: lane placement may be incomplete (${shown} shown)`);
+  if(timeline.truncated.window) notices.push(`Truncated window: rows beyond the model window are not shown (${shown} shown)`);
+  for(const note of timeline.notes) notices.push(noteText(note));
+  const labelWidth=Math.min(24,Math.max(8,Math.floor(inner/3)));
+  const mark=ascii?{pointer:'>',left:'<',right:'>',open:'~',bar:'#',delimiter:'|',lane:'::'}:{pointer:'❯',left:'◀',right:'▶',open:'…',bar:'━',delimiter:'│',lane:'▌'};
+  const filter=view.filter.toLowerCase();
+  const narrowed=filter!=='' || view.focused!==null;
+  const rowLine=(row: TimelineRow):string=>{
+    const bar=row.bar;
+    const timing=row.timing.kind==='closed' ? `${clean(row.timing.durationMs)}ms` : row.timing.kind==='open' ? 'open' : clean(row.timing.reason);
+    const label=truncateToWidth(clean(row.title),labelWidth,ellipsis,true);
+    const lead=`${row.key===view.selectedKey?mark.pointer:' '} ${toneGlyph(row.freshness,row.tone,ascii)} ${label} `;
+    if(bar===null) return `${lead}${timing}${row.timing.kind==='unavailable'?'':' (outside viewport)'}`;
+    const length=barCells(bar.lengthCells);
+    const cells=Array.from({length},()=>mark.bar);
+    if(length>0 && bar.clippedLeft) cells[0]=mark.left;
+    if(length>0 && bar.clippedRight) cells[length-1]=mark.right;
+    if(length>0 && bar.openEnded) cells[length-1]=mark.open;
+    const padded=timing+' '.repeat(Math.max(0,10-visibleWidth(timing)));
+    return `${lead}${padded} ${mark.delimiter}${' '.repeat(barCells(bar.offsetCells))}${cells.join('')}`;
+  };
+  // The selected body line index lets a clipped body scroll to keep the pointer row visible.
+  const body:{text:string;row:boolean;selected:boolean}[]=[];
+  for(const lane of timeline.lanes){
+    const rows=lane.rows.filter(row=>(view.focused===null || row.key===view.focused) &&
+      (filter==='' || `${row.title} ${row.nativeRef.provider}/${row.nativeRef.type}/${row.nativeRef.id}`.toLowerCase().includes(filter)));
+    if(narrowed && rows.length===0) continue;
+    body.push({text:`${mark.lane} ${clean(lane.label)} · ${clean(lane.basis)} · ${lane.confirmed?'confirmed':'unconfirmed'} · ${plural(lane.rows.length,'row')}`,row:false,selected:false});
+    for(const row of rows) body.push({text:rowLine(row),row:true,selected:row.key===view.selectedKey});
+  }
+  if(body.length===0) body.push({text:narrowed?'No timeline rows match the filter or focus (viewport)':'The timeline model holds no lanes',row:false,selected:false});
+  const avail=room-head.length;
+  const noticeBudget=Math.min(notices.length,avail<=2?avail:avail-2);
+  const bodyBudget=avail-noticeBudget;
+  let bodyLines:string[];
+  if(body.length<=bodyBudget) bodyLines=body.map(item=>item.text);
+  else if(bodyBudget<=0) bodyLines=[];
+  else {
+    const capacity=bodyBudget-1;
+    const at=body.findIndex(item=>item.selected);
+    const start=at>=capacity ? at-capacity+1 : 0;
+    const visible=body.slice(start,start+capacity);
+    const hiddenRows=body.filter(item=>item.row).length-visible.filter(item=>item.row).length;
+    const hiddenLanes=body.filter(item=>!item.row).length-visible.filter(item=>!item.row).length;
+    const parts=[...(hiddenRows>0?[`${hiddenRows} more row${hiddenRows===1?'':'s'}`]:[]),...(hiddenLanes>0?[`${hiddenLanes} more lane${hiddenLanes===1?'':'s'}`]:[])];
+    bodyLines=[...visible.map(item=>item.text),`${ellipsis} ${parts.join(', ')} (row budget)`];
+  }
+  const noticeLines=notices.length<=noticeBudget ? notices
+    : noticeBudget>1 ? [...notices.slice(0,noticeBudget-1),`${ellipsis} ${notices.length-noticeBudget+1} more notices (row budget)`] : notices.slice(0,noticeBudget);
+  return [...head,...bodyLines,...noticeLines.map(text=>clean(text))];
 }
 
 /** Pure viewport layout; capped rows fetched from indexed nodes, never raw event history. */
@@ -419,6 +519,11 @@ export function layoutInspector(model:InspectorModel,state:InspectorState,size:I
       for(const text of block) add(text);
     }
     add('Topology incomplete unless native relationships are explicitly supplied.');
+  } else if(state.view==='timeline' && model.timeline){
+    // Lines are already sanitized per producer string; bar cells are fixed glyphs, so they bypass the space-collapsing add().
+    const room=Math.max(0,height-1-(paged?1:0)-lines.length);
+    const view:TimelineView={zoom:state.zoom,pan:state.pan,filter:state.filter,focused:state.focused,selectedKey:current?.key};
+    for(const text of timelineModelLines(model.timeline,view,inner,ascii,room)) lines.push(` ${stripTerminalSequences(truncateToWidth(text,inner,ascii?'~':'…'))}`);
   } else if(state.view==='timeline'){
     add(`Source intervals only · zoom ${state.zoom}x · pan ${state.pan} · clocks may differ`);
     for(let i=0;i<page.nodes.length && lines.length<height-3;i++){
