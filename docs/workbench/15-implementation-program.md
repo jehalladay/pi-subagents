@@ -13,6 +13,9 @@ The in-repo Beads ledger (`.beads/issues.jsonl`, live local Dolt in `.beads/`) t
 - Forked WorkflowHost uses actual Claude Agent SDK for agent(), streaming/session refs; legacy script fixtures unchanged.
 - Terminal card displays live actual Claude execution. An explicit test asserts Pi AgentManager is not called for script agent().
 - Ctrl-C/cancel and invalid model/permission failures behave explicitly.
+  - Measured Ctrl-C behavior (wb-a2g.3 live operator receipt, iterations 3-5, pi 1.2.0, rev f63fd79): a Ctrl-C byte sent through the pty while a SubagentWorkflow run is live has no effect on the background workflow (three Ctrl-Cs in iteration 3, run completed 22.8s later; iteration 5 `ctrlCStoppedWorkflow:false`). Pi's turn interrupt key is Esc (widget footer 'esc to interrupt'), and a background run is not tied to the turn.
+  - The explicit cancel path is the fleet list (Down) -> workflow row (Enter) -> dialog `x stop` (`src/ui/workflow-dialog.ts` kind `kill` -> `onKill` aborts the run controller; the menu notifies 'Stopped workflow'). Docs/10 section "Cancelling a background workflow" repeats this.
+  - Open design call (wb-2t2 scope B): a visible hint or keybinding for in-flight cancel from the prompt. No src change without an owner ruling.
 - Success proof: real Claude SDK script with parallel agents and structured schema, inspected in Pi.
 
 **VC-2: node() + real SDK operation** (P0/P1)

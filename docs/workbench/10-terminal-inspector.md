@@ -68,6 +68,10 @@ For ASCII: +-|>, * running, x failed, ? unknown. Color is redundant to glyph/tex
 - Bound memory: store highlights/current snapshots; stream older event/traces lazily.
 - Pi observation tools paginate/filter/limit and return compact JSON, never rendered ANSI.
 
+## Cancelling a background workflow
+
+Measured by the wb-a2g.3 live operator receipt (iterations 3-5, pi 1.2.0, rev f63fd79): a Ctrl-C byte sent through the pty while a SubagentWorkflow run is live has no effect on the background workflow (three Ctrl-Cs in iteration 3, run completed 22.8s later; iteration 5 `ctrlCStoppedWorkflow:false`). Pi's turn interrupt key is Esc (widget footer 'esc to interrupt'); a background run is not tied to the turn, so neither key stops it. The explicit cancel is the fleet list (Down) -> workflow row (Enter) -> dialog `x stop` (`src/ui/workflow-dialog.ts` kind `kill` -> `onKill` aborts the run controller, then the menu notifies 'Stopped workflow'). A prompt-level hint or keybinding for in-flight cancel is an open design call, owner-ruled before any src change (wb-2t2).
+
 ## Scalability targets (proposed, not measured)
 
 Benchmark >=1000 visible-reachable operations and >=100k synthetic event updates. Typical viewport 30–100 rows; layout/nav calculation target <=20ms on benchmark host and memory bounded by active projection rather than accumulating full prompt bodies. 10k+ grouped operations P2. Record wall time, p50/p95 UI compute, max allocation, file IO and resize metrics; don't declare targets met without measured runs.
