@@ -53,6 +53,8 @@ export interface Relation {
   kind: RelationKind;
   provenance: { source: string; observedAt?: string; nativeConfirmationRef?: string };
 }
+/** One bounded relation page; truncated is true only when a further matching edge exists past it. */
+export interface RelationPage { relations: Relation[]; examined: number; truncated: boolean; limitApplied: number }
 export interface ObservedNode {
   key: string;
   nativeRef: NativeRef;
@@ -622,22 +624,34 @@ export class ObservationProjection {
   }
 
   relations(input: {scope:ObservationScope;from?:string;to?:string;limit?:number}): Relation[] {
+    return this.walkRelations(input).relations;
+  }
+
+  /** Same rows as relations() plus whether a further matching edge exists past the page. */
+  relationsPage(input: {scope:ObservationScope;from?:string;to?:string;limit?:number}): RelationPage {
+    return this.walkRelations(input);
+  }
+
+  private walkRelations(input: {scope:ObservationScope;from?:string;to?:string;limit?:number}): RelationPage {
     const limit=Math.min(input.limit ?? this.limits.maxQuery,this.limits.maxQuery);
     if (!Number.isSafeInteger(limit) || limit < 1) throw new Error("Invalid relation query limit.");
-    if(input.from && !input.from.startsWith(`[${JSON.stringify(input.scope.workspace)},${JSON.stringify(input.scope.principal)},`) ||
-      input.to && !input.to.startsWith(`[${JSON.stringify(input.scope.workspace)},${JSON.stringify(input.scope.principal)},`)) return [];
+    const prefix=`[${JSON.stringify(input.scope.workspace)},${JSON.stringify(input.scope.principal)},`;
+    const relations: Relation[]=[];
+    if(input.from && !input.from.startsWith(prefix) || input.to && !input.to.startsWith(prefix)) return {relations,examined:0,truncated:false,limitApplied:limit};
     const source=input.from ? this.outgoing.get(input.from) : input.to ? this.incoming.get(input.to) : this.edgesByScope.get(scopeOf(input.scope));
-    const rows: Relation[]=[];
+    let examined=0;
+    let truncated=false;
     for (const id of source ?? []) {
       const edge=this.edges.get(id);
       if (!edge) continue;
+      examined++;
       const scope=JSON.parse(edge.from) as string[];
       if (scope[0] !== input.scope.workspace || scope[1] !== input.scope.principal) continue;
       if (input.from && edge.from !== input.from || input.to && edge.to !== input.to) continue;
-      rows.push({...edge,provenance:{...edge.provenance}});
-      if (rows.length >= limit) break;
+      if (relations.length >= limit) { truncated=true; break; }
+      relations.push({...edge,provenance:{...edge.provenance}});
     }
-    return rows;
+    return {relations,examined,truncated,limitApplied:limit};
   }
 
   private viewportGroup(scope: ObservationScope, invocationId: string): string {
