@@ -32,7 +32,7 @@
  */
 
 import { stripTerminalSequences, Text, truncateToWidth, visibleWidth } from "@earendil-works/pi-tui";
-import { redactWorkbenchText, stripUnsafeText } from "../workbench/redaction.js";
+import { redactStrippedText } from "../workbench/redaction.js";
 import type { WorkflowEntryData } from "../workflow/entry.js";
 import type { WorkflowMeta } from "../workflow/meta.js";
 import {
@@ -148,7 +148,7 @@ export type WorkflowCardLine = WorkflowCardSegment[];
 
 /** Native producer strings are untrusted terminal input, not Pi theme markup. */
 export function safeWorkflowTerminalText(value: string): string {
-  return stripUnsafeText(stripTerminalSequences(redactWorkbenchText(value)), " ").replace(/ +/g, " ");
+  return redactStrippedText(stripTerminalSequences(value), " ").replace(/ +/g, " ");
 }
 
 /** The subset of the task record the card reads. */

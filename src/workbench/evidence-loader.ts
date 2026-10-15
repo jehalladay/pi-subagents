@@ -6,7 +6,7 @@
 import { safeWorkflowTerminalText } from "../ui/workflow-card.js";
 import { CapabilityError } from "./capability-registry.js";
 import type { NativeRef, ObservationScope } from "./observation.js";
-import { redactWorkbenchText, stripUnsafeText } from "./redaction.js";
+import { redactStrippedText } from "./redaction.js";
 
 export const EVIDENCE_CONTRACT = "workbench.evidence-loader/v1";
 
@@ -93,10 +93,9 @@ interface Slot {
   pending?: Promise<void>;
 }
 
-/** One preview line to its bounded, redacted, terminal-safe chunks. Redaction runs before any split so a secret cannot straddle a chunk. */
+/** One preview line to its bounded, redacted, terminal-safe chunks. Strip then redaction run before any split so a secret cannot straddle a chunk. */
 function safeChunks(raw: string): string[] {
-  const redacted = redactWorkbenchText(raw, Number.MAX_SAFE_INTEGER).replace(ZERO_WIDTH, "");
-  const cleaned = stripUnsafeText(redacted, " ");
+  const cleaned = redactStrippedText(raw, " ", Number.MAX_SAFE_INTEGER).replace(ZERO_WIDTH, "");
   if (cleaned.length === 0) return [""];
   const chunks: string[] = [];
   for (let at = 0; at < cleaned.length; at += EVIDENCE_LINE_CHARS) chunks.push(safeWorkflowTerminalText(cleaned.slice(at, at + EVIDENCE_LINE_CHARS)));

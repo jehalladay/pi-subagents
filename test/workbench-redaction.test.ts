@@ -1,7 +1,8 @@
 /** Native diagnostic previews never carry deployment credentials into Pi. */
 import { describe, expect, it } from "vitest";
+import { safeWorkflowTerminalText } from "../src/ui/workflow-card.js";
 import { initialWorkflowDialogState, layoutWorkflowDialog, plainWorkflowDialogLines } from "../src/ui/workflow-dialog.js";
-import { redactWorkbenchText } from "../src/workbench/redaction.js";
+import { redactWorkbenchText, sanitizeWorkbenchJson, sanitizeWorkbenchJsonText, sanitizeWorkbenchText, stripUnsafeText } from "../src/workbench/redaction.js";
 
 describe("Workbench credential redaction", () => {
   it.each([
@@ -34,5 +35,49 @@ describe("native detail diagnostic hygiene", () => {
       state, ascii: true, width: 100, now: 2, bodyRows: 16,
     });
     expect(plainWorkflowDialogLines(layout).join("\n")).not.toContain("sk-ant-audit-fake-secret");
+  });
+});
+
+/**
+ * wb-952 probe corpus: six credentials each interrupted by an invisible
+ * character. Redaction must see the reassembled secret, so strip runs first.
+ * `leak` is the tail fragment that must never reach any display path.
+ */
+const ESC = String.fromCharCode(27);
+const BEL = String.fromCharCode(7);
+const PROBE_CORPUS: ReadonlyArray<{ name: string; raw: string; leak: string }> = [
+  { name: "anthropic key split by CSI", raw: `sk-ant-aaaa${ESC}[0mTAILONE1234`, leak: "TAILONE1234" },
+  { name: "bearer token split by ZWSP", raw: "Authorization: Bearer abc\u200bdefTAILTWO99", leak: "TAILTWO99" },
+  { name: "github token split by BOM", raw: "ghp_aaaa\ufeffTAILTHREE33", leak: "TAILTHREE33" },
+  { name: "keyword assignment split by ZWJ in value", raw: "api_key=abcd\u200dTAILFOUR44", leak: "TAILFOUR44" },
+  { name: "password split by OSC", raw: `password=abcd${ESC}]0;title${BEL}TAILFIVE555`, leak: "TAILFIVE555" },
+  { name: "fine-grained pat split by word joiner", raw: "github_pat_aaaa\u2060TAILSIX6666", leak: "TAILSIX6666" },
+];
+
+describe("wb-952 sanitizer drift: split credentials", () => {
+  it.each(PROBE_CORPUS)("safeWorkflowTerminalText removes $name", ({ raw, leak }) => {
+    const out = safeWorkflowTerminalText(raw);
+    expect(out).toContain("[REDACTED]");
+    expect(out).not.toContain(leak);
+  });
+  it.each(PROBE_CORPUS)("sanitizeWorkbenchText removes $name", ({ raw, leak }) => {
+    const out = sanitizeWorkbenchText(raw);
+    expect(out).toContain("[REDACTED]");
+    expect(out).not.toContain(leak);
+  });
+  it.each(PROBE_CORPUS)("sanitizeWorkbenchJson / JsonText remove $name", ({ raw, leak }) => {
+    expect(JSON.stringify(sanitizeWorkbenchJson({ note: [raw] }))).not.toContain(leak);
+    expect(sanitizeWorkbenchJsonText({ note: raw })).not.toContain(leak);
+  });
+  it("stripUnsafeText drops zero-width characters even with a visible replacement", () => {
+    expect(stripUnsafeText("a\u200bb\u200cc\u200dd\ufeffe\u2060f", " ")).toBe("abcdef");
+  });
+  it("keeps layout separators for control characters that carry no credential", () => {
+    expect(safeWorkflowTerminalText("alpha\nbeta\tgamma")).toBe("alpha beta gamma");
+  });
+  it("does not regress the redact-after-strip order the store pipeline uses", () => {
+    for (const { raw, leak } of PROBE_CORPUS) {
+      expect(redactWorkbenchText(stripUnsafeText(raw))).not.toContain(leak);
+    }
   });
 });

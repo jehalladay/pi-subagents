@@ -17,6 +17,12 @@ export function redactWorkbenchText(value: string, maxTextLength = 2000): string
 const TERMINAL_SEQUENCES = /\u001b\[[0-?]*[ -/]*[@-~]|\u001b\][^\u0007\u001b]*(?:\u0007|\u001b\\)/g;
 /** C0/C1 control characters plus the Unicode bidi embedding, override and isolate marks. */
 const UNSAFE_TEXT = /[\u0000-\u001f\u007f-\u009f\u202a-\u202e\u2066-\u2069]/g;
+/**
+ * Zero-width space, non-joiner, joiner, word joiner and BOM. Invisible and
+ * carry no separation, so they are always removed rather than replaced: a
+ * visible replacement would split a credential the redaction pass must see whole.
+ */
+const ZERO_WIDTH = /[\u200b-\u200d\u2060\ufeff]/g;
 
 /**
  * Remove terminal escapes, control characters and bidi marks from untrusted
@@ -24,12 +30,30 @@ const UNSAFE_TEXT = /[\u0000-\u001f\u007f-\u009f\u202a-\u202e\u2066-\u2069]/g;
  * terminal card and the observation projection all strip the same set.
  */
 export function stripUnsafeText(value: string, replacement = ""): string {
-  return value.replace(TERMINAL_SEQUENCES, replacement).replace(UNSAFE_TEXT, replacement);
+  return value.replace(TERMINAL_SEQUENCES, replacement).replace(UNSAFE_TEXT, replacement).replace(ZERO_WIDTH, "");
 }
 
-/** Author- or producer-controlled text bound for model display: redacted, then stripped. */
+function redactionCount(value: string): number {
+  return value.split("[REDACTED]").length - 1;
+}
+
+/**
+ * Strip first, then redact, so a credential interrupted by an escape sequence,
+ * control character or zero-width character is recognized whole. Control
+ * characters become `replacement` for layout, but when only the collapsed form
+ * exposes a credential (an interrupter inside the secret) the collapsed,
+ * redacted form wins: privacy over layout.
+ */
+export function redactStrippedText(value: string, replacement = "", maxTextLength = 2000): string {
+  const spaced = redactWorkbenchText(stripUnsafeText(value, replacement), maxTextLength);
+  if (replacement === "") return spaced;
+  const collapsed = redactWorkbenchText(stripUnsafeText(value, ""), maxTextLength);
+  return redactionCount(collapsed) > redactionCount(spaced) ? collapsed : spaced;
+}
+
+/** Author- or producer-controlled text bound for model display: stripped, then redacted. */
 export function sanitizeWorkbenchText(value: string, maxTextLength = 2000): string {
-  return stripUnsafeText(redactWorkbenchText(value, maxTextLength));
+  return redactStrippedText(value, "", maxTextLength);
 }
 
 const SECRET_FIELD = /^(?:authorization|api[_-]?key|access[_-]?token|refresh[_-]?token|password|secret|aws_secret_access_key|aws_session_token)$/i;
