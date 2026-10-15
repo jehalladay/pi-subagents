@@ -2,11 +2,13 @@
 import { existsSync, mkdirSync, mkdtempSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import type { ExtensionContext } from "@earendil-works/pi-coding-agent";
+import type { ExtensionCommandContext, ExtensionContext } from "@earendil-works/pi-coding-agent";
 import type * as FurnaceSdk from "@furnace/sdk";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import subagentsExtension from "../src/index.js";
+import type * as WorkflowMenuModule from "../src/ui/workflow-menu.js";
 import { CapabilityRegistry } from "../src/workbench/capability-registry.js";
+import * as transcript from "../src/workbench/claude-transcript.js";
 import * as designer from "../src/workbench/designer.js";
 import * as detached from "../src/workbench/hosts/local-detached.js";
 import { ctx, hermeticDir, makePi, textOf } from "./helpers/boot-extension.js";
@@ -22,6 +24,12 @@ vi.mock("@furnace/sdk", async importOriginal => {
     attempts = { list: furnace.attempts };
     logs = { read: vi.fn() };
   } };
+});
+/** Captures the real extension's WorkflowMenuDeps so the transcript gate is tested at the index.ts seam. */
+const workflowMenu = vi.hoisted(() => ({ deps: undefined as unknown }));
+vi.mock("../src/ui/workflow-menu.js", async importOriginal => {
+  const original = await importOriginal<typeof WorkflowMenuModule>();
+  return { ...original, showWorkflowsMenu: async (_ctx: unknown, deps: unknown) => { workflowMenu.deps = deps; } };
 });
 
 let sandbox: ReturnType<typeof hermeticDir> | undefined;
@@ -231,5 +239,35 @@ describe("remaining registered tool display boundaries", () => {
     expect(JSON.parse(response).causalClaim).toBe(false);
     clean(response);
     await waitFor(() => ids.every(id => pi.pi.sendMessage.mock.calls.some(([item]: [unknown]) => JSON.stringify(item).includes(id))));
+  });
+});
+
+describe("claude:transcript grant on the inspector transcript path", () => {
+  async function transcriptSurface(rights: string[]) {
+    const { pi, dir } = await boot(rights);
+    const ui = { setStatus: vi.fn(), setWidget: vi.fn(), addAutocompleteProvider: vi.fn(), notify: vi.fn(), editor: vi.fn(async () => undefined),
+      select: vi.fn().mockResolvedValueOnce("Workflows (0)").mockResolvedValue(undefined) };
+    const menuContext = ctx({ cwd: dir, ui }) as ExtensionCommandContext;
+    workflowMenu.deps = undefined;
+    await pi.commands.get("agents")?.handler("", menuContext);
+    const deps = workflowMenu.deps as WorkflowMenuModule.WorkflowMenuDeps | undefined;
+    if (!deps?.viewClaudeTranscript) throw new Error("workflow menu deps were not captured");
+    return { view: deps.viewClaudeTranscript, ui, dir, menuContext };
+  }
+  it("refuses the transcript read with a typed permission message when the grant is absent", async () => {
+    const { view, ui, menuContext } = await transcriptSurface([]);
+    const read = vi.spyOn(transcript, "readClaudeTranscript").mockResolvedValue([]);
+    await view(menuContext, "sess-denied");
+    expect(read).not.toHaveBeenCalled();
+    expect(ui.editor).not.toHaveBeenCalled();
+    expect(ui.notify).toHaveBeenCalledWith("Permission denied: claude:transcript grant required.", "warning");
+  });
+  it("reads and renders the transcript unchanged when the exact grant is present", async () => {
+    const { view, ui, dir, menuContext } = await transcriptSurface(["claude:transcript"]);
+    const read = vi.spyOn(transcript, "readClaudeTranscript").mockResolvedValue([{ type: "assistant", uuid: "u-1", text: "native transcript row" }]);
+    await view(menuContext, "sess-allowed");
+    expect(read).toHaveBeenCalledWith("sess-allowed", dir);
+    expect(ui.editor).toHaveBeenCalledWith("Claude session sess-allowed", "assistant: native transcript row");
+    expect(ui.notify).not.toHaveBeenCalledWith(expect.stringContaining("Permission denied"), "warning");
   });
 });

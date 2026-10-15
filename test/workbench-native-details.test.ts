@@ -95,6 +95,12 @@ describe("WB-017 native inspector", () => {
     expect(lines.length).toBeLessThanOrEqual(24);
   });
 
+  it("lists a forge-operation evidence ref in the node details pane", () => {
+    const rows = [node(0, "forge.gate.status", { evidenceRefs: ["forge-operation:op-123"] })];
+    const state = { ...initialWorkflowDialogState(), level: "node" as const };
+    expect(render(state, rows, true, 120).join("\n")).toContain("forge-operation:op-123");
+  });
+
   it("preserves selected node on resize and closes without invoking any runtime controls", () => {
     const controls = { onKill: vi.fn(), onSkipAgent: vi.fn(), onRetryAgent: vi.fn() };
     const done = vi.fn();

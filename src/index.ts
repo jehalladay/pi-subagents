@@ -4398,6 +4398,13 @@ Write the file using the write tool. Only write the file, nothing else.`;
     getRecord: id => manager.getRecord(id),
     viewAgentConversation,
     async viewClaudeTranscript(ctx, sessionId) {
+      // Contract ruling 6: the existing inspector transcript path and the
+      // evidence loader share the exact claude:transcript grant, so the two
+      // can never diverge. Without it, nothing is read.
+      if (!grants(ctx).includes("claude:transcript")) {
+        ctx.ui.notify("Permission denied: claude:transcript grant required.", "warning");
+        return;
+      }
       const rows = await readClaudeTranscript(sessionId, ctx.cwd);
       const text = rows.length === 0
         ? `No Claude transcript available for session ${sessionId}.`

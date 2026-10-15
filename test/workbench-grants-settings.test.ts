@@ -15,6 +15,10 @@ describe("Workbench explicit capability grants", () => {
     sandbox = hermeticDir({ settings: { workbench: { workflowAgentBackend: "claude" } } });
     expect(loadSettings(sandbox.dir).workbench).not.toHaveProperty("capabilityGrants");
   });
+  it("accepts the exact claude:transcript grant the transcript path and evidence loader share", () => {
+    sandbox = hermeticDir({ settings: { workbench: { workflowAgentBackend: "claude", capabilityGrants: ["claude:transcript", "forge:inspect"] } } });
+    expect(loadSettings(sandbox.dir).workbench).toMatchObject({ capabilityGrants: ["claude:transcript", "forge:inspect"] });
+  });
   it.each(["*", "", "forge:*", "forge:inspect\n", 42])("refuses malformed grant %j", grant => {
     sandbox = hermeticDir({ settings: { workbench: { workflowAgentBackend: "claude", capabilityGrants: [grant] } } });
     expect(() => loadSettings(sandbox!.dir)).toThrow(/capabilityGrants/);

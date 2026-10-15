@@ -32,6 +32,9 @@ export function nativeEvidence(capabilityId: string, value: JsonValue): NativeEv
       metadata.provider = "forge";
       id = text(source.operation_id);
       status = text(source.status);
+      // Contract ruling 5: a validated native operation id doubles as the node's
+      // loader-resolvable evidence reference; nothing is synthesized without one.
+      if (id !== undefined) metadata.evidenceRefs = [`forge-operation:${id}`];
       const data = record(source.data);
       basis = text(data?.source_snapshot_id) ?? text(data?.gated_tree);
       break;

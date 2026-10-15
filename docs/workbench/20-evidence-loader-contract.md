@@ -37,8 +37,8 @@ Mirrors the lazy transcript pattern: the inspector details view renders per-ref 
 2. The double redaction in the sanitizer order is deliberate and idempotent.
 3. Loaders take the full request, not a bare ref; routing is provider-first.
 4. Cache keys are producer-qualified, matching the projection.
-5. Forge nodes will emit `forge-operation:<operation_id>` evidence refs from native-evidence shaping (parent slice); the loader also accepts synthesis from the owning ref until then.
-6. A new `claude:transcript` grant gates the loader, and the existing `c` transcript path adopts the same grant in the parent slice so the two paths cannot diverge.
+5. Forge nodes will emit `forge-operation:<operation_id>` evidence refs from native-evidence shaping (parent slice); the loader also accepts synthesis from the owning ref until then. The parent slice implemented this: `forge.gate.status` shaping now emits `forge-operation:<operation_id>` whenever the native payload carries a validated operation id.
+6. A new `claude:transcript` grant gates the loader, and the existing `c` transcript path adopts the same grant in the parent slice so the two paths cannot diverge. The parent slice implemented the grant: the host transcript path now refuses with a typed permission message unless `claude:transcript` is granted.
 7. The `e`/`enter` reducer deltas inside the details view are accepted behavior changes.
 8. Zero-width characters are stripped in the loader's own preview pass; the acceptance wording is width-boundedness.
 9. Store-level default budgets with per-request overrides.
