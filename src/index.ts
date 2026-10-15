@@ -79,6 +79,7 @@ import { registerNativeForgeGateStatus } from "./workbench/providers/forge.js";
 import { registerNativeFurnaceRunInspect } from "./workbench/providers/furnace.js";
 import { registerNativeHyperUnixFind } from "./workbench/providers/hyperunix.js";
 import { registerNativeReactiveFiberRender } from "./workbench/providers/reactivefiber.js";
+import { createWorkflowReconcileTool } from "./workbench/reconcile-tool.js";
 import { sanitizeWorkbenchJsonText, sanitizeWorkbenchText, stripUnsafeText } from "./workbench/redaction.js";
 import { decideWorkflowCollision, FOREIGN_WORKFLOW_TOOL_NAMES } from "./workflow/collisions.js";
 import { WORKFLOW_ENTRY_TYPE, type WorkflowEntryData, workflowEntryData } from "./workflow/entry.js";
@@ -86,6 +87,7 @@ import { createWorkflowHost } from "./workflow/host.js";
 import { appendJournal, readJournal, type WorkflowJournalEntry } from "./workflow/journal.js";
 import { extractMeta, type WorkflowMeta, workflowCallName } from "./workflow/meta.js";
 import { type ClaudeNativeObservation, elapsedMs, type WorkflowAgentEntry } from "./workflow/progress.js";
+import { consumeOverridesAtResume } from "./workflow/reconcile.js";
 import { runWorkflow } from "./workflow/runtime.js";
 import { resolveWorkflowScript } from "./workflow/saved.js";
 import { completeWorkflowTask, createWorkflowTask, describeResumeJournal, failWorkflowTask, formatWorkflowNotification, resolveResumeTarget, updateWorkflowProgressBatch, type WorkflowTask, workflowResultText, workflowRunId } from "./workflow/task.js";
@@ -2616,6 +2618,15 @@ Terse command-style prompts produce shallow, generic work.
           nodes: compact, truncated, error: task.error ?? null }));
       },
     }));
+    pi.registerTool(createWorkflowReconcileTool({
+      tasks: workflowTasks,
+      registryFor,
+      grants,
+      observerScope,
+      localPrincipal,
+      sessionIdOf: toolCtx => toolCtx.sessionManager.getSessionId(),
+      now: () => new Date().toISOString(),
+    }));
   }
 
   /**
@@ -2895,6 +2906,9 @@ Terse command-style prompts produce shallow, generic work.
             startTime: task.startTime,
             endTime: task.endTime,
             totalPausedMs: task.totalPausedMs,
+            replayedCount: task.replayedCount,
+            replayedNodeCount: task.replayedNodeCount,
+            reconciledNodeCount: task.reconciledNodeCount,
           },
           meta: task.meta,
           agentCount: task.agentCount,
@@ -2949,6 +2963,15 @@ Terse command-style prompts produce shallow, generic work.
       }
 
       const replay = resumeFrom !== undefined ? readJournal(resumeFrom.journalPath) : undefined;
+      // Spend every live operator override in the SOURCE journal before anything
+      // runs: the runtime receives the entries as read (unspent) and may re-run
+      // once, while any second resume finds the authorization already consumed —
+      // a prompt-injected repetition of one authorization is impossible.
+      if (replay !== undefined && resumeFrom !== undefined) {
+        for (const spent of consumeOverridesAtResume(replay, { byRunId: runId, at: new Date().toISOString() })) {
+          appendJournal(resumeFrom.journalPath, spent);
+        }
+      }
 
       const task = createWorkflowTask({
         id: runId,

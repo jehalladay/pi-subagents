@@ -250,6 +250,16 @@ export class CapabilityRegistry {
       }));
   }
 
+  /**
+   * Policy metadata only: the declared effect class of a registered capability,
+   * ungated — it exposes no payload, and no existence information beyond what
+   * dispatch refusal text already names. The reconcile decision core uses it to
+   * tell a replayable read from a refusing position.
+   */
+  effectClassOf(id: string): CapabilityDescriptor["effectClass"] | undefined {
+    return this.providers.get(id)?.descriptor.effectClass;
+  }
+
   async invoke(id: string, input: unknown, context: InvocationContext): Promise<JsonValue> {
     return this.dispatch("invoke", id, input, context);
   }
