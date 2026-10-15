@@ -69,8 +69,10 @@ describe("wb-952 sanitizer drift: split credentials", () => {
     expect(JSON.stringify(sanitizeWorkbenchJson({ note: [raw] }))).not.toContain(leak);
     expect(sanitizeWorkbenchJsonText({ note: raw })).not.toContain(leak);
   });
-  it("stripUnsafeText drops zero-width characters even with a visible replacement", () => {
-    expect(stripUnsafeText("a\u200bb\u200cc\u200dd\ufeffe\u2060f", " ")).toBe("abcdef");
+  // 16:44Z separator policy: a zero-width character is a separator before any deletion, so a visible replacement is kept.
+  it("stripUnsafeText maps zero-width characters to the replacement like every other unsafe unit", () => {
+    expect(stripUnsafeText("a\u200bb\u200cc\u200dd\ufeffe\u2060f", " ")).toBe("a b c d e f");
+    expect(stripUnsafeText("a\u200bb\u200cc\u200dd\ufeffe\u2060f")).toBe("abcdef");
   });
   it("keeps layout separators for control characters that carry no credential", () => {
     expect(safeWorkflowTerminalText("alpha\nbeta\tgamma")).toBe("alpha beta gamma");
