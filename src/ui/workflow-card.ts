@@ -32,7 +32,7 @@
  */
 
 import { stripTerminalSequences, Text, truncateToWidth, visibleWidth } from "@earendil-works/pi-tui";
-import { redactWorkbenchText } from "../workbench/redaction.js";
+import { redactWorkbenchText, stripUnsafeText } from "../workbench/redaction.js";
 import type { WorkflowEntryData } from "../workflow/entry.js";
 import type { WorkflowMeta } from "../workflow/meta.js";
 import {
@@ -147,9 +147,7 @@ export type WorkflowCardLine = WorkflowCardSegment[];
 
 /** Native producer strings are untrusted terminal input, not Pi theme markup. */
 export function safeWorkflowTerminalText(value: string): string {
-  return stripTerminalSequences(redactWorkbenchText(value))
-    .replace(/[\x00-\x1f\x7f-\x9f\u202a-\u202e\u2066-\u2069]/gu, " ")
-    .replace(/ +/g, " ");
+  return stripUnsafeText(stripTerminalSequences(redactWorkbenchText(value)), " ").replace(/ +/g, " ");
 }
 
 /** The subset of the task record the card reads. */
@@ -322,27 +320,31 @@ export function layoutWorkflowCard(input: WorkflowCardInput): WorkflowCardLine[]
   // The tool name appears only when nothing above the card already carries it.
   // As a tool result there is a `▸ SubagentWorkflow …` call line directly above,
   // and repeating it put two near-identical pointer lines back to back.
+  // Names, descriptions, phase titles and agent labels all come from the
+  // script, so every one is stripped here as untrusted terminal text.
+  const name = safeWorkflowTerminalText(head.name);
+  const subtext = safeWorkflowTerminalText(head.subtext);
   const left: WorkflowCardLine = input.showToolTitle
     ? [
         { text: `${glyphs.pointer} `, color: "toolTitle" },
         { text: "SubagentWorkflow", color: "toolTitle", bold: true },
         { text: "  " },
-        { text: head.name, color: "muted" },
+        { text: name, color: "muted" },
       ]
-    : [{ text: "  " }, { text: head.name, color: "toolTitle", bold: true }];
+    : [{ text: "  " }, { text: name, color: "toolTitle", bold: true }];
   const statsWidth = visibleWidth(head.stats);
   const clampedLeft = clampLine(left, Math.max(0, width - statsWidth - 1));
   const gap = Math.max(1, width - lineWidth(clampedLeft) - statsWidth);
   lines.push([...clampedLeft, { text: " ".repeat(gap) }, { text: head.stats, color: "dim" }]);
 
-  if (head.subtext) lines.push(clampLine([{ text: `  ${head.subtext}`, color: "dim" }], width));
+  if (subtext) lines.push(clampLine([{ text: `  ${subtext}`, color: "dim" }], width));
 
   // ---- Phase tree ----
   // Stats line up in one column across the whole card, not per group, so the
   // eye can scan them; a label past the cap just pushes its own stats along.
   const labelColumn = Math.min(
     LABEL_COLUMN_MAX,
-    Math.max(0, ...groups.flatMap(group => group.agents.map(a => visibleWidth(a.label)))),
+    Math.max(0, ...groups.flatMap(group => group.agents.map(a => visibleWidth(safeWorkflowTerminalText(a.label))))),
   );
 
   groups.forEach((group, groupIndex) => {
@@ -362,7 +364,7 @@ export function layoutWorkflowCard(input: WorkflowCardInput): WorkflowCardLine[]
             } `,
             color: "dim",
           },
-          { text: group.title },
+          { text: safeWorkflowTerminalText(group.title) },
         ],
         width,
       ),
@@ -386,8 +388,9 @@ export function layoutWorkflowCard(input: WorkflowCardInput): WorkflowCardLine[]
       const statParts = entry.cached
         ? [REPLAYED_ANNOTATION, ...agentStatSegments(entry)]
         : agentStatSegments(entry);
-      const pad = Math.max(0, labelColumn - visibleWidth(entry.label));
-      segments.push({ text: statParts.length > 0 ? entry.label + " ".repeat(pad) : entry.label });
+      const label = safeWorkflowTerminalText(entry.label);
+      const pad = Math.max(0, labelColumn - visibleWidth(label));
+      segments.push({ text: statParts.length > 0 ? label + " ".repeat(pad) : label });
       for (const part of statParts) {
         segments.push({ text: " · ", color: "dim" }, { text: part, color: "dim" });
       }
@@ -411,9 +414,9 @@ export function layoutWorkflowCard(input: WorkflowCardInput): WorkflowCardLine[]
   // ---- log() output, below the tree ----
   for (const message of logs) {
     const [first, ...rest] = message.split("\n");
-    lines.push(clampLine([{ text: `  ${glyphs.log}  ${first}`, color: "dim" }], width));
+    lines.push(clampLine([{ text: `  ${glyphs.log}  ${safeWorkflowTerminalText(first)}`, color: "dim" }], width));
     for (const continuation of rest) {
-      lines.push(clampLine([{ text: `     ${continuation}`, color: "dim" }], width));
+      lines.push(clampLine([{ text: `     ${safeWorkflowTerminalText(continuation)}`, color: "dim" }], width));
     }
   }
 

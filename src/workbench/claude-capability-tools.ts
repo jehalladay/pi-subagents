@@ -7,7 +7,7 @@ import { createSdkMcpServer, type McpSdkServerConfigWithInstance, tool } from "@
 import type { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
 import { z } from "zod";
 import { type CapabilityDescriptor, CapabilityError, type CapabilityRegistry, type InvocationContext, type JsonValue, validatedCapabilityJson } from "./capability-registry.js";
-import { redactWorkbenchText } from "./redaction.js";
+import { redactWorkbenchText, sanitizeWorkbenchJson } from "./redaction.js";
 
 export const CLAUDE_CAPABILITY_TOOL_NAMES = ["capability_discover", "capability_contract", "capability_invoke"] as const;
 export interface CuratedToolOptions {
@@ -29,23 +29,6 @@ const ID = /^[a-z][a-z0-9]*(?:[.-][a-z][a-z0-9]*)+$/;
 const VERSION = /^\d+\.\d+\.\d+$/;
 const idSchema = z.string().max(200).regex(ID);
 const versionSchema = z.string().max(64).regex(VERSION);
-
-/** All strings (including keys) are data, sanitized for bounded model display. */
-function sanitized(value: JsonValue): JsonValue {
-  if (typeof value === "string") return redactWorkbenchText(value).replace(/[\u0000-\u001f\u007f-\u009f‪-‮⁦-⁩]/g, "");
-  if (Array.isArray(value)) return value.map(sanitized);
-  if (value && typeof value === "object") {
-    const result: Record<string, JsonValue> = Object.create(null);
-    for (const [key, child] of Object.entries(value)) {
-      // Native secret fields require redaction even when their value alone has
-      // no recognizable credential prefix (e.g. { password: "opaque" }).
-      const safeKey = String(sanitized(key));
-      result[safeKey] = /^(?:authorization|api[_-]?key|access[_-]?token|refresh[_-]?token|password|secret|aws_secret_access_key|aws_session_token)$/i.test(key) ? "[REDACTED]" : sanitized(child);
-    }
-    return result;
-  }
-  return value;
-}
 
 export function createCuratedTools(options: CuratedToolOptions): McpSdkServerConfigWithInstance {
   const { registry, signal, beforeDispatch } = options;
@@ -82,7 +65,7 @@ export function createCuratedTools(options: CuratedToolOptions): McpSdkServerCon
   }
   function encoded(payload: JsonValue, isError = false): CallToolResult {
     const bounded = validatedCapabilityJson(payload, "Claude tool output", 32, maxOutputBytes);
-    return { content: [{ type: "text", text: JSON.stringify(validatedCapabilityJson(sanitized(bounded), "Claude redacted output", 32, maxOutputBytes)) }], ...(isError ? { isError: true } : {}) };
+    return { content: [{ type: "text", text: JSON.stringify(validatedCapabilityJson(sanitizeWorkbenchJson(bounded), "Claude redacted output", 32, maxOutputBytes)) }], ...(isError ? { isError: true } : {}) };
   }
   async function run(args: unknown, extra: unknown, dispatch: (context: InvocationContext) => Promise<JsonValue>): Promise<CallToolResult> {
     const controller = new AbortController();

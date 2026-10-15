@@ -686,7 +686,7 @@ function agentRow(options: {
     { text: " " },
     dialogRowGlyph(display, glyphs, options.spinnerFrame),
     { text: " " },
-    { text: entry.label, color: selected ? "accent" : undefined },
+    { text: safeWorkflowTerminalText(entry.label), color: selected ? "accent" : undefined },
   ];
   // The narrow pane holds the label and nothing else; there is no room for a
   // stat tail, and clamping one would just spend columns on a truncated word.
@@ -793,7 +793,7 @@ export function layoutWorkflowDialog(input: WorkflowDialogInput): WorkflowCardLi
           { text: " " },
           { text: glyph.padStart(digits), color },
           { text: " " },
-          { text: group.title, color },
+          { text: safeWorkflowTerminalText(group.title), color },
         ],
         group.totalCount === 0 ? [] : [{ text: `${group.doneCount}/${group.totalCount} `, color }],
         leftWidth,
@@ -935,7 +935,7 @@ export function layoutWorkflowDialog(input: WorkflowDialogInput): WorkflowCardLi
     }
   }
 
-  const phaseTitle = view.groups[view.clampedPhase]?.title ?? "Phases";
+  const phaseTitle = safeWorkflowTerminalText(view.groups[view.clampedPhase]?.title ?? "Phases");
   // With a filter on, the count is of what survived it — so the title says
   // which filter, rather than leaving "3 agents" looking like the whole phase.
   const shown = view.visibleAgents.length;
@@ -951,7 +951,7 @@ export function layoutWorkflowDialog(input: WorkflowDialogInput): WorkflowCardLi
   lines.push(
     ...paneFrame({
       leftTitle: inPhases ? "Phases" : agentPaneTitle,
-      rightTitle: inPhases ? agentPaneTitle : (state.level === "node" ? safeWorkflowTerminalText(view.selectedNode?.label ?? "Native operation") : entry?.label ?? WORKFLOW_DIALOG_COPY.noAgents),
+      rightTitle: inPhases ? agentPaneTitle : (state.level === "node" ? safeWorkflowTerminalText(view.selectedNode?.label ?? "Native operation") : safeWorkflowTerminalText(entry?.label ?? WORKFLOW_DIALOG_COPY.noAgents)),
       leftRows,
       rightRows,
       width: width - 1,

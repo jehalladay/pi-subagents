@@ -213,3 +213,13 @@ The operator directed docs-only delivery of the prepared feedback files without 
 - ReactiveFiber: `0e6e88345` (no-commit preview preserves provenance without creating render history) plus required dispositions ledger row `3a29b49` on `feedback/pi-workbench-20261015-delivery`.
 
 Delivery is the push, not a fix guarantee. The owning repos' own gates were red or unexercised at delivery time for pre-existing reasons recorded in the files themselves.
+
+## W12 side-effect replay policy
+
+Before this change, node results were not journaled and every node re-executed blindly on resume, while the Claude host had no agent prefix replay at all. Now: red 14 of 18 new cases at 05:40, green 18 of 18 at 05:44, focused batch 9 files 164 tests, adjacent regression batch 15 files 404 tests, lint `bbfed12c8323`, typing `c4d853663cd2`. Known residuals: no operator reconcile surface for journaled effects (fresh run required), the local detached host does not yet declare node effect metadata, and replayed read nodes are not counted in the replayed total shown by the dialog.
+
+## W19 adversarial security pass
+
+Three new security suites cover provider-data prompt injection, grant and identity forgery, credential leakage, path and symlink escape, and VM boundary probes: 15 green with 9 confirmed red findings at `cmd_254839305a5f`. Fixes landed test-first: shared control/bidi/credential sanitizers in redaction over every registered tool output and UI label path, and the Furnace provider now refuses foreign-workspace Run records on both inspect paths (red `cmd_91349509691f`, green `cmd_80373ba3643b`, regression sweep 681 tests `cmd_64c1cd1e297d`).
+
+The residual pass closed the VM host-closure constructor escape with realm-correct bridge factories (red `cmd_fd4fd51ce28c`, green `cmd_8e3d695be01f`) and found and fixed a second escape through pipeline stage this-binding (red `cmd_8c1bb984d29e`). Remaining tool outputs and dialog labels were sanitized (red `cmd_cd0918606287`, green `cmd_f3330759b5fa`); final verification `cmd_596ff447189e` with 396 passed and one deliberate expected-fail exploit probe, lint `cmd_2797393b9166`, typing `cmd_e25d0c27023b`. A thenable-assimilation probe came back clean: hostile then callbacks receive VM-realm closures whose constructor path throws EvalError. The workflow VM is still not claimed as a hostile-script security boundary; dialog detail, model, prompt and outcome strings remain unsanitized display surfaces tracked as residual work.

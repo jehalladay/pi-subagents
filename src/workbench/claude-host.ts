@@ -101,6 +101,24 @@ export function createClaudeWorkflowHost(config: ClaudeWorkflowHostOptions): Wor
   const settings = config.settingSources ?? [];
   const tools = config.tools ?? [];
   const permissionMode = config.permissionMode ?? "dontAsk";
+  /**
+   * Everything an agent answer depends on beyond its own call payload. Journal
+   * entries record it, and the runtime replays only under an equal basis, so a
+   * changed model pin, permission mode, tool list, role set, grant set or
+   * workspace declines the cache (the L4 contract in
+   * workbench-host-contract.test.ts). Per-run identity — invocationId, signal,
+   * observers — is deliberately not part of it.
+   */
+  const replayBasis = JSON.stringify([
+    config.cwd,
+    config.model ?? null,
+    permissionMode,
+    settings,
+    tools,
+    config.roles ?? null,
+    config.grants ?? null,
+    config.principal ?? null,
+  ]);
 
   async function invoke(
     agentId: string,
@@ -237,7 +255,11 @@ export function createClaudeWorkflowHost(config: ClaudeWorkflowHostOptions): Wor
   }
 
   return {
-    replaySafe: false,
+    // Settled-agent prefix replay is safe here because every entry carries
+    // this host's policy basis, and SDK node effects are admitted per journaled
+    // effect class rather than replayed the way agents are.
+    replaySafe: true,
+    replayBasis,
     async spawnAgent(request) {
       const result = await invoke(request.agentId, request.prompt, request, undefined, request.onResolved);
       config.onSettled?.(result, request);
@@ -263,15 +285,23 @@ export function createClaudeWorkflowHost(config: ClaudeWorkflowHostOptions): Wor
       return result;
     },
     loadWorkflow(ref: WorkflowScriptRef) { return resolveWorkflowSource(ref, config.cwd); },
-    ...(config.capabilities ? { callNode: async (request: WorkflowNodeRequest) => {
-      await config.beforeDispatch?.();
-      return config.capabilities!.invoke(request.capabilityId, request.input, {
-        grants: config.grants ?? [], signal: request.signal,
-        invocationId: config.invocationId,
-        principal: config.principal, workspace: config.cwd,
-        callId: String(request.callId),
-      });
-    } } : {}),
+    ...(config.capabilities ? {
+      callNode: async (request: WorkflowNodeRequest) => {
+        await config.beforeDispatch?.();
+        return config.capabilities!.invoke(request.capabilityId, request.input, {
+          grants: config.grants ?? [], signal: request.signal,
+          invocationId: config.invocationId,
+          principal: config.principal, workspace: config.cwd,
+          callId: String(request.callId),
+        });
+      },
+      // Host-side policy lookup, not script-facing discovery: the host owns
+      // this registry, and the journal needs the descriptor's effect class at
+      // invoke time so a resume can admit a read replay and refuse the rest.
+      // The synthesized grant never reaches the script.
+      describeNodeEffect: (capabilityId: string) =>
+        config.capabilities!.discover({ grants: [`discover:${capabilityId}`] })[0]?.effectClass,
+    } : {}),
 
   };
 }

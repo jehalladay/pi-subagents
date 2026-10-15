@@ -24,12 +24,12 @@
  * script `Object.constructor` → the **host** `Function`, i.e. a compiler for
  * arbitrary host-realm code.
  *
- * That said: our injected globals are themselves host closures, so
- * `agent.constructor` is still the host `Function`. The hygiene shrinks the
- * surface; it does not close the hole. **`codeGeneration: { strings: false }` is
- * the load-bearing defense** — it makes `Function("…")` and `eval("…")` throw
- * `EvalError`, so a captured host `Function` cannot compile anything. Treat this
- * as a determinism boundary, not a security boundary against a hostile script.
+ * Host implementations stay in the worker. Realm-native bridge closures capture
+ * them lexically, without exposing a property leading back to the host function.
+ * Returned promises and thrown errors also belong to the VM realm, as do the
+ * console and budget containers. Thus a bridge's constructor chain reaches only
+ * the VM's Function, where disabled code generation throws EvalError. This is
+ * closure hygiene, not a claim that node:vm is a hostile-code security sandbox.
  *
  * ## Why determinism is a prelude and not a stub
  *
@@ -176,6 +176,8 @@ let realmObjectPrototype = null;
  */
 let realmParse = null;
 let realmCapabilityError = null;
+let realmBridge = null;
+let realmAsyncBridge = null;
 
 /**
  * The top-level script's scope.
@@ -392,21 +394,21 @@ function makeScope(name, depth) {
     ambientPhaseTitle: undefined,
     phaseIndexByTitle: new Map(),
   };
-  scope.agent = function (prompt, opts) {
+  scope.agent = realmAsyncBridge(function (prompt, opts) {
     return agentIn(scope, prompt, opts);
-  };
-  scope.node = function (id, input, options) {
+  });
+  scope.node = realmAsyncBridge(function (id, input, options) {
     return nodeIn(scope, id, input, options);
-  };
-  scope.phase = function (title) {
+  });
+  scope.phase = realmBridge(function (title) {
     return phaseIn(scope, title);
-  };
-  scope.log = function (message) {
+  });
+  scope.log = realmBridge(function (message) {
     return logIn(scope, message);
-  };
-  scope.workflow = function (ref, args) {
+  });
+  scope.workflow = realmAsyncBridge(function (ref, args) {
     return workflowIn(scope, ref, args);
-  };
+  });
   scope.console = makeConsole(scope);
   return scope;
 }
@@ -458,12 +460,14 @@ function logIn(scope, message) {
 }
 
 function makeConsole(scope) {
-  const write = function () {
+  const write = realmBridge(function () {
     const parts = [];
     for (let i = 0; i < arguments.length; i++) parts.push(describe(arguments[i]));
     emit({ type: "workflow_log", message: logPrefix(scope) + parts.join(" ") });
-  };
-  return { log: write, info: write, warn: write, error: write, debug: write };
+  });
+  const console = realmParse("{}");
+  for (const name of ["log", "info", "warn", "error", "debug"]) console[name] = write;
+  return console;
 }
 
 async function agentIn(scope, prompt, opts) {
@@ -676,7 +680,9 @@ async function pipeline(items, ...stages) {
       let value = item;
       for (let s = 0; s < stages.length; s++) {
         try {
-          value = await stages[s](value, item, index);
+          // A property call would pass the worker-owned stages array as this.
+          const stage = stages[s];
+          value = await stage(value, item, index);
         } catch (error) {
           if (isFatal(error)) throw error;
           return null;
@@ -790,16 +796,12 @@ async function workflowIn(scope, nameOrRef, args) {
  * main loop and every workflow in the turn, ours counts this run's agents.
  */
 function makeBudget() {
-  return {
-    total: null,
-    spent: function () {
-      return spentOutput;
-    },
-    remaining: function () {
-      // Infinity, not a number, because there is no target to subtract from.
-      return Infinity;
-    },
-  };
+  const budget = realmParse("{}");
+  budget.total = null;
+  budget.spent = realmBridge(function () { return spentOutput; });
+  // Infinity: there is no target to subtract from.
+  budget.remaining = realmBridge(function () { return Infinity; });
+  return budget;
 }
 
 /* ------------------------------------------------------------------ *
@@ -807,18 +809,7 @@ function makeBudget() {
  * ------------------------------------------------------------------ */
 
 async function main() {
-  rootScope = makeScope(undefined, 0);
-  const sandbox = {
-    agent: rootScope.agent,
-    node: rootScope.node,
-    parallel: parallel,
-    pipeline: pipeline,
-    phase: rootScope.phase,
-    log: rootScope.log,
-    workflow: rootScope.workflow,
-    budget: makeBudget(),
-    console: rootScope.console,
-  };
+  const sandbox = Object.create(null);
   const context = vm.createContext(sandbox, {
     name: "workflow",
     codeGeneration: { strings: false, wasm: false },
@@ -831,6 +822,31 @@ async function main() {
   realmContext = context;
   realmCapabilityError = vm.runInContext('(class CapabilityError extends Error { constructor(category, message) { super(message); this.name = "CapabilityError"; this.category = category; } })', context);
   sandbox.CapabilityError = realmCapabilityError;
+
+  // Factories run in the VM, but receive their worker implementation only as a
+  // lexical capture. Never place the host closure on an exposed object, even
+  // briefly. Async wrappers await it so no host Promise crosses back either.
+  const bridges = vm.runInContext("(function () {" +
+    " const RealmError = Error;" +
+    " const convert = error => {" +
+    "   if (error instanceof RealmError) return error;" +
+    "   const copy = new RealmError(String(error && error.message || error));" +
+    "   if (error && typeof error.name === 'string') copy.name = error.name;" +
+    "   if (error && error.workflowFatal === true) copy.workflowFatal = true;" +
+    "   return copy;" +
+    " };" +
+    " return { sync: fn => function (...args) { try { return fn(...args); } catch(error) { throw convert(error); } }," +
+    " async: fn => function (...args) { return (async () => { try { return await fn(...args); } catch(error) { throw convert(error); } })(); } };" +
+    "})()", context);
+  realmBridge = bridges.sync;
+  realmAsyncBridge = bridges.async;
+  rootScope = makeScope(undefined, 0);
+  Object.assign(sandbox, {
+    agent: rootScope.agent, node: rootScope.node,
+    parallel: realmAsyncBridge(parallel), pipeline: realmAsyncBridge(pipeline),
+    phase: rootScope.phase, log: rootScope.log, workflow: rootScope.workflow,
+    budget: makeBudget(), console: rootScope.console,
+  });
 
   // meta and args are materialised *inside* the realm rather than injected, so
   // the script sees objects whose prototype is its own Object.prototype and

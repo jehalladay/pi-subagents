@@ -6,6 +6,7 @@
  */
 import { Script } from "node:vm";
 import ts from "typescript";
+import { sanitizeWorkbenchText } from "../workbench/redaction.js";
 
 /** A phase declared up front, so the UI can show it before any agent runs. */
 export interface WorkflowPhaseMeta {
@@ -165,21 +166,27 @@ export function extractMeta(source: string): MetaExtraction {
  */
 const workflowNames = new Map<string, string>();
 
-/** The label a `SubagentWorkflow` call renders under, from whichever field it carries. */
+/**
+ * The label a `SubagentWorkflow` call renders under, from whichever field it carries.
+ *
+ * Every candidate is untrusted terminal text: `meta.name` is author source, and
+ * the path or saved name is a model argument. Escapes, control and bidi marks
+ * are stripped before the label can reach a call line.
+ */
 export function workflowCallName(args: { script?: string; scriptPath?: string; name?: string }): string {
   const source = args.script;
   if (source === undefined || source === "") {
     // A path-only call would need a synchronous file read per repaint to do
     // better than this, and the file name is what the author will recognize.
-    if (args.scriptPath !== undefined) return args.scriptPath.split(/[/\\]/).pop() ?? "workflow";
+    if (args.scriptPath !== undefined) return sanitizeWorkbenchText(args.scriptPath.split(/[/\\]/).pop() ?? "workflow") || "workflow";
     // A saved workflow is already named by the caller; no read needed at all.
-    return args.name !== undefined && args.name !== "" ? args.name : "workflow";
+    return args.name !== undefined && args.name !== "" ? sanitizeWorkbenchText(args.name) || "workflow" : "workflow";
   }
   const cached = workflowNames.get(source);
   if (cached !== undefined) return cached;
   let name = "workflow";
   try {
-    name = extractMeta(source).meta.name;
+    name = sanitizeWorkbenchText(extractMeta(source).meta.name) || "workflow";
   } catch {
     // An invalid script still gets a call line; `execute` reports why.
   }

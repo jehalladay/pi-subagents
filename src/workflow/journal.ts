@@ -42,6 +42,16 @@
  *
  * The file is JSON Lines, appended as each agent settles, so a run that is
  * killed mid-flight still leaves everything it had finished.
+ *
+ * ## SDK node entries
+ *
+ * `node()` operations share the file under `kind: "node"`, in their own
+ * position space, so the agent prefix walk never sees them. They are recorded
+ * for two reasons that pull against each other: a "read" result may be handed
+ * back on resume (marked stale, never fresh), while any other effect class is
+ * a tripwire — the resume stops on it rather than re-running or silently
+ * replaying an effect the previous run already performed. The admission rules
+ * live in runtime.ts; this file only keeps the record honest.
  */
 
 import { createHash } from "node:crypto";
@@ -67,6 +77,31 @@ export interface WorkflowJournalEntry {
    * partway through, which is why the flag is on the journal and not derived.
    */
   resumed?: true;
+  /**
+   * Entry kind. Absent for a settled agent — the legacy shape, byte-for-byte —
+   * and `"node"` for an SDK `node()` operation, which is admitted on resume by
+   * the per-effect-class policy in runtime.ts, never by the agent prefix rule.
+   */
+  kind?: "node";
+  /** The capability a node entry invoked; names the owning producer on refusal. */
+  capabilityId?: string;
+  /**
+   * The effect class the host declared for the capability when the node ran.
+   * `"read"` is the only class a resume may replay; anything else — including
+   * an entry recorded without one, by a host that declared nothing — is never
+   * handed back as a result. Open text rather than a closed union so a journal
+   * written by a newer host with a new class is kept (and refused) rather than
+   * dropped as malformed, which would erase the very record the refusal needs.
+   */
+  effectClass?: string;
+  /**
+   * The host's replay policy basis at record time (`WorkflowHost.replayBasis`).
+   * A resume only reuses an agent entry recorded under the SAME basis, which is
+   * how a changed Claude host policy — model pin, permission mode, tools,
+   * roles, grants — declines the cache. The legacy host records none and
+   * matches entries that carry none, so its journals stay byte-identical.
+   */
+  basis?: string;
 }
 
 /**
@@ -108,6 +143,21 @@ export function journalKey(input: JournalKeyInput): string {
     ...(input.schema !== undefined ? [input.schema] : []),
   ]);
   return createHash("sha256").update(canonical).digest("hex").slice(0, 32);
+}
+
+/**
+ * Stable hash of what decides a node call: the capability and its input.
+ *
+ * Separate from {@link journalKey}, and salted with a kind tag, so an agent
+ * and a node can never collide into each other's cache. `label` and phase are
+ * display-only, exactly as they are for agents, and deliberately not part of
+ * it.
+ */
+export function nodeJournalKey(capabilityId: string, inputJson: string): string {
+  return createHash("sha256")
+    .update(JSON.stringify(["node", capabilityId, inputJson]))
+    .digest("hex")
+    .slice(0, 32);
 }
 
 /**
@@ -159,6 +209,13 @@ function isEntry(value: unknown): value is WorkflowJournalEntry {
     typeof entry.key === "string" &&
     typeof entry.ok === "boolean" &&
     (entry.text === undefined || typeof entry.text === "string") &&
-    (entry.resumed === undefined || entry.resumed === true)
+    (entry.resumed === undefined || entry.resumed === true) &&
+    (entry.kind === undefined || entry.kind === "node") &&
+    (entry.capabilityId === undefined || typeof entry.capabilityId === "string") &&
+    (entry.effectClass === undefined || typeof entry.effectClass === "string") &&
+    (entry.basis === undefined || typeof entry.basis === "string") &&
+    // A node entry that cannot name its capability cannot name a producer to
+    // reconcile with, so it is as unusable as any other mangled line.
+    (entry.kind !== "node" || typeof entry.capabilityId === "string")
   );
 }

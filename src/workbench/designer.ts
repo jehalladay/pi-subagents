@@ -10,6 +10,7 @@ import { MAX_SCRIPT_LENGTH, type WorkflowScriptRef } from "../workflow/runtime.j
 import { listSavedWorkflows, resolveWorkflowSource } from "../workflow/saved.js";
 import type { CapabilityRegistry, JsonValue } from "./capability-registry.js";
 import { canonicalJson, type DefinitionRef, type InvocationSnapshot, identityDigest, type NativeRef } from "./identity.js";
+import { sanitizeWorkbenchText } from "./redaction.js";
 
 export interface WorkflowSource { readonly definition: DefinitionRef; readonly sourceRef: string; readonly source: string }
 export interface DesignerDiagnostic { code: string; message: string; severity: "error" | "warning"; dimension?: string }
@@ -55,7 +56,8 @@ export function catalogWorkflows(cwd: string, options: CatalogOptions = {}): Wor
   for (const name of listSavedWorkflows(cwd)) {
     if (options.filter && !name.includes(options.filter)) continue;
     try { entries.push({ name, source: inspectWorkflowSource({ name }, cwd) }); }
-    catch (error) { diagnostics.push({code: "SOURCE_UNAVAILABLE", message: `${name}: ${error instanceof Error ? error.message : String(error)}`, severity: "warning"}); }
+    // The saved name and the failure text are author-controlled display strings; sourceRef/definition stay exact references.
+    catch (error) { diagnostics.push({code: "SOURCE_UNAVAILABLE", message: sanitizeWorkbenchText(`${name}: ${error instanceof Error ? error.message : String(error)}`), severity: "warning"}); }
   }
   const catalogDigest = identityDigest("designer-catalog", { cwd: resolve(cwd), filter: options.filter ?? "", entries: entries.map(entry => ({name:entry.name, definition:entry.source.definition})), diagnostics });
   let offset = 0;
@@ -81,7 +83,8 @@ export function validateWorkflowSource(source: WorkflowSource, options: { regist
   let syntax: WorkflowValidation["syntax"] = "valid";
   let meta: WorkflowMeta | undefined;
   let uncertain = false;
-  function error(code: string, message: string): void { diagnostics.push({code,message,severity:"error"}); }
+  // Diagnostics echo author source (syntax errors quote it, node IDs are literals), so they are display text, never raw.
+  function error(code: string, message: string): void { diagnostics.push({code,message:sanitizeWorkbenchText(message),severity:"error"}); }
   if (source.definition.artifactDigest !== digest(source.source)) error("SOURCE_DIGEST_MISMATCH", "Source bytes do not match their pinned definition.");
   if (source.source.length > MAX_SCRIPT_LENGTH) error("SOURCE_TOO_LARGE", "Source exceeds runtime limit.");
   if (/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/.test(source.source)) error("SOURCE_CONTROL_CHARACTERS", "Source contains unsupported control characters.");
@@ -155,7 +158,7 @@ export function validateWorkflowSource(source: WorkflowSource, options: { regist
           catch { uncertain = true; projection.unknown.push({reason:"Dynamic node input; schema cannot be established.",location:location(node)}); }
           if (call.capabilityId && descriptors) {
             const descriptor = descriptors.find(item => item.id === call.capabilityId);
-            if (!descriptor) { uncertain = true; diagnostics.push({code:"NODE_UNAVAILABLE",message:`Capability ${call.capabilityId} is unavailable or not discoverable.`,severity:"warning"}); }
+            if (!descriptor) { uncertain = true; diagnostics.push({code:"NODE_UNAVAILABLE",message:sanitizeWorkbenchText(`Capability ${call.capabilityId} is unavailable or not discoverable.`),severity:"warning"}); }
             else {
               const grants = options.grants ?? [];
               if (!(descriptor.permissions.length ? descriptor.permissions.every(grant => grants.includes(grant)) : grants.includes(`invoke:${descriptor.id}`))) error("NODE_UNAUTHORIZED",`No invocation grant for ${descriptor.id}.`);

@@ -79,6 +79,7 @@ import { registerNativeForgeGateStatus } from "./workbench/providers/forge.js";
 import { registerNativeFurnaceRunInspect } from "./workbench/providers/furnace.js";
 import { registerNativeHyperUnixFind } from "./workbench/providers/hyperunix.js";
 import { registerNativeReactiveFiberRender } from "./workbench/providers/reactivefiber.js";
+import { sanitizeWorkbenchJsonText, sanitizeWorkbenchText, stripUnsafeText } from "./workbench/redaction.js";
 import { decideWorkflowCollision, FOREIGN_WORKFLOW_TOOL_NAMES } from "./workflow/collisions.js";
 import { WORKFLOW_ENTRY_TYPE, type WorkflowEntryData, workflowEntryData } from "./workflow/entry.js";
 import { createWorkflowHost } from "./workflow/host.js";
@@ -2485,7 +2486,7 @@ Terse command-style prompts produce shallow, generic work.
       parameters: Type.Object({}),
       execute: async (_id, _params, _signal, _onUpdate, ctx) => {
         const descriptors = registryFor(ctx.cwd).discover({ grants: grants(ctx) });
-        return textResult(JSON.stringify({ capabilities: descriptors.map(({ id, version, description, effectClass, permissions, supportedModes, contractSource }) =>
+        return textResult(sanitizeWorkbenchJsonText({ capabilities: descriptors.map(({ id, version, description, effectClass, permissions, supportedModes, contractSource }) =>
           ({ id, version, description, effectClass, permissions, supportedModes, contractSource })) }));
       },
     }));
@@ -2503,8 +2504,9 @@ Terse command-style prompts produce shallow, generic work.
             if (target !== root && !target.startsWith(`${root}${sep}`)) return textResult("Source denied outside workspace.");
           }
           const source = inspectWorkflowSource(params, ctx.cwd);
-          return textResult(JSON.stringify(validateWorkflowSource(source, { registry: registryFor(ctx.cwd), grants: grants(ctx) })));
-        } catch (error) { return textResult(error instanceof Error ? error.message : String(error)); }
+          // Metadata, diagnostics and source paths are author-controlled: redacted and stripped before the model reads them.
+          return textResult(sanitizeWorkbenchJsonText(validateWorkflowSource(source, { registry: registryFor(ctx.cwd), grants: grants(ctx) })));
+        } catch (error) { return textResult(sanitizeWorkbenchText(error instanceof Error ? error.message : String(error))); }
       },
     }));
     pi.registerTool(defineTool({
@@ -2517,8 +2519,8 @@ Terse command-style prompts produce shallow, generic work.
         if (params.limit !== undefined && (!Number.isSafeInteger(params.limit) || params.limit < 1 || params.limit > 20)) return textResult("Invalid catalog limit.");
         try {
           const catalog = catalogWorkflows(ctx.cwd, params);
-          return textResult(JSON.stringify({ ...catalog, entries: catalog.entries.map(({name,source}) => ({name,definition:source.definition,sourceRef:source.sourceRef})) }));
-        } catch (error) { return textResult(error instanceof Error ? error.message : String(error)); }
+          return textResult(sanitizeWorkbenchJsonText({ ...catalog, entries: catalog.entries.map(({name,source}) => ({name,definition:source.definition,sourceRef:source.sourceRef})) }));
+        } catch (error) { return textResult(sanitizeWorkbenchText(error instanceof Error ? error.message : String(error))); }
       },
     }));
     pi.registerTool(defineTool({
@@ -2540,7 +2542,7 @@ Terse command-style prompts produce shallow, generic work.
             metrics: [],
           });
         }
-        return textResult(JSON.stringify(compareWorkflowRuns([runs[0]], [runs[1]])));
+        return textResult(sanitizeWorkbenchJsonText(compareWorkflowRuns([runs[0]], [runs[1]])));
       },
     }));
     pi.registerTool(defineTool({
@@ -2558,10 +2560,10 @@ Terse command-style prompts produce shallow, generic work.
         try {
           const reading = await observer.snapshot();
           projection.refresh(observer.projectionSnapshot(reading));
-          return textResult(JSON.stringify(reading));
+          return textResult(sanitizeWorkbenchJsonText(reading));
         } catch (error) {
           projection.markStale({ scope, ref: {provider:"furnace",type:"run",id:params.runId,scope:scope.workspace} });
-          return textResult(error instanceof Error ? error.message : String(error));
+          return textResult(sanitizeWorkbenchText(error instanceof Error ? error.message : String(error)));
         }
         finally { observer.close(); }
       },
@@ -2575,7 +2577,7 @@ Terse command-style prompts produce shallow, generic work.
         if (!grants(ctx).includes(params.action === "launch" ? "workbench:detach" : "workbench:observe")) return textResult("Permission denied: explicit detached launch or observe grant required.");
         const directory=join(getAgentDir(),"workbench-detached");
         try {
-          if (params.action === "inspect") return textResult(JSON.stringify(await connectDetachedWorkflow(directory,params.invocationId).inspect()));
+          if (params.action === "inspect") return textResult(sanitizeWorkbenchJsonText(await connectDetachedWorkflow(directory,params.invocationId).inspect(), 4096));
           if (params.trustedScript !== true || !params.scriptPath) return textResult("Launch requires an explicitly reviewed trusted scriptPath.");
           const source=inspectWorkflowSource({scriptPath:params.scriptPath},ctx.cwd);
           const settings=sourceSettings(ctx);
@@ -2583,8 +2585,8 @@ Terse command-style prompts produce shallow, generic work.
             backend:params.backend ?? "deterministic",providers:[],grants:[],permissions:["inspect","execute"],sourceFiles:[source.sourceRef],
             ...(params.backend === "claude" ? {claude:{model:settings?.model,tools:settings?.tools ?? [],roles:settings?.roles}} : {}),
           });
-          return textResult(JSON.stringify(receipt));
-        } catch (error) { return textResult(error instanceof Error ? error.message : String(error)); }
+          return textResult(sanitizeWorkbenchJsonText(receipt, 4096));
+        } catch (error) { return textResult(sanitizeWorkbenchText(error instanceof Error ? error.message : String(error))); }
       },
     }));
     pi.registerTool(defineTool({
@@ -2607,7 +2609,8 @@ Terse command-style prompts produce shallow, generic work.
           presentation: node.presentation, freshness: node.freshness, completeness: node.completeness,
           observedAt: node.observedAt, lastConfirmedAt: node.lastConfirmedAt,
           subjectBasis: node.subjectBasis, evidenceRefs: node.evidenceRefs }));
-        return textResult(JSON.stringify({ taskId: task.id, status: task.status,
+        // Node labels come from the script and `error` from whatever it threw; both are redacted and stripped here.
+        return textResult(sanitizeWorkbenchJsonText({ taskId: task.id, status: task.status,
           identity: task.identityReceipt?.identity ?? null, inputDigest: task.inputDigest ?? null, workspaceSourceState: task.workspaceSourceState ?? "unknown",
           nodes: compact, truncated, error: task.error ?? null }));
       },
@@ -2668,7 +2671,8 @@ Terse command-style prompts produce shallow, generic work.
           ...(evidenceRefs?.length ? { evidenceRefs: evidenceRefs.slice(0, 32) } : {}),
         });
       }
-      const clamp = (value: string) => value.replace(/[\x00-\x1f\x7f-\x9f]/g, " ").slice(0, 120);
+      // Script labels enter the projection here; bidi marks are stripped with the control bytes.
+      const clamp = (value: string) => stripUnsafeText(value, " ").slice(0, 120);
       const observer = createClaudeObserver((call, snapshot) => {
         nativeSnapshots.set(call.index, snapshot);
         const row = nativeRows.get(call.index);

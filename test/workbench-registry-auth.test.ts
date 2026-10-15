@@ -123,13 +123,19 @@ describe("W06 adverse runtime and registration", () => {
     await expect(registry.invoke("record.read", {}, { grants: ["record:read"], signal: controller.signal })).rejects.toMatchObject({ category: "transport" });
     expect(invoke).not.toHaveBeenCalled();
   });
-  it("preserves typed authorization against a crafted raw RPC that bypasses node checks", async () => {
+  it("closes the script-side raw RPC vehicle while host authorization stays typed", async () => {
     const { registry, invoke } = fixture();
     const host: WorkflowHost = { spawnAgent: async () => ({ ok: true }), abortAgent: () => {}, callNode: request => registry.invoke(request.capabilityId, request.input, context(["discover:record.read"])) };
-    // vm is not hostile-JS isolation: this intentionally exercises the host check.
-    const script = HEAD + 'const port=node.constructor("return require(\\"node:worker_threads\\").parentPort")(); return await new Promise(resolve=>{port.on("message",message=>{if(message.callId===999) resolve({ok:message.ok,error:message.capabilityError});});port.postMessage({type:"call",method:"node",callId:999,payload:{capabilityId:"record.read",input:{},label:"crafted",grants:["record:read"],principal:"admin"}});});';
+    // This case previously reached parentPort through node.constructor and
+    // proved the host denied a crafted raw RPC with forged grants. The W19
+    // bridge hardening closed that vehicle outright (red cmd_fd4fd51ce28c,
+    // green cmd_8e3d695be01f), so the strengthened contract is: a script
+    // cannot craft raw RPC at all, and the probe fails with the documented
+    // realm EvalError while the workflow itself keeps running. Host-side
+    // forged-authority fields stay covered by workbench-security-capability.
+    const script = HEAD + 'try { node.constructor("return require(\\"node:worker_threads\\").parentPort")(); return { escaped: true }; } catch (error) { const denied = await node("record.read", {}).then(() => false, refusal => ({ name: refusal.name, category: refusal.category })); return { escaped: false, probe: error.name, denied }; }';
     const result = await runWorkflow({ script, host });
-    expect(result).toMatchObject({ status: "completed", value: { ok: false, error: { name: "CapabilityError", category: "authorization" } } });
+    expect(result).toMatchObject({ status: "completed", value: { escaped: false, probe: "EvalError", denied: { name: "CapabilityError", category: "authorization" } } });
     expect(invoke).not.toHaveBeenCalled();
   });
 });

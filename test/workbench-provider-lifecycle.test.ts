@@ -92,7 +92,8 @@ describe("HyperUnix SDK custody", () => {
 describe("Furnace SDK read ownership", () => {
   it("refuses an unauthorized request before any native read and preserves native envelope", async () => {
     const registry = new CapabilityRegistry();
-    const inspect = vi.fn().mockResolvedValue({ kind: "run", data: { run_id: "frn-1", state: "active" }, requestId: "req-1", exit: { code: 0, signal: null } });
+    // A real RunDto always records its workspace; the provider refuses a record it cannot attribute to the authorized root.
+    const inspect = vi.fn().mockResolvedValue({ kind: "run", data: { run_id: "frn-1", state: "active", workspace: process.cwd() }, requestId: "req-1", exit: { code: 0, signal: null } });
     registerFurnaceRunInspect(registry, { runs: { get: () => ({ inspect }) } }, process.cwd());
     await expect(registry.invoke("furnace.run.inspect", { runId: "frn-1" }, { grants: [], signal: new AbortController().signal })).rejects.toMatchObject({ category: "authorization" });
     expect(inspect).not.toHaveBeenCalled();

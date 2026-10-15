@@ -20,6 +20,7 @@
  * unit-testable without a terminal.
  */
 
+import { sanitizeWorkbenchText } from "../workbench/redaction.js";
 import type { WorkflowMeta, WorkflowPhaseMeta } from "./meta.js";
 
 /** Raw entry lifecycle, as written by the runtime. */
@@ -464,9 +465,11 @@ export function header(
   }
   totalAgents = Math.max(agentCount, totalAgents, doneAgents);
 
+  // `meta` is author source and the task name follows it, so both are
+  // untrusted terminal text for every surface that renders this header.
   return {
-    name: task.workflowName ?? meta?.name ?? task.summary ?? task.description ?? "workflow",
-    subtext: meta?.description ?? task.description ?? task.summary ?? "",
+    name: sanitizeWorkbenchText(task.workflowName ?? meta?.name ?? task.summary ?? task.description ?? "workflow"),
+    subtext: sanitizeWorkbenchText(meta?.description ?? task.description ?? task.summary ?? ""),
     stats: `${doneAgents}/${totalAgents} ${plural(totalAgents, "agent")} · ${formatDuration(elapsedMs(task, now))}${suffix}`,
   };
 }
