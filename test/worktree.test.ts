@@ -15,6 +15,7 @@ import {
   pruneWorktrees,
   setWorktreeIsolationEnabled,
 } from "../src/worktree.js";
+import { nonRepoScratch } from "./helpers/non-repo-scratch.js";
 
 /**
  * Minimal stand-in for pi.exec(): runs the command for real, and — like the
@@ -102,12 +103,12 @@ describe("worktree", () => {
     });
 
     it("returns undefined for non-git directory", async () => {
-      const nonGit = mkdtempSync(join(tmpdir(), "pi-wt-nongit-"));
+      const nonGit = nonRepoScratch("pi-wt-nongit-");
       try {
-        const wt = await createWorktree(pi, nonGit, "test-id-2");
+        const wt = await createWorktree(pi, nonGit.dir, "test-id-2");
         expect(wt).toBeUndefined();
       } finally {
-        rmSync(nonGit, { recursive: true, force: true });
+        nonGit.dispose();
       }
     });
 
@@ -368,11 +369,11 @@ describe("worktree", () => {
     });
 
     it("does not reject on non-git directory", async () => {
-      const nonGit = mkdtempSync(join(tmpdir(), "pi-wt-nongit-"));
+      const nonGit = nonRepoScratch("pi-wt-nongit-");
       try {
-        await expect(pruneWorktrees(pi, nonGit)).resolves.toBeUndefined();
+        await expect(pruneWorktrees(pi, nonGit.dir)).resolves.toBeUndefined();
       } finally {
-        rmSync(nonGit, { recursive: true, force: true });
+        nonGit.dispose();
       }
     });
   });

@@ -25,6 +25,12 @@ import { encodeCwd } from "../../src/output-file.js";
 /** Every path this process created through `makeScratch` and has not yet removed. */
 const created = new Set<string>();
 
+/**
+ * Every path `removeScratch` has removed. They stay audited until the suite's afterAll, so
+ * a path RE-CREATED after removal (fire-and-forget work landing late) is still named.
+ */
+const removed = new Set<string>();
+
 /** The per-user session scratch root `sessionTaskDir` writes under. */
 export function sessionScratchRoot(): string {
   return join(tmpdir(), `pi-subagents-${process.getuid?.() ?? 0}`);
@@ -81,6 +87,7 @@ export function removeScratch(...dirs: Array<string | undefined>): void {
     for (const session of sessionScratchFor(dir)) rmSync(session, { recursive: true, force: true });
     rmSync(dir, { recursive: true, force: true });
     created.delete(dir);
+    removed.add(dir);
   }
 }
 
@@ -91,11 +98,12 @@ export function removeAllScratch(): void {
 
 /**
  * The tracked paths (and their session trees) that still exist, removing each so a
- * failing run does not make the leak worse. Pure observation of paths we created.
+ * failing run does not make the leak worse. Removed paths are audited too: a directory or
+ * session tree re-created after `removeScratch` is a leak. Pure observation of paths we created.
  */
 export function drainLeaks(): string[] {
   const leaked: string[] = [];
-  for (const dir of [...created]) {
+  for (const dir of new Set([...created, ...removed])) {
     for (const path of [dir, ...sessionScratchFor(dir)]) {
       if (existsSync(path)) leaked.push(path);
     }
@@ -104,12 +112,19 @@ export function drainLeaks(): string[] {
   return leaked;
 }
 
+/** How long the guard waits for fire-and-forget work to land before it audits (ms). */
+export const SCRATCH_SETTLE_MS = 150;
+
 /**
  * Fail the calling suite if any directory made through `makeScratch` — or the
  * session tree created for it — survives the suite. Call once at module scope.
+ * The guard settles for SCRATCH_SETTLE_MS first, so work that lands after the last
+ * `removeScratch` (activation's fire-and-forget agent-dir writes) is audited, not missed.
+ * `register` defaults to vitest's `afterAll`; a test injects its own to run the hook directly.
  */
-export function installScratchLeakGuard(): void {
-  afterAll(() => {
+export function installScratchLeakGuard(register: (hook: () => Promise<void>) => void = afterAll): void {
+  register(async () => {
+    await new Promise<void>(resolve => setTimeout(resolve, SCRATCH_SETTLE_MS));
     const leaked = drainLeaks();
     if (leaked.length > 0) {
       throw new Error(`scratch leaked under ${tmpdir()} (${leaked.length}):\n  ${leaked.join("\n  ")}`);

@@ -11,6 +11,7 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { vi } from "vitest";
+import { pinNonRepo } from "./non-repo-scratch.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./scratch.js";
 
 installScratchLeakGuard();
@@ -117,6 +118,8 @@ export interface Hermetic {
 export function hermeticDir(opts: {
   settings?: Record<string, unknown>;
   agentFiles?: Record<string, string>;
+  /** Pin git discovery so the sandbox is outside any enclosing repository, wherever TMPDIR lives. */
+  nonRepo?: boolean;
 } = {}): Hermetic {
   const dir = makeScratch("pi-boot-");
   const agentDir = makeScratch("pi-boot-agentdir-");
@@ -138,10 +141,12 @@ export function hermeticDir(opts: {
   process.env.PI_CODING_AGENT_DIR = agentDir;
   process.env.HOME = agentDir;
   process.chdir(dir);
+  const unpinRepo = opts.nonRepo ? pinNonRepo(dir) : undefined;
 
   return {
     dir,
     restore() {
+      unpinRepo?.();
       process.chdir(prevCwd);
       if (prevAgentDir == null) delete process.env.PI_CODING_AGENT_DIR;
       else process.env.PI_CODING_AGENT_DIR = prevAgentDir;

@@ -19,8 +19,8 @@ async function waitFor(test: () => boolean) {
   for(let i=0;i<300;i++) { if(test()) return; await new Promise(resolve=>setTimeout(resolve,10)); }
   throw new Error('Timed out waiting for Pi workflow');
 }
-async function boot(settings: Record<string,unknown>, directory?: string) {
-  sandbox=hermeticDir({settings:{workflowsEnabled:true,workbench:{workflowAgentBackend:'claude',...settings}}});
+async function boot(settings: Record<string,unknown>, directory?: string, nonRepo = false) {
+  sandbox=hermeticDir({nonRepo,settings:{workflowsEnabled:true,workbench:{workflowAgentBackend:'claude',...settings}}});
   const pi=makePi(); subagentsExtension(pi.pi);
   const context=ctx({cwd:directory??sandbox.dir});
   await pi.lifecycle.get('session_start')?.({},context);
@@ -51,7 +51,7 @@ describe('registered Workbench entrypoint identity and projection',()=>{
   });
 
   it('binds a bounded observation query to the invoking Pi session and actual Claude session IDs, without payloads',async()=>{
-    const {pi,context,workflow,observe,catalog}=await boot({capabilityGrants:['workbench:observe','discover:forge.gate.status']});
+    const {pi,context,workflow,observe,catalog}=await boot({capabilityGrants:['workbench:observe','discover:forge.gate.status']},undefined,true);
     const descriptors=await catalog.execute('catalog',{},undefined,undefined,context);
     expect(text(descriptors)).toContain('forge.gate.status');
     expect(text(descriptors)).not.toContain('SECRET_');

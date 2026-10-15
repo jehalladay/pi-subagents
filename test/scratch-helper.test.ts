@@ -9,12 +9,15 @@
  * suite's own prefixed directories remain under tmpdir()".
  */
 
-import { existsSync } from "node:fs";
+import { existsSync, mkdirSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { sessionTaskDir } from "../src/output-file.js";
-import { drainLeaks, makeScratch, removeScratch, sessionScratchFor } from "./helpers/scratch.js";
+import { nonRepoScratch } from "./helpers/non-repo-scratch.js";
+import { drainLeaks, installScratchLeakGuard, makeScratch, removeScratch, sessionScratchFor } from "./helpers/scratch.js";
+
+installScratchLeakGuard();
 
 describe("scratch helper", () => {
   it("makeScratch creates a directory under tmpdir() with the requested prefix", () => {
@@ -71,5 +74,76 @@ describe("scratch helper", () => {
     const dir = makeScratch("scratch-helper-d-");
     removeScratch(undefined, dir);
     expect(() => removeScratch(dir)).not.toThrow();
+  });
+
+  // wb-g5o U3 (gate verdict): "so a regression goes red in the leaking suite". A path
+  // re-created AFTER removeScratch (the strict-agent-files fire-and-forget class) must
+  // still be named, so removed paths stay audited until the suite's afterAll.
+  it("drainLeaks names a directory re-created after removeScratch", () => {
+    const dir = makeScratch("scratch-helper-f-");
+    removeScratch(dir);
+    mkdirSync(dir);
+
+    const leaked = drainLeaks();
+
+    expect(leaked).toContain(dir);
+    expect(existsSync(dir)).toBe(false);
+    expect(drainLeaks()).toEqual([]);
+  });
+
+  it("drainLeaks names a session tree re-created after removeScratch", () => {
+    const dir = makeScratch("scratch-helper-g-");
+    removeScratch(dir);
+    sessionTaskDir(dir, "s1");
+    const [session] = sessionScratchFor(dir);
+    expect(session && existsSync(session)).toBe(true);
+
+    const leaked = drainLeaks();
+
+    expect(session && leaked).toContain(session);
+    expect(session && existsSync(session)).toBe(false);
+  });
+
+  it("the installed afterAll guard throws naming every leaked path", async () => {
+    let registered: (() => Promise<void>) | undefined;
+    installScratchLeakGuard(hook => {
+      registered = hook;
+    });
+    expect(registered).toBeTypeOf("function");
+
+    await expect(registered?.()).resolves.toBeUndefined();
+
+    const dir = makeScratch("scratch-helper-h-");
+    await expect(registered?.()).rejects.toThrow(dir);
+    expect(existsSync(dir)).toBe(false);
+  });
+
+  // The strict-agent-files class: fire-and-forget work lands AFTER the suite's last
+  // removeScratch. The guard settles before auditing, so a late re-creation goes red.
+  it("the installed afterAll guard names a directory re-created shortly after removeScratch", async () => {
+    let registered: (() => Promise<void>) | undefined;
+    installScratchLeakGuard(hook => {
+      registered = hook;
+    });
+    const dir = makeScratch("scratch-helper-i-");
+    removeScratch(dir);
+    setTimeout(() => mkdirSync(dir), 20);
+
+    await expect(registered?.()).rejects.toThrow(dir);
+    expect(existsSync(dir)).toBe(false);
+  });
+
+  // wb-g5o owner ruling (16:08Z): one scratch discipline. nonRepoScratch allocates
+  // through the tracked path, keeping its public API.
+  it("nonRepoScratch directories are tracked: an undisposed one is named, a disposed one is not", () => {
+    const kept = nonRepoScratch("scratch-helper-nr-a-");
+    const leaked = drainLeaks();
+    expect(leaked).toContain(kept.dir);
+    kept.dispose();
+
+    const disposed = nonRepoScratch("scratch-helper-nr-b-");
+    disposed.dispose();
+    expect(existsSync(disposed.dir)).toBe(false);
+    expect(drainLeaks()).toEqual([]);
   });
 });
