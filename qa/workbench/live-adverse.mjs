@@ -14,6 +14,12 @@
  * journey. An unavailable gateway is exit 2 with the redacted SDK error, never
  * a skip and never a substitute.
  *
+ * Each journey records requestedModel (the alias given to the host) and
+ * servedModel (the model string the SDK stream natively reported: a genuine
+ * assistant message.model, else the system/init model, else null), both
+ * redacted at capture. The ack wait after terminal and the native-session
+ * lookup retry are bounded by the receipt's disclosed constants and measured.
+ *
  * Usage: node qa/workbench/live-adverse.mjs [cwd]   (CLAUDE_ADVERSE_RECEIPT=path writes the receipt)
  */
 import { execFileSync } from 'node:child_process';
@@ -22,18 +28,20 @@ import { getSessionInfo } from '@anthropic-ai/claude-agent-sdk';
 import { createClaudeWorkflowHost } from '../../dist/workbench/claude-host.js';
 import { redactWorkbenchText, stripUnsafeText } from '../../dist/workbench/redaction.js';
 import { runWorkflow } from '../../dist/workflow/runtime.js';
-import { buildAdverseReceipt } from './live-adverse-receipt.mjs';
+import { ACK_WAIT_BOUND_MS, buildAdverseReceipt, SESSION_LOOKUP_BOUND_MS, servedModelFrom } from './live-adverse-receipt.mjs';
 
 const cwd = process.argv[2] ?? process.cwd();
 const MODEL = process.env.CLAUDE_ADVERSE_MODEL ?? 'claude-opus-5-5';
 const INVALID_MODEL = process.env.CLAUDE_ADVERSE_INVALID_MODEL ?? 'claude-adverse-not-a-model-000';
 const INIT_WATCHDOG_MS = 90_000;
 const RUN_CEILING_MS = 120_000;
-const DRAIN_MS = 20_000;
-const LOOKUP_ATTEMPTS = 6;
+const LOOKUP_INTERVAL_MS = 500;
+/** Native model ids (including long inference-profile ids) fit untruncated, well inside the receipt's 400-character bound. */
+const MODEL_PREVIEW = 200;
 
 /** Sub-millisecond wall clock on one monotonic timeline, comparable with progress `startedAt`. */
 const now = () => performance.timeOrigin + performance.now();
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 /** Redact, strip control bytes, drop credential-looking key names, bound length. */
 function preview(value, max = 300) {
@@ -57,7 +65,14 @@ const summariseOutcome = (outcome) => ({
   hasValue: outcome.value !== undefined && outcome.value !== null,
 });
 
-/** Records ids, types and timestamps only. Message bodies and prompts are never kept. */
+/** The model string a frame natively carries: the system/init `model`, an assistant frame's `message.model`. */
+function nativeModel(message) {
+  if (message.type === 'system' && message.subtype === 'init') return typeof message.model === 'string' ? message.model : undefined;
+  if (message.type === 'assistant') return typeof message.message?.model === 'string' ? message.message.model : undefined;
+  return undefined;
+}
+
+/** Records ids, types, timestamps and the redacted native model string only. Message bodies and prompts are never kept. */
 function recorder(onInit) {
   const messages = [];
   const settled = [];
@@ -66,7 +81,17 @@ function recorder(onInit) {
     settled,
     onMessage(message, call) {
       const at = now();
-      messages.push({ type: String(message.type), subtype: typeof message.subtype === 'string' ? message.subtype : undefined, sessionId: typeof message.session_id === 'string' ? message.session_id : undefined, agentId: call.agentId, at });
+      const model = nativeModel(message);
+      messages.push({
+        type: String(message.type),
+        subtype: typeof message.subtype === 'string' ? message.subtype : undefined,
+        sessionId: typeof message.session_id === 'string' ? message.session_id : undefined,
+        agentId: call.agentId,
+        at,
+        ...(model !== undefined ? { model: preview(model, MODEL_PREVIEW) } : {}),
+        // The SDK flags a synthetic API-error frame; it is never a served model.
+        ...(message.type === 'assistant' && typeof message.error === 'string' ? { assistantError: preview(message.error, 60) } : {}),
+      });
       if (message.type === 'system' && message.subtype === 'init' && message.session_id) onInit?.(call.agentId, message.session_id);
     },
     onSettled(result, call) {
@@ -105,6 +130,37 @@ const result=await agent("Reply with the single word OK. Do not use any tools.")
 if(result===null) throw new Error("agent returned null");
 return result;`;
 
+/**
+ * getSessionInfo for one observed session. The native record is written by
+ * the SDK process, possibly after the abort, so a miss is retried every
+ * LOOKUP_INTERVAL_MS within the disclosed SESSION_LOOKUP_BOUND_MS; attempts
+ * and elapsed time are measured so a late write is not read as an absent record.
+ */
+async function lookupNativeSession(sessionId) {
+  const startedAt = now();
+  const deadline = startedAt + SESSION_LOOKUP_BOUND_MS;
+  let attempts = 0;
+  let record;
+  let lookupError;
+  do {
+    if (attempts > 0) await sleep(LOOKUP_INTERVAL_MS);
+    attempts++;
+    try {
+      const info = await getSessionInfo(sessionId, { dir: cwd });
+      if (info) record = info.sessionId;
+    } catch (error) {
+      lookupError = preview(error instanceof Error ? error.message : error);
+    }
+  } while (record === undefined && now() + LOOKUP_INTERVAL_MS <= deadline);
+  return {
+    sessionId,
+    ...(record !== undefined ? { recordSessionId: record } : {}),
+    ...(record === undefined && lookupError ? { lookupError } : {}),
+    lookupAttempts: attempts,
+    lookupMs: now() - startedAt,
+  };
+}
+
 async function midStreamCancel() {
   const controller = new AbortController();
   let requestedAt;
@@ -119,11 +175,14 @@ async function midStreamCancel() {
   const terminalAt = now();
   clearTimeout(watchdog);
   // A kill can resolve the run before the host delivers the cancellation
-  // result. Wait (bounded) for acknowledgements so that ordering is measured,
-  // not lost: acknowledgedAt is stamped on delivery and may follow terminalAt.
-  const drainDeadline = now() + DRAIN_MS;
+  // result. Wait, bounded by the disclosed ACK_WAIT_BOUND_MS, for
+  // acknowledgements so that ordering is measured, not lost: acknowledgedAt is
+  // stamped on delivery and may follow terminalAt, and the wait is measured.
+  const drainStartedAt = now();
+  const drainDeadline = drainStartedAt + ACK_WAIT_BOUND_MS;
   const owed = () => outcome.progress.some((entry) => entry.type === 'workflow_agent' && typeof entry.agentId === 'string' && entry.startedAt !== undefined && !rec.settled.some((item) => item.agentId === entry.agentId));
-  while (owed() && now() < drainDeadline) await new Promise((resolve) => setTimeout(resolve, 50));
+  while (owed() && now() < drainDeadline) await sleep(50);
+  const ackWaitMs = now() - drainStartedAt;
   const entries = new Map();
   for (const entry of outcome.progress) if (entry.type === 'workflow_agent' && typeof entry.agentId === 'string') entries.set(entry.index, entry);
   const agents = [...entries.values()].map((entry) => {
@@ -140,26 +199,14 @@ async function midStreamCancel() {
     .filter((message) => message.type === 'system' && message.subtype === 'init' && message.sessionId)
     .map((message) => ({ agentId: message.agentId, sessionId: message.sessionId, at: message.at }));
   const nativeSessions = [];
-  for (const sessionId of new Set(initMessages.map((message) => message.sessionId))) {
-    // The native record is written by the SDK process, possibly after the
-    // abort; retry briefly so a late write is not read as an absent record.
-    let record;
-    let lookupError;
-    for (let attempt = 0; attempt < LOOKUP_ATTEMPTS && record === undefined; attempt++) {
-      if (attempt > 0) await new Promise((resolve) => setTimeout(resolve, 500));
-      try {
-        const info = await getSessionInfo(sessionId, { dir: cwd });
-        if (info) record = info.sessionId;
-      } catch (error) {
-        lookupError = preview(error instanceof Error ? error.message : error);
-      }
-    }
-    nativeSessions.push({ sessionId, ...(record !== undefined ? { recordSessionId: record } : {}), ...(record === undefined && lookupError ? { lookupError } : {}) });
-  }
+  for (const sessionId of new Set(initMessages.map((message) => message.sessionId))) nativeSessions.push(await lookupNativeSession(sessionId));
   return {
     observed: {
+      requestedModel: preview(MODEL, MODEL_PREVIEW),
+      ...servedModelFrom(rec.messages),
       ...(requestedAt !== undefined ? { requestedAt } : {}),
       terminalAt,
+      ackWaitMs,
       outcome: summariseOutcome(outcome),
       agents,
       initMessages,
@@ -179,6 +226,8 @@ async function preStartAbort() {
   const outcome = await runWorkflow({ script: SINGLE('adverse-pre-start'), host, signal: controller.signal });
   return {
     observed: {
+      requestedModel: preview(MODEL, MODEL_PREVIEW),
+      ...servedModelFrom(rec.messages),
       requestedAt,
       terminalAt: now(),
       outcome: summariseOutcome(outcome),
@@ -196,6 +245,8 @@ async function invalidModel() {
   const outcome = await runBounded(runWorkflow({ script: SINGLE('adverse-invalid-model'), host, signal: controller.signal }), controller);
   return {
     observed: {
+      requestedModel: preview(INVALID_MODEL, MODEL_PREVIEW),
+      ...servedModelFrom(rec.messages),
       model: preview(INVALID_MODEL, 120),
       outcome: summariseOutcome(outcome),
       settled: rec.settled.map((item) => item.result),

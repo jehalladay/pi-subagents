@@ -7,11 +7,14 @@
  */
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import { assessAdverseJourneys, buildAdverseReceipt } from '../qa/workbench/live-adverse-receipt.mjs';
+import { ACK_WAIT_BOUND_MS, assessAdverseJourneys, buildAdverseReceipt, SESSION_LOOKUP_BOUND_MS, servedModelFrom } from '../qa/workbench/live-adverse-receipt.mjs';
 
 const CANCELLED = 'Claude SDK query was cancelled.';
 const SID_A = '3f2a9c1e-7b64-4d0a-9e1f-0a1b2c3d4e5f';
 const SID_B = '9d8c7b6a-5e4f-4a3b-8c2d-1e0f9a8b7c6d';
+const REQUESTED = 'claude-opus-5-5';
+const SERVED = 'claude-opus-5-5-20261001';
+const INVALID = 'claude-adverse-not-a-model-000';
 
 interface AgentObs {
   agentId: string;
@@ -19,18 +22,25 @@ interface AgentObs {
   acknowledgedAt?: number;
   result?: { ok: boolean; skipped?: boolean; error?: string; sessionId?: string };
 }
-interface MidStreamObs {
+/** What the SDK stream natively reported as the model, beside the alias the host was asked for. */
+interface ModelEvidence {
+  requestedModel: string;
+  servedModel: string | null;
+  servedModelSource: 'assistant' | 'system/init' | null;
+}
+interface MidStreamObs extends ModelEvidence {
   requestedAt?: number;
   terminalAt: number;
+  ackWaitMs: number;
   outcome: { status: string; error?: string; hasValue: boolean };
   agents: AgentObs[];
   initMessages: { agentId: string; sessionId: string; at: number }[];
-  nativeSessions: { sessionId: string; recordSessionId?: string }[];
+  nativeSessions: { sessionId: string; recordSessionId?: string; lookupAttempts: number; lookupMs: number }[];
 }
 interface Observed {
   midStreamCancel: MidStreamObs;
-  preStartAbort: { requestedAt: number; terminalAt: number; outcome: { status: string; error?: string; hasValue: boolean }; sdkMessages: number; sessionIds: string[] };
-  invalidModel: { model: string; outcome: { status: string; error?: string; hasValue: boolean }; settled: { ok: boolean; skipped?: boolean; error?: string; sessionId?: string }[]; sdkMessages: number; sessionIds: string[] };
+  preStartAbort: ModelEvidence & { requestedAt: number; terminalAt: number; outcome: { status: string; error?: string; hasValue: boolean }; sdkMessages: number; sessionIds: string[] };
+  invalidModel: ModelEvidence & { model: string; outcome: { status: string; error?: string; hasValue: boolean }; settled: { ok: boolean; skipped?: boolean; error?: string; sessionId?: string }[]; sdkMessages: number; sessionIds: string[] };
 }
 
 const cancelledResult = (sessionId: string) => ({ ok: false, skipped: true, error: CANCELLED, sessionId });
@@ -38,8 +48,12 @@ const cancelledResult = (sessionId: string) => ({ ok: false, skipped: true, erro
 function cleanObserved(): Observed {
   return {
     midStreamCancel: {
+      requestedModel: REQUESTED,
+      servedModel: SERVED,
+      servedModelSource: 'system/init',
       requestedAt: 1000.5,
       terminalAt: 1300.25,
+      ackWaitMs: 0,
       outcome: { status: 'killed', error: 'Workflow aborted.', hasValue: false },
       agents: [
         { agentId: 'wf-agent-0', startedAt: 900, acknowledgedAt: 1100.1, result: cancelledResult(SID_A) },
@@ -49,10 +63,13 @@ function cleanObserved(): Observed {
         { agentId: 'wf-agent-0', sessionId: SID_A, at: 950.2 },
         { agentId: 'wf-agent-1', sessionId: SID_B, at: 960.4 },
       ],
-      nativeSessions: [{ sessionId: SID_A, recordSessionId: SID_A }, { sessionId: SID_B, recordSessionId: SID_B }],
+      nativeSessions: [{ sessionId: SID_A, recordSessionId: SID_A, lookupAttempts: 1, lookupMs: 3.5 }, { sessionId: SID_B, recordSessionId: SID_B, lookupAttempts: 2, lookupMs: 504.25 }],
     },
-    preStartAbort: { requestedAt: 10, terminalAt: 40, outcome: { status: 'killed', error: 'Workflow aborted.', hasValue: false }, sdkMessages: 0, sessionIds: [] },
+    preStartAbort: { requestedModel: REQUESTED, servedModel: null, servedModelSource: null, requestedAt: 10, terminalAt: 40, outcome: { status: 'killed', error: 'Workflow aborted.', hasValue: false }, sdkMessages: 0, sessionIds: [] },
     invalidModel: {
+      requestedModel: INVALID,
+      servedModel: null,
+      servedModelSource: null,
       model: 'claude-adverse-not-a-model-000',
       outcome: { status: 'failed', error: 'agent returned null', hasValue: false },
       settled: [{ ok: false, error: 'Claude SDK query failed: model not found' }],
@@ -103,7 +120,11 @@ describe('assessAdverseJourneys', () => {
   it('is not realised when no SDK session ever started (gateway unreachable)', () => {
     const o = cleanObserved();
     o.midStreamCancel = {
+      requestedModel: REQUESTED,
+      servedModel: null,
+      servedModelSource: null,
       terminalAt: 500,
+      ackWaitMs: 0,
       outcome: { status: 'completed', hasValue: true },
       agents: [{ agentId: 'wf-agent-0', startedAt: 100, acknowledgedAt: 200, result: { ok: false, error: 'Claude SDK query failed: connect ECONNREFUSED' } }],
       initMessages: [],
@@ -154,10 +175,10 @@ describe('assessAdverseJourneys', () => {
     shape.midStreamCancel.initMessages[0] = { agentId: 'wf-agent-0', sessionId: 'NOT-A-UUID', at: 950 };
     expect(rules(shape)).toContain('invalid-session-id');
     const missing = cleanObserved();
-    missing.midStreamCancel.nativeSessions = [{ sessionId: SID_A, recordSessionId: SID_A }];
+    missing.midStreamCancel.nativeSessions = [{ sessionId: SID_A, recordSessionId: SID_A, lookupAttempts: 1, lookupMs: 3.5 }];
     expect(rules(missing)).toContain('native-session-missing');
     const mismatch = cleanObserved();
-    mismatch.midStreamCancel.nativeSessions[1] = { sessionId: SID_B, recordSessionId: SID_A };
+    mismatch.midStreamCancel.nativeSessions[1] = { sessionId: SID_B, recordSessionId: SID_A, lookupAttempts: 6, lookupMs: 2504 };
     expect(rules(mismatch)).toContain('native-session-missing');
   });
 
@@ -308,6 +329,170 @@ describe('buildAdverseReceipt', () => {
   });
 });
 
+describe('served model evidence', () => {
+  const cleared = { servedModel: null, servedModelSource: null };
+
+  it('carries the requested and the natively served model in every journey measured block', () => {
+    const receipt = build(cleanObserved());
+    expect(receipt.journeys.midStreamCancel.measured).toMatchObject({ requestedModel: REQUESTED, servedModel: SERVED, servedModelSource: 'system/init' });
+    expect(receipt.journeys.preStartAbort.measured).toEqual({ requestedModel: REQUESTED, ...cleared });
+    expect(receipt.journeys.invalidModel.measured).toEqual({ requestedModel: INVALID, ...cleared });
+  });
+
+  it('keeps requested and served independent and carries an assistant-reported model', () => {
+    const o = cleanObserved();
+    o.midStreamCancel.servedModel = 'claude-opus-5-5-native';
+    o.midStreamCancel.servedModelSource = 'assistant';
+    o.invalidModel.servedModel = INVALID;
+    o.invalidModel.servedModelSource = 'system/init';
+    const receipt = build(o);
+    expect(receipt.journeys.midStreamCancel.measured).toMatchObject({ requestedModel: REQUESTED, servedModel: 'claude-opus-5-5-native', servedModelSource: 'assistant' });
+    expect(receipt.journeys.invalidModel.measured).toEqual({ requestedModel: INVALID, servedModel: INVALID, servedModelSource: 'system/init' });
+  });
+
+  it('refuses a realised mid-stream cancel that lost its served model: never a silent null', () => {
+    const o = cleanObserved();
+    Object.assign(o.midStreamCancel, cleared);
+    expect(assessAdverseJourneys(o)).toEqual({ findings: [], realised: true });
+    expect(() => build(o)).toThrow(TypeError);
+    expect(() => build(o)).toThrow(/servedModel/);
+  });
+
+  it('carries a null served model for a mid-stream journey that was never realised', () => {
+    const o = cleanObserved();
+    o.midStreamCancel = {
+      requestedModel: REQUESTED,
+      ...cleared,
+      terminalAt: 500,
+      ackWaitMs: 0,
+      outcome: { status: 'completed', hasValue: true },
+      agents: [{ agentId: 'wf-agent-0', startedAt: 100, acknowledgedAt: 200, result: { ok: false, error: 'Claude SDK query failed: connect ECONNREFUSED' } }],
+      initMessages: [],
+      nativeSessions: [],
+    };
+    const receipt = build(o);
+    expect(receipt).toMatchObject({ realised: false, pass: false });
+    expect(receipt.journeys.midStreamCancel.measured).toMatchObject({ requestedModel: REQUESTED, ...cleared });
+  });
+
+  it('refuses absent, empty, mistyped or source-inconsistent model evidence on any journey', () => {
+    const mutations: [string, (journey: ModelEvidence) => void][] = [
+      ['empty requestedModel', (journey) => { journey.requestedModel = ''; }],
+      ['absent requestedModel', (journey) => { Reflect.deleteProperty(journey, 'requestedModel'); }],
+      ['absent servedModel', (journey) => { Reflect.deleteProperty(journey, 'servedModel'); }],
+      ['absent servedModelSource', (journey) => { Reflect.deleteProperty(journey, 'servedModelSource'); }],
+      ['empty servedModel', (journey) => { journey.servedModel = ''; journey.servedModelSource = 'system/init'; }],
+      ['mistyped servedModel', (journey) => { Object.assign(journey, { servedModel: 42, servedModelSource: 'system/init' }); }],
+      ['served model without a source', (journey) => { journey.servedModel = SERVED; journey.servedModelSource = null; }],
+      ['source without a served model', (journey) => { journey.servedModel = null; journey.servedModelSource = 'assistant'; }],
+      ['unknown source', (journey) => { Object.assign(journey, { servedModel: SERVED, servedModelSource: 'stream_event' }); }],
+    ];
+    for (const name of ['midStreamCancel', 'preStartAbort', 'invalidModel'] as const) {
+      for (const [label, mutate] of mutations) {
+        const o = cleanObserved();
+        mutate(o[name]);
+        expect(() => build(o), `${name}: ${label}`).toThrow(TypeError);
+      }
+    }
+  });
+
+  it('passes the model strings through the receipt credential and escape backstop', () => {
+    const leak = cleanObserved();
+    leak.invalidModel.servedModel = 'sk-ant-api03-leak';
+    leak.invalidModel.servedModelSource = 'system/init';
+    expect(() => build(leak)).toThrow(/credential/);
+    const escaped = cleanObserved();
+    escaped.midStreamCancel.requestedModel = 'claude\u001b[31m';
+    expect(() => build(escaped)).toThrow(/escape/);
+  });
+});
+
+describe('servedModelFrom', () => {
+  it('prefers the first genuine assistant message.model, the gateway answer, over the system/init model', () => {
+    const frames = [
+      { type: 'system', subtype: 'init', model: REQUESTED },
+      { type: 'stream_event' },
+      { type: 'assistant', model: SERVED },
+      { type: 'assistant', model: 'claude-later-frame' },
+    ];
+    expect(servedModelFrom(frames)).toEqual({ servedModel: SERVED, servedModelSource: 'assistant' });
+  });
+
+  it('falls back to the first system/init model when the journey stopped before any assistant frame', () => {
+    const frames = [{ type: 'system', subtype: 'status' }, { type: 'system', subtype: 'init', model: REQUESTED }, { type: 'system', subtype: 'init', model: 'claude-second-init' }];
+    expect(servedModelFrom(frames)).toEqual({ servedModel: REQUESTED, servedModelSource: 'system/init' });
+  });
+
+  it('never reads an assistant frame the SDK flags as an API error as a served model', () => {
+    const synthetic = { type: 'assistant', model: '<synthetic>', assistantError: 'model_not_found' };
+    expect(servedModelFrom([{ type: 'system', subtype: 'init', model: INVALID }, synthetic, { type: 'result', subtype: 'success' }])).toEqual({ servedModel: INVALID, servedModelSource: 'system/init' });
+    expect(servedModelFrom([synthetic])).toEqual({ servedModel: null, servedModelSource: null });
+  });
+
+  it('is null when no model-bearing frame arrived and never invents one from an empty or non-string model', () => {
+    expect(servedModelFrom([])).toEqual({ servedModel: null, servedModelSource: null });
+    expect(servedModelFrom([{ type: 'system', subtype: 'init', model: '' }, { type: 'assistant', model: 7 }, { type: 'result', subtype: 'error_during_execution' }])).toEqual({ servedModel: null, servedModelSource: null });
+    expect(() => servedModelFrom(undefined)).toThrow(TypeError);
+  });
+});
+
+describe('disclosed deviations', () => {
+  const STATED = [
+    'agentsWithoutSession is a measured count, never a pass',
+    'the 20 s ack wait after terminal and the 3 s native-session-lookup retry are bounded waits reported with their measured values',
+    "the runner's extra imports (./live-adverse-receipt.mjs, node:child_process, node:fs) are enumerated by the guard test",
+  ];
+
+  it('states exactly the three disclosed deviations, each beside its measured values', () => {
+    const o = cleanObserved();
+    o.midStreamCancel.ackWaitMs = 2004.5;
+    const receipt = build(o);
+    expect(receipt.deviations).toEqual([
+      { id: 'agents-without-session', statement: STATED[0], agentsWithoutSession: 0 },
+      { id: 'bounded-waits', statement: STATED[1], ackWaitBoundMs: 20_000, ackWaitMs: 2004.5, sessionLookupBoundMs: 3_000, sessionLookupMs: [3.5, 504.25], sessionLookupAttempts: [1, 2] },
+      { id: 'runner-extra-imports', statement: STATED[2], imports: ['./live-adverse-receipt.mjs', 'node:child_process', 'node:fs'] },
+    ]);
+    expect(Object.isFrozen(receipt.deviations)).toBe(true);
+    expect([ACK_WAIT_BOUND_MS, SESSION_LOOKUP_BOUND_MS]).toEqual([20_000, 3_000]);
+  });
+
+  it('reports agentsWithoutSession as the measured count it is, never as a pass', () => {
+    const one = cleanObserved();
+    one.midStreamCancel.agents[1] = { agentId: 'wf-agent-1', startedAt: 900, acknowledgedAt: 1120, result: { ok: false, skipped: true, error: CANCELLED } };
+    one.midStreamCancel.initMessages = [one.midStreamCancel.initMessages[0]];
+    one.midStreamCancel.nativeSessions = [one.midStreamCancel.nativeSessions[0]];
+    const measured = build(one);
+    expect(measured.deviations[0].agentsWithoutSession).toBe(1);
+    expect(measured.deviations[0].agentsWithoutSession).toBe(measured.journeys.midStreamCancel.measured.agentsWithoutSession);
+    expect(measured.deviations[1]).toMatchObject({ sessionLookupMs: [3.5], sessionLookupAttempts: [1] });
+    const none = cleanObserved();
+    none.midStreamCancel.agents = none.midStreamCancel.agents.map((agent) => ({ ...agent, result: { ok: false, skipped: true, error: CANCELLED } }));
+    none.midStreamCancel.initMessages = [];
+    none.midStreamCancel.nativeSessions = [];
+    Object.assign(none.midStreamCancel, { servedModel: null, servedModelSource: null });
+    const sessionless = build(none);
+    expect(sessionless).toMatchObject({ realised: false, pass: false });
+    expect(sessionless.deviations[0].agentsWithoutSession).toBe(2);
+  });
+
+  it('refuses absent, negative or non-finite wait measurements', () => {
+    const mutations: [string, (o: Observed) => void][] = [
+      ['absent ackWaitMs', (o) => { Reflect.deleteProperty(o.midStreamCancel, 'ackWaitMs'); }],
+      ['negative ackWaitMs', (o) => { o.midStreamCancel.ackWaitMs = -1; }],
+      ['infinite ackWaitMs', (o) => { o.midStreamCancel.ackWaitMs = Number.POSITIVE_INFINITY; }],
+      ['zero lookup attempts', (o) => { o.midStreamCancel.nativeSessions[0].lookupAttempts = 0; }],
+      ['fractional lookup attempts', (o) => { o.midStreamCancel.nativeSessions[0].lookupAttempts = 1.5; }],
+      ['NaN lookupMs', (o) => { o.midStreamCancel.nativeSessions[1].lookupMs = Number.NaN; }],
+      ['absent lookupMs', (o) => { Reflect.deleteProperty(o.midStreamCancel.nativeSessions[1], 'lookupMs'); }],
+    ];
+    for (const [label, mutate] of mutations) {
+      const o = cleanObserved();
+      mutate(o);
+      expect(() => build(o), label).toThrow(TypeError);
+    }
+  });
+});
+
 describe('live-adverse runner static guard', () => {
   const runner = readFileSync(new URL('../qa/workbench/live-adverse.mjs', import.meta.url), 'utf8');
   const specifiers = [...runner.matchAll(/^\s*import\s[^;]*?from\s+['"]([^'"]+)['"]/gm)].map((m) => m[1]);
@@ -342,6 +527,20 @@ describe('live-adverse runner static guard', () => {
     expect(receiptSource).not.toMatch(/^\s*import\s/m);
     expect(receiptSource).not.toMatch(/\bimport\s*\(/);
     expect(receiptSource).not.toMatch(/\brequire\s*\(/);
+  });
+
+  it('enumerates exactly the imports beyond the bead set that the receipt discloses as a deviation', () => {
+    const beadSet = ['../../dist/workbench/claude-host.js', '../../dist/workbench/redaction.js', '../../dist/workflow/runtime.js', '@anthropic-ai/claude-agent-sdk'];
+    const extra = specifiers.filter((specifier) => !beadSet.includes(specifier)).sort();
+    const disclosed = build(cleanObserved()).deviations.find((deviation: { id: string }) => deviation.id === 'runner-extra-imports');
+    expect(extra).toEqual(disclosed?.imports);
+  });
+
+  it('waits only by the disclosed bounds and picks the served model with the tested selector', () => {
+    expect(runner).toMatch(/\bACK_WAIT_BOUND_MS\b/);
+    expect(runner).toMatch(/\bSESSION_LOOKUP_BOUND_MS\b/);
+    expect(runner).toMatch(/\bservedModelFrom\(/);
+    expect(runner).not.toMatch(/\b(?:20_?000|3_?000)\b/);
   });
 });
 

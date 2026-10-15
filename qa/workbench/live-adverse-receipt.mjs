@@ -11,9 +11,26 @@
  * workflow run resolved). An acknowledgement after the terminal is recorded as
  * a measurement, not asserted away, because a kill can be reported without
  * child acknowledgement.
+ *
+ * Every journey carries the model alias the host was asked for
+ * (requestedModel) beside the model string the SDK stream natively reported
+ * (servedModel, null only when no model-bearing frame arrived), and the
+ * receipt states the tier's three disclosed deviations with their measured
+ * values instead of leaving them to a side note.
  */
 
 export const ADVERSE_CONTRACT = 'workbench.claude-adverse/v1';
+
+/** Disclosed bounded waits: the runner waits with exactly these and the receipt states them. */
+export const ACK_WAIT_BOUND_MS = 20_000;
+export const SESSION_LOOKUP_BOUND_MS = 3_000;
+
+/** The runner's imports beyond the bead's allowed set; the guard test enumerates them. */
+const RUNNER_EXTRA_IMPORTS = ['./live-adverse-receipt.mjs', 'node:child_process', 'node:fs'];
+const JOURNEYS = ['midStreamCancel', 'preStartAbort', 'invalidModel'];
+const SERVED_MODEL_SOURCES = new Set(['assistant', 'system/init']);
+/** Rules that mean the mid-stream journey itself was never realised. */
+const MID_UNREALISED = new Set(['no-session-started', 'no-agent-cancelled']);
 
 const CANCEL_ERROR = 'Claude SDK query was cancelled.';
 const KILLED_ERROR = 'Workflow aborted.';
@@ -30,6 +47,26 @@ function need(condition, message) {
 }
 
 const isObject = (value) => typeof value === 'object' && value !== null && !Array.isArray(value);
+const isDuration = (value) => typeof value === 'number' && Number.isFinite(value) && value >= 0;
+const named = (frame) => isObject(frame) && typeof frame.model === 'string' && frame.model.trim() !== '';
+
+/**
+ * The model one journey's SDK stream natively reported, from the runner's
+ * redacted frame records ({ type, subtype?, model?, assistantError? }). A
+ * genuine assistant frame's message.model is the gateway's own answer and
+ * wins; a journey stopped before any assistant frame (the abort lands on the
+ * first system/init) falls back to the system/init model; an assistant frame
+ * the SDK flags with an API error is synthetic, never a served model. Null,
+ * never invented, when no model-bearing frame arrived (a pre-start abort).
+ */
+export function servedModelFrom(frames) {
+  need(Array.isArray(frames), 'frames must be an array');
+  const assistant = frames.find((frame) => named(frame) && frame.type === 'assistant' && frame.assistantError === undefined);
+  if (assistant) return { servedModel: assistant.model, servedModelSource: 'assistant' };
+  const init = frames.find((frame) => named(frame) && frame.type === 'system' && frame.subtype === 'init');
+  if (init) return { servedModel: init.model, servedModelSource: 'system/init' };
+  return { servedModel: null, servedModelSource: null };
+}
 
 function requireObserved(observed) {
   need(isObject(observed), 'observed must be an object');
@@ -194,6 +231,47 @@ export function assessAdverseJourneys(observed) {
   return { findings, realised: !findings.some((finding) => UNREALISED.has(finding.rule)) };
 }
 
+/** requestedModel is the alias the host was given; servedModel is present, either the native string or an explicit null. */
+function requireModelEvidence(journey, name) {
+  need(typeof journey.requestedModel === 'string' && journey.requestedModel.trim() !== '', `observed.${name}.requestedModel must be a non-empty string`);
+  need(Object.hasOwn(journey, 'servedModel'), `observed.${name}.servedModel must be present: the native model string, or null when no model-bearing frame arrived`);
+  if (journey.servedModel === null) {
+    need(journey.servedModelSource === null, `observed.${name}.servedModelSource must be null when servedModel is null`);
+    return;
+  }
+  need(typeof journey.servedModel === 'string' && journey.servedModel.trim() !== '', `observed.${name}.servedModel must be a non-empty string or null`);
+  need(SERVED_MODEL_SOURCES.has(journey.servedModelSource), `observed.${name}.servedModelSource must be "assistant" or "system/init" when servedModel is set`);
+}
+
+/** The bounded waits are evidence only when they were measured. */
+function requireWaitMeasurements(mid) {
+  need(isDuration(mid.ackWaitMs), 'observed.midStreamCancel.ackWaitMs must be the measured, finite, non-negative ack wait');
+  mid.nativeSessions.forEach((session, index) => {
+    need(isObject(session), `observed.midStreamCancel.nativeSessions[${index}] must be an object`);
+    need(Number.isInteger(session.lookupAttempts) && session.lookupAttempts >= 1, `observed.midStreamCancel.nativeSessions[${index}].lookupAttempts must be a positive integer`);
+    need(isDuration(session.lookupMs), `observed.midStreamCancel.nativeSessions[${index}].lookupMs must be the measured, finite, non-negative lookup time`);
+  });
+}
+
+const modelEvidence = (journey) => ({ requestedModel: journey.requestedModel, servedModel: journey.servedModel, servedModelSource: journey.servedModelSource });
+
+/** The three disclosed deviations, each stated beside the values this run measured. */
+function disclosedDeviations(mid, measured) {
+  return [
+    { id: 'agents-without-session', statement: 'agentsWithoutSession is a measured count, never a pass', agentsWithoutSession: measured.agentsWithoutSession },
+    {
+      id: 'bounded-waits',
+      statement: `the ${ACK_WAIT_BOUND_MS / 1000} s ack wait after terminal and the ${SESSION_LOOKUP_BOUND_MS / 1000} s native-session-lookup retry are bounded waits reported with their measured values`,
+      ackWaitBoundMs: ACK_WAIT_BOUND_MS,
+      ackWaitMs: mid.ackWaitMs,
+      sessionLookupBoundMs: SESSION_LOOKUP_BOUND_MS,
+      sessionLookupMs: mid.nativeSessions.map((session) => session.lookupMs),
+      sessionLookupAttempts: mid.nativeSessions.map((session) => session.lookupAttempts),
+    },
+    { id: 'runner-extra-imports', statement: `the runner's extra imports (${RUNNER_EXTRA_IMPORTS.join(', ')}) are enumerated by the guard test`, imports: [...RUNNER_EXTRA_IMPORTS] },
+  ];
+}
+
 function deepFreeze(value) {
   if (typeof value === 'object' && value !== null && !Object.isFrozen(value)) {
     Object.freeze(value);
@@ -225,8 +303,10 @@ const REQUIRED_TEXT = ['utc', 'revision', 'node', 'arch', 'platform', 'sdkVersio
 
 /**
  * Assemble the frozen evidence receipt. Throws TypeError for a missing or
- * mistyped field and Error for any credential-shaped, escape-bearing or
- * over-long string; the receipt must never carry a secret or a payload.
+ * mistyped field (including absent model evidence, unmeasured waits, and a
+ * realised mid-stream journey whose served model is null) and Error for any
+ * credential-shaped, escape-bearing or over-long string; the receipt must
+ * never carry a secret or a payload.
  */
 export function buildAdverseReceipt(input) {
   need(isObject(input), 'receipt input must be an object');
@@ -235,9 +315,16 @@ export function buildAdverseReceipt(input) {
   }
   need(Array.isArray(input.sdkEventTypes) && input.sdkEventTypes.every((type) => typeof type === 'string'), 'receipt input sdkEventTypes must be an array of strings');
   requireObserved(input.journeys);
+  for (const name of JOURNEYS) requireModelEvidence(input.journeys[name], name);
+  requireWaitMeasurements(input.journeys.midStreamCancel);
   const journeys = structuredClone(input.journeys);
   const { findings, realised } = assessAdverseJourneys(journeys);
-  journeys.midStreamCancel.measured = measureMidStream(journeys.midStreamCancel);
+  const midRealised = !findings.some((finding) => MID_UNREALISED.has(finding.rule));
+  need(!(midRealised && journeys.midStreamCancel.servedModel === null), 'a realised midStreamCancel journey must carry the servedModel the SDK reported natively; a silent null is refused');
+  const midMeasured = measureMidStream(journeys.midStreamCancel);
+  journeys.midStreamCancel.measured = { ...midMeasured, ...modelEvidence(journeys.midStreamCancel) };
+  journeys.preStartAbort.measured = modelEvidence(journeys.preStartAbort);
+  journeys.invalidModel.measured = modelEvidence(journeys.invalidModel);
   const receipt = {
     contract: ADVERSE_CONTRACT,
     utc: input.utc,
@@ -250,6 +337,7 @@ export function buildAdverseReceipt(input) {
     journeys,
     sdkEventTypes: [...input.sdkEventTypes],
     findings,
+    deviations: disclosedDeviations(journeys.midStreamCancel, midMeasured),
     realised,
     pass: realised && findings.length === 0,
   };
