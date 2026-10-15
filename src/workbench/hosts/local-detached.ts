@@ -434,10 +434,11 @@ export async function launchDetachedWorkflow(raw: DetachedLaunchRequest): Promis
   if (!existsSync(request.directory)) mkdirSync(request.directory, { mode: 0o700 });
   const p = paths(request.directory, request.invocationId);
   const location = resolveDetachedSocket(request.directory, request.invocationId);
-  // No reuse, even after a dead host. Deliberate second executions need NEW IDs.
-  mkdirSync(p.directory, { mode: 0o700 }); privatePath(p.directory, "directory");
+  // The socket directory is created and validated BEFORE the id is reserved, so a refused one never burns the id.
   try { mkdirSync(dirname(location.socket), { mode: 0o700 }); } catch (error) { if ((error as NodeJS.ErrnoException).code !== "EEXIST") throw error; }
   privatePath(dirname(location.socket), "directory");
+  // No reuse, even after a dead host. Deliberate second executions need NEW IDs.
+  mkdirSync(p.directory, { mode: 0o700 }); privatePath(p.directory, "directory");
   const registry = registryFor({ ...request, localProvider: undefined });
   // Local provider manifest + exact module bytes are pinned in config/sourcePins.
   // Registration occurs only in the child, not in the Pi caller.
