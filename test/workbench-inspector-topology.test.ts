@@ -139,6 +139,27 @@ describe('B3 docs/workbench/10 § Four views (Graph) and Four-view viewport incr
     expect(joined(details(modelOf(projection,()=>incomplete),{width:120,rows:40}))).toContain('Topology: incomplete trace');
     expect(joined(details(modelOf(projection,()=>complete),{width:120,rows:40}))).not.toContain('incomplete trace');
   });
+  it('F1 an empty slice carrying a truncation flag says incomplete trace and never "no observed relations"; a complete empty slice says the reverse',()=>{
+    const projection=projectionOf(['focus']);
+    for(const reason of ['relations-truncated','cycle-search-truncated'] as const){
+      const cut=sliceOf({trace:{label:'incomplete-trace',reasons:['no-observed-relations',reason],caveat:TOPOLOGY_CAVEAT}});
+      const text=joined(details(modelOf(projection,()=>cut),{width:120,rows:40}));
+      expect(text).toContain('Topology: incomplete trace');
+      expect(text).toContain(reason.replace(/-/g,' '));
+      expect(text).not.toContain('no observed relations');
+    }
+    const complete=sliceOf({trace:{label:'incomplete-trace',reasons:['no-observed-relations'],caveat:TOPOLOGY_CAVEAT}});
+    const text=joined(details(modelOf(projection,()=>complete),{width:120,rows:40}));
+    expect(text).toContain('Topology: no observed relations (missing edges do not imply independence)');
+    expect(text).not.toContain('incomplete trace');
+  });
+  it('F1 the real selector carries its truncation flag to the details view: a full relation page renders incomplete trace with the reason',()=>{
+    const ids=['focus',...Array.from({length:12},(_,i)=>`d${i}`)];
+    const projection=projectionOf(ids);
+    for(let i=0;i<12;i++) relate(projection,'focus',`d${i}`);
+    const out=details(modelOf(projection,node=>selectLinkedTopology({scope,relations:projection},node.key,{perDirection:2,relationPage:3})),{width:120,rows:40});
+    expect(joined(out)).toMatch(/Topology: incomplete trace \(relations truncated/);
+  });
   it('A3 falsifier: a projection relation that is not in the supplied slice never appears in the details output',()=>{
     const projection=projectionOf(['focus','shown','hidden']);
     relate(projection,'focus','shown');
@@ -168,7 +189,9 @@ describe('B3 docs/workbench/10 § Four views (Graph) and Four-view viewport incr
 });
 
 describe('B4 docs/workbench/10 § Layout responsiveness and docs/workbench/12 § Input and output hardening',()=>{
-  const hostile='src\u001b[31m‮red​漢字\u0007';
+  const RLO=String.fromCharCode(0x202e);
+  const ZWSP=String.fromCharCode(0x200b);
+  const hostile=`src\u001b[31m${RLO}red${ZWSP}漢字\u0007`;
   function hostileModel(): InspectorModel {
     const topology=sliceOf({
       upstream:{edges:[edgeOf('u1','observed-causal',hostile)],remainder:{count:0,atLeast:false,byClass:{}}},
@@ -183,10 +206,38 @@ describe('B4 docs/workbench/10 § Layout responsiveness and docs/workbench/12 §
     expect(out.every(line=>visibleWidth(line)<=size.width)).toBe(true);
     const text=joined(out);
     expect(text).not.toContain('\u001b');
-    expect(text).not.toContain('‮');
-    expect(text).not.toContain('​');
+    expect(text).not.toContain(RLO);
+    expect(text).not.toContain(ZWSP);
     expect(text).not.toContain('\u0007');
     expect(text).toContain('Upstream (1)');
+  });
+  /** wb-6ze.16 respin U2/F3 (16:03Z/16:43Z program rule): separators become one space BEFORE the final redaction, never deleted first. */
+  const SECRET='SECRETabc123XYZ';
+  const SEPARATORS=[['C1 NEL',String.fromCharCode(0x85)],['bidi RLO',String.fromCharCode(0x202e)],['bidi LRI',String.fromCharCode(0x2066)],['zero-width',String.fromCharCode(0x200b)],['C1 PAD',String.fromCharCode(0x80)]] as const;
+  const SCHEMES = ['Bearer','Basic'] as const;
+  const GLUED = SCHEMES.flatMap(scheme=>SEPARATORS.map(([name,sep])=>[scheme,name,sep] as const));
+  it.each(GLUED)('U2 %s + %s separator in a declared edge neighbour id never leaks the token through the real projection (keyRef path)',(scheme,_name,sep)=>{
+    const projection=projectionOf(['focus']);
+    relate(projection,'focus',`${scheme}${sep}${SECRET}`);
+    for(const size of SIZES) for(const ascii of TIERS){
+      const text=joined(details(modelOf(projection,selected(projection)),size,ascii));
+      expect(text).not.toContain(SECRET);
+    }
+  });
+  it.each(GLUED)('U2 %s + %s separator in a provenance source label never leaks the token',(scheme,_name,sep)=>{
+    const topology=sliceOf({
+      upstream:{edges:[edgeOf('u1','observed-causal',`${scheme}${sep}${SECRET}`)],remainder:{count:0,atLeast:false,byClass:{}}},
+      downstream:{edges:[edgeOf('d1','grouping',`${scheme}${sep}${SECRET}`)],remainder:{count:0,atLeast:false,byClass:{}}},
+    });
+    const text=joined(details(modelOf(projectionOf(['focus','u1','d1']),()=>topology),{width:120,rows:40}));
+    expect(text).not.toContain(SECRET);
+    expect(text).toContain('Upstream (1)');
+  });
+  it('U2 word fusion: LF, TAB and U+2028 between words render as a space, not as fused text',()=>{
+    const fuse=`line one${String.fromCharCode(10)}line two${String.fromCharCode(9)}line three${String.fromCharCode(0x2028)}line four`;
+    const topology=sliceOf({upstream:{edges:[edgeOf('u1','observed-causal',fuse)],remainder:{count:0,atLeast:false,byClass:{}}}});
+    const text=joined(details(modelOf(projectionOf(['focus','u1']),()=>topology),{width:120,rows:40}));
+    expect(text).toContain('line one line two line three line four');
   });
   it('A4 the ASCII tier draws direction with only +-|<> glyphs',()=>{
     const projection=projectionOf(['focus','u1','d1']);
@@ -230,6 +281,32 @@ describe('B5 docs/workbench/10 § Rendering pipeline: bounded rows, counted rema
     const out=details(modelOf(projection,node=>selectLinkedTopology({scope,relations:projection},node.key,{perDirection:50})),size,ascii);
     expect(out.length).toBeLessThanOrEqual(size.rows);
     expect(out[out.length-1]).toMatch(HINT);
+  });
+});
+
+describe('F5 owner ruling: a hidden topology section is never silent',()=>{
+  function modelWithEdges(): InspectorModel {
+    const projection=projectionOf(['focus','a','b']);
+    relate(projection,'focus','a'); relate(projection,'b','focus','causation');
+    return modelOf(projection,selected(projection));
+  }
+  it.each([8,9,10,11,12,13])('at %i rows the section yields one header row to a "topology hidden: terminal height" marker and the hint stays last',(rows)=>{
+    for(const ascii of TIERS){
+      const out=details(modelWithEdges(),{width:80,rows},ascii);
+      expect(out.length).toBeLessThanOrEqual(rows);
+      expect(out[out.length-1]).toMatch(HINT);
+      const text=joined(out);
+      if(text.includes('Upstream (')||text.includes('Downstream (')) continue;
+      expect(out.filter(line=>line.trim()==='topology hidden: terminal height')).toHaveLength(1);
+    }
+  });
+  it('at a height with room the marker never appears',()=>{
+    expect(joined(details(modelWithEdges(),{width:120,rows:40}))).not.toContain('topology hidden');
+  });
+  it('the base Relations line is untouched without model.topology (pre-existing remainder is wb-ea1 scope)',()=>{
+    const projection=projectionOf(['focus','a']);
+    relate(projection,'focus','a');
+    expect(joined(details(modelOf(projection),{width:120,rows:40}))).not.toContain('topology hidden');
   });
 });
 

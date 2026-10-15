@@ -4,7 +4,7 @@
 import { matchesKey, stripTerminalSequences, truncateToWidth } from '@earendil-works/pi-tui';
 import type { EvidenceEntry, EvidenceStore } from '../workbench/evidence-loader.js';
 import type { NativeRef, ObservationProjection, ObservationScope, ObservedNode, Relation } from '../workbench/observation.js';
-import { sanitizeWorkbenchText } from '../workbench/redaction.js';
+import { sanitizeWorkbenchText, stripUnsafeText } from '../workbench/redaction.js';
 import type { LinkedTopology, TopologyEdge, TopologyReference, TopologyReferenceReason, TopologyRelationClass } from '../workbench/topology-slice.js';
 import { safeWorkflowTerminalText } from './workflow-card.js';
 
@@ -323,10 +323,12 @@ interface TopologyRow {text:string; count:number}
 const unobservedEndpoint=(model:InspectorModel,edge:TopologyEdge):boolean=>
   model.projection.query({scope:model.scope,limit:1,ref:edge.nativeRef}).nodes.length===0;
 /** Producer text (provenance source, neighbour identity) bound for a row: the shared two-pass sanitizer, then the file's own safe(). */
-/** Zero-width and invisible format characters. The shared UNSAFE_TEXT set omits them (owner-filed wb-952); this local strip is
+/** Zero-width and invisible format characters. The shared UNSAFE_TEXT set omits them (owner-filed wb-952); this local normalisation is
  * redundant once that lands and is kept off the shared path so redaction.ts stays untouched. */
 const INVISIBLE_TEXT=/[\u200b-\u200f\u2028\u2029\u2060-\u2064\ufeff]/gu;
-const topologyText=(text:string):string=>sanitizeWorkbenchText(text,160).replace(INVISIBLE_TEXT,'');
+/** The 16:43Z ruled order: controls, bidi and invisible separators become ONE space first, then the shared redaction (160-unit cap)
+ * sees the real token boundaries; deleting first would glue 'Bearer<sep>token' past the credential pattern. */
+const topologyText=(text:string):string=>sanitizeWorkbenchText(stripUnsafeText(text,' ').replace(INVISIBLE_TEXT,' ').replace(/\s+/g,' '),160);
 /** The neighbour leads the row so a narrow terminal truncates provenance, never the identity. */
 function topologyEdgeRow(model:InspectorModel,edge:TopologyEdge,direction:'upstream'|'downstream',ascii:boolean):TopologyRow{
   const glyph=direction==='downstream' ? edgeGlyph(ascii) : ascii ? '<-' : '←';
@@ -342,12 +344,15 @@ function topologyReferenceRow(reference:TopologyReference):TopologyRow{
 }
 /** Rows for the details view's linked topology: bounded by `room`, every cut counted on one remainder row. */
 function topologyRows(model:InspectorModel,slice:LinkedTopology,room:number,ascii:boolean):string[]{
-  if(room<=0) return [];
   const dots=ascii?'...':'…';
   const rows:TopologyRow[]=[];
   const empty=slice.upstream.edges.length+slice.upstream.remainder.count+slice.downstream.edges.length+slice.downstream.remainder.count+slice.references.length+slice.referencesRemainder===0;
-  if(empty) return [`Topology: no observed relations (missing edges do not imply independence)`];
-  if(slice.trace.label==='incomplete-trace') rows.push({text:'Topology: incomplete trace',count:0});
+  // Two distinct states (owner F1): "no observed relations" is for a COMPLETE empty slice only; a truncation flag always says incomplete trace, and neither substitutes for the other.
+  const truncated=slice.trace.reasons.some(reason=>reason==='relations-truncated' || reason==='cycle-search-truncated');
+  const why=slice.trace.reasons.filter(reason=>reason!=='no-observed-relations').map(reason=>reason.replace(/-/g,' ')).join(', ');
+  const incomplete=`Topology: incomplete trace${why===''?'':` (${why})`}`;
+  if(empty) return [truncated ? incomplete : `Topology: no observed relations (missing edges do not imply independence)`];
+  if(slice.trace.label==='incomplete-trace') rows.push({text:incomplete,count:0});
   for(const [title,direction,side] of [['Upstream','upstream',slice.upstream],['Downstream','downstream',slice.downstream]] as const){
     const total=side.edges.length+side.remainder.count;
     if(total===0) continue;
@@ -513,7 +518,12 @@ export function layoutInspector(model:InspectorModel,state:InspectorState,size:I
       const topology=model.topology?.(current);
       if(topology){
         // Room for topology rows: the paged line, the key hint and the transcript hint stay.
-        for(const text of topologyRows(model,topology,height-lines.length-(paged?1:0)-1-(transcript?1:0),ascii)) add(text);
+        const roomLeft=():number=>height-lines.length-(paged?1:0)-1-(transcript?1:0);
+        if(roomLeft()<1){
+          // Owner F5: a hidden section is never silent. One header row yields its line to the marker (the hint and paged line stay).
+          while(lines.length>0 && roomLeft()<1) lines.pop();
+          add('topology hidden: terminal height');
+        } else for(const text of topologyRows(model,topology,roomLeft(),ascii)) add(text);
       } else {
         const related=relationsFor(model,current);
         if(related.relations.length) add(`Relations: ${related.relations.map(r=>r.kind).slice(0,3).join(', ')}${related.partial?' (partial)':''}`);
