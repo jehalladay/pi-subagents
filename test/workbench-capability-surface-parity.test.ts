@@ -11,6 +11,9 @@
  * The direct registry.invoke call with the same context is the oracle. A
  * surface may only NARROW the oracle's decision (docs/06 finite allowlist per
  * surface); a surface permitting what the oracle refuses is a widening defect.
+ * Widenings are reported, never patched here: the one measured widening (a JSON
+ * own "__proto__" key permitted by capability_invoke) is pinned as the known
+ * widening of follow-up bead wb-8i1, whose fix flips the cell in its own commit.
  * Fixture providers only; no src change.
  */
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
@@ -82,10 +85,16 @@ interface Row {
   grants: readonly string[];
   /** Host-level input, handed to the oracle and to the tool as-is. */
   input: () => unknown;
-  /** A script expression producing the same input inside node(); absent when a script cannot express it. */
+  /**
+   * The same input as a script expression inside node(). Rows without one drive each node host's callNode
+   * directly: the pre-cancelled row (the host receives an already-aborted node signal) and the accessor-bearing
+   * and prototype-key rows. A script CAN express both of those inputs, but the runtime refuses them at the
+   * workflow VM boundary before any host sees them (pinned under C3 below), so callNode is the only way to reach
+   * the host's registry decision for them.
+   */
   expr?: string;
-  /** Surface 3 cannot carry the input (its transport is JSON), so only the other entry points run. */
-  skip?: readonly SurfaceName[];
+  /** Cells this row cannot reach on a surface's production channel, with the reason; every skip is censused below. */
+  skip?: { surfaces: readonly SurfaceName[]; reason: string };
   preCancelled?: boolean;
   /** Tool allowlist; defaults to every fixture id plus the missing id. */
   allowed?: readonly string[];
@@ -93,6 +102,13 @@ interface Row {
   oracle: { permitted: boolean; category?: string };
   /** Where a surface-local gate decides, the message is its own; elsewhere it is the registry's. */
   narrowing?: Partial<Record<SurfaceName, { category: string }>>;
+  /**
+   * A measured WIDENING (the surface permits what the oracle refuses), reported as a finding and never patched
+   * here: surface -> the follow-up bead that fixes it. The cell asserts the current behaviour (permits) and guards
+   * that the oracle still refuses; the fix's own commit deletes the entry, and the cell falls back to plain P1
+   * parity (owner ruling: a known widening is pinned without .skip or .fails).
+   */
+  knownWidening?: Partial<Record<SurfaceName, string>>;
   /** Surfaces whose refusal text is surface-local although the category is the registry's. */
   localText?: readonly SurfaceName[];
 }
@@ -109,6 +125,12 @@ const accessor = (): unknown => {
   return input;
 };
 const protoKey = (): unknown => JSON.parse('{"value":"x","__proto__":{"grants":["fixture:write"]}}');
+/** C4: the reason is measured under "skipped cells" below, not asserted. */
+const ACCESSOR_SKIP = {
+  surfaces: ["claude-tool"],
+  reason:
+    "the tool's production channel is JSON and JSON cannot carry an accessor; the in-memory test transport hands the object over by reference and the tool's zod parse evaluates the getter, so a by-reference cell would measure the harness, not the surface",
+} as const;
 
 const ROWS: readonly Row[] = [
   { name: "unknown capability id", id: MISSING, grants: [`invoke:${MISSING}`], input: () => ({ value: "x" }), expr: '{ value: "x" }', oracle: { permitted: false, category: "unavailable" }, localText: ["claude-tool"] },
@@ -127,8 +149,8 @@ const ROWS: readonly Row[] = [
   { name: "unknown field under a strict schema", id: OPEN, grants: [`invoke:${OPEN}`], input: () => ({ value: "x", extra: 1 }), expr: '{ value: "x", extra: 1 }', oracle: { permitted: false, category: "validation" } },
   { name: "oversized input", id: OPEN, grants: [`invoke:${OPEN}`], input: () => ({ value: "x".repeat(300_000) }), expr: '{ value: "x".repeat(300000) }', oracle: { permitted: false, category: "validation" }, localText: ["claude-node", "detached-node", "claude-tool"] },
   { name: "over-deep input", id: OPEN, grants: [`invoke:${OPEN}`], input: () => deep(100), expr: '(() => { let v = { value: "x" }; for (let i = 0; i < 100; i++) v = { value: "x", next: v }; return v; })()', oracle: { permitted: false, category: "validation" }, localText: ["claude-node", "detached-node", "claude-tool"] },
-  { name: "accessor-bearing input", id: OPEN, grants: [`invoke:${OPEN}`], input: accessor, skip: ["claude-tool"], oracle: { permitted: false, category: "validation" } },
-  { name: "prototype-key input", id: OPEN, grants: [`invoke:${OPEN}`], input: protoKey, skip: ["claude-tool"], oracle: { permitted: false, category: "validation" } },
+  { name: "accessor-bearing input", id: OPEN, grants: [`invoke:${OPEN}`], input: accessor, skip: ACCESSOR_SKIP, oracle: { permitted: false, category: "validation" } },
+  { name: "prototype-key input", id: OPEN, grants: [`invoke:${OPEN}`], input: protoKey, oracle: { permitted: false, category: "validation" }, knownWidening: { "claude-tool": "wb-8i1" } },
   { name: "pre-cancelled signal", id: READ, grants: [`invoke:${READ}`, "fixture:read"], input: () => ({ value: "x" }), preCancelled: true, oracle: { permitted: false, category: "transport" }, localText: ["claude-tool"] },
   { name: "happy path: read with producer permission", id: READ, grants: [`invoke:${READ}`, "fixture:read"], input: () => ({ value: "x" }), expr: '{ value: "x" }', oracle: { permitted: true } },
   { name: "happy path: permission-free read", id: OPEN, grants: [`invoke:${OPEN}`], input: () => ({ value: "x" }), expr: '{ value: "x" }', oracle: { permitted: true } },
@@ -223,7 +245,7 @@ beforeAll(async () => {
   for (const row of ROWS) {
     oracles.set(row.name, await oracle(row));
     for (const surface of SURFACES) {
-      if (row.skip?.includes(surface)) continue;
+      if (row.skip?.surfaces.includes(surface)) continue;
       outcomes.set(key(row, surface), await RUNNERS[surface](row));
     }
   }
@@ -232,7 +254,14 @@ afterAll(async () => {
   for (const close of closers.splice(0)) await close();
 });
 
-const ranSurfaces = (row: Row) => SURFACES.filter(surface => !row.skip?.includes(surface));
+const ranSurfaces = (row: Row) => SURFACES.filter(surface => !row.skip?.surfaces.includes(surface));
+/** Every known widening as `<row> on <surface>`, with the bead that fixes it. */
+const KNOWN_WIDENINGS = ROWS.flatMap(row =>
+  SURFACES.flatMap(surface => {
+    const bead = row.knownWidening?.[surface];
+    return bead === undefined ? [] : [{ cell: `${row.name} on ${surface}`, bead }];
+  }),
+);
 
 describe("the registry oracle matches the recorded expectation", () => {
   it.each(ROWS.map(row => [row.name, row] as const))("%s", (_name, row) => {
@@ -256,12 +285,24 @@ describe("P1: identical registry decision across surfaces", () => {
       expect(out.category).toBe(narrowed.category);
       return;
     }
+    const widening = row.knownWidening?.[surface];
+    if (widening) {
+      // The known widening, reported as a finding: the oracle still refuses with the recorded category...
+      expect(base).toMatchObject({ permitted: false, category: row.oracle.category });
+      // ...and the surface currently permits. The fix turns this red and deletes the knownWidening entry.
+      expect(out.permitted, `known widening, fixed by ${widening}`).toBe(true);
+      return;
+    }
     expect(out.permitted).toBe(base.permitted);
+    // Each surface also equals the recorded expectation, so a registry regression that moves the oracle and every
+    // surface together (M3) is red on each of the three surfaces, not only on the oracle row.
+    expect(out.permitted).toBe(row.oracle.permitted);
     if (base.permitted) {
       expect(out.value).toEqual(base.value);
       return;
     }
     expect(out.category).toBe(base.category);
+    expect(out.category).toBe(row.oracle.category);
     // Where the registry itself decided, the refusal text is the registry's, verbatim.
     if (!row.localText?.includes(surface)) expect(out.message).toBe(base.message);
   });
@@ -280,9 +321,35 @@ describe("P1: identical registry decision across surfaces", () => {
 });
 
 describe("P2: surface allowlists only narrow", () => {
-  it("has no cell where a surface permits and the oracle refuses", () => {
+  it("has no cell where a surface permits and the oracle refuses, beyond the recorded known widening", () => {
     const widenings = ROWS.flatMap(row => ranSurfaces(row).filter(surface => outcomes.get(key(row, surface))?.permitted && !oracles.get(row.name)?.permitted).map(surface => `${row.name} on ${surface}`));
-    expect(widenings).toEqual([]);
+    // Spelled out, so a new knownWidening entry can never silently absorb a new widening.
+    expect(KNOWN_WIDENINGS).toEqual([{ cell: "prototype-key input on claude-tool", bead: "wb-8i1" }]);
+    expect(widenings).toEqual(KNOWN_WIDENINGS.map(widening => widening.cell));
+  });
+  it("pins the known widening wb-8i1: capability_invoke permits a JSON own __proto__ key that the oracle and both node hosts refuse", async () => {
+    // wb-8i1 flips this test to the oracle's refusal and deletes the row's knownWidening entry in the same commit.
+    const row = ROWS.find(candidate => candidate.name === "prototype-key input")!;
+    const refusal = { permitted: false, category: "validation", message: `Prototype pollution key at invoke(${OPEN}) input.__proto__.` };
+    expect(oracles.get(row.name)).toMatchObject(refusal);
+    expect(outcomes.get(key(row, "claude-node"))).toMatchObject(refusal);
+    expect(outcomes.get(key(row, "detached-node"))).toMatchObject(refusal);
+    // The production channel carries the key: JSON text naming "__proto__" parses to an OWN data property.
+    const wire = JSON.stringify({ capabilityId: OPEN, capabilityVersion: "1.0.0", input: row.input() });
+    expect(wire).toBe(`{"capabilityId":"${OPEN}","capabilityVersion":"1.0.0","input":{"value":"x","__proto__":{"grants":["fixture:write"]}}}`);
+    // By reference (the matrix cell) and after the JSON round trip alike, the tool permits; zod's record parse drops
+    // the key, so the provider receives the stripped object and the planted grant never becomes authority.
+    const { registry, recorded } = fixture();
+    const client = await toolClient(registry, row.grants, ALL_FIXTURE_IDS, new AbortController().signal);
+    const overWire = await callInvoke(client, JSON.parse(wire) as Record<string, unknown>);
+    const byReference = outcomes.get(key(row, "claude-tool"))!;
+    expect(byReference.permitted).toBe(true);
+    expect(overWire.kind).toBe("returned");
+    for (const received of [byReference.recorded, recorded]) {
+      expect(received).toHaveLength(1);
+      expect(JSON.stringify(received[0].input)).toBe('{"value":"x"}');
+      expect([...received[0].context.grants]).toEqual([`invoke:${OPEN}`]);
+    }
   });
   it("pins the measured narrowing: the tool alone requires invoke:<id> even when producer permissions are held", () => {
     const row = ROWS.find(candidate => candidate.name.startsWith("producer permission present without invoke grant"))!;
@@ -395,6 +462,48 @@ describe("P3: authority is host-bound on every surface", () => {
     expect([...context.grants]).toEqual(hostGrants);
     hostGrants.push("fixture:write");
     expect([...context.grants]).toEqual([`invoke:${LOOSE}`]);
+  });
+});
+
+describe("C3: a script can express accessor-bearing and prototype-key inputs; the runtime refuses both at the VM boundary", () => {
+  const FORMS = [
+    {
+      name: "accessor-bearing input",
+      expr: '(() => { const v = {}; Object.defineProperty(v, "value", { enumerable: true, get: () => "x" }); return v; })()',
+      text: "Cannot pass an accessor or hidden property across the workflow VM boundary (at node() input.value).",
+    },
+    {
+      name: "prototype-key input",
+      expr: `JSON.parse('{"value":"x","__proto__":{"grants":["fixture:write"]}}')`,
+      text: "Cannot pass a prototype pollution key across the workflow VM boundary (at node() input.__proto__).",
+    },
+  ] as const;
+  const cells = FORMS.flatMap(form => (["claude-node", "detached-node"] as const).map(surface => [form.name, surface, form] as const));
+  it.each(cells)("%s from a script on %s: refused before any host with the oracle's category", async (_name, surface, form) => {
+    const row = ROWS.find(candidate => candidate.name === form.name)!;
+    const out = await RUNNERS[surface]({ ...row, expr: form.expr });
+    expect(oracles.get(row.name)).toMatchObject({ permitted: false, category: "validation" });
+    expect(out).toMatchObject({ permitted: false, category: "validation", message: form.text });
+    expect(out.recorded).toHaveLength(0);
+  });
+});
+
+describe("skipped cells are named and their reason is measured", () => {
+  it("the only skipped cell is the accessor-bearing input on the tool surface", () => {
+    const skipped = ROWS.flatMap(row => (row.skip?.surfaces ?? []).map(surface => `${row.name} on ${surface}`));
+    expect(skipped).toEqual(["accessor-bearing input on claude-tool"]);
+  });
+  it("C4: JSON cannot carry an accessor, while the in-memory harness hands it over by reference and the tool permits it there", async () => {
+    const row = ROWS.find(candidate => candidate.name === "accessor-bearing input")!;
+    // The production channel: a JSON round trip turns the accessor into a plain data property.
+    const wire = JSON.parse(JSON.stringify({ input: row.input() })) as { input: object };
+    expect(Object.getOwnPropertyDescriptor(wire.input, "value")).toEqual({ value: "x", writable: true, enumerable: true, configurable: true });
+    // Harness-only observation, not a production surface: by reference the getter is evaluated before the registry
+    // sees the input, so the skipped cell would record a permit that the production channel cannot produce.
+    expect(oracles.get(row.name)).toMatchObject({ permitted: false, category: "validation" });
+    const harness = await claudeTool(row);
+    expect(harness.permitted).toBe(true);
+    expect(JSON.stringify(harness.recorded[0]?.input)).toBe('{"value":"x"}');
   });
 });
 
