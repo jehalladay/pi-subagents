@@ -43,7 +43,7 @@ export type EvidenceEntry =
 
 export interface EvidenceLoader {
   readonly provider: string;
-  /** Exact-string grant the host must hold for this loader to exist and for every load to proceed. */
+  /** Exact-string grant the host must hold, checked live on every load; it is the only authorization decision. */
   readonly requiredGrant: string;
   /** Shape check for a reference inside this producer only; routing keys off nativeRef.provider first. */
   canLoad(evidenceRef: string): boolean;
