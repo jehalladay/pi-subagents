@@ -52,3 +52,6 @@ node:vm is a language convenience and determinism mechanism, **not a hostile-cod
 ## Conformance
 
 Run legacy fixtures in upstream Pi mode (where available) and Claude host mode, comparing script-level result shapes, phase grouping, error behavior, ordering constraints and cancellation. Test workload schedule nondeterminism rather than requiring identical parallel arrival order. Include invalid/malicious payloads, cycles, prototype pollution attempts, oversized values and timeout ambiguity.
+## Implemented node error boundary
+
+The host now transports a typed `CapabilityError` with its category across worker RPC. Trusted scripts may identify that error in their own realm; fatal authorization, validation and uncertain-effect failures are not converted to ordinary null item failures by parallel composition. Native domain outcomes remain returned JSON values. Node options remain display `label` and `phase`; provider deadlines are host policy, not arbitrary script overrides.

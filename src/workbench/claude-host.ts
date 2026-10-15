@@ -1,0 +1,266 @@
+/** Claude Agent SDK execution of *workflow* agent() calls; Pi's Agent tool stays separate. */
+import { existsSync } from "node:fs";
+import { isAbsolute } from "node:path";
+import {
+  type EffortLevel,
+  getSessionInfo,
+  type Options,
+  type SDKMessage,
+  query as sdkQuery,
+} from "@anthropic-ai/claude-agent-sdk";
+import type {
+  WorkflowHost,
+  WorkflowNodeRequest,
+  WorkflowScriptRef,
+  WorkflowSpawnRequest,
+  WorkflowSpawnResult,
+} from "../workflow/runtime.js";
+import { resolveWorkflowSource } from "../workflow/saved.js";
+import type { CapabilityRegistry } from "./capability-registry.js";
+import { redactWorkbenchText } from "./redaction.js";
+
+/** SDK query injection exists for the fixture integration suite, not a fallback backend. */
+export type ClaudeQuery = (params: { prompt: string; options: Options }) => AsyncIterable<SDKMessage>;
+
+export interface ClaudeWorkflowHostOptions {
+  cwd: string;
+  signal?: AbortSignal;
+  /** An explicit model pin is preferred over inheriting Pi's unrelated model. */
+  model?: string;
+  settingSources?: Options["settingSources"];
+  permissionMode?: Options["permissionMode"];
+  /** Privileged built-ins must be opted into by the host, not the script. */
+  tools?: string[];
+  /** Optional Claude-native role definitions, never Pi AgentManager configs. */
+  roles?: Record<string, { prompt: string; tools?: string[]; model?: string; effort?: EffortLevel }>;
+  capabilities?: CapabilityRegistry;
+  grants?: readonly string[];
+  invocationId?: string;
+  principal?: { readonly id: string; readonly role?: string };
+  query?: ClaudeQuery;
+  onMessage?: (message: SDKMessage, call: ClaudeCallIdentity) => void;
+  onSettled?: (result: WorkflowSpawnResult, call: ClaudeCallIdentity) => void;
+  /** Session lookup comes from the SDK's persistent store; fixture can override it. */
+  getSession?: typeof getSessionInfo;
+  /** Re-observe the host-owned invocation basis before every agent or SDK operation. */
+  beforeDispatch?: () => void | Promise<void>;
+}
+
+export interface ClaudeCallIdentity {
+  agentId: string;
+  index: number;
+  label: string;
+}
+
+interface SessionEntry {
+  call: ClaudeCallIdentity;
+  sessionId: string;
+  model?: string;
+  effort?: EffortLevel;
+  tools: string[];
+  permissionMode: NonNullable<Options["permissionMode"]>;
+  systemPrompt?: string;
+  cumulativeTokens?: number;
+  cumulativeOutputTokens?: number;
+}
+
+const MODELS = new Map([
+  ["opus", "claude-opus-5-5"],
+  ["sonnet", "claude-sonnet-5-5"],
+  ["haiku", "claude-haiku-5-5"],
+  ["fable", "claude-fable-5-1"],
+]);
+const EFFORT = new Set<string>(["low", "medium", "high", "xhigh", "max"]);
+
+function resolvedModel(input: string | undefined): string | undefined {
+  if (!input) return undefined; // SDK resolves its own default; no Pi model leak.
+  const model = MODELS.get(input.toLowerCase()) ?? input;
+  return model.trim() && !/[\u0000-\u001f]/.test(model) ? model : undefined;
+}
+
+function usage(result: SDKMessage & { type: "result" }): { tokens?: number; outputTokens?: number } {
+  // modelUsage is cumulative across turns and includes subagents. Do not sum
+  // assistant frames, which may each carry only a single content block.
+  const models = Object.values(result.modelUsage ?? {});
+  if (models.length === 0) return {};
+  return {
+    tokens: models.reduce((total, item) => total + item.inputTokens + item.outputTokens + item.cacheReadInputTokens + item.cacheCreationInputTokens, 0),
+    outputTokens: models.reduce((total, item) => total + item.outputTokens, 0),
+  };
+}
+
+/** This adapter never imports AgentManager or createAgentSession. */
+export function createClaudeWorkflowHost(config: ClaudeWorkflowHostOptions): WorkflowHost {
+  const query = config.query ?? sdkQuery;
+  const getSession = config.getSession ?? getSessionInfo;
+  const controllers = new Map<string, AbortController>();
+  const sessions = new Map<string, SessionEntry>();
+  const pendingLookupAborts = new Set<string>();
+  const settings = config.settingSources ?? [];
+  const tools = config.tools ?? [];
+  const permissionMode = config.permissionMode ?? "dontAsk";
+
+  async function invoke(
+    agentId: string,
+    prompt: string,
+    request: WorkflowSpawnRequest | undefined,
+    previous: SessionEntry | undefined,
+    onResolved?: WorkflowSpawnRequest["onResolved"],
+  ): Promise<WorkflowSpawnResult> {
+    if (!isAbsolute(config.cwd) || !existsSync(config.cwd)) {
+      return { ok: false, error: `Claude SDK cwd is inaccessible: ${config.cwd}.` };
+    }
+    if (config.signal?.aborted) return { ok: false, skipped: true, error: "Workflow aborted." };
+    if (request?.isolation === "worktree") {
+      return { ok: false, error: "Claude SDK worktree isolation is unavailable; refusing to run in the shared cwd." };
+    }
+    if (request?.effort === "minimal") {
+      return { ok: false, error: 'Claude SDK does not support effort "minimal".' };
+    }
+    if (request?.effort && !EFFORT.has(request.effort)) {
+      return { ok: false, error: `Unsupported Claude SDK effort: ${request.effort}.` };
+    }
+    const roleName = request?.agentType ?? "";
+    const role = request?.agentType === "general-purpose" || !config.roles || !Object.hasOwn(config.roles, roleName)
+      ? undefined : config.roles[roleName];
+    if (request && request.agentType !== "general-purpose" && !role) {
+      return { ok: false, error: `Claude SDK role ${request.agentType} is unavailable; configure a Claude-native role rather than using Pi's agent registry.` };
+    }
+    const model = previous?.model ?? resolvedModel(request?.model ?? role?.model ?? config.model);
+    if ((request?.model || role?.model || config.model) && !model) {
+      return { ok: false, error: `Unsupported Claude SDK model: ${request?.model ?? role?.model ?? config.model}.` };
+    }
+    try { await config.beforeDispatch?.(); } catch (error) {
+      return { ok: false, error: error instanceof Error ? `${"code" in error ? String(error.code) + ": " : ""}${error.message}` : String(error) };
+    }
+    const controller = new AbortController();
+    const onAbort = () => controller.abort();
+    config.signal?.addEventListener("abort", onAbort, { once: true });
+    controllers.set(agentId, controller);
+    const allowedTools = previous?.tools ?? role?.tools ?? tools;
+    const effectiveEffort = previous?.effort ?? request?.effort ?? role?.effort;
+    const options: Options = {
+      cwd: config.cwd,
+      abortController: controller,
+      settingSources: settings,
+      permissionMode: previous?.permissionMode ?? permissionMode,
+      permissionPrompts: "none",
+      tools: allowedTools,
+      includePartialMessages: true,
+      ...(model ? { model } : {}),
+      ...(effectiveEffort ? { effort: effectiveEffort as EffortLevel } : {}),
+      ...(previous?.systemPrompt ?? role?.prompt ? { systemPrompt: previous?.systemPrompt ?? role?.prompt } : {}),
+      ...(request?.schema ? { outputFormat: { type: "json_schema", schema: request.schema.schema } } : {}),
+      ...(previous ? { resume: previous.sessionId } : {}),
+    };
+    let sessionId: string | undefined;
+    let actualModel: string | undefined;
+    let actualEffort: EffortLevel | undefined;
+    let toolCalls = 0;
+    let terminal: SDKMessage & { type: "result" } | undefined;
+    try {
+      for await (const message of query({ prompt, options })) {
+        config.onMessage?.(message, request ?? previous!.call);
+        if (message.type === "system" && message.subtype === "init") {
+          sessionId = message.session_id;
+          actualModel = message.model;
+          actualEffort = message.effort ?? undefined;
+          onResolved?.({ sessionId, modelName: actualModel, modelId: actualModel, ...(actualEffort ? { thinking: actualEffort } : {}) });
+        } else if (message.type === "assistant") {
+          sessionId ??= message.session_id;
+          actualModel ??= message.message.model;
+          for (const block of message.message.content) if (block.type === "tool_use") toolCalls++;
+        } else if (message.type === "result") {
+          sessionId ??= message.session_id;
+          terminal = message;
+        }
+      }
+      if (!terminal) return controller.signal.aborted
+        ? { ok: false, skipped: true, error: "Claude SDK query was cancelled.", ...(sessionId ? { sessionId } : {}) }
+        : { ok: false, error: "Claude SDK stream ended without a result message.", ...(sessionId ? { sessionId } : {}) };
+      const cumulative = usage(terminal);
+      const metrics = previous
+        ? {
+            ...(cumulative.tokens !== undefined ? { tokens: Math.max(0, cumulative.tokens - (previous.cumulativeTokens ?? 0)) } : {}),
+            ...(cumulative.outputTokens !== undefined ? { outputTokens: Math.max(0, cumulative.outputTokens - (previous.cumulativeOutputTokens ?? 0)) } : {}),
+          }
+        : cumulative;
+      const common = { ...metrics, ...(sessionId ? { sessionId } : {}), ...(toolCalls ? { toolCalls } : {}) };
+      if (controller.signal.aborted) return { ...common, ok: false, skipped: true, error: "Claude SDK query was cancelled." };
+      if (terminal.subtype !== "success" || terminal.is_error) {
+        return { ...common, ok: false, error: terminal.subtype === "success" ? redactWorkbenchText(terminal.result) : redactWorkbenchText(terminal.errors.join("; ") || terminal.subtype) };
+      }
+      if (!sessionId) return { ...common, ok: false, error: "Claude SDK succeeded without a session ID." };
+      if (previous && sessionId !== previous.sessionId) {
+        return { ...common, ok: false, error: `Claude SDK resume session mismatch: expected ${previous.sessionId}, got ${sessionId}.` };
+      }
+      let text = terminal.result;
+      if (request?.schema) {
+        if (terminal.structured_output === undefined) {
+          return { ...common, ok: false, error: "Claude SDK result is missing structured_output." };
+        }
+        const verdict = request.schema.check(terminal.structured_output);
+        if (verdict !== true) return { ...common, ok: false, error: `Claude SDK structured output did not match schema: ${verdict}` };
+        text = JSON.stringify(terminal.structured_output);
+      }
+      sessions.set(agentId, {
+        call: request ?? previous!.call,
+        sessionId, ...(actualModel ?? model ? { model: actualModel ?? model } : {}),
+        ...(actualEffort ?? effectiveEffort ? { effort: (actualEffort ?? effectiveEffort) as EffortLevel } : {}),
+        permissionMode: options.permissionMode ?? "dontAsk", tools: [...allowedTools],
+        ...(options.systemPrompt && typeof options.systemPrompt === "string" ? { systemPrompt: options.systemPrompt } : {}),
+        ...(cumulative.tokens !== undefined ? { cumulativeTokens: cumulative.tokens } : {}),
+        ...(cumulative.outputTokens !== undefined ? { cumulativeOutputTokens: cumulative.outputTokens } : {}),
+      });
+      onResolved?.({ sessionId, modelName: actualModel ?? model, modelId: actualModel ?? model });
+      return { ...common, ok: true, text, sessionId };
+    } catch (error) {
+      if (controller.signal.aborted) {
+        return { ok: false, skipped: true, error: "Claude SDK query was cancelled.", ...(sessionId ? { sessionId } : {}) };
+      }
+      return { ok: false, error: `Claude SDK query failed: ${redactWorkbenchText(error instanceof Error ? error.message : String(error))}`, ...(sessionId ? { sessionId } : {}) };
+    } finally {
+      config.signal?.removeEventListener("abort", onAbort);
+      controllers.delete(agentId);
+    }
+  }
+
+  return {
+    replaySafe: false,
+    async spawnAgent(request) {
+      const result = await invoke(request.agentId, request.prompt, request, undefined, request.onResolved);
+      config.onSettled?.(result, request);
+      return result;
+    },
+    abortAgent(agentId) {
+      controllers.get(agentId)?.abort();
+      if (sessions.has(agentId) && !controllers.has(agentId)) pendingLookupAborts.add(agentId);
+    },
+    async resumeAgent(agentId, prompt, onResolved) {
+      const previous = sessions.get(agentId);
+      if (!previous) return { ok: false, error: `Cannot resume unknown Claude SDK session for ${agentId}.` };
+      pendingLookupAborts.delete(agentId);
+      const saved = await getSession(previous.sessionId, { dir: config.cwd });
+      if (pendingLookupAborts.delete(agentId) || config.signal?.aborted) {
+        return { ok: false, skipped: true, error: "Claude SDK resume cancelled before query start." };
+      }
+      if (!saved || saved.sessionId !== previous.sessionId) {
+        return { ok: false, error: `Claude SDK session ${previous.sessionId} is unavailable; refusing fresh-context resume.` };
+      }
+      const result = await invoke(agentId, prompt, undefined, previous, onResolved);
+      config.onSettled?.(result, previous.call);
+      return result;
+    },
+    loadWorkflow(ref: WorkflowScriptRef) { return resolveWorkflowSource(ref, config.cwd); },
+    ...(config.capabilities ? { callNode: async (request: WorkflowNodeRequest) => {
+      await config.beforeDispatch?.();
+      return config.capabilities!.invoke(request.capabilityId, request.input, {
+        grants: config.grants ?? [], signal: request.signal,
+        invocationId: config.invocationId,
+        principal: config.principal, workspace: config.cwd,
+        callId: String(request.callId),
+      });
+    } } : {}),
+
+  };
+}

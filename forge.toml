@@ -1,0 +1,50 @@
+[package]
+name = "pi-subagents"
+type = "code"
+version = "0.20.0"
+language = "typescript"
+
+[build]
+backend = "typescript"
+gate = ["lint", "typing", "test", "build", "workbench-shell", "package-smoke"]
+
+[build.commands]
+lint = "npm run lint"
+typing = "npm run typecheck"
+test = "npm run test"
+build = "npm run build"
+
+[build.commands.workbench-shell]
+command = "bash qa/workbench/smoke.sh"
+timeout = 120
+
+[build.commands.typecheck]
+command = "npm run typecheck"
+
+[build.commands.native-read]
+command = "./node_modules/.bin/vitest run --config vitest.native.config.ts"
+timeout = 180
+
+[build.commands.rf-preview]
+command = "./node_modules/.bin/vitest run --config vitest.rf.config.ts"
+timeout = 180
+
+[build.commands.furnace-observe]
+command = "./node_modules/.bin/vitest run --config vitest.furnace.config.ts"
+timeout = 180
+
+[build.commands.claude-live]
+command = "./node_modules/.bin/vitest run --config vitest.claude-live.config.ts"
+timeout = 210
+
+[build.commands.package-smoke]
+command = "bash qa/workbench/package-smoke.sh"
+timeout = 120
+
+[build.commands.install-smoke]
+command = "node qa/workbench/install-smoke.mjs"
+timeout = 240
+
+[build.commands.e2e]
+command = "npm run test:e2e"
+timeout = 180

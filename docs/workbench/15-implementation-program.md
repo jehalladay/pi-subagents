@@ -2,6 +2,10 @@
 
 The work below is deliberately decomposed into independently assignable work packages (WPs). It is *not* a request to implement the entire architecture as one PR. Ship and validate vertical cuts. Every WP requires source, tests, docs/status changes and native evidence when relevant.
 
+## Implementation status at 2026-10-15
+
+The in-repo Beads ledger (`.beads/issues.jsonl`, live local Dolt in `.beads/`) tracks each W01–W22 and VC-1–VC-7 with explicit dependencies; `bd ready` is its live state. W01 baseline is closed with Forge gate receipt. W02/W05/W06/W13/W14/W22 are in progress. VC-1 is **experimental with a measured live SDK query** (real parallel structured agents returned two native session IDs on 2026-10-15; native same-session continuation also measured; registered Pi real-SDK parallel schema/session proof passed at `cmd_b5f4df13dd3b`; actual terminal operator and live adverse cancellation acceptance remain open). VC-2 has a **real native Forge SDK gate-status read** with historical `authoritative_current=false`, plus registry/VM negative fixtures; Pi client-to-native Forge SDK flow passed the explicit `forge run native-read` tier; the portable Forge build gate excludes live-binary tests. Host read scope, node fan-out caps, abort handling and unknown/partial glyphs now have negative tests, but immutable source-basis and complete observation controls remain open. Do not close VC-1 or VC-2 on source presence or a green fixture suite. W07/W09/W10 now contain measured read adapters, including a completed external real-Beads/Furnace snapshot and real RF preview. Their full acceptance remains open. W11/VC-3 are blocked on task-scoped pinned native discovery and live service bindings. VC-4–VC-7 remain open, not magically shipped by W08. See `TRACEABILITY.md` and the latest Forge result for tested status; docs are not evidence on their own.
+
 ## Vertical cuts
 
 **VC-1: Pi -> Claude SDK workflow** (P0)

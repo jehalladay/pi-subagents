@@ -1,6 +1,6 @@
 # Pi Workflow Workbench — implementation specification
 
-**Status:** architecture and implementation plan; no Workbench implementation is claimed.  
+**Status:** architecture specification plus experimental implementation in this fork as of 2026-10-15. See `00-current-state-and-source-map.md` and `TRACEABILITY.md` for measured status; full Workbench and release conformance are not claimed.
 **Baseline:** 2026-10-11, fork of tintinweb/pi-subagents at upstream commit fd8d81618d80ae83a3faf40cb87dae99cca33264.  
 **Intended product:** keep **Pi** as the interactive designer, observer and operator; execute workflow agent calls using the **actual Claude Agent SDK**, and compose MechanicalWorkflows and native Forge/Furnace/HyperUnix/ReactiveFiberCLI SDK operations.  
 **License:** preserve the original MIT license, copyright notice, and upstream history.

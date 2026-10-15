@@ -2,7 +2,7 @@
 
 ## MechanicalWorkflows is an ordinary function library
 
-**Current evidence:** https://github.com/jehalladay/MechanicalWorkflows, docs/04-public-programming-model.md, docs/06-sdk-integration-and-hosts.md, docs/11-decisions-and-non-goals.md. The shipped @mechanical/workflows-development exports develop(services,request) with four injected callbacks; its rig is currently **fixture only**. contracts/entrypoints/development.v1.json declares optional descriptor-only entrypoint metadata.
+**Current evidence:** https://github.com/jehalladay/MechanicalWorkflows, docs/04-public-programming-model.md, docs/06-sdk-integration-and-hosts.md, docs/11-decisions-and-non-goals.md. The shipped @mechanical/workflows-development exports develop(services,request) with four injected callbacks; the documentation baseline described its rig as fixture-only. A later read-only inspection on 2026-10-15 found a narrower RF/Claude/Forge live rig, but not the required HX-task-scoped Pi binding. See `TRACEABILITY.md` for artifact pins and limitations. contracts/entrypoints/development.v1.json declares optional descriptor-only entrypoint metadata.
 
 Host integration:
 1. Resolve requested entrypoint package/export and pinned artifact digest; reject incompatible host ABI.

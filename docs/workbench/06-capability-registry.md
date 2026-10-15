@@ -74,3 +74,10 @@ These names are design examples, **not claims they are existing SDK function nam
 - Missing native SDK/provider is explicit error, not silent CLI fallback.
 - Unknown effects never auto-retry after disconnect.
 - Registry provider hot change does not silently alter a running pinned execution. Version/digest mismatch must fail or explicitly begin new invocation.
+## Current experimental policy surface
+
+Registered descriptors do not grant access. Invocation requires every explicit producer permission in the descriptor. A descriptor with no producer permission requirements still needs exact `invoke:<capabilityId>`. Catalog discovery independently requires exact `discover:<capabilityId>`. Optional provider inspection requires `inspect:<capabilityId>` and an advertised, implemented inspect mode. No universal observe/control methods are manufactured for producers.
+
+The host registry bounds JSON depth, bytes and wait deadlines. Errors retain validation, authorization, unavailable, transport and uncertain-effect categories through worker RPC. A deadline stops the caller's wait; it does not establish producer rollback. An effectful invocation that loses a usable answer remains uncertain and is not retried automatically. Host principal/workspace annotations are audit metadata until the entrypoint's scope checks and deployment identity supply actual authority.
+
+Configuration uses an explicit finite `workbench.capabilityGrants` array. Selecting Claude does not supply native grants. Unknown or malformed permission data denies access. Provider-specific resource scope remains enforced by native adapters and host wiring; this policy increment is not a complete cross-tenant or expired-token authorization service.

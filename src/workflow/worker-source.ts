@@ -117,7 +117,9 @@ port.on("message", function (message) {
     waiter.resolve(message.value);
     return;
   }
-  const error = new Error(message.error || "The workflow host rejected the call.");
+  const error = message.capabilityError
+    ? new realmCapabilityError(message.capabilityError.category, message.capabilityError.message)
+    : new Error(message.error || "The workflow host rejected the call.");
   // Fatal errors are the run's, not the item's: parallel() and pipeline()
   // swallow ordinary failures into null, and a cap breach must not be
   // silently absorbed that way.
@@ -173,6 +175,7 @@ let realmObjectPrototype = null;
  * inside the script it was handed to.
  */
 let realmParse = null;
+let realmCapabilityError = null;
 
 /**
  * The top-level script's scope.
@@ -200,7 +203,8 @@ function boundaryError(what, path) {
   );
 }
 
-function assertBoundary(value, path, seen) {
+function assertBoundary(value, path, seen, depth = 0, maxDepth = Infinity) {
+  if (depth > maxDepth) throw boundaryError("a value exceeding maximum depth " + maxDepth, path);
   if (value === null) return;
   const kind = typeof value;
   if (kind === "string" || kind === "boolean") return;
@@ -232,7 +236,20 @@ function assertBoundary(value, path, seen) {
       if (!Object.prototype.hasOwnProperty.call(value, i)) {
         throw boundaryError("a sparse array", path + "[" + i + "]");
       }
-      assertBoundary(value[i], path + "[" + i + "]", seen);
+      const property = Object.getOwnPropertyDescriptor(value, String(i));
+      if (!property?.enumerable || !("value" in property)) throw boundaryError("an accessor or hidden property", path + "[" + i + "]");
+      assertBoundary(property.value, path + "[" + i + "]", seen, depth + 1, maxDepth);
+    }
+    for (const key of Reflect.ownKeys(value)) {
+      if (key === "length") continue;
+      const index = String(Number(key));
+      if (typeof key !== "string" || index !== key || Number(key) >= length || Number(key) < 0) {
+        throw boundaryError("an array with extra properties", path);
+      }
+      const property = Object.getOwnPropertyDescriptor(value, key);
+      if (!property?.enumerable || !("value" in property)) {
+        throw boundaryError("an accessor or hidden property", path + "[" + key + "]");
+      }
     }
     seen.delete(value);
     return;
@@ -246,15 +263,22 @@ function assertBoundary(value, path, seen) {
     throw boundaryError("a non-plain object", path);
   }
 
-  const keys = Object.keys(value);
+  const keys = Reflect.ownKeys(value);
   for (let i = 0; i < keys.length; i++) {
-    assertBoundary(value[keys[i]], path + "." + keys[i], seen);
+    const key = keys[i];
+    if (typeof key !== "string") throw boundaryError("a symbol key", path);
+    if (maxDepth !== Infinity && (key === "__proto__" || key === "constructor" || key === "prototype")) throw boundaryError("a prototype pollution key", path + "." + key);
+    const property = Object.getOwnPropertyDescriptor(value, key);
+    if (!property?.enumerable || !("value" in property)) {
+      throw boundaryError("an accessor or hidden property", path + "." + key);
+    }
+    assertBoundary(property.value, path + "." + key, seen, depth + 1, maxDepth);
   }
   seen.delete(value);
 }
 
-function checkBoundary(value, path) {
-  assertBoundary(value, path, new Set());
+function checkBoundary(value, path, maxDepth = Infinity) {
+  assertBoundary(value, path, new Set(), 0, maxDepth);
   return value;
 }
 
@@ -370,6 +394,9 @@ function makeScope(name, depth) {
   };
   scope.agent = function (prompt, opts) {
     return agentIn(scope, prompt, opts);
+  };
+  scope.node = function (id, input, options) {
+    return nodeIn(scope, id, input, options);
   };
   scope.phase = function (title) {
     return phaseIn(scope, title);
@@ -549,6 +576,60 @@ async function agentIn(scope, prompt, opts) {
   }
 }
 
+/** Copy validated own data only; inherited array toJSON must never run. */
+function snapshotNodeJson(value) {
+  if (value === null || typeof value !== "object") return value;
+  if (Array.isArray(value)) {
+    const result = [];
+    for (let i = 0; i < value.length; i++) result.push(snapshotNodeJson(Object.getOwnPropertyDescriptor(value, String(i)).value));
+    return result;
+  }
+  const result = Object.create(null);
+  for (const key of Object.keys(value)) result[key] = snapshotNodeJson(Object.getOwnPropertyDescriptor(value, key).value);
+  return result;
+}
+
+/** A deterministic host capability. No model call, journal replay, or SDK in this VM. */
+async function nodeIn(scope, id, input, opts) {
+  let capabilityId, label, phaseIndex, phaseTitle, snapshot;
+  try {
+    capabilityId = requireText(id, "node(capabilityId)");
+    if (!/^[a-z][a-z0-9]*(?:[.-][a-z][a-z0-9]*)+$/.test(capabilityId)) {
+      throw new Error("node() capabilityId must be a dotted, lowercase identifier.");
+    }
+    checkBoundary(input, "node() input", 64);
+    snapshot = snapshotNodeJson(input);
+    const serialized = JSON.stringify(snapshot);
+    if (Buffer.byteLength(serialized) > 256 * 1024) throw new Error("node() input exceeds 262144 bytes.");
+    const options = opts === undefined || opts === null ? {} : opts;
+    if (typeof options !== "object" || Array.isArray(options)) {
+      throw new Error("node(id, input, options) expects options to be an object.");
+    }
+    checkBoundary(options, "node() options", 64);
+    for (const key of Object.keys(options)) {
+      if (key !== "label" && key !== "phase") {
+        throw new Error("node() options." + key + " is not supported. Supported: label, phase.");
+      }
+    }
+    label = optionalText(options.label, "node() options.label") || capabilityId;
+    if (label.length > 200) throw new Error("node() label exceeds 200 characters.");
+    const phaseName = optionalText(options.phase, "node() options.phase");
+    phaseIndex = phaseName !== undefined ? definePhaseIn(scope, phaseName) : scope.ambientPhaseIndex;
+    phaseTitle = phaseName !== undefined ? scopedTitle(scope, phaseName) : scope.ambientPhaseTitle;
+  } catch (error) {
+    const diagnostic = new realmCapabilityError("validation", describe(error));
+    diagnostic.workflowFatal = true;
+    throw diagnostic;
+  }
+  const result = await callHost("node", {
+    capabilityId: capabilityId, input: snapshot, label: label,
+    phaseIndex: phaseIndex, phaseTitle: phaseTitle,
+  });
+  // Host checks the JSON boundary before replying. Re-materialize in this realm
+  // so instanceof Array/Object behaves as it does for agent({schema}) results.
+  return realmParse(JSON.stringify(result));
+}
+
 /**
  * A barrier: every thunk starts now, and nothing past the await runs until all
  * of them have settled. A thunk that throws resolves to null rather than
@@ -681,7 +762,7 @@ async function workflowIn(scope, nameOrRef, args) {
       // \`meta\` is deliberately not a parameter: the body still opens with its
       // own \`const meta = { ... }\` (extractMeta strips only the \`export\`), so a
       // parameter of that name would collide with it.
-      "(async (agent, phase, log, workflow, console, args) => {" + PRELUDE + "\\n" + loaded.body + "\\n})",
+      "(async (agent, node, phase, log, workflow, console, args) => {" + PRELUDE + "\\n" + loaded.body + "\\n})",
       { filename: "workflow:" + loaded.name + ".js", lineOffset: -1 }
     );
     run = compiled.runInContext(realmContext);
@@ -689,7 +770,7 @@ async function workflowIn(scope, nameOrRef, args) {
     throw new Error('workflow("' + label + '"): ' + describe(error));
   }
 
-  const value = await run(child.agent, child.phase, child.log, child.workflow, child.console, args);
+  const value = await run(child.agent, child.node, child.phase, child.log, child.workflow, child.console, args);
   checkBoundary(value, 'the result of workflow("' + label + '")');
   return value;
 }
@@ -729,6 +810,7 @@ async function main() {
   rootScope = makeScope(undefined, 0);
   const sandbox = {
     agent: rootScope.agent,
+    node: rootScope.node,
     parallel: parallel,
     pipeline: pipeline,
     phase: rootScope.phase,
@@ -747,6 +829,8 @@ async function main() {
   realmPush = vm.runInContext("(function (array, value) { array.push(value); })", context);
   realmParse = vm.runInContext("JSON.parse", context);
   realmContext = context;
+  realmCapabilityError = vm.runInContext('(class CapabilityError extends Error { constructor(category, message) { super(message); this.name = "CapabilityError"; this.category = category; } })', context);
+  sandbox.CapabilityError = realmCapabilityError;
 
   // meta and args are materialised *inside* the realm rather than injected, so
   // the script sees objects whose prototype is its own Object.prototype and
@@ -776,6 +860,9 @@ main().catch(function (error) {
     type: "error",
     message: error && error.message ? String(error.message) : String(error),
     stack: error && error.stack ? String(error.stack) : undefined,
+    capabilityError: error && error.name === "CapabilityError" ? {
+      name: "CapabilityError", category: error.category, message: String(error.message),
+    } : undefined,
   });
 });
 `;

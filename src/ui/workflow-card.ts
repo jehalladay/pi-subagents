@@ -32,6 +32,7 @@
  */
 
 import { stripTerminalSequences, Text, truncateToWidth, visibleWidth } from "@earendil-works/pi-tui";
+import { redactWorkbenchText } from "../workbench/redaction.js";
 import type { WorkflowEntryData } from "../workflow/entry.js";
 import type { WorkflowMeta } from "../workflow/meta.js";
 import {
@@ -143,6 +144,13 @@ export interface WorkflowCardSegment {
 }
 
 export type WorkflowCardLine = WorkflowCardSegment[];
+
+/** Native producer strings are untrusted terminal input, not Pi theme markup. */
+export function safeWorkflowTerminalText(value: string): string {
+  return stripTerminalSequences(redactWorkbenchText(value))
+    .replace(/[\x00-\x1f\x7f-\x9f\u202a-\u202e\u2066-\u2069]/gu, " ")
+    .replace(/ +/g, " ");
+}
 
 /** The subset of the task record the card reads. */
 export interface WorkflowCardTask {
@@ -304,7 +312,7 @@ export function layoutWorkflowCard(input: WorkflowCardInput): WorkflowCardLine[]
   const now = input.now ?? Date.now();
 
   const groups = buildPhaseGroups(input.progress, input.meta?.phases);
-  const { agents, logs } = collapse(input.progress);
+  const { agents, nodes, logs } = collapse(input.progress);
   const totals = stats(input.progress, input.agentCount ?? 0);
   const head = header(input.task, input.meta, groups, input.agentCount ?? 0, now);
 
@@ -386,6 +394,19 @@ export function layoutWorkflowCard(input: WorkflowCardInput): WorkflowCardLine[]
       lines.push(clampLine(segments, width));
     });
   });
+
+  // Deterministic SDK operations have their own rows; never label or count
+  // them as agents. The source/domain result is displayed without inventing a
+  // verified verdict from a successful transport reply.
+  for (const node of nodes) {
+    const verified = node.state === "done" && node.domainStatus === "verified" && node.freshness === "current" && (node.evidenceRefs?.length ?? 0) > 0;
+    const glyph = node.state === "error" ? glyphs.cross : verified ? glyphs.tick : node.state === "done" ? "?" : glyphs.running;
+    const outcome = node.domainStatus ?? node.error ?? node.resultPreview ?? "unknown";
+    lines.push(clampLine([
+      { text: `  ${glyph} ${safeWorkflowTerminalText(node.label)} · ${safeWorkflowTerminalText(node.capabilityId)} · ${safeWorkflowTerminalText(outcome)}`,
+        color: node.state === "error" ? "error" : "dim" },
+    ], width));
+  }
 
   // ---- log() output, below the tree ----
   for (const message of logs) {

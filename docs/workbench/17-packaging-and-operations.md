@@ -57,3 +57,8 @@ Version parser language and node-provider contract independently of bundle versi
 10. Clean external install and minimal-permissions run succeeds.
 
 Not running these tests during documentation authoring must be disclosed, never retroactively called release proof.
+## Current experimental distribution
+
+The declared portable Forge gate includes lint, types, tests, compilation, a compiled external workflow smoke and package-content inspection. Native SDK artifacts are checksum-pinned and bundled so a packed parent can install them. A separately invoked clean consumer smoke has successfully installed and imported the compiled runtime. The package contains a validated dependency-lock copy under `vendor/`, while producer-local Beads/Forge/Furnace/HX/RF stores are excluded. No npm publication or version bump is performed by this program run.
+
+Live tiers are explicit and separate: `native-read`, `rf-preview`, `furnace-observe`, and `claude-live`. The RF/Furnace tiers require pre-existing disposable native fixtures. Missing fixture settings fail rather than skip. Their receipts establish only the surfaces actually exercised. A clean portable gate does not satisfy the full live TUI, security, detached or inspector release checklist.

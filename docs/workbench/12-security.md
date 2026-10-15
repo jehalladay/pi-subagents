@@ -46,3 +46,8 @@ Record authorized principal, capability contract version, logical invocation, ta
 ## Security acceptance tests
 
 Host-side deny even when script crafts raw RPC; JS VM escape attempt must not yield privileged provider client in declared isolation mode; unknown/expired grant refused; observer-only stop refused; cross-workspace ref returns authorization failure; ANSI escape output sanitized; secret env not displayed; schema pollution payload refused; isolated agent cannot see host tools not explicitly granted.
+## Current diagnostic protections
+
+Native exception previews are bounded and redact recognized bearer/basic credentials, common API-token prefixes and sensitive plain or JSON-quoted key/value fields before worker/UI display. Terminal previews also remove control and directional escape characters. Tests include a producer exception containing an authorization credential and quoted JSON secret keys.
+
+Pattern redaction does not detect every possible secret or untrusted payload. Full native transcript access remains separate and permission-sensitive. No claim of hostile-JavaScript isolation, remote authentication or comprehensive tenant security follows from these protections. Trusted scripts still require review and host-mediated capability grants.

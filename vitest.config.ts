@@ -12,6 +12,10 @@ export default defineConfig({
   // subagent session the extension spawns. dedupe alone is insufficient (it only
   // affects modules Vite resolves; without inline the runtime stays externalized).
   test: {
+    // Native SDK probes depend on an installed Forge binary and are run from
+    // their explicit Forge live tier, not by the portable package test gate.
+    include: ["test/**/*.test.ts"],
+    exclude: ["test/workbench-native-client.test.ts", "test/workbench-pi-node-client.test.ts", "test/workbench-ecosystem-native.test.ts", "test/workbench-native-ecosystem.test.ts", "test/workbench-native-rf-preview.test.ts", "test/workbench-external-furnace.test.ts", "test/workbench-claude-pi-live.test.ts"],
     server: { deps: { inline: [/@earendil-works\/pi-/] } },
     // Local reporting only — deliberately no `thresholds`, and not wired into
     // CI. src/index.ts is mostly the /agents wizard, which is TUI flow with

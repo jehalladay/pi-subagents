@@ -1,0 +1,22 @@
+/** Copied into a clean consumer by install-smoke.mjs. */
+import assert from 'node:assert/strict';
+import {writeFileSync} from 'node:fs';
+import {dirname,resolve} from 'node:path';
+import {fileURLToPath} from 'node:url';
+import {createClaudeWorkflowHost} from '@tintinweb/pi-subagents/dist/workbench/claude-host.js';
+import {CapabilityRegistry} from '@tintinweb/pi-subagents/dist/workbench/capability-registry.js';
+import {captureInvocationIdentity,verifyInvocationIdentity} from '@tintinweb/pi-subagents/dist/workbench/identity.js';
+import {runWorkflow} from '@tintinweb/pi-subagents/dist/workflow/runtime.js';
+const installedRoot=resolve(dirname(fileURLToPath(import.meta.resolve('@tintinweb/pi-subagents/dist/workbench/identity.js'))),'../..');
+const scriptPath=resolve('installed.workflow.js');
+writeFileSync(scriptPath,'export const meta={name:"installed",description:"consumer"}; return 42;');
+const pinInput={definition:{kind:'script',id:'installed',schemaVersion:'1'},scriptPath,packageRoot:installedRoot,hostArtifacts:['dist/workbench/identity.js'],runtimeArtifacts:[fileURLToPath(import.meta.resolve('@anthropic-ai/claude-agent-sdk'))],logicalInvocationId:'installed-proof',principal:{issuer:'local-test',subject:'consumer'},workspace:{path:process.cwd(),sourceBasis:'unknown:consumer-fixture'},effectiveConfig:{tools:[]},hostAbi:{runtime:'node',version:process.versions.node,platform:process.platform,arch:process.arch,interfaceVersion:'workbench/v1'},providerDescriptors:[]};
+const pinned=captureInvocationIdentity(pinInput);
+verifyInvocationIdentity(pinned,pinInput);
+assert.ok(pinned.dependencyArtifacts.some(a=>a.path==='vendor/dependency-lock.json'));
+const result=await runWorkflow({script:pinned.scriptSource,host:{spawnAgent(){throw Error('unexpected agent')},abortAgent(){}}});
+assert.equal(result.status,'completed',result.error);
+assert.equal(result.value,42);
+assert.equal(typeof createClaudeWorkflowHost,'function');
+assert.equal(new CapabilityRegistry().discover({grants:[]}).length,0);
+console.log('clean-external-consumer: compiled runtime and packaged invocation identity succeeded');

@@ -193,6 +193,7 @@ export function createWorkflowHost(deps: WorkflowHostOptions): WorkflowHost {
   }
 
   return {
+    replaySafe: true,
     async spawnAgent(request) {
       const dispatch = resolveSpawnType(request.agentType);
       if (!dispatch.ok) return { ok: false, error: dispatch.message };

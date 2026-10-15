@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **Experimental Pi Workflow Workbench.** Explicit Claude workflow selection uses the real Agent SDK while retaining the standalone Pi Agent tool and legacy script mode. Host-authorized native read nodes preserve Forge evidence, HX coverage, Furnace identities and RF preview provenance; unsupported isolation and verification gates refuse rather than silently downgrade. The full inspector, designer, detached host and release conformance remain open in the Workbench evidence ledger.
+
 ### Fixed
 - **The FleetView list no longer sits flush against pi's footer** (fixes [#351](https://github.com/tintinweb/pi-subagents/issues/351) — thanks [@KKinsz](https://github.com/KKinsz)). pi places below-editor widgets directly on its status bar with no gap, so the last agent row ran into the model/context line. The list now ends with a blank line, matching the one above `main`.
 - **FleetView arrow keys work when another extension replaces the prompt editor** (fixes [#374](https://github.com/tintinweb/pi-subagents/issues/374) — thanks [@BarrMan](https://github.com/BarrMan)). The list only handled keys while an `Editor` subclass had focus, so an editor installed via `ui.setEditorComponent` that implements pi's `EditorComponent` interface without extending `Editor` (e.g. pi-voice-stt's) left `↓`/`←` dead. The list now recognizes any focused component with `getText`/`setText`, lifting the limitation noted in the #123 fix; pi's own dialogs and selectors still keep their keys.

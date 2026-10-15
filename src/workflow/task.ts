@@ -9,16 +9,17 @@
  * renderers already expect.
  *
  * The progress log is append-only and collapses by index (see `progress.ts`),
- * so every derived counter here is recomputed from the log rather than
- * incremented as entries arrive — a re-emitted agent entry replaces its
- * predecessor, and adding its tokens on top would double-count them.
+ * so cached counters apply each entry as a replacement delta. A re-emitted
+ * agent entry subtracts its previous contribution before adding the new one.
+ * Historical entries are not revisited during native streaming updates.
  */
 
 import { randomUUID } from "node:crypto";
+import type { InvocationSnapshot } from "../workbench/identity.js";
 import { escapeXml } from "../xml.js";
 import type { WorkflowJournalEntry } from "./journal.js";
 import type { WorkflowMeta } from "./meta.js";
-import { collapse, elapsedMs, stats, type WorkflowEntry, type WorkflowRunStatus } from "./progress.js";
+import { elapsedMs, stats, type WorkflowAgentEntry, type WorkflowEntry, type WorkflowRunStatus } from "./progress.js";
 import type { WorkflowControl, WorkflowRunResult } from "./runtime.js";
 
 /** `wf_` + hex, matching Claude Code's `^wf_[a-z0-9-]{6,}$` run ids. */
@@ -37,6 +38,11 @@ export interface WorkflowTask {
   args?: unknown;
   meta?: WorkflowMeta;
   workflowName?: string;
+  /** Host-owned launch receipt, not writable by the workflow script or worker. */
+  identityReceipt?: InvocationSnapshot;
+  workspaceSourceState?: "measured" | "unknown";
+  /** Session and workspace scope at launch; used to deny cross-session reads. */
+  observationScope?: { readonly sessionId: string; readonly workspace: string; readonly principal: string };
   /** The `tool_use_id` of the call that started this, when one did. */
   toolCallId?: string;
 
@@ -88,6 +94,8 @@ export interface WorkflowTask {
   error?: string;
 }
 
+const taskAgents = new WeakMap<WorkflowTask, Map<number, WorkflowAgentEntry>>();
+
 export function createWorkflowTask(init: {
   id: string;
   script: string;
@@ -130,10 +138,8 @@ export function createWorkflowTask(init: {
 /**
  * Apply one batch of progress entries.
  *
- * Batched rather than per-entry because that is how the worker emits them, and
- * because every counter below is an O(log) recompute — doing it once per fan-out
- * frame instead of once per agent is the difference that keeps a 200-agent run
- * cheap to render.
+ * Each batch updates only the changed agent contributions. The append-only
+ * diagnostic history remains available without being refolded on every frame.
  */
 export function updateWorkflowProgressBatch(
   task: WorkflowTask,
@@ -143,24 +149,21 @@ export function updateWorkflowProgressBatch(
   task.workflowProgress.push(...entries);
   task.progressVersion++;
 
-  const { agents, logs } = collapse(task.workflowProgress);
-  task.logs = logs;
-  // `agentCount` is what the runtime has scheduled, which can lead what the log
-  // has seen — never let a recompute walk it backwards.
-  task.agentCount = Math.max(task.agentCount, agents.length);
-
-  let totalTokens = 0;
-  let totalToolCalls = 0;
-  let done = 0;
-  for (const agent of agents) {
-    totalTokens += agent.tokens ?? 0;
-    totalToolCalls += agent.toolCalls ?? 0;
-    // Counted off the collapsed agents, so a re-emitted row counts once.
-    if (agent.state === "done") done++;
+  let agents = taskAgents.get(task);
+  if (!agents) {
+    agents = new Map();
+    taskAgents.set(task, agents);
   }
-  task.totalTokens = totalTokens;
-  task.totalToolCalls = totalToolCalls;
-  task.doneCount = done;
+  for (const entry of entries) {
+    if (entry.type === "workflow_log") task.logs.push(entry.message);
+    if (entry.type !== "workflow_agent") continue;
+    const prior = agents.get(entry.index);
+    task.totalTokens += (entry.tokens ?? 0) - (prior?.tokens ?? 0);
+    task.totalToolCalls += (entry.toolCalls ?? 0) - (prior?.toolCalls ?? 0);
+    task.doneCount += Number(entry.state === "done") - Number(prior?.state === "done");
+    agents.set(entry.index, entry);
+  }
+  task.agentCount = Math.max(task.agentCount, agents.size);
 }
 
 /**

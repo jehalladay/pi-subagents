@@ -6,6 +6,14 @@ The thing worth understanding up front is that **you do not write these — the 
 
 For the tool's parameter table and where it sits among the other tools, see [`README.md`](../README.md#subagentworkflow).
 
+## Experimental Workbench backend (opt-in)
+
+By default, workflows continue to use Pi subagent sessions. To run *workflow* `agent()` calls through the real Claude Agent SDK, add `"workbench": {"workflowAgentBackend":"claude"}` to `.pi/subagents.json` and restart Pi. That selection is explicit and does not change the standalone `Agent` tool. The Claude SDK uses its own model/credentials/session store; it does not silently fall back to Pi after a Claude failure. Optional `workbench.model` pins a Claude model; `workbench.tools` lists permitted built-in tool names (default `[]`), `workbench.permissionMode` is `dontAsk` (default) or `default`, and `workbench.settingSources` names `user`, `project` or `local` (default `[]`). Custom `agentType` values require an explicit Claude-native role under `workbench.roles` (each with a non-empty `prompt`, optional `tools`, `model`, and `effort`); unconfigured Pi-only roles refuse before the SDK call. Invalid Workbench settings refuse startup rather than switching executors. Permissions that need human approval have no interactive prompt in this first cut; use least-privilege noninteractive tool policy.
+
+Scripts gain `node(capabilityId, input, options?)` in Workbench mode. Native capabilities default to denied. Add an explicit finite `workbench.capabilityGrants` list, such as `["forge:inspect"]`, for the operations the operator authorizes; selecting the Claude executor does not grant provider access. A supported read-only example is `await node("forge.gate.status", {target: "/absolute/forge/workspace"})`; it uses the native Forge TypeScript SDK over the local app-server protocol. The result includes the producer's full native `source` envelope and distinguishes historical `last_result` from `authoritative_current`. `node()` never consumes an LLM turn; it invalidates downstream agent-journal replay. The Claude backend does not replay cached agent calls at all until effective configuration digests exist. Host authorization and input schema checks reject unknown capabilities, malformed input and forbidden access before provider invocation. Optional `options.label` and `options.phase` are display metadata. Other explicit read permissions are `hyperunix:read`, `furnace:inspect`, and `reactivefiber:render`. HX keeps its native coverage. Furnace inspection does not own the Run. RF preview requires an initialized context workspace and retains noncommitted provenance. No write capability is registered. The VM is not a security sandbox against hostile scripts: only execute trusted/reviewed source. The full program and evidentiary status are in [docs/workbench](workbench/README.md).
+
+In this first cut, Claude `agent({isolation:"worktree"})` refuses until an actual isolated-workspace adapter exists; `agent({gate})` refuses rather than silently skipping verification. Transcript is available by SDK session ID in the inspector; the Pi `Agent` tool and its conversation viewer are unchanged. Direct and registered Pi real Claude SDK parallel-structured proofs passed. Completed external Furnace snapshot inspection also passed. Actual terminal operator acceptance, external live event reconciliation and the four-view inspector are not yet certified.
+
 ## What a workflow is
 
 Until workflows existed, the only way to run several agents at once was to name them one by one in a single message. That is fine for three agents you already know about. It does not work for *"audit every route file in this repo"*, where the list only exists once something has gone and looked.
@@ -435,3 +443,18 @@ Every file below is executed by `test/workflow-examples.test.ts` against a stub 
 | [`compose.js`](../examples/workflows/compose.js) | `workflow()` nesting and `args` plumbing | Needs `lib/count-child.js` saved |
 
 Copy one into `.pi/workflows/` to make it yours.
+
+## Workbench verification commands
+
+`forge build --require-complete` runs the portable lint, typing, tests, compile, compiled-client smoke and package-content gate. The package gate proves that SDK artifacts and the extension entrypoint are present without publishing anything. Native producer stores are excluded from the npm artifact; the Beads ledger remains in this source repository.
+
+| Tier | Command | Requirement |
+| --- | --- | --- |
+| Installed native reads | `forge run native-read` | Verified Forge, HX, Furnace and RF executables |
+| RF context preview | `WORKBENCH_RF_FIXTURE=/absolute/test/workspace forge run rf-preview` | Already initialized disposable RF context workspace |
+| External Furnace inspection | `PI_FURNACE_FIXTURE_ROOT=/tmp/pi-external-furnace-realbd.NAME PI_FURNACE_FIXTURE_RUN_ID=NATIVE_RUN_ID forge run furnace-observe` | Independently started real-Beads/Furnace test Run |
+| Registered Pi native Claude proof | `forge run claude-live` | Current Claude SDK deployment authentication; spends model resources |
+
+Native tiers are not part of the portable offline gate and refuse missing fixture configuration. A portable PASS does not establish a native release journey.
+
+The experimental `workbench_catalog` tool returns only contracts allowed by exact `discover:<capabilityId>` grants. A producer invocation grant does not expose catalog metadata and discovery does not permit execution. The experimental `workflow_observe` tool requires `workbench:observe` and returns bounded metadata for a task in the current local operator, Pi session and workspace. It does not accept a caller-supplied principal or read arbitrary raw transcripts. Its local identity is not remote authentication.

@@ -8,7 +8,20 @@ import { getAgentDir } from "@earendil-works/pi-coding-agent";
 import { NO_FALLBACK } from "./agent-types.js";
 import type { AgentMentionMode, JoinMode, ViewerMarkdownMode, WidgetMode } from "./types.js";
 
+/** Workbench is explicit; the legacy Pi workflow executor remains the default. */
+export interface WorkbenchSettings {
+  workflowAgentBackend: "pi" | "claude";
+  model?: string;
+  permissionMode?: "dontAsk" | "default";
+  settingSources?: ("user" | "project" | "local")[];
+  tools?: string[];
+  /** Explicit host-owned provider permissions. Absent means deny all native capabilities. */
+  capabilityGrants?: string[];
+  roles?: Record<string, { prompt: string; tools?: string[]; model?: string; effort?: "low" | "medium" | "high" | "xhigh" | "max" }>;
+}
+
 export interface SubagentsSettings {
+  workbench?: WorkbenchSettings;
   maxConcurrent?: number;
   /**
    * Max concurrent FOREGROUND (blocking) agents — `0` = unlimited, the default,
@@ -332,6 +345,7 @@ export interface SettingsAppliers {
   setShowCost: (b: boolean) => void;
   setShowModel: (b: boolean) => void;
   setViewerMarkdown: (mode: ViewerMarkdownMode) => void;
+  setWorkbench: (settings: WorkbenchSettings | undefined) => void;
 }
 
 /** Emit callback — a subset of `pi.events.emit` to keep helpers testable. */
@@ -356,6 +370,64 @@ function sanitize(raw: unknown): SubagentsSettings {
   if (!raw || typeof raw !== "object") return {};
   const r = raw as Record<string, unknown>;
   const out: SubagentsSettings = {};
+  if (r.workbench !== undefined) {
+    if (typeof r.workbench !== "object" || r.workbench === null || Array.isArray(r.workbench)) {
+      throw new Error("workbench must be an object with workflowAgentBackend: pi|claude.");
+    }
+    const config = r.workbench as Record<string, unknown>;
+    if (config.workflowAgentBackend !== "pi" && config.workflowAgentBackend !== "claude") {
+      throw new Error("workbench.workflowAgentBackend must be pi or claude; no implicit fallback.");
+    }
+    const keys = new Set(["workflowAgentBackend", "model", "permissionMode", "settingSources", "tools", "roles", "capabilityGrants"]);
+    for (const key of Object.keys(config)) {
+      if (!keys.has(key)) throw new Error(`Unknown workbench setting: ${key}.`);
+    }
+    if (config.model !== undefined && (typeof config.model !== "string" || !config.model.trim())) {
+      throw new Error("workbench.model must be a non-empty model ID.");
+    }
+    if (config.permissionMode !== undefined && config.permissionMode !== "dontAsk" && config.permissionMode !== "default") {
+      throw new Error("workbench.permissionMode must be dontAsk or default.");
+    }
+    if (config.settingSources !== undefined && (!Array.isArray(config.settingSources) ||
+      !config.settingSources.every(source => source === "user" || source === "project" || source === "local"))) {
+      throw new Error("workbench.settingSources must be an array of user, project, or local.");
+    }
+    if (config.tools !== undefined && (!Array.isArray(config.tools) || !config.tools.every(tool => typeof tool === "string"))) {
+      throw new Error("workbench.tools must be an array of tool names.");
+    }
+    if (config.capabilityGrants !== undefined && (!Array.isArray(config.capabilityGrants) ||
+      config.capabilityGrants.length > 64 || !config.capabilityGrants.every(grant =>
+        typeof grant === "string" && /^[a-z][a-z0-9.-]*:[a-z][a-z0-9.-]*$/.test(grant) && !grant.includes("\n")))) {
+      throw new Error("workbench.capabilityGrants must be a finite array of explicit namespace:permission identifiers without wildcards.");
+    }
+    if (config.roles !== undefined) {
+      if (typeof config.roles !== "object" || config.roles === null || Array.isArray(config.roles)) {
+        throw new Error("workbench.roles must be an object keyed by Claude-native role name.");
+      }
+      for (const [name, value] of Object.entries(config.roles)) {
+        if (!/^[a-zA-Z][a-zA-Z0-9_-]{0,63}$/.test(name) || !value || typeof value !== "object" || Array.isArray(value)) {
+          throw new Error(`workbench.roles.${name} is invalid.`);
+        }
+        const role = value as Record<string, unknown>;
+        if (typeof role.prompt !== "string" || !role.prompt.trim() ||
+          (role.model !== undefined && (typeof role.model !== "string" || !role.model.trim())) ||
+          (role.tools !== undefined && (!Array.isArray(role.tools) || !role.tools.every(tool => typeof tool === "string"))) ||
+          (role.effort !== undefined && !["low", "medium", "high", "xhigh", "max"].includes(String(role.effort))) ||
+          Object.keys(role).some(key => !["prompt", "model", "tools", "effort"].includes(key))) {
+          throw new Error(`workbench.roles.${name} must declare prompt with optional tools/model/effort.`);
+        }
+      }
+    }
+    out.workbench = {
+      workflowAgentBackend: config.workflowAgentBackend,
+      ...(typeof config.model === "string" ? { model: config.model } : {}),
+      ...(config.permissionMode ? { permissionMode: config.permissionMode } : {}),
+      ...(Array.isArray(config.settingSources) ? { settingSources: config.settingSources } : {}),
+      ...(Array.isArray(config.tools) ? { tools: config.tools } : {}),
+      ...(Array.isArray(config.capabilityGrants) ? { capabilityGrants: [...new Set(config.capabilityGrants)] } : {}),
+      ...(config.roles ? { roles: config.roles } : {}),
+    } as WorkbenchSettings;
+  }
   if (
     Number.isInteger(r.maxConcurrent) &&
     (r.maxConcurrent as number) >= 1 &&
@@ -479,13 +551,17 @@ function projectPath(cwd: string): string {
  */
 function readSettingsFile(path: string): SubagentsSettings {
   if (!existsSync(path)) return {};
+  let raw: unknown;
   try {
-    return sanitize(JSON.parse(readFileSync(path, "utf-8")));
+    raw = JSON.parse(readFileSync(path, "utf-8"));
   } catch (err) {
     const reason = err instanceof Error ? err.message : String(err);
     console.warn(`[pi-subagents] Ignoring malformed settings at ${path}: ${reason}`);
     return {};
   }
+  // Unlike benign legacy fields, an invalid executor selection is not
+  // recoverable by silently running an entirely different agent backend.
+  return sanitize(raw);
 }
 
 /** Load merged settings: global provides defaults, project overrides. */
@@ -537,6 +613,7 @@ export function applySettings(s: SubagentsSettings, appliers: SettingsAppliers):
   if (typeof s.showModel === "boolean") appliers.setShowModel(s.showModel);
   if (s.viewerMarkdown) appliers.setViewerMarkdown(s.viewerMarkdown);
   if (typeof s.workflowsEnabled === "boolean") appliers.setWorkflowsEnabled(s.workflowsEnabled);
+  if (s.workbench !== undefined) appliers.setWorkbench(s.workbench);
 }
 
 /**

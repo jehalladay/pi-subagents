@@ -94,3 +94,8 @@ Short hot window in memory (configurable); optional local/private disk cache for
 8. Closing observer causes zero cancellation calls.
 9. 100k-event benchmark proves incremental projection/viewport, not full-fold in render.
 10. Large/secret payload does not leak into Pi tool result or screen by default.
+## Experimental projection implementation
+
+`src/workbench/observation.ts` stores a bounded, non-authoritative read projection. Native keys include provider, type, scope and identifier. Caller workspace/principal scope is separately bound by the host. Duplicate events and lower source sequences do not regress state. Gaps and disconnects mark observations stale; reconnect alone does not establish current state. Only a real read-current snapshot restores confirmation.
+
+Query indexes cover native references, invocation, typed relations, source basis, status kind, evidence, version and intervals. Event queries expose metadata and references without raw producer payloads. Source-qualified cursor retention loss is explicitly partial-gap. The benchmark in `TRACEABILITY.md` measures this model, not terminal viewport costs or live producer reconnect. Native reader adapters and entrypoint wiring need their own live evidence before observer release.

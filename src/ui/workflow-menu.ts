@@ -31,6 +31,7 @@ export interface WorkflowMenuDeps {
   getRecord(id: string): AgentRecord | undefined;
   /** The conversation overlay `c` opens on an agent row. */
   viewAgentConversation(ctx: ExtensionCommandContext, record: AgentRecord): Promise<void>;
+  viewClaudeTranscript?(ctx: ExtensionCommandContext, sessionId: string): Promise<void>;
   /**
    * The session context, for the fleet-list entry point — that one is a
    * keypress in a list that holds no `ctx` of its own. Undefined between
@@ -117,6 +118,20 @@ export async function showWorkflowDialog(
             }
           },
           onOpenAgent: recordId => {
+            if (recordId.startsWith("claude:")) {
+              if (!deps.viewClaudeTranscript) {
+                ctx.ui.notify("Claude transcript viewer is unavailable.", "warning");
+                return;
+              }
+              overlay?.setHidden(true);
+              void deps.viewClaudeTranscript(ctx, recordId.slice("claude:".length))
+                .catch(err => ctx.ui.notify(
+                  `Could not open Claude transcript: ${err instanceof Error ? err.message : String(err)}`,
+                  "warning",
+                ))
+                .finally(() => overlay?.setHidden(false));
+              return;
+            }
             const record = deps.getRecord(recordId);
             // A run's children are records like any other, so they are swept
             // ten minutes after they finish — the row outlives the

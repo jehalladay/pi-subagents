@@ -82,3 +82,16 @@ A Furnace runs.start request is accepted by producer but the response is lost. N
 ## Example H: native evidence refusal
 
 Forge gate reports partial/unknown evidence after change of candidate basis. Pi must show "verification indeterminate", not success, even if host RPC returned normally and text says "build completed".
+## Measured experimental read example
+
+Unlike the proposed `hyperunix.query` example above, the registered operation is currently `hyperunix.find`. In `.pi/subagents.json`, explicitly select the Claude workflow backend and grant only `hyperunix:read`.
+
+```javascript
+export const meta = {name: "inspect-source", description: "Read native coverage"};
+const found = await node("hyperunix.find", {kind: "hx.fs/regular-file", root: "src"});
+return {coverage: found.source.coverage_summary, runtime: found.runtime};
+```
+
+The native result can be incomplete even when files are returned. `licenses_absence: false` does not establish that a missing file or symbol is absent. This query is a filesystem read, not a task-scoped semantic dependency analysis.
+
+`furnace.run.inspect` accepts an existing `runId` under the authorized Pi workspace with explicit `furnace:inspect`. `reactivefiber.render.preview` accepts `model` and `task` under explicit `reactivefiber:render`; its workspace must already be initialized. It uses a noncommitted render and must not be advertised as a durable RF artifact.

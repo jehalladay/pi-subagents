@@ -15,10 +15,12 @@
 
 import { cpus } from "node:os";
 import { Worker } from "node:worker_threads";
+import { type CapabilityDiagnostic, CapabilityError, validatedCapabilityJson } from "../workbench/capability-registry.js";
+import { nativeEvidence } from "../workbench/native-evidence.js";
 import { type JournalKeyInput, journalKey, type WorkflowJournalEntry } from "./journal.js";
 import { type CompiledSchema, compileJsonSchema } from "./json-schema.js";
 import { extractMeta, type WorkflowMeta } from "./meta.js";
-import type { WorkflowAgentEntry, WorkflowEntry } from "./progress.js";
+import type { WorkflowAgentEntry, WorkflowEntry, WorkflowNodeEntry } from "./progress.js";
 import { WORKER_SOURCE } from "./worker-source.js";
 
 /** Matches the `script` field's `maxLength` in the tool schema. */
@@ -91,6 +93,8 @@ export interface WorkflowSpawnRequest {
      * never got a model is exactly the one worth opening.
      */
     recordId?: string;
+    /** Native Claude Agent SDK session identity; not a Pi AgentRecord id. */
+    sessionId?: string;
     modelName?: string;
     modelId?: string;
     thinking?: string;
@@ -122,6 +126,8 @@ export interface WorkflowSpawnRequest {
 
 export interface WorkflowSpawnResult {
   ok: boolean;
+  /** Session ID reported by the native Claude SDK, when this host uses it. */
+  sessionId?: string;
   /** The agent's answer. Present when `ok`. */
   text?: string;
   /** Why it failed. Present when not `ok`. */
@@ -227,6 +233,22 @@ export interface WorkflowHost {
    * rejects `workflow()` outright rather than silently running nothing.
    */
   loadWorkflow?(ref: WorkflowScriptRef): Promise<WorkflowScriptSource> | WorkflowScriptSource;
+  /** Only the legacy Pi host permits settled-agent journal prefix replay. */
+  readonly replaySafe?: boolean;
+  /** Host-only capability dispatch. The worker never receives a provider client. */
+  callNode?(request: WorkflowNodeRequest): Promise<unknown>;
+}
+
+/** One deterministic SDK operation requested by the script worker. */
+export interface WorkflowNodeRequest {
+  callId: number;
+  index: number;
+  capabilityId: string;
+  input: unknown;
+  label: string;
+  phaseIndex?: number;
+  phaseTitle?: string;
+  signal: AbortSignal;
 }
 
 /**
@@ -316,6 +338,8 @@ export interface WorkflowRunResult {
   /** The script's return value, JSON-checked at the boundary. */
   value?: unknown;
   error?: string;
+  /** Typed node transport/validation diagnostic, never a native domain verdict. */
+  capabilityError?: CapabilityDiagnostic;
   /** The append-only log, in emission order. */
   progress: WorkflowEntry[];
   /** Agents scheduled, including those that failed. */
@@ -364,6 +388,17 @@ function walk(value: unknown, path: string, seen: Set<object>): void {
       if (!Object.hasOwn(object, i)) throw boundaryError("a sparse array", `${path}[${i}]`);
       walk(object[i], `${path}[${i}]`, seen);
     }
+    for (const key of Reflect.ownKeys(object)) {
+      if (key === "length") continue;
+      const index = String(Number(key));
+      if (typeof key !== "string" || index !== key || Number(key) >= object.length || Number(key) < 0) {
+        throw boundaryError("an array with extra properties", path);
+      }
+      const property = Object.getOwnPropertyDescriptor(object, key);
+      if (!property?.enumerable || !("value" in property)) {
+        throw boundaryError("an accessor or hidden property", `${path}[${key}]`);
+      }
+    }
     seen.delete(object);
     return;
   }
@@ -372,8 +407,13 @@ function walk(value: unknown, path: string, seen: Set<object>): void {
   if (prototype !== null && prototype !== Object.prototype) {
     throw boundaryError("a non-plain object", path);
   }
-  for (const [key, entry] of Object.entries(object)) {
-    walk(entry, `${path}.${key}`, seen);
+  for (const key of Reflect.ownKeys(object)) {
+    if (typeof key !== "string") throw boundaryError("a symbol key", path);
+    const property = Object.getOwnPropertyDescriptor(object, key);
+    if (!property?.enumerable || !("value" in property)) {
+      throw boundaryError("an accessor or hidden property", `${path}.${key}`);
+    }
+    walk(property.value, `${path}.${key}`, seen);
   }
   seen.delete(object);
 }
@@ -428,6 +468,14 @@ class Semaphore {
  * Messages
  * ------------------------------------------------------------------------- */
 
+interface NodeCallPayload {
+  capabilityId: string;
+  input: unknown;
+  label: string;
+  phaseIndex?: number;
+  phaseTitle?: string;
+}
+
 interface AgentCallPayload {
   prompt: string;
   label?: string;
@@ -447,10 +495,10 @@ interface AgentCallPayload {
 }
 
 type WorkerMessage =
-  | { type: "call"; callId: number; method: string; payload: AgentCallPayload }
+  | { type: "call"; callId: number; method: string; payload: AgentCallPayload | NodeCallPayload | WorkflowScriptRef }
   | { type: "progress"; entries: WorkflowEntry[] }
   | { type: "complete"; resultJson?: string }
-  | { type: "error"; message: string; stack?: string };
+  | { type: "error"; message: string; stack?: string; capabilityError?: CapabilityDiagnostic };
 
 /** Everything below 0x20 except tab, newline and carriage return, plus DEL. */
 const CONTROL_CHARACTERS = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/;
@@ -591,6 +639,7 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
   const agentCap = options.agentCap ?? WORKFLOW_AGENT_CAP;
   const itemCap = options.itemCap ?? WORKFLOW_ITEM_CAP;
   const semaphore = new Semaphore(options.concurrency ?? workflowConcurrency());
+  const nodeSemaphore = new Semaphore(16);
 
   const progress: WorkflowEntry[] = [];
   const inflight = new Set<string>();
@@ -607,6 +656,10 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
    */
   const openLaunches = new Map<number, string>();
   let agentCount = 0;
+  let nodeCount = 0;
+  const nodeAbort = new AbortController();
+  const openNodes = new Set<number>();
+  const nodeCap = 1000;
   let aborted = false;
   let settled = false;
 
@@ -626,7 +679,7 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
   // continue. Declining up front beats stranding the first `resume` call
   // partway through a run that has already spent its cheap half.
   const journalResumes = journalEntries.some(entry => entry.resumed);
-  let prefixIntact = journalEntries.length > 0 && !journalResumes;
+  let prefixIntact = host.replaySafe !== false && journalEntries.length > 0 && !journalResumes;
   let replayedCount = 0;
 
   /* --- live control ---------------------------------------------------- */
@@ -734,14 +787,14 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
       options.onProgress?.(entries);
     };
 
-    const respond = (callId: number, ok: boolean, value?: unknown, error?: string, fatal?: boolean) => {
+    const respond = (callId: number, ok: boolean, value?: unknown, error?: string, fatal?: boolean, capabilityError?: CapabilityDiagnostic) => {
       // Cleared before the settled check: a launch answered by a run that is
       // already finishing is not an unawaited launch either.
       openLaunches.delete(callId);
       if (settled) return;
       // `spent` rides on every response, so the worker's `budget.spent()` is a
       // mirror of this number rather than a second tally of its own.
-      worker.postMessage({ type: "response", callId, ok, value, error, fatal, spent: spentOutputTokens });
+      worker.postMessage({ type: "response", callId, ok, value, error, fatal, capabilityError, spent: spentOutputTokens });
     };
 
     const finish = (result: Omit<WorkflowRunResult, "meta" | "progress" | "agentCount" | "replayedCount">) => {
@@ -753,9 +806,11 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
       // promise resolves either way — it just does not leave live-agent
       // bookkeeping behind for a run that is over.
       releasePause();
+      if (openNodes.size > 0) nodeAbort.abort();
       for (const agentId of inflight) host.abortAgent(agentId);
       inflight.clear();
       semaphore.drain();
+      nodeSemaphore.drain();
       // Resolve only once the thread is actually down, so a caller that awaits
       // runWorkflow() is guaranteed not to be leaking one.
       const settle = () => resolve({ ...result, meta, progress, agentCount, replayedCount });
@@ -989,6 +1044,7 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
           // is for — the row updates in place while the agent is still running.
           const onResolved = (info: {
             recordId?: string;
+            sessionId?: string;
             modelName?: string;
             modelId?: string;
             thinking?: string;
@@ -996,6 +1052,7 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
             requestedModel?: string;
           }) => {
             if (info.recordId !== undefined) base.recordId = info.recordId;
+            if (info.sessionId !== undefined) base.sessionId = info.sessionId;
             if (info.modelName !== undefined) base.model = info.modelName;
             if (info.modelId !== undefined) base.modelId = info.modelId;
             if (info.thinking !== undefined) base.thinking = info.thinking;
@@ -1094,6 +1151,7 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
             durationMs: finishedAt - startedAt,
             ...(result.tokens !== undefined ? { tokens: result.tokens } : {}),
             ...(result.toolCalls !== undefined ? { toolCalls: result.toolCalls } : {}),
+            ...(result.sessionId !== undefined ? { sessionId: result.sessionId } : {}),
           };
 
           if (result.ok) {
@@ -1126,6 +1184,83 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
         }
       } finally {
         liveAgents.delete(index);
+      }
+    }
+
+    /** No journal reuse for SDK operations, especially not after an uncertain effect. */
+    async function handleNode(callId: number, payload: NodeCallPayload): Promise<void> {
+      // Treat worker messages as untrusted protocol frames; an escaping script
+      // can craft this payload without going through nodeIn's local checks.
+      if (!payload || typeof payload !== "object" || Array.isArray(payload) ||
+        typeof payload.capabilityId !== "string" || !/^[a-z][a-z0-9]*(?:[.-][a-z][a-z0-9]*)+$/.test(payload.capabilityId) ||
+        typeof payload.label !== "string" || payload.label.length > 200 ||
+        (payload.phaseIndex !== undefined && (!Number.isSafeInteger(payload.phaseIndex) || payload.phaseIndex < 0)) ||
+        (payload.phaseTitle !== undefined && typeof payload.phaseTitle !== "string")) {
+        respond(callId, false, undefined, "Malformed workflow node RPC payload.", true, { name: "CapabilityError", category: "validation", message: "Malformed workflow node RPC payload." });
+        return;
+      }
+      const callNode = host.callNode?.bind(host);
+      if (!callNode) {
+        respond(callId, false, undefined, "This workflow host has no capability registry.", true, { name: "CapabilityError", category: "unavailable", message: "This workflow host has no capability registry." });
+        return;
+      }
+      // A node() may change the world; every later agent must run live.
+      prefixIntact = false;
+      if (nodeCount >= nodeCap) {
+        respond(callId, false, undefined, `Workflow exceeded its cap of ${nodeCap} node calls.`, true, { name: "CapabilityError", category: "validation", message: `Workflow exceeded its cap of ${nodeCap} node calls.` });
+        return;
+      }
+      const index = nodeCount++;
+      openNodes.add(callId);
+      const base: WorkflowNodeEntry = {
+        type: "workflow_node", index, callId,
+        capabilityId: payload.capabilityId, label: payload.label,
+        state: "start", queuedAt: Date.now(),
+        ...(payload.phaseIndex !== undefined ? { phaseIndex: payload.phaseIndex } : {}),
+        ...(payload.phaseTitle !== undefined ? { phaseTitle: payload.phaseTitle } : {}),
+      };
+      emit([base]);
+      await nodeSemaphore.acquire();
+      if (aborted || settled) {
+        nodeSemaphore.release();
+        openNodes.delete(callId);
+        return;
+      }
+      const startedAt = Date.now();
+      emit([{ ...base, startedAt }]);
+      try {
+        const input = validatedCapabilityJson(payload.input, `node(${payload.capabilityId}) input`);
+        const output = await callNode({
+          callId, index, capabilityId: payload.capabilityId,
+          input, label: payload.label,
+          ...(payload.phaseIndex !== undefined ? { phaseIndex: payload.phaseIndex } : {}),
+          ...(payload.phaseTitle !== undefined ? { phaseTitle: payload.phaseTitle } : {}),
+          signal: nodeAbort.signal,
+        });
+        const value = validatedCapabilityJson(output, `node(${payload.capabilityId}) output`);
+        // A native producer's domain failure/partial outcome is returned as-is.
+        // The Workbench does not invent an evidence reference or PASS verdict.
+        const finishedAt = Date.now();
+        const evidence = nativeEvidence(payload.capabilityId, value);
+        emit([{ ...base, startedAt, lastProgressAt: finishedAt,
+          durationMs: finishedAt - startedAt, state: "done",
+          ...evidence,
+          freshness: "unknown", // A returned snapshot alone establishes no current observation freshness.
+          resultPreview: preview(JSON.stringify(value) ?? "null") }]);
+        openNodes.delete(callId);
+        respond(callId, true, value);
+      } catch (error) {
+        const finishedAt = Date.now();
+        const detail = error instanceof Error ? error.message : String(error);
+        emit([{ ...base, startedAt, lastProgressAt: finishedAt,
+          durationMs: finishedAt - startedAt, state: "error", error: detail }]);
+        // Validation/authorization/uncertain effects cannot become null under
+        // parallel()'s ordinary item-failure semantics. A failed node is a
+        // failed *workflow*, so the caller must see the typed diagnostic.
+        openNodes.delete(callId);
+        respond(callId, false, undefined, detail, true, { name: "CapabilityError", category: error instanceof CapabilityError ? error.category : "transport", message: detail });
+      } finally {
+        nodeSemaphore.release();
       }
     }
 
@@ -1169,11 +1304,20 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
 
     worker.on("message", (message: WorkerMessage) => {
       if (settled) return;
+      if (!message || typeof message !== "object" ||
+        (message.type === "call" && (!Number.isSafeInteger(message.callId) || message.callId < 1))) {
+        finish({ status: "failed", error: "Malformed workflow worker message." });
+        return;
+      }
       switch (message.type) {
         case "progress":
           emit(message.entries);
           break;
         case "call":
+          if (message.method === "node") {
+            void handleNode(message.callId, message.payload as NodeCallPayload);
+            break;
+          }
           if (message.method === "workflow") {
             void handleLoadWorkflow(message.callId, message.payload as WorkflowScriptRef);
             break;
@@ -1190,6 +1334,10 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
           // this, so anything still open was never awaited. finish() aborts
           // those children on the way out.
           const unawaited = [...openLaunches.values()];
+          if (openNodes.size > 0) {
+            finish({ status: "failed", error: `workflow script completed with ${openNodes.size} unawaited node() call(s). Await or return each launch.` });
+            break;
+          }
           if (unawaited.length > 0) {
             finish({ status: "failed", error: unawaitedLaunchMessage(unawaited) });
             break;
@@ -1201,7 +1349,7 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
           break;
         }
         case "error":
-          finish({ status: "failed", error: message.message });
+          finish({ status: "failed", error: message.message, ...(message.capabilityError ? { capabilityError: message.capabilityError } : {}) });
           break;
       }
     });

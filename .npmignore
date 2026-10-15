@@ -33,3 +33,10 @@ vitest.config.ts
 .github/
 biome.json
 coverage/
+# Local Workbench producer state and development-only native fixture runners
+.beads/
+.forge/
+.furnace/
+.hyperunix/
+.reactive-fiber/
+vitest.*.config.ts

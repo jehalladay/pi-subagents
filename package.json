@@ -30,6 +30,10 @@
     "typebox": "*"
   },
   "dependencies": {
+    "@anthropic-ai/claude-agent-sdk": "0.3.300",
+    "@forge/sdk": "file:vendor/forge-sdk-0.1.0.tgz",
+    "@furnace/sdk": "file:vendor/furnace-sdk-0.1.0.tgz",
+    "@hyperunix/sdk": "file:vendor/hyperunix-sdk-0.1.0.tgz",
     "croner": "^10.0.1",
     "nanoid": "^5.1.16"
   },
@@ -65,5 +69,10 @@
     ],
     "video": "https://github.com/tintinweb/pi-subagents/raw/master/media/demo.mp4",
     "image": "https://github.com/tintinweb/pi-subagents/raw/master/media/screenshot.png"
-  }
+  },
+  "bundledDependencies": [
+    "@forge/sdk",
+    "@furnace/sdk",
+    "@hyperunix/sdk"
+  ]
 }

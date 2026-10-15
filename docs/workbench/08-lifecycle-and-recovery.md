@@ -54,3 +54,10 @@ Record an append-only *diagnostic* event stream in the workbench if useful, plus
 ## Adversarial test matrix
 
 Kill after Furnace side effect before returned Run ID; kill after workspace edit before recorded result; reconnect a stream with missing events; restart Pi while detached executor continues; change source digest under same logical key; issue control as observer-only; cancel a wait on shared child; exhaust Furnace slots with parents awaiting child; change candidate source basis after Forge verify. Required outcomes: reconciliation/uncertainty/conflict; no duplicate effects, no invented PASS, no implicit mass cancellation.
+## Experimental immutable receipt
+
+`src/workbench/identity.ts` distinguishes script definition, deployment digest, logical invocation and producer-native references. It hashes actual script and host implementation files, the package manifest/lock and verified local SDK artifacts, effective configuration, host ABI and provider contract declarations. Principal and independently measured workspace source basis remain explicit inputs. Re-observing changed bytes/configuration/contracts under the same invocation refuses rather than silently upgrading it.
+
+These receipts are not durable JavaScript checkpoints, signed remote authorization or proof of native resource ownership. Installed artifacts carry a validated dependency lock under `vendor/` because npm excludes the root lockfile from packed distributions. Host entrypoint integration and native source-basis authority must be verified separately.
+
+The identity audit also pins explicitly resolved loaded SDK JavaScript files, rather than assuming a lockfile/archive proves the installed bytes. Native executable identity remains a producer-specific observation. A model alias, mutable PATH or SDK default executable must not be advertised as an immutable native deployment merely because the JavaScript client is pinned. Git candidate surveys cover their bounded Git-visible source universe and label non-Git or unmeasurable workspaces unknown; they do not freeze filesystem state or include arbitrary ignored data.

@@ -75,3 +75,8 @@ Benchmark >=1000 visible-reachable operations and >=100k synthetic event updates
 ## Failure and deception defenses
 
 STALLED vs WAITING vs STALE vs UNKNOWN must not be confused. Spinner should not imply work progressed. Node result with missing evidence is not marked verified merely because process exited 0. Cancel controls unavailable for observers without lifecycle authority. Historical reads with limited retention show missing details honestly.
+## Implemented experimental native details at 2026-10-15
+
+The existing phase/agent inspector now permits keyboard selection of native node rows, including node-only phases. The detail view retains the capability, producer-qualified native identifier, transport state, domain outcome, source basis, freshness, last error and evidence references. Native rows do not offer Pi conversation, skip or retry actions. Closing a native detail view is observational and issues no cancellation. Terminal text is sanitized and bounded; fixture tests cover ASCII/Unicode, narrow widths and resize.
+
+This is not the proposed four-view inspector. Full graph/timeline navigation, native evidence loading, incremental viewport rendering and measured layout responsiveness remain open. The bounded observation projection benchmark is separate from terminal layout acceptance.

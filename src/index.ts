@@ -10,8 +10,12 @@
  *   /agents                 — Interactive agent management menu
  */
 
-import { existsSync, mkdirSync, readFileSync, unlinkSync, writeFileSync } from "node:fs";
-import { isAbsolute, join } from "node:path";
+import { execFileSync } from "node:child_process";
+import { createHash } from "node:crypto";
+import { existsSync, lstatSync, mkdirSync, readdirSync, readFileSync, realpathSync, unlinkSync, writeFileSync } from "node:fs";
+import { userInfo } from "node:os";
+import { dirname, isAbsolute, join, relative, resolve, sep } from "node:path";
+import { fileURLToPath } from "node:url";
 import { defineTool, type ExtensionAPI, type ExtensionCommandContext, type ExtensionContext, getAgentDir, getSettingsListTheme } from "@earendil-works/pi-coding-agent";
 import { Container, Key, matchesKey, type SettingItem, SettingsList, Spacer, Text } from "@earendil-works/pi-tui";
 import { Type } from "typebox";
@@ -34,7 +38,7 @@ import { getMaxSubagentDepth, setMaxSubagentDepth } from "./nested-tools.js";
 import { createOutputFilePath, ensureOutputFile, getOutputTranscriptDefault, sessionTaskDir, setOutputTranscriptDefault, streamToOutputFile, writeInitialEntry } from "./output-file.js";
 import { SubagentScheduler } from "./schedule.js";
 import { resolveStorePath, ScheduleStore } from "./schedule-store.js";
-import { applyAndEmitLoaded, loadSettings, type SubagentsSettings, saveAndEmitChanged, type ToolDescriptionMode } from "./settings.js";
+import { applyAndEmitLoaded, loadSettings, type SubagentsSettings, saveAndEmitChanged, type ToolDescriptionMode, type WorkbenchSettings } from "./settings.js";
 import { getForegroundOutcomeNote, getStatusNote, partialOutputSuffix } from "./status-note.js";
 import { type AgentConfig, type AgentInvocation, type AgentMentionMode, type AgentRecord, type JoinMode, type NotificationDetails, type SubagentType, type ViewerMarkdownMode, type WidgetMode } from "./types.js";
 import { createMentionProvider, mentionRoster, type TypeInfo } from "./ui/agent-mention.js";
@@ -62,12 +66,21 @@ import { selectItem } from "./ui/select-item.js";
 import { renderWorkflowCard, renderWorkflowEntryCard } from "./ui/workflow-card.js";
 import { openWorkflowFromFleet, showWorkflowsMenu, type WorkflowMenuDeps } from "./ui/workflow-menu.js";
 import { getLifetimeCost, getLifetimeTotal, getSessionContextPercent, type LifetimeUsage, PendingUsagePool, toReportedUsage } from "./usage.js";
+import { type CapabilityDescriptor, CapabilityRegistry } from "./workbench/capability-registry.js";
+import { createClaudeWorkflowHost } from "./workbench/claude-host.js";
+import { createClaudeObserver, readClaudeTranscript } from "./workbench/claude-transcript.js";
+import { captureInvocationIdentity, type IdentityCaptureInput, identityDigest, verifyInvocationIdentity } from "./workbench/identity.js";
+import { type NativeRef, ObservationProjection, type ObservationScope, type Presentation } from "./workbench/observation.js";
+import { registerNativeForgeGateStatus } from "./workbench/providers/forge.js";
+import { registerNativeFurnaceRunInspect } from "./workbench/providers/furnace.js";
+import { registerNativeHyperUnixFind } from "./workbench/providers/hyperunix.js";
+import { registerNativeReactiveFiberRender } from "./workbench/providers/reactivefiber.js";
 import { decideWorkflowCollision, FOREIGN_WORKFLOW_TOOL_NAMES } from "./workflow/collisions.js";
 import { WORKFLOW_ENTRY_TYPE, type WorkflowEntryData, workflowEntryData } from "./workflow/entry.js";
 import { createWorkflowHost } from "./workflow/host.js";
 import { appendJournal, readJournal, type WorkflowJournalEntry } from "./workflow/journal.js";
 import { extractMeta, type WorkflowMeta, workflowCallName } from "./workflow/meta.js";
-import { elapsedMs } from "./workflow/progress.js";
+import { type ClaudeNativeObservation, elapsedMs, type WorkflowAgentEntry } from "./workflow/progress.js";
 import { runWorkflow } from "./workflow/runtime.js";
 import { resolveWorkflowScript } from "./workflow/saved.js";
 import { completeWorkflowTask, createWorkflowTask, failWorkflowTask, formatWorkflowNotification, resolveResumeTarget, updateWorkflowProgressBatch, type WorkflowTask, workflowResultText, workflowRunId } from "./workflow/task.js";
@@ -297,6 +310,52 @@ export const WORKFLOW_FILE_FLAG = "subagents-workflow-file";
  * {@link WORKFLOW_ENTRY_TYPE} imports it from here.
  */
 export { FOREIGN_WORKFLOW_TOOL_NAMES, WORKFLOW_ENTRY_TYPE, type WorkflowEntryData, workflowEntryData };
+
+/** Git gives a candidate basis, not an immutable checkout or a producer verification verdict.
+ * Include HEAD, index and Git-visible tracked/untracked bytes (not ignored files); refuse to assert a measured basis
+ * when this bounded survey cannot account for every changed path safely.
+ */
+function workspaceCandidateBasis(cwd: string): { sourceBasis: string; state: "measured" | "unknown" } {
+  const unavailable = { sourceBasis: "unknown:git-unavailable", state: "unknown" } as const;
+  const git = (...args: string[]) => execFileSync("git", ["-C", cwd, ...args], {
+    timeout: 5_000, maxBuffer: 2 * 1024 * 1024, encoding: "buffer", stdio: ["ignore", "pipe", "ignore"],
+  });
+  try {
+    const scope = realpathSync(cwd);
+    const root = realpathSync(git("rev-parse", "--show-toplevel").toString("utf8").trim());
+    if (scope !== root && !scope.startsWith(`${root}${sep}`)) return unavailable;
+    // Run path-list commands at the Git top level: ls-files otherwise emits
+    // names relative to cwd, which would hash the wrong file for a subdirectory.
+    const atRoot = (...args: string[]) => execFileSync("git", ["-C", root, ...args], {
+      timeout: 5_000, maxBuffer: 2 * 1024 * 1024, encoding: "buffer", stdio: ["ignore", "pipe", "ignore"],
+    });
+    const tree = atRoot("rev-parse", "HEAD^{tree}").toString("utf8").trim();
+    if (!/^[a-f0-9]{40,64}$/.test(tree)) return unavailable;
+    // Index stage entries distinguish staged edits from HEAD; all Git-visible
+    // file bytes are measured, not merely git status labels.
+    const index = atRoot("ls-files", "--stage", "-z");
+    // Include every Git-visible path, not only a status subset: paths flagged
+    // assume-unchanged can otherwise mutate invisibly to ls-files -m.
+    const changed = atRoot("ls-files", "--cached", "--others", "--exclude-standard", "-z");
+    const names = changed.toString("utf8").split("\0").filter(Boolean);
+    if (names.length > 2_000 || new Set(names).size > 2_000) return unavailable;
+    const files: { path: string; digest: string; bytes: number }[] = [];
+    let totalBytes = 0;
+    for (const name of [...new Set(names)].sort()) {
+      const candidate = resolve(root, name);
+      const rel = relative(root, candidate);
+      if (!rel || rel === ".." || rel.startsWith(`..${sep}`) || isAbsolute(rel)) return unavailable;
+      const stat = lstatSync(candidate, { throwIfNoEntry: false });
+      if (!stat) { files.push({path: name, digest: "deleted", bytes: 0}); continue; }
+      if (!stat.isFile() || stat.size > 32 * 1024 * 1024 || totalBytes + stat.size > 32 * 1024 * 1024 ||
+        realpathSync(candidate) !== candidate) return unavailable;
+      const bytes = readFileSync(candidate);
+      totalBytes += bytes.length;
+      files.push({path: name, digest: `sha256:${createHash("sha256").update(bytes).digest("hex")}`, bytes: bytes.length});
+    }
+    return { sourceBasis: identityDigest("git-candidate", { root, tree, index: `sha256:${createHash("sha256").update(index).digest("hex")}`, files }), state: "measured" };
+  } catch { return unavailable; }
+}
 
 export default function (pi: ExtensionAPI) {
   // Child AgentSessions load normal extensions. Re-entering this extension there
@@ -847,6 +906,7 @@ export default function (pi: ExtensionAPI) {
     // extension factory has run, so this is the earliest point the real value
     // exists. Detached inside — a workflow must not hold up session startup.
     resolveWorkflowCollisions(ctx);
+    registerWorkbenchTools(ctx);
     runWorkflowFlag(ctx);
   });
 
@@ -1192,6 +1252,7 @@ export default function (pi: ExtensionAPI) {
   // extension's workflow tool: a default may be overridden by what else is
   // loaded, an explicit choice may not.
   let workflowsEnabled = true;
+  let workbenchSettings: WorkbenchSettings | undefined;
   let workflowsPinned = false;
   function isWorkflowsEnabled(): boolean { return workflowsEnabled; }
   function isWorkflowsPinned(): boolean { return workflowsPinned; }
@@ -1420,6 +1481,7 @@ export default function (pi: ExtensionAPI) {
       setOutputTranscript: setOutputTranscriptDefault,
       setWorktreeIsolation: setWorktreeIsolationEnabled,
       setWorkflowsEnabled: setWorkflowsEnabled,
+      setWorkbench: settings => { workbenchSettings = settings; },
       setMaxSubagentDepth: setMaxSubagentDepth,
       setFallbackSubagent: setFallbackSubagent,
       setReportUsage,
@@ -2310,6 +2372,144 @@ Terse command-style prompts produce shallow, generic work.
    * background run.
    */
   const workflowTasks = new Map<string, WorkflowTask>();
+  const projection = new ObservationProjection({ maxEvents: 4_096, maxNodes: 512, maxEdges: 512, maxQuery: 40 });
+  const registries = new Map<string, CapabilityRegistry>();
+  let workbenchToolsRegistered = false;
+  function registryFor(cwd: string): CapabilityRegistry {
+    const scope = realpathSync(cwd);
+    let registry = registries.get(scope);
+    if (!registry) {
+      registry = new CapabilityRegistry();
+      registerNativeForgeGateStatus(registry, scope);
+      registerNativeHyperUnixFind(registry, scope);
+      registerNativeFurnaceRunInspect(registry, scope);
+      registerNativeReactiveFiberRender(registry, scope);
+      registries.set(scope, registry);
+    }
+    return registry;
+  }
+  // The local OS user and Pi session identify a local operator, not remote
+  // authentication. The script cannot choose or serialize this authority.
+  function localPrincipal(ctx: ExtensionContext): string {
+    return `local-operator:${process.getuid?.() ?? userInfo().username}:${ctx.sessionManager.getSessionId()}`;
+  }
+  function observerScope(ctx: ExtensionContext): ObservationScope {
+    return { workspace: realpathSync(ctx.cwd), principal: localPrincipal(ctx) };
+  }
+  function grants(ctx: ExtensionContext): readonly string[] {
+    return loadSettings(ctx.cwd).workbench?.capabilityGrants ?? [];
+  }
+  function sourceSettings(ctx: ExtensionContext): WorkbenchSettings | undefined {
+    return loadSettings(ctx.cwd).workbench;
+  }
+  const packageRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+  // Files of THIS installed host, rather than executable names or a mutable
+  // package version string. Local vendor tarballs/lock come from identity.ts.
+  const hostLane = dirname(fileURLToPath(import.meta.url)).endsWith(`${sep}dist`) ? "dist" : "src";
+  function implementationFiles(root: string, extensions: readonly string[]): string[] {
+    const paths: string[] = [];
+    function visit(directory: string): void {
+      for (const entry of readdirSync(directory, { withFileTypes: true })) {
+        if (entry.name === "node_modules") continue;
+        const path = join(directory, entry.name);
+        if (entry.isDirectory()) visit(path);
+        else if (entry.isFile() && extensions.some(extension => entry.name.endsWith(extension))) paths.push(realpathSync(path));
+        if (paths.length > 4096) throw new Error("Identity implementation file budget exceeded.");
+      }
+    }
+    visit(root);
+    return paths.sort();
+  }
+  const hostArtifacts = implementationFiles(join(packageRoot, hostLane), hostLane === "src" ? [".ts"] : [".js", ".mjs", ".cjs"]);
+  function runtimeArtifacts(): string[] {
+    const artifacts = new Set<string>();
+    for (const specifier of ["@anthropic-ai/claude-agent-sdk", "@forge/sdk", "@furnace/sdk", "@hyperunix/sdk", "typebox"]) {
+      const entry = fileURLToPath(import.meta.resolve(specifier));
+      let root = dirname(entry);
+      while (!existsSync(join(root, "package.json"))) {
+        const parent = dirname(root);
+        if (parent === root) throw new Error("Resolved SDK package manifest unavailable.");
+        root = parent;
+      }
+      artifacts.add(realpathSync(join(root, "package.json")));
+      for (const path of implementationFiles(root, [".js", ".mjs", ".cjs", ".json"])) artifacts.add(path);
+    }
+    if (artifacts.size > 4096) throw new Error("Identity runtime SDK file budget exceeded.");
+    return [...artifacts].sort();
+  }
+
+  function invocationInput(ctx: ExtensionContext, task: WorkflowTask, settings: WorkbenchSettings,
+    descriptors: readonly CapabilityDescriptor[]): IdentityCaptureInput {
+    const basis = workspaceCandidateBasis(ctx.cwd);
+    if (task.workspaceSourceState === "measured" && basis.state !== "measured") {
+      throw new Error("IDENTITY_CONFLICT: measured Git candidate is no longer measurable.");
+    }
+    task.workspaceSourceState = basis.state;
+    return {
+      definition: { kind: "script", id: task.scriptPath ?? task.id, schemaVersion: "workflow-script/v1" },
+      scriptPath: task.scriptPath ?? "", packageRoot, hostArtifacts, runtimeArtifacts: runtimeArtifacts(),
+      logicalInvocationId: task.id,
+      principal: { issuer: "pi-local-operator", subject: localPrincipal(ctx) },
+      workspace: { path: realpathSync(ctx.cwd), sourceBasis: basis.sourceBasis },
+      effectiveConfig: {
+        workflowAgentBackend: "claude", model: settings.model ?? null,
+        permissionMode: settings.permissionMode ?? "dontAsk", settingSources: settings.settingSources ?? [],
+        tools: settings.tools ?? [], roles: settings.roles ?? {}, grants: settings.capabilityGrants ?? [],
+      },
+      hostAbi: { runtime: "node", version: process.versions.node, platform: process.platform,
+        arch: process.arch, interfaceVersion: "pi-workbench/v1" },
+      providerDescriptors: descriptors.map(descriptor => ({
+        id: descriptor.id, version: descriptor.version, contractSource: descriptor.contractSource ?? "unavailable",
+        inputSchema: descriptor.inputSchema as IdentityCaptureInput["providerDescriptors"][number]["inputSchema"],
+        ...(descriptor.outputSchema ? { outputSchema: descriptor.outputSchema as IdentityCaptureInput["providerDescriptors"][number]["inputSchema"] } : {}),
+        effectClass: descriptor.effectClass, permissions: descriptor.permissions,
+        supportedModes: descriptor.supportedModes,
+      })),
+    };
+  }
+
+  // Both tools are registered through Pi, so their permissions apply on the
+  // real model path; neither accepts a caller-supplied principal or workspace.
+  function registerWorkbenchTools(ctx: ExtensionContext): void {
+    if (workbenchToolsRegistered || sourceSettings(ctx)?.workflowAgentBackend !== "claude") return;
+    workbenchToolsRegistered = true;
+    pi.registerTool(defineTool({
+      name: "workbench_catalog",
+      label: "Workbench catalog",
+      description: "List host-registered native capabilities visible under independent discover grants.",
+      parameters: Type.Object({}),
+      execute: async (_id, _params, _signal, _onUpdate, ctx) => {
+        const descriptors = registryFor(ctx.cwd).discover({ grants: grants(ctx) });
+        return textResult(JSON.stringify({ capabilities: descriptors.map(({ id, version, description, effectClass, permissions, supportedModes, contractSource }) =>
+          ({ id, version, description, effectClass, permissions, supportedModes, contractSource })) }));
+      },
+    }));
+    pi.registerTool(defineTool({
+      name: "workflow_observe",
+      label: "Observe workflow",
+      description: "Read a bounded, redacted workflow projection by task ID. Requires workbench:observe; not an execution authority.",
+      parameters: Type.Object({ taskId: Type.String(), limit: Type.Optional(Type.Integer({ minimum: 1, maximum: 40 })) }),
+      execute: async (_id, params, _signal, _onUpdate, ctx) => {
+        if (!grants(ctx).includes("workbench:observe")) return textResult("Permission denied: workbench:observe grant required.");
+        if (!/^wf_[a-z0-9-]{6,}$/.test(params.taskId)) return textResult("Invalid workflow task ID.");
+        if (params.limit !== undefined && (!Number.isSafeInteger(params.limit) || params.limit < 1 || params.limit > 40))
+          return textResult("Invalid observation limit (1..40).");
+        const task = workflowTasks.get(params.taskId);
+        const scope = observerScope(ctx);
+        if (!task || task.observationScope?.sessionId !== ctx.sessionManager.getSessionId() ||
+          task.observationScope.workspace !== scope.workspace || task.observationScope.principal !== scope.principal)
+          return textResult("Workflow unavailable in this local operator/session/workspace scope.");
+        const { nodes, truncated } = projection.query({ scope, invocationId: task.id, limit: params.limit ?? 20 });
+        const compact = nodes.map(node => ({ nativeRef: node.nativeRef, kind: node.kind,
+          presentation: node.presentation, freshness: node.freshness, completeness: node.completeness,
+          observedAt: node.observedAt, lastConfirmedAt: node.lastConfirmedAt,
+          subjectBasis: node.subjectBasis, evidenceRefs: node.evidenceRefs }));
+        return textResult(JSON.stringify({ taskId: task.id, status: task.status,
+          identity: task.identityReceipt?.identity ?? null, workspaceSourceState: task.workspaceSourceState ?? "unknown",
+          nodes: compact, truncated, error: task.error ?? null }));
+      },
+    }));
+  }
 
   /**
    * Workflow runs as the fleet list wants them.
@@ -2343,21 +2543,120 @@ Terse command-style prompts produce shallow, generic work.
    */
   async function runWorkflowTask(ctx: ExtensionContext, task: WorkflowTask): Promise<void> {
     try {
+      const configured = sourceSettings(ctx);
+      const settings = configured?.workflowAgentBackend === "claude"
+        ? structuredClone(configured) : undefined;
+      const nativeRows = new Map<number, WorkflowAgentEntry>();
+      const nativeSnapshots = new Map<number, ClaudeNativeObservation>();
+      const scope = observerScope(ctx);
+      task.observationScope = { ...scope, sessionId: ctx.sessionManager.getSessionId() };
+      const emitNumbers = new Map<string, number>();
+      function emitObservation(source: NativeRef, presentation: Presentation, kind: string,
+        evidenceRefs?: readonly string[], subjectBasis?: string): void {
+        const refKey = JSON.stringify(source);
+        const sequence = (emitNumbers.get(refKey) ?? 0) + 1;
+        emitNumbers.set(refKey, sequence);
+        projection.ingest({
+          projectionEventId: `${task.id}:${kind}:${sequence}`,
+          source, scope, sourceSequence: sequence, observedAt: new Date().toISOString(), kind,
+          node: { presentation, definitionDigest: task.identityReceipt?.scriptDigest },
+          trace: { invocationId: task.id },
+          ...(subjectBasis ? { subjectBasis } : {}),
+          ...(evidenceRefs?.length ? { evidenceRefs: evidenceRefs.slice(0, 32) } : {}),
+        });
+      }
+      const clamp = (value: string) => value.replace(/[\x00-\x1f\x7f-\x9f]/g, " ").slice(0, 120);
+      const observer = createClaudeObserver((call, snapshot) => {
+        nativeSnapshots.set(call.index, snapshot);
+        const row = nativeRows.get(call.index);
+        const live = !snapshot.terminal;
+        // Native session id is supplied by the SDK, never derived from a Pi
+        // workflow agent id. Before init the node is explicitly local-only.
+        emitObservation({ provider: snapshot.sessionId ? "claude-agent-sdk" : "pi-workflow",
+          type: snapshot.sessionId ? "session" : "agent-call", id: snapshot.sessionId ?? `${task.id}:${call.index}` },
+          { title: clamp(call.label), type: "agent", statusText: snapshot.terminal ?? (live ? "observed-running" : "unknown"),
+            statusTone: snapshot.terminal === "succeeded" ? "success" : snapshot.terminal === "failed" ? "failure"
+              : snapshot.terminal ? "unknown" : "active" }, "claude.stream",
+          snapshot.lastMessageId ? [`claude-message:${clamp(snapshot.lastMessageId)}`] : undefined,
+          task.identityReceipt?.identity.subjectBasis);
+        if (!row) return;
+        const rowLive = row.state === "start" || row.state === "progress";
+        const updated: WorkflowAgentEntry = {
+          ...row, nativeObservation: snapshot,
+          ...(snapshot.sessionId ? { sessionId: snapshot.sessionId } : {}),
+          ...(rowLive ? {
+            state: "progress", lastProgressAt: Date.now(), toolCalls: Math.max(row.toolCalls ?? 0, snapshot.tools.length),
+            resultPreview: `Claude streaming · ${snapshot.assistantCharacters} characters · ${snapshot.tools.at(-1)?.name ?? "no tools"}`,
+          } : {}),
+        };
+        nativeRows.set(call.index, updated);
+        updateWorkflowProgressBatch(task, [updated]);
+      });
+      let beforeDispatch: (() => void) | undefined;
+      if (settings) {
+        const registry = registryFor(ctx.cwd);
+        const descriptors = registry.discover({ grants: [
+          "discover:forge.gate.status", "discover:hyperunix.find",
+          "discover:furnace.run.inspect", "discover:reactivefiber.render.preview",
+        ] });
+        const input = invocationInput(ctx, task, settings, descriptors);
+        task.identityReceipt = captureInvocationIdentity(input);
+        beforeDispatch = () => {
+          // Re-read operator settings and measured candidate; pinned settings
+          // alone would hide a mid-run grant revocation from verification.
+          const current = loadSettings(ctx.cwd).workbench ?? { workflowAgentBackend: "pi" as const };
+          const check = invocationInput(ctx, task, current, descriptors);
+          verifyInvocationIdentity(task.identityReceipt!, check);
+        };
+      }
+      if (settings && task.identityReceipt?.scriptSource !== task.script) {
+        throw new Error("IDENTITY_CONFLICT: workflow script changed between read and pinned capture.");
+      }
       const result = await runWorkflow({
-        script: task.script,
+        script: task.identityReceipt?.scriptSource ?? task.script,
         args: task.args,
         signal: task.abortController.signal,
-        host: createWorkflowHost({
-          pi,
-          ctx,
-          manager,
-          signal: task.abortController.signal,
-          rootSessionId: ctx.sessionManager.getSessionId(),
-          workflowId: task.id,
-        }),
-        onProgress: entries => updateWorkflowProgressBatch(task, entries),
-        // The dialog's pause / skip / retry keys run through this; it is dropped
-        // again when the task settles.
+        host: settings
+          ? createClaudeWorkflowHost({
+              cwd: ctx.cwd,
+              signal: task.abortController.signal,
+              ...(settings.model ? { model: settings.model } : {}),
+              ...(settings.permissionMode ? { permissionMode: settings.permissionMode } : {}),
+              settingSources: settings.settingSources ?? [],
+              tools: settings.tools ?? [],
+              roles: settings.roles,
+              capabilities: registryFor(ctx.cwd),
+              grants: settings.capabilityGrants ?? [],
+              invocationId: task.id,
+              principal: { id: scope.principal, role: "local-operator" },
+              beforeDispatch,
+              onMessage: observer.onMessage,
+              onSettled: observer.onSettled,
+            })
+          : createWorkflowHost({
+              pi, ctx, manager, signal: task.abortController.signal,
+              rootSessionId: ctx.sessionManager.getSessionId(), workflowId: task.id,
+            }),
+        onProgress: entries => {
+          updateWorkflowProgressBatch(task, entries.map(entry => {
+            if (entry.type === "workflow_node") {
+              const source: NativeRef = entry.nativeId
+                ? { provider: entry.capabilityId.split(".")[0], type: "operation", id: entry.nativeId }
+                : { provider: "pi-workflow", type: "node-call", id: `${task.id}:${entry.callId}` };
+              emitObservation(source, { title: clamp(entry.label), type: "sdk-operation",
+                statusText: clamp(entry.domainStatus ?? (entry.state === "error" ? "error" : entry.state)),
+                statusTone: entry.state === "error" ? "failure" : entry.state === "done" ? "unknown" : "active" },
+                "native.node", entry.evidenceRefs, entry.sourceBasis);
+              return entry;
+            }
+            if (entry.type !== "workflow_agent") return entry;
+            const snapshot = nativeSnapshots.get(entry.index);
+            const updated = snapshot ? { ...entry, nativeObservation: snapshot,
+              ...(snapshot.sessionId ? { sessionId: snapshot.sessionId } : {}) } : entry;
+            nativeRows.set(entry.index, updated);
+            return updated;
+          }));
+        },
         onControl: control => { task.control = control; },
         journal: {
           ...(task.replay !== undefined ? { entries: task.replay } : {}),
@@ -2367,6 +2666,11 @@ Terse command-style prompts produce shallow, generic work.
         },
       });
       completeWorkflowTask(task, result);
+      if (task.identityReceipt) {
+        try { beforeDispatch?.(); } catch (error) {
+          failWorkflowTask(task, error instanceof Error ? `IDENTITY_CONFLICT: ${error.message}` : String(error));
+        }
+      }
     } catch (err) {
       failWorkflowTask(task, err instanceof Error ? err.message : String(err));
     }
@@ -3465,6 +3769,7 @@ Write the file using the write tool. Only write the file, nothing else.`;
       // JSON.stringify, so unset stays unset — same reasoning as
       // `fallbackSubagent` below.
       workflowsEnabled: isWorkflowsPinned() ? isWorkflowsEnabled() : undefined,
+      workbench: workbenchSettings,
       maxSubagentDepth: getMaxSubagentDepth(),
       // Deliberately NOT `?? "general-purpose"`: every settings change writes the
       // whole snapshot, and materializing the implicit default would turn it into
@@ -3979,6 +4284,13 @@ Write the file using the write tool. Only write the file, nothing else.`;
     tasks: workflowTasks,
     getRecord: id => manager.getRecord(id),
     viewAgentConversation,
+    async viewClaudeTranscript(ctx, sessionId) {
+      const rows = await readClaudeTranscript(sessionId, ctx.cwd);
+      const text = rows.length === 0
+        ? `No Claude transcript available for session ${sessionId}.`
+        : rows.map(row => `${row.type}: ${row.text}`).join("\n\n");
+      await ctx.ui.editor(`Claude session ${sessionId}`, text);
+    },
     // Read lazily: `currentCtx` is rebound on every session_start, and the
     // fleet list may act between sessions, when there is none.
     getCtx: () => currentCtx as unknown as ExtensionCommandContext | undefined,

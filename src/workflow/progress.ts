@@ -49,6 +49,19 @@ export interface WorkflowLogEntry {
   message: string;
 }
 
+/** Bounded, payload-free native observation; the SDK transcript remains authoritative. */
+export interface ClaudeNativeObservation {
+  provider: "claude-agent-sdk";
+  sessionId?: string;
+  lastMessageId?: string;
+  observedMessages: number;
+  assistantCharacters: number;
+  tools: { toolUseId: string; name: string; state: "started" | "completed" | "refused" | "failed" }[];
+  toolsTruncated: boolean;
+  freshness: "current" | "unknown";
+  terminal?: "succeeded" | "failed" | "cancelled" | "observation_lost";
+}
+
 export interface WorkflowAgentEntry {
   type: "workflow_agent";
   /** Stable identity. Re-emitting this index replaces the previous entry. */
@@ -72,6 +85,9 @@ export interface WorkflowAgentEntry {
    * before its session resolves still has a conversation worth reading.
    */
   recordId?: string;
+  /** Native Claude Agent SDK session ID, never a Pi AgentRecord id. */
+  sessionId?: string;
+  nativeObservation?: ClaudeNativeObservation;
   agentType?: string;
   /**
    * Short model label for tight rows, e.g. `haiku 4.5`.
@@ -112,13 +128,38 @@ export interface WorkflowAgentEntry {
   durationMs?: number;
 }
 
-export type WorkflowEntry = WorkflowPhaseEntry | WorkflowLogEntry | WorkflowAgentEntry;
+/** An SDK capability operation, distinct from a Pi or Claude agent. */
+export interface WorkflowNodeEntry {
+  type: "workflow_node";
+  index: number;
+  callId: number;
+  capabilityId: string;
+  label: string;
+  state: WorkflowEntryState;
+  phaseIndex?: number;
+  phaseTitle?: string;
+  queuedAt?: number;
+  startedAt?: number;
+  lastProgressAt?: number;
+  durationMs?: number;
+  error?: string;
+  resultPreview?: string;
+  /** Native evidence is a reference, never inferred from process success. */
+  evidenceRefs?: string[];
+  sourceBasis?: string;
+  nativeId?: string;
+  freshness?: "current" | "stale" | "unknown";
+  domainStatus?: string;
+}
+
+export type WorkflowEntry = WorkflowPhaseEntry | WorkflowLogEntry | WorkflowAgentEntry | WorkflowNodeEntry;
 
 /** Overall run status, mirroring the task record. */
 export type WorkflowRunStatus = "running" | "completed" | "failed" | "killed" | "paused";
 
 export interface CollapsedProgress {
   agents: WorkflowAgentEntry[];
+  nodes: WorkflowNodeEntry[];
   logs: string[];
   phaseTitles: Map<number, string>;
 }
@@ -127,6 +168,7 @@ export interface PhaseGroup {
   title: string;
   status: "not-started" | "running" | "done" | "failed";
   agents: WorkflowAgentEntry[];
+  nodes?: WorkflowNodeEntry[];
   doneCount: number;
   totalCount: number;
   tokens: number;
@@ -150,17 +192,20 @@ export interface WorkflowStats {
  */
 export function collapse(progress: readonly WorkflowEntry[]): CollapsedProgress {
   const agents = new Map<number, WorkflowAgentEntry>();
+  const nodes = new Map<number, WorkflowNodeEntry>();
   const logs: string[] = [];
   const phaseTitles = new Map<number, string>();
 
   for (const entry of progress) {
     if (entry.type === "workflow_agent") agents.set(entry.index, entry);
+    else if (entry.type === "workflow_node") nodes.set(entry.index, entry);
     else if (entry.type === "workflow_log") logs.push(entry.message);
-    else phaseTitles.set(entry.index, entry.title);
+    else if (entry.type === "workflow_phase") phaseTitles.set(entry.index, entry.title);
   }
 
   return {
     agents: [...agents.values()].sort((a, b) => a.index - b.index),
+    nodes: [...nodes.values()].sort((a, b) => a.index - b.index),
     logs,
     phaseTitles,
   };
