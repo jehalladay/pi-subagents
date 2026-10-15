@@ -1,5 +1,6 @@
 /** Read-only producer metadata projection. The original JSON remains the authoritative result. */
 import type { JsonValue } from "./capability-registry.js";
+import type { NativeRef } from "./observation.js";
 
 export interface NativeEvidence {
   provider?: "forge" | "hyperunix" | "furnace" | "reactivefiber";
@@ -15,6 +16,17 @@ function record(value: JsonValue | undefined): Record<string, JsonValue> | undef
 }
 function text(value: JsonValue | undefined): string | undefined {
   return typeof value === "string" && value.length > 0 ? value : undefined;
+}
+
+/** The native object type each provider's validated id names; the vocabulary the observers use for the same objects. */
+const NATIVE_TYPES: Readonly<Record<NonNullable<NativeEvidence["provider"]>, string>> = Object.freeze({
+  forge: "operation", hyperunix: "execution", furnace: "run", reactivefiber: "operation",
+});
+
+/** The producer's own reference for a projected result, or nothing: a reference is never synthesized without a native id. */
+export function nativeRefOf(evidence: NativeEvidence): NativeRef | undefined {
+  if (evidence.provider === undefined || evidence.nativeId === undefined) return undefined;
+  return { provider: evidence.provider, type: NATIVE_TYPES[evidence.provider], id: evidence.nativeId };
 }
 
 /** Fields are specific to the pinned provider contracts; unknown/mismatched contracts project nothing. */

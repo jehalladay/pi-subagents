@@ -385,6 +385,15 @@ describe("header", () => {
     expect(header({ ...task, replayedCount: 0, replayedNodeCount: 0 }, meta, groups, 1, 2000).stats).toBe("1/1 agent · 1s");
   });
 
+  it("counts operator-reconciled nodes beside replays, and omits the clause at zero", () => {
+    const groups = buildPhaseGroups([agentEntry({ index: 0, state: "done" })]);
+    expect(header({ ...task, replayedNodeCount: 1, reconciledNodeCount: 1 }, meta, groups, 1, 2000).stats)
+      .toBe("1/1 agent · 1s · replayed: 1 node read · reconciled: 1 node");
+    expect(header({ ...task, reconciledNodeCount: 2, status: "completed" }, meta, groups, 1, 2000).stats)
+      .toBe("1/1 agent · 1s · reconciled: 2 nodes · done");
+    expect(header({ ...task, reconciledNodeCount: 0 }, meta, groups, 1, 2000).stats).toBe("1/1 agent · 1s");
+  });
+
   it("adds no suffix while running", () => {
     const groups = buildPhaseGroups([agentEntry({ index: 0, state: "done" })]);
     expect(header(task, meta, groups, 1, 2000).stats).toBe("1/1 agent · 1s");

@@ -21,6 +21,13 @@ import { CapabilityRegistry } from "../src/workbench/capability-registry.js";
 import { createClaudeWorkflowHost } from "../src/workbench/claude-host.js";
 import { nodeJournalKey, type WorkflowJournalEntry } from "../src/workflow/journal.js";
 import {
+  ACKNOWLEDGEMENT_VALUE_CONTRACT,
+  type AcknowledgeRecord,
+  entryDigestOf,
+  type OverrideRecord,
+  RECONCILE_CONTRACT_VERSION,
+} from "../src/workflow/reconcile.js";
+import {
   runWorkflow,
   type WorkflowHost,
   type WorkflowSpawnRequest,
@@ -647,5 +654,240 @@ describe("replayed read nodes are counted as journal provenance", () => {
     const live = await run('return await node("record.read", { value: "y" });', { host: effectHost({ effect: "read" }).host, journal: { entries: reads.entries } });
     expect(live.replayedNodeCount).toBe(0);
     expect(nodeDone(live).at(-1)).not.toHaveProperty("cached");
+  });
+});
+
+describe("a journaled effect carries the producer's native reference when the payload names one", () => {
+  const payload = { contract: "furnace.run.inspect/v1", source: { kind: "run_inspect", data: { run_id: "frn-run-7", state: "active" } } };
+  const script = 'return await node("furnace.run.inspect", { runId: "frn-run-7" });';
+
+  it("records nativeRefs on a non-read entry, keeps no answer, and leaves the entry replay-refusing", async () => {
+    const journal = recorder();
+    const host = effectHost({ effect: "external", node: () => payload });
+    const live = await run(script, { host: host.host, journal });
+    expect(live.status).toBe("completed");
+    const entry = journal.entries.find(item => item.kind === "node");
+    expect(entry).toMatchObject({ capabilityId: "furnace.run.inspect", effectClass: "external", ok: true, nativeRefs: [{ provider: "furnace", type: "run", id: "frn-run-7" }] });
+    expect(entry).not.toHaveProperty("text");
+    const resumed = await run(script, { host: effectHost({ effect: "external", node: () => payload }).host, journal: { entries: journal.entries } });
+    expect(resumed.capabilityError?.category).toBe("uncertain-effect");
+  });
+
+  it("records no reference when the payload carries none, and a read entry keeps its text instead", async () => {
+    const blank = recorder();
+    await run('return await node("record.write", { value: 1 });', { host: effectHost({ effect: "write", node: () => ({ accepted: true }) }).host, journal: blank });
+    expect(blank.entries.find(item => item.kind === "node")).not.toHaveProperty("nativeRefs");
+    const reads = recorder();
+    await run(script, { host: effectHost({ effect: "read", node: () => payload }).host, journal: reads });
+    const read = reads.entries.find(item => item.kind === "node");
+    expect(read).toHaveProperty("text");
+    expect(read).not.toHaveProperty("nativeRefs");
+  });
+});
+
+
+/* --------------------------------------------------------------------------
+ * Operator reconciliation at a refusing position (wb-g8f part B.2): a resume
+ * that meets a journaled effect refuses until a recorded operator decision
+ * binds to that exact row — an acknowledgement settles it with an envelope,
+ * an override authorizes exactly one re-run and is spent by it.
+ * ------------------------------------------------------------------------ */
+
+const RECONCILE_AT = "2026-10-15T09:30:00Z";
+const OPERATOR_PRINCIPAL = "local-operator:1:s1";
+
+function reconcileEntryOf(recorded: WorkflowJournalEntry) {
+  return {
+    index: recorded.index,
+    key: recorded.key,
+    ok: recorded.ok,
+    capabilityId: recorded.capabilityId ?? "",
+    effectClass: recorded.effectClass ?? "",
+    ...(recorded.basis !== undefined ? { basis: recorded.basis } : {}),
+    entryDigest: entryDigestOf(recorded),
+  };
+}
+
+function acknowledgeRowFor(recorded: WorkflowJournalEntry, changes: Partial<AcknowledgeRecord> = {}): WorkflowJournalEntry {
+  const record: AcknowledgeRecord = {
+    contractVersion: RECONCILE_CONTRACT_VERSION,
+    decision: "acknowledge",
+    acknowledgementId: `ack_${"1".repeat(32)}`,
+    policy: "exact-grant+same-scope+bound-entry+producer-evidence+operator-attested",
+    taskId: "wf_resume01",
+    entry: reconcileEntryOf(recorded),
+    scope: { workspace: "/ws", principal: OPERATOR_PRINCIPAL },
+    operator: { principal: OPERATOR_PRINCIPAL, role: "local-operator" },
+    grant: "reconcile:furnace.acknowledge",
+    recordedAt: RECONCILE_AT,
+    reason: "inspected the producer by hand",
+    determination: "indeterminate",
+    evidenceClass: "operator-asserted",
+    evidence: [],
+    noEvidenceReason: "producer-unavailable",
+    settlement: "envelope",
+    ...changes,
+  };
+  return {
+    index: recorded.index, key: recorded.key, ok: true, kind: "acknowledge",
+    capabilityId: recorded.capabilityId, effectClass: recorded.effectClass, reconcile: record,
+  };
+}
+
+function overrideRowFor(recorded: WorkflowJournalEntry, changes: Partial<OverrideRecord> = {}): WorkflowJournalEntry {
+  const record: OverrideRecord = {
+    contractVersion: RECONCILE_CONTRACT_VERSION,
+    decision: "override",
+    overrideId: `ovr_${"2".repeat(32)}`,
+    policy: "exact-grant+same-scope+bound-acknowledgement+operator-confirmed+duplicate-risk-accepted",
+    taskId: "wf_resume01",
+    entry: reconcileEntryOf(recorded),
+    scope: { workspace: "/ws", principal: OPERATOR_PRINCIPAL },
+    operator: { principal: OPERATOR_PRINCIPAL, role: "local-operator" },
+    grant: "reconcile:furnace.override",
+    recordedAt: RECONCILE_AT,
+    reason: "the effect never happened; re-run it once",
+    acknowledgementId: `ack_${"1".repeat(32)}`,
+    duplicateRisk: "possible-duplicate",
+    confirmation: { confirmed: true, position: recorded.index, capabilityId: recorded.capabilityId ?? "", acceptDuplicateRisk: true },
+    ...changes,
+  };
+  return {
+    index: recorded.index, key: recorded.key, ok: true, kind: "override",
+    capabilityId: recorded.capabilityId, effectClass: recorded.effectClass, reconcile: record,
+  };
+}
+
+describe("operator reconciliation at a refusing position", () => {
+  const script = 'const v = await node("furnace.run.start", { value: "x" });\nawait agent("after");\nreturn v;';
+
+  async function journaledEffect() {
+    const first = effectHost({ effect: "external" });
+    const journal = recorder();
+    const one = await run(script, { host: first.host, journal });
+    expect(one.status).toBe("completed");
+    const recorded = journal.entries.find(entry => entry.kind === "node");
+    if (recorded === undefined) throw new Error("no node row journaled");
+    return { entries: journal.entries, recorded, firstRun: one };
+  }
+
+  it("settles an acknowledged position with the envelope, marked stale, and ends the prefix", async () => {
+    const { entries, recorded, firstRun } = await journaledEffect();
+    // A live run's node rows carry no reconcile provenance.
+    expect(nodeDone(firstRun).every(row => row.reconcile === undefined)).toBe(true);
+
+    const second = effectHost({ effect: "external" });
+    const rec2 = recorder();
+    const result = await run(script, {
+      host: second.host,
+      journal: { entries: [...entries, acknowledgeRowFor(recorded)], append: rec2.append },
+    });
+
+    expect(result.status).toBe("completed");
+    expect(result.value).toMatchObject({
+      contract: ACKNOWLEDGEMENT_VALUE_CONTRACT, decision: "acknowledged", position: 0,
+      capabilityId: "furnace.run.start", producer: "furnace", determination: "indeterminate",
+      operator: { principal: OPERATOR_PRINCIPAL },
+    });
+    expect(result.value).not.toHaveProperty("resolvedValue");
+    expect(second.nodeCalls).toHaveLength(0);
+    expect(second.spawns).toHaveLength(1);
+    expect(result.reconciledNodeCount).toBe(1);
+    expect(result.replayedNodeCount).toBe(0);
+    const settled = nodeDone(result).find(row => row.state === "done");
+    expect(settled).toMatchObject({
+      freshness: "stale",
+      reconcile: { state: "acknowledged", acknowledgementId: `ack_${"1".repeat(32)}`, principal: OPERATOR_PRINCIPAL },
+    });
+    expect(settled?.cached).toBeUndefined();
+    // Carried forward: the node row verbatim plus the acknowledgement stamped applied.
+    expect(rec2.entries.find(entry => entry.kind === "node")).toMatchObject({ capabilityId: "furnace.run.start", effectClass: "external" });
+    const applied = rec2.entries.find(entry => entry.kind === "acknowledge");
+    expect(applied?.reconcile).toHaveProperty("applied");
+  });
+
+  it("keeps an effect-absent acknowledgement refusing, naming the principal and the override path", async () => {
+    const { entries, recorded } = await journaledEffect();
+    const second = effectHost({ effect: "external" });
+    const result = await run(script, {
+      host: second.host,
+      journal: { entries: [...entries, acknowledgeRowFor(recorded, { determination: "effect-absent", settlement: "none" })] },
+    });
+
+    expect(result.status).toBe("failed");
+    expect(result.capabilityError?.category).toBe("uncertain-effect");
+    expect(result.error).toContain("effect-absent");
+    expect(result.error).toContain(OPERATOR_PRINCIPAL);
+    expect(result.error).toContain("override");
+    expect(result.error).toContain("workflow_reconcile");
+    expect(second.nodeCalls).toHaveLength(0);
+    expect(second.spawns).toHaveLength(0);
+    const row = nodeDone(result).find(entry => entry.state === "error");
+    expect(row?.reconcile).toMatchObject({
+      state: "pending", position: 0, producer: "furnace", capabilityId: "furnace.run.start",
+      decisions: { acknowledged: 1, overridesLive: 0, overridesSpent: 0 },
+    });
+  });
+
+  it("appends the binding failure to the hint when a recorded decision does not bind", async () => {
+    const { entries, recorded } = await journaledEffect();
+    const unbound = acknowledgeRowFor(recorded);
+    const result = await run(script, {
+      host: effectHost({ effect: "external" }).host,
+      journal: { entries: [...entries, { ...unbound, reconcile: { ...(unbound.reconcile as AcknowledgeRecord), entry: { ...reconcileEntryOf(recorded), entryDigest: `sha256:${"0".repeat(64)}` } } }] },
+    });
+    expect(result.status).toBe("failed");
+    expect(result.error).toContain("does not bind");
+    expect(result.error).toContain("workflow_reconcile");
+  });
+
+  it("re-runs once under a live override, records the consumed copy, and refuses a resume of the resume", async () => {
+    const { entries, recorded } = await journaledEffect();
+    const decided = [
+      ...entries,
+      acknowledgeRowFor(recorded, { determination: "effect-absent", settlement: "none" }),
+      overrideRowFor(recorded),
+    ];
+    const second = effectHost({ effect: "external" });
+    const rec2 = recorder();
+    const result = await run(script, { host: second.host, journal: { entries: decided, append: rec2.append } });
+
+    expect(result.status).toBe("completed");
+    expect(second.nodeCalls).toHaveLength(1);
+    expect(result.reconciledNodeCount).toBe(1);
+    const row = nodeDone(result).find(entry => entry.state === "done");
+    expect(row?.reconcile).toMatchObject({
+      state: "overridden", overrideId: `ovr_${"2".repeat(32)}`, principal: OPERATOR_PRINCIPAL,
+      duplicateRisk: "possible-duplicate", outcome: "re-run-ok",
+    });
+    // The new journal: a fresh node row, the consumed override, and no carried acknowledgement.
+    expect(rec2.entries.find(entry => entry.kind === "node")).toMatchObject({ ok: true, capabilityId: "furnace.run.start", effectClass: "external" });
+    const consumed = rec2.entries.find(entry => entry.kind === "override");
+    expect(consumed?.reconcile).toMatchObject({ decision: "override", consumed: { outcome: "re-run-ok" } });
+    expect(rec2.entries.some(entry => entry.kind === "acknowledge")).toBe(false);
+
+    const third = effectHost({ effect: "external" });
+    const again = await run(script, { host: third.host, journal: { entries: rec2.entries } });
+    expect(again.status).toBe("failed");
+    expect(again.capabilityError?.category).toBe("uncertain-effect");
+    expect(third.nodeCalls).toHaveLength(0);
+  });
+
+  it("spends the override even when the re-run throws", async () => {
+    const { entries, recorded } = await journaledEffect();
+    const decided = [...entries, acknowledgeRowFor(recorded), overrideRowFor(recorded)];
+    const second = effectHost({
+      effect: "external",
+      node: () => { throw new Error("boom"); },
+    });
+    const rec2 = recorder();
+    const result = await run(script, { host: second.host, journal: { entries: decided, append: rec2.append } });
+
+    expect(result.status).toBe("failed");
+    expect(second.nodeCalls).toHaveLength(1);
+    expect(result.reconciledNodeCount).toBe(1);
+    const consumed = rec2.entries.find(entry => entry.kind === "override");
+    expect(consumed?.reconcile).toMatchObject({ consumed: { outcome: "re-run-failed" } });
+    expect(rec2.entries.find(entry => entry.kind === "node")).toMatchObject({ ok: false });
   });
 });

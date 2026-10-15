@@ -100,6 +100,12 @@ describe("W06 adverse runtime and registration", () => {
     const registry = new CapabilityRegistry();
     expect(() => registry.register({ descriptor: { id: "bad.policy", version: "1.0.0", description: "Bad policy", inputSchema: { type: "object" }, effectClass: "read", permissions: ["discover:bad.policy"], supportedModes: ["invoke"] }, invoke: async () => null })).toThrow(/permission/i);
   });
+  it("reserves every operator authority prefix, reconcile included, so no manifest can launder one into an invocation permission", () => {
+    for (const prefix of ["discover", "inspect", "observe", "control", "reconcile"]) {
+      const registry = new CapabilityRegistry();
+      expect(() => registry.register({ descriptor: { id: "bad.policy", version: "1.0.0", description: "Bad policy", inputSchema: { type: "object" }, effectClass: "read", permissions: [`${prefix}:furnace.acknowledge`], supportedModes: ["invoke"] }, invoke: async () => null })).toThrow(/permission/i);
+    }
+  });
   it("rejects deep JSON in the worker with a typed diagnostic before host dispatch", async () => {
     const callNode = vi.fn(async () => null);
     const host: WorkflowHost = { spawnAgent: async () => ({ ok: true }), abortAgent: () => {}, callNode };

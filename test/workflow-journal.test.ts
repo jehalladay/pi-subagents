@@ -17,6 +17,12 @@ import { join } from "node:path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
 import { appendJournal, journalKey, readJournal, type WorkflowJournalEntry } from "../src/workflow/journal.js";
+import {
+  type AcknowledgeRecord,
+  entryDigestOf,
+  type OverrideRecord,
+  RECONCILE_CONTRACT_VERSION,
+} from "../src/workflow/reconcile.js";
 import { runWorkflow, type WorkflowSpawnRequest, type WorkflowSpawnResult } from "../src/workflow/runtime.js";
 
 const HEAD = 'export const meta = { name: "probe", description: "a probe" };\n';
@@ -110,6 +116,91 @@ describe("journal files", () => {
     const path = join(dir, "junk.jsonl");
     writeFileSync(path, '{"index":"one","key":"k","ok":true}\n[]\nnull\n', "utf-8");
     expect(readJournal(path)).toEqual([]);
+  });
+});
+
+describe("operator decision rows", () => {
+  let dir = "";
+  beforeEach(() => {
+    dir = mkdtempSync(join(tmpdir(), "wf-journal-"));
+  });
+  afterEach(() => {
+    rmSync(dir, { recursive: true, force: true });
+  });
+
+  const node: WorkflowJournalEntry = {
+    index: 0, key: "k0", ok: true, kind: "node", capabilityId: "furnace.run.start", effectClass: "external", basis: "b1",
+  };
+  const ackRecord: AcknowledgeRecord = {
+    contractVersion: RECONCILE_CONTRACT_VERSION,
+    decision: "acknowledge",
+    acknowledgementId: `ack_${"a".repeat(32)}`,
+    policy: "exact-grant+same-scope+bound-entry+producer-evidence+operator-attested",
+    taskId: "wf_journal",
+    entry: { index: 0, key: "k0", ok: true, capabilityId: "furnace.run.start", effectClass: "external", basis: "b1", entryDigest: entryDigestOf(node) },
+    scope: { workspace: "/ws", principal: "local-operator:1:s1" },
+    operator: { principal: "local-operator:1:s1" },
+    grant: "reconcile:furnace.acknowledge",
+    recordedAt: "2026-10-15T09:00:00Z",
+    reason: "inspected by hand; nothing conclusive, settle and move on",
+    determination: "indeterminate",
+    evidenceClass: "operator-asserted",
+    evidence: [],
+    noEvidenceReason: "producer-unavailable",
+    settlement: "envelope",
+  };
+  const overrideRecord: OverrideRecord = {
+    contractVersion: RECONCILE_CONTRACT_VERSION,
+    decision: "override",
+    overrideId: `ovr_${"b".repeat(32)}`,
+    policy: "exact-grant+same-scope+bound-acknowledgement+operator-confirmed+duplicate-risk-accepted",
+    taskId: "wf_journal",
+    entry: ackRecord.entry,
+    scope: ackRecord.scope,
+    operator: ackRecord.operator,
+    grant: "reconcile:furnace.override",
+    recordedAt: "2026-10-15T09:00:00Z",
+    reason: "re-run it; the operator accepts the duplicate risk",
+    acknowledgementId: ackRecord.acknowledgementId,
+    duplicateRisk: "possible-duplicate",
+    confirmation: { confirmed: true, position: 0, capabilityId: "furnace.run.start", acceptDuplicateRisk: true },
+  };
+  const decisionRow = (kind: "acknowledge" | "override", reconcile: AcknowledgeRecord | OverrideRecord): WorkflowJournalEntry => ({
+    index: 0, key: "k0", ok: true, kind, capabilityId: "furnace.run.start", effectClass: "external", basis: "b1", reconcile,
+  });
+
+  it("round-trips acknowledge and override rows beside their node row", () => {
+    const path = join(dir, "decisions.jsonl");
+    appendJournal(path, node);
+    appendJournal(path, decisionRow("acknowledge", ackRecord));
+    appendJournal(path, decisionRow("override", overrideRecord));
+    const read = readJournal(path);
+    expect(read).toHaveLength(3);
+    expect(read.map((entry) => entry.kind)).toEqual(["node", "acknowledge", "override"]);
+    expect(read[1]?.reconcile).toEqual(ackRecord);
+    expect(read[2]?.reconcile).toEqual(overrideRecord);
+  });
+
+  it("drops malformed or mismatched decision rows while their neighbours survive", () => {
+    const path = join(dir, "mangled.jsonl");
+    const lines = [
+      JSON.stringify(node),
+      // The row's kind does not match the record's decision.
+      JSON.stringify({ ...decisionRow("acknowledge", ackRecord), kind: "override" }),
+      // The record mirrors a different row than the one it rides on.
+      JSON.stringify(decisionRow("acknowledge", { ...ackRecord, entry: { ...ackRecord.entry, key: "k9" } })),
+      // A decision row with no record at all.
+      JSON.stringify({ index: 0, key: "k0", ok: true, kind: "acknowledge", capabilityId: "furnace.run.start" }),
+      // A stray record on a plain node row.
+      JSON.stringify({ ...node, reconcile: ackRecord }),
+      // A legacy agent row, byte-identical to what older binaries wrote.
+      JSON.stringify({ index: 1, key: "agent", ok: true, text: "legacy row" }),
+    ];
+    writeFileSync(path, `${lines.join("\n")}\n`, "utf-8");
+    const read = readJournal(path);
+    expect(read).toHaveLength(2);
+    expect(read[0]).toEqual(node);
+    expect(read[1]).toEqual({ index: 1, key: "agent", ok: true, text: "legacy row" });
   });
 });
 

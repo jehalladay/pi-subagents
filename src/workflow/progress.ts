@@ -22,6 +22,7 @@
 
 import { sanitizeWorkbenchText } from "../workbench/redaction.js";
 import type { WorkflowMeta, WorkflowPhaseMeta } from "./meta.js";
+import type { NodeReconcileProvenance } from "./reconcile.js";
 
 /** Raw entry lifecycle, as written by the runtime. */
 export type WorkflowEntryState = "start" | "progress" | "done" | "error";
@@ -153,6 +154,8 @@ export interface WorkflowNodeEntry {
   nativeId?: string;
   freshness?: "current" | "stale" | "unknown";
   domainStatus?: string;
+  /** Operator reconcile provenance: pending at a refused effect, acknowledged, or overridden (reconcile.ts). */
+  reconcile?: NodeReconcileProvenance;
 }
 
 export type WorkflowEntry = WorkflowPhaseEntry | WorkflowLogEntry | WorkflowAgentEntry | WorkflowNodeEntry;
@@ -450,6 +453,8 @@ export function header(
     replayedCount?: number;
     /** Node reads handed back stale from the resume journal rather than re-read. */
     replayedNodeCount?: number;
+    /** Positions settled by an operator acknowledgement or re-run under an operator override. */
+    reconciledNodeCount?: number;
   },
   meta: WorkflowMeta | undefined,
   groups: readonly PhaseGroup[],
@@ -475,13 +480,16 @@ export function header(
   if (task.replayedCount) replayed.push(`${task.replayedCount} ${plural(task.replayedCount, "agent")}`);
   if (task.replayedNodeCount) replayed.push(`${task.replayedNodeCount} node ${plural(task.replayedNodeCount, "read")}`);
   const replayText = replayed.length > 0 ? ` · replayed: ${replayed.join(", ")}` : "";
+  const reconciledText = task.reconciledNodeCount
+    ? ` · reconciled: ${task.reconciledNodeCount} ${plural(task.reconciledNodeCount, "node")}`
+    : "";
 
   // `meta` is author source and the task name follows it, so both are
   // untrusted terminal text for every surface that renders this header.
   return {
     name: sanitizeWorkbenchText(task.workflowName ?? meta?.name ?? task.summary ?? task.description ?? "workflow"),
     subtext: sanitizeWorkbenchText(meta?.description ?? task.description ?? task.summary ?? ""),
-    stats: `${doneAgents}/${totalAgents} ${plural(totalAgents, "agent")} · ${formatDuration(elapsedMs(task, now))}${replayText}${suffix}`,
+    stats: `${doneAgents}/${totalAgents} ${plural(totalAgents, "agent")} · ${formatDuration(elapsedMs(task, now))}${replayText}${reconciledText}${suffix}`,
   };
 }
 
