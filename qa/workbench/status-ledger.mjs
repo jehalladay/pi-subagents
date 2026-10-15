@@ -11,7 +11,7 @@
  * or an unreadable document.
  */
 import { spawnSync } from 'node:child_process';
-import { readFileSync, statSync, writeFileSync } from 'node:fs';
+import { realpathSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 import { dirname, isAbsolute, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -136,11 +136,39 @@ export function validateLedger(parsed, { root, allowedStatuses = ALLOWED_STATUSE
   return { integrity, vocabulary };
 }
 
-function revisionOf(root) {
-  const run = spawnSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8' });
-  const out = run.status === 0 ? String(run.stdout).trim() : '';
-  return /^[0-9a-f]{7,64}$/.test(out) ? out : 'working-tree';
+// git-stamp:begin (copied byte-for-byte into status-ledger.mjs and local-detached-faults.mjs, whose
+// guards allow only node: imports; test/workbench-git-stamp.test.ts fails on any drift)
+const HEX = /^[0-9a-f]{7,64}$/;
+
+function git(root, args) {
+  const run = spawnSync('git', args, {cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore']});
+  return run.status === 0 && typeof run.stdout === 'string' ? run.stdout : undefined;
 }
+
+function sameDir(a, b) {
+  try {
+    return realpathSync(a) === realpathSync(b);
+  } catch {
+    return false;
+  }
+}
+
+/** `{head, porcelain}` for `root`, both null unless root is the repository toplevel with a valid HEAD. */
+function gitStamp(root) {
+  const top = git(root, ['rev-parse', '--show-toplevel']);
+  if (top === undefined || !sameDir(top.trim(), root)) return {head: null, porcelain: null};
+  const head = (git(root, ['rev-parse', 'HEAD']) ?? '').trim();
+  if (!HEX.test(head)) return {head: null, porcelain: null};
+  return {head, porcelain: git(root, ['status', '--porcelain']) ?? null};
+}
+
+/** HEAD sha, suffixed `-dirty` when the tree has changes; `working-tree` when root is not a toplevel. */
+function revisionOf(root) {
+  const {head, porcelain} = gitStamp(root);
+  if (head === null) return 'working-tree';
+  return typeof porcelain === 'string' && porcelain.trim().length > 0 ? `${head}-dirty` : head;
+}
+// git-stamp:end
 
 export function runCli(argv, env, root) {
   const strict = argv.includes('--strict');
