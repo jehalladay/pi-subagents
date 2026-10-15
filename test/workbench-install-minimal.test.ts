@@ -8,11 +8,11 @@
  * census is deterministic and byte-sensitive, the harness sources touch process.env only
  * through allowlisted names, and forge.toml carries the command outside the default gate.
  */
-import { chmodSync, mkdirSync, mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
+import { chmodSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
-import { isPrivilegedUid, resolveNodeBinary, scrubbedEnvironment, treeCensus } from "../qa/workbench/install-minimal-lib.mjs";
+import { isPrivilegedUid, probeInstalledWrite, resolveNodeBinary, scrubbedEnvironment, treeCensus } from "../qa/workbench/install-minimal-lib.mjs";
 
 const repoRoot = join(import.meta.dirname, "..");
 const readRepo = (path: string): string => readFileSync(join(repoRoot, path), "utf8");
@@ -84,6 +84,14 @@ describe("treeCensus", () => {
     expect(treeCensus(root)).not.toBe(base);
   });
 
+  it("changes when an empty directory is added (directory entries are part of the census)", () => {
+    const root = tempTree();
+    writeFileSync(join(root, "f.txt"), "abc");
+    const base = treeCensus(root);
+    mkdirSync(join(root, "empty"));
+    expect(treeCensus(root)).not.toBe(base);
+  });
+
   it("records a symlink by its target without following it", () => {
     const root = tempTree();
     const outside = tempTree();
@@ -141,7 +149,77 @@ describe("isPrivilegedUid", () => {
   });
 });
 
+type FsError = Error & { code?: string };
+const fsError = (code: string): FsError => Object.assign(new Error(code), { code });
+
+describe("probeInstalledWrite (uid-injected write capability probe, U1 privileged branch)", () => {
+  it("as a privileged uid records readOnlyEnforced false with reason privileged-uid and leaves no residue", () => {
+    const root = tempTree();
+    writeFileSync(join(root, "pkg.txt"), "installed");
+    const before = treeCensus(root);
+    const outcome = probeInstalledWrite({ root, uid: 0, write: writeFileSync, remove: rmSync });
+    expect(outcome).toEqual({ readOnlyEnforced: false, readOnlyReason: "privileged-uid" });
+    expect(treeCensus(root)).toBe(before);
+  });
+
+  it("as an unprivileged uid whose write is refused with EACCES, EPERM or EROFS records readOnlyEnforced true and removes nothing", () => {
+    const root = tempTree();
+    for (const code of ["EACCES", "EPERM", "EROFS"]) {
+      let removed = 0;
+      const outcome = probeInstalledWrite({
+        root,
+        uid: 1000,
+        write: () => {
+          throw fsError(code);
+        },
+        remove: () => {
+          removed += 1;
+        },
+      });
+      expect(outcome).toEqual({ readOnlyEnforced: true });
+      expect(removed).toBe(0);
+    }
+  });
+
+  it("as an unprivileged uid whose write succeeds fails loudly and still leaves no residue", () => {
+    const root = tempTree();
+    const before = treeCensus(root);
+    expect(() => probeInstalledWrite({ root, uid: 1000, write: writeFileSync, remove: rmSync })).toThrow(/unexpectedly succeeded/);
+    expect(treeCensus(root)).toBe(before);
+    expect(existsSync(join(root, ".minimal-write-probe"))).toBe(false);
+  });
+
+  it("rethrows an unrelated write error instead of reporting enforcement", () => {
+    const root = tempTree();
+    expect(() =>
+      probeInstalledWrite({
+        root,
+        uid: 1000,
+        write: () => {
+          throw fsError("ENOENT");
+        },
+        remove: rmSync,
+      }),
+    ).toThrow("ENOENT");
+  });
+
+  it("treats an undefined uid as unprivileged", () => {
+    const root = tempTree();
+    expect(() => probeInstalledWrite({ root, uid: undefined, write: writeFileSync, remove: rmSync })).toThrow(/unexpectedly succeeded/);
+  });
+});
+
 describe("harness sources and wiring", () => {
+  it("the runner copies the lib beside the probe and the probe uses probeInstalledWrite with the shared uid predicate", () => {
+    const runner = readRepo("qa/workbench/install-minimal.mjs");
+    expect(runner).toContain("install-minimal-lib.mjs");
+    expect(runner).toMatch(/copyFileSync\([^)]*install-minimal-lib\.mjs/);
+    const probe = readRepo("qa/workbench/installed-minimal.mjs");
+    expect(probe).toContain("./install-minimal-lib.mjs");
+    expect(probe).toContain("probeInstalledWrite(");
+    expect(probe).not.toMatch(/uid\s*===\s*0/);
+  });
+
   const allowedEnvNames = new Set(["WB_REVISION", "WB_INSTALL_MINIMAL_RECEIPT"]);
   for (const path of ["qa/workbench/install-minimal.mjs", "qa/workbench/installed-minimal.mjs", "qa/workbench/install-minimal-lib.mjs"]) {
     it(`${path} references process.env only through allowlisted names`, () => {

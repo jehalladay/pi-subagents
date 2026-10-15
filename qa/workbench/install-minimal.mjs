@@ -30,6 +30,7 @@ try{
   const installed=spawnSync('npm',installArgv,{cwd:consumer,encoding:'utf8',timeout:180000});
   assert.equal(installed.status,0,installed.stderr);
   copyFileSync(join(root,'qa/workbench/installed-minimal.mjs'),join(consumer,'probe.mjs'));
+  copyFileSync(join(root,'qa/workbench/install-minimal-lib.mjs'),join(consumer,'install-minimal-lib.mjs'));
   const installedTree=join(consumer,'node_modules');
   setWritable(installedTree,false);
   const censusBefore=treeCensus(installedTree);

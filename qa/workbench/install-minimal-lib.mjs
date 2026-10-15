@@ -65,3 +65,24 @@ export function resolveNodeBinary(execPath) {
     closeSync(fd);
   }
 }
+
+/**
+ * Probes whether the installed tree can be written, without ever leaving residue (U1). `write` and
+ * `remove` are injected so the privileged branch is testable without root. A refusal with EACCES,
+ * EPERM or EROFS proves read-only enforcement (EROFS is accepted beside the specified pair because a
+ * read-only mount is an equally valid enforcement). A successful write is removed before returning,
+ * so the tree census is unchanged; it is recorded as privileged-uid for uid 0 and is a failure
+ * otherwise. Any other error is rethrown.
+ */
+export function probeInstalledWrite({ root, uid, write, remove }) {
+  const target = join(root, '.minimal-write-probe');
+  try {
+    write(target, 'x');
+  } catch (error) {
+    if (error && (error.code === 'EACCES' || error.code === 'EPERM' || error.code === 'EROFS')) return { readOnlyEnforced: true };
+    throw error;
+  }
+  remove(target, { force: true });
+  if (isPrivilegedUid(uid)) return { readOnlyEnforced: false, readOnlyReason: 'privileged-uid' };
+  throw new Error('write into the installed tree unexpectedly succeeded');
+}

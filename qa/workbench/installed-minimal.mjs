@@ -1,8 +1,9 @@
 /** Copied into a clean consumer by install-minimal.mjs and run under a scrubbed environment. */
 import assert from 'node:assert/strict';
-import {writeFileSync} from 'node:fs';
-import {dirname,join,resolve} from 'node:path';
+import {rmSync,writeFileSync} from 'node:fs';
+import {dirname,resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
+import {probeInstalledWrite} from './install-minimal-lib.mjs';
 import {CapabilityRegistry} from '@tintinweb/pi-subagents/dist/workbench/capability-registry.js';
 import {captureInvocationIdentity,verifyInvocationIdentity} from '@tintinweb/pi-subagents/dist/workbench/identity.js';
 import {runWorkflow} from '@tintinweb/pi-subagents/dist/workflow/runtime.js';
@@ -45,16 +46,5 @@ assert.equal(missing.returned,false,'unknown capability must reject, never resol
 assert.equal(missing.name,'CapabilityError');
 assert.equal(missing.category,'unavailable');
 const uid=typeof process.getuid==='function'?process.getuid():undefined;
-const privileged=uid===0;
-let readOnlyEnforced=false;
-let readOnlyReason;
-try{
-  writeFileSync(join(installedRoot,'.minimal-write-probe'),'x');
-  if(privileged){readOnlyReason='privileged-uid';}
-  else{throw new Error('write into the installed tree unexpectedly succeeded');}
-}catch(error){
-  if(error&&(error.code==='EACCES'||error.code==='EPERM'||error.code==='EROFS')){readOnlyEnforced=true;}
-  else{throw error;}
-}
-if(!readOnlyEnforced&&!privileged)throw new Error('read-only enforcement not demonstrated');
+const {readOnlyEnforced,readOnlyReason}=probeInstalledWrite({root:installedRoot,uid,write:writeFileSync,remove:rmSync});
 console.log(JSON.stringify({contract:'workbench.install-minimal/v1',envKeys:keys,readOnlyEnforced,...(readOnlyReason?{readOnlyReason}:{}),workflowValue:result.value,registryOutcomes:{discoverEmpty,discoverGranted,invokeWithDiscoverOnly:discoverOnly.category,invokeWithUndefinedGrants:undefinedGrants.category,invokeGranted:'returned',invokeMissing:missing.category},node:process.version,platform:process.platform,arch:process.arch,utc:new Date().toISOString()}));
