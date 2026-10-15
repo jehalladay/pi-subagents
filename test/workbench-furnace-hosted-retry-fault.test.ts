@@ -11,148 +11,68 @@
  *   reintroduce a Furnace-owned-retry premise": every retry here originates from the
  *   operator path (the scripted driver), never from Furnace or the adapter itself.
  *
+ * The journeys live in test/helpers/furnace-hosted-retry-journeys.ts so the FIXTURE-tier
+ * receipt runner (forge run furnace-hosted-retry-fault) measures exactly what this default-gate
+ * tier asserts. Respin pins (gate-2 verdict, 22:06Z): U1 establishment markers are re-asserted
+ * AFTER executor.close() (P1 case 2, P2 case 1: an adapter that re-ran an uncertain Attempt's
+ * workflow survived the delivered tier); U3 the observer's cancel and observe replies are pinned
+ * exactly; O1 the connection-drop-before-admission-reply variant; O2 the full limits object;
+ * F5 the host scratch base is XDG_RUNTIME_DIR first and /tmp only as the recorded fallback.
+ *
  * Uses a repaired COPY of the vendored SDK (the shipped digest drift is a separate
- * owner-reserved packaging bead). No live tier, no furnace doctor, no capability probe.
+ * owner-reserved packaging bead), made by qa/workbench/furnace-hosted-repaired-sdk.mjs so the
+ * receipt runner and this tier load the same copy; one case below pins that loader to the wb-zmd
+ * helper's recipe. No live tier, no furnace doctor, no capability probe.
  */
-import { mkdtempSync, readFileSync, rmSync } from "node:fs";
-import { connect, type Socket } from "node:net";
-import { dirname, join } from "node:path";
-import { createInterface } from "node:readline";
-import type { FurnaceOptions } from "@furnace/sdk";
-import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it } from "vitest";
+import { rmSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { dirname } from "node:path";
+import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { loadRepairedSdkCopy } from "../qa/workbench/furnace-hosted-repaired-sdk.mjs";
+import { assessRetryFaultJourneys, RETRY_FAULT_JOURNEYS } from "../qa/workbench/furnace-hosted-retry-fault-receipt.mjs";
 import { CapabilityError } from "../src/workbench/capability-registry.js";
-import { type FurnaceHostedClient, FurnaceHostedExecutor, type HostedWorkflow } from "../src/workbench/hosts/furnace-hosted.js";
-import { loadRepairedFurnaceSdk, type RepairedSdk } from "./helpers/furnace-sdk-repaired.js";
+import { FurnaceHostedExecutor, type FurnaceSdk, SHIPPED_FURNACE_SDK } from "../src/workbench/hosts/furnace-hosted.js";
+import {
+  chooseScratchBase,
+  dropBeforeAdmissionReply,
+  explicitUncertainRetry,
+  lostConnectionRetry,
+  observerNoControl,
+  RETRY_FAULT_JOURNEY_RUNNERS,
+  type RetryFaultEnv,
+  SCRATCH_BASE_MAX_BYTES,
+  SCRATCH_FALLBACK_BASE,
+  sameAttemptReexecution,
+} from "./helpers/furnace-hosted-retry-journeys.js";
+import { loadRepairedFurnaceSdk } from "./helpers/furnace-sdk-repaired.js";
 
-type Line = Record<string, unknown>;
-const sleep = (ms: number): Promise<void> => new Promise((resolve) => setTimeout(resolve, ms));
-
-class Bridge {
-  readonly lines: Line[] = [];
-  private constructor(readonly socket: Socket) {
-    createInterface({ input: socket }).on("line", (raw) => this.lines.push(JSON.parse(raw) as Line));
-  }
-  static async open(socketPath: string): Promise<Bridge> {
-    const socket = connect(socketPath);
-    await new Promise<void>((resolve, reject) => {
-      socket.once("connect", resolve);
-      socket.once("error", reject);
-    });
-    return new Bridge(socket);
-  }
-  send(line: Line): void {
-    this.socket.write(`${JSON.stringify(line)}\n`);
-  }
-  async until(match: (line: Line) => boolean, timeoutMs = 4000): Promise<Line> {
-    const deadline = Date.now() + timeoutMs;
-    for (;;) {
-      const found = this.lines.find(match);
-      if (found) return found;
-      if (Date.now() > deadline) throw new Error(`bridge saw no matching line: ${JSON.stringify(this.lines)}`);
-      await sleep(5);
-    }
-  }
-  end(): void {
-    this.socket.destroy();
-  }
+/** The shape qa/workbench/furnace-hosted-repaired-sdk.mjs returns. */
+interface RepairedCopy {
+  readonly sdk: FurnaceSdk;
+  readonly root: string;
+  readonly repairedDigest: string;
+  readonly shippedManifestDigest: string;
+  readonly dispose: () => void;
 }
-
-const context = (attemptId: string, ordinal: number) => ({
-  context_version: 1,
-  run: { furnace_run_id: "frn-run-fake", beads_run_id: "bd-run-fake", formula: "fixture" },
-  work: { beads_work_id: "bd-work-retry", title: "fixture step", description: null, acceptance_criteria: null },
-  attempt: { attempt_id: attemptId, ordinal, deadline: null },
-  workspace: { root: "/tmp/fixture" },
-});
-const hello = async (bridge: Bridge): Promise<Line> => {
-  bridge.send({ op: "hello", request_id: "h", input: { supported_protocol_versions: [1] } });
-  return bridge.until((line) => line.op === "hello");
-};
-const execute = (bridge: Bridge, executionId: string, attemptId: string, ordinal: number): void =>
-  bridge.send({ op: "execute", protocol_version: 1, request_id: `e-${executionId}`, input: { execution_id: executionId, executor: "pi-hosted", context: context(attemptId, ordinal) } });
-const eventOf = (line: Line): { execution_id?: string; kind?: string; payload?: { result?: { status: string } } } => (line.event ?? {}) as { execution_id?: string; kind?: string; payload?: { result?: { status: string } } };
-const terminalOf = (bridge: Bridge, executionId: string): Promise<Line> => bridge.until((line) => eventOf(line).execution_id === executionId && eventOf(line).kind === "terminal");
-const statusOf = (terminal: Line): string | undefined => eventOf(terminal).payload?.result?.status;
-
-/** Open one Attempt connection, send execute, and wait until the workflow is running (started event). */
-async function beginAttempt(socketPath: string, attemptId: string, ordinal: number): Promise<Bridge> {
-  const bridge = await Bridge.open(socketPath);
-  await hello(bridge);
-  execute(bridge, `ex-${attemptId}`, attemptId, ordinal);
-  await bridge.until((line) => eventOf(line).kind === "started");
-  return bridge;
-}
-
-const socketOf = (options: FurnaceOptions): string => {
-  const text = readFileSync(options.config ?? "", "utf8");
-  const args = /args = \[("[^"]*"), ("[^"]*")\]/.exec(text);
-  if (!args?.[2]) throw new Error(`no bridge socket in config:\n${text}`);
-  return JSON.parse(args[2]) as string;
-};
-
-function harness(workflow: HostedWorkflow, repaired: RepairedSdk, script: (socketPath: string) => Promise<void>): FurnaceHostedExecutor {
-  const createClient = (options: FurnaceOptions): FurnaceHostedClient => ({
-    runs: {
-      async start() {
-        await script(socketOf(options));
-        return { record: { run_id: "frn-run-fake", beads_run_id: "bd-run-fake" }, requestId: "req-fake" };
-      },
-    },
-  });
-  return new FurnaceHostedExecutor({ executor: "pi-hosted", workflow, sdk: repaired.sdk, createClient, cancelGraceMs: 200 });
-}
-
-/** The unix socket path limit is ~103 bytes (wb-71q): keep the host scratch base short. */
-function shortScratchBase(): string {
-  const runtime = process.env.XDG_RUNTIME_DIR;
-  return runtime !== undefined && runtime.length <= 40 ? runtime : "/tmp";
-}
-
-let repaired: RepairedSdk;
-let scratch: string;
-const previousTmp = process.env.TMPDIR;
+let repaired: RepairedCopy;
+let env: RetryFaultEnv;
 beforeAll(async () => {
-  repaired = await loadRepairedFurnaceSdk();
+  repaired = await loadRepairedSdkCopy(tmpdir());
+  env = { Executor: FurnaceHostedExecutor, CapabilityError, sdk: repaired.sdk, scratchBase: chooseScratchBase(process.env).path };
 });
 afterAll(() => {
-  rmSync(dirname(repaired.root), { recursive: true, force: true });
+  repaired.dispose();
 });
-beforeEach(() => {
-  scratch = mkdtempSync(join(shortScratchBase(), "pf04-"));
-  process.env.TMPDIR = scratch;
-});
-afterEach(() => {
-  if (previousTmp === undefined) delete process.env.TMPDIR;
-  else process.env.TMPDIR = previousTmp;
-  rmSync(scratch, { recursive: true, force: true });
-});
+
+const count = (markers: readonly string[], attemptId: string): number => markers.filter((m) => m === attemptId).length;
 
 describe("Furnace Work retry while Run establishment is uncertain (wb-0kg.4)", () => {
   it("an operator retry after an uncertain first Attempt opens a FRESH bridge session; the first Attempt stays parked and is never merged or upgraded", async () => {
-    const markers: string[] = [];
-    const workflow: HostedWorkflow = async ({ identity, signal }) => {
-      markers.push(identity.attemptId);
-      if (identity.ordinal === 1) {
-        await new Promise<void>((resolve) => signal.addEventListener("abort", () => resolve(), { once: true }));
-        return { status: "indeterminate", summary: "establishment not acknowledged" };
-      }
-      return { status: "success", summary: "retried attempt done" };
-    };
-    let retriedTerminal: Line | undefined;
-    const executor = harness(workflow, repaired, async (socketPath) => {
-      const first = await beginAttempt(socketPath, "frn-atm-r1", 1);
-      first.end(); // establishment acknowledgment never arrives: the driver connection is lost
-      await sleep(30);
-      // Operator-confirmed destructive work retry: a NEW Attempt on a NEW connection.
-      const second = await Bridge.open(socketPath);
-      await hello(second);
-      execute(second, "ex-frn-atm-r2", "frn-atm-r2", 2);
-      retriedTerminal = await terminalOf(second, "ex-frn-atm-r2");
-      second.end();
-    });
-    await executor.start({ formula: "fixture" });
-    expect(statusOf(retriedTerminal as Line)).toBe("success");
-    const receipt = executor.receipt();
+    const observed = await lostConnectionRetry(env);
+    expect(observed.armed).toBe(true);
+    expect(observed.droppedAfterStarted).toBe(true);
+    expect(observed.retriedWireStatus).toBe("success");
+    const receipt = observed.beforeClose;
     const [first, second] = receipt.attempts;
     expect(receipt.attempts).toHaveLength(2);
     expect(first?.attemptId).toBe("frn-atm-r1");
@@ -165,86 +85,138 @@ describe("Furnace Work retry while Run establishment is uncertain (wb-0kg.4)", (
     expect(first?.summary).toBeUndefined();
     expect(receipt.identityViolations).toEqual([]);
     // (2) establishment markers exactly once per Attempt
-    expect(markers.filter((m) => m === "frn-atm-r1")).toHaveLength(1);
-    expect(markers.filter((m) => m === "frn-atm-r2")).toHaveLength(1);
+    expect(count(observed.markersBeforeClose, "frn-atm-r1")).toBe(1);
+    expect(count(observed.markersBeforeClose, "frn-atm-r2")).toBe(1);
+    // P2 (respin U1): still exactly once per Attempt AFTER executor.close(); an adapter that re-ran
+    // the uncertain Attempt's workflow when it settled indeterminate would add a second frn-atm-r1 here.
+    expect(count(observed.markersAfterClose, "frn-atm-r1")).toBe(1);
+    expect(count(observed.markersAfterClose, "frn-atm-r2")).toBe(1);
+    expect(observed.markersAfterClose).toEqual(["frn-atm-r1", "frn-atm-r2"]);
     // The uncertain Attempt resolves only on host close, and then as indeterminate, never success.
-    await executor.close();
-    const closed = executor.receipt().attempts[0];
+    const closed = observed.afterClose.attempts[0];
     expect(closed?.cancel).toMatchObject({ requested: true, reason: "host_closed" });
     expect(closed?.terminal).toBe("indeterminate");
     expect(closed?.terminal).not.toBe("success");
+    expect(observed.afterClose.attempts[1]?.terminal).toBe("success");
+    expect(observed.afterClose.identityViolations).toEqual([]);
   });
 
   it("an explicitly uncertain first Attempt parks as indeterminate and the retry gets a distinct session without changing it", async () => {
-    const workflow: HostedWorkflow = async ({ identity }) => {
-      if (identity.ordinal === 1) throw new CapabilityError("uncertain-effect", "run establishment may have happened");
-      return { status: "success" };
-    };
-    const terminals: string[] = [];
-    const executor = harness(workflow, repaired, async (socketPath) => {
-      for (const [index, attemptId] of ["frn-atm-u1", "frn-atm-u2"].entries()) {
-        const bridge = await Bridge.open(socketPath);
-        await hello(bridge);
-        execute(bridge, `ex-${attemptId}`, attemptId, index + 1);
-        terminals.push(statusOf(await terminalOf(bridge, `ex-${attemptId}`)) ?? "none");
-        bridge.end();
-      }
-    });
-    await executor.start({ formula: "fixture" });
-    expect(terminals).toEqual(["indeterminate", "success"]);
-    const [first, second] = executor.receipt().attempts;
+    const observed = await explicitUncertainRetry(env);
+    expect(observed.armed).toBe(true);
+    expect(observed.wireStatuses).toEqual(["indeterminate", "success"]);
+    const [first, second] = observed.beforeClose.attempts;
     expect(first).toMatchObject({ attemptId: "frn-atm-u1", terminal: "indeterminate" });
     expect(second).toMatchObject({ attemptId: "frn-atm-u2", terminal: "success" });
     expect(first?.sessionInstanceId).not.toBe(second?.sessionInstanceId);
-    expect(executor.receipt().identityViolations).toEqual([]);
-    await executor.close();
+    expect(observed.beforeClose.identityViolations).toEqual([]);
+    // P1 (respin U1): the establishment markers are exactly one per Attempt after executor.close();
+    // an adapter that re-ran the workflow once when it threw uncertain-effect would record frn-atm-u1 twice.
+    expect(observed.markersAfterClose).toEqual(["frn-atm-u1", "frn-atm-u2"]);
+    expect(observed.afterClose.attempts.map((attempt) => attempt.terminal)).toEqual(["indeterminate", "success"]);
+    expect(observed.afterClose.identityViolations).toEqual([]);
   });
 
   it("a Furnace-style re-execution of the SAME Attempt id is recorded as an identity violation, not accepted as the operator retry", async () => {
-    const workflow: HostedWorkflow = async () => ({ status: "success" });
-    const executor = harness(workflow, repaired, async (socketPath) => {
-      for (const executionId of ["ex-a", "ex-b"]) {
-        const bridge = await Bridge.open(socketPath);
-        await hello(bridge);
-        execute(bridge, executionId, "frn-atm-same", 1);
-        await terminalOf(bridge, executionId);
-        bridge.end();
-      }
-    });
-    await executor.start({ formula: "fixture" });
-    const receipt = executor.receipt();
+    const observed = await sameAttemptReexecution(env);
+    expect(observed.armed).toBe(true);
+    const receipt = observed.beforeClose;
     expect(receipt.limits.retry).toBe("furnace-parks-never-retries");
     expect(receipt.identityViolations.some((v) => /frn-atm-same executed 2 times/.test(v))).toBe(true);
-    await executor.close();
+    // O2: the full disclosed limits object (layered beside test/workbench-furnace-hosted.test.ts)
+    expect(receipt.limits).toEqual({ crashDurability: "none", observe: "unsupported", identity: "per-attempt", replyBounds: "none", retry: "furnace-parks-never-retries" });
   });
 
   it("an observer connection sees no control: its cancel for another session's execution is unknown_execution and the workflow is never aborted", async () => {
-    let aborted = false;
-    const workflow: HostedWorkflow = async ({ signal }) => {
-      await sleep(120);
-      aborted = signal.aborted;
-      return { status: "success" };
-    };
-    let cancelReply: Line | undefined;
-    let observeReply: Line | undefined;
-    const executor = harness(workflow, repaired, async (socketPath) => {
-      const owner = await beginAttempt(socketPath, "frn-atm-o1", 1);
-      const observer = await Bridge.open(socketPath);
-      await hello(observer);
-      observer.send({ op: "cancel", protocol_version: 1, request_id: "oc", input: { execution_id: "ex-frn-atm-o1", reason: "operator_stop" } });
-      cancelReply = await observer.until((line) => line.op === "cancel");
-      observer.send({ op: "observe", protocol_version: 1, request_id: "oo", input: { execution_id: "ex-frn-atm-o1" } });
-      observeReply = await observer.until((line) => line.op === "observe");
-      observer.end();
-      await terminalOf(owner, "ex-frn-atm-o1");
-      owner.end();
-    });
-    await executor.start({ formula: "fixture" });
-    expect(JSON.stringify(cancelReply)).toContain("unknown_execution");
-    expect(JSON.stringify(observeReply)).not.toContain('"status":"success"');
-    expect(aborted).toBe(false);
-    const attempt = executor.receipt().attempts[0];
+    const observed = await observerNoControl(env);
+    expect(observed.armed).toBe(true);
+    // U3: the exact measured replies. The cancel names no execution id back and Observe is stated
+    // unsupported, not faked: the bridge offers an observer no view of the state change, only no control.
+    expect(observed.cancelReply).toEqual({ protocol_version: 1, op: "cancel", request_id: "oc", output: { status: "unknown_execution" } });
+    expect(observed.observeReply).toEqual({ protocol_version: 1, op: "observe", request_id: "oo", output: { status: "unsupported" } });
+    expect(observed.aborted).toBe(false);
+    expect(observed.ownerWireStatus).toBe("success");
+    const attempt = observed.beforeClose.attempts[0];
     expect(attempt).toMatchObject({ terminal: "success", cancel: { requested: false } });
-    await executor.close();
   });
+
+  it("a connection lost right after the execute line is flushed, before the admission reply, parks the first Attempt; the operator retry opens a fresh session and each Attempt establishes exactly once", async () => {
+    const observed = await dropBeforeAdmissionReply(env);
+    expect(observed.armed).toBe(true);
+    expect(observed.droppedBeforeReply).toBe(true);
+    expect(observed.admissionReplySeen).toBe(false);
+    expect(observed.firstReachedHost).toBe(true);
+    expect(observed.retriedWireStatus).toBe("success");
+    const [first, second] = observed.beforeClose.attempts;
+    expect(observed.beforeClose.attempts).toHaveLength(2);
+    expect(first).toMatchObject({ attemptId: "frn-atm-d1", ordinal: 1, terminal: "pending" });
+    expect(second).toMatchObject({ attemptId: "frn-atm-d2", ordinal: 2, terminal: "success" });
+    expect(first?.sessionInstanceId).not.toBe(second?.sessionInstanceId);
+    expect(first?.summary).toBeUndefined();
+    expect(observed.markersBeforeClose).toEqual(["frn-atm-d1", "frn-atm-d2"]);
+    expect(observed.markersAfterClose).toEqual(["frn-atm-d1", "frn-atm-d2"]);
+    expect(observed.afterClose.attempts[0]).toMatchObject({ terminal: "indeterminate", cancel: { requested: true, reason: "host_closed" } });
+    expect(observed.afterClose.attempts[1]?.terminal).toBe("success");
+    expect(observed.afterClose.identityViolations).toEqual([]);
+  });
+
+  it("the host scratch base follows the host rule: XDG_RUNTIME_DIR first, /tmp only as the recorded fallback, never first", () => {
+    const usable = (): boolean => true;
+    expect(SCRATCH_FALLBACK_BASE).toBe("/tmp");
+    expect(chooseScratchBase({ XDG_RUNTIME_DIR: "/run/user/1000" }, usable)).toEqual({ path: "/run/user/1000", source: "xdg-runtime-dir" });
+    // never /tmp first: a usable XDG_RUNTIME_DIR wins whatever TMPDIR says
+    expect(chooseScratchBase({ XDG_RUNTIME_DIR: "/run/user/1000", TMPDIR: "/tmp" }, usable).source).toBe("xdg-runtime-dir");
+    // /tmp only as the RECORDED fallback: every fallback names its reason
+    expect(chooseScratchBase({}, usable)).toEqual({ path: "/tmp", source: "tmp-fallback", reason: "XDG_RUNTIME_DIR is unset" });
+    expect(chooseScratchBase({ XDG_RUNTIME_DIR: "" }, usable)).toEqual({ path: "/tmp", source: "tmp-fallback", reason: "XDG_RUNTIME_DIR is unset" });
+    expect(chooseScratchBase({ XDG_RUNTIME_DIR: "run/user/1000" }, usable)).toEqual({ path: "/tmp", source: "tmp-fallback", reason: "XDG_RUNTIME_DIR is not an absolute path" });
+    expect(chooseScratchBase({ XDG_RUNTIME_DIR: "/run/user/1000" }, () => false)).toEqual({ path: "/tmp", source: "tmp-fallback", reason: "XDG_RUNTIME_DIR is not a directory" });
+    // the socket bound is counted in BYTES: exactly the limit is usable, one byte more falls back
+    const atLimit = `/${"r".repeat(SCRATCH_BASE_MAX_BYTES - 1)}`;
+    expect(Buffer.byteLength(atLimit)).toBe(SCRATCH_BASE_MAX_BYTES);
+    expect(chooseScratchBase({ XDG_RUNTIME_DIR: atLimit }, usable).source).toBe("xdg-runtime-dir");
+    expect(chooseScratchBase({ XDG_RUNTIME_DIR: `${atLimit}r` }, usable)).toEqual({ path: "/tmp", source: "tmp-fallback", reason: `XDG_RUNTIME_DIR is longer than ${SCRATCH_BASE_MAX_BYTES} bytes` });
+    const multiByte = `/${String.fromCharCode(0xe9).repeat(SCRATCH_BASE_MAX_BYTES - 2)}`;
+    expect(multiByte.length).toBeLessThan(SCRATCH_BASE_MAX_BYTES);
+    expect(chooseScratchBase({ XDG_RUNTIME_DIR: multiByte }, usable).source).toBe("tmp-fallback");
+    // the predicate is asked about XDG_RUNTIME_DIR only once it passed the cheap checks
+    const asked: string[] = [];
+    chooseScratchBase({ XDG_RUNTIME_DIR: "/run/user/1000" }, (path) => {
+      asked.push(path);
+      return true;
+    });
+    expect(asked).toEqual(["/run/user/1000"]);
+  });
+
+  it("the receipt's repaired SDK copy follows the wb-zmd helper's recipe: the same digests, and both decode the context the shipped SDK refuses", async () => {
+    const helper = await loadRepairedFurnaceSdk();
+    try {
+      expect(repaired.repairedDigest).toMatch(/^sha256:[0-9a-f]{64}$/);
+      expect(repaired.repairedDigest).toBe(helper.repairedDigest);
+      expect(repaired.shippedManifestDigest).toBe(helper.shippedManifestDigest);
+      expect(repaired.repairedDigest).not.toBe(repaired.shippedManifestDigest);
+      expect(Object.keys(repaired.sdk).sort()).toEqual(["EmbeddedHost", "ExecutionResult", "ExecutorApp", "Furnace", "ResidentSession", "decodeContextValue"]);
+      const document = {
+        context_version: 1,
+        run: { furnace_run_id: "frn-run-x", beads_run_id: "bd-run-x", formula: null },
+        work: { beads_work_id: "bd-work-x", title: null, description: null, acceptance_criteria: null },
+        attempt: { attempt_id: "frn-atm-x", ordinal: 1, deadline: null },
+        workspace: { root: "/" },
+      };
+      expect(() => SHIPPED_FURNACE_SDK.decodeContextValue(document)).toThrow();
+      expect(repaired.sdk.decodeContextValue(document).context.attempt.attempt_id).toBe("frn-atm-x");
+      expect(helper.sdk.decodeContextValue(document).context.attempt.attempt_id).toBe("frn-atm-x");
+    } finally {
+      rmSync(dirname(helper.root), { recursive: true, force: true });
+    }
+  });
+
+  it("the five journeys the receipt runner measures satisfy the receipt judge here in the default gate (realised, no finding)", async () => {
+    expect(Object.keys(RETRY_FAULT_JOURNEY_RUNNERS)).toEqual([...RETRY_FAULT_JOURNEYS]);
+    const journeys: Record<string, unknown> = {};
+    for (const name of RETRY_FAULT_JOURNEYS) journeys[name] = await RETRY_FAULT_JOURNEY_RUNNERS[name as keyof typeof RETRY_FAULT_JOURNEY_RUNNERS](env);
+    const assessed = assessRetryFaultJourneys({ journeys, sdk: { copy: "repaired", repairedDigest: repaired.repairedDigest, shippedManifestDigest: repaired.shippedManifestDigest } });
+    expect(assessed.findings).toEqual([]);
+    expect(assessed.realised).toBe(true);
+  }, 30_000);
 });
