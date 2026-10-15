@@ -1,4 +1,5 @@
 /** wb-69g.2 (W16-C): pure bounded workflow_catalog / workflow_inspect reply builders. No registry call, provider, RPC or TTY. */
+import { readFileSync } from "node:fs";
 import { describe, expect, it, vi } from "vitest";
 import { type CapabilityDescriptor, type CapabilityProvider, CapabilityRegistry } from "../src/workbench/capability-registry.js";
 import { stripUnsafeText } from "../src/workbench/redaction.js";
@@ -341,5 +342,32 @@ describe("capabilityCatalogEntries", () => {
     expect(entries.map(item => [item.descriptor.id, item.inspectImplemented])).toEqual([["a.with", true], ["a.without", false]]);
     expect(entries[0]?.descriptor).not.toBe(withInspect.descriptor);
     expect(entries[0]?.descriptor.inputSchema).not.toBe(withInspect.descriptor.inputSchema);
+  });
+});
+
+describe("wb-1q8 type-preserving sanitize and inspect byte-cap floor", () => {
+  it("the catalog row sanitizer re-types nothing: no double cast to CatalogRow remains in tool-replies.ts", () => {
+    const source = readFileSync(new URL("../src/workbench/tool-replies.ts", import.meta.url), "utf8");
+    expect(source).not.toMatch(/as unknown as CatalogRow/);
+  });
+
+  it("a catalog row built through the typed sanitizer still bounds and sanitizes every string", () => {
+    const hostile = entry("typed.cap", { description: "\u001b[31mred\u001b[0m Bearer abc123token " + "q".repeat(500), contractSource: "docs/\u001bx" });
+    const reply = ok(buildWorkflowCatalogReply([hostile], ["discover:typed.cap"], {}));
+    const row = reply.rows[0];
+    expect(row?.id).toBe("typed.cap");
+    expect(row?.modes).toEqual(["invoke"]);
+    expect(row?.description.length).toBeLessThanOrEqual(200);
+    expect(JSON.stringify(row)).not.toContain("abc123token");
+    expect(JSON.stringify(row)).not.toContain("u001b");
+  });
+
+  it("the inspect reply fits the 1024-byte floor even when every top-level value is a long string (shortened until it fits, marker always present)", () => {
+    const long = (ch: string) => ch.repeat(180);
+    const fat = entry(`fat.${long("a")}`, { version: long("v"), description: long("d"), contractSource: long("c"), supportedModes: ["invoke", "inspect"] }, true);
+    const id = fat.descriptor.id;
+    const reply = ok(buildWorkflowInspectReply([fat], [`inspect:${id}`], id, "definition", { maxBytes: 1024 }));
+    expect(Buffer.byteLength(JSON.stringify(reply), "utf8")).toBeLessThanOrEqual(1024);
+    expect(reply.truncated).toEqual({ reason: "byte-cap", maxBytes: 1024 });
   });
 });

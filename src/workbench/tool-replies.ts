@@ -137,14 +137,14 @@ function decodeCursor(cursor: string): string | undefined {
 }
 
 function sanitizedRow({ descriptor }: CapabilityCatalogEntry): CatalogRow {
-  return sanitizeWorkbenchJson({
-    id: descriptor.id,
-    version: descriptor.version,
-    description: descriptor.description,
-    effectClass: descriptor.effectClass,
-    modes: [...descriptor.supportedModes],
-    ...(descriptor.contractSource ? { contractSource: descriptor.contractSource } : {}),
-  }, TEXT_LIMIT) as unknown as CatalogRow;
+  return {
+    id: sanitizeWorkbenchText(descriptor.id, TEXT_LIMIT),
+    version: sanitizeWorkbenchText(descriptor.version, TEXT_LIMIT),
+    description: sanitizeWorkbenchText(descriptor.description, TEXT_LIMIT),
+    effectClass: sanitizeWorkbenchText(descriptor.effectClass, TEXT_LIMIT),
+    modes: descriptor.supportedModes.map(mode => sanitizeWorkbenchText(mode, TEXT_LIMIT)),
+    ...(descriptor.contractSource ? { contractSource: sanitizeWorkbenchText(descriptor.contractSource, TEXT_LIMIT) } : {}),
+  };
 }
 
 /**
@@ -282,5 +282,15 @@ export function buildWorkflowInspectReply(
   for (const [key, value] of Object.entries(record)) {
     bounded[key] = value !== null && typeof value === "object" && byteLength(value) > maxBytes / 4 ? { truncated: true, bytes: byteLength(value) } : value;
   }
-  return assemble(bounded, true);
+  const markerFor = (value: JsonValue): JsonValue => ({ truncated: true, bytes: byteLength(value) });
+  let result = assemble(bounded, true);
+  // The per-value share above cannot bound long strings, so re-measure and shrink the largest values first until the
+  // reply fits; the byte-cap marker is always present and the cap is never advisory.
+  const bySize = Object.entries(bounded).sort(([, left], [, right]) => byteLength(right) - byteLength(left));
+  for (const [key, value] of bySize) {
+    if (byteLength(result) <= maxBytes) break;
+    bounded[key] = markerFor(value);
+    result = assemble(bounded, true);
+  }
+  return result;
 }
