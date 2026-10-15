@@ -1,3 +1,4 @@
+import {cpus} from "node:os";
 /** Deterministic 100k-update, 1000-node compiled terminal inspector benchmark. */
 import assert from 'node:assert/strict';
 import {performance} from 'node:perf_hooks';
@@ -30,7 +31,7 @@ for(let i=0;i<1000;i++){
   old=lines;
 }
 samples.sort((a,b)=>a-b);
-const receipt={benchmark:'inspector-100k/1000',utc:new Date().toISOString(),revision:process.env.W15_REVISION??'working-tree',node:process.version,arch:process.arch,platform:process.platform,cpus:await import('node:os').then(m=>m.cpus().length),ingestMs,p50NavigationMs:samples[Math.floor(samples.length*.5)],p95NavigationMs:samples[Math.floor(samples.length*.95)],maxNavigationMs:samples.at(-1),maxRenderedRows,maxTerminalBytes,maxChangedBytes,retained:projection.stats(),heapGrowthBytes:process.memoryUsage().heapUsed-memoryStart,samples:samples.length};
+const receipt={benchmark:'inspector-100k/1000',utc:new Date().toISOString(),revision:process.env.W15_REVISION??'working-tree',node:process.version,arch:process.arch,platform:process.platform,cpus:cpus().length,ingestMs,p50NavigationMs:samples[Math.floor(samples.length*.5)],p95NavigationMs:samples[Math.floor(samples.length*.95)],maxNavigationMs:samples.at(-1),maxRenderedRows,maxTerminalBytes,maxChangedBytes,retained:projection.stats(),heapGrowthBytes:process.memoryUsage().heapUsed-memoryStart,samples:samples.length};
 assert.equal(projection.stats().nodes,1000);
 assert.ok(maxRenderedRows<=40);
 if(process.env.W15_BENCH_RECEIPT)writeFileSync(process.env.W15_BENCH_RECEIPT,JSON.stringify(receipt));
