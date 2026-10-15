@@ -21,6 +21,18 @@ import { type JournalKeyInput, journalKey, nodeJournalKey, type WorkflowJournalE
 import { type CompiledSchema, compileJsonSchema } from "./json-schema.js";
 import { extractMeta, type WorkflowMeta } from "./meta.js";
 import type { WorkflowAgentEntry, WorkflowEntry, WorkflowNodeEntry } from "./progress.js";
+import {
+  type AcknowledgeRow,
+  acknowledgementValue,
+  admitReconcile,
+  entryDigestOf,
+  evidenceOfAcknowledgement,
+  indexReconciliations,
+  markApplied,
+  markConsumed,
+  type OverrideRow,
+  producerOf,
+} from "./reconcile.js";
 import { WORKER_SOURCE } from "./worker-source.js";
 
 /** Matches the `script` field's `maxLength` in the tool schema. */
@@ -374,6 +386,8 @@ export interface WorkflowRunResult {
   replayedCount: number;
   /** Node reads handed back stale from the journal instead of re-read; never folded into agentCount. */
   replayedNodeCount: number;
+  /** Positions settled by an operator acknowledgement or re-run under an operator override; never folded into agentCount, replayedCount or replayedNodeCount. */
+  reconciledNodeCount: number;
 }
 
 /* ------------------------------------------------------------------------- *
@@ -705,6 +719,8 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
   const nodeJournal = new Map(
     journalEntries.filter(entry => entry.kind === "node").map(entry => [entry.index, entry]),
   );
+  /** Operator decisions by node position (reconcile.ts); consulted only at a refusing position. */
+  const reconcileJournal = indexReconciliations(journalEntries);
   /** The policy scope entries are recorded under; must match to replay one. */
   const hostBasis = host.replayBasis;
   const basisMark = hostBasis !== undefined ? ({ basis: hostBasis } as const) : {};
@@ -725,6 +741,7 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
   let prefixIntact = host.replaySafe !== false && journalEntries.length > 0 && !journalResumes;
   let replayedCount = 0;
   let replayedNodeCount = 0;
+  let reconciledNodeCount = 0;
 
   /* --- live control ---------------------------------------------------- */
 
@@ -844,7 +861,7 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
       worker.postMessage({ type: "response", callId, ok, value, error, fatal, capabilityError, spent: spentOutputTokens });
     };
 
-    const finish = (result: Omit<WorkflowRunResult, "meta" | "progress" | "agentCount" | "replayedCount" | "replayedNodeCount">) => {
+    const finish = (result: Omit<WorkflowRunResult, "meta" | "progress" | "agentCount" | "replayedCount" | "replayedNodeCount" | "reconciledNodeCount">) => {
       if (settled) return;
       settled = true;
       options.signal?.removeEventListener("abort", onAbort);
@@ -860,7 +877,7 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
       nodeSemaphore.drain();
       // Resolve only once the thread is actually down, so a caller that awaits
       // runWorkflow() is guaranteed not to be leaking one.
-      const settle = () => resolve({ ...result, meta, progress, agentCount, replayedCount, replayedNodeCount });
+      const settle = () => resolve({ ...result, meta, progress, agentCount, replayedCount, replayedNodeCount, reconciledNodeCount });
       void worker.terminate().then(settle, settle);
     };
 
@@ -1295,22 +1312,48 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
       type NodeAdmission =
         | { kind: "live" }
         | { kind: "replay"; entry: WorkflowJournalEntry; value: JsonValue }
-        | { kind: "uncertain"; entry: WorkflowJournalEntry; hint: string };
+        | { kind: "uncertain"; entry: WorkflowJournalEntry; hint: string }
+        | { kind: "acknowledged"; entry: WorkflowJournalEntry; acknowledgement: AcknowledgeRow; value: JsonValue }
+        | { kind: "override-live"; entry: WorkflowJournalEntry; override: OverrideRow };
       const admission = ((): NodeAdmission => {
         if (recorded === undefined) return { kind: "live" };
         const recordedCapability = recorded.capabilityId ?? payload.capabilityId;
-        const producer = recordedCapability.split(/[.-]/)[0];
-        const tail = `Reconcile with ${producer} before resuming, or re-run without resumeFromRunId for a fresh run.`;
+        const producer = producerOf(recordedCapability);
+        const tail = `Reconcile with ${producer} before resuming: inspect its native evidence and acknowledge or override the position explicitly with workflow_reconcile (position ${index}), or re-run without resumeFromRunId for a fresh run.`;
+        let refusal: { entry: WorkflowJournalEntry; hint: string } | undefined;
         if (recorded.effectClass !== undefined && recorded.effectClass !== "read") {
-          return {
-            kind: "uncertain", entry: recorded,
+          refusal = {
+            entry: recorded,
             hint: `node(${recordedCapability}) at position ${index} was recorded by the resumed run with effect class "${recorded.effectClass}" (producer "${producer}"). A journaled SDK effect is never re-executed or silently replayed. ${tail}`,
           };
-        }
-        if (recorded.effectClass === "read" && currentEffect !== undefined && currentEffect !== "read") {
-          return {
-            kind: "uncertain", entry: recorded,
+        } else if (recorded.effectClass === "read" && currentEffect !== undefined && currentEffect !== "read") {
+          refusal = {
+            entry: recorded,
             hint: `node(${payload.capabilityId}) at position ${index} was journaled as "read" but the capability now declares effect class "${currentEffect}" (producer "${producer}"). Refusing to re-run or replay under a changed effect contract. ${tail}`,
+          };
+        }
+        if (refusal !== undefined) {
+          // An operator decision can settle the refusal, authorize exactly one
+          // re-run, or sharpen the hint — never silently replay the effect.
+          const decided = admitReconcile(
+            { recorded: refusal.entry, index, currentKey: key ?? "", currentCapabilityId: payload.capabilityId },
+            reconcileJournal.get(index),
+          );
+          if (decided.kind === "acknowledged") {
+            try {
+              return {
+                kind: "acknowledged", entry: refusal.entry, acknowledgement: decided.acknowledgement,
+                value: validatedCapabilityJson(acknowledgementValue(decided.acknowledgement.reconcile), `node(${payload.capabilityId}) acknowledged settlement`),
+              };
+            } catch {
+              // A malformed record settles nothing: refuse below with the hint.
+            }
+          } else if (decided.kind === "override") {
+            return { kind: "override-live", entry: refusal.entry, override: decided.override };
+          }
+          return {
+            kind: "uncertain", entry: refusal.entry,
+            hint: decided.kind === "refuse" && decided.reason !== undefined ? `${refusal.hint} ${decided.reason}` : refusal.hint,
           };
         }
         // Replay only what BOTH sides vouch for as a read: the entry's recorded
@@ -1351,7 +1394,23 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
 
       if (admission.kind === "uncertain") {
         const at = Date.now();
-        emit([{ ...base, startedAt: at, lastProgressAt: at, durationMs: 0, state: "error", error: admission.hint }]);
+        // The typed channel the views and the reconcile tool read; nothing
+        // downstream matches on the hint text.
+        const decisions = reconcileJournal.get(index);
+        const overridesLive = decisions === undefined
+          ? 0
+          : decisions.overrides.filter(row => row.reconcile.consumed === undefined && !decisions.spent.has(row.reconcile.overrideId)).length;
+        const pendingCapability = admission.entry.capabilityId ?? payload.capabilityId;
+        emit([{ ...base, startedAt: at, lastProgressAt: at, durationMs: 0, state: "error", error: admission.hint,
+          reconcile: {
+            state: "pending", position: index, capabilityId: pendingCapability,
+            effectClass: admission.entry.effectClass !== undefined && admission.entry.effectClass !== "read"
+              ? admission.entry.effectClass
+              : currentEffect ?? admission.entry.effectClass ?? "",
+            producer: producerOf(pendingCapability), key: admission.entry.key, entryDigest: entryDigestOf(admission.entry),
+            ...(admission.entry.nativeRefs !== undefined ? { nativeRefs: [...admission.entry.nativeRefs] } : {}),
+            decisions: { acknowledged: decisions?.acks.length ?? 0, overridesLive, overridesSpent: decisions?.spent.size ?? 0 },
+          } }]);
         // Carried forward verbatim: the journal this run writes must stay as
         // protective as the one it read, or resuming the failed resume would
         // re-run the effect after all.
@@ -1381,8 +1440,34 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
         return;
       }
 
+      if (admission.kind === "acknowledged") {
+        // The world after an acknowledged effect is uncertain for everything
+        // downstream: the settlement replaces the answer, not the uncertainty,
+        // so the replayable prefix ends here exactly as it does for a live call.
+        prefixIntact = false;
+        reconciledNodeCount++;
+        const at = Date.now();
+        const record = admission.acknowledgement.reconcile;
+        emit([{ ...base, startedAt: at, lastProgressAt: at, durationMs: 0, state: "done",
+          // Native evidence comes from the operator's recorded producer read —
+          // nothing synthesized, and never reported as this run's observation.
+          ...evidenceOfAcknowledgement(record),
+          freshness: "stale",
+          reconcile: { state: "acknowledged", acknowledgementId: record.acknowledgementId, principal: record.operator.principal,
+            recordedAt: record.recordedAt, determination: record.determination, evidenceClass: record.evidenceClass },
+          resultPreview: preview(JSON.stringify(admission.value) ?? "null") }]);
+        // The tripwire stays on the record, verbatim, and the acknowledgement
+        // is carried stamped applied — a resume of this resume settles again.
+        recordJournal?.({ ...admission.entry });
+        recordJournal?.(markApplied(admission.acknowledgement, { at: new Date(at).toISOString(), ...basisMark }));
+        openNodes.delete(callId);
+        respond(callId, true, admission.value);
+        return;
+      }
+
       // A live node() may change the world; every later agent must run live.
       prefixIntact = false;
+      const override = admission.kind === "override-live" ? admission.override : undefined;
       const effectMark = currentEffect !== undefined ? ({ effectClass: currentEffect } as const) : {};
       await nodeSemaphore.acquire();
       if (aborted || settled) {
@@ -1410,6 +1495,9 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
           durationMs: finishedAt - startedAt, state: "done",
           ...evidence,
           freshness: "unknown", // A returned snapshot alone establishes no current observation freshness.
+          ...(override !== undefined ? { reconcile: { state: "overridden" as const, overrideId: override.reconcile.overrideId,
+            principal: override.reconcile.operator.principal, recordedAt: override.reconcile.recordedAt,
+            duplicateRisk: override.reconcile.duplicateRisk, outcome: "re-run-ok" as const } } : {}),
           resultPreview: preview(JSON.stringify(value) ?? "null") }]);
         // Journaled under the class the host declared, with the payload kept
         // only for a read — a stored effect result would invite exactly the
@@ -1420,18 +1508,33 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
         const nativeRef = currentEffect !== undefined && currentEffect !== "read" ? nativeRefOf(evidence) : undefined;
         recordJournal?.({ kind: "node", index, key: key ?? "", ok: true, capabilityId: payload.capabilityId,
           ...effectMark, ...(currentEffect === "read" ? { text: JSON.stringify(value) } : {}), ...(nativeRef ? { nativeRefs: [nativeRef] } : {}), ...basisMark });
+        if (override !== undefined) {
+          // Consumed on success AND failure: a re-run is itself an attempted
+          // effect, so the authorization is spent either way and the tripwire
+          // re-arms for the next resume. The acknowledgement is deliberately
+          // not carried — the re-run invalidated its determination.
+          recordJournal?.(markConsumed(override, { at: new Date(finishedAt).toISOString(), outcome: "re-run-ok" }));
+          reconciledNodeCount++;
+        }
         openNodes.delete(callId);
         respond(callId, true, value);
       } catch (error) {
         const finishedAt = Date.now();
         const detail = error instanceof Error ? error.message : String(error);
         emit([{ ...base, startedAt, lastProgressAt: finishedAt,
-          durationMs: finishedAt - startedAt, state: "error", error: detail }]);
+          durationMs: finishedAt - startedAt, state: "error", error: detail,
+          ...(override !== undefined ? { reconcile: { state: "overridden" as const, overrideId: override.reconcile.overrideId,
+            principal: override.reconcile.operator.principal, recordedAt: override.reconcile.recordedAt,
+            duplicateRisk: override.reconcile.duplicateRisk, outcome: "re-run-failed" as const } } : {}) }]);
         // Recorded as a failure for the same reason a failed agent is: a gap
         // would shift every later node's position on the next resume. A failed
         // read re-runs; a failed effect is still an attempted effect, and the
         // tripwire above refuses to step over it.
         recordJournal?.({ kind: "node", index, key: key ?? "", ok: false, capabilityId: payload.capabilityId, ...effectMark, ...basisMark });
+        if (override !== undefined) {
+          recordJournal?.(markConsumed(override, { at: new Date(finishedAt).toISOString(), outcome: "re-run-failed" }));
+          reconciledNodeCount++;
+        }
         // Validation/authorization/uncertain effects cannot become null under
         // parallel()'s ordinary item-failure semantics. A failed node is a
         // failed *workflow*, so the caller must see the typed diagnostic.

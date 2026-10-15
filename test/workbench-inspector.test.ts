@@ -1,7 +1,9 @@
 import { visibleWidth } from '@earendil-works/pi-tui';
 import { describe, expect, it, vi } from 'vitest';
 import { initialWorkflowDialogState, WorkflowDialog } from '../src/ui/workflow-dialog.js';
-import { type InspectorModel, initialInspectorState, layoutInspector, reduceInspectorKey } from '../src/ui/workflow-inspector.js';
+import { type InspectorModel, initialInspectorState, inspectorEvidenceTarget, layoutInspector, reduceInspectorKey } from '../src/ui/workflow-inspector.js';
+import { type EvidenceContent, type EvidenceLoader, EvidenceRefusal, EvidenceStore } from '../src/workbench/evidence-loader.js';
+import { CLAUDE_TRANSCRIPT_GRANT, createEvidenceLoaders } from '../src/workbench/evidence-producers.js';
 import { type NativeRef, ObservationProjection, type ObservationScope } from '../src/workbench/observation.js';
 
 const scope: ObservationScope = {workspace:'workspace',principal:'reader'};
@@ -687,5 +689,234 @@ describe('W15/VC-5 closing the nested overview (wb-6ze.1)',()=>{
    expect(onKill).not.toHaveBeenCalled();
    for(const spy of mutators) expect(spy).not.toHaveBeenCalled();
    dialog.dispose();
+ });
+});
+
+describe('W15-A lazy bounded evidence in the details view (wb-g1g.1, docs/workbench/20)',()=>{
+ const evidenceRefs=['ev:alpha','ev:beta','ev:gamma'];
+ const sizes=[{width:80,rows:24},{width:120,rows:40}];
+ const tiers=[true,false];
+ interface Counting extends EvidenceLoader{calls:string[]}
+ function loader(handler:(ref:string,signal:AbortSignal)=>Promise<EvidenceContent>=async ref=>({kind:'fixture',provider:'forge',capturedAt:now,bytes:ref.length,truncated:false,preview:[`payload for ${ref}`],freshness:'current'})):Counting{
+   const calls:string[]=[];
+   return {provider:'forge',requiredGrant:'forge:inspect',calls,canLoad:ref=>ref.startsWith('ev:'),load:request=>{calls.push(request.evidenceRef);return handler(request.evidenceRef,request.signal);}};
+ }
+ function evidenceFixture(source:Counting,extra:Partial<ConstructorParameters<typeof EvidenceStore>[0]>={}){
+   const projection=new ObservationProjection({maxEvents:16,maxNodes:100,maxEdges:100,maxQuery:40});
+   projection.refresh({source:ref('forge','gate'),scope,capturedAt:now,observedAt:now,node:{...presentation('Gate'),statusText:'success',statusTone:'success'},trace:{invocationId:'workflow-ev'},coverage:'complete',evidenceRefs});
+   projection.refresh({source:ref('furnace','run'),scope,capturedAt:now,observedAt:now,node:presentation('Run'),trace:{invocationId:'workflow-ev'},coverage:'partial'});
+   const store=new EvidenceStore({loaders:[source],maxEntries:8,maxBytes:2048,timeoutMs:200,scope,...extra});
+   const model:InspectorModel={projection,scope,invocationId:'workflow-ev',title:'Evidence workflow',status:'running',evidence:store};
+   return {model,store};
+ }
+ const toDetails=(model:InspectorModel):ReturnType<typeof initialInspectorState>=>{
+   let state=reduceInspectorKey('j',initialInspectorState(),model)!.state;
+   state=reduceInspectorKey('k',state,model)!.state;
+   return reduceInspectorKey('s',state,model)!.state;
+ };
+ const text=(model:InspectorModel,state:ReturnType<typeof initialInspectorState>,size:{width:number;rows:number},ascii:boolean)=>layoutInspector(model,state,{...size,ascii}).join('\n');
+
+ it('A1 a full keyboard journey and render loads nothing; exactly one call follows Enter on the selected ref; e only moves the selection',async()=>{
+   const source=loader();const {model,store}=evidenceFixture(source);
+   let state=initialInspectorState();
+   for(const view of ['graph','timeline','details','overview'] as const){layoutInspector(model,state,{width:80,rows:24});state=reduceInspectorKey('\t',state,model)!.state;expect(state.view).toBe(view);}
+   state=toDetails(model);
+   const first=text(model,state,sizes[0],true);
+   expect(first).toContain('not loaded (Enter)');
+   expect(source.calls).toHaveLength(0);
+   const moved=reduceInspectorKey('e',state,model)!;
+   expect(moved.state.evidenceIndex).toBe(1);expect(moved.action).toBeUndefined();
+   expect(reduceInspectorKey('e',reduceInspectorKey('e',moved.state,model)!.state,model)!.state.evidenceIndex).toBe(0);
+   layoutInspector(model,moved.state,{width:80,rows:24});
+   expect(source.calls).toHaveLength(0);
+   const entered=reduceInspectorKey('\r',moved.state,model)!;
+   expect(entered.action).toBe('load-evidence');
+   expect(entered.state).toEqual(moved.state);
+   expect(source.calls).toHaveLength(0);
+   const target=inspectorEvidenceTarget(model,entered.state)!;
+   expect(target.evidenceRef).toBe('ev:beta');
+   await store.request(target.scope,target.nativeRef,target.evidenceRef);
+   expect(source.calls).toEqual(['ev:beta']);
+   const after=text(model,entered.state,sizes[0],true);
+   expect(after).toContain('payload for ev:beta');
+   expect(after).not.toContain('payload for ev:alpha');
+ });
+
+ it('A2 j/k reset the evidence selection',()=>{
+   const {model}=evidenceFixture(loader());
+   let state=toDetails(model);
+   state=reduceInspectorKey('e',state,model)!.state;expect(state.evidenceIndex).toBe(1);
+   expect(reduceInspectorKey('j',state,model)!.state.evidenceIndex).toBe(0);
+   expect(reduceInspectorKey('k',state,model)!.state.evidenceIndex).toBe(0);
+ });
+
+ it('A3 e outside the details view still opens it; a node without references has no load action',()=>{
+   const {model}=evidenceFixture(loader());
+   let state=reduceInspectorKey('j',initialInspectorState(),model)!.state;
+   state=reduceInspectorKey('j',state,model)!.state;
+   const opened=reduceInspectorKey('e',state,model)!.state;
+   expect(opened.view).toBe('details');
+   const noRefs=reduceInspectorKey('\r',opened,model)!;
+   expect(noRefs.action).toBeUndefined();
+   expect(inspectorEvidenceTarget(model,opened)).toBeUndefined();
+ });
+
+ it.each(sizes.flatMap(size=>tiers.map(ascii=>[size,ascii] as const)))('A4 every state renders as a visible label at %j ascii=%s, and preview text only for loaded',async(size,ascii)=>{
+   const mixed:Record<string,(signal:AbortSignal)=>Promise<EvidenceContent>>={
+     'ev:alpha':async()=>({kind:'k',provider:'forge',capturedAt:now,bytes:11,truncated:false,preview:['loaded line one','loaded line two'],freshness:'current'}),
+     'ev:beta':()=>new Promise<EvidenceContent>(()=>{}),
+     'ev:gamma':async()=>{throw new Error('SECRET transport detail');},
+   };
+   const source=loader((reference,signal)=>mixed[reference](signal));
+   const {model,store}=evidenceFixture(source,{timeoutMs:5000});
+   const state=toDetails(model);const node=inspectorEvidenceTarget(model,state)!;
+   for(const reference of evidenceRefs) void store.request(node.scope,node.nativeRef,reference);
+   await new Promise(resolve=>setTimeout(resolve,20));
+   const rendered=text(model,state,size,ascii);
+   expect(rendered).toContain('loaded');expect(rendered).toContain('loaded line one');
+   expect(rendered).toMatch(/loading(\.\.\.|…)/);
+   expect(rendered).toContain('unavailable: transport');
+   expect(rendered).not.toContain('SECRET');
+   // a ref nobody can load, and one that times out, stay visible unknowns
+   const orphan=new EvidenceStore({loaders:[],maxEntries:4,maxBytes:1024,timeoutMs:50,scope});
+   const noLoader=layoutInspector({...model,evidence:orphan},state,{...size,ascii});
+   void orphan.request(node.scope,node.nativeRef,'ev:alpha');
+   await new Promise(resolve=>setTimeout(resolve,5));
+   expect(noLoader.join('\n')).toContain('not loaded (Enter)');
+   expect(layoutInspector({...model,evidence:orphan},state,{...size,ascii}).join('\n')).toContain('unavailable: no-loader');
+   const slow=loader(()=>new Promise<EvidenceContent>(()=>{}));
+   const timing=new EvidenceStore({loaders:[slow],maxEntries:4,maxBytes:1024,timeoutMs:10,scope});
+   await timing.request(node.scope,node.nativeRef,'ev:alpha');
+   const timed=layoutInspector({...model,evidence:timing},state,{...size,ascii});
+   expect(timed.join('\n')).toContain('unavailable: timeout');
+   expect(timed.join('\n')).not.toContain('payload for');
+   for(const lines of [timed,layoutInspector(model,state,{...size,ascii})]){
+     expect(lines.length).toBeLessThanOrEqual(size.rows);
+     expect(lines.every(line=>visibleWidth(line)<=size.width)).toBe(true);
+   }
+ });
+
+ it.each(sizes.flatMap(size=>tiers.map(ascii=>[size,ascii] as const)))('A5 hostile preview is sanitized, redacted and width-bounded at %j ascii=%s',async(size,ascii)=>{
+   const hostile=['\x1b[31mred\x1b[0m \u202Ereversed\u200Bzero',`Authorization: Bearer abc123 ${'W'.repeat(400)}`,'{"api_key":"xyz"}','漢字'.repeat(80)];
+   const {model,store}=evidenceFixture(loader(async()=>({kind:'k',provider:'forge',capturedAt:now,bytes:900,truncated:false,preview:hostile,freshness:'current'})));
+   const state=toDetails(model);const node=inspectorEvidenceTarget(model,state)!;
+   await store.request(node.scope,node.nativeRef,'ev:alpha');
+   const lines=layoutInspector(model,state,{...size,ascii});
+   const rendered=lines.join('\n');
+   expect(rendered).toContain('[REDACTED]');
+   for(const forbidden of ['\x1b','\u202e','\u200b','abc123','xyz']) expect(rendered).not.toContain(forbidden);
+   expect(lines.length).toBeLessThanOrEqual(size.rows);
+   expect(lines.every(line=>visibleWidth(line)<=size.width)).toBe(true);
+ });
+
+ it('A6 a loaded entry never changes status text, tone glyph or the confirmed/definition lines',async()=>{
+   const {model,store}=evidenceFixture(loader());
+   const state=toDetails(model);const node=inspectorEvidenceTarget(model,state)!;
+   const pick=(rendered:string)=>rendered.split('\n').filter(line=>/Status:|Freshness:|Confirmed:|Basis:|Definition:/.test(line));
+   const before=pick(text(model,state,sizes[1],false));
+   await store.request(node.scope,node.nativeRef,'ev:alpha');
+   expect(pick(text(model,state,sizes[1],false))).toEqual(before);
+   expect(before.join('\n')).toContain('success');
+   const overview=layoutInspector(model,initialInspectorState(),{width:120,rows:40}).join('\n');
+   expect(overview).not.toContain('Verified');
+ });
+
+ it('A7 Esc and ctrl+c while loading only close; abort stops the local read and nothing touches the projection',async()=>{
+   let seen:AbortSignal|undefined;
+   const {model,store}=evidenceFixture(loader((_ref,signal)=>{seen=signal;return new Promise<EvidenceContent>(()=>{});}));
+   const mutators=[vi.spyOn(model.projection,'refresh'),vi.spyOn(model.projection,'ingest'),vi.spyOn(model.projection,'relate'),
+     vi.spyOn(model.projection,'disconnect'),vi.spyOn(model.projection,'reconnect'),vi.spyOn(model.projection,'markStale')];
+   const state=toDetails(model);const node=inspectorEvidenceTarget(model,state)!;
+   void store.request(node.scope,node.nativeRef,'ev:alpha');
+   expect(store.get(node.scope,node.nativeRef,'ev:alpha')).toEqual({state:'loading'});
+   expect(layoutInspector(model,state,{width:80,rows:24}).join('\n')).toMatch(/loading/);
+   expect(reduceInspectorKey('\x03',state,model)?.action).toBe('close');
+   const back=reduceInspectorKey('\x1b',state,model)!;
+   expect(back.action).toBeUndefined();expect(back.state.view).toBe('overview');
+   expect(reduceInspectorKey('\x1b',back.state,model)?.action).toBe('close');
+   store.abort(node.scope,node.nativeRef,'ev:alpha');
+   expect(seen?.aborted).toBe(true);
+   expect(store.get(node.scope,node.nativeRef,'ev:alpha')).toEqual({state:'not-requested'});
+   for(const spy of mutators) expect(spy).not.toHaveBeenCalled();
+ });
+
+ it('A8 layoutInspector is synchronous and never awaits a pending loader',()=>{
+   const {model,store}=evidenceFixture(loader(()=>new Promise<EvidenceContent>(()=>{})));
+   const state=toDetails(model);const node=inspectorEvidenceTarget(model,state)!;
+   void store.request(node.scope,node.nativeRef,'ev:alpha');
+   const result=layoutInspector(model,state,{width:80,rows:24});
+   expect(Array.isArray(result)).toBe(true);
+   expect(result.join('\n')).toMatch(/loading/);
+ });
+
+ it('A9 without a store the details view is the pre-existing rendering and Enter still folds',()=>{
+   const {model}=evidenceFixture(loader());
+   const plain:InspectorModel={...model};delete plain.evidence;
+   const state=toDetails(plain);
+   const rendered=text(plain,state,sizes[0],true);
+   expect(rendered).toContain('producer references, not fetched payload');
+   expect(rendered).toContain('  ev:alpha');
+   expect(rendered).not.toContain('not loaded');
+   const entered=reduceInspectorKey('\r',state,plain)!;
+   expect(entered.action).toBeUndefined();
+   expect(entered.state.collapsed.length).toBe(1);
+ });
+
+ it('A10 a cross-scope store refuses the node reference and its loader is never invoked',()=>{
+   const source=loader();
+   const {model}=evidenceFixture(source,{scope:{workspace:'elsewhere',principal:'reader'}});
+   const state=toDetails(model);
+   expect(text(model,state,sizes[0],true)).toContain('unavailable: unauthorized');
+   expect(source.calls).toHaveLength(0);
+ });
+
+ it('A11 claude evidence is refused unauthorized without the claude:transcript grant, rendered byte-identical to a revoked grant, and loaded with it',async()=>{
+   const uuid='aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee';
+   const build=(grants:string[])=>{
+     const projection=new ObservationProjection({maxEvents:16,maxNodes:100,maxEdges:100,maxQuery:40});
+     projection.refresh({source:{provider:'claude-agent-sdk',type:'session',id:'s1'},scope,capturedAt:now,observedAt:now,node:presentation('Claude'),trace:{invocationId:'wf-c'},coverage:'partial',evidenceRefs:[`claude-message:${uuid}`]});
+     const readRows=vi.fn(async()=>[{type:'assistant',uuid,text:'claude says hi'}]);
+     const store=new EvidenceStore({loaders:createEvidenceLoaders({grants:()=>grants,claude:readRows}),maxEntries:4,maxBytes:1024,timeoutMs:200,scope});
+     const model:InspectorModel={projection,scope,invocationId:'wf-c',title:'C',status:'running',evidence:store};
+     return {model,store,readRows};
+   };
+   const denied=build([]);const state=toDetails(denied.model);const node=inspectorEvidenceTarget(denied.model,state)!;
+   await denied.store.request(node.scope,node.nativeRef,node.evidenceRef);
+   expect(text(denied.model,state,sizes[1],true)).toContain('unavailable: unauthorized');
+   expect(denied.readRows).not.toHaveBeenCalled();
+   const held=[CLAUDE_TRANSCRIPT_GRANT];const revoked=build(held);held.length=0;
+   await revoked.store.request(node.scope,node.nativeRef,node.evidenceRef);
+   expect(text(denied.model,state,sizes[1],true)).toBe(text(revoked.model,toDetails(revoked.model),sizes[1],true));
+   expect(revoked.readRows).not.toHaveBeenCalled();
+   const granted=build([CLAUDE_TRANSCRIPT_GRANT]);
+   await granted.store.request(node.scope,node.nativeRef,node.evidenceRef);
+   expect(text(granted.model,toDetails(granted.model),sizes[1],true)).toContain('claude says hi');
+ });
+
+ it('A12 the dialog does not treat load-evidence as close or cancel',()=>{
+   const {model}=evidenceFixture(loader());
+   const done=vi.fn(),onKill=vi.fn();
+   const dialog=new WorkflowDialog({requestRender:vi.fn(),terminal:{rows:24,columns:80}} as never,
+     ()=>({progress:[],task:{status:'running',workflowName:'Evidence',startTime:1},observation:model}),
+     {fg:(_color:string,text:string)=>text,bold:(text:string)=>text} as never,done,{onKill});
+   dialog.handleInput('s');dialog.handleInput('\r');
+   expect(done).not.toHaveBeenCalled();expect(onKill).not.toHaveBeenCalled();
+   dialog.dispose();
+ });
+
+ it('A13 a refusal thrown by a loader surfaces as its typed reason in the view',async()=>{
+   const {model,store}=evidenceFixture(loader(async()=>{throw new EvidenceRefusal('too-large');}));
+   const state=toDetails(model);const node=inspectorEvidenceTarget(model,state)!;
+   await store.request(node.scope,node.nativeRef,'ev:alpha');
+   expect(text(model,state,sizes[0],true)).toContain('unavailable: too-large');
+ });
+
+ it('A14 a stale or disconnected owner labels loaded evidence stale and a failed read as transport plus stale',async()=>{
+   const {model,store}=evidenceFixture(loader());
+   const state=toDetails(model);const node=inspectorEvidenceTarget(model,state)!;
+   await store.request(node.scope,node.nativeRef,'ev:alpha');
+   model.projection.disconnect('forge');
+   const rendered=text(model,state,sizes[1],true);
+   expect(rendered).toMatch(/loaded.*stale/);
  });
 });

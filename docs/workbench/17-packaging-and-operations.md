@@ -43,6 +43,23 @@ Report actual: active workflows, Claude SDK sessions, provider call outcomes, ev
 
 Version parser language and node-provider contract independently of bundle version. Changed semantics require migration notes and fixture tests. Pin immutable deploy artifact for reproducible observations. Release docs include feature matrix with status (not claimed based only on source commit).
 
+## Declared support matrix (release checklist item 4)
+
+What this fork is tested against and declares as supported, measured at the time of writing (2026-10-15, trunk `06f7071`). Every row names where the declaration lives; the measured census and its drift guard are wb-cax.20's receipt, which compares the live pins against this table and goes red when they diverge. Nothing here is a claim beyond what the gate runs: Python is not a runtime dependency of this package (no Python row), and a version outside the declared set is unsupported until a gate run on it is recorded.
+
+| Component | Declared | Where declared / how measured |
+|---|---|---|
+| Node.js runtime | tested on v24.20.0; declared floor `>=24` (package.json `engines`) | `node --version` on the gate host; no `.node-version` pin exists, the floor is the only declaration |
+| TypeScript | `6.0.3` exact (runtime AST dependency of the source designer) | package.json dependency pin + lockfile |
+| @anthropic-ai/claude-agent-sdk | `0.3.300` exact | package.json dependency pin + lockfile |
+| @forge/sdk | `0.1.0` vendored tarball (`file:vendor/forge-sdk-0.1.0.tgz`), checksum-pinned by the lockfile | lockfile integrity |
+| @furnace/sdk | `0.1.0` vendored tarball (`file:vendor/furnace-sdk-0.1.0.tgz`), checksum-pinned by the lockfile | lockfile integrity |
+| @hyperunix/sdk | `0.1.0` vendored tarball (`file:vendor/hyperunix-sdk-0.1.0.tgz`), checksum-pinned by the lockfile | lockfile integrity |
+| Pi host packages (peer) | `@earendil-works/pi-ai` >=1.1.0, `@earendil-works/pi-coding-agent` >=1.1.0, `@earendil-works/pi-tui` >=1.1.0 | peerDependencies; the host supplies them, tested against the lockfile's 1.1.0 |
+| Test and lint toolchain (dev) | vitest `4.1.10`, biome `2.4.15` | lockfile; not a runtime requirement |
+
+Policy: the Node floor and the exact pins change only by an owner commit that re-runs the complete gate on the new version and updates this table in the same commit; a drift found by wb-cax.20's guard is a defect in whichever side moved without the other.
+
 ## Release checklist
 
 1. Sources and upstream license preserved; fork origin recorded.
