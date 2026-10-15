@@ -67,6 +67,8 @@ export interface WorkflowTask {
   resumedFrom?: string;
   /** How many agents came back from {@link replay} instead of being spawned. */
   replayedCount: number;
+  /** How many node reads came back stale from {@link replay} instead of being re-read. */
+  replayedNodeCount: number;
 
   /** The append-only event log, in emission order. */
   workflowProgress: WorkflowEntry[];
@@ -124,6 +126,7 @@ export function createWorkflowTask(init: {
     replay: init.replay,
     resumedFrom: init.resumedFrom,
     replayedCount: 0,
+    replayedNodeCount: 0,
     workflowProgress: [],
     progressVersion: 0,
     agentCount: 0,
@@ -208,6 +211,7 @@ export function completeWorkflowTask(task: WorkflowTask, result: WorkflowRunResu
   task.workflowName ??= result.meta.name;
   task.agentCount = Math.max(task.agentCount, result.agentCount);
   task.replayedCount = result.replayedCount;
+  task.replayedNodeCount = result.replayedNodeCount;
   task.value = result.value;
   task.error = result.error;
   task.endTime = Date.now();
@@ -226,6 +230,30 @@ export function failWorkflowTask(task: WorkflowTask, error: string): void {
 }
 
 /** The run's outcome as text, for the notification and the LLM-facing result. */
+/**
+ * What a resume journal holds, by what the runtime will do with each entry:
+ * agent calls and node reads can come back from it, a journaled effect stops
+ * the resume at its position until the producer reconciles it, and a node call
+ * recorded without effect metadata runs live. Said up front so the caller is
+ * not surprised by a refusal halfway through.
+ */
+export function describeResumeJournal(from: string, entries: readonly WorkflowJournalEntry[]): string {
+  const agents = entries.filter(entry => entry.kind === undefined).length;
+  const nodes = entries.filter(entry => entry.kind === "node");
+  const reads = nodes.filter(entry => entry.effectClass === "read" && entry.ok && entry.text !== undefined).length;
+  const effects = nodes.filter(entry => entry.effectClass !== undefined && entry.effectClass !== "read");
+  const untyped = nodes.filter(entry => entry.effectClass === undefined).length;
+  const count = (n: number, word: string) => `${n} ${word}${n === 1 ? "" : "s"}`;
+  const replayable = [agents > 0 ? count(agents, "recorded agent call") : undefined, reads > 0 ? count(reads, "node read") : undefined].filter((part): part is string => part !== undefined);
+  const parts = [`Resuming ${from}: ${replayable.length > 0 ? `${replayable.join(" and ")} available to replay` : "nothing available to replay"}`];
+  if (effects.length > 0) {
+    const producers = [...new Set(effects.map(entry => (entry.capabilityId ?? "unknown").split(/[.-]/)[0]))].sort();
+    parts.push(`${count(effects.length, "journaled effect")} (${producers.join(", ")}) will stop the resume at its position until reconciled with the producer`);
+  }
+  if (untyped > 0) parts.push(`${count(untyped, "node call")} without effect metadata will run live`);
+  return `${parts.join("; ")}.`;
+}
+
 export function workflowResultText(task: WorkflowTask): string {
   if (task.error !== undefined) return task.error;
   if (task.value === undefined) return "No output.";
@@ -299,6 +327,8 @@ export function formatWorkflowNotification(task: WorkflowTask, now = Date.now())
     `<status>${escapeXml(status)}</status>`,
     `<summary>Workflow "${escapeXml(task.workflowName ?? task.id)}" ${task.status} — ${totals.done}/${totals.total} agents${
       task.replayedCount > 0 ? `, ${task.replayedCount} replayed from ${escapeXml(task.resumedFrom ?? "an earlier run")}` : ""
+    }${
+      task.replayedNodeCount > 0 ? `, ${task.replayedNodeCount} node ${task.replayedNodeCount === 1 ? "read" : "reads"} replayed stale from ${escapeXml(task.resumedFrom ?? "an earlier run")}` : ""
     }</summary>`,
     `<result>${escapeXml(result.length > 4000 ? `${result.slice(0, 4000)}\n...(truncated)` : result)}</result>`,
     `<usage><total_tokens>${task.totalTokens}</total_tokens><tool_uses>${task.totalToolCalls}</tool_uses><duration_ms>${elapsedMs(task, now)}</duration_ms></usage>`,

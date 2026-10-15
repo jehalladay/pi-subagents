@@ -724,6 +724,7 @@ function nodeRow(node: WorkflowNodeEntry, selected: boolean, compact: boolean, w
       { text: ` · ${safeWorkflowTerminalText(node.freshness ?? "unknown")}`, color: "dim" as const },
       { text: ` · ${safeWorkflowTerminalText(node.capabilityId)}`, color: "dim" as const },
       ...(node.sourceBasis ? [{ text: ` · ${safeWorkflowTerminalText(node.sourceBasis)}`, color: "dim" as const }] : []),
+      ...(node.cached ? [{ text: ` · ${REPLAYED_ANNOTATION}`, color: "dim" as const }] : []),
     ] : []),
   ], width);
 }
@@ -930,6 +931,7 @@ export function layoutWorkflowDialog(input: WorkflowDialogInput): WorkflowCardLi
       `Basis: ${label(node.sourceBasis, "basis unknown")}`,
       `Last error: ${label(node.error, "none reported")}`,
       `Evidence: ${node.evidenceRefs?.length ? node.evidenceRefs.map(ref => label(ref)).join(", ") : "none reported"}`,
+      ...(node.cached ? [`Provenance: ${REPLAYED_ANNOTATION} (stale read, not re-read by this run)`] : []),
     ];
     detailRows.push(detailHeading(`Native operation · ${label(node.label)}`, [], rightWidth));
     for (const detail of details) {

@@ -611,3 +611,41 @@ describe("node read replay is scoped by the recording host's basis", () => {
     expect(nodeDone(live).at(-1)).toMatchObject({ state: "done", freshness: "unknown" });
   });
 });
+
+describe("replayed read nodes are counted as journal provenance", () => {
+  const script = 'const a = await agent("first");\nconst r = await node("record.read", { value: "x" });\nreturn [a, r];';
+
+  it("counts a replayed read node apart from replayed agents and marks its row", async () => {
+    const first = effectHost({ effect: "read" });
+    const journal = recorder();
+    const live = await run(script, { host: first.host, journal });
+    expect(live.replayedCount).toBe(0);
+    expect(live.replayedNodeCount).toBe(0);
+    expect(nodeDone(live).at(-1)).not.toHaveProperty("cached");
+
+    const second = effectHost({ effect: "read" });
+    const resumed = await run(script, { host: second.host, journal: { entries: journal.entries } });
+    expect(resumed.status).toBe("completed");
+    // One agent and one node came back from the journal; neither is folded into the other's count.
+    expect(resumed.replayedCount).toBe(1);
+    expect(resumed.replayedNodeCount).toBe(1);
+    expect(second.spawns).toHaveLength(0);
+    expect(second.nodeCalls).toHaveLength(0);
+    expect(nodeDone(resumed).at(-1)).toMatchObject({ state: "done", freshness: "stale", cached: true });
+  });
+
+  it("does not count a refused journaled effect or a live re-read as replayed", async () => {
+    const writes = recorder();
+    await run('return await node("record.write", { value: "x" });', { host: effectHost({ effect: "write" }).host, journal: writes });
+    const refused = await run('return await node("record.write", { value: "x" });', { host: effectHost({ effect: "write" }).host, journal: { entries: writes.entries } });
+    expect(refused.capabilityError?.category).toBe("uncertain-effect");
+    expect(refused.replayedNodeCount).toBe(0);
+    expect(nodeDone(refused).at(-1)).not.toHaveProperty("cached");
+
+    const reads = recorder();
+    await run('return await node("record.read", { value: "x" });', { host: effectHost({ effect: "read" }).host, journal: reads });
+    const live = await run('return await node("record.read", { value: "y" });', { host: effectHost({ effect: "read" }).host, journal: { entries: reads.entries } });
+    expect(live.replayedNodeCount).toBe(0);
+    expect(nodeDone(live).at(-1)).not.toHaveProperty("cached");
+  });
+});

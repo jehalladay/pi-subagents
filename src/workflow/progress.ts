@@ -147,6 +147,8 @@ export interface WorkflowNodeEntry {
   resultPreview?: string;
   /** Native evidence is a reference, never inferred from process success. */
   evidenceRefs?: string[];
+  /** The answer came back from the resume journal (a stale read), not from a call this run made. */
+  cached?: boolean;
   sourceBasis?: string;
   nativeId?: string;
   freshness?: "current" | "stale" | "unknown";
@@ -444,6 +446,10 @@ export function header(
     startTime: number;
     endTime?: number;
     totalPausedMs?: number;
+    /** Agents answered from the resume journal rather than spawned. */
+    replayedCount?: number;
+    /** Node reads handed back stale from the resume journal rather than re-read. */
+    replayedNodeCount?: number;
   },
   meta: WorkflowMeta | undefined,
   groups: readonly PhaseGroup[],
@@ -464,13 +470,18 @@ export function header(
     totalAgents += group.totalCount;
   }
   totalAgents = Math.max(agentCount, totalAgents, doneAgents);
+  // Provenance, not progress: what a resumed run did not actually do.
+  const replayed: string[] = [];
+  if (task.replayedCount) replayed.push(`${task.replayedCount} ${plural(task.replayedCount, "agent")}`);
+  if (task.replayedNodeCount) replayed.push(`${task.replayedNodeCount} node ${plural(task.replayedNodeCount, "read")}`);
+  const replayText = replayed.length > 0 ? ` · replayed: ${replayed.join(", ")}` : "";
 
   // `meta` is author source and the task name follows it, so both are
   // untrusted terminal text for every surface that renders this header.
   return {
     name: sanitizeWorkbenchText(task.workflowName ?? meta?.name ?? task.summary ?? task.description ?? "workflow"),
     subtext: sanitizeWorkbenchText(meta?.description ?? task.description ?? task.summary ?? ""),
-    stats: `${doneAgents}/${totalAgents} ${plural(totalAgents, "agent")} · ${formatDuration(elapsedMs(task, now))}${suffix}`,
+    stats: `${doneAgents}/${totalAgents} ${plural(totalAgents, "agent")} · ${formatDuration(elapsedMs(task, now))}${replayText}${suffix}`,
   };
 }
 

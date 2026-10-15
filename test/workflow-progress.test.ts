@@ -377,6 +377,14 @@ describe("header", () => {
     expect(line.stats.endsWith(suffix)).toBe(true);
   });
 
+  it("names replayed agents and node reads from the resume journal", () => {
+    const groups = buildPhaseGroups([agentEntry({ index: 0, state: "done" })]);
+    expect(header({ ...task, replayedCount: 1, replayedNodeCount: 2 }, meta, groups, 1, 2000).stats).toBe("1/1 agent · 1s · replayed: 1 agent, 2 node reads");
+    expect(header({ ...task, replayedCount: 0, replayedNodeCount: 1 }, meta, groups, 1, 2000).stats).toBe("1/1 agent · 1s · replayed: 1 node read");
+    expect(header({ ...task, replayedCount: 2, replayedNodeCount: 0, status: "completed" }, meta, groups, 1, 2000).stats).toBe("1/1 agent · 1s · replayed: 2 agents · done");
+    expect(header({ ...task, replayedCount: 0, replayedNodeCount: 0 }, meta, groups, 1, 2000).stats).toBe("1/1 agent · 1s");
+  });
+
   it("adds no suffix while running", () => {
     const groups = buildPhaseGroups([agentEntry({ index: 0, state: "done" })]);
     expect(header(task, meta, groups, 1, 2000).stats).toBe("1/1 agent · 1s");

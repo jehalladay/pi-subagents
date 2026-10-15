@@ -159,6 +159,10 @@ export interface WorkflowCardTask {
   startTime: number;
   endTime?: number;
   totalPausedMs?: number;
+  /** Agents answered from the resume journal rather than spawned. */
+  replayedCount?: number;
+  /** Node reads handed back stale from the resume journal rather than re-read. */
+  replayedNodeCount?: number;
 }
 
 export interface WorkflowCardInput {
@@ -408,7 +412,7 @@ export function layoutWorkflowCard(input: WorkflowCardInput): WorkflowCardLine[]
     const glyph = node.state === "error" ? glyphs.cross : verified ? glyphs.tick : node.state === "done" ? "?" : glyphs.running;
     const outcome = node.domainStatus ?? node.error ?? node.resultPreview ?? "unknown";
     lines.push(clampLine([
-      { text: `  ${glyph} ${safeWorkflowTerminalText(node.label)} · ${safeWorkflowTerminalText(node.capabilityId)} · ${safeWorkflowTerminalText(outcome)}`,
+      { text: `  ${glyph} ${safeWorkflowTerminalText(node.label)} · ${safeWorkflowTerminalText(node.capabilityId)} · ${safeWorkflowTerminalText(outcome)}${node.cached ? ` · ${REPLAYED_ANNOTATION}` : ""}`,
         color: node.state === "error" ? "error" : "dim" },
     ], width));
   }

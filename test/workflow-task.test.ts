@@ -10,11 +10,14 @@
  */
 
 import { describe, expect, it, vi } from "vitest";
+import type { WorkflowJournalEntry } from "../src/workflow/journal.js";
 import type { WorkflowControl } from "../src/workflow/runtime.js";
 import {
   completeWorkflowTask,
   createWorkflowTask,
+  describeResumeJournal,
   failWorkflowTask,
+  formatWorkflowNotification,
   pauseWorkflowTask,
   resumeWorkflowTask,
   type WorkflowTask,
@@ -128,5 +131,41 @@ describe("settling a run", () => {
 
     expect(task.control).toBeUndefined();
     expect(task.status).toBe("failed");
+  });
+});
+
+describe("replay provenance in the task summary", () => {
+  const settled = (replayedCount: number, replayedNodeCount: number) => {
+    const task = createWorkflowTask({ id: "wf_abc123", script: "", startTime: 1_000, resumedFrom: "wf_prior1" });
+    completeWorkflowTask(task, { status: "completed", value: 1, meta: { name: "wf", description: "d" }, progress: [], agentCount: 2, replayedCount, replayedNodeCount });
+    return task;
+  };
+
+  it("names replayed agents and replayed node reads separately in the notification", () => {
+    const summary = formatWorkflowNotification(settled(1, 2), 2_000);
+    expect(summary).toContain("1 replayed from wf_prior1");
+    expect(summary).toContain("2 node reads replayed stale from wf_prior1");
+  });
+
+  it("says nothing about node reads when none were replayed", () => {
+    const summary = formatWorkflowNotification(settled(1, 0), 2_000);
+    expect(summary).toContain("1 replayed from wf_prior1");
+    expect(summary).not.toMatch(/node read/);
+  });
+
+  it("describes a resume journal by what it can replay and what will stop it", () => {
+    const entries: WorkflowJournalEntry[] = [
+      { index: 0, key: "a", ok: true, text: "agent answer" },
+      { index: 0, key: "r", ok: true, kind: "node", capabilityId: "record.read", effectClass: "read", text: "{}" },
+      { index: 1, key: "w", ok: true, kind: "node", capabilityId: "furnace.run.start", effectClass: "external" },
+      { index: 2, key: "u", ok: true, kind: "node", capabilityId: "legacy.op" },
+    ];
+    const text = describeResumeJournal("wf_prior1", entries);
+    expect(text).toContain("wf_prior1");
+    expect(text).toContain("1 recorded agent call");
+    expect(text).toContain("1 node read");
+    expect(text).toMatch(/1 journaled effect[^.]*furnace/);
+    expect(text).toMatch(/1 node call[^.]*without effect metadata/);
+    expect(describeResumeJournal("wf_prior1", [{ index: 0, key: "a", ok: true, text: "x" }])).not.toMatch(/journaled effect|without effect metadata|node read/);
   });
 });

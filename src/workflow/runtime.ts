@@ -372,6 +372,8 @@ export interface WorkflowRunResult {
   agentCount: number;
   /** How many of those came back from the journal instead of being spawned. */
   replayedCount: number;
+  /** Node reads handed back stale from the journal instead of re-read; never folded into agentCount. */
+  replayedNodeCount: number;
 }
 
 /* ------------------------------------------------------------------------- *
@@ -722,6 +724,7 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
   const journalResumes = agentJournal.some(entry => entry.resumed);
   let prefixIntact = host.replaySafe !== false && journalEntries.length > 0 && !journalResumes;
   let replayedCount = 0;
+  let replayedNodeCount = 0;
 
   /* --- live control ---------------------------------------------------- */
 
@@ -841,7 +844,7 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
       worker.postMessage({ type: "response", callId, ok, value, error, fatal, capabilityError, spent: spentOutputTokens });
     };
 
-    const finish = (result: Omit<WorkflowRunResult, "meta" | "progress" | "agentCount" | "replayedCount">) => {
+    const finish = (result: Omit<WorkflowRunResult, "meta" | "progress" | "agentCount" | "replayedCount" | "replayedNodeCount">) => {
       if (settled) return;
       settled = true;
       options.signal?.removeEventListener("abort", onAbort);
@@ -857,7 +860,7 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
       nodeSemaphore.drain();
       // Resolve only once the thread is actually down, so a caller that awaits
       // runWorkflow() is guaranteed not to be leaking one.
-      const settle = () => resolve({ ...result, meta, progress, agentCount, replayedCount });
+      const settle = () => resolve({ ...result, meta, progress, agentCount, replayedCount, replayedNodeCount });
       void worker.terminate().then(settle, settle);
     };
 
@@ -1361,12 +1364,15 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
       if (admission.kind === "replay") {
         // Before the semaphore, like a replayed agent: a cached answer is not
         // a provider running, so it must not hold a slot a live node could use.
+        replayedNodeCount++;
         const at = Date.now();
         emit([{ ...base, startedAt: at, lastProgressAt: at, durationMs: 0, state: "done",
           ...nativeEvidence(payload.capabilityId, admission.value),
           // Affirmatively not current: this is the resumed run's snapshot, not
           // an observation this run made. A live call reports "unknown".
           freshness: "stale",
+          // The row reads as done because the recorded read is; `cached` says it was not this run's call.
+          cached: true,
           resultPreview: preview(JSON.stringify(admission.value) ?? "null") }]);
         recordJournal?.({ kind: "node", index, key: admission.entry.key, ok: true,
           capabilityId: payload.capabilityId, effectClass: "read", text: admission.entry.text, ...basisMark });

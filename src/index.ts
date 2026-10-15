@@ -88,7 +88,7 @@ import { extractMeta, type WorkflowMeta, workflowCallName } from "./workflow/met
 import { type ClaudeNativeObservation, elapsedMs, type WorkflowAgentEntry } from "./workflow/progress.js";
 import { runWorkflow } from "./workflow/runtime.js";
 import { resolveWorkflowScript } from "./workflow/saved.js";
-import { completeWorkflowTask, createWorkflowTask, failWorkflowTask, formatWorkflowNotification, resolveResumeTarget, updateWorkflowProgressBatch, type WorkflowTask, workflowResultText, workflowRunId } from "./workflow/task.js";
+import { completeWorkflowTask, createWorkflowTask, describeResumeJournal, failWorkflowTask, formatWorkflowNotification, resolveResumeTarget, updateWorkflowProgressBatch, type WorkflowTask, workflowResultText, workflowRunId } from "./workflow/task.js";
 import { fullWorkflowToolDescription } from "./workflow/tool-description.js";
 import { isWorktreeIsolationEnabled, setWorktreeIsolationEnabled } from "./worktree.js";
 import { escapeXml } from "./xml.js";
@@ -2980,7 +2980,7 @@ Terse command-style prompts produce shallow, generic work.
             `Task ID: ${runId}\n` +
             (task.scriptPath ? `Script: ${task.scriptPath}\n` : "") +
             (task.resumedFrom !== undefined
-              ? `Resuming ${task.resumedFrom}: ${task.replay?.length ?? 0} recorded call(s) available to replay.\n`
+              ? `${describeResumeJournal(task.resumedFrom, task.replay ?? [])}\n`
               : params.resumeFromRunId !== undefined
                 ? `Nothing to replay from ${params.resumeFromRunId} — every agent runs live.\n`
                 : "") +
