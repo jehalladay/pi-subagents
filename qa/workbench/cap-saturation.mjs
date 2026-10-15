@@ -36,6 +36,11 @@ export const BOUNDARY_CAPS = Object.freeze([1_000, 2_000]);
 export const CONTROL_LIMITS = BENCH_ONLY_LIMITS;
 export const CAP_SAMPLING = Object.freeze({blocks: 8, keypressesPerBlock: 100, resizeSamples: 40});
 const EVENTS_AND_QUERY = Object.freeze({maxEvents: BENCH_ONLY_LIMITS.maxEvents, maxQuery: BENCH_ONLY_LIMITS.maxQuery});
+/** Production event and query-page defaults of the projection, stated beside the bench-only values so the header is self-contained. */
+const PRODUCTION_EVENTS_AND_QUERY = Object.freeze({maxEvents: 20_000, maxQuery: 100});
+/** Owner ruling F3 (wb-9x5.6): the cross-pass memory series mixes bench-only event and query limits with production-sized node caps. */
+export const MEMORY_COMPARABILITY = `non-comparable (bench-only limits ${EVENTS_AND_QUERY.maxEvents}/${EVENTS_AND_QUERY.maxQuery} vs production ${PRODUCTION_EVENTS_AND_QUERY.maxEvents.toLocaleString('en-US')}/${PRODUCTION_EVENTS_AND_QUERY.maxQuery})`;
+const UNLABELED_OVERFLOW = 'unlabeled-product-overflow';
 const VIEW_CYCLE = 4;
 const OVERFLOW_WORDS = /trunc|overflow|evict|dropp|not retained|omitted|capped/i;
 /** The two docs sections this receipt answers, quoted so the test can pin them against drift. */
@@ -191,6 +196,12 @@ function measurePass({entry, Projection, inspector, fixture, plan, gcAvailable})
   };
 }
 
+/** Overflowing passes when no frame of any view in any of them names the dropped remainder; empty when some pass labels it. */
+function unlabeledOverflowOf(passes) {
+  const overflowing = Object.values(passes).filter(pass => pass.overflow.occurred);
+  return overflowing.length > 0 && !overflowing.some(pass => pass.surface.inspectorLabelsOverflow) ? overflowing : [];
+}
+
 const rowMax = Math.max(...SIZES.map(size => size.rows));
 
 /** Series recomputed from the passes: visible rows vs nodes, timings at the boundary, memory vs retained. */
@@ -206,7 +217,8 @@ export function seriesOf(passes) {
       pass: pass.id, role: pass.role, capNodes: pass.cap.nodes, offeredNodes: pass.offered.nodes, retainedNodes: pass.retained.nodes,
       reducer: pass.navigation?.reducer ?? null, layout: pass.navigation?.layout ?? null, navigation: pass.navigation?.all ?? null, resize: pass.navigation?.resize ?? null,
     })),
-    memory: ordered.map(pass => ({pass: pass.id, capNodes: pass.cap.nodes, offeredNodes: pass.offered.nodes, retainedNodes: pass.retained.nodes, heapBytes: pass.memory.heapBytes, label: pass.memory.label})),
+    memoryComparability: MEMORY_COMPARABILITY,
+    memory: ordered.map(pass => ({pass: pass.id, capNodes: pass.cap.nodes, offeredNodes: pass.offered.nodes, retainedNodes: pass.retained.nodes, heapBytes: pass.memory.heapBytes, label: pass.memory.label, comparability: MEMORY_COMPARABILITY})),
   };
 }
 
@@ -287,7 +299,10 @@ export function assessCapSaturationReceipt(receipt) {
     unbounded.push({pass: small.id, rule: 'memory-not-bounded-by-projection', detail: `${small.memory.heapBytes} bytes with ${small.retained.nodes} nodes retained is not below ${full.memory.heapBytes} bytes with ${full.retained.nodes} retained`});
   }
   const realised = violations.length === 0;
-  const failed = silentDrops.length > 0 || unbounded.length > 0 || over.length > 0;
+  const strict = receipt.strict === true;
+  const unlabeled = unlabeledOverflowOf(passes);
+  const strictFindings = strict && unlabeled.length > 0 ? [{id: UNLABELED_OVERFLOW, detail: `${unlabeled.length} overflowing passes name no dropped remainder in any frame of any view; --strict treats operator-invisible overflow as a failure`}] : [];
+  const failed = silentDrops.length > 0 || unbounded.length > 0 || over.length > 0 || strictFindings.length > 0;
   const exitCode = !realised ? 2 : failed ? 1 : 0;
   return {
     target: {ms: NAVIGATION_TARGET_MS, statistic: 'p95', judged: 'navigation (reducer+layout) and resize of every pass', over},
@@ -295,7 +310,8 @@ export function assessCapSaturationReceipt(receipt) {
     violations,
     silentDrops,
     unbounded,
-    verdict: exitCode === 2 ? 'not-cap-saturation-shape' : silentDrops.length > 0 ? 'silent-drop' : unbounded.length > 0 ? 'unbounded' : over.length > 0 ? 'over-budget' : 'within-budget',
+    strictFindings,
+    verdict: exitCode === 2 ? 'not-cap-saturation-shape' : silentDrops.length > 0 ? 'silent-drop' : unbounded.length > 0 ? 'unbounded' : over.length > 0 ? 'over-budget' : strictFindings.length > 0 ? UNLABELED_OVERFLOW : 'within-budget',
     exitCode,
   };
 }
@@ -307,8 +323,8 @@ function findingsOf(passes, memoryJudged, runtimeNodeCalls) {
     {id: 'runtime-cap-modelled', detail: 'The runtime node-call cap is a closure constant in src/workflow/runtime.ts; this bench models it as a projection cap of the same size and does not start workflow workers.'},
   ];
   const overflowing = Object.values(passes).filter(pass => pass.overflow.occurred);
-  if (overflowing.length > 0 && !overflowing.some(pass => pass.surface.inspectorLabelsOverflow)) {
-    findings.push({id: 'unlabeled-product-overflow', detail: `No frame of any view in ${overflowing.length} overflowing passes names the dropped remainder; FIFO eviction is counted by this receipt only. Labeling or aggregation is a later src decision this receipt informs.`});
+  if (unlabeledOverflowOf(passes).length > 0) {
+    findings.push({id: UNLABELED_OVERFLOW, detail: `No frame of any view in ${overflowing.length} overflowing passes names the dropped remainder; FIFO eviction is counted by this receipt only. Plain mode records this finding and exits 0; --strict exits 1 until the inspector remainder line (wb-ea1) lands.`});
   }
   const edgeLoss = overflowing.filter(pass => pass.retained.edges < pass.afterRelations.edges);
   if (edgeLoss.length > 0) {
@@ -324,7 +340,7 @@ function findingsOf(passes, memoryJudged, runtimeNodeCalls) {
  * `inspector` is {initialInspectorState, layoutInspector, reduceInspectorKey}; `host` carries utc,
  * revision, node, arch, platform, cpus, cpuModel, toolchain, command and runtimeCaps {nodeCalls, agents}.
  */
-export function runCapSaturationBench({Projection, inspector, fixture, host, sampling = CAP_SAMPLING}) {
+export function runCapSaturationBench({Projection, inspector, fixture, host, sampling = CAP_SAMPLING, strict = false}) {
   const plan = {blocks: sampling.blocks, keypressesPerBlock: sampling.keypressesPerBlock, resizeSamples: sampling.resizeSamples};
   const gcAvailable = typeof globalThis.gc === 'function';
   const warm = warmupOf({Projection, inspector, fixture});
@@ -338,6 +354,17 @@ export function runCapSaturationBench({Projection, inspector, fixture, host, sam
     benchmark: 'inspector-cap-saturation',
     measured: true,
     aggregation: 'none: supernode aggregation, sharding and cap changes are later decisions this receipt informs',
+    strict: strict === true,
+    benchOnlyBounds: {
+      nodes: [...CAP_SERIES, CONTROL_LIMITS.maxNodes],
+      boundary: [...BOUNDARY_CAPS],
+      edgeRatio: 2,
+      events: EVENTS_AND_QUERY.maxEvents,
+      query: EVENTS_AND_QUERY.maxQuery,
+      productionEvents: PRODUCTION_EVENTS_AND_QUERY.maxEvents,
+      productionQuery: PRODUCTION_EVENTS_AND_QUERY.maxQuery,
+      source: 'hard-coded in qa/workbench/cap-saturation.mjs and qa/workbench/grouped-fixture.mjs (BENCH_ONLY_LIMITS); not read from configuration; stated here before any measurement',
+    },
     utc: host.utc,
     revision: host.revision,
     node: host.node,

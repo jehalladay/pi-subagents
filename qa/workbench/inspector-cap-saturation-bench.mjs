@@ -7,11 +7,15 @@
 // plan lives in qa/workbench/cap-saturation.mjs). ONE JSON receipt line is printed, and written to
 // $CAP_BENCH_RECEIPT when set, BEFORE the exit code is set:
 //   0  overflow was counted at every cap, memory followed the projection, and every p95 is <= 20 ms
+//      (plain mode records an unlabeled-product-overflow finding and still exits 0)
 //   1  measured, but overflow was dropped silently, the cap was exceeded, memory was unbounded or a
-//      p95 is over 20 ms: a finding, recorded, never tuned away
+//      p95 is over 20 ms: a finding, recorded, never tuned away; under --strict also when no frame of
+//      any view names the dropped remainder (unlabeled-product-overflow, owner ruling F1)
 //   2  the measurement is not this claim (wrong fixture shape, a missing or mislabelled pass, a changed
 //      production cap, an unsampled series)
 //   3  nothing could be measured (an exception, reported on stderr; no receipt)
+// --strict is the falsifier arm: the Forge command stays plain until the inspector remainder line
+// (wb-ea1) lands. The receipt header states the bench-only bounds (benchOnlyBounds) before any measurement.
 // The revision comes from $CAP_BENCH_REVISION (else "working-tree"). $CAP_BENCH_SEED, $CAP_BENCH_NODES,
 // $CAP_BENCH_DEPTH and $CAP_BENCH_TICKS override the fixture; any override below the W21 shape is still
 // measured and exits 2.
@@ -59,6 +63,7 @@ try {
     Projection: ObservationProjection,
     inspector: {initialInspectorState, layoutInspector, reduceInspectorKey},
     fixture,
+    strict: process.argv.includes('--strict'),
     host: {
       utc: new Date().toISOString(),
       revision: process.env.CAP_BENCH_REVISION ?? 'working-tree',

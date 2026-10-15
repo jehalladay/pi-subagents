@@ -71,6 +71,16 @@ interface Receipt {
   revision: string;
   toolchain: Record<string, string>;
   command: string;
+  strict?: boolean;
+  benchOnlyBounds?: {
+    nodes: number[];
+    boundary: number[];
+    events: number;
+    query: number;
+    productionEvents: number;
+    productionQuery: number;
+    source: string;
+  };
   docs: typeof DOC_QUOTES;
   caps: {
     production: {
@@ -88,7 +98,8 @@ interface Receipt {
   series: {
     visibleVsTotal: Array<{ pass: string; offeredNodes: number; retainedNodes: number; visibleRowsMax: number | null }>;
     timing: Array<{ pass: string; reducer: Distribution | null; layout: Distribution | null }>;
-    memory: Array<{ pass: string; retainedNodes: number; heapBytes: number }>;
+    memory: Array<{ pass: string; retainedNodes: number; heapBytes: number; comparability?: string }>;
+    memoryComparability?: string;
   };
   findings: Array<{ id: string; detail: string }>;
   target: { ms: number; statistic: string; over: string[] };
@@ -536,6 +547,75 @@ describe("W21-D honest exit semantics", () => {
     const argful = calm();
     passOf(argful, "production-default").cap.constructorArgs = 1;
     expect(rules(assess(argful).violations)).toContain("production-pass-not-default");
+  });
+});
+
+const NON_COMPARABLE = "non-comparable (bench-only limits 128/40 vs production 20,000/100)";
+const KEYS = (receipt: Receipt): string[] => Object.keys(receipt);
+
+describe("W21-D owner rulings F1/F3/F5 (wb-9x5.6 respin)", () => {
+  it("F1: records unlabeled-product-overflow and exits 0 in plain receipt mode", () => {
+    const plain = calm();
+    expect(plain.findings.some(finding => finding.id === "unlabeled-product-overflow")).toBe(true);
+    expect(plain.strict ?? false).toBe(false);
+    expect(assess(plain)).toMatchObject({ realised: true, exitCode: 0, verdict: "within-budget" });
+  });
+
+  it("F1: --strict exits 1 on the unlabeled-product-overflow finding and names it", () => {
+    const strict = { ...calm(), strict: true };
+    const result = assess(strict) as ReturnType<typeof assess> & { strictFindings?: Array<{ id: string }> };
+    expect(result.exitCode).toBe(1);
+    expect(result.verdict).toBe("unlabeled-product-overflow");
+    expect(result.strictFindings?.map(finding => finding.id)).toEqual(["unlabeled-product-overflow"]);
+    expect(exitCode(strict)).toBe(1);
+  });
+
+  it("F1: --strict recomputes the finding from the passes, so a stripped findings list cannot launder it", () => {
+    const forged = { ...calm(), strict: true, findings: [] as Receipt["findings"] };
+    expect(assess(forged).exitCode).toBe(1);
+  });
+
+  it("F1: --strict goes green once the inspector labels the overflow (the product fix)", () => {
+    const fixed = { ...calm(), strict: true };
+    for (const pass of Object.values(fixed.passes)) if (pass.overflow.occurred) pass.surface.inspectorLabelsOverflow = true;
+    expect(assess(fixed)).toMatchObject({ realised: true, exitCode: 0, verdict: "within-budget" });
+  });
+
+  it("F1: strict never masks an unrealised receipt (exit 2 stays 2)", () => {
+    const wrong = { ...calm(), strict: true };
+    wrong.fixture.snapshots = 10;
+    expect(assess(wrong).exitCode).toBe(2);
+  });
+
+  it("F1: the receipt records the strict flag it ran under, defaulting to plain", () => {
+    expect(realRun().receipt.strict).toBe(false);
+  });
+
+  it("F3: labels the cross-pass memory series non-comparable, at the series and on every entry", () => {
+    const { receipt } = realRun();
+    expect(receipt.series.memoryComparability).toBe(NON_COMPARABLE);
+    for (const entry of receipt.series.memory) expect(entry.comparability).toBe(NON_COMPARABLE);
+  });
+
+  it("F5: states the bench-only bounds in the receipt header, before any measurement", () => {
+    const { receipt } = realRun();
+    const bounds = receipt.benchOnlyBounds;
+    expect(bounds).toMatchObject({ events: 128, query: 40, productionEvents: 20_000, productionQuery: 100 });
+    expect(bounds?.nodes).toEqual([...CAP_SERIES, 12_000]);
+    expect(bounds?.boundary).toEqual([...BOUNDARY_CAPS]);
+    expect(bounds?.source).toMatch(/hard-coded/);
+    const keys = KEYS(receipt);
+    for (const measured of ["caps", "fixture", "sampling", "memory", "passes", "series", "findings"]) {
+      expect(keys.indexOf("benchOnlyBounds")).toBeGreaterThan(-1);
+      expect(keys.indexOf("benchOnlyBounds")).toBeLessThan(keys.indexOf(measured));
+    }
+  });
+
+  it("wires --strict through the thin CLI and keeps the Forge command plain", () => {
+    const text = readRepo("qa/workbench/inspector-cap-saturation-bench.mjs");
+    expect(text).toMatch(/process\.argv\.includes\('--strict'\)/);
+    expect(text).toMatch(/strict/);
+    expect(readRepo("forge.toml")).not.toMatch(/cap-saturation-bench\.mjs --strict/);
   });
 });
 
