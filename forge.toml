@@ -67,6 +67,9 @@ timeout = 180
 
 [build.commands.observation-recovery-bench]
 command = "node qa/workbench/observation-recovery-bench.mjs"
+
+[build.commands.inspector-grouped-bench]
+command = "node qa/workbench/inspector-grouped-bench.mjs"
 timeout = 300
 
 [build.commands.local-detached-shell]
