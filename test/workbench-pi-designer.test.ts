@@ -32,7 +32,7 @@ async function waitFor(predicate: () => boolean) {
   throw new Error("designer compare workflows did not finish in the test window");
 }
 it("names an unmeasured workspace source state as a cohort confound through the real tool, never a matched basis", async () => {
-  sandbox=hermeticDir({settings:{workflowsEnabled:true,workbench:{workflowAgentBackend:"claude",capabilityGrants:["workbench:design","workbench:observe"]}}});
+  sandbox=hermeticDir({nonRepo:true,settings:{workflowsEnabled:true,workbench:{workflowAgentBackend:"claude",capabilityGrants:["workbench:design","workbench:observe"]}}});
   const scriptPath=join(sandbox.dir,"compare.js");
   writeFileSync(scriptPath,'export const meta={name:"compare",description:"local"}; return 1;');
   const pi=makePi();subagentsExtension(pi.pi);const context=ctx({cwd:sandbox.dir});await pi.lifecycle.get("session_start")?.({},context);
