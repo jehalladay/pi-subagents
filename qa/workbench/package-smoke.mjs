@@ -3,10 +3,13 @@ import { spawnSync } from 'node:child_process';
 import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { buildPackageReceipt, bundledLockEntries, classifyPackedPaths } from './package-boundary.mjs';
 const root = process.cwd();
 const scratch = mkdtempSync(join(tmpdir(), 'pi-workbench-pack-'));
+const scratch2 = mkdtempSync(join(tmpdir(), 'pi-workbench-pack2-'));
 try {
-  const packed = spawnSync('npm', ['pack', '--ignore-scripts', '--json', '--pack-destination', scratch], {cwd: root, encoding: 'utf8'});
+  const packArgs = ['pack', '--ignore-scripts', '--json', '--pack-destination', scratch];
+  const packed = spawnSync('npm', packArgs, {cwd: root, encoding: 'utf8'});
   assert.equal(packed.status, 0, packed.stderr);
   const receipts = JSON.parse(packed.stdout);
   assert.equal(receipts.length, 1);
@@ -17,5 +20,22 @@ try {
   const manifest = JSON.parse(readFileSync(join(root,'package.json'),'utf8'));
   assert.equal(manifest.dependencies['@anthropic-ai/claude-agent-sdk'],'0.3.300');
   assert.ok(manifest.pi.extensions.includes('./src/index.ts'));
-  console.log(JSON.stringify({contract:'workbench.package-smoke/v1',fileCount:names.length,sha:receipts[0].shasum,integrity:receipts[0].integrity,privateStateIncluded:false}));
-} finally { rmSync(scratch, {recursive:true,force:true}); }
+  const bundled = bundledLockEntries(JSON.parse(readFileSync(join(root,'package-lock.json'),'utf8')));
+  const { violations, topLevel } = classifyPackedPaths(names, {bundledLockEntries: bundled});
+  assert.equal(violations.length, 0, `packed artifact boundary violated by ${violations.length} path(s):\n${violations.map(v => `  ${v.rule}: ${v.path}`).join('\n')}`);
+  const repacked = spawnSync('npm', ['pack', '--ignore-scripts', '--json', '--pack-destination', scratch2], {cwd: root, encoding: 'utf8'});
+  assert.equal(repacked.status, 0, repacked.stderr);
+  const second = JSON.parse(repacked.stdout)[0];
+  assert.ok(second.shasum === receipts[0].shasum && second.integrity === receipts[0].integrity, `pack is not deterministic: first shasum=${receipts[0].shasum} integrity=${receipts[0].integrity}; second shasum=${second.shasum} integrity=${second.integrity}`);
+  const run = (cmd, args) => spawnSync(cmd, args, {cwd: root, encoding: 'utf8'});
+  const head = run('git', ['rev-parse', 'HEAD']);
+  const known = head.status === 0 && head.stdout.trim().length > 0;
+  const porcelain = known ? run('git', ['status', '--porcelain']) : undefined;
+  const npmVersion = run('npm', ['--version']);
+  console.log(JSON.stringify(buildPackageReceipt({
+    fileCount: names.length, shasum: receipts[0].shasum, integrity: receipts[0].integrity,
+    git: {head: known ? head.stdout.trim() : null, porcelain: known && porcelain?.status === 0 ? porcelain.stdout : null},
+    node: process.version, npm: npmVersion.status === 0 ? npmVersion.stdout.trim() : 'unknown', platform: process.platform, arch: process.arch,
+    utc: new Date().toISOString(), command: `npm ${[...packArgs.slice(0, -1), "<scratch>"].join(" ")}`, topLevel, bundled,
+  })));
+} finally { rmSync(scratch, {recursive:true,force:true}); rmSync(scratch2, {recursive:true,force:true}); }
