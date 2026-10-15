@@ -95,8 +95,11 @@ const MAX_PROVIDER_NAME = 64;
 const MAX_PROVIDER_SCAN = 512;
 const OUTCOME_KEYS: readonly string[] = ["returned", "validation", "authorization", "unavailable", "transport", "uncertain-effect"];
 const ISO_INSTANT = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2}(?:\.\d{1,9})?)?(?:Z|[+-]\d{2}:\d{2})$/;
-/** Zero-width, bidi-mark, word-joiner, BOM and tag characters the shared stripper passes. */
-const INVISIBLE = /[­؜᠎​-‏⁠-⁯﻿￹-￻]|\udb40[\udc00-\udc7f]/g;
+/** Default-ignorable and format (Cf) characters: zero-width, bidi marks, word joiner, BOM, soft hyphen, variation
+ * selectors and tag characters. They are DELETED, never replaced, before redaction so none can split a credential. */
+const INVISIBLE = /[\p{Default_Ignorable_Code_Point}\p{Cf}\ufff9-\ufffb]/gu;
+/** Whitespace controls become ONE space; every other control is deleted by the shared stripper. */
+const WHITESPACE_CONTROLS = /[\t\n\v\f\r]+/g;
 
 const refused = (message: string): CapabilityError => new CapabilityError("validation", `Telemetry report refused: ${message}.`);
 
@@ -135,13 +138,14 @@ function suppliedOutcomes(value: unknown): TelemetryMetric<Record<string, number
   return measuredOf(copy, "supplied");
 }
 
-/** A provider name for display: unsafe sequences become spaces BEFORE the shared redactor runs so an escape glued to a
- * credential cannot hide it; the shared sanitizers then redact and strip, and the name is capped without cutting a
- * surrogate pair. Empty after sanitizing: undefined. */
+/** A provider name for display. Normalize ONCE (whitespace controls to one space; terminal sequences, every other
+ * C0/C1 control, bidi and default-ignorable characters deleted), then redact ONCE, then strip once more: nothing
+ * invisible is removed after redaction, so a credential split by an invisible or escape character cannot reassemble.
+ * The name is capped without cutting a surrogate pair. Empty after sanitizing: undefined. */
 function providerName(raw: unknown): string | undefined {
   if (typeof raw !== "string") return undefined;
-  const spaced = stripUnsafeText(raw.slice(0, MAX_PROVIDER_SCAN), " ");
-  const shown = stripUnsafeText(redactWorkbenchText(spaced)).replace(INVISIBLE, "").replace(/\s+/g, " ").trim();
+  const normalized = stripUnsafeText(raw.slice(0, MAX_PROVIDER_SCAN).replace(WHITESPACE_CONTROLS, " ")).replace(INVISIBLE, "");
+  const shown = stripUnsafeText(redactWorkbenchText(normalized)).replace(/\s+/g, " ").trim();
   if (shown === "") return undefined;
   if (shown.length <= MAX_PROVIDER_NAME) return shown;
   let end = MAX_PROVIDER_NAME;
@@ -242,28 +246,54 @@ export interface TelemetryEvent {
   contract: typeof TELEMETRY_EVENT_CONTRACT;
   kind: "operations.report";
   report: OperationsTelemetry;
+  /** Monotonic count of events this emitter dropped before this one; absent until the first drop. */
+  droppedEvents?: number;
 }
 export interface TelemetrySink { emit(event: TelemetryEvent): void }
 export interface TelemetryEmitOptions {
   /** Telemetry is opt-in: absent or false emits nothing. */
   enabled?: boolean;
-  /** Serialized byte cap for one event; default 8192. */
+  /** Serialized cap in UTF-8 bytes for one event; default 8192. */
   maxBytes?: number;
 }
 export type TelemetryEmitResult = "disabled" | "emitted" | "dropped-oversize" | "dropped-sink-error";
+export interface TelemetryEmitter {
+  emit(report: OperationsTelemetry): TelemetryEmitResult;
+  /** Events this emitter has dropped (oversize or sink error); never decreases. */
+  droppedEvents(): number;
+}
 const DEFAULT_EVENT_BYTES = 8192;
+const utf8Bytes = (text: string): number => new TextEncoder().encode(text).length;
 
-/** Deliver one report to an injected sink when enabled. Never writes to the console, a file or the network itself; an
- * oversized event or a throwing sink is dropped and reported as such, without echoing the sink's error text. */
-export function emitOperationsTelemetry(report: OperationsTelemetry, sink: TelemetrySink, options: TelemetryEmitOptions = {}): TelemetryEmitResult {
-  if (options.enabled !== true) return "disabled";
-  const event: TelemetryEvent = deepFreeze({ contract: TELEMETRY_EVENT_CONTRACT, kind: "operations.report", report });
+/** A stateful emitter over an injected sink. It never writes to the console, a file or the network itself; an oversized
+ * event (measured in UTF-8 bytes) or a throwing sink is dropped and counted, and the next delivered event carries the
+ * running dropped count. The sink's error text is never echoed. */
+export function createTelemetryEmitter(sink: TelemetrySink, options: TelemetryEmitOptions = {}): TelemetryEmitter {
   const cap = options.maxBytes !== undefined && Number.isSafeInteger(options.maxBytes) && options.maxBytes > 0 ? options.maxBytes : DEFAULT_EVENT_BYTES;
-  if (JSON.stringify(event).length > cap) return "dropped-oversize";
-  try {
-    sink.emit(event);
-  } catch {
-    return "dropped-sink-error";
-  }
-  return "emitted";
+  let dropped = 0;
+  return {
+    droppedEvents: () => dropped,
+    emit(report: OperationsTelemetry): TelemetryEmitResult {
+      if (options.enabled !== true) return "disabled";
+      const event: TelemetryEvent = deepFreeze({
+        contract: TELEMETRY_EVENT_CONTRACT, kind: "operations.report" as const, report, ...(dropped > 0 ? { droppedEvents: dropped } : {}),
+      });
+      if (utf8Bytes(JSON.stringify(event)) > cap) {
+        dropped += 1;
+        return "dropped-oversize";
+      }
+      try {
+        sink.emit(event);
+      } catch {
+        dropped += 1;
+        return "dropped-sink-error";
+      }
+      return "emitted";
+    },
+  };
+}
+
+/** Deliver one report to an injected sink when enabled (a one-shot emitter; use createTelemetryEmitter to count drops). */
+export function emitOperationsTelemetry(report: OperationsTelemetry, sink: TelemetrySink, options: TelemetryEmitOptions = {}): TelemetryEmitResult {
+  return createTelemetryEmitter(sink, options).emit(report);
 }

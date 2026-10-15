@@ -10,7 +10,7 @@ import {
   type NativeRef, type ObservationEvent, ObservationProjection, type ObservationScope, type Presentation,
 } from "../src/workbench/observation.js";
 import {
-  buildOperationsTelemetry, emitOperationsTelemetry, type OperationsTelemetry, TELEMETRY_CLOCK_CAVEAT,
+  buildOperationsTelemetry, createTelemetryEmitter, emitOperationsTelemetry, type OperationsTelemetry, TELEMETRY_CLOCK_CAVEAT,
   TELEMETRY_CONTRACT, type TelemetryEvent, type TelemetryMetric,
 } from "../src/workbench/telemetry.js";
 
@@ -238,7 +238,7 @@ describe("B3 docs/workbench/09 § Observation event envelope: event lag with an 
     const lag = measured(build(view).eventLag).value;
     expect(lag.providers).toEqual(["[REDACTED]", "furnace", "x".repeat(64)]);
     const json = JSON.stringify(lag);
-    expect(json).not.toMatch(/\u001b|​|abc123|Bearer/);
+    expect(json).not.toMatch(/\u001b|\u200b|abc123|Bearer/);
     const crowd = new ObservationProjection();
     for (let i = 0; i < 40; i++) ingest(crowd, { id: `p${i}`, provider: `prov-${String(i).padStart(2, "0")}`, sourceTimestamp: at(-2), observedAt: at(-1) });
     const many = measured(build(crowd).eventLag).value;
@@ -419,5 +419,134 @@ describe("B8 Sr. Engineer ruling: opt-in, bounded, injected sink; no console, fi
     expect(fetchSpy).not.toHaveBeenCalled();
     log.mockRestore(); error.mockRestore(); fetchSpy.mockRestore();
     expect(MODULE).not.toMatch(/console\.|["']node:|fetch\(/);
+  });
+});
+
+const CREDENTIAL = "ABCDEFGHIJ0123456789";
+/** wb-cax.13 respin U1 (gate probe): an invisible character inside a credential prefix or keyword stops the shared redactor
+ * matching; stripping it AFTER redaction reassembled the credential in the report. Normalize, redact once, strip once. */
+const SPLIT_CREDENTIALS: ReadonlyArray<readonly [string, string]> = [
+  ["zero-width space inside the sk-ant- prefix", `sk-ant-\u200bapi03-${CREDENTIAL}`],
+  ["word joiner inside the sk- prefix", `sk\u2060-ant-api03-${CREDENTIAL}`],
+  ["soft hyphen inside Bearer", "Bea\u00adrer abc123secret"],
+  ["zero-width space inside Bearer", "Bear\u200ber abc123secret"],
+  ["zero-width space before the password separator", "password\u200b=hunter2hunter2"],
+  ["bidi override inside the sk-ant- prefix", `sk-ant-\u202eapi03-${CREDENTIAL}`],
+  ["C1 next-line inside the sk-ant- prefix", `sk-ant-\u0085api03-${CREDENTIAL}`],
+  ["Arabic letter mark inside a ghp_ prefix", `ghp_\u061c${CREDENTIAL}`],
+];
+
+describe("C1 wb-cax.13 respin U1: split credentials never reassemble in the report", () => {
+  it.each(SPLIT_CREDENTIALS)("redacts %s through a real projection", (_label, provider) => {
+    const view = new ObservationProjection();
+    ingest(view, { id: "1", provider, sourceTimestamp: at(-2), observedAt: at(-1) });
+    const lag = measured(build(view).eventLag).value;
+    const json = JSON.stringify(build(view));
+    for (const secret of [CREDENTIAL, "abc123secret", "hunter2hunter2", "api03"]) expect(json, secret).not.toContain(secret);
+    expect(lag.providers.length).toBe(1);
+    expect(lag.providers[0]).toMatch(/\[REDACTED\]/);
+  });
+
+  it("control: a plain credential provider name becomes [REDACTED]", () => {
+    const view = new ObservationProjection();
+    ingest(view, { id: "1", provider: `sk-ant-api03-${CREDENTIAL}`, sourceTimestamp: at(-2), observedAt: at(-1) });
+    expect(measured(build(view).eventLag).value.providers).toEqual(["[REDACTED]"]);
+  });
+
+  it("redacts a credential split by an escape sequence fed through a structural projection (the real one refuses ESC)", () => {
+    const event = (provider: string): ObservationEvent => ({
+      projectionEventId: "s1", source: ref(provider, "run", "src"), scope: alice, observedAt: at(-1), kind: "native.event", sourceTimestamp: at(-2),
+    });
+    const structural = (provider: string): Parameters<typeof buildOperationsTelemetry>[0] => ({
+      query: () => ({ nodes: [], truncated: false }) as never,
+      stats: () => ({ nodes: 0, events: 1, edges: 0 }),
+      events: () => ({ events: [event(provider)], truncated: false, completeness: "complete" }),
+    });
+    const split = buildOperationsTelemetry(structural(`sk-ant-\u001b[31mapi03-${CREDENTIAL}`), { scope: alice, now: T });
+    expect(JSON.stringify(split)).not.toContain(CREDENTIAL);
+    expect(measured(split.eventLag).value.providers).toEqual(["[REDACTED]"]);
+  });
+});
+
+describe("C2 wb-cax.13 respin U3: terminal escapes and invisibles are removed from provider names", () => {
+  it("renders 'fur<ESC>[31mnace<ZWSP>' as 'furnace' with no escape byte (kills the strip-removal mutant)", () => {
+    const event: ObservationEvent = {
+      projectionEventId: "s1", source: ref("fur\u001b[31mnace\u200b", "run", "src"), scope: alice, observedAt: at(-1), kind: "native.event", sourceTimestamp: at(-2),
+    };
+    const report = buildOperationsTelemetry(
+      { query: () => ({ nodes: [], truncated: false }) as never, stats: () => ({ nodes: 0, events: 1, edges: 0 }), events: () => ({ events: [event], truncated: false, completeness: "complete" }) },
+      { scope: alice, now: T },
+    );
+    const providers = measured(report.eventLag).value.providers;
+    expect(providers).toEqual(["furnace"]);
+    expect(JSON.stringify(report)).not.toContain("\\u001b");
+    expect(providers.join("")).not.toMatch(/[\u0000-\u001f]/);
+  });
+});
+
+describe("C3 wb-cax.13 respin U2a: dropped telemetry events are countable downstream", () => {
+  const reportOf = (): OperationsTelemetry => build(fixtureView());
+  it("carries a monotonic droppedEvents count on the next emitted event, and the emitter exposes it", () => {
+    const received: TelemetryEvent[] = [];
+    const emitter = createTelemetryEmitter({ emit: event => { received.push(event); } }, { enabled: true, maxBytes: 16 * 1024 });
+    expect(emitter.droppedEvents()).toBe(0);
+    const tiny = createTelemetryEmitter({ emit: event => { received.push(event); } }, { enabled: true, maxBytes: 64 });
+    expect(tiny.emit(reportOf())).toBe("dropped-oversize");
+    expect(tiny.emit(reportOf())).toBe("dropped-oversize");
+    expect(tiny.emit(reportOf())).toBe("dropped-oversize");
+    expect(tiny.droppedEvents()).toBe(3);
+    expect(received).toEqual([]);
+  });
+
+  it("stamps the running dropped count on the first event delivered after drops and never decreases", () => {
+    const received: TelemetryEvent[] = [];
+    let fail = true;
+    const sink = { emit: (event: TelemetryEvent): void => { if (fail) throw new Error("sink down"); received.push(event); } };
+    const emitter = createTelemetryEmitter(sink, { enabled: true });
+    expect(emitter.emit(reportOf())).toBe("dropped-sink-error");
+    expect(emitter.emit(reportOf())).toBe("dropped-sink-error");
+    fail = false;
+    expect(emitter.emit(reportOf())).toBe("emitted");
+    expect(emitter.emit(reportOf())).toBe("emitted");
+    expect(received.map(event => event.droppedEvents)).toEqual([2, 2]);
+    expect(emitter.droppedEvents()).toBe(2);
+  });
+
+  it("omits droppedEvents on an event delivered before any drop and counts nothing when disabled", () => {
+    const received: TelemetryEvent[] = [];
+    const emitter = createTelemetryEmitter({ emit: event => { received.push(event); } }, { enabled: true });
+    expect(emitter.emit(reportOf())).toBe("emitted");
+    expect(Object.keys(received[0] ?? {}).sort()).toEqual(["contract", "kind", "report"]);
+    const off = createTelemetryEmitter({ emit: event => { received.push(event); } }, {});
+    expect(off.emit(reportOf())).toBe("disabled");
+    expect(off.droppedEvents()).toBe(0);
+  });
+});
+
+describe("C4 wb-cax.13 respin U2b: the serialized cap counts UTF-8 bytes, not UTF-16 code units", () => {
+  it("drops a non-ASCII event whose UTF-8 size exceeds maxBytes though its UTF-16 length does not", () => {
+    const view = new ObservationProjection();
+    for (let i = 0; i < 16; i++) {
+      ingest(view, { id: `cjk${i}`, provider: `${"\u63d0\u4f9b\u8005".repeat(6)}${String(i).padStart(2, "0")}`, sourceTimestamp: at(-2), observedAt: at(-1) });
+    }
+    const report = build(view);
+    const event = { contract: "workbench.telemetry.event/v1", kind: "operations.report", report };
+    const units = JSON.stringify(event).length;
+    const bytes = new TextEncoder().encode(JSON.stringify(event)).length;
+    expect(bytes).toBeGreaterThan(units + 500);
+    const received: TelemetryEvent[] = [];
+    const sink = { emit: (delivered: TelemetryEvent): void => { received.push(delivered); } };
+    expect(emitOperationsTelemetry(report, sink, { enabled: true, maxBytes: units })).toBe("dropped-oversize");
+    expect(received).toEqual([]);
+    expect(emitOperationsTelemetry(report, sink, { enabled: true, maxBytes: bytes })).toBe("emitted");
+    expect(received).toHaveLength(1);
+  });
+});
+
+describe("C5 wb-cax.13 respin S1: the module and its test carry no raw invisible or bidi code points", () => {
+  it("keeps telemetry.ts and this test escape-only for format characters", () => {
+    const raw = /[\u00ad\u061c\u180e\u200b-\u200f\u202a-\u202e\u2060-\u206f\ufeff\ufff9-\ufffb]/;
+    expect(raw.test(MODULE)).toBe(false);
+    expect(raw.test(readFileSync(new URL("./workbench-telemetry.test.ts", import.meta.url), "utf8"))).toBe(false);
   });
 });
