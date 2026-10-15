@@ -1,0 +1,80 @@
+#!/usr/bin/env node
+/**
+ * headless-host-census.mjs — module-graph census of the headless detached host (wb-cax.19).
+ *
+ * Spawns headless-census-child.mjs with stdin/stdout/stderr piped (no TTY), which records
+ * every module the built dist/workbench/hosts/local-detached.js transitively loads while it
+ * is imported, constructed (deterministic backend, empty registry, no grants) and asked to
+ * validate a trivial script. Prints a `workbench.headless-census/v1` receipt and exits
+ * 0 (pass), 1 (findings, including an inactive tracer) or 2 (could not measure).
+ *
+ *   node qa/workbench/headless-host-census.mjs [--dist-root <dir containing dist/>] [--out <file>]
+ *
+ * Measurement only: no Pi session, no socket, no detached host process (that lives in
+ * qa/workbench/local-detached-client.mjs). Needs a built dist (`npm run build`).
+ */
+import { spawnSync } from "node:child_process";
+import { existsSync, writeFileSync } from "node:fs";
+import { dirname, join, resolve } from "node:path";
+import { fileURLToPath, pathToFileURL } from "node:url";
+import { buildReceipt, exitCodeFor } from "./headless-census-receipt.mjs";
+
+const here = dirname(fileURLToPath(import.meta.url));
+const packageRoot = resolve(here, "../..");
+const args = process.argv.slice(2);
+
+function option(name) {
+  const at = args.indexOf(name);
+  return at === -1 ? undefined : args[at + 1];
+}
+
+const distRoot = resolve(option("--dist-root") ?? packageRoot);
+const out = option("--out");
+const entry = join(distRoot, "dist/workbench/hosts/local-detached.js");
+if (!existsSync(entry)) {
+  console.error(`headless census: ${entry} not found; run \`npm run build\` first`);
+  process.exit(2);
+}
+
+const child = spawnSync(process.execPath, [join(here, "headless-census-child.mjs"), distRoot], {
+  cwd: distRoot,
+  input: "",
+  encoding: "utf8",
+  stdio: ["pipe", "pipe", "pipe"],
+  maxBuffer: 256 * 1024 * 1024,
+  env: { ...process.env, PI_CODING_AGENT_DIR: process.env.PI_CODING_AGENT_DIR ?? "/nonexistent-pi-agent-dir" },
+});
+if (child.status !== 0) {
+  console.error(child.stderr || `headless census child exited ${child.status ?? child.signal}`);
+  process.exit(2);
+}
+let measured;
+try {
+  measured = JSON.parse(child.stdout);
+} catch {
+  console.error("headless census: child output was not JSON");
+  process.exit(2);
+}
+
+function git(...gitArgs) {
+  const result = spawnSync("git", ["-C", packageRoot, ...gitArgs], { encoding: "utf8" });
+  return result.status === 0 ? result.stdout.trim() : undefined;
+}
+
+const receipt = buildReceipt({
+  edges: measured.edges,
+  entryUrl: measured.entryUrl,
+  root: pathToFileURL(`${distRoot}/`).href,
+  ttyFree: measured.ttyFree,
+  utc: new Date().toISOString().replace(/\.\d+Z$/, "Z"),
+  revision: git("rev-parse", "HEAD") ?? "unknown",
+  node: process.version,
+  worktreeClean: git("status", "--porcelain") === "",
+});
+const text = `${JSON.stringify(receipt, null, 2)}\n`;
+if (out) writeFileSync(resolve(out), text);
+process.stdout.write(text);
+for (const finding of receipt.findings) {
+  console.error(`${finding.rule}: ${finding.module}${finding.chain.length > 0 ? ` <- ${[...finding.chain].reverse().slice(1).join(" <- ")}` : ""}${finding.detail ? ` (${finding.detail})` : ""}`);
+}
+process.exit(exitCodeFor(receipt));
