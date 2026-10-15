@@ -1,0 +1,455 @@
+/** wb-6ze.26 (W15-B4/VC-5): the inspector timeline view renders the workbench.timeline/v1 lane model when
+ * InspectorModel.timeline is supplied. Each describe block quotes docs/workbench through the bead's acceptance criteria T1-T7
+ * plus the owner-approved zoom-clamp constraint. The renderer is a pure layout: every case builds a real ObservationProjection
+ * (and, where cell counts matter, a real TimelineModel from buildTimelineLanes) and never touches a TTY, provider or network. */
+import { createHash } from "node:crypto";
+import { readFileSync } from "node:fs";
+import { visibleWidth } from "@earendil-works/pi-tui";
+import { describe, expect, it } from "vitest";
+import {
+  type InspectorModel,
+  type InspectorState,
+  type InspectorView,
+  initialInspectorState,
+  layoutInspector,
+  reduceInspectorKey,
+} from "../src/ui/workflow-inspector.js";
+import { type NativeRef, ObservationProjection, type ObservationScope } from "../src/workbench/observation.js";
+import {
+  buildTimelineLanes,
+  MAX_ZOOM,
+  TIMELINE_CONTRACT,
+  type TimelineLane,
+  type TimelineModel,
+  type TimelineNote,
+  type TimelineRow,
+} from "../src/workbench/timeline.js";
+
+const scope: ObservationScope = { workspace: "workspace", principal: "reader" };
+const INVOCATION = "workflow-1";
+const ref = (provider: string, id: string): NativeRef => ({ provider, type: "operation", id });
+const keyOf = (r: NativeRef): string => JSON.stringify([scope.workspace, scope.principal, r.provider, r.type, r.scope ?? "", r.id]);
+const at = (seconds: number): string => `2026-10-15T00:${String(Math.floor(seconds / 60)).padStart(2, "0")}:${String(seconds % 60).padStart(2, "0")}Z`;
+const presentation = (title: string) => ({ title, type: "sdk-operation" as const, statusText: "running", statusTone: "active" as const });
+
+interface Seed {
+  provider: string;
+  id: string;
+  title: string;
+  interval?: { startedAt: string; endedAt?: string };
+}
+const SEEDS: readonly Seed[] = [
+  { provider: "furnace", id: "a", title: "Alpha closed", interval: { startedAt: at(0), endedAt: at(6) } },
+  { provider: "furnace", id: "b", title: "Bravo open", interval: { startedAt: at(2) } },
+  { provider: "forge", id: "c", title: "Charlie none" },
+  { provider: "forge", id: "d", title: "Delta closed", interval: { startedAt: at(1), endedAt: at(3) } },
+];
+function projectionOf(seeds: readonly Seed[]): ObservationProjection {
+  const projection = new ObservationProjection({ maxEvents: 16, maxNodes: 1200, maxEdges: 1200, maxQuery: 40 });
+  for (const seed of seeds) {
+    projection.refresh({
+      source: ref(seed.provider, seed.id),
+      scope,
+      capturedAt: at(0),
+      observedAt: at(0),
+      node: presentation(seed.title),
+      trace: { invocationId: INVOCATION },
+      coverage: "partial",
+      ...(seed.interval ? { interval: seed.interval } : {}),
+    });
+  }
+  return projection;
+}
+const modelOf = (projection: ObservationProjection, timeline?: TimelineModel): InspectorModel => ({
+  projection,
+  scope,
+  invocationId: INVOCATION,
+  title: "Timeline workflow",
+  status: "running",
+  ...(timeline ? { timeline } : {}),
+});
+const realTimeline = (projection: ObservationProjection, zoom = 1, pan = 0, columns = 30): TimelineModel =>
+  buildTimelineLanes(projection, { scope, invocationId: INVOCATION, offset: 0, limit: 40, zoom, pan, columns });
+const row = (seed: Seed, over: Partial<TimelineRow> = {}): TimelineRow => ({
+  key: keyOf(ref(seed.provider, seed.id)),
+  nativeRef: ref(seed.provider, seed.id),
+  title: seed.title,
+  tone: "active",
+  freshness: "current",
+  timing: { kind: "unavailable", reason: "no-source-interval" },
+  bar: null,
+  ...over,
+});
+const lane = (key: string, label: string, basis: TimelineLane["basis"], confirmed: boolean, rows: TimelineRow[]): TimelineLane => ({ key, label, basis, confirmed, rows });
+const closedRow = (seed: Seed, offsetCells: number, lengthCells: number, durationMs: number, flags: Partial<NonNullable<TimelineRow["bar"]>> = {}): TimelineRow =>
+  row(seed, {
+    timing: { kind: "closed", startedAt: at(0), endedAt: at(1), durationMs },
+    bar: { offsetCells, lengthCells, clippedLeft: false, clippedRight: false, openEnded: false, ...flags },
+  });
+function handModel(over: Partial<TimelineModel> = {}): TimelineModel {
+  return {
+    contract: TIMELINE_CONTRACT,
+    revision: 1,
+    topologyRevision: 1,
+    origin: { startedAt: at(0), basis: "earliest-observed-start" },
+    span: { ms: 6000, complete: true },
+    lanes: [],
+    concurrency: { maxMeasured: 2, basis: "source-intervals-only", countsOpenIntervals: true },
+    notes: [],
+    truncated: { lanes: false, rows: false, relations: false, window: false },
+    ...over,
+  };
+}
+const timelineState = (over: Partial<InspectorState> = {}): InspectorState => ({ ...initialInspectorState(), view: "timeline", ...over });
+const render = (model: InspectorModel, state: InspectorState, width = 120, rows = 40, ascii = true): string[] => layoutInspector(model, state, { width, rows, ascii });
+const barOf = (line: string, ascii = true): { offset: number; glyphs: string } | undefined => {
+  const mark = ascii ? "|" : "│";
+  const at1 = line.indexOf(mark);
+  if (at1 < 0) return undefined;
+  const rest = line.slice(at1 + 1).replace(/\s+$/u, "");
+  return { offset: rest.length - rest.trimStart().length, glyphs: rest.trimStart() };
+};
+
+describe("T1 lanes, not flat lines", () => {
+  // docs/workbench/10 § Four views, Timeline: "relative interval lanes grouped by owner/phase/provider, zoom and horizontal pan,
+  // observed waiting/executing/blocked periods and concurrency."
+  it("prints one header per lane with label, basis, confirmed flag and row count, rows in model order", () => {
+    const [a, b, c, d] = SEEDS;
+    const timeline = handModel({
+      lanes: [lane("l1", "Run one", "ownership", true, [closedRow(a, 0, 6, 6000), row(b)]), lane("l2", "forge", "provider", false, [row(c), closedRow(d, 1, 2, 2000)])],
+    });
+    const lines = render(modelOf(projectionOf(SEEDS), timeline), timelineState());
+    const text = lines.join("\n");
+    const header1 = lines.findIndex((line) => line.includes("Run one") && line.includes("ownership") && line.includes("confirmed") && !line.includes("unconfirmed"));
+    const header2 = lines.findIndex((line) => line.includes("forge") && line.includes("provider") && line.includes("unconfirmed"));
+    expect(header1).toBeGreaterThan(-1);
+    expect(header2).toBeGreaterThan(header1);
+    expect(lines[header1]).toMatch(/2 rows/);
+    const order = ["Alpha closed", "Bravo open", "Charlie none", "Delta closed"].map((title) => lines.findIndex((line) => line.includes(title)));
+    expect([...order].sort((x, y) => x - y)).toEqual(order);
+    expect(order[1]).toBeLessThan(header2);
+    expect(order[2]).toBeGreaterThan(header2);
+    expect(text).not.toMatch(/Source intervals only [·?] zoom/);
+  });
+  it("uses the model's lane order and membership, never re-deriving them from the projection", () => {
+    const [a, b] = SEEDS;
+    const timeline = handModel({ lanes: [lane("only", "Custom lane", "grouping", false, [row(b)])] });
+    const text = render(modelOf(projectionOf(SEEDS), timeline), timelineState()).join("\n");
+    expect(text).toContain("Custom lane");
+    expect(text).toContain(b.title);
+    expect(text).not.toContain(a.title);
+  });
+});
+
+describe("T2 no timing from text", () => {
+  // "Never infer exact timing from text or assume clocks agree; note uncertain clocks or event gaps."
+  it("draws bars from TimelineBar cells only: offset spaces, lengthCells glyphs, clipped edges marked", () => {
+    const [a, b, c, d] = SEEDS;
+    const timeline = handModel({
+      lanes: [
+        lane("l", "mix", "provider", true, [
+          closedRow(a, 3, 7, 6000),
+          closedRow(b, 0, 5, 1234, { clippedLeft: true }),
+          closedRow(c, 2, 4, 5, { clippedRight: true }),
+          closedRow(d, 9, 1, 9),
+        ]),
+      ],
+    });
+    const lines = render(modelOf(projectionOf(SEEDS), timeline), timelineState());
+    const bars = [a, b, c, d].map((seed) => barOf(lines.find((line) => line.includes(seed.title)) ?? "")!);
+    expect(bars.map((bar) => bar.offset)).toEqual([3, 0, 2, 9]);
+    expect(bars.map((bar) => bar.glyphs.length)).toEqual([7, 5, 4, 1]);
+    expect(bars[0].glyphs).toBe("#######");
+    expect(bars[1].glyphs.startsWith("<")).toBe(true);
+    expect(bars[2].glyphs.endsWith(">")).toBe(true);
+    const unicode = render(modelOf(projectionOf(SEEDS), timeline), timelineState(), 120, 40, false);
+    const uni = [a, b].map((seed) => barOf(unicode.find((line) => line.includes(seed.title)) ?? "", false)!);
+    expect(uni.map((bar) => [...bar.glyphs].length)).toEqual([7, 5]);
+    expect(uni[1].glyphs.startsWith("◀")).toBe(true);
+  });
+  it("shows the model's durationMs for closed rows, 'open' for open rows and the model's reason for unavailable rows", () => {
+    const [a, b, c] = SEEDS;
+    const open = row(b, { timing: { kind: "open", startedAt: at(2) }, bar: { offsetCells: 2, lengthCells: 6, clippedLeft: false, clippedRight: true, openEnded: true } });
+    const timeline = handModel({ lanes: [lane("l", "mix", "provider", true, [closedRow(a, 0, 6, 6000), open, row(c)])] });
+    const lines = render(modelOf(projectionOf(SEEDS), timeline), timelineState());
+    const text = lines.join("\n");
+    expect(lines.find((line) => line.includes(a.title))).toContain("6000ms");
+    const openLine = lines.find((line) => line.includes(b.title)) ?? "";
+    expect(openLine).toMatch(/\bopen\b/);
+    expect(openLine).not.toMatch(/timing unavailable/);
+    expect(barOf(openLine)?.glyphs.length).toBe(6);
+    expect(barOf(openLine)?.glyphs.endsWith("~")).toBe(true);
+    expect(lines.find((line) => line.includes(c.title))).toContain("no-source-interval");
+    expect(text).not.toMatch(/timing unavailable/);
+    expect(text).not.toContain("Waiting/blocked/executing lanes unavailable without producer interval kinds.");
+  });
+  it("renders the real model's open interval open and its cell counts equal lengthCells", () => {
+    const projection = projectionOf(SEEDS);
+    const timeline = realTimeline(projection, 2, 0, 40);
+    const lines = render(modelOf(projection, timeline), timelineState());
+    const rows = timeline.lanes.flatMap((l) => l.rows);
+    expect(rows.length).toBe(4);
+    for (const r of rows) {
+      const line = lines.find((candidate) => candidate.includes(r.title)) ?? "";
+      if (r.bar === null) {
+        expect(barOf(line)).toBeUndefined();
+        continue;
+      }
+      const bar = barOf(line)!;
+      expect(bar.offset).toBe(r.bar.offsetCells);
+      expect(bar.glyphs.length).toBe(r.bar.lengthCells);
+      if (r.timing.kind === "open") expect(line).not.toMatch(/timing unavailable/);
+    }
+  });
+  it("the timeline model branch does no timing arithmetic and never builds a model itself", () => {
+    const source = readFileSync(new URL("../src/ui/workflow-inspector.ts", import.meta.url), "utf8");
+    const start = source.indexOf("function timelineModelLines");
+    expect(start).toBeGreaterThan(-1);
+    const next = source.indexOf("\n/** ", start + 10);
+    const branch = source.slice(start, next > start ? next : undefined);
+    expect(branch).not.toMatch(/Date\.(parse|now)|new Date|performance\.now/);
+    expect(branch).not.toMatch(/state\.pan|buildTimelineLanes/);
+    expect(branch).not.toMatch(/\*\s*state\.zoom|state\.zoom\s*\*/);
+  });
+  it("renders each note code as a fixed phrase, intervals-missing with its count, and never echoes unknown note text", () => {
+    const notes: TimelineNote[] = [
+      { code: "clocks-may-differ" },
+      { code: "intervals-missing", count: 7 },
+      { code: "open-intervals-present" },
+      { code: "stale-rows-present" },
+      { code: "multiple-parents" },
+      { code: "rows-outside-viewport" },
+      { code: "phase-kinds-unavailable" },
+    ];
+    const lines = render(modelOf(projectionOf(SEEDS), handModel({ notes })), timelineState(), 120, 40);
+    const text = lines.join("\n");
+    expect(text).toMatch(/clocks may differ/i);
+    expect(text).toMatch(/7 rows? without a source interval/i);
+    expect(text).toMatch(/open intervals/i);
+    expect(text).toMatch(/stale rows/i);
+    expect(text).toMatch(/multiple observed parents/i);
+    expect(text).toMatch(/outside the bar viewport/i);
+    expect(text).toMatch(/phases unavailable/i);
+    const hostile = handModel({ notes: [{ code: "\x1b[31mevil‮" as never }] });
+    const hostileText = render(modelOf(projectionOf(SEEDS), hostile), timelineState()).join("\n");
+    expect(hostileText).not.toContain("evil");
+    expect(hostileText).not.toContain("\x1b");
+  });
+});
+
+describe("T3 honest concurrency and span", () => {
+  // docs/workbench/09 § Aggregates and profiling: "Distinguish measured actual from estimated projected metrics. If dependencies
+  // or interval bounds are missing, suppress precise critical path claims and show 'incomplete trace'."
+  it("prints measured span with complete/partial and concurrency with its basis", () => {
+    const complete = render(modelOf(projectionOf(SEEDS), handModel()), timelineState()).join("\n");
+    expect(complete).toMatch(/span 6000ms complete/);
+    expect(complete).toMatch(/concurrency max 2 \(source-intervals-only\)/);
+    expect(complete).toMatch(/origin earliest-observed-start/);
+    const partial = render(modelOf(projectionOf(SEEDS), handModel({ span: { ms: 4000, complete: false } })), timelineState()).join("\n");
+    expect(partial).toMatch(/span 4000ms partial/);
+  });
+  it("says 'span unknown' when the origin basis is none and never prints an estimate", () => {
+    const none = handModel({ origin: { startedAt: null, basis: "none" }, span: { ms: null, complete: false } });
+    const text = render(modelOf(projectionOf(SEEDS), none), timelineState()).join("\n");
+    expect(text).toMatch(/span unknown/);
+    expect(text).toMatch(/origin none/);
+    expect(text).not.toMatch(/estimate|projected|critical path.*[0-9]/i);
+  });
+});
+
+describe("T4 truncation is visible", () => {
+  // docs/workbench/10 § Failure and deception defenses: "Historical reads with limited retention show missing details honestly."
+  it.each(["lanes", "rows", "relations", "window"] as const)("truncated.%s alone produces exactly one counted notice", (flag) => {
+    const [a] = SEEDS;
+    const truncated = { lanes: false, rows: false, relations: false, window: false, [flag]: true };
+    const timeline = handModel({ lanes: [lane("l", "one", "provider", true, [closedRow(a, 0, 3, 3000)])], truncated });
+    const lines = render(modelOf(projectionOf(SEEDS), timeline), timelineState());
+    const notices = lines.filter((line) => /Truncated (lanes|rows|relations|window)/.test(line));
+    expect(notices).toHaveLength(1);
+    expect(notices[0]).toContain(`Truncated ${flag}`);
+    expect(notices[0]).toMatch(/\b1 (lane|row)/);
+  });
+  it("renders no truncation notice when no flag is set", () => {
+    const text = render(modelOf(projectionOf(SEEDS), handModel()), timelineState()).join("\n");
+    expect(text).not.toMatch(/Truncated (lanes|rows|relations|window)/);
+  });
+});
+
+describe("T5 byte-identical fallback", () => {
+  // docs/workbench/10 § Existing implementation to reuse: "Preserve existing key behavior and workflow run access where possible".
+  const SAMPLE = 240;
+  function prng(seed: number): () => number {
+    let s = seed >>> 0;
+    return () => {
+      s = (Math.imul(s, 1664525) + 1013904223) >>> 0;
+      return s / 0x100000000;
+    };
+  }
+  function sampleOutputs(model: InspectorModel): string {
+    const next = prng(26);
+    const views: InspectorView[] = ["overview", "graph", "timeline", "details"];
+    const keys = model.projection.window({ scope, invocationId: INVOCATION, offset: 0, limit: 4 }).nodes.map((node) => node.key);
+    const out: string[] = [];
+    for (let i = 0; i < SAMPLE; i++) {
+      const state: InspectorState = {
+        ...initialInspectorState(),
+        view: i % 2 === 0 ? "timeline" : views[Math.floor(next() * views.length)],
+        zoom: [1, 2, 4, 8, 16][Math.floor(next() * 5)],
+        pan: Math.floor(next() * 6),
+        index: Math.floor(next() * 4),
+        filter: next() < 0.3 ? ["a", "closed", "zzz"][Math.floor(next() * 3)] : "",
+        focused: next() < 0.2 ? keys[Math.floor(next() * keys.length)] : null,
+        selected: next() < 0.5 ? keys[Math.floor(next() * keys.length)] : null,
+      };
+      const width = [12, 32, 80, 120][Math.floor(next() * 4)];
+      const rows = [5, 9, 24, 40][Math.floor(next() * 4)];
+      out.push(layoutInspector(model, state, { width, rows, ascii: next() < 0.5 }).join("\n"));
+    }
+    return out.join("\n\u0000\n");
+  }
+  it("the timeline view without a model matches the base output over a seeded sample of states", () => {
+    const model = modelOf(projectionOf(SEEDS));
+    const digest = createHash("sha256").update(sampleOutputs(model)).digest("hex");
+    expect(SAMPLE).toBeGreaterThanOrEqual(200);
+    expect(digest).toBe("dfb46fbd50e409a646c8b6fbb4de24e22f6b1a592e14dd8874e79750ad20d5fe");
+  });
+  it("an explicitly undefined timeline is the same as an absent one", () => {
+    const base = modelOf(projectionOf(SEEDS));
+    expect(sampleOutputs({ ...base, timeline: undefined })).toBe(sampleOutputs(base));
+  });
+  it("keeps the legacy flat lines when no model is supplied", () => {
+    const text = render(modelOf(projectionOf(SEEDS)), timelineState(), 120, 40, false).join("\n");
+    expect(text).toContain("Source intervals only · zoom 1x");
+    expect(text).toContain("6000ms source interval");
+  });
+});
+
+describe("T6 geometry and sanitization", () => {
+  // docs/workbench/02 WB-028: "Terminal inspector has plain ASCII tier, theme-aware color tier, and usable 80-column/24-row fallback."
+  const hostile = "\x1b[2J\x1b]0;pwn\x07 a‮b​c⁦d bearer sk-ant-api03-SECRETSECRETSECRET 漢字";
+  function hostileModel(): InspectorModel {
+    const [a, b, c] = SEEDS;
+    const timeline = handModel({
+      lanes: [
+        lane("h", `${hostile} lane`, "provider", false, [
+          closedRow({ ...a, title: hostile }, 2, 40, 6000),
+          row({ ...b, title: `${hostile} two` }, { timing: { kind: "open", startedAt: at(2) }, bar: { offsetCells: 1, lengthCells: 30, clippedLeft: true, clippedRight: true, openEnded: true } }),
+          row({ ...c, title: "plain" }),
+        ]),
+      ],
+      notes: [{ code: "clocks-may-differ" }, { code: "window-partial" }],
+      truncated: { lanes: true, rows: true, relations: true, window: true },
+    });
+    return modelOf(projectionOf(SEEDS), timeline);
+  }
+  it.each([
+    [80, 24, true],
+    [80, 24, false],
+    [120, 40, true],
+    [120, 40, false],
+    [32, 9, true],
+  ])("fits %ix%i (ascii=%s), keeps the key hint and renders hostile text sanitized", (width, rows, ascii) => {
+    const lines = render(hostileModel(), timelineState(), width, rows, ascii);
+    expect(lines.length).toBeLessThanOrEqual(rows);
+    expect(lines.every((line) => visibleWidth(line) <= width)).toBe(true);
+    const text = lines.join("\n");
+    expect(text).toContain("Tab views");
+    expect(text).not.toMatch(/[\u0000-\u0008\u000b-\u001f\u007f-\u009f​-‏‪-‮⁦-⁩]/u);
+    expect(text).not.toContain("SECRETSECRET");
+    expect(text).not.toContain("pwn");
+  });
+  it("keeps every truncation notice reachable and counts what the row budget hides", () => {
+    const lines = render(hostileModel(), timelineState(), 80, 24, true);
+    const text = lines.join("\n");
+    for (const flag of ["lanes", "rows", "relations", "window"]) expect(text).toContain(`Truncated ${flag}`);
+  });
+  it("never exceeds the row budget even with many lanes and rows", () => {
+    const many = Array.from({ length: 30 }, (_, i) => lane(`l${i}`, `lane ${i}`, "provider", true, [closedRow({ ...SEEDS[0], title: `row ${i}` }, 0, 3, 3000)]));
+    for (const rows of [5, 9, 24]) {
+      const lines = render(modelOf(projectionOf(SEEDS), handModel({ lanes: many })), timelineState(), 80, rows, true);
+      expect(lines.length).toBeLessThanOrEqual(rows);
+      expect(lines.join("\n")).toContain("Tab views");
+    }
+    const text = render(modelOf(projectionOf(SEEDS), handModel({ lanes: many })), timelineState(), 80, 24, true).join("\n");
+    expect(text).toMatch(/more .* \(row budget\)/);
+  });
+});
+
+describe("T7 selection and filter parity", () => {
+  // docs/workbench/10 § Navigation: "j/k or arrow move ... / filters; f focuses subtree"
+  const [a, b, c, d] = SEEDS;
+  const timeline = (): TimelineModel => handModel({ lanes: [lane("x", "furnace", "provider", true, [closedRow(a, 0, 6, 6000), row(b)]), lane("y", "forge", "provider", true, [row(c), closedRow(d, 1, 2, 2000)])] });
+  it("marks the selected row with the pointer glyph", () => {
+    const model = modelOf(projectionOf(SEEDS), timeline());
+    const selected = model.projection.window({ scope, invocationId: INVOCATION, offset: 2, limit: 1 }).nodes[0];
+    const lines = render(model, timelineState({ selected: selected.key, index: 2 }));
+    const pointed = lines.filter((line) => /^ >/.test(line));
+    expect(pointed).toHaveLength(1);
+    expect(pointed[0]).toContain(selected.presentation.title);
+  });
+  it("state.filter hides non-matching rows and lanes with no match", () => {
+    const text = render(modelOf(projectionOf(SEEDS), timeline()), timelineState({ filter: "delta" })).join("\n");
+    expect(text).toContain(d.title);
+    expect(text).not.toContain(a.title);
+    expect(text).not.toContain(c.title);
+    expect(text).toContain("Filter (viewport): delta");
+    expect(text).not.toMatch(/furnace [·?] provider/);
+  });
+  it("the filter also matches the provider/type/id reference", () => {
+    const text = render(modelOf(projectionOf(SEEDS), timeline()), timelineState({ filter: "operation/c" })).join("\n");
+    expect(text).toContain(c.title);
+    expect(text).not.toContain(a.title);
+  });
+  it("state.focused keeps only the focused row", () => {
+    const model = modelOf(projectionOf(SEEDS), timeline());
+    const text = render(model, timelineState({ focused: keyOf(ref(b.provider, b.id)) })).join("\n");
+    expect(text).toContain(b.title);
+    for (const other of [a, c, d]) expect(text).not.toContain(other.title);
+    expect(text).toContain("Focused on selected node");
+  });
+});
+
+describe("zoom clamp (owner-approved constraint)", () => {
+  // BOUNDARY 10:23:58Z: clamp the zoom-in reducer to MAX_ZOOM imported from src/workbench/timeline.ts (never spell 8), or obtain an
+  // owner widening decision - never both, never a silent catch of the validation throw. Option (a) is taken.
+  it("pressing the zoom-in key five times from zoom 1 stays within the contract's MAX_ZOOM and sits at the cap", () => {
+    const projection = projectionOf(SEEDS);
+    const model = modelOf(projection);
+    let state = timelineState();
+    const seen: number[] = [];
+    for (let i = 0; i < 5; i++) {
+      state = reduceInspectorKey("=", state, model)!.state;
+      seen.push(state.zoom);
+    }
+    expect(Math.max(...seen)).toBeLessThanOrEqual(MAX_ZOOM);
+    expect(state.zoom).toBe(MAX_ZOOM);
+    expect(reduceInspectorKey("=", state, model)!.state.zoom).toBe(MAX_ZOOM);
+  });
+  it("every zoom the reducer can reach is accepted by buildTimelineLanes, and '-' still halves down to 1", () => {
+    const projection = projectionOf(SEEDS);
+    const model = modelOf(projection);
+    let state = timelineState();
+    for (let i = 0; i < 6; i++) {
+      state = reduceInspectorKey("=", state, model)!.state;
+      expect(() => realTimeline(projection, state.zoom)).not.toThrow();
+    }
+    for (let i = 0; i < 6; i++) state = reduceInspectorKey("-", state, model)!.state;
+    expect(state.zoom).toBe(1);
+  });
+  it("the contract refuses the first zoom above MAX_ZOOM (so the clamp is load-bearing)", () => {
+    expect(() => realTimeline(projectionOf(SEEDS), MAX_ZOOM + 1)).toThrow();
+  });
+  it("the header shows the clamped value and never a zoom the contract refuses", () => {
+    const model = modelOf(projectionOf(SEEDS), handModel());
+    const text = render(model, timelineState({ zoom: 16 })).join("\n");
+    expect(text).toContain(`zoom ${MAX_ZOOM}x`);
+    expect(text).not.toContain("zoom 16x");
+  });
+  it("takes option (a) only: the reducer imports MAX_ZOOM, spells no literal cap and catches nothing around the model", () => {
+    const source = readFileSync(new URL("../src/ui/workflow-inspector.ts", import.meta.url), "utf8");
+    expect(source).toMatch(/import \{[^}]*\bMAX_ZOOM\b[^}]*\} from '\.\.\/workbench\/timeline\.js'/);
+    expect(source).not.toMatch(/Math\.min\(16/);
+    const timelineSource = readFileSync(new URL("../src/workbench/timeline.ts", import.meta.url), "utf8");
+    expect(timelineSource).toMatch(/export const MAX_ZOOM = 8;/);
+  });
+});
