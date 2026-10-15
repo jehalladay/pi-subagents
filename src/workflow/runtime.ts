@@ -16,7 +16,7 @@
 import { cpus } from "node:os";
 import { Worker } from "node:worker_threads";
 import { type CapabilityDescriptor, type CapabilityDiagnostic, CapabilityError, type JsonValue, validatedCapabilityJson } from "../workbench/capability-registry.js";
-import { nativeEvidence } from "../workbench/native-evidence.js";
+import { nativeEvidence, nativeRefOf } from "../workbench/native-evidence.js";
 import { type JournalKeyInput, journalKey, nodeJournalKey, type WorkflowJournalEntry } from "./journal.js";
 import { type CompiledSchema, compileJsonSchema } from "./json-schema.js";
 import { extractMeta, type WorkflowMeta } from "./meta.js";
@@ -1415,8 +1415,11 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
         // only for a read — a stored effect result would invite exactly the
         // silent replay the policy forbids, so it is the attempt that goes on
         // record, not the answer.
+        // An effect keeps the producer's reference instead of its answer: what a
+        // reconciliation can later bind native evidence to (docs/workbench/08).
+        const nativeRef = currentEffect !== undefined && currentEffect !== "read" ? nativeRefOf(evidence) : undefined;
         recordJournal?.({ kind: "node", index, key: key ?? "", ok: true, capabilityId: payload.capabilityId,
-          ...effectMark, ...(currentEffect === "read" ? { text: JSON.stringify(value) } : {}), ...basisMark });
+          ...effectMark, ...(currentEffect === "read" ? { text: JSON.stringify(value) } : {}), ...(nativeRef ? { nativeRefs: [nativeRef] } : {}), ...basisMark });
         openNodes.delete(callId);
         respond(callId, true, value);
       } catch (error) {

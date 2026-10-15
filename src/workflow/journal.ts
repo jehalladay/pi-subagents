@@ -56,6 +56,7 @@
 
 import { createHash } from "node:crypto";
 import { appendFileSync, readFileSync } from "node:fs";
+import type { NativeRef } from "../workbench/observation.js";
 
 /** One settled agent call, as replayed. */
 export interface WorkflowJournalEntry {
@@ -103,6 +104,13 @@ export interface WorkflowJournalEntry {
    * so its journals stay byte-identical.
    */
   basis?: string;
+  /**
+   * The producer's own reference(s) for a journaled effect, when its result
+   * named one (docs/workbench/08 "record ... native refs"). A reference, never
+   * the answer: it is what a later reconciliation can bind native evidence to.
+   * Recorded only for non-read entries, whose answers are deliberately not kept.
+   */
+  nativeRefs?: readonly NativeRef[];
 }
 
 /**
@@ -201,6 +209,13 @@ export function appendJournal(path: string, entry: WorkflowJournalEntry): void {
   }
 }
 
+function isNativeRef(value: unknown): value is NativeRef {
+  if (typeof value !== "object" || value === null) return false;
+  const ref = value as Record<string, unknown>;
+  return typeof ref.provider === "string" && typeof ref.type === "string" && typeof ref.id === "string" &&
+    (ref.scope === undefined || typeof ref.scope === "string");
+}
+
 function isEntry(value: unknown): value is WorkflowJournalEntry {
   if (typeof value !== "object" || value === null) return false;
   const entry = value as Record<string, unknown>;
@@ -215,6 +230,7 @@ function isEntry(value: unknown): value is WorkflowJournalEntry {
     (entry.capabilityId === undefined || typeof entry.capabilityId === "string") &&
     (entry.effectClass === undefined || typeof entry.effectClass === "string") &&
     (entry.basis === undefined || typeof entry.basis === "string") &&
+    (entry.nativeRefs === undefined || (Array.isArray(entry.nativeRefs) && entry.nativeRefs.every(isNativeRef))) &&
     // A node entry that cannot name its capability cannot name a producer to
     // reconcile with, so it is as unusable as any other mangled line.
     (entry.kind !== "node" || typeof entry.capabilityId === "string")

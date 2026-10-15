@@ -649,3 +649,31 @@ describe("replayed read nodes are counted as journal provenance", () => {
     expect(nodeDone(live).at(-1)).not.toHaveProperty("cached");
   });
 });
+
+describe("a journaled effect carries the producer's native reference when the payload names one", () => {
+  const payload = { contract: "furnace.run.inspect/v1", source: { kind: "run_inspect", data: { run_id: "frn-run-7", state: "active" } } };
+  const script = 'return await node("furnace.run.inspect", { runId: "frn-run-7" });';
+
+  it("records nativeRefs on a non-read entry, keeps no answer, and leaves the entry replay-refusing", async () => {
+    const journal = recorder();
+    const host = effectHost({ effect: "external", node: () => payload });
+    const live = await run(script, { host: host.host, journal });
+    expect(live.status).toBe("completed");
+    const entry = journal.entries.find(item => item.kind === "node");
+    expect(entry).toMatchObject({ capabilityId: "furnace.run.inspect", effectClass: "external", ok: true, nativeRefs: [{ provider: "furnace", type: "run", id: "frn-run-7" }] });
+    expect(entry).not.toHaveProperty("text");
+    const resumed = await run(script, { host: effectHost({ effect: "external", node: () => payload }).host, journal: { entries: journal.entries } });
+    expect(resumed.capabilityError?.category).toBe("uncertain-effect");
+  });
+
+  it("records no reference when the payload carries none, and a read entry keeps its text instead", async () => {
+    const blank = recorder();
+    await run('return await node("record.write", { value: 1 });', { host: effectHost({ effect: "write", node: () => ({ accepted: true }) }).host, journal: blank });
+    expect(blank.entries.find(item => item.kind === "node")).not.toHaveProperty("nativeRefs");
+    const reads = recorder();
+    await run(script, { host: effectHost({ effect: "read", node: () => payload }).host, journal: reads });
+    const read = reads.entries.find(item => item.kind === "node");
+    expect(read).toHaveProperty("text");
+    expect(read).not.toHaveProperty("nativeRefs");
+  });
+});

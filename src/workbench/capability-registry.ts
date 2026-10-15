@@ -214,7 +214,7 @@ export class CapabilityRegistry {
       throw new CapabilityError("validation", `Capability ${descriptor.id} is already registered (duplicate).`);
     }
     if (!Array.isArray(descriptor.permissions) || descriptor.permissions.some(permission =>
-      typeof permission !== "string" || permission.trim() === "" || /^(discover|inspect|observe|control):/.test(permission))) {
+      typeof permission !== "string" || permission.trim() === "" || /^(discover|inspect|observe|control|reconcile):/.test(permission))) {
       throw new CapabilityError("validation", `Invalid invocation permission requirements for capability ${descriptor.id}.`);
     }
     if (descriptor.inputSchema.type !== "object") {
