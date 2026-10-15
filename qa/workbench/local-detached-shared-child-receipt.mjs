@@ -8,6 +8,12 @@
 import {basenameOnly} from './local-detached-faults-receipt.mjs';
 
 export const SHARED_CHILD_RECEIPT_CONTRACT = 'workbench.detached-shared-child/v1';
+/**
+ * Ownership model of the measured host: a stop is authorised by an explicit per-invocation grant held by the
+ * caller, not by a per-reader identity, so a same-child owner/non-owner reader pair is inexpressible
+ * (wb-0kg.7 gate F5, accepted by the owner as a documented capability limit).
+ */
+export const SHARED_CHILD_OWNERSHIP_MODEL = 'per-invocation-grant';
 /** The four reader-close injections: the stop-one-reader fault before and after the child's first effect marker. */
 export const SHARED_CHILD_CASES = Object.freeze([
   Object.freeze({when: 'before', close: 'pi-exit'}),
@@ -150,6 +156,7 @@ export function buildSharedChildReceipt(input) {
     node,
     arch,
     platform,
+    ownershipModel: SHARED_CHILD_OWNERSHIP_MODEL,
     journeys,
     markerCounts,
     findings: basenameOnly(findings),

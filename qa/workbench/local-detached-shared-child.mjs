@@ -243,7 +243,7 @@ async function readerCloseJourney() {
 
 async function nonOwnerStopJourney() {
   const id = 'shared-nonowner';
-  await launch(id, READ_ONLY_PERMISSIONS);
+  const receipt = await launch(id, READ_ONLY_PERMISSIONS);
   const first = reader(id);
   const second = reader(id);
   const live = await until(async () => ({snapshot: await first.inspect(), markers: markerCount(id)}), state => running(state.snapshot) && state.markers >= 1);
@@ -263,6 +263,7 @@ async function nonOwnerStopJourney() {
   return {
     armed: live.ok && finished.ok,
     invocationId: id,
+    hostPid: receipt.pid,
     cancelRefusal,
     shutdownRefusal,
     observationAfter: after.observation,
@@ -275,7 +276,7 @@ async function nonOwnerStopJourney() {
 
 async function ownerStopJourney() {
   const id = 'shared-owner';
-  await launch(id, ALL_PERMISSIONS);
+  const receipt = await launch(id, ALL_PERMISSIONS);
   const owner = reader(id);
   const live = await until(async () => ({snapshot: await owner.inspect(), markers: markerCount(id)}), state => running(state.snapshot) && state.markers >= 1);
   const closed = await readerProcess(id);
@@ -290,6 +291,7 @@ async function ownerStopJourney() {
   return {
     armed: live.ok && finished.ok && closed.report.attached === true,
     invocationId: id,
+    hostPid: receipt.pid,
     readerClosedFirst: closed.exited === true && closed.report.attached === true,
     markersBeforeStop,
     terminalBeforeStop: typeof before.terminal === 'string' ? before.terminal : null,

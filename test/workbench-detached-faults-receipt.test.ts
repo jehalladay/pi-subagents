@@ -11,6 +11,7 @@ import { describe, expect, it } from "vitest";
 import {
   assessFaultJourneys,
   buildFaultReceipt,
+  exitCodeFor,
   FAULT_FINDING_RULES,
   FAULT_RECEIPT_CONTRACT,
   faultProviderSource,
@@ -501,5 +502,43 @@ describe("detached fault-injection receipt: module and runner boundaries", () =>
     expect(forge).toContain('gate = ["lint", "typing", "build", "test", "workbench-shell", "package-smoke"]\n');
     const gate = /^gate = \[(.*)\]$/m.exec(forge)?.[1] ?? "";
     expect(gate).not.toContain("local-detached-faults");
+  });
+});
+
+/**
+ * wb-p5a (wb-0kg.7 gate F1): the wb-0kg.1 receipt carries the same runner exit mapping the 0kg.7 gate found
+ * unpinned. A judge whose exit code cannot fail cannot certify the live tier.
+ */
+describe("detached fault-injection receipt: runner exit mapping (wb-p5a X1, X2)", () => {
+  it("maps 0 for a realised clean receipt, 1 for a realised receipt with findings, 2 whenever it is not realised", () => {
+    expect(exitCodeFor(buildFaultReceipt(receiptInput(clean())))).toBe(0);
+    const duplicate = clone(clean());
+    duplicate.markerCounts["effect-crash"] = 2;
+    const withFindings = buildFaultReceipt(receiptInput(duplicate));
+    expect(withFindings.realised).toBe(true);
+    expect(withFindings.findings.length).toBeGreaterThan(0);
+    expect(exitCodeFor(withFindings)).toBe(1);
+    const unarmed = clone(clean());
+    unarmed.journeys.sigterm.armed = false;
+    const notRealised = buildFaultReceipt(receiptInput(unarmed));
+    expect(notRealised.realised).toBe(false);
+    expect(exitCodeFor(notRealised)).toBe(2);
+    const both = clone(clean());
+    both.journeys.sigterm.armed = false;
+    both.markerCounts["effect-crash"] = 2;
+    const notRealisedWithFindings = buildFaultReceipt(receiptInput(both));
+    expect(notRealisedWithFindings.findings.length).toBeGreaterThan(0);
+    expect(exitCodeFor(notRealisedWithFindings)).toBe(2);
+  });
+  it("pins the survivors of the 0kg.7 gate table in the wb-0kg.1 judge: empty sibling polls, afterTerminal and sigterm terminal must be unknown", () => {
+    const noPolls = clone(clean());
+    noPolls.journeys.cancelIsolation.sibling.polls = [];
+    expect(assessFaultJourneys(noPolls).realised).toBe(false);
+    const afterShutdown = clone(clean());
+    afterShutdown.journeys.shutdownUnresolved.running.afterTerminal = "cancelled";
+    expect(rules(afterShutdown)).toContain("unknown-not-reconcilable");
+    const sigterm = clone(clean());
+    sigterm.journeys.sigterm.terminal = "cancelled";
+    expect(rules(sigterm)).toContain("unknown-not-reconcilable");
   });
 });

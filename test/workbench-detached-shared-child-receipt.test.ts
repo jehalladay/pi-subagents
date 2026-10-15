@@ -18,8 +18,10 @@ import { describe, expect, it } from "vitest";
 import {
   assessSharedChildJourneys,
   buildSharedChildReceipt,
+  exitCodeFor,
   SHARED_CHILD_CASES,
   SHARED_CHILD_FINDING_RULES,
+  SHARED_CHILD_OWNERSHIP_MODEL,
   SHARED_CHILD_RECEIPT_CONTRACT,
 } from "../qa/workbench/local-detached-shared-child-receipt.mjs";
 
@@ -396,5 +398,110 @@ describe("shared-child receipt: module and runner boundaries", () => {
     expect(forge).toContain('gate = ["lint", "typing", "build", "test", "workbench-shell", "package-smoke"]\n');
     const gate = /^gate = \[(.*)\]$/m.exec(forge)?.[1] ?? "";
     expect(gate).not.toContain("local-detached-shared-child");
+  });
+});
+
+/**
+ * wb-p5a (wb-0kg.7 gate F1/F5/F6): judge-clause pins. The 12 survivors of the 0kg.7 gate mutant table were
+ * clauses the offline suite never read: the runner exit mapping (a judge that cannot fail cannot certify),
+ * the "after" effect marker at close, the owner audit entry's identity and acceptance, hostPid on the
+ * stop journeys and the ownership-model label. Each case below fails when its clause is mutated.
+ */
+describe("shared-child receipt: judge-clause pins (wb-p5a)", () => {
+  it("maps the runner exit code from the receipt: 0 realised and clean, 1 realised with findings, 2 not realised (X1, X2)", () => {
+    expect(exitCodeFor(buildSharedChildReceipt(receiptInput(clean())))).toBe(0);
+    const duplicate = clone(clean());
+    duplicate.markerCounts["shared-owner"] = 2;
+    const withFindings = buildSharedChildReceipt(receiptInput(duplicate));
+    expect(withFindings.realised).toBe(true);
+    expect(withFindings.findings.length).toBeGreaterThan(0);
+    expect(exitCodeFor(withFindings)).toBe(1);
+    const unarmed = clone(clean());
+    unarmed.journeys.ownerStop.armed = false;
+    const notRealised = buildSharedChildReceipt(receiptInput(unarmed));
+    expect(notRealised.realised).toBe(false);
+    expect(exitCodeFor(notRealised)).toBe(2);
+    const both = clone(clean());
+    both.journeys.ownerStop.armed = false;
+    both.markerCounts["shared-owner"] = 2;
+    const notRealisedWithFindings = buildSharedChildReceipt(receiptInput(both));
+    expect(notRealisedWithFindings.findings.length).toBeGreaterThan(0);
+    expect(exitCodeFor(notRealisedWithFindings)).toBe(2);
+  });
+
+  it("requires the effect marker at close in the 'after' cases only (X3)", () => {
+    const after = clone(clean());
+    const afterCase = after.journeys.readerClose.cases.find((entry) => entry.when === "after");
+    if (afterCase === undefined) throw new Error("fixture has no after case");
+    afterCase.markersAtClose = 0;
+    expect(rules(after)).toContain("effect-lost");
+    const before = clone(clean());
+    const beforeCase = before.journeys.readerClose.cases.find((entry) => entry.when === "before");
+    if (beforeCase === undefined) throw new Error("fixture has no before case");
+    expect(beforeCase.markersAtClose).toBe(0);
+    expect(rules(before)).not.toContain("effect-lost");
+  });
+
+  it("requires the one owner audit entry to be the accepted cancel, not any single entry (X7, X8)", () => {
+    const wrongCommand = clone(clean());
+    wrongCommand.journeys.ownerStop.controlAudit = [{ command: "shutdown", accepted: true, ownership: "owned-local-interpreter-only", terminalConfirmed: false }];
+    expect(rules(wrongCommand)).toContain("owner-stop-unaudited");
+    const refusedEntry = clone(clean());
+    refusedEntry.journeys.ownerStop.controlAudit = [{ command: "cancel", accepted: false, ownership: "owned-local-interpreter-only", terminalConfirmed: false }];
+    expect(rules(refusedEntry)).toContain("owner-stop-unaudited");
+    const hollow = clone(clean());
+    hollow.journeys.ownerStop.controlAudit = [null as never];
+    expect(rules(hollow)).toContain("owner-stop-unaudited");
+    expect(rules(clean())).not.toContain("owner-stop-unaudited");
+  });
+
+  it("requires a marker before the owner stop, not only at the end, and exactly one terminal-before-stop null", () => {
+    const lateEffect = clone(clean());
+    lateEffect.journeys.ownerStop.markersBeforeStop = 0;
+    expect(rules(lateEffect)).toContain("effect-lost");
+    const absent = clone(clean());
+    delete (absent.journeys.ownerStop as { terminalBeforeStop?: unknown }).terminalBeforeStop;
+    expect(rules(absent)).toContain("owner-stop-unrequested");
+  });
+
+  it("names an unknown reader-close terminal as a stopped child, and a non-owner child's marker count as lost or duplicated", () => {
+    const unknown = clone(clean());
+    unknown.journeys.readerClose.cases[0].terminal = "unknown";
+    expect(rules(unknown)).toContain("child-stopped-by-reader-close");
+    const lost = clone(clean());
+    lost.journeys.nonOwnerStop.markersFinal = 0;
+    expect(rules(lost)).toContain("effect-lost");
+    const duplicated = clone(clean());
+    duplicated.journeys.nonOwnerStop.markersFinal = 2;
+    expect(rules(duplicated)).toContain("duplicate-effect");
+  });
+
+  it("keeps hostPid on both stop journeys and runs the receipt through unchanged (F6)", () => {
+    const observed = clone(clean()) as unknown as { journeys: { nonOwnerStop: { hostPid?: number }; ownerStop: { hostPid?: number } } };
+    observed.journeys.nonOwnerStop.hostPid = 5151;
+    observed.journeys.ownerStop.hostPid = 5252;
+    const receipt = buildSharedChildReceipt(receiptInput(observed as unknown as Observed));
+    expect(receipt.journeys.nonOwnerStop.hostPid).toBe(5151);
+    expect(receipt.journeys.ownerStop.hostPid).toBe(5252);
+    const runner = readRepo("qa/workbench/local-detached-shared-child.mjs");
+    for (const [name, next] of [
+      ["nonOwnerStopJourney", "ownerStopJourney"],
+      ["ownerStopJourney", "arrayOf"],
+    ] as const) {
+      const start = runner.indexOf(`async function ${name}`);
+      const end = runner.indexOf(`function ${next}`, start);
+      expect(start).toBeGreaterThan(-1);
+      expect(end).toBeGreaterThan(start);
+      const body = runner.slice(start, end);
+      expect(body, `${name} launches and keeps the host receipt`).toMatch(/const receipt = await launch\(/);
+      expect(body, `${name} records hostPid`).toMatch(/hostPid:\s*receipt\.pid/);
+    }
+  });
+
+  it("labels the ownership model as a per-invocation grant, not per-reader identity (F5, R4)", () => {
+    expect(SHARED_CHILD_OWNERSHIP_MODEL).toBe("per-invocation-grant");
+    const receipt = buildSharedChildReceipt(receiptInput(clean()));
+    expect(receipt.ownershipModel).toBe("per-invocation-grant");
+    expect(Object.isFrozen(receipt)).toBe(true);
   });
 });
