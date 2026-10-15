@@ -58,6 +58,36 @@ describe.each(MODES)("saved-workflow precedence and config parity — mode $mode
     booted.tools.get("SubagentWorkflow").execute(id, params, undefined, undefined, workflowCtx());
   const startedName = (result: unknown): string | undefined => /Workflow "([^"]+)" started/.exec(textOf(result))?.[1];
 
+  /** Layer walk (1): user dir alone, then +.agents, then +.pi; each step must pick the newest-precedence layer. */
+  async function walkLayers(tag: string): Promise<void> {
+    const r = roots();
+    const name = `${SHARED_NAME}-${tag}`;
+    writeWorkflow(r.user, name, USER_DIR);
+    expect(startedName(await run(`${tag}-user`, { name }))).toBe(USER_DIR);
+
+    writeWorkflow(r.agents, name, PROJECT_AGENTS);
+    expect(startedName(await run(`${tag}-agents`, { name }))).toBe(PROJECT_AGENTS);
+
+    writeWorkflow(r.pi, name, PROJECT_PI);
+    const text = textOf(await run(`${tag}-pi`, { name }));
+    expect(text).toMatch(new RegExp(`Workflow "${PROJECT_PI}" started`));
+    expect(text).toContain(join(".pi", "workflows", `${name}.js`));
+  }
+
+  /** Explicit sources (2): inline script, then scriptPath, then both, all outranking a colliding .pi name. */
+  async function checkExplicitSources(tag: string): Promise<void> {
+    const name = `${SHARED_NAME}-explicit-${tag}`;
+    writeWorkflow(roots().pi, name, PROJECT_PI);
+    const explicit = join(hermetic.dir, `explicit-${tag}.js`);
+    writeFileSync(explicit, script("from-script-path"));
+
+    expect(startedName(await run(`${tag}-script`, { name, script: script("from-inline") }))).toBe("from-inline");
+    expect(startedName(await run(`${tag}-path`, { name, scriptPath: explicit }))).toBe("from-script-path");
+    expect(startedName(await run(`${tag}-both`, { name, script: script("from-inline"), scriptPath: explicit }))).toBe(
+      "from-script-path",
+    );
+  }
+
   async function boot(): Promise<void> {
     hermetic = hermeticDir({
       settings: {
@@ -81,30 +111,12 @@ describe.each(MODES)("saved-workflow precedence and config parity — mode $mode
 
   it("resolves a colliding name .pi/workflows -> .agents/workflows -> user agent dir, one layer at a time", async () => {
     await boot();
-    const r = roots();
-    writeWorkflow(r.user, SHARED_NAME, USER_DIR);
-    expect(startedName(await run("t-user", { name: SHARED_NAME }))).toBe(USER_DIR);
-
-    writeWorkflow(r.agents, SHARED_NAME, PROJECT_AGENTS);
-    expect(startedName(await run("t-agents", { name: SHARED_NAME }))).toBe(PROJECT_AGENTS);
-
-    writeWorkflow(r.pi, SHARED_NAME, PROJECT_PI);
-    const text = textOf(await run("t-pi", { name: SHARED_NAME }));
-    expect(text).toMatch(new RegExp(`Workflow "${PROJECT_PI}" started`));
-    expect(text).toContain(join(".pi", "workflows", `${SHARED_NAME}.js`));
+    await walkLayers("first");
   });
 
   it("lets scriptPath and inline script both outrank a colliding name, scriptPath first", async () => {
     await boot();
-    writeWorkflow(roots().pi, SHARED_NAME, PROJECT_PI);
-    const explicit = join(hermetic.dir, "explicit.js");
-    writeFileSync(explicit, script("from-script-path"));
-
-    expect(startedName(await run("t-script", { name: SHARED_NAME, script: script("from-inline") }))).toBe("from-inline");
-    expect(startedName(await run("t-path", { name: SHARED_NAME, scriptPath: explicit }))).toBe("from-script-path");
-    expect(
-      startedName(await run("t-both", { name: SHARED_NAME, script: script("from-inline"), scriptPath: explicit })),
-    ).toBe("from-script-path");
+    await checkExplicitSources("first");
   });
 
   it("reports the same unknown-name diagnostic naming the three searched roots", async () => {
@@ -131,19 +143,17 @@ describe.each(MODES)("saved-workflow precedence and config parity — mode $mode
     }
   });
 
-  it("keeps resolution, precedence and the settings file unchanged across a second session_start", async () => {
+  it("re-walks the full layer chain and the explicit-source rows after a second session_start, with tool surface and settings bytes unchanged", async () => {
     await boot();
-    const r = roots();
-    writeWorkflow(r.user, SHARED_NAME, USER_DIR);
-    writeWorkflow(r.agents, SHARED_NAME, PROJECT_AGENTS);
-    writeWorkflow(r.pi, SHARED_NAME, PROJECT_PI);
     const toolNamesBefore = [...booted.tools.keys()].sort();
-    const before = startedName(await run("t-before", { name: SHARED_NAME }));
+    await walkLayers("pre");
+    await checkExplicitSources("pre");
 
     await booted.lifecycle.get("session_start")?.({}, workflowCtx());
 
-    expect(startedName(await run("t-after", { name: SHARED_NAME }))).toBe(before);
-    expect(before).toBe(PROJECT_PI);
+    // Fresh names: the post-reload walk starts from empty roots for its own files.
+    await walkLayers("post");
+    await checkExplicitSources("post");
     expect([...booted.tools.keys()].sort()).toEqual(toolNamesBefore);
     expect(readFileSync(join(hermetic.dir, ".pi", "subagents.json"), "utf-8")).toBe(settingsText);
   });
