@@ -17,6 +17,18 @@
  * (servedModel, null only when no model-bearing frame arrived), and the
  * receipt states the tier's three disclosed deviations with their measured
  * values instead of leaving them to a side note.
+ *
+ * J3 ("starts nothing new") is judged by the agent row's runtime start stamp,
+ * not by when an init arrived (owner ruling): the runtime stamps startedAt
+ * when it issues host.spawnAgent, before the SDK query starts, and the
+ * journey starts both agents with parallel(), so both starts are issued
+ * before the first init triggers the abort. initAfterAbort counts only inits
+ * whose agent's startedAt is at or after requestedAt (a start issued after the
+ * abort: a finding). An init that arrives after the request from an agent
+ * started before it is the SDK confirming a start requested before the abort:
+ * reported as lateInitAfterAbort with its latency after the request and its
+ * agent's abort-to-ack, never judged. An after-request init that no runtime
+ * start stamp explains is unattributed: counted and flagged, never dropped.
  */
 
 export const ADVERSE_CONTRACT = 'workbench.claude-adverse/v1';
@@ -49,6 +61,59 @@ function need(condition, message) {
 const isObject = (value) => typeof value === 'object' && value !== null && !Array.isArray(value);
 const isDuration = (value) => typeof value === 'number' && Number.isFinite(value) && value >= 0;
 const named = (frame) => isObject(frame) && typeof frame.model === 'string' && frame.model.trim() !== '';
+/** The runtime's own start stamp (Date.now() when it issued host.spawnAgent, 1 ms resolution); never invented. */
+const stamped = (agent) => typeof agent.startedAt === 'number';
+/**
+ * Started strictly before the abort request, so in flight at the abort. Its
+ * exact complement among stamped agents (startedAt >= requestedAt) is a start
+ * issued at or after the abort; no agent is ever both.
+ */
+const startedBeforeAbort = (agent, requestedAt) => stamped(agent) && agent.startedAt < requestedAt;
+const emptyLateInits = () => ({ count: 0, agentIds: [], latenciesMs: [], toControllerAbortMs: [], startedBeforeAbortMs: [] });
+
+/**
+ * Sort every init by its agent's runtime start stamp against the request.
+ * postAbortStart: the agent's startedAt >= requestedAt, whenever its init
+ * arrived. late: the agent started before the request and its init arrived
+ * after it. unattributed: an after-request init whose agent has no runtime
+ * start stamp (no agent row, or a row the runtime never stamped).
+ */
+function classifyInits(journey, requestedAt) {
+  const startOf = new Map();
+  for (const agent of journey.agents) if (stamped(agent) && !startOf.has(agent.agentId)) startOf.set(agent.agentId, agent);
+  const postAbortStart = [];
+  const late = [];
+  const unattributed = [];
+  for (const message of journey.initMessages) {
+    const agent = startOf.get(message.agentId);
+    if (agent === undefined) {
+      if (message.at > requestedAt) unattributed.push(message);
+    } else if (agent.startedAt >= requestedAt) {
+      postAbortStart.push(message);
+    } else if (message.at > requestedAt) {
+      late.push({ message, agent });
+    }
+  }
+  return { postAbortStart, late, unattributed };
+}
+
+/**
+ * Measurements only, never judged. Per late init, in arrival order: its
+ * latency after the request (init at - requestedAt); toControllerAbortMs, its
+ * agent's abort-to-ack (the request to that agent's acknowledged controller
+ * abort, the onSettled cancellation result), null when no acknowledgement was
+ * observed; and startedBeforeAbortMs, how long before the request the runtime
+ * stamped that agent's start.
+ */
+function lateInitBlock(late, requestedAt) {
+  return {
+    count: late.length,
+    agentIds: late.map(({ message }) => message.agentId),
+    latenciesMs: late.map(({ message }) => message.at - requestedAt),
+    toControllerAbortMs: late.map(({ agent }) => (typeof agent.acknowledgedAt === 'number' ? agent.acknowledgedAt - requestedAt : null)),
+    startedBeforeAbortMs: late.map(({ agent }) => requestedAt - agent.startedAt),
+  };
+}
 
 /**
  * The model one journey's SDK stream natively reported, from the runner's
@@ -101,24 +166,29 @@ export function measureMidStream(journey) {
       settledBeforeCancel: 0,
       unacknowledged: 0,
       initAfterAbort: 0,
+      lateInitAfterAbort: emptyLateInits(),
+      unattributedInitAfterAbort: 0,
       ackAfterTerminal: 0,
       distinctSessionIds: distinctSessionIds.size,
       agentsWithoutSession: 0,
     };
   }
-  const started = journey.agents.filter((agent) => typeof agent.startedAt === 'number' && agent.startedAt <= Math.floor(requestedAt));
+  const started = journey.agents.filter((agent) => startedBeforeAbort(agent, requestedAt));
   const settledBefore = started.filter((agent) => typeof agent.acknowledgedAt === 'number' && agent.acknowledgedAt < requestedAt);
   const inFlight = started.filter((agent) => !settledBefore.includes(agent));
   const unacknowledged = inFlight.filter((agent) => typeof agent.acknowledgedAt !== 'number');
   const cancelled = inFlight.filter((agent) => agent.result?.ok === false && agent.result.skipped === true);
   const acks = cancelled.map((agent) => agent.acknowledgedAt).filter((at) => typeof at === 'number');
+  const inits = classifyInits(journey, requestedAt);
   const measured = {
     requested: true,
     agentsStarted: started.length,
     agentsCancelled: cancelled.length,
     settledBeforeCancel: settledBefore.length,
     unacknowledged: unacknowledged.length,
-    initAfterAbort: journey.initMessages.filter((message) => message.at > requestedAt).length,
+    initAfterAbort: inits.postAbortStart.length,
+    lateInitAfterAbort: lateInitBlock(inits.late, requestedAt),
+    unattributedInitAfterAbort: inits.unattributed.length,
     ackAfterTerminal: acks.filter((at) => at > journey.terminalAt).length,
     distinctSessionIds: distinctSessionIds.size,
     agentsWithoutSession: started.filter((agent) => !journey.initMessages.some((message) => message.agentId === agent.agentId)).length,
@@ -156,9 +226,16 @@ export function assessAdverseJourneys(observed) {
     }
     if (mid.outcome.hasValue) add('value-after-cancel', 'the cancelled run still returned a value');
     if (mid.terminalAt < requestedAt) add('terminal-before-request', `terminalAt ${mid.terminalAt} precedes requestedAt ${requestedAt}`);
-    if (measured.initAfterAbort > 0) add('init-after-abort', `${measured.initAfterAbort} system/init message(s) arrived after the abort was requested`);
+    // J3 by the runtime start stamp: a late init (agent started before the
+    // request) is a measurement in measured.lateInitAfterAbort, not a finding.
+    if (measured.initAfterAbort > 0) {
+      add('init-after-abort', `${measured.initAfterAbort} system/init message(s) came from agent(s) the runtime started at or after the abort request`);
+    }
+    if (measured.unattributedInitAfterAbort > 0) {
+      add('init-after-abort-unattributed', `${measured.unattributedInitAfterAbort} system/init message(s) arrived after the abort request from agent(s) with no runtime start stamp`);
+    }
 
-    const started = mid.agents.filter((agent) => typeof agent.startedAt === 'number' && agent.startedAt <= Math.floor(requestedAt));
+    const started = mid.agents.filter((agent) => startedBeforeAbort(agent, requestedAt));
     const inFlight = started.filter((agent) => !(typeof agent.acknowledgedAt === 'number' && agent.acknowledgedAt < requestedAt));
     for (const agent of inFlight) {
       if (typeof agent.acknowledgedAt !== 'number' || !agent.result) {

@@ -20,6 +20,13 @@
  * redacted at capture. The ack wait after terminal and the native-session
  * lookup retry are bounded by the receipt's disclosed constants and measured.
  *
+ * The host is wired to the run's abort signal exactly as production wires it
+ * (src/index.ts 2724-2731: one task abort signal passed both as the runWorkflow
+ * signal and as the createClaudeWorkflowHost signal), so the tier measures the
+ * production cancellation path, not only runtime host.abortAgent. Each
+ * agent's startedAt is the runtime's own stamp from its agent-started progress
+ * entry; J3 judges a post-abort start by it (see live-adverse-receipt.mjs).
+ *
  * Usage: node qa/workbench/live-adverse.mjs [cwd]   (CLAUDE_ADVERSE_RECEIPT=path writes the receipt)
  */
 import { execFileSync } from 'node:child_process';
@@ -100,8 +107,15 @@ function recorder(onInit) {
   };
 }
 
-const hostFor = (model, rec) => createClaudeWorkflowHost({
+/**
+ * Production wiring (src/index.ts 2724-2731): the run abort signal is also
+ * the host's own signal. Production additionally passes an identity
+ * re-verifying beforeDispatch, capabilities, grants, roles, invocationId and
+ * principal built from src-only modules; this tier passes none of them.
+ */
+const hostFor = (model, rec, signal) => createClaudeWorkflowHost({
   cwd,
+  signal,
   model,
   tools: [],
   settingSources: [],
@@ -170,7 +184,7 @@ async function midStreamCancel() {
     controller.abort();
   });
   const watchdog = setTimeout(() => controller.abort(), INIT_WATCHDOG_MS);
-  const host = hostFor(MODEL, rec);
+  const host = hostFor(MODEL, rec, controller.signal);
   const outcome = await runBounded(runWorkflow({ script: FANOUT, host, concurrency: 2, signal: controller.signal }), controller);
   const terminalAt = now();
   clearTimeout(watchdog);
@@ -183,15 +197,23 @@ async function midStreamCancel() {
   const owed = () => outcome.progress.some((entry) => entry.type === 'workflow_agent' && typeof entry.agentId === 'string' && entry.startedAt !== undefined && !rec.settled.some((item) => item.agentId === entry.agentId));
   while (owed() && now() < drainDeadline) await sleep(50);
   const ackWaitMs = now() - drainStartedAt;
-  const entries = new Map();
-  for (const entry of outcome.progress) if (entry.type === 'workflow_agent' && typeof entry.agentId === 'string') entries.set(entry.index, entry);
-  const agents = [...entries.values()].map((entry) => {
-    const ack = rec.settled.find((item) => item.agentId === entry.agentId);
-    const firstMessage = rec.messages.find((message) => message.agentId === entry.agentId);
-    const startedAt = entry.startedAt ?? firstMessage?.at;
+  // One row per agent index. startedAt is the runtime's own stamp, taken from
+  // the agent-started progress entry (the first row carrying it: Date.now()
+  // when the runtime issued host.spawnAgent, before the SDK query starts). It
+  // is never substituted by an SDK message time: an agent the runtime never
+  // stamped carries no startedAt, and the receipt says so.
+  const rows = new Map();
+  for (const entry of outcome.progress) {
+    if (entry.type !== 'workflow_agent' || typeof entry.agentId !== 'string') continue;
+    const row = rows.get(entry.index) ?? { agentId: entry.agentId };
+    if (row.startedAt === undefined && typeof entry.startedAt === 'number') row.startedAt = entry.startedAt;
+    rows.set(entry.index, row);
+  }
+  const agents = [...rows.values()].map((row) => {
+    const ack = rec.settled.find((item) => item.agentId === row.agentId);
     return {
-      agentId: entry.agentId,
-      ...(startedAt !== undefined ? { startedAt } : {}),
+      agentId: row.agentId,
+      ...(row.startedAt !== undefined ? { startedAt: row.startedAt } : {}),
       ...(ack ? { acknowledgedAt: ack.at, result: ack.result } : {}),
     };
   });
@@ -220,7 +242,7 @@ async function midStreamCancel() {
 async function preStartAbort() {
   const controller = new AbortController();
   const rec = recorder();
-  const host = hostFor(MODEL, rec);
+  const host = hostFor(MODEL, rec, controller.signal);
   const requestedAt = now();
   controller.abort();
   const outcome = await runWorkflow({ script: SINGLE('adverse-pre-start'), host, signal: controller.signal });
@@ -241,7 +263,7 @@ async function preStartAbort() {
 async function invalidModel() {
   const controller = new AbortController();
   const rec = recorder();
-  const host = hostFor(INVALID_MODEL, rec);
+  const host = hostFor(INVALID_MODEL, rec, controller.signal);
   const outcome = await runBounded(runWorkflow({ script: SINGLE('adverse-invalid-model'), host, signal: controller.signal }), controller);
   return {
     observed: {

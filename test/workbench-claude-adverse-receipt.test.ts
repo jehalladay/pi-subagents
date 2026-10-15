@@ -12,6 +12,7 @@ import { ACK_WAIT_BOUND_MS, assessAdverseJourneys, buildAdverseReceipt, SESSION_
 const CANCELLED = 'Claude SDK query was cancelled.';
 const SID_A = '3f2a9c1e-7b64-4d0a-9e1f-0a1b2c3d4e5f';
 const SID_B = '9d8c7b6a-5e4f-4a3b-8c2d-1e0f9a8b7c6d';
+const SID_C = '5b4a3c2d-1e0f-4a9b-8c7d-6e5f4a3b2c1d';
 const REQUESTED = 'claude-opus-5-5';
 const SERVED = 'claude-opus-5-5-20261001';
 const INVALID = 'claude-adverse-not-a-model-000';
@@ -103,8 +104,12 @@ describe('assessAdverseJourneys', () => {
     expect(rules(o)).toContain('completed-after-cancel');
   });
 
-  it('flags a session init observed after the abort was requested', () => {
+  it('flags a session init from an agent the runtime started at or after the abort request', () => {
     const o = cleanObserved();
+    // Owner J3 ruling: a post-abort start is judged by the agent row's runtime
+    // startedAt, not by when its init arrived (that fixture is now a late init,
+    // asserted in the J3 block below).
+    o.midStreamCancel.agents[1] = { ...o.midStreamCancel.agents[1], startedAt: 1001 };
     o.midStreamCancel.initMessages[1] = { agentId: 'wf-agent-1', sessionId: SID_B, at: 1010 };
     expect(rules(o)).toContain('init-after-abort');
   });
@@ -288,6 +293,7 @@ describe('buildAdverseReceipt', () => {
 
   it('is not a pass when there are findings or the run is unrealised', () => {
     const violated = cleanObserved();
+    violated.midStreamCancel.agents[1] = { ...violated.midStreamCancel.agents[1], startedAt: 1001 };
     violated.midStreamCancel.initMessages[1] = { agentId: 'wf-agent-1', sessionId: SID_B, at: 1010 };
     const receipt = build(violated);
     expect(receipt.realised).toBe(true);
@@ -326,6 +332,80 @@ describe('buildAdverseReceipt', () => {
     }
     expect(() => buildAdverseReceipt({ ...base, sdkEventTypes: 'system/init' })).toThrow(TypeError);
     expect(() => buildAdverseReceipt({ ...base, journeys: undefined })).toThrow(TypeError);
+  });
+});
+
+describe('J3 by runtime start stamp: post-abort starts judged, late inits measured (owner ruling)', () => {
+  const EMPTY_LATE = { count: 0, agentIds: [], latenciesMs: [], toControllerAbortMs: [], startedBeforeAbortMs: [] };
+  const midMeasured = (o: Observed) => build(o).journeys.midStreamCancel.measured;
+
+  it('counts an init arriving after the request from an agent started before it as a late init, not a post-abort start', () => {
+    const o = cleanObserved();
+    // wf-agent-1 was stamped started at 900, before the 1000.5 request; its init lands 9.5 ms after the request.
+    o.midStreamCancel.initMessages[1] = { agentId: 'wf-agent-1', sessionId: SID_B, at: 1010 };
+    expect(assessAdverseJourneys(o)).toEqual({ findings: [], realised: true });
+    const measured = midMeasured(o);
+    expect(measured.initAfterAbort).toBe(0);
+    expect(measured.unattributedInitAfterAbort).toBe(0);
+    expect(measured.lateInitAfterAbort).toMatchObject({ count: 1, agentIds: ['wf-agent-1'], latenciesMs: [9.5], startedBeforeAbortMs: [100.5] });
+    // Abort-to-ack: the request to that agent's acknowledged cancellation (its onSettled at 1120.7).
+    expect(measured.lateInitAfterAbort.toControllerAbortMs).toHaveLength(1);
+    expect(measured.lateInitAfterAbort.toControllerAbortMs[0]).toBeCloseTo(1120.7 - 1000.5, 9);
+    expect(build(o)).toMatchObject({ realised: true, pass: true });
+  });
+
+  it('counts an init whose agent the runtime started at or after the request as a post-abort start and flags it', () => {
+    const o = cleanObserved();
+    o.midStreamCancel.agents.push({ agentId: 'wf-agent-2', startedAt: 1001, acknowledgedAt: 1130, result: cancelledResult(SID_C) });
+    o.midStreamCancel.initMessages.push({ agentId: 'wf-agent-2', sessionId: SID_C, at: 1050 });
+    o.midStreamCancel.nativeSessions.push({ sessionId: SID_C, recordSessionId: SID_C, lookupAttempts: 1, lookupMs: 1 });
+    expect(rules(o)).toContain('init-after-abort');
+    expect(midMeasured(o)).toMatchObject({ initAfterAbort: 1, unattributedInitAfterAbort: 0, lateInitAfterAbort: { count: 0 } });
+  });
+
+  it('puts the boundary where the ruling does: startedAt >= requestedAt is a post-abort start, never also counted in flight', () => {
+    const exact = cleanObserved();
+    exact.midStreamCancel.requestedAt = 1000;
+    exact.midStreamCancel.agents[1] = { ...exact.midStreamCancel.agents[1], startedAt: 1000 };
+    exact.midStreamCancel.initMessages[1] = { agentId: 'wf-agent-1', sessionId: SID_B, at: 1004 };
+    expect(rules(exact)).toContain('init-after-abort');
+    expect(midMeasured(exact)).toMatchObject({ initAfterAbort: 1, agentsStarted: 1, lateInitAfterAbort: { count: 0 } });
+    const before = cleanObserved();
+    before.midStreamCancel.requestedAt = 1000;
+    before.midStreamCancel.agents[1] = { ...before.midStreamCancel.agents[1], startedAt: 999 };
+    before.midStreamCancel.initMessages[1] = { agentId: 'wf-agent-1', sessionId: SID_B, at: 1004 };
+    expect(assessAdverseJourneys(before)).toEqual({ findings: [], realised: true });
+    expect(midMeasured(before)).toMatchObject({ initAfterAbort: 0, agentsStarted: 2, lateInitAfterAbort: { count: 1, latenciesMs: [4], startedBeforeAbortMs: [1] } });
+  });
+
+  it('never drops an init it cannot attribute: an after-request init with no runtime start stamp is counted and flagged', () => {
+    const unknown = cleanObserved();
+    unknown.midStreamCancel.initMessages.push({ agentId: 'wf-agent-9', sessionId: SID_C, at: 1010 });
+    expect(rules(unknown)).toContain('init-after-abort-unattributed');
+    expect(rules(unknown)).not.toContain('init-after-abort');
+    expect(midMeasured(unknown)).toMatchObject({ initAfterAbort: 0, unattributedInitAfterAbort: 1, lateInitAfterAbort: { count: 0 } });
+    const unstamped = cleanObserved();
+    unstamped.midStreamCancel.agents[1] = { agentId: 'wf-agent-1', acknowledgedAt: 1120.7, result: cancelledResult(SID_B) };
+    unstamped.midStreamCancel.initMessages[1] = { agentId: 'wf-agent-1', sessionId: SID_B, at: 1010 };
+    expect(rules(unstamped)).toContain('init-after-abort-unattributed');
+    expect(midMeasured(unstamped)).toMatchObject({ initAfterAbort: 0, unattributedInitAfterAbort: 1 });
+  });
+
+  it('reports a late init whose agent was never acknowledged with a null abort-to-ack, never an invented one', () => {
+    const o = cleanObserved();
+    o.midStreamCancel.agents[1] = { agentId: 'wf-agent-1', startedAt: 900 };
+    o.midStreamCancel.initMessages[1] = { agentId: 'wf-agent-1', sessionId: SID_B, at: 1010 };
+    expect(rules(o)).toContain('unacknowledged-agent');
+    expect(rules(o)).not.toContain('init-after-abort');
+    expect(midMeasured(o).lateInitAfterAbort).toMatchObject({ count: 1, latenciesMs: [9.5], toControllerAbortMs: [null] });
+  });
+
+  it('carries an empty late-init block when nothing arrived late and when no abort was requested', () => {
+    expect(midMeasured(cleanObserved())).toMatchObject({ initAfterAbort: 0, unattributedInitAfterAbort: 0, lateInitAfterAbort: EMPTY_LATE });
+    const never = cleanObserved();
+    Reflect.deleteProperty(never.midStreamCancel, 'requestedAt');
+    expect(rules(never)).toContain('no-session-started');
+    expect(midMeasured(never)).toMatchObject({ requested: false, initAfterAbort: 0, unattributedInitAfterAbort: 0, lateInitAfterAbort: EMPTY_LATE });
   });
 });
 
@@ -534,6 +614,17 @@ describe('live-adverse runner static guard', () => {
     const extra = specifiers.filter((specifier) => !beadSet.includes(specifier)).sort();
     const disclosed = build(cleanObserved()).deviations.find((deviation: { id: string }) => deviation.id === 'runner-extra-imports');
     expect(extra).toEqual(disclosed?.imports);
+  });
+
+  it('takes each agent startedAt from the runtime progress rows and never substitutes an SDK message time', () => {
+    expect(runner).toMatch(/outcome\.progress/);
+    expect(runner).not.toMatch(/startedAt\s*(?:\?\?|\|\|)/);
+  });
+
+  it('wires one abort signal into both the run and the host, as production does (src/index.ts runWorkflow + createClaudeWorkflowHost)', () => {
+    expect(runner).toMatch(/createClaudeWorkflowHost\(\{[^}]*\bsignal\b/);
+    expect(runner.match(/hostFor\([^)]*controller\.signal\)/g) ?? []).toHaveLength(3);
+    expect(runner.match(/runWorkflow\(\{[^}]*signal: controller\.signal/g) ?? []).toHaveLength(3);
   });
 
   it('waits only by the disclosed bounds and picks the served model with the tested selector', () => {
