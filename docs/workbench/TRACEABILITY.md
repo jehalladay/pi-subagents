@@ -203,6 +203,10 @@ Verification: missing-module red `cmd_fc446e009702`; actual MCP client roundtrip
 
 Correction: commit `f55e448` misquotes its gate receipt id in the commit body. The authoritative receipts are `cmd_5543ac66796b` for the curated-tools source increment and `cmd_c5513d3e361d` for the documented tree actually committed. Both passed complete no-replay gates with 146 files, 2460 passed and 7 skipped.
 
+## Release checklist: published feature matrix (docs/workbench/feature-matrix.md)
+
+docs/workbench/feature-matrix.md publishes the release feature matrix required by docs/workbench/17-packaging-and-operations.md section "Versioning / distribution" ("Release docs include feature matrix with status (not claimed based only on source commit)"): 81 feature rows across W01-W22 plus a Not-claimed section, status vocabulary landed-gated / partial / in-progress / planned / not-started, measured 2026-10-15 against trunk 1e4102f and the Beads ledger export at that tip (53 landed-gated, 17 partial, 8 in-progress, 3 planned, 0 not-started). No status rests on a source commit alone: landed-gated requires a nameable test file on trunk plus a TRACEABILITY section or a closed bead naming a passing gate, and machine-branch deliveries are cited only as not-landed caveats. Production method: one draft pass, two independent correction verdicts (42 corrections, all applied), one adversarial check pass re-verifying every receipt id against the ledger, TRACEABILITY and git; the three same-day post-measurement landings (wb-zmd at e830ac2, wb-0kg.1 at ee8bde0, wb-h8f.1 at 1e4102f) were re-measured at 1e4102f.
+
 ## Tool feedback delivery receipts
 
 The operator directed docs-only delivery of the prepared feedback files without waiting for owning-repo build gates. Every file passed the strict feedback lint; every commit stages exactly one file, discloses the gate waiver in its body, and sits verified as an ancestor of its remote branch. No tool implementation or test changed.
@@ -211,6 +215,7 @@ The operator directed docs-only delivery of the prepared feedback files without 
 - Furnace: `230fbc064` (run-inspect retains native identities through a bounded external read) and `2085b0190` (TypeScript SDK cannot build and generated smithy digests disagree at current main) on `feedback/pi-workbench-20261015-delivery`.
 - HyperUnix: `c52116840a` (typed find keeps incomplete coverage explicit and refuses absence) on `feedback/pi-workbench-20261015-delivery`, in that repo's canonical directory-per-finding layout. An earlier note here calling that shape nonstandard was wrong; the repo's layout linter requires it.
 - ReactiveFiber: `0e6e88345` (no-commit preview preserves provenance without creating render history) plus required dispositions ledger row `3a29b49` on `feedback/pi-workbench-20261015-delivery`.
+- Furnace (second delivery): `182e729fde` (CORROBORATION: realized cost at a new site — the vendored furnace SDK 0.1.0 tarball fails its own crosscheck naming a third digest 2cf7) on `feedback/pi-workbench-20261015-delivery`, strict-lint clean, ancestor-verified; filed from the wb-zby re-vendor investigation.
 
 Delivery is the push, not a fix guarantee. The owning repos' own gates were red or unexercised at delivery time for pre-existing reasons recorded in the files themselves.
 
