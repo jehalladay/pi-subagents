@@ -372,8 +372,9 @@ describe('wb-752.6 Beads Work readiness reader', () => {
     expect(source).not.toMatch(/child_process/);
     expect(source).not.toMatch(/from\s+['"][^'"]*(?:beads|bd-sdk)[^'"]*['"]/i);
     expect(source).not.toMatch(/\brequire\s*\(|\bimport\s*\(/);
-    expect(source).toMatch(/redactWorkbenchText/);
-    expect(source).toMatch(/stripUnsafeText/);
+    // wb-952 pin flip: the shared sanitizers compose into the one helper; the module calls it and no local composition.
+    expect(source).toMatch(/\bsanitizeWorkbenchText\(/);
+    expect(source).not.toMatch(/\b(?:redactWorkbenchText|stripUnsafeText)\b/);
     expect(source.match(/beads\.work\.readiness\/v1/g)).toHaveLength(1);
   });
 });

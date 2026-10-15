@@ -6,7 +6,7 @@
 import { safeWorkflowTerminalText } from "../ui/workflow-card.js";
 import { CapabilityError } from "./capability-registry.js";
 import type { NativeRef, ObservationScope } from "./observation.js";
-import { redactWorkbenchText, stripUnsafeText } from "./redaction.js";
+import { sanitizeWorkbenchText } from "./redaction.js";
 
 export const EVIDENCE_CONTRACT = "workbench.evidence-loader/v1";
 
@@ -43,7 +43,7 @@ export type EvidenceEntry =
 
 export interface EvidenceLoader {
   readonly provider: string;
-  /** Exact-string grant the host must hold for this loader to exist and for every load to proceed. */
+  /** Exact-string grant the host must hold, checked live on every load; it is the only authorization decision. */
   readonly requiredGrant: string;
   /** Shape check for a reference inside this producer only; routing keys off nativeRef.provider first. */
   canLoad(evidenceRef: string): boolean;
@@ -78,7 +78,6 @@ export const EVIDENCE_TRUNCATED_MARK = "[truncated]";
 const NOT_REQUESTED: EvidenceEntry = { state: "not-requested" };
 const LOADING: EvidenceEntry = { state: "loading" };
 const DIGEST = /^(?:[a-z][a-z0-9]{1,15}[:-])?[0-9a-f]{16,128}$/i;
-const ZERO_WIDTH = /[\u00AD\u200B-\u200F\u2060-\u2064\uFEFF]/g;
 const MAX_RECEIPT_CHARS = 120;
 
 const scopeEquals = (left: ObservationScope, right: ObservationScope): boolean =>
@@ -93,10 +92,9 @@ interface Slot {
   pending?: Promise<void>;
 }
 
-/** One preview line to its bounded, redacted, terminal-safe chunks. Redaction runs before any split so a secret cannot straddle a chunk. */
+/** One preview line to its bounded, redacted, terminal-safe chunks: the shared helper runs before any split so a secret cannot straddle a chunk. */
 function safeChunks(raw: string): string[] {
-  const redacted = redactWorkbenchText(raw, Number.MAX_SAFE_INTEGER).replace(ZERO_WIDTH, "");
-  const cleaned = stripUnsafeText(redacted, " ");
+  const cleaned = sanitizeWorkbenchText(raw, Number.MAX_SAFE_INTEGER, "terminal");
   if (cleaned.length === 0) return [""];
   const chunks: string[] = [];
   for (let at = 0; at < cleaned.length; at += EVIDENCE_LINE_CHARS) chunks.push(safeWorkflowTerminalText(cleaned.slice(at, at + EVIDENCE_LINE_CHARS)));
