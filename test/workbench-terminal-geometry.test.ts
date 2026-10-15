@@ -14,9 +14,10 @@ import { type InspectorModel, type InspectorState, type InspectorView, initialIn
 import { type NativeRef, ObservationProjection, type ObservationScope } from '../src/workbench/observation.js';
 import type { WorkflowEntry } from '../src/workflow/progress.js';
 
-interface Geometry { readonly width: number; readonly rows: number }
-const SMALL: Geometry = { width: 80, rows: 24 };
-const LARGE: Geometry = { width: 120, rows: 40 };
+interface Geometry { readonly width: number; readonly rows: number; readonly footer: string }
+/** The paged footer tokens are pinned exactly: 15 and 31 rows fit above the fixed chrome at 80x24 and 120x40 over 46 nodes. */
+const SMALL: Geometry = { width: 80, rows: 24, footer: 'Rows 1-15/46 \u00b7 viewport only' };
+const LARGE: Geometry = { width: 120, rows: 40, footer: 'Rows 1-31/46 \u00b7 viewport only' };
 const GEOMETRIES: readonly Geometry[] = [SMALL, LARGE];
 const VIEWS: readonly InspectorView[] = ['overview', 'graph', 'timeline', 'details'];
 
@@ -27,14 +28,14 @@ const nativeRef = (provider: string, id: string): NativeRef => ({ provider, type
 /** Hostile labels: CJK wide cells, combining marks, zero-width characters, ANSI/OSC, bidi and C0/C1 controls. */
 const HOSTILE_LABELS: readonly string[] = [
   '漢字漢字漢字漢字漢字漢字漢字漢字漢字漢字漢字漢字漢字漢字漢字漢字漢字漢字漢字漢字漢字漢字漢字漢字漢字漢字漢字漢字漢字漢字漢字漢字漢字漢字漢字漢字漢字漢字漢字漢字',
-  `e${'́'.repeat(40)}${'x'.repeat(130)}`,
-  `zero${'​'.repeat(30)}width${'‍'.repeat(30)}${'y'.repeat(130)}`,
+  `e${'\u0301'.repeat(40)}${'x'.repeat(130)}`,
+  `zero${'\u200B'.repeat(30)}width${'\u200D'.repeat(30)}${'y'.repeat(130)}`,
   '\x1b[2J\x1b[31mred\x1b[0m \x1b]0;pwned\x07 title \x1b]8;;https://example.invalid\x1b\\link\x1b]8;;\x1b\\',
-  `bidi ‮evil‬ ⁦iso⁩ ctl\x00\x07\x08\x7f\x9b end ${'z'.repeat(140)}`,
+  `bidi \u202Eevil\u202C \u2066iso\u2069 ctl\x00\x07\x08\x7f\x9b end ${'z'.repeat(140)}`,
   'plain short label',
 ];
 /** No raw ESC, C0/C1 control, DEL or bidi override/isolate may survive in any rendered line. */
-const UNSAFE_OUTPUT = /[\u0000-\u001f\u007f-\u009f‪-‮⁦-⁩]/;
+const UNSAFE_OUTPUT = /[\u0000-\u001f\u007f-\u009f\u202A-\u202E\u2066-\u2069]/;
 
 /** The projection refuses C0/DEL at ingress, so its producer-supplied labels carry only what ingress admits (C1, bidi, zero-width, wide, combining). */
 const INGRESS_ADMITTED = (label: string): string => label.replace(/[\x00-\x1f\x7f]/g, '');
@@ -44,17 +45,17 @@ function inspectorFixture(): InspectorModel {
   HOSTILE_LABELS.map(INGRESS_ADMITTED).forEach((label, i) => {
     projection.refresh({
       source: nativeRef(i % 2 ? 'forge' : 'furnace', `node-${i}`), scope, capturedAt: observedAt, observedAt,
-      node: { title: label, type: 'sdk-operation', statusText: label, statusTone: 'active' } as never,
+      node: { title: label, type: 'sdk-operation', statusText: label, statusTone: 'active' },
       trace: { invocationId: 'geometry-1' }, coverage: 'partial',
       ...(i < 3 ? { interval: { startedAt: observedAt, endedAt: '2026-10-15T00:00:02Z' } } : {}),
-    } as never);
+    });
   });
   for (let i = 0; i < 40; i++) {
     projection.refresh({
       source: nativeRef('forge', `bulk-${i}`), scope, capturedAt: observedAt, observedAt,
-      node: { title: `Bulk operation ${i} 漢字`, type: 'sdk-operation', statusText: 'running', statusTone: 'active' } as never,
+      node: { title: `Bulk operation ${i} 漢字`, type: 'sdk-operation', statusText: 'running', statusTone: 'active' },
       trace: { invocationId: 'geometry-1' }, coverage: 'partial',
-    } as never);
+    });
   }
   projection.relate({ scope, from: nativeRef('furnace', 'node-0'), to: nativeRef('forge', 'node-1'), kind: 'dependency', provenance: { source: 'furnace', observedAt } });
   return { projection, scope, invocationId: 'geometry-1', title: HOSTILE_LABELS[3], status: HOSTILE_LABELS[0] };
@@ -63,10 +64,19 @@ function inspectorFixture(): InspectorModel {
 function progressFixture(): WorkflowEntry[] {
   const entries: WorkflowEntry[] = [{ type: 'workflow_phase', index: 0, title: HOSTILE_LABELS[0] }];
   HOSTILE_LABELS.forEach((label, i) => {
-    entries.push({ type: 'workflow_agent', index: i, label, phaseIndex: 0, phaseTitle: HOSTILE_LABELS[0], state: 'running', agentType: HOSTILE_LABELS[2], resultPreview: label, error: undefined });
+    entries.push({ type: 'workflow_agent', index: i, label, phaseIndex: 0, phaseTitle: HOSTILE_LABELS[0], state: 'progress', agentType: HOSTILE_LABELS[2], resultPreview: label, error: undefined });
     entries.push({ type: 'workflow_node', index: 100 + i, callId: i, capabilityId: 'record.read', label, state: 'done', phaseIndex: 0, phaseTitle: HOSTILE_LABELS[0], resultPreview: label, sourceBasis: label, evidenceRefs: [] });
   });
-  entries.push({ type: 'workflow_log', index: 0, message: HOSTILE_LABELS[4] } as never);
+  entries.push({ type: 'workflow_log', message: HOSTILE_LABELS[4] });
+  return entries;
+}
+
+/** One phase with `nodes` plain nodes: enough rows to exceed the pane body bound at 80x24 (terminalRows - 7 = 17). */
+function saturatingProgress(nodes = 40): WorkflowEntry[] {
+  const entries: WorkflowEntry[] = [{ type: 'workflow_phase', index: 0, title: 'Saturating phase' }];
+  for (let i = 0; i < nodes; i++) {
+    entries.push({ type: 'workflow_node', index: 200 + i, callId: 200 + i, capabilityId: 'record.read', label: `node ${i}`, state: 'done', phaseIndex: 0, phaseTitle: 'Saturating phase', resultPreview: 'ok', sourceBasis: 'basis', evidenceRefs: [] });
+  }
   return entries;
 }
 
@@ -112,7 +122,15 @@ describe('release checklist item 8: deterministic terminal geometry', () => {
 
     it('inspector truncation is explicit: a page larger than the viewport names its remainder', () => {
       const lines = inspectorLines(inspectorFixture(), initialInspectorState(), geometry, false).join('\n');
-      expect(lines).toMatch(/more row|more reference|viewport|row budget/);
+      expect(lines).toContain(geometry.footer);
+    });
+
+    it('workflow dialog row budget is falsifiable: a saturating phase fills the pane and still fits the viewport rows', () => {
+      const lines = plainWorkflowDialogLines(layoutWorkflowDialog({ task, progress: saturatingProgress(), state: initialWorkflowDialogState(), width: geometry.width, terminalRows: geometry.rows, ascii: false, now: 5000 }));
+      // The fixture must reach the bound: the pane body is full, so the frame is taller than the 12-node frame.
+      expect(lines.length).toBeGreaterThan(plainWorkflowDialogLines(layoutWorkflowDialog({ task, progress: saturatingProgress(12), state: initialWorkflowDialogState(), width: geometry.width, terminalRows: geometry.rows, ascii: false, now: 5000 })).length);
+      expect(lines.length).toBeLessThanOrEqual(geometry.rows);
+      for (const line of lines) expect(visibleWidth(line)).toBeLessThanOrEqual(geometry.width);
     });
   });
 
@@ -139,8 +157,12 @@ describe('release checklist item 8: deterministic terminal geometry', () => {
       const state: InspectorState = { ...initialInspectorState(), selected: selected.key, index: 2 };
       for (const geometry of [LARGE, SMALL, LARGE]) {
         const lines = inspectorLines(model, state, geometry, false);
-        expect(lines.some(line => /(❯|>)/.test(line))).toBe(true);
+        const pointers = lines.filter(line => /^\s*(❯|>)/.test(line));
+        // Exactly one pointer row, and it names the selected node (index 2, the zero-width title), not row 0.
+        expect(pointers).toHaveLength(1);
+        expect(pointers[0]).toContain('zero');
         expect(lines.join('\n')).toContain('3/');
+        expect(lines.join('\n')).toContain('furnace/operation/node-2');
       }
     });
 
@@ -189,7 +211,7 @@ describe('release checklist item 8: deterministic terminal geometry', () => {
       ].join('\n');
       expect(all).not.toContain('\x1b');
       expect(all).not.toContain('pwned\x07');
-      expect(all).not.toContain('‮');
+      expect(all).not.toContain('\u202E');
     });
   });
 });
