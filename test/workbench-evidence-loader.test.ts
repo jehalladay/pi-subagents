@@ -418,4 +418,23 @@ describe('grant-gated producer loaders (docs/workbench/20 § Producer mapping)',
     expect(reader).toHaveBeenCalledTimes(1);
     expect(reader).toHaveBeenCalledWith(expect.objectContaining({ operationId: 'op-2' }));
   });
+
+  it('forge: a reader that bounded and labelled its own result has preview, bytes, truncation and staleness carried verbatim', async () => {
+    const s = store(createEvidenceLoaders({
+      grants: () => [FORGE_INSPECT_GRANT],
+      forge: async () => ({
+        status: 'error · FAIL · current gate failed', preview: ['forge-operation:op-3', 'status: error · FAIL · current gate failed'],
+        bytes: 4_321, truncated: true, freshness: 'stale', capturedAt: at, producerReceipt: 'op-3',
+      }),
+    }));
+    await s.request(scope, forgeRef, 'forge-operation:op-3');
+    const entry = s.get(scope, forgeRef, 'forge-operation:op-3');
+    if (entry.state !== 'loaded') throw new Error('expected loaded');
+    // The store appends its own single truncation marker to the carried preview.
+    expect(entry.preview).toEqual(['forge-operation:op-3', 'status: error · FAIL · current gate failed', '[truncated]']);
+    expect(entry.bytes).toBe(4_321);
+    expect(entry.truncated).toBe(true);
+    expect(entry.freshness).toBe('stale');
+    expect(entry.producerReceipt).toBe('op-3');
+  });
 });

@@ -1,12 +1,15 @@
 /** wb-6ze.17: the owner wiring slice — host-built EvidenceStore and the dialog's load-evidence/abortAll wiring. */
 import { describe, expect, it, vi } from "vitest";
 import { WorkflowDialog } from "../src/ui/workflow-dialog.js";
+import { CapabilityError } from "../src/workbench/capability-registry.js";
 import { createWorkbenchEvidenceStore } from "../src/workbench/evidence-wiring.js";
 import { type NativeRef, ObservationProjection, type ObservationScope } from "../src/workbench/observation.js";
 
 const scope: ObservationScope = { workspace: "/ws", principal: "local-operator:1:s1" };
 const NOW = "2026-10-15T11:00:00Z";
 const runRef: NativeRef = { provider: "furnace", type: "run", id: "frn-run-r1", scope: "/ws" };
+const forgeRef: NativeRef = { provider: "forge", type: "gate-status", id: "workspace", scope: "/ws" };
+const OPERATION = "op_8f2c41";
 
 function projectionWithRun(): ObservationProjection {
   const projection = new ObservationProjection({ maxEvents: 16, maxNodes: 16, maxEdges: 16, maxQuery: 8 });
@@ -16,7 +19,25 @@ function projectionWithRun(): ObservationProjection {
     trace: { invocationId: "wf-evidence-1" },
     evidenceRefs: ["frn-atm-a1"],
   });
+  projection.refresh({
+    source: forgeRef, scope, capturedAt: NOW, observedAt: NOW,
+    node: { title: "Forge gate status /ws", type: "sdk-operation" as const, statusText: "success · FORGE_OK", statusTone: "success" as const },
+    trace: { invocationId: "wf-evidence-1" },
+    evidenceRefs: ["forge:gate.status:FORGE_OK", `forge-operation:${OPERATION}`],
+  });
   return projection;
+}
+
+/** A forge.gate.status/v1 reading naming the operation, as the registered capability returns it. */
+function forgeReading(packages: number, operation: string = OPERATION) {
+  return {
+    contract: "forge.gate.status/v1",
+    protocolMethod: "gate.status",
+    source: {
+      status: "success", operation_id: operation, envelope: { verdict: null, reason_code: "FORGE_OK" },
+      data: { packages: Array.from({ length: packages }, (_, index) => ({ ref: `code:p${index}`, last_result: "success", authoritative_current: true, verification_ref: "cmd_current" })) },
+    },
+  };
 }
 
 function wiringDeps(grants: string[]) {
@@ -44,6 +65,13 @@ function wiringDeps(grants: string[]) {
     },
     projection,
   };
+}
+
+function forgeDeps(grants: string[], reading: unknown = forgeReading(1), stale = false) {
+  const { deps, projection } = wiringDeps(grants);
+  if (stale) projection.markStale({ scope, ref: forgeRef });
+  const invoke = vi.fn(async (_id: string, _input: unknown, _context: unknown) => reading);
+  return { deps: { ...deps, registry: () => ({ invoke }) }, invoke, projection };
 }
 
 describe("createWorkbenchEvidenceStore (host wiring)", () => {
@@ -79,12 +107,64 @@ describe("createWorkbenchEvidenceStore (host wiring)", () => {
     expect(store.get(scope, runRef, "frn-atm-zz")).toMatchObject({ state: "unavailable", reason: "unauthorized" });
   });
 
-  it("renders a forge operation ref as the visible no-loader unknown until the forge reader lands", async () => {
+  it("renders a forge operation ref as the visible no-loader unknown when the host supplies no registry", async () => {
     const { deps } = wiringDeps(["forge:inspect"]);
     const store = createWorkbenchEvidenceStore(deps as never);
-    const forgeRef: NativeRef = { provider: "forge", type: "operation", id: "op-1" };
-    await store.request(scope, forgeRef, "forge-operation:op-1");
-    expect(store.get(scope, forgeRef, "forge-operation:op-1")).toMatchObject({ state: "unavailable", reason: "no-loader" });
+    await store.request(scope, forgeRef, `forge-operation:${OPERATION}`);
+    expect(store.get(scope, forgeRef, `forge-operation:${OPERATION}`)).toMatchObject({ state: "unavailable", reason: "no-loader" });
+  });
+
+  it("re-reads a forge operation through the registered capability under the operator's grants and carries the reader's labels", async () => {
+    const { deps, invoke } = forgeDeps(["forge:inspect"]);
+    const store = createWorkbenchEvidenceStore(deps as never);
+    const ref = `forge-operation:${OPERATION}`;
+    await store.request(scope, forgeRef, ref);
+    const entry = store.get(scope, forgeRef, ref);
+    expect(entry.state).toBe("loaded");
+    if (entry.state === "loaded") {
+      expect(entry.provider).toBe("forge");
+      expect(entry.freshness).toBe("current");
+      expect(entry.truncated).toBe(false);
+      expect(entry.preview[0]).toBe(ref);
+      expect(entry.preview.join("\n")).toContain("status: success · FORGE_OK · current gate passed");
+      expect(entry.producerReceipt).toBe(OPERATION);
+      expect(entry.capturedAt).toBe(new Date(NOW).toISOString());
+    }
+    expect(invoke).toHaveBeenCalledTimes(1);
+    const [capabilityId, input, context] = invoke.mock.calls[0] as [string, { target: string }, { grants: string[]; workspace: string; principal: { id: string } }];
+    expect(capabilityId).toBe("forge.gate.status");
+    expect(input).toEqual({ target: "/ws" });
+    expect(context.grants).toEqual(["forge:inspect"]);
+    expect(context.workspace).toBe("/ws");
+    expect(context.principal.id).toBe(scope.principal);
+  });
+
+  it("labels a forge read stale when the owning node is stale and truncated when the reader bounded it", async () => {
+    const { deps } = forgeDeps(["forge:inspect"], forgeReading(60), true);
+    const store = createWorkbenchEvidenceStore(deps as never);
+    const ref = `forge-operation:${OPERATION}`;
+    await store.request(scope, forgeRef, ref);
+    const entry = store.get(scope, forgeRef, ref);
+    expect(entry).toMatchObject({ state: "loaded", freshness: "stale", truncated: true });
+    // Exactly one truncation marker: the store's, never the reader's as well.
+    if (entry.state === "loaded") expect(entry.preview.filter(line => line === "[truncated]")).toEqual(["[truncated]"]);
+  });
+
+  it("refuses an unobserved forge operation and a denied capability read without fabricating anything", async () => {
+    const { deps, invoke } = forgeDeps(["forge:inspect"]);
+    const store = createWorkbenchEvidenceStore(deps as never);
+    await store.request(scope, forgeRef, "forge-operation:op_unlisted");
+    expect(store.get(scope, forgeRef, "forge-operation:op_unlisted")).toMatchObject({ state: "unavailable", reason: "unauthorized" });
+    expect(invoke).not.toHaveBeenCalled();
+    invoke.mockRejectedValueOnce(new CapabilityError("authorization", "Forge read denied outside the authorized workspace scope."));
+    await store.request(scope, forgeRef, `forge-operation:${OPERATION}`);
+    expect(store.get(scope, forgeRef, `forge-operation:${OPERATION}`)).toMatchObject({ state: "unavailable", reason: "unauthorized" });
+    // A reading that names another operation is a visible transport failure, never a substituted result.
+    invoke.mockResolvedValueOnce(forgeReading(1, "op_other"));
+    const otherRef: NativeRef = { ...forgeRef, id: "second" };
+    await store.request(scope, otherRef, `forge-operation:${OPERATION}`);
+    expect(store.get(scope, otherRef, `forge-operation:${OPERATION}`)).toMatchObject({ state: "unavailable" });
+    expect(JSON.stringify(store.get(scope, otherRef, `forge-operation:${OPERATION}`))).not.toContain("op_other");
   });
 });
 
