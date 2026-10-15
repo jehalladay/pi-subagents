@@ -156,3 +156,12 @@ describe("rendering", () => {
     expect(description).toContain("${f.title}");
   });
 });
+
+
+describe("the node() reconcile contract it documents (wb-g8f part B.5)", () => {
+  it("states the resume semantics: stale read replay, operator reconcile for effects", () => {
+    expect(description).toContain("A journaled read replays on resume marked stale");
+    expect(description).toContain("acknowledges or overrides it with workflow_reconcile");
+    expect(description).not.toContain("Node calls are never replayed from the agent journal");
+  });
+});
