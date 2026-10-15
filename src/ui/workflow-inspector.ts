@@ -2,7 +2,8 @@
  * A row is a source observation, never an assertion of ownership or verification.
  */
 import { matchesKey, stripTerminalSequences, truncateToWidth } from '@earendil-works/pi-tui';
-import type { ObservationProjection, ObservationScope, ObservedNode, Relation } from '../workbench/observation.js';
+import type { EvidenceEntry, EvidenceStore } from '../workbench/evidence-loader.js';
+import type { NativeRef, ObservationProjection, ObservationScope, ObservedNode, Relation } from '../workbench/observation.js';
 import { safeWorkflowTerminalText } from './workflow-card.js';
 
 export type InspectorView = 'overview' | 'graph' | 'timeline' | 'details';
@@ -12,6 +13,8 @@ export interface InspectorModel {
   invocationId: string;
   title: string;
   status: string;
+  /** Read side of the lazy evidence store; absent means the details view renders exactly as before. */
+  evidence?: Pick<EvidenceStore, 'get'>;
 }
 export interface InspectorState {
   view: InspectorView;
@@ -25,12 +28,14 @@ export interface InspectorState {
   zoom: number;
   pan: number;
   previousView: InspectorView;
+  /** Selected evidence reference of the current node in the details view. */
+  evidenceIndex: number;
 }
 export interface InspectorSize { width: number; rows: number; ascii?: boolean }
-export type InspectorAction = 'close' | 'transcript';
+export type InspectorAction = 'close' | 'transcript' | 'load-evidence';
 export const initialInspectorState = (): InspectorState => ({
   view: 'overview', selected: null, index: 0, focused: null, filter: '', editingFilter: false,
-  collapsed: [], follow: false, zoom: 1, pan: 0, previousView: 'overview',
+  collapsed: [], follow: false, zoom: 1, pan: 0, previousView: 'overview', evidenceIndex: 0,
 });
 const views: readonly InspectorView[] = ['overview','graph','timeline','details'];
 const safe = (text: string, ascii = false): string => {
@@ -55,6 +60,19 @@ const selected = (model: InspectorModel, state: InspectorState): {node: Observed
   const row=model.projection.window({scope:model.scope,invocationId:model.invocationId,offset:state.index,limit:1});
   return {node:row.nodes[0],index:state.index,total:row.total};
 };
+/** The node the layout draws as current: the selected key when it still resolves, otherwise the row index. */
+function focusedNode(model: InspectorModel, state: InspectorState): ObservedNode | undefined {
+  const at=state.selected ? model.projection.indexOf({scope:model.scope,invocationId:model.invocationId,key:state.selected}) : undefined;
+  const total=model.projection.window({scope:model.scope,invocationId:model.invocationId,offset:0,limit:1}).total;
+  const index=Math.min(Math.max(0,at??state.index),Math.max(0,total-1));
+  return model.projection.window({scope:model.scope,invocationId:model.invocationId,offset:index,limit:1}).nodes[0];
+}
+/** The evidence reference a `load-evidence` action refers to: the focused node's selected reference, for the host to request. */
+export function inspectorEvidenceTarget(model: InspectorModel, state: InspectorState): {scope: ObservationScope; nativeRef: NativeRef; evidenceRef: string} | undefined {
+  const node=focusedNode(model,state);
+  const evidenceRef=node?.evidenceRefs[Math.min(Math.max(0,state.evidenceIndex),Math.max(0,(node?.evidenceRefs.length??0)-1))];
+  return node && evidenceRef!==undefined ? {scope:node.scope,nativeRef:node.nativeRef,evidenceRef} : undefined;
+}
 function rowWindow(model: InspectorModel, state: InspectorState, count: number): {nodes:ObservedNode[];offset:number;total:number;revision:number} {
   const head=model.projection.window({scope:model.scope,invocationId:model.invocationId,offset:0,limit:1});
   const index=Math.min(Math.max(0,state.index),Math.max(0,head.total-1));
@@ -207,12 +225,23 @@ export function reduceInspectorKey(data:string,state:InspectorState,model:Inspec
   if(matchesKey(data,'/')) return {state:{...state,editingFilter:true}};
   if(matchesKey(data,'f')) return {state:{...state,focused:state.focused?null:state.selected}};
   if(data===' ') return {state:{...state,follow:!state.follow}};
-  if(matchesKey(data,'e')) return {state:{...state,view:'details',previousView:state.view}};
+  if(matchesKey(data,'e')){
+    // In the details view with an evidence store, `e` walks the focused node's references; it never loads.
+    if(model.evidence && state.view==='details'){
+      const count=focusedNode(model,state)?.evidenceRefs.length??0;
+      return {state:{...state,evidenceIndex:count>0?(Math.min(Math.max(0,state.evidenceIndex),count-1)+1)%count:0}};
+    }
+    return {state:{...state,view:'details',previousView:state.view}};
+  }
   if(matchesKey(data,'s')) return {state:{...state,view:'details',previousView:state.view}};
   if(matchesKey(data,'c')) {
     const node=selected(model,state).node;
     return node?.nativeRef.provider==='claude-agent-sdk' && node.nativeRef.type==='session'
       ? {state,action:'transcript'} : undefined;
+  }
+  if(model.evidence && state.view==='details' && matchesKey(data,'enter')){
+    // The host performs the load; the reducer only names the request.
+    return inspectorEvidenceTarget(model,state) ? {state,action:'load-evidence'} : {state};
   }
   if(matchesKey(data,'enter') || matchesKey(data,'right')){
     const key=selected(model,state).node?.key;
@@ -230,9 +259,51 @@ export function reduceInspectorKey(data:string,state:InspectorState,model:Inspec
     const delta=matchesKey(data,'j') || matchesKey(data,'down') ? 1 : -1;
     const index=Math.min(Math.max(0,(current??state.index)+delta),Math.max(0,total-1));
     const node=model.projection.window({scope:model.scope,invocationId:model.invocationId,offset:index,limit:1}).nodes[0];
-    return {state:{...state,index,selected:node?.key??null}};
+    return {state:{...state,index,selected:node?.key??null,evidenceIndex:0}};
   }
   return undefined;
+}
+
+/** A node's evidence references with their per-reference load state, within `room` rows. Reads the store synchronously and never loads.
+ * Preview text is read only from a `loaded` entry; every other state is a one-line label. */
+function evidenceRows(store: Pick<EvidenceStore,'get'>, node: ObservedNode, selectedIndex: number, room: number, ascii: boolean): string[] {
+  const refs=node.evidenceRefs;
+  if(refs.length===0||room<=0) return [];
+  const pick=Math.min(Math.max(0,selectedIndex),refs.length-1);
+  const stale=node.freshness!=='current' || node.sourceConnectionState==='disconnected';
+  const entries:EvidenceEntry[]=refs.map(reference=>store.get(node.scope,node.nativeRef,reference));
+  const previewCount=(entry:EvidenceEntry,wanted:number):number=>entry.state==='loaded' ? Math.min(entry.preview.length,wanted) : 0;
+  const label=(entry:EvidenceEntry,shown:number):string=>{
+    switch(entry.state){
+      case 'not-requested': return 'not loaded (Enter)';
+      case 'loading': return ascii ? 'loading...' : 'loading…';
+      case 'unavailable': return `unavailable: ${entry.reason}${entry.freshness==='stale' || stale && entry.reason==='transport' ? ' · stale' : ''}`;
+      case 'loaded': return `loaded · ${entry.bytes} bytes${entry.truncated?' · truncated':''}${stale || entry.freshness==='stale' ? ' · stale' : ''}${shown<entry.preview.length?` · ${shown}/${entry.preview.length} lines`:''}`;
+    }
+  };
+  // Start at the first reference from which the selected one still fits with a minimal preview.
+  let start=0;
+  const need=(from:number):number=>{let sum=0;for(let i=from;i<=pick;i++) sum+=1+previewCount(entries[i],i===pick?3:2);return sum;};
+  while(start<pick && need(start)>room-(pick<refs.length-1?1:0)) start++;
+  const draw=(budget:number):{rows:string[];drawn:number}=>{
+    const rows:string[]=[];
+    let drawn=0;
+    for(let i=start;i<refs.length && rows.length<budget;i++){
+      const entry=entries[i];
+      const remaining=budget-rows.length-1;
+      const shown=previewCount(entry,i===pick ? remaining : Math.min(2,remaining));
+      rows.push(`${i===pick?ascii?'>':'❯':' '} ${safe(refs[i],ascii)} · ${label(entry,shown)}`);
+      if(entry.state==='loaded') for(const text of entry.preview.slice(0,shown)) rows.push(`    ${ascii?'|':'│'} ${text}`);
+      drawn++;
+    }
+    return {rows,drawn};
+  };
+  const full=draw(room);
+  if(start+full.drawn>=refs.length) return full.rows;
+  // References beyond the room are counted, never silently dropped.
+  const trimmed=draw(Math.max(1,room-1));
+  const hidden=refs.length-start-trimmed.drawn;
+  return hidden>0 && room>1 ? [...trimmed.rows,`${ascii?'...':'…'} ${hidden} more reference${hidden===1?'':'s'} (viewport)`] : trimmed.rows;
 }
 
 /** Pure viewport layout; capped rows fetched from indexed nodes, never raw event history. */
@@ -363,7 +434,7 @@ export function layoutInspector(model:InspectorModel,state:InspectorState,size:I
     }
     add('Waiting/blocked/executing lanes unavailable without producer interval kinds.');
   } else {
-    add('Evidence / details · producer references, not fetched payload');
+    add(model.evidence ? 'Evidence / details · producer references; payload loads on focus (Enter)' : 'Evidence / details · producer references, not fetched payload');
     if(current){
       add(`Native ref: ${safe(ref(current),ascii)}`);
       add(`Status: ${safe(current.presentation.statusText,ascii)} · ${current.presentation.statusTone}`);
@@ -372,10 +443,15 @@ export function layoutInspector(model:InspectorModel,state:InspectorState,size:I
       add(`Basis: ${safe(current.subjectBasis??'not supplied',ascii)}`);
       add(`Definition: ${safe(current.definitionDigest??'not supplied',ascii)}`);
       add(`Source: not supplied by observation`);
-      add(`Evidence: ${current.evidenceRefs.length} reference${current.evidenceRefs.length===1?'':'s'}`);
-      const evidenceShown = Math.min(current.evidenceRefs.length,Math.max(0,height-lines.length-5));
-      for(const evidence of current.evidenceRefs.slice(0,evidenceShown)) add(`  ${safe(evidence,ascii)}`);
-      if(current.evidenceRefs.length>evidenceShown) add('  Further references available at producer.');
+      add(`Evidence: ${current.evidenceRefs.length} reference${current.evidenceRefs.length===1?'':'s'}${model.evidence && current.evidenceRefs.length>0 ? ` · ${Math.min(Math.max(0,state.evidenceIndex),current.evidenceRefs.length-1)+1}/${current.evidenceRefs.length} selected · e next · Enter load` : ''}`);
+      if(model.evidence){
+        // Room for evidence rows: the footer, the relations line and the transcript hint stay.
+        for(const text of evidenceRows(model.evidence,current,state.evidenceIndex,height-lines.length-(paged?1:0)-4,ascii)) add(text);
+      } else {
+        const evidenceShown = Math.min(current.evidenceRefs.length,Math.max(0,height-lines.length-5));
+        for(const evidence of current.evidenceRefs.slice(0,evidenceShown)) add(`  ${safe(evidence,ascii)}`);
+        if(current.evidenceRefs.length>evidenceShown) add('  Further references available at producer.');
+      }
       const related=relationsFor(model,current);
       if(related.relations.length) add(`Relations: ${related.relations.map(r=>r.kind).slice(0,3).join(', ')}${related.partial?' (partial)':''}`);
       if(current.nativeRef.provider==='claude-agent-sdk' && current.nativeRef.type==='session') add('c transcript (loaded on focus)');
