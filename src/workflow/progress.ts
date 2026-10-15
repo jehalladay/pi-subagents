@@ -22,6 +22,7 @@
 
 import { sanitizeWorkbenchText } from "../workbench/redaction.js";
 import type { WorkflowMeta, WorkflowPhaseMeta } from "./meta.js";
+import type { NodeReconcileProvenance } from "./reconcile.js";
 
 /** Raw entry lifecycle, as written by the runtime. */
 export type WorkflowEntryState = "start" | "progress" | "done" | "error";
@@ -153,6 +154,8 @@ export interface WorkflowNodeEntry {
   nativeId?: string;
   freshness?: "current" | "stale" | "unknown";
   domainStatus?: string;
+  /** Operator reconcile provenance: pending at a refused effect, acknowledged, or overridden (reconcile.ts). */
+  reconcile?: NodeReconcileProvenance;
 }
 
 export type WorkflowEntry = WorkflowPhaseEntry | WorkflowLogEntry | WorkflowAgentEntry | WorkflowNodeEntry;
