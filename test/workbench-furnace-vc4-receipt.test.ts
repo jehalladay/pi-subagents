@@ -3,16 +3,31 @@
  *
  * Offline, no network and no furnace: the pure assessor is driven with an evidence record that satisfies every
  * criterion and with one mutant per guarantee, so an assessor that returned a constant (or ignored a field)
- * would fail here. The live runner is read as text only.
+ * would fail here. The live runner and the tier launcher are read as text; the runner is executed only without a
+ * usable fixture identity, in front of a sentinel furnace that records any call it receives.
  */
-import { readFileSync } from "node:fs";
+import { spawnSync } from "node:child_process";
+import { chmodSync, existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import {
   assessLive,
+  BINARY_IDENTITY_SOURCE,
   buildReceipt,
+  compareStores,
   exitCodeFor,
   FINDING_RULES,
+  FIXTURE_ENV,
+  FIXTURE_ROOT_PATTERN,
+  FIXTURE_ROOT_PREFIX,
+  fixtureIdentityOf,
+  fixtureRootRefusal,
+  HASHED_STORES,
+  LAUNCHER_CONTRACT,
+  LAUNCHER_RECORD,
   PHASES,
+  READ_ONLY_VERBS,
   RECEIPT_CONTRACT,
   UNREALISED_STEPS,
   verbOf,
@@ -36,9 +51,67 @@ interface Relation {
   provenanceSource: string;
   nativeConfirmationRef?: string;
 }
+interface RunSummary {
+  state: string;
+  controllerSessionId: string | null;
+  attemptIds: string[];
+  cancelledAttemptIds: string[];
+  updatedAt?: string;
+  controllerLive?: boolean | null;
+  attemptStates?: Record<string, string>;
+}
+interface LauncherRecord {
+  contract: string;
+  root: string;
+  runId: string;
+  requestId: string;
+  formula: string;
+  launcherPid: number;
+  launchedAt: string;
+}
+interface Fixture {
+  root?: string;
+  runId?: string;
+  realRoot: string | null;
+  repoRoot: string;
+  beadsStore: boolean;
+  runRecord: boolean;
+  launcher: LauncherRecord | null;
+}
+interface InspectSummary {
+  contract: string;
+  workspaceRoot: string;
+  kind: string;
+  runId: string;
+  workspace: string;
+  beadsRunId: string;
+  creatingRequestId: string;
+  formula: string;
+  state: string;
+  createdAt: string;
+  exitCode: number;
+}
+interface BinaryIdentity {
+  source: string;
+  binary_path?: string;
+  binary_digest?: string;
+  binary_revision?: string;
+  furnace_version: string;
+  protocol_version: number;
+  beads_version?: string;
+}
+interface StoreHashes {
+  at: string;
+  digest: string;
+  count: number;
+  files: Record<string, string>;
+}
 interface Evidence {
+  fixture: Fixture;
   environment: { furnaceAvailable: boolean; diagnostic?: string };
   acquisition: { mode: string; runId?: string; error?: string };
+  inspect: InspectSummary;
+  binary: BinaryIdentity;
   attach: {
     runId: string;
     attachedBy: string;
@@ -46,14 +119,23 @@ interface Evidence {
     ownership: string;
     runnerPid: number;
     controllerPid: number | null;
+    via?: string;
+    launcherPid?: number;
+    creatingRequestId?: string;
+    launcherRequestId?: string;
+    runCreatedAt?: string;
+    attachedAt?: string;
+    runSummary?: RunSummary;
   };
   transitions: Transition[];
   close: {
     observerCalls: string[];
     argv: string[][];
-    runBefore: { state: string; controllerSessionId: string | null; attemptIds: string[]; cancelledAttemptIds: string[] };
-    runAfter: { state: string; controllerSessionId: string | null; attemptIds: string[]; cancelledAttemptIds: string[] };
+    runBefore: RunSummary;
+    runAfter: RunSummary;
+    closedAt?: string;
   };
+  stores: { before: StoreHashes; after: StoreHashes };
   topology: {
     runId: string;
     nativeAttemptIds: string[];
@@ -70,6 +152,41 @@ interface Evidence {
 const RUN = "frn-run-fx-wisp-aaa";
 const ATTEMPT = "frn-atm-fx-wisp-bbb-1";
 const T = (second: number): string => `2026-10-15T09:00:${String(second).padStart(2, "0")}.000Z`;
+const ROOT = "/tmp/pi-external-furnace-realbd.Ab12Cd";
+const REPO = "/workplace/example/worktrees/ws-04-wb-752.3";
+const REQUEST = "vc4-external-4241-abc";
+const DIGEST = "a".repeat(64);
+
+function launcher(): LauncherRecord {
+  return { contract: LAUNCHER_CONTRACT, root: ROOT, runId: RUN, requestId: REQUEST, formula: "vc4-external", launcherPid: 4241, launchedAt: T(0) };
+}
+
+function summary(fields: Partial<RunSummary> = {}): RunSummary {
+  return {
+    state: "active",
+    controllerSessionId: "ses-1",
+    attemptIds: [ATTEMPT],
+    cancelledAttemptIds: [],
+    updatedAt: T(0),
+    controllerLive: true,
+    attemptStates: { [ATTEMPT]: "running" },
+    ...fields,
+  };
+}
+
+function hashes(at: string): StoreHashes {
+  return {
+    at,
+    digest: "d".repeat(64),
+    count: 4,
+    files: {
+      ".beads/embeddeddolt/fx/.dolt/noms/manifest": "1".repeat(64),
+      ".beads/metadata.json": "2".repeat(64),
+      [`.furnace/runs/${RUN}/run.json`]: "3".repeat(64),
+      [`.furnace/runs/${RUN}/events.jsonl`]: "4".repeat(64),
+    },
+  };
+}
 
 function transition(phase: string, second: number, fields: Partial<Transition>): Transition {
   return {
@@ -89,9 +206,46 @@ function transition(phase: string, second: number, fields: Partial<Transition>):
 function good(): Evidence {
   const stale = { freshness: "stale", connection: "disconnected", runNodeFreshness: "stale", attemptNodeFreshness: "stale" };
   return {
+    fixture: { root: ROOT, runId: RUN, realRoot: ROOT, repoRoot: REPO, beadsStore: true, runRecord: true, launcher: launcher() },
     environment: { furnaceAvailable: true },
-    acquisition: { mode: "out-of-band", runId: RUN },
-    attach: { runId: RUN, attachedBy: "run-id", parentInvocationId: null, ownership: "external", runnerPid: 100, controllerPid: 4242 },
+    acquisition: { mode: "fixture", runId: RUN },
+    inspect: {
+      contract: "furnace.run.inspect/v1",
+      workspaceRoot: ROOT,
+      kind: "run_inspect",
+      runId: RUN,
+      workspace: ROOT,
+      beadsRunId: "fx-wisp-aaa",
+      creatingRequestId: REQUEST,
+      formula: "vc4-external",
+      state: "active",
+      createdAt: T(0),
+      exitCode: 0,
+    },
+    binary: {
+      source: BINARY_IDENTITY_SOURCE,
+      binary_path: "/home/u/.local/bin/furnace",
+      binary_digest: DIGEST,
+      binary_revision: "e2294c9f00b3",
+      furnace_version: "0.1.0",
+      protocol_version: 1,
+      beads_version: "1.1.0-rc.1",
+    },
+    attach: {
+      runId: RUN,
+      attachedBy: "run-id",
+      parentInvocationId: null,
+      ownership: "external",
+      runnerPid: 100,
+      controllerPid: 4242,
+      via: "nativeFurnaceRunInspect",
+      launcherPid: 4241,
+      creatingRequestId: REQUEST,
+      launcherRequestId: REQUEST,
+      runCreatedAt: T(0),
+      attachedAt: T(1),
+      runSummary: summary(),
+    },
     transitions: [
       transition("attached", 1, {}),
       transition("disconnected", 2, stale),
@@ -105,9 +259,11 @@ function good(): Evidence {
         ["-C", "/tmp/w", "--json", "attempt", "list", RUN, "--limit", "5"],
         ["-C", "/tmp/w", "--json", "logs", RUN, "--attempt", ATTEMPT, "--stream", "stdout"],
       ],
-      runBefore: { state: "active", controllerSessionId: "ses-1", attemptIds: [ATTEMPT], cancelledAttemptIds: [] },
-      runAfter: { state: "active", controllerSessionId: "ses-1", attemptIds: [ATTEMPT], cancelledAttemptIds: [] },
+      runBefore: summary(),
+      runAfter: summary(),
+      closedAt: T(5),
     },
+    stores: { before: hashes(T(1)), after: hashes(T(6)) },
     topology: {
       runId: RUN,
       nativeAttemptIds: [ATTEMPT],
@@ -139,7 +295,7 @@ const BUILD = {
   node: "v22.0.0",
   arch: "x64",
   platform: "linux",
-  toolchain: { furnace: { version: "furnace 0.1.0 (e2294c9f00b3)", sha256: "00" }, bd: "1.1.0-rc.1", sdk: "@furnace/sdk@0.1.0", producer: "0.1.0" },
+  toolchain: { sdk: "@furnace/sdk@0.1.0", producer: "0.1.0" },
 };
 
 describe("wb-752.3 VC-4 live Furnace receipt: assessor", () => {
@@ -364,6 +520,7 @@ describe("wb-752.3 VC-4 live Furnace receipt: assessor", () => {
   it("names the contract rules and steps exactly so a quiet rename is caught", () => {
     expect([...FINDING_RULES]).toEqual([
       "attach-not-external",
+      "attach-not-inspected",
       "parent-invocation-present",
       "transition-order",
       "disconnect-not-stale",
@@ -372,17 +529,23 @@ describe("wb-752.3 VC-4 live Furnace receipt: assessor", () => {
       "reconcile-not-current",
       "control-call-on-close",
       "run-changed-on-close",
+      "store-changed-by-attach",
       "invented-edge",
       "invented-node",
       "invented-interval",
       "gap-unstated",
     ]);
     expect([...UNREALISED_STEPS]).toEqual([
+      "fixture-identity-absent",
+      "fixture-root-refused",
       "furnace-unavailable",
       "run-not-acquired",
-      "transition-missing",
-      "run-not-running-before-disconnect",
+      "binary-identity-unrecorded",
       "measurement-error",
+      "run-not-running-before-disconnect",
+      "transition-missing",
+      "stores-not-hashed",
+      "run-progressed-during-attach",
     ]);
     expect([...PHASES]).toEqual(["attached", "disconnected", "reconnected", "reconciled"]);
   });
@@ -402,6 +565,7 @@ describe("wb-752.3 VC-4 live Furnace receipt: placement and runner shape", () =>
     const specifiers = specifiersOf(runner);
     expect(specifiers).toContain("../../dist/workbench/furnace-observer.js");
     expect(specifiers).toContain("../../dist/workbench/observation.js");
+    expect(specifiers).toContain("../../dist/workbench/providers/furnace.js");
     expect(specifiers).toContain("./live-furnace-vc4-receipt.mjs");
     for (const specifier of specifiers) expect(specifier).not.toMatch(/\/src\//);
     expect(runner).not.toMatch(DYNAMIC_LOAD);
@@ -409,9 +573,10 @@ describe("wb-752.3 VC-4 live Furnace receipt: placement and runner shape", () =>
     expect(runner).not.toMatch(/doctor/);
   });
 
-  it("attaches by Run ID only: no adopt, resume, pause, stop, retry or unlock verb is ever spoken by the runner", () => {
-    for (const verb of ["adopt", "resume", "pause", "unlock", "retry", "clear"]) expect(runner).not.toMatch(new RegExp(`["'\`]${verb}["'\`]`));
-    expect(runner).toMatch(/FURNACE_RUN_ID/);
+  it("attaches by Run ID only: no start, adopt, resume, pause, stop, retry or unlock verb is ever spoken by the runner", () => {
+    for (const verb of ["start", "adopt", "resume", "pause", "stop", "unlock", "retry", "clear"]) expect(runner).not.toMatch(new RegExp(`["'\`]${verb}["'\`]`));
+    expect(runner).toMatch(/fixtureIdentityOf\(process\.env\)/);
+    expect(runner).not.toMatch(/FURNACE_WORKSPACE|process\.env\.FURNACE_RUN_ID/);
     expect(runner).toMatch(/exitCodeFor\(receipt\)/);
     expect(runner).toMatch(/process\.exitCode\s*=\s*code;\s*$/);
   });
@@ -423,4 +588,351 @@ describe("wb-752.3 VC-4 live Furnace receipt: placement and runner shape", () =>
     const gate = /^gate = \[(.*)\]$/m.exec(forge)?.[0];
     expect(gate).toBe('gate = ["lint", "typing", "build", "test", "workbench-shell", "package-smoke"]');
   });
+});
+
+describe("wb-752.3 respin (BOUNDARY gate substance check): the receipt judges each external-Run rule", () => {
+  it("item 5: the fixture identity is exactly PI_FURNACE_FIXTURE_ROOT and PI_FURNACE_FIXTURE_RUN_ID; the old self-chosen names are ignored", () => {
+    expect(FIXTURE_ENV).toEqual({ root: "PI_FURNACE_FIXTURE_ROOT", runId: "PI_FURNACE_FIXTURE_RUN_ID" });
+    expect(fixtureIdentityOf({ PI_FURNACE_FIXTURE_ROOT: ROOT, PI_FURNACE_FIXTURE_RUN_ID: RUN })).toEqual({ root: ROOT, runId: RUN, missing: [] });
+    expect(fixtureIdentityOf({}).missing).toEqual(["PI_FURNACE_FIXTURE_ROOT", "PI_FURNACE_FIXTURE_RUN_ID"]);
+    expect(fixtureIdentityOf({ PI_FURNACE_FIXTURE_ROOT: ROOT, PI_FURNACE_FIXTURE_RUN_ID: "" }).missing).toEqual(["PI_FURNACE_FIXTURE_RUN_ID"]);
+    expect(fixtureIdentityOf({ PI_FURNACE_FIXTURE_ROOT: "  ", PI_FURNACE_FIXTURE_RUN_ID: RUN }).missing).toEqual(["PI_FURNACE_FIXTURE_ROOT"]);
+    expect(fixtureIdentityOf({ FURNACE_RUN_ID: RUN, FURNACE_WORKSPACE: ROOT }).missing).toEqual(["PI_FURNACE_FIXTURE_ROOT", "PI_FURNACE_FIXTURE_RUN_ID"]);
+  });
+
+  it("item 5: an absent fixture identity is not realised (exit 2), names both variables, and pre-empts every other judgement", () => {
+    const evidence = good();
+    evidence.fixture = { realRoot: null, repoRoot: REPO, beadsStore: false, runRecord: false, launcher: null };
+    evidence.close.argv.push(["-C", ROOT, "run", "stop", RUN, "--json"]);
+    const receipt = buildReceipt({ ...BUILD, evidence });
+    expect(receipt).toMatchObject({ realised: false, pass: false, findings: [] });
+    expect(receipt.unrealised).toHaveLength(1);
+    expect(receipt.unrealised[0].step).toBe("fixture-identity-absent");
+    expect(receipt.unrealised[0].diagnostic).toContain("PI_FURNACE_FIXTURE_ROOT");
+    expect(receipt.unrealised[0].diagnostic).toContain("PI_FURNACE_FIXTURE_RUN_ID");
+    expect(exitCodeFor(receipt)).toBe(2);
+  });
+
+  it("item 1: only a disposable /tmp/pi-external-furnace-realbd.* root is accepted, never the product store, this repository or another prefix", () => {
+    expect(FIXTURE_ROOT_PREFIX).toBe("/tmp/pi-external-furnace-realbd.");
+    expect(FIXTURE_ROOT_PATTERN.test(ROOT)).toBe(true);
+    expect(fixtureRootRefusal(good().fixture)).toBeNull();
+    for (const root of [
+      "/tmp/pi-furnace-vc4-live.UDAAyP",
+      "/tmp/pi-external-furnace-realbd.x/nested",
+      "/tmp/pi-external-furnace-realbdX",
+      "/var/tmp/pi-external-furnace-realbd.x",
+      "/workplace/jehallad/AgentEcosystem/ForgeWorkspaces/Pi/PiSubagents/PrimaryInstallation/src/Pi-subagents",
+    ]) {
+      expect(FIXTURE_ROOT_PATTERN.test(root)).toBe(false);
+      expect(fixtureRootRefusal({ ...good().fixture, realRoot: root })).toMatch(/disposable/);
+    }
+    expect(fixtureRootRefusal({ ...good().fixture, realRoot: null })).toMatch(/does not resolve/);
+  });
+
+  it("item 1: refuses a root that is the repository, lacks the real bd store or the Run record, or was not made by the tier launcher", () => {
+    const base = good().fixture;
+    expect(fixtureRootRefusal({ ...base, repoRoot: ROOT })).toMatch(/repository/);
+    expect(fixtureRootRefusal({ ...base, repoRoot: "/tmp" })).toMatch(/repository/);
+    expect(fixtureRootRefusal({ ...base, beadsStore: false })).toMatch(/embeddeddolt/);
+    expect(fixtureRootRefusal({ ...base, runRecord: false })).toMatch(/run\.json/);
+    expect(LAUNCHER_RECORD).toBe("launcher/fixture.json");
+    expect(fixtureRootRefusal({ ...base, launcher: null })).toMatch(/launcher/);
+    expect(fixtureRootRefusal({ ...base, launcher: { ...launcher(), runId: "frn-run-other" } })).toMatch(/launcher/);
+    expect(fixtureRootRefusal({ ...base, launcher: { ...launcher(), root: "/tmp/pi-external-furnace-realbd.other" } })).toMatch(/launcher/);
+    expect(fixtureRootRefusal({ ...base, launcher: { ...launcher(), contract: "workbench.other/v1" } })).toMatch(/launcher/);
+    expect(fixtureRootRefusal({ ...base, launcher: { ...launcher(), requestId: "" } })).toMatch(/launcher/);
+    expect(fixtureRootRefusal({ ...base, runId: "../../etc/passwd" })).toMatch(/Run identity/);
+  });
+
+  it("item 1: the assessor re-judges the root itself, so a refused root is not realised (exit 2) whatever the runner did", () => {
+    const evidence = good();
+    evidence.fixture = { ...evidence.fixture, realRoot: "/workplace/jehallad/AgentEcosystem/ForgeWorkspaces/Pi/PiSubagents/PrimaryInstallation/src/Pi-subagents" };
+    const receipt = buildReceipt({ ...BUILD, evidence });
+    expect(receipt.unrealised[0]).toMatchObject({ step: "fixture-root-refused" });
+    expect(receipt.unrealised[0].diagnostic).toMatch(/disposable/);
+    expect(exitCodeFor(receipt)).toBe(2);
+  });
+
+  it("item 1: the Run must come from the tier launcher's own request, be created before the attach, and by another process", () => {
+    const foreign = good();
+    foreign.attach.creatingRequestId = "someone-else-1";
+    expect(rulesOf(foreign)).toEqual(["attach-not-external"]);
+    const late = good();
+    late.attach.runCreatedAt = T(5);
+    expect(rulesOf(late)).toEqual(["attach-not-external"]);
+    const unrecorded = good();
+    delete unrecorded.attach.runCreatedAt;
+    expect(rulesOf(unrecorded)).toEqual(["attach-not-external"]);
+    const self = good();
+    self.attach.launcherPid = self.attach.runnerPid;
+    expect(rulesOf(self)).toEqual(["parent-invocation-present"]);
+  });
+
+  it("item 2: the attach must be nativeFurnaceRunInspect's successful furnace.run.inspect/v1 envelope for this Run and root", () => {
+    const other = good();
+    other.attach.via = "sdk-run-status";
+    expect(rulesOf(other)).toEqual(["attach-not-inspected"]);
+    const contract = good();
+    contract.inspect.contract = "furnace.run.status/v1";
+    expect(rulesOf(contract)).toEqual(["attach-not-inspected"]);
+    const kind = good();
+    kind.inspect.kind = "run_status";
+    expect(rulesOf(kind)).toEqual(["attach-not-inspected"]);
+    const wrongRun = good();
+    wrongRun.inspect.runId = "frn-run-other";
+    expect(rulesOf(wrongRun)).toEqual(["attach-not-inspected"]);
+    const wrongRoot = good();
+    wrongRoot.inspect.workspace = "/tmp/pi-external-furnace-realbd.other";
+    expect(rulesOf(wrongRoot)).toEqual(["attach-not-inspected"]);
+    const failed = good();
+    failed.inspect.exitCode = 3;
+    expect(rulesOf(failed)).toEqual(["attach-not-inspected"]);
+  });
+
+  it("item 2: compareStores names every added, removed and modified file", () => {
+    const before = { a: "1", b: "2", c: "3" };
+    expect(compareStores(before, { ...before })).toEqual({ equal: true, added: [], removed: [], modified: [] });
+    expect(compareStores(before, { a: "1", b: "9", d: "4" })).toEqual({ equal: false, added: ["d"], removed: ["c"], modified: ["b"] });
+  });
+
+  it("item 2: byte-identical .beads and .furnace hashes before the attach and after the close are recorded in the receipt", () => {
+    expect(HASHED_STORES).toEqual([".beads", ".furnace"]);
+    const receipt = buildReceipt({ ...BUILD, evidence: good() });
+    expect(receipt.stores).toMatchObject({
+      equal: true,
+      changed: { added: [], removed: [], modified: [] },
+      before: { at: T(1), digest: "d".repeat(64), count: 4 },
+      after: { at: T(6), digest: "d".repeat(64), count: 4 },
+    });
+    expect(Object.keys(receipt.stores.before.files)).toHaveLength(4);
+  });
+
+  it("item 2: a store byte changed while the Run stood still is store-changed-by-attach (exit 1), naming the path", () => {
+    const modified = good();
+    modified.stores.after = { ...modified.stores.after, files: { ...modified.stores.after.files, ".beads/metadata.json": "f".repeat(64) } };
+    expect(rulesOf(modified)).toEqual(["store-changed-by-attach"]);
+    const receipt = buildReceipt({ ...BUILD, evidence: modified });
+    expect(receipt.findings[0].detail).toContain(".beads/metadata.json");
+    expect(receipt.stores.equal).toBe(false);
+    expect(exitCodeFor(receipt)).toBe(1);
+    const added = good();
+    added.stores.after = { ...added.stores.after, files: { ...added.stores.after.files, ".furnace/runs/x/new.json": "e".repeat(64) } };
+    expect(rulesOf(added)).toEqual(["store-changed-by-attach"]);
+    const removed = good();
+    const { ".beads/metadata.json": _gone, ...rest } = removed.stores.after.files;
+    removed.stores.after = { ...removed.stores.after, files: rest };
+    expect(rulesOf(removed)).toEqual(["store-changed-by-attach"]);
+  });
+
+  it("item 2: a store change while the Run made its own progress is not realised, never a pass and never excused as a finding", () => {
+    const evidence = good();
+    evidence.stores.after = { ...evidence.stores.after, files: { ...evidence.stores.after.files, [`.furnace/runs/${RUN}/run.json`]: "f".repeat(64) } };
+    evidence.close.runAfter = summary({ state: "completed", updatedAt: T(8), controllerLive: false, attemptStates: { [ATTEMPT]: "succeeded" } });
+    const receipt = buildReceipt({ ...BUILD, evidence });
+    expect(receipt).toMatchObject({ realised: false, pass: false });
+    expect(receipt.unrealised[0].step).toBe("run-progressed-during-attach");
+    expect(receipt.unrealised[0].diagnostic).toContain("run.json");
+    expect(exitCodeFor(receipt)).toBe(2);
+  });
+
+  it("item 2: progress is never inferred from an absent field, and cannot excuse a change a control call or a halted Run explains", () => {
+    const silent = good();
+    silent.stores.after = { ...silent.stores.after, files: { ...silent.stores.after.files, [`.furnace/runs/${RUN}/run.json`]: "f".repeat(64) } };
+    silent.close.runAfter = { state: "active", controllerSessionId: "ses-1", attemptIds: [ATTEMPT], cancelledAttemptIds: [] };
+    expect(rulesOf(silent)).toEqual(["store-changed-by-attach"]);
+    const halted = good();
+    halted.stores.after = { ...halted.stores.after, files: { ...halted.stores.after.files, [`.furnace/runs/${RUN}/run.json`]: "f".repeat(64) } };
+    halted.close.argv.push(["-C", ROOT, "run", "stop", RUN, "--json"]);
+    halted.close.runAfter = summary({ state: "stopped", updatedAt: T(8) });
+    expect(rulesOf(halted)).toEqual(["control-call-on-close", "run-changed-on-close", "store-changed-by-attach"]);
+    expect(exitCodeFor(buildReceipt({ ...BUILD, evidence: halted }))).toBe(1);
+  });
+
+  it("item 2: hashes that are missing, cover one store only, or do not enclose the attach..close window are not realised", () => {
+    const furnaceOnly = good();
+    const onlyFurnace = (hashed: StoreHashes): StoreHashes => ({ ...hashed, files: Object.fromEntries(Object.entries(hashed.files).filter(([path]) => path.startsWith(".furnace/"))) });
+    furnaceOnly.stores = { before: onlyFurnace(furnaceOnly.stores.before), after: onlyFurnace(furnaceOnly.stores.after) };
+    expect(buildReceipt({ ...BUILD, evidence: furnaceOnly }).unrealised[0]).toMatchObject({ step: "stores-not-hashed" });
+    const lateBefore = good();
+    lateBefore.stores.before = { ...lateBefore.stores.before, at: T(2) };
+    expect(buildReceipt({ ...BUILD, evidence: lateBefore }).unrealised[0]).toMatchObject({ step: "stores-not-hashed" });
+    const earlyAfter = good();
+    earlyAfter.stores.after = { ...earlyAfter.stores.after, at: T(4) };
+    expect(buildReceipt({ ...BUILD, evidence: earlyAfter }).unrealised[0]).toMatchObject({ step: "stores-not-hashed" });
+    const { stores: _stores, ...unhashed } = good();
+    const receipt = buildReceipt({ ...BUILD, evidence: unhashed });
+    expect(receipt.unrealised[0]).toMatchObject({ step: "stores-not-hashed" });
+    expect(exitCodeFor(receipt)).toBe(2);
+  });
+
+  it("item 3: nativeFurnaceRunInspect's version and run inspect are reads; doctor, run start, run resume and run list are not", () => {
+    expect([...READ_ONLY_VERBS]).toEqual(["version", "run inspect", "run status", "attempt list", "logs"]);
+    expect(verbOf(["-C", ROOT, "version", "--json"])).toBe("version");
+    expect(verbOf(["-C", ROOT, "run", "inspect", RUN, "--json"])).toBe("run inspect");
+    const reads = good();
+    reads.close.argv.push(["-C", ROOT, "version", "--json"], ["-C", ROOT, "run", "inspect", RUN, "--json"]);
+    expect(rulesOf(reads)).toEqual([]);
+    for (const words of [["doctor"], ["run", "start", "vc4-external"], ["run", "resume", RUN, "--continue"], ["run", "list"]]) {
+      const probed = good();
+      probed.close.argv.push(["-C", ROOT, ...words, "--json"]);
+      expect(rulesOf(probed)).toEqual(["control-call-on-close"]);
+    }
+  });
+
+  it("item 6: the binary identity is the inspect envelope's version block, verbatim; a prose-derived furnace identity is refused", () => {
+    expect(BINARY_IDENTITY_SOURCE).toBe("furnace.run.inspect/v1#version");
+    const receipt = buildReceipt({ ...BUILD, evidence: good() });
+    expect(receipt.binary).toEqual(good().binary);
+    expect(receipt.toolchain).not.toHaveProperty("furnace");
+    expect(() =>
+      buildReceipt({ ...BUILD, toolchain: { ...BUILD.toolchain, furnace: { version: "furnace 0.1.0 (e2294c9f00b3)", sha256: "00" } }, evidence: good() }),
+    ).toThrow(/inspect envelope/);
+  });
+
+  it("item 6: a binary identity missing its path, digest or revision, or taken from anywhere but the envelope, is not realised", () => {
+    const mutants: ((binary: BinaryIdentity) => void)[] = [
+      (binary) => {
+        delete binary.binary_path;
+      },
+      (binary) => {
+        binary.binary_path = "furnace";
+      },
+      (binary) => {
+        delete binary.binary_digest;
+      },
+      (binary) => {
+        binary.binary_digest = "00";
+      },
+      (binary) => {
+        binary.binary_revision = "";
+      },
+      (binary) => {
+        binary.source = "furnace --version stdout";
+      },
+    ];
+    for (const mutate of mutants) {
+      const evidence = good();
+      mutate(evidence.binary);
+      const receipt = buildReceipt({ ...BUILD, evidence });
+      expect(receipt.unrealised[0]).toMatchObject({ step: "binary-identity-unrecorded" });
+      expect(exitCodeFor(receipt)).toBe(2);
+    }
+  });
+
+  it("binds the receipt to the bytes it ran and the fixture it attached to: dirty flag, source digests, root, launcher and inspect", () => {
+    const sources = { "qa/workbench/live-furnace-vc4.mjs": DIGEST };
+    const receipt = buildReceipt({ ...BUILD, dirty: false, sources, evidence: good() });
+    expect(receipt).toMatchObject({
+      dirty: false,
+      sources,
+      fixture: { root: ROOT, runId: RUN, pattern: FIXTURE_ROOT_PATTERN.source, launcher: launcher() },
+      inspect: { contract: "furnace.run.inspect/v1", creatingRequestId: REQUEST, workspace: ROOT },
+    });
+  });
+});
+
+describe("wb-752.3 respin: the tier launcher and the runner, read as text", () => {
+  const runner = sourceOf("../qa/workbench/live-furnace-vc4.mjs");
+  const launch = sourceOf("../qa/workbench/live-furnace-vc4-launch.mjs");
+  const receiptModule = sourceOf("../qa/workbench/live-furnace-vc4-receipt.mjs");
+  const PROBE_NAME = ["furnace", "capability", "probe", "does", "not", "exist"].join("-");
+  const quoted = (word: string): RegExp => new RegExp(`["'\`]${word}["'\`]`, "g");
+
+  it("item 1/3: the launcher alone starts the Run, once, inside a fresh mkdtemp /tmp/pi-external-furnace-realbd.* workspace with its own bd init", () => {
+    expect(specifiersOf(launch)).toContain("./live-furnace-vc4-receipt.mjs");
+    expect(launch).toMatch(/mkdtempSync\(FIXTURE_ROOT_PREFIX\)/);
+    expect(launch).toMatch(/FIXTURE_ROOT_PATTERN\.test\(/);
+    expect(launch.match(quoted("start"))).toHaveLength(1);
+    expect(launch.match(quoted("init"))).toHaveLength(1);
+    expect(launch).toMatch(/LAUNCHER_RECORD/);
+    expect(launch).not.toMatch(DYNAMIC_LOAD);
+    expect(launch).not.toMatch(/process\.exit\s*\(/);
+  });
+
+  it("item 3: neither the launcher nor the runner speaks a control verb or a capability probe", () => {
+    for (const source of [launch, runner]) {
+      expect(source).not.toMatch(/doctor/);
+      for (const verb of ["stop", "resume", "adopt", "pause", "retry", "unlock", "clear"]) expect(source).not.toMatch(quoted(verb));
+    }
+    expect(runner).not.toMatch(quoted("start"));
+    expect(runner).not.toMatch(quoted("list"));
+    expect(runner).not.toMatch(/\bspawn\s*\(|spawnSync\(\s*["'`](?:furnace|bd|sh)["'`]/);
+  });
+
+  it("item 4: no bead or formula is named for the capability probe anywhere in the tier", () => {
+    for (const source of [launch, runner, receiptModule]) expect(source).not.toContain(PROBE_NAME);
+    expect(launch).toMatch(/const FORMULA = ["']vc4-external["']/);
+  });
+
+  it("item 2/5: the runner gates on the fixture identity and root first, then attaches through the compiled nativeFurnaceRunInspect", () => {
+    expect(runner).toMatch(/fixtureRootRefusal\(/);
+    expect(runner).toMatch(/nativeFurnaceRunInspect\(/);
+    expect(runner).toMatch(/HASHED_STORES/);
+  });
+
+  it("item 6: the runner never reads a furnace identity from prose", () => {
+    expect(runner).not.toMatch(/--version|binary sha256/);
+  });
+});
+
+describe("wb-752.3 respin: the runner executed without a usable fixture identity", () => {
+  const repoRoot = new URL("..", import.meta.url).pathname.replace(/\/$/, "");
+  const runnerPath = join(repoRoot, "qa/workbench/live-furnace-vc4.mjs");
+  interface Outcome {
+    status: number | null;
+    stderr: string;
+    receipt: { contract: string; realised: boolean; pass: boolean; findings: unknown[]; unrealised: { step: string; diagnostic: string }[] };
+    calls: string;
+  }
+
+  function run(extra: Record<string, string>): Outcome {
+    expect(existsSync(join(repoRoot, "dist/workbench/providers/furnace.js")), "the runner drives dist/: run `npm run build` (the forge gate builds before test)").toBe(true);
+    const sandbox = mkdtempSync(join(tmpdir(), "vc4-identity-"));
+    try {
+      const sentinel = join(sandbox, "furnace-calls.log");
+      const fake = join(sandbox, "furnace");
+      writeFileSync(fake, `#!/bin/sh\nprintf '%s\\n' "$*" >> '${sentinel}'\nexit 97\n`);
+      chmodSync(fake, 0o755);
+      const receiptPath = join(sandbox, "receipt.json");
+      const result = spawnSync(process.execPath, [runnerPath], {
+        cwd: repoRoot,
+        encoding: "utf8",
+        env: { PATH: `${sandbox}:${process.env.PATH ?? ""}`, HOME: process.env.HOME ?? sandbox, VC4_RECEIPT: receiptPath, ...extra },
+        timeout: 60_000,
+      });
+      return {
+        status: result.status,
+        stderr: result.stderr,
+        receipt: JSON.parse(readFileSync(receiptPath, "utf8")),
+        calls: existsSync(sentinel) ? readFileSync(sentinel, "utf8") : "",
+      };
+    } finally {
+      rmSync(sandbox, { recursive: true, force: true });
+    }
+  }
+
+  it("item 5: without PI_FURNACE_FIXTURE_ROOT / PI_FURNACE_FIXTURE_RUN_ID it exits 2 (fixture-identity-absent) and never calls furnace", () => {
+    const outcome = run({});
+    expect(outcome.status).toBe(2);
+    expect(outcome.receipt).toMatchObject({ contract: RECEIPT_CONTRACT, realised: false, pass: false, findings: [] });
+    expect(outcome.receipt.unrealised[0].step).toBe("fixture-identity-absent");
+    expect(outcome.stderr).toContain("not realised");
+    expect(outcome.calls).toBe("");
+  }, 60_000);
+
+  it("item 5: the old FURNACE_RUN_ID / FURNACE_WORKSPACE identity is ignored: still exit 2 and still no furnace call", () => {
+    const outcome = run({ FURNACE_RUN_ID: RUN, FURNACE_WORKSPACE: tmpdir() });
+    expect(outcome.status).toBe(2);
+    expect(outcome.receipt.unrealised[0].step).toBe("fixture-identity-absent");
+    expect(outcome.calls).toBe("");
+  }, 60_000);
+
+  it("item 1: a root outside /tmp/pi-external-furnace-realbd.* (here: this repository) is refused, exit 2, before any furnace call", () => {
+    const outcome = run({ PI_FURNACE_FIXTURE_ROOT: repoRoot, PI_FURNACE_FIXTURE_RUN_ID: RUN });
+    expect(outcome.status).toBe(2);
+    expect(outcome.receipt.unrealised[0].step).toBe("fixture-root-refused");
+    expect(outcome.receipt.unrealised[0].diagnostic).toMatch(/disposable/);
+    expect(outcome.calls).toBe("");
+  }, 60_000);
 });
