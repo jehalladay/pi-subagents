@@ -16,11 +16,12 @@
 
 import { randomUUID } from "node:crypto";
 import type { InvocationSnapshot } from "../workbench/identity.js";
+import { sanitizeWorkbenchText } from "../workbench/redaction.js";
 import { escapeXml } from "../xml.js";
 import type { WorkflowJournalEntry } from "./journal.js";
 import type { WorkflowMeta } from "./meta.js";
-import { elapsedMs, stats, type WorkflowAgentEntry, type WorkflowEntry, type WorkflowRunStatus } from "./progress.js";
-import type { EvidenceReceipt } from "./reconcile.js";
+import { collapse, elapsedMs, stats, type WorkflowAgentEntry, type WorkflowEntry, type WorkflowRunStatus } from "./progress.js";
+import { type EvidenceReceipt, entryDigestOf, indexReconciliations, type NodeReconcileProvenance } from "./reconcile.js";
 import type { WorkflowControl, WorkflowRunResult } from "./runtime.js";
 
 /** `wf_` + hex, matching Claude Code's `^wf_[a-z0-9-]{6,}$` run ids. */
@@ -257,6 +258,29 @@ export function describeResumeJournal(from: string, entries: readonly WorkflowJo
     const producers = [...new Set(effects.map(entry => (entry.capabilityId ?? "unknown").split(/[.-]/)[0]))].sort();
     parts.push(`${count(effects.length, "journaled effect")} (${producers.join(", ")}) will stop the resume at its position until reconciled with the producer`);
   }
+  const reconciledIndex = indexReconciliations(entries);
+  const settledPositions: number[] = [];
+  const absentPositions: number[] = [];
+  const overridePositions: number[] = [];
+  for (const row of effects) {
+    const bucket = reconciledIndex.get(row.index);
+    if (bucket === undefined) continue;
+    const digest = entryDigestOf(row);
+    const acks = bucket.acks.filter(ack => ack.reconcile.entry.entryDigest === digest);
+    const latest = acks[acks.length - 1];
+    const live = bucket.overrides.find(candidate =>
+      candidate.reconcile.entry.entryDigest === digest &&
+      candidate.reconcile.consumed === undefined &&
+      !bucket.spent.has(candidate.reconcile.overrideId) &&
+      candidate.reconcile.acknowledgementId === latest?.reconcile.acknowledgementId);
+    if (live !== undefined) overridePositions.push(row.index);
+    else if (latest !== undefined && latest.reconcile.settlement === "none") absentPositions.push(row.index);
+    else if (latest !== undefined) settledPositions.push(row.index);
+  }
+  const positions = (list: readonly number[]) => `position${list.length === 1 ? "" : "s"} ${list.join(", ")}`;
+  if (settledPositions.length > 0) parts.push(`${settledPositions.length} acknowledged by operator (${positions(settledPositions)}) settle from the acknowledgement`);
+  if (overridePositions.length > 0) parts.push(`${overridePositions.length} operator ${overridePositions.length === 1 ? "override" : "overrides"} (${positions(overridePositions)}) re-run once`);
+  if (absentPositions.length > 0) parts.push(`${absentPositions.length} acknowledged as effect-absent (${positions(absentPositions)}) still stop the resume until overridden`);
   if (untyped > 0) parts.push(`${count(untyped, "node call")} without effect metadata will run live`);
   return `${parts.join("; ")}.`;
 }
@@ -319,6 +343,15 @@ export function resolveResumeTarget(
 }
 
 /** `<task-notification>`, in the same shape a finished background agent sends. */
+/** The pending-reconcile provenance rows of a run, as typed objects — the channel the views and tools read instead of matching hint text. */
+export type PendingReconcile = Extract<NodeReconcileProvenance, { state: "pending" }>;
+
+export function pendingReconciliations(task: Pick<WorkflowTask, "workflowProgress">): PendingReconcile[] {
+  return collapse(task.workflowProgress)
+    .nodes.map(node => node.reconcile)
+    .filter((reconcile): reconcile is PendingReconcile => reconcile !== undefined && reconcile.state === "pending");
+}
+
 export function formatWorkflowNotification(task: WorkflowTask, now = Date.now()): string {
   const totals = stats(task.workflowProgress, task.agentCount);
   const status =
@@ -336,7 +369,18 @@ export function formatWorkflowNotification(task: WorkflowTask, now = Date.now())
       task.replayedCount > 0 ? `, ${task.replayedCount} replayed from ${escapeXml(task.resumedFrom ?? "an earlier run")}` : ""
     }${
       task.replayedNodeCount > 0 ? `, ${task.replayedNodeCount} node ${task.replayedNodeCount === 1 ? "read" : "reads"} replayed stale from ${escapeXml(task.resumedFrom ?? "an earlier run")}` : ""
+    }${
+      task.reconciledNodeCount > 0 ? `, ${task.reconciledNodeCount} ${task.reconciledNodeCount === 1 ? "node" : "nodes"} reconciled by operator` : ""
     }</summary>`,
+    // One typed line per position a resume cannot pass without an operator
+    // decision; producer and journal strings are sanitized, then XML-escaped.
+    ...pendingReconciliations(task).map(pending => {
+      const refs = pending.nativeRefs !== undefined && pending.nativeRefs.length > 0
+        ? pending.nativeRefs.map(ref => ref.id).join(", ")
+        : "none recorded";
+      const line = `pending · node position ${pending.position} · capability ${sanitizeWorkbenchText(pending.capabilityId)} · effect class ${sanitizeWorkbenchText(pending.effectClass)} · producer ${sanitizeWorkbenchText(pending.producer)} · native refs ${sanitizeWorkbenchText(refs)} · next: workflow_reconcile {taskId:"${task.id}", position:${pending.position}, action:"inspect"}`;
+      return `<reconcile>${escapeXml(line)}</reconcile>`;
+    }),
     `<result>${escapeXml(result.length > 4000 ? `${result.slice(0, 4000)}\n...(truncated)` : result)}</result>`,
     `<usage><total_tokens>${task.totalTokens}</total_tokens><tool_uses>${task.totalToolCalls}</tool_uses><duration_ms>${elapsedMs(task, now)}</duration_ms></usage>`,
     `</task-notification>`,

@@ -148,3 +148,72 @@ describe("WB-017 incremental component projection", () => {
     dialog.dispose();
   });
 });
+
+
+describe("operator reconcile provenance in the dialog (wb-g8f part B.4)", () => {
+  const pending = node(0, "furnace.run.start", {
+    state: "error", error: "uncertain", domainStatus: undefined, nativeId: undefined,
+    freshness: undefined, sourceBasis: undefined, evidenceRefs: [],
+    reconcile: {
+      state: "pending", position: 0, capabilityId: "furnace.run.start", effectClass: "external", producer: "furnace",
+      key: "k0", entryDigest: `sha256:${"a".repeat(64)}`,
+      nativeRefs: [{ provider: "furnace", type: "run", id: "frn-run-r1" }],
+      decisions: { acknowledged: 0, overridesLive: 0, overridesSpent: 0 },
+    },
+  } as never);
+  const acknowledged = node(0, "furnace.run.start", {
+    reconcile: {
+      state: "acknowledged", acknowledgementId: `ack_${"b".repeat(32)}`, principal: "local-operator:1:s1",
+      recordedAt: "2026-10-15T09:00:00Z", determination: "effect-confirmed", evidenceClass: "producer-confirmed",
+    },
+  } as never);
+  const overridden = node(0, "furnace.run.start", {
+    reconcile: {
+      state: "overridden", overrideId: `ovr_${"c".repeat(32)}`, principal: "local-operator:1:s1",
+      recordedAt: "2026-10-15T09:00:00Z", duplicateRisk: "known-duplicate", outcome: "re-run-ok",
+    },
+  } as never);
+
+  it("marks the node rows with their reconcile state", () => {
+    // Overview level: the node list sits in the wide pane, so the full
+    // annotation is visible; the node-level detail pane carries it otherwise.
+    const state = initialWorkflowDialogState();
+    const phase = { type: "workflow_phase", index: 0, title: "Verify" } as const;
+    const inPhase = (row: WorkflowNodeEntry): WorkflowEntry[] => [phase as never, { ...row, phaseIndex: 0 }];
+    expect(render(state, inPhase(pending), true, 120).join("\n")).toContain("reconcile pending");
+    expect(render(state, inPhase(acknowledged), true, 120).join("\n")).toContain("acknowledged by operator");
+    expect(render(state, inPhase(overridden), true, 120).join("\n")).toContain("re-run by operator override");
+  });
+
+  it("shows a Reconcile detail row for each state", () => {
+    const state = { ...initialWorkflowDialogState(), level: "node" as const };
+    const ackText = render(state, [acknowledged], true, 120).join("\n");
+    expect(ackText).toMatch(/Reconcile: acknowledged by local-operator:1:s1/);
+    expect(ackText).toContain("effect-confirmed");
+    const pendingText = render(state, [pending], true, 120).join("\n");
+    expect(pendingText).toMatch(/Reconcile: pending/);
+    expect(pendingText).toContain("workflow_reconcile");
+    const overriddenText = render(state, [overridden], true, 120).join("\n");
+    expect(overriddenText).toMatch(/Reconcile: re-run by operator override/);
+    expect(overriddenText).toContain("re-run-ok");
+  });
+
+  it("carries the reconciled count into the header", () => {
+    const lines = plainWorkflowDialogLines(layoutWorkflowDialog({
+      task: { ...task, reconciledNodeCount: 1 } as never, progress, state: initialWorkflowDialogState(),
+      ascii: true, width: 100, now: 2000, bodyRows: 12,
+    }));
+    expect(lines.join("\n")).toContain("reconciled: 1 node");
+  });
+
+  it("strips hostile text from a reconcile principal", () => {
+    const hostile = node(0, "furnace.run.start", {
+      reconcile: {
+        state: "acknowledged", acknowledgementId: `ack_${"b".repeat(32)}`, principal: "op\u001b[31m\u202eevil",
+        recordedAt: "2026-10-15T09:00:00Z", determination: "indeterminate", evidenceClass: "operator-asserted",
+      },
+    } as never);
+    const state = { ...initialWorkflowDialogState(), level: "node" as const };
+    expect(render(state, [hostile], true, 120).join("\n")).not.toMatch(/[\u001b\u202a-\u202e]/u);
+  });
+});

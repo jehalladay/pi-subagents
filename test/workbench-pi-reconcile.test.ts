@@ -139,6 +139,12 @@ describe("inspect, evidence, acknowledge, resume", () => {
     const applied = carried.find(entry => entry.kind === "acknowledge");
     expect(applied?.reconcile).toHaveProperty("applied");
     expect(carried.some(entry => entry.kind === "node" && entry.capabilityId === "furnace.run.start")).toBe(true);
+    // The inline card of the resumed run names what the operator settled (part A live gap closed with it).
+    const plainTheme = { fg: (_color: string, text: string) => text, bold: (text: string) => text };
+    const inline = String(
+      pi.tools.get("SubagentWorkflow").renderResult(resumed, { expanded: false, isPartial: false }, plainTheme as never, { isError: false }).text ?? "",
+    );
+    expect(inline).toContain("reconciled: 1 node");
   });
 
   it("strips hostile producer text from the evidence reply and refuses a control-byte reason as malformed", async () => {

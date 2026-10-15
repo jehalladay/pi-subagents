@@ -488,3 +488,32 @@ describe("component rendering", () => {
     expect(rendered.join("\n")).toContain("<success>✔</success>");
   });
 });
+
+
+describe("reconcile provenance on the card (wb-g8f part B.4)", () => {
+  const nodeRow = (reconcile: Record<string, unknown>): WorkflowEntry => ({
+    type: "workflow_node", index: 0, callId: 1, capabilityId: "furnace.run.start", label: "start",
+    state: reconcile.state === "pending" ? "error" : "done",
+    ...(reconcile.state === "pending" ? { error: "uncertain" } : {}),
+    reconcile,
+  } as never);
+
+  it("suffixes node rows with their reconcile state", () => {
+    const acknowledged = card({ progress: [nodeRow({
+      state: "acknowledged", acknowledgementId: `ack_${"b".repeat(32)}`, principal: "local-operator:1:s1",
+      recordedAt: "2026-10-15T09:00:00Z", determination: "indeterminate", evidenceClass: "operator-asserted",
+    })] }).join("\n");
+    expect(acknowledged).toContain("acknowledged by operator");
+    const overridden = card({ progress: [nodeRow({
+      state: "overridden", overrideId: `ovr_${"c".repeat(32)}`, principal: "local-operator:1:s1",
+      recordedAt: "2026-10-15T09:00:00Z", duplicateRisk: "none", outcome: "re-run-ok",
+    })] }).join("\n");
+    expect(overridden).toContain("re-run by operator override");
+    const pending = card({ progress: [nodeRow({
+      state: "pending", position: 0, capabilityId: "furnace.run.start", effectClass: "external", producer: "furnace",
+      key: "k0", entryDigest: `sha256:${"a".repeat(64)}`,
+      decisions: { acknowledged: 0, overridesLive: 0, overridesSpent: 0 },
+    })] }).join("\n");
+    expect(pending).toContain("reconcile pending");
+  });
+});
