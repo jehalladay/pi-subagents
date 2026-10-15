@@ -49,8 +49,8 @@ const REFERENCE_LIMIT = 256;
 const INSTANT_LIMIT = 64;
 /** sanitizeWorkbenchJsonText's default text bound, which the registered tool serializes with; it bounds projection keys. */
 const JSON_TEXT_LIMIT = 2_000;
-/** A string the shared sanitizer never settles on (not observed; bounded defensively) is withheld whole. */
-const MAX_PASSES = 8;
+/** Line and tab separators the credential patterns treat as whitespace: a run becomes ONE space before any deletion (deletion never precedes redaction). */
+const SEPARATORS = /[\n\t\v\f\r\u{2028}\u{2029}]+/gu;
 const REDACTED = "[REDACTED]";
 const TONES: readonly Presentation["statusTone"][] = ["active", "success", "failure", "waiting", "unknown"];
 const PRESENTATION_TYPES: readonly Presentation["type"][] = ["workflow", "agent", "sdk-operation", "group"];
@@ -241,16 +241,15 @@ const inScope = (scope: ObservationScope | undefined, expected: ObservationScope
   scope?.workspace === expected.workspace && scope?.principal === expected.principal;
 const byCodeUnit = (a: string, b: string): number => (a < b ? -1 : a > b ? 1 : 0);
 
-/** One producer string bound for the model: removed first, then redacted and stripped until the shared sanitizer is a no-op. */
+/** One producer string bound for the model: separators normalized, removed, then redacted and stripped until the shared sanitizer is a no-op. */
 function clean(value: unknown, max: number): string {
   if (typeof value !== "string") return "";
-  let text = stripUnsafeText(value).replace(INVISIBLE, "");
-  for (let pass = 0; pass < MAX_PASSES; pass++) {
+  let text = stripUnsafeText(value.replace(SEPARATORS, " ")).replace(INVISIBLE, "");
+  for (;;) {
     const next = sanitizeWorkbenchText(text, max).replace(INVISIBLE, "").replace(LONE_SURROGATE, "");
     if (next === text) return text;
     text = next;
   }
-  return REDACTED;
 }
 
 function deepFreeze<T>(value: T): T {

@@ -24,7 +24,7 @@ import {
   type ObserveRequest,
   observeInvocation,
 } from "../src/workbench/observe-query.js";
-import { sanitizeWorkbenchJsonText } from "../src/workbench/redaction.js";
+import { sanitizeWorkbenchJsonText, sanitizeWorkbenchText } from "../src/workbench/redaction.js";
 
 const alice: ObservationScope = { workspace: "ws-1", principal: "alice" };
 const bob: ObservationScope = { workspace: "ws-1", principal: "bob" };
@@ -588,7 +588,8 @@ describe("workflow_observe reply builder (workbench.observe/v1)", () => {
     expect(first.presentation.title.startsWith("evil Authorization: [REDACTED] xxx")).toBe(true);
     expect(first.presentation.statusText).toBe("RUNNING [REDACTED] iso");
     expect(first.presentation.statusTone).toBe("active");
-    expect(second.presentation.title).toBe("Authorization: [REDACTED] tail");
+    // The fixture's trailing U+2028 is a separator: it becomes one space (wb-752.2 respin) instead of vanishing.
+    expect(second.presentation.title).toBe("Authorization: [REDACTED] tail ");
     expect(second.presentation.statusText).toBe("RUNNING [REDACTED]");
     expect(first.evidenceRefs).toEqual(Array.from({ length: 20 }, (_, index) => `ev-${index}`));
     expect(first.evidenceTruncated).toBe(true);
@@ -1002,5 +1003,146 @@ describe("workflow_observe reply builder (workbench.observe/v1)", () => {
       ["15-implementation-program.md", "compact bounded result and ACL"],
     ];
     for (const [file, quote] of anchors) expect(readFileSync(new URL(`../docs/workbench/${file}`, import.meta.url), "utf8"), file).toContain(quote);
+  });
+});
+
+/**
+ * wb-752.2 respin (owner ruling 16:43Z, gate verdict U1/U2/F5): separators are normalized to ONE space before any deletion, so
+ * deletion never precedes redaction. Every invisible input is built with String.fromCharCode (F11 seat rule), never typed raw.
+ */
+describe("workflow_observe reply builder: separators normalize before redaction (wb-752.2 respin)", () => {
+  const at = (code: number): string => String.fromCharCode(code);
+  const LF = at(0x0a);
+  const TAB = at(0x09);
+  const VT = at(0x0b);
+  const FF = at(0x0c);
+  const CR = at(0x0d);
+  const LS = at(0x2028);
+  const PS = at(0x2029);
+  const ZWSP = at(0x200b);
+  const BEL = at(0x07);
+  const ESC = at(0x1b);
+  const NBSP = at(0xa0);
+  const IDEOGRAPHIC = at(0x3000);
+  const CANARY = "LEAKCANARY0123456789";
+  const SK = `sk-ant-${CANARY}`;
+  const GH = `ghp_${CANARY}`;
+  const TOK = `tok${CANARY}`;
+
+  /** Gate probe shapes: the text is what a producer hands over; none of them may reach the reply with the canary intact. */
+  const gateProbes: readonly (readonly [label: string, text: string])[] = [
+    ["P1", `token: x${LF}${SK}`],
+    ["P2", `see${LF}${GH}`],
+    ["P3", `auth${LF}Bearer ${TOK}`],
+    ["P4", `Bearer${TAB}${TOK}`],
+    ["P5", `Basic${VT}${TOK}`],
+    ["P6", `Authorization: Bearer${LF}${TOK}`],
+    ["P7", `first part${CR}${LF}${SK}`],
+    ["P7b", `form${FF}feed${FF}${GH}`],
+    ["U1", `Authorization: Bearer${LS}${TOK}`],
+    ["U2", `Authorization: Bearer${PS}${TOK}`],
+    ["U4", `line${LS}${SK}`],
+    ["U5", `x${LS}Bearer ${TOK}`],
+    ["U6", `see${PS}${GH}`],
+  ];
+  /** Compositions the old order already redacted; they stay redacted (and the plain single-line shape keeps its meaning). */
+  const controls: readonly (readonly [label: string, text: string])[] = [
+    ["P8", `Authorization: Bea${ZWSP}rer ${TOK}`],
+    ["P10", `Authorization: Bea${BEL}rer ${TOK}`],
+    ["P11", `Authorization: ${ESC}[1mBearer${ESC}[0m ${TOK}`],
+    ["P12", `Authorization: Bearer ${TOK}`],
+    ["NBSP", `Authorization: Bearer${NBSP}${TOK}`],
+    ["U+3000", `Authorization: Bearer${IDEOGRAPHIC}${TOK}`],
+  ];
+
+  function stubReader(node: ObservedNode, events?: ReturnType<ObserveReader["events"]>): ObserveReader {
+    return {
+      window: (filter) => ({ nodes: [node].slice(filter.offset, filter.offset + filter.limit), total: 1, revision: 1 }),
+      relations: () => [],
+      events: () => events ?? { events: [], truncated: false, completeness: "complete" },
+      relationRevision: () => 0,
+      stats: () => ({ nodes: 1, events: events?.events.length ?? 0, edges: 0 }),
+    };
+  }
+
+  it("redacts every gate probe through a stub-reader title, and the plain shared sanitizer is the oracle that already redacts them", () => {
+    for (const [label, text] of [...gateProbes, ...controls]) {
+      if (gateProbes.some(([probe]) => probe === label)) expect(sanitizeWorkbenchText(text), `${label} oracle`).not.toContain(CANARY);
+      const reply = observeInvocation(stubReader(stubNode("frn-probe", alice, shown("RUNNING", "active", text))), { scope: alice, invocationId: "frn-probe" });
+      const title = reply.nodes[0].presentation.title;
+      expect(title, label).not.toContain(CANARY);
+      expect(title, label).toContain("[REDACTED]");
+      expect(JSON.stringify(reply), label).not.toContain(CANARY);
+    }
+  });
+
+  it("redacts the C0-separator probes through the REAL projection's snapshot.kind and the U+2028/U+2029/U+FEFF-free probes through titles", () => {
+    // refresh() never validates kind, so C0 whitespace reaches the reply there; validText refuses C0 in titles but lets U+2028/U+2029 through.
+    for (const [label, text] of gateProbes) {
+      const view = new ObservationProjection();
+      const invocationId = `inv-${label}`;
+      const carriesLineSeparator = text.includes(LS) || text.includes(PS);
+      snapshot(view, ref("forge", `probe-${label}`), invocationId, carriesLineSeparator ? shown("RUNNING", "active", text) : shown("RUNNING", "active", "plain"), 1, carriesLineSeparator ? {} : { kind: text });
+      const reply = observeInvocation(view, { scope: alice, invocationId });
+      expect(JSON.stringify(reply), label).not.toContain(CANARY);
+      const node = reply.nodes[0];
+      expect(carriesLineSeparator ? node.presentation.title : node.kind, label).toContain("[REDACTED]");
+    }
+  });
+
+  it("redacts a separator-split credential in evidenceRefs, subjectBasis, nativeRef.id, event kind and event provider", () => {
+    const glued = `Authorization: Bearer${LS}${TOK}`;
+    const view = new ObservationProjection();
+    snapshot(view, ref("forge", `run${LS}Bearer ${TOK}`), "inv-fields", shown("RUNNING", "active", "fields"), 1, {
+      evidenceRefs: [glued, `see${LS}${GH}`],
+      subjectBasis: `x${LS}Bearer ${TOK}`,
+    });
+    view.ingest({
+      projectionEventId: "evt-kind",
+      source: ref(`prov${LS}Bearer ${TOK}`, "job-1"),
+      scope: alice,
+      sourceSequence: 1,
+      observedAt: clock(2),
+      kind: `native${LS}${SK}`,
+      node: { presentation: shown("RUNNING", "active", "event") },
+      trace: { invocationId: "inv-fields" },
+    });
+    const reply = observeInvocation(view, { scope: alice, invocationId: "inv-fields", selectors: { events: { limit: 5 } } });
+    const node = reply.nodes[0];
+    expect(node.evidenceRefs.every((value) => value.includes("[REDACTED]"))).toBe(true);
+    expect(node.subjectBasis).toContain("[REDACTED]");
+    expect(node.nativeRef.id).toContain("[REDACTED]");
+    const events = onlyEvents(reply);
+    expect(Object.keys(events.kinds).every((kind) => kind.includes("[REDACTED]"))).toBe(true);
+    expect(events.providers.every((provider) => provider.includes("[REDACTED]"))).toBe(true);
+    expect(JSON.stringify(reply)).not.toContain(CANARY);
+  });
+
+  it("maps a run of separators to one space so adjacent words are not fused (U2)", () => {
+    const run = `${CR}${LF}${TAB}${VT}${FF}${LS}${PS}`;
+    const reply = observeInvocation(stubReader(stubNode("frn-words", alice, shown("RUNNING", "active", `line one${LF}line two${run}line three`))), { scope: alice, invocationId: "frn-words" });
+    expect(reply.nodes[0].presentation.title).toBe("line one line two line three");
+  });
+
+  it("keeps the deletion of zero-width and control characters inside a word (they are not separators)", () => {
+    const reply = observeInvocation(stubReader(stubNode("frn-glue", alice, shown("RUNNING", "active", `ab${ZWSP}cd${BEL}ef`))), { scope: alice, invocationId: "frn-glue" });
+    expect(reply.nodes[0].presentation.title).toBe("abcdef");
+  });
+
+  it("settles without a fallback: no MAX_PASSES withheld-whole branch exists and every output is a fixed point of the shared sanitizer", () => {
+    const source = readFileSync(new URL("../src/workbench/observe-query.ts", import.meta.url), "utf8");
+    expect(source).not.toContain("MAX_PASSES");
+    const parts = ["Bearer", " ", LF, LS, ZWSP, "tok", "sk-ant-", "ghp_", "Bea", "rer", BEL, TAB, "password", ":", "=", "x", ESC, "[1m", "[0m", PS, "abc"];
+    let seed = 0x2f6e2b1;
+    const next = (): number => {
+      seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
+      return seed;
+    };
+    for (let trial = 0; trial < 1_500; trial++) {
+      let text = "";
+      for (let index = 0, length = 2 + (next() % 10); index < length; index++) text += parts[next() % parts.length];
+      const title = observeInvocation(stubReader(stubNode("frn-fuzz", alice, shown("RUNNING", "active", text))), { scope: alice, invocationId: "frn-fuzz" }).nodes[0].presentation.title;
+      expect(sanitizeWorkbenchText(title, 200), `trial ${trial}`).toBe(title);
+    }
   });
 });
