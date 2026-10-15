@@ -8,7 +8,7 @@
  */
 import {CapabilityError} from './capability-registry.js';
 import type {NativeRef, NativeSnapshot, ObservationProjection, ObservationScope, Presentation} from './observation.js';
-import {redactWorkbenchText, stripUnsafeText} from './redaction.js';
+import {sanitizeWorkbenchText} from './redaction.js';
 
 export const BEADS_WORK_CONTRACT = 'beads.work.readiness/v1';
 
@@ -86,9 +86,9 @@ type JsonRecord = Record<string, unknown>;
 const isRecord = (value: unknown): value is JsonRecord => value !== null && typeof value === 'object' && !Array.isArray(value);
 const unavailable = (message: string): CapabilityError => new CapabilityError('unavailable', message);
 
-/** Untrusted producer text bound for display: redacted, stripped of terminal escapes, then cut. */
+/** Untrusted producer text bound for display: the shared helper (normalize, redact, strip), then cut by code point. */
 function cleanText(value: string, maxChars: number): string {
-  return Array.from(stripUnsafeText(redactWorkbenchText(value))).slice(0, maxChars).join('').trim();
+  return Array.from(sanitizeWorkbenchText(value)).slice(0, maxChars).join('').trim();
 }
 function label(value: unknown, field: string): string {
   if (typeof value !== 'string') throw unavailable(`Beads ${field} is not a string.`);
