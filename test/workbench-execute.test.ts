@@ -77,7 +77,7 @@ describe("E1 tool shape: exactly {definitionRef,input,hostMode,policy?}", () => 
 
   it("the invocation reference is host-bound and must be clean bounded text", () => {
     const malformed = refused("malformed-request", "validation", "malformed execute request");
-    for (const invocationId of ["", "  ", "inv\u001b[31m", "x".repeat(257), undefined, 7, "a\nb", "a‮b"]) {
+    for (const invocationId of ["", "  ", "inv\u001b[31m", "x".repeat(257), undefined, 7, "a\nb", "a\u202eb"]) {
       expect(decideExecute(request(), host({ invocationId: invocationId as string }))).toStrictEqual(malformed);
     }
   });
@@ -298,11 +298,11 @@ describe("E6 sanitized, bounded reply", () => {
   });
   it("definition id, hostMode and reason are redacted and stripped of terminal and bidi characters", () => {
     const decision = decideExecute(request({ definitionRef: { ...DEFINITION, id: "/ws/access_token=never-leak-me.js" } }), host());
-    const built = reply({ status: "refused", reason: "bad\u001b[31m‮ thing password=hunter2" }, decision);
+    const built = reply({ status: "refused", reason: "bad\u001b[31m\u202e thing password=hunter2" }, decision);
     const text = JSON.stringify(built);
     expect(text).not.toContain("never-leak-me");
     expect(text).not.toContain("hunter2");
-    expect(text).not.toMatch(/[\u0000-\u001f\u007f-\u009f‪-‮⁦-⁩]/);
+    expect(text).not.toMatch(/[\u0000-\u001f\u007f-\u009f\u202a-\u202e\u2066-\u2069]/);
     expect(text).not.toContain("\\u001b");
   });
   it("the reply is byte-capped with a visible truncation marker; raw payloads are never retained", () => {
@@ -336,6 +336,161 @@ describe("E6 sanitized, bounded reply", () => {
     expect(built.nativeRefs[0].id).toBe("frn-run-r1");
     expect(Object.isFrozen(built.nativeRefs)).toBe(true);
     expect(Object.isFrozen(built.nativeRefs[0])).toBe(true);
+  });
+});
+
+const utf8Bytes = (value: unknown): number => new TextEncoder().encode(JSON.stringify(value)).length;
+const FLOOR = 2048;
+/** Caps below the floor clamp to it; the rest are accepted as given. NaN and Infinity fall back to the default. */
+const CAPS: readonly number[] = [1, 100, FLOOR, 2049, 3000, 4096, 6000, 8192, 1_000_000];
+const effectiveCap = (cap: number): number => Math.max(FLOOR, cap);
+
+/** Maxima shapes of every free-text member, as the wb-69g.5 gate measured them (P1-P3) plus multi-byte UTF-8 (P5). */
+const MAXIMA: ReadonlyArray<{ name: string; unit: string; units: number }> = [
+  { name: "P1 ascii", unit: "a", units: 256 },
+  { name: "P2 quote-escaped", unit: "\"", units: 128 },
+  { name: "P3 lone-surrogate", unit: "\ud800", units: 85 },
+  { name: "P5 multi-byte", unit: "\u20ac", units: 85 },
+];
+function maximaScenario(unit: string, units: number, extraRefs = 0) {
+  const text = unit.repeat(units);
+  const definitionRef = { kind: "script" as const, id: text, schemaVersion: text, artifactDigest: DIGEST };
+  const decision = decideExecute(request({ definitionRef, policy: { note: (unit === "\ud800" ? "a" : unit).repeat(unit === "\u20ac" ? 1200 : 1500) } }), host({ invocationId: text }));
+  const maxRef: NativeRef = { provider: text, type: text, id: text, scope: text };
+  const refs = Array.from({ length: 1 + extraRefs }, () => ({ ...maxRef }));
+  return { decision, refs, reason: unit.repeat(2000) };
+}
+
+describe("U2 the reply never exceeds its byte cap for ANY accepted cap (TextEncoder UTF-8 bytes)", () => {
+  for (const shape of MAXIMA) {
+    it(`${shape.name}: serialized bytes <= the effective cap at every cap, for launched, accepted and refused launches`, () => {
+      const { decision, refs, reason } = maximaScenario(shape.unit, shape.units, 40);
+      expect(decision.decision).toBe("admitted");
+      for (const cap of CAPS) {
+        for (const outcome of [{ status: "launched" as const, nativeRefs: refs, reason }, { status: "accepted" as const, nativeRefs: refs, reason }, { status: "refused" as const, reason }]) {
+          const built = reply(outcome, decision, cap);
+          expect(utf8Bytes(built)).toBeLessThanOrEqual(effectiveCap(cap));
+          expect(built.truncated).toBe(true);
+          expect(built.status).toBe(outcome.status);
+          expect(built.completion).toBe("not-asserted");
+          expect(built.definition?.artifactDigest).toBe(DIGEST);
+        }
+      }
+    });
+    it(`${shape.name}: a refused decision's reply is within the floor even with a maximal invocation reference`, () => {
+      const text = shape.unit.repeat(shape.units);
+      const decision = decideExecute(request({ hostMode: "nowhere" }), host({ invocationId: text }));
+      expect(decision.decision).toBe("refused");
+      for (const cap of CAPS) expect(utf8Bytes(reply(undefined, decision, cap))).toBeLessThanOrEqual(effectiveCap(cap));
+    });
+  }
+  it("non-finite and negative caps fall back to a cap the reply still honours", () => {
+    const { decision, refs, reason } = maximaScenario("a", 256, 40);
+    for (const cap of [Number.NaN, Number.POSITIVE_INFINITY, Number.NEGATIVE_INFINITY, -5]) {
+      expect(utf8Bytes(reply({ status: "launched", nativeRefs: refs, reason }, decision, cap))).toBeLessThanOrEqual(8192);
+    }
+  });
+  it("native references are halved first, then text is trimmed deterministically, and the same inputs give the same bytes", () => {
+    const { decision, refs, reason } = maximaScenario("a", 256, 40);
+    const first = reply({ status: "launched", nativeRefs: refs, reason }, decision, FLOOR);
+    const second = reply({ status: "launched", nativeRefs: refs, reason }, decision, FLOOR);
+    expect(JSON.stringify(first)).toBe(JSON.stringify(second));
+    expect(first.truncation).toContain("[truncated]");
+    expect(first.nativeRefs.length).toBeLessThan(refs.length);
+    expect(first.invocationId?.length ?? 0).toBeLessThanOrEqual(256);
+  });
+  it("the logical invocation reference and definition digest survive an ordinary squeeze untouched", () => {
+    const many: NativeRef[] = Array.from({ length: 120 }, (_, index) => ({ provider: "furnace", type: "attempt", id: `frn-atm-${index}-${"x".repeat(120)}`, scope: "/tmp/external-ws" }));
+    const built = reply({ status: "launched", nativeRefs: many, reason: "r".repeat(300) }, decideExecute(request(), host()), 4096);
+    expect(utf8Bytes(built)).toBeLessThanOrEqual(4096);
+    expect(built.invocationId).toBe(INVOCATION);
+    expect(built.definition).toEqual(DEFINITION);
+    expect(built.reason).toBe("r".repeat(300));
+    expect(built.nativeRefs.length).toBeGreaterThan(0);
+  });
+  it("a cap measured in UTF-8 bytes, not UTF-16 units: three-byte text that is short in characters still obeys the cap", () => {
+    const decision = decideExecute(request(), host());
+    const built = reply({ status: "refused", reason: "\u20ac".repeat(500) }, decision, FLOOR);
+    expect("\u20ac".repeat(500).length).toBeLessThan(FLOOR);
+    expect(utf8Bytes(built)).toBeLessThanOrEqual(FLOOR);
+    const wide = reply({ status: "refused", reason: "\u20ac".repeat(500) }, decision, 600);
+    expect(utf8Bytes(wide)).toBeLessThanOrEqual(FLOOR);
+  });
+});
+
+describe("U2 truncated and the reason-cut note key on the redacted/final text", () => {
+  it("P4a: a reason that redaction EXPANDS past the cap ends in the marker AND flags the reply truncated with a reason-cut note", () => {
+    const raw = "Bearer a ".repeat(56);
+    expect(raw.length).toBeLessThanOrEqual(512);
+    const built = reply({ status: "refused", reason: raw });
+    expect(built.reason).toContain("[truncated]");
+    expect(built.truncated).toBe(true);
+    expect(built.truncation).toContain("reason cut");
+  });
+  it("P4b: a long raw reason that redaction SHRINKS under the cap is not cut: no marker, no note, truncated false", () => {
+    const raw = "Bearer abcdefghijklmnopq ".repeat(28);
+    expect(raw.length).toBeGreaterThan(512);
+    const built = reply({ status: "refused", reason: raw });
+    expect(built.reason).not.toContain("[truncated]");
+    expect(built.truncated).toBe(false);
+    expect(built).not.toHaveProperty("truncation");
+    expect(JSON.stringify(built)).not.toContain("abcdefghijklmnopq");
+  });
+  it("an untouched short reply stays truncated:false with no truncation member", () => {
+    const built = reply({ status: "accepted", reason: "queued" });
+    expect(built.truncated).toBe(false);
+    expect(built).not.toHaveProperty("truncation");
+    expect(built.reason).toBe("queued");
+  });
+  it("truncated is true exactly when the final reply dropped or cut something it was given", () => {
+    const decision = decideExecute(request({ policy: { note: "y".repeat(3000) } }), host());
+    const squeezed = reply({ status: "launched", nativeRefs: [REF], reason: "r".repeat(3000) }, decision, FLOOR);
+    expect(squeezed.truncated).toBe(true);
+    expect(squeezed.truncation).toContain("[truncated]");
+    const roomy = reply({ status: "launched", nativeRefs: [REF] }, decideExecute(request({ policy: { note: "y".repeat(100) } }), host()), 1_000_000);
+    expect(roomy.truncated).toBe(false);
+  });
+});
+
+describe("U3 native-reference ceiling and policy-echo fallback are pinned", () => {
+  it("M20/M28: more than 256 native references keep exactly 256 and name the omitted count in the truncation note", () => {
+    const refs: NativeRef[] = Array.from({ length: 300 }, (_, index) => ({ provider: "f", type: "r", id: `i${index}` }));
+    const built = reply({ status: "launched", nativeRefs: refs }, decideExecute(request(), host()), 10_000_000);
+    expect(built.nativeRefs).toHaveLength(256);
+    expect(built.nativeRefs[255].id).toBe("i255");
+    expect(built.truncated).toBe(true);
+    expect(built.truncation).toContain("44 native references omitted");
+  });
+  it("exactly 256 native references are not a truncation", () => {
+    const refs: NativeRef[] = Array.from({ length: 256 }, (_, index) => ({ provider: "f", type: "r", id: `i${index}` }));
+    const built = reply({ status: "launched", nativeRefs: refs }, decideExecute(request(), host()), 10_000_000);
+    expect(built.nativeRefs).toHaveLength(256);
+    expect(built.truncated).toBe(false);
+  });
+  it("M22: an over-cap policy echo is omitted with a visible note, and an in-cap echo is kept without one", () => {
+    const policy: JsonValue = { note: "p".repeat(1900) };
+    const squeezed = reply({ status: "launched", nativeRefs: [REF] }, decideExecute(request({ policy }), host()), FLOOR);
+    expect(squeezed).not.toHaveProperty("policy");
+    expect(squeezed.truncated).toBe(true);
+    expect(squeezed.truncation).toContain("policy echo omitted");
+    const roomy = reply({ status: "launched", nativeRefs: [REF] }, decideExecute(request({ policy }), host()), 10_000);
+    expect(roomy.policy).toEqual(policy);
+    expect(roomy.truncated).toBe(false);
+  });
+  it("a policy string the shared sanitizer cuts is flagged: the echo is not silently shortened", () => {
+    const built = reply({ status: "launched", nativeRefs: [REF] }, decideExecute(request({ policy: { note: "p".repeat(3500) } }), host()), 10_000);
+    expect(built.policy).toBeDefined();
+    expect(built.truncated).toBe(true);
+    expect(built.truncation).toContain("policy echo cut");
+  });
+  it("an empty reason is kept as given and is not a truncation", () => {
+    const built = reply({ status: "accepted", reason: "" });
+    expect(built.reason).toBe("");
+    expect(built.truncated).toBe(false);
+  });
+  it("an admitted decision without a policy never reports a policy-echo omission", () => {
+    const built = reply({ status: "launched", nativeRefs: Array.from({ length: 100 }, (_, i) => ({ provider: "f", type: "r", id: `${"x".repeat(100)}${i}` })) }, decideExecute(request(), host()), FLOOR);
+    expect(built.truncation ?? "").not.toContain("policy echo omitted");
   });
 });
 

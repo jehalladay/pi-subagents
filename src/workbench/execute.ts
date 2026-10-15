@@ -202,6 +202,24 @@ function nativeRefOf(value: unknown): Readonly<NativeRef> {
   const clean = (text: string): string => sanitizeWorkbenchText(text, TEXT_BYTES);
   return Object.freeze({ provider: clean(provider), type: clean(type), id: clean(id), ...(typeof scope.value === "string" ? { scope: clean(scope.value) } : {}) });
 }
+const encoder = new TextEncoder();
+/** UTF-8 bytes of the serialized reply: TextEncoder bytes, never String.length. */
+function utf8Bytes(value: unknown): number {
+  return encoder.encode(JSON.stringify(value)).length;
+}
+/** A prefix of at most `limit` UTF-16 units that never ends between the halves of a surrogate pair. */
+function cutText(value: string, limit: number): string {
+  if (value.length <= limit) return value;
+  const high = limit > 0 ? value.charCodeAt(limit - 1) : 0;
+  return value.slice(0, high >= 0xd800 && high <= 0xdbff ? limit - 1 : limit);
+}
+interface Fit {
+  keep: number;
+  policy: boolean;
+  reasonChars: number;
+  textChars: number;
+  idChars: number;
+}
 function sanitizedJson(value: JsonValue): JsonValue {
   return deepFreeze(JSON.parse(JSON.stringify(sanitizeWorkbenchJson(value))) as JsonValue);
 }
@@ -239,44 +257,82 @@ export function buildWorkflowExecuteReply(decision: ExecuteDecision, outcome: La
   if (launchStatus === "launched" && reportedRefs.length === 0) return fail("A launched reply requires at least one native reference.");
   if (launchStatus === "refused" && reportedRefs.length > 0) return fail("A refused launch carries no native references.");
   const refs = reportedRefs.slice(0, MAX_NATIVE_REFS).map(nativeRefOf);
-  const notes: string[] = [];
-  if (reportedRefs.length > refs.length) notes.push(`${reportedRefs.length - refs.length} native references omitted`);
+  const baseNotes: string[] = [];
+  if (reportedRefs.length > refs.length) baseNotes.push(`${reportedRefs.length - refs.length} native references omitted`);
   let reason: string | undefined;
   if (reasonValue !== undefined) {
     reason = sanitizeWorkbenchText(reasonValue, REASON_CHARS);
-    if (reasonValue.length > REASON_CHARS) notes.push("reason cut");
+    // The cut is keyed on what the shared sanitizer actually did to the redacted text, never on the raw length.
+    if (reason !== sanitizeWorkbenchText(reasonValue, Number.MAX_SAFE_INTEGER)) baseNotes.push("reason cut");
   }
-  const shape = (keep: number, withPolicy: boolean, extra: readonly string[]): WorkflowExecuteReply => {
-    const kept = refs.slice(0, keep);
-    const all = [...notes, ...extra];
+  let policy: JsonValue | undefined;
+  if (admission.policy !== undefined) {
+    policy = sanitizedJson(admission.policy);
+    if (canonicalJson(policy) !== canonicalJson(sanitizeWorkbenchJson(admission.policy, Number.MAX_SAFE_INTEGER))) baseNotes.push("policy echo cut");
+  }
+  const shape = (fit: Fit): WorkflowExecuteReply => {
+    const trimmed = new Set<string>();
+    const text = (value: string, limit: number, what: string): string => {
+      const cut = cutText(value, limit);
+      if (cut !== value) trimmed.add(what);
+      return cut;
+    };
+    const kept = refs.slice(0, fit.keep).map(ref =>
+      Object.freeze({
+        provider: text(ref.provider, fit.textChars, "native reference text"),
+        type: text(ref.type, fit.textChars, "native reference text"),
+        id: text(ref.id, fit.textChars, "native reference text"),
+        ...(ref.scope !== undefined ? { scope: text(ref.scope, fit.textChars, "native reference text") } : {}),
+      }),
+    );
+    const invocationId = text(sanitizeWorkbenchText(admission.invocationId, TEXT_BYTES), fit.idChars, "invocation reference");
+    const definition = Object.freeze({
+      kind: admission.definition.kind,
+      id: text(sanitizeWorkbenchText(admission.definition.id, TEXT_BYTES), fit.textChars, "definition text"),
+      schemaVersion: text(sanitizeWorkbenchText(admission.definition.schemaVersion, TEXT_BYTES), fit.textChars, "definition text"),
+      artifactDigest: admission.definition.artifactDigest,
+    });
+    let shownReason: string | undefined;
+    if (reason !== undefined) {
+      if (fit.reasonChars === 0 && reason !== "") trimmed.add("reason");
+      else shownReason = text(reason, fit.reasonChars, "reason");
+    }
+    const notes = [...baseNotes];
+    if (policy !== undefined && !fit.policy) notes.push("policy echo omitted");
+    if (fit.keep < refs.length) notes.push(`${refs.length - fit.keep} of ${refs.length} native references omitted`);
+    for (const what of trimmed) notes.push(`${what} trimmed`);
+    const withPolicy = fit.policy && policy !== undefined;
     return Object.freeze({
       contractVersion: EXECUTE_CONTRACT_VERSION,
       status: launchStatus,
       completion: "not-asserted",
-      invocationId: sanitizeWorkbenchText(admission.invocationId, TEXT_BYTES),
-      definition: Object.freeze({
-        kind: admission.definition.kind,
-        id: sanitizeWorkbenchText(admission.definition.id, TEXT_BYTES),
-        schemaVersion: sanitizeWorkbenchText(admission.definition.schemaVersion, TEXT_BYTES),
-        artifactDigest: admission.definition.artifactDigest,
-      }),
+      invocationId,
+      definition,
       hostMode: admission.hostMode,
       nativeRefs: Object.freeze(kept),
-      ...(withPolicy && admission.policy !== undefined ? { policy: sanitizedJson(admission.policy) } : {}),
-      ...(reason !== undefined ? { reason } : {}),
-      truncated: all.length > 0,
-      ...(all.length > 0 ? { truncation: `${MARKER} ${all.join("; ")}` } : {}),
+      ...(withPolicy ? { policy } : {}),
+      ...(shownReason !== undefined ? { reason: shownReason } : {}),
+      truncated: notes.length > 0,
+      ...(notes.length > 0 ? { truncation: `${MARKER} ${notes.join("; ")}` } : {}),
     });
   };
-  const size = (reply: WorkflowExecuteReply): number => Buffer.byteLength(JSON.stringify(reply));
-  let reply = shape(refs.length, true, []);
-  if (size(reply) <= cap) return reply;
-  const policyNote = admission.policy !== undefined ? ["policy echo omitted"] : [];
-  let keep = refs.length;
-  reply = shape(keep, false, policyNote);
-  while (size(reply) > cap && keep > 1) {
-    keep = Math.max(1, Math.floor(keep / 2));
-    reply = shape(keep, false, [...policyNote, `${refs.length - keep} of ${refs.length} native references omitted`]);
-  }
+  // Squeeze in a fixed order until the FINAL serialized UTF-8 length fits: policy echo, then native references (halved),
+  // then reason text, definition and reference text, whole references, and last the invocation text. Deterministic and
+  // total: the last step leaves only constant members, so no accepted cap is ever exceeded.
+  const fits = (reply: WorkflowExecuteReply): boolean => utf8Bytes(reply) <= cap;
+  let fit: Fit = { keep: refs.length, policy: true, reasonChars: REASON_CHARS, textChars: TEXT_BYTES, idChars: TEXT_BYTES };
+  let reply = shape(fit);
+  const attempt = (next: Fit): boolean => {
+    fit = next;
+    reply = shape(fit);
+    return fits(reply);
+  };
+  if (fits(reply)) return reply;
+  if (attempt({ ...fit, policy: false })) return reply;
+  while (fit.keep > 1) if (attempt({ ...fit, keep: Math.max(1, Math.floor(fit.keep / 2)) })) return reply;
+  while (fit.reasonChars > 0) if (attempt({ ...fit, reasonChars: Math.floor(fit.reasonChars / 2) })) return reply;
+  while (fit.textChars > 32) if (attempt({ ...fit, textChars: Math.floor(fit.textChars / 2) })) return reply;
+  if (attempt({ ...fit, keep: 0 })) return reply;
+  while (fit.idChars > 0) if (attempt({ ...fit, idChars: Math.floor(fit.idChars / 2) })) return reply;
   return reply;
 }
