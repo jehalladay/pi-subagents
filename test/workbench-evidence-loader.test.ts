@@ -331,13 +331,28 @@ describe('grant-gated producer loaders (docs/workbench/20 § Producer mapping)',
   it('claude: with the grant it selects the row by uuid; a revoked grant refuses on the next load', async () => {
     const held = grants(CLAUDE_TRANSCRIPT_GRANT);
     const readRows = vi.fn(async () => [{ type: 'user', uuid: 'other', text: 'no' }, { type: 'assistant', uuid, text: 'answer\nsecond line' }]);
-    const s = store(createEvidenceLoaders({ grants: held.read, claude: readRows }));
+    const s = store(createEvidenceLoaders({ grants: held.read, claude: readRows, now: () => new Date(at) }));
     await s.request(scope, claudeRef, `claude-message:${uuid}`);
     expect(s.get(scope, claudeRef, `claude-message:${uuid}`)).toMatchObject({ state: 'loaded', kind: 'claude-message', preview: ['assistant:', 'answer', 'second line'], freshness: 'current' });
     expect(readRows).toHaveBeenCalledWith(expect.objectContaining({ sessionId: 'session-1' }));
     held.list.length = 0;
     await s.request(scope, claudeRef, 'claude-message:ffffffff-0000-0000-0000-000000000000');
     expect(s.get(scope, claudeRef, 'claude-message:ffffffff-0000-0000-0000-000000000000')).toEqual({ state: 'unavailable', reason: 'unauthorized' });
+  });
+
+  it('claude: capturedAt is stamped from the injected clock, never the host clock', async () => {
+    const readRows = vi.fn(async () => [{ type: 'assistant', uuid, text: 'answer' }]);
+    const s = store(createEvidenceLoaders({ grants: () => [CLAUDE_TRANSCRIPT_GRANT], claude: readRows, now: () => new Date(at) }));
+    await s.request(scope, claudeRef, `claude-message:${uuid}`);
+    expect(s.get(scope, claudeRef, `claude-message:${uuid}`)).toMatchObject({ state: 'loaded', capturedAt: new Date(at).toISOString() });
+  });
+
+  it('claude: a loader built without an injected clock refuses transport and reads nothing, never inventing a timestamp', async () => {
+    const readRows = vi.fn(async () => [{ type: 'assistant', uuid, text: 'answer' }]);
+    const s = store(createEvidenceLoaders({ grants: () => [CLAUDE_TRANSCRIPT_GRANT], claude: readRows }));
+    await s.request(scope, claudeRef, `claude-message:${uuid}`);
+    expect(s.get(scope, claudeRef, `claude-message:${uuid}`)).toEqual({ state: 'unavailable', reason: 'transport' });
+    expect(readRows).not.toHaveBeenCalled();
   });
 
   it('claude: a uuid outside the bounded window is transport, never a fabricated row', async () => {

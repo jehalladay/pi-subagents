@@ -876,7 +876,7 @@ describe('W15-A lazy bounded evidence in the details view (wb-g1g.1, docs/workbe
      const projection=new ObservationProjection({maxEvents:16,maxNodes:100,maxEdges:100,maxQuery:40});
      projection.refresh({source:{provider:'claude-agent-sdk',type:'session',id:'s1'},scope,capturedAt:now,observedAt:now,node:presentation('Claude'),trace:{invocationId:'wf-c'},coverage:'partial',evidenceRefs:[`claude-message:${uuid}`]});
      const readRows=vi.fn(async()=>[{type:'assistant',uuid,text:'claude says hi'}]);
-     const store=new EvidenceStore({loaders:createEvidenceLoaders({grants:()=>grants,claude:readRows}),maxEntries:4,maxBytes:1024,timeoutMs:200,scope});
+     const store=new EvidenceStore({loaders:createEvidenceLoaders({grants:()=>grants,claude:readRows,now:()=>new Date(now)}),maxEntries:4,maxBytes:1024,timeoutMs:200,scope});
      const model:InspectorModel={projection,scope,invocationId:'wf-c',title:'C',status:'running',evidence:store};
      return {model,store,readRows};
    };
