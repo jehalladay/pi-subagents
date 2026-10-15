@@ -3,7 +3,9 @@
  * Pi tools"). It executes ONE permitted workbench.control/v1 decision minted by the landed core (src/workbench/control.ts,
  * decideControl) through the vendored @furnace/sdk control verbs, and records Furnace's own answers through the core's
  * acknowledge and settle. It decides nothing: grants, scope, lifecycle ownership and operator confirmation are the core's
- * rules, the caller owns the decision, and nothing here registers a tool or wires a host.
+ * rules, the caller owns the decision, and nothing here registers a tool or wires a host. Provenance comes first: only the
+ * very decision object decideControl returned in this process executes (isCoreMintedDecision), so a copy, a decision
+ * replayed from the audit or the journal and a hand-built look-alike never issue a verb, however exact their shape.
  *
  * - A FurnaceControlRefusal always means no native verb was issued.
  * - A returned execution always means exactly one native call was issued. It is never re-issued, whatever the answer:
@@ -18,7 +20,9 @@ import {
   acknowledge,
   CONTROL_CONTRACT_VERSION,
   CONTROL_PERMIT_POLICY,
+  CONTROL_UNMINTED_REASON,
   type ControlDecision,
+  isCoreMintedDecision,
   NATIVE_CONTROL_ACTIONS,
   type NativeControlReceipt,
   type RequestedControlReceipt,
@@ -147,19 +151,42 @@ function nativeInstant(value: unknown): value is string {
   return typeof value === "string" && NATIVE_INSTANT.test(value) && Number.isFinite(Date.parse(value));
 }
 
+function deniedRefusal(decision: object): FurnaceControlRefusal {
+  const policy = own(decision, "policy");
+  return new FurnaceControlRefusal(own(decision, "category") === "validation" ? "validation" : "authorization", "denied-decision",
+    "Furnace control refuses a denied decision; no native verb was issued.", typeof policy === "string" && DENY_POLICY.test(policy) ? policy : undefined);
+}
+function consumedRefusal(): FurnaceControlRefusal {
+  return new FurnaceControlRefusal("validation", "permit-consumed", "This control permit already issued its native verb; a reissue needs a fresh decision.");
+}
 /**
- * The receipt of a permitted decision as the core mints it: frozen, requested, under the core's contract and policy, for
- * an action the core admits for its provider, under the canonical control:<provider>.<action> grant. Nothing is
- * recomputed; a look-alike the core could not have minted is unvetted.
+ * Why a decision the core did not mint is refused. The core mints only permits, so a denial keeps its typed denied-decision
+ * refusal and a re-wrapped receipt this adapter already issued stays permit-consumed; anything else, including a value whose
+ * reads throw (a revoked or trapping proxy), gets the core's fixed text and echoes nothing. No branch issues a native verb.
+ */
+function unminted(decision: unknown): FurnaceControlRefusal {
+  try {
+    if (frozenRecord(decision)) {
+      if (own(decision, "decision") === "denied") return deniedRefusal(decision);
+      const receipt = own(decision, "receipt");
+      if (record(receipt) && issued.has(receipt)) return consumedRefusal();
+    }
+  } catch {
+    // A value whose reads throw is no decision the core minted.
+  }
+  return new FurnaceControlRefusal("validation", "unvetted-decision", CONTROL_UNMINTED_REASON);
+}
+/**
+ * The receipt of a permitted decision the core minted. Provenance first: only the very decision object decideControl minted
+ * in this process passes. Structural vetting stays behind it as defense in depth: frozen, requested, under the core's
+ * contract and policy, for an action the core admits for its provider, under the canonical control:<provider>.<action>
+ * grant. Nothing is recomputed; a look-alike the core could not have minted is unvetted.
  */
 function permitted(decision: unknown): RequestedControlReceipt {
+  if (!isCoreMintedDecision(decision)) throw unminted(decision);
   if (!frozenRecord(decision)) throw new FurnaceControlRefusal("validation", "unvetted-decision", UNVETTED);
   const verdict = own(decision, "decision");
-  if (verdict === "denied") {
-    const policy = own(decision, "policy");
-    throw new FurnaceControlRefusal(own(decision, "category") === "validation" ? "validation" : "authorization", "denied-decision",
-      "Furnace control refuses a denied decision; no native verb was issued.", typeof policy === "string" && DENY_POLICY.test(policy) ? policy : undefined);
-  }
+  if (verdict === "denied") throw deniedRefusal(decision);
   const receipt = own(decision, "receipt");
   const target = own(receipt, "target");
   const provider = own(target, "provider");
@@ -267,16 +294,14 @@ function conclude(verb: FurnaceControlVerb, requested: RequestedControlReceipt, 
 
 /**
  * WorkbenchHost.requestControl's Furnace leg (docs/workbench/13 § "Host boundary") for a decision the caller already
- * obtained from the control core. Refuses (FurnaceControlRefusal, nothing issued) a denied, unvetted or spent decision,
- * an action with no measured Furnace verb for its target type, a flag-shaped target id, invalid dependencies, a target
- * outside the client's workspace and a wait cancelled before issuing; otherwise issues exactly one native call and
- * resolves with what Furnace's answer establishes.
+ * obtained from the control core. Refuses (FurnaceControlRefusal, nothing issued) a decision the core did not mint in this
+ * process, a denied, unvetted or spent decision, an action with no measured Furnace verb for its target type, a flag-shaped
+ * target id, invalid dependencies, a target outside the client's workspace and a wait cancelled before issuing; otherwise
+ * issues exactly one native call and resolves with what Furnace's answer establishes.
  */
 export async function executeFurnaceControl(decision: ControlDecision, deps: FurnaceControlDeps): Promise<FurnaceControlExecution> {
   const requested = permitted(decision);
-  if (issued.has(requested)) {
-    throw new FurnaceControlRefusal("validation", "permit-consumed", "This control permit already issued its native verb; a reissue needs a fresh decision.");
-  }
+  if (issued.has(requested)) throw consumedRefusal();
   const { target, action } = requested;
   const verbs = target.provider === "furnace" && Object.hasOwn(FURNACE_CONTROL_VERBS, target.type) ? FURNACE_CONTROL_VERBS[target.type] : undefined;
   const chosen = verbs !== undefined && Object.hasOwn(verbs, action) ? verbs[action] : undefined;
