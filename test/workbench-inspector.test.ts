@@ -1111,6 +1111,49 @@ describe('W15-C2 attention panel in the inspector overview',()=>{
    expect(lines.filter(line=>line.includes('Attention:'))).toHaveLength(1);
    expect(lines.filter(line=>line.includes('Critical path:'))).toHaveLength(1);
  });
+ // Respin (gate cmd_d9dc4a482899; owner rulings 21:43Z bound on the bead): every producer string passes the sanitizer exactly
+ // ONCE inside the panel. The terminal helper is not idempotent on a JSON closing brace after a marker (the wb-3l3 class), so a
+ // second pass is a text change: a once-sanitized S5 or K8 shape keeps its brace, a twice-sanitized one loses it.
+ const zeroWidthSpace=String.fromCodePoint(0x200b);
+ const jsonBraceShapes=[
+   {id:'S5',raw:'{"api_key":"xyz"}',secret:'xyz',once:'{"api_key":[REDACTED]}'},
+   {id:'K8',raw:`{"pass${zeroWidthSpace}word":"JSONSPLITSECRET"}`,secret:'JSONSPLITSECRET',once:'{"password":[REDACTED]}'},
+ ];
+ it.each(jsonBraceShapes)('U3 $id: a bottleneck title, its provider and a disconnected provider each pass the sanitizer once',({raw,secret,once})=>{
+   const shape=report({disconnectedProviders:[raw],bottlenecks:[bottleneck(1,{title:raw,nativeRef:ref(raw,'b1')})]});
+   for(const ascii of [true,false]){
+     const sep=ascii?' | ':' · ';
+     const lines=overview(small(shape),120,40,ascii);
+     expect(lines.find(line=>line.includes('open 01:02 measured'))).toBe(` ${ascii?'*':'◌'} ${once}${sep}${once}${sep}open 01:02 measured${sep}CURRENT`);
+     expect(flat(lines)).toContain(`(providers: ${once})`);
+     expect(lines.join('\n')).not.toContain(secret);
+   }
+ });
+ it('U4 (M17) more than four disconnected providers: the first four are named and the rest counted, never dropped silently',()=>{
+   const shown=(providers:string[])=>flat(overview(small(report({disconnectedProviders:providers})),120,40,true));
+   expect(shown(['p1','p2','p3','p4','p5','p6'])).toContain('(providers: p1, p2, p3, p4, +2 more)');
+   expect(shown(['p1','p2','p3','p4','p5'])).toContain('(providers: p1, p2, p3, p4, +1 more)');
+   expect(shown(['p1','p2','p3','p4'])).toContain('(providers: p1, p2, p3, p4)');
+   expect(shown(['p1','p2','p3','p4'])).not.toContain('more)');
+ });
+ it('U4 (M18) a provider name is capped at 24 columns with a visible ellipsis, in the providers clause and on the bottleneck row',()=>{
+   const fits='q'.repeat(24);
+   const over='r'.repeat(25);
+   for(const ascii of [true,false]){
+     const sep=ascii?' | ':' · ';
+     const capped=`${'r'.repeat(23)}${ascii?'~':'…'}`;
+     const lines=overview(small(report({disconnectedProviders:[fits,over],bottlenecks:[bottleneck(1,{nativeRef:ref(fits,'b1')}),bottleneck(2,{nativeRef:ref(over,'b2')})]})),120,40,ascii);
+     expect(flat(lines)).toContain(`(providers: ${fits}, ${capped})`);
+     expect(lines.find(line=>line.includes('Bottleneck 1'))).toContain(`${sep}${fits}${sep}open 01:02 measured`);
+     expect(lines.find(line=>line.includes('Bottleneck 2'))).toContain(`${sep}${capped}${sep}open 01:03 measured`);
+   }
+ });
+ it('U4 (M11) under a full panel the paged tree keeps its floor of five rows: four entries and the row-budget notice',()=>{
+   const many=report({bottlenecks:Array.from({length:15},(_,n)=>bottleneck(n+1))});
+   const lines=overview(withAttention(fixture(),many),80,24,true);
+   expect(lines.filter(line=>/Operation \d+ /.test(line))).toHaveLength(4);
+   expect(lines.filter(line=>/more rows in this page \(row budget\)/.test(line))).toHaveLength(1);
+ });
 });
 
 /** Captured from layoutInspector at base b4ca4aa, before the attention panel existed: fixture() without an attention report. */

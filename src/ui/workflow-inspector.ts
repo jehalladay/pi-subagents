@@ -308,9 +308,6 @@ const clockText = (ms: number): string => {
   const total=Math.floor(Math.max(0,ms)/1000);
   return `${String(Math.floor(total/60)).padStart(2,'0')}:${String(total%60).padStart(2,'0')}`;
 };
-/** Zero-width and invisible format characters the shared sanitizer leaves in place; the panel removes them from every report string it draws. */
-const PANEL_INVISIBLE = /[\u200b-\u200f\u2060-\u2064\ufeff]/gu;
-const panelSafe = (text: string, ascii: boolean): string => safe(text.replace(PANEL_INVISIBLE,''),ascii);
 const MAX_PANEL_PROVIDERS = 4;
 const MAX_PANEL_PROVIDER_WIDTH = 24;
 const MAX_PANEL_TREE_MIN = 5;
@@ -326,13 +323,15 @@ interface AttentionPanel {
   /** Unmeasured and clock-skew counts. */
   notes: string[];
 }
-/** The panel's text for one report. Every producer-supplied string is sanitized here; the report is only read, never recomputed. */
+/** The panel's text for one report. Every producer-supplied string passes the shared helper exactly once here (the inspector's
+ * safe(), the "terminal" layout), before any truncation or wrap; the lines are then emitted without a second pass. The report
+ * is only read, never recomputed. */
 function attentionPanel(report: AttentionReport, inner: number, ascii: boolean, compact: boolean): AttentionPanel {
   const sep=ascii ? ' | ' : ' · ';
   const ellipsis=ascii ? '~' : '…';
   const { counts }=report;
   const providers=report.disconnectedProviders.slice(0,MAX_PANEL_PROVIDERS)
-    .map(name=>truncateToWidth(panelSafe(name,ascii),MAX_PANEL_PROVIDER_WIDTH,ellipsis));
+    .map(name=>truncateToWidth(safe(name,ascii),MAX_PANEL_PROVIDER_WIDTH,ellipsis));
   const hidden=report.disconnectedProviders.length-providers.length;
   const countItems=[
     {lead:'',text:`Attention: active ${counts.active}`},
@@ -346,8 +345,8 @@ function attentionPanel(report: AttentionReport, inner: number, ascii: boolean, 
   const pathItems=[
     path.label==='partial-estimated'
       ? {lead:'',text:`Critical path: partial-estimated ${clockText(path.measuredMs)} over ${path.coverage.chainNodes} nodes/${path.coverage.dependencyEdges} edges`}
-      : {lead:'',text:`Critical path: incomplete trace (${path.reasons.length>0?path.reasons.map(reason=>panelSafe(reason,ascii)).join(', '):'no reason supplied'})`},
-    ...(path.label==='partial-estimated' ? [{lead:sep,text:panelSafe(path.caveat,ascii)}] : []),
+      : {lead:'',text:`Critical path: incomplete trace (${path.reasons.map(reason=>safe(reason,ascii)).join(', ')})`},
+    ...(path.label==='partial-estimated' ? [{lead:sep,text:safe(path.caveat,ascii)}] : []),
     ...(report.examined.truncated ? [{lead:sep,text:'page truncated'}] : []),
   ];
   // Continuation lines are indented so a wrapped line never reads as a separate fact.
@@ -356,15 +355,15 @@ function attentionPanel(report: AttentionReport, inner: number, ascii: boolean, 
   if(compact) return panel;
   const row=(bottleneck: AttentionBottleneck):string => {
     const glyph=toneGlyph(bottleneck.freshness,bottleneck.tone,ascii);
-    const provider=truncateToWidth(panelSafe(bottleneck.nativeRef.provider,ascii),MAX_PANEL_PROVIDER_WIDTH,ellipsis);
+    const provider=truncateToWidth(safe(bottleneck.nativeRef.provider,ascii),MAX_PANEL_PROVIDER_WIDTH,ellipsis);
     // Open time is drawn only for an entry the report states as measured.
     const open=bottleneck.measured===true && Number.isFinite(bottleneck.openMs) ? `open ${clockText(bottleneck.openMs)} measured` : 'open unavailable';
-    const suffix=`${sep}${provider}${sep}${open}${sep}${panelSafe(bottleneck.freshness,ascii).toUpperCase()}`;
+    const suffix=`${sep}${provider}${sep}${open}${sep}${safe(bottleneck.freshness,ascii).toUpperCase()}`;
     const room=Math.max(1,inner-visibleWidth(glyph)-1-visibleWidth(suffix));
-    return `${glyph} ${truncateToWidth(panelSafe(bottleneck.title,ascii),room,ellipsis)}${suffix}`;
+    return `${glyph} ${truncateToWidth(safe(bottleneck.title,ascii),room,ellipsis)}${suffix}`;
   };
   panel.rows=report.bottlenecks.map(row);
-  if(report.bottlenecks.length>0) panel.clock=wrapWords(`Clock: ${panelSafe(report.clockCaveat,ascii)}`,inner-PANEL_CONTINUATION.length).map((text,at)=>at===0 ? text : `${PANEL_CONTINUATION}${text}`);
+  if(report.bottlenecks.length>0) panel.clock=wrapWords(`Clock: ${safe(report.clockCaveat,ascii)}`,inner-PANEL_CONTINUATION.length).map((text,at)=>at===0 ? text : `${PANEL_CONTINUATION}${text}`);
   if(report.unmeasured>0) panel.notes.push(`+${report.unmeasured} unmeasured (no open interval)`);
   if(report.clockSkew>0) panel.notes.push(`clock skew ${report.clockSkew} (clamped)`);
   return panel;
@@ -448,6 +447,9 @@ export function layoutInspector(model:InspectorModel,state:InspectorState,size:I
   const add=(text:string)=>{if(lines.length<height) lines.push(` ${limitLine(text,inner,ascii)}`);};
   // The lead (pointer and tree branch) is fixed text built here; only the row text is producer-supplied, and it is sanitized.
   const addTree=(lead:string,text:string)=>{if(lines.length<height) lines.push(` ${stripTerminalSequences(truncateToWidth(`${lead}${safe(text,ascii)}`,inner,ascii?'~':'…'))}`);};
+  // An attention panel line is built from producer strings attentionPanel already passed through the helper once, so it is only
+  // width-bounded here: a second pass is a text change (a JSON closing brace after a marker), never a no-op.
+  const addPanel=(text:string)=>{if(lines.length<height) lines.push(` ${stripTerminalSequences(truncateToWidth(text,inner,ascii?'~':'…'))}`);};
   const title=limitLine(model.title,Math.max(1,inner-28),ascii);
   add(`${ascii?'[':'╭'} ${title}  ${safe(model.status,ascii)} ${ascii?']':'╮'}`);
   add(`${state.view.toUpperCase()}  ${page.total} observed operation${page.total===1?'':'s'} · ${state.follow?'following':'paused view'} · ${index+1}/${Math.max(1,page.total)}`);
@@ -516,11 +518,7 @@ export function layoutInspector(model:InspectorModel,state:InspectorState,size:I
       add(`${holds?ascii?'> ':'❯ ':''}${ascii?'...':'…'} ${rest} more row${rest===1?'':'s'} in this page (row budget)`);
     }
     if(current && width>=80) add(`Selected  ${safe(ref(current),ascii)} · ${current.evidenceRefs.length} evidence ref${current.evidenceRefs.length===1?'':'s'}`);
-    if(panel) for(const text of [...panel.head,...optional,...panel.tail]) {
-      // Only the producer-supplied remainder is sanitized again; the fixed continuation indent is kept.
-      const indent=text.startsWith(PANEL_CONTINUATION) ? PANEL_CONTINUATION : '';
-      addTree(indent,text.slice(indent.length));
-    }
+    if(panel) for(const text of [...panel.head,...optional,...panel.tail]) addPanel(text);
     else {
       add('Attention: stale/unknown is last-known state, not live progress.');
       add('Critical path: incomplete trace (no complete dependency/interval proof).');
