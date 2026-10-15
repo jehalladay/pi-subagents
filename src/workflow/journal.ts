@@ -96,10 +96,11 @@ export interface WorkflowJournalEntry {
   effectClass?: string;
   /**
    * The host's replay policy basis at record time (`WorkflowHost.replayBasis`).
-   * A resume only reuses an agent entry recorded under the SAME basis, which is
-   * how a changed Claude host policy — model pin, permission mode, tools,
-   * roles, grants — declines the cache. The legacy host records none and
-   * matches entries that carry none, so its journals stay byte-identical.
+   * A resume only reuses an agent entry, or replays a node read, recorded under
+   * the SAME basis, which is how a changed host policy — model pin, permission
+   * mode, tools, roles, grants, workspace, provider manifest — declines the
+   * cache. The legacy host records none and matches entries that carry none,
+   * so its journals stay byte-identical.
    */
   basis?: string;
 }

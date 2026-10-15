@@ -444,3 +444,170 @@ describe("Claude host effect policy", () => {
     expect(second.invocations).toHaveLength(0);
   });
 });
+
+/* --------------------------------------------------------------------------
+ * The replay basis scopes node reads too (docs/workbench/08, "Side-effect
+ * replay policy on resume"): a node entry carries the recording host's basis,
+ * and a journaled read comes back only when the current host vouches for the
+ * same effect class, basis and key. The tripwire on a journaled effect does
+ * not depend on the basis — no basis change licenses re-running a write.
+ * ------------------------------------------------------------------------ */
+
+/** {@link effectHost} under a declared replay basis — the shape the Claude and detached hosts present. */
+function basisHost(replayBasis: string, options: Parameters<typeof effectHost>[0] = {}): EffectHost {
+  const made = effectHost(options);
+  return { ...made, host: { ...made.host, replayBasis } };
+}
+
+describe("node read replay is scoped by the recording host's basis", () => {
+  const script = 'return await node("record.read", { value: "x" });';
+
+  it("stamps the recording host's basis on every node entry: a read, an effect and a failure alike", async () => {
+    const read = recorder();
+    await run(script, { host: basisHost("basis-A", { effect: "read", node: () => ({ answer: 1 }) }).host, journal: read });
+    const write = recorder();
+    await run('return await node("effect.write", { value: "x" });', { host: basisHost("basis-A", { effect: "write" }).host, journal: write });
+    const failed = recorder();
+    await run(script, {
+      host: basisHost("basis-A", {
+        effect: "read",
+        node: () => {
+          throw new Error("backend away");
+        },
+      }).host,
+      journal: failed,
+    });
+
+    expect(read.entries).toEqual([
+      {
+        kind: "node",
+        index: 0,
+        key: nodeJournalKey("record.read", JSON.stringify({ value: "x" })),
+        ok: true,
+        capabilityId: "record.read",
+        effectClass: "read",
+        text: JSON.stringify({ answer: 1 }),
+        basis: "basis-A",
+      },
+    ]);
+    expect(write.entries).toEqual([
+      {
+        kind: "node",
+        index: 0,
+        key: nodeJournalKey("effect.write", JSON.stringify({ value: "x" })),
+        ok: true,
+        capabilityId: "effect.write",
+        effectClass: "write",
+        basis: "basis-A",
+      },
+    ]);
+    expect(failed.entries).toEqual([
+      {
+        kind: "node",
+        index: 0,
+        key: nodeJournalKey("record.read", JSON.stringify({ value: "x" })),
+        ok: false,
+        capabilityId: "record.read",
+        effectClass: "read",
+        basis: "basis-A",
+      },
+    ]);
+  });
+
+  it("replays a journaled read under the same basis, marked stale", async () => {
+    const first = basisHost("basis-A", { effect: "read", node: () => ({ answer: "recorded" }) });
+    const journal = recorder();
+    await run(script, { host: first.host, journal });
+
+    const second = basisHost("basis-A", { effect: "read", node: () => ({ answer: "fresh" }) });
+    const result = await run(script, { host: second.host, journal: { entries: journal.entries } });
+
+    expect(result.status).toBe("completed");
+    expect(result.value).toEqual({ answer: "recorded" });
+    expect(second.nodeCalls).toHaveLength(0);
+    expect(nodeDone(result).at(-1)).toMatchObject({ state: "done", freshness: "stale" });
+  });
+
+  it("runs a journaled read live when the resuming host declares another basis", async () => {
+    // The answer was produced under another workspace, grant set or provider
+    // manifest; handing it back would be another contract's answer.
+    const first = basisHost("basis-A", { effect: "read", node: () => ({ answer: "recorded" }) });
+    const journal = recorder();
+    await run(script, { host: first.host, journal });
+
+    const second = basisHost("basis-B", { effect: "read", node: () => ({ answer: "fresh" }) });
+    const result = await run(script, { host: second.host, journal: { entries: journal.entries } });
+
+    expect(result.status).toBe("completed");
+    expect(result.value).toEqual({ answer: "fresh" });
+    expect(second.nodeCalls).toEqual([{ value: "x" }]);
+    expect(nodeDone(result).at(-1)).toMatchObject({ state: "done", freshness: "unknown" });
+  });
+
+  it("runs live a read journaled without a basis once the host declares one, and the reverse", async () => {
+    // As for agents: a host that records no basis matches only entries that
+    // carry none, so neither side can vouch for the other's answer.
+    const unscoped = recorder();
+    await run(script, { host: effectHost({ effect: "read" }).host, journal: unscoped });
+    expect(unscoped.entries[0].basis).toBeUndefined();
+    const scopedResume = basisHost("basis-A", { effect: "read" });
+    expect((await run(script, { host: scopedResume.host, journal: { entries: unscoped.entries } })).status).toBe("completed");
+    expect(scopedResume.nodeCalls).toHaveLength(1);
+
+    const scoped = recorder();
+    await run(script, { host: basisHost("basis-A", { effect: "read" }).host, journal: scoped });
+    const unscopedResume = effectHost({ effect: "read" });
+    expect((await run(script, { host: unscopedResume.host, journal: { entries: scoped.entries } })).status).toBe("completed");
+    expect(unscopedResume.nodeCalls).toHaveLength(1);
+  });
+
+  it("re-records a replayed read under its basis, so resuming the resume stays scoped", async () => {
+    const one = recorder();
+    await run(script, { host: basisHost("basis-A", { effect: "read" }).host, journal: one });
+
+    const two = recorder();
+    await run(script, { host: basisHost("basis-A", { effect: "read" }).host, journal: { entries: one.entries, append: two.append } });
+
+    expect(two.entries).toEqual(one.entries);
+    expect(two.entries[0]).toMatchObject({ kind: "node", effectClass: "read", basis: "basis-A" });
+  });
+
+  it("never re-runs a journaled write because the basis changed", async () => {
+    const first = basisHost("basis-A", { effect: "write" });
+    const journal = recorder();
+    await run('return await node("effect.write", { value: "x" });', { host: first.host, journal });
+
+    const second = basisHost("basis-B", { effect: "write" });
+    const result = await run('return await node("effect.write", { value: "x" });', { host: second.host, journal: { entries: journal.entries } });
+
+    expect(result.status).toBe("failed");
+    expect(result.capabilityError?.category).toBe("uncertain-effect");
+    expect(second.nodeCalls).toHaveLength(0);
+  });
+
+  it("declines a read the Claude host journaled under another grant set, and replays it under the same one", async () => {
+    const script = `${HEAD}return await node("record.read", { value: "x" });`;
+    const host = (registry: CapabilityRegistry, grants: string[]) =>
+      createClaudeWorkflowHost({ cwd: "/tmp", query: sdkQuery([]), capabilities: registry, grants });
+    const first = claudeRegistry("read");
+    const journal = recorder();
+    expect((await runWorkflow({ script, host: host(first.registry, ["fixture:grant"]), journal })).status).toBe("completed");
+    expect(journal.entries[0]).toMatchObject({ kind: "node", effectClass: "read", basis: expect.any(String) });
+
+    const same = claudeRegistry("read");
+    const replayed = await runWorkflow({ script, host: host(same.registry, ["fixture:grant"]), journal: { entries: journal.entries } });
+    expect(replayed.status).toBe("completed");
+    expect(same.invocations).toHaveLength(0);
+    expect(nodeDone(replayed).at(-1)).toMatchObject({ state: "done", freshness: "stale" });
+
+    const widened = claudeRegistry("read");
+    const live = await runWorkflow({
+      script,
+      host: host(widened.registry, ["fixture:grant", "fixture:other"]),
+      journal: { entries: journal.entries },
+    });
+    expect(live.status).toBe("completed");
+    expect(widened.invocations).toEqual([{ value: "x" }]);
+    expect(nodeDone(live).at(-1)).toMatchObject({ state: "done", freshness: "unknown" });
+  });
+});
