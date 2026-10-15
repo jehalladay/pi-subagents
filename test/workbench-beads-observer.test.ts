@@ -318,7 +318,7 @@ describe('wb-752.6 Beads Work readiness reader', () => {
 
   // Falsifier 5: C7 retention and sanitization.
   it('F5: a hostile title is sanitized and bounded; description, notes, acceptance and close_reason never appear', async () => {
-    const hostile = `\u001b[31mTitle\u001b[0m ‮evil\u0007 Bearer abc.def.ghi password=hunter2 ${'x'.repeat(500)}`;
+    const hostile = `\u001b[31mTitle\u001b[0m \u202Eevil\u0007 Bearer abc.def.ghi password=hunter2 ${'x'.repeat(500)}`;
     const reading = await read(
       fake(ok([issue({title: hostile, status: 'closed', close_reason: 'CLOSE-SECRET', closed_at: '2026-10-15T07:59:00Z', dependencies: [{...dep('wb-g1g.2', 'blocks'), title: hostile}]})])),
     );
@@ -327,7 +327,7 @@ describe('wb-752.6 Beads Work readiness reader', () => {
     for (const secret of ['DESCRIPTION-SECRET', 'NOTES-SECRET', 'ACCEPTANCE-SECRET', 'CLOSE-SECRET', 'DEP-DESCRIPTION-SECRET', 'DEP-NOTES-SECRET', 'someone@example.com']) {
       expect(text).not.toContain(secret);
     }
-    for (const unsafe of ['\u001b', '‮', '‮', '\u0007', 'abc.def.ghi', 'hunter2']) expect(text).not.toContain(unsafe);
+    for (const unsafe of ['\u001b', '\u202E', '\u202E', '\u0007', 'abc.def.ghi', 'hunter2']) expect(text).not.toContain(unsafe);
     expect(reading.work.title.length).toBeLessThanOrEqual(limits.maxTitleChars);
     expect(reading.work.title).toContain('Title');
     expect(text).not.toContain('title of');

@@ -147,7 +147,7 @@ export interface HostedStart {
 }
 
 const EXECUTOR_NAME = /^[A-Za-z][A-Za-z0-9_-]{0,63}$/;
-const ZERO_WIDTH = /[​-‏⁠﻿]/g;
+const ZERO_WIDTH = /[\u200B-\u200F\u2060\uFEFF]/g;
 /** Strip, then redact-and-strip: untrusted text bound for a receipt or a wire result. */
 function safeText(value: unknown): string {
   const text = typeof value === "string" ? value : String(value);
