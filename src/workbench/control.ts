@@ -17,9 +17,12 @@ export const NATIVE_CONTROL_ACTIONS: Readonly<Record<string, readonly string[]>>
   furnace: Object.freeze(["stop"]),
   "claude-agent-sdk": Object.freeze(["interrupt"]),
   forge: Object.freeze(["cancel"]),
+  // The Workbench-owned detached host: the reason-carrying DetachedCommand verbs (hosts/local-detached.ts:103-105),
+  // executed by detached-control.ts.
+  "local-detached": Object.freeze(["cancel", "shutdown"]),
 });
 /** Verbs that need explicit operator confirmation (docs/workbench/12 § "Authorization design"). */
-export const DESTRUCTIVE_CONTROL_ACTIONS: readonly string[] = Object.freeze(["stop", "cancel", "interrupt", "kill", "delete"]);
+export const DESTRUCTIVE_CONTROL_ACTIONS: readonly string[] = Object.freeze(["stop", "cancel", "interrupt", "kill", "delete", "shutdown"]);
 
 /** Request shape of WorkbenchHost.requestControl (docs/workbench/13 § "Host boundary"); scope and principal are host-bound. */
 export interface NativeControlRequest {
