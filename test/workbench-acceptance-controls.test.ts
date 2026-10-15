@@ -17,7 +17,12 @@ import { describe, expect, it } from "vitest";
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const DOCS_09 = "docs/workbench/09-observation-and-provenance.md";
 
-type Tier = "default-gate" | "furnace-active-observe" | "native-read" | "bench-receipt";
+/**
+ * Where a pinned case runs. "furnace-observe" is the forge command of that name
+ * (vitest.furnace.config.ts), excluded from the default gate; "bench-receipt" is a non-vitest artifact.
+ * Tier truth is verified against the configs in "tier truth" below, never trusted from the label.
+ */
+type Tier = "default-gate" | "furnace-observe" | "bench-receipt";
 
 interface CasePin {
   readonly file: string;
@@ -43,7 +48,7 @@ const CONTROLS: readonly ControlRow[] = [
       {
         file: "test/workbench-external-furnace.test.ts",
         title: "attaches to the existing Run, retains native identities, and leaves both stores byte-identical",
-        tier: "furnace-active-observe",
+        tier: "furnace-observe",
       },
     ],
   },
@@ -135,6 +140,16 @@ const CONTROLS: readonly ControlRow[] = [
         title: "preserves selected node on resize and closes without invoking any runtime controls",
         tier: "default-gate",
       },
+      {
+        file: "test/workbench-furnace-topology.test.ts",
+        title: "A6: closing after projecting invokes zero Furnace control verbs and carries no raw log line or secret",
+        tier: "default-gate",
+      },
+      {
+        file: "test/workbench-furnace-control.test.ts",
+        title: "closing the observer of a shared client performs zero control calls, and only a permitted decision then reaches one verb",
+        tier: "default-gate",
+      },
     ],
   },
   {
@@ -173,31 +188,112 @@ interface CaseOccurrence {
   readonly title: string;
   /** "" for a plain case, otherwise the modifier (skip, todo, fails, only). */
   readonly modifier: string;
+  /** How the modifier was spelled: it.skip(...) ("dot") or it(title, { skip: true }, fn) ("options"). */
+  readonly via: "dot" | "options" | "none";
 }
 
-const CASE_CALL = /\b(?:it|test)(?:\.(skip|todo|fails|only))?\(\s*(["'`])((?:\\.|(?!\2)[^\\])*)\2/g;
+const CASE_CALL =
+  /(?<![\w$.])(?:it|test)(?:\.(skip|todo|fails|only))?\(\s*(["'`])((?:\\.|(?!\2)[^\\])*)\2(?:\s*,\s*(\{[^{}]*\}))?/g;
+const OPTION_MODIFIER = /\b(skip|todo|fails|only)\s*:\s*true\b/;
+/** File-wide hazards: a stray .only skips every other case in the file; a suite-level skip hides cases. */
+const FILE_HAZARD =
+  /\b(?:describe|suite|it|test)\.only\b|\b(?:describe|suite)\.(?:skip|todo|skipIf|runIf)\b|\b(?:it|test)\.(?:skipIf|runIf)\b/;
 
 function decodeEscapes(raw: string): string {
   return raw.replace(/\\(.)/g, (_all, ch: string) => ch);
 }
 
-/** Lists every it()/test() occurrence with a literal title in a test source. */
+/**
+ * Blanks // and block comments outside string and template literals, keeping newlines, so a
+ * commented-out case never counts as present. Known limits: template-literal ${...} expressions and
+ * regex literals are not parsed (none sit in pinned case positions).
+ */
+function stripComments(source: string): string {
+  let out = "";
+  let quote = "";
+  let i = 0;
+  while (i < source.length) {
+    const ch = source.charAt(i);
+    const next = source.charAt(i + 1);
+    if (quote !== "") {
+      out += ch;
+      if (ch === "\\") {
+        out += next;
+        i += 2;
+        continue;
+      }
+      if (ch === quote) quote = "";
+      i += 1;
+      continue;
+    }
+    if (ch === "/" && next === "/") {
+      while (i < source.length && source.charAt(i) !== "\n") i += 1;
+      continue;
+    }
+    if (ch === "/" && next === "*") {
+      const end = source.indexOf("*/", i + 2);
+      const stop = end === -1 ? source.length : end + 2;
+      out += source.slice(i, stop).replace(/[^\n]/g, " ");
+      i = stop;
+      continue;
+    }
+    if (ch === '"' || ch === "'" || ch === "`") quote = ch;
+    out += ch;
+    i += 1;
+  }
+  return out;
+}
+
+/** Lists every it()/test() occurrence with a literal title in a test source, comments excluded. */
 function listCases(source: string): readonly CaseOccurrence[] {
   const found: CaseOccurrence[] = [];
-  for (const match of source.matchAll(CASE_CALL)) {
-    found.push({ title: decodeEscapes(match[3] ?? ""), modifier: match[1] ?? "" });
+  for (const match of stripComments(source).matchAll(CASE_CALL)) {
+    const dot = match[1] ?? "";
+    const optionName = OPTION_MODIFIER.exec(match[4] ?? "")?.[1] ?? "";
+    const modifier = dot !== "" ? dot : optionName;
+    const via = dot !== "" ? "dot" : optionName !== "" ? "options" : "none";
+    found.push({ title: decodeEscapes(match[3] ?? ""), modifier, via });
   }
   return found;
 }
 
-/** A pin is healthy when its exact title occurs exactly once and is an active case. */
+/**
+ * A pin is healthy when its exact title occurs exactly once as an active case AND the file carries
+ * no file-wide hazard (.only anywhere, suite-level skip/todo/skipIf/runIf), fail-closed.
+ */
 function judgePin(source: string, title: string): { readonly ok: boolean; readonly why: string } {
   const hits = listCases(source).filter(c => c.title === title);
   if (hits.length === 0) return { ok: false, why: "absent" };
   if (hits.length > 1) return { ok: false, why: `duplicated x${hits.length}` };
   const [only] = hits;
-  if (only !== undefined && only.modifier !== "") return { ok: false, why: `modifier .${only.modifier}` };
+  if (only !== undefined && only.modifier !== "") {
+    return { ok: false, why: only.via === "options" ? `modifier { ${only.modifier}: true }` : `modifier .${only.modifier}` };
+  }
+  const hazard = FILE_HAZARD.exec(stripComments(source))?.[0];
+  if (hazard !== undefined) return { ok: false, why: `file hazard ${hazard}` };
   return { ok: true, why: "present" };
+}
+
+/** Which config runs a tier's files, verified from the repository's own config text. */
+function judgeTier(
+  tier: Tier,
+  file: string,
+  configs: { readonly vitestConfig: string; readonly furnaceConfig: string; readonly forgeToml: string },
+): { readonly ok: boolean; readonly why: string } {
+  const excludeLine = configs.vitestConfig.split("\n").find(l => l.includes("exclude:")) ?? "";
+  const excluded = excludeLine.includes(`"${file}"`);
+  if (tier === "default-gate") {
+    if (!/^test\/.+\.test\.ts$/.test(file)) return { ok: false, why: "outside the default include test/**/*.test.ts" };
+    return excluded ? { ok: false, why: "excluded from vitest.config.ts" } : { ok: true, why: "runs in the default gate" };
+  }
+  if (tier === "furnace-observe") {
+    if (!excluded) return { ok: false, why: "not excluded from the default gate, so not a furnace-observe-only case" };
+    if (!configs.furnaceConfig.includes(`"${file}"`)) return { ok: false, why: "not included by vitest.furnace.config.ts" };
+    const block = /\[build\.commands\.furnace-observe\][^[]*/.exec(configs.forgeToml)?.[0] ?? "";
+    if (!block.includes("vitest.furnace.config.ts")) return { ok: false, why: "forge furnace-observe command no longer runs vitest.furnace.config.ts" };
+    return { ok: true, why: "runs under forge furnace-observe" };
+  }
+  return { ok: true, why: "presence-only receipt" };
 }
 
 function readRepo(relative: string): string {
@@ -225,6 +321,22 @@ describe("docs/09 acceptance controls census (wb-752.10)", () => {
     for (const row of CONTROLS) {
       expect(section, `control ${row.control} sentence drifted: ${row.quote}`).toContain(`${row.control}. ${row.quote}`);
     }
+    const numbered = section.filter(l => /^\d+\. /.test(l));
+    expect(numbered.length, "docs/09 carries an eleventh or removed control the table does not know").toBe(CONTROLS.length);
+  });
+
+  it("tier truth: every pin's tier label matches the config that actually runs its file", () => {
+    const configs = {
+      vitestConfig: readRepo("vitest.config.ts"),
+      furnaceConfig: readRepo("vitest.furnace.config.ts"),
+      forgeToml: readRepo("forge.toml"),
+    };
+    for (const row of CONTROLS) {
+      for (const pin of row.pins) {
+        const verdict = judgeTier(pin.tier, pin.file, configs);
+        expect(verdict.ok, `control ${row.control} ${pin.file} labelled ${pin.tier}: ${verdict.why}`).toBe(true);
+      }
+    }
   });
 
   for (const row of CONTROLS) {
@@ -240,7 +352,7 @@ describe("docs/09 acceptance controls census (wb-752.10)", () => {
     });
   }
 
-  it("never claims a live, native or scale pass from presence: only fixture-tier titles run in the default gate", () => {
+  it("labels each pin's tier and requires a title for every case pin; a bench receipt is presence-only", () => {
     for (const row of CONTROLS) {
       for (const pin of row.pins) {
         if (pin.tier === "bench-receipt") expect(pin.title, `control ${row.control}: bench pins are presence-only`).toBeUndefined();
@@ -248,7 +360,7 @@ describe("docs/09 acceptance controls census (wb-752.10)", () => {
       }
     }
     const tiers = new Set(CONTROLS.flatMap(r => r.pins.map(p => p.tier)));
-    expect([...tiers].sort()).toEqual(["bench-receipt", "default-gate", "furnace-active-observe"]);
+    expect([...tiers].sort()).toEqual(["bench-receipt", "default-gate", "furnace-observe"]);
   });
 });
 
@@ -291,5 +403,80 @@ describe("pin scanner falsifiers (one mutant per failure mode)", () => {
     const row = CONTROLS[7];
     expect(row?.quote).toBe("Closing observer causes zero cancellation calls.");
     expect("8. Closing observer causes one cancellation call.").not.toBe(`8. ${row?.quote}`);
+  });
+
+  it("comment mutants: a // or block-commented case goes red as absent", () => {
+    const lineMutant = SOURCE.replace('  it("keeps provider-qualified keys"', '  // it("keeps provider-qualified keys"');
+    expect(judgePin(lineMutant, "keeps provider-qualified keys")).toEqual({ ok: false, why: "absent" });
+    const blockMutant = SOURCE.replace('  it("keeps provider-qualified keys", () => {});', '  /* it("keeps provider-qualified keys", () => {});\n */');
+    expect(judgePin(blockMutant, "keeps provider-qualified keys")).toEqual({ ok: false, why: "absent" });
+  });
+
+  it("comment markers inside string literals are not comments", () => {
+    const source = `it("http://example keeps /* going */", () => {});`;
+    expect(judgePin(source, "http://example keeps /* going */").ok).toBe(true);
+  });
+
+  it.each(["skip", "todo", "fails", "only"])("options mutant: it(title, { %s: true }, fn) goes red", modifier => {
+    const mutant = SOURCE.replace('it("keeps provider-qualified keys", () => {})', `it("keeps provider-qualified keys", { ${modifier}: true }, () => {})`);
+    expect(judgePin(mutant, "keeps provider-qualified keys")).toEqual({ ok: false, why: `modifier { ${modifier}: true }` });
+  });
+
+  it("an options object without a modifier stays healthy", () => {
+    const source = `it("keeps keys", { timeout: 5000 }, () => {});`;
+    expect(judgePin(source, "keeps keys").ok).toBe(true);
+  });
+
+  it("file-hazard mutants: a stray .only or a suite-level skip anywhere in the file fails every pin in it", () => {
+    for (const hazard of ['it.only("other", () => {});', 'describe.skip("wrap", () => {});', 'describe.todo("wrap");', 'it.skipIf(true)("other", () => {});', 'describe.runIf(false)("w", () => {});']) {
+      const verdict = judgePin(`${SOURCE}\n${hazard}`, "keeps provider-qualified keys");
+      expect(verdict.ok, hazard).toBe(false);
+      expect(verdict.why, hazard).toMatch(/^file hazard /);
+    }
+  });
+
+  it("a commented-out hazard is not a hazard", () => {
+    expect(judgePin(`${SOURCE}\n// it.only("x", () => {});`, "keeps provider-qualified keys").ok).toBe(true);
+  });
+
+  it("a RegExp .test(...) call or a call inside a string is not a case", () => {
+    const source = `${SOURCE}\nconst ok = /x/.test("keeps provider-qualified keys");`;
+    expect(judgePin(source, "keeps provider-qualified keys").ok).toBe(true);
+  });
+
+  it("drift mutant: an eleventh docs control is detected by the numbered-item count", () => {
+    const section = ["1. a", "2. b", "11. extra"];
+    expect(section.filter(l => /^\d+\. /.test(l)).length).not.toBe(2);
+  });
+});
+
+describe("tier truth falsifiers", () => {
+  const CONFIGS = {
+    vitestConfig: 'exclude: ["test/workbench-external-furnace.test.ts"],',
+    furnaceConfig: 'include: ["test/workbench-external-furnace.test.ts"]',
+    forgeToml: '[build.commands.furnace-observe]\ncommand = "vitest run --config vitest.furnace.config.ts"\n\n[build.commands.other]\ncommand = "x"',
+  };
+
+  it("accepts the true labels", () => {
+    expect(judgeTier("furnace-observe", "test/workbench-external-furnace.test.ts", CONFIGS).ok).toBe(true);
+    expect(judgeTier("default-gate", "test/workbench-observation.test.ts", CONFIGS).ok).toBe(true);
+  });
+
+  it("a default-gate label on a file excluded from vitest.config.ts goes red (file excluded from the default gate)", () => {
+    expect(judgeTier("default-gate", "test/workbench-external-furnace.test.ts", CONFIGS).ok).toBe(false);
+  });
+
+  it("a furnace-observe label on a file the furnace config dropped goes red", () => {
+    const dropped = { ...CONFIGS, furnaceConfig: "include: []" };
+    expect(judgeTier("furnace-observe", "test/workbench-external-furnace.test.ts", dropped)).toEqual({ ok: false, why: "not included by vitest.furnace.config.ts" });
+  });
+
+  it("a furnace-observe label goes red when the forge command stops running the furnace config", () => {
+    const rewired = { ...CONFIGS, forgeToml: '[build.commands.furnace-observe]\ncommand = "vitest run"' };
+    expect(judgeTier("furnace-observe", "test/workbench-external-furnace.test.ts", rewired).ok).toBe(false);
+  });
+
+  it("a furnace-observe label on a default-gate file goes red", () => {
+    expect(judgeTier("furnace-observe", "test/workbench-observation.test.ts", CONFIGS).ok).toBe(false);
   });
 });
