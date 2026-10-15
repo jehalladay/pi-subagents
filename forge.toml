@@ -92,3 +92,7 @@ timeout = 180
 [build.commands.status-ledger]
 command = "node qa/workbench/status-ledger.mjs"
 timeout = 60
+
+[build.commands.release-checklist]
+command = "node qa/workbench/release-checklist-receipt.mjs"
+timeout = 600
