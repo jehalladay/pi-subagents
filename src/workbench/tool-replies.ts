@@ -285,7 +285,7 @@ export function buildWorkflowInspectReply(
   const markerFor = (value: JsonValue): JsonValue => ({ truncated: true, bytes: byteLength(value) });
   let result = assemble(bounded, true);
   // The per-value share above cannot bound long strings, so re-measure and shrink the largest values first until the
-  // reply fits; the byte-cap marker is always present and the cap is never advisory.
+  // reply fits; the byte-cap marker is always present. The cap holds for registry-admitted ids; the sanitized target echo is never shortened.
   const bySize = Object.entries(bounded).sort(([, left], [, right]) => byteLength(right) - byteLength(left));
   for (const [key, value] of bySize) {
     if (byteLength(result) <= maxBytes) break;

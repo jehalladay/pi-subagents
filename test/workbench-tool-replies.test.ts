@@ -2,7 +2,7 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it, vi } from "vitest";
 import { type CapabilityDescriptor, type CapabilityProvider, CapabilityRegistry } from "../src/workbench/capability-registry.js";
-import { stripUnsafeText } from "../src/workbench/redaction.js";
+import { sanitizeWorkbenchText, stripUnsafeText } from "../src/workbench/redaction.js";
 import {
   buildWorkflowCatalogReply,
   buildWorkflowInspectReply,
@@ -369,5 +369,71 @@ describe("wb-1q8 type-preserving sanitize and inspect byte-cap floor", () => {
     const reply = ok(buildWorkflowInspectReply([fat], [`inspect:${id}`], id, "definition", { maxBytes: 1024 }));
     expect(Buffer.byteLength(JSON.stringify(reply), "utf8")).toBeLessThanOrEqual(1024);
     expect(reply.truncated).toEqual({ reason: "byte-cap", maxBytes: 1024 });
+  });
+});
+
+describe("wb-1q8 respin pins (R1-R5): per-field sanitize, per-value share, shrink order, honest marker bytes, exact fit", () => {
+  const utf8 = (value: unknown): number => Buffer.byteLength(JSON.stringify(value), "utf8");
+  const dataOf = (reply: { readonly data: unknown }): Record<string, unknown> => reply.data as Record<string, unknown>;
+  const inspect = (candidate: CapabilityCatalogEntry, view: string, maxBytes: number) => {
+    const id = candidate.descriptor.id;
+    return ok(buildWorkflowInspectReply([candidate], [`inspect:${id}`], id, view, { maxBytes }));
+  };
+
+  it("R1: every string field of a catalog row is sanitized and contractSource is kept (id, version, effectClass, modes)", () => {
+    const esc = String.fromCharCode(0x1b);
+    const bel = String.fromCharCode(0x07);
+    const rlo = String.fromCharCode(0x202e);
+    const hostile = entry(`hostile${esc}[31mid`, {
+      version: `1.0.0${bel} Bearer vtok123`,
+      effectClass: `read${esc}]0;x${bel}` as CapabilityDescriptor["effectClass"],
+      supportedModes: [`invoke${rlo}`, "inspect"] as CapabilityDescriptor["supportedModes"],
+      contractSource: "docs/x.md",
+    });
+    const reply = ok(buildWorkflowCatalogReply([hostile], [`discover:${hostile.descriptor.id}`], {}));
+    const row = reply.rows[0];
+    expect(row).toBeDefined();
+    if (!row) return;
+    for (const text of [row.id, row.version, row.description, row.effectClass, ...row.modes]) expect(stripUnsafeText(text)).toBe(text);
+    expect(JSON.stringify(row)).not.toContain("vtok123");
+    expect(row.modes).toHaveLength(2);
+    expect(row.contractSource).toBe("docs/x.md");
+  });
+
+  it("R2: both oversized object values are marked even when marking the largest alone would fit (per-value share, exact marker bytes)", () => {
+    const schemaOf = (props: number) => ({
+      type: "object",
+      properties: Object.fromEntries(Array.from({ length: props }, (_, index) => [`p${index}`, { type: "string", description: "y".repeat(40) }])),
+    });
+    const big = entry("schema.big", { supportedModes: ["invoke", "inspect"], inputSchema: schemaOf(30), outputSchema: schemaOf(28) }, true);
+    const reply = inspect(big, "schema", 4096);
+    const data = dataOf(reply);
+    expect(reply.truncated).toEqual({ reason: "byte-cap", maxBytes: 4096 });
+    expect(data.inputSchema).toEqual({ truncated: true, bytes: utf8(schemaOf(30)) });
+    expect(data.outputSchema).toEqual({ truncated: true, bytes: utf8(schemaOf(28)) });
+  });
+
+  it("R3/R4: only the largest value is shrunk, and its marker reports the real serialized size", () => {
+    const description = "中".repeat(200);
+    const fat = entry(`p.${"o".repeat(100)}`, { description, contractSource: "c".repeat(200), supportedModes: ["invoke", "inspect"] }, true);
+    const reply = inspect(fat, "definition", 1024);
+    const data = dataOf(reply);
+    expect(data.description).toEqual({ truncated: true, bytes: Buffer.byteLength(JSON.stringify(sanitizeWorkbenchText(description, 200)), "utf8") });
+    expect(data.description).toEqual({ truncated: true, bytes: 602 });
+    expect(data.id).toBe(fat.descriptor.id);
+    expect(data.effectClass).toBe("read");
+    expect(data.contractSource).toBe("c".repeat(200));
+    expect(Buffer.byteLength(JSON.stringify(reply), "utf8")).toBeLessThanOrEqual(1024);
+  });
+
+  it("R5: a reply that lands exactly on the cap is accepted without shrinking a further value", () => {
+    const fat = entry(`p.${"x".repeat(150)}`, { version: "9".repeat(194), description: "中".repeat(200), contractSource: "c".repeat(200), supportedModes: ["invoke", "inspect"] }, true);
+    const reply = inspect(fat, "definition", 1024);
+    const data = dataOf(reply);
+    expect(Buffer.byteLength(JSON.stringify(reply), "utf8")).toBe(1024);
+    expect(data.description).toEqual({ truncated: true, bytes: 602 });
+    expect(data.id).toBe(fat.descriptor.id);
+    expect(data.version).toBe("9".repeat(194));
+    expect(data.contractSource).toBe("c".repeat(200));
   });
 });
