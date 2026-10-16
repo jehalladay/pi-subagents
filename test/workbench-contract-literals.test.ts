@@ -12,11 +12,13 @@ import { ATTENTION_CONTRACT } from "../src/workbench/attention.js";
 import { BEADS_WORK_CONTRACT } from "../src/workbench/beads-observer.js";
 import { CLAUDE_EVIDENCE_CONTRACT } from "../src/workbench/claude-evidence.js";
 import { CONTROL_CONTRACT_VERSION } from "../src/workbench/control.js";
+import { CONTROL_REPLY_CONTRACT_VERSION } from "../src/workbench/control-reply.js";
 import { EVIDENCE_CONTRACT } from "../src/workbench/evidence-loader.js";
 import { EXECUTABLE_IDENTITY_CONTRACT } from "../src/workbench/executable-identity.js";
 import { EXECUTE_CONTRACT_VERSION } from "../src/workbench/execute.js";
 import { FURNACE_EVIDENCE_CONTRACT } from "../src/workbench/furnace-evidence.js";
 import { FURNACE_EXTERNAL_OBSERVATION_CONTRACT } from "../src/workbench/furnace-observer.js";
+import { GRAPH_VIEW_CONTRACT } from "../src/workbench/graph-view.js";
 import { FURNACE_HOSTED_CONTRACT } from "../src/workbench/hosts/furnace-hosted.js";
 import { DETACHED_CONTRACT } from "../src/workbench/hosts/local-detached.js";
 import { HYPERUNIX_OBSERVATION_CONTRACT } from "../src/workbench/hyperunix-observer.js";
@@ -77,6 +79,10 @@ const CARRIERS: Readonly<Record<string, string>> = {
   // Absorbed at the d204be3 re-cut under the same rule: wb-6ze.10 claude evidence and wb-69g.5 execute contract.
   "workbench.claude-evidence/v1": "workbench/claude-evidence.ts",
   "workbench.execute/v1": "workbench/execute.ts",
+  // Absorbed at the 06015e7 re-cut (F1 reader-scan: the census reads the whole src tree): wb-752.4 control reply (discharges the entry-12
+  // CARRIERS duty, row + exported-value pin in this commit) and the graph-view contract that landed since the cut.
+  "workbench.control-reply/v1": "workbench/control-reply.ts",
+  "workbench.graph-view/v1": "workbench/graph-view.ts",
 };
 
 /** An excluded spelling: exact file, the reason, and the literal it still spells (so a stale exclusion goes red). */
@@ -223,7 +229,7 @@ describe("contract literals have one carrier each", () => {
       BEADS_WORK_CONTRACT, FURNACE_EXTERNAL_OBSERVATION_CONTRACT, HYPERUNIX_OBSERVATION_CONTRACT, REACTIVEFIBER_OBSERVATION_CONTRACT,
       EXECUTABLE_IDENTITY_CONTRACT, FURNACE_HOSTED_CONTRACT, PATCH_PROPOSAL_CONTRACT, VALIDATE_REPLY_CONTRACT_VERSION,
       LATENCY_CONTRACT, OBSERVE_CONTRACT, TELEMETRY_CONTRACT, TELEMETRY_EVENT_CONTRACT,
-      CLAUDE_EVIDENCE_CONTRACT, EXECUTE_CONTRACT_VERSION,
+      CLAUDE_EVIDENCE_CONTRACT, EXECUTE_CONTRACT_VERSION, CONTROL_REPLY_CONTRACT_VERSION, GRAPH_VIEW_CONTRACT,
     }).toEqual({
       FORGE_GATE_STATUS_CONTRACT: "forge.gate.status/v1",
       FURNACE_RUN_INSPECT_CONTRACT: "furnace.run.inspect/v1",
@@ -255,6 +261,8 @@ describe("contract literals have one carrier each", () => {
       TELEMETRY_EVENT_CONTRACT: "workbench.telemetry.event/v1",
       CLAUDE_EVIDENCE_CONTRACT: "workbench.claude-evidence/v1",
       EXECUTE_CONTRACT_VERSION: "workbench.execute/v1",
+      CONTROL_REPLY_CONTRACT_VERSION: "workbench.control-reply/v1",
+      GRAPH_VIEW_CONTRACT: "workbench.graph-view/v1",
     });
   });
 
