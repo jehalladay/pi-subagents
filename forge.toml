@@ -81,12 +81,28 @@ timeout = 300
 command = "node qa/workbench/reducer-selector-bench.mjs"
 timeout = 300
 
+[build.commands.inspector-cap-saturation-bench]
+command = "node --expose-gc qa/workbench/inspector-cap-saturation-bench.mjs"
+timeout = 600
+
+[build.commands.line-diff-bench]
+command = "node qa/workbench/line-diff-bench.mjs"
+timeout = 300
+
+[build.commands.inspector-evidence-retained-bench]
+command = "node --expose-gc qa/workbench/inspector-evidence-retained-bench.mjs"
+timeout = 300
+
 [build.commands.local-detached-shell]
 command = "bash qa/workbench/local-detached.sh"
 timeout = 180
 
 [build.commands.local-detached-faults]
 command = "node qa/workbench/local-detached-faults.mjs"
+timeout = 240
+
+[build.commands.local-detached-shared-child]
+command = "node qa/workbench/local-detached-shared-child.mjs"
 timeout = 240
 
 [build.commands.local-detached-unit]
@@ -97,6 +113,10 @@ timeout = 180
 command = "node qa/workbench/inspector-smoke.mjs"
 timeout = 120
 
+[build.commands.attention-grouped-bench]
+command = "node qa/workbench/attention-grouped-bench.mjs"
+timeout = 300
+
 [build.commands.furnace-active-observe]
 command = "./node_modules/.bin/vitest run --config vitest.furnace-active.config.ts"
 timeout = 180
@@ -105,6 +125,6 @@ timeout = 180
 command = "node qa/workbench/status-ledger.mjs"
 timeout = 60
 
-[build.commands.inspector-cap-saturation-bench]
-command = "node --expose-gc qa/workbench/inspector-cap-saturation-bench.mjs"
-timeout = 600
+[build.commands.timeline-grouped-bench]
+command = "node qa/workbench/timeline-grouped-bench.mjs"
+timeout = 300
