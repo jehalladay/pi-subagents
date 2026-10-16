@@ -236,8 +236,8 @@ const byCodeUnit = (a: string, b: string): number => (a < b ? -1 : a > b ? 1 : 0
 
 /**
  * One producer string bound for the model: the one shared helper, repeated until it is a no-op. After the first pass no
- * unsafe unit is left, so later passes are the plain redactor (not idempotent on a JSON-shaped secret, wb-3l3) or remove
- * the half of a surrogate pair a length bound orphaned.
+ * unsafe unit is left, so later passes are the plain redactor (idempotent or over-redacting only, wb-3l3) or remove the
+ * half of a surrogate pair a length bound orphaned.
  */
 function clean(value: unknown, max: number): string {
   if (typeof value !== "string") return "";

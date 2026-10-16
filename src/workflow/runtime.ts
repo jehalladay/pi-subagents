@@ -17,6 +17,7 @@ import { cpus } from "node:os";
 import { Worker } from "node:worker_threads";
 import { type CapabilityDescriptor, type CapabilityDiagnostic, CapabilityError, type JsonValue, validatedCapabilityJson } from "../workbench/capability-registry.js";
 import { nativeEvidence, nativeRefOf } from "../workbench/native-evidence.js";
+import { sanitizeWorkbenchText } from "../workbench/redaction.js";
 import { type JournalKeyInput, journalKey, nodeJournalKey, type WorkflowJournalEntry } from "./journal.js";
 import { type CompiledSchema, compileJsonSchema } from "./json-schema.js";
 import { extractMeta, type WorkflowMeta } from "./meta.js";
@@ -556,6 +557,34 @@ const CONTROL_CHARACTERS = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/;
 const preview = (text: string) =>
   text.length <= PREVIEW_LENGTH ? text : `${text.slice(0, PREVIEW_LENGTH - 1)}…`;
 
+const MALFORMED_AGENT_RPC = "Malformed workflow agent RPC payload.";
+
+const optionalString = (value: unknown): boolean => value === undefined || typeof value === "string";
+
+/**
+ * Whether a worker frame is an agent call the host can act on.
+ *
+ * Worker messages are untrusted protocol frames — the same stance `handleNode`
+ * takes: an escaping script can post this payload without going through the
+ * worker-side `agent()` checks. Measured on the wb-ksz.5 gate
+ * (cmd_d9d8fb0cb7b5): a missing, null or non-string `prompt` threw inside
+ * `handleAgent` and escaped the `message` listener as an unhandled rejection,
+ * which Node exits on by default (owner bead wb-3l9). Shape only — no length
+ * bounds the worker side does not already apply, so a well-formed frame is
+ * never refused here.
+ */
+function isAgentCallPayload(payload: unknown): payload is AgentCallPayload {
+  if (!payload || typeof payload !== "object" || Array.isArray(payload)) return false;
+  const frame = payload as Record<string, unknown>;
+  return typeof frame.prompt === "string" &&
+    optionalString(frame.label) && optionalString(frame.model) && optionalString(frame.agentType) &&
+    optionalString(frame.gate) && optionalString(frame.resume) && optionalString(frame.effort) &&
+    optionalString(frame.phaseTitle) &&
+    (frame.isolation === undefined || frame.isolation === "worktree") &&
+    (frame.phaseIndex === undefined ||
+      (typeof frame.phaseIndex === "number" && Number.isSafeInteger(frame.phaseIndex) && frame.phaseIndex >= 0));
+}
+
 /** First line of the prompt, trimmed — the fallback display name for an agent. */
 function derivedLabel(prompt: string): string {
   const line = prompt.split("\n", 1)[0].trim();
@@ -857,6 +886,12 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
 
   const worker = new Worker(WORKER_SOURCE, {
     eval: true,
+    // Nothing is the interpreter's environment allowlist: the script realm
+    // runs no subprocess, opens no file and resolves no proxy, so a VM escape
+    // to this thread finds no credential in process.env. Without the option
+    // Node hands the worker a copy of the parent's environment (wb-ksz, W19;
+    // the detached seam in hosts/local-detached.ts takes the named allowlist).
+    env: {},
     workerData: {
       body,
       metaJson: JSON.stringify(meta),
@@ -918,7 +953,13 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
       options.signal.addEventListener("abort", onAbort, { once: true });
     }
 
-    async function handleAgent(callId: number, payload: AgentCallPayload): Promise<void> {
+    async function handleAgent(callId: number, payload: unknown): Promise<void> {
+      // Untrusted frame first (see isAgentCallPayload): answered as a typed
+      // refusal, never thrown — every line below assumes the shape.
+      if (!isAgentCallPayload(payload)) {
+        respond(callId, false, undefined, MALFORMED_AGENT_RPC, true, { name: "CapabilityError", category: "validation", message: MALFORMED_AGENT_RPC });
+        return;
+      }
       // Bound now: the optional methods are checked once, up front, so a
       // capability the host lacks fails before an agent is spawned rather than
       // after — a gate that never ran must not be mistaken for a gate that
@@ -1675,7 +1716,14 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
             respond(message.callId, false, undefined, `Unknown workflow host method "${message.method}".`, true);
             break;
           }
-          void handleAgent(message.callId, message.payload as AgentCallPayload);
+          void handleAgent(message.callId, message.payload).catch((error: unknown) => {
+            // Backstop for the frame check inside: nothing past it is meant to
+            // throw, but a rejection that escaped here would reach the process
+            // as an unhandled rejection — Node exits on those by default — so
+            // it is answered as a typed refusal and the run stays up (wb-3l9).
+            const detail = sanitizeWorkbenchText(error instanceof Error ? error.message : String(error));
+            respond(message.callId, false, undefined, detail, true, { name: "CapabilityError", category: error instanceof CapabilityError ? error.category : "transport", message: detail });
+          });
           break;
         case "complete": {
           // The script is done, so every launch it made should have been
