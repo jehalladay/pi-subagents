@@ -62,7 +62,7 @@ function everyObject(value: unknown, visit: (item: object) => void): void {
   const children: unknown[] = Object.values(value);
   for (const child of children) everyObject(child, visit);
 }
-const UNSAFE = /[\u0000-\u001f\u007f-\u009f‪-‮⁦-⁩]/;
+const UNSAFE = /[\u0000-\u001f\u007f-\u009f\u202A-\u202E\u2066-\u2069]/;
 const LONE_SURROGATE = /[\ud800-\udbff](?![\udc00-\udfff])|(?<![\ud800-\udbff])[\udc00-\udfff]/;
 
 afterEach(() => { vi.restoreAllMocks(); });
@@ -223,7 +223,7 @@ describe('Claude session reader adapter topology', () => {
   });
 
   it('A7: secrets, terminal escapes and bidi marks never reach a title or the serialized topology', () => {
-    const label = 'deploy \u001b[31mBearer abc123‮';
+    const label = 'deploy \u001b[31mBearer abc123\u202E';
     const topology = projectClaudeTopology(input(observation({tools: [tool('toolu_secret', 'completed', 'deploy api_key=xyz now')]}), {call: {...call, label}}));
     const [agent, session, used] = topology.snapshots;
     expect(agent.node.title).toBe('deploy [REDACTED]');
@@ -234,7 +234,7 @@ describe('Claude session reader adapter topology', () => {
     expect(text).not.toContain('abc123');
     expect(text).not.toContain('xyz');
     // An escape, control byte or bidi mark glued to a credential cannot hide it from the redactor.
-    for (const glued of ['Bearer\u0007abc123', 'Bearer\u001b[0mabc123', 'Bearer⁦abc123', 'run password=\u0000abc123']) {
+    for (const glued of ['Bearer\u0007abc123', 'Bearer\u001b[0mabc123', 'Bearer\u2066abc123', 'run password=\u0000abc123']) {
       const sample = projectClaudeTopology(input(observation({tools: [tool('toolu_glued', 'completed', glued)]}), {call: {...call, label: glued}}));
       const serialized = JSON.stringify(sample);
       expect(serialized).not.toContain('abc123');
@@ -254,7 +254,7 @@ describe('Claude session reader adapter topology', () => {
       expect(snapshot.node.title).not.toMatch(LONE_SURROGATE);
     }
     // Text that sanitizes to nothing shows a fixed placeholder, never an id, and the projection still accepts it.
-    const blank = projectClaudeTopology(input(observation({tools: [tool('toolu_blank', 'completed', '\u001b[0m \u0007')]}), {call: {...call, label: '‮\u0007 '}}));
+    const blank = projectClaudeTopology(input(observation({tools: [tool('toolu_blank', 'completed', '\u001b[0m \u0007')]}), {call: {...call, label: '\u202E\u0007 '}}));
     expect(blank.snapshots.map(snapshot => snapshot.node.title)).toStrictEqual(['agent', 'agent · session', 'unknown']);
     expect(apply(new ObservationProjection(), blank)).toStrictEqual(['applied', 'applied', 'applied']);
   });
@@ -313,7 +313,7 @@ describe('Claude session reader adapter topology', () => {
   });
 
   it('withholds a native session id it cannot use verbatim instead of repairing it, and attaches nothing under it', () => {
-    for (const sessionId of ['sess\u001b[2J-1', 'sess‮-1', `s${'x'.repeat(300)}`, 'sk-ant-api03-SECRETSESSION']) {
+    for (const sessionId of ['sess\u001b[2J-1', 'sess\u202E-1', `s${'x'.repeat(300)}`, 'sk-ant-api03-SECRETSESSION']) {
       const topology = projectClaudeTopology(input(observation({sessionId})));
       expect(sources(topology)).toStrictEqual([agentRef]);
       expect(topology.relations).toStrictEqual([]);
@@ -331,7 +331,7 @@ describe('Claude session reader adapter topology', () => {
   });
 
   it('withholds an unusable tool id and never mangles one; a repeated id folds like the observer and over-bound tools keep the newest 16', () => {
-    const malformed = [tool('toolu_ok'), tool(''), tool('toolu\u0000nul'), tool('toolu⁧bidi'), tool(`toolu_${'z'.repeat(300)}`),
+    const malformed = [tool('toolu_ok'), tool(''), tool('toolu\u0000nul'), tool('toolu\u2067bidi'), tool(`toolu_${'z'.repeat(300)}`),
       {toolUseId: 7, name: 'Read', state: 'completed'}, null] as unknown as Tool[];
     const withheld = projectClaudeTopology(input(observation({tools: malformed})));
     expect(ofType(withheld, 'tool-use').map(snapshot => snapshot.source.id)).toStrictEqual(['toolu_ok']);
@@ -351,7 +351,7 @@ describe('Claude session reader adapter topology', () => {
   });
 
   it('lists the session message reference only when it is an exact native uuid, never a mangled one', () => {
-    for (const lastMessageId of [undefined, '', 'm-\u001b[31m9', 'm‮9', `m-${'9'.repeat(300)}`]) {
+    for (const lastMessageId of [undefined, '', 'm-\u001b[31m9', 'm\u202E9', `m-${'9'.repeat(300)}`]) {
       const topology = projectClaudeTopology(input(observation({lastMessageId})));
       expect(topology.snapshots[1].source).toStrictEqual(sessionRef());
       expect(topology.snapshots[1]).not.toHaveProperty('evidenceRefs');
