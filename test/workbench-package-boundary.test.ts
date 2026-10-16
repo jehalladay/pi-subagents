@@ -110,7 +110,7 @@ describe("packed artifact boundary classifier", () => {
     for (const prefix of [".agents/", ".codex/", ".pi/", ".claude/", ".beads/", ".forge/", ".furnace/", ".hyperunix/", ".reactive-fiber/", ".github/", "machines/", "test/", "tests/"]) {
       expect(DENIED_PREFIXES).toContain(prefix);
     }
-    expect([...DENIED_BASENAMES].sort()).toEqual(["AGENTS.md", "CLAUDE.md", "biome.json", "tsconfig.json"]);
+    expect([...DENIED_BASENAMES].sort()).toEqual(["AGENTS.md", "CLAUDE.md", "biome.json", "tsconfig.json", "tsconfig.test.json"]);
     expect(DENIED_PATTERNS.length).toBe(3);
   });
 });

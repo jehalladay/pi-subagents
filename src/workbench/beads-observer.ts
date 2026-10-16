@@ -57,6 +57,8 @@ export interface BeadsWorkReading {
   dependencies: {offered: number; returned: number; truncated: boolean; items: BeadsDependencyReference[]};
   /** Native dependency types that name no dependency or grouping edge, with how many entries carried each. */
   unmappedDependencyTypes: Record<string, number>;
+  /** Entries (or a parent field) naming the work itself: counted, never edged. Present only when nonzero. */
+  selfReferences?: number;
 }
 /** Exactly the statement ObservationProjection.relate accepts. */
 export type BeadsWorkRelation = Parameters<ObservationProjection['relate']>[0];
@@ -123,12 +125,23 @@ function parseEnvelope(result: BeadsShowResult, workId: string): JsonRecord {
   if (first.id !== workId) throw unavailable('bd show returned a different work id than requested.');
   return first;
 }
-function dependencyEntry(raw: unknown, workId: string): BeadsDependencyReference {
+interface DependencyReading {
+  item: BeadsDependencyReference;
+  /** The bucket this entry is counted under when it names no edge; absent for a raw mapped literal. */
+  unmappedLabel?: string;
+}
+/** The mapped literals are compared on the RAW string; sanitized text only labels the unmapped count. */
+function dependencyEntry(raw: unknown): DependencyReading {
   if (!isRecord(raw)) throw unavailable('Beads dependency entry is not an object.');
   const id = workIdOf(raw.id, 'dependency id');
-  if (id === workId) throw unavailable('Beads dependency entry names the work itself.');
-  const cleanedType = label(raw.dependency_type, 'dependency_type');
-  return {id, dependencyType: DEPENDENCY_TYPE.test(cleanedType) ? cleanedType : UNRECOGNIZED_TYPE, status: label(raw.status, 'dependency status')};
+  const status = label(raw.status, 'dependency status');
+  const rawType = raw.dependency_type;
+  if (rawType === 'blocks' || rawType === 'parent-child') return {item: {id, dependencyType: rawType, status}};
+  const cleanedType = label(rawType, 'dependency_type');
+  const shaped = DEPENDENCY_TYPE.test(cleanedType);
+  // A sanitized label that equals a mapped literal is aliased hostile text: it names no edge.
+  const aliased = cleanedType === 'blocks' || cleanedType === 'parent-child';
+  return {item: {id, dependencyType: shaped && !aliased ? cleanedType : UNRECOGNIZED_TYPE, status}, unmappedLabel: shaped ? cleanedType : UNRECOGNIZED_TYPE};
 }
 
 export async function readBeadsWork(client: BeadsReadClient, options: BeadsReadOptions): Promise<BeadsWorkReading> {
@@ -155,14 +168,22 @@ export async function readBeadsWork(client: BeadsReadClient, options: BeadsReadO
   const parentField = issue.parent;
   if (parentField !== undefined && parentField !== null && typeof parentField !== 'string') throw unavailable('Beads parent is not a string.');
 
-  const retained = dependencies.slice(0, limits.maxDependencies).map((raw) => dependencyEntry(raw, workId));
+  const readings = dependencies.slice(0, limits.maxDependencies).map(dependencyEntry);
+  const retained = readings.map((entry) => entry.item);
   const truncated = dependencies.length > retained.length;
   const unmapped: Record<string, number> = Object.create(null) as Record<string, number>;
-  for (const item of retained) {
-    if (item.dependencyType === 'blocks' || item.dependencyType === 'parent-child') continue;
-    unmapped[item.dependencyType] = (Object.hasOwn(unmapped, item.dependencyType) ? (unmapped[item.dependencyType] ?? 0) : 0) + 1;
+  for (const {unmappedLabel} of readings) {
+    if (unmappedLabel === undefined) continue;
+    unmapped[unmappedLabel] = (Object.hasOwn(unmapped, unmappedLabel) ? (unmapped[unmappedLabel] ?? 0) : 0) + 1;
   }
-  const parent = parentField ? workIdOf(parentField, 'parent') : retained.find((item) => item.dependencyType === 'parent-child')?.id;
+  // A self-reference (entry or parent field) is counted and never edged, in either direction.
+  let selfReferences = retained.filter((item) => item.id === workId && (item.dependencyType === 'blocks' || item.dependencyType === 'parent-child')).length;
+  const fieldParent = parentField ? workIdOf(parentField, 'parent') : undefined;
+  if (fieldParent === workId) selfReferences += 1;
+  // The parent FIELD is authoritative; an entry only supplies the parent when the field is absent. With no field the
+  // FIRST parent-child entry is the single parent (gate-pinned reading, wb-752.11 U4): a second distinct parent-child entry
+  // stays in dependencies.items but is neither edged nor counted.
+  const parent = fieldParent !== undefined ? (fieldParent === workId ? undefined : fieldParent) : retained.find((item) => item.dependencyType === 'parent-child' && item.id !== workId)?.id;
   const closedAt = typeof issue.closed_at === 'string' ? cleanText(issue.closed_at, MAX_LABEL_CHARS) : '';
   const clean = cleanText(title, limits.maxTitleChars);
   const stamp = now();
@@ -191,6 +212,7 @@ export async function readBeadsWork(client: BeadsReadClient, options: BeadsReadO
     },
     dependencies: {offered: dependencies.length, returned: retained.length, truncated, items: retained},
     unmappedDependencyTypes: unmapped,
+    ...(selfReferences > 0 ? {selfReferences} : {}),
   };
 }
 
@@ -202,13 +224,11 @@ export function projectBeadsWork(reading: BeadsWorkReading, scope: ObservationSc
   const provenance = {source: 'beads', observedAt: reading.observedAt, nativeConfirmationRef: `bd:show:${workId}`};
   const relations: BeadsWorkRelation[] = [];
   // A dependency edge runs from the dependent work to the blocker it waits on (the direction attention.ts reads).
-  const blockers = new Set(reading.dependencies.items.filter((item) => item.dependencyType === 'blocks').map((item) => item.id));
+  const blockers = new Set(reading.dependencies.items.filter((item) => item.dependencyType === 'blocks' && item.id !== workId).map((item) => item.id));
   for (const id of blockers) relations.push({scope: {...scope}, kind: 'dependency', from: {...self}, to: ref(id), provenance: {...provenance}});
-  // The parent field and parent-child entries name the same grouping; one edge per distinct parent, never ownership.
-  const parents = new Set<string>();
-  if (reading.work.parent !== undefined) parents.add(reading.work.parent);
-  for (const item of reading.dependencies.items) if (item.dependencyType === 'parent-child') parents.add(item.id);
-  for (const id of parents) relations.push({scope: {...scope}, kind: 'grouping', from: ref(id), to: {...self}, provenance: {...provenance}});
+  // The reading's parent is the single authoritative grouping (field first, else the entry); never ownership, never doubled.
+  const {parent} = reading.work;
+  if (parent !== undefined && parent !== workId) relations.push({scope: {...scope}, kind: 'grouping', from: ref(parent), to: {...self}, provenance: {...provenance}});
   const snapshot: NativeSnapshot = {
     source: self,
     scope: {...scope},
