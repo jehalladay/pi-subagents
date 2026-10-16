@@ -213,7 +213,7 @@ describe("buildWorkflowCatalogReply byte cap (A1/A4)", () => {
 
 describe("sanitization (A4)", () => {
   it("strips ESC and control characters from titles and descriptions and redacts credentials", () => {
-    const hostile = entry("evil.cap", { description: "\u001b[31mred\u001b]0;pwned\u0007 Bearer abc123token end\u0000‮", contractSource: "docs/\u001bx" });
+    const hostile = entry("evil.cap", { description: "\u001b[31mred\u001b]0;pwned\u0007 Bearer abc123token end\u0000\u202E", contractSource: "docs/\u001bx" });
     const reply = ok(buildWorkflowCatalogReply([hostile], ["discover:evil.cap"], {}));
     const text = JSON.stringify(reply);
     for (const row of reply.rows) for (const value of [row.id, row.description, row.contractSource ?? ""]) expect(stripUnsafeText(value)).toBe(value);
