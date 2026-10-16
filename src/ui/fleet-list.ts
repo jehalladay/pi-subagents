@@ -467,9 +467,20 @@ export class FleetList {
     // (e.g. on terminal resize) never loses the selection marker.
     const sel = Math.min(this.selectedIndex, rows.length);
 
+    // wb-2t2 scope B (owner ruling 2026-10-16): while a workflow is live the
+    // inactive hint names the stop path, because a Ctrl-C at the prompt does NOT
+    // stop a background run (measured by the wb-a2g.3 live operator receipt) and
+    // the fleet list is the only road to the dialog's 'x stop'. Both literals are
+    // static; no untrusted text flows through this line (F6 DIRECT-CALLER SITES:
+    // this is the sole caller and the strings are constants).
+    const liveWorkflow = rows.some(
+      r => r.kind === "workflow" && (r.workflow.status === "running" || r.workflow.status === "paused"),
+    );
     const hint = this.active
       ? "↑↓ select · enter view · esc back"
-      : "esc to interrupt · ← for agents · ↓ to manage";
+      : liveWorkflow
+        ? "esc to interrupt · ← for agents · ↓ to manage or stop a workflow"
+        : "esc to interrupt · ← for agents · ↓ to manage";
     const lines: string[] = [];
     lines.push(truncateToWidth("  " + theme.fg("dim", hint), width));
     lines.push("");
