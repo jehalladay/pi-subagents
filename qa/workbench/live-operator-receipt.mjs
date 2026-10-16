@@ -313,9 +313,11 @@ async function main() {
   const now = () => new Date().toISOString();
   const startedUtc = now();
 
+  const { gitStamp } = await import("./git-stamp.mjs");
   const revision = (() => {
-    const probe = spawnSync("git", ["-C", repoRoot, "rev-parse", "--short", "HEAD"], { encoding: "utf8" });
-    return probe.status === 0 ? probe.stdout.trim() : "unknown";
+    const { head, porcelain } = gitStamp(repoRoot);
+    if (head === null) return "unknown";
+    return typeof porcelain === "string" && porcelain.trim().length > 0 ? `${head.slice(0, 7)}-dirty` : head.slice(0, 7);
   })();
   const hostFacts = { utc: startedUtc, revision, node: process.version, platform: process.platform, arch: process.arch };
 

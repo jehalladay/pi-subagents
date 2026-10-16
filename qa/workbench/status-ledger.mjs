@@ -136,7 +136,7 @@ export function validateLedger(parsed, { root, allowedStatuses = ALLOWED_STATUSE
   return { integrity, vocabulary };
 }
 
-// git-stamp:begin (copied byte-for-byte into status-ledger.mjs and local-detached-faults.mjs, whose
+// git-stamp:begin (copied byte-for-byte into status-ledger.mjs, local-detached-faults.mjs and local-detached-shared-child.mjs, whose
 // guards allow only node: imports; test/workbench-git-stamp.test.ts fails on any drift)
 const HEX = /^[0-9a-f]{7,64}$/;
 

@@ -37,7 +37,7 @@ async function until(read, done, bound = BOUND_MS) {
   return {value, ok: done(value), ms: Math.round((performance.now() - start) * 100) / 100};
 }
 
-// git-stamp:begin (copied byte-for-byte into status-ledger.mjs and local-detached-faults.mjs, whose
+// git-stamp:begin (copied byte-for-byte into status-ledger.mjs, local-detached-faults.mjs and local-detached-shared-child.mjs, whose
 // guards allow only node: imports; test/workbench-git-stamp.test.ts fails on any drift)
 const HEX = /^[0-9a-f]{7,64}$/;
 

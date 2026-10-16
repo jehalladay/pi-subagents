@@ -103,7 +103,7 @@ describe("the three qa git-discovery members share the stamp", () => {
     expect(readFileSync(join(qa, "package-smoke.mjs"), "utf8")).not.toMatch(/rev-parse['"],\s*['"]HEAD['"]\]/);
   });
 
-  it.each(["status-ledger.mjs", "local-detached-faults.mjs"])("%s inlines the canonical block byte-for-byte (node: imports only)", (name) => {
+  it.each(["status-ledger.mjs", "local-detached-faults.mjs", "local-detached-shared-child.mjs"])("%s inlines the canonical block byte-for-byte (node: imports only)", (name) => {
     expect(stampBlock(name)).toBe(stampBlock("git-stamp.mjs"));
   });
 
@@ -138,5 +138,100 @@ describe("the three qa git-discovery members share the stamp", () => {
     const receipt = JSON.parse(run.stdout) as { revision: string };
     expect(receipt.revision).toBe("working-tree");
     expect(run.stdout).not.toContain(head);
+  });
+});
+
+/**
+ * Member-entry falsifiers (wb-vko gate U2/U3, measured recipe): each member's REAL entry point is staged into a
+ * root and spawned (a) from a root nested inside a fresh foreign repository: the receipt revision must be the
+ * not-a-toplevel value and stdout must not carry the foreign HEAD; (b) from a fresh-repository toplevel: HEAD
+ * when clean, HEAD-dirty with an untracked file. Neither runner needs dist: the not-realised path still emits
+ * a receipt.
+ */
+interface Member {
+  name: string;
+  files: string[];
+  extra: string[];
+  /** Revision the member records for a HEAD (full sha by default). */
+  form?: (head: string) => string;
+  /** Value recorded when the root is not a repository toplevel. */
+  foreign?: string;
+}
+
+const MEMBERS: Member[] = [
+  { name: "local-detached-faults.mjs", files: ["local-detached-faults.mjs", "local-detached-faults-receipt.mjs"], extra: [] },
+  {
+    name: "local-detached-shared-child.mjs",
+    files: ["local-detached-shared-child.mjs", "local-detached-shared-child-receipt.mjs", "local-detached-faults-receipt.mjs"],
+    extra: [],
+  },
+  { name: "status-ledger.mjs", files: ["status-ledger.mjs"], extra: ["docs/workbench/TRACEABILITY.md"] },
+  // wb-vko owner ruling R1 (04:13Z): the fifth site records the 7-character short sha and keeps its "unknown" fallback.
+  {
+    name: "live-operator-receipt.mjs",
+    files: ["live-operator-receipt.mjs", "git-stamp.mjs"],
+    extra: [],
+    form: (head) => head.slice(0, 7),
+    foreign: "unknown",
+  },
+];
+
+function stage(root: string, member: Member): string {
+  const dir = join(root, "qa", "workbench");
+  mkdirSync(dir, { recursive: true });
+  for (const file of member.files) copyFileSync(join(qa, file), join(dir, file));
+  for (const extra of member.extra) {
+    mkdirSync(dirname(join(root, extra)), { recursive: true });
+    copyFileSync(join(repo, extra), join(root, extra));
+  }
+  return join(dir, member.name);
+}
+
+function receiptRevision(entry: string, cwd: string): { revision: string; stdout: string } {
+  const run = spawnSync(process.execPath, [entry], {
+    cwd,
+    encoding: "utf8",
+    env: { ...process.env, DETACHED_SHARED_CHILD_RECEIPT: "", DETACHED_FAULTS_RECEIPT: "", W22_LEDGER_RECEIPT: "" },
+  });
+  const receipt = JSON.parse(run.stdout.trim()) as { revision: string };
+  return { revision: receipt.revision, stdout: run.stdout };
+}
+
+describe.each(MEMBERS)("member entry point $name stamps only its own repository", (member) => {
+  it("reports working-tree, never the foreign HEAD, from a root nested in a foreign repository", () => {
+    const { nested, head } = foreignRepo();
+    const entry = stage(nested, member);
+    const { revision, stdout } = receiptRevision(entry, nested);
+    expect(revision).toBe(member.foreign ?? "working-tree");
+    expect(stdout).not.toContain(head);
+    expect(stdout).not.toContain(head.slice(0, 7));
+  });
+
+  it("reports HEAD at a clean toplevel and HEAD-dirty once an untracked file exists", () => {
+    const { top } = foreignRepo();
+    const entry = stage(top, member);
+    git(top, "add", "-A");
+    git(top, "commit", "-q", "-m", "stage member");
+    const head = git(top, "rev-parse", "HEAD");
+    const expected = (member.form ?? ((full: string) => full))(head);
+    expect(receiptRevision(entry, top).revision).toBe(expected);
+    writeFileSync(join(top, "untracked.txt"), "x\n");
+    expect(receiptRevision(entry, top).revision).toBe(`${expected}-dirty`);
+  });
+});
+
+describe("package-smoke stamps through the canonical module only", () => {
+  const smoke = readFileSync(join(qa, "package-smoke.mjs"), "utf8");
+
+  it("spawns git nowhere itself: no git literal in any spawn position", () => {
+    expect(smoke).not.toMatch(/['"]git['"]/);
+    expect(smoke).not.toMatch(/--show-toplevel|rev-parse|--porcelain/);
+  });
+
+  it("builds the receipt git field from the one gitStamp(root) result with root = process.cwd()", () => {
+    expect(smoke).toMatch(/const root = process\.cwd\(\);/);
+    expect([...smoke.matchAll(/\bstamp\s*=/g)]).toHaveLength(1);
+    expect(smoke).toMatch(/const stamp = gitStamp\(root\);/);
+    expect(smoke).toMatch(/\bgit: stamp,/);
   });
 });
