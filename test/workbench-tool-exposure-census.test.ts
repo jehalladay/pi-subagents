@@ -1,48 +1,92 @@
+import { spawnSync } from "node:child_process";
+import { mkdirSync, mkdtempSync, readFileSync, realpathSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { dirname, join, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+import * as runner from "vitest";
+import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import vitestConfig from "../vitest.config";
+
 /**
- * workbench-tool-exposure-census.test.ts - wb-6hb.10 (VC-2/W06): the docs/06
- * "Tool exposure" and "Optional inspect/observe" requirement census, a
- * falsifier.
+ * workbench-tool-exposure-census.test.ts - wb-6hb.10 (VC-2/W06): the docs/06 "Tool exposure" and "Optional
+ * inspect/observe" requirement census, a falsifier.
+ *
+ * docs/workbench/14 "Truth labels and release gates": "Each major work package must have a falsifier: a negative
+ * test that would fail if a critical guarantee was quietly weakened."
  *
  * docs/workbench/06-capability-registry.md binds two sections:
  *
- *   section "Tool exposure" (WB-034 binding, three paragraphs: Pi side, Claude Agent
- *     SDK side, script side)
- *   section "Optional inspect/observe" (WB-023 binding, two paragraphs)
+ *   section "Tool exposure" (WB-034 binding: Pi side, Claude Agent SDK side, script side)
+ *   section "Optional inspect/observe" (WB-023 binding)
  *
- * Every row below is bound to existing cases by file path, verbatim it/describe
- * title and docs/14 truth label ("tier"). The census reads the pinned files as
- * text and never executes the pinned cases. It goes red, naming the row, when a
- * pinned case is renamed, deleted, duplicated, commented out or skipped, when a
- * tier is outside the docs/14 vocabulary, and when a row's status overstates
- * its pins.
+ * Every row is bound to existing cases by file path, VERBATIM it() title and docs/14 truth label ("tier"), or is
+ * recorded "unpinned" with a written reason and NEVER counts as satisfied. This census binds cases only: the
+ * WB-023/WB-034 row upgrades in docs/workbench/TRACEABILITY.md stay the owner's pass, and no source, doc or other
+ * test file is edited here.
  *
- * A requirement with no existing case is recorded "unpinned" with the reason
- * written out and NEVER counts as satisfied. This census binds cases only: the
- * WB-023/WB-034 row upgrades in docs/workbench/TRACEABILITY.md stay the owner's
- * pass, and no source, doc or other test file is edited here.
+ * Three independent legs prove a pin (a title being present in a file is not one of them):
+ *   1. REGISTRATION is reporter-verified. The pinned suites are loaded by a COLLECT-ONLY child run
+ *      (vitest list --json=<outfile>, written with "="; it executes no case). The reporter drops a case that is
+ *      commented out, renamed, deleted, skipped, todo'd, parked behind an enclosing describe/suite modifier or
+ *      option, conditionally registered, shadowed by a string decoy, registered inside an empty loop or an empty
+ *      table, or never called. A focused call anywhere in a pinned file fails the collect-only run itself under the
+ *      gate's allowOnly:false (vitest.config.ts), so this file carries NO text search for focus: the gate owns it.
+ *   2. SHAPE is read from the located call: a dotted or expression call head (fails, aliased), and an options
+ *      object that sets fails or only. Skips and todos are the reporter's job (leg 1), not a text match.
+ *   3. THIRD LEG (assertion reached). One child RUN of the pinned suites with a setup file records, per case,
+ *      expect.getState().assertionCalls in an afterEach hook. A pinned case that registers but never reaches an
+ *      expect() (an env-guarded early return, a runtime ctx.skip(), a destructured skip()) is red as
+ *      [assertion-not-reached], so a vacuous pass cannot hold a row green.
  *
- * Scope: test-only. It leaves wb-6hb.6 (docs/06 "Conformance tests") alone.
+ * Tier labels are VERIFIED, not carried from prose. fixture/adversarial/code-present pins must be matched by the
+ * include and absent from the exclude of the real vitest.config.ts the default gate loads; live SDK / scale
+ * benchmark pins must name a real forge.toml [build.commands.*] and must sit OUTSIDE the default gate. "adversarial
+ * pass" remains a judgment label (does the case try to defeat the guarantee) that no config can verify; it is
+ * disclosed here and never claimed as machine-checked.
+ *
+ * Docs exactness judges heading uniqueness and extracts the section over the SAME text view (raw lines, including
+ * HTML comments and fences): a second line spelling a bound heading anywhere refuses the census, and the section is
+ * the whole body bounded by the next level-1 or level-2 heading (or EOF), compared by whole-section equality.
+ *
+ * Every falsifier table below is authored by hand, written against the runner's VERIFIED export surface (the
+ * heads it uses are checked against the installed vitest exports, not against this scanner's model of them), and
+ * run through the real collect-only reporter and the real probe run. None is generated by the scanner.
+ *
+ * Record honesty (corrections to the c663b9a delivery, which this file supersedes): its falsifier list named
+ * "tier drift" but the check was vocabulary-only; its skipIf/runIf falsifiers went red only through a misattributed
+ * "no live case" path; its describe-wrapper list included xdescribe (not a vitest export) and omitted suite; and
+ * its claim that docs drift reddens the census held inside the section only, not against a hidden duplicate
+ * heading. Half-covered sentences are split into a covered row and an unpinned row (docs/14 O1 rule).
+ *
+ * Disclosed limits (never claimed as covered): a skip reached through a computed property name the child run
+ * cannot see is still caught only if no expect() is reached; a pin whose assertions all sit in a helper that does
+ * not call expect() would read as not-reached (none today); and this file executes the pinned cases only to count
+ * assertion calls, claiming no live or native pass from a title being present. wb-era's source-hygiene grep ran over
+ * this file and returned nothing.
  */
 
-import { readFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
-import { describe, expect, it } from "vitest";
-
-const ROOT = fileURLToPath(new URL("..", import.meta.url));
+const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const DOC_PATH = "docs/workbench/06-capability-registry.md";
+const VITEST_BIN = resolve(ROOT, "node_modules/vitest/vitest.mjs");
+const VITEST_CONFIG_MODULE = resolve(ROOT, "node_modules/vitest/dist/config.js");
+const REPO_VITEST_CONFIG = resolve(ROOT, "vitest.config.ts");
+const SPAWN_TIMEOUT_MS = 180_000;
 
 /** docs/14 section "Truth labels and release gates" - the only tiers a pin may claim. */
 const TIERS = ["code present", "fixture pass", "live SDK pass", "adversarial pass", "scale benchmark pass"] as const;
 type Tier = (typeof TIERS)[number];
+const LIVE_TIERS: readonly Tier[] = ["live SDK pass", "scale benchmark pass"];
 
 type Status = "pinned" | "unpinned";
 type Section = "tool-exposure" | "inspect-observe";
 
 interface Pin {
   readonly file: string;
-  /** Verbatim text between the quotes of the it()/describe() call, as written in the source. */
+  /** Verbatim text between the quotes of the it() call, as written in the source. */
   readonly title: string;
   readonly tier: Tier;
+  /** Live tiers only: the forge.toml [build.commands.<name>] that runs the pin. */
+  readonly command?: string;
 }
 
 interface Row {
@@ -86,19 +130,30 @@ const FORGE_OBS = "test/workbench-forge-observer.test.ts";
 const CONTROL = "test/workbench-control.test.ts";
 const FURNACE_CTL = "test/workbench-furnace-control.test.ts";
 
+const fixture = (file: string, title: string): Pin => ({ file, title, tier: "fixture pass" });
+const adversarial = (file: string, title: string): Pin => ({ file, title, tier: "adversarial pass" });
+
 const ROWS: readonly Row[] = [
   {
     id: "TE-pi-discovery-invocation-observation-tools",
     section: "tool-exposure",
-    requirement: "register concise discovery/invocation/observation tools",
+    requirement: "discovery/invocation/observation tools",
     status: "pinned",
-    gap: "Discovery (workbench_catalog), inspection (workflow_inspect), invocation (the registered launch tool) and observation (the Furnace attach) are each pinned by a registration case. Whether the whole registered surface stays concise is the surface census (wb-cax.4), not these pins.",
     pins: [
-      { file: PI_REPLIES, title: "registers workflow_inspect in claude mode and leaves workbench_catalog registered", tier: "fixture pass" },
-      { file: SEC_PI, title: "workbench_catalog is settings-scoped and does not echo a secret in unrelated settings", tier: "adversarial pass" },
-      { file: PI_CLIENT, title: "L2: an explicitly selected Claude backend launches a script through the registered Pi tool", tier: "fixture pass" },
-      { file: PI_FURNACE, title: "registers read-only native attachment but denies absence of explicit provider grant", tier: "fixture pass" },
+      fixture(PI_REPLIES, "registers workflow_inspect in claude mode and leaves workbench_catalog registered"),
+      adversarial(SEC_PI, "workbench_catalog is settings-scoped and does not echo a secret in unrelated settings"),
+      fixture(PI_CLIENT, "L2: an explicitly selected Claude backend launches a script through the registered Pi tool"),
+      fixture(PI_FURNACE, "registers read-only native attachment but denies absence of explicit provider grant"),
     ],
+  },
+  {
+    id: "TE-pi-concise-surface",
+    section: "tool-exposure",
+    requirement: "register concise",
+    status: "unpinned",
+    reason:
+      "The concise half of the sentence is a bound on how many tools the Workbench registers with Pi and how small each one is; no case asserts any such bound on this base. The four registration cases pinned under TE-pi-discovery-invocation-observation-tools prove discovery, inspection, invocation and observation tools exist, not that the surface stays concise. The registered-surface census is wb-cax.4, which is respinning and not landed here. Pinned when it lands.",
+    pins: [],
   },
   {
     id: "TE-pi-commands",
@@ -124,21 +179,9 @@ const ROWS: readonly Row[] = [
     requirement: "Allow on-demand capability contract retrieval.",
     status: "pinned",
     pins: [
-      {
-        file: PI_REPLIES,
-        title: "returns the builder's definition reply under the exact inspect:<id> grant, without calling any provider",
-        tier: "fixture pass",
-      },
-      {
-        file: REPLIES,
-        title: "returns the definition view by default for an inspect-granted advertised and implemented capability",
-        tier: "fixture pass",
-      },
-      {
-        file: CLAUDE_TOOLS,
-        title: "roundtrips three generic real MCP schemas, compact discovery, on-demand contract and native values",
-        tier: "fixture pass",
-      },
+      fixture(PI_REPLIES, "returns the builder's definition reply under the exact inspect:<id> grant, without calling any provider"),
+      fixture(REPLIES, "returns the definition view by default for an inspect-granted advertised and implemented capability"),
+      fixture(CLAUDE_TOOLS, "roundtrips three generic real MCP schemas, compact discovery, on-demand contract and native values"),
     ],
   },
   {
@@ -147,17 +190,9 @@ const ROWS: readonly Row[] = [
     requirement: "expose a curated subset through documented custom MCP tools/in-process MCP servers",
     status: "pinned",
     pins: [
-      { file: CLAUDE_ROLE, title: "adds only curated role MCP tools to actual SDK options without provider auto-grants", tier: "fixture pass" },
-      {
-        file: CLAUDE_TOOLS,
-        title: "discovery is finite and does not enumerate provider registrations outside the role",
-        tier: "adversarial pass",
-      },
-      {
-        file: CLAUDE_TOOLS,
-        title: "a role list never turns a registered write fixture into an executable operation",
-        tier: "adversarial pass",
-      },
+      fixture(CLAUDE_ROLE, "adds only curated role MCP tools to actual SDK options without provider auto-grants"),
+      adversarial(CLAUDE_TOOLS, "discovery is finite and does not enumerate provider registrations outside the role"),
+      adversarial(CLAUDE_TOOLS, "a role list never turns a registered write fixture into an executable operation"),
     ],
   },
   {
@@ -167,10 +202,10 @@ const ROWS: readonly Row[] = [
     status: "pinned",
     gap: "WB-034 first binding: the claude agent sees only curated, authorized provider tools and list/inspect never grant invoke. The pins prove it at the in-process MCP boundary against an actual SDK server; a live SDK pass is a separate tier.",
     pins: [
-      { file: CLAUDE_TOOLS, title: "registration and discovery never authorize invocation", tier: "adversarial pass" },
-      { file: CLAUDE_TOOLS, title: "requires BOTH role membership and exact invoke grant plus producer permission", tier: "adversarial pass" },
-      { file: CLAUDE_TOOLS, title: "discovery, contract and native inspect remain independently granted", tier: "adversarial pass" },
-      { file: CLAUDE_TOOLS, title: "validates finite host policy and refuses wildcard or incomplete authority", tier: "adversarial pass" },
+      adversarial(CLAUDE_TOOLS, "registration and discovery never authorize invocation"),
+      adversarial(CLAUDE_TOOLS, "requires BOTH role membership and exact invoke grant plus producer permission"),
+      adversarial(CLAUDE_TOOLS, "discovery, contract and native inspect remain independently granted"),
+      adversarial(CLAUDE_TOOLS, "validates finite host policy and refuses wildcard or incomplete authority"),
     ],
   },
   {
@@ -179,13 +214,9 @@ const ROWS: readonly Row[] = [
     requirement: "tool identity",
     status: "pinned",
     pins: [
-      { file: CLAUDE_TOOLS, title: "does not accept SDK-stripped identity arguments as host authority", tier: "adversarial pass" },
-      {
-        file: CLAUDE_TOOLS,
-        title: "rejects contract drift, malformed native payload, and impersonation before provider dispatch",
-        tier: "adversarial pass",
-      },
-      { file: CLAUDE_TOOLS, title: "pins distinct logical IDs across concurrent asynchronous host checks", tier: "adversarial pass" },
+      adversarial(CLAUDE_TOOLS, "does not accept SDK-stripped identity arguments as host authority"),
+      adversarial(CLAUDE_TOOLS, "rejects contract drift, malformed native payload, and impersonation before provider dispatch"),
+      adversarial(CLAUDE_TOOLS, "pins distinct logical IDs across concurrent asynchronous host checks"),
     ],
   },
   {
@@ -194,13 +225,9 @@ const ROWS: readonly Row[] = [
     requirement: "bounded observations",
     status: "pinned",
     pins: [
-      { file: CLAUDE_TOOLS, title: "bounds serialized input/output and call counts without fake domain success", tier: "adversarial pass" },
-      { file: CLAUDE_TOOLS, title: "rejects oversized native read answers instead of reporting a fabricated status", tier: "adversarial pass" },
-      {
-        file: CLAUDE_OBS,
-        title: "caps samples and tool evidence while terminal is always emitted and snapshots are immutable",
-        tier: "fixture pass",
-      },
+      adversarial(CLAUDE_TOOLS, "bounds serialized input/output and call counts without fake domain success"),
+      adversarial(CLAUDE_TOOLS, "rejects oversized native read answers instead of reporting a fabricated status"),
+      fixture(CLAUDE_OBS, "caps samples and tool evidence while terminal is always emitted and snapshots are immutable"),
     ],
   },
   {
@@ -209,12 +236,8 @@ const ROWS: readonly Row[] = [
     requirement: "redaction",
     status: "pinned",
     pins: [
-      { file: CLAUDE_TOOLS, title: "redacts successful native strings/secret fields and terminal escapes", tier: "adversarial pass" },
-      {
-        file: CLAUDE_TOOLS,
-        title: "redacts unexpected provider errors and keeps authorization/resource failure native",
-        tier: "adversarial pass",
-      },
+      adversarial(CLAUDE_TOOLS, "redacts successful native strings/secret fields and terminal escapes"),
+      adversarial(CLAUDE_TOOLS, "redacts unexpected provider errors and keeps authorization/resource failure native"),
     ],
   },
   {
@@ -232,22 +255,30 @@ const ROWS: readonly Row[] = [
     requirement: "node() is a deterministic host RPC, not an LLM tool call.",
     status: "pinned",
     pins: [
-      { file: NODE, title: "L3: deterministic SDK node returns its typed native domain result without an agent", tier: "fixture pass" },
-      { file: NODE, title: "L4: unauthorized invocation denied at host even with known capability id", tier: "adversarial pass" },
-      { file: SEC_WF, title: "node() refuses grant/identity options before dispatching to a host capability", tier: "adversarial pass" },
+      fixture(NODE, "L3: deterministic SDK node returns its typed native domain result without an agent"),
+      adversarial(NODE, "L4: unauthorized invocation denied at host even with known capability id"),
+      adversarial(SEC_WF, "node() refuses grant/identity options before dispatching to a host capability"),
     ],
   },
   {
-    id: "TE-script-separately-observable",
+    id: "TE-script-node-calls-separately-observable",
     section: "tool-exposure",
-    requirement: "Agent tool calls and script node calls are separately observable.",
+    requirement: "script node calls are separately observable",
     status: "pinned",
-    gap: "The pins prove node calls are journaled and replayed as their own kind (never served from the settled-agent journal) and that progress names agents and node reads separately. No case observes an agent tool call and a script node call side by side in one live run; that comparison is unpinned.",
     pins: [
-      { file: NODE, title: "L4: node calls are never served from the settled-agent journal", tier: "adversarial pass" },
-      { file: NODE, title: "L4: a node between identical agents invalidates downstream journal replay", tier: "adversarial pass" },
-      { file: PROGRESS, title: "names replayed agents and node reads from the resume journal", tier: "fixture pass" },
+      adversarial(NODE, "L4: node calls are never served from the settled-agent journal"),
+      adversarial(NODE, "L4: a node between identical agents invalidates downstream journal replay"),
+      fixture(PROGRESS, "names replayed agents and node reads from the resume journal"),
     ],
+  },
+  {
+    id: "TE-script-agent-vs-node-side-by-side",
+    section: "tool-exposure",
+    requirement: "Agent tool calls and script node calls",
+    status: "unpinned",
+    reason:
+      "The pins under TE-script-node-calls-separately-observable prove node calls are journaled and replayed as their own kind and that progress names agents and node reads separately. No case observes an agent tool call and a script node call side by side in one live run, so the comparison the sentence states is unpinned.",
+    pins: [],
   },
   {
     id: "IO-independent-inspect-observe",
@@ -256,17 +287,9 @@ const ROWS: readonly Row[] = [
     status: "pinned",
     gap: "WB-023 first binding: inspect/observe are exposed only where the producer supports them. The pins prove the advertised-and-implemented gate for inspect and a native Run/Attempt read for observe; event cursor and snapshot freshness are pinned under the snapshot row.",
     pins: [
-      {
-        file: REPLIES,
-        title: "requires an advertised AND implemented inspect mode, else explicit unavailable with the reason",
-        tier: "fixture pass",
-      },
-      { file: CLAUDE_TOOLS, title: "discovery, contract and native inspect remain independently granted", tier: "adversarial pass" },
-      {
-        file: FURNACE_OBS,
-        title: "reads native Run, Attempt and bounded log reference without promoting output or owning the Run",
-        tier: "fixture pass",
-      },
+      fixture(REPLIES, "requires an advertised AND implemented inspect mode, else explicit unavailable with the reason"),
+      adversarial(CLAUDE_TOOLS, "discovery, contract and native inspect remain independently granted"),
+      fixture(FURNACE_OBS, "reads native Run, Attempt and bounded log reference without promoting output or owning the Run"),
     ],
   },
   {
@@ -275,13 +298,9 @@ const ROWS: readonly Row[] = [
     requirement: 'A one-shot function need not implement fake "poll until done" semantics.',
     status: "pinned",
     pins: [
-      { file: PI_REPLIES, title: "reports inspect-not-advertised and inspect-not-implemented as typed unavailable replies", tier: "fixture pass" },
-      {
-        file: REPLIES,
-        title: "requires an advertised AND implemented inspect mode, else explicit unavailable with the reason",
-        tier: "fixture pass",
-      },
-      { file: NODE, title: "L3: deterministic SDK node returns its typed native domain result without an agent", tier: "fixture pass" },
+      fixture(PI_REPLIES, "reports inspect-not-advertised and inspect-not-implemented as typed unavailable replies"),
+      fixture(REPLIES, "requires an advertised AND implemented inspect mode, else explicit unavailable with the reason"),
+      fixture(NODE, "L3: deterministic SDK node returns its typed native domain result without an agent"),
     ],
   },
   {
@@ -290,16 +309,8 @@ const ROWS: readonly Row[] = [
     requirement: "Observe must support snapshot and event stream if native provider supports them",
     status: "pinned",
     pins: [
-      {
-        file: OBSERVATION,
-        title: "deduplicates IDs, rejects old sequence updates, and treats a cursor gap as stale until snapshot",
-        tier: "fixture pass",
-      },
-      {
-        file: OBSERVATION,
-        title: "disconnect invalidates known nodes; reconnect alone cannot restore current without snapshot",
-        tier: "fixture pass",
-      },
+      fixture(OBSERVATION, "deduplicates IDs, rejects old sequence updates, and treats a cursor gap as stale until snapshot"),
+      fixture(OBSERVATION, "disconnect invalidates known nodes; reconnect alone cannot restore current without snapshot"),
     ],
   },
   {
@@ -308,46 +319,21 @@ const ROWS: readonly Row[] = [
     requirement: "otherwise explicit polling with provider-specific freshness",
     status: "pinned",
     pins: [
-      {
-        file: FURNACE_OBS,
-        title: "a bounded poll ending on a still-active Run emits last-known stale state instead of ending silently",
-        tier: "fixture pass",
-      },
-      {
-        file: FURNACE_OBS,
-        title: "reconnects only by fresh snapshot, marking a failed read stale instead of asserting last-known RUNNING",
-        tier: "fixture pass",
-      },
-      {
-        file: FORGE_OBS,
-        title: "F1: a historical last_result is not a verdict: unknown tone and partial coverage, never a success tone",
-        tier: "fixture pass",
-      },
+      fixture(FURNACE_OBS, "a bounded poll ending on a still-active Run emits last-known stale state instead of ending silently"),
+      fixture(FURNACE_OBS, "reconnects only by fresh snapshot, marking a failed read stale instead of asserting last-known RUNNING"),
+      fixture(FORGE_OBS, "F1: a historical last_result is not a verdict: unknown tone and partial coverage, never a success tone"),
     ],
   },
   {
     id: "IO-control-separate-and-explicit",
     section: "inspect-observe",
-    requirement:
-      "Control actions are separate, explicitly registered by a provider with per-action preconditions and acknowledgements.",
+    requirement: "Control actions are separate, explicitly registered by a provider with per-action preconditions and acknowledgements.",
     status: "pinned",
     pins: [
-      {
-        file: CONTROL,
-        title: "rule 3: only the frozen per-provider allowlist resolves an action (exact, case-sensitive, no prototype lookups)",
-        tier: "adversarial pass",
-      },
-      { file: CONTROL, title: "rule 4: the exact grant control:<provider>.<action> is required verbatim", tier: "adversarial pass" },
-      {
-        file: CONTROL,
-        title: "requested, acknowledged and result are three distinct, ordered, frozen receipts that each carry their own timestamp",
-        tier: "fixture pass",
-      },
-      {
-        file: FURNACE_CTL,
-        title: "closing the observer of a shared client performs zero control calls, and only a permitted decision then reaches one verb",
-        tier: "adversarial pass",
-      },
+      adversarial(CONTROL, "rule 3: only the frozen per-provider allowlist resolves an action (exact, case-sensitive, no prototype lookups)"),
+      adversarial(CONTROL, "rule 4: the exact grant control:<provider>.<action> is required verbatim"),
+      fixture(CONTROL, "requested, acknowledged and result are three distinct, ordered, frozen receipts that each carry their own timestamp"),
+      adversarial(FURNACE_CTL, "closing the observer of a shared client performs zero control calls, and only a permitted decision then reaches one verb"),
     ],
   },
   {
@@ -356,16 +342,8 @@ const ROWS: readonly Row[] = [
     requirement: "No mandatory universal pause/resume/cancel methods.",
     status: "pinned",
     pins: [
-      {
-        file: CONTROL,
-        title: "freezes the per-provider allowlist; an unlisted provider such as hyperunix has no permitted action at all",
-        tier: "adversarial pass",
-      },
-      {
-        file: FURNACE_CTL,
-        title: "is exactly run pause/stop/resume and attempt stop, each a verbatim vendored clientOperations row, deep-frozen",
-        tier: "fixture pass",
-      },
+      adversarial(CONTROL, "freezes the per-provider allowlist; an unlisted provider such as hyperunix has no permitted action at all"),
+      fixture(FURNACE_CTL, "is exactly run pause/stop/resume and attempt stop, each a verbatim vendored clientOperations row, deep-frozen"),
     ],
   },
 ];
@@ -380,7 +358,7 @@ const SATISFIED = [
   "TE-claude-bounded-observations",
   "TE-claude-redaction",
   "TE-script-node-is-host-rpc",
-  "TE-script-separately-observable",
+  "TE-script-node-calls-separately-observable",
   "IO-independent-inspect-observe",
   "IO-one-shot-no-fake-polling",
   "IO-snapshot-and-event-stream",
@@ -388,296 +366,940 @@ const SATISFIED = [
   "IO-control-separate-and-explicit",
   "IO-no-universal-lifecycle-methods",
 ];
-const NOT_SATISFIED = ["TE-pi-commands", "TE-pi-no-eager-provider-tools", "TE-claude-no-generic-astools"];
+const NOT_SATISFIED = [
+  "TE-pi-concise-surface",
+  "TE-pi-commands",
+  "TE-pi-no-eager-provider-tools",
+  "TE-claude-no-generic-astools",
+  "TE-script-agent-vs-node-side-by-side",
+];
 
-// ---------------------------------------------------------------------------
-// The scanner. Reads source text; never imports or runs a pinned file.
-// ---------------------------------------------------------------------------
+/* ------------------------------------------------------------------ */
+/* Lexical scanner for the located call (string, template and comment aware) */
+/* ------------------------------------------------------------------ */
 
-type ReadSource = (file: string) => string | undefined;
+const REGEX_PREFIX = "(,=:[!&|?{};";
 
-const readFromDisk: ReadSource = file => {
-  try {
-    return readFileSync(`${ROOT}${file}`, "utf8");
-  } catch {
-    return undefined;
+function skipQuoted(s: string, at: number): number {
+  const quote = s[at];
+  let i = at + 1;
+  while (i < s.length) {
+    if (s[i] === "\\") i += 2;
+    else if (s[i] === quote) return i + 1;
+    else i += 1;
   }
-};
+  return s.length;
+}
 
-/** it()/test()/describe() calls with a string-literal title: name, modifier chain, quote, raw title. */
-const CALL = /\b(describe|it|test)((?:\.[A-Za-z]+)*)\(\s*(["'`])((?:\\.|(?!\3)[^\\])*)\3/g;
-/** `.only` anywhere in a file stops every other case in it from running, so it voids every pin in the file. */
-const FILE_ONLY = /\b(?:describe|it|test)\.only\b/;
-/** A skip, todo or conditional modifier voids the pins it encloses. (`.fails` is judged on the pinned case itself.) */
-const DISABLING = /\b(?:(?:describe|it|test)\.(?:skip|todo|skipIf|runIf)|xit|xdescribe)\b/g;
-
-/** Index just past the brace that closes the block opened at `open`, skipping strings, templates and comments; undefined when unbalanced. */
-function blockEnd(source: string, open: number): number | undefined {
+function skipCode(s: string, start: number, commas?: number[]): number | undefined {
   let depth = 0;
-  for (let i = open; i < source.length; i++) {
-    const ch = source[i];
-    if (ch === '"' || ch === "'" || ch === "`") {
-      i++;
-      while (i < source.length && source[i] !== ch) i += source[i] === "\\" ? 2 : 1;
-    } else if (ch === "/" && source[i + 1] === "/") {
-      while (i < source.length && source[i] !== "\n") i++;
-    } else if (ch === "/" && source[i + 1] === "*") {
-      i = source.indexOf("*/", i + 2);
-      if (i < 0) return undefined;
-      i++;
-    } else if (ch === "{") {
-      depth++;
-    } else if (ch === "}") {
-      depth--;
-      if (depth === 0) return i + 1;
+  let prev = "";
+  let i = start;
+  while (i < s.length) {
+    const c = s[i] ?? "";
+    const next = s[i + 1] ?? "";
+    if (c === "/" && next === "/") {
+      const eol = s.indexOf("\n", i);
+      i = eol < 0 ? s.length : eol;
+      continue;
     }
+    if (c === "/" && next === "*") {
+      const end = s.indexOf("*/", i + 2);
+      i = end < 0 ? s.length : end + 2;
+      continue;
+    }
+    if (c === "'" || c === '"') {
+      i = skipQuoted(s, i);
+      prev = c;
+      continue;
+    }
+    if (c === "`") {
+      i += 1;
+      while (i < s.length) {
+        if (s[i] === "\\") i += 2;
+        else if (s[i] === "`") {
+          i += 1;
+          break;
+        } else if (s[i] === "$" && s[i + 1] === "{") {
+          const close = skipCode(s, i + 2);
+          if (close === undefined) return undefined;
+          i = close + 1;
+        } else i += 1;
+      }
+      prev = "`";
+      continue;
+    }
+    if (c === "/" && (prev === "" || REGEX_PREFIX.includes(prev))) {
+      i += 1;
+      let inClass = false;
+      while (i < s.length) {
+        if (s[i] === "\\") i += 2;
+        else if (s[i] === "[") {
+          inClass = true;
+          i += 1;
+        } else if (s[i] === "]") {
+          inClass = false;
+          i += 1;
+        } else if (s[i] === "/" && !inClass) {
+          i += 1;
+          break;
+        } else i += 1;
+      }
+      prev = "/";
+      continue;
+    }
+    if (c === "(" || c === "[" || c === "{") depth += 1;
+    else if (c === ")" || c === "]" || c === "}") {
+      if (depth === 0) return i;
+      depth -= 1;
+    } else if (c === "," && depth === 0 && commas) commas.push(i);
+    if (!/\s/u.test(c)) prev = c;
+    i += 1;
   }
   return undefined;
 }
 
-/** The disabling modifiers whose callback block contains `position`; an unbalanced block is treated as containing it. */
-function disablingAround(source: string, position: number): string[] {
-  const around: string[] = [];
-  for (const match of source.matchAll(DISABLING)) {
-    const open = source.indexOf("{", match.index);
-    if (open < 0 || open > position) continue;
-    const end = blockEnd(source, open);
-    if (end === undefined || position < end) around.push(match[0]);
+function callArguments(source: string, open: number): readonly string[] | undefined {
+  const commas: number[] = [];
+  const end = skipCode(source, open + 1, commas);
+  if (end === undefined) return undefined;
+  const bounds = [open, ...commas, end];
+  const args: string[] = [];
+  for (let k = 0; k + 1 < bounds.length; k += 1) args.push(source.slice((bounds[k] ?? 0) + 1, bounds[k + 1]));
+  return args;
+}
+
+const OPTION_MODIFIER = /\b(skip|todo|fails|only)\b\s*(?::\s*(?!false\b)|[,}])/u;
+
+const HEAD_MODIFIER = /\b(?:it|test)((?:\s*\.\s*[A-Za-z]+)*)$/u;
+
+const ALLOWED_HEAD_MODIFIERS = new Set(["concurrent", "sequential"]);
+
+function maskComments(s: string): string {
+  let out = "";
+  let i = 0;
+  while (i < s.length) {
+    const c = s[i] ?? "";
+    const next = s[i + 1] ?? "";
+    if (c === "/" && next === "/") {
+      const eol = s.indexOf("\n", i);
+      const end = eol < 0 ? s.length : eol;
+      out += " ".repeat(end - i);
+      i = end;
+    } else if (c === "/" && next === "*") {
+      const close = s.indexOf("*/", i + 2);
+      const end = close < 0 ? s.length : close + 2;
+      out += s.slice(i, end).replace(/[^\n]/gu, " ");
+      i = end;
+    } else if (c === "'" || c === '"' || c === "`") {
+      let j = i + 1;
+      while (j < s.length && s[j] !== c) j += s[j] === "\\" ? 2 : 1;
+      out += s.slice(i, j + 1);
+      i = j + 1;
+    } else {
+      out += c;
+      i += 1;
+    }
   }
-  return around;
+  return out;
 }
 
-interface Declaration {
-  readonly modifier: string;
-  readonly commented: boolean;
-  readonly position: number;
+function titleLiterals(title: string): string[] {
+  return ["'", '"', "`"].map((quote) => `${quote}${title}${quote}`);
 }
 
-function declarations(source: string, title: string): Declaration[] {
-  const found: Declaration[] = [];
-  for (const match of source.matchAll(CALL)) {
-    if (match[4] !== title) continue;
-    const lineStart = source.lastIndexOf("\n", match.index) + 1;
-    const lead = source.slice(lineStart, match.index).trimStart();
-    found.push({
-      modifier: match[2] ?? "",
-      commented: lead.startsWith("//") || lead.startsWith("*") || lead.startsWith("/*"),
-      position: match.index,
-    });
+function locateCalls(code: string, title: string): number[] {
+  const opens: number[] = [];
+  for (const literal of titleLiterals(title)) {
+    let from = 0;
+    for (;;) {
+      const at = code.indexOf(literal, from);
+      if (at < 0) break;
+      from = at + literal.length;
+      const before = code.slice(0, at).trimEnd();
+      if (before.endsWith("(")) opens.push(before.length - 1);
+    }
   }
-  return found;
+  return opens;
 }
 
-function auditPin(row: Row, pin: Pin, read: ReadSource): string[] {
-  const where = `row ${row.id}: ${pin.file} "${pin.title}"`;
-  if (!TIERS.includes(pin.tier)) return [`${where}: tier "${pin.tier}" is not a docs/14 truth label`];
-  const source = read(pin.file);
-  if (source === undefined) return [`${where}: pinned file is missing`];
+function globToRegExp(glob: string): RegExp {
+  let out = "";
+  for (let i = 0; i < glob.length; i += 1) {
+    const c = glob[i] ?? "";
+    if (c === "*" && glob[i + 1] === "*") {
+      if (glob[i + 2] === "/") {
+        out += "(?:.*/)?";
+        i += 2;
+      } else {
+        out += ".*";
+        i += 1;
+      }
+    } else if (c === "*") out += "[^/]*";
+    else out += c.replace(/[.+^${}()|[\]\\?]/gu, "\\$&");
+  }
+  return new RegExp(`^${out}$`, "u");
+}
+
+function matchesAny(patterns: readonly string[], file: string): boolean {
+  return patterns.some((pattern) => globToRegExp(pattern).test(file));
+}
+
+/* ------------------------------------------------------------------ */
+/* Collect-only reporter and probe run (child processes)               */
+/* ------------------------------------------------------------------ */
+
+interface ListedCase {
+  readonly name: string;
+  readonly file: string;
+}
+
+interface ProbeRecord {
+  readonly name: string;
+  readonly file: string;
+  readonly calls: number;
+}
+
+interface ListResult {
+  readonly status: number | null;
+  readonly stderr: string;
+  readonly cases: readonly ListedCase[];
+}
+
+interface ProbeResult {
+  readonly status: number | null;
+  readonly stderr: string;
+  readonly records: readonly ProbeRecord[];
+}
+
+interface Run {
+  readonly list: ListResult;
+  readonly probe: ProbeResult;
+}
+
+function isListedCase(value: unknown): value is ListedCase {
+  if (typeof value !== "object" || value === null) return false;
+  const record = value as Record<string, unknown>;
+  return typeof record.name === "string" && typeof record.file === "string";
+}
+
+function isProbeRecord(value: unknown): value is ProbeRecord {
+  if (typeof value !== "object" || value === null) return false;
+  const record = value as Record<string, unknown>;
+  return typeof record.name === "string" && typeof record.file === "string" && typeof record.calls === "number";
+}
+
+/** The child must not inherit this run's VITEST_* state, or it would join the parent's pool instead of running alone. */
+function childEnv(extra: Readonly<Record<string, string>> = {}): NodeJS.ProcessEnv {
+  const env: NodeJS.ProcessEnv = {};
+  for (const [key, value] of Object.entries(process.env)) {
+    if (!key.startsWith("VITEST")) env[key] = value;
+  }
+  return { ...env, ...extra };
+}
+
+let childCounter = 0;
+
+/**
+ * Runs `vitest list --json=<outfile>` (the = form: a space-separated path is written into by the CLI) in a child
+ * process. Collect-only: no case body is executed.
+ */
+function vitestList(outDir: string, cwd: string, filters: readonly string[], extra: readonly string[]): ListResult {
+  childCounter += 1;
+  const outFile = join(outDir, `list-${childCounter}.json`);
+  const run = spawnSync(process.execPath, [VITEST_BIN, "list", ...filters, ...extra, `--json=${outFile}`], {
+    cwd,
+    env: childEnv(),
+    encoding: "utf8",
+    timeout: SPAWN_TIMEOUT_MS,
+    maxBuffer: 64 * 1024 * 1024,
+  });
+  let cases: ListedCase[] = [];
+  try {
+    const parsed: unknown = JSON.parse(readFileSync(outFile, "utf8"));
+    if (Array.isArray(parsed)) cases = parsed.filter(isListedCase);
+  } catch {
+    cases = [];
+  }
+  return { status: run.status, stderr: `${run.stderr ?? ""}${run.error ? String(run.error) : ""}`, cases };
+}
+
+/**
+ * Third leg: the setup file records expect.getState().assertionCalls for every case that completes (an afterEach
+ * hook runs for a case that returned, threw or called ctx.skip() after starting). A case that never starts leaves
+ * no record, which the audit reads as not reached.
+ */
+const PROBE_SETUP = [
+  'import { appendFileSync } from "node:fs";',
+  "afterEach((context) => {",
+  "  const chain = [];",
+  "  for (let task = context.task; task; task = task.suite) {",
+  '    if (task.type !== "suite" || task.name) chain.unshift(task.name);',
+  "  }",
+  "  const calls = expect.getState().assertionCalls;",
+  '  const line = JSON.stringify({ file: context.task.file?.filepath, name: chain.join(" > "), calls });',
+  '  appendFileSync(process.env.DOCS06_CENSUS_PROBE_OUT, line + "\\n");',
+  "});",
+  "",
+].join("\n");
+
+function writeProbeSetup(dir: string): string {
+  const path = join(dir, "probe-setup.mjs");
+  writeFileSync(path, PROBE_SETUP);
+  return path;
+}
+
+/** The real gate config, merged with the probe setup file and globals; the include/exclude stay the repository's own. */
+function writeRepoProbeConfig(dir: string, setup: string): string {
+  const path = join(dir, "probe.config.mts");
+  writeFileSync(
+    path,
+    [
+      `import { mergeConfig } from ${JSON.stringify(VITEST_CONFIG_MODULE)};`,
+      `import base from ${JSON.stringify(REPO_VITEST_CONFIG)};`,
+      `export default mergeConfig(base, { root: ${JSON.stringify(ROOT)}, test: { globals: true, setupFiles: [${JSON.stringify(setup)}] } });`,
+      "",
+    ].join("\n"),
+  );
+  return path;
+}
+
+function writeScratchConfig(dir: string, setup: string, allowOnly: boolean): string {
+  const path = join(dir, `scratch-${allowOnly ? "focus" : "gate"}.config.mjs`);
+  writeFileSync(
+    path,
+    `export default { test: { globals: true, allowOnly: ${allowOnly}, include: ["**/*.test.ts"], setupFiles: [${JSON.stringify(setup)}] } };\n`,
+  );
+  return path;
+}
+
+/** Runs the pinned suites for real, only to read how many expect() calls each case reached. */
+function vitestProbe(outDir: string, cwd: string, filters: readonly string[], extra: readonly string[]): ProbeResult {
+  childCounter += 1;
+  const outFile = join(outDir, `probe-${childCounter}.jsonl`);
+  writeFileSync(outFile, "");
+  const run = spawnSync(process.execPath, [VITEST_BIN, "run", ...extra, ...filters, "--silent", "--reporter=dot"], {
+    cwd,
+    env: childEnv({ DOCS06_CENSUS_PROBE_OUT: outFile }),
+    encoding: "utf8",
+    timeout: SPAWN_TIMEOUT_MS,
+    maxBuffer: 64 * 1024 * 1024,
+  });
+  const records: ProbeRecord[] = [];
+  for (const line of readFileSync(outFile, "utf8").split("\n")) {
+    if (line.trim().length === 0) continue;
+    try {
+      const parsed: unknown = JSON.parse(line);
+      if (isProbeRecord(parsed)) records.push(parsed);
+    } catch {
+      // A torn line is skipped; the case then reads as not reached.
+    }
+  }
+  return { status: run.status, stderr: `${run.stderr ?? ""}${run.error ? String(run.error) : ""}`, records };
+}
+
+/** Lists then runs a directory of scratch suites under the scratch config. */
+function scratchRun(dir: string, files: readonly string[], allowOnly: boolean): Run {
+  const setup = writeProbeSetup(dir);
+  const config = writeScratchConfig(dir, setup, allowOnly);
+  const extra = [`--config=${config}`, `--root=${dir}`];
+  return { list: vitestList(dir, dir, files, extra), probe: vitestProbe(dir, dir, files, extra) };
+}
+
+/* ------------------------------------------------------------------ */
+/* Tier truth                                                          */
+/* ------------------------------------------------------------------ */
+
+interface GateConfig {
+  readonly include: readonly string[];
+  readonly exclude: readonly string[];
+}
+
+function gateConfigOf(config: unknown): GateConfig {
+  const test = (config as { test?: { include?: unknown; exclude?: unknown } }).test ?? {};
+  const strings = (value: unknown): readonly string[] =>
+    Array.isArray(value) ? value.filter((item): item is string => typeof item === "string") : [];
+  return { include: strings(test.include), exclude: strings(test.exclude) };
+}
+
+/** A tier label is a claim about the gate config and forge.toml: verify it, never carry it from prose. */
+function auditTier(pin: Pin, gate: GateConfig, forgeToml: string): string | undefined {
+  if (!TIERS.includes(pin.tier)) return `[tier-truth] "${pin.tier}" is not a docs/14 truth label`;
+  const inDefaultGate = matchesAny(gate.include, pin.file) && !matchesAny(gate.exclude, pin.file);
+  if (LIVE_TIERS.includes(pin.tier)) {
+    if (!pin.command) return `[tier-truth] ${pin.file} is labelled "${pin.tier}" but names no forge.toml command`;
+    if (!forgeToml.includes(`[build.commands.${pin.command}]`)) {
+      return `[tier-truth] ${pin.file} names forge.toml command ${pin.command}, which does not exist`;
+    }
+    if (inDefaultGate) return `[tier-truth] ${pin.file} is labelled "${pin.tier}" but the default vitest gate runs it, which is a fixture pass at best`;
+    return undefined;
+  }
+  if (!matchesAny(gate.include, pin.file)) return `[tier-truth] ${pin.file} is labelled "${pin.tier}" but is not matched by the vitest include`;
+  if (matchesAny(gate.exclude, pin.file)) return `[tier-truth] ${pin.file} is labelled "${pin.tier}" but is excluded from the default vitest run`;
+  return undefined;
+}
+
+/* ------------------------------------------------------------------ */
+/* Docs exactness (one text view: raw lines, comments and fences kept)  */
+/* ------------------------------------------------------------------ */
+
+function auditDocs(doc: string): string[] {
   const problems: string[] = [];
-  if (FILE_ONLY.test(source)) problems.push(`${where}: file carries an .only modifier, so its other cases do not run`);
-  const live = declarations(source, pin.title).filter(d => !d.commented);
-  if (live.length === 0) problems.push(`${where}: no live case with this verbatim title (renamed, deleted or commented out)`);
-  if (live.length > 1) problems.push(`${where}: title is declared ${live.length} times, so the pin is ambiguous`);
-  for (const declared of live) {
-    if (declared.modifier !== "") problems.push(`${where}: case carries the modifier "${declared.modifier}"`);
-    for (const around of disablingAround(source, declared.position)) {
-      problems.push(`${where}: case sits inside a disabled or conditional block (${around})`);
+  const lines = doc.split("\n");
+  const frozen: readonly (readonly [string, string])[] = [
+    ["Tool exposure", TOOL_EXPOSURE],
+    ["Optional inspect/observe", INSPECT_OBSERVE],
+  ];
+  for (const [heading, expected] of frozen) {
+    const marker = `## ${heading}`;
+    const spelled = lines.filter(line => line.includes(marker)).length;
+    const exact = lines.filter(line => line === marker).length;
+    if (spelled !== 1 || exact !== 1) {
+      problems.push(
+        `[docs-heading] ${DOC_PATH} spells "${marker}" on ${spelled} line(s), ${exact} of them as the exact heading line; expected one of each, judged over the raw text including comments and fences`,
+      );
+      continue;
+    }
+    const rest = lines.slice(lines.indexOf(marker) + 1);
+    const next = rest.findIndex(line => /^#{1,2} /u.test(line));
+    const body = (next < 0 ? rest : rest.slice(0, next)).filter(line => line.trim().length > 0).join(" ");
+    if (body.trim().replace(/\s+/gu, " ") !== expected) {
+      problems.push(`[docs-section] ${DOC_PATH} section "${heading}" is not the exact frozen body (every sentence, nothing added, bounded at the next level-1/2 heading)`);
     }
   }
   return problems;
 }
 
-/** Every reason this row is not what it claims to be. Empty means the row's declared status is honest. */
-function auditRow(row: Row, read: ReadSource): string[] {
-  const problems: string[] = [];
-  switch (row.status) {
-    case "unpinned":
-      if (row.pins.length > 0) problems.push(`row ${row.id}: is unpinned yet lists ${row.pins.length} pin(s)`);
-      if ((row.reason ?? "").trim().length < 20) problems.push(`row ${row.id}: an unpinned row needs a written reason`);
-      break;
-    case "pinned":
-      if (row.pins.length === 0) problems.push(`row ${row.id}: pinned with no pin`);
-      break;
+/* ------------------------------------------------------------------ */
+/* Pin and row audit (every failure names the row)                      */
+/* ------------------------------------------------------------------ */
+
+interface PinLocation {
+  /** The real path the reporter prints. */
+  readonly absolute: string;
+  readonly source: string;
+}
+
+type Locate = (file: string) => PinLocation | undefined;
+
+const nameMatches = (name: string, title: string): boolean => name === title || name.endsWith(` > ${title}`);
+
+/**
+ * Returns a problem string beginning with a [category] tag for one pin, or undefined when the reporter lists the
+ * title exactly once, the located call is a plain it()/test() without a disabling option, and the probe run
+ * reached at least one expect() in it.
+ */
+function auditPin(listing: readonly ListedCase[], records: readonly ProbeRecord[], location: PinLocation, pin: Pin): string | undefined {
+  const listed = listing.filter(entry => entry.file === location.absolute && nameMatches(entry.name, pin.title));
+  const code = maskComments(location.source);
+  const opens = locateCalls(code, pin.title);
+  if (listed.length === 0) {
+    if (opens.length > 0) {
+      return "[not-registered] the source declares this title as a call argument but the collect-only run registers no such case (skipped, todo, parked behind a describe/suite modifier or option, conditionally registered, inside an empty loop or table, never called, or the title is only a string argument to another call)";
+    }
+    return "[no-such-case] no call in the source, comments masked, carries this verbatim title (renamed, deleted or commented out)";
   }
-  for (const pin of row.pins) problems.push(...auditPin(row, pin, read));
-  return problems;
+  if (listed.length > 1) return `[duplicate] the collect-only listing has ${listed.length} such cases, expected exactly one`;
+  if (opens.length !== 1) return `[source-unlocated] the title is a call argument ${opens.length} times in the source, expected exactly once`;
+  const open = opens[0] ?? 0;
+  const head = code.slice(0, open).trimEnd();
+  if (/[)\]]$/u.test(head)) return "[call-head-modifier] the call head is a modifier expression, not a plain it()/test()";
+  const headMatch = HEAD_MODIFIER.exec(head);
+  if (!headMatch) return "[call-head] the call head is not a plain it()/test() (aliased or shadowed binding)";
+  const blocked = (headMatch[1] ?? "")
+    .split(".")
+    .map(part => part.trim())
+    .filter(part => part.length > 0 && !ALLOWED_HEAD_MODIFIERS.has(part));
+  if (blocked.length > 0) return `[call-head-modifier] the call head carries .${blocked.join(".")}`;
+  const args = callArguments(code, open);
+  if (!args) return "[source-unbalanced] the pinned call could not be scanned to its closing parenthesis";
+  for (const arg of args.slice(1)) {
+    const text = arg.trim();
+    const option = text.startsWith("{") ? OPTION_MODIFIER.exec(text) : null;
+    if (option) return `[options-modifier] the options argument sets ${option[1]}`;
+  }
+  const reached = records.filter(record => record.file === location.absolute && nameMatches(record.name, pin.title));
+  if (reached.length === 0) {
+    return "[assertion-not-reached] the case registered but the probe run recorded no completion for it (it did not start, or was skipped at run time)";
+  }
+  if (!reached.some(record => record.calls >= 1)) {
+    return "[assertion-not-reached] the case ran to completion without reaching a single expect()";
+  }
+  return undefined;
+}
+
+/** Every reason this row is not what it claims to be. Empty means the row's declared status and pins are honest. */
+function rowViolations(
+  row: Row,
+  listing: readonly ListedCase[],
+  records: readonly ProbeRecord[],
+  locate: Locate,
+  gate: GateConfig,
+  forgeToml: string,
+): string[] {
+  const out: string[] = [];
+  if (row.status === "unpinned") {
+    if (row.pins.length > 0) out.push(`${row.id}: is unpinned yet lists ${row.pins.length} pin(s)`);
+    if ((row.reason ?? "").trim().length < 40) out.push(`${row.id}: an unpinned row needs a written reason`);
+  } else if (row.pins.length === 0) {
+    out.push(`${row.id}: pinned with no pin`);
+  }
+  for (const pin of row.pins) {
+    const where = `${row.id}: ${pin.file} :: ${pin.title}`;
+    if (!pin.file.startsWith("test/")) out.push(`${where}: ${pin.file} is not under test/`);
+    const tier = auditTier(pin, gate, forgeToml);
+    if (tier) out.push(`${where}: ${tier}`);
+    const location = locate(pin.file);
+    if (!location) {
+      out.push(`${where}: [missing-file] the pinned file does not exist`);
+      continue;
+    }
+    const problem = auditPin(listing, records, location, pin);
+    if (problem) out.push(`${where}: ${problem}`);
+  }
+  return out;
 }
 
 /** Only a pinned row counts. An unpinned row never does. */
 const satisfied = (row: Row): boolean => row.status === "pinned";
 
-// ---------------------------------------------------------------------------
-// The census against the repository.
-// ---------------------------------------------------------------------------
+const GATE_CONFIG = gateConfigOf(vitestConfig);
 
-/** A section's body: from its heading to the next heading, whitespace-collapsed. */
-function sectionText(doc: string, heading: string): string {
-  const escaped = heading.replace(/[.*+?^${}()|[\]\\/]/g, "\\$&");
-  const body = new RegExp(`^## ${escaped}\\s*\\n([\\s\\S]*?)(?=^## )`, "m").exec(doc)?.[1] ?? "";
-  return body.trim().replace(/\s+/g, " ");
+function readRepoFile(relative: string): string {
+  return readFileSync(resolve(ROOT, relative), "utf8");
 }
 
-describe("docs/06 tool-exposure census: the requirement text", () => {
-  const doc = readFileSync(`${ROOT}${DOC_PATH}`, "utf8");
+const locateRepo: Locate = file => {
+  try {
+    return { absolute: realpathSync(resolve(ROOT, file)), source: readRepoFile(file) };
+  } catch {
+    return undefined;
+  }
+};
 
-  it("still says exactly the three Tool exposure paragraphs this census binds", () => {
-    expect(sectionText(doc, "Tool exposure")).toBe(TOOL_EXPOSURE);
+const PINNED_FILES = [...new Set(ROWS.flatMap(row => row.pins.map(pin => pin.file)))].sort();
+
+/* ------------------------------------------------------------------ */
+/* Shared fixtures: the real collect-only listing and the real probe     */
+/* ------------------------------------------------------------------ */
+
+let scratchDir = "";
+let realListing: ListResult | undefined;
+let realProbe: ProbeResult | undefined;
+
+beforeAll(() => {
+  scratchDir = mkdtempSync(join(tmpdir(), "docs06-census-"));
+  realListing = vitestList(scratchDir, ROOT, PINNED_FILES, []);
+  const setup = writeProbeSetup(scratchDir);
+  realProbe = vitestProbe(scratchDir, ROOT, PINNED_FILES, [`--config=${writeRepoProbeConfig(scratchDir, setup)}`]);
+}, SPAWN_TIMEOUT_MS * 2 + 30_000);
+
+afterAll(() => {
+  if (scratchDir) rmSync(scratchDir, { recursive: true, force: true });
+});
+
+describe("docs/06 tool-exposure census (wb-6hb.10)", () => {
+  describe("frozen census table", () => {
+    it("holds twenty unique rows: fourteen for Tool exposure, six for Optional inspect/observe", () => {
+      expect(ROWS).toHaveLength(20);
+      expect(new Set(ROWS.map(row => row.id)).size).toBe(20);
+      expect(ROWS.filter(row => row.section === "tool-exposure")).toHaveLength(14);
+      expect(ROWS.filter(row => row.section === "inspect-observe")).toHaveLength(6);
+    });
+
+    it("binds every row to a fragment of the section it claims", () => {
+      const sections: Record<Section, string> = { "tool-exposure": TOOL_EXPOSURE, "inspect-observe": INSPECT_OBSERVE };
+      expect(ROWS.length).toBeGreaterThan(0);
+      for (const row of ROWS) {
+        expect(sections[row.section], `row ${row.id}`).toContain(row.requirement);
+      }
+    });
+
+    it("counts exactly the rows expected as satisfied, and never an unpinned one", () => {
+      expect(ROWS.filter(satisfied).map(row => row.id)).toEqual(SATISFIED);
+      expect(ROWS.filter(row => !satisfied(row)).map(row => row.id)).toEqual(NOT_SATISFIED);
+      expect(ROWS.filter(row => row.status === "unpinned").map(row => row.id)).toEqual(NOT_SATISFIED);
+    });
+
+    it("splits the two half-covered sentences: the uncovered half is its own unpinned row carrying the gap as its reason", () => {
+      const get = (id: string) => ROWS.find(candidate => candidate.id === id);
+      const concise = get("TE-pi-concise-surface");
+      const sideBySide = get("TE-script-agent-vs-node-side-by-side");
+      expect(concise?.status).toBe("unpinned");
+      expect(concise?.pins).toEqual([]);
+      expect(concise?.reason).toContain("concise");
+      expect(sideBySide?.status).toBe("unpinned");
+      expect(sideBySide?.pins).toEqual([]);
+      expect(sideBySide?.reason).toContain("side by side");
+      expect(get("TE-pi-discovery-invocation-observation-tools")?.gap).toBeUndefined();
+      expect(get("TE-script-node-calls-separately-observable")?.gap).toBeUndefined();
+    });
+
+    it("states what the permission and observability rows cannot prove", () => {
+      const get = (id: string) => ROWS.find(candidate => candidate.id === id);
+      expect(get("TE-claude-permissions")?.gap).toContain("WB-034");
+      expect(get("IO-independent-inspect-observe")?.gap).toContain("WB-023");
+    });
+
+    it("does not pin a case from another bead's census as its own evidence", () => {
+      const census = ROWS.flatMap(row => row.pins).filter(pin => /census/.test(pin.file));
+      expect(census).toEqual([]);
+    });
+
+    it("pins every case under a vocabulary label and writes the first-binding tiers honestly", () => {
+      const pins = ROWS.flatMap(row => row.pins);
+      expect(pins.length).toBeGreaterThan(0);
+      for (const pin of pins) expect(TIERS, `${pin.file} :: ${pin.title}`).toContain(pin.tier);
+    });
   });
 
-  it("still says exactly the two Optional inspect/observe paragraphs this census binds", () => {
-    expect(sectionText(doc, "Optional inspect/observe")).toBe(INSPECT_OBSERVE);
-  });
+  describe("docs exactness (heading uniqueness and extraction over the same raw text)", () => {
+    const doc = readRepoFile(DOC_PATH);
 
-  it("binds every row to a fragment of the section it claims", () => {
-    const sections: Record<Section, string> = { "tool-exposure": TOOL_EXPOSURE, "inspect-observe": INSPECT_OBSERVE };
-    for (const row of ROWS) {
-      expect(sections[row.section], `row ${row.id}`).toContain(row.requirement);
+    it("the real docs/06 Tool exposure and Optional inspect/observe sections are the exact frozen bodies", () => {
+      expect(auditDocs(doc)).toStrictEqual([]);
+    });
+
+    interface DocMutant {
+      readonly id: string;
+      readonly label: string;
+      readonly mutate: (text: string) => string;
+      /** undefined = the audit must stay green. */
+      readonly red: "docs-heading" | "docs-section" | undefined;
+    }
+
+    const CLAUSE = "Include permissions, tool identity, bounded observations and redaction.";
+    const sectionOf = (text: string, heading: string, next: string): string => {
+      const from = text.indexOf(`\n## ${heading}\n`);
+      return text.slice(from + 1, text.indexOf(`\n## ${next}\n`) + 1);
+    };
+    const dropLast = (text: string, needle: string): string => {
+      const at = text.lastIndexOf(needle);
+      return at < 0 ? text : `${text.slice(0, at)}${text.slice(at + needle.length)}`;
+    };
+    const swap = (from: string, to: string) => (text: string) => text.replace(from, to);
+
+    const DOC_MUTANTS: readonly DocMutant[] = [
+      {
+        id: "D1",
+        label: "a verbatim archived copy under its own heading in an HTML comment, while the real section loses a clause",
+        mutate: text =>
+          dropLast(swap("\n## Tool exposure\n", `\n<!--\n${sectionOf(text, "Tool exposure", "Optional inspect/observe")}-->\n\n## Tool exposure\n`)(text), CLAUSE),
+        red: "docs-heading",
+      },
+      {
+        id: "D2",
+        label: "the same archived copy inside a fenced code block, while the real section loses a clause",
+        mutate: text =>
+          dropLast(swap("\n## Tool exposure\n", `\n\`\`\`text\n${sectionOf(text, "Tool exposure", "Optional inspect/observe")}\`\`\`\n\n## Tool exposure\n`)(text), CLAUSE),
+        red: "docs-heading",
+      },
+      {
+        id: "D3",
+        label: "a ### subsection with weakening prose inside Tool exposure",
+        mutate: swap("\n## Optional inspect/observe\n", "\n### Exceptions\n\nPermissions are optional in single-user mode.\n\n## Optional inspect/observe\n"),
+        red: "docs-section",
+      },
+      { id: "D4", label: "an HTML comment wrapping a clause inside Tool exposure", mutate: swap(CLAUSE, `<!-- ${CLAUSE} -->`), red: "docs-section" },
+      {
+        id: "D5",
+        label: "a level-1 heading and text inserted AFTER the Tool exposure section stays green",
+        mutate: swap("\n## Optional inspect/observe\n", "\n# Appendix\n\nHistorical notes.\n\n## Optional inspect/observe\n"),
+        red: undefined,
+      },
+      { id: "D6", label: "the Tool exposure heading demoted to ###", mutate: swap("\n## Tool exposure\n", "\n### Tool exposure\n"), red: "docs-heading" },
+      { id: "D7", label: "a Tool exposure sentence deleted", mutate: swap(" Allow on-demand capability contract retrieval.", ""), red: "docs-section" },
+      {
+        id: "D8",
+        label: "a qualifier appended to an Optional inspect/observe sentence",
+        mutate: swap("No mandatory universal pause/resume/cancel methods.", "No mandatory universal pause/resume/cancel methods, except for local runs."),
+        red: "docs-section",
+      },
+      {
+        id: "D9",
+        label: "an archived copy of Optional inspect/observe in an HTML comment",
+        mutate: text =>
+          swap("\n## Optional inspect/observe\n", `\n<!--\n${sectionOf(text, "Optional inspect/observe", "Discovery examples (proposed identifiers)")}-->\n\n## Optional inspect/observe\n`)(text),
+        red: "docs-heading",
+      },
+      { id: "D10", label: "an Optional inspect/observe sentence deleted", mutate: swap(" A one-shot function need not implement fake \"poll until done\" semantics.", ""), red: "docs-section" },
+      { id: "D11", label: "the heading spelled once more inside a one-line HTML comment", mutate: swap("\n## Tool exposure\n", "\n<!-- ## Tool exposure -->\n## Tool exposure\n"), red: "docs-heading" },
+    ];
+
+    it("freezes eleven doc mutants", () => {
+      expect(DOC_MUTANTS).toHaveLength(11);
+    });
+
+    for (const mutant of DOC_MUTANTS) {
+      it(`${mutant.id} ${mutant.label}: ${mutant.red === undefined ? "stays green" : `goes red as [${mutant.red}]`}`, () => {
+        const mutated = mutant.mutate(doc);
+        expect(mutated, `${mutant.id} must actually change the docs text`).not.toBe(doc);
+        const problems = auditDocs(mutated);
+        if (mutant.red === undefined) expect(problems, `${mutant.id} must stay green`).toStrictEqual([]);
+        else {
+          expect(problems.length, `${mutant.id} must go red`).toBeGreaterThan(0);
+          expect(problems.join("\n"), `${mutant.id} must name its category`).toContain(`[${mutant.red}]`);
+        }
+      });
     }
   });
 
-  it("holds eighteen unique rows: twelve for Tool exposure, six for Optional inspect/observe", () => {
-    expect(ROWS).toHaveLength(18);
-    expect(new Set(ROWS.map(row => row.id)).size).toBe(18);
-    expect(ROWS.filter(row => row.section === "tool-exposure")).toHaveLength(12);
-    expect(ROWS.filter(row => row.section === "inspect-observe")).toHaveLength(6);
-  });
-});
+  describe("tier truth (the label is verified against the real gate config and forge.toml)", () => {
+    const forgeToml = readRepoFile("forge.toml");
+    const anchor = ROWS.flatMap(row => row.pins).find(pin => pin.file === CLAUDE_TOOLS && pin.title === "registration and discovery never authorize invocation") as Pin;
+    const realCommand = /\[build\.commands\.([A-Za-z0-9_-]+)\]/u.exec(forgeToml)?.[1] ?? "";
+    const row = (pin: Pin): Row => ({ id: "row-tier", section: "tool-exposure", requirement: "redaction", status: "pinned", pins: [pin] });
 
-describe("docs/06 tool-exposure census: every row is bound to a live case", () => {
-  for (const row of ROWS) {
-    it(`${row.id} (${row.status}) is honest and every pin resolves by file, verbatim title and tier`, () => {
-      expect(auditRow(row, readFromDisk)).toEqual([]);
-    });
-  }
-
-  it("counts exactly the rows expected as satisfied, and never an unpinned one", () => {
-    expect(ROWS.filter(satisfied).map(row => row.id)).toEqual(SATISFIED);
-    expect(ROWS.filter(row => !satisfied(row)).map(row => row.id)).toEqual(NOT_SATISFIED);
-    expect(ROWS.filter(row => row.status === "unpinned").map(row => row.id)).toEqual(NOT_SATISFIED);
-  });
-
-  it("states what the permission and observability rows cannot prove", () => {
-    const get = (id: string) => ROWS.find(candidate => candidate.id === id);
-    expect(get("TE-claude-permissions")?.gap).toContain("WB-034");
-    expect(get("IO-independent-inspect-observe")?.gap).toContain("WB-023");
-    expect(get("TE-script-separately-observable")?.gap).toContain("side by side");
-  });
-
-  it("does not pin a case from another bead's census as its own evidence", () => {
-    const census = ROWS.flatMap(row => row.pins).filter(pin => /census/.test(pin.file));
-    expect(census).toEqual([]);
-  });
-});
-
-// ---------------------------------------------------------------------------
-// Falsifiers: the census is only evidence if it goes red when a pin is lost.
-// ---------------------------------------------------------------------------
-
-describe("docs/06 tool-exposure census: falsifiers", () => {
-  const FILE = "test/fixture-pinned.test.ts";
-  const SOURCE = [
-    'import { describe, expect, it } from "vitest";',
-    'describe("suite", () => {',
-    '  it("pinned case one", () => { expect(1).toBe(1); });',
-    "  it(",
-    '    "pinned case two",',
-    "    () => { expect(2).toBe(2); },",
-    "  );",
-    "});",
-    "",
-  ].join("\n");
-  const readers = (source: string | undefined): ReadSource => file => (file === FILE ? source : undefined);
-  const row = (overrides: Partial<Row> & { pins?: readonly Pin[] } = {}): Row => ({
-    id: "T-row",
-    section: "tool-exposure",
-    requirement: "redaction",
-    status: "pinned",
-    pins: [{ file: FILE, title: "pinned case one", tier: "fixture pass" }],
-    ...overrides,
-  });
-
-  it("accepts a live case, including one whose call spans several lines", () => {
-    expect(auditRow(row(), readers(SOURCE))).toEqual([]);
-    const pins: readonly Pin[] = [{ file: FILE, title: "pinned case two", tier: "fixture pass" }];
-    expect(auditRow(row({ pins }), readers(SOURCE))).toEqual([]);
-  });
-
-  it("goes red naming the row when a pinned case is renamed", () => {
-    const problems = auditRow(row(), readers(SOURCE.replace("pinned case one", "pinned case 1")));
-    expect(problems).toHaveLength(1);
-    expect(problems[0]).toContain("row T-row");
-    expect(problems[0]).toContain("no live case with this verbatim title");
-  });
-
-  it("goes red when a pinned case is deleted or its file is gone", () => {
-    expect(auditRow(row(), readers(SOURCE.replace(/ {2}it\("pinned case one".*\n/, "")))).toEqual([
-      expect.stringContaining("no live case with this verbatim title"),
-    ]);
-    expect(auditRow(row(), readers(undefined))).toEqual([expect.stringContaining("pinned file is missing")]);
-  });
-
-  it("goes red when a pinned case is commented out", () => {
-    const problems = auditRow(row(), readers(SOURCE.replace('  it("pinned case one"', '  // it("pinned case one"')));
-    expect(problems).toEqual([expect.stringContaining("no live case with this verbatim title")]);
-  });
-
-  it.each([".skip", ".todo", ".skipIf(true)", ".runIf(false)", ".fails"])("goes red when a pinned case gains the %s modifier", modifier => {
-    const problems = auditRow(row(), readers(SOURCE.replace('it("pinned case one"', `it${modifier}("pinned case one"`)));
-    expect(problems.length).toBeGreaterThan(0);
-    expect(problems.join("\n")).toContain("row T-row");
-  });
-
-  it("stays green when an unrelated sibling case is skipped, because the pin still runs", () => {
-    expect(auditRow(row(), readers(SOURCE.replace("  it(\n", "  it.skip(\n")))).toEqual([]);
-  });
-
-  it.each(["describe.skip", "describe.todo", "describe.runIf(false)", "describe.skipIf(true)", "xdescribe"])(
-    "goes red when the pinned case sits inside %s",
-    wrapper => {
-      const problems = auditRow(row(), readers(SOURCE.replace('describe("suite"', `${wrapper}("suite"`)));
-      expect(problems).toEqual([expect.stringContaining("inside a disabled or conditional block")]);
-    },
-  );
-
-  it("treats an unbalanced wrapper block as enclosing the pin", () => {
-    const broken = SOURCE.replace('describe("suite", () => {', 'describe.skip("suite", () => {  const open = "{";').replace(/\n\}\);\n$/, "\n");
-    expect(auditRow(row(), readers(broken))).toEqual([expect.stringContaining("inside a disabled or conditional block")]);
-  });
-
-  it("goes red when .only elsewhere in the file keeps the pinned case from running", () => {
-    expect(auditRow(row(), readers(`${SOURCE}it.only("other", () => {});\n`))).toEqual([expect.stringContaining(".only modifier")]);
-  });
-
-  it("goes red when the title is declared twice, so the pin would be ambiguous", () => {
-    const problems = auditRow(row(), readers(`${SOURCE}it("pinned case one", () => {});\n`));
-    expect(problems).toEqual([expect.stringContaining("declared 2 times")]);
-  });
-
-  it("goes red when a tier is outside the docs/14 vocabulary", () => {
-    const pins = [{ file: FILE, title: "pinned case one", tier: "passes" as unknown as Tier }];
-    expect(auditRow(row({ pins }), readers(SOURCE))).toEqual([expect.stringContaining("not a docs/14 truth label")]);
-  });
-
-  describe("unpinned rows are reasoned and never pass", () => {
-    const unpinned = (overrides: Partial<Row>): Row => row({ status: "unpinned", pins: [], ...overrides });
-
-    it("accepts a reasoned no-case row and does not count it satisfied", () => {
-      const missing = unpinned({ reason: "No case on this base exercises this requirement; it is filed for a later bead." });
-      expect(auditRow(missing, readers(SOURCE))).toEqual([]);
-      expect(satisfied(missing)).toBe(false);
+    it("every pinned file's label is verified: matched by the vitest include and absent from its exclude", () => {
+      expect(GATE_CONFIG.include.length, "vitest include must be readable from vitest.config.ts").toBeGreaterThan(0);
+      for (const pin of ROWS.flatMap(candidate => candidate.pins)) expect(auditTier(pin, GATE_CONFIG, forgeToml), `${pin.file}`).toBeUndefined();
     });
 
-    it("refuses an unpinned row with no reason, and one that also lists pins", () => {
-      expect(auditRow(unpinned({}), readers(SOURCE))).toEqual([expect.stringContaining("needs a written reason")]);
-      const withPin = unpinned({
-        reason: "A reason long enough to be a reason.",
-        pins: [{ file: FILE, title: "pinned case one", tier: "fixture pass" }],
+    it("T1 the security pin relabelled live SDK pass (false: an in-process fixture MCP in the default gate) goes red [tier-truth]", () => {
+      expect(auditTier({ ...anchor, tier: "live SDK pass" }, GATE_CONFIG, forgeToml)).toContain("[tier-truth]");
+      const violations = rowViolations(row({ ...anchor, tier: "live SDK pass" }), [], [], () => undefined, GATE_CONFIG, forgeToml);
+      expect(violations.some(line => line.startsWith("row-tier:") && line.includes("[tier-truth]"))).toBe(true);
+    });
+
+    it("T1b a live label naming a real forge.toml command while the default gate still runs the file goes red [tier-truth]", () => {
+      expect(realCommand.length).toBeGreaterThan(0);
+      const problem = auditTier({ ...anchor, tier: "live SDK pass", command: realCommand }, GATE_CONFIG, forgeToml);
+      expect(problem).toContain("[tier-truth]");
+      expect(problem).toContain("default vitest gate runs it");
+    });
+
+    it("T2 the security pin's file added to the vitest exclude list (it leaves the default gate) goes red [tier-truth]", () => {
+      const problem = auditTier(anchor, { include: GATE_CONFIG.include, exclude: [...GATE_CONFIG.exclude, anchor.file] }, forgeToml);
+      expect(problem).toContain("[tier-truth]");
+      expect(problem).toContain("excluded");
+    });
+
+    it("T2b a pin outside the vitest include goes red [tier-truth]", () => {
+      expect(auditTier(anchor, { include: ["qa/**/*.test.ts"], exclude: GATE_CONFIG.exclude }, forgeToml)).toContain("not matched by the vitest include");
+    });
+
+    it("T3 a live pin naming a command forge.toml does not define goes red [tier-truth]", () => {
+      expect(auditTier({ ...anchor, tier: "live SDK pass", command: "no-such-command" }, GATE_CONFIG, forgeToml)).toContain("does not exist");
+    });
+
+    it("T4 a live pin naming a real command while its file is excluded from the default gate is accepted", () => {
+      const excluded = GATE_CONFIG.exclude.find(pattern => pattern.startsWith("test/") && !pattern.includes("*")) ?? "";
+      expect(excluded.length, "vitest.config.ts must exclude at least one concrete test file").toBeGreaterThan(0);
+      expect(auditTier({ file: excluded, title: "anything", tier: "live SDK pass", command: realCommand }, GATE_CONFIG, forgeToml)).toBeUndefined();
+    });
+
+    it("T5 a tier outside the docs/14 vocabulary goes red [tier-truth]", () => {
+      expect(auditTier({ ...anchor, tier: "passes" as unknown as Tier }, GATE_CONFIG, forgeToml)).toContain("not a docs/14 truth label");
+    });
+  });
+
+  describe("row status honesty", () => {
+    const base: Row = { id: "T-row", section: "tool-exposure", requirement: "redaction", status: "pinned", pins: [] };
+    const audit = (candidate: Row) => rowViolations(candidate, [], [], () => undefined, GATE_CONFIG, "");
+
+    it("refuses a pinned row with no pin, an unpinned row with no reason, and an unpinned row that also lists pins", () => {
+      expect(audit(base)).toEqual([expect.stringContaining("T-row: pinned with no pin")]);
+      expect(audit({ ...base, status: "unpinned" })).toEqual([expect.stringContaining("needs a written reason")]);
+      const withPin = audit({ ...base, status: "unpinned", reason: "A reason that is long enough to count as a written reason.", pins: [fixture("test/x.test.ts", "t")] });
+      expect(withPin.some(line => line.includes("yet lists 1 pin"))).toBe(true);
+    });
+
+    it("accepts a reasoned no-case row and never counts it satisfied", () => {
+      const reasoned: Row = { ...base, status: "unpinned", reason: "No case on this base exercises this requirement; it is filed for a later bead." };
+      expect(audit(reasoned)).toEqual([]);
+      expect(satisfied(reasoned)).toBe(false);
+    });
+
+    it("goes red naming the file when a pinned file does not exist", () => {
+      const missing: Row = { ...base, pins: [fixture("test/does-not-exist.test.ts", "t")] };
+      expect(audit(missing)).toEqual([expect.stringContaining("[missing-file]")]);
+    });
+  });
+
+  describe("the runner export surface the falsifier tables are written against", () => {
+    it("every head the tables spell is a real export of the installed vitest, and the legacy aliases are not", () => {
+      const exportsOf = runner as unknown as Record<string, unknown>;
+      for (const head of ["describe", "suite", "it", "test"]) expect(typeof exportsOf[head], head).toBe("function");
+      for (const alias of ["xit", "xtest", "xdescribe"]) expect(exportsOf[alias], alias).toBeUndefined();
+    });
+  });
+
+  describe("pinned cases (collect-only reporter and probe run over the real suites)", () => {
+    it("the collect-only child run over every pinned suite succeeds (a focused call under allowOnly:false fails it)", () => {
+      expect(realListing, "beforeAll did not run").toBeDefined();
+      expect(realListing?.status, `vitest list failed: ${realListing?.stderr.slice(-400) ?? ""}`).toBe(0);
+      expect(realListing?.cases.length ?? 0).toBeGreaterThan(0);
+    });
+
+    it("the probe run over every pinned suite recorded completed cases", () => {
+      expect(realProbe, "beforeAll did not run").toBeDefined();
+      expect(realProbe?.records.length ?? 0, `probe run recorded nothing: ${realProbe?.stderr.slice(-400) ?? ""}`).toBeGreaterThan(0);
+    });
+
+    for (const row of ROWS) {
+      it(`${row.id} (${row.status}) is honest: every pin is registered, undisabled, reaches an expect() and carries a verified tier`, () => {
+        expect(realListing, "beforeAll did not run").toBeDefined();
+        expect(realProbe, "beforeAll did not run").toBeDefined();
+        expect(rowViolations(row, realListing?.cases ?? [], realProbe?.records ?? [], locateRepo, GATE_CONFIG, readRepoFile("forge.toml"))).toStrictEqual([]);
       });
-      expect(auditRow(withPin, readers(SOURCE))).toEqual([expect.stringContaining("yet lists 1 pin")]);
+    }
+  });
+
+  describe("the scanner is falsifiable: one hand-authored mutant per mode, run through the real reporter and the real probe", () => {
+    interface Mutant {
+      readonly id: string;
+      readonly label: string;
+      readonly source: string;
+      /** undefined = must stay green; otherwise the [category] the row audit must name. */
+      readonly red: string | undefined;
+    }
+
+    const T = "pinned case";
+    const body = "() => { expect(1).toBe(1); }";
+    const wrap = (inner: string): string => `describe("suite", () => {\n${inner}\n});\n`;
+    const intact = wrap(`  it("${T}", ${body});\n  it("sibling", ${body});`);
+    const SCRATCH_GATE: GateConfig = { include: ["test/**/*.test.ts"], exclude: [] };
+    /** Appended to every written mutant so a file whose pinned case never registers still holds one case and loads. */
+    const SENTINEL = '\nit("always registered", () => { expect(1).toBe(1); });\n';
+
+    const MUTANTS: readonly Mutant[] = [
+      { id: "C0", label: "intact control", source: intact, red: undefined },
+      { id: "C1", label: "renamed", source: wrap(`  it("${T} renamed", ${body});`), red: "no-such-case" },
+      { id: "C2", label: "deleted", source: wrap(`  it("sibling", ${body});`), red: "no-such-case" },
+      { id: "C3", label: "it.skip", source: wrap(`  it.skip("${T}", ${body});`), red: "not-registered" },
+      { id: "C4", label: "test.skip", source: wrap(`  test.skip("${T}", ${body});`), red: "not-registered" },
+      { id: "C5", label: "it.todo", source: wrap(`  it.todo("${T}");`), red: "not-registered" },
+      { id: "C6", label: "describe.skip around the case", source: `describe.skip("suite", () => {\n  it("${T}", ${body});\n});\n`, red: "not-registered" },
+      { id: "C7", label: "suite.skip around the case (suite is a real vitest export)", source: `suite.skip("suite", () => {\n  it("${T}", ${body});\n});\n`, red: "not-registered" },
+      { id: "C8", label: "it.concurrent.skip", source: wrap(`  it.concurrent.skip("${T}", ${body});`), red: "not-registered" },
+      { id: "C9", label: "line comment-out", source: wrap(`  // it("${T}", ${body});\n  it("sibling", ${body});`), red: "no-such-case" },
+      { id: "S1", label: "multi-line block comment without leading asterisks", source: wrap(`  /*\n    it("${T}", ${body});\n  */\n  it("sibling", ${body});`), red: "no-such-case" },
+      { id: "S2", label: "options argument { skip: true }", source: wrap(`  it("${T}", { skip: true }, ${body});`), red: "not-registered" },
+      { id: "S3", label: "options argument { todo: true }", source: wrap(`  it("${T}", { todo: true }, ${body});`), red: "not-registered" },
+      { id: "S4", label: "ctx.skip() at run time", source: wrap(`  it("${T}", (ctx) => { ctx.skip(); expect(1).toBe(1); });`), red: "assertion-not-reached" },
+      { id: "S5", label: "destructured skip() at run time", source: wrap(`  it("${T}", ({ skip }) => { skip(); expect(1).toBe(1); });`), red: "assertion-not-reached" },
+      { id: "S6", label: "suite options { skip: true }", source: `suite("suite", { skip: true }, () => {\n  it("${T}", ${body});\n});\n`, red: "not-registered" },
+      { id: "S7", label: "describe options { skip: true }", source: `describe("suite", { skip: true }, () => {\n  it("${T}", ${body});\n});\n`, red: "not-registered" },
+      { id: "S8", label: "conditional registration behind a never-set env var", source: wrap(`  if (process.env.DOCS06_CENSUS_NEVER_SET) {\n    it("${T}", ${body});\n  }\n  it("sibling", ${body});`), red: "not-registered" },
+      {
+        id: "S9",
+        label: "env-guarded early return before the first expect (planted false assertion never reached; the case passes vacuously)",
+        source: wrap(`  it("${T}", () => {\n    if (!process.env.DOCS06_CENSUS_NEVER_SET) return;\n    expect(1).toBe(2);\n  });`),
+        red: "assertion-not-reached",
+      },
+      { id: "S10", label: "case deleted, title kept as a string argument to another call", source: wrap(`  it("sibling", () => { expect(String("${T}")).toBe("${T}"); });`), red: "not-registered" },
+      { id: "S10b", label: "case deleted, title kept as a plain string variable", source: wrap(`  it("sibling", () => { const label = "${T}"; expect(label.length).toBeGreaterThan(0); });`), red: "no-such-case" },
+      { id: "S11", label: "registration inside a never-called arrow function", source: wrap(`  const register = () => {\n    it("${T}", ${body});\n  };\n  void register;\n  it("sibling", ${body});`), red: "not-registered" },
+      { id: "S12", label: "registration inside an empty for-of loop", source: wrap(`  for (const _unused of [] as number[]) {\n    it("${T}", ${body});\n  }\n  it("sibling", ${body});`), red: "not-registered" },
+      { id: "S13", label: "enclosing describe.each([]) with an empty table", source: `describe.each([])("suite %s", () => {\n  it("${T}", ${body});\n});\n`, red: "not-registered" },
+      { id: "A1", label: "attribution: it.skipIf(true) is present and skipped", source: wrap(`  it.skipIf(true)("${T}", ${body});`), red: "not-registered" },
+      { id: "A2", label: "attribution: it.runIf(false) is present and skipped", source: wrap(`  it.runIf(false)("${T}", ${body});`), red: "not-registered" },
+      { id: "A3", label: "attribution: describe.skipIf(true)", source: `describe.skipIf(true)("suite", () => {\n  it("${T}", ${body});\n});\n`, red: "not-registered" },
+      { id: "A4", label: "attribution: describe.runIf(false)", source: `describe.runIf(false)("suite", () => {\n  it("${T}", ${body});\n});\n`, red: "not-registered" },
+      { id: "H1", label: "it.fails inverts the polarity", source: wrap(`  it.fails("${T}", () => { expect(1).toBe(2); });`), red: "call-head-modifier" },
+      { id: "H2", label: "options argument { fails: true } inverts the polarity", source: wrap(`  it("${T}", { fails: true }, () => { expect(1).toBe(2); });`), red: "options-modifier" },
+      { id: "H3", label: "duplicated registration", source: wrap(`  it("${T}", ${body});\n  it("${T}", ${body});`), red: "duplicate" },
+      { id: "P1", label: "precision: it.concurrent still runs", source: wrap(`  it.concurrent("${T}", ${body});`), red: undefined },
+      { id: "P2", label: "precision: a line comment mentioning describe.skip above a live suite", source: `// never wrap this suite in describe.skip or suite.skip\n${intact}`, red: undefined },
+      { id: "P3", label: "precision: an inline leading block comment before the case", source: wrap(`  /* WB-034 */ it("${T}", ${body});`), red: undefined },
+      { id: "P4", label: "precision: a comment mentioning it.only and it.skip while the case runs", source: wrap(`  // once it.only("${T}") and it.skip("${T}")\n  it("${T}", ${body});`), red: undefined },
+      { id: "P5", label: "precision: a string that mentions .only while the case runs", source: wrap(`  it("${T}", () => { expect("it.only is the gate's job").toContain(".only"); });`), red: undefined },
+      { id: "P6", label: "precision: an unrelated sibling case skipped", source: wrap(`  it("${T}", ${body});\n  it.skip("sibling", ${body});`), red: undefined },
+      { id: "P7", label: "precision: the expect lives in a helper the case calls", source: wrap(`  const check = () => expect(1).toBe(1);\n  it("${T}", () => { check(); });`), red: undefined },
+    ];
+
+    const FOCUS_MUTANTS: readonly Mutant[] = [
+      { id: "F1", label: "sibling it.only", source: wrap(`  it("${T}", ${body});\n  it.only("sibling", ${body});`), red: "not-registered" },
+      { id: "F2", label: "sibling options { only: true }", source: wrap(`  it("${T}", ${body});\n  it("sibling", { only: true }, ${body});`), red: "not-registered" },
+      { id: "F3", label: "describe.only around a sibling suite", source: `describe("suite", () => {\n  it("${T}", ${body});\n});\ndescribe.only("other", () => {\n  it("x", ${body});\n});\n`, red: "not-registered" },
+      { id: "F4", label: "suite.only around a sibling suite", source: `describe("suite", () => {\n  it("${T}", ${body});\n});\nsuite.only("other", () => {\n  it("x", ${body});\n});\n`, red: "not-registered" },
+    ];
+
+    const outcomes = new Map<string, readonly string[]>();
+    const focusFailures = new Map<string, number | null>();
+    let batch: Run | undefined;
+
+    const pinFor = (mutant: Mutant): Pin => ({ file: `test/m-${mutant.id}.test.ts`, title: T, tier: "fixture pass" });
+    const rowFor = (mutant: Mutant): Row => ({ id: `row-${mutant.id}`, section: "tool-exposure", requirement: "q", status: "pinned", pins: [pinFor(mutant)] });
+
+    function audit(mutants: readonly Mutant[], dir: string, run: Run): void {
+      const real = realpathSync(dir);
+      for (const mutant of mutants) {
+        const locate: Locate = file => ({ absolute: join(real, file.replace(/^test\//u, "")), source: mutant.source });
+        outcomes.set(mutant.id, rowViolations(rowFor(mutant), run.list.cases, run.probe.records, locate, SCRATCH_GATE, ""));
+      }
+    }
+
+    beforeAll(() => {
+      const dir = join(scratchDir, "mutants");
+      mkdirSync(dir, { recursive: true });
+      for (const mutant of MUTANTS) writeFileSync(join(dir, `m-${mutant.id}.test.ts`), `${mutant.source}${SENTINEL}`);
+      batch = scratchRun(dir, MUTANTS.map(mutant => `m-${mutant.id}.test.ts`), false);
+      if (batch.list.status !== 0) throw new Error(`mutant collect-only run failed: ${batch.list.stderr.slice(-400)}`);
+      audit(MUTANTS, dir, batch);
+
+      const focusDir = join(scratchDir, "focus");
+      mkdirSync(focusDir, { recursive: true });
+      for (const mutant of FOCUS_MUTANTS) writeFileSync(join(focusDir, `m-${mutant.id}.test.ts`), `${mutant.source}${SENTINEL}`);
+      const focused = scratchRun(focusDir, FOCUS_MUTANTS.map(mutant => `m-${mutant.id}.test.ts`), true);
+      if (focused.list.status !== 0) throw new Error(`focus collect-only run (allowOnly true) failed: ${focused.list.stderr.slice(-400)}`);
+      audit(FOCUS_MUTANTS, focusDir, focused);
+
+      for (const mutant of FOCUS_MUTANTS) {
+        const soloDir = join(scratchDir, `only-${mutant.id}`);
+        mkdirSync(soloDir, { recursive: true });
+        writeFileSync(join(soloDir, `m-${mutant.id}.test.ts`), `${mutant.source}${SENTINEL}`);
+        const setup = writeProbeSetup(soloDir);
+        const config = writeScratchConfig(soloDir, setup, false);
+        const failing = vitestList(soloDir, soloDir, [`m-${mutant.id}.test.ts`], [`--config=${config}`, `--root=${soloDir}`]);
+        focusFailures.set(mutant.id, failing.status);
+      }
+    }, SPAWN_TIMEOUT_MS * 4 + 60_000);
+
+    it("freezes the mutant tables so an emptied table cannot register zero cases silently", () => {
+      expect(MUTANTS).toHaveLength(38);
+      expect(FOCUS_MUTANTS).toHaveLength(4);
+      expect(new Set([...MUTANTS, ...FOCUS_MUTANTS].map(mutant => mutant.id)).size).toBe(42);
     });
 
-    it("refuses a pinned row with no pin at all", () => {
-      expect(auditRow(row({ pins: [] }), readers(SOURCE))).toEqual([expect.stringContaining("pinned with no pin")]);
+    for (const mutant of [...MUTANTS, ...FOCUS_MUTANTS]) {
+      it(`${mutant.id} ${mutant.label}: ${mutant.red === undefined ? "stays green" : `goes red as [${mutant.red}] naming the row, with the right cause`}`, () => {
+        const violations = outcomes.get(mutant.id);
+        expect(violations, "mutant was not executed").toBeDefined();
+        if (mutant.red === undefined) {
+          expect(violations, `${mutant.id} must stay green`).toStrictEqual([]);
+          return;
+        }
+        const named = (violations ?? []).filter(line => line.startsWith(`row-${mutant.id}:`) && line.includes(`[${mutant.red}]`));
+        expect(named.length, `${mutant.id} must go red as [${mutant.red}] naming row-${mutant.id}; got ${JSON.stringify(violations)}`).toBeGreaterThan(0);
+        const text = named.join("\n");
+        if (mutant.red === "not-registered") {
+          expect(text, `${mutant.id}: a present-but-skipped case must not be blamed on a rename or deletion`).not.toContain("renamed, deleted");
+          expect(text).toContain("declares this title");
+        }
+        if (mutant.red === "no-such-case") {
+          expect(text, `${mutant.id}: an absent case must not be blamed on a skip`).not.toContain("skipped");
+          expect(text).toContain("renamed, deleted or commented out");
+        }
+        if (mutant.red === "assertion-not-reached") expect(text).toMatch(/did not start|without reaching a single expect/u);
+      });
+    }
+
+    it("a focused call in a pinned file fails the collect-only run under the gate's allowOnly:false (the gate owns focus, not a text search)", () => {
+      expect(FOCUS_MUTANTS.length).toBeGreaterThan(0);
+      for (const mutant of FOCUS_MUTANTS) {
+        const status = focusFailures.get(mutant.id);
+        expect(status, `${mutant.id} must run`).not.toBeUndefined();
+        expect(status, `${mutant.id} must fail the collect-only run under allowOnly:false`).not.toBe(0);
+      }
+    });
+
+    it("the vacuous S9 case really passes (the planted false assertion is never reached), so only the third leg can catch it", () => {
+      expect(batch, "beforeAll did not run").toBeDefined();
+      expect(batch?.probe.status, `mutant probe run failed: ${batch?.probe.stderr.slice(-400) ?? ""}`).toBe(0);
+      expect(batch?.list.cases.some(entry => entry.file.endsWith("m-S9.test.ts"))).toBe(true);
+      const record = batch?.probe.records.find(entry => entry.file.endsWith("m-S9.test.ts"));
+      expect(record?.calls).toBe(0);
     });
   });
 });
