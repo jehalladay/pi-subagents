@@ -74,28 +74,71 @@ export const READ_ONLY_METHODS = Object.freeze(['runs.status', 'attempts.list', 
 const GLOBAL_VALUE_FLAGS = new Set(['-C', '--directory', '--state-dir', '--config', '--request-id']);
 const TWO_WORD_COMMANDS = new Set(['run', 'attempt', 'work', 'config', 'executor', 'skill']);
 const HALTED_RUN_STATES = new Set(['stopped', 'paused']);
-const CREDENTIAL = /\bbearer\s+[A-Za-z0-9._~+/=-]{6,}|"authorization"\s*:|\bauthorization\s*[:=]\s*\S/i;
 const SHA256 = /^[a-f0-9]{64}$/;
-/** Controls, line and paragraph separators, soft hyphen and default-ignorables that can split a credential token. */
-const SEPARATOR_RANGES = Object.freeze([[0x0, 0x20], [0x7f, 0xa0], [0xad, 0xad], [0x34f, 0x34f], [0x61c, 0x61c], [0x115f, 0x1160], [0x17b4, 0x17b5], [0x180b, 0x180f], [0x1680, 0x1680], [0x2000, 0x200f], [0x2028, 0x202f], [0x205f, 0x206f], [0x3000, 0x3000], [0x3164, 0x3164], [0xfe00, 0xfe0f], [0xfeff, 0xfeff], [0xffa0, 0xffa0]]);
-const SEPARATORS = new RegExp(`[${SEPARATOR_RANGES.map(([from, to]) => `${String.fromCodePoint(from)}-${String.fromCodePoint(to)}`).join('')}]+`, 'g');
 
-/** Every string in the value, keys included, each normalised so each separator run reads as one space (deletion never precedes the check). */
-function credentialTexts(value, out) {
-  if (typeof value === 'string') out.push(value.replace(SEPARATORS, ' '));
+// C6 credential refusal (wb-752.3 respin 3: gate-1 07:30Z U1, U2, U4 and U7; owner rulings 07:4xZ). ONE refusal-only
+// reading of the raw text: nothing is normalised, deleted or rewritten before it, and nothing it reads is displayed, so
+// an over-refusal costs an honest exit 2, never a leak. A separate normalise-then-match reading would be strictly
+// contained in this one (each separator run it reads as one space is a run this reading accepts as such), so its line
+// could never be falsified; there is none. The vocabulary is the shared redactor's (src/workbench/redaction.ts SCHEMES,
+// KEY_PREFIXES, ASSIGNMENT_KEYS and SECRET_FIELD), spelled out here because this module imports nothing.
+// Correction of record (respin 3): the respin-2 comment called its enumerated SEPARATOR_RANGES "default-ignorables", but
+// that BMP list missed 4117 of the 4174 Default_Ignorable_Code_Point code points (U+FFF0-U+FFF8, U+1BCA0-U+1BCA3,
+// U+1D173-U+1D17A, U+E0000-U+E0FFF) and read an escape sequence as ESC followed by visible text. The property is used now.
+/** A terminated ANSI CSI or string sequence (OSC, DCS, SOS, PM, APC), read as ONE unit as trunk UNSAFE_UNIT reads it. */
+const ESCAPE_SEQUENCE = String.raw`\x1b\[[0-?]*[ -/]*[@-~]|\x1b[\]P^X_][^\x07\x1b]*(?:\x07|\x1b\\)`;
+/** Controls, lone surrogates and every default-ignorable code point (the property, astral ones included). */
+const INVISIBLE = String.raw`\p{Cc}\p{Cs}\p{Default_Ignorable_Code_Point}`;
+/** Every space, line separator and paragraph separator. */
+const SPACING = String.raw`\p{Zs}\p{Zl}\p{Zp}`;
+/** Glue: what may sit between the letters of a keyword or the characters of a token without splitting it visibly. */
+const GLUE = `(?:${ESCAPE_SEQUENCE}|[${INVISIBLE}])*`;
+/** One separator unit: the trunk UNSAFE_UNIT set (an escape sequence as one unit) and every spacing code point. */
+const SEPARATOR = `(?:${ESCAPE_SEQUENCE}|[${INVISIBLE}${SPACING}])`;
+const SCHEMES = Object.freeze(['bearer', 'basic']);
+const KEY_PREFIXES = Object.freeze(['sk-ant-', 'sk-proj-', 'ghp_', 'github_pat_']);
+/** The shared ASSIGNMENT_KEYS (each [_-]? spelled out) and SECRET_FIELD's authorization: assignment keys and field names. */
+const SECRET_NAMES = Object.freeze(['authorization', 'api_key', 'api-key', 'apikey', 'access_token', 'access-token', 'accesstoken', 'refresh_token', 'refresh-token', 'refreshtoken', 'password', 'secret', 'aws_secret_access_key', 'aws_session_token']);
+/** The words as alternatives with GLUE between their characters (letters, '-' and '_' only: none is special in a pattern). */
+const glued = (words) => words.map((word) => [...word].join(GLUE)).join('|');
+/**
+ * Three shapes, case-insensitive: a scheme, a separator run and a token of at least six characters, none of them a
+ * separator or one of , ; " ' (the scheme not after a letter or digit, unless an escape sequence ends there); a vendor key
+ * prefix and one key character; a secret name, an optional quote, separators and an assignment (= or :). The assignment
+ * needs no value after it: in the JSON text a value or a closing quote always follows one.
+ */
+const CREDENTIAL = new RegExp(
+  [
+    `(?:${ESCAPE_SEQUENCE}|(?<![A-Za-z0-9]))(?:${glued(SCHEMES)})${SEPARATOR}+(?:[^${INVISIBLE}${SPACING},;"']${GLUE}){6,}`,
+    `(?:${glued(KEY_PREFIXES)})${GLUE}[A-Za-z0-9_-]`,
+    `(?:${glued(SECRET_NAMES)})["']?${SEPARATOR}*[:=]`,
+  ].join('|'),
+  'iu',
+);
+/**
+ * An object key naming a secret field, whatever its value (the shared SECRET_FIELD reading). Only separators AFTER the
+ * name need reading here: in the JSON text a key is followed by its quote and colon, so a name with separators before it
+ * already reads as an assignment there.
+ */
+const SECRET_FIELD = new RegExp(`^(?:${glued(SECRET_NAMES)})${SEPARATOR}*$`, 'iu');
+
+/** Every string in the value as raw text: the values, and the keys (which are also judged as field names). */
+function credentialTexts(value, out = { values: [], keys: [] }) {
+  if (typeof value === 'string') out.values.push(value);
   else if (Array.isArray(value)) for (const item of value) credentialTexts(item, out);
   else if (value && typeof value === 'object') {
     for (const [key, item] of Object.entries(value)) {
-      out.push(key.replace(SEPARATORS, ' '));
+      out.keys.push(key);
       credentialTexts(item, out);
     }
   }
   return out;
 }
 
+/** The JSON text (it alone joins adjacent strings), each value and each key, read raw; then each key as a field name. */
 function carriesCredential(input) {
-  if (CREDENTIAL.test(JSON.stringify(input))) return true;
-  return credentialTexts(input, []).some((text) => CREDENTIAL.test(text));
+  const { values, keys } = credentialTexts(input);
+  return [JSON.stringify(input), ...values, ...keys].some((text) => CREDENTIAL.test(text)) || keys.some((key) => SECRET_FIELD.test(key));
 }
 
 /** The Furnace verb of a recorded argv, found after the global flags and their values. */
@@ -363,7 +406,7 @@ export function assessLive(evidence) {
 
 /** Build the evidence-grade receipt. Refuses (throws, without echoing the value) any input carrying a credential. */
 export function buildReceipt(input) {
-  if (carriesCredential(input)) throw new Error('receipt input carries an Authorization credential; refusing to record it');
+  if (carriesCredential(input)) throw new Error('receipt input carries a credential; refusing to record it');
   if (input.toolchain && typeof input.toolchain === 'object' && Object.hasOwn(input.toolchain, 'furnace')) {
     throw new Error('the furnace binary identity comes from the inspect envelope (evidence.binary), never from the toolchain');
   }

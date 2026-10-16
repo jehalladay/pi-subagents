@@ -298,6 +298,46 @@ const BUILD = {
   toolchain: { sdk: "@furnace/sdk@0.1.0", producer: "0.1.0" },
 };
 
+// Respin 3 (gate-1 g2-gate-r2 07:30Z U1/U2/U4/U7, owner rulings 07:4xZ). Seat rule F11: every invisible or control code
+// point in the respin-3 probes below is built with String.fromCodePoint; every token and value is synthetic.
+const cp = (code: number): string => String.fromCodePoint(code);
+/** A default-ignorable code point, by the Unicode property itself, never by a list. */
+const DEFAULT_IGNORABLE = /^\p{Default_Ignorable_Code_Point}$/u;
+/** A code point the separator unit names: default-ignorable, control, lone surrogate, space, line or paragraph separator. */
+const SEPARATOR_CODE_POINT = /^[\p{Default_Ignorable_Code_Point}\p{Cc}\p{Cs}\p{Zs}\p{Zl}\p{Zp}]$/u;
+/** A probe in ASCII for failure output: each code point outside printable ASCII shows as <U+XXXX>. */
+const shown = (text: string): string =>
+  [...text].map((character) => (/^[ -~]$/.test(character) ? character : `<U+${(character.codePointAt(0) ?? 0).toString(16).toUpperCase()}>`)).join("");
+/** Where a probe sits in the builder input: by default one string value of the evidence. */
+type Placement = (probe: string) => Record<string, unknown>;
+const inNote: Placement = (probe) => ({ evidence: { ...good(), note: probe } });
+
+/** The probes the builder RECORDED instead of refusing (shown in ASCII); a refusal must not name the secret either. */
+function unrefused(probes: readonly string[], secret: string, place: Placement = inNote): string[] {
+  const missed: string[] = [];
+  for (const probe of probes) {
+    let refusal: unknown;
+    try {
+      buildReceipt({ ...BUILD, ...place(probe) });
+    } catch (error) {
+      refusal = error;
+    }
+    if (!(refusal instanceof Error) || !/credential; refusing to record it$/.test(refusal.message)) missed.push(shown(probe));
+    else expect(refusal.message).not.toContain(secret);
+  }
+  return missed;
+}
+
+/** True when the builder records evidence carrying this text (no refusal of any kind). */
+function recorded(note: string): boolean {
+  try {
+    buildReceipt({ ...BUILD, evidence: { ...good(), note } });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 describe("wb-752.3 VC-4 live Furnace receipt: assessor", () => {
   it("passes evidence that satisfies every criterion: realised, no findings, zero control calls, exit 0", () => {
     const assessment = assessLive(good());
@@ -547,6 +587,95 @@ describe("wb-752.3 VC-4 live Furnace receipt: assessor", () => {
     expect(() => buildReceipt({ ...BUILD, evidence: { ...good(), nested: { list: [`Bearer${sep(0x85)}${token}`] } } as Evidence })).toThrow();
     expect(() => buildReceipt({ ...BUILD, evidence: { ...good(), note: `Bearer${sep(0xad)}word and plain text` } as Evidence })).not.toThrow();
     expect(() => buildReceipt({ ...BUILD, evidence: { ...good(), note: "nothing secret here, bearer of no news" } as Evidence })).not.toThrow();
+  });
+
+  it("C6 falsifier (respin 3, U1): ANY default-ignorable code point, astral ones included, separates a bare Bearer from its token, and an escape sequence is one separator unit", () => {
+    const token = "SYNTHETICTOKEN0123456789";
+    const ESC = cp(0x1b);
+    // The six default-ignorables and the two SGR shapes gate-1 measured unrefused at 0f69fc5 and on its landing merge.
+    const measured = [0xe0020, 0x1d173, 0x1bca0, 0xe0001, 0xe007f, 0xfff0].map((code) => `Bearer${cp(code)}${token}`);
+    expect(unrefused([...measured, `${ESC}[0mBearer ${token}`, `Bearer${ESC}[0m${token}`], token)).toEqual([]);
+    // An escape sequence whose parameters hold a delimiter is still ONE separator unit, never ESC and then visible text.
+    expect(unrefused([`Bearer${ESC}[1;31m${token}`], token)).toEqual([]);
+    // The property, never a list: every Default_Ignorable_Code_Point code point (4174 at Unicode 17), every control, every
+    // space, line or paragraph separator and every lone surrogate is a separator (the trunk UNSAFE_UNIT set plus spacing).
+    // The refusal precedes every judgement, so a bare evidence record carries each probe (any other error is a miss).
+    const units: number[] = [];
+    for (let code = 0; code <= 0x10ffff; code++) if (SEPARATOR_CODE_POINT.test(cp(code))) units.push(code);
+    expect(units.filter((code) => DEFAULT_IGNORABLE.test(cp(code))).length).toBeGreaterThan(4000);
+    expect(units.length).toBeGreaterThan(6000);
+    const missed = unrefused(
+      units.map((code) => `Bearer${cp(code)}${token}`),
+      token,
+      (probe) => ({ evidence: { note: probe } }),
+    );
+    expect(missed.length, missed.slice(0, 12).join(" ")).toBe(0);
+  });
+
+  it("C6 falsifier (respin 3, U2): an invisible, control or escape glued INSIDE a scheme, key name or token is still refused (a refusal-only tolerant reading of the raw text); prose that merely resembles one is still recorded", () => {
+    const [NUL, BEL, LF, ESC, C1, ZWSP, RLO, BOM, LONE] = [0x00, 0x07, 0x0a, 0x1b, 0x80, 0x200b, 0x202e, 0xfeff, 0xd800].map(cp);
+    const probes = [
+      `token: Bear${ZWSP}er GLUEDSCHEMEONE`, // inside the scheme (the 952 corpus S4)
+      `x${LF}Bear${BEL}er GLUEDSCHEMETWO`, // a separator before it, a control inside it (M1)
+      `x${ZWSP}Bea${ZWSP}rer GLUEDSCHEMETHREE`, // one unit both before and inside it (X1)
+      `x${BEL}Bear${BEL}er${BEL}GLUEDSCHEMEFOUR`, // before, inside and after it (X4)
+      `x${BOM}Bea${BOM}rer${BOM}GLUEDSCHEMEFIVE`, // inside it and as its space, no Authorization key before it (X3)
+      `Bea${C1}rer GLUEDSCHEMESIX`, // a C1 control inside a bare scheme
+      `Bear${ESC}[0mer GLUEDSCHEMESEVEN`, // a CSI sequence inside the scheme
+      `Bea${ESC}]0;t${BEL}rer GLUEDSCHEMEEIGHT`, // an OSC string sequence inside the scheme
+      `x${RLO}Bearer SEC${RLO}GLUEDTOKENNINE`, // inside the token (X5)
+      `Bearer SEC${LONE}GLUEDTOKENTEN`, // a lone surrogate inside the token
+      `Bearer SEC${NUL}GLUEDTOKENELEVEN`, // NUL inside the token
+      `Author${ZWSP}ization: GLUEDKEYTWELVE`, // inside the authorization key name
+    ];
+    expect(unrefused(probes, "GLUED")).toEqual([]);
+    const prose = [`Bearer${cp(0xad)}word and plain text`, "nothing secret here, bearer of no news", "the pallbearer carried the casket", `soft${cp(0xad)}hyphenated prose about a bearer`];
+    for (const text of prose) expect(recorded(text), shown(text)).toBe(true);
+  });
+
+  it("C6 falsifier (respin 3, U4): a credential in an object KEY is refused although the JSON text escapes its separator (the key walk is load-bearing; gate mutant M1 dropped it)", () => {
+    const token = "sk-live-0123456789abcdef";
+    const keyed: Placement = (key) => ({ evidence: { ...good(), keyed: { [key]: 1 } } });
+    expect(unrefused([`Bearer${cp(0x09)}${token}`, `Bearer${cp(0x0a)}${token}`], token, keyed)).toEqual([]);
+  });
+
+  it("C6 falsifier (respin 3, U7): the shared redactor's shapes are refused as well (src/workbench/redaction.ts SCHEMES, KEY_PREFIXES, ASSIGNMENT_KEYS, SECRET_FIELD), plain and glued; prose that names them is still recorded", () => {
+    const value = "SYNTHETICVALUE0123";
+    const [NUL, BEL, ZWSP, LRM, RLM, WJ, BOM] = [0x00, 0x07, 0x200b, 0x200e, 0x200f, 0x2060, 0xfeff].map(cp);
+    const keys = ["api_key", "api-key", "apikey", "access_token", "access-token", "accesstoken", "refresh_token", "refresh-token", "refreshtoken", "password", "secret", "aws_secret_access_key", "aws_session_token"];
+    const probes = [
+      `Basic ${value}`, // a bare Basic value
+      `key sk-ant-${value}`,
+      `sk-proj-${value}`,
+      `ghp_${value}`,
+      `github_pat_${value}`,
+      ...keys.map((key) => `${key}=${value}`),
+      `api_key: ${value}`,
+      `password = ${value}`,
+      `{'password': '${value}'}`,
+      // The same classes glued (952 corpus X8, Z2, Z3, Z1, Z4, K1, K5, K7).
+      `x${NUL}Ba${NUL}sic ${value}`,
+      `see gh${LRM}p_${value}`,
+      `sk-${RLM}ant-${value}`,
+      `sk-ant-${ZWSP}${value}`,
+      `github${BOM}_pat_${value}`,
+      `pass${BEL}word=${value}`,
+      `api${WJ}_key=${value}`,
+      `pass${ZWSP}word="two ${value}"`,
+    ];
+    expect(unrefused(probes, value)).toEqual([]);
+    // A field named for a secret, whatever its value. A control inside or after the name is escaped in the JSON text, so
+    // only the key reading sees that name.
+    const field: Placement = (key) => ({ evidence: { ...good(), settings: { [key]: value } } });
+    expect(unrefused(["password", "api_key", "authorization", `pass${BEL}word`, `password${BEL}`], value, field)).toEqual([]);
+    // A field whose name ENDS in a secret name: only the JSON text joins that name to its quote and colon.
+    expect(unrefused(["client_secret", "db_password"], value, field)).toEqual([]);
+    // An assignment flag split from its value across two adjacent strings (an argv) is refused too.
+    expect(unrefused(["password:"], value, (flag) => ({ evidence: { ...good(), argv: ["--header", flag, value] } }))).toEqual([]);
+    const prose = ["a password is required", "the secret sauce", "basic usage notes", "Bearer word", "a setting named basicAuthFallback", "task-antenna and ghp", "keys start with the sk-ant- prefix"];
+    for (const text of prose) expect(recorded(text), text).toBe(true);
+    // A field holding names only is recorded: a name alone is not a secret.
+    expect(() => buildReceipt({ ...BUILD, evidence: { ...good(), secret_env: ["SYNTHETIC_API_KEY"] } })).not.toThrow();
   });
 
   it("names the contract rules and steps exactly so a quiet rename is caught", () => {
