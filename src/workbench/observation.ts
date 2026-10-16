@@ -53,6 +53,8 @@ export interface Relation {
   kind: RelationKind;
   provenance: { source: string; observedAt?: string; nativeConfirmationRef?: string };
 }
+/** One bounded relation page; truncated is true only when a further matching edge exists past it. */
+export interface RelationPage { relations: Relation[]; examined: number; truncated: boolean; limitApplied: number }
 export interface ObservedNode {
   key: string;
   nativeRef: NativeRef;
@@ -235,6 +237,39 @@ function shiftContribution(record: AggregateRecord, before: Contribution, after:
     if (after.endedAt !== undefined) record.ends.add(after.endedAt);
     if (before.endedAt !== undefined) record.ends.remove(before.endedAt);
   }
+}
+
+/** The relation indexes one page reads, typed read-only so the walk cannot write them. */
+interface RelationIndexes {
+  edges: ReadonlyMap<string, Relation>;
+  outgoing: ReadonlyMap<string, ReadonlySet<string>>;
+  incoming: ReadonlyMap<string, ReadonlySet<string>>;
+  edgesByScope: ReadonlyMap<string, ReadonlySet<string>>;
+}
+/** The one walk behind relations() and relationsPage(): outgoing for from, incoming for to, the scope's edges otherwise.
+ * A module function rather than a method, so each read stays a single call on the projection surface. It looks one
+ * matching edge past the page and stops there; a bucket's size never stands in for that, because the exact from/to
+ * filter can exclude bucket entries. A cross-scope key learns nothing: no rows and examined 0. */
+function walkRelations(indexes: RelationIndexes, maxQuery: number, input: {scope:ObservationScope;from?:string;to?:string;limit?:number}): RelationPage {
+  const limit=Math.min(input.limit ?? maxQuery,maxQuery);
+  if (!Number.isSafeInteger(limit) || limit < 1) throw new Error("Invalid relation query limit.");
+  const prefix=`[${JSON.stringify(input.scope.workspace)},${JSON.stringify(input.scope.principal)},`;
+  const relations: Relation[]=[];
+  if(input.from && !input.from.startsWith(prefix) || input.to && !input.to.startsWith(prefix)) return {relations,examined:0,truncated:false,limitApplied:limit};
+  const source=input.from ? indexes.outgoing.get(input.from) : input.to ? indexes.incoming.get(input.to) : indexes.edgesByScope.get(scopeOf(input.scope));
+  let examined=0;
+  let truncated=false;
+  for (const id of source ?? []) {
+    const edge=indexes.edges.get(id);
+    if (!edge) continue;
+    examined++;
+    const scope=JSON.parse(edge.from) as string[];
+    if (scope[0] !== input.scope.workspace || scope[1] !== input.scope.principal) continue;
+    if (input.from && edge.from !== input.from || input.to && edge.to !== input.to) continue;
+    if (relations.length >= limit) { truncated=true; break; }
+    relations.push({...edge,provenance:{...edge.provenance}});
+  }
+  return {relations,examined,truncated,limitApplied:limit};
 }
 
 /** One cache per observer. It never polls, calls a producer, or cancels one. */
@@ -622,22 +657,12 @@ export class ObservationProjection {
   }
 
   relations(input: {scope:ObservationScope;from?:string;to?:string;limit?:number}): Relation[] {
-    const limit=Math.min(input.limit ?? this.limits.maxQuery,this.limits.maxQuery);
-    if (!Number.isSafeInteger(limit) || limit < 1) throw new Error("Invalid relation query limit.");
-    if(input.from && !input.from.startsWith(`[${JSON.stringify(input.scope.workspace)},${JSON.stringify(input.scope.principal)},`) ||
-      input.to && !input.to.startsWith(`[${JSON.stringify(input.scope.workspace)},${JSON.stringify(input.scope.principal)},`)) return [];
-    const source=input.from ? this.outgoing.get(input.from) : input.to ? this.incoming.get(input.to) : this.edgesByScope.get(scopeOf(input.scope));
-    const rows: Relation[]=[];
-    for (const id of source ?? []) {
-      const edge=this.edges.get(id);
-      if (!edge) continue;
-      const scope=JSON.parse(edge.from) as string[];
-      if (scope[0] !== input.scope.workspace || scope[1] !== input.scope.principal) continue;
-      if (input.from && edge.from !== input.from || input.to && edge.to !== input.to) continue;
-      rows.push({...edge,provenance:{...edge.provenance}});
-      if (rows.length >= limit) break;
-    }
-    return rows;
+    return walkRelations({edges:this.edges,outgoing:this.outgoing,incoming:this.incoming,edgesByScope:this.edgesByScope},this.limits.maxQuery,input).relations;
+  }
+
+  /** Same rows as relations() plus whether a further matching edge exists past the page. */
+  relationsPage(input: {scope:ObservationScope;from?:string;to?:string;limit?:number}): RelationPage {
+    return walkRelations({edges:this.edges,outgoing:this.outgoing,incoming:this.incoming,edgesByScope:this.edgesByScope},this.limits.maxQuery,input);
   }
 
   private viewportGroup(scope: ObservationScope, invocationId: string): string {
