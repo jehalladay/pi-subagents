@@ -30,13 +30,15 @@
  * replies and settlement only; a type handled silently is outside it. R8's kill is the registry's JSON boundary
  * (capability-registry.ts); the runtime's own node-output boundary is pinned nowhere here (F2: deferred groom
  * bundle, owner 07:16Z). Malformed non-call frames (e.g. a progress frame without iterable entries) are outside
- * this verb census; the measured listener throw is reported to the owner lane on the bead, not rowed here.
+ * this verb census: their listener hardening is the owner's wb-zin (landed 3c09587) with its own test file
+ * (test/workflow-progress-frame-hardening.test.ts), so they are not rowed here.
  *
- * KNOWN DEFECT rows (fault-tier convention: a measured row pinning the signature plus an it.fails row for the
- * required behaviour - never a fabricated green): a malformed AGENT frame gets no reply and escapes the real host
- * listener as an unhandled TypeError rejection (gate F1; fix filed owner-side as wb-3l9). Both U2a rows flip at
- * wb-3l9's landing and its lander flips them same-commit. Host rejections are collected by a test-scoped
- * unhandledRejection listener that is always removed (vitest 4 defers to a user listener while one is present).
+ * LANDED CURE (U2a): a malformed AGENT frame used to get no reply and escape the real host listener as an unhandled
+ * TypeError rejection (gate F1); owner commit b5a37c4 (wb-3l9: isAgentCallPayload guard + MALFORMED_AGENT_RPC typed
+ * refusal) cured it, so the measured-defect row is retired and the required-behaviour row is a plain it (verify-at-cut
+ * flip, gate-measured 20/20 on the trunk merge; reverting b5a37c4's runtime.ts hunk reddens exactly that row). Host
+ * rejections are collected by a test-scoped unhandledRejection listener that is always removed (vitest 4 defers to a
+ * user listener while one is present).
  *
  * SCOPE EXCLUSION (U4b, named): the bead clause "refusal text routes through the shared sanitizers (two-pass order)"
  * is NOT met and NOT asserted. Row O1 records the measured truth: the unknown-verb refusal echoes the crafted method
@@ -666,14 +668,6 @@ describe("W19 slice 2: the host-accepted RPC surface, enumerated behaviourally t
 const MALFORMED: ReadonlyArray<readonly [string, unknown]> = [
   ["null", null], ["number", 7], ["string", "x"], ["array", []], ["empty object", {}], ["non-string prompt", { prompt: 42 }],
 ];
-const UNDEFINED_SPLIT: RejectionSignature = { name: "TypeError", message: "Cannot read properties of undefined (reading 'split')", innermost: "derivedLabel", viaHandleAgent: true };
-/** The gate-measured (P-f) and seat-re-measured signature of each malformed agent frame at this tip. */
-const AGENT_DEFECT: Readonly<Record<string, RejectionSignature>> = {
-  null: { name: "TypeError", message: "Cannot read properties of null (reading 'gate')", innermost: "handleAgent", viaHandleAgent: true },
-  number: UNDEFINED_SPLIT, string: UNDEFINED_SPLIT, array: UNDEFINED_SPLIT, "empty object": UNDEFINED_SPLIT,
-  "non-string prompt": { name: "TypeError", message: "prompt.split is not a function", innermost: "derivedLabel", viaHandleAgent: true },
-};
-
 /** Inject each malformed agent frame on its own and record its reply shape and the host rejections it raised. */
 async function malformedAgentFrames(rg: Rig): Promise<Array<{ label: string; reply: Shape | "no reply"; rejections: Array<RejectionSignature | string> }>> {
   return await capturingRejections(async rejections => {
@@ -722,21 +716,34 @@ describe("W19 slice 2: malformed frames on every exposed verb (U2)", () => {
     });
   });
 
-  it("U2a KNOWN DEFECT (measured; F1 -> wb-3l9): each malformed agent frame gets NO reply, spawns nothing, and escapes the real host listener as one unhandled TypeError rejection", async () => {
-    const rg = rig(["fixture:read"]);
-    const rows = await malformedAgentFrames(rg);
-    expect(rows).toEqual(MALFORMED.map(([label]) => ({ label, reply: "no reply", rejections: [AGENT_DEFECT[label]] })));
-    expect(rg.spawnAgent.mock.calls.map(([request]) => request.prompt)).toEqual([PARK]);
-  });
-
-  // Flips green at wb-3l9's landing: its lander turns this into a plain it and retires the measured row above, same commit.
-  it.fails("U2a KNOWN DEFECT (required behaviour): each malformed agent frame must get a fatal typed validation refusal, spawn nothing and raise no host rejection", async () => {
+  it("U2a each malformed agent frame must get a fatal typed validation refusal, spawn nothing and raise no host rejection", async () => {
     const rg = rig(["fixture:read"]);
     const rows = await malformedAgentFrames(rg);
     expect(rows).toEqual(MALFORMED.map(([label]) => ({
       label, reply: { ok: false, fatal: true, error: "text", typed: "CapabilityError:validation", value: "none" }, rejections: [],
     })));
     expect(rg.spawnAgent.mock.calls.map(([request]) => request.prompt)).toEqual([PARK]);
+  });
+});
+
+describe("W19 slice 2: the census input tables are non-empty (R2 E1-E4; an emptied table leaves every row above vacuously green)", () => {
+  it("E1 the malformed-payload table holds the six named payload classes", () => {
+    expect(MALFORMED.map(([label]) => label)).toEqual(["null", "number", "string", "array", "empty object", "non-string prompt"]);
+  });
+
+  it("E2 the non-string method table holds all eleven named method shapes", () => {
+    expect(NON_STRING_METHODS.map(([label]) => label)).toEqual(["missing", "null", "0", "7", "true", "false", "[]", '["agent"]', '["node","workflow"]', "{}", '{"method":"node"}']);
+  });
+
+  it("E3 the hostile verb list is non-empty, duplicate-free and holds no registered verb", () => {
+    expect(HOSTILE_VERBS.length).toBeGreaterThan(100);
+    expect(new Set(HOSTILE_VERBS).size).toBe(HOSTILE_VERBS.length);
+    expect(HOSTILE_VERBS.filter(verb => (RPC_VERBS as readonly string[]).includes(verb))).toEqual([]);
+  });
+
+  it("E4 the near-miss table holds the two blanks plus twelve spellings of each registered verb", () => {
+    expect(NEAR_MISSES).toHaveLength(2 + RPC_VERBS.length * 12);
+    expect(NEAR_MISSES.filter(spelling => (RPC_VERBS as readonly string[]).includes(spelling))).toEqual([]);
   });
 });
 
