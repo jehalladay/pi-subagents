@@ -3,13 +3,14 @@
 // Run after `npm run build`, outside the default gate: `forge run reducer-selector-bench`, or
 // `node qa/workbench/reducer-selector-bench.mjs`. The fixture is the wb-9x5.1 one, imported from
 // ./grouped-fixture.mjs and never forked. ONE JSON receipt line (contract workbench.reducer-selector/v1)
-// is written to $W21_REDUCER_RECEIPT when set, printed, and only then is the exit code set:
+// is printed FIRST, then written to $W21_REDUCER_RECEIPT when set, and only then is the exit code set:
 //   0  the W21 shape was measured and no judged series is over its bound
 //   1  the W21 shape was measured but a finding stands: a selector p95 over 20 ms, a full 100,000-event
 //      fold on a redraw, or a redraw cadence over 4 Hz. Recorded honestly, never tuned away.
 //   2  the measurement is not the W21 claim (fixture shape, a truncated projection, updates not applied,
-//      a series with no samples, no redraws)
-//   3  nothing could be measured (an exception, reported on stderr; no receipt)
+//      a series with no samples, a non-positive timing, no redraws)
+//   3  nothing could be measured (an exception, reported on stderr; no receipt), or the receipt file could
+//      not be written (reported on stderr; the receipt is already on stdout, never a silent exit 1)
 // The revision comes from $W21_REVISION (else "working-tree"). $W21_SEED, $W21_NODES, $W21_DEPTH and
 // $W21_TICKS override the fixture; an override below the W21 shape is still measured and exits 2.
 //
@@ -366,6 +367,25 @@ const versionOf = path => {
   }
 };
 
+/**
+ * Prints the receipt line FIRST, then writes the same line to the optional receipt file, and only then returns the exit
+ * code. A failed write is reported on stderr and returns 3 with the receipt already on stdout; it never surfaces as the
+ * over-target 1 or as a pass (one-liner batch item (5), bound onto wb-9x5.15 by name; the wb-9x5.12 bench shape).
+ */
+export function publishReceipt(receipt, {path, log = console.log, logError = console.error, writeFile = writeFileSync} = {}) {
+  const line = JSON.stringify(receipt);
+  log(line);
+  if (path) {
+    try {
+      writeFile(path, `${line}\n`);
+    } catch (error) {
+      logError(JSON.stringify({benchmark: 'reducer-selector-grouped-10k', error: 'receipt-write-failed', path, detail: error instanceof Error ? error.message : String(error)}));
+      return 3;
+    }
+  }
+  return receipt.exitCode;
+}
+
 async function main() {
   const {initialInspectorState, layoutInspector, reduceInspectorKey} = await import('../../dist/ui/workflow-inspector.js');
   const {ObservationProjection} = await import('../../dist/workbench/observation.js');
@@ -406,7 +426,5 @@ if (process.argv[1] !== undefined && import.meta.url === pathToFileURL(process.a
     console.error(JSON.stringify({benchmark: 'reducer-selector-grouped-10k', measured: false, error: error instanceof Error ? error.stack ?? error.message : String(error)}));
     process.exit(3);
   }
-  if (process.env.W21_REDUCER_RECEIPT) writeFileSync(process.env.W21_REDUCER_RECEIPT, `${JSON.stringify(receipt)}\n`);
-  console.log(JSON.stringify(receipt));
-  process.exitCode = receipt.exitCode;
+  process.exitCode = publishReceipt(receipt, {path: process.env.W21_REDUCER_RECEIPT});
 }

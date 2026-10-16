@@ -3,7 +3,8 @@
  * This guard checks receipt completeness, determinism of the measured path, the fold falsifier, the exit
  * semantics, and that src/ stays untouched. It never asserts a measured latency value.
  */
-import { readdirSync, readFileSync } from "node:fs";
+import { mkdtempSync, readdirSync, readFileSync, rmSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import {
@@ -19,6 +20,7 @@ import {
   BANDS,
   distribution,
   FOLD_THRESHOLD_EVENTS,
+  publishReceipt,
   REDRAW_CAP_LABEL,
   REDRAW_MAX_HZ,
   REDUCER_SELECTOR_CONTRACT,
@@ -449,12 +451,15 @@ describe("W21 reducer/selector determinism and fixture reuse (C5)", () => {
   it("prints the receipt, writes it when asked, and sets the exit code only after both", () => {
     const text = readRepo("qa/workbench/reducer-selector-bench.mjs");
     expect(text).toMatch(/W21_REDUCER_RECEIPT/);
-    const written = text.indexOf("writeFileSync(process.env.W21_REDUCER_RECEIPT");
-    const printed = text.indexOf("console.log(JSON.stringify(receipt))");
-    const exit = text.indexOf("process.exitCode = receipt.exitCode");
-    expect(written).toBeGreaterThan(-1);
-    expect(printed).toBeGreaterThan(written);
-    expect(exit).toBeGreaterThan(printed);
+    // One-liner batch item (5), bound onto wb-9x5.15 by name: the receipt line is printed BEFORE the file write
+    // (the write-before-print order this pin held at trunk :384 flips here, in the same commit as the behaviour).
+    const printed = text.indexOf("log(line);");
+    const written = text.indexOf("writeFile(path, ");
+    const exit = text.indexOf("process.exitCode = publishReceipt(receipt, {path: process.env.W21_REDUCER_RECEIPT});");
+    expect(printed).toBeGreaterThan(-1);
+    expect(written).toBeGreaterThan(printed);
+    expect(exit).toBeGreaterThan(written);
+    expect(text).not.toMatch(/writeFileSync\s*\(/);
   });
 
   it("leaves the existing bench, the fixture semantics and the perf test files as they were", () => {
@@ -646,7 +651,7 @@ describe("W21-D2 counted read methods: one guard case per method (wb-9x5.15, kil
   }, 60_000);
 });
 
-describe("W21-D2 timed distributions: positivity and honest emptiness (wb-9x5.15, kills K5/K12/K14)", () => {
+describe("W21-D2 timed distributions: positivity and honest emptiness (wb-9x5.15, kills K5; K12/K14 die under the known-duration stubs below)", () => {
   const timed = (receipt: Receipt): Array<[string, Distribution]> => [
     ["reducer.all", receipt.reducer.all],
     ["reducer.firstTenth", receipt.reducer.firstTenth],
@@ -713,5 +718,184 @@ describe("W21-D2 timed distributions: positivity and honest emptiness (wb-9x5.15
 
   it("keeps a clean realised receipt at exit 0", () => {
     expect(assess(realisedReceipt()).exitCode).toBe(0);
+  }, 120_000);
+});
+
+/**
+ * Busy-waits at least `ms` on the monotonic clock. A known-duration stub: any clock that wraps the stubbed call must
+ * measure at least this long on any host load, so the asserted bound is the stub's own duration, never a latency target.
+ */
+const spin = (ms: number): void => {
+  const start = performance.now();
+  while (performance.now() - start < ms) {
+    // busy-wait: the measured span must contain this whole loop
+  }
+};
+const KNOWN_FIXTURE = { seed: 3, nodes: 200, depth: 5, ticks: 4 };
+const bandName = (band: Band): string => `${band.minChanges}-${band.maxChanges}`;
+
+describe("W21-D2 known-duration falsifiers: each clock wraps exactly the timed call (wb-9x5.15 respin, kills K12/K14)", () => {
+  it("P1: times layoutInspector inside the selector clock, so a 1 ms layout stub puts every view's selector p50 at >= 1 ms", () => {
+    const slowLayout: Inspector = {
+      ...inspector,
+      layoutInspector: (model, state, size) => {
+        spin(1);
+        return layoutInspector(model, state, size);
+      },
+    };
+    const receipt = run({ Projection: ObservationProjection, inspector: slowLayout, fixture: build(KNOWN_FIXTURE), host: HOST });
+    expect(receipt.folds.redraws).toBeGreaterThan(0);
+    expect(receipt.folds.layoutCalls).toBe(receipt.folds.redraws * VIEWS.length);
+    for (const view of VIEWS) {
+      expect(receipt.selectors[view].samples, view).toBe(receipt.folds.redraws);
+      expect(receipt.selectors[view].p50, `selector:all:${view} p50`).toBeGreaterThanOrEqual(1);
+    }
+    for (const band of [...receipt.bands, ...receipt.exactChurn].filter(band => band.redraws > 0)) {
+      for (const view of VIEWS) expect(band.selectors[view].p50, `selector:${bandName(band)}:${view} p50`).toBeGreaterThanOrEqual(1);
+    }
+  }, 60_000);
+
+  it("P2: times ingest inside the reducer clock, so a 0.2 ms ingest stub puts reducer.all p50 at >= 0.2 ms", () => {
+    class SlowIngestProjection extends ObservationProjection {
+      override ingest(event: ObservationEvent): ReturnType<ObservationProjection["ingest"]> {
+        spin(0.2);
+        return super.ingest(event);
+      }
+    }
+    const receipt = run({ Projection: SlowIngestProjection, inspector, fixture: build(KNOWN_FIXTURE), host: HOST });
+    expect(receipt.apply.ingestApplied).toBe(receipt.offered.updates);
+    expect(receipt.reducer.all.samples).toBe(receipt.offered.updates);
+    expect(receipt.reducer.all.p50, "reducer.all p50").toBeGreaterThanOrEqual(0.2);
+    expect(receipt.reducer.firstTenth.p50, "reducer.firstTenth p50").toBeGreaterThanOrEqual(0.2);
+    expect(receipt.reducer.lastTenth.p50, "reducer.lastTenth p50").toBeGreaterThanOrEqual(0.2);
+    for (const band of [...receipt.bands, ...receipt.exactChurn].filter(band => band.updates > 0)) {
+      expect(band.reducer.p50, `reducer:${bandName(band)} p50`).toBeGreaterThanOrEqual(0.2);
+    }
+  }, 60_000);
+});
+
+/** Rewrites each fixture tick's observedAt so tick n + 1 lands `gaps[n]` ms after tick n: non-uniform spacing, order kept. */
+const respaced = (fixture: GroupedFixture, gaps: readonly number[]): GroupedFixture => {
+  const base = Date.parse(fixture.updates[0].observedAt);
+  const tickOf = new Map<string, number>();
+  for (const update of fixture.updates) if (!tickOf.has(update.observedAt)) tickOf.set(update.observedAt, tickOf.size);
+  if (tickOf.size !== gaps.length + 1) throw new RangeError(`${tickOf.size} ticks need ${tickOf.size - 1} gaps, got ${gaps.length}`);
+  const offsets = [0];
+  for (const gap of gaps) offsets.push(offsets[offsets.length - 1] + gap);
+  return {
+    ...fixture,
+    updates: fixture.updates.map(update => ({
+      ...update,
+      observedAt: new Date(base + offsets[tickOf.get(update.observedAt) ?? 0]).toISOString(),
+    })),
+  };
+};
+
+describe("W21-D2 respin folds: tenths positivity and non-uniform cadence (wb-9x5.15 respin O1/O2/O3, kills N13/N14/N3/N4)", () => {
+  for (const tenth of ["firstTenth", "lastTenth"] as const) {
+    it(`O1: exits 2 naming reducer:${tenth} when its non-empty p50 is 0`, () => {
+      const receipt = realisedReceipt();
+      receipt.reducer[tenth] = { samples: 50, p50: 0, p95: 0.2, max: 0.3 };
+      const verdict = assess(receipt);
+      expect(verdict.exitCode).toBe(2);
+      expect(verdict.violations.find(violation => violation.rule === "timing-not-positive")?.detail).toContain(`reducer:${tenth}`);
+    }, 120_000);
+  }
+
+  it("O2/O3: binds on exactly one skipped tick and reports the smallest gap of a non-uniformly spaced stream", () => {
+    const fixture = respaced(build(KNOWN_FIXTURE), [1_000, 100, 1_000]);
+    const { cadence } = run({ Projection: ObservationProjection, inspector, fixture, host: HOST });
+    expect(cadence.ticks).toBe(4);
+    expect(cadence.skipped).toBe(1);
+    expect(cadence.redraws).toBe(3);
+    expect(cadence.capBound).toBe(true);
+    expect(cadence.capBinding).toBe("bound");
+    expect(cadence.minTickIntervalMs).toBe(100);
+  }, 60_000);
+});
+
+interface PublishIo {
+  path?: string;
+  log?: (line: string) => void;
+  logError?: (line: string) => void;
+  writeFile?: (path: string, text: string) => void;
+}
+const publish = publishReceipt as (receipt: Receipt, io?: PublishIo) => number;
+
+describe("W21 receipt publication: printed before the file write; a failed write exits 3 with the receipt on stdout (one-liner batch item (5), bound onto wb-9x5.15 by name)", () => {
+  interface Published {
+    kind: "log" | "error" | "write";
+    text: string;
+    path?: string;
+  }
+  const recorder = (failure?: Error) => {
+    const events: Published[] = [];
+    const io: Required<Omit<PublishIo, "path">> = {
+      log: text => {
+        events.push({ kind: "log", text });
+      },
+      logError: text => {
+        events.push({ kind: "error", text });
+      },
+      writeFile: (path, text) => {
+        if (failure) throw failure;
+        events.push({ kind: "write", text, path });
+      },
+    };
+    return { events, io };
+  };
+  const withStoredExit = (exitCode: number): Receipt => ({ ...realisedReceipt(), exitCode });
+
+  it("prints the receipt line first, then writes the same line to the receipt file, then returns the receipt's own exit code", () => {
+    const receipt = withStoredExit(1);
+    const { events, io } = recorder();
+    expect(publish(receipt, { ...io, path: "/var/tmp/reducer-receipt.json" })).toBe(1);
+    const line = JSON.stringify(receipt);
+    expect(events).toEqual([
+      { kind: "log", text: line },
+      { kind: "write", text: `${line}\n`, path: "/var/tmp/reducer-receipt.json" },
+    ]);
+  }, 120_000);
+
+  it("prints and writes nothing when no receipt path is set", () => {
+    const receipt = withStoredExit(0);
+    const { events, io } = recorder();
+    expect(publish(receipt, io)).toBe(0);
+    expect(events).toEqual([{ kind: "log", text: JSON.stringify(receipt) }]);
+  }, 120_000);
+
+  for (const stored of [0, 1, 2]) {
+    it(`exits 3, never the stored ${stored}, when the receipt write fails, with the receipt already printed and the failure on stderr`, () => {
+      const receipt = withStoredExit(stored);
+      const detail = "EACCES: permission denied, open '/nonexistent/receipt.json'";
+      const { events, io } = recorder(new Error(detail));
+      expect(publish(receipt, { ...io, path: "/nonexistent/receipt.json" })).toBe(3);
+      expect(events.map(event => event.kind)).toEqual(["log", "error"]);
+      expect(events[0].text).toBe(JSON.stringify(receipt));
+      const diagnostic: unknown = JSON.parse(events[1].text);
+      expect(diagnostic).toEqual({ benchmark: "reducer-selector-grouped-10k", error: "receipt-write-failed", path: "/nonexistent/receipt.json", detail });
+    }, 120_000);
+  }
+
+  it("uses the real file writer by default: the file holds the printed line, and an unwritable path exits 3", () => {
+    const directory = mkdtempSync(join(tmpdir(), "w21-rs-"));
+    try {
+      const receipt = withStoredExit(0);
+      const printed: string[] = [];
+      const errors: string[] = [];
+      const io = { log: (line: string) => printed.push(line), logError: (line: string) => errors.push(line) };
+      const target = join(directory, "receipt.json");
+      expect(publish(receipt, { ...io, path: target })).toBe(0);
+      expect(printed).toEqual([JSON.stringify(receipt)]);
+      expect(readFileSync(target, "utf8")).toBe(`${printed[0]}\n`);
+      const unwritable = join(directory, "missing", "receipt.json");
+      expect(publish(receipt, { ...io, path: unwritable })).toBe(3);
+      expect(printed).toEqual([JSON.stringify(receipt), JSON.stringify(receipt)]);
+      expect(errors).toHaveLength(1);
+      const diagnostic: unknown = JSON.parse(errors[0]);
+      expect(diagnostic).toMatchObject({ benchmark: "reducer-selector-grouped-10k", error: "receipt-write-failed", path: unwritable });
+    } finally {
+      rmSync(directory, { recursive: true, force: true });
+    }
   }, 120_000);
 });
