@@ -840,3 +840,91 @@ describe('F6 pre-emption: preview routes through sanitizeWorkbenchText "label" a
     expect(runner).not.toMatch(/redactWorkbenchText|stripUnsafeText/);
   });
 });
+
+/**
+ * wb-a2g.1 J7 respin (gate-1 12:14Z U1, owner ruling 12:2xZ): the shared helper's BEARER rule is boundary-anchored by
+ * ruled policy (a word-glued scheme stays plain text), so on this runner the receipt builder is the ONLY refusal for a
+ * glued or JSON-escaped Bearer token. J7 requires the builder to throw on any value matching
+ * /Bearer\s+\S+|sk-ant-|api[_-]?key/i, so the Bearer alternative is unanchored again (Basic keeps its word boundary).
+ * The four measured probes are ASCII only: the JSON-escaped forms carry a literal backslash before n or t.
+ */
+describe('J7 respin: the builder refuses word-glued and JSON-escaped Bearer tokens (unanchored Bearer, fail-closed)', () => {
+  const J7_VERBATIM = /Bearer\s+\S+|sk-ant-|api[_-]?key/i;
+  const TOKEN = 'abc123def456';
+  const GLUED: readonly [string, string][] = [
+    ['the JSON-escaped newline form', `{"error":"denied\\nBearer ${TOKEN}"}`],
+    ['the JSON-escaped tab form', `{"error":"denied\\tBearer ${TOKEN}"}`],
+    ['authBearer', `authBearer ${TOKEN}`],
+    ['x1Bearer', `x1Bearer ${TOKEN}`],
+  ];
+  const preview = (value: string, max = 300) => buildPreview(value, max, { sanitize: sanitizeWorkbenchText });
+  const refusesAsCredential = (error: unknown): boolean => error instanceof Error && error.message.startsWith('receipt refused: credential-shaped content');
+  /** The receipt line the runner would print for this settled error, or '' when the builder refuses it as credential-shaped. */
+  function emitted(errorText: string): string {
+    const o = cleanObserved();
+    o.invalidModel.settled = [{ ok: false, error: errorText }];
+    try {
+      return JSON.stringify(build(o));
+    } catch (error) {
+      if (refusesAsCredential(error)) return '';
+      throw error;
+    }
+  }
+
+  it.each(GLUED)('throws on %s, a value the J7 verbatim pattern refuses', (_name, value) => {
+    expect(J7_VERBATIM.test(value)).toBe(true);
+    const o = cleanObserved();
+    o.invalidModel.settled = [{ ok: false, error: value }];
+    expect(() => build(o)).toThrow(/^receipt refused: credential-shaped content at receipt\.journeys\.invalidModel\.settled\[0\]\.error$/);
+  });
+
+  it.each(GLUED)('never emits the token for %s through the runner path (preview, then the builder)', (_name, value) => {
+    expect(emitted(preview(value))).not.toContain(TOKEN);
+  });
+
+  it('keeps the word boundary on Basic: a word merely ending in "basic" is not refused, a Basic credential still is', () => {
+    expect(emitted('Claude SDK query failed: acidobasic balance unknown')).toContain('acidobasic balance unknown');
+    expect(emitted('leak Basic dXNlcjpwYXNz')).toBe('');
+  });
+
+  it('builds a live-shaped clean receipt unflagged: no false refusal from the unanchored alternative', () => {
+    const o = cleanObserved();
+    o.midStreamCancel.servedModel = 'openai.gpt-6.1-sol';
+    o.invalidModel.outcome = { status: 'failed', error: 'agent returned null', hasValue: false };
+    o.invalidModel.settled = [{ ok: false, error: "Claude SDK query failed: There's an issue with the selected model (claude-adverse-not-a-model-000). It may not exist or you may not have access to it." }];
+    const receipt = buildAdverseReceipt({ ...meta(), sdkEventTypes: ['assistant', 'result/success', 'stream_event', 'system/init', 'system/status'], journeys: o });
+    expect(receipt).toMatchObject({ realised: true, pass: true, findings: [] });
+  });
+});
+
+describe('O1 (bound by the owner): the receipt bound applies after the key-name mask grows the text', () => {
+  it('keeps a mask-grown preview within its max (api_key, 7 characters, becomes [REDACTED-NAME], 15)', () => {
+    const shown = buildPreview('api_key '.repeat(60), 300, { sanitize: sanitizeWorkbenchText });
+    expect(shown).toContain('[REDACTED-NAME]');
+    expect(shown.length).toBeLessThanOrEqual(300);
+  });
+});
+
+/** Comment-blind source shape (the p5a F1 / a2g.6 O1 class): a pin read from raw text is satisfied by a comment naming the route. */
+const codeOnly = (source: string): string => source.replace(/\/\*[\s\S]*?\*\//g, '').replace(/(^|[^:'"`\\])\/\/.*$/gm, '$1');
+
+describe('O3 (bound by the owner): receipt dirty bit (the wb-a2g.6 O4 family standard)', () => {
+  it('records whether the working tree differed from HEAD at the revision, null when unknown or mistyped', () => {
+    expect(buildAdverseReceipt({ ...meta(), dirty: false, journeys: cleanObserved() }).dirty).toBe(false);
+    expect(buildAdverseReceipt({ ...meta(), dirty: true, journeys: cleanObserved() }).dirty).toBe(true);
+    expect(build(cleanObserved()).dirty).toBeNull();
+    expect(buildAdverseReceipt({ ...meta(), dirty: 'yes', journeys: cleanObserved() }).dirty).toBeNull();
+  });
+
+  it('the runner reads git status --porcelain from the package root and passes the bit to the builder (comment-blind)', () => {
+    const code = codeOnly(readFileSync(new URL('../qa/workbench/live-adverse.mjs', import.meta.url), 'utf8'));
+    expect(code).toMatch(/execFileSync\('git', \['status', '--porcelain'\], \{ cwd: new URL\('\.\.\/\.\.', import\.meta\.url\)/);
+    expect(code).toMatch(/\bdirty: dirty\(\),/);
+  });
+
+  it('the comment stripper is not satisfied by a commented-out call', () => {
+    expect(codeOnly("const a = 'x'; // dirty: dirty(),\n")).not.toMatch(/dirty: dirty\(\),/);
+    expect(codeOnly("/* execFileSync('git', ['status', '--porcelain'] */ const b = 1;")).not.toContain('--porcelain');
+    expect(codeOnly("const u = new URL('http://x'); // note")).toBe("const u = new URL('http://x'); ");
+  });
+});

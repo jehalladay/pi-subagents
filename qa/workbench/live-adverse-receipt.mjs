@@ -53,8 +53,13 @@ const SESSION_ID = /^[a-f0-9-]{36}$/;
  * Backstop for the shared redactor's shapes (src/workbench/redaction.ts): Bearer/Basic
  * values, vendor token prefixes, credential key names and key=value assignments.
  * Redaction itself is the runner's job (buildPreview); this refuses to emit a leak.
+ * Bearer is deliberately UNANCHORED, the J7 pattern verbatim (/Bearer\s+\S+/i): the shared
+ * helper anchors its BEARER rule by ruled policy, so a word-glued or JSON-escaped token
+ * (authBearer, x1Bearer, a literal backslash-n or backslash-t before Bearer) passes
+ * preview() as plain text and this builder is its only refusal. Basic keeps its word
+ * boundary (an ordinary word ending in "basic" is not a credential scheme).
  */
-const SECRET = /\b(?:Bearer|Basic)\s+\S+|sk-ant-|sk-proj-|ghp_|github_pat_|api[_-]?key|access[_-]?token|refresh[_-]?token|aws_secret_access_key|aws_session_token|(?:password|secret)["']?\s*[=:]/i;
+const SECRET = /Bearer\s+\S+|\bBasic\s+\S+|sk-ant-|sk-proj-|ghp_|github_pat_|api[_-]?key|access[_-]?token|refresh[_-]?token|aws_secret_access_key|aws_session_token|(?:password|secret)["']?\s*[=:]/i;
 const MAX_STRING = 400;
 const CONTROL = /[\u0000-\u001f\u007f-\u009f]/;
 
@@ -410,7 +415,9 @@ const REQUIRED_TEXT = ['utc', 'revision', 'node', 'arch', 'platform', 'sdkVersio
  * mistyped field (including absent model evidence, unmeasured waits, and a
  * realised mid-stream journey whose served model is null) and Error for any
  * credential-shaped, escape-bearing or over-long string; the receipt must
- * never carry a secret or a payload.
+ * never carry a secret or a payload. `dirty` is the working-tree bit beside
+ * the revision (true: the tree differed from HEAD when the runner measured;
+ * false: clean), null when the runner could not tell or passed no boolean.
  */
 export function buildAdverseReceipt(input) {
   need(isObject(input), 'receipt input must be an object');
@@ -433,6 +440,7 @@ export function buildAdverseReceipt(input) {
     contract: ADVERSE_CONTRACT,
     utc: input.utc,
     revision: input.revision,
+    dirty: typeof input.dirty === 'boolean' ? input.dirty : null,
     node: input.node,
     arch: input.arch,
     platform: input.platform,
