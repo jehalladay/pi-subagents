@@ -112,6 +112,34 @@ describe("wb-rqd census: the format controls that defeat a reader are unsafe uni
     expect(failures).toEqual([]);
   });
 
+  // Owner ruling R1 = ALT (23:52Z): the refused class has EXACT edges. The four range neighbours are pinned by their own rows, so a
+  // widening of either edge by one code point reddens a row and not only a census count.
+  const NEIGHBOURS: readonly { readonly code: number; readonly side: string }[] = [
+    { code: 0xfffc, side: "after FFF9-FFFB (OBJECT REPLACEMENT CHARACTER)" },
+    { code: 0x1342f, side: "before 13430-1343F" },
+    { code: 0x13440, side: "after 13430-1343F" },
+  ];
+  for (const { code, side } of NEIGHBOURS) {
+    it(`range neighbour ${named(code)} (${side}) stays text: admitted in identity, unchanged in every display layout`, () => {
+      const text = `a${cp(code)}b`;
+      const failures: string[] = [];
+      if (REFUSED.includes(code)) failures.push("in the refused list");
+      if (stripUnsafeText(text) !== text) failures.push("stripped");
+      for (const layout of LAYOUTS) if (sanitizeWorkbenchText(text, 2000, layout) !== text) failures.push(`${layout}: changed`);
+      if (decide(`review${cp(code)}.js`).decision !== "admitted") failures.push("definition id refused");
+      if (decide("review.js", `inv${cp(code)}rqd`).decision !== "admitted") failures.push("invocation reference refused");
+      expect(failures).toEqual([]);
+    });
+  }
+
+  it(`range neighbour ${named(0xfff8)} (before FFF9-FFFB) is a default-ignorable that wb-952 already refuses: stripped whole, unrelated to this class's edge`, () => {
+    const text = `a${cp(0xfff8)}b`;
+    expect(IGNORABLE.test(cp(0xfff8))).toBe(true);
+    expect(REFUSED.includes(0xfff8)).toBe(false);
+    expect(stripUnsafeText(text)).toBe("ab");
+    expect(decide(`review${cp(0xfff8)}.js`).decision).toBe("refused");
+  });
+
   it("false-positive census over the fixture texts: none holds a refused control or a kept mark, so the widening changes none", () => {
     const refused = new Set(REFUSED);
     const kept = new Set(KEPT);
