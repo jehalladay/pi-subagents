@@ -30,6 +30,8 @@ import { type CapabilityDescriptor, CapabilityError, type JsonValue } from "../s
 import { readClaudeMessageEvidence } from "../src/workbench/claude-evidence.js";
 import { type ClaudeQuery, createClaudeWorkflowHost } from "../src/workbench/claude-host.js";
 import { type ClaudeTopologyInput, projectClaudeTopology } from "../src/workbench/claude-topology.js";
+import { CONTROL_CONTRACT_VERSION, CONTROL_PERMIT_POLICY, type NativeControlReceipt } from "../src/workbench/control.js";
+import { buildControlReply, MAX_CONTROL_REPLY_BYTES } from "../src/workbench/control-reply.js";
 import type { WorkflowSource } from "../src/workbench/designer.js";
 import { type DetachedControlClient, type DetachedControlExecution, type DetachedControlInput, executeDetachedControl } from "../src/workbench/detached-control.js";
 import { projectDetachedReading } from "../src/workbench/detached-observer.js";
@@ -630,6 +632,23 @@ function latencyTexts(raw: string): string[] {
 }
 
 /**
+ * DIRECT-CALLER row (wb-752.4 O1, owner 2026-10-16T01:22Z): site 13 control-reply.ts buildControlReply routes every display
+ * string of the workflow_control reply through the one helper with the text layout, exactly once. A hand-built result receipt
+ * carries the producer's raw text in the requested target id and in both native echo refs, as the control wiring could hand the
+ * builder a receipt the core did not mint (the landed core refuses unsafe refs); the cap is the maximum, so no compact cut hides
+ * a secret.
+ */
+function controlReplyTexts(raw: string): string[] {
+  const receipt: NativeControlReceipt = {
+    contractVersion: CONTROL_CONTRACT_VERSION, requestId: "ctl_corpus", scope: { workspace: ALICE.workspace, principal: ALICE.principal }, principal: { id: ALICE.principal },
+    grant: "control:furnace.stop", policy: CONTROL_PERMIT_POLICY, target: { provider: "furnace", type: "run", id: raw }, action: "stop", invocationId: "inv-control-corpus",
+    ownershipConfirmationRef: "req-control-corpus", requestedAt: NOW, decidedAt: NOW, phase: "result", acknowledgedAt: NOW, nativeAckRef: raw, outcome: "completed",
+    nativeResultRef: raw, settledAt: NOW,
+  };
+  return strings(buildControlReply(receipt, { maxBytes: MAX_CONTROL_REPLY_BYTES }).reply);
+}
+
+/**
  * wb-wyr: claude-host.ts producer outcomes (createClaudeWorkflowHost.spawnAgent over the ClaudeQuery seam). The SDK text
  * reaches the outcome error on five paths: the auth error from a result and from a thrown error (authRequiredError), the
  * success-subtype and error-subtype result arms, and the thrown catch message. Every one routes through the one helper
@@ -688,6 +707,7 @@ const SITES: readonly Site[] = [
   { site: "site 8 furnace-hosted.ts safeText (FurnaceHostedExecutor.start)", texts: hostedTexts },
   { site: "site 9 patch-proposal.ts displayText (proposeWorkflowPatch)", texts: patchTexts },
   { site: "site 10 beads-observer.ts cleanText (readBeadsWork, projectBeadsWork)", texts: beadsTexts },
+  { site: "site 13 control-reply.ts buildControlReply (requested target id, acknowledged and result echo refs)", texts: controlReplyTexts },
   { site: "site 15 furnace-evidence.ts sanitize (readFurnaceAttemptLogEvidence)", texts: furnaceEvidenceTexts },
   { site: "site 16 evidence-loader.ts safeChunks (EvidenceStore)", texts: storeTexts },
   { site: "claude-evidence.ts sanitizeRow (readClaudeMessageEvidence preview lines)", texts: claudeEvidenceTexts },
