@@ -2,22 +2,24 @@
 //
 // Run after `npm run build`, outside the default gate, with a collector:
 //   forge run inspector-retained-memory-bench      (or: node --expose-gc qa/workbench/inspector-retained-memory-bench.mjs)
-// ONE JSON receipt line is printed, and written to $W21_RETAINED_RECEIPT when set, BEFORE the exit code is set:
+// ONE JSON receipt line is printed FIRST, then written to $W21_RETAINED_RECEIPT when set, and only then is the exit
+// code set (publishRetainedReceipt in ./retained-memory.mjs; one-liner batch item (5), bound onto wb-9x5.3):
 //   0  the W21 shape was measured, retained heap stayed within the stated bounds and no payload body outlived blur
-//   1  measured with a sound probe, but a stated bound was missed or a payload body stayed reachable after blur:
-//      a finding, recorded, never tuned away
+//   1  measured with a sound probe, but a stated bound was missed or a payload body stayed reachable after blur
+//      and every bounded re-collect round: a finding, recorded, never tuned away
 //   2  the measurement is not the claim (fixture shape, no gc, a blind or unreleased positive control, a series
 //      too short to separate warmup from measured)
-//   3  nothing could be measured (an exception, reported on stderr; no receipt)
+//   3  nothing could be measured (an exception, reported on stderr; no receipt), or the receipt file could not be
+//      written (the receipt is already on stdout; the write failure is reported on stderr)
 // The revision comes from $W21_REVISION (else "working-tree"). $W21_SEED, $W21_NODES, $W21_DEPTH, $W21_TICKS
 // override the fixture and $W21_CYCLES, $W21_WARMUP_CYCLES, $W21_KEYS, $W21_BODY_CAP the sampling; any override
 // below the W21 shape is still measured and exits 2.
-import {readFileSync, writeFileSync} from 'node:fs';
+import {readFileSync} from 'node:fs';
 import {cpus} from 'node:os';
 import {initialInspectorState, layoutInspector, reduceInspectorKey} from '../../dist/ui/workflow-inspector.js';
 import {ObservationProjection} from '../../dist/workbench/observation.js';
 import {buildGroupedFixture, GROUPED_FIXTURE_DEFAULTS} from './grouped-fixture.mjs';
-import {DEFAULT_RETAINED_SAMPLING, retainedExitCodeFor, runRetainedMemoryBench} from './retained-memory.mjs';
+import {DEFAULT_RETAINED_SAMPLING, publishRetainedReceipt, runRetainedMemoryBench} from './retained-memory.mjs';
 
 const integerFromEnv = (name, fallback) => {
   const raw = process.env[name];
@@ -73,6 +75,4 @@ try {
   console.error(JSON.stringify({benchmark: 'inspector-retained-memory-grouped-10k', measured: false, error: error instanceof Error ? error.stack ?? error.message : String(error)}));
   process.exit(3);
 }
-if (process.env.W21_RETAINED_RECEIPT) writeFileSync(process.env.W21_RETAINED_RECEIPT, `${JSON.stringify(receipt)}\n`);
-console.log(JSON.stringify(receipt));
-process.exitCode = retainedExitCodeFor(receipt);
+process.exitCode = publishRetainedReceipt(receipt, {path: process.env.W21_RETAINED_RECEIPT});

@@ -2,11 +2,14 @@
  * Measurement-only: the module under test loads no src/ or dist/ code, production caps do not move, and the
  * on-blur release falsifier must be able to fail (a deliberately leaking renderer is caught).
  */
-import { readFileSync } from "node:fs";
+import { mkdtempSync, readFileSync, rmSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import { setFlagsFromString } from "node:v8";
 import { runInNewContext } from "node:vm";
 import { describe, expect, it } from "vitest";
 import { BENCH_ONLY_LIMITS, buildGroupedFixture } from "../qa/workbench/grouped-fixture.mjs";
+import * as retainedMemory from "../qa/workbench/retained-memory.mjs";
 import {
   assessRetainedReceipt,
   DEFAULT_RETAINED_SAMPLING,
@@ -34,6 +37,8 @@ interface Sample {
   rss: number;
   payloadBytesOffered: number;
   reachableBodies: number;
+  lateCollected?: number;
+  releaseRounds?: number;
 }
 interface Snapshot {
   heapUsed: number;
@@ -50,6 +55,7 @@ interface Receipt {
   bounds: { heapGrowthAfterWarmupBytes: number; arrayBufferGrowthBytes: number; reachableBodiesAfterBlur: number };
   warmupAnchor?: { choice: string; rule: string };
   comparability?: string;
+  releaseRecheck?: { rounds: number; rule: string };
   gc: { available: boolean; method: string };
   fixture: Record<string, number | string | Record<string, number>>;
   sampling: { cycles: number; warmupCycles: number; keypressesPerCycle: number; bodyBytesCap: number };
@@ -73,6 +79,9 @@ interface Receipt {
     detailsCycles?: number;
     reachableAfterBlur: number;
     leakedCycles: number[];
+    lateCollectedAfterBlur?: number;
+    lateCollectedCycles?: number[];
+    controlProbeRounds?: { whileHeld: number; afterDrop: number };
     control: { detectedWhileHeld: boolean; releasedAfterDrop: boolean };
   } | null;
   realised: boolean;
@@ -105,10 +114,28 @@ interface RunInput {
   gc: Gc | undefined;
   sampling?: Sampling;
 }
+interface PublishIo {
+  path?: string;
+  log?: (line: string) => void;
+  logError?: (line: string) => void;
+  writeFile?: (path: string, text: string) => void;
+}
 
 const run = runRetainedMemoryBench as (input: RunInput) => Promise<Receipt>;
 const assess = assessRetainedReceipt as (receipt: Receipt) => { realised: boolean; violations: { rule: string }[]; exitCode: number };
 const exitCode = retainedExitCodeFor as (receipt: Receipt) => number;
+// Added by the respin (U2 bounded re-collect; one-liner batch item (5)). Read off the module namespace so a module
+// without them reddens only the tests that use them.
+const RELEASE_RECHECK_ROUNDS = retainedMemory.RELEASE_RECHECK_ROUNDS as number | undefined;
+const publishRetainedReceipt = retainedMemory.publishRetainedReceipt as ((receipt: Receipt, io?: PublishIo) => number) | undefined;
+function recheckRounds(): number {
+  if (typeof RELEASE_RECHECK_ROUNDS !== "number") throw new Error("qa/workbench/retained-memory.mjs exports no RELEASE_RECHECK_ROUNDS header constant");
+  return RELEASE_RECHECK_ROUNDS;
+}
+function publishWith(receipt: Receipt, io?: PublishIo): number {
+  if (typeof publishRetainedReceipt !== "function") throw new Error("qa/workbench/retained-memory.mjs exports no publishRetainedReceipt");
+  return publishRetainedReceipt(receipt, io);
+}
 
 setFlagsFromString("--expose-gc");
 const gc = runInNewContext("gc") as Gc;
@@ -125,6 +152,8 @@ const HOST: Host = {
   command: "vitest",
 };
 const SMALL: Sampling = { cycles: 6, warmupCycles: 2, keypressesPerCycle: 24, bodyBytesCap: 1_048_576 };
+/** Bodies up to 4 MiB, so a body still alive when its cycle is sampled would breach the one-body ArrayBuffer tolerance. */
+const DELAYED: Sampling = { cycles: 4, warmupCycles: 1, keypressesPerCycle: 12, bodyBytesCap: 4 * 1_048_576 };
 const small = () => buildGroupedFixture({ seed: 21, nodes: 600, depth: 5, ticks: 120 });
 const readRepo = (path: string): string => readFileSync(new URL(`../${path}`, import.meta.url), "utf8");
 
@@ -176,6 +205,36 @@ function passingReceipt(): Receipt {
     violations: [],
     verdict: "within-bound",
     exitCode: 0,
+  };
+}
+
+/**
+ * A deterministic delayed-release renderer: it keeps every model it is handed (the focused one carries the payload
+ * body) and drops each one on the `turns`-th event-loop turn after the layout call. With turns = 3 the body is still
+ * reachable when the probe first looks (its first collection spans two turns) and free one re-collect round later, so it
+ * is late-collected, never retained.
+ */
+function delayedReleaseInspector(turns: number): { inspector: Inspector; held: Set<unknown>; peak: () => number } {
+  const held = new Set<unknown>();
+  let peak = 0;
+  const releaseAfter = (model: unknown, remaining: number): void => {
+    setImmediate(() => {
+      if (remaining > 1) releaseAfter(model, remaining - 1);
+      else held.delete(model);
+    });
+  };
+  return {
+    held,
+    peak: () => peak,
+    inspector: {
+      ...inspector,
+      layoutInspector: (model, state, size) => {
+        held.add(model);
+        peak = Math.max(peak, held.size);
+        releaseAfter(model, turns);
+        return layoutInspector(model, state, size);
+      },
+    },
   };
 }
 
@@ -328,6 +387,133 @@ describe("W21-C respin folds F1/F4/F5/F7 (wb-9x5.3, owner 13:30Z rulings)", () =
   }, 120_000);
 });
 
+describe("W21-C bounded re-collect before a body counts as retained (wb-9x5.3 respin U2, owner 01:42Z)", () => {
+  it("states RELEASE_RECHECK_ROUNDS as a header constant, written into the receipt before the baseline and the series", async () => {
+    expect(recheckRounds()).toBe(3);
+    const receipt = await run({ Projection: ObservationProjection, inspector, fixture: small(), host: HOST, gc, sampling: SMALL });
+    expect(receipt.releaseRecheck?.rounds).toBe(recheckRounds());
+    expect(receipt.releaseRecheck?.rule).toMatch(/late-collected/);
+    expect(receipt.releaseRecheck?.rule).toMatch(/retained/);
+    const keys = Object.keys(receipt);
+    expect(keys.indexOf("releaseRecheck")).toBeGreaterThan(-1);
+    expect(keys.indexOf("releaseRecheck")).toBeLessThan(keys.indexOf("baseline"));
+    expect(keys.indexOf("releaseRecheck")).toBeLessThan(keys.indexOf("series"));
+    for (const sample of receipt.series) {
+      expect(Number.isInteger(sample.releaseRounds)).toBe(true);
+      expect(sample.releaseRounds).toBeGreaterThanOrEqual(0);
+      expect(sample.releaseRounds).toBeLessThanOrEqual(recheckRounds());
+      expect(sample.lateCollected).toBe(sample.reachableBodies === 0 && (sample.releaseRounds ?? 0) > 0 ? 1 : 0);
+    }
+  }, 120_000);
+
+  it("records a deterministic delayed-release holder as late-collected, never as retained: no reachable body, no ArrayBuffer miss, exit 0 at the W21 shape", async () => {
+    const delayed = delayedReleaseInspector(3);
+    const receipt = await run({ Projection: ObservationProjection, inspector: delayed.inspector, fixture: small(), host: HOST, gc, sampling: DELAYED });
+    expect(receipt.falsifier?.reachableAfterBlur).toBe(0);
+    expect(receipt.falsifier?.leakedCycles).toEqual([]);
+    expect(receipt.falsifier?.lateCollectedCycles).toEqual(Array.from({ length: DELAYED.cycles }, (_, cycle) => cycle));
+    expect(receipt.falsifier?.lateCollectedAfterBlur).toBe(DELAYED.cycles);
+    for (const sample of receipt.series) {
+      expect(sample.reachableBodies).toBe(0);
+      expect(sample.lateCollected).toBe(1);
+      expect(sample.releaseRounds).toBeGreaterThanOrEqual(1);
+      expect(sample.releaseRounds).toBeLessThanOrEqual(recheckRounds());
+    }
+    // Sensitivity: a body larger than the one-body ArrayBuffer tolerance was issued, so a memory sample taken before
+    // the late release would have breached it; the cycle's sample is taken after the probe settles.
+    const perCycle = receipt.series.map((sample, at) => sample.payloadBytesOffered - (at === 0 ? 0 : receipt.series[at - 1].payloadBytesOffered));
+    expect(Math.max(...perCycle)).toBeGreaterThan(RETAINED_BOUNDS.arrayBufferGrowthBytes);
+    const rules = receipt.violations.map((violation) => violation.rule);
+    expect(rules).not.toContain("payload-body-reachable-after-blur");
+    expect(rules).not.toContain("array-buffer-growth-over-bound");
+    const shaped: Receipt = { ...receipt, fixture: passingReceipt().fixture };
+    expect(assess(shaped).exitCode).toBe(0);
+    // The holder really held models past the probe's first look, and the probe waited until it let go of every one.
+    expect(delayed.peak()).toBeGreaterThan(0);
+    expect(delayed.held.size).toBe(0);
+  }, 120_000);
+
+  it("the window is exactly RELEASE_RECHECK_ROUNDS rounds: a holder that lets go inside the last round is still late-collected", async () => {
+    // The first look follows one collection (two event-loop turns) and each round adds two more, so a holder that drops
+    // the body on turn 2 * (1 + RELEASE_RECHECK_ROUNDS) is caught by the last round's second collection.
+    const lastTurn = 2 * (1 + recheckRounds());
+    const delayed = delayedReleaseInspector(lastTurn);
+    const receipt = await run({ Projection: ObservationProjection, inspector: delayed.inspector, fixture: small(), host: HOST, gc, sampling: DELAYED });
+    expect(receipt.falsifier?.reachableAfterBlur).toBe(0);
+    expect(receipt.falsifier?.lateCollectedCycles).toEqual(Array.from({ length: DELAYED.cycles }, (_, cycle) => cycle));
+    for (const sample of receipt.series) {
+      expect(sample.reachableBodies).toBe(0);
+      expect(sample.lateCollected).toBe(1);
+      expect(sample.releaseRounds).toBe(recheckRounds());
+    }
+    const shaped: Receipt = { ...receipt, fixture: passingReceipt().fixture };
+    expect(assess(shaped).exitCode).toBe(0);
+    expect(delayed.held.size).toBe(0);
+  }, 120_000);
+
+  it("the window is bounded: a holder that lets go only after the last re-collect round is retained and exits 1", async () => {
+    const delayed = delayedReleaseInspector(2 * (1 + recheckRounds()) + 1);
+    const receipt = await run({ Projection: ObservationProjection, inspector: delayed.inspector, fixture: small(), host: HOST, gc, sampling: SMALL });
+    expect(receipt.falsifier?.leakedCycles).toEqual(Array.from({ length: SMALL.cycles }, (_, cycle) => cycle));
+    expect(receipt.falsifier?.lateCollectedCycles).toEqual([]);
+    for (const sample of receipt.series) {
+      expect(sample.reachableBodies).toBe(1);
+      expect(sample.lateCollected).toBe(0);
+      expect(sample.releaseRounds).toBe(recheckRounds());
+    }
+    expect(receipt.violations.map((violation) => violation.rule)).toContain("payload-body-reachable-after-blur");
+    const shaped: Receipt = { ...receipt, fixture: passingReceipt().fixture };
+    expect(assess(shaped).exitCode).toBe(1);
+    // The last cycle's holder lets go one turn after the run returns; drain it so nothing outlives this test.
+    for (let turn = 0; turn < 4 && delayed.held.size > 0; turn++) await new Promise((resolve) => setImmediate(resolve));
+    expect(delayed.held.size).toBe(0);
+  }, 120_000);
+
+  it("a body the renderer never releases outlives every re-collect round: retained (exit 1), never late-collected", async () => {
+    const stash: unknown[] = [];
+    const leaking: Inspector = {
+      ...inspector,
+      layoutInspector: (model, state, size) => {
+        stash.push(model);
+        return layoutInspector(model, state, size);
+      },
+    };
+    const receipt = await run({ Projection: ObservationProjection, inspector: leaking, fixture: small(), host: HOST, gc, sampling: SMALL });
+    expect(receipt.falsifier?.leakedCycles).toEqual(Array.from({ length: SMALL.cycles }, (_, cycle) => cycle));
+    expect(receipt.falsifier?.lateCollectedCycles).toEqual([]);
+    expect(receipt.falsifier?.lateCollectedAfterBlur).toBe(0);
+    for (const sample of receipt.series) {
+      expect(sample.reachableBodies).toBe(1);
+      expect(sample.lateCollected).toBe(0);
+      expect(sample.releaseRounds).toBe(recheckRounds());
+    }
+    const shaped: Receipt = { ...receipt, fixture: passingReceipt().fixture };
+    expect(assess(shaped).exitCode).toBe(1);
+    expect(stash.length).toBeGreaterThan(0);
+  }, 120_000);
+
+  it("judges the positive control through the same bounded probe: held through every round, released once dropped", async () => {
+    const receipt = await run({ Projection: ObservationProjection, inspector, fixture: small(), host: HOST, gc, sampling: SMALL });
+    expect(receipt.falsifier?.control).toEqual({ detectedWhileHeld: true, releasedAfterDrop: true });
+    expect(receipt.falsifier?.controlProbeRounds?.whileHeld).toBe(recheckRounds());
+    expect(receipt.falsifier?.controlProbeRounds?.afterDrop).toBeGreaterThanOrEqual(0);
+    expect(receipt.falsifier?.controlProbeRounds?.afterDrop).toBeLessThanOrEqual(recheckRounds());
+  }, 120_000);
+
+  it("never judges a late-collected sample as retained, while a retained sample keeps exit 1", () => {
+    const late = passingReceipt();
+    late.series = late.series.map((sample, at) => (at === 2 ? { ...sample, lateCollected: 1, releaseRounds: 1 } : sample));
+    if (late.falsifier) {
+      late.falsifier.lateCollectedCycles = [2];
+      late.falsifier.lateCollectedAfterBlur = 1;
+    }
+    expect(exitCode(late)).toBe(0);
+    const retained = passingReceipt();
+    retained.series = retained.series.map((sample, at) => (at === 2 ? { ...sample, reachableBodies: 1, releaseRounds: recheckRounds() } : sample));
+    expect(exitCode(retained)).toBe(1);
+  });
+});
+
 describe("W21-C exit semantics are recomputed from the receipt (wb-9x5.3)", () => {
   it("exits 0 when every measured quantity is inside its bound", () => {
     expect(exitCode(passingReceipt())).toBe(0);
@@ -397,14 +583,19 @@ describe("W21-C measurement-only guarantees (wb-9x5.3)", () => {
     expect(readRepo("src/workbench/observation.ts")).toContain("const MAX_DEFAULT = {maxEvents:20_000,maxNodes:2_000,maxEdges:4_000,maxPayloadBytes:4_096,maxQuery:100};");
   });
 
-  it("writes and prints the receipt before it sets the exit code, and drives compiled dist/ only", () => {
+  it("prints the receipt before the file write, sets the exit code only from the publication, and drives compiled dist/ only", () => {
+    // One-liner batch item (5), bound onto wb-9x5.3 by name (owner 01:42Z): the receipt line is printed BEFORE the file
+    // write. The write-before-print order this pin held at ea221f1 flips here, in the same commit as the behaviour.
+    const module = readRepo("qa/workbench/retained-memory.mjs");
+    const printed = module.indexOf("log(line);");
+    const written = module.indexOf("writeFile(path, ");
+    expect(printed).toBeGreaterThan(-1);
+    expect(written).toBeGreaterThan(printed);
     const text = readRepo("qa/workbench/inspector-retained-memory-bench.mjs");
-    const written = text.indexOf("writeFileSync(process.env.W21_RETAINED_RECEIPT");
-    const printed = text.indexOf("console.log(JSON.stringify(receipt))");
-    const exit = text.indexOf("process.exitCode = retainedExitCodeFor(receipt)");
-    expect(written).toBeGreaterThan(-1);
-    expect(printed).toBeGreaterThan(written);
-    expect(exit).toBeGreaterThan(printed);
+    expect(text).toContain("process.exitCode = publishRetainedReceipt(receipt, {path: process.env.W21_RETAINED_RECEIPT});");
+    expect(text).not.toMatch(/writeFileSync\s*\(/);
+    expect(text).not.toMatch(/console\.log\s*\(/);
+    expect(text).not.toContain("retainedExitCodeFor");
     expect(text).toContain("../../dist/ui/workflow-inspector.js");
     expect(text).toContain("../../dist/workbench/observation.js");
     expect(text).not.toMatch(/\.\.\/\.\.\/src\//);
@@ -419,5 +610,114 @@ describe("W21-C measurement-only guarantees (wb-9x5.3)", () => {
     const gate = /^gate = \[([^\]]*)\]/m.exec(toml)?.[1] ?? "";
     expect(gate.length).toBeGreaterThan(0);
     expect(gate).not.toMatch(/retained/);
+  });
+});
+
+describe("W21-C receipt publication: printed before the file write; a failed write exits 3 with the receipt on stdout (one-liner batch item (5), bound onto wb-9x5.3 by name)", () => {
+  interface Event {
+    kind: "log" | "error" | "write";
+    text: string;
+    path?: string;
+  }
+  const recorder = (failWith?: Error): { events: Event[]; io: Required<Pick<PublishIo, "log" | "logError" | "writeFile">> } => {
+    const events: Event[] = [];
+    return {
+      events,
+      io: {
+        log: (line) => {
+          events.push({ kind: "log", text: line });
+        },
+        logError: (line) => {
+          events.push({ kind: "error", text: line });
+        },
+        writeFile: (path, text) => {
+          if (failWith) throw failWith;
+          events.push({ kind: "write", text, path });
+        },
+      },
+    };
+  };
+  const overBound = (): Receipt => {
+    const receipt = passingReceipt();
+    if (receipt.summary) receipt.summary.heapGrowthAfterWarmupBytes = RETAINED_BOUNDS.heapGrowthAfterWarmupBytes + 1;
+    return receipt;
+  };
+  const notTheShape = (): Receipt => {
+    const receipt = passingReceipt();
+    receipt.fixture = { ...receipt.fixture, nodes: 500 };
+    return receipt;
+  };
+  const RECEIPTS: [string, () => Receipt, number][] = [
+    ["within-bound", passingReceipt, 0],
+    ["over-bound", overBound, 1],
+    ["not-measured", notTheShape, 2],
+  ];
+
+  it.each(RECEIPTS)("prints the %s receipt line first, then writes the same line, then returns its exit code", (_label, make, expected) => {
+    const receipt = make();
+    const { events, io } = recorder();
+    expect(publishWith(receipt, { ...io, path: "/var/tmp/retained-receipt.json" })).toBe(expected);
+    const line = JSON.stringify(receipt);
+    expect(events).toEqual([
+      { kind: "log", text: line },
+      { kind: "write", text: `${line}\n`, path: "/var/tmp/retained-receipt.json" },
+    ]);
+  });
+
+  it("prints the receipt and writes nothing when no receipt path is set", () => {
+    const receipt = passingReceipt();
+    const { events, io } = recorder();
+    expect(publishWith(receipt, io)).toBe(0);
+    expect(events).toEqual([{ kind: "log", text: JSON.stringify(receipt) }]);
+  });
+
+  it("returns the exit code recomputed from the receipt's own series and summary, never a stored exitCode field", () => {
+    const receipt = overBound();
+    expect(receipt.exitCode).toBe(0);
+    const { io } = recorder();
+    expect(publishWith(receipt, io)).toBe(1);
+  });
+
+  it.each(RECEIPTS)("exits 3, never the %s receipt's own code, when the receipt write fails, with the receipt already printed and the failure on stderr", (_label, make) => {
+    const receipt = make();
+    const failure = new Error("ENOENT: no such file or directory, open '/nonexistent/receipt.json'");
+    const { events, io } = recorder(failure);
+    expect(publishWith(receipt, { ...io, path: "/nonexistent/receipt.json" })).toBe(3);
+    expect(events.map((event) => event.kind)).toEqual(["log", "error"]);
+    expect(events[0].text).toBe(JSON.stringify(receipt));
+    expect(JSON.parse(events[1].text)).toEqual({
+      benchmark: "inspector-retained-memory-grouped-10k",
+      error: "receipt-write-failed",
+      path: "/nonexistent/receipt.json",
+      detail: failure.message,
+    });
+  });
+
+  it("uses the real file writer by default: the file holds the printed line, and an unwritable path exits 3", () => {
+    const dir = mkdtempSync(join(tmpdir(), "wb-9x5.3-receipt-"));
+    try {
+      const receipt = passingReceipt();
+      const printed: string[] = [];
+      const errors: string[] = [];
+      const io: PublishIo = {
+        log: (line) => {
+          printed.push(line);
+        },
+        logError: (line) => {
+          errors.push(line);
+        },
+      };
+      const target = join(dir, "receipt.json");
+      expect(publishWith(receipt, { ...io, path: target })).toBe(0);
+      expect(printed).toEqual([JSON.stringify(receipt)]);
+      expect(readFileSync(target, "utf8")).toBe(`${printed[0]}\n`);
+      const unwritable = join(dir, "missing", "receipt.json");
+      expect(publishWith(receipt, { ...io, path: unwritable })).toBe(3);
+      expect(printed).toEqual([JSON.stringify(receipt), JSON.stringify(receipt)]);
+      expect(errors).toHaveLength(1);
+      expect(JSON.parse(errors[0])).toMatchObject({ benchmark: "inspector-retained-memory-grouped-10k", error: "receipt-write-failed", path: unwritable });
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
   });
 });

@@ -16,16 +16,28 @@
 //   yields to the event loop (a WeakRef keeps its target alive for the rest of the current job), forces GC and
 //   asks a WeakRef whether the body, or the wrapper that carried it, is still reachable. Anything the renderer
 //   kept (a module-level cache, a stashed model) makes it reachable: the falsifier fails the run (exit 1).
-// - The probe is itself checked by a positive control: a body deliberately held must be detected, and must be
-//   released once dropped. A blind probe is exit 2, never a pass.
+// - A body still reachable at that first look gets up to RELEASE_RECHECK_ROUNDS further collect rounds (a header
+//   constant stated before any run) before it is counted. One released within them is recorded as LATE-COLLECTED,
+//   separately from retained, and never fails the run; one that outlives every round is retained (exit 1). The
+//   cycle's memory sample is taken after the probe settles. Why: at ea221f1 the wb-9x5.3 gate measured a body
+//   reachable at the first look in 6 of 12 runs (always cycle 22) that one more collect round released with no
+//   renderer or carried-state reference: a false finding. Its mechanism stays UNDETERMINED (GC timing).
+// - The probe is itself checked by a positive control, judged through the same bounded probe: a body deliberately
+//   held must still be reachable after every round, and must be released once dropped. A blind probe is exit 2,
+//   never a pass.
 // - Heap figures are process.memoryUsage() after an explicit GC, in bytes, for this whole process (the fixture
 //   arrays the bench holds are a constant baseline, not projection state).
 //
 // The pass/fail bounds are constants stated before any run (RETAINED_BOUNDS). A miss is recorded as a miss:
 // nothing here tunes a bound, a fixture or a cap. Production caps (observation.ts) are not touched.
+//
+// publishRetainedReceipt prints the receipt line BEFORE the optional file write, so an unwritable receipt path
+// still leaves the receipt on stdout and exits 3, never a silent 1 (one-liner batch item (5), bound onto wb-9x5.3).
+import {writeFileSync} from 'node:fs';
 import {assessFixtureShape, BENCH_ONLY_LIMITS, INVOCATION_ID, SCOPE, SIZES} from './grouped-fixture.mjs';
 
 export const RETAINED_RECEIPT_CONTRACT = 'workbench.inspector-retained-memory-bench/v1';
+const BENCHMARK = 'inspector-retained-memory-grouped-10k';
 const MIB = 1_048_576;
 /** Stated before the run; a miss is a finding (exit 1), never retuned. */
 export const RETAINED_BOUNDS = Object.freeze({
@@ -41,6 +53,12 @@ export const WARMUP_ANCHOR = Object.freeze({
   choice: 'last-warmup-sample',
   rule: 'heap growth after warmup is the worst measured post-GC heapUsed minus the post-GC heapUsed of the final warmup sample; a different anchor (first warmup sample, baseline) would give a different figure',
 });
+/**
+ * Stated in the receipt header before any measurement: how many further collect rounds (each an event-loop yield,
+ * a GC, a yield and a GC) the release probe gives a body that is still reachable at its first look before counting it.
+ */
+export const RELEASE_RECHECK_ROUNDS = 3;
+const RELEASE_RECHECK_RULE = `a body still reachable at the first look after blur gets up to ${RELEASE_RECHECK_ROUNDS} further collect rounds; one released within them is recorded as late-collected, separately from retained, and is not a finding; one still reachable after every round is retained (exit 1); the cycle's memory sample is taken after the probe settles`;
 /** Bench limits are not the production configuration at the same node cap, so no figure here is comparable to a production run. */
 export const COMPARABILITY = 'non-comparable to production (bench limits 12000/128/40 vs 2000/20000/100)';
 const SLOPE_LABEL = 'UNDETERMINED: least-squares post-GC heapUsed slope over the measured samples at bench limits; no significance test, not a leak claim and not a clean bill';
@@ -72,6 +90,22 @@ async function collect(gc) {
   gc();
   await settle();
   gc();
+}
+
+/**
+ * The release probe: one collection, then up to RELEASE_RECHECK_ROUNDS more while `isReachable` still says yes.
+ * `retained` is true only when the target outlived every round; `rounds` is how many further rounds ran (0 = gone at
+ * the first look). `isReachable` returns a boolean, so no strong reference to the target enters this frame, and each
+ * round opens with an event-loop yield, so a previous deref's job pinning has ended before the next collection.
+ */
+async function probeRelease(gc, isReachable) {
+  await collect(gc);
+  let rounds = 0;
+  while (rounds < RELEASE_RECHECK_ROUNDS && isReachable()) {
+    rounds++;
+    await collect(gc);
+  }
+  return {retained: isReachable(), rounds};
 }
 
 function applyFixture(projection, fixture) {
@@ -225,6 +259,26 @@ export function assessRetainedReceipt(receipt) {
 export const retainedExitCodeFor = receipt => assessRetainedReceipt(receipt).exitCode;
 
 /**
+ * Prints the receipt line FIRST, then writes the same line to the optional receipt file, and returns the exit code
+ * recomputed from the receipt (never a stored field). A failed write is reported on stderr and returns 3 with the
+ * receipt already on stdout: it never surfaces as the bound miss 1, the instrument refusal 2 or a pass (one-liner
+ * batch item (5), bound onto wb-9x5.3 by name; the wb-9x5.15 reducer-selector shape).
+ */
+export function publishRetainedReceipt(receipt, {path, log = console.log, logError = console.error, writeFile = writeFileSync} = {}) {
+  const line = JSON.stringify(receipt);
+  log(line);
+  if (path) {
+    try {
+      writeFile(path, `${line}\n`);
+    } catch (error) {
+      logError(JSON.stringify({benchmark: BENCHMARK, error: 'receipt-write-failed', path, detail: error instanceof Error ? error.message : String(error)}));
+      return 3;
+    }
+  }
+  return retainedExitCodeFor(receipt);
+}
+
+/**
  * The whole measurement as one receipt. `Projection` is the ObservationProjection class, `inspector` is
  * {initialInspectorState, layoutInspector, reduceInspectorKey}, `gc` is a synchronous full-collection function
  * (undefined is recorded honestly and exits 2), and `host` carries utc, revision, node, arch, platform, cpus,
@@ -240,12 +294,13 @@ export async function runRetainedMemoryBench({Projection, inspector, fixture, ho
   const offered = {nodes: fixture.snapshots.length, edges: fixture.relations.length, updates: fixture.updates.length};
   const receipt = {
     contract: RETAINED_RECEIPT_CONTRACT,
-    benchmark: 'inspector-retained-memory-grouped-10k',
+    benchmark: BENCHMARK,
     measured: false,
     heapLabel: 'post-gc-retained',
     labels: {...LABELS},
     comparability: COMPARABILITY,
     warmupAnchor: {...WARMUP_ANCHOR},
+    releaseRecheck: {rounds: RELEASE_RECHECK_ROUNDS, rule: RELEASE_RECHECK_RULE},
     aggregation: 'none: no cap change and no supernode aggregation; this receipt informs those later decisions',
     utc: host.utc,
     revision: host.revision,
@@ -281,14 +336,16 @@ export async function runRetainedMemoryBench({Projection, inspector, fixture, ho
 
   const holder = [];
   const controlWeak = holdControl(holder, plan.bodyBytesCap);
-  await collect(gc);
-  const detectedWhileHeld = controlWeak.deref() !== undefined;
+  const controlReachable = () => controlWeak.deref() !== undefined;
+  const whileHeld = await probeRelease(gc, controlReachable);
+  const detectedWhileHeld = whileHeld.retained;
   holder.length = 0;
-  await collect(gc);
-  const releasedAfterDrop = controlWeak.deref() === undefined;
+  const afterDrop = await probeRelease(gc, controlReachable);
+  const releasedAfterDrop = !afterDrop.retained;
 
   const ctx = {state: inspector.initialInspectorState()};
   const leakedCycles = [];
+  const lateCollectedCycles = [];
   let blurCycles = 0;
   let focusedCycles = 0;
   let detailsCycles = 0;
@@ -301,16 +358,20 @@ export async function runRetainedMemoryBench({Projection, inspector, fixture, ho
     if (issued.focusedWhileHeld) focusedCycles++;
     if (issued.detailsWhileHeld) detailsCycles++;
     payloadBytesOffered += issued.bytes;
-    await collect(gc);
+    const probe = await probeRelease(gc, () => issued.weakBody.deref() !== undefined || issued.weakLoaded.deref() !== undefined);
     const usage = memory();
-    const reachableBodies = issued.weakBody.deref() !== undefined || issued.weakLoaded.deref() !== undefined ? 1 : 0;
+    const reachableBodies = probe.retained ? 1 : 0;
+    const lateCollected = !probe.retained && probe.rounds > 0 ? 1 : 0;
     if (reachableBodies > 0) leakedCycles.push(cycle);
+    if (lateCollected > 0) lateCollectedCycles.push(cycle);
     receipt.series.push({
       cycle,
       phase: cycle < plan.warmupCycles ? 'warmup' : 'measured',
       ...usage,
       payloadBytesOffered,
       reachableBodies,
+      lateCollected,
+      releaseRounds: probe.rounds,
     });
   }
   const measuredSamples = receipt.series.filter(sample => sample.phase === 'measured');
@@ -325,6 +386,9 @@ export async function runRetainedMemoryBench({Projection, inspector, fixture, ho
     detailsCycles,
     reachableAfterBlur: leakedCycles.length,
     leakedCycles,
+    lateCollectedAfterBlur: lateCollectedCycles.length,
+    lateCollectedCycles,
+    controlProbeRounds: {whileHeld: whileHeld.rounds, afterDrop: afterDrop.rounds},
     control: {detectedWhileHeld, releasedAfterDrop},
   };
   receipt.summary = {
