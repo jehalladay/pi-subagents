@@ -36,6 +36,7 @@ import { readFurnaceAttemptLogEvidence } from "../src/workbench/furnace-evidence
 import { FurnaceHostedExecutor, SHIPPED_FURNACE_SDK } from "../src/workbench/hosts/furnace-hosted.js";
 import { type HyperUnixTopologyContext, hyperunixTopology } from "../src/workbench/hyperunix-observer.js";
 import { WORKFLOW_SCRIPT_SCHEMA_VERSION } from "../src/workbench/identity.js";
+import { selectLatencyDecomposition } from "../src/workbench/latency.js";
 import { type NativeRef, ObservationProjection, type ObservationScope, type ObservedNode, type Relation } from "../src/workbench/observation.js";
 import { type ObserveReader, observeInvocation } from "../src/workbench/observe-query.js";
 import { proposeWorkflowPatch } from "../src/workbench/patch-proposal.js";
@@ -494,6 +495,18 @@ function observeTexts(raw: string): string[] {
   return strings(observeInvocation(reader, { scope: ALICE, invocationId: "inv-observe" }));
 }
 
+/** wb-h8f.10: latency.ts displayText (selectLatencyDecomposition), the provider and the evidence-ref paths, joined to the corpus in the same commit as its routing through the one helper. */
+function latencyTexts(raw: string): string[] {
+  const node: ObservedNode = {
+    key: JSON.stringify([ALICE.workspace, ALICE.principal, raw, "operation", "", "latency"]), nativeRef: { provider: raw, type: "operation", id: "latency" },
+    scope: ALICE, sourceKind: "observed", observedAt: NOW, sourceConnectionState: "connected", freshness: "current", completeness: "complete",
+    presentation: { title: "latency", type: "sdk-operation", statusText: "DONE", statusTone: "success" }, kind: "native.snapshot", invocationId: "inv-latency",
+    evidenceRefs: [raw], interval: { startedAt: "2026-10-15T09:00:00Z", endedAt: "2026-10-15T09:00:05Z" },
+  };
+  const report = selectLatencyDecomposition({ query: filter => ({ nodes: [node].slice(0, filter.limit), examined: 1, truncated: false }) }, { scope: ALICE, invocationId: "inv-latency" });
+  return [...report.components.flatMap(item => item.providers), ...report.evidenceRefs, ...report.components.flatMap(item => item.evidenceRefs), report.invocationId];
+}
+
 interface Site {
   readonly site: string;
   readonly texts: (raw: string) => string[] | Promise<string[]>;
@@ -529,6 +542,7 @@ const SITES: readonly Site[] = [
   { site: "site 18 detached-observer.ts shown (projectDetachedReading)", texts: detachedTexts },
   { site: "sites 19/20 workflow_inspect and workbench_catalog replies", texts: replyTexts },
   { site: "site 22 observe-query.ts clean (observeInvocation)", texts: observeTexts },
+  { site: "wb-h8f.10 latency.ts displayText (selectLatencyDecomposition provider and evidence paths)", texts: latencyTexts },
 ];
 
 describe("wb-952 one-helper corpus through every census site's public function", () => {
