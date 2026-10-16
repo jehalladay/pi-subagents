@@ -477,6 +477,78 @@ const INVERSION_ROWS: readonly Row[] = [
     oracle: RUNS,
     verdict: OK,
   },
+  // u62 gate-2 U1 (cmd_337abda7b0e2): five callee shapes whose chain root is not vitest's it / test. The runner reports
+  // each expect(1).toBe(2)-only case passed; report mode must read options-unknown NAMING the callee, never ok.
+  {
+    id: "r-u62g2-u1-object-held",
+    routed: "u62 gate-2 U1.1 an object-held registration: const api = { run: it.fails }; api.run(...)",
+    source: { prelude: "const api = { run: it.fails };", body: `  api.run("${PIN}", () => {\n    expect(1).toBe(2);\n  });` },
+    oracle: { kind: "inverted" },
+    verdict: red("inverted", "asserts", /registered with fails/),
+    report: red("options-unknown", "asserts", /the registration api\.run at line \d+:\d+ does not resolve to vitest's it \/ test/),
+  },
+  {
+    id: "r-u62g2-u1-destructured",
+    routed: "u62 gate-2 U1.2 a destructured registration: const { fails } = it; fails(...)",
+    source: { prelude: "const { fails } = it;", body: `  fails("${PIN}", () => {\n    expect(1).toBe(2);\n  });` },
+    oracle: { kind: "inverted" },
+    verdict: red("inverted", "asserts", /registered with fails/),
+    report: red("options-unknown", "asserts", /the registration fails at line \d+:\d+ does not resolve to vitest's it \/ test/),
+  },
+  {
+    id: "r-u62g2-u1-returned",
+    routed: "u62 gate-2 U1.3 a function-returned registration: function pick() { return it.fails; } pick()(...)",
+    source: { prelude: "function pick(): typeof it.fails {\n  return it.fails;\n}", body: `  pick()("${PIN}", () => {\n    expect(1).toBe(2);\n  });` },
+    oracle: { kind: "inverted" },
+    verdict: red("inverted", "asserts", /registered with fails/),
+    report: red("options-unknown", "asserts", /the registration pick\(\) at line \d+:\d+ does not resolve to vitest's it \/ test/),
+  },
+  {
+    id: "r-u62g2-u1-class-static",
+    routed: "u62 gate-2 U1.4 a class-static registration: class Reg { static run = it.fails; } Reg.run(...)",
+    source: { prelude: "class Reg {\n  static run = it.fails;\n}", body: `  Reg.run("${PIN}", () => {\n    expect(1).toBe(2);\n  });` },
+    oracle: { kind: "inverted" },
+    verdict: red("inverted", "asserts", /registered with fails/),
+    report: red("options-unknown", "asserts", /the registration Reg\.run at line \d+:\d+ does not resolve to vitest's it \/ test/),
+  },
+  {
+    id: "r-u62g2-u1-object-assign",
+    routed: "u62 gate-2 U1.5 an Object.assign-built registration: const reg = Object.assign(it.fails, {}); reg(...)",
+    source: { prelude: "const reg = Object.assign(it.fails, {});", body: `  reg("${PIN}", () => {\n    expect(1).toBe(2);\n  });` },
+    oracle: { kind: "inverted" },
+    verdict: red("inverted", "asserts", /registered with fails/),
+    report: red("options-unknown", "asserts", /the registration reg at line \d+:\d+ does not resolve to vitest's it \/ test/),
+  },
+  // u62 gate-2 I1, the owner's design invariant (21:29Z: every value flow report mode reads fails closed to
+  // options-unknown when it cannot resolve) applied to the inversion read's other callee flow: an enclosing callback whose
+  // holder is not vitest's describe / suite may register a suite with fails. Measured fail-open on the de90b83 helper.
+  {
+    id: "r-u62g2-i1-object-held-suite",
+    routed: "u62 gate-2 I1.1 invariant: the enclosing suite registered through an object-held describe with { fails: true }",
+    source: { prelude: "const api = { suite: describe };", body: `  api.suite("inner", { fails: true }, () => {\n    it("${PIN}", () => {\n      expect(1).toBe(2);\n    });\n  });` },
+    oracle: { kind: "inverted" },
+    verdict: red("inverted", "asserts", /registered with fails/),
+    report: red("options-unknown", "asserts", /inside a callback of api\.suite at line \d+:\d+, which does not resolve to vitest's describe \/ suite/),
+  },
+  {
+    id: "r-u62g2-i1-wrapper-suite",
+    routed: "u62 gate-2 I1.2 invariant: the enclosing suite created by a same-file wrapper function with { fails: true }",
+    source: {
+      prelude: "function failing(name: string, fn: () => void): void {\n  describe(name, { fails: true }, fn);\n}",
+      body: `  failing("inner", () => {\n    it("${PIN}", () => {\n      expect(1).toBe(2);\n    });\n  });`,
+    },
+    oracle: { kind: "inverted" },
+    verdict: red("inverted", "asserts", /registered with fails/),
+    report: red("options-unknown", "asserts", /inside a callback of failing at line \d+:\d+, which does not resolve to vitest's describe \/ suite/),
+  },
+  {
+    id: "r-u62g2-i1-foreach-holder",
+    routed: "u62 gate-2 I1.3 invariant, the fail-closed cost: a case inside a forEach callback (no holder in test/** today)",
+    source: { body: `  [0].forEach(() => {\n    it("${PIN}", () => {\n      expect(1).toBe(1);\n    });\n  });` },
+    oracle: RUNS,
+    verdict: OK,
+    report: red("options-unknown", "asserts", /inside a callback of \[0\]\.forEach at line \d+:\d+, which does not resolve to vitest's describe \/ suite/),
+  },
 ];
 
 /** it.each / it.for pins: each-liveness (05:42Z) is the runner's case count at the template's call site, once per table row (13:36Z). */
@@ -818,6 +890,38 @@ const ASSERT_ROWS: readonly Row[] = [
     id: "a-u62-assert-or-throw",
     routed: "u62 report-mode control: one branch asserts and the other throws (every path that passes asserts)",
     source: { body: `  it("${PIN}", () => {\n    if (Date.now() > 0) {\n      expect(1).toBe(1);\n    } else {\n      throw new Error("never");\n    }\n  });` },
+    oracle: RUNS,
+    verdict: OK,
+  },
+  // u62 gate-2 U2 (cmd_337abda7b0e2): a break leaving an enclosing labeled NON-loop block before the first assertion is a
+  // strict exit of that block; the break lands right after the block, so the walk resumes there.
+  {
+    id: "a-u62g2-u2-labeled-break",
+    routed: "u62 gate-2 U2 a break out of an enclosing labeled non-loop block before the only assertion",
+    source: { body: `  it("${PIN}", () => {\n    outer: {\n      if (Date.now() > 0) break outer;\n      expect(1).toBe(1);\n    }\n  });` },
+    oracle: { kind: "vacuous" },
+    verdict: red("no-assertion", "asserts", /reached no assertion/),
+    report: red("no-assertion", "asserts", /reached only on some paths: the break at line \d+:\d+ may leave the labeled block outer before it/),
+  },
+  {
+    id: "a-u62g2-u2-assert-after-block",
+    routed: "u62 gate-2 U2 control: an assertion after the labeled block is reached on every path (the break lands before it)",
+    source: { body: `  it("${PIN}", () => {\n    outer: {\n      if (Date.now() > 0) break outer;\n      expect(1).toBe(1);\n    }\n    expect(2).toBe(2);\n  });` },
+    oracle: RUNS,
+    verdict: OK,
+  },
+  {
+    id: "a-u62g2-u2-return-after-break",
+    routed: "u62 gate-2 U2 fail-closed: a return later in the labeled block still reddens although its break lands after the block",
+    source: { body: `  it("${PIN}", () => {\n    outer: {\n      if (Date.now() < 0) break outer;\n      if (Date.now() > 0) return;\n      expect(1).toBe(1);\n    }\n    expect(2).toBe(2);\n  });` },
+    oracle: { kind: "vacuous" },
+    verdict: red("no-assertion", "asserts", /reached no assertion/),
+    report: red("no-assertion", "asserts", /may return at line \d+:\d+ before its first matcher-bearing assertion/),
+  },
+  {
+    id: "a-u62g2-u2-strict-only",
+    routed: "u62 gate-2 U2 control: an unconditional break out of a labeled try lands before the assertion (the exit is strict-only)",
+    source: { body: `  it("${PIN}", () => {\n    outer: try {\n      break outer;\n    } finally {\n      void 0;\n    }\n    expect(1).toBe(1);\n  });` },
     oracle: RUNS,
     verdict: OK,
   },
@@ -1603,10 +1707,11 @@ const ROUTED_MODES: Readonly<Record<string, readonly string[]>> = {
   "9x5.6": ["D1", "D2", "D3"],
   "6hb.11": ["J1", "J4", "SD1", "X17", "S10b", "S18", "S19", "S20", "S21", "E1", "F4", "T7", "T8"],
   "752.15": ["M1", "M2", "M3", "M4", "M5", "M6", "M7", "M9", "M10", "M11", "M12", "M13", "M14", "M15"],
+  "u62 gate-2": ["U1.1", "U1.2", "U1.3", "U1.4", "U1.5", "U2", "I1.1", "I1.2", "I1.3"],
 };
 
 /** Exact table sizes: deleting or emptying a falsifier table goes red (each-liveness of this file's own rows). */
-const TABLE_SIZES = [55, 8, 22, 35, 15, 10, 29, 34, 5, 16, 8, 14, 3];
+const TABLE_SIZES = [55, 8, 22, 39, 15, 10, 29, 34, 5, 16, 16, 14, 3];
 
 
 /**

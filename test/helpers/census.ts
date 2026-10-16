@@ -17,7 +17,11 @@
  *   must carry task locations (includeTaskLocation): the runner-located call site anchors the AST legs. What the report
  *   cannot carry, report mode reads from the source and fails closed on: the fails inversion (an inverted case is
  *   recorded as passed) and the third leg (no runtime assertion count, so an exit reachable before the first assertion
- *   reddens). A pinned file changed after the report, or a report that records the judging file itself, is refused.
+ *   reddens, a break out of a labeled block included). A pinned file changed after the report, or a report that records
+ *   the judging file itself, is refused. DESIGN INVARIANT (owner, 2026-10-16 21:29Z, the U1 lesson of record): every
+ *   value flow report mode reads fails closed to options-unknown when it cannot resolve - the inversion is read only
+ *   through a callee whose chain root is vitest's it / test (U1), inside callbacks held by vitest's describe / suite
+ *   (I1), with same-file const options; anything else is options-unknown naming what it could not resolve.
  * - EXECUTING MODE, for fixtures and non-default tiers only (never the default tier once wb-nl8 lands): judgePins
  *   EXECUTES each claimed tier's real command - the forge.toml step through its npm script, with setupFiles /
  *   globalSetup, testNamePattern, include/exclude and every CLI flag as the gate runs them (owner ruling on the 6hb.7
@@ -1315,6 +1319,8 @@ interface EvidenceScope {
    * short-circuit, catch or switch clause that routes around it, reddens even where the run did not take that path.
    */
   readonly strictExits: boolean;
+  /** Strict reading only (U2): labeled statements whose body is read again with their own breaks as plain jumps. */
+  readonly landed?: ReadonlySet<ts.LabeledStatement>;
 }
 type Exit = "none" | "return" | "jump";
 /** An assertion the strict reading sees reached on SOME paths only, and the route around it. */
@@ -1325,7 +1331,10 @@ interface Conditional {
 interface Walk {
   readonly evidence: string | undefined;
   readonly exit: Exit;
-  /** The return statement the walk may leave through before an assertion (never a throw: a throw fails the case). */
+  /**
+   * The return statement the walk may leave through before an assertion (never a throw: a throw fails the case); under
+   * the strict reading also a break leaving a labeled non-loop statement (U2), which that statement resolves.
+   */
   readonly exitAt?: ts.Node;
   /** Strict reading only: an assertion reached on some paths, while another path continues past it without one. */
   readonly conditional?: Conditional;
@@ -1647,6 +1656,15 @@ function walkSwitch(statement: ts.SwitchStatement, scope: EvidenceScope): Walk {
   return withConditional(CONTINUES, head.conditional ?? runs.find(run => run.conditional !== undefined)?.conditional);
 }
 
+/** U2: the labeled statement a labeled break leaves, when it is not a loop (a loop's break is the loop-body residual's). */
+function leftStatement(statement: ts.BreakStatement): ts.LabeledStatement | undefined {
+  const label = statement.label?.text;
+  for (let node: ts.Node = statement.parent; label !== undefined && !ts.isSourceFile(node) && !ts.isFunctionLike(node); node = node.parent) {
+    if (ts.isLabeledStatement(node) && node.label.text === label) return ts.isIterationStatement(node.statement, false) ? undefined : node;
+  }
+  return undefined;
+}
+
 function walkStatement(statement: ts.Statement, scope: EvidenceScope): Walk {
   if (ts.isBlock(statement)) return walkBlock(statement.statements, scope);
   if (ts.isExpressionStatement(statement)) return findStrict(statement.expression, scope);
@@ -1665,7 +1683,12 @@ function walkStatement(statement: ts.Statement, scope: EvidenceScope): Walk {
     return value.evidence !== undefined ? { evidence: value.evidence, exit: "return" } : { evidence: undefined, exit: "return", exitAt: statement, conditional: value.conditional };
   }
   if (ts.isThrowStatement(statement)) return { evidence: findIn(statement.expression, scope), exit: "return" };
-  if (ts.isBreakStatement(statement) || ts.isContinueStatement(statement)) return { evidence: undefined, exit: "jump" };
+  if (ts.isBreakStatement(statement) || ts.isContinueStatement(statement)) {
+    // U2: under the strict reading a break leaving a labeled NON-loop statement is a strict exit of it (exitAt = the break)
+    const left = strict(scope) && ts.isBreakStatement(statement) ? leftStatement(statement) : undefined;
+    if (left !== undefined && scope.landed?.has(left) !== true) return mayReturn(statement);
+    return { evidence: undefined, exit: "jump" };
+  }
   if (ts.isIfStatement(statement)) return walkIf(statement, scope);
   if (ts.isForOfStatement(statement) || ts.isForInStatement(statement)) {
     const head = findStrict(statement.expression, scope);
@@ -1701,6 +1724,15 @@ function walkStatement(statement: ts.Statement, scope: EvidenceScope): Walk {
   if (ts.isTryStatement(statement)) return walkTry(statement, scope);
   if (ts.isLabeledStatement(statement)) {
     const inner = walkStatement(statement.statement, scope);
+    const exit = inner.evidence === undefined ? inner.exitAt : undefined;
+    if (exit !== undefined && ts.isBreakStatement(exit) && leftStatement(exit) === statement) {
+      // U2: the break lands right after this statement, so the walk resumes there. Its body is read again with its own
+      // breaks as plain jumps: a return later in it still reddens, its assertion is reached only on some paths, and an
+      // assertion after the statement still counts on every path (no false red).
+      const rest = walkStatement(statement.statement, { ...scope, landed: new Set([...(scope.landed ?? []), statement]) });
+      if (rest.evidence !== undefined) return { ...CONTINUES, conditional: { evidence: rest.evidence, route: `the break at ${scope.a.where(exit)} may leave the labeled block ${statement.label.text} before it` } };
+      return { evidence: undefined, exit: rest.exit === "return" ? "return" : "none", exitAt: rest.exitAt, conditional: rest.conditional };
+    }
     return inner.evidence !== undefined ? inner : { evidence: undefined, exit: inner.exit === "return" ? "return" : "none", exitAt: inner.exitAt, conditional: inner.conditional };
   }
   if (ts.isSwitchStatement(statement)) return walkSwitch(statement, scope);
@@ -2203,10 +2235,18 @@ function callHolding(fn: FunctionLiteral): ts.CallExpression | undefined {
   return ts.isCallExpression(parent) && parent.arguments.some(argument => argument === node) ? parent : undefined;
 }
 
+/** A call's callee as written (whitespace collapsed, clipped), so an options-unknown red names what it could not resolve. */
+function calleeText(call: ts.CallExpression, a: SourceAnalysis): string {
+  const text = call.expression.getText(a.sf).replace(/\s+/g, " ");
+  return text.length > 60 ? `${text.slice(0, 57)}...` : text;
+}
+
 /**
  * The fails flag the report cannot carry, read from the source the way vitest 4 merges it: the case's chain modifiers
  * (it.fails, through const aliases), then each enclosing suite's options outermost first and the case's own options last
- * (options override the chain). Fail-closed: options or enclosing suites it cannot read statically are unknown.
+ * (options override the chain). Fail-closed: options or enclosing suites it cannot read statically are unknown, an
+ * enclosing callback whose holder is not vitest's describe / suite included (I1). judgeReported calls it only for a
+ * callee whose chain root resolves to vitest's it / test (U1).
  */
 function inversionHazard(call: ts.CallExpression, a: SourceAnalysis): { readonly kind: "inverted" | "unknown"; readonly detail: string } | undefined {
   const suites: ts.CallExpression[] = [];
@@ -2217,6 +2257,11 @@ function inversionHazard(call: ts.CallExpression, a: SourceAnalysis): { readonly
     if (holder === undefined) return { kind: "unknown", detail: `the case is registered inside a function at ${a.where(parent)} that is not a suite callback, so report mode cannot read the enclosing suites' fails` };
     const api = registrationApi(holder, a);
     if (api === "describe" || api === "suite") suites.unshift(holder);
+    // I1 (the design invariant): any other holder - a wrapper function, an object-held describe, an array's forEach - may
+    // itself register a suite with fails that the source does not show, so the enclosing suites are unreadable.
+    if (!suites.includes(holder)) {
+      return { kind: "unknown", detail: `the case is registered inside a callback of ${calleeText(holder, a)} at ${a.where(holder)}, which does not resolve to vitest's describe / suite, so report mode cannot read whether it registers a suite with fails` };
+    }
   }
   let state: boolean | "unknown" | undefined;
   let source = "";
@@ -2291,7 +2336,12 @@ function judgeReported(pin: CasePin, context: ReportContext): PinVerdict {
   const registered = new Set(module.tests.map(test => `${test.line}:${test.column}`));
   const call = place.call;
   const fn = call === undefined ? undefined : caseFunction(call, a);
-  const inversion = call === undefined ? undefined : inversionHazard(call, a);
+  // U1 (the design invariant): the inversion is read only through a callee whose chain root resolves to vitest's it /
+  // test; any other callee (object-held, destructured, function-returned, class-static, Object.assign-built ...) may
+  // carry fails the source does not show, so it is options-unknown below, naming the callee - never read as no fails.
+  const api = call === undefined ? undefined : registrationApi(call, a);
+  const readable = api === "it" || api === "test";
+  const inversion = call === undefined || !readable ? undefined : inversionHazard(call, a);
   if (inversion?.kind === "inverted") return verdict(pin, "asserts", "inverted", inversion.detail, count);
   for (const test of place.cases) {
     if (test.state === "failed") return verdict(pin, "asserts", "failed", `the case failed in the ${tier} report: ${test.errors[0] ?? "no error message"}`, count);
@@ -2315,6 +2365,10 @@ function judgeReported(pin: CasePin, context: ReportContext): PinVerdict {
   }
   if (call === undefined) return verdict(pin, "asserts", "unmapped-location", "the report's location maps to no call expression", count);
   if (fn === undefined) return verdict(pin, "asserts", "body-unresolved", `the case function at ${a.where(call)} is not statically resolvable`, count);
+  if (!readable) {
+    const route = "report mode follows const aliases, .each / .for heads, test.extend and namespace imports";
+    return verdict(pin, "asserts", "options-unknown", `the registration ${calleeText(call, a)} at ${a.where(call)} does not resolve to vitest's it / test (${route}), so report mode cannot read its fails, which the report does not record`, count);
+  }
   const cause = chainCause(call, fn, a, registered, context.sources);
   if (cause !== undefined) return verdict(pin, "runs-where", cause.code, cause.detail, count);
   const symbols = contextSymbols(fn, contextIndex(call), a);
