@@ -271,8 +271,9 @@ export interface WorkflowHost {
   /**
    * The effect class this host's registry declares for a capability, stamped
    * into the node's journal entry so a later resume can admit a "read" replay
-   * and refuse everything else. A host without it records no class, which a
-   * resume treats as "run live, never replay" — the pre-policy semantics.
+   * and refuse everything else. A host without it records no class, and a
+   * resume treats an unclassified entry fail-closed, as an uncertain effect: it
+   * neither replays nor re-runs it, exactly as for a recorded non-read class.
    */
   describeNodeEffect?(capabilityId: string): CapabilityDescriptor["effectClass"] | undefined;
 }
@@ -1256,10 +1257,10 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
      * invoke time and the host's replay basis, and admitted on resume per that
      * class: a "read" may come back from the journal under the same basis —
      * marked stale, never fresh — while any other
-     * recorded effect stops the run with an uncertain-effect diagnostic naming
-     * the owning producer. The one thing a resume never does is re-execute a
-     * journaled effect, so a position with no safe answer fails rather than
-     * runs.
+     * recorded effect, and an entry recorded with no class at all, stops the run
+     * with an uncertain-effect diagnostic naming the owning producer. The one
+     * thing a resume never does is re-execute a journaled effect, so a position
+     * with no safe answer fails rather than runs.
      */
     async function handleNode(callId: number, payload: NodeCallPayload): Promise<void> {
       // Treat worker messages as untrusted protocol frames; an escaping script
@@ -1289,8 +1290,9 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
         currentEffect = host.describeNodeEffect?.(payload.capabilityId);
       } catch {
         // A throwing describe is a host bug. Recording no class keeps the safe
-        // path — never replay, refuse on a recorded effect — rather than
-        // taking the run down for a lookup the call itself never needed.
+        // path — never replay, refuse on a recorded effect, and a later resume
+        // stops at the unclassified entry — rather than taking the run down
+        // for a lookup the call itself never needed.
         currentEffect = undefined;
       }
       /** Key over capability + input; undefined when the input cannot stringify. */
@@ -1321,7 +1323,15 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
         const producer = producerOf(recordedCapability);
         const tail = `Reconcile with ${producer} before resuming: inspect its native evidence and acknowledge or override the position explicitly with workflow_reconcile (position ${index}), or re-run without resumeFromRunId for a fresh run.`;
         let refusal: { entry: WorkflowJournalEntry; hint: string } | undefined;
-        if (recorded.effectClass !== undefined && recorded.effectClass !== "read") {
+        if (recorded.effectClass === undefined) {
+          // Fail closed (wb-tu1): an entry nobody classified — an older journal,
+          // or a host that declared nothing — is an uncertain effect, not a
+          // read. Today's declaration cannot vouch for what that call did then.
+          refusal = {
+            entry: recorded,
+            hint: `node(${recordedCapability}) at position ${index} was recorded by the resumed run with no effect class (producer "${producer}"). An unclassified journaled node is an uncertain effect: it is never re-executed or silently replayed. ${tail}`,
+          };
+        } else if (recorded.effectClass !== "read") {
           refusal = {
             entry: recorded,
             hint: `node(${recordedCapability}) at position ${index} was recorded by the resumed run with effect class "${recorded.effectClass}" (producer "${producer}"). A journaled SDK effect is never re-executed or silently replayed. ${tail}`,
@@ -1360,9 +1370,9 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
         // class and the current host's declaration, under the same host basis.
         // An answer read under another workspace, grant set or manifest is
         // another contract's answer, so a basis mismatch runs live, as it does
-        // for an agent. An entry recorded with no class keeps the pre-policy
-        // semantics — run live, never replay. The refusals above are not gated
-        // on the basis: no policy change licenses re-running a journaled effect.
+        // for an agent. An entry recorded with no class never gets this far: it
+        // refused above, fail-closed. The refusals above are not gated on the
+        // basis: no policy change licenses re-running a journaled effect.
         if (
           recorded.effectClass === "read" && currentEffect === "read" && recorded.basis === hostBasis &&
           prefixIntact && key !== undefined && recorded.key === key &&
@@ -1404,9 +1414,14 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
         emit([{ ...base, startedAt: at, lastProgressAt: at, durationMs: 0, state: "error", error: admission.hint,
           reconcile: {
             state: "pending", position: index, capabilityId: pendingCapability,
-            effectClass: admission.entry.effectClass !== undefined && admission.entry.effectClass !== "read"
-              ? admission.entry.effectClass
-              : currentEffect ?? admission.entry.effectClass ?? "",
+            // The record's own class; a read refused under a changed contract
+            // names the class the capability now declares; an unclassified
+            // record names none — never today's declaration for it.
+            effectClass: admission.entry.effectClass === undefined
+              ? ""
+              : admission.entry.effectClass !== "read"
+                ? admission.entry.effectClass
+                : currentEffect ?? admission.entry.effectClass,
             producer: producerOf(pendingCapability), key: admission.entry.key, entryDigest: entryDigestOf(admission.entry),
             ...(admission.entry.nativeRefs !== undefined ? { nativeRefs: [...admission.entry.nativeRefs] } : {}),
             decisions: { acknowledged: decisions?.acks.length ?? 0, overridesLive, overridesSpent: decisions?.spent.size ?? 0 },

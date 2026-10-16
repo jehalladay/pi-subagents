@@ -6,7 +6,7 @@ import { isAbsolute } from "node:path";
 import { createSdkMcpServer, type McpSdkServerConfigWithInstance, tool } from "@anthropic-ai/claude-agent-sdk";
 import type { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
 import { z } from "zod";
-import { type CapabilityDescriptor, CapabilityError, type CapabilityRegistry, type InvocationContext, type JsonValue, validatedCapabilityJson } from "./capability-registry.js";
+import { type CapabilityDescriptor, CapabilityError, type CapabilityRegistry, capabilityInputPath, findPrototypePollutionKey, type InvocationContext, type JsonValue, type PrototypePollutionKey, prototypePollutionMessage, validatedCapabilityJson } from "./capability-registry.js";
 import { redactWorkbenchText, sanitizeWorkbenchJson } from "./redaction.js";
 
 export const CLAUDE_CAPABILITY_TOOL_NAMES = ["capability_discover", "capability_contract", "capability_invoke"] as const;
@@ -29,6 +29,25 @@ const ID = /^[a-z][a-z0-9]*(?:[.-][a-z][a-z0-9]*)+$/;
 const VERSION = /^\d+\.\d+\.\d+$/;
 const idSchema = z.string().max(200).regex(ID);
 const versionSchema = z.string().max(64).regex(VERSION);
+/**
+ * zod's record parse silently drops a declared __proto__ key, so the RAW capability input is scanned with the
+ * registry's own predicate before that parse runs. A finding replaces the input with a token no JSON caller can
+ * forge, and the handler turns the token into the registry's refusal text through the sanitized reply path.
+ */
+const rawPrototypeKeys = new WeakMap<object, PrototypePollutionKey>();
+const RAW_PROTOTYPE_KEY = "rawPrototypeKey";
+const inputSchema = z.preprocess(raw => {
+  const key = findPrototypePollutionKey(raw);
+  if (key === undefined) return raw;
+  const token = Object.freeze({});
+  rawPrototypeKeys.set(token, key);
+  return { [RAW_PROTOTYPE_KEY]: token };
+}, z.record(z.string(), z.unknown()));
+function refuseRawPrototypeKey(capabilityId: string, input: Record<string, unknown>): void {
+  const token = Object.hasOwn(input, RAW_PROTOTYPE_KEY) ? input[RAW_PROTOTYPE_KEY] : undefined;
+  const key = typeof token === "object" && token !== null ? rawPrototypeKeys.get(token) : undefined;
+  if (key !== undefined) throw new CapabilityError("validation", prototypePollutionMessage(capabilityInputPath("invoke", capabilityId), key));
+}
 
 export function createCuratedTools(options: CuratedToolOptions): McpSdkServerConfigWithInstance {
   const { registry, signal, beforeDispatch } = options;
@@ -67,7 +86,8 @@ export function createCuratedTools(options: CuratedToolOptions): McpSdkServerCon
     const bounded = validatedCapabilityJson(payload, "Claude tool output", 32, maxOutputBytes);
     return { content: [{ type: "text", text: JSON.stringify(validatedCapabilityJson(sanitizeWorkbenchJson(bounded), "Claude redacted output", 32, maxOutputBytes)) }], ...(isError ? { isError: true } : {}) };
   }
-  async function run(args: unknown, extra: unknown, dispatch: (context: InvocationContext) => Promise<JsonValue>): Promise<CallToolResult> {
+  /** `refuseInput` decides on the raw capability input first, before bounds, host pins or grants are consulted. */
+  async function run(args: unknown, extra: unknown, dispatch: (context: InvocationContext) => Promise<JsonValue>, refuseInput?: () => void): Promise<CallToolResult> {
     const controller = new AbortController();
     const nativeSignal = extra && typeof extra === "object" && "signal" in extra && extra.signal instanceof AbortSignal ? extra.signal : undefined;
     const abort = () => controller.abort();
@@ -77,6 +97,7 @@ export function createCuratedTools(options: CuratedToolOptions): McpSdkServerCon
     try {
       const callNumber = ++calls;
       if (callNumber > maxCalls) throw new CapabilityError("authorization", "Claude capability call quota exhausted.");
+      refuseInput?.();
       validatedCapabilityJson(args, "Claude tool input", 32, maxInputBytes);
       if (controller.signal.aborted) throw new CapabilityError("transport", "Claude capability request cancelled.");
       await beforeDispatch?.();
@@ -117,7 +138,7 @@ export function createCuratedTools(options: CuratedToolOptions): McpSdkServerCon
         return { kind: "returned", value: await registry.inspect(args.capabilityId, args.ref, context) };
       })),
       tool("capability_invoke", "Invoke one role-exposed capability at its exact contract version under independent host and producer grants. Preserve native status and evidence.", {
-        capabilityId: idSchema, capabilityVersion: versionSchema, input: z.record(z.string(), z.unknown()),
+        capabilityId: idSchema, capabilityVersion: versionSchema, input: inputSchema,
       }, async (args, extra) => run(args, extra, async (context): Promise<JsonValue> => {
         requireGrant(`invoke:${args.capabilityId}`);
         const descriptor = descriptorFor(args.capabilityId);
@@ -128,7 +149,7 @@ export function createCuratedTools(options: CuratedToolOptions): McpSdkServerCon
         try { encoded({ kind: "returned", value }); }
         catch (error) { if (descriptor.effectClass !== "read") throw new CapabilityError("uncertain-effect", "Native effect completed without a bounded usable answer; reconcile with the producer before retrying."); throw error; }
         return { kind: "returned", value };
-      })),
+      }, () => refuseRawPrototypeKey(args.capabilityId, args.input))),
     ],
   });
 }

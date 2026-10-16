@@ -22,7 +22,7 @@ const TEXT = 'real context text SECRET-CONTEXT-BODY api_key=sk-live-abcdef012345
 const scope: ObservationScope = {workspace: WS, principal: 'local-operator:tester'};
 const context: ReactiveFiberTopologyContext = {scope, seam: 'rf-cli', capturedAt: '2026-10-15T10:00:00Z', observedAt: '2026-10-15T10:00:01Z'};
 const operationRef: NativeRef = {provider: 'pi-workflow', type: 'node-call', id: 'wf_rf_1:0'};
-const UNSAFE = /[\u0000-\u001f\u007f-\u009f‪-‮⁦-⁩]/;
+const UNSAFE = /[\u0000-\u001f\u007f-\u009f\u202A-\u202E\u2066-\u2069]/;
 const LIFECYCLE = /ownership|causation|dependency|hypothesis|nativeConfirmationRef/;
 const digestOf = (text: string): string => createHash('sha256').update(text).digest('hex');
 
@@ -232,7 +232,7 @@ describe('ReactiveFiber render preview reader adapter', () => {
 
   it('R6: host-supplied text is routed through the shared sanitizers: an unsafe invocation id or scope is refused before anything projects', () => {
     expect(refusal(reading(), {...context, invocationId: 'wf\u001b[31m'}).category).toBe('validation');
-    expect(refusal(reading(), {...context, scope: {workspace: WS, principal: 'a‮b'}}).category).toBe('validation');
+    expect(refusal(reading(), {...context, scope: {workspace: WS, principal: 'a\u202Eb'}}).category).toBe('validation');
     expect(refusal(reading(), {...context, capturedAt: 'yesterday'}).category).toBe('validation');
     expect(refusal(reading(), {...context, operationRef: {provider: 'pi\u0007', type: 'node-call', id: 'x'}}).category).toBe('validation');
   });
