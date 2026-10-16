@@ -26,10 +26,12 @@ import { safeWorkflowTerminalText } from "../src/ui/workflow-card.js";
 import { selectAttention } from "../src/workbench/attention.js";
 import { type BeadsReadClient, projectBeadsWork, readBeadsWork } from "../src/workbench/beads-observer.js";
 import { type CapabilityDescriptor, CapabilityError, type JsonValue } from "../src/workbench/capability-registry.js";
+import { readClaudeMessageEvidence } from "../src/workbench/claude-evidence.js";
 import { type ClaudeTopologyInput, projectClaudeTopology } from "../src/workbench/claude-topology.js";
 import type { WorkflowSource } from "../src/workbench/designer.js";
 import { projectDetachedReading } from "../src/workbench/detached-observer.js";
 import { type EvidenceLoader, EvidenceStore } from "../src/workbench/evidence-loader.js";
+import { buildWorkflowExecuteReply, decideExecute, EXECUTE_GRANT, type ExecuteDecision, type LaunchOutcome, type WorkflowExecuteRequest } from "../src/workbench/execute.js";
 import { readForgeOperationEvidence } from "../src/workbench/forge-evidence.js";
 import { forgeGateTopology } from "../src/workbench/forge-observer.js";
 import { readFurnaceAttemptLogEvidence } from "../src/workbench/furnace-evidence.js";
@@ -441,6 +443,24 @@ async function storeTexts(raw: string): Promise<string[]> {
   return [...entry.preview, entry.kind, entry.producerReceipt ?? ""];
 }
 
+/**
+ * DIRECT-CALLER row (wb-6ze.10 O1, owner 2026-10-16T01:36Z): claude-evidence.ts sanitizeRow calls the one helper with the
+ * lines layout over the whole selected transcript row, and the bounded preview lines are its display. The injected read
+ * seam hands the reader the producer's raw row text, as the furnace driver hands its reader a raw log line.
+ */
+async function claudeEvidenceTexts(raw: string): Promise<string[]> {
+  const uuid = "00000000-0000-4000-8000-0000000000c1";
+  const ref = `claude-message:${uuid}`;
+  const content = await readClaudeMessageEvidence(ref, {
+    grants: () => ["claude:transcript"],
+    owningNode: { nativeRef: { provider: "claude-agent-sdk", type: "session", id: "sess-corpus" }, evidenceRefs: [ref], freshness: "current" },
+    readTranscript: async () => [{ type: "assistant", uuid, text: raw }],
+    cwd: "/tmp/claude-evidence-ws", maxMessages: 40, maxBytes: 65_536, maxLines: 200,
+    signal: new AbortController().signal, capturedAt: () => NOW,
+  });
+  return [...content.preview];
+}
+
 function detachedTexts(raw: string): string[] {
   const host = "a1".repeat(24);
   const operator = { issuer: "local-os-dac", uid: 1000, id: "local-os:uid:1000" } as const;
@@ -476,6 +496,40 @@ function replyTexts(raw: string): string[] {
   const catalog = buildWorkflowCatalogReply(snapshot, ["discover:forge.build"], {});
   const inspect = buildWorkflowInspectReply(snapshot, ["inspect:forge.build"], "forge.build");
   return [catalog, inspect].flatMap(reply => [...strings(reply), ...strings(JSON.parse(sanitizeWorkbenchJsonText(reply)))]);
+}
+
+/**
+ * DIRECT-CALLER row (wb-69g.5 respin U1, BOUNDARY 21:00Z F6 rule; cax.13 O1 precedent): site 12 is execute.ts itself, not the
+ * sanitizeWorkbenchJsonText proxy above. buildWorkflowExecuteReply renders five display paths, and its policy echo goes through
+ * sanitizeWorkbenchJson, which names no layout, so this row drives the real reply through every one with the probe as the only
+ * hostile member: the launch reason, a policy value and key, a native reference id and scope, the definition id, and the
+ * invocation reference (admitted and refused replies). An identity member refuses unsafe text typed rather than deleting it, so
+ * its typed refusal is what is displayed then.
+ */
+function executeTexts(raw: string): string[] {
+  const definition = { kind: "script" as const, id: "review.js", schemaVersion: WORKFLOW_SCRIPT_SCHEMA_VERSION, artifactDigest: `sha256:${"e".repeat(64)}` };
+  const ref: NativeRef = { provider: "furnace", type: "run", id: "frn-run-execute", scope: "/tmp/execute-ws" };
+  const decide = (overrides: Partial<WorkflowExecuteRequest>, invocationId = "inv-execute-corpus", grants = [EXECUTE_GRANT]): ExecuteDecision =>
+    decideExecute({ definitionRef: { ...definition }, input: { topic: "corpus" }, hostMode: "embedded", ...overrides }, { grants, invocationId });
+  const shown = (decision: ExecuteDecision, outcome: LaunchOutcome): string[] => {
+    try {
+      return strings(buildWorkflowExecuteReply(decision, outcome));
+    } catch (error) {
+      // A native reference carrying an unsafe unit is a typed host defect; its constant message is the display.
+      if (error instanceof CapabilityError) return [error.message];
+      throw error;
+    }
+  };
+  const paths = [
+    shown(decide({}), { status: "refused", reason: raw }),
+    shown(decide({ policy: { note: raw, [raw]: raw } }), { status: "launched", nativeRefs: [ref] }),
+    shown(decide({}), { status: "launched", nativeRefs: [{ ...ref, id: raw, scope: raw }] }),
+    shown(decide({ definitionRef: { ...definition, id: raw } }), { status: "accepted" }),
+    shown(decide({}, raw), { status: "launched", nativeRefs: [ref] }),
+    shown(decide({}, raw, []), { status: "accepted" }),
+  ];
+  if (paths.some(texts => texts.length === 0)) throw new Error("an execute display path produced no text");
+  return paths.flat();
 }
 
 /** Site 22: observe-query.ts clean(), through every producer string of a workflow_observe reply node. */
@@ -539,8 +593,10 @@ const SITES: readonly Site[] = [
   { site: "site 10 beads-observer.ts cleanText (readBeadsWork, projectBeadsWork)", texts: beadsTexts },
   { site: "site 15 furnace-evidence.ts sanitize (readFurnaceAttemptLogEvidence)", texts: furnaceEvidenceTexts },
   { site: "site 16 evidence-loader.ts safeChunks (EvidenceStore)", texts: storeTexts },
+  { site: "claude-evidence.ts sanitizeRow (readClaudeMessageEvidence preview lines)", texts: claudeEvidenceTexts },
   { site: "site 18 detached-observer.ts shown (projectDetachedReading)", texts: detachedTexts },
   { site: "sites 19/20 workflow_inspect and workbench_catalog replies", texts: replyTexts },
+  { site: "site 12 execute.ts buildWorkflowExecuteReply (DIRECT-CALLER: reason, policy value and key, native reference id and scope, definition id, invocation reference)", texts: executeTexts },
   { site: "site 22 observe-query.ts clean (observeInvocation)", texts: observeTexts },
   { site: "wb-h8f.10 latency.ts displayText (selectLatencyDecomposition provider and evidence paths)", texts: latencyTexts },
 ];
@@ -681,7 +737,8 @@ describe("wb-952 the one helper: normalize once, redact the union of every readi
     }
   });
 
-  // redactWorkbenchText's own second-pass shape (a closing brace after a marker) is wb-3l3's, held behind this bead.
+  // redactWorkbenchText's own second pass keeps a marker before closing brackets and a value end, and otherwise only
+  // over-redacts (wb-3l3, pinned in workbench-redaction.test.ts).
   it("leaves nothing unsafe after one pass, so a second pass is the plain redactor and exposes nothing", () => {
     for (const probe of CORPUS) {
       for (const layout of ["text", "label", "terminal", "lines"] as const) {
