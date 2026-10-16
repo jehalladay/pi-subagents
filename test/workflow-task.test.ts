@@ -175,6 +175,19 @@ describe("replay provenance in the task summary", () => {
     expect(text).toMatch(/1 node call[^.]*without effect metadata/);
     expect(describeResumeJournal("wf_prior1", [{ index: 0, key: "a", ok: true, text: "x" }])).not.toMatch(/journaled effect|without effect metadata|node read/);
   });
+
+  it("says a node call journaled without effect metadata stops the resume, never that it runs live (wb-tu1)", () => {
+    // The notice exists so a refusal halfway through is no surprise; since the
+    // runtime fails closed on an unclassified node, promising a live re-run
+    // would be exactly that surprise.
+    const text = describeResumeJournal("wf_prior1", [
+      { index: 0, key: "u", ok: true, kind: "node", capabilityId: "legacy.op" },
+      { index: 1, key: "v", ok: false, kind: "node", capabilityId: "legacy.op" },
+    ]);
+    expect(text).toMatch(/2 node calls without effect metadata will stop the resume at its position/);
+    expect(text).toContain("uncertain effect");
+    expect(text).not.toMatch(/run live/);
+  });
 });
 
 describe("operator reconcile provenance in the task summary", () => {

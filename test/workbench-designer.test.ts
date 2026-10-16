@@ -150,7 +150,7 @@ it("named expression scopes and destructuring mutation are not false host primit
 
 describe("W17 cohort identity and per-metric verdicts (wb-pno)", () => {
   const SECRET = "wb-pno-fixture-private-value";
-  const hostile = `UNTRUSTED \u001b[31mred\u001b[0m ‮evil‬ ⁦bidi⁩ api_key=${SECRET}`;
+  const hostile = `UNTRUSTED \u001b[31mred\u001b[0m \u202Eevil\u202C \u2066bidi\u2069 api_key=${SECRET}`;
   type Confound = { field: string; kind: string; reason: string };
   /** Re-pin a receipt after changing snapshot or definition fields so its deployment digest stays internally consistent. */
   function repin(base: CompareRun, snapshotChanges: Partial<InvocationSnapshot> = {}, definitionChanges: Partial<InvocationSnapshot["identity"]["definition"]> = {}, identityChanges: Partial<InvocationSnapshot["identity"]> = {}): CompareRun {
