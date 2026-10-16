@@ -18,15 +18,16 @@
  * status-only change re-reads the window but no relations; a topology change re-reads the pages once and shares every
  * unchanged neighborhood by identity, so a renderer re-lays out only what changed.
  *
- * Labels are producer text and pass the shared sanitizers (redaction.ts): control characters, bidi marks and every
- * default-ignorable code point are first read as SEPARATORS (and, in a second variant, deleted), the text is redacted in
- * both variants, the variant that redacted more is kept, then it is stripped and bounded. Deletion never precedes the
- * redaction of the only variant that carries it. Keys and native references are the projection's own bounded identities,
- * copied unchanged so a consumer can resolve them.
+ * Labels are producer text. Every display string (node label, status and provider, the provenance source of an edge or a
+ * reference, the provider/type/id reference form a label falls back to, supernode and partial labels) goes through the ONE
+ * shared helper, sanitizeWorkbenchText from redaction.ts, with its NAMED "label" layout and nothing composed before it: the
+ * helper redacts every reading of every unsafe unit (a separator between two tokens or glued inside one) before it strips
+ * anything, so no reading is chosen over another and producer text cannot pick one. Keys and native references are the
+ * projection's own bounded identities, copied unchanged so a consumer can resolve them; they are not display text.
  */
 import { CapabilityError } from "./capability-registry.js";
 import type { NativeRef, ObservationProjection, ObservationScope, ObservedNode, Presentation, Relation, RelationKind } from "./observation.js";
-import { redactWorkbenchText, stripUnsafeText } from "./redaction.js";
+import { sanitizeWorkbenchText } from "./redaction.js";
 
 export const GRAPH_VIEW_CONTRACT = "workbench.graph-view/v1";
 export type GraphReader = Pick<ObservationProjection, "window" | "relationsPage" | "relationRevision">;
@@ -139,9 +140,6 @@ const MAX_REFERENCES = 200;
 const LABEL = 80;
 /** Producer text scanned for a label; anything later is never shown. */
 const LABEL_SCAN = 4_096;
-const REDACTED = "[REDACTED]";
-const INVISIBLE = /\p{Default_Ignorable_Code_Point}/gu;
-const LINE_SEPARATORS = /[\u2028\u2029]/g;
 /** A UTF-16 code unit orphaned when a length bound cuts through a surrogate pair. */
 const LONE_SURROGATE = /[\ud800-\udbff](?![\udc00-\udfff])|(?<![\ud800-\udbff])[\udc00-\udfff]/g;
 
@@ -192,21 +190,12 @@ function validated(request: GraphViewRequest): Bounds {
   };
 }
 
-const spaces = (value: string): string => value.replace(/\s+/g, " ").trim();
-const redactedCount = (value: string): number => value.split(REDACTED).length - 1;
-
-/** Producer text bound for display. Controls, bidi marks, terminal sequences and default-ignorable code points are read
- * as separators first; the text is redacted both with them as separators and with the ignorables deleted, and the variant
- * that redacted more is kept (the separator reading on a tie), so neither a deleted character nor a glued separator can
- * hide a credential from the redactor. The shared strip and the length bound follow. May be empty; callers choose the
- * fallback. */
+/** Producer text bound for display: the one shared helper's named "label" layout over the scanned prefix, bounded to 80,
+ * with nothing before it; after it only a code unit the bound orphaned from a surrogate pair is dropped. May be empty;
+ * callers choose the fallback. */
 function shown(value: unknown): string {
   if (typeof value !== "string") return "";
-  const separated = stripUnsafeText(value.slice(0, LABEL_SCAN), " ").replace(LINE_SEPARATORS, " ");
-  const asSeparators = redactWorkbenchText(spaces(separated.replace(INVISIBLE, " ")), LABEL);
-  const deleted = redactWorkbenchText(spaces(separated.replace(INVISIBLE, "")), LABEL);
-  const kept = redactedCount(deleted) > redactedCount(asSeparators) ? deleted : asSeparators;
-  return stripUnsafeText(kept).replace(LONE_SURROGATE, "").trim();
+  return sanitizeWorkbenchText(value.slice(0, LABEL_SCAN), LABEL, "label").replace(LONE_SURROGATE, "").trim();
 }
 
 function providerOf(key: string): string {
