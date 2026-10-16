@@ -121,6 +121,10 @@ timeout = 300
 command = "./node_modules/.bin/vitest run --config vitest.furnace-active.config.ts"
 timeout = 180
 
+[build.commands.headless-host-census]
+command = "node qa/workbench/headless-host-census.mjs"
+timeout = 120
+
 [build.commands.status-ledger]
 command = "node qa/workbench/status-ledger.mjs"
 timeout = 60
