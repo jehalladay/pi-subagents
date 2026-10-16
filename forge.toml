@@ -33,6 +33,10 @@ timeout = 180
 command = "./node_modules/.bin/vitest run --config vitest.furnace.config.ts"
 timeout = 180
 
+[build.commands.furnace-hosted-live]
+command = "./node_modules/.bin/vitest run --config vitest.furnace-hosted.config.ts"
+timeout = 240
+
 [build.commands.claude-live]
 command = "./node_modules/.bin/vitest run --config vitest.claude-live.config.ts"
 timeout = 210
@@ -73,9 +77,25 @@ timeout = 300
 command = "node qa/workbench/inspector-grouped-bench.mjs"
 timeout = 300
 
+[build.commands.reducer-selector-bench]
+command = "node qa/workbench/reducer-selector-bench.mjs"
+timeout = 300
+
+[build.commands.line-diff-bench]
+command = "node qa/workbench/line-diff-bench.mjs"
+timeout = 300
+
 [build.commands.local-detached-shell]
 command = "bash qa/workbench/local-detached.sh"
 timeout = 180
+
+[build.commands.local-detached-faults]
+command = "node qa/workbench/local-detached-faults.mjs"
+timeout = 240
+
+[build.commands.local-detached-shared-child]
+command = "node qa/workbench/local-detached-shared-child.mjs"
+timeout = 240
 
 [build.commands.local-detached-unit]
 command = "./node_modules/.bin/vitest run test/workbench-local-detached.test.ts"
@@ -85,6 +105,10 @@ timeout = 180
 command = "node qa/workbench/inspector-smoke.mjs"
 timeout = 120
 
+[build.commands.attention-grouped-bench]
+command = "node qa/workbench/attention-grouped-bench.mjs"
+timeout = 300
+
 [build.commands.furnace-active-observe]
 command = "./node_modules/.bin/vitest run --config vitest.furnace-active.config.ts"
 timeout = 180
@@ -92,3 +116,7 @@ timeout = 180
 [build.commands.status-ledger]
 command = "node qa/workbench/status-ledger.mjs"
 timeout = 60
+
+[build.commands.timeline-grouped-bench]
+command = "node qa/workbench/timeline-grouped-bench.mjs"
+timeout = 300
