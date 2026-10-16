@@ -85,6 +85,10 @@ timeout = 300
 command = "node qa/workbench/line-diff-bench.mjs"
 timeout = 300
 
+[build.commands.inspector-evidence-retained-bench]
+command = "node --expose-gc qa/workbench/inspector-evidence-retained-bench.mjs"
+timeout = 300
+
 [build.commands.local-detached-shell]
 command = "bash qa/workbench/local-detached.sh"
 timeout = 180
