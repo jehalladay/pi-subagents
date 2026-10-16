@@ -21,7 +21,7 @@
  * lookup retry are bounded by the receipt's disclosed constants and measured.
  *
  * The host is wired to the run's abort signal exactly as production wires it
- * (src/index.ts 2748-2755: one task abort signal passed both as the runWorkflow
+ * (src/index.ts 2762-2769: one task abort signal passed both as the runWorkflow
  * signal and as the createClaudeWorkflowHost signal), so the tier measures the
  * production cancellation path, not only runtime host.abortAgent. Each
  * agent's startedAt is the runtime's own stamp from its agent-started progress
@@ -33,7 +33,7 @@ import { execFileSync } from 'node:child_process';
 import { readFileSync, writeFileSync } from 'node:fs';
 import { getSessionInfo } from '@anthropic-ai/claude-agent-sdk';
 import { createClaudeWorkflowHost } from '../../dist/workbench/claude-host.js';
-import { redactWorkbenchText, stripUnsafeText } from '../../dist/workbench/redaction.js';
+import { sanitizeWorkbenchText } from '../../dist/workbench/redaction.js';
 import { runWorkflow } from '../../dist/workflow/runtime.js';
 import { ACK_WAIT_BOUND_MS, buildAdverseReceipt, buildPreview, SESSION_LOOKUP_BOUND_MS, servedModelFrom } from './live-adverse-receipt.mjs';
 
@@ -50,8 +50,8 @@ const MODEL_PREVIEW = 200;
 const now = () => performance.timeOrigin + performance.now();
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-/** Normalize, redact, strip control bytes, drop credential-looking key names, bound length (live-adverse-receipt.mjs buildPreview). */
-const preview = (value, max = 300) => buildPreview(value, max, { redact: redactWorkbenchText, strip: stripUnsafeText });
+/** Every receipt string goes through the shared sanitizeWorkbenchText with the named "label" layout (live-adverse-receipt.mjs buildPreview). */
+const preview = (value, max = 300) => buildPreview(value, max, { sanitize: sanitizeWorkbenchText });
 
 const summariseResult = (result) => ({
   ok: result.ok === true,
@@ -102,7 +102,7 @@ function recorder(onInit) {
 }
 
 /**
- * Production wiring (src/index.ts 2748-2755): the run abort signal is also
+ * Production wiring (src/index.ts 2762-2769): the run abort signal is also
  * the host's own signal. Production additionally passes an identity
  * re-verifying beforeDispatch, capabilities, grants, roles, invocationId and
  * principal built from src-only modules; this tier passes none of them.

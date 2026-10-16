@@ -8,7 +8,7 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { ACK_WAIT_BOUND_MS, assessAdverseJourneys, buildAdverseReceipt, buildPreview, SESSION_LOOKUP_BOUND_MS, servedModelFrom } from '../qa/workbench/live-adverse-receipt.mjs';
-import { redactWorkbenchText, stripUnsafeText } from '../src/workbench/redaction.js';
+import { sanitizeWorkbenchText } from '../src/workbench/redaction.js';
 
 const CANCELLED = 'Claude SDK query was cancelled.';
 const SID_A = '3f2a9c1e-7b64-4d0a-9e1f-0a1b2c3d4e5f';
@@ -665,7 +665,7 @@ describe('respin F1: preview normalizes before it redacts', () => {
   const SHY = String.fromCharCode(0xad);
   const RLO = String.fromCharCode(0x202e);
   const ESC = String.fromCharCode(0x1b);
-  const preview = (value: string, max = 300) => buildPreview(value, max, { redact: redactWorkbenchText, strip: stripUnsafeText });
+  const preview = (value: string, max = 300) => buildPreview(value, max, { sanitize: sanitizeWorkbenchText });
   const alnum36 = 'a1B2c3D4e5F6g7H8i9J0k1L2m3N4o5P6q7R8';
   const secretKey40 = 'wJalrXUtnFEMIK7MDENGbPxRfiCYEXAMPLEKEY12';
 
@@ -764,5 +764,79 @@ describe('respin item 3: src/index.ts line references are current', () => {
       expect(window).toMatch(/createClaudeWorkflowHost\(/);
       expect(window.match(/signal: task\.abortController\.signal/g)?.length).toBeGreaterThanOrEqual(2);
     }
+  });
+});
+
+/**
+ * wb-a2g.1 F6 pre-emption (owner ruling 00:06Z, the wb-a2g.6 U1 shape): preview() composed the sanitizer primitives locally,
+ * the class the wb-a2g.6 gate measured leaking 5,036 of 5,806 separator-corpus probes. buildPreview now routes through the
+ * landed sanitizeWorkbenchText with the NAMED "label" layout (single-line receipt fields) and carries no local unit class.
+ * Every control and invisible code point here is built with String.fromCodePoint, never typed raw.
+ */
+describe('F6 pre-emption: preview routes through sanitizeWorkbenchText "label" and survives the separator corpus', () => {
+  const cp = (code: number): string => String.fromCodePoint(code);
+  const ESC = cp(0x1b);
+  /** Units that may sit glued inside a token: the helper reads them both as separators and as nothing (redaction.ts cover). */
+  const UNITS: readonly string[] = [cp(0x07), cp(0x00), cp(0x200b), cp(0xad), cp(0x202e), cp(0xfeff), cp(0x2060), cp(0x200e), `${ESC}[31m`, `${ESC}]0;t${cp(0x07)}`];
+  /** Whitespace (VT, NEL, LS, PS) always separates, exactly as a plain space does, so it never splits a keyword: it is probed only beside a credential and in place of the Bearer space. */
+  const WHITESPACE: readonly string[] = [cp(0x0b), cp(0x85), cp(0x2028), cp(0x2029)];
+  const BODY_36 = 'a1B2c3D4e5F6g7H8i9J0k1L2m3N4o5P6q7R8';
+  const BODY_40 = 'wJalrXUtnFEMIK7MDENGbPxRfiCYEXAMPLEKEY12';
+  const TOKEN = 'abc123def456ghi789jkl';
+  const SECRETS: readonly { readonly text: string; readonly body: string; readonly gap?: number }[] = [
+    { text: `ghp_${BODY_36}`, body: BODY_36 },
+    { text: `sk-ant-api03-${BODY_36}`, body: BODY_36 },
+    { text: `github_pat_${BODY_36}`, body: BODY_36 },
+    { text: `Bearer ${TOKEN}`, body: TOKEN, gap: 6 },
+    { text: `aws_secret_access_key=${BODY_40}`, body: BODY_40 },
+    { text: `password=${TOKEN}`, body: TOKEN },
+  ];
+  /** A leak is either end of the body visible: the whole value, or twelve characters of either half. */
+  const leaks = (shown: string, body: string): boolean => shown.includes(body.slice(0, 12)) || shown.includes(body.slice(-12));
+
+  function probes(): { readonly raw: string; readonly body: string; readonly label: string }[] {
+    const out: { raw: string; body: string; label: string }[] = [];
+    for (const { text, body, gap } of SECRETS) {
+      const keyword = text.length - body.length;
+      for (const unit of [...UNITS, ...WHITESPACE]) {
+        if (UNITS.includes(unit)) for (let at = 0; at <= keyword; at++) out.push({ raw: text.slice(0, at) + unit + text.slice(at), body, label: `${text.slice(0, 6)}@${at}+U${unit.codePointAt(0)?.toString(16)}` });
+        if (gap !== undefined) out.push({ raw: text.slice(0, gap) + unit + text.slice(gap + 1), body, label: `${text.slice(0, 6)} replaces the space with U${unit.codePointAt(0)?.toString(16)}` });
+        out.push({ raw: `lead${unit}${text}`, body, label: `${text.slice(0, 6)} glued after U${unit.codePointAt(0)?.toString(16)}` });
+        out.push({ raw: `${text}${unit}tail`, body, label: `${text.slice(0, 6)} glued before U${unit.codePointAt(0)?.toString(16)}` });
+      }
+    }
+    return out;
+  }
+
+  it('shows no credential body for any unit between, inside or beside any credential keyword (zero leaks over the corpus)', () => {
+    const all = probes();
+    expect(all.length).toBeGreaterThan(800);
+    const failures = all.filter(({ raw, body }) => leaks(buildPreview(raw, 400, { sanitize: sanitizeWorkbenchText }), body)).map(({ label }) => label);
+    expect(failures).toEqual([]);
+  });
+
+  it('names the "label" layout and the receipt bound when it calls the shared helper', () => {
+    const calls: { max: number; layout: string | undefined }[] = [];
+    const recording = (text: string, max?: number, layout?: 'text' | 'terminal' | 'label' | 'lines'): string => {
+      calls.push({ max: max ?? -1, layout });
+      return sanitizeWorkbenchText(text, max, layout);
+    };
+    expect(buildPreview('plain text', 80, { sanitize: recording })).toBe('plain text');
+    expect(calls).toEqual([{ max: 80, layout: 'label' }]);
+  });
+
+  it('collapses a multi-line value to one line (the label layout), still bounded by the caller', () => {
+    expect(buildPreview('one\ntwo\r\nthree', 300, { sanitize: sanitizeWorkbenchText })).toBe('one two three');
+    expect(buildPreview('y'.repeat(900), 120, { sanitize: sanitizeWorkbenchText }).length).toBeLessThanOrEqual(120);
+  });
+
+  it('the receipt module composes no unit class of its own and the runner imports only sanitizeWorkbenchText from the helper', () => {
+    const receipt = readFileSync(new URL('../qa/workbench/live-adverse-receipt.mjs', import.meta.url), 'utf8');
+    const runner = readFileSync(new URL('../qa/workbench/live-adverse.mjs', import.meta.url), 'utf8');
+    for (const retired of ['TERMINAL_SEQUENCES', 'WHITESPACE_CONTROLS', 'INVISIBLES', 'redact(', 'strip(']) expect(receipt, retired).not.toContain(retired);
+    const redactionImports = [...runner.matchAll(/import \{([^}]*)\} from '\.\.\/\.\.\/dist\/workbench\/redaction\.js'/g)].map((match) => match[1].split(',').map((name) => name.trim()));
+    expect(redactionImports).toEqual([['sanitizeWorkbenchText']]);
+    expect(runner).toContain('sanitize: sanitizeWorkbenchText');
+    expect(runner).not.toMatch(/redactWorkbenchText|stripUnsafeText/);
   });
 });
