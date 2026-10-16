@@ -11,14 +11,14 @@
  * The invocation's root (the examined node of presentation type "workflow") carries the wall; it is not itself a
  * component, so the host provider's own entry never absorbs the whole wall and drives overhead to zero.
  *
- * Provider strings are producer text: they pass the shared sanitizers (redaction.ts) plus a zero-width strip and a
- * 64-character bound before they appear in a report. Native references are the projection's own identities, copied
+ * Provider strings are producer text: they pass the shared display helper (sanitizeWorkbenchText, label layout, in
+ * redaction.ts) and a 64-character bound before they appear in a report. Native references are the projection's own identities, copied
  * unchanged so a caller can resolve them.
  */
 import { CapabilityError } from "./capability-registry.js";
 import type { MeasuredMetric } from "./designer.js";
 import type { NativeRef, ObservationProjection, ObservationScope, ObservedNode } from "./observation.js";
-import { redactWorkbenchText, stripUnsafeText } from "./redaction.js";
+import { sanitizeWorkbenchText } from "./redaction.js";
 
 export const LATENCY_CONTRACT = "workbench.latency-decomposition/v1";
 export const LATENCY_CLASSES = Object.freeze(["model", "build", "context", "queue", "query", "host", "other"] as const);
@@ -33,7 +33,7 @@ export const LATENCY_PROVIDER_CLASSES: Readonly<Record<string, LatencyClass>> = 
   "pi-workflow": "host",
 });
 /** Why a figure is unmeasured or partial, in the order a report lists them. */
-export const LATENCY_REASONS = Object.freeze(["page-truncated", "open-intervals", "missing-intervals", "no-root-interval", "no-native-usage", "single-interval-per-node"] as const);
+export const LATENCY_REASONS = Object.freeze(["page-truncated", "open-intervals", "missing-intervals", "no-root-interval", "no-native-usage", "single-interval-per-node", "components-exceed-wall"] as const);
 export type LatencyReason = (typeof LATENCY_REASONS)[number];
 export const LATENCY_CAVEAT = "Closed source intervals only; cross-provider clocks are not reconciled and open or missing intervals are counted, never summed.";
 
@@ -91,8 +91,6 @@ const MAX_SOURCES_LISTED = 8;
 const MAX_REPORT_CHARS = 8_000;
 /** Shape of a bounded, timezone-qualified ISO-8601 instant; the host date parser alone is too lenient. */
 const ISO_INSTANT = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2}(?:\.\d{1,9})?)?(?:Z|[+-]\d{2}:\d{2})$/;
-/** Zero-width and default-ignorable characters the shared strip does not cover; deleted, never spaced. */
-const INVISIBLE = /[\u00ad\u200b-\u200f\u2060-\u2064\ufeff]/g;
 
 const refused = (message: string): CapabilityError => new CapabilityError("validation", `Latency selection refused: ${message}.`);
 const byText = (a: string, b: string): number => (a < b ? -1 : a > b ? 1 : 0);
@@ -119,12 +117,14 @@ function classOf(provider: string): LatencyClass {
   return Object.hasOwn(LATENCY_PROVIDER_CLASSES, provider) ? LATENCY_PROVIDER_CLASSES[provider] : "other";
 }
 
-/** Producer text bound for display: unsafe sequences become spaces before the shared redactor runs, invisible
- * characters are deleted, then redact and strip, then cut to `most` characters. */
+/** Producer text bound for display: the shared helper's label layout (normalize, redact, strip once, deletion never
+ * before redaction), then a cut to `most` characters that never leaves half a surrogate pair. */
 function displayText(raw: unknown, most: number): string {
   if (typeof raw !== "string") return "";
-  const spaced = stripUnsafeText(raw.slice(0, MAX_PROVIDER_SCAN).replace(INVISIBLE, ""), " ").replace(/\s+/g, " ").trim();
-  return stripUnsafeText(redactWorkbenchText(spaced)).slice(0, most);
+  const shown = sanitizeWorkbenchText(raw.slice(0, MAX_PROVIDER_SCAN), MAX_PROVIDER_SCAN, "label");
+  if (shown.length <= most) return shown;
+  const last = shown.charCodeAt(most - 1);
+  return shown.slice(0, last >= 0xd800 && last <= 0xdbff ? most - 1 : most);
 }
 
 interface Interval { startMs: number; endMs: number }
@@ -255,7 +255,9 @@ export function selectLatencyDecomposition(projection: Projection, input: Latenc
   if (truncated) overheadReasons.push("page-truncated");
   if (open > 0) overheadReasons.push("open-intervals");
   if (missing > 0) overheadReasons.push("missing-intervals");
-  const overhead: LatencyOverhead = wall.measured && overheadReasons.length === 0 ? { measured: true, ms: Math.max(0, wall.ms - unionMs(everyClosed)) } : { measured: false, reasons: overheadReasons };
+  const componentsMs = unionMs(everyClosed);
+  if (wall.measured && overheadReasons.length === 0 && componentsMs > wall.ms) overheadReasons.push("components-exceed-wall");
+  const overhead: LatencyOverhead = wall.measured && overheadReasons.length === 0 ? { measured: true, ms: wall.ms - componentsMs } : { measured: false, reasons: overheadReasons };
 
   return bounded({
     contract: LATENCY_CONTRACT,
