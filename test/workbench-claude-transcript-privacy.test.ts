@@ -430,31 +430,45 @@ describe('Claude transcript adapter privacy and bounds', () => {
 describe('SITE 21 separator corpus: readClaudeTranscript rows and the real EvidenceStore claude path (respin U1)', () => {
   const SHAPES: readonly Probe[] = [...CORPUS, ...ACCEPTANCE];
   const SCOPE: ObservationScope = { workspace: '/work', principal: 'local-operator:1:s1' };
+  const CAPTURED = '2026-10-16T00:00:00Z';
+  /** The module's ref grammar is a uuid (wb-idq): one deterministic uuid per fixture row, s-rows and p-rows apart. */
+  const corpusUuid = (kind: 's' | 'p', index: number): string => `0000000${kind === 's' ? '1' : '2'}-0000-4000-8000-${index.toString(16).padStart(12, '0')}`;
+  const GLUE_UUID = '00000003-0000-4000-8000-000000000000';
+  const STEER_UUID = '00000004-0000-4000-8000-000000000000';
   /** Two fixture messages per shape, string content (s<i>) and one text part (p<i>), under one session per shape. */
   const sessions = new Map<string, SessionMessage[]>(
     SHAPES.map((probe, index) => [
       `sess-${index}`,
       [
-        session('assistant', `s${index}`, { content: probe.raw }),
-        session('assistant', `p${index}`, { content: [{ type: 'text', text: probe.raw }] }),
+        session('assistant', corpusUuid('s', index), { content: probe.raw }),
+        session('assistant', corpusUuid('p', index), { content: [{ type: 'text', text: probe.raw }] }),
       ],
     ]),
   );
   const corpusReader = async (sessionId: string): Promise<SessionMessage[]> => [...(sessions.get(sessionId) ?? [])];
 
-  /** The host's EvidenceStore (src/index.ts builds it with no claudeRead, so its default reaches readClaudeTranscript). */
+  /** The host's EvidenceStore (src/index.ts builds it with no claudeRead, so its default reaches readClaudeTranscript). The
+   * projection holds the requesting session nodes: ownership is the requested node's own listing (wb-idq). */
+  const projection = new ObservationProjection({ maxEvents: 4096, maxNodes: 2048, maxEdges: 4, maxQuery: 4 });
   function hostStore(claudeRead: (sessionId: string, cwd: string) => Promise<readonly ClaudeTranscriptRow[]>) {
     return createWorkbenchEvidenceStore({
       grants: () => [CLAUDE_TRANSCRIPT_GRANT],
       scope: () => SCOPE,
-      projection: new ObservationProjection({ maxEvents: 4, maxNodes: 4, maxEdges: 4, maxQuery: 4 }),
+      projection,
       cwd: () => '/work',
       claudeRead,
+      now: () => new Date(CAPTURED),
     });
   }
 
   async function preview(store: ReturnType<typeof hostStore>, sessionId: string, uuid: string): Promise<readonly string[] | string> {
     const ref: NativeRef = { provider: 'claude-agent-sdk', type: 'session', id: sessionId };
+    projection.refresh({
+      source: ref, scope: SCOPE, capturedAt: CAPTURED, observedAt: CAPTURED,
+      node: { title: `Claude ${sessionId}`, type: 'agent', statusText: 'running', statusTone: 'active' },
+      trace: { invocationId: 'wf-privacy' },
+      evidenceRefs: [`claude-message:${uuid}`],
+    });
     await store.request(SCOPE, ref, `claude-message:${uuid}`);
     const entry = store.get(SCOPE, ref, `claude-message:${uuid}`);
     return entry.state === 'loaded' ? entry.preview : `state ${entry.state}`;
@@ -477,12 +491,12 @@ describe('SITE 21 separator corpus: readClaudeTranscript rows and the real Evide
       // The inversion, demonstrated with the shared primitives (redact, delete, redact again): the token reaches the output.
       const inverted = redactWorkbenchText(stripUnsafeText(redactWorkbenchText(raw, Number.MAX_SAFE_INTEGER)), Number.MAX_SAFE_INTEGER);
       expect(inverted, raw).toContain(secret);
-      const { read } = fixtureReader([session('assistant', 'glue', { content: raw })]);
+      const { read } = fixtureReader([session('assistant', GLUE_UUID, { content: raw })]);
       const [row] = await readClaudeTranscript('native-session', '/work', 40, read);
       expect(row?.text, raw).toBe(helperLines(raw));
       expect(row?.text, raw).not.toContain(secret);
       const store = hostStore((sessionId, cwd) => readClaudeTranscript(sessionId, cwd, 40, read));
-      const shown = await preview(store, 'native-session', 'glue');
+      const shown = await preview(store, 'native-session', GLUE_UUID);
       expect(Array.isArray(shown), `${raw} loads through the store`).toBe(true);
       for (const line of Array.isArray(shown) ? shown : []) expect(line, raw).not.toContain(secret);
     }
@@ -510,7 +524,7 @@ describe('SITE 21 separator corpus: readClaudeTranscript rows and the real Evide
     expect(steered).toHaveLength(120);
     const reader = async (sessionId: string): Promise<SessionMessage[]> => {
       const index = Number(sessionId.slice('steer-'.length));
-      return [session('assistant', 'steer', { content: steered[index]?.raw ?? '' })];
+      return [session('assistant', STEER_UUID, { content: steered[index]?.raw ?? '' })];
     };
     const store = hostStore((sessionId, cwd) => readClaudeTranscript(sessionId, cwd, 40, reader));
     const failures: string[] = [];
@@ -518,7 +532,7 @@ describe('SITE 21 separator corpus: readClaudeTranscript rows and the real Evide
       const [row] = await readClaudeTranscript(`steer-${index}`, '/work', 40, reader);
       if (row?.text !== helperLines(raw)) failures.push(`${secret}: row is not the helper's lines output`);
       if (row?.text.includes(secret)) failures.push(`${secret}: leaked on the viewer`);
-      const shown = await preview(store, `steer-${index}`, 'steer');
+      const shown = await preview(store, `steer-${index}`, STEER_UUID);
       if (typeof shown === 'string') failures.push(`${secret}: ${shown}`);
       else if (shown.some(line => line.includes(secret))) failures.push(`${secret}: leaked through the store`);
     }
@@ -530,7 +544,7 @@ describe('SITE 21 separator corpus: readClaudeTranscript rows and the real Evide
     let checked = 0;
     for (const [index, probe] of SHAPES.entries()) {
       const rows = await readClaudeTranscript(`sess-${index}`, '/work', 40, corpusReader);
-      if (rows.map(row => row.uuid).join(',') !== `s${index},p${index}`) failures.push(`${probe.id}: rows ${rows.map(row => row.uuid).join(',')}`);
+      if (rows.map(row => row.uuid).join(',') !== `${corpusUuid('s', index)},${corpusUuid('p', index)}`) failures.push(`${probe.id}: rows ${rows.map(row => row.uuid).join(',')}`);
       for (const row of rows) {
         checked += 1;
         if (probe.secrets.some(secret => row.text.includes(secret))) failures.push(`${probe.id} (${row.uuid}): leaked`);
@@ -551,15 +565,15 @@ describe('SITE 21 separator corpus: readClaudeTranscript rows and the real Evide
       const index = Number(sessionId.slice('sess-'.length));
       const text = SHAPES[index]?.raw ?? '';
       return [
-        { type: 'assistant' as const, uuid: `s${index}`, text },
-        { type: 'assistant' as const, uuid: `p${index}`, text },
+        { type: 'assistant' as const, uuid: corpusUuid('s', index), text },
+        { type: 'assistant' as const, uuid: corpusUuid('p', index), text },
       ];
     });
     const failures: string[] = [];
     const baselineLeaks: string[] = [];
     let checked = 0;
     for (const [index, probe] of SHAPES.entries()) {
-      for (const uuid of [`s${index}`, `p${index}`]) {
+      for (const uuid of [corpusUuid('s', index), corpusUuid('p', index)]) {
         const shown = await preview(adapted, `sess-${index}`, uuid);
         const base = await preview(raw, `sess-${index}`, uuid);
         if (typeof shown === 'string' || shown.length < 2) {

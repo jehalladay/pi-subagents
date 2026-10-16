@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { initialWorkflowDialogState, WorkflowDialog } from '../src/ui/workflow-dialog.js';
 import { type InspectorModel, initialInspectorState, inspectorEvidenceTarget, layoutInspector, reduceInspectorKey } from '../src/ui/workflow-inspector.js';
 import { type EvidenceContent, type EvidenceLoader, EvidenceRefusal, EvidenceStore } from '../src/workbench/evidence-loader.js';
-import { CLAUDE_TRANSCRIPT_GRANT, createEvidenceLoaders } from '../src/workbench/evidence-producers.js';
+import { CLAUDE_TRANSCRIPT_GRANT, type ClaudeEvidenceSeam, createEvidenceLoaders } from '../src/workbench/evidence-producers.js';
 import { type NativeRef, ObservationProjection, type ObservationScope } from '../src/workbench/observation.js';
 
 const scope: ObservationScope = {workspace:'workspace',principal:'reader'};
@@ -875,8 +875,12 @@ describe('W15-A lazy bounded evidence in the details view (wb-g1g.1, docs/workbe
    const build=(grants:string[])=>{
      const projection=new ObservationProjection({maxEvents:16,maxNodes:100,maxEdges:100,maxQuery:40});
      projection.refresh({source:{provider:'claude-agent-sdk',type:'session',id:'s1'},scope,capturedAt:now,observedAt:now,node:presentation('Claude'),trace:{invocationId:'wf-c'},coverage:'partial',evidenceRefs:[`claude-message:${uuid}`]});
-     const readRows=vi.fn(async()=>[{type:'assistant',uuid,text:'claude says hi'}]);
-     const store=new EvidenceStore({loaders:createEvidenceLoaders({grants:()=>grants,claude:readRows,now:()=>new Date(now)}),maxEntries:4,maxBytes:1024,timeoutMs:200,scope});
+     const readRows=vi.fn(async()=>[{type:'assistant' as const,uuid,text:'claude says hi'}]);
+     const claude:ClaudeEvidenceSeam={readTranscript:readRows,cwd:()=>'/ws',owningNode:(owningScope,nativeRef,ref)=>{
+       const owner=projection.query({scope:owningScope,ref:nativeRef,limit:1}).nodes[0];
+       return owner&&owner.evidenceRefs.includes(ref)?{nativeRef:owner.nativeRef,evidenceRefs:owner.evidenceRefs,freshness:owner.freshness}:undefined;
+     }};
+     const store=new EvidenceStore({loaders:createEvidenceLoaders({grants:()=>grants,claude,now:()=>new Date(now)}),maxEntries:4,maxBytes:1024,timeoutMs:200,scope});
      const model:InspectorModel={projection,scope,invocationId:'wf-c',title:'C',status:'running',evidence:store};
      return {model,store,readRows};
    };

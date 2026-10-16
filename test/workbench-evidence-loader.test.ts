@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import { CapabilityError } from '../src/workbench/capability-registry.js';
+import type { ClaudeTranscriptRow } from '../src/workbench/claude-transcript.js';
 import {
   EVIDENCE_CONTRACT,
   EVIDENCE_LINE_CHARS,
@@ -11,7 +12,9 @@ import {
 } from '../src/workbench/evidence-loader.js';
 import {
   CLAUDE_TRANSCRIPT_GRANT,
+  type ClaudeEvidenceSeam,
   createEvidenceLoaders,
+  type EvidenceProducerOptions,
   FORGE_INSPECT_GRANT,
   FURNACE_INSPECT_GRANT,
   type FurnaceEvidenceRead,
@@ -31,6 +34,16 @@ function counting(handler: (request: EvidenceRequest) => Promise<EvidenceContent
 }
 const store = (loaders: readonly EvidenceLoader[], extra: Partial<ConstructorParameters<typeof EvidenceStore>[0]> = {}) =>
   new EvidenceStore({ loaders, maxEntries: 8, maxBytes: 4096, timeoutMs: 200, ...extra });
+/** The module-shaped claude seam (wb-idq): a transcript read spy plus an owning node that lists exactly the requested ref, or none. */
+function claudeSeam(rows: readonly ClaudeTranscriptRow[], listing = true) {
+  const readTranscript = vi.fn(async (_sessionId: string, _cwd: string, _limit: number) => rows);
+  const seam: ClaudeEvidenceSeam = {
+    readTranscript,
+    cwd: () => '/ws',
+    owningNode: (_scope: ObservationScope, nativeRef: NativeRef, ref: string) => (listing ? { nativeRef, evidenceRefs: [ref], freshness: 'current' as const } : undefined),
+  };
+  return { seam, readTranscript };
+}
 
 describe('EvidenceStore contract (docs/workbench/20)', () => {
   it('names the contract and never loads on construction or get', () => {
@@ -295,14 +308,15 @@ describe('grant-gated producer loaders (docs/workbench/20 § Producer mapping)',
   const grants = (...held: string[]) => { const list = [...held]; return { list, read: () => list }; };
 
   it('builds a loader for each supplied reader; without its exact grant every load refuses unauthorized and reads nothing', async () => {
-    const readers = { claude: vi.fn(async () => []), furnace: vi.fn(), forge: vi.fn() };
+    const claude = claudeSeam([]);
+    const readers = { claude: claude.seam, furnace: vi.fn(), forge: vi.fn() };
     const targets: ReadonlyArray<readonly [NativeRef, string]> = [
       [claudeRef, `claude-message:${uuid}`],
       [native('furnace', 'run-1', 'run'), 'attempt-1'],
       [native('forge', 'pkg', 'gate-status'), 'forge-operation:op-1'],
     ];
     for (const held of [[], ['claude:transcript-x', 'furnace:*', 'FORGE:INSPECT']]) {
-      const loaders = createEvidenceLoaders({ grants: () => held, ...readers });
+      const loaders = createEvidenceLoaders({ grants: () => held, now: () => new Date(at), ...readers });
       expect(loaders.map(l => l.provider)).toEqual(['claude-agent-sdk', 'furnace', 'forge']);
       const s = store(loaders);
       for (const [ref, evidenceRef] of targets) {
@@ -310,67 +324,73 @@ describe('grant-gated producer loaders (docs/workbench/20 § Producer mapping)',
         expect(s.get(scope, ref, evidenceRef)).toEqual({ state: 'unavailable', reason: 'unauthorized' });
       }
     }
-    for (const read of [readers.claude, readers.furnace, readers.forge]) expect(read).not.toHaveBeenCalled();
-    expect(createEvidenceLoaders({ grants: () => [CLAUDE_TRANSCRIPT_GRANT, FURNACE_INSPECT_GRANT, FORGE_INSPECT_GRANT], ...readers }).map(l => l.provider)).toEqual(['claude-agent-sdk', 'furnace', 'forge']);
+    for (const read of [claude.readTranscript, readers.furnace, readers.forge]) expect(read).not.toHaveBeenCalled();
+    expect(createEvidenceLoaders({ grants: () => [CLAUDE_TRANSCRIPT_GRANT, FURNACE_INSPECT_GRANT, FORGE_INSPECT_GRANT], now: () => new Date(at), ...readers }).map(l => l.provider)).toEqual(['claude-agent-sdk', 'furnace', 'forge']);
     expect(createEvidenceLoaders({ grants: () => [CLAUDE_TRANSCRIPT_GRANT] })).toHaveLength(0);
   });
 
   it('claude: without the claude:transcript grant nothing is read and the ref refuses unauthorized, the same entry a revoked grant leaves', async () => {
-    const readRows = vi.fn(async () => [{ type: 'user', uuid, text: 'hi' }]);
-    const s = store(createEvidenceLoaders({ grants: () => [FORGE_INSPECT_GRANT], claude: readRows }));
+    const claude = claudeSeam([{ type: 'user', uuid, text: 'hi' }]);
+    const s = store(createEvidenceLoaders({ grants: () => [FORGE_INSPECT_GRANT], claude: claude.seam, now: () => new Date(at) }));
     await s.request(scope, claudeRef, `claude-message:${uuid}`);
     expect(s.get(scope, claudeRef, `claude-message:${uuid}`)).toEqual({ state: 'unavailable', reason: 'unauthorized' });
     const held = grants(CLAUDE_TRANSCRIPT_GRANT);
-    const revoked = store(createEvidenceLoaders({ grants: held.read, claude: readRows }));
+    const revoked = store(createEvidenceLoaders({ grants: held.read, claude: claude.seam, now: () => new Date(at) }));
     held.list.length = 0;
     await revoked.request(scope, claudeRef, `claude-message:${uuid}`);
     expect(s.get(scope, claudeRef, `claude-message:${uuid}`)).toEqual(revoked.get(scope, claudeRef, `claude-message:${uuid}`));
-    expect(readRows).not.toHaveBeenCalled();
+    expect(claude.readTranscript).not.toHaveBeenCalled();
   });
 
-  it('claude: with the grant it selects the row by uuid; a revoked grant refuses on the next load', async () => {
+  it('claude: with the grant it selects the row by uuid through the module (role prefix, bounded rows, the 40-row window); a revoked grant refuses on the next load', async () => {
     const held = grants(CLAUDE_TRANSCRIPT_GRANT);
-    const readRows = vi.fn(async () => [{ type: 'user', uuid: 'other', text: 'no' }, { type: 'assistant', uuid, text: 'answer\nsecond line' }]);
-    const s = store(createEvidenceLoaders({ grants: held.read, claude: readRows, now: () => new Date(at) }));
+    const claude = claudeSeam([{ type: 'user', uuid: 'other', text: 'no' }, { type: 'assistant', uuid, text: 'answer\nsecond line' }]);
+    const s = store(createEvidenceLoaders({ grants: held.read, claude: claude.seam, now: () => new Date(at) }));
     await s.request(scope, claudeRef, `claude-message:${uuid}`);
     expect(s.get(scope, claudeRef, `claude-message:${uuid}`)).toMatchObject({ state: 'loaded', kind: 'claude-message', preview: ['assistant:', 'answer', 'second line'], freshness: 'current' });
-    expect(readRows).toHaveBeenCalledWith(expect.objectContaining({ sessionId: 'session-1' }));
+    expect(claude.readTranscript).toHaveBeenCalledWith('session-1', '/ws', 40);
     held.list.length = 0;
     await s.request(scope, claudeRef, 'claude-message:ffffffff-0000-0000-0000-000000000000');
     expect(s.get(scope, claudeRef, 'claude-message:ffffffff-0000-0000-0000-000000000000')).toEqual({ state: 'unavailable', reason: 'unauthorized' });
   });
 
   it('claude: capturedAt is stamped from the injected clock, never the host clock', async () => {
-    const readRows = vi.fn(async () => [{ type: 'assistant', uuid, text: 'answer' }]);
-    const s = store(createEvidenceLoaders({ grants: () => [CLAUDE_TRANSCRIPT_GRANT], claude: readRows, now: () => new Date(at) }));
+    const claude = claudeSeam([{ type: 'assistant', uuid, text: 'answer' }]);
+    const s = store(createEvidenceLoaders({ grants: () => [CLAUDE_TRANSCRIPT_GRANT], claude: claude.seam, now: () => new Date(at) }));
     await s.request(scope, claudeRef, `claude-message:${uuid}`);
     expect(s.get(scope, claudeRef, `claude-message:${uuid}`)).toMatchObject({ state: 'loaded', capturedAt: new Date(at).toISOString() });
   });
 
-  it('claude: a loader built without an injected clock refuses transport and reads nothing, never inventing a timestamp', async () => {
-    const readRows = vi.fn(async () => [{ type: 'assistant', uuid, text: 'answer' }]);
-    const s = store(createEvidenceLoaders({ grants: () => [CLAUDE_TRANSCRIPT_GRANT], claude: readRows }));
+  it('claude: a loader built without an injected clock (a JS caller past the types) refuses transport and reads nothing, never inventing a timestamp', async () => {
+    const claude = claudeSeam([{ type: 'assistant', uuid, text: 'answer' }]);
+    const clockless = { grants: () => [CLAUDE_TRANSCRIPT_GRANT], claude: claude.seam } as unknown as EvidenceProducerOptions;
+    const s = store(createEvidenceLoaders(clockless));
     await s.request(scope, claudeRef, `claude-message:${uuid}`);
     expect(s.get(scope, claudeRef, `claude-message:${uuid}`)).toEqual({ state: 'unavailable', reason: 'transport' });
-    expect(readRows).not.toHaveBeenCalled();
+    expect(claude.readTranscript).not.toHaveBeenCalled();
   });
 
   it('claude: a uuid outside the bounded window is transport, never a fabricated row', async () => {
-    // The clock is injected so the answer comes from the window check itself, not from the clockless refusal that precedes it.
-    const readRows = vi.fn(async () => [{ type: 'user', uuid: 'other', text: 'x' }]);
-    const s = store(createEvidenceLoaders({ grants: () => [CLAUDE_TRANSCRIPT_GRANT], claude: readRows, now: () => new Date(at) }));
+    const claude = claudeSeam([{ type: 'user', uuid: 'other', text: 'x' }]);
+    const s = store(createEvidenceLoaders({ grants: () => [CLAUDE_TRANSCRIPT_GRANT], claude: claude.seam, now: () => new Date(at) }));
     await s.request(scope, claudeRef, `claude-message:${uuid}`);
     expect(s.get(scope, claudeRef, `claude-message:${uuid}`)).toEqual({ state: 'unavailable', reason: 'transport' });
-    expect(readRows).toHaveBeenCalledTimes(1);
+    expect(claude.readTranscript).toHaveBeenCalledTimes(1);
   });
 
-  it('claude: a non-session node does not resolve claude-message refs', async () => {
-    const readRows = vi.fn(async () => []);
-    const s = store(createEvidenceLoaders({ grants: () => [CLAUDE_TRANSCRIPT_GRANT], claude: readRows }));
+  it('claude: ownership is the requested node: a node that does not list the ref and a non-session node refuse unauthorized and read nothing; a ref outside the uuid grammar is the store\'s own no-loader', async () => {
+    const unlisted = claudeSeam([], false);
+    const s = store(createEvidenceLoaders({ grants: () => [CLAUDE_TRANSCRIPT_GRANT], claude: unlisted.seam, now: () => new Date(at) }));
+    await s.request(scope, claudeRef, `claude-message:${uuid}`);
+    expect(s.get(scope, claudeRef, `claude-message:${uuid}`)).toEqual({ state: 'unavailable', reason: 'unauthorized' });
+    const listing = claudeSeam([]);
+    const t = store(createEvidenceLoaders({ grants: () => [CLAUDE_TRANSCRIPT_GRANT], claude: listing.seam, now: () => new Date(at) }));
     const toolUse = native('claude-agent-sdk', 'tool-1', 'tool-use');
-    await s.request(scope, toolUse, `claude-message:${uuid}`);
-    expect(s.get(scope, toolUse, `claude-message:${uuid}`)).toEqual({ state: 'unavailable', reason: 'no-loader' });
-    expect(readRows).not.toHaveBeenCalled();
+    await t.request(scope, toolUse, `claude-message:${uuid}`);
+    expect(t.get(scope, toolUse, `claude-message:${uuid}`)).toEqual({ state: 'unavailable', reason: 'unauthorized' });
+    for (const read of [unlisted.readTranscript, listing.readTranscript]) expect(read).not.toHaveBeenCalled();
+    await t.request(scope, claudeRef, 'claude-message:u1');
+    expect(t.get(scope, claudeRef, 'claude-message:u1')).toEqual({ state: 'unavailable', reason: 'no-loader' });
   });
 
   const runRef = native('furnace', 'run-1', 'run');

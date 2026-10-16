@@ -1,8 +1,10 @@
 /** wb-6ze.17: the owner wiring slice — host-built EvidenceStore and the dialog's load-evidence/abortAll wiring. */
+import { readFileSync } from "node:fs";
 import { describe, expect, it, vi } from "vitest";
 import { WorkflowDialog } from "../src/ui/workflow-dialog.js";
 import { CapabilityError } from "../src/workbench/capability-registry.js";
-import { createWorkbenchEvidenceStore } from "../src/workbench/evidence-wiring.js";
+import { CLAUDE_TRANSCRIPT_GRANT } from "../src/workbench/evidence-producers.js";
+import { createWorkbenchEvidenceStore, type WorkbenchEvidenceDeps } from "../src/workbench/evidence-wiring.js";
 import { type NativeRef, ObservationProjection, type ObservationScope } from "../src/workbench/observation.js";
 
 const scope: ObservationScope = { workspace: "/ws", principal: "local-operator:1:s1" };
@@ -10,6 +12,9 @@ const NOW = "2026-10-15T11:00:00Z";
 const runRef: NativeRef = { provider: "furnace", type: "run", id: "frn-run-r1", scope: "/ws" };
 const forgeRef: NativeRef = { provider: "forge", type: "gate-status", id: "workspace", scope: "/ws" };
 const OPERATION = "op_8f2c41";
+const CLAUDE_UUID = "11111111-2222-4333-8444-555555555555";
+const CLAUDE_REF = `claude-message:${CLAUDE_UUID}`;
+const claudeRef = (id: string): NativeRef => ({ provider: "claude-agent-sdk", type: "session", id });
 
 function projectionWithRun(): ObservationProjection {
   const projection = new ObservationProjection({ maxEvents: 16, maxNodes: 16, maxEdges: 16, maxQuery: 8 });
@@ -25,6 +30,15 @@ function projectionWithRun(): ObservationProjection {
     trace: { invocationId: "wf-evidence-1" },
     evidenceRefs: ["forge:gate.status:FORGE_OK", `forge-operation:${OPERATION}`],
   });
+  // The two Claude session nodes the claude cases request on; ownership is each node's own listing (wb-idq).
+  for (const id of ["sess-1", "sess-2"]) {
+    projection.refresh({
+      source: claudeRef(id), scope, capturedAt: NOW, observedAt: NOW,
+      node: { title: `Claude ${id}`, type: "agent" as const, statusText: "running", statusTone: "active" as const },
+      trace: { invocationId: "wf-evidence-1" },
+      evidenceRefs: [CLAUDE_REF],
+    });
+  }
   return projection;
 }
 
@@ -48,7 +62,7 @@ function wiringDeps(grants: string[]) {
       scope: () => scope,
       projection,
       cwd: () => "/ws",
-      claudeRead: async (sessionId: string) => [{ type: "assistant" as const, uuid: "u1", text: `hello ${sessionId}` }],
+      claudeRead: async (sessionId: string) => [{ type: "assistant" as const, uuid: CLAUDE_UUID, text: `hello ${sessionId}` }],
       furnaceClient: () => ({
         logs: {
           read: async (runId: string, options: { attempt: string; limit: number; stream: string }) => ({
@@ -80,32 +94,102 @@ describe("createWorkbenchEvidenceStore (host wiring)", () => {
     const { deps } = wiringDeps(grants);
     const store = createWorkbenchEvidenceStore(deps as never);
     const sessionRef: NativeRef = { provider: "claude-agent-sdk", type: "session", id: "sess-1" };
-    await store.request(scope, sessionRef, "claude-message:u1");
-    const loaded = store.get(scope, sessionRef, "claude-message:u1");
+    await store.request(scope, sessionRef, CLAUDE_REF);
+    const loaded = store.get(scope, sessionRef, CLAUDE_REF);
     expect(loaded.state).toBe("loaded");
     if (loaded.state === "loaded") expect(loaded.preview.join("\n")).toContain("hello sess-1");
     // Mid-view revocation: the next load refuses unauthorized; nothing cached is consulted.
     grants.length = 0;
     const otherRef: NativeRef = { provider: "claude-agent-sdk", type: "session", id: "sess-2" };
-    await store.request(scope, otherRef, "claude-message:u1");
-    expect(store.get(scope, otherRef, "claude-message:u1")).toMatchObject({ state: "unavailable", reason: "unauthorized" });
+    await store.request(scope, otherRef, CLAUDE_REF);
+    expect(store.get(scope, otherRef, CLAUDE_REF)).toMatchObject({ state: "unavailable", reason: "unauthorized" });
   });
 
-  it("loads a claude transcript row when the host supplies no clock (the shipped index.ts shape), stamping a parseable capturedAt", async () => {
-    // Without the wiring's own clock injection every shipped claude load would refuse transport at the loader.
+  it("wb-idq: the claude row is served by the claude-evidence module through the wiring: role prefix, module-bounded preview, the host's injected clock, the claude-message kind", async () => {
     const { deps } = wiringDeps(["claude:transcript"]);
-    const { now, ...clockless } = deps;
-    expect(now).toBeTypeOf("function");
-    expect("now" in clockless).toBe(false);
-    const store = createWorkbenchEvidenceStore(clockless as never);
-    const sessionRef: NativeRef = { provider: "claude-agent-sdk", type: "session", id: "sess-1" };
-    await store.request(scope, sessionRef, "claude-message:u1");
-    const loaded = store.get(scope, sessionRef, "claude-message:u1");
-    expect(loaded.state).toBe("loaded");
-    if (loaded.state === "loaded") {
-      expect(Number.isNaN(Date.parse(loaded.capturedAt))).toBe(false);
-      expect(loaded.preview.join("\n")).toContain("hello sess-1");
+    const store = createWorkbenchEvidenceStore(deps as never);
+    await store.request(scope, claudeRef("sess-1"), CLAUDE_REF);
+    const loaded = store.get(scope, claudeRef("sess-1"), CLAUDE_REF);
+    expect(loaded).toMatchObject({ state: "loaded", kind: "claude-message", provider: "claude-agent-sdk", freshness: "current", truncated: false, capturedAt: new Date(NOW).toISOString() });
+    if (loaded.state === "loaded") expect(loaded.preview).toStrictEqual(["assistant:", "hello sess-1"]);
+  });
+
+  it("wb-idq: a clockless host cannot build the store (the type refuses it) and index.ts injects the host clock at the boot seam", () => {
+    const { deps, projection } = wiringDeps(["claude:transcript"]);
+    expect(deps.now).toBeTypeOf("function");
+    const minimal: Omit<WorkbenchEvidenceDeps, "now"> = { grants: () => [], scope: () => scope, projection, cwd: () => "/ws" };
+    // @ts-expect-error the wiring requires the host clock, so a clockless store is unrepresentable (wb-563 F4 follow-up, wb-idq)
+    const build = () => createWorkbenchEvidenceStore(minimal);
+    expect(build).toBeTypeOf("function");
+    const source = readFileSync(new URL("../src/index.ts", import.meta.url), "utf8");
+    const call = source.slice(source.indexOf("evidence: createWorkbenchEvidenceStore({"));
+    expect(call.slice(0, call.indexOf("}),"))).toMatch(/\bnow: \(\) => new Date\(\)/);
+  });
+
+  it("wb-idq: ownership is the requested node's own listing: a session that does not list the ref, an unobserved session and a tool-use node refuse unauthorized with no read", async () => {
+    const { deps, projection } = wiringDeps(["claude:transcript"]);
+    const readTranscript = vi.fn(async (sessionId: string) => [{ type: "assistant" as const, uuid: CLAUDE_UUID, text: `hello ${sessionId}` }]);
+    const store = createWorkbenchEvidenceStore({ ...deps, claudeRead: readTranscript } as never);
+    const silent = claudeRef("sess-silent");
+    projection.refresh({ source: silent, scope, capturedAt: NOW, observedAt: NOW, node: { title: "Claude silent", type: "agent" as const, statusText: "running", statusTone: "active" as const }, trace: { invocationId: "wf-evidence-1" } });
+    const toolUse: NativeRef = { provider: "claude-agent-sdk", type: "tool-use", id: "tool-1" };
+    projection.refresh({ source: toolUse, scope, capturedAt: NOW, observedAt: NOW, node: { title: "Tool", type: "agent" as const, statusText: "running", statusTone: "active" as const }, trace: { invocationId: "wf-evidence-1" }, evidenceRefs: [CLAUDE_REF] });
+    for (const requester of [silent, claudeRef("sess-unobserved"), toolUse]) {
+      await store.request(scope, requester, CLAUDE_REF);
+      expect(store.get(scope, requester, CLAUDE_REF), requester.id).toEqual({ state: "unavailable", reason: "unauthorized" });
     }
+    expect(readTranscript).not.toHaveBeenCalled();
+    await store.request(scope, claudeRef("sess-1"), CLAUDE_REF);
+    expect(store.get(scope, claudeRef("sess-1"), CLAUDE_REF)).toMatchObject({ state: "loaded" });
+    expect(readTranscript).toHaveBeenCalledTimes(1);
+  });
+
+  it("wb-idq: between sessions (no cwd) the claude row is a visible transport failure, never no-loader, and the transcript is never read", async () => {
+    const { deps } = wiringDeps(["claude:transcript"]);
+    const readTranscript = vi.fn(async () => []);
+    const store = createWorkbenchEvidenceStore({ ...deps, cwd: () => undefined, claudeRead: readTranscript } as never);
+    await store.request(scope, claudeRef("sess-1"), CLAUDE_REF);
+    expect(store.get(scope, claudeRef("sess-1"), CLAUDE_REF)).toEqual({ state: "unavailable", reason: "transport" });
+    expect(readTranscript).not.toHaveBeenCalled();
+  });
+
+  it("wb-idq: a failing transcript read on a stale owning node is transport plus stale with no native text; a clock seam that is not an instant is transport", async () => {
+    const { deps, projection } = wiringDeps(["claude:transcript"]);
+    projection.markStale({ scope, ref: claudeRef("sess-1") });
+    const failing = createWorkbenchEvidenceStore({ ...deps, claudeRead: async () => { throw new Error("socket closed: token=abc"); } } as never);
+    await failing.request(scope, claudeRef("sess-1"), CLAUDE_REF);
+    const entry = failing.get(scope, claudeRef("sess-1"), CLAUDE_REF);
+    expect(entry).toEqual({ state: "unavailable", reason: "transport", freshness: "stale" });
+    expect(JSON.stringify(entry)).not.toContain("token=abc");
+    const badClock = createWorkbenchEvidenceStore({ ...deps, now: () => new Date(Number.NaN) } as never);
+    await badClock.request(scope, claudeRef("sess-2"), CLAUDE_REF);
+    expect(badClock.get(scope, claudeRef("sess-2"), CLAUDE_REF)).toMatchObject({ state: "unavailable", reason: "transport" });
+  });
+
+  it("wb-idq: one visible truncation marker: a row the adapter clipped loads truncated with the store's [truncated] line only, and a whole row that merely ends in the module's marker text is kept verbatim", async () => {
+    const { deps } = wiringDeps(["claude:transcript"]);
+    const marker = "… truncated (bounded preview)";
+    const clipped = createWorkbenchEvidenceStore({ ...deps, claudeRead: async () => [{ type: "assistant" as const, uuid: CLAUDE_UUID, text: "cut here", clipped: true as const }] } as never);
+    await clipped.request(scope, claudeRef("sess-1"), CLAUDE_REF);
+    const entry = clipped.get(scope, claudeRef("sess-1"), CLAUDE_REF);
+    expect(entry).toMatchObject({ state: "loaded", truncated: true });
+    if (entry.state === "loaded") {
+      expect(entry.preview.filter(line => line === "[truncated]")).toEqual(["[truncated]"]);
+      expect(entry.preview.some(line => line.startsWith("… truncated"))).toBe(false);
+      expect(entry.preview.slice(0, 2)).toEqual(["assistant:", "cut here"]);
+    }
+    const literal = createWorkbenchEvidenceStore({ ...deps, claudeRead: async () => [{ type: "assistant" as const, uuid: CLAUDE_UUID, text: `line one\n${marker}` }] } as never);
+    await literal.request(scope, claudeRef("sess-2"), CLAUDE_REF);
+    expect(literal.get(scope, claudeRef("sess-2"), CLAUDE_REF)).toMatchObject({ state: "loaded", truncated: false, preview: ["assistant:", "line one", marker] });
+  });
+
+  it("wb-idq: the claude:transcript grant has one definition (claude-evidence.ts) and evidence-producers re-exports it", () => {
+    const root = new URL("../src/workbench/", import.meta.url);
+    const defining = ["claude-evidence.ts", "evidence-producers.ts", "evidence-wiring.ts", "claude-transcript.ts"]
+      .filter(file => /export const CLAUDE_TRANSCRIPT_GRANT\b/.test(readFileSync(new URL(file, root), "utf8")));
+    expect(defining).toEqual(["claude-evidence.ts"]);
+    expect(readFileSync(new URL("evidence-producers.ts", root), "utf8")).toMatch(/export \{ CLAUDE_TRANSCRIPT_GRANT \} from "\.\/claude-evidence\.js"/);
+    expect(CLAUDE_TRANSCRIPT_GRANT).toBe("claude:transcript");
   });
 
   it("loads a furnace attempt log through the landed reader, bound to the owning run node", async () => {

@@ -15,7 +15,9 @@
  * reads as whole (wb-idq); the kind is `claude-message`, the ref prefix spelling the store path shares. Only the sanitized preview and the
  * row's byte size leave this module, never the raw text, the row object or any native error text. It registers nothing,
  * states no verification, changes no node status or tone and leaves the EvidenceLoader/EvidenceStore wrapper (wb-g1g.1)
- * to consume it. An abort stops only this local wait.
+ * to consume it. An abort stops only this local wait. The answer names the selected row's role (user, assistant or system), so
+ * the store path can label the row without seeing it; the ref grammar and the marker line are exported for the EvidenceStore
+ * wiring, which keys its canLoad on the one and strips the other so the store's own truncation mark is the single one shown.
  */
 import { CapabilityError } from "./capability-registry.js";
 import type { ClaudeTranscriptRow } from "./claude-transcript.js";
@@ -25,6 +27,10 @@ import { sanitizeWorkbenchText } from "./redaction.js";
 export const CLAUDE_EVIDENCE_CONTRACT = "workbench.claude-evidence/v1";
 /** The one exact grant string; wildcard, prefix and case spellings never match. */
 export const CLAUDE_TRANSCRIPT_GRANT = "claude:transcript";
+/** The one ref grammar this row answers to: `claude-message:` followed by an RFC 4122 uuid, case-insensitive. */
+export const CLAUDE_MESSAGE_REF = /^claude-message:([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})$/;
+/** The final preview line whenever anything was dropped or clipped. */
+export const CLAUDE_EVIDENCE_TRUNCATED_MARK = "… truncated (bounded preview)";
 
 export interface ClaudeEvidenceDeps {
   /** The live host grant set, re-read before and after the transcript read. */
@@ -50,6 +56,8 @@ export interface ClaudeEvidenceContent {
   contract: typeof CLAUDE_EVIDENCE_CONTRACT;
   kind: "claude-message";
   provider: "claude-agent-sdk";
+  /** The selected row's own type, so a consumer can label the row without ever seeing it. */
+  role: ClaudeTranscriptRow["type"];
   nativeRef: { provider: "claude-agent-sdk"; type: "message"; id: string };
   capturedAt: string;
   /** UTF-8 size of the selected row's text as the bounded read returned it. */
@@ -61,7 +69,6 @@ export interface ClaudeEvidenceContent {
 
 type Loose = Readonly<Record<string, unknown>>;
 
-const REF = /^claude-message:([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})$/;
 const MAX_MESSAGES = 100;
 const MIN_BYTES = 64;
 const MAX_BYTES = 65_536;
@@ -70,7 +77,7 @@ const MAX_LINES = 200;
 const MAX_LINE = 200;
 /** Raw characters of one row ever examined; anything later is never shown. */
 const MAX_SCAN = 4_000;
-const MARKER = "… truncated (bounded preview)";
+const MARKER = CLAUDE_EVIDENCE_TRUNCATED_MARK;
 const MARKER_BYTES = Buffer.byteLength(MARKER, "utf8");
 /** The helper's text cap for one row. Redaction lengthens a short credential to its marker, by about twice at the densest
  * (a 9-character "apikey=x;" becomes the 18-character "apikey=[REDACTED];"), so a cap of four scan windows never cuts a
@@ -171,7 +178,7 @@ function shape(lines: readonly { text: string; clipped: boolean }[], scanClipped
 }
 
 export async function readClaudeMessageEvidence(ref: string, deps: ClaudeEvidenceDeps): Promise<ClaudeEvidenceContent> {
-  const parsed = typeof ref === "string" ? REF.exec(ref) : null;
+  const parsed = typeof ref === "string" ? CLAUDE_MESSAGE_REF.exec(ref) : null;
   if (!parsed) throw refused("ref");
   const wanted = parsed[1].toLowerCase();
 
@@ -212,8 +219,9 @@ export async function readClaudeMessageEvidence(ref: string, deps: ClaudeEvidenc
   if (selected === undefined) {
     throw new CapabilityError("transport", `Claude message is not in the bounded transcript window of ${maxMessages} messages.`);
   }
-  const { text, uuid, clipped } = selected;
+  const { text, uuid, clipped, type } = selected;
   if (typeof text !== "string" || typeof uuid !== "string") throw malformed();
+  if (type !== "user" && type !== "assistant" && type !== "system") throw malformed();
   // The adapter's row-bound cut is part of the truth: a flag that is present must be the literal true.
   if (clipped !== undefined && clipped !== true) throw malformed();
 
@@ -229,6 +237,7 @@ export async function readClaudeMessageEvidence(ref: string, deps: ClaudeEvidenc
     contract: CLAUDE_EVIDENCE_CONTRACT,
     kind: "claude-message",
     provider: "claude-agent-sdk",
+    role: type,
     nativeRef: { provider: "claude-agent-sdk", type: "message", id: uuid },
     capturedAt: stamp,
     bytes: Buffer.byteLength(text, "utf8"),
