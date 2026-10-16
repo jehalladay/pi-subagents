@@ -20,12 +20,14 @@
  * four-digit escape.
  */
 import { createHash } from "node:crypto";
+import type { SDKMessage } from "@anthropic-ai/claude-agent-sdk";
 import type { LogsReadDto, Response } from "@furnace/sdk";
 import { describe, expect, it } from "vitest";
 import { safeWorkflowTerminalText } from "../src/ui/workflow-card.js";
 import { selectAttention } from "../src/workbench/attention.js";
 import { type BeadsReadClient, projectBeadsWork, readBeadsWork } from "../src/workbench/beads-observer.js";
 import { type CapabilityDescriptor, CapabilityError, type JsonValue } from "../src/workbench/capability-registry.js";
+import { type ClaudeQuery, createClaudeWorkflowHost } from "../src/workbench/claude-host.js";
 import { type ClaudeTopologyInput, projectClaudeTopology } from "../src/workbench/claude-topology.js";
 import type { WorkflowSource } from "../src/workbench/designer.js";
 import { projectDetachedReading } from "../src/workbench/detached-observer.js";
@@ -507,6 +509,35 @@ function latencyTexts(raw: string): string[] {
   return [...report.components.flatMap(item => item.providers), ...report.evidenceRefs, ...report.components.flatMap(item => item.evidenceRefs), report.invocationId];
 }
 
+/**
+ * wb-wyr: claude-host.ts producer outcomes (createClaudeWorkflowHost.spawnAgent over the ClaudeQuery seam). The SDK text
+ * reaches the outcome error on five paths: the auth error from a result and from a thrown error (authRequiredError), the
+ * success-subtype and error-subtype result arms, and the thrown catch message. Every one routes through the one helper
+ * with the "label" layout; the display strings are the outcome error and its card/dialog rendering.
+ */
+async function claudeHostTexts(raw: string): Promise<string[]> {
+  const init = { type: "system", subtype: "init", session_id: "sdk-corpus", model: "claude-opus-5-5" } as unknown as SDKMessage;
+  const authed = { type: "assistant", session_id: "sdk-corpus", parent_tool_use_id: null, error: "authentication_failed", message: { id: "msg-corpus", role: "assistant", model: "claude-opus-5-5", content: [] } } as unknown as SDKMessage;
+  const failed = (fields: Record<string, unknown>): SDKMessage => ({ type: "result", session_id: "sdk-corpus", is_error: true, modelUsage: {}, ...fields }) as unknown as SDKMessage;
+  const stream = (frames: readonly SDKMessage[], thrown?: Error): ClaudeQuery => () => (async function* () {
+    for (const frame of frames) yield frame;
+    if (thrown) throw thrown;
+  })();
+  const queries = [
+    stream([init, authed, failed({ subtype: "success", result: raw })]),
+    stream([init, authed], new Error(raw)),
+    stream([init, failed({ subtype: "success", result: raw })]),
+    stream([init, failed({ subtype: "error_during_execution", errors: [raw] })]),
+    stream([init], new Error(raw)),
+  ];
+  const errors: string[] = [];
+  for (const query of queries) {
+    const result = await createClaudeWorkflowHost({ cwd: "/tmp", query }).spawnAgent({ agentId: "wf-agent-0", index: 0, prompt: "hello", label: "hello", agentType: "general-purpose" });
+    errors.push(result.error ?? "");
+  }
+  return [...errors, ...errors.map(safeWorkflowTerminalText)];
+}
+
 interface Site {
   readonly site: string;
   readonly texts: (raw: string) => string[] | Promise<string[]>;
@@ -543,6 +574,7 @@ const SITES: readonly Site[] = [
   { site: "sites 19/20 workflow_inspect and workbench_catalog replies", texts: replyTexts },
   { site: "site 22 observe-query.ts clean (observeInvocation)", texts: observeTexts },
   { site: "wb-h8f.10 latency.ts displayText (selectLatencyDecomposition provider and evidence paths)", texts: latencyTexts },
+  { site: "wb-wyr claude-host.ts producer outcomes (createClaudeWorkflowHost.spawnAgent, five failure paths)", texts: claudeHostTexts },
 ];
 
 describe("wb-952 one-helper corpus through every census site's public function", () => {
