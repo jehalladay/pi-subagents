@@ -80,6 +80,22 @@ function resolvedModel(input: string | undefined): string | undefined {
   return model.trim() && !/[\u0000-\u001f]/.test(model) ? model : undefined;
 }
 
+/**
+ * docs/workbench/17 "Error and degradation policy": missing Claude auth is a
+ * clear config error, never a silent Pi-model answer. The SDK flags it with the
+ * typed assistant error "authentication_failed"; the outcome carries a stable
+ * code (same "CODE: message" shape as the beforeDispatch refusal), names the
+ * prerequisite, and routes the bounded SDK detail through the shared sanitizer.
+ */
+const AUTH_REQUIRED_CODE = "CLAUDE_AUTH_REQUIRED";
+
+function authRequiredError(detail: string): string {
+  const reason = redactWorkbenchText(detail, 160);
+  return redactWorkbenchText(
+    `${AUTH_REQUIRED_CODE}: Claude SDK authentication is missing or rejected; sign in with \`claude /login\` or set ANTHROPIC_API_KEY. The workflow does not fall back to a Pi model.${reason ? ` (SDK detail: ${reason})` : ""}`,
+  );
+}
+
 function usage(result: SDKMessage & { type: "result" }): { tokens?: number; outputTokens?: number } {
   // modelUsage is cumulative across turns and includes subagents. Do not sum
   // assistant frames, which may each carry only a single content block.
@@ -192,6 +208,7 @@ export function createClaudeWorkflowHost(config: ClaudeWorkflowHostOptions): Wor
     let actualModel: string | undefined;
     let actualEffort: EffortLevel | undefined;
     let toolCalls = 0;
+    let authFailed = false;
     let terminal: SDKMessage & { type: "result" } | undefined;
     try {
       for await (const message of query({ prompt, options })) {
@@ -203,6 +220,7 @@ export function createClaudeWorkflowHost(config: ClaudeWorkflowHostOptions): Wor
           onResolved?.({ sessionId, modelName: actualModel, modelId: actualModel, ...(actualEffort ? { thinking: actualEffort } : {}) });
         } else if (message.type === "assistant") {
           sessionId ??= message.session_id;
+          if (message.error === "authentication_failed") authFailed = true;
           actualModel = message.message.model ?? actualModel;
           if (actualModel) onResolved?.({ ...(sessionId ? { sessionId } : {}), modelName: actualModel, modelId: actualModel });
           for (const block of message.message.content) if (block.type === "tool_use") toolCalls++;
@@ -224,6 +242,7 @@ export function createClaudeWorkflowHost(config: ClaudeWorkflowHostOptions): Wor
       const common = { ...metrics, ...(sessionId ? { sessionId } : {}), ...(toolCalls ? { toolCalls } : {}) };
       if (controller.signal.aborted) return { ...common, ok: false, skipped: true, error: "Claude SDK query was cancelled." };
       if (terminal.subtype !== "success" || terminal.is_error) {
+        if (authFailed) return { ...common, ok: false, error: authRequiredError(terminal.subtype === "success" ? terminal.result : terminal.errors.join("; ") || terminal.subtype) };
         return { ...common, ok: false, error: terminal.subtype === "success" ? redactWorkbenchText(terminal.result) : redactWorkbenchText(terminal.errors.join("; ") || terminal.subtype) };
       }
       if (!sessionId) return { ...common, ok: false, error: "Claude SDK succeeded without a session ID." };
@@ -254,6 +273,7 @@ export function createClaudeWorkflowHost(config: ClaudeWorkflowHostOptions): Wor
       if (controller.signal.aborted) {
         return { ok: false, skipped: true, error: "Claude SDK query was cancelled.", ...(sessionId ? { sessionId } : {}) };
       }
+      if (authFailed) return { ok: false, error: authRequiredError(error instanceof Error ? error.message : String(error)), ...(sessionId ? { sessionId } : {}) };
       return { ok: false, error: `Claude SDK query failed: ${redactWorkbenchText(error instanceof Error ? error.message : String(error))}`, ...(sessionId ? { sessionId } : {}) };
     } finally {
       config.signal?.removeEventListener("abort", onAbort);
