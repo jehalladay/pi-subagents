@@ -583,8 +583,14 @@ describe("wb-6ze.10 respin-2 U3 kill-own: whitespace separators, the line and pa
     expect(content.truncated).toBe(false);
     expect(content.preview.length).toBeGreaterThan(1);
     for (const line of content.preview) expect(line).not.toMatch(UNSAFE_DISPLAY);
-    // Every unsafe unit vanished or became whitespace; no visible character was dropped or added.
-    expect(content.preview.join("").replace(/ /g, "")).toBe(units.map((_, index) => `w${index}`).join(""));
+    // Every unsafe unit vanished or became whitespace; no visible character was dropped or added, with ONE sanctioned exception
+    // (wb-xbq, known-conflicts entry 7): the 8-bit DCS introducer U+0090 at stretch 49 opens a whole escape unit that runs to the
+    // 8-bit ST U+009C at stretch 61, so the body stretches w50..w61 belong to that unit and are covered with it. The expectation
+    // stays an EXACT equality over every other stretch; the row now also pins the whole-unit DCS body.
+    const swallowedByDcsBody = (index: number): boolean => index >= 50 && index <= 61;
+    expect(content.preview.join("").replace(/ /g, "")).toBe(
+      units.flatMap((_, index) => (swallowedByDcsBody(index) ? [] : [`w${index}`])).join(""),
+    );
   });
 
   it("routes the whole row through the shared helper's lines layout: whole-row redaction first, then LF rows kept", async () => {
