@@ -313,6 +313,22 @@ describe('Claude transcript adapter privacy and bounds', () => {
     for (const row of rows) expect(hasLoneSurrogate(row.text), row.uuid).toBe(false);
   });
 
+  it('T2d (wb-idq): a row the bound cut carries clipped: true and an uncut row carries no clipped key at all', async () => {
+    const cut = `${'a'.repeat(CLAUDE_TRANSCRIPT_ROW_CHARS)}BEYOND`;
+    const exact = 'b'.repeat(CLAUDE_TRANSCRIPT_ROW_CHARS);
+    const { read } = fixtureReader([
+      session('assistant', 'cut', { content: cut }),
+      session('assistant', 'exact', { content: [{ type: 'text', text: exact }] }),
+      session('user', 'short', { content: 'short row' }),
+    ]);
+    const rows = await readClaudeTranscript('native-session', '/work', 40, read);
+    expect(rows.map(row => row.clipped)).toEqual([true, undefined, undefined]);
+    expect(rows.map(row => 'clipped' in row)).toEqual([true, false, false]);
+    expect(rows[0]).toEqual({ type: 'assistant', uuid: 'cut', text: 'a'.repeat(CLAUDE_TRANSCRIPT_ROW_CHARS), clipped: true });
+    expect(rows[1]).toEqual({ type: 'assistant', uuid: 'exact', text: exact });
+    expect(rows[2]).toEqual({ type: 'user', uuid: 'short', text: 'short row' });
+  });
+
   const ANT = 'sk-ant-api03-W04SECRETvalue123';
   const GHP = 'ghp_W04SECRETvalue456';
   const TOK = 'w04bearertoken789';
