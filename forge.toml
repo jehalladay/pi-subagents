@@ -33,6 +33,10 @@ timeout = 180
 command = "./node_modules/.bin/vitest run --config vitest.furnace.config.ts"
 timeout = 180
 
+[build.commands.furnace-hosted-retry-fault]
+command = "node qa/workbench/furnace-hosted-retry-fault.mjs"
+timeout = 120
+
 [build.commands.furnace-hosted-live]
 command = "./node_modules/.bin/vitest run --config vitest.furnace-hosted.config.ts"
 timeout = 240
@@ -48,6 +52,10 @@ timeout = 120
 [build.commands.install-smoke]
 command = "node qa/workbench/install-smoke.mjs"
 timeout = 240
+
+[build.commands.install-minimal]
+command = "node qa/workbench/install-minimal.mjs"
+timeout = 300
 
 [build.commands.e2e]
 command = "npm run test:e2e"
@@ -77,8 +85,24 @@ timeout = 300
 command = "node qa/workbench/inspector-grouped-bench.mjs"
 timeout = 300
 
+[build.commands.topology-slice-grouped-bench]
+command = "node qa/workbench/topology-slice-grouped-bench.mjs"
+timeout = 300
+
 [build.commands.reducer-selector-bench]
 command = "node qa/workbench/reducer-selector-bench.mjs"
+timeout = 300
+
+[build.commands.inspector-cap-saturation-bench]
+command = "node --expose-gc qa/workbench/inspector-cap-saturation-bench.mjs"
+timeout = 600
+
+[build.commands.line-diff-bench]
+command = "node qa/workbench/line-diff-bench.mjs"
+timeout = 300
+
+[build.commands.inspector-evidence-retained-bench]
+command = "node --expose-gc qa/workbench/inspector-evidence-retained-bench.mjs"
 timeout = 300
 
 [build.commands.local-detached-shell]
@@ -105,10 +129,22 @@ timeout = 120
 command = "node qa/workbench/attention-grouped-bench.mjs"
 timeout = 300
 
+[build.commands.inspector-retained-memory-bench]
+command = "node --expose-gc qa/workbench/inspector-retained-memory-bench.mjs"
+timeout = 300
+
 [build.commands.furnace-active-observe]
 command = "./node_modules/.bin/vitest run --config vitest.furnace-active.config.ts"
 timeout = 180
 
+[build.commands.headless-host-census]
+command = "node qa/workbench/headless-host-census.mjs"
+timeout = 120
+
 [build.commands.status-ledger]
 command = "node qa/workbench/status-ledger.mjs"
 timeout = 60
+
+[build.commands.timeline-grouped-bench]
+command = "node qa/workbench/timeline-grouped-bench.mjs"
+timeout = 300
