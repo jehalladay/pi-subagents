@@ -17,7 +17,7 @@
  */
 import { CapabilityError } from "./capability-registry.js";
 import type { NativeRef, ObservationProjection, ObservationScope, Relation, RelationKind } from "./observation.js";
-import { sanitizeWorkbenchText, stripUnsafeText } from "./redaction.js";
+import { sanitizeWorkbenchText } from "./redaction.js";
 
 export const TOPOLOGY_CONTRACT = "workbench.topology-slice/v1";
 export const TOPOLOGY_CAVEAT = "Observed typed relations only; missing edges do not imply independence.";
@@ -136,11 +136,9 @@ function parseKey(key: unknown): ParsedKey | undefined {
   return { workspace, principal, ref: { provider, type, id, ...(scope ? { scope } : {}) } };
 }
 
-/** Producer text bound for display. Unsafe sequences become spaces BEFORE the shared redactor runs, so an escape glued
- * to a credential cannot hide it; the shared sanitizers then redact, strip and cut to MAX_LABEL with a visible marker. */
+/** Producer text bound for display: the shared helper's label layout, cut to MAX_LABEL with a visible marker. */
 function labelOf(raw: string): string {
-  const spaced = stripUnsafeText(raw.slice(0, MAX_SCAN), " ").replace(/\s+/g, " ").trim();
-  return sanitizeWorkbenchText(spaced, MAX_LABEL);
+  return sanitizeWorkbenchText(raw.slice(0, MAX_SCAN), MAX_LABEL, "label");
 }
 const refLabel = (ref: NativeRef): string => labelOf(`${ref.provider}:${ref.type}:${ref.id}`);
 const nativeRefOf = (ref: NativeRef): NativeRef => ({ provider: ref.provider, type: ref.type, id: ref.id, ...(ref.scope !== undefined ? { scope: ref.scope } : {}) });

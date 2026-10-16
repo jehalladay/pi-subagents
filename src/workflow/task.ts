@@ -242,8 +242,9 @@ export function failWorkflowTask(task: WorkflowTask, error: string): void {
  * What a resume journal holds, by what the runtime will do with each entry:
  * agent calls and node reads can come back from it, a journaled effect stops
  * the resume at its position until the producer reconciles it, and a node call
- * recorded without effect metadata runs live. Said up front so the caller is
- * not surprised by a refusal halfway through.
+ * recorded without effect metadata stops it too — the runtime fails closed on
+ * an unclassified entry. Said up front so the caller is not surprised by a
+ * refusal halfway through.
  */
 export function describeResumeJournal(from: string, entries: readonly WorkflowJournalEntry[]): string {
   const agents = entries.filter(entry => entry.kind === undefined).length;
@@ -281,7 +282,7 @@ export function describeResumeJournal(from: string, entries: readonly WorkflowJo
   if (settledPositions.length > 0) parts.push(`${settledPositions.length} acknowledged by operator (${positions(settledPositions)}) settle from the acknowledgement`);
   if (overridePositions.length > 0) parts.push(`${overridePositions.length} operator ${overridePositions.length === 1 ? "override" : "overrides"} (${positions(overridePositions)}) re-run once`);
   if (absentPositions.length > 0) parts.push(`${absentPositions.length} acknowledged as effect-absent (${positions(absentPositions)}) still stop the resume until overridden`);
-  if (untyped > 0) parts.push(`${count(untyped, "node call")} without effect metadata will run live`);
+  if (untyped > 0) parts.push(`${count(untyped, "node call")} without effect metadata will stop the resume at its position (fail-closed: an unclassified call is an uncertain effect)`);
   return `${parts.join("; ")}.`;
 }
 

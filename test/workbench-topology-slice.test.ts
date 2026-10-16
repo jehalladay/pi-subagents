@@ -17,7 +17,7 @@ import {selectLinkedTopology,
 const alice: ObservationScope = { workspace: "ws-topology", principal: "alice" };
 const bob: ObservationScope = { workspace: "ws-topology", principal: "bob" };
 const T = "2026-10-15T12:00:00.000Z";
-const UNSAFE = /[\u0000-\u001f\u007f-\u009f‪-‮⁦-⁩]/;
+const UNSAFE = /[\u0000-\u001f\u007f-\u009f\u202A-\u202E\u2066-\u2069]/;
 const CAVEAT = "Observed typed relations only; missing edges do not imply independence.";
 
 const ref = (id: string, provider = "furnace"): NativeRef => ({ provider, type: "operation", id });
@@ -372,7 +372,7 @@ describe("B5 gate: labels pass the shared sanitizers; nothing outside the pure s
     expect(edge.provenance.sourceLabel).not.toContain(token);
     expect(edge.provenance.sourceLabel).toContain("[REDACTED]");
 
-    const evil = `\u001b]0;pwn\u0007id-${token}‮`;
+    const evil = `\u001b]0;pwn\u0007id-${token}\u202E`;
     const rows = stand([edgeRow(keyOf("F"), JSON.stringify([alice.workspace, alice.principal, "furnace", "operation", "", evil]), "dependency")]);
     const out = select(rows, "F").downstream.edges[0];
     expect(out.label).not.toMatch(UNSAFE);
