@@ -6,8 +6,10 @@
  * adapter never loads the Claude Agent SDK or the Claude host.
  */
 import { readFileSync } from "node:fs";
+import ts from "typescript";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { CapabilityError } from "../src/workbench/capability-registry.js";
+import * as claudeControl from "../src/workbench/claude-control.js";
 import {
   CLAUDE_CONTROL_RECONCILE,
   CLAUDE_CONTROL_VERBS,
@@ -26,6 +28,7 @@ import {
 import {
   acknowledge,
   type ControlDecision,
+  type ControlDenyPolicy,
   DESTRUCTIVE_CONTROL_ACTIONS,
   decideControl,
   NATIVE_CONTROL_ACTIONS,
@@ -34,6 +37,7 @@ import {
   settle,
 } from "../src/workbench/control.js";
 import { type NativeRef, ObservationProjection, type ObservationScope, type RelationKind } from "../src/workbench/observation.js";
+import { sanitizeWorkbenchText } from "../src/workbench/redaction.js";
 import type { ClaudeNativeObservation } from "../src/workflow/progress.js";
 
 // Isolation tripwires (BOUNDARY 10:23:58Z standing marker rule: a factory that ONLY throws). The suite cannot load if the
@@ -687,5 +691,328 @@ describe("sanitizer routing, bounds and the core's audit fields (A6)", () => {
     }
     const parked = await executeClaudeControl(permit({ invocationId: "inv-control-3" }), deps(fakeSeam(() => { throw new Error("lost"); })));
     expect(parked.receipt).toBe(parked.requested);
+  });
+});
+
+/**
+ * wb-69g.8 respin (gate-1 g2-gate-r2 cmd_b475c6dd6234 on 628db43; OWNER RULING 21:13Z; push-hold released 23:48Z). Spec lines
+ * pinned, quoted:
+ * - BOUNDARY 21:00Z standing seat rule (F6, adopted by the owner; it names this module): "every NEW display path landing after
+ *   04cd6d4 calls sanitizeWorkbenchText with a NAMED layout, or asserts a DIRECT-CALLER row that joins the SITES corpus in the
+ *   SAME commit".
+ * - RESPIN SPEC (i): "failureOf errorCode via sanitizeWorkbenchText(code, bound, "label")".
+ * - RESPIN SPEC (ii): "exact() names its layout ("text" — admission byte-identical)".
+ * - RESPIN SPEC (iii): "the denied-decision policy echo becomes a closed-vocabulary check against the 8 ControlDenyPolicy values
+ *   (kills G30); RED-FIRST falsifier = a forged frozen denial with policy "sk-ant-qqsecretqq" echoed verbatim on the delivered
+ *   cut, green after".
+ */
+/** The core's denial vocabulary (control.ts ControlDenyPolicy); the first intake test proves decideControl mints exactly these. */
+const DENY_POLICIES: readonly ControlDenyPolicy[] = ["unknown-permission-data", "observer-only", "malformed-request", "unknown-action",
+  "missing-exact-grant", "cross-scope", "no-confirmed-ownership", "operator-confirmation"];
+const cp = (code: number): string => String.fromCodePoint(code);
+
+/** claude-control.ts parsed by the TypeScript compiler: code compared as printed without comments, never as raw text. */
+function moduleSource(): ts.SourceFile {
+  const path = new URL("../src/workbench/claude-control.ts", import.meta.url);
+  return ts.createSourceFile("claude-control.ts", readFileSync(path, "utf8"), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+}
+function printed(node: ts.Node, file: ts.SourceFile): string {
+  return ts.createPrinter({ removeComments: true }).printNode(ts.EmitHint.Unspecified, node, file).replace(/\s+/g, " ").trim();
+}
+function nodesOf<T extends ts.Node>(root: ts.Node, test: (node: ts.Node) => node is T, found: T[] = []): T[] {
+  if (test(root)) found.push(root);
+  ts.forEachChild(root, child => {
+    nodesOf(child, test, found);
+  });
+  return found;
+}
+function moduleFunction(file: ts.SourceFile, name: string): ts.FunctionDeclaration {
+  const declared = file.statements.filter(ts.isFunctionDeclaration).filter(fn => fn.name?.text === name);
+  expect(declared, `exactly one module-level ${name}()`).toHaveLength(1);
+  return declared[0];
+}
+
+describe("wb-69g.8 respin: every display path is the one helper with a named layout; a denial echoes only the core's vocabulary", () => {
+  it("echoes a denied decision's policy only from the core's ControlDenyPolicy vocabulary: a forged frozen denial's policy is withheld (iii, kills G30)", async () => {
+    let invoked = false;
+    const accessor = Object.freeze(Object.defineProperty({ decision: "denied", category: "authorization", reason: "forged" }, "policy",
+      { enumerable: true, get: () => { invoked = true; return "observer-only"; } }));
+    const policies: unknown[] = ["sk-ant-qqsecretqq", "sk-proj-qqsecretqq", "anything-goes", "observer-only ", "Observer-only", "observer_only",
+      "constructor", "toString", "__proto__", "", 7, null];
+    const forgeries: unknown[] = [...policies.map(policy => Object.freeze({ decision: "denied", category: "authorization", reason: "forged", policy })), accessor];
+    const fake = fakeSeam();
+    for (const forged of forgeries) {
+      const failure = await refused(executeClaudeControl(forged as ControlDecision, deps(fake)), "denied-decision", "authorization");
+      expect(failure.policy).toBeUndefined();
+      expect(JSON.stringify({ message: failure.message, policy: failure.policy })).not.toMatch(/qqsecretqq|anything-goes|constructor|toString|__proto__/);
+    }
+    expect(invoked).toBe(false);
+    // The vocabulary is the core's own, so a frozen denial naming one of its policies still echoes it: structural vetting only,
+    // decision provenance is wb-pjj's.
+    for (const policy of DENY_POLICIES) {
+      const named = Object.freeze({ decision: "denied", category: "validation", reason: "forged", policy }) as ControlDecision;
+      expect((await refused(executeClaudeControl(named, deps(fake)), "denied-decision", "validation")).policy).toBe(policy);
+    }
+    // Every decision the core returns is frozen, so an unfrozen denial-shaped value is no denial at all: unvetted, nothing echoed.
+    const unfrozen = { decision: "denied", category: "validation", reason: "forged", policy: "observer-only" } as ControlDecision;
+    expect((await refused(executeClaudeControl(unfrozen, deps(fake)), "unvetted-decision", "validation")).policy).toBeUndefined();
+    expect(fake.calls()).toBe(0);
+  });
+
+  it("composes no sanitizer of its own: no stripUnsafeText or redactWorkbenchText, no local unsafe-unit pattern, every helper call names its layout (i, ii)", () => {
+    const file = moduleSource();
+    const identifiers = nodesOf(file, ts.isIdentifier).map(node => node.text);
+    expect(identifiers).not.toContain("stripUnsafeText");
+    expect(identifiers).not.toContain("redactWorkbenchText");
+    // The one binding taken from the shared sanitizers is the one helper.
+    const redaction = file.statements.filter(ts.isImportDeclaration)
+      .filter(declaration => ts.isStringLiteral(declaration.moduleSpecifier) && declaration.moduleSpecifier.text === "./redaction.js");
+    expect(redaction.map(declaration => printed(declaration, file))).toStrictEqual(['import { sanitizeWorkbenchText } from "./redaction.js";']);
+    // No local unsafe-unit pattern: no regular expression names a property class, a default-ignorable or a code-point escape.
+    for (const literal of nodesOf(file, ts.isRegularExpressionLiteral)) expect(literal.text).not.toMatch(/\\[pP]\{|Default_Ignorable|\\u|\\x/);
+    // Every helper call is (value, bound, layout) with a layout the helper declares, spelled as a literal.
+    const calls = nodesOf(file, ts.isCallExpression).filter(call => ts.isIdentifier(call.expression) && call.expression.text === "sanitizeWorkbenchText");
+    expect(calls.length).toBeGreaterThanOrEqual(2);
+    const layout = (call: ts.CallExpression): string | undefined => {
+      const named = call.arguments[2];
+      return call.arguments.length === 3 && named !== undefined && ts.isStringLiteral(named) ? named.text : undefined;
+    };
+    for (const call of calls) expect(["text", "terminal", "label", "lines"], printed(call, file)).toContain(layout(call));
+    // The identity predicate reads the text layout (admission byte-identical); the SDK's errorCode is a single-line label.
+    const layoutsIn = (name: string): (string | undefined)[] => nodesOf(moduleFunction(file, name), ts.isCallExpression).filter(call => calls.includes(call)).map(layout);
+    expect(layoutsIn("exact")).toStrictEqual(["text"]);
+    expect(layoutsIn("failureOf")).toStrictEqual(["label"]);
+  });
+
+  it("the identity predicate keeps the text layout's admission byte-identical: what only the label layout rewrites still binds; what the helper changes never does (ii)", async () => {
+    // The label layout collapses inner whitespace (a NO-BREAK SPACE included) and would refuse these; the text layout leaves them
+    // unchanged. An identity of exactly the 256-byte bound is displayed whole, never truncated.
+    for (const invocationId of ["inv  workflow-1", `inv${cp(0xa0)}workflow-1`, "i".repeat(256)]) {
+      if (invocationId.length < 256) expect(sanitizeWorkbenchText(invocationId, 256, "label")).not.toBe(invocationId);
+      expect(sanitizeWorkbenchText(invocationId, 256, "text")).toBe(invocationId);
+      const execution = await executeClaudeControl(permit(), deps(fakeSeam(), { call: { ...CALL, invocationId } }));
+      expect(execution).toMatchObject({ status: "acknowledged", call: { invocationId } });
+    }
+    // Anything the helper would change, a credential or an unsafe unit, is refused as the call's identity, never repaired.
+    const fake = fakeSeam();
+    for (const invocationId of ["sk-ant-api03-qqsecretqq", "inv api_key=qqsecretqq", `inv${cp(0x200b)}1`, `inv${cp(0x1b)}[0m1`, `inv${cp(0x7)}1`]) {
+      const failure = await refused(executeClaudeControl(permit(), deps(fake, { call: { ...CALL, invocationId } })), "invalid-deps", "validation");
+      expect(failure.message).not.toContain("qqsecretqq");
+    }
+    expect(fake.calls()).toBe(0);
+  });
+
+  it("shows the SDK's errorCode through the helper's label layout: a credential-shaped code reads [REDACTED], never raw (i)", async () => {
+    // The whole NATIVE_LABEL grammar fits the display bound: a 64-character code is shown unchanged, a 65-character one is not a code.
+    for (const [errorCode, code] of [["e".repeat(64), "e".repeat(64)], ["e".repeat(65), undefined]] as const) {
+      const fake = fakeSeam();
+      fake.interrupt.mockRejectedValueOnce(Object.assign(new Error("refused"), { errorClass: "control_request_failed", errorCode }));
+      const execution = await executeClaudeControl(permit(), deps(fake));
+      expect(execution.uncertainty).toStrictEqual({ reason: "seam-failure", failure: { category: "sdk-refused", ...(code === undefined ? {} : { code }) } });
+    }
+    for (const errorCode of ["ghp_qqsecretqq", "github_pat_qqsecretqq"]) {
+      const fake = fakeSeam();
+      fake.interrupt.mockRejectedValueOnce(Object.assign(new Error("refused"), { errorClass: "control_request_failed", errorCode }));
+      const execution = await executeClaudeControl(permit(), deps(fake));
+      expect(sanitizeWorkbenchText(errorCode, 64, "label")).toBe("[REDACTED]");
+      expect(execution.uncertainty).toStrictEqual({ reason: "seam-failure", failure: { category: "sdk-refused", code: "[REDACTED]" } });
+      expect(JSON.stringify(execution)).not.toContain("qqsecretqq");
+      expect(fake.calls()).toBe(1);
+    }
+  });
+});
+
+/**
+ * wb-69g.8 respin, PROVENANCE LINE (owner wb-pjj R1(b) ruling, bound by name onto this respin mid-cut 02:29Z; the 21:08Z
+ * per-adapter recipe): "this adapter's cut ... adds the FIRST-LINE isCoreMintedDecision(decision) check in the adapter's
+ * decision-accepting entry and ONE ProvenanceSubject table row (a real minted decision accepted; a structurally identical
+ * non-minted forgery refused)". The row is in test/workbench-control-provenance.test.ts. With provenance first, structural
+ * vetting is unreachable through executeClaudeControl for any minted value, so (the landed furnace precedent,
+ * test/workbench-control-provenance-depth.test.ts) it is the pure exported vetClaudeControlDecision, driven directly with
+ * decisions the real core minted and forgeries of them, and one parse-aware census line pins the composition no behaviour
+ * can reach. No module mock anywhere.
+ */
+const UNMINTED_TEXT = "decision was not minted by the decision core";
+/** The structural refusal text claude-control.ts already used before provenance existed. */
+const STRUCTURAL_TEXT = "Claude control executes only a permitted workbench.control/v1 decision minted by the control core.";
+const DENIED_TEXT = "Claude control refuses a denied decision; interrupt() was not called.";
+type Permit = ControlDecision & { decision: "permitted" };
+type Table = readonly (readonly [string, unknown])[];
+
+/** One request per deny policy of the core's ladder; each mints a real denial. */
+const DENIALS: readonly (readonly [Partial<NativeControlRequest>, ObservationProjection?])[] = [
+  [{ grants: undefined }], [{ grants: ["observe:claude-agent-sdk.session.inspect"] }], [{ invocationId: "" }],
+  [{ action: "stop", grants: ["control:claude-agent-sdk.stop"] }], [{ grants: ["observe:claude-agent-sdk.session.inspect", "control:furnace.stop"] }],
+  [{ target: { ...SESSION, id: "sess-unseen" } }], [{}, observe([SESSION, SUBAGENT], [])], [{ params: {} }],
+];
+function deepFreeze<T>(value: T): T {
+  if (typeof value === "object" && value !== null) {
+    for (const key of Reflect.ownKeys(value)) deepFreeze(Reflect.get(value, key));
+    Object.freeze(value);
+  }
+  return value;
+}
+/** Copies of a real permit the core never minted that are structurally exact: structural vetting alone cannot tell them apart. */
+function exactForgeries(genuine: Permit): Table {
+  const { receipt } = genuine;
+  return [
+    ["deep-frozen JSON round-trip (a decision replayed from the audit or the journal)", deepFreeze(JSON.parse(JSON.stringify(genuine)))],
+    ["deep-frozen structuredClone", deepFreeze(structuredClone(genuine))],
+    ["hand-built permit carrying the genuine field values", deepFreeze({ decision: "permitted", receipt: { ...receipt, scope: { ...receipt.scope },
+      principal: { ...receipt.principal }, target: { ...receipt.target } } })],
+    ["frozen re-wrap of the genuine, unspent receipt", Object.freeze({ decision: "permitted", receipt })],
+    ["forwarding proxy over the genuine permit", new Proxy(genuine, {})],
+  ];
+}
+/**
+ * One forgery per structural check, each built from a real permit (and its real acknowledged phase) with exactly one thing
+ * wrong. The accessor's getter throws, so reading it instead of its own data descriptor fails as a raw error, not a refusal;
+ * the two proxies throw on every read, which the vetting refuses rather than lets escape.
+ */
+function malformedForgeries(genuine: Permit): Table {
+  const { receipt } = genuine;
+  const forged = (patch: Record<string, unknown>): unknown => deepFreeze({ decision: "permitted", receipt: { ...structuredClone(receipt), ...patch } });
+  const thawed = (key: "scope" | "principal" | "target"): unknown => Object.freeze({ decision: "permitted", receipt: Object.freeze({ ...receipt, [key]: { ...receipt[key] } }) });
+  const accessor = Object.freeze(Object.defineProperty({ decision: "permitted" }, "receipt", { enumerable: true, get: (): never => {
+    throw new Error("the receipt accessor was invoked");
+  } }));
+  return [
+    ["undefined", undefined], ["null", null], ["the verdict string alone", "permitted"], ["a number", 42],
+    ["a frozen array holding the permit", Object.freeze([genuine])],
+    ["an unfrozen copy of the decision", { ...genuine }],
+    ["a verdict that is neither permitted nor denied", Object.freeze({ decision: "approved", receipt })],
+    ["no receipt", Object.freeze({ decision: "permitted" })],
+    ["the receipt behind an accessor (never invoked)", accessor],
+    ["an unfrozen receipt", Object.freeze({ decision: "permitted", receipt: { ...receipt } })],
+    ["an unfrozen target", thawed("target")],
+    ["an unfrozen scope", thawed("scope")],
+    ["an unfrozen principal", thawed("principal")],
+    ["another contract version", forged({ contractVersion: "workbench.control/v0" })],
+    ["the core's own acknowledged phase", Object.freeze({ decision: "permitted", receipt: acknowledge(receipt, { acknowledgedAt: ACKED_AT, nativeAckRef: CLAUDE_INTERRUPT_NO_RECEIPT }) })],
+    ["a forged later phase", forged({ phase: "acknowledged" })],
+    ["another permit policy", forged({ policy: "exact-grant" })],
+    ["a provider that is not a string but names an admitted one", forged({ target: { ...receipt.target, provider: ["claude-agent-sdk"] } })],
+    ["an action that is not a string", forged({ action: ["interrupt"] })],
+    ["a provider the core admits no action for", forged({ target: { ...receipt.target, provider: "hyperunix" }, grant: "control:hyperunix.interrupt" })],
+    ["an inherited provider name", forged({ target: { ...receipt.target, provider: "toString" }, grant: "control:toString.interrupt" })],
+    ["an action the core does not admit for the provider", forged({ action: "stop", grant: "control:claude-agent-sdk.stop" })],
+    ["a non-canonical grant", forged({ grant: "claude-agent-sdk:interrupt" })],
+    ["a request id that is not a string but spells a valid one", forged({ requestId: [receipt.requestId] })],
+    ["a flag-shaped request id", forged({ requestId: "--force" })],
+    ["a revoked proxy", revoked()],
+    ["a trapping proxy over a frozen copy of the permit", trapping({ ...genuine })],
+  ];
+}
+/** The structural vetting under test, through the module namespace so its absence is an assertion failure, not a link error. */
+function vet(value: unknown): RequestedControlReceipt {
+  expect(claudeControl.vetClaudeControlDecision, "src/workbench/claude-control.ts exports vetClaudeControlDecision").toBeTypeOf("function");
+  return claudeControl.vetClaudeControlDecision(value);
+}
+function vetRefusal(value: unknown): unknown {
+  expect(claudeControl.vetClaudeControlDecision, "src/workbench/claude-control.ts exports vetClaudeControlDecision").toBeTypeOf("function");
+  try {
+    claudeControl.vetClaudeControlDecision(value);
+  } catch (error) {
+    return error;
+  }
+  return undefined;
+}
+
+describe("wb-69g.8 respin, provenance line: a decision the core did not mint never reaches structural vetting or interrupt()", () => {
+  it("a minted permit executes; every structurally exact forgery of it is refused with the core's fixed text before interrupt()", async () => {
+    const fake = fakeSeam();
+    const genuine = permit({ invocationId: "inv-depth-exact" });
+    for (const [label, forgery] of exactForgeries(genuine)) {
+      const failure = await refused(executeClaudeControl(forgery as ControlDecision, deps(fake)), "unvetted-decision", "validation");
+      expect(failure.message, label).toBe(UNMINTED_TEXT);
+      expect(failure.policy, label).toBeUndefined();
+    }
+    expect(fake.calls()).toBe(0);
+    // The refusals spent nothing: the permit decideControl returned still executes, exactly once.
+    await expect(executeClaudeControl(genuine, deps(fake))).resolves.toMatchObject({ status: "acknowledged" });
+    expect(fake.calls()).toBe(1);
+  });
+
+  it("refuses every malformed forgery with the provenance text, never the structural one: provenance is asked first", async () => {
+    const fake = fakeSeam();
+    // Never executed, so no forgery below re-wraps a receipt this adapter already issued (that one stays permit-consumed).
+    for (const [label, forgery] of malformedForgeries(permit({ invocationId: "inv-depth-malformed" }))) {
+      const failure = await refused(executeClaudeControl(forgery as ControlDecision, deps(fake)), "unvetted-decision", "validation");
+      expect(failure.message, label).toBe(UNMINTED_TEXT);
+    }
+    expect(fake.calls()).toBe(0);
+  });
+});
+
+describe("structural vetting (vetClaudeControlDecision), driven with decisions the real core minted and forgeries of them", () => {
+  it("passes every permit the core mints and hands back that permit's own receipt", () => {
+    const overrides: readonly Partial<NativeControlRequest>[] = [
+      {}, { invocationId: "inv-depth-2" }, { principal: { id: SCOPE.principal } }, { grants: ["control:claude-agent-sdk.interrupt"] },
+      { requestedAt: "2026-10-15T09:00:00+02:00" },
+    ];
+    for (const override of overrides) {
+      const genuine = permit(override);
+      expect(vet(genuine), JSON.stringify(override)).toBe(genuine.receipt);
+    }
+  });
+
+  it("keeps a real denial's typed reason: denied-decision with the core's own category and policy, for every deny policy", () => {
+    const policies = new Set<string>();
+    for (const [overrides, projection] of DENIALS) {
+      const denial = decide(overrides, projection);
+      if (denial.decision !== "denied") throw new Error(`expected a denial for ${JSON.stringify(overrides)}`);
+      policies.add(denial.policy);
+      const error = vetRefusal(denial);
+      expect(error, denial.policy).toBeInstanceOf(ClaudeControlRefusal);
+      expect(error, denial.policy).toMatchObject({ refusal: "denied-decision", category: denial.category, policy: denial.policy });
+      expect((error as Error).message, denial.policy).toBe(DENIED_TEXT);
+    }
+    expect([...policies].sort()).toStrictEqual([...DENY_POLICIES].sort());
+  });
+
+  it("refuses one forgery per structural check with the structural text, naming no field and reading no accessor", () => {
+    for (const [label, forgery] of malformedForgeries(permit())) {
+      const error = vetRefusal(forgery);
+      expect(error, `${label} must be refused`).toBeInstanceOf(ClaudeControlRefusal);
+      expect(error, label).toMatchObject({ refusal: "unvetted-decision", category: "validation" });
+      expect((error as Error).message, label).toBe(STRUCTURAL_TEXT);
+      expect((error as { policy?: unknown }).policy, label).toBeUndefined();
+    }
+  });
+
+  it("passes a structurally exact forgery: it vouches for shape and never for provenance, so provenance is what refuses it", async () => {
+    const fake = fakeSeam();
+    const genuine = permit({ invocationId: "inv-depth-vouch" });
+    for (const [label, forgery] of exactForgeries(genuine)) {
+      expect(vet(forgery), label).toStrictEqual(genuine.receipt);
+      const failure = await refused(executeClaudeControl(forgery as ControlDecision, deps(fake)), "unvetted-decision", "validation");
+      expect(failure.message, label).toBe(UNMINTED_TEXT);
+    }
+    expect(fake.calls()).toBe(0);
+  });
+});
+
+describe("the composition no behaviour can reach, by one parse-aware census line", () => {
+  it("the entry's first statement is permitted(), which asks the core's own predicate first and then hands the decision to vetClaudeControlDecision", () => {
+    const file = moduleSource();
+    expect(printed(moduleFunction(file, "executeClaudeControl").body?.statements[0] ?? file, file)).toBe("const requested = permitted(decision);");
+    expect(moduleFunction(file, "permitted").body?.statements.map(statement => printed(statement, file))).toStrictEqual([
+      "if (!isCoreMintedDecision(decision)) throw unminted(decision);",
+      "return vetClaudeControlDecision(decision);",
+    ]);
+    // The vetting it hands on to is the exported pure function the behaviour above drives.
+    expect(moduleFunction(file, "vetClaudeControlDecision").modifiers?.map(modifier => modifier.kind)).toContain(ts.SyntaxKind.ExportKeyword);
+    // The predicate it asks is the core's own binding: a value import from ./control.js, declared nowhere in the adapter.
+    const core = file.statements.filter(ts.isImportDeclaration).filter(declaration => ts.isStringLiteral(declaration.moduleSpecifier) &&
+      declaration.moduleSpecifier.text === "./control.js" && declaration.importClause?.isTypeOnly !== true);
+    const bindings = core.flatMap(declaration => {
+      const named = declaration.importClause?.namedBindings;
+      return named && ts.isNamedImports(named)
+        ? named.elements.filter(element => !element.isTypeOnly).map(element => `${(element.propertyName ?? element.name).text} as ${element.name.text}`)
+        : [];
+    });
+    expect(bindings).toContain("isCoreMintedDecision as isCoreMintedDecision");
+    const declared = [...nodesOf(file, ts.isFunctionDeclaration), ...nodesOf(file, ts.isVariableDeclaration)].map(node => node.name?.getText(file));
+    expect(declared).not.toContain("isCoreMintedDecision");
   });
 });

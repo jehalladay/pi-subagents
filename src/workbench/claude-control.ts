@@ -6,7 +6,9 @@
  * sdk.d.ts:2882). It records the SDK's own answer through the core's acknowledge and, later, the call's terminal as the
  * observer reports it through the core's settle. It decides nothing: grants, scope, lifecycle ownership and operator
  * confirmation are the core's rules. It loads no SDK and no host, registers no tool and wires nothing: retaining the live
- * Query per call and exposing this seam through the host boundary is the host's wiring.
+ * Query per call and exposing this seam through the host boundary is the host's wiring. Provenance comes first: only the very
+ * decision object decideControl returned in this process executes (isCoreMintedDecision), so a copy, a decision replayed from
+ * the audit or the journal and a hand-built look-alike never reach interrupt(), however exact their shape.
  *
  * - A ClaudeControlRefusal from executeClaudeControl always means interrupt() was not called; one from
  *   settleClaudeInterrupt means no result was minted.
@@ -23,15 +25,18 @@ import {
   acknowledge,
   CONTROL_CONTRACT_VERSION,
   CONTROL_PERMIT_POLICY,
+  CONTROL_UNMINTED_REASON,
   type ControlDecision,
+  type ControlDenyPolicy,
   type ControlOutcome,
+  isCoreMintedDecision,
   NATIVE_CONTROL_ACTIONS,
   type NativeControlReceipt,
   type RequestedControlReceipt,
   type ResultControlReceipt,
   settle,
 } from "./control.js";
-import { sanitizeWorkbenchText, stripUnsafeText } from "./redaction.js";
+import { sanitizeWorkbenchText } from "./redaction.js";
 
 /** The workflow agent() call whose live query the seam reaches (docs/workbench/04: exactly one owned Claude invocation). */
 export interface ClaudeControlCall {
@@ -78,10 +83,11 @@ export type ClaudeControlUncertainty = "seam-failure" | "wait-timeout" | "wait-a
 /**
  * The category of a rejected interrupt(): the CLI answered the control request with an error (the SDK's
  * control_request_failed, with its own closed-vocabulary code), the query closed before the CLI answered, or anything else.
- * The SDK's message is never echoed.
+ * The SDK's message is never echoed; its code is shown as the one shared helper's label layout displays it, so a
+ * credential-shaped code reads [REDACTED].
  */
 export interface ClaudeControlFailure { readonly category: "sdk-refused" | "query-closed" | "transport"; readonly code?: string }
-/** The SDK's answer as observed: counts, and only the survivor ids the shared sanitizers leave unchanged. Observed, not verified. */
+/** The SDK's answer as observed: counts, and only the survivor ids the one shared helper leaves unchanged. Observed, not verified. */
 export interface ClaudeInterruptEcho {
   /** interrupt_receipt_v1 when interrupt() resolved the SDK's receipt (sdk.d.ts:4666-4678), none when it resolved undefined. */
   readonly receipt: "interrupt_receipt_v1" | "none";
@@ -136,9 +142,7 @@ const ISSUE: Readonly<Record<string, (seam: ClaudeInterruptSeam) => Promise<unkn
   interrupt: (seam: ClaudeInterruptSeam) => seam.interrupt(),
 });
 /** The executable verbs: exactly the landed core's verbs for this producer (NATIVE_CONTROL_ACTIONS) that have a seam method. */
-export const CLAUDE_CONTROL_VERBS: readonly string[] = Object.freeze(
-  (Object.hasOwn(NATIVE_CONTROL_ACTIONS, PROVIDER) ? NATIVE_CONTROL_ACTIONS[PROVIDER] : []).filter(action => Object.hasOwn(ISSUE, action)),
-);
+export const CLAUDE_CONTROL_VERBS: readonly string[] = Object.freeze(NATIVE_CONTROL_ACTIONS[PROVIDER].filter(action => Object.hasOwn(ISSUE, action)));
 /** nativeAckRef of an interrupt() that resolved without a receipt: older CLIs (sdk.d.ts:2880-2881) or a seam resolving nothing. */
 export const CLAUDE_INTERRUPT_NO_RECEIPT = "claude-agent-sdk:interrupt:no-receipt";
 /** The receipt CLIs advertising the interrupt_receipt_v1 capability resolve (sdk.d.ts:4666). */
@@ -163,7 +167,22 @@ export const CLAUDE_CONTROL_RECONCILE = "Claude interrupt outcome unknown: no us
 const REQUEST_ID = /^ctl_[0-9a-f]{32}$/;
 /** The closed-vocabulary shape the SDK itself admits for a control request's errorCode. */
 const NATIVE_LABEL = /^[a-z][a-z0-9_]{0,63}$/;
-const DENY_POLICY = /^[a-z][a-z-]{0,63}$/;
+/** The bound an errorCode is displayed under: the whole NATIVE_LABEL grammar fits, so the helper can only change it by redacting. */
+const NATIVE_LABEL_TEXT = 64;
+/**
+ * The core's denial vocabulary, exactly ControlDenyPolicy (satisfies refuses a missing and an extra key alike): a denied
+ * decision's policy is echoed only when it is one of these, so a look-alike denial never carries caller text into a refusal.
+ */
+const DENY_POLICIES: Readonly<Record<ControlDenyPolicy, true>> = Object.freeze({
+  "unknown-permission-data": true,
+  "observer-only": true,
+  "malformed-request": true,
+  "unknown-action": true,
+  "missing-exact-grant": true,
+  "cross-scope": true,
+  "no-confirmed-ownership": true,
+  "operator-confirmation": true,
+} satisfies Record<ControlDenyPolicy, true>);
 /** A survivor id shown verbatim: never flag-shaped, no whitespace, control, escape or bidi character. */
 const SURVIVOR_ID = /^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$/;
 /** An RFC 3339 instant. Date.parse alone also admits free text around a date. */
@@ -178,8 +197,8 @@ const MAX_TIMER_MS = 2_147_483_647;
 const UNVETTED = "Claude control executes only a permitted workbench.control/v1 decision minted by the control core.";
 /** Receipts whose one interrupt() was issued: a permit executes once. */
 const issued = new WeakSet<object>();
-/** Acknowledged executions this module returned and has not settled. */
-const settleable = new WeakSet<object>();
+/** Acknowledged executions this module returned and has not settled, each with the acknowledged phase it settles from. */
+const settleable = new WeakMap<object, AcknowledgedControlReceipt>();
 /** Executions already settled, and the settled executions themselves. */
 const settled = new WeakSet<object>();
 
@@ -193,10 +212,14 @@ function record(value: unknown): value is object {
 function frozenRecord(value: unknown): value is object {
   return record(value) && Object.isFrozen(value);
 }
-/** Bounded text the shared sanitizers (strip, redact, strip) leave unchanged: used verbatim, never repaired. */
+/**
+ * Bounded identity text the one shared helper leaves unchanged in its "text" layout (it normalizes, redacts and strips, in
+ * that order, and nothing is deleted before it): used verbatim, never repaired. A value carrying an unsafe unit or a
+ * credential never equals its display, so it is refused.
+ */
 function exact(value: unknown, maxBytes = IDENTITY_BYTES): value is string {
   return typeof value === "string" && value !== "" && value.trim() === value && Buffer.byteLength(value) <= maxBytes &&
-    sanitizeWorkbenchText(stripUnsafeText(value)) === value;
+    sanitizeWorkbenchText(value, maxBytes, "text") === value;
 }
 function instant(value: unknown): value is string {
   return typeof value === "string" && INSTANT.test(value) && Number.isFinite(Date.parse(value));
@@ -207,29 +230,63 @@ function isTerminal(value: unknown): value is ClaudeTerminal {
 function isFreshness(value: unknown): value is ClaudeFreshness {
   return value === "current" || value === "unknown";
 }
+function isDenyPolicy(value: unknown): value is ControlDenyPolicy {
+  return typeof value === "string" && Object.hasOwn(DENY_POLICIES, value);
+}
 
+function deniedRefusal(decision: object): ClaudeControlRefusal {
+  const policy = own(decision, "policy");
+  return new ClaudeControlRefusal(own(decision, "category") === "validation" ? "validation" : "authorization", "denied-decision",
+    "Claude control refuses a denied decision; interrupt() was not called.", isDenyPolicy(policy) ? policy : undefined);
+}
+function consumedRefusal(): ClaudeControlRefusal {
+  return new ClaudeControlRefusal("validation", "permit-consumed", "This control permit already issued its interrupt; a reissue needs a fresh decision.");
+}
 /**
- * The receipt of a permitted decision as the core mints it: frozen, requested, under the core's contract and policy, for an
- * action the core admits for its provider, under the canonical control:<provider>.<action> grant. Nothing is recomputed;
- * a look-alike the core could not have minted is unvetted.
+ * Why a decision the core did not mint is refused. The core mints only permits, so a denial keeps its typed denied-decision
+ * refusal and a re-wrapped receipt this adapter already issued stays permit-consumed; anything else, including a value whose
+ * reads throw (a revoked or trapping proxy), gets the core's fixed text and echoes nothing. No branch calls interrupt().
  */
-function permitted(decision: unknown): RequestedControlReceipt {
+function unminted(decision: unknown): ClaudeControlRefusal {
+  try {
+    if (frozenRecord(decision)) {
+      if (own(decision, "decision") === "denied") return deniedRefusal(decision);
+      const receipt = own(decision, "receipt");
+      if (record(receipt) && issued.has(receipt)) return consumedRefusal();
+    }
+  } catch {
+    // A value whose reads throw is no decision the core minted.
+  }
+  return new ClaudeControlRefusal("validation", "unvetted-decision", CONTROL_UNMINTED_REASON);
+}
+/**
+ * Structural vetting, the defense in depth behind provenance: the receipt of a decision shaped exactly as the core mints a
+ * permit: frozen, requested, under the core's contract and policy, for an action the core admits for its provider, under the
+ * canonical control:<provider>.<action> grant. Pure: it reads own data properties only (never an accessor), recomputes
+ * nothing and calls nothing; a look-alike the core could not have minted is unvetted, a decision whose reads throw (a revoked
+ * or trapping proxy) too, and a denial keeps its typed refusal. It vouches for shape, never for provenance: a structurally
+ * exact copy passes it, which is why executeClaudeControl asks isCoreMintedDecision first and only then calls this.
+ */
+export function vetClaudeControlDecision(decision: unknown): RequestedControlReceipt {
   try {
     return vetted(decision);
   } catch (error) {
-    // A decision whose reads throw (a revoked or trapping proxy) is no decision the core minted.
     if (error instanceof ClaudeControlRefusal) throw error;
     throw new ClaudeControlRefusal("validation", "unvetted-decision", UNVETTED);
   }
 }
+/**
+ * The receipt of a permitted decision the core minted. Provenance first: only the very decision object decideControl minted
+ * in this process passes on to structural vetting.
+ */
+function permitted(decision: unknown): RequestedControlReceipt {
+  if (!isCoreMintedDecision(decision)) throw unminted(decision);
+  return vetClaudeControlDecision(decision);
+}
 function vetted(decision: unknown): RequestedControlReceipt {
   if (!frozenRecord(decision)) throw new ClaudeControlRefusal("validation", "unvetted-decision", UNVETTED);
   const verdict = own(decision, "decision");
-  if (verdict === "denied") {
-    const policy = own(decision, "policy");
-    throw new ClaudeControlRefusal(own(decision, "category") === "validation" ? "validation" : "authorization", "denied-decision",
-      "Claude control refuses a denied decision; interrupt() was not called.", typeof policy === "string" && DENY_POLICY.test(policy) ? policy : undefined);
-  }
+  if (verdict === "denied") throw deniedRefusal(decision);
   const receipt = own(decision, "receipt");
   const target = own(receipt, "target");
   const provider = own(target, "provider");
@@ -336,7 +393,8 @@ function receiptOf(value: unknown): { readonly nativeAckRef: string; readonly ec
 function failureOf(error: unknown): ClaudeControlFailure {
   if (own(error, "errorClass") === "control_request_failed") {
     const code = own(error, "errorCode");
-    const failure: ClaudeControlFailure = { category: "sdk-refused", ...(typeof code === "string" && NATIVE_LABEL.test(code) ? { code: sanitizeWorkbenchText(code) } : {}) };
+    const failure: ClaudeControlFailure = { category: "sdk-refused",
+      ...(typeof code === "string" && NATIVE_LABEL.test(code) ? { code: sanitizeWorkbenchText(code, NATIVE_LABEL_TEXT, "label") } : {}) };
     return Object.freeze(failure);
   }
   const failure: ClaudeControlFailure = { category: error instanceof Error && own(error, "message") === QUERY_CLOSED ? "query-closed" : "transport" };
@@ -375,22 +433,20 @@ function conclude(issuedCall: IssuedCall, answer: Answer, now: () => string): Cl
   const { verb, call, requested } = issuedCall;
   const execution: ClaudeControlExecution = Object.freeze({ verb, status: "acknowledged", outcome: "unknown", call, receipt: acknowledged, requested,
     acknowledged, echo: read.echo });
-  settleable.add(execution);
+  settleable.set(execution, acknowledged);
   return execution;
 }
 
 /**
  * WorkbenchHost.requestControl's Claude leg (docs/workbench/13 § "Host boundary") for a decision the caller already obtained
- * from the control core. Refuses (ClaudeControlRefusal, interrupt() not called) a denied, unvetted or spent decision, an
- * action with no Query control request, a target that is not an SDK session, invalid dependencies, a seam not bound to the
- * target session and a wait cancelled before issuing; otherwise calls interrupt() exactly once and resolves with what the
- * SDK's answer establishes: acknowledged at most, never a result.
+ * from the control core. Refuses (ClaudeControlRefusal, interrupt() not called) a decision the core did not mint in this
+ * process, a denied, unvetted or spent decision, an action with no Query control request, a target that is not an SDK
+ * session, invalid dependencies, a seam not bound to the target session and a wait cancelled before issuing; otherwise calls
+ * interrupt() exactly once and resolves with what the SDK's answer establishes: acknowledged at most, never a result.
  */
 export async function executeClaudeControl(decision: ControlDecision, deps: ClaudeControlDeps): Promise<ClaudeControlExecution> {
   const requested = permitted(decision);
-  if (issued.has(requested)) {
-    throw new ClaudeControlRefusal("validation", "permit-consumed", "This control permit already issued its interrupt; a reissue needs a fresh decision.");
-  }
+  if (issued.has(requested)) throw consumedRefusal();
   const { target, action } = requested;
   const issue = target.provider === PROVIDER && CLAUDE_CONTROL_VERBS.includes(action) ? ISSUE[action] : undefined;
   if (issue === undefined) throw new ClaudeControlRefusal("validation", "unsupported-verb", "No Claude Agent SDK control request exists for this action.");
@@ -435,14 +491,15 @@ function readObserved(observed: unknown): ObservedFields | undefined {
  * core refuses. Each acknowledged execution settles at most once; the earlier execution is never rewritten.
  */
 export function settleClaudeInterrupt(execution: ClaudeControlExecution, observed: ClaudeObservedTerminal, deps: { readonly now: () => string }): ClaudeControlExecution {
-  if (!record(execution) || !settleable.has(execution)) {
+  // The acknowledged phase is read from this module's own record of what it acknowledged, never from the execution object.
+  const acknowledged = record(execution) ? settleable.get(execution) : undefined;
+  if (acknowledged === undefined) {
     if (record(execution) && settled.has(execution)) {
       throw new ClaudeControlRefusal("validation", "result-consumed", "This interrupt was already settled; its result is never minted twice.");
     }
     throw new ClaudeControlRefusal("validation", "unvetted-execution", "Only an interrupt this adapter acknowledged can be settled.");
   }
-  const { verb, call, requested, acknowledged, echo } = execution;
-  if (acknowledged === undefined) throw new ClaudeControlRefusal("validation", "unvetted-execution", "Only an interrupt this adapter acknowledged can be settled.");
+  const { verb, call, requested, echo } = execution;
   if (!record(deps) || typeof deps.now !== "function") {
     throw new ClaudeControlRefusal("validation", "invalid-deps", "Settling a Claude interrupt requires a host clock.");
   }
