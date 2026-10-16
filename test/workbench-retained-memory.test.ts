@@ -139,6 +139,35 @@ function publishWith(receipt: Receipt, io?: PublishIo): number {
 
 setFlagsFromString("--expose-gc");
 const gc = runInNewContext("gc") as Gc;
+interface SettleOptions {
+  stableReads: number;
+  maxReads: number;
+}
+/** wb-xn2: unchanged reads (2 ms apart) that count as "the off-thread ArrayBuffer free has settled", and the read bound. */
+const SETTLE_OPTIONS: SettleOptions = { stableReads: 8, maxReads: 200 };
+/**
+ * A collector that returns only once the ArrayBuffer byte counter has stopped moving. V8 frees ArrayBuffer backing
+ * stores on a sweeper thread after the collection returns, so a sample taken straight after the last collection of a
+ * window can still count a body that is already unreachable (wb-xn2). The wait is bounded by `maxReads`; a body that
+ * really is retained keeps the counter high and steady, so it is still reported.
+ */
+function settledCollector(collect: Gc, readBytes: () => number, pause: () => void, options: SettleOptions): Gc {
+  return () => {
+    collect();
+    let last = readBytes();
+    let stable = 0;
+    for (let reads = 1; reads < options.maxReads && stable < options.stableReads; reads++) {
+      pause();
+      const current = readBytes();
+      stable = current === last ? stable + 1 : 0;
+      last = current;
+    }
+  };
+}
+const pauseTwoMilliseconds = (): void => {
+  Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 2);
+};
+const settledGc: Gc = settledCollector(gc, () => process.memoryUsage().arrayBuffers, pauseTwoMilliseconds, SETTLE_OPTIONS);
 const inspector: Inspector = { initialInspectorState, layoutInspector, reduceInspectorKey };
 const HOST: Host = {
   utc: "2026-10-15T00:00:00.000Z",
@@ -438,7 +467,7 @@ describe("W21-C bounded re-collect before a body counts as retained (wb-9x5.3 re
     // the body on turn 2 * (1 + RELEASE_RECHECK_ROUNDS) is caught by the last round's second collection.
     const lastTurn = 2 * (1 + recheckRounds());
     const delayed = delayedReleaseInspector(lastTurn);
-    const receipt = await run({ Projection: ObservationProjection, inspector: delayed.inspector, fixture: small(), host: HOST, gc, sampling: DELAYED });
+    const receipt = await run({ Projection: ObservationProjection, inspector: delayed.inspector, fixture: small(), host: HOST, gc: settledGc, sampling: DELAYED });
     expect(receipt.falsifier?.reachableAfterBlur).toBe(0);
     expect(receipt.falsifier?.lateCollectedCycles).toEqual(Array.from({ length: DELAYED.cycles }, (_, cycle) => cycle));
     for (const sample of receipt.series) {
@@ -719,5 +748,75 @@ describe("W21-C receipt publication: printed before the file write; a failed wri
     } finally {
       rmSync(dir, { recursive: true, force: true });
     }
+  });
+});
+
+describe("wb-xn2 the exit-0 window case samples ArrayBuffer bytes only after the off-thread free has settled", () => {
+  // Incidents cmd_87bc2bf80c37 (wb-752.4 first landing gate, load1 20+) and cmd_ddbff06f7b99 (wb-ktf first landing
+  // gate, load1 145 on 64 CPUs): this file's "window is exactly RELEASE_RECHECK_ROUNDS rounds" case failed in a
+  // full-suite landing gate (3/3 serial, 41/41 on clean trunk, fresh-TMPDIR re-runs green). Measured here under 120
+  // busy node processes (load1 ~130, about 2x oversubscription) before the cure: 9 of 14 runs failed on `assess(shaped).exitCode` with the sole violation
+  // array-buffer-growth-over-bound ("grew 4194304 B"), the 4 MiB body released by the LAST collection of the window
+  // still counted in process.memoryUsage().arrayBuffers when the cycle was sampled. The body was already unreachable
+  // (reachableAfterBlur 0, lateCollected 1, releaseRounds 3 all held), so the cure is in the test: the injected gc waits
+  // for the ArrayBuffer counter to stop moving before returning. No gate allowlist, no skip, no bound change.
+  const script = (values: number[]): { read: () => number; reads: () => number } => {
+    let at = 0;
+    return {
+      read: () => values[Math.min(at++, values.length - 1)] ?? 0,
+      reads: () => at,
+    };
+  };
+
+  it("collects first, then keeps reading until the counter has been unchanged for stableReads consecutive reads", () => {
+    const calls: string[] = [];
+    const counter = script([4_332_207, 4_332_207, 137_903, 137_903, 137_903, 137_903]);
+    const collector = settledCollector(
+      () => calls.push("gc"),
+      () => {
+        calls.push("read");
+        return counter.read();
+      },
+      () => calls.push("pause"),
+      { stableReads: 3, maxReads: 50 },
+    );
+    collector();
+    expect(calls[0]).toBe("gc");
+    // 4332207 -> 4332207 (stable 1) -> 137903 (reset) -> 137903 (1) -> 137903 (2) -> 137903 (3): six reads.
+    expect(counter.reads()).toBe(6);
+    expect(calls.filter((call) => call === "pause").length).toBe(5);
+  });
+
+  it("is bounded: a counter that never stops moving ends after maxReads reads", () => {
+    let value = 0;
+    let reads = 0;
+    const collector = settledCollector(
+      () => undefined,
+      () => {
+        reads++;
+        return value++;
+      },
+      () => undefined,
+      { stableReads: 3, maxReads: 7 },
+    );
+    collector();
+    expect(reads).toBe(7);
+  });
+
+  it("a counter that is already steady costs exactly stableReads + 1 reads, so a truly retained body is still reported", () => {
+    const counter = script([4_332_207]);
+    const collector = settledCollector(
+      () => undefined,
+      counter.read,
+      () => undefined,
+      { stableReads: 4, maxReads: 50 },
+    );
+    collector();
+    expect(counter.reads()).toBe(5);
+  });
+
+  it("the production settle options tolerate a loaded sweeper: at least 8 stable reads and a bound well above that", () => {
+    expect(SETTLE_OPTIONS.stableReads).toBeGreaterThanOrEqual(8);
+    expect(SETTLE_OPTIONS.maxReads).toBeGreaterThanOrEqual(10 * SETTLE_OPTIONS.stableReads);
   });
 });
