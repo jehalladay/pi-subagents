@@ -7,8 +7,9 @@
  * requested, acknowledged and result are three distinct reply shapes carrying the receipt's own timestamps and native
  * echo refs verbatim. A request is not an accepted action and an accepted action is not its outcome, so an
  * acknowledged reply says completion is not established, and transport success is never labeled domain verification.
- * Every string routes through the shared sanitizers (redaction.ts) and the compact JSON is byte-capped with an honest
- * truncated flag and a visible truncation marker.
+ * Every display string goes through the one shared helper (redaction.ts sanitizeWorkbenchText, "text" layout) exactly
+ * once and before anything is cut, and the compact JSON is byte-capped with an honest truncated flag and a visible
+ * truncation marker.
  */
 import type { CapabilityErrorCategory, JsonValue } from "./capability-registry.js";
 import {
@@ -21,7 +22,7 @@ import {
   NATIVE_CONTROL_ACTIONS,
   type NativeControlReceipt,
 } from "./control.js";
-import { redactWorkbenchText, sanitizeWorkbenchJson, stripUnsafeText } from "./redaction.js";
+import { sanitizeWorkbenchText, type WorkbenchTextLayout } from "./redaction.js";
 
 export const CONTROL_REPLY_CONTRACT_VERSION = "workbench.control-reply/v1";
 export const DEFAULT_CONTROL_REPLY_BYTES = 4096;
@@ -36,7 +37,10 @@ export interface ControlReply {
   /** The sanitized compact JSON, never longer than the effective byte budget. */
   readonly text: string;
   readonly bytes: number;
-  /** True when anything was cut to fit the budget; the same flag and a marker are inside the reply. */
+  /**
+   * True when anything was cut: the byte budget forced a smaller tier, or the shared text cap cut a string after
+   * redaction. The same flag and a marker are inside the reply.
+   */
   readonly truncated: boolean;
   /** The parsed form of `text`. */
   readonly reply: { readonly [key: string]: JsonValue };
@@ -73,23 +77,24 @@ const NOTICES = {
 } as const;
 const MISSING_GRANT = /^missing exact grant control:([a-z][a-z0-9-]*)\.([a-z][a-z0-9-]*)$/;
 /**
- * Zero-width, soft-hyphen and BOM code points survive the shared terminal strip. They are deleted BEFORE the shared
- * sanitizer (strip, redact, strip) so an invisible character inside a credential can never split it past redaction and be
- * glued back together afterwards.
+ * The reply is model-facing text, so every display string takes the one helper's "text" layout: redaction reads every
+ * unsafe unit both as a separator and as glue first, then whitespace controls become one space and every other unsafe
+ * unit vanishes. Nothing is deleted or cut before the helper runs: deletion never precedes redaction (wb-952).
  */
-const INVISIBLE = /[\u00AD\u061C\u180E\u200B-\u200F\u2060-\u2064\uFEFF]/g;
+const LAYOUT: WorkbenchTextLayout = "text";
+/** The shared text cap on one display string, applied by the helper after redaction. */
 const REF_TEXT_LIMIT = 4200;
-const CLIP = { compact: 64 } as const;
+/** The compact tier's width for one echo string, in code points, cut only from the helper's output. */
+const COMPACT_WIDTH = 64;
+const CUT_MARKER = " [truncated]";
+/** The blocks that echo receipt text: the only strings the compact tier cuts. */
+const ECHO_BLOCKS = ["requested", "acknowledged", "result"] as const;
 
 function plain(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 function text(value: unknown): value is string {
   return typeof value === "string";
-}
-function clip(value: string, detail: Detail): string {
-  const limit = detail === "full" ? Number.POSITIVE_INFINITY : CLIP.compact;
-  return value.length > limit ? `${value.slice(0, limit - 12)} [truncated]` : value;
 }
 /** The grant a missing-exact-grant denial names, only when both halves are allowlisted verbs of the core. */
 function requiredGrantOf(reason: unknown): string | undefined {
@@ -125,14 +130,15 @@ function wellFormed(receipt: unknown): receipt is NativeControlReceipt {
   if (receipt.phase === "acknowledged") return true;
   return receipt.phase === "result" && OUTCOMES.some(outcome => outcome === receipt.outcome) && text(receipt.nativeResultRef) && text(receipt.settledAt);
 }
+/** The receipt's audit core as raw text; render() sanitizes it and the compact tier cuts the helper's output. */
 function requestedBlock(receipt: NativeControlReceipt, detail: Detail): Body {
   const { target } = receipt;
   const base: Body = {
-    requestId: clip(receipt.requestId, detail),
-    grant: clip(receipt.grant, detail),
-    action: clip(receipt.action, detail),
+    requestId: receipt.requestId,
+    grant: receipt.grant,
+    action: receipt.action,
     destructive: DESTRUCTIVE_CONTROL_ACTIONS.includes(receipt.action),
-    target: { provider: clip(target.provider, detail), type: clip(target.type, detail), id: clip(target.id, detail), ...(target.scope !== undefined ? { scope: clip(target.scope, detail) } : {}) },
+    target: { provider: target.provider, type: target.type, id: target.id, ...(target.scope !== undefined ? { scope: target.scope } : {}) },
     requestedAt: receipt.requestedAt,
   };
   if (detail !== "full") return base;
@@ -140,8 +146,8 @@ function requestedBlock(receipt: NativeControlReceipt, detail: Detail): Body {
 }
 function phased(receipt: NativeControlReceipt, detail: Detail): Body {
   const body: Body = { status: receipt.phase, phase: receipt.phase, requested: requestedBlock(receipt, detail) };
-  if (receipt.phase !== "requested") body.acknowledged = { acknowledgedAt: receipt.acknowledgedAt, nativeAckRef: clip(receipt.nativeAckRef, detail) };
-  if (receipt.phase === "result") body.result = { outcome: receipt.outcome, nativeResultRef: clip(receipt.nativeResultRef, detail), settledAt: receipt.settledAt };
+  if (receipt.phase !== "requested") body.acknowledged = { acknowledgedAt: receipt.acknowledgedAt, nativeAckRef: receipt.nativeAckRef };
+  if (receipt.phase === "result") body.result = { outcome: receipt.outcome, nativeResultRef: receipt.nativeResultRef, settledAt: receipt.settledAt };
   body.completionBasis = receipt.phase === "result" ? "producer-reported" : "not-established";
   body.verification = "not-performed";
   body.notice = NOTICES[receipt.phase];
@@ -165,34 +171,64 @@ function effectiveBudget(maxBytes: number | undefined): number {
   return Math.min(MAX_CONTROL_REPLY_BYTES, Math.max(MIN_CONTROL_REPLY_BYTES, Math.floor(maxBytes)));
 }
 /**
- * Pass one of strip, redact, strip: delete the invisible set and the terminal-unsafe set from every string and key, and
- * record whether the shared redactor's text cap will cut any of them after redaction expansion.
+ * One display string, sanitized by the one helper at the named layout and never again. The shared text cap cuts after
+ * redaction; whether it cut is read from the helper's own uncapped output, so the truncated flag keys on what the
+ * helper produced.
  */
-function prepared(value: JsonValue, state: { cut: boolean }): JsonValue {
-  if (typeof value === "string") {
-    const cleaned = stripUnsafeText(value.replace(INVISIBLE, ""));
-    if (redactWorkbenchText(cleaned, Number.POSITIVE_INFINITY).length > REF_TEXT_LIMIT) state.cut = true;
-    return cleaned;
-  }
-  if (Array.isArray(value)) return value.map(child => prepared(child, state));
-  if (value && typeof value === "object") {
+function shown(value: string, cut: { text: boolean }): string {
+  const whole = sanitizeWorkbenchText(value, Number.POSITIVE_INFINITY, LAYOUT);
+  if (whole.length <= REF_TEXT_LIMIT) return whole;
+  cut.text = true;
+  return sanitizeWorkbenchText(value, REF_TEXT_LIMIT, LAYOUT);
+}
+/** The reply's one sanitizing pass: every string of a shaped body, keys included, through shown(). */
+function displayed(value: JsonValue, cut: { text: boolean }): JsonValue {
+  if (typeof value === "string") return shown(value, cut);
+  if (Array.isArray(value)) return value.map(child => displayed(child, cut));
+  if (value !== null && typeof value === "object") {
     const result: Body = Object.create(null);
-    for (const [key, child] of Object.entries(value)) result[prepared(key, state) as string] = prepared(child, state);
+    for (const [key, child] of Object.entries(value)) result[shown(key, cut)] = displayed(child, cut);
     return result;
   }
   return value;
 }
-/** Renders one shaped body: pass one, the envelope, then the shared sanitizers (redact, strip) and compact JSON. */
-function render(shaped: Body, byteCut: boolean, maxBytes: number): ControlReply {
-  const state = { cut: false };
-  const clean = prepared(shaped, state) as Body;
+/**
+ * The compact tier's cut of text the helper already sanitized, by code points so no surrogate pair is split. A cut
+ * after redaction can only drop text, never expose what redaction covered.
+ */
+function clipped(value: JsonValue): JsonValue {
+  if (typeof value === "string") {
+    const points = Array.from(value);
+    return points.length > COMPACT_WIDTH ? `${points.slice(0, COMPACT_WIDTH - CUT_MARKER.length).join("")}${CUT_MARKER}` : value;
+  }
+  if (Array.isArray(value)) return value.map(clipped);
+  if (value !== null && typeof value === "object") {
+    const result: Body = Object.create(null);
+    for (const [key, child] of Object.entries(value)) result[key] = clipped(child);
+    return result;
+  }
+  return value;
+}
+function compacted(body: Body): Body {
+  const result: Body = { ...body };
+  for (const block of ECHO_BLOCKS) if (block in body) result[block] = clipped(body[block]);
+  return result;
+}
+/**
+ * Renders one shaped body: the one sanitizing pass, then (compact tier) the cut of the echo blocks, then the envelope,
+ * which adds only module constants, and compact JSON. Nothing is sanitized twice.
+ */
+function render(shaped: Body, detail: Detail, byteCut: boolean, maxBytes: number): ControlReply {
+  const cut = { text: false };
+  const sanitized = displayed(shaped, cut) as Body;
+  const body = detail === "compact" ? compacted(sanitized) : sanitized;
   const truncation: Body | undefined = byteCut
-    ? { reason: "byte-cap", maxBytes, ...(state.cut ? { textCap: REF_TEXT_LIMIT } : {}) }
-    : state.cut
+    ? { reason: "byte-cap", maxBytes, ...(cut.text ? { textCap: REF_TEXT_LIMIT } : {}) }
+    : cut.text
       ? { reason: "text-cap", maxChars: REF_TEXT_LIMIT }
       : undefined;
-  const envelope: Body = { contractVersion: CONTROL_REPLY_CONTRACT_VERSION, kind: "control-reply", ...clean, truncated: truncation !== undefined, ...(truncation ? { truncation } : {}) };
-  const out = JSON.stringify(sanitizeWorkbenchJson(envelope, REF_TEXT_LIMIT));
+  const envelope: Body = { contractVersion: CONTROL_REPLY_CONTRACT_VERSION, kind: "control-reply", ...body, truncated: truncation !== undefined, ...(truncation ? { truncation } : {}) };
+  const out = JSON.stringify(envelope);
   return { text: out, bytes: Buffer.byteLength(out, "utf8"), truncated: truncation !== undefined, reply: JSON.parse(out) as { [key: string]: JsonValue } };
 }
 
@@ -204,9 +240,9 @@ function render(shaped: Body, byteCut: boolean, maxBytes: number): ControlReply 
  */
 export function buildControlReply(source: ControlDecision | NativeControlReceipt, options: ControlReplyOptions = {}): ControlReply {
   const maxBytes = effectiveBudget(options.maxBytes);
-  const full = render(bodyOf(source, "full"), false, maxBytes);
+  const full = render(bodyOf(source, "full"), "full", false, maxBytes);
   if (full.bytes <= maxBytes) return full;
-  const compact = render(bodyOf(source, "compact"), true, maxBytes);
+  const compact = render(bodyOf(source, "compact"), "compact", true, maxBytes);
   if (compact.bytes <= maxBytes) return compact;
-  return render(minimal(bodyOf(source, "compact")), true, maxBytes);
+  return render(minimal(bodyOf(source, "compact")), "compact", true, maxBytes);
 }

@@ -1,7 +1,7 @@
 /** wb-752.4 (W16-F): the pure, bounded workflow_control reply builder. It renders a ControlDecision or a NativeControlReceipt and never decides. */
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import type { JsonValue } from "../src/workbench/capability-registry.js";
+import { CapabilityError, type JsonValue } from "../src/workbench/capability-registry.js";
 import {
   acknowledge,
   CONTROL_PERMIT_POLICY,
@@ -13,8 +13,9 @@ import {
   type NativeControlRequest,
   settle,
 } from "../src/workbench/control.js";
-import { buildControlReply, CONTROL_REPLY_CONTRACT_VERSION, DEFAULT_CONTROL_REPLY_BYTES, MIN_CONTROL_REPLY_BYTES } from "../src/workbench/control-reply.js";
+import { buildControlReply, CONTROL_REPLY_CONTRACT_VERSION, DEFAULT_CONTROL_REPLY_BYTES, MAX_CONTROL_REPLY_BYTES, MIN_CONTROL_REPLY_BYTES } from "../src/workbench/control-reply.js";
 import { type NativeRef, ObservationProjection, type ObservationScope, type Relation } from "../src/workbench/observation.js";
+import { sanitizeWorkbenchText } from "../src/workbench/redaction.js";
 
 const SCOPE: ObservationScope = { workspace: "/tmp/external-ws", principal: "tester" };
 const AT = "2026-10-15T06:00:00Z";
@@ -254,7 +255,9 @@ describe("byte cap", () => {
   });
 });
 
-const cp = (...codes: number[]): string => String.fromCharCode(...codes);
+const cp = (...codes: number[]): string => String.fromCodePoint(...codes);
+const NUL = cp(0x00);
+const LF = cp(0x0a);
 const ZWSP = cp(0x200b);
 const LRM = cp(0x200e);
 const RLM = cp(0x200f);
@@ -262,10 +265,40 @@ const ZWJ = cp(0x200d);
 const WJ = cp(0x2060);
 const BOM = cp(0xfeff);
 const RLO = cp(0x202e);
+/** Anything a display string must never carry: C0/C1 controls, line/paragraph separators, default-ignorables, lone surrogates. */
+const UNSAFE = /[\x00-\x1f\x7f-\x9f\u{2028}\u{2029}]|\p{Default_Ignorable_Code_Point}|[\u{d800}-\u{dfff}]/u;
+/** Every string leaf of a reply, keys included. */
+function strings(value: unknown, into: string[] = []): string[] {
+  if (typeof value === "string") into.push(value);
+  else if (Array.isArray(value)) for (const item of value) strings(item, into);
+  else if (value !== null && typeof value === "object") {
+    for (const [key, item] of Object.entries(value)) {
+      into.push(key);
+      strings(item, into);
+    }
+  }
+  return into;
+}
+/** The CapabilityError a core call throws, or undefined when it accepts. */
+function refusalOf(run: () => unknown): CapabilityError | undefined {
+  try {
+    run();
+  } catch (error) {
+    if (error instanceof CapabilityError) return error;
+    throw error;
+  }
+  return undefined;
+}
+/** Hand-built receipts: a core-minted receipt with one echo replaced by text the core itself would refuse to record. */
+const withAck = (ref: string): NativeControlReceipt => ({ ...acknowledge(requested(), ACK), nativeAckRef: ref });
+const withResult = (ref: string): NativeControlReceipt => ({ ...settle(acknowledge(requested(), ACK), RESULT), nativeResultRef: ref });
+const withTarget = (id: string): NativeControlReceipt => ({ ...requested(), target: { ...RUN, id } });
 
 describe("wb-752.4 U1: invisible characters never reassemble a redacted credential", () => {
-  // Spec (gate verdict U1): delete the zero-width / default-ignorable set BEFORE the shared sanitizer, so a credential
-  // split by an invisible character is redacted as one token. Seven probe refs, each accepted by the landed core.
+  // Spec (14:17Z ruling U1, re-expressed per the 01:17Z verdict U2): seven within-token probe refs. Since wb-952 the landed core
+  // reads every default-ignorable as an unsafe unit and REFUSES each of these refs (pinned below), so no core-minted receipt
+  // carries one; the builder's own routing through the one helper is the only defense for a receipt the core did not mint.
+  // Each shape is therefore a builder-defense probe on a HAND-BUILT receipt beside a pin of the core's refusal of that shape.
   const probes: readonly [string, string, string][] = [
     ["ZWSP in sk-ant- prefix", `ref sk-ant-${ZWSP}api03-ZWSECRETAAAA`, "ZWSECRETAAAA"],
     ["LRM in sk-ant- prefix", `ref sk-ant-${LRM}api03-LRMSECRETAAAA`, "LRMSECRETAAAA"],
@@ -277,17 +310,31 @@ describe("wb-752.4 U1: invisible characters never reassemble a redacted credenti
   ];
   for (const [label, ref, secret] of probes) {
     it(`acknowledged reply redacts ${label}`, () => {
-      const out = buildControlReply(acknowledge(requested(), { ...ACK, nativeAckRef: ref }));
+      const hostile = withAck(ref);
+      const out = buildControlReply(hostile);
       expect(out.text).not.toContain(secret);
       expect(out.text).toContain("[REDACTED]");
     });
     it(`result reply redacts ${label}`, () => {
-      const out = buildControlReply(settle(acked(), { ...RESULT, nativeResultRef: ref }));
+      const hostile = withResult(ref);
+      const out = buildControlReply(hostile);
       expect(out.text).not.toContain(secret);
       expect(out.text).toContain("[REDACTED]");
     });
+    it(`the landed core refuses ${label} as an acknowledgement reference`, () => {
+      const error = refusalOf(() => acknowledge(requested(), { ...ACK, nativeAckRef: ref }));
+      expect(error).toBeInstanceOf(CapabilityError);
+      expect(error?.category).toBe("validation");
+      expect(error?.message).toBe("Control acknowledgement requires a native acknowledgement reference.");
+    });
+    it(`the landed core refuses ${label} as a result reference`, () => {
+      const error = refusalOf(() => settle(acked(), { ...RESULT, nativeResultRef: ref }));
+      expect(error).toBeInstanceOf(CapabilityError);
+      expect(error?.category).toBe("validation");
+      expect(error?.message).toBe("Control result requires a native result reference.");
+    });
   }
-  it("a bidi override inside a credential (hand-built receipt, the core refuses such refs) is stripped before redaction", () => {
+  it("a bidi override inside a credential (hand-built receipt, the core refuses such refs) is redacted as one token by the one helper", () => {
     const hostile = { ...acked(), nativeAckRef: `ref sk-ant-${RLO}api03-BIDISECRETAAAA` } as unknown as NativeControlReceipt;
     const out = buildControlReply(hostile);
     expect(out.text).not.toContain("BIDISECRETAAAA");
@@ -297,6 +344,162 @@ describe("wb-752.4 U1: invisible characters never reassemble a redacted credenti
     const out = buildControlReply(acknowledge(requested(), { ...ACK, nativeAckRef: "ref sk-ant-api03-PLAINSECRETAAAA" }));
     expect(out.text).not.toContain("PLAINSECRETAAAA");
     expect(out.text).toContain("[REDACTED]");
+  });
+});
+
+/** The three echo paths of a hand-built receipt: what the control wiring could hand the builder that the core did not mint. */
+const ECHO_PATHS: readonly (readonly [path: string, receipt: (raw: string) => NativeControlReceipt, field: (body: Record<string, JsonValue>) => JsonValue])[] = [
+  ["acknowledged.nativeAckRef", withAck, body => (body.acknowledged as Record<string, JsonValue>).nativeAckRef],
+  ["result.nativeResultRef", withResult, body => (body.result as Record<string, JsonValue>).nativeResultRef],
+  ["requested.target.id", withTarget, body => ((body.requested as Record<string, JsonValue>).target as Record<string, JsonValue>).id],
+];
+
+describe("wb-752.4 respin U1: between-token separators reach the one helper untouched (F6 display-path rule, wb-952 site 13)", () => {
+  // Spec (01:17Z verdict U1): drop the local invisible-deletion regex and the strip/redact pre-pass; route every display string
+  // through sanitizeWorkbenchText(value, REF_TEXT_LIMIT, NAMED layout) exactly once; red-first BETWEEN-token shapes through
+  // hand-built receipts ("key<U+200B>sk-ant-...", "Authorization: Bearer<U+FEFF>...", "x<NUL>Bearer ...", "first line<LF>sk-ant-...").
+  // The table is the gate's seat separator corpus: 12 shapes x 28 separators + 3 plain rows = 339, of which the 32 rows with a
+  // whitespace unit inside a keyword are control rows (whitespace always separates, wb-952 12:10Z, so the keyword is split).
+  const separators: readonly (readonly [name: string, unit: string])[] = [
+    ["NUL", cp(0x00)], ["BEL", cp(0x07)], ["BS", cp(0x08)], ["TAB", cp(0x09)], ["LF", cp(0x0a)], ["VT", cp(0x0b)], ["FF", cp(0x0c)],
+    ["CR", cp(0x0d)], ["SGR", `${cp(0x1b)}[0m`], ["DEL", cp(0x7f)], ["NEL", cp(0x85)], ["CSI", cp(0x9b)], ["SHY", cp(0xad)], ["ALM", cp(0x61c)],
+    ["MVS", cp(0x180e)], ["ZWSP", cp(0x200b)], ["ZWNJ", cp(0x200c)], ["ZWJ", cp(0x200d)], ["LRM", cp(0x200e)], ["RLM", cp(0x200f)],
+    ["LS", cp(0x2028)], ["PS", cp(0x2029)], ["RLO", cp(0x202e)], ["LRI", cp(0x2066)], ["WJ", cp(0x2060)], ["BOM", cp(0xfeff)],
+    ["CGJ", cp(0x34f)], ["VS16", cp(0xfe0f)],
+  ];
+  const whitespace: ReadonlySet<string> = new Set(["TAB", "LF", "VT", "FF", "CR", "NEL", "LS", "PS"]);
+  type Shape = (unit: string, secret: string) => string;
+  /** A unit between two tokens: before a boundary-anchored start, or as the space after a scheme. */
+  const between: readonly (readonly [position: string, shape: Shape])[] = [
+    ["before sk-ant-", (unit, secret) => `key${unit}sk-ant-api03-${secret}`],
+    ["before sk-proj-", (unit, secret) => `key${unit}sk-proj-${secret}`],
+    ["before ghp_", (unit, secret) => `see${unit}ghp_${secret}`],
+    ["before github_pat_", (unit, secret) => `see${unit}github_pat_${secret}`],
+    ["before Bearer", (unit, secret) => `x${unit}Bearer ${secret}`],
+    ["before Basic", (unit, secret) => `x${unit}Basic ${secret}`],
+    ["as the space after Bearer", (unit, secret) => `Authorization: Bearer${unit}${secret}`],
+    ["as the space after Basic", (unit, secret) => `Authorization: Basic${unit}${secret}`],
+  ];
+  /** A unit inside a keyword or key prefix. */
+  const inside: readonly (readonly [position: string, shape: Shape])[] = [
+    ["inside Bearer", (unit, secret) => `Authorization: Bea${unit}rer ${secret}`],
+    ["inside password", (unit, secret) => `pass${unit}word=${secret}`],
+    ["inside api_key", (unit, secret) => `api${unit}_key=${secret}`],
+    ["inside sk-ant-", (unit, secret) => `sk-a${unit}nt-${secret}`],
+  ];
+  interface SeparatorProbe {
+    readonly id: string;
+    readonly raw: string;
+    readonly secret: string;
+    /** A whitespace unit inside a keyword: the ruled reading splits the keyword, so the value is shown, not hidden. */
+    readonly control: boolean;
+  }
+  const table: readonly SeparatorProbe[] = [
+    ...separators.flatMap(([name, unit], u) => [
+      ...between.map(([position, shape], s): SeparatorProbe => {
+        const secret = `SEPARATOR${u}B${s}SECRET`;
+        return { id: `${name} ${position}`, raw: shape(unit, secret), secret, control: false };
+      }),
+      ...inside.map(([position, shape], s): SeparatorProbe => {
+        const secret = `SEPARATOR${u}I${s}SECRET`;
+        return { id: `${name} ${position}`, raw: shape(unit, secret), secret, control: whitespace.has(name) };
+      }),
+    ]),
+    { id: "plain sk-ant-", raw: "key sk-ant-api03-PLAINSEPARATORONE", secret: "PLAINSEPARATORONE", control: false },
+    { id: "plain Bearer", raw: "Authorization: Bearer PLAINSEPARATORTWO", secret: "PLAINSEPARATORTWO", control: false },
+    { id: "plain password", raw: "password=PLAINSEPARATORTHREE", secret: "PLAINSEPARATORTHREE", control: false },
+  ];
+
+  it("the table is the gate's 339 shapes with 32 whitespace-inside-keyword control rows", () => {
+    expect(table.length).toBe(339);
+    expect(table.filter(probe => probe.control).length).toBe(32);
+  });
+  for (const [path, build, field] of ECHO_PATHS) {
+    it(`${path}: every separator shape is shown exactly as the one helper's text layout, redacted, with no unsafe unit kept`, () => {
+      const failures: string[] = [];
+      for (const probe of table) {
+        const out = buildControlReply(build(probe.raw), { maxBytes: MAX_CONTROL_REPLY_BYTES });
+        if (field(parse(out.text)) !== sanitizeWorkbenchText(probe.raw, Number.POSITIVE_INFINITY, "text")) failures.push(`${probe.id}: not the helper's text layout`);
+        if (!probe.control && out.text.includes(probe.secret)) failures.push(`${probe.id}: leaked`);
+        if (strings(out.reply).some(text => UNSAFE.test(text))) failures.push(`${probe.id}: kept an unsafe unit`);
+      }
+      expect(failures).toEqual([]);
+    });
+  }
+  const named: readonly (readonly [label: string, raw: string, secret: string])[] = [
+    ["ZWSP before sk-ant-", `key${ZWSP}sk-ant-api03-NAMEDSECRETONE`, "NAMEDSECRETONE"],
+    ["BOM as the space after Bearer", `Authorization: Bearer${BOM}NAMEDSECRETTWO`, "NAMEDSECRETTWO"],
+    ["NUL before Bearer", `x${NUL}Bearer NAMEDSECRETTHREE`, "NAMEDSECRETTHREE"],
+    ["LF before sk-ant-", `first line${LF}sk-ant-api03-NAMEDSECRETFOUR`, "NAMEDSECRETFOUR"],
+  ];
+  for (const [label, raw, secret] of named) {
+    it(`${label}: redacted in every echo of a hand-built receipt`, () => {
+      for (const [path, build] of ECHO_PATHS) {
+        const out = buildControlReply(build(raw), { maxBytes: MAX_CONTROL_REPLY_BYTES });
+        expect(out.text, path).not.toContain(secret);
+        expect(out.text, path).toContain("[REDACTED]");
+      }
+    });
+  }
+});
+
+describe("wb-752.4 respin: the compact tier cuts only what the one helper already redacted", () => {
+  // Deletion never precedes redaction (wb-952 16:44Z), and a cut is a deletion: cutting a raw ref first can drop the closing
+  // quote of a quoted assignment, so the redactor reads an unquoted value that stops at the first space and the rest of the
+  // secret shows. The landed core accepts such a ref (it carries no unsafe unit), so the real core path reaches this tier.
+  const secret = "QUOTEDPARTSECRET";
+  const windows = Array.from({ length: secret.length - 3 }, (_, at) => secret.slice(at, at + 4));
+  const exposes = (text: string): boolean => windows.some(window => text.includes(window));
+  const quoted = (pad: number): string => `password="${"w ".repeat(pad)}${secret} ${"z".repeat(3600)}"`;
+  const paths: readonly (readonly [path: string, receipt: (ref: string) => NativeControlReceipt])[] = [
+    ["acknowledged.nativeAckRef through the real core", ref => acknowledge(requested(), { ...ACK, nativeAckRef: ref })],
+    ["result.nativeResultRef through the real core", ref => settle(acked(), { ...RESULT, nativeResultRef: ref })],
+    ["requested.target.id of a hand-built receipt", withTarget],
+  ];
+  for (const [path, build] of paths) {
+    it(`${path}: no cap exposes any part of a quoted secret`, () => {
+      const exposed: string[] = [];
+      let compactEchoes = 0;
+      for (const pad of [1, 2, 4, 8, 12, 16]) {
+        const receipt = build(quoted(pad));
+        const full = buildControlReply(receipt, { maxBytes: MAX_CONTROL_REPLY_BYTES });
+        expect(exposes(full.text)).toBe(false);
+        for (let maxBytes = MIN_CONTROL_REPLY_BYTES; maxBytes < full.bytes; maxBytes += 2) {
+          const out = buildControlReply(receipt, { maxBytes });
+          if (exposes(out.text)) exposed.push(`pad ${pad} maxBytes ${maxBytes}`);
+          if (out.truncated && out.text.includes("password=")) compactEchoes += 1;
+        }
+      }
+      expect(exposed).toEqual([]);
+      // Not vacuous: the sweep reaches the compact tier with the echo still shown.
+      expect(compactEchoes).toBeGreaterThan(0);
+    });
+  }
+  it("the compact tier cuts every echo block at the compact width, and only past it", () => {
+    const receipt: NativeControlReceipt = { ...settle(acknowledge(requested(), ACK), RESULT), target: { ...RUN, id: "t".repeat(65) }, nativeAckRef: "a".repeat(64), nativeResultRef: "r".repeat(300) };
+    const full = buildControlReply(receipt, { maxBytes: MAX_CONTROL_REPLY_BYTES });
+    const out = buildControlReply(receipt, { maxBytes: full.bytes - 1 });
+    const body = parse(out.text);
+    const block = (name: string): Record<string, JsonValue> => body[name] as Record<string, JsonValue>;
+    expect(out.truncated).toBe(true);
+    expect(body.truncation).toMatchObject({ reason: "byte-cap" });
+    expect(block("requested")).not.toHaveProperty("invocationId");
+    expect((block("requested").target as Record<string, JsonValue>).id).toBe(`${"t".repeat(52)} [truncated]`);
+    expect(block("acknowledged").nativeAckRef).toBe("a".repeat(64));
+    expect(block("result").nativeResultRef).toBe(`${"r".repeat(52)} [truncated]`);
+  });
+  it("the compact cut counts code points, so no surrogate pair is split and no lone surrogate reaches the reply", () => {
+    const receipt = acknowledge(requested(), { ...ACK, nativeAckRef: `a${cp(0x1f642).repeat(300)}` });
+    let cutEchoes = 0;
+    for (let maxBytes = MIN_CONTROL_REPLY_BYTES; maxBytes <= 2048; maxBytes += 16) {
+      const out = buildControlReply(receipt, { maxBytes });
+      expect(out.bytes).toBeLessThanOrEqual(maxBytes);
+      for (const text of strings(out.reply)) expect(text).not.toMatch(/[\u{d800}-\u{dfff}]/u);
+      const acknowledged = parse(out.text).acknowledged;
+      const ref = acknowledged !== null && typeof acknowledged === "object" && !Array.isArray(acknowledged) ? acknowledged.nativeAckRef : undefined;
+      if (typeof ref === "string" && ref.endsWith(" [truncated]")) cutEchoes += 1;
+    }
+    expect(cutEchoes).toBeGreaterThan(0);
   });
 });
 
@@ -415,5 +618,15 @@ describe("purity falsifier", () => {
     expect(source).not.toMatch(/@furnace\/sdk|@anthropic|\.\.\/index|\.\.\/ui\/|\.\.\/workflow\/|node:child_process|node:fs|node:net/);
     expect(source).not.toMatch(/\b(?:decideControl|acknowledge|settle)\s*\(/);
     expect(source).not.toMatch(/\bnew Date\b|Date\.now|process\.|await |fetch\(/);
+  });
+  it("takes only the one display helper from the shared sanitizers: no local strip or redact composition and no local deletion (F6)", () => {
+    const fromRedaction = [...source.matchAll(/import\s*\{([^}]*)\}\s*from\s*["']\.\/redaction\.js["']/g)].flatMap(match =>
+      match[1]
+        .split(",")
+        .map(name => name.trim())
+        .filter(name => name !== ""),
+    );
+    expect(fromRedaction.sort()).toEqual(["sanitizeWorkbenchText", "type WorkbenchTextLayout"]);
+    expect(source).not.toMatch(/\.replace\(/);
   });
 });
