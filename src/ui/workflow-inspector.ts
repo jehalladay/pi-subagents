@@ -4,7 +4,7 @@
 import { matchesKey, stripTerminalSequences, truncateToWidth } from '@earendil-works/pi-tui';
 import type { EvidenceEntry, EvidenceStore } from '../workbench/evidence-loader.js';
 import type { NativeRef, ObservationProjection, ObservationScope, ObservedNode, Relation } from '../workbench/observation.js';
-import { sanitizeWorkbenchText, stripUnsafeText } from '../workbench/redaction.js';
+import { sanitizeWorkbenchText } from '../workbench/redaction.js';
 import type { LinkedTopology, TopologyEdge, TopologyReference, TopologyReferenceReason, TopologyRelationClass } from '../workbench/topology-slice.js';
 import { safeWorkflowTerminalText } from './workflow-card.js';
 
@@ -322,13 +322,10 @@ interface TopologyRow {text:string; count:number}
 /** Whether a native reference has no node in the projection's scope. A read only; absence is stated, never inferred away. */
 const unobservedEndpoint=(model:InspectorModel,edge:TopologyEdge):boolean=>
   model.projection.query({scope:model.scope,limit:1,ref:edge.nativeRef}).nodes.length===0;
-/** Producer text (provenance source, neighbour identity) bound for a row: the shared two-pass sanitizer, then the file's own safe(). */
-/** Zero-width and invisible format characters. The shared UNSAFE_TEXT set omits them (owner-filed wb-952); this local normalisation is
- * redundant once that lands and is kept off the shared path so redaction.ts stays untouched. */
-const INVISIBLE_TEXT=/[\u200b-\u200f\u2028\u2029\u2060-\u2064\ufeff]/gu;
-/** The 16:43Z ruled order: controls, bidi and invisible separators become ONE space first, then the shared redaction (160-unit cap)
- * sees the real token boundaries; deleting first would glue 'Bearer<sep>token' past the credential pattern. */
-const topologyText=(text:string):string=>sanitizeWorkbenchText(stripUnsafeText(text,' ').replace(INVISIBLE_TEXT,' ').replace(/\s+/g,' '),160);
+/** Producer text (provenance source, neighbour identity) bound for a row: the ONE shared helper with the NAMED 'label' layout (the
+ * slice's own labelOf layout, 160-unit cap), then the row's own safe(). No local pre-pass: rewriting or deleting a gap before the
+ * helper hides the raw text it reads, so a unit glued inside a keyword, prefix or token would split it past redaction. */
+const topologyText=(text:string):string=>sanitizeWorkbenchText(text,160,'label');
 /** The neighbour leads the row so a narrow terminal truncates provenance, never the identity. */
 function topologyEdgeRow(model:InspectorModel,edge:TopologyEdge,direction:'upstream'|'downstream',ascii:boolean):TopologyRow{
   const glyph=direction==='downstream' ? edgeGlyph(ascii) : ascii ? '<-' : '←';

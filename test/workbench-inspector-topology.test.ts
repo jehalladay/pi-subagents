@@ -41,6 +41,8 @@ const selected = (projection: ObservationProjection) => (node: ObservedNode) => 
 const joined = (lines: readonly string[]): string => lines.join('\n');
 /** The key hint; the ASCII tier renders its separators as `?`. */
 const HINT = /^ Tab views . j\/k . Esc back\/close$/u;
+/** Downstream edge rows naming a furnace neighbour: a keyRef case proves its row RENDERS before it asserts what the row hides. */
+const neighbourRows = (text: string, ascii: boolean): string[] => text.split('\n').filter(line=>line.startsWith(ascii?' -> furnace/operation/':' → furnace/operation/'));
 
 /** A hand-built slice, for hostile strings and references the real projection would refuse to store. */
 function sliceOf(parts: Partial<LinkedTopology> = {}): LinkedTopology {
@@ -222,6 +224,7 @@ describe('B4 docs/workbench/10 § Layout responsiveness and docs/workbench/12 §
     for(const size of SIZES) for(const ascii of TIERS){
       const text=joined(details(modelOf(projection,selected(projection)),size,ascii));
       expect(text).not.toContain(SECRET);
+      expect(neighbourRows(text,ascii)).toEqual([expect.stringContaining('[REDACTED]')]);
     }
   });
   it.each(GLUED)('U2 %s + %s separator in a provenance source label never leaks the token',(scheme,_name,sep)=>{
@@ -355,5 +358,59 @@ describe('B6 byte identity and read-only: docs/workbench/10 § Navigation "Closi
     details(model,{width:120,rows:40});
     expect(calls).toEqual([keyOf('focus')]);
     expect(touched.filter(name=>(mutators as readonly string[]).includes(name))).toEqual([]);
+  });
+});
+
+describe('wb-6ze.16 respin U1 (gate-3 07:18Z, owner 07:23Z): a unit glued inside a keyword, prefix or token never splits it on the real keyRef path',()=>{
+  /** docs/workbench/12 § Input and output hardening: "Validate Unicode and terminal escape sequences before display (no untrusted ANSI injection)."
+   * The ONE helper reads every gap as a separator AND as glue; a local pre-pass that rewrote the gap first would split the keyword or token. */
+  const cp = (code: number): string => String.fromCodePoint(code);
+  const ZWSP=cp(0x200b);
+  const RLO=cp(0x202e);
+  const WJ=cp(0x2060);
+  const NEL=cp(0x85);
+  const APC=cp(0x9f);
+  type InTokenProbe = readonly [id: string, raw: string, secret: string];
+  /** test/workbench-sanitizer-corpus.test.ts CORPUS S4, K2 and K5, verbatim. */
+  const CORPUS_SPLITS: readonly InTokenProbe[] = [
+    ['CORPUS S4 ZWSP inside the scheme',`token: Bear${ZWSP}er abc123`,'abc123'],
+    ['CORPUS K2 RLO inside password',`pass${RLO}word=hunter2`,'hunter2'],
+    ['CORPUS K5 WJ inside api_key',`api${WJ}_key=xyz789`,'xyz789'],
+  ];
+  /** The same file's ACCEPTANCE within-token shapes the gate named, with U+200B and U+202E, built and named as that corpus builds them. */
+  const WITHIN: readonly (readonly [position: string, shape: (unit: string, secret: string) => string])[] = [
+    ['inside Bearer',(unit,secret)=>`Authorization: Bea${unit}rer ${secret}`],
+    ['inside ghp_',(unit,secret)=>`see gh${unit}p_${secret}`],
+    ['inside a Bearer token',(unit,secret)=>`Bearer SEC${unit}${secret}`],
+    ['inside password',(unit,secret)=>`pass${unit}word=${secret}`],
+  ];
+  const ACCEPTANCE_SPLITS: readonly InTokenProbe[] = ([['U+200B',ZWSP],['U+202E',RLO]] as const).flatMap(([name,unit])=>WITHIN.map(([position,shape]):InTokenProbe=>{
+    const secret=`ACCEPT${name.replace(/[^A-Z0-9]/g,'')}${position.replace(/[^a-z]/g,'').slice(0,24)}`;
+    return [`ACCEPTANCE ${name} ${position}`,shape(unit,secret),secret];
+  }));
+  /** F5: a C1 unit glued inside a Bearer token. The helper's raw reading keeps the token whole, as the graph view of the same relation
+   * renders it; rewriting the unit to a space first ended the token early and showed its tail ("[REDACTED] RETTAIL"). */
+  const C1_GLUED: readonly InTokenProbe[] = [
+    ['F5 U+0085 inside a Bearer token',`Bearer SEC${NEL}RETTAIL`,'RETTAIL'],
+    ['F5 U+009F inside a Bearer token',`Bearer SEC${APC}RETTAIL`,'RETTAIL'],
+  ];
+  const IN_TOKEN: readonly InTokenProbe[] = [...CORPUS_SPLITS,...ACCEPTANCE_SPLITS,...C1_GLUED];
+  it('the probe table holds every gate-named shape, so an emptied table cannot pass vacuously',()=>{
+    expect(IN_TOKEN.map(([id])=>id)).toEqual([
+      'CORPUS S4 ZWSP inside the scheme','CORPUS K2 RLO inside password','CORPUS K5 WJ inside api_key',
+      'ACCEPTANCE U+200B inside Bearer','ACCEPTANCE U+200B inside ghp_','ACCEPTANCE U+200B inside a Bearer token','ACCEPTANCE U+200B inside password',
+      'ACCEPTANCE U+202E inside Bearer','ACCEPTANCE U+202E inside ghp_','ACCEPTANCE U+202E inside a Bearer token','ACCEPTANCE U+202E inside password',
+      'F5 U+0085 inside a Bearer token','F5 U+009F inside a Bearer token',
+    ]);
+  });
+  it.each(IN_TOKEN)('%s as a declared edge neighbour id: the row renders redacted and the credential never leaks (real projection, keyRef path)',(_id,raw,secret)=>{
+    const projection=projectionOf(['focus']);
+    relate(projection,'focus',raw);
+    for(const size of SIZES) for(const ascii of TIERS){
+      const text=joined(details(modelOf(projection,selected(projection)),size,ascii));
+      expect(neighbourRows(text,ascii)).toEqual([expect.stringContaining('[REDACTED]')]);
+      expect(text).not.toContain(secret);
+      for(const unit of [ZWSP,RLO,WJ,NEL,APC]) expect(text).not.toContain(unit);
+    }
   });
 });
