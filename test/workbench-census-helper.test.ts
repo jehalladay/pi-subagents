@@ -24,13 +24,26 @@
  *   modes (1)-(7), the tier forms, the front-spread attribution datum, F6, DR1/DR2), wb-6hb.7 (S1-S13, K1-K8,
  *   M1-M15, FR1, the F7/D9 parent-path datum) and wb-6ze.38 (K8/K9/K13/K16/K17 and M1-M19); plus wb-cax.25
  *   M1-M12b, T1-T3, the bound K1-K4 rows, FR1-FR3, X1, the D1 straddle (D10) and the F7 per-row each clause.
+ * - The wb-u62 gate-1 respin set (owner three-stage ruling 2026-10-16 16:12Z: R1 = (b) as the architecture and (a) as
+ *   the hardening): U1 J1-J5 (judge detection - no judge-identifying name reaches the judged code, the operator's
+ *   VITEST_* names pass through, the runner's public current-test routes are context references), the one-run E2E
+ *   adoption shape, U2 A1a/A1b (a red names only what it observed and every remaining route), U4 GM19 (two npm hops)
+ *   and GM21 (real-path recursion), and wb-9x5.6 D1-D3 (relocation, HTML-comment wrap, withdrawn ### inside the
+ *   section) with the D2 raw-text footgun closed.
+ *
+ * REPORT MODE (the default-tier judgment once wb-nl8 lands): judge(reportPath, pins) reads vitest's own JSON report of
+ * the run and never re-executes it. Every main, tier and config row is judged in BOTH modes: the runner oracle's
+ * report IS a gate-shaped report (vitest's JSON reporter through the tier's real command, task locations included), so
+ * each row's report-mode verdict is measured on exactly the run the row proves real. A row names its own report-mode
+ * verdict only where the report cannot carry what the executing run saw (mode, the fails flag, a runtime assertion
+ * count, unhandled errors).
  *
  * The synthetic projects live in a mkdtemp directory with node_modules symlinked to this repository's, so the
  * runner, its config loader and the helper all run exactly as they do for a real census. Nothing here reads or
  * mutates a pinned file of another census.
  */
 import { spawn } from "node:child_process";
-import { mkdirSync, mkdtempSync, readFileSync, realpathSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
+import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readFileSync, realpathSync, rmSync, statSync, symlinkSync, utimesSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -41,12 +54,16 @@ import {
   type CensusCode,
   type CensusLeg,
   DEFAULT_GATE_TIER,
+  DEFAULT_TIER_REPORT,
   type DocsSection,
   docsSection,
+  judge,
   judgePins,
   type PinVerdict,
+  type RenderedBlock,
   resolveTier,
   type SourceStructure,
+  sectionMatches,
   sourceStructure,
 } from "./helpers/census.js";
 
@@ -92,9 +109,12 @@ interface Row {
   readonly pin?: Partial<CasePin>;
   readonly oracle: Oracle;
   readonly verdict: Expected;
+  /** Report mode's verdict where it differs from the executing run's (the report cannot carry what that run saw). */
+  readonly report?: Expected;
 }
 
 /** The verdict a row expects; why pins the attribution where two guards could produce the same code. */
+
 interface Expected {
   readonly ok: boolean;
   readonly code: CensusCode;
@@ -128,16 +148,48 @@ const REGISTRATION: readonly Row[] = [
     oracle: RUNS_NOT,
     verdict: red("absent", "exists"),
   },
-  { id: "r-duplicate", routed: "752.10 duplicate title", source: { body: `${PLAIN}\n${PLAIN}` }, oracle: { kind: "passed", cases: 2 }, verdict: red("duplicated", "exists") },
-  { id: "r-it-skip", routed: "752.10 it.skip", source: { body: `  it.skip("${PIN}", ${BODY});` }, oracle: RUNS_NOT, verdict: red("skipped", "runs-where", /collected the case with mode skip/) },
-  { id: "r-it-todo", routed: "752.10 it.todo", source: { body: `  it.todo("${PIN}");` }, oracle: RUNS_NOT, verdict: red("skipped", "runs-where", /collected the case with mode todo/) },
+  { id: "r-6hb11-s18-bracket-head", routed: '6hb.11 S18 it["skip"] bracket head', source: { body: `  it["skip"]("${PIN}", ${BODY});` }, oracle: RUNS_NOT, verdict: red("skipped", "runs-where") },
+  {
+    id: "r-6hb11-f4-bracket-focus",
+    routed: '6hb.11 F4 it["only"] bracket focus under allowOnly false',
+    source: { body: `  it["only"]("${PIN}", ${BODY});` },
+    oracle: RUNS_NOT,
+    verdict: red("failed", "asserts", /Unexpected \.only modifier/),
+    report: red("failed", "asserts", /Unexpected \.only modifier/),
+  },
+  {
+    id: "r-6hb11-s21-source-unlocated",
+    routed: "6hb.11 S21 source-unlocated: the case registered by an imported wrapper (the runner locates the wrapper call)",
+    source: { imports: `${IMPORTS}\nimport { registerPinned } from "./census-register-helper.js";`, body: "  registerPinned();" },
+    oracle: RUNS,
+    verdict: red("body-unresolved", "asserts", /not statically resolvable/),
+  },
+  { id: "r-duplicate", routed: "752.10 duplicate title / 6hb.11 S20", source: { body: `${PLAIN}\n${PLAIN}` }, oracle: { kind: "passed", cases: 2 }, verdict: red("duplicated", "exists") },
+  {
+    id: "r-it-skip",
+    routed: "752.10 it.skip",
+    source: { body: `  it.skip("${PIN}", ${BODY});` },
+    oracle: RUNS_NOT,
+    verdict: red("skipped", "runs-where", /collected the case with mode skip/),
+    report: red("skipped", "runs-where", /report records the case skipped/),
+  },
+  {
+    id: "r-it-todo",
+    routed: "752.10 it.todo",
+    source: { body: `  it.todo("${PIN}");` },
+    oracle: RUNS_NOT,
+    verdict: red("skipped", "runs-where", /collected the case with mode todo/),
+    report: red("skipped", "runs-where", /report records the case todo/),
+  },
   {
     id: "r-cax25-m1-callback-removed",
     routed: "cax.25 M1 the callback removed: it(title) registers a todo",
     source: { body: `  it("${PIN}");` },
     oracle: RUNS_NOT,
     verdict: red("skipped", "runs-where", /collected the case with mode todo/),
+    report: red("skipped", "runs-where", /report records the case todo/),
   },
+
   { id: "r-skipif", routed: "6hb.6 S3 it.skipIf(true)", source: { body: `  it.skipIf(true)("${PIN}", ${BODY});` }, oracle: RUNS_NOT, verdict: red("skipped", "runs-where") },
   { id: "r-runif", routed: "6hb.6 S3r it.runIf(false)", source: { body: `  it.runIf(false)("${PIN}", ${BODY});` }, oracle: RUNS_NOT, verdict: red("skipped", "runs-where") },
   { id: "r-describe-skip", routed: "752.10 describe.skip", source: { body: `  describe.skip("inner", () => {\n  ${PLAIN}\n  });` }, oracle: RUNS_NOT, verdict: red("skipped", "runs-where") },
@@ -216,7 +268,7 @@ const REGISTRATION: readonly Row[] = [
   },
   {
     id: "r-n12-never-called",
-    routed: "6hb.6 N12 / 0kg.11 (10) / 0kg.12 never-called / 6hb.7 S11 never-called closure",
+    routed: "6hb.6 N12 / 0kg.11 (10) / 0kg.12 never-called / 6hb.7 S11 / 6hb.11 S19 never-called closure",
     source: { body: `  const registerLater = (): void => {\n  ${PLAIN}\n  };\n  void registerLater;` },
     oracle: RUNS_NOT,
     verdict: red("absent", "exists"),
@@ -253,6 +305,180 @@ const REGISTRATION: readonly Row[] = [
   { id: "r-s7-fails-variable", routed: "cax.23 S7 fails through variable-held options", source: { prelude: "const FAILS = { fails: true };", body: `  it("${PIN}", FAILS, () => {\n    expect(1).toBe(2);\n  });` }, oracle: { kind: "inverted" }, verdict: red("inverted", "asserts") },
 ];
 
+/** The runner's public current-test routes (vitest/suite re-exports @vitest/runner; deprecated there since 4.1 but live). */
+const IMPORTS_SUITE = `${IMPORTS}\nimport { getCurrentSuite, getCurrentTest } from "vitest/suite";`;
+const SKIP_CURRENT = `  it("${PIN}", () => {\n    getCurrentTest()?.context.skip();\n    expect(1).toBe(1);\n  });`;
+
+/**
+ * U1 judge detection (wb-u62 gate-1 cmd_2b0d57494582, measured end to end): code that can tell the census's own run
+ * from the gate's run fabricates a green. Runner truth is the gate's run under the documented gate env
+ * (VITEST_MAX_WORKERS set, no census name anywhere), and the helper must see exactly what that run sees: it adds no
+ * name to the judged code's environment and strips only what vitest itself sets in a worker. U2: a red names what it
+ * observed (getCurrentTest is a context reference, the test.extend precedent), never an unobserved cause.
+ */
+const JUDGE_ROWS: readonly Row[] = [
+  {
+    id: "j-u62-j1-runif-nested",
+    routed: "u62 J1 it.runIf on the census's nested-run marker",
+    source: { body: `  it.runIf(process.env.CENSUS_HELPER_NESTED === "1")("${PIN}", ${BODY});` },
+    oracle: RUNS_NOT,
+    verdict: red("skipped", "runs-where"),
+  },
+  {
+    id: "j-u62-j2-report-out",
+    routed: "u62 J2 registration only while the census's report path is set",
+    source: { body: `  if (process.env.CENSUS_REPORT_OUT !== undefined) {\n  ${PLAIN}\n  }` },
+    oracle: RUNS_NOT,
+    verdict: red("absent", "exists"),
+  },
+  {
+    id: "j-u62-j3-describe-runif",
+    routed: "u62 J3 describe.runIf on the census's nested-run marker",
+    source: { body: `  describe.runIf(process.env.CENSUS_HELPER_NESTED === "1")("inner", () => {\n  ${PLAIN}\n  });` },
+    oracle: RUNS_NOT,
+    verdict: red("skipped", "runs-where"),
+  },
+  {
+    id: "j-u62-j4-operator-cap",
+    routed: "u62 J4 it.skipIf on the operator's VITEST_MAX_WORKERS (the documented gate env)",
+    source: { body: `  it.skipIf(process.env.VITEST_MAX_WORKERS !== undefined)("${PIN}", ${BODY});` },
+    oracle: RUNS_NOT,
+    verdict: red("skipped", "runs-where"),
+  },
+  {
+    id: "j-u62-j5-current-test-env",
+    routed: "u62 J5 getCurrentTest()?.context.skip() unless the census's marker is set",
+    source: { imports: IMPORTS_SUITE, body: `  it("${PIN}", () => {\n    if (process.env.CENSUS_HELPER_NESTED !== "1") getCurrentTest()?.context.skip();\n    expect(1).toBe(1);\n  });` },
+    oracle: RUNS_NOT,
+    verdict: red("context-unknown", "runs-where", /getCurrentTest from vitest\/suite/),
+  },
+  { id: "j-u62-a1a-current-test-body", routed: "u62 A1a getCurrentTest()?.context.skip() in the case body", source: { imports: IMPORTS_SUITE, body: SKIP_CURRENT }, oracle: RUNS_NOT, verdict: red("context-unknown", "runs-where", /getCurrentTest from vitest\/suite/) },
+  {
+    id: "j-u62-a1b-current-test-hook",
+    routed: "u62 A1b getCurrentTest()?.context.skip() in the pin's own enclosing beforeEach",
+    source: { imports: IMPORTS_SUITE, body: `  describe("inner", () => {\n    beforeEach(() => {\n      getCurrentTest()?.context.skip();\n    });\n  ${PLAIN}\n  });` },
+    oracle: RUNS_NOT,
+    verdict: red("context-unknown", "runs-where", /beforeEach at .*getCurrentTest from vitest\/suite/),
+  },
+  {
+    id: "j-u62-j5-runner-package",
+    routed: "u62 J5 getCurrentTest imported from @vitest/runner",
+    source: { imports: `${IMPORTS}\nimport { getCurrentTest } from "@vitest/runner";`, body: SKIP_CURRENT },
+    oracle: RUNS_NOT,
+    verdict: red("context-unknown", "runs-where", /getCurrentTest from @vitest\/runner/),
+  },
+  {
+    id: "j-u62-j5-test-runner-static",
+    routed: "u62 J5 TestRunner.getCurrentTest() from the vitest entry (the 4.1 route)",
+    source: { imports: 'import { beforeEach, describe, expect, it, TestRunner, test } from "vitest";', body: `  it("${PIN}", () => {\n    TestRunner.getCurrentTest()?.context.skip();\n    expect(1).toBe(1);\n  });` },
+    oracle: RUNS_NOT,
+    verdict: red("context-unknown", "runs-where", /TestRunner from vitest/),
+  },
+  {
+    id: "j-u62-j5-namespace",
+    routed: "u62 J5 a namespace import of vitest/suite",
+    source: { imports: `${IMPORTS}\nimport * as runner from "vitest/suite";`, body: `  it("${PIN}", () => {\n    runner.getCurrentTest()?.context.skip();\n    expect(1).toBe(1);\n  });` },
+    oracle: RUNS_NOT,
+    verdict: red("context-unknown", "runs-where", /runner from vitest\/suite/),
+  },
+  {
+    id: "j-u62-j5-helper",
+    routed: "u62 J5 getCurrentTest reached through a same-file helper the case calls",
+    source: { imports: IMPORTS_SUITE, prelude: "function skipCurrent(): void {\n  getCurrentTest()?.context.skip();\n}", body: `  it("${PIN}", () => {\n    skipCurrent();\n    expect(1).toBe(1);\n  });` },
+    oracle: RUNS_NOT,
+    verdict: red("context-unknown", "runs-where", /getCurrentTest from vitest\/suite/),
+  },
+  {
+    id: "j-u62-j5-alias",
+    routed: "u62 J5 getCurrentTest through a module-level alias",
+    source: { imports: IMPORTS_SUITE, prelude: "const current = getCurrentTest;", body: `  it("${PIN}", () => {\n    current()?.context.skip();\n    expect(1).toBe(1);\n  });` },
+    oracle: RUNS_NOT,
+    verdict: red("context-unknown", "runs-where", /getCurrentTest from vitest\/suite/),
+  },
+  {
+    id: "j-u62-j5-suite-hook",
+    routed: "u62 J5 getCurrentSuite().on(beforeEach) installs a skipping hook in the pin's own suite",
+    source: { imports: IMPORTS_SUITE, body: `  describe("inner", () => {\n    getCurrentSuite().on("beforeEach", (ctx) => {\n      ctx.skip();\n    });\n  ${PLAIN}\n  });` },
+    oracle: RUNS_NOT,
+    verdict: red("context-unknown", "runs-where", /getCurrentSuite from vitest\/suite/),
+  },
+  {
+    id: "j-u62-j5-dynamic-import",
+    routed: "u62 J5 the runner module imported dynamically inside the case",
+    source: { body: `  it("${PIN}", async () => {\n    const runner = await import("vitest/suite");\n    runner.getCurrentTest()?.context.skip();\n    expect(1).toBe(1);\n  });` },
+    oracle: RUNS_NOT,
+    verdict: red("context-unknown", "runs-where", /imports vitest\/suite/),
+  },
+  {
+    id: "j-u62-control-sibling-current-test",
+    routed: "u62 J5 control: getCurrentTest read by ANOTHER case of the file leaves the pin green",
+    source: { imports: IMPORTS_SUITE, body: `${PLAIN}\n  it("reads its own name", () => {\n    expect(getCurrentTest()?.name).toBe("reads its own name");\n  });` },
+    oracle: RUNS,
+    verdict: OK,
+  },
+  {
+    id: "j-u62-control-sibling-suite-hook",
+    routed: "u62 J5 control: a getCurrentSuite hook in a SIBLING describe does not reach the pin",
+    source: {
+      imports: IMPORTS_SUITE,
+      body: PLAIN,
+      after: 'describe("sibling", () => {\n  getCurrentSuite().on("beforeEach", (ctx) => {\n    ctx.skip();\n  });\n  it("sibling case", () => {\n    expect(1).toBe(1);\n  });\n});',
+    },
+    oracle: RUNS,
+    verdict: OK,
+  },
+];
+
+/**
+ * Inversion and options under report mode: vitest's JSON report records an inverted (fails) case as passed, so report
+ * mode reads fails from the AST - the registration chain through const aliases, the case's options and every
+ * enclosing suite's options (vitest merges suite options into the case's) - and fails closed where the options or the
+ * enclosing suites are not statically readable, or where config tags (whose definitions may set fails) apply. The
+ * executing run reads the runner's own fails flag, so these rows are the same verdict there except where noted.
+ */
+const INVERSION_ROWS: readonly Row[] = [
+  {
+    id: "r-u62-describe-fails",
+    routed: "u62 report-mode inversion: describe options { fails: true } inherited by the pin",
+    source: { body: `  describe("inner", { fails: true }, () => {\n    it("${PIN}", () => {\n      expect(1).toBe(2);\n    });\n  });` },
+    oracle: { kind: "inverted" },
+    verdict: red("inverted", "asserts", /registered with fails/),
+  },
+  {
+    id: "r-u62-aliased-fails",
+    routed: "u62 report-mode inversion: an aliased registration const parked = it.fails",
+    source: { prelude: "const parked = it.fails;", body: `  parked("${PIN}", () => {\n    expect(1).toBe(2);\n  });` },
+    oracle: { kind: "inverted" },
+    verdict: red("inverted", "asserts", /registered with fails/),
+  },
+  {
+    id: "r-u62-tags",
+    routed: "u62 report-mode options: a case carrying a config tag (a tag definition may set fails)",
+    source: { body: `  it("${PIN}", { tags: ["census-tag"] }, ${BODY});` },
+    oracle: RUNS,
+    verdict: OK,
+    report: red("options-unknown", "asserts", /carries the tags \["census-tag"\]/),
+  },
+  {
+    id: "r-u62-assign-options",
+    routed: "u62 report-mode options: Object.assign-built options on a passing case",
+    source: { body: `  it("${PIN}", Object.assign({}, { timeout: 5000 }), ${BODY});` },
+    oracle: RUNS,
+    verdict: OK,
+    report: red("options-unknown", "asserts", /not a same-file const object literal/),
+  },
+  { id: "r-u62-literal-options", routed: "u62 report-mode control: literal options without fails", source: { body: `  it("${PIN}", { timeout: 5000 }, ${BODY});` }, oracle: RUNS, verdict: OK },
+  { id: "r-u62-const-options", routed: "u62 report-mode control: const-held options without fails", source: { prelude: "const OPTS = { timeout: 5000 };", body: `  it("${PIN}", OPTS, ${BODY});` }, oracle: RUNS, verdict: OK },
+  { id: "r-u62-fails-false", routed: "u62 report-mode control: options { fails: false }", source: { body: `  it("${PIN}", { fails: false }, ${BODY});` }, oracle: RUNS, verdict: OK },
+  {
+    id: "r-u62-describe-options-control",
+    routed: "u62 report-mode control: enclosing describe options without fails",
+    source: { body: `  describe("inner", { timeout: 5000 }, () => {\n  ${PLAIN}\n  });` },
+    oracle: RUNS,
+    verdict: OK,
+  },
+];
+
 /** it.each / it.for pins: each-liveness (05:42Z) is the runner's case count at the template's call site, once per table row (13:36Z). */
 const EACH: readonly Row[] = [
   {
@@ -281,7 +507,7 @@ const EACH: readonly Row[] = [
   },
   {
     id: "e-cax25-f7-twice",
-    routed: "cax.25 F7 per-row clause: a table call site reached twice collects every row twice",
+    routed: "cax.25 F7 / 6hb.11 E1 per-row clause: a table call site reached twice collects every row twice",
     source: { body: `  for (const _round of [1, 2]) {\n    it.each([["a"], ["b"]])("${PIN} %s", (value) => {\n      expect(value).toBeTruthy();\n    });\n  }` },
     pin: { title: `${PIN} %s`, each: { minCases: 2 } },
     oracle: { kind: "passed", cases: 4 },
@@ -324,14 +550,14 @@ const EACH: readonly Row[] = [
 /** Runtime skips the listing cannot see (0kg.11 measured split): the tier run reports them skipped, and the AST scan of the located case names the cause. */
 const BODY_ROWS: readonly Row[] = [
   { id: "b-x1-ctx-skip", routed: "752.10 X1 / 6hb.6 S5 / 6hb.7 S8 ctx.skip()", source: { body: `  it("${PIN}", (ctx) => {\n    ctx.skip();\n    expect(1).toBe(1);\n  });` }, oracle: RUNS_NOT, verdict: red("context-skip", "runs-where") },
-  { id: "b-0kg11-5-optional-call", routed: "0kg.11 (5) / 0kg.12 (4) / 6hb.7 K3 ctx.skip?.()", source: { body: `  it("${PIN}", (ctx) => {\n    ctx.skip?.();\n    expect(1).toBe(1);\n  });` }, oracle: RUNS_NOT, verdict: red("context-skip", "runs-where") },
+  { id: "b-0kg11-5-optional-call", routed: "0kg.11 (5) / 0kg.12 (4) / 6hb.7 K3 / 752.15 M2 ctx.skip?.()", source: { body: `  it("${PIN}", (ctx) => {\n    ctx.skip?.();\n    expect(1).toBe(1);\n  });` }, oracle: RUNS_NOT, verdict: red("context-skip", "runs-where") },
   { id: "b-0kg11-6-aliased", routed: "0kg.11 (6) / h8f.9 P8 / 0kg.12 (5) / 6hb.7 K2 / 6ze.38 M6 / cax.25 M7 aliased const stop = ctx.skip", source: { body: `  it("${PIN}", (ctx) => {\n    const stop = ctx.skip;\n    stop();\n    expect(1).toBe(1);\n  });` }, oracle: RUNS_NOT, verdict: red("context-skip", "runs-where") },
   { id: "b-p7-bracket", routed: 'h8f.9 P7 / 6hb.6 N15 / 6hb.7 M7 / cax.25 M6 tc["skip"]()', source: { body: `  it("${PIN}", async (tc) => {\n    tc["skip"]();\n    expect(1).toBe(1);\n  });` }, oracle: RUNS_NOT, verdict: red("context-skip", "runs-where") },
-  { id: "b-destructured", routed: "6hb.6 S5 / 6hb.7 S9 destructured skip()", source: { body: `  it("${PIN}", ({ skip }) => {\n    skip();\n    expect(1).toBe(1);\n  });` }, oracle: RUNS_NOT, verdict: red("context-skip", "runs-where") },
-  { id: "b-n14-renamed-destructured", routed: "6hb.6 N14 / h8f.9 P6 / 6hb.7 K1 / cax.25 M8 ({ skip: halt }) => halt()", source: { body: `  it("${PIN}", async ({ skip: halt }) => {\n    halt();\n    expect(1).toBe(1);\n  });` }, oracle: RUNS_NOT, verdict: red("context-skip", "runs-where") },
+  { id: "b-destructured", routed: "6hb.6 S5 / 6hb.7 S9 / 6hb.11 S10b destructured skip()", source: { body: `  it("${PIN}", ({ skip }) => {\n    skip();\n    expect(1).toBe(1);\n  });` }, oracle: RUNS_NOT, verdict: red("context-skip", "runs-where") },
+  { id: "b-n14-renamed-destructured", routed: "6hb.6 N14 / h8f.9 P6 / 6hb.7 K1 / cax.25 M8 / 752.15 M3 ({ skip: halt }) => halt()", source: { body: `  it("${PIN}", async ({ skip: halt }) => {\n    halt();\n    expect(1).toBe(1);\n  });` }, oracle: RUNS_NOT, verdict: red("context-skip", "runs-where") },
   {
     id: "b-0kg11-11-lexer-desync",
-    routed: "0kg.11 (11) / gs2.2 X17 / cax.25 K2 lexer desync: a regex literal that a comment strip reads as /*",
+    routed: "0kg.11 (11) / gs2.2 X17 / cax.25 K2 / 752.15 M4 lexer desync: a regex literal that a comment strip reads as /*",
     source: { body: `  it("${PIN}", (ctx) => {\n    void /\\/*/;\n    ctx.skip();\n    const commentEnd = "*/";\n    expect(commentEnd).toBe("*/");\n  });` },
     oracle: RUNS_NOT,
     verdict: red("context-skip", "runs-where"),
@@ -390,7 +616,7 @@ const BODY_ROWS: readonly Row[] = [
   { id: "b-p5-hook", routed: "h8f.9 P5 / 6hb.7 M6 / cax.25 M9 beforeEach(ctx => ctx.skip()) in the enclosing describe", source: { body: `  describe("inner", () => {\n    beforeEach((ctx) => {\n      ctx.skip();\n    });\n  ${PLAIN}\n  });` }, oracle: RUNS_NOT, verdict: red("hook-skip", "runs-where") },
   {
     id: "b-6ze38-m5-hook-by-name",
-    routed: "6ze.38 M5 an enclosing beforeEach skipping the pin by its name",
+    routed: "6ze.38 M5 / 752.15 M1 an enclosing beforeEach skipping the pin by its name",
     source: { body: `  describe("inner", () => {\n    beforeEach((ctx) => {\n      if (ctx.task.name.startsWith("${PIN}")) ctx.skip();\n    });\n  ${PLAIN}\n  });` },
     oracle: RUNS_NOT,
     verdict: red("hook-skip", "runs-where"),
@@ -419,7 +645,10 @@ const BODY_ROWS: readonly Row[] = [
 /**
  * The third leg (04:47Z): at least one REACHED vitest assertion. The tier run carries --expect.requireAssertions; the
  * AST inner leg rejects a case whose only counted assertion is a bare expect(x). Runner truth for the oracle:
- * expect.hasAssertions() in a setup file of a separate config.
+ * expect.hasAssertions() in a setup file of a separate config. Report mode has no assertion count, so it reads the leg
+ * strictly from the source: the first matcher-bearing assertion must be reached on every statically visible path of the
+ * case function's own flow - a return, branch, short-circuit, catch or switch clause that routes around it reddens, fired
+ * or not; a loop body, an invoked callback and a called helper count as reached (the residual the header names).
  */
 const ASSERT_ROWS: readonly Row[] = [
   { id: "a-s8-vacuous", routed: "cax.23 S8 vacuous body", source: { body: `  it("${PIN}", () => {});` }, oracle: { kind: "vacuous" }, verdict: red("no-assertion", "asserts") },
@@ -429,7 +658,9 @@ const ASSERT_ROWS: readonly Row[] = [
     source: { body: `  it("${PIN}", () => {\n    if (Date.now() > 0) return;\n    expect(1).toBe(1);\n  });` },
     oracle: { kind: "vacuous" },
     verdict: red("no-assertion", "asserts", /reached no assertion/),
+    report: red("no-assertion", "asserts", /may return at line \d+:\d+ before its first matcher-bearing assertion/),
   },
+
   { id: "a-comment-only", routed: "third leg: the only assertion commented out", source: { body: `  it("${PIN}", () => {\n    // expect(1).toBe(1);\n  });` }, oracle: { kind: "vacuous" }, verdict: red("no-assertion", "asserts") },
   { id: "a-after-return", routed: "third leg: assertion after an unconditional return", source: { body: `  it("${PIN}", () => {\n    return;\n    expect(1).toBe(1);\n  });` }, oracle: { kind: "vacuous" }, verdict: red("no-assertion", "asserts") },
   { id: "a-dead-if", routed: "third leg: assertion under if (false)", source: { body: `  it("${PIN}", () => {\n    if (false) {\n      expect(1).toBe(1);\n    }\n  });` }, oracle: { kind: "vacuous" }, verdict: red("no-assertion", "asserts") },
@@ -479,7 +710,7 @@ const ASSERT_ROWS: readonly Row[] = [
   },
   {
     id: "a-bare-shadowed",
-    routed: "inner leg: a counted bare expect(false), the matcher on a shadowing local expect",
+    routed: "752.15 M7 inner leg: a counted bare expect(false), the matcher on a shadowing local expect",
     source: { body: `  it("${PIN}", () => {\n    expect(false);\n    {\n      const expect = (_value: unknown) => ({ toBe: (_other: unknown) => undefined });\n      expect(1).toBe(2);\n    }\n  });` },
     oracle: { kind: "planted-false" },
     verdict: red("no-assertion", "asserts", /bare expect/),
@@ -490,6 +721,113 @@ const ASSERT_ROWS: readonly Row[] = [
     source: { body: `  it("${PIN}", () => {\n    expect(false);\n    // expect(1).toBe(1);\n  });` },
     oracle: { kind: "planted-false" },
     verdict: red("no-assertion", "asserts", /bare expect/),
+  },
+  {
+    id: "a-u62-early-exit-loop",
+    routed: "u62 report-mode third leg: a conditional return inside a loop before the first assertion",
+    source: { body: `  it("${PIN}", () => {\n    for (const _round of [1]) {\n      if (Date.now() > 0) return;\n    }\n    expect(1).toBe(1);\n  });` },
+    oracle: { kind: "vacuous" },
+    verdict: red("no-assertion", "asserts", /reached no assertion/),
+    report: red("no-assertion", "asserts", /may return at line \d+:\d+ before its first matcher-bearing assertion/),
+  },
+  {
+    id: "a-u62-early-exit-catch",
+    routed: "u62 report-mode third leg: a return in a catch block before the first assertion",
+    source: { body: `  it("${PIN}", () => {\n    try {\n      JSON.parse("{");\n    } catch {\n      return;\n    }\n    expect(1).toBe(1);\n  });` },
+    oracle: { kind: "vacuous" },
+    verdict: red("no-assertion", "asserts", /reached no assertion/),
+    report: red("no-assertion", "asserts", /may return at line \d+:\d+ before its first matcher-bearing assertion/),
+  },
+  {
+    id: "a-u62-unfired-guard",
+    routed: "u62 report-mode third leg: a guard that did not fire in this run still precedes every assertion",
+    source: { body: `  it("${PIN}", () => {\n    if (Date.now() < 0) return;\n    expect(1).toBe(1);\n  });` },
+    oracle: RUNS,
+    verdict: OK,
+    report: red("no-assertion", "asserts", /may return at line \d+:\d+ before its first matcher-bearing assertion/),
+  },
+  {
+    id: "a-u62-exit-after-assertion",
+    routed: "u62 control: a conditional return after the first assertion (at least one reached, the C2 definition)",
+    source: { body: `  it("${PIN}", () => {\n    expect(1).toBe(1);\n    if (Date.now() < 0) return;\n    expect(2).toBe(2);\n  });` },
+    oracle: RUNS,
+    verdict: OK,
+  },
+  {
+    id: "a-6hb11-j1-probe-env-return",
+    routed: "6hb.11 J1 a return keyed on the census probe's own environment name (CENSUS_PROBE_OUT)",
+    source: { body: `  it("${PIN}", () => {\n    if (!process.env.CENSUS_PROBE_OUT) return;\n    expect(1).toBe(1);\n  });` },
+    oracle: { kind: "vacuous" },
+    verdict: red("no-assertion", "asserts", /reached no assertion/),
+    report: red("no-assertion", "asserts", /may return at line \d+:\d+ before its first matcher-bearing assertion/),
+  },
+  {
+    id: "a-u62-conditional-if",
+    routed: "u62 report-mode third leg: the only assertion under a non-static if (the M16 class without a return)",
+    source: { body: `  it("${PIN}", () => {\n    if (Date.now() < 0) {\n      expect(1).toBe(1);\n    }\n  });` },
+    oracle: { kind: "vacuous" },
+    verdict: red("no-assertion", "asserts", /reached no assertion/),
+    report: red("no-assertion", "asserts", /reached only on some paths: the if at line \d+:\d+ may take the branch without it/),
+  },
+  {
+    id: "a-u62-conditional-and",
+    routed: "u62 report-mode third leg: the only assertion behind a short-circuit &&",
+    source: { body: `  it("${PIN}", () => {\n    Date.now() < 0 && expect(1).toBe(1);\n  });` },
+    oracle: { kind: "vacuous" },
+    verdict: red("no-assertion", "asserts", /reached no assertion/),
+    report: red("no-assertion", "asserts", /reached only on some paths: the && at line \d+:\d+ may short-circuit it/),
+  },
+  {
+    id: "a-u62-conditional-catch",
+    routed: "u62 report-mode third leg: a throw before the only assertion, swallowed by a catch",
+    source: { body: `  it("${PIN}", () => {\n    try {\n      JSON.parse("{");\n      expect(1).toBe(1);\n    } catch {\n      // swallowed\n    }\n  });` },
+    oracle: { kind: "vacuous" },
+    verdict: red("no-assertion", "asserts", /reached no assertion/),
+    report: red("no-assertion", "asserts", /reached only on some paths: the catch at line \d+:\d+ may swallow a throw that comes before it/),
+  },
+  {
+    id: "a-u62-conditional-switch",
+    routed: "u62 report-mode third leg: the only assertion in one clause of a non-static switch",
+    source: { body: `  it("${PIN}", () => {\n    switch (Date.now() < 0 ? "a" : "b") {\n      case "a":\n        expect(1).toBe(1);\n        break;\n      default:\n        break;\n    }\n  });` },
+    oracle: { kind: "vacuous" },
+    verdict: red("no-assertion", "asserts", /reached no assertion/),
+    report: red("no-assertion", "asserts", /reached only on some paths: the switch at line \d+:\d+ may take a clause without it/),
+  },
+  {
+    id: "a-u62-ternary-both",
+    routed: "u62 report-mode control: an assertion on both arms of a conditional expression",
+    source: { body: `  it("${PIN}", () => {\n    Date.now() < 0 ? expect(0).toBe(0) : expect(1).toBe(1);\n  });` },
+    oracle: RUNS,
+    verdict: OK,
+  },
+  {
+    id: "a-u62-try-both",
+    routed: "u62 report-mode control: an assertion in the try block and in its catch",
+    source: { body: `  it("${PIN}", () => {\n    try {\n      JSON.parse("{");\n      expect(0).toBe(1);\n    } catch (error) {\n      expect(error).toBeInstanceOf(SyntaxError);\n    }\n  });` },
+    oracle: RUNS,
+    verdict: OK,
+  },
+  {
+    id: "a-u62-throw-guard",
+    routed: "u62 report-mode control: a guard that throws (a throw fails the case, it never hollows it)",
+    source: { body: `  it("${PIN}", () => {\n    if (Date.now() < 0) throw new Error("never");\n    expect(1).toBe(1);\n  });` },
+    oracle: RUNS,
+    verdict: OK,
+  },
+  {
+    id: "a-u62-assert-or-throw",
+    routed: "u62 report-mode control: one branch asserts and the other throws (every path that passes asserts)",
+    source: { body: `  it("${PIN}", () => {\n    if (Date.now() > 0) {\n      expect(1).toBe(1);\n    } else {\n      throw new Error("never");\n    }\n  });` },
+    oracle: RUNS,
+    verdict: OK,
+  },
+  {
+    id: "a-u62-failing-case",
+    routed: "u62 result leg: a pinned case that fails is red in both modes (the report's failed status, never read as passed)",
+    source: { body: `  it("${PIN}", () => {\n    expect(1).toBe(2);\n  });` },
+    oracle: RUNS_NOT,
+    verdict: red("failed", "asserts", /failed when test ran it/),
+    report: red("failed", "asserts", /failed in the test report/),
   },
   { id: "a-callback", routed: "control: assertions inside a forEach callback", source: { body: `  it("${PIN}", () => {\n    [1, 2].forEach((value) => {\n      expect(value).toBeGreaterThan(0);\n    });\n  });` }, oracle: RUNS, verdict: OK },
   { id: "a-local-helper", routed: "control: assertions in a same-file helper", source: { prelude: "function assertOne(value: number): void {\n  expect(value).toBe(1);\n}", body: `  it("${PIN}", () => {\n    assertOne(1);\n  });` }, oracle: RUNS, verdict: OK },
@@ -589,6 +927,13 @@ const ATTRIBUTION_ROWS: readonly Row[] = [
     oracle: RUNS_NOT,
     verdict: red("context-skip", "runs-where"),
   },
+  {
+    id: "t-6hb11-x17-arrow-regex",
+    routed: "6hb.11 X17 a regex literal after an arrow (a lexer reads it as division) reads no false red",
+    source: { prelude: 'const g2Rx = (s: string): boolean => /"/.test(s);', body: PLAIN },
+    oracle: RUNS,
+    verdict: OK,
+  },
   { id: "t-cax25-fr1-unused-ctx", routed: "cax.25 FR1 a legitimately unused context parameter", source: { body: `  it("${PIN}", async (_ctx) => {\n    expect(1).toBe(1);\n  });` }, oracle: RUNS, verdict: OK },
   { id: "t-cax25-fr2-top-level", routed: "cax.25 FR2 the pin registered at module top level", source: { after: `it("${PIN}", () => {\n  expect(1).toBe(1);\n});` }, oracle: RUNS, verdict: OK },
   { id: "t-cax25-fr3-block-comment", routed: "cax.25 FR3 a block comment in the pin body", source: { body: `  it("${PIN}", () => {\n    /* a block comment in the body */\n    expect(1).toBe(1);\n  });` }, oracle: RUNS, verdict: OK },
@@ -603,7 +948,10 @@ interface TierRow {
   readonly pin: CasePin;
   readonly oracle: { readonly config: "default" | "live"; readonly kind: "passed" | "not-passed" };
   readonly verdict: Expected;
+  /** Report mode's verdict where it differs: a report belongs to ONE tier, so a pin of any other tier is refused (R2=(i)). */
+  readonly report?: Expected;
 }
+
 
 const LIVE_ONLY = "test/live-only.test.ts";
 const LIVE_IN_DEFAULT = "test/live-in-default.test.ts";
@@ -625,11 +973,19 @@ const TIER_ROWS: readonly TierRow[] = [
   },
   {
     id: "tier-live-also-default",
-    routed: "6hb.6 T3: a live-tier label on a file the default gate also runs",
+    routed: "6hb.6 T3 / 6hb.11 T8: a live-tier label on a file the default gate also runs",
     file: LIVE_IN_DEFAULT,
     pin: { file: LIVE_IN_DEFAULT, title: PIN, tier: "live" },
     oracle: { config: "default", kind: "passed" },
     verdict: red("also-default-gate", "runs-where", /default gate \(test\) also runs it/),
+  },
+  {
+    id: "tier-6hb11-t7-repoint",
+    routed: "6hb.11 T7 a live-tier pin whose tier config is re-pointed away from its file",
+    file: CONTROL_FILE,
+    pin: { file: CONTROL_FILE, title: PIN, tier: "live" },
+    oracle: { config: "live", kind: "not-passed" },
+    verdict: red("not-collected", "runs-where", /does not collect this file/),
   },
   {
     id: "tier-live-env-at-import",
@@ -640,8 +996,25 @@ const TIER_ROWS: readonly TierRow[] = [
     oracle: { config: "live", kind: "passed" },
     verdict: red("also-default-gate", "runs-where", /fails to load it: the live tier environment is absent/),
   },
-  { id: "tier-unknown", routed: "fail-closed: a tier forge.toml does not declare", file: CONTROL_FILE, pin: { file: CONTROL_FILE, title: PIN, tier: "no-such-tier" }, oracle: { config: "default", kind: "passed" }, verdict: red("tier-unresolved", "runs-where", /declares no command no-such-tier/) },
-  { id: "tier-shell", routed: "fail-closed: a tier command that is not a vitest invocation", file: CONTROL_FILE, pin: { file: CONTROL_FILE, title: PIN, tier: "shell-tier" }, oracle: { config: "default", kind: "passed" }, verdict: red("tier-unresolved", "runs-where", /runs bash, not vitest/) },
+  {
+    id: "tier-unknown",
+    routed: "fail-closed: a tier forge.toml does not declare",
+    file: CONTROL_FILE,
+    pin: { file: CONTROL_FILE, title: PIN, tier: "no-such-tier" },
+    oracle: { config: "default", kind: "passed" },
+    verdict: red("tier-unresolved", "runs-where", /declares no command no-such-tier/),
+    report: red("tier-mismatch", "runs-where", /a no-such-tier pin is judged only over its own tier's report/),
+  },
+  {
+    id: "tier-shell",
+    routed: "fail-closed: a tier command that is not a vitest invocation",
+    file: CONTROL_FILE,
+    pin: { file: CONTROL_FILE, title: PIN, tier: "shell-tier" },
+    oracle: { config: "default", kind: "passed" },
+    verdict: red("tier-unresolved", "runs-where", /runs bash, not vitest/),
+    report: red("tier-mismatch", "runs-where", /a shell-tier pin is judged only over its own tier's report/),
+  },
+
   { id: "fail-unreadable", routed: "fail-closed: an unreadable (missing) pinned file", file: "test/m-missing.test.ts", pin: { file: "test/m-missing.test.ts", title: PIN, tier: DEFAULT_GATE_TIER }, oracle: { config: "default", kind: "not-passed" }, verdict: red("unreadable", "exists", /unreadable/) },
   {
     id: "fail-unparseable",
@@ -674,6 +1047,9 @@ interface ConfigRow {
   readonly configPrelude?: string;
   /** package.json scripts.test; null removes the script. Default "vitest run". */
   readonly testScript?: string | null;
+  /** Further package.json scripts (a second npm hop names one). */
+  readonly scripts?: Readonly<Record<string, string>>;
+
   /** forge.toml [build.commands] test. Default "npm run test". */
   readonly forgeCommand?: string;
   /** forge.toml [build] gate. Default ["lint", "test"]. */
@@ -686,14 +1062,17 @@ interface ConfigRow {
   readonly target?: Source;
   readonly oracle: "passed" | "not-passed" | "none";
   readonly verdict: Expected;
+  /** Report mode's verdict (over the oracle's own report of the row's default gate) where it differs. */
+  readonly report?: Expected;
 }
 
 const CFG_TARGET = "test/cfg-target.test.ts";
 
+
 const CONFIG_ROWS: readonly ConfigRow[] = [
   { id: "c-control", routed: "control: the unmutated default gate", oracle: "passed", verdict: OK },
   { id: "c-n18-glob", routed: "6hb.6 N18 / 6ze.38 K17 a **/ glob in the default exclude", configBody: 'exclude: ["**/cfg-target.test.ts"]', oracle: "not-passed", verdict: red("not-collected", "runs-where") },
-  { id: "c-n19-name-pattern", routed: "6hb.6 N19 / 0kg.11 testNamePattern / h8f.9 T3 / 0kg.12 testNamePattern / 6hb.7 M14 / 6ze.38 M9 / cax.25 T1 config testNamePattern", configBody: "testNamePattern: /^(?!.*the pinned case)/", oracle: "not-passed", verdict: red("skipped", "runs-where") },
+  { id: "c-n19-name-pattern", routed: "6hb.6 N19 / 0kg.11 testNamePattern / h8f.9 T3 / 0kg.12 testNamePattern / 6hb.7 M14 / 6ze.38 M9 / cax.25 T1 / 6hb.11 SD1 / 752.15 M6 config testNamePattern", configBody: "testNamePattern: /^(?!.*the pinned case)/", oracle: "not-passed", verdict: red("skipped", "runs-where") },
   { id: "c-t3-variant", routed: "h8f.9 T3-variant inefficacy datum: /^(?!the pinned case)/ matches the full name, so the pin still runs", configBody: "testNamePattern: /^(?!the pinned case)/", oracle: "passed", verdict: OK },
   { id: "c-n20-spread", routed: "6hb.6 N20 / 0kg.11 spread exclude", configPrelude: 'const LIVE_TIER_ONLY = ["test/cfg-target.test.ts"];', configBody: "exclude: [...LIVE_TIER_ONLY]", oracle: "not-passed", verdict: red("not-collected", "runs-where") },
   { id: "c-0kg11-concat", routed: "0kg.11 concat / 0kg.12 concat / cax.25 K4 exclude .concat()", configBody: 'exclude: ["test/nothing.test.ts"].concat(["test/cfg-target.test.ts"])', oracle: "not-passed", verdict: red("not-collected", "runs-where") },
@@ -713,7 +1092,7 @@ const CONFIG_ROWS: readonly ConfigRow[] = [
     oracle: "not-passed",
     verdict: red("not-collected", "runs-where", /does not collect this file/),
   },
-  { id: "c-6hb7-m12-brace-glob", routed: "6hb.7 M12 a brace-glob exclude", configBody: 'exclude: ["test/{cfg-target,nothing}.test.ts"]', oracle: "not-passed", verdict: red("not-collected", "runs-where") },
+  { id: "c-6hb7-m12-brace-glob", routed: "6hb.7 M12 / 752.15 M9 a brace-glob exclude", configBody: 'exclude: ["test/{cfg-target,nothing}.test.ts"]', oracle: "not-passed", verdict: red("not-collected", "runs-where") },
   { id: "c-6hb7-m13-char-class", routed: "6hb.7 M13 a character-class exclude", configBody: 'exclude: ["test/cfg-targe[t].test.ts"]', oracle: "not-passed", verdict: red("not-collected", "runs-where") },
   { id: "c-6hb7-fr1-node-modules", routed: "6hb.7 FR1 control: a benign **/node_modules/** exclude reads no false red", configBody: 'exclude: ["**/node_modules/**", "test/nothing.test.ts"]', oracle: "passed", verdict: OK },
   { id: "c-t2-identifier", routed: "h8f.9 T2 / 6hb.7 K7 / 6ze.38 K16 identifier-held exclude list", configPrelude: 'const GATE_EXCLUDES = ["test/cfg-target.test.ts"];', configBody: "exclude: GATE_EXCLUDES", oracle: "not-passed", verdict: red("not-collected", "runs-where") },
@@ -728,12 +1107,14 @@ const CONFIG_ROWS: readonly ConfigRow[] = [
   { id: "c-f8-forge-argv", routed: "0kg.11 F8 / 0kg.12 gate-step / 6ze.38 M12 / cax.25 T3 forge.toml test-step argv change", forgeCommand: "npm run test -- --exclude test/cfg-target.test.ts", oracle: "not-passed", verdict: red("not-collected", "runs-where") },
   {
     id: "c-6ze38-m10-setup-files",
-    routed: "6ze.38 M10 a vitest.config setupFiles global hook skipping the pin by name",
+    routed: "6ze.38 M10 / 6hb.11 J4 / 752.15 M5 a vitest.config setupFiles global hook skipping the pin by name",
     configBody: 'setupFiles: ["./census-skip.setup.ts"]',
     files: { "census-skip.setup.ts": 'import { beforeEach } from "vitest";\nbeforeEach((ctx) => {\n  if (ctx.task.name === "the pinned case") ctx.skip();\n});\n' },
     oracle: "not-passed",
-    verdict: red("skipped", "runs-where", /nothing in its own call chain skips it/),
+    // U2 (wb-u62 gate-1): the elimination red names what it observed and every route still open, never a guessed cause.
+    verdict: red("skipped", "runs-where", /nothing the census models in the case or its own call chain skips it.*the remaining routes: .*a setup file, a config filter, a CLI flag/),
   },
+
   {
     id: "c-global-setup-abort",
     routed: "owner 13:30Z globalSetup fold: a vitest.config global setup that aborts the tier run",
@@ -741,7 +1122,11 @@ const CONFIG_ROWS: readonly ConfigRow[] = [
     files: { "census-global.setup.ts": 'export default function setup(): void {\n  throw new Error("the global setup refuses");\n}\n' },
     oracle: "not-passed",
     verdict: red("run-error", "runs-where", /scheduled this file but never ran it/),
+    // REPORT-MODE BOUNDARY of record: the JSON report records no scheduled files, so the aborted run reads like one that
+    // collected nothing (both red); the why names both routes.
+    report: red("not-collected", "runs-where", /the report records no test file.*aborted before running one \(a throwing global setup\)/),
   },
+
   {
     id: "c-positional-filter",
     routed: "tier truth: a test step whose own file filter excludes the pin; the census never widens a filtered command",
@@ -762,14 +1147,34 @@ const CONFIG_ROWS: readonly ConfigRow[] = [
     target: { body: PLAIN, after: 'it("leaves a rejection behind", () => {\n  void Promise.reject(new Error("an unhandled rejection"));\n  expect(1).toBe(1);\n});' },
     oracle: "passed",
     verdict: red("run-error", "runs-where", /unhandled errors: an unhandled rejection/),
+    // REPORT-MODE BOUNDARY of record: vitest's JSON reporter omits unhandled errors (onTestRunEnd reads modules only), so
+    // a pin that passed reads as passed; the gate's own test step exits 1 on them, so the gate fails without the census.
+    report: OK,
   },
+
   { id: "c-gate-missing", routed: "fail-closed: forge.toml [build] gate no longer runs the test step", gate: '["lint"]', oracle: "none", verdict: red("tier-unresolved", "runs-where", /gate does not run the test step/) },
   { id: "c-toml-unparseable", routed: "fail-closed: forge.toml outside the parsed subset", rawForge: "[build]\ngate = [\"test\"]\n\n[build.commands]\ntest = npm run test\n", oracle: "none", verdict: red("tier-unresolved", "runs-where", /outside the parsed TOML subset/) },
   { id: "c-script-missing", routed: "fail-closed: the npm script the test step names is gone", testScript: null, oracle: "none", verdict: red("tier-unresolved", "runs-where", /declares no script test/) },
   { id: "c-shell-operator", routed: "fail-closed: a test step chained through the shell", forgeCommand: "npm run test && echo done", oracle: "none", verdict: red("tier-unresolved", "runs-where", /shell operator "&"/) },
   { id: "c-0kg12-never-executing", routed: "0kg.12 F6 a never-executing test step (true || npm run test)", forgeCommand: "true || npm run test", oracle: "none", verdict: red("tier-unresolved", "runs-where", /shell operator "\|"/) },
   { id: "c-shell-pipe", routed: "fail-closed: an npm test script piped through the shell", testScript: "vitest run | tee census.log", oracle: "none", verdict: red("tier-unresolved", "runs-where", /shell operator "\|"/) },
+  {
+    id: "c-752-15-m10-toml-comment",
+    routed: "752.15 M10 the gate array's test entry commented out on its own line (a TOML comment is never an entry)",
+    rawForge: '[build]\ngate = [\n  "lint",\n  # "test",\n]\n\n[build.commands]\ntest = "npm run test"\n',
+    oracle: "none",
+    verdict: red("tier-unresolved", "runs-where", /gate does not run the test step/),
+  },
+  {
+    id: "c-u62-gm19-two-hop",
+    routed: "u62 GM19 a test step reaching vitest through two npm hops (forge test -> npm run test -> npm run test:unit -> vitest run)",
+    testScript: "npm run test:unit",
+    scripts: { "test:unit": "vitest run" },
+    oracle: "none",
+    verdict: red("tier-unresolved", "runs-where", /more than one npm script/),
+  },
 ];
+
 
 /**
  * Docs pins read the RENDERED view (05:15Z), bounded at the next level-1/2 heading or EOF (FOLD-1), unique heading
@@ -798,6 +1203,17 @@ const itemsOf = (section: DocsSection): string[] => section.blocks.flatMap(b => 
 const SPAN_COMMENT = ["# Doc", "", "## Controls", "", ...LIST, "", "<!--", "", "## Next", "", "Other text.", "", "-->", "", "## After", "", "Tail.", ""].join("\n");
 /** cax.25 D1: one comment opened in "## Before" hides "## Controls" and "## Next" together. */
 const STRADDLE = ["# Doc", "", "## Before", "", "Intro.", "", "<!--", "", "## Controls", "", ...LIST, "", "## Next", "", "Other text.", "-->", "", "## After", "", "Tail.", ""].join("\n");
+
+/**
+ * wb-9x5.6 D1-D3 (routed 15:54Z, "the floor MUST KILL"; measured by the u62 gate on the real docs/10 + docs/14 pinned
+ * sections): a pinned section holding a normative clause and a list. The adoption form is EXACT equality of the whole
+ * rendered block list through sectionMatches (never an includes check: D3 keeps the clause present), and an HTML block
+ * exposes no rendered text (D2: its raw source is only under raw, so a reader of every block's text is never fooled).
+ */
+const CLAUSE = "The inspector keeps at most 1000 rows in view.";
+const D_BASE = doc([CLAUSE, "", ...LIST]);
+const renderedTexts = (section: DocsSection): string[] =>
+  section.blocks.flatMap((block: RenderedBlock) => (block.kind === "list" ? block.items.map(item => item.text) : [block.kind === "other" || block.kind === "heading" || block.kind === "paragraph" || block.kind === "code" || block.kind === "html" ? block.text : ""]));
 
 const DOCS_ROWS: readonly DocsRow[] = [
   { id: "d-control", routed: "control: three rendered items", markdown: doc(LIST), rendered: html => expect(html).toContain("<li>Second control holds.</li>"), check: s => { expect(s.ok).toBe(true); expect(itemsOf(s)).toEqual(ITEMS); } },
@@ -962,7 +1378,146 @@ const DOCS_ROWS: readonly DocsRow[] = [
       expect(s.blocks).toContainEqual({ kind: "paragraph", text: "Operators may waive these controls.", markdown: "Operators may waive these controls." });
     },
   },
+  {
+    id: "d-752-15-m11-setext-duplicate",
+    routed: "752.15 M11 a setext-form duplicate of the pinned heading inside its section",
+    markdown: doc(LIST, [], ["Controls", "--------", "", "The operator may disable them."]),
+    rendered: html => expect(html.match(/<h2>Controls<\/h2>/g)).toHaveLength(2),
+    check: s => {
+      expect(s.ok).toBe(false);
+      expect(s.why).toMatch(/occurs 2 times in the rendered view/);
+    },
+  },
+  {
+    id: "d-752-15-m12-closing-hash",
+    routed: "752.15 M12 a closing-hash duplicate of the pinned heading (## Controls ##)",
+    markdown: doc(LIST, [], ["## Controls ##", "", "The operator may disable them."]),
+    rendered: html => expect(html.match(/<h2>Controls<\/h2>/g)).toHaveLength(2),
+    check: s => {
+      expect(s.ok).toBe(false);
+      expect(s.why).toMatch(/occurs 2 times in the rendered view/);
+    },
+  },
+  {
+    id: "d-752-15-m13-indented-duplicate",
+    routed: "752.15 M13 a three-space-indented duplicate of the pinned heading",
+    markdown: doc(LIST, [], ["   ## Controls", "", "The operator may disable them."]),
+    rendered: html => expect(html.match(/<h2>Controls<\/h2>/g)).toHaveLength(2),
+    check: s => {
+      expect(s.ok).toBe(false);
+      expect(s.why).toMatch(/occurs 2 times in the rendered view/);
+    },
+  },
+  {
+    id: "d-u62-nested-heading-only",
+    routed: "u62 fail-closed: the pinned heading renders only nested inside a list item, so no section is bounded under it",
+    markdown: ["# Doc", "", "1. First control holds.", "", "   ## Controls", "", "   The operator may disable them.", "", "## Next", "", "Other text.", ""].join("\n"),
+    rendered: html => expect(html).toMatch(/<li>[\s\S]*<h2>Controls<\/h2>[\s\S]*<\/li>/),
+    check: s => {
+      expect(s.ok).toBe(false);
+      expect(s.why).toMatch(/renders only nested inside a list item or blockquote/);
+    },
+  },
+  {
+    id: "d-752-15-m14-four-backtick-fence",
+    routed: "752.15 M14 a four-backtick fence swallowing the pinned section and the next one (an inner three-backtick line closes nothing)",
+    markdown: ["# Doc", "", "````md", "```", "## Controls", "", ...LIST, "```", "", "## Next", "", "Other text.", "````", ""].join("\n"),
+    rendered: html => {
+      expect(html).toContain("<pre>");
+      expect(html).not.toContain("<h2>Controls</h2>");
+    },
+    check: s => {
+      expect(s.ok).toBe(false);
+      expect(s.why).toMatch(/no level-2 heading "Controls"/);
+    },
+  },
+  {
+    id: "d-752-15-m15-html-block-heading",
+    routed: "752.15 M15 an HTML block opened on the line above swallows the pinned heading",
+    markdown: ["# Doc", "", "<div>", "## Controls", "", ...LIST, "", "## Next", "", "Other text.", ""].join("\n"),
+    rendered: html => expect(html).not.toContain("<h2>Controls</h2>"),
+    check: s => {
+      expect(s.ok).toBe(false);
+      expect(s.why).toMatch(/no level-2 heading "Controls"/);
+    },
+  },
+  {
+    id: "d-u62-matches-control",
+    routed: "u62 control: the adoption form (sectionMatches, exact rendered block list) holds on the unmutated section",
+    markdown: D_BASE,
+    rendered: html => expect(html).toContain(`<p>${CLAUSE}</p>`),
+    check: s => {
+      expect(sectionMatches(s, pinned(D_BASE).blocks)).toEqual({ ok: true, why: "" });
+      expect(renderedTexts(s)).toContain(CLAUSE);
+    },
+  },
+  {
+    id: "d-9x5-6-d1-relocation",
+    routed: "9x5.6 D1 relocation: the pinned clause moved out of its section into an EOF appendix",
+    markdown: `${doc(LIST)}\n## Appendix\n\n${CLAUSE}\n`,
+    rendered: html => expect(html.indexOf(`<p>${CLAUSE}</p>`)).toBeGreaterThan(html.indexOf("<h2>Appendix</h2>")),
+    check: s => {
+      expect(s.ok).toBe(true);
+      expect(renderedTexts(s)).not.toContain(CLAUSE);
+      const verdict = sectionMatches(s, pinned(D_BASE).blocks);
+      expect(verdict.ok).toBe(false);
+      expect(verdict.why).toMatch(/block 1 differs/);
+    },
+  },
+  {
+    id: "d-9x5-6-d2-comment-wrap",
+    routed: "9x5.6 D2 HTML-comment wrap: the pinned clause wrapped in a comment inside its section",
+    markdown: doc(["<!--", CLAUSE, "-->", "", ...LIST]),
+    rendered: html => {
+      expect(html).toContain("<!--");
+      expect(html).not.toContain(`<p>${CLAUSE}</p>`);
+    },
+    check: s => {
+      expect(s.hasHtml).toBe(true);
+      // the D2 footgun closed: no block's rendered text carries the commented clause; only an html block's raw does
+      expect(renderedTexts(s).filter(text => text.includes(CLAUSE))).toEqual([]);
+      expect(s.blocks.some(block => block.kind === "html" && block.raw.includes(CLAUSE))).toBe(true);
+      const verdict = sectionMatches(s, pinned(D_BASE).blocks);
+      expect(verdict.ok).toBe(false);
+      expect(verdict.why).toMatch(/carries HTML/);
+    },
+  },
+  {
+    id: "d-9x5-6-d3-withdrawn",
+    routed: "9x5.6 D3 a withdrawn ### subsection inserted inside the pinned section",
+    markdown: doc([CLAUSE, "", ...LIST, "", "### Withdrawn", "", "Nothing in this section binds."]),
+    rendered: html => expect(html).toContain("<h3>Withdrawn</h3>"),
+    check: s => {
+      // an includes-form adopter stays green (the clause is still present); the exact form reddens
+      expect(renderedTexts(s)).toContain(CLAUSE);
+      const verdict = sectionMatches(s, pinned(D_BASE).blocks);
+      expect(verdict.ok).toBe(false);
+      expect(verdict.why).toMatch(/the section has 4 blocks; the census pins 2/);
+    },
+  },
+  {
+    id: "d-u62-other-rendered",
+    routed: "u62 D2 footgun, other blocks: a blockquote's text is its rendered text, an inline comment excluded",
+    markdown: doc([...LIST, "", "> Operators <!-- may not --> keep these controls."]),
+    rendered: html => expect(html).toContain("<blockquote>"),
+    check: s => {
+      expect(s.blocks).toContainEqual({ kind: "other", type: "blockquote", text: "Operators keep these controls." });
+      expect(s.hasHtml).toBe(true);
+    },
+  },
+  {
+    id: "d-u62-matches-refused",
+    routed: "u62 fail-closed: sectionMatches never passes a refused section",
+    markdown: doc(LIST).replace("## Controls", "## Controlz"),
+    rendered: html => expect(html).not.toContain("<h2>Controls</h2>"),
+    check: s => {
+      const verdict = sectionMatches(s, []);
+      expect(verdict.ok).toBe(false);
+      expect(verdict.why).toMatch(/no level-2 heading "Controls"/);
+    },
+  },
 ];
+
 
 /**
  * Each-liveness of THIS table (h8f.9 O1 class): every routed mode name keeps its row, so emptying a table goes red.
@@ -1044,10 +1599,15 @@ const ROUTED_MODES: Readonly<Record<string, readonly string[]>> = {
   ],
   "6ze.38": ["M1", "M2b", "M3", "M4", "M4b", "M5", "M6", "M7", "M8", "M8b", "M9", "M10", "M11", "M12", "M13", "M14a", "M14b", "M15", "M16", "M19", "K8", "K9", "K13", "K16", "K17"],
   "cax.25": ["M1", "M2", "M3", "M4", "M5", "M6", "M7", "M8", "M9", "M10", "M11", "M12a", "M12b", "T1", "T2", "T3", "K1", "K2", "K3", "K4", "FR1", "FR2", "FR3", "X1", "D1", "D2", "F7"],
+  u62: ["J1", "J2", "J3", "J4", "J5", "A1a", "A1b", "GM19", "GM21", "E2E"],
+  "9x5.6": ["D1", "D2", "D3"],
+  "6hb.11": ["J1", "J4", "SD1", "X17", "S10b", "S18", "S19", "S20", "S21", "E1", "F4", "T7", "T8"],
+  "752.15": ["M1", "M2", "M3", "M4", "M5", "M6", "M7", "M9", "M10", "M11", "M12", "M13", "M14", "M15"],
 };
 
 /** Exact table sizes: deleting or emptying a falsifier table goes red (each-liveness of this file's own rows). */
-const TABLE_SIZES = [52, 8, 22, 21, 14, 9, 27, 22, 5];
+const TABLE_SIZES = [55, 8, 22, 35, 15, 10, 29, 34, 5, 16, 8, 14, 3];
+
 
 /**
  * Source structure (0kg.7 F10 / gate mutant X16: an import pin read as text survives a commented-out import plus a
@@ -1123,7 +1683,7 @@ const fixtureModule = (id: string): string =>
 // Harness: synthetic projects, the runner oracle (JSON reporter through the tier's real command), the helper.
 // ---------------------------------------------------------------------------------------------------------
 
-const MAIN_ROWS: readonly Row[] = [...REGISTRATION, ...EACH, ...BODY_ROWS, ...ASSERT_ROWS, ...ATTRIBUTION_ROWS];
+const MAIN_ROWS: readonly Row[] = [...REGISTRATION, ...EACH, ...BODY_ROWS, ...ASSERT_ROWS, ...ATTRIBUTION_ROWS, ...JUDGE_ROWS, ...INVERSION_ROWS];
 const fileOf = (id: string): string => `test/${id}.test.ts`;
 const pinOf = (row: Row): CasePin => ({ file: fileOf(row.id), title: PIN, tier: DEFAULT_GATE_TIER, ...row.pin });
 const MAIN_PINS: readonly { readonly id: string; readonly pin: CasePin }[] = [
@@ -1131,11 +1691,14 @@ const MAIN_PINS: readonly { readonly id: string; readonly pin: CasePin }[] = [
   ...TIER_ROWS.map(row => ({ id: row.id, pin: row.pin })),
 ];
 
+/** The documented gate env (house rule: the operator exports a worker cap); every runner run and helper run here carries it. */
+const GATE_CAP = "2";
+
 const vitestConfig = (testOptions: string, prelude = ""): string =>
   ['import { defineConfig } from "vitest/config";', prelude, `export default defineConfig({ cacheDir: ".census-cache", test: { cache: false, ${testOptions} } });`, ""].join("\n");
 const defaultOptions = (extra: string): string => `include: ["test/**/*.test.ts"], allowOnly: false${extra === "" ? "" : `, ${extra}`}`;
-const packageJson = (testScript: string | null): string =>
-  `${JSON.stringify({ name: "census-synthetic", private: true, scripts: { lint: "true", ...(testScript === null ? {} : { test: testScript }) } }, null, 2)}\n`;
+const packageJson = (testScript: string | null, scripts: Readonly<Record<string, string>> = {}): string =>
+  `${JSON.stringify({ name: "census-synthetic", private: true, scripts: { lint: "true", ...(testScript === null ? {} : { test: testScript }), ...scripts } }, null, 2)}\n`;
 const forgeToml = (testCommand: string, gate = '["lint", "test"]', extra = ""): string =>
   `[package]\nname = "census-synthetic"\n\n[build]\ngate = ${gate}\n\n[build.commands]\nlint = "npm run lint"\ntest = ${JSON.stringify(testCommand)}\n${extra}`;
 
@@ -1148,6 +1711,9 @@ function writeTree(root: string, files: Readonly<Record<string, string>>): strin
   return root;
 }
 
+/** A report-mode-only pinned file: judged after its mtime is moved past the report's (the stale-report class). */
+const STALE_TARGET = "test/p-stale-target.test.ts";
+
 function buildMainRoot(root: string): string {
   const files: Record<string, string> = {
     "package.json": packageJson("vitest run"),
@@ -1156,13 +1722,15 @@ function buildMainRoot(root: string): string {
       undefined,
       '\n[build.commands.live]\ncommand = "./node_modules/.bin/vitest run --config vitest.live.config.ts"\ntimeout = 60\n\n[build.commands.shell-tier]\ncommand = "bash run-tests.sh"\n',
     ),
-    "vitest.config.ts": vitestConfig(defaultOptions(`exclude: [${JSON.stringify(LIVE_ONLY)}]`)),
+    "vitest.config.ts": vitestConfig(defaultOptions(`exclude: [${JSON.stringify(LIVE_ONLY)}], tags: [{ name: "census-tag" }]`)),
     "vitest.live.config.ts": vitestConfig(`include: ${JSON.stringify([LIVE_ONLY, LIVE_IN_DEFAULT, LIVE_ENV])}, env: { CENSUS_LIVE_TIER: "1" }`),
     "vitest.asserts.config.ts": vitestConfig(`include: ${JSON.stringify(ASSERT_ROWS.map(row => fileOf(row.id)))}, setupFiles: ["./census-has-assertions.setup.ts"]`),
     "census-has-assertions.setup.ts": 'import { beforeEach, expect } from "vitest";\nbeforeEach(() => {\n  expect.hasAssertions();\n});\n',
     "test/census-assert-helper.ts": 'import { expect } from "vitest";\nexport function assertPositive(value: number): void {\n  expect(value).toBeGreaterThan(0);\n}\n',
+    "test/census-register-helper.ts": `import { expect, it } from "vitest";\nexport function registerPinned(): void {\n  it(${JSON.stringify(PIN)}, () => {\n    expect(1).toBe(1);\n  });\n}\n`,
     [LIVE_ONLY]: testFile({ body: PLAIN }),
     [LIVE_IN_DEFAULT]: testFile({ body: PLAIN }),
+    [STALE_TARGET]: testFile({ body: PLAIN }),
   };
   for (const row of MAIN_ROWS) files[fileOf(row.id)] = testFile(row.source);
   for (const row of STRUCTURE_ROWS) {
@@ -1176,7 +1744,7 @@ function buildMainRoot(root: string): string {
 
 function buildConfigRoot(root: string, row: ConfigRow): string {
   return writeTree(root, {
-    "package.json": packageJson(row.testScript === undefined ? "vitest run" : row.testScript),
+    "package.json": packageJson(row.testScript === undefined ? "vitest run" : row.testScript, row.scripts),
     "forge.toml": row.rawForge ?? forgeToml(row.forgeCommand ?? "npm run test", row.gate),
     "vitest.config.ts": vitestConfig(defaultOptions(row.configBody ?? ""), row.configPrelude ?? ""),
     [CFG_TARGET]: testFile(row.target ?? { body: PLAIN }),
@@ -1184,11 +1752,151 @@ function buildConfigRoot(root: string, row: ConfigRow): string {
   });
 }
 
-/** The runner processes started here never inherit the parent vitest worker's own markers. */
+/** A one-config project (forge.toml test -> npm run test -> the given script) holding the given files. */
+const projectFiles = (testScript: string, extra: Readonly<Record<string, string>>): Record<string, string> => ({
+  "package.json": packageJson(testScript),
+  "forge.toml": forgeToml("npm run test"),
+  "vitest.config.ts": vitestConfig(defaultOptions("")),
+  ...extra,
+});
+
+/** The helper module itself: real-path rows run census files that import it by absolute path, as an adopting census does. */
+const HELPER_MODULE = join(ROOT, "test", "helpers", "census.ts");
+
+/**
+ * U4 GM21 real-path recursion: a census file inside the NON-narrowable tier run it judges ("vitest run test" carries a
+ * positional filter, so the helper runs the whole command). A depth counter in the project bounds the row even if the
+ * guard under test failed (no fork bomb): at depth 2 the census refuses and fails.
+ */
+const RECURSION_PINNED = "test/recursion-pinned.test.ts";
+const RECURSION_CENSUS = "test/recursion-census.test.ts";
+const RECURSION_TITLE = "a judging census inside the tier run it judges";
+const RECURSION_LOG = ".census-recursion.log";
+const RECURSION_PIN: CasePin = { file: RECURSION_PINNED, title: PIN, tier: DEFAULT_GATE_TIER };
+const recursionCensus = (): string =>
+  [
+    'import { appendFileSync, existsSync, readFileSync, writeFileSync } from "node:fs";',
+    'import { dirname, join } from "node:path";',
+    'import { fileURLToPath } from "node:url";',
+    'import { expect, it } from "vitest";',
+    `import { judgePins } from ${JSON.stringify(HELPER_MODULE)};`,
+    'const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");',
+    'const DEPTH = join(ROOT, ".census-depth");',
+    `const LOG = join(ROOT, ${JSON.stringify(RECURSION_LOG)});`,
+    `it(${JSON.stringify(RECURSION_TITLE)}, async () => {`,
+    '  const depth = existsSync(DEPTH) ? Number(readFileSync(DEPTH, "utf8")) : 0;',
+    "  if (depth >= 2) {",
+    `    appendFileSync(LOG, \`\${depth}:depth-exceeded\\n\`);`,
+    '    throw new Error("the recursion guard did not hold");',
+    "  }",
+    "  writeFileSync(DEPTH, String(depth + 1));",
+    "  try {",
+    `    const verdicts = await judgePins(ROOT, [${JSON.stringify(RECURSION_PIN)}], { timeoutMs: 120_000 });`,
+    `    appendFileSync(LOG, \`\${depth}:\${verdicts.map(verdict => verdict.code).join(",")}\\n\`);`,
+    "    expect(verdicts).toHaveLength(1);",
+    "  } finally {",
+    "    writeFileSync(DEPTH, String(depth));",
+    "  }",
+    "}, 180_000);",
+    "",
+  ].join("\n");
+const buildRecursionRoot = (root: string): string => writeTree(root, projectFiles("vitest run test", { [RECURSION_PINNED]: testFile({ body: PLAIN }), [RECURSION_CENSUS]: recursionCensus() }));
+
+/** U1 E2E: the gate's one-run adoption shape - an adopting census asserting ok for three judge-detecting pins. */
+const E2E_PINNED = "test/e2e-pinned.test.ts";
+const E2E_CENSUS = "test/e2e-census.test.ts";
+const E2E_CENSUS_TITLE = "adopting census: the three pins are collected once, pass under test, and assert";
+const E2E_CODES = ".census-e2e.json";
+const E2E_TITLES = ["pin A: runs only when the census judges it", "pin B: skips under the gate's documented worker cap", "pin C: skips through the runner's public getCurrentTest unless judged"];
+const e2ePinned = (): string =>
+  [
+    'import { describe, expect, it } from "vitest";',
+    'import { getCurrentTest } from "vitest/suite";',
+    'describe("pinned suite", () => {',
+    `  it.runIf(process.env.CENSUS_HELPER_NESTED === "1")(${JSON.stringify(E2E_TITLES[0])}, () => {`,
+    "    expect(1).toBe(1);",
+    "  });",
+    `  it.skipIf(process.env.VITEST_MAX_WORKERS !== undefined)(${JSON.stringify(E2E_TITLES[1])}, () => {`,
+    "    expect(1).toBe(1);",
+    "  });",
+    `  it(${JSON.stringify(E2E_TITLES[2])}, () => {`,
+    '    if (process.env.CENSUS_HELPER_NESTED !== "1") getCurrentTest()?.context.skip();',
+    "    expect(1).toBe(1);",
+    "  });",
+    "});",
+    "",
+  ].join("\n");
+const e2eCensus = (): string =>
+  [
+    'import { writeFileSync } from "node:fs";',
+    'import { dirname, join } from "node:path";',
+    'import { fileURLToPath } from "node:url";',
+    'import { expect, it } from "vitest";',
+    `import { judgePins } from ${JSON.stringify(HELPER_MODULE)};`,
+    'const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");',
+    `it(${JSON.stringify(E2E_CENSUS_TITLE)}, async () => {`,
+    `  const verdicts = await judgePins(ROOT, ${JSON.stringify(E2E_TITLES)}.map(title => ({ file: ${JSON.stringify(E2E_PINNED)}, title, tier: "test" })), { timeoutMs: 120_000 });`,
+    `  writeFileSync(join(ROOT, ${JSON.stringify(E2E_CODES)}), JSON.stringify(verdicts.map(verdict => verdict.code)));`,
+    '  expect(verdicts.map(verdict => verdict.code)).toEqual(["ok", "ok", "ok"]);',
+    "}, 180_000);",
+    "",
+  ].join("\n");
+
+/** The fabricated-green class report mode guards: a census inside the run it judges can only read that run's PREVIOUS report. */
+const INRUN_PINNED = "test/inrun-pinned.test.ts";
+const INRUN_CENSUS = "test/inrun-census.test.ts";
+const INRUN_LOG = ".census-inrun.log";
+const inRunCensus = (): string =>
+  [
+    'import { appendFileSync } from "node:fs";',
+    'import { dirname, join } from "node:path";',
+    'import { fileURLToPath } from "node:url";',
+    'import { expect, it } from "vitest";',
+    `import { DEFAULT_TIER_REPORT, judge } from ${JSON.stringify(HELPER_MODULE)};`,
+    'const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");',
+    'it("a census judging the report of the run it sits in", () => {',
+    `  const verdicts = judge(join(ROOT, DEFAULT_TIER_REPORT), [{ file: ${JSON.stringify(INRUN_PINNED)}, title: ${JSON.stringify(PIN)}, tier: "test" }]);`,
+    `  appendFileSync(join(ROOT, ${JSON.stringify(INRUN_LOG)}), \`\${JSON.stringify(verdicts.map(verdict => ({ code: verdict.code, why: verdict.why })))}\\n\`);`,
+    "  expect(verdicts).toHaveLength(1);",
+    "});",
+    "",
+  ].join("\n");
+
+/**
+ * F2 cap fidelity (6hb.11 gate input, part ii; 49 and 68 child processes measured under a VITEST_MAX_WORKERS=2 gate):
+ * three pinned files that each hold their worker for 400 ms and log their run interval, so overlap is concurrency.
+ */
+const CAP_FILES = ["test/cap-a.test.ts", "test/cap-b.test.ts", "test/cap-c.test.ts"];
+const CAP_LOG = ".census-cap.log";
+const capFile = (): string =>
+  [
+    'import { appendFileSync } from "node:fs";',
+    'import { describe, expect, it } from "vitest";',
+    'describe("census suite", () => {',
+    `  it(${JSON.stringify(PIN)}, async () => {`,
+    "    const start = Date.now();",
+    "    await new Promise(resolve => setTimeout(resolve, 400));",
+    `    appendFileSync(new URL(${JSON.stringify(`../${CAP_LOG}`)}, import.meta.url), \`\${start} \${Date.now()}\\n\`);`,
+    "    expect(1).toBe(1);",
+    "  });",
+    "});",
+    "",
+  ].join("\n");
+
+/** A report written WITHOUT task locations (the AST legs need the runner-located call site). */
+const NOLOC_FILE = "test/noloc.test.ts";
+
+/** Names a vitest worker carries that the gate's own run never inherits (measured on 4.1.10). */
+const WORKER_ONLY = new Set(["TEST", "BASE_URL", "MODE", "DEV", "PROD", "SSR", "FORCE_TTY"]);
+
+/** The runner processes started here never inherit the parent worker's markers or any census name; they carry the gate env. */
 function runnerEnv(): NodeJS.ProcessEnv {
   const env: NodeJS.ProcessEnv = {};
-  for (const [key, value] of Object.entries(process.env)) if (value !== undefined && !key.startsWith("VITEST") && key !== "TEST") env[key] = value;
-  return { ...env, NO_COLOR: "1", FORCE_COLOR: "0", VITE_CONFIG_NATIVE_IGNORE_WARNING: "true" };
+  for (const [key, value] of Object.entries(process.env)) {
+    if (value === undefined || key.startsWith("CENSUS_") || WORKER_ONLY.has(key) || (key.startsWith("VITEST") && key !== "VITEST_MAX_WORKERS")) continue;
+    env[key] = value;
+  }
+  return { ...env, VITEST_MAX_WORKERS: process.env.VITEST_MAX_WORKERS ?? GATE_CAP, NO_COLOR: "1", FORCE_COLOR: "0", VITE_CONFIG_NATIVE_IGNORE_WARNING: "true" };
 }
 
 interface ReportCase {
@@ -1211,12 +1919,18 @@ function shell(command: string, cwd: string): Promise<{ readonly code: number | 
   });
 }
 
+/** A runner run: what it did per file, and its report file, which is gate-shaped (vitest's JSON reporter) and report mode reads. */
+interface RunnerRun {
+  readonly report: Report;
+  readonly path: string;
+}
+
 let reportSeq = 0;
-/** Runs a tier command line exactly as a shell would, with the JSON reporter appended, and reads what the runner did. */
-async function runnerReport(root: string, command: string): Promise<Report> {
+/** Runs a tier command line exactly as a shell would, with vitest's JSON reporter appended (task locations unless asked not to), and reads what the runner did. */
+async function runnerReport(root: string, command: string, options: { readonly out?: string; readonly locations?: boolean } = {}): Promise<RunnerRun> {
   reportSeq += 1;
-  const out = join(root, `.runner-report-${reportSeq}.json`);
-  const reporter = `--reporter=json --outputFile=${out} --maxWorkers=2`;
+  const out = options.out ?? join(root, `.runner-report-${reportSeq}.json`);
+  const reporter = `--reporter=json --outputFile=${out}${options.locations === false ? "" : " --includeTaskLocation"} --maxWorkers=2`;
   const full = command.includes(" -- ") ? `${command} ${reporter}` : command.startsWith("npm ") ? `${command} -- ${reporter}` : `${command} ${reporter}`;
   const result = await shell(full, root);
   let text: string;
@@ -1232,7 +1946,7 @@ async function runnerReport(root: string, command: string): Promise<Report> {
     const relativeName = file.name.startsWith(`${realRoot}/`) ? file.name.slice(realRoot.length + 1) : file.name;
     report.set(relativeName, (file.assertionResults ?? []).map(entry => ({ title: entry.title, status: entry.status })));
   }
-  return report;
+  return { report, path: out };
 }
 
 function titleMatcher(title: string, each: boolean): (candidate: string) => boolean {
@@ -1286,6 +2000,8 @@ async function pool(tasks: readonly (() => Promise<void>)[], width: number): Pro
 }
 
 const hasToken = (text: string, token: string): boolean => new RegExp(`(^|[^A-Za-z0-9-])${token.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}($|[^A-Za-z0-9])`).test(text);
+const statusIn = (report: Report | undefined, file: string, title: string): string[] => (report?.get(file) ?? []).filter(entry => entry.title === title).map(entry => entry.status);
+const readLines = (path: string): string[] => (existsSync(path) ? readFileSync(path, "utf8").split("\n").filter(line => line !== "") : []);
 
 let synthBase = "";
 const mainVerdicts = new Map<string, PinVerdict>();
@@ -1297,11 +2013,48 @@ let mainAsserts: Report = new Map();
 let smoke: PinVerdict | undefined;
 let mainRootPath = "";
 let fixtureLoads: readonly string[] = [];
+let previousCap: string | undefined;
+/** Report mode: every row judged over the oracle's own report of the run that row proves real. */
+let mainDefaultPath = "";
+let mainLivePath = "";
+const configReportPaths = new Map<string, string>();
+const reportVerdicts = new Map<string, PinVerdict>();
+const configReportVerdicts = new Map<string, PinVerdict>();
+const reportOnly = new Map<string, PinVerdict>();
+let smokeReport: RunnerRun | undefined;
+let noLocation: RunnerRun | undefined;
+let noLocationRaw = "";
+let staleTargetMtimeMs = 0;
+let staleReportMtimeMs = 0;
+let inRunFirst: RunnerRun | undefined;
+let inRunLog: readonly (readonly { readonly code: string; readonly why: string }[])[] = [];
+/** Real-path rows. */
+let recursionVerdict: PinVerdict | undefined;
+let recursionLog: readonly string[] = [];
+let recursionWallMs = 0;
+let recursionOracle: RunnerRun | undefined;
+let recursionOracleLog: readonly string[] = [];
+let e2eRun: RunnerRun | undefined;
+let e2eCodes: readonly string[] = [];
+let e2eReportVerdicts: readonly PinVerdict[] = [];
+let capVerdicts: readonly PinVerdict[] = [];
+let capIntervals: readonly (readonly number[])[] = [];
+
+const SMOKE_PIN: CasePin = { file: SMOKE_FILE, title: SMOKE_TITLE, tier: DEFAULT_GATE_TIER };
 
 beforeAll(async () => {
+  // The documented gate env: the operator's worker cap is set for every helper run and runner run here (J4's runner truth).
+  previousCap = process.env.VITEST_MAX_WORKERS;
+  if (previousCap === undefined) process.env.VITEST_MAX_WORKERS = GATE_CAP;
   synthBase = realpathSync(mkdtempSync(join(tmpdir(), "census-helper.")));
   const mainRoot = buildMainRoot(join(synthBase, "main"));
   mainRootPath = mainRoot;
+  const recursionJudgeRoot = buildRecursionRoot(join(synthBase, "recursion-judge"));
+  const recursionOracleRoot = buildRecursionRoot(join(synthBase, "recursion-oracle"));
+  const e2eRoot = writeTree(join(synthBase, "e2e"), projectFiles("vitest run", { [E2E_PINNED]: e2ePinned(), [E2E_CENSUS]: e2eCensus() }));
+  const inRunRoot = writeTree(join(synthBase, "inrun"), projectFiles("vitest run", { [INRUN_PINNED]: testFile({ body: PLAIN }), [INRUN_CENSUS]: inRunCensus() }));
+  const noLocRoot = writeTree(join(synthBase, "noloc"), projectFiles("vitest run", { [NOLOC_FILE]: testFile({ body: PLAIN }) }));
+  const capRoot = writeTree(join(synthBase, "cap"), projectFiles("vitest run", Object.fromEntries(CAP_FILES.map(file => [file, capFile()]))));
   const tasks: (() => Promise<void>)[] = [
     async () => {
       const verdicts = await judgePins(mainRoot, MAIN_PINS.map(entry => entry.pin));
@@ -1311,17 +2064,60 @@ beforeAll(async () => {
       });
     },
     async () => {
-      mainDefault = await runnerReport(mainRoot, "npm run test");
+      const run = await runnerReport(mainRoot, "npm run test");
+      mainDefault = run.report;
+      mainDefaultPath = run.path;
       fixtureLoads = readFileSync(join(mainRoot, FIXTURE_LOADS), "utf8").split("\n").filter(entry => entry !== "");
     },
     async () => {
-      mainLive = await runnerReport(mainRoot, "./node_modules/.bin/vitest run --config vitest.live.config.ts");
+      const run = await runnerReport(mainRoot, "./node_modules/.bin/vitest run --config vitest.live.config.ts");
+      mainLive = run.report;
+      mainLivePath = run.path;
     },
     async () => {
-      mainAsserts = await runnerReport(mainRoot, "./node_modules/.bin/vitest run --config vitest.asserts.config.ts");
+      mainAsserts = (await runnerReport(mainRoot, "./node_modules/.bin/vitest run --config vitest.asserts.config.ts")).report;
     },
     async () => {
-      [smoke] = await judgePins(ROOT, [{ file: SMOKE_FILE, title: SMOKE_TITLE, tier: DEFAULT_GATE_TIER }]);
+      [smoke] = await judgePins(ROOT, [SMOKE_PIN]);
+    },
+    async () => {
+      // FIND-1 for report mode: vitest's own JSON report of this repository's REAL config, narrowed to the anchor file.
+      smokeReport = await runnerReport(ROOT, `./node_modules/.bin/vitest run ${SMOKE_FILE}`, { out: join(synthBase, "smoke-report.json") });
+    },
+    async () => {
+      const started = Date.now();
+      [recursionVerdict] = await judgePins(recursionJudgeRoot, [RECURSION_PIN]);
+      recursionWallMs = Date.now() - started;
+      recursionLog = readLines(join(recursionJudgeRoot, RECURSION_LOG));
+    },
+    async () => {
+      recursionOracle = await runnerReport(recursionOracleRoot, "npm run test");
+      recursionOracleLog = readLines(join(recursionOracleRoot, RECURSION_LOG));
+    },
+    async () => {
+      e2eRun = await runnerReport(e2eRoot, "npm run test", { out: join(e2eRoot, DEFAULT_TIER_REPORT) });
+      const codes = join(e2eRoot, E2E_CODES);
+      e2eCodes = existsSync(codes) ? (JSON.parse(readFileSync(codes, "utf8")) as string[]) : [];
+    },
+    async () => {
+      // two runs of the same gate: the census inside the second can only read the first run's report
+      inRunFirst = await runnerReport(inRunRoot, "npm run test", { out: join(inRunRoot, DEFAULT_TIER_REPORT) });
+      await runnerReport(inRunRoot, "npm run test", { out: join(inRunRoot, DEFAULT_TIER_REPORT) });
+      inRunLog = readLines(join(inRunRoot, INRUN_LOG)).map(line => JSON.parse(line) as { readonly code: string; readonly why: string }[]);
+    },
+    async () => {
+      noLocation = await runnerReport(noLocRoot, "npm run test", { locations: false });
+      noLocationRaw = readFileSync(noLocation.path, "utf8");
+    },
+    async () => {
+      // F2: the gate's documented cap is 1 for this one judgment; judgePins reads it synchronously when it spawns the run.
+      const saved = process.env.VITEST_MAX_WORKERS;
+      process.env.VITEST_MAX_WORKERS = "1";
+      const pending = judgePins(capRoot, CAP_FILES.map(file => ({ file, title: PIN, tier: DEFAULT_GATE_TIER })));
+      if (saved === undefined) delete process.env.VITEST_MAX_WORKERS;
+      else process.env.VITEST_MAX_WORKERS = saved;
+      capVerdicts = await pending;
+      capIntervals = readLines(join(capRoot, CAP_LOG)).map(line => line.split(" ").map(Number));
     },
   ];
   for (const row of CONFIG_ROWS) {
@@ -1332,16 +2128,173 @@ beforeAll(async () => {
     });
     if (row.oracle !== "none") {
       tasks.push(async () => {
-        configReports.set(row.id, await runnerReport(root, row.forgeCommand ?? "npm run test"));
+        const run = await runnerReport(root, row.forgeCommand ?? "npm run test");
+        configReports.set(row.id, run.report);
+        configReportPaths.set(row.id, run.path);
       });
     }
   }
   await pool(tasks, 4);
+
+  // REPORT MODE: nothing below executes a test run; every verdict is read from a report the runner already wrote.
+  const mainJudged = judge(mainDefaultPath, MAIN_ROWS.map(pinOf), { root: mainRoot });
+  MAIN_ROWS.forEach((row, index) => {
+    const verdict = mainJudged[index];
+    if (verdict !== undefined) reportVerdicts.set(row.id, verdict);
+  });
+  for (const row of TIER_ROWS) {
+    const [verdict] = row.pin.tier === "live" ? judge(mainLivePath, [row.pin], { root: mainRoot, tier: "live", defaultReport: mainDefaultPath }) : judge(mainDefaultPath, [row.pin], { root: mainRoot });
+    if (verdict !== undefined) reportVerdicts.set(row.id, verdict);
+  }
+  for (const row of CONFIG_ROWS) {
+    const path = configReportPaths.get(row.id);
+    if (path === undefined) continue;
+    const [verdict] = judge(path, [{ file: CFG_TARGET, title: PIN, tier: DEFAULT_GATE_TIER }], { root: join(synthBase, row.id) });
+    if (verdict !== undefined) configReportVerdicts.set(row.id, verdict);
+  }
+  const control: CasePin = { file: fileOf("r-control"), title: PIN, tier: DEFAULT_GATE_TIER };
+  const only = (id: string, verdicts: readonly PinVerdict[]): void => {
+    const [verdict] = verdicts;
+    if (verdict !== undefined) reportOnly.set(id, verdict);
+  };
+  const forge = join(mainRoot, ".forge");
+  mkdirSync(forge, { recursive: true });
+  only("p-missing", judge(join(forge, "absent.json"), [control], { root: mainRoot }));
+  writeFileSync(join(forge, "malformed.json"), "{ not json");
+  only("p-malformed", judge(join(forge, "malformed.json"), [control], { root: mainRoot }));
+  writeFileSync(join(forge, "shape.json"), JSON.stringify({ testResults: "none" }));
+  only("p-shape", judge(join(forge, "shape.json"), [control], { root: mainRoot }));
+  writeFileSync(join(forge, "shape-counts.json"), JSON.stringify({ testResults: [] }));
+  only("p-shape-counts", judge(join(forge, "shape-counts.json"), [control], { root: mainRoot }));
+  copyFileSync(mainDefaultPath, join(synthBase, "loose-report.json"));
+  only("p-root-required", judge(join(synthBase, "loose-report.json"), [control]));
+  copyFileSync(mainDefaultPath, join(mainRoot, DEFAULT_TIER_REPORT));
+  only("p-canonical-root", judge(join(mainRoot, DEFAULT_TIER_REPORT), [control]));
+  only("p-tier-live-in-default", judge(mainDefaultPath, [{ file: LIVE_ONLY, title: PIN, tier: "live" }], { root: mainRoot }));
+  only("p-tier-default-in-live", judge(mainLivePath, [{ file: LIVE_ONLY, title: PIN, tier: DEFAULT_GATE_TIER }], { root: mainRoot, tier: "live", defaultReport: mainDefaultPath }));
+  only("p-exclusivity-unreadable", judge(mainLivePath, [{ file: LIVE_ONLY, title: PIN, tier: "live" }], { root: mainRoot, tier: "live", defaultReport: join(forge, "absent.json") }));
+  if (noLocation !== undefined) only("p-no-location", judge(noLocation.path, [{ file: NOLOC_FILE, title: PIN, tier: DEFAULT_GATE_TIER }], { root: noLocRoot }));
+  if (smokeReport !== undefined) only("p-smoke", judge(smokeReport.path, [SMOKE_PIN], { root: ROOT }));
+  if (e2eRun !== undefined) e2eReportVerdicts = judge(e2eRun.path, E2E_TITLES.map(title => ({ file: E2E_PINNED, title, tier: DEFAULT_GATE_TIER })), { root: e2eRoot });
+  // the stale class last: move the target's mtime past the report's, then judge it
+  staleReportMtimeMs = statSync(mainDefaultPath).mtimeMs;
+  const staleAt = (staleReportMtimeMs + 60_000) / 1000;
+  utimesSync(join(mainRoot, STALE_TARGET), staleAt, staleAt);
+  staleTargetMtimeMs = statSync(join(mainRoot, STALE_TARGET)).mtimeMs;
+  only("p-stale", judge(mainDefaultPath, [{ file: STALE_TARGET, title: PIN, tier: DEFAULT_GATE_TIER }], { root: mainRoot }));
 }, SUITE_TIMEOUT);
 
 afterAll(() => {
+  if (previousCap === undefined) delete process.env.VITEST_MAX_WORKERS;
   if (synthBase !== "") rmSync(synthBase, { recursive: true, force: true });
 });
+
+/** A row that needs its own report (absent, malformed, stale, unlocated, in-run), a tier refusal, or a real path. */
+interface StandaloneRow {
+  readonly id: string;
+  readonly routed: string;
+  readonly check: () => void;
+}
+
+const reportRow = (id: string, want: Expected) => (): void => expectVerdict(reportOnly.get(id), want, id);
+
+/** Report mode's own rows: the nl8 interface, the report's fail-closed reading, the stale-report class, and R2=(i). */
+const REPORT_ROWS: readonly StandaloneRow[] = [
+  { id: "p-default-path", routed: "u62 nl8 interface: the helper names .forge/vitest-report.json as the default tier's report", check: () => expect(DEFAULT_TIER_REPORT).toBe(".forge/vitest-report.json") },
+  { id: "p-canonical-root", routed: "u62 report mode: a report at <root>/.forge/vitest-report.json needs no root option", check: reportRow("p-canonical-root", { ...OK, why: /collected once, passed in the test report, asserts/ }) },
+  { id: "p-missing", routed: "u62 report-mode fail-closed: no report at the path", check: reportRow("p-missing", red("report-unreadable", "runs-where", /is unreadable/)) },
+  { id: "p-malformed", routed: "u62 report-mode fail-closed: a report that is not JSON", check: reportRow("p-malformed", red("report-unreadable", "runs-where", /is not JSON/)) },
+  { id: "p-shape", routed: "u62 report-mode fail-closed: a report without vitest's JSON reporter shape", check: reportRow("p-shape", red("report-unreadable", "runs-where", /does not have vitest's JSON reporter shape/)) },
+  {
+    id: "p-shape-counts",
+    routed: "u62 report-mode fail-closed: a well-formed testResults list without the reporter's run counts is not vitest's report",
+    check: reportRow("p-shape-counts", red("report-unreadable", "runs-where", /does not have vitest's JSON reporter shape/)),
+  },
+  { id: "p-root-required", routed: "u62 report-mode fail-closed: a report outside a .forge directory with no root named", check: reportRow("p-root-required", red("report-unreadable", "runs-where", /outside a \.forge directory/)) },
+  {
+    id: "p-no-location",
+    routed: "u62 report-mode fail-closed: a report written without task locations (the AST legs need the runner-located call)",
+    check: () => {
+      expect(statusIn(noLocation?.report, NOLOC_FILE, PIN), "the runner ran and passed the case").toEqual(["passed"]);
+      expect(noLocationRaw.includes('"location"'), "the runner wrote no task location without includeTaskLocation").toBe(false);
+      expectVerdict(reportOnly.get("p-no-location"), red("report-unlocated", "exists", /includeTaskLocation/), "p-no-location");
+    },
+  },
+  {
+    id: "p-stale",
+    routed: "u62 stale-report guard: the pinned file changed after the report was written",
+    check: () => {
+      expect(statusIn(mainDefault, STALE_TARGET, PIN), "the report records the case passed").toEqual(["passed"]);
+      expect(staleTargetMtimeMs, "the pinned file is newer than the report").toBeGreaterThan(staleReportMtimeMs);
+      expectVerdict(reportOnly.get("p-stale"), red("report-stale", "runs-where", /changed after the report was written/), "p-stale");
+    },
+  },
+  {
+    id: "p-in-run",
+    routed: "u62 fabricated-green guard: a census inside the run it judges can only read that run's previous report",
+    check: () => {
+      expect(statusIn(inRunFirst?.report, INRUN_PINNED, PIN), "the first run passes the pinned case").toEqual(["passed"]);
+      expect(inRunFirst?.report.has(INRUN_CENSUS), "the first run's report records the judging census itself").toBe(true);
+      expect(inRunLog.map(entry => entry[0]?.code)).toEqual(["report-unreadable", "report-stale"]);
+      expect(inRunLog[1]?.[0]?.why).toMatch(/records the judging file test\/inrun-census\.test\.ts itself/);
+    },
+  },
+  { id: "p-tier-live-in-default", routed: "u62 R2=(i): a live-tier pin is never judged over the default tier's report", check: reportRow("p-tier-live-in-default", red("tier-mismatch", "runs-where", /a live pin is judged only over its own tier's report/)) },
+  { id: "p-tier-default-in-live", routed: "u62 R2=(i): a default-tier pin is never judged over a live tier's report", check: reportRow("p-tier-default-in-live", red("tier-mismatch", "runs-where", /a test pin is judged only over its own tier's report/)) },
+  {
+    id: "p-exclusivity-unreadable",
+    routed: "u62 report-mode fail-closed: a live pin's exclusivity against the default gate needs the default tier's report",
+    check: reportRow("p-exclusivity-unreadable", red("run-error", "runs-where", /exclusivity against the default gate is unverifiable/)),
+  },
+  {
+    id: "p-smoke",
+    routed: "u62 FIND-1 report-mode smoke: vitest's own JSON report of this repository's real config, judged without execution",
+    check: () => {
+      expect(statusIn(smokeReport?.report, SMOKE_FILE, SMOKE_TITLE), "the runner ran and passed the anchor").toEqual(["passed"]);
+      expectVerdict(reportOnly.get("p-smoke"), { ...OK, why: /collected once, passed in the test report, asserts/ }, "p-smoke");
+    },
+  },
+];
+
+/** Rows that run a census file inside a real tier run: the recursion guard (U4 GM21) and the gate's one-run adoption shape (U1 E2E). */
+const REAL_PATH_ROWS: readonly StandaloneRow[] = [
+  {
+    id: "x-u62-f2-cap-fidelity",
+    routed: "u62 F2 cap fidelity (6hb.11 gate input, part ii): under the gate's documented cap of 1 the helper's tier run holds one worker",
+    check: () => {
+      expect(capVerdicts.map(verdict => verdict.code)).toEqual(["ok", "ok", "ok"]);
+      expect(capIntervals, "each pinned file ran once").toHaveLength(3);
+      const ordered = [...capIntervals].sort((left, right) => (left[0] ?? 0) - (right[0] ?? 0));
+      for (let index = 1; index < ordered.length; index += 1) {
+        expect(ordered[index]?.[0] ?? 0, "the helper's tier run ran its files one at a time").toBeGreaterThanOrEqual(ordered[index - 1]?.[1] ?? 0);
+      }
+    },
+  },
+  {
+    id: "x-u62-gm21-recursion",
+    routed: "u62 GM21 recursion guard: a judging census inside a non-narrowable tier run gets nested-run reds and starts nothing (no environment marker)",
+    check: () => {
+      expect(statusIn(recursionOracle?.report, RECURSION_PINNED, PIN), "the tier's own run passes the pin").toEqual(["passed"]);
+      expect(statusIn(recursionOracle?.report, RECURSION_CENSUS, RECURSION_TITLE), "the tier's own run passes the census case").toEqual(["passed"]);
+      // the oracle's top-level census started ONE tier run, and the census inside that run refused to start another
+      expect(recursionOracleLog).toEqual(["1:nested-run", "0:ok"]);
+      // judged from here: the census inside the helper's run judges nothing, the pin is green, the wall is bounded
+      expect(recursionLog).toEqual(["0:nested-run"]);
+      expectVerdict(recursionVerdict, OK, "x-u62-gm21-recursion");
+      expect(recursionWallMs).toBeLessThan(150_000);
+    },
+  },
+  {
+    id: "x-u62-e2e-adoption",
+    routed: "u62 E2E the one-run adoption shape: an adopting census asserting ok for J1/J4/J5 pins fails in the run that skips them",
+    check: () => {
+      for (const title of E2E_TITLES) expect(statusIn(e2eRun?.report, E2E_PINNED, title), title).toEqual(["skipped"]);
+      expect(statusIn(e2eRun?.report, E2E_CENSUS, E2E_CENSUS_TITLE), "the adopting census can no longer pass").toEqual(["failed"]);
+      expect(e2eCodes).toEqual(["skipped", "skipped", "context-unknown"]);
+      expect(e2eReportVerdicts.map(verdict => verdict.code)).toEqual(["skipped", "skipped", "context-unknown"]);
+    },
+  },
+];
 
 function rowSuite(title: string, rows: readonly Row[]): void {
   describe(title, () => {
@@ -1350,6 +2303,7 @@ function rowSuite(title: string, rows: readonly Row[]): void {
         const pin = pinOf(row);
         expectRunner(mainDefault, pin.file, titleMatcher(pin.title, pin.each !== undefined), row.oracle, mainAsserts);
         expectVerdict(mainVerdicts.get(row.id), row.verdict, row.id);
+        expectVerdict(reportVerdicts.get(row.id), row.report ?? row.verdict, `${row.id} in report mode`);
       });
     }
   });
@@ -1360,20 +2314,32 @@ rowSuite("census helper: it.each / it.for liveness is the runner's case count at
 rowSuite("census helper: runtime skips die on the run's result, named by the AST scan of the runner-located case", BODY_ROWS);
 rowSuite("census helper: the third leg - at least one reached vitest assertion with a matcher", ASSERT_ROWS);
 rowSuite("census helper: attribution - hazards scope to the pin's own call chain, never file-wide", ATTRIBUTION_ROWS);
+rowSuite("census helper: judge detection - the helper sees exactly what the gate's own run sees (U1 J1-J5, U2 A1a/A1b)", JUDGE_ROWS);
+rowSuite("census helper: inversion and options under report mode (the JSON report records fails as passed)", INVERSION_ROWS);
 
 describe("census helper: tier truth through the tier's real entrypoint (forge.toml -> npm script -> vitest config)", () => {
   for (const row of TIER_ROWS) {
     it(`${row.routed} [${row.id}]`, () => {
       expectRunner(row.oracle.config === "live" ? mainLive : mainDefault, row.file, title => title === PIN, { kind: row.oracle.kind }, new Map());
       expectVerdict(mainVerdicts.get(row.id), row.verdict, row.id);
+      expectVerdict(reportVerdicts.get(row.id), row.report ?? row.verdict, `${row.id} in report mode`);
     });
   }
   for (const row of CONFIG_ROWS) {
     it(`${row.routed} [${row.id}]`, () => {
       if (row.oracle !== "none") expectRunner(configReports.get(row.id) ?? new Map(), CFG_TARGET, title => title === PIN, { kind: row.oracle }, new Map());
       expectVerdict(configVerdicts.get(row.id), row.verdict, row.id);
+      if (row.oracle !== "none") expectVerdict(configReportVerdicts.get(row.id), row.report ?? row.verdict, `${row.id} in report mode`);
     });
   }
+});
+
+describe("census helper: report mode - judge(reportPath, pins) over the tier's own JSON report, never re-executed", () => {
+  for (const row of REPORT_ROWS) it(`${row.routed} [${row.id}]`, row.check);
+});
+
+describe("census helper: real-path rows - census files inside real tier runs", () => {
+  for (const row of REAL_PATH_ROWS) it(`${row.routed} [${row.id}]`, row.check);
 });
 
 describe("census helper: docs sections are read from the rendered view", () => {
@@ -1430,18 +2396,6 @@ describe("census helper: read-only pins of this repository's tier commands, and 
     expect(resolveTier(ROOT, "furnace-observe")).toMatchObject({ ok: true, argv: ["run", "--config", "vitest.furnace.config.ts"] });
   });
 
-  it("recursion guard: reached from inside a tier run the helper started, judgePins starts nothing", async () => {
-    const previous = process.env.CENSUS_HELPER_NESTED;
-    process.env.CENSUS_HELPER_NESTED = "1";
-    try {
-      const [verdict] = await judgePins(mainRootPath, [{ file: fileOf("r-control"), title: PIN, tier: DEFAULT_GATE_TIER }]);
-      expect({ ok: verdict?.ok, code: verdict?.code, leg: verdict?.leg }).toEqual({ ok: false, code: "nested-run", leg: "runs-where" });
-    } finally {
-      if (previous === undefined) delete process.env.CENSUS_HELPER_NESTED;
-      else process.env.CENSUS_HELPER_NESTED = previous;
-    }
-  });
-
   it("FIND-1 smoke: the helper judges the anchor case through this repository's real default gate", () => {
     expect(smoke?.ok, smoke?.why).toBe(true);
     expect(smoke?.cases).toBe(1);
@@ -1450,7 +2404,8 @@ describe("census helper: read-only pins of this repository's tier commands, and 
 });
 
 describe("census helper: liveness of this falsifier table (h8f.9 O1 class)", () => {
-  const routed = [...MAIN_ROWS, ...TIER_ROWS, ...CONFIG_ROWS, ...DOCS_ROWS, ...STRUCTURE_ROWS].map(row => row.routed);
+  const tables = [REGISTRATION, EACH, BODY_ROWS, ASSERT_ROWS, ATTRIBUTION_ROWS, TIER_ROWS, CONFIG_ROWS, DOCS_ROWS, STRUCTURE_ROWS, JUDGE_ROWS, INVERSION_ROWS, REPORT_ROWS, REAL_PATH_ROWS];
+  const routed = tables.flatMap(rows => rows.map(row => row.routed));
   const segments = routed.flatMap(text => text.split(" / "));
   for (const [gate, modes] of Object.entries(ROUTED_MODES)) {
     it(`every routed wb-${gate} mode keeps a falsifier row`, () => {
@@ -1459,8 +2414,8 @@ describe("census helper: liveness of this falsifier table (h8f.9 O1 class)", () 
   }
 
   it("row ids are unique and every table keeps its exact size", () => {
-    const ids = [...MAIN_ROWS, ...TIER_ROWS, ...CONFIG_ROWS, ...DOCS_ROWS, ...STRUCTURE_ROWS].map(row => row.id);
+    const ids = tables.flatMap(rows => rows.map(row => row.id));
     expect(new Set(ids).size).toBe(ids.length);
-    expect([REGISTRATION, EACH, BODY_ROWS, ASSERT_ROWS, ATTRIBUTION_ROWS, TIER_ROWS, CONFIG_ROWS, DOCS_ROWS, STRUCTURE_ROWS].map(rows => rows.length)).toEqual(TABLE_SIZES);
+    expect(tables.map(rows => rows.length)).toEqual(TABLE_SIZES);
   });
 });

@@ -1,9 +1,11 @@
 /**
  * wb-u62: the census reporter. test/helpers/census.ts appends --reporter=<this file> to the tier's REAL
- * entrypoint (the forge.toml step, through its npm script) and reads what this writes to CENSUS_REPORT_OUT when
- * the run ends: the files the run scheduled, and the reported-task surface every reporter receives (TestModule,
- * TestSuite, TestCase - name, suite path, mode, fails, each, location) together with each case's EXECUTION result
- * under that entrypoint. Nothing here models the runner; it serializes what the runner answered.
+ * entrypoint (the forge.toml step, through its npm script) - through a per-run subclass it generates, which passes
+ * the report path to this constructor, so the path travels on the run's command line and never through the
+ * environment the judged code reads (J1-J3) - and reads what this writes there when the run ends: the files the run
+ * scheduled, and the reported-task surface every reporter receives (TestModule, TestSuite, TestCase - name, suite
+ * path, mode, fails, each, location) together with each case's EXECUTION result under that entrypoint. Nothing here
+ * models the runner; it serializes what the runner answered.
  */
 import { writeFileSync } from "node:fs";
 import type { Reporter, SerializedError, TestCase, TestModule, TestSpecification, TestSuite } from "vitest/node";
@@ -48,15 +50,20 @@ function serialize(module: TestModule): RunModule {
 
 export default class CensusReporter implements Reporter {
   private scheduled: readonly string[] = [];
+  private readonly out: string | undefined;
+
+  /** The per-run subclass passes the report path; anything else (vitest's own reporter options) writes nothing. */
+  constructor(out?: unknown) {
+    this.out = typeof out === "string" && out !== "" ? out : undefined;
+  }
 
   onTestRunStart(specifications: ReadonlyArray<TestSpecification>): void {
     this.scheduled = specifications.map(specification => specification.moduleId);
   }
 
   onTestRunEnd(modules: ReadonlyArray<TestModule>, unhandledErrors: ReadonlyArray<SerializedError>): void {
-    const out = process.env.CENSUS_REPORT_OUT;
-    if (out === undefined || out === "") return;
+    if (this.out === undefined) return;
     const report: RunReport = { complete: true, scheduled: this.scheduled, modules: modules.map(serialize), unhandledErrors: unhandledErrors.map(message) };
-    writeFileSync(out, JSON.stringify(report));
+    writeFileSync(this.out, JSON.stringify(report));
   }
 }
