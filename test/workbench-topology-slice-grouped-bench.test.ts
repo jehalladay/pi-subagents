@@ -458,7 +458,7 @@ describe("W21 topology honest exit semantics (T1/T2)", () => {
   it("keeps the CLI thin: dist imports only inside the entry guard, receipt printed before the file write and both before the exit code, exit 3 on exception", () => {
     const text = readRepo("qa/workbench/topology-slice-grouped-bench.mjs");
     const staticImports = [...text.matchAll(/^import\s[^'"]*['"]([^'"]+)['"]/gm)].map(match => match[1]).sort();
-    expect(staticImports).toEqual(["./grouped-fixture.mjs", "node:fs", "node:os", "node:url"].sort());
+    expect(staticImports).toEqual(["./bench-revision.mjs", "./grouped-fixture.mjs", "node:fs", "node:os", "node:url"].sort());
     const dynamicImports = [...text.matchAll(/await import\(\s*['"]([^'"]+)['"]\s*\)/g)].map(match => match[1]).sort();
     expect(dynamicImports).toEqual(["../../dist/workbench/observation.js", "../../dist/workbench/topology-slice.js"].sort());
     expect(text).not.toMatch(/\brequire\s*\(/);
@@ -471,7 +471,7 @@ describe("W21 topology honest exit semantics (T1/T2)", () => {
     expect(written).toBeGreaterThan(printed);
     expect(exit).toBeGreaterThan(written);
     expect(text).toMatch(/process\.exit\(3\)/);
-    expect(text).toMatch(/W21_REVISION/);
+    expect(text).toMatch(/\$W21_REVISION only overrides the revision/); // wb-oq3 re-cut (gate U1a): the git stamp is the revision; $W21_REVISION only its override
     expect(text).toMatch(/\{\.\.\.BENCH_ONLY_LIMITS, maxQuery: 100\}/);
   });
 });

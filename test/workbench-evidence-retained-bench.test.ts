@@ -646,3 +646,36 @@ describe("W21 evidence-retained receipt: the three unpinned judge clauses (wb-oq
     }
   }, 120_000);
 });
+
+/* wb-oq3 re-cut (gate U3b, cmd_33628cade82b): the G6 pin above forces the store over budget at the AFTER-CLOSE budget
+ * read, and its store never shrinks, so the same clamp at the FIRST-LOAD budget read (the one right after the first load
+ * renders) survived. This row over-holds only while the details view is open and releases at close, so only the
+ * first-load read can see it: G6a dies here, G6b (the after-close read) stays killed by the G6 pin above. The gate's
+ * falsifier shape of record (/var/tmp/oq3-gate-scripts/g6a-probe.mjs, measured 16 entries over 4), re-authored on the
+ * store seam over the TypeScript sources. Appended only: every line above is unchanged.
+ */
+describe("W21 evidence-retained receipt: the first-load budget read fires on an over-hold released at close (wb-oq3 G6a)", () => {
+  it("G6a: a store reporting 3 x maxEntries phantom slots from request() until abortAll() is reported over budget at its peak", async () => {
+    let peak = 0;
+    class OverHoldUntilCloseStore extends EvidenceStore {
+      #phantom = 0;
+      override request(...args: Parameters<EvidenceStore["request"]>): ReturnType<EvidenceStore["request"]> {
+        this.#phantom = 3 * FAULT_LIMITS.maxEntries;
+        return super.request(...args);
+      }
+      override abortAll(): void {
+        this.#phantom = 0;
+        super.abortAll();
+      }
+      override get size(): number {
+        const size = super.size + this.#phantom;
+        peak = Math.max(peak, size);
+        return size;
+      }
+    }
+    const receipt = await runFault({ store: OverHoldUntilCloseStore });
+    expect(peak).toBeGreaterThan(3 * FAULT_LIMITS.maxEntries);
+    expect(receipt.falsifiers.budget.maxStoreSize).toBe(peak);
+    expect(receipt.over).toContain(`store-over-budget: ${peak} entries over ${FAULT_LIMITS.maxEntries}`);
+  }, 120_000);
+});

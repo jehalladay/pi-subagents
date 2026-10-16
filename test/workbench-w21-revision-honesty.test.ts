@@ -5,10 +5,17 @@
  * repository), never a faked git. Each bench CLI's wiring is read through the TypeScript parser, so a commented-out,
  * string-quoted or unreachable call is not a call (the wb-9x5.6 M3/M10 comment-out class cannot pass these pins).
  *
- * Scope of record: the six landed W21 bench CLIs below. inspector-grouped-bench.mjs is NOT wired: its guarded test
- * (test/workbench-grouped-fixture.test.ts "keeps the CLI thin") pins an exact static-import list and forbids any
- * dynamic import, and the 14e78f1 two-arm rule forbids removing that line, so the bench cannot reach git without an
- * owner ruling; the delivery note carries the route. Benches not yet on trunk (wb-9x5.3, wb-9x5.6) join at landing.
+ * Scope of record at the wb-oq3 re-cut (trunk 86425ea): the TEN W21 bench CLIs on the tree, enumerated by
+ * test/helpers/w21-bench-clis.ts rather than kept by hand (the census below). NINE are wired (BENCHES): the six of the
+ * first cut plus topology-slice-grouped (wb-9x5.12), inspector-retained-memory (wb-9x5.3) and inspector-cap-saturation
+ * (wb-9x5.6), which landed after it and join here as their second lander. ONE is a named residual (RESIDUALS):
+ * inspector-grouped-bench.mjs stays on caller-supplied $W21_REVISION, because its guarded test
+ * (test/workbench-grouped-fixture.test.ts "keeps the CLI thin") pins an exact static-import list under the 14e78f1
+ * two-arm rule; owner bead wb-4jr wires it after the stamp helper lands and moves its row from RESIDUALS to BENCHES in
+ * the same commit. A W21 bench CLI that lands later (wb-9x5.5's tool-reply-bench is queued) reddens the census until its
+ * lander wires it: known-conflicts entry 8, mechanical rather than remembered.
+ * Override name: $W21_REVISION for the whole family, read by the stamp alone. inspector-cap-saturation's own
+ * $CAP_BENCH_REVISION is RETIRED at this cut (pinned below), so one variable overrides every W21 receipt revision.
  */
 import { execFileSync } from "node:child_process";
 import { mkdirSync, mkdtempSync, readFileSync, realpathSync, rmSync, writeFileSync } from "node:fs";
@@ -18,6 +25,7 @@ import ts from "typescript";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { BENCH_CHECKOUT_ROOT, benchRevision, UNKNOWN_REVISION, withBenchRevision } from "../qa/workbench/bench-revision.mjs";
 import { pinNonRepo } from "./helpers/non-repo-scratch.js";
+import { w21BenchClis } from "./helpers/w21-bench-clis.js";
 
 interface Stamp {
   revision: string;
@@ -124,6 +132,21 @@ describe("bench-revision stamp: git rev-parse HEAD plus a dirty flag, W21_REVISI
     expect(out).toEqual({ contract: "c/v1", revision: head, exitCode: 2, nested: { a: 1 }, revisionSource: "git", dirty: true });
     expect(receipt.revision).toBe("test-revision");
   });
+
+  // Gate U3a (cmd_33628cade82b): the f38534c table recorded H7 (`dirty: stamp.dirty ?? false`) as killed, but no row
+  // ever handed withBenchRevision an unknown dirty flag, so it survived 39/39. An unknown tree must stay null, never clean.
+  it("withBenchRevision keeps an unknown dirty flag null, never clean: unit stamps and a non-toplevel checkout end to end", () => {
+    const receipt = Object.freeze({ contract: "c/v1", revision: "test-revision" });
+    expect(stamped(receipt, { revision: UNKNOWN_REVISION, revisionSource: "unknown", dirty: null }).dirty).toBeNull();
+    expect(stamped(receipt, { revision: "abc1234", revisionSource: "env-override", dirty: null }).dirty).toBeNull();
+    const nested = join(repo, "nested-unknown-dirty");
+    mkdirSync(nested, { recursive: true });
+    for (const env of [NO_OVERRIDE, { W21_REVISION: "abc1234" }]) {
+      const out = stamped(receipt, stampOf({ env, root: nested }));
+      expect(out.revisionSource).toBe(env === NO_OVERRIDE ? "unknown" : "env-override");
+      expect(out.dirty).toBeNull();
+    }
+  });
 });
 
 /** The parsed module: ESM JavaScript, so comments and string contents never reach the AST. */
@@ -176,7 +199,13 @@ const BENCHES: ReadonlyArray<{ file: string; flow: Flow }> = [
   { file: "qa/workbench/attention-grouped-bench.mjs", flow: { kind: "binds", target: "receipt", scope: "main" } },
   { file: "qa/workbench/timeline-grouped-bench.mjs", flow: { kind: "binds", target: "receipt", scope: "<module>" } },
   { file: "qa/workbench/observation-recovery-bench.mjs", flow: { kind: "binds", target: "receipt", scope: "<module>" } },
+  // Second-lander rows (gate U1a): W21 benches that landed after the first wb-oq3 cut.
+  { file: "qa/workbench/topology-slice-grouped-bench.mjs", flow: { kind: "binds", target: "receipt", scope: "main" } },
+  { file: "qa/workbench/inspector-retained-memory-bench.mjs", flow: { kind: "binds", target: "receipt", scope: "<module>" } },
+  { file: "qa/workbench/inspector-cap-saturation-bench.mjs", flow: { kind: "binds", target: "receipt", scope: "<module>" } },
 ];
+/** W21 bench CLIs not wired yet, each with the bead that owns its wiring (owner ruling R2=(a), 2026-10-16T17:2xZ). */
+const RESIDUALS: ReadonlyArray<{ file: string; bead: string }> = [{ file: "qa/workbench/inspector-grouped-bench.mjs", bead: "wb-4jr" }];
 
 describe("every wired W21 bench CLI stamps its receipt from bench-revision.mjs (parse-aware)", () => {
   for (const { file, flow } of BENCHES) {
@@ -261,5 +290,100 @@ describe("every wired W21 bench CLI stamps its receipt from bench-revision.mjs (
       if (ts.isCallExpression(node) && node.expression.kind === ts.SyntaxKind.ImportKeyword) dynamic++;
     });
     expect(dynamic).toBe(0);
+  });
+});
+
+/** Static import specifiers of a parsed module, in source order. */
+const importsOf = (file: ts.SourceFile): string[] =>
+  file.statements.filter(ts.isImportDeclaration).map(declaration => (ts.isStringLiteral(declaration.moduleSpecifier) ? declaration.moduleSpecifier.text : "<computed>"));
+/** `process.env.NAME` or `process.env["NAME"]` reads of one variable. */
+const envReads = (file: ts.SourceFile, name: string): number => {
+  let reads = 0;
+  walk(file, node => {
+    const access = ts.isPropertyAccessExpression(node) ? node.name.text : ts.isElementAccessExpression(node) && ts.isStringLiteral(node.argumentExpression) ? node.argumentExpression.text : undefined;
+    if (access === name && (node as ts.PropertyAccessExpression | ts.ElementAccessExpression).expression.getText(file) === "process.env") reads++;
+  });
+  return reads;
+};
+/** Real `process.exitCode = ...` assignments: a commented-out or string-quoted one never reaches the AST. */
+const exitCodeAssignments = (file: ts.SourceFile): ts.BinaryExpression[] => {
+  const found: ts.BinaryExpression[] = [];
+  walk(file, node => {
+    if (ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.EqualsToken && node.left.getText(file) === "process.exitCode") found.push(node);
+  });
+  return found;
+};
+const within = (node: ts.Node, container: ts.Node): boolean => node.getStart() >= container.getStart() && node.end <= container.end;
+
+describe("the W21 bench CLI census: every W21 bench CLI on the tree is wired or a named residual (gate U1)", () => {
+  it("BENCHES plus RESIDUALS is exactly the W21 bench CLIs on this tree: nine wired, one residual", () => {
+    const wired = BENCHES.map(bench => bench.file);
+    const residual = RESIDUALS.map(entry => entry.file);
+    expect(new Set([...wired, ...residual]).size).toBe(wired.length + residual.length);
+    expect([...wired, ...residual].sort()).toEqual(w21BenchClis());
+    expect({ wired: wired.length, residual: residual.length }).toEqual({ wired: 9, residual: 1 });
+  });
+
+  it("a residual is still unwired, so wiring it moves its row from RESIDUALS to BENCHES in the same commit", () => {
+    for (const { file, bead } of RESIDUALS) {
+      const source = parse(file);
+      expect(bead).toMatch(/^wb-[0-9a-z.]+$/);
+      expect(importsOf(source)).not.toContain("./bench-revision.mjs");
+      expect(callsTo(source, "benchRevision")).toHaveLength(0);
+    }
+  });
+});
+
+describe("one override name for the family: inspector-cap-saturation's $CAP_BENCH_REVISION is retired (wb-oq3 re-cut decision)", () => {
+  it("reads no $CAP_BENCH_REVISION and names no such variable in code, and its header states the retirement", () => {
+    const file = "qa/workbench/inspector-cap-saturation-bench.mjs";
+    const source = parse(file);
+    expect(envReads(source, "CAP_BENCH_REVISION")).toBe(0);
+    expect(stringLiterals(source)).not.toContain("CAP_BENCH_REVISION");
+    expect(envReads(source, "W21_REVISION")).toBe(0);
+    const text = readFileSync(new URL(`../${file}`, import.meta.url), "utf8");
+    const header = text.slice(0, text.search(/^import /m));
+    expect(header).toMatch(/\$CAP_BENCH_REVISION is retired/);
+    expect(header).toMatch(/\$W21_REVISION/);
+  });
+});
+
+describe("every W21 bench CLI sets its exit code in one real statement (parse-aware; the gate's CLI-G6 comment-out class)", () => {
+  for (const file of [...BENCHES.map(bench => bench.file), ...RESIDUALS.map(entry => entry.file)]) {
+    it(`${file}: exactly one process.exitCode assignment, as a statement of its own`, () => {
+      const assignments = exitCodeAssignments(parse(file));
+      expect(assignments).toHaveLength(1);
+      expect(ts.isExpressionStatement(assignments[0].parent)).toBe(true);
+    });
+  }
+});
+
+describe("inspector-cap-saturation-bench publishes and takes --strict through real statements (wb-9x5.6 O1 M3/M10; gate CLI-G6, CLI-M3)", () => {
+  const source = parse("qa/workbench/inspector-cap-saturation-bench.mjs");
+
+  it("sets the exit code at module level, after the measuring try, from publishReceipt over the stamped receipt and the real writers", () => {
+    const [assignment] = exitCodeAssignments(source);
+    const statement = assignment.parent;
+    expect(ts.isExpressionStatement(statement) && statement.parent === source).toBe(true);
+    expect(statement.getText(source)).toBe(
+      "process.exitCode = publishReceipt(receipt, {path: process.env.CAP_BENCH_RECEIPT, log: console.log, logError: console.error, writeFile: writeFileSync});",
+    );
+    const measuring = source.statements.filter(ts.isTryStatement);
+    expect(measuring).toHaveLength(1);
+    expect(source.statements.indexOf(statement as ts.Statement)).toBeGreaterThan(source.statements.indexOf(measuring[0]));
+    const applied = callsTo(source, "withBenchRevision");
+    expect(applied).toHaveLength(1);
+    expect(within(applied[0], measuring[0].tryBlock)).toBe(true);
+    expect(callsTo(source, "publishReceipt")).toHaveLength(1);
+  });
+
+  it("hands runCapSaturationBench strict: process.argv.includes('--strict') as a real property, never a constant", () => {
+    const runs = callsTo(source, "runCapSaturationBench");
+    expect(runs).toHaveLength(1);
+    const [options] = runs[0].arguments;
+    if (options === undefined || !ts.isObjectLiteralExpression(options)) throw new Error("runCapSaturationBench takes no options object");
+    const strict = options.properties.filter((property): property is ts.PropertyAssignment => ts.isPropertyAssignment(property) && ts.isIdentifier(property.name) && property.name.text === "strict");
+    expect(strict).toHaveLength(1);
+    expect(strict[0].initializer.getText(source)).toBe("process.argv.includes('--strict')");
   });
 });
