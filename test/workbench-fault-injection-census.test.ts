@@ -788,7 +788,7 @@ describe("docs/14 fault-injection locations census (wb-0kg.12)", () => {
     }
   });
 
-  it("A1: row ids are unique and the table is frozen to the seventeen rows that split the half-covered locations", () => {
+  it("A1: row ids are unique and the table is frozen to the eighteen rows that split the half-covered locations", () => {
     expect(new Set(ROWS.map((row) => row.row)).size).toBe(ROWS.length);
     expect(rowNames(ROWS)).toBe("L1,L2a,L2b,L2c,L3,L4,L5,L6,L7,L8,L9,L10,L11a,L11b,L12,L13,L14a,L14b");
   });
