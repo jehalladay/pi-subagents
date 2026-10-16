@@ -34,7 +34,7 @@ Mirrors the lazy transcript pattern: the inspector details view renders per-ref 
 ## Owner rulings on the design conflicts
 
 1. `loaded` equals the full `EvidenceContent` (kind, sourceBasis, freshness included).
-2. The double redaction in the sanitizer order is deliberate and idempotent.
+2. The double redaction in the sanitizer order is deliberate. A second pass is idempotent or over-redacts only, never a leak: a marker an earlier pass left as an assignment's whole value stays as it is when only closing brackets and a value end follow it, and any other change a second pass makes hides more text and shows none (wb-3l3).
 3. Loaders take the full request, not a bare ref; routing is provider-first.
 4. Cache keys are producer-qualified, matching the projection.
 5. Forge nodes will emit `forge-operation:<operation_id>` evidence refs from native-evidence shaping (parent slice); the loader also accepts synthesis from the owning ref until then. The parent slice implemented this: `forge.gate.status` shaping now emits `forge-operation:<operation_id>` whenever the native payload carries a validated operation id.
