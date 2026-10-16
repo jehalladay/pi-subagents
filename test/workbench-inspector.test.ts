@@ -923,6 +923,26 @@ describe('W15-A lazy bounded evidence in the details view (wb-g1g.1, docs/workbe
  });
 });
 
+describe('details view renders code-point-safe evidence previews (wb-v53)',()=>{
+ const LONE_SURROGATE=/[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?<![\uD800-\uDBFF])[\uDC00-\uDFFF]/;
+ it('a surrogate-pair preview renders no lone surrogate at 120x40 in the Unicode tier and stays within width',async()=>{
+   const emoji:EvidenceLoader={provider:'forge',requiredGrant:'forge:inspect',canLoad:evidenceRef=>evidenceRef.startsWith('ev:'),
+     load:async()=>({kind:'fixture',provider:'forge',capturedAt:now,bytes:400,truncated:false,preview:['a'+'😀'.repeat(130)],freshness:'current'})};
+   const projection=new ObservationProjection({maxEvents:16,maxNodes:100,maxEdges:100,maxQuery:40});
+   projection.refresh({source:ref('forge','gate'),scope,capturedAt:now,observedAt:now,node:{...presentation('Gate'),statusText:'success',statusTone:'success'},trace:{invocationId:'workflow-emoji'},coverage:'complete',evidenceRefs:['ev:alpha']});
+   const store=new EvidenceStore({loaders:[emoji],maxEntries:8,maxBytes:2048,timeoutMs:200,scope});
+   const model:InspectorModel={projection,scope,invocationId:'workflow-emoji',title:'Emoji workflow',status:'running',evidence:store};
+   let state=reduceInspectorKey('j',initialInspectorState(),model)!.state;
+   state=reduceInspectorKey('k',state,model)!.state;
+   state=reduceInspectorKey('s',state,model)!.state;
+   const node=inspectorEvidenceTarget(model,state)!;
+   await store.request(node.scope,node.nativeRef,'ev:alpha');
+   const lines=layoutInspector(model,state,{width:120,rows:40,ascii:false});
+   expect(lines.join('\n')).toContain('😀');
+   for(const line of lines){expect(line).not.toMatch(LONE_SURROGATE);expect(visibleWidth(line)).toBeLessThanOrEqual(120);}
+ });
+});
+
 // wb-6ze.21 (W15-C2 / VC-5): the overview renders the optional AttentionReport the caller computed. Spec quotes are from
 // docs/workbench/10-terminal-inspector.md and docs/workbench/09-observation-and-provenance.md.
 describe('W15-C2 attention panel in the inspector overview',()=>{
