@@ -2745,8 +2745,13 @@ Terse command-style prompts produce shallow, generic work.
           ...(evidenceRefs?.length ? { evidenceRefs: evidenceRefs.slice(0, 32) } : {}),
         });
       }
-      // Script labels enter the projection here; bidi marks are stripped with the control bytes.
-      const clamp = (value: string) => stripUnsafeText(value, " ").slice(0, 120);
+      // Script labels and statuses are display text, so they take the one helper's label layout, which redacts every
+      // reading of a gap before anything is stripped: a separator put in first splits the very credential it hides
+      // (wb-zo9). The projection refuses an empty title, so text that sanitizes to nothing shows a fixed placeholder.
+      const clamp = (value: string) => sanitizeWorkbenchText(value, 120, "label") || "unknown";
+      // An evidence reference is an identity, not display text: docs/workbench/20 lists claude-message:<uuid> only when
+      // exact, and neither the layout's deletions nor a placeholder may make one. It keeps the clamp it had (wb-zo9 F1).
+      const reference = (value: string) => stripUnsafeText(value, " ").slice(0, 120);
       // The Claude backend is the only native path of a run; the Pi backend
       // never touches the SDKs, so nothing native is loaded for it (wb-cax.10).
       const native = settings ? await loadWorkbenchNative() : undefined;
@@ -2761,7 +2766,7 @@ Terse command-style prompts produce shallow, generic work.
           { title: clamp(call.label), type: "agent", statusText: snapshot.terminal ?? (live ? "observed-running" : "unknown"),
             statusTone: snapshot.terminal === "succeeded" ? "success" : snapshot.terminal === "failed" ? "failure"
               : snapshot.terminal ? "unknown" : "active" }, "claude.stream",
-          snapshot.lastMessageId ? [`claude-message:${clamp(snapshot.lastMessageId)}`] : undefined,
+          snapshot.lastMessageId ? [`claude-message:${reference(snapshot.lastMessageId)}`] : undefined,
           task.identityReceipt?.identity.subjectBasis);
         if (!row) return;
         const rowLive = row.state === "start" || row.state === "progress";
