@@ -9,7 +9,7 @@ import { runWorkflow, type WorkflowHost } from "../src/workflow/runtime.js";
 const MARKER = "UNTRUSTED_SOURCE_DATA";
 const META = (name: string, description = MARKER) => `export const meta={name:${JSON.stringify(name)},description:${JSON.stringify(description)}};\n`;
 const host = (): WorkflowHost => ({ spawnAgent: vi.fn(async () => ({ ok: true })), abortAgent: vi.fn(), callNode: vi.fn(async () => ({ ok: true })) });
-const suspicious = `${MARKER} \u001b[31mR\u001b[0m ‮BAD‬ ⁦override⁩`;
+const suspicious = `${MARKER} \u001b[31mR\u001b[0m \u202EBAD\u202C \u2066override\u2069`;
 
 describe("workflow source and rendering", () => {
   it("rejects a raw ANSI escape in source before VM execution", async () => {
@@ -126,7 +126,7 @@ describe("workflow source and rendering", () => {
   it("the saved meta name used by renderCall must remove ANSI and bidi source escapes", () => {
     const name = workflowCallName({ script: META(suspicious) + "return 1;" });
     expect(name).toContain(MARKER);
-    expect(name).not.toMatch(/[\u001b‪-‮⁦-⁩]/u);
+    expect(name).not.toMatch(/[\u001b\u202A-\u202E\u2066-\u2069]/u);
   });
   it("a workflow card must strip source meta escapes before placing labels in its layout", () => {
     const rendered = plainWorkflowCardLines(layoutWorkflowCard({
@@ -135,7 +135,7 @@ describe("workflow source and rendering", () => {
       progress: [], now: 2, width: 160,
     })).join("\n");
     expect(rendered).toContain(MARKER);
-    expect(rendered).not.toMatch(/[\u001b‪-‮⁦-⁩]/u);
+    expect(rendered).not.toMatch(/[\u001b\u202A-\u202E\u2066-\u2069]/u);
   });
 });
 

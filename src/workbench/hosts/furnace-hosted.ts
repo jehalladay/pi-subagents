@@ -147,11 +147,9 @@ export interface HostedStart {
 }
 
 const EXECUTOR_NAME = /^[A-Za-z][A-Za-z0-9_-]{0,63}$/;
-const ZERO_WIDTH = /[​-‏⁠﻿]/g;
-/** Strip, then redact-and-strip: untrusted text bound for a receipt or a wire result. */
+/** Untrusted text bound for a receipt or a wire result: the shared helper, which redacts every reading before it strips. */
 function safeText(value: unknown): string {
-  const text = typeof value === "string" ? value : String(value);
-  return sanitizeWorkbenchText(sanitizeWorkbenchText(text.replace(ZERO_WIDTH, ""), HOSTED_TEXT_LIMIT), HOSTED_TEXT_LIMIT);
+  return sanitizeWorkbenchText(typeof value === "string" ? value : String(value), HOSTED_TEXT_LIMIT);
 }
 const isRecord = (value: unknown): value is Record<string, unknown> => typeof value === "object" && value !== null;
 function hasCancellation(context: ExecutionContext): context is CallbackContext {
