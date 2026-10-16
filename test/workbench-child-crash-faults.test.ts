@@ -22,13 +22,32 @@
  * settle path under an injected thread death, NOT a sandbox property. The
  * real-child proof rides wb-ksz slice 3.
  *
- * Test-only. No src, qa or docs edit; the detached rows are pinned to the
- * landed wb-0kg.1 tier by title and never re-tested here.
+ * LISTENER TRUTH (measured, wb-ksz.6 respin): after settlement the dead
+ * Worker still has its 1 "message", 1 "error" and 1 "exit" listener attached
+ * (runtime.ts never removes them). They are attached-but-inert: each is
+ * neutralised only by the settled guards. "Holds no live listeners" is
+ * therefore FALSE at trunk and is not claimed; K4 and K5 pin the inertness of
+ * each listener type instead. Removing the listeners is a src change and does
+ * not belong in this test-only slice.
+ *
+ * DETACHED CRASH ROWS ARE CITED, NOT TESTED (owner ruling 06:1xZ, route b).
+ * The detached host's crash rows live in their own landed files and are
+ * never re-tested, edited or text-asserted here. Cited by title, with the
+ * bead whose commit introduced each row (verified by git log -S at the cut):
+ *   - test/workbench-detached-faults-receipt.test.ts, introduced by 2dfa1f9
+ *     (wb-0kg.1): "writes exactly one marker before the kill and nothing after
+ *     it"; "flags a marker count of 2 under one invocation id as
+ *     duplicate-effect"; "drives real signals and cleans every host and the
+ *     workspace in finally".
+ *   - test/workbench-local-detached-effects.test.ts, introduced by 56275ad
+ *     (wb-6hb.1, NOT wb-0kg.1): "refuses a write whose first attempt lost its
+ *     answer instead of retrying it".
+ * A citation is not an assertion: this file makes no claim that those rows
+ * still exist or run; their own files are the evidence.
+ *
+ * Test-only. No src, qa or docs edit.
  */
 import { EventEmitter } from "node:events";
-import { readFileSync } from "node:fs";
-import { dirname, join } from "node:path";
-import { fileURLToPath } from "node:url";
 import type * as WorkerThreads from "node:worker_threads";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { runWorkflow, type WorkflowHost, type WorkflowNodeRequest, type WorkflowRunResult, type WorkflowSpawnResult } from "../src/workflow/runtime.js";
@@ -211,7 +230,7 @@ async function expectOnlyRunAFailed(scenario: Scenario, error: string): Promise<
   expect(hostFaults).toEqual([]);
 }
 
-describe("injected worker death (mocked node:worker_threads, NOT a real crash)", () => {
+describe("injected worker death (mocked node:worker_threads, NOT a real crash and NOT a sandbox property; the real-child proof rides wb-ksz slice 3)", () => {
   it("K1 'exit' alone settles only its run as the typed exited-before-completing failure", async () => {
     const scenario = await startScenario();
     scenario.fake.emit("exit", 1);
@@ -238,10 +257,12 @@ describe("injected worker death (mocked node:worker_threads, NOT a real crash)",
     const failed = await scenario.outcomeA;
     const spawnsAtDeath = scenario.spawnedPrompts().length;
     const postedAtDeath = scenario.fake.posted.length;
+    const progressAtDeath = failed.progress.length;
 
     // A message delivered after death: a completion, and a brand-new agent call.
     scenario.fake.emit("message", { type: "complete", resultJson: JSON.stringify("too late") });
     scenario.fake.emit("message", { type: "call", callId: 9, method: "agent", payload: { prompt: "a-after-death" } });
+    scenario.fake.emit("message", { type: "progress", entries: [{ type: "workflow_log", message: "log-after-death" }] });
     // The host answers A's orphaned children late, success and failure.
     scenario.answer("a-0", { ok: true, text: "a-0:late" });
     scenario.answer("a-1", { ok: false, error: "late failure" });
@@ -251,8 +272,39 @@ describe("injected worker death (mocked node:worker_threads, NOT a real crash)",
     expect(failed.error).toBe(EXITED_BEFORE_COMPLETING);
     expect(scenario.spawnedPrompts()).toHaveLength(spawnsAtDeath);
     expect(scenario.spawnedPrompts()).not.toContain("a-after-death");
+    // C1: the SETTLED run's progress is frozen at death. Late call and progress
+    // frames must append nothing (removing the worker 'message' listener's
+    // settled guard appends a phantom workflow_agent entry here).
+    expect(failed.progress.slice(progressAtDeath)).toEqual([]);
+    expect(JSON.stringify(failed.progress)).not.toContain("a-after-death");
+    expect(JSON.stringify(failed.progress)).not.toContain("log-after-death");
     // C4: nothing is posted to the dead worker after settlement, and it was told to terminate once.
     expect(scenario.fake.posted).toHaveLength(postedAtDeath);
+    expect(scenario.fake.terminateCalls).toBe(1);
+    expect(scenario.nodeCalls).toHaveLength(1);
+
+    await expectOnlyRunAFailed(scenario, EXITED_BEFORE_COMPLETING);
+  });
+
+  it("K5 a settled run's attached-but-inert error and exit listeners change nothing when fired again", async () => {
+    const scenario = await startScenario();
+    scenario.fake.emit("exit", 1);
+    const failed = await scenario.outcomeA;
+    const progressAtDeath = failed.progress.length;
+    const abortsAtDeath = scenario.aborts.length;
+    // Measured truth: runtime.ts never removes its three listeners, so the dead
+    // Worker keeps 1 of each. They are inert only through the settled guards.
+    expect([scenario.fake.listenerCount("message"), scenario.fake.listenerCount("error"), scenario.fake.listenerCount("exit")]).toEqual([1, 1, 1]);
+
+    // A second 'error' (with a different message) and a second 'exit' after settlement.
+    scenario.fake.emit("error", new Error("error after settlement"));
+    scenario.fake.emit("exit", 2);
+    await flush();
+
+    expect(failed.status).toBe("failed");
+    expect(failed.error).toBe(EXITED_BEFORE_COMPLETING);
+    expect(failed.progress).toHaveLength(progressAtDeath);
+    expect(scenario.aborts).toHaveLength(abortsAtDeath);
     expect(scenario.fake.terminateCalls).toBe(1);
     expect(scenario.nodeCalls).toHaveLength(1);
 
@@ -263,21 +315,4 @@ describe("injected worker death (mocked node:worker_threads, NOT a real crash)",
 describe("real-crash rows (no src-free vector at the cut base)", () => {
   it.todo("REAL: allocation exhaustion under resourceLimits kills the worker thread and settles only its run (needs a resourceLimits seam: the wb-ksz implementation slice, not yet filed)");
   it.todo("REAL: killing the isolated OS-process child leaves the host and a concurrent run untouched (needs the process-isolated child: the wb-ksz implementation slice, not yet filed)");
-});
-
-describe("detached crash rows are pinned to the landed wb-0kg.1 tier by title", () => {
-  const here = dirname(fileURLToPath(import.meta.url));
-  const source = (name: string) => readFileSync(join(here, name), "utf8");
-  const receipt = source("workbench-detached-faults-receipt.test.ts");
-  const effects = source("workbench-local-detached-effects.test.ts");
-
-  it.each([
-    ["workbench-detached-faults-receipt.test.ts", "writes exactly one marker before the kill and nothing after it"],
-    ["workbench-detached-faults-receipt.test.ts", "flags a marker count of 2 under one invocation id as duplicate-effect"],
-    ["workbench-detached-faults-receipt.test.ts", "drives real signals and cleans every host and the workspace in finally"],
-    ["workbench-local-detached-effects.test.ts", "refuses a write whose first attempt lost its answer instead of retrying it"],
-  ] as const)("%s still carries the row %j", (file, title) => {
-    const text = file === "workbench-detached-faults-receipt.test.ts" ? receipt : effects;
-    expect(text).toContain(`it("${title}"`);
-  });
 });
