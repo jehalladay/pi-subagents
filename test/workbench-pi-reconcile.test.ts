@@ -150,11 +150,11 @@ describe("inspect, evidence, acknowledge, resume", () => {
   it("strips hostile producer text from the evidence reply and refuses a control-byte reason as malformed", async () => {
     const { pi, context, dir } = await boot(["workbench:observe", "furnace:inspect", "reconcile:furnace.acknowledge"]);
     const { taskId } = await journaledTask(pi, context, dir);
-    RUN_STATE.state = "active\u001b[31m ‮evil";
+    RUN_STATE.state = "active\u001b[31m \u202Eevil";
     const reply = await invoke(pi.tools.get("workflow_reconcile"), context, {
       taskId, action: "evidence", position: 0, evidence: { capabilityId: "furnace.run.inspect", input: { runId: "frn-run-r1" } },
     });
-    expect(reply).not.toMatch(/[\u001b‪-‮⁦-⁩]/u);
+    expect(reply).not.toMatch(/[\u001b\u202A-\u202E\u2066-\u2069]/u);
     const malformed = await invoke(pi.tools.get("workflow_reconcile"), context, {
       taskId, action: "acknowledge", position: 0, reason: "bad \u001b[31m reason", determination: "indeterminate", noEvidenceReason: "producer-unavailable",
     });
