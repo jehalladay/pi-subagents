@@ -10,7 +10,7 @@ New module `src/workbench/evidence-loader.ts` exporting `EVIDENCE_CONTRACT = "wo
 
 `EvidenceContent`: `{kind; provider; capturedAt; bytes; truncated; preview: readonly string[]; sourceBasis?; freshness: "current"|"stale"; producerReceipt?}`. `EvidenceEntry` is `not-requested | loading | loaded & EvidenceContent | {state:"unavailable"; reason; freshness?}` with reasons `no-loader | unauthorized | transport | timeout | too-large`. Only `loaded` ever carries preview text. `truncated` is always visibly marked in the preview. `sourceBasis` accepts digest-shaped values only.
 
-`EvidenceLoader`: `{provider; requiredGrant; canLoad(ref); load(request): Promise<EvidenceContent>}`. Grant gating is two-layered and exact-string: loaders are constructed only when the host grant set contains `requiredGrant`, and every `load` re-reads the live grant set so mid-view revocation refuses with `unauthorized`.
+`EvidenceLoader`: `{provider; requiredGrant; canLoad(ref); load(request): Promise<EvidenceContent>}`. Grant gating is exact-string and purely live: a loader is built for every supplied reader, and the exact-grant check every `load` runs against the live grant set is the only authorization decision, so missing and revoked grants are indistinguishable (both refuse with `unauthorized`) and a grant that appears after construction authorizes the next load.
 
 `EvidenceStore`: synchronous `get`, idempotent `request`, `abort`, `abortAll`; options `{loaders; maxEntries; maxBytes; timeoutMs}`. Cache keys are producer-qualified like the projection's own `keyOf` (scope + full nativeRef + ref) so same-scope cross-producer ref strings cannot collide. Scope mismatch refuses before any loader runs. Timeouts race a per-request abort. Loader errors map by CapabilityError category; raw error text never enters an entry. Every preview line passes the shared redaction and terminal sanitizers plus a loader-local zero-width strip; raw payloads are never retained. Abort paths stop only the local read; no projection method and no producer control verb is ever called from the store.
 
@@ -34,7 +34,7 @@ Mirrors the lazy transcript pattern: the inspector details view renders per-ref 
 ## Owner rulings on the design conflicts
 
 1. `loaded` equals the full `EvidenceContent` (kind, sourceBasis, freshness included).
-2. The double redaction in the sanitizer order is deliberate and idempotent.
+2. The double redaction in the sanitizer order is deliberate. A second pass is idempotent or over-redacts only, never a leak: a marker an earlier pass left as an assignment's whole value stays as it is when only closing brackets and a value end follow it, and any other change a second pass makes hides more text and shows none (wb-3l3).
 3. Loaders take the full request, not a bare ref; routing is provider-first.
 4. Cache keys are producer-qualified, matching the projection.
 5. Forge nodes will emit `forge-operation:<operation_id>` evidence refs from native-evidence shaping (parent slice); the loader also accepts synthesis from the owning ref until then. The parent slice implemented this: `forge.gate.status` shaping now emits `forge-operation:<operation_id>` whenever the native payload carries a validated operation id.

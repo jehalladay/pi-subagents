@@ -568,7 +568,9 @@ describe("workflow_observe reply builder (workbench.observe/v1)", () => {
       evidenceRefs: Array.from({ length: 32 }, (_, index) => `ev-${index}\u200b`),
       nativePayloadRef: "payload://secret-body-9",
     });
-    // Control (C1), bidi and default-ignorable characters inside a keyword are removed before the keyword pass, so they cannot hide it.
+    // Control (C1), bidi and default-ignorable characters inside a keyword are glued back into it for redaction, so they cannot hide it.
+    // wb-952 pin flip (site 22 routed through the one helper): U+0085 (NEL) is a separator under the 16:44Z policy, so it renders as one
+    // space beside the space before it instead of being deleted first (deletion-first leaked "x"+NEL+"Bearer tok", 17:25Z gate F2).
     view.ingest({
       projectionEventId: "late",
       source: ref("forge", "body"),
@@ -590,7 +592,7 @@ describe("workflow_observe reply builder (workbench.observe/v1)", () => {
     expect(first.presentation.statusTone).toBe("active");
     // The fixture's trailing U+2028 is a separator: it becomes one space (wb-752.2 respin) instead of vanishing.
     expect(second.presentation.title).toBe("Authorization: [REDACTED] tail ");
-    expect(second.presentation.statusText).toBe("RUNNING [REDACTED]");
+    expect(second.presentation.statusText).toBe("RUNNING  [REDACTED]");
     expect(first.evidenceRefs).toEqual(Array.from({ length: 20 }, (_, index) => `ev-${index}`));
     expect(first.evidenceTruncated).toBe(true);
     expect(second.evidenceRefs).toEqual(["ev-a", "ev-b"]);
@@ -862,15 +864,15 @@ describe("workflow_observe reply builder (workbench.observe/v1)", () => {
     ]);
     expect(Object.values(kinds).every((count) => typeof count === "number")).toBe(true);
 
-    // The shared redactor is not idempotent on a JSON-shaped secret (owner-filed wb-3l3): each string is repeated through it
-    // until it settles, so the reply stays a fixed point and its byte count stays exact. A bound that cuts a surrogate pair
-    // drops the orphaned half instead of emitting it.
+    // The shared redactor's second pass keeps the marker of a JSON-shaped secret and otherwise only over-redacts (wb-3l3,
+    // docs/20 ruling 2): each string is still repeated through it until it settles, so the reply stays a fixed point and its
+    // byte count stays exact. A bound that cuts a surrogate pair drops the orphaned half instead of emitting it.
     const settled = new ObservationProjection();
     snapshot(settled, ref("forge", "json-secret"), "inv-settle", shown("RUNNING", "active", 'config {"password":"x"} end'));
     const pair = String.fromCodePoint(0x1f600);
     snapshot(settled, ref("forge", "split-pair"), "inv-settle", shown("RUNNING", "active", `${"x".repeat(179)}${pair}${"y".repeat(50)}`));
     const settledReply = observeInvocation(settled, { scope: alice, invocationId: "inv-settle" });
-    expect(settledReply.nodes.map((node) => node.presentation.title)).toEqual(['config {"password":[REDACTED] end', `${"x".repeat(179)} [truncated]`]);
+    expect(settledReply.nodes.map((node) => node.presentation.title)).toEqual(['config {"password":[REDACTED]} end', `${"x".repeat(179)} [truncated]`]);
     const settledText = JSON.stringify(settledReply);
     expect(sanitizeWorkbenchJsonText(settledReply)).toBe(settledText);
     expect(settledReply.bytes).toBe(Buffer.byteLength(settledText));
