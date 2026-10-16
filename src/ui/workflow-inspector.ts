@@ -5,6 +5,8 @@ import { matchesKey, stripTerminalSequences, truncateToWidth, visibleWidth } fro
 import type { AttentionBottleneck, AttentionReport } from '../workbench/attention.js';
 import type { EvidenceEntry, EvidenceStore } from '../workbench/evidence-loader.js';
 import type { NativeRef, ObservationProjection, ObservationScope, ObservedNode, Relation } from '../workbench/observation.js';
+import { sanitizeWorkbenchText } from '../workbench/redaction.js';
+import type { LinkedTopology, TopologyEdge, TopologyReference, TopologyReferenceReason, TopologyRelationClass } from '../workbench/topology-slice.js';
 import { safeWorkflowTerminalText } from './workflow-card.js';
 
 export type InspectorView = 'overview' | 'graph' | 'timeline' | 'details';
@@ -16,6 +18,8 @@ export interface InspectorModel {
   status: string;
   /** Read side of the lazy evidence store; absent means the details view renders exactly as before. */
   evidence?: Pick<EvidenceStore, 'get' | 'request' | 'abortAll'>;
+  /** Read side of the linked topology selector for one node; absent means the details view renders exactly as before. */
+  topology?: (node: ObservedNode) => LinkedTopology | undefined;
   /** Attention report the caller computed with its own clock at redraw cadence; absent means the overview renders exactly as before.
    * The layout only draws it: it never computes attention and never reads a clock. */
   attention?: AttentionReport;
@@ -431,6 +435,61 @@ function evidenceRows(store: Pick<EvidenceStore,'get'>, node: ObservedNode, sele
   return hidden>0 && room>1 ? [...trimmed.rows,`${ascii?'...':'…'} ${hidden} more reference${hidden===1?'':'s'} (viewport)`] : trimmed.rows;
 }
 
+const TOPOLOGY_CLASS_LABEL: Readonly<Record<TopologyRelationClass, string>> = {
+  'declared-dependency':'declared dependency','observed-causal':'observed causal','lifecycle-ownership':'lifecycle ownership (native-confirmed)',
+  grouping:'grouping','inferred-hypothesis':'inferred hypothesis',
+};
+const TOPOLOGY_REASON_LABEL: Readonly<Record<TopologyReferenceReason, string>> = {
+  cycle:'cycle','missing-provenance':'missing provenance','unconfirmed-ownership':'unconfirmed ownership','unknown-endpoint':'unknown endpoint','unknown-relation-kind':'unknown relation kind',
+};
+/** One topology line. `count` is the number of edges and references it stands for, so a budget cut can be counted. */
+interface TopologyRow {text:string; count:number}
+/** Whether a native reference has no node in the projection's scope. A read only; absence is stated, never inferred away. */
+const unobservedEndpoint=(model:InspectorModel,edge:TopologyEdge):boolean=>
+  model.projection.query({scope:model.scope,limit:1,ref:edge.nativeRef}).nodes.length===0;
+/** Producer text (provenance source, neighbour identity) bound for a row: the ONE shared helper with the NAMED 'label' layout (the
+ * slice's own labelOf layout, 160-unit cap), then the row's own safe(). No local pre-pass: rewriting or deleting a gap before the
+ * helper hides the raw text it reads, so a unit glued inside a keyword, prefix or token would split it past redaction. */
+const topologyText=(text:string):string=>sanitizeWorkbenchText(text,160,'label');
+/** The neighbour leads the row so a narrow terminal truncates provenance, never the identity. */
+function topologyEdgeRow(model:InspectorModel,edge:TopologyEdge,direction:'upstream'|'downstream',ascii:boolean):TopologyRow{
+  const glyph=direction==='downstream' ? edgeGlyph(ascii) : ascii ? '<-' : '←';
+  // A declared edge to a never-observed endpoint stays a declared dependency and says so; it is not an unknown-dynamic reference.
+  const unobserved=edge.relation==='declared-dependency' && unobservedEndpoint(model,edge) ? ' · unobserved endpoint' : '';
+  const authority=edge.authoritative ? '' : ' · non-authoritative';
+  const when=edge.provenance.observedAt!==undefined ? ` @${edge.provenance.observedAt}` : ' · no timestamp';
+  return {text:`${glyph} ${topologyText(keyRef(edge.key))} · ${TOPOLOGY_CLASS_LABEL[edge.relation]}${unobserved}${authority} [${topologyText(edge.provenance.sourceLabel)}${when}]`,count:1};
+}
+function topologyReferenceRow(reference:TopologyReference):TopologyRow{
+  const named=topologyText(reference.nativeRef ? keyRef(reference.key) : reference.label);
+  return {text:`reference -> ${named} · ${TOPOLOGY_REASON_LABEL[reference.reason]} (${reference.direction})`,count:1};
+}
+/** Rows for the details view's linked topology: bounded by `room`, every cut counted on one remainder row. */
+function topologyRows(model:InspectorModel,slice:LinkedTopology,room:number,ascii:boolean):string[]{
+  const dots=ascii?'...':'…';
+  const rows:TopologyRow[]=[];
+  const empty=slice.upstream.edges.length+slice.upstream.remainder.count+slice.downstream.edges.length+slice.downstream.remainder.count+slice.references.length+slice.referencesRemainder===0;
+  // Two distinct states (owner F1): "no observed relations" is for a COMPLETE empty slice only; a truncation flag always says incomplete trace, and neither substitutes for the other.
+  const truncated=slice.trace.reasons.some(reason=>reason==='relations-truncated' || reason==='cycle-search-truncated');
+  const why=slice.trace.reasons.filter(reason=>reason!=='no-observed-relations').map(reason=>reason.replace(/-/g,' ')).join(', ');
+  const incomplete=`Topology: incomplete trace${why===''?'':` (${why})`}`;
+  if(empty) return [truncated ? incomplete : `Topology: no observed relations (missing edges do not imply independence)`];
+  if(slice.trace.label==='incomplete-trace') rows.push({text:incomplete,count:0});
+  for(const [title,direction,side] of [['Upstream','upstream',slice.upstream],['Downstream','downstream',slice.downstream]] as const){
+    const total=side.edges.length+side.remainder.count;
+    if(total===0) continue;
+    rows.push({text:`${title} (${total}${side.remainder.atLeast?'+':''})`,count:0});
+    for(const edge of side.edges) rows.push(topologyEdgeRow(model,edge,direction,ascii));
+    if(side.remainder.count>0) rows.push({text:`${dots} +${side.remainder.count} more (bounded)${side.remainder.atLeast?' (partial)':''}`,count:side.remainder.count});
+  }
+  for(const reference of slice.references) rows.push(topologyReferenceRow(reference));
+  if(slice.referencesRemainder>0) rows.push({text:`${dots} +${slice.referencesRemainder} more reference${slice.referencesRemainder===1?'':'s'} (bounded)`,count:slice.referencesRemainder});
+  if(rows.length<=room) return rows.map(row=>row.text);
+  const kept=rows.slice(0,room-1);
+  const cut=rows.slice(room-1).reduce((sum,row)=>sum+row.count,0);
+  return [...kept.map(row=>row.text),...(cut>0 ? [`${dots} +${cut} more (bounded)`] : [])];
+}
+
 /** Pure viewport layout; capped rows fetched from indexed nodes, never raw event history. */
 export function layoutInspector(model:InspectorModel,state:InspectorState,size:InspectorSize):string[]{
   const width=Math.max(12,Math.trunc(size.width));
@@ -588,9 +647,21 @@ export function layoutInspector(model:InspectorModel,state:InspectorState,size:I
         for(const evidence of current.evidenceRefs.slice(0,evidenceShown)) add(`  ${safe(evidence,ascii)}`);
         if(current.evidenceRefs.length>evidenceShown) add('  Further references available at producer.');
       }
-      const related=relationsFor(model,current);
-      if(related.relations.length) add(`Relations: ${related.relations.map(r=>r.kind).slice(0,3).join(', ')}${related.partial?' (partial)':''}`);
-      if(current.nativeRef.provider==='claude-agent-sdk' && current.nativeRef.type==='session') add('c transcript (loaded on focus)');
+      const transcript=current.nativeRef.provider==='claude-agent-sdk' && current.nativeRef.type==='session';
+      const topology=model.topology?.(current);
+      if(topology){
+        // Room for topology rows: the paged line, the key hint and the transcript hint stay.
+        const roomLeft=():number=>height-lines.length-(paged?1:0)-1-(transcript?1:0);
+        if(roomLeft()<1){
+          // Owner F5: a hidden section is never silent. One header row yields its line to the marker (the hint and paged line stay).
+          while(lines.length>0 && roomLeft()<1) lines.pop();
+          add('topology hidden: terminal height');
+        } else for(const text of topologyRows(model,topology,roomLeft(),ascii)) add(text);
+      } else {
+        const related=relationsFor(model,current);
+        if(related.relations.length) add(`Relations: ${related.relations.map(r=>r.kind).slice(0,3).join(', ')}${related.partial?' (partial)':''}`);
+      }
+      if(transcript) add('c transcript (loaded on focus)');
     } else add('Select an observed operation with j/k.');
   }
   if(paged) add(`Rows ${page.offset+1}-${page.offset+page.nodes.length}/${page.total} · viewport only`);
