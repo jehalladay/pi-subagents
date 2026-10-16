@@ -25,7 +25,13 @@ function rejectionText(error: unknown): string {
 }
 
 describe("native-modules loader failure path (wb-cax.10)", () => {
-  it("reports a failed load to every concurrent waiter, stays unloaded, and retries on the next call", async () => {
+  // Instrument constant, not a behavioral assertion: the three sequential load
+  // attempts settle in ~3.4s intrinsically (measured 3.35-3.45s across five
+  // serial runs at trunk 5516365 and 7346457), leaving 1.6s of headroom under
+  // the 5s default -- which timed out deterministically while parallel work
+  // runs loaded the host (owner gates cmd_57bde9675662 / cmd_ad1811dbaf03).
+  // Cure-in-the-test per the wb-cax.7 F3 rule; assertions unchanged.
+  it("reports a failed load to every concurrent waiter, stays unloaded, and retries on the next call", { timeout: 20_000 }, async () => {
     const first = loadWorkbenchNative();
     const second = loadWorkbenchNative();
     expect(rejectionText(await first.then(() => undefined, (error: unknown) => error))).toMatch(/native module unavailable/);
