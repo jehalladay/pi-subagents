@@ -579,7 +579,7 @@ describe('producer-mapping conformance pass (wb-6ze.20, docs/workbench/20 § Pro
 
   it('routes provider-first: of the nine provider x ref-shape pairs exactly the three row pairs reach a reader, and only on load', async () => {
     const spies = readers();
-    const loaders = createEvidenceLoaders({ grants: () => allGrants, ...spies });
+    const loaders = createEvidenceLoaders({ grants: () => allGrants, now: () => new Date(at), ...spies });
     for (const spy of Object.values(spies)) expect(spy).toHaveBeenCalledTimes(0);
     const s = store(loaders);
     const providers = [claudeTarget[0], furnaceTarget[0], forgeTarget[0]];
