@@ -1,10 +1,21 @@
-/** wb-71q: the detached Unix socket base prefers a short per-user runtime dir over a long TMPDIR. */
-import { chmodSync, existsSync, mkdirSync, mkdtempSync, readFileSync, realpathSync, rmSync, writeFileSync } from "node:fs";
+/** wb-71q: the detached Unix socket base prefers a short per-user runtime dir over a long TMPDIR. wb-70b: typed same-id
+ * relaunch refusal (R2), per-launch tmpdir socket directory (PF2), receipt socket containment (F3), cleanup contract (PF4). */
+import { chmodSync, existsSync, lstatSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, realpathSync, rmSync, writeFileSync } from "node:fs";
+import { createServer } from "node:net";
 import { tmpdir } from "node:os";
 import { basename, dirname, join } from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
 import subagentsExtension from "../src/index.js";
-import { DETACHED_SOCKET_PATH_LIMIT, resolveDetachedSocket } from "../src/workbench/hosts/local-detached.js";
+import { CapabilityError } from "../src/workbench/capability-registry.js";
+import {
+  connectDetachedWorkflow,
+  DETACHED_SOCKET_PATH_LIMIT,
+  type DetachedLaunchRequest,
+  type DetachedSnapshot,
+  detachedFrame,
+  launchDetachedWorkflow,
+  resolveDetachedSocket,
+} from "../src/workbench/hosts/local-detached.js";
 import { ctx, hermeticDir, makePi } from "./helpers/boot-extension.js";
 
 const uid = process.getuid?.() ?? 0;
@@ -35,8 +46,10 @@ afterEach(() => {
   for (const dir of scratch.splice(0)) rmSync(dir, { recursive: true, force: true });
 });
 const LONG_ROOT = `/${"x".repeat(100)}`;
-/** Bytes the resolver appends to its base: "/pw-<uid>/<16 hex>.sock". */
+/** Bytes the resolver appends to a private runtime base: "/pw-<uid>/<16 hex>.sock". */
 const SOCKET_SUFFIX_BYTES = Buffer.byteLength(`/pw-${uid}/${"0".repeat(16)}.sock`);
+/** Bytes it appends to the tmpdir fallback, whose socket directory is a per-launch mkdtemp (wb-70b PF2): "/pw-<uid>-XXXXXX/<16 hex>.sock". */
+const TMPDIR_SOCKET_SUFFIX_BYTES = Buffer.byteLength(`/pw-${uid}-XXXXXX/${"0".repeat(16)}.sock`);
 const NO_RUN_USER = "/nonexistent-run-user";
 const DETACHED_SETTINGS = { workflowsEnabled: true, workbench: { workflowAgentBackend: "claude", capabilityGrants: ["workbench:detach", "workbench:observe"] } };
 function privateDirRefusal(path: string): string { return `Authorization: directory must be owned by uid ${uid} with exact private permissions: ${path}.`; }
@@ -99,7 +112,7 @@ describe("detached socket base selection (wb-71q)", () => {
   });
   it("accepts a socket path of exactly the limit and refuses one byte more (gate mutant M9)", () => {
     const options = (base: string) => ({ env: {}, tmpdir: base, uid, runUserRoot: NO_RUN_USER });
-    const atLimit = `/${"b".repeat(DETACHED_SOCKET_PATH_LIMIT - SOCKET_SUFFIX_BYTES - 1)}`;
+    const atLimit = `/${"b".repeat(DETACHED_SOCKET_PATH_LIMIT - TMPDIR_SOCKET_SUFFIX_BYTES - 1)}`;
     const found = resolveDetachedSocket("/a/dir", "one", options(atLimit));
     expect(found.source).toBe("tmpdir"); expect(Buffer.byteLength(found.socket)).toBe(DETACHED_SOCKET_PATH_LIMIT);
     expect(() => resolveDetachedSocket("/a/dir", "one", options(`${atLimit}b`))).toThrow(`(${DETACHED_SOCKET_PATH_LIMIT + 1} bytes)`);
@@ -184,5 +197,194 @@ describe("detached socket base selection (wb-71q)", () => {
     hosts.push(receipt.pid);
     expect(receipt.socketBase).toBe(xdg); expect(dirname(receipt.socketPath)).toBe(socketDir);
     expect(existsSync(reserved)).toBe(true);
+  }, 30000);
+});
+
+/** The direct launch API's inputs: a reviewed one-line script in a private workspace and a detached root beside it. */
+function fixture(prefix: string): { cwd: string; scriptPath: string; root: string } {
+  const cwd = private0700(`${prefix}ws-`);
+  const scriptPath = join(cwd, "pure.js");
+  writeFileSync(scriptPath, 'export const meta={name:"detached",description:"local computation"}; return 42;');
+  return { cwd, scriptPath, root: join(private0700(`${prefix}root-`), "hosts") };
+}
+function request(f: ReturnType<typeof fixture>, invocationId: string): DetachedLaunchRequest {
+  return { directory: f.root, invocationId, scriptPath: f.scriptPath, cwd: f.cwd, input: null, trustedScript: true, backend: "deterministic", providers: [], grants: [], permissions: ["inspect", "execute", "cancel", "shutdown"], sourceFiles: [f.scriptPath] };
+}
+async function launched(f: ReturnType<typeof fixture>, invocationId: string, placement?: Parameters<typeof launchDetachedWorkflow>[1]) {
+  const receipt = await launchDetachedWorkflow(request(f, invocationId), placement);
+  hosts.push(receipt.pid);
+  return receipt;
+}
+async function terminal(root: string, id: string): Promise<DetachedSnapshot> {
+  const client = connectDetachedWorkflow(root, id);
+  let observed = await client.inspect();
+  for (let i = 0; i < 150 && !observed.terminal; i++) { await new Promise(r => setTimeout(r, 20)); observed = await client.inspect(); }
+  return observed;
+}
+function alive(pid: number): boolean {
+  try { process.kill(pid, 0); return true; } catch { return false; }
+}
+async function gone(pid: number): Promise<boolean> {
+  for (let i = 0; i < 150 && alive(pid); i++) await new Promise(r => setTimeout(r, 20));
+  return !alive(pid);
+}
+async function refusal(promise: Promise<unknown>): Promise<unknown> {
+  return promise.then(() => undefined, (error: unknown) => error);
+}
+/** The tmpdir fallback, reached by naming the inputs a host without a private runtime dir has (wb-70b PF2). */
+const tmpdirOnly = (base: string) => ({ env: {}, tmpdir: base, runUserRoot: NO_RUN_USER });
+const PER_LAUNCH_DIR = new RegExp(`^pw-${uid}-[A-Za-z0-9]{6}$`);
+
+describe("detached invocation reuse, socket placement and cleanup (wb-70b)", () => {
+  it("refuses a second launch under a reserved id with a typed conflict naming the id and its reservation, never the raw EEXIST (R2)", async () => {
+    saveEnv();
+    process.env.XDG_RUNTIME_DIR = private0700("rt-r2-");
+    const f = fixture("r2-");
+    const first = await launched(f, "reserved-one");
+    const error = await refusal(launchDetachedWorkflow(request(f, "reserved-one")));
+    expect(error).toBeInstanceOf(CapabilityError);
+    expect((error as CapabilityError).category).toBe("validation");
+    const text = (error as Error).message;
+    expect(text).not.toMatch(/EEXIST|file already exists/);
+    // wb-0kg.1's relaunch probe keeps passing.
+    expect(text).toMatch(/exists|conflict/i);
+    expect(text).toContain("reserved-one");
+    expect(text).toContain(join(f.root, "reserved-one"));
+    // The refusal reserves nothing new, and the first host keeps serving its receipt.
+    expect(readdirSync(f.root)).toEqual(["reserved-one"]);
+    expect((await connectDetachedWorkflow(f.root, "reserved-one").inspect()).receipt?.pid).toBe(first.pid);
+  }, 30000);
+
+  it("routes the typed relaunch refusal to the model through the workflow_detached catch, sanitized (R2 display path)", async () => {
+    saveEnv();
+    process.env.XDG_RUNTIME_DIR = private0700("rt-r2d-");
+    sandbox = hermeticDir({ settings: DETACHED_SETTINGS });
+    const path = join(sandbox.dir, "pure.js"); writeFileSync(path, 'export const meta={name:"detached",description:"local computation"}; return 42;');
+    const pi = makePi(); subagentsExtension(pi.pi); const context = ctx({ cwd: sandbox.dir }); await pi.lifecycle.get("session_start")?.({}, context);
+    const launch = async () => (await pi.tools.get("workflow_detached").execute("launch", { action: "launch", invocationId: "reuse-me", scriptPath: path, trustedScript: true, backend: "deterministic" }, undefined, undefined, context)).content[0].text as string;
+    hosts.push((JSON.parse(await launch()) as { pid: number }).pid);
+    const reply = await launch();
+    expect(reply).toMatch(/conflict/i); expect(reply).toContain("reuse-me");
+    expect(reply).not.toMatch(/EEXIST|file already exists/);
+    expect(reply).toContain(join(process.env.PI_CODING_AGENT_DIR ?? "", "workbench-detached", "reuse-me"));
+  }, 30000);
+
+  it("gives the tmpdir fallback a per-launch mkdtemp socket directory, never the predictable shared <tmpdir>/pw-<uid> (PF2)", () => {
+    const short = private0700("tmp-pf2-");
+    const found = resolveDetachedSocket("/a/dir", "one", { env: {}, tmpdir: short, uid, runUserRoot: NO_RUN_USER });
+    expect(found.source).toBe("tmpdir");
+    expect(dirname(found.socket)).toBe(join(short, `pw-${uid}-XXXXXX`));
+    // A private per-user runtime base keeps its one stable directory.
+    const xdg = private0700("xdg-pf2-");
+    expect(dirname(resolveDetachedSocket("/a/dir", "one", { env: { XDG_RUNTIME_DIR: xdg }, tmpdir: short, uid }).socket)).toBe(join(xdg, `pw-${uid}`));
+  });
+
+  it("launches under the tmpdir fallback past a pre-created foreign <tmpdir>/pw-<uid>, recording the per-launch path in boot and receipt (PF2)", async () => {
+    const f = fixture("pf2-");
+    const base = private0700("tmp-pf2-");
+    // What another local user can pre-create in a shared tmpdir: not ours, not private.
+    const foreign = join(base, `pw-${uid}`); mkdirSync(foreign); chmodSync(foreign, 0o755);
+    const receipt = await launched(f, "pf2-one", tmpdirOnly(base));
+    expect(receipt.socketBase).toBe(base);
+    expect(dirname(dirname(receipt.socketPath))).toBe(base);
+    expect(basename(dirname(receipt.socketPath))).toMatch(PER_LAUNCH_DIR);
+    const boot = JSON.parse(readFileSync(join(f.root, "pf2-one", "invocation.json"), "utf8")) as { socket: string; socketBase: string };
+    expect(boot.socket).toBe(receipt.socketPath); expect(boot.socketBase).toBe(base);
+    // Reattachment reads the recorded path; nothing re-derives it from the caller's environment.
+    const observed = await terminal(f.root, "pf2-one");
+    expect(observed.terminal).toBe("completed"); expect(observed.result).toBe(42);
+    // Each launch gets its own directory; an unnormalized spelling of the same base still launches and reattaches.
+    const second = await launched(f, "pf2-two", tmpdirOnly(`${base}/.`));
+    expect(dirname(dirname(second.socketPath))).toBe(base);
+    expect(dirname(second.socketPath)).not.toBe(dirname(receipt.socketPath));
+    expect((await terminal(f.root, "pf2-two")).terminal).toBe("completed");
+    expect(lstatSync(foreign).mode & 0o7777).toBe(0o755);
+  }, 30000);
+
+  it("refuses a receipt whose socket lies outside the recorded socketBase/pw-<uid>, as the child's boot check does (wb-71q F3)", async () => {
+    saveEnv();
+    const xdg = private0700("rt-f3-");
+    process.env.XDG_RUNTIME_DIR = xdg;
+    const f = fixture("f3-");
+    const receipt = await launched(f, "f3-one");
+    const receiptFile = join(f.root, "f3-one", "receipt.json");
+    const recorded = readFileSync(receiptFile, "utf8");
+    // A same-uid decoy that passes every other client check: private directory, private socket, listening.
+    const decoyDir = join(private0700("decoy-"), `pw-${uid}`); mkdirSync(decoyDir, { mode: 0o700 }); chmodSync(decoyDir, 0o700);
+    const decoySocket = join(decoyDir, basename(receipt.socketPath));
+    const decoy = createServer(socket => { socket.on("error", () => socket.destroy()); socket.end(detachedFrame({ ok: false, category: "validation", diagnostic: "decoy reached" })); });
+    await new Promise<void>(resolveListen => decoy.listen(decoySocket, () => resolveListen()));
+    chmodSync(decoySocket, 0o600);
+    const rewrite = (fields: Record<string, unknown>) => {
+      const next = { ...JSON.parse(recorded), ...fields } as Record<string, unknown>;
+      for (const [key, value] of Object.entries(fields)) if (value === undefined) delete next[key];
+      writeFileSync(receiptFile, JSON.stringify(next));
+    };
+    const client = connectDetachedWorkflow(f.root, "f3-one");
+    try {
+      for (const fields of [
+        { socketPath: decoySocket },
+        { socketPath: join(xdg, basename(receipt.socketPath)) },
+        { socketPath: join(xdg, `pw-${uid + 1}`, basename(receipt.socketPath)) },
+        { socketPath: join(dirname(receipt.socketPath), "host.sock") },
+        { socketBase: undefined, socketPath: decoySocket },
+      ]) {
+        rewrite(fields);
+        await expect(client.inspect(), JSON.stringify(fields)).rejects.toThrow("Authorization: receipt socket path invalid.");
+      }
+      // An existing receipt written before socketBase existed (the invocation directory's host.sock) is still accepted.
+      rewrite({ socketBase: undefined, socketPath: join(f.root, "f3-one", "host.sock") });
+      expect((await client.inspect()).observation).toBe("unknown");
+    } finally {
+      writeFileSync(receiptFile, recorded);
+      decoy.close();
+    }
+    expect((await client.inspect()).receipt?.pid).toBe(receipt.pid);
+  }, 30000);
+
+  it("pins the cleanup contract under a runtime base: a graceful stop unlinks the socket and keeps pw-<uid>; a crash leaves the socket, never rebound and never deleted by a client (PF4)", async () => {
+    saveEnv();
+    const xdg = private0700("rt-pf4-");
+    process.env.XDG_RUNTIME_DIR = xdg;
+    const f = fixture("pf4-");
+    const shared = join(xdg, `pw-${uid}`);
+    const graceful = await launched(f, "pf4-graceful");
+    expect(dirname(graceful.socketPath)).toBe(shared);
+    expect((await terminal(f.root, "pf4-graceful")).terminal).toBe("completed");
+    await connectDetachedWorkflow(f.root, "pf4-graceful").shutdown("wb-70b PF4 graceful stop");
+    expect(await gone(graceful.pid)).toBe(true);
+    expect(existsSync(graceful.socketPath)).toBe(false);
+    // The shared directory stays even when the stopping host was its only tenant.
+    expect(readdirSync(shared)).toEqual([]);
+    const crashed = await launched(f, "pf4-crashed");
+    expect(dirname(crashed.socketPath)).toBe(shared);
+    expect((await terminal(f.root, "pf4-crashed")).terminal).toBe("completed");
+    process.kill(crashed.pid, "SIGKILL");
+    expect(await gone(crashed.pid)).toBe(true);
+    expect(lstatSync(crashed.socketPath).isSocket()).toBe(true);
+    const lost = await connectDetachedWorkflow(f.root, "pf4-crashed").inspect();
+    expect(lost.observation).toBe("unknown"); expect(lost.reconcileHint).toMatch(/never automatically retry/i);
+    expect(lstatSync(crashed.socketPath).isSocket()).toBe(true);
+    // Both ids stay reserved, so neither path is ever bound again.
+    for (const id of ["pf4-graceful", "pf4-crashed"]) expect(await refusal(launchDetachedWorkflow(request(f, id)))).toBeInstanceOf(CapabilityError);
+    expect(readdirSync(join(f.root, "pf4-crashed")).sort()).toEqual(["invocation.json", "receipt.json"]);
+    expect(readdirSync(shared).sort()).toEqual([basename(crashed.socketPath)]);
+  }, 30000);
+
+  it("pins the cleanup contract under the tmpdir fallback: a graceful stop removes the per-launch directory, a crash leaves it with its socket, a refused relaunch leaves none (PF4)", async () => {
+    const f = fixture("pf4t-");
+    const base = private0700("tmp-pf4-");
+    const graceful = await launched(f, "pf4t-graceful", tmpdirOnly(base));
+    const crashed = await launched(f, "pf4t-crashed", tmpdirOnly(base));
+    expect((await terminal(f.root, "pf4t-graceful")).terminal).toBe("completed");
+    expect((await terminal(f.root, "pf4t-crashed")).terminal).toBe("completed");
+    await connectDetachedWorkflow(f.root, "pf4t-graceful").shutdown("wb-70b PF4 graceful stop");
+    expect(await gone(graceful.pid)).toBe(true);
+    expect(existsSync(dirname(graceful.socketPath))).toBe(false);
+    process.kill(crashed.pid, "SIGKILL");
+    expect(await gone(crashed.pid)).toBe(true);
+    expect(lstatSync(crashed.socketPath).isSocket()).toBe(true);
+    expect(await refusal(launchDetachedWorkflow(request(f, "pf4t-graceful"), tmpdirOnly(base)))).toBeInstanceOf(CapabilityError);
+    expect(readdirSync(base).filter(name => PER_LAUNCH_DIR.test(name))).toEqual([basename(dirname(crashed.socketPath))]);
   }, 30000);
 });

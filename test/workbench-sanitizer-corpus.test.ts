@@ -45,6 +45,7 @@ import { buildOperationsTelemetry } from "../src/workbench/telemetry.js";
 import { buildTimelineLanes, type TimelineReader } from "../src/workbench/timeline.js";
 import { buildWorkflowCatalogReply, buildWorkflowInspectReply, type CapabilityCatalogEntry } from "../src/workbench/tool-replies.js";
 import { selectLinkedTopology } from "../src/workbench/topology-slice.js";
+import { detachedCatchDriver } from "./helpers/detached-peer.js";
 
 const cp = (code: number): string => String.fromCodePoint(code);
 const NUL = cp(0x00);
@@ -495,6 +496,13 @@ function observeTexts(raw: string): string[] {
   return strings(observeInvocation(reader, { scope: ALICE, invocationId: "inv-observe" }));
 }
 
+/**
+ * DIRECT-CALLER row (wb-71q R1, owner 2026-10-16T10:59Z, bound onto wb-70b): the workflow_detached launch/inspect catch in
+ * src/index.ts hands every refusal message straight to the one helper (text layout), the wb-70b typed relaunch refusal
+ * included. A same-uid peer on the receipt-recorded socket returns the raw text as the host's authorization refusal.
+ */
+const detachedCatchTexts = detachedCatchDriver();
+
 /** wb-h8f.10: latency.ts displayText (selectLatencyDecomposition), the provider and the evidence-ref paths, joined to the corpus in the same commit as its routing through the one helper. */
 function latencyTexts(raw: string): string[] {
   const node: ObservedNode = {
@@ -540,6 +548,7 @@ const SITES: readonly Site[] = [
   { site: "site 15 furnace-evidence.ts sanitize (readFurnaceAttemptLogEvidence)", texts: furnaceEvidenceTexts },
   { site: "site 16 evidence-loader.ts safeChunks (EvidenceStore)", texts: storeTexts },
   { site: "site 18 detached-observer.ts shown (projectDetachedReading)", texts: detachedTexts },
+  { site: "src/index.ts workflow_detached launch/inspect catch (DIRECT-CALLER, the detached refusal text)", texts: detachedCatchTexts },
   { site: "sites 19/20 workflow_inspect and workbench_catalog replies", texts: replyTexts },
   { site: "site 22 observe-query.ts clean (observeInvocation)", texts: observeTexts },
   { site: "wb-h8f.10 latency.ts displayText (selectLatencyDecomposition provider and evidence paths)", texts: latencyTexts },

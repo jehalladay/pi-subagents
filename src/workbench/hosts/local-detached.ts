@@ -7,14 +7,32 @@
  * served by the actual detached process. connectDetachedWorkflow(root,id) never
  * launches anything. inspect() after loss returns unknown/reconcile, never a
  * saved terminal verdict or a replacement JavaScript execution.
+ *
+ * Socket placement and cleanup (wb-71q, wb-70b PF2/PF4). The host listens on
+ * <base>/pw-<uid>/<digest>.sock under a private per-user runtime base
+ * (XDG_RUNTIME_DIR, then /run/user/<uid>); under the shared tmpdir fallback it
+ * listens in a fresh per-launch mkdtemp directory <tmpdir>/pw-<uid>-XXXXXX that
+ * no other local user can pre-create. The launcher records the path in the boot
+ * pin and the receipt; clients read it from there. A graceful stop (shutdown,
+ * retention or idle expiry, SIGTERM/SIGINT) unlinks the socket and removes a
+ * per-launch directory; the shared pw-<uid> directory stays for later hosts. A
+ * launch refused before its host starts removes the per-launch directory it
+ * made. A crashed host (SIGKILL, OOM, power loss) runs no cleanup, so its socket,
+ * and a per-launch directory, stay where they are: the reserved invocation ID
+ * means that path is never bound again, a client reading the receipt gets a
+ * refused connection and reports unknown with reconcile guidance, and nothing in
+ * the workbench deletes it. It goes when its base is cleaned: the login manager
+ * clears the runtime directory at the user's last logout or a reboot; the OS
+ * temp cleaner, a reboot or the operator clears tmpdir. The invocation
+ * directory (boot pin and receipt) always stays: it is the ID reservation.
  */
 import { spawn } from "node:child_process";
 import { createHash, randomBytes } from "node:crypto";
-import { chmodSync, closeSync, constants, existsSync, fstatSync, lstatSync, mkdirSync, openSync, readdirSync, readFileSync, realpathSync, writeFileSync } from "node:fs";
+import { chmodSync, closeSync, constants, existsSync, fstatSync, lstatSync, mkdirSync, mkdtempSync, openSync, readdirSync, readFileSync, realpathSync, rmdirSync, writeFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import { createConnection, createServer, type Socket } from "node:net";
 import { tmpdir } from "node:os";
-import { dirname, isAbsolute, join, relative, resolve, sep } from "node:path";
+import { basename, dirname, isAbsolute, join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
 import { runWorkflow, validateScript, type WorkflowHost } from "../../workflow/runtime.js";
@@ -184,6 +202,10 @@ export const DETACHED_SOCKET_PATH_LIMIT = 103;
 export type DetachedSocketBaseSource = "XDG_RUNTIME_DIR" | "run-user" | "tmpdir";
 export interface DetachedSocketLocation { base: string; source: DetachedSocketBaseSource; socket: string }
 export interface DetachedSocketOptions { env?: NodeJS.ProcessEnv; tmpdir?: string; uid?: number; runUserRoot?: string }
+/** The socket-base inputs a launch may name instead of its own environment (tests reach the tmpdir fallback with it); never the uid. */
+export type DetachedSocketPlacement = Pick<DetachedSocketOptions, "env" | "tmpdir" | "runUserRoot">;
+/** mkdtemp's six-character template: the tmpdir fallback's per-launch socket directory is <tmpdir>/pw-<uid>-XXXXXX. */
+const PER_LAUNCH_TEMPLATE = "XXXXXX";
 /** A runtime base qualifies only when absolute, a real directory (no symlink), owned by uid, mode exactly 0700. */
 function privateRuntimeBase(path: string | undefined, uid: number): path is string {
   if (path === undefined || !isAbsolute(path) || resolve(path) !== path) return false;
@@ -192,7 +214,9 @@ function privateRuntimeBase(path: string | undefined, uid: number): path is stri
 }
 /** Choose the Unix-socket base: XDG_RUNTIME_DIR, then /run/user/<uid>, then tmpdir(). The socket name is a
  * deterministic digest of (directory, id), so the path is short and stable; it is recorded in the boot pin and
- * receipt, never re-derived from a later caller's environment. */
+ * receipt, never re-derived from a later caller's environment. A private runtime base holds the socket in its one
+ * <base>/pw-<uid> directory; the shared tmpdir fallback gets a per-launch mkdtemp directory instead (wb-70b PF2), so
+ * there the directory component is the template <tmpdir>/pw-<uid>-XXXXXX, whose byte length the launched path keeps. */
 export function resolveDetachedSocket(directory: string, id: string, options: DetachedSocketOptions = {}): DetachedSocketLocation {
   const uid = options.uid ?? localOperator().uid; const env = options.env ?? process.env;
   const perUser = join(options.runUserRoot ?? "/run/user", String(uid));
@@ -201,9 +225,46 @@ export function resolveDetachedSocket(directory: string, id: string, options: De
   else if (privateRuntimeBase(perUser, uid)) { base = perUser; source = "run-user"; }
   else { base = options.tmpdir ?? tmpdir(); source = "tmpdir"; }
   const name = createHash("sha256").update(`${directory}\0${id}`).digest("hex").slice(0, 16);
-  const socket = join(base, `pw-${uid}`, `${name}.sock`);
+  const socket = join(base, source === "tmpdir" ? `pw-${uid}-${PER_LAUNCH_TEMPLATE}` : `pw-${uid}`, `${name}.sock`);
   if (Buffer.byteLength(socket) > DETACHED_SOCKET_PATH_LIMIT) throw new Error(`Detached Unix socket path exceeds the ${DETACHED_SOCKET_PATH_LIMIT}-byte Linux socket path bound (${Buffer.byteLength(socket)} bytes) under ${source} base ${base}; set XDG_RUNTIME_DIR to a short private directory (owner-only, mode 0700) or use a shorter TMPDIR.`);
   return { base, source, socket };
+}
+/** True when `socket` sits in the per-user socket directory directly under `base`: <base>/pw-<uid>/<digest>.sock, or a
+ * per-launch <base>/pw-<uid>-XXXXXX/<digest>.sock. The child checks its boot pin with it and a client its receipt. */
+function socketWithinBase(socket: string, base: string, uid: number): boolean {
+  const directory = dirname(socket);
+  return isAbsolute(base) && dirname(directory) === resolve(base) && resolve(socket) === socket
+    && socketDirectoryName(uid).test(basename(directory)) && /^[a-f0-9]{16}\.sock$/.test(basename(socket));
+}
+const socketDirectoryName = (uid: number): RegExp => new RegExp(`^pw-${uid}(-[A-Za-z0-9]{${PER_LAUNCH_TEMPLATE.length}})?$`);
+/** A per-launch tmpdir socket directory (pw-<uid>-XXXXXX): the only kind a host removes as it stops. */
+const perLaunchDirectory = (socket: string, uid: number): boolean => socketDirectoryName(uid).exec(basename(dirname(socket)))?.[1] !== undefined;
+/** Removes a directory only when it is empty; anything left inside keeps it. */
+function removeEmptyDirectory(path: string): void {
+  try { rmdirSync(path); } catch {}
+}
+/** The socket directory, made and validated BEFORE the id is reserved so a refused one never burns the id (wb-71q
+ * F1): the one shared <base>/pw-<uid> under a private runtime base, or a fresh per-launch mkdtemp directory under the
+ * tmpdir fallback (wb-70b PF2), which a pre-created foreign <tmpdir>/pw-<uid> cannot block. Returns the socket path. */
+function openSocketDirectory(location: DetachedSocketLocation, uid: number): string {
+  if (location.source !== "tmpdir") {
+    try { mkdirSync(dirname(location.socket), { mode: 0o700 }); } catch (error) { if ((error as NodeJS.ErrnoException).code !== "EEXIST") throw error; }
+    privatePath(dirname(location.socket), "directory", uid);
+    return location.socket;
+  }
+  const directory = mkdtempSync(join(location.base, `pw-${uid}-`));
+  try { privatePath(directory, "directory", uid); } catch (error) { removeEmptyDirectory(directory); throw error; }
+  return join(directory, basename(location.socket));
+}
+/** No reuse, even after a dead host: a deliberate second execution needs a NEW invocation ID. A taken ID is a typed
+ * refusal naming the ID and its reservation (wb-70b R2), never the raw mkdir EEXIST. */
+function reserveInvocation(directory: string, id: string): void {
+  try { mkdirSync(directory, { mode: 0o700 }); }
+  catch (error) {
+    if ((error as NodeJS.ErrnoException).code !== "EEXIST") throw error;
+    throw new CapabilityError("validation", `Detached invocation ID conflict: ${id} is already reserved by an earlier launch (${directory} exists); IDs are never reused, even after a dead host, so a deliberate second execution needs a NEW invocation ID.`);
+  }
+  privatePath(directory, "directory");
 }
 function readPrivate(path: string, maxBytes: number): Buffer {
   privatePath(path, "file");
@@ -427,18 +488,10 @@ function safeJson(value: unknown, maxBytes = 256 * 1024): JsonValue {
   const walk = (v: JsonValue): JsonValue => typeof v === "string" ? redactWorkbenchText(v) : Array.isArray(v) ? v.map(walk) : v && typeof v === "object" ? Object.fromEntries(Object.entries(v).map(([k, child]) => [k, walk(child)])) : v;
   return walk(json);
 }
-/** Receipt comes through hello from the actual process, never spawn.pid alone. */
-export async function launchDetachedWorkflow(raw: DetachedLaunchRequest): Promise<DetachedReceipt> {
-  const owner = localOperator(); const request = validateRequest(raw);
-  ancestors(request.directory);
-  if (!existsSync(request.directory)) mkdirSync(request.directory, { mode: 0o700 });
-  const p = paths(request.directory, request.invocationId);
-  const location = resolveDetachedSocket(request.directory, request.invocationId);
-  // The socket directory is created and validated BEFORE the id is reserved, so a refused one never burns the id.
-  try { mkdirSync(dirname(location.socket), { mode: 0o700 }); } catch (error) { if ((error as NodeJS.ErrnoException).code !== "EEXIST") throw error; }
-  privatePath(dirname(location.socket), "directory");
-  // No reuse, even after a dead host. Deliberate second executions need NEW IDs.
-  mkdirSync(p.directory, { mode: 0o700 }); privatePath(p.directory, "directory");
+interface PreparedBoot { boot: Boot; bootDigest: string; hostEntrypoint: string; root: string }
+/** Everything the child needs before it may start: the provider registry, identity capture, source pins and the
+ * private boot pin, which records the socket the launcher chose. */
+function prepareBoot(request: DetachedLaunchRequest, owner: LocalOperator, p: ReturnType<typeof paths>, socket: string, socketBase: string): PreparedBoot {
   const registry = registryFor({ ...request, localProvider: undefined });
   // Local provider manifest + exact module bytes are pinned in config/sourcePins.
   // Registration occurs only in the child, not in the Pi caller.
@@ -457,22 +510,39 @@ export async function launchDetachedWorkflow(raw: DetachedLaunchRequest): Promis
     providerDescriptors: registry.discover({ grants: (request.providers ?? []).map(id => `discover:${NATIVE_CAPABILITIES[id]}`) }).map(d => ({ id: d.id, version: d.version, permissions: d.permissions, effectClass: d.effectClass, supportedModes: d.supportedModes, inputSchema: validatedCapabilityJson(d.inputSchema, "schema"), ...(d.outputSchema ? { outputSchema: validatedCapabilityJson(d.outputSchema, "schema") } : {}), contractSource: d.contractSource ?? "unknown" })),
   };
   const pin = captureInvocationIdentity(capture); validateScript(pin.scriptSource);
-  const boot: Boot = { contract: DETACHED_CONTRACT, request, owner, hostInstanceId: randomBytes(24).toString("hex"), pin, capture, sourcePins, socket: location.socket, socketBase: location.base, ...(localProviderTree ? { localProviderTree } : {}), inputDigest: identityDigest("invocation-input", request.input), snapshotDigest: identityDigest("invocation-snapshot", pin) };
+  const boot: Boot = { contract: DETACHED_CONTRACT, request, owner, hostInstanceId: randomBytes(24).toString("hex"), pin, capture, sourcePins, socket, socketBase, ...(localProviderTree ? { localProviderTree } : {}), inputDigest: identityDigest("invocation-input", request.input), snapshotDigest: identityDigest("invocation-snapshot", pin) };
   writePrivate(p.boot, boot);
-  const bootDigest = hash(readPrivate(p.boot, 8 * DETACHED_MAX_FRAME_BYTES));
+  return { boot, bootDigest: hash(readPrivate(p.boot, 8 * DETACHED_MAX_FRAME_BYTES)), hostEntrypoint, root };
+}
+/** Receipt comes through hello from the actual process, never spawn.pid alone. `placement` names the socket-base
+ * inputs instead of this process's environment (how a test reaches the tmpdir fallback); Pi never passes it. */
+export async function launchDetachedWorkflow(raw: DetachedLaunchRequest, placement: DetachedSocketPlacement = {}): Promise<DetachedReceipt> {
+  const owner = localOperator(); const request = validateRequest(raw);
+  ancestors(request.directory);
+  if (!existsSync(request.directory)) mkdirSync(request.directory, { mode: 0o700 });
+  const p = paths(request.directory, request.invocationId);
+  const location = resolveDetachedSocket(request.directory, request.invocationId, { env: placement.env, tmpdir: placement.tmpdir, runUserRoot: placement.runUserRoot, uid: owner.uid });
+  // The socket directory is created and validated BEFORE the id is reserved, so a refused one never burns the id.
+  const socket = openSocketDirectory(location, owner.uid);
+  // Until a host process runs, a per-launch socket directory is this launcher's to remove when the launch fails.
+  const discard = () => { if (location.source === "tmpdir") removeEmptyDirectory(dirname(socket)); };
+  let prepared: PreparedBoot;
+  try { reserveInvocation(p.directory, request.invocationId); prepared = prepareBoot(request, owner, p, socket, location.base); }
+  catch (error) { discard(); throw error; }
+  const { boot, bootDigest, hostEntrypoint, root } = prepared;
   const env = { ...process.env }; delete env.NODE_OPTIONS; delete env.NODE_PATH;
   const child = spawn(process.execPath, [hostEntrypoint, "--serve", p.boot, bootDigest], { cwd: root, env, detached: true, stdio: "ignore", shell: false });
   let launchError: Error | undefined;
   child.on("error", error => { launchError = error; }); child.unref();
   for (let attempt = 0; attempt < 100; attempt++) {
-    if (launchError) throw launchError;
-    if (child.exitCode !== null || child.signalCode !== null) throw new Error("Detached host exited before handshake; invocation reserved, do not retry automatically.");
-    if (existsSync(location.socket)) {
+    if (launchError) { discard(); throw launchError; }
+    if (child.exitCode !== null || child.signalCode !== null) { discard(); throw new Error("Detached host exited before handshake; invocation reserved, do not retry automatically."); }
+    if (existsSync(socket)) {
       try {
-        const reply = record(await commandAt(request.directory, request.invocationId, { command: "hello", invocationId: request.invocationId }, location.socket));
+        const reply = record(await commandAt(request.directory, request.invocationId, { command: "hello", invocationId: request.invocationId }, socket));
         const receipt = validateReceipt(reply.receipt, request.invocationId);
         if (receipt.hostInstanceId !== boot.hostInstanceId || receipt.pid !== child.pid || receipt.snapshotDigest !== boot.snapshotDigest || receipt.owner.id !== owner.id) throw new Error("Detached handshake identity conflict.");
-        if (request.autoStart !== false && request.permissions?.includes("execute")) await commandAt(request.directory, request.invocationId, { command: "execute", invocationId: request.invocationId }, location.socket);
+        if (request.autoStart !== false && request.permissions?.includes("execute")) await commandAt(request.directory, request.invocationId, { command: "execute", invocationId: request.invocationId }, socket);
         return receipt;
       } catch (error) {
         if (error instanceof Error && !/ENOENT|ECONNREFUSED/.test(error.message)) throw error;
@@ -487,10 +557,15 @@ function validateReceipt(raw: unknown, id: string): DetachedReceipt {
   if (receipt.contract !== DETACHED_CONTRACT || receipt.invocationId !== id || typeof receipt.pid !== "number" || !Number.isSafeInteger(receipt.pid) || receipt.pid < 1 || receipt.sessionId !== receipt.pid || typeof receipt.hostInstanceId !== "string" || !/^[a-f0-9]{48}$/.test(receipt.hostInstanceId) || owner.id !== localOperator().id || owner.uid !== localOperator().uid || receipt.nativeRuntimeIdentity !== "unsupported") throw new Error("Authorization: invalid detached receipt identity.");
   return receipt as unknown as DetachedReceipt;
 }
-/** The socket the host recorded in its private receipt; a client never re-derives it from its own env. */
+/** The socket the host recorded in its private receipt; a client never re-derives it from its own env. It must sit
+ * in the per-user socket directory under the recorded socketBase, the check the child makes on its boot pin (wb-71q
+ * F3); a receipt from before socketBase existed names its invocation directory's host.sock and keeps it. */
 function recordedSocket(p: ReturnType<typeof paths>, id: string): string {
-  const socketPath = validateReceipt(JSON.parse(readPrivate(p.receipt, DETACHED_MAX_FRAME_BYTES).toString("utf8")), id).socketPath;
+  const receipt = validateReceipt(JSON.parse(readPrivate(p.receipt, DETACHED_MAX_FRAME_BYTES).toString("utf8")), id);
+  const { socketPath, socketBase } = receipt;
   if (typeof socketPath !== "string" || !isAbsolute(socketPath) || Buffer.byteLength(socketPath) > DETACHED_SOCKET_PATH_LIMIT || !socketPath.endsWith(".sock")) throw new Error("Authorization: receipt socket path invalid.");
+  const contained = socketBase === undefined ? socketPath === join(p.directory, "host.sock") : typeof socketBase === "string" && socketWithinBase(socketPath, socketBase, localOperator().uid);
+  if (!contained) throw new Error("Authorization: receipt socket path invalid.");
   return socketPath;
 }
 async function commandAt(root: string, id: string, command: DetachedCommand, knownSocket?: string): Promise<JsonValue> {
@@ -605,7 +680,7 @@ export async function startDetachedHost(bootPath: string, expectedDigest: string
   if (boot.contract !== DETACHED_CONTRACT || boot.owner.id !== localOperator().id) throw new Error("Authorization: boot owner conflict.");
   const request = validateRequest(boot.request); const p = paths(request.directory, request.invocationId);
   if (bootPath !== p.boot) throw new Error("Authorization: boot path mismatch.");
-  if (typeof boot.socket !== "string" || typeof boot.socketBase !== "string" || !isAbsolute(boot.socket) || !boot.socket.endsWith(".sock") || Buffer.byteLength(boot.socket) > DETACHED_SOCKET_PATH_LIMIT || dirname(dirname(boot.socket)) !== resolve(boot.socketBase)) throw new Error("Authorization: boot socket path invalid.");
+  if (typeof boot.socket !== "string" || typeof boot.socketBase !== "string" || !isAbsolute(boot.socket) || !boot.socket.endsWith(".sock") || Buffer.byteLength(boot.socket) > DETACHED_SOCKET_PATH_LIMIT || !socketWithinBase(boot.socket, boot.socketBase, localOperator().uid)) throw new Error("Authorization: boot socket path invalid.");
   privatePath(dirname(boot.socket), "directory");
   privatePath(p.directory, "directory"); verifyFiles(boot.sourcePins);
   if (boot.localProviderTree && identityDigest("local-provider-tree", providerTree(request.cwd)) !== identityDigest("local-provider-tree", boot.localProviderTree)) throw new Error("IDENTITY_CONFLICT: local provider tree changed.");
@@ -663,6 +738,8 @@ export async function startDetachedHost(bootPath: string, expectedDigest: string
     closing = true; controller.abort(); clearTimeout(deadline); clearTimeout(retention);
     clearInterval(idle);
     server.close();
+    // Closing unlinks the socket; a per-launch tmpdir socket directory goes with it, the shared pw-<uid> stays (PF4).
+    if (perLaunchDirectory(boot.socket, receipt.owner.uid)) removeEmptyDirectory(dirname(boot.socket));
     for (const socket of sockets) socket.end();
     // Native waits can ignore cancellation. Bound graceful shutdown, never claim rollback.
     setTimeout(() => process.exit(0), 250).unref();
