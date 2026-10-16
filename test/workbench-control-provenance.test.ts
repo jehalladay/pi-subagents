@@ -16,6 +16,7 @@ import type { CallOptions } from "@furnace/sdk";
 import ts from "typescript";
 import { describe, expect, it, vi } from "vitest";
 import { CapabilityError } from "../src/workbench/capability-registry.js";
+import { ClaudeControlRefusal, type ClaudeInterruptSeam, executeClaudeControl } from "../src/workbench/claude-control.js";
 import * as control from "../src/workbench/control.js";
 import {
   acknowledge,
@@ -42,6 +43,9 @@ const STATE_SINCE = "2026-10-15T07:00:02.719135054+00:00";
 const TIMEOUT_MS = 5_000;
 const RUN: NativeRef = { provider: "furnace", type: "run", id: "frn-run-r1", scope: WS };
 const ATTEMPT: NativeRef = { provider: "furnace", type: "attempt", id: "frn-atm-a1", scope: WS };
+const SESSION_ID = "8f14e45f-ceea-467f-a8d5-2b1c3e6f0a9d";
+const SESSION: NativeRef = { provider: "claude-agent-sdk", type: "session", id: SESSION_ID };
+const SUBAGENT: NativeRef = { provider: "claude-agent-sdk", type: "subagent", id: `${SESSION_ID}:sub-1` };
 
 /** The forge adapter's own workspace and native operation: a uuid4 hex, the id the Forge operations service allocates. */
 const FORGE_WS = "/tmp/provenance-forge-ws";
@@ -234,14 +238,14 @@ interface ProvenanceSubject {
   readonly adapter: string;
   /** A fresh permitted decision decideControl minted for this adapter's provider. */
   permit(): Permit;
+  /** decideControl for this adapter's provider over its own projection, with the request fields overridden. */
+  decide(overrides: Partial<NativeControlRequest>): ControlDecision;
   /** Executes the decision against fresh fakes. `calls` counts every native verb the adapter's seam was asked to issue. */
   attempt(decision: unknown): Promise<{ readonly outcome: "resolved" | "rejected"; readonly error?: unknown; readonly calls: number }>;
   /** The adapter's typed refusal class (a CapabilityError). */
   readonly refusal: abstract new (...args: never[]) => CapabilityError;
   /** A native id of this adapter's target type that the projection never observed, so decideControl would deny it. */
   readonly unobservedTargetId: string;
-  /** What decideControl answers for this adapter's own request aimed at the unobserved id. */
-  decideUnobserved(): ControlDecision;
 }
 
 function furnaceClient() {
@@ -259,11 +263,35 @@ function clock(...ticks: string[]): () => string {
   let tick = 0;
   return () => ticks[Math.min(tick++, ticks.length - 1)];
 }
+/** A Claude session the projection observed owning a subagent: the producer-stated ownership statement decideControl requires. */
+function claudeProjection(): ObservationProjection {
+  const projection = new ObservationProjection();
+  for (const source of [SESSION, SUBAGENT]) {
+    projection.refresh({ source, scope: SCOPE, capturedAt: AT, observedAt: AT, kind: `${source.provider}.${source.type}.snapshot`,
+      node: { title: `${source.provider} ${source.type} ${source.id}`, type: "agent", statusText: "observed-running", statusTone: "active" } });
+  }
+  projection.relate({ scope: SCOPE, from: SESSION, to: SUBAGENT, kind: "ownership", provenance: { source: "claude-agent-sdk", observedAt: AT, nativeConfirmationRef: SESSION_ID } });
+  return projection;
+}
+const claudeDecide = (overrides: Partial<NativeControlRequest> = {}): ControlDecision =>
+  decideControl(request({ grants: ["control:claude-agent-sdk.interrupt"], target: { ...SESSION }, action: "interrupt", ...overrides }),
+    { projection: claudeProjection(), now: () => DECIDED_AT });
+function claudePermit(): Permit {
+  const decision = claudeDecide();
+  if (decision.decision !== "permitted") throw new Error(`expected a permitted decision, got ${JSON.stringify(decision)}`);
+  return decision;
+}
+/** The control seam of one live query: interrupt() is its only verb, and every call is counted. */
+function claudeSeam() {
+  const interrupt = vi.fn(async (): Promise<unknown> => ({ still_queued: [] }));
+  return { seam: { interrupt } as ClaudeInterruptSeam, calls: (): number => interrupt.mock.calls.length };
+}
 
 const SUBJECTS: readonly ProvenanceSubject[] = [
   {
     adapter: "furnace (src/workbench/furnace-control.ts)",
     permit: () => furnacePermit(),
+    decide: overrides => decide(overrides),
     async attempt(decision) {
       const fake = furnaceClient();
       try {
@@ -275,11 +303,28 @@ const SUBJECTS: readonly ProvenanceSubject[] = [
     },
     refusal: FurnaceControlRefusal,
     unobservedTargetId: "frn-run-foreign",
-    decideUnobserved: () => decide({ target: { ...RUN, id: "frn-run-foreign" } }),
+  },
+  {
+    adapter: "claude-agent-sdk (src/workbench/claude-control.ts)",
+    permit: () => claudePermit(),
+    decide: overrides => claudeDecide(overrides),
+    async attempt(decision) {
+      const fake = claudeSeam();
+      try {
+        await executeClaudeControl(decision as ControlDecision, { seam: fake.seam, call: { invocationId: "inv-workflow-1", index: 0, sessionId: SESSION_ID },
+          now: () => ACKED_AT, timeoutMs: TIMEOUT_MS });
+        return { outcome: "resolved", calls: fake.calls() };
+      } catch (error) {
+        return { outcome: "rejected", error, calls: fake.calls() };
+      }
+    },
+    refusal: ClaudeControlRefusal,
+    unobservedTargetId: "0b1c2d3e-0000-4000-8000-000000000000",
   },
   {
     adapter: "forge (src/workbench/forge-control.ts)",
     permit: () => forgePermit(),
+    decide: overrides => decideForge(overrides),
     async attempt(decision) {
       const cancel = vi.fn(async (operationId: string): Promise<CancelReceipt> => decodeCancelResponse(operationId,
         { operation_id: operationId, cancel_intent: "CANCEL_REQUESTED", cancel_acceptance: "ACCEPTED", cancellation_established: false }));
@@ -293,9 +338,15 @@ const SUBJECTS: readonly ProvenanceSubject[] = [
     },
     refusal: ForgeControlRefusal,
     unobservedTargetId: FOREIGN_OP_ID,
-    decideUnobserved: () => decideForge({ target: { ...OPERATION, id: FOREIGN_OP_ID } }),
   },
 ];
+
+/** The SUBJECTS row for one adapter, bound by its name: a reordered table can never re-point an adapter-specific case at another adapter. */
+function subjectNamed(adapter: string): ProvenanceSubject {
+  const rows = SUBJECTS.filter(subject => subject.adapter === adapter);
+  if (rows.length !== 1) throw new Error(`expected exactly one ProvenanceSubject row for ${adapter}, found ${rows.length}`);
+  return rows[0];
+}
 
 describe.each(SUBJECTS)("$adapter refuses a decision the core did not mint", subject => {
   /** The provenance refusal: typed, the unvetted-decision code, the fixed text and no echoed field; no native verb issued. */
@@ -325,7 +376,7 @@ describe.each(SUBJECTS)("$adapter refuses a decision the core did not mint", sub
     expectUnminted(await subject.attempt(Object.freeze({ decision: "permitted", receipt: Object.freeze({ ...genuine.receipt }) })), "frozen copy of a spent receipt");
     // Probe 2: a permit assembled by hand for a target decideControl denies (never observed: cross-scope) once executed.
     const target = Object.freeze({ ...genuine.receipt.target, id: subject.unobservedTargetId });
-    expect(subject.decideUnobserved()).toMatchObject({ decision: "denied", policy: "cross-scope" });
+    expect(subject.decide({ target: { ...target } })).toMatchObject({ decision: "denied", policy: "cross-scope" });
     expectUnminted(await subject.attempt(Object.freeze({ decision: "permitted", receipt: Object.freeze({ ...genuine.receipt, target }) })), "hand-assembled cross-scope permit");
   });
 
@@ -410,7 +461,7 @@ describe("furnace adapter: a decision the core did not mint keeps its typed reas
 });
 
 describe("forge adapter: a decision the core did not mint keeps its typed reason where one exists", () => {
-  const forge = SUBJECTS[1];
+  const forge = subjectNamed("forge (src/workbench/forge-control.ts)");
 
   it("a core denial is refused as denied-decision with the core's category and policy, and a re-wrapped spent receipt stays spent", async () => {
     const denied = await forge.attempt(decideForge({ grants: ["observe:forge.operation"] }));
