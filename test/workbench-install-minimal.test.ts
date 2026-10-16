@@ -32,7 +32,11 @@ describe("scrubbedEnvironment", () => {
   it("returns exactly the four allowlisted keys with fixed names", () => {
     const env = scrubbedEnvironment({ execPath: "/opt/node/bin/node", home: "/h", tmp: "/t" });
     expect(Object.keys(env).sort()).toEqual(["HOME", "LANG", "PATH", "TMPDIR"]);
-    expect(env).toEqual({ PATH: "/opt/node/bin", HOME: "/h", TMPDIR: "/t", LANG: "C.UTF-8" });
+    // Names-only projection: compare keys, then each value against its fixed fake as a boolean, so a
+    // value-sourcing regression never prints the offending (possibly ambient, secret-bearing) value.
+    const fakes = { PATH: "/opt/node/bin", HOME: "/h", TMPDIR: "/t", LANG: "C.UTF-8" };
+    expect(Object.keys(env).sort()).toEqual(Object.keys(fakes).sort());
+    for (const [name, fake] of Object.entries(fakes)) expect(Reflect.get(env, name) === fake, `value of ${name} differs from its fixed fake`).toBe(true);
   });
 
   it("contributes nothing from a seeded process environment", () => {
@@ -44,8 +48,10 @@ describe("scrubbedEnvironment", () => {
     }
     try {
       const env = scrubbedEnvironment({ execPath: "/opt/node/bin/node", home: "/h", tmp: "/t" });
+      // Names-only projection: count seeded values found in the serialized env; never not.toContain over the raw text.
       const text = JSON.stringify(env);
-      for (const value of Object.values(seeded)) expect(text).not.toContain(value);
+      const leakedSeededValues = Object.values(seeded).filter(value => text.includes(value)).length;
+      expect(leakedSeededValues, "seeded process.env values reached the scrubbed environment").toBe(0);
       expect(Object.keys(env).some(key => /^(ANTHROPIC|AWS|CLAUDE|OPENAI|GITHUB|NPM_|NODE_OPTIONS|NODE_PATH)/.test(key))).toBe(false);
     } finally {
       for (const [key, value] of Object.entries(saved)) {
@@ -233,6 +239,22 @@ describe("harness sources and wiring", () => {
       expect(source).not.toMatch(/env:\s*process\.env\b/);
     });
   }
+
+  it("the probe call site pins the real write, remove, root and own-uid wiring so a stubbed probe cannot pass the default gate (F3, kills MW2/MW4)", () => {
+    const probe = readRepo("qa/workbench/installed-minimal.mjs");
+    expect(probe).toContain("probeInstalledWrite({root:installedRoot,uid,write:writeFileSync,remove:rmSync})");
+    expect(probe).toContain("rmSync");
+    expect(probe).toMatch(/import \{rmSync,writeFileSync\} from 'node:fs'/);
+    expect(probe).toMatch(/const installedRoot=resolve\(dirname\(fileURLToPath\(import\.meta\.resolve\('@tintinweb\/pi-subagents\/dist\/workbench\/identity\.js'\)\)\),'\.\.\/\.\.'\)/);
+  });
+
+  it("the probe reads its own uid from process.getuid and forwards readOnlyReason into the receipt so the runner cross-check has a real subject (F2, kills MW3/MW5)", () => {
+    const probe = readRepo("qa/workbench/installed-minimal.mjs");
+    expect(probe).toContain("const uid=typeof process.getuid==='function'?process.getuid():undefined;");
+    expect(probe).toContain("const {readOnlyEnforced,readOnlyReason}=probeInstalledWrite(");
+    expect(probe).toContain("...(readOnlyReason?{readOnlyReason}:{})");
+    expect(probe).toContain("readOnlyEnforced,");
+  });
 
   it("the runner spawns the probe with the scrubbed environment only", () => {
     const source = readRepo("qa/workbench/install-minimal.mjs");
