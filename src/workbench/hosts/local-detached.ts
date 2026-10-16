@@ -39,6 +39,7 @@ import { runWorkflow, validateScript, type WorkflowHost } from "../../workflow/r
 import { CapabilityError, CapabilityRegistry, type JsonValue, validatedCapabilityJson } from "../capability-registry.js";
 import { type ClaudeWorkflowHostOptions, createClaudeWorkflowHost } from "../claude-host.js";
 import { captureInvocationIdentity, type IdentityCaptureInput, type InvocationSnapshot, identityDigest, WORKFLOW_SCRIPT_SCHEMA_VERSION } from "../identity.js";
+import { scrubbedEnvironment } from "../process-env.js";
 import { registerNativeForgeGateStatus } from "../providers/forge.js";
 import { registerNativeFurnaceRunInspect } from "../providers/furnace.js";
 import { registerNativeHyperUnixFind } from "../providers/hyperunix.js";
@@ -239,6 +240,17 @@ function socketWithinBase(socket: string, base: string, uid: number): boolean {
 const socketDirectoryName = (uid: number): RegExp => new RegExp(`^pw-${uid}(-[A-Za-z0-9]{${PER_LAUNCH_TEMPLATE.length}})?$`);
 /** A per-launch tmpdir socket directory (pw-<uid>-XXXXXX): the only kind a host removes as it stops. */
 const perLaunchDirectory = (socket: string, uid: number): boolean => socketDirectoryName(uid).exec(basename(dirname(socket)))?.[1] !== undefined;
+/** The host's file-creation mask. It binds its socket under it, so the socket first exists at HOST_SOCKET_BIND_MODE
+ * (0700) and becomes 0600 only in the listening callback. */
+const DETACHED_HOST_UMASK = 0o077;
+const HOST_SOCKET_BIND_MODE = 0o777 & ~DETACHED_HOST_UMASK;
+/** An owned socket still at the bind mode is the host mid-bind, not yet the private socket a handshake needs: the
+ * launcher waits it out instead of refusing it (wb-70b launcher race). Every other state goes on to the private-path
+ * check, which refuses anything but an owned 0600 socket. */
+function hostMidBind(path: string, uid: number): boolean {
+  const stat = lstatSync(path, { throwIfNoEntry: false });
+  return stat?.isSocket() === true && stat.uid === uid && (stat.mode & 0o7777) === HOST_SOCKET_BIND_MODE;
+}
 /** Removes a directory only when it is empty; anything left inside keeps it. */
 function removeEmptyDirectory(path: string): void {
   try { rmdirSync(path); } catch {}
@@ -530,14 +542,17 @@ export async function launchDetachedWorkflow(raw: DetachedLaunchRequest, placeme
   try { reserveInvocation(p.directory, request.invocationId); prepared = prepareBoot(request, owner, p, socket, location.base); }
   catch (error) { discard(); throw error; }
   const { boot, bootDigest, hostEntrypoint, root } = prepared;
-  const env = { ...process.env }; delete env.NODE_OPTIONS; delete env.NODE_PATH;
+  // Allowlist, never subtraction: the detached host gets the named operational
+  // variables (src/workbench/process-env.ts) and no credential, whatever the
+  // operator's shell holds; it authenticates through the SDK's own store (wb-ksz, W19).
+  const env = scrubbedEnvironment(process.env);
   const child = spawn(process.execPath, [hostEntrypoint, "--serve", p.boot, bootDigest], { cwd: root, env, detached: true, stdio: "ignore", shell: false });
   let launchError: Error | undefined;
   child.on("error", error => { launchError = error; }); child.unref();
   for (let attempt = 0; attempt < 100; attempt++) {
     if (launchError) { discard(); throw launchError; }
     if (child.exitCode !== null || child.signalCode !== null) { discard(); throw new Error("Detached host exited before handshake; invocation reserved, do not retry automatically."); }
-    if (existsSync(socket)) {
+    if (existsSync(socket) && !hostMidBind(socket, owner.uid)) {
       try {
         const reply = record(await commandAt(request.directory, request.invocationId, { command: "hello", invocationId: request.invocationId }, socket));
         const receipt = validateReceipt(reply.receipt, request.invocationId);
@@ -673,7 +688,7 @@ export function createDetachedWorkflowHost({ request, registry, principal, signa
 }
 /** Internal child entry, exported for the explicit detached Node bootstrap only. */
 export async function startDetachedHost(bootPath: string, expectedDigest: string): Promise<void> {
-  process.umask(0o077);
+  process.umask(DETACHED_HOST_UMASK);
   const bytes = readPrivate(bootPath, 8 * DETACHED_MAX_FRAME_BYTES);
   if (hash(bytes) !== expectedDigest) throw new Error("IDENTITY_CONFLICT: boot bytes changed.");
   const boot = JSON.parse(bytes.toString("utf8")) as Boot;

@@ -388,3 +388,56 @@ describe("detached invocation reuse, socket placement and cleanup (wb-70b)", () 
     expect(readdirSync(base).filter(name => PER_LAUNCH_DIR.test(name))).toEqual([basename(dirname(crashed.socketPath))]);
   }, 30000);
 });
+
+/** The socket path a launch of `id` under the private runtime base `xdg` uses, with its pw-<uid> directory made private. */
+function heldSocketPath(f: ReturnType<typeof fixture>, id: string, xdg: string): string {
+  const { socket } = resolveDetachedSocket(f.root, id, { env: { XDG_RUNTIME_DIR: xdg } });
+  mkdirSync(dirname(socket), { recursive: true, mode: 0o700 }); chmodSync(dirname(socket), 0o700);
+  return socket;
+}
+/** A stand-in Unix socket at `path` with exact `mode`, so the launched host cannot bind there. */
+async function holdSocket(path: string, mode: number): Promise<() => Promise<void>> {
+  const holder = createServer();
+  await new Promise<void>(resolveListen => holder.listen(path, () => resolveListen()));
+  chmodSync(path, mode);
+  return () => new Promise<void>(resolveClose => holder.close(() => resolveClose()));
+}
+/** The host writes its receipt before it binds, so a launch refused before its handshake still names the host to wait for. */
+async function hostGone(root: string, id: string): Promise<boolean> {
+  const receipt = join(root, id, "receipt.json");
+  for (let i = 0; i < 250 && !existsSync(receipt); i++) await new Promise(r => setTimeout(r, 20));
+  return gone((JSON.parse(readFileSync(receipt, "utf8")) as { pid: number }).pid);
+}
+const socketRefusal = (path: string): string => `Authorization: socket must be owned by uid ${uid} with exact private permissions: ${path}.`;
+
+describe("the launch handshake and the host's socket bind mode (wb-70b re-cut, launcher race)", () => {
+  it("waits out an owned socket still at the host's bind mode (0700, before the listening callback sets 0600) instead of refusing it, so the host's own fate decides the launch", async () => {
+    const f = fixture("mb-");
+    const xdg = private0700("rt-mb-");
+    const socket = heldSocketPath(f, "mid-bind", xdg);
+    const release = await holdSocket(socket, 0o700);
+    try {
+      const error = await refusal(launchDetachedWorkflow(request(f, "mid-bind"), { env: { XDG_RUNTIME_DIR: xdg } }));
+      expect((error as Error).message).not.toBe(socketRefusal(socket));
+      // The host cannot bind the held path, so it exits; the launch reports that, never an authorization refusal.
+      expect((error as Error).message).toBe("Detached host exited before handshake; invocation reserved, do not retry automatically.");
+      expect(await hostGone(f.root, "mid-bind")).toBe(true);
+    } finally { await release(); }
+  }, 30000);
+
+  it("still refuses at once anything else at the launch's socket path: a regular file at the bind mode, or a socket at any mode but the bind mode", async () => {
+    const f = fixture("nb-");
+    const xdg = private0700("rt-nb-");
+    const placement = { env: { XDG_RUNTIME_DIR: xdg } };
+    const file = heldSocketPath(f, "not-a-socket", xdg);
+    writeFileSync(file, ""); chmodSync(file, 0o700);
+    expect((await refusal(launchDetachedWorkflow(request(f, "not-a-socket"), placement)) as Error).message).toBe(socketRefusal(file));
+    expect(await hostGone(f.root, "not-a-socket")).toBe(true);
+    const open = heldSocketPath(f, "open-mode", xdg);
+    const release = await holdSocket(open, 0o755);
+    try {
+      expect((await refusal(launchDetachedWorkflow(request(f, "open-mode"), placement)) as Error).message).toBe(socketRefusal(open));
+      expect(await hostGone(f.root, "open-mode")).toBe(true);
+    } finally { await release(); }
+  }, 30000);
+});

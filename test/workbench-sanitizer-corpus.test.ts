@@ -30,6 +30,7 @@ import { type ClaudeTopologyInput, projectClaudeTopology } from "../src/workbenc
 import type { WorkflowSource } from "../src/workbench/designer.js";
 import { projectDetachedReading } from "../src/workbench/detached-observer.js";
 import { type EvidenceLoader, EvidenceStore } from "../src/workbench/evidence-loader.js";
+import { buildWorkflowExecuteReply, decideExecute, EXECUTE_GRANT, type ExecuteDecision, type LaunchOutcome, type WorkflowExecuteRequest } from "../src/workbench/execute.js";
 import { readForgeOperationEvidence } from "../src/workbench/forge-evidence.js";
 import { forgeGateTopology } from "../src/workbench/forge-observer.js";
 import { readFurnaceAttemptLogEvidence } from "../src/workbench/furnace-evidence.js";
@@ -479,6 +480,40 @@ function replyTexts(raw: string): string[] {
   return [catalog, inspect].flatMap(reply => [...strings(reply), ...strings(JSON.parse(sanitizeWorkbenchJsonText(reply)))]);
 }
 
+/**
+ * DIRECT-CALLER row (wb-69g.5 respin U1, BOUNDARY 21:00Z F6 rule; cax.13 O1 precedent): site 12 is execute.ts itself, not the
+ * sanitizeWorkbenchJsonText proxy above. buildWorkflowExecuteReply renders five display paths, and its policy echo goes through
+ * sanitizeWorkbenchJson, which names no layout, so this row drives the real reply through every one with the probe as the only
+ * hostile member: the launch reason, a policy value and key, a native reference id and scope, the definition id, and the
+ * invocation reference (admitted and refused replies). An identity member refuses unsafe text typed rather than deleting it, so
+ * its typed refusal is what is displayed then.
+ */
+function executeTexts(raw: string): string[] {
+  const definition = { kind: "script" as const, id: "review.js", schemaVersion: WORKFLOW_SCRIPT_SCHEMA_VERSION, artifactDigest: `sha256:${"e".repeat(64)}` };
+  const ref: NativeRef = { provider: "furnace", type: "run", id: "frn-run-execute", scope: "/tmp/execute-ws" };
+  const decide = (overrides: Partial<WorkflowExecuteRequest>, invocationId = "inv-execute-corpus", grants = [EXECUTE_GRANT]): ExecuteDecision =>
+    decideExecute({ definitionRef: { ...definition }, input: { topic: "corpus" }, hostMode: "embedded", ...overrides }, { grants, invocationId });
+  const shown = (decision: ExecuteDecision, outcome: LaunchOutcome): string[] => {
+    try {
+      return strings(buildWorkflowExecuteReply(decision, outcome));
+    } catch (error) {
+      // A native reference carrying an unsafe unit is a typed host defect; its constant message is the display.
+      if (error instanceof CapabilityError) return [error.message];
+      throw error;
+    }
+  };
+  const paths = [
+    shown(decide({}), { status: "refused", reason: raw }),
+    shown(decide({ policy: { note: raw, [raw]: raw } }), { status: "launched", nativeRefs: [ref] }),
+    shown(decide({}), { status: "launched", nativeRefs: [{ ...ref, id: raw, scope: raw }] }),
+    shown(decide({ definitionRef: { ...definition, id: raw } }), { status: "accepted" }),
+    shown(decide({}, raw), { status: "launched", nativeRefs: [ref] }),
+    shown(decide({}, raw, []), { status: "accepted" }),
+  ];
+  if (paths.some(texts => texts.length === 0)) throw new Error("an execute display path produced no text");
+  return paths.flat();
+}
+
 /** Site 22: observe-query.ts clean(), through every producer string of a workflow_observe reply node. */
 function observeTexts(raw: string): string[] {
   const node: ObservedNode = {
@@ -550,6 +585,7 @@ const SITES: readonly Site[] = [
   { site: "site 18 detached-observer.ts shown (projectDetachedReading)", texts: detachedTexts },
   { site: "src/index.ts workflow_detached launch/inspect catch (DIRECT-CALLER, the detached refusal text)", texts: detachedCatchTexts },
   { site: "sites 19/20 workflow_inspect and workbench_catalog replies", texts: replyTexts },
+  { site: "site 12 execute.ts buildWorkflowExecuteReply (DIRECT-CALLER: reason, policy value and key, native reference id and scope, definition id, invocation reference)", texts: executeTexts },
   { site: "site 22 observe-query.ts clean (observeInvocation)", texts: observeTexts },
   { site: "wb-h8f.10 latency.ts displayText (selectLatencyDecomposition provider and evidence paths)", texts: latencyTexts },
 ];

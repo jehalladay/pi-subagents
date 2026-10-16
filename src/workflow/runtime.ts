@@ -865,6 +865,12 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
 
   const worker = new Worker(WORKER_SOURCE, {
     eval: true,
+    // Nothing is the interpreter's environment allowlist: the script realm
+    // runs no subprocess, opens no file and resolves no proxy, so a VM escape
+    // to this thread finds no credential in process.env. Without the option
+    // Node hands the worker a copy of the parent's environment (wb-ksz, W19;
+    // the detached seam in hosts/local-detached.ts takes the named allowlist).
+    env: {},
     workerData: {
       body,
       metaJson: JSON.stringify(meta),
