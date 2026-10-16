@@ -116,3 +116,7 @@ timeout = 180
 [build.commands.status-ledger]
 command = "node qa/workbench/status-ledger.mjs"
 timeout = 60
+
+[build.commands.timeline-grouped-bench]
+command = "node qa/workbench/timeline-grouped-bench.mjs"
+timeout = 300
