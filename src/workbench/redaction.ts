@@ -4,21 +4,32 @@ import type { JsonValue } from "./capability-registry.js";
 /** The bound every sanitizer applies unless its caller names a tighter one. */
 export const WORKBENCH_TEXT_LIMIT = 2000;
 const REDACTED = "[REDACTED]";
+/**
+ * What BEARER and PREFIXED write until ASSIGNED has read the text (wb-3l3): a stand-in ASSIGNED never takes for a whole
+ * value, so an assignment whose value they rewrote still loses its whole unquoted tail. It becomes REDACTED before output,
+ * and so does a U+0001 the text already held (over-redaction only: sanitizeWorkbenchText never passes an unsafe unit here).
+ */
+const PENDING = "\x01";
 /** The credential schemes, key prefixes and assignment keys, spelled once for the shapes below and the reading in cover. */
 const SCHEMES = "Bearer|Basic";
 const KEY_PREFIXES = "sk-ant-|sk-proj-|ghp_|github_pat_";
 const ASSIGNMENT_KEYS = "api[_-]?key|access[_-]?token|refresh[_-]?token|password|secret|aws_secret_access_key|aws_session_token";
-/** The three credential shapes, in the order redactWorkbenchText applies them. */
+/**
+ * The three credential shapes, in the order redactWorkbenchText applies them. ASSIGNED first takes a marker an earlier
+ * pass left as a whole value, but only before closing brackets and a value end, so a second pass keeps that marker and
+ * any text glued to it is still read as the value (docs/20 ruling 2).
+ */
 const BEARER = new RegExp(String.raw`\b(?:${SCHEMES})\s+[^\s,;"']+`, "gi");
 const PREFIXED = new RegExp(String.raw`\b(?:${KEY_PREFIXES})[a-zA-Z0-9_-]+`, "g");
-const ASSIGNED = new RegExp(String.raw`((?:${ASSIGNMENT_KEYS})["']?\s*[=:]\s*)(?:"[^"\n]*"|'[^'\n]*'|[^\s,;]+)`, "gi");
+const ASSIGNED = new RegExp(String.raw`((?:${ASSIGNMENT_KEYS})["']?\s*[=:]\s*)(?:\[REDACTED\](?=[}\]]*(?:$|[\s,;]))|"[^"\n]*"|'[^'\n]*'|[^\s,;]+)`, "gi");
 
 function bounded(value: string, maxTextLength: number): string {
   return value.length > maxTextLength ? `${value.slice(0, Math.max(0, maxTextLength - 20))} [truncated]` : value;
 }
 
 export function redactWorkbenchText(value: string, maxTextLength = WORKBENCH_TEXT_LIMIT): string {
-  return bounded(value.replace(BEARER, REDACTED).replace(PREFIXED, REDACTED).replace(ASSIGNED, `$1${REDACTED}`), maxTextLength);
+  const assigned = value.replace(BEARER, PENDING).replace(PREFIXED, PENDING).replace(ASSIGNED, `$1${REDACTED}`);
+  return bounded(assigned.replaceAll(PENDING, REDACTED), maxTextLength);
 }
 
 /**

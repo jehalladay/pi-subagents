@@ -46,7 +46,7 @@ describe("forge-operation evidence reader", () => {
   });
 
   it("C1: refs that are not a validated forge-operation:<id> refuse validation and never reach the seam", async () => {
-    const refs = ["", "forge-operation:", "forge-operation: x", "forge-operation:a b", "forge-operation:\u001b[31mx", "forge-operation:x‮y", `forge-operation:${"a".repeat(257)}`,
+    const refs = ["", "forge-operation:", "forge-operation: x", "forge-operation:a b", "forge-operation:\u001b[31mx", "forge-operation:x\u202Ey", `forge-operation:${"a".repeat(257)}`,
       "claude-message:abc", "forge:gate.status:FORGE_OK", "FORGE-OPERATION:abc", "forge-operation", " forge-operation:abc"];
     for (const ref of refs) {
       const { read, deps: d } = deps();
@@ -166,16 +166,17 @@ describe("forge-operation evidence reader", () => {
   it("C4: producer text is redacted and stripped, and no raw payload member is retained", async () => {
     const planted = "Bearer SECRET-TOKEN-123";
     const source = reading([{ ...current("code:a", "success"), unverified_reason: "password=hunter2", raw_body: "RAW-BODY-MARKER".repeat(100), nested: { secret: "RAW-NESTED" } },
-      { ...historical("code:\u001b[31mred"), unverified_reason: `${planted} \u001b[2Jwipe‮` }]);
+      { ...historical("code:\u001b[31mred"), unverified_reason: `${planted} \u001b[2Jwipe\u202E` }]);
     const content = await readForgeOperationEvidence(`forge-operation:${OPERATION}`, deps({}, source).deps).catch((error: unknown) => error);
     // An unprintable package ref is a producer-identity violation: refused, never mangled into a different identity.
     expect(content).toBeInstanceOf(CapabilityError);
+    expect((content as CapabilityError).category).toBe("transport"); // measured: a malformed producer reading is a transport-class failure
     const clean = reading([{ ...current("code:a", "success"), unverified_reason: "password=hunter2", raw_body: "RAW-BODY-MARKER".repeat(100), nested: { secret: "RAW-NESTED" } },
-      { ...historical("code:b"), unverified_reason: `${planted} \u001b[2Jwipe‮​` }]);
+      { ...historical("code:b"), unverified_reason: `${planted} \u001b[2Jwipe\u202E\u200B` }]);
     const loaded = await readForgeOperationEvidence(`forge-operation:${OPERATION}`, deps({}, clean).deps);
     const everything = JSON.stringify(loaded);
-    expect(everything).not.toMatch(/hunter2|SECRET-TOKEN|RAW-BODY|RAW-NESTED|wipe‮/);
-    for (const line of loaded.preview) expect(line).not.toMatch(/[\u0000-\u001f\u007f-\u009f​-‏⁠﻿‪-‮⁦-⁩]/);
+    expect(everything).not.toMatch(/hunter2|SECRET-TOKEN|RAW-BODY|RAW-NESTED|wipe\u202E/);
+    for (const line of loaded.preview) expect(line).not.toMatch(/[\u0000-\u001f\u007f-\u009f\u200B-\u200F\u2060\uFEFF\u202A-\u202E\u2066-\u2069]/);
     expect(Object.keys(loaded).sort()).toStrictEqual(["bytes", "capturedAt", "freshness", "kind", "preview", "producerReceipt", "provider", "statusText", "truncated"]);
   });
 
@@ -195,8 +196,11 @@ describe("forge-operation evidence reader", () => {
     expect(tight.preview.at(-1)).toMatch(/\[truncated\]/);
 
     const wide = await readForgeOperationEvidence(`forge-operation:${OPERATION}`, deps({}, reading([current(`code:${"w".repeat(240)}`, "success")])).deps).catch((error: unknown) => error);
-    if (wide instanceof CapabilityError) expect(wide.category).toBe("validation");
-    else for (const line of wide.preview) expect(line.length).toBeLessThanOrEqual(220);
+    // Measured: an over-wide ref is loaded, never refused; every preview line is clamped to the 220-character bound.
+    expect(wide).not.toBeInstanceOf(CapabilityError);
+    if (wide instanceof CapabilityError) throw wide;
+    expect(wide.preview.length).toBeGreaterThan(0);
+    expect(Math.max(...wide.preview.map((line) => line.length))).toBeLessThanOrEqual(220);
   });
 
   it("C4: an invalid byte budget refuses validation before the seam runs", async () => {
