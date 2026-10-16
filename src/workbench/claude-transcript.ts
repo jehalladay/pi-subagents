@@ -4,6 +4,7 @@ import { getSessionMessages, type SDKMessage, type SessionMessage } from "@anthr
 import type { ClaudeNativeObservation } from "../workflow/progress.js";
 import type { WorkflowSpawnResult } from "../workflow/runtime.js";
 import type { ClaudeCallIdentity } from "./claude-host.js";
+import { sanitizeWorkbenchText } from "./redaction.js";
 
 /** At most 64 sampled snapshots per call plus its terminal acknowledgement. */
 export function createClaudeObserver(emit: (call: ClaudeCallIdentity, snapshot: ClaudeNativeObservation) => void) {
@@ -69,24 +70,48 @@ export function createClaudeObserver(emit: (call: ClaudeCallIdentity, snapshot: 
   };
 }
 
+export const CLAUDE_TRANSCRIPT_ROW_CHARS = 500;
+export const CLAUDE_TRANSCRIPT_MAX_ROWS = 100;
+
+/** The session reader seam; production passes the SDK function, tests inject a fixture. */
+export type ClaudeSessionReader = (sessionId: string, options?: { dir?: string; limit?: number }) => Promise<SessionMessage[]>;
+
 export interface ClaudeTranscriptRow {
   type: "user" | "assistant" | "system";
   uuid: string;
   text: string;
+  /** Present, and only ever `true`, when the row bound cut the text (wb-idq truncation honesty); an uncut row has no such key. */
+  clipped?: true;
 }
 
-function summary(message: SessionMessage): string {
+function rawText(message: SessionMessage): string {
   const payload = message.message;
   if (!payload || typeof payload !== "object") return "(no text)";
   const content = (payload as { content?: unknown }).content;
-  if (typeof content === "string") return content.slice(0, 500);
+  if (typeof content === "string") return content;
   if (!Array.isArray(content)) return "(no text)";
   return content
     .filter((part): part is { type: "text"; text: string } =>
       typeof part === "object" && part !== null && part.type === "text" && typeof part.text === "string")
     .map(part => part.text)
-    .join("\n")
-    .slice(0, 500) || "(tool or non-text content)";
+    .join("\n") || "(tool or non-text content)";
+}
+
+/** Clip to the row bound on a code-point boundary, so a clipped row never ends in half of a surrogate pair, and say whether it cut. */
+function clipRow(text: string): { text: string; clipped: boolean } {
+  if (text.length <= CLAUDE_TRANSCRIPT_ROW_CHARS) return { text, clipped: false };
+  const last = text.charCodeAt(CLAUDE_TRANSCRIPT_ROW_CHARS - 1);
+  return { text: text.slice(0, last >= 0xd800 && last <= 0xdbff ? CLAUDE_TRANSCRIPT_ROW_CHARS - 1 : CLAUDE_TRANSCRIPT_ROW_CHARS), clipped: true };
+}
+
+/**
+ * SITE 21 of the wb-952 census: the whole row text through the ONE shared display helper with its NAMED "lines" layout
+ * (transcript-class bodies), unbounded, then the row clip. The helper redacts over every reading of every gap before it
+ * renders any of them, so nothing is deleted before redaction has read it; LF row structure survives and every other
+ * unsafe unit is dropped. No local pre-pass: deleting or rewriting a unit here first would glue tokens the helper must see.
+ */
+function summary(message: SessionMessage): { text: string; clipped: boolean } {
+  return clipRow(sanitizeWorkbenchText(rawText(message), Number.MAX_SAFE_INTEGER, "lines"));
 }
 
 /** SDK session_id only; never reinterpret it as a Pi AgentRecord id. */
@@ -94,7 +119,12 @@ export async function readClaudeTranscript(
   sessionId: string,
   cwd: string,
   limit = 40,
+  read: ClaudeSessionReader = getSessionMessages,
 ): Promise<ClaudeTranscriptRow[]> {
-  const messages = await getSessionMessages(sessionId, { dir: cwd, limit: Math.min(Math.max(1, limit), 100) });
-  return messages.map(message => ({ type: message.type, uuid: message.uuid, text: summary(message) }));
+  const messages = await read(sessionId, { dir: cwd, limit: Math.min(Math.max(1, limit), CLAUDE_TRANSCRIPT_MAX_ROWS) });
+  // uuid and type pass through untouched; only the text is sanitized (see summary). A cut row says so, and only a cut row.
+  return messages.map(message => {
+    const { text, clipped } = summary(message);
+    return { type: message.type, uuid: message.uuid, text, ...(clipped ? { clipped: true as const } : {}) };
+  });
 }
