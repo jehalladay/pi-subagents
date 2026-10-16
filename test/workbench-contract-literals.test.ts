@@ -10,9 +10,11 @@ import { join, relative } from "node:path";
 import { describe, expect, it } from "vitest";
 import { ATTENTION_CONTRACT } from "../src/workbench/attention.js";
 import { BEADS_WORK_CONTRACT } from "../src/workbench/beads-observer.js";
+import { CLAUDE_EVIDENCE_CONTRACT } from "../src/workbench/claude-evidence.js";
 import { CONTROL_CONTRACT_VERSION } from "../src/workbench/control.js";
 import { EVIDENCE_CONTRACT } from "../src/workbench/evidence-loader.js";
 import { EXECUTABLE_IDENTITY_CONTRACT } from "../src/workbench/executable-identity.js";
+import { EXECUTE_CONTRACT_VERSION } from "../src/workbench/execute.js";
 import { FURNACE_EVIDENCE_CONTRACT } from "../src/workbench/furnace-evidence.js";
 import { FURNACE_EXTERNAL_OBSERVATION_CONTRACT } from "../src/workbench/furnace-observer.js";
 import { FURNACE_HOSTED_CONTRACT } from "../src/workbench/hosts/furnace-hosted.js";
@@ -72,6 +74,9 @@ const CARRIERS: Readonly<Record<string, string>> = {
   "workbench.observe/v1": "workbench/observe-query.ts",
   "workbench.telemetry/v1": "workbench/telemetry.ts",
   "workbench.telemetry.event/v1": "workbench/telemetry.ts",
+  // Absorbed at the d204be3 re-cut under the same rule: wb-6ze.10 claude evidence and wb-69g.5 execute contract.
+  "workbench.claude-evidence/v1": "workbench/claude-evidence.ts",
+  "workbench.execute/v1": "workbench/execute.ts",
 };
 
 /** An excluded spelling: exact file, the reason, and the literal it still spells (so a stale exclusion goes red). */
@@ -140,6 +145,18 @@ function staleExclusions(files: ReadonlyMap<string, string>, exclusions: Exclusi
     .filter(([literal, { file }]) => !(files.get(file) ?? "").includes(`"${literal}"`) && !(files.get(file) ?? "").includes(`'${literal}'`))
     .map(([literal, { file }]) => `${literal} in ${file}`);
 }
+/**
+ * O2 (owner ruling 18:3xZ R1): every purity-excluded literal must be a CARRIERS key whose carrier is a DIFFERENT file than
+ * the excluded observer, so a provider contract bump (re-keyed CARRIERS) cannot hide behind an exclusion row that keeps
+ * spelling the old literal.
+ */
+function purityViolations(carriers: Readonly<Record<string, string>>, exclusions: ExclusionTable): string[] {
+  return Object.entries(exclusions).flatMap(([literal, { file }]) => {
+    const carrier = carriers[literal];
+    if (carrier === undefined) return [`${literal}: not a CARRIERS key`];
+    return carrier === file ? [`${literal}: carried by the excluded file ${file}`] : [];
+  });
+}
 function carrierTable(files: ReadonlyMap<string, string>, exclusions: ExclusionTable): Record<string, string> {
   const actual: Record<string, string> = {};
   for (const item of census(files)) if (exclusions[item.literal]?.file !== item.file) actual[item.literal] ??= item.file;
@@ -183,6 +200,21 @@ describe("contract literals have one carrier each", () => {
     expect(staleExclusions(moved, exclusions)).toEqual(["x.y/v1 in workbench/reserved.ts"]);
   });
 
+  it("O2: every purity-excluded literal is a CARRIERS key carried by a different file (the real tables satisfy it)", () => {
+    expect(purityViolations(CARRIERS, OBSERVER_PURITY)).toEqual([]);
+  });
+
+  it("O2 red-first (gate mutant D1): a provider bumped to /v2 with CARRIERS re-keyed leaves the observer's /v1 row without a carrier and is reported by literal", () => {
+    const bumped: Readonly<Record<string, string>> = { ...CARRIERS, "forge.gate.status/v2": "workbench/providers/forge.ts" };
+    const { "forge.gate.status/v1": _dropped, ...rekeyed } = bumped;
+    expect(purityViolations(rekeyed, OBSERVER_PURITY)).toEqual(["forge.gate.status/v1: not a CARRIERS key"]);
+  });
+
+  it("O2: an exclusion row whose carrier is the excluded file itself is reported (the carrier must be a different file)", () => {
+    const selfCarried: Readonly<Record<string, string>> = { ...CARRIERS, "hyperunix.find/v1": "workbench/hyperunix-observer.ts" };
+    expect(purityViolations(selfCarried, OBSERVER_PURITY)).toEqual(["hyperunix.find/v1: carried by the excluded file workbench/hyperunix-observer.ts"]);
+  });
+
   it("exported constants carry the pinned values (the docs/17 fixture test)", () => {
     expect({
       FORGE_GATE_STATUS_CONTRACT, FURNACE_RUN_INSPECT_CONTRACT, HYPERUNIX_FIND_CONTRACT, REACTIVEFIBER_RENDER_PREVIEW_CONTRACT, REACTIVE_FIBER_CLI_SCHEMA,
@@ -191,6 +223,7 @@ describe("contract literals have one carrier each", () => {
       BEADS_WORK_CONTRACT, FURNACE_EXTERNAL_OBSERVATION_CONTRACT, HYPERUNIX_OBSERVATION_CONTRACT, REACTIVEFIBER_OBSERVATION_CONTRACT,
       EXECUTABLE_IDENTITY_CONTRACT, FURNACE_HOSTED_CONTRACT, PATCH_PROPOSAL_CONTRACT, VALIDATE_REPLY_CONTRACT_VERSION,
       LATENCY_CONTRACT, OBSERVE_CONTRACT, TELEMETRY_CONTRACT, TELEMETRY_EVENT_CONTRACT,
+      CLAUDE_EVIDENCE_CONTRACT, EXECUTE_CONTRACT_VERSION,
     }).toEqual({
       FORGE_GATE_STATUS_CONTRACT: "forge.gate.status/v1",
       FURNACE_RUN_INSPECT_CONTRACT: "furnace.run.inspect/v1",
@@ -220,6 +253,8 @@ describe("contract literals have one carrier each", () => {
       OBSERVE_CONTRACT: "workbench.observe/v1",
       TELEMETRY_CONTRACT: "workbench.telemetry/v1",
       TELEMETRY_EVENT_CONTRACT: "workbench.telemetry.event/v1",
+      CLAUDE_EVIDENCE_CONTRACT: "workbench.claude-evidence/v1",
+      EXECUTE_CONTRACT_VERSION: "workbench.execute/v1",
     });
   });
 
