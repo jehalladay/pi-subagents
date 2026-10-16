@@ -1,0 +1,108 @@
+{
+  "contract": "workbench.operator-journey/v2",
+  "utc": "2026-10-15T22:35:49.543Z",
+  "revision": "e07474a",
+  "node": "v24.20.0",
+  "platform": "linux",
+  "arch": "x64",
+  "pi": "1.2.0",
+  "settings": {
+    "workflowsEnabled": true,
+    "workbench": {
+      "workflowAgentBackend": "claude",
+      "model": "claude-opus-5-5",
+      "permissionMode": "dontAsk",
+      "settingSources": [],
+      "tools": [],
+      "capabilityGrants": [
+        "workbench:observe"
+      ]
+    }
+  },
+  "preflight": {
+    "requestedModel": "claude-opus-5-5",
+    "nativeModels": [
+      "openai.gpt-6.1-sol"
+    ],
+    "sessionIds": [
+      "95c9f087-08cf-4e6d-9551-52466b2991de"
+    ],
+    "status": "completed",
+    "at": "2026-10-15T22:35:53.201Z"
+  },
+  "journeys": {
+    "completion": {
+      "captureRef": "completion.capture.txt",
+      "launchAt": "2026-10-15T22:35:53.202Z",
+      "toolStartedAt": "2026-10-15T22:35:59.585Z",
+      "firstLiveFrameAt": "2026-10-15T22:35:59.585Z",
+      "sessionIdSeenAt": "2026-10-15T22:36:00.944Z",
+      "completionSeenAt": "2026-10-15T22:36:31.326Z",
+      "inspectionPromptSentAt": "2026-10-15T22:36:38.350Z",
+      "structuredOutputSeenAt": "2026-10-15T22:36:44.912Z",
+      "sessionIdsDuringRun": [
+        "29801dd7-a3ba-427e-9cbb-f81f7d67b8d3"
+      ],
+      "sessionIdsAll": [
+        "29801dd7-a3ba-427e-9cbb-f81f7d67b8d3",
+        "01139b29-f264-4e4b-a193-dfdb2be9be76",
+        "6be703e6-466d-4e4f-9012-2d50b5ada570",
+        "2ec0a035-38f2-4cae-ab2e-b1649a887b91"
+      ],
+      "sessionIdsVerified": [
+        "29801dd7-a3ba-427e-9cbb-f81f7d67b8d3",
+        "01139b29-f264-4e4b-a193-dfdb2be9be76",
+        "6be703e6-466d-4e4f-9012-2d50b5ada570",
+        "2ec0a035-38f2-4cae-ab2e-b1649a887b91"
+      ],
+      "sessionProvidersObserved": [
+        "claude-agent-sdk"
+      ],
+      "nativeModels": [
+        "openai.gpt-6.1-sol",
+        "openai.gpt-6-sol"
+      ],
+      "requestedModel": "claude-opus-5-5",
+      "sessionIdFirstIndex": 11183,
+      "doneFirstIndex": 23770,
+      "agentCount": 4,
+      "taskId": "wf_49e8f8202a04",
+      "markersPresentBeforeInspection": false,
+      "structuredOutputShown": true,
+      "completionNotificationShown": true
+    },
+    "cancellation": {
+      "captureRef": "cancellation.capture.txt",
+      "journalRef": "wf_6154a43d4f38.workflow.jsonl",
+      "scriptRef": "wf_6154a43d4f38.workflow.js",
+      "journalPresent": false,
+      "launchAt": "2026-10-15T22:36:45.055Z",
+      "firstLiveFrameAt": "2026-10-15T22:36:52.663Z",
+      "sessionIdSeenAt": "2026-10-15T22:36:54.474Z",
+      "sessionIdsDuringRun": [
+        "361ea747-92e7-4dd4-ba0a-dc01b4036a6e"
+      ],
+      "sessionIdsVerified": [
+        "361ea747-92e7-4dd4-ba0a-dc01b4036a6e",
+        "6c0c7582-c220-4a2e-8ad4-12aa43f914b8",
+        "93af7606-7f8e-4251-8314-d2ecb85ce679",
+        "1c7d89a5-d56b-44d7-8410-5b8bdb55ed02"
+      ],
+      "nativeModels": [],
+      "interruptSentAt": "2026-10-15T22:36:54.974Z",
+      "ctrlCStoppedWorkflow": false,
+      "explicitCancelSentAt": "2026-10-15T22:36:58.814Z",
+      "interruptAcknowledgedAt": "2026-10-15T22:37:02.147Z",
+      "exitAt": "2026-10-15T22:37:12.697Z",
+      "startedAgentsObserved": 4,
+      "startedAgentsSource": "sdk-transcripts",
+      "settledJournalRows": 0,
+      "agentCount": 4
+    }
+  },
+  "diagnostics": [],
+  "findings": [],
+  "realised": true,
+  "reasons": [],
+  "pass": true
+}

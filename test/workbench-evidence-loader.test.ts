@@ -218,12 +218,12 @@ describe('EvidenceStore contract (docs/workbench/20)', () => {
   });
 
   it('strips terminal escapes, bidi and zero-width characters from preview lines', async () => {
-    const s = store([counting(async () => content(['red \x1b[31mtext\x1b[0m', 'rtl ‮evil', 'zero​width', 'osc \x1b]0;title\x07done', 'multi\nline\r\nsplit']))]);
+    const s = store([counting(async () => content(['red \x1b[31mtext\x1b[0m', 'rtl \u202Eevil', 'zero\u200Bwidth', 'osc \x1b]0;title\x07done', 'multi\nline\r\nsplit']))]);
     await s.request(scope, native('fixture'), 'ev:1');
     const entry = s.get(scope, native('fixture'), 'ev:1');
     if (entry.state !== 'loaded') throw new Error('expected loaded');
     const text = entry.preview.join('\n');
-    expect(text).not.toMatch(/[\u001b\u0007‮​]/);
+    expect(text).not.toMatch(/[\u001b\u0007\u202E\u200B]/);
     expect(text).toContain('zerowidth');
     expect(entry.preview).toEqual(expect.arrayContaining(['multi', 'line', 'split']));
   });
