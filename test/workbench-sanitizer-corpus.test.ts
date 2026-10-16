@@ -681,7 +681,8 @@ describe("wb-952 the one helper: normalize once, redact the union of every readi
     }
   });
 
-  // redactWorkbenchText's own second-pass shape (a closing brace after a marker) is wb-3l3's, held behind this bead.
+  // redactWorkbenchText's own second pass keeps a marker before closing brackets and a value end, and otherwise only
+  // over-redacts (wb-3l3, pinned in workbench-redaction.test.ts).
   it("leaves nothing unsafe after one pass, so a second pass is the plain redactor and exposes nothing", () => {
     for (const probe of CORPUS) {
       for (const layout of ["text", "label", "terminal", "lines"] as const) {
