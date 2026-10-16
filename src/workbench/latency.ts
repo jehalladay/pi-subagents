@@ -145,17 +145,25 @@ function unionMs(spans: readonly Interval[]): number {
   return total + (started ? to - from : 0);
 }
 
+/** One evidence ref for display, or "" when it cannot be shown whole. A ref whose RAW length exceeds the scan bound is
+ * dropped before any scan cut: reading only its first MAX_PROVIDER_SCAN units could keep a truncated ref, and a truncated
+ * ref is a wrong ref. Routing stays through displayText (the shared helper's label layout). */
+function evidenceText(raw: unknown): string {
+  if (typeof raw === "string" && raw.length > MAX_PROVIDER_SCAN) return "";
+  return displayText(raw, MAX_EVIDENCE_CHARS + 1);
+}
+
 function evidenceOf(nodes: readonly ObservedNode[], first?: ObservedNode): string[] {
   const seen = new Set<string>();
   const ordered: string[] = [];
   const add = (node: ObservedNode, sort: boolean): void => {
-    const shown = [...node.evidenceRefs].map(item => displayText(item, MAX_EVIDENCE_CHARS + 1)).filter(item => item !== "" && item.length <= MAX_EVIDENCE_CHARS);
+    const shown = [...node.evidenceRefs].map(evidenceText).filter(item => item !== "" && item.length <= MAX_EVIDENCE_CHARS);
     for (const item of sort ? shown.sort(byText) : shown) if (!seen.has(item)) { seen.add(item); ordered.push(item); }
   };
   if (first) add(first, false);
   const rest: string[] = [];
   for (const node of nodes) if (node !== first) for (const item of node.evidenceRefs) {
-    const shown = displayText(item, MAX_EVIDENCE_CHARS + 1);
+    const shown = evidenceText(item);
     if (shown !== "" && shown.length <= MAX_EVIDENCE_CHARS && !seen.has(shown)) rest.push(shown);
   }
   for (const item of [...new Set(rest)].sort(byText)) if (!seen.has(item)) { seen.add(item); ordered.push(item); }
