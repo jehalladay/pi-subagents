@@ -78,6 +78,7 @@ export interface EvidenceProducerOptions {
   readonly claude?: ClaudeEvidenceReader;
   readonly furnace?: FurnaceEvidenceReader;
   readonly forge?: ForgeEvidenceReader;
+  /** Injected capture clock; the claude loader refuses transport without it, it never reads the host clock. */
   readonly now?: () => Date;
 }
 
@@ -100,6 +101,9 @@ function claudeLoader(options: EvidenceProducerOptions, read: ClaudeEvidenceRead
       gated(options, CLAUDE_TRANSCRIPT_GRANT);
       const uuid = CLAUDE_REF.exec(request.evidenceRef)?.[1];
       if (uuid === undefined || request.nativeRef.type !== "session") throw new EvidenceRefusal("no-loader");
+      // The capture time comes only from the injected clock; a loader built without one refuses before any read.
+      const now = options.now;
+      if (now === undefined) throw new EvidenceRefusal("transport");
       const rows = await read({ sessionId: request.nativeRef.id, signal: request.signal });
       const row = rows.find(candidate => candidate.uuid === uuid);
       // A message outside the bounded window is a visible transport failure, never a fabricated row.
@@ -107,7 +111,7 @@ function claudeLoader(options: EvidenceProducerOptions, read: ClaudeEvidenceRead
       return {
         kind: "claude-message",
         provider: "claude-agent-sdk",
-        capturedAt: (options.now?.() ?? new Date()).toISOString(),
+        capturedAt: now().toISOString(),
         bytes: Buffer.byteLength(row.text),
         truncated: false,
         preview: [`${row.type}:`, ...textLines(row.text)],
