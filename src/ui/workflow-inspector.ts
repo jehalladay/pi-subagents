@@ -314,8 +314,6 @@ function evidenceRows(store: Pick<EvidenceStore,'get'>, node: ObservedNode, sele
 interface TimelineView { zoom: number; pan: number; filter: string; focused: string | null; selectedKey: string | undefined }
 /** Contract ceiling on bar columns (workbench.timeline/v1 columns 8..200); a hand-built model cannot make a line longer. */
 const MAX_BAR_CELLS = 200;
-/** Default-ignorable code points (zero-width, bidi marks) render as nothing and can hide a credential from the redactor, so they go before it. */
-const INVISIBLE = /\p{Default_Ignorable_Code_Point}/gu;
 const barCells = (value: number): number => Number.isSafeInteger(value) && value > 0 ? Math.min(value, MAX_BAR_CELLS) : 0;
 const plural = (count: number, word: string): string => `${count} ${word}${count===1?'':'s'}`;
 const NOTE_PHRASES: Readonly<Record<Exclude<TimelineNote['code'],'intervals-missing'>,string>> = {
@@ -339,7 +337,8 @@ function noteText(note: TimelineNote): string {
  * individually (the bar is built from fixed glyphs and so is never collapsed by the shared sanitizer). Truncation flags and
  * notes are fixed phrases and survive the row budget ahead of lane and row lines. */
 function timelineModelLines(timeline: TimelineModel, view: TimelineView, inner: number, ascii: boolean, room: number): string[] {
-  const clean=(text: unknown):string=>safe(String(text).replace(INVISIBLE,''),ascii);
+  // safe() is the shared helper's named terminal layout (wb-952 site 24): redaction reads every gap before anything is stripped.
+  const clean=(text: unknown):string=>safe(String(text),ascii);
   const ellipsis=ascii?'...':'…';
   /** The plain ASCII tier must stay ASCII (WB-028): separators are tier-aware instead of leaning on the '?' substitution. */
   const sep=ascii?'-':'·';

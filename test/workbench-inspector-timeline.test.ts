@@ -15,6 +15,7 @@ import {
   reduceInspectorKey,
 } from "../src/ui/workflow-inspector.js";
 import { type NativeRef, ObservationProjection, type ObservationScope } from "../src/workbench/observation.js";
+import { stripUnsafeText } from "../src/workbench/redaction.js";
 import {
   buildTimelineLanes,
   MAX_ZOOM,
@@ -450,7 +451,10 @@ describe("zoom clamp (owner-approved constraint)", () => {
     expect(source).toMatch(/import \{[^}]*\bMAX_ZOOM\b[^}]*\} from '\.\.\/workbench\/timeline\.js'/);
     expect(source).not.toMatch(/Math\.min\(16/);
     const timelineSource = readFileSync(new URL("../src/workbench/timeline.ts", import.meta.url), "utf8");
-    expect(timelineSource).toMatch(/export const MAX_ZOOM = 8;/);
+    // Respin 2 (gate 2026-10-16T08:57:41Z U1): the declaration stays byte-identical to the line wb-9x5.7's W21 C5 falsifier pins
+    // and a separate export statement publishes it, so a value-preserving export keyword never reddens that landed pin.
+    expect(timelineSource).toMatch(/^const MAX_ZOOM = 8;$/m);
+    expect(timelineSource).toMatch(/^export \{ MAX_ZOOM \};$/m);
   });
 });
 
@@ -459,6 +463,100 @@ describe("zoom clamp (owner-approved constraint)", () => {
 const cp = (...codes: number[]): string => String.fromCodePoint(...codes);
 const SECRET = "SECRETTOKENVALUE0123456789";
 const asciiOnly = (line: string): boolean => /^[\x20-\x7e]*$/.test(line);
+
+// wb-6ze.26 respin 2 (gate verdict 2026-10-16T08:57:41Z, owner ruling 09:01Z): U2 site 24 composes the one helper, U3 title payloads
+// fit the visible label.
+type Surface = "title" | "label" | "reason";
+const SURFACES: readonly Surface[] = ["title", "label", "reason"];
+/** U3: a row title shows at most 24 cells, so the 26-character SECRET can never appear whole there and a not-contain assertion on it
+ * cannot fail. Title payloads carry this short secret instead, which fits the label together with its keyword, and the title row
+ * must also show the redaction marker. */
+const TITLE_SECRET = "TKN4826";
+const secretFor = (surface: Surface): string => (surface === "title" ? TITLE_SECRET : SECRET);
+/** The one rendered line a surface's producer string lands on: the closed row (title), the lane header (label) or the unavailable
+ * row (timing.reason) of the payloadModels shapes. */
+function surfaceLine(lines: readonly string[], surface: Surface): string {
+  const marker = surface === "title" ? "4000ms" : surface === "label" ? " 1 row" : SEEDS[1].title;
+  const found = lines.filter((line) => line.includes(marker));
+  expect(found, surface).toHaveLength(1);
+  return found[0] ?? "";
+}
+
+/** Anything a display line must never carry (the wb-952 corpus's UNSAFE_DISPLAY): C0/C1 controls, line and paragraph separators,
+ * default-ignorables and lone surrogates. */
+const UNSAFE_DISPLAY = /[\x00-\x1f\x7f-\x9f\u{2028}\u{2029}]|\p{Default_Ignorable_Code_Point}|[\u{d800}-\u{dfff}]/u;
+interface Probe {
+  readonly id: string;
+  readonly raw: string;
+  readonly secret: string;
+}
+/** The wb-952 17:32Z acceptance set and class-level probes, rebuilt from the construction in
+ * test/workbench-sanitizer-corpus.test.ts (that census exports nothing, and importing a test file would register its cases here):
+ * every unit between two tokens, inside a keyword, prefix, key or token, and both. */
+const SGR = `${cp(0x1b)}[0m`;
+const ACCEPTANCE_CODES = [
+  0x200b, 0x07, 0x1b, 0x202e, 0xad, 0x2060, 0x200d, 0x200c, 0x7f, 0x2066, 0x9b, 0x180e, 0x34f, 0xfe0f, 0x3164, 0x08, 0x00, 0xfeff, 0x85,
+  0x2061, 0x2064, 0x206a, 0x115f, 0xffa0, 0xe0020, 0x1d173, 0x200e, 0x200f, 0x61c, 0x80, 0x9f, 0x202a, 0x202c, 0x2069, 0x1160, 0x17b4,
+  0x17b5, 0x180b, 0x2062, 0x2063, 0x206f, 0xfe00, 0x1bca0, 0xe0001, 0xe007f, 0xfff0,
+];
+const ACCEPTANCE_UNITS: readonly (readonly [name: string, unit: string])[] = [
+  ...ACCEPTANCE_CODES.map((code) => [`U+${code.toString(16).toUpperCase().padStart(4, "0")}`, cp(code)] as const),
+  ["SGR", SGR],
+];
+type Shape = (unit: string, secret: string) => string;
+const BETWEEN_TOKENS: readonly (readonly [position: string, shape: Shape])[] = [
+  ["before ghp_", (unit, secret) => `see${unit}ghp_${secret}`],
+  ["before sk-ant-", (unit, secret) => `key${unit}sk-ant-${secret}`],
+  ["before Bearer", (unit, secret) => `x${unit}Bearer ${secret}`],
+  ["before Basic", (unit, secret) => `x${unit}Basic ${secret}`],
+  ["as the space after Bearer", (unit, secret) => `Authorization: Bearer${unit}${secret}`],
+  ["as the space after Basic", (unit, secret) => `Authorization: Basic${unit}${secret}`],
+];
+const WITHIN_TOKENS: readonly (readonly [position: string, shape: Shape])[] = [
+  ["inside Bearer", (unit, secret) => `Authorization: Bea${unit}rer ${secret}`],
+  ["inside ghp_", (unit, secret) => `see gh${unit}p_${secret}`],
+  ["inside a Bearer token", (unit, secret) => `Bearer SEC${unit}${secret}`],
+  ["inside password", (unit, secret) => `pass${unit}word=${secret}`],
+  ["before and inside Bearer", (unit, secret) => `x${unit}Bea${unit}rer ${secret}`],
+  ["before and inside ghp_", (unit, secret) => `see${unit}gh${unit}p_${secret}`],
+  ["inside and after Bearer", (unit, secret) => `Authorization: Bea${unit}rer${unit}${secret}`],
+  ["before, inside and after Bearer", (unit, secret) => `x${unit}Bea${unit}rer${unit}${secret}`],
+  ["after a key token and inside the next key name", (unit, secret) => `ghp_abc${unit}pass${unit}word=${secret}`],
+];
+/** Whitespace always separates (wb-952 12:10Z), so the acceptance set gives whitespace units no inside-a-token positions. */
+const WHITESPACE_UNITS: ReadonlySet<string> = new Set([0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x85, 0x2028, 0x2029].map((code) => cp(code)));
+const CLASS_UNIT = { quiet: cp(0xfeff), control: cp(0x07), escape: SGR, invisible: cp(0x200b) } as const;
+type GapClassName = keyof typeof CLASS_UNIT;
+const GAP_CLASS_NAMES: readonly GapClassName[] = ["quiet", "control", "escape", "invisible"];
+/** Every choice of at most two separator classes, every other class glued inside the scheme (no uniform reading exposes it). */
+const SEPARATOR_CHOICES: readonly (readonly GapClassName[])[] = [
+  [],
+  ...GAP_CLASS_NAMES.flatMap((first, index) => [[first], ...GAP_CLASS_NAMES.slice(index + 1).map((second) => [first, second])]),
+];
+function classRaw(separators: readonly GapClassName[], secret: string): string {
+  const glue = GAP_CLASS_NAMES.filter((name) => !separators.includes(name)).map((name) => CLASS_UNIT[name]);
+  const scheme = [..."Bearer"].map((letter, at) => `${letter}${glue[at] ?? ""}`).join("");
+  const before = separators[0] === undefined ? "" : `x${CLASS_UNIT[separators[0]]}`;
+  const after = separators[1] === undefined ? " " : CLASS_UNIT[separators[1]];
+  return `${before}${scheme}${after}${secret}`;
+}
+/** Label and timing.reason probes carry the corpus's own secrets; title probes (fitted) carry a short secret and drop the
+ * "Authorization: " lead so that every secret lands inside the 24-cell row label (U3). */
+function wb952Probes(fitted: boolean): Probe[] {
+  const probes: Probe[] = [];
+  for (const [name, unit] of ACCEPTANCE_UNITS) {
+    for (const [position, shape] of [...BETWEEN_TOKENS, ...(WHITESPACE_UNITS.has(unit) ? [] : WITHIN_TOKENS)]) {
+      const secret = fitted ? `TQ${String(probes.length).padStart(3, "0")}` : `ACCEPT${name.replace(/[^A-Z0-9]/g, "")}${position.replace(/[^a-z]/g, "").slice(0, 24)}`;
+      const raw = shape(unit, secret);
+      probes.push({ id: `${name} ${position}`, raw: fitted ? raw.replace(/^Authorization: /, "") : raw, secret });
+    }
+  }
+  SEPARATOR_CHOICES.forEach((separators, index) => {
+    const secret = fitted ? `TQ${String(probes.length).padStart(3, "0")}` : `CLASSTOKEN${index}`;
+    probes.push({ id: `C${index} separators {${separators.join(",")}}`, raw: classRaw(separators, secret), secret });
+  });
+  return probes;
+}
 
 /** A hand-built one-lane, one-row model whose three producer strings (row title, lane label, timing.reason) carry `payload`. */
 function payloadModels(payload: string): Record<"title" | "label" | "reason", InspectorModel> {
@@ -522,7 +620,8 @@ describe("U3 the ascii tier carries no non-ASCII byte on any model-backed line",
 describe("U4 whitespace-control separators are redacted through title, lane label and timing.reason", () => {
   // The P1-P7 glue class: a TAB/LF/VT/FF/CR as the ONLY separator between a credential keyword and its value must still be redacted
   // (redaction sees the control before it is collapsed to a space). Deleting controls before redaction would glue
-  // "Bearer" to the token and leak it (gate mutant M21).
+  // "Bearer" to the token and leak it (gate mutant M21). Respin 2 U3: the title third carries TITLE_SECRET, which fits the 24-cell
+  // row label, so a title-only mutant can fail it (M21t, MTred); each surface's line must also show the redaction marker.
   const controls: ReadonlyArray<readonly [string, string]> = [
     ["TAB", "\t"],
     ["LF", "\n"],
@@ -536,33 +635,94 @@ describe("U4 whitespace-control separators are redacted through title, lane labe
     it.each(controls.flatMap(([name, control]) => keywords.map((keyword) => [name, control, keyword] as const)))(
       `${surface}: %s as the only separator after %s keeps the credential out of the frame`,
       (_name, control, keyword) => {
-        const model = payloadModels(`${keyword}${control}${SECRET}`)[surface];
+        const secret = secretFor(surface);
+        const model = payloadModels(`${keyword}${control}${secret}`)[surface];
         for (const ascii of [true, false]) {
-          const text = render(model, timelineState(), 120, 40, ascii).join("\n");
-          expect(text).not.toContain(SECRET);
+          const lines = render(model, timelineState(), 120, 40, ascii);
+          expect(lines.join("\n")).not.toContain(secret);
+          expect(surfaceLine(lines, surface)).toContain("[REDACTED]");
         }
       },
     );
   }
 });
 
-describe("U4 the shipped clean() composition is pinned as shipped (wb-952 SITE 24 owns the redesign)", () => {
-  // Owner ruling 18:32Z Q1 = (a): composition untouched. These rows pin what the composition does TODAY so a change to the deletion
-  // or its order is visible: default-ignorables are deleted before the shared sanitizer, so an in-token split is rejoined and caught
-  // (gate mutants M1 order swap, M2 ignorables spaced). The glue residual is recorded as a known-residual row; wb-952 flips it.
+describe("U2 site 24 reads in-token splits through the one helper (wb-952 landed first at 04cd6d4)", () => {
+  // Respin 2 U2: clean() is safe() alone, the shared helper's named terminal layout, so redaction reads every gap both as a separator
+  // and as glue inside a keyword, prefix or token: an invisible inside "Bearer" or "sk-ant-" is read glued and redacted with no local
+  // deletion. A pre-pass that turns the gaps into spaces instead (gate M2) splits the keyword and leaks.
   const zwsp = cp(0x200b);
-  const inToken = [`Bea${zwsp}rer ${SECRET}`, `sk-${zwsp}ant-api03-${SECRET}`, `Bea${cp(0xfeff)}rer ${SECRET}`, `Bea${cp(0x202e)}rer ${SECRET}`];
-  for (const surface of ["title", "label", "reason"] as const) {
-    it.each(inToken.map((payload, i) => [i, payload] as const))(`${surface}: in-token split ${"%i"} is rejoined by the deletion and redacted`, (_i, payload) => {
-      const text = render(payloadModels(payload)[surface], timelineState(), 120, 40, true).join("\n");
-      expect(text).not.toContain(SECRET);
+  const inToken = (secret: string): string[] => [`Bea${zwsp}rer ${secret}`, `sk-${zwsp}ant-api03-${secret}`, `Bea${cp(0xfeff)}rer ${secret}`, `Bea${cp(0x202e)}rer ${secret}`];
+  for (const surface of SURFACES) {
+    it.each(inToken(secretFor(surface)).map((payload, i) => [i, payload] as const))(`${surface}: in-token split ${"%i"} is read glued by the one helper and redacted`, (_i, payload) => {
+      for (const ascii of [true, false]) {
+        const lines = render(payloadModels(payload)[surface], timelineState(), 120, 40, ascii);
+        expect(lines.join("\n")).not.toContain(secretFor(surface));
+        expect(surfaceLine(lines, surface)).toContain("[REDACTED]");
+      }
     });
   }
-  it("KNOWN RESIDUAL (wb-952 site 24): a default-ignorable between a prefix letter and a sk-ant- key glues and the key survives in the lane label; flips when the helper lands", () => {
-    const payload = `x${zwsp}sk-ant-api03-${SECRET}`;
-    const text = render(payloadModels(payload).label, timelineState(), 120, 40, true).join("\n");
-    expect(text).toContain(SECRET);
+  // PIN-FLIP (wb-952): the shipped deletion pre-pass glued "x" to the key, so the delivered KNOWN RESIDUAL row pinned the secret as
+  // PRESENT in the lane label and said it flips when the helper lands. wb-952 landed first (04cd6d4) and site 24 now composes it, so
+  // the row is flipped here to secret ABSENT, on every surface the residual reached.
+  it.each(SURFACES)("PIN-FLIP (wb-952 one helper, landed 04cd6d4): the former site-24 KNOWN RESIDUAL, a default-ignorable between a prefix letter and a sk-ant- key, now separates there and the key is redacted (%s, secret absent)", (surface) => {
+    const secret = secretFor(surface);
+    const payload = `x${zwsp}sk-ant-api03-${secret}`;
+    for (const ascii of [true, false]) {
+      const lines = render(payloadModels(payload)[surface], timelineState(), 120, 40, ascii);
+      expect(lines.join("\n")).not.toContain(secret);
+      expect(surfaceLine(lines, surface)).toContain("x[REDACTED]");
+    }
   });
+});
+
+describe("U2 site 24 composes the one helper: the wb-952 probes through title, lane label and timing.reason", () => {
+  // wb-952 closure record (bound by name): "24 workflow-inspector timelineModelLines clean() (wb-6ze.26) ... whichever lands second
+  // composes the helper". wb-952 landed first, so no local pre-pass may delete anything before redaction has read it (16:43Z
+  // "deletion never precedes redaction"); the shipped deletion pre-pass leaked these probes through lane label and timing.reason.
+  const wide = wb952Probes(false);
+  const fitted = wb952Probes(true);
+  it("builds the full wb-952 set: 47 units at 6 between-token positions, 9 inside-token positions for non-whitespace units, 11 class probes", () => {
+    const whitespace = ACCEPTANCE_UNITS.filter(([, unit]) => WHITESPACE_UNITS.has(unit)).length;
+    expect(ACCEPTANCE_UNITS).toHaveLength(47);
+    expect(SEPARATOR_CHOICES).toHaveLength(11);
+    expect(wide).toHaveLength(ACCEPTANCE_UNITS.length * BETWEEN_TOKENS.length + (ACCEPTANCE_UNITS.length - whitespace) * WITHIN_TOKENS.length + 11);
+    expect(fitted).toHaveLength(wide.length);
+    expect(new Set(fitted.map((probe) => probe.secret)).size).toBe(fitted.length);
+  });
+  it("every title probe fits the 24-cell row label, so its secret would show if it were not redacted (no case that cannot fail)", () => {
+    // stripUnsafeText is the measurement instrument here: every unsafe unit as one cell bounds any unredacted rendering.
+    const over = fitted.filter((probe) => visibleWidth(stripUnsafeText(probe.raw, " ")) > 24).map((probe) => probe.id);
+    expect(over).toEqual([]);
+  });
+  it("every lane label and timing.reason probe fits its 200-column line whole, so those cases can fail too", () => {
+    // The lane header and the unavailable row spend under 40 fixed cells of the 196-cell inner width; 120 leaves room for both.
+    const over = wide.filter((probe) => visibleWidth(stripUnsafeText(probe.raw, " ")) > 120).map((probe) => probe.id);
+    expect(over).toEqual([]);
+  });
+  for (const surface of SURFACES) {
+    const probes = surface === "title" ? fitted : wide;
+    it(`${surface}: every wb-952 probe leaks no secret and keeps no unsafe code point in either tier`, () => {
+      const leaked = { ascii: new Set<string>(), unicode: new Set<string>() };
+      const unsafe = new Set<string>();
+      for (const probe of probes) {
+        const model = payloadModels(probe.raw)[surface];
+        for (const ascii of [true, false]) {
+          const lines = render(model, timelineState(), 200, 40, ascii);
+          if (lines.some((line) => line.includes(probe.secret))) leaked[ascii ? "ascii" : "unicode"].add(probe.id);
+          if (lines.some((line) => UNSAFE_DISPLAY.test(line))) unsafe.add(probe.id);
+        }
+      }
+      const sample = [...new Set([...leaked.ascii, ...leaked.unicode, ...unsafe])].slice(0, 6);
+      expect({ probes: probes.length, ascii: leaked.ascii.size, unicode: leaked.unicode.size, unsafe: unsafe.size, sample }).toEqual({
+        probes: probes.length,
+        ascii: 0,
+        unicode: 0,
+        unsafe: 0,
+        sample: [],
+      });
+    });
+  }
 });
 
 describe("U4 hostile timing.reason and unknown span", () => {
