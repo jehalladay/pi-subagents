@@ -2,8 +2,10 @@
  * wb-pjj (W16-L/VC-7): decision-core provenance for the control adapters. decideControl registers every permitted decision it
  * mints in a module-private WeakSet and isCoreMintedDecision() answers by identity against it, so a structurally exact
  * look-alike -- a copy, a JSON round-trip such as a decision replayed from the audit or the journal, a re-wrapped receipt or
- * a hand-built permit -- never reaches a native verb. Structural vetting stays behind provenance as defense in depth
- * (pinned separately in test/workbench-control-provenance-depth.test.ts, where provenance is bypassed on purpose).
+ * a hand-built permit -- never reaches a native verb. Structural vetting stays behind provenance as defense in depth,
+ * pinned separately in test/workbench-control-provenance-depth.test.ts with the real core and no module mock: the pure
+ * exported vetFurnaceControlDecision is driven with decisions decideControl minted and forgeries built from them, and one
+ * parse-aware census line pins that the adapter asks the core's predicate before it.
  *
  * The adapter half is table-driven: every control adapter that takes a caller-held decision is one ProvenanceSubject, and the
  * same look-alike battery runs against each. No live binary, SDK process or network: every seam is a counting fake.
@@ -313,5 +315,41 @@ describe("furnace adapter: a decision the core did not mint keeps its typed reas
     expect((await furnace.attempt(genuine)).calls).toBe(1);
     const respent = await furnace.attempt(Object.freeze({ decision: "permitted", receipt: genuine.receipt }));
     expect(respent).toMatchObject({ outcome: "rejected", calls: 0, error: { refusal: "permit-consumed", category: "validation" } });
+  });
+
+  it("a forged frozen denial carries no caller text into the refusal: its policy is echoed only from the core's closed vocabulary", async () => {
+    // wb-69g.8 gate F3 (owner routing 21:13Z): a policy that merely fits the old /^[a-z][a-z-]{0,63}$/ shape was echoed verbatim.
+    const [furnace] = SUBJECTS;
+    const policies: unknown[] = ["sk-ant-qqsecretqq", "sk-proj-qqsecretqq", "ghp-qqsecretqq", "bearer-qqsecretqq", "anything-goes", "observer-only ",
+      "Observer-only", "observer_only", "", 7, null, undefined];
+    const accessor = Object.freeze(Object.defineProperty({ decision: "denied", category: "authorization", reason: "forged" }, "policy",
+      { enumerable: true, get: (): never => { throw new Error("the policy accessor was invoked"); } }));
+    const forgeries: readonly (readonly [string, unknown])[] = [
+      ...policies.map(policy => [`policy ${JSON.stringify(policy) ?? "undefined"}`, Object.freeze({ decision: "denied", category: "authorization", reason: "forged", policy })] as const),
+      ["policy behind an accessor (never invoked)", accessor],
+    ];
+    for (const [label, forged] of forgeries) {
+      const result = await furnace.attempt(forged);
+      expect(result, label).toMatchObject({ outcome: "rejected", calls: 0, error: { refusal: "denied-decision", category: "authorization" } });
+      const error = result.error as FurnaceControlRefusal;
+      expect(error.policy, label).toBeUndefined();
+      for (const rendered of [error.message, String(error), JSON.stringify(error), JSON.stringify(Object.entries(error))]) {
+        expect(rendered, label).not.toMatch(/qqsecretqq|anything-goes/);
+      }
+    }
+    // The vocabulary is exactly the core's: every real denial still names its own policy, whichever of the eight it is.
+    const denials: Partial<NativeControlRequest>[] = [
+      { grants: undefined }, { grants: ["observe:furnace.run.inspect"] }, { invocationId: "" }, { action: "start", grants: ["control:furnace.start"] },
+      { grants: ["control:furnace.pause"] }, { target: { ...RUN, id: "frn-run-unseen" } }, { target: { ...ATTEMPT } }, { params: {} },
+    ];
+    const echoed = new Set<string>();
+    for (const overrides of denials) {
+      const denial = decide(overrides);
+      if (denial.decision !== "denied") throw new Error(`expected a denial for ${JSON.stringify(overrides)}`);
+      const result = await furnace.attempt(denial);
+      expect(result).toMatchObject({ outcome: "rejected", calls: 0, error: { refusal: "denied-decision", category: denial.category, policy: denial.policy } });
+      echoed.add((result.error as FurnaceControlRefusal).policy ?? "");
+    }
+    expect(echoed.size).toBe(denials.length);
   });
 });

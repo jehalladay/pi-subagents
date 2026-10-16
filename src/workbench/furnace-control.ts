@@ -22,6 +22,7 @@ import {
   CONTROL_PERMIT_POLICY,
   CONTROL_UNMINTED_REASON,
   type ControlDecision,
+  type ControlDenyPolicy,
   isCoreMintedDecision,
   NATIVE_CONTROL_ACTIONS,
   type NativeControlReceipt,
@@ -128,7 +129,20 @@ const REQUEST_ID = /^ctl_[0-9a-f]{32}$/;
 const NATIVE_ID = /^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$/;
 /** A closed-vocabulary native label: an SDK error kind or an envelope error code. */
 const NATIVE_LABEL = /^[a-z][a-z0-9_]{0,63}$/;
-const DENY_POLICY = /^[a-z][a-z-]{0,63}$/;
+/**
+ * The core's denial vocabulary, exactly ControlDenyPolicy (satisfies refuses a missing and an extra key alike): a denied
+ * decision's policy is echoed only when it is one of these, so a look-alike denial never carries caller text into a refusal.
+ */
+const DENY_POLICIES: Readonly<Record<ControlDenyPolicy, true>> = Object.freeze({
+  "unknown-permission-data": true,
+  "observer-only": true,
+  "malformed-request": true,
+  "unknown-action": true,
+  "missing-exact-grant": true,
+  "cross-scope": true,
+  "no-confirmed-ownership": true,
+  "operator-confirmation": true,
+} satisfies Record<ControlDenyPolicy, true>);
 /** Furnace's RFC 3339 instant (nanosecond fraction, offset-qualified). Date.parse alone also admits free text around a date. */
 const NATIVE_INSTANT = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,9})?(?:Z|[+-]\d{2}:\d{2})$/;
 const ECHO_TEXT = 256;
@@ -150,11 +164,14 @@ function frozenRecord(value: unknown): value is object {
 function nativeInstant(value: unknown): value is string {
   return typeof value === "string" && NATIVE_INSTANT.test(value) && Number.isFinite(Date.parse(value));
 }
+function isDenyPolicy(value: unknown): value is ControlDenyPolicy {
+  return typeof value === "string" && Object.hasOwn(DENY_POLICIES, value);
+}
 
 function deniedRefusal(decision: object): FurnaceControlRefusal {
   const policy = own(decision, "policy");
   return new FurnaceControlRefusal(own(decision, "category") === "validation" ? "validation" : "authorization", "denied-decision",
-    "Furnace control refuses a denied decision; no native verb was issued.", typeof policy === "string" && DENY_POLICY.test(policy) ? policy : undefined);
+    "Furnace control refuses a denied decision; no native verb was issued.", isDenyPolicy(policy) ? policy : undefined);
 }
 function consumedRefusal(): FurnaceControlRefusal {
   return new FurnaceControlRefusal("validation", "permit-consumed", "This control permit already issued its native verb; a reissue needs a fresh decision.");
@@ -177,13 +194,14 @@ function unminted(decision: unknown): FurnaceControlRefusal {
   return new FurnaceControlRefusal("validation", "unvetted-decision", CONTROL_UNMINTED_REASON);
 }
 /**
- * The receipt of a permitted decision the core minted. Provenance first: only the very decision object decideControl minted
- * in this process passes. Structural vetting stays behind it as defense in depth: frozen, requested, under the core's
- * contract and policy, for an action the core admits for its provider, under the canonical control:<provider>.<action>
- * grant. Nothing is recomputed; a look-alike the core could not have minted is unvetted.
+ * Structural vetting, the defense in depth behind provenance: the receipt of a decision shaped exactly as the core mints a
+ * permit: frozen, requested, under the core's contract and policy, for an action the core admits for its provider, under
+ * the canonical control:<provider>.<action> grant. Pure: it reads own data properties only (never an accessor), recomputes
+ * nothing and issues nothing; a look-alike the core could not have minted is unvetted, and a denial keeps its typed refusal.
+ * It vouches for shape, never for provenance: a structurally exact copy passes it, which is why executeFurnaceControl asks
+ * isCoreMintedDecision first and only then calls this.
  */
-function permitted(decision: unknown): RequestedControlReceipt {
-  if (!isCoreMintedDecision(decision)) throw unminted(decision);
+export function vetFurnaceControlDecision(decision: unknown): RequestedControlReceipt {
   if (!frozenRecord(decision)) throw new FurnaceControlRefusal("validation", "unvetted-decision", UNVETTED);
   const verdict = own(decision, "decision");
   if (verdict === "denied") throw deniedRefusal(decision);
@@ -200,6 +218,14 @@ function permitted(decision: unknown): RequestedControlReceipt {
     throw new FurnaceControlRefusal("validation", "unvetted-decision", UNVETTED);
   }
   return receipt as RequestedControlReceipt;
+}
+/**
+ * The receipt of a permitted decision the core minted. Provenance first: only the very decision object decideControl minted
+ * in this process passes on to structural vetting.
+ */
+function permitted(decision: unknown): RequestedControlReceipt {
+  if (!isCoreMintedDecision(decision)) throw unminted(decision);
+  return vetFurnaceControlDecision(decision);
 }
 function validDeps(deps: FurnaceControlDeps): FurnaceControlDeps {
   const invalid = (): FurnaceControlRefusal =>
