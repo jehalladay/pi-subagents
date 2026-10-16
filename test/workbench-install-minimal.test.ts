@@ -12,6 +12,7 @@ import { chmodSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, sy
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
+import * as installMinimalLib from "../qa/workbench/install-minimal-lib.mjs";
 import { isPrivilegedUid, probeInstalledWrite, resolveNodeBinary, scrubbedEnvironment, treeCensus } from "../qa/workbench/install-minimal-lib.mjs";
 
 const repoRoot = join(import.meta.dirname, "..");
@@ -215,6 +216,46 @@ describe("probeInstalledWrite (uid-injected write capability probe, U1 privilege
   });
 });
 
+describe("assertReadOnlyReceipt (runner cross-check on the probe receipt: wb-nh3 F2/O1, kills MW3/MW5/MW5b/MW6 in the default gate)", () => {
+  it("accepts a receipt that records enforced read-only, as an unprivileged or a privileged runner", () => {
+    expect(() => installMinimalLib.assertReadOnlyReceipt({ readOnlyEnforced: true }, 1000)).not.toThrow();
+    expect(() => installMinimalLib.assertReadOnlyReceipt({ readOnlyEnforced: true }, 0)).not.toThrow();
+  });
+
+  it("accepts the privileged-uid record only when the runner's own uid is privileged", () => {
+    expect(() => installMinimalLib.assertReadOnlyReceipt({ readOnlyEnforced: false, readOnlyReason: "privileged-uid" }, 0)).not.toThrow();
+  });
+
+  it("MW3: a privileged-uid record from an unprivileged runner (probe uid pinned to 0) is refused", () => {
+    expect(() => installMinimalLib.assertReadOnlyReceipt({ readOnlyEnforced: false, readOnlyReason: "privileged-uid" }, 1000)).toThrow(/read-only/);
+    expect(() => installMinimalLib.assertReadOnlyReceipt({ readOnlyEnforced: false, readOnlyReason: "privileged-uid" }, undefined)).toThrow(/read-only/);
+  });
+
+  it("MW5 and MW5b: an unenforced receipt whose reason was dropped or replaced is refused even for a privileged runner", () => {
+    expect(() => installMinimalLib.assertReadOnlyReceipt({ readOnlyEnforced: false }, 0)).toThrow(/read-only/);
+    expect(() => installMinimalLib.assertReadOnlyReceipt({ readOnlyEnforced: false, readOnlyReason: undefined }, 0)).toThrow(/read-only/);
+    expect(() => installMinimalLib.assertReadOnlyReceipt({ readOnlyEnforced: false, readOnlyReason: "other" }, 0)).toThrow(/read-only/);
+  });
+
+  it("MW6: a receipt that dropped readOnlyEnforced, or carries a non-true value, is refused for any runner uid", () => {
+    expect(() => installMinimalLib.assertReadOnlyReceipt({}, 1000)).toThrow(/read-only/);
+    expect(() => installMinimalLib.assertReadOnlyReceipt({}, 0)).toThrow(/read-only/);
+    expect(() => installMinimalLib.assertReadOnlyReceipt({ readOnlyEnforced: "true" }, 1000)).toThrow(/read-only/);
+    expect(() => installMinimalLib.assertReadOnlyReceipt({ readOnlyEnforced: 1 }, 1000)).toThrow(/read-only/);
+  });
+
+  it("its refusal names the receipt fields as booleans and types, never a raw receipt value", () => {
+    let message = "";
+    try {
+      installMinimalLib.assertReadOnlyReceipt({ readOnlyEnforced: false, readOnlyReason: "sentinel-reason-value" }, 1000);
+    } catch (error) {
+      message = error instanceof Error ? error.message : "";
+    }
+    expect(/read-only/.test(message), "the refusal must be the read-only cross-check refusal").toBe(true);
+    expect(message.includes("sentinel-reason-value"), "the refusal echoed a raw receipt value").toBe(false);
+  });
+});
+
 describe("harness sources and wiring", () => {
   it("the runner copies the lib beside the probe and the probe uses probeInstalledWrite with the shared uid predicate", () => {
     const runner = readRepo("qa/workbench/install-minimal.mjs");
@@ -253,7 +294,18 @@ describe("harness sources and wiring", () => {
     expect(probe).toContain("const uid=typeof process.getuid==='function'?process.getuid():undefined;");
     expect(probe).toContain("const {readOnlyEnforced,readOnlyReason}=probeInstalledWrite(");
     expect(probe).toContain("...(readOnlyReason?{readOnlyReason}:{})");
-    expect(probe).toContain("readOnlyEnforced,");
+    // Receipt-text pin: the bare "readOnlyEnforced," is also satisfied by the destructuring line, so pin the receipt object itself (kills MW6).
+    expect(probe).toContain("envKeys:keys,readOnlyEnforced,");
+  });
+
+  it("the runner calls the cross-check on the parsed probe receipt with its own uid, so deleting the call cannot pass the default gate (O1 pin-flip floor)", () => {
+    const runner = readRepo("qa/workbench/install-minimal.mjs");
+    expect(runner).toMatch(/import \{[^}]*\bassertReadOnlyReceipt\b[^}]*\} from '\.\/install-minimal-lib\.mjs'/);
+    expect(runner).toContain("const ownUid=typeof process.getuid==='function'?process.getuid():undefined;");
+    const parsed = runner.indexOf("const probeReceipt=JSON.parse(");
+    const crossCheck = runner.indexOf("assertReadOnlyReceipt(probeReceipt,ownUid);");
+    expect(parsed >= 0, "runner no longer parses the probe receipt").toBe(true);
+    expect(crossCheck > parsed, "cross-check must follow the receipt parse").toBe(true);
   });
 
   it("the runner spawns the probe with the scrubbed environment only", () => {
