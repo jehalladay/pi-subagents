@@ -38,7 +38,7 @@ const scope = {workspace: '/tmp/forge-ws', principal: 'local-operator:tester'};
 const context = {scope, target: '/tmp/forge-ws', capturedAt: '2026-10-15T07:00:00Z', observedAt: '2026-10-15T07:00:01Z'};
 const workspaceRef: NativeRef = {provider: 'forge', type: 'gate-status', id: 'workspace', scope: context.target};
 const packageRef = (id: string): NativeRef => ({provider: 'forge', type: 'gate-status', id, scope: context.target});
-const UNSAFE = /[\u0000-\u001f\u007f-\u009f‪-‮⁦-⁩]/;
+const UNSAFE = /[\u0000-\u001f\u007f-\u009f\u202A-\u202E\u2066-\u2069]/;
 function thrown(fn: () => unknown): unknown {
   try { fn(); } catch (error) { return error; }
   throw new Error('expected forgeGateTopology to refuse');
@@ -148,7 +148,7 @@ describe('Forge gate.status reader adapter', () => {
     ['a package with an empty ref', withPackages({ref: ''})],
     ['a ref longer than 256 bytes', withPackages({ref: 'é'.repeat(129)})],
     ['a ref carrying a terminal escape', withPackages({ref: 'code:\u001b[31mred'})],
-    ['a ref carrying a bidi override', withPackages({ref: 'code:‮pi'})],
+    ['a ref carrying a bidi override', withPackages({ref: 'code:\u202Epi'})],
     ['a ref colliding with the workspace node', withPackages({ref: 'workspace'})],
     ['a repeated ref', withPackages(HISTORICAL, {...HISTORICAL, last_result: 'failure'})],
   ];
@@ -262,7 +262,7 @@ describe('Forge gate.status reader adapter', () => {
 
   it('F7: every producer string that reaches presentation is bounded, stripped and redacted', () => {
     const value = reading({status: 'success\u001b]0;title\u0007', envelope: {verdict: 'password=abc123', reason_code: 'FORGE_OK'},
-      data: {packages: [{ref: 'code:pi-subagents', last_result: `\u001b[2Jsuccess${'S'.repeat(5_000)}`, authoritative_current: false, unverified_reason: 'Bearer abc123‮'}]}});
+      data: {packages: [{ref: 'code:pi-subagents', last_result: `\u001b[2Jsuccess${'S'.repeat(5_000)}`, authoritative_current: false, unverified_reason: 'Bearer abc123\u202E'}]}});
     const result = forgeGateTopology(value, {...context, target: '/tmp/forge-ws/ Bearer abc123'});
     for (const snapshot of result.snapshots) {
       for (const text of [snapshot.node.title, snapshot.node.statusText]) {

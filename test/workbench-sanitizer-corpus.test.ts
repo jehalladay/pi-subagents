@@ -38,10 +38,12 @@ import { readFurnaceAttemptLogEvidence } from "../src/workbench/furnace-evidence
 import { FurnaceHostedExecutor, SHIPPED_FURNACE_SDK } from "../src/workbench/hosts/furnace-hosted.js";
 import { type HyperUnixTopologyContext, hyperunixTopology } from "../src/workbench/hyperunix-observer.js";
 import { WORKFLOW_SCRIPT_SCHEMA_VERSION } from "../src/workbench/identity.js";
+import { selectLatencyDecomposition } from "../src/workbench/latency.js";
 import { type NativeRef, ObservationProjection, type ObservationScope, type ObservedNode, type Relation } from "../src/workbench/observation.js";
 import { type ObserveReader, observeInvocation } from "../src/workbench/observe-query.js";
 import { proposeWorkflowPatch } from "../src/workbench/patch-proposal.js";
 import { redactWorkbenchText, sanitizeWorkbenchJson, sanitizeWorkbenchJsonText, sanitizeWorkbenchText, stripUnsafeText } from "../src/workbench/redaction.js";
+import { buildOperationsTelemetry } from "../src/workbench/telemetry.js";
 import { buildTimelineLanes, type TimelineReader } from "../src/workbench/timeline.js";
 import { buildWorkflowCatalogReply, buildWorkflowInspectReply, type CapabilityCatalogEntry } from "../src/workbench/tool-replies.js";
 import { selectLinkedTopology } from "../src/workbench/topology-slice.js";
@@ -337,6 +339,27 @@ function attentionTexts(raw: string): string[] {
   return selectAttention(view, { scope: ALICE, invocationId: "inv-attention", now: NOW }).bottlenecks.map(bottleneck => bottleneck.title);
 }
 
+/**
+ * DIRECT-CALLER row (wb-cax.13 O1, owner 2026-10-16T00:01Z): telemetry.ts providerName calls the one helper with the label
+ * layout, and the report's sampled-provider list is its display. A structural projection hands the report the producer's raw
+ * provider, as the attention driver hands selectAttention a raw title (the real projection refuses C0 controls in identity).
+ */
+function telemetryTexts(raw: string): string[] {
+  const report = buildOperationsTelemetry(
+    {
+      query: () => ({ nodes: [], examined: 0, truncated: false }),
+      stats: () => ({ nodes: 0, events: 1, edges: 0 }),
+      events: () => ({
+        events: [{ projectionEventId: "e-telemetry", source: { provider: raw, type: "run", id: "src-telemetry" }, scope: ALICE, observedAt: NOW, sourceTimestamp: "2026-10-15T11:59:59.000Z", kind: "native.event" }],
+        truncated: false,
+        completeness: "complete",
+      }),
+    },
+    { scope: ALICE, now: NOW },
+  );
+  return report.eventLag.state === "measured" ? report.eventLag.value.providers : [];
+}
+
 const sliceKey = (id: string): string => JSON.stringify([ALICE.workspace, ALICE.principal, "furnace", "operation", "", id]);
 function topologyTexts(raw: string): string[] {
   const edges: Relation[] = [
@@ -474,6 +497,18 @@ function observeTexts(raw: string): string[] {
   return strings(observeInvocation(reader, { scope: ALICE, invocationId: "inv-observe" }));
 }
 
+/** wb-h8f.10: latency.ts displayText (selectLatencyDecomposition), the provider and the evidence-ref paths, joined to the corpus in the same commit as its routing through the one helper. */
+function latencyTexts(raw: string): string[] {
+  const node: ObservedNode = {
+    key: JSON.stringify([ALICE.workspace, ALICE.principal, raw, "operation", "", "latency"]), nativeRef: { provider: raw, type: "operation", id: "latency" },
+    scope: ALICE, sourceKind: "observed", observedAt: NOW, sourceConnectionState: "connected", freshness: "current", completeness: "complete",
+    presentation: { title: "latency", type: "sdk-operation", statusText: "DONE", statusTone: "success" }, kind: "native.snapshot", invocationId: "inv-latency",
+    evidenceRefs: [raw], interval: { startedAt: "2026-10-15T09:00:00Z", endedAt: "2026-10-15T09:00:05Z" },
+  };
+  const report = selectLatencyDecomposition({ query: filter => ({ nodes: [node].slice(0, filter.limit), examined: 1, truncated: false }) }, { scope: ALICE, invocationId: "inv-latency" });
+  return [...report.components.flatMap(item => item.providers), ...report.evidenceRefs, ...report.components.flatMap(item => item.evidenceRefs), report.invocationId];
+}
+
 /**
  * DIRECT-CALLER row (wb-752.4 O1, owner 2026-10-16T01:22Z): site 13 control-reply.ts buildControlReply routes every display
  * string of the workflow_control reply through the one helper with the text layout, exactly once. A hand-built result receipt
@@ -516,6 +551,7 @@ const SITES: readonly Site[] = [
   { site: "site 4 claude-topology.ts shown (projectClaudeTopology)", texts: claudeTexts },
   { site: "site 5 timeline.ts shown (buildTimelineLanes)", texts: timelineTexts },
   { site: "site 6 attention.ts titleOf (selectAttention)", texts: attentionTexts },
+  { site: "telemetry.ts providerName (buildOperationsTelemetry eventLag.providers)", texts: telemetryTexts },
   { site: "site 7 topology-slice.ts labelOf (selectLinkedTopology)", texts: topologyTexts },
   { site: "site 8 furnace-hosted.ts safeText (FurnaceHostedExecutor.start)", texts: hostedTexts },
   { site: "site 9 patch-proposal.ts displayText (proposeWorkflowPatch)", texts: patchTexts },
@@ -526,6 +562,7 @@ const SITES: readonly Site[] = [
   { site: "site 18 detached-observer.ts shown (projectDetachedReading)", texts: detachedTexts },
   { site: "sites 19/20 workflow_inspect and workbench_catalog replies", texts: replyTexts },
   { site: "site 22 observe-query.ts clean (observeInvocation)", texts: observeTexts },
+  { site: "wb-h8f.10 latency.ts displayText (selectLatencyDecomposition provider and evidence paths)", texts: latencyTexts },
 ];
 
 describe("wb-952 one-helper corpus through every census site's public function", () => {
@@ -664,7 +701,8 @@ describe("wb-952 the one helper: normalize once, redact the union of every readi
     }
   });
 
-  // redactWorkbenchText's own second-pass shape (a closing brace after a marker) is wb-3l3's, held behind this bead.
+  // redactWorkbenchText's own second pass keeps a marker before closing brackets and a value end, and otherwise only
+  // over-redacts (wb-3l3, pinned in workbench-redaction.test.ts).
   it("leaves nothing unsafe after one pass, so a second pass is the plain redactor and exposes nothing", () => {
     for (const probe of CORPUS) {
       for (const layout of ["text", "label", "terminal", "lines"] as const) {
