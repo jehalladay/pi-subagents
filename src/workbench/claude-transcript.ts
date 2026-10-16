@@ -85,6 +85,8 @@ export interface ClaudeTranscriptRow {
   type: "user" | "assistant" | "system";
   uuid: string;
   text: string;
+  /** Present, and only ever `true`, when the row bound cut the text (wb-idq truncation honesty); an uncut row has no such key. */
+  clipped?: true;
 }
 
 function rawText(message: SessionMessage): string {
@@ -100,11 +102,11 @@ function rawText(message: SessionMessage): string {
     .join("\n") || "(tool or non-text content)";
 }
 
-/** Clip to the row bound on a code-point boundary, so a clipped row never ends in half of a surrogate pair. */
-function clipRow(text: string): string {
-  if (text.length <= CLAUDE_TRANSCRIPT_ROW_CHARS) return text;
+/** Clip to the row bound on a code-point boundary, so a clipped row never ends in half of a surrogate pair, and say whether it cut. */
+function clipRow(text: string): { text: string; clipped: boolean } {
+  if (text.length <= CLAUDE_TRANSCRIPT_ROW_CHARS) return { text, clipped: false };
   const last = text.charCodeAt(CLAUDE_TRANSCRIPT_ROW_CHARS - 1);
-  return text.slice(0, last >= 0xd800 && last <= 0xdbff ? CLAUDE_TRANSCRIPT_ROW_CHARS - 1 : CLAUDE_TRANSCRIPT_ROW_CHARS);
+  return { text: text.slice(0, last >= 0xd800 && last <= 0xdbff ? CLAUDE_TRANSCRIPT_ROW_CHARS - 1 : CLAUDE_TRANSCRIPT_ROW_CHARS), clipped: true };
 }
 
 /**
@@ -117,7 +119,8 @@ function clipRow(text: string): string {
  * helper still precedes the clip and nothing is stripped first. A window whose output is shorter than the row clip plus the
  * closers (dense deletions, or a redaction that swallowed the cut) is widened and read again, so a unit or a credential
  * the cut straddles is never what the row shows. WINDOW_CLOSERS ends a quoted value the cut left open. Past the last
- * widening the whole text is read, exactly as before the bound.
+ * widening the whole text is read, exactly as before the bound. The clipped flag (wb-idq) is set by clipRow alone: a
+ * widened window that still fills the row bound holds more raw text than it shows, so that cut is a real cut.
  */
 function displayText(raw: string): string {
   for (let bound = CLAUDE_TRANSCRIPT_PREBOUND_CHARS; bound < raw.length; bound *= PREBOUND_GROWTH) {
@@ -127,7 +130,7 @@ function displayText(raw: string): string {
   return sanitizeWorkbenchText(raw, Number.MAX_SAFE_INTEGER, "lines");
 }
 
-function summary(message: SessionMessage): string {
+function summary(message: SessionMessage): { text: string; clipped: boolean } {
   return clipRow(displayText(rawText(message)));
 }
 
@@ -139,6 +142,9 @@ export async function readClaudeTranscript(
   read: ClaudeSessionReader = getSessionMessages,
 ): Promise<ClaudeTranscriptRow[]> {
   const messages = await read(sessionId, { dir: cwd, limit: Math.min(Math.max(1, limit), CLAUDE_TRANSCRIPT_MAX_ROWS) });
-  // uuid and type pass through untouched; only the text is sanitized (see summary).
-  return messages.map(message => ({ type: message.type, uuid: message.uuid, text: summary(message) }));
+  // uuid and type pass through untouched; only the text is sanitized (see summary). A cut row says so, and only a cut row.
+  return messages.map(message => {
+    const { text, clipped } = summary(message);
+    return { type: message.type, uuid: message.uuid, text, ...(clipped ? { clipped: true as const } : {}) };
+  });
 }

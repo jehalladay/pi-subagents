@@ -12,7 +12,7 @@ New module `src/workbench/evidence-loader.ts` exporting `EVIDENCE_CONTRACT = "wo
 
 `EvidenceLoader`: `{provider; requiredGrant; canLoad(ref); load(request): Promise<EvidenceContent>}`. Grant gating is exact-string and purely live: a loader is built for every supplied reader, and the exact-grant check every `load` runs against the live grant set is the only authorization decision, so missing and revoked grants are indistinguishable (both refuse with `unauthorized`) and a grant that appears after construction authorizes the next load.
 
-`EvidenceStore`: synchronous `get`, idempotent `request`, `abort`, `abortAll`; options `{loaders; maxEntries; maxBytes; timeoutMs}`. Cache keys are producer-qualified like the projection's own `keyOf` (scope + full nativeRef + ref) so same-scope cross-producer ref strings cannot collide. Scope mismatch refuses before any loader runs. Timeouts race a per-request abort. Loader errors map by CapabilityError category; raw error text never enters an entry. Every preview line passes the shared redaction and terminal sanitizers plus a loader-local zero-width strip; raw payloads are never retained. Abort paths stop only the local read; no projection method and no producer control verb is ever called from the store.
+`EvidenceStore`: synchronous `get`, idempotent `request`, `abort`, `abortAll`; options `{loaders; maxEntries; maxBytes; timeoutMs}`. Cache keys are producer-qualified like the projection's own `keyOf` (scope + full nativeRef + ref) so same-scope cross-producer ref strings cannot collide. Scope mismatch refuses before any loader runs. Timeouts race a per-request abort. Loader errors map by CapabilityError category; raw error text never enters an entry. Every preview entry is redacted whole, exactly once, by the shared helper's `lines` layout before the store splits it into rows or cuts it to the byte budget, so a credential whose scheme or key and value straddle a line break stays one credential (wb-ktf); a loader therefore hands each producer text whole, never pre-split. Every row then passes the terminal sanitizer; raw payloads are never retained. Abort paths stop only the local read; no projection method and no producer control verb is ever called from the store.
 
 ## Producer mapping
 
@@ -22,6 +22,8 @@ New module `src/workbench/evidence-loader.ts` exporting `EVIDENCE_CONTRACT = "wo
 | furnace run | native Attempt id listed on the owning run node | the observer's bounded logs read with its run/attempt/stream identity checks; lossy, incomplete or paged reads are loaded with truncated true; an attempt belonging to another run is unauthorized | `furnace:inspect` |
 | forge operation | `forge-operation:<operation_id>` | re-read through the registered read capability; a failed or partial domain verdict is a legitimate loaded result rendered as its own status, never "verified" | `forge:inspect` |
 | anything else | — | `unavailable: no-loader`, a visible unknown | — |
+
+The claude row's module (`workbench.claude-evidence/v1`, `src/workbench/claude-evidence.ts`, whose EvidenceStore wiring is the wb-idq slice) emits `kind` `claude-message`, the ref prefix spelling, and keeps `truncated` honest end to end: a row the transcript adapter cut at `CLAUDE_TRANSCRIPT_ROW_CHARS` arrives flagged `clipped` and loads truncated with the marker line even when its text fits every budget, so a bounded row never reads as whole.
 
 ## Refusal and freshness rules
 
