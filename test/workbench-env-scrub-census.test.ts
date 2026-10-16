@@ -12,18 +12,20 @@
  * or the RPC surface (slice 2). The existing it.fails canary in
  * test/workbench-security-workflow.test.ts is neither edited nor duplicated here.
  *
- * Honesty (E5): both seams are RED today because neither passes an allowlist-only env:
- *   - src/workflow/runtime.ts constructs the interpreter Worker with NO env option, so Node's
- *     documented default hands the worker a copy of process.env.
- *   - src/workbench/hosts/local-detached.ts spawns the detached host with {...process.env}
- *     minus NODE_OPTIONS/NODE_PATH.
- * Each red row is a NAMED known widening carried as it.fails. It is never a pass and never a
- * warning. It flips to a plain it only when the real scrub lands (owner bead wb-ksz).
+ * Honesty (E5): both seams SCRUB as of wb-ksz.8 (landed b0a1892), so the former known-widening
+ * pairs are plain rows now (pin-flip, both pairs together):
+ *   - src/workflow/runtime.ts constructs the interpreter Worker with an explicit plain `env: {}`
+ *     (owner seam rule 1: zero names; the subset form of E1 is satisfied by the empty object).
+ *   - src/workbench/hosts/local-detached.ts spawns the detached host with
+ *     scrubbedEnvironment(process.env) (src/workbench/process-env.ts), a null-prototype object
+ *     holding only DETACHED_HOST_ENV_ALLOWLIST names.
+ * A regression to an inherited env fails the plain rows; it is never a pass and never a warning.
  *
- * PROPOSED ALLOWLIST (for owner review): PATH, HOME, TMPDIR, TMP, TEMP, LANG, LC_ALL, LC_CTYPE,
- * TERM, TZ, PWD, USER, LOGNAME, SHELL, NODE_ENV, CI. Nothing else. When the implementation slice
- * exports its allowlist constant, ALLOWLIST below flips to that export (pin-flip; oracle bead
- * wb-ksz). Failure messages print KEY NAMES only, never a value and never an environment dump:
+ * ALLOWLIST OF RECORD: ALLOWLIST below IS the DETACHED_HOST_ENV_ALLOWLIST export (31 names,
+ * src/workbench/process-env.ts:22), the owner's 12:4xZ allowlist (16 + 15 names). ORACLE: beads
+ * wb-ksz and wb-ksz.8; the operational name XDG_RUNTIME_DIR is read by the detached socket base
+ * (local-detached.ts resolveDetachedSocket) and is the pin that proves the 16-name proposal is
+ * superseded. Failure messages print KEY NAMES only, never a value and never an environment dump:
  * every assertion over a recorded options object projects to key names or scalar fields before
  * expect(), and the failure-path falsifier in the harness sanity block proves it with a synthetic
  * canary value.
@@ -34,6 +36,7 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { inspect } from "node:util";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
+import { DETACHED_HOST_ENV_ALLOWLIST } from "../src/workbench/process-env.js";
 import { runWorkflow, type WorkflowHost } from "../src/workflow/runtime.js";
 
 const captured = vi.hoisted(() => ({
@@ -97,7 +100,7 @@ vi.mock("node:fs", async importOriginal => {
   return { ...overlay, default: overlay };
 });
 
-const ALLOWLIST = new Set(["PATH", "HOME", "TMPDIR", "TMP", "TEMP", "LANG", "LC_ALL", "LC_CTYPE", "TERM", "TZ", "PWD", "USER", "LOGNAME", "SHELL", "NODE_ENV", "CI"]);
+const ALLOWLIST: ReadonlySet<string> = new Set(DETACHED_HOST_ENV_ALLOWLIST);
 const CREDENTIAL_SHAPED = /TOKEN|SECRET|KEY|PASSWORD|CREDENTIAL|COOKIE|AUTH/i;
 const CREDENTIAL_PREFIXES = ["ANTHROPIC_", "AWS_", "CLAUDE_", "OPENAI_", "GITHUB_", "MIDWAY_", "NPM_"];
 const CANARY_VALUE = "W19_NOT_A_REAL_CREDENTIAL";
@@ -110,11 +113,23 @@ const CANARIES = [
   "W19_CANARY_NPM_TOKEN",
 ] as const;
 
-const credentialShaped = (name: string) => CREDENTIAL_SHAPED.test(name) || CREDENTIAL_PREFIXES.some(prefix => name.startsWith(prefix));
+/**
+ * OWNER-GRANTED EXCEPTION (wb-ksz.3 ruling R1 = (a), 2026-10-16T20:00Z): exactly CLAUDE_CONFIG_DIR is
+ * exempt from the CLAUDE_ prefix arm. GROUNDS: the variable carries a DIRECTORY PATH the SDK CLI
+ * consumes, not a secret; the credential store lives under it or HOME and is never an environment
+ * variable at this seam (the process-env.ts rationale of record). The exception is BY NAME, never by
+ * class: the regex arm and every other prefix (and every other CLAUDE_* name) stay flagged.
+ */
+const PREFIX_EXEMPT_BY_OWNER_RULING: ReadonlySet<string> = new Set(["CLAUDE_CONFIG_DIR"]);
+const credentialShaped = (name: string) =>
+  CREDENTIAL_SHAPED.test(name) || (!PREFIX_EXEMPT_BY_OWNER_RULING.has(name) && CREDENTIAL_PREFIXES.some(prefix => name.startsWith(prefix)));
 
 /** Verdict over a handed-over env: names only, never values. `undefined` is the inherited-env widening. */
 function censusEnv(env: unknown): { inherited: boolean; outsideAllowlist: string[]; canariesPresent: string[]; credentialShaped: string[] } {
-  if (env === undefined || env === null || typeof env !== "object" || Object.getPrototypeOf(env) !== Object.prototype) {
+  // Explicit env = a plain object whose prototype is Object.prototype OR null (scrubbedEnvironment returns
+  // Object.create(null)); undefined, null, non-objects and worker.SHARE_ENV stay inherited.
+  const prototype = env !== null && typeof env === "object" ? Object.getPrototypeOf(env) : undefined;
+  if (env === undefined || env === null || typeof env !== "object" || (prototype !== Object.prototype && prototype !== null)) {
     return { inherited: true, outsideAllowlist: [], canariesPresent: [], credentialShaped: [] };
   }
   const names = Object.keys(env as Record<string, unknown>);
@@ -155,14 +170,19 @@ const host = (): WorkflowHost => ({ spawnAgent: vi.fn(async () => ({ ok: true })
 
 let scratch = "";
 
-beforeAll(() => {
+const loadDetachedHost = () => import("../src/workbench/hosts/local-detached.js");
+let launchDetachedWorkflow: Awaited<ReturnType<typeof loadDetachedHost>>["launchDetachedWorkflow"];
+
+// The cold import of local-detached.js (~2.5 s at load 20-23) is hoisted out of the first detached row
+// with an explicit hook timeout, so the row's own 5 s budget measures the launch, not the module load.
+beforeAll(async () => {
   captured.root = realpathSync(resolve(dirname(fileURLToPath(import.meta.url)), ".."));
   scratch = realpathSync(mkdtempSync(join(tmpdir(), "w19-envscrub-")));
-});
+  ({ launchDetachedWorkflow } = await loadDetachedHost());
+}, 60_000);
 afterAll(() => { if (scratch) rmSync(scratch, { recursive: true, force: true }); });
 
 async function launchAndCaptureSpawn(): Promise<Record<string, unknown> | undefined> {
-  const { launchDetachedWorkflow } = await import("../src/workbench/hosts/local-detached.js");
   const id = `envscrub${captured.spawnOptions.length}${Date.now().toString(36)}`;
   const scriptPath = join(scratch, `${id}.js`);
   writeFileSync(scriptPath, `${META("w19-env-census")}return 1;\n`);
@@ -182,6 +202,28 @@ describe("W19 env-scrub census: harness sanity (plain, must pass)", () => {
     expect(censusEnv({ PATH: "/bin", HOME: "/h", LANG: "C" })).toEqual({ inherited: false, outsideAllowlist: [], canariesPresent: [], credentialShaped: [] });
     expect(() => expectScrubbed({ PATH: "/bin", HOME: "/h" }, "clean")).not.toThrow();
   });
+  it("a null-prototype allowlisted env classifies as explicit and passes expectScrubbed (U2 falsifier)", () => {
+    const env: Record<string, string> = Object.create(null);
+    env.PATH = "/bin";
+    env.HOME = "/h";
+    expect(censusEnv(env)).toEqual({ inherited: false, outsideAllowlist: [], canariesPresent: [], credentialShaped: [] });
+    expect(() => expectScrubbed(env, "null-prototype")).not.toThrow();
+    const outside: Record<string, string> = Object.create(null);
+    outside.W19_CANARY_NPM_TOKEN = "x";
+    expect(censusEnv(outside).canariesPresent, "a null-prototype env is still judged name by name").toEqual(["W19_CANARY_NPM_TOKEN"]);
+    expect(censusEnv(undefined).inherited, "undefined stays inherited").toBe(true);
+    expect(censusEnv(null).inherited, "null stays inherited").toBe(true);
+    expect(censusEnv("PATH=/bin").inherited, "a non-object stays inherited").toBe(true);
+    expect(censusEnv(Object.create({ PATH: "/bin" })).inherited, "an object with a foreign prototype stays inherited").toBe(true);
+  });
+  it("the owner-granted CLAUDE_CONFIG_DIR exception is by NAME: it alone passes, every other CLAUDE_ name still flags (R1 falsifiers)", () => {
+    expect(censusEnv({ CLAUDE_CONFIG_DIR: "/c" }).credentialShaped, "CLAUDE_CONFIG_DIR is exempt from the prefix arm").toEqual([]);
+    expect(() => expectScrubbed({ PATH: "/bin", CLAUDE_CONFIG_DIR: "/c" }, "claude-config-dir")).not.toThrow();
+    expect(censusEnv({ CLAUDE_CONFIG_DIR: "/c", CLAUDE_OTHER: "x" }).credentialShaped, "any other CLAUDE_ name is still flagged").toEqual(["CLAUDE_OTHER"]);
+    expect(censusEnv({ CLAUDE_CONFIG_DIR_EXTRA: "x" }).credentialShaped, "a name merely starting with the exempt name is still flagged").toEqual(["CLAUDE_CONFIG_DIR_EXTRA"]);
+    expect(censusEnv({ CLAUDE_CODE_OAUTH_TOKEN: "x" }).credentialShaped, "the regex arm is unchanged").toEqual(["CLAUDE_CODE_OAUTH_TOKEN"]);
+    expect(() => expectScrubbed({ PATH: "/bin", CLAUDE_OTHER: "x" }, "claude-other")).toThrow();
+  });
   it("a failing options assertion names the key and never prints a value (E3 failure-path falsifier)", () => {
     const probe = "W19_FALSIFIER_LEAK_PROBE_VALUE";
     let message = "";
@@ -195,8 +237,11 @@ describe("W19 env-scrub census: harness sanity (plain, must pass)", () => {
     expect(message.includes(probe), "the failure rendering must not contain the env value").toBe(false);
     expect(message.includes("W19_PROBE_KEY"), "the failure rendering must not dump the env object").toBe(false);
   });
-  it("the allowlist proposal itself contains no credential-shaped name", () => {
+  it("the allowlist of record (DETACHED_HOST_ENV_ALLOWLIST) contains no credential-shaped name and names XDG_RUNTIME_DIR", () => {
     expect([...ALLOWLIST].filter(credentialShaped)).toEqual([]);
+    expect(ALLOWLIST.has("XDG_RUNTIME_DIR"), "the operational oracle name read by the detached socket base").toBe(true);
+    expect(ALLOWLIST.has("CLAUDE_CONFIG_DIR"), "the owner-granted exemption name is on the allowlist of record").toBe(true);
+    expect(ALLOWLIST.size, "size of the allowlist of record").toBe(31);
   });
 });
 
@@ -208,12 +253,16 @@ describe("W19 env-scrub census: embedded interpreter seam (src/workflow/runtime.
     expect(captured.workerOptions.length, "one interpreter Worker was constructed for the run").toBe(1);
     expect(captured.workerOptions[0]?.eval, "the interpreter Worker is constructed with eval: true").toBe(true);
   });
-  it("KNOWN WIDENING (measured): runtime.ts passes no env option, so Node hands the worker a copy of process.env", async () => {
+  it("the Worker env option is an explicit plain object with ZERO names (owner seam rule 1)", async () => {
     captured.workerOptions.length = 0;
     await withCanaries(() => runWorkflow({ script: `${META("env-census-embedded-fact")}return 1;`, host: host() }));
-    expectNoEnvOption(captured.workerOptions[0], "runtime.ts Worker");
+    const env = captured.workerOptions[0]?.env;
+    expect(typeof env, "type of the Worker env option").toBe("object");
+    expect(env === null, "the Worker env option is not null").toBe(false);
+    expect(Object.getPrototypeOf(env), "the Worker env option is a plain object").toBe(Object.prototype);
+    expect(Object.keys(env as Record<string, unknown>), "names in the Worker env option").toEqual([]);
   });
-  it.fails("KNOWN WIDENING: runtime.ts new Worker must hand an allowlist-only env object with no canary credential names", async () => {
+  it("runtime.ts new Worker hands an allowlist-only env object with no canary credential names", async () => {
     captured.workerOptions.length = 0;
     await withCanaries(async () => {
       await runWorkflow({ script: `${META("env-census-embedded-scrub")}return 1;`, host: host() });
@@ -230,13 +279,33 @@ describe("W19 env-scrub census: detached host seam (src/workbench/hosts/local-de
     expect(options?.shell, "shell spawn option").toBe(false);
     expect(typeof options?.env, "type of the spawn env option").toBe("object");
   });
-  it("KNOWN WIDENING (measured): the spawned env carries the parent's canary credential names", async () => {
+  it("no canary, no credential-shaped and no outside-allowlist name reached the spawned env", async () => {
     const options = await withCanaries(launchAndCaptureSpawn);
     const verdict = censusEnv(options?.env);
-    expect(verdict.canariesPresent).toEqual([...CANARIES].sort());
+    expect(verdict.inherited, "the spawn env is an explicit object").toBe(false);
+    expect(verdict.canariesPresent, "canary credential names in the spawn env").toEqual([]);
+    expect(verdict.credentialShaped, "credential-shaped names in the spawn env").toEqual([]);
+    expect(verdict.outsideAllowlist, "names outside the allowlist of record in the spawn env").toEqual([]);
   });
-  it.fails("KNOWN WIDENING: local-detached.ts spawn must hand an allowlist-only env with no canary credential names", async () => {
+  it("local-detached.ts spawn hands an allowlist-only env with no canary credential names", async () => {
     const options = await withCanaries(launchAndCaptureSpawn);
     expectScrubbed(options?.env, "local-detached.ts spawn");
+  });
+  it("a proxy variable carrying canary userinfo is dropped by NAME while a userinfo-free proxy value is passed (owner seam rule 2)", async () => {
+    const userinfoProxy = "http://w19canary:W19_NOT_A_REAL_CREDENTIAL@proxy.invalid:3128";
+    const plainProxy = "http://proxy.invalid:3128";
+    const priorProxy = process.env.HTTPS_PROXY;
+    try {
+      process.env.HTTPS_PROXY = userinfoProxy;
+      const droppedEnv = (await withCanaries(launchAndCaptureSpawn))?.env;
+      expect(censusEnv(droppedEnv).inherited, "the spawn env is an explicit object").toBe(false);
+      expect(Object.keys(droppedEnv as Record<string, unknown>).includes("HTTPS_PROXY"), "HTTPS_PROXY (userinfo value) reached the spawn env").toBe(false);
+      process.env.HTTPS_PROXY = plainProxy;
+      const control = (await withCanaries(launchAndCaptureSpawn))?.env;
+      expect(Object.keys(control as Record<string, unknown>).includes("HTTPS_PROXY"), "HTTPS_PROXY (userinfo-free control) was passed").toBe(true);
+      expectScrubbed(control, "local-detached.ts spawn (proxy control)");
+    } finally {
+      if (priorProxy === undefined) delete process.env.HTTPS_PROXY; else process.env.HTTPS_PROXY = priorProxy;
+    }
   });
 });
