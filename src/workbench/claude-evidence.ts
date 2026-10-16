@@ -10,7 +10,9 @@
  * sanitizeWorkbenchText with its transcript-class "lines" layout (redaction.ts): redaction sees every reading of the row
  * first, so a credential can neither straddle a line break nor hide behind or glue across an invisible mark, and deletion
  * never precedes redaction; only then are CR, CRLF, NEL, LS and PS rendered as one LF, other whitespace as one space and
- * every other unsafe unit deleted. The row is split into preview lines afterwards. Only the sanitized preview and the
+ * every other unsafe unit deleted. The row is split into preview lines afterwards. A row the transcript adapter flagged
+ * `clipped` (cut at its row bound) is truncated with the marker even when it fits every budget, so a bounded row never
+ * reads as whole (wb-idq); the kind is `claude-message`, the ref prefix spelling the store path shares. Only the sanitized preview and the
  * row's byte size leave this module, never the raw text, the row object or any native error text. It registers nothing,
  * states no verification, changes no node status or tone and leaves the EvidenceLoader/EvidenceStore wrapper (wb-g1g.1)
  * to consume it. An abort stops only this local wait.
@@ -46,7 +48,7 @@ export interface ClaudeEvidenceDeps {
 /** The docs/20 EvidenceContent shape minus the store-level fields; freshness follows the owning node. */
 export interface ClaudeEvidenceContent {
   contract: typeof CLAUDE_EVIDENCE_CONTRACT;
-  kind: "claude.message";
+  kind: "claude-message";
   provider: "claude-agent-sdk";
   nativeRef: { provider: "claude-agent-sdk"; type: "message"; id: string };
   capturedAt: string;
@@ -210,20 +212,22 @@ export async function readClaudeMessageEvidence(ref: string, deps: ClaudeEvidenc
   if (selected === undefined) {
     throw new CapabilityError("transport", `Claude message is not in the bounded transcript window of ${maxMessages} messages.`);
   }
-  const { text, uuid } = selected;
+  const { text, uuid, clipped } = selected;
   if (typeof text !== "string" || typeof uuid !== "string") throw malformed();
+  // The adapter's row-bound cut is part of the truth: a flag that is present must be the literal true.
+  if (clipped !== undefined && clipped !== true) throw malformed();
 
   const scanned = clip(text, MAX_SCAN);
   const sanitized = sanitizeRow(scanned);
   const rows = sanitized.length === 0 ? [] : sanitized.split("\n");
   if (rows.length > 0 && rows[rows.length - 1] === "") rows.pop();
-  const { preview, truncated } = shape(rows.map(boundLine), scanned.length !== text.length, maxLines, maxBytes);
+  const { preview, truncated } = shape(rows.map(boundLine), scanned.length !== text.length || clipped === true, maxLines, maxBytes);
 
   const stamp: unknown = capturedAt();
   if (typeof stamp !== "string" || stamp.length > 64 || !ISO_INSTANT.test(stamp) || !Number.isFinite(Date.parse(stamp))) throw refused("capturedAt clock reading");
   return {
     contract: CLAUDE_EVIDENCE_CONTRACT,
-    kind: "claude.message",
+    kind: "claude-message",
     provider: "claude-agent-sdk",
     nativeRef: { provider: "claude-agent-sdk", type: "message", id: uuid },
     capturedAt: stamp,
