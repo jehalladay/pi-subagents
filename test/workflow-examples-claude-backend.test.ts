@@ -66,15 +66,17 @@ import {
 
 /**
  * gated-fix.js: the one first-cut degradation, as a PIN-FLIP ORACLE (owner ruling R1 (a)).
- * It names wb-a2g.11 as the oracle, the exact landed refusal text and the exact diff-key
- * list; it FLIPS WHEN wb-a2g.11 LANDS, and the landing slice must retire this pin.
+ * It names wb-a2g.11 as the oracle (the PAIRED-PIN partner: wb-a2g.11's first-cut-refusal pin and
+ * this pin move together), the exact landed refusal text and the exact diff-key list; it FLIPS
+ * WHEN the Claude-host gate path slice (the W16/VC-2 host runGate slice) lands, and that slice
+ * retires both pins in the same commit.
  */
 const KNOWN_DEGRADATIONS: Record<string, { oracle: string; error: string; diffKeys: string[]; flipsWhen: string }> = {
   "gated-fix.js": {
     oracle: "wb-a2g.11",
     error: "This workflow host cannot run gate commands.",
     diffKeys: ["agentCount", "error", "hostCalls", "phases", "status", "value"],
-    flipsWhen: "wb-a2g.11 lands",
+    flipsWhen: "the Claude-host gate path slice (the W16/VC-2 host runGate slice) lands",
   },
 };
 
@@ -365,15 +367,19 @@ describe("dual-backend golden equivalence (fixture pass, not live SDK)", () => {
 
     it("exhausting the agent budget fails the run with the same class under both backends", async () => {
       const fanOut = scriptNamed("fan-out-audit.js");
-      const a = await runUpstream(fanOut, cwd, { agentCap: 2 });
-      const b = await runClaude(fanOut, cwd, { agentCap: 2 });
+      // agentCap 1, not 2: the cap refuses the first audit before any agent is in flight, so the
+      // journal shape is deterministic. At cap 2 the in-flight agent's 1 ms host timer raced the
+      // worker's cross-thread cap-failure round trip (paired-run probe: 15/240 divergences at cap 2
+      // under 12-way load, 0/240 at cap 1); that was a race, not a backend divergence.
+      const a = await runUpstream(fanOut, cwd, { agentCap: 1 });
+      const b = await runClaude(fanOut, cwd, { agentCap: 1 });
       expect(a.result.status).toBe("failed");
       expect(errorClassOf(a.result.error)).toBe("agent-cap-exceeded");
       expect(b.result.status).toBe("failed");
       expect(b.result.error).toBe(a.result.error);
       expect(normalizeRun(b)).toEqual(normalizeRun(a));
-      // The cap held on the SDK side too: no query beyond it.
-      expect(b.sdkCalls.length).toBeLessThanOrEqual(2);
+      // The cap held on the SDK side too: exactly the one query the cap allows, none beyond it.
+      expect(b.sdkCalls).toHaveLength(1);
     });
 
     it("an unsupported agent() option fails at the call under both backends, naming the key, before any SDK query", async () => {
