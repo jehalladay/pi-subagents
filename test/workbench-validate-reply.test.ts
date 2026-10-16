@@ -287,15 +287,15 @@ describe("W16 workflow_validate reply: sanitization", () => {
     const found = source("return 1;", '{ name: "sam\\u001b[31mple", description: "password=hunter2 Bearer abc.def \\u202e" }');
     const result = build(found);
     expect(result.text).not.toContain("\u001b");
-    expect(result.text).not.toContain("‮");
+    expect(result.text).not.toContain("\u202E");
     expect(result.text).not.toContain("hunter2");
     expect(result.text).not.toContain("abc.def");
   });
 
   it("a diagnostic that quotes author source is sanitized", () => {
-    const result = build(source('const secret = ; // api_key=ABCSECRET‮'));
+    const result = build(source('const secret = ; // api_key=ABCSECRET\u202E'));
     expect(result.text).not.toContain("ABCSECRET");
-    expect(result.text).not.toContain("‮");
+    expect(result.text).not.toContain("\u202E");
   });
 });
 
