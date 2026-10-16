@@ -180,7 +180,9 @@ export async function readBeadsWork(client: BeadsReadClient, options: BeadsReadO
   let selfReferences = retained.filter((item) => item.id === workId && (item.dependencyType === 'blocks' || item.dependencyType === 'parent-child')).length;
   const fieldParent = parentField ? workIdOf(parentField, 'parent') : undefined;
   if (fieldParent === workId) selfReferences += 1;
-  // The parent FIELD is authoritative; an entry only supplies the parent when the field is absent.
+  // The parent FIELD is authoritative; an entry only supplies the parent when the field is absent. With no field the
+  // FIRST parent-child entry is the single parent (gate-pinned reading, wb-752.11 U4): a second distinct parent-child entry
+  // stays in dependencies.items but is neither edged nor counted.
   const parent = fieldParent !== undefined ? (fieldParent === workId ? undefined : fieldParent) : retained.find((item) => item.dependencyType === 'parent-child' && item.id !== workId)?.id;
   const closedAt = typeof issue.closed_at === 'string' ? cleanText(issue.closed_at, MAX_LABEL_CHARS) : '';
   const clean = cleanText(title, limits.maxTitleChars);

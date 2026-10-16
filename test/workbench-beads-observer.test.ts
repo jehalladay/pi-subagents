@@ -293,9 +293,9 @@ describe('wb-752.6 Beads Work readiness reader', () => {
     );
     const {relations} = projectBeadsWork(reading, scope);
     expect(relations.map((relation) => [relation.kind, relation.to.id])).toEqual([['dependency', 'wb-g1g.2']]);
-    // The ANSI-wrapped literal sanitizes to 'blocks' and is counted under that label; the zero-width forms survive the shared
-    // strip (wb-952 owns widening it), fail the type shape and fall to the unrecognized bucket. None of them mints an edge.
-    expect(reading.unmappedDependencyTypes).toEqual({unrecognized: 2, blocks: 1});
+    // Post-wb-952 the shared helper strips U+200B and ANSI, so every hostile form sanitizes onto a mapped literal and is
+    // counted under that sanitized label; the RAW comparison keeps all of them from minting an edge.
+    expect(reading.unmappedDependencyTypes).toEqual({blocks: 2, 'parent-child': 1});
     expect(reading.work.parent).toBeUndefined();
     expect(JSON.stringify(reading)).not.toMatch(/[\u200b\u001b]/);
   });
@@ -318,6 +318,12 @@ describe('wb-752.6 Beads Work readiness reader', () => {
     const field = await read(fake(ok([issue({parent: workId, dependencies: []})])));
     expect(projectBeadsWork(field, scope).relations).toEqual([]);
     expect(field.selfReferences).toBe(1);
+    // The reading layer itself never exports a self parent (the projection guard below must not be the only defense).
+    expect(field.work.parent).toBeUndefined();
+    expect(Object.hasOwn(field.work, 'parent')).toBe(false);
+    // The projection layer independently refuses a reading whose parent already names the work.
+    const forged: BeadsWorkReading = {...field, work: {...field.work, parent: workId}};
+    expect(projectBeadsWork(forged, scope).relations).toEqual([]);
     const clean = await read(fake(ok([issue()])));
     expect(Object.hasOwn(clean, 'selfReferences')).toBe(false);
   });
@@ -328,7 +334,34 @@ describe('wb-752.6 Beads Work readiness reader', () => {
       fake(ok([issue({dependencies: [dep('wb-u.1', 'Weird Type!'), dep('wb-u.2', 'x'.repeat(40)), dep('wb-u.3', '9lives'), dep('wb-u.4', 'related')]})])),
     );
     expect(reading.unmappedDependencyTypes).toEqual({unrecognized: 3, related: 1});
+    expect(reading.dependencies.items.map((item) => item.dependencyType)).toEqual(['unrecognized', 'unrecognized', 'unrecognized', 'related']);
     expect(projectBeadsWork(reading, scope).relations).toEqual([]);
+  });
+
+  // wb-752.11 U4 (gate default reading, pinned): with no parent field, the FIRST parent-child entry is the single parent.
+  it('wb-752.11 U4: no parent field and two distinct parent-child entries give one grouping edge from the first; the second is retained in items only', async () => {
+    const reading = await read(fake(ok([issue({dependencies: [dep('wb-p.1', 'parent-child'), dep('wb-p.2', 'parent-child')]})])));
+    const grouping = projectBeadsWork(reading, scope).relations.filter((relation) => relation.kind === 'grouping');
+    expect(grouping.map((relation) => relation.from.id)).toEqual(['wb-p.1']);
+    expect(reading.work.parent).toBe('wb-p.1');
+    expect(reading.dependencies.items.map((item) => item.id)).toEqual(['wb-p.1', 'wb-p.2']);
+    expect(reading.unmappedDependencyTypes).toEqual({});
+  });
+
+  // wb-752.11 O1: a self entry of an unmapped type is counted under its type, never as a self-reference.
+  it('wb-752.11 O1: a self entry of an unmapped type counts under its type and never in selfReferences', async () => {
+    const reading = await read(fake(ok([issue({dependencies: [dep(workId, 'related')]})])));
+    expect(reading.unmappedDependencyTypes).toEqual({related: 1});
+    expect(Object.hasOwn(reading, 'selfReferences')).toBe(false);
+    expect(projectBeadsWork(reading, scope).relations).toEqual([]);
+  });
+
+  // wb-752.11 O2: a self parent field suppresses the entry fallback.
+  it('wb-752.11 O2: a self parent field suppresses the parent-child entry fallback', async () => {
+    const reading = await read(fake(ok([issue({parent: workId, dependencies: [dep('wb-752', 'parent-child')]})])));
+    expect(reading.work.parent).toBeUndefined();
+    expect(reading.selfReferences).toBe(1);
+    expect(projectBeadsWork(reading, scope).relations.filter((relation) => relation.kind === 'grouping')).toEqual([]);
   });
 
   // Falsifier 4: C6 closed is never success.
