@@ -7,6 +7,7 @@
  * `forge run local-detached-faults`, never by this file.
  */
 import { readFileSync } from "node:fs";
+import ts from "typescript";
 import { describe, expect, it } from "vitest";
 import {
   assessFaultJourneys,
@@ -540,5 +541,64 @@ describe("detached fault-injection receipt: runner exit mapping (wb-p5a X1, X2)"
     const sigterm = clone(clean());
     sigterm.journeys.sigterm.terminal = "cancelled";
     expect(rules(sigterm)).toContain("unknown-not-reconcilable");
+  });
+});
+
+/**
+ * wb-p5a respin R7 (owner binding 03:3xZ; RESPIN branch of the 11:13Z ruling, fired by the wb-0kg.10 verdict 15:34Z: "p5a cuts
+ * IMMEDIATELY with R7 RESTATED against trunk's inline same-id relaunch block (verbatim; base-equivalents of G14-G16 killed)").
+ * docs/workbench/08: "Logical invocation: caller-created unique identity stable across retry of same request; distinct from
+ * identical intentional second request."
+ *
+ * The six runner lines that re-launch the SAME id after host loss and count markers around it are pinned verbatim, as parsed
+ * code: counting any error as a rejection (G14), reporting an accepted relaunch as rejected (G15, fabricated-green-capable on a
+ * broken host) or launching a different id (G16) changes them, and a commented-out copy can never stand in for them.
+ * PIN-FLIP (known-conflicts entry 5): if wb-0kg.10 lands after this pin, its re-cut flips it to the attemptRelaunch function
+ * form verbatim in the same commit.
+ */
+describe("detached fault-injection receipt: same-id relaunch pinned verbatim (wb-p5a R7)", () => {
+  const SAME_ID_RELAUNCH = [
+    "  const afterExecute = markerCount(id);",
+    "  const relaunch = await host.launchDetachedWorkflow(request(id, 'crash', {autoStart: false, permissions: ['inspect', 'execute']})).then(",
+    "    receipt => { pids.add(receipt.pid); return {rejected: false, diagnostic: 'same-id relaunch accepted'}; },",
+    "    error => ({rejected: /exists|conflict/i.test(message(error)), diagnostic: message(error)}),",
+    "  );",
+    "  const afterRelaunch = markerCount(id);",
+  ];
+  // The same six lines as the three statements the parser sees (statement text starts at its first token).
+  const STATEMENTS = [SAME_ID_RELAUNCH[0], SAME_ID_RELAUNCH.slice(1, 5).join("\n"), SAME_ID_RELAUNCH[5]].map((statement) => statement.slice(2));
+
+  function effectCrashJourney(): { file: ts.SourceFile; journey: ts.FunctionDeclaration } {
+    const file = ts.createSourceFile("local-detached-faults.mjs", readRepo("qa/workbench/local-detached-faults.mjs"), ts.ScriptTarget.Latest, true, ts.ScriptKind.JS);
+    const journeys = file.statements.filter(ts.isFunctionDeclaration).filter((fn) => fn.name?.text === "effectCrashJourney");
+    expect(journeys, "exactly one top-level effectCrashJourney()").toHaveLength(1);
+    return { file, journey: journeys[0] };
+  }
+
+  function propertyAssignments(root: ts.Node, found: ts.PropertyAssignment[] = []): ts.PropertyAssignment[] {
+    if (ts.isPropertyAssignment(root)) found.push(root);
+    ts.forEachChild(root, (child) => {
+      propertyAssignments(child, found);
+    });
+    return found;
+  }
+
+  it("the six same-id relaunch lines stand verbatim, exactly once, as three consecutive statements of effectCrashJourney", () => {
+    expect(readRepo("qa/workbench/local-detached-faults.mjs").split(`${SAME_ID_RELAUNCH.join("\n")}\n`)).toHaveLength(2);
+    const { file, journey } = effectCrashJourney();
+    const statements = journey.body?.statements.map((statement) => statement.getText(file)) ?? [];
+    expect(statements.filter((statement) => statement === STATEMENTS[1]), "the relaunch statement is live code, once").toHaveLength(1);
+    const at = statements.indexOf(STATEMENTS[1]);
+    expect(statements.slice(at - 1, at + 2)).toEqual(STATEMENTS);
+  });
+
+  it("the journey record reads that relaunch outcome itself, never a constant", () => {
+    const { file, journey } = effectCrashJourney();
+    const initializers = (name: string): string[] =>
+      propertyAssignments(journey)
+        .filter((property) => ts.isIdentifier(property.name) && property.name.text === name)
+        .map((property) => property.initializer.getText(file));
+    expect(initializers("relaunchRejected")).toEqual(["relaunch.rejected"]);
+    expect(initializers("relaunchDiagnostic")).toEqual(["relaunch.diagnostic"]);
   });
 });

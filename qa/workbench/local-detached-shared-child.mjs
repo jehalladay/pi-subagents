@@ -14,7 +14,7 @@ import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {faultProviderSource} from './local-detached-faults-receipt.mjs';
-import {buildSharedChildReceipt, exitCodeFor, SHARED_CHILD_CASES} from './local-detached-shared-child-receipt.mjs';
+import {buildSharedChildReceipt, exitCodeFor, reachedTerminal, SHARED_CHILD_CASES} from './local-detached-shared-child-receipt.mjs';
 
 const HOLD_MS = 2500;
 const BOUND_MS = 6000;
@@ -285,9 +285,10 @@ async function ownerStopJourney() {
   const startedAt = performance.now();
   const reply = await owner.cancel('shared-child journey: explicit owner stop after a reader closed');
   const firstInspect = await owner.inspect();
-  const finished = await until(() => owner.inspect(), snapshot => snapshot.terminal === 'cancelled');
+  // Arm on ANY reached terminal: a non-cancelled terminal after the owner stop is the judge's finding, not an unrealised run.
+  const finished = await until(() => owner.inspect(), reachedTerminal);
   if (!live.ok) diagnostics.push(`${id}: the child did not reach observed-running with its effect marker.`);
-  if (!finished.ok) diagnostics.push(`${id}: the child did not reach cancelled after the explicit owner stop.`);
+  if (!finished.ok) diagnostics.push(`${id}: the child did not reach a terminal after the explicit owner stop.`);
   return {
     armed: live.ok && finished.ok && closed.report.attached === true,
     invocationId: id,
