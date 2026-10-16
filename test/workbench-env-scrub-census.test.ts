@@ -23,12 +23,16 @@
  * PROPOSED ALLOWLIST (for owner review): PATH, HOME, TMPDIR, TMP, TEMP, LANG, LC_ALL, LC_CTYPE,
  * TERM, TZ, PWD, USER, LOGNAME, SHELL, NODE_ENV, CI. Nothing else. When the implementation slice
  * exports its allowlist constant, ALLOWLIST below flips to that export (pin-flip; oracle bead
- * wb-ksz). Failure messages print KEY NAMES only, never a value and never an environment dump.
+ * wb-ksz). Failure messages print KEY NAMES only, never a value and never an environment dump:
+ * every assertion over a recorded options object projects to key names or scalar fields before
+ * expect(), and the failure-path falsifier in the harness sanity block proves it with a synthetic
+ * canary value.
  */
 import { mkdtempSync, realpathSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { inspect } from "node:util";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { runWorkflow, type WorkflowHost } from "../src/workflow/runtime.js";
 
@@ -130,6 +134,14 @@ function expectScrubbed(env: unknown, seam: string): void {
   expect(verdict.outsideAllowlist, `${seam}: names outside the proposed allowlist reached the child`).toEqual([]);
 }
 
+/**
+ * Asserts a recorded options object carries no env key. The assertion is made over the KEY NAMES only
+ * (a projection taken before expect()), so a failure can never serialize an env value (E3).
+ */
+function expectNoEnvOption(options: Record<string, unknown> | undefined, seam: string): void {
+  expect(Object.keys(options ?? {}), `${seam} options carry an env key`).not.toContain("env");
+}
+
 function withCanaries<T>(run: () => Promise<T>): Promise<T> {
   const prior = new Map<string, string | undefined>();
   for (const name of CANARIES) { prior.set(name, process.env[name]); process.env[name] = CANARY_VALUE; }
@@ -170,6 +182,19 @@ describe("W19 env-scrub census: harness sanity (plain, must pass)", () => {
     expect(censusEnv({ PATH: "/bin", HOME: "/h", LANG: "C" })).toEqual({ inherited: false, outsideAllowlist: [], canariesPresent: [], credentialShaped: [] });
     expect(() => expectScrubbed({ PATH: "/bin", HOME: "/h" }, "clean")).not.toThrow();
   });
+  it("a failing options assertion names the key and never prints a value (E3 failure-path falsifier)", () => {
+    const probe = "W19_FALSIFIER_LEAK_PROBE_VALUE";
+    let message = "";
+    try {
+      expectNoEnvOption({ eval: true, env: { W19_PROBE_KEY: probe } }, "synthetic seam");
+    } catch (error) {
+      message = inspect(error, { depth: null });
+    }
+    expect(message === "", "the synthetic env option must make the helper throw").toBe(false);
+    expect(message.includes("env"), "the failure rendering (message plus the actual/expected diff vitest prints) names the env key").toBe(true);
+    expect(message.includes(probe), "the failure rendering must not contain the env value").toBe(false);
+    expect(message.includes("W19_PROBE_KEY"), "the failure rendering must not dump the env object").toBe(false);
+  });
   it("the allowlist proposal itself contains no credential-shaped name", () => {
     expect([...ALLOWLIST].filter(credentialShaped)).toEqual([]);
   });
@@ -180,14 +205,13 @@ describe("W19 env-scrub census: embedded interpreter seam (src/workflow/runtime.
     captured.workerOptions.length = 0;
     const result = await withCanaries(() => runWorkflow({ script: `${META("env-census-embedded")}return 1;`, host: host() }));
     expect(result.status).toBe("completed");
-    expect(captured.workerOptions).toHaveLength(1);
-    expect(captured.workerOptions[0]).toMatchObject({ eval: true });
+    expect(captured.workerOptions.length, "one interpreter Worker was constructed for the run").toBe(1);
+    expect(captured.workerOptions[0]?.eval, "the interpreter Worker is constructed with eval: true").toBe(true);
   });
   it("KNOWN WIDENING (measured): runtime.ts passes no env option, so Node hands the worker a copy of process.env", async () => {
     captured.workerOptions.length = 0;
     await withCanaries(() => runWorkflow({ script: `${META("env-census-embedded-fact")}return 1;`, host: host() }));
-    const options = captured.workerOptions[0];
-    expect(options).not.toHaveProperty("env");
+    expectNoEnvOption(captured.workerOptions[0], "runtime.ts Worker");
   });
   it.fails("KNOWN WIDENING: runtime.ts new Worker must hand an allowlist-only env object with no canary credential names", async () => {
     captured.workerOptions.length = 0;
@@ -202,8 +226,9 @@ describe("W19 env-scrub census: detached host seam (src/workbench/hosts/local-de
   it("the launch reaches spawn with the host entrypoint and captures its options", async () => {
     const options = await withCanaries(launchAndCaptureSpawn);
     expect(options).toBeDefined();
-    expect(options).toMatchObject({ detached: true, shell: false });
-    expect(options?.env).toBeTypeOf("object");
+    expect(options?.detached, "detached spawn option").toBe(true);
+    expect(options?.shell, "shell spawn option").toBe(false);
+    expect(typeof options?.env, "type of the spawn env option").toBe("object");
   });
   it("KNOWN WIDENING (measured): the spawned env carries the parent's canary credential names", async () => {
     const options = await withCanaries(launchAndCaptureSpawn);
