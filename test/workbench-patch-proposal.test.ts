@@ -2,17 +2,25 @@ import { createHash } from "node:crypto";
 import { mkdtempSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { CapabilityRegistry } from "../src/workbench/capability-registry.js";
-import { inspectWorkflowSource, type WorkflowSource } from "../src/workbench/designer.js";
+import type * as Designer from "../src/workbench/designer.js";
+import { inspectWorkflowSource, validateWorkflowSource, type WorkflowSource } from "../src/workbench/designer.js";
 import { type InvocationSnapshot, identityDigest } from "../src/workbench/identity.js";
 import {
   PATCH_PROPOSAL_CONTRACT,
   PatchProposalError,
+  type PatchProposalErrorCode,
   proposeWorkflowPatch,
   recordPromotionDecision,
   type WorkflowPatchProposal,
 } from "../src/workbench/patch-proposal.js";
+
+// Wrapper spy: the real validateWorkflowSource runs through vi.fn so tests can count calls without editing designer.ts.
+vi.mock("../src/workbench/designer.js", async importOriginal => {
+  const actual = await importOriginal<typeof Designer>();
+  return { ...actual, validateWorkflowSource: vi.fn(actual.validateWorkflowSource) };
+});
 
 const roots: string[] = [];
 afterEach(() => {
@@ -61,6 +69,24 @@ function deepFrozen(value: unknown): boolean {
   if (!Object.isFrozen(value)) return false;
   return Object.values(value).every(deepFrozen);
 }
+function expectCode(fn: () => unknown, code: PatchProposalErrorCode): void {
+  try {
+    fn();
+  } catch (error) {
+    expect(error).toBeInstanceOf(PatchProposalError);
+    expect((error as PatchProposalError).code).toBe(code);
+    return;
+  }
+  expect.unreachable();
+}
+function gateRegistry(): CapabilityRegistry {
+  const registry = new CapabilityRegistry();
+  registry.register({
+    descriptor: { id: "forge.gate.status", version: "1.0.0", description: "fixture", effectClass: "read", inputSchema: { type: "object", properties: { root: { type: "string" } }, required: ["root"], additionalProperties: false }, permissions: ["forge:inspect"], supportedModes: ["invoke"] },
+    invoke: async () => { throw Error("NEVER INVOKE"); },
+  });
+  return registry;
+}
 const operator = { decision: "promoted" as const, principal: { id: "operator-1", role: "owner" }, at: "2026-10-15T10:00:00.000Z", reason: "reviewed diff" };
 
 describe("W17-A pure digest-pinned workflow patch proposal", () => {
@@ -105,7 +131,7 @@ describe("W17-A pure digest-pinned workflow patch proposal", () => {
     expect(huge.validation.diagnostics.some(item => item.code === "SOURCE_TOO_LARGE")).toBe(true);
     const control = proposeWorkflowPatch({ base, candidateSource: `${HEADER}return 1;\u0001`, rationale: "r" });
     expect(control.validation.diagnostics.some(item => item.code === "SOURCE_CONTROL_CHARACTERS")).toBe(true);
-    expect(() => proposeWorkflowPatch({ base, candidateSource: `${HEADER}${"//x\n".repeat(700_000)}`, rationale: "r" })).toThrowError(PatchProposalError);
+    expectCode(() => proposeWorkflowPatch({ base, candidateSource: `${HEADER}${"//x\n".repeat(700_000)}`, rationale: "r" }), "CANDIDATE_TOO_LARGE");
   });
 
   it("never writes source or touches a fixture script and never exposes a path-taking API", () => {
@@ -195,21 +221,20 @@ describe("W17-A pure digest-pinned workflow patch proposal", () => {
     expect(proposal.diff.truncated).toBe(false);
     expect(proposal.diff.summary.added).toBe(0);
     expect(proposal.diff.summary.removed).toBe(0);
-    expect(() => recordPromotionDecision(proposal, operator)).toThrowError(PatchProposalError);
-    try { recordPromotionDecision(proposal, operator); } catch (error) { expect((error as PatchProposalError).code).toBe("PROMOTION_PRECONDITION"); }
+    expectCode(() => recordPromotionDecision(proposal, operator), "PROMOTION_PRECONDITION");
   });
 
   it("strips terminal escapes and bidi marks and redacts credentials in diff text", () => {
     const base = inMemory("return 1;");
-    const candidate = `${HEADER}// \u001b[31mred\u001b[0m ‮evil Authorization: Bearer abc123\n// split Bear\u001b[0mer\nreturn 1;`;
+    const candidate = `${HEADER}// \u001b[31mred\u001b[0m \u202Eevil Authorization: Bearer abc123\n// split Bear\u001b[0mer\nreturn 1;`;
     const proposal = proposeWorkflowPatch({ base, candidateSource: candidate, rationale: "tok Authorization: Bearer topsecret999" });
     const text = proposal.diff.hunks.map(hunk => hunk.text).join("\n");
     expect(text).not.toContain("\u001b");
-    expect(text).not.toContain("‮");
+    expect(text).not.toContain("\u202E");
     expect(text).not.toContain("abc123");
     expect(text).toContain("[REDACTED]");
     expect(JSON.stringify(proposal)).not.toContain("topsecret999");
-    expect(JSON.stringify(proposal)).not.toMatch(/\u001b|‮/);
+    expect(JSON.stringify(proposal)).not.toMatch(/\u001b|\u202E/);
     const credentialSplit = proposeWorkflowPatch({ base, candidateSource: `${HEADER}// Bearer\u001b[0m zzz-secret-token\nreturn 1;`, rationale: "r" });
     expect(JSON.stringify(credentialSplit.diff)).not.toContain("zzz-secret-token");
   });
@@ -227,7 +252,7 @@ describe("W17-A pure digest-pinned workflow patch proposal", () => {
     expect(Buffer.byteLength(JSON.stringify(small.diff.hunks), "utf8")).toBeLessThanOrEqual(2048);
     expect(small.diff.summary).toEqual(proposal.diff.summary);
     expect(small.diff.hunks.length).toBeGreaterThan(0);
-    expect(() => proposeWorkflowPatch({ base, candidateSource: candidate, rationale: "r", limits: { maxDiffLines: 0 } })).toThrowError(PatchProposalError);
+    expectCode(() => proposeWorkflowPatch({ base, candidateSource: candidate, rationale: "r", limits: { maxDiffLines: 0 } }), "VALIDATION");
   });
 
   it("issues a frozen operator-only receipt and gates promotion on a valid proposal", () => {
@@ -249,18 +274,45 @@ describe("W17-A pure digest-pinned workflow patch proposal", () => {
     expect(deepFrozen(receipt)).toBe(true);
     for (const body of [`${HEADER}const = ;`, base.source]) {
       const blocked = proposeWorkflowPatch({ base, candidateSource: body, rationale: "r" });
-      expect(() => recordPromotionDecision(blocked, operator)).toThrowError(PatchProposalError);
+      expectCode(() => recordPromotionDecision(blocked, operator), "PROMOTION_PRECONDITION");
       expect(recordPromotionDecision(blocked, { ...operator, decision: "rejected" }).decision).toBe("rejected");
     }
-    const uncertain = proposeWorkflowPatch({ base, candidateSource: `${HEADER}const x = args.y; await agent(x);`, rationale: "r" });
-    if (uncertain.status === "uncertain") {
-      try { recordPromotionDecision(uncertain, operator); expect.unreachable(); } catch (error) { expect((error as PatchProposalError).code).toBe("PROMOTION_PRECONDITION"); }
-    }
-    expect(() => recordPromotionDecision(proposal, { ...operator, principal: { id: "" } })).toThrowError(PatchProposalError);
-    expect(() => recordPromotionDecision(proposal, { ...operator, reason: "" })).toThrowError(PatchProposalError);
-    expect(() => recordPromotionDecision(proposal, { ...operator, at: "not a date" })).toThrowError(PatchProposalError);
+    expectCode(() => recordPromotionDecision(proposal, { ...operator, principal: { id: "" } }), "VALIDATION");
+    expectCode(() => recordPromotionDecision(proposal, { ...operator, reason: "" }), "VALIDATION");
+    expectCode(() => recordPromotionDecision(proposal, { ...operator, at: "not a date" }), "VALIDATION");
     const forged: WorkflowPatchProposal = { ...proposal, status: "valid", rationale: "forged" };
-    expect(() => recordPromotionDecision(forged, operator)).toThrowError(PatchProposalError);
+    expectCode(() => recordPromotionDecision(forged, operator), "PROMOTION_PRECONDITION");
+  });
+
+  it("refuses to promote the suite's uncertain dynamic-branch candidate while rejection still records", () => {
+    const base = inMemory("return 1;");
+    const uncertain = proposeWorkflowPatch({
+      base,
+      candidateSource: `${HEADER}await node("forge.gate.status", args);`,
+      rationale: "r",
+      registry: gateRegistry(),
+      grants: ["discover:forge.gate.status", "forge:inspect"],
+    });
+    expect(uncertain.status).toBe("uncertain");
+    expectCode(() => recordPromotionDecision(uncertain, operator), "PROMOTION_PRECONDITION");
+    expect(recordPromotionDecision(uncertain, { ...operator, decision: "rejected" }).decision).toBe("rejected");
+  });
+
+  it("checks the base digest before size, diff-cell and validation under a joint mismatch", () => {
+    const spy = vi.mocked(validateWorkflowSource);
+    const base = inMemory("return 1;");
+    const line = (tag: string, index: number): string => `//${tag}${String(index).padStart(5, "0")}${"y".repeat(1000)}`;
+    const tampered: WorkflowSource = { ...base, source: `${base.source}\n${Array.from({ length: 2200 }, (_, index) => line("b", index)).join("\n")}` };
+    const candidateSource = `${HEADER}${Array.from({ length: 2200 }, (_, index) => line("c", index)).join("\n")}`;
+    // Control: the candidate really is over the byte bound and the diff would exceed the cell bound against this base.
+    expect(Buffer.byteLength(candidateSource, "utf8")).toBeGreaterThan(524_288 * 4);
+    expect((tampered.source.split("\n").length + 1) * (candidateSource.split("\n").length + 1)).toBeGreaterThan(4_000_000);
+    spy.mockClear();
+    expectCode(() => proposeWorkflowPatch({ base: tampered, candidateSource, rationale: "r" }), "SOURCE_DIGEST_MISMATCH");
+    expect(spy).toHaveBeenCalledTimes(0);
+    // Positive control: the spy does observe validation on an accepted proposal.
+    proposeWorkflowPatch({ base, candidateSource: `${HEADER}return 2;`, rationale: "r" });
+    expect(spy).toHaveBeenCalledTimes(1);
   });
 
   it("digests the proposal and reports ungrounded hypotheses without any causal claim", () => {
@@ -291,7 +343,7 @@ describe("W17-A pure digest-pinned workflow patch proposal", () => {
     expect(Object.isFrozen(one.diff.hunks)).toBe(true);
     expect(deepFrozen(one)).toBe(true);
     expect(Object.isFrozen(base)).toBe(false);
-    expect(() => proposeWorkflowPatch({ base, candidateSource: 42 as unknown as string, rationale: "r" })).toThrowError(PatchProposalError);
-    expect(() => proposeWorkflowPatch({ base, candidateSource: input.candidateSource, rationale: "" })).toThrowError(PatchProposalError);
+    expectCode(() => proposeWorkflowPatch({ base, candidateSource: 42 as unknown as string, rationale: "r" }), "VALIDATION");
+    expectCode(() => proposeWorkflowPatch({ base, candidateSource: input.candidateSource, rationale: "" }), "VALIDATION");
   });
 });
