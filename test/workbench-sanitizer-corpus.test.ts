@@ -376,6 +376,9 @@ function inspectorPanelRealTexts(raw: string): string[] | undefined {
   if (projection.window({ scope: PANEL_SCOPE, invocationId: "inv-panel-real", offset: 0, limit: 1 }).total === 0) return undefined;
   const attention = selectAttention(projection, { scope: PANEL_SCOPE, invocationId: "inv-panel-real", now: "2026-10-15T12:01:00.000Z" });
   return panelLines({ projection, scope: PANEL_SCOPE, invocationId: "inv-panel-real", title: "Panel real path", status: "running", attention });
+}
+
+/**
  * DIRECT-CALLER row (wb-cax.13 O1, owner 2026-10-16T00:01Z): telemetry.ts providerName calls the one helper with the label
  * layout, and the report's sampled-provider list is its display. A structural projection hands the report the producer's raw
  * provider, as the attention driver hands selectAttention a raw title (the real projection refuses C0 controls in identity).
