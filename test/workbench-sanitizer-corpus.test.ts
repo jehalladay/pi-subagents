@@ -40,6 +40,7 @@ import { type NativeRef, ObservationProjection, type ObservationScope, type Obse
 import { type ObserveReader, observeInvocation } from "../src/workbench/observe-query.js";
 import { proposeWorkflowPatch } from "../src/workbench/patch-proposal.js";
 import { redactWorkbenchText, sanitizeWorkbenchJson, sanitizeWorkbenchJsonText, sanitizeWorkbenchText, stripUnsafeText } from "../src/workbench/redaction.js";
+import { buildOperationsTelemetry } from "../src/workbench/telemetry.js";
 import { buildTimelineLanes, type TimelineReader } from "../src/workbench/timeline.js";
 import { buildWorkflowCatalogReply, buildWorkflowInspectReply, type CapabilityCatalogEntry } from "../src/workbench/tool-replies.js";
 import { selectLinkedTopology } from "../src/workbench/topology-slice.js";
@@ -335,6 +336,27 @@ function attentionTexts(raw: string): string[] {
   return selectAttention(view, { scope: ALICE, invocationId: "inv-attention", now: NOW }).bottlenecks.map(bottleneck => bottleneck.title);
 }
 
+/**
+ * DIRECT-CALLER row (wb-cax.13 O1, owner 2026-10-16T00:01Z): telemetry.ts providerName calls the one helper with the label
+ * layout, and the report's sampled-provider list is its display. A structural projection hands the report the producer's raw
+ * provider, as the attention driver hands selectAttention a raw title (the real projection refuses C0 controls in identity).
+ */
+function telemetryTexts(raw: string): string[] {
+  const report = buildOperationsTelemetry(
+    {
+      query: () => ({ nodes: [], examined: 0, truncated: false }),
+      stats: () => ({ nodes: 0, events: 1, edges: 0 }),
+      events: () => ({
+        events: [{ projectionEventId: "e-telemetry", source: { provider: raw, type: "run", id: "src-telemetry" }, scope: ALICE, observedAt: NOW, sourceTimestamp: "2026-10-15T11:59:59.000Z", kind: "native.event" }],
+        truncated: false,
+        completeness: "complete",
+      }),
+    },
+    { scope: ALICE, now: NOW },
+  );
+  return report.eventLag.state === "measured" ? report.eventLag.value.providers : [];
+}
+
 const sliceKey = (id: string): string => JSON.stringify([ALICE.workspace, ALICE.principal, "furnace", "operation", "", id]);
 function topologyTexts(raw: string): string[] {
   const edges: Relation[] = [
@@ -497,6 +519,7 @@ const SITES: readonly Site[] = [
   { site: "site 4 claude-topology.ts shown (projectClaudeTopology)", texts: claudeTexts },
   { site: "site 5 timeline.ts shown (buildTimelineLanes)", texts: timelineTexts },
   { site: "site 6 attention.ts titleOf (selectAttention)", texts: attentionTexts },
+  { site: "telemetry.ts providerName (buildOperationsTelemetry eventLag.providers)", texts: telemetryTexts },
   { site: "site 7 topology-slice.ts labelOf (selectLinkedTopology)", texts: topologyTexts },
   { site: "site 8 furnace-hosted.ts safeText (FurnaceHostedExecutor.start)", texts: hostedTexts },
   { site: "site 9 patch-proposal.ts displayText (proposeWorkflowPatch)", texts: patchTexts },

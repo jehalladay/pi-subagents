@@ -11,7 +11,7 @@
  */
 import { CapabilityError, type CapabilityErrorCategory } from "./capability-registry.js";
 import type { ObservationEvent, ObservationProjection, ObservationScope, ObservedNode } from "./observation.js";
-import { redactWorkbenchText, stripUnsafeText } from "./redaction.js";
+import { sanitizeWorkbenchText, WORKBENCH_TEXT_LIMIT } from "./redaction.js";
 
 export const TELEMETRY_CONTRACT = "workbench.telemetry/v1";
 export const TELEMETRY_EVENT_CONTRACT = "workbench.telemetry.event/v1";
@@ -95,11 +95,6 @@ const MAX_PROVIDER_NAME = 64;
 const MAX_PROVIDER_SCAN = 512;
 const OUTCOME_KEYS: readonly string[] = ["returned", "validation", "authorization", "unavailable", "transport", "uncertain-effect"];
 const ISO_INSTANT = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2}(?:\.\d{1,9})?)?(?:Z|[+-]\d{2}:\d{2})$/;
-/** Default-ignorable and format (Cf) characters: zero-width, bidi marks, word joiner, BOM, soft hyphen, variation
- * selectors and tag characters. They are DELETED, never replaced, before redaction so none can split a credential. */
-const INVISIBLE = /[\p{Default_Ignorable_Code_Point}\p{Cf}\ufff9-\ufffb]/gu;
-/** Whitespace controls become ONE space; every other control is deleted by the shared stripper. */
-const WHITESPACE_CONTROLS = /[\t\n\v\f\r]+/g;
 
 const refused = (message: string): CapabilityError => new CapabilityError("validation", `Telemetry report refused: ${message}.`);
 
@@ -138,14 +133,13 @@ function suppliedOutcomes(value: unknown): TelemetryMetric<Record<string, number
   return measuredOf(copy, "supplied");
 }
 
-/** A provider name for display. Normalize ONCE (whitespace controls to one space; terminal sequences, every other
- * C0/C1 control, bidi and default-ignorable characters deleted), then redact ONCE, then strip once more: nothing
- * invisible is removed after redaction, so a credential split by an invisible or escape character cannot reassemble.
- * The name is capped without cutting a surrogate pair. Empty after sanitizing: undefined. */
+/** A provider name for display, through the ONE display sanitizer (sanitizeWorkbenchText, src/workbench/redaction.ts) in
+ * its single-line label layout: the helper reads every gap a control, escape sequence or invisible leaves both as a
+ * separator and as glue before it redacts once, so a credential split or glued by one cannot show, and nothing is deleted
+ * before redaction. Its output is capped without cutting a surrogate pair. Empty after sanitizing: undefined. */
 function providerName(raw: unknown): string | undefined {
   if (typeof raw !== "string") return undefined;
-  const normalized = stripUnsafeText(raw.slice(0, MAX_PROVIDER_SCAN).replace(WHITESPACE_CONTROLS, " ")).replace(INVISIBLE, "");
-  const shown = stripUnsafeText(redactWorkbenchText(normalized)).replace(/\s+/g, " ").trim();
+  const shown = sanitizeWorkbenchText(raw.slice(0, MAX_PROVIDER_SCAN), WORKBENCH_TEXT_LIMIT, "label");
   if (shown === "") return undefined;
   if (shown.length <= MAX_PROVIDER_NAME) return shown;
   let end = MAX_PROVIDER_NAME;

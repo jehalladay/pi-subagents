@@ -9,6 +9,7 @@ import { CapabilityError } from "../src/workbench/capability-registry.js";
 import {
   type NativeRef, type ObservationEvent, ObservationProjection, type ObservationScope, type Presentation,
 } from "../src/workbench/observation.js";
+import { sanitizeWorkbenchText, WORKBENCH_TEXT_LIMIT } from "../src/workbench/redaction.js";
 import {
   buildOperationsTelemetry, createTelemetryEmitter, emitOperationsTelemetry, type OperationsTelemetry, TELEMETRY_CLOCK_CAVEAT,
   TELEMETRY_CONTRACT, type TelemetryEvent, type TelemetryMetric,
@@ -422,6 +423,16 @@ describe("B8 Sr. Engineer ruling: opt-in, bounded, injected sink; no console, fi
   });
 });
 
+/** Seat rule F11: every control or invisible code point the respin-2 cases add is built with String.fromCodePoint. */
+const cp = (code: number): string => String.fromCodePoint(code);
+const BEL = cp(0x07);
+const TAB = cp(0x09);
+const ESC = cp(0x1b);
+const NEL = cp(0x85);
+const SHY = cp(0xad);
+const ZWSP = cp(0x200b);
+const LS = cp(0x2028);
+const BOM = cp(0xfeff);
 const CREDENTIAL = "ABCDEFGHIJ0123456789";
 /** wb-cax.13 respin U1 (gate probe): an invisible character inside a credential prefix or keyword stops the shared redactor
  * matching; stripping it AFTER redaction reassembled the credential in the report. Normalize, redact once, strip once. */
@@ -432,7 +443,7 @@ const SPLIT_CREDENTIALS: ReadonlyArray<readonly [string, string]> = [
   ["zero-width space inside Bearer", "Bear\u200ber abc123secret"],
   ["zero-width space before the password separator", "password\u200b=hunter2hunter2"],
   ["bidi override inside the sk-ant- prefix", `sk-ant-\u202eapi03-${CREDENTIAL}`],
-  ["C1 next-line inside the sk-ant- prefix", `sk-ant-\u0085api03-${CREDENTIAL}`],
+  // The C1 next-line row is re-expressed in its own case below (respin 2 U3): NEL is a separator under the one helper.
   ["Arabic letter mark inside a ghp_ prefix", `ghp_\u061c${CREDENTIAL}`],
 ];
 
@@ -445,6 +456,18 @@ describe("C1 wb-cax.13 respin U1: split credentials never reassemble in the repo
     for (const secret of [CREDENTIAL, "abc123secret", "hunter2hunter2", "api03"]) expect(json, secret).not.toContain(secret);
     expect(lag.providers.length).toBe(1);
     expect(lag.providers[0]).toMatch(/\[REDACTED\]/);
+  });
+
+  it("re-expresses the C1 next-line-inside-the-sk-ant-prefix row to the one helper's ruled reading: NEL separates two plain words", () => {
+    // Respin 2 U3 (gate 2026-10-15T23:27Z, F3 default; owner 2026-10-16T00:01Z "F3 helper reading stands"): whitespace survives
+    // as a separator (12:10Z) and U+0085 is whitespace (16:44Z; the trunk corpus WHITESPACE_UNITS), so "sk-ant-" then NEL is the
+    // visible-space split class under every layout of the one helper. Reading NEL inside a key prefix as glue would be a wb-952
+    // helper change (the authorized 952-F2 follow-up), never a local pre-pass in this module.
+    const provider = `sk-ant-${NEL}api03-${CREDENTIAL}`;
+    const view = new ObservationProjection();
+    ingest(view, { id: "1", provider, sourceTimestamp: at(-2), observedAt: at(-1) });
+    expect(measured(build(view).eventLag).value.providers).toEqual([`sk-ant- api03-${CREDENTIAL}`]);
+    expect(sanitizeWorkbenchText(provider, WORKBENCH_TEXT_LIMIT, "label")).toBe(`sk-ant- api03-${CREDENTIAL}`);
   });
 
   it("control: a plain credential provider name becomes [REDACTED]", () => {
@@ -469,7 +492,9 @@ describe("C1 wb-cax.13 respin U1: split credentials never reassemble in the repo
 });
 
 describe("C2 wb-cax.13 respin U3: terminal escapes and invisibles are removed from provider names", () => {
-  it("renders 'fur<ESC>[31mnace<ZWSP>' as 'furnace' with no escape byte (kills the strip-removal mutant)", () => {
+  // Respin 2: the one helper's label layout renders an escape sequence as one space and deletes the ZWSP (gate U1: "label"
+  // re-expresses C2 as "fur nace"); the case still dies if the module stops stripping (the raw ESC would reach the report).
+  it("renders 'fur<ESC>[31mnace<ZWSP>' as 'fur nace' in the label layout with no escape byte (kills the strip-removal mutant)", () => {
     const event: ObservationEvent = {
       projectionEventId: "s1", source: ref("fur\u001b[31mnace\u200b", "run", "src"), scope: alice, observedAt: at(-1), kind: "native.event", sourceTimestamp: at(-2),
     };
@@ -478,7 +503,7 @@ describe("C2 wb-cax.13 respin U3: terminal escapes and invisibles are removed fr
       { scope: alice, now: T },
     );
     const providers = measured(report.eventLag).value.providers;
-    expect(providers).toEqual(["furnace"]);
+    expect(providers).toEqual(["fur nace"]);
     expect(JSON.stringify(report)).not.toContain("\\u001b");
     expect(providers.join("")).not.toMatch(/[\u0000-\u001f]/);
   });
@@ -548,5 +573,79 @@ describe("C5 wb-cax.13 respin S1: the module and its test carry no raw invisible
     const raw = /[\u00ad\u061c\u180e\u200b-\u200f\u202a-\u202e\u2060-\u206f\ufeff\ufff9-\ufffb]/;
     expect(raw.test(MODULE)).toBe(false);
     expect(raw.test(readFileSync(new URL("./workbench-telemetry.test.ts", import.meta.url), "utf8"))).toBe(false);
+  });
+});
+
+/** The module's declared input as a plain object: it hands the report the producer's raw provider, which is the only way a
+ * C0 control such as BEL or ESC reaches the provider path (the real projection refuses C0 controls in identity at ingest). */
+function structuralView(provider: string): Parameters<typeof buildOperationsTelemetry>[0] {
+  const event: ObservationEvent = {
+    projectionEventId: "between-1", source: ref(provider, "run", "src"), scope: alice, observedAt: at(-1), kind: "native.event", sourceTimestamp: at(-2),
+  };
+  return {
+    query: () => ({ nodes: [], examined: 0, truncated: false }),
+    stats: () => ({ nodes: 0, events: 1, edges: 0 }),
+    events: () => ({ events: [event], truncated: false, completeness: "complete" }),
+  };
+}
+const providersOf = (projection: Parameters<typeof buildOperationsTelemetry>[0]): string[] =>
+  measured(buildOperationsTelemetry(projection, { scope: alice, now: T }).eventLag).value.providers;
+
+const BETWEEN_SECRET = "BETWEENTOKEN0123456789";
+/**
+ * Respin 2 U2 (gate 2026-10-15T23:27Z F2): a unit BETWEEN two tokens separates them, so the credential after it keeps its
+ * boundary and is redacted. Deleting the unit before redaction (the 0071719 pre-pass, the eighth deletion-before-redaction
+ * instance) glued the credential to the word before it and the redactor missed it; every row here leaked at 0071719.
+ */
+const STRUCTURAL_BETWEEN: ReadonlyArray<readonly [label: string, provider: string, shown: string]> = [
+  ["a zero-width space before sk-ant-", `x${ZWSP}sk-ant-api03-${BETWEEN_SECRET}`, "x[REDACTED]"],
+  ["a BEL before sk-ant-", `key${BEL}sk-ant-${BETWEEN_SECRET}`, "key [REDACTED]"],
+  ["an SGR sequence before Bearer", `x${ESC}[0mBearer ${BETWEEN_SECRET}`, "x [REDACTED]"],
+  ["a BEL as the space after Bearer", `Authorization: Bearer${BEL}${BETWEEN_SECRET}`, "Authorization: [REDACTED]"],
+];
+const REAL_BETWEEN: ReadonlyArray<readonly [label: string, provider: string, shown: string]> = [
+  ["a BOM as the space after Bearer", `Authorization: Bearer${BOM}${BETWEEN_SECRET}`, "Authorization: [REDACTED]"],
+  ["a soft hyphen before Bearer", `x${SHY}Bearer ${BETWEEN_SECRET}`, "x[REDACTED]"],
+  ["a next-line as the space after Bearer", `Authorization: Bearer${NEL}${BETWEEN_SECRET}`, "Authorization: [REDACTED]"],
+  ["a line separator before sk-ant-", `x${LS}sk-ant-api03-${BETWEEN_SECRET}`, "x [REDACTED]"],
+  ["a line separator as the space after Bearer", `Authorization: Bearer${LS}${BETWEEN_SECRET}`, "Authorization: [REDACTED]"],
+];
+
+describe("C6 wb-cax.13 respin 2 U1/U2: provider names are the one helper's label output, falsified between tokens", () => {
+  it.each(STRUCTURAL_BETWEEN)("redacts a credential after %s fed through a structural projection", (_label, provider, shown) => {
+    const providers = providersOf(structuralView(provider));
+    expect(providers).toEqual([shown]);
+    expect(JSON.stringify(providers)).not.toContain(BETWEEN_SECRET);
+  });
+
+  it.each(REAL_BETWEEN)("redacts a credential after %s ingested through a real projection", (_label, provider, shown) => {
+    const view = new ObservationProjection();
+    const event: ObservationEvent = {
+      projectionEventId: "between-real", source: ref(provider, "run", "src"), scope: alice, observedAt: at(-1), kind: "native.event", sourceTimestamp: at(-2),
+    };
+    expect(view.ingest(event)).toBe("applied");
+    const report = build(view);
+    expect(measured(report.eventLag).value.providers).toEqual([shown]);
+    expect(JSON.stringify(report)).not.toContain(BETWEEN_SECRET);
+  });
+
+  it("renders exactly what sanitizeWorkbenchText renders in the label layout for every split and between-token shape", () => {
+    for (const [, provider] of [...SPLIT_CREDENTIALS, ...STRUCTURAL_BETWEEN, ...REAL_BETWEEN]) {
+      expect(providersOf(structuralView(provider)), provider).toEqual([sanitizeWorkbenchText(provider, WORKBENCH_TEXT_LIMIT, "label")]);
+    }
+  });
+
+  it("collapses whitespace and trims the ends as a single-line label (respin 2 O2)", () => {
+    expect(providersOf(structuralView(`furnace${TAB}${TAB} local `))).toEqual(["furnace local"]);
+  });
+
+  it("drops a provider that sanitizes to nothing from the list while its event still counts as a sample", () => {
+    const lag = measured(buildOperationsTelemetry(structuralView(`${ZWSP}${BOM} ${TAB}`), { scope: alice, now: T }).eventLag).value;
+    expect(lag).toMatchObject({ samples: 1, unmeasured: 0, providers: [], providersOmitted: 0 });
+  });
+
+  it("composes no sanitizer locally: one helper call with the named label layout, no primitive and no deletion class (F6 rule)", () => {
+    expect(MODULE).toContain('WORKBENCH_TEXT_LIMIT, "label")');
+    for (const forbidden of ["stripUnsafeText", "redactWorkbenchText", "Default_Ignorable_Code_Point", "{Cf}"]) expect(MODULE, forbidden).not.toContain(forbidden);
   });
 });
