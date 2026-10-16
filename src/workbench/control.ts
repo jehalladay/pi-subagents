@@ -2,7 +2,9 @@
  * Pure decision core of workflow_control (docs/workbench/11 § "First public Pi tools"). It decides whether one
  * explicit native action may be requested and mints the immutable `requested` receipt. It never calls a provider,
  * never mutates the projection and never fabricates an acknowledgement or a result: a host executes a permitted
- * receipt natively and records the producer's answers through acknowledge() and settle().
+ * receipt natively and records the producer's answers through acknowledge() and settle(). A permit is provenance-bearing
+ * in-process only: isCoreMintedDecision() answers by object identity, so an adapter executes exactly the decision
+ * decideControl returned here, never a copy, a replay or a look-alike of it.
  */
 import { createHash } from "node:crypto";
 import { CapabilityError, type CapabilityErrorCategory, type JsonValue } from "./capability-registry.js";
@@ -11,6 +13,8 @@ import { stripUnsafeText } from "./redaction.js";
 
 export const CONTROL_CONTRACT_VERSION = "workbench.control/v1";
 export const CONTROL_PERMIT_POLICY = "exact-grant+confirmed-owner+operator-confirmed";
+/** The fixed text a control adapter refuses a decision the core did not mint with. It names no field of what it refuses. */
+export const CONTROL_UNMINTED_REASON = "decision was not minted by the decision core";
 
 /** The only native verbs Workbench may request, per producer. No universal control method exists (docs/workbench/06). */
 export const NATIVE_CONTROL_ACTIONS: Readonly<Record<string, readonly string[]>> = Object.freeze({
@@ -79,6 +83,12 @@ export type ControlDecision =
 const GRANT = /^[a-z][a-z0-9.-]*:[a-z][a-z0-9.-]*$/;
 const OUTCOMES: readonly ControlOutcome[] = Object.freeze(["completed", "failed", "cancelled", "unknown"]);
 const NATIVE_REF_BYTES = 4096;
+/**
+ * In-process provenance (docs/workbench/12 § "Authorization design"): every permit decideControl mints, held weakly so a
+ * dropped decision stays collectable. Membership is object identity, never shape, and nothing is written onto the decision,
+ * so a copy, a JSON round-trip (a decision replayed from the audit or the journal) or a hand-built look-alike is never in it.
+ */
+const MINTED = new WeakSet<ControlDecision>();
 
 /** Bounded, non-blank text the shared sanitizer leaves unchanged, so no control, escape or bidi character reaches a receipt. */
 function cleanText(value: unknown, maxBytes = 256): value is string {
@@ -144,9 +154,10 @@ function core(receipt: Omit<ControlReceiptCore, "contractVersion" | "policy">): 
 }
 
 /**
- * Synchronous and side-effect free: it only reads the projection (query, relations) and reads the host clock only to
- * stamp a permit. Rules apply in order and the first match wins. Authorization rules that need no projection read run
- * first, so an observer learns nothing about targets. Reasons never echo caller text.
+ * Synchronous and side-effect free: it only reads the projection (query, relations), reads the host clock only to stamp
+ * a permit, and records each permit it mints in the module-private provenance set (identity only, never on the object).
+ * Rules apply in order and the first match wins. Authorization rules that need no projection read run first, so an
+ * observer learns nothing about targets. Reasons never echo caller text.
  */
 export function decideControl(request: NativeControlRequest, deps: { projection: ObservationProjection; now: () => string }): ControlDecision {
   const grants = grantList(request.grants);
@@ -182,7 +193,19 @@ export function decideControl(request: NativeControlRequest, deps: { projection:
       requestedAt: request.requestedAt, decidedAt }),
     phase: "requested",
   });
-  return Object.freeze({ decision: "permitted", receipt });
+  const permit: ControlDecision = Object.freeze({ decision: "permitted", receipt });
+  MINTED.add(permit);
+  return permit;
+}
+
+/**
+ * Whether this exact object is a permitted decision decideControl minted in this process. An identity check that reads
+ * nothing from its argument (no property, accessor or proxy trap is touched) and answers false for every copy, replay or
+ * look-alike however exact its shape, and for every denial: only permits are minted. A control adapter asks this before
+ * anything else and refuses a false answer with CONTROL_UNMINTED_REASON, keeping its structural vetting behind it.
+ */
+export function isCoreMintedDecision(decision: unknown): boolean {
+  return typeof decision === "object" && decision !== null && MINTED.has(decision as ControlDecision);
 }
 
 /** Records the producer's acceptance of a requested action. Acknowledgement is not completion. */
