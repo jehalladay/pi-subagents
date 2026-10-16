@@ -224,15 +224,22 @@ describe("AC1: older formats stay readable, and no effectful entry is ever repla
     expect(warning).toContain("position 3");
   });
 
-  it("never replays a node recorded with no effect class: it re-runs live, and no refusal is claimed that the runtime does not make", () => {
+  it("never replays or re-runs a node recorded with no effect class: it refuses with the typed uncertain-effect the runtime raises (wb-tu1)", () => {
+    // Mirror, never relax: this pin used to report a live re-run, because the
+    // runtime then ran an unclassified node live. wb-tu1 made the runtime fail
+    // closed, and the mirror moves with it in the same commit.
     const report = classifyJournal(jsonl([
       { kind: "node", index: 0, key: "n0", ok: true, capabilityId: "effect.write", basis: "A" },
     ]));
 
     expect(kept(report.lines[0])).toMatchObject({
-      class: "node-effectful", effectClass: null, replay: "live", refusal: null, replayEligible: false,
+      class: "node-effectful", effectClass: null, replay: "refuse-uncertain-effect", refusal: "uncertain-effect",
+      replayEligible: false, boundDecisions: 0,
     });
     expect(report.warnings.find((text) => text.startsWith(`${JOURNAL_UNVOUCHED_NODE_WARNING}:`))).toContain("position 0");
+    expect(report.warnings.find((text) => text.startsWith(`${JOURNAL_UNCERTAIN_EFFECT_WARNING}:`))).toContain("position 0");
+    // Nothing the report says still promises the live re-run the runtime no longer makes.
+    expect(strings(report).join("\n")).not.toMatch(/\blive\b/);
   });
 
   it("marks only a recorded read replay-eligible, across every effect class a journal can carry", () => {
@@ -266,16 +273,20 @@ describe("AC1: older formats stay readable, and no effectful entry is ever repla
     expect(second.spawns).toHaveLength(0);
   });
 
-  it("agrees with the runtime: a node journaled with no effect class re-runs live on resume", async () => {
+  it("agrees with the runtime: a node journaled with no effect class refuses resume with exactly the typed refusal it reports", async () => {
     const body = 'return await node("effect.write", { value: "x" });';
     const { path, raw } = await journaled("unvouched", body, probeHost({}));
-    expect(kept(classifyJournal(raw).lines[0])).toMatchObject({ class: "node-effectful", effectClass: null, replay: "live" });
+    const unvouched = kept(classifyJournal(raw).lines[0]);
+    expect(unvouched).toMatchObject({ class: "node-effectful", effectClass: null, replay: "refuse-uncertain-effect" });
 
-    const second = probeHost({ effect: "write" });
-    const result = await resume(path, body, second);
-    expect(result.status).toBe("completed");
-    expect(result.capabilityError).toBeUndefined();
-    expect(second.nodeCalls).toEqual([{ value: "x" }]);
+    // Fail-closed whatever the resuming host declares now, a read included.
+    for (const effect of ["write", "read"] as const) {
+      const second = probeHost({ effect });
+      const result = await resume(path, body, second);
+      expect(result.status).toBe("failed");
+      expect(result.capabilityError?.category).toBe(unvouched.refusal);
+      expect(second.nodeCalls).toHaveLength(0);
+    }
   });
 
   it("agrees with the runtime: a legacy agent row re-runs live under a basis-recording host and replays only under one that records none", async () => {
