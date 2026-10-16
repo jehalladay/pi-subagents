@@ -12,12 +12,13 @@
  *
  * Usage: node qa/workbench/live-served-model.mjs [cwd]   (CLAUDE_SERVED_MODEL_RECEIPT=path writes the receipt)
  */
-import { execFileSync } from 'node:child_process';
 import { readFileSync, writeFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { createClaudeWorkflowHost } from '../../dist/workbench/claude-host.js';
 import { sanitizeWorkbenchText } from '../../dist/workbench/redaction.js';
 import { runWorkflow } from '../../dist/workflow/runtime.js';
 import { buildPreview, buildServedModelReceipt, SERVED_MODEL_CONTRACT, servedModelExitCode } from './live-served-model-receipt.mjs';
+import { gitStamp } from './live-served-model-stamp.mjs';
 
 const cwd = process.argv[2] ?? process.cwd();
 /** Haiku-class alias: one cheap turn only (release terms on the bead). */
@@ -67,23 +68,6 @@ const result=await agent("Reply with the single word OK. Do not use any tools.")
 if(result===null) throw new Error("agent returned null");
 return result;`;
 
-function revision() {
-  try {
-    return execFileSync('git', ['rev-parse', 'HEAD'], { cwd: new URL('../..', import.meta.url), encoding: 'utf8' }).trim() || 'working-tree';
-  } catch {
-    return 'working-tree';
-  }
-}
-
-/** True when the working tree differs from HEAD, false when clean, null when git cannot say (the receipt dirty bit). */
-function dirty() {
-  try {
-    return execFileSync('git', ['status', '--porcelain'], { cwd: new URL('../..', import.meta.url), encoding: 'utf8' }).trim().length > 0;
-  } catch {
-    return null;
-  }
-}
-
 function sdkVersion() {
   return JSON.parse(readFileSync(new URL('../../node_modules/@anthropic-ai/claude-agent-sdk/package.json', import.meta.url), 'utf8')).version;
 }
@@ -101,10 +85,12 @@ try {
   } finally {
     clearTimeout(timer);
   }
+  // Read only when the package root IS the git toplevel; a nested copy never adopts a foreign HEAD (wb-a2g.6 U1).
+  const stamp = gitStamp(fileURLToPath(new URL('../..', import.meta.url)));
   const receipt = buildServedModelReceipt({
     utc: new Date().toISOString(),
-    revision: revision(),
-    dirty: dirty(),
+    revision: stamp.revision,
+    dirty: stamp.dirty,
     node: process.version,
     arch: process.arch,
     platform: process.platform,
