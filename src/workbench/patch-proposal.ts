@@ -14,7 +14,6 @@ import { safeWorkflowTerminalText } from "../ui/workflow-card.js";
 import type { CapabilityRegistry } from "./capability-registry.js";
 import { validateWorkflowSource, type WorkflowSource, type WorkflowValidation } from "./designer.js";
 import { type DefinitionRef, type InvocationSnapshot, identityDigest } from "./identity.js";
-import { redactWorkbenchText } from "./redaction.js";
 
 export const PATCH_PROPOSAL_CONTRACT = "workbench.patch-proposal/v1";
 
@@ -124,9 +123,9 @@ function sourceDigest(text: string): string {
   return `sha256:${createHash("sha256").update(text, "utf8").digest("hex")}`;
 }
 
-/** Redact, strip terminal and bidi controls, then redact again so a credential split by a control sequence is still caught. */
+/** The shared helper's terminal layout: a credential a control sequence splits is redacted before anything is stripped. */
 function displayText(value: string): string {
-  return redactWorkbenchText(safeWorkflowTerminalText(redactWorkbenchText(value)));
+  return safeWorkflowTerminalText(value);
 }
 
 function deepFreeze<T>(value: T): T {
