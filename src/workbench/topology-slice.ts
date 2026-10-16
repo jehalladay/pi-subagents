@@ -32,8 +32,9 @@ export type TopologyReferenceReason = (typeof TOPOLOGY_REFERENCE_REASONS)[number
 
 export interface TopologyRelationsInput {
   scope: ObservationScope;
-  /** Only the read side of a projection: the selector holds no mutation capability. */
-  relations: Pick<ObservationProjection, "relations">;
+  /** Only the read side of a projection: the selector holds no mutation capability. relationsPage is optional; when it is
+   * present its reported truncation and applied limit decide page-full honesty, otherwise the requested page does. */
+  relations: Pick<ObservationProjection, "relations"> & Partial<Pick<ObservationProjection, "relationsPage">>;
 }
 export interface TopologyCaps {
   /** Edges listed per direction; default 10, 0 to 50. */
@@ -182,10 +183,24 @@ interface Side {
 }
 type Direction = "upstream" | "downstream";
 
+/** One bounded relation read plus whether it may have hidden a matching edge. A projection clamps every read to its own
+ * cap, so the requested page alone is never the full-page test: a reported RelationPage.truncated, or rows reaching the
+ * smaller of the requested page and the applied limit, both mean "lower bound". Without relationsPage the requested page
+ * is the only signal available, so nothing less conservative than it is used. */
+function readRows(input: TopologyRelationsInput, query: { from?: string; to?: string }, page: number): { rows: Relation[]; full: boolean } {
+  const request = { scope: input.scope, ...query, limit: page };
+  if (typeof input.relations.relationsPage === "function") {
+    const read = input.relations.relationsPage(request);
+    return { rows: read.relations, full: read.truncated || read.relations.length >= Math.min(page, read.limitApplied) };
+  }
+  const rows = input.relations.relations(request);
+  return { rows, full: rows.length >= page };
+}
+
 function readSide(input: TopologyRelationsInput, focus: string, direction: Direction, page: number): Side {
   const { scope } = input;
-  const rows = input.relations.relations(direction === "downstream" ? { scope, from: focus, limit: page } : { scope, to: focus, limit: page });
-  const side: Side = { edges: [], references: [], rows: 0, full: rows.length >= page };
+  const { rows, full } = readRows(input, direction === "downstream" ? { from: focus } : { to: focus }, page);
+  const side: Side = { edges: [], references: [], rows: 0, full };
   for (const row of rows) {
     const near = direction === "downstream" ? row.from : row.to;
     if (near !== focus) continue;
@@ -239,8 +254,8 @@ function findCycles(input: TopologyRelationsInput, focus: string, down: readonly
     reads += 1;
     const node = queue[at];
     queued.delete(node);
-    const rows = input.relations.relations({ scope: input.scope, from: node, limit: page });
-    if (rows.length >= page) found.truncated = true;
+    const { rows, full } = readRows(input, { from: node }, page);
+    if (full) found.truncated = true;
     const mine = firsts.get(node) ?? new Set<string>();
     for (const row of rows) {
       if (row.from !== node || row.to === focus) continue;
