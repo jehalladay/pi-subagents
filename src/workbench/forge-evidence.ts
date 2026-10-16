@@ -23,7 +23,6 @@ const DEFAULT_MAX_BYTES = 4096;
 const MIN_MAX_BYTES = 64;
 const MAX_MAX_BYTES = 65_536;
 const MARKER = "[truncated]";
-const ZERO_WIDTH = /[\u200b-\u200f\u2060\ufeff]/g;
 
 export type ForgeEvidenceFreshness = "current" | "stale";
 /** The host's view of the owning source: anything but "current" labels the loaded evidence stale. */
@@ -80,8 +79,9 @@ function operationIdOf(ref: string): string | undefined {
   return stripUnsafeText(id) === id && sanitizeWorkbenchText(id, MAX_LINE) === id ? id : undefined;
 }
 
+/** One preview line: the shared helper's label layout, which also removes every zero-width and default-ignorable character. */
 function display(line: string): string {
-  return sanitizeWorkbenchText(stripUnsafeText(line, " ").replace(ZERO_WIDTH, "").replace(/\s+/g, " ").trim(), MAX_LINE);
+  return sanitizeWorkbenchText(line, MAX_LINE, "label");
 }
 
 /** Within the line and byte budgets: whole lines only, then one marker line that itself fits the budget. */

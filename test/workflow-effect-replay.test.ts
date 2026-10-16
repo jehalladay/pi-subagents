@@ -30,6 +30,7 @@ import {
 import {
   runWorkflow,
   type WorkflowHost,
+  type WorkflowRunResult,
   type WorkflowSpawnRequest,
   type WorkflowSpawnResult,
 } from "../src/workflow/runtime.js";
@@ -242,10 +243,11 @@ describe("read effect replay", () => {
     expect(second.nodeCalls).toHaveLength(1);
   });
 
-  it("re-runs live when the journal carries no effect metadata", async () => {
-    // A journal recorded by a host that declared nothing keeps today's
-    // semantics: the node runs live and the prefix ends there. The runtime
-    // cannot retroactively grant replay to an entry nobody vouched for.
+  it("neither replays nor re-runs a node the journal carries no effect metadata for: the resume stops there", async () => {
+    // A journal recorded by a host that declared nothing cannot be granted
+    // replay retroactively, and — fail-closed (wb-tu1) — it cannot license a
+    // live re-run either: an entry nobody classified is an uncertain effect,
+    // not a read. This pin used to assert the live re-run; that was the defect.
     const first = effectHost({});
     const journal = recorder();
     await run(script, { host: first.host, journal });
@@ -254,8 +256,9 @@ describe("read effect replay", () => {
     const second = effectHost({});
     const result = await run(script, { host: second.host, journal: { entries: journal.entries } });
 
-    expect(result.status).toBe("completed");
-    expect(second.nodeCalls).toHaveLength(1);
+    expect(result.status).toBe("failed");
+    expect(result.capabilityError?.category).toBe("uncertain-effect");
+    expect(second.nodeCalls).toHaveLength(0);
   });
 
   it("does not replay a read the current host cannot vouch for", async () => {
@@ -345,6 +348,119 @@ describe("non-read effects on resume", () => {
     expect(result.status).toBe("failed");
     const carried = two.entries.find(entry => entry.kind === "node");
     expect(carried).toMatchObject({ kind: "node", capabilityId: "effect.write", effectClass: "write" });
+  });
+});
+
+/* --------------------------------------------------------------------------
+ * wb-tu1: a node journaled with NO effect class. The W12 rule (the tool
+ * description and docs/workflows.md): "A journaled read replays on resume
+ * marked stale; a journaled non-read node stops a resume at its position until
+ * an operator acknowledges or overrides it". An entry nobody classified is not
+ * a read, and docs/workbench/12 fails closed ("Treat unknown permission data
+ * as deny"; "malformed schema/unsupported contract fails closed"), so the
+ * resume stops there exactly as it does at a recorded non-read class — never
+ * re-running a call that may have performed an effect.
+ * ------------------------------------------------------------------------ */
+
+const recordedNode = (entries: readonly WorkflowJournalEntry[]): WorkflowJournalEntry => {
+  const row = entries.find(entry => entry.kind === "node");
+  if (row === undefined) throw new Error("no node row journaled");
+  return row;
+};
+
+type NodeProgressRow = Extract<WorkflowRunResult["progress"][number], { type: "workflow_node" }>;
+
+/** The node row a refusal settles to: typed, so its reconcile provenance is checked by the compiler too. */
+const refusedRow = (result: WorkflowRunResult): NodeProgressRow | undefined =>
+  result.progress.find((entry): entry is NodeProgressRow => entry.type === "workflow_node" && entry.state === "error");
+
+describe("a journaled node with no effect class stops a resume (wb-tu1)", () => {
+  const script = 'await agent("first");\nawait node("effect.write", { value: "x" });\nreturn await agent("second");';
+
+  it.each([
+    ["no effect class", undefined, "with no effect class"],
+    ['the non-read class "write"', "write", 'with effect class "write"'],
+  ] as const)("stops with the typed uncertain effect, pending provenance and the workflow_reconcile hint: %s", async (_label, recordAs, cause) => {
+    const options = recordAs === undefined ? {} : { effect: recordAs };
+    const first = effectHost(options);
+    const journal = recorder();
+    expect((await run(script, { host: first.host, journal })).status).toBe("completed");
+    const recorded = recordedNode(journal.entries);
+    expect(recorded.effectClass).toBe(recordAs);
+
+    const second = effectHost(options);
+    const result = await run(script, { host: second.host, journal: { entries: journal.entries } });
+
+    expect(result.status).toBe("failed");
+    expect(result.capabilityError?.category).toBe("uncertain-effect");
+    expect(result.error).toContain(`node(effect.write) at position 0 was recorded by the resumed run ${cause}`);
+    expect(result.error).toContain('producer "effect"');
+    expect(result.error).toContain("workflow_reconcile (position 0)");
+    expect(result.error).toContain("resumeFromRunId");
+    // Nothing re-executed; the settled first agent replays and the run stops before the second.
+    expect(second.nodeCalls).toHaveLength(0);
+    expect(second.spawns).toHaveLength(0);
+    expect(result.replayedNodeCount).toBe(0);
+    expect(result.reconciledNodeCount).toBe(0);
+    // The typed channel the views and workflow_reconcile read; the class is the record's own.
+    expect(refusedRow(result)?.reconcile).toEqual({
+      state: "pending", position: 0, capabilityId: "effect.write", effectClass: recordAs ?? "", producer: "effect",
+      key: recorded.key, entryDigest: entryDigestOf(recorded),
+      decisions: { acknowledged: 0, overridesLive: 0, overridesSpent: 0 },
+    });
+  });
+
+  it.each(["read", "write"] as const)("refuses even when the resuming host now declares the capability %s", async resumeAs => {
+    // Today's declaration cannot vouch for a call recorded before anyone
+    // classified it: the record, not the host, says what happened back then.
+    const journal = recorder();
+    await run(script, { host: effectHost({}).host, journal });
+    expect(recordedNode(journal.entries).effectClass).toBeUndefined();
+
+    const second = effectHost({ effect: resumeAs, node: () => ({ answer: "fresh" }) });
+    const result = await run(script, { host: second.host, journal: { entries: journal.entries } });
+
+    expect(result.status).toBe("failed");
+    expect(result.capabilityError?.category).toBe("uncertain-effect");
+    expect(second.nodeCalls).toHaveLength(0);
+    expect(refusedRow(result)?.reconcile).toMatchObject({ state: "pending", effectClass: "" });
+  });
+
+  it("refuses whatever the recorded outcome: a failed unclassified call is still an attempted effect", async () => {
+    const body = 'return await node("effect.write", { value: "x" });';
+    const broken = effectHost({ node: () => { throw new Error("backend away"); } });
+    const journal = recorder();
+    expect((await run(body, { host: broken.host, journal })).status).toBe("failed");
+    expect(recordedNode(journal.entries)).toMatchObject({ ok: false });
+    expect(recordedNode(journal.entries).effectClass).toBeUndefined();
+
+    const second = effectHost({});
+    const result = await run(body, { host: second.host, journal: { entries: journal.entries } });
+
+    expect(result.status).toBe("failed");
+    expect(result.capabilityError?.category).toBe("uncertain-effect");
+    expect(second.nodeCalls).toHaveLength(0);
+  });
+
+  it("carries the unclassified entry forward verbatim, so a resume of the failed resume still refuses", async () => {
+    // Even under a host that now calls the capability a read: stamping that
+    // claim onto the carried row would let the next resume replay it.
+    const one = recorder();
+    await run(script, { host: effectHost({}).host, journal: one });
+
+    const two = recorder();
+    const result = await run(script, {
+      host: effectHost({ effect: "read" }).host,
+      journal: { entries: one.entries, append: two.append },
+    });
+    expect(result.status).toBe("failed");
+    expect(recordedNode(two.entries)).toEqual(recordedNode(one.entries));
+
+    const third = effectHost({ effect: "read" });
+    const again = await run(script, { host: third.host, journal: { entries: two.entries } });
+    expect(again.status).toBe("failed");
+    expect(again.capabilityError?.category).toBe("uncertain-effect");
+    expect(third.nodeCalls).toHaveLength(0);
   });
 });
 

@@ -13,7 +13,7 @@ import {createHash} from 'node:crypto';
 import {CapabilityError, type JsonValue} from './capability-registry.js';
 import type {NativeRef, NativeSnapshot, ObservationProjection, ObservationScope, Presentation} from './observation.js';
 import {REACTIVE_FIBER_CLI_SCHEMA, REACTIVEFIBER_RENDER_PREVIEW_CONTRACT} from './providers/reactivefiber.js';
-import {redactWorkbenchText, stripUnsafeText} from './redaction.js';
+import {sanitizeWorkbenchText, stripUnsafeText} from './redaction.js';
 
 /** This adapter's projection contract, for the tool wiring that will surface it. */
 export const REACTIVEFIBER_OBSERVATION_CONTRACT = 'workbench.reactivefiber-observation/v1';
@@ -79,12 +79,9 @@ const count = (value: JsonValue | undefined): value is number => typeof value ==
 const hasExactKeys = (value: JsonRecord, keys: readonly string[]): boolean =>
   Object.keys(value).length === keys.length && keys.every(key => Object.hasOwn(value, key));
 
-/** Producer or host text bound for display. Unsafe sequences become spaces BEFORE the shared redactor runs, so an escape or bidi
- * mark glued to a credential cannot hide it; redactWorkbenchText then redacts and bounds, stripUnsafeText strips, and a code unit
- * the bound orphaned is dropped. */
+/** Producer or host text bound for display: the shared helper's label layout, then a code unit the bound orphaned is dropped. */
 function shown(value: string, max: number): string {
-  const spaced = stripUnsafeText(value, ' ').replace(/\s+/g, ' ').trim();
-  return stripUnsafeText(redactWorkbenchText(spaced, max)).replace(LONE_SURROGATE, '').trim();
+  return sanitizeWorkbenchText(value, max, 'label').replace(LONE_SURROGATE, '').trim();
 }
 
 /** Freezes a tree this module just built; nothing in it is shared with the caller's input. */
