@@ -7,6 +7,8 @@
  *   kills the ingest loop, never a silent drop)"
  * - "src/workbench/observation.ts ingest/refresh (and any other admission path, e.g. relations/markStale)"
  * - "Red-first: the gate's 4 admitted shapes + 2 clean controls + one mutant per class"
+ * - Owner ruling R1(a), 2026-10-16 11:42Z, on the respin gate's measured 4-identity collapse: "U+2028/U+2029 JOIN the
+ *   refused identity set ON THIS RESPIN (own spoofing class)", so the identity rule is redaction.ts's one unsafe set exactly.
  * The gate measured the four shapes (sanitizer corpus Y1, X1, X2, X6) admitted as nativeRef.provider by the REAL projection
  * and reaching selectAttention's provider columns. The panel sanitizer is wb-6ze.21's respin and is not touched here.
  * Seat rule F11: every invisible or control code point is built with String.fromCodePoint; none is typed raw or as a
@@ -24,7 +26,8 @@ import {
   type ObservationScope,
   unsafeIdentityUnit,
 } from "../src/workbench/observation.js";
-import { stripUnsafeText } from "../src/workbench/redaction.js";
+import { sanitizeWorkbenchText, stripUnsafeText, WORKBENCH_TEXT_LIMIT } from "../src/workbench/redaction.js";
+import { buildOperationsTelemetry } from "../src/workbench/telemetry.js";
 
 const cp = (...codes: number[]): string => String.fromCodePoint(...codes);
 const ZWSP = cp(0x200b);
@@ -70,6 +73,8 @@ const CLASS_MUTANTS = [
   { name: "C1 control", code: 0x9b },
   { name: "bidi embedding or override U+202A-U+202E", code: 0x202e },
   { name: "bidi isolate U+2066-U+2069", code: 0x2066 },
+  // Owner ruling R1(a): the line and paragraph separators joined the refused set on this respin.
+  { name: "line or paragraph separator U+2028-U+2029", code: 0x2029 },
 ] as const;
 const FIELDS = ["provider", "type", "id", "scope"] as const;
 const CLEAN: Required<NativeRef> = { provider: "forge", type: "operation", id: "op-0br", scope: "/tmp/ws-0br" };
@@ -234,7 +239,7 @@ describe("wb-0br admission refuses unsafe nativeRef identity: the gate's shapes,
 });
 
 describe("wb-0br the identity rule restates redaction.ts's one unsafe set, because observation.ts imports nothing", () => {
-  it("is the shared set less only U+2028 and U+2029 on all 1,114,112 code points, reporting each unsafe one as itself", () => {
+  it("is exactly the shared set on all 1,114,112 code points, U+2028 and U+2029 included (R1(a)), reporting each unsafe one as itself", () => {
     // Every unit of the shared set starts with one of its single code points (escape sequences start with ESC), so
     // agreement on every code point is agreement on every string and on its first unsafe position.
     const outsideShared: string[] = [];
@@ -251,12 +256,57 @@ describe("wb-0br the identity rule restates redaction.ts's one unsafe set, becau
       if (reported !== undefined && reported !== codePointOf(code)) misreported.push(codePointOf(code));
     }
     expect(outsideShared).toStrictEqual([]);
-    // The line and paragraph separators render as a separator in every display layout, never deleted (finding F1).
-    expect(sharedOnly).toStrictEqual(["U+2028", "U+2029"]);
+    // Pin flip naming wb-0br, owner ruling R1(a): the line and paragraph separators, admitted at the first cut (its finding F1),
+    // JOIN the refused set. The label layout renders a separator as a space and trims it, so "forge" with one is a distinct
+    // identity shown as "forge" (the gate's measured 4-identity collapse, pinned below). Nothing is shared-only now.
+    expect(sharedOnly).toStrictEqual([]);
+    expect(unsafeIdentityUnit(cp(0x2028)), "line separator").toBe("U+2028");
+    expect(unsafeIdentityUnit(cp(0x2029)), "paragraph separator").toBe("U+2029");
     expect(misreported).toStrictEqual([]);
     expect(refused).toBeGreaterThan(4_096);
     for (const { name, code } of CLASS_MUTANTS) expect(unsafeIdentityUnit(cp(code)), name).toBe(codePointOf(code));
     expect(unsafeIdentityUnit(cp(0xd800)), "lone surrogate").toBe("U+D800");
+  });
+});
+
+describe("wb-0br R1(a): U+2028 and U+2029 join the refused identity set (owner ruling 2026-10-16 11:42Z)", () => {
+  const LS = cp(0x2028);
+  const PS = cp(0x2029);
+  /** The respin gate's measured collapse (gate-1 2026-10-16T11:37Z, the 1312c35 landing merge): four identities, one label. */
+  const COLLAPSE = ["forge", `forge${LS}`, `forge${PS}`, `${LS}forge`] as const;
+  /** An event the telemetry report samples: its producer timestamp is a minute before it was observed. */
+  const sampled = (provider: string): ObservationEvent => ({ ...event({ provider, type: "operation", id: "op-collapse" }), sourceTimestamp: STARTED });
+
+  it("refuses the 4-identity telemetry collapse: the three separator spoofs of forge are typed refusals, never forge's samples", () => {
+    // Red-first, as the gate measured it before the widening: all four applied as distinct identities, every label rendered
+    // "forge", and buildOperationsTelemetry reported ONE provider ["forge"] over FOUR samples with no refusal row.
+    for (const provider of COLLAPSE) expect(sanitizeWorkbenchText(provider, WORKBENCH_TEXT_LIMIT, "label"), JSON.stringify(provider)).toBe("forge");
+    const view = new ObservationProjection();
+    expect(COLLAPSE.map(provider => view.ingest(sampled(provider)))).toStrictEqual(["applied", "refused", "refused", "refused"]);
+    const lag = buildOperationsTelemetry(view, { scope: alice, now: NOW }).eventLag;
+    if (lag.state !== "measured") throw new Error(`expected a measured event lag, saw unknown(${lag.reason})`);
+    expect([lag.value.samples, lag.value.providers]).toStrictEqual([1, ["forge"]]);
+    expect(view.stats()).toStrictEqual({ nodes: 1, events: 1, edges: 0 });
+    for (const provider of COLLAPSE.slice(1)) {
+      expect(view.query({ scope: alice, ref: { provider, type: "operation", id: "op-collapse" }, limit: 1 }).nodes, JSON.stringify(provider)).toStrictEqual([]);
+    }
+    expect(view.identityRefusals({ scope: alice, limit: 10 })).toStrictEqual({
+      refusals: [row("ingest", "source", "provider", 0x2028), row("ingest", "source", "provider", 0x2029), row("ingest", "source", "provider", 0x2028)],
+      total: 3,
+      truncated: false,
+    });
+  });
+
+  it("refuses a separator on relate and markStale as well: no edge, no stale mark, one row naming the end and the part", () => {
+    const view = new ObservationProjection();
+    const clean = CLEAN_CONTROLS[0];
+    view.refresh(snapshot(clean));
+    const before = view.query({ scope: alice, ref: clean, limit: 1 }).nodes[0];
+    view.relate({ scope: alice, from: clean, to: { ...clean, id: `${clean.id}${PS}` }, kind: "dependency", provenance: { source: "declared", observedAt: NOW } });
+    view.markStale({ scope: alice, ref: { ...clean, provider: `${clean.provider}${LS}` } });
+    expect(view.stats()).toStrictEqual({ nodes: 1, events: 0, edges: 0 });
+    expect(view.query({ scope: alice, ref: clean, limit: 1 }).nodes[0]).toStrictEqual(before);
+    expect(view.identityRefusals({ scope: alice, limit: 10 }).refusals).toStrictEqual([row("relate", "to", "id", 0x2029), row("markStale", "ref", "provider", 0x2028)]);
   });
 });
 
