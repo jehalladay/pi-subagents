@@ -678,6 +678,40 @@ describe("wb-752.3 VC-4 live Furnace receipt: assessor", () => {
     expect(() => buildReceipt({ ...BUILD, evidence: { ...good(), secret_env: ["SYNTHETIC_API_KEY"] } })).not.toThrow();
   });
 
+  // Respin 4 (gate-2 g4-gate-r1 20:39Z U1; owner rulings 20:43Z): the gate-verified cure rows K1-K4 for the scheme shape's
+  // leak-direction atoms that survived the delivered suite (token floor read from above, digits and '.' in the token
+  // class, a glue RUN). Each row passes on this module and flips under its named mutants; the per-mutant red counts on
+  // throwaway module copies are in the delivery note. Every invisible is built with String.fromCodePoint (seat rule F11).
+  it("C6 falsifier (respin 4, K1): a token of exactly six characters, digits among them, is refused (the floor is six read from above; a seven, eleven or twelve character floor, or a token class without digits, records it)", () => {
+    expect(unrefused(["Bearer q1w2e3"], "q1w2e3")).toEqual([]);
+  });
+
+  it("C6 falsifier (respin 4, K1b): a seven-character Basic value with digits is refused (a twelve character floor, or a token class without digits, records it)", () => {
+    expect(unrefused(["Basic Zm9vOmI"], "Zm9vOmI")).toEqual([]);
+  });
+
+  it("C6 falsifier (respin 4, K2): a token of digits only is refused (a token class without digits records it)", () => {
+    expect(unrefused(["Bearer 123456789012"], "123456789012")).toEqual([]);
+  });
+
+  it("C6 falsifier (respin 4, K3): a dot inside the first six token characters is refused (a token class without '.', or a twelve character floor, records it)", () => {
+    expect(unrefused(["Bearer ab.cdefghij"], "ab.cdefghij")).toEqual([]);
+  });
+
+  it("C6 falsifier (respin 4, K4): a glue run of TWO units inside the scheme is refused (glue read as at most one unit records it)", () => {
+    const ZWSP = cp(0x200b);
+    expect(unrefused([`Bea${ZWSP}${ZWSP}rer SYNTHTOKENVALUE`], "SYNTHTOKENVALUE")).toEqual([]);
+  });
+
+  it("C6 falsifier (respin 4, K4b): a glue run of TWO units inside the token is refused (glue read as at most one unit records it)", () => {
+    const ZWSP = cp(0x200b);
+    expect(unrefused([`Bearer SYN${ZWSP}${ZWSP}THTOKENVALUE`], "THTOKENVALUE")).toEqual([]);
+  });
+
+  it("C6 negative (respin 4, O1): a scheme before comma and semicolon separated fragments is recorded (',' and ';' end a token; a token class admitting them refuses this text)", () => {
+    expect(recorded("Bearer a,b;c,d")).toBe(true);
+  });
+
   it("names the contract rules and steps exactly so a quiet rename is caught", () => {
     expect([...FINDING_RULES]).toEqual([
       "attach-not-external",
