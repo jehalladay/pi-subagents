@@ -125,6 +125,10 @@ timeout = 120
 command = "node qa/workbench/attention-grouped-bench.mjs"
 timeout = 300
 
+[build.commands.inspector-retained-memory-bench]
+command = "node --expose-gc qa/workbench/inspector-retained-memory-bench.mjs"
+timeout = 300
+
 [build.commands.furnace-active-observe]
 command = "./node_modules/.bin/vitest run --config vitest.furnace-active.config.ts"
 timeout = 180
