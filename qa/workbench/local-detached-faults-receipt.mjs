@@ -36,11 +36,15 @@ export const SURVEYED_UNIVERSE_NON_CLAIM =
   'This is a lint over the text the fixture emits, not a sandbox: node:vm and a text survey are not a hostile-JavaScript isolation boundary, and no claim is made about code outside the surveyed text.';
 /** The only builtin the emitted provider text may reach, and only as a literal process.getBuiltinModule argument. */
 export const ALLOWED_BUILTINS = Object.freeze(['node:fs']);
+/** The three provider texts the runner emits and lints, by role; a receipt whose survey lacks any one of them is not realised. */
+export const PROVIDER_FIXTURES = Object.freeze({crash: 'effect-crash-provider.mjs', hold: 'effect-hold-provider.mjs', wait: 'wait-provider.mjs'});
 
 const RECONCILE_HINT = /never.*retry|do not.*retry/i;
 const NEVER_A_VERDICT = new Set(['completed', 'failed']);
 const CAPABILITY_ID = /^[A-Za-z][A-Za-z0-9_.-]{0,63}$/;
 const MAX_HOLD_MS = 60_000;
+// The fixed-width UTC instant Date#toISOString emits; two such strings sort chronologically as text.
+const ISO_INSTANT = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/;
 // An absolute path: a slash that does not continue a word, then at least one directory segment.
 const ABSOLUTE_PATH = /(?<![A-Za-z0-9._@+~-])\/(?:[A-Za-z0-9._@+~-]+\/)+([A-Za-z0-9._@+~-]*)/g;
 
@@ -120,6 +124,7 @@ export function builtinAccessViolations(text) {
 const isObject = value => typeof value === 'object' && value !== null && !Array.isArray(value);
 const isNumber = value => typeof value === 'number' && Number.isFinite(value);
 const arrayOf = value => (Array.isArray(value) ? value : []);
+const strictlyAfter = (later, earlier) => typeof later === 'string' && typeof earlier === 'string' && ISO_INSTANT.test(later) && ISO_INSTANT.test(earlier) && later > earlier;
 
 /** Replace every absolute path in every string of a JSON-like value with its basename. */
 export function basenameOnly(value) {
@@ -139,7 +144,9 @@ function deepFreeze(value) {
 
 /**
  * Judge observed journeys. Returns {findings: {rule, detail}[], realised}. A missing or unarmed journey
- * makes the measurement not realised; it never produces a pass and never a finding.
+ * makes the measurement not realised, and so does a post-cancel record that is not a later second inspect
+ * or a provider-lint survey that lacks any of the three provider fixtures; not realised never produces a
+ * pass and is never itself a finding.
  */
 export function assessFaultJourneys(observed) {
   const findings = [];
@@ -159,6 +166,13 @@ export function assessFaultJourneys(observed) {
   if (crash && !(after.crash >= 1)) realised = false;
   if (crash && typeof crash.relaunchRejectedAfterSecond !== 'boolean') realised = false;
   if (cancel && !isObject(cancel.postCancelInspect)) realised = false;
+  // The post-cancel record must come from a SECOND inspect, observed after the snapshot on which the wait saw the terminal.
+  const postCancel = cancel && isObject(cancel.postCancelInspect) ? cancel.postCancelInspect : {};
+  const cancelledHost = cancel && isObject(cancel.cancelledHost) ? cancel.cancelledHost : {};
+  if (cancel && !strictlyAfter(postCancel.observedAt, cancelledHost.terminalObservedAt)) realised = false;
+  // Every provider text the runner emits must be in the lint survey: a partial survey is an unrealised measurement, never a clean lint.
+  const surveyed = arrayOf(providerLint.surveyed);
+  if (!Object.values(PROVIDER_FIXTURES).every(name => surveyed.includes(name))) realised = false;
 
   // D1/D2/D3: an effect that happened is never repeated, never denied, never reported as a verdict.
   for (const [id, count] of Object.entries(markerCounts)) {
