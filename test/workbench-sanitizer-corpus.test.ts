@@ -41,6 +41,7 @@ import { type NativeRef, ObservationProjection, type ObservationScope, type Obse
 import { type ObserveReader, observeInvocation } from "../src/workbench/observe-query.js";
 import { proposeWorkflowPatch } from "../src/workbench/patch-proposal.js";
 import { redactWorkbenchText, sanitizeWorkbenchJson, sanitizeWorkbenchJsonText, sanitizeWorkbenchText, stripUnsafeText } from "../src/workbench/redaction.js";
+import { buildOperationsTelemetry } from "../src/workbench/telemetry.js";
 import { buildTimelineLanes, type TimelineReader } from "../src/workbench/timeline.js";
 import { buildWorkflowCatalogReply, buildWorkflowInspectReply, type CapabilityCatalogEntry } from "../src/workbench/tool-replies.js";
 import { selectLinkedTopology } from "../src/workbench/topology-slice.js";
@@ -375,6 +376,24 @@ function inspectorPanelRealTexts(raw: string): string[] | undefined {
   if (projection.window({ scope: PANEL_SCOPE, invocationId: "inv-panel-real", offset: 0, limit: 1 }).total === 0) return undefined;
   const attention = selectAttention(projection, { scope: PANEL_SCOPE, invocationId: "inv-panel-real", now: "2026-10-15T12:01:00.000Z" });
   return panelLines({ projection, scope: PANEL_SCOPE, invocationId: "inv-panel-real", title: "Panel real path", status: "running", attention });
+ * DIRECT-CALLER row (wb-cax.13 O1, owner 2026-10-16T00:01Z): telemetry.ts providerName calls the one helper with the label
+ * layout, and the report's sampled-provider list is its display. A structural projection hands the report the producer's raw
+ * provider, as the attention driver hands selectAttention a raw title (the real projection refuses C0 controls in identity).
+ */
+function telemetryTexts(raw: string): string[] {
+  const report = buildOperationsTelemetry(
+    {
+      query: () => ({ nodes: [], examined: 0, truncated: false }),
+      stats: () => ({ nodes: 0, events: 1, edges: 0 }),
+      events: () => ({
+        events: [{ projectionEventId: "e-telemetry", source: { provider: raw, type: "run", id: "src-telemetry" }, scope: ALICE, observedAt: NOW, sourceTimestamp: "2026-10-15T11:59:59.000Z", kind: "native.event" }],
+        truncated: false,
+        completeness: "complete",
+      }),
+    },
+    { scope: ALICE, now: NOW },
+  );
+  return report.eventLag.state === "measured" ? report.eventLag.value.providers : [];
 }
 
 const sliceKey = (id: string): string => JSON.stringify([ALICE.workspace, ALICE.principal, "furnace", "operation", "", id]);
@@ -540,6 +559,7 @@ const SITES: readonly Site[] = [
   { site: "site 5 timeline.ts shown (buildTimelineLanes)", texts: timelineTexts },
   { site: "site 6 attention.ts titleOf (selectAttention)", texts: attentionTexts },
   { site: "workflow-inspector.ts attention panel (layoutInspector overview)", texts: inspectorPanelTexts },
+  { site: "telemetry.ts providerName (buildOperationsTelemetry eventLag.providers)", texts: telemetryTexts },
   { site: "site 7 topology-slice.ts labelOf (selectLinkedTopology)", texts: topologyTexts },
   { site: "site 8 furnace-hosted.ts safeText (FurnaceHostedExecutor.start)", texts: hostedTexts },
   { site: "site 9 patch-proposal.ts displayText (proposeWorkflowPatch)", texts: patchTexts },
