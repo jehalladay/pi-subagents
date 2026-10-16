@@ -72,6 +72,11 @@ export function createClaudeObserver(emit: (call: ClaudeCallIdentity, snapshot: 
 
 export const CLAUDE_TRANSCRIPT_ROW_CHARS = 500;
 export const CLAUDE_TRANSCRIPT_MAX_ROWS = 100;
+/** The first window of a row's text the helper reads; it grows only while the helper's output is too short to fill the row clip. */
+export const CLAUDE_TRANSCRIPT_PREBOUND_CHARS = 8192;
+const PREBOUND_GROWTH = 4;
+/** Closes a quoted assignment value the window cut open, so the helper redacts it whole as it does with the rest of the text. */
+const WINDOW_CLOSERS = "\"'";
 
 /** The session reader seam; production passes the SDK function, tests inject a fixture. */
 export type ClaudeSessionReader = (sessionId: string, options?: { dir?: string; limit?: number }) => Promise<SessionMessage[]>;
@@ -103,13 +108,27 @@ function clipRow(text: string): string {
 }
 
 /**
- * SITE 21 of the wb-952 census: the whole row text through the ONE shared display helper with its NAMED "lines" layout
+ * SITE 21 of the wb-952 census: the row text through the ONE shared display helper with its NAMED "lines" layout
  * (transcript-class bodies), unbounded, then the row clip. The helper redacts over every reading of every gap before it
  * renders any of them, so nothing is deleted before redaction has read it; LF row structure survives and every other
  * unsafe unit is dropped. No local pre-pass: deleting or rewriting a unit here first would glue tokens the helper must see.
+ *
+ * The helper reads a straddle-safe window, not the whole SDK text (wb-ig7). The window is a prefix of the raw text, so the
+ * helper still precedes the clip and nothing is stripped first. A window whose output is shorter than the row clip plus the
+ * closers (dense deletions, or a redaction that swallowed the cut) is widened and read again, so a unit or a credential
+ * the cut straddles is never what the row shows. WINDOW_CLOSERS ends a quoted value the cut left open. Past the last
+ * widening the whole text is read, exactly as before the bound.
  */
+function displayText(raw: string): string {
+  for (let bound = CLAUDE_TRANSCRIPT_PREBOUND_CHARS; bound < raw.length; bound *= PREBOUND_GROWTH) {
+    const shown = sanitizeWorkbenchText(`${raw.slice(0, bound)}${WINDOW_CLOSERS}`, Number.MAX_SAFE_INTEGER, "lines");
+    if (shown.length >= CLAUDE_TRANSCRIPT_ROW_CHARS + WINDOW_CLOSERS.length) return shown;
+  }
+  return sanitizeWorkbenchText(raw, Number.MAX_SAFE_INTEGER, "lines");
+}
+
 function summary(message: SessionMessage): string {
-  return clipRow(sanitizeWorkbenchText(rawText(message), Number.MAX_SAFE_INTEGER, "lines"));
+  return clipRow(displayText(rawText(message)));
 }
 
 /** SDK session_id only; never reinterpret it as a Pi AgentRecord id. */
