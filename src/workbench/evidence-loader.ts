@@ -6,7 +6,7 @@
 import { safeWorkflowTerminalText } from "../ui/workflow-card.js";
 import { CapabilityError } from "./capability-registry.js";
 import type { NativeRef, ObservationScope } from "./observation.js";
-import { redactWorkbenchText, stripUnsafeText } from "./redaction.js";
+import { sanitizeWorkbenchText } from "./redaction.js";
 
 export const EVIDENCE_CONTRACT = "workbench.evidence-loader/v1";
 
@@ -78,7 +78,6 @@ export const EVIDENCE_TRUNCATED_MARK = "[truncated]";
 const NOT_REQUESTED: EvidenceEntry = { state: "not-requested" };
 const LOADING: EvidenceEntry = { state: "loading" };
 const DIGEST = /^(?:[a-z][a-z0-9]{1,15}[:-])?[0-9a-f]{16,128}$/i;
-const ZERO_WIDTH = /[­​-‏⁠-⁤﻿]/g;
 const MAX_RECEIPT_CHARS = 120;
 
 const scopeEquals = (left: ObservationScope, right: ObservationScope): boolean =>
@@ -93,14 +92,34 @@ interface Slot {
   pending?: Promise<void>;
 }
 
-/** One preview line to its bounded, redacted, terminal-safe chunks. Redaction runs before any split so a secret cannot straddle a chunk. */
+/** One preview line to its bounded, redacted, terminal-safe chunks: the shared helper runs before any split so a secret cannot straddle a chunk. */
 function safeChunks(raw: string): string[] {
-  const redacted = redactWorkbenchText(raw, Number.MAX_SAFE_INTEGER).replace(ZERO_WIDTH, "");
-  const cleaned = stripUnsafeText(redacted, " ");
+  const cleaned = sanitizeWorkbenchText(raw, Number.MAX_SAFE_INTEGER, "terminal");
   if (cleaned.length === 0) return [""];
   const chunks: string[] = [];
-  for (let at = 0; at < cleaned.length; at += EVIDENCE_LINE_CHARS) chunks.push(safeWorkflowTerminalText(cleaned.slice(at, at + EVIDENCE_LINE_CHARS)));
+  let at = 0;
+  while (at < cleaned.length) {
+    let end = Math.min(at + EVIDENCE_LINE_CHARS, cleaned.length);
+    if (end < cleaned.length && isHighSurrogate(cleaned.charCodeAt(end - 1))) end -= 1;
+    chunks.push(safeWorkflowTerminalText(cleaned.slice(at, end)));
+    at = end;
+  }
   return chunks;
+}
+
+const isHighSurrogate = (unit: number): boolean => unit >= 0xd800 && unit <= 0xdbff;
+
+/** The longest prefix of `text` whose UTF-8 size fits `budget` bytes, cut only on code-point boundaries. */
+function prefixWithinBytes(text: string, budget: number): string {
+  let used = 0;
+  let kept = "";
+  for (const codePoint of text) {
+    const size = Buffer.byteLength(codePoint);
+    if (used + size > budget) break;
+    used += size;
+    kept += codePoint;
+  }
+  return kept;
 }
 
 /** Fit loader-supplied preview lines inside the byte and line budgets; raw payload is never retained. */
@@ -113,9 +132,10 @@ function boundPreview(preview: readonly string[], maxBytes: number): { lines: st
     for (const part of entry.split(/\r\n|\r|\n/)) {
       if (remaining <= 0 || lines.length >= EVIDENCE_MAX_PREVIEW_LINES) { clipped = true; break; }
       const size = Buffer.byteLength(part);
-      const kept = size > remaining ? Buffer.from(part).subarray(0, remaining).toString() : part;
+      const kept = size > remaining ? prefixWithinBytes(part, remaining) : part;
       if (size > remaining) clipped = true;
       remaining -= Math.min(size, remaining);
+      if (kept === "" && size > 0) continue;
       for (const chunk of safeChunks(kept)) {
         if (lines.length >= EVIDENCE_MAX_PREVIEW_LINES) { clipped = true; break; }
         lines.push(chunk);

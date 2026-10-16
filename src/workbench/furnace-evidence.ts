@@ -14,7 +14,7 @@
 import { CapabilityError } from "./capability-registry.js";
 import type { FurnaceObserverClient } from "./furnace-observer.js";
 import type { NativeRef } from "./observation.js";
-import { redactWorkbenchText, stripUnsafeText } from "./redaction.js";
+import { sanitizeWorkbenchText } from "./redaction.js";
 
 export const FURNACE_EVIDENCE_CONTRACT = "workbench.furnace-evidence/v1";
 
@@ -71,8 +71,6 @@ const MAX_TIMEOUT_MS = 2_147_483_647;
 const MAX_LINE = 200;
 /** Raw characters of one producer string ever examined; anything later is never shown. */
 const MAX_SCAN = 2_000;
-/** U+200B-U+200D, U+2060 and U+FEFF as an alternation: a class holding the joiner U+200D lints as misleading. */
-const ZERO_WIDTH = /\u200b|\u200c|\u200d|\u2060|\ufeff/g;
 /** An ISO-8601 date-time with a timezone; the host date parser alone also accepts prose. */
 const ISO_INSTANT = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2}(?:\.\d{1,9})?)?(?:Z|[+-]\d{2}:\d{2})$/;
 
@@ -90,13 +88,13 @@ function clip(value: string, length: number): string {
   return last >= 0xd800 && last <= 0xdbff ? head.slice(0, -1) : head;
 }
 
-/** One producer string bound for display: redaction, the terminal sanitizer, the zero-width strip, then redaction once
- * more, so a credential an escape or zero-width character split from its scheme cannot reassemble past the first pass
- * (docs/20 owner ruling 2: the double redaction is deliberate and idempotent). Tabs become spaces first so columns
- * stay apart. A value longer than MAX_LINE, or than the scan window, ends in an ellipsis inside MAX_LINE. */
+/** One producer string bound for display: the shared helper, which redacts every reading of the gaps an escape, control or
+ * zero-width character leaves before it strips them, so a credential split from its scheme cannot reassemble (the property
+ * docs/20 owner ruling 2 asked of the double redaction). Tabs become spaces so columns stay apart. A value longer than
+ * MAX_LINE, or than the scan window, ends in an ellipsis inside MAX_LINE. */
 function sanitize(raw: string): { text: string; clipped: boolean } {
   const scanned = clip(raw, MAX_SCAN);
-  const text = redactWorkbenchText(stripUnsafeText(redactWorkbenchText(scanned, MAX_SCAN).replace(/\t/g, " ")).replace(ZERO_WIDTH, ""), MAX_SCAN);
+  const text = sanitizeWorkbenchText(scanned, MAX_SCAN);
   return text.length <= MAX_LINE && scanned.length === raw.length ? { text, clipped: false } : { text: `${clip(text, MAX_LINE - 1)}…`, clipped: true };
 }
 

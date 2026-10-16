@@ -75,7 +75,7 @@ function fixtureHost(projection: ObservationProjection, session: { grants: strin
   };
 }
 
-const UNSAFE = /[\u0000-\u001f\u007f-\u009f‪-‮⁦-⁩]/;
+const UNSAFE = /[\u0000-\u001f\u007f-\u009f\u202A-\u202E\u2066-\u2069]/;
 function deniedReason(decision: ControlDecision): string {
   if (decision.decision !== "denied") throw new Error(`expected a denial, got ${JSON.stringify(decision)}`);
   return decision.reason;
@@ -148,7 +148,7 @@ describe("expired control credentials -> deny action (docs/workbench/17 bullet 6
 describe("denial text is sanitized and never echoes the caller", () => {
   it("adversarial ANSI, bidi and control characters in provider, action, target and invocation never reach a denial reason", () => {
     const sdk = sdkSeam();
-    const hostile = ["\u001b[31mred\u001b[0m", "\u001b]0;title\u0007", "‮evil", "line\nbreak", "nul\u0000", "\u009b31m", "control:furnace.stop\u0007"];
+    const hostile = ["\u001b[31mred\u001b[0m", "\u001b]0;title\u0007", "\u202Eevil", "line\nbreak", "nul\u0000", "\u009b31m", "control:furnace.stop\u0007"];
     for (const text of hostile) {
       const host = fixtureHost(observed(), { grants: [OBSERVE] }, sdk);
       const overrides: Partial<NativeControlRequest>[] = [
