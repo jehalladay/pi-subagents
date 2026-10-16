@@ -1,5 +1,5 @@
 import { spawnSync } from "node:child_process";
-import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { chmodSync, copyFileSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -295,5 +295,175 @@ describe("CLI contract", () => {
     expect(source).not.toMatch(/from '\.\.\/\.\.\/(src|dist)/);
     const run = spawnSync(process.execPath, ["--check", join(repo, "qa", "workbench", "release-checklist-receipt.mjs")], { encoding: "utf8" });
     expect(run.status).toBe(0);
+  });
+});
+
+// wb-cax.23 respin (gate-3 U1-U3, O1): each block below kills named mutants of the runner. Every case drives the real runner
+// (builder, repoIdentity, or the spawned CLI over a test-scoped executable at its own vitest spawn seam); nothing is mocked.
+interface CaseSpec {
+  title: string;
+  status: string;
+}
+const CONTROL_A1 = "control a1 refuses forged grant";
+const CONTROL_A2 = "control a2 refuses unknown caller";
+const CONTROL_B1 = "control b1 refuses cancelled request";
+const CONTROL_C1 = "control c1 never replays a journaled write";
+const multi: Item[] = [
+  {
+    item: 6,
+    text: "Authorized provider invocation and denial tests pass.",
+    suites: [
+      { path: "test/multi-a.test.ts", negativeControls: [CONTROL_A1, CONTROL_A2] },
+      { path: "test/multi-b.test.ts", negativeControls: [CONTROL_B1] },
+    ],
+  },
+  { item: 7, text: "Abort/restart/side-effect ambiguity tests pass.", suites: [{ path: "test/multi-c.test.ts", negativeControls: [CONTROL_C1] }] },
+];
+const multiBytes = (path: string): Buffer | undefined => {
+  const suite = multi.flatMap((i) => i.suites).find((s) => s.path === path);
+  return suite ? Buffer.from(suite.negativeControls.map((t) => `it("${t}", () => {});\n`).join("")) : undefined;
+};
+function reportOf(files: Record<string, CaseSpec[]>): unknown {
+  const entries = Object.entries(files);
+  const failed = entries.some(([, cases]) => cases.some((c) => c.status === "failed"));
+  return {
+    success: !failed,
+    testResults: entries.map(([path, cases]) => ({
+      name: resolve("/repo", path),
+      status: cases.some((c) => c.status === "failed") ? "failed" : "passed",
+      assertionResults: cases.map((c) => ({ title: c.title, fullName: `multi ${c.title}`, status: c.status })),
+    })),
+  };
+}
+const passing = (title: string): CaseSpec => ({ title, status: "passed" });
+const A = "test/multi-a.test.ts";
+const B = "test/multi-b.test.ts";
+const C = "test/multi-c.test.ts";
+function multiReceipt(files6: Record<string, CaseSpec[]>, files7: Record<string, CaseSpec[]>): Receipt {
+  return build({
+    items: multi,
+    root: "/repo",
+    reports: { 6: { report: reportOf(files6), exitStatus: 0 }, 7: { report: reportOf(files7), exitStatus: 0 } },
+    read: multiBytes,
+    meta,
+  });
+}
+const clean6 = { [A]: [passing(CONTROL_A1), passing(CONTROL_A2)], [B]: [passing(CONTROL_B1)] };
+const clean7 = { [C]: [passing(CONTROL_C1)] };
+
+describe("the three aggregations are exercised over a multi-item, multi-suite, multi-control table (U1)", () => {
+  it("(a) everything clean: both items and the receipt pass, exit 0", () => {
+    const receipt = multiReceipt(clean6, clean7);
+    expect(receipt.items.map((i) => i.pass)).toEqual([true, true]);
+    expect(receipt.pass).toBe(true);
+    expect(exitOf(receipt)).toBe(0);
+  });
+
+  it("(b) item 7 has one failed case while item 6 is clean: the receipt is not a pass (item aggregation is every, not some)", () => {
+    const receipt = multiReceipt(clean6, { [C]: [{ title: CONTROL_C1, status: "failed" }] });
+    expect(receipt.items.map((i) => i.pass)).toEqual([true, false]);
+    expect(receipt.pass).toBe(false);
+    expect(exitOf(receipt)).toBe(1);
+  });
+
+  it("(c) the second suite's only control is skipped while the first suite is clean: item 6 fails (suite aggregation is some, not every)", () => {
+    const receipt = multiReceipt({ [A]: clean6[A], [B]: [{ title: CONTROL_B1, status: "skipped" }] }, clean7);
+    expect(receipt.items.map((i) => i.pass)).toEqual([false, true]);
+    expect(receipt.pass).toBe(false);
+    expect(exitOf(receipt)).toBe(1);
+  });
+
+  it("(d) one of the first suite's two controls is skipped while the other passes: item 6 fails (control aggregation is some, not every)", () => {
+    const receipt = multiReceipt({ [A]: [{ title: CONTROL_A1, status: "skipped" }, passing(CONTROL_A2)], [B]: clean6[B] }, clean7);
+    expect(receipt.items[0].suites[0].negativeControls).toEqual([
+      { title: CONTROL_A1, present: false },
+      { title: CONTROL_A2, present: true },
+    ]);
+    expect(receipt.items.map((i) => i.pass)).toEqual([false, true]);
+    expect(receipt.pass).toBe(false);
+    expect(exitOf(receipt)).toBe(1);
+  });
+
+  it("O1 a todo case is listed under skipped and never counted as passed, with its control still passing", () => {
+    const todo = { title: "a todo placeholder", status: "todo" };
+    const receipt = multiReceipt({ [A]: [passing(CONTROL_A1), passing(CONTROL_A2), todo], [B]: clean6[B] }, clean7);
+    expect(receipt.items[0].suites[0]).toMatchObject({ tests: 3, passed: 2, failed: 0, skipped: 1, skippedTitles: ["multi a todo placeholder"] });
+    expect(receipt.pass).toBe(true);
+  });
+});
+
+describe("the CLI plumbs vitest's exit status into the verdict (U2: the exit leg is the only guard for unhandled errors)", () => {
+  // A test-scoped executable at the runner's own vitest spawn seam: it writes an all-pass success:true report for the paths it
+  // receives and exits with FAKE_VITEST_EXIT, the shape vitest 4.1.10 produces for an error thrown in a timer after a passing test.
+  function scratchRoot(): string {
+    const root = mkdtempSync(join(tmpdir(), "rc-cli-"));
+    roots.push(root);
+    for (const item of items) {
+      for (const suite of item.suites) {
+        mkdirSync(dirname(join(root, suite.path)), { recursive: true });
+        writeFileSync(join(root, suite.path), suite.negativeControls.map((t) => `it(${JSON.stringify(t)}, () => {});\n`).join(""));
+      }
+    }
+    mkdirSync(join(root, "node_modules", "vitest"), { recursive: true });
+    writeFileSync(join(root, "node_modules", "vitest", "package.json"), JSON.stringify({ version: "0.0.0-fake" }));
+    mkdirSync(join(root, "node_modules", ".bin"), { recursive: true });
+    const fake = [
+      `#!${process.execPath}`,
+      'const fs = require("node:fs");',
+      'const path = require("node:path");',
+      "const args = process.argv.slice(2);",
+      'const out = args.find((a) => a.startsWith("--outputFile=")).slice("--outputFile=".length);',
+      'const files = args.filter((a) => !a.startsWith("-") && a !== "run");',
+      "const testResults = files.map((f) => {",
+      '  const titles = [...fs.readFileSync(f, "utf8").matchAll(/^it\\("(.*)", /gm)].map((m) => m[1]);',
+      '  return { name: path.resolve(f), status: "passed", assertionResults: titles.map((title) => ({ title, fullName: title, status: "passed" })) };',
+      "});",
+      "fs.writeFileSync(out, JSON.stringify({ success: true, testResults }));",
+      "process.exit(Number(process.env.FAKE_VITEST_EXIT));",
+      "",
+    ].join("\n");
+    writeFileSync(join(root, "node_modules", ".bin", "vitest"), fake);
+    chmodSync(join(root, "node_modules", ".bin", "vitest"), 0o755);
+    mkdirSync(join(root, "qa", "workbench"), { recursive: true });
+    copyFileSync(join(repo, "qa", "workbench", "release-checklist-receipt.mjs"), join(root, "qa", "workbench", "release-checklist-receipt.mjs"));
+    return root;
+  }
+  function runCli(root: string, exit: string): { status: number | null; receipt: Receipt } {
+    const run = spawnSync(process.execPath, [join(root, "qa", "workbench", "release-checklist-receipt.mjs")], { encoding: "utf8", env: { ...process.env, FAKE_VITEST_EXIT: exit } });
+    return { status: run.status, receipt: JSON.parse(run.stdout) as Receipt };
+  }
+
+  it("control: a vitest that exits 0 with an all-pass report yields exit 0, vitestExit 0 and pass true (the fake seam is faithful)", () => {
+    const { status, receipt } = runCli(scratchRoot(), "0");
+    expect(status).toBe(0);
+    expect(receipt.items.map((i) => [i.vitestExit, i.vitestSuccess, i.pass])).toEqual([
+      [0, true, true],
+      [0, true, true],
+    ]);
+    expect(receipt.pass).toBe(true);
+  });
+
+  it("a vitest that exits 1 with success true and every file passed is exit 1 with vitestExit 1 on both items and pass false", () => {
+    const { status, receipt } = runCli(scratchRoot(), "1");
+    expect(status).toBe(1);
+    expect(receipt.items.map((i) => [i.vitestExit, i.vitestSuccess, i.pass])).toEqual([
+      [1, true, false],
+      [1, true, false],
+    ]);
+    expect(receipt.pass).toBe(false);
+  });
+});
+
+describe("repoIdentity fails closed when git status itself fails (U3: the vko corrupt-index shape)", () => {
+  it("a repository whose index is corrupt (git status rc 128, rev-parse HEAD ok) reports unknown for both, never a clean or dirty claim", () => {
+    const repoDir = mkdtempSync(join(tmpdir(), "rc-corrupt-"));
+    roots.push(repoDir);
+    const git = (args: string[]) => spawnSync("git", args, { cwd: repoDir, encoding: "utf8" });
+    git(["init", "-q"]);
+    git(["-c", "user.email=a@b.c", "-c", "user.name=t", "commit", "-q", "--allow-empty", "-m", "base"]);
+    writeFileSync(join(repoDir, ".git", "index"), "garbage");
+    expect(git(["status", "--porcelain"]).status).toBe(128);
+    expect(git(["rev-parse", "HEAD"]).status).toBe(0);
+    expect(identityOf(repoDir)).toEqual({ revision: "unknown", dirty: "unknown" });
   });
 });
