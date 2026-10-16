@@ -692,7 +692,14 @@ describe("D1 wb-9iu M3: the 64-unit provider cap never leaves half a surrogate p
 });
 
 describe("D2 wb-9iu M4: telemetry is enabled only by the boolean true", () => {
-  it.each([1, "true", "yes", {}, []])("emits nothing for a truthy non-boolean enabled flag %j", flag => {
+  const TRUTHY_FLAGS: ReadonlyArray<readonly [string, unknown]> = [
+    ["number 1", 1],
+    ["string true", "true"],
+    ["string yes", "yes"],
+    ["empty object", {}],
+    ["empty array", []],
+  ];
+  it.each(TRUTHY_FLAGS)("emits nothing for a truthy non-boolean enabled flag: %s", (_label, flag) => {
     const received: TelemetryEvent[] = [];
     const sink = { emit: (event: TelemetryEvent): void => { received.push(event); } };
     const report = build(fixtureView());
@@ -746,12 +753,21 @@ describe("D4 wb-9iu M6: a disconnected node counts as last-known even when its f
 describe("D5 wb-9iu M8 / gate F6: an invalid maxBytes falls back to the 8192-byte default, never used raw", () => {
   const oversize = (): OperationsTelemetry => ({ ...build(fixtureView()), now: `${T}${"x".repeat(9000)}` });
   const small = (): OperationsTelemetry => build(fixtureView());
-  it.each([0, -1, 1.5, Number.NaN, Number.POSITIVE_INFINITY, Number.MAX_SAFE_INTEGER + 2, "64" as never])(
-    "applies the default cap to maxBytes %j: a small event is delivered and an event over 8192 bytes is dropped", bad => {
+  const INVALID_MAX_BYTES: ReadonlyArray<readonly [string, unknown]> = [
+    ["zero", 0],
+    ["negative one", -1],
+    ["fractional 1.5", 1.5],
+    ["NaN", Number.NaN],
+    ["positive Infinity", Number.POSITIVE_INFINITY],
+    ["unsafe integer", Number.MAX_SAFE_INTEGER + 2],
+    ["string 64", "64"],
+  ];
+  it.each(INVALID_MAX_BYTES)(
+    "applies the default cap to maxBytes %s: a small event is delivered and an event over 8192 bytes is dropped", (_label, bad) => {
       const received: TelemetryEvent[] = [];
       const sink = { emit: (event: TelemetryEvent): void => { received.push(event); } };
-      expect(emitOperationsTelemetry(small(), sink, { enabled: true, maxBytes: bad })).toBe("emitted");
-      expect(emitOperationsTelemetry(oversize(), sink, { enabled: true, maxBytes: bad })).toBe("dropped-oversize");
+      expect(emitOperationsTelemetry(small(), sink, { enabled: true, maxBytes: bad as never })).toBe("emitted");
+      expect(emitOperationsTelemetry(oversize(), sink, { enabled: true, maxBytes: bad as never })).toBe("dropped-oversize");
       expect(received).toHaveLength(1);
     },
   );
