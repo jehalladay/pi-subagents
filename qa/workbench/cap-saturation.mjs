@@ -318,6 +318,27 @@ export function assessCapSaturationReceipt(receipt) {
 
 export const exitCodeFor = receipt => assessCapSaturationReceipt(receipt).exitCode;
 
+/**
+ * Publishes one receipt (one-liner batch item (5), bound onto wb-9x5.6 by name; the wb-9x5.15 shape). The receipt line
+ * is printed FIRST, then the same line is written to `path` when one is given, and only then is the exit code returned,
+ * re-assessed from the receipt rather than read from it. A failed write is reported on `logError` and returns 3 with the
+ * receipt already printed, so an unwritable receipt path never loses the measurement and never surfaces as the
+ * over-budget 1 or as a pass. The writers are arguments because this module imports nothing but the fixture.
+ */
+export function publishReceipt(receipt, {path, log, logError, writeFile}) {
+  const line = JSON.stringify(receipt);
+  log(line);
+  if (path) {
+    try {
+      writeFile(path, `${line}\n`);
+    } catch (error) {
+      logError(JSON.stringify({benchmark: 'inspector-cap-saturation', error: 'receipt-write-failed', path, detail: error instanceof Error ? error.message : String(error)}));
+      return 3;
+    }
+  }
+  return exitCodeFor(receipt);
+}
+
 function findingsOf(passes, memoryJudged, runtimeNodeCalls) {
   const findings = [
     {id: 'runtime-cap-modelled', detail: 'The runtime node-call cap is a closure constant in src/workflow/runtime.ts; this bench models it as a projection cap of the same size and does not start workflow workers.'},

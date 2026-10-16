@@ -4,8 +4,8 @@
 // `node --expose-gc qa/workbench/inspector-cap-saturation-bench.mjs` (--expose-gc makes the memory series
 // post-collection and judgeable; without it the series is recorded and marked unjudged). The wb-9x5.2
 // fixture (qa/workbench/grouped-fixture.mjs) is offered to projections capped far below it (the
-// plan lives in qa/workbench/cap-saturation.mjs). ONE JSON receipt line is printed, and written to
-// $CAP_BENCH_RECEIPT when set, BEFORE the exit code is set:
+// plan lives in qa/workbench/cap-saturation.mjs). ONE JSON receipt line is printed FIRST, then written to
+// $CAP_BENCH_RECEIPT when set, and only then is the exit code set (publishReceipt, one-liner batch item (5)):
 //   0  overflow was counted at every cap, memory followed the projection, and every p95 is <= 20 ms
 //      (plain mode records an unlabeled-product-overflow finding and still exits 0)
 //   1  measured, but overflow was dropped silently, the cap was exceeded, memory was unbounded or a
@@ -13,7 +13,8 @@
 //      any view names the dropped remainder (unlabeled-product-overflow, owner ruling F1)
 //   2  the measurement is not this claim (wrong fixture shape, a missing or mislabelled pass, a changed
 //      production cap, an unsampled series)
-//   3  nothing could be measured (an exception, reported on stderr; no receipt)
+//   3  nothing could be measured (an exception, reported on stderr; no receipt), or the receipt file could not be
+//      written (reported on stderr; the receipt is already on stdout, never a silent exit 1)
 // --strict is the falsifier arm: the Forge command stays plain until the inspector remainder line
 // (wb-ea1) lands. The receipt header states the bench-only bounds (benchOnlyBounds) before any measurement.
 // The revision comes from $CAP_BENCH_REVISION (else "working-tree"). $CAP_BENCH_SEED, $CAP_BENCH_NODES,
@@ -24,7 +25,7 @@ import {cpus} from 'node:os';
 import {initialInspectorState, layoutInspector, reduceInspectorKey} from '../../dist/ui/workflow-inspector.js';
 import {WORKFLOW_AGENT_CAP} from '../../dist/workflow/runtime.js';
 import {ObservationProjection} from '../../dist/workbench/observation.js';
-import {runCapSaturationBench, exitCodeFor} from './cap-saturation.mjs';
+import {publishReceipt, runCapSaturationBench} from './cap-saturation.mjs';
 import {buildGroupedFixture, GROUPED_FIXTURE_DEFAULTS} from './grouped-fixture.mjs';
 
 const integerFromEnv = (name, fallback) => {
@@ -85,6 +86,4 @@ try {
   console.error(JSON.stringify({benchmark: 'inspector-cap-saturation', measured: false, error: error instanceof Error ? error.stack ?? error.message : String(error)}));
   process.exit(3);
 }
-if (process.env.CAP_BENCH_RECEIPT) writeFileSync(process.env.CAP_BENCH_RECEIPT, `${JSON.stringify(receipt)}\n`);
-console.log(JSON.stringify(receipt));
-process.exitCode = exitCodeFor(receipt);
+process.exitCode = publishReceipt(receipt, {path: process.env.CAP_BENCH_RECEIPT, log: console.log, logError: console.error, writeFile: writeFileSync});

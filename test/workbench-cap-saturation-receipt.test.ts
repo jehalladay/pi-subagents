@@ -2,7 +2,9 @@
  * Measurement-only: the bench module is ESM over the wb-9x5.2 fixture, the CLI drives compiled dist/, and no
  * production cap moves. Overflow past the caps must be a counted remainder; a silent drop fails the run.
  */
-import { readFileSync } from "node:fs";
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import { beforeAll, describe, expect, it } from "vitest";
 import {
   assessCapSaturationReceipt,
@@ -14,6 +16,7 @@ import {
   PASS_IDS,
   PRODUCTION_CAPS,
   passPlan,
+  publishReceipt,
   runCapSaturationBench,
 } from "../qa/workbench/cap-saturation.mjs";
 import { buildGroupedFixture, NAVIGATION_TARGET_MS } from "../qa/workbench/grouped-fixture.mjs";
@@ -636,12 +639,25 @@ describe("W21-D CLI and Forge registration", () => {
     );
     expect(text).not.toMatch(/\bimport\s*\(|\brequire\s*\(/);
     expect(text).toMatch(/CAP_BENCH_RECEIPT/);
-    const written = text.indexOf("writeFileSync(process.env.CAP_BENCH_RECEIPT");
-    const printed = text.indexOf("console.log(JSON.stringify(receipt))");
-    const exit = text.indexOf("process.exitCode = exitCodeFor(receipt)");
-    expect(written).toBeGreaterThan(-1);
-    expect(printed).toBeGreaterThan(written);
-    expect(exit).toBeGreaterThan(printed);
+    // One-liner batch item (5), bound onto wb-9x5.6 by name (owner ruling O2): the receipt line is printed BEFORE the
+    // file write and a failed write exits 3 with the receipt already on stdout. The write-before-print order this pin
+    // held at the 11146ac cut (:639-644) flips here, in the same commit as the behaviour; the publication itself lives
+    // in qa/workbench/cap-saturation.mjs (publishReceipt) so the describe block below can drive it, and the CLI hands
+    // it the real writers and the receipt path, then sets the exit code from what it returns.
+    const lib = readRepo("qa/workbench/cap-saturation.mjs");
+    const printed = lib.indexOf("log(line);");
+    const written = lib.indexOf("writeFile(path, ");
+    const settled = lib.indexOf("return exitCodeFor(receipt);");
+    expect(printed).toBeGreaterThan(-1);
+    expect(written).toBeGreaterThan(printed);
+    expect(settled).toBeGreaterThan(written);
+    const measured = text.indexOf("receipt = runCapSaturationBench(");
+    const exit = text.indexOf(
+      "process.exitCode = publishReceipt(receipt, {path: process.env.CAP_BENCH_RECEIPT, log: console.log, logError: console.error, writeFile: writeFileSync});",
+    );
+    expect(measured).toBeGreaterThan(-1);
+    expect(exit).toBeGreaterThan(measured);
+    expect(text).not.toMatch(/writeFileSync\s*\(|console\.log\s*\(/);
     expect(text).toMatch(/process\.exit\(3\)/);
   });
 
@@ -662,5 +678,127 @@ describe("W21-D CLI and Forge registration", () => {
     const gate = /^gate = \[([^\]]*)\]/m.exec(toml)?.[1] ?? "";
     expect(gate.length).toBeGreaterThan(0);
     expect(gate).not.toMatch(/cap-saturation/);
+  });
+});
+
+interface PublishIo {
+  path?: string;
+  log: (line: string) => void;
+  logError: (line: string) => void;
+  writeFile: (path: string, text: string) => void;
+}
+const publish = publishReceipt as (receipt: Receipt, io: PublishIo) => number;
+
+describe("W21-D receipt publication: printed before the file write; a failed write exits 3 with the receipt on stdout (one-liner batch item (5), bound onto wb-9x5.6 by name)", () => {
+  interface Published {
+    kind: "log" | "error" | "write";
+    text: string;
+    path?: string;
+  }
+  const recorder = (failure?: unknown) => {
+    const events: Published[] = [];
+    const io: Omit<PublishIo, "path"> = {
+      log: text => {
+        events.push({ kind: "log", text });
+      },
+      logError: text => {
+        events.push({ kind: "error", text });
+      },
+      writeFile: (path, text) => {
+        if (failure !== undefined) throw failure;
+        events.push({ kind: "write", text, path });
+      },
+    };
+    return { events, io };
+  };
+  /** Receipts whose re-assessed exit code is 0 (calm, plain), 1 (calm, --strict) and 2 (wrong fixture shape). */
+  const receiptExiting = (code: 0 | 1 | 2): Receipt => {
+    if (code === 0) return calm();
+    if (code === 1) return { ...calm(), strict: true };
+    const wrong = calm();
+    wrong.fixture.snapshots = 10;
+    return wrong;
+  };
+
+  it("prints the receipt line first, then writes the same line to the receipt file, then returns the re-assessed exit code", () => {
+    for (const code of [0, 1, 2] as const) {
+      const receipt = receiptExiting(code);
+      expect(exitCode(receipt)).toBe(code);
+      const { events, io } = recorder();
+      expect(publish(receipt, { ...io, path: "/var/tmp/cap-receipt.json" })).toBe(code);
+      const line = JSON.stringify(receipt);
+      expect(events).toEqual([
+        { kind: "log", text: line },
+        { kind: "write", text: `${line}\n`, path: "/var/tmp/cap-receipt.json" },
+      ]);
+    }
+  });
+
+  it("re-assesses the exit code from the receipt rather than trusting the one stored in it", () => {
+    const forged = { ...receiptExiting(1), exitCode: 0, verdict: "within-budget" };
+    const { events, io } = recorder();
+    expect(publish(forged, io)).toBe(1);
+    expect(events).toEqual([{ kind: "log", text: JSON.stringify(forged) }]);
+  });
+
+  it("prints the receipt and writes nothing when no receipt path is set, unset or empty", () => {
+    for (const path of [undefined, ""]) {
+      const receipt = receiptExiting(0);
+      const { events, io } = recorder();
+      expect(publish(receipt, { ...io, path })).toBe(0);
+      expect(events).toEqual([{ kind: "log", text: JSON.stringify(receipt) }]);
+    }
+  });
+
+  for (const code of [0, 1, 2] as const) {
+    it(`exits 3, never the receipt's own ${code}, when the receipt write fails, with the receipt already printed and the failure on stderr`, () => {
+      const receipt = receiptExiting(code);
+      const detail = "ENOENT: no such file or directory, open '/nonexistent/cap-receipt.json'";
+      const { events, io } = recorder(new Error(detail));
+      expect(publish(receipt, { ...io, path: "/nonexistent/cap-receipt.json" })).toBe(3);
+      expect(events.map(event => event.kind)).toEqual(["log", "error"]);
+      expect(events[0]?.text).toBe(JSON.stringify(receipt));
+      const diagnostic: unknown = JSON.parse(events[1]?.text ?? "null");
+      expect(diagnostic).toEqual({ benchmark: "inspector-cap-saturation", error: "receipt-write-failed", path: "/nonexistent/cap-receipt.json", detail });
+    });
+  }
+
+  it("reports a non-Error throw from the writer as text and still exits 3 after printing", () => {
+    const receipt = receiptExiting(0);
+    const { events, io } = recorder("disk quota exceeded");
+    expect(publish(receipt, { ...io, path: "/var/tmp/cap-receipt.json" })).toBe(3);
+    expect(events.map(event => event.kind)).toEqual(["log", "error"]);
+    const diagnostic: unknown = JSON.parse(events[1]?.text ?? "null");
+    expect(diagnostic).toEqual({ benchmark: "inspector-cap-saturation", error: "receipt-write-failed", path: "/var/tmp/cap-receipt.json", detail: "disk quota exceeded" });
+  });
+
+  it("with the real node:fs writer: the file holds the printed line, and an unwritable path exits 3 with the receipt on stdout", () => {
+    const directory = mkdtempSync(join(tmpdir(), "w21-cap-"));
+    try {
+      const receipt = receiptExiting(0);
+      const printed: string[] = [];
+      const errors: string[] = [];
+      const io = {
+        log: (line: string) => {
+          printed.push(line);
+        },
+        logError: (line: string) => {
+          errors.push(line);
+        },
+        writeFile: writeFileSync,
+      };
+      const target = join(directory, "receipt.json");
+      expect(publish(receipt, { ...io, path: target })).toBe(0);
+      expect(printed).toEqual([JSON.stringify(receipt)]);
+      expect(readFileSync(target, "utf8")).toBe(`${printed[0]}\n`);
+      const unwritable = join(directory, "missing", "receipt.json");
+      expect(publish(receipt, { ...io, path: unwritable })).toBe(3);
+      expect(printed).toEqual([JSON.stringify(receipt), JSON.stringify(receipt)]);
+      expect(errors).toHaveLength(1);
+      const diagnostic: unknown = JSON.parse(errors[0] ?? "null");
+      expect(diagnostic).toMatchObject({ benchmark: "inspector-cap-saturation", error: "receipt-write-failed", path: unwritable });
+    } finally {
+      rmSync(directory, { recursive: true, force: true });
+    }
   });
 });
