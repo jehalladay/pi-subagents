@@ -21,6 +21,7 @@ import { runWorkflow, validateScript, type WorkflowHost } from "../../workflow/r
 import { CapabilityError, CapabilityRegistry, type JsonValue, validatedCapabilityJson } from "../capability-registry.js";
 import { type ClaudeWorkflowHostOptions, createClaudeWorkflowHost } from "../claude-host.js";
 import { captureInvocationIdentity, type IdentityCaptureInput, type InvocationSnapshot, identityDigest, WORKFLOW_SCRIPT_SCHEMA_VERSION } from "../identity.js";
+import { scrubbedEnvironment } from "../process-env.js";
 import { registerNativeForgeGateStatus } from "../providers/forge.js";
 import { registerNativeFurnaceRunInspect } from "../providers/furnace.js";
 import { registerNativeHyperUnixFind } from "../providers/hyperunix.js";
@@ -460,7 +461,10 @@ export async function launchDetachedWorkflow(raw: DetachedLaunchRequest): Promis
   const boot: Boot = { contract: DETACHED_CONTRACT, request, owner, hostInstanceId: randomBytes(24).toString("hex"), pin, capture, sourcePins, socket: location.socket, socketBase: location.base, ...(localProviderTree ? { localProviderTree } : {}), inputDigest: identityDigest("invocation-input", request.input), snapshotDigest: identityDigest("invocation-snapshot", pin) };
   writePrivate(p.boot, boot);
   const bootDigest = hash(readPrivate(p.boot, 8 * DETACHED_MAX_FRAME_BYTES));
-  const env = { ...process.env }; delete env.NODE_OPTIONS; delete env.NODE_PATH;
+  // Allowlist, never subtraction: the detached host gets the named operational
+  // variables (src/workbench/process-env.ts) and no credential, whatever the
+  // operator's shell holds; it authenticates through the SDK's own store (wb-ksz, W19).
+  const env = scrubbedEnvironment(process.env);
   const child = spawn(process.execPath, [hostEntrypoint, "--serve", p.boot, bootDigest], { cwd: root, env, detached: true, stdio: "ignore", shell: false });
   let launchError: Error | undefined;
   child.on("error", error => { launchError = error; }); child.unref();
