@@ -11,9 +11,9 @@
  * The direct registry.invoke call with the same context is the oracle. A
  * surface may only NARROW the oracle's decision (docs/06 finite allowlist per
  * surface); a surface permitting what the oracle refuses is a widening defect.
- * Widenings are reported, never patched here: the one measured widening (a JSON
- * own "__proto__" key permitted by capability_invoke) is pinned as the known
- * widening of follow-up bead wb-8i1, whose fix flips the cell in its own commit.
+ * Widenings are reported, never patched here. The one measured widening (a JSON
+ * own "__proto__" key permitted by capability_invoke) was fixed by follow-up bead
+ * wb-8i1; its cell is now plain P1 parity and the known-widening list is empty.
  * Fixture providers only; no src change.
  */
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
@@ -150,7 +150,7 @@ const ROWS: readonly Row[] = [
   { name: "oversized input", id: OPEN, grants: [`invoke:${OPEN}`], input: () => ({ value: "x".repeat(300_000) }), expr: '{ value: "x".repeat(300000) }', oracle: { permitted: false, category: "validation" }, localText: ["claude-node", "detached-node", "claude-tool"] },
   { name: "over-deep input", id: OPEN, grants: [`invoke:${OPEN}`], input: () => deep(100), expr: '(() => { let v = { value: "x" }; for (let i = 0; i < 100; i++) v = { value: "x", next: v }; return v; })()', oracle: { permitted: false, category: "validation" }, localText: ["claude-node", "detached-node", "claude-tool"] },
   { name: "accessor-bearing input", id: OPEN, grants: [`invoke:${OPEN}`], input: accessor, skip: ACCESSOR_SKIP, oracle: { permitted: false, category: "validation" } },
-  { name: "prototype-key input", id: OPEN, grants: [`invoke:${OPEN}`], input: protoKey, oracle: { permitted: false, category: "validation" }, knownWidening: { "claude-tool": "wb-8i1" } },
+  { name: "prototype-key input", id: OPEN, grants: [`invoke:${OPEN}`], input: protoKey, oracle: { permitted: false, category: "validation" } },
   { name: "pre-cancelled signal", id: READ, grants: [`invoke:${READ}`, "fixture:read"], input: () => ({ value: "x" }), preCancelled: true, oracle: { permitted: false, category: "transport" }, localText: ["claude-tool"] },
   { name: "happy path: read with producer permission", id: READ, grants: [`invoke:${READ}`, "fixture:read"], input: () => ({ value: "x" }), expr: '{ value: "x" }', oracle: { permitted: true } },
   { name: "happy path: permission-free read", id: OPEN, grants: [`invoke:${OPEN}`], input: () => ({ value: "x" }), expr: '{ value: "x" }', oracle: { permitted: true } },
@@ -321,14 +321,13 @@ describe("P1: identical registry decision across surfaces", () => {
 });
 
 describe("P2: surface allowlists only narrow", () => {
-  it("has no cell where a surface permits and the oracle refuses, beyond the recorded known widening", () => {
+  it("has no cell where a surface permits and the oracle refuses, and records no known widening", () => {
     const widenings = ROWS.flatMap(row => ranSurfaces(row).filter(surface => outcomes.get(key(row, surface))?.permitted && !oracles.get(row.name)?.permitted).map(surface => `${row.name} on ${surface}`));
-    // Spelled out, so a new knownWidening entry can never silently absorb a new widening.
-    expect(KNOWN_WIDENINGS).toEqual([{ cell: "prototype-key input on claude-tool", bead: "wb-8i1" }]);
-    expect(widenings).toEqual(KNOWN_WIDENINGS.map(widening => widening.cell));
+    // Spelled out and empty since wb-8i1 landed the refusal: any future knownWidening entry or measured widening is red.
+    expect(KNOWN_WIDENINGS).toEqual([]);
+    expect(widenings).toEqual([]);
   });
-  it("pins the known widening wb-8i1: capability_invoke permits a JSON own __proto__ key that the oracle and both node hosts refuse", async () => {
-    // wb-8i1 flips this test to the oracle's refusal and deletes the row's knownWidening entry in the same commit.
+  it("pins the wb-8i1 refusal: capability_invoke refuses a JSON own __proto__ key exactly like the oracle and both node hosts", async () => {
     const row = ROWS.find(candidate => candidate.name === "prototype-key input")!;
     const refusal = { permitted: false, category: "validation", message: `Prototype pollution key at invoke(${OPEN}) input.__proto__.` };
     expect(oracles.get(row.name)).toMatchObject(refusal);
@@ -337,19 +336,37 @@ describe("P2: surface allowlists only narrow", () => {
     // The production channel carries the key: JSON text naming "__proto__" parses to an OWN data property.
     const wire = JSON.stringify({ capabilityId: OPEN, capabilityVersion: "1.0.0", input: row.input() });
     expect(wire).toBe(`{"capabilityId":"${OPEN}","capabilityVersion":"1.0.0","input":{"value":"x","__proto__":{"grants":["fixture:write"]}}}`);
-    // By reference (the matrix cell) and after the JSON round trip alike, the tool permits; zod's record parse drops
-    // the key, so the provider receives the stripped object and the planted grant never becomes authority.
+    // By reference (the matrix cell) and after the JSON round trip alike, the tool refuses with the registry text and
+    // the provider is never reached, so the planted grant never becomes authority.
     const { registry, recorded } = fixture();
     const client = await toolClient(registry, row.grants, ALL_FIXTURE_IDS, new AbortController().signal);
     const overWire = await callInvoke(client, JSON.parse(wire) as Record<string, unknown>);
-    const byReference = outcomes.get(key(row, "claude-tool"))!;
-    expect(byReference.permitted).toBe(true);
-    expect(overWire.kind).toBe("returned");
-    for (const received of [byReference.recorded, recorded]) {
-      expect(received).toHaveLength(1);
-      expect(JSON.stringify(received[0].input)).toBe('{"value":"x"}');
-      expect([...received[0].context.grants]).toEqual([`invoke:${OPEN}`]);
-    }
+    expect(outcomes.get(key(row, "claude-tool"))).toMatchObject(refusal);
+    expect(overWire).toEqual({ kind: "rejected", category: "validation", diagnostic: refusal.message });
+    expect(outcomes.get(key(row, "claude-tool"))?.recorded).toHaveLength(0);
+    expect(recorded).toHaveLength(0);
+  });
+  it("pins the matrix row set by name, so deleting any one row (and its oracle test and P1 cells) is red", () => {
+    expect(ROWS.map(row => row.name)).toEqual([
+      "unknown capability id",
+      "invoke grant absent",
+      "producer permission absent",
+      "discover and inspect grants never confer invoke",
+      "discover grant never confers a producer permission",
+      "producer permission present without invoke grant (recorded narrowing)",
+      "exposure allowlist miss (tool surface only)",
+      "schema-invalid input",
+      "missing required field",
+      "unknown field under a strict schema",
+      "oversized input",
+      "over-deep input",
+      "accessor-bearing input",
+      "prototype-key input",
+      "pre-cancelled signal",
+      "happy path: read with producer permission",
+      "happy path: permission-free read",
+      "happy path: write with producer permission",
+    ]);
   });
   it("pins the measured narrowing: the tool alone requires invoke:<id> even when producer permissions are held", () => {
     const row = ROWS.find(candidate => candidate.name.startsWith("producer permission present without invoke grant"))!;
