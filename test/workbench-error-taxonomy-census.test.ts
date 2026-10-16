@@ -10,14 +10,32 @@
  *
  * Cases embodying the categories exist, but nothing bound the eight categories or the never-silent-null
  * clause to them. This census does: a frozen table of nine rows, each pinned to landed cases by file and
- * verbatim title. A pinned case that is renamed, deleted, duplicated, commented out, or disabled (skip, todo,
- * fails, only, skipIf, runIf, or an enclosing disabled describe) fails the census naming the category.
+ * verbatim title.
  *
- * Truth label: "fixture pass" only. The census reads the pinned files as text; it never executes a pinned
- * case and it adds no behaviour test for a category.
+ * Scanner (parse-aware, 00:31Z title-census rule and the 02:17Z floor reading): the pinned files are parsed
+ * with the TypeScript compiler API, never matched as text. A pin holds only when the exact title is the
+ * first argument of exactly one registration call that is reached unconditionally: the call is an it() or
+ * test() whose modifiers are run-class only (concurrent, sequential, runIf(true), skipIf(false)), carries no
+ * options object that skips, todos, fails or focuses it, never reads ctx.skip, and every enclosing function
+ * is the callback of a describe() or suite() that is itself live. Comments, string and template decoys are
+ * not calls and never count. A registration through an alias, a wrapper function, a branch, a loop or a
+ * describe.each is refused as indirect rather than assumed to run. Disclosed limits: an identifier named
+ * it/test/describe/suite is trusted to be the vitest binding unless the file imports it under another name;
+ * a callback that shadows the first parameter name is not tracked; the scanner never executes a pinned case.
+ *
+ * Tier-truth: every pinned file must be run by the default gate, which means matched by the include globs and
+ * absent from the exclude list of the SAME vitest config module the gate loads, so a pinned file parked in
+ * the exclude list turns the census red even though the file is untouched. Docs-exactness: the whole
+ * "## Error taxonomy" and "## Implemented node error boundary" section bodies are pinned line for line, so a
+ * weakened qualifier or an added sentence turns the census red.
+ *
+ * Truth label: "fixture pass" only. The census reads the pinned files as text and parses them; it never
+ * executes a pinned case and it adds no behaviour test for a category.
  */
 import { readFileSync } from "node:fs";
+import ts from "typescript";
 import { describe, expect, it } from "vitest";
+import config from "../vitest.config.js";
 
 type Tier = "default-gate";
 
@@ -175,71 +193,207 @@ const ROWS: readonly TaxonomyRow[] = Object.freeze([
 const readRepoText = (path: string): string => readFileSync(new URL(`../${path}`, import.meta.url), "utf8");
 
 interface CaseScan {
-  /** Occurrences of the exact title registered by a plain it()/test() call. */
+  /** Registrations of the exact title that are plain, unconditional and run. */
   readonly live: number;
-  /** Occurrences that are disabled, each named by its modifier (".skip", "describe.todo", ...). */
+  /** Registrations that are disabled or indirect, each named by what disables it (".skip", "describe.todo", ...). */
   readonly disabled: readonly string[];
 }
 
-const CASE_CALL = /^[ \t]*(?:it|test)((?:\.[A-Za-z]+(?:\([^)\n]*\))?)*)\([ \t\r\n]*(["'`])/gm;
-const DESCRIBE_CALL = /^[ \t]*describe((?:\.[A-Za-z]+)*)\(/;
+const CASE_ROOTS: ReadonlySet<string> = new Set(["it", "test"]);
+const SUITE_ROOTS: ReadonlySet<string> = new Set(["describe", "suite"]);
+/** Option keys that stop a case or suite from running as a plain pass. */
+const DISABLING_OPTION_KEYS: ReadonlySet<string> = new Set(["skip", "todo", "fails", "only"]);
 
-/** Blank every line that sits in a block comment so a commented-out case is not counted. Line indexes are preserved. */
-const withoutBlockComments = (source: string): string => {
-  let inBlock = false;
-  return source
-    .split("\n")
-    .map(line => {
-      if (inBlock) {
-        if (line.includes("*/")) inBlock = false;
-        return "";
-      }
-      const trimmed = line.trimStart();
-      if (trimmed.startsWith("/*")) {
-        if (!trimmed.includes("*/")) inBlock = true;
-        return "";
-      }
-      return line;
-    })
-    .join("\n");
+const parseSource = (source: string): ts.SourceFile =>
+  ts.createSourceFile("pinned.test.ts", source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+
+interface Modifier {
+  readonly name: string;
+  /** Present for a call modifier such as skipIf(cond); absent for a property modifier such as skip. */
+  readonly args: readonly ts.Expression[] | undefined;
+}
+
+interface Callee {
+  readonly root: string;
+  readonly modifiers: readonly Modifier[];
+}
+
+/** Break `it.skipIf(cond).concurrent` style callees into a root identifier and its modifier chain; null when not that shape. */
+const unwrapCallee = (expression: ts.Expression): Callee | null => {
+  const modifiers: Modifier[] = [];
+  let node: ts.Expression = expression;
+  for (;;) {
+    if (ts.isCallExpression(node)) {
+      if (!ts.isPropertyAccessExpression(node.expression)) return null;
+      modifiers.unshift({ name: node.expression.name.text, args: [...node.arguments] });
+      node = node.expression.expression;
+    } else if (ts.isPropertyAccessExpression(node)) {
+      modifiers.unshift({ name: node.name.text, args: undefined });
+      node = node.expression;
+    } else if (ts.isIdentifier(node)) {
+      return { root: node.text, modifiers };
+    } else {
+      return null;
+    }
+  }
 };
 
-const indentOf = (line: string): number => line.length - line.trimStart().length;
+/** Local name -> vitest name for `import { it as alias } from "vitest"`, so an honest alias import is still recognised. */
+const vitestAliases = (sourceFile: ts.SourceFile): ReadonlyMap<string, string> => {
+  const aliases = new Map<string, string>();
+  for (const statement of sourceFile.statements) {
+    if (!ts.isImportDeclaration(statement) || !ts.isStringLiteral(statement.moduleSpecifier)) continue;
+    if (statement.moduleSpecifier.text !== "vitest") continue;
+    const bindings = statement.importClause?.namedBindings;
+    if (bindings === undefined || !ts.isNamedImports(bindings)) continue;
+    for (const element of bindings.elements) aliases.set(element.name.text, element.propertyName?.text ?? element.name.text);
+  }
+  return aliases;
+};
 
-/** Modifiers of every enclosing describe, found by walking up to each shallower describe line. */
-const enclosingDescribeModifiers = (lines: readonly string[], lineIndex: number): readonly string[] => {
+const modifiersText = (modifiers: readonly Modifier[], sourceFile: ts.SourceFile): string =>
+  modifiers
+    .map(modifier =>
+      modifier.args === undefined ? `.${modifier.name}` : `.${modifier.name}(${modifier.args.map(arg => arg.getText(sourceFile)).join(", ")})`,
+    )
+    .join("");
+
+/** Run-class modifiers keep a case running; everything else (skip, todo, fails, only, each, unknown) disables or redirects it. */
+const modifierDisables = (modifier: Modifier): boolean => {
+  if (modifier.name === "concurrent" || modifier.name === "sequential" || modifier.name === "shuffle") return modifier.args !== undefined;
+  const only = modifier.args?.length === 1 ? modifier.args[0] : undefined;
+  if (modifier.name === "runIf") return only?.kind !== ts.SyntaxKind.TrueKeyword;
+  if (modifier.name === "skipIf") return only?.kind !== ts.SyntaxKind.FalseKeyword;
+  return true;
+};
+
+/** Option-object keys that disable a registration; a computed key or a spread cannot be vouched for and also counts. */
+const optionDisables = (call: ts.CallExpression): readonly string[] => {
   const found: string[] = [];
-  let threshold = indentOf(lines[lineIndex] ?? "");
-  for (let index = lineIndex - 1; index >= 0 && threshold > 0; index -= 1) {
-    const line = lines[index] ?? "";
-    if (line.trim() === "" || indentOf(line) >= threshold) continue;
-    threshold = indentOf(line);
-    const match = DESCRIBE_CALL.exec(line);
-    if (match !== null && (match[1] ?? "") !== "") found.push(`describe${match[1]}`);
+  for (const argument of call.arguments) {
+    if (!ts.isObjectLiteralExpression(argument)) continue;
+    for (const property of argument.properties) {
+      if (ts.isSpreadAssignment(property)) {
+        found.push("{...spread}");
+        continue;
+      }
+      const name = property.name;
+      if (name === undefined || ts.isComputedPropertyName(name)) {
+        found.push("{computed}");
+        continue;
+      }
+      const key = ts.isIdentifier(name) || ts.isStringLiteral(name) ? name.text : "";
+      if (!DISABLING_OPTION_KEYS.has(key)) continue;
+      const falseValue = ts.isPropertyAssignment(property) && property.initializer.kind === ts.SyntaxKind.FalseKeyword;
+      if (!falseValue) found.push(`{${key}}`);
+    }
   }
   return found;
 };
 
+const isFunctionLike = (node: ts.Node): node is ts.ArrowFunction | ts.FunctionExpression => ts.isArrowFunction(node) || ts.isFunctionExpression(node);
+
+/** The case callback reads its context's skip: ctx.skip(), a destructured skip, or `const { skip } = ctx`. */
+const callbackSkips = (callback: ts.ArrowFunction | ts.FunctionExpression): boolean => {
+  const parameter = callback.parameters[0]?.name;
+  if (parameter === undefined) return false;
+  if (ts.isObjectBindingPattern(parameter)) {
+    return parameter.elements.some(element => (element.propertyName ?? element.name).getText() === "skip");
+  }
+  if (!ts.isIdentifier(parameter)) return false;
+  let skips = false;
+  const visit = (node: ts.Node): void => {
+    if (skips) return;
+    if (ts.isPropertyAccessExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === parameter.text && node.name.text === "skip") {
+      skips = true;
+      return;
+    }
+    if (
+      ts.isVariableDeclaration(node) &&
+      ts.isObjectBindingPattern(node.name) &&
+      node.initializer !== undefined &&
+      ts.isIdentifier(node.initializer) &&
+      node.initializer.text === parameter.text &&
+      node.name.elements.some(element => (element.propertyName ?? element.name).getText() === "skip")
+    ) {
+      skips = true;
+      return;
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(callback.body);
+  return skips;
+};
+
+const stringArgument = (call: ts.CallExpression): string | undefined => {
+  const first = call.arguments[0];
+  return first !== undefined && (ts.isStringLiteral(first) || ts.isNoSubstitutionTemplateLiteral(first)) ? first.text : undefined;
+};
+
+/** Reasons the registration is not a plain, running case; empty means the call registers a case that runs. */
+const caseDisables = (call: ts.CallExpression, sourceFile: ts.SourceFile, aliases: ReadonlyMap<string, string>): readonly string[] => {
+  const callee = unwrapCallee(call.expression);
+  const root = callee === null ? undefined : (aliases.get(callee.root) ?? callee.root);
+  if (callee === null || root === undefined || !CASE_ROOTS.has(root)) {
+    return [`indirect registration (${call.expression.getText(sourceFile)})`];
+  }
+  const reasons: string[] = [];
+  const disabling = callee.modifiers.filter(modifierDisables);
+  if (disabling.length > 0) reasons.push(`${root}${modifiersText(disabling, sourceFile)}`);
+  reasons.push(...optionDisables(call).map(key => `${root} options ${key}`));
+  const callback = call.arguments.find(isFunctionLike);
+  if (callback !== undefined && callbackSkips(callback)) reasons.push(`${root} ctx.skip`);
+  return reasons;
+};
+
+/** Walk up from the case: only suite callbacks and plain statements are allowed between the case and the file. */
+const enclosureDisables = (call: ts.CallExpression, sourceFile: ts.SourceFile, aliases: ReadonlyMap<string, string>): readonly string[] => {
+  const reasons: string[] = [];
+  let current: ts.Node = call.parent;
+  while (!ts.isSourceFile(current)) {
+    if (ts.isExpressionStatement(current) || ts.isBlock(current)) {
+      current = current.parent;
+      continue;
+    }
+    if (isFunctionLike(current)) {
+      const owner: ts.Node = current.parent;
+      const callee = ts.isCallExpression(owner) && owner.arguments.some(argument => argument === current) ? unwrapCallee(owner.expression) : null;
+      const root = callee === null ? undefined : (aliases.get(callee.root) ?? callee.root);
+      if (!ts.isCallExpression(owner) || callee === null || root === undefined || !SUITE_ROOTS.has(root)) {
+        reasons.push("indirect registration (enclosed by a function that is not a describe/suite callback)");
+        break;
+      }
+      const disabling = callee.modifiers.filter(modifierDisables);
+      if (disabling.length > 0) reasons.push(`${root}${modifiersText(disabling, sourceFile)}`);
+      reasons.push(...optionDisables(owner).map(key => `${root} options ${key}`));
+      current = owner.parent;
+      continue;
+    }
+    reasons.push(`conditional or indirect registration (${ts.SyntaxKind[current.kind]})`);
+    break;
+  }
+  return reasons;
+};
+
 /**
- * Count the registrations of one exact case title in a test file. A registration is an it()/test() call at the
- * start of a line whose first argument is the title as a complete string literal. A modifier on the call, or on
- * any enclosing describe, makes the occurrence disabled. Line and block comments are not registrations.
+ * Count the registrations of one exact case title in a test file. A registration is a call whose first argument is
+ * the title as a complete string literal and which carries a callback. Everything the call is, and everything it
+ * sits in, is read from the syntax tree.
  */
 const scanCases = (source: string, title: string): CaseScan => {
-  const code = withoutBlockComments(source);
-  const lines = code.split("\n");
+  const sourceFile = parseSource(source);
+  const aliases = vitestAliases(sourceFile);
   let live = 0;
   const disabled: string[] = [];
-  for (const match of code.matchAll(CASE_CALL)) {
-    const quote = match[2] ?? "";
-    const rest = code.slice((match.index ?? 0) + match[0].length);
-    if (!rest.startsWith(`${title}${quote}`)) continue;
-    const lineIndex = code.slice(0, match.index ?? 0).split("\n").length - 1;
-    const modifier = match[1] ?? "";
-    const enclosing = enclosingDescribeModifiers(lines, lineIndex);
-    if (modifier === "" && enclosing.length === 0) live += 1;
-    else disabled.push(...(modifier === "" ? [] : [modifier]), ...enclosing);
-  }
+  const visit = (node: ts.Node): void => {
+    if (ts.isCallExpression(node) && stringArgument(node) === title && node.arguments.some(isFunctionLike)) {
+      const reasons = [...caseDisables(node, sourceFile, aliases), ...enclosureDisables(node, sourceFile, aliases)];
+      if (reasons.length === 0) live += 1;
+      else disabled.push(reasons.join(", "));
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(sourceFile);
   return { live, disabled };
 };
 
@@ -450,5 +604,393 @@ describe("docs/05 Error taxonomy census: scanner and row rules on synthetic sour
     const unpinned: TaxonomyRow = { ...demo, category: "y", status: "unpinned", reason: "no typed case yet", pins: [] };
     const read = () => wrap(caseAt("it"));
     expect(passedCategories([demo, unpinned], read)).toEqual(["x"]);
+  });
+});
+
+/** Where one pinned case sits in a real file, found from the syntax tree, for building mutants of that file. */
+interface CaseSite {
+  readonly statementStart: number;
+  readonly statementEnd: number;
+  readonly statementText: string;
+  readonly indent: string;
+  readonly callbackStart: number;
+  readonly callbackEnd: number;
+  readonly callbackText: string;
+  readonly titleEnd: number;
+}
+
+const locateCase = (source: string, title: string): CaseSite => {
+  const sourceFile = parseSource(source);
+  let site: CaseSite | undefined;
+  const visit = (node: ts.Node): void => {
+    if (site === undefined && ts.isCallExpression(node) && stringArgument(node) === title && ts.isExpressionStatement(node.parent)) {
+      const callback = node.arguments.find(isFunctionLike);
+      const first = node.arguments[0];
+      if (callback !== undefined && first !== undefined) {
+        const statementStart = node.parent.getStart(sourceFile);
+        const lineStart = source.lastIndexOf("\n", statementStart - 1) + 1;
+        site = {
+          statementStart,
+          statementEnd: node.parent.getEnd(),
+          statementText: node.parent.getText(sourceFile),
+          indent: source.slice(lineStart, statementStart),
+          callbackStart: callback.getStart(sourceFile),
+          callbackEnd: callback.getEnd(),
+          callbackText: callback.getText(sourceFile),
+          titleEnd: first.getEnd(),
+        };
+      }
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(sourceFile);
+  if (site === undefined) throw new Error(`no statement-level registration of "${title}"`);
+  return site;
+};
+
+const replaceStatement = (source: string, site: CaseSite, replacement: string): string =>
+  `${source.slice(0, site.statementStart)}${replacement}${source.slice(site.statementEnd)}`;
+
+const withCallbackReplaced = (source: string, site: CaseSite, callback: string): string =>
+  replaceStatement(source, site, `${site.statementText.slice(0, site.callbackStart - site.statementStart)}${callback}${site.statementText.slice(site.callbackEnd - site.statementStart)}`);
+
+const withOption = (source: string, site: CaseSite, option: string): string =>
+  replaceStatement(
+    source,
+    site,
+    `${site.statementText.slice(0, site.titleEnd - site.statementStart)}, ${option}${site.statementText.slice(site.titleEnd - site.statementStart)}`,
+  );
+
+const wrapInSuite = (source: string, site: CaseSite, opening: string): string =>
+  replaceStatement(source, site, `${opening}\n${site.indent}  ${site.statementText}\n${site.indent}});`);
+
+const retarget = (text: string, head: string): string => text.replace(/^(it|test)\(/, head);
+
+interface SkipMode {
+  readonly id: string;
+  readonly mode: string;
+  readonly mutate: (source: string, site: CaseSite) => string;
+}
+
+/** A disabled case must turn the census red. Controls C1-C6 are the delivered text-scanner kills; S1-S13 are the gate-measured silent modes. */
+const DISABLE_MODES: readonly SkipMode[] = [
+  { id: "C1", mode: "it.skip", mutate: (source, site) => replaceStatement(source, site, retarget(site.statementText, "$1.skip(")) },
+  { id: "C3", mode: "line comment-out", mutate: (source, site) => replaceStatement(source, site, site.statementText.split("\n").map(line => `// ${line}`).join("\n")) },
+  { id: "C4", mode: "line-start block comment", mutate: (source, site) => replaceStatement(source, site, `/*\n${site.statementText}\n*/`) },
+  { id: "C5", mode: "describe.skip wrapper", mutate: (source, site) => wrapInSuite(source, site, `describe.skip("wrapper", () => {`) },
+  { id: "C6", mode: "it.skipIf(true)", mutate: (source, site) => replaceStatement(source, site, retarget(site.statementText, "$1.skipIf(true)(")) },
+  { id: "S1", mode: "block comment opened mid-line", mutate: (source, site) => replaceStatement(source, site, `void 0; /* ${site.statementText} */`) },
+  { id: "S2", mode: "options {skip: true}", mutate: (source, site) => withOption(source, site, "{ skip: true }") },
+  { id: "S3", mode: "options {todo: true}", mutate: (source, site) => withOption(source, site, "{ todo: true }") },
+  { id: "S4", mode: "options {fails: true}", mutate: (source, site) => withOption(source, site, "{ fails: true }") },
+  { id: "S5", mode: "describe options {skip: true}", mutate: (source, site) => wrapInSuite(source, site, `describe("wrapper", { skip: true }, () => {`) },
+  { id: "S6", mode: "suite.skip alias", mutate: (source, site) => wrapInSuite(source, site, `suite.skip("wrapper", () => {`) },
+  {
+    id: "S7",
+    mode: "aliased describe",
+    mutate: (source, site) => wrapInSuite(source, site, `const parked = describe.skip;\n${site.indent}parked("wrapper", () => {`),
+  },
+  {
+    id: "S8",
+    mode: "ctx.skip()",
+    mutate: (source, site) => withCallbackReplaced(source, site, `(ctx: { skip: () => void }) => {\n    ctx.skip();\n    return (${site.callbackText})();\n  }`),
+  },
+  {
+    id: "S9",
+    mode: "destructured skip()",
+    mutate: (source, site) => withCallbackReplaced(source, site, `({ skip }: { skip: () => void }) => {\n    skip();\n    return (${site.callbackText})();\n  }`),
+  },
+  { id: "S10", mode: "conditional registration", mutate: (source, site) => replaceStatement(source, site, `if (process.env.TAXONOMY_CENSUS_NEVER === "1") {\n${site.indent}  ${site.statementText}\n${site.indent}}`) },
+  { id: "S11", mode: "never-called wrapper", mutate: (source, site) => replaceStatement(source, site, `const neverCalled = () => {\n${site.indent}  ${site.statementText}\n${site.indent}};\n${site.indent}void neverCalled;`) },
+  {
+    id: "S12",
+    mode: "case deleted, title kept as a template-literal decoy",
+    mutate: (source, site) => replaceStatement(source, site, `const decoy = \`it("${site.statementText.slice(site.statementText.indexOf("(") + 2, site.titleEnd - site.statementStart - 1)}", () => {})\`;\n${site.indent}void decoy;`),
+  },
+  {
+    id: "S13",
+    mode: "same-indent describe.skip wrapper",
+    mutate: (source, site) => replaceStatement(source, site, `describe.skip("wrapper", () => {\n${site.indent}${site.statementText}\n${site.indent}});`),
+  },
+  {
+    id: "S14",
+    mode: "const { skip } = ctx",
+    mutate: (source, site) =>
+      withCallbackReplaced(source, site, `(ctx: { skip: () => void }) => {\n    const { skip } = ctx;\n    skip();\n    return (${site.callbackText})();\n  }`),
+  },
+  { id: "S15", mode: "it.each indirection", mutate: (source, site) => replaceStatement(source, site, retarget(site.statementText, "$1.each([1])(")) },
+  { id: "S16", mode: "loop registration", mutate: (source, site) => replaceStatement(source, site, `for (const once of [1]) {\n${site.indent}  void once;\n${site.indent}  ${site.statementText}\n${site.indent}}`) },
+];
+
+/** Run-class modifiers still run the case, so the census must stay green for them (precision, safe direction). */
+const RUN_MODES: readonly SkipMode[] = [
+  { id: "P1", mode: "it.runIf(true)", mutate: (source, site) => replaceStatement(source, site, retarget(site.statementText, "$1.runIf(true)(")) },
+  { id: "P2", mode: "it.concurrent", mutate: (source, site) => replaceStatement(source, site, retarget(site.statementText, "$1.concurrent(")) },
+];
+
+describe("docs/05 Error taxonomy census: every census-silent skip mode goes red on the real pinned files", () => {
+  for (const row of ROWS) {
+    for (const pin of row.pins) {
+      for (const mode of DISABLE_MODES) {
+        it(`${tag(row)}: ${mode.id} ${mode.mode} of "${pin.title}"`, () => {
+          const original = readRepoText(pin.file);
+          const mutated = mode.mutate(original, locateCase(original, pin.title));
+          expect(mutated, "the mutant must change the pinned file").not.toBe(original);
+          const problems = auditRow(row, path => (path === pin.file ? mutated : readRepoText(path)));
+          expect(problems.length, `${mode.id} ${mode.mode} was census-silent`).toBeGreaterThan(0);
+          expect(problems[0]).toContain(`category (${row.category})`);
+        });
+      }
+      for (const mode of RUN_MODES) {
+        it(`${tag(row)}: ${mode.id} ${mode.mode} still runs, so the row holds for "${pin.title}"`, () => {
+          const original = readRepoText(pin.file);
+          const mutated = mode.mutate(original, locateCase(original, pin.title));
+          expect(mutated).not.toBe(original);
+          expect(auditRow(row, path => (path === pin.file ? mutated : readRepoText(path)))).toEqual([]);
+        });
+      }
+    }
+  }
+});
+
+/** The default-gate tier, read from the vitest config module the gate itself loads. */
+interface GateConfigShape {
+  readonly test?: { readonly include?: readonly string[]; readonly exclude?: readonly string[] };
+}
+
+const globToRegExp = (glob: string): RegExp => {
+  let pattern = "";
+  for (let index = 0; index < glob.length; index += 1) {
+    const char = glob[index] ?? "";
+    if (glob.startsWith("**/", index)) {
+      pattern += "(?:.*/)?";
+      index += 2;
+    } else if (glob.startsWith("**", index)) {
+      pattern += ".*";
+      index += 1;
+    } else if (char === "*") pattern += "[^/]*";
+    else if (char === "?") pattern += "[^/]";
+    else pattern += escapeRegExp(char);
+  }
+  return new RegExp(`^${pattern}$`);
+};
+
+const matchesAny = (globs: readonly string[], file: string): boolean => globs.some(glob => globToRegExp(glob).test(file));
+
+/** Problems proving each default-gate pinned file is run by the config: matched by include, absent from exclude. */
+const auditTier = (rows: readonly TaxonomyRow[], gate: GateConfigShape): readonly string[] => {
+  const include = gate.test?.include ?? [];
+  const exclude = gate.test?.exclude ?? [];
+  const problems: string[] = [];
+  for (const row of rows) {
+    for (const file of new Set(row.pins.map(pin => pin.file))) {
+      if (!matchesAny(include, file)) problems.push(`${tag(row)}: ${file} is not matched by the vitest include globs, so the default gate never runs it`);
+      if (matchesAny(exclude, file)) problems.push(`${tag(row)}: ${file} is in the vitest exclude list, so the default gate never runs it`);
+    }
+  }
+  return problems;
+};
+
+describe("docs/05 Error taxonomy census: tier-truth against the vitest config the gate loads", () => {
+  const gate = config as unknown as GateConfigShape;
+
+  it("runs every default-gate pinned file and the census file itself under the real config", () => {
+    expect(auditTier(ROWS, gate)).toEqual([]);
+    expect(matchesAny(gate.test?.include ?? [], "test/workbench-error-taxonomy-census.test.ts")).toBe(true);
+    expect(matchesAny(gate.test?.exclude ?? [], "test/workbench-error-taxonomy-census.test.ts")).toBe(false);
+  });
+
+  it("goes red naming the category when a pinned file is parked in the exclude list", () => {
+    const control = ROWS.find(row => row.category === "c");
+    expect(control).toBeDefined();
+    const parked: GateConfigShape = { test: { include: gate.test?.include, exclude: [...(gate.test?.exclude ?? []), "test/workbench-control.test.ts"] } };
+    const problems = auditTier(ROWS, parked);
+    expect(problems).toHaveLength(1);
+    expect(problems[0]).toContain('category (c) "permission denied"');
+    expect(problems[0]).toContain("exclude list");
+  });
+
+  it("goes red when a glob in the exclude list covers a pinned file, and when include no longer matches it", () => {
+    const globbed: GateConfigShape = { test: { include: gate.test?.include, exclude: ["test/workbench-control*.test.ts"] } };
+    expect(auditTier(ROWS, globbed).some(problem => problem.includes("category (c)"))).toBe(true);
+    const narrowed: GateConfigShape = { test: { include: ["test/workflow-*.test.ts"], exclude: [] } };
+    expect(auditTier(ROWS, narrowed).some(problem => problem.includes("not matched by the vitest include"))).toBe(true);
+  });
+
+  it("reads the real exclude list as exact files, so the glob matcher agrees with the config", () => {
+    for (const excluded of gate.test?.exclude ?? []) expect(matchesAny(gate.test?.include ?? [], excluded)).toBe(true);
+    expect(matchesAny(["test/**/*.test.ts"], "test/a/b.test.ts")).toBe(true);
+    expect(matchesAny(["test/**/*.test.ts"], "src/a.test.ts")).toBe(false);
+  });
+});
+
+const sectionBody = (doc: string, heading: string): readonly string[] | null => {
+  const lines = doc.split("\n");
+  const at = lines.indexOf(heading);
+  if (at === -1) return null;
+  const body: string[] = [];
+  for (const line of lines.slice(at + 1)) {
+    if (line.startsWith("## ")) break;
+    if (line.trim() !== "") body.push(line);
+  }
+  return body;
+};
+
+const TAXONOMY_HEADING = "## Error taxonomy";
+const BOUNDARY_HEADING = "## Implemented node error boundary";
+
+const TAXONOMY_SECTION: readonly string[] = [`${TAXONOMY_PARAGRAPH} Legacy agent() null failure semantics may remain at script boundary, with full detail in observer.`];
+
+const BOUNDARY_SECTION: readonly string[] = [
+  "The host now transports a typed `CapabilityError` with its category across worker RPC. Trusted scripts may identify that error in their own realm; fatal authorization, validation and uncertain-effect failures are not converted to ordinary null item failures by parallel composition. Native domain outcomes remain returned JSON values. Node options remain display `label` and `phase`; provider deadlines are host policy, not arbitrary script overrides.",
+];
+
+/** Section-bounded slice equality: heading exact and present once, body lines equal to the frozen lines. */
+const auditSection = (doc: string, heading: string, expected: readonly string[]): readonly string[] => {
+  const occurrences = doc.split("\n").filter(line => line === heading).length;
+  if (occurrences !== 1) return [`docs/05 heading "${heading}" occurs ${occurrences} times, expected exactly once`];
+  const body = sectionBody(doc, heading) ?? [];
+  if (body.length === expected.length && body.every((line, index) => line === expected[index])) return [];
+  return [`docs/05 section "${heading}" body changed; re-pin the census`];
+};
+
+describe("docs/05 Error taxonomy census: section-bounded docs exactness", () => {
+  const doc05 = readRepoText(DOC_05);
+
+  it("holds both section bodies exactly, heading included", () => {
+    expect(auditSection(doc05, TAXONOMY_HEADING, TAXONOMY_SECTION)).toEqual([]);
+    expect(auditSection(doc05, BOUNDARY_HEADING, BOUNDARY_SECTION)).toEqual([]);
+  });
+
+  const mutants: readonly { readonly id: string; readonly heading: string; readonly expected: readonly string[]; readonly mutate: (doc: string) => string }[] = [
+    {
+      id: "D1 ninth category sentence appended after the clause",
+      heading: TAXONOMY_HEADING,
+      expected: TAXONOMY_SECTION,
+      mutate: doc => doc.replace("do not silently return null for every failure.", "do not silently return null for every failure. (i) partial result."),
+    },
+    {
+      id: "D2 trailing legacy-agent qualifier weakened",
+      heading: TAXONOMY_HEADING,
+      expected: TAXONOMY_SECTION,
+      mutate: doc => doc.replace("may remain at script boundary", "may remain at every boundary"),
+    },
+    {
+      id: "D3 new paragraph inside the section",
+      heading: TAXONOMY_HEADING,
+      expected: TAXONOMY_SECTION,
+      mutate: doc => doc.replace(`${TAXONOMY_SECTION[0] ?? ""}\n`, `${TAXONOMY_SECTION[0] ?? ""}\n\nNulls are fine for most failures.\n`),
+    },
+    {
+      id: "D4 new bullet inside the section",
+      heading: TAXONOMY_HEADING,
+      expected: TAXONOMY_SECTION,
+      mutate: doc => doc.replace(`${TAXONOMY_SECTION[0] ?? ""}\n`, `${TAXONOMY_SECTION[0] ?? ""}\n\n- null is acceptable for stale reads\n`),
+    },
+    {
+      id: "D5 heading retitled",
+      heading: TAXONOMY_HEADING,
+      expected: TAXONOMY_SECTION,
+      mutate: doc => doc.replace(TAXONOMY_HEADING, "## Error taxonomy (superseded)"),
+    },
+    {
+      id: "D6 boundary section weakened",
+      heading: BOUNDARY_HEADING,
+      expected: BOUNDARY_SECTION,
+      mutate: doc => doc.replace("are not converted to ordinary null item failures", "may be converted to ordinary null item failures"),
+    },
+  ];
+
+  for (const mutant of mutants) {
+    it(`goes red for ${mutant.id}`, () => {
+      const mutated = mutant.mutate(doc05);
+      expect(mutated, "the mutant must change docs/05").not.toBe(doc05);
+      const problems = auditSection(mutated, mutant.heading, mutant.expected);
+      expect(problems).toHaveLength(1);
+      expect(problems[0]).toContain(mutant.heading);
+    });
+  }
+
+  it("is bounded by the next level-two heading, so a change in a neighbouring section does not move the pin", () => {
+    const neighbour = doc05.replace("node:vm is a language convenience", "node:vm is a language convenience (edited)");
+    expect(neighbour).not.toBe(doc05);
+    expect(auditSection(neighbour, TAXONOMY_HEADING, TAXONOMY_SECTION)).toEqual([]);
+  });
+});
+
+describe("docs/05 Error taxonomy census: parse-aware scanner on synthetic sources", () => {
+  const TITLE = "marks a replayed read as stale";
+  const body = "() => {\n    expect(1).toBe(1);\n  }";
+  const demo: TaxonomyRow = {
+    category: "x",
+    label: "demo",
+    quote: "(x) demo",
+    tier: "default-gate",
+    status: "pinned",
+    pins: [{ file: "fake.test.ts", title: TITLE }],
+  };
+  const audit = (source: string): readonly string[] => auditRow(demo, () => source);
+  const suite = (inner: string, header = 'describe("suite", () => {'): string => `${header}\n${inner}\n});\n`;
+
+  it("counts a registration that reads like ordinary code and is reached unconditionally", () => {
+    expect(audit(suite(`  it("${TITLE}", ${body});`))).toEqual([]);
+    expect(audit(suite(`  it.concurrent("${TITLE}", ${body});`))).toEqual([]);
+    expect(audit(suite(`  it.runIf(true)("${TITLE}", ${body});`))).toEqual([]);
+    expect(audit(suite(`  it.skipIf(false)("${TITLE}", ${body});`))).toEqual([]);
+    expect(audit(suite(`  it("${TITLE}", { skip: false }, ${body});`))).toEqual([]);
+    expect(audit(suite(`  it("${TITLE}", async ({ expect }) => {\n    expect(1).toBe(1);\n  });`))).toEqual([]);
+    expect(audit(suite(`  it("${TITLE}", ${body});`, 'describe.concurrent("suite", () => {'))).toEqual([]);
+    expect(audit(`import { it as spec, describe as group } from "vitest";\ngroup("s", () => {\n  spec("${TITLE}", ${body});\n});\n`)).toEqual([]);
+  });
+
+  it("is not fooled by strings, template literals, comments and a title used as an ordinary argument", () => {
+    for (const decoy of [
+      `const decoy = \`it("${TITLE}", () => {})\`;`,
+      `const decoy = 'it("${TITLE}", () => {})';`,
+      `expect(titles).toContain("${TITLE}");`,
+      `/* it("${TITLE}", () => {}); */ void 0;`,
+      `void 0; /* it("${TITLE}", () => {});\n*/`,
+      `// it("${TITLE}", () => {});`,
+    ]) {
+      const problems = audit(suite(`  ${decoy}`));
+      expect(problems, decoy).toHaveLength(1);
+      expect(problems[0], decoy).toContain("occurs 0 times");
+    }
+  });
+
+  it("refuses every disabling option, ctx.skip form, alias and conditional or indirect registration", () => {
+    const refused: readonly string[] = [
+      suite(`  it("${TITLE}", { skip: true }, ${body});`),
+      suite(`  it("${TITLE}", { todo: true }, ${body});`),
+      suite(`  it("${TITLE}", { fails: true }, ${body});`),
+      suite(`  it("${TITLE}", { only: true }, ${body});`),
+      suite(`  it("${TITLE}", { ...flags }, ${body});`),
+      suite(`  it("${TITLE}", { ["skip"]: true }, ${body});`),
+      suite(`  it("${TITLE}", ${body}, { skip: true });`),
+      suite(`  it("${TITLE}", (ctx) => {\n    ctx.skip();\n  });`),
+      suite(`  it("${TITLE}", (ctx) => {\n    const { skip } = ctx;\n    skip();\n  });`),
+      suite(`  it("${TITLE}", ({ skip }) => {\n    skip();\n  });`),
+      suite(`  it.skipIf(process.env.CI)("${TITLE}", ${body});`),
+      suite(`  it.runIf(process.env.RUN)("${TITLE}", ${body});`),
+      suite(`  it.each([1])("${TITLE}", ${body});`),
+      suite(`  it("${TITLE}", ${body});`, 'describe("suite", { skip: true }, () => {'),
+      suite(`  it("${TITLE}", ${body});`, "suite.skip('suite', () => {"),
+      suite(`  it("${TITLE}", ${body});`, "describe.skipIf(true)('suite', () => {"),
+      suite(`  it("${TITLE}", ${body});`, "describe.each([1])('suite', () => {"),
+      `const parked = describe.skip;\nparked("suite", () => {\n  it("${TITLE}", ${body});\n});\n`,
+      `const parked = it.skip;\nparked("${TITLE}", ${body});\n`,
+      `const never = () => {\n  it("${TITLE}", ${body});\n};\nvoid never;\n`,
+      `if (process.env.X) {\n  it("${TITLE}", ${body});\n}\n`,
+      `for (const once of [1]) {\n  void once;\n  it("${TITLE}", ${body});\n}\n`,
+      `[1].forEach(() => {\n  it("${TITLE}", ${body});\n});\n`,
+      `describe.skip("suite", () => {\nit("${TITLE}", ${body});\n});\n`,
+      `describe.skip("suite", () => {\n  it("${TITLE}", ${body});\n});\n`,
+      `void 0 && it("${TITLE}", ${body});\n`,
+    ];
+    for (const source of refused) {
+      const problems = audit(source);
+      expect(problems, source).toHaveLength(1);
+      expect(problems[0], source).toContain('category (x) "demo"');
+    }
   });
 });
