@@ -320,6 +320,17 @@ describe("L5 scope and bounds", () => {
  * re-adding the Math.max(0, ...) clamp fails H2 "declines overhead...". Every invisible unit is built with String.fromCodePoint.
  * wb-k10 mutation table: dropping the containment check fails H3 (outside-wall x5); cutting before the length check in evidenceText
  * fails H4 (astral at 120 and the over-120 sweep); "label" -> "terminal" fails H5 F4; the raw invocationId in the report fails H5 F5.
+ * wb-k10 respin (gate-3 verdict U1/U2/U3 + owner R1=O1): src stays byte-identical to the delivered 3c0f242 cut; this respin is one test file.
+ * U1: the first-node (root) path of evidenceOf is a separate production line from the rest path; H4 holds three root-path twins of the
+ * 126-character probe (presentation-type "workflow" closed root; assert report.evidenceRefs excludes the ref). Measured red-first
+ * against gate mutant G12 (ONLY the add line reverted to displayText(item, MAX_EVIDENCE_CHARS + 1) plus an item.length <= 120
+ * filter): the delivered file survived G12 at 47/47, the respin file fails 2 of 50 (root astral-at-120 and root over-120 sweep).
+ * O1: H1 WITHIN holds `sk-ant-aaaa${unit}${secret}` and `sk-ant-${unit}${secret}` beside the ghp_ twins, so the file carries both prefix
+ * families. Measured against gap-to-space redaction mutants spelled for this respin (a non-whitespace gap right after the literal
+ * sk-ant- read as a space = M16s; after sk-ant-<token chars> = M17s): the delivered file survived both at 47/47, the respin file fails
+ * 2 of 50 on each (provider and evidence leak paths).
+ * Era statement: wb-era's source-hygiene grep ran over my files and returned nothing (guard = test/source-hygiene.test.ts BIDI set
+ * U+061C, U+200E/U+200F, U+202A-U+202E, U+2066-U+2069). `npm run typecheck:test` reports no row in the delivered files.
  */
 describe("H1 wb-h8f.10 A1: provider and evidence strings pass the shared label-layout sanitizer, deletion never precedes redaction", () => {
   const cp = (code: number): string => String.fromCodePoint(code);
@@ -352,6 +363,9 @@ describe("H1 wb-h8f.10 A1: provider and evidence strings pass the shared label-l
     // wb-k10 F3(b): the two gate-reconstruction templates H1 did not hold on its own (T08 in-token prefixed, T13 after-prefix).
     (unit, secret) => `ghp_abc${unit}${secret}`,
     (unit, secret) => `ghp_${unit}${secret}`,
+    // wb-k10 respin O1 (owner R1): the sk-ant- twins of those two templates, so the file holds both prefix families on its own.
+    (unit, secret) => `sk-ant-aaaa${unit}${secret}`,
+    (unit, secret) => `sk-ant-${unit}${secret}`,
   ];
   interface Shaped { id: string; raw: string; halves: [string, string] }
   const SHAPES: Shaped[] = [];
@@ -475,6 +489,30 @@ describe("H4 wb-k10 F2: an evidence ref over 120 characters is dropped on its sa
     expect(wide.length).toBe(120);
     expect(kept(plain)).toEqual([plain]);
     expect(kept(wide)).toEqual([wide]);
+  });
+  // wb-k10 respin U1: the first-node (root) path of evidenceOf is a separate production line from the rest path above, and the
+  // root's refs reach report.evidenceRefs (the list behind latency.wall.ms / latency.overhead.ms -> compareWorkflowRuns).
+  const rootRefs = (refs: string[]): string[] =>
+    decompose(stand([row("root", "pi-workflow", { presentation: { title: "root", type: "workflow", statusText: "DONE", statusTone: "success" }, evidenceRefs: refs, interval: span(0, 10) })])).evidenceRefs;
+  it("root path: drops a 126-character ref whose astral character starts at index 120, never a truncated 120-unit ref", () => {
+    const ref = `${"e".repeat(120)}${astral}tail`;
+    expect(ref.length).toBe(126);
+    expect(ref.charCodeAt(120)).toBeGreaterThanOrEqual(0xd800);
+    expect(rootRefs([ref])).toEqual([]);
+    expect(rootRefs([ref, "ev:root"])).toEqual(["ev:root"]);
+  });
+  it("root path: drops every over-120 length whatever character sits at the cut, and keeps exactly 120 whole", () => {
+    for (const ref of ["e".repeat(121), "e".repeat(126), `${"e".repeat(119)}${astral}`, `${"e".repeat(120)}${astral}`, `${"e".repeat(121)}${astral}`]) {
+      const expected = ref.length <= 120 ? [ref] : [];
+      expect(rootRefs([ref]), `${ref.length} units`).toEqual(expected);
+    }
+    const wide = `${"e".repeat(118)}${astral}`;
+    expect(wide.length).toBe(120);
+    expect(rootRefs([wide])).toEqual([wide]);
+  });
+  it("root path: measures the sanitized length, so a raw ref over 120 units that sanitizes to 100 is kept whole", () => {
+    const ref = `${"e".repeat(100)}${String.fromCodePoint(0x200b).repeat(40)}`;
+    expect(rootRefs([ref])).toEqual(["e".repeat(100)]);
   });
   it("measures the sanitized length: a raw ref over 120 units that sanitizes to 100 is kept whole", () => {
     const ref = `${"e".repeat(100)}${String.fromCodePoint(0x200b).repeat(40)}`;
