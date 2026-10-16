@@ -28,6 +28,8 @@ src/workflow/worker-source.ts documents host-function constructor escape concern
 
 Pi operator host/deployment owns credential sourcing; providers borrow secure SDK clients; no serialized clients/private tokens across worker channel. Agent tools use scoped capabilities and API-specific credentials as supported. Disable untrusted script filesystem/network; redact tokens from logs, UI, recordings and failure messages.
 
+Interpreter launch environments are built by allowlist, never by subtraction (`src/workbench/process-env.ts`): the embedded workflow interpreter worker is constructed with an empty environment, and the detached host is spawned with only the named operational variables (paths, locale, the runtime directory, proxy and CA settings, the SDK CLI's config directory). A credential-shaped name never passes, and a proxy URL carrying userinfo is dropped as a credential by content. The detached host authenticates through the SDK's own credential store, not through an environment variable.
+
 ## Input and output hardening
 
 Bound recursively nested JSON, bytes, array length, call count, response size and event rate. Prevent prototype pollution and weird structured-clone prototypes at RPC boundaries. Validate Unicode and terminal escape sequences before display (no untrusted ANSI injection). Inspect evidence through authenticated adapters, not arbitrary shell file reads. Treat observed tool outputs as data, not instructions for Pi designer.
