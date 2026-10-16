@@ -1,337 +1,1419 @@
-/**
- * wb-9x5.17 - docs/workbench/14 "Performance benchmark" census falsifier.
- *
- * docs/workbench/14 "Truth labels and release gates": "Each major work package must have a
- * falsifier: a negative test that would fail if a critical guarantee was quietly weakened."
- *
- * This file binds the seven fixture properties, the seven "Measure:" bullets and the target and
- * honesty clauses of the docs/14 "Performance benchmark" section to existing cases by file and
- * verbatim title. It never executes a pinned case or a bench, never reads a receipt file and never
- * reads or edits forge.toml. `tier` states what kind of evidence a pinned case is; a clause with no
- * landed case is `unpinned` with a reason naming its owning bead, never counted as passed.
- */
-import { readFileSync } from "node:fs";
-import { describe, expect, it } from "vitest";
+import { spawnSync } from "node:child_process";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, realpathSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { dirname, join, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import vitestConfig from "../vitest.config";
 
-const REPO_ROOT = new URL("../", import.meta.url);
-const DOCS_FILE = "docs/workbench/14-qa-and-benchmarks.md";
-const EN_DASH = String.fromCharCode(0x2013);
+/**
+ * wb-9x5.17 (respin) - docs/workbench/14 "Performance benchmark" census falsifier.
+ *
+ * docs/workbench/14 "Truth labels and release gates": "Each major work package must have a falsifier: a negative
+ * test that would fail if a critical guarantee was quietly weakened."
+ *
+ * Binds the seven fixture properties, the seven "Measure:" bullets and the target and honesty clauses of the
+ * docs/14 "Performance benchmark" section to existing cases by repo-relative file and VERBATIM it()/test() title.
+ * A measure or target clause is split into halves: a GUARD half (default-gate cases that test the receipt builders
+ * and honesty rules and run in every default gate) and a RECEIPT half (the [build.commands.*] block that produces
+ * the real receipt outside gate = [...]). The receipt half is verified by a READ-ONLY look at forge.toml (owner
+ * amendment of AC4: read, never write): the block exists, its script exists, and the command is not in the gate
+ * list. A clause with no landed case, or a half no landed case covers, is `unpinned` with a reason naming its owning
+ * bead and is never counted as passed.
+ *
+ * Detection is reporter-verified, not text-matched. The pinned suites are loaded by a COLLECT-ONLY child run
+ * (vitest list --json=<outfile>, which executes no case): a pinned title must be listed exactly once. The reporter
+ * drops a case that is commented out, renamed, deleted, skipped, todo'd, parked behind an enclosing describe
+ * modifier or option, conditionally registered, aliased, or wrapped in an empty each/for table, so none of those
+ * leaves this census green, and the red names the real cause ([not-registered]). The listing carries no mode, so
+ * what a collect-only run cannot see is checked lexically on the located call: a dotted or expression call head, a
+ * skip/todo/fails/only OPTION, a skip call in the body (ctx.skip, destructured skip), a focused .only anywhere in a
+ * pinned file (census-level red of its own, independent of allowOnly), and a THIRD LEG: the located case body must
+ * reach at least one unconditional case-level expect() with no earlier return (an env-guarded early return passes
+ * vacuously and is red here). The lexical passes resolve the call that ENCLOSES the title literal; a title quoted in
+ * a comment or in an assertion string is never a case.
+ *
+ * Tier labels are verified, not carried from prose: default-gate against the real vitest.config.ts include/exclude
+ * (and allowOnly false), and every receipt half against forge.toml. Docs exactness is whole-section slice equality
+ * of the RENDERED docs text (HTML comments blanked, an unterminated comment swallowing the rest of the file), bounded
+ * at the next level-1/2 heading; a comment anywhere inside the section is its own red.
+ *
+ * Record honesty (corrections to the 69061e5 delivery, which this file supersedes): its claim that a rename,
+ * deletion, skip, todo, fails or only goes red held only for the paren-free it/test heads and a few modifiers
+ * (twenty modes were census-silent, measured by the 05:12Z gate); its claim that a docs edit that drops a clause
+ * goes red held only for a verbatim-substring removal (HTML-comment evasions kept the file green); its bench-receipt
+ * tier was a membership-only constant that mislabelled ten cases that run in the default gate; its recorded red
+ * ("3 tests, 1 failed") was not reproducible (at the base the file is absent: no test files found, exit 1). The
+ * mutants below are authored by hand per mode and run through the real reporter; none is generated by the scanner's
+ * own regex.
+ *
+ * Disclosed limits (never claimed as covered): an assertion reached only through a helper function the lexical third
+ * leg does not follow, a skip reached through a dynamic alias the lexical body check does not spell, the evidence
+ * retained bench (wb-9x5.14), which measures EvidenceStore retention and is deliberately NOT bound to "projection
+ * memory", and everything this file does not execute: it never runs a pinned case or a bench, never reads a receipt
+ * file, and claims no scale, timing or live pass from a title being present. forge.toml is only read.
+ */
 
 interface Pin {
   readonly file: string;
   readonly title: string;
+  /** Present only for an it.each pin: the exact number of instances the reporter must list. */
+  readonly each?: number;
 }
 
-interface ClauseRow {
+interface Half {
+  readonly id: string;
+  /** guard: default-gate cases. receipt: the forge.toml command that produces the real receipt (registration verified read-only). */
+  readonly kind: "guard" | "receipt";
+  /** Verbatim part of the row clause this half covers. */
   readonly clause: string;
-  readonly part: "fixture" | "measure" | "target";
-  readonly tier: "default-gate" | "bench-receipt";
-  readonly status: "pinned" | "unpinned";
   readonly pins: readonly Pin[];
+  /** For kind receipt only: the [build.commands.<name>] that produces the receipt. */
+  readonly command?: string;
+  /** Present only when the half has no pin. */
   readonly reason?: string;
 }
+
+interface Row {
+  readonly id: string;
+  readonly part: "fixture" | "measure" | "target";
+  /** Verbatim docs text: a fixture or target fragment of its sentence, or a whole "- " measure bullet line. */
+  readonly clause: string;
+  readonly halves: readonly Half[];
+}
+
+const DOCS_FILE = "docs/workbench/14-qa-and-benchmarks.md";
+const DOCS_HEADING = "Performance benchmark";
+const EN_DASH = String.fromCharCode(0x2013);
 
 const GROUPED = "test/workbench-grouped-fixture.test.ts";
 const RECOVERY = "test/workbench-observation-recovery-receipt.test.ts";
 const PERF = "test/workbench-observation-perf.test.ts";
 const SELECTOR = "test/workbench-reducer-selector-bench.test.ts";
+const LINEDIFF = "test/workbench-line-diff-bench.test.ts";
+const TIMELINE = "test/workbench-timeline-grouped-bench.test.ts";
+const ATTENTION = "test/workbench-attention-grouped-bench.test.ts";
 
-const ROWS: readonly ClauseRow[] = Object.freeze([
+const pin = (file: string, title: string): Pin => ({ file, title });
+const guard = (id: string, clause: string, pins: readonly Pin[]): Half => ({ id, kind: "guard", clause, pins });
+const receipt = (id: string, clause: string, command: string, pins: readonly Pin[]): Half => ({ id, kind: "receipt", clause, pins, command });
+const unpinned = (id: string, kind: "guard" | "receipt", clause: string, reason: string): Half => ({ id, kind, clause, pins: [], reason });
+
+const GROUPED_REGISTERS = pin(GROUPED, "registers inspector-grouped-bench as a Forge command outside the default gate");
+const SELECTOR_REGISTERS = pin(SELECTOR, "registers reducer-selector-bench as a Forge command outside the default gate");
+const RECOVERY_REGISTERS = pin(RECOVERY, "registers the bench as one additive Forge command outside the default gate");
+const LINEDIFF_REGISTERS = pin(LINEDIFF, "registers line-diff-bench as a Forge command outside the default gate");
+const TIMELINE_REGISTERS = pin(TIMELINE, "registers timeline-grouped-bench as one additive Forge command outside the default gate");
+const ATTENTION_REGISTERS = pin(ATTENTION, "registers attention-grouped-bench as a Forge command outside the default gate, leaving the other blocks alone");
+
+const FIXTURE_SENTENCE = `Construct deterministic fixture with >=1000 nodes, >=100000 events, 1${EN_DASH}100 active changes per tick, 5 nested groups depth, partial graph links, long Unicode paths and large transcript payload refs. Measure:`;
+const MEASURE_BULLETS: readonly string[] = Object.freeze([
+  "- observer ingest events/s and projection memory",
+  "- p50/p95 reducer update and UI selector time",
+  "- p50/p95 layout render/navigate/resize time",
+  "- number of visible rendered rows vs total nodes",
+  "- terminal bytes per update (with line diff)",
+  "- recover snapshot/cursor latency",
+  "- Pi model tool response size under bounded queries",
+]);
+const TARGET_SENTENCE =
+  "Proposed responsive target <=20ms per navigation/layout calculation on declared reference host, redraw <=4Hz live; no full 100k-event fold per redraw; report measured hardware/toolchain and outliers. No invented pass numbers.";
+
+/** The frozen docs/14 "Performance benchmark" section body: every non-blank line, in order. */
+const SECTION_LINES: readonly string[] = Object.freeze([FIXTURE_SENTENCE, ...MEASURE_BULLETS, TARGET_SENTENCE]);
+
+
+const ROWS: readonly Row[] = Object.freeze([
   {
+    id: "fixture:nodes",
+    part: "fixture",
     clause: "Construct deterministic fixture with >=1000 nodes",
-    part: "fixture",
-    tier: "default-gate",
-    status: "pinned",
-    pins: [
-      { file: GROUPED, title: "builds the default W21 fixture identically twice" },
-      { file: GROUPED, title: "applies a 2,000-node subset to a default-limits projection without throwing and keeps typed fixture provenance" },
-      { file: GROUPED, title: "keeps a default projection at 2,000 nodes and 4,000 edges, and no src/ literal raises either cap" },
+    halves: [
+      guard("guard", "Construct deterministic fixture with >=1000 nodes", [
+        pin(GROUPED, "builds the default W21 fixture identically twice"),
+        pin(GROUPED, "applies a 2,000-node subset to a default-limits projection without throwing and keeps typed fixture provenance"),
+        pin(GROUPED, "keeps a default projection at 2,000 nodes and 4,000 edges, and no src/ literal raises either cap"),
+      ]),
     ],
-    reason: "Binds determinism, the 2,000-node subset against default limits and the W21 standing rule that production caps are unchanged.",
   },
   {
+    id: "fixture:events",
+    part: "fixture",
     clause: ">=100000 events",
-    part: "fixture",
-    tier: "default-gate",
-    status: "pinned",
-    pins: [{ file: GROUPED, title: "changes 1-100 distinct operations per tick across >= 100 ticks, >= 100,000 updates, in tick order" }],
+    halves: [guard("guard", ">=100000 events", [pin(GROUPED, "changes 1-100 distinct operations per tick across >= 100 ticks, >= 100,000 updates, in tick order")])],
   },
   {
+    id: "fixture:changes-per-tick",
+    part: "fixture",
     clause: `1${EN_DASH}100 active changes per tick`,
-    part: "fixture",
-    tier: "default-gate",
-    status: "pinned",
-    pins: [{ file: GROUPED, title: "changes 1-100 distinct operations per tick across >= 100 ticks, >= 100,000 updates, in tick order" }],
+    halves: [guard("guard", `1${EN_DASH}100 active changes per tick`, [pin(GROUPED, "changes 1-100 distinct operations per tick across >= 100 ticks, >= 100,000 updates, in tick order")])],
   },
   {
+    id: "fixture:nested-groups",
+    part: "fixture",
     clause: "5 nested groups depth",
-    part: "fixture",
-    tier: "default-gate",
-    status: "pinned",
-    pins: [{ file: GROUPED, title: "nests every operation under exactly 5 group levels through grouping relations" }],
+    halves: [guard("guard", "5 nested groups depth", [pin(GROUPED, "nests every operation under exactly 5 group levels through grouping relations")])],
   },
   {
+    id: "fixture:partial-links",
+    part: "fixture",
     clause: "partial graph links",
-    part: "fixture",
-    tier: "default-gate",
-    status: "pinned",
-    pins: [{ file: GROUPED, title: "adds partial dependency (about every 7th operation, never all) and hypothesis links between operations only" }],
+    halves: [guard("guard", "partial graph links", [pin(GROUPED, "adds partial dependency (about every 7th operation, never all) and hypothesis links between operations only")])],
   },
   {
+    id: "fixture:unicode-paths",
+    part: "fixture",
     clause: "long Unicode paths",
-    part: "fixture",
-    tier: "default-gate",
-    status: "pinned",
-    pins: [{ file: GROUPED, title: "titles every node with a long Unicode path (CJK, combining marks) inside the projection's bounds" }],
+    halves: [guard("guard", "long Unicode paths", [pin(GROUPED, "titles every node with a long Unicode path (CJK, combining marks) inside the projection's bounds")])],
   },
   {
+    id: "fixture:payload-refs",
+    part: "fixture",
     clause: "large transcript payload refs",
-    part: "fixture",
-    tier: "default-gate",
-    status: "pinned",
-    pins: [{ file: GROUPED, title: "carries transcript payload references, never bodies, and only plain projection input fields" }],
+    halves: [guard("guard", "large transcript payload refs", [pin(GROUPED, "carries transcript payload references, never bodies, and only plain projection input fields")])],
   },
   {
+    id: "measure:ingest-and-memory",
+    part: "measure",
     clause: "- observer ingest events/s and projection memory",
-    part: "measure",
-    tier: "bench-receipt",
-    status: "pinned",
-    pins: [
-      { file: RECOVERY, title: "times every refresh() call on its own and derives throughput and heap growth from the injected probes" },
-      { file: PERF, title: "retains only a hot window, indexes 1000 nodes across 100k events, and selects one without folding history" },
+    halves: [
+      guard("guard", "observer ingest events/s and projection memory", [
+        pin(RECOVERY, "times every refresh() call on its own and derives throughput and heap growth from the injected probes"),
+        pin(PERF, "retains only a hot window, indexes 1000 nodes across 100k events, and selects one without folding history"),
+      ]),
+      receipt("receipt", "observer ingest events/s and projection memory", "observation-recovery-bench", [RECOVERY_REGISTERS]),
     ],
   },
   {
+    id: "measure:reducer-and-selector-time",
+    part: "measure",
     clause: "- p50/p95 reducer update and UI selector time",
-    part: "measure",
-    tier: "bench-receipt",
-    status: "pinned",
-    pins: [
-      { file: SELECTOR, title: "emits host, toolchain, fixture shape, limits and every per-band latency" },
-      { file: SELECTOR, title: "exits 1 and names the series when a selector p95 is over 20 ms, and never judges the reducer" },
+    halves: [
+      guard("guard", "p50/p95 reducer update and UI selector time", [
+        pin(SELECTOR, "emits host, toolchain, fixture shape, limits and every per-band latency"),
+        pin(SELECTOR, "exits 1 and names the series when a selector p95 is over 20 ms, and never judges the reducer"),
+      ]),
+      receipt("receipt", "p50/p95 reducer update and UI selector time", "reducer-selector-bench", [SELECTOR_REGISTERS]),
     ],
   },
   {
+    id: "measure:layout-render-navigate-resize",
+    part: "measure",
     clause: "- p50/p95 layout render/navigate/resize time",
-    part: "measure",
-    tier: "bench-receipt",
-    status: "pinned",
-    pins: [{ file: GROUPED, title: "reports pass B with every offered row retained and navigation/layout/resize distributions per view, size and key" }],
-    reason: "The four-view navigation receipt is the open follow-up wb-9x5.11; this binds pass B only.",
+    halves: [
+      guard("pass-b", "layout render/navigate/resize time", [pin(GROUPED, "reports pass B with every offered row retained and navigation/layout/resize distributions per view, size and key")]),
+      receipt("pass-b-receipt", "layout render/navigate/resize time", "inspector-grouped-bench", [GROUPED_REGISTERS]),
+      guard("lane-model", "navigate", [pin(TIMELINE, "reports p50/p95/max overall and per (zoom, columns), plus the five slowest samples with their request")]),
+      receipt("lane-model-receipt", "navigate", "timeline-grouped-bench", [TIMELINE_REGISTERS]),
+      unpinned(
+        "four-view-resize",
+        "guard",
+        "render/navigate/resize",
+        "The four-view navigation and resize layout-time receipt is the open bead wb-9x5.11; the pass-B and lane-model halves above bind only what landed, so render and resize across the four views stay a visible gap until it lands.",
+      ),
+    ],
   },
   {
+    id: "measure:visible-rows-vs-total",
+    part: "measure",
     clause: "- number of visible rendered rows vs total nodes",
-    part: "measure",
-    tier: "bench-receipt",
-    status: "pinned",
-    pins: [{ file: GROUPED, title: "reports pass A as honest FIFO truncation: retained versus offered under default caps, no navigation claim" }],
+    halves: [
+      guard("guard", "number of visible rendered rows vs total nodes", [pin(GROUPED, "reports pass A as honest FIFO truncation: retained versus offered under default caps, no navigation claim")]),
+      receipt("receipt", "number of visible rendered rows vs total nodes", "inspector-grouped-bench", [GROUPED_REGISTERS]),
+    ],
   },
   {
+    id: "measure:terminal-bytes",
+    part: "measure",
     clause: "- terminal bytes per update (with line diff)",
-    part: "measure",
-    tier: "bench-receipt",
-    status: "unpinned",
-    pins: [],
-    reason: "No landed case measures terminal bytes per update; the receipt is wb-9x5.8 (in flight), so the bullet is a visible gap until it lands.",
+    halves: [
+      guard("guard", "terminal bytes per update (with line diff)", [
+        pin(LINEDIFF, "charges only the changed line on a single-line change, strictly under the full frame"),
+        pin(LINEDIFF, "emits host, toolchain, fixture shape, limits and a series per view and width in every churn band"),
+        pin(LINEDIFF, "never reports a diff above its own full frame, and the cold paint is excluded from the series"),
+      ]),
+      receipt("receipt", "terminal bytes per update (with line diff)", "line-diff-bench", [LINEDIFF_REGISTERS]),
+    ],
   },
   {
+    id: "measure:recover-latency",
+    part: "measure",
     clause: "- recover snapshot/cursor latency",
-    part: "measure",
-    tier: "bench-receipt",
-    status: "pinned",
-    pins: [
-      { file: RECOVERY, title: "records every recovery and bounded-query field as a finite number and holds the recovery invariants (200 nodes / 2,000 events)" },
-      { file: RECOVERY, title: "catches an evicted cursor reported as a complete resume" },
+    halves: [
+      guard("guard", "recover snapshot/cursor latency", [
+        pin(RECOVERY, "records every recovery and bounded-query field as a finite number and holds the recovery invariants (200 nodes / 2,000 events)"),
+        pin(RECOVERY, "catches an evicted cursor reported as a complete resume"),
+      ]),
+      receipt("receipt", "recover snapshot/cursor latency", "observation-recovery-bench", [RECOVERY_REGISTERS]),
     ],
   },
   {
+    id: "measure:pi-tool-response-size",
+    part: "measure",
     clause: "- Pi model tool response size under bounded queries",
-    part: "measure",
-    tier: "bench-receipt",
-    status: "unpinned",
-    pins: [],
-    reason: "No landed case measures Pi model tool response size; the receipt is wb-9x5.5 (open, blocked by wb-752.2), so the bullet is a visible gap until it lands.",
-  },
-  {
-    clause: "<=20ms per navigation/layout calculation on declared reference host",
-    part: "target",
-    tier: "bench-receipt",
-    status: "pinned",
-    pins: [
-      { file: GROUPED, title: "exits 1 only for a bench-only p95 over 20 ms on a realised shape; 20 ms itself is within target" },
-      { file: GROUPED, title: "registers inspector-grouped-bench as a Forge command outside the default gate" },
-      { file: SELECTOR, title: "registers reducer-selector-bench as a Forge command outside the default gate" },
-      { file: RECOVERY, title: "registers the bench as one additive Forge command outside the default gate" },
+    halves: [
+      unpinned(
+        "whole",
+        "guard",
+        "Pi model tool response size under bounded queries",
+        "No landed case measures Pi model tool response size under bounded queries on the grouped fixture: wb-752.2 (closed) landed only the bounded reply builder, and the bounded tool-reply size receipt is wb-9x5.5 (in_progress; its guard is queued on a branch, not on trunk). The bullet stays a visible gap until wb-9x5.5 lands, and its receipt half is unpinned for the same reason.",
+      ),
     ],
-    reason: "The target is judged only by bench-only exit 1; the registration cases pin the fact that each bench runs outside the default gate. This census never reads forge.toml.",
   },
   {
+    id: "target:20ms",
+    part: "target",
+    clause: "<=20ms per navigation/layout calculation on declared reference host",
+    halves: [
+      guard("guard", "<=20ms per navigation/layout calculation on declared reference host", [
+        pin(GROUPED, "exits 1 only for a bench-only p95 over 20 ms on a realised shape; 20 ms itself is within target"),
+        pin(SELECTOR, "exits 1 and names the series when a selector p95 is over 20 ms, and never judges the reducer"),
+        pin(TIMELINE, "exits 1 when any judged p95 is over 20 ms, in either pass, naming the series; the receipt is still a measurement"),
+        pin(ATTENTION, "exits 0 on a W21-shaped receipt within the target, and 1 when any judged p95 is over 20 ms"),
+      ]),
+      receipt("receipt-grouped", "<=20ms per navigation/layout calculation on declared reference host", "inspector-grouped-bench", [GROUPED_REGISTERS]),
+      receipt("receipt-selector", "<=20ms per navigation/layout calculation on declared reference host", "reducer-selector-bench", [SELECTOR_REGISTERS]),
+      receipt("receipt-timeline", "<=20ms per navigation/layout calculation on declared reference host", "timeline-grouped-bench", [TIMELINE_REGISTERS]),
+      receipt("receipt-attention", "<=20ms per navigation/layout calculation on declared reference host", "attention-grouped-bench", [ATTENTION_REGISTERS]),
+    ],
+  },
+  {
+    id: "target:redraw-4hz",
+    part: "target",
     clause: "redraw <=4Hz live",
-    part: "target",
-    tier: "bench-receipt",
-    status: "pinned",
-    pins: [{ file: SELECTOR, title: "keeps the redraw cadence at or below 4 Hz from fixture time, never the wall clock" }],
+    halves: [
+      guard("guard", "redraw <=4Hz live", [
+        pin(SELECTOR, "keeps the redraw cadence at or below 4 Hz from fixture time, never the wall clock"),
+        pin(LINEDIFF, "keeps the redraw cadence at or below 4 Hz from fixture time, never the wall clock"),
+      ]),
+      receipt("receipt-selector", "redraw <=4Hz live", "reducer-selector-bench", [SELECTOR_REGISTERS]),
+      receipt("receipt-line-diff", "redraw <=4Hz live", "line-diff-bench", [LINEDIFF_REGISTERS]),
+    ],
   },
   {
+    id: "target:no-full-fold",
+    part: "target",
     clause: "no full 100k-event fold per redraw",
-    part: "target",
-    tier: "bench-receipt",
-    status: "pinned",
-    pins: [{ file: SELECTOR, title: "accounts reducer calls and bounded reads, and records no full fold per redraw" }],
+    halves: [
+      guard("guard", "no full 100k-event fold per redraw", [
+        pin(SELECTOR, "accounts reducer calls and bounded reads, and records no full fold per redraw"),
+        pin(LINEDIFF, "F3: accounts bounded reads, and records a full fold per redraw as a finding with exit 1"),
+      ]),
+      receipt("receipt-selector", "no full 100k-event fold per redraw", "reducer-selector-bench", [SELECTOR_REGISTERS]),
+      receipt("receipt-line-diff", "no full 100k-event fold per redraw", "line-diff-bench", [LINEDIFF_REGISTERS]),
+    ],
   },
   {
+    id: "target:report-hardware",
+    part: "target",
     clause: "report measured hardware/toolchain and outliers",
-    part: "target",
-    tier: "bench-receipt",
-    status: "pinned",
-    pins: [{ file: GROUPED, title: "emits every receipt field with host/toolchain, fixture shape and judged target" }],
+    halves: [
+      guard("guard", "report measured hardware/toolchain and outliers", [
+        pin(GROUPED, "emits every receipt field with host/toolchain, fixture shape and judged target"),
+        pin(TIMELINE, "carries host, toolchain, command, overrides, fixture shape and sampling plan"),
+      ]),
+      receipt("receipt", "report measured hardware/toolchain and outliers", "inspector-grouped-bench", [GROUPED_REGISTERS]),
+    ],
   },
   {
-    clause: "No invented pass numbers.",
+    id: "target:no-invented-pass-numbers",
     part: "target",
-    tier: "bench-receipt",
-    status: "pinned",
-    pins: [
-      { file: GROUPED, title: "exits 2 for an unrealised measurement and names why, before any timing judgement" },
-      { file: GROUPED, title: "exits 2 when a judged series was never sampled, rather than passing it by absence" },
+    clause: "No invented pass numbers.",
+    halves: [
+      guard("guard", "No invented pass numbers.", [
+        pin(GROUPED, "exits 2 for an unrealised measurement and names why, before any timing judgement"),
+        pin(GROUPED, "exits 2 when a judged series was never sampled, rather than passing it by absence"),
+        pin(TIMELINE, "exits 2 on an off-shape receipt even when every p95 is fast, and names the violated rules"),
+        pin(LINEDIFF, "exits 2 for a wrong shape, a truncated projection, unapplied updates, an unsampled series or no redraws"),
+      ]),
     ],
   },
 ]);
 
-const FIXTURE_SENTENCE = `Construct deterministic fixture with >=1000 nodes, >=100000 events, 1${EN_DASH}100 active changes per tick, 5 nested groups depth, partial graph links, long Unicode paths and large transcript payload refs. Measure:`;
-const TARGET_SENTENCE =
-  "Proposed responsive target <=20ms per navigation/layout calculation on declared reference host, redraw <=4Hz live; no full 100k-event fold per redraw; report measured hardware/toolchain and outliers. No invented pass numbers.";
+const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+const VITEST_BIN = resolve(REPO_ROOT, "node_modules/vitest/vitest.mjs");
+const SPAWN_TIMEOUT_MS = 90_000;
 
-const FORBIDDEN_MODIFIERS = new Set(["skip", "todo", "fails", "only", "skipIf", "runIf"]);
-
-interface TitleLocation {
-  readonly occurrences: number;
-  readonly forbiddenModifiers: readonly string[];
+function readRepoFile(relative: string): string {
+  return readFileSync(resolve(REPO_ROOT, relative), "utf8");
 }
 
-/** Locates a case title as a quoted literal and reports how often it occurs and under which call modifiers. */
-function locateTitle(source: string, title: string): TitleLocation {
-  const callHead = /\b(?:it|test)((?:\.[A-Za-z]+)*)\s*\(/g;
-  let occurrences = 0;
-  const forbiddenModifiers: string[] = [];
-  for (const quote of ['"', "'", "`"]) {
-    const literal = `${quote}${title}${quote}`;
-    let from = source.indexOf(literal);
-    while (from !== -1) {
-      const before = source.slice(0, from);
-      let head: RegExpExecArray | null = null;
-      for (const match of before.matchAll(callHead)) head = match;
-      const preceding = before.slice(before.search(/\s*\(?\s*$/)).replace(/\s/g, "");
-      const isCaseTitle = head !== null && (preceding === "(" || preceding === "");
-      if (isCaseTitle) {
-        occurrences += 1;
-        for (const modifier of (head?.[1] ?? "").split(".").filter(Boolean)) {
-          if (FORBIDDEN_MODIFIERS.has(modifier)) forbiddenModifiers.push(modifier);
-        }
+/* ------------------------------------------------------------------ */
+/* Collect-only reporter                                               */
+/* ------------------------------------------------------------------ */
+
+
+interface ListedCase {
+  readonly name: string;
+  readonly file: string;
+}
+
+interface ListResult {
+  readonly status: number | null;
+  readonly stderr: string;
+  readonly cases: readonly ListedCase[];
+}
+
+function isListedCase(value: unknown): value is ListedCase {
+  if (typeof value !== "object" || value === null) return false;
+  const record = value as Record<string, unknown>;
+  return typeof record.name === "string" && typeof record.file === "string";
+}
+
+function childEnv(): NodeJS.ProcessEnv {
+  const env: NodeJS.ProcessEnv = {};
+  for (const [key, value] of Object.entries(process.env)) {
+    if (!key.startsWith("VITEST")) env[key] = value;
+  }
+  return env;
+}
+
+let listCounter = 0;
+
+/**
+ * Runs `vitest list --json=<outfile>` (the = form: a space-separated path is written
+ * into by the CLI) in a child process. Collect-only: no case body is executed.
+ */
+function vitestList(outDir: string, cwd: string, filters: readonly string[], extra: readonly string[]): ListResult {
+  listCounter += 1;
+  const outFile = join(outDir, `list-${listCounter}.json`);
+  const run = spawnSync(process.execPath, [VITEST_BIN, "list", ...filters, ...extra, `--json=${outFile}`], {
+    cwd,
+    env: childEnv(),
+    encoding: "utf8",
+    timeout: SPAWN_TIMEOUT_MS,
+  });
+  let cases: ListedCase[] = [];
+  try {
+    const parsed: unknown = JSON.parse(readFileSync(outFile, "utf8"));
+    if (Array.isArray(parsed)) cases = parsed.filter(isListedCase);
+  } catch {
+    cases = [];
+  }
+  return { status: run.status, stderr: `${run.stderr ?? ""}${run.error ? String(run.error) : ""}`, cases };
+}
+
+/* ------------------------------------------------------------------ */
+/* Lexical scanner for the located call (string, template and comment aware) */
+/* ------------------------------------------------------------------ */
+
+const REGEX_PREFIX = "(,=:[!&|?{};";
+
+function skipQuoted(s: string, at: number): number {
+  const quote = s[at];
+  let i = at + 1;
+  while (i < s.length) {
+    if (s[i] === "\\") i += 2;
+    else if (s[i] === quote) return i + 1;
+    else i += 1;
+  }
+  return s.length;
+}
+
+/** Scans from `start` to the unmatched closer at depth 0; records top-level commas in `commas`. */
+function skipCode(s: string, start: number, commas?: number[]): number | undefined {
+  let depth = 0;
+  let prev = "";
+  let i = start;
+  while (i < s.length) {
+    const c = s[i] ?? "";
+    const next = s[i + 1] ?? "";
+    if (c === "/" && next === "/") {
+      const eol = s.indexOf("\n", i);
+      i = eol < 0 ? s.length : eol;
+      continue;
+    }
+    if (c === "/" && next === "*") {
+      const end = s.indexOf("*/", i + 2);
+      i = end < 0 ? s.length : end + 2;
+      continue;
+    }
+    if (c === "'" || c === '"') {
+      i = skipQuoted(s, i);
+      prev = c;
+      continue;
+    }
+    if (c === "`") {
+      i += 1;
+      while (i < s.length) {
+        if (s[i] === "\\") i += 2;
+        else if (s[i] === "`") {
+          i += 1;
+          break;
+        } else if (s[i] === "$" && s[i + 1] === "{") {
+          const close = skipCode(s, i + 2);
+          if (close === undefined) return undefined;
+          i = close + 1;
+        } else i += 1;
       }
-      from = source.indexOf(literal, from + literal.length);
+      prev = "`";
+      continue;
     }
+    if (c === "/" && (prev === "" || REGEX_PREFIX.includes(prev))) {
+      i += 1;
+      let inClass = false;
+      while (i < s.length) {
+        if (s[i] === "\\") i += 2;
+        else if (s[i] === "[") {
+          inClass = true;
+          i += 1;
+        } else if (s[i] === "]") {
+          inClass = false;
+          i += 1;
+        } else if (s[i] === "/" && !inClass) {
+          i += 1;
+          break;
+        } else i += 1;
+      }
+      prev = "/";
+      continue;
+    }
+    if (c === "(" || c === "[" || c === "{") depth += 1;
+    else if (c === ")" || c === "]" || c === "}") {
+      if (depth === 0) return i;
+      depth -= 1;
+    } else if (c === "," && depth === 0 && commas) commas.push(i);
+    if (!/\s/u.test(c)) prev = c;
+    i += 1;
   }
-  return { occurrences, forbiddenModifiers };
+  return undefined;
 }
 
-function read(relativePath: string): string {
-  return readFileSync(new URL(relativePath, REPO_ROOT), "utf8");
+/** Top-level argument texts of the call whose "(" is at `open`; undefined when unbalanced. */
+function callArguments(source: string, open: number): readonly string[] | undefined {
+  const commas: number[] = [];
+  const end = skipCode(source, open + 1, commas);
+  if (end === undefined) return undefined;
+  const bounds = [open, ...commas, end];
+  const args: string[] = [];
+  for (let k = 0; k + 1 < bounds.length; k += 1) args.push(source.slice((bounds[k] ?? 0) + 1, bounds[k + 1]));
+  return args;
+}
+const OPTION_MODIFIER = /\b(skip|todo|fails|only)\b\s*(?::\s*(?!false\b)|[,}])/u;
+const RUNTIME_SKIP = /\bskip\s*\(|\[\s*["']skip["']\s*\]/u;
+const HEAD_MODIFIER = /\b(?:it|test)((?:\s*\.\s*[A-Za-z]+)*)$/u;
+const ALLOWED_HEAD_MODIFIERS = new Set(["concurrent", "sequential"]);
+
+function escapeRegExp(text: string): string {
+  return text.replace(/[.*+?^${}()|[\]\\]/gu, "\\$&");
 }
 
-describe("wb-9x5.17 docs/14 performance-benchmark census", () => {
-  const docs = read(DOCS_FILE);
+/** The reporter-name matcher for an it.each title: each format specifier matches any substituted text. */
+function eachMatcher(title: string): RegExp {
+  const body = title
+    .split(/%[sjdoif]/u)
+    .map(escapeRegExp)
+    .join(".+?");
+  return new RegExp(`^(?:.* > )?${body}$`, "u");
+}
 
-  it("classifies seven fixture properties, seven measure bullets and the target clauses", () => {
-    expect(ROWS.filter((row) => row.part === "fixture")).toHaveLength(7);
-    expect(ROWS.filter((row) => row.part === "measure")).toHaveLength(7);
-    expect(ROWS.filter((row) => row.part === "target").length).toBeGreaterThanOrEqual(5);
-    for (const row of ROWS) {
-      expect(["default-gate", "bench-receipt"], `clause "${row.clause}": tier`).toContain(row.tier);
-      expect(["pinned", "unpinned"], `clause "${row.clause}": status`).toContain(row.status);
-    }
-  });
-
-  it("carries the fixture sentence and the target sentence verbatim in docs/14", () => {
-    expect(docs.includes(FIXTURE_SENTENCE), `${DOCS_FILE}: the fixture sentence drifted`).toBe(true);
-    expect(docs.includes(TARGET_SENTENCE), `${DOCS_FILE}: the target and honesty sentence drifted`).toBe(true);
-  });
-
-  for (const row of ROWS) {
-    it(`carries the ${row.part} clause "${row.clause}" in docs/14`, () => {
-      const text = row.clause.startsWith("- ") ? `\n${row.clause}\n` : row.clause;
-      expect(docs.includes(text), `${DOCS_FILE}: the ${row.part} clause "${row.clause}" is no longer present`).toBe(true);
-    });
+/** For `it.each(table)(title, fn)`: the index just before ".each(", located by balanced-scanning the table call. */
+function eachHeadEnd(code: string, open: number): number | undefined {
+  const between = code.slice(0, open).trimEnd();
+  if (!between.endsWith(")")) return undefined;
+  const close = between.length - 1;
+  let from = between.lastIndexOf(".each(", close);
+  while (from >= 0) {
+    const reached = skipCode(code, from + ".each(".length);
+    if (reached === close) return from;
+    from = from > 0 ? between.lastIndexOf(".each(", from - 1) : -1;
   }
+  return undefined;
+}
 
-  it("never counts an unpinned clause as passed: it names an owning bead and holds no pins", () => {
-    for (const row of ROWS) {
-      if (row.status === "unpinned") {
-        expect(row.pins, `clause "${row.clause}": unpinned rows hold no pins`).toEqual([]);
-        expect(row.reason ?? "", `clause "${row.clause}": unpinned rows name an owning bead`).toMatch(/wb-[0-9a-z]+\.[0-9]+/);
+function globToRegExp(glob: string): RegExp {
+  let out = "";
+  for (let i = 0; i < glob.length; i += 1) {
+    const c = glob[i] ?? "";
+    if (c === "*" && glob[i + 1] === "*") {
+      if (glob[i + 2] === "/") {
+        out += "(?:.*/)?";
+        i += 2;
       } else {
-        expect(row.pins.length, `clause "${row.clause}": pinned rows hold at least one pin`).toBeGreaterThan(0);
+        out += ".*";
+        i += 1;
       }
-    }
-  });
+    } else if (c === "*") out += "[^/]*";
+    else out += c.replace(/[.+^${}()|[\]\\?]/gu, "\\$&");
+  }
+  return new RegExp(`^${out}$`, "u");
+}
 
-  it("leaves exactly the terminal-bytes and tool-response-size bullets unpinned", () => {
-    expect(ROWS.filter((row) => row.status === "unpinned").map((row) => row.clause)).toEqual([
-      "- terminal bytes per update (with line diff)",
-      "- Pi model tool response size under bounded queries",
-    ]);
-  });
+function matchesAny(patterns: readonly string[], file: string): boolean {
+  return patterns.some((pattern) => globToRegExp(pattern).test(file));
+}
 
-  for (const row of ROWS.filter((candidate) => candidate.status === "pinned")) {
-    for (const pin of row.pins) {
-      it(`${row.part} clause "${row.clause}" stays bound to ${pin.file}: "${pin.title}"`, () => {
-        const where = `${row.part} clause "${row.clause}", file ${pin.file}, title "${pin.title}"`;
-        const located = locateTitle(read(pin.file), pin.title);
-        expect(located.occurrences, `${where}: expected the case exactly once`).toBe(1);
-        expect(located.forbiddenModifiers, `${where}: the case is skipped, todo, failing-by-design or focused`).toEqual([]);
-      });
+/* ------------------------------------------------------------------ */
+/* One-pass segmenter: comments, strings, templates and regex literals  */
+/* ------------------------------------------------------------------ */
+
+interface Segment {
+  readonly kind: "comment" | "string" | "regex";
+  readonly start: number;
+  readonly end: number;
+}
+
+function skipTemplate(s: string, at: number): number {
+  let i = at + 1;
+  while (i < s.length) {
+    if (s[i] === "\\") i += 2;
+    else if (s[i] === "`") return i + 1;
+    else if (s[i] === "$" && s[i + 1] === "{") {
+      const close = skipCode(s, i + 2);
+      if (close === undefined) return s.length;
+      i = close + 1;
+    } else i += 1;
+  }
+  return s.length;
+}
+
+function skipRegex(s: string, at: number): number {
+  let i = at + 1;
+  let inClass = false;
+  while (i < s.length) {
+    if (s[i] === "\\") i += 2;
+    else if (s[i] === "[") {
+      inClass = true;
+      i += 1;
+    } else if (s[i] === "]") {
+      inClass = false;
+      i += 1;
+    } else if (s[i] === "/" && !inClass) return i + 1;
+    else i += 1;
+  }
+  return s.length;
+}
+
+function segmentsOf(s: string): readonly Segment[] {
+  const out: Segment[] = [];
+  let prev = "";
+  let i = 0;
+  while (i < s.length) {
+    const c = s[i] ?? "";
+    const next = s[i + 1] ?? "";
+    if (c === "/" && next === "/") {
+      const eol = s.indexOf("\n", i);
+      const end = eol < 0 ? s.length : eol;
+      out.push({ kind: "comment", start: i, end });
+      i = end;
+    } else if (c === "/" && next === "*") {
+      const close = s.indexOf("*/", i + 2);
+      const end = close < 0 ? s.length : close + 2;
+      out.push({ kind: "comment", start: i, end });
+      i = end;
+    } else if (c === "'" || c === '"') {
+      const end = skipQuoted(s, i);
+      out.push({ kind: "string", start: i, end });
+      i = end;
+      prev = c;
+    } else if (c === "`") {
+      const end = skipTemplate(s, i);
+      out.push({ kind: "string", start: i, end });
+      i = end;
+      prev = c;
+    } else if (c === "/" && (prev === "" || REGEX_PREFIX.includes(prev))) {
+      const end = skipRegex(s, i);
+      out.push({ kind: "regex", start: i, end });
+      i = end;
+      prev = "/";
+    } else {
+      if (!/\s/u.test(c)) prev = c;
+      i += 1;
     }
   }
+  return out;
+}
+
+const blank = (text: string): string => text.replace(/[^\n]/gu, " ");
+
+/** Blanks every comment (same length, so offsets survive) so a commented-out call is never located. */
+function maskComments(s: string): string {
+  let out = "";
+  let at = 0;
+  for (const segment of segmentsOf(s)) {
+    if (segment.kind !== "comment") continue;
+    out += s.slice(at, segment.start) + blank(s.slice(segment.start, segment.end));
+    at = segment.end;
+  }
+  return out + s.slice(at);
+}
+
+/** Blanks every comment, every string/template body and every regex literal (same length): only real code remains. */
+function maskCode(s: string): string {
+  let out = "";
+  let at = 0;
+  for (const segment of segmentsOf(s)) {
+    out += s.slice(at, segment.start);
+    const raw = s.slice(segment.start, segment.end);
+    if (segment.kind === "string") out += raw.slice(0, 1) + blank(raw.slice(1, -1)) + raw.slice(-1);
+    else out += blank(raw);
+    at = segment.end;
+  }
+  return out + s.slice(at);
+}
+
+/** Start offsets of every TOP-LEVEL string token whose raw text is exactly one of the quoted spellings of the title. */
+function titleTokens(source: string, title: string): number[] {
+  const literals = new Set(["'", '"', "`"].map((quote) => `${quote}${title}${quote}`));
+  return segmentsOf(source)
+    .filter((segment) => segment.kind === "string" && literals.has(source.slice(segment.start, segment.end)))
+    .map((segment) => segment.start);
+}
+
+/* ------------------------------------------------------------------ */
+/* Focus                                                               */
+/* ------------------------------------------------------------------ */
+
+const FOCUS_DOT_CALL = /\b(?:it|test|describe|suite)\s*(?:\.\s*[A-Za-z]+\s*)*\.\s*only\b/u;
+const FOCUS_BRACKET_CALL = /\b(?:it|test|describe|suite)\s*\[\s*["']only["']\s*\]/u;
+const FOCUS_OPTION_CALL = /\b(?:it|test|describe|suite)\s*(?:\.\s*[A-Za-z]+\s*)*\(\s*(?:`[^`]*`|"[^"\n]*"|'[^'\n]*')\s*,\s*\{[^}]*\bonly\s*:\s*(?!false\b)/u;
+
+/** A focused call anywhere in a pinned file narrows the whole run: a census-level red, independent of allowOnly. */
+function auditFocus(source: string): string | undefined {
+  const focused = FOCUS_DOT_CALL.test(maskCode(source)) || FOCUS_BRACKET_CALL.test(maskComments(source)) || FOCUS_OPTION_CALL.test(maskComments(source));
+  return focused ? "[only-focus] the file carries a focused .only call or only option, which silently narrows every sibling case" : undefined;
+}
+
+/* ------------------------------------------------------------------ */
+/* Locating the call that ENCLOSES the title literal                   */
+/* ------------------------------------------------------------------ */
+
+/**
+ * Offsets of the "(" that opens a case call whose first argument is exactly the title literal. A title quoted in a
+ * comment, inside another string, or as an argument of anything that is not an it()/test() head (an assertion, a
+ * helper) is not a case and never counts; there is no fall-back to the nearest earlier it/test head.
+ */
+function locateCalls(source: string, title: string): number[] {
+  const code = maskComments(source);
+  const opens: number[] = [];
+  for (const at of titleTokens(source, title)) {
+    const before = code.slice(0, at).trimEnd();
+    if (!before.endsWith("(")) continue;
+    const open = before.length - 1;
+    const head = code.slice(0, open).trimEnd();
+    if (HEAD_MODIFIER.test(head) || /[)\]]$/u.test(head)) opens.push(open);
+  }
+  return opens;
+}
+
+/* ------------------------------------------------------------------ */
+/* Third leg: the located case body reaches an unconditional expect()  */
+/* ------------------------------------------------------------------ */
+
+type Frame = "case" | "fn" | "cond" | "plain" | "obj";
+const CONTROL_WORDS = new Set(["if", "for", "while", "switch", "catch", "with"]);
+
+/** A control header guards its body, except a for loop over anything but an empty array literal (credited; disclosed limit). */
+function guardsBody(word: string, header: string): boolean {
+  if (!CONTROL_WORDS.has(word)) return false;
+  if (word !== "for") return true;
+  return /\b(?:of|in)\s*\[\s*\]/u.test(header);
+}
+
+function lastWord(text: string): string {
+  return /([A-Za-z_$][\w$]*)\s*$/u.exec(text)?.[1] ?? "";
+}
+
+function matchingOpen(text: string, closeAt: number): number {
+  let depth = 0;
+  for (let i = closeAt; i >= 0; i -= 1) {
+    const c = text[i];
+    if (c === ")") depth += 1;
+    else if (c === "(") {
+      depth -= 1;
+      if (depth === 0) return i;
+    }
+  }
+  return -1;
+}
+
+function classifyBrace(code: string, at: number): Frame {
+  const pre = code.slice(0, at).trimEnd();
+  if (pre.endsWith("=>")) return "fn";
+  if (pre.endsWith(")")) {
+    const open = matchingOpen(pre, pre.length - 1);
+    if (open < 0) return "fn";
+    const word = lastWord(pre.slice(0, open));
+    if (guardsBody(word, pre.slice(open))) return "cond";
+    return CONTROL_WORDS.has(word) ? "plain" : "fn";
+  }
+  const word = lastWord(pre);
+  if (word === "catch" || word === "else") return "cond";
+  if (word === "try" || word === "finally" || word === "do") return "plain";
+  return "obj";
+}
+
+/** True when the statement at `at` is guarded without braces: `if (c) x`, `else x`, `c && x`, `c ? x : y`. */
+function bracelessGuard(code: string, at: number): boolean {
+  let pre = code.slice(0, at).trimEnd();
+  while (/\bawait$/u.test(pre)) pre = pre.slice(0, -"await".length).trimEnd();
+  if (/(?:&&|\|\||\?\?|\?|:)$/u.test(pre)) return true;
+  if (lastWord(pre) === "else") return true;
+  if (pre.endsWith(")")) {
+    const open = matchingOpen(pre, pre.length - 1);
+    return open >= 0 && guardsBody(lastWord(pre.slice(0, open)), pre.slice(open));
+  }
+  return false;
+}
+
+/** An assertion entry point: expect(...), expect.soft(...) or expect.poll(...). expect.any/arrayContaining/assertions are matchers or declarations, never an assertion. */
+const EXPECT_CALL = /(?<![\w$.])expect\s*(?:\(|\.\s*(?:soft|poll)\s*\()/u;
+
+/**
+ * Returns a problem string beginning with a [category] tag, or undefined when the callback reaches at least one
+ * unconditional, case-level expect() with no earlier return. Lexical and conservative: an assertion made only inside
+ * a helper function, a loop, a branch or a nested callback is not credited.
+ */
+function auditReach(callback: string): string | undefined {
+  const code = maskCode(callback);
+  if (!EXPECT_CALL.test(code)) return "[no-assertion] the case body holds no expect() call, so it passes vacuously";
+  const arrow = code.indexOf("=>");
+  const fnWord = code.search(/\bfunction\b/u);
+  let bodyOpen = -1;
+  if (arrow >= 0 && (fnWord < 0 || arrow < fnWord)) {
+    const after = code.slice(arrow + 2).trimStart();
+    if (!after.startsWith("{")) {
+      const exprAt = code.length - after.length;
+      return EXPECT_CALL.test(after) && !bracelessGuard(code, exprAt + (EXPECT_CALL.exec(after)?.index ?? 0)) ? undefined : "[assertion-unreached] the expression body holds no unconditional expect()";
+    }
+    bodyOpen = code.length - after.length;
+  } else if (fnWord >= 0) {
+    const paramsOpen = code.indexOf("(", fnWord);
+    const paramsClose = paramsOpen < 0 ? undefined : skipCode(code, paramsOpen + 1);
+    if (paramsClose !== undefined) bodyOpen = code.indexOf("{", paramsClose);
+  }
+  if (bodyOpen < 0) return "[assertion-unreached] the case callback is not an inline function whose body can be scanned";
+  const stack: Frame[] = ["case"];
+  let firstReach = -1;
+  let firstReturn = -1;
+  let i = bodyOpen + 1;
+  while (i < code.length && stack.length > 0) {
+    const c = code[i] ?? "";
+    if (c === "{") {
+      stack.push(classifyBrace(code, i));
+      i += 1;
+    } else if (c === "}") {
+      stack.pop();
+      i += 1;
+    } else if (/[A-Za-z_$]/u.test(c) && !/[\w$.]/u.test(code[i - 1] ?? "")) {
+      const word = /^[\w$]+/u.exec(code.slice(i))?.[0] ?? c;
+      const flat = !stack.includes("fn");
+      if (word === "return" && flat && firstReturn < 0) firstReturn = i;
+      if (word === "expect" && EXPECT_CALL.test(code.slice(i, i + 20)) && flat && !stack.includes("cond") && !bracelessGuard(code, i) && firstReach < 0) firstReach = i;
+      i += word.length;
+    } else i += 1;
+  }
+  if (firstReach < 0) return "[assertion-unreached] every expect() sits behind a branch, a loop, a nested callback or an early return, so the case can pass without asserting";
+  if (firstReturn >= 0 && firstReturn < firstReach) return "[assertion-unreached] a return precedes the first unconditional expect(), so the case can pass without asserting";
+  return undefined;
+}
+
+/**
+ * Returns a problem string beginning with a [category] tag for one pinned title, or undefined when the reporter lists
+ * it exactly once (an it.each pin: its declared instance count), the located call is a plain, undisabled it()/test(),
+ * and its body reaches an assertion. `file` is the real path the reporter prints.
+ */
+function auditPin(listing: readonly ListedCase[], file: string, source: string, pinned: Pick<Pin, "title" | "each">): string | undefined {
+  const title = pinned.title;
+  const isEach = pinned.each !== undefined;
+  const matcher = eachMatcher(title);
+  const listed = listing.filter((entry) => entry.file === file && (isEach ? matcher.test(entry.name) : entry.name === title || entry.name.endsWith(` > ${title}`)));
+  if (listed.length === 0) {
+    return "[not-registered] the collect-only listing has no such case (renamed, deleted, commented out, skipped, todo'd, parked behind a describe modifier or option, conditionally registered, aliased, shadowed or wrapped in an empty each/for table)";
+  }
+  if (isEach) {
+    if (listed.length !== pinned.each) return `[each-count] the collect-only listing has ${listed.length} instances, expected exactly ${pinned.each}`;
+  } else if (listed.length > 1) return `[duplicate] the collect-only listing has ${listed.length} such cases, expected exactly one`;
+
+  const code = maskComments(source);
+  const opens = locateCalls(source, title);
+  if (opens.length !== 1) return `[source-unlocated] the title is the first argument of an it()/test() call ${opens.length} times in the source, expected exactly once`;
+  const open = opens[0] ?? 0;
+  let head = code.slice(0, open).trimEnd();
+  if (isEach) {
+    const eachAt = eachHeadEnd(code, open);
+    if (eachAt === undefined) return "[call-head] the pinned it.each table call could not be located";
+    head = code.slice(0, eachAt).trimEnd();
+  } else if (/[)\]]$/u.test(head)) return "[call-head-modifier] the call head is a modifier expression, not a plain it()/test()";
+  const headMatch = HEAD_MODIFIER.exec(head);
+  if (!headMatch) return "[call-head] the call head is not a plain it()/test() (aliased or shadowed binding)";
+  const modifiers = (headMatch[1] ?? "")
+    .split(".")
+    .map((part) => part.trim())
+    .filter((part) => part.length > 0);
+  const blocked = modifiers.filter((part) => !ALLOWED_HEAD_MODIFIERS.has(part));
+  if (blocked.length > 0) return `[call-head-modifier] the call head carries .${blocked.join(".")}`;
+
+  const args = callArguments(code, open);
+  if (!args) return "[source-unbalanced] the pinned call could not be scanned to its closing parenthesis";
+  for (const arg of args.slice(1)) {
+    const text = arg.trim();
+    if (text.startsWith("{")) {
+      const option = OPTION_MODIFIER.exec(maskCode(text));
+      if (option) return `[options-modifier] the options argument sets ${option[1]}`;
+    } else if (RUNTIME_SKIP.test(maskCode(text))) {
+      return "[runtime-skip] the case body calls skip() (a runtime skip the collect-only run cannot see)";
+    }
+  }
+  const callback = args.slice(1).find((arg) => /=>|\bfunction\b/u.test(maskCode(arg)));
+  return auditReach(callback ?? "");
+}
+
+/* ------------------------------------------------------------------ */
+/* Tier truth: default-gate against the vitest config, receipts against forge.toml (READ ONLY) */
+/* ------------------------------------------------------------------ */
+
+interface GateConfig {
+  readonly include: readonly string[];
+  readonly exclude: readonly string[];
+  readonly allowOnly: boolean | undefined;
+}
+
+function gateConfigOf(config: unknown): GateConfig {
+  const test = (config as { test?: { include?: unknown; exclude?: unknown; allowOnly?: unknown } }).test ?? {};
+  const strings = (value: unknown): readonly string[] => (Array.isArray(value) ? value.filter((item): item is string => typeof item === "string") : []);
+  return { include: strings(test.include), exclude: strings(test.exclude), allowOnly: typeof test.allowOnly === "boolean" ? test.allowOnly : undefined };
+}
+
+/** A pinned case is claimed to run in the default gate: verify the claim against the real vitest config. */
+function auditGateTier(file: string, gateConfig: GateConfig): string | undefined {
+  if (!matchesAny(gateConfig.include, file)) return `[tier-truth] ${file} is labelled default-gate but is not matched by the vitest include`;
+  if (matchesAny(gateConfig.exclude, file)) return `[tier-truth] ${file} is labelled default-gate but is excluded from the vitest run`;
+  if (gateConfig.allowOnly !== false) return "[tier-truth] vitest allowOnly is not false, so a focused case would narrow the default gate silently";
+  return undefined;
+}
+
+/** Lines of the [build.commands.<name>] block of forge.toml, or undefined when the block does not exist. */
+function commandBlock(forgeToml: string, command: string): string[] | undefined {
+  const lines = forgeToml.split("\n");
+  const at = lines.findIndex((line) => line.trim() === `[build.commands.${command}]`);
+  if (at < 0) return undefined;
+  const rest = lines.slice(at + 1);
+  const next = rest.findIndex((line) => /^\s*\[/u.test(line));
+  return next < 0 ? rest : rest.slice(0, next);
+}
+
+/** The receipt half's command is a real forge.toml block, runs a script that exists, and is NOT in gate = [...]. */
+function auditReceipt(command: string, forgeToml: string, exists: (relative: string) => boolean): string | undefined {
+  const block = commandBlock(forgeToml, command);
+  if (!block) return `[receipt-command] forge.toml has no [build.commands.${command}] block`;
+  const script = /qa\/[\w./-]+/u.exec(block.find((line) => /^\s*command\s*=/u.test(line)) ?? "")?.[0];
+  if (!script) return `[receipt-script] [build.commands.${command}] names no qa/ script`;
+  if (!exists(script)) return `[receipt-script] [build.commands.${command}] runs ${script}, which does not exist`;
+  const gate = /^gate\s*=\s*\[([^\]]*)\]/mu.exec(forgeToml)?.[1] ?? "";
+  if ([...gate.matchAll(/"([^"]+)"/gu)].some((match) => match[1] === command)) return `[receipt-in-gate] ${command} is listed in gate = [...], so it is not a receipt outside the default gate`;
+  return undefined;
+}
+
+/* ------------------------------------------------------------------ */
+/* Docs exactness (RENDERED text, whole-section slice equality)         */
+/* ------------------------------------------------------------------ */
+
+/** The doc as a renderer shows it: HTML comments blanked (an unterminated comment swallows the rest), line numbers kept. */
+function renderedDocs(doc: string): string {
+  return doc.replace(/<!--[\s\S]*?(?:-->|$)/gu, (comment) => blank(comment));
+}
+
+interface SectionView {
+  readonly start: number;
+  readonly end: number;
+  readonly body: readonly string[];
+}
+
+function sectionOf(doc: string): SectionView | undefined {
+  const lines = renderedDocs(doc).split("\n");
+  const heads = lines.flatMap((line, index) => (line === `## ${DOCS_HEADING}` ? [index] : []));
+  if (heads.length !== 1) return undefined;
+  const start = heads[0] ?? 0;
+  const rest = lines.slice(start + 1);
+  const next = rest.findIndex((line) => /^#{1,2} /u.test(line));
+  const end = next < 0 ? lines.length : start + 1 + next;
+  return { start, end, body: lines.slice(start + 1, end).filter((line) => line.trim().length > 0) };
+}
+
+function auditDocs(doc: string): string[] {
+  const problems: string[] = [];
+  const headings = renderedDocs(doc)
+    .split("\n")
+    .filter((line) => line === `## ${DOCS_HEADING}`).length;
+  const section = sectionOf(doc);
+  if (!section) {
+    problems.push(`[docs-heading] ${DOCS_FILE} has ${headings} rendered lines exactly "## ${DOCS_HEADING}", expected one`);
+    return problems;
+  }
+  if (section.body.length !== SECTION_LINES.length || section.body.some((line, index) => line !== SECTION_LINES[index])) {
+    problems.push(`[docs-section] ${DOCS_FILE} section "${DOCS_HEADING}" is not the exact frozen body (the fixture sentence, the seven Measure bullets, the target sentence, nothing added, moved or hidden)`);
+  }
+  const rawSection = doc.split("\n").slice(section.start + 1, section.end);
+  if (rawSection.some((line) => line.includes("<!--") || line.includes("-->"))) problems.push(`[docs-comment] ${DOCS_FILE} section "${DOCS_HEADING}" carries an HTML comment, so rendered docs may differ from the text`);
+  return problems;
+}
+
+/** Violations naming the clause when a row's clause is no longer in the rendered section. */
+function auditDocsClause(row: Row, doc: string): string[] {
+  const section = sectionOf(doc);
+  const present = section !== undefined && (row.part === "measure" ? section.body.includes(row.clause) : section.body.join("\n").includes(row.clause));
+  return present ? [] : [`[docs-clause] ${DOCS_FILE}: the ${row.part} clause "${row.clause}" is no longer present in the rendered "${DOCS_HEADING}" section`];
+}
+
+/* ------------------------------------------------------------------ */
+/* Row audit (every failure names the row and half)                     */
+/* ------------------------------------------------------------------ */
+
+interface PinLocation {
+  readonly absolute: string;
+  readonly source: string;
+}
+
+/** Violations of one row, each beginning with `<row id>/<half id>`. Empty only when every pin is live and honest. */
+function rowViolations(row: Row, listing: readonly ListedCase[], locate: (file: string) => PinLocation, gateConfig: GateConfig, forgeToml: string, exists: (relative: string) => boolean): string[] {
+  const out: string[] = [];
+  for (const half of row.halves) {
+    const where = `${row.id}/${half.id}`;
+    if (!row.clause.includes(half.clause)) out.push(`${where}: clause is not part of the row clause`);
+    if (half.pins.length === 0) {
+      if ((half.reason ?? "").trim().length < 60) out.push(`${where}: unpinned half carries no reason`);
+      else if (!/wb-[0-9a-z]+(?:\.[0-9]+)?/u.test(half.reason ?? "")) out.push(`${where}: unpinned half names no owning bead`);
+      continue;
+    }
+    if (half.reason !== undefined) out.push(`${where}: carries both pins and an unpinned reason`);
+    if (half.kind === "receipt") {
+      if (!half.command) out.push(`${where}: a receipt half names no forge.toml command`);
+      else {
+        const receiptProblem = auditReceipt(half.command, forgeToml, exists);
+        if (receiptProblem) out.push(`${where}: ${receiptProblem}`);
+      }
+    } else if (half.command !== undefined) out.push(`${where}: a guard half names a forge.toml command`);
+    for (const pinned of half.pins) {
+      if (!pinned.file.startsWith("test/")) out.push(`${where}: ${pinned.file} is not under test/`);
+      const tier = auditGateTier(pinned.file, gateConfig);
+      if (tier) out.push(`${where}: ${pinned.file} :: ${pinned.title}: ${tier}`);
+      const location = locate(pinned.file);
+      const focus = auditFocus(location.source);
+      if (focus) out.push(`${where}: ${pinned.file}: ${focus}`);
+      const problem = auditPin(listing, location.absolute, location.source, pinned);
+      if (problem) out.push(`${where}: ${pinned.file} :: ${pinned.title}: ${problem}`);
+    }
+  }
+  return out;
+}
+
+const PINNED_FILES = [...new Set(ROWS.flatMap((row) => row.halves.flatMap((half) => half.pins.map((pinned) => pinned.file))))].sort();
+const DISTINCT_PINS = new Set(ROWS.flatMap((row) => row.halves.flatMap((half) => half.pins.map((pinned) => `${pinned.file}::${pinned.title}`))));
+
+/* ------------------------------------------------------------------ */
+/* Shared fixtures                                                     */
+/* ------------------------------------------------------------------ */
+
+let scratchDir = "";
+let realListing: ListResult | undefined;
+
+beforeAll(() => {
+  scratchDir = mkdtempSync(join(tmpdir(), "perf-census-"));
+  realListing = vitestList(scratchDir, REPO_ROOT, PINNED_FILES, []);
+}, SPAWN_TIMEOUT_MS + 10_000);
+
+afterAll(() => {
+  if (scratchDir) rmSync(scratchDir, { recursive: true, force: true });
 });
 
-describe("wb-9x5.17 title locator falsifiers (the mutant a rename, delete or skip would be)", () => {
-  const live = [
-    'describe("suite", () => {',
-    '  it("case alpha", () => {});',
-    "  it('case beta', async () => {});",
-    '  it.each([1, 2])("case gamma %s", () => {});',
-    "});",
-  ].join("\n");
+const GATE_CONFIG = gateConfigOf(vitestConfig);
+const repoExists = (relative: string): boolean => existsSync(resolve(REPO_ROOT, relative));
 
-  it("finds a live double-quoted, single-quoted and it.each title exactly once", () => {
-    expect(locateTitle(live, "case alpha")).toEqual({ occurrences: 1, forbiddenModifiers: [] });
-    expect(locateTitle(live, "case beta")).toEqual({ occurrences: 1, forbiddenModifiers: [] });
-    expect(locateTitle(live, "case gamma %s")).toEqual({ occurrences: 1, forbiddenModifiers: [] });
+function locateRepo(file: string): PinLocation {
+  return { absolute: realpathSync(resolve(REPO_ROOT, file)), source: readRepoFile(file) };
+}
+
+function coverage(rows: readonly Row[]): { readonly pinned: string[]; readonly unpinned: string[] } {
+  const pinnedHalves: string[] = [];
+  const unpinnedHalves: string[] = [];
+  for (const row of rows) for (const half of row.halves) (half.pins.length > 0 ? pinnedHalves : unpinnedHalves).push(`${row.id}/${half.id}`);
+  return { pinned: pinnedHalves, unpinned: unpinnedHalves };
+}
+
+describe("docs/14 performance-benchmark census (wb-9x5.17)", () => {
+  describe("frozen census table", () => {
+    it("freezes nineteen rows: seven fixture properties, seven Measure bullets and five target clauses, in docs order", () => {
+      expect(Object.isFrozen(ROWS)).toBe(true);
+      expect(ROWS).toHaveLength(19);
+      expect(ROWS.filter((row) => row.part === "fixture")).toHaveLength(7);
+      expect(ROWS.filter((row) => row.part === "measure")).toHaveLength(7);
+      expect(ROWS.filter((row) => row.part === "target")).toHaveLength(5);
+      expect(new Set(ROWS.map((row) => row.id)).size).toBe(ROWS.length);
+      expect(ROWS.filter((row) => row.part === "measure").map((row) => row.clause)).toStrictEqual([...MEASURE_BULLETS]);
+      for (const row of ROWS.filter((candidate) => candidate.part === "fixture")) expect(FIXTURE_SENTENCE.includes(row.clause), `${row.id}: clause is not in the fixture sentence`).toBe(true);
+      for (const row of ROWS.filter((candidate) => candidate.part === "target")) expect(TARGET_SENTENCE.includes(row.clause), `${row.id}: clause is not in the target sentence`).toBe(true);
+    });
+
+    it("every half names a clause inside its row clause, and a half is pinned xor carries a reason", () => {
+      for (const row of ROWS) {
+        for (const half of row.halves) {
+          expect(row.clause.includes(half.clause), `${row.id}/${half.id}: clause "${half.clause}" is not inside the row clause`).toBe(true);
+          if (half.pins.length > 0) expect(half.reason, `${row.id}/${half.id} is pinned and must carry no reason`).toBeUndefined();
+          else expect((half.reason ?? "").length, `${row.id}/${half.id} is unpinned and needs a reason`).toBeGreaterThan(60);
+        }
+      }
+    });
+
+    it("every measure and target row has a guard half that is pinned or honestly unpinned, and a receipt half only where a forge.toml command exists", () => {
+      for (const row of ROWS) {
+        expect(
+          row.halves.some((half) => half.kind === "guard"),
+          `${row.id}: no guard half`,
+        ).toBe(true);
+        for (const half of row.halves.filter((candidate) => candidate.kind === "receipt")) expect(half.command, `${row.id}/${half.id}: a receipt half names its command`).toMatch(/^[a-z0-9-]+$/u);
+      }
+    });
+
+    it("leaves exactly the tool-response-size bullet and the four-view layout resize half unpinned, and an unpinned half is never counted as passed", () => {
+      const report = coverage(ROWS);
+      expect(report.unpinned).toStrictEqual(["measure:layout-render-navigate-resize/four-view-resize", "measure:pi-tool-response-size/whole"]);
+      expect(report.pinned.length + report.unpinned.length).toBe(ROWS.reduce((sum, row) => sum + row.halves.length, 0));
+      for (const row of ROWS) {
+        for (const half of row.halves.filter((candidate) => candidate.pins.length === 0)) {
+          expect(half.reason ?? "", `${row.id}/${half.id}: names the owning bead`).toMatch(/wb-[0-9a-z]+\.[0-9]+/u);
+        }
+      }
+    });
+
+    it("binds the landed wb-9x5.8 terminal-bytes guard titles instead of leaving the terminal-bytes bullet unpinned", () => {
+      const terminal = ROWS.find((row) => row.id === "measure:terminal-bytes");
+      expect(terminal?.halves.map((half) => `${half.kind}:${half.pins.length > 0}`)).toStrictEqual(["guard:true", "receipt:true"]);
+      expect(terminal?.halves[0]?.pins.every((pinned) => pinned.file === LINEDIFF)).toBe(true);
+    });
+
+    it("binds a verified-distinct set of pins: every original pin is kept and the landed guards are added", () => {
+      expect(DISTINCT_PINS.size).toBeGreaterThanOrEqual(25);
+      expect(PINNED_FILES).toStrictEqual([ATTENTION, GROUPED, LINEDIFF, PERF, RECOVERY, SELECTOR, TIMELINE].sort());
+    });
   });
 
-  it("goes red on a rename: the old title is no longer present", () => {
-    expect(locateTitle(live.replace("case alpha", "case alpha renamed"), "case alpha").occurrences).toBe(0);
+  describe("docs exactness (rendered text, whole-section slice equality)", () => {
+    const doc = readRepoFile(DOCS_FILE);
+
+    it("the real docs/14 Performance benchmark section is the exact frozen body", () => {
+      expect(auditDocs(doc)).toStrictEqual([]);
+    });
+
+    it("carries the 'Each major work package must have a falsifier' sentence this census answers", () => {
+      expect(renderedDocs(doc).includes("Each major work package must have a falsifier")).toBe(true);
+    });
+
+    for (const row of ROWS) {
+      it(`carries the ${row.part} clause "${row.clause}" in the rendered docs/14 section`, () => {
+        expect(auditDocsClause(row, doc), `${row.id}`).toStrictEqual([]);
+      });
+    }
+
+    interface DocMutant {
+      readonly id: string;
+      readonly label: string;
+      readonly mutate: (text: string) => string;
+      readonly tag: string;
+    }
+    const swap = (from: string, to: string) => (text: string) => text.replace(from, to);
+    const SECTION_END = "\n## Truth labels and release gates";
+    const BULLET = "- recover snapshot/cursor latency";
+
+    const DOC_MUTANTS: readonly DocMutant[] = [
+      { id: "D1", label: "heading text edited", mutate: swap("## Performance benchmark\n", "## Performance benchmarks\n"), tag: "docs-heading" },
+      { id: "D2", label: "heading demoted to ###", mutate: swap("## Performance benchmark\n", "### Performance benchmark\n"), tag: "docs-heading" },
+      { id: "D3", label: "a ### Status subsection weakening the target is added inside the section", mutate: swap(SECTION_END, `\n### Status\n\nThe 20ms target is advisory.\n${SECTION_END}`), tag: "docs-section" },
+      { id: "D4", label: "section body relocated under a moved heading, empty heading left behind", mutate: (text) => `${swap("## Performance benchmark\n", "## Performance benchmark (moved)\n")(text)}\n## Performance benchmark\n\n`, tag: "docs-section" },
+      { id: "D5", label: "target prose weakened to 200ms", mutate: swap("<=20ms per navigation", "<=200ms per navigation"), tag: "docs-section" },
+      { id: "D6", label: "an eighth unclassified Measure bullet", mutate: swap("- Pi model tool response size under bounded queries\n", "- Pi model tool response size under bounded queries\n- battery drain per redraw\n"), tag: "docs-section" },
+      { id: "D7", label: "a Measure bullet hidden in a single-line HTML comment", mutate: swap(BULLET, `<!-- ${BULLET} -->`), tag: "docs-section" },
+      { id: "D8", label: "the target sentence hidden in a multi-line HTML comment", mutate: swap("Proposed responsive target", "<!--\nProposed responsive target"), tag: "docs-section" },
+      { id: "D9", label: "an inline HTML comment inside a sentence", mutate: swap("5 nested groups depth", "5 nested <!-- x --> groups depth"), tag: "docs-section" },
+      { id: "D10", label: "an unterminated comment above the heading swallows the whole section", mutate: swap("## Performance benchmark\n", "<!--\n## Performance benchmark\n"), tag: "docs-heading" },
+      { id: "D11", label: "a comment line appended inside the section", mutate: swap("No invented pass numbers.\n", "No invented pass numbers.\n<!-- note -->\n"), tag: "docs-comment" },
+      { id: "D12", label: "the honesty sentence deleted", mutate: swap(" No invented pass numbers.", ""), tag: "docs-section" },
+      { id: "DC1", label: "control: fixture node count weakened", mutate: swap(">=1000 nodes", ">=100 nodes"), tag: "docs-section" },
+      { id: "DC2", label: "control: a Measure bullet deleted", mutate: swap("- number of visible rendered rows vs total nodes\n", ""), tag: "docs-section" },
+      { id: "DC3", label: "control: two Measure bullets swapped", mutate: swap("- p50/p95 reducer update and UI selector time\n- p50/p95 layout render/navigate/resize time", "- p50/p95 layout render/navigate/resize time\n- p50/p95 reducer update and UI selector time"), tag: "docs-section" },
+    ];
+
+    for (const mutant of DOC_MUTANTS) {
+      it(`${mutant.id} ${mutant.label} goes red [${mutant.tag}]`, () => {
+        const mutated = mutant.mutate(doc);
+        expect(mutated, `${mutant.id} must actually change the docs text`).not.toBe(doc);
+        expect(auditDocs(mutated).join("\n"), `${mutant.id} must name its category`).toContain(`[${mutant.tag}]`);
+      });
+    }
+
+    it("a dropped or weakened clause goes red naming the clause (the row audit, not only the section audit)", () => {
+      const mutated = swap("redraw <=4Hz live", "redraw <=40Hz live")(doc);
+      const row = ROWS.find((candidate) => candidate.id === "target:redraw-4hz") as Row;
+      expect(auditDocsClause(row, mutated).join("\n")).toContain('"redraw <=4Hz live"');
+      const hidden = swap(BULLET, `<!-- ${BULLET} -->`)(doc);
+      const bullet = ROWS.find((candidate) => candidate.id === "measure:recover-latency") as Row;
+      expect(auditDocsClause(bullet, hidden).join("\n")).toContain(`"${BULLET}"`);
+    });
   });
 
-  it("goes red on a deletion: the case is gone", () => {
-    expect(locateTitle(live.replace('  it("case alpha", () => {});\n', ""), "case alpha").occurrences).toBe(0);
+  describe("tier truth (the labels are verified against the real vitest config and forge.toml, read-only)", () => {
+    const forgeToml = readRepoFile("forge.toml");
+    const anchor = pinFirst();
+    function pinFirst(): Pin {
+      return ROWS[0]?.halves[0]?.pins[0] as Pin;
+    }
+
+    it("every pinned file's default-gate label is matched by the vitest include, absent from its exclude, and allowOnly is false", () => {
+      expect(GATE_CONFIG.include.length, "vitest include must be readable from vitest.config.ts").toBeGreaterThan(0);
+      expect(GATE_CONFIG.allowOnly).toBe(false);
+      for (const file of PINNED_FILES) expect(auditGateTier(file, GATE_CONFIG), file).toBeUndefined();
+    });
+
+    it("every receipt half names a command that exists in forge.toml, runs an existing script, and is outside gate = [...]", () => {
+      const receipts = ROWS.flatMap((row) => row.halves.filter((half) => half.kind === "receipt").map((half) => ({ where: `${row.id}/${half.id}`, command: half.command ?? "" })));
+      expect(receipts.length).toBeGreaterThan(0);
+      for (const entry of receipts) expect(auditReceipt(entry.command, forgeToml, repoExists), entry.where).toBeUndefined();
+    });
+
+    it("T1 a pinned file added to the vitest exclude list goes red [tier-truth]", () => {
+      expect(auditGateTier(anchor.file, { ...GATE_CONFIG, exclude: [...GATE_CONFIG.exclude, anchor.file] })).toContain("[tier-truth]");
+    });
+
+    it("T2 a pinned file outside the vitest include goes red [tier-truth]", () => {
+      expect(auditGateTier(anchor.file, { ...GATE_CONFIG, include: ["qa/**/*.test.ts"] })).toContain("[tier-truth]");
+    });
+
+    it("T3 a pin re-pointed at a default-excluded (live-tier) file still labelled default-gate goes red, naming the row", () => {
+      const excluded = GATE_CONFIG.exclude.find((pattern) => pattern.startsWith("test/") && !pattern.includes("*")) ?? "";
+      expect(excluded.length, "vitest.config.ts must exclude at least one concrete test file").toBeGreaterThan(0);
+      const row: Row = { id: "row-t3", part: "fixture", clause: "q", halves: [guard("h", "q", [{ file: excluded, title: "anything" }])] };
+      const violations = rowViolations(row, [], () => ({ absolute: "/nonexistent", source: "" }), GATE_CONFIG, forgeToml, repoExists);
+      expect(violations.some((line) => line.startsWith("row-t3/h:") && line.includes("[tier-truth]"))).toBe(true);
+    });
+
+    it("T4 a gate config whose allowOnly is not false goes red [tier-truth] (a focused case would narrow the gate)", () => {
+      expect(auditGateTier(anchor.file, { ...GATE_CONFIG, allowOnly: undefined })).toContain("[tier-truth]");
+      expect(auditGateTier(anchor.file, { ...GATE_CONFIG, allowOnly: true })).toContain("[tier-truth]");
+    });
+
+    it("T5 a receipt half naming a command that does not exist goes red [receipt-command]", () => {
+      expect(auditReceipt("no-such-command", forgeToml, repoExists)).toContain("[receipt-command]");
+    });
+
+    it("T6 a receipt command listed in gate = [...] goes red [receipt-in-gate]", () => {
+      const gated = forgeToml.replace(/^gate\s*=\s*\[/mu, 'gate = ["line-diff-bench", ');
+      expect(auditReceipt("line-diff-bench", gated, repoExists)).toContain("[receipt-in-gate]");
+    });
+
+    it("T7 a receipt block whose script does not exist goes red [receipt-script]", () => {
+      expect(auditReceipt("line-diff-bench", forgeToml, () => false)).toContain("[receipt-script]");
+      const noScript = forgeToml.replace("node qa/workbench/line-diff-bench.mjs", "node nowhere");
+      expect(auditReceipt("line-diff-bench", noScript, repoExists)).toContain("[receipt-script]");
+    });
+
+    it("T8 a receipt half whose block was renamed away goes red naming the row and half", () => {
+      const renamed = forgeToml.replace("[build.commands.line-diff-bench]", "[build.commands.line-diff-bench-renamed]");
+      const row = ROWS.find((candidate) => candidate.id === "measure:terminal-bytes") as Row;
+      const violations = rowViolations(row, [], locateRepo, GATE_CONFIG, renamed, repoExists);
+      expect(violations.some((line) => line.startsWith("measure:terminal-bytes/receipt:") && line.includes("[receipt-command]"))).toBe(true);
+    });
+
+    it("T9 a guard half that names a forge.toml command, or a receipt half that names none, goes red", () => {
+      const pinned = pin(GROUPED, "builds the default W21 fixture identically twice");
+      const guardWithCommand: Row = { id: "row-t9a", part: "fixture", clause: "q", halves: [{ ...guard("h", "q", [pinned]), command: "line-diff-bench" }] };
+      const receiptWithout: Row = { id: "row-t9b", part: "fixture", clause: "q", halves: [{ id: "h", kind: "receipt", clause: "q", pins: [pinned] }] };
+      expect(rowViolations(guardWithCommand, [], locateRepo, GATE_CONFIG, forgeToml, repoExists).some((line) => line.startsWith("row-t9a/h: a guard half names a forge.toml command"))).toBe(true);
+      expect(rowViolations(receiptWithout, [], locateRepo, GATE_CONFIG, forgeToml, repoExists).some((line) => line.startsWith("row-t9b/h: a receipt half names no forge.toml command"))).toBe(true);
+    });
   });
 
-  it("goes red on a duplicate: the title occurs twice", () => {
-    expect(locateTitle(`${live}\nit("case alpha", () => {});`, "case alpha").occurrences).toBe(2);
+  describe("pinned cases (collect-only reporter over the real suites)", () => {
+    it("the collect-only child run over every pinned suite succeeds (a focused .only under allowOnly:false fails it)", () => {
+      expect(realListing, "beforeAll did not run").toBeDefined();
+      expect(realListing?.status, `vitest list failed: ${realListing?.stderr.slice(-400) ?? ""}`).toBe(0);
+      expect(realListing?.cases.length ?? 0).toBeGreaterThan(0);
+    });
+
+    for (const row of ROWS) {
+      it(`${row.id} is pinned to live cases that reach an assertion (or honestly unpinned), with verified tiers, receipts and no focused case`, () => {
+        const listing = realListing;
+        expect(listing, "beforeAll did not run").toBeDefined();
+        expect(rowViolations(row, listing?.cases ?? [], locateRepo, GATE_CONFIG, readRepoFile("forge.toml"), repoExists)).toStrictEqual([]);
+      });
+    }
   });
 
-  it.each(["skip", "todo", "fails", "only"])("goes red on it.%s", (modifier) => {
-    const mutated = live.replace('it("case alpha"', `it.${modifier}("case alpha"`);
-    expect(locateTitle(mutated, "case alpha").forbiddenModifiers).toEqual([modifier]);
+  describe("the scanner is falsifiable: one hand-authored mutant per silent mode, run through the real collect-only reporter", () => {
+    interface Mutant {
+      readonly id: string;
+      readonly label: string;
+      readonly source: string;
+      /** undefined = must stay green; otherwise the [category] the row audit must name (and name alone, when exclusive). */
+      readonly red: string | undefined;
+      readonly pin?: Pick<Pin, "title" | "each">;
+    }
+
+    const T = "pinned case";
+    const body = "() => { expect(1).toBe(1); }";
+    const wrap = (inner: string): string => `describe("suite", () => {\n${inner}\n});\n`;
+    const intact = wrap(`  it("${T}", ${body});\n  it("sibling", ${body});`);
+
+    const MUTANTS: readonly Mutant[] = [
+      { id: "C0", label: "intact control", source: intact, red: undefined },
+      { id: "C1", label: "rename", source: wrap(`  it("${T} renamed", ${body});`), red: "not-registered" },
+      { id: "C2", label: "delete", source: wrap(`  it("sibling", ${body});`), red: "not-registered" },
+      { id: "C3", label: "duplicated registration", source: wrap(`  it("${T}", ${body});\n  it("${T}", ${body});`), red: "duplicate" },
+      { id: "C4", label: "it.skip", source: wrap(`  it.skip("${T}", ${body});`), red: "not-registered" },
+      { id: "C5", label: "it.todo", source: wrap(`  it.todo("${T}");`), red: "not-registered" },
+      { id: "C6", label: "it.fails (polarity inverted)", source: wrap(`  it.fails("${T}", () => { expect(1).toBe(2); });`), red: "call-head-modifier" },
+      { id: "C7", label: "test.skip", source: wrap(`  test.skip("${T}", ${body});`), red: "not-registered" },
+      { id: "C8", label: "title only inside an assertion string", source: wrap(`  it("sibling", () => { expect("x").toBe("${T}"); });`), red: "not-registered" },
+      { id: "C9", label: "single-quoted title stays green", source: wrap(`  it('${T}', ${body});`), red: undefined },
+      { id: "C10", label: "backtick title stays green", source: wrap(`  it(\`${T}\`, ${body});`), red: undefined },
+      { id: "C11", label: "it.skipIf(true)", source: wrap(`  it.skipIf(true)("${T}", ${body});`), red: "not-registered" },
+      { id: "C12", label: "it.concurrent.skip", source: wrap(`  it.concurrent.skip("${T}", ${body});`), red: "not-registered" },
+      { id: "S1", label: "options { skip: true }", source: wrap(`  it("${T}", { skip: true }, ${body});`), red: "not-registered" },
+      { id: "S2", label: "options { todo: true }", source: wrap(`  it("${T}", { todo: true }, ${body});`), red: "not-registered" },
+      { id: "S5", label: "ctx.skip() inside the body", source: wrap(`  it("${T}", (ctx) => { ctx.skip(); expect(1).toBe(1); });`), red: "runtime-skip" },
+      { id: "S6", label: "destructured skip() inside the body", source: wrap(`  it("${T}", ({ skip }) => { skip(); expect(1).toBe(1); });`), red: "runtime-skip" },
+      { id: "S7", label: "describe.skip around the case", source: `describe.skip("suite", () => {\n  it("${T}", ${body});\n});\n`, red: "not-registered" },
+      { id: "S8", label: "describe.todo around the case", source: `describe.todo("suite", () => {\n  it("${T}", ${body});\n});\n`, red: "not-registered" },
+      { id: "S9", label: "describe.skipIf(true)", source: `describe.skipIf(true)("suite", () => {\n  it("${T}", ${body});\n});\n`, red: "not-registered" },
+      { id: "S10", label: "describe.runIf(false)", source: `describe.runIf(false)("suite", () => {\n  it("${T}", ${body});\n});\n`, red: "not-registered" },
+      { id: "S11", label: "describe options { skip: true }", source: `describe("suite", { skip: true }, () => {\n  it("${T}", ${body});\n});\n`, red: "not-registered" },
+      { id: "S12", label: "block comment around the case", source: wrap(`  /* it("${T}", ${body}); */\n  it("sibling", ${body});`), red: "not-registered" },
+      { id: "S13", label: "conditional registration behind a never-set env var", source: wrap(`  if (process.env.PERF_CENSUS_NEVER_SET) {\n    it("${T}", ${body});\n  }`), red: "not-registered" },
+      { id: "S14", label: "void substitution: the title is only an argument of a void expression", source: wrap(`  void ("${T}", ${body});\n  it("sibling", ${body});`), red: "not-registered" },
+      { id: "S15", label: 'it["skip"] bracket head', source: wrap(`  it["skip"]("${T}", ${body});`), red: "not-registered" },
+      { id: "S16", label: "parenthesized (it.skip)(...) head", source: wrap(`  (it.skip)("${T}", ${body});`), red: "not-registered" },
+      { id: "S17", label: "newline before .skip", source: wrap(`  it\n    .skip("${T}", ${body});`), red: "not-registered" },
+      { id: "S18", label: "it.each over an empty table wrapping a plain pin", source: wrap(`  it.each([])("${T}", ${body});`), red: "not-registered" },
+      { id: "S19", label: "alias const t = it.skip", source: wrap(`  const t = it.skip;\n  t("${T}", ${body});`), red: "not-registered" },
+      { id: "S20b", label: "env-guarded early return: the case passes vacuously", source: wrap(`  it("${T}", () => {\n    if (!process.env.PERF_CENSUS_NEVER_SET) return;\n    expect(1).toBe(1);\n  });`), red: "assertion-unreached" },
+      { id: "S21", label: "it.for over an empty table", source: wrap(`  it.for([])("${T}", ${body});`), red: "not-registered" },
+      { id: "S22", label: "it.extend({}).skip", source: wrap(`  it.extend({}).skip("${T}", ${body});`), red: "not-registered" },
+      { id: "S23", label: "line comment-out of the whole case", source: wrap(`  // it("${T}", ${body});\n  it("sibling", ${body});`), red: "not-registered" },
+      { id: "S24", label: "enclosing describe.each([]) with an empty table", source: `describe.each([])("suite %s", () => {\n  it("${T}", ${body});\n});\n`, red: "not-registered" },
+      { id: "L1", label: "third leg: no expect() at all", source: wrap(`  it("${T}", () => {});`), red: "no-assertion" },
+      { id: "L2", label: "third leg: the only expect() sits inside an if on a never-set env var", source: wrap(`  it("${T}", () => {\n    if (process.env.PERF_CENSUS_NEVER_SET) {\n      expect(1).toBe(1);\n    }\n  });`), red: "assertion-unreached" },
+      { id: "L3", label: "third leg: the only expect() sits inside a nested callback nobody calls", source: wrap(`  it("${T}", () => {\n    const later = () => {\n      expect(1).toBe(1);\n    };\n    void later;\n  });`), red: "assertion-unreached" },
+      { id: "L4", label: "third leg: a brace-less early return", source: wrap(`  it("${T}", () => {\n    if (!process.env.PERF_CENSUS_NEVER_SET) return;\n    expect(1).toBe(1);\n  });`), red: "assertion-unreached" },
+      { id: "L5", label: "third leg: the only expect() sits in a loop over an empty table", source: wrap(`  it("${T}", () => {\n    for (const row of []) {\n      expect(row).toBeDefined();\n    }\n  });`), red: "assertion-unreached" },
+      { id: "L6", label: "third leg: a brace-less if guards the only expect()", source: wrap(`  it("${T}", () => {\n    if (process.env.PERF_CENSUS_NEVER_SET) expect(1).toBe(1);\n  });`), red: "assertion-unreached" },
+      { id: "L7", label: "third leg: a short-circuit guards the only expect()", source: wrap(`  it("${T}", () => {\n    process.env.PERF_CENSUS_NEVER_SET && expect(1).toBe(1);\n  });`), red: "assertion-unreached" },
+      { id: "L8", label: "third leg: the only expect() is a string and a comment", source: wrap(`  it("${T}", () => {\n    const note = "expect(1).toBe(1)";\n    // expect(1).toBe(1)\n    void note;\n  });`), red: "no-assertion" },
+      { id: "L8b", label: "third leg: only expect.any / expect.arrayContaining matchers, no expect() call", source: wrap(`  it("${T}", () => {\n    const matcher = expect.arrayContaining([1]);\n    void matcher;\n    void expect.any(Number);\n  });`), red: "no-assertion" },
+      { id: "L9", label: "third leg: an unconditional await expect after an await stays green", source: wrap(`  it("${T}", async () => {\n    await Promise.resolve();\n    await expect(Promise.resolve(1)).resolves.toBe(1);\n  });`), red: undefined },
+      { id: "L10", label: "third leg: an expect() inside try stays green", source: wrap(`  it("${T}", () => {\n    try {\n      expect(1).toBe(1);\n    } finally {\n      void 0;\n    }\n  });`), red: undefined },
+      { id: "L11", label: "third leg: an expression-bodied arrow stays green", source: wrap(`  it("${T}", () => expect(1).toBe(1));`), red: undefined },
+      { id: "L12", label: "third leg: a return AFTER the first expect() stays green", source: wrap(`  it("${T}", () => {\n    expect(1).toBe(1);\n    if (process.env.PERF_CENSUS_NEVER_SET) return;\n  });`), red: undefined },
+      { id: "L13", label: "third leg: a nested callback return before the first expect() stays green", source: wrap(`  it("${T}", () => {\n    const rows = [1].map((n) => {\n      return n;\n    });\n    expect(rows).toHaveLength(1);\n  });`), red: undefined },
+      { id: "X1", label: "precision: a comment quoting the title inside another case body stays green", source: wrap(`  it("${T}", ${body});\n  it("sibling", () => {\n    // it.skip("${T}", () => {});\n    expect(1).toBe(1);\n  });`), red: undefined },
+      { id: "X1b", label: "precision: a string quoting an it.skip of the title inside another case body stays green", source: wrap(`  it("${T}", ${body});\n  it("sibling", () => {\n    const quoted = 'it.skip("${T}", () => {})';\n    expect(quoted).toContain("skip");\n  });`), red: undefined },
+      { id: "X2", label: "wrong-cause check: the pinned case deleted next to an it.skip neighbour is [not-registered], never the neighbour's modifier", source: wrap(`  it.skip("sibling", ${body});`), red: "not-registered" },
+      { id: "P1", label: "precision: it.concurrent still runs", source: wrap(`  it.concurrent("${T}", ${body});`), red: undefined },
+      { id: "P2", label: "precision: a comment that mentions it.skip and it.only while the case runs", source: wrap(`  // note: this was once it.skip("${T}") and it.only("${T}")\n  it("${T}", ${body});`), red: undefined },
+      { id: "P3", label: "precision: a string that mentions .only while the case runs", source: wrap(`  it("${T}", () => { expect("it.only is banned").toContain(".only"); });`), red: undefined },
+      { id: "P4", label: "precision: an object key named only: false stays green", source: wrap(`  it("${T}", () => { expect({ only: false }.only).toBe(false); });`), red: undefined },
+      { id: "E0", label: "it.each pin with its declared two instances stays green", source: wrap(`  it.each([1, 2])("${T} %s", ${body});`), red: undefined, pin: { title: `${T} %s`, each: 2 } },
+      { id: "E1", label: "it.each table shrunk to one instance", source: wrap(`  it.each([1])("${T} %s", ${body});`), red: "each-count", pin: { title: `${T} %s`, each: 2 } },
+      { id: "E2", label: "it.each over an empty table", source: wrap(`  it.each([])("${T} %s", ${body});`), red: "not-registered", pin: { title: `${T} %s`, each: 2 } },
+      { id: "E3", label: "it.skip.each over the table", source: wrap(`  it.skip.each([1, 2])("${T} %s", ${body});`), red: "not-registered", pin: { title: `${T} %s`, each: 2 } },
+    ];
+
+    /** Focused-call mutants: the census itself must name [only-focus]; the listing is taken with allowOnly true so it succeeds. */
+    const FOCUS_MUTANTS: readonly Mutant[] = [
+      { id: "S3", label: "options { only: true } on the pinned case", source: wrap(`  it("${T}", { only: true }, ${body});`), red: "only-focus" },
+      { id: "F1", label: "sibling it.only", source: wrap(`  it("${T}", ${body});\n  it.only("sibling", ${body});`), red: "only-focus" },
+      { id: "F2", label: "describe.only around a sibling suite", source: `describe("suite", () => {\n  it("${T}", ${body});\n});\ndescribe.only("other", () => {\n  it("x", ${body});\n});\n`, red: "only-focus" },
+      { id: "F3", label: "test.only on the pinned case itself", source: wrap(`  test.only("${T}", ${body});`), red: "only-focus" },
+      { id: "F4", label: 'bracket it["only"]', source: wrap(`  it("${T}", ${body});\n  it["only"]("sibling", ${body});`), red: "only-focus" },
+      { id: "F5", label: "describe options { only: true }", source: `describe("suite", { only: true }, () => {\n  it("${T}", ${body});\n});\n`, red: "only-focus" },
+    ];
+
+    const outcomes = new Map<string, readonly string[]>();
+
+    const pinFor = (mutant: Mutant): Pin => ({ file: `test/m-${mutant.id}.test.ts`, title: mutant.pin?.title ?? T, ...(mutant.pin?.each !== undefined ? { each: mutant.pin.each } : {}) });
+    const rowFor = (mutant: Mutant): Row => ({ id: `row-${mutant.id}`, part: "fixture", clause: "q", halves: [guard("half", "q", [pinFor(mutant)])] });
+    const scratchConfig = (allowOnly: boolean): string => `export default { test: { globals: true, allowOnly: ${allowOnly}, include: ["**/*.test.ts"] } };\n`;
+    const SCRATCH_GATE: GateConfig = { include: ["test/**/*.test.ts"], exclude: [], allowOnly: false };
+
+    function scratchRun(dir: string, files: readonly string[], allowOnly: boolean): ListResult {
+      writeFileSync(join(dir, "vitest.config.mjs"), scratchConfig(allowOnly));
+      return vitestList(dir, dir, files, [`--config=${join(dir, "vitest.config.mjs")}`, `--root=${dir}`]);
+    }
+
+    function audit(mutants: readonly Mutant[], dir: string, listing: ListResult): void {
+      const real = realpathSync(dir);
+      for (const mutant of mutants) {
+        const locate = (file: string): PinLocation => ({ absolute: join(real, file.replace(/^test\//u, "")), source: mutant.source });
+        outcomes.set(mutant.id, rowViolations(rowFor(mutant), listing.cases, locate, SCRATCH_GATE, "", () => true));
+      }
+    }
+
+    beforeAll(() => {
+      const dir = join(scratchDir, "mutants");
+      mkdirSync(dir, { recursive: true });
+      for (const mutant of MUTANTS) writeFileSync(join(dir, `m-${mutant.id}.test.ts`), mutant.source);
+      const batch = scratchRun(dir, MUTANTS.map((mutant) => `m-${mutant.id}.test.ts`), false);
+      if (batch.status !== 0) throw new Error(`mutant collect-only run failed: ${batch.stderr.slice(-400)}`);
+      audit(MUTANTS, dir, batch);
+
+      const focusDir = join(scratchDir, "focus");
+      mkdirSync(focusDir, { recursive: true });
+      for (const mutant of FOCUS_MUTANTS) writeFileSync(join(focusDir, `m-${mutant.id}.test.ts`), mutant.source);
+      const focusBatch = scratchRun(focusDir, FOCUS_MUTANTS.map((mutant) => `m-${mutant.id}.test.ts`), true);
+      if (focusBatch.status !== 0) throw new Error(`focus collect-only run failed: ${focusBatch.stderr.slice(-400)}`);
+      audit(FOCUS_MUTANTS, focusDir, focusBatch);
+
+      const soloDir = join(scratchDir, "only-fails");
+      mkdirSync(soloDir, { recursive: true });
+      const solo = FOCUS_MUTANTS.find((mutant) => mutant.id === "F1") as Mutant;
+      writeFileSync(join(soloDir, `m-${solo.id}.test.ts`), solo.source);
+      const failing = scratchRun(soloDir, [`m-${solo.id}.test.ts`], false);
+      outcomes.set("F1-allowOnly", failing.status === 0 ? [] : ["[listing-failed] the collect-only run failed under allowOnly:false"]);
+    }, SPAWN_TIMEOUT_MS * 3 + 20_000);
+
+    for (const mutant of [...MUTANTS, ...FOCUS_MUTANTS]) {
+      it(`${mutant.id} ${mutant.label}: ${mutant.red === undefined ? "stays green" : `goes red as [${mutant.red}] naming the row`}`, () => {
+        const violations = outcomes.get(mutant.id);
+        expect(violations, "mutant was not executed").toBeDefined();
+        if (mutant.red === undefined) expect(violations, `${mutant.id} must stay green`).toStrictEqual([]);
+        else {
+          const lines = violations ?? [];
+          const named = lines.filter((line) => line.startsWith(`row-${mutant.id}/half:`) && line.includes(`[${mutant.red}]`));
+          expect(named.length, `${mutant.id} must go red as [${mutant.red}] naming row-${mutant.id}; got ${JSON.stringify(lines)}`).toBeGreaterThan(0);
+          if (mutant.red !== "only-focus") expect(lines.length, `${mutant.id} must go red for its own cause alone; got ${JSON.stringify(lines)}`).toBe(named.length);
+        }
+      });
+    }
+
+    it("F1 is also fatal to the collect-only run under the gate's allowOnly:false (a second, independent catch)", () => {
+      expect(outcomes.get("F1-allowOnly")?.[0]).toContain("[listing-failed]");
+    });
+
+    it("an enclosing describe.skip, an options skip or a comment-out on every case reddens every pinned row under it (breadth)", () => {
+      const titles = ["breadth one", "breadth two", "breadth three"];
+      const sources: ReadonlyMap<string, string> = new Map([
+        ["describe-skip", `describe.skip("suite", () => {\n${titles.map((title) => `  it("${title}", ${body});`).join("\n")}\n});\n`],
+        ["options-skip", `describe("suite", () => {\n${titles.map((title) => `  it("${title}", { skip: true }, ${body});`).join("\n")}\n});\n`],
+        ["comment-out", `describe("suite", () => {\n${titles.map((title) => `  // it("${title}", ${body});`).join("\n")}\n});\n`],
+      ]);
+      const dir = join(scratchDir, "breadth");
+      mkdirSync(dir, { recursive: true });
+      for (const [id, source] of sources) writeFileSync(join(dir, `b-${id}.test.ts`), source);
+      const listing = scratchRun(dir, [...sources.keys()].map((id) => `b-${id}.test.ts`), false);
+      expect(listing.status, listing.stderr.slice(-300)).toBe(0);
+      const real = realpathSync(dir);
+      for (const [id, source] of sources) {
+        const row: Row = { id: `row-${id}`, part: "fixture", clause: "q", halves: [guard("half", "q", titles.map((title) => ({ file: `test/b-${id}.test.ts`, title })))] };
+        const violations = rowViolations(row, listing.cases, (file) => ({ absolute: join(real, file.replace(/^test\//u, "")), source }), SCRATCH_GATE, "", () => true);
+        expect(violations.filter((line) => line.includes("[not-registered]")), `${id}: every pinned row under the parked suite must go red`).toHaveLength(titles.length);
+      }
+    });
+
+    it("the scratch harness really executed nothing: mutant sources never ran a case (collect-only)", () => {
+      expect(outcomes.size).toBe(MUTANTS.length + FOCUS_MUTANTS.length + 1);
+    });
   });
 
-  it("goes red on test.skip and on it.skip.each", () => {
-    expect(locateTitle('test.skip("case delta", () => {});', "case delta").forbiddenModifiers).toEqual(["skip"]);
-    expect(locateTitle('it.skip.each([1])("case delta %s", () => {});', "case delta %s").forbiddenModifiers).toEqual(["skip"]);
-  });
-
-  it("does not count a title that only appears inside an assertion string", () => {
-    expect(locateTitle('expect(x).toBe("case alpha");', "case alpha").occurrences).toBe(0);
+  it("reads the pinned files as text and a collect-only listing only: no pinned case or bench is executed, no receipt is read and no live, timing or scale pass is claimed", () => {
+    expect(PINNED_FILES.every((file) => readRepoFile(file).length > 0)).toBe(true);
+    expect(PINNED_FILES.every((file) => file.startsWith("test/") && file.endsWith(".test.ts"))).toBe(true);
   });
 });
