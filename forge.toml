@@ -49,6 +49,10 @@ timeout = 120
 command = "node qa/workbench/install-smoke.mjs"
 timeout = 240
 
+[build.commands.install-minimal]
+command = "node qa/workbench/install-minimal.mjs"
+timeout = 300
+
 [build.commands.e2e]
 command = "npm run test:e2e"
 timeout = 180
