@@ -128,7 +128,8 @@ export type JournalLineClass = (typeof JOURNAL_LINE_CLASSES)[number];
  *   only while the rest of admission holds — same call key, unbroken prefix,
  *   and for a node read a host that still declares the capability a read.
  * - `live`: never handed back; a resume that reaches it runs the call live.
- * - `refuse-uncertain-effect`: a journaled effect; a resume that reaches it
+ * - `refuse-uncertain-effect`: a journaled effect, or a node row recorded
+ *   with no effect class at all (fail-closed); a resume that reaches it
  *   stops with a typed uncertain-effect refusal unless a bound operator
  *   decision settles it. Not gated on any basis.
  * - `decision`: an operator decision row, never a result; consulted only at
@@ -163,7 +164,7 @@ export const JOURNAL_UNSUPPORTED_WARNING = "journal unsupported";
 export const JOURNAL_DUPLICATE_POSITION_WARNING = "journal duplicate position";
 /** Journaled effects a resume will stop on. */
 export const JOURNAL_UNCERTAIN_EFFECT_WARNING = "journal uncertain effect";
-/** Node rows with no recorded effect class, which a resume re-runs live. */
+/** Node rows with no recorded effect class, at which a resume stops fail-closed as an uncertain effect. */
 export const JOURNAL_UNVOUCHED_NODE_WARNING = "journal unvouched node";
 /** Entries recorded under more than one replay basis. */
 export const JOURNAL_MIXED_BASIS_WARNING = "journal mixed basis";
@@ -462,8 +463,6 @@ const NOTES = {
     "Journaled failed read: never replayed. A resume re-runs it live, or refuses with uncertain-effect if the capability now declares another class.",
   readEmpty:
     "Journaled read with no recorded payload, so there is nothing to replay. A resume re-runs it live, or refuses with uncertain-effect if the capability now declares another class.",
-  unvouched:
-    "Node entry recorded without an effect class (the pre-policy shape): never replayed. A resume re-runs it live, so an effect it performed would be repeated.",
 } as const;
 
 function effectNote(effectClass: string, capabilityId: string, bound: number): string {
@@ -471,6 +470,14 @@ function effectNote(effectClass: string, capabilityId: string, bound: number): s
     `Journaled ${quoted(effectClass)} effect of producer ${quoted(producerOf(capabilityId))}: never re-run or replayed. ` +
     "A resume that reaches this position stops with a typed uncertain-effect refusal unless a bound operator decision " +
     `(workflow_reconcile) settles it; ${bound} bound decision(s) recorded here.`
+  );
+}
+
+function unvouchedNote(bound: number): string {
+  return (
+    "Node entry recorded without an effect class (the pre-policy shape): unclassified, so a resume treats it fail-closed " +
+    "as an uncertain effect and never re-runs or replays it. A resume that reaches this position stops with a typed " +
+    `uncertain-effect refusal unless a bound operator decision settles it; ${bound} bound decision(s) recorded here.`
   );
 }
 
@@ -548,19 +555,18 @@ function classifyEntry(line: number, parsed: KeptLine, context: Context): ReadJo
     // runtime.ts node admission: replay only a recorded read, under the same
     // basis (basis-on-every-entry, so a read without one is the legacy class),
     // with a payload to hand back; refuse any other recorded class whatever
-    // the basis; keep the pre-policy "run live" for an entry with no class.
+    // the basis, and refuse an entry with no class at all (fail-closed, wb-tu1).
     if (entry.effectClass === "read") {
       if (entry.basis === undefined) return shape("node-read", "live", NOTES.readLegacy);
       if (!entry.ok) return shape("node-read", "live", NOTES.readFailed);
       if (entry.text === undefined) return shape("node-read", "live", NOTES.readEmpty);
       return shape("node-read", "replay-conditional-on-basis", NOTES.readScoped);
     }
-    if (entry.effectClass === undefined) return shape("node-effectful", "live", NOTES.unvouched);
     const bound = context.bound.get(line) ?? 0;
     return shape(
       "node-effectful",
       "refuse-uncertain-effect",
-      effectNote(entry.effectClass, entry.capabilityId ?? "", bound),
+      entry.effectClass === undefined ? unvouchedNote(bound) : effectNote(entry.effectClass, entry.capabilityId ?? "", bound),
       { refusal: "uncertain-effect", boundDecisions: bound },
     );
   }
@@ -705,18 +711,20 @@ export function classifyJournal(raw: string): JournalCompatReport {
   const refusing = read.filter((line) => line.replay === "refuse-uncertain-effect");
   if (refusing.length > 0) {
     const named = refusing.map(
-      (line) => `position ${line.index} (line ${line.line}, ${quoted(line.capabilityId ?? "")} ${quoted(line.effectClass ?? "")})`,
+      (line) =>
+        `position ${line.index} (line ${line.line}, ${quoted(line.capabilityId ?? "")} ${line.effectClass === null ? "unclassified" : quoted(line.effectClass)})`,
     );
     warnings.push(
       `${JOURNAL_UNCERTAIN_EFFECT_WARNING}: ${listed(named)} record(s) an effect a resume never re-runs or replays; ` +
         "a resume that reaches one stops with a typed uncertain-effect refusal unless a bound operator decision settles it.",
     );
   }
-  const unvouched = read.filter((line) => line.class === "node-effectful" && line.replay === "live");
+  const unvouched = refusing.filter((line) => line.effectClass === null);
   if (unvouched.length > 0) {
     const named = unvouched.map((line) => `position ${line.index} (line ${line.line}, ${quoted(line.capabilityId ?? "")})`);
     warnings.push(
-      `${JOURNAL_UNVOUCHED_NODE_WARNING}: ${listed(named)} carry no effect class; a resume re-runs each live, repeating any effect it performed.`,
+      `${JOURNAL_UNVOUCHED_NODE_WARNING}: ${listed(named)} carry no effect class, so a resume treats each fail-closed as an uncertain effect: ` +
+        "it stops at that position and never re-runs whatever the call may have done.",
     );
   }
   if (cohorts.length > 1) {
