@@ -81,6 +81,10 @@ timeout = 300
 command = "node qa/workbench/inspector-grouped-bench.mjs"
 timeout = 300
 
+[build.commands.topology-slice-grouped-bench]
+command = "node qa/workbench/topology-slice-grouped-bench.mjs"
+timeout = 300
+
 [build.commands.reducer-selector-bench]
 command = "node qa/workbench/reducer-selector-bench.mjs"
 timeout = 300
