@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { CapabilityError } from '../src/workbench/capability-registry.js';
 import {
@@ -12,6 +13,7 @@ import {
 import {
   CLAUDE_TRANSCRIPT_GRANT,
   createEvidenceLoaders,
+  EVIDENCE_LOADER_ROWS,
   FORGE_INSPECT_GRANT,
   FURNACE_INSPECT_GRANT,
   type FurnaceEvidenceRead,
@@ -499,5 +501,113 @@ describe('a clipped preview is a strict prefix ending at the cut (wb-v53 respin 
     const preview = await previewOf(['漢'.repeat(100)], 99, 300);
     expect(preview).toEqual(['漢'.repeat(33), TRUNCATED]);
     expect(Buffer.byteLength(preview[0] ?? '')).toBe(99);
+  });
+});
+
+describe('producer-mapping conformance pass (wb-6ze.20, docs/workbench/20 § Producer mapping)', () => {
+  const uuid = '11111111-2222-3333-4444-555555555555';
+  const claudeTarget: readonly [NativeRef, string] = [native('claude-agent-sdk', 'session-1', 'session'), `claude-message:${uuid}`];
+  const furnaceTarget: readonly [NativeRef, string] = [native('furnace', 'run-1', 'run'), 'attempt-1'];
+  const forgeTarget: readonly [NativeRef, string] = [native('forge', 'pkg', 'gate-status'), 'forge-operation:op-1'];
+  const allGrants = [CLAUDE_TRANSCRIPT_GRANT, FURNACE_INSPECT_GRANT, FORGE_INSPECT_GRANT];
+  const forgeRead = (over: Record<string, unknown> = {}) => ({ status: 'passed', capturedAt: at, ...over });
+  const readers = () => ({
+    claude: vi.fn(async () => [{ type: 'user', uuid, text: 'hi' }]),
+    furnace: vi.fn(async () => ({ runId: 'run-1', attemptId: 'attempt-1', stream: 'stdout', text: 'ok', complete: true, lossy: false, capturedAt: at })),
+    forge: vi.fn(async () => forgeRead()),
+  });
+  const PINNED_ROWS = [
+    { provider: 'claude-agent-sdk', requiredGrant: 'claude:transcript', refKind: 'claude-message:<uuid>' },
+    { provider: 'furnace', requiredGrant: 'furnace:inspect', refKind: 'native Attempt id listed on the owning run node' },
+    { provider: 'forge', requiredGrant: 'forge:inspect', refKind: 'forge-operation:<operation_id>' },
+  ];
+
+  it('EVIDENCE_LOADER_ROWS is the frozen docs/20 three-row producer table and nothing else', () => {
+    expect(EVIDENCE_LOADER_ROWS).toEqual(PINNED_ROWS);
+    expect(Object.isFrozen(EVIDENCE_LOADER_ROWS)).toBe(true);
+    for (const row of EVIDENCE_LOADER_ROWS) expect(Object.isFrozen(row)).toBe(true);
+    expect(() => (EVIDENCE_LOADER_ROWS as unknown as unknown[]).push({ provider: 'hyperunix', requiredGrant: 'hyperunix:inspect', refKind: 'x' })).toThrow(TypeError);
+    // The pinned-table assertion itself fails when a fourth row is appended.
+    const appended = [...EVIDENCE_LOADER_ROWS, { provider: 'hyperunix', requiredGrant: 'hyperunix:inspect', refKind: 'x' }];
+    expect(() => expect(appended).toEqual(PINNED_ROWS)).toThrow();
+  });
+
+  it('createEvidenceLoaders returns loaders in row order carrying each row provider and requiredGrant', () => {
+    const loaders = createEvidenceLoaders({ grants: () => allGrants, ...readers() });
+    expect(loaders.map(l => [l.provider, l.requiredGrant])).toEqual(EVIDENCE_LOADER_ROWS.map(row => [row.provider, row.requiredGrant]));
+    expect(EVIDENCE_LOADER_ROWS.map(row => row.requiredGrant)).toEqual([CLAUDE_TRANSCRIPT_GRANT, FURNACE_INSPECT_GRANT, FORGE_INSPECT_GRANT]);
+  });
+
+  it('no loader exists for a provider outside the table even when its grant is held and every reader is supplied', async () => {
+    const spies = readers();
+    const loaders = createEvidenceLoaders({ grants: () => [...allGrants, 'hyperunix:inspect', 'reactivefiber:inspect', 'beads:inspect'], ...spies });
+    expect(loaders.map(l => l.provider)).toEqual(EVIDENCE_LOADER_ROWS.map(row => row.provider));
+    const s = store(loaders);
+    for (const provider of ['hyperunix', 'reactivefiber', 'beads', 'unknown']) {
+      const ref = native(provider, 'n1', 'operation');
+      await s.request(scope, ref, 'forge-operation:op-1');
+      expect(s.get(scope, ref, 'forge-operation:op-1')).toEqual({ state: 'unavailable', reason: 'no-loader' });
+    }
+    for (const spy of Object.values(spies)) expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('canLoad accepts exactly its row ref shape and rejects the other two shapes', () => {
+    const [claude, furnace, forge] = createEvidenceLoaders({ grants: () => allGrants, ...readers() });
+    const shapes = [claudeTarget[1], furnaceTarget[1], forgeTarget[1]];
+    expect(shapes.map(ref => claude?.canLoad(ref))).toEqual([true, false, false]);
+    expect(shapes.map(ref => furnace?.canLoad(ref))).toEqual([false, true, false]);
+    expect(shapes.map(ref => forge?.canLoad(ref))).toEqual([false, false, true]);
+  });
+
+  it('routes provider-first: of the nine provider x ref-shape pairs exactly the three row pairs reach a reader, and only on load', async () => {
+    const spies = readers();
+    const loaders = createEvidenceLoaders({ grants: () => allGrants, ...spies });
+    for (const spy of Object.values(spies)) expect(spy).toHaveBeenCalledTimes(0);
+    const s = store(loaders);
+    const providers = [claudeTarget[0], furnaceTarget[0], forgeTarget[0]];
+    const shapes = [claudeTarget[1], furnaceTarget[1], forgeTarget[1]];
+    const states: string[][] = [];
+    for (const [p, ref] of providers.entries()) {
+      const row: string[] = [];
+      for (const [r, shape] of shapes.entries()) {
+        await s.request(scope, ref, shape);
+        const entry = s.get(scope, ref, shape);
+        row.push(entry.state === 'unavailable' ? `unavailable:${entry.reason}` : entry.state);
+        if (p === r) expect(entry).toMatchObject({ state: 'loaded' });
+      }
+      states.push(row);
+    }
+    expect(states).toEqual([
+      ['loaded', 'unavailable:no-loader', 'unavailable:no-loader'],
+      ['unavailable:no-loader', 'loaded', 'unavailable:no-loader'],
+      ['unavailable:no-loader', 'unavailable:no-loader', 'loaded'],
+    ]);
+    for (const spy of Object.values(spies)) expect(spy).toHaveBeenCalledTimes(1);
+  });
+
+  it('a forge result carries sourceBasis only when digest-shaped and copies truncation, freshness, capturedAt and receipt from the reader', async () => {
+    const digest = `sha256:${'a1'.repeat(32)}`;
+    const load = async (sourceBasis: string) => {
+      const s = store(createEvidenceLoaders({
+        grants: () => [FORGE_INSPECT_GRANT],
+        forge: async () => forgeRead({ lines: ['gate ok'], preview: ['gate ok'], bytes: 7, truncated: true, freshness: 'stale', sourceBasis, producerReceipt: 'cmd_42' }),
+      }));
+      await s.request(scope, forgeTarget[0], forgeTarget[1]);
+      return s.get(scope, forgeTarget[0], forgeTarget[1]);
+    };
+    expect(await load(digest)).toMatchObject({ state: 'loaded', sourceBasis: digest, truncated: true, capturedAt: at, freshness: 'stale', producerReceipt: 'cmd_42' });
+    for (const bad of ['main', '/tmp/x', 'sha256:abc']) {
+      const entry = await load(bad);
+      expect(entry).toMatchObject({ state: 'loaded', truncated: true, capturedAt: at });
+      expect('sourceBasis' in entry).toBe(false);
+    }
+  });
+
+  it('the producer module imports no SDK or child_process and never labels a result verified', () => {
+    const source = readFileSync(new URL('../src/workbench/evidence-producers.ts', import.meta.url), 'utf8');
+    const specifiers = [...source.matchAll(/(?:from|import)\s*\(?\s*["']([^"']+)["']/g)].map(match => match[1] ?? '');
+    expect(specifiers.length).toBeGreaterThan(0);
+    for (const specifier of specifiers) expect(specifier.startsWith('./')).toBe(true);
+    expect(source).not.toMatch(/child_process|@anthropic|claude-agent-sdk\/|verified/i);
   });
 });
