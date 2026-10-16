@@ -18,7 +18,7 @@ Separate:
 
 ## Runtime and host requirements
 
-- Credentials sourced from deployment/SDK supported mechanism; no secret copied into script VM.
+- Credentials sourced from deployment/SDK supported mechanism; no secret copied into script VM. The two interpreter launch seams pass an allowlisted environment only (`src/workbench/process-env.ts`): the embedded worker gets none of `process.env`, the detached host gets the named operational variables and no credential-shaped name; a deployment that authenticates the SDK through an environment variable must instead provision the SDK's credential store for detached hosts.
 - Workspace materialization pinned to correct basis and permissions.
 - Provider clients initialized lazily with scoped resource ownership.
 - Streaming bounded by max in-flight node calls, backend admission and configured quota.

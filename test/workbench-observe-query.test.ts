@@ -864,15 +864,15 @@ describe("workflow_observe reply builder (workbench.observe/v1)", () => {
     ]);
     expect(Object.values(kinds).every((count) => typeof count === "number")).toBe(true);
 
-    // The shared redactor is not idempotent on a JSON-shaped secret (owner-filed wb-3l3): each string is repeated through it
-    // until it settles, so the reply stays a fixed point and its byte count stays exact. A bound that cuts a surrogate pair
-    // drops the orphaned half instead of emitting it.
+    // The shared redactor's second pass keeps the marker of a JSON-shaped secret and otherwise only over-redacts (wb-3l3,
+    // docs/20 ruling 2): each string is still repeated through it until it settles, so the reply stays a fixed point and its
+    // byte count stays exact. A bound that cuts a surrogate pair drops the orphaned half instead of emitting it.
     const settled = new ObservationProjection();
     snapshot(settled, ref("forge", "json-secret"), "inv-settle", shown("RUNNING", "active", 'config {"password":"x"} end'));
     const pair = String.fromCodePoint(0x1f600);
     snapshot(settled, ref("forge", "split-pair"), "inv-settle", shown("RUNNING", "active", `${"x".repeat(179)}${pair}${"y".repeat(50)}`));
     const settledReply = observeInvocation(settled, { scope: alice, invocationId: "inv-settle" });
-    expect(settledReply.nodes.map((node) => node.presentation.title)).toEqual(['config {"password":[REDACTED] end', `${"x".repeat(179)} [truncated]`]);
+    expect(settledReply.nodes.map((node) => node.presentation.title)).toEqual(['config {"password":[REDACTED]} end', `${"x".repeat(179)} [truncated]`]);
     const settledText = JSON.stringify(settledReply);
     expect(sanitizeWorkbenchJsonText(settledReply)).toBe(settledText);
     expect(settledReply.bytes).toBe(Buffer.byteLength(settledText));
