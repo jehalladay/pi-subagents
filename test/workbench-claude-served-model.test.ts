@@ -124,8 +124,34 @@ describe('buildServedModelReceipt', () => {
   });
 });
 
+/**
+ * Comment-blind source shape (wb-a2g.6 O1, the p5a F1 class): a pin that reads the raw runner text is satisfied by a
+ * comment that merely names the route, so every shape assertion below reads the source with comments removed.
+ */
+const stripComments = (source: string): string => source.replace(/\/\*[\s\S]*?\*\//g, '').replace(/(^|[^:'"`\\])\/\/.*$/gm, '$1');
+
+/** Every capture site of the runner and the routed form it must keep; a site that no longer matches bypasses preview(). */
+const CAPTURE_SITES: readonly [string, RegExp][] = [
+  ['native model string', /model: preview\(model, MODEL_PREVIEW\)/],
+  ['assistant error flag', /assistantError: preview\(message\.error, 60\)/],
+  ['settled error', /error: preview\(result\.error\)/],
+  ['requested alias', /requestedModel: preview\(MODEL, MODEL_PREVIEW\)/],
+  ['outcome error', /error: preview\(outcome\.error, 300\)/],
+  ['harness-failure stderr line (the one path with no builder backstop)', /harness failure: \$\{preview\(/],
+  ['harness-failure stdout receipt', /harnessFailure: preview\(/],
+];
+const bypassedSites = (source: string): string[] => {
+  const code = stripComments(source);
+  const failures = CAPTURE_SITES.filter(([, shape]) => !shape.test(code)).map(([name]) => name);
+  const rawMessages = (code.match(/error\.message/g) ?? []).length;
+  const routedMessages = (code.match(/preview\(error instanceof Error \? error\.message : error, \d+\)/g) ?? []).length;
+  if (rawMessages !== routedMessages) failures.push('a raw error.message outside preview(');
+  return failures;
+};
+
 describe('runner shape', () => {
-  const runner = readFileSync(new URL('../qa/workbench/live-served-model.mjs', import.meta.url), 'utf8');
+  const rawRunner = readFileSync(new URL('../qa/workbench/live-served-model.mjs', import.meta.url), 'utf8');
+  const runner = stripComments(rawRunner);
   it('drives the real dist host and runtime, never a mock or query override', () => {
     expect(runner).toContain("from '../../dist/workbench/claude-host.js'");
     expect(runner).toContain("from '../../dist/workflow/runtime.js'");
@@ -145,6 +171,35 @@ describe('runner shape', () => {
   });
   it('is measurement-only: no src imports', () => {
     expect(runner).not.toMatch(/from '\.\.\/\.\.\/src\//);
+  });
+  it('reads the working tree state for the receipt dirty bit (wb-a2g.6 O4)', () => {
+    expect(runner).toMatch(/dirty: /);
+    expect(runner).toMatch(/'status', '--porcelain'/);
+  });
+  it('keeps every one of the seven capture sites routed through preview() (wb-a2g.6 O1: G9 pinned)', () => {
+    expect(bypassedSites(rawRunner)).toEqual([]);
+  });
+  it('the comment stripper is string-aware enough for the runner and keeps urls and quoted slashes', () => {
+    expect(stripComments("const a = 'http://x'; // note\nconst b = 1; /* gone */")).toBe("const a = 'http://x'; \nconst b = 1; ");
+  });
+  it('is comment-blind: a comment naming the route never satisfies a pin (G11 dies)', () => {
+    const commentedOut = rawRunner.replace(/^(.*harnessFailure: preview\(.*)$/m, '// $1\n      harnessFailure: String(error),');
+    expect(commentedOut).not.toBe(rawRunner);
+    expect(bypassedSites(commentedOut)).toContain('harness-failure stdout receipt');
+    const named = rawRunner.replace('model: preview(model, MODEL_PREVIEW)', 'model: String(model) /* model: preview(model, MODEL_PREVIEW) */');
+    expect(bypassedSites(named)).toContain('native model string');
+  });
+  it('a capture that bypasses preview() is named, one mutant per site (G9/G10/G12 die)', () => {
+    const mutants: [string, string, string][] = [
+      ['harness-failure stderr line (the one path with no builder backstop)', 'harness failure: $' + '{preview(error instanceof Error ? error.message : error, 400)}', 'harness failure: $' + '{error}'],
+      ['outcome error', 'error: preview(outcome.error, 300)', 'error: outcome.error'],
+      ['native model string', 'model: preview(model, MODEL_PREVIEW)', 'model'],
+      ['settled error', 'error: preview(result.error)', 'error: result.error'],
+    ];
+    for (const [name, from, to] of mutants) {
+      expect(rawRunner).toContain(from);
+      expect(bypassedSites(rawRunner.replace(from, to))).toContain(name);
+    }
   });
 });
 
@@ -171,11 +226,11 @@ const leaks = (shown: string, secret: string): boolean => {
 describe('buildPreview: the pure, behaviourally pinned display path (wb-a2g.6 U1/U2)', () => {
   it('calls the injected sanitizer exactly once with the NAMED label layout and the bound (M2: a wrong layout dies)', () => {
     const calls: unknown[][] = [];
-    const spy = (...args: unknown[]): string => {
+    const spy = (...args: Parameters<typeof sanitizeWorkbenchText>): string => {
       calls.push(args);
-      return 'SANITIZED';
+      return sanitizeWorkbenchText(...args);
     };
-    expect(buildPreview(spy as never, 'raw input', 120)).toBe('SANITIZED');
+    expect(buildPreview(spy, 'raw input', 120)).toBe(sanitizeWorkbenchText('raw input', 120, 'label'));
     expect(calls).toEqual([['raw input', 120, 'label']]);
   });
   it('coerces a missing value to the empty string before sanitizing and rejects a non-function sanitizer', () => {
@@ -194,7 +249,8 @@ describe('buildPreview: the pure, behaviourally pinned display path (wb-a2g.6 U1
       ['aws_secret_access + BEL + _key=40 chars', `aws_secret_access${BEL}_key=${KEY40}`, KEY40],
       ['P2 Bearer + NEL', `Bearer${NEL}${TOKEN36}`, TOKEN36],
       ['P3 Bearer + NUL', `Bearer${NUL}${TOKEN36}`, TOKEN36],
-      ['K1 BEL inside password', `password=${KEY40.slice(0, 20)}${BEL}${KEY40.slice(20)}`, KEY40],
+      ['K1 BEL inside the password KEYWORD (952 corpus:108)', `pass${BEL}word=hunter2`, 'hunter2'],
+      ['K1v BEL inside the password VALUE (value-interior)', `password=${KEY40.slice(0, 20)}${BEL}${KEY40.slice(20)}`, KEY40],
       ['Z2 LRM inside ghp_', `gh${LRM}p_${TOKEN36}`, TOKEN36],
     ];
     const failures = cases.filter(([, raw, secret]) => leaks(buildPreview(sanitizeWorkbenchText, raw), secret)).map(([name]) => name);
@@ -210,6 +266,9 @@ describe('buildPreview: the pure, behaviourally pinned display path (wb-a2g.6 U1
     expect(shown).toContain('[REDACTED-NAME]');
     expect(shown).not.toMatch(/api[_-]?key/i);
     expect(buildPreview(sanitizeWorkbenchText, 'x'.repeat(500), 40).length).toBeLessThanOrEqual(40);
+  });
+  it('holds the final bound after the key-name mask lengthens the text (O2: G4 dies)', () => {
+    expect(buildPreview(sanitizeWorkbenchText, 'api_key '.repeat(40), 50).length).toBeLessThanOrEqual(50);
   });
 });
 
@@ -232,6 +291,12 @@ describe('builder backstop is as wide as the shared redactor and the unsafe-unit
     ['secret assignment', 'secret="abcdef"'],
     ['api key name', 'api_key'],
   ])('refuses %s', (_name, value) => rejects(value));
+  it.each([
+    ['JSON-escaped newline glued to Bearer', 'x\\nBearer abc123def456'],
+    ['JSON-escaped tab glued to Bearer', 'x\\tBearer abc123def456'],
+    ['authBearer', 'authBearer abc123def456'],
+    ['x1Bearer', 'x1Bearer abc123def456'],
+  ])('refuses a word-glued Bearer token: %s (a2g.1 J7 four-probe set)', (_name, value) => rejects(value));
   it('still admits an already-redacted assignment and a plain model id', () => {
     expect(buildServedModelReceipt(input({ requestedModel: 'password=[REDACTED]' })).requestedModel).toBe('password=[REDACTED]');
     expect(buildServedModelReceipt(input()).requestedModel).toBe(REQUESTED);
@@ -246,4 +311,23 @@ describe('builder backstop is as wide as the shared redactor and the unsafe-unit
     ['NEL', NEL],
     ['lone surrogate', LONE_HIGH],
   ])('refuses %s in a string field', (_name, unit) => rejects(`claude${unit}haiku`));
+});
+
+describe('receipt dirty bit (wb-a2g.6 O4, the vko family standard)', () => {
+  it('records whether the working tree was dirty at the revision, null when unknown', () => {
+    expect(buildServedModelReceipt(input({ dirty: false })).dirty).toBe(false);
+    expect(buildServedModelReceipt(input({ dirty: true })).dirty).toBe(true);
+    expect(buildServedModelReceipt(input()).dirty).toBeNull();
+    expect(buildServedModelReceipt(input({ dirty: 'yes' })).dirty).toBeNull();
+  });
+});
+
+describe('TRACEABILITY alias-vs-native pointer (wb-a2g.6 U3, owner landing instruction 00:06Z)', () => {
+  const trace = readFileSync(new URL('../docs/workbench/TRACEABILITY.md', import.meta.url), 'utf8');
+  it('points the alias-vs-native sentence at the gate-bound receipt of record', () => {
+    expect(trace).toContain('cmd_59b070680f65');
+    expect(trace).toContain('30af7a6');
+    expect(trace).toContain('claude-sonnet-5-5');
+    expect(trace).toContain('claude-haiku-4-5');
+  });
 });

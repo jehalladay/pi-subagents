@@ -195,6 +195,8 @@ The outer Pi model request returned unauthorized credentials, while the separate
 
 Actual inference provenance for that terminal receipt differs from the requested model: configuration and SDK init/UI named `claude-opus-5-5`, while persisted native assistant messages reported `openai.gpt-6.1-sol` through the deployed gateway. This proves the real Claude Agent SDK runtime/session/tool interface, not Anthropic Opus model inference. API intervals overlapped for the parallel calls. Observer closure occurred after completion and therefore does not establish active-run view-close safety by itself.
 
+Evidence of record for the alias-versus-native split (wb-a2g.6, owner-designated): the one-turn served-model journey, bound by gate receipt `cmd_59b070680f65` at commit `30af7a6`, observed the deployed gateway serve `claude-sonnet-5-5` in the genuine assistant `message.model` for the requested `claude-haiku-4-5` alias while system/init echoed `claude-haiku-4-5`. The receipt records `matchesRequested` and never judges the mismatch.
+
 ## Curated per-role provider tools over the native SDK MCP interface
 
 `createCuratedTools` exposes `capability_discover`, `capability_contract` and `capability_invoke` through the actual Claude Agent SDK in-process MCP server. A Claude-native role's finite `capabilities` list is exposure only; discovery, inspection and invocation each require their own exact host grant plus the producer's declared permissions, with pinned contract versions, bounded redacted outputs, host-pinned principal/workspace/invocation identity and native cancellation. Oversized answers to effectful calls report uncertain-effect rather than fabricated success, and no client object enters the workflow VM.

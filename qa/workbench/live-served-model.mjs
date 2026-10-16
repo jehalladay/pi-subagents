@@ -75,6 +75,15 @@ function revision() {
   }
 }
 
+/** True when the working tree differs from HEAD, false when clean, null when git cannot say (the receipt dirty bit). */
+function dirty() {
+  try {
+    return execFileSync('git', ['status', '--porcelain'], { cwd: new URL('../..', import.meta.url), encoding: 'utf8' }).trim().length > 0;
+  } catch {
+    return null;
+  }
+}
+
 function sdkVersion() {
   return JSON.parse(readFileSync(new URL('../../node_modules/@anthropic-ai/claude-agent-sdk/package.json', import.meta.url), 'utf8')).version;
 }
@@ -95,6 +104,7 @@ try {
   const receipt = buildServedModelReceipt({
     utc: new Date().toISOString(),
     revision: revision(),
+    dirty: dirty(),
     node: process.version,
     arch: process.arch,
     platform: process.platform,

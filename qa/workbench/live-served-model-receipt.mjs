@@ -26,11 +26,12 @@
 export const SERVED_MODEL_CONTRACT = 'workbench.claude-served-model/v1';
 
 /**
- * The shared redactor's shapes (src/workbench/redaction.ts): Bearer|Basic schemes, the four key prefixes, the assignment keys
+ * The shared redactor's shapes (src/workbench/redaction.ts): Bearer (deliberately UNANCHORED: a word-glued or JSON-escaped
+ * token such as authBearer, x1Bearer or a backslash-n before Bearer must still be refused, wb-a2g.1 J7) and Basic schemes, the four key prefixes, the assignment keys
  * (an already-redacted value is admitted), and the bare key name this journey has always refused.
  */
 const SECRET =
-  /\b(?:Bearer|Basic)\s+\S+|sk-ant-|sk-proj-|ghp_|github_pat_|api[_-]?key|(?:access[_-]?token|refresh[_-]?token|password|secret|aws_secret_access_key|aws_session_token)["']?\s*[=:]\s*(?!\[REDACTED\])\S/i;
+  /Bearer\s+\S+|\bBasic\s+\S+|sk-ant-|sk-proj-|ghp_|github_pat_|api[_-]?key|(?:access[_-]?token|refresh[_-]?token|password|secret|aws_secret_access_key|aws_session_token)["']?\s*[=:]\s*(?!\[REDACTED\])\S/i;
 /** The unsafe-unit set of redaction.ts: C0/C1 controls, line and paragraph separators, bidi controls, lone surrogates, default-ignorables. */
 const CONTROL = /[\u0000-\u001f\u007f-\u009f\u2028\u2029\u202a-\u202e\u2066-\u2069\ud800-\udfff]|\p{Default_Ignorable_Code_Point}/u;
 const MAX_STRING = 400;
@@ -105,6 +106,7 @@ export function buildServedModelReceipt(input) {
     contract: SERVED_MODEL_CONTRACT,
     utc: clean(input.utc, 'utc'),
     revision: clean(input.revision, 'revision'),
+    dirty: typeof input.dirty === 'boolean' ? input.dirty : null,
     node: clean(input.node, 'node'),
     arch: clean(input.arch, 'arch'),
     platform: clean(input.platform, 'platform'),
