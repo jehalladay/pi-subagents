@@ -53,7 +53,7 @@ const fixtures = join(repo, "test", "fixtures", "release-checklist");
 const meta = { utc: "2026-10-15T00:00:00.000Z", revision: "abc", dirty: false, node: "v24", vitest: "4", host: { platform: "linux", arch: "x64", cpus: 1 } };
 const CONTROL = "denies the forged grant";
 const fake: Item[] = [{ item: 6, text: "Authorized provider invocation and denial tests pass.", suites: [{ path: "test/fake-a.test.ts", negativeControls: [CONTROL] }] }];
-const bytes = Buffer.from("fake suite bytes");
+const bytes = Buffer.from(`it("${CONTROL}", () => {});\n`);
 const roots: string[] = [];
 
 function load(name: string): unknown {
@@ -176,10 +176,57 @@ describe("vitest's own verdict is part of the item verdict (U1: suite-level fail
     expect(exitOf(receipt)).toBe(1);
   });
 
+  it("O1 success false alone fails the item: exit status 0, every assertion passed, no failed file", () => {
+    const report = { ...(load("all-pass") as Record<string, unknown>), success: false };
+    const receipt = receiptFor({ 6: { report, exitStatus: 0 } });
+    expect(receipt.items[0].suites[0]).toMatchObject({ failed: 0, fileStatus: "passed" });
+    expect(receipt.items[0]).toMatchObject({ vitestExit: 0, vitestSuccess: false, pass: false });
+    expect(exitOf(receipt)).toBe(1);
+  });
+
+  it("O1 a failed file alone fails the item: exit status 0, success true, every assertion passed", () => {
+    const report = { ...(load("suite-failed") as Record<string, unknown>), success: true };
+    const receipt = receiptFor({ 6: { report, exitStatus: 0 } });
+    expect(receipt.items[0].suites[0]).toMatchObject({ failed: 0, fileStatus: "failed" });
+    expect(receipt.items[0]).toMatchObject({ vitestExit: 0, vitestSuccess: true, pass: false });
+    expect(exitOf(receipt)).toBe(1);
+  });
+
+  it("O1 the suite-failed fixture fails the item even when the exit status is 0", () => {
+    const receipt = receiptFor({ 6: { report: load("suite-failed"), exitStatus: 0 } });
+    expect(receipt.items[0].pass).toBe(false);
+    expect(exitOf(receipt)).toBe(1);
+  });
+
   it("a clean run records exit 0 and success true", () => {
     const receipt = receiptFor({ 6: { report: load("all-pass"), exitStatus: 0 } });
     expect(receipt.items[0]).toMatchObject({ vitestExit: 0, vitestSuccess: true, pass: true });
     expect(exitOf(receipt)).toBe(0);
+  });
+});
+
+describe("a pinned control converted to it.fails with a broken body is never receipted present (U3)", () => {
+  it("the guard goes red naming the suite and the title for it.fails, it.skip and it.todo declarations", () => {
+    const root = mkdtempSync(join(tmpdir(), "rc-pin-"));
+    roots.push(root);
+    mkdirSync(join(root, "test"));
+    const file = join(root, "test", "fake-a.test.ts");
+    const missing = [{ item: 6, path: "test/fake-a.test.ts", kind: "missing-negative-control", title: CONTROL }];
+    for (const modifier of ["fails", "skip", "todo", "only"]) {
+      writeFileSync(file, `it.${modifier}("${CONTROL}", () => { expect(1).toBe(2); });\n`);
+      expect(problemsOf(root, fake), modifier).toEqual(missing);
+    }
+    writeFileSync(file, `it("${CONTROL}", () => {});\n`);
+    expect(problemsOf(root, fake)).toEqual([]);
+  });
+
+  it("the receipt exits 1 with present false when the reporter says passed but the suite bytes declare it.fails", () => {
+    const failsBytes = Buffer.from(`it.fails("${CONTROL}", () => { expect(1).toBe(2); });\n`);
+    const receipt = receiptFor({ 6: { report: load("all-pass"), exitStatus: 0 } }, () => failsBytes);
+    expect(receipt.items[0].suites[0].negativeControls).toEqual([{ title: CONTROL, present: false }]);
+    expect(receipt.items[0].unavailable).toEqual([]);
+    expect(receipt.pass).toBe(false);
+    expect(exitOf(receipt)).toBe(1);
   });
 });
 
@@ -197,7 +244,7 @@ describe("pin matching is the quoted test-call form (F2)", () => {
     writeFileSync(file, `  it("${CONTROL}", () => {});\n`);
     expect(problemsOf(root, fake)).toEqual([]);
     writeFileSync(file, `  it.skip('${CONTROL}', () => {});\n`);
-    expect(problemsOf(root, fake)).toEqual([]);
+    expect(problemsOf(root, fake)).toEqual(missing);
   });
 });
 
@@ -236,7 +283,10 @@ describe("CLI contract", () => {
     const block = '[build.commands.release-checklist]\ncommand = "node qa/workbench/release-checklist-receipt.mjs"\ntimeout = 600\n';
     const smoke = '[build.commands.package-smoke]\ncommand = "bash qa/workbench/package-smoke.sh"\ntimeout = 120\n\n';
     expect(toml).toContain(`${smoke}${block}\n[build.commands.install-smoke]`);
-    expect(toml.match(/^timeout = /gm)?.length).toBe(23);
+    expect(toml.split("[build.commands.release-checklist]").length - 1).toBe(1);
+    const start = toml.indexOf("[build.commands.release-checklist]");
+    const end = toml.indexOf("\n[", start + 1);
+    expect(toml.slice(start, end).match(/^timeout = /gm)?.length).toBe(1);
   });
 
   it("source reads the reporter file only from a scratch dir it removes, and imports nothing from src or dist", () => {

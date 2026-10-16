@@ -58,9 +58,9 @@ function escapeRegExp(text) {
   return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
-/** True when the source declares a test whose title is exactly `title`: `it(`/`test(` (and `.skip` style modifiers) at a line start with the title as the whole quoted first argument. A suffix-extended title, a comment or a plain string never matches. */
+/** True when the source declares a test whose title is exactly `title` in the PLAIN call form: `it(`/`test(` at a line start with the title as the whole quoted first argument. No modifier chain is accepted (it.fails, it.skip, it.todo, it.only all invert, drop or narrow the control), and a suffix-extended title, a comment or a plain string never matches. */
 export function hasTestCall(source, title) {
-  return new RegExp(`^\\s*(?:it|test)(?:\\.\\w+)*\\(\\s*(["'\`])${escapeRegExp(title)}\\1`, 'm').test(source);
+  return new RegExp(`^\\s*(?:it|test)\\(\\s*(["'\`])${escapeRegExp(title)}\\1`, 'm').test(source);
 }
 
 /** Drift check against a tree: every pinned path exists and holds each pinned negative-control title. */
@@ -82,13 +82,14 @@ export function pinProblems(root, items = ITEMS) {
   return problems;
 }
 
-function suiteResult(report, root, suite) {
+function suiteResult(report, root, suite, source) {
   const absolute = resolve(root, suite.path);
   const file = (report?.testResults ?? []).find((entry) => resolve(entry.name ?? '') === absolute);
   const cases = file?.assertionResults ?? [];
   const count = (status) => cases.filter((c) => c.status === status).length;
   const skipped = cases.filter((c) => c.status !== 'passed' && c.status !== 'failed').map((c) => c.fullName ?? c.title);
-  const negativeControls = suite.negativeControls.map((title) => ({ title, present: cases.some((c) => c.title === title && c.status === 'passed') }));
+  // present = the reporter says the case passed AND the suite bytes declare it in the plain call form (an it.fails control with a broken body reports "passed").
+  const negativeControls = suite.negativeControls.map((title) => ({ title, present: hasTestCall(source, title) && cases.some((c) => c.title === title && c.status === 'passed') }));
   return { ran: file !== undefined, fileStatus: file?.status ?? null, fileMessage: typeof file?.message === 'string' && file.message.length > 0 ? file.message : null, tests: cases.length, passed: count('passed'), failed: count('failed'), skipped: skipped.length, skippedTitles: skipped, negativeControls };
 }
 
@@ -107,7 +108,7 @@ export function buildReceipt(inputs) {
         reasons.push(`missing suite ${suite.path}`);
         return { path: suite.path, sha256: null, fileStatus: null, fileMessage: null, tests: 0, passed: 0, failed: 0, skipped: 0, skippedTitles: [], negativeControls: suite.negativeControls.map((title) => ({ title, present: false })) };
       }
-      const result = given.report ? suiteResult(given.report, inputs.root, suite) : { ran: false, fileStatus: null, fileMessage: null, tests: 0, passed: 0, failed: 0, skipped: 0, skippedTitles: [], negativeControls: suite.negativeControls.map((title) => ({ title, present: false })) };
+      const result = given.report ? suiteResult(given.report, inputs.root, suite, Buffer.from(bytes).toString('utf8')) : { ran: false, fileStatus: null, fileMessage: null, tests: 0, passed: 0, failed: 0, skipped: 0, skippedTitles: [], negativeControls: suite.negativeControls.map((title) => ({ title, present: false })) };
       if (given.report && !result.ran) reasons.push(`reporter has no result for ${suite.path}`);
       const { ran: _ran, ...rest } = result;
       return { path: suite.path, sha256: sha256Of(bytes), ...rest };
