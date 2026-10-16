@@ -106,10 +106,18 @@ function balancedEnd(text: string, open: number): number {
   return -1;
 }
 
+/** Last significant characters after which a "/" opens a regex literal; ">" covers an arrow body (`raw => /x/.test(raw)`). */
+const REGEX_START = "(,=:[!&|?{};>";
+/** A keyword at the end of the already-copied code after which a "/" opens a regex literal (`return /x/`). */
+const REGEX_KEYWORD = /(?:^|[^\w$.])(?:return|typeof|case|do|else|in|of|new|delete|void|throw|yield|await|instanceof)\s*$/;
+
 /**
  * Removes // and block comments. String-, template- (including ${} code) and
  * regex-literal-aware, so a comment marker inside a literal survives and a real
- * comment never does. Regex literals become a neutral token. Line breaks are preserved.
+ * comment never does. A "/" opens a regex after REGEX_START characters (including an
+ * arrow ">") or a REGEX_KEYWORD, and is division otherwise; a regex literal found that way
+ * becomes a neutral token (a regex in any other position is not recognised, and the
+ * fail-closed unparseable-arguments hazard is what then surfaces it). Line breaks are preserved.
  */
 function stripComments(source: string): string {
   let out = "";
@@ -175,7 +183,7 @@ function stripComments(source: string): string {
       } else if (ch === "`") {
         copyTemplate();
         last = ch;
-      } else if (ch === "/" && (last === "" || "(,=:[!&|?{};".includes(last))) {
+      } else if (ch === "/" && (last === "" || REGEX_START.includes(last) || REGEX_KEYWORD.test(out))) {
         copyRegex();
         last = "/";
       } else {
@@ -464,6 +472,30 @@ describe("census scanner falsifiers", () => {
     expect(problemOf(`it("${FIXTURE_TITLE}", ({ skip }) => { skip(); });`)).toMatch(/skip/);
     expect(problemOf(`it("${FIXTURE_TITLE}", async function (t) { if (process.platform === "win32") t.skip(); });`)).toMatch(/skip/);
     expect(problemOf(`it("${FIXTURE_TITLE}", () => { const skipped = 1; expect(skipped).toBe(1); });`)).toBeUndefined();
+  });
+
+  it("FIND-1 (i): an arrow-body regex with bracket classes inside a describe desyncs nothing (the wb-3l3 redaction line)", () => {
+    const landed = lines(
+      'describe("group", () => {',
+      "  const hits = BRACKET_TAILS.filter(raw => /\\[REDACTED\\][\\]}]/.test(redact(raw)));",
+      `  it("${FIXTURE_TITLE}", () => {});`,
+      "});",
+    );
+    expect(hazardsOf(landed)).toEqual([]);
+    expect(problemOf(landed)).toBeUndefined();
+  });
+
+  it("FIND-1 (ii): an arrow-body regex holding // does not swallow a same-line describe.skip", () => {
+    const hidden = lines("void ((s: string) => /\\/\\//.test(s)), describe.skip(\"group\", () => {", `  it("${FIXTURE_TITLE}", () => {});`, "});");
+    expect(hazardsOf(hidden).length).toBeGreaterThan(0);
+  });
+
+  it("FIND-1 (iii): a regex after a keyword (return, typeof, case, void, throw, await) inside a describe is not division", () => {
+    for (const keyword of ["return", "typeof", "case", "void", "throw", "await", "yield", "delete", "new", "instanceof", "in", "of", "do", "else"]) {
+      const source = lines('describe("group", () => {', `  function probe(s: string) { ${keyword} /[)]/.test(s); }`, `  it("${FIXTURE_TITLE}", () => {});`, "});");
+      expect(hazardsOf(source), keyword).toEqual([]);
+    }
+    expect(hazardsOf(lines("const half = total / 2; const rest = total / 4;", 'describe("group", () => { it("a", () => {}); });'))).toEqual([]);
   });
 
   it("tier checks: a widening must be it.fails and a default case must not be", () => {
