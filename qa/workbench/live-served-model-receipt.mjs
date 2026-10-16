@@ -4,7 +4,11 @@
  * No imports, no I/O, no clock: the runner (live-served-model.mjs) gathers what
  * the real SDK did in ONE bounded turn; this module only decides what that
  * means and refuses to emit a receipt that could carry a credential.
- * Redaction is the runner's job; the builder is the backstop that throws.
+ * Sanitization is buildPreview's job, which calls the shared helper
+ * (sanitizeWorkbenchText, injected by the runner) with the NAMED "label"
+ * layout and composes no sanitizer primitive itself; the builder is the
+ * backstop that throws, as wide as the shared redactor's credential shapes
+ * and the unsafe-unit set.
  *
  * The served model is the model string a genuine assistant frame natively
  * carried (message.model). The system/init model is recorded separately as
@@ -21,11 +25,28 @@
 
 export const SERVED_MODEL_CONTRACT = 'workbench.claude-served-model/v1';
 
-const SECRET = /Bearer\s+\S+|sk-ant-|api[_-]?key/i;
-const CONTROL = /[\u0000-\u001f\u007f-\u009f]/;
+/**
+ * The shared redactor's shapes (src/workbench/redaction.ts): Bearer|Basic schemes, the four key prefixes, the assignment keys
+ * (an already-redacted value is admitted), and the bare key name this journey has always refused.
+ */
+const SECRET =
+  /\b(?:Bearer|Basic)\s+\S+|sk-ant-|sk-proj-|ghp_|github_pat_|api[_-]?key|(?:access[_-]?token|refresh[_-]?token|password|secret|aws_secret_access_key|aws_session_token)["']?\s*[=:]\s*(?!\[REDACTED\])\S/i;
+/** The unsafe-unit set of redaction.ts: C0/C1 controls, line and paragraph separators, bidi controls, lone surrogates, default-ignorables. */
+const CONTROL = /[\u0000-\u001f\u007f-\u009f\u2028\u2029\u202a-\u202e\u2066-\u2069\ud800-\udfff]|\p{Default_Ignorable_Code_Point}/u;
 const MAX_STRING = 400;
 /** Rules that mean the journey was not realised rather than that the SDK misbehaved. */
 const UNREALISED = new Set(['turn-not-completed', 'gateway-error-frame']);
+
+/**
+ * The ONE display path of the runner: the shared helper, injected, with the named "label" layout, then the credential key
+ * NAME mask (run on already-sanitized text, so no unsafe unit can split it) and the bound. Nothing is composed from the
+ * sanitizer primitives here, because deletion before redaction is what leaked split secrets (wb-a2g.1 F1).
+ */
+export function buildPreview(sanitize, value, max = 300) {
+  need(typeof sanitize === 'function', 'sanitize must be the shared sanitizeWorkbenchText helper');
+  const text = sanitize(String(value ?? ''), max, 'label').replace(/api[_-]?key/gi, '[REDACTED-NAME]');
+  return text.length > max ? text.slice(0, max) : text;
+}
 
 function need(condition, message) {
   if (!condition) throw new TypeError(message);

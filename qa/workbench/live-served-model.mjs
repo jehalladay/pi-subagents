@@ -15,9 +15,9 @@
 import { execFileSync } from 'node:child_process';
 import { readFileSync, writeFileSync } from 'node:fs';
 import { createClaudeWorkflowHost } from '../../dist/workbench/claude-host.js';
-import { redactWorkbenchText, stripUnsafeText } from '../../dist/workbench/redaction.js';
+import { sanitizeWorkbenchText } from '../../dist/workbench/redaction.js';
 import { runWorkflow } from '../../dist/workflow/runtime.js';
-import { buildServedModelReceipt, SERVED_MODEL_CONTRACT, servedModelExitCode } from './live-served-model-receipt.mjs';
+import { buildPreview, buildServedModelReceipt, SERVED_MODEL_CONTRACT, servedModelExitCode } from './live-served-model-receipt.mjs';
 
 const cwd = process.argv[2] ?? process.cwd();
 /** Haiku-class alias: one cheap turn only (release terms on the bead). */
@@ -26,14 +26,8 @@ const RUN_CEILING_MS = 90_000;
 const MODEL_PREVIEW = 200;
 const now = () => performance.timeOrigin + performance.now();
 
-/** Redact, strip control bytes, drop credential-looking key names, bound length. */
-function preview(value, max = 300) {
-  const text = stripUnsafeText(redactWorkbenchText(String(value ?? ''), max))
-    .replace(/Bearer\s+\S+/gi, '[REDACTED]')
-    .replace(/sk-ant-\S*/gi, '[REDACTED]')
-    .replace(/api[_-]?key/gi, '[REDACTED-NAME]');
-  return text.length > max ? `${text.slice(0, max - 1)}…` : text;
-}
+/** Every capture goes through the shared helper's named "label" layout (buildPreview); nothing is composed here. */
+const preview = (value, max = 300) => buildPreview(sanitizeWorkbenchText, value, max);
 
 /** The model string a frame natively carries: the system/init `model`, an assistant frame's `message.model`. */
 function nativeModel(message) {
