@@ -30,7 +30,7 @@ const PARTIAL_KINDS = ['incomplete', 'budget-exhausted', 'cancelled', 'view-inva
 const FAILURE_KINDS = ['provider-failed', 'schema-failed', 'internal-failed', 'protocol-failed', 'usage-error'] as const;
 const MUTATION_KINDS = ['mutation-rejected', 'mutation-partial'] as const;
 const MUTATION = new Set<string>(MUTATION_KINDS);
-const UNSAFE = /[\u0000-\u001f\u007f-\u009f‪-‮⁦-⁩]/;
+const UNSAFE = /[\u0000-\u001f\u007f-\u009f\u202A-\u202E\u2066-\u2069]/;
 const LIFECYCLE = /ownership|causation|dependency|hypothesis|nativeConfirmationRef/;
 const DERIVED = 'query id is a derived digest, not a native identifier';
 
@@ -433,7 +433,7 @@ describe('HyperUnix hyperunix.find reader adapter', () => {
     ['a missing target', {...context, target: undefined}],
     ['a non-string query root', {...context, target: {kind: 'hx.fs/regular-file', root: 7}}],
     ['an oversized invocation id', {...context, invocationId: 'i'.repeat(257)}],
-    ['an invocation id carrying a bidi override', {...context, invocationId: 'wf_‮hx'}],
+    ['an invocation id carrying a bidi override', {...context, invocationId: 'wf_\u202Ehx'}],
     ['an operation reference carrying a terminal escape', {...context, operationRef: {...operationRef, id: 'wf\u001b[2J'}}],
     ['an operation reference without a type', {...context, operationRef: {provider: 'pi-workflow', id: 'wf_hx_1:0'}}],
     ['an operation reference with an empty native scope', {...context, operationRef: {...operationRef, scope: ''}}],
@@ -458,7 +458,7 @@ describe('HyperUnix hyperunix.find reader adapter', () => {
   // ANSI injection)." docs/workbench/09 § "Acceptance/negative controls" item 10: "Large/secret payload does not leak into Pi tool
   // result or screen by default."
   it('H6: hostile operation and target text reach title and diagnostics stripped, redacted and bounded', () => {
-    const hostile = {...context, target: {kind: 'hx.fs/‮regular', root: 'src Bearer abc123'}};
+    const hostile = {...context, target: {kind: 'hx.fs/\u202Eregular', root: 'src Bearer abc123'}};
     const topology = hyperunixTopology(measured({operation: 'find\u001b[31m'}), hostile);
     const [snapshot] = topology.snapshots;
     // Unsafe sequences become spaces before the shared redactor runs; the shared sanitizers then redact and strip.
@@ -471,13 +471,13 @@ describe('HyperUnix hyperunix.find reader adapter', () => {
     }
     expect(JSON.stringify(topology)).not.toContain('abc123');
     // The derived id hashes the raw native and host strings: sanitization is for display, never for identity.
-    expect(snapshot.source.id).toBe(derivedId(WS, 'find\u001b[31m', 'hx.fs/‮regular', 'src Bearer abc123', []));
+    expect(snapshot.source.id).toBe(derivedId(WS, 'find\u001b[31m', 'hx.fs/\u202Eregular', 'src Bearer abc123', []));
     const projection = new ObservationProjection();
     expect(projection.refresh(snapshot)).toBe('applied');
   });
 
   it('H6: a credential glued to an escape or bidi mark is still redacted, and a 10,000-character target stays within 120', () => {
-    const glued = hyperunixTopology(measured({operation: 'find\u001b[0mBearer abc123'}), {...context, target: {kind: 'Bearer‮def456', root: 'password=ghi789'}});
+    const glued = hyperunixTopology(measured({operation: 'find\u001b[0mBearer abc123'}), {...context, target: {kind: 'Bearer\u202Edef456', root: 'password=ghi789'}});
     const title = glued.snapshots[0].node.title;
     for (const secret of ['abc123', 'def456', 'ghi789']) expect(JSON.stringify(glued)).not.toContain(secret);
     expect(title).toBe('HX find [REDACTED] [REDACTED] password=[REDACTED]');
