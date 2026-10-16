@@ -751,7 +751,7 @@ describe("journey census falsifiers (one mutant per failure mode)", () => {
     { id: "COND3 unbraced if registration", why: /conditional registration/, source: lines("if (process.env.RUN_JOURNEYS)", `  it("${TITLE}", () => {});`) },
     { id: "COND4 loop-wrapped registration", why: /conditional registration/, source: lines("for (const n of []) {", `  it("${TITLE}", () => {});`, "}") },
     { id: "COND5 if-wrapped inside a describe", why: /conditional registration/, source: lines('describe("group", () => {', "  if (process.env.RUN_JOURNEYS) {", `    it("${TITLE}", () => {});`, "  }", "});") },
-    { id: "G12 stray .only on a sibling", why: /it\.only/, source: lines(HEALTHY, 'it.only("sibling", () => {});') },
+    { id: "G12 stray .only on a sibling", why: /it\.only/, source: lines(HEALTHY, `${["it", "only"].join(".")}("sibling", () => {});`) },
     { id: "G13 it.skip on the case", why: /it\.skip/, source: `it.skip("${TITLE}", () => {});` },
     { id: "G13t it.todo on the case", why: /it\.todo/, source: `it.todo("${TITLE}");` },
     { id: "G13f it.fails on the case", why: /it\.fails/, source: `it.fails("${TITLE}", () => {});` },
