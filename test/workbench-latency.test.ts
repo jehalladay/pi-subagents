@@ -15,7 +15,7 @@ import { CapabilityError } from "../src/workbench/capability-registry.js";
 import { type CompareRun, compareWorkflowRuns } from "../src/workbench/designer.js";
 import { type InvocationSnapshot, identityDigest } from "../src/workbench/identity.js";
 import {
-  LATENCY_CAVEAT, LATENCY_CLASSES, LATENCY_CONTRACT, LATENCY_PROVIDER_CLASSES, type LatencyDecomposition, selectLatencyDecomposition, toMeasuredMetrics,
+  LATENCY_CAVEAT, LATENCY_CLASSES, LATENCY_CONTRACT, LATENCY_PROVIDER_CLASSES, LATENCY_REASONS, type LatencyDecomposition, selectLatencyDecomposition, toMeasuredMetrics,
 } from "../src/workbench/latency.js";
 import {
   type Interval, type NativeRef, ObservationProjection, type ObservationQuery, type ObservationScope, type ObservedNode, type Presentation,
@@ -293,5 +293,109 @@ describe("L5 scope and bounds", () => {
     const text = JSON.stringify(report);
     expect(text).not.toContain("SECRET");
     expect(text).not.toContain("payload:secret");
+  });
+});
+
+/**
+ * wb-h8f.10 (wb-h8f.5 gate cmd_526b2de7ee90 findings F1 and F2, owner rulings at the 895e26b landing):
+ *   A1 "displayText calls sanitizeWorkbenchText(raw.slice(0, MAX_PROVIDER_SCAN), MAX_PROVIDER_SCAN, "label") before the 64/121/128
+ *      cuts; the local INVISIBLE constant and its deletion are removed (deletion never precedes redaction). Red-first acceptance:
+ *      the merged-tree separator-corpus shapes (leak = either 7-char half of a 14-char secret visible in JSON.stringify(report))
+ *      driven through the PUBLIC selectLatencyDecomposition on BOTH the provider path and the evidence path; plus the E5 pin
+ *      (provider "Bearer <tok>" renders "[REDACTED]")."
+ *   A2 "when the component union exceeds the root wall, overhead is {measured: false} with a NEW entry in the frozen
+ *      LATENCY_REASONS vocabulary, never {measured: true, ms: 0}; the latency.overhead.ms MeasuredMetric row is then declined;
+ *      the Math.max clamp is gone (probe E3: root [10 s, 20 s], child [0 s, 30 s])."
+ * Mutation table: dropping the label-layout call (local deletion before redaction) fails H1 provider and evidence paths;
+ * re-adding the Math.max(0, ...) clamp fails H2 "declines overhead...". Every invisible unit is built with String.fromCodePoint.
+ */
+describe("H1 wb-h8f.10 A1: provider and evidence strings pass the shared label-layout sanitizer, deletion never precedes redaction", () => {
+  const cp = (code: number): string => String.fromCodePoint(code);
+  const CODES = [
+    0x200b, 0x07, 0x1b, 0x202e, 0xad, 0x2060, 0x200d, 0x200c, 0x7f, 0x2066, 0x9b, 0x180e, 0x34f, 0xfe0f, 0x3164, 0x08, 0x00, 0xfeff, 0x85,
+    0x2061, 0x2064, 0x206a, 0x115f, 0xffa0, 0xe0020, 0x1d173, 0x200e, 0x200f, 0x61c, 0x80, 0x9f, 0x202a, 0x202c, 0x2069, 0x1160, 0x17b4,
+    0x17b5, 0x180b, 0x2062, 0x2063, 0x206f, 0xfe00, 0x1bca0, 0xe0001, 0xe007f, 0xfff0,
+  ];
+  const UNITS: readonly string[] = [...CODES.map(cp), `${cp(0x1b)}[0m`];
+  const WHITESPACE = new Set([0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x85, 0x2028, 0x2029].map(cp));
+  type Shape = (unit: string, secret: string) => string;
+  const BETWEEN: readonly Shape[] = [
+    (unit, secret) => `see${unit}ghp_${secret}`,
+    (unit, secret) => `key${unit}sk-ant-${secret}`,
+    (unit, secret) => `x${unit}Bearer ${secret}`,
+    (unit, secret) => `x${unit}Basic ${secret}`,
+    (unit, secret) => `Authorization: Bearer${unit}${secret}`,
+    (unit, secret) => `Authorization: Basic${unit}${secret}`,
+  ];
+  const WITHIN: readonly Shape[] = [
+    (unit, secret) => `Authorization: Bea${unit}rer ${secret}`,
+    (unit, secret) => `see gh${unit}p_${secret}`,
+    (unit, secret) => `Bearer SEC${unit}${secret}`,
+    (unit, secret) => `pass${unit}word=${secret}`,
+    (unit, secret) => `x${unit}Bea${unit}rer ${secret}`,
+    (unit, secret) => `see${unit}gh${unit}p_${secret}`,
+    (unit, secret) => `Authorization: Bea${unit}rer${unit}${secret}`,
+    (unit, secret) => `x${unit}Bea${unit}rer${unit}${secret}`,
+    (unit, secret) => `ghp_abc${unit}pass${unit}word=${secret}`,
+  ];
+  interface Shaped { id: string; raw: string; halves: [string, string] }
+  const SHAPES: Shaped[] = [];
+  for (const [unitIndex, unit] of UNITS.entries()) {
+    for (const [shapeIndex, shape] of [...BETWEEN, ...(WHITESPACE.has(unit) ? [] : WITHIN)].entries()) {
+      const secret = `Zq${String(unitIndex).padStart(3, "0")}${String(shapeIndex).padStart(2, "0")}Kx${"v".repeat(5)}`;
+      SHAPES.push({ id: `unit ${unitIndex} shape ${shapeIndex}`, raw: shape(unit, secret), halves: [secret.slice(0, 7), secret.slice(7)] });
+    }
+  }
+  const leaks = (paths: (raw: string) => LatencyDecomposition): string[] =>
+    SHAPES.filter(item => {
+      const text = JSON.stringify(paths(item.raw));
+      return text.includes(item.halves[0]) || text.includes(item.halves[1]);
+    }).map(item => item.id);
+  const secretLength = (item: Shaped): number => item.halves[0].length + item.halves[1].length;
+
+  it("builds 14-character secrets so a half is seven characters", () => {
+    expect(SHAPES.length).toBeGreaterThan(500);
+    expect(SHAPES.every(item => secretLength(item) === 14)).toBe(true);
+  });
+  it("leaks no secret half through the provider path of selectLatencyDecomposition", () => {
+    expect(leaks(raw => decompose(stand([row("p", raw)])))).toEqual([]);
+  });
+  it("leaks no secret half through the evidence path of selectLatencyDecomposition", () => {
+    expect(leaks(raw => decompose(stand([row("e", "forge", { evidenceRefs: [raw] })])))).toEqual([]);
+  });
+  it("E5: a provider carrying Bearer <token> renders [REDACTED] (the display path redacts, not only the shape strip)", () => {
+    const report = decompose(stand([row("b", "Bearer abcdef1234567890")]));
+    expect(component(report, "other").providers).toEqual(["[REDACTED]"]);
+  });
+  it("keeps a long provider inside 64 characters without leaving half a surrogate pair", () => {
+    const report = decompose(stand([row("l", `${"a".repeat(63)}${String.fromCodePoint(0x1f600)}tail`)]));
+    const shown = component(report, "other").providers[0];
+    expect(shown.length).toBeLessThanOrEqual(64);
+    expect(shown).not.toMatch(/[\ud800-\udfff]/);
+  });
+});
+
+describe("H2 wb-h8f.10 A2: overhead declines when the component union exceeds the root wall", () => {
+  const rootRow = (start: number, end: number): ObservedNode =>
+    row("root", "pi-workflow", { interval: span(start, end), presentation: { title: "root", type: "workflow", statusText: "DONE", statusTone: "success" } });
+  it("declares a new frozen reason", () => {
+    expect(LATENCY_REASONS).toContain("components-exceed-wall");
+    expect(Object.isFrozen(LATENCY_REASONS)).toBe(true);
+  });
+  it("E3: root [10 s, 20 s] with a child [0 s, 30 s] declines overhead, never a measured zero", () => {
+    const report = decompose(stand([rootRow(10, 20), row("child", "forge", { interval: span(0, 30) })]));
+    expect(report.wall).toEqual({ measured: true, ms: 10_000, from: "root-interval" });
+    expect(report.overhead).toEqual({ measured: false, reasons: ["components-exceed-wall"] });
+    const rows = toMeasuredMetrics(report, { subjectBasis: "basis", freshness: "current" });
+    expect(rows.some(item => item.name === "latency.overhead.ms")).toBe(false);
+  });
+  it("still measures a genuine zero when the union equals the wall exactly", () => {
+    const report = decompose(stand([rootRow(0, 10), row("child", "forge", { interval: span(0, 10) })]));
+    expect(report.overhead).toEqual({ measured: true, ms: 0 });
+    expect(toMeasuredMetrics(report, { subjectBasis: "basis", freshness: "current" }).find(item => item.name === "latency.overhead.ms")?.value).toBe(0);
+  });
+  it("keeps measuring a positive overhead unchanged", () => {
+    const report = decompose(stand([rootRow(0, 100), row("child", "forge", { interval: span(10, 40) })]));
+    expect(report.overhead).toEqual({ measured: true, ms: 70_000 });
   });
 });
