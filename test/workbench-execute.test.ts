@@ -17,6 +17,7 @@ import {
   type WorkflowExecuteRequest,
 } from "../src/workbench/execute.js";
 import type { NativeRef } from "../src/workbench/observation.js";
+import { redactWorkbenchText } from "../src/workbench/redaction.js";
 
 const DIGEST = `sha256:${"a".repeat(64)}`;
 const INVOCATION = "inv-execute-1";
@@ -45,6 +46,52 @@ const reply = (outcome: LaunchOutcome | undefined, decision: ExecuteDecision = d
   buildWorkflowExecuteReply(decision, outcome, maxBytes);
 
 afterEach(() => { vi.restoreAllMocks(); });
+
+const cp = (code: number): string => String.fromCodePoint(code);
+const BEL = cp(0x07);
+const EURO = cp(0x20ac);
+const ASTRAL = cp(0x1f600);
+const LONE_HIGH = cp(0xd800);
+const LONE_LOW = cp(0xdc00);
+/** A lone surrogate: with the u flag a well-formed pair reads as one astral code point, so only an unpaired half matches. */
+const LONE_SURROGATE = /[\u{d800}-\u{dfff}]/u;
+/** What a display string must never carry (the sanitizer corpus's UNSAFE_DISPLAY). */
+const UNSAFE_DISPLAY = /[\x00-\x1f\x7f-\x9f\u{2028}\u{2029}]|\p{Default_Ignorable_Code_Point}|[\u{d800}-\u{dfff}]/u;
+/** Every string leaf of a reply, keys included. */
+function strings(value: unknown, into: string[] = []): string[] {
+  if (typeof value === "string") into.push(value);
+  else if (Array.isArray(value)) for (const item of value) strings(item, into);
+  else if (value !== null && typeof value === "object") {
+    for (const [key, item] of Object.entries(value)) {
+      into.push(key);
+      strings(item, into);
+    }
+  }
+  return into;
+}
+/**
+ * Every display string the module's five display paths produce for one hostile member: the launch reason, a policy value and
+ * key, a native reference id and scope, the definition id, and the invocation reference (admitted and refused replies). An
+ * identity member refuses unsafe text typed rather than deleting it, so its typed refusal is what is displayed then.
+ */
+function displays(raw: string): string[] {
+  const shown = (decision: ExecuteDecision, outcome: LaunchOutcome): string[] => {
+    try {
+      return strings(buildWorkflowExecuteReply(decision, outcome));
+    } catch (error) {
+      if (error instanceof CapabilityError) return [error.message];
+      throw error;
+    }
+  };
+  return [
+    ...shown(decideExecute(request(), host()), { status: "refused", reason: raw }),
+    ...shown(decideExecute(request({ policy: { note: raw, [raw]: raw } }), host()), LAUNCHED),
+    ...shown(decideExecute(request(), host()), { status: "launched", nativeRefs: [{ ...REF, id: raw, scope: raw }] }),
+    ...shown(decideExecute(request({ definitionRef: { ...DEFINITION, id: raw } }), host()), LAUNCHED),
+    ...shown(decideExecute(request(), host({ invocationId: raw })), LAUNCHED),
+    ...shown(decideExecute(request(), host({ grants: [], invocationId: raw })), LAUNCHED),
+  ];
+}
 
 describe("E1 tool shape: exactly {definitionRef,input,hostMode,policy?}", () => {
   it("admits the documented request and carries an immutable admission record", () => {
@@ -345,26 +392,34 @@ const FLOOR = 2048;
 const CAPS: readonly number[] = [1, 100, FLOOR, 2049, 3000, 4096, 6000, 8192, 1_000_000];
 const effectiveCap = (cap: number): number => Math.max(FLOOR, cap);
 
-/** Maxima shapes of every free-text member, as the wb-69g.5 gate measured them (P1-P3) plus multi-byte UTF-8 (P5). */
-const MAXIMA: ReadonlyArray<{ name: string; unit: string; units: number }> = [
-  { name: "P1 ascii", unit: "a", units: 256 },
-  { name: "P2 quote-escaped", unit: "\"", units: 128 },
-  { name: "P3 lone-surrogate", unit: "\ud800", units: 85 },
-  { name: "P5 multi-byte", unit: "\u20ac", units: 85 },
+/**
+ * TRUE admissible maxima of every identity member (cleanText admits at most TEXT_BYTES = 256 UTF-8 bytes and no unsafe unit), as
+ * the wb-69g.5 gate swept them (its F2 folded in): ascii, quote and backslash 256 units (a quote or backslash serializes to two
+ * bytes), the three-byte euro 85 and the four-byte astral 64; policyUnits keeps the echoed note inside POLICY_BYTES. P3 (lone
+ * surrogate) is re-expressed in its own block below: after wb-952 a lone surrogate is an unsafe unit, so identity text carrying
+ * one is refused typed, never deleted.
+ */
+const MAXIMA: ReadonlyArray<{ name: string; unit: string; units: number; policyUnits: number }> = [
+  { name: "P1 ascii", unit: "a", units: 256, policyUnits: 1500 },
+  { name: "P2 quote-escaped", unit: '"', units: 256, policyUnits: 1500 },
+  { name: "P2b backslash-escaped", unit: "\\", units: 256, policyUnits: 1500 },
+  { name: "P5 multi-byte", unit: EURO, units: 85, policyUnits: 1200 },
+  { name: "P6 astral", unit: ASTRAL, units: 64, policyUnits: 1000 },
 ];
-function maximaScenario(unit: string, units: number, extraRefs = 0) {
-  const text = unit.repeat(units);
+type Maximum = (typeof MAXIMA)[number];
+function maximaScenario(shape: Maximum, extraRefs = 0) {
+  const text = shape.unit.repeat(shape.units);
   const definitionRef = { kind: "script" as const, id: text, schemaVersion: text, artifactDigest: DIGEST };
-  const decision = decideExecute(request({ definitionRef, policy: { note: (unit === "\ud800" ? "a" : unit).repeat(unit === "\u20ac" ? 1200 : 1500) } }), host({ invocationId: text }));
+  const decision = decideExecute(request({ definitionRef, policy: { note: shape.unit.repeat(shape.policyUnits) } }), host({ invocationId: text }));
   const maxRef: NativeRef = { provider: text, type: text, id: text, scope: text };
   const refs = Array.from({ length: 1 + extraRefs }, () => ({ ...maxRef }));
-  return { decision, refs, reason: unit.repeat(2000) };
+  return { decision, refs, reason: shape.unit.repeat(2000) };
 }
 
 describe("U2 the reply never exceeds its byte cap for ANY accepted cap (TextEncoder UTF-8 bytes)", () => {
   for (const shape of MAXIMA) {
     it(`${shape.name}: serialized bytes <= the effective cap at every cap, for launched, accepted and refused launches`, () => {
-      const { decision, refs, reason } = maximaScenario(shape.unit, shape.units, 40);
+      const { decision, refs, reason } = maximaScenario(shape, 40);
       expect(decision.decision).toBe("admitted");
       for (const cap of CAPS) {
         for (const outcome of [{ status: "launched" as const, nativeRefs: refs, reason }, { status: "accepted" as const, nativeRefs: refs, reason }, { status: "refused" as const, reason }]) {
@@ -380,18 +435,27 @@ describe("U2 the reply never exceeds its byte cap for ANY accepted cap (TextEnco
     it(`${shape.name}: a refused decision's reply is within the floor even with a maximal invocation reference`, () => {
       const text = shape.unit.repeat(shape.units);
       const decision = decideExecute(request({ hostMode: "nowhere" }), host({ invocationId: text }));
-      expect(decision.decision).toBe("refused");
+      expect(decision).toMatchObject({ decision: "refused", policy: "unknown-host-mode", invocationId: text });
       for (const cap of CAPS) expect(utf8Bytes(reply(undefined, decision, cap))).toBeLessThanOrEqual(effectiveCap(cap));
+    });
+    it(`${shape.name}: the maximum is exact - one more unit in any identity member is refused typed`, () => {
+      const over = shape.unit.repeat(shape.units + 1);
+      const malformed = refused("malformed-request", "validation", "malformed execute request");
+      expect(Buffer.byteLength(shape.unit.repeat(shape.units))).toBeLessThanOrEqual(256);
+      expect(Buffer.byteLength(over)).toBeGreaterThan(256);
+      expect(decideExecute(request(), host({ invocationId: over }))).toStrictEqual(malformed);
+      for (const field of ["id", "schemaVersion"] as const) expect(decideExecute(request({ definitionRef: { ...DEFINITION, [field]: over } }), host())).toStrictEqual(malformed);
+      for (const field of ["provider", "type", "id", "scope"] as const) validationFailure(() => reply({ status: "launched", nativeRefs: [{ ...REF, [field]: over }] }));
     });
   }
   it("non-finite and negative caps fall back to a cap the reply still honours", () => {
-    const { decision, refs, reason } = maximaScenario("a", 256, 40);
+    const { decision, refs, reason } = maximaScenario(MAXIMA[0], 40);
     for (const cap of [Number.NaN, Number.POSITIVE_INFINITY, Number.NEGATIVE_INFINITY, -5]) {
       expect(utf8Bytes(reply({ status: "launched", nativeRefs: refs, reason }, decision, cap))).toBeLessThanOrEqual(8192);
     }
   });
   it("native references are halved first, then text is trimmed deterministically, and the same inputs give the same bytes", () => {
-    const { decision, refs, reason } = maximaScenario("a", 256, 40);
+    const { decision, refs, reason } = maximaScenario(MAXIMA[0], 40);
     const first = reply({ status: "launched", nativeRefs: refs, reason }, decision, FLOOR);
     const second = reply({ status: "launched", nativeRefs: refs, reason }, decision, FLOOR);
     expect(JSON.stringify(first)).toBe(JSON.stringify(second));
@@ -415,6 +479,66 @@ describe("U2 the reply never exceeds its byte cap for ANY accepted cap (TextEnco
     expect(utf8Bytes(built)).toBeLessThanOrEqual(FLOOR);
     const wide = reply({ status: "refused", reason: "\u20ac".repeat(500) }, decision, 600);
     expect(utf8Bytes(wide)).toBeLessThanOrEqual(FLOOR);
+  });
+});
+
+describe("U2 P3 lone-surrogate, re-expressed for the post-952 admission: refused typed in identity text, never deleted", () => {
+  // wb-952 made a lone surrogate an unsafe unit (redaction.ts UNSAFE_UNIT), so cleanText refuses identity text carrying one rather
+  // than deleting it. The lone-surrogate maxima live on in the members that stay admissible, the launch reason and the policy, where
+  // the one helper redacts first and drops the unit only when it renders.
+  const LONE = [LONE_HIGH.repeat(85), `inv-${LONE_HIGH}-1`, `${LONE_LOW}tail`, `pair-${ASTRAL}-${LONE_HIGH}`];
+  const malformed = refused("malformed-request", "validation", "malformed execute request");
+  /** The largest note the 4096-byte canonical policy bound admits beside the lone-surrogate key: each lone surrogate escapes to six bytes. */
+  const NOTE_UNITS = 676;
+  const lonePolicy = (units: number): JsonValue => ({ note: LONE_HIGH.repeat(units), [`key${LONE_LOW}`]: `${LONE_LOW}value` });
+
+  it("P3 lone-surrogate identity text is refused typed: the invocation reference, definition id and schemaVersion are malformed-request", () => {
+    for (const text of LONE) {
+      const byInvocation = decideExecute(request(), host({ invocationId: text }));
+      expect(byInvocation).toStrictEqual(malformed);
+      expect(byInvocation).not.toHaveProperty("invocationId");
+      for (const field of ["id", "schemaVersion"] as const) {
+        const byDefinition = decideExecute(request({ definitionRef: { ...DEFINITION, [field]: text } }), host());
+        expect(byDefinition).toStrictEqual(malformed);
+        expect(byDefinition).toMatchObject({ invocationId: INVOCATION });
+      }
+    }
+  });
+  it("P3 lone-surrogate native reference members are a CapabilityError validation, never guessed or dropped", () => {
+    for (const text of LONE) {
+      for (const field of ["provider", "type", "id", "scope"] as const) validationFailure(() => reply({ status: "launched", nativeRefs: [{ ...REF, [field]: text }] }));
+    }
+  });
+  it("P3 the lone-surrogate policy maximum is exact: 676 units beside a lone-surrogate key are admitted, 677 are a malformed policy", () => {
+    expect(decideExecute(request({ policy: lonePolicy(NOTE_UNITS) }), host()).decision).toBe("admitted");
+    expect(decideExecute(request({ policy: lonePolicy(NOTE_UNITS + 1) }), host())).toStrictEqual(refused("malformed-policy", "validation", "malformed execute policy"));
+  });
+  it("P3 lone-surrogate maxima in the admissible members (launch reason, policy value and key): within the effective cap at every cap for launched, accepted and refused launches, and no lone surrogate reaches any reply member", () => {
+    const text = "a".repeat(256);
+    const decision = decideExecute(request({ definitionRef: { ...DEFINITION, id: text, schemaVersion: text }, policy: lonePolicy(NOTE_UNITS) }), host({ invocationId: text }));
+    expect(decision.decision).toBe("admitted");
+    const refs = Array.from({ length: 41 }, () => ({ provider: text, type: text, id: text, scope: text }));
+    const reason = LONE_HIGH.repeat(2000);
+    for (const cap of CAPS) {
+      for (const outcome of [{ status: "launched" as const, nativeRefs: refs, reason }, { status: "accepted" as const, nativeRefs: refs, reason }, { status: "refused" as const, reason }]) {
+        const built = reply(outcome, decision, cap);
+        expect(utf8Bytes(built)).toBeLessThanOrEqual(effectiveCap(cap));
+        expect(built.status).toBe(outcome.status);
+        expect(built.completion).toBe("not-asserted");
+        expect(built.definition?.artifactDigest).toBe(DIGEST);
+        expect(strings(built).filter(member => LONE_SURROGATE.test(member))).toEqual([]);
+        expect(JSON.stringify(built)).not.toMatch(/\\u[dD][89a-fA-F]/);
+      }
+    }
+  });
+  it("P3 a refused decision carrying a maximal lone-surrogate invocation reference renders without it, within the floor", () => {
+    const decision = decideExecute(request({ hostMode: "nowhere" }), host({ invocationId: LONE_HIGH.repeat(85) }));
+    expect(decision).toStrictEqual(malformed);
+    for (const cap of CAPS) {
+      const built = reply(undefined, decision, cap);
+      expect(utf8Bytes(built)).toBeLessThanOrEqual(effectiveCap(cap));
+      expect(built).not.toHaveProperty("invocationId");
+    }
   });
 });
 
@@ -491,6 +615,137 @@ describe("U3 native-reference ceiling and policy-echo fallback are pinned", () =
   it("an admitted decision without a policy never reports a policy-echo omission", () => {
     const built = reply({ status: "launched", nativeRefs: Array.from({ length: 100 }, (_, i) => ({ provider: "f", type: "r", id: `${"x".repeat(100)}${i}` })) }, decideExecute(request(), host()), FLOOR);
     expect(built.truncation ?? "").not.toContain("policy echo omitted");
+  });
+});
+
+describe("U3 kill-own: the respin's squeeze order, surrogate-safe cut and trim notes are pinned", () => {
+  const quotes = '"'.repeat(256);
+  const quoteRef: NativeRef = { provider: quotes, type: quotes, id: quotes, scope: quotes };
+  it("M8 the squeeze never cuts between the halves of a surrogate pair: no lone surrogate reaches any reply member", () => {
+    const id = `${"a".repeat(127)}${ASTRAL}${"b".repeat(60)}`;
+    const decision = decideExecute(request({ definitionRef: { ...DEFINITION, id, schemaVersion: quotes } }), host());
+    const built = reply({ status: "launched", nativeRefs: [quoteRef] }, decision, FLOOR);
+    expect(utf8Bytes(built)).toBeLessThanOrEqual(FLOOR);
+    // The squeeze stops at 128 units with the pair straddling the cut, so the cut keeps 127 units instead of its high half.
+    expect(built.definition?.id).toBe("a".repeat(127));
+    expect(strings(built).filter(member => LONE_SURROGATE.test(member))).toEqual([]);
+  });
+  it("M11 a squeeze that only trims text still reports truncated, with exactly the trim notes", () => {
+    const decision = decideExecute(request({ definitionRef: { ...DEFINITION, id: quotes, schemaVersion: quotes } }), host());
+    const built = reply({ status: "launched", nativeRefs: [quoteRef] }, decision, FLOOR);
+    expect(utf8Bytes(built)).toBeLessThanOrEqual(FLOOR);
+    expect(built.nativeRefs).toHaveLength(1);
+    expect(built.truncated).toBe(true);
+    expect(built.truncation).toBe("[truncated] native reference text trimmed; definition text trimmed");
+  });
+  it("M3/M12 the ruled order beyond the reason step: the reason is omitted with its note, then definition and reference text are trimmed while one native reference is kept, before any whole reference is dropped", () => {
+    const decision = decideExecute(request({ definitionRef: { ...DEFINITION, id: quotes, schemaVersion: quotes } }), host());
+    const built = reply({ status: "launched", nativeRefs: Array.from({ length: 41 }, () => ({ ...quoteRef })), reason: quotes }, decision, FLOOR);
+    expect(utf8Bytes(built)).toBeLessThanOrEqual(FLOOR);
+    expect(built.nativeRefs).toHaveLength(1);
+    expect(built.nativeRefs[0].id.length).toBeLessThan(256);
+    expect(built.definition?.id.length).toBeLessThan(256);
+    expect(built).not.toHaveProperty("reason");
+    expect(built.invocationId).toBe(INVOCATION);
+    expect(built.truncation).toBe("[truncated] 40 of 41 native references omitted; native reference text trimmed; definition text trimmed; reason trimmed");
+  });
+});
+
+describe("U1 F6 named layouts: identity text renders in the text layout, single-line diagnostics in label", () => {
+  it("every sanitizeWorkbenchText call in execute.ts names its layout (the policy echo rides the DIRECT-CALLER SITES row instead)", () => {
+    const source = readFileSync(new URL("../src/workbench/execute.ts", import.meta.url), "utf8");
+    const calls = [...source.matchAll(/sanitizeWorkbenchText\(([^()]*)\)/g)].map(match => match[1]);
+    // Every call is caught by the pattern (none nests parentheses) and every one names "text" or "label" as its last argument.
+    expect(calls).toHaveLength(source.split("sanitizeWorkbenchText(").length - 1);
+    expect(calls.length).toBeGreaterThan(0);
+    for (const args of calls) expect(args).toMatch(/,\s*"(?:text|label)"$/);
+  });
+  it("a launch reason renders in the label layout: a control between two words is one space, whitespace collapses, the ends are trimmed", () => {
+    const built = reply({ status: "refused", reason: `  host${BEL}busy\n\n now  ` });
+    expect(built.reason).toBe("host busy now");
+    expect(built.truncated).toBe(false);
+  });
+  it("a refusal reason renders in the label layout too (a forged refused decision is the only way to put text there)", () => {
+    const forged: ExecuteDecision = { decision: "refused", category: "validation", reason: `  forged${BEL}reason\tpassword=hunter2  `, policy: "malformed-request" };
+    expect(reply(undefined, forged).refusal?.reason).toBe("forged reason password=[REDACTED]");
+  });
+  it("identity text renders in the text layout: an admitted identity is never collapsed or trimmed", () => {
+    const spaced = "  review  workflow.js ";
+    const ref: NativeRef = { provider: " furnace ", type: "run  r", id: " frn  1 ", scope: " /tmp/a  b " };
+    const decision = decideExecute(request({ definitionRef: { ...DEFINITION, id: spaced, schemaVersion: spaced } }), host({ invocationId: " inv  1 " }));
+    const built = reply({ status: "launched", nativeRefs: [ref] }, decision);
+    expect(built.definition).toMatchObject({ id: spaced, schemaVersion: spaced });
+    expect(built.invocationId).toBe(" inv  1 ");
+    expect(built.nativeRefs[0]).toStrictEqual(ref);
+    expect(reply(undefined, decideExecute(request(), host({ grants: [], invocationId: " inv  1 " }))).invocationId).toBe(" inv  1 ");
+  });
+  it("a forged refused decision's invocation reference is redacted in the text layout: a control glues, nothing is spaced in", () => {
+    const forged: ExecuteDecision = { decision: "refused", category: "authorization", reason: "missing exact grant workbench:execute", policy: "missing-execute-grant", invocationId: `inv${BEL}-1 sk-ant-FORGEDSECRET` };
+    expect(reply(undefined, forged).invocationId).toBe("inv-1 [REDACTED]");
+  });
+});
+
+/**
+ * The wb-69g.5 gate's separator corpus (its section 8; the owner's BASELINE TO PRESERVE is 0 of these 307 shown): 12 credential
+ * shapes x 28 separator units + 3 plain rows = 339 rows. The 32 rows with a whitespace unit inside a keyword are controls -
+ * whitespace always separates, so the plain redactor equally reads two words there - leaving 307 rows whose secret no display
+ * path may show.
+ */
+const SEPARATORS: readonly (readonly [name: string, unit: string])[] = [
+  ["NUL", cp(0x00)], ["BEL", cp(0x07)], ["BS", cp(0x08)], ["TAB", cp(0x09)], ["LF", cp(0x0a)], ["VT", cp(0x0b)], ["FF", cp(0x0c)], ["CR", cp(0x0d)],
+  ["SGR", `${cp(0x1b)}[0m`], ["DEL", cp(0x7f)], ["NEL", cp(0x85)], ["CSI-C1", cp(0x9b)], ["SHY", cp(0xad)], ["ALM", cp(0x61c)], ["MVS", cp(0x180e)],
+  ["ZWSP", cp(0x200b)], ["ZWNJ", cp(0x200c)], ["ZWJ", cp(0x200d)], ["LRM", cp(0x200e)], ["RLM", cp(0x200f)], ["LS", cp(0x2028)], ["PS", cp(0x2029)],
+  ["RLO", cp(0x202e)], ["LRI", cp(0x2066)], ["WJ", cp(0x2060)], ["BOM", cp(0xfeff)], ["CGJ", cp(0x34f)], ["VS16", cp(0xfe0f)],
+];
+const WHITESPACE_SEPARATORS: ReadonlySet<string> = new Set([0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x85, 0x2028, 0x2029].map(cp));
+type SeparatorShape = (unit: string, secret: string) => string;
+const SEPARATOR_SHAPES: readonly (readonly [position: string, shape: SeparatorShape, insideKeyword: boolean])[] = [
+  ["before sk-ant-", (unit, secret) => `key${unit}sk-ant-${secret}`, false],
+  ["before ghp_", (unit, secret) => `see${unit}ghp_${secret}`, false],
+  ["before github_pat_", (unit, secret) => `see${unit}github_pat_${secret}`, false],
+  ["before Bearer", (unit, secret) => `x${unit}Bearer ${secret}`, false],
+  ["before Basic", (unit, secret) => `x${unit}Basic ${secret}`, false],
+  ["before sk-proj-", (unit, secret) => `key${unit}sk-proj-${secret}`, false],
+  ["after Bearer", (unit, secret) => `Authorization: Bearer${unit}${secret}`, false],
+  ["after Basic", (unit, secret) => `Authorization: Basic${unit}${secret}`, false],
+  ["inside Bearer", (unit, secret) => `Authorization: Bea${unit}rer ${secret}`, true],
+  ["inside password", (unit, secret) => `pass${unit}word=${secret}`, true],
+  ["inside api_key", (unit, secret) => `api${unit}_key=${secret}`, true],
+  ["inside sk-ant-", (unit, secret) => `sk-${unit}ant-${secret}`, true],
+];
+const PLAIN_ROWS: readonly (readonly [raw: string, secret: string])[] = [
+  ["Authorization: Bearer PLAINSECRETONE", "PLAINSECRETONE"],
+  ["password=PLAINSECRETTWO", "PLAINSECRETTWO"],
+  ["sk-ant-PLAINSECRETTHREE", "PLAINSECRETTHREE"],
+];
+
+describe("F1 BASELINE TO PRESERVE: the separator corpus through all five display paths shows no secret (0 of 307)", () => {
+  it("339 rows, 307 of them genuine: no path shows a genuine row's secret and no path keeps an unsafe unit", () => {
+    let rows = 0;
+    let genuine = 0;
+    const failures: string[] = [];
+    const check = (id: string, raw: string, secret: string, control: boolean): void => {
+      rows += 1;
+      const shown = displays(raw);
+      if (shown.length === 0) failures.push(`${id}: no display text`);
+      for (const text of shown) if (UNSAFE_DISPLAY.test(text)) failures.push(`${id}: kept an unsafe unit`);
+      if (control) {
+        // A control row: the plain redactor reads the same two words, so the whitespace split is the ruled rendering.
+        expect(redactWorkbenchText(raw)).toContain(secret);
+        return;
+      }
+      genuine += 1;
+      if (shown.some(text => text.includes(secret))) failures.push(`${id}: shown`);
+    };
+    for (const [index, [position, shape, insideKeyword]] of SEPARATOR_SHAPES.entries()) {
+      for (const [name, unit] of SEPARATORS) {
+        const secret = `SEP${name.replace(/[^A-Za-z0-9]/g, "")}X${index}`;
+        check(`${name} ${position}`, shape(unit, secret), secret, insideKeyword && WHITESPACE_SEPARATORS.has(unit));
+      }
+    }
+    for (const [raw, secret] of PLAIN_ROWS) check(`plain ${secret}`, raw, secret, false);
+    expect([rows, genuine]).toStrictEqual([339, 307]);
+    expect([...new Set(failures)]).toStrictEqual([]);
   });
 });
 

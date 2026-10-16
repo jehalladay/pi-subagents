@@ -105,6 +105,19 @@ function own(record: Record<string, unknown>, key: string): { present: boolean; 
 function cleanText(value: unknown, maxBytes = TEXT_BYTES): value is string {
   return typeof value === "string" && value.trim() !== "" && Buffer.byteLength(value) <= maxBytes && stripUnsafeText(value) === value;
 }
+/**
+ * The named display layouts (F6 rule): every display string goes through the one shared helper, with its layout named here.
+ * Identity text (the invocation reference, the definition id and schemaVersion, the native reference members) renders in
+ * "text", so an identity is never collapsed or trimmed; a single-line diagnostic (a refusal or launch reason) renders in
+ * "label". The policy echo goes through sanitizeWorkbenchJson, which names no layout; the sanitizer corpus drives it through
+ * buildWorkflowExecuteReply as a DIRECT-CALLER row.
+ */
+function identityText(value: string): string {
+  return sanitizeWorkbenchText(value, TEXT_BYTES, "text");
+}
+function diagnosticText(value: string, maxTextLength: number): string {
+  return sanitizeWorkbenchText(value, maxTextLength, "label");
+}
 function refuse(policy: ExecuteRefusalPolicy, category: CapabilityErrorCategory, reason: string, invocationId?: string): ExecuteDecision {
   return Object.freeze({ decision: "refused", category, reason, policy, ...(invocationId !== undefined ? { invocationId } : {}) });
 }
@@ -199,8 +212,7 @@ function nativeRefOf(value: unknown): Readonly<NativeRef> {
   if (!cleanText(provider) || !cleanText(type) || !cleanText(id) || (scope.value !== undefined && !cleanText(scope.value))) {
     return fail("Launch native reference requires clean provider, type and id (and scope when present).");
   }
-  const clean = (text: string): string => sanitizeWorkbenchText(text, TEXT_BYTES);
-  return Object.freeze({ provider: clean(provider), type: clean(type), id: clean(id), ...(typeof scope.value === "string" ? { scope: clean(scope.value) } : {}) });
+  return Object.freeze({ provider: identityText(provider), type: identityText(type), id: identityText(id), ...(typeof scope.value === "string" ? { scope: identityText(scope.value) } : {}) });
 }
 const encoder = new TextEncoder();
 /** UTF-8 bytes of the serialized reply: TextEncoder bytes, never String.length. */
@@ -238,9 +250,9 @@ export function buildWorkflowExecuteReply(decision: ExecuteDecision, outcome: La
       contractVersion: EXECUTE_CONTRACT_VERSION,
       status: "refused",
       completion: "not-asserted",
-      ...(decision.invocationId !== undefined ? { invocationId: sanitizeWorkbenchText(decision.invocationId, TEXT_BYTES) } : {}),
+      ...(decision.invocationId !== undefined ? { invocationId: identityText(decision.invocationId) } : {}),
       nativeRefs: Object.freeze([]),
-      refusal: Object.freeze({ category: decision.category, policy: decision.policy, reason: sanitizeWorkbenchText(decision.reason, REASON_CHARS) }),
+      refusal: Object.freeze({ category: decision.category, policy: decision.policy, reason: diagnosticText(decision.reason, REASON_CHARS) }),
       truncated: false,
     });
   }
@@ -261,15 +273,18 @@ export function buildWorkflowExecuteReply(decision: ExecuteDecision, outcome: La
   if (reportedRefs.length > refs.length) baseNotes.push(`${reportedRefs.length - refs.length} native references omitted`);
   let reason: string | undefined;
   if (reasonValue !== undefined) {
-    reason = sanitizeWorkbenchText(reasonValue, REASON_CHARS);
+    reason = diagnosticText(reasonValue, REASON_CHARS);
     // The cut is keyed on what the shared sanitizer actually did to the redacted text, never on the raw length.
-    if (reason !== sanitizeWorkbenchText(reasonValue, Number.MAX_SAFE_INTEGER)) baseNotes.push("reason cut");
+    if (reason !== diagnosticText(reasonValue, Number.MAX_SAFE_INTEGER)) baseNotes.push("reason cut");
   }
   let policy: JsonValue | undefined;
   if (admission.policy !== undefined) {
     policy = sanitizedJson(admission.policy);
     if (canonicalJson(policy) !== canonicalJson(sanitizeWorkbenchJson(admission.policy, Number.MAX_SAFE_INTEGER))) baseNotes.push("policy echo cut");
   }
+  const shownInvocation = identityText(admission.invocationId);
+  const shownDefinitionId = identityText(admission.definition.id);
+  const shownSchemaVersion = identityText(admission.definition.schemaVersion);
   const shape = (fit: Fit): WorkflowExecuteReply => {
     const trimmed = new Set<string>();
     const text = (value: string, limit: number, what: string): string => {
@@ -285,11 +300,11 @@ export function buildWorkflowExecuteReply(decision: ExecuteDecision, outcome: La
         ...(ref.scope !== undefined ? { scope: text(ref.scope, fit.textChars, "native reference text") } : {}),
       }),
     );
-    const invocationId = text(sanitizeWorkbenchText(admission.invocationId, TEXT_BYTES), fit.idChars, "invocation reference");
+    const invocationId = text(shownInvocation, fit.idChars, "invocation reference");
     const definition = Object.freeze({
       kind: admission.definition.kind,
-      id: text(sanitizeWorkbenchText(admission.definition.id, TEXT_BYTES), fit.textChars, "definition text"),
-      schemaVersion: text(sanitizeWorkbenchText(admission.definition.schemaVersion, TEXT_BYTES), fit.textChars, "definition text"),
+      id: text(shownDefinitionId, fit.textChars, "definition text"),
+      schemaVersion: text(shownSchemaVersion, fit.textChars, "definition text"),
       artifactDigest: admission.definition.artifactDigest,
     });
     let shownReason: string | undefined;
@@ -318,7 +333,10 @@ export function buildWorkflowExecuteReply(decision: ExecuteDecision, outcome: La
   };
   // Squeeze in a fixed order until the FINAL serialized UTF-8 length fits: policy echo, then native references (halved),
   // then reason text, definition and reference text, whole references, and last the invocation text. Deterministic and
-  // total: the last step leaves only constant members, so no accepted cap is ever exceeded.
+  // total: the last step leaves only constant members, so no accepted cap is ever exceeded. Since wb-952 the admission
+  // refuses every unsafe unit in identity text, so text trimmed to 32 units with one reference kept always fits the
+  // 2048-byte floor (bounded near 1.66 KB; the respin's sweep of 77,760 admissible maxima cases peaked at 1652 bytes):
+  // the whole-reference and invocation steps are not reached today and stay only as the structural bound behind "total".
   const fits = (reply: WorkflowExecuteReply): boolean => utf8Bytes(reply) <= cap;
   let fit: Fit = { keep: refs.length, policy: true, reasonChars: REASON_CHARS, textChars: TEXT_BYTES, idChars: TEXT_BYTES };
   let reply = shape(fit);
