@@ -25,6 +25,7 @@ import {
 } from "../src/workbench/detached-control.js";
 import { type connectDetachedWorkflow, type DetachedCommand, decodeDetachedCommand } from "../src/workbench/hosts/local-detached.js";
 import { type NativeRef, ObservationProjection, type ObservationScope, type Relation, type RelationKind } from "../src/workbench/observation.js";
+import { redactWorkbenchText } from "../src/workbench/redaction.js";
 
 const OWNER = "local-os:uid:1000";
 const SCOPE: ObservationScope = { workspace: "/tmp/detached-ws", principal: OWNER };
@@ -648,5 +649,73 @@ describe("A7: reasons, diagnostics and echoed host text route through the shared
       for (const text of ["HOSTSECRET", "HOST", "hunter2", "\u001b", "\u200b", "\u202e", "\u0007"]) expect(diagnostic).not.toContain(text);
       expect(diagnostic.length).toBeLessThanOrEqual(300);
     }
+  });
+
+  /**
+   * Respin U2 (gate-3 08:27Z, collapsed-readings class): on the landing merge the delivered local pre-pass spaced every
+   * default-ignorable before the redactor, so an in-token zero-width or control split the credential. The measured leaking
+   * classes of the trunk separator corpus run through every REAL output path of executeDetachedControl: the client frame
+   * (which the host decoder must admit), the reason the host's controlAudit stores from it (local-detached.ts:650 applies
+   * redactWorkbenchText to the decoded reason), the host-refusal, client-refusal, EACCES and transport diagnostics, and each whole execution (receipts included).
+   */
+  it("U2: the corpus's in-token glue classes (S4, K1, Z1, X1, I1-I8) never reach the frame, the host audit, a diagnostic or an execution", async () => {
+    const unit = (code: number): string => String.fromCodePoint(code);
+    const ZWSP = unit(0x200b);
+    const IGNORABLES = [0xad, 0x2061, 0x180e, 0x34f, 0xfe0f, 0x200e, 0xe0041, 0x61c];
+    const probes: readonly (readonly [id: string, raw: string, secret: string])[] = [
+      ["S4 ZWSP inside the scheme", `token: Bear${ZWSP}er abc123`, "abc123"],
+      ["K1 BEL inside password", `pass${unit(0x07)}word=hunter2`, "hunter2"],
+      ["Z1 ZWSP after the prefix", `sk-ant-${ZWSP}ZEROWIDTHSECRET`, "ZEROWIDTHSECRET"],
+      ["X1 ZWSP before and inside the scheme", `x${ZWSP}Bea${ZWSP}rer MIXONESECRET`, "MIXONESECRET"],
+      ...IGNORABLES.map((code, index) => [`I${index + 1} U+${code.toString(16).toUpperCase()} inside a key`, `sk-ant-aaaa${unit(code)}TAILIGNORABLE${index + 1}`,
+        `TAILIGNORABLE${index + 1}`] as const),
+    ];
+    const UNSAFE = /[\x00-\x1f\x7f-\x9f\u{2028}\u{2029}]|\p{Default_Ignorable_Code_Point}|[\u{d800}-\u{dfff}]/u;
+    const failures: string[] = [];
+    let checked = 0;
+    for (const [id, raw, secret] of probes) {
+      const fake = host();
+      const settled = expectStatus(await run({ params: { confirmed: true, reason: raw } }, fake), "settled");
+      const frame = fake.cancel.mock.calls[0][0];
+      expect(decodeDetachedCommand({ command: "cancel", invocationId: INVOCATION.id, reason: frame }), `${id}: the host decoder admits the frame`)
+        .toStrictEqual({ command: "cancel", invocationId: INVOCATION.id, reason: frame });
+      if (!frame.includes("[REDACTED]")) failures.push(`${id}: frame carries no [REDACTED] marker`);
+      const shown: [path: string, text: string][] = [["frame", frame], ["host audit", redactWorkbenchText(frame)], ["settled execution", JSON.stringify(settled)]];
+      const errors: [path: string, error: Error][] = [
+        ["host refusal", new Error(`Detached authorization: ${raw}`)],
+        ["client refusal", new Error(`Authorization: ${raw}`)],
+        ["EACCES", Object.assign(new Error(`connect EACCES ${raw}`), { code: "EACCES" })],
+        ["transport", new Error(`Detached host disconnected before reply. ${raw}`)],
+      ];
+      for (const [path, error] of errors) {
+        const execution = await run({}, host({ cancel: rejecting(error) }));
+        const diagnostic = execution.status === "refused" ? execution.refusal.diagnostic : execution.status === "uncertain" ? execution.diagnostic ?? "" : "";
+        expect(execution.status, `${id}: ${path} path`).toBe(path === "transport" ? "uncertain" : "refused");
+        if (!diagnostic.includes("[REDACTED]")) failures.push(`${id}: ${path} carries no [REDACTED] marker`);
+        shown.push([path, diagnostic], [`${path} execution`, JSON.stringify(execution)]);
+      }
+      for (const [path, text] of shown) {
+        checked += 1;
+        if (text.includes(secret)) failures.push(`${id}: ${path} leaked`);
+        if (UNSAFE.test(text)) failures.push(`${id}: ${path} kept an unsafe code point`);
+      }
+    }
+    expect(probes).toHaveLength(12);
+    expect(checked).toBe(12 * 11);
+    expect(failures).toStrictEqual([]);
+  });
+
+  it("U1: the frame and every diagnostic render through the helper's label layout: one line, gaps one space, runs collapsed, ends trimmed", async () => {
+    // An escape sequence and a control between words, a whitespace run and a line break: only the label layout renders all
+    // four as single spaces on one line (text glues the first two, terminal glues the escape, lines keeps the LF).
+    const raw = `  stop${String.fromCodePoint(0x1b)}[0mnow${String.fromCodePoint(0x07)}then   twice${String.fromCodePoint(0x0a)}lines  `;
+    const shown = "stop now then twice lines";
+    const fake = host();
+    const execution = expectStatus(await run({ params: { confirmed: true, reason: raw } }, fake), "settled");
+    expect(fake.cancel.mock.calls).toStrictEqual([[`${CONTROL_CONTRACT_VERSION} ${execution.requested.requestId}: ${shown}`]]);
+    const refused = expectStatus(await run({}, host({ cancel: rejecting(new Error(`Detached authorization: ${raw}`)) })), "refused");
+    expect(refused.refusal.diagnostic).toBe(shown);
+    const lost = expectStatus(await run({}, host({ cancel: rejecting(new Error(`Detached host disconnected before reply. ${raw}`)) })), "uncertain");
+    expect(lost.diagnostic).toBe(`Detached host disconnected before reply. ${shown}`);
   });
 });

@@ -35,7 +35,7 @@ import {
 } from "./control.js";
 import type { connectDetachedWorkflow, DetachedCommand } from "./hosts/local-detached.js";
 import type { ObservationProjection } from "./observation.js";
-import { sanitizeWorkbenchText, stripUnsafeText } from "./redaction.js";
+import { sanitizeWorkbenchText } from "./redaction.js";
 
 /** The reason-carrying DetachedCommand verbs: the detached host's only control verbs (hosts/local-detached.ts:103-105). */
 export type DetachedControlVerb = Extract<DetachedCommand, { reason: string }>["command"];
@@ -132,13 +132,6 @@ const NOTE_LENGTH = 400;
 const DIAGNOSTIC_LENGTH = 300;
 /** Untrusted text is cut before any pattern runs over it. */
 const SCAN = 4096;
-/**
- * Default-ignorable code points (zero-width spaces and joiners, soft hyphen, variation selectors, tags, BOM) render as
- * nothing and the shared strip keeps most of them (owner-filed wb-952), so one inside a keyword could hide a credential.
- */
-const INVISIBLE = /\p{Default_Ignorable_Code_Point}/gu;
-/** A UTF-16 code unit orphaned when a length bound cuts through a surrogate pair. */
-const LONE_SURROGATE = /[\ud800-\udbff](?![\udc00-\udfff])|(?<![\ud800-\udbff])[\udc00-\udfff]/g;
 const MISWIRED = "Detached control requires a request, a projection, a connect factory and a host clock.";
 const NO_HANDLE = "Detached control could not build a detached client with cancel and shutdown for the invocation.";
 const NOT_DETACHED = "Detached control executes only a decision for a local-detached control verb.";
@@ -167,12 +160,14 @@ function detachedVerb(action: string): action is DetachedControlVerb {
   return Object.hasOwn(DETACHED_CONTROL_VERBS, action);
 }
 /**
- * Untrusted text through the shared sanitizers in two passes: unsafe sequences become spaces and invisible code points
- * vanish BEFORE the redactor runs, so neither can split a credential from its scheme; then redact, bound and strip again.
+ * Untrusted text through the ONE shared helper (wb-952 census site 23), with the label layout: redaction reads every
+ * reading of every gap (a unit between two tokens separates, the same unit inside a keyword or token glues) before
+ * anything is stripped, then escapes, controls and separators render as one space, invisibles vanish, whitespace collapses
+ * and the ends are trimmed, so the frame stays on one line (the host decoder, hosts/local-detached.ts:123, refuses any C0).
+ * No local pre-pass: deletion never precedes redaction.
  */
 function sanitized(value: string, maxLength: number): string {
-  const spaced = stripUnsafeText(value.slice(0, SCAN), " ").replace(INVISIBLE, "").replace(/\s+/g, " ").trim();
-  return sanitizeWorkbenchText(spaced, maxLength).replace(LONE_SURROGATE, "").trim();
+  return sanitizeWorkbenchText(value.slice(0, SCAN), maxLength, "label").trim();
 }
 /** The optional operator note, params.reason as an own data string: "" when absent or blank once sanitized, undefined when malformed. */
 function operatorNote(params: unknown): string | undefined {
