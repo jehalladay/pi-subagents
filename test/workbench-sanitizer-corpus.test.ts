@@ -26,6 +26,7 @@ import { safeWorkflowTerminalText } from "../src/ui/workflow-card.js";
 import { selectAttention } from "../src/workbench/attention.js";
 import { type BeadsReadClient, projectBeadsWork, readBeadsWork } from "../src/workbench/beads-observer.js";
 import { type CapabilityDescriptor, CapabilityError, type JsonValue } from "../src/workbench/capability-registry.js";
+import { readClaudeMessageEvidence } from "../src/workbench/claude-evidence.js";
 import { type ClaudeTopologyInput, projectClaudeTopology } from "../src/workbench/claude-topology.js";
 import type { WorkflowSource } from "../src/workbench/designer.js";
 import { projectDetachedReading } from "../src/workbench/detached-observer.js";
@@ -442,6 +443,24 @@ async function storeTexts(raw: string): Promise<string[]> {
   return [...entry.preview, entry.kind, entry.producerReceipt ?? ""];
 }
 
+/**
+ * DIRECT-CALLER row (wb-6ze.10 O1, owner 2026-10-16T01:36Z): claude-evidence.ts sanitizeRow calls the one helper with the
+ * lines layout over the whole selected transcript row, and the bounded preview lines are its display. The injected read
+ * seam hands the reader the producer's raw row text, as the furnace driver hands its reader a raw log line.
+ */
+async function claudeEvidenceTexts(raw: string): Promise<string[]> {
+  const uuid = "00000000-0000-4000-8000-0000000000c1";
+  const ref = `claude-message:${uuid}`;
+  const content = await readClaudeMessageEvidence(ref, {
+    grants: () => ["claude:transcript"],
+    owningNode: { nativeRef: { provider: "claude-agent-sdk", type: "session", id: "sess-corpus" }, evidenceRefs: [ref], freshness: "current" },
+    readTranscript: async () => [{ type: "assistant", uuid, text: raw }],
+    cwd: "/tmp/claude-evidence-ws", maxMessages: 40, maxBytes: 65_536, maxLines: 200,
+    signal: new AbortController().signal, capturedAt: () => NOW,
+  });
+  return [...content.preview];
+}
+
 function detachedTexts(raw: string): string[] {
   const host = "a1".repeat(24);
   const operator = { issuer: "local-os-dac", uid: 1000, id: "local-os:uid:1000" } as const;
@@ -574,6 +593,7 @@ const SITES: readonly Site[] = [
   { site: "site 10 beads-observer.ts cleanText (readBeadsWork, projectBeadsWork)", texts: beadsTexts },
   { site: "site 15 furnace-evidence.ts sanitize (readFurnaceAttemptLogEvidence)", texts: furnaceEvidenceTexts },
   { site: "site 16 evidence-loader.ts safeChunks (EvidenceStore)", texts: storeTexts },
+  { site: "claude-evidence.ts sanitizeRow (readClaudeMessageEvidence preview lines)", texts: claudeEvidenceTexts },
   { site: "site 18 detached-observer.ts shown (projectDetachedReading)", texts: detachedTexts },
   { site: "sites 19/20 workflow_inspect and workbench_catalog replies", texts: replyTexts },
   { site: "site 12 execute.ts buildWorkflowExecuteReply (DIRECT-CALLER: reason, policy value and key, native reference id and scope, definition id, invocation reference)", texts: executeTexts },
