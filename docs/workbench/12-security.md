@@ -20,6 +20,7 @@ src/workflow/worker-source.ts documents host-function constructor escape concern
 - Node cap must be explicitly allowed in workflow and Claude agent role; never auto-share all registered providers.
 - Policy enforced in privileged host *after* receiving RPC, not only by hiding tool names.
 - Control decisions require native ownership/preconditions and, for destructive actions, operator confirmation.
+- A control adapter executes only the decision object the decision core minted in this process: `isCoreMintedDecision` (src/workbench/control.ts) is an identity check against a module-private WeakSet, so a copy, a deserialized or audit/journal-replayed receipt and a hand-built look-alike are refused with the fixed text "decision was not minted by the decision core" however exact their shape, and structural vetting stays behind it as defense in depth.
 - Treat unknown permission data as deny.
 - Source/deployment pin must be checked before loading; malformed schema/unsupported contract fails closed.
 
