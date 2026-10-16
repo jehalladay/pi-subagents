@@ -837,3 +837,46 @@ describe("FleetList workflow rows", () => {
     expect(h.render().map(plain).join("\n")).toContain("12s");
   });
 });
+
+describe("inactive footer hint names the workflow stop path (wb-2t2 scope B)", () => {
+  // Measured by the wb-a2g.3 live operator receipt: Ctrl-C through the pty does
+  // not stop a background workflow, and the only cancel path is fleet list ->
+  // workflow row -> dialog 'x stop'. The INACTIVE hint is the one surface an
+  // operator sees at the prompt, so it must name that path while a run is live.
+  // Owner ruling 2026-10-16 on wb-2t2 binds both literals exactly.
+  const hintLine = (h: Harness): string => plain(h.render()[0] ?? "");
+
+  it("keeps today's hint byte-identical when no workflow is live", () => {
+    const h = harness([makeRecord({ id: "a1" })]);
+    expect(hintLine(h)).toContain("esc to interrupt · ← for agents · ↓ to manage");
+    expect(hintLine(h)).not.toContain("or stop a workflow");
+  });
+
+  it("names the stop path while a workflow is running", () => {
+    const h = harness([]);
+    h.setWorkflows([makeWorkflow()]);
+    expect(hintLine(h)).toContain("esc to interrupt · ← for agents · ↓ to manage or stop a workflow");
+  });
+
+  it("names the stop path while a workflow is paused", () => {
+    const h = harness([]);
+    h.setWorkflows([makeWorkflow({ status: "paused" })]);
+    expect(hintLine(h)).toContain("↓ to manage or stop a workflow");
+  });
+
+  it("reverts to the plain hint once every workflow has settled", () => {
+    const h = harness([makeRecord({ id: "a1" })]);
+    const completedAt = Date.now() - 1_000;
+    h.setWorkflows([makeWorkflow({ status: "completed", startedAt: completedAt - 12_000, completedAt })]);
+    expect(hintLine(h)).toContain("↓ to manage");
+    expect(hintLine(h)).not.toContain("or stop a workflow");
+  });
+
+  it("leaves the active-state hint untouched with a live workflow", () => {
+    const h = harness([]);
+    h.setWorkflows([makeWorkflow()]);
+    h.press(DOWN);
+    expect(hintLine(h)).toContain("↑↓ select · enter view · esc back");
+    expect(hintLine(h)).not.toContain("or stop a workflow");
+  });
+});

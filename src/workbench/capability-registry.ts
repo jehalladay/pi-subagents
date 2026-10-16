@@ -269,6 +269,24 @@ export class CapabilityRegistry {
   }
 
   /**
+   * A metadata-only snapshot for the read-only catalog and inspect replies: cloned descriptors plus whether the
+   * provider implements `inspect`. It carries no provider function, so a caller cannot invoke or inspect through it.
+   * Ungated, like effectClassOf: the reply builders apply the exact discover/inspect grants.
+   */
+  catalogSnapshot(): ReadonlyArray<{ readonly descriptor: CapabilityDescriptor; readonly inspectImplemented: boolean }> {
+    return [...this.providers.values()].map(({ descriptor, inspect }) => ({
+      descriptor: {
+        ...descriptor,
+        inputSchema: structuredClone(descriptor.inputSchema),
+        ...(descriptor.outputSchema ? { outputSchema: structuredClone(descriptor.outputSchema) } : {}),
+        permissions: [...descriptor.permissions],
+        supportedModes: [...descriptor.supportedModes],
+      },
+      inspectImplemented: typeof inspect === "function",
+    }));
+  }
+
+  /**
    * Policy metadata only: the declared effect class of a registered capability,
    * ungated — it exposes no payload, and no existence information beyond what
    * dispatch refusal text already names. The reconcile decision core uses it to
