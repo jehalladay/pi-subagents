@@ -2,12 +2,25 @@
  * wb-vko: the qa git-discovery members share one stamp that is truthful about
  * which repository it describes.
  *
- * Spec (bead wb-vko, from the wb-7uq gate folds U1/U2/F6):
- *  - U1 status-ledger revisionOf: rev-parse --show-toplevel equality against the
- *    ledger root, and a "-dirty" suffix when porcelain is non-empty.
- *  - U2 local-detached-faults revision(): same toplevel + dirty discipline.
- *  - F6 package-smoke: no --show-toplevel check today, so a package root nested
- *    in a foreign repo reports the foreign HEAD.
+ * Spec (bead wb-vko):
+ *  - wb-7uq gate fold U1, status-ledger revisionOf: rev-parse --show-toplevel
+ *    equality against the ledger root, and a "-dirty" suffix when porcelain is
+ *    non-empty.
+ *  - wb-7uq gate fold U2, local-detached-faults revision(): same toplevel + dirty
+ *    discipline.
+ *  - wb-7uq gate F6, package-smoke: had no --show-toplevel check, so a package
+ *    root nested in a foreign repo reported the foreign HEAD.
+ *  - 04:10Z gate U2/U3 + owner R1: member-entry falsifiers at every member's real
+ *    entry point; local-detached-shared-child joins; the live-operator-receipt
+ *    revision-stamp block (bounded release) takes the same helper.
+ *  - 16:26Z gate U2 (F1, fail-closed): "no consumer reports a clean HEAD after a
+ *    failed status read" - revisionOf members return working-tree,
+ *    live-operator-receipt returns 'unknown', package-smoke keeps
+ *    {head, porcelain: null} (its receipt reports dirty: null); corrupt-index
+ *    fixture at every member entry point.
+ *  - 16:26Z gate U3 + owner O1 (cax.2 F7): headless-host-census git() and the
+ *    install-minimal revision join as members; owner F4: every member table
+ *    carries a non-emptiness pin (emptying one must redden).
  * Red-first with a foreign-repo TMPDIR fixture.
  */
 import { execFileSync, spawnSync } from "node:child_process";
@@ -15,8 +28,9 @@ import { copyFileSync, mkdirSync, mkdtempSync, readFileSync, realpathSync, rmSyn
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterAll, afterEach, describe, expect, it } from "vitest";
 import { gitStamp, revisionOf } from "../qa/workbench/git-stamp.mjs";
+import { buildPackageReceipt } from "../qa/workbench/package-boundary.mjs";
 import { nonRepoScratch } from "./helpers/non-repo-scratch";
 
 interface Stamp {
@@ -27,6 +41,18 @@ interface Stamp {
 const repo = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const qa = join(repo, "qa", "workbench");
 const dirs: string[] = [];
+
+/**
+ * Fixture hygiene (the wb-a9s gate F1 class): a hook or wrapper that exports one of these points every fixture
+ * git command - init, add, commit - and every spawned member at an OUTER repository or index. They are removed
+ * for this file's worker and put back afterwards.
+ */
+const GIT_LOCATING = ["GIT_DIR", "GIT_WORK_TREE", "GIT_INDEX_FILE", "GIT_OBJECT_DIRECTORY", "GIT_ALTERNATE_OBJECT_DIRECTORIES", "GIT_COMMON_DIR"];
+const inheritedGitEnv = new Map(GIT_LOCATING.map((name) => [name, process.env[name]]));
+for (const name of GIT_LOCATING) delete process.env[name];
+afterAll(() => {
+  for (const [name, value] of inheritedGitEnv) if (value !== undefined) process.env[name] = value;
+});
 
 function git(cwd: string, ...args: string[]): string {
   return execFileSync("git", ["-c", "user.name=t", "-c", "user.email=t@example.invalid", "-c", "commit.gpgsign=false", ...args], {
@@ -46,6 +72,24 @@ function foreignRepo(): { top: string; nested: string; head: string } {
   git(top, "add", "-A");
   git(top, "commit", "-q", "-m", "init");
   return { top, nested: join(top, "pkg"), head: git(top, "rev-parse", "HEAD") };
+}
+
+/** A scratch directory outside every fixture repository, removed after each test. */
+function scratchDir(prefix: string): string {
+  const dir = realpathSync(mkdtempSync(join(tmpdir(), prefix)));
+  dirs.push(dir);
+  return dir;
+}
+
+/**
+ * Garbage over .git/index: `git status --porcelain` now fails while both rev-parse reads still succeed - the
+ * failed-status-read case of the 16:26Z gate F1. The fixture proves that state before any member reads it.
+ */
+function corruptIndex(top: string): void {
+  writeFileSync(join(top, ".git", "index"), "this is not a git index\n");
+  expect(spawnSync("git", ["status", "--porcelain"], { cwd: top, stdio: "ignore" }).status).not.toBe(0);
+  expect(spawnSync("git", ["rev-parse", "--show-toplevel"], { cwd: top, stdio: "ignore" }).status).toBe(0);
+  expect(spawnSync("git", ["rev-parse", "HEAD"], { cwd: top, stdio: "ignore" }).status).toBe(0);
 }
 
 afterEach(() => {
@@ -87,6 +131,13 @@ describe("gitStamp / revisionOf toplevel and dirty discipline", () => {
   it("answers working-tree for a directory that does not exist", () => {
     expect(revisionOf(join(tmpdir(), "git-stamp-missing-dir-does-not-exist"))).toBe("working-tree");
   });
+
+  it("never reports a clean HEAD when the status read fails: head kept, porcelain null, revision working-tree", () => {
+    const { top, head } = foreignRepo();
+    corruptIndex(top);
+    expect(gitStamp(top)).toEqual({ head, porcelain: null });
+    expect(revisionOf(top)).toBe("working-tree");
+  });
 });
 
 function stampBlock(name: string): string {
@@ -98,12 +149,24 @@ function stampBlock(name: string): string {
   return text.slice(start, end + "// git-stamp:end".length);
 }
 
-describe("the three qa git-discovery members share the stamp", () => {
+/** The members whose guards allow only node: imports, so they carry the canonical block inline. */
+const INLINED = ["status-ledger.mjs", "local-detached-faults.mjs", "local-detached-shared-child.mjs"];
+
+/** The members that import the canonical module (statically, or dynamically inside live-operator's bounded block). */
+const IMPORTERS = ["package-smoke.mjs", "live-operator-receipt.mjs", "headless-host-census.mjs", "install-minimal.mjs"];
+
+async function importBlock(name: string): Promise<{ revisionOf: (root: string) => string }> {
+  const file = join(scratchDir("git-stamp-inline-"), "inline.mjs");
+  writeFileSync(file, `import {spawnSync} from 'node:child_process';\nimport {realpathSync} from 'node:fs';\n${stampBlock(name)}\nexport {revisionOf};\n`);
+  return (await import(pathToFileURL(file).href)) as { revisionOf: (root: string) => string };
+}
+
+describe("the qa git-discovery members share the one canonical stamp (three inlined copies, four importers)", () => {
   it("package-smoke runs no HEAD-only rev-parse of its own", () => {
     expect(readFileSync(join(qa, "package-smoke.mjs"), "utf8")).not.toMatch(/rev-parse['"],\s*['"]HEAD['"]\]/);
   });
 
-  it.each(["status-ledger.mjs", "local-detached-faults.mjs", "local-detached-shared-child.mjs"])("%s inlines the canonical block byte-for-byte (node: imports only)", (name) => {
+  it.each(INLINED)("%s inlines the canonical block byte-for-byte (node: imports only)", (name) => {
     expect(stampBlock(name)).toBe(stampBlock("git-stamp.mjs"));
   });
 
@@ -127,6 +190,13 @@ describe("the three qa git-discovery members share the stamp", () => {
     expect(inline.revisionOf(top)).toBe(`${head}-dirty`);
   });
 
+  it.each(INLINED)("the block inlined in %s answers working-tree, never a clean HEAD, when the status read fails", async (name) => {
+    const { top } = foreignRepo();
+    const inline = await importBlock(name);
+    corruptIndex(top);
+    expect(inline.revisionOf(top)).toBe("working-tree");
+  });
+
   it("status-ledger CLI receipt reports working-tree, not the foreign HEAD, from a nested root", () => {
     const { nested, head } = foreignRepo();
     const stage = join(nested, "qa", "workbench");
@@ -145,18 +215,48 @@ describe("the three qa git-discovery members share the stamp", () => {
  * Member-entry falsifiers (wb-vko gate U2/U3, measured recipe): each member's REAL entry point is staged into a
  * root and spawned (a) from a root nested inside a fresh foreign repository: the receipt revision must be the
  * not-a-toplevel value and stdout must not carry the foreign HEAD; (b) from a fresh-repository toplevel: HEAD
- * when clean, HEAD-dirty with an untracked file. Neither runner needs dist: the not-realised path still emits
- * a receipt.
+ * when clean, HEAD-dirty with an untracked file; (c) from a root vendored and committed inside a foreign repository,
+ * so the foreign tree is CLEAN: still the not-a-toplevel value and no foreign HEAD; (d) from a toplevel whose
+ * `git status` fails (corrupt index): never a clean HEAD (16:26Z gate F1). No runner needs dist: the not-realised
+ * paths still emit a receipt, the headless census measures a stand-in dist and install-minimal packs and installs
+ * a stand-in package for real.
  */
 interface Member {
   name: string;
+  /** qa/workbench files staged beside the entry point. */
   files: string[];
+  /** Repository files staged at the same root-relative path. */
   extra: string[];
+  /** Root-relative stand-ins for what the entry point measures (never for the stamp under test). */
+  fixtures?: Record<string, string>;
+  /** Extra argv for the entry point, given a scratch directory outside the fixture repository. */
+  argv?: (scratch: string) => string[];
   /** Revision the member records for a HEAD (full sha by default). */
   form?: (head: string) => string;
-  /** Value recorded when the root is not a repository toplevel. */
+  /** Value recorded when the stamp cannot describe the root: not a repository toplevel, or a failed status read. */
   foreign?: string;
+  /** The member also reports `worktreeClean`, which must be true only for a clean HEAD it can describe. */
+  cleanFlag?: boolean;
 }
+
+interface MemberReceipt {
+  revision: string;
+  worktreeClean?: unknown;
+}
+
+/** The three modules the headless census child imports, as a stand-in dist with no other closure. */
+const HEADLESS_DIST: Record<string, string> = {
+  "dist/package.json": '{"type":"module"}\n',
+  "dist/workbench/hosts/local-detached.js": 'import "node:path";\nexport function createDetachedWorkflowHost() {\n  return { callNode() {} };\n}\n',
+  "dist/workflow/runtime.js": 'export function validateScript() {\n  return { meta: { name: "headless-census" } };\n}\n',
+  "dist/workbench/capability-registry.js": "export class CapabilityRegistry {}\n",
+};
+
+/** A stand-in package npm packs and installs for real, and the probe that reports the one value the harness asserts. */
+const INSTALL_MINIMAL_FIXTURES: Record<string, string> = {
+  "package.json": `${JSON.stringify({ name: "git-stamp-install-fixture", version: "0.0.0", type: "module", files: ["package.json"] })}\n`,
+  "qa/workbench/installed-minimal.mjs": 'console.log(JSON.stringify({ contract: "workbench.install-minimal/v1", workflowValue: 42 }));\n',
+};
 
 const MEMBERS: Member[] = [
   { name: "local-detached-faults.mjs", files: ["local-detached-faults.mjs", "local-detached-faults-receipt.mjs"], extra: [] },
@@ -166,13 +266,30 @@ const MEMBERS: Member[] = [
     extra: [],
   },
   { name: "status-ledger.mjs", files: ["status-ledger.mjs"], extra: ["docs/workbench/TRACEABILITY.md"] },
-  // wb-vko owner ruling R1 (04:13Z): the fifth site records the 7-character short sha and keeps its "unknown" fallback.
+  // wb-vko owner ruling R1 (04:13Z): the operator-receipt site records the 7-character short sha and keeps its "unknown" fallback.
+  // Its receipt directory is given explicitly so no run leaves an a2g3-receipt-* directory under TMPDIR.
   {
     name: "live-operator-receipt.mjs",
     files: ["live-operator-receipt.mjs", "git-stamp.mjs"],
     extra: [],
+    argv: (scratch) => [scratch],
     form: (head) => head.slice(0, 7),
     foreign: "unknown",
+  },
+  // 16:26Z gate U3 (cax.19 F3 routed by name): headless-host-census git() describes the runner's root.
+  {
+    name: "headless-host-census.mjs",
+    files: ["headless-host-census.mjs", "headless-census-child.mjs", "headless-census-receipt.mjs", "git-stamp.mjs"],
+    extra: [],
+    fixtures: HEADLESS_DIST,
+    cleanFlag: true,
+  },
+  // Owner ruling O1 (16:30Z, cax.2 F7 folded by name): install-minimal revision = WB_REVISION ?? the stamp.
+  {
+    name: "install-minimal.mjs",
+    files: ["install-minimal.mjs", "install-minimal-lib.mjs", "git-stamp.mjs"],
+    extra: [],
+    fixtures: INSTALL_MINIMAL_FIXTURES,
   },
 ];
 
@@ -184,39 +301,145 @@ function stage(root: string, member: Member): string {
     mkdirSync(dirname(join(root, extra)), { recursive: true });
     copyFileSync(join(repo, extra), join(root, extra));
   }
+  for (const [path, text] of Object.entries(member.fixtures ?? {})) {
+    mkdirSync(dirname(join(root, path)), { recursive: true });
+    writeFileSync(join(root, path), text);
+  }
   return join(dir, member.name);
 }
 
-function receiptRevision(entry: string, cwd: string): { revision: string; stdout: string } {
-  const run = spawnSync(process.execPath, [entry], {
-    cwd,
-    encoding: "utf8",
-    env: { ...process.env, DETACHED_SHARED_CHILD_RECEIPT: "", DETACHED_FAULTS_RECEIPT: "", W22_LEDGER_RECEIPT: "" },
-  });
-  const receipt = JSON.parse(run.stdout.trim()) as { revision: string };
-  return { revision: receipt.revision, stdout: run.stdout };
+function receiptRevision(
+  entry: string,
+  cwd: string,
+  argv: string[] = [],
+  overrides: NodeJS.ProcessEnv = {},
+): { revision: string; stdout: string; receipt: MemberReceipt } {
+  const env: NodeJS.ProcessEnv = { ...process.env, DETACHED_SHARED_CHILD_RECEIPT: "", DETACHED_FAULTS_RECEIPT: "", W22_LEDGER_RECEIPT: "" };
+  // install-minimal: an explicit WB_REVISION replaces the stamp under test, and its receipt file stays unwritten.
+  delete env.WB_REVISION;
+  delete env.WB_INSTALL_MINIMAL_RECEIPT;
+  const run = spawnSync(process.execPath, [entry, ...argv], { cwd, encoding: "utf8", env: { ...env, ...overrides } });
+  const text = run.stdout.trim();
+  expect(text, `${entry} printed no receipt (exit ${run.status}): ${run.stderr}`).not.toBe("");
+  const receipt = JSON.parse(text) as MemberReceipt;
+  return { revision: receipt.revision, stdout: run.stdout, receipt };
 }
 
+function runMember(member: Member, entry: string, cwd: string): { revision: string; stdout: string; receipt: MemberReceipt } {
+  return receiptRevision(entry, cwd, member.argv?.(scratchDir("git-stamp-out-")) ?? []);
+}
+
+describe("member tables are live (owner F4: emptying a table must redden)", () => {
+  it("the inlined-copy table names its three copies", () => {
+    expect(INLINED).toEqual(["status-ledger.mjs", "local-detached-faults.mjs", "local-detached-shared-child.mjs"]);
+  });
+
+  it("the importer table names its four importers", () => {
+    expect(IMPORTERS).toEqual(["package-smoke.mjs", "live-operator-receipt.mjs", "headless-host-census.mjs", "install-minimal.mjs"]);
+  });
+
+  it("the member-entry table names all six members", () => {
+    expect(MEMBERS.map((member) => member.name)).toEqual([
+      "local-detached-faults.mjs",
+      "local-detached-shared-child.mjs",
+      "status-ledger.mjs",
+      "live-operator-receipt.mjs",
+      "headless-host-census.mjs",
+      "install-minimal.mjs",
+    ]);
+  });
+});
+
 describe.each(MEMBERS)("member entry point $name stamps only its own repository", (member) => {
-  it("reports working-tree, never the foreign HEAD, from a root nested in a foreign repository", () => {
+  it("reports working-tree, never the foreign HEAD, from a root nested in a foreign repository", { timeout: 60_000 }, () => {
     const { nested, head } = foreignRepo();
     const entry = stage(nested, member);
-    const { revision, stdout } = receiptRevision(entry, nested);
+    const { revision, stdout, receipt } = runMember(member, entry, nested);
     expect(revision).toBe(member.foreign ?? "working-tree");
     expect(stdout).not.toContain(head);
     expect(stdout).not.toContain(head.slice(0, 7));
+    if (member.cleanFlag) expect(receipt.worktreeClean).toBe(false);
   });
 
-  it("reports HEAD at a clean toplevel and HEAD-dirty once an untracked file exists", () => {
+  it("reports HEAD at a clean toplevel and HEAD-dirty once an untracked file exists", { timeout: 60_000 }, () => {
     const { top } = foreignRepo();
     const entry = stage(top, member);
     git(top, "add", "-A");
     git(top, "commit", "-q", "-m", "stage member");
     const head = git(top, "rev-parse", "HEAD");
     const expected = (member.form ?? ((full: string) => full))(head);
-    expect(receiptRevision(entry, top).revision).toBe(expected);
+    const clean = runMember(member, entry, top);
+    expect(clean.revision).toBe(expected);
+    if (member.cleanFlag) expect(clean.receipt.worktreeClean).toBe(true);
     writeFileSync(join(top, "untracked.txt"), "x\n");
-    expect(receiptRevision(entry, top).revision).toBe(`${expected}-dirty`);
+    const dirty = runMember(member, entry, top);
+    expect(dirty.revision).toBe(`${expected}-dirty`);
+    if (member.cleanFlag) expect(dirty.receipt.worktreeClean).toBe(false);
+  });
+
+  it("stamps nothing of a CLEAN foreign tree: the member vendored and committed inside a foreign repository", { timeout: 60_000 }, () => {
+    const { top, nested } = foreignRepo();
+    const entry = stage(nested, member);
+    git(top, "add", "-A");
+    git(top, "commit", "-q", "-m", "vendor member");
+    const head = git(top, "rev-parse", "HEAD");
+    const { revision, stdout, receipt } = runMember(member, entry, nested);
+    expect(revision).toBe(member.foreign ?? "working-tree");
+    expect(stdout).not.toContain(head);
+    expect(stdout).not.toContain(head.slice(0, 7));
+    if (member.cleanFlag) expect(receipt.worktreeClean).toBe(false);
+  });
+
+  it("never reports a clean HEAD when git status fails at its own toplevel (corrupt index)", { timeout: 60_000 }, () => {
+    const { top } = foreignRepo();
+    const entry = stage(top, member);
+    git(top, "add", "-A");
+    git(top, "commit", "-q", "-m", "stage member");
+    const head = git(top, "rev-parse", "HEAD");
+    corruptIndex(top);
+    const { revision, stdout, receipt } = runMember(member, entry, top);
+    expect(revision).toBe(member.foreign ?? "working-tree");
+    expect(stdout).not.toContain(head);
+    expect(stdout).not.toContain(head.slice(0, 7));
+    if (member.cleanFlag) expect(receipt.worktreeClean).toBe(false);
+  });
+});
+
+describe("member-specific stamp boundaries on the lines this fold touched", () => {
+  const headless = MEMBERS.find((member) => member.name === "headless-host-census.mjs");
+  const installMinimal = MEMBERS.find((member) => member.name === "install-minimal.mjs");
+
+  it("headless-host-census stamps the runner's repository, never a --dist-root measured elsewhere", { timeout: 60_000 }, () => {
+    expect(headless).toBeDefined();
+    if (!headless) return;
+    const runner = foreignRepo();
+    const entry = stage(runner.top, { ...headless, fixtures: {} });
+    git(runner.top, "add", "-A");
+    git(runner.top, "commit", "-q", "-m", "stage runner");
+    const runnerHead = git(runner.top, "rev-parse", "HEAD");
+    const measured = foreignRepo();
+    for (const [path, text] of Object.entries(HEADLESS_DIST)) {
+      mkdirSync(dirname(join(measured.top, path)), { recursive: true });
+      writeFileSync(join(measured.top, path), text);
+    }
+    git(measured.top, "add", "-A");
+    git(measured.top, "commit", "-q", "-m", "stand-in dist");
+    const measuredHead = git(measured.top, "rev-parse", "HEAD");
+    const { revision, stdout, receipt } = receiptRevision(entry, runner.top, ["--dist-root", measured.top]);
+    expect(revision).toBe(runnerHead);
+    expect(receipt.worktreeClean).toBe(true);
+    expect(stdout).not.toContain(measuredHead.slice(0, 7));
+    expect(stdout).toContain('"revisionDescribesDist": false');
+  });
+
+  it("install-minimal keeps an explicit WB_REVISION ahead of the stamp (the AC's override clause on the edited line)", { timeout: 60_000 }, () => {
+    expect(installMinimal).toBeDefined();
+    if (!installMinimal) return;
+    const { top } = foreignRepo();
+    const entry = stage(top, installMinimal);
+    git(top, "add", "-A");
+    git(top, "commit", "-q", "-m", "stage member");
+    expect(receiptRevision(entry, top, [], { WB_REVISION: "explicit-caller-revision" }).revision).toBe("explicit-caller-revision");
   });
 });
 
@@ -233,5 +456,35 @@ describe("package-smoke stamps through the canonical module only", () => {
     expect([...smoke.matchAll(/\bstamp\s*=/g)]).toHaveLength(1);
     expect(smoke).toMatch(/const stamp = gitStamp\(root\);/);
     expect(smoke).toMatch(/\bgit: stamp,/);
+  });
+
+  it("a failed status read reaches its receipt as dirty: null with the HEAD kept, never as a clean dirty: false", () => {
+    const { top, head } = foreignRepo();
+    corruptIndex(top);
+    const receipt = buildPackageReceipt({
+      fileCount: 1,
+      shasum: "0",
+      integrity: "sha512-0",
+      node: "v24.0.0",
+      npm: "11.0.0",
+      platform: "linux",
+      arch: "x64",
+      utc: "2026-10-16T00:00:00Z",
+      command: ["npm", "pack"],
+      topLevel: [],
+      bundled: [],
+      git: gitStamp(top),
+    });
+    expect(receipt.revision).toBe(head);
+    expect(receipt.dirty).toBeNull();
+  });
+});
+
+describe("the importing members stamp through the canonical module only (one implementation)", () => {
+  it.each(IMPORTERS)("%s imports the stamp and spawns git nowhere itself", (name) => {
+    const source = readFileSync(join(qa, name), "utf8");
+    expect(source).toMatch(/(?:from |import\()["']\.\/git-stamp\.mjs["']/);
+    expect(source).not.toMatch(/['"]git['"]/);
+    expect(source).not.toMatch(/--show-toplevel|rev-parse|--porcelain/);
   });
 });

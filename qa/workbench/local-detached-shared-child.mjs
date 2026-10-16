@@ -61,7 +61,7 @@ function sameDir(a, b) {
   }
 }
 
-/** `{head, porcelain}` for `root`, both null unless root is the repository toplevel with a valid HEAD. */
+/** `{head, porcelain}` for `root`: both null unless root is the repository toplevel with a valid HEAD; porcelain alone is null when the status read fails. */
 function gitStamp(root) {
   const top = git(root, ['rev-parse', '--show-toplevel']);
   if (top === undefined || !sameDir(top.trim(), root)) return {head: null, porcelain: null};
@@ -70,11 +70,11 @@ function gitStamp(root) {
   return {head, porcelain: git(root, ['status', '--porcelain']) ?? null};
 }
 
-/** HEAD sha, suffixed `-dirty` when the tree has changes; `working-tree` when root is not a toplevel. */
+/** HEAD sha, suffixed `-dirty` when the tree has changes; `working-tree` when root is not a toplevel or its status cannot be read. */
 function revisionOf(root) {
   const {head, porcelain} = gitStamp(root);
-  if (head === null) return 'working-tree';
-  return typeof porcelain === 'string' && porcelain.trim().length > 0 ? `${head}-dirty` : head;
+  if (head === null || porcelain === null) return 'working-tree';
+  return porcelain.trim().length > 0 ? `${head}-dirty` : head;
 }
 // git-stamp:end
 
