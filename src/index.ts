@@ -75,7 +75,7 @@ import { loadWorkbenchNative, workbenchNative } from "./workbench/native-modules
 import { type NativeRef, ObservationProjection, type ObservationScope, type Presentation } from "./workbench/observation.js";
 import { OBSERVE_CURSOR_MAX_BYTES, OBSERVE_DEFAULT_MAX_BYTES, OBSERVE_MAX_LIMIT, OBSERVE_MAX_MAX_BYTES, OBSERVE_MIN_MAX_BYTES, observeInvocation } from "./workbench/observe-query.js";
 import { createWorkflowReconcileTool } from "./workbench/reconcile-tool.js";
-import { sanitizeWorkbenchJsonText, sanitizeWorkbenchText, stripUnsafeText } from "./workbench/redaction.js";
+import { sanitizeWorkbenchJsonText, sanitizeWorkbenchText, stripUnsafeText, WORKBENCH_TEXT_LIMIT } from "./workbench/redaction.js";
 import { buildWorkflowInspectReply, INSPECT_VIEWS } from "./workbench/tool-replies.js";
 import { decideWorkflowCollision, FOREIGN_WORKFLOW_TOOL_NAMES } from "./workflow/collisions.js";
 import { WORKFLOW_ENTRY_TYPE, type WorkflowEntryData, workflowEntryData } from "./workflow/entry.js";
@@ -2656,6 +2656,9 @@ Terse command-style prompts produce shallow, generic work.
           // A tight maxBytes cannot carry the digests and the error text: say so instead of dropping them silently.
           { taskId: task.id, status: task.status, envelopeOmitted: ["identity", "inputDigest", "workspaceSourceState", "error"] },
         ];
+        // maxBytes bounds the WHOLE reply, so it is checked as requested, before the task envelope is subtracted from it (gate F2).
+        if (params.maxBytes !== undefined && (!Number.isSafeInteger(params.maxBytes) || params.maxBytes < OBSERVE_MIN_MAX_BYTES || params.maxBytes > OBSERVE_MAX_MAX_BYTES))
+          return textResult(`Invalid observe request: maxBytes must be a safe integer ${OBSERVE_MIN_MAX_BYTES}..${OBSERVE_MAX_MAX_BYTES}.`);
         const requested = params.maxBytes ?? OBSERVE_DEFAULT_MAX_BYTES;
         const request = { scope, invocationId: task.id, ...(params.cursor === undefined ? {} : { cursor: params.cursor }),
           ...(params.limit === undefined ? {} : { limit: params.limit }), ...(params.selectors === undefined ? {} : { selectors: params.selectors }) };
@@ -2672,7 +2675,7 @@ Terse command-style prompts produce shallow, generic work.
           }
           return textResult(`Invalid observe request: maxBytes ${requested} leaves under ${OBSERVE_MIN_MAX_BYTES} bytes for the reply after the task envelope (at least ${floor} needed).`);
         } catch (error) {
-          if (error instanceof CapabilityError && error.category === "validation") return textResult(`Invalid observe request: ${sanitizeWorkbenchText(error.message)}`);
+          if (error instanceof CapabilityError && error.category === "validation") return textResult(`Invalid observe request: ${sanitizeWorkbenchText(error.message, WORKBENCH_TEXT_LIMIT, "text")}`);
           throw error;
         }
       },
