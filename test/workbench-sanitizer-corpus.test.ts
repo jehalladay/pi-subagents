@@ -31,6 +31,7 @@ import { readClaudeMessageEvidence } from "../src/workbench/claude-evidence.js";
 import { type ClaudeQuery, createClaudeWorkflowHost } from "../src/workbench/claude-host.js";
 import { type ClaudeTopologyInput, projectClaudeTopology } from "../src/workbench/claude-topology.js";
 import type { WorkflowSource } from "../src/workbench/designer.js";
+import { type DetachedControlClient, type DetachedControlExecution, type DetachedControlInput, executeDetachedControl } from "../src/workbench/detached-control.js";
 import { projectDetachedReading } from "../src/workbench/detached-observer.js";
 import { type EvidenceLoader, EvidenceStore } from "../src/workbench/evidence-loader.js";
 import { buildWorkflowExecuteReply, decideExecute, EXECUTE_GRANT, type ExecuteDecision, type LaunchOutcome, type WorkflowExecuteRequest } from "../src/workbench/execute.js";
@@ -38,6 +39,7 @@ import { readForgeOperationEvidence } from "../src/workbench/forge-evidence.js";
 import { forgeGateTopology } from "../src/workbench/forge-observer.js";
 import { readFurnaceAttemptLogEvidence } from "../src/workbench/furnace-evidence.js";
 import { FurnaceHostedExecutor, SHIPPED_FURNACE_SDK } from "../src/workbench/hosts/furnace-hosted.js";
+import { decodeDetachedCommand } from "../src/workbench/hosts/local-detached.js";
 import { type HyperUnixTopologyContext, hyperunixTopology } from "../src/workbench/hyperunix-observer.js";
 import { WORKFLOW_SCRIPT_SCHEMA_VERSION } from "../src/workbench/identity.js";
 import { selectLatencyDecomposition } from "../src/workbench/latency.js";
@@ -486,6 +488,70 @@ function detachedTexts(raw: string): string[] {
   return reading.snapshots.flatMap(snapshot => [snapshot.node.title, snapshot.node.statusText]);
 }
 
+/**
+ * Site 23 DIRECT-CALLER row (wb-0kg.6 respin U4, owner O1 bound 2026-10-16 08:31Z): detached-control.ts sanitized() calls the
+ * one helper with the label layout, and wb-952 counts it as census site 23. Every display it feeds runs through the REAL
+ * executeDetachedControl: the client frame (decoded by the host's own decodeDetachedCommand, as the real client does before
+ * writing it), the reason the host's controlAudit stores from that frame (local-detached.ts:650 redacts the decoded reason),
+ * the host-refusal, client-refusal, EACCES and transport diagnostics, and every string of each execution. The projection is
+ * seeded by hand with the W13-G reader convention: an invocation owned by its host process, confirmed by host instance, pid
+ * and owner.
+ */
+const CONTROL_OWNER = "local-os:uid:1000";
+const CONTROL_SCOPE: ObservationScope = { workspace: "/tmp/detached-control-ws", principal: CONTROL_OWNER };
+const CONTROL_HOST = "ab".repeat(24);
+const CONTROL_INVOCATION: NativeRef = { provider: "local-detached", type: "invocation", id: "inv-control-corpus" };
+const CONTROL_HOST_PROCESS: NativeRef = { provider: "local-detached", type: "host-process", id: `${CONTROL_HOST}:4242` };
+function controlProjection(): ObservationProjection {
+  const projection = new ObservationProjection();
+  for (const source of [CONTROL_INVOCATION, CONTROL_HOST_PROCESS]) {
+    projection.refresh({
+      source, scope: CONTROL_SCOPE, capturedAt: NOW, observedAt: NOW, kind: `local-detached.${source.type}.snapshot`,
+      node: { title: source.id, type: "workflow", statusText: "running", statusTone: "active" },
+    });
+  }
+  projection.relate({
+    scope: CONTROL_SCOPE, from: CONTROL_INVOCATION, to: CONTROL_HOST_PROCESS, kind: "ownership",
+    provenance: { source: "local-detached", observedAt: NOW, nativeConfirmationRef: `local-detached:${CONTROL_HOST}:4242:${CONTROL_OWNER}` },
+  });
+  return projection;
+}
+function controlExecution(reason: string, cancel: DetachedControlClient["cancel"]): Promise<DetachedControlExecution> {
+  const request: DetachedControlInput["request"] = {
+    scope: { ...CONTROL_SCOPE }, principal: { id: CONTROL_OWNER, role: "local-operator" }, grants: ["control:local-detached.cancel"],
+    target: { ...CONTROL_INVOCATION }, action: "cancel", params: { confirmed: true, reason }, invocationId: "inv-control-request",
+    requestedAt: "2026-10-15T11:59:00.000Z",
+  };
+  const shutdown: DetachedControlClient["shutdown"] = async () => {
+    throw new Error("the site-23 driver sends cancel only");
+  };
+  return executeDetachedControl({ request, deps: { projection: controlProjection() }, connect: () => ({ cancel, shutdown }), now: () => NOW });
+}
+async function detachedControlTexts(raw: string): Promise<string[]> {
+  const frames: string[] = [];
+  const settled = await controlExecution(raw, async frame => {
+    decodeDetachedCommand({ command: "cancel", invocationId: CONTROL_INVOCATION.id, reason: frame });
+    frames.push(frame);
+    return { accepted: true, terminalConfirmed: false };
+  });
+  if (settled.status !== "settled" || frames.length !== 1) throw new Error(`site 23: the frame did not reach the host (${settled.status})`);
+  const texts = [frames[0], redactWorkbenchText(frames[0]), ...strings(settled)];
+  const failures: readonly (readonly [error: Error, status: DetachedControlExecution["status"]])[] = [
+    [new Error(`Detached authorization: ${raw}`), "refused"],
+    [new Error(`Authorization: ${raw}`), "refused"],
+    [Object.assign(new Error(`connect EACCES ${raw}`), { code: "EACCES" }), "refused"],
+    [new Error(`Detached host disconnected before reply. ${raw}`), "uncertain"],
+  ];
+  for (const [error, status] of failures) {
+    const execution = await controlExecution("operator note", async () => {
+      throw error;
+    });
+    if (execution.status !== status) throw new Error(`site 23: expected ${status}, got ${execution.status}`);
+    texts.push(...strings(execution));
+  }
+  return texts;
+}
+
 function descriptor(description: string): CapabilityDescriptor {
   return {
     id: "forge.build", version: "1.0.0", description, inputSchema: { type: "object", properties: { q: { type: "string", description } } },
@@ -630,6 +696,7 @@ const SITES: readonly Site[] = [
   { site: "site 12 execute.ts buildWorkflowExecuteReply (DIRECT-CALLER: reason, policy value and key, native reference id and scope, definition id, invocation reference)", texts: executeTexts },
   { site: "site 22 observe-query.ts clean (observeInvocation)", texts: observeTexts },
   { site: "wb-h8f.10 latency.ts displayText (selectLatencyDecomposition provider and evidence paths)", texts: latencyTexts },
+  { site: "site 23 detached-control.ts sanitized (executeDetachedControl)", texts: detachedControlTexts },
   { site: "wb-wyr claude-host.ts producer outcomes (createClaudeWorkflowHost.spawnAgent, five failure paths)", texts: claudeHostTexts },
 ];
 
