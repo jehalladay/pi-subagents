@@ -703,6 +703,16 @@ describe("wb-0kg.10: surveyed source universe, a lint and not a sandbox (docs/12
     ]);
   });
 
+  it("the runner hands the survey object to the receipt builder verbatim, as the last four fields of the one buildFaultReceipt call", () => {
+    const runner = readRepo("qa/workbench/local-detached-faults.mjs");
+    // R6 (owner ruling R1=(b), gate mutants G29/G37): the token count above cannot tell a fabricated complete clean survey
+    // (G29) or an emptied one (G37) from the real object; the five hand-off lines are pinned verbatim, once, in emit().
+    const handoff = "    journeys,\n    markerCounts,\n    providerLint,\n    diagnostics,\n  });\n";
+    expect(runner.split(handoff)).toHaveLength(2);
+    expect(runner).toContain(`    platform: process.platform,\n${handoff}`);
+    expect(runner.match(/\bbuildFaultReceipt\(/g)).toHaveLength(1);
+  });
+
   it("pins the rule roster order, with the new rule appended and nothing reordered", () => {
     expect([...FAULT_FINDING_RULES]).toEqual([
       "duplicate-effect",
