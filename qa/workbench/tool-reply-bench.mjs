@@ -4,13 +4,14 @@
 // `node qa/workbench/tool-reply-bench.mjs`. The fixture is the wb-9x5.1 one, imported from ./grouped-fixture.mjs
 // and never forked. The workflow_observe reply builder (observeInvocation, wb-752.2) is driven across every cursor
 // page of the whole invocation viewport, for each selector shape at the default (16384) and maximum (65536)
-// maxBytes. ONE JSON receipt line (contract workbench.tool-reply-bench/v1) is written to $W21_TOOL_REPLY_RECEIPT
-// when set, printed, and only then is the exit code set:
+// maxBytes. ONE JSON receipt line (contract workbench.tool-reply-bench/v1) is printed FIRST, then written to
+// $W21_TOOL_REPLY_RECEIPT when set, and only then is the exit code set:
 //   0  the W21 shape was measured and no reply exceeded its maxBytes
 //   1  the W21 shape was measured but a reply exceeded its maxBytes: a hard FAIL regardless of timings
 //   2  the measurement is not the W21 claim (fixture shape, a truncated projection, updates not applied, a series
 //      that is missing, unsampled or not paged to the end, a selector that never rode a reply)
-//   3  nothing could be measured (an exception, reported on stderr; no receipt)
+//   3  nothing could be measured (an exception, reported on stderr; no receipt), or the receipt file could not be
+//      written (reported on stderr; the receipt is already on stdout, never a silent exit 1)
 // The revision comes from $W21_REVISION (else "working-tree"). $W21_SEED, $W21_NODES, $W21_DEPTH and $W21_TICKS
 // override the fixture; an override below the W21 shape is still measured and exits 2.
 //
@@ -247,6 +248,26 @@ const versionOf = path => {
   }
 };
 
+/**
+ * Prints the receipt line FIRST, then writes the same line to the optional receipt file, and only then returns the exit
+ * code. A failed write is reported on stderr and returns 3 with the receipt already on stdout; it never surfaces as the
+ * over-cap 1 or as a pass (owner O1, bound by name on wb-9x5.5; the one-liner batch item (5) shape of wb-9x5.12 and
+ * wb-9x5.15).
+ */
+export function publishReceipt(receipt, {path, log = console.log, logError = console.error, writeFile = writeFileSync} = {}) {
+  const line = JSON.stringify(receipt);
+  log(line);
+  if (path) {
+    try {
+      writeFile(path, `${line}\n`);
+    } catch (error) {
+      logError(JSON.stringify({benchmark: 'tool-reply-grouped-10k', error: 'receipt-write-failed', path, detail: error instanceof Error ? error.message : String(error)}));
+      return 3;
+    }
+  }
+  return receipt.exitCode;
+}
+
 async function main() {
   const {ObservationProjection} = await import('../../dist/workbench/observation.js');
   const observeQuery = await import('../../dist/workbench/observe-query.js');
@@ -292,7 +313,5 @@ if (process.argv[1] !== undefined && import.meta.url === pathToFileURL(process.a
     console.error(JSON.stringify({benchmark: 'tool-reply-grouped-10k', measured: false, error: error instanceof Error ? error.stack ?? error.message : String(error)}));
     process.exit(3);
   }
-  if (process.env.W21_TOOL_REPLY_RECEIPT) writeFileSync(process.env.W21_TOOL_REPLY_RECEIPT, `${JSON.stringify(receipt)}\n`);
-  console.log(JSON.stringify(receipt));
-  process.exitCode = receipt.exitCode;
+  process.exitCode = publishReceipt(receipt, {path: process.env.W21_TOOL_REPLY_RECEIPT});
 }
