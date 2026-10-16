@@ -19,12 +19,15 @@ import { FURNACE_HOSTED_CONTRACT } from "../src/workbench/hosts/furnace-hosted.j
 import { DETACHED_CONTRACT } from "../src/workbench/hosts/local-detached.js";
 import { HYPERUNIX_OBSERVATION_CONTRACT } from "../src/workbench/hyperunix-observer.js";
 import { WORKFLOW_SCRIPT_SCHEMA_VERSION } from "../src/workbench/identity.js";
+import { LATENCY_CONTRACT } from "../src/workbench/latency.js";
+import { OBSERVE_CONTRACT } from "../src/workbench/observe-query.js";
 import { PATCH_PROPOSAL_CONTRACT } from "../src/workbench/patch-proposal.js";
 import { FORGE_GATE_STATUS_CONTRACT } from "../src/workbench/providers/forge.js";
 import { FURNACE_RUN_INSPECT_CONTRACT } from "../src/workbench/providers/furnace.js";
 import { HYPERUNIX_FIND_CONTRACT } from "../src/workbench/providers/hyperunix.js";
 import { REACTIVE_FIBER_CLI_SCHEMA, REACTIVEFIBER_RENDER_PREVIEW_CONTRACT } from "../src/workbench/providers/reactivefiber.js";
 import { REACTIVEFIBER_OBSERVATION_CONTRACT } from "../src/workbench/reactivefiber-observer.js";
+import { TELEMETRY_CONTRACT, TELEMETRY_EVENT_CONTRACT } from "../src/workbench/telemetry.js";
 import { TIMELINE_CONTRACT } from "../src/workbench/timeline.js";
 import { TOOL_REPLY_CONTRACT_VERSION } from "../src/workbench/tool-replies.js";
 import { TOPOLOGY_CONTRACT } from "../src/workbench/topology-slice.js";
@@ -63,6 +66,12 @@ const CARRIERS: Readonly<Record<string, string>> = {
   "workbench.furnace-hosted/v1": "workbench/hosts/furnace-hosted.ts",
   "workbench.patch-proposal/v1": "workbench/patch-proposal.ts",
   "workbench.validate-reply/v1": "workbench/validate-reply.ts",
+  // Absorbed at the b459773 re-cut under the 16:19Z R3 seat rule (trunk literals that landed while this census was unlanded):
+  // wb-h8f.5 latency selector, wb-752.2 observe query, and the wb-cax.13 telemetry projection (one carrier, two literals).
+  "workbench.latency-decomposition/v1": "workbench/latency.ts",
+  "workbench.observe/v1": "workbench/observe-query.ts",
+  "workbench.telemetry/v1": "workbench/telemetry.ts",
+  "workbench.telemetry.event/v1": "workbench/telemetry.ts",
 };
 
 /** An excluded spelling: exact file, the reason, and the literal it still spells (so a stale exclusion goes red). */
@@ -181,6 +190,7 @@ describe("contract literals have one carrier each", () => {
       EVIDENCE_CONTRACT, FURNACE_EVIDENCE_CONTRACT, TOOL_REPLY_CONTRACT_VERSION, RECONCILE_CONTRACT_VERSION, ACKNOWLEDGEMENT_VALUE_CONTRACT,
       BEADS_WORK_CONTRACT, FURNACE_EXTERNAL_OBSERVATION_CONTRACT, HYPERUNIX_OBSERVATION_CONTRACT, REACTIVEFIBER_OBSERVATION_CONTRACT,
       EXECUTABLE_IDENTITY_CONTRACT, FURNACE_HOSTED_CONTRACT, PATCH_PROPOSAL_CONTRACT, VALIDATE_REPLY_CONTRACT_VERSION,
+      LATENCY_CONTRACT, OBSERVE_CONTRACT, TELEMETRY_CONTRACT, TELEMETRY_EVENT_CONTRACT,
     }).toEqual({
       FORGE_GATE_STATUS_CONTRACT: "forge.gate.status/v1",
       FURNACE_RUN_INSPECT_CONTRACT: "furnace.run.inspect/v1",
@@ -206,6 +216,10 @@ describe("contract literals have one carrier each", () => {
       FURNACE_HOSTED_CONTRACT: "workbench.furnace-hosted/v1",
       PATCH_PROPOSAL_CONTRACT: "workbench.patch-proposal/v1",
       VALIDATE_REPLY_CONTRACT_VERSION: "workbench.validate-reply/v1",
+      LATENCY_CONTRACT: "workbench.latency-decomposition/v1",
+      OBSERVE_CONTRACT: "workbench.observe/v1",
+      TELEMETRY_CONTRACT: "workbench.telemetry/v1",
+      TELEMETRY_EVENT_CONTRACT: "workbench.telemetry.event/v1",
     });
   });
 
