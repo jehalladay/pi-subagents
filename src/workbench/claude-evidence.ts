@@ -6,17 +6,19 @@
  * never fabricated and the window is never widened past the caller's bound. The exact `claude:transcript` grant is
  * checked against the live grant set before the read and again after it, so a mid-read revocation returns nothing.
  *
- * Preview lines are bounded in count, width and bytes. The whole row is normalized once (wb-952 shape: whitespace
- * controls to one space, terminal escapes, controls, bidi and every default-ignorable code point deleted), redacted
- * once by the shared redactor (redaction.ts) and stripped once more, all BEFORE the newline split, so a credential
- * cannot straddle a line break or hide behind an invisible mark; only the sanitized preview and the row's byte size leave this module, never the raw text, the
- * row object or any native error text. It registers nothing, states no verification, changes no node status or tone
- * and leaves the EvidenceLoader/EvidenceStore wrapper (wb-g1g.1) to consume it. An abort stops only this local wait.
+ * Preview lines are bounded in count, width and bytes. The whole row goes once through the ONE shared display helper,
+ * sanitizeWorkbenchText with its transcript-class "lines" layout (redaction.ts): redaction sees every reading of the row
+ * first, so a credential can neither straddle a line break nor hide behind or glue across an invisible mark, and deletion
+ * never precedes redaction; only then are CR, CRLF, NEL, LS and PS rendered as one LF, other whitespace as one space and
+ * every other unsafe unit deleted. The row is split into preview lines afterwards. Only the sanitized preview and the
+ * row's byte size leave this module, never the raw text, the row object or any native error text. It registers nothing,
+ * states no verification, changes no node status or tone and leaves the EvidenceLoader/EvidenceStore wrapper (wb-g1g.1)
+ * to consume it. An abort stops only this local wait.
  */
 import { CapabilityError } from "./capability-registry.js";
 import type { ClaudeTranscriptRow } from "./claude-transcript.js";
 import type { NativeRef } from "./observation.js";
-import { redactWorkbenchText, stripUnsafeText } from "./redaction.js";
+import { sanitizeWorkbenchText } from "./redaction.js";
 
 export const CLAUDE_EVIDENCE_CONTRACT = "workbench.claude-evidence/v1";
 /** The one exact grant string; wildcard, prefix and case spellings never match. */
@@ -68,13 +70,10 @@ const MAX_LINE = 200;
 const MAX_SCAN = 4_000;
 const MARKER = "… truncated (bounded preview)";
 const MARKER_BYTES = Buffer.byteLength(MARKER, "utf8");
-/** Every Unicode default-ignorable code point (soft hyphen, U+061C, zero-width, LRM/RLM, bidi, variation selectors). */
-const DEFAULT_IGNORABLE = /\p{Default_Ignorable_Code_Point}/gu;
-/** Whitespace controls other than the newline family, which the row split consumes later. */
-const SPACE_CONTROLS = /[\t\v\f\u0085\u2028\u2029]/g;
-const LINE_BREAKS = /\r\n|\r|\n/;
-/** The same break set as a capturing split, so the separators stay in the answer array. */
-const LINE_BREAKS_KEPT = /(\r\n|\r|\n)/;
+/** The helper's text cap for one row. Redaction lengthens a short credential to its marker, by about twice at the densest
+ * (a 9-character "apikey=x;" becomes the 18-character "apikey=[REDACTED];"), so a cap of four scan windows never cuts a
+ * row the scan bound admitted. */
+const ROW_TEXT_CAP = MAX_SCAN * 4;
 const ISO_INSTANT = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2}(?:\.\d{1,9})?)?(?:Z|[+-]\d{2}:\d{2})$/;
 
 const refused = (field: string): CapabilityError => new CapabilityError("validation", `Claude evidence read refused: invalid ${field}.`);
@@ -105,21 +104,10 @@ function clipBytes(value: string, bytes: number): string {
   return value.slice(0, end);
 }
 
-/** Strip pass over a whole row: terminal escapes, controls and bidi marks by the shared stripper, then every
- * default-ignorable code point. The newline family is kept, so the row can be split after redaction. */
-function stripRow(value: string): string {
-  return value
-    .split(LINE_BREAKS_KEPT)
-    .map((part, index) => (index % 2 === 1 ? part : stripUnsafeText(part).replace(DEFAULT_IGNORABLE, "")))
-    .join("");
-}
-
-/** One whole producer row bound for display, in the wb-952 order: normalize and strip, redact once, strip once more.
- * Redaction sees the whole row, so a credential straddling a newline is one match; the split happens afterwards. */
+/** One whole producer row bound for display: the shared helper with the transcript-class layout, so redaction reads the
+ * whole row before anything is deleted and LF is the one row break left in its answer. */
 function sanitizeRow(raw: string): string {
-  const normalized = stripRow(raw.replace(SPACE_CONTROLS, " "));
-  // Redaction can lengthen a short token to the marker, so its text cap sits well above the scan bound.
-  return stripRow(redactWorkbenchText(normalized, MAX_SCAN * 4));
+  return sanitizeWorkbenchText(raw, ROW_TEXT_CAP, "lines");
 }
 
 /** One display line: width-bounded, with an ellipsis when clipped. */
@@ -227,7 +215,7 @@ export async function readClaudeMessageEvidence(ref: string, deps: ClaudeEvidenc
 
   const scanned = clip(text, MAX_SCAN);
   const sanitized = sanitizeRow(scanned);
-  const rows = sanitized.length === 0 ? [] : sanitized.split(LINE_BREAKS);
+  const rows = sanitized.length === 0 ? [] : sanitized.split("\n");
   if (rows.length > 0 && rows[rows.length - 1] === "") rows.pop();
   const { preview, truncated } = shape(rows.map(boundLine), scanned.length !== text.length, maxLines, maxBytes);
 

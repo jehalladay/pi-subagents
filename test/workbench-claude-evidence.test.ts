@@ -484,3 +484,101 @@ describe("wb-6ze.10 respin U4(b) wb-952 shape: strip default-ignorables and bidi
     expect(content.preview).toStrictEqual(["abcde", "fghi"]);
   });
 });
+
+// ---------------------------------------------------------------------------------------------------------------------
+// wb-6ze.10 respin-2 (gate-1 g2-gate-r2 2026-10-16T01:24Z, owner ruling 01:36Z): every preview line goes through the ONE
+// shared helper, sanitizeWorkbenchText with the transcript-class "lines" layout (redaction.ts: "Whole-text redaction
+// first, then LF row structure preserved (CRLF, CR, NEL, LS and PS each become one LF), other whitespace one space,
+// every other unsafe unit deleted"). Seat rule F11: every invisible or control code point below is built with
+// String.fromCodePoint; none is typed raw.
+// ---------------------------------------------------------------------------------------------------------------------
+const cp = (code: number): string => String.fromCodePoint(code);
+const BEL = cp(0x07);
+const TAB = cp(0x09);
+const LF = cp(0x0a);
+const CR = cp(0x0d);
+const ESC = cp(0x1b);
+const NEL = cp(0x85);
+const ZWSP = cp(0x200b);
+const LS = cp(0x2028);
+const PS = cp(0x2029);
+const BOM = cp(0xfeff);
+/** The trunk corpus's display set (test/workbench-sanitizer-corpus.test.ts UNSAFE_DISPLAY): C0/C1 controls, the line and
+ * paragraph separators, every default-ignorable code point and lone surrogates. */
+const UNSAFE_DISPLAY = /[\x00-\x1f\x7f-\x9f\u{2028}\u{2029}]|\p{Default_Ignorable_Code_Point}|[\u{d800}-\u{dfff}]/u;
+
+describe("wb-6ze.10 respin-2 U2: the glue controls the first cut kept clean stay clean (the raw reading is load-bearing)", () => {
+  // Trunk corpus ids D1 (U5 glue control), Y1 (16:44Z: a zero-width space can split a token) and P1 (16:44Z: the BOM is a
+  // separator). Deleting the unit before redaction glues the key to the word before it, or the token to its scheme.
+  const GLUE: readonly { id: string; raw: string; secret: string; preview: readonly string[] }[] = [
+    { id: "D1 key after BEL", raw: `key${BEL}sk-ant-GLUEFOUR`, secret: "GLUEFOUR", preview: ["key[REDACTED]"] },
+    { id: "Y1 ZWSP before a key", raw: `key${ZWSP}sk-ant-ZWSEPSECRET`, secret: "ZWSEPSECRET", preview: ["key[REDACTED]"] },
+    { id: "P1 BOM separator", raw: `Authorization: Bearer${BOM}SEPONE`, secret: "SEPONE", preview: ["Authorization: [REDACTED]"] },
+  ];
+  for (const { id, raw, secret, preview } of GLUE) {
+    it(`${id}: the secret never reaches the answer and the preview is the shared helper's reading`, async () => {
+      const content = await previewOf(raw);
+      expect(JSON.stringify(content)).not.toContain(secret);
+      expect(content.preview).toStrictEqual(preview);
+    });
+  }
+});
+
+describe("wb-6ze.10 respin-2 U3 kill-own: whitespace separators, the line and paragraph separators, the redaction cap", () => {
+  it.each([
+    ["TAB after Bearer", `Authorization: Bearer${TAB}TABSECRET`, "TABSECRET"],
+    ["NEL after Bearer", `Authorization: Bearer${NEL}NELSECRET`, "NELSECRET"],
+    ["TAB after Basic", `Authorization: Basic${TAB}dGFic2VjcmV0`, "dGFic2VjcmV0"],
+    ["NEL after Basic", `Authorization: Basic${NEL}bmVsc2VjcmV0`, "bmVsc2VjcmV0"],
+  ])("a scheme and token separated by %s are redacted as one credential", async (_name, raw, secret) => {
+    const content = await previewOf(raw);
+    expect(JSON.stringify(content)).not.toContain(secret);
+    expect(content.preview).toStrictEqual(["Authorization: [REDACTED]"]);
+  });
+
+  it("U+2028, U+2029 and NEL end preview rows like LF: no preview line carries any of them, and a key after one is redacted", async () => {
+    const content = await previewOf(`row one${LS}row two${PS}row three${NEL}row four${LF}token: x${LS}sk-ant-api03-LSSECRET${PS}end`);
+    expect(content.preview).toStrictEqual(["row one", "row two", "row three", "row four", "token: x", "[REDACTED]", "end"]);
+    for (const line of content.preview) expect(line).not.toMatch(UNSAFE_DISPLAY);
+    expect(JSON.stringify(content)).not.toContain("LSSECRET");
+  });
+
+  it("no preview line carries a code point of the trunk UNSAFE_DISPLAY set and every visible stretch survives, whatever unsafe classes one row mixes", async () => {
+    const units = [
+      ...Array.from({ length: 0x20 }, (_, code) => cp(code)),
+      cp(0x7f),
+      ...Array.from({ length: 0x20 }, (_, index) => cp(0x80 + index)),
+      LS, PS, cp(0xad), cp(0x34f), cp(0x61c), cp(0x115f), cp(0x17b4), cp(0x180e), ZWSP, cp(0x200c), cp(0x200d), cp(0x200e), cp(0x200f),
+      cp(0x202a), cp(0x202e), cp(0x2060), cp(0x2064), cp(0x2066), cp(0x2069), cp(0x206f), cp(0x3164), cp(0xfe0f), BOM, cp(0xffa0),
+      cp(0x1d173), cp(0xe0001), cp(0xe007f), cp(0xd800), cp(0xdfff), `${ESC}[31m`, `${ESC}]0;title${BEL}`,
+    ];
+    // A LF after every eighth stretch keeps each preview line well inside the 200-character width bound.
+    const raw = units.map((unit, index) => `w${index}${unit}${index % 8 === 7 ? LF : ""}`).join("");
+    const content = await previewOf(raw, { maxLines: 200, maxBytes: 65_536 });
+    expect(content.truncated).toBe(false);
+    expect(content.preview.length).toBeGreaterThan(1);
+    for (const line of content.preview) expect(line).not.toMatch(UNSAFE_DISPLAY);
+    // Every unsafe unit vanished or became whitespace; no visible character was dropped or added.
+    expect(content.preview.join("").replace(/ /g, "")).toBe(units.map((_, index) => `w${index}`).join(""));
+  });
+
+  it("routes the whole row through the shared helper's lines layout: whole-row redaction first, then LF rows kept", async () => {
+    const content = await previewOf(`row one${CR}${LF}token: x${LF}sk-ant-api03-LINESECRET${LF}a${ZWSP}b${TAB}c${ESC}[2Jd${LF}${LF}end`);
+    expect(content.preview).toStrictEqual(["row one", "token: x", "[REDACTED]", "ab cd", "", "end"]);
+  });
+
+  // Redaction lengthens a short credential to its marker, so the helper's text cap must sit above anything a 4,000-character
+  // scan window can grow to; the densest lengthening is a 9-character assignment becoming 18 characters.
+  it.each([
+    ["666 'ghp_a ' keys", "ghp_a ".repeat(666)],
+    ["444 'apikey=x;' assignments", "apikey=x;".repeat(444)],
+  ])("a row of %s near the scan bound keeps its final line after redaction lengthens it", async (_name, body) => {
+    const raw = `${body}${LF}END`;
+    expect(raw.length).toBe(4_000);
+    const content = await previewOf(raw);
+    expect(content.truncated).toBe(true);
+    expect(content.preview[0]).toMatch(/^(?:\[REDACTED\] |apikey=\[REDACTED\];)/);
+    expect(content.preview.slice(1)).toStrictEqual(["END", "… truncated (bounded preview)"]);
+    expect(JSON.stringify(content)).not.toContain("[truncated]");
+  });
+});
