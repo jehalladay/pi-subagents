@@ -687,3 +687,7 @@ export function runGroupedBench({Projection, inspector, fixture, host, sampling 
   };
   return {...receipt, ...assessReceipt(receipt)};
 }
+
+// wb-9x5.6: the measurement internals the cap-saturation bench (qa/workbench/cap-saturation.mjs) reuses
+// rather than duplicates. Additive: nothing above changed.
+export {applyFixture, censusOf, distribution, navigate};

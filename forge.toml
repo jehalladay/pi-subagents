@@ -93,6 +93,10 @@ timeout = 300
 command = "node qa/workbench/reducer-selector-bench.mjs"
 timeout = 300
 
+[build.commands.inspector-cap-saturation-bench]
+command = "node --expose-gc qa/workbench/inspector-cap-saturation-bench.mjs"
+timeout = 600
+
 [build.commands.line-diff-bench]
 command = "node qa/workbench/line-diff-bench.mjs"
 timeout = 300
