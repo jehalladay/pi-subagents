@@ -9,11 +9,11 @@
  * event window. It never ingests, refreshes, relates, marks stale, reconnects or reaches a provider: an observation
  * stays a read.
  *
- * Hygiene: every string of a reply passes the shared sanitizers in redaction.ts in the order strip, redact, strip.
- * Terminal sequences, control, bidi and default-ignorable characters are REMOVED before the keyword pass, never
- * replaced by a space, so none can split a credential keyword past the redactor; each string is then repeated
- * through sanitizeWorkbenchText until that is a no-op. The reply is therefore a fixed point of
- * sanitizeWorkbenchJsonText, and `bytes` is measured through it: exactly the size of the text the tool emits.
+ * Hygiene: every string of a reply passes the one shared helper, sanitizeWorkbenchText in redaction.ts (wb-952 census
+ * site 22): it normalizes once, redacts every credential any reading of the unsafe units exposes (a unit between two
+ * tokens separates, a unit inside a keyword or token glues; deletion never precedes redaction) and strips once. Each
+ * string is repeated through it until that is a no-op, so the reply is a fixed point of sanitizeWorkbenchJsonText and
+ * `bytes` is measured through it: exactly the size of the text the tool emits.
  *
  * Honesty: counts describe the returned window only (countsBasis "returned-window"); aggregates stay "not-wired"
  * until the ancestor-aggregate read model is wired; nothing is estimated. Over the byte cap the reply drops events,
@@ -29,7 +29,7 @@
  */
 import { CapabilityError } from "./capability-registry.js";
 import type { Interval, NativeRef, ObservationProjection, ObservationScope, ObservedNode, Presentation, RelationKind } from "./observation.js";
-import { sanitizeWorkbenchJsonText, sanitizeWorkbenchText, stripUnsafeText } from "./redaction.js";
+import { sanitizeWorkbenchJsonText, sanitizeWorkbenchText } from "./redaction.js";
 
 export const OBSERVE_CONTRACT = "workbench.observe/v1";
 export const OBSERVE_DEFAULT_LIMIT = 20;
@@ -49,8 +49,6 @@ const REFERENCE_LIMIT = 256;
 const INSTANT_LIMIT = 64;
 /** sanitizeWorkbenchJsonText's default text bound, which the registered tool serializes with; it bounds projection keys. */
 const JSON_TEXT_LIMIT = 2_000;
-/** Line and tab separators the credential patterns treat as whitespace: a run becomes ONE space before any deletion (deletion never precedes redaction). */
-const SEPARATORS = /[\n\t\v\f\r\u{2028}\u{2029}]+/gu;
 const REDACTED = "[REDACTED]";
 const TONES: readonly Presentation["statusTone"][] = ["active", "success", "failure", "waiting", "unknown"];
 const PRESENTATION_TYPES: readonly Presentation["type"][] = ["workflow", "agent", "sdk-operation", "group"];
@@ -59,11 +57,6 @@ const COMPLETENESS: readonly ObservedNode["completeness"][] = ["complete", "part
 const CONNECTION: readonly ObservedNode["sourceConnectionState"][] = ["connected", "disconnected", "unknown"];
 const RELATION_KINDS: readonly RelationKind[] = ["dependency", "causation", "ownership", "grouping", "hypothesis"];
 const CURSOR_FIELDS = "v,offset,invocationId,scope,revision";
-/** Default-ignorable code points (zero-width spaces and joiners, word joiner, BOM, soft hyphen, variation selectors, tag
- * characters) plus the line and paragraph separators. stripUnsafeText keeps them, so one inside a keyword would hide it. */
-const INVISIBLE = /[\p{Default_Ignorable_Code_Point}\u{2028}\u{2029}]/gu;
-/** A UTF-16 code unit a length bound orphaned from its pair (in u-mode a well-formed pair is one code point). */
-const LONE_SURROGATE = /[\u{d800}-\u{dfff}]/gu;
 /** The projection's reference rule: no C0 control character and no DEL. */
 const CONTROL = /[\u0000-\u001f\u007f]/;
 
@@ -241,12 +234,16 @@ const inScope = (scope: ObservationScope | undefined, expected: ObservationScope
   scope?.workspace === expected.workspace && scope?.principal === expected.principal;
 const byCodeUnit = (a: string, b: string): number => (a < b ? -1 : a > b ? 1 : 0);
 
-/** One producer string bound for the model: separators normalized, removed, then redacted and stripped until the shared sanitizer is a no-op. */
+/**
+ * One producer string bound for the model: the one shared helper, repeated until it is a no-op. After the first pass no
+ * unsafe unit is left, so later passes are the plain redactor (not idempotent on a JSON-shaped secret, wb-3l3) or remove
+ * the half of a surrogate pair a length bound orphaned.
+ */
 function clean(value: unknown, max: number): string {
   if (typeof value !== "string") return "";
-  let text = stripUnsafeText(value.replace(SEPARATORS, " ")).replace(INVISIBLE, "");
+  let text = sanitizeWorkbenchText(value, max);
   for (;;) {
-    const next = sanitizeWorkbenchText(text, max).replace(INVISIBLE, "").replace(LONE_SURROGATE, "");
+    const next = sanitizeWorkbenchText(text, max);
     if (next === text) return text;
     text = next;
   }

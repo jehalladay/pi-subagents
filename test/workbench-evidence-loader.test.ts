@@ -218,12 +218,12 @@ describe('EvidenceStore contract (docs/workbench/20)', () => {
   });
 
   it('strips terminal escapes, bidi and zero-width characters from preview lines', async () => {
-    const s = store([counting(async () => content(['red \x1b[31mtext\x1b[0m', 'rtl ‮evil', 'zero​width', 'osc \x1b]0;title\x07done', 'multi\nline\r\nsplit']))]);
+    const s = store([counting(async () => content(['red \x1b[31mtext\x1b[0m', 'rtl \u202Eevil', 'zero\u200Bwidth', 'osc \x1b]0;title\x07done', 'multi\nline\r\nsplit']))]);
     await s.request(scope, native('fixture'), 'ev:1');
     const entry = s.get(scope, native('fixture'), 'ev:1');
     if (entry.state !== 'loaded') throw new Error('expected loaded');
     const text = entry.preview.join('\n');
-    expect(text).not.toMatch(/[\u001b\u0007‮​]/);
+    expect(text).not.toMatch(/[\u001b\u0007\u202E\u200B]/);
     expect(text).toContain('zerowidth');
     expect(entry.preview).toEqual(expect.arrayContaining(['multi', 'line', 'split']));
   });
@@ -454,5 +454,68 @@ describe('grant-gated producer loaders (docs/workbench/20 § Producer mapping)',
     expect(entry.truncated).toBe(true);
     expect(entry.freshness).toBe('stale');
     expect(entry.producerReceipt).toBe('op-3');
+  });
+});
+
+describe('preview bounding cuts on code-point boundaries (wb-v53)', () => {
+  const LONE_SURROGATE = /[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?<![\uD800-\uDBFF])[\uDC00-\uDFFF]/;
+
+  it('a multibyte preview at a small byte budget never contains U+FFFD and stays within maxBytes', async () => {
+    const s = store([counting(async () => content(['漢'.repeat(1000)], { bytes: 3000 }))], { maxBytes: 100 });
+    await s.request(scope, native('fixture'), 'ev:1');
+    const entry = s.get(scope, native('fixture'), 'ev:1');
+    if (entry.state !== 'loaded') throw new Error('expected a loaded entry');
+    const body = entry.preview.filter(line => line !== '[truncated]');
+    expect(entry.truncated).toBe(true);
+    expect(body.join('')).not.toContain('�');
+    expect(body.reduce((sum, line) => sum + Buffer.byteLength(line), 0)).toBeLessThanOrEqual(100);
+  });
+
+  it('a surrogate-pair preview is never split into lone surrogates across chunks', async () => {
+    const s = store([counting(async () => content(['a' + '😀'.repeat(130)]))]);
+    await s.request(scope, native('fixture'), 'ev:1');
+    const entry = s.get(scope, native('fixture'), 'ev:1');
+    if (entry.state !== 'loaded') throw new Error('expected a loaded entry');
+    expect(entry.preview.length).toBeGreaterThan(1);
+    for (const line of entry.preview) expect(line).not.toMatch(LONE_SURROGATE);
+    expect(entry.preview.join('')).toBe('a' + '😀'.repeat(130));
+  });
+});
+
+describe('a clipped preview is a strict prefix ending at the cut (wb-v53 respin U1/U3)', () => {
+  const TRUNCATED = '[truncated]';
+
+  async function previewOf(lines: readonly string[], maxBytes: number, bytes = 10_000): Promise<readonly string[]> {
+    const s = store([counting(async () => content(lines, { bytes }))], { maxBytes });
+    await s.request(scope, native('fixture'), 'ev:1');
+    const entry = s.get(scope, native('fixture'), 'ev:1');
+    if (entry.state !== 'loaded') throw new Error('expected a loaded entry');
+    return entry.preview;
+  }
+
+  it('C1: text after a mid-line cut is not appended (budget is exhausted on a clip)', async () => {
+    expect(await previewOf(['漢漢\nab'], 4)).toEqual(['漢', TRUNCATED]);
+  });
+
+  it('C2: a part clipped to nothing emits no line and nothing after it', async () => {
+    expect(await previewOf(['漢\nx'], 1)).toEqual([TRUNCATED]);
+  });
+
+  it('C3: blank lines after a mid-line cut are not appended', async () => {
+    expect(await previewOf(['漢漢\n\n\n\nb'], 4)).toEqual(['漢', TRUNCATED]);
+  });
+
+  it('C5: a long run of newlines after the cut does not fill the line cap', async () => {
+    expect(await previewOf(['漢漢' + '\n'.repeat(300)], 4)).toEqual(['漢', TRUNCATED]);
+  });
+
+  it('C6: later lines never appear after the cut line', async () => {
+    expect(await previewOf(['漢'.repeat(7) + '\nrm -rf /tmp/x\nok'], 20)).toEqual(['漢'.repeat(6), TRUNCATED]);
+  });
+
+  it('U3: an exactly fitting code point is kept (maxBytes 99 keeps 33 of three-byte characters)', async () => {
+    const preview = await previewOf(['漢'.repeat(100)], 99, 300);
+    expect(preview).toEqual(['漢'.repeat(33), TRUNCATED]);
+    expect(Buffer.byteLength(preview[0] ?? '')).toBe(99);
   });
 });
