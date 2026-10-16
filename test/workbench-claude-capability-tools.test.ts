@@ -5,7 +5,7 @@
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
 import { afterEach, describe, expect, it } from "vitest";
-import { CapabilityError, CapabilityRegistry, type InvocationContext, type JsonValue } from "../src/workbench/capability-registry.js";
+import { CAPABILITY_MAX_DEPTH, CapabilityError, CapabilityRegistry, findPrototypePollutionKey, type InvocationContext, isPrototypePollutionKey, type JsonValue } from "../src/workbench/capability-registry.js";
 import { CLAUDE_CAPABILITY_TOOL_NAMES, type CuratedToolOptions, createCuratedTools } from "../src/workbench/claude-capability-tools.js";
 
 const id = "fixture.status.read";
@@ -212,4 +212,76 @@ it("discovery is finite and does not enumerate provider registrations outside th
   expect((await call("capability_discover", {})).payload.capabilities.map((descriptor: { id: string }) => descriptor.id)).toEqual([id]);
   expect((await call("capability_contract", { capabilityId: "fixture.hidden.read" })).payload.category).toBe("authorization");
   expect((await call("capability_invoke", { ...invocation, capabilityId: "fixture.hidden.read" })).payload.category).toBe("authorization");
+});
+
+// wb-8i1. docs/workbench/06 "Conformance tests": "Same capability in workflow node() and Pi invocation uses
+// identical authorization and input contracts."; docs/workbench/12 "Input and output hardening": "Prevent prototype
+// pollution and weird structured-clone prototypes at RPC boundaries." zod's record parse drops a declared __proto__
+// key before the handler runs, so capability_invoke scans the RAW input first and refuses with the oracle's own text.
+describe("raw-input prototype keys refuse with the registry oracle's text (wb-8i1)", () => {
+  // JSON.parse makes "__proto__" an own data key, exactly as the JSON transport delivers it.
+  const polluted = [
+    ["an own __proto__ key", '{"target":"/fixture/authorized","__proto__":{"polluted":true}}', "__proto__"],
+    ["a nested __proto__ key", '{"target":"/fixture/authorized","nested":{"__proto__":{"polluted":true}}}', "__proto__"],
+    ["a __proto__ key inside an array", '{"target":"/fixture/authorized","list":[1,{"__proto__":{"polluted":true}}]}', "__proto__"],
+    ["an own constructor key", '{"target":"/fixture/authorized","constructor":{"prototype":{"polluted":true}}}', "constructor"],
+    ["a nested prototype key", '{"target":"/fixture/authorized","nested":{"prototype":{"polluted":true}}}', "prototype"],
+    ["the first key in the oracle's walk order", '{"target":"/fixture/authorized","nested":{"constructor":1},"__proto__":{"polluted":true}}', "constructor"],
+  ] as const;
+  async function oracleRefusal(registry: CapabilityRegistry, input: unknown): Promise<unknown> {
+    try { await registry.invoke(id, input, { grants, signal: new AbortController().signal }); }
+    catch (error) { return error; }
+    throw new Error("the registry oracle permitted a prototype-key input");
+  }
+  for (const [name, json, key] of polluted) {
+    it(`refuses ${name} with the oracle's exact text before any host work, and never calls the provider`, async () => {
+      let pins = 0;
+      const { call, calls, options } = await connect({ beforeDispatch: () => { pins++; } });
+      const oracle = await oracleRefusal(options.registry, JSON.parse(json));
+      expect(oracle).toBeInstanceOf(CapabilityError);
+      expect(oracle).toMatchObject({ category: "validation", message: `Prototype pollution key at invoke(${id}) input.${key}.` });
+      const refused = await call("capability_invoke", { ...invocation, input: JSON.parse(json) });
+      expect(refused.result.isError).toBe(true);
+      expect(refused.payload).toEqual({ kind: "rejected", category: "validation", diagnostic: (oracle as CapabilityError).message });
+      expect(calls).toHaveLength(0);
+      expect(pins).toBe(0);
+    });
+  }
+  it("refuses the polluted call identically after a JSON round trip of the whole tool arguments", async () => {
+    const { call, calls } = await connect();
+    const args = JSON.parse(JSON.stringify({ ...invocation, input: JSON.parse('{"target":"/fixture/authorized","__proto__":{"grants":["fixture:write"]}}') }));
+    const refused = await call("capability_invoke", args);
+    expect(refused.payload).toEqual({ kind: "rejected", category: "validation", diagnostic: `Prototype pollution key at invoke(${id}) input.__proto__.` });
+    expect(calls).toHaveLength(0);
+  });
+  it("leaves prototype-like values and look-alike keys to the provider untouched", async () => {
+    const registry = new CapabilityRegistry();
+    const received: JsonValue[] = [];
+    registry.register({ descriptor: { id, version: "1.0.0", description: "Permissive read fixture", effectClass: "read", permissions: [], supportedModes: ["invoke"], inputSchema: { type: "object" } }, async invoke(input) { received.push(input); return { status: "UNKNOWN" }; } });
+    const { call } = await connect({ registry, grants: [`invoke:${id}`] });
+    // An object under the tool's own token field name is ordinary input: only a token the raw scan minted refuses.
+    const input = { target: "__proto__", proto: "constructor", __proto: 1, Constructor: 2, prototypes: [{ _proto_: "prototype" }], rawPrototypeKey: {} };
+    const returned = await call("capability_invoke", { ...invocation, input });
+    expect(returned.payload).toEqual({ kind: "returned", value: { status: "UNKNOWN" } });
+    expect(received).toEqual([input]);
+  });
+  it("keeps the advertised capability_invoke input schema unchanged", async () => {
+    const { client } = await connect();
+    const invoke = (await client.listTools()).tools.find(tool => tool.name === "capability_invoke");
+    expect(invoke?.inputSchema.required).toEqual(["capabilityId", "capabilityVersion", "input"]);
+    expect(invoke?.inputSchema.properties?.input).toEqual({ type: "object", propertyNames: { type: "string" }, additionalProperties: {} });
+  });
+  it("shares one exported key predicate and walk-order scan with the registry oracle", () => {
+    expect(["__proto__", "constructor", "prototype"].every(key => isPrototypePollutionKey(key))).toBe(true);
+    expect(["__proto", "proto", "Constructor", "prototypes", "toString", "hasOwnProperty", "", Symbol("__proto__")].some(key => isPrototypePollutionKey(key))).toBe(false);
+    expect(findPrototypePollutionKey(JSON.parse('{"a":[{"b":{"prototype":1}}],"__proto__":{}}'))).toBe("prototype");
+    expect(findPrototypePollutionKey({ a: { b: "__proto__" }, list: ["constructor"] })).toBeUndefined();
+    let evaluated = 0;
+    const accessor = Object.defineProperty({}, "inner", { enumerable: true, get() { evaluated++; return JSON.parse('{"__proto__":{}}'); } });
+    expect(findPrototypePollutionKey(accessor)).toBeUndefined();
+    expect(evaluated).toBe(0);
+    const nested = (depth: number) => JSON.parse(`${'{"a":'.repeat(depth)}{"__proto__":{}}${"}".repeat(depth)}`);
+    expect(findPrototypePollutionKey(nested(CAPABILITY_MAX_DEPTH))).toBe("__proto__");
+    expect(findPrototypePollutionKey(nested(CAPABILITY_MAX_DEPTH + 1))).toBeUndefined();
+  });
 });
