@@ -117,6 +117,20 @@ describe("the deny ladder, in order", () => {
     expect(denied(decideReconcile(request({ position: 3 }), deps())).policy).toBe("nothing-to-reconcile");
   });
 
+  it("lists and decides nothing at an unclassified node row: wb-tu1 made the runtime refuse it and left this ladder unchanged", () => {
+    // The runtime now stops a resume at a node journaled with no effect class
+    // (fail-closed), but the decision core still lists and decides only
+    // classified rows, so a fresh run is the way past such a position.
+    const unclassified: WorkflowJournalEntry = { index: 0, key: "k0", ok: true, kind: "node", capabilityId: "furnace.run.start", basis: "b1" };
+    const withRow = deps({ entries: [unclassified] });
+    for (const action of ["acknowledge", "override", "evidence"] as const) {
+      expect(denied(decideReconcile(request({ action }), withRow)).policy).toBe("nothing-to-reconcile");
+    }
+    const inspect = decideReconcile(request({ action: "inspect" }), withRow);
+    if (inspect.decision !== "inspect") throw new Error(`expected inspect, got ${inspect.decision}`);
+    expect(inspect.roster.positions).toEqual([]);
+  });
+
   it("denies an unlisted producer before minting any grant literal", () => {
     const foreignRow: WorkflowJournalEntry = { ...nodeRow, capabilityId: "record.write" };
     const decision = denied(decideReconcile(request(), deps({ entries: [foreignRow] })));
