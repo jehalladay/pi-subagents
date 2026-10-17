@@ -45,6 +45,9 @@ interface Receipt {
   nonComparable: string;
   loaderProvenance: string;
   bounds: Record<string, number>;
+  offered: { nodes: number; edges: number; updates: number };
+  retained: { nodes: number; edges: number };
+  apply: { ingestApplied: number; ingestDuplicate: number; ingestOutOfOrder: number };
   cycles: number;
   focusedCycles: number;
   detailsCycles: number;
