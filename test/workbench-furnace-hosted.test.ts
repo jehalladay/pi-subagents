@@ -12,6 +12,7 @@ import {
   type FurnaceHostedOptions,
   type FurnaceSdk,
   type HostedOutcome,
+  type HostedReceipt,
   type HostedWorkflow,
 } from "../src/workbench/hosts/furnace-hosted.js";
 import { chooseScratchBase, SOCKET_PATH_BOUND, scratchBaseBudget } from "./helpers/fixture-roots.js";
@@ -160,6 +161,25 @@ afterEach(() => {
   rmSync(scratch, { recursive: true, force: true });
 });
 const success: HostedWorkflow = async () => ({ status: "success", summary: "done" });
+
+/**
+ * wb-lrz.1 / wb-lrz.2 source census helpers. prose(): comment leaders stripped and whitespace collapsed, so a sentence
+ * wrapped across lines reads as one. clausesOf(): split after a clause-ending . ; ! ? followed by whitespace, so
+ * "retry.*" and "README.md" stay whole and a colon never separates a class name from its verb. RETRY_WORD: retry,
+ * retries, retried, re-attempt(s|ed). NEGATED_RETRY: a retry word governed by never/not/no/nor (one adverb allowed),
+ * capturing what it governs up to the clause end. These are bounded text censuses over one module, not a parser: they
+ * pin the shapes named in each case.
+ */
+const HOSTED_SOURCE_URL = new URL("../src/workbench/hosts/furnace-hosted.ts", import.meta.url);
+const prose = (text: string): string => text.replace(/^[ \t]*(?:\*|\/\/)[ \t]?/gm, "").replace(/\s+/g, " ").trim();
+const clausesOf = (text: string): string[] => text.split(/(?<=[.;!?])\s+/).filter((clause) => clause !== "");
+const RETRY_WORD = /\b(?:retr(?:y|ies|ied|ying)|re-?attempt(?:s|ed|ing)?)\b/i;
+const NEGATED_RETRY = /\b(?:never|not|no|nor)\s+(?:\w+\s+)?(?:retr(?:y|ies|ied|ying)|re-?attempt(?:s|ed|ing)?)\b([^.;]*)/gi;
+function moduleHeader(source: string): string {
+  const end = source.indexOf("*/");
+  if (!source.startsWith("/**") || end < 0) throw new Error("furnace-hosted.ts lost its leading module header");
+  return prose(source.slice(3, end));
+}
 
 describe("Furnace-hosted execution adapter", () => {
   it("loads a repaired copy of the vendored SDK and measures the shipped drift it repairs", async () => {
@@ -343,12 +363,19 @@ describe("Furnace-hosted execution adapter", () => {
     });
     await h.executor.start({ formula: "fixture" });
     expect(observe?.output).toEqual({ status: "unsupported" });
-    expect(h.executor.receipt().limits).toEqual({
+    // wb-lrz.1: Furnace re-attempts policy-admitted classes on its own (README.md §7 @15fd6f8ee: infrastructure_failure under
+    // the default retry.* policy), so the receipt may not carry the universal negative it used to. The typed constant pins
+    // the literal TYPE as well as the value: it does not compile against the retired literal type.
+    const disclosed: HostedReceipt["limits"]["retry"] = "adapter-never-retries; furnace-auto-retries-by-recorded-retry-policy; work_failure-and-indeterminate-park";
+    const limits = h.executor.receipt().limits;
+    expect(limits.retry).not.toBe("furnace-parks-never-retries");
+    expect(limits.retry).toBe(disclosed);
+    expect(limits).toEqual({
       crashDurability: "none",
       observe: "unsupported",
       identity: "per-attempt",
       replyBounds: "none",
-      retry: "furnace-parks-never-retries",
+      retry: "adapter-never-retries; furnace-auto-retries-by-recorded-retry-policy; work_failure-and-indeterminate-park",
     });
     await h.executor.close();
   });
@@ -474,6 +501,43 @@ describe("Furnace-hosted execution adapter", () => {
     expect(source).not.toMatch(/import\(/);
     expect(source).toContain("@furnace/sdk/dist/src/embedded.js");
     expect(existsSync(new URL("../src/workbench/hosts/furnace-hosted.ts", import.meta.url))).toBe(true);
+  });
+
+  it("discloses the verified retry semantics in its header: this adapter never retries, Furnace re-attempts only what the Run's recorded retry.* policy admits, work_failure and a resident host's indeterminate park (wb-lrz.1)", () => {
+    const source = readFileSync(HOSTED_SOURCE_URL, "utf8");
+    const header = moduleHeader(source);
+    // The retired universal negative contradicted README.md §7 @15fd6f8ee (external_termination -> infrastructure_failure is re-attempted by default).
+    expect(source).not.toContain("Furnace never retries an Attempt on its own");
+    expect(header).toMatch(/\bwork_failure\b/);
+    expect(header).toMatch(/\ba resident host's indeterminate\b/);
+    expect(header).toMatch(/\bthe Run's recorded retry\.\* policy admits\b/);
+    expect(header).toContain("README.md §5/§7 @15fd6f8ee");
+    expect(header).toContain("This adapter never retries an Attempt.");
+  });
+
+  it("keeps the retry correction words-only and scoped: the no-scheduler sentence verbatim, Furnace's 'never' naming exactly work_failure and indeterminate, and no clause claiming Furnace retries either class (wb-lrz.2)", () => {
+    const source = readFileSync(HOSTED_SOURCE_URL, "utf8");
+    // The behaviour claim stays exactly as landed: the whole line, byte for byte.
+    expect(source.split("\n")).toContain(" * admission receipt. This module adds no scheduler, no retry and no checkpoint.");
+    // Every header clause that negates a retry is exactly one of three: the module's no-scheduler sentence, this adapter's
+    // own posture, or Furnace's naming exactly the two parked classes (so no universal "Furnace never retries" survives).
+    const negatedRetry = clausesOf(moduleHeader(source)).filter((clause) => /\b(?:never|not|no|nothing|neither|nor)\b/i.test(clause) && RETRY_WORD.test(clause));
+    expect(negatedRetry).toHaveLength(3);
+    const furnaceNever = negatedRetry.filter((clause) => /\bFurnace\b/.test(clause));
+    expect(furnaceNever).toHaveLength(1);
+    for (const clause of furnaceNever) {
+      // What the negated retry GOVERNS, not merely the clause around it: exactly work_failure and indeterminate.
+      const governed = [...clause.matchAll(NEGATED_RETRY)].map((match) => match[1] ?? "");
+      expect(governed).toHaveLength(1);
+      expect(governed[0]).toMatch(/\bwork_failure\b/);
+      expect(governed[0]).toMatch(/\bindeterminate\b/);
+      expect(governed[0]).not.toMatch(/\b(?:infrastructure_failure|timeout|executor_failure|protocol_failure|abandoned|cancelled)\b/);
+    }
+    for (const clause of negatedRetry.filter((candidate) => !/\bFurnace\b/.test(candidate))) expect(clause).toMatch(/\bthis (?:adapter|module)\b/i);
+    // The opposite over-claim: nowhere in the module (header, comments, strings, the LIMITS literal) does a clause naming
+    // work_failure or indeterminate keep a retry word once its negated retries are taken out.
+    const overClaims = clausesOf(prose(source)).filter((clause) => /\b(?:work_failure|indeterminate)\b/.test(clause) && RETRY_WORD.test(clause.replace(NEGATED_RETRY, "")));
+    expect(overClaims).toEqual([]);
   });
 
   it("roots every fixture under the short scratch base, never the inherited TMPDIR, so the bridge socket keeps the 103-byte bound (wb-70b R1)", async () => {
