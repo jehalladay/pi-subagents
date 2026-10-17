@@ -635,7 +635,8 @@ describe("workflow_observe reply builder (workbench.observe/v1)", () => {
     expect(sanitized.nodes[0]).toMatchObject({
       nativeRef: { provider: "furnace", type: "run", id: "frn-run-hostile" },
       kind: "native.status",
-      presentation: { title: "Red evil Authorization: [REDACTED]", statusText: "RUNNING31m [REDACTED]", statusTone: "active" },
+      // wb-xbq: the 8-bit CSI "\u009b31m" is one escape unit, as "\u001b[31m" is, so its parameters are not displayed.
+      presentation: { title: "Red evil Authorization: [REDACTED]", statusText: "RUNNING [REDACTED]", statusTone: "active" },
       evidenceRefs: ["ev-1"],
       subjectBasis: "sha-1",
       interval: { startedAt: clock(1) },

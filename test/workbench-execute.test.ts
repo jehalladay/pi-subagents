@@ -55,8 +55,8 @@ const LONE_HIGH = cp(0xd800);
 const LONE_LOW = cp(0xdc00);
 /** A lone surrogate: with the u flag a well-formed pair reads as one astral code point, so only an unpaired half matches. */
 const LONE_SURROGATE = /[\u{d800}-\u{dfff}]/u;
-/** What a display string must never carry (the sanitizer corpus's UNSAFE_DISPLAY). */
-const UNSAFE_DISPLAY = /[\x00-\x1f\x7f-\x9f\u{2028}\u{2029}]|\p{Default_Ignorable_Code_Point}|[\u{d800}-\u{dfff}]/u;
+/** What a display string must never carry (the sanitizer corpus's UNSAFE_DISPLAY, wb-rqd format controls included). */
+const UNSAFE_DISPLAY = /[\x00-\x1f\x7f-\x9f\u{2028}\u{2029}\u{fff9}-\u{fffb}\u{13430}-\u{1343f}]|\p{Default_Ignorable_Code_Point}|[\u{d800}-\u{dfff}]/u;
 /** Every string leaf of a reply, keys included. */
 function strings(value: unknown, into: string[] = []): string[] {
   if (typeof value === "string") into.push(value);
