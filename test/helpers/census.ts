@@ -62,18 +62,28 @@
  *   registration an inherited fails, or an inherited fixtures registry that writes the context. The census closes the
  *   class fail-closed with a runtime half it vouches statically: test/helpers/census-guard.ts installs non-configurable
  *   accessors for fails and fixtures on Object.prototype before any test module loads (a prototype write of either
- *   throws; an own one keeps its meaning), and censusGuard() vouches - from the tier's forge.toml step, its npm script,
- *   its argv, the one config file vitest loads, that file's statements (imports of defineConfig from vitest/config and
- *   types, and a default export whose every value is a plain literal: no code runs when vitest loads it), its closed
- *   key lists (no globalSetup, no test.env name node or vitest reads in the workers it forks, test.server.deps only) and
- *   the first setup file's bytes (CENSUS_GUARD_SHA256), never by executing - that the tier's run loads it first, before
- *   any code but vitest's own (roster rows options.inherited and context.inherited). Without that vouch report mode
- *   reads no absent fails as no fails (options-unknown) and neither mode resolves a context flow (context-unknown),
- *   whatever the code; an own fails (true or false) needs no vouch.
+ *   throws; an own one keeps its meaning), and censusGuard() vouches - by reading its READ SET (VOUCH_READ_SET, below),
+ *   never by executing - that the tier's run loads it first, before any code but vitest's own and the named residuals
+ *   (roster rows options.inherited and context.inherited). Without that vouch report mode reads no absent fails as no
+ *   fails (options-unknown) and neither mode resolves a context flow (context-unknown), whatever the code; an own fails
+ *   (true or false) needs no vouch.
+ *   THE CLOSED RECORD (owner R470 R1 = (a) with the closed-record cap, respin-6): the vouch's read set, by name, each
+ *   read fail-closed - forge-step (forge.toml read CLOSED: its tables, [build] keys and the tier's own step keys from
+ *   closed lists, so a build configuration's env, a hook, a second gate spelling, a toolchain table are refused),
+ *   npm-script (the hop's package.json script, and its pre / post lifecycle scripts admitted only as exact literals of
+ *   CENSUS_LIFECYCLE_SCRIPTS, whose membership is wb-nl8's), npm-project-config (on a chain with an npm hop, the
+ *   project .npmrc read CLOSED - node-options, script-shell and every key outside a closed list refused, a non-plain
+ *   key, a section or an unreadable file refused - and every enclosing package.json: one declaring workspaces is
+ *   refused, since npm would load ITS .npmrc as the project layer), vitest-argv (closed flag lists), vitest-config (the
+ *   one config file vitest loads: its statements, imports of defineConfig from vitest/config and types and a default
+ *   export whose every value is a plain literal, and its closed key lists: no globalSetup, no test.env name node or
+ *   vitest reads in the workers it forks, test.server.deps only) and guard-bytes (the first setup file's sha256,
+ *   CENSUS_GUARD_SHA256). Report mode's staleness check covers every file the vouch read (GuardState.read).
  *   MEASURED, NOT PROVEN: what the roster is known to refuse is its measured probe set, re-run on the delivered bytes in
  *   BOTH modes - the gate-3 battery (sixteen shapes), the gate-2 battery (38 shapes), the respin-4 seat's own (S1-S16,
  *   X1-X19, X21, X22, X22b), the gate-3 r4 battery (48 rows: O1-O6, P1-P9, A1-A12, C1-C6 and its controls) and the
- *   respin-5 seat's own (F1, F2, E1, the G rows, RS1, RS2), every one a row of test/workbench-census-helper.test.ts; its
+ *   respin-5 seat's own (F1, F2, E1, the G rows, RS1, RS2) and the respin-6 seat's own (the gate-1 g6s2 N2 / N4 / N5
+ *   twins, the read-set G rows), every one a row of test/workbench-census-helper.test.ts; its
  *   ROSTER_JUSTIFICATION table names, per roster row, the falsifier rows that would fabricate green through it and go
  *   red instead. A shape outside that set is refused only as far as the guards of the roster rows reach.
  *   NAMED RESIDUALS - what the roster does NOT cover, so no census may claim it; each MEASURED (a probe ran the shape on
@@ -89,18 +99,39 @@
  *     the gate-3 r4 battery measured that false (P2: a relative helper that never touches vitest places fails on
  *     Object.prototype, read as no fails in report mode). The inherited-option class is closed by the census guard
  *     (INHERITED OPTIONS above), never by the closure read.
- *   - PRE-GUARD CODE: code that runs in the worker realm BEFORE the guard - a --require / --import preload set through
- *     NODE_OPTIONS for the workers vitest forks - defeats the runtime half alone: a plain prototype write there is
- *     caught (the guard throws at load: RS1, collection-error in both modes), but one that first replaces the builtins
- *     the guard calls evades it, since the first code in a realm wins (measured on these bytes with the vouch's
- *     config-module read removed: report ok and executing inverted for fails, ok in both modes for a fixtures
- *     registry). The routes the vouch reads are refused statically instead (MEASURED): config-module code and an option
- *     value that is code (rows c-u62r5-rs1-preload, c-u62r5-rs2-tamper, c-u62r5-rs2-fixtures, g-u62r5-config-code,
- *     g-u62r5-config-import, g-u62r5-value-code), a globalSetup (g-u62r5-global-setup), a test.env NODE_* / VITE*
- *     name (g-u62r5-env-node-options, g-u62r5-env-vitest), a CLI flag or config key outside the closed lists
- *     (g-u62r5-cli-flag, g-u62r5-test-key, g-u62r5-plugins, g-u62r5-server-debug). NAMED RESIDUAL (UNMEASURED): what
- *     the vouch does not read - the gate's own environment (an operator's NODE_OPTIONS reaches every worker) and the
- *     installed packages (node_modules, vitest itself), which run before the guard by construction.
+ *   - PRE-GUARD CODE: code that runs in the worker realm BEFORE the guard - a --require / --import preload that npm, the
+ *     environment or a config module sets through NODE_OPTIONS for vitest and the workers it forks - defeats the runtime
+ *     half alone. The runtime half catches only an UNFORGED prior placement (RS1, g6s2 N1: collection-error in both
+ *     modes). FORGED MARK (named): it recognises its own accessors by Symbol.for("wb-u62.census-guard"), a
+ *     global-registry symbol any pre-guard code can mint (g6s2 N2), and pre-guard code can first replace the builtins it
+ *     calls (RS2, g6s2 N4) - first code in a realm wins - so the runtime half is never the guard against a pre-guard
+ *     route. Every route in the read set is refused statically instead (MEASURED, both modes): config-module code and an
+ *     option value that is code (rows c-u62r5-rs1-preload, c-u62r5-rs2-tamper, c-u62r5-rs2-fixtures,
+ *     g-u62r5-config-code, g-u62r5-config-import, g-u62r5-value-code), a globalSetup (g-u62r5-global-setup), a test.env
+ *     NODE_* / VITE* name (g-u62r5-env-node-options, g-u62r5-env-vitest), a CLI flag or config key outside the closed
+ *     lists (g-u62r5-cli-flag, g-u62r5-test-key, g-u62r5-plugins, g-u62r5-server-debug), the project .npmrc
+ *     (c-u62r6-npmrc-forged-mark, c-u62r6-npmrc-tamper, c-u62r6-npmrc-script-shell, c-u62r6-npmrc-fixtures and the
+ *     g-u62r6-npmrc-* rows), an enclosing workspace root (c-u62r6-workspace-npmrc, g-u62r6-workspace-*), a lifecycle
+ *     script (c-u62r6-lifecycle-swap, g-u62r6-lifecycle-*) and a forge build configuration or any other table or key
+ *     outside the closed forge-step read (c-u62r6-forge-configuration, g-u62r6-forge-*). Every route OUTSIDE the read
+ *     set is a named residual of report mode (VOUCH_RESIDUALS), each measured ONCE with ONE shape on these bytes in the
+ *     respin-6 seat battery, both modes, the result in docs/workbench/receipts/wb-u62.md:
+ *     MEASURED RESIDUAL operator-environment - the environment the gate hands the npm hop, however set (an operator's
+ *       shell, forge's env layer, a toolchain manager's activation: NODE_OPTIONS, npm_config_*, BASH_ENV, PATH,
+ *       VITEST_* / VITE_*). Shape: NODE_OPTIONS=--import=<the forged-mark preload>, the project clean.
+ *     MEASURED RESIDUAL operator-npm-config - npm's user, global and builtin config layers. Shape: a user-layer .npmrc
+ *       carrying node-options, reached through HOME at a scratch home.
+ *     MEASURED RESIDUAL installed-code - node_modules (its .bin shims, vitest, every package the run loads), npm, node
+ *       and the shell themselves, and whatever an install or another gate step leaves there. Shape: node_modules/.bin/vitest
+ *       replaced by a shim that exports NODE_OPTIONS before it execs the real vitest.
+ *     MEASURED RESIDUAL run-judgment-drift - a route present for the run and gone (or restored under an old mtime)
+ *       before judgment: the vouch reads the repository at judgment time, and staleness covers only files it read that
+ *       are newer than the report. Shape: the N2 project .npmrc present for the run, deleted before judge().
+ *     Measured (the clean control fails in the runner and reads failed in both modes): in operator-environment,
+ *     operator-npm-config and installed-code the targeted failing pin passes in the runner and report mode reads it ok
+ *     (false green), while executing mode, whose own run carries the same route, reads the inversion from that run
+ *     (inverted: the fails the accessor answers, never the route); in run-judgment-drift report mode reads it ok (false
+ *     green) and executing mode's own run, on the tree as judged, is clean (failed, the pin's honest state).
  *   - setup files after the guard: their fails / fixtures route is the guard's (measured, rows r-u62r5-* and
  *     c-u62r5-*); a custom matcher, tester or serializer registered there or in a package (UNMEASURED; inside the
  *     import closure they are refused, X8 measured).
@@ -399,14 +430,14 @@ const ROSTER = [
     id: "options.inherited",
     flow: "options",
     construct: "fails absent at the case and at every enclosing suite reads as no fails ONLY when censusGuard vouches the tier's run: its first setup file is test/helpers/census-guard.ts (CENSUS_GUARD_SHA256), which keeps fails off Object.prototype",
-    guard: "unvouched - no guard, another setup file first or in parallel, other bytes, a pool or environment outside the list, an argv flag or config key the vouch does not read - the absent read is options-unknown, naming why (u62 gate-3 r4 P1-P5 / P7, owner R1 = (a)); an own fails never needs it",
+    guard: "unvouched - no guard, another setup file first or in parallel, other bytes, a pool or environment outside the list, an argv flag or config key the vouch does not read, or anything in its read set (VOUCH_READ_SET: the forge step read closed, the npm lifecycle around the hop, the project npm config read closed) that may load code before the guard - the absent read is options-unknown, naming why (u62 gate-3 r4 P1-P5 / P7, owner R1 = (a); respin-6 g6s2 N2 / N4 / N5, owner R470 R1 = (a)); an own fails never needs it; the routes outside the read set are the named residuals VOUCH_RESIDUALS",
   },
   // ---- the context flow (both modes): every use of the test context and the runner state it reaches ----
   {
     id: "context.inherited",
     flow: "context",
     construct: "a case's context flow resolves ONLY when censusGuard vouches the tier's run, so no inherited fixtures registry hands the test context to auto fixtures the census does not read",
-    guard: "unvouched, every context flow is context-unknown in both modes, naming why (u62 respin-5 F1 / F2: vitest 4.1.10 reads options.fixtures through the prototype chain and runs its auto fixtures with the context, after collection)",
+    guard: "unvouched (VOUCH_READ_SET, as options.inherited), every context flow is context-unknown in both modes, naming why (u62 respin-5 F1 / F2: vitest 4.1.10 reads options.fixtures through the prototype chain and runs its auto fixtures with the context, after collection; respin-6: the RS2 fixtures registry by the project .npmrc, a forge build configuration)",
   },
   {
     id: "context.seed",
@@ -833,7 +864,13 @@ function tokenize(command: string): Parsed<readonly string[]> {
   return { ok: true, value: words };
 }
 
-function readScripts(root: string): Parsed<Readonly<Record<string, string>>> {
+/** package.json's scripts (string ones) and the raw entry of every key readFileSync kept (a non-string lifecycle is refused, not dropped). */
+interface PackageJson {
+  readonly scripts: Readonly<Record<string, string>>;
+  readonly raw: Readonly<Record<string, unknown>>;
+}
+
+function readScripts(root: string): Parsed<PackageJson> {
   let value: unknown;
   try {
     value = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
@@ -841,14 +878,14 @@ function readScripts(root: string): Parsed<Readonly<Record<string, string>>> {
     return { ok: false, why: `package.json is unreadable: ${String(error instanceof Error ? error.message : error)}` };
   }
   const scripts = typeof value === "object" && value !== null ? (value as { scripts?: unknown }).scripts : undefined;
-  if (scripts === undefined) return { ok: true, value: {} };
+  if (scripts === undefined) return { ok: true, value: { scripts: {}, raw: {} } };
   if (typeof scripts !== "object" || scripts === null) return { ok: false, why: "package.json scripts is not an object" };
   const out: Record<string, string> = {};
   for (const [name, body] of Object.entries(scripts)) if (typeof body === "string") out[name] = body;
-  return { ok: true, value: out };
+  return { ok: true, value: { scripts: out, raw: scripts as Record<string, unknown> } };
 }
 
-function resolveWords(words: readonly string[], scripts: Readonly<Record<string, string>>, chain: string[], depth: number): Parsed<readonly string[]> {
+function resolveWords(words: readonly string[], scripts: Readonly<Record<string, string>>, chain: string[], depth: number, npm?: NpmHop): Parsed<readonly string[]> {
   const [head, ...rest] = words;
   if (head === "npm") {
     let script: string | undefined;
@@ -865,19 +902,56 @@ function resolveWords(words: readonly string[], scripts: Readonly<Record<string,
     const body = scripts[script];
     if (body === undefined) return { ok: false, why: `package.json declares no script ${script}` };
     if (depth > 4) return { ok: false, why: "npm scripts nest deeper than four levels" };
+    if (npm !== undefined) {
+      npm.npm = true;
+      npm.script ??= script;
+    }
     chain.push(`package.json scripts.${script} = ${JSON.stringify(body)}`);
     const nested = tokenize(body);
     if (!nested.ok) return { ok: false, why: `package.json scripts.${script}: ${nested.why}` };
-    return resolveWords([...nested.value, ...extra.slice(1)], scripts, chain, depth + 1);
+    return resolveWords([...nested.value, ...extra.slice(1)], scripts, chain, depth + 1, npm);
   }
   const vitestArgs = head === "npx" && rest[0] === "vitest" ? rest.slice(1) : head !== undefined && VITEST_BINARIES.has(head) ? rest : undefined;
   if (vitestArgs === undefined) return { ok: false, why: `the tier runs ${head ?? "nothing"}, not vitest` };
   if (vitestArgs[0] !== "run" && !vitestArgs.includes("--run")) return { ok: false, why: "vitest without run is watch mode" };
+  if (head === "npx" && npm !== undefined) npm.npm = true;
   return { ok: true, value: vitestArgs };
 }
 
+/**
+ * u62 respin-6 V1 (forge-step): the forge.toml tables and keys the vouch reads CLOSED - anything else may move code onto
+ * the tier's step and is refused, naming it (owner R470 R1 = (a) with the closed-record cap). The tier's own table carries
+ * only its step keys; other steps' tables are not read at all (their commands are not the tier's hop).
+ */
+const GUARD_FORGE_TABLES = ["", "package", "build", "build.commands"];
+const GUARD_FORGE_BUILD_KEYS = ["backend", "gate", "timeout", "workers"];
+const GUARD_FORGE_STEP_KEYS = ["command", "timeout", "hint", "test_report", "workers"];
+
+function forgeGuard(toml: TomlTables, tier: string): string | undefined {
+  const rootTable = toml.get("");
+  if (rootTable !== undefined && rootTable.size > 0) return `forge.toml sets ${[...rootTable.keys()][0] ?? ""} outside every table, which the vouch does not read`;
+  for (const table of toml.keys()) {
+    if (table === "") continue;
+    if (table.startsWith("[[")) return `forge.toml declares ${table.replace(/@\d+$/, "")}, an array table outside the closed forge-step read`;
+    if (GUARD_FORGE_TABLES.includes(table) || table === `build.commands.${tier}`) continue;
+    if (table.startsWith("build.commands.")) continue;
+    return `forge.toml declares [${table}], a table outside the closed forge-step read`;
+  }
+  const build = toml.get("build");
+  for (const key of build?.keys() ?? []) if (!GUARD_FORGE_BUILD_KEYS.includes(key)) return `forge.toml [build] sets ${key}, outside the closed list of build keys`;
+  const step = toml.get(`build.commands.${tier}`);
+  for (const key of step?.keys() ?? []) if (!GUARD_FORGE_STEP_KEYS.includes(key)) return `forge.toml [build.commands.${tier}] sets ${key}, outside the closed list of step keys`;
+  return undefined;
+}
+
+/** u62 respin-6: the tier chain's npm hop, recorded by resolveWords for the vouch's V2 / V3 reads. */
+export interface NpmHop {
+  npm: boolean;
+  script?: string;
+}
+
 /** Resolves a forge.toml command to the vitest argv it runs, read-only; anything outside the modelled grammar fails closed. */
-export function resolveTier(root: string, tier: string): TierResolution {
+export function resolveTier(root: string, tier: string, npm?: NpmHop): TierResolution {
   const fail = (why: string, chain: readonly string[] = [], command = ""): TierResolution => ({ ok: false, tier, command, argv: [], chain, why });
   let text: string;
   try {
@@ -902,10 +976,107 @@ export function resolveTier(root: string, tier: string): TierResolution {
   if (!words.ok) return fail(`forge.toml command ${tier}: ${words.why}`, chain, command.value);
   const scripts = readScripts(root);
   if (!scripts.ok) return fail(scripts.why, chain, command.value);
-  const argv = resolveWords(words.value, scripts.value, chain, 0);
+  const argv = resolveWords(words.value, scripts.value.scripts, chain, 0, npm);
   if (!argv.ok) return fail(argv.why, chain, command.value);
   if (chain.length > 2) return fail("the command reaches vitest through more than one npm script; only one npm hop is executed faithfully", chain, command.value);
   return { ok: true, tier, command: command.value, argv: argv.value, chain, why: "" };
+}
+
+/**
+ * u62 respin-6 V2 (npm-script): the npm lifecycle scripts npm runs around the hop's own script, admitted only as exact
+ * literals of this closed list - anything else is code around the tier's hop and is refused, naming it. EMPTY at this cut:
+ * the list's membership is wb-nl8's (its pretest rotation hook joins it in nl8's own cut; owner R470: never an outright
+ * refusal of lifecycle scripts).
+ */
+export const CENSUS_LIFECYCLE_SCRIPTS: readonly string[] = [];
+
+/** u62 respin-6 V3 (npm-project-config): the .npmrc keys the vouch admits - they load no code and move no config layer. */
+const GUARD_NPMRC_KEYS = ["registry", "audit", "fund", "loglevel", "update-notifier", "engine-strict", "save-exact", "package-lock"];
+const GUARD_NPMRC_KEY = /^[a-z][a-z0-9-]*$/;
+const GUARD_NPMRC_REGISTRY = /^@[a-z0-9][a-z0-9._~-]*:registry$/;
+const GUARD_NPMRC_NAMED: Readonly<Record<string, string>> = {
+  "node-options": "npm exports it as NODE_OPTIONS to the script it runs",
+  "script-shell": "it names the program npm runs the tier's script through",
+  shell: "it names the program npm runs the tier's script through",
+  userconfig: "it moves npm's user config layer",
+  globalconfig: "it moves npm's global config layer",
+  prefix: "it moves npm's global layer (its node_modules and its etc/npmrc)",
+  workspace: "it moves npm's project config layer",
+  workspaces: "it moves npm's project config layer",
+};
+
+function npmrcGuard(root: string, read: string[]): string | undefined {
+  const path = join(root, ".npmrc");
+  let text: string;
+  try {
+    text = readFileSync(path, "utf8");
+  } catch (error) {
+    const code = (error as NodeJS.ErrnoException).code;
+    if (code === "ENOENT") return undefined;
+    return `.npmrc is unreadable: ${String(error instanceof Error ? error.message : error)}`;
+  }
+  read.push(path);
+  const lines = text.split(/[\r\n]+/);
+  for (let index = 0; index < lines.length; index += 1) {
+    const line = lines[index]?.trim() ?? "";
+    if (line === "" || line.startsWith(";") || line.startsWith("#")) continue;
+    if (line.startsWith("[")) return `.npmrc line ${index + 1} is a section header, outside the plain key=value lines the vouch reads`;
+    const equals = line.indexOf("=");
+    const key = (equals === -1 ? line : line.slice(0, equals)).trim();
+    if (!GUARD_NPMRC_KEY.test(key) && !GUARD_NPMRC_REGISTRY.test(key)) return `.npmrc line ${index + 1} sets ${JSON.stringify(key)}, not a plain key the vouch admits (ini unquotes, unescapes, substitutes and folds keys the closed read cannot name)`;
+    const named = GUARD_NPMRC_NAMED[key];
+    if (named !== undefined) return `.npmrc sets ${key} (line ${index + 1}): ${named}`;
+    if (!GUARD_NPMRC_KEYS.includes(key) && !GUARD_NPMRC_REGISTRY.test(key)) return `.npmrc sets ${key} (line ${index + 1}), outside the closed list of keys that load no code and move no config layer`;
+  }
+  return undefined;
+}
+
+/** u62 respin-6 V3: an enclosing package.json that declares workspaces may make npm treat it as the hop's workspace root and load ITS .npmrc as the project layer. */
+function ancestorGuard(root: string, read: string[]): string | undefined {
+  for (let dir = dirname(resolve(root)); ; dir = dirname(dir)) {
+    const path = join(dir, "package.json");
+    let value: unknown;
+    try {
+      value = JSON.parse(readFileSync(path, "utf8"));
+    } catch {
+      value = undefined;
+    }
+    if (value !== undefined) {
+      read.push(path);
+      const workspaces = typeof value === "object" && value !== null ? (value as { workspaces?: unknown }).workspaces : undefined;
+      if (Array.isArray(workspaces) || (typeof workspaces === "object" && workspaces !== null && Array.isArray((workspaces as { packages?: unknown }).packages))) {
+        return `${relative(root, path)} declares workspaces, so npm takes ${dir === dirname(resolve(root)) ? "it" : "that ancestor"} for the workspace root and loads ITS .npmrc as the hop's project config`;
+      }
+    }
+    if (dirname(dir) === dir) return undefined;
+  }
+}
+
+/** u62 respin-6 V1: the tier step's forge.toml, read closed (resolveTier reads it open, for the command alone). */
+function forgeStep(root: string, tier: string): string | undefined {
+  let text: string;
+  try {
+    text = readFileSync(join(root, "forge.toml"), "utf8");
+  } catch (error) {
+    return `forge.toml is unreadable: ${String(error instanceof Error ? error.message : error)}`;
+  }
+  const toml = parseToml(text);
+  return toml.ok ? forgeGuard(toml.value, tier) : toml.why;
+}
+
+/** u62 respin-6 V2: npm runs pre<script> and post<script> around the hop's script; each is admitted only as a closed-list literal. */
+function lifecycleGuard(root: string, script: string): string | undefined {
+  const scripts = readScripts(root);
+  if (!scripts.ok) return scripts.why;
+  for (const key of [`pre${script}`, `post${script}`]) {
+    if (!Object.hasOwn(scripts.value.raw, key)) continue;
+    const body = scripts.value.raw[key];
+    if (typeof body !== "string") return `package.json scripts.${key} is not a string, so the vouch cannot read what npm runs around the tier's npm hop`;
+    if (!CENSUS_LIFECYCLE_SCRIPTS.includes(body)) {
+      return `package.json scripts.${key} = ${JSON.stringify(body)} runs around the tier's npm hop (npm runs pre${script} and post${script} around scripts.${script}) and is not a literal of the closed list CENSUS_LIFECYCLE_SCRIPTS (its membership is wb-nl8's)`;
+    }
+  }
+  return undefined;
 }
 // ---------------------------------------------------------------------------------------------
 // The census guard (u62 respin-5, owner R1 = (a)): vouched statically on the tier's own run, never executed.
@@ -913,6 +1084,83 @@ export function resolveTier(root: string, tier: string): TierResolution {
 
 /** The census guard's own bytes (test/helpers/census-guard.ts): censusGuard vouches a tier's first setup file by this sha256. */
 export const CENSUS_GUARD_SHA256 = "8db6194624037437602602092e115dc47c890e66da6f893c1e1f1ad61a22222f";
+
+/** One entry of the vouch's read set (u62 respin-6, owner R470 R1 = (a) with the closed-record cap). */
+export interface VouchRead {
+  readonly id: string;
+  /** What the vouch reads there, by name. */
+  readonly reads: string;
+  /** What it refuses there, fail-closed. */
+  readonly refuses: string;
+}
+
+/**
+ * THE VOUCH'S READ SET, enumerated by name: censusGuard reads exactly these and refuses, naming it, anything in them that
+ * may load code before the guard. Every route OUTSIDE them is a named, measured residual of report mode (VOUCH_RESIDUALS).
+ */
+export const VOUCH_READ_SET: readonly VouchRead[] = [
+  {
+    id: "forge-step",
+    reads: "forge.toml, read CLOSED: the tables [package], [build], [build.commands] and [build.commands.<name>] only; [build] keys backend, gate, timeout, workers; the tier's own [build.commands.<tier>] keys command, hint, test_report, timeout, workers (other steps' tables are not read)",
+    refuses: "any other table (array tables included: [build.configurations.<name>], [build.hooks], [[build.gate.steps]], [toolchain], [package.<name>]), any other [build] key (default_configuration, preset ...), any other key of the tier's own table, any key outside every table",
+  },
+  {
+    id: "npm-script",
+    reads: "package.json scripts.<script> of the tier's one npm hop, and scripts.pre<script> / post<script>, which npm runs around it",
+    refuses: "a pre / post script whose body is not an exact literal of CENSUS_LIFECYCLE_SCRIPTS (membership: wb-nl8), a non-string one included; a second npm hop (resolveTier)",
+  },
+  {
+    id: "npm-project-config",
+    reads: "on a chain with an npm hop (npm run / npm test / npx): <root>/.npmrc read CLOSED - plain key=value lines of registry, @<scope>:registry, audit, fund, loglevel, update-notifier, engine-strict, save-exact, package-lock - and every enclosing package.json",
+    refuses: "node-options, script-shell, shell, userconfig, globalconfig, prefix, workspace(s) and every unlisted key; a section line; a key that is not plain (quoted, escaped, env-substituted, bracketed); an unreadable file (anything but absent); an enclosing package.json that declares workspaces (npm would load ITS .npmrc as the project layer)",
+  },
+  {
+    id: "vitest-argv",
+    reads: "the vitest argv the hop reaches: the closed boolean and value flag lists",
+    refuses: 'any other flag, "--", a value flag without a value, a --config file that does not exist',
+  },
+  {
+    id: "vitest-config",
+    reads: "the ONE config file vitest loads: its statements (imports of defineConfig from vitest/config and types, a default export) and its default export's closed key lists and plain literals",
+    refuses: "any other statement or import, a value that is code, a key outside the lists (globalSetup, a test.env NODE_* / VITE* name, a pool or environment outside the list ...), a second config file",
+  },
+  {
+    id: "guard-bytes",
+    reads: "the config's first setup file and its sha256 (CENSUS_GUARD_SHA256), with sequence.setupFiles \"list\" when there is more than one",
+    refuses: "no setup file, another file first, other bytes, a second setup file in parallel",
+  },
+];
+
+/** One route the vouch does not read: a named, MEASURED residual of report mode, with the one shape that measures it. */
+export interface VouchResidual {
+  readonly id: string;
+  readonly route: string;
+  /** The one N-shape that measures it (the seat battery on the delivered bytes, both modes; result in the receipt). */
+  readonly shape: string;
+}
+
+export const VOUCH_RESIDUALS: readonly VouchResidual[] = [
+  {
+    id: "operator-environment",
+    route: "the process environment the gate hands the tier's npm hop, however set (an operator's shell, forge's env layer, a toolchain manager's activation): NODE_OPTIONS, npm_config_* / NPM_CONFIG_*, BASH_ENV, PATH, VITEST_* / VITE_*",
+    shape: "NODE_OPTIONS=--import=<the forged-mark preload> in the gate's environment, the project clean",
+  },
+  {
+    id: "operator-npm-config",
+    route: "npm's user (~/.npmrc or userconfig), global (<prefix>/etc/npmrc) and builtin (<npm>/npmrc) config layers",
+    shape: "a user-layer .npmrc carrying node-options=--import=<the forged-mark preload>, reached through HOME pointing at a scratch home",
+  },
+  {
+    id: "installed-code",
+    route: "node_modules (its .bin shims, vitest, every package the run loads), npm, node and the shell themselves, and whatever an install or another gate step leaves there",
+    shape: "node_modules/.bin/vitest replaced by a shim that exports NODE_OPTIONS=--import=<the forged-mark preload> and execs the real vitest, in a node_modules of per-package links",
+  },
+  {
+    id: "run-judgment-drift",
+    route: "a route present for the run and gone (or restored under an old mtime) before judgment: the vouch reads the repository at JUDGMENT time, and staleness covers only files it read that are newer than the report",
+    shape: "the N2 project .npmrc present for the run and deleted before judge()",
+  },
+];
 
 export interface GuardState {
   readonly ok: boolean;
@@ -1089,14 +1337,28 @@ function importedFrom(sf: ts.SourceFile, local: string, imported: string, module
  * and could set NODE_OPTIONS for the workers vitest forks is refused where the vouch can read it: a config-module
  * statement besides the imports of defineConfig (and types) and the default export, an option value that is not a
  * plain literal, a globalSetup, a test.env name node or vitest reads in a worker (cli-api: env = {...process.env,
- * ...config.env}), test.server outside deps. Anything else is unvouched, naming why; what it cannot read (the gate's
- * environment, the installed packages) is the named PRE-GUARD residual.
+ * ...config.env}), test.server outside deps. u62 respin-6 (owner R470 R1 = (a) with the closed-record cap) widens the
+ * read to the tier step's own forge and npm configuration (VOUCH_READ_SET: the forge step read closed, the npm lifecycle
+ * around the hop, the project npm config and every enclosing package.json). Anything else is unvouched, naming why;
+ * what it does not read is a named, measured residual of report mode (VOUCH_RESIDUALS).
  */
 export function censusGuard(root: string, tier: string): GuardState {
-  const read: string[] = [];
+  // V1 / V2 read forge.toml and package.json; staleness covers them (and every file below the vouch reads) in report mode.
+  const read: string[] = [join(root, "forge.toml"), join(root, "package.json")];
   const refuse = (why: string, config?: string): GuardState => ({ ok: false, read, why: `the census guard is not vouched on the ${tier} tier: ${why}`, ...(config === undefined ? {} : { config }) });
-  const resolution = resolveTier(root, tier);
+  const hop: NpmHop = { npm: false };
+  const resolution = resolveTier(root, tier, hop);
   if (!resolution.ok) return refuse(`the tier does not resolve (${resolution.why})`);
+  const forge = forgeStep(root, tier);
+  if (forge !== undefined) return refuse(forge);
+  if (hop.script !== undefined) {
+    const lifecycle = lifecycleGuard(root, hop.script);
+    if (lifecycle !== undefined) return refuse(lifecycle);
+  }
+  if (hop.npm) {
+    const npmrc = npmrcGuard(root, read) ?? ancestorGuard(root, read);
+    if (npmrc !== undefined) return refuse(npmrc);
+  }
   const argv = resolution.argv;
   let configured: string | undefined;
   for (let index = argv[0] === "run" ? 1 : 0; index < argv.length; index += 1) {

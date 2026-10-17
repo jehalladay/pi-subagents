@@ -50,7 +50,7 @@
  */
 import { spawn } from "node:child_process";
 import { createHash } from "node:crypto";
-import { copyFileSync, existsSync, mkdirSync, readFileSync, realpathSync, statSync, symlinkSync, utimesSync, writeFileSync } from "node:fs";
+import { chmodSync, copyFileSync, existsSync, mkdirSync, readFileSync, realpathSync, statSync, symlinkSync, utimesSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { marked } from "marked";
@@ -58,6 +58,7 @@ import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import {
   type CasePin,
   CENSUS_GUARD_SHA256,
+  CENSUS_LIFECYCLE_SCRIPTS,
   type CensusCode,
   type CensusLeg,
   censusGuard,
@@ -75,6 +76,8 @@ import {
   type SourceStructure,
   sectionMatches,
   sourceStructure,
+  VOUCH_READ_SET,
+  VOUCH_RESIDUALS,
 } from "./helpers/census.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
 
@@ -90,6 +93,10 @@ const SUITE_TIMEOUT = 300_000;
 const PIN = "the pinned case";
 const IMPORTS = 'import { beforeEach, describe, expect, it, test } from "vitest";';
 const OTHER = '  it("another case", () => {\n    expect(2).toBe(2);\n  });';
+/** u62 respin-6: the planted answers are TARGETED to the pinned case's registration (as in the gate-1 g6s2 battery). */
+const CENSUS_TARGET = "CENSUS-TARGET-u62r6";
+const TARGET_BODY = `() => {\n    expect("${CENSUS_TARGET}").toBe(2);\n  }`;
+const TARGET_PLAIN = `  it("${PIN}", ${TARGET_BODY});`;
 const BODY = "() => {\n    expect(1).toBe(1);\n  }";
 const PLAIN = `  it("${PIN}", ${BODY});`;
 
@@ -1486,6 +1493,14 @@ interface ConfigRow {
   readonly report?: Expected;
   /** u62 respin-5: the row's config names no census guard (the census itself must refuse the absent read). */
   readonly unguarded?: boolean;
+  /** u62 respin-6: files whose text needs the project's absolute root (an .npmrc preload path, a lifecycle swap's configs). */
+  readonly rooted?: (root: string) => Readonly<Record<string, string>>;
+  /** u62 respin-6: project files the row marks executable (a script shell). */
+  readonly executables?: readonly string[];
+  /** u62 respin-6: the project sits at child/ under a directory holding these files (an enclosing npm workspace root). */
+  readonly parent?: (root: string) => Readonly<Record<string, string>>;
+  /** u62 respin-6: the row's executing and report runs must not overlap (its lifecycle scripts rewrite project files). */
+  readonly serial?: boolean;
 }
 
 const CFG_TARGET = "test/cfg-target.test.ts";
@@ -1527,6 +1542,40 @@ const TAMPER_FIXTURES_PRELOAD = [
 ].join("\n");
 const CFG_FAILING = "() => {\n    expect(1).toBe(2);\n  }";
 const CFG_PLAIN_FAILING = `  it("${PIN}", ${CFG_FAILING});`;
+/**
+ * u62 respin-6: the g6s2 battery's targeting machinery (its shapes adopted unchanged) - an inherited value answers
+ * only a vitest registration options object whose own handler's source carries CENSUS_TARGET, so the co-resident
+ * control cases of the same run stay honest.
+ */
+const TARGETED = [
+  'const MARK = Symbol.for("wb-u62.census-guard");',
+  "const proto = Object.getPrototypeOf({});",
+  "const own = Object.prototype.hasOwnProperty;",
+  "const realDefine = Object.defineProperty;",
+  `const targeted = self => { const h = self !== null && self !== undefined && own.call(self, "handler") ? self.handler : undefined; return typeof h === "function" && String(h).includes(${JSON.stringify(CENSUS_TARGET)}); };`,
+  'const ownSetter = key => function (value) { if (this === proto) throw new TypeError("refused"); realDefine(this, key, { value, writable: true, enumerable: true, configurable: true }); };',
+  "",
+].join("\n");
+/** u62 respin-6 (gate-1 g6s2 N2, adopted unchanged): a fails accessor carrying the guard's own global-registry mark. */
+const FORGED_MARK_PRELOAD = `${TARGETED}const get = function () { return targeted(this) ? true : undefined; };\nrealDefine(get, MARK, { value: true });\nrealDefine(proto, "fails", { configurable: false, enumerable: false, get, set: ownSetter("fails") });\n`;
+/** u62 respin-6 (g6s2 N4, adopted unchanged): the respin-5 RS2 builtin tamper, carried by .npmrc node-options instead of the config module. */
+const TAMPER_NPMRC_PRELOAD = `${TARGETED}const describeOwn = Object.getOwnPropertyDescriptor;\nObject.getOwnPropertyDescriptor = (t, k) => (t === proto && k === "fails" ? undefined : describeOwn(t, k));\nObject.defineProperty = (t, k, d) => (t === proto && k === "fails" ? t : realDefine(t, k, d));\nrealDefine(proto, "fails", { configurable: true, enumerable: false, get() { return targeted(this) ? true : undefined; }, set: ownSetter("fails") });\n`;
+/** u62 respin-6 (g6s2 N5): the shell .npmrc script-shell names - it exports NODE_OPTIONS with the forged-mark preload and execs sh. */
+const scriptShellNpmrc = (root: string): Readonly<Record<string, string>> => ({
+  ".npmrc": `script-shell=${join(root, "census-shell.sh")}\n`,
+  "census-shell.sh": `#!/bin/sh\nexport NODE_OPTIONS="--import=${join(root, "census-pre.mjs")}"\nexec /bin/sh "$@"\n`,
+  "census-pre.mjs": FORGED_MARK_PRELOAD,
+});
+/** u62 respin-6: the project .npmrc of the tier's npm hop, setting node-options to preload one file of the project. */
+const npmrcPreload = (preload: string) => (root: string): Readonly<Record<string, string>> => ({
+  ".npmrc": `node-options=--import=${join(root, "census-pre.mjs")}\n`,
+  "census-pre.mjs": preload,
+});
+/** u62 respin-6 swap: the lifecycle row's unguarded config's setup file places a targeted fails accessor (the g6s2 N1 shape). */
+const SWAP_TARGETED_FAILS = `${TARGETED}realDefine(proto, "fails", { configurable: true, enumerable: false, get() { return targeted(this) ? true : undefined; }, set: ownSetter("fails") });\n`;
+/** u62 respin-6: a forge.toml whose default build configuration adds NODE_OPTIONS to every step forge runs. */
+const FORGE_WITH_CONFIGURATION =
+  '[package]\nname = "census-synthetic"\n\n[build]\ngate = ["lint", "test"]\ndefault_configuration = "ci"\n\n[build.commands]\nlint = "npm run lint"\ntest = "npm run test"\n\n[build.configurations.ci]\nenv = { NODE_OPTIONS = "--import=./census-pre.mjs" }\n';
 
 
 const CONFIG_ROWS: readonly ConfigRow[] = [
@@ -1796,6 +1845,94 @@ const CONFIG_ROWS: readonly ConfigRow[] = [
     oracle: "passed",
     verdict: red("context-unknown", "runs-where", /census guard is not vouched.*holds a statement/),
     report: red("options-unknown", "asserts", /census guard is not vouched.*holds a statement/),
+  },
+  // u62 respin-6 (owner R470 R1 = (a) with the closed-record cap): pre-guard code on the tier's OWN npm hop and step that
+  // the respin-5 vouch did not read - the project .npmrc (the gate-1 g6s2 battery's N2 / N4 / N5 carriers), an enclosing
+  // workspace root's .npmrc, an npm lifecycle script around the hop's script, a forge build configuration. Executing mode
+  // reads the inversion from the run (unchanged); report mode now refuses each tier statically, naming the route.
+  {
+    id: "c-u62r6-npmrc-forged-mark",
+    routed: "u62 respin-6 g6s2 N2: the project .npmrc node-options preloads a fails accessor carrying the guard's own Symbol.for mark, which the guard skips as its own",
+    rooted: npmrcPreload(FORGED_MARK_PRELOAD),
+    target: { body: TARGET_PLAIN },
+    oracle: "passed",
+    verdict: red("inverted", "asserts", /registered with fails/),
+    report: red("options-unknown", "asserts", /census guard is not vouched.*\.npmrc sets node-options/),
+  },
+  {
+    id: "c-u62r6-npmrc-tamper",
+    routed: "u62 respin-6 g6s2 N4: the respin-5 RS2 builtin tamper carried by the project .npmrc node-options instead of the config module",
+    rooted: npmrcPreload(TAMPER_NPMRC_PRELOAD),
+    target: { body: TARGET_PLAIN },
+    oracle: "passed",
+    verdict: red("inverted", "asserts", /registered with fails/),
+    report: red("options-unknown", "asserts", /census guard is not vouched.*\.npmrc sets node-options/),
+  },
+  {
+    id: "c-u62r6-npmrc-script-shell",
+    routed: "u62 respin-6 g6s2 N5: the project .npmrc script-shell names a shell that exports NODE_OPTIONS with the forged-mark preload, then runs the script",
+    rooted: scriptShellNpmrc,
+    executables: ["census-shell.sh"],
+    target: { body: TARGET_PLAIN },
+    oracle: "passed",
+    verdict: red("inverted", "asserts", /registered with fails/),
+    report: red("options-unknown", "asserts", /census guard is not vouched.*\.npmrc sets script-shell/),
+  },
+  {
+    id: "c-u62r6-npmrc-fixtures",
+    routed: "u62 respin-6: the respin-5 RS2 fixtures preload (builtin tamper, then an inherited fixtures registry) carried by the project .npmrc node-options - false green in BOTH modes on 469c8e3; neither mode resolves the tier",
+    rooted: npmrcPreload(TAMPER_FIXTURES_PRELOAD),
+    target: { body: CFG_PLAIN_FAILING },
+    oracle: "passed",
+    verdict: red("context-unknown", "runs-where", /census guard is not vouched.*\.npmrc sets node-options/),
+    report: red("options-unknown", "asserts", /census guard is not vouched.*\.npmrc sets node-options/),
+  },
+  {
+    id: "c-u62r6-npmrc-admitted",
+    routed: "u62 respin-6 control: a project .npmrc holding only keys of the closed list (registry, a scoped registry, fund, audit, update-notifier, loglevel) stays vouched",
+    files: { ".npmrc": "; inert npm settings only\nregistry=https://registry.example.invalid/\n@census:registry=https://registry.example.invalid/\nfund=false\naudit = false\nupdate-notifier=false\nloglevel=warn\n" },
+    oracle: "passed",
+    verdict: OK,
+  },
+  {
+    id: "c-u62r6-workspace-npmrc",
+    routed: "u62 respin-6: the project sits in an npm workspace whose root .npmrc sets node-options, so npm loads the ROOT's .npmrc as the hop's project config, never the project's own",
+    parent: root => ({
+      "package.json": `${JSON.stringify({ name: "census-workspace-root", private: true, workspaces: ["child"] }, null, 2)}\n`,
+      ".npmrc": `node-options=--import=${join(root, "census-pre.mjs")}\n`,
+    }),
+    rooted: () => ({ "census-pre.mjs": FORGED_MARK_PRELOAD }),
+    target: { body: TARGET_PLAIN },
+    oracle: "passed",
+    verdict: red("inverted", "asserts", /registered with fails/),
+    report: red("options-unknown", "asserts", /census guard is not vouched.*declares workspaces/),
+  },
+  {
+    id: "c-u62r6-lifecycle-swap",
+    routed: "u62 respin-6: scripts.pretest swaps in an unguarded config whose setup file places fails, and scripts.posttest restores the guarded one under its old mtime, so the files read at judgment are the vouched ones",
+    scripts: {
+      pretest: "cp census-swap.config.ts vitest.config.ts",
+      posttest: "cp census-kept.config.ts vitest.config.ts && touch -r census-kept.config.ts vitest.config.ts",
+    },
+    files: { "census-swap.setup.ts": `${SWAP_TARGETED_FAILS}\nexport {};\n` },
+    rooted: () => ({
+      "census-kept.config.ts": vitestConfig(defaultOptions("")),
+      "census-swap.config.ts": vitestConfig(defaultOptions('setupFiles: ["./census-swap.setup.ts"]'), "", false),
+    }),
+    serial: true,
+    target: { body: TARGET_PLAIN },
+    oracle: "passed",
+    verdict: red("inverted", "asserts", /registered with fails/),
+    report: red("options-unknown", "asserts", /census guard is not vouched.*scripts\.pretest/),
+  },
+  {
+    id: "c-u62r6-forge-configuration",
+    routed: "u62 respin-6: forge.toml selects a default build configuration whose env sets NODE_OPTIONS (a forged-mark preload) for every step - forge itself applies it, not the in-suite npm run, so this row pins the refusal on a plain passing pin in both modes",
+    rawForge: FORGE_WITH_CONFIGURATION,
+    rooted: () => ({ "census-pre.mjs": FORGED_MARK_PRELOAD }),
+    oracle: "passed",
+    verdict: red("context-unknown", "runs-where", /census guard is not vouched.*configuration/),
+    report: red("options-unknown", "asserts", /census guard is not vouched.*configuration/),
   },
 ];
 
@@ -3067,10 +3204,11 @@ const ROUTED_MODES: Readonly<Record<string, readonly string[]>> = {
   ],
   "u62 gate-3r4": ["O1", "O3", "O4", "O6", "P1", "P2", "P3", "P5", "P6", "P7", "P8"],
   "u62 respin-5": ["E1", "F1", "F2", "RS1", "RS2", "G-not-first", "G-parallel", "G-list", "G-altered", "G-pool", "G-env", "G-global-setup", "G-config-code", "G-config-import", "G-value-code", "G-server", "G-server-deps", "G-coverage", "G-define", "G-no-default", "G-no-test", "G-sequence", "G-setup-literal", "G-cli-dash", "G-cli-value", "G-cli-config-missing"],
+  "u62 respin-6": ["N2", "N4", "N5", "V1", "V2", "V3"],
 };
 
 /** Exact table sizes: deleting or emptying a falsifier table goes red (each-liveness of this file's own rows). */
-const TABLE_SIZES = [55, 8, 22, 46, 15, 10, 46, 34, 5, 16, 43, 16, 5, 76, 15, 44];
+const TABLE_SIZES = [55, 8, 22, 46, 15, 10, 54, 34, 5, 16, 43, 19, 5, 76, 15, 79];
 
 
 /**
@@ -3191,11 +3329,15 @@ const packageJson = (testScript: string | null, scripts: Readonly<Record<string,
 const forgeToml = (testCommand: string, gate = '["lint", "test"]', extra = ""): string =>
   `[package]\nname = "census-synthetic"\n\n[build]\ngate = ${gate}\n\n[build.commands]\nlint = "npm run lint"\ntest = ${JSON.stringify(testCommand)}\n${extra}`;
 
-function writeTree(root: string, files: Readonly<Record<string, string>>): string {
-  for (const [path, text] of Object.entries({ [GUARD_FILE]: GUARD_SOURCE, ...files })) {
+function writeFiles(root: string, files: Readonly<Record<string, string>>): void {
+  for (const [path, text] of Object.entries(files)) {
     mkdirSync(dirname(join(root, path)), { recursive: true });
     writeFileSync(join(root, path), text);
   }
+}
+
+function writeTree(root: string, files: Readonly<Record<string, string>>): string {
+  writeFiles(root, { [GUARD_FILE]: GUARD_SOURCE, ...files });
   symlinkSync(join(ROOT, "node_modules"), join(root, "node_modules"), "dir");
   return root;
 }
@@ -3245,14 +3387,19 @@ function buildMainRoot(root: string): string {
   return writeTree(root, files);
 }
 
-function buildConfigRoot(root: string, row: ConfigRow): string {
-  return writeTree(root, {
+/** A config row's project: at base itself, or (u62 respin-6, a row with a parent) at base/child under the parent's files. */
+function buildConfigRoot(base: string, row: ConfigRow): string {
+  const root = row.parent === undefined ? base : join(base, "child");
+  if (row.parent !== undefined) writeFiles(base, row.parent(root));
+  const project = {
     "package.json": packageJson(row.testScript === undefined ? "vitest run" : row.testScript, row.scripts),
     "forge.toml": row.rawForge ?? forgeToml(row.forgeCommand ?? "npm run test", row.gate),
     "vitest.config.ts": vitestConfig(defaultOptions(row.configBody ?? ""), row.configPrelude ?? "", row.unguarded !== true),
     [CFG_TARGET]: testFile(row.target ?? { body: PLAIN }),
-    ...row.files,
-  });
+  };
+  writeTree(root, { ...project, ...row.files, ...row.rooted?.(root) });
+  for (const file of row.executables ?? []) chmodSync(join(root, file), 0o755);
+  return root;
 }
 
 /** A one-config project (forge.toml test -> npm run test -> the given script) holding the given files. */
@@ -3273,6 +3420,8 @@ interface GuardRow {
   readonly id: string;
   readonly routed: string;
   readonly files: Readonly<Record<string, string | null>>;
+  /** u62 respin-6: the project sits at child/ under a directory holding these files (an enclosing package.json). */
+  readonly parent?: Readonly<Record<string, string>>;
   readonly ok: boolean;
   readonly why?: RegExp;
 }
@@ -3508,10 +3657,105 @@ const GUARD_ROWS: readonly GuardRow[] = [
     ok: false,
     why: /the --config file vitest\.none\.config\.ts does not exist/,
   },
+  // u62 respin-6 (owner R470 R1 = (a) with the closed-record cap): the vouch's read set widens to the tier step's own npm
+  // and forge configuration, each read CLOSED - V1 forge-step, V2 npm-script (lifecycle), V3 npm-project-config.
+  { id: "g-u62r6-npmrc-node-options", routed: "u62 respin-6 V3 node-options: the project .npmrc sets node-options, which npm exports as NODE_OPTIONS to the script it runs", files: { ".npmrc": "node-options=--import=./census-pre.mjs\n" }, ok: false, why: /\.npmrc sets node-options \(line 1\)/ },
+  { id: "g-u62r6-npmrc-script-shell", routed: "u62 respin-6 V3 script-shell: the project .npmrc names the program npm runs the tier's script through", files: { ".npmrc": "script-shell=/bin/sh\n" }, ok: false, why: /\.npmrc sets script-shell \(line 1\)/ },
+  { id: "g-u62r6-npmrc-layer", routed: "u62 respin-6 V3 layer: the project .npmrc moves another npm config layer (userconfig), past an admitted key", files: { ".npmrc": "fund=false\nuserconfig=./census-user.npmrc\n" }, ok: false, why: /\.npmrc sets userconfig \(line 2\)/ },
+  { id: "g-u62r6-npmrc-unlisted", routed: "u62 respin-6 V3 unlisted: a key outside the closed list (ignore-scripts) is refused, not judged harmless", files: { ".npmrc": "ignore-scripts=true\n" }, ok: false, why: /\.npmrc sets ignore-scripts \(line 1\), outside the closed list/ },
+  { id: "g-u62r6-npmrc-env-key", routed: "u62 respin-6 V3 env-key: npm substitutes environment variables in .npmrc keys, so a substituted key names what the environment chooses", files: { ".npmrc": `\${CENSUS_NPMRC_KEY}=--import=./census-pre.mjs\n` }, ok: false, why: /\.npmrc line 1 sets "\$\{CENSUS_NPMRC_KEY\}", not a plain key/ },
+  { id: "g-u62r6-npmrc-quoted-key", routed: "u62 respin-6 V3 quoted-key: ini unquotes a quoted key, so the vouch refuses any key that is not plain", files: { ".npmrc": '"node-options"=--import=./census-pre.mjs\n' }, ok: false, why: /\.npmrc line 1 sets "\\"node-options\\"", not a plain key/ },
+  { id: "g-u62r6-npmrc-escaped-key", routed: "u62 respin-6 V3 escaped-key: ini unescapes a backslash in a key", files: { ".npmrc": "node\\-options=--import=./census-pre.mjs\n" }, ok: false, why: /\.npmrc line 1 sets "node\\\\-options", not a plain key/ },
+  { id: "g-u62r6-npmrc-array-key", routed: "u62 respin-6 V3 array-key: a key[] line is an ini array entry of that key", files: { ".npmrc": "node-options[]=--import=./census-pre.mjs\n" }, ok: false, why: /\.npmrc line 1 sets "node-options\[\]", not a plain key/ },
+  { id: "g-u62r6-npmrc-section", routed: "u62 respin-6 V3 section: a [section] header line, which the closed read does not admit", files: { ".npmrc": "[census]\nnode-options=--import=./census-pre.mjs\n" }, ok: false, why: /\.npmrc line 1 is a section header/ },
+  { id: "g-u62r6-npmrc-cr-separator", routed: "u62 respin-6 V3 cr-separator: ini splits lines on CR as well as LF, so a CR-separated key is its own line", files: { ".npmrc": "fund=false\rnode-options=--import=./census-pre.mjs\n" }, ok: false, why: /\.npmrc sets node-options \(line 2\)/ },
+  { id: "g-u62r6-npmrc-unreadable", routed: "u62 respin-6 V3 unreadable: a project .npmrc the vouch cannot read (here a directory) is refused, never read as absent", files: { ".npmrc/keep": "" }, ok: false, why: /\.npmrc is unreadable/ },
+  {
+    id: "g-u62r6-npmrc-admitted",
+    routed: "u62 respin-6 V3 control: comments, blank lines and every key of the closed list (a scoped registry included) stay vouched",
+    files: { ".npmrc": "; inert npm settings\n# only\n\nregistry=https://registry.example.invalid/\n@census:registry=https://registry.example.invalid/\nfund=false\naudit = false\nupdate-notifier=false\nloglevel=warn\nengine-strict=true\nsave-exact=true\npackage-lock=false\n" },
+    ok: true,
+  },
+  { id: "g-u62r6-npmrc-no-hop", routed: "u62 respin-6 V3 no-hop control: a tier that runs vitest directly never loads npm's config, so the .npmrc is not read", files: { "forge.toml": forgeToml("./node_modules/.bin/vitest run"), ".npmrc": "node-options=--import=./census-pre.mjs\n" }, ok: true },
+  { id: "g-u62r6-npmrc-npx-hop", routed: "u62 respin-6 V3 npx-hop: npx loads npm's config too", files: { "forge.toml": forgeToml("npx vitest run"), ".npmrc": "node-options=--import=./census-pre.mjs\n" }, ok: false, why: /\.npmrc sets node-options/ },
+  { id: "g-u62r6-lifecycle-pretest", routed: "u62 respin-6 V2 pretest: npm runs scripts.pretest before the hop's script, and its body is no literal of the closed list", files: { "package.json": packageJson("vitest run", { pretest: "node -e 0" }) }, ok: false, why: /package\.json scripts\.pretest = "node -e 0" runs around the tier's npm hop/ },
+  { id: "g-u62r6-lifecycle-posttest", routed: "u62 respin-6 V2 posttest: npm runs scripts.posttest after the hop's script", files: { "package.json": packageJson("vitest run", { posttest: "true" }) }, ok: false, why: /package\.json scripts\.posttest = "true" runs around the tier's npm hop/ },
+  {
+    id: "g-u62r6-lifecycle-non-string",
+    routed: "u62 respin-6 V2 non-string: a pretest that is not a string is refused (the scripts reader drops it, npm does not)",
+    files: { "package.json": `${JSON.stringify({ name: "census-synthetic", private: true, scripts: { lint: "true", test: "vitest run", pretest: 1 } }, null, 2)}\n` },
+    ok: false,
+    why: /package\.json scripts\.pretest is not a string/,
+  },
+  { id: "g-u62r6-lifecycle-npm-test", routed: "u62 respin-6 V2 npm-test: the npm test spelling runs the same pretest", files: { "forge.toml": forgeToml("npm test"), "package.json": packageJson("vitest run", { pretest: "node -e 0" }) }, ok: false, why: /scripts\.pretest/ },
+  { id: "g-u62r6-lifecycle-other-scripts", routed: "u62 respin-6 V2 control: lifecycle scripts around OTHER scripts (prelint, postbuild, pretestx) do not run around the hop", files: { "package.json": packageJson("vitest run", { prelint: "node -e 0", postbuild: "node -e 0", pretestx: "node -e 0" }) }, ok: true },
+  { id: "g-u62r6-lifecycle-no-hop", routed: "u62 respin-6 V2 no-hop control: a tier that runs vitest directly runs no npm lifecycle", files: { "forge.toml": forgeToml("./node_modules/.bin/vitest run"), "package.json": packageJson("vitest run", { pretest: "node -e 0" }) }, ok: true },
+  {
+    id: "g-u62r6-workspace-parent",
+    routed: "u62 respin-6 V3 workspace: an enclosing package.json that declares workspaces may make npm load ITS .npmrc as the hop's project config",
+    files: {},
+    parent: { "package.json": `${JSON.stringify({ name: "census-workspace-root", private: true, workspaces: ["child"] }, null, 2)}\n` },
+    ok: false,
+    why: /\.\.\/package\.json declares workspaces/,
+  },
+  { id: "g-u62r6-workspace-parent-plain", routed: "u62 respin-6 V3 workspace control: an enclosing package.json without workspaces is read and admitted", files: {}, parent: { "package.json": `${JSON.stringify({ name: "census-enclosing", private: true }, null, 2)}\n` }, ok: true },
+  { id: "g-u62r6-workspace-parent-unparseable", routed: "u62 respin-6 V3 workspace control: npm skips an enclosing package.json it cannot parse, and so does the vouch", files: {}, parent: { "package.json": "{ not json\n" }, ok: true },
+  {
+    id: "g-u62r6-forge-default-configuration",
+    routed: "u62 respin-6 V1 default-configuration: [build] default_configuration selects a configuration whose env rides every step",
+    files: { "forge.toml": '[package]\nname = "census-synthetic"\n\n[build]\ngate = ["lint", "test"]\ndefault_configuration = "ci"\n\n[build.commands]\nlint = "npm run lint"\ntest = "npm run test"\n' },
+    ok: false,
+    why: /forge\.toml \[build\] sets default_configuration, outside the closed list/,
+  },
+  { id: "g-u62r6-forge-configurations", routed: "u62 respin-6 V1 configurations: a [build.configurations.<name>] table", files: { "forge.toml": forgeToml("npm run test", undefined, '\n[build.configurations.ci]\nenv = { CENSUS = "1" }\n') }, ok: false, why: /forge\.toml declares \[build\.configurations\.ci\], a table outside the closed forge-step read/ },
+  {
+    id: "g-u62r6-forge-dotted-configuration",
+    routed: "u62 respin-6 V1 dotted: a dotted key inside [build] declares the same configuration table",
+    files: { "forge.toml": '[package]\nname = "census-synthetic"\n\n[build]\ngate = ["lint", "test"]\nconfigurations.ci.env = { CENSUS = "1" }\n\n[build.commands]\nlint = "npm run lint"\ntest = "npm run test"\n' },
+    ok: false,
+    why: /forge\.toml declares \[build\.configurations\.ci\]/,
+  },
+  { id: "g-u62r6-forge-hooks", routed: "u62 respin-6 V1 hooks: [build.hooks] runs code around a step", files: { "forge.toml": forgeToml("npm run test", undefined, '\n[build.hooks]\npre_test = "node -e 0"\n') }, ok: false, why: /forge\.toml declares \[build\.hooks\]/ },
+  { id: "g-u62r6-forge-gate-steps", routed: "u62 respin-6 V1 gate-steps: [[build.gate.steps]] spells the gate's steps a second way", files: { "forge.toml": forgeToml("npm run test", undefined, '\n[[build.gate.steps]]\nname = "test"\n') }, ok: false, why: /forge\.toml declares \[\[build\.gate\.steps\]\], an array table outside the closed forge-step read/ },
+  {
+    id: "g-u62r6-forge-build-key",
+    routed: "u62 respin-6 V1 build-key: any [build] key outside backend, gate, timeout, workers (here preset)",
+    files: { "forge.toml": '[package]\nname = "census-synthetic"\n\n[build]\ngate = ["lint", "test"]\npreset = "node"\n\n[build.commands]\nlint = "npm run lint"\ntest = "npm run test"\n' },
+    ok: false,
+    why: /forge\.toml \[build\] sets preset/,
+  },
+  {
+    id: "g-u62r6-forge-tier-key",
+    routed: "u62 respin-6 V1 tier-key: the tier's own [build.commands.<tier>] table sets a key outside the closed step-key list",
+    files: { "forge.toml": '[package]\nname = "census-synthetic"\n\n[build]\ngate = ["lint", "test"]\n\n[build.commands]\nlint = "npm run lint"\n\n[build.commands.test]\ncommand = "npm run test"\ntimeout = 60\nprelude = "node -e 0"\n' },
+    ok: false,
+    why: /forge\.toml \[build\.commands\.test\] sets prelude, outside the closed list of step keys/,
+  },
+  {
+    id: "g-u62r6-forge-tier-keys-admitted",
+    routed: "u62 respin-6 V1 control: the tier's own table with command, timeout and hint only",
+    files: { "forge.toml": '[package]\nname = "census-synthetic"\n\n[build]\nbackend = "typescript"\ngate = ["lint", "test"]\ntimeout = 600\n\n[build.commands]\nlint = "npm run lint"\n\n[build.commands.test]\ncommand = "npm run test"\ntimeout = 60\nhint = "the unit tier"\n' },
+    ok: true,
+  },
+  { id: "g-u62r6-forge-toolchain", routed: "u62 respin-6 V1 toolchain: a [toolchain] table", files: { "forge.toml": forgeToml("npm run test", undefined, '\n[toolchain]\nmanager = "mise"\n') }, ok: false, why: /forge\.toml declares \[toolchain\]/ },
+  { id: "g-u62r6-forge-package-table", routed: "u62 respin-6 V1 package-table: a [package.<name>] table", files: { "forge.toml": forgeToml("npm run test", undefined, '\n[package.metadata]\nowner = "census"\n') }, ok: false, why: /forge\.toml declares \[package\.metadata\]/ },
+  { id: "g-u62r6-forge-root-key", routed: "u62 respin-6 V1 root-key: a key outside every table", files: { "forge.toml": `schema = 1\n\n${forgeToml("npm run test")}` }, ok: false, why: /forge\.toml sets schema outside every table/ },
+  {
+    id: "g-u62r6-forge-other-step",
+    routed: "u62 respin-6 V1 control: another step's own table is not the tier's step, so its keys are not read",
+    files: { "forge.toml": forgeToml("npm run test", undefined, '\n[build.commands.other]\ncommand = "node -e 0"\nprelude = "node -e 0"\n') },
+    ok: true,
+  },
 ];
 
-const buildGuardRoot = (root: string, row: GuardRow): string =>
-  writeTree(root, Object.fromEntries(Object.entries({ ...projectFiles("vitest run", {}), ...row.files }).filter((entry): entry is [string, string] => entry[1] !== null)));
+/** u62 respin-6: a guard row's project root (child/ under its parent's files, when it has one). */
+const guardRootOf = (row: GuardRow): string => (row.parent === undefined ? join(synthBase, "guard", row.id) : join(synthBase, "guard", row.id, "child"));
+
+function buildGuardRoot(row: GuardRow): string {
+  const root = guardRootOf(row);
+  if (row.parent !== undefined) writeFiles(dirname(root), row.parent);
+  return writeTree(root, Object.fromEntries(Object.entries({ ...projectFiles("vitest run", {}), ...row.files }).filter((entry): entry is [string, string] => entry[1] !== null)));
+}
 
 /** The helper module itself: real-path rows run census files that import it by absolute path, as an adopting census does. */
 const HELPER_MODULE = join(ROOT, "test", "helpers", "census.ts");
@@ -3815,6 +4059,8 @@ let synthBase = "";
 const mainVerdicts = new Map<string, PinVerdict>();
 const configVerdicts = new Map<string, PinVerdict>();
 const configReports = new Map<string, Report>();
+/** u62 respin-6: each config row's project root (base/child for a row with a parent). */
+const configRoots = new Map<string, string>();
 let mainDefault: Report = new Map();
 let mainLive: Report = new Map();
 let mainAsserts: Report = new Map();
@@ -3870,7 +4116,7 @@ beforeAll(async () => {
   const plainNodeRoot = writeTree(join(synthBase, "plain-node"), projectFiles("vitest run", { [PLAIN_NODE_PINNED]: testFile({ body: PLAIN }) }));
   writeFileSync(join(synthBase, PLAIN_NODE_SCRIPT), plainNodeJudge());
   const reporterRoot = writeTree(join(synthBase, "reporter"), projectFiles("vitest run", { [REPORTER_PINNED]: testFile({ body: PLAIN }) }));
-  for (const row of GUARD_ROWS) buildGuardRoot(join(synthBase, "guard", row.id), row);
+  for (const row of GUARD_ROWS) buildGuardRoot(row);
   const tasks: (() => Promise<void>)[] = [
     async () => {
       const verdicts = await judgePins(mainRoot, MAIN_PINS.map(entry => entry.pin));
@@ -3945,17 +4191,25 @@ beforeAll(async () => {
   ];
   for (const row of CONFIG_ROWS) {
     const root = buildConfigRoot(join(synthBase, row.id), row);
-    tasks.push(async () => {
+    configRoots.set(row.id, root);
+    const execute = async (): Promise<void> => {
       const [verdict] = await judgePins(root, [{ file: CFG_TARGET, title: PIN, tier: DEFAULT_GATE_TIER }]);
       if (verdict !== undefined) configVerdicts.set(row.id, verdict);
-    });
-    if (row.oracle !== "none") {
+    };
+    const oracle = async (): Promise<void> => {
+      const run = await runnerReport(root, row.forgeCommand ?? "npm run test");
+      configReports.set(row.id, run.report);
+      configReportPaths.set(row.id, run.path);
+    };
+    if (row.serial === true) {
       tasks.push(async () => {
-        const run = await runnerReport(root, row.forgeCommand ?? "npm run test");
-        configReports.set(row.id, run.report);
-        configReportPaths.set(row.id, run.path);
+        if (row.oracle !== "none") await oracle();
+        await execute();
       });
+      continue;
     }
+    tasks.push(execute);
+    if (row.oracle !== "none") tasks.push(oracle);
   }
   await pool(tasks, 4);
 
@@ -3972,7 +4226,7 @@ beforeAll(async () => {
   for (const row of CONFIG_ROWS) {
     const path = configReportPaths.get(row.id);
     if (path === undefined) continue;
-    const [verdict] = judge(path, [{ file: CFG_TARGET, title: PIN, tier: DEFAULT_GATE_TIER }], { root: join(synthBase, row.id) });
+    const [verdict] = judge(path, [{ file: CFG_TARGET, title: PIN, tier: DEFAULT_GATE_TIER }], { root: configRoots.get(row.id) ?? join(synthBase, row.id) });
     if (verdict !== undefined) configReportVerdicts.set(row.id, verdict);
   }
   const control: CasePin = { file: fileOf("r-control"), title: PIN, tier: DEFAULT_GATE_TIER };
@@ -4019,6 +4273,25 @@ beforeAll(async () => {
     utimesSync(guardFile, guardBefore.atime, guardBefore.mtime);
     utimesSync(join(vouchRoot, "vitest.config.ts"), later, later);
     only("p-u62r5-stale-config", judge(vouchReport, [vouchPin], { root: vouchRoot }));
+  }
+  // u62 respin-6: the vouch's new reads (the project .npmrc, forge.toml, package.json) join the stale-report check too, one
+  // at a time on the admitted-.npmrc control's own report after its report verdict was taken, each restored after.
+  const npmrcRoot = configRoots.get("c-u62r6-npmrc-admitted");
+  const npmrcReport = configReportPaths.get("c-u62r6-npmrc-admitted");
+  if (npmrcRoot !== undefined && npmrcReport !== undefined) {
+    const later = (statSync(npmrcReport).mtimeMs + 60_000) / 1000;
+    const npmrcPin: CasePin = { file: CFG_TARGET, title: PIN, tier: DEFAULT_GATE_TIER };
+    for (const [id, file] of [
+      ["p-u62r6-stale-npmrc", ".npmrc"],
+      ["p-u62r6-stale-forge", "forge.toml"],
+      ["p-u62r6-stale-package", "package.json"],
+    ] as const) {
+      const path = join(npmrcRoot, file);
+      const before = statSync(path);
+      utimesSync(path, later, later);
+      only(id, judge(npmrcReport, [npmrcPin], { root: npmrcRoot }));
+      utimesSync(path, before.atime, before.mtime);
+    }
   }
 }, SUITE_TIMEOUT);
 
@@ -4076,6 +4349,21 @@ const REPORT_ROWS: readonly StandaloneRow[] = [
     id: "p-u62r5-stale-config",
     routed: "u62 respin-5 stale-report guard: the vitest config the vouch read changed after the report was written",
     check: reportRow("p-u62r5-stale-config", red("report-stale", "runs-where", /vitest\.config\.ts changed after the report was written/)),
+  },
+  {
+    id: "p-u62r6-stale-npmrc",
+    routed: "u62 respin-6 stale-report guard: the project .npmrc the vouch read (V3) changed after the report was written",
+    check: reportRow("p-u62r6-stale-npmrc", red("report-stale", "runs-where", /\.npmrc changed after the report was written/)),
+  },
+  {
+    id: "p-u62r6-stale-forge",
+    routed: "u62 respin-6 stale-report guard: the forge.toml the vouch read closed (V1) changed after the report was written",
+    check: reportRow("p-u62r6-stale-forge", red("report-stale", "runs-where", /forge\.toml changed after the report was written/)),
+  },
+  {
+    id: "p-u62r6-stale-package",
+    routed: "u62 respin-6 stale-report guard: the package.json whose scripts the vouch read (V2) changed after the report was written",
+    check: reportRow("p-u62r6-stale-package", red("report-stale", "runs-where", /package\.json changed after the report was written/)),
   },
   {
     id: "p-in-run",
@@ -4296,12 +4584,60 @@ describe("census helper: liveness of this falsifier table (h8f.9 O1 class)", () 
 describe("census helper: the census guard is vouched statically on the tier's own run, never executed (u62 respin-5 G rows)", () => {
   for (const row of GUARD_ROWS) {
     it(`${row.routed} [${row.id}]`, () => {
-      const state = censusGuard(join(synthBase, "guard", row.id), DEFAULT_GATE_TIER);
+      const state = censusGuard(guardRootOf(row), DEFAULT_GATE_TIER);
       expect(state.ok, state.why).toBe(row.ok);
       if (row.why !== undefined) expect(state.why).toMatch(row.why);
       if (row.ok) expect(state.why).toBe("");
     });
   }
+});
+
+describe("census helper: the closed record of the vouch (u62 respin-6, owner R470 R1 = (a) with the closed-record cap)", () => {
+  const HEADER = (() => {
+    const text = readFileSync(HELPER_MODULE, "utf8");
+    const end = text.search(/^import /m);
+    return end === -1 ? text : text.slice(0, end);
+  })();
+
+  it("the vouch's read set is enumerated by name, each entry naming what it reads and what it refuses", () => {
+    expect(VOUCH_READ_SET.map(entry => entry.id)).toEqual(["forge-step", "npm-script", "npm-project-config", "vitest-argv", "vitest-config", "guard-bytes"]);
+    for (const entry of VOUCH_READ_SET) {
+      expect(entry.reads.length, entry.id).toBeGreaterThan(0);
+      expect(entry.refuses.length, entry.id).toBeGreaterThan(0);
+    }
+  });
+
+  it("every route outside the read set is a named residual of report mode, each with the one N-shape that measures it", () => {
+    expect(VOUCH_RESIDUALS.map(entry => entry.id)).toEqual(["operator-environment", "operator-npm-config", "installed-code", "run-judgment-drift"]);
+    for (const entry of VOUCH_RESIDUALS) {
+      expect(entry.route.length, entry.id).toBeGreaterThan(0);
+      expect(entry.shape.length, entry.id).toBeGreaterThan(0);
+    }
+  });
+
+  it("the helper header names every read-set entry and every residual, each residual as MEASURED, and the forged mark", () => {
+    for (const entry of VOUCH_READ_SET) expect(HEADER, entry.id).toContain(entry.id);
+    for (const entry of VOUCH_RESIDUALS) expect(HEADER, entry.id).toContain(`MEASURED RESIDUAL ${entry.id}`);
+    expect(HEADER).toContain('Symbol.for("wb-u62.census-guard")');
+    expect(HEADER).not.toMatch(/RESIDUAL \(UNMEASURED\)/);
+  });
+
+  it("the lifecycle scripts the vouch admits are a closed list of exact literals (membership is wb-nl8's), each admitted as written", () => {
+    expect(CENSUS_LIFECYCLE_SCRIPTS.every(body => typeof body === "string" && body !== "")).toBe(true);
+    CENSUS_LIFECYCLE_SCRIPTS.forEach((body, index) => {
+      const root = writeTree(join(synthBase, `lifecycle-member-${index}`), projectFiles("vitest run", { "package.json": packageJson("vitest run", { pretest: body, posttest: body }) }));
+      const state = censusGuard(root, DEFAULT_GATE_TIER);
+      expect(state.ok, state.why).toBe(true);
+    });
+  });
+
+  it("this repository's vouch reads forge.toml, package.json, any project .npmrc or enclosing package.json, the config and the guard - nothing else", () => {
+    const state = censusGuard(ROOT, DEFAULT_GATE_TIER);
+    expect(state.ok, state.why).toBe(true);
+    expect(state.read.slice(0, 2)).toEqual([join(ROOT, "forge.toml"), join(ROOT, "package.json")]);
+    expect(state.read.slice(-2)).toEqual([join(ROOT, "vitest.config.ts"), join(ROOT, "test", "helpers", GUARD_FILE)]);
+    for (const file of state.read.slice(2, -2)) expect(file === join(ROOT, ".npmrc") || (file.endsWith("/package.json") && ROOT.startsWith(dirname(file))), file).toBe(true);
+  });
 });
 
 describe("census helper: the census guard of this repository (u62 respin-5)", () => {
@@ -4412,8 +4748,24 @@ const ROSTER_JUSTIFICATION: Readonly<Record<RosterId, readonly string[]>> = {
   "options.enclosure": ["r-u62g2-i1-object-held-suite", "r-u62g2-i1-wrapper-suite", "r-u62g3-1-object-method", "r-u62r5-o4-exported-describe-options", "r-u62r5-p7-proto-describe-inner"],
   "options.absent": ["r-u62r5-p1-proto-own-file", "r-u62r5-p7-proto-describe-inner", "c-u62r5-unguarded-p1"],
   "options.number": ["c-u62r5-unguarded-number"],
-  "options.inherited": ["c-u62r5-unguarded-plain", "c-u62r5-unguarded-p1", "c-u62r5-unguarded-number", "c-u62r5-unguarded-f1", "c-u62r5-guard-not-first", "c-u62r5-guard-altered", "c-u62r5-rs2-tamper", "c-u62r5-rs2-fixtures"],
-  "context.inherited": ["c-u62r5-unguarded-f1", "c-u62r5-unguarded-f2", "c-u62r5-guard-parallel", "c-u62r5-pool-vm", "c-u62r5-rs2-fixtures"],
+  "options.inherited": [
+    "c-u62r5-unguarded-plain",
+    "c-u62r5-unguarded-p1",
+    "c-u62r5-unguarded-number",
+    "c-u62r5-unguarded-f1",
+    "c-u62r5-guard-not-first",
+    "c-u62r5-guard-altered",
+    "c-u62r5-rs2-tamper",
+    "c-u62r5-rs2-fixtures",
+    "c-u62r6-npmrc-forged-mark",
+    "c-u62r6-npmrc-tamper",
+    "c-u62r6-npmrc-script-shell",
+    "c-u62r6-npmrc-fixtures",
+    "c-u62r6-workspace-npmrc",
+    "c-u62r6-lifecycle-swap",
+    "c-u62r6-forge-configuration",
+  ],
+  "context.inherited": ["c-u62r5-unguarded-f1", "c-u62r5-unguarded-f2", "c-u62r5-guard-parallel", "c-u62r5-pool-vm", "c-u62r5-rs2-fixtures", "c-u62r6-npmrc-fixtures", "c-u62r6-forge-configuration"],
   "context.seed": ["b-6hb7-m10-rest-destructured", "b-6ze38-m8-rest-args", "b-arguments"],
   "context.member": ["r-u62g3-8-context-write-task", "b-destructured", "b-computed-key"],
   "context.alias": ["b-alias-context"],
