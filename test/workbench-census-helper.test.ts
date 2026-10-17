@@ -65,7 +65,9 @@ import {
   judge,
   judgePins,
   type PinVerdict,
+  RESOLVABLE_CONSTRUCTS,
   type RenderedBlock,
+  type RosterId,
   resolveTier,
   type SourceStructure,
   sectionMatches,
@@ -630,10 +632,10 @@ const INVERSION_ROWS: readonly Row[] = [
   },
   {
     id: "r-u62g3-6c-unknown-member-cost",
-    routed: "u62 gate-3 (6c) the fail-closed cost: a user-added member that is plain it (0 in test/** today)",
+    routed: "u62 gate-3 (6c) the fail-closed cost: a user-added member that is plain it (0 in test/** today; respin-4: the escape reaches the test context too, so both modes pay it)",
     source: { prelude: "const api = it as typeof it & { inv: typeof it };\nObject.assign(it, { inv: it });", body: `  api.inv("${PIN}", ${BODY});` },
     oracle: RUNS,
-    verdict: OK,
+    verdict: red("context-unknown", "runs-where", /the registration API escapes in this file: it at line \d+:\d+ is handed to a call, and the hooks it carries/),
     report: red("options-unknown", "asserts", /the registration api\.inv at line \d+:\d+ does not resolve to vitest's it \/ test: inv is not a member of vitest's test API/),
   },
   // u62 gate-3, the CONTEXT flow in BOTH modes: the runner flips a case after its last hook (@vitest/runner reads test.fails
@@ -1932,6 +1934,668 @@ const DOCS_ROWS: readonly DocsRow[] = [
 
 
 /**
+ * u62 gate-2 (cmd_ca3b5facef4d, the respin-3 refusal; battery g2r3-falsify.mts mirrored from the gate evidence) and the
+ * respin-4 seat's own hunt, both against the owner acceptance criterion of 2026-10-17 (report model = an explicit
+ * RESOLVABLE-CONSTRUCT ROSTER, census.ts RESOLVABLE_CONSTRUCTS; every step of a flow matches a roster row or fails closed).
+ * Runner truth for every inverted row: the pinned case's only assertion is expect(1).toBe(2) and the run reports it
+ * passed; for every planted-false row the only expectation is on false and the run passes it; for every vacuous row
+ * expect.hasAssertions() fails it. H = a vitest hook or context registrar VALUE outside a direct call (U1); O = same-file
+ * const options written through a destructuring or for-of target (U2); E = assertion members (U3 / U4); R2 = vitest's
+ * import.meta.vitest handle (U5); K = the gate's controls; S = the seat's routes beyond the battery, each measured
+ * fail-open on d9e0b26 unless the row says control or cost.
+ */
+const WRITE_HOOK = "({ task }) => {\n    task.fails = true;\n  }";
+const FAILING = "() => {\n    expect(1).toBe(2);\n  }";
+const IMPORTS_HOOKS = 'import { afterAll, aroundEach, beforeEach, describe, expect, it, onTestFinished, test } from "vitest";';
+/** A test.extend fixture vitest runs WITH the test context, writing the case's fails before it hands the value over. */
+const FIXTURE_WRITE = "async ({ task }, use) => {\n    task.fails = true;\n    await use(1);\n  }";
+/** A same-file check a matcher may call with the runner state it is handed: it sets the pinned case's fails. */
+const SUITE_CHECK = `function check(suite: { tasks: { name: string; fails?: boolean }[] }): boolean {\n  const pinned = suite.tasks.find(entry => entry.name === "${PIN}");\n  if (pinned !== undefined) pinned.fails = true;\n  return true;\n}`;
+/** A function kept on an object member that reaches the runner's current test and sets its fails (X15 / X19). */
+const RUNNER_FLIP = (lookup: string): string => `const registry: { flip?: () => void } = {};\nregistry.flip = () => {\n  const current = ${lookup}();\n  if (current !== undefined) current.fails = true;\n};`;
+const RUNNER_PLACE = /reaches the runner's current test or suite from code the census cannot place in one case or suite factory/;
+const ROSTER_ROWS: readonly Row[] = [
+  // U1 - the CONTEXT flow: a hook or registrar value used other than as a direct callee (or a const alias then called)
+  // escapes, so every pin of its file is context-unknown in BOTH modes, naming it.
+  {
+    id: "r-u62g2r3-h1-array-held",
+    routed: "u62 gate-2r3 H1 beforeEach held in an array, called through hooks[0]",
+    source: { prelude: "const hooks = [beforeEach] as const;", body: `  hooks[0](${WRITE_HOOK});\n  it("${PIN}", ${FAILING});` },
+    oracle: { kind: "inverted" },
+    verdict: red("context-unknown", "runs-where", /the vitest hook beforeEach at line \d+:\d+ escapes: it is used as ArrayLiteralExpression/),
+  },
+  {
+    id: "r-u62g2r3-h2-object-held",
+    routed: "u62 gate-2r3 H2 beforeEach held as an object property, called through lifecycle.before",
+    source: { prelude: "const lifecycle = { before: beforeEach };", body: `  lifecycle.before(${WRITE_HOOK});\n  it("${PIN}", ${FAILING});` },
+    oracle: { kind: "inverted" },
+    verdict: red("context-unknown", "runs-where", /the vitest hook beforeEach at line \d+:\d+ escapes: it is used as PropertyAssignment/),
+  },
+  {
+    id: "r-u62g2r3-h3-param-helper",
+    routed: "u62 gate-2r3 H3 beforeEach handed to a same-file helper that calls its parameter",
+    source: { prelude: `function install(hook: typeof beforeEach): void {\n  hook(${WRITE_HOOK});\n}`, body: `  install(beforeEach);\n  it("${PIN}", ${FAILING});` },
+    oracle: { kind: "inverted" },
+    verdict: red("context-unknown", "runs-where", /the vitest hook beforeEach at line \d+:\d+ escapes: it is handed to a call/),
+  },
+  {
+    id: "r-u62g2r3-h4-let-held",
+    routed: "u62 gate-2r3 H4 control: beforeEach held in a let binding (red on d9e0b26, carried)",
+    source: { prelude: "let hook = beforeEach;\nhook = beforeEach;", body: `  hook(${WRITE_HOOK});\n  it("${PIN}", ${FAILING});` },
+    oracle: { kind: "inverted" },
+    verdict: red("context-unknown", "runs-where"),
+  },
+  {
+    id: "r-u62g2r3-h5-call-method",
+    routed: "u62 gate-2r3 H5 beforeEach.call(undefined, callback)",
+    source: { body: `  beforeEach.call(undefined, ${WRITE_HOOK});\n  it("${PIN}", ${FAILING});` },
+    oracle: { kind: "inverted" },
+    verdict: red("context-unknown", "runs-where", /the vitest hook beforeEach at line \d+:\d+ escapes: beforeEach\.call is called, but call is not a member of vitest's beforeEach hook/),
+  },
+  {
+    id: "r-u62g2r3-h6-reflect-apply",
+    routed: "u62 gate-2r3 H6 Reflect.apply(beforeEach, undefined, [callback])",
+    source: { body: `  Reflect.apply(beforeEach, undefined, [${WRITE_HOOK}]);\n  it("${PIN}", ${FAILING});` },
+    oracle: { kind: "inverted" },
+    verdict: red("context-unknown", "runs-where", /the vitest hook beforeEach at line \d+:\d+ escapes: it is handed to a call/),
+  },
+  {
+    id: "r-u62g2r3-h7-returned",
+    routed: "u62 gate-2r3 H7 beforeEach returned by a same-file function, pick()(callback)",
+    source: { prelude: "const pick = () => beforeEach;", body: `  pick()(${WRITE_HOOK});\n  it("${PIN}", ${FAILING});` },
+    oracle: { kind: "inverted" },
+    verdict: red("context-unknown", "runs-where", /the vitest hook beforeEach at line \d+:\d+ escapes: it is used as ArrowFunction/),
+  },
+  {
+    id: "r-u62g2r3-h8-bind",
+    routed: "u62 gate-2r3 H8 beforeEach.bind(undefined)(callback)",
+    source: { body: `  beforeEach.bind(undefined)(${WRITE_HOOK});\n  it("${PIN}", ${FAILING});` },
+    oracle: { kind: "inverted" },
+    verdict: red("context-unknown", "runs-where", /the vitest hook beforeEach at line \d+:\d+ escapes: beforeEach\.bind is called, but bind is not a member of vitest's beforeEach hook/),
+  },
+  {
+    id: "r-u62g2r3-h9-iife-param",
+    routed: "u62 gate-2r3 H9 beforeEach handed to an IIFE that calls its parameter",
+    source: { body: `  ((h: typeof beforeEach) => h(${WRITE_HOOK}))(beforeEach);\n  it("${PIN}", ${FAILING});` },
+    oracle: { kind: "inverted" },
+    verdict: red("context-unknown", "runs-where", /the vitest hook beforeEach at line \d+:\d+ escapes: it is handed to a call/),
+  },
+  {
+    id: "r-u62g2r3-h10-registrar-array",
+    routed: "u62 gate-2r3 H10 vitest's onTestFinished held in an array, called from the case body",
+    source: { imports: IMPORTS_HOOKS, prelude: "const registrars = [onTestFinished] as const;", body: `  it("${PIN}", () => {\n    registrars[0](${WRITE_HOOK});\n    expect(1).toBe(2);\n  });` },
+    oracle: { kind: "inverted" },
+    verdict: red("context-unknown", "runs-where", /the vitest registrar onTestFinished at line \d+:\d+ escapes: it is used as ArrayLiteralExpression/),
+  },
+  {
+    id: "r-u62g2r3-h11-test-api-hook-array",
+    routed: "u62 gate-2r3 H11 the same hook through the test API, [test.beforeEach][0](callback) (executing mode fail-open on d9e0b26)",
+    source: { prelude: "const testHooks = [test.beforeEach] as const;", body: `  testHooks[0](${WRITE_HOOK});\n  it("${PIN}", ${FAILING});` },
+    oracle: { kind: "inverted" },
+    verdict: red("context-unknown", "runs-where", /the vitest hook test\.beforeEach at line \d+:\d+ escapes: it is used as ArrayLiteralExpression/),
+  },
+  // U2 - the OPTIONS flow (report mode): a reference to a const options binding is safe only in the roster's read
+  // positions; a destructuring or for-in / for-of target writes it, so the binding escapes and its fails is unknown.
+  {
+    id: "r-u62g2r3-o1-destructure-object",
+    routed: "u62 gate-2r3 O1 ({ fails: opts.fails } = { fails: true }) before it(PIN, opts, fn)",
+    source: { prelude: "const opts = { fails: false };\n({ fails: opts.fails } = { fails: true });", body: `  it("${PIN}", opts, ${FAILING});` },
+    oracle: { kind: "inverted" },
+    verdict: red("inverted", "asserts", /registered with fails/),
+    report: red("options-unknown", "asserts", /the options at line \d+:\d+ are not a same-file const object literal/),
+  },
+  {
+    id: "r-u62g2r3-o2-destructure-array",
+    routed: "u62 gate-2r3 O2 [opts.fails] = [true] before it(PIN, opts, fn)",
+    source: { prelude: "const opts = { fails: false };\n[opts.fails] = [true];", body: `  it("${PIN}", opts, ${FAILING});` },
+    oracle: { kind: "inverted" },
+    verdict: red("inverted", "asserts", /registered with fails/),
+    report: red("options-unknown", "asserts", /the options at line \d+:\d+ are not a same-file const object literal/),
+  },
+  {
+    id: "r-u62g2r3-o3-for-of-target",
+    routed: "u62 gate-2r3 O3 for (opts.fails of [true]); before it(PIN, opts, fn)",
+    source: { prelude: "const opts = { fails: false };\nfor (opts.fails of [true]);", body: `  it("${PIN}", opts, ${FAILING});` },
+    oracle: { kind: "inverted" },
+    verdict: red("inverted", "asserts", /registered with fails/),
+    report: red("options-unknown", "asserts", /the options at line \d+:\d+ are not a same-file const object literal/),
+  },
+  {
+    id: "r-u62g2r3-o4-describe-options",
+    routed: "u62 gate-2r3 O4 describe options written through ({ fails: so.fails } = ...)",
+    source: { prelude: "const so = { fails: false };\n({ fails: so.fails } = { fails: true });", body: `  describe("inner", so, () => {\n    it("${PIN}", ${FAILING});\n  });` },
+    oracle: { kind: "inverted" },
+    verdict: red("inverted", "asserts", /registered with fails/),
+    report: red("options-unknown", "asserts", /the options at line \d+:\d+ are not a same-file const object literal/),
+  },
+  {
+    id: "r-u62g2r3-o5-spread-source",
+    routed: "u62 gate-2r3 O5 a spread source written through [base.fails] = [true], it(PIN, { ...base }, fn)",
+    source: { prelude: "const base = { fails: false };\n[base.fails] = [true];", body: `  it("${PIN}", { ...base }, ${FAILING});` },
+    oracle: { kind: "inverted" },
+    verdict: red("inverted", "asserts", /registered with fails/),
+    report: red("options-unknown", "asserts", /the options at line \d+:\d+ are not a same-file const object literal/),
+  },
+  // U3 - the ASSERTION flow (both modes): the first call after an expect construction counts only when it is one of
+  // vitest's matchers (MATCHERS, pinned against the installed runtime); withContext / withTest configure, never check.
+  {
+    id: "a-u62g2r3-e1-withcontext",
+    routed: "u62 gate-2r3 E1 void expect(x).withContext({}) - a non-matcher Assertion method, one counted assertion",
+    source: { body: `  it("${PIN}", () => {\n    void expect(false).withContext({});\n  });` },
+    oracle: { kind: "planted-false" },
+    verdict: red("no-assertion", "asserts", /the run counted an assertion, but no matcher-bearing vitest assertion is reachable/),
+    report: red("no-assertion", "asserts", /no matcher-bearing vitest assertion is reachable/),
+  },
+  {
+    id: "a-u62g2r3-e2b-withtest",
+    routed: "u62 gate-2r3 E2b void expect(x).withTest(undefined as never) - a non-matcher Assertion method",
+    source: { body: `  it("${PIN}", () => {\n    void expect(false).withTest(undefined as never);\n  });` },
+    oracle: { kind: "planted-false" },
+    verdict: red("no-assertion", "asserts", /the run counted an assertion, but no matcher-bearing vitest assertion is reachable/),
+    report: red("no-assertion", "asserts", /no matcher-bearing vitest assertion is reachable/),
+  },
+  {
+    id: "a-u62g2r3-e3-not-withcontext",
+    routed: "u62 gate-2r3 E3 void expect(x).not.withContext({})",
+    source: { body: `  it("${PIN}", () => {\n    void expect(false).not.withContext({});\n  });` },
+    oracle: { kind: "planted-false" },
+    verdict: red("no-assertion", "asserts", /the run counted an assertion, but no matcher-bearing vitest assertion is reachable/),
+    report: red("no-assertion", "asserts", /no matcher-bearing vitest assertion is reachable/),
+  },
+  // U4 - an object-literal method body runs where it is CALLED, like the arrow / declaration / class-method twins.
+  {
+    id: "a-u62g2r3-e7-never-method",
+    routed: "u62 gate-2r3 E7 the only assertion sits in an object-literal method that is never called",
+    source: { body: `  it("${PIN}", () => {\n    const holder = {\n      check(): void {\n        expect(1).toBe(1);\n      },\n    };\n    void holder;\n  });` },
+    oracle: { kind: "vacuous" },
+    verdict: red("no-assertion", "asserts", /reached no assertion when test ran it/),
+    report: red("no-assertion", "asserts", /no matcher-bearing vitest assertion is reachable/),
+  },
+  // U5 - vitest's public routes to its registration API are a CLOSED set; import.meta.vitest reads as a vitest namespace.
+  {
+    id: "r-u62g2r3-r2-import-meta-vitest",
+    routed: "u62 gate-2r3 R2 import.meta.vitest (the same it object) rewrites runIf in the pinned file",
+    source: {
+      prelude: "const inSource = (import.meta as unknown as { vitest?: { it: typeof it } }).vitest;\nif (inSource !== undefined) Object.assign(inSource.it, { runIf: () => inSource.it.fails });",
+      body: `  it.runIf(true)("${PIN}", ${FAILING});`,
+    },
+    oracle: { kind: "inverted" },
+    verdict: red("inverted", "asserts", /registered with fails/),
+    report: red("options-unknown", "asserts", /the registration API escapes in this file: the vitest namespace import\.meta\.vitest at line \d+:\d+ is used other than to read its members/),
+  },
+  // The gate's controls and costs, carried as rows so the cure keeps them.
+  {
+    id: "r-u62g2r3-k-around-direct",
+    routed: "u62 gate-2r3 K-around control: a direct aroundEach writes task.fails through its context parameter",
+    source: { imports: IMPORTS_HOOKS, body: `  aroundEach(async (run, { task }) => {\n    task.fails = true;\n    await run();\n  });\n  it("${PIN}", ${FAILING});` },
+    oracle: { kind: "inverted" },
+    verdict: red("context-unknown", "runs-where", /aroundEach at line \d+:\d+: task\.fails is written through the test context/),
+  },
+  {
+    id: "r-u62g2r3-k-object-method-hook",
+    routed: "u62 gate-2r3 K-object-method control: beforeEach called inside an object method the chain calls",
+    source: { prelude: `const setup = {\n  run(): void {\n    beforeEach(${WRITE_HOOK});\n  },\n};`, body: `  setup.run();\n  it("${PIN}", ${FAILING});` },
+    oracle: { kind: "inverted" },
+    verdict: red("context-unknown", "runs-where", /task\.fails is written through the test context/),
+  },
+  {
+    id: "r-u62g2r3-k-context-destructure-write",
+    routed: "u62 gate-2r3 K-C2 control: ({ fails: task.fails } = { fails: true }) in the case body",
+    source: { body: `  it("${PIN}", ({ task }) => {\n    ({ fails: task.fails } = { fails: true });\n    expect(1).toBe(2);\n  });` },
+    oracle: { kind: "inverted" },
+    verdict: red("context-unknown", "runs-where"),
+  },
+  {
+    id: "r-u62g2r3-k-context-for-of-write",
+    routed: "u62 gate-2r3 K-C3 control: for (task.fails of [true]); in the case body",
+    source: { body: `  it("${PIN}", ({ task }) => {\n    for (task.fails of [true]);\n    expect(1).toBe(2);\n  });` },
+    oracle: { kind: "inverted" },
+    verdict: red("context-unknown", "runs-where"),
+  },
+  {
+    id: "a-u62g2r3-k-setstate-count",
+    routed: "u62 gate-2r3 K-E4 control: expect.setState({ assertionCalls: 1 }) fakes the runtime count",
+    source: { body: `  it("${PIN}", () => {\n    expect.setState({ assertionCalls: 1 });\n  });` },
+    oracle: RUNS,
+    verdict: red("no-assertion", "asserts"),
+    report: red("no-assertion", "asserts", /no matcher-bearing vitest assertion is reachable/),
+  },
+  {
+    id: "a-u62g2r3-k-never-arrow",
+    routed: "u62 gate-2r3 K-E5 control: the only assertion sits in a const arrow that is never called",
+    source: { body: `  it("${PIN}", () => {\n    const never = (): void => {\n      expect(1).toBe(1);\n    };\n    void never;\n  });` },
+    oracle: { kind: "vacuous" },
+    verdict: red("no-assertion", "asserts", /reached no assertion when test ran it/),
+    report: red("no-assertion", "asserts", /no matcher-bearing vitest assertion is reachable/),
+  },
+  {
+    id: "a-u62g2r3-k-never-declaration",
+    routed: "u62 gate-2r3 K-E6 control: the only assertion sits in a function declaration that is never called",
+    source: { body: `  it("${PIN}", () => {\n    function never(): void {\n      expect(1).toBe(1);\n    }\n    void never;\n  });` },
+    oracle: { kind: "vacuous" },
+    verdict: red("no-assertion", "asserts", /reached no assertion when test ran it/),
+    report: red("no-assertion", "asserts", /no matcher-bearing vitest assertion is reachable/),
+  },
+  {
+    id: "a-u62g2r3-k-never-class-method",
+    routed: "u62 gate-2r3 K-E8 control: the only assertion sits in a class method that is never called",
+    source: { body: `  it("${PIN}", () => {\n    class Checker {\n      check(): void {\n        expect(1).toBe(1);\n      }\n    }\n    void Checker;\n  });` },
+    oracle: { kind: "vacuous" },
+    verdict: red("no-assertion", "asserts", /reached no assertion when test ran it/),
+    report: red("no-assertion", "asserts", /no matcher-bearing vitest assertion is reachable/),
+  },
+  {
+    id: "a-u62g2r3-k-withcontext-then-matcher",
+    routed: "u62 gate-2r3 K-withContext the fail-closed COST: expect(x).withContext({}).toBe(x) - a matcher behind vitest's internal withContext (0 in test/** today)",
+    source: { body: `  it("${PIN}", () => {\n    expect(1).withContext({}).toBe(1);\n  });` },
+    oracle: RUNS,
+    verdict: red("no-assertion", "asserts", /the run counted an assertion, but no matcher-bearing vitest assertion is reachable/),
+    report: red("no-assertion", "asserts", /no matcher-bearing vitest assertion is reachable/),
+  },
+  // The seat's hunt (respin-4), through the same three flows: S1/S2 the suite collector describe() RETURNS (measured:
+  // vitest 4.1.10 returns the collector, whose on / options / test reach the suite's hooks, its fails and its cases).
+  {
+    id: "r-u62r4-s1-collector-on",
+    routed: "u62 respin-4 S1 describe()'s returned collector registers a beforeEach through collector.on that sets task.fails",
+    source: {
+      body: `  const collector = describe("inner", () => {\n    it("${PIN}", ${FAILING});\n  });\n  collector.on("beforeEach", ((ctx: { task: { fails?: boolean } }) => {\n    ctx.task.fails = true;\n  }) as never);`,
+    },
+    oracle: { kind: "inverted" },
+    verdict: red("context-unknown", "runs-where", /the suite collector vitest's describe returns at line \d+:\d+ escapes: it is used as VariableDeclaration/),
+  },
+  {
+    id: "r-u62r4-s2-collector-options",
+    routed: "u62 respin-4 S2 describe()'s returned collector carries the suite options: collector.options.fails = true",
+    source: { body: `  const collector = describe("inner", () => {\n    it("${PIN}", ${FAILING});\n  });\n  (collector.options as { fails?: boolean }).fails = true;` },
+    oracle: { kind: "inverted" },
+    verdict: red("inverted", "asserts", /registered with fails/),
+    report: red("context-unknown", "runs-where", /the suite collector vitest's describe returns at line \d+:\d+ escapes: it is used as VariableDeclaration/),
+  },
+  // S3-S5: code the J5 walk reaches through a declaration it did not follow (a class, a destructured binding, a relative
+  // namespace / default import or a re-export) registers a context-writing hook.
+  {
+    id: "r-u62r4-s3-class-static-hook",
+    routed: "u62 respin-4 S3 a class STATIC method the chain calls registers a context-writing beforeEach",
+    source: { prelude: `class Setup {\n  static run(): void {\n    beforeEach(${WRITE_HOOK});\n  }\n}`, body: `  Setup.run();\n  it("${PIN}", ${FAILING});` },
+    oracle: { kind: "inverted" },
+    verdict: red("context-unknown", "runs-where", /task\.fails is written through the test context/),
+  },
+  {
+    id: "r-u62r4-s4-destructured-helper",
+    routed: "u62 respin-4 S4 a destructured helper the chain calls registers a context-writing beforeEach",
+    source: { prelude: `const { install } = {\n  install(): void {\n    beforeEach(${WRITE_HOOK});\n  },\n};`, body: `  install();\n  it("${PIN}", ${FAILING});` },
+    oracle: { kind: "inverted" },
+    verdict: red("context-unknown", "runs-where", /task\.fails is written through the test context/),
+  },
+  {
+    id: "r-u62r4-s5-relative-namespace",
+    routed: "u62 respin-4 S5 a relative module reached through a namespace import registers a context-writing beforeEach",
+    source: { imports: `${IMPORTS}\nimport * as hookHelpers from "./census-hook-helpers.js";`, body: `  hookHelpers.installWriter();\n  it("${PIN}", ${FAILING});` },
+    oracle: { kind: "inverted" },
+    verdict: red("context-unknown", "runs-where", /task\.fails is written through the test context/),
+  },
+  {
+    id: "r-u62r4-s6-relative-default",
+    routed: "u62 respin-4 S6 a relative module's DEFAULT export registers a context-writing beforeEach",
+    source: { imports: `${IMPORTS}\nimport installDefault from "./census-hook-helpers.js";`, body: `  installDefault();\n  it("${PIN}", ${FAILING});` },
+    oracle: { kind: "inverted" },
+    verdict: red("context-unknown", "runs-where", /task\.fails is written through the test context/),
+  },
+  {
+    id: "r-u62r4-s7-relative-reexport",
+    routed: "u62 respin-4 S7 a helper reached through a relative RE-EXPORT registers a context-writing beforeEach",
+    source: { imports: `${IMPORTS}\nimport { installWriter } from "./census-hook-reexport.js";`, body: `  installWriter();\n  it("${PIN}", ${FAILING});` },
+    oracle: { kind: "inverted" },
+    verdict: red("context-unknown", "runs-where", /task\.fails is written through the test context/),
+  },
+  // S8-S10: a hook as a parameter's DEFAULT (the test/helpers/scratch.ts:125 and detached-peer.ts:96 shape): the
+  // parameter called directly is read as that hook, so its callback's context flow is read (S8 red, S9 the clean cost
+  // shape stays ok); any other use of the parameter escapes (S10).
+  {
+    id: "r-u62r4-s8-hook-parameter-writer",
+    routed: "u62 respin-4 S8 a relative helper whose parameter defaults to beforeEach registers a context-writing callback",
+    source: { imports: `${IMPORTS}\nimport { guardWriter } from "./census-hook-helpers.js";`, body: `  guardWriter();\n  it("${PIN}", ${FAILING});` },
+    oracle: { kind: "inverted" },
+    verdict: red("context-unknown", "runs-where", /task\.fails is written through the test context/),
+  },
+  {
+    id: "r-u62r4-s9-hook-parameter-clean",
+    routed: "u62 respin-4 S9 control (the scratch.ts:125 shape): a relative helper whose parameter defaults to afterAll registers a clean cleanup",
+    source: { imports: `${IMPORTS}\nimport { guardClean } from "./census-hook-clean.js";`, prelude: "guardClean();", body: PLAIN },
+    oracle: RUNS,
+    verdict: OK,
+  },
+  // S9b - the measured cost of context.free-hook (false-closed, the safe direction): the same clean guard imported from
+  // a module that ALSO holds a context-writing hook in a function is refused, since that function may run in any suite.
+  {
+    id: "r-u62r4-s9b-mixed-helper-cost",
+    routed: "u62 respin-4 S9b cost (measured, false-closed): the clean guard imported from a module that also holds a context-writing free hook refuses the pin",
+    source: { imports: `${IMPORTS}\nimport { guardClean } from "./census-hook-helpers.js";`, prelude: "guardClean();", body: PLAIN },
+    oracle: RUNS,
+    verdict: red("context-unknown", "runs-where", /in \.\/census-hook-helpers\.js, loaded at .*: the vitest beforeEach at line \d+:\d+ is called where the census cannot place it in one suite/),
+  },
+  {
+    id: "r-u62r4-s10-hook-parameter-escape",
+    routed: "u62 respin-4 S10 a parameter defaulting to beforeEach used other than as a direct callee escapes",
+    source: { prelude: `function guard(register: typeof beforeEach = beforeEach): void {\n  const all = [register] as const;\n  all[0](${WRITE_HOOK});\n}`, body: `  guard();\n  it("${PIN}", ${FAILING});` },
+    oracle: { kind: "inverted" },
+    verdict: red("context-unknown", "runs-where", /the vitest hook beforeEach at line \d+:\d+ escapes: the parameter register it defaults is used as ArrayLiteralExpression/),
+  },
+  // S11: a context registrar DESTRUCTURED from the test context, used other than as a direct callee.
+  {
+    id: "r-u62r4-s11-destructured-registrar-array",
+    routed: "u62 respin-4 S11 the context's destructured onTestFinished held in an array, called through it",
+    source: { body: `  it("${PIN}", ({ onTestFinished }) => {\n    const registrars = [onTestFinished] as const;\n    registrars[0](${WRITE_HOOK});\n    expect(1).toBe(2);\n  });` },
+    oracle: { kind: "inverted" },
+    verdict: red("context-unknown", "runs-where", /the test context's onTestFinished is used other than by calling it/),
+  },
+  // S12: a const options object carrying a METHOD exposes itself as this: opts.flip() writes opts.fails.
+  {
+    id: "r-u62r4-s12-options-method-this",
+    routed: "u62 respin-4 S12 const options carrying a method that writes this.fails, called before the registration",
+    source: { prelude: "const opts = {\n  fails: false,\n  flip(): void {\n    this.fails = true;\n  },\n};\nopts.flip();", body: `  it("${PIN}", opts, ${FAILING});` },
+    oracle: { kind: "inverted" },
+    verdict: red("inverted", "asserts", /registered with fails/),
+    report: red("options-unknown", "asserts", /the options at line \d+:\d+ (are not a same-file const object literal|carry the method flip)/),
+  },
+  // S13 / S14: vitest's registration API reached through import.meta aliased, or through a relative re-export.
+  {
+    id: "r-u62r4-s13-import-meta-alias",
+    routed: "u62 respin-4 S13 import.meta aliased, its vitest member rewriting runIf",
+    source: {
+      prelude: "const meta = import.meta as unknown as { vitest?: { it: typeof it } };\nconst inSource = meta.vitest;\nif (inSource !== undefined) Object.assign(inSource.it, { runIf: () => inSource.it.fails });",
+      body: `  it.runIf(true)("${PIN}", ${FAILING});`,
+    },
+    oracle: { kind: "inverted" },
+    verdict: red("inverted", "asserts", /registered with fails/),
+    report: red("options-unknown", "asserts", /the registration API escapes in this file: import\.meta at line \d+:\d+ is used other than to read a member/),
+  },
+  {
+    id: "r-u62r4-s14-relative-reexport-api",
+    routed: "u62 respin-4 S14 vitest's it re-exported by a relative module and rewritten through that alias",
+    source: {
+      imports: `${IMPORTS}\nimport { it as aliasIt } from "./census-vitest-reexport.js";`,
+      prelude: "Object.assign(aliasIt, { runIf: () => aliasIt.fails });",
+      body: `  it.runIf(true)("${PIN}", ${FAILING});`,
+    },
+    oracle: { kind: "inverted" },
+    verdict: red("inverted", "asserts", /registered with fails/),
+    report: red("options-unknown", "asserts", /the registration API escapes in this file: aliasIt at line \d+:\d+ is handed to a call/),
+  },
+  // S15 / S16: the assertion flow's other members - chai's internal assert method checks its own argument, never the
+  // subject; a generator's body runs only when it is iterated (E9, the called-helper row sharpened).
+  {
+    id: "a-u62r4-s15-chai-assert-method",
+    routed: "u62 respin-4 S15 expect(x).assert(true, msg) - chai's internal assert checks its argument, not the subject",
+    source: { body: `  it("${PIN}", () => {\n    expect(false).assert(true, "checked nothing about the subject");\n  });` },
+    oracle: { kind: "planted-false" },
+    verdict: red("no-assertion", "asserts", /no matcher-bearing vitest assertion is reachable/),
+    report: red("no-assertion", "asserts", /no matcher-bearing vitest assertion is reachable/),
+  },
+  {
+    id: "a-u62g2r3-e9-generator-not-iterated",
+    routed: "u62 gate-2r3 E9 the only assertion sits in a generator that is called but never iterated",
+    source: { body: `  it("${PIN}", () => {\n    function* steps(): Generator<number> {\n      expect(1).toBe(1);\n      yield 1;\n    }\n    void steps();\n  });` },
+    oracle: { kind: "vacuous" },
+    verdict: red("no-assertion", "asserts", /reached no assertion when test ran it/),
+    report: red("no-assertion", "asserts", /no matcher-bearing vitest assertion is reachable/),
+  },
+  // O6 - options.fails-constant: a fails value that is no constant the rows read is options-unknown, never read as absent.
+  {
+    id: "r-u62r4-o6-fails-not-constant",
+    routed: "u62 respin-4 O6 options { fails: Boolean(1) } - a fails value that is not a constant",
+    source: { body: `  it("${PIN}", { fails: Boolean(1) }, ${FAILING});` },
+    oracle: { kind: "inverted" },
+    verdict: red("inverted", "asserts", /registered with fails/),
+    report: red("options-unknown", "asserts", /the fails option at line \d+:\d+ is not a constant/),
+  },
+  // C1 - registration.relative-export's positive control: vitest's it re-exported by a relative module registers the pin.
+  {
+    id: "r-u62r4-c1-relative-reexport-control",
+    routed: "u62 respin-4 C1 control: the pin registered through vitest's it re-exported by a relative module (export { it } from vitest)",
+    source: { imports: `${IMPORTS}\nimport { it as reexportedIt } from "./census-vitest-reexport.js";`, body: `  reexportedIt("${PIN}", ${BODY});` },
+    oracle: RUNS,
+    verdict: OK,
+  },
+  // R1 (gate-2r3, measured fail-open on d9e0b26) - a relative module the pinned file loads for its side effect runs its
+  // top level at import, inside the file's collection: the integrity scan and the hook walk cover the import closure.
+  {
+    id: "r-u62g2r3-r1-side-effect-mutation",
+    routed: "u62 gate-2r3 R1 a relative module imported for its side effect rewrites it.runIf at import (Object.assign(it, { runIf: () => it.fails }))",
+    source: { imports: `${IMPORTS}\nimport "./census-mutate-it.js";`, body: `  it.runIf(true)("${PIN}", ${FAILING});` },
+    oracle: { kind: "inverted" },
+    verdict: red("inverted", "asserts", /registered with fails/),
+    report: red("options-unknown", "asserts", /the registration API escapes in this file: in \.\/census-mutate-it\.js, loaded at .*: it at line \d+:\d+ is handed to a call/),
+  },
+  {
+    id: "r-u62r4-s16-side-effect-hook",
+    routed: "u62 respin-4 S16 a relative module imported for its side effect registers a context-writing beforeEach at import",
+    source: { imports: `${IMPORTS}\nimport "./census-hook-on-import.js";`, body: `  it("${PIN}", ${FAILING});` },
+    oracle: { kind: "inverted" },
+    verdict: red("context-unknown", "runs-where", /in \.\/census-hook-on-import\.js, loaded at .*: beforeEach at line \d+:\d+: task\.fails is written through the test context/),
+  },
+  // X - the seat's own hunt for false green THROUGH roster members (owner criterion (3)), each measured fail-open on
+  // d9e0b26 (report mode; X1-X9 and X15-X19 in executing mode too): X1-X3 registration.method-call (fixtures), X4-X6
+  // context.checked (a check that calls an argument with the runner state), X7 registration.suite-factory, X8 / X10b /
+  // X11 assertion.handle-integrity, X9 context.free-hook, X14 options.fails-constant, X15-X19 context.runner-placed.
+  {
+    id: "r-u62r4-x1-extend-inline",
+    routed: "u62 respin-4 X1 an inline it.extend fixture writes task.fails (vitest runs a fixture with the test context)",
+    source: { body: `  it.extend<{ fx: number }>({ fx: ${FIXTURE_WRITE} })("${PIN}", ({ fx }) => {\n    void fx;\n    expect(1).toBe(2);\n  });` },
+    oracle: { kind: "inverted" },
+    verdict: red("context-unknown", "runs-where", /the case is registered through test\.extend fixtures/),
+  },
+  {
+    id: "r-u62r4-x2-extend-relative",
+    routed: "u62 respin-4 X2 a relative module exports it.extend with a fixture that writes task.fails",
+    source: { imports: `${IMPORTS}\nimport { fxTest } from "./census-extend-fixture.js";`, body: `  fxTest("${PIN}", ({ fx }) => {\n    void fx;\n    expect(1).toBe(2);\n  });` },
+    oracle: { kind: "inverted" },
+    verdict: red("context-unknown", "runs-where", /test\.extend fixtures|defines test fixtures/),
+  },
+  {
+    id: "r-u62r4-x3-extend-element",
+    routed: 'u62 respin-4 X3 it["extend"]: the fixture method read through an element access',
+    source: { body: `  it["extend"]<{ fx: number }>({ fx: ${FIXTURE_WRITE} })("${PIN}", ({ fx }) => {\n    void fx;\n    expect(1).toBe(2);\n  });` },
+    oracle: { kind: "inverted" },
+    verdict: red("context-unknown", "runs-where", /the case is registered through test\.extend fixtures/),
+  },
+  {
+    id: "r-u62r4-x4-satisfy-by-name",
+    routed: "u62 respin-4 X4 runner state checked by toSatisfy(check), a same-file function that sets the pin's fails",
+    source: { prelude: SUITE_CHECK, body: `  it("${PIN}", ({ task }) => {\n    expect(task.suite).toSatisfy(check);\n    expect(1).toBe(2);\n  });` },
+    oracle: { kind: "inverted" },
+    verdict: red("context-unknown", "runs-where", /check, handed to the check of runner state, may be called with that state/),
+  },
+  {
+    id: "r-u62r4-x5-asymmetric-object",
+    routed: "u62 respin-4 X5 runner state compared against an object literal carrying asymmetricMatch, which sets the pin's fails",
+    source: {
+      body: `  it("${PIN}", ({ task }) => {\n    expect(task.suite).toEqual({\n      asymmetricMatch: (suite: { tasks: { name: string; fails?: boolean }[] }) => {\n        const pinned = suite.tasks.find(entry => entry.name === "${PIN}");\n        if (pinned !== undefined) pinned.fails = true;\n        return true;\n      },\n    });\n    expect(1).toBe(2);\n  });`,
+    },
+    oracle: { kind: "inverted" },
+    verdict: red("context-unknown", "runs-where", /asymmetricMatch[\s\S]*handed to the check of runner state, may be called with that state/),
+  },
+  {
+    id: "r-u62r4-x6-satisfy-member",
+    routed: "u62 respin-4 X6 runner state checked by toSatisfy(holder.check), the check kept on an object member",
+    source: { prelude: `${SUITE_CHECK}\nconst holder = { check };`, body: `  it("${PIN}", ({ task }) => {\n    expect(task.suite).toSatisfy(holder.check);\n    expect(1).toBe(2);\n  });` },
+    oracle: { kind: "inverted" },
+    verdict: red("context-unknown", "runs-where", /holder\.check, handed to the check of runner state, may be called with that state/),
+  },
+  {
+    id: "r-u62r4-x7-factory-param",
+    routed: "u62 respin-4 X7 a describe factory's parameter receives vitest's test API (factory(test)); t.beforeEach sets task.fails",
+    source: { body: `  describe("inner", (t: typeof test) => {\n    t.beforeEach(${WRITE_HOOK});\n    it("${PIN}", ${FAILING});\n  });` },
+    oracle: { kind: "inverted" },
+    verdict: red("context-unknown", "runs-where", /the suite factory at line \d+:\d+ declares the parameter t: typeof test/),
+    report: red("options-unknown", "asserts", /the suite factory at line \d+:\d+ declares the parameter t: typeof test/),
+  },
+  {
+    id: "r-u62r4-x8-custom-matcher",
+    routed: "u62 respin-4 X8 a same-file expect.extend matcher sets this.task.fails (vitest hands a matcher MatcherState.task)",
+    source: {
+      prelude: 'expect.extend({\n  toBeFine(this: { task?: { fails?: boolean } }) {\n    if (this.task !== undefined) this.task.fails = true;\n    return { pass: true, message: () => "" };\n  },\n});',
+      body: `  it("${PIN}", () => {\n    (expect(1) as unknown as { toBeFine(): void }).toBeFine();\n    expect(1).toBe(2);\n  });`,
+    },
+    oracle: { kind: "inverted" },
+    verdict: red("context-unknown", "runs-where", /the assertion handle expect at line \d+:\d+ registers code through extend/),
+  },
+  {
+    id: "r-u62r4-x9-dispatch-member",
+    routed: "u62 respin-4 X9 a hook call inside an arrow kept on an object member, dispatched from the pin's describe",
+    source: { prelude: `const registry: { install?: () => void } = {};\nregistry.install = () => {\n  beforeEach(${WRITE_HOOK});\n};`, body: `  (registry.install as () => void)();\n  it("${PIN}", ${FAILING});` },
+    oracle: { kind: "inverted" },
+    verdict: red("context-unknown", "runs-where", /the vitest beforeEach at line \d+:\d+ is called where the census cannot place it in one suite/),
+  },
+  {
+    id: "r-u62r4-x10b-mock-node-assert",
+    routed: 'u62 respin-4 X10b vi.mock("node:assert") replaces equal with a no-op, the pin\'s only check',
+    source: {
+      imports: 'import { beforeEach, describe, expect, it, test, vi } from "vitest";\nimport nodeAssert from "node:assert";',
+      prelude: 'vi.mock("node:assert", () => ({ default: { equal: (): void => undefined } }));',
+      body: `  it("${PIN}", () => {\n    nodeAssert.equal(1, 2);\n  });`,
+    },
+    oracle: { kind: "planted-false" },
+    verdict: red("no-assertion", "asserts", /reached no assertion/),
+    report: red("context-unknown", "runs-where", /vi\.mock\("node:assert"\) at line \d+:\d+ replaces an assertion or runner module/),
+  },
+  {
+    id: "r-u62r4-x11-assert-overwrite",
+    routed: "u62 respin-4 X11 node:assert's equal overwritten with a no-op, the pin's only check",
+    source: {
+      imports: `${IMPORTS}\nimport nodeAssert from "node:assert";`,
+      prelude: "(nodeAssert as unknown as { equal: (...args: unknown[]) => void }).equal = () => {};",
+      body: `  it("${PIN}", () => {\n    nodeAssert.equal(1, 2);\n  });`,
+    },
+    oracle: { kind: "planted-false" },
+    verdict: red("no-assertion", "asserts", /reached no assertion/),
+    report: red("context-unknown", "runs-where", /the assertion handle nodeAssert at line \d+:\d+ has equal written/),
+  },
+  {
+    id: "r-u62r4-x14-undefined-shadow",
+    routed: "u62 respin-4 X14 options { fails: undefined } where undefined is shadowed by a const true",
+    source: { body: `  {\n    const undefined = true;\n    it("${PIN}", { fails: undefined }, ${FAILING});\n  }` },
+    oracle: { kind: "inverted" },
+    verdict: red("inverted", "asserts", /registered with fails/),
+  },
+  {
+    id: "r-u62r4-x15-runner-dispatch",
+    routed: "u62 respin-4 X15 getCurrentTest called in an arrow kept on an object member, dispatched from the pin's case",
+    source: { imports: IMPORTS_SUITE, prelude: RUNNER_FLIP("getCurrentTest"), body: `  it("${PIN}", () => {\n    (registry.flip as () => void)();\n    expect(1).toBe(2);\n  });` },
+    oracle: { kind: "inverted" },
+    verdict: red("context-unknown", "runs-where", RUNNER_PLACE),
+  },
+  {
+    id: "r-u62r4-x16-runner-class-field",
+    routed: "u62 respin-4 X16 getCurrentTest in a class field initializer a sibling case defines, constructed in the pin's case",
+    source: {
+      imports: IMPORTS_SUITE,
+      prelude: "const registry: { Probe?: unknown } = {};",
+      body: `  it("defines a probe class", () => {\n    registry.Probe = class {\n      readonly current = getCurrentTest();\n    };\n    expect(1).toBe(1);\n  });\n  it("${PIN}", () => {\n    const made = new (registry.Probe as new () => { readonly current: { fails?: boolean } | undefined })();\n    if (made.current !== undefined) made.current.fails = true;\n    expect(1).toBe(2);\n  });`,
+    },
+    oracle: { kind: "inverted" },
+    verdict: red("context-unknown", "runs-where", RUNNER_PLACE),
+  },
+  {
+    id: "r-u62r4-x17-runner-alias",
+    routed: "u62 respin-4 X17 a sibling case stores getCurrentTest itself on a member, the pin's case calls it",
+    source: {
+      imports: IMPORTS_SUITE,
+      prelude: "const registry: { lookup?: unknown } = {};",
+      body: `  it("keeps the lookup", () => {\n    registry.lookup = getCurrentTest;\n    expect(1).toBe(1);\n  });\n  it("${PIN}", () => {\n    const current = (registry.lookup as () => { fails?: boolean } | undefined)();\n    if (current !== undefined) current.fails = true;\n    expect(1).toBe(2);\n  });`,
+    },
+    oracle: { kind: "inverted" },
+    verdict: red("context-unknown", "runs-where", RUNNER_PLACE),
+  },
+  {
+    id: "r-u62r4-x18-runner-async",
+    routed: "u62 respin-4 X18 a concurrent sibling reads getCurrentTest after an await - the pin's turn by then - and sets its fails",
+    source: {
+      imports: IMPORTS_SUITE,
+      body: `  describe.concurrent("concurrent", () => {\n    it("reads the current test after an await", async () => {\n      await new Promise<void>(resolve => setTimeout(resolve, 50));\n      const current = getCurrentTest();\n      if (current !== undefined && current.name === "${PIN}") current.fails = true;\n      expect(2).toBe(2);\n    });\n    it("${PIN}", async () => {\n      await new Promise<void>(resolve => setTimeout(resolve, 500));\n      expect(1).toBe(2);\n    });\n  });`,
+    },
+    oracle: { kind: "inverted" },
+    verdict: red("context-unknown", "runs-where", RUNNER_PLACE),
+  },
+  {
+    id: "r-u62r4-x19-runner-reexport",
+    routed: "u62 respin-4 X19 getCurrentTest re-exported by a relative module (export { getCurrentTest } from vitest/suite), called from an arrow kept on a member",
+    source: { imports: `${IMPORTS}\nimport { getCurrentTest as lookup } from "./census-runner-reexport.js";`, prelude: RUNNER_FLIP("lookup"), body: `  it("${PIN}", () => {\n    (registry.flip as () => void)();\n    expect(1).toBe(2);\n  });` },
+    oracle: { kind: "inverted" },
+    verdict: red("context-unknown", "runs-where", /in \.\/census-runner-reexport\.js, loaded at .*: vitest\/suite is re-exported at line \d+:\d+/),
+  },
+  // X21 / X22 / X22b - shapes the respin-4 mutant table found unpinned (M4-15, M4-02): each guard's own falsifier.
+  {
+    id: "r-u62r4-x21-prototype-route",
+    routed: "u62 respin-4 X21 the Assertion class reached through expect(0).constructor overwrites toBe with a no-op, the pin's only check",
+    source: {
+      prelude: '(expect(0).constructor as unknown as { overwriteMethod(name: string, fn: () => () => void): void }).overwriteMethod("toBe", () => function () {});',
+      body: `  it("${PIN}", ${FAILING});`,
+    },
+    oracle: { kind: "planted-false" },
+    verdict: red("context-unknown", "runs-where", /the assertion handle expect at line \d+:\d+ reaches constructor, the class its matchers are defined on/),
+  },
+  {
+    id: "r-u62r4-x22-override-auto",
+    routed: "u62 respin-4 X22 it.override at the module top level adds an auto fixture to the plain it that writes task.fails",
+    source: {
+      prelude: "it.override({\n  flip: [\n    async ({ task }, use) => {\n      task.fails = true;\n      await use(1);\n    },\n    { auto: true },\n  ],\n});",
+      body: `  it("${PIN}", ${FAILING});`,
+    },
+    oracle: { kind: "inverted" },
+    verdict: red("context-unknown", "runs-where", /it\.override at line \d+:\d+ defines test fixtures, which vitest calls with the test context and the census does not read/),
+  },
+  {
+    id: "r-u62r4-x22b-scoped-suite",
+    routed: "u62 respin-4 X22b it.scoped inside the pin's describe adds an auto fixture to the plain it that writes task.fails",
+    source: { body: `  it.scoped({\n    flip: [\n      async ({ task }, use) => {\n        task.fails = true;\n        await use(1);\n      },\n      { auto: true },\n    ],\n  });\n  it("${PIN}", ${FAILING});` },
+    oracle: { kind: "inverted" },
+    verdict: red("context-unknown", "runs-where", /it\.scoped at line \d+:\d+ defines test fixtures, which vitest calls with the test context and the census does not read/),
+  },
+  // K - positive controls that keep context.free-hook and api-use.type live (the acceptance block's liveness check).
+  {
+    id: "r-u62r4-k-free-hook-control",
+    routed: "u62 respin-4 K-free-hook control: a same-file function registers a clean afterEach, called at the module top level",
+    source: { imports: 'import { afterEach, beforeEach, describe, expect, it, test } from "vitest";', prelude: "function installCleanup(): void {\n  afterEach(() => {\n    void 0;\n  });\n}\ninstallCleanup();", body: PLAIN },
+    oracle: RUNS,
+    verdict: OK,
+  },
+  {
+    id: "r-u62r4-k-type-control",
+    routed: "u62 respin-4 K-type control: a type-only reference to the registration API (typeof it) beside the pin",
+    source: { prelude: "type Registration = typeof it;\nconst registrations: readonly Registration[] = [];\nvoid registrations;", body: PLAIN },
+    oracle: RUNS,
+    verdict: OK,
+  },
+  // C2-C4 - positive controls: every roster row resolves some ok verdict (no dead row; the acceptance block checks it).
+  {
+    id: "r-u62r4-c2-namespace-alias-control",
+    routed: "u62 respin-4 C2 control: the pin registered through a vitest namespace member, beside a const alias of it read by typeof",
+    source: {
+      imports: `${IMPORTS}\nimport * as vitestNamespace from "vitest";`,
+      prelude: 'const aliasIt = it;\nif (typeof aliasIt !== "function") throw new Error("vitest\'s it is missing");',
+      body: `  vitestNamespace.it("${PIN}", ${BODY});`,
+    },
+    oracle: RUNS,
+    verdict: OK,
+  },
+  {
+    id: "r-u62r4-c3-context-control",
+    routed: "u62 respin-4 C3 control: the test context discarded, aliased and read, a clean handler registered through the alias, the assertion in a loop",
+    source: { body: `  it("${PIN}", (ctx) => {\n    void ctx;\n    const alias = ctx;\n    alias.onTestFinished(() => undefined);\n    for (const value of [1]) {\n      expect(value).toBe(alias.task.name === "${PIN}" ? 1 : 0);\n    }\n  });` },
+    oracle: RUNS,
+    verdict: OK,
+  },
+  {
+    id: "a-u62r4-c4-assert-first-control",
+    routed: "u62 respin-4 C4 control: the first assertion is vitest's assert API (assert.equal), a matcher after it",
+    source: { imports: 'import { assert, beforeEach, describe, expect, it, test } from "vitest";', body: `  it("${PIN}", () => {\n    assert.equal(1, 1);\n    expect(1).toBe(1);\n  });` },
+    oracle: RUNS,
+    verdict: OK,
+  },
+];
+
+/**
  * Each-liveness of THIS table (h8f.9 O1 class): every routed mode name keeps its row, so emptying a table goes red.
  * A mode counts only inside a " / "-separated segment of a routed string that names its own gate.
  */
@@ -2018,10 +2682,57 @@ const ROUTED_MODES: Readonly<Record<string, readonly string[]>> = {
   "u62 gate-2": ["U1.1", "U1.2", "U1.3", "U1.4", "U1.5", "U2", "I1.1", "I1.2", "I1.3"],
   "u62 gate-3": ["(1)", "(2)", "(3)", "(4)", "(5)", "(6)", "(7)", "(1c)", "(6c)", "(8)", "(9)", "(10)", "(11)", "(12)", "(13)", "(14)", "(15)", "(16)"],
   "u62 respin-3": ["A1", "A2", "A3", "A4", "A5", "A6", "A7", "A8", "A9", "A10", "A11", "A12", "K1", "K2", "K3", "K4"],
+  "u62 gate-2r3": ["R1", "H1", "H2", "H3", "H4", "H5", "H6", "H7", "H8", "H9", "H10", "H11", "O1", "O2", "O3", "O4", "O5", "E1", "E2b", "E3", "E7", "E9", "R2", "K-around", "K-object-method", "K-C2", "K-C3", "K-E4", "K-E5", "K-E6", "K-E8", "K-withContext"],
+  "u62 respin-4": [
+    "S1",
+    "S2",
+    "S3",
+    "S4",
+    "S5",
+    "S6",
+    "S7",
+    "S8",
+    "S9",
+    "S9b",
+    "S10",
+    "S11",
+    "S12",
+    "S13",
+    "S14",
+    "S15",
+    "S16",
+    "O6",
+    "C1",
+    "C2",
+    "C3",
+    "C4",
+    "X1",
+    "X2",
+    "X3",
+    "X4",
+    "X5",
+    "X6",
+    "X7",
+    "X8",
+    "X9",
+    "X10b",
+    "X11",
+    "X14",
+    "X15",
+    "X16",
+    "X17",
+    "X18",
+    "X19",
+    "X21",
+    "X22",
+    "X22b",
+    "K-free-hook",
+    "K-type",
+  ],
 };
 
 /** Exact table sizes: deleting or emptying a falsifier table goes red (each-liveness of this file's own rows). */
-const TABLE_SIZES = [55, 8, 22, 46, 15, 10, 29, 34, 5, 16, 43, 14, 3];
+const TABLE_SIZES = [55, 8, 22, 46, 15, 10, 29, 34, 5, 16, 43, 14, 3, 76];
 
 
 /**
@@ -2098,13 +2809,26 @@ const fixtureModule = (id: string): string =>
 // Harness: synthetic projects, the runner oracle (JSON reporter through the tier's real command), the helper.
 // ---------------------------------------------------------------------------------------------------------
 
-const MAIN_ROWS: readonly Row[] = [...REGISTRATION, ...EACH, ...BODY_ROWS, ...ASSERT_ROWS, ...ATTRIBUTION_ROWS, ...JUDGE_ROWS, ...INVERSION_ROWS];
+const MAIN_ROWS: readonly Row[] = [...REGISTRATION, ...EACH, ...BODY_ROWS, ...ASSERT_ROWS, ...ATTRIBUTION_ROWS, ...JUDGE_ROWS, ...INVERSION_ROWS, ...ROSTER_ROWS];
 const fileOf = (id: string): string => `test/${id}.test.ts`;
 const pinOf = (row: Row): CasePin => ({ file: fileOf(row.id), title: PIN, tier: DEFAULT_GATE_TIER, ...row.pin });
 const MAIN_PINS: readonly { readonly id: string; readonly pin: CasePin }[] = [
   ...MAIN_ROWS.map(row => ({ id: row.id, pin: pinOf(row) })),
   ...TIER_ROWS.map(row => ({ id: row.id, pin: row.pin })),
 ];
+
+/** The relative module the respin-4 S5-S9 rows reach: hooks registered by its exports, two through a parameter's default. */
+const HOOK_HELPERS = [
+  'import { afterAll, beforeEach } from "vitest";',
+  `export function installWriter(): void {\n  beforeEach(${WRITE_HOOK});\n}`,
+  `export default function installDefault(): void {\n  beforeEach(${WRITE_HOOK});\n}`,
+  `export function guardWriter(register: typeof beforeEach = beforeEach): void {\n  register(${WRITE_HOOK});\n}`,
+  "export function guardClean(register: (hook: () => void) => void = afterAll): void {\n  register(() => {\n    void 0;\n  });\n}",
+  "",
+].join("\n");
+
+/** The scratch.ts:125 / detached-peer.ts:96 shape on its own: one module, one clean hook helper whose parameter defaults to afterAll. */
+const HOOK_CLEAN = 'import { afterAll } from "vitest";\nexport function guardClean(register: (hook: () => void) => void = afterAll): void {\n  register(() => {\n    void 0;\n  });\n}\n';
 
 /** The documented gate env (house rule: the operator exports a worker cap); every runner run and helper run here carries it. */
 const GATE_CAP = "2";
@@ -2139,10 +2863,18 @@ function buildMainRoot(root: string): string {
     ),
     "vitest.config.ts": vitestConfig(defaultOptions(`exclude: [${JSON.stringify(LIVE_ONLY)}], tags: [{ name: "census-tag" }]`)),
     "vitest.live.config.ts": vitestConfig(`include: ${JSON.stringify([LIVE_ONLY, LIVE_IN_DEFAULT, LIVE_ENV])}, env: { CENSUS_LIVE_TIER: "1" }`),
-    "vitest.asserts.config.ts": vitestConfig(`include: ${JSON.stringify(ASSERT_ROWS.map(row => fileOf(row.id)))}, setupFiles: ["./census-has-assertions.setup.ts"]`),
+    "vitest.asserts.config.ts": vitestConfig(`include: ${JSON.stringify([...ASSERT_ROWS, ...ROSTER_ROWS].map(row => fileOf(row.id)))}, setupFiles: ["./census-has-assertions.setup.ts"]`),
     "census-has-assertions.setup.ts": 'import { beforeEach, expect } from "vitest";\nbeforeEach(() => {\n  expect.hasAssertions();\n});\n',
     "test/census-assert-helper.ts": 'import { expect } from "vitest";\nexport function assertPositive(value: number): void {\n  expect(value).toBeGreaterThan(0);\n}\n',
     "test/census-register-helper.ts": `import { expect, it } from "vitest";\nexport function registerPinned(): void {\n  it(${JSON.stringify(PIN)}, () => {\n    expect(1).toBe(1);\n  });\n}\n`,
+    "test/census-hook-helpers.ts": HOOK_HELPERS,
+    "test/census-hook-reexport.ts": 'export { installWriter } from "./census-hook-helpers.js";\n',
+    "test/census-vitest-reexport.ts": 'export { it } from "vitest";\n',
+    "test/census-mutate-it.ts": 'import { it } from "vitest";\nObject.assign(it, { runIf: () => it.fails });\n',
+    "test/census-hook-on-import.ts": `import { beforeEach } from "vitest";\nbeforeEach(${WRITE_HOOK});\n`,
+    "test/census-hook-clean.ts": HOOK_CLEAN,
+    "test/census-extend-fixture.ts": `import { it } from "vitest";\nexport const fxTest = it.extend<{ fx: number }>({ fx: ${FIXTURE_WRITE} });\n`,
+    "test/census-runner-reexport.ts": 'export { getCurrentTest } from "vitest/suite";\n',
     [LIVE_ONLY]: testFile({ body: PLAIN }),
     [LIVE_IN_DEFAULT]: testFile({ body: PLAIN }),
     [STALE_TARGET]: testFile({ body: PLAIN }),
@@ -2731,6 +3463,7 @@ rowSuite("census helper: the third leg - at least one reached vitest assertion w
 rowSuite("census helper: attribution - hazards scope to the pin's own call chain, never file-wide", ATTRIBUTION_ROWS);
 rowSuite("census helper: judge detection - the helper sees exactly what the gate's own run sees (U1 J1-J5, U2 A1a/A1b)", JUDGE_ROWS);
 rowSuite("census helper: inversion and options under report mode (the JSON report records fails as passed)", INVERSION_ROWS);
+rowSuite("census helper: the resolvable-construct roster - every value flow resolves through a roster row or fails closed (u62 gate-2r3, respin-4)", ROSTER_ROWS);
 
 describe("census helper: tier truth through the tier's real entrypoint (forge.toml -> npm script -> vitest config)", () => {
   for (const row of TIER_ROWS) {
@@ -2819,7 +3552,7 @@ describe("census helper: read-only pins of this repository's tier commands, and 
 });
 
 describe("census helper: liveness of this falsifier table (h8f.9 O1 class)", () => {
-  const tables = [REGISTRATION, EACH, BODY_ROWS, ASSERT_ROWS, ATTRIBUTION_ROWS, TIER_ROWS, CONFIG_ROWS, DOCS_ROWS, STRUCTURE_ROWS, JUDGE_ROWS, INVERSION_ROWS, REPORT_ROWS, REAL_PATH_ROWS];
+  const tables = [REGISTRATION, EACH, BODY_ROWS, ASSERT_ROWS, ATTRIBUTION_ROWS, TIER_ROWS, CONFIG_ROWS, DOCS_ROWS, STRUCTURE_ROWS, JUDGE_ROWS, INVERSION_ROWS, REPORT_ROWS, REAL_PATH_ROWS, ROSTER_ROWS];
   const routed = tables.flatMap(rows => rows.map(row => row.routed));
   const segments = routed.flatMap(text => text.split(" / "));
   for (const [gate, modes] of Object.entries(ROUTED_MODES)) {
@@ -2832,5 +3565,93 @@ describe("census helper: liveness of this falsifier table (h8f.9 O1 class)", () 
     const ids = tables.flatMap(rows => rows.map(row => row.id));
     expect(new Set(ids).size).toBe(ids.length);
     expect(tables.map(rows => rows.length)).toEqual(TABLE_SIZES);
+  });
+});
+
+/**
+ * The roster is the acceptance surface (owner criterion 2026-10-17, binding from respin-4): every row of the helper's
+ * RESOLVABLE-CONSTRUCT ROSTER names its JUSTIFICATION here - the falsifier rows whose shape would fabricate green through
+ * that row, or around its guard, and goes red instead - and every ok verdict this suite judges resolved its value flows
+ * through roster rows only (PinVerdict.through), each roster row resolving at least one of them (no dead row).
+ */
+const ROSTER_JUSTIFICATION: Readonly<Record<RosterId, readonly string[]>> = {
+  "registration.import": ["r-u62r3-a1-api-member-overwrite", "r-u62r3-a11-runner-handle"],
+  "registration.namespace": ["r-u62g2r3-r2-import-meta-vitest", "r-u62r4-s13-import-meta-alias"],
+  "registration.global": ["r-n13-iife-shadow", "r-6hb7-m9-local-shadow"],
+  "registration.relative-export": ["r-u62r4-s14-relative-reexport-api", "r-u62r4-s7-relative-reexport"],
+  "registration.alias": ["r-u62g2r3-h4-let-held", "r-u62g2-u1-destructured"],
+  "registration.member": ["r-u62g3-6-callee-unknown-member", "r-u62g2r3-h5-call-method", "r-u62g2r3-h8-bind"],
+  "registration.method-call": ["r-u62g2-u1-returned", "r-u62g2r3-h7-returned", "r-u62r4-x1-extend-inline", "r-u62r4-x2-extend-relative", "r-u62r4-x3-extend-element"],
+  "registration.suite-factory": ["r-u62r4-x7-factory-param"],
+  "registration.integrity": ["r-u62r3-a12-dynamic-load", "r-u62g2r3-h1-array-held", "r-u62g2r3-h11-test-api-hook-array", "r-u62r4-s1-collector-on", "r-u62r4-x22-override-auto", "r-u62r4-x22b-scoped-suite"],
+  "api-use.member-read": ["r-u62r3-a1-api-member-overwrite"],
+  "api-use.call": ["r-u62g2r3-h5-call-method", "r-u62g2r3-h6-reflect-apply"],
+  "api-use.collector": ["r-u62r4-s1-collector-on", "r-u62r4-s2-collector-options"],
+  "api-use.const-alias": ["r-u62g2r3-h4-let-held", "r-u62g2-u1-destructured"],
+  "api-use.discard": ["r-u62g2r3-h2-object-held", "r-u62g2r3-h7-returned"],
+  "api-use.re-export": ["r-u62r4-s14-relative-reexport-api"],
+  "api-use.type": ["r-u62r4-s10-hook-parameter-escape"],
+  "context.hook-parameter": ["r-u62r4-s8-hook-parameter-writer", "r-u62r4-s10-hook-parameter-escape"],
+  "options.literal": ["r-u62r4-s12-options-method-this", "r-n5-computed-key", "r-6hb7-s4-fails-options"],
+  "options.const": ["r-u62g2r3-o1-destructure-object", "r-u62g2r3-o4-describe-options", "r-s7-fails-variable"],
+  "options.read-position": ["r-u62g2r3-o2-destructure-array", "r-u62g2r3-o3-for-of-target", "r-u62g2r3-o5-spread-source"],
+  "options.fails-constant": ["r-u62r4-o6-fails-not-constant", "r-u62r4-x14-undefined-shadow"],
+  "options.enclosure": ["r-u62g2-i1-object-held-suite", "r-u62g2-i1-wrapper-suite", "r-u62g3-1-object-method"],
+  "context.seed": ["b-6hb7-m10-rest-destructured", "b-6ze38-m8-rest-args", "b-arguments"],
+  "context.member": ["r-u62g3-8-context-write-task", "b-destructured", "b-computed-key"],
+  "context.alias": ["b-alias-context"],
+  "context.discard": ["b-escape"],
+  "context.derived": ["r-u62r3-a5-result-rewrite", "r-u62g2r3-k-context-destructure-write", "r-u62g2r3-k-context-for-of-write"],
+  "context.checked": ["r-u62r3-a10-assertion-callback", "r-u62r4-x4-satisfy-by-name", "r-u62r4-x5-asymmetric-object", "r-u62r4-x6-satisfy-member"],
+  "context.handler": ["r-u62r3-a4-registrar-handler", "r-u62r3-a6-imported-registrar", "r-u62r3-a9-handler-arguments", "r-u62r4-s11-destructured-registrar-array"],
+  "context.hook": ["r-u62g3-10-context-write-hook", "r-u62r3-a2-test-api-hook", "r-u62g2r3-k-around-direct"],
+  "context.sibling": ["r-u62g2r3-k-object-method-hook"],
+  "context.free-hook": ["r-u62r4-x9-dispatch-member", "r-u62r4-s8-hook-parameter-writer"],
+  "context.runner-placed": ["r-u62r4-x15-runner-dispatch", "r-u62r4-x16-runner-class-field", "r-u62r4-x17-runner-alias", "r-u62r4-x18-runner-async", "r-u62r4-x19-runner-reexport", "j-u62-j5-helper"],
+  "context.follow": ["r-u62r4-s3-class-static-hook", "r-u62r4-s4-destructured-helper", "r-u62r4-s5-relative-namespace", "r-u62r4-s6-relative-default", "r-u62r4-s7-relative-reexport", "j-u62-j5-helper"],
+  "assertion.matcher": ["a-u62g2r3-e1-withcontext", "a-u62g2r3-e2b-withtest", "a-u62g2r3-e3-not-withcontext", "a-u62r4-s15-chai-assert-method", "a-u62g3-15-expect-tostring", "a-bare-expect"],
+  "assertion.failing-member": ["a-u62g2r3-k-setstate-count", "a-u62g3-11-expect-getstate", "a-u62g3-12-expect-assertions-zero"],
+  "assertion.assert-call": ["a-u62g3-13-assert-tostring", "a-u62g3-14-assert-bound"],
+  "assertion.handle-integrity": ["r-u62r4-x8-custom-matcher", "r-u62r4-x10b-mock-node-assert", "r-u62r4-x11-assert-overwrite", "r-u62r4-x21-prototype-route"],
+  "assertion.case-body": ["a-after-return", "a-u62-conditional-if", "a-u62g2-u2-labeled-break"],
+  "assertion.invoked-callback": ["a-never-called", "a-u62g2r3-e7-never-method", "a-u62g2r3-k-never-arrow"],
+  "assertion.called-helper": ["a-u62g2r3-e9-generator-not-iterated", "a-u62g2r3-k-never-declaration"],
+  "assertion.loop-body": ["a-empty-loop", "a-bare-empty-loop"],
+};
+
+/** Roster rows no fixture of this suite can resolve an ok verdict through, each with the reason (the liveness check names any other). */
+const LIVENESS_EXEMPT: Readonly<Partial<Record<RosterId, string>>> = {
+  "registration.global": "the fixture project runs with vitest's default globals: false (as this repository does), so no fixture registers through a global; its refusals are its justification rows",
+};
+
+describe("census helper: the resolvable-construct roster is the acceptance surface (owner criterion 2026-10-17, respin-4)", () => {
+  const rows = new Map(MAIN_ROWS.map(row => [row.id, row]));
+
+  it("every roster row names the falsifier rows that justify it, each a row of this suite that goes red", () => {
+    expect(Object.keys(ROSTER_JUSTIFICATION).sort()).toEqual(RESOLVABLE_CONSTRUCTS.map(row => row.id).sort());
+    for (const [construct, justified] of Object.entries(ROSTER_JUSTIFICATION)) {
+      expect(justified.length, construct).toBeGreaterThan(0);
+      for (const id of justified) {
+        const row = rows.get(id);
+        expect(row, `${construct}: ${id} is a row of this suite`).toBeDefined();
+        expect(row !== undefined && (!row.verdict.ok || row.report?.ok === false), `${construct}: ${id} goes red`).toBe(true);
+      }
+    }
+  });
+
+  it("every ok verdict resolved its flows through roster rows only, and every roster row resolves some ok verdict", () => {
+    const ids = new Set<string>(RESOLVABLE_CONSTRUCTS.map(row => row.id));
+    const greens = [...mainVerdicts.values(), ...reportVerdicts.values()].filter(verdict => verdict.ok);
+    expect(greens.length).toBeGreaterThan(0);
+    const live = new Set<string>();
+    for (const verdict of greens) {
+      expect(verdict.through.length, verdict.why).toBeGreaterThan(0);
+      for (const row of verdict.through) {
+        expect(ids.has(row), `${verdict.why}: ${row}`).toBe(true);
+        live.add(row);
+      }
+    }
+    const dead = [...ids].filter(id => !live.has(id) && LIVENESS_EXEMPT[id as RosterId] === undefined);
+    expect(dead, `roster rows no ok verdict resolves through: ${dead.join(", ")}`).toEqual([]);
   });
 });
