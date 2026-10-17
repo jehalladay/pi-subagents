@@ -712,6 +712,55 @@ describe("wb-752.3 VC-4 live Furnace receipt: assessor", () => {
     expect(recorded("Bearer a,b;c,d")).toBe(true);
   });
 
+  // Respin 5 (gate-2 g4-gate-r1 cmd_d6e5a2e58f20 U1/U2; owner ruling 02:3xZ): the gate-verified class-closing rows C1-C5.
+  // Neighbour mutants of the same C6 atoms survived the respin-4 suite (a separator or glue run capped at two units, one
+  // token-class member excluded, the respin-2 ASCII class, a narrowed vendor-prefix key class, a name-to-assignment
+  // separator run capped at one unit). Each row walks a CLOSED member family instead of one shape and pins the size of
+  // its table, so a run cap below 32 units or the exclusion of any listed member records a probe and reddens the row.
+  // The closed family and the per-mutant red counts are in the delivery note (the acceptance surface). Every invisible
+  // and non-ASCII member is built with String.fromCodePoint (seat rule F11); every value is an obviously fake placeholder.
+  it("C6 falsifier (respin 5, C1): every admitted token character inside the first six is refused after Bearer and after Basic (95 members: printable ASCII minus comma, semicolon and both quotes, plus five non-ASCII letters; a token class excluding any one records it)", () => {
+    const universe: string[] = [];
+    for (let code = 0x21; code <= 0x7e; code++) if (![0x2c, 0x3b, 0x22, 0x27].includes(code)) universe.push(cp(code));
+    for (const code of [0xe9, 0xf6, 0x416, 0x4e2d, 0x1f600]) universe.push(cp(code));
+    expect(universe.length).toBe(95);
+    const probes = universe.flatMap((character) => [`Bearer ab${character}cdefgh`, `Basic ab${character}cdefgh`]);
+    expect(probes.length).toBe(190);
+    expect(unrefused(probes, "cdefgh")).toEqual([]);
+  });
+
+  it("C6 falsifier (respin 5, C2): a separator run of each length 1, 2, 3, 4, 8, 16 and 32 between the scheme and its token is refused, for a space, TAB, ZWSP and NBSP unit (a run capped below 32 units records it)", () => {
+    const units = [cp(0x20), cp(0x09), cp(0x200b), cp(0xa0)];
+    const runs = [1, 2, 3, 4, 8, 16, 32];
+    const probes = units.flatMap((unit) => runs.map((length) => `Bearer${unit.repeat(length)}SYNTHTOKENVALUE`));
+    expect(probes.length).toBe(28);
+    expect(unrefused(probes, "SYNTHTOKENVALUE")).toEqual([]);
+  });
+
+  it("C6 falsifier (respin 5, C3): a glue run of each length 1, 2, 3, 4, 8, 16 and 32 inside the scheme and inside the token is refused (a glue run capped below 32 units records it)", () => {
+    const ZWSP = cp(0x200b);
+    const runs = [1, 2, 3, 4, 8, 16, 32];
+    const probes = runs.flatMap((length) => [`Bea${ZWSP.repeat(length)}rer SYNTHTOKENVALUE`, `Bearer SYN${ZWSP.repeat(length)}THTOKENVALUE`]);
+    expect(probes.length).toBe(14);
+    expect(unrefused(probes, "THTOKENVALUE")).toEqual([]);
+  });
+
+  it("C6 falsifier (respin 5, C4): each key character a, Z, 0, 9, _ and - after each of sk-ant-, sk-proj-, ghp_ and github_pat_ is refused (a key class without any one of them records it)", () => {
+    const keyCharacters = ["a", "Z", "0", "9", "_", "-"];
+    const prefixes = ["sk-ant-", "sk-proj-", "ghp_", "github_pat_"];
+    const probes = prefixes.flatMap((prefix) => keyCharacters.map((character) => `${prefix}${character}SYNTHKEY`));
+    expect(probes.length).toBe(24);
+    expect(unrefused(probes, "SYNTHKEY")).toEqual([]);
+  });
+
+  it("C6 falsifier (respin 5, C5): a separator run of each length 0, 1, 2, 3, 8 and 32 between password or api_key and = or : is refused (a run capped below 32 units records it)", () => {
+    const [SPACE, ZWSP] = [0x20, 0x200b].map(cp);
+    const runs = [0, 1, 2, 3, 8, 32];
+    const probes = runs.flatMap((length) => [`password${SPACE.repeat(length)}=SYNTHVALUE`, `api_key${ZWSP.repeat(length)}:SYNTHVALUE`]);
+    expect(probes.length).toBe(12);
+    expect(unrefused(probes, "SYNTHVALUE")).toEqual([]);
+  });
+
   it("names the contract rules and steps exactly so a quiet rename is caught", () => {
     expect([...FINDING_RULES]).toEqual([
       "attach-not-external",
