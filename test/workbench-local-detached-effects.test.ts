@@ -88,6 +88,15 @@ function recorder() {
   return { entries, append: (entry: WorkflowJournalEntry) => entries.push(entry) };
 }
 
+/**
+ * The row a resume consults at a run's single node position: the last node
+ * row there. A non-read node is journaled at dispatch and again once it
+ * settles (wb-5x0.1), and runtime.ts keys node rows last-wins.
+ */
+function recordedNode(entries: readonly WorkflowJournalEntry[]): WorkflowJournalEntry | undefined {
+  return entries.filter(entry => entry.kind === "node").at(-1);
+}
+
 const run = (body: string, host: WorkflowHost, journal?: RunWorkflowOptions["journal"]) =>
   runWorkflow({ script: HEAD + body, host, ...(journal ? { journal } : {}) });
 
@@ -138,6 +147,17 @@ describe("detached node effect metadata comes from the provider manifest", () =>
         text: JSON.stringify({ id: "local.fixture-read", echoed: { value: "x" } }),
         basis: host.replayBasis,
       },
+      // The write is on record from dispatch: its marker, then the settled row that supersedes it (wb-5x0.1).
+      {
+        kind: "node",
+        index: 1,
+        key: nodeJournalKey("local.fixture-write", JSON.stringify({ value: "y" })),
+        ok: false,
+        capabilityId: "local.fixture-write",
+        effectClass: "write",
+        basis: host.replayBasis,
+        dispatched: true,
+      },
       {
         kind: "node",
         index: 1,
@@ -180,7 +200,8 @@ describe("a detached resume never re-runs a journaled effect", () => {
     const first = localProvider({ "local.fixture-effect": effectClass });
     const journal = recorder();
     expect((await run(body, detachedHost(first.registry, localRequest(["local.fixture-effect"])), journal)).status).toBe("completed");
-    expect(journal.entries[0]).toMatchObject({ kind: "node", capabilityId: "local.fixture-effect", effectClass });
+    expect(recordedNode(journal.entries)).toMatchObject({ kind: "node", capabilityId: "local.fixture-effect", effectClass });
+    expect(recordedNode(journal.entries)).not.toHaveProperty("dispatched");
 
     const second = localProvider({ "local.fixture-effect": effectClass });
     const result = await run(body, detachedHost(second.registry, localRequest(["local.fixture-effect"])), { entries: journal.entries });
@@ -217,7 +238,8 @@ describe("a detached resume never re-runs a journaled effect", () => {
     expect(one.status).toBe("failed");
     expect(one.capabilityError?.category).toBe("uncertain-effect");
     expect(lost.invocations).toHaveLength(1);
-    expect(journal.entries[0]).toMatchObject({ kind: "node", ok: false, capabilityId: "local.fixture-write", effectClass: "write" });
+    expect(recordedNode(journal.entries)).toMatchObject({ kind: "node", ok: false, capabilityId: "local.fixture-write", effectClass: "write" });
+    expect(recordedNode(journal.entries)).not.toHaveProperty("dispatched");
 
     const healthy = localProvider({ "local.fixture-write": "write" });
     const result = await run(body, detachedHost(healthy.registry, localRequest(["local.fixture-write"])), { entries: journal.entries });

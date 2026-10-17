@@ -269,10 +269,15 @@ describe("dual-backend golden equivalence (fixture pass, not live SDK)", () => {
       for (const first of [a, b]) {
         expect(first.result.status).toBe("completed");
         expect(first.nodeInvocations).toBe(1);
-        expect(first.journal).toHaveLength(1);
-        expect(first.journal[0]).toMatchObject({ kind: "node", capabilityId: write.id, effectClass: "write", ok: true });
+        // A non-read node is on record from dispatch (wb-5x0.1): its dispatched marker, then
+        // its settled row at the same position.
+        expect(first.journal).toHaveLength(2);
+        expect(first.journal[0]).toMatchObject({ kind: "node", index: 0, capabilityId: write.id, effectClass: "write", ok: false, dispatched: true });
+        expect(first.journal[1]).toMatchObject({ kind: "node", index: 0, capabilityId: write.id, effectClass: "write", ok: true });
+        expect(first.journal[1]).not.toHaveProperty("dispatched");
         // A write's answer is deliberately not journaled: nothing to replay silently.
         expect(first.journal[0].text).toBeUndefined();
+        expect(first.journal[1].text).toBeUndefined();
       }
       expect(normalizeRun(b).journal).toEqual(normalizeRun(a).journal);
 
