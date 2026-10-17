@@ -3,9 +3,11 @@
 import {HyperUnix} from '@hyperunix/sdk';
 import {describe,expect,it,vi} from 'vitest';
 import {CapabilityRegistry} from '../src/workbench/capability-registry.js';
+import {hxLiveInvariant} from '../src/workbench/hyperunix-observer.js';
 import {registerFurnaceRunInspect} from '../src/workbench/providers/furnace.js';
 import {registerHyperUnixFind} from '../src/workbench/providers/hyperunix.js';
 import {registerReactiveFiberRender} from '../src/workbench/providers/reactivefiber.js';
+import {hxLiveReceipt} from './helpers/hx-live-receipt.js';
 
 const ctx={grants:['hyperunix:read','furnace:inspect','reactivefiber:render'],signal:new AbortController().signal};
 
@@ -16,8 +18,10 @@ describe('in-house native provider contracts',()=>{
     registerHyperUnixFind(registry,reader,process.cwd());
     const result=await registry.invoke('hyperunix.find',{kind:'hx.fs/regular-file',root:'src'},{...ctx});
     await reader.close();
-    expect(result).toMatchObject({contract:'hyperunix.find/v1',source:{execution_status:{kind:'incomplete'},coverage_summary:{licenses_absence:false}}});
+    expect(result).toMatchObject({contract:'hyperunix.find/v1',source:{representation:'hyperunix.result/1'},runtime:{binarySha256:expect.stringMatching(/^[0-9a-f]{64}$/)}});
+    expect(hxLiveInvariant(result)).toMatchObject({holds:true,violations:[]});
     expect(JSON.stringify(result)).not.toContain('"verified":true');
+    console.log(hxLiveReceipt(result));
   });
   it('Furnace inspect preserves a missing Run as a typed unavailable refusal',async()=>{
     const registry=new CapabilityRegistry();

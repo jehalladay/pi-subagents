@@ -18,6 +18,15 @@
  * the proxy and CA variables the Claude SDK's CLI child needs to reach the
  * network, and the CLI's own config directory (its credential STORE lives
  * under HOME; the credential itself is never an environment variable here).
+ *
+ * RF_WORKSPACE and SWARM_RF_WORKSPACE (wb-973.6 / wb-973.7, SCG-R6/R7) are
+ * operational workspace locators, not credentials: each holds the directory of
+ * the swarm's rf workspace, which a hosted agent passes to `rf --workspace`
+ * (docs/workbench/13 "Host boundary" names them as that channel). The embedded
+ * host's SDK child inherits both with process.env; naming them here hands the
+ * detached host's SDK child the same workspace, so one agent instruction
+ * resolves one workspace on either host. They are the only names the channel
+ * adds.
  */
 export const DETACHED_HOST_ENV_ALLOWLIST: readonly string[] = Object.freeze([
   "PATH",
@@ -51,6 +60,8 @@ export const DETACHED_HOST_ENV_ALLOWLIST: readonly string[] = Object.freeze([
   "SSL_CERT_FILE",
   "SSL_CERT_DIR",
   "CLAUDE_CONFIG_DIR",
+  "RF_WORKSPACE",
+  "SWARM_RF_WORKSPACE",
 ]);
 
 /** Proxy variables: allowlisted by name, but a URL carrying userinfo is a credential by content. */

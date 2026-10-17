@@ -228,7 +228,7 @@ const DENY_POLICIES: Readonly<Record<ControlDenyPolicy, true>> = Object.freeze({
 } satisfies Record<ControlDenyPolicy, true>);
 const ECHO_TEXT = 256;
 const MAX_TIMER_MS = 2_147_483_647;
-const UNVETTED = "Forge control executes only a permitted workbench.control/v1 decision minted by the control core.";
+const UNVETTED = `Forge control executes only a permitted ${CONTROL_CONTRACT_VERSION} decision minted by the control core.`;
 /** Receipts whose one cancel was handed to the seam: a permit executes once. */
 const issued = new WeakSet<object>();
 /** Acknowledged executions this module returned and has not settled: the only inputs settleForgeControl accepts. */

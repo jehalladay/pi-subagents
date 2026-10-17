@@ -4,6 +4,7 @@
 import { matchesKey, stripTerminalSequences, truncateToWidth, visibleWidth } from '@earendil-works/pi-tui';
 import type { AttentionBottleneck, AttentionReport } from '../workbench/attention.js';
 import type { EvidenceEntry, EvidenceStore } from '../workbench/evidence-loader.js';
+import type { GraphEdge, GraphReference, GraphViewModel } from '../workbench/graph-view.js';
 import type { NativeRef, ObservationProjection, ObservationScope, ObservedNode, Relation } from '../workbench/observation.js';
 import { sanitizeWorkbenchText } from '../workbench/redaction.js';
 import { MAX_ZOOM, type TimelineModel, type TimelineNote, type TimelineRow } from '../workbench/timeline.js';
@@ -17,6 +18,9 @@ export interface InspectorModel {
   invocationId: string;
   title: string;
   status: string;
+  /** Graph-view model the host builds per redraw (createGraphViewBuilder, wb-6ze.32); absent means the graph view renders exactly
+   * as before. The layout only draws it: it reads no relation page and never rebuilds or re-lays out the model. */
+  graph?: GraphViewModel;
   /** Read side of the lazy evidence store; absent means the details view renders exactly as before. */
   evidence?: Pick<EvidenceStore, 'get' | 'request' | 'abortAll'>;
   /** Lane model the host builds per redraw (buildTimelineLanes); absent means the timeline view renders exactly as before. */
@@ -590,6 +594,115 @@ function topologyRows(model:InspectorModel,slice:LinkedTopology,room:number,asci
   return [...kept.map(row=>row.text),...(cut>0 ? [`${dots} +${cut} more (bounded)`] : [])];
 }
 
+/** The documented relation class of a graph-view edge: the RelationKind table topology-slice.ts applies, so the graph and the
+ * details views name one class alike. */
+const GRAPH_CLASS: Readonly<Record<GraphEdge['class'], TopologyRelationClass>> = {
+  dependency:'declared-dependency', causation:'observed-causal', ownership:'lifecycle-ownership', grouping:'grouping', hypothesis:'inferred-hypothesis',
+};
+/** Partial-label rows the graph view keeps ahead of every block, so a truncated read is never pushed out by the row budget. */
+const MAX_GRAPH_PARTIAL_ROWS = 3;
+/** Edge rows one node block lists before it counts the rest, so one hub cannot fill the viewport. */
+const MAX_GRAPH_BLOCK_EDGES = 8;
+/** What the model-backed graph view reads from the inspector state. */
+interface GraphViewState { selectedKey: string | undefined; focused: string | null; filter: string; collapsed: readonly string[] }
+/** One drawn unit of the graph view, kept whole or counted whole by the row-budget notice. */
+interface GraphBlock { lines: string[]; aggregates: number; nodes: number; edges: number; references: number; holds: boolean }
+/** The notice for blocks the row budget cut: every one is counted by kind, and a selection among them stays visible. */
+function graphBudgetNotice(rest: readonly GraphBlock[], ascii: boolean): string {
+  const total=(pick:(block:GraphBlock)=>number):number=>rest.reduce((sum,block)=>sum+pick(block),0);
+  const counts:readonly (readonly [number,string])[]=[[total(block=>block.aggregates),'aggregate'],[total(block=>block.nodes),'node'],
+    [total(block=>block.edges),'edge'],[total(block=>block.references),'reference']];
+  const parts=counts.filter(([count])=>count>0).map(([count,word])=>`${count} ${word}${count===1?'':'s'}`);
+  return `${rest.some(block=>block.holds)?ascii?'> ':'❯ ':''}${ascii?'...':'…'} more: ${parts.join(', ')} (row budget)`;
+}
+/** Rows of the graph view drawn from a graph-view model alone (wb-6ze.34), within `room` rows: no relation page is read and
+ * nothing is laid out again, the model carries the topology-revision cache. Aggregate supernodes come first, then one block per
+ * node row with the typed edges drawn under it, then explicit reference rows: a cycle is never drawn as an arrow, and an edge
+ * whose endpoint the view does not hold is a reference, or a declared dependency marked as such, never an arrow between shown
+ * rows. A row leads with its fixed vocabulary (class, marker, reason) so a narrow terminal truncates names and provenance, never
+ * the marker. Partial labels are kept before any block. Producer text is the model's sanitized
+ * label fields; an endpoint the model holds no row for is identity text and passes the shared helper's named label layout
+ * (topologyText) first, so no key or native reference is printed raw. The caller's add() then passes every row through safe(). */
+function graphModelRows(graph: GraphViewModel, view: GraphViewState, room: number, ascii: boolean): string[] {
+  const sep=ascii?' | ':' · ';
+  const dots=ascii?'...':'…';
+  const forward=edgeGlyph(ascii);
+  const backward=ascii?'<-':'←';
+  const byKey=new Map(graph.nodes.map(node=>[node.key,node] as const));
+  const named=(key:string):string=>byKey.get(key)?.label || topologyText(keyRef(key));
+  const classOf=(kind:GraphEdge['class']):string=>TOPOLOGY_CLASS_LABEL[GRAPH_CLASS[kind]];
+  const source=(text:string):string=>`[${text===''?'unlabeled source':text}]`;
+  // Focus and filter narrow the rows exactly as the per-node blocks do: the focused key, or the label and native provider/type/id.
+  const narrowed=view.focused!==null || view.filter!=='';
+  const needle=view.filter.toLowerCase();
+  const shown=graph.nodes.filter(node=>(view.focused===null || node.key===view.focused) &&
+    (needle==='' || `${node.label} ${node.nativeRef.provider}/${node.nativeRef.type}/${node.nativeRef.id}`.toLowerCase().includes(needle)));
+  const visible=new Set(shown.map(node=>node.key));
+  const under=new Map<string,string[]>();
+  const loose:string[]=[];
+  // An edge is drawn once: under its source row when that row is shown, else under its target row, else on its own line when
+  // nothing narrows the view.
+  const place=(from:string,to:string,body:(glyph:string,other:string)=>string):void=>{
+    if(visible.has(from)) under.set(from,[...(under.get(from)??[]),body(forward,named(to))]);
+    else if(visible.has(to)) under.set(to,[...(under.get(to)??[]),body(backward,named(from))]);
+    else if(!narrowed) loose.push(`${named(from)}${sep}${body(forward,named(to))}`);
+  };
+  for(const edge of graph.edges) place(edge.from,edge.to,(glyph,other)=>`${classOf(edge.class)} ${glyph} ${other}${edge.crossProvider?`${sep}cross-provider`:''} ${source(edge.source)}`);
+  const references:GraphReference[]=[];
+  for(const reference of graph.references){
+    // A declared edge to an endpoint the view does not hold stays a declared dependency and says so; it is never an
+    // unknown-dynamic reference (BOUNDARY 2026-10-15T10:58:33Z: declared-vs-dynamic is where the knowledge came from, observed or
+    // not is the endpoint's state).
+    if(reference.reason==='endpoint-not-in-view' && reference.class==='dependency'){
+      place(reference.from,reference.to,(glyph,other)=>`${classOf(reference.class)}${sep}unobserved endpoint (not in view) ${glyph} ${other} ${source(reference.source)}`);
+    } else if(!narrowed || visible.has(reference.from) || visible.has(reference.to)) references.push(reference);
+  }
+  const blocks:GraphBlock[]=[];
+  for(const supernode of graph.supernodes){
+    if(narrowed && !visible.has(supernode.from)) continue;
+    const parts=[`aggregate${sep}${supernode.label}`,supernode.classes.map(classOf).join('/'),
+      supernode.providers.map(entry=>`${entry.provider===''?'unlabeled':entry.provider} ${entry.count}`).join(', '),
+      supernode.tones.map(entry=>`${toneGlyph('current',entry.tone,ascii)}${entry.count}`).join(' ')];
+    blocks.push({lines:[parts.filter(part=>part!=='').join(sep)],aggregates:1,nodes:0,edges:0,references:0,holds:false});
+  }
+  for(const node of shown){
+    const edges=under.get(node.key)??[];
+    const pointed=node.key===view.selectedKey;
+    const head=[`${pointed?ascii?'>':'❯':' '} ${toneGlyph(node.freshness,node.tone,ascii)} ${named(node.key)}`,node.provider,node.type,node.status,
+      node.freshness==='current'?'':node.freshness.toUpperCase()].filter(part=>part!=='').join(sep);
+    const lines=[head];
+    if(view.collapsed.includes(node.key)){
+      if(edges.length>0) lines.push(`  ${dots} ${edges.length} relation${edges.length===1?'':'s'} collapsed`);
+    } else {
+      lines.push(...edges.slice(0,MAX_GRAPH_BLOCK_EDGES).map(text=>`  ${text}`));
+      if(edges.length>MAX_GRAPH_BLOCK_EDGES) lines.push(`  ${dots} +${edges.length-MAX_GRAPH_BLOCK_EDGES} more edges of this node (bounded)`);
+    }
+    blocks.push({lines,aggregates:0,nodes:1,edges:edges.length,references:0,holds:pointed});
+  }
+  for(const text of loose) blocks.push({lines:[`  ${text}`],aggregates:0,nodes:0,edges:1,references:0,holds:false});
+  for(const reference of references){
+    const why=reference.reason==='cycle' ? 'cycle' : 'unknown dynamic edge (not in view)';
+    blocks.push({lines:[`  reference${sep}${why}${sep}${classOf(reference.class)}${sep}${named(reference.from)} ${forward} ${named(reference.to)} ${source(reference.source)}`],
+      aggregates:0,nodes:0,edges:0,references:1,holds:false});
+  }
+  const space=Math.max(0,room);
+  const labels=graph.partials.map(partial=>`partial${sep}${partial.label===''?'truncated read':partial.label}`);
+  // Partial labels are kept ahead of every block; one row stays for the budget notice while any block is left to draw.
+  const kept=Math.min(labels.length,MAX_GRAPH_PARTIAL_ROWS,blocks.length>0 && space>1 ? space-1 : space);
+  const partials=kept>=labels.length ? labels : kept<=0 ? [] : [...labels.slice(0,kept-1),`${dots} +${labels.length-kept+1} more partial labels (bounded)`];
+  const budget=space-partials.length;
+  const out:string[]=[];
+  for(let n=0;n<blocks.length;n++){
+    // A block is drawn whole or not at all; the first that does not fit ends the list, and it and every later block are counted.
+    if(out.length+blocks[n].lines.length>budget-(n<blocks.length-1?1:0)){
+      if(out.length<budget) out.push(graphBudgetNotice(blocks.slice(n),ascii));
+      break;
+    }
+    out.push(...blocks[n].lines);
+  }
+  return [...out,...partials];
+}
+
 /** Pure viewport layout; capped rows fetched from indexed nodes, never raw event history. */
 export function layoutInspector(model:InspectorModel,state:InspectorState,size:InspectorSize):string[]{
   const width=Math.max(12,Math.trunc(size.width));
@@ -684,10 +797,13 @@ export function layoutInspector(model:InspectorModel,state:InspectorState,size:I
     }
   } else if(state.view==='graph'){
     add('Observed reference graph · cycles allowed; missing edges are unknown');
+    // With a graph-view model (wb-6ze.34) the model is drawn alone and no relation page is read; without one the per-node blocks
+    // below draw exactly as before.
+    if(model.graph) for(const text of graphModelRows(model.graph,{selectedKey:current?.key,focused:state.focused,filter:state.filter,collapsed:state.collapsed},height-lines.length-(paged?1:0)-2,ascii)) add(text);
     // A node's block is drawn whole or not at all, so the topology footer and key hint always remain;
     // blocks that do not fit are counted, never silently dropped.
     const limit=height-1-(paged ? 1 : 0)-1;
-    const visible=page.nodes.flatMap((node,i)=>(state.focused && node.key!==state.focused) ||
+    const visible=model.graph ? [] : page.nodes.flatMap((node,i)=>(state.focused && node.key!==state.focused) ||
       (state.filter && !`${node.presentation.title} ${ref(node)}`.toLowerCase().includes(state.filter.toLowerCase())) ? [] : [i]);
     for(const [n,i] of visible.entries()){
       const node=page.nodes[i];

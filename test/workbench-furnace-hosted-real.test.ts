@@ -5,16 +5,15 @@
  * Every Run lives in a disposable /tmp workspace with its own bd store and its own
  * Furnace state directory, in the default wisp mode, with fixture formulas only.
  * Nothing here calls `furnace doctor`, starts a capability probe, uses
- * --persistent, or touches this repository's .beads or .furnace. The vendored
- * SDK's contract drift is repaired in a temp COPY (test/helpers) so the real
- * bridge can decode contexts; the adapter's own preflight refuses the shipped drift.
+ * --persistent, or touches this repository's .beads or .furnace. The bridge runs
+ * on the SHIPPED vendored SDK (wb-zby re-packaged it from a Furnace revision whose
+ * manifest and generated provenance digests agree); no repaired copy exists any more.
  */
 import { execFileSync, spawnSync } from "node:child_process";
 import { mkdirSync, mkdtempSync, realpathSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import { FurnaceHostedExecutor, type HostedOutcome, type HostedWorkflow } from "../src/workbench/hosts/furnace-hosted.js";
-import { loadRepairedFurnaceSdk } from "./helpers/furnace-sdk-repaired.js";
+import { FurnaceHostedExecutor, type HostedOutcome, type HostedWorkflow, SHIPPED_FURNACE_SDK } from "../src/workbench/hosts/furnace-hosted.js";
 import { installScratchLeakGuard } from "./helpers/scratch.js";
 
 installScratchLeakGuard();
@@ -51,18 +50,15 @@ function seedWorkspace(root: string): void {
   writeFileSync(join(root, ".beads/formulas/hosted-single.formula.toml"), `formula = "hosted-single"\ntype = "workflow"\nversion = 1\n\n${steps(["only"])}`);
 }
 
-let repaired: Awaited<ReturnType<typeof loadRepairedFurnaceSdk>>;
 let workspace: string;
 beforeAll(async () => {
   requireBinary("furnace");
   requireBinary("bd");
-  repaired = await loadRepairedFurnaceSdk();
   workspace = disposableWorkspace();
   expect(workspace).toMatch(/^\/tmp\/pi-furnace-hosted\.[^/]+$/);
 });
 
 afterAll(() => {
-  repaired?.dispose();
   if (workspace && /^\/tmp\/pi-furnace-hosted\.[^/]+$/.test(workspace)) rmSync(workspace, { recursive: true, force: true });
 });
 
@@ -75,10 +71,10 @@ describe("Furnace-hosted adapter over the real bridge (disposable /tmp workspace
       return { status: "success", summary: `fixture ${identity.ordinal}` };
     };
     const furnace = { binary: "furnace", cwd: workspace, stateDir: join(workspace, ".furnace-hosted-state"), timeoutMs: 60_000 };
-    const executor = new FurnaceHostedExecutor({ executor: "pi-hosted", workflow, sdk: repaired.sdk, furnace, startTimeoutMs: 120_000 });
+    const executor = new FurnaceHostedExecutor({ executor: "pi-hosted", workflow, sdk: SHIPPED_FURNACE_SDK, furnace, startTimeoutMs: 120_000 });
     try {
       const started = await executor.start({ formula: "hosted-pair" });
-      const client = new repaired.sdk.Furnace(furnace);
+      const client = new SHIPPED_FURNACE_SDK.Furnace(furnace);
       const status = await client.runs.get(started.runId).status({ timeoutMs: 30_000 });
       const attempts = await client.attempts.list(started.runId, {}, { timeoutMs: 30_000 });
       const receipt = executor.receipt();
@@ -115,10 +111,10 @@ describe("Furnace-hosted adapter over the real bridge (disposable /tmp workspace
       return { status: "success" };
     };
     const furnace = { binary: "furnace", cwd: workspace, stateDir: join(workspace, ".furnace-hosted-state-cancel"), timeoutMs: 60_000 };
-    const executor = new FurnaceHostedExecutor({ executor: "pi-hosted-cancel", workflow, sdk: repaired.sdk, furnace, startTimeoutMs: 120_000, cancelGraceMs: 10_000 });
+    const executor = new FurnaceHostedExecutor({ executor: "pi-hosted-cancel", workflow, sdk: SHIPPED_FURNACE_SDK, furnace, startTimeoutMs: 120_000, cancelGraceMs: 10_000 });
     try {
       const starting = executor.start({ formula: "hosted-single" });
-      const client = new repaired.sdk.Furnace(furnace);
+      const client = new SHIPPED_FURNACE_SDK.Furnace(furnace);
       let attemptId: string | undefined;
       for (let i = 0; i < 400 && attemptId === undefined; i++) {
         attemptId = executor.receipt().attempts[0]?.attemptId;

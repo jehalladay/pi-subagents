@@ -19,14 +19,13 @@
  * exactly; O1 the connection-drop-before-admission-reply variant; O2 the full limits object;
  * F5 the host scratch base is XDG_RUNTIME_DIR first and /tmp only as the recorded fallback.
  *
- * Uses a repaired COPY of the vendored SDK (the shipped digest drift is a separate
- * owner-reserved packaging bead), made by qa/workbench/furnace-hosted-repaired-sdk.mjs so the
- * receipt runner and this tier load the same copy; one case below pins that loader to the wb-zmd
- * helper's recipe. No live tier, no furnace doctor, no capability probe.
+ * Uses the COPY of the vendored SDK that the FIXTURE-tier receipt runner also loads
+ * (qa/workbench/furnace-hosted-repaired-sdk.mjs), so both tiers exercise one artifact. Since
+ * wb-zby re-packaged the vendored SDK from a Furnace revision whose digests agree, the copy's
+ * manifest realignment is the identity and the shipped SDK decodes every context itself; one
+ * case below pins both. No live tier, no furnace doctor, no capability probe.
  */
-import { rmSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { dirname } from "node:path";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { loadRepairedSdkCopy } from "../qa/workbench/furnace-hosted-repaired-sdk.mjs";
 import { assessRetryFaultJourneys, RETRY_FAULT_JOURNEYS } from "../qa/workbench/furnace-hosted-retry-fault-receipt.mjs";
@@ -46,7 +45,6 @@ import {
   sameAttemptReexecution,
   settledCloseTimers,
 } from "./helpers/furnace-hosted-retry-journeys.js";
-import { loadRepairedFurnaceSdk } from "./helpers/furnace-sdk-repaired.js";
 
 /** The shape qa/workbench/furnace-hosted-repaired-sdk.mjs returns. */
 interface RepairedCopy {
@@ -123,19 +121,21 @@ describe("Furnace Work retry while Run establishment is uncertain (wb-0kg.4)", (
     const observed = await sameAttemptReexecution(env);
     expect(observed.armed).toBe(true);
     const receipt = observed.beforeClose;
-    expect(receipt.limits.retry).toBe("furnace-parks-never-retries");
+    // wb-lrz.1: the disclosed retry semantics replace the retired universal negative "furnace-parks-never-retries".
+    expect(receipt.limits.retry).toBe("adapter-never-retries; furnace-auto-retries-by-recorded-retry-policy; work_failure-and-indeterminate-park");
     expect(receipt.identityViolations.some((v) => /frn-atm-same executed 2 times/.test(v))).toBe(true);
     // O2: the full disclosed limits object (layered beside test/workbench-furnace-hosted.test.ts)
-    expect(receipt.limits).toEqual({ crashDurability: "none", observe: "unsupported", identity: "per-attempt", replyBounds: "none", retry: "furnace-parks-never-retries" });
+    expect(receipt.limits).toEqual({ crashDurability: "none", observe: "session-word", identity: "per-attempt", replyBounds: "none", retry: "adapter-never-retries; furnace-auto-retries-by-recorded-retry-policy; work_failure-and-indeterminate-park" });
   });
 
-  it("an observer connection sees no control: its cancel for another session's execution is unknown_execution and the workflow is never aborted", async () => {
+  it("an observer connection sees no control: its cancel for another session's execution is unknown_execution, its observe is the session's own unknown word, and the workflow is never aborted", async () => {
     const observed = await observerNoControl(env);
     expect(observed.armed).toBe(true);
-    // U3: the exact measured replies. The cancel names no execution id back and Observe is stated
-    // unsupported, not faked: the bridge offers an observer no view of the state change, only no control.
+    // U3: the exact measured replies. The cancel names no execution id back; observe for a never-admitted id is the
+    // resident session's own word "unknown" (wb-zby: the rebuilt SDK answers observe from its admission record), so the
+    // bridge offers an observer no view of the state change and no control.
     expect(observed.cancelReply).toEqual({ protocol_version: 1, op: "cancel", request_id: "oc", output: { status: "unknown_execution" } });
-    expect(observed.observeReply).toEqual({ protocol_version: 1, op: "observe", request_id: "oo", output: { status: "unsupported" } });
+    expect(observed.observeReply).toEqual({ protocol_version: 1, op: "observe", request_id: "oo", output: { status: "unknown" } });
     expect(observed.aborted).toBe(false);
     expect(observed.ownerWireStatus).toBe("success");
     const attempt = observed.beforeClose.attempts[0];
@@ -218,27 +218,19 @@ describe("Furnace Work retry while Run establishment is uncertain (wb-0kg.4)", (
     expect(asked).toEqual(["/run/user/1000"]);
   });
 
-  it("the receipt's repaired SDK copy follows the wb-zmd helper's recipe: the same digests, and both decode the context the shipped SDK refuses", async () => {
-    const helper = await loadRepairedFurnaceSdk();
-    try {
-      expect(repaired.repairedDigest).toMatch(/^sha256:[0-9a-f]{64}$/);
-      expect(repaired.repairedDigest).toBe(helper.repairedDigest);
-      expect(repaired.shippedManifestDigest).toBe(helper.shippedManifestDigest);
-      expect(repaired.repairedDigest).not.toBe(repaired.shippedManifestDigest);
-      expect(Object.keys(repaired.sdk).sort()).toEqual(["EmbeddedHost", "ExecutionResult", "ExecutorApp", "Furnace", "ResidentSession", "decodeContextValue"]);
-      const document = {
-        context_version: 1,
-        run: { furnace_run_id: "frn-run-x", beads_run_id: "bd-run-x", formula: null },
-        work: { beads_work_id: "bd-work-x", title: null, description: null, acceptance_criteria: null },
-        attempt: { attempt_id: "frn-atm-x", ordinal: 1, deadline: null },
-        workspace: { root: "/" },
-      };
-      expect(() => SHIPPED_FURNACE_SDK.decodeContextValue(document)).toThrow();
-      expect(repaired.sdk.decodeContextValue(document).context.attempt.attempt_id).toBe("frn-atm-x");
-      expect(helper.sdk.decodeContextValue(document).context.attempt.attempt_id).toBe("frn-atm-x");
-    } finally {
-      rmSync(dirname(helper.root), { recursive: true, force: true });
-    }
+  it("the receipt's SDK copy is the shipped artifact (wb-zby): its manifest and provenance digests agree, and both the copy and the shipped SDK decode the context", () => {
+    expect(repaired.repairedDigest).toMatch(/^sha256:[0-9a-f]{64}$/);
+    expect(repaired.shippedManifestDigest).toBe(repaired.repairedDigest);
+    expect(Object.keys(repaired.sdk).sort()).toEqual(["EmbeddedHost", "ExecutionResult", "ExecutorApp", "Furnace", "ResidentSession", "decodeContextValue"]);
+    const document = {
+      context_version: 1,
+      run: { furnace_run_id: "frn-run-x", beads_run_id: "bd-run-x", formula: null },
+      work: { beads_work_id: "bd-work-x", title: null, description: null, acceptance_criteria: null },
+      attempt: { attempt_id: "frn-atm-x", ordinal: 1, deadline: null },
+      workspace: { root: "/" },
+    };
+    expect(SHIPPED_FURNACE_SDK.decodeContextValue(document).context.attempt.attempt_id).toBe("frn-atm-x");
+    expect(repaired.sdk.decodeContextValue(document).context.attempt.attempt_id).toBe("frn-atm-x");
   });
 
   it("the five journeys the receipt runner measures satisfy the receipt judge here in the default gate (realised, no finding)", async () => {
