@@ -1,14 +1,13 @@
 /**
- * wb-u62: the census reporter. test/helpers/census.ts appends --reporter=<this file> to the tier's REAL
- * entrypoint (the forge.toml step, through its npm script) - through a per-run subclass it generates, which passes
- * the report path to this constructor, so the path travels on the run's command line and never through the
- * environment the judged code reads (J1-J3) - and reads what this writes there when the run ends: the files the run
- * scheduled, and the reported-task surface every reporter receives (TestModule, TestSuite, TestCase - name, suite
- * path, mode, fails, each, location) together with each case's EXECUTION result under that entrypoint. Nothing here
- * models the runner; it serializes what the runner answered.
+ * wb-u62: the census reporter. test/helpers/census.ts appends --reporter=<this file> and --outputFile.census=<frame>
+ * to the tier's REAL entrypoint (the forge.toml step, through its npm script) - the frame a fresh nonce per run, so it
+ * travels on the run's command line and never through the environment the judged code reads (J1-J3), and no file is
+ * written anywhere (standing rule 11: no scratch) - and reads what this writes to the run's stdout when the run ends,
+ * ONE line, the frame then the JSON: the files the run scheduled, and the reported-task surface every reporter receives
+ * (TestModule, TestSuite, TestCase - name, suite path, mode, fails, each, location) together with each case's EXECUTION
+ * result under that entrypoint. Nothing here models the runner; it serializes what the runner answered.
  */
-import { writeFileSync } from "node:fs";
-import type { Reporter, SerializedError, TestCase, TestModule, TestSpecification, TestSuite } from "vitest/node";
+import type { Reporter, SerializedError, TestCase, TestModule, TestSpecification, TestSuite, Vitest } from "vitest/node";
 import type { RunCase, RunModule, RunReport, RunSuite } from "./census.js";
 
 function suitePath(entity: TestCase | TestSuite): string[] {
@@ -50,11 +49,13 @@ function serialize(module: TestModule): RunModule {
 
 export default class CensusReporter implements Reporter {
   private scheduled: readonly string[] = [];
-  private readonly out: string | undefined;
+  private frame: string | undefined;
 
-  /** The per-run subclass passes the report path; anything else (vitest's own reporter options) writes nothing. */
-  constructor(out?: unknown) {
-    this.out = typeof out === "string" && out !== "" ? out : undefined;
+  /** The census run names its frame as --outputFile.census=<frame>; configured any other way, this reporter writes nothing. */
+  onInit(vitest: Vitest): void {
+    const outputs = vitest.config.outputFile;
+    const frame = typeof outputs === "object" ? outputs.census : undefined;
+    this.frame = typeof frame === "string" && frame !== "" ? frame : undefined;
   }
 
   onTestRunStart(specifications: ReadonlyArray<TestSpecification>): void {
@@ -62,8 +63,8 @@ export default class CensusReporter implements Reporter {
   }
 
   onTestRunEnd(modules: ReadonlyArray<TestModule>, unhandledErrors: ReadonlyArray<SerializedError>): void {
-    if (this.out === undefined) return;
+    if (this.frame === undefined) return;
     const report: RunReport = { complete: true, scheduled: this.scheduled, modules: modules.map(serialize), unhandledErrors: unhandledErrors.map(message) };
-    writeFileSync(this.out, JSON.stringify(report));
+    process.stdout.write(`\n${this.frame}${JSON.stringify(report)}\n`);
   }
 }

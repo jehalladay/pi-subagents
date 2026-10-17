@@ -43,15 +43,15 @@
  * verdict only where the report cannot carry what the executing run saw (mode, the fails flag, a runtime assertion
  * count, unhandled errors).
  *
- * The synthetic projects live in a mkdtemp directory with node_modules symlinked to this repository's, so the
- * runner, its config loader and the helper all run exactly as they do for a real census. Nothing here reads or
+ * The synthetic projects live in one tracked scratch directory (test/helpers/scratch.ts makeScratch, leak guard
+ * installed; standing rule 11) with node_modules symlinked to this repository's, so the runner, its config loader and
+ * the helper all run exactly as they do for a real census. Nothing here reads or
  * mutates a pinned file of another census.
  */
 import { spawn } from "node:child_process";
-import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readFileSync, realpathSync, rmSync, statSync, symlinkSync, utimesSync, writeFileSync } from "node:fs";
-import { tmpdir } from "node:os";
+import { copyFileSync, existsSync, mkdirSync, readFileSync, realpathSync, statSync, symlinkSync, utimesSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { marked } from "marked";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import {
@@ -73,6 +73,9 @@ import {
   sectionMatches,
   sourceStructure,
 } from "./helpers/census.js";
+import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
+
+installScratchLeakGuard();
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 /** Holds only the anchor case, so judging it on the real default gate never re-enters this suite. */
@@ -1587,6 +1590,23 @@ const CONFIG_ROWS: readonly ConfigRow[] = [
     oracle: "none",
     verdict: red("tier-unresolved", "runs-where", /more than one npm script/),
   },
+  {
+    id: "c-u62r4-forged-frame",
+    routed:
+      "u62 respin-4 T2 standing rule 11 transport: a config that reads the report frame off the run's command line and prints a second framed line gets the run refused, never the forged report read",
+    configPrelude: `const CENSUS_WORD = process.argv.find(word => word.startsWith("--outputFile.census="));\nif (CENSUS_WORD !== undefined) process.stdout.write(\`\\n\${CENSUS_WORD.slice("--outputFile.census=".length)}{}\`);`,
+    oracle: "passed",
+    verdict: red("run-error", "runs-where", /wrote 2 census reports under its one frame/),
+    report: OK,
+  },
+  {
+    id: "c-u62r4-frame-collision",
+    routed:
+      "u62 respin-4 T3 standing rule 11 transport cost: a config printing a line that begins like a report frame but without the run's nonce is never read as one - the pin is judged ok",
+    configPrelude: 'process.stdout.write("\\ncensus-report:not-this-run:{}\\n");',
+    oracle: "passed",
+    verdict: OK,
+  },
 ];
 
 
@@ -2728,11 +2748,14 @@ const ROUTED_MODES: Readonly<Record<string, readonly string[]>> = {
     "X22b",
     "K-free-hook",
     "K-type",
+    "T1",
+    "T2",
+    "T3",
   ],
 };
 
 /** Exact table sizes: deleting or emptying a falsifier table goes red (each-liveness of this file's own rows). */
-const TABLE_SIZES = [55, 8, 22, 46, 15, 10, 29, 34, 5, 16, 43, 14, 3, 76];
+const TABLE_SIZES = [55, 8, 22, 46, 15, 10, 31, 34, 5, 16, 43, 14, 4, 76];
 
 
 /**
@@ -2949,6 +2972,33 @@ const recursionCensus = (): string =>
   ].join("\n");
 const buildRecursionRoot = (root: string): string => writeTree(root, projectFiles("vitest run test", { [RECURSION_PINNED]: testFile({ body: PLAIN }), [RECURSION_CENSUS]: recursionCensus() }));
 
+/**
+ * u62 respin-4 T1 (standing rule 11, no scratch): the gate batteries' shape - plain node loading the helper by path, no
+ * vitest around it - judges one pin in executing mode with every allocating fs call of the judging process recorded
+ * (the live node:fs bindings the helper imports, re-synced after the wrap). The helper composes no scratch because it
+ * allocates none - the report travels on the run's stdout - so the record stays empty.
+ */
+const PLAIN_NODE_PINNED = "test/plain-node-pinned.test.ts";
+const PLAIN_NODE_SCRIPT = "plain-node-judge.mjs";
+const plainNodeJudge = (): string =>
+  [
+    'import fs from "node:fs";',
+    'import { syncBuiltinESMExports } from "node:module";',
+    `import { judgePins } from ${JSON.stringify(pathToFileURL(HELPER_MODULE).href)};`,
+    "const writes = [];",
+    'for (const name of ["mkdtempSync", "mkdirSync", "writeFileSync"]) {',
+    "  const original = fs[name];",
+    "  fs[name] = (...args) => {",
+    `    writes.push(\`\${name} \${String(args[0])}\`);`,
+    "    return original(...args);",
+    "  };",
+    "}",
+    "syncBuiltinESMExports();",
+    `const verdicts = await judgePins(process.argv[2], [${JSON.stringify({ file: PLAIN_NODE_PINNED, title: PIN, tier: DEFAULT_GATE_TIER })}], { timeoutMs: 120_000 });`,
+    "process.stdout.write(JSON.stringify({ codes: verdicts.map(verdict => verdict.code), writes }));",
+    "",
+  ].join("\n");
+
 /** U1 E2E: the gate's one-run adoption shape - an adopting census asserting ok for three judge-detecting pins. */
 const E2E_PINNED = "test/e2e-pinned.test.ts";
 const E2E_CENSUS = "test/e2e-census.test.ts";
@@ -3066,6 +3116,22 @@ function shell(command: string, cwd: string): Promise<{ readonly code: number | 
   });
 }
 
+/** Plain node on a script, outside vitest's worker environment (runnerEnv): what it printed and how it exited. */
+function nodeRun(script: string, args: readonly string[], cwd: string): Promise<{ readonly code: number | null; readonly stdout: string; readonly stderr: string }> {
+  return new Promise(settle => {
+    const child = spawn(process.execPath, [script, ...args], { cwd, env: runnerEnv(), stdio: ["ignore", "pipe", "pipe"] });
+    let stdout = "";
+    let stderr = "";
+    child.stdout.on("data", (chunk: Buffer) => {
+      stdout += chunk.toString("utf8");
+    });
+    child.stderr.on("data", (chunk: Buffer) => {
+      if (stderr.length < 20_000) stderr += chunk.toString("utf8");
+    });
+    child.on("close", code => settle({ code, stdout, stderr }));
+  });
+}
+
 /** A runner run: what it did per file, and its report file, which is gate-shaped (vitest's JSON reporter) and report mode reads. */
 interface RunnerRun {
   readonly report: Report;
@@ -3150,6 +3216,8 @@ const hasToken = (text: string, token: string): boolean => new RegExp(`(^|[^A-Za
 const statusIn = (report: Report | undefined, file: string, title: string): string[] => (report?.get(file) ?? []).filter(entry => entry.title === title).map(entry => entry.status);
 const readLines = (path: string): string[] => (existsSync(path) ? readFileSync(path, "utf8").split("\n").filter(line => line !== "") : []);
 
+/** The tracked scratch directory (makeScratch's own spelling, removed with removeScratch) and its real path. */
+let synthScratch = "";
 let synthBase = "";
 const mainVerdicts = new Map<string, PinVerdict>();
 const configVerdicts = new Map<string, PinVerdict>();
@@ -3186,6 +3254,7 @@ let e2eCodes: readonly string[] = [];
 let e2eReportVerdicts: readonly PinVerdict[] = [];
 let capVerdicts: readonly PinVerdict[] = [];
 let capIntervals: readonly (readonly number[])[] = [];
+let plainNode: { readonly code: number | null; readonly stdout: string; readonly stderr: string } | undefined;
 
 const SMOKE_PIN: CasePin = { file: SMOKE_FILE, title: SMOKE_TITLE, tier: DEFAULT_GATE_TIER };
 
@@ -3193,7 +3262,8 @@ beforeAll(async () => {
   // The documented gate env: the operator's worker cap is set for every helper run and runner run here (J4's runner truth).
   previousCap = process.env.VITEST_MAX_WORKERS;
   if (previousCap === undefined) process.env.VITEST_MAX_WORKERS = GATE_CAP;
-  synthBase = realpathSync(mkdtempSync(join(tmpdir(), "census-helper.")));
+  synthScratch = makeScratch("census-helper.");
+  synthBase = realpathSync(synthScratch);
   const mainRoot = buildMainRoot(join(synthBase, "main"));
   mainRootPath = mainRoot;
   const recursionJudgeRoot = buildRecursionRoot(join(synthBase, "recursion-judge"));
@@ -3202,6 +3272,8 @@ beforeAll(async () => {
   const inRunRoot = writeTree(join(synthBase, "inrun"), projectFiles("vitest run", { [INRUN_PINNED]: testFile({ body: PLAIN }), [INRUN_CENSUS]: inRunCensus() }));
   const noLocRoot = writeTree(join(synthBase, "noloc"), projectFiles("vitest run", { [NOLOC_FILE]: testFile({ body: PLAIN }) }));
   const capRoot = writeTree(join(synthBase, "cap"), projectFiles("vitest run", Object.fromEntries(CAP_FILES.map(file => [file, capFile()]))));
+  const plainNodeRoot = writeTree(join(synthBase, "plain-node"), projectFiles("vitest run", { [PLAIN_NODE_PINNED]: testFile({ body: PLAIN }) }));
+  writeFileSync(join(synthBase, PLAIN_NODE_SCRIPT), plainNodeJudge());
   const tasks: (() => Promise<void>)[] = [
     async () => {
       const verdicts = await judgePins(mainRoot, MAIN_PINS.map(entry => entry.pin));
@@ -3265,6 +3337,9 @@ beforeAll(async () => {
       else process.env.VITEST_MAX_WORKERS = saved;
       capVerdicts = await pending;
       capIntervals = readLines(join(capRoot, CAP_LOG)).map(line => line.split(" ").map(Number));
+    },
+    async () => {
+      plainNode = await nodeRun(join(synthBase, PLAIN_NODE_SCRIPT), [plainNodeRoot], synthBase);
     },
   ];
   for (const row of CONFIG_ROWS) {
@@ -3333,7 +3408,7 @@ beforeAll(async () => {
 
 afterAll(() => {
   if (previousCap === undefined) delete process.env.VITEST_MAX_WORKERS;
-  if (synthBase !== "") rmSync(synthBase, { recursive: true, force: true });
+  removeScratch(synthScratch);
 });
 
 /** A row that needs its own report (absent, malformed, stale, unlocated, in-run), a tier refusal, or a real path. */
@@ -3429,6 +3504,15 @@ const REAL_PATH_ROWS: readonly StandaloneRow[] = [
       expect(recursionLog).toEqual(["0:nested-run"]);
       expectVerdict(recursionVerdict, OK, "x-u62-gm21-recursion");
       expect(recursionWallMs).toBeLessThan(150_000);
+    },
+  },
+  {
+    id: "x-u62r4-plain-node-no-scratch",
+    routed:
+      "u62 respin-4 T1 standing rule 11: plain node loads the helper by path (the gate batteries' shape) and judges a pin in executing mode with no allocating fs call - no mkdtemp, mkdir or file write - in the judging process",
+    check: () => {
+      expect(plainNode?.code, plainNode?.stderr.slice(-2000)).toBe(0);
+      expect(JSON.parse(plainNode?.stdout ?? "{}") as unknown).toEqual({ codes: ["ok"], writes: [] });
     },
   },
   {

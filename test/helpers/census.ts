@@ -83,13 +83,18 @@
  *   EXECUTES each claimed tier's real command - the forge.toml step through its npm script, with setupFiles /
  *   globalSetup, testNamePattern, include/exclude and every CLI flag as the gate runs them (owner ruling on the 6hb.7
  *   verdict) - with the census reporter, --includeTaskLocation and --expect.requireAssertions appended. The judged code's
- *   environment is the gate's: the helper adds NO name to it (the report path and the recursion guard travel on the
- *   run's command line) and strips only what vitest itself sets in a worker, so every operator name, VITEST_MAX_WORKERS
- *   included, passes through (J1-J4).
+ *   environment is the gate's: the helper adds NO name to it (the report's per-run frame and the recursion guard travel
+ *   on the run's command line, the report itself on the run's stdout) and strips only what vitest itself sets in a
+ *   worker, so every operator name, VITEST_MAX_WORKERS included, passes through (J1-J4). The helper allocates NO scratch
+ *   (standing rule 11): nothing is written to disk by the judging process, and the helper keeps no relative import, so
+ *   plain node loads it by path as the gate batteries do (row x-u62r4-plain-node-no-scratch). Exactly ONE framed report
+ *   line is read; a second (a frame forged from the command line) is refused (row c-u62r4-forged-frame), a line that
+ *   begins like a frame without the run's nonce is never read (row c-u62r4-frame-collision), and a tier whose own
+ *   command sets --outputFile is refused by vitest itself (its CLI rejects the mixed forms, measured).
  *   NAMED RESIDUAL (executing mode): a judge that re-executes stays detectable through channels other than the
- *   environment - the parent-process argv (the per-run census reporter on the vitest command line, the very word the
- *   recursion guard reads), timing, and the narrowed file set. That is why executing mode is never the default-tier
- *   judgment: full closure is report mode, judging the gate's own run.
+ *   environment - the parent-process argv (the census reporter and its --outputFile.census frame on the vitest command
+ *   line, the very word the recursion guard reads), timing, and the narrowed file set. That is why executing mode is
+ *   never the default-tier judgment: full closure is report mode, judging the gate's own run.
  * - inner legs (both modes; keep-or-match floors): a parse-aware TypeScript AST scan of the case the RUNNER located
  *   (its reported line:column, never a title search) - a reachable test-context skip or runner-state write in the case
  *   body or in a vitest hook of the pin's own enclosing call chain (never file-wide); the runner's public current-test
@@ -108,8 +113,8 @@
  */
 
 import { spawn, spawnSync } from "node:child_process";
-import { existsSync, mkdtempSync, readFileSync, realpathSync, rmSync, statSync, writeFileSync } from "node:fs";
-import { tmpdir } from "node:os";
+import { randomUUID } from "node:crypto";
+import { existsSync, readFileSync, realpathSync, statSync } from "node:fs";
 import { basename, dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { marked, type Token, type Tokens } from "marked";
@@ -862,16 +867,14 @@ function runEnv(): NodeJS.ProcessEnv {
 }
 
 /**
- * Each tier run gets its own directory holding a generated reporter module that writes the run's report next to
- * itself, so the report path reaches the run only through its command line (--reporter=<that module>), never through
- * the environment the judged code reads. The same command-line word marks the run for the recursion guard.
+ * The tier run's report channel, with no scratch anywhere (standing rule 11): the census reporter is selected on the
+ * run's command line by --outputFile.census=<frame>, the frame a fresh nonce per run, and writes the report to the
+ * run's stdout as ONE line, the frame then the JSON. Nothing reaches the environment the judged code reads, nothing is
+ * written to disk, and the same command-line word marks the run for the recursion guard.
  */
-const RUN_DIR_PREFIX = "census-run.";
-const RUN_REPORTER = "census-reporter-run.ts";
-const RUN_MARKER = /census-run\.[^/\s]+\/census-reporter-run\.ts/;
-
-const runReporterSource = (out: string): string =>
-  [`import CensusReporter from ${JSON.stringify(REPORTER)};`, "", "export default class CensusRunReporter extends CensusReporter {", "  constructor() {", `    super(${JSON.stringify(out)});`, "  }", "}", ""].join("\n");
+const RUN_OUTPUT = "census";
+const RUN_FRAME = "census-report:";
+const RUN_MARKER = /--outputFile\.census=census-report:/;
 
 /** This process's command line and its ancestors', from /proc (or one ps listing where /proc is absent); undefined when neither answers. */
 function ancestorCommandLines(): readonly string[] | undefined {
@@ -907,7 +910,7 @@ function ancestorCommandLines(): readonly string[] | undefined {
 
 /**
  * The recursion guard, carried on the run's command line instead of the environment: is this process inside a tier run
- * the helper started (an ancestor's command line names a per-run census reporter)? Fail-closed: when the ancestry cannot
+ * the helper started (an ancestor's command line carries the census report frame)? Fail-closed: when the ancestry cannot
  * be read, the answer is yes, so the helper never starts a run it cannot bound.
  */
 function insideCensusRun(): boolean {
@@ -1062,15 +1065,15 @@ function parseReport(text: string): TierRun {
 }
 
 /** The command line judgePins executes: the forge.toml command itself, then (after an npm "--") the census arguments. */
-function censusCommand(resolution: TierResolution, files: readonly string[], reporter: string, options: JudgeOptions): string | undefined {
+function censusCommand(resolution: TierResolution, files: readonly string[], frame: string, options: JudgeOptions): string | undefined {
   const words = tokenize(resolution.command);
   if (!words.ok) return undefined;
   const npm = words.value[0] === "npm" && !words.value.includes("--");
   const maxWorkers = resolution.argv.some(word => /^--max(?:Workers|-workers)(?:=|$)/.test(word));
   const extra = [
     ...(narrowable(resolution.argv) ? files : []),
-    `--reporter=${reporter}`,
-
+    `--reporter=${REPORTER}`,
+    `--outputFile.${RUN_OUTPUT}=${frame}`,
     "--includeTaskLocation",
     "--expect.requireAssertions",
     ...(maxWorkers ? [] : [`--maxWorkers=${options.maxWorkers ?? 2}`]),
@@ -1080,41 +1083,39 @@ function censusCommand(resolution: TierResolution, files: readonly string[], rep
 }
 
 async function runTier(root: string, resolution: TierResolution, files: readonly string[], options: JudgeOptions): Promise<TierRun> {
-  const dir = mkdtempSync(join(tmpdir(), RUN_DIR_PREFIX));
-  const out = join(dir, "report.json");
-  const reporter = join(dir, RUN_REPORTER);
-  try {
-    writeFileSync(reporter, runReporterSource(out));
-    const line = censusCommand(resolution, files, reporter, options);
-    if (line === undefined) return { ok: false, why: "a pinned path or the reporter path cannot be quoted for the shell" };
-    const timeoutMs = options.timeoutMs ?? 300_000;
-    const exit = await new Promise<{ readonly code: number | null; readonly stderr: string; readonly timedOut: boolean }>(settle => {
-      const child = spawn("bash", ["-c", line], { cwd: root, env: runEnv(), stdio: ["ignore", "ignore", "pipe"], detached: true });
-
-      let stderr = "";
-      let timedOut = false;
-      const timer = setTimeout(() => {
-        timedOut = true;
-        if (child.pid !== undefined) process.kill(-child.pid, "SIGKILL");
-      }, timeoutMs);
-      child.stderr.on("data", (chunk: Buffer) => {
-        stderr = `${stderr}${chunk.toString("utf8")}`.slice(-16_000);
-      });
-      child.on("error", error => {
-        clearTimeout(timer);
-        settle({ code: null, stderr: `${stderr}${error.message}`, timedOut });
-      });
-      child.on("close", code => {
-        clearTimeout(timer);
-        settle({ code, stderr, timedOut });
-      });
+  const frame = `${RUN_FRAME}${randomUUID()}:`;
+  const line = censusCommand(resolution, files, frame, options);
+  if (line === undefined) return { ok: false, why: "a pinned path or the reporter path cannot be quoted for the shell" };
+  const timeoutMs = options.timeoutMs ?? 300_000;
+  const exit = await new Promise<{ readonly code: number | null; readonly stdout: string; readonly stderr: string; readonly timedOut: boolean }>(settle => {
+    const child = spawn("bash", ["-c", line], { cwd: root, env: runEnv(), stdio: ["ignore", "pipe", "pipe"], detached: true });
+    const stdout: Buffer[] = [];
+    let stderr = "";
+    let timedOut = false;
+    const timer = setTimeout(() => {
+      timedOut = true;
+      if (child.pid !== undefined) process.kill(-child.pid, "SIGKILL");
+    }, timeoutMs);
+    child.stdout.on("data", (chunk: Buffer) => {
+      stdout.push(chunk);
     });
-    if (exit.timedOut) return { ok: false, why: `the tier run timed out after ${timeoutMs} ms` };
-    if (!existsSync(out)) return { ok: false, why: `the tier run wrote no census report (exit ${String(exit.code)}): ${exit.stderr.trim().slice(-600)}` };
-    return parseReport(readFileSync(out, "utf8"));
-  } finally {
-    rmSync(dir, { recursive: true, force: true });
-  }
+    child.stderr.on("data", (chunk: Buffer) => {
+      stderr = `${stderr}${chunk.toString("utf8")}`.slice(-16_000);
+    });
+    child.on("error", error => {
+      clearTimeout(timer);
+      settle({ code: null, stdout: Buffer.concat(stdout).toString("utf8"), stderr: `${stderr}${error.message}`, timedOut });
+    });
+    child.on("close", code => {
+      clearTimeout(timer);
+      settle({ code, stdout: Buffer.concat(stdout).toString("utf8"), stderr, timedOut });
+    });
+  });
+  if (exit.timedOut) return { ok: false, why: `the tier run timed out after ${timeoutMs} ms` };
+  const reports = exit.stdout.split("\n").filter(text => text.startsWith(frame));
+  if (reports.length === 0) return { ok: false, why: `the tier run wrote no census report (exit ${String(exit.code)}): ${exit.stderr.trim().slice(-600)}` };
+  if (reports.length > 1) return { ok: false, why: `the tier run wrote ${reports.length} census reports under its one frame, never more than one (a frame forged from the command line)` };
+  return parseReport((reports[0] ?? "").slice(frame.length));
 }
 
 function realOrSelf(path: string): string {
@@ -3900,7 +3901,7 @@ function judgeOne(pin: CasePin, context: JudgeContext): PinVerdict {
  */
 export async function judgePins(root: string, pins: readonly CasePin[], options: JudgeOptions = {}): Promise<readonly PinVerdict[]> {
   if (insideCensusRun()) {
-    return pins.map(pin => verdict(pin, "runs-where", "nested-run", "reached from inside a tier run the census helper started (an ancestor's command line names its per-run reporter); it never starts another one there (recursion guard)"));
+    return pins.map(pin => verdict(pin, "runs-where", "nested-run", "reached from inside a tier run the census helper started (an ancestor's command line carries its report frame); it never starts another one there (recursion guard)"));
   }
 
   const realRoot = realpathSync(root);
