@@ -359,7 +359,9 @@ function lowerBound(sorted: readonly number[], value: number): number {
  *   is one of that cluster's combinations).
  * So both uniform readings are always members. A cluster with more combinations than MAX_READINGS, or a text whose readings
  * times its code units exceed MAX_READING_WORK, has none to list: `undefined`, which callers answer by hiding the whole
- * text, never by guessing at the readings left out.
+ * text, never by guessing at the readings left out. A cluster's combinations are counted before any is built, so this
+ * holds at any cluster size (wb-mrg respin 2); the walk that builds a cluster within the bound recurses once per choice on a
+ * path, and every choice adds a reading, so it runs at most MAX_READINGS frames deep.
  */
 function readingsOf(value: string): UnitMatch[][] | undefined {
   // The ends the unit at each offset may take, the whole sequence first; offsets in no unit are visible text.
@@ -394,8 +396,28 @@ function readingsOf(value: string): UnitMatch[][] | undefined {
     reach = Math.max(reach, last);
   }
   const unitAt = (at: number, end: number): UnitMatch => ({ index: at, 0: value.slice(at, end) });
+  /**
+   * How many readings within lists for [first, last], counted without building any and capped at `cap` (wb-mrg respin 2):
+   * from the last unit back, the readings from a unit on are the sum, over the ends it may take there, of the readings from
+   * the unit each end leaves next; a unit outside [first, last], or with one end, takes its whole one.
+   */
+  const counted = (first: number, last: number, cap: number): number => {
+    const from = new Int32Array(units.length + 1);
+    from[units.length] = 1;
+    for (let slot = units.length - 1; slot >= 0; slot--) {
+      const at = units[slot];
+      const options = ends.get(at) ?? [];
+      const choices = options.length > 1 && at >= first && at <= last ? options.length : Math.min(1, options.length);
+      let total = 0;
+      for (let option = 0; option < choices; option++) total += from[lowerBound(units, options[option])];
+      from[slot] = Math.min(cap, total);
+    }
+    return from[0];
+  };
   /** Up to `limit` readings in which the introducers in [first, last] choose freely and every other follows the whole sequence. */
   const within = (first: number, last: number, limit: number): UnitMatch[][] | undefined => {
+    // Counted before the walk, which recurses once per choice it makes: a cluster past the bound is never walked.
+    if (counted(first, last, Math.max(1, limit + 1)) > limit) return undefined;
     const found: UnitMatch[][] = [];
     const walk = (from: number, prior: readonly UnitMatch[]): boolean => {
       const taken = [...prior];

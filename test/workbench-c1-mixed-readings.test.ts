@@ -1,4 +1,6 @@
+import type { SessionMessage } from "@anthropic-ai/claude-agent-sdk";
 import { describe, expect, it } from "vitest";
+import { readClaudeTranscript } from "../src/workbench/claude-transcript.js";
 import { redactWorkbenchText, sanitizeWorkbenchJson, sanitizeWorkbenchText, type WorkbenchTextLayout } from "../src/workbench/redaction.js";
 
 /**
@@ -274,6 +276,74 @@ describe("wb-mrg respin: readings across clusters (gate row 417 battery, MRGCAPT
     for (const layout of LAYOUTS) {
       const shown = sanitizeWorkbenchText(coloured(five), 2000, layout);
       for (const word of five) expect(shown, layout).toContain(word);
+    }
+  });
+});
+
+/**
+ * wb-mrg respin 2 (gate row 436 U1; owner R1/R2 defaults: inside the closed MRGCAPTOKEN record), W19 input hygiene: the
+ * record states that a cluster with more combinations than MAX_READINGS, or a text past MAX_READING_WORK, has no readings
+ * to list and is hidden whole. The respin-1 walk recursed one frame per branching introducer before that bound was reached,
+ * so one cluster of a few thousand introducers threw RangeError (Maximum call stack size exceeded) instead, in every layout,
+ * through a JSON key, and through the landed transcript reader, whose whole read failed. Benign text only: no row here holds
+ * a credential shape. Every introducer and control is built with String.fromCodePoint.
+ */
+const BEL = String.fromCodePoint(0x07);
+/** One cluster of `count` introducers, each read whole (CSI m, nothing shown) or alone (a visible m). */
+const deepCsi = (count: number): string => `${CSI}m`.repeat(count);
+/** A coloured-words log of `words` 8-bit SGR-coloured words, one cluster (the gate's 6,000-word shape: 52,890 code units). */
+const colouredLog = (words: number): string => Array.from({ length: words }, (_, index) => `${CSI}3${index % 8}mw${index}`).join("");
+/** One assistant row as the SDK session reader returns it. */
+const transcriptRow = (uuid: string, text: string): SessionMessage => ({
+  type: "assistant",
+  uuid,
+  session_id: "fake-session-id",
+  message: { role: "assistant", content: [{ type: "text", text }] },
+  parent_tool_use_id: null,
+  parent_agent_id: null,
+});
+
+describe("wb-mrg respin 2: a cluster past the reading bound is hidden whole at any size (gate row 436 U1, MRGCAPTOKEN record)", () => {
+  it("U1 (a): one cluster of 5,000 introducers (10,000 code units) is hidden whole in every layout, as 4,000 are, and so is 50,000", () => {
+    for (const count of [4_000, 5_000, 50_000]) {
+      const text = deepCsi(count);
+      for (const layout of LAYOUTS) expect(sanitizeWorkbenchText(text, 2000, layout), `${count} / ${layout}`).toBe("[REDACTED]");
+    }
+  });
+
+  it("U1 (b): a coloured-words log of 6,000 words (52,890 code units, one cluster) is hidden whole in every layout", () => {
+    const log = colouredLog(6_000);
+    expect(log.length).toBe(52_890);
+    for (const layout of LAYOUTS) expect(sanitizeWorkbenchText(log, 2000, layout), layout).toBe("[REDACTED]");
+  });
+
+  it("U1 (c): through the landed transcript reader a row whose body is either deep cluster is hidden whole, and every row is read", async () => {
+    for (const [name, body] of [
+      ["<U+009B>m x 6,000", deepCsi(6_000)],
+      ["6,000-word coloured log", colouredLog(6_000)],
+    ] as const) {
+      const rows = await readClaudeTranscript("fake-session-id", "/nonexistent-fake-cwd", 40, async () => [transcriptRow("row-before", "visible-row-before"), transcriptRow("row-deep", body)]);
+      expect(
+        rows.map(row => row.text),
+        name,
+      ).toEqual(["visible-row-before", "[REDACTED]"]);
+    }
+  });
+
+  it("U1 (d): a JSON key of one deep cluster is still a secret field and is hidden itself, as a key of 3,000 introducers is", () => {
+    for (const count of [3_000, 6_000]) {
+      const sanitized = sanitizeWorkbenchJson({ [deepCsi(count)]: "opaque-deep-key-value" });
+      expect(JSON.stringify(sanitized), String(count)).toBe(JSON.stringify({ "[REDACTED]": "[REDACTED]" }));
+    }
+  });
+
+  it("guard (green before and after the cure): introducers that no reading reaches add no readings, so the text stays listed", () => {
+    // A 7-bit OSC (ESC ] ... BEL) is one unit in every reading, so no reading reads the 5,000 introducers in its body on
+    // their own; a bound that counted introducers rather than readings would hide this text whole.
+    const text = `visible-before ${ESC}]${deepCsi(5_000)}${BEL} visible-after`;
+    for (const layout of LAYOUTS) {
+      const shown = sanitizeWorkbenchText(text, 2000, layout);
+      for (const stretch of ["visible-before", "visible-after"]) expect(shown, layout).toContain(stretch);
     }
   });
 });
