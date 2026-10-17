@@ -49,11 +49,13 @@ import { selectLatencyDecomposition } from "../src/workbench/latency.js";
 import { type NativeRef, ObservationProjection, type ObservationScope, type ObservedNode, type Relation } from "../src/workbench/observation.js";
 import { type ObserveReader, observeInvocation } from "../src/workbench/observe-query.js";
 import { proposeWorkflowPatch } from "../src/workbench/patch-proposal.js";
+import { mintEvidenceReceipt } from "../src/workbench/reconcile-decision.js";
 import { redactWorkbenchText, sanitizeWorkbenchJson, sanitizeWorkbenchJsonText, sanitizeWorkbenchText, stripUnsafeText } from "../src/workbench/redaction.js";
 import { buildOperationsTelemetry } from "../src/workbench/telemetry.js";
 import { buildTimelineLanes, type TimelineReader } from "../src/workbench/timeline.js";
 import { buildWorkflowCatalogReply, buildWorkflowInspectReply, type CapabilityCatalogEntry } from "../src/workbench/tool-replies.js";
 import { selectLinkedTopology } from "../src/workbench/topology-slice.js";
+import { reconcileGrant } from "../src/workflow/reconcile.js";
 import { detachedCatchDriver } from "./helpers/detached-peer.js";
 
 const cp = (code: number): string => String.fromCodePoint(code);
@@ -787,6 +789,39 @@ async function claudeHostTexts(raw: string): Promise<string[]> {
   return [...errors, ...errors.map(safeWorkflowTerminalText)];
 }
 
+/**
+ * wb-71w (dc0.1 F6 collapsed-readings sweep leg): reconcile-decision.ts mintEvidenceReceipt binds the producer's own status
+ * text as the receipt's domainStatus. The minted string is what the receipt carries everywhere it goes: workflow_reconcile
+ * holds it for the inspect roster and returns it in the evidence reply (reconcile-tool.ts, through sanitizeWorkbenchJsonText),
+ * an acknowledgement cites it into the journaled settlement value (reconcile.ts acknowledgementValue), and the settled node row
+ * shows it as the card outcome (runtime.ts evidenceOfAcknowledgement, workflow-card.ts safeWorkflowTerminalText). Only the
+ * display strings are returned: the receipt id and digests hash the raw result, so they differ between a row and its twin.
+ */
+function receiptTexts(raw: string): string[] {
+  const receipt = mintEvidenceReceipt({
+    taskId: "wf_corpus01", position: 0, producer: "forge", capabilityId: "forge.gate.status", input: { operation: "op_corpus" },
+    requestedAt: NOW, observedAt: NOW, result: { contract: "forge.gate.status/v1", source: { operation_id: "op_corpus", status: raw } },
+    recordedNativeRefs: [],
+  });
+  if (receipt.domainStatus === undefined) throw new Error("wb-71w: the minted receipt dropped the producer status");
+  return [receipt.domainStatus, ...strings(JSON.parse(sanitizeWorkbenchJsonText({ domainStatus: receipt.domainStatus }, 4_096))), safeWorkflowTerminalText(receipt.domainStatus)];
+}
+
+/**
+ * DIRECT-CALLER row (wb-71w): reconcile.ts reconcileGrant names the producer it refuses in its CapabilityError message. Its one
+ * caller, decideReconcile, refuses an undeclared producer before calling it (reconcile-decision.ts), so the exported function is
+ * the only path to the message; the message is display text all the same and routes through the one helper.
+ */
+function grantRefusalTexts(raw: string): string[] {
+  try {
+    reconcileGrant(raw, "acknowledge");
+  } catch (error) {
+    if (error instanceof CapabilityError) return [error.message];
+    throw error;
+  }
+  throw new Error("wb-71w: reconcileGrant admitted a corpus probe as a producer");
+}
+
 interface Site {
   readonly site: string;
   readonly texts: (raw: string) => string[] | Promise<string[]>;
@@ -830,6 +865,8 @@ const SITES: readonly Site[] = [
   { site: "wb-h8f.10 latency.ts displayText (selectLatencyDecomposition provider and evidence paths)", texts: latencyTexts },
   { site: "site 23 detached-control.ts sanitized (executeDetachedControl)", texts: detachedControlTexts },
   { site: "wb-wyr claude-host.ts producer outcomes (createClaudeWorkflowHost.spawnAgent, five failure paths)", texts: claudeHostTexts },
+  { site: "wb-71w reconcile-decision.ts mintEvidenceReceipt domainStatus (minted receipt, evidence reply, settled card row)", texts: receiptTexts },
+  { site: "wb-71w reconcile.ts reconcileGrant refusal (DIRECT-CALLER: the producer its CapabilityError names)", texts: grantRefusalTexts },
 ];
 
 describe("wb-952 one-helper corpus through every census site's public function", () => {

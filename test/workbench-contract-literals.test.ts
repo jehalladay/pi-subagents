@@ -3,10 +3,23 @@
  * Spec: docs/workbench/17-packaging-and-operations.md "Versioning / distribution":
  * "Version parser language and node-provider contract independently of bundle version.
  * Changed semantics require migration notes and fixture tests."
+ *
+ * wb-8l6 (cax.8 UD2 + O1): the census reads src through the TypeScript parser and counts string text only - a StringLiteral,
+ * a NoSubstitutionTemplateLiteral and each literal part of a template with substitutions - so a backtick re-inline is an
+ * occurrence (M2) and a comment never is (M4). Its embedded-id leg pins every contract id inside a larger string, per the owner's
+ * UD2 ruling ("OUR contract ids compose the const ...; FOREIGN ... EXCLUDED as asserted FOREIGN rows"): our ids compose their
+ * constant, and an id that stays literal is an asserted row - FOREIGN (another tool's id), EMBEDDED_PURITY (a guard forbids the
+ * import) or OWNER_NAMED (the owner's carrier, named here and never composed).
+ * Residuals, named and not pinned:
+ * - M3: an id built at runtime or split over a concatenation is no string token, so neither leg sees it; src/workbench/
+ *   native-evidence.ts matches `${capabilityId}/v1`, built from its argument.
+ * - M4 class: doc-comment mentions of contract ids are never tokens and stay as written (line 3 of claude-control.ts,
+ *   forge-control.ts, furnace-control.ts, detached-control.ts and reactivefiber-observer.ts; line 4 of forge-evidence.ts).
  */
 import { mkdtempSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, relative } from "node:path";
+import ts from "typescript";
 import { describe, expect, it } from "vitest";
 import { ATTENTION_CONTRACT } from "../src/workbench/attention.js";
 import { BEADS_WORK_CONTRACT } from "../src/workbench/beads-observer.js";
@@ -39,8 +52,10 @@ import { VALIDATE_REPLY_CONTRACT_VERSION } from "../src/workbench/validate-reply
 import { ACKNOWLEDGEMENT_VALUE_CONTRACT, RECONCILE_CONTRACT_VERSION } from "../src/workflow/reconcile.js";
 
 const SRC = join(process.cwd(), "src");
-/** Both quote forms; the back-reference keeps a mixed pair from matching. */
-const CONTRACT_LITERAL = /(["'])([a-z][a-z0-9.-]*\/v[0-9]+)\1/g;
+/** A contract id that is the whole text of a string token (a mixed quote pair is never one: the parser reads no such literal). */
+const WHOLE_ID = /^[a-z][a-z0-9.-]*\/v[0-9]+$/;
+/** A contract id anywhere inside string text; each maximal run is one embedded token. */
+const EMBEDDED_ID = /[a-z][a-z0-9.-]*\/v[0-9]+/g;
 
 /** Literal -> the one src file (relative to src/) that spells it. */
 const CARRIERS: Readonly<Record<string, string>> = {
@@ -85,19 +100,30 @@ const CARRIERS: Readonly<Record<string, string>> = {
   "workbench.graph-view/v1": "workbench/graph-view.ts",
 };
 
-/** An excluded spelling: exact file, the reason, and the literal it still spells (so a stale exclusion goes red). */
-interface Exclusion { readonly file: string; readonly reason: string }
+/**
+ * An excluded spelling: exact file, the reason, and the literal it still spells (so a stale exclusion goes red). An `embedded`
+ * row (wb-8l6) excuses its literal inside a larger string of that file only and never a whole-literal spelling, so it can hide
+ * neither a carrier's own constant nor a re-inline of it.
+ */
+interface Exclusion { readonly file: string; readonly reason: string; readonly embedded?: true }
 type ExclusionTable = Readonly<Record<string, Exclusion>>;
 
 /**
  * Asserted exclusions. Every row is listed by exact path with its reason and the census asserts the file STILL spells
  * the literal, so an exclusion goes red once the file moves to the constant. A silent allowlist is not acceptable.
  * RESERVED: duplicates inside reserved (HOT) files this bead may not edit (none: src/index.ts only spells its own
- * single-occurrence interfaceVersion). FOREIGN: another tool's contract id that must stay literal (none are
- * whole-literal in src today; the RF id inside reactivefiber.ts contractSource is embedded in a larger string).
+ * single-occurrence interfaceVersion). FOREIGN: another tool's contract id that must stay literal; the one row is
+ * ReactiveFiberCLI's schema id inside the contractSource provenance string of both RF render descriptors (embedded; wb-8l6
+ * reads providers/reactivefiber.ts and never edits it).
  */
 const RESERVED_DUPLICATES: ExclusionTable = {};
-const FOREIGN_CONTRACTS: ExclusionTable = {};
+const FOREIGN_CONTRACTS: ExclusionTable = {
+  "reactive-fiber.cli/v1": {
+    file: "workbench/providers/reactivefiber.ts",
+    reason: "ReactiveFiberCLI's own schema id quoted in both render descriptors' contractSource (rf@<release>:<schema> context.render --no-commit): another tool's contract text, kept verbatim",
+    embedded: true,
+  },
+};
 /**
  * Observer-purity exclusions (owner ruling 16:19Z R1/R2 asks for const imports in all six consumers; three of them are
  * pinned by existing guards this bead may not weaken). forge-observer.ts is reachable from the extension boot path, and
@@ -114,21 +140,80 @@ const OBSERVER_PURITY: ExclusionTable = {
   "hyperunix.find/v1": { file: "workbench/hyperunix-observer.ts", reason: "H7 guard pins the observer to four allowed imports" },
   "workbench.local-detached/v1": { file: "workbench/detached-observer.ts", reason: "provider-free guard requires type-only host import" },
 };
+/**
+ * Embedded ids our code keeps literal because a guard forbids the import (the OBSERVER_PURITY reasoning, for an id inside a
+ * larger string). forge-evidence.ts is on the extension boot path (evidence-wiring.ts imports it) and does not import
+ * providers/forge.ts, whose value import loads @forge/sdk (test/workbench-boot-isolation.test.ts: "disabled Workbench boot must
+ * not load @forge/sdk"), so its transport error text keeps the id. Delete the row in the same commit that composes the text.
+ */
+const EMBEDDED_PURITY: ExclusionTable = {
+  "forge.gate.status/v1": {
+    file: "workbench/forge-evidence.ts",
+    reason: "boot-isolation guard: a value import of providers/forge.ts loads @forge/sdk at disabled boot; the transport error text keeps the id",
+    embedded: true,
+  },
+};
+/** Embedded ids that are the owner's carrier (cax.8 U3 site list): named here, never composed or moved by this census. */
+const OWNER_NAMED: ExclusionTable = {
+  "workbench.identity/v1": {
+    file: "workbench/identity.ts",
+    reason: "identityDigest's hash domain tag, the template head before the NUL separator: the owner's carrier, out of this census's scope",
+    embedded: true,
+  },
+};
+/** The tables the embedded-id leg consults; only their embedded rows excuse an embedded token. */
+const EMBEDDED_TABLES: readonly ExclusionTable[] = [FOREIGN_CONTRACTS, EMBEDDED_PURITY, OWNER_NAMED];
+/**
+ * UD2 OURS sites (cax.8 U3 site list): the UNVETTED refusal text of each control adapter composes CONTROL_CONTRACT_VERSION, the
+ * constant control.ts carries, and renders byte-identically to the sentence it spelled before wb-8l6.
+ */
+const COMPOSED_UNVETTED: Readonly<Record<string, string>> = {
+  "workbench/furnace-control.ts": "Furnace control executes only a permitted workbench.control/v1 decision minted by the control core.",
+  "workbench/claude-control.ts": "Claude control executes only a permitted workbench.control/v1 decision minted by the control core.",
+  "workbench/forge-control.ts": "Forge control executes only a permitted workbench.control/v1 decision minted by the control core.",
+};
 
 function sourceFiles(dir: string): string[] {
   return readdirSync(dir).flatMap(name => { const path = join(dir, name); return statSync(path).isDirectory() ? sourceFiles(path) : path.endsWith(".ts") ? [path] : []; });
 }
 interface Occurrence { readonly literal: string; readonly where: string; readonly file: string }
+/** A contract id in string text: the whole text of a string token, or one id embedded inside a larger string. */
+interface Token extends Occurrence { readonly whole: boolean }
+type StringText = ts.StringLiteral | ts.NoSubstitutionTemplateLiteral | ts.TemplateHead | ts.TemplateMiddle | ts.TemplateTail;
 
-/** Pure census over an injectable path -> text map (paths relative to src/), so fixtures can exercise it. */
+/** String text as the parser reads it: both quote forms, a no-substitution template, and each literal part of a template. */
+function isStringText(node: ts.Node): node is StringText {
+  return ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node) || ts.isTemplateHead(node) || ts.isTemplateMiddle(node) || ts.isTemplateTail(node);
+}
+const parsed = new Map<string, { readonly text: string; readonly tokens: readonly Token[] }>();
+/** The contract-id tokens of one file's string text. A comment, a regular expression or an identifier is never string text. */
+function fileTokens(file: string, text: string): readonly Token[] {
+  const cached = parsed.get(file);
+  if (cached?.text === text) return cached.tokens;
+  const source = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const tokens: Token[] = [];
+  const visit = (node: ts.Node): void => {
+    if (isStringText(node)) {
+      const where = `src/${file}:${source.getLineAndCharacterOfPosition(node.getStart(source)).line + 1}`;
+      if ((ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node)) && WHOLE_ID.test(node.text)) tokens.push({ literal: node.text, where, file, whole: true });
+      else for (const match of node.text.matchAll(EMBEDDED_ID)) tokens.push({ literal: match[0], where, file, whole: false });
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  parsed.set(file, { text, tokens });
+  return tokens;
+}
+function stringTokens(files: ReadonlyMap<string, string>): Token[] {
+  return [...files].flatMap(([file, text]) => fileTokens(file, text));
+}
+/** Pure census over an injectable path -> text map (paths relative to src/), so fixtures can exercise it: whole-literal tokens. */
 function census(files: ReadonlyMap<string, string>): Occurrence[] {
-  const found: Occurrence[] = [];
-  for (const [file, text] of files) {
-    text.split("\n").forEach((line, index) => {
-      for (const match of line.matchAll(CONTRACT_LITERAL)) found.push({ literal: match[2], where: `src/${file}:${index + 1}`, file });
-    });
-  }
-  return found;
+  return stringTokens(files).filter(token => token.whole).map(({ literal, where, file }) => ({ literal, where, file }));
+}
+/** Whether a whole-literal spelling in `file` is set aside by `row` (an embedded row never sets one aside). */
+function wholeExcused(row: Exclusion | undefined, file: string): boolean {
+  return row !== undefined && row.embedded !== true && row.file === file;
 }
 function realTree(): Map<string, string> {
   return new Map(sourceFiles(SRC).map(path => [relative(SRC, path), readFileSync(path, "utf8")]));
@@ -140,15 +225,19 @@ function groupByLiteral(items: readonly Occurrence[]): Map<string, Occurrence[]>
 }
 /** Offenders (literal occurring other than once once the asserted-excluded file's spelling is set aside) as `literal: path:line, ...`. */
 function offenders(files: ReadonlyMap<string, string>, exclusions: ExclusionTable): string[] {
-  const counted = census(files).filter(item => exclusions[item.literal]?.file !== item.file);
+  const counted = census(files).filter(item => !wholeExcused(exclusions[item.literal], item.file));
   return [...groupByLiteral(counted).entries()]
     .filter(([, list]) => list.length !== 1)
     .map(([literal, list]) => `${literal}: ${list.map(item => item.where).join(", ")}`);
 }
-/** Stale exclusions: rows whose file no longer spells the literal in either quote form. */
+/**
+ * Stale exclusions: rows whose file no longer spells the literal as string text in the form the row excuses (a whole literal,
+ * or embedded for an embedded row). String-aware, so a comment quoting the literal never keeps a row alive.
+ */
 function staleExclusions(files: ReadonlyMap<string, string>, exclusions: ExclusionTable): string[] {
+  const tokens = stringTokens(files);
   return Object.entries(exclusions)
-    .filter(([literal, { file }]) => !(files.get(file) ?? "").includes(`"${literal}"`) && !(files.get(file) ?? "").includes(`'${literal}'`))
+    .filter(([literal, row]) => !tokens.some(token => token.literal === literal && token.file === row.file && token.whole === (row.embedded !== true)))
     .map(([literal, { file }]) => `${literal} in ${file}`);
 }
 /**
@@ -165,9 +254,53 @@ function purityViolations(carriers: Readonly<Record<string, string>>, exclusions
 }
 function carrierTable(files: ReadonlyMap<string, string>, exclusions: ExclusionTable): Record<string, string> {
   const actual: Record<string, string> = {};
-  for (const item of census(files)) if (exclusions[item.literal]?.file !== item.file) actual[item.literal] ??= item.file;
+  for (const item of census(files)) if (!wholeExcused(exclusions[item.literal], item.file)) actual[item.literal] ??= item.file;
   return actual;
 }
+/** Embedded ids no embedded row excuses (a row excuses its literal inside string text of exactly its file), as `literal: path:line, ...`. */
+function embeddedOffenders(files: ReadonlyMap<string, string>, tables: readonly ExclusionTable[]): string[] {
+  const excused = (token: Token): boolean => tables.some(table => table[token.literal]?.embedded === true && table[token.literal]?.file === token.file);
+  return [...groupByLiteral(stringTokens(files).filter(token => !token.whole && !excused(token))).entries()]
+    .map(([literal, list]) => `${literal}: ${list.map(item => item.where).join(", ")}`);
+}
+/** Rows of the given tables that are not embedded rows (the embedded-id leg consults embedded rows only). */
+function notEmbedded(tables: readonly ExclusionTable[]): string[] {
+  return tables.flatMap(table => Object.entries(table).filter(([, row]) => row.embedded !== true).map(([literal, { file }]) => `${literal} in ${file}`));
+}
+/**
+ * How `const UNVETTED` is initialised in one adapter: `composed` only when it is a template whose every substitution is the
+ * CONTROL_CONTRACT_VERSION binding the file value-imports from ./control.js (and declares nowhere itself); `rendered` is the
+ * text it yields with the real constant substituted (or a plain string's own text).
+ */
+function unvettedInitializer(text: string): { readonly composed: boolean; readonly rendered: string | undefined } {
+  const source = ts.createSourceFile("adapter.ts", text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const imported = source.statements.filter(ts.isImportDeclaration).some(declaration => ts.isStringLiteral(declaration.moduleSpecifier) &&
+    declaration.moduleSpecifier.text === "./control.js" && declaration.importClause?.isTypeOnly !== true &&
+    declaration.importClause?.namedBindings !== undefined && ts.isNamedImports(declaration.importClause.namedBindings) &&
+    declaration.importClause.namedBindings.elements.some(element => !element.isTypeOnly && element.propertyName === undefined && element.name.text === "CONTROL_CONTRACT_VERSION"));
+  const declared: string[] = [];
+  const collect = (node: ts.Node): void => {
+    if ((ts.isVariableDeclaration(node) || ts.isFunctionDeclaration(node) || ts.isParameter(node)) && node.name !== undefined && ts.isIdentifier(node.name)) declared.push(node.name.text);
+    ts.forEachChild(node, collect);
+  };
+  collect(source);
+  const initializers = source.statements.filter(ts.isVariableStatement).flatMap(statement => statement.declarationList.declarations)
+    .filter(declaration => ts.isIdentifier(declaration.name) && declaration.name.text === "UNVETTED").map(declaration => declaration.initializer);
+  const [initializer] = initializers;
+  if (initializers.length !== 1 || initializer === undefined) return { composed: false, rendered: undefined };
+  if (ts.isStringLiteral(initializer) || ts.isNoSubstitutionTemplateLiteral(initializer)) return { composed: false, rendered: initializer.text };
+  if (!ts.isTemplateExpression(initializer)) return { composed: false, rendered: undefined };
+  const constant = (span: ts.TemplateSpan): boolean => ts.isIdentifier(span.expression) && span.expression.text === "CONTROL_CONTRACT_VERSION";
+  const composed = imported && !declared.includes("CONTROL_CONTRACT_VERSION") && initializer.templateSpans.every(constant);
+  const rendered = initializer.templateSpans.every(constant)
+    ? initializer.head.text + initializer.templateSpans.map(span => CONTROL_CONTRACT_VERSION + span.literal.text).join("")
+    : undefined;
+  return { composed, rendered };
+}
+
+/** Fixture source text for templates, spelled without a placeholder inside a plain string. */
+const TICK = "`";
+const slot = (expression: string): string => "$" + "{" + expression + "}";
 
 describe("contract literals have one carrier each", () => {
   it("every distinct contract literal, in either quote form, occurs exactly once in src (offenders reported as path:line)", () => {
@@ -178,9 +311,9 @@ describe("contract literals have one carrier each", () => {
     expect(carrierTable(realTree(), OBSERVER_PURITY)).toEqual(CARRIERS);
   });
 
-  it("the exclusion tables are pinned exactly (empty today) and none is stale", () => {
+  it("the exclusion tables are pinned exactly (RESERVED empty; FOREIGN the one UD2 row) and none is stale", () => {
     expect(RESERVED_DUPLICATES).toEqual({});
-    expect(FOREIGN_CONTRACTS).toEqual({});
+    expect(FOREIGN_CONTRACTS).toEqual({ "reactive-fiber.cli/v1": { file: "workbench/providers/reactivefiber.ts", reason: expect.stringMatching(/\S/), embedded: true } });
     expect(Object.keys(OBSERVER_PURITY).sort()).toEqual(["forge.gate.status/v1", "hyperunix.find/v1", "workbench.local-detached/v1"]);
     expect(staleExclusions(realTree(), { ...RESERVED_DUPLICATES, ...FOREIGN_CONTRACTS, ...OBSERVER_PURITY })).toEqual([]);
   });
@@ -281,5 +414,109 @@ describe("contract literals have one carrier each", () => {
     } finally {
       rmSync(scratch, { recursive: true, force: true });
     }
+  });
+
+  it("M2 (wb-8l6): a backtick re-inline of a pinned literal is an occurrence, reported at exactly that path:line, and so is an escaped spelling", () => {
+    const base = new Map([["workbench/providers/hyperunix.ts", 'export const HYPERUNIX_FIND_CONTRACT = "hyperunix.find/v1";\n']]);
+    const backtick = new Map(base).set("workbench/hyperunix-observer.ts", `import x from "y";\nconst CONTRACT = ${TICK}hyperunix.find/v1${TICK};\n`);
+    expect(offenders(backtick, {})).toEqual(["hyperunix.find/v1: src/workbench/providers/hyperunix.ts:1, src/workbench/hyperunix-observer.ts:2"]);
+    // The parser reads a literal's cooked text, so an escape sequence spells the same literal.
+    const escaped = new Map(base).set("workbench/other.ts", 'const CONTRACT = "hyperunix.find\\u002fv1";\n');
+    expect(offenders(escaped, {})).toEqual(["hyperunix.find/v1: src/workbench/providers/hyperunix.ts:1, src/workbench/other.ts:1"]);
+  });
+
+  it("M4 (wb-8l6): a comment quoting a pinned literal is no occurrence and never keeps an exclusion alive", () => {
+    const base = new Map([["workbench/providers/hyperunix.ts", 'export const HYPERUNIX_FIND_CONTRACT = "hyperunix.find/v1";\n']]);
+    const commented = new Map(base).set("workbench/hyperunix-observer.ts", "// the carrier spells \"hyperunix.find/v1\"\n/* or 'hyperunix.find/v1' */\nconst a = 1;\n");
+    expect(offenders(commented, {})).toEqual([]);
+    expect(census(commented).map(item => item.where)).toEqual(["src/workbench/providers/hyperunix.ts:1"]);
+    const exclusions: ExclusionTable = { "hyperunix.find/v1": { file: "workbench/hyperunix-observer.ts", reason: "fixture row" } };
+    expect(staleExclusions(commented, exclusions)).toEqual(["hyperunix.find/v1 in workbench/hyperunix-observer.ts"]);
+  });
+
+  it("UD2 (wb-8l6): every contract id embedded inside a larger string in src is an asserted embedded row; ours compose the const (offenders as path:line)", () => {
+    expect(embeddedOffenders(realTree(), EMBEDDED_TABLES)).toEqual([]);
+  });
+
+  it("UD2: the embedded-row tables are pinned exactly, hold embedded rows only, and none is stale", () => {
+    const row = (file: string): unknown => ({ file, reason: expect.stringMatching(/\S/), embedded: true });
+    expect(EMBEDDED_PURITY).toEqual({ "forge.gate.status/v1": row("workbench/forge-evidence.ts") });
+    expect(OWNER_NAMED).toEqual({ "workbench.identity/v1": row("workbench/identity.ts") });
+    expect(notEmbedded(EMBEDDED_TABLES)).toEqual([]);
+    expect(EMBEDDED_TABLES.flatMap(table => staleExclusions(realTree(), table))).toEqual([]);
+  });
+
+  it("UD2 + O2: an embedded purity row names a CARRIERS key carried by a different file, a FOREIGN row quotes a carried contract, and a bump that re-keys CARRIERS is reported", () => {
+    expect(purityViolations(CARRIERS, EMBEDDED_PURITY)).toEqual([]);
+    expect(Object.keys(FOREIGN_CONTRACTS).filter(literal => CARRIERS[literal] === undefined)).toEqual([]);
+    // D1 shape: both providers bumped to /v2 with CARRIERS re-keyed leave the embedded /v1 rows behind without a carrier.
+    const { "forge.gate.status/v1": _forge, "reactive-fiber.cli/v1": _schema, ...rest } = CARRIERS;
+    const bumped: Readonly<Record<string, string>> = { ...rest, "forge.gate.status/v2": "workbench/providers/forge.ts", "reactive-fiber.cli/v2": "workbench/providers/reactivefiber.ts" };
+    expect(purityViolations(bumped, EMBEDDED_PURITY)).toEqual(["forge.gate.status/v1: not a CARRIERS key"]);
+    expect(Object.keys(FOREIGN_CONTRACTS).filter(literal => bumped[literal] === undefined)).toEqual(["reactive-fiber.cli/v1"]);
+  });
+
+  it("UD2 negative control: an id embedded in every string form is reported at its path:line; a comment, a whole literal and a runtime-built id (M3) are not embedded tokens", () => {
+    const files = new Map([
+      ["workbench/a.ts", 'export const A = "x.y/v1";\n'],
+      ["workbench/b.ts", [
+        'const d = "uses x.y/v1 here";',
+        "const s = 'uses x.y/v1 here';",
+        `const t = ${TICK}uses x.y/v1 here${TICK};`,
+        `const u = ${TICK}head x.y/v1 ${slot("d")} middle x.y/v1 ${slot("s")} tail x.y/v1${TICK};`,
+        "// a comment naming x.y/v1 or \"x.y/v1\"",
+        `const r = ${TICK}${slot('A.split("/")[0]')}/v1${TICK};`,
+        'const c = "x.y" + "/v1";',
+        "",
+      ].join("\n")],
+    ]);
+    const b = (line: number): string => `src/workbench/b.ts:${line}`;
+    expect(embeddedOffenders(files, [])).toEqual([`x.y/v1: ${[b(1), b(2), b(3), b(4), b(4), b(4)].join(", ")}`]);
+    expect(offenders(files, {})).toEqual([]);
+    expect(census(files).map(item => item.where)).toEqual(["src/workbench/a.ts:1"]);
+  });
+
+  it("UD2: an embedded row excuses its literal inside strings of exactly its file and never a whole literal; it goes stale once the file composes", () => {
+    const files = new Map([
+      ["workbench/p.ts", 'export const P = "x.y/v1";\nexport const D = "provenance x.y/v1 text";\n'],
+      ["workbench/q.ts", 'const E = "error x.y/v1 text";\n'],
+    ]);
+    const row: ExclusionTable = { "x.y/v1": { file: "workbench/p.ts", reason: "fixture row", embedded: true } };
+    expect(embeddedOffenders(files, [row])).toEqual(["x.y/v1: src/workbench/q.ts:1"]);
+    expect(staleExclusions(files, row)).toEqual([]);
+    // The whole-literal leg ignores an embedded row: the carrier's own spelling stays counted, so a re-inline elsewhere is reported.
+    const reinlined = new Map(files).set("workbench/r.ts", 'const P = "x.y/v1";\n');
+    expect(offenders(reinlined, row)).toEqual(["x.y/v1: src/workbench/p.ts:1, src/workbench/r.ts:1"]);
+    expect(carrierTable(files, row)).toEqual({ "x.y/v1": "workbench/p.ts" });
+    // A whole-literal row for the same file excuses no embedded token.
+    const wholeRow: ExclusionTable = { "x.y/v1": { file: "workbench/p.ts", reason: "fixture row" } };
+    expect(embeddedOffenders(files, [wholeRow])).toEqual(["x.y/v1: src/workbench/p.ts:2, src/workbench/q.ts:1"]);
+    const composed = new Map(files).set("workbench/p.ts", `export const P = "x.y/v1";\nexport const D = ${TICK}provenance ${slot("P")} text${TICK};\n`);
+    expect(staleExclusions(composed, row)).toEqual(["x.y/v1 in workbench/p.ts"]);
+    expect(embeddedOffenders(composed, [row])).toEqual(["x.y/v1: src/workbench/q.ts:1"]);
+  });
+
+  it("UD2 OURS: each control adapter's UNVETTED text composes the imported CONTROL_CONTRACT_VERSION and renders the byte-identical sentence", () => {
+    const tree = realTree();
+    const actual = Object.fromEntries(Object.keys(COMPOSED_UNVETTED).map(file => [file, unvettedInitializer(tree.get(file) ?? "")]));
+    expect(actual).toEqual(Object.fromEntries(Object.entries(COMPOSED_UNVETTED).map(([file, sentence]) => [file, { composed: true, rendered: sentence }])));
+  });
+
+  it("UD2 OURS negative control: a plain string, another slot expression, a local or type-only or aliased binding, or no import is not composed", () => {
+    const header = 'import { CONTROL_CONTRACT_VERSION } from "./control.js";\n';
+    const declare = (initializer: string): string => `const UNVETTED = ${initializer};\n`;
+    const template = (expression: string): string => `${TICK}a ${slot(expression)} b${TICK}`;
+    expect(unvettedInitializer(header + declare(template("CONTROL_CONTRACT_VERSION")))).toEqual({ composed: true, rendered: "a workbench.control/v1 b" });
+    expect(unvettedInitializer(header + declare('"a workbench.control/v1 b"'))).toEqual({ composed: false, rendered: "a workbench.control/v1 b" });
+    expect(unvettedInitializer(header + declare(template("OTHER")))).toEqual({ composed: false, rendered: undefined });
+    for (const text of [
+      `${header}const CONTROL_CONTRACT_VERSION = "workbench.control/v1";\n${declare(template("CONTROL_CONTRACT_VERSION"))}`,
+      `import type { CONTROL_CONTRACT_VERSION } from "./control.js";\n${declare(template("CONTROL_CONTRACT_VERSION"))}`,
+      `import { type CONTROL_CONTRACT_VERSION } from "./control.js";\n${declare(template("CONTROL_CONTRACT_VERSION"))}`,
+      `import { OTHER as CONTROL_CONTRACT_VERSION } from "./control.js";\n${declare(template("CONTROL_CONTRACT_VERSION"))}`,
+      `import { CONTROL_CONTRACT_VERSION } from "./other.js";\n${declare(template("CONTROL_CONTRACT_VERSION"))}`,
+      declare(template("CONTROL_CONTRACT_VERSION")),
+      `${header}${declare(template("CONTROL_CONTRACT_VERSION"))}${declare(template("CONTROL_CONTRACT_VERSION"))}`,
+    ]) expect(unvettedInitializer(text).composed, text).toBe(false);
   });
 });

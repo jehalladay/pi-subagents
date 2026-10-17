@@ -11,6 +11,7 @@
  */
 import {createHash} from 'node:crypto';
 import {CapabilityError, type JsonValue} from './capability-registry.js';
+import {reportedRelease} from './native-evidence.js';
 import type {NativeRef, NativeSnapshot, ObservationProjection, ObservationScope, Presentation} from './observation.js';
 import {REACTIVE_FIBER_CLI_SCHEMA, REACTIVEFIBER_RENDER_PREVIEW_CONTRACT} from './providers/reactivefiber.js';
 import {sanitizeWorkbenchText, stripUnsafeText} from './redaction.js';
@@ -166,6 +167,9 @@ function previewSnapshot(envelope: JsonRecord, diagnostics: readonly JsonRecord[
   const provenance = record(result.provenance);
   const graph = provenance?.graph_revision_id;
   if (typeof graph !== 'string' || !GRAPH_DIGEST.test(graph)) throw refused('result.provenance.graph_revision_id must be sha256:<64 lowercase hex>');
+  // The producer's own release, read only when the envelope states it (wb-2j3.1; wb-2j3.2: an absent one is never synthesized).
+  // Owner ruling G-A: it travels as a distinct rf-cli evidence reference and a note, never as sourceVersion.
+  const release = reportedRelease(provenance?.cli_version);
   const formula = record(record(result.budget)?.formula_terms);
   if (!formula || !FORMULA_KEYS.every(key => count(formula[key])) || typeof formula.available_context_tokens !== 'number' ||
     !Number.isSafeInteger(formula.available_context_tokens)) {
@@ -195,9 +199,10 @@ function previewSnapshot(envelope: JsonRecord, diagnostics: readonly JsonRecord[
   if (!live) notes.push('fixture seam: not a real generated context');
   if (flagged) notes.push('render reported errors: partial, not a clean render');
   if (overBudget) notes.push('context exceeds the available budget: partial');
+  if (release !== undefined) notes.push(`producer release from result.provenance.cli_version: rf@${release}`);
   return {
     operationId: String(envelope.operation_id), coverage: clean ? 'complete' : 'partial', statusTone: clean ? 'success' : 'unknown', statusText,
-    evidenceRefs: [`rf-graph:${graph}`, `rf-workspace:${workspaceId}`], notes, sourceRevision: graph,
+    evidenceRefs: [`rf-graph:${graph}`, `rf-workspace:${workspaceId}`, ...(release !== undefined ? [`rf-cli:${release}`] : [])], notes, sourceRevision: graph,
     nativePayloadRef: `rf-output:sha256:${createHash('sha256').update(output.text).digest('hex')}`,
   };
 }
