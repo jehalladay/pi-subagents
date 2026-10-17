@@ -144,7 +144,7 @@ describe('RF external CLI preview producer', () => {
     ['string spawn count', { tsx_worker_spawns: '1', tsx_resource_rounds: 0 }],
   ])('refuses %s as a transport error instead of presenting it as a preview', async (_label, engineMetrics) => {
     producer({ ...validRf(), result: { ...validRf().result, engine_metrics: engineMetrics } });
-    await expect(nativeReactiveFiberPreview('model', 'task', process.cwd())).rejects.toMatchObject({ category: 'transport' });
+    await expect(nativeReactiveFiberPreview('model', 'task', process.cwd())).rejects.toMatchObject({ category: 'transport', message: 'RF preview returned an unrecognized or contradictory envelope.' });
   });
   it.each([
     ['absent operation id', () => { const e = validRf(); return { ...e, operation_id: undefined }; }],
