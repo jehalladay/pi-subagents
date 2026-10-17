@@ -11,8 +11,7 @@
  *   T4 production caps byte-identical; bench-only 100 is a local spread.
  *   T5 reads per slice <= 2 + cycleReads in force; rows per call <= the relationPage in force.
  */
-import { mkdtempSync, readFileSync, rmSync } from "node:fs";
-import { tmpdir } from "node:os";
+import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { BENCH_ONLY_LIMITS, buildGroupedFixture, INVOCATION_ID, NAVIGATION_TARGET_MS, SCOPE } from "../qa/workbench/grouped-fixture.mjs";
@@ -35,6 +34,9 @@ import {
   TOPOLOGY_REFERENCE_REASONS,
   TOPOLOGY_TRACE_REASONS,
 } from "../src/workbench/topology-slice.js";
+import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
+
+installScratchLeakGuard();
 
 interface Distribution {
   samples: number;
@@ -507,7 +509,7 @@ describe("W21 topology receipt publication: print first, a failed file write nev
 
   it("keeps the receipt on stdout and exits 3 when the receipt path is unwritable (a real filesystem error)", () => {
     const claim = claimReceipt();
-    const directory = mkdtempSync(join(tmpdir(), "w21-topology-"));
+    const directory = makeScratch("w21-topology-");
     try {
       const events: string[] = [];
       const code = publishReceipt(claim, {
@@ -520,7 +522,7 @@ describe("W21 topology receipt publication: print first, a failed file write nev
       expect(events).toHaveLength(2);
       expect(events[1]).toMatch(/^err:.*receipt-write-failed/);
     } finally {
-      rmSync(directory, { recursive: true, force: true });
+      removeScratch(directory);
     }
   }, 60_000);
 
