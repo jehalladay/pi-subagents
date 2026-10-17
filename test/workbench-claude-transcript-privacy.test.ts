@@ -23,6 +23,7 @@ import { CLAUDE_TRANSCRIPT_GRANT } from '../src/workbench/evidence-producers.js'
 import { createWorkbenchEvidenceStore } from '../src/workbench/evidence-wiring.js';
 import { type NativeRef, ObservationProjection, type ObservationScope } from '../src/workbench/observation.js';
 import { redactWorkbenchText, sanitizeWorkbenchText, stripUnsafeText } from '../src/workbench/redaction.js';
+import { UNSAFE_DISPLAY } from "./helpers/unsafe-display.js";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // The wb-952 separator corpus, MIRRORED VERBATIM from test/workbench-sanitizer-corpus.test.ts lines 48-212 at b459773
@@ -45,9 +46,6 @@ const RLO = cp(0x202e);
 const WJ = cp(0x2060);
 const BOM = cp(0xfeff);
 const LONE_HIGH = cp(0xd800);
-
-/** Anything a display string must never carry: C0/C1 controls, line/paragraph separators, default-ignorables, lone surrogates. */
-const UNSAFE_DISPLAY = /[\x00-\x1f\x7f-\x9f\u{2028}\u{2029}]|\p{Default_Ignorable_Code_Point}|[\u{d800}-\u{dfff}]/u;
 
 interface Probe {
   readonly id: string;

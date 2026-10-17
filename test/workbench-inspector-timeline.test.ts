@@ -25,6 +25,7 @@ import {
   type TimelineNote,
   type TimelineRow,
 } from "../src/workbench/timeline.js";
+import { UNSAFE_DISPLAY } from "./helpers/unsafe-display.js";
 
 const scope: ObservationScope = { workspace: "workspace", principal: "reader" };
 const INVOCATION = "workflow-1";
@@ -482,9 +483,6 @@ function surfaceLine(lines: readonly string[], surface: Surface): string {
   return found[0] ?? "";
 }
 
-/** Anything a display line must never carry (the wb-952 corpus's UNSAFE_DISPLAY): C0/C1 controls, line and paragraph separators,
- * default-ignorables and lone surrogates. */
-const UNSAFE_DISPLAY = /[\x00-\x1f\x7f-\x9f\u{2028}\u{2029}]|\p{Default_Ignorable_Code_Point}|[\u{d800}-\u{dfff}]/u;
 interface Probe {
   readonly id: string;
   readonly raw: string;
