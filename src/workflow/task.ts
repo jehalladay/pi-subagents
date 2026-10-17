@@ -254,7 +254,9 @@ export function failWorkflowTask(task: WorkflowTask, error: string): void {
  */
 export function describeResumeJournal(from: string, entries: readonly WorkflowJournalEntry[]): string {
   const agents = entries.filter(entry => entry.kind === undefined).length;
-  const nodes = entries.filter(entry => entry.kind === "node");
+  // One row per node position, the last, as runtime.ts consults them: a
+  // non-read call is journaled at dispatch and again once settled (wb-5x0.1).
+  const nodes = [...new Map(entries.filter(entry => entry.kind === "node").map(entry => [entry.index, entry])).values()];
   const reads = nodes.filter(entry => entry.effectClass === "read" && entry.ok && entry.text !== undefined).length;
   const effects = nodes.filter(entry => entry.effectClass !== undefined && entry.effectClass !== "read");
   const untyped = nodes.filter(entry => entry.effectClass === undefined).length;
