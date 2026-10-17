@@ -5,19 +5,20 @@
  * repository), never a faked git. Each bench CLI's wiring is read through the TypeScript parser, so a commented-out,
  * string-quoted or unreachable call is not a call (the wb-9x5.6 M3/M10 comment-out class cannot pass these pins).
  *
- * Scope of record at the wb-oq3 re-cut (trunk 86425ea): the TEN W21 bench CLIs on the tree, enumerated by
- * test/helpers/w21-bench-clis.ts rather than kept by hand (the census below). NINE are wired (BENCHES): the six of the
- * first cut plus topology-slice-grouped (wb-9x5.12), inspector-retained-memory (wb-9x5.3) and inspector-cap-saturation
- * (wb-9x5.6), which landed after it and join here as their second lander. ONE is a named residual (RESIDUALS):
- * inspector-grouped-bench.mjs stays on caller-supplied $W21_REVISION, because its guarded test
- * (test/workbench-grouped-fixture.test.ts "keeps the CLI thin") pins an exact static-import list under the 14e78f1
- * two-arm rule; owner bead wb-4jr wires it after the stamp helper lands and moves its row from RESIDUALS to BENCHES in
- * the same commit. A W21 bench CLI that lands later (wb-9x5.5's tool-reply-bench is queued) reddens the census until its
- * lander wires it: known-conflicts entry 8, mechanical rather than remembered.
+ * Scope of record at the wb-oq3 respin (trunk 4becba1): the ELEVEN W21 bench CLIs on the tree, enumerated by
+ * test/helpers/w21-bench-clis.ts rather than kept by hand (the census below). TEN are wired (BENCHES): the six of the
+ * first cut; topology-slice-grouped (wb-9x5.12), inspector-retained-memory (wb-9x5.3) and inspector-cap-saturation
+ * (wb-9x5.6), which landed after it and joined at the re-cut (trunk 86425ea) as their second lander; and tool-reply
+ * (wb-9x5.5), which landed after the re-cut (c4904e7) and joins at this respin as the second lander of known-conflicts
+ * entry 8. ONE is a named residual (RESIDUALS): inspector-grouped-bench.mjs stays on caller-supplied $W21_REVISION,
+ * because its guarded test (test/workbench-grouped-fixture.test.ts "keeps the CLI thin") pins an exact static-import
+ * list under the 14e78f1 two-arm rule; owner bead wb-4jr wires it after the stamp helper lands and moves its row from
+ * RESIDUALS to BENCHES in the same commit. A W21 bench CLI that lands later reddens the census until its lander wires
+ * it: the entry-8 second-lander duty, mechanical rather than remembered.
  * Override name: $W21_REVISION for the whole family, read by the stamp alone. inspector-cap-saturation's own
  * $CAP_BENCH_REVISION is RETIRED at this cut (pinned below), so one variable overrides every W21 receipt revision.
  */
-import { execFileSync } from "node:child_process";
+import { execFileSync, spawnSync } from "node:child_process";
 import { mkdirSync, mkdtempSync, readFileSync, realpathSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -147,6 +148,40 @@ describe("bench-revision stamp: git rev-parse HEAD plus a dirty flag, W21_REVISI
       expect(out.dirty).toBeNull();
     }
   });
+
+  // Gate-2 IND-1 (g4-gate-r2, outbox row 369): `known ? (typeof porcelain === 'string' && ...) : null` stamps a FAILED
+  // status read with a valid HEAD as dirty false, and no row reached that path (70/70). A corrupt index is the reachable
+  // failure: HEAD resolves and the toplevel matches, git status exits nonzero, so the dirty flag is unknown, never clean.
+  it("a failed status read with a valid HEAD (corrupt index) stamps dirty null, never clean, end to end through withBenchRevision", () => {
+    const corrupt = join(scratch, "corrupt-index");
+    mkdirSync(corrupt);
+    git(corrupt, "init", "-q");
+    git(corrupt, "config", "user.email", "bench@example.invalid");
+    git(corrupt, "config", "user.name", "bench");
+    git(corrupt, "config", "commit.gpgsign", "false");
+    writeFileSync(join(corrupt, "tracked.txt"), "one\n");
+    git(corrupt, "add", "tracked.txt");
+    git(corrupt, "commit", "-q", "-m", "fixture");
+    const corruptHead = git(corrupt, "rev-parse", "HEAD");
+    writeFileSync(join(corrupt, ".git", "index"), "not a git index\n");
+    // Reachability, measured rather than assumed: the toplevel and HEAD still resolve, the status read itself fails.
+    expect(realpathSync(git(corrupt, "rev-parse", "--show-toplevel"))).toBe(corrupt);
+    expect(git(corrupt, "rev-parse", "HEAD")).toBe(corruptHead);
+    expect(spawnSync("git", ["status", "--porcelain"], { cwd: corrupt, stdio: "ignore" }).status).not.toBe(0);
+    expect(stampOf({ env: NO_OVERRIDE, root: corrupt })).toEqual({ revision: corruptHead, revisionSource: "git", dirty: null });
+    expect(stampOf({ env: { W21_REVISION: "abc1234" }, root: corrupt })).toEqual({ revision: "abc1234", revisionSource: "env-override", dirty: null });
+    const receipt = Object.freeze({ contract: "c/v1", revision: "test-revision", exitCode: 0 });
+    for (const env of [NO_OVERRIDE, { W21_REVISION: "abc1234" }]) {
+      const out = stamped(receipt, stampOf({ env, root: corrupt }));
+      expect(out).toEqual({
+        contract: "c/v1",
+        exitCode: 0,
+        revision: env === NO_OVERRIDE ? corruptHead : "abc1234",
+        revisionSource: env === NO_OVERRIDE ? "git" : "env-override",
+        dirty: null,
+      });
+    }
+  });
 });
 
 /** The parsed module: ESM JavaScript, so comments and string contents never reach the AST. */
@@ -203,6 +238,8 @@ const BENCHES: ReadonlyArray<{ file: string; flow: Flow }> = [
   { file: "qa/workbench/topology-slice-grouped-bench.mjs", flow: { kind: "binds", target: "receipt", scope: "main" } },
   { file: "qa/workbench/inspector-retained-memory-bench.mjs", flow: { kind: "binds", target: "receipt", scope: "<module>" } },
   { file: "qa/workbench/inspector-cap-saturation-bench.mjs", flow: { kind: "binds", target: "receipt", scope: "<module>" } },
+  // Second-lander row of known-conflicts entry 8 (gate-2 U1, outbox row 369): wb-9x5.5 landed tool-reply-bench at c4904e7.
+  { file: "qa/workbench/tool-reply-bench.mjs", flow: { kind: "return-from-main" } },
 ];
 /** W21 bench CLIs not wired yet, each with the bead that owns its wiring (owner ruling R2=(a), 2026-10-16T17:2xZ). */
 const RESIDUALS: ReadonlyArray<{ file: string; bead: string }> = [{ file: "qa/workbench/inspector-grouped-bench.mjs", bead: "wb-4jr" }];
@@ -316,12 +353,12 @@ const exitCodeAssignments = (file: ts.SourceFile): ts.BinaryExpression[] => {
 const within = (node: ts.Node, container: ts.Node): boolean => node.getStart() >= container.getStart() && node.end <= container.end;
 
 describe("the W21 bench CLI census: every W21 bench CLI on the tree is wired or a named residual (gate U1)", () => {
-  it("BENCHES plus RESIDUALS is exactly the W21 bench CLIs on this tree: nine wired, one residual", () => {
+  it("BENCHES plus RESIDUALS is exactly the W21 bench CLIs on this tree: ten wired, one residual", () => {
     const wired = BENCHES.map(bench => bench.file);
     const residual = RESIDUALS.map(entry => entry.file);
     expect(new Set([...wired, ...residual]).size).toBe(wired.length + residual.length);
     expect([...wired, ...residual].sort()).toEqual(w21BenchClis());
-    expect({ wired: wired.length, residual: residual.length }).toEqual({ wired: 9, residual: 1 });
+    expect({ wired: wired.length, residual: residual.length }).toEqual({ wired: 10, residual: 1 });
   });
 
   it("a residual is still unwired, so wiring it moves its row from RESIDUALS to BENCHES in the same commit", () => {

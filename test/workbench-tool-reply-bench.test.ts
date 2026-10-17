@@ -415,7 +415,7 @@ describe("W21 tool-reply determinism and fixture reuse (C5)", () => {
   it("reuses the grouped fixture builder and forks no second fixture or limits literal", () => {
     const text = readRepo("qa/workbench/tool-reply-bench.mjs");
     const specifiers = [...text.matchAll(/^import\s[^'"]*['"]([^'"]+)['"]/gm)].map((match) => match[1]).sort();
-    expect(specifiers).toEqual(["./grouped-fixture.mjs", "node:fs", "node:os", "node:url"].sort());
+    expect(specifiers).toEqual(["./bench-revision.mjs", "./grouped-fixture.mjs", "node:fs", "node:os", "node:url"].sort());
     expect(text).toMatch(/buildGroupedFixture/);
     expect(text).toMatch(/BENCH_ONLY_LIMITS/);
     expect(text).not.toMatch(/function\s+(?:buildGroupedFixture|seeded|mulberry32)\b|maxNodes|maxEdges/);

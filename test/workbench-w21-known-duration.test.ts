@@ -15,15 +15,17 @@
  * Scalar spans (apply totals, disconnect, reconnect, probes) wait a stated constant per call and must hold the sum.
  * line-diff-bench reads no clock in its measured path, so its falsifier is that slow stubs change no receipt byte.
  *
- * Landed set at the wb-oq3 re-cut (trunk 86425ea): the TEN W21 bench CLIs on the tree, enumerated by
+ * Landed set at the wb-oq3 respin (trunk 4becba1): the ELEVEN W21 bench CLIs on the tree, enumerated by
  * test/helpers/w21-bench-clis.ts, each with its own case below (the census case at the end parses this file and fails
  * for a W21 bench CLI without one, so a bench that lands later reddens it until its lander adds a case: known-conflicts
- * entry 8). Three joined at this cut as the second lander of benches that landed after the first cut:
+ * entry 8). Three joined at the re-cut (trunk 86425ea) as the second lander of benches that landed after the first cut:
  * topology-slice-grouped (wb-9x5.12: its timed selectLinkedTopology call, the gate's TS-K1/TS-G1), inspector-cap-
  * saturation (wb-9x5.6: its own clock in qa/workbench/cap-saturation.mjs brackets refresh and relate, the gate's
  * CS-K1..K4; its ingest and navigation series run through grouped-fixture.mjs and are held here too) and
  * inspector-retained-memory (wb-9x5.3), which reads no clock in its measured path (a post-GC heap receipt): N/A, and the
- * N/A is pinned by a parse-aware no-clock read rather than stated.
+ * N/A is pinned by a parse-aware no-clock read rather than stated. tool-reply (wb-9x5.5) landed after the re-cut
+ * (c4904e7) and joins at this respin as the second lander of entry 8: its timed observeInvocation call, one ramp per
+ * (cap, selectors) series, the gate's TR-K1/TR-G1.
  */
 import { readFileSync } from "node:fs";
 import ts from "typescript";
@@ -36,11 +38,13 @@ import { runLineDiffBench } from "../qa/workbench/line-diff-bench.mjs";
 import { buildFixture, measureRecovery } from "../qa/workbench/observation-recovery-receipt.mjs";
 import { runReducerSelectorBench } from "../qa/workbench/reducer-selector-bench.mjs";
 import { runTimelineBench } from "../qa/workbench/timeline-grouped-core.mjs";
+import { BYTE_CAPS, runToolReplyBench, SHAPE_NAMES } from "../qa/workbench/tool-reply-bench.mjs";
 import { PASS_SPECS, runTopologyBench } from "../qa/workbench/topology-slice-grouped-bench.mjs";
 import { initialInspectorState, inspectorEvidenceTarget, layoutInspector, reduceInspectorKey } from "../src/ui/workflow-inspector.js";
 import { ATTENTION_TRACE_REASONS, selectAttention } from "../src/workbench/attention.js";
 import { EvidenceStore } from "../src/workbench/evidence-loader.js";
 import { type ObservationEvent, ObservationProjection } from "../src/workbench/observation.js";
+import { observeInvocation } from "../src/workbench/observe-query.js";
 import { buildTimelineLanes } from "../src/workbench/timeline.js";
 import {
   selectLinkedTopology,
@@ -766,6 +770,78 @@ describe("W21 known duration: inspector-cap-saturation-bench (its own refresh an
   }, 120_000);
 });
 
+describe("W21 known duration: tool-reply-bench (its timed observeInvocation call, one ramp per (cap, selectors) series; gate TR-K1, TR-G1)", () => {
+  interface ReplySeries {
+    id: string;
+    shape: string;
+    cap: number;
+    replies: number;
+    buildMs: Quantiles;
+  }
+  // The bench takes the reply builder as an argument and, optionally, its production cap constants (runToolReplyBench's
+  // own contract; omitted here, so the receipt states the module's caps); the receipt read here is the series and the
+  // kept slowest builds.
+  const toolReplyRun = runToolReplyBench as (input: {
+    Projection: typeof ObservationProjection;
+    observeInvocation: typeof observeInvocation;
+    fixture: Fixture;
+    host: Host;
+    production?: { defaultMaxBytes: number; maxMaxBytes: number; maxLimit: number };
+  }) => { series: ReplySeries[]; outliers: { slowestBuilds: Array<{ id: string; page: number; ms: number }> } };
+  /** 0.1 ms plus 2 ms per call: the step dominates the real build of an untruncated reply (about 1 ms on this fixture). */
+  const BUILD = { base: 1_000, step: 20_000 };
+
+  it("holds every series' build clock at the exact ramp of its own timed calls, at p50, p95, max and the kept slowest builds", () => {
+    // pageThrough brackets one observeInvocation call per reply (qa/workbench/tool-reply-bench.mjs :79-81), and every
+    // request of a series carries its cap as maxBytes and its shape's selectors; the one untimed call (the selector-value
+    // probe before the series) carries neither. So the stub keys one ramp per series by the id the receipt publishes,
+    // shape@cap, derived here from the request alone: the i-th timed call of a series is its page i and its i-th sample.
+    const ramps = new Map<string, Ramp>();
+    let untimed = 0;
+    const observe: typeof observeInvocation = (reader, request) => {
+      if (request.maxBytes === undefined) untimed += 1;
+      else {
+        const shape = request.selectors === undefined ? "plain" : Object.keys(request.selectors).join("+");
+        const id = `${shape}@${request.maxBytes}`;
+        let ramp = ramps.get(id);
+        if (ramp === undefined) {
+          ramp = new Ramp(BUILD.base, BUILD.step);
+          ramps.set(id, ramp);
+        }
+        ramp.wait();
+      }
+      return observeInvocation(reader, request);
+    };
+    const receipt = toolReplyRun({
+      Projection: ObservationProjection,
+      observeInvocation: observe,
+      fixture: build({ seed: 3, nodes: 300, depth: 3, ticks: 8 }),
+      host: HOST,
+    });
+    expect(untimed).toBe(1);
+    expect(receipt.series).toHaveLength(BYTE_CAPS.length * SHAPE_NAMES.length);
+    expect(receipt.series.map(series => series.id).sort()).toEqual([...ramps.keys()].sort());
+    for (const series of receipt.series) {
+      const ramp = ramps.get(series.id);
+      if (ramp === undefined) throw new Error(`no timed call reached ${series.id}`);
+      expect(series.id).toBe(`${series.shape}@${series.cap}`);
+      expect(ramp.calls, `${series.id} timed calls`).toBe(series.replies);
+      expect(series.buildMs.samples, `${series.id} samples`).toBe(series.replies);
+      // At least three replies, so a minority of wrong-span samples has published ranks to move (9 or 17 here).
+      expect(series.replies, `${series.id} replies`).toBeGreaterThanOrEqual(3);
+      expectRankFloors(`${series.id} buildMs`, series.buildMs, i => ramp.at(i));
+    }
+    // The kept slowest builds name their series and page: each holds the wait of its own call.
+    const slowest = receipt.outliers.slowestBuilds;
+    expect(slowest.length).toBeGreaterThan(0);
+    for (const outlier of slowest) {
+      const ramp = ramps.get(outlier.id);
+      if (ramp === undefined) throw new Error(`a kept slowest build names no measured series: ${outlier.id}`);
+      expectSpan(`slowest ${outlier.id} page ${outlier.page}`, outlier.ms, ramp.at(outlier.page));
+    }
+  }, 120_000);
+});
+
 /** The parsed source of a repository file (ESM JavaScript or TypeScript), so comments never reach the AST. */
 const parseRepo = (path: string, kind: ts.ScriptKind): ts.SourceFile =>
   ts.createSourceFile(path, readFileSync(new URL(`../${path}`, import.meta.url), "utf8"), ts.ScriptTarget.Latest, true, kind);
@@ -811,7 +887,7 @@ describe("W21 known duration: the census of cases (gate U1/U1d: one case per W21
       if (title !== undefined && (ts.isStringLiteral(title) || ts.isNoSubstitutionTemplateLiteral(title))) titles.push(title.text);
     });
     const clis = w21BenchClis();
-    expect(clis).toHaveLength(10);
+    expect(clis).toHaveLength(11);
     for (const cli of clis) {
       const name = cli.slice("qa/workbench/".length, -".mjs".length);
       const cases = titles.filter(title => title === `W21 known duration: ${name}` || title.startsWith(`W21 known duration: ${name} `));
