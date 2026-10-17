@@ -1,7 +1,6 @@
 import { existsSync, mkdtempSync, readdirSync, readFileSync, rmSync } from "node:fs";
 import { connect, type Socket } from "node:net";
-import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 import { createInterface } from "node:readline";
 import type { FurnaceOptions, RunStartRequest } from "@furnace/sdk";
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it } from "vitest";
@@ -15,6 +14,7 @@ import {
   type HostedOutcome,
   type HostedWorkflow,
 } from "../src/workbench/hosts/furnace-hosted.js";
+import { chooseScratchBase, SOCKET_PATH_BOUND, scratchBaseBudget } from "./helpers/fixture-roots.js";
 import { loadRepairedFurnaceSdk } from "./helpers/furnace-sdk-repaired.js";
 import { installScratchLeakGuard } from "./helpers/scratch.js";
 
@@ -134,6 +134,13 @@ function harness(
   return { executor, clients, starts, calls, configTexts };
 }
 
+/**
+ * wb-70b R1: the vendored EmbeddedHost places its bridge socket at <tmpdir()>/furnace-embedded-XXXXXX/host.sock and each
+ * case points TMPDIR at its fixture root, so the root must not inherit the caller's TMPDIR depth. Base per the
+ * shortScratchBase() rule: XDG_RUNTIME_DIR first, /tmp only as the recorded fallback, never the inherited TMPDIR.
+ */
+const SCRATCH_BASE_MAX_BYTES = scratchBaseBudget("/pi-furnace-hosted-test-XXXXXX/furnace-embedded-XXXXXX/host.sock");
+const SCRATCH_BASE = chooseScratchBase(process.env, SCRATCH_BASE_MAX_BYTES);
 let repaired: Awaited<ReturnType<typeof loadRepairedFurnaceSdk>>;
 let scratch: string;
 const previousTmp = process.env.TMPDIR;
@@ -144,7 +151,7 @@ afterAll(() => {
   repaired?.dispose();
 });
 beforeEach(() => {
-  scratch = mkdtempSync(join(tmpdir(), "pi-furnace-hosted-test-"));
+  scratch = mkdtempSync(join(SCRATCH_BASE.path, "pi-furnace-hosted-test-"));
   process.env.TMPDIR = scratch;
 });
 afterEach(() => {
@@ -467,5 +474,36 @@ describe("Furnace-hosted execution adapter", () => {
     expect(source).not.toMatch(/import\(/);
     expect(source).toContain("@furnace/sdk/dist/src/embedded.js");
     expect(existsSync(new URL("../src/workbench/hosts/furnace-hosted.ts", import.meta.url))).toBe(true);
+  });
+
+  it("roots every fixture under the short scratch base, never the inherited TMPDIR, so the bridge socket keeps the 103-byte bound (wb-70b R1)", async () => {
+    expect(SCRATCH_BASE).toEqual(chooseScratchBase(process.env, SCRATCH_BASE_MAX_BYTES));
+    expect(dirname(scratch)).toBe(SCRATCH_BASE.path);
+    let socketPath = "";
+    const h = harness(repaired.sdk, success, async (path) => {
+      socketPath = path;
+    });
+    await h.executor.start({ formula: "fixture" });
+    expect(socketPath.startsWith(`${scratch}/furnace-embedded-`)).toBe(true);
+    expect(Buffer.byteLength(socketPath)).toBeLessThanOrEqual(SOCKET_PATH_BOUND);
+    await h.executor.close();
+  });
+
+  it("chooses the scratch base by the host rule: XDG_RUNTIME_DIR first, /tmp only as the recorded fallback, never first (wb-70b R1)", () => {
+    const usable = () => true;
+    const room = SCRATCH_BASE_MAX_BYTES;
+    expect(room).toBe(SOCKET_PATH_BOUND - Buffer.byteLength("/pi-furnace-hosted-test-XXXXXX/furnace-embedded-XXXXXX/host.sock"));
+    expect(chooseScratchBase({ XDG_RUNTIME_DIR: "/run/user/1000" }, room, usable)).toEqual({ path: "/run/user/1000", source: "xdg-runtime-dir" });
+    // Never /tmp first and never the inherited TMPDIR: a usable XDG_RUNTIME_DIR wins whatever TMPDIR says.
+    expect(chooseScratchBase({ XDG_RUNTIME_DIR: "/run/user/1000", TMPDIR: "/tmp" }, room, usable).source).toBe("xdg-runtime-dir");
+    expect(chooseScratchBase({ TMPDIR: "/s" }, room, usable)).toEqual({ path: "/tmp", source: "tmp-fallback", reason: "XDG_RUNTIME_DIR is unset" });
+    expect(chooseScratchBase({ XDG_RUNTIME_DIR: "" }, room, usable)).toEqual({ path: "/tmp", source: "tmp-fallback", reason: "XDG_RUNTIME_DIR is unset" });
+    for (const spelled of ["run/user/1000", "/run/user/1000/", "/run//user/1000"]) {
+      expect(chooseScratchBase({ XDG_RUNTIME_DIR: spelled }, room, usable)).toEqual({ path: "/tmp", source: "tmp-fallback", reason: "XDG_RUNTIME_DIR is not a normalized absolute path" });
+    }
+    const atRoom = `/${"x".repeat(room - 1)}`;
+    expect(chooseScratchBase({ XDG_RUNTIME_DIR: atRoom }, room, usable)).toEqual({ path: atRoom, source: "xdg-runtime-dir" });
+    expect(chooseScratchBase({ XDG_RUNTIME_DIR: `${atRoom}x` }, room, usable)).toEqual({ path: "/tmp", source: "tmp-fallback", reason: `XDG_RUNTIME_DIR is longer than ${room} bytes` });
+    expect(chooseScratchBase({ XDG_RUNTIME_DIR: "/run/user/1000" }, room, () => false)).toEqual({ path: "/tmp", source: "tmp-fallback", reason: "XDG_RUNTIME_DIR is not a directory" });
   });
 });
