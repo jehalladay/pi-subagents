@@ -53,9 +53,14 @@ function at(value: unknown, ...path: readonly string[]): unknown {
   return current;
 }
 
-/** One stdout line per passing row, so the Forge receipt carries the measured identity. */
+/**
+ * One stdout line per passing row, so the Forge receipt carries the measured identity. Written to the
+ * process stdout directly (newline-led and newline-terminated, the furnace-hosted-real.test.ts record
+ * form), never through console.*: vitest's agent reporter, auto-selected when AI_AGENT/CLAUDECODE are
+ * set, drops the console output of passing tests, but a direct write reaches stdout under every reporter.
+ */
 function receipt(row: string, fields: Readonly<Record<string, unknown>>): void {
-  console.log(`RF-TSX-RECEIPT ${JSON.stringify({ row, ...fields })}`);
+  process.stdout.write(`\nRF-TSX-RECEIPT ${JSON.stringify({ row, ...fields })}\n`);
 }
 
 describe("RF TSX-era native context producer (R9 receipt rows)", () => {
