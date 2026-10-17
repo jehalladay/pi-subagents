@@ -27,6 +27,236 @@ import {
   SIZES,
 } from './grouped-fixture.mjs';
 
+/**
+ * Contract types (JSDoc that TypeScript callers read under allowJs; nothing here runs). CAP_SAMPLING is a default, not
+ * the accepted set: sampling takes other counts too, and the receipt's pass map is keyed by the passPlan() ids.
+ *
+ * @typedef {Readonly<Record<keyof typeof BENCH_ONLY_LIMITS, number>>} CapLimits
+ *   A bench-only constructor argument: the keys of grouped-fixture.mjs BENCH_ONLY_LIMITS, each a number.
+ * @typedef {{
+ *   refresh(snapshot: unknown): string,
+ *   relate(item: unknown): unknown,
+ *   ingest(update: unknown): string,
+ *   stats(): {nodes: number, events: number, edges: number},
+ *   window(filter: {scope: object, invocationId: string, offset: number, limit: number}): {
+ *     total: number,
+ *     nodes: ReadonlyArray<object>,
+ *   },
+ *   relations(query: object): ReadonlyArray<object>,
+ * }} CapProjection The projection methods this module and the grouped-fixture helpers it reuses call on an
+ *   ObservationProjection instance.
+ * @typedef {new (limits?: CapLimits) => CapProjection} CapProjectionClass
+ *   Constructed with no argument for the production-default pass and with CapLimits for every other pass.
+ * @typedef {{
+ *   initialInspectorState(): object,
+ *   layoutInspector(model: object, state: object, size: {width: number, rows: number, ascii?: boolean}): ReadonlyArray<string>,
+ *   reduceInspectorKey(data: string, state: object, model: object): {state: object} | undefined,
+ * }} CapInspector The inspector functions this module drives.
+ * @typedef {{readonly provider: string, readonly type: string, readonly id: string, readonly scope?: string}} CapNativeRef
+ * @typedef {{
+ *   readonly snapshots: ReadonlyArray<{readonly source: CapNativeRef, readonly node: {readonly type: string}}>,
+ *   readonly relations: ReadonlyArray<{readonly from: CapNativeRef, readonly to: CapNativeRef}>,
+ *   readonly updates: ReadonlyArray<{readonly source: CapNativeRef}>,
+ *   readonly shape: Readonly<Record<string, unknown>>,
+ * }} CapFixture A grouped fixture (grouped-fixture.mjs): snapshots, relations and updates are all offered (a boundary
+ *   pass offers a prefix of the snapshots with the relations and updates inside it) and the shape is copied into the
+ *   receipt.
+ * @typedef {{
+ *   readonly utc: string,
+ *   readonly revision: string,
+ *   readonly node: string,
+ *   readonly arch: string,
+ *   readonly platform: string,
+ *   readonly cpus: number,
+ *   readonly cpuModel: string,
+ *   readonly toolchain: Readonly<Record<string, string>>,
+ *   readonly command: string,
+ *   readonly runtimeCaps?: {readonly nodeCalls?: number | null, readonly agents?: number | null},
+ * }} CapHost
+ * @typedef {{readonly blocks: number, readonly keypressesPerBlock: number, readonly resizeSamples: number}} CapSampling
+ * @typedef {{samples: number, p50: number | null, p95: number | null, max: number | null}} CapDistribution
+ * @typedef {{
+ *   keypresses: number,
+ *   frames: number,
+ *   enterOnGroupRows: number,
+ *   all: CapDistribution,
+ *   reducer: CapDistribution,
+ *   layout: CapDistribution,
+ *   resize: CapDistribution,
+ *   changedBytes: CapDistribution,
+ *   byView: Record<string, CapDistribution>,
+ *   bySize: Record<string, CapDistribution>,
+ *   byKey: Record<string, CapDistribution>,
+ *   maxRenderedRows: number,
+ *   maxTerminalBytes: number,
+ *   maxChangedBytes: number,
+ * }} CapNavigation
+ * @typedef {{
+ *   id: string,
+ *   role: string,
+ *   cap: {nodes: number, edges: number, source: string, constructorArgs: number},
+ *   limits: 'default' | Record<keyof typeof BENCH_ONLY_LIMITS, number>,
+ *   offered: {nodes: number, groups: number, operations: number, edges: number, updates: number},
+ *   afterSnapshots: {nodes: number, applied: number},
+ *   afterRelations: {edges: number},
+ *   retained: {nodes: number, events: number, edges: number},
+ *   census: {
+ *     rows: number,
+ *     groups: number,
+ *     operations: number,
+ *     current: number,
+ *     stale: number,
+ *     unknown: number,
+ *     providers: Record<string, number>,
+ *     edgesBetweenRetainedRows: number,
+ *     edgesByKind: Record<string, number>,
+ *     danglingEdges: number,
+ *     complete: boolean,
+ *   },
+ *   overflow: {occurred: boolean, mode: string, countedRemainder: number, countedEdgeRemainder: number, eviction: string},
+ *   surface: {
+ *     rowsBySize: Record<string, number>,
+ *     inspectorLabelsOverflow: boolean,
+ *     inspectorNamesOfferedTotal: boolean,
+ *     windowTotal: number,
+ *   },
+ *   apply: {
+ *     refreshMs: number,
+ *     relateMs: number,
+ *     ingestMs: number,
+ *     eventsPerSecond: number,
+ *     refreshApplied: number,
+ *     refreshOutOfOrder: number,
+ *     ingestApplied: number,
+ *     ingestDuplicate: number,
+ *     ingestOutOfOrder: number,
+ *     ingestPerTick: CapDistribution,
+ *   },
+ *   navigation: CapNavigation,
+ *   memory: {label: string, heapBytes: number, retainedNodes: number},
+ * }} CapPass One pass, keyed in the receipt by its passPlan() id.
+ * @typedef {{
+ *   visibleVsTotal: Array<{
+ *     pass: string,
+ *     role: string,
+ *     capNodes: number,
+ *     offeredNodes: number,
+ *     retainedNodes: number,
+ *     visibleRowsMax: number | null,
+ *     visibleRowsBySize: Record<string, number>,
+ *     visibleToRetained: number | null,
+ *   }>,
+ *   timing: Array<{
+ *     pass: string,
+ *     role: string,
+ *     capNodes: number,
+ *     offeredNodes: number,
+ *     retainedNodes: number,
+ *     reducer: CapDistribution | null,
+ *     layout: CapDistribution | null,
+ *     navigation: CapDistribution | null,
+ *     resize: CapDistribution | null,
+ *   }>,
+ *   memoryComparability: string,
+ *   memory: Array<{
+ *     pass: string,
+ *     capNodes: number,
+ *     offeredNodes: number,
+ *     retainedNodes: number,
+ *     heapBytes: number,
+ *     label: string,
+ *     comparability: string,
+ *   }>,
+ * }} CapSeries What seriesOf(passes) recomputes.
+ * @typedef {{
+ *   [field: string]: unknown,
+ *   seed: number,
+ *   nodes: number,
+ *   groups: number,
+ *   snapshots: number,
+ *   depth: number,
+ *   minDepth: number,
+ *   groupingEdges: number,
+ *   dependencyEdges: number,
+ *   hypothesisEdges: number,
+ *   ownershipEdges: number,
+ *   causationEdges: number,
+ *   updates: number,
+ *   ticks: number,
+ *   minChangesPerTick: number,
+ *   maxChangesPerTick: number,
+ *   providers: Record<string, number>,
+ *   collidingIds: number,
+ *   minTitleBytes: number,
+ *   maxTitleBytes: number,
+ *   payloadRefs: number,
+ *   minPayloadRefBytes: number,
+ *   maxPayloadRefBytes: number,
+ * }} CapFixtureRecord The grouped fixture's realised shape as copied into the receipt: its counts by name and every
+ *   other shape field (the fixture contract id among them) as given.
+ * @typedef {{pass: string, rule: string, detail: string}} CapPassFinding
+ * @typedef {{
+ *   contract: string,
+ *   benchmark: string,
+ *   measured: boolean,
+ *   aggregation: string,
+ *   strict: boolean,
+ *   benchOnlyBounds: {
+ *     nodes: number[],
+ *     boundary: number[],
+ *     edgeRatio: number,
+ *     events: number,
+ *     query: number,
+ *     productionEvents: number,
+ *     productionQuery: number,
+ *     source: string,
+ *   },
+ *   utc: string,
+ *   revision: string,
+ *   node: string,
+ *   arch: string,
+ *   platform: string,
+ *   cpus: number,
+ *   cpuModel: string,
+ *   toolchain: Record<string, string>,
+ *   command: string,
+ *   docs: typeof DOC_QUOTES,
+ *   caps: {
+ *     production: {
+ *       projectionMaxNodes: number,
+ *       projectionMaxEdges: number,
+ *       projectionLabel: string,
+ *       runtimeNodeCalls: number | null,
+ *       runtimeAgents: number | null,
+ *       runtimeLabel: string,
+ *     },
+ *     benchOnly: {nodes: number[], boundary: number[], edgeRatio: number, events: number, query: number},
+ *   },
+ *   fixture: CapFixtureRecord,
+ *   sampling: {
+ *     blocks: number,
+ *     keypressesPerBlock: number,
+ *     resizeSamples: number,
+ *     keypresses: number,
+ *     warmupKeypresses: number,
+ *     sizes: string[],
+ *   },
+ *   memory: {judged: boolean, label: string, claim: string},
+ *   passes: Record<string, CapPass>,
+ *   series: CapSeries,
+ *   findings: Array<{id: string, detail: string}>,
+ *   target: {ms: number, statistic: string, judged: string, over: string[]},
+ *   realised: boolean,
+ *   violations: Array<{rule: string, detail: string}>,
+ *   silentDrops: CapPassFinding[],
+ *   unbounded: CapPassFinding[],
+ *   strictFindings: Array<{id: string, detail: string}>,
+ *   verdict: string,
+ *   exitCode: number,
+ * }} CapReceipt The receipt runCapSaturationBench returns: the measured fields, the series and findings recomputed from
+ *   the passes, and assessCapSaturationReceipt's judgement.
+ */
+
 export const CAP_RECEIPT_CONTRACT = 'workbench.inspector-cap-saturation/v1';
 /** Production caps this receipt is measured against (parent wb-9x5 note: no cap raise without this evidence). */
 export const PRODUCTION_CAPS = Object.freeze({projectionMaxNodes: 2_000, projectionMaxEdges: 4_000, runtimeNodeCalls: 1_000, runtimeAgents: 1_000});
@@ -326,6 +556,15 @@ export const exitCodeFor = receipt => assessCapSaturationReceipt(receipt).exitCo
  * re-assessed from the receipt rather than read from it. A failed write is reported on `logError` and returns 3 with the
  * receipt already printed, so an unwritable receipt path never loses the measurement and never surfaces as the
  * over-budget 1 or as a pass. The writers are arguments because this module imports nothing but the fixture.
+ *
+ * @param {object} receipt a runCapSaturationBench receipt or a copy of one; it is printed as given and judged again by
+ *   assessCapSaturationReceipt, which reads every field it needs defensively
+ * @param {object} io
+ * @param {string} [io.path] the receipt file to write; nothing is written when it is unset
+ * @param {(line: string) => void} io.log
+ * @param {(line: string) => void} io.logError
+ * @param {(path: string, text: string) => void} io.writeFile
+ * @returns {number} the judged exit code, or 3 when the receipt file could not be written
  */
 export function publishReceipt(receipt, {path, log, logError, writeFile}) {
   const line = JSON.stringify(receipt);
@@ -362,6 +601,15 @@ function findingsOf(passes, memoryJudged, runtimeNodeCalls) {
  * Every pass over one fixture, as one receipt. `Projection` is the ObservationProjection class and
  * `inspector` is {initialInspectorState, layoutInspector, reduceInspectorKey}; `host` carries utc,
  * revision, node, arch, platform, cpus, cpuModel, toolchain, command and runtimeCaps {nodeCalls, agents}.
+ *
+ * @param {object} input
+ * @param {CapProjectionClass} input.Projection the ObservationProjection class (the sources in tests, dist in the CLI)
+ * @param {CapInspector} input.inspector
+ * @param {CapFixture} input.fixture
+ * @param {CapHost} input.host
+ * @param {CapSampling} [input.sampling] defaults to CAP_SAMPLING
+ * @param {boolean} [input.strict] the --strict arm; defaults to false
+ * @returns {CapReceipt}
  */
 export function runCapSaturationBench({Projection, inspector, fixture, host, sampling = CAP_SAMPLING, strict = false}) {
   const plan = {blocks: sampling.blocks, keypressesPerBlock: sampling.keypressesPerBlock, resizeSamples: sampling.resizeSamples};

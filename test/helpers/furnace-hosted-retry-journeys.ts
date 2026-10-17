@@ -13,8 +13,9 @@
  * verb, no furnace doctor, no capability probe.
  */
 import { mkdtempSync, readFileSync, rmSync, statSync } from "node:fs";
+import { createRequire } from "node:module";
 import { connect, type Socket } from "node:net";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 import { createInterface } from "node:readline";
 import type { FurnaceOptions } from "@furnace/sdk";
 import type { CapabilityError } from "../../src/workbench/capability-registry.js";
@@ -26,10 +27,42 @@ export interface RetryFaultEnv {
   /** The adapter class: src through vitest in the default gate, the BUILT dist copy in the receipt runner. */
   readonly Executor: typeof FurnaceHostedExecutor;
   readonly CapabilityError: typeof CapabilityError;
-  /** The SDK: the shipped vendored package, or the receipt runner's copy of it (qa/workbench/furnace-hosted-repaired-sdk.mjs; identical digests since wb-zby). */
+  /** The SDK: the SHIPPED vendored package in both drivers (SHIPPED_FURNACE_SDK; no copy since wb-zby.2); shippedSdkRecord() records its digests. */
   readonly sdk: FurnaceSdk;
   /** chooseScratchBase(...).path: every journey runs with TMPDIR set to a fresh private directory under it. */
   readonly scratchBase: string;
+}
+
+/** The receipt's record of the SDK both drivers drive: the SHIPPED vendored package as installed (wb-zby.2). */
+export interface ShippedSdkRecord {
+  readonly copy: "shipped";
+  /** contract/manifest.json's smithy_model_digest, or "<none>" when the manifest states none. */
+  readonly manifestDigest: string;
+  /** The generated validators' SMITHY_MODEL_DIGEST (their provenance module), or "<none>" when it states none. */
+  readonly provenanceDigest: string;
+}
+
+/** The generated provenance module's exported model digest. */
+const PROVENANCE_DIGEST = /\bSMITHY_MODEL_DIGEST = "(sha256:[0-9a-f]{64})"/;
+
+/** One file of the installed @furnace/sdk package (the vendored tarball as npm installed it), by package-relative path. */
+function readInstalledSdkFile(path: string): string {
+  return readFileSync(join(dirname(createRequire(import.meta.url).resolve("@furnace/sdk/package.json")), path), "utf8");
+}
+
+/**
+ * Read an @furnace/sdk package's two model digests, each from its own file: contract/manifest.json's
+ * smithy_model_digest and the generated validators' provenance SMITHY_MODEL_DIGEST, which agree since wb-zby
+ * re-vendored the SDK. `read` defaults to the installed package (a test hands it an in-memory drifted package).
+ * Read-only: nothing is copied or rewritten. The receipt judge realises a measurement only on copy "shipped" with two
+ * well-formed, EQUAL digests, so a digest stated nowhere ("<none>") or a drifted pair is a recorded "not realised",
+ * never a pass.
+ */
+export function shippedSdkRecord(read: (path: string) => string = readInstalledSdkFile): ShippedSdkRecord {
+  const manifest: unknown = JSON.parse(read("contract/manifest.json"));
+  const stated = typeof manifest === "object" && manifest !== null && "smithy_model_digest" in manifest ? manifest.smithy_model_digest : undefined;
+  const provenance = PROVENANCE_DIGEST.exec(read("dist/contract/furnace-executor-contract/provenance.js"))?.[1];
+  return { copy: "shipped", manifestDigest: typeof stated === "string" ? stated : "<none>", provenanceDigest: provenance ?? "<none>" };
 }
 
 /**
@@ -397,6 +430,9 @@ export async function dropBeforeAdmissionReply(env: RetryFaultEnv): Promise<Drop
 /** The grace the dangling-timer measurement runs under: long enough that a leaked grace timer is still alive when it is counted. */
 export const SETTLED_CLOSE_GRACE_MS = 5000;
 const activeTimeouts = (): number => process.getActiveResourcesInfo().filter((name) => name === "Timeout").length;
+/** The three Attempts that settle success before close(); the sensitivity control parks a fourth until close() aborts it. */
+const SETTLED_ATTEMPT_IDS = ["frn-atm-t1", "frn-atm-t2", "frn-atm-t3"] as const;
+export const SETTLED_CLOSE_CONTROL_ATTEMPT = "frn-atm-t4";
 
 export interface SettledCloseTimers {
   readonly armed: boolean;
@@ -405,22 +441,44 @@ export interface SettledCloseTimers {
   readonly timeoutsAfterClose: number;
   readonly afterClose: HostedReceipt;
 }
-/**
- * wb-21k: three Attempts settle success, then executor.close() aborts the host's closing signal. A grace timer or
- * cancel listener left armed on a settled Attempt would arm one SETTLED_CLOSE_GRACE_MS timer per Attempt there. This is
- * a measurement beside the receipt roster, not a sixth roster journey: the receipt shape stays the five journeys.
- */
-export async function settledCloseTimers(env: RetryFaultEnv): Promise<SettledCloseTimers> {
+/** settledCloseTimers plus the sensitivity control's own fact (wb-19q member 18, wb-21k F2). */
+export interface SettledCloseTimersControl extends SettledCloseTimers {
+  /** True once close()'s abort of the parked control Attempt armed the control timer; the timer is cleared after the after-close count. */
+  readonly controlTimerArmed: boolean;
+}
+
+/** ONE measurement body for the roster-side row and its sensitivity control, so the two cannot drift apart. */
+async function measureSettledCloseTimers(env: RetryFaultEnv, parkControlAttempt: boolean): Promise<SettledCloseTimersControl> {
   return withScratch(env.scratchBase, async () => {
-    const workflow: HostedWorkflow = async () => ({ status: "success" });
+    const control: { timer: ReturnType<typeof setTimeout> | undefined; armed: boolean } = { timer: undefined, armed: false };
+    const workflow: HostedWorkflow = async ({ identity, signal }) => {
+      if (identity.attemptId !== SETTLED_CLOSE_CONTROL_ATTEMPT) return { status: "success" };
+      // wb-19q member 18 (wb-21k F2): the control Attempt parks until close() aborts it and arms its own
+      // SETTLED_CLOSE_GRACE_MS timer INSIDE that abort, so a count taken before close() cannot see the timer.
+      await new Promise<void>((resolve) => {
+        const arm = (): void => {
+          control.timer = setTimeout(() => undefined, SETTLED_CLOSE_GRACE_MS);
+          control.armed = true;
+          resolve();
+        };
+        if (signal.aborted) arm();
+        else signal.addEventListener("abort", arm, { once: true });
+      });
+      return { status: "indeterminate", summary: "control attempt parked until host close" };
+    };
     const executor = harness(
       env,
       workflow,
       async (socketPath) => {
-        for (const [index, attemptId] of ["frn-atm-t1", "frn-atm-t2", "frn-atm-t3"].entries()) {
+        for (const [index, attemptId] of SETTLED_ATTEMPT_IDS.entries()) {
           const bridge = await beginAttempt(socketPath, attemptId, index + 1);
           await terminalOf(bridge, `ex-${attemptId}`);
           bridge.end();
+        }
+        if (parkControlAttempt) {
+          // started, then the driver side is gone: the Attempt stays pending until close() aborts it (as in lostConnectionRetry)
+          const parked = await beginAttempt(socketPath, SETTLED_CLOSE_CONTROL_ATTEMPT, SETTLED_ATTEMPT_IDS.length + 1);
+          parked.end();
         }
       },
       SETTLED_CLOSE_GRACE_MS,
@@ -430,8 +488,34 @@ export async function settledCloseTimers(env: RetryFaultEnv): Promise<SettledClo
     const timeoutsBeforeClose = activeTimeouts();
     await executor.close();
     const timeoutsAfterClose = activeTimeouts();
-    return { armed: settledAttempts === 3, settledAttempts, timeoutsBeforeClose, timeoutsAfterClose, afterClose: executor.receipt() };
+    if (control.timer !== undefined) clearTimeout(control.timer);
+    return {
+      armed: settledAttempts === SETTLED_ATTEMPT_IDS.length && control.armed === parkControlAttempt,
+      settledAttempts,
+      timeoutsBeforeClose,
+      timeoutsAfterClose,
+      controlTimerArmed: control.armed,
+      afterClose: executor.receipt(),
+    };
   });
+}
+
+/**
+ * wb-21k: three Attempts settle success, then executor.close() aborts the host's closing signal. A grace timer or
+ * cancel listener left armed on a settled Attempt would arm one SETTLED_CLOSE_GRACE_MS timer per Attempt there. This is
+ * a measurement beside the receipt roster, not a sixth roster journey: the receipt shape stays the five journeys.
+ */
+export async function settledCloseTimers(env: RetryFaultEnv): Promise<SettledCloseTimers> {
+  return measureSettledCloseTimers(env, false);
+}
+
+/**
+ * wb-19q member 18 (wb-21k F2): the same measurement with a fourth Attempt parked until close() aborts it; that abort
+ * arms one SETTLED_CLOSE_GRACE_MS timer, so the after-close count must exceed the before-close count by at least one.
+ * A measurement whose after-close count is taken before close(), or that never counts, reads a delta of 0 here.
+ */
+export async function settledCloseTimersSensitivity(env: RetryFaultEnv): Promise<SettledCloseTimersControl> {
+  return measureSettledCloseTimers(env, true);
 }
 
 /** The receipt roster's runners, in roster order (pinned against qa RETRY_FAULT_JOURNEYS by the default-gate tier). */

@@ -1,5 +1,5 @@
 import { execFileSync } from "node:child_process";
-import { existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, realpathSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
@@ -14,6 +14,7 @@ import {
   isWorktreeIsolationEnabled,
   pruneWorktrees,
   setWorktreeIsolationEnabled,
+  type WorktreeInfo,
 } from "../src/worktree.js";
 import { nonRepoScratch } from "./helpers/non-repo-scratch.js";
 
@@ -471,6 +472,45 @@ describe("cleanupWorktree — failure path", () => {
   });
 });
 
+/** Every worktree git has registered for `repoDir`, as the resolved paths `git worktree list` prints. */
+function registeredWorktrees(repoDir: string): string[] {
+  return execFileSync("git", ["worktree", "list", "--porcelain"], { cwd: repoDir, encoding: "utf-8", stdio: "pipe" })
+    .split("\n")
+    .filter(line => line.startsWith("worktree "))
+    .map(line => line.slice("worktree ".length));
+}
+
+/**
+ * The body of "does not disable createWorktree directly", with createWorktree
+ * injected so the row after that case can run these exact assertions against a
+ * createWorktree that yields nothing. The case used to call the pre-async
+ * signatures without awaiting them (wb-ana): it asserted on a pending Promise,
+ * so it passed whatever createWorktree did, and no worktree was ever created.
+ */
+async function expectSwitchOffStillCreatesWorktree(create: typeof createWorktree): Promise<void> {
+  const pi = mockPi();
+  const repoDir = initGitRepo();
+  let wt: WorktreeInfo | undefined;
+  try {
+    setWorktreeIsolationEnabled(false);
+    expect(isWorktreeIsolationEnabled()).toBe(false);
+    wt = await create(pi, repoDir, "switch-test");
+    expect(wt).toBeDefined();
+    // A real worktree of this repo: on disk, holding the repo's files, registered with git.
+    expect(existsSync(join(wt!.path, "README.md"))).toBe(true);
+    const registered = realpathSync(wt!.path);
+    expect(registeredWorktrees(repoDir)).toContain(registered);
+
+    const result = await cleanupWorktree(pi, repoDir, wt!, "switch test");
+    expect(result.hasChanges).toBe(false);
+    expect(existsSync(wt!.path)).toBe(false);
+    expect(registeredWorktrees(repoDir)).not.toContain(registered);
+  } finally {
+    await pruneWorktrees(pi, repoDir);
+    removeScratch(wt?.path, repoDir);
+  }
+}
+
 /**
  * The project switch itself (`worktreeIsolation`, #184). Its consumers —
  * agent-manager, both tool schemas, the invocation resolver — all mock this
@@ -495,16 +535,12 @@ describe("worktree isolation switch", () => {
   // The switch gates callers; it deliberately does not disarm createWorktree
   // itself, so a caller that has already decided (agent-manager checks first)
   // still gets a real worktree rather than a silent no-op.
-  it("does not disable createWorktree directly", () => {
-    const repoDir = initGitRepo();
-    try {
-      setWorktreeIsolationEnabled(false);
-      const wt = createWorktree(repoDir, "switch-test");
-      expect(wt).toBeDefined();
-      cleanupWorktree(repoDir, wt!, "switch test");
-    } finally {
-      pruneWorktrees(repoDir);
-      rmSync(repoDir, { recursive: true, force: true });
-    }
+  it("does not disable createWorktree directly", async () => {
+    await expectSwitchOffStillCreatesWorktree(createWorktree);
+  });
+
+  it("the case above fails when createWorktree yields no worktree", async () => {
+    const disabled: typeof createWorktree = async () => undefined;
+    await expect(expectSwitchOffStillCreatesWorktree(disabled)).rejects.toThrow("expected undefined to be defined");
   });
 });

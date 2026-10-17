@@ -74,6 +74,8 @@ import { type CompareRun, catalogWorkflows, compareWorkflowRuns, inspectWorkflow
 import { executeDetachedControl } from "./workbench/detached-control.js";
 import { createWorkbenchEvidenceStore } from "./workbench/evidence-wiring.js";
 import { createWorkflowExecuteTool, type ExecuteLaunch } from "./workbench/execute-tool.js";
+import { createRetainedForgeControlExecutor, retainForgeOperation } from "./workbench/forge-control-retention.js";
+import { type ForgeOperationObserver, observeForgeGateRun } from "./workbench/forge-operation-observer.js";
 import { executeFurnaceControl } from "./workbench/furnace-control.js";
 import { FurnaceObserver } from "./workbench/furnace-observer.js";
 import { captureInvocationIdentity, type IdentityCaptureInput, identityDigest, verifyInvocationIdentity, WORKFLOW_SCRIPT_SCHEMA_VERSION } from "./workbench/identity.js";
@@ -317,6 +319,13 @@ export const WORKFLOW_FILE_FLAG = "subagents-workflow-file";
  * pages of exactly this size, so a slice never asks for more rows than the projection can return (wb-6ze.24).
  */
 export const WORKBENCH_PROJECTION_MAX_QUERY = 40;
+/**
+ * The bar viewport of the inspector timeline view, in cells: the columns of the workbench.timeline/v1 lane model the menu
+ * builds (wb-6ze.35). Fixed rather than read from the terminal, so the model is rebuilt only on a projection change or a
+ * window, zoom or pan change. 24 cells fit the bar area the timeline view leaves at the 80-column overlay (docs/workbench/02
+ * WB-028), so a bar the model places inside its viewport is never cut by the screen.
+ */
+export const WORKBENCH_TIMELINE_COLUMNS = 24;
 
 /**
  * Re-exported from where they now live, because this is where they were
@@ -1185,6 +1194,9 @@ export default function (pi: ExtensionAPI) {
     // as well as its children, and only its own signal terminates that.
     for (const task of workflowTasks.values()) task.abortController.abort();
     workflowTasks.clear();
+    // Forge operations this process started: dispose releases their retentions and closes the owned connections (no cancel verb).
+    await Promise.all([...liveForgeOperations.values()].map(operation => operation.dispose().catch(() => undefined)));
+    liveForgeOperations.clear();
     manager.abortAll();
     for (const timer of pendingNudges.values()) clearTimeout(timer);
     pendingNudges.clear();
@@ -2388,6 +2400,12 @@ Terse command-style prompts produce shallow, generic work.
   const workflowTasks = new Map<string, WorkflowTask>();
   const projection = new ObservationProjection({ maxEvents: 4_096, maxNodes: 2_000, maxEdges: 4_000, maxQuery: WORKBENCH_PROJECTION_MAX_QUERY });
   /**
+   * forge_gate_run (wb-a3s): the Forge operations THIS process started and still observes, keyed by the server's operation
+   * id. Each owns its connection; session_shutdown disposes them, which reaps the spawned app-servers — process ownership at
+   * teardown, never a control verb.
+   */
+  const liveForgeOperations = new Map<string, ForgeOperationObserver>();
+  /**
    * workflow_control (wb-cra): the live Claude SDK queries THIS process runs, keyed by invocation and call index, each
    * with the SDK session it has reported. The host fires onQueryLive/onQueryDone around every query whose stream exposes
    * interrupt(); the session binding comes from the init message. An ended query is dropped the moment the host says so,
@@ -2422,6 +2440,16 @@ Terse command-style prompts produce shallow, generic work.
   }
   function grants(ctx: ExtensionContext): readonly string[] {
     return loadSettings(ctx.cwd).workbench?.capabilityGrants ?? [];
+  }
+  /** The gate.run root: an absolute path resolving to the bound workspace or a package inside it; anything else is undefined, never repaired. */
+  function forgeRunRoot(target: string, workspace: string): string | undefined {
+    if (!isAbsolute(target)) return undefined;
+    try {
+      const resolved = realpathSync(target);
+      return resolved === workspace || resolved.startsWith(`${workspace}/`) ? resolved : undefined;
+    } catch {
+      return undefined;
+    }
   }
   function sourceSettings(ctx: ExtensionContext): WorkbenchSettings | undefined {
     return loadSettings(ctx.cwd).workbench;
@@ -2640,6 +2668,31 @@ Terse command-style prompts produce shallow, generic work.
       },
     }));
     pi.registerTool(defineTool({
+      name: "forge_gate_run",
+      label: "Run a Forge gate as an observed operation",
+      description: "Start one Forge gate.run on an absolute package path inside this workspace over a connection this process keeps open, observe the server's own operation and gate-step frames into the session projection, and return the server-named operation id. Requires forge:run. The operation outlives the call and completes on its own; cancel it through workflow_control under control:forge.cancel.",
+      parameters: Type.Object({ target: Type.String({ minLength: 1, maxLength: 1024 }) }),
+      execute: async (_id, params, _signal, _onUpdate, ctx) => {
+        if (!grants(ctx).includes("forge:run")) return textResult("Permission denied: forge:run grant required.");
+        const scope = observerScope(ctx);
+        const root = forgeRunRoot(params.target, scope.workspace);
+        if (root === undefined) return textResult("Forge gate.run denied outside the authorized workspace scope.");
+        try {
+          const connection = await workbenchNative().openForgeOperationConnection();
+          const observer = await observeForgeGateRun(connection, {
+            root, projection, scope, now: controlNow, timeoutMs: 30_000,
+            // wb-cra.1: the issuing connection is retained under the server's operation id, so workflow_control's forge leg can reach it.
+            retain: (operationId, issuing) => retainForgeOperation(operationId, { operations: issuing.operations, connection: issuing, workspaceRoot: scope.workspace }),
+          });
+          liveForgeOperations.set(observer.operationId, observer);
+          void observer.settled.then(() => { liveForgeOperations.delete(observer.operationId); });
+          return textResult(sanitizeWorkbenchJsonText({ contract: "workbench.forge-gate-run/v1", operationId: observer.operationId, target: root, startedAt: observer.startedAt, completion: "not-asserted" }));
+        } catch (error) {
+          return textResult(sanitizeWorkbenchText(error instanceof Error ? error.message : String(error)));
+        }
+      },
+    }));
+    pi.registerTool(defineTool({
       name: "furnace_observe",
       label: "Observe external Furnace Run",
       description: "Read one bounded snapshot of an externally launched native Run and Attempt/log references in this workspace. Requires furnace:inspect. Never controls the Run.",
@@ -2773,12 +2826,7 @@ Terse command-style prompts produce shallow, generic work.
         }
         return { receipt: execution.receipt, status: execution.status };
       },
-      forge: async (): Promise<ControlExecutionSummary> => {
-        throw Object.assign(
-          new CapabilityError("unavailable", "Forge cancel needs the connection that issued the operation; this process retains none, so no Forge control leg is wired."),
-          { code: "no-retained-connection" },
-        );
-      },
+      forge: createRetainedForgeControlExecutor(controlNow),
     };
     pi.registerTool(createWorkflowControlTool({
       grants,
@@ -4601,6 +4649,7 @@ Write the file using the write tool. Only write the file, nothing else.`;
     observation: {
       projection,
       relationPage: WORKBENCH_PROJECTION_MAX_QUERY,
+      timelineColumns: WORKBENCH_TIMELINE_COLUMNS,
       scope: task => task.observationScope ? { workspace: task.observationScope.workspace, principal: task.observationScope.principal } : undefined,
       // Loaders exist for the landed readers; authorization is the live
       // exact-grant check each load runs (docs/workbench/20, wb-g1g.1 ruling).
