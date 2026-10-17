@@ -166,10 +166,47 @@ describe('SCG reactivefiber.render.preview input arms (wb-973.1 R1, wb-973.3 R3)
     registerNativeReactiveFiberRender(registry, process.cwd());
     return registry;
   }
+  /** The pinned RFCLI ViewContractOutcome.to_json key order and vocabularies (src/reactive_fiber_cli/domain/view_contract.py
+   * :85-116, :236-248 @8a8b83e4d). */
+  const VIEW_CONTRACT_KEYS = ['view_id', 'view_revision', 'satisfied', 'degraded', 'checks', 'failures', 'unavailable_sources', 'contract_digest'];
+  const CHECK_NAMES = ['required_source_present', 'max_output_bytes', 'non_empty_output', 'no_truncated_blocks', 'required_keys_observed', 'latency_ms'];
+  const CHECK_STATUSES = ['passed', 'failed', 'advisory'];
+  const SHA256_REF = /^sha256:[0-9a-f]{64}$/;
+  /** The elements of a JSON array, or a thrown error when the value is not one. */
+  function jsonArray(value: unknown): unknown[] {
+    if (!Array.isArray(value)) throw new Error('expected a JSON array');
+    const items: unknown[] = value;
+    return items;
+  }
+  /** The elements of a JSON array of objects, or a thrown error naming what was not one. */
+  function objectRows(value: unknown): Record<string, unknown>[] {
+    return jsonArray(value).map(item => {
+      if (item === null || typeof item !== 'object' || Array.isArray(item)) throw new Error('expected a JSON object row');
+      const entries: [string, unknown][] = Object.entries(item);
+      return Object.fromEntries(entries);
+    });
+  }
+  /** A satisfied result.view_contract in the pinned RFCLI ViewContractOutcome.to_json shape, for a view whose contract
+   * requires one lens key and the non_empty_output invariant under a latency budget: both deterministic rows passed,
+   * the advisory latency row is recorded, nothing failed and no required source is lacking ('context' is 7 bytes). */
+  const satisfiedViewContract = () => ({
+    view_id: VIEW,
+    view_revision: `sha256:${'b'.repeat(64)}`,
+    satisfied: true,
+    degraded: false,
+    checks: [
+      { check: 'required_source_present', expected: 'lens:beads.current.title', actual: 'present', status: 'passed' },
+      { check: 'non_empty_output', expected: 'non-empty output', actual: '7 bytes', status: 'passed' },
+      { check: 'latency_ms', expected: '<= 60000 ms', actual: '12 ms', status: 'advisory' },
+    ],
+    failures: [],
+    unavailable_sources: [],
+    contract_digest: `sha256:${'c'.repeat(64)}`,
+  });
   /** A served --view render envelope: the legacy keys plus the additive view keys rf puts beside them in result. */
   const viewRenderEnvelope = () => {
     const envelope = validRf();
-    return { ...envelope, result: { ...envelope.result, view_id: VIEW, effective_scopes: [{ kind: 'shared', revision: digest }], view_contract: { status: 'satisfied', missing: [] } } };
+    return { ...envelope, result: { ...envelope.result, view_id: VIEW, effective_scopes: [{ kind: 'shared', revision: digest }], view_contract: satisfiedViewContract() } };
   };
 
   it('SCG-R1: {view,taskId} spawns the served --view --task-id argv', async () => {
@@ -191,6 +228,29 @@ describe('SCG reactivefiber.render.preview input arms (wb-973.1 R1, wb-973.3 R3)
     producer(envelope);
     const result = await nativeReactiveFiberPreview('model', 'task', process.cwd());
     expect(result).toEqual({ contract: 'reactivefiber.render.preview/v1', workspaceRoot: process.cwd(), source: envelope });
+  });
+
+  // wb-973.1 re-cut, owner ruling R468(b) (folds in gate-2 F1): the fixture names the contract RFCLI serves, so the
+  // R2 reader (wb-973.2) is built against the real object, never an invented one.
+  it('SCG-R1 (R468 F1): the view_contract fixture is the pinned RFCLI ViewContractOutcome.to_json object (view_contract.py:236-248 @8a8b83e4d)', () => {
+    const outcome: Record<string, unknown> = viewRenderEnvelope().result.view_contract;
+    expect(Object.keys(outcome)).toEqual(VIEW_CONTRACT_KEYS);
+    expect(outcome.view_id).toBe(VIEW);
+    expect(outcome.view_revision).toMatch(SHA256_REF);
+    expect(outcome.contract_digest).toMatch(SHA256_REF);
+    const checks = objectRows(outcome.checks);
+    for (const row of checks) {
+      expect(Object.keys(row)).toEqual(['check', 'expected', 'actual', 'status']);
+      expect(CHECK_NAMES).toContain(row.check);
+      expect(CHECK_STATUSES).toContain(row.status);
+    }
+    // failures are the failed rows as {check, expected, actual}; satisfied iff none failed; degraded is its negation.
+    const failures = objectRows(outcome.failures);
+    expect(failures).toEqual(checks.filter(row => row.status === 'failed').map(({ check, expected, actual }) => ({ check, expected, actual })));
+    expect(outcome.satisfied).toBe(failures.length === 0);
+    expect(outcome.degraded).toBe(outcome.satisfied === false);
+    expect(jsonArray(outcome.unavailable_sources).every(ref => typeof ref === 'string' && ref.startsWith('lens:'))).toBe(true);
+    expect(outcome.satisfied).toBe(true);
   });
 
   it.each([
