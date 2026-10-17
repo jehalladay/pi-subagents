@@ -6,6 +6,9 @@ import {
   acknowledge,
   CONTROL_CONTRACT_VERSION,
   CONTROL_PERMIT_POLICY,
+  CONTROL_REF_NOT_ADMITTED_REASON,
+  CONTROL_REF_REFUSAL_POLICY,
+  CONTROL_WITHHELD_REF,
   type ControlDecision,
   type ControlDenyPolicy,
   type ControlOutcome,
@@ -65,6 +68,7 @@ function validationFailure(fn: () => unknown): void {
   expect(failure).toBeInstanceOf(CapabilityError);
   expect((failure as CapabilityError).category).toBe("validation");
 }
+const cp = (...codes: number[]): string => String.fromCodePoint(...codes);
 const ACK = { acknowledgedAt: "2026-10-15T07:00:02Z", nativeAckRef: "frn-req-stop-1" };
 const DONE = { outcome: "completed" as ControlOutcome, nativeResultRef: "frn-req-status-2", settledAt: "2026-10-15T07:00:09Z" };
 const NO_OWNER = denied("no-confirmed-ownership", "authorization", "no confirmed lifecycle ownership");
@@ -308,12 +312,23 @@ describe("permitted receipt and its native phases", () => {
     validationFailure(() => acknowledge(acknowledged, ACK));
     validationFailure(() => acknowledge(result, ACK));
     validationFailure(() => settle(result, DONE));
-    for (const nativeAckRef of ["", "   ", undefined, "ack\u001b[2J", "a".repeat(4097)]) {
+    // A missing native reference is no reference: the phase itself is refused.
+    for (const nativeAckRef of ["", "   ", undefined]) {
       validationFailure(() => acknowledge(requested, { ...ACK, nativeAckRef: nativeAckRef as string }));
     }
-    for (const nativeResultRef of ["", "   ", undefined, "res\u202e"]) {
+    for (const nativeResultRef of ["", "   ", undefined]) {
       validationFailure(() => settle(acknowledged, { ...DONE, nativeResultRef: nativeResultRef as string }));
     }
+    // wb-5a7: a present reference the core does not admit (an escape sequence, past the 4096-byte bound, a bidi override) is
+    // no longer a throw. The phase is recorded with the reference withheld and a typed refusal on the receipt it mints;
+    // test/workbench-control-admission.test.ts measures the whole wb-952 acceptance set.
+    const refused = (field: "nativeAckRef" | "nativeResultRef") => [{ policy: CONTROL_REF_REFUSAL_POLICY, category: "validation", field, reason: CONTROL_REF_NOT_ADMITTED_REASON }];
+    for (const nativeAckRef of [`ack${cp(0x1b)}[2J`, "a".repeat(4097)]) {
+      expect(acknowledge(requested, { ...ACK, nativeAckRef })).toStrictEqual({ ...requested, phase: "acknowledged", acknowledgedAt: ACK.acknowledgedAt,
+        nativeAckRef: CONTROL_WITHHELD_REF, refusals: refused("nativeAckRef") });
+    }
+    expect(settle(acknowledged, { ...DONE, nativeResultRef: `res${cp(0x202e)}` })).toStrictEqual({ ...acknowledged, phase: "result", outcome: DONE.outcome,
+      nativeResultRef: CONTROL_WITHHELD_REF, settledAt: DONE.settledAt, refusals: refused("nativeResultRef") });
     for (const acknowledgedAt of ["", "later", "2026-10-15T07:00:02"]) validationFailure(() => acknowledge(requested, { ...ACK, acknowledgedAt }));
     for (const settledAt of ["later", "2026-10-15T07:00:09"]) validationFailure(() => settle(acknowledged, { ...DONE, settledAt }));
     validationFailure(() => settle(acknowledged, { ...DONE, outcome: "success" as ControlOutcome }));
