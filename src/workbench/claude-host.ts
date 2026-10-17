@@ -118,6 +118,15 @@ function outcomeText(value: string, maxTextLength = WORKBENCH_TEXT_LIMIT): strin
   return sanitizeWorkbenchText(value, maxTextLength, "label");
 }
 
+/**
+ * wb-19q member 12 (wb-wyr gate survivor GM5): the outer outcomeText pass below is retained as
+ * defense-in-depth. Its only measured discriminator was the bounded() cut splitting an astral pair
+ * in the inner 160-unit reason — gone since wb-yr9 (ce7ec7f), whose bounded() drops a pair it
+ * would split rather than leave a lone surrogate. With that cut fixed, GM5 ("outer pass -> plain
+ * redactor") measures equivalent on every probe, including the member-12 straddle probe in
+ * test/workbench-degradation-policy.test.ts (green with GM5 applied in an isolated copy). Keeping
+ * the outer pass re-covers any future drift in what the inner pass can hand this composition.
+ */
 function authRequiredError(detail: string): string {
   const reason = outcomeText(detail, 160);
   return outcomeText(

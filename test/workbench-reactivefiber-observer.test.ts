@@ -448,12 +448,34 @@ describe('producer release from result.provenance.cli_version (wb-2j3.1 reader, 
     ['a whitespace run', `${RELEASE}  local`],
     ['text the shared label layout redacts (an obviously fake assignment)', 'api_key=OBVIOUSLY-FAKE'],
     ['text the shared label layout redacts (an obviously fake bearer value)', 'Bearer OBVIOUSLY-FAKE-VALUE'],
+    // wb-19q (2j3.2 F1): 257 bytes in 129 code units, the one 257-byte string the 256-unit label layout leaves whole, so the byte
+    // bound alone drops it; a reader admitting 257 bytes carries it and fails this row (the 257-ASCII row above is also cut by the layout).
+    ['257 UTF-8 bytes in 129 characters (the multibyte boundary)', `a${cp(0xe9).repeat(128)}`],
   ];
   it.each(DROPPED)('R3: a cli_version that is %s is dropped, never rewritten or defaulted: the projection equals the absent case', (_name, value) => {
     const topology = reactivefiberTopology(stating(value) as JsonValue, invoked);
     expect(JSON.stringify(topology)).toBe(JSON.stringify(TODAY));
     expect(topology).toStrictEqual(TODAY);
     expect(nativeEvidence(CAPABILITY, stating(value) as JsonValue)).toStrictEqual(TODAY_EVIDENCE);
+  });
+
+  // wb-19q (2j3.2 F2) decoy: a release is read from result.provenance.cli_version only. A cli_version beside provenance
+  // (result.cli_version) is an extra result key the shape check tolerates and neither reader consults, so a reader falling back to it
+  // (provenance?.cli_version ?? result.cli_version, in the topology or the native-evidence reader) fails this row. The value is obviously fake.
+  it('R3: a cli_version beside provenance (result.cli_version) is never read as a release: the projection and metadata equal the absent case and never show it', () => {
+    const decoyRelease = '9.9.9';
+    const decoy = withResult({cli_version: decoyRelease, provenance: {graph_revision_id: GRAPH}});
+    expect(JSON.stringify(decoy)).toContain(`"cli_version":"${decoyRelease}"`);
+    const topology = reactivefiberTopology(decoy as JsonValue, invoked);
+    expect(JSON.stringify(topology)).toBe(JSON.stringify(TODAY));
+    expect(topology).toStrictEqual(TODAY);
+    const evidence = nativeEvidence(CAPABILITY, decoy as JsonValue);
+    expect(evidence).toStrictEqual(TODAY_EVIDENCE);
+    const surfaced = `${JSON.stringify(topology)}\n${JSON.stringify(evidence)}`;
+    expect(surfaced).not.toContain(decoyRelease);
+    for (const synthesized of ['rf-cli:', 'rf@', 'cli_version', 'producer release', CARRIER_RELEASE]) expect(surfaced).not.toContain(synthesized);
+    // Control: the same key at the envelope level is a ninth key, refused by the strict eight-key check before anything projects.
+    expect(refusal(reading(envelope({cli_version: decoyRelease}))).category).toBe('validation');
   });
 });
 

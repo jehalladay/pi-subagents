@@ -768,6 +768,10 @@ describe('respin item 2: ackToTerminalMs states its sign convention', () => {
  * unrelated line moves; non-vacuous by the falsifier row, whose mutants are spliced at the located nodes so that a
  * reformat of src/index.ts cannot quietly disarm them. For reference only, never asserted: at trunk 06015e7 the call
  * is src/index.ts:2767 and the host :2772.
+ *
+ * wb-a2g.1 F1 (member 19): a spread element placed after the signal property wins at runtime, so signalOf fails
+ * closed on any trailing spread unless it resolves to object literals carrying no signal key; trunk's conditional
+ * model/permissionMode spreads resolve signal-free, so the positive row stays green on the real source.
  */
 const TASK_SIGNAL = 'task.abortController.signal';
 
@@ -788,10 +792,37 @@ function calleeName(call: ts.CallExpression): string | undefined {
   return undefined;
 }
 
+/**
+ * True when `expression` provably contributes no `signal` key if spread into an object literal: parentheses and
+ * conditionals resolve structurally, object literals must name every key away from `signal` (nested spreads recurse),
+ * and anything else (identifiers, calls, computed names) fails closed as potentially signal-bearing.
+ */
+function resolvesSignalFree(expression: ts.Expression): boolean {
+  if (ts.isParenthesizedExpression(expression)) return resolvesSignalFree(expression.expression);
+  if (ts.isConditionalExpression(expression)) return resolvesSignalFree(expression.whenTrue) && resolvesSignalFree(expression.whenFalse);
+  if (!ts.isObjectLiteralExpression(expression)) return false;
+  return expression.properties.every((property) => {
+    if (ts.isSpreadAssignment(property)) return resolvesSignalFree(property.expression);
+    const name = property.name;
+    return (ts.isIdentifier(name) || ts.isStringLiteral(name)) && name.text !== 'signal';
+  });
+}
+
 function signalOf(call: ts.CallExpression | undefined): ts.PropertyAssignment | undefined {
   const options = call?.arguments[0];
   if (options === undefined || !ts.isObjectLiteralExpression(options)) return undefined;
-  return options.properties.find((property): property is ts.PropertyAssignment => ts.isPropertyAssignment(property) && ts.isIdentifier(property.name) && property.name.text === 'signal');
+  const signal = options.properties.find((property): property is ts.PropertyAssignment => ts.isPropertyAssignment(property) && ts.isIdentifier(property.name) && property.name.text === 'signal');
+  if (signal === undefined) return undefined;
+  // A later element wins at runtime, so fail closed when anything after the signal property could redefine it.
+  for (const later of options.properties.slice(options.properties.indexOf(signal) + 1)) {
+    if (ts.isSpreadAssignment(later)) {
+      if (!resolvesSignalFree(later.expression)) return undefined;
+    } else {
+      const name = later.name;
+      if (!(ts.isIdentifier(name) || ts.isStringLiteral(name)) || name.text === 'signal') return undefined;
+    }
+  }
+  return signal;
 }
 
 /** Every createClaudeWorkflowHost call in `text`, with its own signal and the signal of the runWorkflow call enclosing it. */
@@ -843,12 +874,17 @@ describe('respin item 3 (r16 U1, owner R1 = (b)): the src/index.ts wiring the ru
     expect(host?.hostSignalSpan).toBeDefined();
     expect(host?.runSignalSpan).toBeDefined();
     if (host?.hostSignalSpan === undefined || host.runSignalSpan === undefined) return;
+    const [, hostSignalEnd] = host.hostSignalSpan;
     const mutants = [
       splice(index, host.hostSignalSpan, 'signal: hostController.signal'),
       splice(index, host.hostSignalSpan, 'abortSignal: task.abortController.signal'),
       splice(index, host.hostSignalSpan, '/* signal: task.abortController.signal */ label: "host"'),
       splice(index, host.runSignalSpan, 'runController.signal'),
       `${index}\nnative.createClaudeWorkflowHost({ cwd: ".", signal: task.abortController.signal });\n`,
+      // GM10b (wb-a2g.1 F1): a trailing spread that can swap in a fresh controller's signal once the task signal has aborted.
+      splice(index, [hostSignalEnd, hostSignalEnd], ', ...(task.abortController.signal.aborted ? { signal: new AbortController().signal } : {})'),
+      // GM10 (wb-a2g.1 F1): a trailing spread that can override the wired signal with undefined at runtime.
+      splice(index, [hostSignalEnd, hostSignalEnd], ', ...(settings.detachSignal ? { signal: undefined } : {})'),
     ];
     for (const mutant of mutants) {
       expect(mutant).not.toBe(index);

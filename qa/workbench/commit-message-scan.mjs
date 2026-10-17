@@ -11,8 +11,8 @@
 // test/source-hygiene.test.ts has 12. The message set adds U+200B, U+200C, U+200D, U+2060 and U+FEFF. Messages are
 // ASCII by the fresh-ASCII-cut rule (a 0-of-N ratchet), so an emoji ZWJ sequence in a message IS a finding, while
 // source and fixtures legitimately carry ZWJ sequences, so the tree-side guard keeps its narrower set. Not unified. This is the message-side mirror of the tree-side guard: a commit
-// message is permanent once a merge-only landing carries it, and the guard set includes U+202E, the
-// trojan-source display vector. Motivation of record: wb-era F1.
+// message is permanent once a merge-only landing carries it, and the guard set covers U+202E and its neighbours, the
+// bidi and invisible display controls that change how a commit message reads. Motivation of record: wb-era F1.
 //   0  every new commit message and identity is clean
 //   2  the scan could not run (unresolvable base or tip, bad arguments, an unknown argument); never a silent pass, and no
 //      summary line is printed on stdout in this case
@@ -24,6 +24,7 @@
 // as an offender; the name is projected to printable ASCII so the report cannot carry a raw point.
 // Output prints only code point labels, never the raw points, so the report cannot itself carry them.
 import {execFileSync} from 'node:child_process';
+import {realpathSync} from 'node:fs';
 import {pathToFileURL} from 'node:url';
 
 /**
@@ -204,4 +205,7 @@ export function main(argv) {
   return offenders.length === 0 ? 0 : 3;
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) process.exitCode = main(process.argv.slice(2));
+// Entry guard (wb-vic F9): run main only when this file is the script node was started with. argv[1] may be a SYMLINK to this
+// file or a relative spelling, while import.meta.url is always the resolved file, so the comparison uses the resolved path of
+// argv[1] (the pre-push hook's own guard does the same); comparing the raw argv[1] skipped the scan and exited 0, failing open.
+if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href) process.exitCode = main(process.argv.slice(2));
