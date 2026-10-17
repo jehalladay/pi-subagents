@@ -46,7 +46,14 @@ export interface InspectorState {
   /** Selected evidence reference of the current node in the details view. */
   evidenceIndex: number;
 }
-export interface InspectorSize { width: number; rows: number; ascii?: boolean }
+export interface InspectorSize {
+  width: number;
+  rows: number;
+  ascii?: boolean;
+  /** Opt in to the docs/10 pane tiers (two panes at 80-119 columns, three at 120 and above, both needing 20 rows). Absent or false keeps
+   * the single-column rendering at every size, so a host that passes only width and rows is unchanged. */
+  panes?: boolean;
+}
 export type InspectorAction = 'close' | 'transcript' | 'load-evidence';
 export const initialInspectorState = (): InspectorState => ({
   view: 'overview', selected: null, index: 0, focused: null, filter: '', editingFilter: false,
@@ -713,11 +720,22 @@ function graphModelRows(graph: GraphViewModel, view: GraphViewState, room: numbe
 }
 
 /** Pure viewport layout; capped rows fetched from indexed nodes, never raw event history. */
-export function layoutInspector(model:InspectorModel,state:InspectorState,size:InspectorSize):string[]{
+interface ColumnOptions {
+  /** Treat the render as one pane of a composition: the wide-terminal "Selected" line and the full attention panel are suppressed. */
+  compact: boolean;
+  /** Width the header lines (title, view, filter, focus, rule) are built for; the body keeps the column width. */
+  headerWidth: number;
+  /** View name the header prints, so a pane that renders another view still labels the real state. */
+  headerView: InspectorView;
+}
+interface ColumnResult { lines: string[]; headerCount: number; hasCurrent: boolean; hinted: boolean }
+function layoutColumn(model:InspectorModel,state:InspectorState,size:InspectorSize,options?:ColumnOptions):ColumnResult{
   const width=Math.max(12,Math.trunc(size.width));
   const height=Math.max(5,Math.trunc(size.rows));
   const ascii=size.ascii??false;
   const inner=Math.max(1,width-4);
+  const compact=options?.compact??false;
+  const headerInner=Math.max(1,(options?.headerWidth??width)-4);
   const bodyCount=Math.max(1,Math.min(32,height-9));
   const selectedIndex=state.selected ? model.projection.indexOf({scope:model.scope,invocationId:model.invocationId,key:state.selected}) : undefined;
   const page=rowWindow(model,selectedIndex===undefined?state:{...state,index:selectedIndex},bodyCount);
@@ -731,6 +749,8 @@ export function layoutInspector(model:InspectorModel,state:InspectorState,size:I
   // An attention panel line is built from producer strings attentionPanel already passed through the helper once, so it is only
   // width-bounded here: a second pass is a text change (a JSON closing brace after a marker), never a no-op.
   const addPanel=(text:string)=>{if(lines.length<height) lines.push(` ${stripTerminalSequences(truncateToWidth(text,inner,ascii?'~':'…'))}`);};
+  // Header lines are built for the full terminal width even when the body is one pane of a composition.
+  const addHeader=(text:string)=>{if(lines.length<height) lines.push(` ${limitLine(text,headerInner,ascii)}`);};
   // What the projection's caps dropped for this invocation (wb-ea1): one counted line in the overview and details views, and
   // nothing at all when nothing was dropped. The header names node truncation in every view: an evicted node is a row no view
   // can draw, while an evicted event hides no row of any view (the inspector draws no event history), so an event-only drop
@@ -738,12 +758,13 @@ export function layoutInspector(model:InspectorModel,state:InspectorState,size:I
   const cut=model.projection.truncation({scope:model.scope,invocationId:model.invocationId});
   const capLine=capRemainder(cut,ascii);
   const capped=cut.nodes===0 ? '' : ascii ? ' | capped' : ' · capped';
-  const title=limitLine(model.title,Math.max(1,inner-28-capped.length),ascii);
-  add(`${ascii?'[':'╭'} ${title}  ${safe(model.status,ascii)}${capped} ${ascii?']':'╮'}`);
-  add(`${state.view.toUpperCase()}  ${page.total} observed operation${page.total===1?'':'s'} · ${state.follow?'following':'paused view'} · ${index+1}/${Math.max(1,page.total)}`);
-  if(state.filter) add(`Filter (viewport): ${state.filter}${state.editingFilter?'_':''}`);
-  if(state.focused) add('Focused on selected node and confirmed direct relations only');
-  add(ascii?'-'.repeat(Math.min(inner,48)):'─'.repeat(Math.min(inner,48)));
+  const title=limitLine(model.title,Math.max(1,headerInner-28-capped.length),ascii);
+  addHeader(`${ascii?'[':'╭'} ${title}  ${safe(model.status,ascii)}${capped} ${ascii?']':'╮'}`);
+  addHeader(`${(options?.headerView??state.view).toUpperCase()}  ${page.total} observed operation${page.total===1?'':'s'} · ${state.follow?'following':'paused view'} · ${index+1}/${Math.max(1,page.total)}`);
+  if(state.filter) addHeader(`Filter (viewport): ${state.filter}${state.editingFilter?'_':''}`);
+  if(state.focused) addHeader('Focused on selected node and confirmed direct relations only');
+  addHeader(ascii?'-'.repeat(Math.min(headerInner,48)):'─'.repeat(Math.min(headerInner,48)));
+  const headerCount=lines.length;
   if(page.total===0) add('No source observations for this invocation; no graph or timeline is inferred.');
   if(state.view==='overview') {
     add('Observed tree · nesting from observed grouping/ownership edges only');
@@ -785,8 +806,8 @@ export function layoutInspector(model:InspectorModel,state:InspectorState,size:I
     };
     const last=lastSiblings(entries);
     // Rows never displace the selected, attention, critical-path, row-range and key-hint lines.
-    const panel=model.attention ? attentionPanel(model.attention,inner,ascii,width<80 || height<20) : undefined;
-    const available=height-lines.length-(current && width>=80 ? 1 : 0)-(paged ? 1 : 0)-1-(capLine ? 1 : 0);
+    const panel=model.attention ? attentionPanel(model.attention,inner,ascii,compact || width<80 || height<20) : undefined;
+    const available=height-lines.length-(current && !compact && width>=80 ? 1 : 0)-(paged ? 1 : 0)-1-(capLine ? 1 : 0);
     const fixed=panel ? panel.head.length+panel.tail.length : 2;
     // The tree keeps a few rows; bottleneck rows and notes take only what remains, dropping from the bottom.
     const optional=panel ? fitAttentionPanel(panel,Math.max(0,available-fixed-Math.min(entries.length,MAX_PANEL_TREE_MIN))) : [];
@@ -810,7 +831,7 @@ export function layoutInspector(model:InspectorModel,state:InspectorState,size:I
       while(lines.length>0 && lines.length>=height) lines.pop();
       add(capLine);
     }
-    if(current && width>=80) add(`Selected  ${safe(ref(current),ascii)} · ${current.evidenceRefs.length} evidence ref${current.evidenceRefs.length===1?'':'s'}`);
+    if(current && !compact && width>=80) add(`Selected  ${safe(ref(current),ascii)} · ${current.evidenceRefs.length} evidence ref${current.evidenceRefs.length===1?'':'s'}`);
     if(panel) for(const text of [...panel.head,...optional,...panel.tail]) addPanel(text);
     else {
       add('Attention: stale/unknown is last-known state, not live progress.');
@@ -921,6 +942,68 @@ export function layoutInspector(model:InspectorModel,state:InspectorState,size:I
   }
   if(paged) add(`Rows ${page.offset+1}-${page.offset+page.nodes.length}/${page.total} · viewport only`);
   while(lines.length<Math.min(height-1,5)) add('');
+  const hinted=lines.length<height;
   add('Tab views · j/k · Esc back/close');
-  return lines.slice(0,height);
+  return {lines:lines.slice(0,height),headerCount:Math.min(headerCount,lines.length),hasCurrent:current!==undefined,hinted};
 }
+
+/** Pane geometry (docs/10 "Layout responsiveness"): the two-pane left pane never narrower than PANE_MIN_WIDTH_LEFT, every pane of a
+ * three-pane composition at least PANE_MIN_WIDTH_THREE, no pane wider than PANE_MAX_WIDTH. Exported so tests compute tier
+ * boundaries from the values the layout uses instead of restating them. */
+export const PANE_MIN_WIDTH_LEFT=40;
+export const PANE_MIN_WIDTH_THREE=36;
+export const PANE_MAX_WIDTH=80;
+/** Fixed text only: no producer string reaches the separator or the cap notice, so nothing here needs the shared sanitizers. */
+const paneSeparator=(ascii:boolean):string=>ascii?' | ':' │ ';
+
+/** Docs/10 "Layout responsiveness" pane tiers over the single-column renderer. Each pane is one column render of its own view
+ * (one projection window per pane); the header spans the full width above the panes and the key hint stays the last row. */
+function layoutPanes(model:InspectorModel,state:InspectorState,size:InspectorSize):string[]{
+  const width=Math.max(12,Math.trunc(size.width));
+  const height=Math.max(5,Math.trunc(size.rows));
+  const ascii=size.ascii??false;
+  const separator=paneSeparator(ascii);
+  const gap=visibleWidth(separator);
+  const threePane=width>=120 && Math.min(PANE_MAX_WIDTH,Math.floor((width-2*gap)/3))>=PANE_MIN_WIDTH_THREE;
+  const widths=threePane
+    ? Array<number>(3).fill(Math.min(PANE_MAX_WIDTH,Math.floor((width-2*gap)/3)))
+    : (()=>{const left=Math.min(PANE_MAX_WIDTH,Math.max(PANE_MIN_WIDTH_LEFT,Math.floor((width-gap)/2)));return [left,Math.min(PANE_MAX_WIDTH,width-gap-left)];})();
+  const render=(view:InspectorView,paneWidth:number):ColumnResult=>
+    layoutColumn(model,{...state,view},{width:paneWidth,rows:height,ascii},{compact:true,headerWidth:width,headerView:state.view});
+  // Panes after the first are chosen from what the first one found: a selected node gets details, otherwise the timeline summary.
+  const first=render(threePane?'overview':state.view==='details'?'overview':state.view,widths[0]);
+  const bodies=[first];
+  if(threePane){
+    bodies.push(render(state.view==='overview' || state.view==='graph'?'graph':'timeline',widths[1]));
+    bodies.push(render('details',widths[2]));
+  } else bodies.push(render(first.hasCurrent?'details':'timeline',widths[1]));
+  const headerCount=first.headerCount;
+  const rowsLeft=Math.max(1,height-headerCount-1);
+  const columns=bodies.map(body=>{
+    const rows=body.lines.slice(headerCount,body.hinted?body.lines.length-1:body.lines.length);
+    if(rows.length<=rowsLeft) return rows;
+    // Rows past the cap end with a notice, never a silent cut.
+    return [...rows.slice(0,rowsLeft-1),` ${ascii?'...':'…'} ${rows.length-(rowsLeft-1)} more row${rows.length-(rowsLeft-1)===1?'':'s'} in this pane`];
+  });
+  const padPane=(text:string,paneWidth:number):string=>{
+    const cut=visibleWidth(text)>paneWidth?truncateToWidth(text,paneWidth,''):text;
+    return cut+' '.repeat(Math.max(0,paneWidth-visibleWidth(cut)));
+  };
+  const out=first.lines.slice(0,headerCount);
+  for(let row=0;row<rowsLeft;row++){
+    if(columns.every(column=>row>=column.length)) break;
+    out.push(columns.map((column,at)=>padPane(column[row]??'',widths[at])).join(separator).trimEnd());
+  }
+  while(out.length<Math.min(height-1,5)) out.push('');
+  out.push(first.hinted ? first.lines[first.lines.length-1] : ' Tab views · j/k · Esc back/close');
+  return out.slice(0,height);
+}
+
+export function layoutInspector(model:InspectorModel,state:InspectorState,size:InspectorSize):string[]{
+  const width=Math.max(12,Math.trunc(size.width));
+  const height=Math.max(5,Math.trunc(size.rows));
+  // Below 80 columns or 20 rows the single column is the specified layout and is reached unchanged.
+  if(size.panes===true && width>=80 && height>=20) return layoutPanes(model,state,size);
+  return layoutColumn(model,state,size).lines;
+}
+
