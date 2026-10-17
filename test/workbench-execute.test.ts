@@ -778,8 +778,12 @@ describe("E7 purity", () => {
     expect(source).not.toMatch(/\b(?:Date\.now|Math\.random|process\.|child_process|node:fs|fetch\s*\(|new Date\()/);
     expect(source).not.toMatch(/@anthropic|@furnace|claude-agent-sdk|\.invoke\s*\(|\.discover\s*\(/);
   });
-  it("does not register itself in the pinned workbench tool census (registration is a separate bead)", () => {
+  it("is registered in the pinned workbench tool census by wb-syh, the registration bead (the F9 pin, flipped in that bead's own commit)", () => {
     const index = readFileSync(new URL("../src/index.ts", import.meta.url), "utf8");
-    expect(index).not.toContain("workflow_execute");
+    expect(index).toContain("createWorkflowExecuteTool");
+    expect(index).toContain("workflow_execute");
+    // The pure module still launches nothing itself: the wiring lives in execute-tool.ts and index.ts.
+    const module = readFileSync(new URL("../src/workbench/execute.ts", import.meta.url), "utf8");
+    expect(module).not.toMatch(/registerTool|defineTool/);
   });
 });
