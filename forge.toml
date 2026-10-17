@@ -172,3 +172,7 @@ timeout = 180
 [build.commands.forge-control-live]
 command = "./node_modules/.bin/vitest run --config vitest.forge-control-live.config.ts"
 timeout = 600
+
+[build.commands.detached-control-live]
+command = "./node_modules/.bin/vitest run --config vitest.detached-control-live.config.ts"
+timeout = 600
