@@ -1,7 +1,9 @@
 // wb-0kg.4 (VC-7 / W18-D): Furnace Work retry while child Run establishment is uncertain -- FIXTURE-tier receipt.
 // Pure judgement and receipt shaping over the journeys the runner measured through the landed wb-zmd adapter's
-// per-Attempt embedded bridge and a REPAIRED copy of the vendored @furnace/sdk. This module does no I/O and reads no
-// clock or environment; its only import is the wb-0kg.1 fault receipt's path scrubber, reused, never copied.
+// per-Attempt embedded bridge and the SHIPPED vendored @furnace/sdk (wb-zby.2: no copy, no manifest rewrite; the
+// receipt records the package's manifest and provenance digests, which agree since wb-zby). This module does no I/O
+// and reads no clock or environment; its only import is the wb-0kg.1 fault receipt's path scrubber, reused, never
+// copied.
 // Spec: docs/workbench/14 "Parent Furnace Work retry while child Run establishment is uncertain."; wb-zmd "one bridge
 // host session per Attempt" with receipts stating "no crash durability (controller or Pi death leaves running Attempts
 // needing operator recovery), Observe answered by the resident session (session-word), per-Attempt identity"; BOUNDARY 07:30Z "never reintroduce a
@@ -12,7 +14,7 @@ import {basenameOnly} from './local-detached-faults-receipt.mjs';
 export const RETRY_FAULT_RECEIPT_CONTRACT = 'workbench.furnace-hosted-retry-fault/v1';
 export const RETRY_FAULT_TIER = 'fixture';
 export const RETRY_FAULT_TIER_STATEMENT =
-  'FIXTURE tier: the landed wb-zmd adapter (built dist) over its real per-Attempt EmbeddedHost bridge, driven by a scripted operator through a REPAIRED copy of the vendored @furnace/sdk (manifest digest realigned to the generated validators); no Furnace binary, no live Run, no Furnace verb, no furnace doctor or probe. The LIVE receipt is wb-3hc.';
+  'FIXTURE tier: the landed wb-zmd adapter (built dist) over its real per-Attempt EmbeddedHost bridge, driven by a scripted operator through the SHIPPED vendored @furnace/sdk (no copy and no manifest rewrite since wb-zby.2; its manifest digest equals the provenance digest of the generated validators since wb-zby); no Furnace binary, no live Run, no Furnace verb, no furnace doctor or probe. The LIVE receipt is wb-3hc.';
 export const RETRY_FAULT_LIMITS_STATEMENT =
   'no crash durability (controller or Pi death leaves running Attempts needing operator recovery); Observe answered by the resident session (session-word); per-Attempt identity';
 /** Journey keys the measurement needs; any one missing or unarmed means "not realised" (runner exit 2). */
@@ -86,8 +88,9 @@ function replyIs(reply, op, requestId, status) {
 
 /**
  * Judge observed journeys. Returns {findings: {rule, detail}[], realised}. A missing or unarmed journey (its `armed`
- * flag or its arming facts), or an SDK copy that is not the recorded repaired one, makes the measurement not realised;
- * it never produces a pass and never a finding.
+ * flag or its arming facts), or an SDK record that is not the shipped one (copy "shipped" with a well-formed manifest
+ * digest EQUAL to a well-formed provenance digest, wb-zby.2), makes the measurement not realised; it never produces a
+ * pass and never a finding.
  */
 export function assessRetryFaultJourneys(observed) {
   const findings = [];
@@ -96,7 +99,8 @@ export function assessRetryFaultJourneys(observed) {
   const sdk = isObject(observed) && isObject(observed.sdk) ? observed.sdk : undefined;
 
   let realised = RETRY_FAULT_JOURNEYS.every(name => isObject(journeys[name]) && journeys[name].armed === true && ARMING_FACTS[name](journeys[name]));
-  if (!sdk || sdk.copy !== 'repaired' || !SHA256.test(String(sdk.repairedDigest)) || !SHA256.test(String(sdk.shippedManifestDigest))) realised = false;
+  // wb-zby.2: the SHIPPED vendored SDK only, and only while its manifest digest equals its generated provenance digest.
+  if (!sdk || sdk.copy !== 'shipped' || !SHA256.test(String(sdk.manifestDigest)) || !SHA256.test(String(sdk.provenanceDigest)) || sdk.manifestDigest !== sdk.provenanceDigest) realised = false;
 
   // Every adapter receipt states the wb-zmd limits and the wb-lrz.1 retry disclosure (EXPECTED_LIMITS.retry); only the same-id journey may carry a violation.
   for (const name of RETRY_FAULT_JOURNEYS) {
@@ -161,6 +165,8 @@ export function assessRetryFaultJourneys(observed) {
   // wb-21k: close() must leave an Attempt that settled BEFORE it alone. Every Attempt not pending at beforeClose (each
   // retry Attempt, the same-id pair, the observer's owner, an explicitly uncertain first Attempt) must still carry
   // cancel {requested: false} afterClose; only an Attempt parked until the host closed may carry host_closed (above).
+  // wb-19q member 17 (wb-21k F1): a settled Attempt with no aligned afterClose record (missing, or another id at its
+  // index) is reported under the same rule: its cancel after close cannot be shown, so the judge fails closed, never skips.
   for (const name of RETRY_FAULT_JOURNEYS) {
     const journey = journeys[name];
     if (!isObject(journey)) continue;
@@ -168,7 +174,10 @@ export function assessRetryFaultJourneys(observed) {
     for (const [index, settled] of attemptsOf(journey.beforeClose).entries()) {
       if (settled.terminal === 'pending') continue;
       const closed = after[index];
-      if (!closed || closed.attemptId !== settled.attemptId) continue;
+      if (!closed || closed.attemptId !== settled.attemptId) {
+        add('settled-attempt-cancelled-by-close', `${name}: ${settled.attemptId} had settled ${settled.terminal} before the host closed, yet afterClose has no aligned record for it (afterClose[${index}] is ${closed ? closed.attemptId : 'missing'}), so its cancel after close is unverified.`);
+        continue;
+      }
       const cancel = isObject(closed.cancel) ? closed.cancel : {};
       if (cancel.requested !== false) {
         add('settled-attempt-cancelled-by-close', `${name}: ${settled.attemptId} had settled ${settled.terminal} before the host closed, yet carries cancel ${JSON.stringify(closed.cancel)} afterClose.`);
@@ -220,7 +229,7 @@ export function buildRetryFaultReceipt(input) {
   const platform = requiredText(input, 'platform');
   const revisionClean = typeof input.revisionClean === 'boolean' ? input.revisionClean : null;
   const sdk = isObject(input.sdk)
-    ? {copy: String(input.sdk.copy), repairedDigest: String(input.sdk.repairedDigest), shippedManifestDigest: String(input.sdk.shippedManifestDigest)}
+    ? {copy: String(input.sdk.copy), manifestDigest: String(input.sdk.manifestDigest), provenanceDigest: String(input.sdk.provenanceDigest)}
     : null;
   const scratch = isObject(input.scratch)
     ? {source: String(input.scratch.source), ...(typeof input.scratch.reason === 'string' ? {reason: input.scratch.reason} : {})}

@@ -7,7 +7,8 @@
  *   (controller or Pi death leaves running Attempts needing operator recovery), Observe answered by the resident session
  *   (session-word, wb-zby), per-Attempt identity".
  * Owner Q1 ruling (22:15Z): (a) a FIXTURE receipt per the W18 family pattern -- pure builder, runner, offline vitest and
- *   ONE additive forge command outside the default gate -- honestly labelled as driven through the REPAIRED SDK copy;
+ *   ONE additive forge command outside the default gate -- honestly labelled with the SDK it drives (the REPAIRED copy
+ *   then; since wb-zby.2 the SHIPPED vendored SDK, whose manifest and provenance digests agree since wb-zby);
  *   (c) the LIVE receipt is wb-3hc.
  *
  * Offline: the pure judge is driven with a clean observed fixture and one mutant per rule, so a judge that reported a
@@ -69,7 +70,7 @@ interface RetryJourney {
   markersAfterClose: string[];
 }
 interface Observed {
-  sdk: { copy: string; repairedDigest: string; shippedManifestDigest: string };
+  sdk: { copy: string; manifestDigest: string; provenanceDigest: string };
   journeys: {
     lostConnectionRetry: RetryJourney & { droppedAfterStarted: boolean; retriedWireStatus: string | null };
     explicitUncertainRetry: RetryJourney & { wireStatuses: string[] };
@@ -90,6 +91,8 @@ interface Observed {
 }
 
 const clone = <T>(value: T): T => structuredClone(value);
+/** An obviously fake, well-formed digest: the clean fixture's manifest and provenance digests are equal (wb-zby.2). */
+const FAKE_DIGEST = `sha256:${"c".repeat(64)}`;
 const LIMITS = { crashDurability: "none", observe: "session-word", identity: "per-attempt", replyBounds: "none", retry: "adapter-never-retries; furnace-auto-retries-by-recorded-retry-policy; work_failure-and-indeterminate-park" };
 
 function attempt(invocation: number, attemptId: string, ordinal: number, terminal: string, extra: Partial<Attempt> = {}): Attempt {
@@ -138,7 +141,7 @@ function clean(): Observed {
   const owner = attempt(1, "frn-atm-o1", 1, "success");
   const uncertain = { summary: "run establishment may have happened" };
   return {
-    sdk: { copy: "repaired", repairedDigest: `sha256:${"e".repeat(64)}`, shippedManifestDigest: `sha256:${"b".repeat(64)}` },
+    sdk: { copy: "shipped", manifestDigest: FAKE_DIGEST, provenanceDigest: FAKE_DIGEST },
     journeys: {
       lostConnectionRetry: { ...parkedRetry("frn-atm-r1", "frn-atm-r2"), droppedAfterStarted: true, retriedWireStatus: "success" },
       explicitUncertainRetry: {
@@ -364,6 +367,55 @@ describe("furnace-hosted retry-fault receipt: judge falsifiers", () => {
     expect(rules(clean())).toEqual([]);
   });
 
+  it("wb-19q member 17 (wb-21k F1): a settled Attempt whose afterClose record is missing or misaligned is itself a finding, never a silent skip (K1-K4)", () => {
+    // The two journeys without a beforeClose/afterClose alignment rule (observerNoControl, sameAttemptReexecution) used to
+    // let a settled Attempt slip past the wb-21k rule whenever its afterClose record was gone or carried another id, so a
+    // host_closed stamp behind a swapped id went unseen (K2). Each row names the settled ids the judge must now report.
+    const cancelledByClose = (observed: Observed) =>
+      assessRetryFaultJourneys(observed).findings.filter((finding: { rule: string }) => finding.rule === "settled-attempt-cancelled-by-close");
+    const unaligned: readonly (readonly [string, (observed: Observed) => void, readonly string[]])[] = [
+      ["K1 observer afterClose emptied", (o) => { o.journeys.observerNoControl.afterClose.attempts = []; }, ["frn-atm-o1"]],
+      [
+        "K2 observer afterClose id swapped and stamped host_closed",
+        (o) => {
+          // a fresh record, not an in-place edit: clean() aliases the owner between beforeClose and afterClose, and the
+          // real journeys snapshot executor.receipt() twice, so only afterClose changes here
+          const closed = o.journeys.observerNoControl.afterClose.attempts[0];
+          if (!closed) throw new Error("fixture lost its attempts");
+          o.journeys.observerNoControl.afterClose.attempts = [{ ...closed, attemptId: "frn-atm-o9", cancel: closedByHost }];
+        },
+        ["frn-atm-o1"],
+      ],
+      ["K3 same-id afterClose emptied", (o) => { o.journeys.sameAttemptReexecution.afterClose.attempts = []; }, ["frn-atm-same", "frn-atm-same"]],
+      ["K4 same-id second afterClose record dropped", (o) => { o.journeys.sameAttemptReexecution.afterClose.attempts.pop(); }, ["frn-atm-same"]],
+    ];
+    for (const [label, mutate, settledIds] of unaligned) {
+      const stale = clone(clean());
+      mutate(stale);
+      const assessed = assessRetryFaultJourneys(stale);
+      expect(assessed.realised, label).toBe(true);
+      expect(assessed.findings.length, label).toBeGreaterThan(0);
+      const found = cancelledByClose(stale);
+      expect(found, label).toHaveLength(settledIds.length);
+      for (const [index, attemptId] of settledIds.entries()) {
+        expect(found[index].detail, label).toContain(attemptId);
+        expect(found[index].detail, label).toMatch(/no aligned record/);
+      }
+      // the runner would exit 1 on such a receipt, where it used to exit 0 with pass true
+      expect(exitCodeFor(buildRetryFaultReceipt(receiptInput(stale))), label).toBe(1);
+    }
+    // control: a retry journey with its afterClose emptied is caught by uncertain-merged AND, for its settled retry
+    // Attempt only, by the fail-closed wb-21k rule; the first Attempt was pending at beforeClose and is not this rule's business
+    const k5 = clone(clean());
+    k5.journeys.lostConnectionRetry.afterClose.attempts = [];
+    expect(rules(k5)).toContain("uncertain-merged");
+    expect(cancelledByClose(k5)).toHaveLength(1);
+    expect(cancelledByClose(k5)[0].detail).toContain("frn-atm-r2");
+    expect(cancelledByClose(k5)[0].detail).not.toContain("frn-atm-r1");
+    // control: the clean fixture stays silent
+    expect(rules(clean())).toEqual([]);
+  });
+
   it("flags an operator retry that did not reach its own success", () => {
     const wire = clone(clean());
     wire.journeys.lostConnectionRetry.retriedWireStatus = "indeterminate";
@@ -459,7 +511,7 @@ describe("furnace-hosted retry-fault receipt: judge falsifiers", () => {
     expect(rules(wrongVersion)).toContain("observe-faked");
   });
 
-  it("is not realised when a journey is missing or unarmed or the SDK copy is not the recorded repaired one, and produces no finding for it", () => {
+  it("is not realised when a journey is missing or unarmed or the SDK record is not the shipped one with equal manifest and provenance digests (wb-zby.2), and produces no finding for it", () => {
     for (const name of RETRY_FAULT_JOURNEYS as readonly (keyof Observed["journeys"])[]) {
       const unarmed = clone(clean());
       unarmed.journeys[name].armed = false;
@@ -470,12 +522,28 @@ describe("furnace-hosted retry-fault receipt: judge falsifiers", () => {
       delete missing.journeys[name];
       expect(assessRetryFaultJourneys(missing).realised).toBe(false);
     }
-    const shipped = clone(clean());
-    shipped.sdk.copy = "shipped";
-    expect(assessRetryFaultJourneys(shipped).realised).toBe(false);
-    const digest = clone(clean());
-    digest.sdk.repairedDigest = "sha256:short";
-    expect(assessRetryFaultJourneys(digest).realised).toBe(false);
+    // wb-zby.2: only copy "shipped" with two well-formed, EQUAL digests realises; every other record measures nothing.
+    const sdkMutants: [string, (sdk: Observed["sdk"]) => void][] = [
+      ["the retired repaired copy", (sdk) => { sdk.copy = "repaired"; }],
+      ["an unnamed copy", (sdk) => { sdk.copy = ""; }],
+      ["unequal digests", (sdk) => { sdk.provenanceDigest = `sha256:${"d".repeat(64)}`; }],
+      ["a malformed manifest digest", (sdk) => { sdk.manifestDigest = "sha256:short"; }],
+      ["a malformed provenance digest", (sdk) => { sdk.provenanceDigest = "sha256:short"; }],
+      ["two equal but malformed digests", (sdk) => { sdk.manifestDigest = "sha256:short"; sdk.provenanceDigest = "sha256:short"; }],
+      ["the retired field names", (sdk) => {
+        const legacy = sdk as unknown as Record<string, string>;
+        legacy.repairedDigest = sdk.manifestDigest;
+        legacy.shippedManifestDigest = sdk.provenanceDigest;
+        delete legacy.manifestDigest;
+        delete legacy.provenanceDigest;
+      }],
+    ];
+    for (const [label, mutate] of sdkMutants) {
+      const observed = clone(clean());
+      mutate(observed.sdk);
+      const assessed = assessRetryFaultJourneys(observed);
+      expect({ label, realised: assessed.realised, findings: assessed.findings }).toEqual({ label, realised: false, findings: [] });
+    }
     const noSdk = clone(clean()) as unknown as Partial<Observed>;
     delete noSdk.sdk;
     expect(assessRetryFaultJourneys(noSdk).realised).toBe(false);
@@ -510,7 +578,7 @@ describe("furnace-hosted retry-fault receipt: arming facts", () => {
 });
 
 describe("furnace-hosted retry-fault receipt: evidence-grade shape", () => {
-  it("builds a frozen passing FIXTURE-tier receipt that names the repaired SDK copy, the scratch rule and every per-scenario outcome", () => {
+  it("builds a frozen passing FIXTURE-tier receipt that names the shipped SDK, the scratch rule and every per-scenario outcome", () => {
     const built = buildRetryFaultReceipt(receiptInput(clean()));
     expect(RETRY_FAULT_RECEIPT_CONTRACT).toBe("workbench.furnace-hosted-retry-fault/v1");
     expect(built.contract).toBe(RETRY_FAULT_RECEIPT_CONTRACT);
@@ -518,7 +586,8 @@ describe("furnace-hosted retry-fault receipt: evidence-grade shape", () => {
     expect(built.tier).toBe("fixture");
     expect(built.tierStatement).toBe(RETRY_FAULT_TIER_STATEMENT);
     expect(RETRY_FAULT_TIER_STATEMENT).toMatch(/^FIXTURE tier:/);
-    expect(RETRY_FAULT_TIER_STATEMENT).toMatch(/REPAIRED copy of the vendored @furnace\/sdk/);
+    expect(RETRY_FAULT_TIER_STATEMENT).toMatch(/through the SHIPPED vendored @furnace\/sdk \(no copy and no manifest rewrite/);
+    expect(RETRY_FAULT_TIER_STATEMENT).not.toMatch(/REPAIRED/);
     expect(RETRY_FAULT_TIER_STATEMENT).toMatch(/no Furnace binary, no live Run/);
     expect(RETRY_FAULT_TIER_STATEMENT).toMatch(/wb-3hc/);
     expect(built.limitsStatement).toBe("no crash durability (controller or Pi death leaves running Attempts needing operator recovery); Observe answered by the resident session (session-word); per-Attempt identity");
@@ -528,7 +597,7 @@ describe("furnace-hosted retry-fault receipt: evidence-grade shape", () => {
     }
     expect(built.revision).toBe("0123456789abcdef0123456789abcdef01234567");
     expect(built.revisionClean).toBe(true);
-    expect(built.sdk).toEqual({ copy: "repaired", repairedDigest: `sha256:${"e".repeat(64)}`, shippedManifestDigest: `sha256:${"b".repeat(64)}` });
+    expect(built.sdk).toEqual({ copy: "shipped", manifestDigest: FAKE_DIGEST, provenanceDigest: FAKE_DIGEST });
     expect(built.scratch).toEqual({ source: "xdg-runtime-dir" });
     expect(built.pass).toBe(true);
     expect(built.realised).toBe(true);
@@ -568,6 +637,13 @@ describe("furnace-hosted retry-fault receipt: evidence-grade shape", () => {
     expect(notRealised.realised).toBe(false);
     expect(notRealised.pass).toBe(false);
     expect(exitCodeFor(notRealised)).toBe(2);
+    // wb-zby.2: the receipt records BOTH digests as measured (a drifted pair is never normalised into agreement) and is not realised.
+    const drifted = clone(clean());
+    drifted.sdk.provenanceDigest = `sha256:${"d".repeat(64)}`;
+    const driftedReceipt = buildRetryFaultReceipt(receiptInput(drifted));
+    expect(driftedReceipt.sdk).toEqual({ copy: "shipped", manifestDigest: FAKE_DIGEST, provenanceDigest: `sha256:${"d".repeat(64)}` });
+    expect(driftedReceipt.realised).toBe(false);
+    expect(exitCodeFor(driftedReceipt)).toBe(2);
   });
 
   it("reduces absolute paths in diagnostics to basenames and rejects a receipt without identifying fields", () => {
@@ -585,7 +661,6 @@ describe("furnace-hosted retry-fault receipt: evidence-grade shape", () => {
 describe("furnace-hosted retry-fault receipt: module, runner and helper boundaries", () => {
   const receiptModule = readRepo("qa/workbench/furnace-hosted-retry-fault-receipt.mjs");
   const runner = readRepo("qa/workbench/furnace-hosted-retry-fault.mjs");
-  const loader = readRepo("qa/workbench/furnace-hosted-repaired-sdk.mjs");
   const journeys = readRepo("test/helpers/furnace-hosted-retry-journeys.ts");
 
   it("keeps the receipt module pure: its only import is the wb-0kg.1 path scrubber, no clock or random source", () => {
@@ -595,8 +670,16 @@ describe("furnace-hosted retry-fault receipt: module, runner and helper boundari
     expect(receiptModule).not.toMatch(/Date\.now|new Date\(|Math\.random|process\./);
   });
 
-  it("drives the BUILT adapter through the default-gate journeys and the shared repaired-SDK loader; it reaches no Furnace binary, verb, doctor or probe", () => {
-    expect(specifiersOf(runner).filter((specifier) => specifier.startsWith("."))).toEqual(["./furnace-hosted-retry-fault-receipt.mjs", "./furnace-hosted-repaired-sdk.mjs"]);
+  it("drives the BUILT adapter through the default-gate journeys and the SHIPPED SDK that adapter loads; it reaches no Furnace binary, verb, doctor or probe", () => {
+    expect(specifiersOf(runner).filter((specifier) => specifier.startsWith("."))).toEqual(["./furnace-hosted-retry-fault-receipt.mjs"]);
+    // wb-zby.2: the SDK is the built adapter's SHIPPED_FURNACE_SDK (the vendored package as installed, no copy) and the
+    // receipt's sdk record is the journeys helper's shippedSdkRecord(), the record the default-gate tier hands the judge.
+    expect(runner).toContain("sdk: adapter.SHIPPED_FURNACE_SDK");
+    expect(runner).toContain("sdk = journeyModule.shippedSdkRecord();");
+    expect(runner).not.toMatch(/repaired|tmpdir\(|dispose\(/);
+    expect(journeys).toContain('"contract/manifest.json"');
+    expect(journeys).toContain('"dist/contract/furnace-executor-contract/provenance.js"');
+    expect(journeys).not.toMatch(/\bwriteFileSync\b|\bcpSync\b/);
     // node can load these at runtime: dist is plain ESM and the journeys helper has type-only project imports. The wb-zmd
     // TypeScript helper is NOT loaded here (wb-g5o gives it runtime ./scratch.js -> vitest and src imports).
     expect(dynamicImportsOf(runner)).toEqual(["../../dist/workbench/hosts/furnace-hosted.js", "../../dist/workbench/capability-registry.js", "../../test/helpers/furnace-hosted-retry-journeys.ts"]);
@@ -610,21 +693,7 @@ describe("furnace-hosted retry-fault receipt: module, runner and helper boundari
     expect(journeys).not.toMatch(/new\s+\w*\.?Furnace\s*\(/);
   });
 
-  it("keeps the repaired-SDK loader to node builtins and to ONE rewrite: the manifest's smithy_model_digest", () => {
-    expect(specifiersOf(loader).every((specifier) => specifier.startsWith("node:"))).toBe(true);
-    // its only dynamic import is computed: the three SDK modules inside the copied package, never a project file
-    expect(dynamicImportsOf(loader)).toEqual([]);
-    expect(loader.match(/\bimport\(/g)).toHaveLength(1);
-    expect(loader).toContain("import(pathToFileURL(join(root, path)).href)");
-    expect(loader).not.toMatch(/\brequire\s*\(\s*["']\./);
-    expect(loader.match(/writeFileSync\(/g)).toHaveLength(1);
-    expect(loader).toContain("writeFileSync(manifestPath, manifest.replace(shippedManifestDigest, repairedDigest));");
-    expect(loader).toMatch(/smithy_model_digest/);
-    expect(loader).toMatch(/dispose = \(\) => rmSync\(holder, \{recursive: true, force: true\}\)/);
-    expect(loader).toMatch(/catch \(error\) \{\n\s*dispose\(\);\n\s*throw error;/);
-  });
-
-  it("prints the receipt BEFORE any file write, exits 3 when the write fails, and removes the repaired copy in finally", () => {
+  it("prints the receipt BEFORE any file write, exits 3 when the write fails, and emits it in finally", () => {
     expect(runner).toContain("FURNACE_HOSTED_RETRY_FAULT_RECEIPT");
     const printed = runner.indexOf("console.log(line)");
     const written = runner.indexOf("writeFileSync(target");
@@ -632,7 +701,7 @@ describe("furnace-hosted retry-fault receipt: module, runner and helper boundari
     expect(written).toBeGreaterThan(printed);
     expect(runner).toMatch(/return 3;/);
     expect(runner).toMatch(/finally\s*\{/);
-    expect(runner).toMatch(/finally \{\n\s*if \(repaired\) repaired\.dispose\(\);/);
+    expect(runner).toMatch(/finally \{\n\s*code = emit\(\);\n\s*\}/);
     expect(runner).toMatch(/chooseScratchBase\(process\.env\)/);
   });
 
@@ -660,7 +729,7 @@ describe("furnace-hosted retry-fault receipt: module, runner and helper boundari
 });
 
 describe("furnace-hosted retry-fault receipt: runner exit paths (spawned, no built adapter)", () => {
-  const QA_FILES = ["furnace-hosted-retry-fault.mjs", "furnace-hosted-retry-fault-receipt.mjs", "furnace-hosted-repaired-sdk.mjs", "local-detached-faults-receipt.mjs"];
+  const QA_FILES = ["furnace-hosted-retry-fault.mjs", "furnace-hosted-retry-fault-receipt.mjs", "local-detached-faults-receipt.mjs"];
   /** The runner and its qa imports in a scratch tree with no dist/ and no git repository above it. */
   function stage(): string {
     const root = mkdtempSync(join(tmpdir(), "pf04-runner-"));

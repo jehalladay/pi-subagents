@@ -93,11 +93,12 @@ interface Pushable {
 }
 
 /**
- * Install the DOCUMENTED line into a fixture repository, from a scratch copy of the scan files (so the install target can
- * be removed without touching the real package), and wire a bare scratch remote to push to through real `git push`.
+ * Install the DOCUMENTED line into a fixture repository, from a scratch copy of the scan files under `pkgName` (so the install
+ * target can be removed without touching the real package, and the clone path can carry characters sh treats specially), and
+ * wire a bare scratch remote to push to through real `git push`.
  */
-function installDocumented(fx: Fixture): Pushable {
-  const pkg = join(fx.root, "pkg");
+function installDocumented(fx: Fixture, pkgName = "pkg"): Pushable {
+  const pkg = join(fx.root, pkgName);
   const remote = join(fx.root, "remote.git");
   for (const file of SCAN_FILES) {
     mkdirSync(join(pkg, dirname(file)), { recursive: true });
@@ -250,13 +251,28 @@ describe("wb-vic pre-push hook: remote..local scan at the hook entry point", () 
     expect(nonHexRemote.stderr).not.toContain(GUARD);
   });
 
+  it("R6b (wb-vic row-428 F3) the refusal line says why: an unresolvable remote sha refuses (2) saying its commits could not be scanned, never that offenders are listed above; an offender keeps the listed-above line", () => {
+    const fx = makeFixture();
+    const remote = fx.commit("base commit");
+    const tip = fx.commit("feat: clean");
+    const r = fx.hook(refLine(tip, "1".repeat(40)));
+    expect(r.status).toBe(2);
+    expect(r.stderr).not.toContain("offending commits are listed above");
+    expect(r.stderr).toMatch(/could not be scanned|nothing was scanned/);
+    expect(r.stderr).toContain("push of refs/heads/main refused; its commits could not be scanned (scan exit 2)");
+    const dirty = fx.commit(`feat: dirty${GUARD}`);
+    const offender = fx.hook(refLine(dirty, remote));
+    expect(offender.status).toBe(3);
+    expect(offender.stderr).toContain("push of refs/heads/main refused (scan exit 3); offending commits are listed above");
+  });
+
   it("R7 an empty stdin (nothing to push) passes", () => {
     const fx = makeFixture();
     fx.commit("base commit");
     expect(fx.hook("").status).toBe(0);
   });
 
-  it("R8 a symlink named pre-push in the git hooks dir (still a supported way to place the hook) runs the hook and refuses", () => {
+  it("R8 a symlink named pre-push in the git hooks dir (not an install form: the entry guard resolves the link) runs the hook and refuses", () => {
     const fx = makeFixture();
     const remote = fx.commit("base commit");
     fx.commit(`fix: bad${GUARD}`);
@@ -268,6 +284,12 @@ describe("wb-vic pre-push hook: remote..local scan at the hook entry point", () 
     const r = fx.hook(refLine(tip, remote), installed);
     expect(r.status).toBe(3);
     expect(r.stdout).toContain("commit-message-scan: 2 commits, 1 offenders");
+  });
+
+  it("R8b (wb-vic row-428 F1) the hook's entry-guard comment and docs/17 present the wrapper as the only install form (anti-revert wording pin)", () => {
+    const retired = /alternative to the wrapper install|supported way to place the hook/;
+    expect(readFileSync(HOOK, "utf8")).not.toMatch(retired);
+    expect(readFileSync(join(process.cwd(), DOCS_17), "utf8")).not.toMatch(retired);
   });
 
   it("O1a an inherited GIT_DIR / GIT_WORK_TREE never lets the fixture or the hook write into that repository (sentinel HEAD and commit count unchanged)", () => {
@@ -328,6 +350,24 @@ describe("wb-vic pre-push hook: remote..local scan at the hook entry point", () 
     expect(r.status).not.toBe(0);
     expect(pushable.remoteHas("refs/heads/main")).toBe(false);
   });
+
+  for (const [label, name] of [
+    ["a double quote and a dollar sign", 'pk"g$X'],
+    ["a backtick", "pk`g"],
+    ["an apostrophe (the '\\'' escape in the documented printf)", "it's"],
+  ] as const) {
+    it(`R9d (wb-vic row-428 F2) the documented install quotes the clone path for sh: a package dir with ${label} still runs the scan and lets a clean push through`, () => {
+      const fx = makeFixture();
+      fx.commit("base commit");
+      const tip = fx.commit("feat: clean tip");
+      const pushable = installDocumented(fx, name);
+      const r = pushable.push();
+      expect(r.status).toBe(0);
+      expect(r.stdout + r.stderr).toContain("commit-message-scan: 2 commits, 0 offenders");
+      expect(pushable.remoteHas(`${tip}^{commit}`)).toBe(true);
+      expect(pushable.remoteHas("refs/heads/main")).toBe(true);
+    });
+  }
 
   it("U2 a valid push line whose LOCAL REF carries U+202E and U+0085 refuses (3) and echoes the ref as printable ASCII only", () => {
     const fx = makeFixture();

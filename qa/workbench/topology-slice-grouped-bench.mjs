@@ -34,6 +34,177 @@ import {
   SCOPE,
 } from './grouped-fixture.mjs';
 
+/**
+ * Contract types (JSDoc that TypeScript callers read under allowJs; nothing here runs). The frozen literals below are
+ * defaults, never the accepted set: a pass takes its own label and limits of the bench-only shape, sampling takes other
+ * counts too, and the receipt's pass and cap-set maps are keyed by whatever ran.
+ *
+ * @typedef {Readonly<Record<keyof typeof BENCH_ONLY_LIMITS, number>>} TopologyLimits
+ *   Projection limits for one pass: the bench-only keys of grouped-fixture.mjs, each a number.
+ * @typedef {{readonly label: string, readonly limits: TopologyLimits}} TopologyPassSpec
+ * @typedef {{readonly operationFocuses: number, readonly groupSampleCap: number}} TopologySampling
+ * @typedef {{
+ *   refresh(snapshot: unknown): unknown,
+ *   relate(item: unknown): unknown,
+ *   ingest(update: unknown): string,
+ *   stats(): {nodes: number, edges: number},
+ *   window(filter: {scope: object, invocationId: string, offset: number, limit: number}): {
+ *     total: number,
+ *     nodes: ReadonlyArray<{key: string, presentation: {type: string}, nativeRef: {id: string}}>,
+ *   },
+ *   relations(query: object): ReadonlyArray<unknown>,
+ * }} TopologyProjection The projection methods this runner calls on an ObservationProjection instance.
+ * @typedef {new (limits: TopologyLimits) => TopologyProjection} TopologyProjectionClass
+ * @typedef {{
+ *   focus: {nativeRef: {provider: string, type: string, id: string}},
+ *   upstream: {edges: ReadonlyArray<unknown>, remainder: {count: number, atLeast: boolean}},
+ *   downstream: {edges: ReadonlyArray<unknown>, remainder: {count: number, atLeast: boolean}},
+ *   references: ReadonlyArray<{reason: string}>,
+ *   referencesRemainder: number,
+ *   trace: {label: string, reasons: ReadonlyArray<string>},
+ * }} TopologySliceRead The fields of one selectLinkedTopology slice this runner reads.
+ * @typedef {{
+ *   selectLinkedTopology(input: {scope: object, relations: object}, focusKey: string, caps: object): TopologySliceRead,
+ *   readonly TOPOLOGY_CONTRACT: string,
+ *   readonly TOPOLOGY_CAVEAT: string,
+ *   readonly TOPOLOGY_TRACE_REASONS: ReadonlyArray<string>,
+ *   readonly TOPOLOGY_REFERENCE_REASONS: ReadonlyArray<string>,
+ * }} TopologyModule The topology-slice module members this runner uses.
+ * @typedef {{
+ *   readonly snapshots: ReadonlyArray<unknown>,
+ *   readonly relations: ReadonlyArray<unknown>,
+ *   readonly updates: ReadonlyArray<unknown>,
+ *   readonly shape: Readonly<Record<string, unknown>>,
+ * }} TopologyFixture A grouped fixture (buildGroupedFixture): every item goes to the projection as given; shape.seed
+ *   seeds the focus stride and the whole shape is copied into the receipt.
+ * @typedef {{
+ *   readonly utc: string,
+ *   readonly revision: string,
+ *   readonly node: string,
+ *   readonly arch: string,
+ *   readonly platform: string,
+ *   readonly cpus: number,
+ *   readonly cpuModel: string,
+ *   readonly toolchain: Readonly<Record<string, string>>,
+ *   readonly command: string,
+ * }} TopologyHost
+ * @typedef {{samples: number, p50: number | null, p95: number | null, max: number | null}} TopologyDistribution
+ * @typedef {{
+ *   slices: number,
+ *   withRemainder: number,
+ *   atLeast: number,
+ *   maxRemainderCount: number,
+ *   withRemainderRate: number,
+ *   atLeastRate: number,
+ * }} TopologyRemainderCell
+ * @typedef {{upstream: TopologyRemainderCell, downstream: TopologyRemainderCell}} TopologyRemainderPair
+ * @typedef {{
+ *   caps: Record<string, number>,
+ *   cycleReadsInForce: number,
+ *   callBudget: number,
+ *   slices: number,
+ *   slice: {
+ *     all: TopologyDistribution,
+ *     operation: TopologyDistribution,
+ *     group: TopologyDistribution,
+ *     byDepth: Record<string, TopologyDistribution>,
+ *   },
+ *   reads: {calls: TopologyDistribution, maxRowsPerCall: number, relationPage: number, violations: number},
+ *   remainder: {
+ *     upstream: TopologyRemainderCell,
+ *     downstream: TopologyRemainderCell,
+ *     operation: TopologyRemainderPair,
+ *     group: TopologyRemainderPair,
+ *   },
+ *   traceLabels: Record<string, number>,
+ *   traceReasons: Record<string, number>,
+ *   referenceReasons: Record<string, {references: number, slices: number}>,
+ *   referencesRemainder: {max: number, slices: number, total: number},
+ *   slowest: Array<{
+ *     kind: string,
+ *     depth: number | null,
+ *     ms: number,
+ *     ref: string,
+ *     reads: number,
+ *     edgesListed: number,
+ *     capSet: string,
+ *     pass: string,
+ *   }>,
+ * }} TopologyCapSet One cap set of one pass.
+ * @typedef {{
+ *   label: string,
+ *   maxQuery: number,
+ *   limits: Record<keyof typeof BENCH_ONLY_LIMITS, number>,
+ *   limitsLabel: string,
+ *   relationPage: number,
+ *   offered: {nodes: number, edges: number, updates: number},
+ *   retained: {nodes: number, edges: number, updatesApplied: number},
+ *   focuses: {
+ *     operations: number,
+ *     groups: number,
+ *     byDepth: Record<string, number>,
+ *     offeredByDepth: Record<string, number>,
+ *     offeredOperations: number,
+ *     source: string,
+ *   },
+ *   capSets: Record<string, TopologyCapSet>,
+ * }} TopologyPass One pass, keyed in the receipt by its label.
+ * @typedef {{
+ *   [field: string]: unknown,
+ *   seed: number,
+ *   nodes: number,
+ *   groups: number,
+ *   snapshots: number,
+ *   depth: number,
+ *   minDepth: number,
+ *   groupingEdges: number,
+ *   dependencyEdges: number,
+ *   hypothesisEdges: number,
+ *   ownershipEdges: number,
+ *   causationEdges: number,
+ *   updates: number,
+ *   ticks: number,
+ *   minChangesPerTick: number,
+ *   maxChangesPerTick: number,
+ *   providers: Record<string, number>,
+ *   collidingIds: number,
+ *   minTitleBytes: number,
+ *   maxTitleBytes: number,
+ *   payloadRefs: number,
+ *   minPayloadRefBytes: number,
+ *   maxPayloadRefBytes: number,
+ *   realised: boolean,
+ * }} TopologyFixtureRecord The grouped fixture's realised shape as copied into the receipt: its counts by name, every
+ *   other shape field (the fixture contract id among them) as given, and realised as assessFixtureShape judged it.
+ * @typedef {{
+ *   contract: string,
+ *   benchmark: string,
+ *   measured: boolean,
+ *   topologyContract: string,
+ *   caveat: string,
+ *   note: string,
+ *   utc: string,
+ *   revision: string,
+ *   node: string,
+ *   arch: string,
+ *   platform: string,
+ *   cpus: number,
+ *   cpuModel: string,
+ *   toolchain: Record<string, string>,
+ *   command: string,
+ *   fixture: TopologyFixtureRecord,
+ *   sampling: {operationFocuses: number, groupSampleCap: number},
+ *   timing: string,
+ *   passes: Record<string, TopologyPass>,
+ *   target: {ms: number, statistic: string, judged: string[], over: string[]},
+ *   readsViolations: string[],
+ *   realised: boolean,
+ *   violations: Array<{rule: string, detail: string}>,
+ *   verdict: string,
+ *   exitCode: number,
+ * }} TopologyReceipt The receipt runTopologyBench returns: the measured fields plus assessTopologyReceipt's judgement.
+ */
+
 export const RECEIPT_CONTRACT = 'workbench.topology-slice-grouped-bench/v1';
 export const BENCHMARK = 'topology-slice-grouped-10k';
 /** Bench-only passes. The second spreads maxQuery locally; nothing here is ever written into a production module. */
@@ -298,6 +469,16 @@ export const exitCodeFor = receipt => assessTopologyReceipt(receipt).exitCode;
  * Every pass over one fixture, as one receipt. `Projection` is the ObservationProjection class and `topology` carries
  * selectLinkedTopology with TOPOLOGY_CONTRACT, TOPOLOGY_CAVEAT, TOPOLOGY_TRACE_REASONS and TOPOLOGY_REFERENCE_REASONS;
  * `host` carries utc, revision, node, arch, platform, cpus, cpuModel, toolchain and command.
+ *
+ * @param {object} input
+ * @param {TopologyProjectionClass} input.Projection the ObservationProjection class (the sources in tests, dist in the CLI)
+ * @param {TopologyModule} input.topology
+ * @param {TopologyFixture} input.fixture
+ * @param {TopologyHost} input.host
+ * @param {TopologySampling} [input.sampling] defaults to DEFAULT_SAMPLING
+ * @param {() => number} [input.clock] milliseconds; defaults to the module clock
+ * @param {ReadonlyArray<TopologyPassSpec>} [input.passes] defaults to PASS_SPECS
+ * @returns {TopologyReceipt}
  */
 export function runTopologyBench({Projection, topology, fixture, host, sampling = DEFAULT_SAMPLING, clock = defaultClock, passes = PASS_SPECS}) {
   const measured = {};
@@ -348,6 +529,15 @@ const versionOf = path => {
  * Prints the receipt line FIRST, then writes the optional receipt file. A failed write is reported on stderr and exits 3
  * ("nothing durably recorded") with the receipt already on stdout; it must never surface as the over-target exit 1 with no
  * receipt (owner ruling 2026-10-15T21:37Z).
+ *
+ * @param {{readonly fixture: object, readonly passes?: Readonly<Record<string, object>>}} receipt a runTopologyBench
+ *   receipt or a copy of one; it is printed as given and judged again by assessTopologyReceipt
+ * @param {object} io
+ * @param {string | undefined} io.path the receipt file to write; nothing is written when it is unset
+ * @param {(line: string) => void} [io.log] defaults to console.log
+ * @param {(line: string) => void} [io.logError] defaults to console.error
+ * @param {(path: string, data: string) => void} [io.writeFile] defaults to the node:fs synchronous writer
+ * @returns {number} the judged exit code, or 3 when the receipt file could not be written
  */
 export function publishReceipt(receipt, {path, log = console.log, logError = console.error, writeFile = writeFileSync}) {
   log(JSON.stringify(receipt));

@@ -36,6 +36,157 @@
 import {writeFileSync} from 'node:fs';
 import {assessFixtureShape, BENCH_ONLY_LIMITS, INVOCATION_ID, SCOPE, SIZES} from './grouped-fixture.mjs';
 
+/**
+ * Contract types (JSDoc that TypeScript callers read under allowJs; nothing here runs). DEFAULT_RETAINED_SAMPLING is a
+ * default, not the accepted set: sampling takes other counts too.
+ *
+ * @typedef {Readonly<Record<keyof typeof BENCH_ONLY_LIMITS, number>>} RetainedLimits
+ *   The one constructor argument: BENCH_ONLY_LIMITS from grouped-fixture.mjs.
+ * @typedef {{
+ *   refresh(snapshot: unknown): unknown,
+ *   relate(item: unknown): unknown,
+ *   ingest(update: unknown): unknown,
+ *   stats(): {nodes: number, events: number, edges: number},
+ *   window(filter: {scope: object, invocationId: string, offset: number, limit: number}): {
+ *     total: number,
+ *     nodes: ReadonlyArray<{key: string, payloadRef?: string}>,
+ *   },
+ * }} RetainedProjection The projection methods this module calls on an ObservationProjection instance.
+ * @typedef {new (limits: RetainedLimits) => RetainedProjection} RetainedProjectionClass
+ * @typedef {{
+ *   initialInspectorState(): object,
+ *   layoutInspector(model: object, state: object, size: {width: number, rows: number, ascii?: boolean}): ReadonlyArray<string>,
+ *   reduceInspectorKey(data: string, state: object, model: object): {state?: object} | undefined,
+ * }} RetainedInspector The inspector functions this module drives.
+ * @typedef {{
+ *   readonly snapshots: ReadonlyArray<unknown>,
+ *   readonly relations: ReadonlyArray<unknown>,
+ *   readonly updates: ReadonlyArray<unknown>,
+ *   readonly shape: Readonly<Record<string, unknown>>,
+ * }} RetainedFixture A grouped fixture (grouped-fixture.mjs): every item goes to the projection as given and the shape
+ *   is copied into the receipt.
+ * @typedef {{
+ *   readonly utc: string,
+ *   readonly revision: string,
+ *   readonly node: string,
+ *   readonly arch: string,
+ *   readonly platform: string,
+ *   readonly cpus: number,
+ *   readonly cpuModel: string,
+ *   readonly toolchain: Readonly<Record<string, string>>,
+ *   readonly command: string,
+ * }} RetainedHost
+ * @typedef {{
+ *   readonly cycles: number,
+ *   readonly warmupCycles: number,
+ *   readonly keypressesPerCycle: number,
+ *   readonly bodyBytesCap: number,
+ * }} RetainedSampling
+ * @typedef {{heapUsed: number, arrayBuffers: number, external: number, rss: number}} RetainedMemorySample
+ *   process.memoryUsage() figures in bytes, read after a forced collection.
+ * @typedef {RetainedMemorySample & {
+ *   cycle: number,
+ *   phase: 'warmup' | 'measured',
+ *   payloadBytesOffered: number,
+ *   reachableBodies: number,
+ *   lateCollected: number,
+ *   releaseRounds: number,
+ * }} RetainedSeriesSample One navigate / focus / blur cycle.
+ * @typedef {{
+ *   [field: string]: unknown,
+ *   seed: number,
+ *   nodes: number,
+ *   groups: number,
+ *   snapshots: number,
+ *   depth: number,
+ *   minDepth: number,
+ *   groupingEdges: number,
+ *   dependencyEdges: number,
+ *   hypothesisEdges: number,
+ *   ownershipEdges: number,
+ *   causationEdges: number,
+ *   updates: number,
+ *   ticks: number,
+ *   minChangesPerTick: number,
+ *   maxChangesPerTick: number,
+ *   providers: Record<string, number>,
+ *   collidingIds: number,
+ *   minTitleBytes: number,
+ *   maxTitleBytes: number,
+ *   payloadRefs: number,
+ *   minPayloadRefBytes: number,
+ *   maxPayloadRefBytes: number,
+ * }} RetainedFixtureRecord The grouped fixture's realised shape as copied into the receipt: its counts by name and
+ *   every other shape field (the fixture contract id among them) as given.
+ * @typedef {{
+ *   contract: string,
+ *   benchmark: string,
+ *   measured: boolean,
+ *   heapLabel: string,
+ *   labels: {heap: string, body: string, probe: string},
+ *   comparability: string,
+ *   warmupAnchor: {choice: string, rule: string},
+ *   releaseRecheck: {rounds: number, rule: string},
+ *   aggregation: string,
+ *   utc: string,
+ *   revision: string,
+ *   node: string,
+ *   arch: string,
+ *   platform: string,
+ *   cpus: number,
+ *   cpuModel: string,
+ *   toolchain: Record<string, string>,
+ *   command: string,
+ *   limits: Record<keyof typeof BENCH_ONLY_LIMITS, number>,
+ *   limitsLabel: string,
+ *   bounds: {heapGrowthAfterWarmupBytes: number, arrayBufferGrowthBytes: number, reachableBodiesAfterBlur: number},
+ *   gc: {available: boolean, method: string},
+ *   fixture: RetainedFixtureRecord,
+ *   sampling: {cycles: number, warmupCycles: number, keypressesPerCycle: number, bodyBytesCap: number, sizes: string[]},
+ *   projection: {
+ *     offered: {nodes: number, edges: number, updates: number},
+ *     retained: {nodes: number, events: number, edges: number} | null,
+ *   },
+ *   preIngest: RetainedMemorySample | null,
+ *   baseline: RetainedMemorySample | null,
+ *   series: RetainedSeriesSample[],
+ *   summary: {
+ *     heapGrowthAfterWarmupBytes: number | null,
+ *     heapSlopeBytesPerCycle: number | null,
+ *     heapSlopeVerdict: string,
+ *     heapSlopeLabel: string,
+ *     arrayBufferGrowthBytes: number | null,
+ *     payloadBytesOffered: number,
+ *     payloadBytesRetained: number | null,
+ *     retainedHeapPerRetainedNodeBytes: number | null,
+ *     retainedHeapPerRetainedNodeLabel: string,
+ *   } | null,
+ *   falsifier: {
+ *     blurCycles: number,
+ *     bodiesIssued: number,
+ *     focusedCycles: number,
+ *     detailsCycles: number,
+ *     reachableAfterBlur: number,
+ *     leakedCycles: number[],
+ *     lateCollectedAfterBlur: number,
+ *     lateCollectedCycles: number[],
+ *     controlProbeRounds: {whileHeld: number, afterDrop: number},
+ *     control: {detectedWhileHeld: boolean, releasedAfterDrop: boolean},
+ *   } | null,
+ *   realised: boolean,
+ *   violations: Array<{rule: string, detail: string, kind: 'instrument' | 'bound'}>,
+ *   judged: {
+ *     heapGrowthAfterWarmupBytes: number | null,
+ *     arrayBufferGrowthBytes: number | null,
+ *     reachableBodiesAfterBlur: number,
+ *   },
+ *   verdict: string,
+ *   exitCode: number,
+ * }} RetainedReceipt The receipt runRetainedMemoryBench resolves to: the measured fields plus assessRetainedReceipt's
+ *   judgement. Without a gc function nothing is measured: projection.retained, preIngest, baseline, summary and
+ *   falsifier stay null and the series stays empty (exit 2).
+ */
+
 export const RETAINED_RECEIPT_CONTRACT = 'workbench.inspector-retained-memory-bench/v1';
 const BENCHMARK = 'inspector-retained-memory-grouped-10k';
 const MIB = 1_048_576;
@@ -263,6 +414,15 @@ export const retainedExitCodeFor = receipt => assessRetainedReceipt(receipt).exi
  * recomputed from the receipt (never a stored field). A failed write is reported on stderr and returns 3 with the
  * receipt already on stdout: it never surfaces as the bound miss 1, the instrument refusal 2 or a pass (one-liner
  * batch item (5), bound onto wb-9x5.3 by name; the wb-9x5.15 reducer-selector shape).
+ *
+ * @param {{readonly fixture: object}} receipt a runRetainedMemoryBench receipt or a copy of one; it is printed as given
+ *   and judged again by assessRetainedReceipt
+ * @param {object} [io]
+ * @param {string} [io.path] the receipt file to write; nothing is written when it is unset
+ * @param {(line: string) => void} [io.log] defaults to console.log
+ * @param {(line: string) => void} [io.logError] defaults to console.error
+ * @param {(path: string, text: string) => void} [io.writeFile] defaults to the node:fs synchronous writer
+ * @returns {number} the judged exit code, or 3 when the receipt file could not be written
  */
 export function publishRetainedReceipt(receipt, {path, log = console.log, logError = console.error, writeFile = writeFileSync} = {}) {
   const line = JSON.stringify(receipt);
@@ -283,6 +443,15 @@ export function publishRetainedReceipt(receipt, {path, log = console.log, logErr
  * {initialInspectorState, layoutInspector, reduceInspectorKey}, `gc` is a synchronous full-collection function
  * (undefined is recorded honestly and exits 2), and `host` carries utc, revision, node, arch, platform, cpus,
  * cpuModel, toolchain and command.
+ *
+ * @param {object} input
+ * @param {RetainedProjectionClass} input.Projection the ObservationProjection class (the sources in tests, dist in the CLI)
+ * @param {RetainedInspector} input.inspector
+ * @param {RetainedFixture} input.fixture
+ * @param {RetainedHost} input.host
+ * @param {(() => void) | undefined} input.gc a synchronous full collection; undefined is recorded and exits 2
+ * @param {RetainedSampling} [input.sampling] defaults to DEFAULT_RETAINED_SAMPLING
+ * @returns {Promise<RetainedReceipt>}
  */
 export async function runRetainedMemoryBench({Projection, inspector, fixture, host, gc, sampling = DEFAULT_RETAINED_SAMPLING}) {
   const plan = {

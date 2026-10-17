@@ -61,6 +61,8 @@ export interface FurnaceEvidenceRead {
   readonly text: string;
   readonly complete: boolean;
   readonly lossy: boolean;
+  /** The reader cut an otherwise whole read to its own line or row budget (wb-10v): bytes were dropped, so the read is truncated. */
+  readonly budgetCut: boolean;
   readonly nextCursor?: string;
   readonly capturedAt: string;
   readonly producerReceipt?: string;
@@ -123,7 +125,11 @@ function gated(options: EvidenceProducerOptions, grant: string): void {
  * splits it into rows, so splitting a row here would hand it a credential's scheme or key and its value as two entries.
  */
 
-const sameNativeRef = (left: NativeRef, right: NativeRef): boolean =>
+/**
+ * The one native-ref equality the producers and the host wiring share (wb-cz9 F3): an absent scope and an empty scope
+ * name the same node. Exported so the forge wiring calls this predicate instead of carrying its own copy of the comparison.
+ */
+export const sameNativeRef = (left: NativeRef, right: NativeRef): boolean =>
   left.provider === right.provider && left.type === right.type && left.id === right.id && (left.scope ?? "") === (right.scope ?? "");
 
 function claudeLoader(options: EvidenceProducerOptions, seam: ClaudeEvidenceSeam): EvidenceLoader {
@@ -196,7 +202,7 @@ function furnaceLoader(options: EvidenceProducerOptions, read: FurnaceEvidenceRe
         provider: "furnace",
         capturedAt: result.capturedAt,
         bytes: Buffer.byteLength(result.text),
-        truncated: !result.complete || result.lossy || result.nextCursor !== undefined,
+        truncated: !result.complete || result.lossy || result.nextCursor !== undefined || result.budgetCut,
         preview: [`${result.stream}:`, result.text],
         freshness: "current",
         ...(result.producerReceipt !== undefined ? { producerReceipt: result.producerReceipt } : {}),

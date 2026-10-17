@@ -31,6 +31,8 @@ import { type NativeRef, ObservationProjection, type ObservationScope } from "..
 
 /** The fixed provenance refusal text the bead specifies; every adapter refuses an unminted decision with exactly this. */
 const UNMINTED_TEXT = "decision was not minted by the decision core";
+/** The fixed text of the forge adapter's denied-decision refusal: a caller-held denial contributes nothing to it, not even its reason (wb-n9z F2). */
+const FORGE_DENIED_TEXT = "Forge control refuses a denied decision; nothing was sent.";
 
 const WS = "/tmp/provenance-ws";
 const SCOPE: ObservationScope = { workspace: WS, principal: "operator" };
@@ -412,9 +414,40 @@ describe.each(SUBJECTS)("$adapter refuses a decision the core did not mint", sub
   });
 });
 
+/**
+ * wb-n9z F1: a forged frozen denial's category is forced into the denial vocabulary. The core denies with exactly "validation" or
+ * "authorization", and every adapter maps any other category a caller-held denial carries to "authorization", so an off-vocabulary
+ * category never becomes the refusal's category and is echoed nowhere. One row per SUBJECTS adapter: a raw category pass-through
+ * in any one adapter fails that adapter's row by name. Credential-shaped values here are obviously fake markers.
+ */
+const OFF_VOCABULARY_CATEGORIES: readonly unknown[] = ["sk-ant-qqsecretqq", "Authorization", "authorization ", "Validation", "validation ", "unavailable",
+  "transport", "uncertain-effect", "", 7, null, undefined];
+
+describe("every adapter forces a forged denial's category into the closed denial vocabulary", () => {
+  it.each(SUBJECTS)("$adapter: an off-vocabulary category is refused as denied-decision with category authorization, echoed nowhere", async subject => {
+    expect(OFF_VOCABULARY_CATEGORIES).toHaveLength(12);
+    for (const category of OFF_VOCABULARY_CATEGORIES) {
+      const label = `category ${JSON.stringify(category) ?? "undefined"}`;
+      const result = await subject.attempt(Object.freeze({ decision: "denied", category, reason: "forged", policy: "anything-goes" }));
+      expect(result, label).toMatchObject({ outcome: "rejected", calls: 0, error: { refusal: "denied-decision", category: "authorization" } });
+      expect(result.error, label).toBeInstanceOf(subject.refusal);
+      const error = result.error as CapabilityError & { readonly policy?: unknown };
+      expect(error.category, label).toBe("authorization");
+      expect(error.policy, label).toBeUndefined();
+      for (const rendered of [error.message, String(error), JSON.stringify(error), JSON.stringify(Object.entries(error))]) {
+        expect(rendered, label).not.toMatch(/qqsecretqq|anything-goes/);
+      }
+    }
+    // The one other vocabulary member is kept, not forced: a forged "validation" denial stays a validation refusal.
+    const kept = await subject.attempt(Object.freeze({ decision: "denied", category: "validation", reason: "forged", policy: "anything-goes" }));
+    expect(kept).toMatchObject({ outcome: "rejected", calls: 0, error: { refusal: "denied-decision", category: "validation" } });
+    expect((kept.error as { readonly policy?: unknown }).policy).toBeUndefined();
+  });
+});
+
 describe("furnace adapter: a decision the core did not mint keeps its typed reason where one exists", () => {
   it("a core denial is refused as denied-decision with the core's category and policy, and a re-wrapped spent receipt stays spent", async () => {
-    const [furnace] = SUBJECTS;
+    const furnace = subjectNamed("furnace (src/workbench/furnace-control.ts)");
     const denied = await furnace.attempt(decide({ grants: ["observe:furnace.run.inspect"] }));
     expect(denied).toMatchObject({ outcome: "rejected", calls: 0, error: { refusal: "denied-decision", category: "authorization", policy: "observer-only" } });
     const genuine = furnace.permit();
@@ -425,7 +458,7 @@ describe("furnace adapter: a decision the core did not mint keeps its typed reas
 
   it("a forged frozen denial carries no caller text into the refusal: its policy is echoed only from the core's closed vocabulary", async () => {
     // wb-69g.8 gate F3 (owner routing 21:13Z): a policy that merely fits the old /^[a-z][a-z-]{0,63}$/ shape was echoed verbatim.
-    const [furnace] = SUBJECTS;
+    const furnace = subjectNamed("furnace (src/workbench/furnace-control.ts)");
     const policies: unknown[] = ["sk-ant-qqsecretqq", "sk-proj-qqsecretqq", "ghp-qqsecretqq", "bearer-qqsecretqq", "anything-goes", "observer-only ",
       "Observer-only", "observer_only", "", 7, null, undefined];
     const accessor = Object.freeze(Object.defineProperty({ decision: "denied", category: "authorization", reason: "forged" }, "policy",
@@ -472,14 +505,22 @@ describe("forge adapter: a decision the core did not mint keeps its typed reason
     expect(respent).toMatchObject({ outcome: "rejected", calls: 0, error: { refusal: "permit-consumed", category: "validation" } });
   });
 
-  it("a forged frozen denial carries no caller text into the refusal: its policy is echoed only from the core's closed vocabulary", async () => {
-    for (const policy of ["sk-ant-qqsecretqq", "anything-goes", "observer-only ", "Observer-only", "", 7, null, undefined]) {
-      const result = await forge.attempt(Object.freeze({ decision: "denied", category: "authorization", reason: "forged", policy }));
-      expect(result, String(policy)).toMatchObject({ outcome: "rejected", calls: 0, error: { refusal: "denied-decision", category: "authorization" } });
+  it("a forged frozen denial carries no caller text into the refusal: its policy is echoed only from the core's closed vocabulary and its reason never reaches the fixed text", async () => {
+    const policies: unknown[] = ["sk-ant-qqsecretqq", "anything-goes", "observer-only ", "Observer-only", "", 7, null, undefined];
+    const forgeries: readonly (readonly [string, unknown])[] = [
+      ...policies.map(policy => [`policy ${JSON.stringify(policy) ?? "undefined"}`, Object.freeze({ decision: "denied", category: "authorization", reason: "forged", policy })] as const),
+      // wb-n9z F2: a caller-supplied reason (an obviously fake marker here) is never appended to the fixed text, with or without a policy beside it.
+      ["reason needle without a policy", Object.freeze({ decision: "denied", category: "authorization", reason: "reason-qqsecretqq" })],
+      ["reason needle beside a forged policy", Object.freeze({ decision: "denied", category: "authorization", reason: "reason-qqsecretqq", policy: "anything-goes" })],
+    ];
+    for (const [label, forged] of forgeries) {
+      const result = await forge.attempt(forged);
+      expect(result, label).toMatchObject({ outcome: "rejected", calls: 0, error: { refusal: "denied-decision", category: "authorization" } });
       const error = result.error as ForgeControlRefusal;
-      expect(error.policy).toBeUndefined();
+      expect(error.policy, label).toBeUndefined();
+      expect(error.message, label).toBe(FORGE_DENIED_TEXT);
       for (const rendered of [error.message, String(error), JSON.stringify(error), JSON.stringify(Object.entries(error))]) {
-        expect(rendered).not.toMatch(/qqsecretqq|anything-goes/);
+        expect(rendered, label).not.toMatch(/qqsecretqq|anything-goes/);
       }
     }
   });

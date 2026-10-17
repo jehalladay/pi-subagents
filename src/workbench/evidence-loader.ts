@@ -115,6 +115,11 @@ function safeChunks(row: string): string[] {
 
 const isHighSurrogate = (unit: number): boolean => unit >= 0xd800 && unit <= 0xdbff;
 
+/** At most `length` UTF-16 units of display text, never ending inside a surrogate pair, as safeChunks cuts (wb-yr9). */
+function headWithin(text: string, length: number): string {
+  return text.slice(0, text.length > length && isHighSurrogate(text.charCodeAt(length - 1)) ? length - 1 : length);
+}
+
 /** The longest prefix of `text` whose UTF-8 size fits `budget` bytes, cut only on code-point boundaries. */
 function prefixWithinBytes(text: string, budget: number): string {
   let used = 0;
@@ -174,7 +179,7 @@ function admit(loader: EvidenceLoader, content: EvidenceContent, maxBytes: numbe
   const receipt = typeof content.producerReceipt === "string" ? safeWorkflowTerminalText(content.producerReceipt.slice(0, MAX_RECEIPT_CHARS)) : "";
   return {
     state: "loaded",
-    kind: safeWorkflowTerminalText(String(content.kind)).slice(0, 64),
+    kind: headWithin(safeWorkflowTerminalText(String(content.kind)), 64),
     provider: loader.provider,
     capturedAt: content.capturedAt,
     bytes: Math.max(content.bytes, preview.reduce((sum, line) => sum + Buffer.byteLength(line), 0)),

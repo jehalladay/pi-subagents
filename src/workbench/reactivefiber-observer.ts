@@ -61,6 +61,12 @@ const SEAM_LABEL: Readonly<Record<ReactiveFiberSeam, string>> = {
   'rf-cli': 'noncommitted preview (rf-cli)',
   'injected-fixture': 'fixture seam (not a real render)',
 };
+/** The JL-A34 engine keys (RF ruling A28): an object-shaped result.provenance.sdk_versions carries them exactly when the render
+ * loaded a TSX definition, beside the sibling SDK entries and the wire format, which this reader never reads. */
+const ENGINE_KEYS = ['tsx_runtime', 'tsx_sdk'] as const;
+/** The fingerprint an engine entry states when its lock pins no digest. */
+const UNKNOWN_FINGERPRINT = 'unknown';
+const ENGINE_NOTE = 'TSX engine identity from result.provenance.sdk_versions: a foreign runtime executed component source';
 
 type JsonRecord = {[key: string]: JsonValue};
 interface CheckedContext {
@@ -83,6 +89,25 @@ const hasExactKeys = (value: JsonRecord, keys: readonly string[]): boolean =>
 /** Producer or host text bound for display: the shared helper's label layout, then a code unit the bound orphaned is dropped. */
 function shown(value: string, max: number): string {
   return sanitizeWorkbenchText(value, max, 'label').replace(LONE_SURROGATE, '').trim();
+}
+
+/** One rf-engine:<key>:<distribution_version>:<contract_fingerprint> reference per engine entry whose two identity strings are
+ * bounded (wb-693.1), in ENGINE_KEYS order: the version passes identity() and the shared label layout shows it unchanged, and
+ * the fingerprint is the graph digest's sha256:<64 lowercase hex> form or the literal 'unknown'. Nothing else is read
+ * (wb-693.3): no other field of an entry, no sibling SDK entry and no engine metric reaches a surfaced string, and an entry
+ * failing either bound is dropped, never rewritten. A LIST-shaped sdk_versions (rf <= 0.1.709), an absent one or any other
+ * shape records no engine identity and is never a refusal (wb-693.2). */
+function engineRefs(versions: JsonValue | undefined): string[] {
+  const entries = record(versions);
+  const refs: string[] = [];
+  for (const key of ENGINE_KEYS) {
+    const entry = entries !== undefined && Object.hasOwn(entries, key) ? record(entries[key]) : undefined;
+    const version = entry?.distribution_version;
+    const fingerprint = entry?.contract_fingerprint;
+    if (identity(version) && shown(version, MAX_IDENTITY_BYTES) === version && typeof fingerprint === 'string' &&
+      (GRAPH_DIGEST.test(fingerprint) || fingerprint === UNKNOWN_FINGERPRINT)) refs.push(`rf-engine:${key}:${version}:${fingerprint}`);
+  }
+  return refs;
 }
 
 /** Freezes a tree this module just built; nothing in it is shared with the caller's input. */
@@ -170,6 +195,8 @@ function previewSnapshot(envelope: JsonRecord, diagnostics: readonly JsonRecord[
   // The producer's own release, read only when the envelope states it (wb-2j3.1; wb-2j3.2: an absent one is never synthesized).
   // Owner ruling G-A: it travels as a distinct rf-cli evidence reference and a note, never as sourceVersion.
   const release = reportedRelease(provenance?.cli_version);
+  // RF ruling A28 engine identity, read only from an object-shaped sdk_versions: references and one note, never coverage or tone.
+  const engines = engineRefs(provenance?.sdk_versions);
   const formula = record(record(result.budget)?.formula_terms);
   if (!formula || !FORMULA_KEYS.every(key => count(formula[key])) || typeof formula.available_context_tokens !== 'number' ||
     !Number.isSafeInteger(formula.available_context_tokens)) {
@@ -200,9 +227,10 @@ function previewSnapshot(envelope: JsonRecord, diagnostics: readonly JsonRecord[
   if (flagged) notes.push('render reported errors: partial, not a clean render');
   if (overBudget) notes.push('context exceeds the available budget: partial');
   if (release !== undefined) notes.push(`producer release from result.provenance.cli_version: rf@${release}`);
+  if (engines.length > 0) notes.push(ENGINE_NOTE);
   return {
     operationId: String(envelope.operation_id), coverage: clean ? 'complete' : 'partial', statusTone: clean ? 'success' : 'unknown', statusText,
-    evidenceRefs: [`rf-graph:${graph}`, `rf-workspace:${workspaceId}`, ...(release !== undefined ? [`rf-cli:${release}`] : [])], notes, sourceRevision: graph,
+    evidenceRefs: [`rf-graph:${graph}`, `rf-workspace:${workspaceId}`, ...(release !== undefined ? [`rf-cli:${release}`] : []), ...engines], notes, sourceRevision: graph,
     nativePayloadRef: `rf-output:sha256:${createHash('sha256').update(output.text).digest('hex')}`,
   };
 }
