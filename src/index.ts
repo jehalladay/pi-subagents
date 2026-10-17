@@ -307,6 +307,12 @@ export function formatToolsSuffix(cfg: AgentConfig | undefined): string {
 export const WORKFLOW_FILE_FLAG = "subagents-workflow-file";
 
 /**
+ * The session ObservationProjection's read cap (its maxQuery). The inspector's linked topology wiring reads relation
+ * pages of exactly this size, so a slice never asks for more rows than the projection can return (wb-6ze.24).
+ */
+export const WORKBENCH_PROJECTION_MAX_QUERY = 40;
+
+/**
  * Re-exported from where they now live, because this is where they were
  * defined and a consumer (or a test) that matched a session entry on
  * {@link WORKFLOW_ENTRY_TYPE} imports it from here.
@@ -2374,7 +2380,7 @@ Terse command-style prompts produce shallow, generic work.
    * background run.
    */
   const workflowTasks = new Map<string, WorkflowTask>();
-  const projection = new ObservationProjection({ maxEvents: 4_096, maxNodes: 2_000, maxEdges: 4_000, maxQuery: 40 });
+  const projection = new ObservationProjection({ maxEvents: 4_096, maxNodes: 2_000, maxEdges: 4_000, maxQuery: WORKBENCH_PROJECTION_MAX_QUERY });
   const registries = new Map<string, CapabilityRegistry>();
   let workbenchToolsRegistered = false;
   function registryFor(cwd: string): CapabilityRegistry {
@@ -4448,6 +4454,7 @@ Write the file using the write tool. Only write the file, nothing else.`;
     tasks: workflowTasks,
     observation: {
       projection,
+      relationPage: WORKBENCH_PROJECTION_MAX_QUERY,
       scope: task => task.observationScope ? { workspace: task.observationScope.workspace, principal: task.observationScope.principal } : undefined,
       // Loaders exist for the landed readers; authorization is the live
       // exact-grant check each load runs (docs/workbench/20, wb-g1g.1 ruling).

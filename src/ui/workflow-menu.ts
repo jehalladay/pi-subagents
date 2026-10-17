@@ -16,8 +16,10 @@
 
 import type { ExtensionCommandContext } from "@earendil-works/pi-coding-agent";
 import type { AgentRecord } from "../types.js";
+import { CapabilityError } from "../workbench/capability-registry.js";
 import type { EvidenceStore } from "../workbench/evidence-loader.js";
-import type { ObservationProjection, ObservationScope } from "../workbench/observation.js";
+import type { ObservationProjection, ObservationScope, ObservedNode } from "../workbench/observation.js";
+import { type LinkedTopology, selectLinkedTopology } from "../workbench/topology-slice.js";
 import { pauseWorkflowTask, resumeWorkflowTask, type WorkflowTask } from "../workflow/task.js";
 import { WorkflowDialog } from "./workflow-dialog.js";
 
@@ -29,7 +31,18 @@ export interface WorkflowMenuDeps {
    * crash.
    */
   tasks: ReadonlyMap<string, WorkflowTask>;
-  observation?: { projection: ObservationProjection; scope(task: WorkflowTask): ObservationScope | undefined; evidence?: EvidenceStore };
+  observation?: {
+    projection: ObservationProjection;
+    scope(task: WorkflowTask): ObservationScope | undefined;
+    evidence?: EvidenceStore;
+    /**
+     * The read cap `projection` was built with (its maxQuery; src/index.ts hands over the constant it builds the
+     * projection with). Declared, the details view shows the selected node's linked topology slice, read in pages of
+     * exactly this size so the slice never asks for more rows than the projection returns (wb-6ze.24). Undeclared, the
+     * details view renders exactly as it does without one.
+     */
+    relationPage?: number;
+  };
   /** The record behind an agent id, or undefined once it has been swept. */
   getRecord(id: string): AgentRecord | undefined;
   /** The conversation overlay `c` opens on an agent row. */
@@ -41,6 +54,35 @@ export interface WorkflowMenuDeps {
    * sessions, which is a no-op rather than an error.
    */
   getCtx(): ExtensionCommandContext | undefined;
+}
+
+/**
+ * The details view's linked topology read side for one open dialog (wb-6ze.24; docs/workbench/10, Four views: Details).
+ * It computes the bounded slice of the one node the inspector draws as current from the projection's typed relations,
+ * read through relationsPage so a full page comes back as a lower bound, and holds that slice alone: a redraw reads
+ * nothing until the selection or the relation topology changes. Reading is all it does, so a selection change reaches no
+ * producer and no control verb, and closing the dialog leaves it nothing to cancel. A focus or a page the selector
+ * refuses yields no slice, and the details view then renders exactly as it does without one.
+ */
+function selectedNodeTopology(
+  projection: ObservationProjection,
+  relationPage: number,
+): (scope: ObservationScope, node: ObservedNode) => LinkedTopology | undefined {
+  let held: { workspace: string; principal: string; key: string; revision: number; slice: LinkedTopology | undefined } | undefined;
+  return (scope, node) => {
+    const revision = projection.relationRevision();
+    if (held?.key === node.key && held.revision === revision && held.workspace === scope.workspace && held.principal === scope.principal) {
+      return held.slice;
+    }
+    let slice: LinkedTopology | undefined;
+    try {
+      slice = selectLinkedTopology({ scope, relations: projection }, node.key, { relationPage });
+    } catch (error) {
+      if (!(error instanceof CapabilityError)) throw error;
+    }
+    held = { workspace: scope.workspace, principal: scope.principal, key: node.key, revision, slice };
+    return slice;
+  };
 }
 
 /**
@@ -72,6 +114,9 @@ export async function showWorkflowDialog(
    * closes.
    */
   let overlay: { setHidden(hidden: boolean): void } | undefined;
+  // One topology read side per open dialog: it holds the selected node's slice and goes with the overlay (wb-6ze.24).
+  const host = deps.observation;
+  const topology = host?.relationPage !== undefined ? selectedNodeTopology(host.projection, host.relationPage) : undefined;
   await ctx.ui.custom<undefined>(
     (tui, theme, _keybindings, done) =>
       new WorkflowDialog(
@@ -89,6 +134,7 @@ export async function showWorkflowDialog(
               title: task.meta?.name ?? task.workflowName ?? task.id,
               status: task.status,
               ...(deps.observation.evidence !== undefined ? { evidence: deps.observation.evidence } : {}),
+              ...(topology !== undefined ? { topology: (node: ObservedNode) => topology(observationScope, node) } : {}),
             } } : {}),
             task: {
               status: task.status,
