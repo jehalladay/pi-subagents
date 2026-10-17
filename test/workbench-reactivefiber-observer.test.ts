@@ -11,7 +11,7 @@ import {afterEach, describe, expect, expectTypeOf, it} from 'vitest';
 import {CapabilityError, type JsonValue} from '../src/workbench/capability-registry.js';
 import {nativeEvidence} from '../src/workbench/native-evidence.js';
 import {type NativeRef, ObservationProjection, type ObservationScope} from '../src/workbench/observation.js';
-import {nativeReactiveFiberPreview} from '../src/workbench/providers/reactivefiber.js';
+import {nativeReactiveFiberPreview, REACTIVE_FIBER_CONTRACT_SOURCE} from '../src/workbench/providers/reactivefiber.js';
 import {
   REACTIVEFIBER_OBSERVATION_CONTRACT, type ReactiveFiberObservedRelation, type ReactiveFiberProjectionTopology,
   type ReactiveFiberTopologyContext, reactivefiberTopology,
@@ -335,8 +335,9 @@ describe('ReactiveFiber render preview reader adapter', () => {
 describe('producer release from result.provenance.cli_version (wb-2j3.1 reader, wb-2j3.2 no-synthesis guard)', () => {
   const CAPABILITY = 'reactivefiber.render.preview';
   const RELEASE = '0.1.716';
-  /** The release both registered descriptors still hard-code in contractSource: the default the R3 guard must catch. */
-  const CARRIER_RELEASE = '0.1.583';
+  /** The release the single rf contractSource carrier states (wb-2j3.12, R2; read by identifier so the R3 guard tracks the
+   * live carrier, never a stale literal): the default an implementation must never synthesize for an absent cli_version. */
+  const CARRIER_RELEASE = REACTIVE_FIBER_CONTRACT_SOURCE.slice('rf@'.length, REACTIVE_FIBER_CONTRACT_SOURCE.indexOf(':'));
   const invoked: ReactiveFiberTopologyContext = {...context, invocationId: 'wf_rf_1'};
   const stating = (cliVersion: JsonValue): Json => withResult({provenance: {graph_revision_id: GRAPH, cli_version: cliVersion}});
   const noteOf = (release: string): string => `producer release from result.provenance.cli_version: rf@${release}`;
