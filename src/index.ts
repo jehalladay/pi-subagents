@@ -68,6 +68,7 @@ import { openWorkflowFromFleet, showWorkflowsMenu, type WorkflowMenuDeps } from 
 import { getLifetimeCost, getLifetimeTotal, getSessionContextPercent, type LifetimeUsage, PendingUsagePool, toReportedUsage } from "./usage.js";
 import { type CapabilityDescriptor, CapabilityError, CapabilityRegistry } from "./workbench/capability-registry.js";
 import { executeClaudeControl } from "./workbench/claude-control.js";
+import { createClaudeControlObserver, createClaudeControlRetention } from "./workbench/claude-control-observer.js";
 import type { ClaudeCallIdentity } from "./workbench/claude-host.js";
 import { type ControlExecutionSummary, type ControlExecutor, createWorkflowControlTool } from "./workbench/control-tool.js";
 import { type CompareRun, catalogWorkflows, compareWorkflowRuns, inspectWorkflowSource, validateWorkflowSource } from "./workbench/designer.js";
@@ -1201,6 +1202,7 @@ export default function (pi: ExtensionAPI) {
     // as well as its children, and only its own signal terminates that.
     for (const task of workflowTasks.values()) task.abortController.abort();
     workflowTasks.clear();
+    claudeControlRetention.dispose();
     // Forge operations this process started: dispose releases their retentions and closes the owned connections (no cancel verb).
     await Promise.all([...liveForgeOperations.values()].map(operation => operation.dispose().catch(() => undefined)));
     liveForgeOperations.clear();
@@ -2422,6 +2424,12 @@ Terse command-style prompts produce shallow, generic work.
   const liveClaudeQueries = new Map<string, LiveClaudeQuery>();
   const liveClaudeSessions = new Map<string, string>();
   const liveClaudeKey = (invocationId: string, call: ClaudeCallIdentity): string => `${invocationId}:${call.index}`;
+  /**
+   * workflow_control (wb-hqa): the acknowledged Claude interrupts awaiting the observer's report of the call's own terminal,
+   * keyed like liveClaudeQueries. Separate from the live maps because onQueryDone deletes those BEFORE onSettled publishes
+   * the terminal; the observer's control hooks settle from here, and session_shutdown disposes it.
+   */
+  const claudeControlRetention = createClaudeControlRetention({ projection, tasks: workflowTasks, now: () => new Date().toISOString() });
   const registries = new Map<string, CapabilityRegistry>();
   let workbenchToolsRegistered = false;
   function registryFor(cwd: string): CapabilityRegistry {
@@ -2809,6 +2817,7 @@ Terse command-style prompts produce shallow, generic work.
           call: { invocationId: live.invocationId, index: live.call.index, ...(live.sessionId !== undefined ? { sessionId: live.sessionId } : {}) },
           now: controlNow, timeoutMs: 10_000, ...(signal !== undefined ? { signal } : {}),
         });
+        claudeControlRetention.retain(execution);
         return { receipt: execution.receipt, status: execution.status };
       },
       furnace: async (decision, request, signal): Promise<ControlExecutionSummary> => {
@@ -2936,7 +2945,7 @@ Terse command-style prompts produce shallow, generic work.
         };
         nativeRows.set(call.index, updated);
         updateWorkflowProgressBatch(task, [updated]);
-      });
+      }, createClaudeControlObserver({ invocationId: task.id, scope, projection, now: () => new Date().toISOString(), retention: claudeControlRetention }));
       let beforeDispatch: (() => void) | undefined;
       if (settings) {
         const registry = registryFor(ctx.cwd);
