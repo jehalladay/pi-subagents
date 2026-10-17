@@ -158,6 +158,7 @@ const WORKBENCH_TOOLS = [
   "workflow_catalog",
   "workflow_compare",
   "workflow_detached",
+  "workflow_execute",
   "workflow_inspect",
   "workflow_observe",
   "workflow_reconcile",
@@ -256,6 +257,9 @@ const PROBES: Array<{ tool: string; params: Params; zeroGrant: string; sameWhenU
   { tool: "workflow_compare", params: { referenceTask: "wf_a", candidateTask: "wf_b" }, zeroGrant: "Permission denied: design and observe grants required." },
   { tool: "furnace_observe", params: { runId: "not-a-run" }, zeroGrant: "Permission denied: furnace:inspect grant required." },
   { tool: "workflow_detached", params: { action: "inspect", invocationId: "inv-census" }, zeroGrant: "Permission denied: explicit detached launch or observe grant required." },
+  // Exact workbench:execute (not in mode D's list) gates this tool; the typed refusal is identical for every caller without it
+  // and names no invocation reference (nothing addressable was launched), so mode D asserts only that it is not a permission denial.
+  { tool: "workflow_execute", sameWhenUngranted: true, params: { definitionRef: { kind: "script", id: "missing.js", schemaVersion: "workflow-script/v1", artifactDigest: `sha256:${"0".repeat(64)}` }, input: null, hostMode: "embedded" }, zeroGrant: '{"contract":"workbench.tool-reply/v1","tool":"workflow_execute","ok":false,"invoked":false,"status":"refused","completion":"not-asserted","nativeRefs":[],"error":{"code":"missing-execute-grant","message":"missing exact grant workbench:execute"}}' },
   { tool: "workflow_observe", params: { taskId: "bad" }, zeroGrant: "Permission denied: workbench:observe grant required." },
   { tool: "workflow_reconcile", params: { taskId: "wf_abcdef123456", action: "inspect" }, zeroGrant: "Permission denied: workbench:observe grant required." },
 ];
