@@ -23,12 +23,16 @@ import { createHash } from "node:crypto";
 import type { LogsReadDto, Response } from "@furnace/sdk";
 import { describe, expect, it } from "vitest";
 import { safeWorkflowTerminalText } from "../src/ui/workflow-card.js";
-import { selectAttention } from "../src/workbench/attention.js";
+import { type InspectorModel, initialInspectorState, layoutInspector } from "../src/ui/workflow-inspector.js";
+import { ATTENTION_CLOCK_CAVEAT, ATTENTION_CONTRACT, type AttentionReport, selectAttention } from "../src/workbench/attention.js";
 import { type BeadsReadClient, projectBeadsWork, readBeadsWork } from "../src/workbench/beads-observer.js";
 import { type CapabilityDescriptor, CapabilityError, type JsonValue } from "../src/workbench/capability-registry.js";
 import { readClaudeMessageEvidence } from "../src/workbench/claude-evidence.js";
 import { type ClaudeTopologyInput, projectClaudeTopology } from "../src/workbench/claude-topology.js";
+import { CONTROL_CONTRACT_VERSION, CONTROL_PERMIT_POLICY, type NativeControlReceipt } from "../src/workbench/control.js";
+import { buildControlReply, MAX_CONTROL_REPLY_BYTES } from "../src/workbench/control-reply.js";
 import type { WorkflowSource } from "../src/workbench/designer.js";
+import { type DetachedControlClient, type DetachedControlExecution, type DetachedControlInput, executeDetachedControl } from "../src/workbench/detached-control.js";
 import { projectDetachedReading } from "../src/workbench/detached-observer.js";
 import { type EvidenceLoader, EvidenceStore } from "../src/workbench/evidence-loader.js";
 import { buildWorkflowExecuteReply, decideExecute, EXECUTE_GRANT, type ExecuteDecision, type LaunchOutcome, type WorkflowExecuteRequest } from "../src/workbench/execute.js";
@@ -36,6 +40,7 @@ import { readForgeOperationEvidence } from "../src/workbench/forge-evidence.js";
 import { forgeGateTopology } from "../src/workbench/forge-observer.js";
 import { readFurnaceAttemptLogEvidence } from "../src/workbench/furnace-evidence.js";
 import { FurnaceHostedExecutor, SHIPPED_FURNACE_SDK } from "../src/workbench/hosts/furnace-hosted.js";
+import { decodeDetachedCommand } from "../src/workbench/hosts/local-detached.js";
 import { type HyperUnixTopologyContext, hyperunixTopology } from "../src/workbench/hyperunix-observer.js";
 import { WORKFLOW_SCRIPT_SCHEMA_VERSION } from "../src/workbench/identity.js";
 import { selectLatencyDecomposition } from "../src/workbench/latency.js";
@@ -47,6 +52,7 @@ import { buildOperationsTelemetry } from "../src/workbench/telemetry.js";
 import { buildTimelineLanes, type TimelineReader } from "../src/workbench/timeline.js";
 import { buildWorkflowCatalogReply, buildWorkflowInspectReply, type CapabilityCatalogEntry } from "../src/workbench/tool-replies.js";
 import { selectLinkedTopology } from "../src/workbench/topology-slice.js";
+import { detachedCatchDriver } from "./helpers/detached-peer.js";
 
 const cp = (code: number): string => String.fromCodePoint(code);
 const NUL = cp(0x00);
@@ -340,6 +346,47 @@ function attentionTexts(raw: string): string[] {
 }
 
 /**
+ * The workflow-inspector.ts attention panel (layoutInspector overview): a DIRECT-CALLER row under the 21:00Z display-path rule.
+ * The panel inherits the workflow-card.ts "terminal" site through the inspector's safe() and passes every producer string through
+ * it exactly once (wb-6ze.21 respin, owner rulings 21:43Z). The probe rides a bottleneck title, that bottleneck's provider and a
+ * disconnected provider; the overview is drawn at the gate's 120x40 and at 200x40, where no title is cut, in both tiers.
+ */
+const PANEL_SCOPE: ObservationScope = { workspace: "ws-inspector-panel", principal: "operator" };
+function panelReport(raw: string): AttentionReport {
+  return {
+    contract: ATTENTION_CONTRACT, basis: "observed", now: NOW, examined: { nodes: 1, truncated: false },
+    counts: { active: 1, waiting: 0, success: 0, failure: 0, unknown: 0, stale: 0, disconnected: 1, withInterval: 1, withoutInterval: 0 },
+    disconnectedProviders: [raw],
+    bottlenecks: [{ key: "panel-probe", nativeRef: { provider: raw, type: "operation", id: "panel-probe" }, title: raw, tone: "active", freshness: "current", openMs: 60_000, measured: true }],
+    unmeasured: 0, clockSkew: 0, criticalPath: { label: "incomplete-trace", reasons: ["no-dependency-edges"] }, clockCaveat: ATTENTION_CLOCK_CAVEAT,
+  };
+}
+function panelLines(model: InspectorModel): string[] {
+  return [120, 200].flatMap(width => [false, true].flatMap(ascii => layoutInspector(model, initialInspectorState(), { width, rows: 40, ascii })));
+}
+function inspectorPanelTexts(raw: string): string[] {
+  return panelLines({ projection: new ObservationProjection(), scope: PANEL_SCOPE, invocationId: "inv-panel", title: "Panel corpus", status: "running", attention: panelReport(raw) });
+}
+/** The panel through the REAL projection, the provider as the projection admits it: undefined when the projection does not hold the node. */
+function inspectorPanelRealTexts(raw: string): string[] | undefined {
+  const projection = new ObservationProjection();
+  const at = "2026-10-15T12:00:30.000Z";
+  try {
+    projection.refresh({
+      source: { provider: raw, type: "operation", id: "op-panel" }, scope: PANEL_SCOPE, capturedAt: at, observedAt: at, kind: "fixture.snapshot",
+      node: { title: "Panel real path", type: "sdk-operation", statusText: "running", statusTone: "active" },
+      trace: { invocationId: "inv-panel-real" }, interval: { startedAt: "2026-10-15T12:00:00.000Z" },
+    });
+    projection.disconnect(raw);
+  } catch {
+    return undefined;
+  }
+  if (projection.window({ scope: PANEL_SCOPE, invocationId: "inv-panel-real", offset: 0, limit: 1 }).total === 0) return undefined;
+  const attention = selectAttention(projection, { scope: PANEL_SCOPE, invocationId: "inv-panel-real", now: "2026-10-15T12:01:00.000Z" });
+  return panelLines({ projection, scope: PANEL_SCOPE, invocationId: "inv-panel-real", title: "Panel real path", status: "running", attention });
+}
+
+/**
  * DIRECT-CALLER row (wb-cax.13 O1, owner 2026-10-16T00:01Z): telemetry.ts providerName calls the one helper with the label
  * layout, and the report's sampled-provider list is its display. A structural projection hands the report the producer's raw
  * provider, as the attention driver hands selectAttention a raw title (the real projection refuses C0 controls in identity).
@@ -484,6 +531,70 @@ function detachedTexts(raw: string): string[] {
   return reading.snapshots.flatMap(snapshot => [snapshot.node.title, snapshot.node.statusText]);
 }
 
+/**
+ * Site 23 DIRECT-CALLER row (wb-0kg.6 respin U4, owner O1 bound 2026-10-16 08:31Z): detached-control.ts sanitized() calls the
+ * one helper with the label layout, and wb-952 counts it as census site 23. Every display it feeds runs through the REAL
+ * executeDetachedControl: the client frame (decoded by the host's own decodeDetachedCommand, as the real client does before
+ * writing it), the reason the host's controlAudit stores from that frame (local-detached.ts:650 redacts the decoded reason),
+ * the host-refusal, client-refusal, EACCES and transport diagnostics, and every string of each execution. The projection is
+ * seeded by hand with the W13-G reader convention: an invocation owned by its host process, confirmed by host instance, pid
+ * and owner.
+ */
+const CONTROL_OWNER = "local-os:uid:1000";
+const CONTROL_SCOPE: ObservationScope = { workspace: "/tmp/detached-control-ws", principal: CONTROL_OWNER };
+const CONTROL_HOST = "ab".repeat(24);
+const CONTROL_INVOCATION: NativeRef = { provider: "local-detached", type: "invocation", id: "inv-control-corpus" };
+const CONTROL_HOST_PROCESS: NativeRef = { provider: "local-detached", type: "host-process", id: `${CONTROL_HOST}:4242` };
+function controlProjection(): ObservationProjection {
+  const projection = new ObservationProjection();
+  for (const source of [CONTROL_INVOCATION, CONTROL_HOST_PROCESS]) {
+    projection.refresh({
+      source, scope: CONTROL_SCOPE, capturedAt: NOW, observedAt: NOW, kind: `local-detached.${source.type}.snapshot`,
+      node: { title: source.id, type: "workflow", statusText: "running", statusTone: "active" },
+    });
+  }
+  projection.relate({
+    scope: CONTROL_SCOPE, from: CONTROL_INVOCATION, to: CONTROL_HOST_PROCESS, kind: "ownership",
+    provenance: { source: "local-detached", observedAt: NOW, nativeConfirmationRef: `local-detached:${CONTROL_HOST}:4242:${CONTROL_OWNER}` },
+  });
+  return projection;
+}
+function controlExecution(reason: string, cancel: DetachedControlClient["cancel"]): Promise<DetachedControlExecution> {
+  const request: DetachedControlInput["request"] = {
+    scope: { ...CONTROL_SCOPE }, principal: { id: CONTROL_OWNER, role: "local-operator" }, grants: ["control:local-detached.cancel"],
+    target: { ...CONTROL_INVOCATION }, action: "cancel", params: { confirmed: true, reason }, invocationId: "inv-control-request",
+    requestedAt: "2026-10-15T11:59:00.000Z",
+  };
+  const shutdown: DetachedControlClient["shutdown"] = async () => {
+    throw new Error("the site-23 driver sends cancel only");
+  };
+  return executeDetachedControl({ request, deps: { projection: controlProjection() }, connect: () => ({ cancel, shutdown }), now: () => NOW });
+}
+async function detachedControlTexts(raw: string): Promise<string[]> {
+  const frames: string[] = [];
+  const settled = await controlExecution(raw, async frame => {
+    decodeDetachedCommand({ command: "cancel", invocationId: CONTROL_INVOCATION.id, reason: frame });
+    frames.push(frame);
+    return { accepted: true, terminalConfirmed: false };
+  });
+  if (settled.status !== "settled" || frames.length !== 1) throw new Error(`site 23: the frame did not reach the host (${settled.status})`);
+  const texts = [frames[0], redactWorkbenchText(frames[0]), ...strings(settled)];
+  const failures: readonly (readonly [error: Error, status: DetachedControlExecution["status"]])[] = [
+    [new Error(`Detached authorization: ${raw}`), "refused"],
+    [new Error(`Authorization: ${raw}`), "refused"],
+    [Object.assign(new Error(`connect EACCES ${raw}`), { code: "EACCES" }), "refused"],
+    [new Error(`Detached host disconnected before reply. ${raw}`), "uncertain"],
+  ];
+  for (const [error, status] of failures) {
+    const execution = await controlExecution("operator note", async () => {
+      throw error;
+    });
+    if (execution.status !== status) throw new Error(`site 23: expected ${status}, got ${execution.status}`);
+    texts.push(...strings(execution));
+  }
+  return texts;
+}
+
 function descriptor(description: string): CapabilityDescriptor {
   return {
     id: "forge.build", version: "1.0.0", description, inputSchema: { type: "object", properties: { q: { type: "string", description } } },
@@ -549,6 +660,13 @@ function observeTexts(raw: string): string[] {
   return strings(observeInvocation(reader, { scope: ALICE, invocationId: "inv-observe" }));
 }
 
+/**
+ * DIRECT-CALLER row (wb-71q R1, owner 2026-10-16T10:59Z, bound onto wb-70b): the workflow_detached launch/inspect catch in
+ * src/index.ts hands every refusal message straight to the one helper (text layout), the wb-70b typed relaunch refusal
+ * included. A same-uid peer on the receipt-recorded socket returns the raw text as the host's authorization refusal.
+ */
+const detachedCatchTexts = detachedCatchDriver();
+
 /** wb-h8f.10: latency.ts displayText (selectLatencyDecomposition), the provider and the evidence-ref paths, joined to the corpus in the same commit as its routing through the one helper. */
 function latencyTexts(raw: string): string[] {
   const node: ObservedNode = {
@@ -559,6 +677,23 @@ function latencyTexts(raw: string): string[] {
   };
   const report = selectLatencyDecomposition({ query: filter => ({ nodes: [node].slice(0, filter.limit), examined: 1, truncated: false }) }, { scope: ALICE, invocationId: "inv-latency" });
   return [...report.components.flatMap(item => item.providers), ...report.evidenceRefs, ...report.components.flatMap(item => item.evidenceRefs), report.invocationId];
+}
+
+/**
+ * DIRECT-CALLER row (wb-752.4 O1, owner 2026-10-16T01:22Z): site 13 control-reply.ts buildControlReply routes every display
+ * string of the workflow_control reply through the one helper with the text layout, exactly once. A hand-built result receipt
+ * carries the producer's raw text in the requested target id and in both native echo refs, as the control wiring could hand the
+ * builder a receipt the core did not mint (the landed core refuses unsafe refs); the cap is the maximum, so no compact cut hides
+ * a secret.
+ */
+function controlReplyTexts(raw: string): string[] {
+  const receipt: NativeControlReceipt = {
+    contractVersion: CONTROL_CONTRACT_VERSION, requestId: "ctl_corpus", scope: { workspace: ALICE.workspace, principal: ALICE.principal }, principal: { id: ALICE.principal },
+    grant: "control:furnace.stop", policy: CONTROL_PERMIT_POLICY, target: { provider: "furnace", type: "run", id: raw }, action: "stop", invocationId: "inv-control-corpus",
+    ownershipConfirmationRef: "req-control-corpus", requestedAt: NOW, decidedAt: NOW, phase: "result", acknowledgedAt: NOW, nativeAckRef: raw, outcome: "completed",
+    nativeResultRef: raw, settledAt: NOW,
+  };
+  return strings(buildControlReply(receipt, { maxBytes: MAX_CONTROL_REPLY_BYTES }).reply);
 }
 
 interface Site {
@@ -586,19 +721,23 @@ const SITES: readonly Site[] = [
   { site: "site 4 claude-topology.ts shown (projectClaudeTopology)", texts: claudeTexts },
   { site: "site 5 timeline.ts shown (buildTimelineLanes)", texts: timelineTexts },
   { site: "site 6 attention.ts titleOf (selectAttention)", texts: attentionTexts },
+  { site: "workflow-inspector.ts attention panel (layoutInspector overview)", texts: inspectorPanelTexts },
   { site: "telemetry.ts providerName (buildOperationsTelemetry eventLag.providers)", texts: telemetryTexts },
   { site: "site 7 topology-slice.ts labelOf (selectLinkedTopology)", texts: topologyTexts },
   { site: "site 8 furnace-hosted.ts safeText (FurnaceHostedExecutor.start)", texts: hostedTexts },
   { site: "site 9 patch-proposal.ts displayText (proposeWorkflowPatch)", texts: patchTexts },
   { site: "site 10 beads-observer.ts cleanText (readBeadsWork, projectBeadsWork)", texts: beadsTexts },
+  { site: "site 13 control-reply.ts buildControlReply (requested target id, acknowledged and result echo refs)", texts: controlReplyTexts },
   { site: "site 15 furnace-evidence.ts sanitize (readFurnaceAttemptLogEvidence)", texts: furnaceEvidenceTexts },
   { site: "site 16 evidence-loader.ts safeChunks (EvidenceStore)", texts: storeTexts },
   { site: "claude-evidence.ts sanitizeRow (readClaudeMessageEvidence preview lines)", texts: claudeEvidenceTexts },
   { site: "site 18 detached-observer.ts shown (projectDetachedReading)", texts: detachedTexts },
+  { site: "src/index.ts workflow_detached launch/inspect catch (DIRECT-CALLER, the detached refusal text)", texts: detachedCatchTexts },
   { site: "sites 19/20 workflow_inspect and workbench_catalog replies", texts: replyTexts },
   { site: "site 12 execute.ts buildWorkflowExecuteReply (DIRECT-CALLER: reason, policy value and key, native reference id and scope, definition id, invocation reference)", texts: executeTexts },
   { site: "site 22 observe-query.ts clean (observeInvocation)", texts: observeTexts },
   { site: "wb-h8f.10 latency.ts displayText (selectLatencyDecomposition provider and evidence paths)", texts: latencyTexts },
+  { site: "site 23 detached-control.ts sanitized (executeDetachedControl)", texts: detachedControlTexts },
 ];
 
 describe("wb-952 one-helper corpus through every census site's public function", () => {
@@ -640,6 +779,27 @@ describe("wb-952 acceptance set (17:32Z): every unit between, inside and both, t
     }
     // Every shape without a C0 control or DEL reaches the real path, so none is skipped silently.
     expect(admitted).toBe(probes.filter(probe => !/[\x00-\x1f\x7f]/.test(probe.raw)).length);
+    expect([...new Set(failures)]).toEqual([]);
+  });
+
+  it("workflow-inspector.ts attention panel through the REAL ObservationProjection -> selectAttention -> layoutInspector path, every provider the projection holds (wb-6ze.21 respin U1)", () => {
+    const probes = [...CORPUS, ...ACCEPTANCE];
+    const failures: string[] = [];
+    let held = 0;
+    for (const probe of probes) {
+      const shown = inspectorPanelRealTexts(probe.raw);
+      if (shown === undefined) continue;
+      held += 1;
+      // A held node reaches the panel twice: as a measured bottleneck row and as a disconnected provider.
+      if (!shown.some(text => text.includes("open 01:00 measured"))) failures.push(`${probe.id}: no bottleneck row`);
+      if (!shown.some(text => text.includes("(providers: "))) failures.push(`${probe.id}: no disconnected provider`);
+      for (const text of shown) {
+        if (probe.secrets.some(secret => text.includes(secret))) failures.push(`${probe.id}: leaked`);
+        if (UNSAFE_DISPLAY.test(text)) failures.push(`${probe.id}: kept an unsafe code point`);
+      }
+    }
+    // A shape without any unsafe unit is held whatever admission refuses, so the path is never skipped wholesale.
+    expect(held).toBeGreaterThanOrEqual(probes.filter(probe => stripUnsafeText(probe.raw) === probe.raw).length);
     expect([...new Set(failures)]).toEqual([]);
   });
 });

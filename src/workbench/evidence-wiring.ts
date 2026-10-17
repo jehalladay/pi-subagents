@@ -116,7 +116,7 @@ export function createWorkbenchEvidenceStore(deps: WorkbenchEvidenceDeps): Evide
         };
   const loaders = createEvidenceLoaders({
     grants: deps.grants,
-    ...(deps.now !== undefined ? { now: deps.now } : {}),
+    now: () => (deps.now?.() ?? new Date()),
     ...(forge !== undefined ? { forge } : {}),
     claude: async ({ sessionId }) => {
       const cwd = deps.cwd();
