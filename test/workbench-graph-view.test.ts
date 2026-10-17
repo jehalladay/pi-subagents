@@ -513,18 +513,31 @@ describe("A9 purity: the module reads no clock, producer, SDK or UI", () => {
   it("calls no clock, timer, random or process API", () => {
     expect(source).not.toMatch(/Date\.now|new Date\(|Math\.random|setTimeout|setInterval|process\./);
   });
-  it("uses the shared sanitizers for labels: every display path shows the one helper's named label layout", () => {
+  it("uses the shared sanitizers for labels: every display path shows the one helper's named label layout (a routing probe the real projection refuses as identity, typed, reaches the identity paths through the structural reader, wb-0br)", () => {
     // Respin U4 (gate-3 08:01Z): the source-text check this case held stayed green with the labels routed elsewhere and
     // pinned the forbidden local composition. The behaviour instead: on the real projection path every display string is
     // exactly what sanitizeWorkbenchText shows for the same producer text in its NAMED "label" layout (4 096-unit scan,
     // 80-unit bound), for text a local composition shows differently: a scheme glued to its token beside planted literal
     // markers (GATE-STEER1), an ignorable inside a key (the tie class), a C1 control (a space in the label layout, nothing
     // in "text"), a separator, runs of spaces (collapsed only by "label") and an over-long title.
+    // wb-0br second-lander re-expression (known-conflicts entry 16): the real projection refuses four routing probes as
+    // identity, typed, with nothing stored. Each of those pins that refusal (the absent rows, no routing marker in either
+    // build) and reads its identity paths through the structural reader instead; the two it still admits keep the real
+    // path, which the structural reader must read identically.
     const label = (raw: string): string => sanitizeWorkbenchText(raw.slice(0, 4_096), 80, "label");
-    for (const raw of ROUTING) {
+    expect(ROUTING.map(unsafeIdentityAt)).toEqual(ROUTING_REFUSED_AT);
+    for (const [index, raw] of ROUTING.entries()) {
       const text = textPaths(raw);
-      const identity = identityPaths(raw);
+      const refusal = ROUTING_REFUSED_AT[index];
+      const identity = refusal === undefined ? identityPaths(raw) : heldIdentityPaths(raw);
       if (text === "refused" || identity === "refused") expect.unreachable("the projection refused a routing probe");
+      if (refusal === undefined) {
+        expect(heldIdentityPaths(raw)).toEqual(identity);
+      } else {
+        const { rendered, ...refused } = refusedIdentityPaths(raw);
+        expect(refused).toStrictEqual(refusedIdentityAt(refusal));
+        expect(/ROUTE[A-Z]+/.test(rendered), `routing probe ${index} reached a build`).toBe(false);
+      }
       const shown = label(raw);
       expect(shown).not.toBe("");
       expect(text).toEqual({
@@ -824,6 +837,153 @@ function identityPaths(raw: string): Record<IdentityPath, string[]> | "refused" 
   };
 }
 
+// ---------------------------------------------------------------------------------------------------------------------
+// wb-0br second-lander re-expression (known-conflicts entry 16, owner 2026-10-16T20:51Z; gate-3 row 378 U1). The real
+// projection's typed identity admission refuses a nativeRef provider, type, id or scope carrying an unsafe unit, so it
+// stores nothing of identityPaths' fixture for such a probe and the five identity rows no longer reach their display
+// paths through it. Each of those rows now pins, through the REAL projection, the typed refusal (closed-vocabulary rows
+// naming the first refused unit), the absent rows and the secret's absence; then the structural reader feeds the fixture
+// as the projection held it before the widening to the REAL builder, where every presence and redaction assertion of the
+// original row is unchanged. A probe the real projection still admits as identity keeps its real path, and there the
+// structural reader must read the same strings.
+// ---------------------------------------------------------------------------------------------------------------------
+
+/** The first unit the projection's identity admission refuses (observation.ts, wb-0br), as "U+XXXX": it refuses every
+ * unit a display string must never carry (UNSAFE_DISPLAY above), and no probe in these tables carries any other unit it
+ * refuses. */
+function unsafeIdentityAt(raw: string): string | undefined {
+  const code = UNSAFE_DISPLAY.exec(raw)?.[0].codePointAt(0);
+  return code === undefined ? undefined : `U+${code.toString(16).toUpperCase().padStart(4, "0")}`;
+}
+/** The first unit the real projection's typed identity refusal names for each routing probe, read off the probes: the two
+ * without one (runs of spaces, an over-long title) are still admitted as identity. */
+const ROUTING_REFUSED_AT: readonly (string | undefined)[] = ["U+200B", "U+00AD", "U+009B", "U+0085", undefined, undefined];
+/** Shapes of each table carrying no unit the identity admission refuses: only these still reach the real identity path. */
+const IDENTITY_ADMITTED: Readonly<Record<(typeof TABLES)[number]["name"], number>> = { CORPUS: 2, ACCEPTANCE: 0, GATE: 0 };
+
+/** One snapshot carrying the probe as its provider, through the REAL projection: true when the projection applied it;
+ * otherwise its typed identity admission refused it with exactly one row naming the first refused unit, and it stored
+ * nothing (wb-0br). */
+function admittedAsIdentity(raw: string): boolean {
+  const projection = new ObservationProjection();
+  const outcome = projection.refresh(snapshotOf(providerRef(raw, "p"), "provider node", "running"));
+  const codePoint = unsafeIdentityAt(raw);
+  if (codePoint === undefined) {
+    expect(outcome).toBe("applied");
+    return true;
+  }
+  expect({ outcome, refusals: projection.identityRefusals({ scope, limit: 10 }), stats: projection.stats() }).toStrictEqual({
+    outcome: "refused",
+    refusals: { refusals: [{ path: "refresh", ref: "source", field: "provider", codePoint, reason: "unsafe-identity" }], total: 1, truncated: false },
+    stats: { nodes: 0, events: 0, edges: 0 },
+  });
+  return false;
+}
+
+/** The three identity display paths identityPaths reads, from a plain and a fan-out collapsed build of the probe's fixture. */
+function identityShown(raw: string, plain: GraphViewModel, collapsed: GraphViewModel): Record<IdentityPath, string[]> {
+  const providers = new Set([keyOf(providerRef(raw, "p")), keyOf(providerRef(raw, "q"))]);
+  return {
+    provider: plain.nodes.filter(node => providers.has(node.key)).map(node => node.provider),
+    "reference label": plain.nodes.filter(node => node.key === keyOf(idRef(raw))).map(node => node.label),
+    "supernode provider": collapsed.supernodes.filter(entry => entry.from === keyOf(forge("hub"))).flatMap(entry => entry.providers.map(row => row.provider)),
+  };
+}
+
+/** identityPaths' fixture through the REAL projection for a probe its identity admission refuses: the same three snapshots
+ * carrying the probe, then the hub and the two hub relations, in the same order. Every admission carrying the probe comes
+ * back a typed refusal and stores nothing, so both builds hold the hub alone. `rendered` is both builds as JSON, read for
+ * the secret's absence only. */
+function refusedIdentityPaths(raw: string) {
+  const projection = new ObservationProjection();
+  const outcomes = [
+    projection.refresh(snapshotOf(providerRef(raw, "p"), "provider node", "running")),
+    projection.refresh(snapshotOf(providerRef(raw, "q"), "provider node too", "running")),
+    projection.refresh(snapshotOf(idRef(raw), ZWSP, "running")),
+  ];
+  observe(projection, { ref: forge("hub"), title: "hub" });
+  for (const id of ["p", "q"]) link(projection, forge("hub"), providerRef(raw, id));
+  const plain = buildGraphView(projection, request());
+  const collapsed = buildGraphView(projection, request({ caps: { maxFanOut: 1 } }));
+  return {
+    outcomes,
+    refusals: projection.identityRefusals({ scope, limit: 10 }),
+    stats: projection.stats(),
+    built: {
+      nodes: plain.nodes.map(node => node.label),
+      edges: plain.edges.length,
+      references: plain.references.length,
+      supernodes: collapsed.supernodes.length,
+      complete: plain.complete && collapsed.complete,
+    },
+    shown: identityShown(raw, plain, collapsed),
+    rendered: JSON.stringify([plain, collapsed]),
+  };
+}
+/** The one outcome refusedIdentityPaths may have for a probe whose first refused unit is `codePoint`: all three snapshots
+ * refused, five rows (each provider node's provider, the reference node's id, the `to` end's provider of both hub
+ * relations), only the hub stored and drawn (so the absent rows are never vacuous), every identity display path empty. */
+function refusedIdentityAt(codePoint: string) {
+  const row = (path: string, ref: string, field: string) => ({ path, ref, field, codePoint, reason: "unsafe-identity" });
+  return {
+    outcomes: ["refused", "refused", "refused"],
+    refusals: {
+      refusals: [row("refresh", "source", "provider"), row("refresh", "source", "provider"), row("refresh", "source", "id"), row("relate", "to", "provider"), row("relate", "to", "provider")],
+      total: 5,
+      truncated: false,
+    },
+    stats: { nodes: 1, events: 0, edges: 0 },
+    built: { nodes: ["hub"], edges: 0, references: 0, supernodes: 0, complete: true },
+    shown: { provider: [], "reference label": [], "supernode provider": [] },
+  };
+}
+
+/** The builder's declared reader input (graph-view.ts GraphReader). */
+type Reader = Parameters<typeof buildGraphView>[0];
+/** The placeholder the structural twin carries where identityPaths' fixture carries the probe. */
+const TWIN = "identity-twin";
+/** identityPaths' fixture as the real projection held it before its typed identity admission (wb-0br), as a plain reader.
+ * The fixture's clean twin (TWIN in place of the probe) goes through a real projection; the reader serves that
+ * projection's own window rows and relation pages with the probe put back into every provider, id and key, so the REAL
+ * builder and every display path meet the hostile identity where the projection stored it before the widening. */
+function heldReader(raw: string): Reader {
+  const twin = new ObservationProjection();
+  if (!admit(twin, providerRef(TWIN, "p"), "provider node", "running")) expect.unreachable("the projection refused the clean twin");
+  observe(twin, { ref: providerRef(TWIN, "q"), title: "provider node too" });
+  observe(twin, { ref: idRef(TWIN), title: ZWSP });
+  observe(twin, { ref: forge("hub"), title: "hub" });
+  for (const id of ["p", "q"]) link(twin, forge("hub"), providerRef(TWIN, id));
+  const held = (ref: NativeRef): NativeRef => ({ ...ref, provider: ref.provider === TWIN ? raw : ref.provider, id: ref.id === TWIN ? raw : ref.id });
+  const heldKeys = new Map(twin.window({ scope, invocationId: INVOCATION, offset: 0, limit: 100 }).nodes.map(node => [node.key, keyOf(held(node.nativeRef))]));
+  const twinKeys = new Map([...heldKeys].map(([key, heldKey]) => [heldKey, key]));
+  const toHeld = (key: string): string => heldKeys.get(key) ?? key;
+  const toTwin = (key: string): string => twinKeys.get(key) ?? key;
+  return {
+    window: input => {
+      const page = twin.window(input);
+      return { ...page, nodes: page.nodes.map(node => ({ ...node, key: toHeld(node.key), nativeRef: held(node.nativeRef) })) };
+    },
+    relationsPage: input => {
+      const page = twin.relationsPage({
+        ...input,
+        ...(input.from === undefined ? {} : { from: toTwin(input.from) }),
+        ...(input.to === undefined ? {} : { to: toTwin(input.to) }),
+      });
+      return { ...page, relations: page.relations.map(relation => ({ ...relation, from: toHeld(relation.from), to: toHeld(relation.to) })) };
+    },
+    relationRevision: () => twin.relationRevision(),
+  };
+}
+/** identityPaths through the structural reader: the probe as nativeRef provider and id where the projection stored it before
+ * wb-0br, read by a plain and a fan-out collapsed build of the REAL builder. Before wb-0br an identity part met only the
+ * projection's text rule (carriesC0OrDel; every probe here is within its 256-byte identity bound), so a probe carrying a
+ * C0 control or DEL is refused here as it was there. */
+function heldIdentityPaths(raw: string): Record<IdentityPath, string[]> | "refused" {
+  if (carriesC0OrDel(raw)) return "refused";
+  const reader = heldReader(raw);
+  return identityShown(raw, buildGraphView(reader, request()), buildGraphView(reader, request({ caps: { maxFanOut: 1 } })));
+}
+
 interface Finding {
   readonly id: string;
   readonly path: string;
@@ -875,13 +1035,16 @@ describe("A10 the trunk separator corpus through the real ObservationProjection 
     }
   });
 
-  it("admits through the real projection exactly the shapes without a C0 control or DEL: 30 of 60, 606 of 696, 3 of 3", () => {
+  it("admits through the real projection exactly the shapes without a C0 control or DEL as text (30 of 60, 606 of 696, 3 of 3), and as identity only the shapes without a unit its identity admission refuses (2 of 60, 0 of 696, 0 of 3), refusing every other one typed with nothing stored (wb-0br)", () => {
+    // wb-0br second-lander re-expression (known-conflicts entry 16): an identity part no longer meets the text rule alone.
+    // Every shape carrying a unit the identity admission refuses (a C0 control or DEL included, now a typed refusal instead of
+    // a throw) is refused with exactly one row naming its first such unit and nothing stored. The shapes the projection held
+    // as identity before wb-0br are the text-admitted ones, which the identity rows read through the structural reader.
     for (const table of TABLES) {
       const asText = table.probes.filter(probe => admit(new ObservationProjection(), forge("hostile"), probe.raw, probe.raw));
-      const asIdentity = table.probes.filter(probe => admit(new ObservationProjection(), providerRef(probe.raw, "p"), "provider node", "running"));
-      expect([table.name, asText.length, asIdentity.length]).toEqual([table.name, table.admitted, table.admitted]);
+      const asIdentity = table.probes.filter(probe => admittedAsIdentity(probe.raw));
+      expect([table.name, asText.length, asIdentity.length]).toEqual([table.name, table.admitted, IDENTITY_ADMITTED[table.name]]);
       for (const probe of table.probes) expect(asText.includes(probe), probe.id).toBe(!carriesC0OrDel(probe.raw));
-      for (const probe of table.probes) expect(asIdentity.includes(probe), probe.id).toBe(!carriesC0OrDel(probe.raw));
     }
   });
 
@@ -891,8 +1054,29 @@ describe("A10 the trunk separator corpus through the real ObservationProjection 
       expect(admitted).toBe(table.admitted);
       expect(findings, `${failing(findings)} of ${admitted} admitted ${table.name} shapes fail a text display path`).toEqual([]);
     });
-    it(`${table.name}: every admitted shape is redacted and stripped on the three identity display paths (provider, reference label, supernode provider)`, () => {
-      const { admitted, findings } = judge(table.probes, identityPaths, IDENTITY_PATHS);
+    it(`${table.name}: every admitted shape is redacted and stripped on the three identity display paths (provider, reference label, supernode provider), through the structural reader where the real projection now refuses it as identity, typed, with no row and no secret (wb-0br)`, () => {
+      // wb-0br second-lander re-expression (known-conflicts entry 16): every shape carrying a unit the identity admission
+      // refuses is refused typed by the real projection (five rows naming that unit, only the hub stored and drawn, every
+      // identity path empty, no secret in either build); a shape it still admits keeps the real path, where the structural
+      // reader must read the same strings; and every shape the projection held before wb-0br reaches the three paths through
+      // the structural reader, judged exactly as before.
+      const real: Probe[] = [];
+      for (const probe of table.probes) {
+        const codePoint = unsafeIdentityAt(probe.raw);
+        if (codePoint === undefined) {
+          real.push(probe);
+          continue;
+        }
+        const { rendered, ...refused } = refusedIdentityPaths(probe.raw);
+        expect(refused, probe.id).toStrictEqual(refusedIdentityAt(codePoint));
+        for (const secret of probe.secrets) expect(rendered.includes(secret), `${probe.id} leaked ${secret}`).toBe(false);
+      }
+      expect(real).toHaveLength(IDENTITY_ADMITTED[table.name]);
+      const viaReal = judge(real, identityPaths, IDENTITY_PATHS);
+      expect(viaReal.admitted).toBe(real.length);
+      expect(viaReal.findings).toEqual([]);
+      for (const probe of real) expect(heldIdentityPaths(probe.raw), probe.id).toEqual(identityPaths(probe.raw));
+      const { admitted, findings } = judge(table.probes, heldIdentityPaths, IDENTITY_PATHS);
       expect(admitted).toBe(table.admitted);
       expect(findings, `${failing(findings)} of ${admitted} admitted ${table.name} shapes fail an identity display path`).toEqual([]);
     });

@@ -438,33 +438,63 @@ describe("falsifier: details rendering is byte-identical when the projection or 
 });
 
 describe("display path: producer text reaching the operator through the wired slice passes the landed named-layout sanitizer", () => {
-  it("a hostile neighbour id and provenance source render redacted, with no unsafe code point, and the row still renders", async () => {
+  it("a hostile neighbour id is refused at identity admission with a typed row and no edge row, and a hostile provenance source on a safe neighbour renders redacted, with no unsafe code point, and the row still renders", async () => {
     const override = String.fromCodePoint(0x202e);
     const nextLine = String.fromCodePoint(0x85);
     const zeroWidth = String.fromCodePoint(0x200b);
     // Obviously fake placeholders in the shapes the shared redactor recognises.
     const fakeKey = "sk-ant-FAKE0PLACEHOLDER0KEY";
     const fakeToken = "FAKE0TOKEN0FOR0TEST0ONLY";
+    const placeholders = { fakeKey, fakeKeyBody: "FAKE0PLACEHOLDER0KEY", fakeToken };
+    const unsafeIn = (lines: readonly string[]): string[] =>
+      lines
+        .flatMap(line => [...line])
+        .map(unit => unit.codePointAt(0) ?? 0)
+        .filter(point => point < 0x20 || (point >= 0x7f && point <= 0x9f) || (point >= 0x202a && point <= 0x202e) || (point >= 0x2066 && point <= 0x2069) || point === 0x200b)
+        .map(point => `U+${point.toString(16).toUpperCase().padStart(4, "0")}`);
+    // Names-only projections throughout: rendered rows may carry producer text, so no assertion below touches one raw; a
+    // failure names the broken check, the leaked placeholder or the unsafe code point, never the row itself.
+    const leaked = (lines: readonly string[]): string[] => Object.entries(placeholders).filter(([, secret]) => lines.some(line => line.includes(secret))).map(([name]) => name);
+
+    // (i) The U+0085-bearing neighbour id never reaches the view: the projection's typed admission refuses the relation
+    // (wb-0br), so there is no neighbour row and no placeholder half of it anywhere on screen.
+    const refusing = capped();
+    observe(refusing, "F");
+    relate(refusing, "F", `${fakeKey}${nextLine}tail`, "dependency", "declared workflow", T1);
+    const refused = await openRun(runTask(), depsOf(observationOf(refusing)));
+    refused.press(DETAILS);
+    const refusedLines = refused.lines();
+    expect({
+      refusals: refusing.identityRefusals({ scope, limit: 10 }),
+      edges: refusing.stats().edges,
+      neighbourRows: edgeRows(refusedLines).length,
+      redactionMarkerShown: refusedLines.some(line => line.includes("[REDACTED]")),
+      leaked: leaked(refusedLines),
+      unsafe: unsafeIn(refusedLines),
+    }).toStrictEqual({
+      refusals: { refusals: [{ path: "relate", ref: "to", field: "id", codePoint: "U+0085", reason: "unsafe-identity" }], total: 1, truncated: false },
+      edges: 0,
+      neighbourRows: 0,
+      redactionMarkerShown: false,
+      leaked: [],
+      unsafe: [],
+    });
+
+    // (ii) The sanitizer path stays reachable through the provenance source: a safe neighbour id admitted over a hostile
+    // source renders one row with the redaction marker, no placeholder and no unsafe code point.
     const projection = capped();
     observe(projection, "F");
-    relate(projection, "F", `${fakeKey}${nextLine}tail`, "dependency", `tool call Bearer ${fakeToken}${override}rtl${zeroWidth}`, T1);
+    relate(projection, "F", "N-SAFE", "dependency", `tool call ${fakeKey}${nextLine}tail Bearer ${fakeToken}${override}rtl${zeroWidth}`, T1);
     const run = await openRun(runTask(), depsOf(observationOf(projection)));
     run.press(DETAILS);
-    const rows = edgeRows(run.lines());
-    // Names-only projections: the rendered row may carry producer text, so no assertion below touches it raw; a
-    // failure names the broken check, the leaked placeholder or the unsafe code point, never the row itself.
+    const lines = run.lines();
+    const rows = edgeRows(lines);
     expect(rows.length).toBe(1);
     const row = rows[0] ?? "";
     expect({ neighbourRow: row.startsWith(" → furnace/operation/"), redactionMarker: row.includes("[REDACTED]") }).toEqual({
       neighbourRow: true,
       redactionMarker: true,
     });
-    const placeholders = { fakeKey, fakeKeyBody: "FAKE0PLACEHOLDER0KEY", fakeToken };
-    expect(Object.entries(placeholders).filter(([, secret]) => row.includes(secret)).map(([name]) => name)).toEqual([]);
-    const unsafe = [...row]
-      .map(unit => unit.codePointAt(0) ?? 0)
-      .filter(point => point < 0x20 || (point >= 0x7f && point <= 0x9f) || (point >= 0x202a && point <= 0x202e) || (point >= 0x2066 && point <= 0x2069) || point === 0x200b)
-      .map(point => `U+${point.toString(16).toUpperCase().padStart(4, "0")}`);
-    expect(unsafe).toEqual([]);
+    expect({ leaked: leaked(lines), unsafe: unsafeIn(lines) }).toEqual({ leaked: [], unsafe: [] });
   });
 });
