@@ -147,6 +147,14 @@
       "source": "package.json devDependencies[\"@vitest/coverage-istanbul\"]"
     },
     {
+      "id": "pin:devDependencies:marked",
+      "kind": "package-pin",
+      "name": "marked",
+      "status": "measured",
+      "version": "18.0.11",
+      "source": "package.json devDependencies[\"marked\"]"
+    },
+    {
       "id": "pin:devDependencies:typebox",
       "kind": "package-pin",
       "name": "typebox",
@@ -219,7 +227,7 @@
       "status": "measured",
       "version": "0.1.0",
       "source": "vendor/dependency-lock.json packages[\"node_modules/@furnace/sdk\"]",
-      "integrity": "sha512-ZC7jxZeCcpuiZUDUn+C4RZe2dXwD/Tfn8X0X3c5XJ62rOn2GPgF0GeJOTmSgCdIPQAX+5tbR1cRmWmFvc3X24g=="
+      "integrity": "sha512-6lFWkwqpUYOtnrhSFSwVt7O/QrsjiPItMakXzSSkDxpRtDZtMCbuD18cMybmgY6MnyWMtv0RXmuYoDfHDxXYEA=="
     },
     {
       "id": "lock:dependencies:@hyperunix/sdk",
@@ -321,6 +329,15 @@
       "integrity": "sha512-AyNJ5pQRFqCX7pwB9PSTmoVKPaZ4H5IEVJfJsT+q1DYkXvZMEFYgJlyk5sfStmt9rVYRyYYRRsuBeImCOc39ww=="
     },
     {
+      "id": "lock:devDependencies:marked",
+      "kind": "lock-resolution",
+      "name": "marked",
+      "status": "measured",
+      "version": "18.0.11",
+      "source": "vendor/dependency-lock.json packages[\"node_modules/marked\"]",
+      "integrity": "sha512-HnslJfsZkRPBDJRHvVtAaWlZHEpSu7u8LgQuJCELjRKuWR+hpq4A7sLq3p8HaI9ypVoXDXxV34CsQJEe1+J5Aw=="
+    },
+    {
       "id": "lock:devDependencies:typebox",
       "kind": "lock-resolution",
       "name": "typebox",
@@ -345,7 +362,7 @@
       "status": "measured",
       "version": "lockfileVersion 3",
       "source": "package-lock.json",
-      "integrity": "sha512-E0kmZydiSzzDdH9PGJba5Y3qoyGmnJZB5UqyQEekBgYj62HjkmsyFoGtnYUdremlpNro2ANp+FJxjPtdQowH+w==",
+      "integrity": "sha512-YhMVtKBXiG3dN5j54CoPxif8VOZsKS9qB3xTRltD66lwuwIwUv3Zxp5rNkTRdk3vut+A595Wj7yWg9hozhBhaw==",
       "matchesVendorLock": true
     },
     {
@@ -355,7 +372,7 @@
       "status": "measured",
       "version": "lockfileVersion 3",
       "source": "vendor/dependency-lock.json",
-      "integrity": "sha512-E0kmZydiSzzDdH9PGJba5Y3qoyGmnJZB5UqyQEekBgYj62HjkmsyFoGtnYUdremlpNro2ANp+FJxjPtdQowH+w=="
+      "integrity": "sha512-YhMVtKBXiG3dN5j54CoPxif8VOZsKS9qB3xTRltD66lwuwIwUv3Zxp5rNkTRdk3vut+A595Wj7yWg9hozhBhaw=="
     },
     {
       "id": "vendor:forge-sdk-0.1.0.tgz",
@@ -375,8 +392,8 @@
       "status": "measured",
       "version": "0.1.0",
       "source": "vendor/furnace-sdk-0.1.0.tgz",
-      "integrity": "sha512-ZC7jxZeCcpuiZUDUn+C4RZe2dXwD/Tfn8X0X3c5XJ62rOn2GPgF0GeJOTmSgCdIPQAX+5tbR1cRmWmFvc3X24g==",
-      "lockIntegrity": "sha512-ZC7jxZeCcpuiZUDUn+C4RZe2dXwD/Tfn8X0X3c5XJ62rOn2GPgF0GeJOTmSgCdIPQAX+5tbR1cRmWmFvc3X24g==",
+      "integrity": "sha512-6lFWkwqpUYOtnrhSFSwVt7O/QrsjiPItMakXzSSkDxpRtDZtMCbuD18cMybmgY6MnyWMtv0RXmuYoDfHDxXYEA==",
+      "lockIntegrity": "sha512-6lFWkwqpUYOtnrhSFSwVt7O/QrsjiPItMakXzSSkDxpRtDZtMCbuD18cMybmgY6MnyWMtv0RXmuYoDfHDxXYEA==",
       "integrityMatchesLock": true
     },
     {

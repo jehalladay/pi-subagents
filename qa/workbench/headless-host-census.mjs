@@ -17,6 +17,7 @@ import { spawnSync } from "node:child_process";
 import { existsSync, readdirSync, realpathSync, statSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { revisionOf } from "./git-stamp.mjs";
 import { buildReceipt, exitCodeFor } from "./headless-census-receipt.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -62,11 +63,6 @@ try {
   process.exit(2);
 }
 
-function git(...gitArgs) {
-  const result = spawnSync("git", ["-C", packageRoot, ...gitArgs], { encoding: "utf8" });
-  return result.status === 0 ? result.stdout.trim() : undefined;
-}
-
 function newestSrcMtimeMs() {
   const srcDir = join(packageRoot, "src");
   if (!existsSync(srcDir)) return undefined;
@@ -88,6 +84,10 @@ const dist = {
   revisionDescribesDist: distRoot === realpathSync(packageRoot),
 };
 
+// wb-vko (16:26Z gate U3, cax.19 F3): the one canonical stamp (./git-stamp.mjs) - HEAD, HEAD-dirty, or working-tree when
+// packageRoot is not its repository toplevel or its status cannot be read - so the receipt never carries an
+// enclosing checkout's HEAD or cleanliness; worktreeClean holds only for a bare (clean) HEAD.
+const revision = revisionOf(packageRoot);
 const receipt = buildReceipt({
   dist,
   edges: measured.edges,
@@ -95,9 +95,9 @@ const receipt = buildReceipt({
   root: pathToFileURL(`${distRoot}/`).href,
   ttyFree: measured.ttyFree,
   utc: new Date().toISOString().replace(/\.\d+Z$/, "Z"),
-  revision: git("rev-parse", "HEAD") ?? "unknown",
+  revision,
   node: process.version,
-  worktreeClean: git("status", "--porcelain") === "",
+  worktreeClean: revision !== "working-tree" && !revision.endsWith("-dirty"),
 });
 const text = `${JSON.stringify(receipt, null, 2)}\n`;
 if (out) writeFileSync(resolve(out), text);

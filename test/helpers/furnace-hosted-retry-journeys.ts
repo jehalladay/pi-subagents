@@ -26,7 +26,7 @@ export interface RetryFaultEnv {
   /** The adapter class: src through vitest in the default gate, the BUILT dist copy in the receipt runner. */
   readonly Executor: typeof FurnaceHostedExecutor;
   readonly CapabilityError: typeof CapabilityError;
-  /** The REPAIRED SDK copy (qa/workbench/furnace-hosted-repaired-sdk.mjs); the shipped 0.1.0 refuses every context decode. */
+  /** The SDK: the shipped vendored package, or the receipt runner's copy of it (qa/workbench/furnace-hosted-repaired-sdk.mjs; identical digests since wb-zby). */
   readonly sdk: FurnaceSdk;
   /** chooseScratchBase(...).path: every journey runs with TMPDIR set to a fresh private directory under it. */
   readonly scratchBase: string;

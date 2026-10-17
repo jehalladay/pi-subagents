@@ -5,8 +5,13 @@
  * package root would then adopt the ENCLOSING repository's HEAD and dirty state. The stamp reads HEAD and the working
  * tree status ONLY when the root IS the git toplevel (realpath equality); otherwise the revision is "working-tree" and
  * the dirty bit is null. A failed status read is dirty null, never false (never a clean claim from a failed read).
- * Inline copy of the in-tree conformant precedent qa/workbench/dependency-census.mjs revisionOf; the canonical shared
- * block (queued wb-vko git-stamp.mjs) is not on trunk and is deliberately not imported here.
+ * Inline copy of the in-tree conformant precedent qa/workbench/dependency-census.mjs revisionOf. The shared block
+ * qa/workbench/git-stamp.mjs landed with wb-vko (2026-10-17, landing bb7d5eb) and is deliberately NOT imported here
+ * (owner restatement at that landing, row 405 R2): it exposes no injection seam (its git/sameDir are module-private) and
+ * a different stamp shape ({head, porcelain} / revisionOf), while this module's injectable gitStamp(root, git, sameDir)
+ * -> {revision, dirty} is what test/workbench-claude-served-model.test.ts exercises offline. Converging the two means
+ * adding an injection seam to the shared block (copied byte-for-byte into three guarded files with a drift test), which
+ * is its own change, not a silent import swap here.
  *
  * `git` and `sameDir` are injectable so the stamp is testable offline; the defaults never throw.
  */
