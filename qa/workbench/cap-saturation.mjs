@@ -272,7 +272,15 @@ const PRODUCTION_EVENTS_AND_QUERY = Object.freeze({maxEvents: 20_000, maxQuery: 
 export const MEMORY_COMPARABILITY = `non-comparable (bench-only limits ${EVENTS_AND_QUERY.maxEvents}/${EVENTS_AND_QUERY.maxQuery} vs production ${PRODUCTION_EVENTS_AND_QUERY.maxEvents.toLocaleString('en-US')}/${PRODUCTION_EVENTS_AND_QUERY.maxQuery})`;
 const UNLABELED_OVERFLOW = 'unlabeled-product-overflow';
 const VIEW_CYCLE = 4;
-const OVERFLOW_WORDS = /trunc|overflow|evict|dropp|not retained|omitted|capped/i;
+/**
+ * What counts as the inspector naming the dropped remainder (wb-j0b, owner R473 R2(a)): the counted remainder line the inspector
+ * draws as a whole line ("N nodes not shown: projection cap M", optionally " · K events not shown", or "K events not shown:
+ * projection event cap E"; counts and fixed words only, one leading pad space). The frame header's " · capped" suffix is NOT a
+ * label here: it is a second signal of the same drop, and a judge that counted it let a frame without the remainder line pass
+ * (gate mutant GM3 on wb-ea1) and one without the suffix fail (GM2). The anchors keep the same words inside a producer-supplied
+ * row, which always carries a tree lead, from counting.
+ */
+const COUNTED_REMAINDER = /^ ?(?:\d+ nodes? not shown: projection cap \d+(?: [·|] \d+ events? not shown)?|\d+ events? not shown: projection event cap \d+)$/m;
 /** The two docs sections this receipt answers, quoted so the test can pin them against drift. */
 export const DOC_QUOTES = Object.freeze({
   scalability: Object.freeze({
@@ -352,7 +360,7 @@ function surfaceOf(projection, inspector, offered) {
       const lines = inspector.layoutInspector(model, state, size);
       if (view === 0) rowsBySize[size.label] = lines.length;
       const text = lines.join('\n');
-      if (OVERFLOW_WORDS.test(text)) labelled = true;
+      if (COUNTED_REMAINDER.test(text)) labelled = true;
       if (text.includes(String(offered.nodes))) namesOffered = true;
     }
     state = inspector.reduceInspectorKey('\t', state, model)?.state ?? state;
