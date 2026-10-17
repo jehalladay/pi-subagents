@@ -377,8 +377,10 @@ describe("wb-cz9: the forge adapter resolves ownership by the requested node, ne
 /**
  * wb-cz9 leg 2 (measured red first): on the wired furnace store path a lossy, incomplete or paged read rendered TWO truncation
  * marks, the reader's own trailing "... truncated (producer: ...)" line inside the joined text plus the store's single [truncated].
- * One visible marker: the loader strips the reader's trailing marker when the store marks the read; a budget-only cut, which the
- * furnace loader does not mark, keeps the reader's line as its one marker.
+ * One visible marker: the loader strips the reader's trailing marker when the store marks the read.
+ * wb-10v (owner ruling, the leg-2 pin re-ruled, the one-marker invariant kept): a budget-only cut, a whole read the reader cut to
+ * its own line or row budget, is marked like the other three. Its budget fact crosses the FurnaceEvidenceRead seam as budgetCut,
+ * so the entry reports truncated true, and the store's single [truncated] is its one visible marker.
  */
 describe("wb-cz9 leg 2: one visible truncation marker on the wired furnace store path", () => {
   const ATTEMPT = "frn-atm-a1";
@@ -425,12 +427,21 @@ describe("wb-cz9 leg 2: one visible truncation marker on the wired furnace store
     if (entry.state === "loaded") expect(entry.preview).toEqual(["stdout:", "line one", `${"y".repeat(199)}${ELLIPSIS}`, "[truncated]"]);
   });
 
-  it("positive protection: a budget-only cut the loader does not mark keeps exactly one visible marker, never zero", async () => {
+  it("wb-10v: a budget-only cut reports truncated true and keeps exactly one visible marker, the store's [truncated]", async () => {
     const entry = await furnaceEntry({ lines: ["line one", "y".repeat(201)], complete: true, lossy: false, next_cursor: null });
-    expect(entry.state).toBe("loaded");
+    expect(entry).toMatchObject({ state: "loaded", truncated: true });
     if (entry.state === "loaded") {
-      expect(entry.preview.filter(isMarker)).toHaveLength(1);
-      expect(entry.preview.slice(0, 3)).toEqual(["stdout:", "line one", `${"y".repeat(199)}${ELLIPSIS}`]);
+      expect(entry.preview.filter(isMarker)).toEqual(["[truncated]"]);
+      expect(entry.preview).toEqual(["stdout:", "line one", `${"y".repeat(199)}${ELLIPSIS}`, "[truncated]"]);
+    }
+  });
+
+  it("wb-10v: a producer line past the reader's scan window is a budget-only cut too: truncated true, the store's [truncated] its one marker", async () => {
+    const entry = await furnaceEntry({ lines: ["line one", "z".repeat(2001)], complete: true, lossy: false, next_cursor: null });
+    expect(entry).toMatchObject({ state: "loaded", truncated: true });
+    if (entry.state === "loaded") {
+      expect(entry.preview.filter(isMarker)).toEqual(["[truncated]"]);
+      expect(entry.preview).toEqual(["stdout:", "line one", `${"z".repeat(199)}${ELLIPSIS}`, "[truncated]"]);
     }
   });
 });

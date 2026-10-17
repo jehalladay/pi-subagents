@@ -61,6 +61,8 @@ export interface FurnaceEvidenceRead {
   readonly text: string;
   readonly complete: boolean;
   readonly lossy: boolean;
+  /** The reader cut an otherwise whole read to its own line or row budget (wb-10v): bytes were dropped, so the read is truncated. */
+  readonly budgetCut: boolean;
   readonly nextCursor?: string;
   readonly capturedAt: string;
   readonly producerReceipt?: string;
@@ -196,7 +198,7 @@ function furnaceLoader(options: EvidenceProducerOptions, read: FurnaceEvidenceRe
         provider: "furnace",
         capturedAt: result.capturedAt,
         bytes: Buffer.byteLength(result.text),
-        truncated: !result.complete || result.lossy || result.nextCursor !== undefined,
+        truncated: !result.complete || result.lossy || result.nextCursor !== undefined || result.budgetCut,
         preview: [`${result.stream}:`, result.text],
         freshness: "current",
         ...(result.producerReceipt !== undefined ? { producerReceipt: result.producerReceipt } : {}),

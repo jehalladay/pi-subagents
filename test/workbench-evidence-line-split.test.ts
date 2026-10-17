@@ -222,7 +222,7 @@ describe("wb-ktf: producers hand each row's WHOLE text to the store, never pre-s
     const store = new EvidenceStore({
       loaders: createEvidenceLoaders({
         grants: () => [FURNACE_INSPECT_GRANT],
-        furnace: async () => ({ runId: "run-1", attemptId: "attempt-1", stream: "stdout", text, complete: true, lossy: false, capturedAt: NOW }),
+        furnace: async () => ({ runId: "run-1", attemptId: "attempt-1", stream: "stdout", text, complete: true, lossy: false, budgetCut: false, capturedAt: NOW }),
       }),
       maxEntries: 4, maxBytes: 4096, timeoutMs: 200,
     });
