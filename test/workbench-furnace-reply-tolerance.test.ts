@@ -63,17 +63,17 @@ function envelope<T>(kind: ResponseKind, data: T): Response<T> {
 }
 
 const CONTROLLER: ControllerDto = {
-  live: true, pid: 4242, start_fingerprint: "fixture-fingerprint", controller_session_id: "fixture-session", hostname: "fixture-host", started_at: "2026-10-15T00:00:00Z",
+  live: true, pid: 4242, start_fingerprint: "fixture-fingerprint", controller_session_id: "fixture-session", hostname: "fixture-host", started_at: "2026-10-15T00:00:00Z", executable_hint: null,
 };
 const RECORD: RunDto = {
   run_id: RUN, beads_run_id: BEADS_RUN, workspace: WORKSPACE, state: "active", mode: "ephemeral_wisp", furnace_version: "0.1.0", created_at: "2026-10-15T00:00:00Z",
-  updated_at: "2026-10-15T00:00:01Z", state_since: "2026-10-15T00:00:01Z", executor: "runner", max_parallel: 1, controller: CONTROLLER,
+  updated_at: "2026-10-15T00:00:01Z", state_since: "2026-10-15T00:00:01Z", executor: "runner", max_parallel: 1, attempt_timeout: "off", controller: CONTROLLER,
 };
 const STATUS: RunStatusDto = {
   ...RECORD, active: [], failed: [], failed_total: 0, attention: [], unreadable: [], corrupt_events: [], corrupt_events_total: 0, conflicts: [], completed: 0, total: 1,
 };
 const ATTEMPT: AttemptDto = {
-  attempt_id: "frn-atm-tolerance-1", run_id: RUN, work_id: "bd-work-tolerance", ordinal: 1, executor: "runner", state: "running", created_at: "2026-10-15T00:00:01Z", started_at: "2026-10-15T00:00:02Z",
+  attempt_id: "frn-atm-tolerance-1", run_id: RUN, work_id: "bd-work-tolerance", ordinal: 1, executor: "runner", controller_session_id: "fixture-session", state: "running", created_at: "2026-10-15T00:00:01Z", started_at: "2026-10-15T00:00:02Z",
 };
 const ATTEMPTS: AttemptListDto = { run_id: RUN, beads_run_id: BEADS_RUN, complete: true, limit: 5, returned: 1, next_cursor: null, attempts: [ATTEMPT], unreadable: [] };
 const LOGS: LogsReadDto = { run_id: RUN, attempt_id: ATTEMPT.attempt_id, stream: "stdout", complete: true, limit: 512, returned: 1, next_cursor: null, lossy: false, lines: ["fixture line"] };
