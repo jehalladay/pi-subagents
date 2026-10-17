@@ -11,13 +11,15 @@
 //      too short to separate warmup from measured)
 //   3  nothing could be measured (an exception, reported on stderr; no receipt), or the receipt file could not be
 //      written (the receipt is already on stdout; the write failure is reported on stderr)
-// The revision comes from $W21_REVISION (else "working-tree"). $W21_SEED, $W21_NODES, $W21_DEPTH, $W21_TICKS
-// override the fixture and $W21_CYCLES, $W21_WARMUP_CYCLES, $W21_KEYS, $W21_BODY_CAP the sampling; any override
-// below the W21 shape is still measured and exits 2.
+// The revision is git rev-parse HEAD of this checkout plus a dirty flag, stamped by qa/workbench/bench-revision.mjs
+// (wb-oq3); $W21_REVISION only overrides the revision and the receipt names the source. $W21_SEED, $W21_NODES,
+// $W21_DEPTH, $W21_TICKS override the fixture and $W21_CYCLES, $W21_WARMUP_CYCLES, $W21_KEYS, $W21_BODY_CAP the
+// sampling; any override below the W21 shape is still measured and exits 2.
 import {readFileSync} from 'node:fs';
 import {cpus} from 'node:os';
 import {initialInspectorState, layoutInspector, reduceInspectorKey} from '../../dist/ui/workflow-inspector.js';
 import {ObservationProjection} from '../../dist/workbench/observation.js';
+import {benchRevision, withBenchRevision} from './bench-revision.mjs';
 import {buildGroupedFixture, GROUPED_FIXTURE_DEFAULTS} from './grouped-fixture.mjs';
 import {DEFAULT_RETAINED_SAMPLING, publishRetainedReceipt, runRetainedMemoryBench} from './retained-memory.mjs';
 
@@ -44,7 +46,8 @@ try {
     ticks: integerFromEnv('W21_TICKS', GROUPED_FIXTURE_DEFAULTS.ticks),
   });
   const processors = cpus();
-  receipt = await runRetainedMemoryBench({
+  const stamp = benchRevision();
+  receipt = withBenchRevision(await runRetainedMemoryBench({
     Projection: ObservationProjection,
     inspector: {initialInspectorState, layoutInspector, reduceInspectorKey},
     fixture,
@@ -57,7 +60,7 @@ try {
     },
     host: {
       utc: new Date().toISOString(),
-      revision: process.env.W21_REVISION ?? 'working-tree',
+      revision: stamp.revision,
       node: process.version,
       arch: process.arch,
       platform: process.platform,
@@ -70,7 +73,7 @@ try {
       },
       command: 'node --expose-gc qa/workbench/inspector-retained-memory-bench.mjs',
     },
-  });
+  }), stamp);
 } catch (error) {
   console.error(JSON.stringify({benchmark: 'inspector-retained-memory-grouped-10k', measured: false, error: error instanceof Error ? error.stack ?? error.message : String(error)}));
   process.exit(3);

@@ -12,8 +12,9 @@
 //      that is missing, unsampled or not paged to the end, a selector that never rode a reply)
 //   3  nothing could be measured (an exception, reported on stderr; no receipt), or the receipt file could not be
 //      written (reported on stderr; the receipt is already on stdout, never a silent exit 1)
-// The revision comes from $W21_REVISION (else "working-tree"). $W21_SEED, $W21_NODES, $W21_DEPTH and $W21_TICKS
-// override the fixture; an override below the W21 shape is still measured and exits 2.
+// The revision is git rev-parse HEAD of this checkout plus a dirty flag, stamped by qa/workbench/bench-revision.mjs
+// (wb-oq3); $W21_REVISION only overrides the revision and the receipt names the source. $W21_SEED, $W21_NODES,
+// $W21_DEPTH and $W21_TICKS override the fixture; an override below the W21 shape is still measured and exits 2.
 //
 // BOUNDS, stated here before any run and exported below; none is derived from a measurement:
 //   - a reply's size is the UTF-8 length of JSON.stringify(reply), measured here and never taken from the reply's own
@@ -25,6 +26,7 @@
 import {readFileSync, writeFileSync} from 'node:fs';
 import {cpus} from 'node:os';
 import {pathToFileURL} from 'node:url';
+import {benchRevision, withBenchRevision} from './bench-revision.mjs';
 import {
   assessFixtureShape, BENCH_ONLY_LIMITS, buildGroupedFixture, GROUPED_FIXTURE_DEFAULTS, INVOCATION_ID, SCOPE,
 } from './grouped-fixture.mjs';
@@ -278,7 +280,8 @@ async function main() {
     ticks: integerFromEnv('W21_TICKS', GROUPED_FIXTURE_DEFAULTS.ticks),
   });
   const processors = cpus();
-  return runToolReplyBench({
+  const stamp = benchRevision();
+  const receipt = runToolReplyBench({
     Projection: ObservationProjection,
     observeInvocation: observeQuery.observeInvocation,
     fixture,
@@ -289,7 +292,7 @@ async function main() {
     },
     host: {
       utc: process.env.W21_UTC ?? new Date().toISOString(),
-      revision: process.env.W21_REVISION ?? 'working-tree',
+      revision: stamp.revision,
       node: process.version,
       arch: process.arch,
       platform: process.platform,
@@ -303,6 +306,7 @@ async function main() {
       command: 'node qa/workbench/tool-reply-bench.mjs',
     },
   });
+  return withBenchRevision(receipt, stamp);
 }
 
 if (process.argv[1] !== undefined && import.meta.url === pathToFileURL(process.argv[1]).href) {

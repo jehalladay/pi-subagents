@@ -190,7 +190,9 @@ function measurePass({entry, Projection, inspector, fixture, plan, gcAvailable})
       eviction: 'fifo (observation.ts store and relate)',
     },
     surface,
-    apply: {refreshMs: Math.round(refreshMs * 10_000) / 10_000, relateMs: Math.round(relateMs * 10_000) / 10_000, ...ingest},
+    // The refresh and relate spans are the ones bracketed above: applyFixture ran over empty snapshot and relation lists,
+    // so its own refreshMs/relateMs are ~0 and must not overwrite them (wb-oq3 re-cut: found by the known-duration case).
+    apply: {...ingest, refreshMs: Math.round(refreshMs * 10_000) / 10_000, relateMs: Math.round(relateMs * 10_000) / 10_000},
     navigation,
     memory: {label: gcAvailable ? 'post-gc' : 'transient-inclusive', heapBytes, retainedNodes: kept},
   };
