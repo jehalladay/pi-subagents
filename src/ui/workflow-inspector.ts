@@ -5,7 +5,7 @@ import { matchesKey, stripTerminalSequences, truncateToWidth, visibleWidth } fro
 import type { AttentionBottleneck, AttentionReport } from '../workbench/attention.js';
 import type { EvidenceEntry, EvidenceStore } from '../workbench/evidence-loader.js';
 import type { GraphEdge, GraphReference, GraphViewModel } from '../workbench/graph-view.js';
-import type { NativeRef, ObservationProjection, ObservationScope, ObservedNode, Relation } from '../workbench/observation.js';
+import type { NativeRef, ObservationProjection, ObservationScope, ObservationTruncation, ObservedNode, Relation } from '../workbench/observation.js';
 import { sanitizeWorkbenchText } from '../workbench/redaction.js';
 import { MAX_ZOOM, type TimelineModel, type TimelineNote, type TimelineRow } from '../workbench/timeline.js';
 import type { LinkedTopology, TopologyEdge, TopologyReference, TopologyReferenceReason, TopologyRelationClass } from '../workbench/topology-slice.js';
@@ -448,6 +448,15 @@ interface TimelineView { zoom: number; pan: number; filter: string; focused: str
 const MAX_BAR_CELLS = 200;
 const barCells = (value: number): number => Number.isSafeInteger(value) && value > 0 ? Math.min(value, MAX_BAR_CELLS) : 0;
 const plural = (count: number, word: string): string => `${count} ${word}${count===1?'':'s'}`;
+/** The cap remainder line (wb-ea1): counts and fixed words only, so nothing a producer supplies can reach it. Undefined when
+ * the projection dropped nothing for this invocation, so an uncapped frame is drawn byte-identically. */
+const capRemainder = (cut: ObservationTruncation, ascii: boolean): string | undefined => {
+  if(cut.nodes===0 && cut.events===0) return undefined;
+  const events=`${plural(cut.events,'event')} not shown`;
+  if(cut.nodes===0) return `${events}: projection event cap ${cut.maxEvents}`;
+  const nodes=`${plural(cut.nodes,'node')} not shown: projection cap ${cut.maxNodes}`;
+  return cut.events===0 ? nodes : `${nodes}${ascii?' | ':' · '}${events}`;
+};
 const NOTE_PHRASES: Readonly<Record<Exclude<TimelineNote['code'],'intervals-missing'>,string>> = {
   'clocks-may-differ': 'clocks may differ across sources',
   'open-intervals-present': 'open intervals present (drawn open, no end observed)',
@@ -722,8 +731,15 @@ export function layoutInspector(model:InspectorModel,state:InspectorState,size:I
   // An attention panel line is built from producer strings attentionPanel already passed through the helper once, so it is only
   // width-bounded here: a second pass is a text change (a JSON closing brace after a marker), never a no-op.
   const addPanel=(text:string)=>{if(lines.length<height) lines.push(` ${stripTerminalSequences(truncateToWidth(text,inner,ascii?'~':'…'))}`);};
-  const title=limitLine(model.title,Math.max(1,inner-28),ascii);
-  add(`${ascii?'[':'╭'} ${title}  ${safe(model.status,ascii)} ${ascii?']':'╮'}`);
+  // What the projection's caps dropped for this invocation (wb-ea1): one counted line in the overview and details views, and
+  // nothing at all when nothing was dropped. The header names node truncation in every view: an evicted node is a row no view
+  // can draw, while an evicted event hides no row of any view (the inspector draws no event history), so an event-only drop
+  // is counted on the remainder line alone.
+  const cut=model.projection.truncation({scope:model.scope,invocationId:model.invocationId});
+  const capLine=capRemainder(cut,ascii);
+  const capped=cut.nodes===0 ? '' : ascii ? ' | capped' : ' · capped';
+  const title=limitLine(model.title,Math.max(1,inner-28-capped.length),ascii);
+  add(`${ascii?'[':'╭'} ${title}  ${safe(model.status,ascii)}${capped} ${ascii?']':'╮'}`);
   add(`${state.view.toUpperCase()}  ${page.total} observed operation${page.total===1?'':'s'} · ${state.follow?'following':'paused view'} · ${index+1}/${Math.max(1,page.total)}`);
   if(state.filter) add(`Filter (viewport): ${state.filter}${state.editingFilter?'_':''}`);
   if(state.focused) add('Focused on selected node and confirmed direct relations only');
@@ -770,7 +786,7 @@ export function layoutInspector(model:InspectorModel,state:InspectorState,size:I
     const last=lastSiblings(entries);
     // Rows never displace the selected, attention, critical-path, row-range and key-hint lines.
     const panel=model.attention ? attentionPanel(model.attention,inner,ascii,width<80 || height<20) : undefined;
-    const available=height-lines.length-(current && width>=80 ? 1 : 0)-(paged ? 1 : 0)-1;
+    const available=height-lines.length-(current && width>=80 ? 1 : 0)-(paged ? 1 : 0)-1-(capLine ? 1 : 0);
     const fixed=panel ? panel.head.length+panel.tail.length : 2;
     // The tree keeps a few rows; bottleneck rows and notes take only what remains, dropping from the bottom.
     const optional=panel ? fitAttentionPanel(panel,Math.max(0,available-fixed-Math.min(entries.length,MAX_PANEL_TREE_MIN))) : [];
@@ -788,6 +804,11 @@ export function layoutInspector(model:InspectorModel,state:InspectorState,size:I
       // A selection the budget pushes past the drawn rows stays visible on the notice.
       const holds=remainder.some(entry=>entry.type==='node' ? entry.at===selectedAt : entry.type==='collapsed' && entry.holdsSelection);
       add(`${holds?ascii?'> ':'❯ ':''}${ascii?'...':'…'} ${rest} more row${rest===1?'':'s'} in this page (row budget)`);
+    }
+    if(capLine){
+      // The cap remainder ends the tree; only a header block taller than the terminal yields a row to it.
+      while(lines.length>0 && lines.length>=height) lines.pop();
+      add(capLine);
     }
     if(current && width>=80) add(`Selected  ${safe(ref(current),ascii)} · ${current.evidenceRefs.length} evidence ref${current.evidenceRefs.length===1?'':'s'}`);
     if(panel) for(const text of [...panel.head,...optional,...panel.tail]) addPanel(text);
@@ -862,17 +883,17 @@ export function layoutInspector(model:InspectorModel,state:InspectorState,size:I
       add(`Evidence: ${current.evidenceRefs.length} reference${current.evidenceRefs.length===1?'':'s'}${model.evidence && current.evidenceRefs.length>0 ? ` · ${Math.min(Math.max(0,state.evidenceIndex),current.evidenceRefs.length-1)+1}/${current.evidenceRefs.length} selected · e next · Enter load` : ''}`);
       if(model.evidence){
         // Room for evidence rows: the footer, the relations line and the transcript hint stay.
-        for(const text of evidenceRows(model.evidence,current,state.evidenceIndex,height-lines.length-(paged?1:0)-4,ascii)) add(text);
+        for(const text of evidenceRows(model.evidence,current,state.evidenceIndex,height-lines.length-(paged?1:0)-4-(capLine?1:0),ascii)) add(text);
       } else {
-        const evidenceShown = Math.min(current.evidenceRefs.length,Math.max(0,height-lines.length-5));
+        const evidenceShown = Math.min(current.evidenceRefs.length,Math.max(0,height-lines.length-5-(capLine?1:0)));
         for(const evidence of current.evidenceRefs.slice(0,evidenceShown)) add(`  ${safe(evidence,ascii)}`);
         if(current.evidenceRefs.length>evidenceShown) add('  Further references available at producer.');
       }
       const transcript=current.nativeRef.provider==='claude-agent-sdk' && current.nativeRef.type==='session';
       const topology=model.topology?.(current);
       if(topology){
-        // Room for topology rows: the paged line, the key hint and the transcript hint stay.
-        const roomLeft=():number=>height-lines.length-(paged?1:0)-1-(transcript?1:0);
+        // Room for topology rows: the paged line, the key hint, the transcript hint and the cap remainder stay.
+        const roomLeft=():number=>height-lines.length-(paged?1:0)-1-(transcript?1:0)-(capLine?1:0);
         if(roomLeft()<1){
           // Owner F5: a hidden section is never silent. One header row yields its line to the marker (the hint and paged line stay).
           while(lines.length>0 && roomLeft()<1) lines.pop();
@@ -880,10 +901,23 @@ export function layoutInspector(model:InspectorModel,state:InspectorState,size:I
         } else for(const text of topologyRows(model,topology,roomLeft(),ascii)) add(text);
       } else {
         const related=relationsFor(model,current);
-        if(related.relations.length) add(`Relations: ${related.relations.map(r=>r.kind).slice(0,3).join(', ')}${related.partial?' (partial)':''}`);
+        // Remainder item 2 of the wb-6ze.16 gate, owner ruling R473 R1(b): where the base Relations line cannot fit with the
+        // paged line, the key hint, the transcript hint and the cap remainder, header rows yield (the F5 pop above) and the
+        // one-line section itself takes the freed row. The marker stays the fallback only where no row can be freed, which
+        // would need a height below 2 + paged + transcript + cap remainder with every header row yielded: under the 5-row floor.
+        const roomLeft=():number=>height-lines.length-(paged?1:0)-1-(transcript?1:0)-(capLine?1:0);
+        if(related.relations.length){
+          while(lines.length>0 && roomLeft()<1) lines.pop();
+          add(roomLeft()<1 ? 'relations hidden: terminal height' : `Relations: ${related.relations.map(r=>r.kind).slice(0,3).join(', ')}${related.partial?' (partial)':''}`);
+        }
       }
       if(transcript) add('c transcript (loaded on focus)');
     } else add('Select an observed operation with j/k.');
+    if(capLine){
+      // The cap remainder sits under the node body; header rows yield to it so the paged line and key hint stay.
+      while(lines.length>0 && height-lines.length-(paged?1:0)-1<1) lines.pop();
+      add(capLine);
+    }
   }
   if(paged) add(`Rows ${page.offset+1}-${page.offset+page.nodes.length}/${page.total} · viewport only`);
   while(lines.length<Math.min(height-1,5)) add('');

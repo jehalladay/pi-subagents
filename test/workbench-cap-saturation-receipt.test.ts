@@ -192,9 +192,9 @@ const realRun = () => {
   cached = { receipt, constructed };
   return cached;
 };
-/** A deep copy of the real receipt in which every p95 reads 1 ms, so only the mutation under test can change the verdict. */
-const calm = (): Receipt => {
-  const copy = structuredClone(realRun().receipt);
+/** A deep copy of the real receipt (or of `source`) in which every p95 reads 1 ms, so only the mutation under test can change the verdict. */
+const calm = (source: Receipt = realRun().receipt): Receipt => {
+  const copy = structuredClone(source);
   const flat = (value: Distribution | null | undefined) => {
     if (value) Object.assign(value, { p50: 1, p95: 1, max: 1 });
   };
@@ -212,6 +212,28 @@ const passOf = (receipt: Receipt, id: string): Pass => {
 };
 beforeAll(() => {
   realRun();
+}, 240_000);
+let silentRun: Receipt | undefined;
+/** The same real run over a projection that reports no evictions, as ObservationProjection did before wb-ea1: no frame can
+ * carry the remainder line or the capped header, so the unlabeled-overflow inputs below are measured, never forged. */
+const unlabeledRun = (): Receipt => {
+  if (silentRun) return silentRun;
+  class SilentProjection extends ObservationProjection {
+    override truncation(filter: Parameters<ObservationProjection["truncation"]>[0]): ReturnType<ObservationProjection["truncation"]> {
+      return { ...super.truncation(filter), nodes: 0, events: 0 };
+    }
+  }
+  silentRun = run({
+    Projection: SilentProjection,
+    inspector,
+    fixture: buildFixture(),
+    host: HOST,
+    sampling: { blocks: 1, keypressesPerBlock: 30, resizeSamples: 8 },
+  });
+  return silentRun;
+};
+beforeAll(() => {
+  unlabeledRun();
 }, 240_000);
 const rules = (list: Array<{ rule: string }>): string[] => list.map(item => item.rule);
 
@@ -560,14 +582,14 @@ const KEYS = (receipt: Receipt): string[] => Object.keys(receipt);
 
 describe("W21-D owner rulings F1/F3/F5 (wb-9x5.6 respin)", () => {
   it("F1: records unlabeled-product-overflow and exits 0 in plain receipt mode", () => {
-    const plain = calm();
+    const plain = calm(unlabeledRun());
     expect(plain.findings.some(finding => finding.id === "unlabeled-product-overflow")).toBe(true);
     expect(plain.strict ?? false).toBe(false);
     expect(assess(plain)).toMatchObject({ realised: true, exitCode: 0, verdict: "within-budget" });
   });
 
   it("F1: --strict exits 1 on the unlabeled-product-overflow finding and names it", () => {
-    const strict = { ...calm(), strict: true };
+    const strict = { ...calm(unlabeledRun()), strict: true };
     const result = assess(strict) as ReturnType<typeof assess> & { strictFindings?: Array<{ id: string }> };
     expect(result.exitCode).toBe(1);
     expect(result.verdict).toBe("unlabeled-product-overflow");
@@ -576,7 +598,7 @@ describe("W21-D owner rulings F1/F3/F5 (wb-9x5.6 respin)", () => {
   });
 
   it("F1: --strict recomputes the finding from the passes, so a stripped findings list cannot launder it", () => {
-    const forged = { ...calm(), strict: true, findings: [] as Receipt["findings"] };
+    const forged = { ...calm(unlabeledRun()), strict: true, findings: [] as Receipt["findings"] };
     expect(assess(forged).exitCode).toBe(1);
   });
 
@@ -586,10 +608,36 @@ describe("W21-D owner rulings F1/F3/F5 (wb-9x5.6 respin)", () => {
     expect(assess(fixed)).toMatchObject({ realised: true, exitCode: 0, verdict: "within-budget" });
   });
 
+  it("F1 (wb-ea1): the real run labels every overflowing pass, so plain mode records no unlabeled finding and --strict exits 0", () => {
+    const { receipt } = realRun();
+    const overflowing = Object.values(receipt.passes).filter(pass => pass.overflow.occurred);
+    expect(overflowing.length).toBeGreaterThan(0);
+    for (const pass of overflowing) expect(pass.surface.inspectorLabelsOverflow).toBe(true);
+    expect(receipt.findings.some(finding => finding.id === "unlabeled-product-overflow")).toBe(false);
+    const result = assess({ ...calm(), strict: true }) as ReturnType<typeof assess> & { strictFindings?: Array<{ id: string }> };
+    expect(result).toMatchObject({ realised: true, exitCode: 0, verdict: "within-budget" });
+    expect(result.strictFindings).toEqual([]);
+  });
+
+  // What the bench counts as a label is the frame header's ' · capped' suffix: OVERFLOW_WORDS matches 'capped' and cannot see
+  // the remainder line's 'not shown' (gate GM2/GM3 on wb-ea1). The --strict arm learning the remainder line is wb-j0b (R473 R2).
+  it("F1 (wb-ea1): withdrawing only the projection's eviction counts withdraws every label: the bench's labels follow the projection's truncation counts", () => {
+    const silent = unlabeledRun();
+    expect(Object.keys(silent.passes)).toEqual(Object.keys(realRun().receipt.passes));
+    const overflowing = Object.values(silent.passes).filter(pass => pass.overflow.occurred);
+    expect(overflowing.length).toBeGreaterThan(0);
+    for (const pass of overflowing) expect(pass.surface.inspectorLabelsOverflow).toBe(false);
+  });
+
   it("F1: strict never masks an unrealised receipt (exit 2 stays 2)", () => {
-    const wrong = { ...calm(), strict: true };
+    // Anchored on the measured silent run (wb-ea1 respin, gate U1): the real run now labels every overflowing pass, so its
+    // receipt carries no strict finding and cannot exercise the strict-versus-unrealised precedence this row pins.
+    const wrong = { ...calm(unlabeledRun()), strict: true };
     wrong.fixture.snapshots = 10;
-    expect(assess(wrong).exitCode).toBe(2);
+    const result = assess(wrong) as ReturnType<typeof assess> & { strictFindings?: Array<{ id: string }> };
+    expect(result.realised).toBe(false);
+    expect(result.strictFindings?.map(finding => finding.id)).toEqual(["unlabeled-product-overflow"]);
+    expect(result.exitCode).toBe(2);
   });
 
   it("F1: the receipt records the strict flag it ran under, defaulting to plain", () => {
@@ -718,7 +766,7 @@ describe("W21-D receipt publication: printed before the file write; a failed wri
   /** Receipts whose re-assessed exit code is 0 (calm, plain), 1 (calm, --strict) and 2 (wrong fixture shape). */
   const receiptExiting = (code: 0 | 1 | 2): Receipt => {
     if (code === 0) return calm();
-    if (code === 1) return { ...calm(), strict: true };
+    if (code === 1) return { ...calm(unlabeledRun()), strict: true };
     const wrong = calm();
     wrong.fixture.snapshots = 10;
     return wrong;

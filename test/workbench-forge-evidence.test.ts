@@ -197,7 +197,7 @@ describe("forge-operation evidence reader", () => {
     expect(Buffer.byteLength(text(tight.preview))).toBeLessThanOrEqual(160);
     expect(tight.preview.at(-1)).toMatch(/\[truncated\]/);
 
-    const wide = await readForgeOperationEvidence(`forge-operation:${OPERATION}`, deps({}, reading([current(`code:${"w".repeat(240)}`, "success")])).deps).catch((error: unknown) => error);
+    const wide = await readForgeOperationEvidence(`forge-operation:${OPERATION}`, deps({}, reading([current(`code:${"w".repeat(240)}`, "success")])).deps).catch((error: CapabilityError) => error);
     // Measured: an over-wide ref is loaded, never refused; every preview line is clamped to the 220-character bound.
     expect(wide).not.toBeInstanceOf(CapabilityError);
     if (wide instanceof CapabilityError) throw wide;
