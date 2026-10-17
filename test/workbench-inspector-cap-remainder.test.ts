@@ -4,8 +4,9 @@
  * - The inspector overview renders one 'N nodes not shown: projection cap M' line at the end of the tree (with
  *   'K events not shown' when events were dropped), the details view renders the same line under its body, and the header
  *   gains ' · capped'. A projection that dropped nothing renders byte-identically.
- * - Remainder item 2 of the wb-6ze.16 gate (F5 marker family): the base details view (no topology model) renders
- *   'relations hidden: terminal height' where its Relations line does not fit, never a silent omission.
+ * - Remainder item 2 of the wb-6ze.16 gate (F5 marker family): the base details view (no topology model) never omits its
+ *   Relations line silently. Owner ruling R473 R1(b): header rows yield so the one-line Relations section itself takes the
+ *   freed row; the 'relations hidden: terminal height' marker is the fallback only where no row can be freed.
  */
 import { createHash } from "node:crypto";
 import { visibleWidth } from "@earendil-works/pi-tui";
@@ -64,6 +65,12 @@ function capped(limits: ObservationLimits = { maxNodes: 4, maxEvents: 3 }): Obse
   const projection = new ObservationProjection(limits);
   for (let id = 0; id < 7; id++) snap(projection, id);
   for (let sequence = 1; sequence <= 5; sequence++) update(projection, 6, sequence);
+  return projection;
+}
+/** Sixty snapshots against a node cap of twenty: a capped tree that overflows its page at every terminal height. */
+function cappedDeep(): ObservationProjection {
+  const projection = new ObservationProjection({ maxNodes: 20 });
+  for (let id = 0; id < 60; id++) snap(projection, id);
   return projection;
 }
 
@@ -236,6 +243,29 @@ describe("wb-ea1 inspector remainder line and capped header", () => {
       }
     }
   });
+
+  // Gate U4 (wb-ea1 respin): the overview reserves the remainder line's row before it sizes the tree. The overview's floor under
+  // a remainder line is the frame header, view line, rule, tree title, remainder line, attention and critical-path lines,
+  // row-range line and key hint (9 rows), plus the Selected line at width >= 80; below it the remainder line keeps its row and
+  // the trailing lines yield (measured at every width 16-160).
+  const overviewFloor = (width: number): number => (width >= 80 ? 10 : 9);
+  it.each([
+    ["seven snapshots against a node cap of four", capped],
+    ["sixty snapshots against a node cap of twenty, a tree that overflows its page", cappedDeep],
+  ] as const)("overview, %s: from its floor the key hint stays last and the Selected line stays under the remainder line", (_shape, build) => {
+    const model = modelOf(build());
+    for (const width of [16, 24, 32, 40, 60, 80, 100, 120, 160]) {
+      for (let rows = overviewFloor(width); rows <= 60; rows++) {
+        for (const ascii of [false, true]) {
+          const lines = trimmed(frame(model, "overview", rows, width, ascii));
+          const remainder = lines.findIndex(line => /^\d+ nodes?\b/.test(line));
+          expect(remainder).toBeGreaterThan(0);
+          expect(lines.at(-1)?.startsWith("Tab views")).toBe(true);
+          if (width >= 80) expect(lines.findIndex(line => line.startsWith("Selected"))).toBeGreaterThan(remainder);
+        }
+      }
+    }
+  });
 });
 
 /** A rich projection that dropped nothing: relations, evidence, intervals and retained events under both caps. */
@@ -329,5 +359,58 @@ describe("wb-ea1 remainder item 2: the base Relations line is never omitted sile
     const lines = trimmed(frame(relationsModel(0, 2), "details", 24));
     expect(lines).toContain("Relations: dependency, causation");
     expect(lines).not.toContain(MARKER);
+  });
+
+  // Owner ruling R473 R1(b): where the Relations line does not fit, header rows yield and the one-line section itself takes the
+  // freed row; the marker is the fallback only where no row can be freed. Branch one: every frame with a freed row.
+  const markerRows = (lines: readonly string[]): string[] => lines.filter(line => line.startsWith("relations hidden"));
+  it.each(VARIANTS)("R473 R1(b) evidence $evidence, $count operations, state $state: the freed row carries the Relations line at every height, never the marker", ({ evidence, count, state }) => {
+    const model = relationsModel(evidence, count);
+    const focusKey = model.projection.window({ scope, invocationId: INVOCATION, offset: 0, limit: 1 }).nodes[0]?.key ?? null;
+    const extra: Partial<InspectorState> = "focused" in state ? { focused: focusKey } : state;
+    for (const width of [32, 80, 120, 160]) {
+      for (let rows = 5; rows <= 60; rows++) {
+        for (const ascii of [false, true]) {
+          const lines = trimmed(frame(model, "details", rows, width, ascii, extra));
+          expect(lines.filter(line => line.startsWith("Relations: "))).toHaveLength(1);
+          expect(markerRows(lines)).toEqual([]);
+          expect(lines.length).toBeLessThanOrEqual(rows);
+          expect(lines.at(-1)?.startsWith("Tab views")).toBe(true);
+        }
+      }
+    }
+  });
+
+  /** The tightest details frame the layout draws: the 5-row floor with every reservation the Relations line yields to (the
+   * row-range line, the key hint, the transcript hint and the cap remainder), on a selected session with an observed relation. */
+  function floorModel(): { model: InspectorModel; selected: string } {
+    const projection = new ObservationProjection({ maxNodes: 3 });
+    const session: NativeRef = { provider: "claude-agent-sdk", type: "session", id: "floor-session" };
+    for (let id = 0; id < 3; id++) snap(projection, id);
+    projection.refresh({ source: session, scope, capturedAt: at, observedAt: at, node: node("Floor session"), trace: { invocationId: INVOCATION } });
+    snap(projection, 3);
+    projection.relate({ scope, from: session, to: ref(3), kind: "dependency", provenance: { source: "forge", observedAt: at } });
+    const selected = projection.window({ scope, invocationId: INVOCATION, offset: 0, limit: 10 }).nodes.find(entry => entry.nativeRef.id === "floor-session")?.key;
+    if (selected === undefined) throw new Error("the floor session was not retained");
+    return { model: modelOf(projection), selected };
+  }
+
+  // Branch two, measured: a frame with no freeable row would need height - 1 - (paged + transcript + remainder) < 1 with every
+  // header row yielded, but the layout floor is 5 rows and at most those three plus the key hint are reserved, so even the
+  // tightest frame frees a row. The marker fallback is therefore never drawn on this path (the sweep above finds none).
+  it("R473 R1(b) floor: the 5-row frame with the row-range line, transcript hint, cap remainder and key hint all reserved still frees a row for the Relations line", () => {
+    const { model, selected } = floorModel();
+    for (const width of [32, 80, 120]) {
+      for (const ascii of [false, true]) {
+        const lines = trimmed(frame(model, "details", 5, width, ascii, { selected }));
+        expect(lines).toHaveLength(5);
+        expect(lines.some(line => line.startsWith("Rows "))).toBe(true);
+        expect(lines.some(line => line.startsWith("c transcript"))).toBe(true);
+        expect(lines.some(line => /^\d+ nodes?\b/.test(line))).toBe(true);
+        expect(lines.at(-1)?.startsWith("Tab views")).toBe(true);
+        expect(lines.filter(line => line.startsWith("Relations: "))).toEqual(["Relations: dependency"]);
+        expect(markerRows(lines)).toEqual([]);
+      }
+    }
   });
 });

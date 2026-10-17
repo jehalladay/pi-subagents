@@ -901,13 +901,15 @@ export function layoutInspector(model:InspectorModel,state:InspectorState,size:I
         } else for(const text of topologyRows(model,topology,roomLeft(),ascii)) add(text);
       } else {
         const related=relationsFor(model,current);
-        // Remainder item 2 of the wb-6ze.16 gate: the base Relations line follows the F5 rule above, so where it cannot fit
-        // with the paged line, the key hint, the transcript hint and the cap remainder, header rows yield to one marker.
+        // Remainder item 2 of the wb-6ze.16 gate, owner ruling R473 R1(b): where the base Relations line cannot fit with the
+        // paged line, the key hint, the transcript hint and the cap remainder, header rows yield (the F5 pop above) and the
+        // one-line section itself takes the freed row. The marker stays the fallback only where no row can be freed, which
+        // would need a height below 2 + paged + transcript + cap remainder with every header row yielded: under the 5-row floor.
         const roomLeft=():number=>height-lines.length-(paged?1:0)-1-(transcript?1:0)-(capLine?1:0);
-        if(related.relations.length && roomLeft()<1){
+        if(related.relations.length){
           while(lines.length>0 && roomLeft()<1) lines.pop();
-          add('relations hidden: terminal height');
-        } else if(related.relations.length) add(`Relations: ${related.relations.map(r=>r.kind).slice(0,3).join(', ')}${related.partial?' (partial)':''}`);
+          add(roomLeft()<1 ? 'relations hidden: terminal height' : `Relations: ${related.relations.map(r=>r.kind).slice(0,3).join(', ')}${related.partial?' (partial)':''}`);
+        }
       }
       if(transcript) add('c transcript (loaded on focus)');
     } else add('Select an observed operation with j/k.');

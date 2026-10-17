@@ -619,7 +619,9 @@ describe("W21-D owner rulings F1/F3/F5 (wb-9x5.6 respin)", () => {
     expect(result.strictFindings).toEqual([]);
   });
 
-  it("F1 (wb-ea1): withdrawing only the projection's eviction counts withdraws every label, so the label is the counted remainder", () => {
+  // What the bench counts as a label is the frame header's ' · capped' suffix: OVERFLOW_WORDS matches 'capped' and cannot see
+  // the remainder line's 'not shown' (gate GM2/GM3 on wb-ea1). The --strict arm learning the remainder line is wb-j0b (R473 R2).
+  it("F1 (wb-ea1): withdrawing only the projection's eviction counts withdraws every label: the bench's labels follow the projection's truncation counts", () => {
     const silent = unlabeledRun();
     expect(Object.keys(silent.passes)).toEqual(Object.keys(realRun().receipt.passes));
     const overflowing = Object.values(silent.passes).filter(pass => pass.overflow.occurred);
@@ -628,9 +630,14 @@ describe("W21-D owner rulings F1/F3/F5 (wb-9x5.6 respin)", () => {
   });
 
   it("F1: strict never masks an unrealised receipt (exit 2 stays 2)", () => {
-    const wrong = { ...calm(), strict: true };
+    // Anchored on the measured silent run (wb-ea1 respin, gate U1): the real run now labels every overflowing pass, so its
+    // receipt carries no strict finding and cannot exercise the strict-versus-unrealised precedence this row pins.
+    const wrong = { ...calm(unlabeledRun()), strict: true };
     wrong.fixture.snapshots = 10;
-    expect(assess(wrong).exitCode).toBe(2);
+    const result = assess(wrong) as ReturnType<typeof assess> & { strictFindings?: Array<{ id: string }> };
+    expect(result.realised).toBe(false);
+    expect(result.strictFindings?.map(finding => finding.id)).toEqual(["unlabeled-product-overflow"]);
+    expect(result.exitCode).toBe(2);
   });
 
   it("F1: the receipt records the strict flag it ran under, defaulting to plain", () => {
