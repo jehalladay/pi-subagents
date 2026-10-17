@@ -585,6 +585,23 @@ function isAgentCallPayload(payload: unknown): payload is AgentCallPayload {
       (typeof frame.phaseIndex === "number" && Number.isSafeInteger(frame.phaseIndex) && frame.phaseIndex >= 0));
 }
 
+const WORKFLOW_ENTRY_TYPES: ReadonlySet<string> = new Set(["workflow_phase", "workflow_log", "workflow_agent", "workflow_node"]);
+
+/**
+ * Whether a worker `progress` frame carries entries the host can surface.
+ *
+ * Untrusted like every worker frame (wb-zin, the wb-3l9 sibling; measured by
+ * the wb-ksz.5 gate): a crafted `entries` value threw synchronously out of the
+ * host's message listener as an uncaughtException. Shape only — each element
+ * must be a plain object whose `type` is one of the four entry discriminants;
+ * field-level validation stays with the consumers, which already treat entry
+ * text as untrusted display input.
+ */
+function isWorkflowEntries(value: unknown): value is WorkflowEntry[] {
+  return Array.isArray(value) && value.every(entry => !!entry && typeof entry === "object" && !Array.isArray(entry) &&
+    typeof (entry as { type?: unknown }).type === "string" && WORKFLOW_ENTRY_TYPES.has((entry as { type: string }).type));
+}
+
 /** First line of the prompt, trimmed — the fallback display name for an agent. */
 function derivedLabel(prompt: string): string {
   const line = prompt.split("\n", 1)[0].trim();
@@ -741,6 +758,8 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
   const nodeCap = 1000;
   let aborted = false;
   let settled = false;
+  /** One diagnostic per run: a hostile worker must not spam the log with drops (wb-zin). */
+  let droppedProgressFrame = false;
 
   /* --- resume state ---------------------------------------------------- */
 
@@ -1699,8 +1718,19 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
         finish({ status: "failed", error: "Malformed workflow worker message." });
         return;
       }
+      try {
       switch (message.type) {
         case "progress":
+          // Untrusted frame (wb-zin): a malformed `entries` is DROPPED, never
+          // thrown — progress is fire-and-forget, so there is no callId to
+          // answer — and the drop is recorded once as a log entry.
+          if (!isWorkflowEntries(message.entries)) {
+            if (!droppedProgressFrame) {
+              droppedProgressFrame = true;
+              emit([{ type: "workflow_log", message: "Dropped a malformed workflow progress frame from the worker." }]);
+            }
+            break;
+          }
           emit(message.entries);
           break;
         case "call":
@@ -1739,15 +1769,39 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
             finish({ status: "failed", error: unawaitedLaunchMessage(unawaited) });
             break;
           }
-          finish({
-            status: "completed",
-            ...(message.resultJson === undefined ? {} : { value: JSON.parse(message.resultJson) }),
-          });
+          if (message.resultJson === undefined) {
+            finish({ status: "completed" });
+            break;
+          }
+          let value: unknown;
+          try {
+            value = JSON.parse(message.resultJson);
+          } catch {
+            // A crafted or truncated frame threw out of this listener here
+            // before the guard (wb-zin). The run fails typed instead.
+            finish({ status: "failed", error: "Workflow worker posted a completion whose result is not valid JSON." });
+            break;
+          }
+          finish({ status: "completed", value });
           break;
         }
-        case "error":
-          finish({ status: "failed", error: message.message, ...(message.capabilityError ? { capabilityError: message.capabilityError } : {}) });
+        case "error": {
+          // Same stance as every frame: a crafted non-string message must not
+          // flow into the run result, and a capabilityError is carried only in
+          // its declared shape (wb-zin).
+          const detail = typeof message.message === "string" ? message.message : "Workflow worker reported a malformed error frame.";
+          const diagnostic = message.capabilityError;
+          const capabilityError = diagnostic && typeof diagnostic === "object" && diagnostic.name === "CapabilityError" && typeof diagnostic.category === "string" && typeof diagnostic.message === "string" ? diagnostic : undefined;
+          finish({ status: "failed", error: detail, ...(capabilityError ? { capabilityError } : {}) });
           break;
+        }
+      }
+      } catch (error) {
+        // Backstop (wb-zin): no message case may throw out of this listener —
+        // a synchronous throw here is an uncaughtException that kills the host
+        // process. The run fails typed and the worker is torn down by finish().
+        const detail = sanitizeWorkbenchText(error instanceof Error ? error.message : String(error));
+        finish({ status: "failed", error: `Workflow host message handling failed: ${detail}` });
       }
     });
 
