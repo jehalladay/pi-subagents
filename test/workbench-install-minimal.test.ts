@@ -8,24 +8,26 @@
  * census is deterministic and byte-sensitive, the harness sources touch process.env only
  * through allowlisted names, and forge.toml carries the command outside the default gate.
  */
-import { chmodSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
-import { tmpdir } from "node:os";
+import { chmodSync, existsSync, mkdirSync, readFileSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
 import { isPrivilegedUid, probeInstalledWrite, resolveNodeBinary, scrubbedEnvironment, treeCensus } from "../qa/workbench/install-minimal-lib.mjs";
+import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
+
+installScratchLeakGuard();
 
 const repoRoot = join(import.meta.dirname, "..");
 const readRepo = (path: string): string => readFileSync(join(repoRoot, path), "utf8");
 const scratch: string[] = [];
 
 function tempTree(): string {
-  const dir = mkdtempSync(join(tmpdir(), "install-minimal-test-"));
+  const dir = makeScratch("install-minimal-test-");
   scratch.push(dir);
   return dir;
 }
 
 afterEach(() => {
-  for (const dir of scratch.splice(0)) rmSync(dir, { recursive: true, force: true });
+  removeScratch(...scratch.splice(0));
 });
 
 describe("scrubbedEnvironment", () => {
