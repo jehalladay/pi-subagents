@@ -68,7 +68,7 @@ function isPreviewEnvelope(source: unknown, exit: number|null, workspaceRoot: st
 const INPUT={type:"object",properties:{model:{type:"string",minLength:1},task:{type:"string",minLength:1}},required:["model","task"],additionalProperties:false};
 
 export function registerReactiveFiberRender(registry:CapabilityRegistry,invoke:()=>Promise<RfEnvelope>,workspaceRoot:string):void {
-  registry.register({descriptor:{id:"reactivefiber.render.preview",version:"1.0.0",description:"Preview native RF context with provenance and no durable write",inputSchema:INPUT,effectClass:"read",permissions:["reactivefiber:render"],supportedModes:["invoke"],contractSource:"rf@0.1.583:reactive-fiber.cli/v1 context.render --no-commit"},
+  registry.register({descriptor:{id:"reactivefiber.render.preview",version:"1.0.0",description:"Preview native RF context with provenance; no authoritative or journal store write (disposable, reconstructible cache-plane writes may occur)",inputSchema:INPUT,effectClass:"read",permissions:["reactivefiber:render"],supportedModes:["invoke"],contractSource:"rf@0.1.583:reactive-fiber.cli/v1 context.render --no-commit"},
     async invoke(_input,context){
       if(context.signal.aborted) throw new CapabilityError("transport","RF preview cancelled before invocation.");
       const source=await invoke();
@@ -142,6 +142,6 @@ export async function nativeReactiveFiberPreview(model:string,task:string,worksp
 }
 
 export function registerNativeReactiveFiberRender(registry:CapabilityRegistry,workspaceRoot:string):void {
-  registry.register({descriptor:{id:"reactivefiber.render.preview",version:"1.0.0",description:"RF noncommitted context with native provenance",inputSchema:INPUT,effectClass:"read",permissions:["reactivefiber:render"],supportedModes:["invoke"],contractSource:"rf@0.1.583:reactive-fiber.cli/v1 context.render --no-commit"},
+  registry.register({descriptor:{id:"reactivefiber.render.preview",version:"1.0.0",description:"RF noncommitted context with native provenance; no authoritative or journal store write (disposable, reconstructible cache-plane writes may occur)",inputSchema:INPUT,effectClass:"read",permissions:["reactivefiber:render"],supportedModes:["invoke"],contractSource:"rf@0.1.583:reactive-fiber.cli/v1 context.render --no-commit"},
     invoke:async(input,ctx)=>nativeReactiveFiberPreview((input as {model:string}).model,(input as {task:string}).task,workspaceRoot,ctx.signal)});
 }

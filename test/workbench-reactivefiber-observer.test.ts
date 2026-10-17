@@ -353,7 +353,7 @@ describe('producer release from result.provenance.cli_version (wb-2j3.1 reader, 
       trace: {invocationId: 'wf_rf_1'},
     }],
     relations: [],
-    diagnostics: ['ephemeral noncommitted preview: render_id null, transaction_id null, 0 storage writes', 'context text withheld: referenced by sha256 digest',
+    diagnostics: ['ephemeral noncommitted preview: render_id null, transaction_id null, 0 authoritative storage writes (envelope storage_write_count)', 'context text withheld: referenced by sha256 digest',
       'no native interval supplied'],
   };
   const [PREVIEW_NOTE, WITHHELD_NOTE, INTERVAL_NOTE] = TODAY.diagnostics;
