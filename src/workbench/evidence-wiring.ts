@@ -21,7 +21,7 @@
 import type { CapabilityRegistry } from "./capability-registry.js";
 import type { ClaudeTranscriptRow } from "./claude-transcript.js";
 import { EVIDENCE_TRUNCATED_MARK, EvidenceRefusal, EvidenceStore } from "./evidence-loader.js";
-import { createEvidenceLoaders, type ForgeEvidenceRead, type FurnaceEvidenceRead } from "./evidence-producers.js";
+import { createEvidenceLoaders, type ForgeEvidenceRead, type FurnaceEvidenceRead, sameNativeRef } from "./evidence-producers.js";
 import { ForgeEvidenceError, readForgeOperationEvidence } from "./forge-evidence.js";
 import { readFurnaceAttemptLogEvidence } from "./furnace-evidence.js";
 import type { FurnaceObserverClient } from "./furnace-observer.js";
@@ -78,8 +78,7 @@ export function createWorkbenchEvidenceStore(deps: WorkbenchEvidenceDeps): Evide
           // refuses unauthorized with no capability call issued, never served another node's re-read under its own key.
           const owningNode = deps.projection.query({ scope, ref: nativeRef, limit: 1 }).nodes[0];
           const owner = owningNode?.nativeRef;
-          const requested = owner !== undefined && owner.provider === nativeRef.provider && owner.type === nativeRef.type &&
-            owner.id === nativeRef.id && (owner.scope ?? "") === (nativeRef.scope ?? "");
+          const requested = owner !== undefined && sameNativeRef(owner, nativeRef);
           if (owningNode === undefined || !requested || !owningNode.evidenceRefs.includes(ref)) throw new EvidenceRefusal("unauthorized");
           try {
             const content = await readForgeOperationEvidence(ref, {

@@ -214,10 +214,12 @@ describe("Furnace-hosted execution adapter", () => {
     await h.executor.close();
   });
 
-  it("serves one bridge host session per Attempt and receipts a distinct identity for each", async () => {
+  it("receipts each Attempt by its own admission receipt and names the admitting session: three connections give three sessions whose receipts each end /1", async () => {
     const seen: string[] = [];
+    const seenReceipts: string[] = [];
     const workflow: HostedWorkflow = async ({ identity }) => {
       seen.push(identity.attemptId);
+      seenReceipts.push(identity.admissionReceipt);
       return { status: "success", summary: `attempt ${identity.ordinal}` };
     };
     const results: Array<Awaited<ReturnType<typeof driveAttempt>>> = [];
@@ -241,8 +243,41 @@ describe("Furnace-hosted execution adapter", () => {
       expect(hostInstance).toBe(sessions[index]);
       // The SDK mints receipts as <instance_id>/<process token>/<n> (ResidentSession.mintReceipt, @furnace/sdk at Furnace 9970621d8).
       expect((result.accepted.output as { receipt: string }).receipt).toMatch(new RegExp(`^${hostInstance}/[0-9a-f]{16}/1$`));
+      expect(receipt.attempts[index]?.admissionReceipt).toBe((result.accepted.output as { receipt: string }).receipt);
     }
+    const receipts = receipt.attempts.map((a) => a.admissionReceipt);
+    expect(seenReceipts).toEqual(receipts);
+    expect(receipt.sessions).toEqual(sessions.map((s, i) => ({ sessionInstanceId: s, admissionReceipts: [receipts[i]] })));
     expect(receipt.identityViolations).toEqual([]);
+    await h.executor.close();
+  });
+
+  it("admits a Run's sequential Attempts on ONE kept connection: distinct admission receipts /1 and /2 on one session, no identity violation", async () => {
+    const acks: Line[] = [];
+    const h = harness(SHIPPED_FURNACE_SDK, success, async (socketPath) => {
+      const bridge = await Bridge.open(socketPath);
+      await hello(bridge);
+      execute(bridge, "pi-hosted", "ex-1", "frn-atm-k1", 1);
+      await terminalOf(bridge, "ex-1");
+      execute(bridge, "pi-hosted", "ex-2", "frn-atm-k2", 2);
+      await terminalOf(bridge, "ex-2");
+      acks.push(await bridge.until((line) => line.op === "execute" && line.request_id === "e-ex-1"));
+      acks.push(await bridge.until((line) => line.op === "execute" && line.request_id === "e-ex-2"));
+      bridge.end();
+    });
+    await h.executor.start({ formula: "fixture" });
+    const receipt = h.executor.receipt();
+    expect(receipt.identityViolations).toEqual([]);
+    expect(receipt.attempts).toHaveLength(2);
+    const [first, second] = receipt.attempts;
+    expect(first?.sessionInstanceId).toBe(second?.sessionInstanceId);
+    const minted = acks.map((ack) => (ack.output as { receipt: string }).receipt);
+    expect(first?.admissionReceipt).toBe(minted[0]);
+    expect(second?.admissionReceipt).toBe(minted[1]);
+    expect(first?.admissionReceipt).toMatch(/\/1$/);
+    expect(second?.admissionReceipt).toMatch(/\/2$/);
+    expect(second?.admissionReceipt).not.toBe(first?.admissionReceipt);
+    expect(receipt.sessions).toEqual([{ sessionInstanceId: first?.sessionInstanceId, admissionReceipts: [minted[0], minted[1]] }]);
     await h.executor.close();
   });
 
@@ -409,7 +444,7 @@ describe("Furnace-hosted execution adapter", () => {
     });
   });
 
-  it("flags a second Attempt served on one session and a repeated Attempt identity as violations, never merging them", async () => {
+  it("flags a repeated Attempt identity whether it arrives on a new connection or on the kept one, never merging rows", async () => {
     const h = harness(SHIPPED_FURNACE_SDK, success, async (socketPath) => {
       const bridge = await Bridge.open(socketPath);
       await hello(bridge);
@@ -417,14 +452,109 @@ describe("Furnace-hosted execution adapter", () => {
       await terminalOf(bridge, "ex-1");
       execute(bridge, "pi-hosted", "ex-2", "frn-atm-s2", 2);
       await terminalOf(bridge, "ex-2");
+      // The kept-session repeat: the SAME Attempt identity under a NEW execution id. The SDK admits it (admission is
+      // keyed on execution_id), so the repeated-Attempt rule must fire with no session rule beside it.
+      execute(bridge, "pi-hosted", "ex-3", "frn-atm-s1", 1);
+      await terminalOf(bridge, "ex-3");
       bridge.end();
       await driveAttempt(socketPath, "pi-hosted", "frn-atm-s1", 1);
     });
     await h.executor.start({ formula: "fixture" });
     const receipt = h.executor.receipt();
-    expect(receipt.attempts).toHaveLength(3);
-    expect(receipt.identityViolations.some((v) => /session .* served 2 attempts/.test(v))).toBe(true);
+    expect(receipt.attempts).toHaveLength(4);
+    expect(receipt.identityViolations).toEqual(["attempt frn-atm-s1 executed 2 times", "attempt frn-atm-s1 executed 3 times"]);
     expect(receipt.identityViolations.some((v) => /frn-atm-s1.* executed 2 times/.test(v))).toBe(true);
+    const [first, , keptRepeat, freshRepeat] = receipt.attempts;
+    expect(first?.admissionReceipt).toMatch(/\/1$/);
+    expect(keptRepeat?.admissionReceipt).toMatch(/\/3$/);
+    expect(freshRepeat?.admissionReceipt).toMatch(/\/1$/);
+    expect(keptRepeat?.admissionReceipt).not.toBe(first?.admissionReceipt);
+    expect(freshRepeat?.admissionReceipt).not.toBe(first?.admissionReceipt);
+    await h.executor.close();
+  });
+
+  it("a same-execution-id resend on the kept session is refused by the SDK, never admitted twice", async () => {
+    // Disclosure: same-execution dedup is the SDK's refusal, not an adapter rule — Pi advertises deduplicate_admission
+    // false, so ResidentSession.repeated refuses the resend instead of acknowledging the first receipt.
+    const refusals: Line[] = [];
+    const h = harness(SHIPPED_FURNACE_SDK, success, async (socketPath) => {
+      const bridge = await Bridge.open(socketPath);
+      await hello(bridge);
+      execute(bridge, "pi-hosted", "ex-dup", "frn-atm-dup", 1);
+      await terminalOf(bridge, "ex-dup");
+      execute(bridge, "pi-hosted", "ex-dup", "frn-atm-dup", 1);
+      refusals.push(await bridge.until((line) => line.error !== undefined));
+      bridge.end();
+    });
+    await h.executor.start({ formula: "fixture" });
+    const refusal = refusals[0]?.error as { type: string; message: string };
+    expect(refusal.type).toBe("ExecutorProtocolError");
+    expect(refusal.message).toMatch(/declares no deduplicate_admission/);
+    const receipt = h.executor.receipt();
+    expect(receipt.attempts).toHaveLength(1);
+    expect(receipt.attempts[0]?.admissionReceipt).toMatch(/\/1$/);
+    expect(receipt.sessions).toEqual([{ sessionInstanceId: receipt.attempts[0]?.sessionInstanceId, admissionReceipts: [receipt.attempts[0]?.admissionReceipt] }]);
+    expect(receipt.identityViolations).toEqual([]);
+    await h.executor.close();
+  });
+
+  it("an Attempt outside a bridge session frame carries the unknown identity words and exactly one violation", async () => {
+    const ShippedApp = SHIPPED_FURNACE_SDK.ExecutorApp;
+    let registered: ExecutorCallback | undefined;
+    /** A fixture SDK whose app hands back the adapter's registered callback so the case can run it with no bridge frame. */
+    class CapturingApp extends ShippedApp {
+      override executor(name: string, callback: ExecutorCallback, options?: ExecutorOptions): ExecutorCallback {
+        registered = callback;
+        return super.executor(name, callback, options);
+      }
+    }
+    const sdk: FurnaceSdk = { ...SHIPPED_FURNACE_SDK, ExecutorApp: CapturingApp };
+    const executor = new FurnaceHostedExecutor({ executor: "pi-hosted", workflow: success, sdk });
+    if (registered === undefined) throw new Error("the adapter registered no executor callback");
+    const naked = { ...SHIPPED_FURNACE_SDK.decodeContextValue(context("frn-atm-naked", 1)).context, cancellation: new AbortController().signal };
+    const result = await registered(naked);
+    expect(result.status).toBe("success");
+    const receipt = executor.receipt();
+    expect(receipt.attempts[0]).toMatchObject({ attemptId: "frn-atm-naked", sessionInstanceId: "unknown", executionId: "unknown", admissionReceipt: "unknown" });
+    expect(receipt.identityViolations).toEqual(["attempt frn-atm-naked ran outside a bridge session frame"]);
+    expect(receipt.sessions).toContainEqual({ sessionInstanceId: "unknown", admissionReceipts: ["unknown"] });
+  });
+
+  it("a framed admission with no admission receipt is a violation naming the session and the execution", async () => {
+    const ShippedSession = SHIPPED_FURNACE_SDK.ResidentSession;
+    /** A fixture session that admits but holds no receipt: receiptOf (public) answers undefined for every execution. */
+    class ReceiptlessSession extends ShippedSession {
+      override receiptOf(): string | undefined {
+        return undefined;
+      }
+    }
+    const sdk: FurnaceSdk = { ...SHIPPED_FURNACE_SDK, ResidentSession: ReceiptlessSession };
+    const h = harness(sdk, success, async (socketPath) => {
+      await driveAttempt(socketPath, "pi-hosted", "frn-atm-x", 1);
+    });
+    await h.executor.start({ formula: "fixture" });
+    const receipt = h.executor.receipt();
+    const attempt = receipt.attempts[0];
+    expect(receipt.identityViolations).toEqual([`attempt frn-atm-x ran on session ${attempt?.sessionInstanceId} with no admission receipt for execution ex-frn-atm-x`]);
+    expect(attempt).toMatchObject({ executionId: "ex-frn-atm-x", admissionReceipt: "unknown" });
+    await h.executor.close();
+  });
+
+  it("a repeated admission receipt is a violation", async () => {
+    const ShippedSession = SHIPPED_FURNACE_SDK.ResidentSession;
+    /** A fixture session that answers one constant receipt, so a second admission collides with the first. */
+    class ConstantReceiptSession extends ShippedSession {
+      override receiptOf(): string | undefined {
+        return "fixture-instance/0123456789abcdef/1";
+      }
+    }
+    const sdk: FurnaceSdk = { ...SHIPPED_FURNACE_SDK, ResidentSession: ConstantReceiptSession };
+    const h = harness(sdk, success, async (socketPath) => {
+      await driveAttempt(socketPath, "pi-hosted", "frn-atm-c1", 1);
+      await driveAttempt(socketPath, "pi-hosted", "frn-atm-c2", 2);
+    });
+    await h.executor.start({ formula: "fixture" });
+    expect(h.executor.receipt().identityViolations.some((v) => /admission receipt .* recorded twice/.test(v))).toBe(true);
     await h.executor.close();
   });
 
@@ -715,6 +845,12 @@ describe("Furnace-hosted execution adapter", () => {
     // work_failure or indeterminate keep a retry word once its negated retries are taken out.
     const overClaims = clausesOf(prose(source)).filter((clause) => /\b(?:work_failure|indeterminate)\b/.test(clause) && RETRY_WORD.test(clause.replace(NEGATED_RETRY, "")));
     expect(overClaims).toEqual([]);
+  });
+
+  it("states the kept-session identity model in its header: sequential Attempts share one kept bridge connection and each Attempt is identified by its own admission receipt (wb-zby.1)", () => {
+    const header = moduleHeader(readFileSync(HOSTED_SOURCE_URL, "utf8"));
+    expect(header).not.toMatch(/every Attempt is its own bridge connection/);
+    expect(header).toMatch(/each Attempt is identified by its own admission receipt/);
   });
 
   it("roots every fixture under the short scratch base, never the inherited TMPDIR, so the bridge socket keeps the 103-byte bound (wb-70b R1)", async () => {

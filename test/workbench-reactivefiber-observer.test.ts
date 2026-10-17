@@ -5,14 +5,18 @@
  * acceptance criteria 1-7. Nothing here needs an rf binary, a TTY or the network: the live rf tests stay untouched, and this
  * module never invokes rf (it projects an envelope the host already holds, so it can never issue a history-creating verb). */
 import {createHash} from 'node:crypto';
-import {describe, expect, expectTypeOf, it} from 'vitest';
+import {chmodSync, writeFileSync} from 'node:fs';
+import {join} from 'node:path';
+import {afterEach, describe, expect, expectTypeOf, it} from 'vitest';
 import {CapabilityError, type JsonValue} from '../src/workbench/capability-registry.js';
 import {nativeEvidence} from '../src/workbench/native-evidence.js';
 import {type NativeRef, ObservationProjection, type ObservationScope} from '../src/workbench/observation.js';
+import {nativeReactiveFiberPreview} from '../src/workbench/providers/reactivefiber.js';
 import {
   REACTIVEFIBER_OBSERVATION_CONTRACT, type ReactiveFiberObservedRelation, type ReactiveFiberProjectionTopology,
   type ReactiveFiberTopologyContext, reactivefiberTopology,
 } from '../src/workbench/reactivefiber-observer.js';
+import {installScratchLeakGuard, makeScratch, removeScratch} from './helpers/scratch.js';
 
 type Json = {[key: string]: JsonValue};
 const WS = '/tmp/reactivefiber-observer-ws';
@@ -38,6 +42,18 @@ function result(over: Json = {}): Json {
 }
 const rfDiagnostic = (over: Json = {}): Json => ({code: 'RF_RENDER_FAILED', severity: 'error', message: 'failed SECRET-DIAGNOSTIC', hint: 'hint SECRET-HINT',
   source: null, metadata: {secret: 'SECRET-METADATA'}, ...over});
+/** wb-693.3: result fields that put this file's obviously fake SECRET- placeholders in every engine-era field beside the two
+ * bounded identity strings an engine entry states (an unexpected entry field, nested entry metadata, an engine metric and a
+ * sibling SDK entry); only those two identity strings may ever surface. */
+const LEAKY_ENGINE_FIELDS: Json = {
+  provenance: {graph_revision_id: GRAPH, sdk_versions: {
+    fiber_optics: {distribution_version: 'SECRET-SIBLING-VERSION', contract_fingerprint: 'unknown', note: 'SECRET-SIBLING-NOTE'},
+    tsx_runtime: {distribution_version: '2.9.7', contract_fingerprint: `sha256:${'b2'.repeat(32)}`, message: 'SECRET-ENGINE-MESSAGE',
+      metadata: {detail: 'SECRET-ENGINE-METADATA'}},
+    tsx_sdk: {distribution_version: '0.1.341', contract_fingerprint: 'unknown', hint: 'SECRET-ENGINE-HINT'},
+  }},
+  engine_metrics: {tsx_worker_spawns: 1, tsx_resource_rounds: 0, detail: 'SECRET-ENGINE-METRICS'},
+};
 /** The validated rf CLI envelope the provider returns as `source`, in the measured reactive-fiber.cli/v1 shape. */
 function envelope(over: Json = {}): Json {
   return {schema: 'reactive-fiber.cli/v1', ok: true, command: 'context.render', operation_id: OPERATION, workspace: {id: WORKSPACE_ID, root: WS},
@@ -244,14 +260,19 @@ describe('ReactiveFiber render preview reader adapter', () => {
   });
 
   // R6: docs/workbench/09 negative control 10: "Large/secret payload does not leak into Pi tool result or screen by default."
+  // wb-693.3 (RF-TSX-AND-EMBEDDING-R3) extends this guard to the new fields: the same assertions run over the original fixture
+  // and over the engine-era one (LEAKY_ENGINE_FIELDS), whose engine entries, engine metrics and sibling SDK entry carry SECRET-
+  // placeholders beside the two bounded identity strings.
   it('R6: output text, diagnostics and budget payloads never appear in any surfaced string', () => {
     const big = `${TEXT} ${'x'.repeat(1_000_000)}`;
-    const topology = reactivefiberTopology(reading(envelope({result: result({output: {text: big}}), diagnostics: [rfDiagnostic({severity: 'warning'})]})) as JsonValue, context);
-    const text = JSON.stringify(topology);
-    for (const secret of ['SECRET-CONTEXT-BODY', 'sk-live-abcdef', 'api_key', 'SECRET-DIAGNOSTIC', 'SECRET-HINT', 'SECRET-METADATA']) expect(text).not.toContain(secret);
-    expect(text.length).toBeLessThan(4000);
-    expect(topology.snapshots[0].nativePayloadRef).toBe(`rf-output:sha256:${digestOf(big)}`);
-    bounded(topology);
+    for (const extra of [{}, LEAKY_ENGINE_FIELDS]) {
+      const topology = reactivefiberTopology(reading(envelope({result: result({output: {text: big}, ...extra}), diagnostics: [rfDiagnostic({severity: 'warning'})]})) as JsonValue, context);
+      const text = JSON.stringify(topology);
+      for (const secret of ['SECRET-CONTEXT-BODY', 'sk-live-abcdef', 'api_key', 'SECRET-DIAGNOSTIC', 'SECRET-HINT', 'SECRET-METADATA', 'SECRET-ENGINE', 'SECRET-SIBLING']) expect(text).not.toContain(secret);
+      expect(text.length).toBeLessThan(4000);
+      expect(topology.snapshots[0].nativePayloadRef).toBe(`rf-output:sha256:${digestOf(big)}`);
+      bounded(topology);
+    }
   });
 
   it('R6: host-supplied text is routed through the shared sanitizers: an unsafe invocation id or scope is refused before anything projects', () => {
@@ -427,11 +448,377 @@ describe('producer release from result.provenance.cli_version (wb-2j3.1 reader, 
     ['a whitespace run', `${RELEASE}  local`],
     ['text the shared label layout redacts (an obviously fake assignment)', 'api_key=OBVIOUSLY-FAKE'],
     ['text the shared label layout redacts (an obviously fake bearer value)', 'Bearer OBVIOUSLY-FAKE-VALUE'],
+    // wb-19q (2j3.2 F1): 257 bytes in 129 code units, the one 257-byte string the 256-unit label layout leaves whole, so the byte
+    // bound alone drops it; a reader admitting 257 bytes carries it and fails this row (the 257-ASCII row above is also cut by the layout).
+    ['257 UTF-8 bytes in 129 characters (the multibyte boundary)', `a${cp(0xe9).repeat(128)}`],
   ];
   it.each(DROPPED)('R3: a cli_version that is %s is dropped, never rewritten or defaulted: the projection equals the absent case', (_name, value) => {
     const topology = reactivefiberTopology(stating(value) as JsonValue, invoked);
     expect(JSON.stringify(topology)).toBe(JSON.stringify(TODAY));
     expect(topology).toStrictEqual(TODAY);
     expect(nativeEvidence(CAPABILITY, stating(value) as JsonValue)).toStrictEqual(TODAY_EVIDENCE);
+  });
+
+  // wb-19q (2j3.2 F2) decoy: a release is read from result.provenance.cli_version only. A cli_version beside provenance
+  // (result.cli_version) is an extra result key the shape check tolerates and neither reader consults, so a reader falling back to it
+  // (provenance?.cli_version ?? result.cli_version, in the topology or the native-evidence reader) fails this row. The value is obviously fake.
+  it('R3: a cli_version beside provenance (result.cli_version) is never read as a release: the projection and metadata equal the absent case and never show it', () => {
+    const decoyRelease = '9.9.9';
+    const decoy = withResult({cli_version: decoyRelease, provenance: {graph_revision_id: GRAPH}});
+    expect(JSON.stringify(decoy)).toContain(`"cli_version":"${decoyRelease}"`);
+    const topology = reactivefiberTopology(decoy as JsonValue, invoked);
+    expect(JSON.stringify(topology)).toBe(JSON.stringify(TODAY));
+    expect(topology).toStrictEqual(TODAY);
+    const evidence = nativeEvidence(CAPABILITY, decoy as JsonValue);
+    expect(evidence).toStrictEqual(TODAY_EVIDENCE);
+    const surfaced = `${JSON.stringify(topology)}\n${JSON.stringify(evidence)}`;
+    expect(surfaced).not.toContain(decoyRelease);
+    for (const synthesized of ['rf-cli:', 'rf@', 'cli_version', 'producer release', CARRIER_RELEASE]) expect(surfaced).not.toContain(synthesized);
+    // Control: the same key at the envelope level is a ninth key, refused by the strict eight-key check before anything projects.
+    expect(refusal(reading(envelope({cli_version: decoyRelease}))).category).toBe('validation');
+  });
+});
+
+// The wb-693.1/.2/.3 provider rows below write a stub rf into tracked scratch; the guard fails this file if any of it survives.
+installScratchLeakGuard();
+
+/** wb-693.1 + wb-693.2 + wb-693.3 (RF-TSX-AND-EMBEDDING R1, R2 and R3), one cut. RF ruling A28 records engine identity as the
+ * additive JL-A34 sdk_versions keys tsx_runtime and tsx_sdk exactly when a render loaded a TSX definition. R1: "When a preview
+ * envelope's result.provenance.sdk_versions is an OBJECT carrying tsx_runtime and/or tsx_sdk entries whose distribution_version
+ * passes the existing identity() bound and whose contract_fingerprint matches /^sha256:[0-9a-f]{64}$/ or equals the literal
+ * 'unknown', previewSnapshot shall add one bounded evidence ref rf-engine:<key>:<distribution_version>:<contract_fingerprint>
+ * per entry and one note that a foreign runtime executed component source; with no such entries the snapshot stays
+ * byte-identical to today's." R2: "The engine-identity reader shall treat a LIST-shaped sdk_versions (rf <= 0.1.709) as 'no
+ * engine identity recorded' — the preview projects normally with no rf-engine: ref and no refusal — and shall never make
+ * sdk_versions or cli_version required envelope fields." R3: "Engine identity and engine metrics shall never surface producer
+ * text beyond the bounded identity strings, and their presence shall never upgrade coverage/tone." R10-R13 are that program's
+ * case names (the R10 row above is RFCLI's wb-2j3.9 pin). Placeholders keep this file's SECRET- convention: obviously fake and
+ * never credential-shaped. The provider rows run nativeReactiveFiberPreview against a stub rf written into tracked scratch and
+ * put first on PATH, so the provider's own envelope validator decides; no installed rf ever runs. */
+describe('engine identity from result.provenance.sdk_versions (wb-693.1 R1, wb-693.2 R2, wb-693.3 R3)', () => {
+  const RUNTIME_FINGERPRINT = `sha256:${'b2'.repeat(32)}`;
+  const RUNTIME_REF = `rf-engine:tsx_runtime:2.9.7:${RUNTIME_FINGERPRINT}`;
+  const SDK_REF = 'rf-engine:tsx_sdk:0.1.341:unknown';
+  const PLAIN_REFS = [`rf-graph:${GRAPH}`, `rf-workspace:${WORKSPACE_ID}`];
+  /** The acceptance's own pattern for the foreign-runtime note, and the one note text the reader states. */
+  const ENGINE_NOTE_PATTERN = /foreign runtime|TSX engine/;
+  const ENGINE_NOTE = 'TSX engine identity from result.provenance.sdk_versions: a foreign runtime executed component source';
+  const INTERVAL_NOTE = 'no native interval supplied';
+  const releaseNote = (release: string): string => `producer release from result.provenance.cli_version: rf@${release}`;
+  const cp = (code: number): string => String.fromCodePoint(code);
+  /** The four sibling entries and the wire format every JL-A34 object states, python-only and TSX renders alike; never read. */
+  const SIBLINGS: Json = {
+    fiber_optics: {distribution_version: '0.1.88', contract_fingerprint: `sha256:${'c3'.repeat(32)}`},
+    reactive_lenses: {distribution_version: '0.1.40', contract_fingerprint: `sha256:${'d4'.repeat(32)}`},
+    reactive_components: {distribution_version: '0.1.52', contract_fingerprint: 'unknown'},
+    reactive_inference: {distribution_version: '0.1.17', contract_fingerprint: `sha256:${'e5'.repeat(32)}`},
+    fiber_optics_wire_format: '2',
+  };
+  const RUNTIME: Json = {distribution_version: '2.9.7', contract_fingerprint: RUNTIME_FINGERPRINT};
+  const SDK: Json = {distribution_version: '0.1.341', contract_fingerprint: 'unknown'};
+  /** The acceptance's JL-A34 object fixture: both engine entries beside the siblings. */
+  const ENGINE_OBJECT: Json = {...SIBLINGS, tsx_runtime: RUNTIME, tsx_sdk: SDK};
+  const stating = (sdkVersions: JsonValue, over: Json = {}, provenance: Json = {}): Json =>
+    withResult({provenance: {graph_revision_id: GRAPH, ...provenance, sdk_versions: sdkVersions}, ...over});
+  const project = (value: JsonValue, ctx: ReactiveFiberTopologyContext = context): ReactiveFiberProjectionTopology => reactivefiberTopology(value, ctx);
+  /** The same fixture with sdk_versions absent, projected: what "byte-identical to today's" compares with (R1 and wb-2j3.2's TODAY pin it). */
+  const today = (over: Json = {}, provenance: Json = {}, ctx: ReactiveFiberTopologyContext = context): ReactiveFiberProjectionTopology =>
+    project(withResult({provenance: {graph_revision_id: GRAPH, ...provenance}, ...over}), ctx);
+  const engineRefsOf = (topology: ReactiveFiberProjectionTopology): string[] =>
+    (topology.snapshots[0].evidenceRefs ?? []).filter(ref => ref.startsWith('rf-engine:'));
+
+  const originalPath = process.env.PATH;
+  const stubs: string[] = [];
+  afterEach(() => {
+    if (originalPath === undefined) Reflect.deleteProperty(process.env, 'PATH');
+    else process.env.PATH = originalPath;
+    removeScratch(...stubs.splice(0));
+  });
+  /** A stub rf first on PATH that prints `source` and exits 0, so the provider's own envelope validator decides. */
+  function stubRf(source: Json): void {
+    const dir = makeScratch('rf-engine-identity-');
+    stubs.push(dir);
+    const binary = join(dir, 'rf');
+    writeFileSync(binary, `#!${process.execPath}\nprocess.stdout.write(${JSON.stringify(JSON.stringify(source))});\n`);
+    chmodSync(binary, 0o700);
+    process.env.PATH = `${dir}:${originalPath ?? ''}`;
+  }
+  /** One call of the native provider through the stub: the reading the registered reactivefiber.render.preview returns. */
+  async function provided(source: Json): Promise<JsonValue> {
+    stubRf(source);
+    return nativeReactiveFiberPreview('claude-opus-5', 'Summarize workbench integration', WS);
+  }
+  const STUB_TEXT = 'hermetic stub render';
+  /** A TSX-era noncommitted preview (wb-693.1 acceptance 4): object sdk_versions with both engine keys, engine_metrics and the
+   * seven-key formula_terms (max_output_tokens beside the five terms and available_context_tokens), plus a later result key. */
+  const tsxEra = (): Json => envelope({result: result({
+    output: {text: STUB_TEXT}, provenance: {graph_revision_id: GRAPH, cli_version: '0.1.716', sdk_versions: ENGINE_OBJECT},
+    budget: {formula_terms: formula({max_output_tokens: 128000})}, engine_metrics: {tsx_worker_spawns: 1, tsx_resource_rounds: 1},
+    commit_seq: null, bundle_revision_id: `sha256:${'f6'.repeat(32)}`,
+  })});
+  /** The dogfood-shaped rf 0.1.709 render (wb-693.2 acceptance 3, steps/15-context-render.out:1@8a8b83e4d) as the noncommitted
+   * preview Pi asks for: LIST sdk_versions, engine_metrics.tsx_worker_spawns 1, the seven-key formula_terms and the extra
+   * provenance and result keys that release reported. */
+  const dogfood709 = (): Json => envelope({result: result({
+    output: {text: STUB_TEXT},
+    provenance: {created_at: '2026-10-16T09:57:47.094450Z', graph_revision_id: GRAPH, necessity_policy_revision_id: `sha256:${'44'.repeat(32)}`,
+      workspace_schema_version: 'reactive-fiber.workspace/v1', cli_version: '0.1.709', storage_backend: 'jsonl',
+      sdk_versions: [{name: 'fiber_optics_wire_format', version: '2'}]},
+    budget: {formula_terms: {context_window: 1000000, max_output_tokens: 128000, output_reserve: 8192, occupied_tokens: 0, overhead: 0,
+      safety_margin: 2048, available_context_tokens: 989760}},
+    diagnostics_summary: {errors: 0, warnings: 0, has_errors: false, has_warnings: false},
+    engine_metrics: {tsx_worker_spawns: 1, tsx_resource_rounds: 0}, commit_seq: null, scope: null, session_id: null, effects: [],
+  })});
+
+  // R10 (wb-693.1 acceptance 1): "evidenceRefs arrayContaining ['rf-engine:tsx_runtime:2.9.7:sha256:b2b2...',
+  // 'rf-engine:tsx_sdk:0.1.341:unknown'] and diagnostics match /foreign runtime|TSX engine/". Acceptance 3: refs stay within the cap.
+  it('R10: an object sdk_versions stating both engine entries adds one rf-engine reference per entry and one foreign-runtime note', () => {
+    const topology = project(stating(ENGINE_OBJECT));
+    const [snapshot] = topology.snapshots;
+    expect(snapshot.evidenceRefs).toEqual(expect.arrayContaining([RUNTIME_REF, SDK_REF]));
+    expect(topology.diagnostics.some(note => ENGINE_NOTE_PATTERN.test(note))).toBe(true);
+    // Exactly: today's references, then one per entry in tsx_runtime, tsx_sdk order; one note, just before the interval note.
+    const plain = today();
+    expect(snapshot.evidenceRefs).toStrictEqual([...PLAIN_REFS, RUNTIME_REF, SDK_REF]);
+    expect(topology.diagnostics).toStrictEqual([...plain.diagnostics.slice(0, -1), ENGINE_NOTE, INTERVAL_NOTE]);
+    expect(ENGINE_NOTE).toMatch(ENGINE_NOTE_PATTERN);
+    // Nothing else moves: coverage, tone, status text, revision and payload reference are today's.
+    expect({...snapshot, evidenceRefs: PLAIN_REFS}).toStrictEqual(plain.snapshots[0]);
+    expect(snapshot.evidenceRefs?.length).toBeLessThanOrEqual(32);
+    bounded(topology);
+    everyObject(topology, item => { expect(Object.isFrozen(item)).toBe(true); });
+    const projection = new ObservationProjection();
+    expect(projection.refresh(snapshot)).toBe('applied');
+    for (const ref of [RUNTIME_REF, SDK_REF]) {
+      expect(projection.query({scope, limit: 10, evidence: ref}).nodes.map(item => item.nativeRef.id)).toStrictEqual([OPERATION]);
+    }
+  });
+
+  it('R10: each engine entry stands alone: a lone tsx_runtime or tsx_sdk entry adds its one reference and the same single note', () => {
+    const cases: [Json, string[]][] = [[{tsx_runtime: RUNTIME}, [RUNTIME_REF]], [{tsx_sdk: SDK}, [SDK_REF]]];
+    for (const [entries, refs] of cases) {
+      const topology = project(stating({...SIBLINGS, ...entries}));
+      expect(topology.snapshots[0].evidenceRefs).toStrictEqual([...PLAIN_REFS, ...refs]);
+      expect(topology.diagnostics.filter(note => note === ENGINE_NOTE)).toHaveLength(1);
+    }
+  });
+
+  it('R10: references follow tsx_runtime, tsx_sdk order whatever the key order, after a stated rf-cli release, and the engine note follows the release note', () => {
+    expect(project(stating({tsx_sdk: SDK, ...SIBLINGS, tsx_runtime: RUNTIME})).snapshots[0].evidenceRefs).toStrictEqual([...PLAIN_REFS, RUNTIME_REF, SDK_REF]);
+    const topology = project(stating(ENGINE_OBJECT, {}, {cli_version: '0.1.716'}));
+    expect(topology.snapshots[0].evidenceRefs).toStrictEqual([...PLAIN_REFS, 'rf-cli:0.1.716', RUNTIME_REF, SDK_REF]);
+    const plain = today({}, {cli_version: '0.1.716'});
+    expect(topology.diagnostics).toStrictEqual([...plain.diagnostics.slice(0, -1), ENGINE_NOTE, INTERVAL_NOTE]);
+    expect(topology.diagnostics.indexOf(ENGINE_NOTE)).toBe(topology.diagnostics.indexOf(releaseNote('0.1.716')) + 1);
+  });
+
+  it('R10: the identities are carried, not hard-coded: other versions and fingerprints round-trip verbatim into their references', () => {
+    const cases: [Json, string][] = [
+      [{distribution_version: '2.1.4', contract_fingerprint: `sha256:${'0f'.repeat(32)}`}, `2.1.4:sha256:${'0f'.repeat(32)}`],
+      [{distribution_version: '0.1.400-rc.1+local.7', contract_fingerprint: 'unknown'}, '0.1.400-rc.1+local.7:unknown'],
+    ];
+    for (const [entry, identities] of cases) {
+      expect(engineRefsOf(project(stating({tsx_runtime: entry, tsx_sdk: entry})))).toStrictEqual([`rf-engine:tsx_runtime:${identities}`, `rf-engine:tsx_sdk:${identities}`]);
+    }
+  });
+
+  it('R10: a distribution_version of exactly 256 UTF-8 bytes is carried whole and its reference still applies to the projection', () => {
+    for (const version of ['a'.repeat(256), cp(0xe9).repeat(128)]) {
+      const topology = project(stating({tsx_runtime: {distribution_version: version, contract_fingerprint: RUNTIME_FINGERPRINT}}));
+      expect(engineRefsOf(topology)).toStrictEqual([`rf-engine:tsx_runtime:${version}:${RUNTIME_FINGERPRINT}`]);
+      expect(new ObservationProjection().refresh(topology.snapshots[0])).toBe('applied');
+      bounded(topology);
+    }
+  });
+
+  it('R10: no other field of an entry is read: an entry that also carries placeholders yields only its two bounded identities', () => {
+    const topology = project(stating({tsx_runtime: {...RUNTIME, message: 'SECRET-ENGINE-MESSAGE', metadata: {detail: 'SECRET-ENGINE-METADATA'}},
+      tsx_sdk: {...SDK, hint: 'SECRET-ENGINE-HINT'}}));
+    expect(engineRefsOf(topology)).toStrictEqual([RUNTIME_REF, SDK_REF]);
+    expect(JSON.stringify(topology)).not.toContain('SECRET-');
+  });
+
+  it('R10: a valid entry beside a malformed one adds only the valid reference and the note; the malformed entry surfaces nothing', () => {
+    const topology = project(stating({tsx_runtime: RUNTIME, tsx_sdk: {distribution_version: 'SECRET-ENGINE-VERSION', contract_fingerprint: 'SECRET-ENGINE-FINGERPRINT'}}));
+    expect(engineRefsOf(topology)).toStrictEqual([RUNTIME_REF]);
+    expect(topology.diagnostics.filter(note => note === ENGINE_NOTE)).toHaveLength(1);
+    expect(JSON.stringify(topology)).not.toContain('SECRET-');
+  });
+
+  // wb-693.1 acceptance 4 names a workbench-provider-envelope-audit row; that file belongs to another seat this run, so the row is
+  // carried here through the same nativeReactiveFiberPreview path (providers/reactivefiber.ts is unchanged by this cut).
+  it('R10 provider: a TSX-era envelope (object sdk_versions with engine keys, engine_metrics, seven-key formula_terms) passes isPreviewEnvelope unchanged', async () => {
+    const source = tsxEra();
+    expect(Object.keys(((source.result as Json).budget as Json).formula_terms as Json)).toHaveLength(7);
+    expect(await provided(source)).toStrictEqual({contract: 'reactivefiber.render.preview/v1', workspaceRoot: WS, source});
+  }, 30_000);
+
+  it('R10 end to end: the provider reading of a TSX-era envelope projects both rf-engine references and the foreign-runtime note', async () => {
+    const topology = project(await provided(tsxEra()));
+    expect(topology.snapshots[0].evidenceRefs).toStrictEqual([...PLAIN_REFS, 'rf-cli:0.1.716', RUNTIME_REF, SDK_REF]);
+    expect(topology.diagnostics).toContain(ENGINE_NOTE);
+    expect(topology.snapshots[0].coverage).toBe('complete');
+  }, 30_000);
+
+  // R11 (wb-693.1 acceptance 2): "python-only object, no engine keys: no rf-engine: ref, no engine note, snapshot otherwise identical".
+  it('R11: a python-only object sdk_versions (siblings and wire format, no engine key) projects byte-identically to today', () => {
+    const releases: Json[] = [{}, {cli_version: '0.1.716'}];
+    for (const provenance of releases) {
+      const topology = project(stating(SIBLINGS, {}, provenance));
+      expect(JSON.stringify(topology)).toBe(JSON.stringify(today({}, provenance)));
+      expect(engineRefsOf(topology)).toStrictEqual([]);
+      expect(topology.diagnostics.some(note => ENGINE_NOTE_PATTERN.test(note))).toBe(false);
+    }
+  });
+
+  it('R11: only the two engine keys are read: an engine-shaped entry under another name or out of case adds nothing', () => {
+    for (const key of ['tsx_runtime_v2', 'TSX_RUNTIME', 'Tsx_Sdk', 'tsx', 'runtime', 'deno']) {
+      expect(JSON.stringify(project(stating({...SIBLINGS, [key]: RUNTIME})))).toBe(JSON.stringify(today()));
+    }
+  });
+
+  // R12 (wb-693.2 acceptance 1): "sdk_versions [{name:'fiber_optics_wire_format', version:'2'}] projects with no validation
+  // refusal and no rf-engine: ref; passes today and keeps passing after R1's GREEN".
+  const LISTS: [string, JsonValue][] = [
+    ['the rf <= 0.1.709 wire-format list', [{name: 'fiber_optics_wire_format', version: '2'}]],
+    ['an empty list', []],
+    ['a list whose elements look like engine entries', [{name: 'tsx_runtime', ...RUNTIME}, {tsx_sdk: SDK}]],
+  ];
+  it.each(LISTS)('R12: a LIST-shaped sdk_versions (%s) records no engine identity and is never a refusal', (_name, list) => {
+    const releases: Json[] = [{}, {cli_version: '0.1.709'}];
+    for (const provenance of releases) {
+      const topology = project(stating(list, {}, provenance));
+      expect(JSON.stringify(topology)).toBe(JSON.stringify(today({}, provenance)));
+      expect(engineRefsOf(topology)).toStrictEqual([]);
+    }
+  });
+
+  const OTHER_SHAPES: [string, JsonValue][] = [['null', null], ['a string', 'tsx_runtime 2.9.7'], ['a number', 2], ['a boolean', true]];
+  it.each(OTHER_SHAPES)('R12: an sdk_versions that is %s records no engine identity and is never a refusal either', (_name, value) => {
+    expect(JSON.stringify(project(stating(value)))).toBe(JSON.stringify(today()));
+  });
+
+  // R12 (wb-693.2 acceptance 2): sdk_versions and cli_version never become required envelope fields.
+  it('R12: sdk_versions and cli_version are never required: the baseline fixture states neither and still validates and projects', () => {
+    const source = envelope();
+    expect(JSON.stringify(source)).not.toMatch(/sdk_versions|cli_version|engine_metrics/);
+    const topology = project(reading(source));
+    expect(topology.snapshots).toHaveLength(1);
+    expect(topology.snapshots[0].coverage).toBe('complete');
+  });
+
+  // R12 (wb-693.2 acceptance 3): "A dogfood-shaped 0.1.709 fixture (list sdk_versions + tsx_worker_spawns 1 ...) passes provider and
+  // observer end-to-end".
+  it('R12: the dogfood-shaped rf 0.1.709 preview (list sdk_versions, tsx_worker_spawns 1, seven-key formula_terms) projects normally', () => {
+    const topology = project(reading(dogfood709()));
+    const [snapshot] = topology.snapshots;
+    expect(snapshot.evidenceRefs).toStrictEqual([...PLAIN_REFS, 'rf-cli:0.1.709']);
+    expect(snapshot.coverage).toBe('complete');
+    expect(snapshot.node.statusTone).toBe('success');
+    expect(snapshot.node.statusText).toBe('noncommitted preview (rf-cli) · 989760 of 1000000 context tokens available · necessity evals 4 · 0 errors, 0 warnings');
+    expect(topology.diagnostics).toContain(releaseNote('0.1.709'));
+    expect(topology.diagnostics.some(note => ENGINE_NOTE_PATTERN.test(note))).toBe(false);
+  });
+
+  it('R12 end to end: the dogfood-shaped 0.1.709 preview passes the provider unchanged and projects with no engine identity', async () => {
+    const source = dogfood709();
+    const preview = await provided(source);
+    expect(preview).toStrictEqual({contract: 'reactivefiber.render.preview/v1', workspaceRoot: WS, source});
+    const topology = project(preview);
+    expect(topology.snapshots[0].evidenceRefs).toStrictEqual([...PLAIN_REFS, 'rf-cli:0.1.709']);
+    expect(engineRefsOf(topology)).toStrictEqual([]);
+  }, 30_000);
+
+  it('R12 end to end: the provider still admits the envelope that states neither sdk_versions nor cli_version', async () => {
+    const source = envelope({result: result({output: {text: STUB_TEXT}})});
+    expect(await provided(source)).toStrictEqual({contract: 'reactivefiber.render.preview/v1', workspaceRoot: WS, source});
+  }, 30_000);
+
+  // R13 (wb-693.3 acceptance 1): "engine entries carrying SECRET-... text in an unexpected field, an oversized
+  // distribution_version, and a non-sha256:/non-'unknown' fingerprint surface nothing beyond bounded identities;
+  // JSON.stringify(topology) contains no secret; refs <= 32".
+  const DROPPED: [string, JsonValue][] = [
+    // The version: the identity() bound (non-empty, at most 256 UTF-8 bytes, no unsafe unit), displayed unchanged by the shared label layout.
+    ['a 257-byte version', {distribution_version: 'a'.repeat(257), contract_fingerprint: 'unknown'}],
+    ['a 258-byte version in 129 characters', {distribution_version: cp(0xe9).repeat(129), contract_fingerprint: 'unknown'}],
+    ['a 4096-character version', {distribution_version: `2.9.7-${'9'.repeat(4090)}`, contract_fingerprint: 'unknown'}],
+    ['an empty version', {distribution_version: '', contract_fingerprint: 'unknown'}],
+    ['a numeric version', {distribution_version: 297, contract_fingerprint: 'unknown'}],
+    ['a null version', {distribution_version: null, contract_fingerprint: 'unknown'}],
+    ['an object version', {distribution_version: {major: 2, minor: 9, patch: 7}, contract_fingerprint: 'unknown'}],
+    ['a list version', {distribution_version: ['2.9.7'], contract_fingerprint: 'unknown'}],
+    ['no version', {contract_fingerprint: 'unknown'}],
+    ['a terminal escape sequence in the version', {distribution_version: `2.9.7${cp(0x1b)}[31m`, contract_fingerprint: 'unknown'}],
+    ['a bidi override in the version', {distribution_version: `2.${cp(0x202e)}9.7`, contract_fingerprint: 'unknown'}],
+    ['a zero-width space in the version', {distribution_version: `2.9.7${cp(0x200b)}`, contract_fingerprint: 'unknown'}],
+    ['a line break in the version', {distribution_version: `2.9.7${cp(0x0a)}SECRET-ENGINE-TAIL`, contract_fingerprint: 'unknown'}],
+    ['surrounding whitespace in the version', {distribution_version: ' 2.9.7 ', contract_fingerprint: 'unknown'}],
+    ['a whitespace run in the version', {distribution_version: '2.9.7  local', contract_fingerprint: 'unknown'}],
+    // The fingerprint: exactly sha256:<64 lowercase hex> or the literal unknown.
+    ['an uppercase-hex fingerprint', {distribution_version: '2.9.7', contract_fingerprint: `sha256:${'B2'.repeat(32)}`}],
+    ['a 63-hex fingerprint', {distribution_version: '2.9.7', contract_fingerprint: `sha256:${'b'.repeat(63)}`}],
+    ['a 65-hex fingerprint', {distribution_version: '2.9.7', contract_fingerprint: `sha256:${'b'.repeat(65)}`}],
+    ['a fingerprint without its prefix', {distribution_version: '2.9.7', contract_fingerprint: 'b2'.repeat(32)}],
+    ['the bare prefix as the fingerprint', {distribution_version: '2.9.7', contract_fingerprint: 'sha256:'}],
+    ['a sha512 fingerprint', {distribution_version: '2.9.7', contract_fingerprint: `sha512:${'b2'.repeat(64)}`}],
+    ['UNKNOWN as the fingerprint', {distribution_version: '2.9.7', contract_fingerprint: 'UNKNOWN'}],
+    ['unknown with a trailing space', {distribution_version: '2.9.7', contract_fingerprint: 'unknown '}],
+    ['placeholder text as the fingerprint', {distribution_version: '2.9.7', contract_fingerprint: 'SECRET-ENGINE-FINGERPRINT'}],
+    ['a null fingerprint', {distribution_version: '2.9.7', contract_fingerprint: null}],
+    ['a numeric fingerprint', {distribution_version: '2.9.7', contract_fingerprint: 0}],
+    ['no fingerprint', {distribution_version: '2.9.7'}],
+    // The entry itself must be an object.
+    ['an entry that is a string', '2.9.7'],
+    ['an entry that is a list', ['2.9.7', 'unknown']],
+    ['an entry that is null', null],
+  ];
+  it.each(DROPPED)('R13: an engine entry with %s is dropped, never rewritten: no reference, no note, the projection equals today', (_name, entry) => {
+    const topology = project(stating({...SIBLINGS, tsx_runtime: entry, tsx_sdk: entry}));
+    expect(JSON.stringify(topology)).toBe(JSON.stringify(today()));
+    expect(JSON.stringify(topology)).not.toContain('SECRET-');
+    expect(topology.snapshots[0].evidenceRefs?.length).toBeLessThanOrEqual(32);
+  });
+
+  it('R13: placeholders in every engine-era field beside the identities never surface; only bounded references do, refs <= 32', () => {
+    const topology = project(withResult(LEAKY_ENGINE_FIELDS));
+    expect(JSON.stringify(topology)).not.toContain('SECRET-');
+    for (const ref of engineRefsOf(topology)) expect([RUNTIME_REF, SDK_REF]).toContain(ref);
+    expect(topology.snapshots[0].evidenceRefs?.length).toBeLessThanOrEqual(32);
+    bounded(topology);
+  });
+
+  // R13 (wb-693.3 acceptance 2): "The existing seam case and partial rows, re-run with engine keys added to their fixtures, still
+  // read partial/unknown with the seam label intact".
+  const PARTIAL: [string, Json, ReactiveFiberTopologyContext, RegExp][] = [
+    ['the injected-fixture seam (R2)', {}, {...context, seam: 'injected-fixture'}, /^fixture seam \(not a real render\) · /],
+    ['diagnostics_summary.has_errors (R4)', {diagnostics_summary: {errors: 2, warnings: 0, has_errors: true, has_warnings: false}}, context, /^noncommitted preview \(rf-cli\) · .* 2 errors, 0 warnings$/],
+    ['an over-budget render (R4)', {budget: {formula_terms: formula({available_context_tokens: -40})}}, context, /^noncommitted preview \(rf-cli\) · over budget by 40 /],
+  ];
+  it.each(PARTIAL)('R13: %s with both engine entries still reads partial and unknown, its status text and seam label unchanged', (_name, over, ctx, label) => {
+    const engine = project(stating(ENGINE_OBJECT, over), ctx).snapshots[0];
+    const plain = today(over, {}, ctx).snapshots[0];
+    expect(engine.coverage).toBe('partial');
+    expect(engine.node.statusTone).toBe('unknown');
+    expect(engine.node.statusText).toMatch(label);
+    expect(engine.node).toStrictEqual(plain.node);
+    expect(engine.coverage).toBe(plain.coverage);
+  });
+
+  it('R13: an error-severity envelope diagnostic beside engine entries still cannot read as success, and its text stays withheld', () => {
+    const topology = project(reading(envelope({result: result({provenance: {graph_revision_id: GRAPH, sdk_versions: ENGINE_OBJECT}}), diagnostics: [rfDiagnostic()]})));
+    expect(topology.snapshots[0].coverage).toBe('partial');
+    expect(topology.snapshots[0].node.statusTone).not.toBe('success');
+    for (const secret of ['SECRET-DIAGNOSTIC', 'SECRET-HINT', 'SECRET-METADATA']) expect(JSON.stringify(topology)).not.toContain(secret);
+  });
+
+  it('R13: with every partial note, a stated release and engine identity the diagnostics stay inside the shared bound and none is dropped', () => {
+    const over: Json = {diagnostics_summary: {errors: 2, warnings: 0, has_errors: true, has_warnings: false}, budget: {formula_terms: formula({available_context_tokens: -40})}};
+    const ctx: ReactiveFiberTopologyContext = {...context, seam: 'injected-fixture'};
+    const topology = project(stating(ENGINE_OBJECT, over, {cli_version: '0.1.716'}), ctx);
+    bounded(topology);
+    // Every note today's projection states is still stated, the interval note last: the bound truncated nothing.
+    for (const note of today(over, {cli_version: '0.1.716'}, ctx).diagnostics) expect(topology.diagnostics).toContain(note);
+    expect(topology.diagnostics.at(-1)).toBe(INTERVAL_NOTE);
+    expect(topology.snapshots[0].coverage).toBe('partial');
   });
 });

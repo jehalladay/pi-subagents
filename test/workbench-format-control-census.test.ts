@@ -132,6 +132,9 @@ describe("wb-rqd census: the format controls that defeat a reader are unsafe uni
     });
   }
 
+  // wb-19q member 21 (wb-rqd F1): table liveness. Hollowed to [], the census registers 7 of 10 cases with exit 0.
+  it("the NEIGHBOURS table itself registers all three range-neighbour rows", () => expect(NEIGHBOURS).toHaveLength(3));
+
   it(`range neighbour ${named(0xfff8)} (before FFF9-FFFB) is a default-ignorable that wb-952 already refuses: stripped whole, unrelated to this class's edge`, () => {
     const text = `a${cp(0xfff8)}b`;
     expect(IGNORABLE.test(cp(0xfff8))).toBe(true);
