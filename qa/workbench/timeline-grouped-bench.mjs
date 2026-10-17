@@ -11,12 +11,14 @@
 //      recorded, never tuned away
 //   2  the measurement is not the W21 claim (fixture shape, fewer than 1,000 samples per pass, a truncated pass)
 //   3  nothing could be measured (an exception, reported on stderr; no receipt)
-// The revision comes from $W21_REVISION (else "working-tree"). $W21_SEED, $W21_NODES, $W21_DEPTH and $W21_TICKS override
-// the fixture; any override below the W21 shape is still measured and exits 2.
+// The revision is git rev-parse HEAD of this checkout plus a dirty flag, stamped by qa/workbench/bench-revision.mjs (wb-oq3);
+// $W21_REVISION only overrides the revision and the receipt names the source. $W21_SEED, $W21_NODES, $W21_DEPTH and
+// $W21_TICKS override the fixture; any override below the W21 shape is still measured and exits 2.
 import {readFileSync, writeFileSync} from 'node:fs';
 import {cpus} from 'node:os';
 import {ObservationProjection} from '../../dist/workbench/observation.js';
 import {buildTimelineLanes} from '../../dist/workbench/timeline.js';
+import {benchRevision, withBenchRevision} from './bench-revision.mjs';
 import {buildGroupedFixture, GROUPED_FIXTURE_DEFAULTS} from './grouped-fixture.mjs';
 import {runTimelineBench, timelineExitCodeFor} from './timeline-grouped-core.mjs';
 
@@ -44,13 +46,14 @@ try {
     ticks: integerFromEnv('W21_TICKS', GROUPED_FIXTURE_DEFAULTS.ticks),
   });
   const processors = cpus();
-  receipt = runTimelineBench({
+  const stamp = benchRevision();
+  receipt = withBenchRevision(runTimelineBench({
     Projection: ObservationProjection,
     buildTimelineLanes,
     fixture,
     host: {
       utc: new Date().toISOString(),
-      revision: process.env.W21_REVISION ?? 'working-tree',
+      revision: stamp.revision,
       node: process.version,
       arch: process.arch,
       platform: process.platform,
@@ -64,7 +67,7 @@ try {
       command: 'node qa/workbench/timeline-grouped-bench.mjs',
       overrides: Object.fromEntries(OVERRIDES.filter(name => process.env[name] !== undefined && process.env[name] !== '').map(name => [name, process.env[name]])),
     },
-  });
+  }), stamp);
 } catch (error) {
   console.error(JSON.stringify({benchmark: 'timeline-grouped-10k', measured: false, error: error instanceof Error ? error.stack ?? error.message : String(error)}));
   process.exit(3);
