@@ -26,8 +26,12 @@ import { safeWorkflowTerminalText } from "../src/ui/workflow-card.js";
 import { selectAttention } from "../src/workbench/attention.js";
 import { type BeadsReadClient, projectBeadsWork, readBeadsWork } from "../src/workbench/beads-observer.js";
 import { type CapabilityDescriptor, CapabilityError, type JsonValue } from "../src/workbench/capability-registry.js";
+import { readClaudeMessageEvidence } from "../src/workbench/claude-evidence.js";
 import { type ClaudeTopologyInput, projectClaudeTopology } from "../src/workbench/claude-topology.js";
+import { CONTROL_CONTRACT_VERSION, CONTROL_PERMIT_POLICY, type NativeControlReceipt } from "../src/workbench/control.js";
+import { buildControlReply, MAX_CONTROL_REPLY_BYTES } from "../src/workbench/control-reply.js";
 import type { WorkflowSource } from "../src/workbench/designer.js";
+import { type DetachedControlClient, type DetachedControlExecution, type DetachedControlInput, executeDetachedControl } from "../src/workbench/detached-control.js";
 import { projectDetachedReading } from "../src/workbench/detached-observer.js";
 import { type EvidenceLoader, EvidenceStore } from "../src/workbench/evidence-loader.js";
 import { buildWorkflowExecuteReply, decideExecute, EXECUTE_GRANT, type ExecuteDecision, type LaunchOutcome, type WorkflowExecuteRequest } from "../src/workbench/execute.js";
@@ -35,6 +39,7 @@ import { readForgeOperationEvidence } from "../src/workbench/forge-evidence.js";
 import { forgeGateTopology } from "../src/workbench/forge-observer.js";
 import { readFurnaceAttemptLogEvidence } from "../src/workbench/furnace-evidence.js";
 import { FurnaceHostedExecutor, SHIPPED_FURNACE_SDK } from "../src/workbench/hosts/furnace-hosted.js";
+import { decodeDetachedCommand } from "../src/workbench/hosts/local-detached.js";
 import { type HyperUnixTopologyContext, hyperunixTopology } from "../src/workbench/hyperunix-observer.js";
 import { WORKFLOW_SCRIPT_SCHEMA_VERSION } from "../src/workbench/identity.js";
 import { selectLatencyDecomposition } from "../src/workbench/latency.js";
@@ -442,6 +447,24 @@ async function storeTexts(raw: string): Promise<string[]> {
   return [...entry.preview, entry.kind, entry.producerReceipt ?? ""];
 }
 
+/**
+ * DIRECT-CALLER row (wb-6ze.10 O1, owner 2026-10-16T01:36Z): claude-evidence.ts sanitizeRow calls the one helper with the
+ * lines layout over the whole selected transcript row, and the bounded preview lines are its display. The injected read
+ * seam hands the reader the producer's raw row text, as the furnace driver hands its reader a raw log line.
+ */
+async function claudeEvidenceTexts(raw: string): Promise<string[]> {
+  const uuid = "00000000-0000-4000-8000-0000000000c1";
+  const ref = `claude-message:${uuid}`;
+  const content = await readClaudeMessageEvidence(ref, {
+    grants: () => ["claude:transcript"],
+    owningNode: { nativeRef: { provider: "claude-agent-sdk", type: "session", id: "sess-corpus" }, evidenceRefs: [ref], freshness: "current" },
+    readTranscript: async () => [{ type: "assistant", uuid, text: raw }],
+    cwd: "/tmp/claude-evidence-ws", maxMessages: 40, maxBytes: 65_536, maxLines: 200,
+    signal: new AbortController().signal, capturedAt: () => NOW,
+  });
+  return [...content.preview];
+}
+
 function detachedTexts(raw: string): string[] {
   const host = "a1".repeat(24);
   const operator = { issuer: "local-os-dac", uid: 1000, id: "local-os:uid:1000" } as const;
@@ -463,6 +486,70 @@ function detachedTexts(raw: string): string[] {
     observedAt: "2026-10-15T09:00:05Z",
   });
   return reading.snapshots.flatMap(snapshot => [snapshot.node.title, snapshot.node.statusText]);
+}
+
+/**
+ * Site 23 DIRECT-CALLER row (wb-0kg.6 respin U4, owner O1 bound 2026-10-16 08:31Z): detached-control.ts sanitized() calls the
+ * one helper with the label layout, and wb-952 counts it as census site 23. Every display it feeds runs through the REAL
+ * executeDetachedControl: the client frame (decoded by the host's own decodeDetachedCommand, as the real client does before
+ * writing it), the reason the host's controlAudit stores from that frame (local-detached.ts:650 redacts the decoded reason),
+ * the host-refusal, client-refusal, EACCES and transport diagnostics, and every string of each execution. The projection is
+ * seeded by hand with the W13-G reader convention: an invocation owned by its host process, confirmed by host instance, pid
+ * and owner.
+ */
+const CONTROL_OWNER = "local-os:uid:1000";
+const CONTROL_SCOPE: ObservationScope = { workspace: "/tmp/detached-control-ws", principal: CONTROL_OWNER };
+const CONTROL_HOST = "ab".repeat(24);
+const CONTROL_INVOCATION: NativeRef = { provider: "local-detached", type: "invocation", id: "inv-control-corpus" };
+const CONTROL_HOST_PROCESS: NativeRef = { provider: "local-detached", type: "host-process", id: `${CONTROL_HOST}:4242` };
+function controlProjection(): ObservationProjection {
+  const projection = new ObservationProjection();
+  for (const source of [CONTROL_INVOCATION, CONTROL_HOST_PROCESS]) {
+    projection.refresh({
+      source, scope: CONTROL_SCOPE, capturedAt: NOW, observedAt: NOW, kind: `local-detached.${source.type}.snapshot`,
+      node: { title: source.id, type: "workflow", statusText: "running", statusTone: "active" },
+    });
+  }
+  projection.relate({
+    scope: CONTROL_SCOPE, from: CONTROL_INVOCATION, to: CONTROL_HOST_PROCESS, kind: "ownership",
+    provenance: { source: "local-detached", observedAt: NOW, nativeConfirmationRef: `local-detached:${CONTROL_HOST}:4242:${CONTROL_OWNER}` },
+  });
+  return projection;
+}
+function controlExecution(reason: string, cancel: DetachedControlClient["cancel"]): Promise<DetachedControlExecution> {
+  const request: DetachedControlInput["request"] = {
+    scope: { ...CONTROL_SCOPE }, principal: { id: CONTROL_OWNER, role: "local-operator" }, grants: ["control:local-detached.cancel"],
+    target: { ...CONTROL_INVOCATION }, action: "cancel", params: { confirmed: true, reason }, invocationId: "inv-control-request",
+    requestedAt: "2026-10-15T11:59:00.000Z",
+  };
+  const shutdown: DetachedControlClient["shutdown"] = async () => {
+    throw new Error("the site-23 driver sends cancel only");
+  };
+  return executeDetachedControl({ request, deps: { projection: controlProjection() }, connect: () => ({ cancel, shutdown }), now: () => NOW });
+}
+async function detachedControlTexts(raw: string): Promise<string[]> {
+  const frames: string[] = [];
+  const settled = await controlExecution(raw, async frame => {
+    decodeDetachedCommand({ command: "cancel", invocationId: CONTROL_INVOCATION.id, reason: frame });
+    frames.push(frame);
+    return { accepted: true, terminalConfirmed: false };
+  });
+  if (settled.status !== "settled" || frames.length !== 1) throw new Error(`site 23: the frame did not reach the host (${settled.status})`);
+  const texts = [frames[0], redactWorkbenchText(frames[0]), ...strings(settled)];
+  const failures: readonly (readonly [error: Error, status: DetachedControlExecution["status"]])[] = [
+    [new Error(`Detached authorization: ${raw}`), "refused"],
+    [new Error(`Authorization: ${raw}`), "refused"],
+    [Object.assign(new Error(`connect EACCES ${raw}`), { code: "EACCES" }), "refused"],
+    [new Error(`Detached host disconnected before reply. ${raw}`), "uncertain"],
+  ];
+  for (const [error, status] of failures) {
+    const execution = await controlExecution("operator note", async () => {
+      throw error;
+    });
+    if (execution.status !== status) throw new Error(`site 23: expected ${status}, got ${execution.status}`);
+    texts.push(...strings(execution));
+  }
+  return texts;
 }
 
 function descriptor(description: string): CapabilityDescriptor {
@@ -542,6 +629,23 @@ function latencyTexts(raw: string): string[] {
   return [...report.components.flatMap(item => item.providers), ...report.evidenceRefs, ...report.components.flatMap(item => item.evidenceRefs), report.invocationId];
 }
 
+/**
+ * DIRECT-CALLER row (wb-752.4 O1, owner 2026-10-16T01:22Z): site 13 control-reply.ts buildControlReply routes every display
+ * string of the workflow_control reply through the one helper with the text layout, exactly once. A hand-built result receipt
+ * carries the producer's raw text in the requested target id and in both native echo refs, as the control wiring could hand the
+ * builder a receipt the core did not mint (the landed core refuses unsafe refs); the cap is the maximum, so no compact cut hides
+ * a secret.
+ */
+function controlReplyTexts(raw: string): string[] {
+  const receipt: NativeControlReceipt = {
+    contractVersion: CONTROL_CONTRACT_VERSION, requestId: "ctl_corpus", scope: { workspace: ALICE.workspace, principal: ALICE.principal }, principal: { id: ALICE.principal },
+    grant: "control:furnace.stop", policy: CONTROL_PERMIT_POLICY, target: { provider: "furnace", type: "run", id: raw }, action: "stop", invocationId: "inv-control-corpus",
+    ownershipConfirmationRef: "req-control-corpus", requestedAt: NOW, decidedAt: NOW, phase: "result", acknowledgedAt: NOW, nativeAckRef: raw, outcome: "completed",
+    nativeResultRef: raw, settledAt: NOW,
+  };
+  return strings(buildControlReply(receipt, { maxBytes: MAX_CONTROL_REPLY_BYTES }).reply);
+}
+
 interface Site {
   readonly site: string;
   readonly texts: (raw: string) => string[] | Promise<string[]>;
@@ -572,13 +676,16 @@ const SITES: readonly Site[] = [
   { site: "site 8 furnace-hosted.ts safeText (FurnaceHostedExecutor.start)", texts: hostedTexts },
   { site: "site 9 patch-proposal.ts displayText (proposeWorkflowPatch)", texts: patchTexts },
   { site: "site 10 beads-observer.ts cleanText (readBeadsWork, projectBeadsWork)", texts: beadsTexts },
+  { site: "site 13 control-reply.ts buildControlReply (requested target id, acknowledged and result echo refs)", texts: controlReplyTexts },
   { site: "site 15 furnace-evidence.ts sanitize (readFurnaceAttemptLogEvidence)", texts: furnaceEvidenceTexts },
   { site: "site 16 evidence-loader.ts safeChunks (EvidenceStore)", texts: storeTexts },
+  { site: "claude-evidence.ts sanitizeRow (readClaudeMessageEvidence preview lines)", texts: claudeEvidenceTexts },
   { site: "site 18 detached-observer.ts shown (projectDetachedReading)", texts: detachedTexts },
   { site: "sites 19/20 workflow_inspect and workbench_catalog replies", texts: replyTexts },
   { site: "site 12 execute.ts buildWorkflowExecuteReply (DIRECT-CALLER: reason, policy value and key, native reference id and scope, definition id, invocation reference)", texts: executeTexts },
   { site: "site 22 observe-query.ts clean (observeInvocation)", texts: observeTexts },
   { site: "wb-h8f.10 latency.ts displayText (selectLatencyDecomposition provider and evidence paths)", texts: latencyTexts },
+  { site: "site 23 detached-control.ts sanitized (executeDetachedControl)", texts: detachedControlTexts },
 ];
 
 describe("wb-952 one-helper corpus through every census site's public function", () => {
