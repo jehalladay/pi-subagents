@@ -45,7 +45,7 @@ export const EXPECTED_LIMITS = Object.freeze({
   observe: 'unsupported',
   identity: 'per-attempt',
   replyBounds: 'none',
-  retry: 'furnace-parks-never-retries',
+  retry: 'adapter-never-retries; furnace-auto-retries-by-recorded-retry-policy; work_failure-and-indeterminate-park',
 });
 
 /** The operator-retry journeys: an uncertain first Attempt, then a NEW Attempt on a NEW bridge connection. */
@@ -98,7 +98,7 @@ export function assessRetryFaultJourneys(observed) {
   let realised = RETRY_FAULT_JOURNEYS.every(name => isObject(journeys[name]) && journeys[name].armed === true && ARMING_FACTS[name](journeys[name]));
   if (!sdk || sdk.copy !== 'repaired' || !SHA256.test(String(sdk.repairedDigest)) || !SHA256.test(String(sdk.shippedManifestDigest))) realised = false;
 
-  // Every adapter receipt states the wb-zmd limits and the park-never-retry premise; only the same-id journey may carry a violation.
+  // Every adapter receipt states the wb-zmd limits and the wb-lrz.1 retry disclosure (EXPECTED_LIMITS.retry); only the same-id journey may carry a violation.
   for (const name of RETRY_FAULT_JOURNEYS) {
     const journey = journeys[name];
     if (!isObject(journey)) continue;

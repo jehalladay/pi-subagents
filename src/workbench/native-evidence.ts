@@ -2,6 +2,7 @@
 import type { JsonValue } from "./capability-registry.js";
 import type { NativeRef } from "./observation.js";
 import { REACTIVE_FIBER_CLI_SCHEMA } from "./providers/reactivefiber.js";
+import { sanitizeWorkbenchText } from "./redaction.js";
 
 export interface NativeEvidence {
   provider?: "forge" | "hyperunix" | "furnace" | "reactivefiber";
@@ -10,6 +11,11 @@ export interface NativeEvidence {
   evidenceRefs?: string[];
   /** Native immutable source/graph basis, never the workspace directory. */
   sourceBasis?: string;
+  /**
+   * The release the producer states about itself in this result (RF: result.provenance.cli_version), exactly as stated, and
+   * only when it is stated: never defaulted, never a basis or version cohort (owner ruling G-A, wb-x32).
+   */
+  producerRelease?: string;
 }
 
 function record(value: JsonValue | undefined): Record<string, JsonValue> | undefined {
@@ -17,6 +23,18 @@ function record(value: JsonValue | undefined): Record<string, JsonValue> | undef
 }
 function text(value: JsonValue | undefined): string | undefined {
   return typeof value === "string" && value.length > 0 ? value : undefined;
+}
+
+/** The observers' bounded-identity size, in UTF-8 bytes. */
+const MAX_RELEASE_BYTES = 256;
+/**
+ * A producer's self-reported release, or nothing (wb-2j3.1/wb-2j3.2). It is carried only as stated: a non-empty string of at
+ * most 256 UTF-8 bytes that the shared label layout displays unchanged. Anything else (an unsafe unit, text the layout would
+ * redact or collapse, an oversized or non-string value) is dropped, never rewritten, and an absent release is never defaulted.
+ */
+export function reportedRelease(value: JsonValue | undefined): string | undefined {
+  return typeof value === "string" && value.length > 0 && Buffer.byteLength(value) <= MAX_RELEASE_BYTES &&
+    sanitizeWorkbenchText(value, MAX_RELEASE_BYTES, "label") === value ? value : undefined;
 }
 
 /** The native object type each provider's validated id names; the vocabulary the observers use for the same objects. */
@@ -40,6 +58,7 @@ export function nativeEvidence(capabilityId: string, value: JsonValue): NativeEv
   let id: string | undefined;
   let status: string | undefined;
   let basis: string | undefined;
+  let release: string | undefined;
   switch (capabilityId) {
     case "forge.gate.status": {
       metadata.provider = "forge";
@@ -78,6 +97,7 @@ export function nativeEvidence(capabilityId: string, value: JsonValue): NativeEv
       metadata.provider = "reactivefiber";
       id = text(source.operation_id);
       basis = text(record(record(source.result)?.provenance)?.graph_revision_id);
+      release = reportedRelease(record(record(source.result)?.provenance)?.cli_version);
       // `ok` describes CLI transport success; it is not a graph verification verdict.
       break;
     }
@@ -86,5 +106,6 @@ export function nativeEvidence(capabilityId: string, value: JsonValue): NativeEv
   if (id !== undefined) metadata.nativeId = id;
   if (status !== undefined) metadata.domainStatus = status;
   if (basis !== undefined && (/^sha256:[0-9a-f]{64}$/.test(basis) || /^[0-9a-f]{40,64}$/.test(basis) || /^dirty-tree\/v1:[0-9a-f]{40,64}:sha256:[0-9a-f]{64}$/.test(basis))) metadata.sourceBasis = basis;
+  if (release !== undefined) metadata.producerRelease = release;
   return metadata;
 }

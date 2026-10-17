@@ -45,6 +45,25 @@ export interface ClaudeWorkflowHostOptions {
   getSession?: typeof getSessionInfo;
   /** Re-observe the host-owned invocation basis before every agent or SDK operation. */
   beforeDispatch?: () => void | Promise<void>;
+  /**
+   * Live-query retention seam (wb-cra): fired once per SDK query whose stream exposes a native interrupt(),
+   * BEFORE the first message is read, with the call identity and a seam that proxies that one method. The host
+   * keeps no registry itself; workflow_control wiring owns the map and the session binding (from onMessage init).
+   */
+  onQueryLive?: (call: ClaudeCallIdentity, seam: { interrupt(): Promise<unknown> }) => void;
+  /** Fired in the query's own finally, pairing every onQueryLive so a wiring registry never leaks an ended query. */
+  onQueryDone?: (call: ClaudeCallIdentity) => void;
+}
+
+/**
+ * The retained SDK Query's control channel, read structurally (wb-cra): the vendored Query extends the message
+ * AsyncIterable with interrupt() (sdk.d.ts), while the fixture seam's plain generators have no such method. Only a
+ * function-valued own interrupt yields a seam; everything else means no control channel, never a throw.
+ */
+function interruptSeamOf(stream: AsyncIterable<SDKMessage>): { interrupt(): Promise<unknown> } | undefined {
+  const candidate: unknown = (stream as AsyncIterable<SDKMessage> & { interrupt?: unknown }).interrupt;
+  if (typeof candidate !== "function") return undefined;
+  return { interrupt: () => Promise.resolve((candidate as () => unknown).call(stream)) };
 }
 
 export interface ClaudeCallIdentity {
@@ -220,8 +239,15 @@ export function createClaudeWorkflowHost(config: ClaudeWorkflowHostOptions): Wor
     let toolCalls = 0;
     let authFailed = false;
     let terminal: SDKMessage & { type: "result" } | undefined;
+    let retained = false;
     try {
-      for await (const message of query({ prompt, options })) {
+      const live = query({ prompt, options });
+      const liveSeam = interruptSeamOf(live);
+      if (liveSeam !== undefined) {
+        retained = true;
+        config.onQueryLive?.(request ?? previous!.call, liveSeam);
+      }
+      for await (const message of live) {
         config.onMessage?.(message, request ?? previous!.call);
         if (message.type === "system" && message.subtype === "init") {
           sessionId = message.session_id;
@@ -288,6 +314,7 @@ export function createClaudeWorkflowHost(config: ClaudeWorkflowHostOptions): Wor
     } finally {
       config.signal?.removeEventListener("abort", onAbort);
       controllers.delete(agentId);
+      if (retained) config.onQueryDone?.(request ?? previous!.call);
     }
   }
 
