@@ -349,15 +349,20 @@ export class FurnaceHostedExecutor {
         (error: unknown): Settlement => ({ kind: "error", error }),
       );
     let timer: ReturnType<typeof setTimeout> | undefined;
+    let armGrace = (): void => {};
     const grace = new Promise<"grace">((resolve) => {
-      const arm = (): void => {
+      armGrace = (): void => {
         timer = setTimeout(() => resolve("grace"), this.options.cancelGraceMs ?? DEFAULT_CANCEL_GRACE_MS);
       };
-      if (signal.aborted) arm();
-      else signal.addEventListener("abort", arm, { once: true });
+      if (signal.aborted) armGrace();
+      else signal.addEventListener("abort", armGrace, { once: true });
     });
     const first = await Promise.race([run, grace]);
     if (timer) clearTimeout(timer);
+    // wb-21k: the Attempt has settled (or the grace elapsed after an abort already fired), so a later
+    // close() abort must not stamp a cancel onto it; drop both listeners here.
+    signal.removeEventListener("abort", noteCancel);
+    signal.removeEventListener("abort", armGrace);
     if (first === "grace") {
       receipt.unsettledAfterCancel = true;
       receipt.terminal = "indeterminate";
