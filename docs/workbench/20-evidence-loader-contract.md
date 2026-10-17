@@ -23,6 +23,8 @@ New module `src/workbench/evidence-loader.ts` exporting `EVIDENCE_CONTRACT = "wo
 | forge operation | `forge-operation:<operation_id>` | re-read through the registered read capability; a failed or partial domain verdict is a legitimate loaded result rendered as its own status, never "verified" | `forge:inspect` |
 | anything else | — | `unavailable: no-loader`, a visible unknown | — |
 
+The claude row's module (`workbench.claude-evidence/v1`, `src/workbench/claude-evidence.ts`, whose EvidenceStore wiring is the wb-idq slice) emits `kind` `claude-message`, the ref prefix spelling, and keeps `truncated` honest end to end: a row the transcript adapter cut at `CLAUDE_TRANSCRIPT_ROW_CHARS` arrives flagged `clipped` and loads truncated with the marker line even when its text fits every budget, so a bounded row never reads as whole.
+
 ## Refusal and freshness rules
 
 Unknown producer or ref kind: no-loader, ref stays listed sanitized. Scope mismatch or missing/revoked exact grant: unauthorized. Stale or disconnected owning nodes label loaded evidence stale; a failed read against a disconnected source is transport plus stale. A loaded entry never upgrades projection freshness and never changes node status text or tone. Transport success never implies verification.

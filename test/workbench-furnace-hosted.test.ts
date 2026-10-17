@@ -4,7 +4,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { createInterface } from "node:readline";
 import type { FurnaceOptions, RunStartRequest } from "@furnace/sdk";
-import { afterEach, beforeAll, beforeEach, describe, expect, it } from "vitest";
+import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it } from "vitest";
 import { CapabilityError } from "../src/workbench/capability-registry.js";
 import {
   FURNACE_HOSTED_CONTRACT,
@@ -16,6 +16,9 @@ import {
   type HostedWorkflow,
 } from "../src/workbench/hosts/furnace-hosted.js";
 import { loadRepairedFurnaceSdk } from "./helpers/furnace-sdk-repaired.js";
+import { installScratchLeakGuard } from "./helpers/scratch.js";
+
+installScratchLeakGuard();
 
 type Line = Record<string, unknown>;
 const sleep = (ms: number): Promise<void> => new Promise((resolve) => setTimeout(resolve, ms));
@@ -136,6 +139,9 @@ let scratch: string;
 const previousTmp = process.env.TMPDIR;
 beforeAll(async () => {
   repaired = await loadRepairedFurnaceSdk();
+});
+afterAll(() => {
+  repaired?.dispose();
 });
 beforeEach(() => {
   scratch = mkdtempSync(join(tmpdir(), "pi-furnace-hosted-test-"));
