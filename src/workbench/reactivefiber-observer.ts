@@ -238,7 +238,7 @@ function previewSnapshot(envelope: JsonRecord, diagnostics: readonly JsonRecord[
   const budget = overBudget ? `over budget by ${-available} (context window ${window} tokens)` : `${available} of ${window} context tokens available`;
   const statusText = `${SEAM_LABEL[host.seam]} · ${budget} · necessity evals ${work.necessity_eval_count} · ${counts.errors} errors, ${counts.warnings} warnings`;
   const clean = live && !flagged && !overBudget;
-  const notes = ['ephemeral noncommitted preview: render_id null, transaction_id null, 0 storage writes', 'context text withheld: referenced by sha256 digest'];
+  const notes = ['ephemeral noncommitted preview: render_id null, transaction_id null, 0 authoritative storage writes (envelope storage_write_count)', 'context text withheld: referenced by sha256 digest'];
   if (!live) notes.push('fixture seam: not a real generated context');
   if (flagged) notes.push('render reported errors: partial, not a clean render');
   if (overBudget) notes.push('context exceeds the available budget: partial');
