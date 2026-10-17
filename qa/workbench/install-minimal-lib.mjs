@@ -86,3 +86,19 @@ export function probeInstalledWrite({ root, uid, write, remove }) {
   if (isPrivilegedUid(uid)) return { readOnlyEnforced: false, readOnlyReason: 'privileged-uid' };
   throw new Error('write into the installed tree unexpectedly succeeded');
 }
+
+/**
+ * Runner-side cross-check on the parsed probe receipt (wb-nh3 F2/O1). The probe's own claim about
+ * read-only enforcement is only accepted when it is `readOnlyEnforced === true`, or when the RUNNER's
+ * own uid is privileged and the probe recorded `readOnlyReason: 'privileged-uid'`. A receipt that
+ * dropped `readOnlyEnforced`, dropped or replaced the reason, or claims privileged-uid for an
+ * unprivileged runner (probe uid pinned to 0) is refused. The refusal names booleans and types only,
+ * never a raw receipt value.
+ */
+export function assertReadOnlyReceipt(receipt, ownUid) {
+  if (receipt.readOnlyEnforced === true) return;
+  if (isPrivilegedUid(ownUid) && receipt.readOnlyReason === 'privileged-uid') return;
+  throw new Error(
+    `install-minimal probe receipt does not prove read-only enforcement (readOnlyEnforced is ${typeof receipt.readOnlyEnforced}, readOnlyReason is ${typeof receipt.readOnlyReason}, runner privileged: ${isPrivilegedUid(ownUid)})`,
+  );
+}

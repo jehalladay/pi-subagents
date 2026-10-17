@@ -109,7 +109,31 @@ try {
 if (!host) process.exit(emit({}));
 
 const hostUrl = new URL('../../dist/workbench/hosts/local-detached.js', import.meta.url).href;
-const directory = mkdtempSync(join(tmpdir(), 'wb-shared-'));
+// wb-70b R1 (owner ruling on the wb-0kg.7 gate, 2026-10-15T22:40Z, the shortScratchBase() rule): the fixture root never
+// inherits the caller's TMPDIR depth. XDG_RUNTIME_DIR first, /tmp only as the recorded fallback (with its reason), never
+// the inherited TMPDIR; TMPDIR then names the root, so the host's own tmpdir socket fallback stays short as well. The
+// host's typed fail-closed socket-path refusal is unchanged.
+const SCRATCH_BASE_MAX_BYTES = 103 - Buffer.byteLength(`/wb-shared-XXXXXX/pw-${process.getuid?.() ?? 0}-XXXXXX/${'0'.repeat(16)}.sock`);
+function shortScratchRoot(prefix) {
+  const runtime = process.env.XDG_RUNTIME_DIR;
+  let reason = 'XDG_RUNTIME_DIR is unset';
+  if (runtime && !runtime.startsWith('/')) reason = 'XDG_RUNTIME_DIR is not an absolute path';
+  else if (runtime && Buffer.byteLength(runtime) > SCRATCH_BASE_MAX_BYTES) reason = `XDG_RUNTIME_DIR is longer than ${SCRATCH_BASE_MAX_BYTES} bytes`;
+  else if (runtime) {
+    try {
+      return {directory: mkdtempSync(join(runtime, prefix)), source: 'xdg-runtime-dir'};
+    } catch (error) {
+      reason = `XDG_RUNTIME_DIR is not usable (${error?.code ?? message(error)})`;
+    }
+  }
+  return {directory: mkdtempSync(join('/tmp', prefix)), source: 'tmp-fallback', reason};
+}
+const scratch = shortScratchRoot('wb-shared-');
+const directory = scratch.directory;
+process.env.TMPDIR = directory;
+// The launcher's own tmpdir() now names the root, so the host's tmpdir socket fallback resolves under it.
+if (tmpdir() !== directory) diagnostics.push(`scratch base: TMPDIR does not name the fixture root (${tmpdir()})`);
+if (scratch.source === 'tmp-fallback') diagnostics.push(`scratch base: /tmp is the recorded fallback (${scratch.reason})`);
 const workspace = join(directory, 'source');
 const markers = join(workspace, 'markers');
 const hosts = join(directory, 'hosts');

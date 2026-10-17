@@ -6,6 +6,7 @@ import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {revisionOf} from './git-stamp.mjs';
 import {resolveNodeBinary,scrubbedEnvironment,treeCensus} from './install-minimal-lib.mjs';
+import {assertReadOnlyReceipt} from './install-minimal-lib.mjs';
 const root=process.cwd();
 const scratch=mkdtempSync(join(tmpdir(),'pi-workbench-install-minimal-'));
 const consumer=join(scratch,'consumer');
@@ -43,6 +44,8 @@ try{
   assert.equal(probe.status,0,probe.stderr||probe.stdout);
   assert.equal(censusBefore,censusAfter,'installed tree changed during the probe');
   const probeReceipt=JSON.parse(probe.stdout.trim().split('\n').pop());
+  const ownUid=typeof process.getuid==='function'?process.getuid():undefined;
+  assertReadOnlyReceipt(probeReceipt,ownUid);
   assert.equal(probeReceipt.workflowValue,42);
   // wb-vko (owner O1, cax.2 F7): the canonical stamp - HEAD, HEAD-dirty, or working-tree when root is not its repository toplevel or its status cannot be read.
   const revision=process.env.WB_REVISION??revisionOf(root);
