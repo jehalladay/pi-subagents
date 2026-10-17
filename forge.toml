@@ -156,3 +156,7 @@ timeout = 60
 [build.commands.timeline-grouped-bench]
 command = "node qa/workbench/timeline-grouped-bench.mjs"
 timeout = 300
+
+[build.commands.rf-preview-tsx]
+command = "./node_modules/.bin/vitest run --config vitest.rf-tsx.config.ts"
+timeout = 180
