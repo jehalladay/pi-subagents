@@ -4456,6 +4456,9 @@ Write the file using the write tool. Only write the file, nothing else.`;
         scope: () => { const c = currentCtx as unknown as ExtensionCommandContext | undefined; return c ? observerScope(c) : undefined; },
         projection,
         cwd: () => (currentCtx as unknown as ExtensionCommandContext | undefined)?.cwd,
+        // The one place the host clock enters the evidence path (wb-idq): every
+        // capturedAt below is stamped from this injection, never from a fallback.
+        now: () => new Date(),
         // The forge evidence re-read goes through the same registry the workflow
         // tools use, so one authorization ladder governs both (wb-6ze.17).
         registry: workspace => registryFor(workspace),
@@ -4474,7 +4477,8 @@ Write the file using the write tool. Only write the file, nothing else.`;
       const rows = await (await loadWorkbenchNative()).readClaudeTranscript(sessionId, ctx.cwd);
       const text = rows.length === 0
         ? `No Claude transcript available for session ${sessionId}.`
-        : rows.map(row => `${row.type}: ${row.text}`).join("\n\n");
+        // A row the adapter cut at its bound says so on its own line, so a bounded row never reads as whole (wb-idq).
+        : rows.map(row => `${row.type}: ${row.text}${row.clipped ? "\n… truncated (row bound)" : ""}`).join("\n\n");
       await ctx.ui.editor(`Claude session ${sessionId}`, text);
     },
     // Read lazily: `currentCtx` is rebound on every session_start, and the
