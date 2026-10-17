@@ -44,7 +44,9 @@ const rfDiagnostic = (over: Json = {}): Json => ({code: 'RF_RENDER_FAILED', seve
   source: null, metadata: {secret: 'SECRET-METADATA'}, ...over});
 /** wb-693.3: result fields that put this file's obviously fake SECRET- placeholders in every engine-era field beside the two
  * bounded identity strings an engine entry states (an unexpected entry field, nested entry metadata, an engine metric and a
- * sibling SDK entry); only those two identity strings may ever surface. */
+ * sibling SDK entry); only those two identity strings may ever surface. wb-693.4 closes engine_metrics to its two producer
+ * counters, so the engine-metric placeholder moved out of this fixture into the extra-key refusal row (which asserts the
+ * refusal text echoes no placeholder) and the fixture's own counts surface only as the bounded rf-engine-spawns:<n> reference. */
 const LEAKY_ENGINE_FIELDS: Json = {
   provenance: {graph_revision_id: GRAPH, sdk_versions: {
     fiber_optics: {distribution_version: 'SECRET-SIBLING-VERSION', contract_fingerprint: 'unknown', note: 'SECRET-SIBLING-NOTE'},
@@ -52,7 +54,7 @@ const LEAKY_ENGINE_FIELDS: Json = {
       metadata: {detail: 'SECRET-ENGINE-METADATA'}},
     tsx_sdk: {distribution_version: '0.1.341', contract_fingerprint: 'unknown', hint: 'SECRET-ENGINE-HINT'},
   }},
-  engine_metrics: {tsx_worker_spawns: 1, tsx_resource_rounds: 0, detail: 'SECRET-ENGINE-METRICS'},
+  engine_metrics: {tsx_worker_spawns: 1, tsx_resource_rounds: 0},
 };
 /** The validated rf CLI envelope the provider returns as `source`, in the measured reactive-fiber.cli/v1 shape. */
 function envelope(over: Json = {}): Json {
@@ -655,7 +657,8 @@ describe('engine identity from result.provenance.sdk_versions (wb-693.1 R1, wb-6
 
   it('R10 end to end: the provider reading of a TSX-era envelope projects both rf-engine references and the foreign-runtime note', async () => {
     const topology = project(await provided(tsxEra()));
-    expect(topology.snapshots[0].evidenceRefs).toStrictEqual([...PLAIN_REFS, 'rf-cli:0.1.716', RUNTIME_REF, SDK_REF]);
+    // wb-693.4: the envelope's engine_metrics.tsx_worker_spawns 1 adds the bounded spawn reference after the identities.
+    expect(topology.snapshots[0].evidenceRefs).toStrictEqual([...PLAIN_REFS, 'rf-cli:0.1.716', RUNTIME_REF, SDK_REF, 'rf-engine-spawns:1']);
     expect(topology.diagnostics).toContain(ENGINE_NOTE);
     expect(topology.snapshots[0].coverage).toBe('complete');
   }, 30_000);
@@ -712,12 +715,13 @@ describe('engine identity from result.provenance.sdk_versions (wb-693.1 R1, wb-6
   it('R12: the dogfood-shaped rf 0.1.709 preview (list sdk_versions, tsx_worker_spawns 1, seven-key formula_terms) projects normally', () => {
     const topology = project(reading(dogfood709()));
     const [snapshot] = topology.snapshots;
-    expect(snapshot.evidenceRefs).toStrictEqual([...PLAIN_REFS, 'rf-cli:0.1.709']);
+    // wb-693.4: tsx_worker_spawns 1 adds the bounded spawn reference (and the spawn note); no engine identity is recorded.
+    expect(snapshot.evidenceRefs).toStrictEqual([...PLAIN_REFS, 'rf-cli:0.1.709', 'rf-engine-spawns:1']);
     expect(snapshot.coverage).toBe('complete');
     expect(snapshot.node.statusTone).toBe('success');
     expect(snapshot.node.statusText).toBe('noncommitted preview (rf-cli) · 989760 of 1000000 context tokens available · necessity evals 4 · 0 errors, 0 warnings');
     expect(topology.diagnostics).toContain(releaseNote('0.1.709'));
-    expect(topology.diagnostics.some(note => ENGINE_NOTE_PATTERN.test(note))).toBe(false);
+    expect(topology.diagnostics).not.toContain(ENGINE_NOTE);
   });
 
   it('R12 end to end: the dogfood-shaped 0.1.709 preview passes the provider unchanged and projects with no engine identity', async () => {
@@ -725,7 +729,7 @@ describe('engine identity from result.provenance.sdk_versions (wb-693.1 R1, wb-6
     const preview = await provided(source);
     expect(preview).toStrictEqual({contract: 'reactivefiber.render.preview/v1', workspaceRoot: WS, source});
     const topology = project(preview);
-    expect(topology.snapshots[0].evidenceRefs).toStrictEqual([...PLAIN_REFS, 'rf-cli:0.1.709']);
+    expect(topology.snapshots[0].evidenceRefs).toStrictEqual([...PLAIN_REFS, 'rf-cli:0.1.709', 'rf-engine-spawns:1']);
     expect(engineRefsOf(topology)).toStrictEqual([]);
   }, 30_000);
 
@@ -820,5 +824,94 @@ describe('engine identity from result.provenance.sdk_versions (wb-693.1 R1, wb-6
     for (const note of today(over, {cli_version: '0.1.716'}, ctx).diagnostics) expect(topology.diagnostics).toContain(note);
     expect(topology.diagnostics.at(-1)).toBe(INTERVAL_NOTE);
     expect(topology.snapshots[0].coverage).toBe('partial');
+  });
+});
+
+/** wb-693.4 (RF-TSX-AND-EMBEDDING-R6): "When result.engine_metrics is present, previewSnapshot shall require exactly the
+ * producer-closed keys {tsx_worker_spawns, tsx_resource_rounds} as non-negative integers (mirroring work handling) and, when
+ * tsx_worker_spawns > 0, add one bounded ref rf-engine-spawns:<n> and a foreign-runtime note; zero spawns or an absent object
+ * leaves the projection unchanged." Acceptance 1: R15 spawns 1 -> the ref plus the note; spawns 0 -> neither; absent -> unchanged.
+ * Acceptance 2 (closedness mutant): "a missing or extra key -> validation refusal mirroring work". */
+describe('engine_metrics spawn surfacing (wb-693.4 R6, R15)', () => {
+  const PLAIN = [`rf-graph:${GRAPH}`, `rf-workspace:${WORKSPACE_ID}`];
+  const SPAWN_NOTE = 'TSX worker spawned (result.engine_metrics.tsx_worker_spawns): a foreign runtime executed component source';
+  const INTERVAL = 'no native interval supplied';
+  const metrics = (spawns: JsonValue, rounds: JsonValue = 0, extra: Json = {}): Json => ({tsx_worker_spawns: spawns, tsx_resource_rounds: rounds, ...extra});
+  const rendered = (engineMetrics: JsonValue | undefined, provenance: Json = {}): ReactiveFiberProjectionTopology =>
+    reactivefiberTopology(withResult({provenance: {graph_revision_id: GRAPH, ...provenance}, ...(engineMetrics === undefined ? {} : {engine_metrics: engineMetrics})}) as JsonValue, context);
+  const baseline = (provenance: Json = {}): ReactiveFiberProjectionTopology => rendered(undefined, provenance);
+
+  it('R15: tsx_worker_spawns 1 adds exactly one rf-engine-spawns:1 reference and one foreign-runtime note, nothing else moves', () => {
+    const topology = rendered(metrics(1, 1));
+    const plain = baseline();
+    expect(topology.snapshots[0].evidenceRefs).toStrictEqual([...PLAIN, 'rf-engine-spawns:1']);
+    expect(topology.diagnostics).toStrictEqual([...plain.diagnostics.slice(0, -1), SPAWN_NOTE, INTERVAL]);
+    expect(SPAWN_NOTE).toMatch(/foreign runtime/);
+    expect({...topology.snapshots[0], evidenceRefs: PLAIN}).toStrictEqual(plain.snapshots[0]);
+  });
+
+  it('R15: the count is carried verbatim, including the largest safe integer, and the reference stays applicable to the projection', () => {
+    for (const spawns of [2, 17, Number.MAX_SAFE_INTEGER]) {
+      const topology = rendered(metrics(spawns));
+      expect(topology.snapshots[0].evidenceRefs).toStrictEqual([...PLAIN, `rf-engine-spawns:${spawns}`]);
+      expect(topology.snapshots[0].evidenceRefs?.at(-1)).toMatch(/^rf-engine-spawns:[1-9][0-9]{0,15}$/);
+      const projection = new ObservationProjection();
+      expect(projection.refresh(topology.snapshots[0])).toBe('applied');
+      expect(projection.query({scope, limit: 10, evidence: `rf-engine-spawns:${spawns}`}).nodes.map(item => item.nativeRef.id)).toStrictEqual([OPERATION]);
+    }
+  });
+
+  it('R15: zero spawns (any rounds) and an absent object leave the projection byte-identical to today', () => {
+    for (const engineMetrics of [metrics(0, 0), metrics(0, 3)]) {
+      expect(JSON.stringify(rendered(engineMetrics))).toBe(JSON.stringify(baseline()));
+    }
+    const topology = baseline();
+    expect(topology.snapshots[0].evidenceRefs).toStrictEqual(PLAIN);
+    expect(topology.diagnostics.some(note => /foreign runtime/.test(note))).toBe(false);
+  });
+
+  it('R15: beside an engine identity the spawn reference follows the identity references and the foreign-runtime note is stated once', () => {
+    const runtime: Json = {distribution_version: '2.9.7', contract_fingerprint: 'unknown'};
+    const topology = rendered(metrics(1, 1), {cli_version: '0.1.716', sdk_versions: {tsx_runtime: runtime}});
+    expect(topology.snapshots[0].evidenceRefs).toStrictEqual([...PLAIN, 'rf-cli:0.1.716', 'rf-engine:tsx_runtime:2.9.7:unknown', 'rf-engine-spawns:1']);
+    expect(topology.diagnostics.filter(note => /foreign runtime/.test(note))).toHaveLength(1);
+  });
+
+  it('R15: a list-shaped sdk_versions (rf <= 0.1.709) with spawns 1 still projects, carrying the spawn reference and note', () => {
+    const topology = rendered(metrics(1, 0), {cli_version: '0.1.709', sdk_versions: [{name: 'fiber_optics_wire_format', version: '2'}]});
+    expect(topology.snapshots[0].evidenceRefs).toStrictEqual([...PLAIN, 'rf-cli:0.1.709', 'rf-engine-spawns:1']);
+    expect(topology.diagnostics).toContain(SPAWN_NOTE);
+  });
+
+  it('R15: with every partial note, a release, an engine identity and spawns the diagnostics stay inside the shared bound and the interval note is last', () => {
+    const over: Json = {diagnostics_summary: {errors: 2, warnings: 0, has_errors: true, has_warnings: false}, budget: {formula_terms: formula({available_context_tokens: -40})}};
+    const runtime: Json = {distribution_version: '2.9.7', contract_fingerprint: 'unknown'};
+    const topology = reactivefiberTopology(withResult({provenance: {graph_revision_id: GRAPH, cli_version: '0.1.716', sdk_versions: {tsx_runtime: runtime}}, engine_metrics: metrics(1), ...over}) as JsonValue,
+      {...context, seam: 'injected-fixture'});
+    expect(topology.diagnostics.length).toBeLessThanOrEqual(8);
+    expect(topology.diagnostics.at(-1)).toBe(INTERVAL);
+    expect(topology.diagnostics.some(note => /foreign runtime/.test(note))).toBe(true);
+  });
+
+  // Closedness (acceptance 2): exactly the two producer keys, each a non-negative safe integer; absence alone is tolerated.
+  const MALFORMED: [string, JsonValue][] = [
+    ['a missing tsx_resource_rounds', {tsx_worker_spawns: 1}],
+    ['a missing tsx_worker_spawns', {tsx_resource_rounds: 0}],
+    ['an empty object', {}],
+    ['an extra key', metrics(1, 0, {detail: 'SECRET-ENGINE-METRICS'})],
+    ['a negative spawn count', metrics(-1)],
+    ['a fractional spawn count', metrics(1.5)],
+    ['a string spawn count', metrics('1')],
+    ['a null round count', metrics(1, null)],
+    ['an unsafe integer round count', metrics(1, 2 ** 53)],
+    ['a null object', null],
+    ['a list', [1, 0]],
+    ['a string', 'tsx_worker_spawns'],
+  ];
+  it.each(MALFORMED)('R15: engine_metrics with %s is refused as a validation error that echoes no producer text', (_name, engineMetrics) => {
+    const error = refusal(withResult({engine_metrics: engineMetrics}));
+    expect(error.category).toBe('validation');
+    expect(error.message).toMatch(/result\.engine_metrics/);
+    expect(error.message).not.toContain('SECRET-');
   });
 });

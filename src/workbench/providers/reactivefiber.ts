@@ -63,6 +63,12 @@ function isPreviewEnvelope(source: unknown, exit: number|null, workspaceRoot: st
       typeof result.diagnostics_summary.has_warnings!=="boolean" ||
       !record(work) || Object.keys(work).length!==6 || work.storage_write_count!==0 ||
       !["source_capture_count","fiber_signal_count","component_render_count","lens_resolution_count","necessity_eval_count","storage_write_count"].every(key=>nonnegativeInteger(work[key]))) return false;
+  // wb-693.4: engine_metrics rides committed and ephemeral forms alike and is closed to the two TSX counters; a pre-TSX rf states none.
+  if (Object.hasOwn(result,"engine_metrics")) {
+    const metrics=result.engine_metrics;
+    if (!record(metrics) || Object.keys(metrics).length!==2 ||
+        !["tsx_worker_spawns","tsx_resource_rounds"].every(key=>Object.hasOwn(metrics,key) && nonnegativeInteger(metrics[key]))) return false;
+  }
   return true;
 }
 const INPUT={type:"object",properties:{model:{type:"string",minLength:1},task:{type:"string",minLength:1}},required:["model","task"],additionalProperties:false};
