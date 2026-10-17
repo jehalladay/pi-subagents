@@ -16,7 +16,7 @@
  * a passing test. Each run therefore pins `live: false` rather than trusting the
  * env var to leave it alone — the pre-publish smoke sets it globally.
  */
-import { mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { type Context, fauxToolCall, getCurrentTools } from "@earendil-works/pi-ai";
@@ -30,6 +30,9 @@ import {
   type PrintModeRun,
   runPrintMode,
 } from "./helpers/print-mode-runner.js";
+import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
+
+installScratchLeakGuard();
 
 vi.setConfig({ testTimeout: 30_000 });
 
@@ -88,11 +91,11 @@ describe("nested delegation e2e (real pi-mono, faux model)", () => {
   afterEach(async () => {
     await run?.dispose();
     run = undefined;
-    for (const d of tmpDirs.splice(0)) rmSync(d, { recursive: true, force: true });
+    for (const d of tmpDirs.splice(0)) removeScratch(d);
   });
 
   it("a child with allowed_subagents spawns its own child, and the output travels back up", async () => {
-    const cwd = mkdtempSync(join(tmpdir(), "nested-e2e-"));
+    const cwd = makeScratch("nested-e2e-");
     tmpDirs.push(cwd);
     writeAgents(cwd);
 
@@ -179,7 +182,7 @@ describe("nested delegation e2e (real pi-mono, faux model)", () => {
   });
 
   it("backgrounds a nested child, polls it by id, and streams its transcript", async () => {
-    const cwd = mkdtempSync(join(tmpdir(), "nested-e2e-bg-"));
+    const cwd = makeScratch("nested-e2e-bg-");
     tmpDirs.push(cwd);
     writeAgents(cwd);
     const transcriptRoot = join(tmpdir(), `pi-subagents-${process.getuid?.() ?? 0}`, encodeCwd(cwd));

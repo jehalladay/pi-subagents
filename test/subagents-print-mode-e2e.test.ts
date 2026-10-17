@@ -12,8 +12,7 @@
  * (no network). The same runner also drives a real LLM when PI_E2E_LIVE=1 — the
  * `live` describe below is a smoke test for that opt-in path.
  */
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
-import { tmpdir } from "node:os";
+import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { type Context, getCurrentSystemPrompt, getCurrentTools } from "@earendil-works/pi-ai";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -27,6 +26,7 @@ import {
   routeBySession,
   runPrintMode,
 } from "./helpers/print-mode-runner.js";
+import { makeScratch, removeScratch } from "./helpers/scratch.js";
 
 // Real pi-mono (loader + dynamic extension import + two live sessions) — a cold
 // run under full-suite CPU contention can exceed vitest's 5s default.
@@ -41,7 +41,7 @@ describe.skipIf(LIVE)("subagents print-mode e2e (scripted faux, real pi-mono)", 
   afterEach(async () => {
     await run?.dispose();
     run = undefined;
-    for (const d of tmpDirs.splice(0)) rmSync(d, { recursive: true, force: true });
+    for (const d of tmpDirs.splice(0)) removeScratch(d);
   });
 
   // The one assumption the model/thinking display rests on, checked against a
@@ -167,7 +167,7 @@ describe.skipIf(LIVE)("subagents print-mode e2e (scripted faux, real pi-mono)", 
     // process.cwd(), parses its frontmatter, and runAgent's buildAgentPrompt
     // feeds the body into the real child session.
     const MARKER = "SPYMARKER_FRONTMATTER_REACHED_CHILD";
-    const cwd = mkdtempSync(join(tmpdir(), "subagents-fm-"));
+    const cwd = makeScratch("subagents-fm-");
     tmpDirs.push(cwd);
     mkdirSync(join(cwd, ".pi", "agents"), { recursive: true });
     writeFileSync(
@@ -202,7 +202,7 @@ describe.skipIf(LIVE)("subagents print-mode e2e (scripted faux, real pi-mono)", 
 
   it("spawns a FRONTMATTER-defined (.agents/agents/*.md) agent and its prompt reaches the child", async () => {
     const MARKER = "SPYMARKER_AGENTS_FRONTMATTER_REACHED_CHILD";
-    const cwd = mkdtempSync(join(tmpdir(), "subagents-agents-fm-"));
+    const cwd = makeScratch("subagents-agents-fm-");
     tmpDirs.push(cwd);
     mkdirSync(join(cwd, ".agents", "agents"), { recursive: true });
     writeFileSync(
@@ -237,7 +237,7 @@ describe.skipIf(LIVE)("subagents print-mode e2e (scripted faux, real pi-mono)", 
     // Badges are a TUI concern: print mode renders no tool components, and the text the
     // model and `pi -p` see is built from plain display names. An escape sequence here
     // would mean color leaking into transcripts, headless output and the parent prompt.
-    const cwd = mkdtempSync(join(tmpdir(), "subagents-color-"));
+    const cwd = makeScratch("subagents-color-");
     tmpDirs.push(cwd);
     mkdirSync(join(cwd, ".pi", "agents"), { recursive: true });
     writeFileSync(
