@@ -123,6 +123,29 @@ describe('RF external CLI preview producer', () => {
     producer({ ...validRf(), ok: false, workspace: null, result: null, diagnostics: [{ code: 'RF_WORKSPACE_INVALID', severity: 'error', message: 'No initialized workspace', hint: null, source: 'host', metadata: {} }] });
     await expect(nativeReactiveFiberPreview('model', 'task', process.cwd())).rejects.toMatchObject({ category: 'unavailable', message: expect.stringContaining('RF_WORKSPACE_INVALID') });
   });
+  // wb-693.4 (RF-TSX-AND-EMBEDDING-R6) acceptance 3: "One provider-audit row proves malformed engine_metrics refused as transport
+  // while an absent one passes"; the producer's schema is closed to {tsx_worker_spawns, tsx_resource_rounds}.
+  it('admits an envelope that states no engine_metrics, and one stating exactly the two producer-closed counters', async () => {
+    for (const engineMetrics of [undefined, { tsx_worker_spawns: 0, tsx_resource_rounds: 0 }, { tsx_worker_spawns: 2, tsx_resource_rounds: 1 }]) {
+      const fixture = { ...validRf(), result: { ...validRf().result, ...(engineMetrics === undefined ? {} : { engine_metrics: engineMetrics }) } };
+      producer(fixture);
+      const result = await nativeReactiveFiberPreview('model', 'task', process.cwd());
+      expect(result).toEqual({ contract: 'reactivefiber.render.preview/v1', workspaceRoot: process.cwd(), source: fixture });
+    }
+  });
+  it.each([
+    ['null engine_metrics', null],
+    ['list engine_metrics', [1, 0]],
+    ['empty engine_metrics', {}],
+    ['one-key engine_metrics', { tsx_worker_spawns: 1 }],
+    ['extra-key engine_metrics', { tsx_worker_spawns: 1, tsx_resource_rounds: 0, detail: 'x' }],
+    ['negative spawn count', { tsx_worker_spawns: -1, tsx_resource_rounds: 0 }],
+    ['fractional round count', { tsx_worker_spawns: 1, tsx_resource_rounds: 0.5 }],
+    ['string spawn count', { tsx_worker_spawns: '1', tsx_resource_rounds: 0 }],
+  ])('refuses %s as a transport error instead of presenting it as a preview', async (_label, engineMetrics) => {
+    producer({ ...validRf(), result: { ...validRf().result, engine_metrics: engineMetrics } });
+    await expect(nativeReactiveFiberPreview('model', 'task', process.cwd())).rejects.toMatchObject({ category: 'transport' });
+  });
   it.each([
     ['absent operation id', () => { const e = validRf(); return { ...e, operation_id: undefined }; }],
     ['empty operation id', () => ({ ...validRf(), operation_id: '' })],

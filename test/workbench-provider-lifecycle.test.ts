@@ -9,6 +9,13 @@ import { nativeFurnaceRunInspect, registerFurnaceRunInspect } from "../src/workb
 import { nativeHyperUnixFind, registerNativeHyperUnixFind } from "../src/workbench/providers/hyperunix.js";
 import { nativeReactiveFiberPreview } from "../src/workbench/providers/reactivefiber.js";
 
+/**
+ * The HyperUnix.open overload the provider calls (a root path, answered synchronously with a
+ * Workspace). vi.spyOn types a spy from the LAST overload (options -> Promise<HyperUnix>), so the
+ * spies below are pinned to this one.
+ */
+type RootPathOpen = { open(root: string): Workspace };
+
 const furnaceMocks = vi.hoisted(() => ({ version: vi.fn(), inspect: vi.fn(), constructor: vi.fn() }));
 vi.mock("@furnace/sdk", () => ({
   Furnace: class {
@@ -54,7 +61,7 @@ describe("HyperUnix SDK custody", () => {
       find: vi.fn().mockResolvedValue({ rows: [], coverage: [], streams: [], diagnostics: [], status: { exitCode: 3, signal: null, terminalReached: true, framesTotal: 0, diagnosticCode: "HX-COVERAGE-INCOMPLETE", kind: "incomplete" }, transport: {}, coverageSummary: { certificates: [], modes: [], completeness: "incomplete", licensesAbsence: false, certificatesLicenseAbsence: false, incompleteRegions: [] }, evidence: { supportIds: [], evidenceClasses: [], derivationHandles: [], providers: [], providerVersions: {} } }), runtime: vi.fn().mockResolvedValue({ version: "0.1.0", binarySha256: "abc" }),
       dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined),
     };
-    const open = vi.spyOn(HyperUnix, "open").mockReturnValue({client,find:client.find} as unknown as Workspace);
+    const open = vi.spyOn<RootPathOpen, "open">(HyperUnix, "open").mockReturnValue({client,find:client.find} as unknown as Workspace);
     const registry = new CapabilityRegistry();
     registerNativeHyperUnixFind(registry, process.cwd());
     await expect(registry.invoke("hyperunix.find", { kind: "hx.fs/regular-file" }, { grants: [], signal: new AbortController().signal })).rejects.toMatchObject({ category: "authorization" });
@@ -67,7 +74,7 @@ describe("HyperUnix SDK custody", () => {
   it("preserves incomplete native coverage instead of inventing absence", async () => {
     const native = { rows: [], coverage: [], streams: [], diagnostics: [], status: { exitCode: 3, signal: null, terminalReached: true, framesTotal: 0, diagnosticCode: "HX-COVERAGE-INCOMPLETE", kind: "incomplete" }, transport: {}, coverageSummary: { certificates: [], modes: [], completeness: "incomplete", licensesAbsence: false, certificatesLicenseAbsence: false, incompleteRegions: [] }, evidence: { supportIds: [], evidenceClasses: [], derivationHandles: [], providers: [], providerVersions: {} } };
     const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: "0.1.0", binarySha256: "abc" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };
-    vi.spyOn(HyperUnix, "open").mockReturnValue({client,find:client.find} as unknown as Workspace);
+    vi.spyOn<RootPathOpen, "open">(HyperUnix, "open").mockReturnValue({client,find:client.find} as unknown as Workspace);
     const result = await nativeHyperUnixFind(process.cwd(), "hx.fs/regular-file");
     expect(result).toMatchObject({source:{status:{exit_code:3},coverage_summary:{licenses_absence:false,completeness:"incomplete"}}});
   });
@@ -75,7 +82,7 @@ describe("HyperUnix SDK custody", () => {
   it("closes an SDK client when abort fires during asynchronous open, before find", async () => {
     const pending = deferred<{version:string;binarySha256:string}>();
     const client = { find: vi.fn(), runtime: vi.fn().mockReturnValue(pending.promise), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };
-    vi.spyOn(HyperUnix, "open").mockReturnValue({client,find:client.find} as unknown as Workspace);
+    vi.spyOn<RootPathOpen, "open">(HyperUnix, "open").mockReturnValue({client,find:client.find} as unknown as Workspace);
     const abort = new AbortController();
     const result = nativeHyperUnixFind(process.cwd(), "hx.fs/regular-file", "src", abort.signal);
     abort.abort();
