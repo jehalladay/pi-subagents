@@ -19,14 +19,16 @@
  * $CAP_BENCH_REVISION is RETIRED at this cut (pinned below), so one variable overrides every W21 receipt revision.
  */
 import { execFileSync, spawnSync } from "node:child_process";
-import { mkdirSync, mkdtempSync, readFileSync, realpathSync, rmSync, writeFileSync } from "node:fs";
-import { tmpdir } from "node:os";
+import { mkdirSync, readFileSync, realpathSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import ts from "typescript";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { BENCH_CHECKOUT_ROOT, benchRevision, UNKNOWN_REVISION, withBenchRevision } from "../qa/workbench/bench-revision.mjs";
-import { pinNonRepo } from "./helpers/non-repo-scratch.js";
+import { nonRepoScratch } from "./helpers/non-repo-scratch.js";
+import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
 import { w21BenchClis } from "./helpers/w21-bench-clis.js";
+
+installScratchLeakGuard();
 
 interface Stamp {
   revision: string;
@@ -41,11 +43,13 @@ const git = (cwd: string, ...args: string[]): string =>
 const NO_OVERRIDE: Record<string, string | undefined> = {};
 
 describe("bench-revision stamp: git rev-parse HEAD plus a dirty flag, W21_REVISION only an override", () => {
+  let scratchDir = "";
   let scratch = "";
   let repo = "";
   let head = "";
   beforeAll(() => {
-    scratch = realpathSync(mkdtempSync(join(tmpdir(), "w21-revision-")));
+    scratchDir = makeScratch("w21-revision-");
+    scratch = realpathSync(scratchDir);
     repo = join(scratch, "checkout");
     mkdirSync(repo);
     git(repo, "init", "-q");
@@ -58,7 +62,7 @@ describe("bench-revision stamp: git rev-parse HEAD plus a dirty flag, W21_REVISI
     head = git(repo, "rev-parse", "HEAD");
   });
   afterAll(() => {
-    if (scratch !== "") rmSync(scratch, { recursive: true, force: true });
+    removeScratch(scratchDir);
   });
 
   it("a clean toplevel checkout stamps its HEAD with dirty false and names git as the source", () => {
@@ -106,14 +110,13 @@ describe("bench-revision stamp: git rev-parse HEAD plus a dirty flag, W21_REVISI
   });
 
   it("a directory outside any repository stamps working-tree with dirty unknown", () => {
-    const outside = realpathSync(mkdtempSync(join(tmpdir(), "w21-revision-outside-")));
-    const restore = pinNonRepo(outside);
+    const fixture = nonRepoScratch("w21-revision-outside-");
+    const outside = realpathSync(fixture.dir);
     try {
       expect(UNKNOWN_REVISION).toBe("working-tree");
       expect(stampOf({ env: NO_OVERRIDE, root: outside })).toEqual({ revision: "working-tree", revisionSource: "unknown", dirty: null });
     } finally {
-      restore();
-      rmSync(outside, { recursive: true, force: true });
+      fixture.dispose();
     }
   });
 
