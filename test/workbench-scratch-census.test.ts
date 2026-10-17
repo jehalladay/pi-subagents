@@ -19,7 +19,8 @@
  * listed file, or cures one without updating its entry, turns it red. The allowlist is long because trunk is: wb-e37's
  * owner-named census is nine test files plus the qa leg (NAMED_CENSUS), so every other raw site on trunk is recorded
  * here as OUT-OF-SCOPE rather than cured. An owner-named file this cut leaves raw is listed DEFERRED-TO the queued cut
- * that edits it (contact rule), or OWNER-RULING where composing it would move a pin another bead's landed test holds.
+ * that edits it, or to the owner cut or filed follow-up that holds it on a hot set (contact rule), or OWNER-RULING where
+ * composing it would move a pin another bead's landed test holds.
  */
 import { lstatSync, readdirSync, readFileSync } from "node:fs";
 import { dirname, join, posix } from "node:path";
@@ -329,7 +330,7 @@ const ALLOWLIST: Record<string, Listed> = {
   "test/ext-templates-e2e.test.ts": { mkdtemp: 1, tmpdir: 1, reason: OUT_OF_SCOPE },
   "test/foreground-concurrency-print-mode-e2e.test.ts": { mkdtemp: 1, tmpdir: 1, reason: OUT_OF_SCOPE },
   "test/helpers/detached-peer.ts": { mkdtemp: 1, tmpdir: 0, reason: OUT_OF_SCOPE },
-  "test/helpers/furnace-hosted-retry-journeys.ts": { mkdtemp: 1, tmpdir: 0, reason: deferred("wb-lrz.2", "the plain-node runner qa/workbench/furnace-hosted-retry-fault.mjs loads it and the receipt test that pins its imports is edited by queued wb-lrz.2") },
+  "test/helpers/furnace-hosted-retry-journeys.ts": { mkdtemp: 1, tmpdir: 0, reason: deferred("wb-zby", "the plain-node runner qa/workbench/furnace-hosted-retry-fault.mjs loads it, the receipt test pins its imports, and it is a HOT SET #2 path the wb-zby owner cut holds (machine cuts frozen until the zby landing relay); wb-lrz.2, its first deferral, landed at d5d326f mid-cut") },
   "test/helpers/scratch.ts": { mkdtemp: 1, tmpdir: 3, reason: GUARDED_PATH },
   "test/memory-legacy-fallback.test.ts": { mkdtemp: 1, tmpdir: 1, reason: OUT_OF_SCOPE },
   "test/memory.test.ts": { mkdtemp: 1, tmpdir: 1, reason: OUT_OF_SCOPE },
@@ -367,7 +368,7 @@ const ALLOWLIST: Record<string, Listed> = {
   "test/workbench-executable-identity.test.ts": { mkdtemp: 1, tmpdir: 1, reason: OUT_OF_SCOPE },
   "test/workbench-forge-observer.test.ts": { mkdtemp: 1, tmpdir: 1, reason: OUT_OF_SCOPE },
   "test/workbench-furnace-hosted-real.test.ts": { mkdtemp: 1, tmpdir: 0, reason: OUT_OF_SCOPE },
-  "test/workbench-furnace-hosted-retry-fault-receipt.test.ts": { mkdtemp: 1, tmpdir: 1, reason: deferred("wb-lrz.2", "queued wb-lrz.2 edits this file") },
+  "test/workbench-furnace-hosted-retry-fault-receipt.test.ts": { mkdtemp: 1, tmpdir: 1, reason: deferred("wb-zby.2", "it is a HOT SET #2 path (wb-zby packaging; machine cuts frozen until the zby landing relay) and wb-zby.2, dispatchable after that landing, edits its QA_FILES and specifier pins; wb-lrz.2, its first deferral, landed at d5d326f mid-cut") },
   "test/workbench-furnace-hosted-retry-fault.test.ts": { mkdtemp: 0, tmpdir: 1, reason: OUT_OF_SCOPE },
   "test/workbench-furnace-hosted.test.ts": { mkdtemp: 1, tmpdir: 0, reason: OUT_OF_SCOPE },
   "test/workbench-furnace-vc4-receipt.test.ts": { mkdtemp: 0, tmpdir: 1, reason: TMPDIR_READ },
@@ -390,7 +391,7 @@ const ALLOWLIST: Record<string, Listed> = {
   "test/workflow-journal.test.ts": { mkdtemp: 2, tmpdir: 2, reason: OUT_OF_SCOPE },
   "test/workflow-tool.test.ts": { mkdtemp: 3, tmpdir: 3, reason: OUT_OF_SCOPE },
   "test/worktree.test.ts": { mkdtemp: 1, tmpdir: 1, reason: OUT_OF_SCOPE },
-  "qa/workbench/furnace-hosted-repaired-sdk.mjs": { mkdtemp: 1, tmpdir: 0, reason: deferred("wb-lrz.2", "the receipt test queued wb-lrz.2 edits pins this loader to node: imports only") },
+  "qa/workbench/furnace-hosted-repaired-sdk.mjs": { mkdtemp: 1, tmpdir: 0, reason: deferred("wb-zby.2", "it is a HOT SET #2 path (wb-zby packaging; machine cuts frozen until the zby landing relay) and wb-zby.2, dispatchable after that landing, deletes it; wb-lrz.2, its first deferral, landed at d5d326f mid-cut") },
   "qa/workbench/furnace-hosted-retry-fault.mjs": { mkdtemp: 0, tmpdir: 1, reason: OUT_OF_SCOPE },
   "qa/workbench/install-minimal.mjs": {
     mkdtemp: 1,
@@ -431,7 +432,7 @@ const GUARD_ALLOWLIST: Record<string, string> = {
   "test/non-repo-scratch.test.ts": NON_REPO_UNGUARDED,
   "test/workbench-claude-adverse-receipt.test.ts": NON_REPO_UNGUARDED,
   "test/workbench-dependency-census.test.ts": NON_REPO_UNGUARDED,
-  "test/workbench-furnace-hosted-retry-fault.test.ts": "OUT-OF-SCOPE: allocates through test/helpers/furnace-sdk-repaired.ts with no guard in its closure; outside wb-e37's owner-named census, and edited by queued wb-lrz.2.",
+  "test/workbench-furnace-hosted-retry-fault.test.ts": "OUT-OF-SCOPE: allocates through test/helpers/furnace-sdk-repaired.ts with no guard in its closure; outside wb-e37's owner-named census, and both files are HOT SET #2 paths (wb-zby packaging) frozen for machine cuts until the zby landing relay.",
 };
 
 const GUARD_EXEMPT = new Map(Object.entries(GUARD_ALLOWLIST));
