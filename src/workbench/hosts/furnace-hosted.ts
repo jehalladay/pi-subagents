@@ -160,6 +160,18 @@ const isRecord = (value: unknown): value is Record<string, unknown> => typeof va
 function hasCancellation(context: ExecutionContext): context is CallbackContext {
   return "cancellation" in context && isRecord(context) && context.cancellation instanceof AbortSignal;
 }
+const isIdentifier = (value: unknown): value is string => typeof value === "string" && value !== "";
+/**
+ * The Run a start reply names, read from the members the receipt needs and nothing else (FRN-PRO-002 forward field
+ * tolerance: additive members beside them are not read). A reply missing one names no Run that could be reconciled, so
+ * it throws here and start() reports an uncertain start, as for an unreadable answer; no Run is recorded without them.
+ */
+function startedRun(started: unknown): NonNullable<HostedReceipt["run"]> {
+  const record = isRecord(started) ? started.record : undefined;
+  const requestId = isRecord(started) ? started.requestId : undefined;
+  if (!isRecord(record) || !isIdentifier(record.run_id) || !isIdentifier(record.beads_run_id) || !isIdentifier(requestId)) throw new TypeError("Furnace run start reply names no Run.");
+  return { runId: record.run_id, beadsRunId: record.beads_run_id, requestId };
+}
 const CANONICAL_CONTEXT = {
   context_version: 1,
   run: { furnace_run_id: "frn-run-preflight", beads_run_id: "bd-preflight", formula: null },
@@ -223,7 +235,7 @@ export class FurnaceHostedExecutor {
       const startRequest: RunStartRequest = { formula: request.formula, ...(request.vars ? { vars: { ...request.vars } } : {}) };
       const call = { ...(this.options.startTimeoutMs !== undefined ? { timeoutMs: this.options.startTimeoutMs } : {}), ...(request.requestId !== undefined ? { requestId: request.requestId } : {}) };
       const started = await client.runs.start(startRequest, call);
-      this.run = { runId: started.record.run_id, beadsRunId: started.record.beads_run_id, requestId: started.requestId };
+      this.run = startedRun(started);
       this.state = "started";
       return { ...this.run };
     } catch (error) {
