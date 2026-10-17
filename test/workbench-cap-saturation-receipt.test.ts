@@ -134,6 +134,8 @@ interface Inspector {
 }
 interface GroupedFixture {
   snapshots: unknown[];
+  relations: unknown[];
+  updates: unknown[];
   shape: { nodes: number };
 }
 
