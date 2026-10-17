@@ -110,6 +110,8 @@ describe("settling a run", () => {
     progress: [],
     agentCount: 0,
     replayedCount: 0,
+    replayedNodeCount: 0,
+    reconciledNodeCount: 0,
   };
 
   it("drops the control so a finished run cannot be paused", () => {
@@ -144,7 +146,7 @@ describe("settling a run", () => {
 describe("replay provenance in the task summary", () => {
   const settled = (replayedCount: number, replayedNodeCount: number) => {
     const task = createWorkflowTask({ id: "wf_abc123", script: "", startTime: 1_000, resumedFrom: "wf_prior1" });
-    completeWorkflowTask(task, { status: "completed", value: 1, meta: { name: "wf", description: "d" }, progress: [], agentCount: 2, replayedCount, replayedNodeCount });
+    completeWorkflowTask(task, { status: "completed", value: 1, meta: { name: "wf", description: "d" }, progress: [], agentCount: 2, replayedCount, replayedNodeCount, reconciledNodeCount: 0 });
     return task;
   };
 
