@@ -61,6 +61,7 @@ export interface EvidenceProducerOptions {
   readonly claude?: ClaudeEvidenceReader;
   readonly furnace?: FurnaceEvidenceReader;
   readonly forge?: ForgeEvidenceReader;
+  /** Injected capture clock; the claude loader refuses transport without it, it never reads the host clock. */
   readonly now?: () => Date;
 }
 
@@ -72,7 +73,10 @@ function gated(options: EvidenceProducerOptions, grant: string): void {
   if (!options.grants().includes(grant)) throw new EvidenceRefusal("unauthorized");
 }
 
-const textLines = (text: string): string[] => text.split(/\r\n|\r|\n/);
+/*
+ * Each producer text reaches the store WHOLE, as one preview entry (wb-ktf): the store redacts an entry exactly once before it
+ * splits it into rows, so splitting a row here would hand it a credential's scheme or key and its value as two entries.
+ */
 
 function claudeLoader(options: EvidenceProducerOptions, read: ClaudeEvidenceReader): EvidenceLoader {
   return {
@@ -83,6 +87,9 @@ function claudeLoader(options: EvidenceProducerOptions, read: ClaudeEvidenceRead
       gated(options, CLAUDE_TRANSCRIPT_GRANT);
       const uuid = CLAUDE_REF.exec(request.evidenceRef)?.[1];
       if (uuid === undefined || request.nativeRef.type !== "session") throw new EvidenceRefusal("no-loader");
+      // The capture time comes only from the injected clock; a loader built without one refuses before any read.
+      const now = options.now;
+      if (now === undefined) throw new EvidenceRefusal("transport");
       const rows = await read({ sessionId: request.nativeRef.id, signal: request.signal });
       const row = rows.find(candidate => candidate.uuid === uuid);
       // A message outside the bounded window is a visible transport failure, never a fabricated row.
@@ -90,10 +97,10 @@ function claudeLoader(options: EvidenceProducerOptions, read: ClaudeEvidenceRead
       return {
         kind: "claude-message",
         provider: "claude-agent-sdk",
-        capturedAt: (options.now?.() ?? new Date()).toISOString(),
+        capturedAt: now().toISOString(),
         bytes: Buffer.byteLength(row.text),
         truncated: false,
-        preview: [`${row.type}:`, ...textLines(row.text)],
+        preview: [`${row.type}:`, row.text],
         freshness: "current",
       } satisfies EvidenceContent;
     },
@@ -117,7 +124,7 @@ function furnaceLoader(options: EvidenceProducerOptions, read: FurnaceEvidenceRe
         capturedAt: result.capturedAt,
         bytes: Buffer.byteLength(result.text),
         truncated: !result.complete || result.lossy || result.nextCursor !== undefined,
-        preview: [`${result.stream}:`, ...textLines(result.text)],
+        preview: [`${result.stream}:`, result.text],
         freshness: "current",
         ...(result.producerReceipt !== undefined ? { producerReceipt: result.producerReceipt } : {}),
       } satisfies EvidenceContent;

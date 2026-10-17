@@ -18,7 +18,7 @@
  * a scripted `SubagentWorkflow` call a real model has no reason to emit.
  */
 
-import { existsSync, mkdirSync, mkdtempSync, readdirSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { fauxText, fauxToolCall, getCurrentSystemPrompt, getCurrentTools } from "@earendil-works/pi-ai";
@@ -26,6 +26,9 @@ import { afterEach, describe, expect, it } from "vitest";
 import { encodeCwd } from "../../src/output-file.js";
 import { readJournal } from "../../src/workflow/journal.js";
 import { runPrintMode, toolCallsNamed, toolResultsNamed } from "../helpers/print-mode-runner.js";
+import { installScratchLeakGuard, makeScratch, removeAllScratch, removeScratch } from "../helpers/scratch.js";
+
+installScratchLeakGuard();
 
 /**
  * A project directory with workflows switched on.
@@ -36,7 +39,7 @@ import { runPrintMode, toolCallsNamed, toolResultsNamed } from "../helpers/print
  * and the parent model has nothing to call.
  */
 function workflowProject(): string {
-  const dir = mkdtempSync(join(tmpdir(), "subagents-wf-e2e-"));
+  const dir = makeScratch("subagents-wf-e2e-");
   mkdirSync(join(dir, ".pi"), { recursive: true });
   writeFileSync(join(dir, ".pi", "subagents.json"), JSON.stringify({ workflowsEnabled: true }));
   return dir;
@@ -78,6 +81,10 @@ async function waitFor(predicate: () => boolean, timeoutMs = 20_000): Promise<bo
 }
 
 describe("Workflow end to end", () => {
+  // Several cases hand `workflowProject()` straight to the runner (which does not own a cwd it was given),
+  // so every project made through the scratch helper is removed here, with its session tree.
+  afterEach(() => removeAllScratch());
+
   it("runs a real script whose agents reach real sessions with the script's prompts", async () => {
     const script = [
       'export const meta = { name: "e2e-fanout", description: "spawn two agents", phases: [{ title: "Work" }] };',
@@ -299,7 +306,7 @@ describe.runIf(LIVE)("Workflow end to end (live LLM, opt-in)", () => {
   afterEach(async () => {
     await run?.dispose?.();
     run = undefined;
-    for (const dir of dirs.splice(0)) rmSync(dir, { recursive: true, force: true });
+    for (const dir of dirs.splice(0)) removeScratch(dir);
   });
 
   /** A project with workflows on, registered for cleanup. */
