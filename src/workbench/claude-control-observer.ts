@@ -22,7 +22,12 @@
  * which is when the observer publishes the terminal, so a settle keyed on the live maps would always miss. Bounded: at most
  * MAX_PENDING_CLAUDE_SETTLES pending executions (a retain past the bound is refused, never evicting a live entry), at most
  * MAX_REMEMBERED_CLAUDE_TERMINALS remembered terminals (FIFO) for the acknowledge/terminal race, and a TTL sweep on every
- * mutation (the forge precedent is forge-control-retention.ts). A refused settle (stale-observation, foreign-observation,
+ * mutation (the forge precedent is forge-control-retention.ts). A remembered terminal is forgotten when a system/init frame
+ * arrives for its key (onInit; ruling R479, wb-hqa.1): the key `${task.id}:${call.index}` is reused by a retried attempt (a
+ * new session under the same index) and by a resumed turn (the same session) of one call, the earlier attempt's terminal
+ * always precedes the next attempt's init and is never the later attempt's, so forgetting it lets the later attempt's
+ * acknowledged interrupt park pending and settle from its own terminal instead of being refused foreign- or stale-observation
+ * at retain. A refused settle (stale-observation, foreign-observation,
  * result-consumed, unvetted-execution, capacity, or anything else) mints nothing, never retries, never throws into the SDK
  * message loop, and leaves exactly one workflow_log line on the owning task through the existing label layout (Q3): the
  * audit truthfully ends at acknowledged and the reconcile hint remains the operator's path. The tool reply is never amended.
@@ -66,6 +71,8 @@ export interface ClaudeControlRetention {
   retain(execution: ClaudeControlExecution, at?: number): ClaudeRetainOutcome;
   /** Settles every pending execution of `key` (`${invocationId}:${index}`) from one observed terminal, then remembers it. */
   settle(key: string, observed: ClaudeObservedTerminal, scope: ObservationScope, at?: number): { settled: number; refused: number };
+  /** Forgets the terminal remembered for `key`, if any: a new system/init on the key is a new query (ruling R479); pending executions are untouched. */
+  forget(key: string): void;
   /** Honest teardown: nothing pending, nothing remembered, so nothing is attributed after the tasks are gone. */
   dispose(): void;
   /** Pending executions across every call. */
@@ -201,6 +208,9 @@ export function createClaudeControlRetention(deps: ClaudeControlRetentionDeps): 
       }
       return { settled, refused };
     },
+    forget(key) {
+      terminals.delete(key);
+    },
     dispose() {
       pending.clear();
       terminals.clear();
@@ -222,6 +232,11 @@ export function createClaudeControlObserver(deps: ClaudeControlObserverDeps): Cl
   return {
     onInit(call, sessionId) {
       try {
+        // Forget-on-init (ruling R479, wb-hqa.1): this system/init opens a new query of the call under the same key (a retried
+        // attempt on a new session, or a resumed turn on the same one), so a terminal remembered from the earlier attempt is never
+        // this attempt's; forgotten here, it cannot refuse this attempt's acknowledged interrupt at retain. Fires for every init on
+        // the key, whether or not the ownership statement below is withheld.
+        deps.retention.forget(keyOf({ invocationId: deps.invocationId, index: call.index }));
         const relation = claudeSessionOwnership({ scope: deps.scope, invocationId: deps.invocationId, index: call.index, sessionId, observedAt: deps.now() });
         if (relation === undefined) {
           counts.ownershipWithheld += 1;
