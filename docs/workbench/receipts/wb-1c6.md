@@ -1,0 +1,11 @@
+# wb-1c6: reactivefiber-observer it.each tables carry no length pins (wb-693.1 R2 / wb-19q member 36): LISTS 3, OTHER_SHAPES 4, DROPPED 30, PARTIAL 3 need expect(TABLE.length).toBe(n); G1/G2/G3/G8/G11 are each killed by exactly one row
+
+## 2026-10-17 receipt: the cut (machine seat ws-01, base f7e3c75)
+
+- Gap closed: the four engine-identity `it.each` tables in `test/workbench-reactivefiber-observer.test.ts` (LISTS, OTHER_SHAPES, the R13 DROPPED table, PARTIAL) had no length pin, so a deleted or emptied table registered fewer or zero cases and stayed green (gate measurement on wb-693.1: DROPPED 30 to 29 left mutant G1 alive at 149/149; DROPPED emptied with G1 applied stayed green at 120/120).
+- What landed (test-only, one file): one `expect(TABLE.length).toBe(n)` case per table: LISTS 5, OTHER_SHAPES 4, DROPPED 32, PARTIAL 3. The counts are 5 and 32 rather than the bead's 3 and 30 because the cut also adds the adjacent kill rows below (2 LISTS rows, 2 DROPPED rows).
+- Kill-margin rows (F2): G1 gains a mixed-case-hex fingerprint DROPPED row; G2 gains a leading-line-break `unknown` DROPPED row; G3 gains two LISTS rows (keyed valid engine entries; bare identity objects); G8 gains an ordering case behind every partial-render note; G11 gains out-of-case keys in the R11 loop plus one separate case. Each of G1, G2, G3, G8 and G11 is now killed by two tests (was one).
+- Red: with each table emptied (`TABLE.length = 0` placed before its pin) the file reads 4 failed | 113 passed (117), one failure per pin (`expected +0 to be 5/4/32/3`). Source mutants applied to `src/workbench/reactivefiber-observer.ts` one at a time and reverted: G1 2 failed, G2 2, G3 2, G8 2, G11 2, all of the 162 otherwise green.
+- Green: `npx vitest run test/workbench-reactivefiber-observer.test.ts` 162 of 162 (was 152); the nine reader suites that import the observer 372 of 372; `forge run lint` and `forge run typing` exit 0; `typecheck:test` 36 errors identical to the base tree, none in the file.
+- Revision: the test file is git blob c388f92d86aaf8e61bc02986ad3384c1b91072b0 in the pushed commit (blob ids are stable across the receipt amend).
+- Display paths added: none. No src change.
