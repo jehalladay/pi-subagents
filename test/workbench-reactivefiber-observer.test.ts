@@ -16,6 +16,7 @@ import {
   REACTIVEFIBER_OBSERVATION_CONTRACT, type ReactiveFiberObservedRelation, type ReactiveFiberProjectionTopology,
   type ReactiveFiberTopologyContext, reactivefiberTopology,
 } from '../src/workbench/reactivefiber-observer.js';
+import {sanitizeWorkbenchText} from '../src/workbench/redaction.js';
 import {installScratchLeakGuard, makeScratch, removeScratch} from './helpers/scratch.js';
 
 type Json = {[key: string]: JsonValue};
@@ -820,5 +821,252 @@ describe('engine identity from result.provenance.sdk_versions (wb-693.1 R1, wb-6
     for (const note of today(over, {cli_version: '0.1.716'}, ctx).diagnostics) expect(topology.diagnostics).toContain(note);
     expect(topology.diagnostics.at(-1)).toBe(INTERVAL_NOTE);
     expect(topology.snapshots[0].coverage).toBe('partial');
+  });
+});
+
+/** wb-973.10 (SWARM-CONTEXT-GRAPH-R10, the negative requirement of dossier C22; it extends R6 above). Statement: "No surfaced
+ * string shall carry an observation row's executable, binding_ref, observed_dep_refs, freshness_witness, timestamps or any digest
+ * preimage - only bounded, sanitized lens_key and status words and counts; a row can only demote coverage/tone, never upgrade a
+ * flagged or over-budget render; an unknown status word is treated as non-observed, never as success and never as a refusal;
+ * distinct surfaced status words <= 4 and notes within MAX_DIAGNOSTICS." The pinned rf row vocabulary is observed, missing, null,
+ * suppressed, invalid, timeout, nonzero, truncated and denied, of which observed and null are observed values; a planned vocabulary
+ * migration adds words, so a word outside that enum reads as not observed and is never refused. A row's freshness, replayed and
+ * degraded legs belong to wb-973.9 (SCG-R9), not to this cut. Input-hygiene rows only: the SECRET- placeholders and the
+ * FAKEPLACEHOLDER credential shapes are obviously fake. Every it.each table below carries its own length pin (each-liveness). */
+describe('observation rows from result.observations (wb-973.10 SCG-R10)', () => {
+  const STARTED = '2026-10-17T00:00:00Z';
+  const OBSERVATION_ID = 'rfl_0123456789abcdefghijkl';
+  const VALUE_DIGEST = `sha256:${'c7'.repeat(32)}`;
+  const PARSED_DIGEST = `sha256:${'d8'.repeat(32)}`;
+  const ELLIPSIS = '…';
+  const cp = (code: number): string => String.fromCodePoint(code);
+  /** One served row in the pinned shape (context.render.schema.json observations items): observed and fresh unless overridden. */
+  const row = (over: Json = {}): Json => ({observation_id: OBSERVATION_ID, lens_key: 'beads.current', value_digest: VALUE_DIGEST, status: 'observed',
+    code: null, freshness: 'captured_at_render', replayed: false, required: true, degraded: false, persisted: true, ...over});
+  const withRows = (rows: JsonValue, over: Json = {}): Json => withResult({observations: rows, ...over});
+  const project = (value: Json, ctx: ReactiveFiberTopologyContext = context): ReactiveFiberProjectionTopology => reactivefiberTopology(value as JsonValue, ctx);
+  const observationNotes = (topology: ReactiveFiberProjectionTopology): string[] => topology.diagnostics.filter(note => note.startsWith('observations: '));
+  /** Every key and every string value anywhere in the topology, the R6 everyObject walk: what any display of it can show. */
+  function surfaced(topology: ReactiveFiberProjectionTopology): string[] {
+    const texts: string[] = [];
+    everyObject(topology, item => {
+      for (const [key, value] of Object.entries(item)) {
+        texts.push(key);
+        if (typeof value === 'string') texts.push(value);
+      }
+    });
+    return texts;
+  }
+
+  // Acceptance 1: "a row carrying executable '/usr/bin/SECRET-EXE', binding_ref 'binding:SECRET-BIND/x', observed_dep_refs
+  // ['SECRET-DEP'], freshness_witness {secret:'SECRET-WITNESS'}, started_at '2026-10-17T00:00:00Z' yields no surfaced string
+  // containing any SECRET- substring or the timestamp (everyObject walk)". The walk runs for observed values and for not-observed
+  // rows, which do surface a note, and also finds no row id, digest, code or row field name anywhere.
+  const LEAKY: Json = {executable: '/usr/bin/SECRET-EXE', binding_ref: 'binding:SECRET-BIND/x', observed_dep_refs: ['SECRET-DEP'],
+    freshness_witness: {secret: 'SECRET-WITNESS'}, started_at: STARTED, elapsed_ms: 17, exit_code: 3, parsed_value_digest: PARSED_DIGEST};
+  const HIDDEN = ['SECRET-', STARTED, OBSERVATION_ID, VALUE_DIGEST, PARSED_DIGEST, 'RF_OBSERVATION_DENIED', '/usr/bin', 'binding:'];
+  const ROW_FIELDS = /executable|binding_ref|observed_dep_refs|freshness_witness|started_at|elapsed_ms|exit_code|value_digest|observation_id|lens_key/;
+  const LEAK_STATUSES = ['observed', 'null', 'denied', 'frobnicated'];
+  it('SCG-R10 (a): the leak-walk table registers all 4 statuses', () => {
+    expect(LEAK_STATUSES.length).toBe(4);
+  });
+  it.each(LEAK_STATUSES)('SCG-R10 (a): %s rows carrying executable, binding_ref, observed_dep_refs, freshness_witness and timestamps surface none of them, nor any row id, digest or code', status => {
+    const code = status === 'denied' ? 'RF_OBSERVATION_DENIED' : null;
+    const topology = project(withRows([row({...LEAKY, status, code}), row({...LEAKY, status, code, lens_key: 'beads.ready'})]));
+    const texts = surfaced(topology);
+    expect(texts.length).toBeGreaterThan(0);
+    for (const text of texts) {
+      for (const hidden of HIDDEN) expect(text).not.toContain(hidden);
+      expect(text).not.toMatch(ROW_FIELDS);
+    }
+    bounded(topology);
+  });
+
+  // Acceptance 2: "One-directional: a flagged (has_errors:true) or over-budget render with all-fresh observed rows stays
+  // partial/non-success (the R4 cases pass unchanged with rows added)". All-fresh rows leave each partial render byte-identical
+  // to its row-free projection, and a not-observed row adds only its own note.
+  const FRESH = [row(), row({status: 'null'}), row({lens_key: 'beads.ready'})];
+  const PARTIAL_RENDERS: [string, Json, Json, ReactiveFiberTopologyContext][] = [
+    ['diagnostics_summary.has_errors (R4)', {diagnostics_summary: {errors: 2, warnings: 0, has_errors: true, has_warnings: false}}, {}, context],
+    ['an error-severity envelope diagnostic beside has_errors false (R4)', {}, {diagnostics: [rfDiagnostic()]}, context],
+    ['an over-budget render (R4)', {budget: {formula_terms: formula({available_context_tokens: -40})}}, {}, context],
+    ['the injected-fixture seam (R2)', {}, {}, {...context, seam: 'injected-fixture'}],
+  ];
+  const render = (resultOver: Json, envelopeOver: Json, rows?: JsonValue): Json =>
+    reading(envelope({result: result(rows === undefined ? resultOver : {...resultOver, observations: rows}), ...envelopeOver}));
+  it('SCG-R10 (b): the one-directional table registers all 4 partial renders', () => {
+    expect(PARTIAL_RENDERS.length).toBe(4);
+  });
+  it.each(PARTIAL_RENDERS)('SCG-R10 (b): %s with all-fresh observed rows stays partial and non-success, byte-identical to the row-free render', (_name, resultOver, envelopeOver, ctx) => {
+    const plain = project(render(resultOver, envelopeOver), ctx);
+    const fresh = project(render(resultOver, envelopeOver, FRESH), ctx);
+    expect(fresh.snapshots[0].coverage).toBe('partial');
+    expect(fresh.snapshots[0].node.statusTone).not.toBe('success');
+    expect(JSON.stringify(fresh)).toBe(JSON.stringify(plain));
+    const demoted = project(render(resultOver, envelopeOver, [...FRESH, row({status: 'denied'}), row({status: 'denied'})]), ctx);
+    expect(demoted.snapshots).toStrictEqual(plain.snapshots);
+    expect(demoted.relations).toStrictEqual(plain.relations);
+    expect(demoted.diagnostics.filter(note => !note.startsWith('observations: '))).toStrictEqual(plain.diagnostics);
+    expect(observationNotes(demoted)).toStrictEqual(['observations: 5 rows, 2 not observed (denied): partial']);
+  });
+
+  // The positive controls a demote-only reader keeps: observed values ('observed' and 'null'), an empty list and an absent key
+  // leave a clean render complete and successful, byte-identical to today. wb-973.9 (SCG-R9) owns the reused, replayed and degraded
+  // legs; a cut that adds a fresh-row count note re-pins this row in its own commit.
+  it('SCG-R10 (b): observed values and an empty list never demote a clean render: byte-identical to the row-free projection', () => {
+    const plain = JSON.stringify(project(reading()));
+    for (const rows of [FRESH, [row({status: 'null'})], [row(), row()], []]) expect(JSON.stringify(project(withRows(rows)))).toBe(plain);
+    expect(project(withRows(FRESH)).snapshots[0]).toMatchObject({coverage: 'complete', node: {statusTone: 'success'}});
+  });
+
+  it('SCG-R10 (b): a clean render whose rows are all observed values applies to the projection complete and successful', () => {
+    const [snapshot] = project(withRows([row(), row({status: 'null'})])).snapshots;
+    const projection = new ObservationProjection();
+    expect(projection.refresh(snapshot)).toBe('applied');
+    expect(projection.query({scope, limit: 10}).nodes.find(item => item.nativeRef.id === OPERATION)).toMatchObject({completeness: 'complete', presentation: {statusTone: 'success'}});
+  });
+
+  // Acceptance 3: "Unknown status 'frobnicated' -> partial, no CapabilityError; status of a non-string type -> refused 'validation'".
+  it('SCG-R10 (c): an unknown status word reads as not observed: partial and never success, and never a refusal', () => {
+    const value = withRows([row({status: 'frobnicated'})]);
+    expect(() => project(value)).not.toThrow();
+    const topology = project(value);
+    const [snapshot] = topology.snapshots;
+    expect(snapshot.coverage).toBe('partial');
+    expect(snapshot.node.statusTone).toBe('unknown');
+    expect(observationNotes(topology)).toStrictEqual(['observations: 1 row, 1 not observed (frobnicated): partial']);
+    // Only coverage and tone move: the status text, references, revision and payload reference are the clean render's.
+    const [clean] = project(reading()).snapshots;
+    expect({...snapshot, coverage: clean.coverage, node: {...snapshot.node, statusTone: clean.node.statusTone}}).toStrictEqual(clean);
+    const projection = new ObservationProjection();
+    expect(projection.refresh(snapshot)).toBe('applied');
+    expect(projection.query({scope, limit: 10}).nodes.find(item => item.nativeRef.id === OPERATION)).toMatchObject({completeness: 'partial', presentation: {statusTone: 'unknown'}});
+  });
+
+  const NOT_OBSERVED = ['missing', 'suppressed', 'invalid', 'timeout', 'nonzero', 'truncated', 'denied', 'frobnicated', 'stale_inputs', 'reused'];
+  it('SCG-R10 (c): the not-observed table registers all 10 words', () => {
+    expect(NOT_OBSERVED.length).toBe(10);
+  });
+  it.each(NOT_OBSERVED)('SCG-R10 (c): status %s is not an observed value: beside a fresh row the render reads partial and unknown, listing the word', status => {
+    const topology = project(withRows([row(), row({status})]));
+    expect(topology.snapshots[0].coverage).toBe('partial');
+    expect(topology.snapshots[0].node.statusTone).toBe('unknown');
+    expect(observationNotes(topology)).toStrictEqual([`observations: 2 rows, 1 not observed (${status}): partial`]);
+  });
+
+  const UNREADABLE: [string, JsonValue][] = [
+    ['a numeric status', [row({status: 7})]],
+    ['a null status', [row({status: null})]],
+    ['a boolean status', [row({status: true})]],
+    ['an object status', [row({status: {word: 'observed'}})]],
+    ['a list status', [row({status: ['observed']})]],
+    ['a row without status', [without(row(), 'status')]],
+    ['a non-string status after a fresh row', [row(), row({status: 0})]],
+    ['a row that is a string', ['observed']],
+    ['a row that is null', [null]],
+    ['a row that is a list', [[row()]]],
+    ['observations as an object', {rows: [row()]}],
+    ['observations as a string', 'observed'],
+    ['observations as a number', 1],
+    ['observations null', null],
+  ];
+  it('SCG-R10 (c): the refusal table registers all 14 shapes', () => {
+    expect(UNREADABLE.length).toBe(14);
+  });
+  it.each(UNREADABLE)('SCG-R10 (c): %s is refused with a typed validation error before anything projects', (_name, rows) => {
+    expect(refusal(withRows(rows)).category).toBe('validation');
+  });
+
+  // Acceptance 4: "Bound: 10 000 rows with 10 000 distinct status words project one note listing at most 4 words plus '…',
+  // total diagnostics <= MAX_DIAGNOSTICS (8), each <= 200 bytes (DIAGNOSTIC), each through sanitizeWorkbenchText; projection time
+  // bounded (the R8 purity/determinism case still passes)".
+  it('SCG-R10 (d): 10 000 rows with 10 000 distinct status words project one note listing 4 words plus …, inside every bound', () => {
+    const input = withRows(Array.from({length: 10_000}, (_, index) => row({status: `word_${index}`})));
+    const before = JSON.stringify(input);
+    const topology = project(input);
+    expect(observationNotes(topology)).toStrictEqual([`observations: 10000 rows, 10000 not observed (word_0, word_1, word_2, word_3, ${ELLIPSIS}): partial`]);
+    expect(topology.diagnostics.length).toBeLessThanOrEqual(8);
+    for (const note of topology.diagnostics) {
+      expect(Buffer.byteLength(note)).toBeLessThanOrEqual(200);
+      expect(sanitizeWorkbenchText(note, 200, 'label')).toBe(note);
+    }
+    bounded(topology);
+    expect([...new Set(surfaced(topology).flatMap(text => text.match(/word_\d+/g) ?? []))]).toStrictEqual(['word_0', 'word_1', 'word_2', 'word_3']);
+    expect(topology.snapshots[0].coverage).toBe('partial');
+    // R8 on the 10 000-row input: deterministic, the input unmutated, the result deeply frozen.
+    expect(project(input)).toStrictEqual(topology);
+    expect(JSON.stringify(input)).toBe(before);
+    everyObject(topology, item => { expect(Object.isFrozen(item)).toBe(true); });
+  });
+
+  it('SCG-R10 (d): a repeated word is listed once, exactly four distinct words carry no …, a fifth adds it, and observed values take no slot', () => {
+    const four = ['missing', 'denied', 'timeout', 'frobnicated'];
+    const notesFor = (statuses: readonly string[]): string[] => observationNotes(project(withRows(statuses.map(status => row({status})))));
+    expect(notesFor(Array.from({length: 10_000}, () => 'denied'))).toStrictEqual(['observations: 10000 rows, 10000 not observed (denied): partial']);
+    expect(notesFor([...four, ...four])).toStrictEqual(['observations: 8 rows, 8 not observed (missing, denied, timeout, frobnicated): partial']);
+    expect(notesFor([...four, 'truncated'])).toStrictEqual([`observations: 5 rows, 5 not observed (missing, denied, timeout, frobnicated, ${ELLIPSIS}): partial`]);
+    expect(notesFor(['observed', 'null', ...four, 'observed'])).toStrictEqual(['observations: 7 rows, 4 not observed (missing, denied, timeout, frobnicated): partial']);
+  });
+
+  it('SCG-R10 (d): a 24-character status word is listed whole, and four of them with the … stay inside the 200-byte bound', () => {
+    const longest = ['a', 'b', 'c', 'd'].map(letter => `${letter.repeat(23)}_`);
+    const [note] = observationNotes(project(withRows([...longest, `${'e'.repeat(23)}_`].map(status => row({status})))));
+    expect(note).toBe(`observations: 5 rows, 5 not observed (${longest.join(', ')}, ${ELLIPSIS}): partial`);
+    expect(Buffer.byteLength(note)).toBeLessThanOrEqual(200);
+  });
+
+  // A status word is listed only when it is a bounded word the shared label layout shows unchanged; any other not-observed word
+  // still counts and demotes, and the note marks it with … instead of rewriting it.
+  const UNLISTED: [string, string][] = [
+    ['empty', ''],
+    ['25 characters', 'a'.repeat(25)],
+    ['4096 characters', `stale_${'x'.repeat(4090)}`],
+    ['two words', 'stale inputs'],
+    ['a comma-joined pair', 'denied,timeout'],
+    ['an ellipsis', `denied${ELLIPSIS}`],
+    ['a terminal escape sequence', `denied${cp(0x1b)}[31m`],
+    ['a bidi override', `de${cp(0x202e)}nied`],
+    ['a zero-width space', `denied${cp(0x200b)}`],
+    ['a line break', `denied${cp(0x0a)}SECRET-STATUS-TAIL`],
+    ['a non-ASCII letter', `d${cp(0xe9)}nied`],
+    ['text the shared label layout redacts (an obviously fake prefixed key)', ['sk', 'ant', 'FAKEPLACEHOLDER'].join('-')],
+    ['text the shared label layout redacts (an obviously fake ghp key)', ['ghp', 'FAKEPLACEHOLDER'].join('_')],
+  ];
+  it('SCG-R10 (d): the unlisted-word table registers all 13 shapes', () => {
+    expect(UNLISTED.length).toBe(13);
+  });
+  it.each(UNLISTED)('SCG-R10 (d): a not-observed status word that is %s counts and demotes but is never listed: the note marks it …', (_name, status) => {
+    const topology = project(withRows([row({status}), row({status: 'denied'})]));
+    expect(topology.snapshots[0].coverage).toBe('partial');
+    expect(observationNotes(topology)).toStrictEqual([`observations: 2 rows, 2 not observed (denied, ${ELLIPSIS}): partial`]);
+    for (const text of surfaced(topology)) {
+      expect(text).not.toMatch(UNSAFE);
+      expect(text).not.toContain('SECRET-');
+      expect(text).not.toContain('FAKEPLACEHOLDER');
+    }
+    bounded(topology);
+  });
+
+  // The observations note is a partial-render note: after the errors and budget notes, before the release and engine notes.
+  const EVERY_NOTE: Json = {diagnostics_summary: {errors: 2, warnings: 0, has_errors: true, has_warnings: false}, budget: {formula_terms: formula({available_context_tokens: -40})},
+    provenance: {graph_revision_id: GRAPH, cli_version: '0.1.716', sdk_versions: {tsx_runtime: {distribution_version: '2.9.7', contract_fingerprint: 'unknown'}}}};
+  it('SCG-R10 (e): the observations note follows every partial-render note and precedes the release note; on the rf-cli seam no note is cut', () => {
+    const plain = project(withResult(EVERY_NOTE));
+    const topology = project(withRows([row({status: 'timeout'})], EVERY_NOTE));
+    expect(topology.diagnostics).toStrictEqual([...plain.diagnostics.slice(0, 4), 'observations: 1 row, 1 not observed (timeout): partial', ...plain.diagnostics.slice(4)]);
+    expect(topology.diagnostics).toHaveLength(8);
+    expect(topology.diagnostics.at(-1)).toBe('no native interval supplied');
+    bounded(topology);
+  });
+
+  // On the injected-fixture seam nine notes compete for MAX_DIAGNOSTICS (8) slots: the shared bound keeps the first eight, so the
+  // observations note always survives and the constant interval note is the one cut.
+  it('SCG-R10 (e): with the fixture-seam note as well the diagnostics stay at MAX_DIAGNOSTICS and the observations note is kept', () => {
+    const topology = project(withRows([row({status: 'denied'})], EVERY_NOTE), {...context, seam: 'injected-fixture'});
+    expect(topology.diagnostics).toHaveLength(8);
+    expect(topology.diagnostics.slice(2, 7)).toStrictEqual(['fixture seam: not a real generated context', 'render reported errors: partial, not a clean render',
+      'context exceeds the available budget: partial', 'observations: 1 row, 1 not observed (denied): partial', 'producer release from result.provenance.cli_version: rf@0.1.716']);
+    expect(topology.diagnostics.at(-1)).toBe('TSX engine identity from result.provenance.sdk_versions: a foreign runtime executed component source');
+    bounded(topology);
   });
 });
