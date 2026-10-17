@@ -1,3 +1,4 @@
 - [wb-xox](wb-xox.md) | receipts: per-bead receipt files under receipts/ replace the TRACEABILITY EOF-append for NEW receipts; historical TRACEABILITY frozen append-only | 2026-10-17
 - [wb-a3s](wb-a3s.md) | forge operations the Pi host starts are observed into the session projection from the server's own frames, so the booted workflow_control admits and cancels them over the retained connection | 2026-10-17
 - [wb-tz2.13](wb-tz2.13.md) | native-tier HX receipt names the runtime-licence invariant and the binary identity, never a verdict | 2026-10-17
+- [wb-tz2.14](wb-tz2.14.md) | HX_NATIVE_RECEIPT lines are printed with console.log, so the canonical forge run native-read (agent reporter) carries zero receipt lines: switch the two live HX tests to process.stdout.write and pin the call site in the HX live-tier census (test-only, wb-bj6 class) | 2026-10-17
