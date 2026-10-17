@@ -7,11 +7,12 @@
  * Every code point below is built with String.fromCodePoint so this file itself carries no raw guard point.
  */
 import { execFileSync, type SpawnSyncReturns, spawnSync } from "node:child_process";
-import { mkdtempSync, rmSync } from "node:fs";
-import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { GUARD_CODE_POINTS, isGuardCodePoint, scanCommitMessage, scanCommitMessages, scanCommitObject } from "../qa/workbench/commit-message-scan.mjs";
+import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
+
+installScratchLeakGuard();
 
 const SCRIPT = join(process.cwd(), "qa/workbench/commit-message-scan.mjs");
 const cp = (n: number): string => String.fromCodePoint(n);
@@ -124,7 +125,7 @@ function scrubGitEnv(source: NodeJS.ProcessEnv): NodeJS.ProcessEnv {
 const ZEROS = "0".repeat(40);
 const dirs: string[] = [];
 afterAll(() => {
-  for (const d of dirs) rmSync(d, { recursive: true, force: true });
+  removeScratch(...dirs);
 });
 
 interface Repo {
@@ -136,7 +137,7 @@ interface Repo {
 
 /** A throwaway repository whose git children never see an inherited repository-locating variable. */
 function makeRepo(inherited: NodeJS.ProcessEnv = process.env): Repo {
-  const dir = mkdtempSync(join(tmpdir(), "a9s-"));
+  const dir = makeScratch("a9s-");
   dirs.push(dir);
   const env: NodeJS.ProcessEnv = { ...scrubGitEnv(inherited), GIT_AUTHOR_NAME: "t", GIT_AUTHOR_EMAIL: "t@example.invalid", GIT_COMMITTER_NAME: "t", GIT_COMMITTER_EMAIL: "t@example.invalid", GIT_CONFIG_GLOBAL: "/dev/null", GIT_CONFIG_SYSTEM: "/dev/null" };
   const git = (...args: string[]): string => execFileSync("git", args, { cwd: dir, env, encoding: "utf8" }).trim();

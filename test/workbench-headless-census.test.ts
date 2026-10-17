@@ -14,8 +14,7 @@
  * mutant (H4). Measurement only: nothing under src/ is touched or mocked.
  */
 import { spawnSync } from "node:child_process";
-import { cpSync, existsSync, mkdtempSync, readFileSync, realpathSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
-import { tmpdir } from "node:os";
+import { cpSync, existsSync, readFileSync, realpathSync, symlinkSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { describe, expect, it } from "vitest";
@@ -28,6 +27,9 @@ import {
   exitCodeFor,
   MEASUREMENT_BOUND,
 } from "../qa/workbench/headless-census-receipt.mjs";
+import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
+
+installScratchLeakGuard();
 
 interface PiPackage {
   name: string;
@@ -387,7 +389,7 @@ describe("headless census runner over the built dist (H1, H4, H5)", () => {
   });
 
   it.skipIf(!built)("goes red naming src/ui/workflow-card.js when the detached host imports a UI module (mutant)", { timeout: 180_000 }, () => {
-    const scratch = mkdtempSync(join(tmpdir(), "hc."));
+    const scratch = makeScratch("hc.");
     try {
       cpSync(join(packageRoot, "dist"), join(scratch, "dist"), { recursive: true });
       cpSync(join(packageRoot, "package.json"), join(scratch, "package.json"));
@@ -401,7 +403,7 @@ describe("headless census runner over the built dist (H1, H4, H5)", () => {
       const finding = receipt?.findings.find(entry => entry.rule === "ui-module" && entry.module === "dist/ui/workflow-card.js");
       expect(finding?.chain).toEqual(["dist/workbench/hosts/local-detached.js", "dist/ui/workflow-card.js"]);
     } finally {
-      rmSync(scratch, { recursive: true, force: true });
+      removeScratch(scratch);
     }
   });
 
@@ -415,7 +417,7 @@ describe("headless census runner over the built dist (H1, H4, H5)", () => {
   });
 
   it.skipIf(!built)("measures a symlinked dist root as itself, not as an inactive tracer (F3)", { timeout: 120_000 }, () => {
-    const scratch = mkdtempSync(join(tmpdir(), "hc."));
+    const scratch = makeScratch("hc.");
     try {
       const link = join(scratch, "linked-root");
       symlinkSync(packageRoot, link, "dir");
@@ -427,12 +429,12 @@ describe("headless census runner over the built dist (H1, H4, H5)", () => {
       expect(receipt?.dist?.root).toBe(realpathSync(packageRoot));
       expect(receipt?.closure.length ?? 0).toBeGreaterThan(50);
     } finally {
-      rmSync(scratch, { recursive: true, force: true });
+      removeScratch(scratch);
     }
   });
 
   it.skipIf(!built)("the child itself traces from the real path when handed a symlinked dist root (F3)", { timeout: 120_000 }, () => {
-    const scratch = mkdtempSync(join(tmpdir(), "hc."));
+    const scratch = makeScratch("hc.");
     try {
       const link = join(scratch, "linked-root");
       symlinkSync(packageRoot, link, "dir");
@@ -449,7 +451,7 @@ describe("headless census runner over the built dist (H1, H4, H5)", () => {
       expect(measured.entryUrl).toBe(realEntry);
       expect(measured.edges.some(edge => edge.parent === realEntry)).toBe(true);
     } finally {
-      rmSync(scratch, { recursive: true, force: true });
+      removeScratch(scratch);
     }
   });
 
@@ -486,7 +488,7 @@ describe("TTY measurement is made inside the child on all three standard streams
 
   /** Runs the child under util-linux `script` so every stream left unredirected is a PTY. */
   function measureUnderPty(attached: Attached): { ttyFree: boolean | undefined; status: number | null } {
-    const scratch = mkdtempSync(join(tmpdir(), "hc."));
+    const scratch = makeScratch("hc.");
     try {
       const outFile = join(scratch, "out.json");
       const parts = [quote(process.execPath), quote(child), quote(packageRoot)];
@@ -505,7 +507,7 @@ describe("TTY measurement is made inside the child on all three standard streams
       const parsed = flag === undefined ? undefined : { ttyFree: flag === "true" };
       return { ttyFree: parsed?.ttyFree, status: run.status };
     } finally {
-      rmSync(scratch, { recursive: true, force: true });
+      removeScratch(scratch);
     }
   }
 
