@@ -33,7 +33,7 @@ export const LATENCY_PROVIDER_CLASSES: Readonly<Record<string, LatencyClass>> = 
   "pi-workflow": "host",
 });
 /** Why a figure is unmeasured or partial, in the order a report lists them. */
-export const LATENCY_REASONS = Object.freeze(["page-truncated", "open-intervals", "missing-intervals", "no-root-interval", "no-native-usage", "single-interval-per-node", "components-exceed-wall"] as const);
+export const LATENCY_REASONS = Object.freeze(["page-truncated", "open-intervals", "missing-intervals", "no-root-interval", "no-native-usage", "single-interval-per-node", "components-exceed-wall", "components-outside-wall"] as const);
 export type LatencyReason = (typeof LATENCY_REASONS)[number];
 export const LATENCY_CAVEAT = "Closed source intervals only; cross-provider clocks are not reconciled and open or missing intervals are counted, never summed.";
 
@@ -117,11 +117,13 @@ function classOf(provider: string): LatencyClass {
   return Object.hasOwn(LATENCY_PROVIDER_CLASSES, provider) ? LATENCY_PROVIDER_CLASSES[provider] : "other";
 }
 
-/** Producer text bound for display: the shared helper's label layout (normalize, redact, strip once, deletion never
- * before redaction), then a cut to `most` characters that never leaves half a surrogate pair. */
+/** Producer text through the shared helper's label layout (normalize, redact, strip once, deletion never before redaction). */
+function sanitizedText(raw: unknown): string {
+  return typeof raw === "string" ? sanitizeWorkbenchText(raw.slice(0, MAX_PROVIDER_SCAN), MAX_PROVIDER_SCAN, "label") : "";
+}
+/** Producer text bound for display: the sanitized text, then a cut to `most` characters that never leaves half a surrogate pair. */
 function displayText(raw: unknown, most: number): string {
-  if (typeof raw !== "string") return "";
-  const shown = sanitizeWorkbenchText(raw.slice(0, MAX_PROVIDER_SCAN), MAX_PROVIDER_SCAN, "label");
+  const shown = sanitizedText(raw);
   if (shown.length <= most) return shown;
   const last = shown.charCodeAt(most - 1);
   return shown.slice(0, last >= 0xd800 && last <= 0xdbff ? most - 1 : most);
@@ -145,18 +147,25 @@ function unionMs(spans: readonly Interval[]): number {
   return total + (started ? to - from : 0);
 }
 
+/** An evidence ref is kept whole or not at all: the drop is decided on the SANITIZED length before any cut, because a
+ * truncated ref is a wrong ref. */
+function evidenceText(raw: unknown): string {
+  const shown = sanitizedText(raw);
+  return shown.length <= MAX_EVIDENCE_CHARS ? shown : "";
+}
+
 function evidenceOf(nodes: readonly ObservedNode[], first?: ObservedNode): string[] {
   const seen = new Set<string>();
   const ordered: string[] = [];
   const add = (node: ObservedNode, sort: boolean): void => {
-    const shown = [...node.evidenceRefs].map(item => displayText(item, MAX_EVIDENCE_CHARS + 1)).filter(item => item !== "" && item.length <= MAX_EVIDENCE_CHARS);
+    const shown = [...node.evidenceRefs].map(evidenceText).filter(item => item !== "");
     for (const item of sort ? shown.sort(byText) : shown) if (!seen.has(item)) { seen.add(item); ordered.push(item); }
   };
   if (first) add(first, false);
   const rest: string[] = [];
   for (const node of nodes) if (node !== first) for (const item of node.evidenceRefs) {
-    const shown = displayText(item, MAX_EVIDENCE_CHARS + 1);
-    if (shown !== "" && shown.length <= MAX_EVIDENCE_CHARS && !seen.has(shown)) rest.push(shown);
+    const shown = evidenceText(item);
+    if (shown !== "" && !seen.has(shown)) rest.push(shown);
   }
   for (const item of [...new Set(rest)].sort(byText)) if (!seen.has(item)) { seen.add(item); ordered.push(item); }
   return ordered.slice(0, MAX_EVIDENCE_LISTED);
@@ -257,6 +266,8 @@ export function selectLatencyDecomposition(projection: Projection, input: Latenc
   if (missing > 0) overheadReasons.push("missing-intervals");
   const componentsMs = unionMs(everyClosed);
   if (wall.measured && overheadReasons.length === 0 && componentsMs > wall.ms) overheadReasons.push("components-exceed-wall");
+  // A closed component interval must lie inside the closed root interval, or its overhead share is not the wall's.
+  else if (rootSpan?.state === "closed" && overheadReasons.length === 0 && everyClosed.some(span => span.startMs < rootSpan.startMs || span.endMs > rootSpan.endMs)) overheadReasons.push("components-outside-wall");
   const overhead: LatencyOverhead = wall.measured && overheadReasons.length === 0 ? { measured: true, ms: wall.ms - componentsMs } : { measured: false, reasons: overheadReasons };
 
   return bounded({

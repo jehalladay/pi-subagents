@@ -708,8 +708,9 @@ describe("acceptance 6: docs/workbench/12 § Input and output hardening: \"Valid
 
   it("sanitizes the same way when the real projection admits an 8-bit CSI, a bidi override and a zero-width character", () => {
     const model = buildTimelineLanes(hostileFixture(hostile("\u009b31m")), request());
-    expectSanitized(laneOf(model, keyOf(parent)).label, "31m");
-    expectSanitized(rowOf(model, parent).title, "31m");
+    // wb-xbq: the 8-bit CSI is one escape unit, as its 7-bit form is, so none of it is displayed: the same prefix as above.
+    expectSanitized(laneOf(model, keyOf(parent)).label, "");
+    expectSanitized(rowOf(model, parent).title, "");
   });
 
   it("admits from a producer stand-in only this scope's and this invocation's rows, each once and at most limit, in the known vocabulary", () => {

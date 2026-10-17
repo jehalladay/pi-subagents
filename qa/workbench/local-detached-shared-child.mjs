@@ -14,7 +14,7 @@ import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {faultProviderSource} from './local-detached-faults-receipt.mjs';
-import {buildSharedChildReceipt, exitCodeFor, SHARED_CHILD_CASES} from './local-detached-shared-child-receipt.mjs';
+import {buildSharedChildReceipt, exitCodeFor, reachedTerminal, SHARED_CHILD_CASES} from './local-detached-shared-child-receipt.mjs';
 
 const HOLD_MS = 2500;
 const BOUND_MS = 6000;
@@ -295,7 +295,7 @@ async function readerCloseJourney() {
 
 async function nonOwnerStopJourney() {
   const id = 'shared-nonowner';
-  await launch(id, READ_ONLY_PERMISSIONS);
+  const receipt = await launch(id, READ_ONLY_PERMISSIONS);
   const first = reader(id);
   const second = reader(id);
   const live = await until(async () => ({snapshot: await first.inspect(), markers: markerCount(id)}), state => running(state.snapshot) && state.markers >= 1);
@@ -315,6 +315,7 @@ async function nonOwnerStopJourney() {
   return {
     armed: live.ok && finished.ok,
     invocationId: id,
+    hostPid: receipt.pid,
     cancelRefusal,
     shutdownRefusal,
     observationAfter: after.observation,
@@ -327,7 +328,7 @@ async function nonOwnerStopJourney() {
 
 async function ownerStopJourney() {
   const id = 'shared-owner';
-  await launch(id, ALL_PERMISSIONS);
+  const receipt = await launch(id, ALL_PERMISSIONS);
   const owner = reader(id);
   const live = await until(async () => ({snapshot: await owner.inspect(), markers: markerCount(id)}), state => running(state.snapshot) && state.markers >= 1);
   const closed = await readerProcess(id);
@@ -336,12 +337,14 @@ async function ownerStopJourney() {
   const startedAt = performance.now();
   const reply = await owner.cancel('shared-child journey: explicit owner stop after a reader closed');
   const firstInspect = await owner.inspect();
-  const finished = await until(() => owner.inspect(), snapshot => snapshot.terminal === 'cancelled');
+  // Arm on ANY reached terminal: a non-cancelled terminal after the owner stop is the judge's finding, not an unrealised run.
+  const finished = await until(() => owner.inspect(), reachedTerminal);
   if (!live.ok) diagnostics.push(`${id}: the child did not reach observed-running with its effect marker.`);
-  if (!finished.ok) diagnostics.push(`${id}: the child did not reach cancelled after the explicit owner stop.`);
+  if (!finished.ok) diagnostics.push(`${id}: the child did not reach a terminal after the explicit owner stop.`);
   return {
     armed: live.ok && finished.ok && closed.report.attached === true,
     invocationId: id,
+    hostPid: receipt.pid,
     readerClosedFirst: closed.exited === true && closed.report.attached === true,
     markersBeforeStop,
     terminalBeforeStop: typeof before.terminal === 'string' ? before.terminal : null,

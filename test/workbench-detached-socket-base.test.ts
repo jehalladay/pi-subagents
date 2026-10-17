@@ -16,6 +16,7 @@ import {
   launchDetachedWorkflow,
   resolveDetachedSocket,
 } from "../src/workbench/hosts/local-detached.js";
+import { sanitizeWorkbenchText, WORKBENCH_TEXT_LIMIT } from "../src/workbench/redaction.js";
 import { ctx, hermeticDir, makePi } from "./helpers/boot-extension.js";
 
 const uid = process.getuid?.() ?? 0;
@@ -53,6 +54,18 @@ const TMPDIR_SOCKET_SUFFIX_BYTES = Buffer.byteLength(`/pw-${uid}-XXXXXX/${"0".re
 const NO_RUN_USER = "/nonexistent-run-user";
 const DETACHED_SETTINGS = { workflowsEnabled: true, workbench: { workflowAgentBackend: "claude", capabilityGrants: ["workbench:detach", "workbench:observe"] } };
 function privateDirRefusal(path: string): string { return `Authorization: directory must be owned by uid ${uid} with exact private permissions: ${path}.`; }
+/** wb-a3j legibility: every reply-parse site below goes through jsonReply. The reply must be JSON; a refusal text where a
+ * receipt or snapshot was expected fails NAMING that text, never as JSON.parse's opaque `"Authorizat"... is not valid JSON`
+ * (which hid both measured occurrences). The text is shown as the shared display sanitizer renders it, in the named
+ * "terminal" layout: the failure prints in the runner's terminal and in the gate's captured log. */
+function jsonReply<T>(site: string, reply: string): T {
+  let value: unknown;
+  try { value = JSON.parse(reply); }
+  catch { throw new Error(`${site}: expected a JSON reply, received: ${sanitizeWorkbenchText(reply, WORKBENCH_TEXT_LIMIT, "terminal")}`); }
+  return value as T;
+}
+/** An obviously fake credential-shaped placeholder (standing rule 7), never a real key. */
+const FAKE_KEY = "sk-ant-api03-FAKE-PLACEHOLDER-NOT-A-REAL-KEY-0000";
 
 describe("detached socket base selection (wb-71q)", () => {
   it("pins the Linux sun_path bound the refusal names", () => {
@@ -126,6 +139,24 @@ describe("detached socket base selection (wb-71q)", () => {
     expect(resolveDetachedSocket("/b/dir", "one", options).socket).not.toBe(a.socket);
   });
 
+  it("fails a reply-parse site NAMING the sanitized refusal text instead of an opaque JSON.parse error (wb-a3j legibility)", () => {
+    const refusal = `Authorization: socket must be owned by uid ${uid} with exact private permissions: /tmp/rt-a3j/pw-${uid}/0123456789abcdef.sock.`;
+    expect(() => jsonReply("launch receipt", refusal)).toThrow(`launch receipt: expected a JSON reply, received: ${refusal}`);
+    // The text shown is the shared sanitizer's in the named "terminal" layout, never the raw reply: the fixture renders
+    // four different ways under the four layouts (a bell between words, a doubled space, a line break, an escape, an
+    // invisible, a key).
+    const hostile = `Authorization:  socket\u0007refused \u001b[31m${FAKE_KEY}\u200B now.\nretry`;
+    const layouts = (["text", "terminal", "label", "lines"] as const).map(layout => sanitizeWorkbenchText(hostile, WORKBENCH_TEXT_LIMIT, layout));
+    expect(new Set(layouts).size).toBe(4);
+    let shown = "";
+    try { jsonReply("inspect snapshot", hostile); } catch (error) { shown = error instanceof Error ? error.message : String(error); }
+    expect(shown).toBe(`inspect snapshot: expected a JSON reply, received: ${layouts[1]}`);
+    expect(shown).toContain("[REDACTED]"); expect(shown).not.toContain(FAKE_KEY);
+    for (const unsafe of ["\u0007", "\u001b", "\u200B"]) expect(shown).not.toContain(unsafe);
+    // A JSON reply parses unchanged.
+    expect(jsonReply<{ pid: number; socketBase: string }>("launch receipt", '{"pid":7,"socketBase":"/tmp/rt-a3j"}')).toEqual({ pid: 7, socketBase: "/tmp/rt-a3j" });
+  });
+
   it("routes the over-limit refusal, which names an env-derived base, through the shared reply sanitizer and never burns the id (display path)", async () => {
     saveEnv();
     const secret = "sk-ant-api03-abcDEF0123456789abcDEF0123456789";
@@ -154,14 +185,15 @@ describe("detached socket base selection (wb-71q)", () => {
     const pi = makePi(); subagentsExtension(pi.pi); const context = ctx({ cwd: sandbox.dir }); await pi.lifecycle.get("session_start")?.({}, context);
     const tool = pi.tools.get("workflow_detached");
     const launched = await tool.execute("launch", { action: "launch", invocationId: "sock-base", scriptPath: path, trustedScript: true, backend: "deterministic" }, undefined, undefined, context);
-    const receipt = JSON.parse(launched.content[0].text) as { pid: number; socketPath: string; socketBase: string };
+    const receipt = jsonReply<{ pid: number; socketPath: string; socketBase: string }>("launch receipt (60-byte TMPDIR)", launched.content[0].text);
     hosts.push(receipt.pid);
     expect(receipt.socketBase).toBe(xdg); expect(receipt.socketPath.startsWith(`${xdg}/`)).toBe(true);
     // Reattachment must not depend on the env at connect time.
     delete process.env.XDG_RUNTIME_DIR;
     const inspect = async () => (await tool.execute("inspect", { action: "inspect", invocationId: "sock-base" }, undefined, undefined, context)).content[0].text as string;
-    let observed = JSON.parse(await inspect());
-    for (let i = 0; i < 100 && !observed.terminal; i++) { await new Promise(r => setTimeout(r, 20)); observed = JSON.parse(await inspect()); }
+    const snapshot = async () => jsonReply<{ terminal?: string; result?: unknown }>("inspect snapshot", await inspect());
+    let observed = await snapshot();
+    for (let i = 0; i < 100 && !observed.terminal; i++) { await new Promise(r => setTimeout(r, 20)); observed = await snapshot(); }
     expect(observed.terminal).toBe("completed"); expect(observed.result).toBe(42);
     // A client refuses to connect once the recorded socket directory stops being private (gate mutant M7).
     const socketDir = dirname(receipt.socketPath);
@@ -176,7 +208,7 @@ describe("detached socket base selection (wb-71q)", () => {
     const forged = await inspect();
     writeFileSync(receiptFile, recorded);
     expect(forged).toBe("Authorization: receipt socket path invalid.");
-    expect(JSON.parse(await inspect()).terminal).toBe("completed");
+    expect((await snapshot()).terminal).toBe("completed");
   }, 30000);
 
   it("validates the pw-<uid> socket directory BEFORE reserving the invocation id, so a refused socket dir never burns the id (gate fold F1)", async () => {
@@ -193,7 +225,7 @@ describe("detached socket base selection (wb-71q)", () => {
     expect(await launch()).toBe(privateDirRefusal(socketDir));
     expect(existsSync(reserved)).toBe(false);
     chmodSync(socketDir, 0o700);
-    const receipt = JSON.parse(await launch()) as { pid: number; socketPath: string; socketBase: string };
+    const receipt = jsonReply<{ pid: number; socketPath: string; socketBase: string }>("relaunch receipt (F1 order)", await launch());
     hosts.push(receipt.pid);
     expect(receipt.socketBase).toBe(xdg); expect(dirname(receipt.socketPath)).toBe(socketDir);
     expect(existsSync(reserved)).toBe(true);
@@ -262,7 +294,7 @@ describe("detached invocation reuse, socket placement and cleanup (wb-70b)", () 
     const path = join(sandbox.dir, "pure.js"); writeFileSync(path, 'export const meta={name:"detached",description:"local computation"}; return 42;');
     const pi = makePi(); subagentsExtension(pi.pi); const context = ctx({ cwd: sandbox.dir }); await pi.lifecycle.get("session_start")?.({}, context);
     const launch = async () => (await pi.tools.get("workflow_detached").execute("launch", { action: "launch", invocationId: "reuse-me", scriptPath: path, trustedScript: true, backend: "deterministic" }, undefined, undefined, context)).content[0].text as string;
-    hosts.push((JSON.parse(await launch()) as { pid: number }).pid);
+    hosts.push(jsonReply<{ pid: number }>("first launch receipt (R2 display path)", await launch()).pid);
     const reply = await launch();
     expect(reply).toMatch(/conflict/i); expect(reply).toContain("reuse-me");
     expect(reply).not.toMatch(/EEXIST|file already exists/);

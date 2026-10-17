@@ -221,7 +221,8 @@ describe("R2 docs/workbench/20 § Types and docs/workbench/09 § Data retention 
     const content = await load({
       lines: ["Authorization: Bearer abc123", "\u001b[31mred alert\u001b[0m", "left\u202eright", "zero\u200bwidth\u200c\u200d\u2060join", "\ufeffbom", "tab\tseparated", "bell\u0007 and \u009bcsi"],
     });
-    expect(content.preview).toStrictEqual(["Authorization: [REDACTED]", "red alert", "leftright", "zerowidthjoin", "bom", "tab separated", "bell and csi"]);
+    // wb-xbq: "\u009bc" is one 8-bit CSI (final byte c), as "\u001b[c" is, so the c is part of the escape and not displayed.
+    expect(content.preview).toStrictEqual(["Authorization: [REDACTED]", "red alert", "leftright", "zerowidthjoin", "bom", "tab separated", "bell and si"]);
     for (const line of content.preview) {
       expect(line).not.toMatch(UNSAFE);
       expect(line.length).toBeLessThanOrEqual(200);
