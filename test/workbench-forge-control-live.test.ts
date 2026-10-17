@@ -7,25 +7,28 @@
  * and acknowledged are distinct, the acknowledged phase echoes the server's own CancelReceipt verbatim, and no
  * result is minted from an acknowledgement — the operation's own terminal envelope is recorded beside it.
  *
- * STRICT-READING LIMIT (named, never papered over): the BOOTED extension's projection admits no forge-operation
- * nodes (wb-a3s), so the booted registered tool cannot permit a forge target yet. The journey runs the registered
- * tool's own constructor and executor with a harness-owned projection fed exclusively from the server's
- * operation.started frames, and the receipt records the strict booted-tool reading as UNREALISED citing wb-a3s.
+ * STRICT READING (wb-a3s): the last row boots the REAL extension and drives only its registered tools — forge_gate_run
+ * starts the operation over a connection the booted process keeps and observes into its own session projection, and
+ * workflow_control admits the forge target the ordinary way (observed in scope, owned by the server's own step frame)
+ * and cancels it over that retained connection. The earlier rows keep the harness-owned projection so each falsifier
+ * is isolated at the seam; the strict row is where admission is measured through the registered tool itself.
  *
  * Runs ONLY from its own forge command (vitest.forge-control-live.config.ts); excluded from the default gate.
  * Exit semantics: an absent forge binary or SDK is honest unavailability (the suite fails naming it, never skips).
  */
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { readFileSync, realpathSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, realpathSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { OperationClient, ServerConnection } from "@forge/sdk";
 import { afterAll, describe, expect, it } from "vitest";
+import subagentsExtension from "../src/index.js";
 import { createWorkflowControlTool, type WorkflowControlDeps } from "../src/workbench/control-tool.js";
 import type { ForgeCancelOperations } from "../src/workbench/forge-control.js";
 import { createRetainedForgeControlExecutor, retainForgeOperation } from "../src/workbench/forge-control-retention.js";
 import { type NativeRef, ObservationProjection, type ObservationScope, type Relation } from "../src/workbench/observation.js";
 import type { WorkflowTask } from "../src/workflow/task.js";
+import { ctx, hermeticDir, makePi, textOf } from "./helpers/boot-extension.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
 
 installScratchLeakGuard();
@@ -74,14 +77,14 @@ const scenario = (name: string, realised: boolean, detail: string): void => {
   receipt.scenarios[name] = { realised, detail };
 };
 afterAll(() => {
-  scenario("strict-booted-tool-reading", false,
-    "UNREALISED: the booted extension's projection admits no forge-operation nodes (wb-a3s), so the booted registered tool cannot permit a forge target; this journey ran the registered tool's constructor and production executor with a harness-owned projection fed only from operation.started frames.");
+  if (receipt.scenarios["strict-booted-tool-reading"] === undefined) {
+    scenario("strict-booted-tool-reading", false, "UNREALISED: the booted-extension row did not record its outcome.");
+  }
   process.stdout.write(`\nFORGE_CONTROL_LIVE_RECEIPT ${JSON.stringify(receipt)}\n`);
 });
 
 /** A disposable fixture package whose explicit gate runs one bounded long command. */
-function fixtureWorkspace(sleepSeconds: number): string {
-  const dir = makeScratch("fgc-");
+function fixtureWorkspace(sleepSeconds: number, dir = makeScratch("fgc-")): string {
   writeFileSync(join(dir, "forge.toml"),
     `[package]\nname = "fgc-fixture"\ntype = "code"\nversion = "0.0.1"\nlanguage = "python"\n\n[build]\nbackend = "python"\ngate = ["long"]\n\n[build.commands.long]\ncommand = "sleep ${sleepSeconds}"\ntimeout = ${sleepSeconds + 60}\n`);
   return dir;
@@ -286,6 +289,48 @@ describe("live forge adverse cancellation journey (wb-6hb.5)", () => {
     } finally {
       release();
       removeScratch(root);
+    }
+  }, 120_000);
+
+  it("STRICT (wb-a3s): the BOOTED extension's registered forge_gate_run and workflow_control admit and cancel a real operation over the retained connection", async () => {
+    const sandbox = hermeticDir({ settings: { workflowsEnabled: true, workbench: { workflowAgentBackend: "claude", capabilityGrants: ["forge:run", GRANT] } } });
+    const pkg = join(sandbox.dir, "pkg");
+    mkdirSync(pkg, { recursive: true });
+    fixtureWorkspace(90, pkg);
+    const pi = makePi();
+    subagentsExtension(pi.pi);
+    const context = ctx({ cwd: sandbox.dir });
+    await pi.lifecycle.get("session_start")?.({}, context);
+    const call = async (tool: string, params: Record<string, unknown>): Promise<string> =>
+      textOf(await pi.tools.get(tool).execute("live-booted", params, undefined, undefined, context));
+    try {
+      receipt.verbCounts["gate.run"] += 1;
+      const started = JSON.parse(await call("forge_gate_run", { target: pkg })) as { contract: string; operationId: string; completion: string };
+      expect(started.contract).toBe("workbench.forge-gate-run/v1");
+      expect(started.completion).toBe("not-asserted");
+      receipt.nativeOperationIds.push(started.operationId);
+      record("booted-requested", `registered forge_gate_run started ${started.operationId}; registered workflow_control cancel under ${GRANT}`);
+      // Admission needs the server's own step statement; the gate's first step starts within moments of the operation.
+      let reply: Reply = { ok: false, invoked: false, status: "unsent" };
+      const deadline = Date.now() + 30_000;
+      do {
+        reply = JSON.parse(await call("workflow_control", cancelParams({ provider: "forge", type: "operation", id: started.operationId }))) as Reply;
+        if (reply.error?.code !== "no-confirmed-ownership") break;
+        await new Promise(resolve => setTimeout(resolve, 200));
+      } while (Date.now() < deadline);
+      receipt.verbCounts["operation.cancel"] += 1;
+      record("booted-acknowledged", JSON.stringify({ status: reply.status, control: reply.control ?? null }).slice(0, 400));
+      expect(reply.ok).toBe(true);
+      expect(reply.invoked).toBe(true);
+      expect(reply.status).toBe("acknowledged");
+      const foreign = JSON.parse(await call("workflow_control", cancelParams({ provider: "forge", type: "operation", id: "op-never00000000000000000000000000" }))) as Reply;
+      expect(foreign.ok).toBe(false);
+      expect(foreign.error?.code).toBe("cross-scope");
+      scenario("strict-booted-tool-reading", true,
+        `the booted extension's registered tools admitted and cancelled ${started.operationId}: projection admission measured through workflow_control itself, over the connection forge_gate_run retained; a never-started id stayed cross-scope`);
+    } finally {
+      await pi.lifecycle.get("session_shutdown")?.({}, context);
+      sandbox.restore();
     }
   }, 120_000);
 });

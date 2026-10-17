@@ -100,6 +100,8 @@ const CARRIERS: Readonly<Record<string, string>> = {
   "workbench.graph-view/v1": "workbench/graph-view.ts",
   // wb-4ap.2: Forge's own invalidation-basis kind, carried once by the one adapter that reads a package's derived_from under it.
   "invalidation-basis/v2": "workbench/forge-observer.ts",
+  // wb-a3s: the forge_gate_run tool's reply contract, spelled once where the registered tool composes its reply.
+  "workbench.forge-gate-run/v1": "index.ts",
 };
 
 /**
