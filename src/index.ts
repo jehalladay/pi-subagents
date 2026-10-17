@@ -69,6 +69,7 @@ import { getLifetimeCost, getLifetimeTotal, getSessionContextPercent, type Lifet
 import { type CapabilityDescriptor, CapabilityRegistry } from "./workbench/capability-registry.js";
 import { type CompareRun, catalogWorkflows, compareWorkflowRuns, inspectWorkflowSource, validateWorkflowSource } from "./workbench/designer.js";
 import { createWorkbenchEvidenceStore } from "./workbench/evidence-wiring.js";
+import { createWorkflowExecuteTool, type ExecuteLaunch } from "./workbench/execute-tool.js";
 import { FurnaceObserver } from "./workbench/furnace-observer.js";
 import { captureInvocationIdentity, type IdentityCaptureInput, identityDigest, verifyInvocationIdentity, WORKFLOW_SCRIPT_SCHEMA_VERSION } from "./workbench/identity.js";
 import { loadWorkbenchNative, workbenchNative } from "./workbench/native-modules.js";
@@ -2477,6 +2478,52 @@ Terse command-style prompts produce shallow, generic work.
     };
   }
 
+  /** A native reference scope the pure reply builder admits (clean text within its 256-byte identity bound), else none. */
+  function referenceScope(path: string): { scope: string } | Record<string, never> {
+    return Buffer.byteLength(path) <= 256 && stripUnsafeText(path) === path ? { scope: path } : {};
+  }
+  // workflow_execute launchers (wb-syh). Each receives the admission and its host-bound provenance (principal,
+  // workspace scope, session, grant, admission policy); neither reads authority from the model, and each resolves to
+  // the native references the host can report now, never to completion.
+  async function launchEmbeddedWorkflow(ctx: ExtensionContext, launch: ExecuteLaunch): Promise<readonly NativeRef[]> {
+    if (!isWorkflowsEnabled()) throw new Error("Workflows are disabled in this session.");
+    const meta = extractMeta(launch.source.source).meta;
+    const runId = launch.invocationId;
+    let journalPath: string | undefined;
+    try {
+      const dir = sessionTaskDir(ctx.cwd, ctx.sessionManager.getSessionId());
+      writeFileSync(join(dir, `${runId}.workflow.js`), launch.source.source, "utf-8");
+      journalPath = join(dir, `${runId}.workflow.jsonl`);
+    } catch (err) {
+      console.warn(`[pi-subagents] could not persist workflow script: ${err instanceof Error ? err.message : String(err)}`);
+    }
+    const task = createWorkflowTask({
+      id: runId, script: launch.source.source, scriptPath: launch.source.sourceRef, args: launch.input, meta,
+      toolCallId: launch.toolCallId, ...(journalPath !== undefined ? { journalPath } : {}),
+    });
+    workflowTasks.set(runId, task);
+    widget.update();
+    fleet.update();
+    // Background, like SubagentWorkflow: the reference comes back now and completion is read through workflow_observe.
+    void runWorkflowTask(ctx, task).then(() => notifyWorkflowFinished(task));
+    return [{ provider: "pi-workflow", type: "task", id: runId, ...referenceScope(launch.scope.workspace) }];
+  }
+  async function launchDetachedWorkflow(ctx: ExtensionContext, launch: ExecuteLaunch): Promise<readonly NativeRef[]> {
+    const settings = sourceSettings(ctx);
+    const claude = settings?.workflowAgentBackend === "claude";
+    // The review assertion is the operator's own: a digest-pinned saved source launched under the execute+detach conjunction.
+    const receipt = await workbenchNative().launchDetachedWorkflow({
+      directory: join(getAgentDir(), "workbench-detached"), invocationId: launch.invocationId, scriptPath: launch.source.sourceRef,
+      cwd: ctx.cwd, input: launch.input, trustedScript: true, backend: claude ? "claude" : "deterministic",
+      providers: [], grants: [], permissions: ["inspect", "execute"], sourceFiles: [launch.source.sourceRef],
+      ...(claude ? { claude: { model: settings?.model, tools: settings?.tools ?? [], roles: settings?.roles } } : {}),
+    });
+    return [
+      { provider: "local-detached", type: "invocation", id: receipt.invocationId, ...referenceScope(receipt.invocationDirectory) },
+      { provider: "local-detached", type: "host-instance", id: receipt.hostInstanceId },
+    ];
+  }
+
   // Both tools are registered through Pi, so their permissions apply on the
   // real model path; neither accepts a caller-supplied principal or workspace.
   async function registerWorkbenchTools(ctx: ExtensionContext): Promise<void> {
@@ -2656,6 +2703,19 @@ Terse command-style prompts produce shallow, generic work.
       localPrincipal,
       sessionIdOf: toolCtx => toolCtx.sessionManager.getSessionId(),
       now: () => new Date().toISOString(),
+    }));
+    // workflow_execute (wb-syh): the launch tool over the pure admission module in execute.ts. Grants, principal,
+    // workspace and session come from host context on every call; a script definition's id is its saved source
+    // path (designer.ts) and the shell re-checks the pinned digest against the bytes before either launcher runs.
+    pi.registerTool(createWorkflowExecuteTool({
+      grants,
+      observerScope,
+      localPrincipal,
+      sessionIdOf: toolCtx => toolCtx.sessionManager.getSessionId(),
+      mintInvocationId: workflowRunId,
+      resolveSource: (definition, cwd) => inspectWorkflowSource({ scriptPath: definition.id }, cwd),
+      launchEmbedded: launchEmbeddedWorkflow,
+      launchDetached: launchDetachedWorkflow,
     }));
   }
 
@@ -4463,6 +4523,9 @@ Write the file using the write tool. Only write the file, nothing else.`;
         scope: () => { const c = currentCtx as unknown as ExtensionCommandContext | undefined; return c ? observerScope(c) : undefined; },
         projection,
         cwd: () => (currentCtx as unknown as ExtensionCommandContext | undefined)?.cwd,
+        // The one place the host clock enters the evidence path (wb-idq): every
+        // capturedAt below is stamped from this injection, never from a fallback.
+        now: () => new Date(),
         // The forge evidence re-read goes through the same registry the workflow
         // tools use, so one authorization ladder governs both (wb-6ze.17).
         registry: workspace => registryFor(workspace),
@@ -4481,7 +4544,8 @@ Write the file using the write tool. Only write the file, nothing else.`;
       const rows = await (await loadWorkbenchNative()).readClaudeTranscript(sessionId, ctx.cwd);
       const text = rows.length === 0
         ? `No Claude transcript available for session ${sessionId}.`
-        : rows.map(row => `${row.type}: ${row.text}`).join("\n\n");
+        // A row the adapter cut at its bound says so on its own line, so a bounded row never reads as whole (wb-idq).
+        : rows.map(row => `${row.type}: ${row.text}${row.clipped ? "\n… truncated (row bound)" : ""}`).join("\n\n");
       await ctx.ui.editor(`Claude session ${sessionId}`, text);
     },
     // Read lazily: `currentCtx` is rebound on every session_start, and the
