@@ -49,6 +49,7 @@
  * mutates a pinned file of another census.
  */
 import { spawn } from "node:child_process";
+import { createHash } from "node:crypto";
 import { copyFileSync, existsSync, mkdirSync, readFileSync, realpathSync, statSync, symlinkSync, utimesSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -56,8 +57,10 @@ import { marked } from "marked";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import {
   type CasePin,
+  CENSUS_GUARD_SHA256,
   type CensusCode,
   type CensusLeg,
+  censusGuard,
   DEFAULT_GATE_TIER,
   DEFAULT_TIER_REPORT,
   type DocsSection,
@@ -1481,9 +1484,49 @@ interface ConfigRow {
   readonly verdict: Expected;
   /** Report mode's verdict (over the oracle's own report of the row's default gate) where it differs. */
   readonly report?: Expected;
+  /** u62 respin-5: the row's config names no census guard (the census itself must refuse the absent read). */
+  readonly unguarded?: boolean;
 }
 
 const CFG_TARGET = "test/cfg-target.test.ts";
+
+/** u62 respin-5: the prototype write of the gate-3 r4 P rows (a non-enumerable Object.prototype.fails). */
+const PROTO_FAILS = 'Object.defineProperty(Object.prototype, "fails", { value: true, configurable: true, writable: true });';
+/** u62 respin-5 F1: a relative module that never touches vitest places a fixtures registry on Object.prototype. */
+const FIXTURES_HELPER = [
+  'const registrations = new Map([["census", { name: "census", auto: true, scope: "test", value: async (context: { task: { fails?: boolean } }, use: (value: number) => Promise<void>) => {',
+  "  context.task.fails = true;",
+  "  await use(1);",
+  "} }]]);",
+  'Object.defineProperty(Object.prototype, "fixtures", { value: { get: () => registrations }, configurable: true, writable: true });',
+  "export {};",
+  "",
+].join("\n");
+/** u62 respin-5 RS1 / RS2: code that runs BEFORE the guard - the config module sets a worker preload through NODE_OPTIONS. */
+/** respin-4 T2-T4 print from a setup file after the guard; the parent's argv is the vitest command line the census ran. */
+const PRINT_AFTER_GUARD = 'setupFiles: ["./census-guard.ts", "./census-print.setup.ts"], sequence: { setupFiles: "list" }';
+const PARENT_ARGV = 'import { readFileSync } from "node:fs";\nconst PARENT = readFileSync("/proc/" + process.ppid + "/cmdline", "utf8").split("\\u0000");\n';
+const PRELOAD_PRELUDE = 'process.env.NODE_OPTIONS = ((process.env.NODE_OPTIONS ?? "") + " --import " + process.cwd() + "/census-preload.mjs").trim();';
+/** RS2: a preload that first replaces the two builtins the guard calls, then places fails on Object.prototype (the named residual). */
+const TAMPER_PRELOAD = [
+  "const proto = Object.getPrototypeOf({});",
+  "const describeOwn = Object.getOwnPropertyDescriptor;",
+  "const defineOwn = Object.defineProperty;",
+  'const hidden = key => key === "fails" || key === "fixtures";',
+  "Object.getOwnPropertyDescriptor = (target, key) => (target === proto && hidden(key) ? undefined : describeOwn(target, key));",
+  "Object.defineProperty = (target, key, descriptor) => (target === proto && hidden(key) ? target : defineOwn(target, key, descriptor));",
+  'defineOwn(proto, "fails", { get: () => true, set: () => undefined, configurable: true, enumerable: false });',
+  "",
+].join("\n");
+/** RS2 for fixtures: the same builtin replacement, then the F1 registry placed on Object.prototype (plain JS: a preload is not transformed). */
+const TAMPER_FIXTURES_PRELOAD = [
+  ...TAMPER_PRELOAD.split("\n").slice(0, 6),
+  'const registrations = new Map([["census", { name: "census", auto: true, scope: "test", value: async (context, use) => { context.task.fails = true; await use(1); } }]]);',
+  'defineOwn(proto, "fixtures", { value: { get: () => registrations }, configurable: true, writable: true, enumerable: false });',
+  "",
+].join("\n");
+const CFG_FAILING = "() => {\n    expect(1).toBe(2);\n  }";
+const CFG_PLAIN_FAILING = `  it("${PIN}", ${CFG_FAILING});`;
 
 
 const CONFIG_ROWS: readonly ConfigRow[] = [
@@ -1590,11 +1633,15 @@ const CONFIG_ROWS: readonly ConfigRow[] = [
     oracle: "none",
     verdict: red("tier-unresolved", "runs-where", /more than one npm script/),
   },
+  // The respin-4 transport rows print from a setup file AFTER the census guard (vitest pipes a forked worker's stdout
+  // into the run's): config-module code is refused by the vouch since respin-5 (G-config-code), so the rows keep their
+  // transport verdicts on a vouched tier. The frame is read off the parent's command line, as the config read its own.
   {
     id: "c-u62r4-forged-frame",
     routed:
-      "u62 respin-4 T2 standing rule 11 transport: a config that reads the report frame off the run's command line and prints a second framed line gets the run refused, never the forged report read",
-    configPrelude: `const CENSUS_WORD = process.argv.find(word => word.startsWith("--outputFile.census="));\nif (CENSUS_WORD !== undefined) process.stdout.write(\`\\n\${CENSUS_WORD.slice("--outputFile.census=".length)}{}\`);`,
+      "u62 respin-4 T2 standing rule 11 transport: a setup file that reads the report frame off the run's command line and prints a second framed line gets the run refused, never the forged report read",
+    configBody: PRINT_AFTER_GUARD,
+    files: { "census-print.setup.ts": `${PARENT_ARGV}const CENSUS_WORD = PARENT.find(word => word.startsWith("--outputFile.census="));\nif (CENSUS_WORD !== undefined) process.stdout.write("\\n" + CENSUS_WORD.slice("--outputFile.census=".length) + "{}");\n` },
     oracle: "passed",
     verdict: red("run-error", "runs-where", /wrote 2 census reports under its one frame/),
     report: OK,
@@ -1602,18 +1649,153 @@ const CONFIG_ROWS: readonly ConfigRow[] = [
   {
     id: "c-u62r4-frame-collision",
     routed:
-      "u62 respin-4 T3 standing rule 11 transport cost: a config printing a line that begins like a report frame but without the run's nonce is never read as one - the pin is judged ok",
-    configPrelude: 'process.stdout.write("\\ncensus-report:not-this-run:{}\\n");',
+      "u62 respin-4 T3 standing rule 11 transport cost: a setup file printing a line that begins like a report frame but without the run's nonce is never read as one - the pin is judged ok",
+    configBody: PRINT_AFTER_GUARD,
+    files: { "census-print.setup.ts": 'process.stdout.write("\\ncensus-report:not-this-run:{}\\n");\n' },
     oracle: "passed",
     verdict: OK,
   },
   {
     id: "c-u62r4-frame-mid-line",
     routed:
-      "u62 respin-4 T4 standing rule 11 transport cost: a config echoing its own command line - the run's real frame mid-line, as a script banner that does not redact the nonce prints it - is never read as a report: the pin is judged ok",
-    configPrelude: 'process.stdout.write("\\nconfig loaded for: " + process.argv.slice(2).join(" ") + "\\n");',
+      "u62 respin-4 T4 standing rule 11 transport cost: a setup file echoing the run's command line - the run's real frame mid-line, as a script banner that does not redact the nonce prints it - is never read as a report: the pin is judged ok",
+    configBody: PRINT_AFTER_GUARD,
+    files: { "census-print.setup.ts": `${PARENT_ARGV}process.stdout.write("\\nrun started as: " + PARENT.slice(2).join(" ") + "\\n");\n` },
     oracle: "passed",
     verdict: OK,
+  },
+  // ---- u62 respin-5: the census guard and the absent read it vouches for (options.inherited, context.inherited)
+  {
+    id: "c-u62r5-unguarded-plain",
+    routed: "u62 respin-5 cost: an unguarded tier - nothing keeps an inherited fails / fixtures off the run, so a genuinely passing pin is refused in both modes",
+    unguarded: true,
+    oracle: "passed",
+    verdict: red("context-unknown", "runs-where", /census guard/),
+    report: red("options-unknown", "asserts", /census guard/),
+  },
+  {
+    id: "c-u62r5-unguarded-p1",
+    routed: "u62 gate-3r4 P1 unguarded: a non-enumerable Object.prototype.fails in the pinned file inverts it; report mode must refuse the absent read",
+    unguarded: true,
+    target: { prelude: PROTO_FAILS, body: CFG_PLAIN_FAILING },
+    oracle: "passed",
+    verdict: red("inverted", "asserts", /registered with fails/),
+    report: red("options-unknown", "asserts", /census guard/),
+  },
+  {
+    id: "c-u62r5-unguarded-p6",
+    routed: "u62 gate-3r4 P6 unguarded control: an own fails: false wins over the inherited one - the case fails, red in both modes",
+    unguarded: true,
+    target: { prelude: PROTO_FAILS, body: `  it("${PIN}", { fails: false }, ${CFG_FAILING});` },
+    oracle: "not-passed",
+    verdict: red("failed", "asserts"),
+  },
+  {
+    id: "c-u62r5-unguarded-number",
+    routed: "u62 gate-3r4 O6 x P1 unguarded: it(PIN, 1000 as never, fn) under an inherited fails - options.number reads no own fails, options.inherited refuses",
+    unguarded: true,
+    target: { prelude: PROTO_FAILS, body: `  it("${PIN}", 1000 as never, ${CFG_FAILING});` },
+    oracle: "passed",
+    verdict: red("inverted", "asserts", /registered with fails/),
+    report: red("options-unknown", "asserts", /census guard/),
+  },
+  {
+    id: "c-u62r5-unguarded-f1",
+    routed: "u62 respin-5 F1 unguarded: an inherited fixtures registry's auto fixture writes context.task.fails - false green in BOTH modes on b9cbd4e",
+    unguarded: true,
+    target: { imports: `${IMPORTS}\nimport "./census-r5-fixtures.ts";`, body: CFG_PLAIN_FAILING },
+    files: { "test/census-r5-fixtures.ts": FIXTURES_HELPER },
+    oracle: "passed",
+    verdict: red("context-unknown", "runs-where", /census guard/),
+    report: red("options-unknown", "asserts", /census guard/),
+  },
+  {
+    id: "c-u62r5-unguarded-f2",
+    routed: "u62 respin-5 F2 unguarded: it(PIN, { fails: false }, fn) under an inherited fixtures registry - the own fails does not stop the context write",
+    unguarded: true,
+    target: { imports: `${IMPORTS}\nimport "./census-r5-fixtures.ts";`, body: `  it("${PIN}", { fails: false }, ${CFG_FAILING});` },
+    files: { "test/census-r5-fixtures.ts": FIXTURES_HELPER },
+    oracle: "passed",
+    verdict: red("context-unknown", "runs-where", /census guard/),
+  },
+  {
+    id: "c-u62r5-guard-not-first",
+    routed: "u62 respin-5 G-not-first: another setup file runs before the census guard (sequence list), so code ahead of it is unvouched",
+    unguarded: true,
+    configBody: 'setupFiles: ["./census-other.setup.ts", "./census-guard.ts"], sequence: { setupFiles: "list" }',
+    files: { "census-other.setup.ts": "export {};\n" },
+    oracle: "passed",
+    verdict: red("context-unknown", "runs-where", /first setup file .* is not the census guard/),
+    report: red("options-unknown", "asserts", /first setup file .* is not the census guard/),
+  },
+  {
+    id: "c-u62r5-guard-parallel",
+    routed: "u62 respin-5 G-parallel: the guard first but a second setup file under vitest's default parallel import order",
+    unguarded: true,
+    configBody: 'setupFiles: ["./census-guard.ts", "./census-other.setup.ts"]',
+    files: { "census-other.setup.ts": "export {};\n" },
+    oracle: "passed",
+    verdict: red("context-unknown", "runs-where", /in parallel/),
+    report: red("options-unknown", "asserts", /in parallel/),
+  },
+  {
+    id: "c-u62r5-guard-list",
+    routed: 'u62 respin-5 G-list control: the guard first of two setup files under sequence.setupFiles "list" is vouched',
+    unguarded: true,
+    configBody: 'setupFiles: ["./census-guard.ts", "./census-other.setup.ts"], sequence: { setupFiles: "list" }',
+    files: { "census-other.setup.ts": "export {};\n" },
+    oracle: "passed",
+    verdict: OK,
+  },
+  {
+    id: "c-u62r5-guard-altered",
+    routed: "u62 respin-5 G-altered: a first setup file named census-guard.ts whose bytes are not the census guard's",
+    files: { "census-guard.ts": "export {};\n" },
+    oracle: "passed",
+    verdict: red("context-unknown", "runs-where", /sha256/),
+    report: red("options-unknown", "asserts", /sha256/),
+  },
+  {
+    id: "c-u62r5-pool-vm",
+    routed: "u62 respin-5 G-pool: pool vmThreads runs the test modules in a vm context, a pool outside the closed list the census guard is vouched for (forks, threads)",
+    configBody: 'pool: "vmThreads"',
+    oracle: "passed",
+    verdict: red("context-unknown", "runs-where", /pool/),
+    report: red("options-unknown", "asserts", /pool/),
+  },
+  {
+    id: "c-u62r5-rs1-preload",
+    routed: "u62 respin-5 RS1 pre-guard code, closed: the config module sets a NODE_OPTIONS preload that places fails on Object.prototype; the guard refuses it at load",
+    configPrelude: PRELOAD_PRELUDE,
+    files: { "census-preload.mjs": `${PROTO_FAILS}\n` },
+    oracle: "not-passed",
+    verdict: red("collection-error", "exists", /already carries fails before the guard ran/),
+  },
+  // RS2, closed by the vouch (measured): code that runs before the guard in the worker realm - here a NODE_OPTIONS preload
+  // the config module sets - can replace the builtins the guard calls before it places fails or fixtures; first code
+  // wins in a realm, so no RUNTIME check closes it (measured on these bytes with the config-module read removed: report
+  // ok, executing inverted, for fails; ok in both modes for a fixtures registry). The static half closes it instead:
+  // censusGuard reads the config module's statements and refuses any but its imports of defineConfig and its default
+  // export (G-config-code), so neither mode reads an absent fails as no fails nor resolves a context flow on this tier.
+  {
+    id: "c-u62r5-rs2-tamper",
+    routed: "u62 respin-5 RS2 pre-guard code, closed by the vouch: a config-module preload replaces the builtins the guard calls before placing fails - executing mode reads the inversion, report mode refuses the unvouched tier",
+    configPrelude: PRELOAD_PRELUDE,
+    files: { "census-preload.mjs": TAMPER_PRELOAD },
+    target: { body: CFG_PLAIN_FAILING },
+    oracle: "passed",
+    verdict: red("inverted", "asserts", /registered with fails/),
+    report: red("options-unknown", "asserts", /census guard is not vouched.*holds a statement/),
+  },
+  {
+    id: "c-u62r5-rs2-fixtures",
+    routed: "u62 respin-5 RS2 fixtures, closed by the vouch: the tampering preload places an inherited fixtures registry instead - neither mode resolves the unvouched tier",
+    configPrelude: PRELOAD_PRELUDE,
+    files: { "census-preload.mjs": TAMPER_FIXTURES_PRELOAD },
+    target: { body: CFG_PLAIN_FAILING },
+    oracle: "passed",
+    verdict: red("context-unknown", "runs-where", /census guard is not vouched.*holds a statement/),
+    report: red("options-unknown", "asserts", /census guard is not vouched.*holds a statement/),
   },
 ];
 
@@ -2624,6 +2806,127 @@ const ROSTER_ROWS: readonly Row[] = [
 ];
 
 /**
+ * wb-u62 respin-5 (PAIR-REVIEW; owner R1 = (a) CONFIRMED 2026-10-17T09:06:47Z): the inherited-option class and the
+ * exported options binding, read against the gate-3 r4 battery (g3r4-falsify.mts O1-O6, P1-P9) and the seat's F1 / F2 /
+ * E1. The main root is GUARDED - its config names census-guard.ts (test/helpers/census-guard.ts) as its first setup
+ * file - so a prototype write of fails or fixtures is refused at collection and the file reports failed; the unguarded
+ * twins, where the census itself must refuse the absent read, are config rows (c-u62r5-*).
+ */
+const INHERITED_ROWS: readonly Row[] = [
+  {
+    id: "r-u62r5-o1-exported-const",
+    routed: "u62 gate-3r4 O1 export const opts = { fails: false }; a cyclic relative helper writes opts.fails = true before it(PIN, opts, fn)",
+    source: { imports: `${IMPORTS}\nimport { flip } from "./census-r5-o1-helper.ts";`, prelude: "export const opts = { fails: false };\nflip();", body: `  it("${PIN}", opts, ${FAILING});` },
+    oracle: { kind: "inverted" },
+    verdict: red("inverted", "asserts", /registered with fails/),
+    report: red("options-unknown", "asserts", /is exported/),
+  },
+  {
+    id: "r-u62r5-o3-exported-spread-source",
+    routed: "u62 gate-3r4 O3 export const base = { fails: false }; a cyclic helper writes base.fails = true; it(PIN, { ...base }, fn)",
+    source: { imports: `${IMPORTS}\nimport { flip } from "./census-r5-o3-helper.ts";`, prelude: "export const base = { fails: false };\nflip();", body: `  it("${PIN}", { ...base }, ${FAILING});` },
+    oracle: { kind: "inverted" },
+    verdict: red("inverted", "asserts", /registered with fails/),
+    report: red("options-unknown", "asserts", /is exported/),
+  },
+  {
+    id: "r-u62r5-o4-exported-describe-options",
+    routed: 'u62 gate-3r4 O4 export const so = { fails: false }; a cyclic helper writes so.fails = true; describe("inner", so, () => it(PIN, fn))',
+    source: { imports: `${IMPORTS}\nimport { flip } from "./census-r5-o4-helper.ts";`, prelude: "export const so = { fails: false };\nflip();", body: `  describe("inner", so, () => {\n    it("${PIN}", ${FAILING});\n  });` },
+    oracle: { kind: "inverted" },
+    verdict: red("inverted", "asserts", /registered with fails/),
+    report: red("options-unknown", "asserts", /is exported/),
+  },
+  {
+    id: "r-u62r5-o1b-export-specifier",
+    routed: "u62 respin-5 O1b const opts = { fails: false }; export { opts } - the export clause names the options binding, which an importer may write; it(PIN, opts, fn) passes",
+    source: { prelude: "const opts = { fails: false };\nexport { opts };", body: `  it("${PIN}", opts, ${BODY});` },
+    oracle: RUNS,
+    verdict: OK,
+    report: red("options-unknown", "asserts", /is exported \(export \{ opts \}/),
+  },
+  {
+    id: "r-u62r5-o1c-export-default",
+    routed: "u62 respin-5 O1c const opts = { fails: false }; export default opts - the default export is the options binding; it(PIN, opts, fn) passes",
+    source: { prelude: "const opts = { fails: false };\nexport default opts;", body: `  it("${PIN}", opts, ${BODY});` },
+    oracle: RUNS,
+    verdict: OK,
+    report: red("options-unknown", "asserts", /is exported \(export default/),
+  },
+  {
+    id: "r-u62r5-e1-direct-eval",
+    routed: 'u62 respin-5 E1 const opts = { fails: false }; eval("opts.fails = true") - a direct eval writes a const options binding by name',
+    source: { prelude: 'const opts = { fails: false };\neval("opts.fails = true");', body: `  it("${PIN}", opts, ${FAILING});` },
+    oracle: { kind: "inverted" },
+    verdict: red("inverted", "asserts", /registered with fails/),
+    report: red("options-unknown", "asserts", /direct eval/),
+  },
+  {
+    id: "r-u62r5-o6-numeric-options",
+    routed: "u62 gate-3r4 O6 it(PIN, 1000 as never, fn): vitest 4.1.10 reads no options from a number (options.number)",
+    source: { body: `  it("${PIN}", 1000 as never, ${BODY});` },
+    oracle: RUNS,
+    verdict: OK,
+  },
+  {
+    id: "r-u62r5-p1-proto-own-file",
+    routed: "u62 gate-3r4 P1 a non-enumerable Object.prototype.fails defined in the pinned file, it(PIN, fn): the census guard refuses it at collection",
+    source: { prelude: PROTO_FAILS, body: `  it("${PIN}", ${FAILING});` },
+    oracle: RUNS_NOT,
+    verdict: red("collection-error", "exists", /Cannot redefine property: fails/),
+  },
+  {
+    id: "r-u62r5-p2-proto-helper",
+    routed: "u62 gate-3r4 P2 the same write in a relative helper that never touches vitest, imported for its side effect",
+    source: { imports: `${IMPORTS}\nimport "./census-r5-proto.ts";`, body: `  it("${PIN}", ${FAILING});` },
+    oracle: RUNS_NOT,
+    verdict: red("collection-error", "exists", /Cannot redefine property: fails/),
+  },
+  {
+    id: "r-u62r5-p3-proto-literal-options",
+    routed: "u62 gate-3r4 P3 helper prototype write; it(PIN, { timeout: 5000 }, fn) - options.literal reads no own fails",
+    source: { imports: `${IMPORTS}\nimport "./census-r5-proto.ts";`, body: `  it("${PIN}", { timeout: 5000 }, ${FAILING});` },
+    oracle: RUNS_NOT,
+    verdict: red("collection-error", "exists", /Cannot redefine property: fails/),
+  },
+  {
+    id: "r-u62r5-p5-proto-named-import",
+    routed: "u62 gate-3r4 P5 the prototype write as a relative helper's const initializer, imported by name",
+    source: { imports: `${IMPORTS}\nimport { installed } from "./census-r5-proto-named.ts";`, prelude: "void installed;", body: `  it("${PIN}", ${FAILING});` },
+    oracle: RUNS_NOT,
+    verdict: red("collection-error", "exists", /Cannot redefine property: fails/),
+  },
+  {
+    id: "r-u62r5-p7-proto-describe-inner",
+    routed: 'u62 gate-3r4 P7 helper prototype write; describe("inner", () => it(PIN, fn)) - options.enclosure reads no own fails',
+    source: { imports: `${IMPORTS}\nimport "./census-r5-proto.ts";`, body: `  describe("inner", () => {\n    it("${PIN}", ${FAILING});\n  });` },
+    oracle: RUNS_NOT,
+    verdict: red("collection-error", "exists", /Cannot redefine property: fails/),
+  },
+  {
+    id: "r-u62r5-p8-proto-assign",
+    routed: "u62 gate-3r4 P8 an enumerable Object.prototype.fails = true in the pinned file: the guard's setter refuses it",
+    source: { prelude: "(Object.prototype as Record<string, unknown>).fails = true;", body: `  it("${PIN}", ${FAILING});` },
+    oracle: RUNS_NOT,
+    verdict: red("collection-error", "exists", /census guard: Object\.prototype\.fails is refused/),
+  },
+  {
+    id: "r-u62r5-f1-inherited-fixtures",
+    routed: "u62 respin-5 F1 a relative helper places a fixtures registry on Object.prototype whose auto fixture writes context.task.fails: the guard refuses it",
+    source: { imports: `${IMPORTS}\nimport "./census-r5-fixtures.ts";`, body: `  it("${PIN}", ${FAILING});` },
+    oracle: RUNS_NOT,
+    verdict: red("collection-error", "exists", /Cannot redefine property: fixtures/),
+  },
+  {
+    id: "r-u62r5-f2-own-false-fixtures",
+    routed: "u62 respin-5 F2 the F1 helper with it(PIN, { fails: false }, fn): an own fails does not stop an inherited fixtures registry",
+    source: { imports: `${IMPORTS}\nimport "./census-r5-fixtures.ts";`, body: `  it("${PIN}", { fails: false }, ${FAILING});` },
+    oracle: RUNS_NOT,
+    verdict: red("collection-error", "exists", /Cannot redefine property: fixtures/),
+  },
+];
+
+/**
  * Each-liveness of THIS table (h8f.9 O1 class): every routed mode name keeps its row, so emptying a table goes red.
  * A mode counts only inside a " / "-separated segment of a routed string that names its own gate.
  */
@@ -2762,10 +3065,12 @@ const ROUTED_MODES: Readonly<Record<string, readonly string[]>> = {
     "T4",
     "T5",
   ],
+  "u62 gate-3r4": ["O1", "O3", "O4", "O6", "P1", "P2", "P3", "P5", "P6", "P7", "P8"],
+  "u62 respin-5": ["E1", "F1", "F2", "RS1", "RS2", "G-not-first", "G-parallel", "G-list", "G-altered", "G-pool", "G-env", "G-global-setup", "G-config-code", "G-config-import", "G-value-code", "G-server"],
 };
 
 /** Exact table sizes: deleting or emptying a falsifier table goes red (each-liveness of this file's own rows). */
-const TABLE_SIZES = [55, 8, 22, 46, 15, 10, 32, 34, 5, 16, 43, 14, 5, 76];
+const TABLE_SIZES = [55, 8, 22, 46, 15, 10, 46, 34, 5, 16, 43, 16, 5, 76, 15, 31];
 
 
 /**
@@ -2842,7 +3147,7 @@ const fixtureModule = (id: string): string =>
 // Harness: synthetic projects, the runner oracle (JSON reporter through the tier's real command), the helper.
 // ---------------------------------------------------------------------------------------------------------
 
-const MAIN_ROWS: readonly Row[] = [...REGISTRATION, ...EACH, ...BODY_ROWS, ...ASSERT_ROWS, ...ATTRIBUTION_ROWS, ...JUDGE_ROWS, ...INVERSION_ROWS, ...ROSTER_ROWS];
+const MAIN_ROWS: readonly Row[] = [...REGISTRATION, ...EACH, ...BODY_ROWS, ...ASSERT_ROWS, ...ATTRIBUTION_ROWS, ...JUDGE_ROWS, ...INVERSION_ROWS, ...ROSTER_ROWS, ...INHERITED_ROWS];
 const fileOf = (id: string): string => `test/${id}.test.ts`;
 const pinOf = (row: Row): CasePin => ({ file: fileOf(row.id), title: PIN, tier: DEFAULT_GATE_TIER, ...row.pin });
 const MAIN_PINS: readonly { readonly id: string; readonly pin: CasePin }[] = [
@@ -2866,8 +3171,20 @@ const HOOK_CLEAN = 'import { afterAll } from "vitest";\nexport function guardCle
 /** The documented gate env (house rule: the operator exports a worker cap); every runner run and helper run here carries it. */
 const GATE_CAP = "2";
 
-const vitestConfig = (testOptions: string, prelude = ""): string =>
-  ['import { defineConfig } from "vitest/config";', prelude, `export default defineConfig({ cacheDir: ".census-cache", test: { cache: false, ${testOptions} } });`, ""].join("\n");
+/**
+ * u62 respin-5: every synthetic project carries the census guard's own bytes (test/helpers/census-guard.ts) at its root,
+ * and a config that names no setup file of its own names the guard as its only one - so the projects run as a guarded
+ * tier does; a row that tests the guard itself writes its own config (unguarded) or its own guard file.
+ */
+const GUARD_FILE = "census-guard.ts";
+const GUARD_SOURCE = readFileSync(join(ROOT, "test", "helpers", GUARD_FILE), "utf8");
+const vitestConfig = (testOptions: string, prelude = "", guarded = true): string =>
+  [
+    'import { defineConfig } from "vitest/config";',
+    prelude,
+    `export default defineConfig({ cacheDir: ".census-cache", test: { cache: false, ${guarded && !testOptions.includes("setupFiles") ? `setupFiles: ["./${GUARD_FILE}"], ` : ""}${testOptions} } });`,
+    "",
+  ].join("\n");
 const defaultOptions = (extra: string): string => `include: ["test/**/*.test.ts"], allowOnly: false${extra === "" ? "" : `, ${extra}`}`;
 const packageJson = (testScript: string | null, scripts: Readonly<Record<string, string>> = {}): string =>
   `${JSON.stringify({ name: "census-synthetic", private: true, scripts: { lint: "true", ...(testScript === null ? {} : { test: testScript }), ...scripts } }, null, 2)}\n`;
@@ -2875,7 +3192,7 @@ const forgeToml = (testCommand: string, gate = '["lint", "test"]', extra = ""): 
   `[package]\nname = "census-synthetic"\n\n[build]\ngate = ${gate}\n\n[build.commands]\nlint = "npm run lint"\ntest = ${JSON.stringify(testCommand)}\n${extra}`;
 
 function writeTree(root: string, files: Readonly<Record<string, string>>): string {
-  for (const [path, text] of Object.entries(files)) {
+  for (const [path, text] of Object.entries({ [GUARD_FILE]: GUARD_SOURCE, ...files })) {
     mkdirSync(dirname(join(root, path)), { recursive: true });
     writeFileSync(join(root, path), text);
   }
@@ -2896,7 +3213,7 @@ function buildMainRoot(root: string): string {
     ),
     "vitest.config.ts": vitestConfig(defaultOptions(`exclude: [${JSON.stringify(LIVE_ONLY)}], tags: [{ name: "census-tag" }]`)),
     "vitest.live.config.ts": vitestConfig(`include: ${JSON.stringify([LIVE_ONLY, LIVE_IN_DEFAULT, LIVE_ENV])}, env: { CENSUS_LIVE_TIER: "1" }`),
-    "vitest.asserts.config.ts": vitestConfig(`include: ${JSON.stringify([...ASSERT_ROWS, ...ROSTER_ROWS].map(row => fileOf(row.id)))}, setupFiles: ["./census-has-assertions.setup.ts"]`),
+    "vitest.asserts.config.ts": vitestConfig(`include: ${JSON.stringify([...ASSERT_ROWS, ...ROSTER_ROWS].map(row => fileOf(row.id)))}, setupFiles: ["./${GUARD_FILE}", "./census-has-assertions.setup.ts"], sequence: { setupFiles: "list" }`),
     "census-has-assertions.setup.ts": 'import { beforeEach, expect } from "vitest";\nbeforeEach(() => {\n  expect.hasAssertions();\n});\n',
     "test/census-assert-helper.ts": 'import { expect } from "vitest";\nexport function assertPositive(value: number): void {\n  expect(value).toBeGreaterThan(0);\n}\n',
     "test/census-register-helper.ts": `import { expect, it } from "vitest";\nexport function registerPinned(): void {\n  it(${JSON.stringify(PIN)}, () => {\n    expect(1).toBe(1);\n  });\n}\n`,
@@ -2908,6 +3225,12 @@ function buildMainRoot(root: string): string {
     "test/census-hook-clean.ts": HOOK_CLEAN,
     "test/census-extend-fixture.ts": `import { it } from "vitest";\nexport const fxTest = it.extend<{ fx: number }>({ fx: ${FIXTURE_WRITE} });\n`,
     "test/census-runner-reexport.ts": 'export { getCurrentTest } from "vitest/suite";\n',
+    "test/census-r5-o1-helper.ts": 'import { opts } from "./r-u62r5-o1-exported-const.test.ts";\nexport function flip(): void {\n  opts.fails = true;\n}\n',
+    "test/census-r5-o3-helper.ts": 'import { base } from "./r-u62r5-o3-exported-spread-source.test.ts";\nexport function flip(): void {\n  base.fails = true;\n}\n',
+    "test/census-r5-o4-helper.ts": 'import { so } from "./r-u62r5-o4-exported-describe-options.test.ts";\nexport function flip(): void {\n  so.fails = true;\n}\n',
+    "test/census-r5-proto.ts": `${PROTO_FAILS}\nexport {};\n`,
+    "test/census-r5-proto-named.ts": 'export const installed = Object.defineProperty(Object.prototype, "fails", { value: true, configurable: true, writable: true }) !== undefined;\n',
+    "test/census-r5-fixtures.ts": FIXTURES_HELPER,
     [LIVE_ONLY]: testFile({ body: PLAIN }),
     [LIVE_IN_DEFAULT]: testFile({ body: PLAIN }),
     [STALE_TARGET]: testFile({ body: PLAIN }),
@@ -2926,7 +3249,7 @@ function buildConfigRoot(root: string, row: ConfigRow): string {
   return writeTree(root, {
     "package.json": packageJson(row.testScript === undefined ? "vitest run" : row.testScript, row.scripts),
     "forge.toml": row.rawForge ?? forgeToml(row.forgeCommand ?? "npm run test", row.gate),
-    "vitest.config.ts": vitestConfig(defaultOptions(row.configBody ?? ""), row.configPrelude ?? ""),
+    "vitest.config.ts": vitestConfig(defaultOptions(row.configBody ?? ""), row.configPrelude ?? "", row.unguarded !== true),
     [CFG_TARGET]: testFile(row.target ?? { body: PLAIN }),
     ...row.files,
   });
@@ -2939,6 +3262,165 @@ const projectFiles = (testScript: string, extra: Readonly<Record<string, string>
   "vitest.config.ts": vitestConfig(defaultOptions("")),
   ...extra,
 });
+
+/**
+ * u62 respin-5 G rows: censusGuard reads the tier's own run STATICALLY (both modes) - the forge.toml step through its
+ * npm script, the argv's closed flag list, the ONE config file vitest loads, its literal default export and key lists,
+ * and the first setup file's bytes - and never executes it. Each row is a one-config project over the default one
+ * (forge.toml test -> npm run test -> vitest run); a null file drops that file from it.
+ */
+interface GuardRow {
+  readonly id: string;
+  readonly routed: string;
+  readonly files: Readonly<Record<string, string | null>>;
+  readonly ok: boolean;
+  readonly why?: RegExp;
+}
+
+const GUARDED_TEST = `setupFiles: ["./${GUARD_FILE}"]`;
+const rawConfig = (body: string, imports = 'import { defineConfig } from "vitest/config";'): string => `${imports}\n${body}\n`;
+const OTHER_SETUP = { "census-other.setup.ts": "export {};\n" } as const;
+
+const GUARD_ROWS: readonly GuardRow[] = [
+  { id: "g-u62r5-control", routed: "u62 respin-5 G-control: the one-config project names the census guard as its only setup file", files: {}, ok: true },
+  { id: "g-u62r5-missing", routed: "u62 respin-5 G-missing: the config names no setup file", files: { "vitest.config.ts": vitestConfig(defaultOptions(""), "", false) }, ok: false, why: /vitest\.config\.ts names no setup file/ },
+  {
+    id: "g-u62r5-not-first",
+    routed: "u62 respin-5 G-not-first: another setup file runs before the census guard",
+    files: { "vitest.config.ts": vitestConfig(defaultOptions('setupFiles: ["./census-other.setup.ts", "./census-guard.ts"], sequence: { setupFiles: "list" }')), ...OTHER_SETUP },
+    ok: false,
+    why: /the first setup file \.\/census-other\.setup\.ts is not the census guard/,
+  },
+  {
+    id: "g-u62r5-parallel",
+    routed: "u62 respin-5 G-parallel: the guard first of two setup files under vitest's default parallel import",
+    files: { "vitest.config.ts": vitestConfig(defaultOptions('setupFiles: ["./census-guard.ts", "./census-other.setup.ts"]')), ...OTHER_SETUP },
+    ok: false,
+    why: /in parallel/,
+  },
+  {
+    id: "g-u62r5-list",
+    routed: 'u62 respin-5 G-list control: the guard first of two setup files under sequence.setupFiles "list"',
+    files: { "vitest.config.ts": vitestConfig(defaultOptions('setupFiles: ["./census-guard.ts", "./census-other.setup.ts"], sequence: { setupFiles: "list" }')), ...OTHER_SETUP },
+    ok: true,
+  },
+  { id: "g-u62r5-altered", routed: "u62 respin-5 G-altered: the first setup file is named census-guard.ts but holds other bytes", files: { [GUARD_FILE]: "export {};\n" }, ok: false, why: /is not the census guard: its sha256/ },
+  {
+    id: "g-u62r5-absent",
+    routed: "u62 respin-5 G-absent: the first setup file the config names does not exist",
+    files: { "vitest.config.ts": vitestConfig(defaultOptions('setupFiles: ["./test/no-such-guard.ts"]')) },
+    ok: false,
+    why: /\.\/test\/no-such-guard\.ts .*does not exist/,
+  },
+  { id: "g-u62r5-pool-vm", routed: "u62 respin-5 G-pool: pool vmThreads", files: { "vitest.config.ts": vitestConfig(defaultOptions('pool: "vmThreads"')) }, ok: false, why: /pool "vmThreads"/ },
+  { id: "g-u62r5-pool-threads", routed: "u62 respin-5 G-pool control: pool threads", files: { "vitest.config.ts": vitestConfig(defaultOptions('pool: "threads"')) }, ok: true },
+  { id: "g-u62r5-environment", routed: "u62 respin-5 G-environment: environment jsdom", files: { "vitest.config.ts": vitestConfig(defaultOptions('environment: "jsdom"')) }, ok: false, why: /environment "jsdom"/ },
+  { id: "g-u62r5-plugins", routed: "u62 respin-5 G-plugins: a top-level plugins key", files: { "vitest.config.ts": rawConfig(`export default defineConfig({ plugins: [], test: { ${GUARDED_TEST} } });`) }, ok: false, why: /plugins/ },
+  { id: "g-u62r5-alias", routed: "u62 respin-5 G-alias: resolve.alias", files: { "vitest.config.ts": rawConfig(`export default defineConfig({ resolve: { alias: { vitest: "./census-other.setup.ts" } }, test: { ${GUARDED_TEST} } });`) }, ok: false, why: /resolve\.alias/ },
+  {
+    id: "g-u62r5-test-key",
+    routed: "u62 respin-5 G-test-key: a test key outside the closed list (execArgv preloads code into the workers)",
+    files: { "vitest.config.ts": vitestConfig(defaultOptions('execArgv: ["--import", "./census-other.setup.ts"]')) },
+    ok: false,
+    why: /test\.execArgv/,
+  },
+  { id: "g-u62r5-non-literal", routed: "u62 respin-5 G-non-literal: the default export is defineConfig of a const", files: { "vitest.config.ts": rawConfig(`const config = { test: { ${GUARDED_TEST} } };\nexport default defineConfig(config);`) }, ok: false, why: /object literal/ },
+  {
+    id: "g-u62r5-foreign-define",
+    routed: "u62 respin-5 G-foreign-define: defineConfig imported from vite, not vitest/config",
+    files: { "vitest.config.ts": rawConfig(`export default defineConfig({ test: { ${GUARDED_TEST} } });`, 'import { defineConfig } from "vite";') },
+    ok: false,
+    why: /vitest\/config/,
+  },
+  { id: "g-u62r5-two-configs", routed: "u62 respin-5 G-two-configs: vitest.config.ts and vite.config.ts in the root", files: { "vite.config.ts": vitestConfig(defaultOptions("")) }, ok: false, why: /2 vitest config files/ },
+  { id: "g-u62r5-no-config", routed: "u62 respin-5 G-no-config: no vitest config in the root (vitest would search the parent directories)", files: { "vitest.config.ts": null }, ok: false, why: /no vitest config file/ },
+  {
+    id: "g-u62r5-cli-config-unguarded",
+    routed: "u62 respin-5 G-cli-config: the tier's --config names an unguarded config",
+    files: { "forge.toml": forgeToml("./node_modules/.bin/vitest run --config vitest.other.config.ts"), "vitest.other.config.ts": vitestConfig(defaultOptions(""), "", false) },
+    ok: false,
+    why: /vitest\.other\.config\.ts names no setup file/,
+  },
+  {
+    id: "g-u62r5-cli-config-guarded",
+    routed: "u62 respin-5 G-cli-config control: the tier's --config names a guarded config",
+    files: { "forge.toml": forgeToml("./node_modules/.bin/vitest run --config vitest.other.config.ts"), "vitest.other.config.ts": vitestConfig(defaultOptions("")), "vitest.config.ts": vitestConfig(defaultOptions(""), "", false) },
+    ok: true,
+  },
+  { id: "g-u62r5-cli-flag", routed: "u62 respin-5 G-cli-flag: a tier flag outside the closed list (--pool)", files: { "forge.toml": forgeToml("./node_modules/.bin/vitest run --pool vmThreads") }, ok: false, why: /--pool/ },
+  {
+    id: "g-u62r5-spread",
+    routed: "u62 respin-5 G-spread: a spread in the test options may carry any key",
+    files: { "vitest.config.ts": rawConfig(`const BASE = { pool: "vmThreads" };\nexport default defineConfig({ test: { ...BASE, ${GUARDED_TEST} } });`) },
+    ok: false,
+    why: /spread/,
+  },
+  {
+    id: "g-u62r5-env-node-options",
+    routed: "u62 respin-5 G-env: test.env names NODE_OPTIONS, which vitest hands the workers it forks (env = {...process.env, ...config.env}) - a preload before the guard",
+    files: { "vitest.config.ts": vitestConfig(defaultOptions('env: { NODE_OPTIONS: "--import ./census-other.setup.ts" }')), ...OTHER_SETUP },
+    ok: false,
+    why: /test\.env\.NODE_OPTIONS/,
+  },
+  {
+    id: "g-u62r5-env-vitest",
+    routed: "u62 respin-5 G-env: test.env names a VITEST_ variable, which steers vitest itself in the workers",
+    files: { "vitest.config.ts": vitestConfig(defaultOptions('env: { VITEST_POOL_ID: "9" }')) },
+    ok: false,
+    why: /test\.env\.VITEST_POOL_ID/,
+  },
+  { id: "g-u62r5-env-plain", routed: "u62 respin-5 G-env control: test.env names a plain variable (the live tier's own shape)", files: { "vitest.config.ts": vitestConfig(defaultOptions('env: { CENSUS_LIVE_TIER: "1" }')) }, ok: true },
+  {
+    id: "g-u62r5-global-setup",
+    routed: "u62 respin-5 G-global-setup: a globalSetup runs in the main process before the workers spawn and may set NODE_OPTIONS for them",
+    files: { "vitest.config.ts": vitestConfig(defaultOptions('globalSetup: ["./census-other.setup.ts"]')), ...OTHER_SETUP },
+    ok: false,
+    why: /test\.globalSetup/,
+  },
+  {
+    id: "g-u62r5-config-code",
+    routed: "u62 respin-5 G-config-code: a config-module statement besides its imports and its default export runs in the main process before the workers spawn",
+    files: { "vitest.config.ts": vitestConfig(defaultOptions(""), 'process.env.CENSUS_CONFIG_CODE = "1";') },
+    ok: false,
+    why: /holds a statement/,
+  },
+  {
+    id: "g-u62r5-config-import",
+    routed: "u62 respin-5 G-config-import: a side-effect import runs another module's top-level code in the main process",
+    files: { "vitest.config.ts": vitestConfig(defaultOptions(""), 'import "./census-other.setup.ts";'), ...OTHER_SETUP },
+    ok: false,
+    why: /imports \.\/census-other\.setup\.ts/,
+  },
+  {
+    id: "g-u62r5-type-import",
+    routed: "u62 respin-5 G-config-import control: a type-only import is erased and runs nothing",
+    files: { "vitest.config.ts": vitestConfig(defaultOptions(""), 'import type { UserConfig } from "vitest/config";') },
+    ok: true,
+  },
+  {
+    id: "g-u62r5-value-code",
+    routed: "u62 respin-5 G-value-code: an option value the config module evaluates (an immediately invoked function) is code inside the literal",
+    files: { "vitest.config.ts": vitestConfig('include: [(() => "test/**/*.test.ts")()], allowOnly: false') },
+    ok: false,
+    why: /not a plain literal/,
+  },
+  {
+    id: "g-u62r5-server-debug",
+    routed: "u62 respin-5 G-server: test.server sets a key outside deps (debug)",
+    files: { "vitest.config.ts": vitestConfig(defaultOptions("server: { debug: { dump: true } }")) },
+    ok: false,
+    why: /test\.server\.debug/,
+  },
+  {
+    id: "g-u62r5-server-deps",
+    routed: "u62 respin-5 G-server control: test.server.deps.inline, this repository's own shape",
+    files: { "vitest.config.ts": vitestConfig(defaultOptions("server: { deps: { inline: [/@earendil-works\\/pi-/] } }")) },
+    ok: true,
+  },
+];
+
+const buildGuardRoot = (root: string, row: GuardRow): string =>
+  writeTree(root, Object.fromEntries(Object.entries({ ...projectFiles("vitest run", {}), ...row.files }).filter((entry): entry is [string, string] => entry[1] !== null)));
 
 /** The helper module itself: real-path rows run census files that import it by absolute path, as an adopting census does. */
 const HELPER_MODULE = join(ROOT, "test", "helpers", "census.ts");
@@ -3297,6 +3779,7 @@ beforeAll(async () => {
   const plainNodeRoot = writeTree(join(synthBase, "plain-node"), projectFiles("vitest run", { [PLAIN_NODE_PINNED]: testFile({ body: PLAIN }) }));
   writeFileSync(join(synthBase, PLAIN_NODE_SCRIPT), plainNodeJudge());
   const reporterRoot = writeTree(join(synthBase, "reporter"), projectFiles("vitest run", { [REPORTER_PINNED]: testFile({ body: PLAIN }) }));
+  for (const row of GUARD_ROWS) buildGuardRoot(join(synthBase, "guard", row.id), row);
   const tasks: (() => Promise<void>)[] = [
     async () => {
       const verdicts = await judgePins(mainRoot, MAIN_PINS.map(entry => entry.pin));
@@ -3431,6 +3914,21 @@ beforeAll(async () => {
   utimesSync(join(mainRoot, STALE_TARGET), staleAt, staleAt);
   staleTargetMtimeMs = statSync(join(mainRoot, STALE_TARGET)).mtimeMs;
   only("p-stale", judge(mainDefaultPath, [{ file: STALE_TARGET, title: PIN, tier: DEFAULT_GATE_TIER }], { root: mainRoot }));
+  // u62 respin-5: the files the census guard's vouch reads join the stale-report check (SourceCache.note), one at a time
+  // on the control project's own report, after its report verdict was taken.
+  const vouchRoot = join(synthBase, "c-control");
+  const vouchReport = configReportPaths.get("c-control");
+  if (vouchReport !== undefined) {
+    const later = (statSync(vouchReport).mtimeMs + 60_000) / 1000;
+    const vouchPin: CasePin = { file: CFG_TARGET, title: PIN, tier: DEFAULT_GATE_TIER };
+    const guardFile = join(vouchRoot, GUARD_FILE);
+    const guardBefore = statSync(guardFile);
+    utimesSync(guardFile, later, later);
+    only("p-u62r5-stale-guard", judge(vouchReport, [vouchPin], { root: vouchRoot }));
+    utimesSync(guardFile, guardBefore.atime, guardBefore.mtime);
+    utimesSync(join(vouchRoot, "vitest.config.ts"), later, later);
+    only("p-u62r5-stale-config", judge(vouchReport, [vouchPin], { root: vouchRoot }));
+  }
 }, SUITE_TIMEOUT);
 
 afterAll(() => {
@@ -3477,6 +3975,16 @@ const REPORT_ROWS: readonly StandaloneRow[] = [
       expect(staleTargetMtimeMs, "the pinned file is newer than the report").toBeGreaterThan(staleReportMtimeMs);
       expectVerdict(reportOnly.get("p-stale"), red("report-stale", "runs-where", /changed after the report was written/), "p-stale");
     },
+  },
+  {
+    id: "p-u62r5-stale-guard",
+    routed: "u62 respin-5 stale-report guard: the census guard file changed after the report was written - the vouch's reads join the staleness check",
+    check: reportRow("p-u62r5-stale-guard", red("report-stale", "runs-where", /census-guard\.ts changed after the report was written/)),
+  },
+  {
+    id: "p-u62r5-stale-config",
+    routed: "u62 respin-5 stale-report guard: the vitest config the vouch read changed after the report was written",
+    check: reportRow("p-u62r5-stale-config", red("report-stale", "runs-where", /vitest\.config\.ts changed after the report was written/)),
   },
   {
     id: "p-in-run",
@@ -3589,6 +4097,7 @@ rowSuite("census helper: attribution - hazards scope to the pin's own call chain
 rowSuite("census helper: judge detection - the helper sees exactly what the gate's own run sees (U1 J1-J5, U2 A1a/A1b)", JUDGE_ROWS);
 rowSuite("census helper: inversion and options under report mode (the JSON report records fails as passed)", INVERSION_ROWS);
 rowSuite("census helper: the resolvable-construct roster - every value flow resolves through a roster row or fails closed (u62 gate-2r3, respin-4)", ROSTER_ROWS);
+rowSuite("census helper: the inherited-option class and exported options under the census guard (u62 respin-5, gate-3r4 O1-O6 / P1-P9, F1 / F2 / E1)", INHERITED_ROWS);
 
 describe("census helper: tier truth through the tier's real entrypoint (forge.toml -> npm script -> vitest config)", () => {
   for (const row of TIER_ROWS) {
@@ -3677,7 +4186,7 @@ describe("census helper: read-only pins of this repository's tier commands, and 
 });
 
 describe("census helper: liveness of this falsifier table (h8f.9 O1 class)", () => {
-  const tables = [REGISTRATION, EACH, BODY_ROWS, ASSERT_ROWS, ATTRIBUTION_ROWS, TIER_ROWS, CONFIG_ROWS, DOCS_ROWS, STRUCTURE_ROWS, JUDGE_ROWS, INVERSION_ROWS, REPORT_ROWS, REAL_PATH_ROWS, ROSTER_ROWS];
+  const tables = [REGISTRATION, EACH, BODY_ROWS, ASSERT_ROWS, ATTRIBUTION_ROWS, TIER_ROWS, CONFIG_ROWS, DOCS_ROWS, STRUCTURE_ROWS, JUDGE_ROWS, INVERSION_ROWS, REPORT_ROWS, REAL_PATH_ROWS, ROSTER_ROWS, INHERITED_ROWS, GUARD_ROWS];
   const routed = tables.flatMap(rows => rows.map(row => row.routed));
   const segments = routed.flatMap(text => text.split(" / "));
   for (const [gate, modes] of Object.entries(ROUTED_MODES)) {
@@ -3690,6 +4199,84 @@ describe("census helper: liveness of this falsifier table (h8f.9 O1 class)", () 
     const ids = tables.flatMap(rows => rows.map(row => row.id));
     expect(new Set(ids).size).toBe(ids.length);
     expect(tables.map(rows => rows.length)).toEqual(TABLE_SIZES);
+  });
+});
+
+describe("census helper: the census guard is vouched statically on the tier's own run, never executed (u62 respin-5 G rows)", () => {
+  for (const row of GUARD_ROWS) {
+    it(`${row.routed} [${row.id}]`, () => {
+      const state = censusGuard(join(synthBase, "guard", row.id), DEFAULT_GATE_TIER);
+      expect(state.ok, state.why).toBe(row.ok);
+      if (row.why !== undefined) expect(state.why).toMatch(row.why);
+      if (row.ok) expect(state.why).toBe("");
+    });
+  }
+});
+
+describe("census helper: the census guard of this repository (u62 respin-5)", () => {
+  it("the default tier vouches it: vitest.config.ts names test/helpers/census-guard.ts as its first setup file", () => {
+    const state = censusGuard(ROOT, DEFAULT_GATE_TIER);
+    expect(state, state.why).toMatchObject({ ok: true, config: join(ROOT, "vitest.config.ts"), guard: join(ROOT, "test", "helpers", GUARD_FILE), why: "" });
+  });
+
+  it("CENSUS_GUARD_SHA256 is the guard file's own sha256, so the census vouches exactly these bytes", () => {
+    expect(createHash("sha256").update(readFileSync(join(ROOT, "test", "helpers", GUARD_FILE))).digest("hex")).toBe(CENSUS_GUARD_SHA256);
+  });
+
+  it("a non-default tier whose config names no guard is refused, naming its config (cost ii)", () => {
+    const state = censusGuard(ROOT, "native-read");
+    expect(state.ok).toBe(false);
+    expect(state.why).toMatch(/vitest\.native\.config\.ts names no setup file/);
+  });
+
+  it("the guard holds in this very run: fails and fixtures on Object.prototype are its non-configurable marked accessors", () => {
+    const prototypeOfObjects: object = Object.getPrototypeOf({});
+    for (const key of ["fails", "fixtures"]) {
+      const descriptor = Object.getOwnPropertyDescriptor(prototypeOfObjects, key);
+      expect(descriptor?.configurable, key).toBe(false);
+      expect(descriptor?.enumerable, key).toBe(false);
+      const getter = descriptor?.get;
+      expect(getter === undefined ? undefined : Object.getOwnPropertyDescriptor(getter, Symbol.for("wb-u62.census-guard"))?.value, key).toBe(true);
+    }
+  });
+
+  it("a prototype write of fails or fixtures is refused, by definition and by assignment, and an absent one reads undefined", () => {
+    const prototypeOfObjects: Record<string, unknown> = Object.getPrototypeOf({});
+    // Without the guard each write would land on this worker's Object.prototype: a configurable one is removed again, so a
+    // run without the guard reds these rows without inheriting fails or fixtures into the rest of the file.
+    const refusal = (key: string, write: () => void): string => {
+      try {
+        write();
+        return "accepted";
+      } catch (error) {
+        return error instanceof Error ? error.message : String(error);
+      } finally {
+        if (Object.getOwnPropertyDescriptor(prototypeOfObjects, key)?.configurable === true) delete prototypeOfObjects[key];
+      }
+    };
+    expect(refusal("fails", () => Object.defineProperty(prototypeOfObjects, "fails", { value: true, configurable: true }))).toMatch(/Cannot redefine property: fails/);
+    expect(refusal("fixtures", () => Object.defineProperty(prototypeOfObjects, "fixtures", { value: {}, configurable: true }))).toMatch(/Cannot redefine property: fixtures/);
+    expect(
+      refusal("fails", () => {
+        prototypeOfObjects.fails = true;
+      }),
+    ).toMatch(/census guard: Object\.prototype\.fails is refused/);
+    expect(
+      refusal("fixtures", () => {
+        prototypeOfObjects.fixtures = {};
+      }),
+    ).toMatch(/census guard: Object\.prototype\.fixtures is refused/);
+    const plain: { fails?: unknown; fixtures?: unknown } = {};
+    expect([plain.fails, plain.fixtures]).toEqual([undefined, undefined]);
+  });
+
+  it("an own fails or fixtures keeps its meaning: an assignment defines an own enumerable data property", () => {
+    const options: { fails?: boolean; fixtures?: number } = {};
+    options.fails = true;
+    options.fixtures = 2;
+    expect(Object.getOwnPropertyDescriptor(options, "fails")).toEqual({ value: true, writable: true, enumerable: true, configurable: true });
+    expect(Object.getOwnPropertyDescriptor(options, "fixtures")).toEqual({ value: 2, writable: true, enumerable: true, configurable: true });
+    expect({ ...options }).toEqual({ fails: true, fixtures: 2 });
   });
 });
 
@@ -3717,11 +4304,25 @@ const ROSTER_JUSTIFICATION: Readonly<Record<RosterId, readonly string[]>> = {
   "api-use.re-export": ["r-u62r4-s14-relative-reexport-api"],
   "api-use.type": ["r-u62r4-s10-hook-parameter-escape"],
   "context.hook-parameter": ["r-u62r4-s8-hook-parameter-writer", "r-u62r4-s10-hook-parameter-escape"],
-  "options.literal": ["r-u62r4-s12-options-method-this", "r-n5-computed-key", "r-6hb7-s4-fails-options"],
-  "options.const": ["r-u62g2r3-o1-destructure-object", "r-u62g2r3-o4-describe-options", "r-s7-fails-variable"],
+  "options.literal": ["r-u62r4-s12-options-method-this", "r-n5-computed-key", "r-6hb7-s4-fails-options", "r-u62r5-p3-proto-literal-options"],
+  "options.const": [
+    "r-u62g2r3-o1-destructure-object",
+    "r-u62g2r3-o4-describe-options",
+    "r-s7-fails-variable",
+    "r-u62r5-o1-exported-const",
+    "r-u62r5-o3-exported-spread-source",
+    "r-u62r5-o4-exported-describe-options",
+    "r-u62r5-o1b-export-specifier",
+    "r-u62r5-o1c-export-default",
+    "r-u62r5-e1-direct-eval",
+  ],
   "options.read-position": ["r-u62g2r3-o2-destructure-array", "r-u62g2r3-o3-for-of-target", "r-u62g2r3-o5-spread-source"],
   "options.fails-constant": ["r-u62r4-o6-fails-not-constant", "r-u62r4-x14-undefined-shadow"],
-  "options.enclosure": ["r-u62g2-i1-object-held-suite", "r-u62g2-i1-wrapper-suite", "r-u62g3-1-object-method"],
+  "options.enclosure": ["r-u62g2-i1-object-held-suite", "r-u62g2-i1-wrapper-suite", "r-u62g3-1-object-method", "r-u62r5-o4-exported-describe-options", "r-u62r5-p7-proto-describe-inner"],
+  "options.absent": ["r-u62r5-p1-proto-own-file", "r-u62r5-p7-proto-describe-inner", "c-u62r5-unguarded-p1"],
+  "options.number": ["c-u62r5-unguarded-number"],
+  "options.inherited": ["c-u62r5-unguarded-plain", "c-u62r5-unguarded-p1", "c-u62r5-unguarded-number", "c-u62r5-unguarded-f1", "c-u62r5-guard-not-first", "c-u62r5-guard-altered", "c-u62r5-rs2-tamper", "c-u62r5-rs2-fixtures"],
+  "context.inherited": ["c-u62r5-unguarded-f1", "c-u62r5-unguarded-f2", "c-u62r5-guard-parallel", "c-u62r5-pool-vm", "c-u62r5-rs2-fixtures"],
   "context.seed": ["b-6hb7-m10-rest-destructured", "b-6ze38-m8-rest-args", "b-arguments"],
   "context.member": ["r-u62g3-8-context-write-task", "b-destructured", "b-computed-key"],
   "context.alias": ["b-alias-context"],
@@ -3750,7 +4351,7 @@ const LIVENESS_EXEMPT: Readonly<Partial<Record<RosterId, string>>> = {
 };
 
 describe("census helper: the resolvable-construct roster is the acceptance surface (owner criterion 2026-10-17, respin-4)", () => {
-  const rows = new Map(MAIN_ROWS.map(row => [row.id, row]));
+  const rows = new Map<string, Row | ConfigRow>([...MAIN_ROWS, ...CONFIG_ROWS].map(row => [row.id, row]));
 
   it("every roster row names the falsifier rows that justify it, each a row of this suite that goes red", () => {
     expect(Object.keys(ROSTER_JUSTIFICATION).sort()).toEqual(RESOLVABLE_CONSTRUCTS.map(row => row.id).sort());
@@ -3778,5 +4379,17 @@ describe("census helper: the resolvable-construct roster is the acceptance surfa
     }
     const dead = [...ids].filter(id => !live.has(id) && LIVENESS_EXEMPT[id as RosterId] === undefined);
     expect(dead, `roster rows no ok verdict resolves through: ${dead.join(", ")}`).toEqual([]);
+  });
+
+  it("u62 respin-5: every ok verdict resolved its context flow through context.inherited, and a fails-absent read through options.absent / options.number and options.inherited", () => {
+    const greens = [...mainVerdicts.values(), ...reportVerdicts.values()].filter(verdict => verdict.ok);
+    for (const verdict of greens) expect(verdict.through, verdict.why).toContain("context.inherited");
+    const control = reportVerdicts.get("r-control");
+    expect(control?.ok, control?.why).toBe(true);
+    expect(control?.through).toEqual(expect.arrayContaining(["options.absent", "options.inherited", "context.inherited"]));
+    const numeric = reportVerdicts.get("r-u62r5-o6-numeric-options");
+    expect(numeric?.ok, numeric?.why).toBe(true);
+    expect(numeric?.through).toEqual(expect.arrayContaining(["options.number", "options.absent", "options.inherited", "context.inherited"]));
+    expect(mainVerdicts.get("r-u62r5-o6-numeric-options")?.through).not.toContain("options.inherited");
   });
 });

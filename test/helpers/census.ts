@@ -55,22 +55,59 @@
  *       __proto__ / prototype read - the Assertion class whose matchers chai overwrites, respin-4 X21 - no vi.mock of an
  *       assertion or runner module); any other static expect member (getState, assertions ...), a bare expect(x) and
  *       a member every object or function carries (toString, bind, call ...) assert nothing.
+ *   INHERITED OPTIONS (owner ruling R1 = (a) CONFIRMED 2026-10-17, respin-5: the prototype-chain read is a hole, not a
+ *   residual): vitest 4.1.10 merges a case's options with spreads, which copy own keys only, and then reads fails and
+ *   fixtures through the prototype chain (task(): fails: options.fails; setTestFixture(context, options.fixtures ?? new
+ *   TestFixtures()), whose auto fixtures it runs with the test context), so code anywhere in the run can give every
+ *   registration an inherited fails, or an inherited fixtures registry that writes the context. The census closes the
+ *   class fail-closed with a runtime half it vouches statically: test/helpers/census-guard.ts installs non-configurable
+ *   accessors for fails and fixtures on Object.prototype before any test module loads (a prototype write of either
+ *   throws; an own one keeps its meaning), and censusGuard() vouches - from the tier's forge.toml step, its npm script,
+ *   its argv, the one config file vitest loads, that file's statements (imports of defineConfig from vitest/config and
+ *   types, and a default export whose every value is a plain literal: no code runs when vitest loads it), its closed
+ *   key lists (no globalSetup, no test.env name node or vitest reads in the workers it forks, test.server.deps only) and
+ *   the first setup file's bytes (CENSUS_GUARD_SHA256), never by executing - that the tier's run loads it first, before
+ *   any code but vitest's own (roster rows options.inherited and context.inherited). Without that vouch report mode
+ *   reads no absent fails as no fails (options-unknown) and neither mode resolves a context flow (context-unknown),
+ *   whatever the code; an own fails (true or false) needs no vouch.
  *   MEASURED, NOT PROVEN: what the roster is known to refuse is its measured probe set, re-run on the delivered bytes in
- *   BOTH modes - the gate-3 battery (sixteen shapes), the gate-2 battery (38 shapes) and the respin-4 seat's own (S1-S16,
- *   X1-X19, X21, X22, X22b), every one a row of test/workbench-census-helper.test.ts; its ROSTER_JUSTIFICATION table
- *   names, per roster row, the falsifier rows that would fabricate green through it and go red instead. A shape
- *   outside that set is refused only as far as the guards of the roster rows reach.
+ *   BOTH modes - the gate-3 battery (sixteen shapes), the gate-2 battery (38 shapes), the respin-4 seat's own (S1-S16,
+ *   X1-X19, X21, X22, X22b), the gate-3 r4 battery (48 rows: O1-O6, P1-P9, A1-A12, C1-C6 and its controls) and the
+ *   respin-5 seat's own (F1, F2, E1, the G rows, RS1, RS2), every one a row of test/workbench-census-helper.test.ts; its
+ *   ROSTER_JUSTIFICATION table names, per roster row, the falsifier rows that would fabricate green through it and go
+ *   red instead. A shape outside that set is refused only as far as the guards of the roster rows reach.
  *   NAMED RESIDUALS - what the roster does NOT cover, so no census may claim it; each MEASURED (a probe ran the shape on
  *   these bytes) or UNMEASURED (named, never run):
  *   - C1, sibling cases (MEASURED, both modes ok on the inverted pin): another case's own code reaching the pin's task
  *     through the task tree - its context's task.suite.tasks (gate-2 c1), or getCurrentTest().suite called on the spot
  *     in its body (respin-4 X20).
  *   - package modules (UNMEASURED): a package's top-level code run by an import, and the API or a hook reached inside
- *     it. Its relative twin - a relative module's top-level code reached by a side-effect import (R1) - is closed:
- *     integrity and the hook walk read the whole relative import closure (rows r-u62g2r3-r1-side-effect-mutation and
- *     r-u62r4-s16-side-effect-hook, measured red both modes).
- *   - setup files, globalSetup and config (UNMEASURED), and a custom matcher, tester or serializer registered there or in
- *     a package (UNMEASURED; inside the import closure they are refused, X8 measured).
+ *     it. Its relative twin - a relative module's top-level code reached by a side-effect import (R1) - is read only
+ *     where the module's own import closure touches vitest: integrity and the hook walk enter a relative module only
+ *     then (rows r-u62g2r3-r1-side-effect-mutation and r-u62r4-s16-side-effect-hook, measured red both modes). The
+ *     respin-4 header claimed R1 closed because "integrity and the hook walk read the whole relative import closure";
+ *     the gate-3 r4 battery measured that false (P2: a relative helper that never touches vitest places fails on
+ *     Object.prototype, read as no fails in report mode). The inherited-option class is closed by the census guard
+ *     (INHERITED OPTIONS above), never by the closure read.
+ *   - PRE-GUARD CODE: code that runs in the worker realm BEFORE the guard - a --require / --import preload set through
+ *     NODE_OPTIONS for the workers vitest forks - defeats the runtime half alone: a plain prototype write there is
+ *     caught (the guard throws at load: RS1, collection-error in both modes), but one that first replaces the builtins
+ *     the guard calls evades it, since the first code in a realm wins (measured on these bytes with the vouch's
+ *     config-module read removed: report ok and executing inverted for fails, ok in both modes for a fixtures
+ *     registry). The routes the vouch reads are refused statically instead (MEASURED): config-module code and an option
+ *     value that is code (rows c-u62r5-rs1-preload, c-u62r5-rs2-tamper, c-u62r5-rs2-fixtures, g-u62r5-config-code,
+ *     g-u62r5-config-import, g-u62r5-value-code), a globalSetup (g-u62r5-global-setup), a test.env NODE_* / VITE*
+ *     name (g-u62r5-env-node-options, g-u62r5-env-vitest), a CLI flag or config key outside the closed lists
+ *     (g-u62r5-cli-flag, g-u62r5-test-key, g-u62r5-plugins, g-u62r5-server-debug). NAMED RESIDUAL (UNMEASURED): what
+ *     the vouch does not read - the gate's own environment (an operator's NODE_OPTIONS reaches every worker) and the
+ *     installed packages (node_modules, vitest itself), which run before the guard by construction.
+ *   - setup files after the guard: their fails / fixtures route is the guard's (measured, rows r-u62r5-* and
+ *     c-u62r5-*); a custom matcher, tester or serializer registered there or in a package (UNMEASURED; inside the
+ *     import closure they are refused, X8 measured).
+ *   - the other options vitest's task() reads through the prototype chain (ANALYSED, UNMEASURED): skip, todo, only,
+ *     timeout, retry, repeats, tags, each, concurrent, sequential - none turns a failing case into a passed one by our
+ *     reading of vitest 4.1.10 (skip / todo report it not passed, only meets allowOnly: false, tags are refused from
+ *     the report); not probed.
  *   - the global object (UNMEASURED; this repository runs globals: false): the API or a hook reached through
  *     globalThis or vi.stubGlobal.
  *   - vitest internals beyond the public routes (UNMEASURED): chai's assertion flags (an expect(x) object carries its
@@ -116,7 +153,7 @@
  */
 
 import { spawn, spawnSync } from "node:child_process";
-import { randomUUID } from "node:crypto";
+import { createHash, randomUUID } from "node:crypto";
 import { existsSync, readFileSync, realpathSync, statSync } from "node:fs";
 import { basename, dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -325,7 +362,8 @@ const ROSTER = [
     id: "options.const",
     flow: "options",
     construct: "an identifier bound by const to options the options rows read, every reference to it standing in an options.read-position",
-    guard: "any other reference escapes, since fails may be written through it",
+    guard:
+      "any other reference escapes, since fails may be written through it; an EXPORTED binding (an export modifier, export { x }, export default x) and any const of a file that calls a direct eval never resolve (options-unknown): an importing module - a cyclic one included - or an eval string reaches it where the census does not read (u62 gate-3 r4 O1 / O3 / O4, respin-5 E1)",
   },
   {
     id: "options.read-position",
@@ -345,7 +383,31 @@ const ROSTER = [
     construct: "each enclosing function of the case is a function literal passed as a callback to a call resolving to describe / suite (the suites' options read in order), or a class static block or static field, which run where written",
     guard: "a method, accessor, constructor, instance initializer or any other holder runs where it is called, so the enclosing suites are unknown",
   },
+  {
+    id: "options.absent",
+    flow: "options",
+    construct: "a case or an enclosing suite registered with no options argument (its second argument is the case function itself, or missing) contributes no options of its own",
+    guard: "fails is then absent from it, which vitest reads through the prototype chain: options.inherited decides it",
+  },
+  {
+    id: "options.number",
+    flow: "options",
+    construct: "a numeric literal in the options position sets no option: vitest 4.1.10 parseArguments takes options only from an object and a timeout only from a numeric third argument",
+    guard: "a negative, bigint or computed number is not this construct (options-unknown); the absent fails is options.inherited's",
+  },
+  {
+    id: "options.inherited",
+    flow: "options",
+    construct: "fails absent at the case and at every enclosing suite reads as no fails ONLY when censusGuard vouches the tier's run: its first setup file is test/helpers/census-guard.ts (CENSUS_GUARD_SHA256), which keeps fails off Object.prototype",
+    guard: "unvouched - no guard, another setup file first or in parallel, other bytes, a pool or environment outside the list, an argv flag or config key the vouch does not read - the absent read is options-unknown, naming why (u62 gate-3 r4 P1-P5 / P7, owner R1 = (a)); an own fails never needs it",
+  },
   // ---- the context flow (both modes): every use of the test context and the runner state it reaches ----
+  {
+    id: "context.inherited",
+    flow: "context",
+    construct: "a case's context flow resolves ONLY when censusGuard vouches the tier's run, so no inherited fixtures registry hands the test context to auto fixtures the census does not read",
+    guard: "unvouched, every context flow is context-unknown in both modes, naming why (u62 respin-5 F1 / F2: vitest 4.1.10 reads options.fixtures through the prototype chain and runs its auto fixtures with the context, after collection)",
+  },
   {
     id: "context.seed",
     flow: "context",
@@ -846,6 +908,342 @@ export function resolveTier(root: string, tier: string): TierResolution {
   return { ok: true, tier, command: command.value, argv: argv.value, chain, why: "" };
 }
 // ---------------------------------------------------------------------------------------------
+// The census guard (u62 respin-5, owner R1 = (a)): vouched statically on the tier's own run, never executed.
+// ---------------------------------------------------------------------------------------------
+
+/** The census guard's own bytes (test/helpers/census-guard.ts): censusGuard vouches a tier's first setup file by this sha256. */
+export const CENSUS_GUARD_SHA256 = "8db6194624037437602602092e115dc47c890e66da6f893c1e1f1ad61a22222f";
+
+export interface GuardState {
+  readonly ok: boolean;
+  /** The config file vitest loads for the tier, once it resolved. */
+  readonly config?: string;
+  /** The guard file the config names first, when it is vouched. */
+  readonly guard?: string;
+  /** The files the vouch read: report mode refuses a report older than any of them. */
+  readonly read: readonly string[];
+  readonly why: string;
+}
+
+/** vitest 4.1.10's config lookup (dist/chunks/constants: CONFIG_NAMES x CONFIG_EXTENSIONS, first match wins, searching upward). */
+const CONFIG_FILES = ["vitest.config", "vite.config"].flatMap(name => [".ts", ".mts", ".cts", ".js", ".mjs", ".cjs"].map(extension => `${name}${extension}`));
+/** Tier flags that load no code and leave the pool, the environment and the setup files alone (a closed list). */
+const GUARD_BOOLEAN_FLAGS = new Set(["allowOnly", "cache", "clearScreen", "color", "disableConsoleIntercept", "expandSnapshotDiff", "fileParallelism", "hideSkippedTests", "includeTaskLocation", "isolate", "logHeapUsage", "passWithNoTests", "printConsoleTrace", "run", "strictTags"]);
+const GUARD_VALUE_FLAGS = new Set(["bail", "config", "exclude", "hookTimeout", "maxConcurrency", "maxWorkers", "outputFile", "retry", "shard", "slowTestThreshold", "tagsFilter", "teardownTimeout", "testNamePattern", "testTimeout"]);
+/** Config keys the vouch reads: anything else may load code, redirect a module or move the tests to another realm. */
+const GUARD_TOP_KEYS = new Set(["cacheDir", "resolve", "test"]);
+const GUARD_TEST_KEYS = new Set([
+  "allowOnly",
+  "cache",
+  "coverage",
+  "env",
+  "environment",
+  "exclude",
+  "fileParallelism",
+  "hookTimeout",
+  "include",
+  "includeTaskLocation",
+  "isolate",
+  "maxWorkers",
+  "passWithNoTests",
+  "pool",
+  "sequence",
+  "server",
+  "setupFiles",
+  "tags",
+  "testNamePattern",
+  "testTimeout",
+]);
+const GUARD_SEQUENCE_KEYS = new Set(["concurrent", "hooks", "seed", "setupFiles", "shuffle"]);
+const GUARD_POOLS = new Set(["forks", "threads"]);
+const GUARD_SERVER_DEPS_KEYS = new Set(["external", "fallbackCJS", "inline"]);
+/** test.env names node reads at a worker's start (NODE_OPTIONS preloads code) or vitest and vite read in a worker. */
+const GUARD_ENV_REFUSED = /^(?:node_|vite)/i;
+
+/** An object literal's plain properties by key, or why the vouch cannot read them (a spread, a computed key, a method, an accessor, a shorthand, a repeat). */
+function literalKeys(literal: ts.ObjectLiteralExpression, label: string, where: string): ReadonlyMap<string, ts.Expression> | string {
+  const keys = new Map<string, ts.Expression>();
+  for (const property of literal.properties) {
+    if (ts.isSpreadAssignment(property)) return `${label} spreads a value into ${where}, which may carry any key`;
+    if (!ts.isPropertyAssignment(property)) return `${label} sets ${where} through a ${ts.isShorthandPropertyAssignment(property) ? "shorthand property" : "method or accessor"}, which the vouch does not read`;
+    const key = propertyKey(property.name);
+    if (key === undefined) return `${label} sets a computed key in ${where}, which may name any option`;
+    if (keys.has(key)) return `${label} sets ${where}.${key} twice`;
+    keys.set(key, property.initializer);
+  }
+  return keys;
+}
+
+/** A value's object-literal properties (see literalKeys), or why it is not an object literal the vouch reads. */
+function literalAt(value: ts.Expression, label: string, where: string): ReadonlyMap<string, ts.Expression> | string {
+  const literal = unwrap(value);
+  return ts.isObjectLiteralExpression(literal) ? literalKeys(literal, label, where) : `${label} sets ${where} to something other than an object literal`;
+}
+
+const stringValue = (value: ts.Expression): string | undefined => {
+  const literal = unwrap(value);
+  return ts.isStringLiteralLike(literal) ? literal.text : undefined;
+};
+
+function stringList(value: ts.Expression): readonly string[] | undefined {
+  const literal = unwrap(value);
+  if (ts.isStringLiteralLike(literal)) return [literal.text];
+  if (!ts.isArrayLiteralExpression(literal)) return undefined;
+  const texts: string[] = [];
+  for (const element of literal.elements) {
+    const text = stringValue(element);
+    if (text === undefined) return undefined;
+    texts.push(text);
+  }
+  return texts;
+}
+
+/**
+ * The config module's statements, read before vitest loads it: its top-level code runs in the main process before the
+ * workers spawn and may set NODE_OPTIONS for them (rows c-u62r5-rs*), so the vouch reads only imports of defineConfig
+ * from vitest/config, type-only imports and declarations, and the default export.
+ */
+function configStatements(sf: ts.SourceFile, label: string): string | undefined {
+  for (const statement of sf.statements) {
+    if (ts.isExportAssignment(statement) && statement.isExportEquals !== true) continue;
+    if (ts.isInterfaceDeclaration(statement) || ts.isTypeAliasDeclaration(statement)) continue;
+    if (ts.isImportDeclaration(statement)) {
+      const module = ts.isStringLiteral(statement.moduleSpecifier) ? statement.moduleSpecifier.text : "a module named by an expression";
+      const clause = statement.importClause;
+      if (clause?.isTypeOnly === true) continue;
+      const named = clause?.namedBindings;
+      const onlyDefineConfig =
+        clause !== undefined && clause.name === undefined && named !== undefined && ts.isNamedImports(named) && named.elements.every(element => element.isTypeOnly || (element.propertyName ?? element.name).text === "defineConfig");
+      if (module === "vitest/config" && onlyDefineConfig) continue;
+      return `${label} imports ${module}${clause === undefined ? " for its side effects" : ""}, and the vouch reads a config module that imports only defineConfig from vitest/config (and types): an imported module's top-level code runs in the main process when vitest loads the config, before the workers spawn, and may set NODE_OPTIONS for them`;
+    }
+    const line = sf.getLineAndCharacterOfPosition(statement.getStart(sf)).line + 1;
+    return `${label} holds a statement besides its imports and its default export (line ${line}), which runs in the main process when vitest loads the config, before the workers spawn, and may set NODE_OPTIONS for them`;
+  }
+  return undefined;
+}
+
+const describeCode = (node: ts.Expression): string =>
+  ts.isCallExpression(node) || ts.isNewExpression(node) || ts.isTaggedTemplateExpression(node)
+    ? "a call"
+    : ts.isIdentifier(node)
+      ? `the binding ${node.text}`
+      : ts.isFunctionLike(node)
+        ? "a function"
+        : ts.isPropertyAccessExpression(node) || ts.isElementAccessExpression(node)
+          ? "a property read"
+          : ts.isTemplateExpression(node)
+            ? "a template with substitutions"
+            : "an expression";
+
+/** Is a config value a plain literal - so loading the config evaluates nothing - or what code it holds. */
+function plainLiteral(value: ts.Expression, label: string, where: string): string | undefined {
+  const node = unwrap(value);
+  if (ts.isStringLiteralLike(node) || ts.isNumericLiteral(node) || ts.isRegularExpressionLiteral(node)) return undefined;
+  if (node.kind === ts.SyntaxKind.TrueKeyword || node.kind === ts.SyntaxKind.FalseKeyword || node.kind === ts.SyntaxKind.NullKeyword) return undefined;
+  if (ts.isPrefixUnaryExpression(node) && node.operator === ts.SyntaxKind.MinusToken && ts.isNumericLiteral(node.operand)) return undefined;
+  if (ts.isArrayLiteralExpression(node)) {
+    for (const [index, element] of node.elements.entries()) {
+      if (ts.isSpreadElement(element) || ts.isOmittedExpression(element)) return `${label} sets ${where}[${index}] to ${ts.isSpreadElement(element) ? "a spread" : "a hole"}, not a plain literal`;
+      const why = plainLiteral(element, label, `${where}[${index}]`);
+      if (why !== undefined) return why;
+    }
+    return undefined;
+  }
+  if (ts.isObjectLiteralExpression(node)) {
+    const keys = literalKeys(node, label, where);
+    if (typeof keys === "string") return keys;
+    for (const [key, entry] of keys) {
+      const why = plainLiteral(entry, label, `${where}.${key}`);
+      if (why !== undefined) return why;
+    }
+    return undefined;
+  }
+  return `${label} sets ${where} to ${describeCode(node)} - not a plain literal, so loading the config evaluates code in the main process before the workers spawn (it may set NODE_OPTIONS for them)`;
+}
+
+/** Is local bound by `import { imported as local } from module` (a value import, never a type-only one)? */
+function importedFrom(sf: ts.SourceFile, local: string, imported: string, module: string): boolean {
+  return sf.statements.some(
+    statement =>
+      ts.isImportDeclaration(statement) &&
+      ts.isStringLiteral(statement.moduleSpecifier) &&
+      statement.moduleSpecifier.text === module &&
+      statement.importClause !== undefined &&
+      !statement.importClause.isTypeOnly &&
+      statement.importClause.namedBindings !== undefined &&
+      ts.isNamedImports(statement.importClause.namedBindings) &&
+      statement.importClause.namedBindings.elements.some(element => !element.isTypeOnly && element.name.text === local && (element.propertyName ?? element.name).text === imported),
+  );
+}
+
+/**
+ * options.inherited / context.inherited (u62 respin-5, owner R1 = (a)): does the tier's run load the census guard
+ * before any test module? Read STATICALLY, never by executing: the forge.toml step through its npm script
+ * (resolveTier), its argv against a closed flag list, the ONE config file vitest loads (the --config file, or the one
+ * vitest default name in the root: none or several is unvouched, since vitest would search the parents or pick by its
+ * own order), that file's default export - defineConfig(<object literal>) imported from vitest/config, or the literal
+ * itself - against closed key lists, pool forks / threads and environment node (literals, when set), and the first
+ * setup file's bytes against CENSUS_GUARD_SHA256; with several setup files sequence.setupFiles must be the literal
+ * "list" (vitest imports them in parallel by default: @vitest/runner runSetupFiles). Code that runs before the guard
+ * and could set NODE_OPTIONS for the workers vitest forks is refused where the vouch can read it: a config-module
+ * statement besides the imports of defineConfig (and types) and the default export, an option value that is not a
+ * plain literal, a globalSetup, a test.env name node or vitest reads in a worker (cli-api: env = {...process.env,
+ * ...config.env}), test.server outside deps. Anything else is unvouched, naming why; what it cannot read (the gate's
+ * environment, the installed packages) is the named PRE-GUARD residual.
+ */
+export function censusGuard(root: string, tier: string): GuardState {
+  const read: string[] = [];
+  const refuse = (why: string, config?: string): GuardState => ({ ok: false, read, why: `the census guard is not vouched on the ${tier} tier: ${why}`, ...(config === undefined ? {} : { config }) });
+  const resolution = resolveTier(root, tier);
+  if (!resolution.ok) return refuse(`the tier does not resolve (${resolution.why})`);
+  const argv = resolution.argv;
+  let configured: string | undefined;
+  for (let index = argv[0] === "run" ? 1 : 0; index < argv.length; index += 1) {
+    const word = argv[index] ?? "";
+    if (!word.startsWith("-")) continue;
+    if (word === "--") return refuse('its command passes "--", which the vouch does not read');
+    const long = word.startsWith("--");
+    const body = word.slice(long ? 2 : 1);
+    const equals = body.indexOf("=");
+    const raw = equals === -1 ? body : body.slice(0, equals);
+    const name = long ? camel(raw.startsWith("no-") ? raw.slice(3) : raw) : (SHORT_VALUE_FLAGS.get(raw) ?? "");
+    if (GUARD_VALUE_FLAGS.has(name) && !raw.startsWith("no-")) {
+      const value = equals === -1 ? argv[index + 1] : body.slice(equals + 1);
+      if (equals === -1) index += 1;
+      if (value === undefined || value === "" || value.startsWith("-")) return refuse(`its command carries ${word} without a value the vouch reads`);
+      if (name === "config") configured = value;
+      continue;
+    }
+    if (long && equals === -1 && GUARD_BOOLEAN_FLAGS.has(name)) continue;
+    return refuse(`its command carries ${word}, a flag outside the closed list the vouch reads (it may load code, or change the pool, the environment or the setup files)`);
+  }
+  let config: string;
+  if (configured !== undefined) {
+    config = resolve(root, configured);
+    if (!existsSync(config)) return refuse(`the --config file ${configured} does not exist`);
+  } else {
+    const found = CONFIG_FILES.filter(name => existsSync(join(root, name)));
+    const first = found[0];
+    if (first === undefined) return refuse("the root holds no vitest config file, so vitest would search the parent directories for one");
+    if (found.length > 1) return refuse(`the root holds ${found.length} vitest config files (${found.join(", ")}); vitest loads only the first in its own order, and the vouch reads one`);
+    config = join(root, first);
+  }
+  read.push(config);
+  const label = relative(root, config);
+  let text: string;
+  try {
+    text = readFileSync(config, "utf8");
+  } catch (error) {
+    return refuse(`${label} is unreadable: ${String(error instanceof Error ? error.message : error)}`, config);
+  }
+  const sf = ts.createSourceFile(config, text, ts.ScriptTarget.Latest, true, /\.[cm]?ts$/.test(config) ? ts.ScriptKind.TS : ts.ScriptKind.JS);
+  const defaults = sf.statements.filter((statement): statement is ts.ExportAssignment => ts.isExportAssignment(statement) && statement.isExportEquals !== true);
+  const exported = defaults[0];
+  if (exported === undefined || defaults.length > 1) return refuse(`${label} has no single default export the vouch reads`, config);
+  let value = unwrap(exported.expression);
+  if (ts.isCallExpression(value)) {
+    const callee = unwrap(value.expression);
+    const argument = value.arguments[0];
+    if (!ts.isIdentifier(callee) || !importedFrom(sf, callee.text, "defineConfig", "vitest/config") || argument === undefined || value.arguments.length !== 1) {
+      return refuse(`${label} default-exports a call that is not defineConfig(<object literal>) imported from vitest/config`, config);
+    }
+    value = unwrap(argument);
+  }
+  if (!ts.isObjectLiteralExpression(value)) return refuse(`${label} default-exports no object literal - defineConfig(<object literal>) from vitest/config, or the literal itself - so the vouch cannot read the options vitest receives`, config);
+  const top = literalKeys(value, label, "the config");
+  if (typeof top === "string") return refuse(top, config);
+  for (const key of top.keys()) if (!GUARD_TOP_KEYS.has(key)) return refuse(`${label} sets the top-level key ${key}, outside the closed list the vouch reads (cacheDir, resolve, test): it may load code or redirect a module`, config);
+  const resolveOptions = top.get("resolve");
+  if (resolveOptions !== undefined) {
+    const keys = literalAt(resolveOptions, label, "resolve");
+    if (typeof keys === "string") return refuse(keys, config);
+    for (const key of keys.keys()) if (key !== "dedupe") return refuse(`${label} sets resolve.${key}, outside the closed list the vouch reads (resolve.dedupe): it may redirect a module`, config);
+  }
+  const testOptions = top.get("test");
+  if (testOptions === undefined) return refuse(`${label} sets no test options, so it names no setup file`, config);
+  const options = literalAt(testOptions, label, "test");
+  if (typeof options === "string") return refuse(options, config);
+  for (const key of options.keys()) if (!GUARD_TEST_KEYS.has(key)) return refuse(`${label} sets test.${key}, outside the closed list the vouch reads: it may load code before the guard or run the test modules in another realm`, config);
+  const pool = options.get("pool");
+  const poolName = pool === undefined ? undefined : stringValue(pool);
+  if (pool !== undefined && (poolName === undefined || !GUARD_POOLS.has(poolName))) {
+    return refuse(`${label} sets pool ${poolName === undefined ? "to a value the vouch cannot read" : JSON.stringify(poolName)}, outside forks / threads: the guard is vouched only for the realm vitest's own runner runs the test modules in`, config);
+  }
+  const environment = options.get("environment");
+  const environmentName = environment === undefined ? undefined : stringValue(environment);
+  if (environment !== undefined && environmentName !== "node") {
+    return refuse(`${label} sets environment ${environmentName === undefined ? "to a value the vouch cannot read" : JSON.stringify(environmentName)}, not node`, config);
+  }
+  const env = options.get("env");
+  if (env !== undefined) {
+    const keys = literalAt(env, label, "test.env");
+    if (typeof keys === "string") return refuse(keys, config);
+    for (const key of keys.keys()) {
+      if (GUARD_ENV_REFUSED.test(key)) {
+        return refuse(`${label} sets test.env.${key}: vitest hands test.env to the workers it forks (cli-api: env = {...process.env, ...config.env}), where node reads NODE_* names at start (NODE_OPTIONS preloads code) and vitest reads VITE* names, before any setup file runs`, config);
+      }
+    }
+  }
+  const server = options.get("server");
+  if (server !== undefined) {
+    const keys = literalAt(server, label, "test.server");
+    if (typeof keys === "string") return refuse(keys, config);
+    for (const key of keys.keys()) if (key !== "deps") return refuse(`${label} sets test.server.${key}, outside the closed list the vouch reads (test.server.deps)`, config);
+    const deps = keys.get("deps");
+    if (deps !== undefined) {
+      const depsKeys = literalAt(deps, label, "test.server.deps");
+      if (typeof depsKeys === "string") return refuse(depsKeys, config);
+      for (const key of depsKeys.keys()) if (!GUARD_SERVER_DEPS_KEYS.has(key)) return refuse(`${label} sets test.server.deps.${key}, outside the closed list the vouch reads (external, fallbackCJS, inline)`, config);
+    }
+  }
+  const coverage = options.get("coverage");
+  if (coverage !== undefined) {
+    const keys = literalAt(coverage, label, "test.coverage");
+    if (typeof keys === "string") return refuse(keys, config);
+    for (const key of ["enabled", "customProviderModule"]) if (keys.has(key)) return refuse(`${label} sets test.coverage.${key}, which loads coverage code into the run`, config);
+  }
+  let order: string | undefined;
+  const sequence = options.get("sequence");
+  if (sequence !== undefined) {
+    const keys = literalAt(sequence, label, "test.sequence");
+    if (typeof keys === "string") return refuse(keys, config);
+    for (const key of keys.keys()) if (!GUARD_SEQUENCE_KEYS.has(key)) return refuse(`${label} sets test.sequence.${key}, outside the closed list the vouch reads (a sequencer is code)`, config);
+    const setupOrder = keys.get("setupFiles");
+    if (setupOrder !== undefined) order = stringValue(setupOrder) ?? "a value the vouch cannot read";
+  }
+  const setup = options.get("setupFiles");
+  const files = setup === undefined ? [] : stringList(setup);
+  if (files === undefined) return refuse(`${label} sets test.setupFiles to something other than a literal string or string array`, config);
+  const first = files[0];
+  if (first === undefined) return refuse(`${label} names no setup file, so the census guard does not run before the test modules`, config);
+  if (files.length > 1 && order !== "list") {
+    return refuse(`${label} names ${files.length} setup files and sequence.setupFiles is not "list", so vitest imports them in parallel (@vitest/runner runSetupFiles) and another one may run before the guard`, config);
+  }
+  const guard = resolve(root, first);
+  if (!existsSync(guard)) return refuse(`the first setup file ${first} that ${label} names does not exist`, config);
+  read.push(guard);
+  let digest: string;
+  try {
+    digest = createHash("sha256").update(readFileSync(guard)).digest("hex");
+  } catch (error) {
+    return refuse(`the first setup file ${first} is unreadable: ${String(error instanceof Error ? error.message : error)}`, config);
+  }
+  if (digest !== CENSUS_GUARD_SHA256) return refuse(`the first setup file ${first} is not the census guard: its sha256 ${digest} is not CENSUS_GUARD_SHA256 ${CENSUS_GUARD_SHA256} (${label} names it)`, config);
+  const statements = configStatements(sf, label);
+  if (statements !== undefined) return refuse(statements, config);
+  for (const [key, entry] of top) {
+    const code = plainLiteral(entry, label, key);
+    if (code !== undefined) return refuse(code, config);
+  }
+  return { ok: true, config, guard, read, why: "" };
+}
+
+/** context.inherited's red: the guard unvouched, an inherited fixtures registry may hand the context to code the census does not read. */
+const contextUnguarded = (guard: GuardState): string =>
+  `${guard.why}, so code the census does not read may place a fixtures registry on Object.prototype, which vitest 4.1.10 reads through the prototype chain and whose auto fixtures it runs with the test context (setTestFixture: options.fixtures ?? new TestFixtures())`;
+
+// ---------------------------------------------------------------------------------------------
 // Execution: the tier's REAL entrypoint with the census reporter appended (owner rulings 13:20Z, 13:30Z).
 // ---------------------------------------------------------------------------------------------
 
@@ -1235,6 +1633,11 @@ class SourceCache {
 
   resetTouched(): void {
     this.reads.clear();
+  }
+
+  /** A file the judgment read outside the source cache (the vouched config and guard file): its mtime joins the staleness check. */
+  note(file: string): void {
+    this.reads.add(file);
   }
 
   get(file: string): LoadedSource {
@@ -3797,6 +4200,8 @@ interface JudgeContext {
   readonly tierOf: (tier: string) => TierResolution;
   readonly runs: ReadonlyMap<string, TierRun>;
   readonly sources: SourceCache;
+  /** context.inherited: censusGuard of the pin's tier, read once per tier. */
+  readonly guardOf: (tier: string) => GuardState;
 }
 
 function moduleIn(run: TierRun | undefined, absolute: string): RunModule | undefined {
@@ -3884,6 +4289,11 @@ function judgeOne(pin: CasePin, context: JudgeContext): PinVerdict {
   }
   if (call === undefined) return verdict(pin, "asserts", "unmapped-location", "the runner's location maps to no call expression", count);
   if (fn === undefined) return verdict(pin, "asserts", "body-unresolved", `the case function at ${a.where(call)} is not statically resolvable`, count);
+  // context.inherited (u62 respin-5): the reporter's collected task never shows a write an inherited fixtures registry's
+  // auto fixture makes at run time (F1), so the context flow resolves only on a run the census guard is vouched for.
+  const guard = context.guardOf(pin.tier);
+  if (!guard.ok) return verdict(pin, "runs-where", "context-unknown", contextUnguarded(guard), count);
+  through("context.inherited", call);
   const cause = chainCause(call, fn, a, registered, context.sources, true);
   if (cause !== undefined) return verdict(pin, "runs-where", cause.code, cause.detail, count);
   const symbols = contextSymbols(fn, contextIndex(call), a);
@@ -3935,7 +4345,16 @@ export async function judgePins(root: string, pins: readonly CasePin[], options:
     const resolution = tierOf(tier);
     if (resolution.ok) runs.set(tier, await runTier(realRoot, resolution, [...files].sort(), options));
   }
-  const context: JudgeContext = { root: realRoot, tierOf, runs, sources: new SourceCache() };
+  const guards = new Map<string, GuardState>();
+  const guardOf = (tier: string): GuardState => {
+    let guard = guards.get(tier);
+    if (guard === undefined) {
+      guard = censusGuard(realRoot, tier);
+      guards.set(tier, guard);
+    }
+    return guard;
+  };
+  const context: JudgeContext = { root: realRoot, tierOf, runs, sources: new SourceCache(), guardOf };
   return pins.map(pin => traced(() => judgeOne(pin, context)));
 }
 
@@ -4143,15 +4562,65 @@ function assignmentPattern(literal: ts.Node): boolean {
 
 type OptionsRead = { readonly fails: boolean | undefined } | { readonly unknown: string };
 
+/**
+ * options.const (u62 gate-3 r4 O1 / O3 / O4, U1): how a const binding is exported - an export modifier, export { x },
+ * export default x - or undefined. A module that imports it, a cyclic one included, may write fails through it before
+ * the registration runs, and the census does not read it (the fail-closed default: no every-importer read route).
+ */
+function exportedBinding(declaration: ts.VariableDeclaration, a: SourceAnalysis): string | undefined {
+  if ((ts.getCombinedModifierFlags(declaration) & ts.ModifierFlags.Export) !== 0) return `is exported (export const at ${a.where(declaration)})`;
+  const symbol = ts.isIdentifier(declaration.name) ? a.checker.getSymbolAtLocation(declaration.name) : undefined;
+  if (symbol === undefined) return undefined;
+  for (const statement of a.sf.statements) {
+    if (ts.isExportDeclaration(statement) && statement.moduleSpecifier === undefined && statement.exportClause !== undefined && ts.isNamedExports(statement.exportClause)) {
+      for (const specifier of statement.exportClause.elements) {
+        if (a.checker.getExportSpecifierLocalTargetSymbol(specifier) === symbol) return `is exported (export { ${specifier.getText(a.sf)} } at ${a.where(specifier)})`;
+      }
+    }
+    const target = ts.isExportAssignment(statement) ? unwrap(statement.expression) : undefined;
+    if (target !== undefined && ts.isIdentifier(target) && valueSymbol(target, a) === symbol) return `is exported (export default at ${a.where(statement)})`;
+  }
+  return undefined;
+}
+
+const directEvals = new WeakMap<SourceAnalysis, ts.CallExpression | null>();
+/** E1 (u62 respin-5): a direct eval anywhere in the file - eval(...) called by its own name - reaches module bindings by name. */
+function directEval(a: SourceAnalysis): ts.CallExpression | undefined {
+  const cached = directEvals.get(a);
+  if (cached !== undefined) return cached ?? undefined;
+  let found: ts.CallExpression | undefined;
+  const visit = (node: ts.Node): void => {
+    if (found !== undefined) return;
+    if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "eval") {
+      found = node;
+      return;
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(a.sf);
+  directEvals.set(a, found ?? null);
+  return found;
+}
+
 /** The fails an options value sets (true / false / absent), or why report mode cannot read it statically. */
 function optionsFails(expression: ts.Expression, a: SourceAnalysis, depth = 0): OptionsRead {
   const value = unwrap(expression);
-  if (ts.isNumericLiteral(value)) return { fails: undefined };
+  if (ts.isNumericLiteral(value)) return through("options.number", { fails: undefined });
   if (ts.isIdentifier(value) && depth < 6) {
     const declaration = a.checker.getSymbolAtLocation(value)?.declarations?.[0];
-    if (declaration !== undefined && ts.isVariableDeclaration(declaration) && isConst(declaration) && declaration.initializer !== undefined && !escapes(declaration, a)) {
-      through("options.const", value);
-      return optionsFails(declaration.initializer, a, depth + 1);
+    if (declaration !== undefined && ts.isVariableDeclaration(declaration) && isConst(declaration) && declaration.initializer !== undefined) {
+      const exported = exportedBinding(declaration, a);
+      if (exported !== undefined) {
+        return { unknown: `the options ${value.text} at ${a.where(value)} are a const binding that ${exported}, so a module that imports it - a cyclic import included - may write fails through it before the registration runs, where the census does not read (report mode does not record it)` };
+      }
+      const evaluated = directEval(a);
+      if (evaluated !== undefined) {
+        return { unknown: `the options ${value.text} at ${a.where(value)} are a const of a file that calls a direct eval at ${a.where(evaluated)}, which reaches module bindings by name and may write fails through it (report mode does not record it)` };
+      }
+      if (!escapes(declaration, a)) {
+        through("options.const", value);
+        return optionsFails(declaration.initializer, a, depth + 1);
+      }
     }
   }
   if (!ts.isObjectLiteralExpression(value)) return { unknown: `the options at ${a.where(value)} are not a same-file const object literal, so report mode cannot read their fails (the report does not record it)` };
@@ -4232,7 +4701,7 @@ function deferredMember(member: ts.Node, child: ts.Node, a: SourceAnalysis): str
  * fails the source does not show (I1) - the options must be same-file constants, and the file must not let the
  * registration API escape (A1). judgeReported calls it only for a callee the strict resolver reads as it / test (U1).
  */
-function inversionHazard(call: ts.CallExpression, a: SourceAnalysis): { readonly kind: "inverted" | "unknown"; readonly detail: string } | undefined {
+function inversionHazard(call: ts.CallExpression, a: SourceAnalysis, guard: GuardState): { readonly kind: "inverted" | "unknown"; readonly detail: string } | undefined {
   const suites: ts.CallExpression[] = [];
   for (let node: ts.Node = call; node.parent !== undefined && !ts.isSourceFile(node.parent); node = node.parent) {
     const parent = node.parent;
@@ -4259,7 +4728,10 @@ function inversionHazard(call: ts.CallExpression, a: SourceAnalysis): { readonly
   ];
   let unknown = "";
   for (const entry of sources) {
-    if (entry.options === undefined) continue;
+    if (entry.options === undefined) {
+      through("options.absent", entry);
+      continue;
+    }
     const read = optionsFails(entry.options, a);
     if ("unknown" in read) {
       state = "unknown";
@@ -4275,6 +4747,14 @@ function inversionHazard(call: ts.CallExpression, a: SourceAnalysis): { readonly
   const members = chainMembers(call.expression, a);
   if ("unknown" in members) return { kind: "unknown", detail: members.unknown };
   if (members.names.includes("fails")) return { kind: "inverted", detail: `registered with fails at ${a.where(call)}: it passes only when its assertions fail, and the report records it passed` };
+  // options.inherited (u62 respin-5, owner R1 = (a)): no own fails anywhere, which vitest reads through the prototype chain
+  if (!guard.ok) {
+    return {
+      kind: "unknown",
+      detail: `fails is absent at the case and at every enclosing suite, which vitest 4.1.10 reads through the prototype chain (task(): fails: options.fails), but ${guard.why}, so code the census does not read may place fails on Object.prototype (the report does not record it)`,
+    };
+  }
+  through("options.inherited", call);
   return apiEscapeHazard(a);
 }
 
@@ -4287,6 +4767,8 @@ interface ReportContext {
   /** The default tier's report, read once, for a non-default pin's exclusivity. */
   readonly gateReport: () => LoadedReport;
   readonly sources: SourceCache;
+  /** options.inherited / context.inherited: censusGuard of the report's tier, read once; every call notes the files it read for the staleness check. */
+  readonly guard: () => GuardState;
 }
 
 /** Report mode's third leg: the strict reading's red names the return or the some-paths route that hollows the case. */
@@ -4331,7 +4813,7 @@ function judgeReported(pin: CasePin, context: ReportContext): PinVerdict {
   const resolved = call === undefined ? undefined : resolveChain(call.expression, a);
   const api = resolved === undefined || "unresolved" in resolved ? undefined : resolved.name;
   const readable = api === "it" || api === "test";
-  const inversion = call === undefined || !readable ? undefined : inversionHazard(call, a);
+  const inversion = call === undefined || !readable ? undefined : inversionHazard(call, a, context.guard());
   if (inversion?.kind === "inverted") return verdict(pin, "asserts", "inverted", inversion.detail, count);
   for (const test of place.cases) {
     if (test.state === "failed") return verdict(pin, "asserts", "failed", `the case failed in the ${tier} report: ${test.errors[0] ?? "no error message"}`, count);
@@ -4360,6 +4842,9 @@ function judgeReported(pin: CasePin, context: ReportContext): PinVerdict {
     const why = resolved === undefined ? "it reaches no registration chain" : "unresolved" in resolved ? resolved.unresolved : `${resolved.name} is vitest's ${apiLabel(resolved)}, not its test API`;
     return verdict(pin, "asserts", "options-unknown", `the registration ${calleeText(call, a)} at ${a.where(call)} does not resolve to vitest's it / test: ${why} (${route}), so report mode cannot read its fails, which the report does not record`, count);
   }
+  const guard = context.guard();
+  if (!guard.ok) return verdict(pin, "runs-where", "context-unknown", contextUnguarded(guard), count);
+  through("context.inherited", call);
   const cause = chainCause(call, fn, a, registered, context.sources, true);
   if (cause !== undefined) return verdict(pin, "runs-where", cause.code, cause.detail, count);
   const symbols = contextSymbols(fn, contextIndex(call), a);
@@ -4411,7 +4896,15 @@ export function judge(reportPath: string, pins: readonly CasePin[], options: Rep
     gate ??= loadReport(options.defaultReport === undefined ? join(root, DEFAULT_TIER_REPORT) : resolve(options.defaultReport));
     return gate;
   };
-  const context: ReportContext = { root, tier: options.tier ?? DEFAULT_GATE_TIER, report, gateReport, sources: new SourceCache() };
+  const tier = options.tier ?? DEFAULT_GATE_TIER;
+  const sources = new SourceCache();
+  let guardState: GuardState | undefined;
+  const guard = (): GuardState => {
+    guardState ??= censusGuard(root, tier);
+    for (const file of guardState.read) sources.note(file);
+    return guardState;
+  };
+  const context: ReportContext = { root, tier, report, gateReport, sources, guard };
   return pins.map(pin => traced(() => judgeFresh(pin, context)));
 }
 
