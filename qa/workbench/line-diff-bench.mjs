@@ -12,8 +12,9 @@
 //      series with no samples, no redraws, or a broken byte accounting: the one-line probe does not beat the
 //      full frame, or a diff is larger than its own frame)
 //   3  nothing could be measured (an exception, reported on stderr; no receipt)
-// The revision comes from $W21_REVISION (else "working-tree"). $W21_SEED, $W21_NODES, $W21_DEPTH and
-// $W21_TICKS override the fixture; an override below the W21 shape is still measured and exits 2.
+// The revision is git rev-parse HEAD of this checkout plus a dirty flag, stamped by qa/workbench/bench-revision.mjs
+// (wb-oq3); $W21_REVISION only overrides the revision and the receipt names the source. $W21_SEED, $W21_NODES,
+// $W21_DEPTH and $W21_TICKS override the fixture; an override below the W21 shape is still measured and exits 2.
 //
 // WHAT IS COUNTED. A frame is the lines layoutInspector returns for one view at one width. Full-frame repaint
 // bytes are every line's UTF-8 bytes plus one terminator byte. Line-diff bytes are the same count over only the
@@ -32,6 +33,7 @@
 import {readFileSync, writeFileSync} from 'node:fs';
 import {cpus} from 'node:os';
 import {pathToFileURL} from 'node:url';
+import {benchRevision, withBenchRevision} from './bench-revision.mjs';
 import {
   assessFixtureShape, BENCH_ONLY_LIMITS, buildGroupedFixture, GROUPED_FIXTURE_DEFAULTS, INVOCATION_ID, SCOPE, SIZES,
 } from './grouped-fixture.mjs';
@@ -383,13 +385,14 @@ async function main() {
     ticks: integerFromEnv('W21_TICKS', GROUPED_FIXTURE_DEFAULTS.ticks),
   });
   const processors = cpus();
-  return runLineDiffBench({
+  const stamp = benchRevision();
+  const receipt = runLineDiffBench({
     Projection: ObservationProjection,
     inspector: {initialInspectorState, layoutInspector, reduceInspectorKey},
     fixture,
     host: {
       utc: process.env.W21_UTC ?? new Date().toISOString(),
-      revision: process.env.W21_REVISION ?? 'working-tree',
+      revision: stamp.revision,
       node: process.version,
       arch: process.arch,
       platform: process.platform,
@@ -403,6 +406,7 @@ async function main() {
       command: 'node qa/workbench/line-diff-bench.mjs',
     },
   });
+  return withBenchRevision(receipt, stamp);
 }
 
 if (process.argv[1] !== undefined && import.meta.url === pathToFileURL(process.argv[1]).href) {

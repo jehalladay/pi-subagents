@@ -1,0 +1,992 @@
+/** W21 known-duration falsifiers, one case per landed W21 bench (wb-oq3 family 3, with the wb-9x5.15 gate F1 bound by name).
+ *
+ * Every timed series of every landed bench is driven through call-through stubs that busy-wait a KNOWN duration on
+ * performance.now(), the clock every W21 bench reads, before delegating to the real call. Any clock that brackets the
+ * stubbed call therefore measures at least that long on any host load, so each bound below is the stub's own duration,
+ * never a latency target. A constant stub bounds only the median: a clock that is wrong on a minority of samples moves
+ * the low order statistics and leaves p50 where it was (the wb-9x5.15 gate's G1), and no W21 receipt publishes a min.
+ * So the stubs RAMP: call k waits (base + k * step) tenths of a microsecond. If each sample wraps a distinct stubbed call
+ * and the samples' call indices, sorted, are i_0 < i_1 < ..., the j-th smallest sample is at least the wait of call i_j,
+ * so EVERY published quantile (p50, p95 and max, read at the lowest rank any bench convention can pick) has a
+ * rank-indexed floor, and a minority of wrong-span samples drags them under it: the low-quantile floor the wb-9x5.15
+ * F1 binding asks for. Where several series share one stubbed call the stub keys a separate ramp per series (by the
+ * argument identity the bench passes), and where a bench interleaves series it records each call, so every floor uses
+ * the exact call indices, and the step is chosen to dominate the real per-call work.
+ * Scalar spans (apply totals, disconnect, reconnect, probes) wait a stated constant per call and must hold the sum.
+ * line-diff-bench reads no clock in its measured path, so its falsifier is that slow stubs change no receipt byte.
+ *
+ * Landed set at the wb-oq3 respin (trunk 4becba1): the ELEVEN W21 bench CLIs on the tree, enumerated by
+ * test/helpers/w21-bench-clis.ts, each with its own case below (the census case at the end parses this file and fails
+ * for a W21 bench CLI without one, so a bench that lands later reddens it until its lander adds a case: known-conflicts
+ * entry 8). Three joined at the re-cut (trunk 86425ea) as the second lander of benches that landed after the first cut:
+ * topology-slice-grouped (wb-9x5.12: its timed selectLinkedTopology call, the gate's TS-K1/TS-G1), inspector-cap-
+ * saturation (wb-9x5.6: its own clock in qa/workbench/cap-saturation.mjs brackets refresh and relate, the gate's
+ * CS-K1..K4; its ingest and navigation series run through grouped-fixture.mjs and are held here too) and
+ * inspector-retained-memory (wb-9x5.3), which reads no clock in its measured path (a post-GC heap receipt): N/A, and the
+ * N/A is pinned by a parse-aware no-clock read rather than stated. tool-reply (wb-9x5.5) landed after the re-cut
+ * (c4904e7) and joins at this respin as the second lander of entry 8: its timed observeInvocation call, one ramp per
+ * (cap, selectors) series, the gate's TR-K1/TR-G1.
+ */
+import { readFileSync } from "node:fs";
+import ts from "typescript";
+import { describe, expect, it } from "vitest";
+import { runAttentionBench } from "../qa/workbench/attention-grouped-bench.mjs";
+import { PASS_IDS, runCapSaturationBench } from "../qa/workbench/cap-saturation.mjs";
+import { buildGroupedFixture, runGroupedBench } from "../qa/workbench/grouped-fixture.mjs";
+import { runEvidenceRetainedBench } from "../qa/workbench/inspector-evidence-retained-bench.mjs";
+import { runLineDiffBench } from "../qa/workbench/line-diff-bench.mjs";
+import { buildFixture, measureRecovery } from "../qa/workbench/observation-recovery-receipt.mjs";
+import { runReducerSelectorBench } from "../qa/workbench/reducer-selector-bench.mjs";
+import { runTimelineBench } from "../qa/workbench/timeline-grouped-core.mjs";
+import { BYTE_CAPS, runToolReplyBench, SHAPE_NAMES } from "../qa/workbench/tool-reply-bench.mjs";
+import { PASS_SPECS, runTopologyBench } from "../qa/workbench/topology-slice-grouped-bench.mjs";
+import { initialInspectorState, inspectorEvidenceTarget, layoutInspector, reduceInspectorKey } from "../src/ui/workflow-inspector.js";
+import { ATTENTION_TRACE_REASONS, selectAttention } from "../src/workbench/attention.js";
+import { EvidenceStore } from "../src/workbench/evidence-loader.js";
+import { type ObservationEvent, ObservationProjection } from "../src/workbench/observation.js";
+import { observeInvocation } from "../src/workbench/observe-query.js";
+import { buildTimelineLanes } from "../src/workbench/timeline.js";
+import {
+  selectLinkedTopology,
+  TOPOLOGY_CAVEAT,
+  TOPOLOGY_CONTRACT,
+  TOPOLOGY_REFERENCE_REASONS,
+  TOPOLOGY_TRACE_REASONS,
+} from "../src/workbench/topology-slice.js";
+import { w21BenchClis } from "./helpers/w21-bench-clis.js";
+
+/** Durations are integers in tenths of a microsecond: every floor is then a multiple of the benches' 0.1 us rounding. */
+const UNIT = 10_000;
+const EPS = 1e-9;
+
+/** Busy-waits at least `ms` on performance.now(); a clock bracketing the stubbed call must contain the whole loop. */
+const spin = (ms: number): void => {
+  const start = performance.now();
+  while (performance.now() - start < ms) {
+    // busy-wait: the measured span must contain this whole loop
+  }
+};
+
+/** A known-duration schedule: call k waits (base + k * step) / UNIT ms. */
+class Ramp {
+  calls = 0;
+  readonly #base: number;
+  readonly #step: number;
+  constructor(base: number, step: number) {
+    this.#base = base;
+    this.#step = step;
+  }
+  /** The duration of call k, in ms. */
+  at(k: number): number {
+    return (this.#base + k * this.#step) / UNIT;
+  }
+  /** The summed duration of calls 0..n-1, in ms. */
+  total(n: number): number {
+    return (n * this.#base + (this.#step * n * (n - 1)) / 2) / UNIT;
+  }
+  wait(): void {
+    spin(this.at(this.calls));
+    this.calls += 1;
+  }
+}
+
+interface Quantiles {
+  samples: number;
+  p50: number | null;
+  p95: number | null;
+  max: number | null;
+}
+const QUANTILES = [
+  ["p50", 0.5],
+  ["p95", 0.95],
+  ["max", 1],
+] as const;
+/** The lowest rank any W21 quantile convention reads for q over n samples: floor(n q), ceil(n q) - 1 or floor((n - 1) q). */
+const rankFloor = (n: number, q: number): number => Math.max(0, Math.min(n - 1, Math.ceil(n * q) - 1, Math.floor((n - 1) * q)));
+
+/** Every published quantile of a series whose i-th sample (call order) is at least lb(i), lb increasing, holds lb at its rank floor. */
+function expectRankFloors(label: string, series: Quantiles, lb: (rank: number) => number): void {
+  expect(series.samples, `${label}: samples`).toBeGreaterThan(0);
+  for (const [name, q] of QUANTILES) {
+    const floor = lb(rankFloor(series.samples, q));
+    expect(series[name], `${label}: ${name} >= ${floor} ms`).toBeGreaterThanOrEqual(floor - EPS);
+  }
+}
+
+/** A scalar span that wraps calls whose waits sum to `floor` ms. */
+const expectSpan = (label: string, value: number | null, floor: number): void => {
+  expect(value, `${label} >= ${floor} ms`).toBeGreaterThanOrEqual(floor - EPS);
+};
+
+const HOST = {
+  utc: "2026-10-16T00:00:00.000Z",
+  revision: "test-revision",
+  node: process.version,
+  arch: process.arch,
+  platform: process.platform,
+  cpus: 1,
+  cpuModel: "test-cpu",
+  toolchain: { node: process.version, typescript: "test", piTui: "test" },
+  command: "vitest test/workbench-w21-known-duration.test.ts",
+  overrides: {},
+  pinnedCaps: { observationMaxQuery: 100, attentionDefaultLimit: 100, attentionMaxLimit: 100, attentionDefaultBottlenecks: 5, attentionMaxBottlenecks: 20 },
+};
+type Host = typeof HOST;
+interface Inspector {
+  initialInspectorState: typeof initialInspectorState;
+  layoutInspector: typeof layoutInspector;
+  reduceInspectorKey: typeof reduceInspectorKey;
+  inspectorEvidenceTarget?: typeof inspectorEvidenceTarget;
+}
+const INSPECTOR: Inspector = { initialInspectorState, layoutInspector, reduceInspectorKey, inspectorEvidenceTarget };
+/** The inspector with layoutInspector behind a known-duration ramp; everything else is the real reducer. */
+const rampedLayout = (ramp: Ramp): Inspector => ({
+  ...INSPECTOR,
+  layoutInspector: (...args: Parameters<typeof layoutInspector>): string[] => {
+    ramp.wait();
+    return layoutInspector(...args);
+  },
+});
+
+interface Fixture {
+  shape: Record<string, unknown> & { ticks: number };
+  snapshots: readonly unknown[];
+  relations: readonly unknown[];
+  updates: readonly ObservationEvent[];
+}
+const build = buildGroupedFixture as (options: { seed: number; nodes: number; depth: number; ticks: number }) => Fixture;
+const SMALL = { seed: 3, nodes: 60, depth: 3, ticks: 8 };
+
+describe("W21 known duration: inspector-grouped-bench (runGroupedBench and applyFixture in qa/workbench/grouped-fixture.mjs)", () => {
+  interface Navigation {
+    keypresses: number;
+    all: Quantiles;
+    reducer: Quantiles;
+    layout: Quantiles;
+    resize: Quantiles;
+    byView: Record<string, Quantiles>;
+    bySize: Record<string, Quantiles>;
+    byKey: Record<string, Quantiles>;
+  }
+  interface Pass {
+    offered: { nodes: number; edges: number; updates: number };
+    apply: { refreshMs: number; relateMs: number; ingestMs: number; ingestPerTick: Quantiles };
+    navigation: Navigation | null;
+  }
+  const groupedRun = runGroupedBench as (input: {
+    Projection: typeof ObservationProjection;
+    inspector: Inspector;
+    fixture: Fixture;
+    host: Host;
+    sampling: { blocks: number; keypressesPerBlock: number; resizeSamples: number };
+  }) => { passes: Record<"default-limits" | "bench-only-limits", Pass> };
+  const REFRESH = 1_000;
+  const RELATE = 1_000;
+  const TICK = { base: 500, step: 2_500 };
+  const GROUPED = { seed: 3, nodes: 60, depth: 3, ticks: 24 };
+  const SAMPLING = { blocks: 2, keypressesPerBlock: 40, resizeSamples: 16 };
+
+  it("holds every navigation series at its ramp floors and every apply span at its stated sum, in both passes", () => {
+    /** Known-duration apply: refresh and relate wait a constant per call, and the first ingest of each tick waits its ramp. */
+    class KnownApplyProjection extends ObservationProjection {
+      readonly #ticks = new Ramp(TICK.base, TICK.step);
+      #tickAt: string | undefined;
+      override refresh(...args: Parameters<ObservationProjection["refresh"]>): ReturnType<ObservationProjection["refresh"]> {
+        spin(REFRESH / UNIT);
+        return super.refresh(...args);
+      }
+      override relate(...args: Parameters<ObservationProjection["relate"]>): void {
+        spin(RELATE / UNIT);
+        super.relate(...args);
+      }
+      override ingest(event: ObservationEvent): ReturnType<ObservationProjection["ingest"]> {
+        if (event.observedAt !== this.#tickAt) {
+          this.#tickAt = event.observedAt;
+          this.#ticks.wait();
+        }
+        return super.ingest(event);
+      }
+    }
+    const reduce = new Ramp(1_000, 500);
+    const keyLayout = new Ramp(1_000, 500);
+    const resizeLayout = new Ramp(1_000, 5_000);
+    // navigate() lays a block's first frame out at a new size (the timed resize) and every keypress frame at that same
+    // size object, so the size identity tells the two layout series apart; the call counts are asserted below.
+    let lastSize: unknown;
+    const inspector: Inspector = {
+      ...INSPECTOR,
+      layoutInspector: (...args: Parameters<typeof layoutInspector>): string[] => {
+        if (args[2] !== lastSize) {
+          lastSize = args[2];
+          resizeLayout.wait();
+        } else keyLayout.wait();
+        return layoutInspector(...args);
+      },
+      reduceInspectorKey: (...args: Parameters<typeof reduceInspectorKey>): ReturnType<typeof reduceInspectorKey> => {
+        reduce.wait();
+        return reduceInspectorKey(...args);
+      },
+    };
+    const receipt = groupedRun({ Projection: KnownApplyProjection, inspector, fixture: build(GROUPED), host: HOST, sampling: SAMPLING });
+    const navigation = receipt.passes["bench-only-limits"].navigation;
+    if (navigation === null) throw new Error("the bench-only pass recorded no navigation");
+    const keypresses = SAMPLING.blocks * SAMPLING.keypressesPerBlock;
+    expect(navigation.keypresses).toBe(keypresses);
+    expect(keyLayout.calls).toBe(keypresses);
+    expect(navigation.resize.samples).toBe(SAMPLING.blocks + SAMPLING.resizeSamples);
+    expect(resizeLayout.calls).toBe(navigation.resize.samples);
+    // Keypress k is reduce call k and keypress-layout call k; resize s is resize-layout call s.
+    expectRankFloors("navigation.reducer", navigation.reducer, k => reduce.at(k));
+    expectRankFloors("navigation.layout", navigation.layout, k => keyLayout.at(k));
+    expectRankFloors("navigation.all", navigation.all, k => reduce.at(k) + keyLayout.at(k));
+    expectRankFloors("navigation.resize", navigation.resize, s => resizeLayout.at(s));
+    for (const group of ["byView", "bySize", "byKey"] as const) {
+      for (const [name, series] of Object.entries(navigation[group])) {
+        if (series.samples > 0) expectRankFloors(`navigation.${group}.${name}`, series, k => reduce.at(k) + keyLayout.at(k));
+      }
+    }
+    const ticks = new Ramp(TICK.base, TICK.step);
+    for (const [label, pass] of Object.entries(receipt.passes)) {
+      const perTick = pass.apply.ingestPerTick;
+      expect(perTick.samples, `${label} ticks`).toBe(GROUPED.ticks);
+      expectSpan(`${label} apply.refreshMs`, pass.apply.refreshMs, (pass.offered.nodes * REFRESH) / UNIT);
+      expectSpan(`${label} apply.relateMs`, pass.apply.relateMs, (pass.offered.edges * RELATE) / UNIT);
+      expectSpan(`${label} apply.ingestMs`, pass.apply.ingestMs, ticks.total(perTick.samples));
+      expectRankFloors(`${label} apply.ingestPerTick`, perTick, tick => ticks.at(tick));
+    }
+  }, 120_000);
+
+  // Respin r24 re-measure on the final tree: IG-G5 (every third tick's ingest span 0.0001 ms) SURVIVED this file
+  // (13 passed (13), load1 ~20-30). At TICK.step a tick waits 0.25 ms more than the one before, while a tick's own
+  // ingest work measured 1.0-1.2 ms above its floor at p50, so the minority's p50 (1.75 ms under its floor before
+  // that work) cleared it. The navigation margins are larger (reducer 15x, layout 3x, resize 2.4x their measured
+  // excess) but shrink the same way under load. Here every step is ten times the one above, so it dominates the
+  // per-call work as the header asks, and the same rank floors close a minority wrong span on every series by
+  // milliseconds on any host load.
+  it("holds every series at its ramp floors when each step dominates the per-call work (gate IG-G1..G5)", () => {
+    const STEP = { reduce: 5_000, layout: 5_000, resize: 50_000, tick: 25_000 };
+    class DominantApplyProjection extends ObservationProjection {
+      readonly #ticks = new Ramp(TICK.base, STEP.tick);
+      #tickAt: string | undefined;
+      override refresh(...args: Parameters<ObservationProjection["refresh"]>): ReturnType<ObservationProjection["refresh"]> {
+        spin(REFRESH / UNIT);
+        return super.refresh(...args);
+      }
+      override relate(...args: Parameters<ObservationProjection["relate"]>): void {
+        spin(RELATE / UNIT);
+        super.relate(...args);
+      }
+      override ingest(event: ObservationEvent): ReturnType<ObservationProjection["ingest"]> {
+        if (event.observedAt !== this.#tickAt) {
+          this.#tickAt = event.observedAt;
+          this.#ticks.wait();
+        }
+        return super.ingest(event);
+      }
+    }
+    const reduce = new Ramp(1_000, STEP.reduce);
+    const keyLayout = new Ramp(1_000, STEP.layout);
+    const resizeLayout = new Ramp(1_000, STEP.resize);
+    let lastSize: unknown;
+    const inspector: Inspector = {
+      ...INSPECTOR,
+      layoutInspector: (...args: Parameters<typeof layoutInspector>): string[] => {
+        if (args[2] !== lastSize) {
+          lastSize = args[2];
+          resizeLayout.wait();
+        } else keyLayout.wait();
+        return layoutInspector(...args);
+      },
+      reduceInspectorKey: (...args: Parameters<typeof reduceInspectorKey>): ReturnType<typeof reduceInspectorKey> => {
+        reduce.wait();
+        return reduceInspectorKey(...args);
+      },
+    };
+    const receipt = groupedRun({ Projection: DominantApplyProjection, inspector, fixture: build(GROUPED), host: HOST, sampling: SAMPLING });
+    const navigation = receipt.passes["bench-only-limits"].navigation;
+    if (navigation === null) throw new Error("the bench-only pass recorded no navigation");
+    expect(keyLayout.calls).toBe(navigation.keypresses);
+    expect(resizeLayout.calls).toBe(navigation.resize.samples);
+    expectRankFloors("navigation.reducer", navigation.reducer, k => reduce.at(k));
+    expectRankFloors("navigation.layout", navigation.layout, k => keyLayout.at(k));
+    expectRankFloors("navigation.all", navigation.all, k => reduce.at(k) + keyLayout.at(k));
+    expectRankFloors("navigation.resize", navigation.resize, s => resizeLayout.at(s));
+    for (const group of ["byView", "bySize", "byKey"] as const) {
+      for (const [name, series] of Object.entries(navigation[group])) {
+        if (series.samples > 0) expectRankFloors(`navigation.${group}.${name}`, series, k => reduce.at(k) + keyLayout.at(k));
+      }
+    }
+    const ticks = new Ramp(TICK.base, STEP.tick);
+    for (const [label, pass] of Object.entries(receipt.passes)) {
+      const perTick = pass.apply.ingestPerTick;
+      expect(perTick.samples, `${label} ticks`).toBe(GROUPED.ticks);
+      expectSpan(`${label} apply.ingestMs`, pass.apply.ingestMs, ticks.total(perTick.samples));
+      expectRankFloors(`${label} apply.ingestPerTick`, perTick, tick => ticks.at(tick));
+    }
+  }, 120_000);
+});
+
+describe("W21 known duration: reducer-selector-bench (wb-9x5.15 F1: the minority wrong-span clock is closed here)", () => {
+  interface Band {
+    updates: number;
+    redraws: number;
+    reducer: Quantiles;
+    selectors: Record<string, Quantiles>;
+  }
+  interface ReducerReceipt {
+    offered: { updates: number };
+    reducer: { all: Quantiles; firstTenth: Quantiles; lastTenth: Quantiles };
+    bands: Band[];
+    exactChurn: Band[];
+    selectors: Record<string, Quantiles>;
+    folds: { redraws: number; layoutCalls: number };
+    outliers: { reducer: Array<{ ms: number }>; selector: Array<{ ms: number }> };
+  }
+  const reducerRun = runReducerSelectorBench as (input: {
+    Projection: typeof ObservationProjection;
+    inspector: Inspector;
+    fixture: Fixture;
+    host: Host;
+  }) => ReducerReceipt;
+
+  it("holds the reducer clock at its ingest ramp and every selector clock at its layout ramp, at p50, p95, max and the outliers", () => {
+    const ingest = new Ramp(100, 20);
+    const layout = new Ramp(2_000, 500);
+    class RampIngestProjection extends ObservationProjection {
+      override ingest(event: ObservationEvent): ReturnType<ObservationProjection["ingest"]> {
+        ingest.wait();
+        return super.ingest(event);
+      }
+    }
+    const receipt = reducerRun({ Projection: RampIngestProjection, inspector: rampedLayout(layout), fixture: build({ seed: 3, nodes: 200, depth: 5, ticks: 12 }), host: HOST });
+    const updates = receipt.offered.updates;
+    expect(receipt.reducer.all.samples).toBe(updates);
+    expect(ingest.calls).toBe(updates);
+    // Reducer sample k is ingest call k; selector sample j of a view is a layout call with index >= j.
+    expectRankFloors("reducer.all", receipt.reducer.all, k => ingest.at(k));
+    expectRankFloors("reducer.firstTenth", receipt.reducer.firstTenth, k => ingest.at(k));
+    const tailStart = updates - receipt.reducer.lastTenth.samples;
+    expectRankFloors("reducer.lastTenth", receipt.reducer.lastTenth, k => ingest.at(tailStart + k));
+    expect(receipt.folds.layoutCalls).toBe(layout.calls);
+    for (const [view, series] of Object.entries(receipt.selectors)) expectRankFloors(`selectors.${view}`, series, j => layout.at(j));
+    for (const band of [...receipt.bands, ...receipt.exactChurn]) {
+      if (band.updates > 0) expectRankFloors("band reducer", band.reducer, k => ingest.at(k));
+      if (band.redraws > 0) for (const [view, series] of Object.entries(band.selectors)) expectRankFloors(`band selectors.${view}`, series, j => layout.at(j));
+    }
+    // The kept outliers are the top order statistics: the i-th slowest of n is the (n - 1 - i)-th smallest.
+    for (const [i, sample] of receipt.outliers.reducer.entries()) expectSpan(`outliers.reducer[${i}]`, sample.ms, ingest.at(updates - 1 - i));
+    for (const [i, sample] of receipt.outliers.selector.entries()) expectSpan(`outliers.selector[${i}]`, sample.ms, layout.at(layout.calls - 1 - i));
+  }, 120_000);
+});
+
+describe("W21 known duration: line-diff-bench reads no clock in its measured path", () => {
+  const lineDiffRun = runLineDiffBench as (input: { Projection: typeof ObservationProjection; inspector: Inspector; fixture: Fixture; host: Host }) => Record<string, unknown>;
+
+  it("slow ingest and layout stubs, one pause longer than the 1 s cadence window, leave every receipt field identical", () => {
+    const fixture = build(SMALL);
+    const plain = lineDiffRun({ Projection: ObservationProjection, inspector: INSPECTOR, fixture, host: HOST });
+    let waits = 0;
+    const pauseAt = fixture.updates.findIndex(update => update.observedAt !== fixture.updates[0].observedAt);
+    class SlowIngestProjection extends ObservationProjection {
+      #ingested = 0;
+      override ingest(event: ObservationEvent): ReturnType<ObservationProjection["ingest"]> {
+        // Every update waits; the first update of the second tick waits past one whole cadence window (1 s of wall
+        // time), so a redraw clock or cadence read from the host instead of fixture time would change the receipt.
+        spin(this.#ingested === pauseAt ? 1_100 : 0.05);
+        this.#ingested += 1;
+        waits += 1;
+        return super.ingest(event);
+      }
+    }
+    const slowLayout: Inspector = {
+      ...INSPECTOR,
+      layoutInspector: (...args: Parameters<typeof layoutInspector>): string[] => {
+        spin(0.2);
+        waits += 1;
+        return layoutInspector(...args);
+      },
+    };
+    const slowed = lineDiffRun({ Projection: SlowIngestProjection, inspector: slowLayout, fixture, host: HOST });
+    expect(pauseAt).toBeGreaterThan(0);
+    expect(waits).toBeGreaterThan(fixture.updates.length);
+    expect(slowed).toEqual(plain);
+  }, 120_000);
+});
+
+describe("W21 known duration: attention-grouped-bench", () => {
+  interface AttentionReceipt {
+    passes: Array<{
+      label: string;
+      samples: number;
+      settings: Array<{ label: string; bottlenecks: number; clockLagMs: number; build: Quantiles }>;
+      slowest: Array<{ ms: number }>;
+    }>;
+  }
+  type Selector = (projection: Parameters<typeof selectAttention>[0], input: Parameters<typeof selectAttention>[1]) => ReturnType<typeof selectAttention>;
+  const attentionRun = runAttentionBench as (input: {
+    Projection: typeof ObservationProjection;
+    selectAttention: Selector;
+    reasonNames: string[];
+    fixture: Fixture;
+    host: Host;
+  }) => AttentionReceipt;
+
+  it("holds every setting's build clock at the exact ramp of its own timed selectAttention calls, in both passes", () => {
+    // One ramp per pass (each pass reads its own projection); every timed call is recorded so the floors use exact indices.
+    const passes = new Map<object, { ramp: Ramp; calls: Array<{ bottlenecks: number | undefined; now: number }> }>();
+    let untimed = 0;
+    // The timed call reads the projection itself; the bench's untimed second call reads a counting view.
+    const timed: Selector = (projection, input) => {
+      if (projection instanceof ObservationProjection) {
+        let pass = passes.get(projection);
+        if (pass === undefined) {
+          pass = { ramp: new Ramp(1_000, 4_000), calls: [] };
+          passes.set(projection, pass);
+        }
+        pass.calls.push({ bottlenecks: input.bottlenecks, now: Date.parse(input.now) });
+        pass.ramp.wait();
+      } else untimed += 1;
+      return selectAttention(projection, input);
+    };
+    const receipt = attentionRun({ Projection: ObservationProjection, selectAttention: timed, reasonNames: [...ATTENTION_TRACE_REASONS], fixture: build({ seed: 5, nodes: 60, depth: 5, ticks: 20 }), host: HOST });
+    const recorded = [...passes.values()];
+    expect(recorded).toHaveLength(receipt.passes.length);
+    expect(untimed).toBe(recorded.reduce((sum, pass) => sum + pass.calls.length, 0));
+    for (const [at, pass] of receipt.passes.entries()) {
+      const { ramp, calls } = recorded[at];
+      const width = pass.settings.length;
+      expect(calls).toHaveLength(pass.samples);
+      // The bench samples every setting once per sample tick, in order: call i belongs to setting i mod width.
+      for (const [i, call] of calls.entries()) {
+        const setting = pass.settings[i % width];
+        const first = calls[i - (i % width)];
+        expect({ i, bottlenecks: call.bottlenecks, lag: first.now - call.now }).toEqual({
+          i,
+          bottlenecks: setting.bottlenecks,
+          lag: setting.clockLagMs - pass.settings[0].clockLagMs,
+        });
+      }
+      for (const [c, setting] of pass.settings.entries()) {
+        expectRankFloors(`${pass.label}:${setting.label}`, setting.build, j => ramp.at(width * j + c));
+      }
+      for (const [i, sample] of pass.slowest.entries()) expectSpan(`${pass.label} slowest[${i}]`, sample.ms, ramp.at(pass.samples - 1 - i));
+    }
+  }, 120_000);
+});
+
+describe("W21 known duration: timeline-grouped-bench (runTimelineBench in qa/workbench/timeline-grouped-core.mjs)", () => {
+  interface TimelinePass {
+    samples: number;
+    build: Record<string, unknown>;
+  }
+  // runTimelineBench merges `sampling` over DEFAULT_TIMELINE_SAMPLING ({...defaults, ...sampling}), so its contract is a
+  // partial override: every knob optional (the correct local contract type; the gate's U2 TS2352 cure, never an unknown-cast).
+  const timelineRun = runTimelineBench as (input: {
+    Projection: typeof ObservationProjection;
+    buildTimelineLanes: typeof buildTimelineLanes;
+    fixture: Fixture;
+    host: Host;
+    sampling?: Partial<{ limit: number; zooms: readonly number[]; pans: readonly number[]; columns: readonly number[]; rounds: number }>;
+  }) => { passes: Record<string, TimelinePass> };
+  const isQuantiles = (value: unknown): value is Quantiles => typeof value === "object" && value !== null && "samples" in value && "p50" in value;
+  type Call = { zoom: number; pan: number; columns: number };
+  /** The recorded call indices a receipt series covers, from its name: overall, z<zoom>c<columns> or pan<pan>. */
+  const indicesOf = (name: string, calls: readonly Call[]): number[] => {
+    const zc = /^z(\d+)c(\d+)$/.exec(name);
+    const pan = /^pan(\d+)$/.exec(name);
+    const keep = (call: Call): boolean =>
+      name === "overall" || (zc !== null && call.zoom === Number(zc[1]) && call.columns === Number(zc[2])) || (pan !== null && call.pan === Number(pan[1]));
+    return calls.flatMap((call, index) => (keep(call) ? [index] : []));
+  };
+
+  it("holds the overall, zoom-columns and pan series at the exact ramp of their own buildTimelineLanes calls, in both passes", () => {
+    // One ramp per pass (each pass builds through its own counting reader); every call's request is recorded.
+    const passes = new Map<object, { ramp: Ramp; calls: Call[] }>();
+    const timed: typeof buildTimelineLanes = (reader, request) => {
+      let pass = passes.get(reader);
+      if (pass === undefined) {
+        pass = { ramp: new Ramp(500, 2_500), calls: [] };
+        passes.set(reader, pass);
+      }
+      pass.calls.push({ zoom: request.zoom, pan: request.pan, columns: request.columns });
+      pass.ramp.wait();
+      return buildTimelineLanes(reader, request);
+    };
+    const receipt = timelineRun({ Projection: ObservationProjection, buildTimelineLanes: timed, fixture: build(SMALL), host: HOST, sampling: { rounds: 1 } });
+    const recorded = [...passes.values()];
+    const results = Object.entries(receipt.passes);
+    expect(recorded).toHaveLength(results.length);
+    let checked = 0;
+    for (const [at, [label, pass]] of results.entries()) {
+      const { ramp, calls } = recorded[at];
+      expect(calls, label).toHaveLength(pass.samples);
+      for (const [name, value] of Object.entries(pass.build)) {
+        const series = isQuantiles(value) ? { [name]: value } : (value as Record<string, unknown>);
+        for (const [key, entry] of Object.entries(series)) {
+          if (!isQuantiles(entry)) throw new Error(`${label}.build.${name}.${key} is not a distribution`);
+          const indices = indicesOf(key, calls);
+          expect(indices, `${label}.build.${key} calls`).toHaveLength(entry.samples);
+          expectRankFloors(`${label}.build.${key}`, entry, j => ramp.at(indices[j]));
+          checked += 1;
+        }
+      }
+    }
+    expect(checked).toBe(results.length * (1 + 4 * 2 + 3));
+  }, 120_000);
+});
+
+describe("W21 known duration: observation-recovery-bench (measureRecovery in qa/workbench/observation-recovery-receipt.mjs)", () => {
+  interface Measurement {
+    ingest: { offered: number };
+    ingestMs: number;
+    disconnectMs: number;
+    reconnectMs: number;
+    refreshCalls: number;
+    refreshLatencyMs: Quantiles;
+    reconcileMs: number;
+    gapDetectMs: number | null;
+    resumeMs: number | null;
+  }
+  const measure = measureRecovery as (
+    projection: typeof ObservationProjection,
+    fixture: unknown,
+    options: { provider: string; queryLimit: number; limits: { maxEvents: number } },
+  ) => Measurement;
+  const fixtureOf = buildFixture as (options: { seed: number; nodes: number; events: number; providers: readonly string[] }) => unknown;
+  const INGEST = 500;
+  const DISCONNECT = 5_000;
+  const RECONNECT = 7_000;
+  const PROBE = 3_000;
+
+  it("holds every scalar span at its stated duration and every per-node reconcile latency at its ramp floor", () => {
+    const reconcile = new Ramp(200, 100);
+    class KnownRecoveryProjection extends ObservationProjection {
+      #reconnected = false;
+      override ingest(event: ObservationEvent): ReturnType<ObservationProjection["ingest"]> {
+        spin(INGEST / UNIT);
+        return super.ingest(event);
+      }
+      override disconnect(provider: string): void {
+        spin(DISCONNECT / UNIT);
+        super.disconnect(provider);
+      }
+      override reconnect(provider: string): void {
+        spin(RECONNECT / UNIT);
+        super.reconnect(provider);
+        this.#reconnected = true;
+      }
+      // Only the per-node reconcile after the reconnect is timed per call; the baseline refreshes stay untouched.
+      override refresh(...args: Parameters<ObservationProjection["refresh"]>): ReturnType<ObservationProjection["refresh"]> {
+        if (this.#reconnected) reconcile.wait();
+        return super.refresh(...args);
+      }
+      // Only the two cursor probes pass `after`; the size samples read events without it.
+      override events(...args: Parameters<ObservationProjection["events"]>): ReturnType<ObservationProjection["events"]> {
+        if (args[0].after !== undefined) spin(PROBE / UNIT);
+        return super.events(...args);
+      }
+    }
+    const measurement = measure(KnownRecoveryProjection, fixtureOf({ seed: 7, nodes: 200, events: 2_000, providers: ["forge", "furnace", "claude-agent-sdk"] }), {
+      provider: "furnace",
+      queryLimit: 100,
+      limits: { maxEvents: 500 },
+    });
+    expect(measurement.refreshCalls).toBe(reconcile.calls);
+    expect(measurement.refreshLatencyMs.samples).toBe(reconcile.calls);
+    expectSpan("ingestMs", measurement.ingestMs, (measurement.ingest.offered * INGEST) / UNIT);
+    expectSpan("disconnectMs", measurement.disconnectMs, DISCONNECT / UNIT);
+    expectSpan("reconnectMs", measurement.reconnectMs, RECONNECT / UNIT);
+    expectRankFloors("refreshLatencyMs", measurement.refreshLatencyMs, j => reconcile.at(j));
+    expectSpan("reconcileMs", measurement.reconcileMs, reconcile.total(reconcile.calls));
+    expectSpan("gapDetectMs", measurement.gapDetectMs, PROBE / UNIT);
+    expectSpan("resumeMs", measurement.resumeMs, PROBE / UNIT);
+  }, 120_000);
+});
+
+describe("W21 known duration: inspector-evidence-retained-bench", () => {
+  interface EvidenceReceipt {
+    wall: { cycle: Quantiles; detailsRender: Quantiles };
+    outliers: Array<{ ms: number }>;
+  }
+  const evidenceRun = runEvidenceRetainedBench as (input: {
+    Projection: typeof ObservationProjection;
+    EvidenceStore: typeof EvidenceStore;
+    inspector: Inspector;
+    fixture: Fixture;
+    host: Host;
+    limits: Record<string, number>;
+  }) => Promise<EvidenceReceipt>;
+
+  it("holds the details render clock at the layout ramp and each cycle wall at the sum of its renders' ramp", async () => {
+    const render = new Ramp(500, 1_000);
+    const receipt = await evidenceRun({
+      Projection: ObservationProjection,
+      EvidenceStore,
+      inspector: rampedLayout(render),
+      fixture: build({ seed: 9, nodes: 120, depth: 5, ticks: 20 }),
+      host: HOST,
+      limits: { cycles: 12, warmupCycles: 4, sampleEvery: 4, payloadBytes: 262_144, maxEntries: 4, maxBytes: 4_096, timeoutMs: 5_000, controlBytes: 4_194_304 },
+    });
+    const { cycle, detailsRender } = receipt.wall;
+    const perCycle = detailsRender.samples / cycle.samples;
+    expect(perCycle).toBe(3);
+    expect(render.calls).toBe(detailsRender.samples);
+    // Render i is layout call i; cycle c wraps exactly layout calls perCycle * c .. perCycle * c + perCycle - 1.
+    expectRankFloors("wall.detailsRender", detailsRender, i => render.at(i));
+    const cycleFloor = (c: number): number => Array.from({ length: perCycle }, (_, r) => render.at(perCycle * c + r)).reduce((sum, ms) => sum + ms, 0);
+    expectRankFloors("wall.cycle", cycle, cycleFloor);
+    for (const [i, sample] of receipt.outliers.entries()) expectSpan(`outliers[${i}]`, sample.ms, cycleFloor(cycle.samples - 1 - i));
+  }, 120_000);
+
+  // Respin r24 re-measure under fleet load: at the step above (0.1 ms per render, 0.9 ms per cycle) a cycle's own
+  // request, settle and abort work (measured 1.3 to 3.8 ms warm, 25 to 37 ms on the first cycle) outweighs the
+  // per-cycle step, so a minority of wrong-span cycle walls (ER-G2: every third cycle 0.0001 ms) cleared every floor
+  // in this file before this case (12 passed (12)).
+  // Here the step dominates that work, as the header asks: 2.5 ms per render, 22.5 ms per cycle, so the same rank
+  // floors close a minority wrong span on either series by tens of milliseconds, on any host load.
+  it("holds both series at their ramp floors when the render step dominates a cycle's own work (gate ER-G2, ER-G1)", async () => {
+    const render = new Ramp(500, 25_000);
+    const receipt = await evidenceRun({
+      Projection: ObservationProjection,
+      EvidenceStore,
+      inspector: rampedLayout(render),
+      fixture: build({ seed: 9, nodes: 120, depth: 5, ticks: 20 }),
+      host: HOST,
+      limits: { cycles: 12, warmupCycles: 4, sampleEvery: 4, payloadBytes: 262_144, maxEntries: 4, maxBytes: 4_096, timeoutMs: 5_000, controlBytes: 4_194_304 },
+    });
+    const { cycle, detailsRender } = receipt.wall;
+    const perCycle = detailsRender.samples / cycle.samples;
+    expect(perCycle).toBe(3);
+    expect(render.calls).toBe(detailsRender.samples);
+    expectRankFloors("wall.detailsRender", detailsRender, i => render.at(i));
+    const cycleFloor = (c: number): number => Array.from({ length: perCycle }, (_, r) => render.at(perCycle * c + r)).reduce((sum, ms) => sum + ms, 0);
+    expectRankFloors("wall.cycle", cycle, cycleFloor);
+    for (const [i, sample] of receipt.outliers.entries()) expectSpan(`outliers[${i}]`, sample.ms, cycleFloor(cycle.samples - 1 - i));
+  }, 120_000);
+});
+
+describe("W21 known duration: topology-slice-grouped-bench (its timed selectLinkedTopology call; gate TS-K1, TS-G1)", () => {
+  interface TopologyCapSet {
+    slices: number;
+    slice: { all: Quantiles; operation: Quantiles; group: Quantiles; byDepth: Record<string, Quantiles> };
+    slowest: Array<{ ms: number }>;
+  }
+  interface TopologyPass {
+    focuses: { operations: number; groups: number; byDepth: Record<string, number> };
+    capSets: Record<string, TopologyCapSet>;
+  }
+  const TOPOLOGY = { selectLinkedTopology, TOPOLOGY_CAVEAT, TOPOLOGY_CONTRACT, TOPOLOGY_REFERENCE_REASONS, TOPOLOGY_TRACE_REASONS };
+  /** The bench's pass labels, in run order (pinned against PASS_SPECS below). */
+  const TOPOLOGY_PASSES = ["maxQuery-40", "maxQuery-100"] as const;
+  // The bench fills `passes` key by key (allowJs infers `{}`), so the contract is the labelled entries, each asserted present.
+  const topologyRun = runTopologyBench as (input: {
+    Projection: typeof ObservationProjection;
+    topology: typeof TOPOLOGY;
+    fixture: Fixture;
+    host: Host;
+    sampling?: { operationFocuses: number; groupSampleCap: number };
+  }) => { passes: Partial<Record<(typeof TOPOLOGY_PASSES)[number], TopologyPass>> };
+
+  it("holds every slice series of every pass and cap set at the exact ramp of its own timed calls, and the slowest at the top ranks", () => {
+    // One ramp per (pass, cap set): the bench hands both calls of a focus the same caps object, and only the timed call
+    // reads the projection itself (the untimed read-counting call reads a counting view), so caps identity keys the ramp.
+    const timedBy = new Map<object, Ramp>();
+    let untimed = 0;
+    const select: typeof selectLinkedTopology = (input, key, caps) => {
+      if (input.relations instanceof ObservationProjection && caps !== undefined) {
+        let ramp = timedBy.get(caps);
+        if (ramp === undefined) {
+          ramp = new Ramp(1_000, 2_000);
+          timedBy.set(caps, ramp);
+        }
+        ramp.wait();
+      } else untimed += 1;
+      return selectLinkedTopology(input, key, caps);
+    };
+    const receipt = topologyRun({
+      Projection: ObservationProjection,
+      topology: { ...TOPOLOGY, selectLinkedTopology: select },
+      fixture: build({ seed: 3, nodes: 60, depth: 3, ticks: 8 }),
+      host: HOST,
+      sampling: { operationFocuses: 20, groupSampleCap: 4 },
+    });
+    const ramps = [...timedBy.values()];
+    expect(PASS_SPECS.map(spec => spec.label)).toEqual([...TOPOLOGY_PASSES]);
+    const capSets = TOPOLOGY_PASSES.flatMap(label => {
+      const pass = receipt.passes[label];
+      if (pass === undefined) throw new Error(`the receipt carries no ${label} pass`);
+      return Object.values(pass.capSets).map(capSet => ({ pass, capSet }));
+    });
+    expect(ramps).toHaveLength(capSets.length);
+    expect(untimed).toBe(ramps.reduce((sum, ramp) => sum + ramp.calls, 0));
+    let checked = 0;
+    for (const [at, { pass, capSet }] of capSets.entries()) {
+      const ramp = ramps[at];
+      const { operations, groups, byDepth } = pass.focuses;
+      // The bench times every operation focus, then the group focuses depth by depth: call i is the i-th sample of `all`.
+      expect(ramp.calls).toBe(operations + groups);
+      expect(capSet.slice.all.samples).toBe(ramp.calls);
+      expectRankFloors(`capSet ${at} slice.all`, capSet.slice.all, i => ramp.at(i));
+      expectRankFloors(`capSet ${at} slice.operation`, capSet.slice.operation, j => ramp.at(j));
+      expectRankFloors(`capSet ${at} slice.group`, capSet.slice.group, j => ramp.at(operations + j));
+      let before = operations;
+      for (const depth of Object.keys(byDepth).sort()) {
+        const series = capSet.slice.byDepth[depth];
+        expect(series.samples, `depth ${depth} samples`).toBe(byDepth[depth]);
+        const offset = before;
+        if (series.samples > 0) expectRankFloors(`capSet ${at} slice.byDepth.${depth}`, series, j => ramp.at(offset + j));
+        before += byDepth[depth];
+      }
+      // The kept outliers are the top order statistics: the i-th slowest of n is the (n - 1 - i)-th smallest.
+      for (const [i, sample] of capSet.slowest.entries()) expectSpan(`capSet ${at} slowest[${i}]`, sample.ms, ramp.at(ramp.calls - 1 - i));
+      checked += 1;
+    }
+    expect(checked).toBe(4);
+  }, 120_000);
+});
+
+describe("W21 known duration: inspector-cap-saturation-bench (its own refresh and relate clock in qa/workbench/cap-saturation.mjs; gate CS-K1..K4)", () => {
+  interface CapNavigation {
+    keypresses: number;
+    all: Quantiles;
+    reducer: Quantiles;
+    layout: Quantiles;
+    resize: Quantiles;
+  }
+  interface CapPass {
+    offered: { nodes: number; edges: number; updates: number };
+    apply: { refreshMs: number; relateMs: number; ingestMs: number; ingestPerTick: Quantiles };
+    navigation: CapNavigation | null;
+  }
+  /** The bench's pass ids, in plan order (pinned against PASS_IDS below). */
+  const CAP_PASSES = [
+    "production-default",
+    "cap-1000-at",
+    "cap-1000-just-past",
+    "cap-1000-past",
+    "cap-2000-at",
+    "cap-2000-just-past",
+    "cap-2000-past",
+    "cap-4000-past",
+    "cap-8000-past",
+    "uncapped-control",
+  ] as const;
+  // The bench fills `passes` key by key (allowJs infers `{}`), so the contract is the planned entries, each asserted present.
+  const capRun = runCapSaturationBench as (input: {
+    Projection: typeof ObservationProjection;
+    inspector: Inspector;
+    fixture: Fixture;
+    host: Host & { runtimeCaps: { nodeCalls: number; agents: number } };
+    sampling?: { blocks: number; keypressesPerBlock: number; resizeSamples: number };
+  }) => { passes: Partial<Record<(typeof CAP_PASSES)[number], CapPass>> };
+  const REFRESH = 1_000;
+  const RELATE = 1_000;
+  const TICK = { base: 500, step: 2_500 };
+  const REDUCE = { base: 1_000, step: 500 };
+  const LAYOUT = { base: 1_000, step: 500 };
+  const SAMPLING = { blocks: 2, keypressesPerBlock: 10, resizeSamples: 6 };
+
+  it("holds every pass's refresh and relate span at its stated sum, and its ingest and navigation series at their ramp floors", () => {
+    /** refresh and relate wait a constant per call (the cap-saturation clock brackets each loop); each tick's first ingest waits its ramp. */
+    class KnownCapProjection extends ObservationProjection {
+      readonly #ticks = new Ramp(TICK.base, TICK.step);
+      #tickAt: string | undefined;
+      override refresh(...args: Parameters<ObservationProjection["refresh"]>): ReturnType<ObservationProjection["refresh"]> {
+        spin(REFRESH / UNIT);
+        return super.refresh(...args);
+      }
+      override relate(...args: Parameters<ObservationProjection["relate"]>): void {
+        spin(RELATE / UNIT);
+        super.relate(...args);
+      }
+      override ingest(event: ObservationEvent): ReturnType<ObservationProjection["ingest"]> {
+        if (event.observedAt !== this.#tickAt) {
+          this.#tickAt = event.observedAt;
+          this.#ticks.wait();
+        }
+        return super.ingest(event);
+      }
+    }
+    // Every pass navigates its own projection, so the reduce and layout ramps are keyed by it and each pass's series
+    // start at call 0. A timed keypress wraps one reduce and one layout call of that projection and a timed resize one
+    // layout call, in order, so sample k of each series is at least call k's wait whatever the interleaving.
+    const byProjection = new Map<ObservationProjection, { reduce: Ramp; layout: Ramp }>();
+    const rampsOf = (projection: ObservationProjection): { reduce: Ramp; layout: Ramp } => {
+      let ramps = byProjection.get(projection);
+      if (ramps === undefined) {
+        ramps = { reduce: new Ramp(REDUCE.base, REDUCE.step), layout: new Ramp(LAYOUT.base, LAYOUT.step) };
+        byProjection.set(projection, ramps);
+      }
+      return ramps;
+    };
+    const inspector: Inspector = {
+      ...INSPECTOR,
+      layoutInspector: (...args: Parameters<typeof layoutInspector>): string[] => {
+        rampsOf(args[0].projection).layout.wait();
+        return layoutInspector(...args);
+      },
+      reduceInspectorKey: (...args: Parameters<typeof reduceInspectorKey>): ReturnType<typeof reduceInspectorKey> => {
+        rampsOf(args[2].projection).reduce.wait();
+        return reduceInspectorKey(...args);
+      },
+    };
+    const receipt = capRun({
+      Projection: KnownCapProjection,
+      inspector,
+      fixture: build(SMALL),
+      host: { ...HOST, runtimeCaps: { nodeCalls: 1_000, agents: 1_000 } },
+      sampling: SAMPLING,
+    });
+    const ticks = new Ramp(TICK.base, TICK.step);
+    const reduce = new Ramp(REDUCE.base, REDUCE.step);
+    const layout = new Ramp(LAYOUT.base, LAYOUT.step);
+    expect([...PASS_IDS]).toEqual([...CAP_PASSES]);
+    for (const id of CAP_PASSES) {
+      const pass = receipt.passes[id];
+      if (pass === undefined) throw new Error(`the receipt carries no ${id} pass`);
+      // cap-saturation.mjs brackets the refresh loop and the relate loop with its own clock: one call per offered node / edge.
+      expectSpan(`${id} apply.refreshMs`, pass.apply.refreshMs, (pass.offered.nodes * REFRESH) / UNIT);
+      expectSpan(`${id} apply.relateMs`, pass.apply.relateMs, (pass.offered.edges * RELATE) / UNIT);
+      const perTick = pass.apply.ingestPerTick;
+      expect(perTick.samples, `${id} ticks`).toBeGreaterThan(0);
+      expectSpan(`${id} apply.ingestMs`, pass.apply.ingestMs, ticks.total(perTick.samples));
+      expectRankFloors(`${id} apply.ingestPerTick`, perTick, tick => ticks.at(tick));
+      const navigation = pass.navigation;
+      if (navigation === null) throw new Error(`${id} recorded no navigation`);
+      expect(navigation.keypresses).toBe(SAMPLING.blocks * SAMPLING.keypressesPerBlock);
+      expect(navigation.resize.samples).toBe(SAMPLING.blocks + SAMPLING.resizeSamples);
+      expectRankFloors(`${id} navigation.reducer`, navigation.reducer, k => reduce.at(k));
+      expectRankFloors(`${id} navigation.layout`, navigation.layout, k => layout.at(k));
+      expectRankFloors(`${id} navigation.all`, navigation.all, k => reduce.at(k) + layout.at(k));
+      expectRankFloors(`${id} navigation.resize`, navigation.resize, r => layout.at(r));
+    }
+    // Each pass and the untimed warm-up built a projection of their own.
+    expect(byProjection.size).toBe(CAP_PASSES.length + 1);
+  }, 120_000);
+});
+
+describe("W21 known duration: tool-reply-bench (its timed observeInvocation call, one ramp per (cap, selectors) series; gate TR-K1, TR-G1)", () => {
+  interface ReplySeries {
+    id: string;
+    shape: string;
+    cap: number;
+    replies: number;
+    buildMs: Quantiles;
+  }
+  // The bench takes the reply builder as an argument and, optionally, its production cap constants (runToolReplyBench's
+  // own contract; omitted here, so the receipt states the module's caps); the receipt read here is the series and the
+  // kept slowest builds.
+  const toolReplyRun = runToolReplyBench as (input: {
+    Projection: typeof ObservationProjection;
+    observeInvocation: typeof observeInvocation;
+    fixture: Fixture;
+    host: Host;
+    production?: { defaultMaxBytes: number; maxMaxBytes: number; maxLimit: number };
+  }) => { series: ReplySeries[]; outliers: { slowestBuilds: Array<{ id: string; page: number; ms: number }> } };
+  /** 0.1 ms plus 2 ms per call: the step dominates the real build of an untruncated reply (about 1 ms on this fixture). */
+  const BUILD = { base: 1_000, step: 20_000 };
+
+  it("holds every series' build clock at the exact ramp of its own timed calls, at p50, p95, max and the kept slowest builds", () => {
+    // pageThrough brackets one observeInvocation call per reply (qa/workbench/tool-reply-bench.mjs :79-81), and every
+    // request of a series carries its cap as maxBytes and its shape's selectors; the one untimed call (the selector-value
+    // probe before the series) carries neither. So the stub keys one ramp per series by the id the receipt publishes,
+    // shape@cap, derived here from the request alone: the i-th timed call of a series is its page i and its i-th sample.
+    const ramps = new Map<string, Ramp>();
+    let untimed = 0;
+    const observe: typeof observeInvocation = (reader, request) => {
+      if (request.maxBytes === undefined) untimed += 1;
+      else {
+        const shape = request.selectors === undefined ? "plain" : Object.keys(request.selectors).join("+");
+        const id = `${shape}@${request.maxBytes}`;
+        let ramp = ramps.get(id);
+        if (ramp === undefined) {
+          ramp = new Ramp(BUILD.base, BUILD.step);
+          ramps.set(id, ramp);
+        }
+        ramp.wait();
+      }
+      return observeInvocation(reader, request);
+    };
+    const receipt = toolReplyRun({
+      Projection: ObservationProjection,
+      observeInvocation: observe,
+      fixture: build({ seed: 3, nodes: 300, depth: 3, ticks: 8 }),
+      host: HOST,
+    });
+    expect(untimed).toBe(1);
+    expect(receipt.series).toHaveLength(BYTE_CAPS.length * SHAPE_NAMES.length);
+    expect(receipt.series.map(series => series.id).sort()).toEqual([...ramps.keys()].sort());
+    for (const series of receipt.series) {
+      const ramp = ramps.get(series.id);
+      if (ramp === undefined) throw new Error(`no timed call reached ${series.id}`);
+      expect(series.id).toBe(`${series.shape}@${series.cap}`);
+      expect(ramp.calls, `${series.id} timed calls`).toBe(series.replies);
+      expect(series.buildMs.samples, `${series.id} samples`).toBe(series.replies);
+      // At least three replies, so a minority of wrong-span samples has published ranks to move (9 or 17 here).
+      expect(series.replies, `${series.id} replies`).toBeGreaterThanOrEqual(3);
+      expectRankFloors(`${series.id} buildMs`, series.buildMs, i => ramp.at(i));
+    }
+    // The kept slowest builds name their series and page: each holds the wait of its own call.
+    const slowest = receipt.outliers.slowestBuilds;
+    expect(slowest.length).toBeGreaterThan(0);
+    for (const outlier of slowest) {
+      const ramp = ramps.get(outlier.id);
+      if (ramp === undefined) throw new Error(`a kept slowest build names no measured series: ${outlier.id}`);
+      expectSpan(`slowest ${outlier.id} page ${outlier.page}`, outlier.ms, ramp.at(outlier.page));
+    }
+  }, 120_000);
+});
+
+/** The parsed source of a repository file (ESM JavaScript or TypeScript), so comments never reach the AST. */
+const parseRepo = (path: string, kind: ts.ScriptKind): ts.SourceFile =>
+  ts.createSourceFile(path, readFileSync(new URL(`../${path}`, import.meta.url), "utf8"), ts.ScriptTarget.Latest, true, kind);
+const walkAll = (node: ts.Node, visit: (node: ts.Node) => void): void => {
+  visit(node);
+  ts.forEachChild(node, child => walkAll(child, visit));
+};
+
+describe("W21 known duration: inspector-retained-memory-bench reads no clock in its measured path (N/A, pinned)", () => {
+  /** Every clock read in a module: performance.now(), process.hrtime(), Date.now() and new Date(). */
+  const clockReads = (path: string): string[] => {
+    const source = parseRepo(path, ts.ScriptKind.JS);
+    const reads: string[] = [];
+    walkAll(source, node => {
+      if (ts.isCallExpression(node) && ["performance.now", "process.hrtime", "process.hrtime.bigint", "Date.now"].includes(node.expression.getText(source))) reads.push(node.getText(source));
+      if (ts.isNewExpression(node) && node.expression.getText(source) === "Date") reads.push(node.getText(source));
+    });
+    return reads;
+  };
+
+  it("qa/workbench/retained-memory.mjs reads no clock at all; its CLI reads one only to stamp the receipt utc", () => {
+    expect(clockReads("qa/workbench/retained-memory.mjs")).toEqual([]);
+    const cli = parseRepo("qa/workbench/inspector-retained-memory-bench.mjs", ts.ScriptKind.JS);
+    const reads: ts.Node[] = [];
+    walkAll(cli, node => {
+      if (ts.isNewExpression(node) && node.expression.getText(cli) === "Date") reads.push(node);
+    });
+    expect(clockReads("qa/workbench/inspector-retained-memory-bench.mjs")).toEqual(["new Date()"]);
+    const [stamp] = reads;
+    const property = stamp.parent.parent;
+    expect(ts.isPropertyAccessExpression(stamp.parent) && stamp.parent.name.text === "toISOString").toBe(true);
+    expect(ts.isCallExpression(property) && ts.isPropertyAssignment(property.parent) && property.parent.name.getText(cli) === "utc").toBe(true);
+  });
+});
+
+describe("W21 known duration: the census of cases (gate U1/U1d: one case per W21 bench CLI on the tree)", () => {
+  it("every W21 bench CLI on the tree has exactly one case in this file, titled after it", () => {
+    const self = parseRepo("test/workbench-w21-known-duration.test.ts", ts.ScriptKind.TS);
+    const titles: string[] = [];
+    walkAll(self, node => {
+      if (!ts.isCallExpression(node) || !ts.isIdentifier(node.expression) || node.expression.text !== "describe") return;
+      const [title] = node.arguments;
+      if (title !== undefined && (ts.isStringLiteral(title) || ts.isNoSubstitutionTemplateLiteral(title))) titles.push(title.text);
+    });
+    const clis = w21BenchClis();
+    expect(clis).toHaveLength(11);
+    for (const cli of clis) {
+      const name = cli.slice("qa/workbench/".length, -".mjs".length);
+      const cases = titles.filter(title => title === `W21 known duration: ${name}` || title.startsWith(`W21 known duration: ${name} `));
+      expect(cases, cli).toHaveLength(1);
+    }
+  });
+});

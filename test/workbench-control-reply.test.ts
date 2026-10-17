@@ -5,10 +5,14 @@ import { CapabilityError, type JsonValue } from "../src/workbench/capability-reg
 import {
   acknowledge,
   CONTROL_PERMIT_POLICY,
+  CONTROL_REF_NOT_ADMITTED_REASON,
+  CONTROL_REF_REFUSAL_POLICY,
+  CONTROL_WITHHELD_REF,
   type ControlDecision,
   type ControlDenyPolicy,
   DESTRUCTIVE_CONTROL_ACTIONS,
   decideControl,
+  isCoreMintedDecision,
   type NativeControlReceipt,
   type NativeControlRequest,
   settle,
@@ -299,6 +303,8 @@ describe("wb-752.4 U1: invisible characters never reassemble a redacted credenti
   // reads every default-ignorable as an unsafe unit and REFUSES each of these refs (pinned below), so no core-minted receipt
   // carries one; the builder's own routing through the one helper is the only defense for a receipt the core did not mint.
   // Each shape is therefore a builder-defense probe on a HAND-BUILT receipt beside a pin of the core's refusal of that shape.
+  // Since wb-5a7 the core refuses by withholding: the phase is recorded, the reference is the fixed marker, and a typed
+  // refusal sits on the receipt it mints, never a throw.
   const probes: readonly [string, string, string][] = [
     ["ZWSP in sk-ant- prefix", `ref sk-ant-${ZWSP}api03-ZWSECRETAAAA`, "ZWSECRETAAAA"],
     ["LRM in sk-ant- prefix", `ref sk-ant-${LRM}api03-LRMSECRETAAAA`, "LRMSECRETAAAA"],
@@ -322,16 +328,20 @@ describe("wb-752.4 U1: invisible characters never reassemble a redacted credenti
       expect(out.text).toContain("[REDACTED]");
     });
     it(`the landed core refuses ${label} as an acknowledgement reference`, () => {
-      const error = refusalOf(() => acknowledge(requested(), { ...ACK, nativeAckRef: ref }));
-      expect(error).toBeInstanceOf(CapabilityError);
-      expect(error?.category).toBe("validation");
-      expect(error?.message).toBe("Control acknowledgement requires a native acknowledgement reference.");
+      expect(refusalOf(() => acknowledge(requested(), { ...ACK, nativeAckRef: ref }))).toBeUndefined();
+      const receipt = acknowledge(requested(), { ...ACK, nativeAckRef: ref });
+      expect(receipt).toMatchObject({ phase: "acknowledged", nativeAckRef: CONTROL_WITHHELD_REF,
+        refusals: [{ policy: CONTROL_REF_REFUSAL_POLICY, category: "validation", field: "nativeAckRef", reason: CONTROL_REF_NOT_ADMITTED_REASON }] });
+      expect(JSON.stringify(receipt)).not.toContain(secret);
+      expect(buildControlReply(receipt).text).not.toContain(secret);
     });
     it(`the landed core refuses ${label} as a result reference`, () => {
-      const error = refusalOf(() => settle(acked(), { ...RESULT, nativeResultRef: ref }));
-      expect(error).toBeInstanceOf(CapabilityError);
-      expect(error?.category).toBe("validation");
-      expect(error?.message).toBe("Control result requires a native result reference.");
+      expect(refusalOf(() => settle(acked(), { ...RESULT, nativeResultRef: ref }))).toBeUndefined();
+      const receipt = settle(acked(), { ...RESULT, nativeResultRef: ref });
+      expect(receipt).toMatchObject({ phase: "result", nativeAckRef: ACK.nativeAckRef, nativeResultRef: CONTROL_WITHHELD_REF,
+        refusals: [{ policy: CONTROL_REF_REFUSAL_POLICY, category: "validation", field: "nativeResultRef", reason: CONTROL_REF_NOT_ADMITTED_REASON }] });
+      expect(JSON.stringify(receipt)).not.toContain(secret);
+      expect(buildControlReply(receipt).text).not.toContain(secret);
     });
   }
   it("a bidi override inside a credential (hand-built receipt, the core refuses such refs) is redacted as one token by the one helper", () => {
@@ -341,9 +351,13 @@ describe("wb-752.4 U1: invisible characters never reassemble a redacted credenti
     expect(out.text).toContain("[REDACTED]");
   });
   it("an unsplit control credential is redacted too (the probes are not vacuous)", () => {
-    const out = buildControlReply(acknowledge(requested(), { ...ACK, nativeAckRef: "ref sk-ant-api03-PLAINSECRETAAAA" }));
+    const out = buildControlReply(withAck("ref sk-ant-api03-PLAINSECRETAAAA"));
     expect(out.text).not.toContain("PLAINSECRETAAAA");
     expect(out.text).toContain("[REDACTED]");
+    // wb-5a7: through the real core the same reference never reaches a receipt; the reply shows the withheld marker.
+    const core = buildControlReply(acknowledge(requested(), { ...ACK, nativeAckRef: "ref sk-ant-api03-PLAINSECRETAAAA" }));
+    expect(core.text).not.toContain("PLAINSECRETAAAA");
+    expect((parse(core.text).acknowledged as Record<string, JsonValue>).nativeAckRef).toBe(CONTROL_WITHHELD_REF);
   });
 });
 
@@ -446,16 +460,28 @@ describe("wb-752.4 respin U1: between-token separators reach the one helper unto
 describe("wb-752.4 respin: the compact tier cuts only what the one helper already redacted", () => {
   // Deletion never precedes redaction (wb-952 16:44Z), and a cut is a deletion: cutting a raw ref first can drop the closing
   // quote of a quoted assignment, so the redactor reads an unquoted value that stops at the first space and the rest of the
-  // secret shows. The landed core accepts such a ref (it carries no unsafe unit), so the real core path reaches this tier.
+  // secret shows. The core accepted such a ref until wb-5a7 (it carries no unsafe unit); it now withholds it, since the label
+  // layout redacts it (pinned below), so a hand-built receipt is what reaches this tier.
   const secret = "QUOTEDPARTSECRET";
   const windows = Array.from({ length: secret.length - 3 }, (_, at) => secret.slice(at, at + 4));
   const exposes = (text: string): boolean => windows.some(window => text.includes(window));
   const quoted = (pad: number): string => `password="${"w ".repeat(pad)}${secret} ${"z".repeat(3600)}"`;
   const paths: readonly (readonly [path: string, receipt: (ref: string) => NativeControlReceipt])[] = [
-    ["acknowledged.nativeAckRef through the real core", ref => acknowledge(requested(), { ...ACK, nativeAckRef: ref })],
-    ["result.nativeResultRef through the real core", ref => settle(acked(), { ...RESULT, nativeResultRef: ref })],
+    ["acknowledged.nativeAckRef of a hand-built receipt", withAck],
+    ["result.nativeResultRef of a hand-built receipt", withResult],
     ["requested.target.id of a hand-built receipt", withTarget],
   ];
+  it("the real core withholds every quoted-secret reference, so no part of the secret reaches a receipt or a reply (wb-5a7)", () => {
+    for (const pad of [1, 2, 4, 8, 12, 16]) {
+      const ack = acknowledge(requested(), { ...ACK, nativeAckRef: quoted(pad) });
+      const result = settle(acked(), { ...RESULT, nativeResultRef: quoted(pad) });
+      expect([ack.nativeAckRef, result.nativeResultRef]).toStrictEqual([CONTROL_WITHHELD_REF, CONTROL_WITHHELD_REF]);
+      for (const receipt of [ack, result]) {
+        expect(exposes(JSON.stringify(receipt))).toBe(false);
+        expect(exposes(buildControlReply(receipt, { maxBytes: MAX_CONTROL_REPLY_BYTES }).text)).toBe(false);
+      }
+    }
+  });
   for (const [path, build] of paths) {
     it(`${path}: no cap exposes any part of a quoted secret`, () => {
       const exposed: string[] = [];
@@ -510,30 +536,42 @@ describe("wb-752.4 U3: truncation is honest on the final cut", () => {
   const cut = (text: string): boolean => text.includes("[truncated]");
   it("a 4094-char Bearer ref whose redaction expansion hits the text cap reports truncated:true at 65536 (ack and result)", () => {
     const ackRef = expanding(4094);
-    const ack = buildControlReply(acknowledge(requested(), { ...ACK, nativeAckRef: ackRef }), { maxBytes: 65536 });
+    // wb-5a7: the core now withholds such a ref (the label layout redacts it), so the builder's own cut is measured on a
+    // hand-built receipt and the core path is pinned at the end.
+    const ack = buildControlReply(withAck(ackRef), { maxBytes: 65536 });
     expect(cut(ack.text)).toBe(true);
     expect(ack.truncated).toBe(true);
     expect(parse(ack.text).truncated).toBe(true);
     expect(parse(ack.text)).toHaveProperty("truncation");
-    const result = buildControlReply(settle(acked(), { ...RESULT, nativeResultRef: ackRef }), { maxBytes: 65536 });
+    const result = buildControlReply(withResult(ackRef), { maxBytes: 65536 });
     expect(cut(result.text)).toBe(true);
     expect(result.truncated).toBe(true);
     expect(parse(result.text)).toHaveProperty("truncation");
+    expect(acknowledge(requested(), { ...ACK, nativeAckRef: ackRef }).nativeAckRef).toBe(CONTROL_WITHHELD_REF);
+    expect(settle(acked(), { ...RESULT, nativeResultRef: ackRef }).nativeResultRef).toBe(CONTROL_WITHHELD_REF);
   });
   it("whenever the reply text carries a cut marker the flag is set, across caps and phases; never over the cap", () => {
+    let cuts = 0;
     for (const length of [100, 3000, 4094]) {
       for (const maxBytes of [512, 1024, 4096, 5000, 16384, 65536]) {
         for (const build of [
+          () => withAck(expanding(length)),
+          () => withResult(expanding(length)),
           () => acknowledge(requested(), { ...ACK, nativeAckRef: expanding(length) }),
           () => settle(acked(), { ...RESULT, nativeResultRef: expanding(length) }),
         ]) {
           const out = buildControlReply(build(), { maxBytes });
           expect(out.bytes).toBeLessThanOrEqual(maxBytes);
-          if (cut(out.text)) expect(out.truncated).toBe(true);
+          if (cut(out.text)) {
+            cuts += 1;
+            expect(out.truncated).toBe(true);
+          }
           expect(parse(out.text).truncated).toBe(out.truncated);
         }
       }
     }
+    // Not vacuous: the hand-built echoes still reach a cut (wb-5a7 moved the expanding refs off the core path).
+    expect(cuts).toBeGreaterThan(0);
   });
   it("an ordinary ref is not flagged truncated", () => {
     const out = buildControlReply(acknowledge(requested(), { ...ACK, nativeAckRef: "furnace-ack-7" }), { maxBytes: 65536 });
@@ -602,6 +640,140 @@ describe("wb-752.4 folds: policy pin, completionBasis, dead-code removal, era hy
     const guard = new RegExp(`[${cp(0x00ad)}${cp(0x061c)}${cp(0x180e)}${cp(0x200b)}-${cp(0x200f)}${cp(0x202a)}-${cp(0x202e)}${cp(0x2060)}-${cp(0x2069)}${cp(0xfeff)}]`);
     for (const file of ["../src/workbench/control-reply.ts", "./workbench-control-reply.test.ts"]) {
       expect(readFileSync(new URL(file, import.meta.url), "utf8")).not.toMatch(guard);
+    }
+  });
+});
+
+/** The permitted decision decideControl minted for this file's request: the one value the builder renders as a permit. */
+function permit(): Extract<ControlDecision, { decision: "permitted" }> {
+  const decision = decide();
+  if (decision.decision !== "permitted") throw new Error("expected permit");
+  return decision;
+}
+/** Freezes every nested object, so a copy is exactly as frozen as the genuine permit. */
+function deepFreeze<T>(value: T): T {
+  if (typeof value === "object" && value !== null) {
+    for (const key of Reflect.ownKeys(value)) deepFreeze(Reflect.get(value, key));
+    Object.freeze(value);
+  }
+  return value;
+}
+
+describe("wb-5a7: a permit renders only when the decision core minted that very decision", () => {
+  // Spec (owner ruling on the wb-752.4 gate F5, appended to wb-5a7 verbatim): "control-reply builder accepts only core-minted
+  // decisions (isCoreMintedDecision), typed malformed-input refusal otherwise, red-first with a forged structurally identical
+  // receipt". Each forgery carries a receipt structurally identical to the genuine permit's (the provenance suite's set).
+  const forgeries = (genuine: ReturnType<typeof permit>): readonly (readonly [string, unknown])[] => [
+    ["deep-frozen structural copy", deepFreeze(structuredClone(genuine))],
+    ["deep-frozen JSON round-trip", deepFreeze(JSON.parse(JSON.stringify(genuine)))],
+    ["hand-built permit carrying the genuine field values", deepFreeze({ decision: "permitted", receipt: { ...genuine.receipt, scope: { ...genuine.receipt.scope },
+      principal: { ...genuine.receipt.principal }, target: { ...genuine.receipt.target } } })],
+    ["frozen re-wrap of the genuine receipt", Object.freeze({ decision: "permitted", receipt: genuine.receipt })],
+    ["forwarding proxy over the genuine permit", new Proxy(genuine, {})],
+  ];
+
+  it("positive control: the genuine permit renders the requested phase, and every forgery serializes exactly as it does", () => {
+    const genuine = permit();
+    expect(isCoreMintedDecision(genuine)).toBe(true);
+    const body = parse(buildControlReply(genuine).text);
+    expect(body).toMatchObject({ status: "requested", phase: "requested" });
+    expect((body.requested as Record<string, JsonValue>).requestId).toBe(genuine.receipt.requestId);
+    for (const [label, forged] of forgeries(genuine)) {
+      expect(JSON.stringify(forged), label).toBe(JSON.stringify(genuine));
+      expect(isCoreMintedDecision(forged), label).toBe(false);
+    }
+  });
+  it("renders every structurally identical forged permit as the typed malformed-input refusal: no phase and nothing of the receipt", () => {
+    const genuine = permit();
+    for (const [label, forged] of forgeries(genuine)) {
+      const out = buildControlReply(forged as ControlDecision);
+      expect(parse(out.text), label).toStrictEqual({ contractVersion: CONTROL_REPLY_CONTRACT_VERSION, kind: "control-reply", status: "denied",
+        category: "validation", policy: "malformed-input", effect: "none", reason: "The reply input is not a control decision or receipt.", truncated: false });
+      for (const echo of [genuine.receipt.requestId, genuine.receipt.invocationId, genuine.receipt.target.id]) expect(out.text, label).not.toContain(echo);
+    }
+  });
+  it("denials and bare receipts carry no permit: they render exactly as before (positive controls)", () => {
+    expect(parse(buildControlReply(decide({ params: {} })).text)).toMatchObject({ status: "denied", policy: "operator-confirmation", category: "validation" });
+    expect(parse(buildControlReply(permit().receipt).text)).toMatchObject({ status: "requested", phase: "requested" });
+    expect(parse(buildControlReply(acked()).text)).toMatchObject({ status: "acknowledged", phase: "acknowledged" });
+    expect(parse(buildControlReply(settled()).text)).toMatchObject({ status: "result", phase: "result" });
+  });
+  it("the permit branch asks the core's own predicate, imported as a value, and the builder keeps no registry of its own", () => {
+    const source = readFileSync(new URL("../src/workbench/control-reply.ts", import.meta.url), "utf8");
+    const fromControl = /import\s*\{([^}]*)\}\s*from\s*["']\.\/control\.js["']/.exec(source)?.[1] ?? "";
+    expect(fromControl.split(",").map(name => name.trim())).toContain("isCoreMintedDecision");
+    expect(source).toMatch(/isCoreMintedDecision\(source\)/);
+    expect(source).not.toMatch(/function isCoreMintedDecision|\bWeakSet\b|\bWeakMap\b/);
+  });
+});
+
+describe("wb-5a7: a reference the core withheld renders exactly as the core recorded it", () => {
+  // The core records a reference it does not admit as CONTROL_WITHHELD_REF with one typed refusal per withheld field. The reply
+  // shows the marker in the echo block and a fixed withheld record built from module constants; it never echoes the refusal
+  // record's own text, and a record that does not match the receipt's withheld fields is not a core product.
+  const withheldAck = (): NativeControlReceipt => acknowledge(requested(), { ...ACK, nativeAckRef: "ref ghp_FAKE0WITHHELD0ACK0REF" });
+  const withheldBoth = (): NativeControlReceipt => settle(withheldAck(), { ...RESULT, nativeResultRef: "Bearer FAKE-WITHHELD-RESULT-REF" });
+  const record = (fields: readonly string[]): JsonValue => ({ policy: CONTROL_REF_REFUSAL_POLICY, category: "validation", fields: [...fields], reason: CONTROL_REF_NOT_ADMITTED_REASON });
+  const entry = (field: string): Record<string, string> => ({ policy: CONTROL_REF_REFUSAL_POLICY, category: "validation", field, reason: CONTROL_REF_NOT_ADMITTED_REASON });
+
+  it("an acknowledgement the core withheld renders the marker and the typed record at every cap, never the refused text", () => {
+    const full = parse(buildControlReply(withheldAck()).text);
+    expect(full).toMatchObject({ status: "acknowledged", phase: "acknowledged", acknowledged: { acknowledgedAt: ACK.acknowledgedAt, nativeAckRef: CONTROL_WITHHELD_REF } });
+    expect(full.withheld).toStrictEqual(record(["nativeAckRef"]));
+    for (const maxBytes of [MIN_CONTROL_REPLY_BYTES, 700, 1024, DEFAULT_CONTROL_REPLY_BYTES, MAX_CONTROL_REPLY_BYTES]) {
+      const out = buildControlReply(withheldAck(), { maxBytes });
+      expect(out.bytes, `maxBytes ${maxBytes}`).toBeLessThanOrEqual(maxBytes);
+      expect(out.text, `maxBytes ${maxBytes}`).not.toContain("FAKE0WITHHELD0ACK0REF");
+      expect(parse(out.text).withheld, `maxBytes ${maxBytes}`).toStrictEqual(record(["nativeAckRef"]));
+    }
+  });
+  it("a result whose two references were withheld renders both fields in the record, in field order", () => {
+    const out = buildControlReply(withheldBoth());
+    const body = parse(out.text);
+    expect(body).toMatchObject({ status: "result", acknowledged: { nativeAckRef: CONTROL_WITHHELD_REF },
+      result: { outcome: RESULT.outcome, nativeResultRef: CONTROL_WITHHELD_REF, settledAt: RESULT.settledAt } });
+    expect(body.withheld).toStrictEqual(record(["nativeAckRef", "nativeResultRef"]));
+    for (const secret of ["FAKE0WITHHELD0ACK0REF", "FAKE-WITHHELD-RESULT-REF"]) expect(out.text).not.toContain(secret);
+    // Only the result withheld: the admitted acknowledgement is echoed verbatim.
+    const resultOnly = parse(buildControlReply(settle(acked(), { ...RESULT, nativeResultRef: "Bearer FAKE-WITHHELD-RESULT-REF" })).text);
+    expect(resultOnly).toMatchObject({ acknowledged: { nativeAckRef: ACK.nativeAckRef }, result: { nativeResultRef: CONTROL_WITHHELD_REF } });
+    expect(resultOnly.withheld).toStrictEqual(record(["nativeResultRef"]));
+  });
+  it("the smallest tier keeps the withheld record and fits the minimum cap even for the largest withheld receipt", () => {
+    const largest = { ...withheldBoth(), target: { ...RUN, id: "c".repeat(4000) } } as unknown as NativeControlReceipt;
+    const out = buildControlReply(largest, { maxBytes: MIN_CONTROL_REPLY_BYTES });
+    const body = parse(out.text);
+    expect(out.bytes).toBeLessThanOrEqual(MIN_CONTROL_REPLY_BYTES);
+    expect(Object.keys(body)).toStrictEqual(["contractVersion", "kind", "status", "phase", "completionBasis", "verification", "withheld", "truncated", "truncation"]);
+    expect(body.withheld).toStrictEqual(record(["nativeAckRef", "nativeResultRef"]));
+  });
+  it("an admitted reference renders no withheld record (positive control)", () => {
+    for (const receipt of [requested(), acked(), settled()]) expect(parse(buildControlReply(receipt).text)).not.toHaveProperty("withheld");
+  });
+  it("a refusal record that does not match the receipt's withheld fields is not a core product: typed malformed-input", () => {
+    const cases: readonly (readonly [string, unknown])[] = [
+      ["the marker without a refusal record", { ...acked(), nativeAckRef: CONTROL_WITHHELD_REF }],
+      ["a refusal record without the marker", { ...acked(), refusals: [entry("nativeAckRef")] }],
+      ["an empty refusal record", { ...acked(), refusals: [] }],
+      ["a record that is not an array", { ...withheldAck(), refusals: { 0: entry("nativeAckRef"), length: 1 } }],
+      ["a record naming the wrong field", { ...withheldAck(), refusals: [entry("nativeResultRef")] }],
+      ["a record with a foreign reason", { ...withheldAck(), refusals: [{ ...entry("nativeAckRef"), reason: "FAKE-FOREIGN-REASON-TEXT" }] }],
+      ["a record with a foreign policy", { ...withheldAck(), refusals: [{ ...entry("nativeAckRef"), policy: "FAKE-FOREIGN-POLICY" }] }],
+      ["a record with a foreign category", { ...withheldAck(), refusals: [{ ...entry("nativeAckRef"), category: "authorization" }] }],
+      ["a record entry with an extra key", { ...withheldAck(), refusals: [{ ...entry("nativeAckRef"), note: "FAKE-EXTRA-NOTE-TEXT" }] }],
+      ["a duplicated record entry", { ...withheldAck(), refusals: [entry("nativeAckRef"), entry("nativeAckRef")] }],
+      ["a requested receipt carrying a record", { ...requested(), refusals: [entry("nativeAckRef")] }],
+      ["a result record out of field order", { ...withheldBoth(), refusals: [entry("nativeResultRef"), entry("nativeAckRef")] }],
+      ["a result record missing one withheld field", { ...withheldBoth(), refusals: [entry("nativeAckRef")] }],
+      ["a result whose withheld field has no record entry", { ...settled(), nativeResultRef: CONTROL_WITHHELD_REF }],
+    ];
+    // Positive controls: the receipts the core minted with withheld references render their phase.
+    expect(parse(buildControlReply(withheldAck()).text).status).toBe("acknowledged");
+    expect(parse(buildControlReply(withheldBoth()).text).status).toBe("result");
+    for (const [label, receipt] of cases) {
+      const out = buildControlReply(receipt as NativeControlReceipt);
+      expect(parse(out.text), label).toMatchObject({ status: "denied", policy: "malformed-input", category: "validation" });
+      expect(out.text, label).not.toMatch(/FAKE-FOREIGN|FAKE-EXTRA/);
     }
   });
 });

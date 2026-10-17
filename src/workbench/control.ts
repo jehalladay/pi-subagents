@@ -4,17 +4,27 @@
  * never mutates the projection and never fabricates an acknowledgement or a result: a host executes a permitted
  * receipt natively and records the producer's answers through acknowledge() and settle(). A permit is provenance-bearing
  * in-process only: isCoreMintedDecision() answers by object identity, so an adapter executes exactly the decision
- * decideControl returned here, never a copy, a replay or a look-alike of it.
+ * decideControl returned here, never a copy, a replay or a look-alike of it. Every native reference a producer answers
+ * with passes ONE admission chokepoint (admit): it is recorded only as text the shared display helper leaves unchanged,
+ * and anything else is recorded as withheld with a typed refusal on the receipt, never thrown and never silently dropped.
  */
 import { createHash } from "node:crypto";
 import { CapabilityError, type CapabilityErrorCategory, type JsonValue } from "./capability-registry.js";
 import type { NativeRef, ObservationProjection, ObservationScope, Relation } from "./observation.js";
-import { stripUnsafeText } from "./redaction.js";
+import { sanitizeWorkbenchText, stripUnsafeText } from "./redaction.js";
 
 export const CONTROL_CONTRACT_VERSION = "workbench.control/v1";
 export const CONTROL_PERMIT_POLICY = "exact-grant+confirmed-owner+operator-confirmed";
 /** The fixed text a control adapter refuses a decision the core did not mint with. It names no field of what it refuses. */
 export const CONTROL_UNMINTED_REASON = "decision was not minted by the decision core";
+/**
+ * The admission chokepoint's fixed texts (wb-5a7). A native reference the core does not admit is never recorded: the
+ * receipt holds CONTROL_WITHHELD_REF in its place and one typed refusal per withheld field, naming only the field. The
+ * brackets keep the marker outside every producer's reference grammar, as forge-control.ts does for a disposition.
+ */
+export const CONTROL_WITHHELD_REF = "[withheld]";
+export const CONTROL_REF_REFUSAL_POLICY = "native-ref-not-admitted";
+export const CONTROL_REF_NOT_ADMITTED_REASON = "native reference was not admitted";
 
 /** The only native verbs Workbench may request, per producer. No universal control method exists (docs/workbench/06). */
 export const NATIVE_CONTROL_ACTIONS: Readonly<Record<string, readonly string[]>> = Object.freeze({
@@ -59,11 +69,22 @@ interface ControlReceiptCore {
   readonly requestedAt: string;
   readonly decidedAt: string;
 }
+/** A native reference field of a receipt: the unit the admission chokepoint withholds. */
+export type ControlRefField = "nativeAckRef" | "nativeResultRef";
+/** The typed refusal the core records on a receipt for each native reference it withheld (wb-5a7). */
+export interface ControlRefRefusal {
+  readonly policy: typeof CONTROL_REF_REFUSAL_POLICY;
+  readonly category: "validation";
+  readonly field: ControlRefField;
+  readonly reason: typeof CONTROL_REF_NOT_ADMITTED_REASON;
+}
 export interface RequestedControlReceipt extends ControlReceiptCore { readonly phase: "requested" }
 export interface AcknowledgedControlReceipt extends ControlReceiptCore {
   readonly phase: "acknowledged";
   readonly acknowledgedAt: string;
   readonly nativeAckRef: string;
+  /** Present only when a reference was withheld: one refusal per withheld field, in field order. */
+  readonly refusals?: readonly ControlRefRefusal[];
 }
 export interface ResultControlReceipt extends ControlReceiptCore {
   readonly phase: "result";
@@ -72,6 +93,8 @@ export interface ResultControlReceipt extends ControlReceiptCore {
   readonly outcome: ControlOutcome;
   readonly nativeResultRef: string;
   readonly settledAt: string;
+  /** Present only when a reference was withheld: one refusal per withheld field, in field order. */
+  readonly refusals?: readonly ControlRefRefusal[];
 }
 /** A request is not an accepted action, and an accepted action is not its outcome (docs/workbench/08 § "State/event semantics"). */
 export type NativeControlReceipt = RequestedControlReceipt | AcknowledgedControlReceipt | ResultControlReceipt;
@@ -93,6 +116,31 @@ const MINTED = new WeakSet<ControlDecision>();
 /** Bounded, non-blank text the shared sanitizer leaves unchanged, so no control, escape or bidi character reaches a receipt. */
 function cleanText(value: unknown, maxBytes = 256): value is string {
   return typeof value === "string" && value.trim() !== "" && Buffer.byteLength(value) <= maxBytes && stripUnsafeText(value) === value;
+}
+/** A present native reference: a non-blank string. A missing one is no reference, which refuses the phase itself. */
+function present(value: unknown): value is string {
+  return typeof value === "string" && value.trim() !== "";
+}
+/** One native reference after admission: the producer's own text, or the marker and the typed refusal recorded instead. */
+interface Admission {
+  readonly ref: string;
+  readonly refusal?: ControlRefRefusal;
+}
+/**
+ * The ONE admission chokepoint for native references (wb-5a7): acknowledge() and settle() record a producer's reference
+ * only when the shared helper would display it unchanged at the label layout within NATIVE_REF_BYTES, so nothing the
+ * helper redacts, strips, collapses or cuts ever reaches a receipt. Anything else is withheld: its place holds
+ * CONTROL_WITHHELD_REF and a frozen typed refusal naming only the field is recorded. A producer reference that spells the
+ * marker is withheld too, so the marker in a receipt always means withheld.
+ */
+function admit(field: ControlRefField, ref: string): Admission {
+  if (ref !== CONTROL_WITHHELD_REF && Buffer.byteLength(ref) <= NATIVE_REF_BYTES && sanitizeWorkbenchText(ref, NATIVE_REF_BYTES, "label") === ref) return { ref };
+  return { ref: CONTROL_WITHHELD_REF, refusal: Object.freeze({ policy: CONTROL_REF_REFUSAL_POLICY, category: "validation", field, reason: CONTROL_REF_NOT_ADMITTED_REASON }) };
+}
+/** The refusal record of one transition: recomputed from the references it admitted, never copied from its input. */
+function recorded(...admissions: readonly Admission[]): { readonly refusals?: readonly ControlRefRefusal[] } {
+  const refusals = admissions.flatMap(({ refusal }) => (refusal ? [refusal] : []));
+  return refusals.length > 0 ? { refusals: Object.freeze(refusals) } : {};
 }
 /** A timezone-qualified instant. Host and producer clocks differ, so phases are ordered by transition, never by timestamp (docs/workbench/13). */
 function instant(value: unknown): value is string {
@@ -208,26 +256,36 @@ export function isCoreMintedDecision(decision: unknown): boolean {
   return typeof decision === "object" && decision !== null && MINTED.has(decision as ControlDecision);
 }
 
-/** Records the producer's acceptance of a requested action. Acknowledgement is not completion. */
+/**
+ * Records the producer's acceptance of a requested action. Acknowledgement is not completion. A missing reference refuses
+ * the phase; a present one passes the admission chokepoint, so one the core does not admit is recorded as withheld.
+ */
 export function acknowledge(receipt: NativeControlReceipt, ack: { acknowledgedAt: string; nativeAckRef: string }): AcknowledgedControlReceipt {
   if (receipt.contractVersion !== CONTROL_CONTRACT_VERSION || receipt.phase !== "requested") {
     throw new CapabilityError("validation", "Only a requested control receipt can be acknowledged.");
   }
-  if (!cleanText(ack.nativeAckRef, NATIVE_REF_BYTES)) throw new CapabilityError("validation", "Control acknowledgement requires a native acknowledgement reference.");
+  if (!present(ack.nativeAckRef)) throw new CapabilityError("validation", "Control acknowledgement requires a native acknowledgement reference.");
   if (!instant(ack.acknowledgedAt)) throw new CapabilityError("validation", "Control acknowledgement requires a timezone-qualified acknowledgedAt.");
-  return Object.freeze({ ...core(receipt), phase: "acknowledged", acknowledgedAt: ack.acknowledgedAt, nativeAckRef: ack.nativeAckRef });
+  const native = admit("nativeAckRef", ack.nativeAckRef);
+  return Object.freeze({ ...core(receipt), phase: "acknowledged", acknowledgedAt: ack.acknowledgedAt, nativeAckRef: native.ref, ...recorded(native) });
 }
 
-/** Records the producer's outcome of an acknowledged action; a result never exists without its native reference. */
+/**
+ * Records the producer's outcome of an acknowledged action; a result never exists without its native reference. Both
+ * references pass the admission chokepoint, the carried acknowledgement reference included, so a receipt this core did not
+ * mint carries nothing into a result the core would not record; the refusal record is recomputed, never carried.
+ */
 export function settle(receipt: NativeControlReceipt, result: { outcome: ControlOutcome; nativeResultRef: string; settledAt: string }): ResultControlReceipt {
-  if (receipt.contractVersion !== CONTROL_CONTRACT_VERSION || receipt.phase !== "acknowledged" || !cleanText(receipt.nativeAckRef, NATIVE_REF_BYTES)) {
+  if (receipt.contractVersion !== CONTROL_CONTRACT_VERSION || receipt.phase !== "acknowledged" || !present(receipt.nativeAckRef)) {
     throw new CapabilityError("validation", "Only an acknowledged control receipt can be settled.");
   }
   if (!OUTCOMES.includes(result.outcome)) throw new CapabilityError("validation", "Unknown control outcome.");
-  if (!cleanText(result.nativeResultRef, NATIVE_REF_BYTES)) throw new CapabilityError("validation", "Control result requires a native result reference.");
+  if (!present(result.nativeResultRef)) throw new CapabilityError("validation", "Control result requires a native result reference.");
   if (!instant(result.settledAt)) throw new CapabilityError("validation", "Control result requires a timezone-qualified settledAt.");
+  const acknowledged = admit("nativeAckRef", receipt.nativeAckRef);
+  const native = admit("nativeResultRef", result.nativeResultRef);
   return Object.freeze({
-    ...core(receipt), phase: "result", acknowledgedAt: receipt.acknowledgedAt, nativeAckRef: receipt.nativeAckRef,
-    outcome: result.outcome, nativeResultRef: result.nativeResultRef, settledAt: result.settledAt,
+    ...core(receipt), phase: "result", acknowledgedAt: receipt.acknowledgedAt, nativeAckRef: acknowledged.ref,
+    outcome: result.outcome, nativeResultRef: native.ref, settledAt: result.settledAt, ...recorded(acknowledged, native),
   });
 }

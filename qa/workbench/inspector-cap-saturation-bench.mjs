@@ -17,7 +17,10 @@
 //      written (reported on stderr; the receipt is already on stdout, never a silent exit 1)
 // --strict is the falsifier arm: the Forge command stays plain until the inspector remainder line
 // (wb-ea1) lands. The receipt header states the bench-only bounds (benchOnlyBounds) before any measurement.
-// The revision comes from $CAP_BENCH_REVISION (else "working-tree"). $CAP_BENCH_SEED, $CAP_BENCH_NODES,
+// The revision is git rev-parse HEAD of this checkout plus a dirty flag, stamped by qa/workbench/bench-revision.mjs
+// (wb-oq3); $W21_REVISION, the one override name of the W21 family, read by that stamp alone, only overrides the
+// revision and the receipt names the source. $CAP_BENCH_REVISION is retired (wb-oq3 re-cut decision: one override
+// variable for every W21 receipt revision) and is no longer read. $CAP_BENCH_SEED, $CAP_BENCH_NODES,
 // $CAP_BENCH_DEPTH and $CAP_BENCH_TICKS override the fixture; any override below the W21 shape is still
 // measured and exits 2.
 import {readFileSync, writeFileSync} from 'node:fs';
@@ -25,6 +28,7 @@ import {cpus} from 'node:os';
 import {initialInspectorState, layoutInspector, reduceInspectorKey} from '../../dist/ui/workflow-inspector.js';
 import {WORKFLOW_AGENT_CAP} from '../../dist/workflow/runtime.js';
 import {ObservationProjection} from '../../dist/workbench/observation.js';
+import {benchRevision, withBenchRevision} from './bench-revision.mjs';
 import {publishReceipt, runCapSaturationBench} from './cap-saturation.mjs';
 import {buildGroupedFixture, GROUPED_FIXTURE_DEFAULTS} from './grouped-fixture.mjs';
 
@@ -60,14 +64,15 @@ try {
     ticks: integerFromEnv('CAP_BENCH_TICKS', GROUPED_FIXTURE_DEFAULTS.ticks),
   });
   const processors = cpus();
-  receipt = runCapSaturationBench({
+  const stamp = benchRevision();
+  receipt = withBenchRevision(runCapSaturationBench({
     Projection: ObservationProjection,
     inspector: {initialInspectorState, layoutInspector, reduceInspectorKey},
     fixture,
     strict: process.argv.includes('--strict'),
     host: {
       utc: new Date().toISOString(),
-      revision: process.env.CAP_BENCH_REVISION ?? 'working-tree',
+      revision: stamp.revision,
       node: process.version,
       arch: process.arch,
       platform: process.platform,
@@ -81,7 +86,7 @@ try {
       command: 'node --expose-gc qa/workbench/inspector-cap-saturation-bench.mjs',
       runtimeCaps: {nodeCalls: runtimeNodeCap(), agents: WORKFLOW_AGENT_CAP},
     },
-  });
+  }), stamp);
 } catch (error) {
   console.error(JSON.stringify({benchmark: 'inspector-cap-saturation', measured: false, error: error instanceof Error ? error.stack ?? error.message : String(error)}));
   process.exit(3);

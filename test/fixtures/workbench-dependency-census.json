@@ -147,6 +147,14 @@
       "source": "package.json devDependencies[\"@vitest/coverage-istanbul\"]"
     },
     {
+      "id": "pin:devDependencies:marked",
+      "kind": "package-pin",
+      "name": "marked",
+      "status": "measured",
+      "version": "18.0.11",
+      "source": "package.json devDependencies[\"marked\"]"
+    },
+    {
       "id": "pin:devDependencies:typebox",
       "kind": "package-pin",
       "name": "typebox",
@@ -321,6 +329,15 @@
       "integrity": "sha512-AyNJ5pQRFqCX7pwB9PSTmoVKPaZ4H5IEVJfJsT+q1DYkXvZMEFYgJlyk5sfStmt9rVYRyYYRRsuBeImCOc39ww=="
     },
     {
+      "id": "lock:devDependencies:marked",
+      "kind": "lock-resolution",
+      "name": "marked",
+      "status": "measured",
+      "version": "18.0.11",
+      "source": "vendor/dependency-lock.json packages[\"node_modules/marked\"]",
+      "integrity": "sha512-HnslJfsZkRPBDJRHvVtAaWlZHEpSu7u8LgQuJCELjRKuWR+hpq4A7sLq3p8HaI9ypVoXDXxV34CsQJEe1+J5Aw=="
+    },
+    {
       "id": "lock:devDependencies:typebox",
       "kind": "lock-resolution",
       "name": "typebox",
@@ -345,7 +362,7 @@
       "status": "measured",
       "version": "lockfileVersion 3",
       "source": "package-lock.json",
-      "integrity": "sha512-E0kmZydiSzzDdH9PGJba5Y3qoyGmnJZB5UqyQEekBgYj62HjkmsyFoGtnYUdremlpNro2ANp+FJxjPtdQowH+w==",
+      "integrity": "sha512-kTBLwuo46NgZRuZaT9zzWMdmWQRfEA5Z4uPJDI5wrdjOhwWIVBpnJF3c/sB8BhkUcmxGX/5TP8+ArclJuCuLrQ==",
       "matchesVendorLock": true
     },
     {
@@ -355,7 +372,7 @@
       "status": "measured",
       "version": "lockfileVersion 3",
       "source": "vendor/dependency-lock.json",
-      "integrity": "sha512-E0kmZydiSzzDdH9PGJba5Y3qoyGmnJZB5UqyQEekBgYj62HjkmsyFoGtnYUdremlpNro2ANp+FJxjPtdQowH+w=="
+      "integrity": "sha512-kTBLwuo46NgZRuZaT9zzWMdmWQRfEA5Z4uPJDI5wrdjOhwWIVBpnJF3c/sB8BhkUcmxGX/5TP8+ArclJuCuLrQ=="
     },
     {
       "id": "vendor:forge-sdk-0.1.0.tgz",
