@@ -255,6 +255,75 @@ describe("W21 known duration: inspector-grouped-bench (runGroupedBench and apply
       expectRankFloors(`${label} apply.ingestPerTick`, perTick, tick => ticks.at(tick));
     }
   }, 120_000);
+
+  // Respin r24 re-measure on the final tree: IG-G5 (every third tick's ingest span 0.0001 ms) SURVIVED this file
+  // (13 passed (13), load1 ~20-30). At TICK.step a tick waits 0.25 ms more than the one before, while a tick's own
+  // ingest work measured 1.0-1.2 ms above its floor at p50, so the minority's p50 (1.75 ms under its floor before
+  // that work) cleared it. The navigation margins are larger (reducer 15x, layout 3x, resize 2.4x their measured
+  // excess) but shrink the same way under load. Here every step is ten times the one above, so it dominates the
+  // per-call work as the header asks, and the same rank floors close a minority wrong span on every series by
+  // milliseconds on any host load.
+  it("holds every series at its ramp floors when each step dominates the per-call work (gate IG-G1..G5)", () => {
+    const STEP = { reduce: 5_000, layout: 5_000, resize: 50_000, tick: 25_000 };
+    class DominantApplyProjection extends ObservationProjection {
+      readonly #ticks = new Ramp(TICK.base, STEP.tick);
+      #tickAt: string | undefined;
+      override refresh(...args: Parameters<ObservationProjection["refresh"]>): ReturnType<ObservationProjection["refresh"]> {
+        spin(REFRESH / UNIT);
+        return super.refresh(...args);
+      }
+      override relate(...args: Parameters<ObservationProjection["relate"]>): void {
+        spin(RELATE / UNIT);
+        super.relate(...args);
+      }
+      override ingest(event: ObservationEvent): ReturnType<ObservationProjection["ingest"]> {
+        if (event.observedAt !== this.#tickAt) {
+          this.#tickAt = event.observedAt;
+          this.#ticks.wait();
+        }
+        return super.ingest(event);
+      }
+    }
+    const reduce = new Ramp(1_000, STEP.reduce);
+    const keyLayout = new Ramp(1_000, STEP.layout);
+    const resizeLayout = new Ramp(1_000, STEP.resize);
+    let lastSize: unknown;
+    const inspector: Inspector = {
+      ...INSPECTOR,
+      layoutInspector: (...args: Parameters<typeof layoutInspector>): string[] => {
+        if (args[2] !== lastSize) {
+          lastSize = args[2];
+          resizeLayout.wait();
+        } else keyLayout.wait();
+        return layoutInspector(...args);
+      },
+      reduceInspectorKey: (...args: Parameters<typeof reduceInspectorKey>): ReturnType<typeof reduceInspectorKey> => {
+        reduce.wait();
+        return reduceInspectorKey(...args);
+      },
+    };
+    const receipt = groupedRun({ Projection: DominantApplyProjection, inspector, fixture: build(GROUPED), host: HOST, sampling: SAMPLING });
+    const navigation = receipt.passes["bench-only-limits"].navigation;
+    if (navigation === null) throw new Error("the bench-only pass recorded no navigation");
+    expect(keyLayout.calls).toBe(navigation.keypresses);
+    expect(resizeLayout.calls).toBe(navigation.resize.samples);
+    expectRankFloors("navigation.reducer", navigation.reducer, k => reduce.at(k));
+    expectRankFloors("navigation.layout", navigation.layout, k => keyLayout.at(k));
+    expectRankFloors("navigation.all", navigation.all, k => reduce.at(k) + keyLayout.at(k));
+    expectRankFloors("navigation.resize", navigation.resize, s => resizeLayout.at(s));
+    for (const group of ["byView", "bySize", "byKey"] as const) {
+      for (const [name, series] of Object.entries(navigation[group])) {
+        if (series.samples > 0) expectRankFloors(`navigation.${group}.${name}`, series, k => reduce.at(k) + keyLayout.at(k));
+      }
+    }
+    const ticks = new Ramp(TICK.base, STEP.tick);
+    for (const [label, pass] of Object.entries(receipt.passes)) {
+      const perTick = pass.apply.ingestPerTick;
+      expect(perTick.samples, `${label} ticks`).toBe(GROUPED.ticks);
+      expectSpan(`${label} apply.ingestMs`, pass.apply.ingestMs, ticks.total(perTick.samples));
+      expectRankFloors(`${label} apply.ingestPerTick`, perTick, tick => ticks.at(tick));
+    }
+  }, 120_000);
 });
 
 describe("W21 known duration: reducer-selector-bench (wb-9x5.15 F1: the minority wrong-span clock is closed here)", () => {
