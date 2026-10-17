@@ -44,7 +44,7 @@ const HELPER = "test/helpers/furnace-control-live-receipt.ts";
 const LIVE_CONFIG = "vitest.furnace-control-live.config.ts";
 const FORGE_BLOCK = '[build.commands.furnace-control-live]\ncommand = "./node_modules/.bin/vitest run --config vitest.furnace-control-live.config.ts"\ntimeout = 900\n';
 const FORGE_PREDECESSOR = '[build.commands.forge-control-live]\ncommand = "./node_modules/.bin/vitest run --config vitest.forge-control-live.config.ts"\ntimeout = 600\n';
-const GATE_LINE = 'gate = ["lint", "typing", "build", "test", "workbench-shell", "package-smoke"]';
+const GATE_LINE = 'gate = ["lint", "typing", "build", "test", "census", "workbench-shell", "package-smoke"]';
 
 // Hand-built evidence. Every literal is a plain fake placeholder for the live suite's recorded values.
 const REPO = "/tmp/fake-repo-checkout";

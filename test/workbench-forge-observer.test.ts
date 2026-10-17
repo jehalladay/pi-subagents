@@ -50,6 +50,9 @@ describe('Forge gate.status reader adapter', () => {
   it('states exactly the relation statement ObservationProjection.relate accepts', () => {
     expectTypeOf<ForgeObservedRelation>().toEqualTypeOf<Parameters<ObservationProjection['relate']>[0]>();
     expectTypeOf(forgeGateTopology).parameter(0).toEqualTypeOf<JsonValue>();
+    // wb-nl8 (--expect.requireAssertions, R1 default): the two type-level statements assert nothing at runtime; this states
+    // what the case already proves - the reader whose first parameter type is pinned above exists as a function.
+    expect(typeof forgeGateTopology).toBe('function');
   });
 
   // docs/workbench/00 § "2026-10-15 implementation update (experimental; evidence-scoped)": "authoritative_current=false

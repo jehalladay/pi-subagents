@@ -281,7 +281,7 @@ describe("rf-preview-tsx tier wiring (wb-693.6, R8)", () => {
     expect(toml.match(/^\[build\.commands\.rf-preview-tsx\]$/gm)).toHaveLength(1);
     expect(toml).toContain('[build.commands.rf-preview-tsx]\ncommand = "./node_modules/.bin/vitest run --config vitest.rf-tsx.config.ts"\ntimeout = 180\n');
     expect(toml).toContain('[build.commands.rf-preview]\ncommand = "./node_modules/.bin/vitest run --config vitest.rf.config.ts"\ntimeout = 180\n');
-    expect(toml).toContain('gate = ["lint", "typing", "build", "test", "workbench-shell", "package-smoke"]\n');
+    expect(toml).toContain('gate = ["lint", "typing", "build", "test", "census", "workbench-shell", "package-smoke"]\n');
     expect(toml.match(/^gate = /gm)).toHaveLength(1);
   });
 
