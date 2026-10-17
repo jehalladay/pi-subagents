@@ -11,6 +11,7 @@
 import { chmodSync, existsSync, mkdirSync, readFileSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
+import * as installMinimalLib from "../qa/workbench/install-minimal-lib.mjs";
 import { isPrivilegedUid, probeInstalledWrite, resolveNodeBinary, scrubbedEnvironment, treeCensus } from "../qa/workbench/install-minimal-lib.mjs";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
 
@@ -34,7 +35,11 @@ describe("scrubbedEnvironment", () => {
   it("returns exactly the four allowlisted keys with fixed names", () => {
     const env = scrubbedEnvironment({ execPath: "/opt/node/bin/node", home: "/h", tmp: "/t" });
     expect(Object.keys(env).sort()).toEqual(["HOME", "LANG", "PATH", "TMPDIR"]);
-    expect(env).toEqual({ PATH: "/opt/node/bin", HOME: "/h", TMPDIR: "/t", LANG: "C.UTF-8" });
+    // Names-only projection: compare keys, then each value against its fixed fake as a boolean, so a
+    // value-sourcing regression never prints the offending (possibly ambient, secret-bearing) value.
+    const fakes = { PATH: "/opt/node/bin", HOME: "/h", TMPDIR: "/t", LANG: "C.UTF-8" };
+    expect(Object.keys(env).sort()).toEqual(Object.keys(fakes).sort());
+    for (const [name, fake] of Object.entries(fakes)) expect(Reflect.get(env, name) === fake, `value of ${name} differs from its fixed fake`).toBe(true);
   });
 
   it("contributes nothing from a seeded process environment", () => {
@@ -46,8 +51,10 @@ describe("scrubbedEnvironment", () => {
     }
     try {
       const env = scrubbedEnvironment({ execPath: "/opt/node/bin/node", home: "/h", tmp: "/t" });
+      // Names-only projection: count seeded values found in the serialized env; never not.toContain over the raw text.
       const text = JSON.stringify(env);
-      for (const value of Object.values(seeded)) expect(text).not.toContain(value);
+      const leakedSeededValues = Object.values(seeded).filter(value => text.includes(value)).length;
+      expect(leakedSeededValues, "seeded process.env values reached the scrubbed environment").toBe(0);
       expect(Object.keys(env).some(key => /^(ANTHROPIC|AWS|CLAUDE|OPENAI|GITHUB|NPM_|NODE_OPTIONS|NODE_PATH)/.test(key))).toBe(false);
     } finally {
       for (const [key, value] of Object.entries(saved)) {
@@ -211,6 +218,46 @@ describe("probeInstalledWrite (uid-injected write capability probe, U1 privilege
   });
 });
 
+describe("assertReadOnlyReceipt (runner cross-check on the probe receipt: wb-nh3 F2/O1, kills MW3/MW5/MW5b/MW6 in the default gate)", () => {
+  it("accepts a receipt that records enforced read-only, as an unprivileged or a privileged runner", () => {
+    expect(() => installMinimalLib.assertReadOnlyReceipt({ readOnlyEnforced: true }, 1000)).not.toThrow();
+    expect(() => installMinimalLib.assertReadOnlyReceipt({ readOnlyEnforced: true }, 0)).not.toThrow();
+  });
+
+  it("accepts the privileged-uid record only when the runner's own uid is privileged", () => {
+    expect(() => installMinimalLib.assertReadOnlyReceipt({ readOnlyEnforced: false, readOnlyReason: "privileged-uid" }, 0)).not.toThrow();
+  });
+
+  it("MW3: a privileged-uid record from an unprivileged runner (probe uid pinned to 0) is refused", () => {
+    expect(() => installMinimalLib.assertReadOnlyReceipt({ readOnlyEnforced: false, readOnlyReason: "privileged-uid" }, 1000)).toThrow(/read-only/);
+    expect(() => installMinimalLib.assertReadOnlyReceipt({ readOnlyEnforced: false, readOnlyReason: "privileged-uid" }, undefined)).toThrow(/read-only/);
+  });
+
+  it("MW5 and MW5b: an unenforced receipt whose reason was dropped or replaced is refused even for a privileged runner", () => {
+    expect(() => installMinimalLib.assertReadOnlyReceipt({ readOnlyEnforced: false }, 0)).toThrow(/read-only/);
+    expect(() => installMinimalLib.assertReadOnlyReceipt({ readOnlyEnforced: false, readOnlyReason: undefined }, 0)).toThrow(/read-only/);
+    expect(() => installMinimalLib.assertReadOnlyReceipt({ readOnlyEnforced: false, readOnlyReason: "other" }, 0)).toThrow(/read-only/);
+  });
+
+  it("MW6: a receipt that dropped readOnlyEnforced, or carries a non-true value, is refused for any runner uid", () => {
+    expect(() => installMinimalLib.assertReadOnlyReceipt({}, 1000)).toThrow(/read-only/);
+    expect(() => installMinimalLib.assertReadOnlyReceipt({}, 0)).toThrow(/read-only/);
+    expect(() => installMinimalLib.assertReadOnlyReceipt({ readOnlyEnforced: "true" }, 1000)).toThrow(/read-only/);
+    expect(() => installMinimalLib.assertReadOnlyReceipt({ readOnlyEnforced: 1 }, 1000)).toThrow(/read-only/);
+  });
+
+  it("its refusal names the receipt fields as booleans and types, never a raw receipt value", () => {
+    let message = "";
+    try {
+      installMinimalLib.assertReadOnlyReceipt({ readOnlyEnforced: false, readOnlyReason: "sentinel-reason-value" }, 1000);
+    } catch (error) {
+      message = error instanceof Error ? error.message : "";
+    }
+    expect(/read-only/.test(message), "the refusal must be the read-only cross-check refusal").toBe(true);
+    expect(message.includes("sentinel-reason-value"), "the refusal echoed a raw receipt value").toBe(false);
+  });
+});
+
 describe("harness sources and wiring", () => {
   it("the runner copies the lib beside the probe and the probe uses probeInstalledWrite with the shared uid predicate", () => {
     const runner = readRepo("qa/workbench/install-minimal.mjs");
@@ -235,6 +282,33 @@ describe("harness sources and wiring", () => {
       expect(source).not.toMatch(/env:\s*process\.env\b/);
     });
   }
+
+  it("the probe call site pins the real write, remove, root and own-uid wiring so a stubbed probe cannot pass the default gate (F3, kills MW2/MW4)", () => {
+    const probe = readRepo("qa/workbench/installed-minimal.mjs");
+    expect(probe).toContain("probeInstalledWrite({root:installedRoot,uid,write:writeFileSync,remove:rmSync})");
+    expect(probe).toContain("rmSync");
+    expect(probe).toMatch(/import \{rmSync,writeFileSync\} from 'node:fs'/);
+    expect(probe).toMatch(/const installedRoot=resolve\(dirname\(fileURLToPath\(import\.meta\.resolve\('@tintinweb\/pi-subagents\/dist\/workbench\/identity\.js'\)\)\),'\.\.\/\.\.'\)/);
+  });
+
+  it("the probe reads its own uid from process.getuid and forwards readOnlyReason into the receipt so the runner cross-check has a real subject (F2, kills MW3/MW5)", () => {
+    const probe = readRepo("qa/workbench/installed-minimal.mjs");
+    expect(probe).toContain("const uid=typeof process.getuid==='function'?process.getuid():undefined;");
+    expect(probe).toContain("const {readOnlyEnforced,readOnlyReason}=probeInstalledWrite(");
+    expect(probe).toContain("...(readOnlyReason?{readOnlyReason}:{})");
+    // Receipt-text pin: the bare "readOnlyEnforced," is also satisfied by the destructuring line, so pin the receipt object itself (kills MW6).
+    expect(probe).toContain("envKeys:keys,readOnlyEnforced,");
+  });
+
+  it("the runner calls the cross-check on the parsed probe receipt with its own uid, so deleting the call cannot pass the default gate (O1 pin-flip floor)", () => {
+    const runner = readRepo("qa/workbench/install-minimal.mjs");
+    expect(runner).toMatch(/import \{[^}]*\bassertReadOnlyReceipt\b[^}]*\} from '\.\/install-minimal-lib\.mjs'/);
+    expect(runner).toContain("const ownUid=typeof process.getuid==='function'?process.getuid():undefined;");
+    const parsed = runner.indexOf("const probeReceipt=JSON.parse(");
+    const crossCheck = runner.indexOf("assertReadOnlyReceipt(probeReceipt,ownUid);");
+    expect(parsed >= 0, "runner no longer parses the probe receipt").toBe(true);
+    expect(crossCheck > parsed, "cross-check must follow the receipt parse").toBe(true);
+  });
 
   it("the runner spawns the probe with the scrubbed environment only", () => {
     const source = readRepo("qa/workbench/install-minimal.mjs");

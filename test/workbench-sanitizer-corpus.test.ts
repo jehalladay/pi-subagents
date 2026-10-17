@@ -23,7 +23,8 @@ import { createHash } from "node:crypto";
 import type { LogsReadDto, Response } from "@furnace/sdk";
 import { describe, expect, it } from "vitest";
 import { safeWorkflowTerminalText } from "../src/ui/workflow-card.js";
-import { selectAttention } from "../src/workbench/attention.js";
+import { type InspectorModel, initialInspectorState, layoutInspector } from "../src/ui/workflow-inspector.js";
+import { ATTENTION_CLOCK_CAVEAT, ATTENTION_CONTRACT, type AttentionReport, selectAttention } from "../src/workbench/attention.js";
 import { type BeadsReadClient, projectBeadsWork, readBeadsWork } from "../src/workbench/beads-observer.js";
 import { type CapabilityDescriptor, CapabilityError, type JsonValue } from "../src/workbench/capability-registry.js";
 import { readClaudeMessageEvidence } from "../src/workbench/claude-evidence.js";
@@ -51,6 +52,7 @@ import { buildOperationsTelemetry } from "../src/workbench/telemetry.js";
 import { buildTimelineLanes, type TimelineReader } from "../src/workbench/timeline.js";
 import { buildWorkflowCatalogReply, buildWorkflowInspectReply, type CapabilityCatalogEntry } from "../src/workbench/tool-replies.js";
 import { selectLinkedTopology } from "../src/workbench/topology-slice.js";
+import { detachedCatchDriver } from "./helpers/detached-peer.js";
 
 const cp = (code: number): string => String.fromCodePoint(code);
 const NUL = cp(0x00);
@@ -344,6 +346,47 @@ function attentionTexts(raw: string): string[] {
 }
 
 /**
+ * The workflow-inspector.ts attention panel (layoutInspector overview): a DIRECT-CALLER row under the 21:00Z display-path rule.
+ * The panel inherits the workflow-card.ts "terminal" site through the inspector's safe() and passes every producer string through
+ * it exactly once (wb-6ze.21 respin, owner rulings 21:43Z). The probe rides a bottleneck title, that bottleneck's provider and a
+ * disconnected provider; the overview is drawn at the gate's 120x40 and at 200x40, where no title is cut, in both tiers.
+ */
+const PANEL_SCOPE: ObservationScope = { workspace: "ws-inspector-panel", principal: "operator" };
+function panelReport(raw: string): AttentionReport {
+  return {
+    contract: ATTENTION_CONTRACT, basis: "observed", now: NOW, examined: { nodes: 1, truncated: false },
+    counts: { active: 1, waiting: 0, success: 0, failure: 0, unknown: 0, stale: 0, disconnected: 1, withInterval: 1, withoutInterval: 0 },
+    disconnectedProviders: [raw],
+    bottlenecks: [{ key: "panel-probe", nativeRef: { provider: raw, type: "operation", id: "panel-probe" }, title: raw, tone: "active", freshness: "current", openMs: 60_000, measured: true }],
+    unmeasured: 0, clockSkew: 0, criticalPath: { label: "incomplete-trace", reasons: ["no-dependency-edges"] }, clockCaveat: ATTENTION_CLOCK_CAVEAT,
+  };
+}
+function panelLines(model: InspectorModel): string[] {
+  return [120, 200].flatMap(width => [false, true].flatMap(ascii => layoutInspector(model, initialInspectorState(), { width, rows: 40, ascii })));
+}
+function inspectorPanelTexts(raw: string): string[] {
+  return panelLines({ projection: new ObservationProjection(), scope: PANEL_SCOPE, invocationId: "inv-panel", title: "Panel corpus", status: "running", attention: panelReport(raw) });
+}
+/** The panel through the REAL projection, the provider as the projection admits it: undefined when the projection does not hold the node. */
+function inspectorPanelRealTexts(raw: string): string[] | undefined {
+  const projection = new ObservationProjection();
+  const at = "2026-10-15T12:00:30.000Z";
+  try {
+    projection.refresh({
+      source: { provider: raw, type: "operation", id: "op-panel" }, scope: PANEL_SCOPE, capturedAt: at, observedAt: at, kind: "fixture.snapshot",
+      node: { title: "Panel real path", type: "sdk-operation", statusText: "running", statusTone: "active" },
+      trace: { invocationId: "inv-panel-real" }, interval: { startedAt: "2026-10-15T12:00:00.000Z" },
+    });
+    projection.disconnect(raw);
+  } catch {
+    return undefined;
+  }
+  if (projection.window({ scope: PANEL_SCOPE, invocationId: "inv-panel-real", offset: 0, limit: 1 }).total === 0) return undefined;
+  const attention = selectAttention(projection, { scope: PANEL_SCOPE, invocationId: "inv-panel-real", now: "2026-10-15T12:01:00.000Z" });
+  return panelLines({ projection, scope: PANEL_SCOPE, invocationId: "inv-panel-real", title: "Panel real path", status: "running", attention });
+}
+
+/**
  * DIRECT-CALLER row (wb-cax.13 O1, owner 2026-10-16T00:01Z): telemetry.ts providerName calls the one helper with the label
  * layout, and the report's sampled-provider list is its display. A structural projection hands the report the producer's raw
  * provider, as the attention driver hands selectAttention a raw title (the real projection refuses C0 controls in identity).
@@ -617,6 +660,13 @@ function observeTexts(raw: string): string[] {
   return strings(observeInvocation(reader, { scope: ALICE, invocationId: "inv-observe" }));
 }
 
+/**
+ * DIRECT-CALLER row (wb-71q R1, owner 2026-10-16T10:59Z, bound onto wb-70b): the workflow_detached launch/inspect catch in
+ * src/index.ts hands every refusal message straight to the one helper (text layout), the wb-70b typed relaunch refusal
+ * included. A same-uid peer on the receipt-recorded socket returns the raw text as the host's authorization refusal.
+ */
+const detachedCatchTexts = detachedCatchDriver();
+
 /** wb-h8f.10: latency.ts displayText (selectLatencyDecomposition), the provider and the evidence-ref paths, joined to the corpus in the same commit as its routing through the one helper. */
 function latencyTexts(raw: string): string[] {
   const node: ObservedNode = {
@@ -671,6 +721,7 @@ const SITES: readonly Site[] = [
   { site: "site 4 claude-topology.ts shown (projectClaudeTopology)", texts: claudeTexts },
   { site: "site 5 timeline.ts shown (buildTimelineLanes)", texts: timelineTexts },
   { site: "site 6 attention.ts titleOf (selectAttention)", texts: attentionTexts },
+  { site: "workflow-inspector.ts attention panel (layoutInspector overview)", texts: inspectorPanelTexts },
   { site: "telemetry.ts providerName (buildOperationsTelemetry eventLag.providers)", texts: telemetryTexts },
   { site: "site 7 topology-slice.ts labelOf (selectLinkedTopology)", texts: topologyTexts },
   { site: "site 8 furnace-hosted.ts safeText (FurnaceHostedExecutor.start)", texts: hostedTexts },
@@ -681,6 +732,7 @@ const SITES: readonly Site[] = [
   { site: "site 16 evidence-loader.ts safeChunks (EvidenceStore)", texts: storeTexts },
   { site: "claude-evidence.ts sanitizeRow (readClaudeMessageEvidence preview lines)", texts: claudeEvidenceTexts },
   { site: "site 18 detached-observer.ts shown (projectDetachedReading)", texts: detachedTexts },
+  { site: "src/index.ts workflow_detached launch/inspect catch (DIRECT-CALLER, the detached refusal text)", texts: detachedCatchTexts },
   { site: "sites 19/20 workflow_inspect and workbench_catalog replies", texts: replyTexts },
   { site: "site 12 execute.ts buildWorkflowExecuteReply (DIRECT-CALLER: reason, policy value and key, native reference id and scope, definition id, invocation reference)", texts: executeTexts },
   { site: "site 22 observe-query.ts clean (observeInvocation)", texts: observeTexts },
@@ -727,6 +779,27 @@ describe("wb-952 acceptance set (17:32Z): every unit between, inside and both, t
     }
     // Every shape without a C0 control or DEL reaches the real path, so none is skipped silently.
     expect(admitted).toBe(probes.filter(probe => !/[\x00-\x1f\x7f]/.test(probe.raw)).length);
+    expect([...new Set(failures)]).toEqual([]);
+  });
+
+  it("workflow-inspector.ts attention panel through the REAL ObservationProjection -> selectAttention -> layoutInspector path, every provider the projection holds (wb-6ze.21 respin U1)", () => {
+    const probes = [...CORPUS, ...ACCEPTANCE];
+    const failures: string[] = [];
+    let held = 0;
+    for (const probe of probes) {
+      const shown = inspectorPanelRealTexts(probe.raw);
+      if (shown === undefined) continue;
+      held += 1;
+      // A held node reaches the panel twice: as a measured bottleneck row and as a disconnected provider.
+      if (!shown.some(text => text.includes("open 01:00 measured"))) failures.push(`${probe.id}: no bottleneck row`);
+      if (!shown.some(text => text.includes("(providers: "))) failures.push(`${probe.id}: no disconnected provider`);
+      for (const text of shown) {
+        if (probe.secrets.some(secret => text.includes(secret))) failures.push(`${probe.id}: leaked`);
+        if (UNSAFE_DISPLAY.test(text)) failures.push(`${probe.id}: kept an unsafe code point`);
+      }
+    }
+    // A shape without any unsafe unit is held whatever admission refuses, so the path is never skipped wholesale.
+    expect(held).toBeGreaterThanOrEqual(probes.filter(probe => stripUnsafeText(probe.raw) === probe.raw).length);
     expect([...new Set(failures)]).toEqual([]);
   });
 });
