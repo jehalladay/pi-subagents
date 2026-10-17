@@ -15,6 +15,10 @@ export default defineConfig({
     // Native SDK probes depend on an installed Forge binary and are run from
     // their explicit Forge live tier, not by the portable package test gate.
     include: ["test/**/*.test.ts"],
+    // The census guard runs before every test module (wb-u62): it keeps an inherited fails / fixtures off
+    // Object.prototype, which vitest reads through the prototype chain, so a census judging this tier can
+    // read an absent fails as no fails (test/helpers/census.ts verifies this line and the guard's bytes).
+    setupFiles: ["./test/helpers/census-guard.ts"],
     // A stray `.only` must FAIL the gate, never narrow it: vitest's default is
     // `!process.env.CI`, and CI is unset under forge, so without this pin one
     // focused test silently shrank the whole run while the gate stayed green

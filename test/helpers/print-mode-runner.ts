@@ -57,6 +57,7 @@ import {
 import {
   type AgentSession,
   type AgentSessionEvent,
+  type CreateAgentSessionOptions,
   createAgentSession,
   DefaultResourceLoader,
   getAgentDir,
@@ -68,6 +69,14 @@ import { getModel, registerFauxProvider } from "./pi-ai.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./scratch.js";
 
 installScratchLeakGuard();
+
+/**
+ * `createAgentSession` options spanning the supported Pi range (see
+ * faux-model-backend.ts): Pi < 0.80.8 reads `modelRegistry`, which the installed
+ * `CreateAgentSessionOptions` no longer declares; each Pi ignores the option it
+ * does not know, so both stay on the call.
+ */
+type CrossVersionSessionOptions = CreateAgentSessionOptions & { modelRegistry?: unknown };
 
 /** Path to the pi-subagents extension entrypoint (repo `src/index.ts`). */
 const EXTENSION_PATH = fileURLToPath(new URL("../../src/index.ts", import.meta.url));
@@ -358,7 +367,7 @@ export async function runPrintMode(options: RunPrintModeOptions): Promise<PrintM
   // are isolated but before the parent turn spawns anything.
   await options.beforeRun?.();
 
-  const { session } = await createAgentSession({
+  const sessionOptions: CrossVersionSessionOptions = {
     cwd,
     agentDir,
     model,
@@ -373,7 +382,8 @@ export async function runPrintMode(options: RunPrintModeOptions): Promise<PrintM
     settingsManager: live
       ? SettingsManager.create(cwd, agentDir)
       : SettingsManager.inMemory({ compaction: { enabled: false }, retry: { enabled: false } }),
-  });
+  };
+  const { session } = await createAgentSession(sessionOptions);
   session.setSessionName("print-mode-host");
 
   // Binding fires session_start so the extension initializes and publishes its

@@ -231,10 +231,12 @@ describe("remaining registered tool display boundaries", () => {
       const launched = await pi.tools.get("SubagentWorkflow").execute("compare", { scriptPath }, undefined, undefined, context);
       ids.push(launched.details.taskId as string);
     }
+    // A deliberately partial comparison: this row checks the source and diagnostic strings at the
+    // result boundary, so cohort, perMetric and claim are left out of the fixture.
     vi.spyOn(designer, "compareWorkflowRuns").mockReturnValueOnce({
       status: "unknown", diagnostics: [{ code: "COMPARISON_UNKNOWN", message: `${risk} api_key=${SECRET}`, severity: "warning" }],
       sourceDigests: { reference: [risk], candidate: [risk] }, metrics: [], causalClaim: false, criticalPath: "unestablished", limitations: [],
-    });
+    } as unknown as designer.WorkflowComparison);
     const response = await invoke(pi.tools.get("workflow_compare"), context, { referenceTask: ids[0], candidateTask: ids[1] });
     expect(JSON.parse(response).causalClaim).toBe(false);
     clean(response);
