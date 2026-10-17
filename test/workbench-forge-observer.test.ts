@@ -419,6 +419,8 @@ describe('wb-4ap.3 COLLECTIVE-ADAPTATION-R3: a malformed descriptor is withheld 
     ['last_result_state text (not an object)', {...MEASURED_ROW, last_result_state: 'text'}],
   ];
 
+  it('F11 table liveness (wb-4ap.2): the malformed table holds all six shapes', () => expect(malformed).toHaveLength(6));
+
   it.each(malformed)('F11 (wb-4ap.3): %s sets no subjectBasis, pushes exactly one withheld-basis diagnostic for the ref and renders basis UNKNOWN', (_name, row) => {
     const result = forgeGateTopology(withPackages(row), context);
     const [, pkg] = result.snapshots;

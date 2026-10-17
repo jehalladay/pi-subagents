@@ -26,10 +26,15 @@
  * N/A is pinned by a parse-aware no-clock read rather than stated. tool-reply (wb-9x5.5) landed after the re-cut
  * (c4904e7) and joins at this respin as the second lander of entry 8: its timed observeInvocation call, one ramp per
  * (cap, selectors) series, the gate's TR-K1/TR-G1.
+ *
+ * wb-19q (wb-oq3 F1/F4) adds the liveness and header censuses: every case registers its bench in the module-level
+ * `ran` set as its LAST statement and an afterAll holds the set against the CLI census, a parse-time row rejects
+ * skip/todo modifiers and options inside the "W21 known duration:" describes, and the header census at the end of
+ * the file pins the first-line "// W21" definition against the helper's exported W21_HEADER and the docs/14 row.
  */
-import { readFileSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import ts from "typescript";
-import { describe, expect, it } from "vitest";
+import { afterAll, describe, expect, it } from "vitest";
 import { runAttentionBench } from "../qa/workbench/attention-grouped-bench.mjs";
 import { PASS_IDS, runCapSaturationBench } from "../qa/workbench/cap-saturation.mjs";
 import { buildGroupedFixture, runGroupedBench } from "../qa/workbench/grouped-fixture.mjs";
@@ -53,7 +58,7 @@ import {
   TOPOLOGY_REFERENCE_REASONS,
   TOPOLOGY_TRACE_REASONS,
 } from "../src/workbench/topology-slice.js";
-import { w21BenchClis } from "./helpers/w21-bench-clis.js";
+import { isW21BenchHeader, W21_HEADER, w21BenchClis } from "./helpers/w21-bench-clis.js";
 
 /** Durations are integers in tenths of a microsecond: every floor is then a multiple of the benches' 0.1 us rounding. */
 const UNIT = 10_000;
@@ -157,6 +162,15 @@ interface Fixture {
 const build = buildGroupedFixture as (options: { seed: number; nodes: number; depth: number; ticks: number }) => Fixture;
 const SMALL = { seed: 3, nodes: 60, depth: 3, ticks: 8 };
 
+/** Liveness census (wb-oq3 F1): every W21 case registers its bench here as its LAST statement, and the afterAll holds
+ * the registrations against the CLI census, so a case that is skipped (an options object or a .skip modifier), hollowed
+ * by an early return or never reached reddens this file even when the reporter exits green on "passed | skipped". */
+const ran = new Set<string>();
+const benchNameOf = (cli: string): string => cli.slice("qa/workbench/".length, -".mjs".length);
+afterAll(() => {
+  expect([...ran].sort(), "every W21 known-duration case must actually run (wb-oq3 F1)").toEqual(w21BenchClis().map(benchNameOf));
+});
+
 describe("W21 known duration: inspector-grouped-bench (runGroupedBench and applyFixture in qa/workbench/grouped-fixture.mjs)", () => {
   interface Navigation {
     keypresses: number;
@@ -254,6 +268,7 @@ describe("W21 known duration: inspector-grouped-bench (runGroupedBench and apply
       expectSpan(`${label} apply.ingestMs`, pass.apply.ingestMs, ticks.total(perTick.samples));
       expectRankFloors(`${label} apply.ingestPerTick`, perTick, tick => ticks.at(tick));
     }
+    ran.add("inspector-grouped-bench");
   }, 120_000);
 
   // Respin r24 re-measure on the final tree: IG-G5 (every third tick's ingest span 0.0001 ms) SURVIVED this file
@@ -323,6 +338,7 @@ describe("W21 known duration: inspector-grouped-bench (runGroupedBench and apply
       expectSpan(`${label} apply.ingestMs`, pass.apply.ingestMs, ticks.total(perTick.samples));
       expectRankFloors(`${label} apply.ingestPerTick`, perTick, tick => ticks.at(tick));
     }
+    ran.add("inspector-grouped-bench");
   }, 120_000);
 });
 
@@ -376,6 +392,7 @@ describe("W21 known duration: reducer-selector-bench (wb-9x5.15 F1: the minority
     // The kept outliers are the top order statistics: the i-th slowest of n is the (n - 1 - i)-th smallest.
     for (const [i, sample] of receipt.outliers.reducer.entries()) expectSpan(`outliers.reducer[${i}]`, sample.ms, ingest.at(updates - 1 - i));
     for (const [i, sample] of receipt.outliers.selector.entries()) expectSpan(`outliers.selector[${i}]`, sample.ms, layout.at(layout.calls - 1 - i));
+    ran.add("reducer-selector-bench");
   }, 120_000);
 });
 
@@ -410,6 +427,7 @@ describe("W21 known duration: line-diff-bench reads no clock in its measured pat
     expect(pauseAt).toBeGreaterThan(0);
     expect(waits).toBeGreaterThan(fixture.updates.length);
     expect(slowed).toEqual(plain);
+    ran.add("line-diff-bench");
   }, 120_000);
 });
 
@@ -471,6 +489,7 @@ describe("W21 known duration: attention-grouped-bench", () => {
       }
       for (const [i, sample] of pass.slowest.entries()) expectSpan(`${pass.label} slowest[${i}]`, sample.ms, ramp.at(pass.samples - 1 - i));
     }
+    ran.add("attention-grouped-bench");
   }, 120_000);
 });
 
@@ -532,6 +551,7 @@ describe("W21 known duration: timeline-grouped-bench (runTimelineBench in qa/wor
       }
     }
     expect(checked).toBe(results.length * (1 + 4 * 2 + 3));
+    ran.add("timeline-grouped-bench");
   }, 120_000);
 });
 
@@ -600,6 +620,7 @@ describe("W21 known duration: observation-recovery-bench (measureRecovery in qa/
     expectSpan("reconcileMs", measurement.reconcileMs, reconcile.total(reconcile.calls));
     expectSpan("gapDetectMs", measurement.gapDetectMs, PROBE / UNIT);
     expectSpan("resumeMs", measurement.resumeMs, PROBE / UNIT);
+    ran.add("observation-recovery-bench");
   }, 120_000);
 });
 
@@ -636,6 +657,7 @@ describe("W21 known duration: inspector-evidence-retained-bench", () => {
     const cycleFloor = (c: number): number => Array.from({ length: perCycle }, (_, r) => render.at(perCycle * c + r)).reduce((sum, ms) => sum + ms, 0);
     expectRankFloors("wall.cycle", cycle, cycleFloor);
     for (const [i, sample] of receipt.outliers.entries()) expectSpan(`outliers[${i}]`, sample.ms, cycleFloor(cycle.samples - 1 - i));
+    ran.add("inspector-evidence-retained-bench");
   }, 120_000);
 
   // Respin r24 re-measure under fleet load: at the step above (0.1 ms per render, 0.9 ms per cycle) a cycle's own
@@ -662,6 +684,7 @@ describe("W21 known duration: inspector-evidence-retained-bench", () => {
     const cycleFloor = (c: number): number => Array.from({ length: perCycle }, (_, r) => render.at(perCycle * c + r)).reduce((sum, ms) => sum + ms, 0);
     expectRankFloors("wall.cycle", cycle, cycleFloor);
     for (const [i, sample] of receipt.outliers.entries()) expectSpan(`outliers[${i}]`, sample.ms, cycleFloor(cycle.samples - 1 - i));
+    ran.add("inspector-evidence-retained-bench");
   }, 120_000);
 });
 
@@ -742,6 +765,7 @@ describe("W21 known duration: topology-slice-grouped-bench (its timed selectLink
       checked += 1;
     }
     expect(checked).toBe(4);
+    ran.add("topology-slice-grouped-bench");
   }, 120_000);
 });
 
@@ -862,6 +886,7 @@ describe("W21 known duration: inspector-cap-saturation-bench (its own refresh an
     }
     // Each pass and the untimed warm-up built a projection of their own.
     expect(byProjection.size).toBe(CAP_PASSES.length + 1);
+    ran.add("inspector-cap-saturation-bench");
   }, 120_000);
 });
 
@@ -934,6 +959,7 @@ describe("W21 known duration: tool-reply-bench (its timed observeInvocation call
       if (ramp === undefined) throw new Error(`a kept slowest build names no measured series: ${outlier.id}`);
       expectSpan(`slowest ${outlier.id} page ${outlier.page}`, outlier.ms, ramp.at(outlier.page));
     }
+    ran.add("tool-reply-bench");
   }, 120_000);
 });
 
@@ -969,6 +995,7 @@ describe("W21 known duration: inspector-retained-memory-bench reads no clock in 
     const property = stamp.parent.parent;
     expect(ts.isPropertyAccessExpression(stamp.parent) && stamp.parent.name.text === "toISOString").toBe(true);
     expect(ts.isCallExpression(property) && ts.isPropertyAssignment(property.parent) && property.parent.name.getText(cli) === "utc").toBe(true);
+    ran.add("inspector-retained-memory-bench");
   });
 });
 
@@ -988,5 +1015,88 @@ describe("W21 known duration: the census of cases (gate U1/U1d: one case per W21
       const cases = titles.filter(title => title === `W21 known duration: ${name}` || title.startsWith(`W21 known duration: ${name} `));
       expect(cases, cli).toHaveLength(1);
     }
+  });
+
+  it("no W21 case is skippable at parse time: no skip/todo modifier or option inside a 'W21 known duration:' describe (wb-oq3 F1)", () => {
+    const self = parseRepo("test/workbench-w21-known-duration.test.ts", ts.ScriptKind.TS);
+    const runners = ["describe", "it", "test", "suite"];
+    const modifiers = ["skip", "todo"];
+    const titleOf = (node: ts.CallExpression): string | undefined => {
+      const [title] = node.arguments;
+      return title !== undefined && (ts.isStringLiteral(title) || ts.isNoSubstitutionTemplateLiteral(title)) ? title.text : undefined;
+    };
+    const offences: string[] = [];
+    const visit = (node: ts.Node, inW21: boolean): void => {
+      let within = inW21;
+      if (ts.isCallExpression(node)) {
+        const callee = node.expression;
+        if ((titleOf(node) ?? "").startsWith("W21 known duration:")) within = true;
+        const base = ts.isPropertyAccessExpression(callee) ? callee.expression.getText(self) : callee.getText(self);
+        if (within && runners.includes(base)) {
+          const title = titleOf(node) ?? "<untitled>";
+          if (ts.isPropertyAccessExpression(callee) && modifiers.includes(callee.name.text)) offences.push(`${base}.${callee.name.text} on ${title}`);
+          for (const argument of node.arguments) {
+            if (!ts.isObjectLiteralExpression(argument)) continue;
+            for (const property of argument.properties) {
+              if (!ts.isPropertyAssignment(property) && !ts.isShorthandPropertyAssignment(property)) continue;
+              const name = property.name.getText(self);
+              if (modifiers.includes(name)) offences.push(`{ ${name}: ... } option on ${title}`);
+            }
+          }
+        }
+      }
+      ts.forEachChild(node, child => visit(child, within));
+    };
+    visit(self, false);
+    expect(offences).toEqual([]);
+  });
+});
+
+describe("W21 bench header census (wb-oq3 F4): the first-line definition is single-sourced and misplaced headers are loud", () => {
+  const QA_WORKBENCH = new URL("../qa/workbench/", import.meta.url);
+  /** The leading shebang/comment/blank block of a bench CLI: every line before its first code line. */
+  const headerBlock = (source: string): string[] => {
+    const block: string[] = [];
+    let inBlockComment = false;
+    for (const line of source.split("\n")) {
+      const text = line.trim();
+      if (inBlockComment) {
+        block.push(line);
+        if (text.includes("*/")) inBlockComment = false;
+      } else if (text === "" || text.startsWith("#!") || text.startsWith("//")) {
+        block.push(line);
+      } else if (text.startsWith("/*")) {
+        block.push(line);
+        if (!text.includes("*/")) inBlockComment = true;
+      } else break;
+    }
+    return block;
+  };
+  /** True iff any line of the leading block would be the W21 header, wherever it sits (the misplaced-header probe). */
+  const headerBlockMentionsW21 = (source: string): boolean => headerBlock(source).some(line => W21_HEADER.test(line));
+
+  it("every qa/workbench/*-bench.mjs opens with the W21 header exactly when its header block carries one (inspector-bench.mjs is the non-W21 control)", () => {
+    const benches = readdirSync(QA_WORKBENCH).filter(name => name.endsWith("-bench.mjs")).sort();
+    expect(benches).toContain("inspector-bench.mjs");
+    expect(benches.length).toBeGreaterThan(w21BenchClis().length);
+    for (const name of benches) {
+      const source = readFileSync(new URL(name, QA_WORKBENCH), "utf8");
+      expect(headerBlockMentionsW21(source), `qa/workbench/${name}: a W21 header line and first-line membership must agree`).toBe(isW21BenchHeader(source));
+    }
+    const control = readFileSync(new URL("inspector-bench.mjs", QA_WORKBENCH), "utf8");
+    expect(isW21BenchHeader(control)).toBe(false);
+    expect(headerBlockMentionsW21(control)).toBe(false);
+  });
+
+  it("a W21 header displaced below a shebang line is reported as misplaced instead of sitting silently outside both censuses", () => {
+    const probe = '#!/usr/bin/env node\n// W21 (wb-0000): a header hidden below the shebang\nconsole.log("probe");\n';
+    expect(isW21BenchHeader(probe)).toBe(false);
+    expect(headerBlockMentionsW21(probe)).toBe(true);
+  });
+
+  it("docs/workbench/14-qa-and-benchmarks.md states the first-line rule and the exported regex has not drifted from it", () => {
+    const docs = readFileSync(new URL("../docs/workbench/14-qa-and-benchmarks.md", import.meta.url), "utf8");
+    expect(docs).toContain("first line is a `// W21` comment");
+    expect(W21_HEADER.source).toBe("^\\/\\/ W21\\b");
   });
 });

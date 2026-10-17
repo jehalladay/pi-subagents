@@ -702,3 +702,61 @@ describe("shared-child receipt: respin pins (wb-p5a M1, O1, O2)", () => {
     expect(JSON.stringify(receipt)).not.toMatch(/\/tmp\/|wb-shared-x12\/hosts/);
   });
 });
+
+/**
+ * wb-70b F2 (wb-19q member 6): the shared-child R1 member roots the fixture through shortScratchRoot('wb-shared-') -
+ * XDG_RUNTIME_DIR first, /tmp as the recorded fallback, never a mkdtempSync under the inherited tmpdir() - and until this
+ * row its only falsifier was the live tier (a receipt run under a long TMPDIR; gate cmd_f527615fc5b6). The row below states
+ * the three facts as text and again in the parsed runner (p5a's runnerAst), so a root reverted to
+ * mkdtempSync(join(tmpdir(), 'wb-shared-')) - at top level, beside a dead copy of the helper, or inside a rewritten helper
+ * that no longer tries XDG_RUNTIME_DIR first - fails offline as well as live.
+ */
+describe("shared-child receipt: fixture-root pin (wb-70b F2)", () => {
+  /** Source text of the argument list of every mkdtempSync(...) call under `root`, in source order. */
+  function mkdtempArguments(file: ts.SourceFile, root: ts.Node): string[] {
+    return nodesOf(root, ts.isCallExpression)
+      .filter((call) => ts.isIdentifier(call.expression) && call.expression.text === "mkdtempSync")
+      .map((call) => call.arguments.map((argument) => argument.getText(file)).join(", "));
+  }
+
+  /** The initializer text of every top-level variable named `name`. */
+  function topLevelInitializers(file: ts.SourceFile, name: string): string[] {
+    return file.statements
+      .filter(ts.isVariableStatement)
+      .flatMap((statement) => statement.declarationList.declarations)
+      .filter((declaration) => ts.isIdentifier(declaration.name) && declaration.name.text === name)
+      .map((declaration) => declaration.initializer?.getText(file) ?? "");
+  }
+
+  it("roots the fixture through shortScratchRoot('wb-shared-'): XDG_RUNTIME_DIR first, /tmp the recorded fallback, never mkdtempSync under the inherited tmpdir() (F2)", () => {
+    const runner = readRepo("qa/workbench/local-detached-shared-child.mjs");
+    // The three facts as text.
+    expect(runner).toContain("const scratch = shortScratchRoot('wb-shared-');");
+    expect(runner).not.toMatch(/mkdtempSync\(join\(tmpdir\(\)/);
+    const xdgRead = runner.indexOf("process.env.XDG_RUNTIME_DIR");
+    const tmpFallback = runner.indexOf("mkdtempSync(join('/tmp', prefix))");
+    expect(xdgRead).toBeGreaterThan(-1);
+    expect(tmpFallback).toBeGreaterThan(xdgRead);
+    // The same facts in parsed code, where a comment or a dead copy of the helper counts for nothing.
+    const file = runnerAst();
+    expect(topLevelInitializers(file, "scratch")).toEqual(["shortScratchRoot('wb-shared-')"]);
+    expect(topLevelInitializers(file, "directory")).toEqual(["scratch.directory"]);
+    const helper = runnerFunction(file, "shortScratchRoot");
+    expect(declarationsNamed(helper, "runtime").map((declaration) => declaration.initializer?.getText(file))).toEqual(["process.env.XDG_RUNTIME_DIR"]);
+    // Every mkdtempSync call of the runner lives in the helper, the XDG_RUNTIME_DIR one first; the /tmp one is its final, recorded fallback.
+    expect(mkdtempArguments(file, helper)).toEqual(["join(runtime, prefix)", "join('/tmp', prefix)"]);
+    expect(mkdtempArguments(file, file)).toEqual(mkdtempArguments(file, helper));
+    const last = helper.body?.statements.at(-1);
+    expect(last !== undefined && ts.isReturnStatement(last) ? last.expression?.getText(file) : undefined).toBe(
+      "{directory: mkdtempSync(join('/tmp', prefix)), source: 'tmp-fallback', reason}",
+    );
+    // TMPDIR then names the root, so the host's own tmpdir socket fallback resolves under it.
+    const assignments = file.statements
+      .filter(ts.isExpressionStatement)
+      .map((statement) => statement.expression)
+      .filter(ts.isBinaryExpression)
+      .filter((binary) => binary.operatorToken.kind === ts.SyntaxKind.EqualsToken)
+      .map((binary) => binary.getText(file));
+    expect(assignments).toContain("process.env.TMPDIR = directory");
+  });
+});
