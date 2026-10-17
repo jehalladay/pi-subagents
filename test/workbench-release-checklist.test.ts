@@ -1,6 +1,6 @@
 import { spawnSync } from "node:child_process";
 import { chmodSync, copyFileSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
-import { tmpdir } from "node:os";
+import { arch, cpus, platform, tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { afterEach, describe, expect, it } from "vitest";
@@ -452,6 +452,67 @@ describe("the CLI plumbs vitest's exit status into the verdict (U2: the exit leg
     ]);
     expect(receipt.pass).toBe(false);
   });
+
+  // U1(b)/O1: the scratch root made a git toplevel (init, add -A, two commits) so the CLI reads a real identity, and the fake vitest
+  // reports version 0.0.0-fake, so every receipt provenance field has a value the test knows independently of the runner.
+  function gitIn(dir: string, args: string[]): string {
+    const run = spawnSync("git", ["-c", "user.email=a@b.c", "-c", "user.name=t", ...args], { cwd: dir, encoding: "utf8" });
+    expect(run.status).toBe(0);
+    return run.stdout.trim();
+  }
+  function gitToplevelRoot(): { root: string; head: string } {
+    const root = scratchRoot();
+    gitIn(root, ["init", "-q"]);
+    gitIn(root, ["add", "-A"]);
+    gitIn(root, ["commit", "-q", "-m", "first"]);
+    writeFileSync(join(root, "second.txt"), "second\n");
+    gitIn(root, ["add", "-A"]);
+    gitIn(root, ["commit", "-q", "-m", "second"]);
+    const head = gitIn(root, ["rev-parse", "HEAD"]);
+    expect(head).toMatch(/^[0-9a-f]{40}$/);
+    expect(gitIn(root, ["rev-parse", "HEAD~1"])).not.toBe(head);
+    return { root, head };
+  }
+
+  it("U1 the CLI receipt carries the scratch toplevel's own HEAD and dirty false when clean, then dirty true after a probe file", () => {
+    const { root, head } = gitToplevelRoot();
+    expect(gitIn(root, ["status", "--porcelain"])).toBe("");
+    const clean = runCli(root, "0");
+    expect(clean.status).toBe(0);
+    expect(clean.receipt.revision).toBe(head);
+    expect(clean.receipt.dirty).toBe(false);
+    writeFileSync(join(root, "probe.txt"), "probe\n");
+    const dirty = runCli(root, "0");
+    expect(dirty.status).toBe(0);
+    expect(dirty.receipt.revision).toBe(head);
+    expect(dirty.receipt.dirty).toBe(true);
+  });
+
+  it("O1 the CLI receipt records the vitest version, node version, host, an in-window utc and each item's exact command, and W22_CHECKLIST_RECEIPT (outside the repo) byte-equals stdout", () => {
+    const { root } = gitToplevelRoot();
+    const outside = mkdtempSync(join(tmpdir(), "rc-receipt-out-"));
+    roots.push(outside);
+    const receiptFile = join(outside, "receipt.json");
+    const before = Date.now();
+    const run = spawnSync(process.execPath, [join(root, "qa", "workbench", "release-checklist-receipt.mjs")], { encoding: "utf8", env: { ...process.env, FAKE_VITEST_EXIT: "0", W22_CHECKLIST_RECEIPT: receiptFile } });
+    const after = Date.now();
+    expect(run.status).toBe(0);
+    expect(readFileSync(receiptFile, "utf8")).toBe(run.stdout);
+    const receipt = JSON.parse(run.stdout) as { vitest: string; node: string; host: unknown; utc: string; items: { item: number; command: string }[] };
+    expect(receipt.vitest).toBe("0.0.0-fake");
+    expect(receipt.node).toBe(process.version);
+    expect(receipt.host).toEqual({ platform: platform(), arch: arch(), cpus: cpus().length });
+    expect(new Date(receipt.utc).toISOString()).toBe(receipt.utc);
+    expect(Date.parse(receipt.utc)).toBeGreaterThanOrEqual(before);
+    expect(Date.parse(receipt.utc)).toBeLessThanOrEqual(after);
+    const literal = (text: string): string => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    expect(receipt.items.map((i) => i.item)).toEqual(items.map((i) => i.item));
+    for (const item of items) {
+      const got = receipt.items.find((i) => i.item === item.item);
+      const paths = item.suites.map((s) => s.path).join(" ");
+      expect(got?.command).toMatch(new RegExp(`^\\./node_modules/\\.bin/vitest run --reporter=json --outputFile=${literal(join(tmpdir(), "release-checklist-"))}[^/]+/item-${item.item}\\.json ${literal(paths)}$`));
+    }
+  });
 });
 
 describe("repoIdentity fails closed when git status itself fails (U3: the vko corrupt-index shape)", () => {
@@ -465,5 +526,39 @@ describe("repoIdentity fails closed when git status itself fails (U3: the vko co
     expect(git(["status", "--porcelain"]).status).toBe(128);
     expect(git(["rev-parse", "HEAD"]).status).toBe(0);
     expect(identityOf(repoDir)).toEqual({ revision: "unknown", dirty: "unknown" });
+  });
+});
+
+describe("repoIdentity reads the toplevel's own HEAD and a real dirty bit (U1(a), O2: the 21:22Z fabricated-identity class on the clean/dirty path)", () => {
+  const gitAt = (dir: string, args: string[]): string => {
+    const run = spawnSync("git", ["-c", "user.email=a@b.c", "-c", "user.name=t", ...args], { cwd: dir, encoding: "utf8" });
+    expect(run.status).toBe(0);
+    return run.stdout.trim();
+  };
+
+  it("U1 a scratch toplevel with two commits is {its own HEAD, dirty false} when clean and {same HEAD, dirty true} after an untracked file", () => {
+    const dir = mkdtempSync(join(tmpdir(), "rc-ident-"));
+    roots.push(dir);
+    gitAt(dir, ["init", "-q"]);
+    writeFileSync(join(dir, "a.txt"), "a\n");
+    gitAt(dir, ["add", "-A"]);
+    gitAt(dir, ["commit", "-q", "-m", "first"]);
+    writeFileSync(join(dir, "b.txt"), "b\n");
+    gitAt(dir, ["add", "-A"]);
+    gitAt(dir, ["commit", "-q", "-m", "second"]);
+    const head = gitAt(dir, ["rev-parse", "HEAD"]);
+    expect(gitAt(dir, ["rev-parse", "HEAD~1"])).not.toBe(head);
+    expect(identityOf(dir)).toEqual({ revision: head, dirty: false });
+    writeFileSync(join(dir, "untracked.txt"), "u\n");
+    expect(identityOf(dir)).toEqual({ revision: head, dirty: true });
+  });
+
+  it("O2 a toplevel with an unborn HEAD (git init, no commit) is {unknown, unknown}: the revision key never drops out", () => {
+    const dir = mkdtempSync(join(tmpdir(), "rc-unborn-"));
+    roots.push(dir);
+    gitAt(dir, ["init", "-q"]);
+    const identity = identityOf(dir);
+    expect(identity).toEqual({ revision: "unknown", dirty: "unknown" });
+    expect(Object.keys(identity).sort()).toEqual(["dirty", "revision"]);
   });
 });
