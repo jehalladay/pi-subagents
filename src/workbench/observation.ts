@@ -149,14 +149,17 @@ const IDENTITY_FIELDS: readonly IdentityField[] = ["provider","type","id","scope
 /**
  * A code point a nativeRef identity part may never carry (wb-0br): a C0 or C1 control (NUL, NEL and DEL included), the line
  * or paragraph separator, a bidi embedding, override or isolate, a lone surrogate, or any default-ignorable code point
- * (zero-width characters, joiners, bidi marks, the BOM, the soft hyphen, variation selectors, tags). That is exactly
+ * (zero-width characters, joiners, bidi marks, the BOM, the soft hyphen, variation selectors, tags), and the two
+ * reader-defeating format-control ranges redaction.ts refuses as unsafe units (wb-rqd, landed 845de98): U+FFF9-U+FFFB (the
+ * interlinear annotation anchor, separator and terminator) and U+13430-U+1343F (the Egyptian hieroglyph format controls).
+ * That is exactly
  * redaction.ts's one unsafe set (UNSAFE_UNIT); each escape sequence there begins with ESC, a C0 control. The separators joined
  * by owner ruling R1(a) (2026-10-16): every display layout renders one as a separator, so a label trims "forge" plus a
  * separator to "forge" while the projection would key a distinct identity. This module imports nothing, because a bare Node
  * process loads it from source (test/workbench-observation-shell.test.ts), so the set is restated here, and
  * test/workbench-observation-identity-admission.test.ts pins it against the shared set on every code point.
  */
-const UNSAFE_IDENTITY_UNIT = /[\x00-\x1f\x7f-\x9f\u{2028}\u{2029}\u{202a}-\u{202e}\u{2066}-\u{2069}\u{d800}-\u{dfff}]|\p{Default_Ignorable_Code_Point}/u;
+const UNSAFE_IDENTITY_UNIT = /[\x00-\x1f\x7f-\x9f\u{2028}\u{2029}\u{202a}-\u{202e}\u{2066}-\u{2069}\u{d800}-\u{dfff}\u{fff9}-\u{fffb}\u{13430}-\u{1343f}]|\p{Default_Ignorable_Code_Point}/u;
 /** The first unsafe unit of a nativeRef identity part as "U+XXXX" (wb-0br), or undefined when it carries none. */
 export function unsafeIdentityUnit(value: string): string | undefined {
   const code = UNSAFE_IDENTITY_UNIT.exec(value)?.[0].codePointAt(0);
