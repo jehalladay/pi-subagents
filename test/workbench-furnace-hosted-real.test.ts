@@ -15,6 +15,9 @@ import { join } from "node:path";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { FurnaceHostedExecutor, type HostedOutcome, type HostedWorkflow } from "../src/workbench/hosts/furnace-hosted.js";
 import { loadRepairedFurnaceSdk } from "./helpers/furnace-sdk-repaired.js";
+import { installScratchLeakGuard } from "./helpers/scratch.js";
+
+installScratchLeakGuard();
 
 const sleep = (ms: number): Promise<void> => new Promise((resolve) => setTimeout(resolve, ms));
 const REPO = process.cwd();
@@ -30,13 +33,22 @@ function requireBinary(name: string): void {
 
 function disposableWorkspace(): string {
   const root = realpathSync(mkdtempSync("/tmp/pi-furnace-hosted."));
+  try {
+    seedWorkspace(root);
+  } catch (error) {
+    rmSync(root, { recursive: true, force: true });
+    throw error;
+  }
+  return root;
+}
+
+function seedWorkspace(root: string): void {
   execFileSync("git", ["init", "-q", root]);
   execFileSync("bd", ["init", "--quiet"], { cwd: root, env: { ...process.env, BD_NON_INTERACTIVE: "1" }, stdio: "pipe" });
   mkdirSync(join(root, ".beads/formulas"), { recursive: true });
   const steps = (ids: string[]): string => ids.map((id, index) => `[[steps]]\nid = "${id}"\ntitle = "fixture ${id}"\ndescription = "Fixture step ${id}."\n${index > 0 ? `needs = ["${ids[index - 1]}"]\n` : ""}`).join("\n");
   writeFileSync(join(root, ".beads/formulas/hosted-pair.formula.toml"), `formula = "hosted-pair"\ntype = "workflow"\nversion = 1\n\n${steps(["first", "second"])}`);
   writeFileSync(join(root, ".beads/formulas/hosted-single.formula.toml"), `formula = "hosted-single"\ntype = "workflow"\nversion = 1\n\n${steps(["only"])}`);
-  return root;
 }
 
 let repaired: Awaited<ReturnType<typeof loadRepairedFurnaceSdk>>;
@@ -50,6 +62,7 @@ beforeAll(async () => {
 });
 
 afterAll(() => {
+  repaired?.dispose();
   if (workspace && /^\/tmp\/pi-furnace-hosted\.[^/]+$/.test(workspace)) rmSync(workspace, { recursive: true, force: true });
 });
 
@@ -63,23 +76,26 @@ describe("Furnace-hosted adapter over the real bridge (disposable /tmp workspace
     };
     const furnace = { binary: "furnace", cwd: workspace, stateDir: join(workspace, ".furnace-hosted-state"), timeoutMs: 60_000 };
     const executor = new FurnaceHostedExecutor({ executor: "pi-hosted", workflow, sdk: repaired.sdk, furnace, startTimeoutMs: 120_000 });
-    const started = await executor.start({ formula: "hosted-pair" });
-    const client = new repaired.sdk.Furnace(furnace);
-    const status = await client.runs.get(started.runId).status({ timeoutMs: 30_000 });
-    const attempts = await client.attempts.list(started.runId, {}, { timeoutMs: 30_000 });
-    const receipt = executor.receipt();
-    process.stdout.write(`\nHOSTED-RECEIPT-PAIR ${JSON.stringify({ run: receipt.run, runState: status.data.state, furnaceAttempts: attempts.data.attempts.map((a) => [a.attempt_id, a.ordinal, a.state, a.outcome]), receipt: receipt.attempts.map((a) => [a.attemptId, a.ordinal, a.sessionInstanceId, a.terminal]) })}\n`);
-    expect(status.data.state).toBe("completed");
-    expect(attempts.data.attempts).toHaveLength(2);
-    expect(attempts.data.attempts.map((a) => a.state)).toEqual(["succeeded", "succeeded"]);
-    // Furnace lists Attempts by Work then ordinal; the adapter receipts them in admission order. Compare as sets.
-    const identities = (rows: Array<[string, number]>): Array<[string, number]> => rows.sort((a, b) => a[0].localeCompare(b[0]));
-    expect(identities(receipt.attempts.map((a) => [a.attemptId, a.ordinal]))).toEqual(identities(attempts.data.attempts.map((a) => [a.attempt_id, a.ordinal])));
-    expect(ran).toEqual(receipt.attempts.map((a) => a.attemptId));
-    expect(new Set(receipt.attempts.map((a) => a.sessionInstanceId)).size).toBe(2);
-    expect(receipt.attempts.every((a) => a.terminal === "success")).toBe(true);
-    expect(receipt.identityViolations).toEqual([]);
-    await executor.close();
+    try {
+      const started = await executor.start({ formula: "hosted-pair" });
+      const client = new repaired.sdk.Furnace(furnace);
+      const status = await client.runs.get(started.runId).status({ timeoutMs: 30_000 });
+      const attempts = await client.attempts.list(started.runId, {}, { timeoutMs: 30_000 });
+      const receipt = executor.receipt();
+      process.stdout.write(`\nHOSTED-RECEIPT-PAIR ${JSON.stringify({ run: receipt.run, runState: status.data.state, furnaceAttempts: attempts.data.attempts.map((a) => [a.attempt_id, a.ordinal, a.state, a.outcome]), receipt: receipt.attempts.map((a) => [a.attemptId, a.ordinal, a.sessionInstanceId, a.terminal]) })}\n`);
+      expect(status.data.state).toBe("completed");
+      expect(attempts.data.attempts).toHaveLength(2);
+      expect(attempts.data.attempts.map((a) => a.state)).toEqual(["succeeded", "succeeded"]);
+      // Furnace lists Attempts by Work then ordinal; the adapter receipts them in admission order. Compare as sets.
+      const identities = (rows: Array<[string, number]>): Array<[string, number]> => rows.sort((a, b) => a[0].localeCompare(b[0]));
+      expect(identities(receipt.attempts.map((a) => [a.attemptId, a.ordinal]))).toEqual(identities(attempts.data.attempts.map((a) => [a.attempt_id, a.ordinal])));
+      expect(ran).toEqual(receipt.attempts.map((a) => a.attemptId));
+      expect(new Set(receipt.attempts.map((a) => a.sessionInstanceId)).size).toBe(2);
+      expect(receipt.attempts.every((a) => a.terminal === "success")).toBe(true);
+      expect(receipt.identityViolations).toEqual([]);
+    } finally {
+      await executor.close();
+    }
     expect(mainTreeState()).toBe(before);
   });
 
@@ -100,31 +116,34 @@ describe("Furnace-hosted adapter over the real bridge (disposable /tmp workspace
     };
     const furnace = { binary: "furnace", cwd: workspace, stateDir: join(workspace, ".furnace-hosted-state-cancel"), timeoutMs: 60_000 };
     const executor = new FurnaceHostedExecutor({ executor: "pi-hosted-cancel", workflow, sdk: repaired.sdk, furnace, startTimeoutMs: 120_000, cancelGraceMs: 10_000 });
-    const starting = executor.start({ formula: "hosted-single" });
-    const client = new repaired.sdk.Furnace(furnace);
-    let attemptId: string | undefined;
-    for (let i = 0; i < 400 && attemptId === undefined; i++) {
-      attemptId = executor.receipt().attempts[0]?.attemptId;
-      if (attemptId === undefined) await sleep(50);
+    try {
+      const starting = executor.start({ formula: "hosted-single" });
+      const client = new repaired.sdk.Furnace(furnace);
+      let attemptId: string | undefined;
+      for (let i = 0; i < 400 && attemptId === undefined; i++) {
+        attemptId = executor.receipt().attempts[0]?.attemptId;
+        if (attemptId === undefined) await sleep(50);
+      }
+      expect(attemptId).toBeDefined();
+      await sleep(300);
+      const stop = await client.attempts.stop(attemptId as string, { timeoutMs: 30_000 });
+      const started = await starting;
+      const receipt = executor.receipt();
+      const attempt = receipt.attempts[0];
+      const frozen = effects.length;
+      await sleep(500);
+      const inspected = await client.attempts.inspect(attemptId as string, { timeoutMs: 30_000 });
+      process.stdout.write(`\nHOSTED-RECEIPT-CANCEL ${JSON.stringify({ run: receipt.run, stopKind: stop.kind, attemptState: inspected.data.state, attemptOutcome: inspected.data.outcome, receipt: attempt, effectsAtAbort: abortedAtEffects, effectsAfter: effects.length })}\n`);
+      expect(started.runId).toBe(receipt.run?.runId);
+      expect(attempt).toMatchObject({ terminal: "cancelled", cancel: { requested: true }, unsettledAfterCancel: false });
+      expect(attempt?.cancel.reason).toMatch(/operator_stop/);
+      expect(abortedAtEffects).toBeGreaterThan(0);
+      expect(effects.length).toBe(frozen);
+      expect(frozen).toBe(abortedAtEffects);
+      expect(inspected.data.state).toBe("cancelled");
+    } finally {
+      await executor.close();
     }
-    expect(attemptId).toBeDefined();
-    await sleep(300);
-    const stop = await client.attempts.stop(attemptId as string, { timeoutMs: 30_000 });
-    const started = await starting;
-    const receipt = executor.receipt();
-    const attempt = receipt.attempts[0];
-    const frozen = effects.length;
-    await sleep(500);
-    const inspected = await client.attempts.inspect(attemptId as string, { timeoutMs: 30_000 });
-    process.stdout.write(`\nHOSTED-RECEIPT-CANCEL ${JSON.stringify({ run: receipt.run, stopKind: stop.kind, attemptState: inspected.data.state, attemptOutcome: inspected.data.outcome, receipt: attempt, effectsAtAbort: abortedAtEffects, effectsAfter: effects.length })}\n`);
-    expect(started.runId).toBe(receipt.run?.runId);
-    expect(attempt).toMatchObject({ terminal: "cancelled", cancel: { requested: true }, unsettledAfterCancel: false });
-    expect(attempt?.cancel.reason).toMatch(/operator_stop/);
-    expect(abortedAtEffects).toBeGreaterThan(0);
-    expect(effects.length).toBe(frozen);
-    expect(frozen).toBe(abortedAtEffects);
-    expect(inspected.data.state).toBe("cancelled");
-    await executor.close();
     expect(mainTreeState()).toBe(before);
   });
 });
