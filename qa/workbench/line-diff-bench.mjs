@@ -38,6 +38,166 @@ import {
   assessFixtureShape, BENCH_ONLY_LIMITS, buildGroupedFixture, GROUPED_FIXTURE_DEFAULTS, INVOCATION_ID, SCOPE, SIZES,
 } from './grouped-fixture.mjs';
 
+/**
+ * Contract types (JSDoc that TypeScript callers read under allowJs; nothing here runs). The receipt's series,
+ * first-paint and band maps are keyed by view@width; the series keys come from VIEW_NAMES and the two bench widths.
+ *
+ * @typedef {Readonly<Record<keyof typeof BENCH_ONLY_LIMITS, number>>} LineDiffLimits
+ *   The one constructor argument: BENCH_ONLY_LIMITS from grouped-fixture.mjs.
+ * @typedef {{
+ *   refresh(snapshot: unknown): unknown,
+ *   relate(item: unknown): unknown,
+ *   ingest(update: unknown): string,
+ *   stats(): {nodes: number, events: number, edges: number},
+ *   aggregateStats?(): {adjustments: number, rebuilds: number, maxVisitedPerUpdate: number},
+ * }} LineDiffProjection The projection methods this runner calls by name on an ObservationProjection instance; the
+ *   inspector reads the rest through the read-counting view (window, query, events, relations, aggregate, indexOf,
+ *   relationRevision, stats).
+ * @typedef {new (limits: LineDiffLimits) => LineDiffProjection} LineDiffProjectionClass
+ * @typedef {{
+ *   initialInspectorState(): object,
+ *   layoutInspector(model: object, state: object, size: {width: number, rows: number, ascii?: boolean}): ReadonlyArray<string>,
+ *   reduceInspectorKey(data: string, state: object, model: object): {state: object} | undefined,
+ * }} LineDiffInspector The inspector functions handed in; this runner lays frames out and reduces no key.
+ * @typedef {{
+ *   readonly snapshots: ReadonlyArray<unknown>,
+ *   readonly relations: ReadonlyArray<unknown>,
+ *   readonly updates: ReadonlyArray<{readonly observedAt: string}>,
+ *   readonly shape: Readonly<Record<string, unknown>>,
+ * }} LineDiffFixture A grouped fixture (grouped-fixture.mjs): updates sharing one observedAt are one tick; every item
+ *   goes to the projection as given and the shape is copied into the receipt.
+ * @typedef {{
+ *   readonly utc: string,
+ *   readonly revision: string,
+ *   readonly node: string,
+ *   readonly arch: string,
+ *   readonly platform: string,
+ *   readonly cpus: number,
+ *   readonly cpuModel: string,
+ *   readonly toolchain: Readonly<Record<string, string>>,
+ *   readonly command: string,
+ * }} LineDiffHost
+ * @typedef {{samples: number, p50: number | null, p95: number | null, max: number | null}} LineDiffDistribution
+ * @typedef {{
+ *   diffBytes: LineDiffDistribution,
+ *   fullBytes: LineDiffDistribution,
+ *   ratio: LineDiffDistribution,
+ *   changedLines: LineDiffDistribution,
+ *   zeroDiffRedraws: number,
+ * }} LineDiffSeries One view@width series of repaints.
+ * @typedef {{
+ *   label: string,
+ *   minChanges: number,
+ *   maxChanges: number,
+ *   ticks: number,
+ *   updates: number,
+ *   redraws: number,
+ *   series: Record<string, LineDiffSeries>,
+ * }} LineDiffBand One churn band (or one exact churn), with a series per view@width.
+ * @typedef {{
+ *   [field: string]: unknown,
+ *   seed: number,
+ *   nodes: number,
+ *   groups: number,
+ *   snapshots: number,
+ *   depth: number,
+ *   minDepth: number,
+ *   groupingEdges: number,
+ *   dependencyEdges: number,
+ *   hypothesisEdges: number,
+ *   ownershipEdges: number,
+ *   causationEdges: number,
+ *   updates: number,
+ *   ticks: number,
+ *   minChangesPerTick: number,
+ *   maxChangesPerTick: number,
+ *   providers: Record<string, number>,
+ *   collidingIds: number,
+ *   minTitleBytes: number,
+ *   maxTitleBytes: number,
+ *   payloadRefs: number,
+ *   minPayloadRefBytes: number,
+ *   maxPayloadRefBytes: number,
+ * }} LineDiffFixtureRecord The grouped fixture's realised shape as copied into the receipt: its counts by name and
+ *   every other shape field (the fixture contract id among them) as given.
+ * @typedef {{
+ *   contract: string,
+ *   benchmark: string,
+ *   measured: boolean,
+ *   utc: string,
+ *   revision: string,
+ *   node: string,
+ *   arch: string,
+ *   platform: string,
+ *   cpus: number,
+ *   cpuModel: string,
+ *   toolchain: Record<string, string>,
+ *   command: string,
+ *   fixture: LineDiffFixtureRecord,
+ *   limits: Record<keyof typeof BENCH_ONLY_LIMITS, number>,
+ *   limitsLabel: string,
+ *   accounting: string,
+ *   instrumentation: string,
+ *   sampling: {
+ *     views: string[],
+ *     sizes: Array<{label: string, width: number, rows: number, ascii: boolean}>,
+ *     selection: string,
+ *     warmupRedraws: number,
+ *   },
+ *   bounds: {redrawMaxHz: number, foldThresholdEvents: number, byteBudget: null},
+ *   offered: {nodes: number, edges: number, updates: number},
+ *   retained: {nodes: number, events: number, edges: number},
+ *   apply: {ingestApplied: number, ingestDuplicate: number, ingestOutOfOrder: number},
+ *   series: Record<string, LineDiffSeries>,
+ *   bands: LineDiffBand[],
+ *   exactChurn: LineDiffBand[],
+ *   firstPaint: Record<string, {fullBytes: number, lines: number}>,
+ *   probe: {fullBytes: number, diffBytes: number, changedLines: number, ratio: number},
+ *   folds: {
+ *     redraws: number,
+ *     layoutCalls: number,
+ *     readCalls: Record<string, number>,
+ *     ingestCalls: number,
+ *     maxTouchedPerRedraw: number,
+ *     maxEventsRequested: number,
+ *     fullFoldRedraws: number,
+ *     threshold: number,
+ *     retainedEvents: number,
+ *     aggregateStats: {adjustments: number, rebuilds: number, maxVisitedPerUpdate: number} | null,
+ *   },
+ *   cadence: {
+ *     capHz: number,
+ *     minIntervalMs: number,
+ *     basis: string,
+ *     ticks: number,
+ *     redraws: number,
+ *     skipped: number,
+ *     fixtureSpanMs: number,
+ *     effectiveHz: number,
+ *     maxRedrawsInOneSecond: number,
+ *   },
+ *   outliers: {
+ *     rule: string,
+ *     diff: Array<{
+ *       bytes: number,
+ *       ordinal: number,
+ *       tick: number,
+ *       churn: number,
+ *       view: string,
+ *       width: number,
+ *       fullBytes: number,
+ *       changedLines: number,
+ *     }>,
+ *   },
+ *   realised: boolean,
+ *   violations: Array<{rule: string, detail: string}>,
+ *   over: string[],
+ *   pass: boolean,
+ *   exitCode: number,
+ *   verdict: string,
+ * }} LineDiffReceipt The receipt runLineDiffBench returns: the measured fields plus assessLineDiffReceipt's judgement.
+ */
+
 export const LINE_DIFF_CONTRACT = 'workbench.line-diff/v1';
 export const VIEW_NAMES = Object.freeze(['overview', 'graph', 'timeline', 'details']);
 export const REDRAW_MAX_HZ = 4;
@@ -166,6 +326,13 @@ const record = (series, result) => {
  * REDRAW_MAX_HZ times per fixture second, accounting the line-diff and full-frame bytes of each repaint.
  * `Projection` is the ObservationProjection class and `inspector` is {initialInspectorState, layoutInspector,
  * reduceInspectorKey}; `host` carries utc, revision, node, arch, platform, cpus, cpuModel, toolchain, command.
+ *
+ * @param {object} input
+ * @param {LineDiffProjectionClass} input.Projection the ObservationProjection class (the sources in tests, dist in the CLI)
+ * @param {LineDiffInspector} input.inspector
+ * @param {LineDiffFixture} input.fixture
+ * @param {LineDiffHost} input.host
+ * @returns {LineDiffReceipt}
  */
 export function runLineDiffBench({Projection, inspector, fixture, host}) {
   const projection = new Projection(BENCH_ONLY_LIMITS);

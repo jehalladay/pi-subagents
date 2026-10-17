@@ -2,9 +2,10 @@
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import type { SDKMessage } from '@anthropic-ai/claude-agent-sdk';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { loadSettings } from '../src/settings.js';
-import { createClaudeWorkflowHost } from '../src/workbench/claude-host.js';
+import { type ClaudeQuery, createClaudeWorkflowHost } from '../src/workbench/claude-host.js';
 import { runWorkflow, type WorkflowSpawnRequest } from '../src/workflow/runtime.js';
 
 const HEAD = 'export const meta = {name:"workbench-contract", description:"test host"};\n';
@@ -25,10 +26,12 @@ const successMessages = (sessionId = 'sdk-session-1') => [
    usage:{input_tokens:4,output_tokens:3}, total_cost_usd:0.01},
 ] as const;
 
-function fakeQuery(messages: readonly unknown[], calls: Array<{prompt:string;options:Record<string,unknown>}>) {
+// Fixture SDK traffic is deliberately partial (only the fields the host reads), so it crosses the ClaudeQuery
+// seam by assertion to SDKMessage; the fixtures are neither completed nor the seam widened for the test.
+function fakeQuery(messages: readonly unknown[], calls: Array<{prompt:string;options:Record<string,unknown>}>): ClaudeQuery {
   return ({prompt,options}:{prompt:string;options:Record<string,unknown>}) => {
     calls.push({prompt,options});
-    return (async function*(){for(const m of messages) yield m;})();
+    return (async function*(){for(const m of messages) yield m as SDKMessage;})();
   };
 }
 
@@ -113,9 +116,9 @@ describe('Workbench Claude execution host', () => {
   it('L4: SDK resume returning a different session ID refuses fresh-context continuation', async () => {
     let calls=0;
     const host=createClaudeWorkflowHost({cwd:'/tmp',getSession:async()=>({sessionId:'sdk-session-1'} as Awaited<ReturnType<typeof import('@anthropic-ai/claude-agent-sdk').getSessionInfo>>),
-      query:()=> (async function*(){yield* successMessages(++calls===1?'sdk-session-1':'sdk-session-other');})()});
+      query:()=> (async function*(){yield* successMessages(++calls===1?'sdk-session-1':'sdk-session-other') as unknown as readonly SDKMessage[];})()});
     expect((await host.spawnAgent(req())).ok).toBe(true);
-    const resumed=await host.resumeAgent('wf-agent-0','followup');
+    const resumed=await host.resumeAgent!('wf-agent-0','followup');
     expect(resumed.ok).toBe(false);
     expect(resumed.error).toMatch(/session.*mismatch|different session/i);
   });
@@ -163,7 +166,7 @@ describe('Workbench Claude execution host', () => {
     ];
     let nth=0;
     const host=createClaudeWorkflowHost({cwd:'/tmp',getSession:async()=>({sessionId:'sdk-session-1'} as Awaited<ReturnType<typeof import('@anthropic-ai/claude-agent-sdk').getSessionInfo>>),
-      query:()=> (async function*(){yield* ++nth===1?stream(10,2):stream(15,4);})()});
+      query:()=> (async function*(){yield* (++nth===1?stream(10,2):stream(15,4)) as unknown as readonly SDKMessage[];})()});
     const result=await runWorkflow({script:HEAD+'await agent("first",{label:"l"}); await agent("next",{resume:"l"}); return budget.spent();',host});
     expect(result.status).toBe('completed');
     expect(result.value).toBe(15);
@@ -175,7 +178,7 @@ describe('Workbench Claude execution host', () => {
       getSession:async()=>({sessionId:'sdk-session-1'} as Awaited<ReturnType<typeof import('@anthropic-ai/claude-agent-sdk').getSessionInfo>>),
       roles:{reviewer:{prompt:'Review only. Never edit.',tools:['Read'],effort:'low'}}});
     const first=await host.spawnAgent(req({agentType:'reviewer'}));
-    const next=await host.resumeAgent('wf-agent-0','followup');
+    const next=await host.resumeAgent!('wf-agent-0','followup');
     expect(first.ok).toBe(true); expect(next.ok).toBe(true);
     expect(calls[1].options).toMatchObject({resume:'sdk-session-1',systemPrompt:'Review only. Never edit.',tools:['Read'],effort:'low'});
   });
@@ -186,7 +189,7 @@ describe('Workbench Claude execution host', () => {
     const pending=new Promise<Awaited<ReturnType<typeof import('@anthropic-ai/claude-agent-sdk').getSessionInfo>>>(resolve=>{finishLookup=resolve;});
     const host=createClaudeWorkflowHost({cwd:'/tmp',query:fakeQuery(successMessages(),calls),getSession:async()=>pending});
     expect((await host.spawnAgent(req())).ok).toBe(true);
-    const resumed=host.resumeAgent('wf-agent-0','followup');
+    const resumed=host.resumeAgent!('wf-agent-0','followup');
     host.abortAgent('wf-agent-0');
     finishLookup({sessionId:'sdk-session-1'} as Awaited<ReturnType<typeof import('@anthropic-ai/claude-agent-sdk').getSessionInfo>>);
     const result=await resumed;
@@ -199,7 +202,7 @@ describe('Workbench Claude execution host', () => {
     const host=createClaudeWorkflowHost({cwd:'/tmp',query:fakeQuery(successMessages(),calls),getSession:async()=>undefined});
     const initial=await host.spawnAgent(req());
     expect(initial.ok).toBe(true);
-    const resumed=await host.resumeAgent('wf-agent-0','followup');
+    const resumed=await host.resumeAgent!('wf-agent-0','followup');
     expect(resumed).toMatchObject({ok:false});
     expect(resumed.error).toMatch(/unavailable|refusing fresh-context/i);
     expect(calls).toHaveLength(1);
@@ -208,7 +211,7 @@ describe('Workbench Claude execution host', () => {
   it('L4: unknown resume session refuses without invoking a new query', async () => {
     const calls: Array<{prompt:string;options:Record<string,unknown>}> = [];
     const host=createClaudeWorkflowHost({cwd:'/tmp',query:fakeQuery(successMessages(),calls)});
-    const result=await host.resumeAgent('missing','followup');
+    const result=await host.resumeAgent!('missing','followup');
     expect(result.ok).toBe(false);
     expect(calls).toHaveLength(0);
   });

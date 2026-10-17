@@ -154,7 +154,9 @@ function createSession(finalText: string) {
       listeners.push(listener);
       return () => {};
     }),
-    prompt: vi.fn(async () => {
+    // Declares pi's prompt-text argument (unused here) so a test can read it
+    // back from `mock.calls`; optional, so zero-argument replacements still fit.
+    prompt: vi.fn(async (_text?: string) => {
       session.messages.push({
         role: "assistant",
         content: [{ type: "text", text: finalText }],

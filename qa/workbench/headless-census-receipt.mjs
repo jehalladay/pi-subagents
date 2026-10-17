@@ -7,6 +7,40 @@
 
 export const CENSUS_SCHEMA = "workbench.headless-census/v1";
 
+/**
+ * Contract types (JSDoc that TypeScript callers read under allowJs; nothing here runs).
+ *
+ * @typedef {{readonly parent?: string | null, readonly url: string}} CensusEdge
+ *   One resolved edge the child recorded: importing module url (null or absent for the entry itself) to resolved url.
+ * @typedef {{readonly via: ReadonlyArray<string>, readonly through?: string, readonly caveat: string}} CensusPiClosureRow
+ * @typedef {{
+ *   readonly piClosure: Readonly<Record<string, CensusPiClosureRow>>,
+ *   readonly piTransitive: ReadonlyArray<string>,
+ *   readonly uiModules: ReadonlyArray<string>,
+ * }} CensusAllowlist The shape of the frozen EXPECTED_PI_CLOSURE, EXPECTED_PI_TRANSITIVE and EXPECTED_UI_MODULES tables.
+ * @typedef {{root: string, builtUtc: string | null, olderThanSrc: boolean | null, revisionDescribesDist: boolean}} CensusDistRecord
+ *   The measured dist record headless-host-census.mjs passes in.
+ * @typedef {{rule: string, module: string, chain: string[], detail: string}} CensusFinding
+ * @typedef {{
+ *   schema: string,
+ *   utc: string,
+ *   revision: string,
+ *   node: string,
+ *   worktreeClean: boolean | undefined,
+ *   entry: string,
+ *   closure: string[],
+ *   packageChains: Record<string, string[]>,
+ *   piPackages: Array<{name: string, direct: boolean, importers: string[], chain: string[]}>,
+ *   uiModules: Array<{module: string, chain: string[]}>,
+ *   ttyFree: boolean,
+ *   measurementBound: string,
+ *   dist: CensusDistRecord | null,
+ *   warnings: string[],
+ *   findings: CensusFinding[],
+ *   pass: boolean,
+ * }} CensusReceipt The receipt buildReceipt returns (schema CENSUS_SCHEMA): worktreeClean and dist are echoed as given.
+ */
+
 /** What this receipt does and does not measure (F8). module.registerHooks is per-thread, so the
  * trace covers one thread's static boot only. An unstated bound reads as a claim about everything. */
 export const MEASUREMENT_BOUND =
@@ -120,6 +154,23 @@ function traceActive(edges, entryUrl) {
   return edges.some(edge => edge.parent === entryUrl);
 }
 
+/**
+ * The census receipt over one recorded closure. Pure: the same input always builds the same receipt.
+ *
+ * @param {object} input
+ * @param {ReadonlyArray<CensusEdge>} input.edges every resolved edge the child recorded
+ * @param {string} input.entryUrl the detached host entry url the closure is walked from
+ * @param {string} input.root the package-root file url that makes first-party paths relative
+ * @param {boolean} input.ttyFree whether the child measured no TTY on stdin, stdout and stderr
+ * @param {string} input.utc
+ * @param {string} input.revision
+ * @param {string} input.node
+ * @param {boolean} [input.worktreeClean] the runner's clean-HEAD flag, echoed as given; a fixture caller that stamps
+ *   no checkout omits it
+ * @param {CensusAllowlist} [input.allowlist] defaults to the frozen EXPECTED_* tables
+ * @param {CensusDistRecord | null} [input.dist] the measured dist record; defaults to null
+ * @returns {CensusReceipt}
+ */
 export function buildReceipt({ edges, entryUrl, root, ttyFree, utc, revision, node, worktreeClean, allowlist = DEFAULT_ALLOWLIST, dist = null }) {
   const graph = buildClosure({ edges, entryUrl, root });
   const findings = [];

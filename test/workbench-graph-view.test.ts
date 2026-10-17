@@ -20,7 +20,7 @@ import {
   type Presentation,
   type RelationKind,
 } from "../src/workbench/observation.js";
-import { sanitizeWorkbenchText } from "../src/workbench/redaction.js";
+import { sanitizeWorkbenchText, stripUnsafeText } from "../src/workbench/redaction.js";
 
 // The model is a pure read: nothing this suite loads may reach a native producer SDK.
 vi.mock("@anthropic-ai/claude-agent-sdk", () => {
@@ -558,7 +558,8 @@ describe("A9 purity: the module reads no clock, producer, SDK or UI", () => {
 // buildGraphView path on every display path. Between the two markers below sits test/workbench-sanitizer-corpus.test.ts
 // lines 49-213 at 5516365 VERBATIM (that file's sha256 d52e78447c7fe5ba4bf88ea25670cf2b3cc28334aa1a6281fb83b2efe49f91f9;
 // the same segment as lines 48-212 at e6f41be): copied, not imported, because importing a test module registers its
-// suites in this file.
+// suites in this file. One line has since moved past that copy: UNSAFE_DISPLAY (below) carries the wb-rqd format-control ranges
+// the shared stripUnsafeText refuses (wb-19q member 29, wb-0br F2), as the corpus file's own copy now does; nothing else changed.
 // ---------------------------------------------------------------------------------------------------------------------
 // BEGIN verbatim corpus segment (test/workbench-sanitizer-corpus.test.ts:49-213 at 5516365)
 const cp = (code: number): string => String.fromCodePoint(code);
@@ -579,8 +580,10 @@ const WJ = cp(0x2060);
 const BOM = cp(0xfeff);
 const LONE_HIGH = cp(0xd800);
 
-/** Anything a display string must never carry: C0/C1 controls, line/paragraph separators, default-ignorables, lone surrogates. */
-const UNSAFE_DISPLAY = /[\x00-\x1f\x7f-\x9f\u{2028}\u{2029}]|\p{Default_Ignorable_Code_Point}|[\u{d800}-\u{dfff}]/u;
+/** Anything a display string must never carry: C0/C1 controls, line/paragraph separators, default-ignorables, lone surrogates, and
+ * the format controls that defeat a reader (wb-rqd: the interlinear annotation controls and the Egyptian hieroglyph format
+ * controls). */
+const UNSAFE_DISPLAY = /[\x00-\x1f\x7f-\x9f\u{2028}\u{2029}\u{fff9}-\u{fffb}\u{13430}-\u{1343f}]|\p{Default_Ignorable_Code_Point}|[\u{d800}-\u{dfff}]/u;
 
 interface Probe {
   readonly id: string;
@@ -1101,5 +1104,41 @@ describe("A10 the trunk separator corpus through the real ObservationProjection 
     const rendered = [...Object.values(text).flat(), ...Object.values(identity).flat()];
     expect(rendered).toHaveLength(11);
     for (const shown of rendered) expect(UNSAFE_DISPLAY.test(shown), shown).toBe(false);
+  });
+});
+
+// ---------------------------------------------------------------------------------------------------------------------
+// wb-19q member 29 (wb-0br F2): the display oracle above must carry every unit the shared stripUnsafeText refuses, or a
+// renderer keeping one of the wb-rqd format controls would pass every oracle check in this file unseen. The 19 units are
+// the ones redaction.ts added for wb-rqd (landed 845de98): the interlinear annotation anchor, separator and terminator
+// (U+FFF9-U+FFFB) and the Egyptian hieroglyph format controls (U+13430-U+1343F). The three neighbours are the nearest code
+// point outside each range that is text to both (U+FFF8 is default-ignorable, so no control sits before U+FFF9).
+// ---------------------------------------------------------------------------------------------------------------------
+const named = (code: number): string => `U+${code.toString(16).toUpperCase().padStart(4, "0")}`;
+/** The 19 wb-rqd format-control units, each as [name, code point]. */
+const RQD_UNITS: readonly (readonly [string, number])[] = [0xfff9, 0xfffa, 0xfffb, ...Array.from({ length: 16 }, (_, at) => 0x13430 + at)].map(
+  code => [named(code), code] as const,
+);
+/** The nearest code point past each range on the side where text begins again. */
+const RQD_NEIGHBOURS: readonly (readonly [string, number])[] = [
+  [`${named(0xfffc)} after FFF9-FFFB`, 0xfffc],
+  [`${named(0x1342f)} before 13430-1343F`, 0x1342f],
+  [`${named(0x13440)} after 13430-1343F`, 0x13440],
+];
+
+describe("A11 oracle parity: UNSAFE_DISPLAY carries every wb-rqd format control the shared stripUnsafeText refuses (wb-0br F2)", () => {
+  it("names all 19 units", () => {
+    expect(RQD_UNITS).toHaveLength(19);
+    expect(RQD_NEIGHBOURS).toHaveLength(3);
+  });
+
+  it.each(RQD_UNITS)("%s: the oracle flags it and stripUnsafeText drops it", (_, code) => {
+    expect(UNSAFE_DISPLAY.test(cp(code))).toBe(true);
+    expect(stripUnsafeText(cp(code))).toBe("");
+  });
+
+  it.each(RQD_NEIGHBOURS)("%s: the oracle and stripUnsafeText both keep it as text", (_, code) => {
+    expect(UNSAFE_DISPLAY.test(cp(code))).toBe(false);
+    expect(stripUnsafeText(cp(code))).toBe(cp(code));
   });
 });

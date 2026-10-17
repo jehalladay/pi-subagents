@@ -3,6 +3,8 @@
 import { describe, expect, expectTypeOf, it, vi } from "vitest";
 import { CapabilityError, type JsonValue } from "../src/workbench/capability-registry.js";
 import { type ForgeEvidenceDeps, readForgeOperationEvidence } from "../src/workbench/forge-evidence.js";
+import { forgeGateTopology } from "../src/workbench/forge-observer.js";
+import { A, B, basis, MEASURED_STATE } from "./helpers/forge-last-result-state.js";
 
 type Json = { [key: string]: JsonValue };
 const OPERATION = "op_8f2c41";
@@ -234,5 +236,91 @@ describe("forge-operation evidence reader", () => {
   it("C4: the capture time is the host clock and must be a timezone-qualified instant", async () => {
     const error = await refusal(readForgeOperationEvidence(`forge-operation:${OPERATION}`, deps({ now: () => "yesterday" }).deps));
     expect(error.category).toBe("validation");
+  });
+});
+
+// ---------------------------------------------------------------------------------------------------------------------
+// Collective adaptation (program-triage-2026-10-17, epic wb-4ap), the evidence legs: R9 (wb-4ap.9) and the L3 legs of R5
+// (wb-4ap.5) and R8 (wb-4ap.8). The descriptor is the measured SOURCE_WITH_STATE one of test/workbench-forge-contract.test.ts
+// (wb-4ap.11) through test/helpers/forge-last-result-state.ts, mutated per case; never a hand-rolled shape.
+// ---------------------------------------------------------------------------------------------------------------------
+
+/** The measured package row's preview line before the basis word: the reader's `<title>: <statusText>` layout. */
+const PACKAGE_LINE = "Forge package code:a: success (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED)";
+/** historical('code:a') carrying the measured descriptor (freshness STALE over basis(A, B)), descriptor fields overridden per case. */
+const withState = (state: Json = {}, ref = "code:a"): Json => ({ ...historical(ref), last_result_status: "success", last_result_state: { ...MEASURED_STATE, ...state } });
+/** The same row without a descriptor. */
+const plainRow = (ref = "code:a"): Json => ({ ...historical(ref), last_result_status: "success" });
+const load = (source: JsonValue, overrides: Partial<ForgeEvidenceDeps> = {}) => readForgeOperationEvidence(`forge-operation:${OPERATION}`, deps(overrides, source).deps);
+const UNSAFE = /[\u0000-\u001f\u007f-\u009f\u200B-\u200F\u2060\uFEFF\u202A-\u202E\u2066-\u2069]/;
+
+describe("wb-4ap.9 COLLECTIVE-ADAPTATION-R9: the forge-operation evidence preview inherits the freshness word beside its historical label", () => {
+  it("C5 (wb-4ap.9): a measured STALE descriptor puts STALE beside the historical label in the preview, and statusText stays historical, never verified", async () => {
+    const content = await load(reading([withState()]));
+    expect(text(content.preview)).toMatch(/STALE/);
+    expect(text(content.preview)).toMatch(/authoritative_current=false/);
+    expect(content.preview).toContain(`${PACKAGE_LINE} · basis STALE`);
+    expect(content.statusText).toMatch(/historical; not current verification/);
+    expect(content.statusText).not.toMatch(/passed|\bverified\b/i);
+  });
+
+  it("wb-4ap.9: content.sourceBasis is unchanged by the descriptor - absent without a workspace digest, the workspace digest with one, never the package basis", async () => {
+    const without = await load(reading([withState()]));
+    expect(without.sourceBasis).toBeUndefined();
+    expect(Object.keys(without).sort()).toStrictEqual(["bytes", "capturedAt", "freshness", "kind", "preview", "producerReceipt", "provider", "statusText", "truncated"]);
+    const digest = `sha256:${"a".repeat(64)}`;
+    const withDigest = await load(reading([withState()], { data: { packages: [withState()], source_snapshot_id: digest } }));
+    expect(withDigest.sourceBasis).toBe(digest);
+    for (const content of [without, withDigest]) {
+      expect(JSON.stringify(content)).not.toContain(B);
+      expect(JSON.stringify(content)).not.toContain(A);
+    }
+  });
+
+  it("wb-4ap.9: content.freshness is the owning node's, never the producer word - CURRENT under a disconnected owner is stale, STALE under a current owner is current", async () => {
+    const fresh = withState({ freshness: "CURRENT", invalidation_basis: basis(A, A) });
+    expect((await load(reading([fresh]), { owner: "disconnected" })).freshness).toBe("stale");
+    expect((await load(reading([fresh]), { owner: "stale" })).freshness).toBe("stale");
+    expect((await load(reading([withState()]), { owner: "current" })).freshness).toBe("current");
+    expect((await load(reading([withState()]))).freshness).toBe("current");
+  });
+
+  it("wb-4ap.9: the snapshots the reader re-reads expose the package subjectBasis - B for the described row, none for a descriptor-less sibling", async () => {
+    // The reader's own re-read (forge-evidence.ts): forgeGateTopology over the seam's reading with the host scope and target and
+    // the capture time as both instants. Its package lines are exactly the loaded preview's, so these are the snapshots it shows.
+    const source = reading([withState(), plainRow("code:b")]);
+    const content = await load(source);
+    const [workspace, described, plain] = forgeGateTopology(source, { scope: SCOPE, target: SCOPE.workspace, capturedAt: CAPTURED, observedAt: CAPTURED }).snapshots;
+    expect(content.preview.slice(2)).toStrictEqual([described, plain].map((snapshot) => `${snapshot?.node.title}: ${snapshot?.node.statusText}`));
+    expect(described?.subjectBasis).toBe(B);
+    expect(Object.keys(plain ?? {})).not.toContain("subjectBasis");
+    expect(Object.keys(workspace ?? {})).not.toContain("subjectBasis");
+  });
+});
+
+describe("wb-4ap.5 COLLECTIVE-ADAPTATION-R5 (L3): a quoted freshness never makes the loaded evidence read as current verification", () => {
+  it("wb-4ap.5 L3: STALE and CURRENT descriptors keep content.statusText historical and indeterminate, byte-identical to the descriptor-less twin", async () => {
+    const plain = await load(reading([plainRow()]));
+    for (const row of [withState(), withState({ freshness: "CURRENT", invalidation_basis: basis(A, A) })]) {
+      const content = await load(reading([row]));
+      expect(content.statusText).toMatch(/historical/);
+      expect(content.statusText).toMatch(/indeterminate/);
+      expect(content.statusText).not.toMatch(/passed|\bverified\b/i);
+      expect(content.statusText).toBe(plain.statusText);
+      expect(text(content.preview)).not.toMatch(/gate passed|\bverified\b/i);
+    }
+  });
+});
+
+describe("wb-4ap.8 COLLECTIVE-ADAPTATION-R8 (L3): descriptor prose never reaches the evidence preview", () => {
+  it("wb-4ap.8 L3: a planted note, source_ref and state_class never reach the preview or any loaded field, nor any control or bidi unit", async () => {
+    const ESC = String.fromCodePoint(0x1b);
+    const RLO = String.fromCodePoint(0x202e);
+    const planted = withState({ note: `PLANTED-NOTE ${ESC}[2Jwipe${RLO}`, source_ref: ["PLANTED-REF#cmd_9"], state_class: "PLANTED-CLASS" });
+    const content = await load(reading([planted]));
+    expect(text(content.preview)).not.toMatch(/PLANTED-/);
+    expect(JSON.stringify(content)).not.toMatch(/PLANTED-/);
+    for (const line of content.preview) expect(line).not.toMatch(UNSAFE);
+    expect(content.preview).toContain(`${PACKAGE_LINE} · basis STALE`);
   });
 });
