@@ -1,10 +1,11 @@
 /** External producer-boundary regressions for Forge and RF read envelopes. */
-import { chmodSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { chmodSync, existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import { CapabilityRegistry } from '../src/workbench/capability-registry.js';
 import { readForgeGateStatus } from '../src/workbench/providers/forge.js';
-import { nativeReactiveFiberPreview } from '../src/workbench/providers/reactivefiber.js';
+import { nativeReactiveFiberPreview, registerNativeReactiveFiberRender, registerReactiveFiberRender } from '../src/workbench/providers/reactivefiber.js';
 
 const forge = vi.hoisted(() => ({ reply: null as unknown, method: '', close: vi.fn(async () => {}) }));
 vi.mock('@forge/sdk', async importOriginal => ({
@@ -63,13 +64,27 @@ const validRf = () => ({
 const dirs: string[] = [];
 const originalPath = process.env.PATH;
 afterEach(() => { process.env.PATH = originalPath; for (const dir of dirs.splice(0)) rmSync(dir, { recursive: true, force: true }); });
-function producer(reply: unknown): void {
+/** Installs a stub rf first on PATH that records the argv it was spawned with (wb-973.1/.3) and returns that record's path. */
+function producer(reply: unknown): string {
   const dir = mkdtempSync(join(tmpdir(), 'rf-envelope-audit-'));
   dirs.push(dir);
   const binary = join(dir, 'rf');
-  writeFileSync(binary, `#!/usr/bin/env node\nprocess.stdout.write(JSON.stringify(${JSON.stringify(reply)}));\nprocess.exit(${(reply as {ok?:boolean})?.ok===false ? 3 : 0});\n`);
+  const argvRecord = join(dir, 'argv.json');
+  writeFileSync(binary, `#!/usr/bin/env node\nrequire('node:fs').writeFileSync(${JSON.stringify(argvRecord)}, JSON.stringify(process.argv.slice(2)));\nprocess.stdout.write(JSON.stringify(${JSON.stringify(reply)}));\nprocess.exit(${(reply as {ok?:boolean})?.ok===false ? 3 : 0});\n`);
   chmodSync(binary, 0o700);
   process.env.PATH = `${dir}:${originalPath ?? ''}`;
+  return argvRecord;
+}
+/** The argv the stub rf recorded, or undefined when no rf process was ever spawned. */
+function recordedArgv(record: string): string[] | undefined {
+  if (!existsSync(record)) return undefined;
+  const argv: unknown = JSON.parse(readFileSync(record, 'utf8'));
+  if (!Array.isArray(argv)) throw new Error('stub rf recorded a non-array argv');
+  const tokens: unknown[] = argv;
+  return tokens.map(token => {
+    if (typeof token !== 'string') throw new Error('stub rf recorded a non-string argv token');
+    return token;
+  });
 }
 
 describe('RF external CLI preview producer', () => {
@@ -124,5 +139,128 @@ describe('RF external CLI preview producer', () => {
   ])('refuses %s instead of presenting producer data as a preview', async (_label, mutate) => {
     producer(mutate());
     await expect(nativeReactiveFiberPreview('model', 'task', process.cwd())).rejects.toMatchObject({ category: 'transport' });
+  });
+});
+
+/**
+ * wb-973.1 (SCG-R1) + wb-973.3 (SCG-R3), one cut. The reactivefiber.render.preview capability admits exactly two input
+ * arms - the legacy {model, task} preview and the served {view, taskId, model?} render - and the stub rf above records
+ * the argv each one spawns. R1: the view arm spawns `rf --workspace <root> context render --view V --task-id T
+ * [--model M] --no-commit --no-input --json`; every mixed shape is refused at input validation by the descriptor's
+ * exclusive oneOf, before an rf process exists. R3: the legacy argv stays byte-identical to the measured rf@0.1.583
+ * form, every admitted argv ends with --no-commit --no-input --json and carries no unserved selector, and both
+ * registrations keep their read/render/invoke-only descriptor.
+ */
+describe('SCG reactivefiber.render.preview input arms (wb-973.1 R1, wb-973.3 R3)', () => {
+  const RF_CAPABILITY = 'reactivefiber.render.preview';
+  const VIEW = 'swarm.worker';
+  const TASK_ID = 'bead-fixture-000';
+  const MODEL = 'model-fixture';
+  const TAIL = ['--no-commit', '--no-input', '--json'];
+  const UNSERVED = ['--component', '--candidate', '--overlay', '--commit', '--actor', '--session', '--redact', '--reveal'];
+  /** The measured rf@0.1.583 legacy form for {model:'model', task:'task'} (the R3 fence). */
+  const legacyForm = () => ['--workspace', process.cwd(), 'context', 'render', '--model', 'model', '--task', 'task', ...TAIL];
+  const invokeContext = () => ({ grants: ['reactivefiber:render'], signal: new AbortController().signal });
+  function nativeRegistry(): CapabilityRegistry {
+    const registry = new CapabilityRegistry();
+    registerNativeReactiveFiberRender(registry, process.cwd());
+    return registry;
+  }
+  /** A served --view render envelope: the legacy keys plus the additive view keys rf puts beside them in result. */
+  const viewRenderEnvelope = () => {
+    const envelope = validRf();
+    return { ...envelope, result: { ...envelope.result, view_id: VIEW, effective_scopes: [{ kind: 'shared', revision: digest }], view_contract: { status: 'satisfied', missing: [] } } };
+  };
+
+  it('SCG-R1: {view,taskId} spawns the served --view --task-id argv', async () => {
+    const envelope = viewRenderEnvelope();
+    const record = producer(envelope);
+    const result = await nativeRegistry().invoke(RF_CAPABILITY, { view: VIEW, taskId: TASK_ID }, invokeContext());
+    expect(recordedArgv(record)).toEqual(['--workspace', process.cwd(), 'context', 'render', '--view', VIEW, '--task-id', TASK_ID, ...TAIL]);
+    expect(result).toEqual({ contract: 'reactivefiber.render.preview/v1', workspaceRoot: process.cwd(), source: envelope });
+  });
+
+  it('SCG-R1: {view,taskId,model} carries --model after --task-id', async () => {
+    const record = producer(viewRenderEnvelope());
+    await nativeRegistry().invoke(RF_CAPABILITY, { view: VIEW, taskId: TASK_ID, model: MODEL }, invokeContext());
+    expect(recordedArgv(record)).toEqual(['--workspace', process.cwd(), 'context', 'render', '--view', VIEW, '--task-id', TASK_ID, '--model', MODEL, ...TAIL]);
+  });
+
+  it('SCG-R1: a view render envelope (view_id, effective_scopes, satisfied view_contract) round-trips verbatim through nativeReactiveFiberPreview', async () => {
+    const envelope = viewRenderEnvelope();
+    producer(envelope);
+    const result = await nativeReactiveFiberPreview('model', 'task', process.cwd());
+    expect(result).toEqual({ contract: 'reactivefiber.render.preview/v1', workspaceRoot: process.cwd(), source: envelope });
+  });
+
+  it.each([
+    ['{view,task}', { view: VIEW, task: 'task' }],
+    ['{view,taskId,task}', { view: VIEW, taskId: TASK_ID, task: 'task' }],
+    ['{taskId}', { taskId: TASK_ID }],
+    ['{view}', { view: VIEW }],
+    ['{model}', { model: 'model' }],
+    ['{model,task,taskId}', { model: 'model', task: 'task', taskId: TASK_ID }],
+  ])('SCG-R1: the mixed shape %s is refused at input validation and never spawns rf', async (_shape, input) => {
+    const record = producer(validRf());
+    await expect(nativeRegistry().invoke(RF_CAPABILITY, input, invokeContext())).rejects.toMatchObject({
+      name: 'CapabilityError', category: 'validation', message: 'Invalid input schema for capability reactivefiber.render.preview.',
+    });
+    expect(recordedArgv(record)).toBeUndefined();
+  });
+
+  it.each([
+    ['an empty view', { view: '', taskId: TASK_ID }],
+    ['an empty taskId', { view: VIEW, taskId: '' }],
+    ['an empty model under --view', { view: VIEW, taskId: TASK_ID, model: '' }],
+    ['a non-string taskId', { view: VIEW, taskId: 7 }],
+  ])('SCG-R1: %s is refused at input validation and never spawns rf', async (_case, input) => {
+    const record = producer(validRf());
+    await expect(nativeRegistry().invoke(RF_CAPABILITY, input, invokeContext())).rejects.toMatchObject({ category: 'validation' });
+    expect(recordedArgv(record)).toBeUndefined();
+  });
+
+  it('SCG-R1: the descriptor advertises the two arms as one exclusive oneOf, the legacy arm unchanged', () => {
+    const legacyArm = { type: 'object', properties: { model: { type: 'string', minLength: 1 }, task: { type: 'string', minLength: 1 } }, required: ['model', 'task'], additionalProperties: false };
+    const viewArm = { type: 'object', properties: { view: { type: 'string', minLength: 1 }, taskId: { type: 'string', minLength: 1 }, model: { type: 'string', minLength: 1 } }, required: ['view', 'taskId'], additionalProperties: false };
+    const [row] = nativeRegistry().catalogSnapshot();
+    expect(row?.descriptor.inputSchema).toEqual({ type: 'object', oneOf: [legacyArm, viewArm] });
+  });
+
+  it('SCG-R3: the legacy argv is byte-identical to the measured 0.1.583 form', async () => {
+    const viaRegistry = producer(validRf());
+    await nativeRegistry().invoke(RF_CAPABILITY, { model: 'model', task: 'task' }, invokeContext());
+    expect(recordedArgv(viaRegistry)).toEqual(legacyForm());
+    const viaPreview = producer(validRf());
+    await nativeReactiveFiberPreview('model', 'task', process.cwd());
+    expect(JSON.stringify(recordedArgv(viaPreview))).toBe(JSON.stringify(legacyForm()));
+  });
+
+  it.each([
+    ['{model,task}', { model: 'model', task: 'task' }],
+    ['{view,taskId}', { view: VIEW, taskId: TASK_ID }],
+    ['{view,taskId,model}', { view: VIEW, taskId: TASK_ID, model: MODEL }],
+  ])('SCG-R3: the admitted shape %s ends with --no-commit --no-input --json and adds no unserved selector', async (_shape, input) => {
+    const record = producer(validRf());
+    await nativeRegistry().invoke(RF_CAPABILITY, input, invokeContext());
+    const argv = recordedArgv(record);
+    expect(argv).toBeDefined();
+    expect(argv?.slice(-TAIL.length)).toEqual(TAIL);
+    expect(argv?.filter(token => TAIL.includes(token))).toEqual(TAIL);
+    expect(argv?.filter(token => UNSERVED.includes(token))).toEqual([]);
+  });
+
+  it('SCG-R3: both registered descriptors keep effectClass read, the render permission and invoke-only modes', () => {
+    const injected = new CapabilityRegistry();
+    registerReactiveFiberRender(injected, async () => validRf(), process.cwd());
+    for (const registry of [nativeRegistry(), injected]) {
+      const rows = registry.catalogSnapshot();
+      expect(rows).toHaveLength(1);
+      const [row] = rows;
+      expect(row?.descriptor.id).toBe(RF_CAPABILITY);
+      expect(row?.descriptor.effectClass).toBe('read');
+      expect(row?.descriptor.permissions).toEqual(['reactivefiber:render']);
+      expect(row?.descriptor.supportedModes).toEqual(['invoke']);
+      expect(row?.inspectImplemented).toBe(false);
+    }
   });
 });
