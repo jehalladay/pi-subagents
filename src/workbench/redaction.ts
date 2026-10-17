@@ -33,14 +33,36 @@ export function redactWorkbenchText(value: string, maxTextLength = WORKBENCH_TEX
 }
 
 /**
- * One unsafe unit: a terminated ANSI CSI or string sequence (OSC, DCS, SOS, PM, APC), a C0 or C1 control, the line and
- * paragraph separators, a bidi embedding, override or isolate, any default-ignorable code point (zero-width characters,
- * joiners, bidi marks, the BOM, the soft hyphen, variation selectors, tags) or a lone surrogate. An unterminated sequence
- * prefix is not one unit, but its ESC is, so no sequence survives either way. The one place this set lives.
+ * One unsafe code point: a C0 or C1 control, the line and paragraph separators, a bidi embedding, override or isolate, any
+ * default-ignorable code point (zero-width characters, joiners, bidi marks, the BOM, the soft hyphen, variation selectors,
+ * tags), a format control that hides or rearranges the text beside it although Unicode does not make it default-ignorable
+ * (wb-rqd: the interlinear annotation controls U+FFF9-U+FFFB and the Egyptian hieroglyph format controls U+13430-U+1343F),
+ * or a lone surrogate. The other format controls that are not default-ignorable, the prepended concatenation marks (Arabic
+ * number signs and ayah ends, the Syriac abbreviation mark, the Kaithi number signs), are drawn with a visible glyph and
+ * stay text.
  */
-const UNSAFE_UNIT =
-  /\x1b\[[0-?]*[ -/]*[@-~]|\x1b[\]P^X_][^\x07\x1b]*(?:\x07|\x1b\\)|[\x00-\x1f\x7f-\x9f\u{2028}\u{2029}\u{202a}-\u{202e}\u{2066}-\u{2069}\u{d800}-\u{dfff}]|\p{Default_Ignorable_Code_Point}/gu;
+const UNSAFE_CODE_POINT = String.raw`[\x00-\x1f\x7f-\x9f\u{2028}\u{2029}\u{202a}-\u{202e}\u{2066}-\u{2069}\u{d800}-\u{dfff}\u{fff9}-\u{fffb}\u{13430}-\u{1343f}]|\p{Default_Ignorable_Code_Point}`;
+/** A terminated ANSI CSI or string sequence (OSC, DCS, SOS, PM, APC) as ESC introduces it in its 7-bit form. */
+const SEVEN_BIT_SEQUENCE = String.raw`\x1b\[[0-?]*[ -/]*[@-~]|\x1b[\]P^X_][^\x07\x1b]*(?:\x07|\x1b\\)`;
+/**
+ * The same sequences with either form of introducer (wb-xbq): U+009B is CSI, and U+0090, U+0098, U+009D, U+009E and U+009F
+ * are DCS, SOS, OSC, PM and APC, each the same control as its ESC form, so the bytes after one belong to its sequence
+ * exactly as after ESC; a string sequence ends at BEL or at ST in either form, ESC \ or U+009C.
+ */
+const SEQUENCE = String.raw`(?:\x1b\[|\x9b)[0-?]*[ -/]*[@-~]|(?:\x1b[\]P^X_]|[\x90\x98\x9d-\x9f])[^\x07\x1b\x9c]*(?:\x07|\x1b\\|\x9c)`;
+/**
+ * One unsafe unit: a terminated escape sequence, 7-bit or 8-bit, or one unsafe code point. An unterminated sequence prefix
+ * is not one unit, but its introducer is, so no sequence survives either way. The one place this set lives.
+ */
+const UNSAFE_UNIT = new RegExp(`${SEQUENCE}|${UNSAFE_CODE_POINT}`, "gu");
 const HAS_UNSAFE_UNIT = new RegExp(UNSAFE_UNIT.source, "u");
+/**
+ * The other reading of an 8-bit introducer or ST (wb-xbq): it is also one C1 control, which a reader may drop on its own and
+ * so glue the bytes after it to the text before it. Here every C1 code point is its own unit and only ESC opens a sequence.
+ */
+const LONE_C1_UNIT = new RegExp(`${SEVEN_BIT_SEQUENCE}|${UNSAFE_CODE_POINT}`, "gu");
+/** An 8-bit introducer or ST: the two readings agree on every text without one. */
+const EIGHT_BIT_CONTROL = /[\x90\x98\x9b-\x9f]/u;
 
 /**
  * Replace every unsafe unit with `replacement`. A value equal to its stripped form carries none, which is how identity
@@ -67,7 +89,7 @@ interface Gap {
   control: boolean;
   /** A terminated escape sequence (CSI or a string sequence). */
   escape: boolean;
-  /** Any other default-ignorable code point, or a lone surrogate. */
+  /** Any other default-ignorable code point, a format control that hides or rearranges the text beside it, or a lone surrogate. */
   invisible: boolean;
   /** Line breaks, a CRLF counting once. */
   breaks: number;
@@ -80,8 +102,9 @@ type Rendering = (gap: Gap) => string;
 function absorb(gap: Gap, unit: string): void {
   const code = unit.charCodeAt(0);
   if (unit.length > 1) {
-    // An escape sequence, or an astral default-ignorable (a surrogate pair).
-    if (code === 0x1b) gap.escape = true;
+    // An escape sequence (ESC or an 8-bit C1 introducer opens it), or an astral invisible (a surrogate pair: a
+    // default-ignorable or an Egyptian hieroglyph format control).
+    if (code === 0x1b || (code >= 0x80 && code <= 0x9f)) gap.escape = true;
     else gap.invisible = true;
     gap.carriage = false;
     return;
@@ -95,12 +118,12 @@ function absorb(gap: Gap, unit: string): void {
   gap.carriage = code === 0x0d;
 }
 
-/** The input as visible stretches and the gaps between them; nothing is dropped or rewritten yet. */
-function segments(value: string): Segment[] {
+/** The input as visible stretches and the gaps between them, units read by `units`; nothing is dropped or rewritten yet. */
+function segments(value: string, units: RegExp = UNSAFE_UNIT): Segment[] {
   const parts: Segment[] = [];
   let at = 0;
   let gap: Gap | undefined;
-  for (const match of value.matchAll(UNSAFE_UNIT)) {
+  for (const match of value.matchAll(units)) {
     if (match.index > at) {
       if (gap) parts.push(gap);
       gap = undefined;
@@ -114,6 +137,9 @@ function segments(value: string): Segment[] {
   if (at < value.length) parts.push(value.slice(at));
   return parts;
 }
+
+/** One cell per visible character and one per gap. */
+const cellCount = (parts: readonly Segment[]): number => parts.reduce((cells, part) => cells + (typeof part === "string" ? part.length : 1), 0);
 
 /** A display renders a gap as a space when it holds whitespace or any of `classes`, and as nothing otherwise. */
 const separates = (gap: Gap, classes: readonly GapClass[]): boolean => gap.whitespace || classes.some(name => gap[name]);
@@ -246,16 +272,13 @@ function cover(parts: readonly Segment[], covered: Uint8Array): void {
   }
 }
 
-/**
- * The raw text as the plain redactor reads it, every unsafe unit in place: whatever plain redaction hides stays hidden
- * (a U+0085 inside a token, say, which JavaScript's \s does not hold). Same-length placeholders keep every offset.
- */
-function coverRaw(value: string, covered: Uint8Array): void {
+/** The cell of every offset as segments numbers them with `units`: a visible character's own, or its gap's for a unit. */
+function cellsOf(value: string, units: RegExp): Int32Array {
   const cellOf = new Int32Array(value.length);
   let cell = 0;
   let at = 0;
   let gap = -1;
-  for (const match of value.matchAll(UNSAFE_UNIT)) {
+  for (const match of value.matchAll(units)) {
     if (match.index > at || gap < 0) {
       for (; at < match.index; at++) cellOf[at] = cell++;
       gap = cell++;
@@ -263,6 +286,15 @@ function coverRaw(value: string, covered: Uint8Array): void {
     for (const end = match.index + match[0].length; at < end; at++) cellOf[at] = gap;
   }
   for (; at < value.length; at++) cellOf[at] = cell++;
+  return cellOf;
+}
+
+/**
+ * The raw text as the plain redactor reads it, every unsafe unit in place: whatever plain redaction hides stays hidden
+ * (a U+0085 inside a token, say, which JavaScript's \s does not hold). Same-length placeholders keep every offset.
+ */
+function coverRaw(value: string, covered: Uint8Array): void {
+  const cellOf = cellsOf(value, UNSAFE_UNIT);
   const conceal = (offset: number, match: string, kept = ""): string => {
     for (let index = offset + kept.length; index < offset + match.length; index++) covered[cellOf[index]] = 1;
     return kept + "\x01".repeat(match.length - kept.length);
@@ -271,6 +303,21 @@ function coverRaw(value: string, covered: Uint8Array): void {
     .replace(BEARER, (match: string, offset: number) => conceal(offset, match))
     .replace(PREFIXED, (match: string, offset: number) => conceal(offset, match))
     .replace(ASSIGNED, (match: string, key: string, offset: number) => conceal(offset, match, key));
+}
+
+/**
+ * The text with every 8-bit introducer and ST read as one control (LONE_C1_UNIT), covered as cover reads any text, every
+ * offset it covers then covered in the cells displayed (wb-xbq): reading the introducers as the sequences they open never
+ * uncovers what reading them all as single controls would hide, such as a keyword whose next letter is the final byte of a
+ * CSI. The two readings are uniform: every introducer opens its sequence in one, and none does in the other.
+ */
+function coverLone(value: string, covered: Uint8Array): void {
+  const parts = segments(value, LONE_C1_UNIT);
+  const lone = new Uint8Array(cellCount(parts));
+  cover(parts, lone);
+  const loneCell = cellsOf(value, LONE_C1_UNIT);
+  const cell = cellsOf(value, UNSAFE_UNIT);
+  for (let index = 0; index < value.length; index++) if (lone[loneCell[index]] === 1) covered[cell[index]] = 1;
 }
 
 /** Visible text and gaps as the layout displays them, every covered run as one [REDACTED]. */
@@ -304,7 +351,8 @@ const collapse = (text: string): string => text.replace(/\s+/g, " ").trim();
  * 16:44Z policy), controls, escape sequences and invisibles may each separate two tokens or sit glued inside one,
  * independently at every position (see cover), and the raw text is read as the plain redactor reads it (see coverRaw).
  * A credential any reading exposes is redacted, so an invisible can neither split a keyword nor glue a key to the text
- * before it, deletion never precedes redaction, and no reading is chosen over another. Only then are the gaps rendered:
+ * before it, deletion never precedes redaction, and no reading is chosen over another: an 8-bit introducer opens the
+ * sequence its 7-bit form would, and is read as one control as well (see coverLone). Only then are the gaps rendered:
  * - "text": model-facing text. Whitespace controls become one space; every other unsafe unit vanishes.
  * - "terminal": the terminal card. Escape sequences vanish as its terminal parser removes them; controls and separators
  *   become a space; invisibles vanish; no trim.
@@ -319,14 +367,17 @@ export function sanitizeWorkbenchText(value: string, maxTextLength = WORKBENCH_T
   if (!HAS_UNSAFE_UNIT.test(value)) return redactWorkbenchText(layout === "label" ? collapse(value) : value, maxTextLength);
   const parts = segments(value);
   const display = DISPLAY[layout];
-  const covered = new Uint8Array(parts.reduce((cells, part) => cells + (typeof part === "string" ? part.length : 1), 0));
+  const covered = new Uint8Array(cellCount(parts));
   cover(parts, covered);
   coverRaw(value, covered);
+  if (EIGHT_BIT_CONTROL.test(value)) coverLone(value, covered);
   const shown = render(parts, covered, display);
   return bounded(layout === "label" ? collapse(shown) : shown, maxTextLength);
 }
 
 const SECRET_FIELD = /^(?:authorization|api[_-]?key|access[_-]?token|refresh[_-]?token|password|secret|aws_secret_access_key|aws_session_token)$/i;
+/** A key naming a native secret field once its unsafe units are gone, in either reading of an 8-bit introducer (wb-xbq). */
+const isSecretField = (key: string): boolean => SECRET_FIELD.test(stripUnsafeText(key)) || SECRET_FIELD.test(key.replace(LONE_C1_UNIT, ""));
 
 /** All strings (including keys) are data, sanitized for bounded model display. */
 export function sanitizeWorkbenchJson(value: JsonValue, maxTextLength = WORKBENCH_TEXT_LIMIT): JsonValue {
@@ -337,7 +388,7 @@ export function sanitizeWorkbenchJson(value: JsonValue, maxTextLength = WORKBENC
     for (const [key, child] of Object.entries(value)) {
       // Native secret fields require redaction even when their value alone has no recognizable credential prefix
       // (e.g. { password: "opaque" }), and an invisible inside the key name does not hide the field.
-      result[sanitizeWorkbenchText(key, maxTextLength)] = SECRET_FIELD.test(stripUnsafeText(key)) ? REDACTED : sanitizeWorkbenchJson(child, maxTextLength);
+      result[sanitizeWorkbenchText(key, maxTextLength)] = isSecretField(key) ? REDACTED : sanitizeWorkbenchJson(child, maxTextLength);
     }
     return result;
   }

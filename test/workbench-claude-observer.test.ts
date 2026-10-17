@@ -30,6 +30,19 @@ describe('Claude bounded observer',()=>{
     expect(snapshots.get('two')?.tools).toEqual([{toolUseId:'t-two',name:'Write',state:'refused'}]);
     expect(JSON.stringify([...snapshots.values()])).not.toContain('SECRET');
   });
+  it('wb-idq: lastMessageId names only a frame the transcript read can return: user and assistant frames move it, system, stream_event and result frames do not',()=>{
+    let snapshot:ClaudeNativeObservation|undefined;
+    const observer=createClaudeObserver((_,value)=>{snapshot=value;});
+    observer.onMessage(message({type:'system',subtype:'init',session_id:'s-ids',uuid:'init-frame'}),call);
+    expect(snapshot?.lastMessageId).toBeUndefined();
+    observer.onMessage(message({type:'user',uuid:'user-1',session_id:'s-ids',message:{role:'user',content:'hi'}}),call);
+    observer.onMessage(message({type:'assistant',uuid:'asst-1',session_id:'s-ids',message:{content:[{type:'text',text:'answer'}]}}),call);
+    observer.onMessage(message({type:'stream_event',uuid:'stream-frame',session_id:'s-ids',event:{type:'content_block_delta',delta:{type:'text_delta',text:'more'}}}),call);
+    observer.onMessage(message({type:'result',uuid:'result-frame',session_id:'s-ids',subtype:'success'}),call);
+    observer.onSettled({ok:true,sessionId:'s-ids'},call);
+    expect(snapshot?.lastMessageId).toBe('asst-1');
+    expect(snapshot?.observedMessages).toBe(5);
+  });
   it.each(['exhausted','thrown'])('partial stream %s is unknown observation lost, not successful terminal',async mode=>{
     let snapshot:ClaudeNativeObservation|undefined;
     const observer=createClaudeObserver((_,value)=>{snapshot=value;});

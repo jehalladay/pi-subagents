@@ -180,7 +180,7 @@ const socketOf = (options: FurnaceOptions): string => {
 };
 
 /** The adapter under the injected client: `runs.start` runs the scripted operator path against the host's socket. */
-function harness(env: RetryFaultEnv, workflow: HostedWorkflow, script: (socketPath: string) => Promise<void>): FurnaceHostedExecutor {
+function harness(env: RetryFaultEnv, workflow: HostedWorkflow, script: (socketPath: string) => Promise<void>, cancelGraceMs = 200): FurnaceHostedExecutor {
   const createClient = (options: FurnaceOptions): FurnaceHostedClient => ({
     runs: {
       async start() {
@@ -189,7 +189,7 @@ function harness(env: RetryFaultEnv, workflow: HostedWorkflow, script: (socketPa
       },
     },
   });
-  return new env.Executor({ executor: "pi-hosted", workflow, sdk: env.sdk, createClient, cancelGraceMs: 200 });
+  return new env.Executor({ executor: "pi-hosted", workflow, sdk: env.sdk, createClient, cancelGraceMs });
 }
 
 /** The adapter receipt and the establishment markers just after start returned, and again after executor.close(). */
@@ -391,6 +391,46 @@ export async function dropBeforeAdmissionReply(env: RetryFaultEnv): Promise<Drop
       retriedWireStatus: seen.retried,
       ...settled,
     };
+  });
+}
+
+/** The grace the dangling-timer measurement runs under: long enough that a leaked grace timer is still alive when it is counted. */
+export const SETTLED_CLOSE_GRACE_MS = 5000;
+const activeTimeouts = (): number => process.getActiveResourcesInfo().filter((name) => name === "Timeout").length;
+
+export interface SettledCloseTimers {
+  readonly armed: boolean;
+  readonly settledAttempts: number;
+  readonly timeoutsBeforeClose: number;
+  readonly timeoutsAfterClose: number;
+  readonly afterClose: HostedReceipt;
+}
+/**
+ * wb-21k: three Attempts settle success, then executor.close() aborts the host's closing signal. A grace timer or
+ * cancel listener left armed on a settled Attempt would arm one SETTLED_CLOSE_GRACE_MS timer per Attempt there. This is
+ * a measurement beside the receipt roster, not a sixth roster journey: the receipt shape stays the five journeys.
+ */
+export async function settledCloseTimers(env: RetryFaultEnv): Promise<SettledCloseTimers> {
+  return withScratch(env.scratchBase, async () => {
+    const workflow: HostedWorkflow = async () => ({ status: "success" });
+    const executor = harness(
+      env,
+      workflow,
+      async (socketPath) => {
+        for (const [index, attemptId] of ["frn-atm-t1", "frn-atm-t2", "frn-atm-t3"].entries()) {
+          const bridge = await beginAttempt(socketPath, attemptId, index + 1);
+          await terminalOf(bridge, `ex-${attemptId}`);
+          bridge.end();
+        }
+      },
+      SETTLED_CLOSE_GRACE_MS,
+    );
+    await executor.start({ formula: "fixture" });
+    const settledAttempts = executor.receipt().attempts.filter((attempt) => attempt.terminal === "success").length;
+    const timeoutsBeforeClose = activeTimeouts();
+    await executor.close();
+    const timeoutsAfterClose = activeTimeouts();
+    return { armed: settledAttempts === 3, settledAttempts, timeoutsBeforeClose, timeoutsAfterClose, afterClose: executor.receipt() };
   });
 }
 
