@@ -10,8 +10,12 @@
  *
  * Verified protocol only (@furnace/sdk 0.1.0, furnace.executor.v1):
  *  - Only the result `status` word is mapped; failure_class and data are never read.
- *  - failure and indeterminate PARK the Run for the manual operator ladder.
- *    Furnace never retries an Attempt on its own, and neither does this adapter.
+ *  - failure and indeterminate PARK the Run for the manual operator ladder
+ *    (README.md §5/§7 @15fd6f8ee): Furnace records this adapter's failure as
+ *    work_failure and never retries work_failure or a resident host's
+ *    indeterminate. Furnace automatically re-attempts only what the Run's
+ *    recorded retry.* policy admits, for example infrastructure_failure by
+ *    default and timeout only when opted in. This adapter never retries an Attempt.
  *  - Cancel is a request: the callback's AbortSignal is aborted and the workflow
  *    must stop cooperatively. A workflow that ignores it is reported
  *    indeterminate after a bounded grace, never cancelled.
@@ -107,12 +111,12 @@ export interface HostedReceipt {
     readonly observe: "unsupported";
     readonly identity: "per-attempt";
     readonly replyBounds: "none";
-    readonly retry: "furnace-parks-never-retries";
+    readonly retry: "adapter-never-retries; furnace-auto-retries-by-recorded-retry-policy; work_failure-and-indeterminate-park";
   };
   readonly attempts: readonly HostedAttemptReceipt[];
   readonly identityViolations: readonly string[];
 }
-const LIMITS: HostedReceipt["limits"] = { crashDurability: "none", observe: "unsupported", identity: "per-attempt", replyBounds: "none", retry: "furnace-parks-never-retries" };
+const LIMITS: HostedReceipt["limits"] = { crashDurability: "none", observe: "unsupported", identity: "per-attempt", replyBounds: "none", retry: "adapter-never-retries; furnace-auto-retries-by-recorded-retry-policy; work_failure-and-indeterminate-park" };
 
 /** The slice of the SDK client this adapter calls; injectable so tests never spawn Furnace. */
 export interface FurnaceHostedClient {
