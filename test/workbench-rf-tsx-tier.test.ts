@@ -35,6 +35,8 @@ const STUB_VERSION = "0.0.0-hermetic-stub";
 const RUN_BUDGET_MS = 120_000;
 const CHILD_TIMEOUT_MS = 100_000;
 const NODE = process.execPath;
+/** Environment variables std-env reads to decide that an agent drives the run (vitest then auto-selects its agent reporter). */
+const AGENT_MARKERS = ["AI_AGENT", "CLAUDECODE", "CLAUDE_CODE"] as const;
 const ID_TAIL = "0".repeat(26);
 
 /** R9's clauses as the tier labels its assertions; a failing clause names itself in the report. */
@@ -108,11 +110,11 @@ function childEnv(tier: Readonly<Record<string, string>>, path: string): NodeJS.
   return { ...env, ...tier, PATH: path };
 }
 
-/** Run the declared tier command once, with a JSON report written beside the default console output. */
+/** Run the declared tier command once, with a JSON report. No forced console reporter: the record lines must reach stdout through the reporter vitest picks itself. */
 function runTier(dir: string, tier: Readonly<Record<string, string>>, path: string): TierRun {
   const out = join(dir, "report.json");
   const [bin = "", ...args] = declaredCommand();
-  const child = spawnSync(join(ROOT, bin), [...args, "--reporter=default", "--reporter=json", `--outputFile.json=${out}`], {
+  const child = spawnSync(join(ROOT, bin), [...args, "--reporter=json", `--outputFile.json=${out}`], {
     cwd: ROOT,
     env: childEnv(tier, path),
     encoding: "utf8",
@@ -130,6 +132,27 @@ function runTier(dir: string, tier: Readonly<Record<string, string>>, path: stri
     return only;
   };
   return { status: child.status, stdout: child.stdout ?? "", report, success: row("success row"), absent: row("runtime-absent row") };
+}
+
+/** The two canonical launches: an agent session (vitest auto-selects its agent reporter) and a plain shell. */
+type Launch = "agent" | "plain";
+
+/** The parent's environment minus vitest's own variables, both tier variables and every agent marker, plus the tier variables and PATH; `agent` adds the markers std-env detects. */
+function launchEnv(launch: Launch, tier: Readonly<Record<string, string>>, path: string): NodeJS.ProcessEnv {
+  const env = childEnv(tier, path);
+  for (const marker of AGENT_MARKERS) delete env[marker];
+  return launch === "agent" ? { ...env, AI_AGENT: "hermetic-agent", CLAUDECODE: "1" } : env;
+}
+
+/** The declared tier command exactly as forge launches it (no reporter flag), in `launch`'s environment: its exit status and every RF-TSX-RECEIPT line it printed. */
+function canonicalLaunch(launch: Launch, tier: Readonly<Record<string, string>>, path: string): { readonly status: number | null; readonly receipts: readonly string[] } {
+  const [bin = "", ...args] = declaredCommand();
+  const child = spawnSync(join(ROOT, bin), args, { cwd: ROOT, env: launchEnv(launch, tier, path), encoding: "utf8", timeout: CHILD_TIMEOUT_MS });
+  const receipts = (child.stdout ?? "")
+    .split("\n")
+    .filter(line => line.includes("RF-TSX-RECEIPT {"))
+    .map(line => line.slice(line.indexOf("RF-TSX-RECEIPT {")));
+  return { status: child.status, receipts };
 }
 
 function failureOf(row: RowResult): string {
@@ -310,6 +333,24 @@ describe("rf-preview-tsx encodes R9's receipt rows (wb-693.6, R8 -> R9)", () => 
       expect(run.status).toBe(0);
       expect(run.stdout).toContain(`RF-TSX-RECEIPT {"row":"success","cli_version":"${STUB_VERSION}","tsx_worker_spawns":1,`);
       expect(run.stdout).toContain('RF-TSX-RECEIPT {"row":"runtime-absent","category":"unavailable","message":"RF render refused: RF_COMPONENT_RUNTIME_ABSENT"}');
+    },
+    RUN_BUDGET_MS,
+  );
+
+  it(
+    "the canonical launch (no reporter flag) carries the same receipt lines in an agent session as in a plain shell: agent-reporter count == plain-reporter count == 2",
+    () => {
+      const dir = scratch("rf-tsx-launch-");
+      const workspace = join(dir, "workspace");
+      mkdirSync(workspace);
+      const tier = { [FIXTURE]: workspace, [NO_DENO_PATH]: stubRf(join(dir, "no-deno"), refusal("RF_COMPONENT_RUNTIME_ABSENT"), 1) };
+      const path = `${stubRf(join(dir, "tsx"), tsxPreview(), 0)}:${process.env.PATH ?? ""}`;
+      const agent = canonicalLaunch("agent", tier, path);
+      const plain = canonicalLaunch("plain", tier, path);
+      expect([agent.status, plain.status]).toEqual([0, 0]);
+      expect(plain.receipts).toHaveLength(2);
+      expect(agent.receipts).toHaveLength(plain.receipts.length);
+      expect(agent.receipts).toEqual(plain.receipts);
     },
     RUN_BUDGET_MS,
   );

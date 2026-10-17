@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { addUsage, getLifetimeCost, getLifetimeTotal, getSessionContextPercent, getSessionTokens, PendingUsagePool } from "../src/usage.js";
+import { addUsage, getLifetimeCost, getLifetimeTotal, getSessionContextPercent, getSessionTokens, type LifetimeUsage, PendingUsagePool } from "../src/usage.js";
 
 // Regression for issue #38 — token semantics + context indicator
 describe("usage", () => {
@@ -114,7 +114,7 @@ describe("usage", () => {
 
   describe("cost accumulation", () => {
     it("sums cost across messages but keeps it out of the token total", () => {
-      const usage = { input: 0, output: 0, cacheWrite: 0 };
+      const usage: LifetimeUsage = { input: 0, output: 0, cacheWrite: 0 };
       addUsage(usage, { input: 100, output: 50, cacheWrite: 10, cacheRead: 900, cost: 0.002 });
       addUsage(usage, { input: 200, output: 80, cacheWrite: 20, cacheRead: 1800, cost: 0.004 });
 
