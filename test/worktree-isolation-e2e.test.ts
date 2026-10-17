@@ -65,8 +65,18 @@ function toolResultNames(context: Context): string[] {
     .map((m) => (m as { toolName?: string }).toolName ?? "");
 }
 
+/**
+ * The transcript fields agentResultText reads. A faux-model `Context` and the
+ * live parent `AgentSession` both carry them; the session's `messages` are
+ * `AgentMessage[]` (pi's custom entries included), which a `Context` parameter
+ * does not accept.
+ */
+interface TranscriptLike {
+  messages: ReadonlyArray<{ role: string; toolName?: string; content?: unknown }>;
+}
+
 /** Every Agent tool result the parent session received, concatenated. */
-function agentResultText(session: Context): string {
+function agentResultText(session: TranscriptLike): string {
   return session.messages
     .filter((m) => m.role === "toolResult" && (m as { toolName?: string }).toolName === "Agent")
     .flatMap((m) => ((m.content ?? []) as Array<{ text?: string }>).map((b) => b.text ?? ""))
