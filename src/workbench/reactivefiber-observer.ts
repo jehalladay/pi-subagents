@@ -12,6 +12,7 @@
 import {createHash} from 'node:crypto';
 import {CapabilityError, type JsonValue} from './capability-registry.js';
 import type {NativeRef, NativeSnapshot, ObservationProjection, ObservationScope, Presentation} from './observation.js';
+import {REACTIVE_FIBER_CLI_SCHEMA, REACTIVEFIBER_RENDER_PREVIEW_CONTRACT} from './providers/reactivefiber.js';
 import {sanitizeWorkbenchText, stripUnsafeText} from './redaction.js';
 
 /** This adapter's projection contract, for the tool wiring that will surface it. */
@@ -37,8 +38,8 @@ export interface ReactiveFiberProjectionTopology {
   diagnostics: readonly string[];
 }
 
-const CONTRACT = 'reactivefiber.render.preview/v1';
-const SCHEMA = 'reactive-fiber.cli/v1';
+const CONTRACT = REACTIVEFIBER_RENDER_PREVIEW_CONTRACT;
+const SCHEMA = REACTIVE_FIBER_CLI_SCHEMA;
 const COMMAND = 'context.render';
 const ENVELOPE_KEYS = ['schema', 'ok', 'command', 'operation_id', 'workspace', 'transaction_id', 'result', 'diagnostics'];
 const DIAGNOSTIC_KEYS = ['code', 'severity', 'message', 'hint', 'source', 'metadata'];
