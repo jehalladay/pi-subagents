@@ -59,8 +59,11 @@ const HAS_UNSAFE_UNIT = new RegExp(UNSAFE_UNIT.source, "u");
 /**
  * The other reading of an 8-bit introducer or ST (wb-xbq): it is also one C1 control, which a reader may drop on its own and
  * so glue the bytes after it to the text before it. Here every C1 code point is its own unit and only ESC opens a sequence.
+ * Sticky, for readingsOf, which takes one unit at a time.
  */
-const LONE_C1_UNIT = new RegExp(`${SEVEN_BIT_SEQUENCE}|${UNSAFE_CODE_POINT}`, "gu");
+const LONE_C1_UNIT = new RegExp(`${SEVEN_BIT_SEQUENCE}|${UNSAFE_CODE_POINT}`, "uy");
+/** The unit a reader that honours every 8-bit introducer takes at an offset: UNSAFE_UNIT, sticky. */
+const WHOLE_UNIT = new RegExp(UNSAFE_UNIT.source, "uy");
 /** An 8-bit introducer or ST: the two readings agree on every text without one. */
 const EIGHT_BIT_CONTROL = /[\x90\x98\x9b-\x9f]/u;
 
@@ -118,12 +121,18 @@ function absorb(gap: Gap, unit: string): void {
   gap.carriage = code === 0x0d;
 }
 
-/** The input as visible stretches and the gaps between them, units read by `units`; nothing is dropped or rewritten yet. */
-function segments(value: string, units: RegExp = UNSAFE_UNIT): Segment[] {
+/** One unsafe unit as a reading takes it: where it starts and its text. A RegExpExecArray from matchAll is one. */
+interface UnitMatch {
+  readonly index: number;
+  readonly 0: string;
+}
+
+/** The input as visible stretches and the gaps between them, units as `units` takes them; nothing is dropped or rewritten yet. */
+function segments(value: string, units: Iterable<UnitMatch> = value.matchAll(UNSAFE_UNIT)): Segment[] {
   const parts: Segment[] = [];
   let at = 0;
   let gap: Gap | undefined;
-  for (const match of value.matchAll(units)) {
+  for (const match of units) {
     if (match.index > at) {
       if (gap) parts.push(gap);
       gap = undefined;
@@ -273,12 +282,12 @@ function cover(parts: readonly Segment[], covered: Uint8Array): void {
 }
 
 /** The cell of every offset as segments numbers them with `units`: a visible character's own, or its gap's for a unit. */
-function cellsOf(value: string, units: RegExp): Int32Array {
+function cellsOf(value: string, units: Iterable<UnitMatch>): Int32Array {
   const cellOf = new Int32Array(value.length);
   let cell = 0;
   let at = 0;
   let gap = -1;
-  for (const match of value.matchAll(units)) {
+  for (const match of units) {
     if (match.index > at || gap < 0) {
       for (; at < match.index; at++) cellOf[at] = cell++;
       gap = cell++;
@@ -294,7 +303,7 @@ function cellsOf(value: string, units: RegExp): Int32Array {
  * (a U+0085 inside a token, say, which JavaScript's \s does not hold). Same-length placeholders keep every offset.
  */
 function coverRaw(value: string, covered: Uint8Array): void {
-  const cellOf = cellsOf(value, UNSAFE_UNIT);
+  const cellOf = cellsOf(value, value.matchAll(UNSAFE_UNIT));
   const conceal = (offset: number, match: string, kept = ""): string => {
     for (let index = offset + kept.length; index < offset + match.length; index++) covered[cellOf[index]] = 1;
     return kept + "\x01".repeat(match.length - kept.length);
@@ -305,19 +314,130 @@ function coverRaw(value: string, covered: Uint8Array): void {
     .replace(ASSIGNED, (match: string, key: string, offset: number) => conceal(offset, match, key));
 }
 
+/** The most readings of one cluster of 8-bit introducers and ST a text is covered under; a text with more is hidden whole. */
+const MAX_READINGS = 1024;
 /**
- * The text with every 8-bit introducer and ST read as one control (LONE_C1_UNIT), covered as cover reads any text, every
- * offset it covers then covered in the cells displayed (wb-xbq): reading the introducers as the sequences they open never
- * uncovers what reading them all as single controls would hide, such as a keyword whose next letter is the final byte of a
- * CSI. The two readings are uniform: every introducer opens its sequence in one, and none does in the other.
+ * Introducers that sit this many code units apart or less are read in every combination (a cluster); a farther one is read
+ * on its own, because a detection (a scheme, a key prefix or an assignment key and the start of its value) spans a few
+ * dozen code units at most, and what an introducer does to the tail of a token is already covered by the reading that
+ * takes every introducer whole.
  */
-function coverLone(value: string, covered: Uint8Array): void {
-  const parts = segments(value, LONE_C1_UNIT);
-  const lone = new Uint8Array(cellCount(parts));
-  cover(parts, lone);
-  const loneCell = cellsOf(value, LONE_C1_UNIT);
-  const cell = cellsOf(value, UNSAFE_UNIT);
-  for (let index = 0; index < value.length; index++) if (lone[loneCell[index]] === 1) covered[cell[index]] = 1;
+const CLUSTER_GAP = 32;
+/** The most work (readings times code units of text) one text is covered under; a text that needs more is hidden whole. */
+const MAX_READING_WORK = 2 ** 23;
+
+/** The first index of `sorted` whose value is at least `value`. */
+function lowerBound(sorted: readonly number[], value: number): number {
+  let low = 0;
+  let high = sorted.length;
+  while (low < high) {
+    const middle = (low + high) >> 1;
+    if (sorted[middle] < value) low = middle + 1;
+    else high = middle;
+  }
+  return low;
+}
+
+/**
+ * Every reading of the text's 8-bit introducers and ST (wb-xbq, wb-mrg), each a list of the units it takes in order. An
+ * introducer is either the start of the sequence it opens (U+009B is CSI, U+0090/0098/009D/009E/009F open the string
+ * sequences) or one C1 control a reader drops on its own, and ST in the same way ends a string or is one control; a reader
+ * decides at EACH introducer, so the readings are the combinations of those choices, the first one every introducer whole
+ * (UNSAFE_UNIT). The combinations are taken per cluster of introducers (CLUSTER_GAP), the rest of the text read whole. A
+ * cluster with more combinations than MAX_READINGS, or a text whose readings take more than MAX_READING_WORK, has none to
+ * list: `undefined`, which callers answer by hiding the whole text, never by guessing at the readings left out.
+ */
+function readingsOf(value: string): UnitMatch[][] | undefined {
+  // The ends the unit at each offset may take, the whole sequence first; offsets in no unit are visible text.
+  const ends = new Map<number, number[]>();
+  const units: number[] = [];
+  for (let at = 0; at < value.length; at += (value.codePointAt(at) ?? 0) > 0xffff ? 2 : 1) {
+    WHOLE_UNIT.lastIndex = at;
+    LONE_C1_UNIT.lastIndex = at;
+    const taken = [WHOLE_UNIT.exec(value), LONE_C1_UNIT.exec(value)].flatMap(match => (match ? [at + match[0].length] : []));
+    if (taken.length === 0) continue;
+    ends.set(at, [...new Set(taken)]);
+    units.push(at);
+  }
+  // Each cluster of offsets where the readings differ, as the first offset and the last offset a reading may reach.
+  const clusters: { first: number; last: number }[] = [];
+  let reach = -1;
+  for (const at of units) {
+    const options = ends.get(at) ?? [];
+    if (options.length < 2) continue;
+    const last = Math.max(...options);
+    const open = clusters[clusters.length - 1];
+    if (open && at - reach <= CLUSTER_GAP) open.last = Math.max(open.last, last);
+    else clusters.push({ first: at, last });
+    reach = Math.max(reach, last);
+  }
+  const unitAt = (at: number, end: number): UnitMatch => ({ index: at, 0: value.slice(at, end) });
+  /** The readings in which the introducers in [first, last] choose freely and every other follows the whole sequence. */
+  const within = (first: number, last: number): UnitMatch[][] | undefined => {
+    const found: UnitMatch[][] = [];
+    const walk = (from: number, prior: readonly UnitMatch[]): boolean => {
+      const taken = [...prior];
+      let slot = lowerBound(units, from);
+      while (slot < units.length) {
+        const at = units[slot];
+        const options = ends.get(at) ?? [];
+        if (options.length > 1 && at >= first && at <= last) {
+          for (const end of options) if (!walk(end, [...taken, unitAt(at, end)])) return false;
+          return true;
+        }
+        taken.push(unitAt(at, options[0]));
+        slot = lowerBound(units, options[0]);
+      }
+      found.push(taken);
+      return found.length <= MAX_READINGS;
+    };
+    return walk(0, []) ? found : undefined;
+  };
+  const base = within(1, 0);
+  if (!base) return undefined;
+  const readings = base;
+  for (const { first, last } of clusters) {
+    if (readings.length * value.length > MAX_READING_WORK) return undefined;
+    const found = within(first, last);
+    if (!found) return undefined;
+    readings.push(...found.slice(1));
+  }
+  return readings;
+}
+
+/** The text with the units of one reading removed. */
+function withoutUnits(value: string, units: readonly UnitMatch[]): string {
+  let kept = "";
+  let at = 0;
+  for (const unit of units) {
+    kept += value.slice(at, unit.index);
+    at = unit.index + unit[0].length;
+  }
+  return kept + value.slice(at);
+}
+
+/**
+ * The text read under every combination of readings of its 8-bit introducers and ST (readingsOf), each reading covered as
+ * cover reads any text, and every offset it covers then covered in the cells displayed (wb-xbq, wb-mrg): reading the
+ * introducers as the sequences they open never uncovers what reading some as single controls would hide, such as a keyword
+ * whose next letter is the final byte of a CSI, and a text whose introducers are read differently from one another is
+ * covered as each such reading covers it. Past the bound on readings every cell is covered.
+ */
+function coverMixed(value: string, covered: Uint8Array): void {
+  const readings = readingsOf(value);
+  if (!readings) {
+    covered.fill(1);
+    return;
+  }
+  const cell = cellsOf(value, value.matchAll(UNSAFE_UNIT));
+  // The first reading takes every introducer whole, the one cover has already read.
+  for (const reading of readings.slice(1)) {
+    const parts = segments(value, reading);
+    const read = new Uint8Array(cellCount(parts));
+    cover(parts, read);
+    const own = cellsOf(value, reading);
+    for (let index = 0; index < value.length; index++) if (read[own[index]] === 1) covered[cell[index]] = 1;
+  }
 }
 
 /** Visible text and gaps as the layout displays them, every covered run as one [REDACTED]. */
@@ -370,14 +490,22 @@ export function sanitizeWorkbenchText(value: string, maxTextLength = WORKBENCH_T
   const covered = new Uint8Array(cellCount(parts));
   cover(parts, covered);
   coverRaw(value, covered);
-  if (EIGHT_BIT_CONTROL.test(value)) coverLone(value, covered);
+  if (EIGHT_BIT_CONTROL.test(value)) coverMixed(value, covered);
   const shown = render(parts, covered, display);
   return bounded(layout === "label" ? collapse(shown) : shown, maxTextLength);
 }
 
 const SECRET_FIELD = /^(?:authorization|api[_-]?key|access[_-]?token|refresh[_-]?token|password|secret|aws_secret_access_key|aws_session_token)$/i;
-/** A key naming a native secret field once its unsafe units are gone, in either reading of an 8-bit introducer (wb-xbq). */
-const isSecretField = (key: string): boolean => SECRET_FIELD.test(stripUnsafeText(key)) || SECRET_FIELD.test(key.replace(LONE_C1_UNIT, ""));
+/**
+ * A key naming a native secret field once its unsafe units are gone, under any reading of its 8-bit introducers (wb-xbq,
+ * wb-mrg); a key with more readings than readingsOf lists is one.
+ */
+function isSecretField(key: string): boolean {
+  if (SECRET_FIELD.test(stripUnsafeText(key))) return true;
+  if (!EIGHT_BIT_CONTROL.test(key)) return false;
+  const readings = readingsOf(key);
+  return !readings || readings.some(reading => SECRET_FIELD.test(withoutUnits(key, reading)));
+}
 
 /** All strings (including keys) are data, sanitized for bounded model display. */
 export function sanitizeWorkbenchJson(value: JsonValue, maxTextLength = WORKBENCH_TEXT_LIMIT): JsonValue {
