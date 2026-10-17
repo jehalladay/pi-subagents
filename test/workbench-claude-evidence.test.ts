@@ -7,7 +7,7 @@
 import { afterEach, describe, expect, it, type Mock, vi } from "vitest";
 import { CapabilityError } from "../src/workbench/capability-registry.js";
 import {
-  CLAUDE_EVIDENCE_CONTRACT, type ClaudeEvidenceContent, type ClaudeEvidenceDeps, readClaudeMessageEvidence,
+  CLAUDE_EVIDENCE_CONTRACT, CLAUDE_EVIDENCE_TRUNCATED_MARK, CLAUDE_MESSAGE_REF, type ClaudeEvidenceContent, type ClaudeEvidenceDeps, readClaudeMessageEvidence,
 } from "../src/workbench/claude-evidence.js";
 import type { ClaudeTranscriptRow } from "../src/workbench/claude-transcript.js";
 
@@ -76,7 +76,7 @@ describe("C1 docs/workbench/20 § Producer mapping (claude-agent-sdk session): s
     const read = seam();
     const content = await readClaudeMessageEvidence(refOf(TARGET), deps(read));
     expect(content).toStrictEqual({
-      contract: "workbench.claude-evidence/v1", kind: "claude-message", provider: "claude-agent-sdk",
+      contract: "workbench.claude-evidence/v1", kind: "claude-message", provider: "claude-agent-sdk", role: "assistant",
       nativeRef: { provider: "claude-agent-sdk", type: "message", id: TARGET },
       capturedAt: CLOCK, bytes: 11, truncated: false, preview: ["target body"], freshness: "current",
     });
@@ -91,6 +91,19 @@ describe("C1 docs/workbench/20 § Producer mapping (claude-agent-sdk session): s
     const content = await previewOf("x");
     expect(content.kind).toBe("claude-message");
     expect(refOf(TARGET).startsWith(`${content.kind}:`)).toBe(true);
+  });
+
+  it("wb-idq: role is the selected row's own type, and the exported ref grammar and marker are what the store wiring keys on", async () => {
+    const read = seam([{ type: "user", uuid: TARGET, text: "asked" }]);
+    const content = await readClaudeMessageEvidence(refOf(TARGET), deps(read));
+    expect(content.role).toBe("user");
+    expect(CLAUDE_MESSAGE_REF.test(refOf(TARGET))).toBe(true);
+    expect(CLAUDE_MESSAGE_REF.test("claude-message:u1")).toBe(false);
+    expect(CLAUDE_MESSAGE_REF.test("forge-operation:op-1")).toBe(false);
+    const bounded = await previewOf("x".repeat(1000), { maxLines: 1 });
+    expect(bounded.truncated).toBe(true);
+    expect(bounded.preview.at(-1)).toBe(CLAUDE_EVIDENCE_TRUNCATED_MARK);
+    expect(CLAUDE_EVIDENCE_TRUNCATED_MARK).toMatch(/^… truncated/);
   });
 
   it("a uuid outside the bounded window is a transport refusal that states the bound, with no preview and no fabricated row", async () => {
@@ -342,7 +355,7 @@ describe("C3 docs/workbench/09 § Data retention and privacy: bounded redacted p
   it("holds no raw payload field: the answer's keys are the fixed contract set and nothing like text, raw, message or uuid-of-others", async () => {
     const content = await previewOf("plain message");
     expect(keysOf(content).sort()).toStrictEqual([
-      "bytes", "capturedAt", "contract", "freshness", "id", "kind", "nativeRef", "preview", "provider", "provider", "truncated", "type",
+      "bytes", "capturedAt", "contract", "freshness", "id", "kind", "nativeRef", "preview", "provider", "provider", "role", "truncated", "type",
     ].sort());
     expect(Array.isArray(content.preview)).toBe(true);
     expect(content.preview.every(line => typeof line === "string")).toBe(true);
@@ -583,8 +596,14 @@ describe("wb-6ze.10 respin-2 U3 kill-own: whitespace separators, the line and pa
     expect(content.truncated).toBe(false);
     expect(content.preview.length).toBeGreaterThan(1);
     for (const line of content.preview) expect(line).not.toMatch(UNSAFE_DISPLAY);
-    // Every unsafe unit vanished or became whitespace; no visible character was dropped or added.
-    expect(content.preview.join("").replace(/ /g, "")).toBe(units.map((_, index) => `w${index}`).join(""));
+    // Every unsafe unit vanished or became whitespace; no visible character was dropped or added, with ONE sanctioned exception
+    // (wb-xbq, known-conflicts entry 7): the 8-bit DCS introducer U+0090 at stretch 49 opens a whole escape unit that runs to the
+    // 8-bit ST U+009C at stretch 61, so the body stretches w50..w61 belong to that unit and are covered with it. The expectation
+    // stays an EXACT equality over every other stretch; the row now also pins the whole-unit DCS body.
+    const swallowedByDcsBody = (index: number): boolean => index >= 50 && index <= 61;
+    expect(content.preview.join("").replace(/ /g, "")).toBe(
+      units.flatMap((_, index) => (swallowedByDcsBody(index) ? [] : [`w${index}`])).join(""),
+    );
   });
 
   it("routes the whole row through the shared helper's lines layout: whole-row redaction first, then LF rows kept", async () => {

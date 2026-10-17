@@ -5,6 +5,9 @@
  * the claude transcript read, the furnace attempt-log read and the forge
  * operation read are adapted to the docs/20 reader seams and handed to
  * `createEvidenceLoaders`, whose live exact-grant check governs every load.
+ * The claude seam resolves the REQUESTED node's own listing (wb-idq), never
+ * the first node in scope that lists the ref, and every capture time comes
+ * from the clock the host injects at boot: this module reads no host clock.
  * The forge adapter re-reads through the registered `forge.gate.status`
  * capability under the operator's grants and carries the reader's own
  * freshness and truncation labels through unchanged. Wiring only: the store
@@ -46,15 +49,16 @@ export interface WorkbenchEvidenceDeps {
    */
   registry?(workspace: string): Pick<CapabilityRegistry, "invoke">;
   /** Test seams; the defaults are the landed reader and the real SDK client, loaded on first use. */
-  claudeRead?(sessionId: string, cwd: string): Promise<readonly ClaudeTranscriptRow[]>;
+  claudeRead?(sessionId: string, cwd: string, limit: number): Promise<readonly ClaudeTranscriptRow[]>;
   furnaceClient?(workspace: string): Pick<FurnaceObserverClient, "logs"> | Promise<Pick<FurnaceObserverClient, "logs">>;
-  now?(): Date;
+  /** The host's capture clock, injected once at boot; the store never falls back to a clock of its own. */
+  now(): Date;
 }
 
 export function createWorkbenchEvidenceStore(deps: WorkbenchEvidenceDeps): EvidenceStore {
   const readTranscript =
     deps.claudeRead ??
-    (async (sessionId: string, cwd: string) => (await loadWorkbenchNative()).readClaudeTranscript(sessionId, cwd));
+    (async (sessionId: string, cwd: string, limit: number) => (await loadWorkbenchNative()).readClaudeTranscript(sessionId, cwd, limit));
   const furnaceClient =
     deps.furnaceClient ??
     (async (workspace: string) => {
@@ -90,7 +94,7 @@ export function createWorkbenchEvidenceStore(deps: WorkbenchEvidenceDeps): Evide
                   principal: { id: scope.principal, role: "local-operator" },
                   workspace: scope.workspace,
                 }),
-              now: () => (deps.now?.() ?? new Date()).toISOString(),
+              now: () => deps.now().toISOString(),
               maxBytes: EVIDENCE_FORGE_MAX_BYTES,
               signal,
               // The owning node's freshness is the host's view of the source: anything but current labels the read stale.
@@ -120,12 +124,18 @@ export function createWorkbenchEvidenceStore(deps: WorkbenchEvidenceDeps): Evide
         };
   const loaders = createEvidenceLoaders({
     grants: deps.grants,
-    now: () => (deps.now?.() ?? new Date()),
+    now: () => deps.now(),
     ...(forge !== undefined ? { forge } : {}),
-    claude: async ({ sessionId }) => {
-      const cwd = deps.cwd();
-      if (cwd === undefined) throw new EvidenceRefusal("transport");
-      return readTranscript(sessionId, cwd);
+    claude: {
+      readTranscript: (sessionId, cwd, limit) => readTranscript(sessionId, cwd, limit),
+      cwd: () => deps.cwd(),
+      // Only the node the ref was requested on, and only when it lists the ref: the loader refuses unauthorized otherwise.
+      owningNode: (scope, nativeRef, evidenceRef) => {
+        const node = deps.projection.query({ scope, ref: nativeRef, limit: 1 }).nodes[0];
+        return node === undefined || !node.evidenceRefs.includes(evidenceRef)
+          ? undefined
+          : { nativeRef: node.nativeRef, evidenceRefs: node.evidenceRefs, freshness: node.freshness };
+      },
     },
     furnace: async ({ runId, attemptId, maxBytes, signal }) => {
       const scope = deps.scope();
@@ -151,7 +161,7 @@ export function createWorkbenchEvidenceStore(deps: WorkbenchEvidenceDeps): Evide
         maxLines: EVIDENCE_MAX_LINES,
         timeoutMs: EVIDENCE_TIMEOUT_MS,
         signal,
-        capturedAt: () => (deps.now?.() ?? new Date()).toISOString(),
+        capturedAt: () => deps.now().toISOString(),
       });
       // The furnace loader marks a lossy, incomplete or paged read truncated and the store then adds its single [truncated];
       // the reader's own trailing "truncated (producer: ...)" line would otherwise show beside it (wb-cz9 leg 2). A budget-only
