@@ -180,3 +180,7 @@ timeout = 900
 [build.commands.detached-control-live]
 command = "./node_modules/.bin/vitest run --config vitest.detached-control-live.config.ts"
 timeout = 600
+
+[build.commands.claude-control-live]
+command = "./node_modules/.bin/vitest run --config vitest.claude-control-live.config.ts"
+timeout = 900

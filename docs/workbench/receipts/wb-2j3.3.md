@@ -9,3 +9,12 @@
 - Red, measured before the change: `npx vitest run test/workbench-reactivefiber-write-plane-disclosure.test.ts` gave `2 failed | 2 passed (4)`: A1 (descriptor still read "no durable write") and A2 (note still read "0 storage writes"); A3 and A4 are controls and passed.
 - Green, measured on this tree: that file plus the twelve related reactivefiber/native suites, `9 files, 309 passed (309)`; `forge run lint` rc 0; `forge run typing` rc 0; `npm run typecheck:test` shows 0 rows in the new file.
 - Not changed, by scope: `docs/workbench/feature-matrix.md` row 105 still says "zero durable writes" (owner-maintained; flagged for the matrix owner). Gate and landing records for this cut go in later entries of this file.
+
+## 2026-10-17 receipt: INDEX union re-cut onto cf0068f (seat ws-05, run g6-work-s4, haiku tier)
+
+- Cause: landing 87 (wb-a2g.12) appended a line to `docs/workbench/receipts/INDEX.md`; trunk cf0068f merged INTO this branch (merge, not rebase). The only conflict was INDEX.md, resolved as an append-only union with the landed lines first and this bead's line last. No other file conflicted.
+- Re-measure on the merged tree: red = the new disclosure test with both src files at their cf0068f blobs gives 2 failed | 2 passed (4); green = full `npx vitest run` 292 files, 10746 passed | 1 expected fail | 7 skipped; `forge run lint` rc 0; `forge run typing` rc 0; biome clean; no `.only`.
+- `npm run typecheck:test`: 36 rows tree-wide, 0 rows in the delivered files (none introduced by this cut).
+- wb-era's source-hygiene grep ran over my files and returned nothing.
+- Display paths added: none (static literals). Direct forge; no furnace-fallback row.
+- Standing landing note carried: REAL src collision with wb-973.1 98b6ffe on `src/workbench/providers/reactivefiber.ts` - 973.1 lands first, this bead re-cuts that file as a union keeping both sides.
