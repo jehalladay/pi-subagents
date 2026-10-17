@@ -24,14 +24,14 @@
  * Red-first with a foreign-repo TMPDIR fixture.
  */
 import { execFileSync, spawnSync } from "node:child_process";
-import { copyFileSync, mkdirSync, mkdtempSync, readFileSync, realpathSync, rmSync, writeFileSync } from "node:fs";
-import { tmpdir } from "node:os";
+import { copyFileSync, mkdirSync, readFileSync, realpathSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { afterAll, afterEach, describe, expect, it } from "vitest";
 import { gitStamp, revisionOf } from "../qa/workbench/git-stamp.mjs";
 import { buildPackageReceipt } from "../qa/workbench/package-boundary.mjs";
 import { nonRepoScratch } from "./helpers/non-repo-scratch";
+import { installScratchLeakGuard, makeScratch, removeAllScratch } from "./helpers/scratch";
 
 interface Stamp {
   head: string | null;
@@ -40,7 +40,7 @@ interface Stamp {
 
 const repo = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const qa = join(repo, "qa", "workbench");
-const dirs: string[] = [];
+installScratchLeakGuard();
 
 /**
  * Fixture hygiene (the wb-a9s gate F1 class): a hook or wrapper that exports one of these points every fixture
@@ -64,8 +64,7 @@ function git(cwd: string, ...args: string[]): string {
 
 /** A real repository with one commit and a nested `pkg/` directory that is NOT its toplevel. */
 function foreignRepo(): { top: string; nested: string; head: string } {
-  const top = realpathSync(mkdtempSync(join(tmpdir(), "git-stamp-foreign-")));
-  dirs.push(top);
+  const top = realpathSync(makeScratch("git-stamp-foreign-"));
   git(top, "init", "-q");
   mkdirSync(join(top, "pkg"));
   writeFileSync(join(top, "pkg", "a.txt"), "a\n");
@@ -76,9 +75,7 @@ function foreignRepo(): { top: string; nested: string; head: string } {
 
 /** A scratch directory outside every fixture repository, removed after each test. */
 function scratchDir(prefix: string): string {
-  const dir = realpathSync(mkdtempSync(join(tmpdir(), prefix)));
-  dirs.push(dir);
-  return dir;
+  return realpathSync(makeScratch(prefix));
 }
 
 /**
@@ -93,7 +90,7 @@ function corruptIndex(top: string): void {
 }
 
 afterEach(() => {
-  for (const dir of dirs.splice(0)) rmSync(dir, { recursive: true, force: true });
+  removeAllScratch();
 });
 
 describe("gitStamp / revisionOf toplevel and dirty discipline", () => {
@@ -129,7 +126,7 @@ describe("gitStamp / revisionOf toplevel and dirty discipline", () => {
   });
 
   it("answers working-tree for a directory that does not exist", () => {
-    expect(revisionOf(join(tmpdir(), "git-stamp-missing-dir-does-not-exist"))).toBe("working-tree");
+    expect(revisionOf(join(scratchDir("git-stamp-missing-parent-"), "does-not-exist"))).toBe("working-tree");
   });
 
   it("never reports a clean HEAD when the status read fails: head kept, porcelain null, revision working-tree", () => {
@@ -176,9 +173,7 @@ describe("the qa git-discovery members share the one canonical stamp (three inli
 
   it("the inlined local-detached-faults block behaves as the module does, including the foreign-root refusal", async () => {
     const { top, nested, head } = foreignRepo();
-    const dir = mkdtempSync(join(tmpdir(), "git-stamp-inline-"));
-    dirs.push(dir);
-    const file = join(dir, "inline.mjs");
+    const file = join(scratchDir("git-stamp-inline-"), "inline.mjs");
     writeFileSync(
       file,
       `import {spawnSync} from 'node:child_process';\nimport {realpathSync} from 'node:fs';\n${stampBlock("local-detached-faults.mjs")}\nexport {revisionOf};\n`,
