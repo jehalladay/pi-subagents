@@ -157,6 +157,7 @@ const WORKBENCH_TOOLS = [
   "workbench_catalog",
   "workflow_catalog",
   "workflow_compare",
+  "workflow_control",
   "workflow_detached",
   "workflow_execute",
   "workflow_inspect",
@@ -262,6 +263,10 @@ const PROBES: Array<{ tool: string; params: Params; zeroGrant: string; sameWhenU
   { tool: "workflow_execute", sameWhenUngranted: true, params: { definitionRef: { kind: "script", id: "missing.js", schemaVersion: "workflow-script/v1", artifactDigest: `sha256:${"0".repeat(64)}` }, input: null, hostMode: "embedded" }, zeroGrant: '{"contract":"workbench.tool-reply/v1","tool":"workflow_execute","ok":false,"invoked":false,"status":"refused","completion":"not-asserted","nativeRefs":[],"error":{"code":"missing-execute-grant","message":"missing exact grant workbench:execute"}}' },
   { tool: "workflow_observe", params: { taskId: "bad" }, zeroGrant: "Permission denied: workbench:observe grant required." },
   { tool: "workflow_reconcile", params: { taskId: "wf_abcdef123456", action: "inspect" }, zeroGrant: "Permission denied: workbench:observe grant required." },
+  // Exact control:<provider>.<action> grants (not in mode D's list) gate this tool; the decision core's observer-only denial
+  // is identical for every caller without a control grant and names no target state, so mode D asserts only that it is not
+  // a permission denial. The denial renders before any adapter or native path is reached.
+  { tool: "workflow_control", sameWhenUngranted: true, params: { target: { provider: "furnace", type: "run", id: "frn-run-census" }, action: "stop", confirmed: true }, zeroGrant: '{"contract":"workbench.tool-reply/v1","tool":"workflow_control","ok":false,"invoked":false,"status":"refused","completion":"not-asserted","control":{"status":"denied","category":"authorization","policy":"observer-only","effect":"none","reason":"Observer grants never control; no control grant is present."},"truncated":false,"error":{"code":"observer-only","category":"authorization","message":"observer-only"}}' },
 ];
 const DENIAL = /Permission denied|grant required/i;
 

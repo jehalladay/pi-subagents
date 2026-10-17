@@ -30,12 +30,15 @@ import {
 } from "../src/workbench/control-tool.js";
 import { type NativeRef, ObservationProjection, type ObservationScope, type Relation } from "../src/workbench/observation.js";
 import { TOOL_REPLY_CONTRACT_VERSION } from "../src/workbench/tool-replies.js";
+import type { WorkflowTask } from "../src/workflow/task.js";
 
 const SCOPE: ObservationScope = { workspace: "/ws", principal: "local-operator:1000:s1" };
 const AT = "2026-10-17T08:00:00Z";
 const NOW = "2026-10-17T09:00:00Z";
 const OWNERSHIP_REF = "req-attempts";
 const ctx = { cwd: "/ws", sessionManager: { getSessionId: () => "s1" } } as unknown as ExtensionContext;
+/** The workflow invocation the seeded targets belong to, so a receipt can land in its control audit. */
+const OWNING_INVOCATION = "wf_owner00001";
 
 const TARGETS: Readonly<Record<string, { target: NativeRef; action: string; grant: string }>> = Object.freeze({
   furnace: { target: { provider: "furnace", type: "run", id: "frn-run-r1", scope: SCOPE.workspace }, action: "stop", grant: "control:furnace.stop" },
@@ -50,7 +53,7 @@ function seededProjection(): ObservationProjection {
   for (const { target } of Object.values(TARGETS)) {
     const child: NativeRef = { provider: target.provider, type: "child", id: `${target.id}-child`, ...(target.scope !== undefined ? { scope: target.scope } : {}) };
     for (const source of [target, child]) {
-      projection.refresh({ source, scope: SCOPE, capturedAt: AT, observedAt: AT, kind: `${source.provider}.${source.type}.snapshot`,
+      projection.refresh({ source, scope: SCOPE, capturedAt: AT, observedAt: AT, kind: `${source.provider}.${source.type}.snapshot`, trace: { invocationId: OWNING_INVOCATION },
         node: { title: `${source.provider} ${source.type} ${source.id}`, type: "workflow", statusText: "active", statusTone: "active" } });
     }
     const provenance: Relation["provenance"] = { source: target.provider, observedAt: AT, nativeConfirmationRef: OWNERSHIP_REF };
@@ -79,12 +82,15 @@ function harness(over: Partial<WorkflowControlDeps> & { rights?: readonly string
     return settledSummary(decision);
   });
   const grants = vi.fn((): readonly string[] => rights ?? Object.values(TARGETS).map(row => row.grant));
+  const task = { id: OWNING_INVOCATION } as unknown as WorkflowTask;
+  const tasks = new Map<string, WorkflowTask>([[OWNING_INVOCATION, task]]);
   const deps: WorkflowControlDeps = {
     grants,
     observerScope: () => ({ ...SCOPE }),
     localPrincipal: () => SCOPE.principal,
     sessionIdOf: () => "s1",
     projection: seededProjection(),
+    tasks,
     now: () => NOW,
     executors: { furnace: executor, "claude-agent-sdk": executor, forge: executor, "local-detached": executor },
     ...rest,
@@ -95,7 +101,7 @@ function harness(over: Partial<WorkflowControlDeps> & { rights?: readonly string
     const text = result.content[0]?.type === "text" ? result.content[0].text : "";
     return { text, reply: JSON.parse(text) as Reply };
   };
-  return { tool, run, executor, grants, calls };
+  return { tool, run, executor, grants, calls, task, projection: deps.projection };
 }
 
 const controlParams = (provider: keyof typeof TARGETS, over: Record<string, unknown> = {}) => {
@@ -112,6 +118,9 @@ describe("workflow_control wiring: refusals before any adapter call (wb-cra)", (
     expect(reply.error).toMatchObject({ code: "observer-only" });
     expect(h.executor).not.toHaveBeenCalled();
     expect(text).not.toContain("workbench.control/v1");
+    expect(text).not.toContain("workbench.control-reply/v1");
+    expect(text).not.toContain('"kind":"control-reply"');
+    expect(JSON.stringify(reply.control)).not.toContain('"truncated"');
   });
 
   it("denies a destructive action without the operator's confirmed flag and never injects the flag itself", async () => {
@@ -218,13 +227,13 @@ describe("workflow_control wiring: the reply dialect (wb-cra)", () => {
     const h = harness();
     h.executor.mockImplementationOnce(async (decision: ControlDecision) => {
       if (decision.decision !== "permitted") throw new Error("permit expected");
-      const acknowledged = acknowledge(decision.receipt, { acknowledgedAt: NOW, nativeAckRef: "ack‎-dir" });
+      const acknowledged = acknowledge(decision.receipt, { acknowledgedAt: NOW, nativeAckRef: "ack\u200e-dir" });
       return { receipt: acknowledged, status: "acknowledged" };
     });
     const { text, reply } = await h.run(controlParams("furnace"));
     expect(reply.ok).toBe(true);
     expect((reply.control as Record<string, unknown>).phase).toBe("acknowledged");
-    expect(text).not.toContain("‎");
+    expect(text).not.toContain("\u200e");
   });
 
   it("keeps the reply inside the byte budget and marks truncation", async () => {
@@ -237,5 +246,46 @@ describe("workflow_control wiring: the reply dialect (wb-cra)", () => {
     const { text, reply } = await h.run(controlParams("furnace"));
     expect(Buffer.byteLength(text, "utf8")).toBeLessThanOrEqual(8192);
     expect(reply.ok).toBe(true);
+  });
+});
+
+describe("workflow_control wiring: receipts audited and projected (wb-cra)", () => {
+  it("records the requested and result phases on the owning task and as events of the target, never a phase it minted", async () => {
+    const h = harness();
+    const { reply } = await h.run(controlParams("furnace"));
+    expect(reply.ok).toBe(true);
+    const receipts = h.task.controlAudit?.receipts ?? [];
+    expect(receipts.map(receipt => receipt.phase)).toEqual(["requested", "result"]);
+    expect(receipts[0]).toBe(h.calls[0].decision.decision === "permitted" ? h.calls[0].decision.receipt : undefined);
+    expect(receipts[1].requestId).toBe(receipts[0].requestId);
+    const { events } = h.projection.events({ scope: SCOPE, limit: 10, ref: TARGETS.furnace.target });
+    const kinds = events.map(event => event.kind);
+    expect(kinds).toContain("control.requested");
+    expect(kinds).toContain("control.result");
+    const result = events.find(event => event.kind === "control.result");
+    expect(result?.evidenceRefs).toEqual(expect.arrayContaining([`control-receipt:${receipts[0].requestId}`, "native-ack:ack-native-1", "native-result:result-native-1"]));
+    expect(result?.trace?.invocationId).toBe(OWNING_INVOCATION);
+  });
+
+  it("marks the acted-on target stale until a producer re-read, and keeps the producer's last presentation", async () => {
+    const h = harness();
+    await h.run(controlParams("furnace"));
+    const node = h.projection.query({ scope: SCOPE, ref: TARGETS.furnace.target, limit: 1 }).nodes[0];
+    expect(node?.freshness).toBe("stale");
+    expect(node?.presentation.title).toBe("furnace run frn-run-r1");
+  });
+
+  it("a denial records nothing: no audit receipt, no target event", async () => {
+    const h = harness({ rights: ["workbench:observe"] });
+    await h.run(controlParams("furnace"));
+    expect(h.task.controlAudit).toBeUndefined();
+    expect(h.projection.events({ scope: SCOPE, limit: 10, ref: TARGETS.furnace.target }).events).toEqual([]);
+  });
+
+  it("an adapter that only reached the requested phase leaves exactly that phase in the audit", async () => {
+    const h = harness();
+    h.executor.mockRejectedValueOnce(new Error("transport lost"));
+    await h.run(controlParams("furnace"));
+    expect(h.task.controlAudit?.receipts.map(receipt => receipt.phase)).toEqual(["requested"]);
   });
 });

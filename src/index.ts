@@ -2786,6 +2786,7 @@ Terse command-style prompts produce shallow, generic work.
       localPrincipal,
       sessionIdOf: toolCtx => toolCtx.sessionManager.getSessionId(),
       projection,
+      tasks: workflowTasks,
       now: controlNow,
       executors: controlExecutors,
     }));
