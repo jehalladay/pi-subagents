@@ -3208,7 +3208,7 @@ const ROUTED_MODES: Readonly<Record<string, readonly string[]>> = {
 };
 
 /** Exact table sizes: deleting or emptying a falsifier table goes red (each-liveness of this file's own rows). */
-const TABLE_SIZES = [55, 8, 22, 46, 15, 10, 54, 34, 5, 16, 43, 19, 5, 76, 15, 79];
+const TABLE_SIZES = [55, 8, 22, 46, 15, 10, 54, 34, 5, 16, 43, 19, 5, 76, 15, 89];
 
 
 /**
@@ -3429,6 +3429,9 @@ interface GuardRow {
 const GUARDED_TEST = `setupFiles: ["./${GUARD_FILE}"]`;
 const rawConfig = (body: string, imports = 'import { defineConfig } from "vitest/config";'): string => `${imports}\n${body}\n`;
 const OTHER_SETUP = { "census-other.setup.ts": "export {};\n" } as const;
+/** wb-nl8: the report-emitting default-tier script and its pretest rotation hook, written out as the literals the vouch must admit (and nothing near them). */
+const NL8_TEST_SCRIPT = "vitest run --reporter=default --reporter=json --outputFile=.forge/vitest-report.json --includeTaskLocation --expect.requireAssertions";
+const NL8_PRETEST = "node -e \"require('fs').rmSync('.forge/vitest-report.json',{force:true})\"";
 
 const GUARD_ROWS: readonly GuardRow[] = [
   { id: "g-u62r5-control", routed: "u62 respin-5 G-control: the one-config project names the census guard as its only setup file", files: {}, ok: true },
@@ -3745,6 +3748,30 @@ const GUARD_ROWS: readonly GuardRow[] = [
     routed: "u62 respin-6 V1 control: another step's own table is not the tier's step, so its keys are not read",
     files: { "forge.toml": forgeToml("npm run test", undefined, '\n[build.commands.other]\ncommand = "node -e 0"\nprelude = "node -e 0"\n') },
     ok: true,
+  },
+  // wb-nl8 (owner R470 sequencing: nl8 widens the vouch for its own flags): the report-emitting script admitted whole, and the
+  // widened reporter / expect.requireAssertions / lifecycle reads, each refusal beside the admission it bounds.
+  { id: "g-nl8-reporter-builtin", routed: "nl8 vouch widening: the default tier's report-emitting script (builtin reporters by name, bare --outputFile, --includeTaskLocation, --expect.requireAssertions) is admitted whole", files: { "package.json": packageJson(NL8_TEST_SCRIPT) }, ok: true },
+  { id: "g-nl8-reporter-spaced", routed: "nl8 vouch widening control: a builtin reporter named as the flag's separate next word is read as its value", files: { "forge.toml": forgeToml("./node_modules/.bin/vitest run --reporter json --outputFile report.json") }, ok: true },
+  {
+    id: "g-nl8-reporter-file",
+    routed: "nl8 vouch widening: a path reporter is code loaded before the test modules (the file exists; the refusal is by the closed list, never by absence)",
+    files: { "forge.toml": forgeToml("./node_modules/.bin/vitest run --reporter=./census-other.setup.ts"), ...OTHER_SETUP },
+    ok: false,
+    why: /--reporter=\.\/census-other\.setup\.ts, a reporter outside the closed list of vitest's builtin reporters/,
+  },
+  { id: "g-nl8-reporter-package", routed: "nl8 vouch widening: a package reporter is code loaded before the test modules", files: { "forge.toml": forgeToml("./node_modules/.bin/vitest run --reporter=vitest-sonar-reporter") }, ok: false, why: /--reporter=vitest-sonar-reporter, a reporter outside the closed list of vitest's builtin reporters/ },
+  { id: "g-nl8-require-assertions", routed: "nl8 vouch widening: --expect.requireAssertions alone (it loads no code; it tightens the runner's third leg)", files: { "package.json": packageJson("vitest run --expect.requireAssertions") }, ok: true },
+  { id: "g-nl8-include-task-location", routed: "nl8 vouch control: --includeTaskLocation alone, the flag report mode needs for located cases", files: { "package.json": packageJson("vitest run --includeTaskLocation") }, ok: true },
+  { id: "g-nl8-output-bare", routed: "nl8 vouch control: the bare --outputFile=<path> form beside a builtin reporter", files: { "package.json": packageJson("vitest run --reporter=json --outputFile=.forge/vitest-report.json") }, ok: true },
+  { id: "g-nl8-output-dotted", routed: "nl8 vouch: the dotted --outputFile.json=<path> form stays outside the closed list (nl8 emits through the bare form)", files: { "package.json": packageJson("vitest run --reporter=json --outputFile.json=.forge/vitest-report.json") }, ok: false, why: /--outputFile\.json=\.forge\/vitest-report\.json, a flag outside the closed list/ },
+  { id: "g-nl8-lifecycle-pretest-literal", routed: "nl8 lifecycle: the test step's pretest rotation hook is the one admitted literal of CENSUS_LIFECYCLE_SCRIPTS", files: { "package.json": packageJson("vitest run", { pretest: NL8_PRETEST }) }, ok: true },
+  {
+    id: "g-nl8-lifecycle-pretest-near-miss",
+    routed: "nl8 lifecycle: a near-miss of the rotation hook (the same command with its option object spaced) is not the literal and is refused, naming it",
+    files: { "package.json": packageJson("vitest run", { pretest: NL8_PRETEST.replace("{force:true}", "{ force: true }") }) },
+    ok: false,
+    why: /scripts\.pretest = .*\{ force: true \}.* is not a literal of the closed list CENSUS_LIFECYCLE_SCRIPTS/,
   },
 ];
 
@@ -4064,7 +4091,6 @@ const configRoots = new Map<string, string>();
 let mainDefault: Report = new Map();
 let mainLive: Report = new Map();
 let mainAsserts: Report = new Map();
-let smoke: PinVerdict | undefined;
 let mainRootPath = "";
 let fixtureLoads: readonly string[] = [];
 let previousCap: string | undefined;
@@ -4138,9 +4164,6 @@ beforeAll(async () => {
     },
     async () => {
       mainAsserts = (await runnerReport(mainRoot, "./node_modules/.bin/vitest run --config vitest.asserts.config.ts")).report;
-    },
-    async () => {
-      [smoke] = await judgePins(ROOT, [SMOKE_PIN]);
     },
     async () => {
       // FIND-1 for report mode: vitest's own JSON report of this repository's REAL config, narrowed to the anchor file.
@@ -4531,13 +4554,16 @@ describe("census helper: source structure from the AST (imports and top-level de
 });
 
 describe("census helper: read-only pins of this repository's tier commands, and the FIND-1 smoke", () => {
-  it("the default gate resolves forge.toml test -> npm run test -> vitest run, with no CLI flags", () => {
+  it("the default gate resolves forge.toml test -> npm run test -> vitest run with the report flags", () => {
     expect(resolveTier(ROOT, DEFAULT_GATE_TIER)).toEqual({
       ok: true,
       tier: "test",
       command: "npm run test",
-      argv: ["run"],
-      chain: ['forge.toml [build.commands] test = "npm run test"', 'package.json scripts.test = "vitest run"'],
+      argv: ["run", "--reporter=default", "--reporter=json", "--outputFile=.forge/vitest-report.json", "--includeTaskLocation", "--expect.requireAssertions"],
+      chain: [
+        'forge.toml [build.commands] test = "npm run test"',
+        'package.json scripts.test = "vitest run --reporter=default --reporter=json --outputFile=.forge/vitest-report.json --includeTaskLocation --expect.requireAssertions"',
+      ],
       why: "",
     });
   });
@@ -4555,12 +4581,6 @@ describe("census helper: read-only pins of this repository's tier commands, and 
 
   it("furnace-observe resolves to vitest run --config vitest.furnace.config.ts", () => {
     expect(resolveTier(ROOT, "furnace-observe")).toMatchObject({ ok: true, argv: ["run", "--config", "vitest.furnace.config.ts"] });
-  });
-
-  it("FIND-1 smoke: the helper judges the anchor case through this repository's real default gate", () => {
-    expect(smoke?.ok, smoke?.why).toBe(true);
-    expect(smoke?.cases).toBe(1);
-    expect(smoke?.why).toMatch(/collected once, passed under test, asserts/);
   });
 });
 

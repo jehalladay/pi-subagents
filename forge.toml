@@ -6,7 +6,7 @@ language = "typescript"
 
 [build]
 backend = "typescript"
-gate = ["lint", "typing", "build", "test", "workbench-shell", "package-smoke"]
+gate = ["lint", "typing", "build", "test", "census", "workbench-shell", "package-smoke"]
 
 [build.commands]
 lint = "npm run lint"
@@ -184,3 +184,9 @@ timeout = 600
 [build.commands.claude-control-live]
 command = "./node_modules/.bin/vitest run --config vitest.claude-control-live.config.ts"
 timeout = 900
+
+[build.commands.census]
+command = "npm run test:census"
+timeout = 300
+after = ["test"]
+consumes = ["test"]

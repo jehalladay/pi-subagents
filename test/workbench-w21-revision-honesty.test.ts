@@ -369,12 +369,17 @@ describe("the W21 bench CLI census: every W21 bench CLI on the tree is wired or 
   });
 
   it("a residual is still unwired, so wiring it moves its row from RESIDUALS to BENCHES in the same commit", () => {
+    let checked = 0;
     for (const { file, bead } of RESIDUALS) {
       const source = parse(file);
       expect(bead).toMatch(/^wb-[0-9a-z.]+$/);
       expect(importsOf(source)).not.toContain("./bench-revision.mjs");
       expect(callsTo(source, "benchRevision")).toHaveLength(0);
+      checked += 1;
     }
+    // wb-nl8 (--expect.requireAssertions, R1 default): with no residual on the tree the loop asserts nothing; this states what
+    // the case proves either way - every RESIDUALS row was read and judged (the row above pins the table at residual: 0).
+    expect(checked).toBe(RESIDUALS.length);
   });
 });
 

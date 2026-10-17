@@ -45,7 +45,7 @@ const FORGE_BLOCK = '[build.commands.claude-control-live]\ncommand = "./node_mod
 const DETACHED_BLOCK = '[build.commands.detached-control-live]\ncommand = "./node_modules/.bin/vitest run --config vitest.detached-control-live.config.ts"\ntimeout = 600\n';
 const FURNACE_BLOCK = '[build.commands.furnace-control-live]\ncommand = "./node_modules/.bin/vitest run --config vitest.furnace-control-live.config.ts"\ntimeout = 900\n';
 const FORGE_CONTROL_BLOCK = '[build.commands.forge-control-live]\ncommand = "./node_modules/.bin/vitest run --config vitest.forge-control-live.config.ts"\ntimeout = 600\n';
-const GATE_LINE = 'gate = ["lint", "typing", "build", "test", "workbench-shell", "package-smoke"]';
+const GATE_LINE = 'gate = ["lint", "typing", "build", "test", "census", "workbench-shell", "package-smoke"]';
 
 // Hand-built evidence. Every literal is a plain fake placeholder shaped like the live suite's recorded values; the
 // measured block below carries the terminal shape the receipt of record measured (regenerated from it, never asserted).
@@ -579,7 +579,7 @@ describe("wb-a2g.12 live claude control receipt: assessor (O1)", () => {
 describe("wb-a2g.12 tier wiring (O2)", () => {
   it("forge.toml ends with exactly one claude-control-live block appended after detached-control-live; the furnace adjacency and the gate line are unchanged", () => {
     const toml = readRepo("forge.toml");
-    expect(toml.endsWith(`${DETACHED_BLOCK}\n${FORGE_BLOCK}`)).toBe(true);
+    expect(toml.endsWith(`${DETACHED_BLOCK}\n${FORGE_BLOCK}\n[build.commands.census]\ncommand = "npm run test:census"\ntimeout = 300\nafter = ["test"]\nconsumes = ["test"]\n`)).toBe(true);
     expect(toml.match(/^\[build\.commands\.claude-control-live\]$/gm)).toHaveLength(1);
     expect(toml.match(/^\[build\.commands\.detached-control-live\]$/gm)).toHaveLength(1);
     expect(toml).toContain(`${FORGE_CONTROL_BLOCK}\n${FURNACE_BLOCK}`);
