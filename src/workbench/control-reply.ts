@@ -9,16 +9,22 @@
  * acknowledged reply says completion is not established, and transport success is never labeled domain verification.
  * Every display string goes through the one shared helper (redaction.ts sanitizeWorkbenchText, "text" layout) exactly
  * once and before anything is cut, and the compact JSON is byte-capped with an honest truncated flag and a visible
- * truncation marker.
+ * truncation marker. A permit renders only when the core minted that very decision (isCoreMintedDecision, wb-5a7), and a
+ * reference the core withheld renders as the core recorded it: the marker plus a fixed withheld record.
  */
 import type { CapabilityErrorCategory, JsonValue } from "./capability-registry.js";
 import {
   CONTROL_CONTRACT_VERSION,
   CONTROL_PERMIT_POLICY,
+  CONTROL_REF_NOT_ADMITTED_REASON,
+  CONTROL_REF_REFUSAL_POLICY,
+  CONTROL_WITHHELD_REF,
   type ControlDecision,
   type ControlDenyPolicy,
   type ControlOutcome,
+  type ControlRefField,
   DESTRUCTIVE_CONTROL_ACTIONS,
+  isCoreMintedDecision,
   NATIVE_CONTROL_ACTIONS,
   type NativeControlReceipt,
 } from "./control.js";
@@ -119,12 +125,33 @@ function denied(decision: Extract<ControlDecision, { decision: "denied" }>): Bod
   }
   return refusal(policy, category, extra);
 }
+/** The keys of one refusal the core records for a withheld reference, sorted. */
+const REFUSAL_KEYS = "category,field,policy,reason";
+/** The reference fields of a receipt that hold the core's withheld marker, in the order the core records their refusals. */
+function withheldFields(receipt: { readonly phase?: unknown; readonly nativeAckRef?: unknown; readonly nativeResultRef?: unknown }): ControlRefField[] {
+  const fields: ControlRefField[] = [];
+  if (receipt.phase !== "requested" && receipt.nativeAckRef === CONTROL_WITHHELD_REF) fields.push("nativeAckRef");
+  if (receipt.phase === "result" && receipt.nativeResultRef === CONTROL_WITHHELD_REF) fields.push("nativeResultRef");
+  return fields;
+}
+/**
+ * The core's own account of what it withheld (control.ts admit): exactly one fixed refusal per field holding the marker, in
+ * field order, and no record at all when nothing was withheld. Any other record is not a core product.
+ */
+function refusalsHold(refusals: unknown, withheld: readonly ControlRefField[]): boolean {
+  if (refusals === undefined) return withheld.length === 0;
+  if (!Array.isArray(refusals) || withheld.length === 0 || refusals.length !== withheld.length) return false;
+  const entries: readonly unknown[] = refusals;
+  return entries.every((entry, at) => plain(entry) && Object.keys(entry).sort().join() === REFUSAL_KEYS && entry.policy === CONTROL_REF_REFUSAL_POLICY &&
+    entry.category === "validation" && entry.field === withheld[at] && entry.reason === CONTROL_REF_NOT_ADMITTED_REASON);
+}
 function wellFormed(receipt: unknown): receipt is NativeControlReceipt {
   if (!plain(receipt) || receipt.contractVersion !== CONTROL_CONTRACT_VERSION) return false;
   const { target } = receipt;
   const core = [receipt.requestId, receipt.grant, receipt.policy, receipt.action, receipt.invocationId, receipt.ownershipConfirmationRef, receipt.requestedAt, receipt.decidedAt];
   if (!core.every(text) || receipt.policy !== CONTROL_PERMIT_POLICY || !plain(target) || !text(target.provider) || !text(target.type) || !text(target.id)) return false;
   if (target.scope !== undefined && !text(target.scope)) return false;
+  if (!refusalsHold(receipt.refusals, withheldFields(receipt))) return false;
   if (receipt.phase === "requested") return true;
   if (!text(receipt.acknowledgedAt) || !text(receipt.nativeAckRef)) return false;
   if (receipt.phase === "acknowledged") return true;
@@ -148,20 +175,24 @@ function phased(receipt: NativeControlReceipt, detail: Detail): Body {
   const body: Body = { status: receipt.phase, phase: receipt.phase, requested: requestedBlock(receipt, detail) };
   if (receipt.phase !== "requested") body.acknowledged = { acknowledgedAt: receipt.acknowledgedAt, nativeAckRef: receipt.nativeAckRef };
   if (receipt.phase === "result") body.result = { outcome: receipt.outcome, nativeResultRef: receipt.nativeResultRef, settledAt: receipt.settledAt };
+  // The core's withheld record, rendered from module constants only: nothing of the receipt's own refusal text is echoed.
+  const withheld = withheldFields(receipt);
+  if (withheld.length > 0) body.withheld = { policy: CONTROL_REF_REFUSAL_POLICY, category: "validation", fields: withheld, reason: CONTROL_REF_NOT_ADMITTED_REASON };
   body.completionBasis = receipt.phase === "result" ? "producer-reported" : "not-established";
   body.verification = "not-performed";
   body.notice = NOTICES[receipt.phase];
   return body;
 }
-/** The smallest honest reply: identity of the outcome with every echo dropped. */
+/** The smallest honest reply: identity of the outcome with every echo dropped; a withheld record is not an echo and stays. */
 function minimal(body: Body): Body {
-  const keep = ["status", "phase", "category", "policy", "completionBasis", "verification", "effect"];
+  const keep = ["status", "phase", "category", "policy", "completionBasis", "verification", "effect", "withheld"];
   return Object.fromEntries(keep.filter(key => key in body).map(key => [key, body[key]]));
 }
 function bodyOf(source: ControlDecision | NativeControlReceipt, detail: Detail): Body {
   if (plain(source) && "decision" in source) {
     if (source.decision === "denied") return denied(source);
-    if (source.decision === "permitted" && wellFormed(source.receipt) && source.receipt.phase === "requested") return phased(source.receipt, detail);
+    // A permit renders only when the core minted this very object: a copy, a replay or a look-alike, however exact, is not one.
+    if (source.decision === "permitted" && isCoreMintedDecision(source) && wellFormed(source.receipt) && source.receipt.phase === "requested") return phased(source.receipt, detail);
     return refusal("malformed-input", "validation");
   }
   return wellFormed(source) ? phased(source, detail) : refusal("malformed-input", "validation");
