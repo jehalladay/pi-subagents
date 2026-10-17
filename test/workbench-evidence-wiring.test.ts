@@ -271,12 +271,167 @@ describe("createWorkbenchEvidenceStore (host wiring)", () => {
     invoke.mockRejectedValueOnce(new CapabilityError("authorization", "Forge read denied outside the authorized workspace scope."));
     await store.request(scope, forgeRef, `forge-operation:${OPERATION}`);
     expect(store.get(scope, forgeRef, `forge-operation:${OPERATION}`)).toMatchObject({ state: "unavailable", reason: "unauthorized" });
-    // A reading that names another operation is a visible transport failure, never a substituted result.
-    invoke.mockResolvedValueOnce(forgeReading(1, "op_other"));
+    // wb-cz9 re-expression: a never-ingested node id requesting a listed operation is refused by ownership before any
+    // re-read (this row used to reach the capability through the first node listing the ref, the fail-open path).
     const otherRef: NativeRef = { ...forgeRef, id: "second" };
     await store.request(scope, otherRef, `forge-operation:${OPERATION}`);
-    expect(store.get(scope, otherRef, `forge-operation:${OPERATION}`)).toMatchObject({ state: "unavailable" });
-    expect(JSON.stringify(store.get(scope, otherRef, `forge-operation:${OPERATION}`))).not.toContain("op_other");
+    expect(store.get(scope, otherRef, `forge-operation:${OPERATION}`)).toEqual({ state: "unavailable", reason: "unauthorized" });
+    expect(invoke).toHaveBeenCalledTimes(1);
+    // A reading that names another operation is a visible transport failure, never a substituted result: read on the owning node.
+    invoke.mockResolvedValueOnce(forgeReading(1, "op_other"));
+    await store.request(scope, forgeRef, `forge-operation:${OPERATION}`);
+    expect(store.get(scope, forgeRef, `forge-operation:${OPERATION}`)).toEqual({ state: "unavailable", reason: "transport" });
+    expect(JSON.stringify(store.get(scope, forgeRef, `forge-operation:${OPERATION}`))).not.toContain("op_other");
+    expect(invoke).toHaveBeenCalledTimes(2);
+  });
+});
+
+/**
+ * wb-cz9 (owner F-text): the forge adapter resolved its owning node by the evidence ref alone, so a forge-operation ref
+ * requested on a node that does not list it was served the FIRST listing node's re-read and cached under the requesting
+ * node's key. Ownership now resolves by the REQUESTED node (projection query by nativeRef, then evidenceRefs.includes plus
+ * nativeRef equality), the furnace adapter's bound shape.
+ */
+describe("wb-cz9: the forge adapter resolves ownership by the requested node, never the first node listing the ref", () => {
+  const OPERATION_REF = `forge-operation:${OPERATION}`;
+  /** Never ingested: the projection holds no node under this id. */
+  const ghostRef: NativeRef = { ...forgeRef, id: "second" };
+  /** Ingested in scope, listing only its own gate-status ref and never the operation. */
+  const bystanderRef: NativeRef = { provider: "forge", type: "gate-status", id: "pkg-b", scope: "/ws" };
+  /** Ingested after the owner and listing the SAME operation, then marked stale. */
+  const secondOwnerRef: NativeRef = { provider: "forge", type: "gate-status", id: "pkg-c", scope: "/ws" };
+  const gateNode = (title: string) => ({ title, type: "sdk-operation" as const, statusText: "success · FORGE_OK", statusTone: "success" as const });
+
+  /** The forge wiring with a call-through spy on the registered capability re-read, so a refused path is counted, not assumed. */
+  function ownershipDeps(options: { secondOwner?: boolean } = {}) {
+    const { deps, projection } = wiringDeps(["forge:inspect"]);
+    projection.refresh({
+      source: bystanderRef, scope, capturedAt: NOW, observedAt: NOW, node: gateNode("Forge gate status pkg-b"),
+      trace: { invocationId: "wf-evidence-1" }, evidenceRefs: ["forge:gate.status:FORGE_OK"],
+    });
+    if (options.secondOwner === true) {
+      projection.refresh({
+        source: secondOwnerRef, scope, capturedAt: NOW, observedAt: NOW, node: gateNode("Forge gate status pkg-c"),
+        trace: { invocationId: "wf-evidence-1" }, evidenceRefs: [OPERATION_REF],
+      });
+      projection.markStale({ scope, ref: secondOwnerRef });
+    }
+    const capability = { invoke: async (_id: string, _input: unknown, _context: unknown) => forgeReading(1) };
+    const invoke = vi.spyOn(capability, "invoke");
+    return { deps: { ...deps, registry: () => capability }, invoke };
+  }
+
+  it("R1: a forge-operation ref requested on a never-ingested node id refuses unauthorized with no re-read", async () => {
+    const { deps, invoke } = ownershipDeps();
+    const store = createWorkbenchEvidenceStore(deps as never);
+    await store.request(scope, ghostRef, OPERATION_REF);
+    expect(store.get(scope, ghostRef, OPERATION_REF)).toEqual({ state: "unavailable", reason: "unauthorized" });
+    expect(invoke).toHaveBeenCalledTimes(0);
+  });
+
+  it("R2: a node that exists but does not list the ref refuses unauthorized with no re-read", async () => {
+    const { deps, invoke } = ownershipDeps();
+    const store = createWorkbenchEvidenceStore(deps as never);
+    await store.request(scope, bystanderRef, OPERATION_REF);
+    expect(store.get(scope, bystanderRef, OPERATION_REF)).toEqual({ state: "unavailable", reason: "unauthorized" });
+    expect(invoke).toHaveBeenCalledTimes(0);
+  });
+
+  it("R3: the legitimate owning node is served once and cached under its own key, and under no other node's", async () => {
+    const { deps, invoke } = ownershipDeps();
+    const store = createWorkbenchEvidenceStore(deps as never);
+    await store.request(scope, forgeRef, OPERATION_REF);
+    expect(store.get(scope, forgeRef, OPERATION_REF)).toMatchObject({ state: "loaded", provider: "forge", freshness: "current", producerReceipt: OPERATION });
+    expect(invoke).toHaveBeenCalledTimes(1);
+    expect(invoke.mock.calls[0]?.[2]).toMatchObject({ callId: `evidence:${OPERATION_REF}`, workspace: "/ws" });
+    for (const other of [ghostRef, bystanderRef]) expect(store.get(scope, other, OPERATION_REF)).toEqual({ state: "not-requested" });
+    await store.request(scope, forgeRef, OPERATION_REF);
+    expect(invoke).toHaveBeenCalledTimes(1);
+  });
+
+  it("R3b: a ref two nodes list is read for the requested node, carrying that node's own freshness under its own key", async () => {
+    const { deps, invoke } = ownershipDeps({ secondOwner: true });
+    const store = createWorkbenchEvidenceStore(deps as never);
+    await store.request(scope, secondOwnerRef, OPERATION_REF);
+    expect(store.get(scope, secondOwnerRef, OPERATION_REF)).toMatchObject({ state: "loaded", freshness: "stale" });
+    expect(store.get(scope, forgeRef, OPERATION_REF)).toEqual({ state: "not-requested" });
+    await store.request(scope, forgeRef, OPERATION_REF);
+    expect(store.get(scope, forgeRef, OPERATION_REF)).toMatchObject({ state: "loaded", freshness: "current" });
+    expect(invoke).toHaveBeenCalledTimes(2);
+  });
+
+  it("R4: no cross-node cache poisoning: after the owner's read, refused requesters hold only the refusal, never the owner's read", async () => {
+    const { deps, invoke } = ownershipDeps();
+    const store = createWorkbenchEvidenceStore(deps as never);
+    await store.request(scope, forgeRef, OPERATION_REF);
+    expect(store.get(scope, forgeRef, OPERATION_REF).state).toBe("loaded");
+    for (const requester of [ghostRef, bystanderRef]) {
+      await store.request(scope, requester, OPERATION_REF);
+      expect(store.get(scope, requester, OPERATION_REF)).toEqual({ state: "unavailable", reason: "unauthorized" });
+    }
+    expect(invoke).toHaveBeenCalledTimes(1);
+    expect(store.get(scope, forgeRef, OPERATION_REF)).toMatchObject({ state: "loaded", producerReceipt: OPERATION });
+  });
+});
+
+/**
+ * wb-cz9 leg 2 (measured red first): on the wired furnace store path a lossy, incomplete or paged read rendered TWO truncation
+ * marks, the reader's own trailing "... truncated (producer: ...)" line inside the joined text plus the store's single [truncated].
+ * One visible marker: the loader strips the reader's trailing marker when the store marks the read; a budget-only cut, which the
+ * furnace loader does not mark, keeps the reader's line as its one marker.
+ */
+describe("wb-cz9 leg 2: one visible truncation marker on the wired furnace store path", () => {
+  const ATTEMPT = "frn-atm-a1";
+  const ELLIPSIS = String.fromCodePoint(0x2026);
+  const isMarker = (line: string): boolean => line === "[truncated]" || line.startsWith(`${ELLIPSIS} truncated (producer: `);
+
+  async function furnaceEntry(reply: { lines: readonly string[]; complete: boolean; lossy: boolean; next_cursor: string | null }) {
+    const { deps } = wiringDeps(["furnace:inspect"]);
+    const store = createWorkbenchEvidenceStore({
+      ...deps,
+      furnaceClient: () => ({
+        logs: {
+          read: async (runId: string, options: { attempt: string; limit: number; stream: string }) => ({
+            kind: "logs_read",
+            requestId: "rq-cz9",
+            data: { run_id: runId, attempt_id: options.attempt, stream: options.stream, lines: [...reply.lines], returned: reply.lines.length, complete: reply.complete, lossy: reply.lossy, next_cursor: reply.next_cursor },
+          }),
+        },
+      }),
+    } as never);
+    await store.request(scope, runRef, ATTEMPT);
+    return store.get(scope, runRef, ATTEMPT);
+  }
+
+  it("positive protection: an untruncated read keeps every row and shows no marker", async () => {
+    const entry = await furnaceEntry({ lines: ["line one", "line two"], complete: true, lossy: false, next_cursor: null });
+    expect(entry).toMatchObject({ state: "loaded", truncated: false });
+    if (entry.state === "loaded") expect(entry.preview).toEqual(["stdout:", "line one", "line two"]);
+  });
+
+  it.each([
+    { reason: "lossy", complete: true, lossy: true, next_cursor: null },
+    { reason: "incomplete", complete: false, lossy: false, next_cursor: null },
+    { reason: "paged", complete: true, lossy: false, next_cursor: "cursor-1" },
+  ])("$reason: the store's single [truncated] is the only marker, never the reader's line beside it", async ({ complete, lossy, next_cursor }) => {
+    const entry = await furnaceEntry({ lines: ["line one", "line two"], complete, lossy, next_cursor });
+    expect(entry).toMatchObject({ state: "loaded", truncated: true });
+    if (entry.state === "loaded") expect(entry.preview).toEqual(["stdout:", "line one", "line two", "[truncated]"]);
+  });
+
+  it("a lossy read whose row the reader also clipped shows one marker and keeps the clipped row", async () => {
+    const entry = await furnaceEntry({ lines: ["line one", "y".repeat(201)], complete: true, lossy: true, next_cursor: null });
+    expect(entry).toMatchObject({ state: "loaded", truncated: true });
+    if (entry.state === "loaded") expect(entry.preview).toEqual(["stdout:", "line one", `${"y".repeat(199)}${ELLIPSIS}`, "[truncated]"]);
+  });
+
+  it("positive protection: a budget-only cut the loader does not mark keeps exactly one visible marker, never zero", async () => {
+    const entry = await furnaceEntry({ lines: ["line one", "y".repeat(201)], complete: true, lossy: false, next_cursor: null });
+    expect(entry.state).toBe("loaded");
+    if (entry.state === "loaded") {
+      expect(entry.preview.filter(isMarker)).toHaveLength(1);
+      expect(entry.preview.slice(0, 3)).toEqual(["stdout:", "line one", `${"y".repeat(199)}${ELLIPSIS}`]);
+    }
   });
 });
 
