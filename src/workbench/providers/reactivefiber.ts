@@ -65,7 +65,26 @@ function isPreviewEnvelope(source: unknown, exit: number|null, workspaceRoot: st
       !["source_capture_count","fiber_signal_count","component_render_count","lens_resolution_count","necessity_eval_count","storage_write_count"].every(key=>nonnegativeInteger(work[key]))) return false;
   return true;
 }
-const INPUT={type:"object",properties:{model:{type:"string",minLength:1},task:{type:"string",minLength:1}},required:["model","task"],additionalProperties:false};
+const LEGACY_INPUT={type:"object",properties:{model:{type:"string",minLength:1},task:{type:"string",minLength:1}},required:["model","task"],additionalProperties:false};
+const VIEW_INPUT={type:"object",properties:{view:{type:"string",minLength:1},taskId:{type:"string",minLength:1},model:{type:"string",minLength:1}},required:["view","taskId"],additionalProperties:false};
+/** Exactly one arm admits an input (wb-973.1 SCG-R1): the legacy {model, task} preview or the served view render; the
+ * registry refuses every mixed shape at input validation, before a provider (and so an rf process) ever runs. */
+const INPUT={type:"object",oneOf:[LEGACY_INPUT,VIEW_INPUT]};
+
+/** The two input arms the descriptor admits, as the provider receives them. */
+export type ReactiveFiberRenderSelector=
+  | {readonly model:string;readonly task:string}
+  | {readonly view:string;readonly taskId:string;readonly model?:string};
+
+/** The spawned argv. The legacy arm is the measured rf@0.1.583 form byte for byte; the view arm is the served
+ * `--view V --task-id T` render with `--model M` (optional only under --view) after --task-id (wb-973.3 SCG-R3). Every
+ * form ends with --no-commit --no-input --json and adds no selector the pinned build parses but does not serve. */
+function renderArgv(selector:ReactiveFiberRenderSelector,workspaceRoot:string):string[] {
+  const select="view" in selector
+    ? ["--view",selector.view,"--task-id",selector.taskId,...(selector.model===undefined?[]:["--model",selector.model])]
+    : ["--model",selector.model,"--task",selector.task];
+  return ["--workspace",workspaceRoot,"context","render",...select,"--no-commit","--no-input","--json"];
+}
 
 export function registerReactiveFiberRender(registry:CapabilityRegistry,invoke:()=>Promise<RfEnvelope>,workspaceRoot:string):void {
   registry.register({descriptor:{id:"reactivefiber.render.preview",version:"1.0.0",description:"Preview native RF context with provenance and no durable write",inputSchema:INPUT,effectClass:"read",permissions:["reactivefiber:render"],supportedModes:["invoke"],contractSource:"rf@0.1.583:reactive-fiber.cli/v1 context.render --no-commit"},
@@ -78,8 +97,13 @@ export function registerReactiveFiberRender(registry:CapabilityRegistry,invoke:(
 }
 
 export async function nativeReactiveFiberPreview(model:string,task:string,workspaceRoot:string,signal?:AbortSignal):Promise<JsonValue> {
+  return nativeReactiveFiberRender({model,task},workspaceRoot,signal);
+}
+
+/** One noncommitted rf render for either input arm; the reading and its envelope checks are the same for both. */
+export async function nativeReactiveFiberRender(selector:ReactiveFiberRenderSelector,workspaceRoot:string,signal?:AbortSignal):Promise<JsonValue> {
   if(signal?.aborted) throw new CapabilityError("transport","RF preview cancelled before launch.");
-  const argv=["--workspace",workspaceRoot,"context","render","--model",model,"--task",task,"--no-commit","--no-input","--json"];
+  const argv=renderArgv(selector,workspaceRoot);
   const child=spawn("rf",argv,{stdio:["ignore","pipe","pipe"]});
   const MAX_BYTES=256*1024;
   const chunks:Buffer[]=[];
@@ -143,5 +167,5 @@ export async function nativeReactiveFiberPreview(model:string,task:string,worksp
 
 export function registerNativeReactiveFiberRender(registry:CapabilityRegistry,workspaceRoot:string):void {
   registry.register({descriptor:{id:"reactivefiber.render.preview",version:"1.0.0",description:"RF noncommitted context with native provenance",inputSchema:INPUT,effectClass:"read",permissions:["reactivefiber:render"],supportedModes:["invoke"],contractSource:"rf@0.1.583:reactive-fiber.cli/v1 context.render --no-commit"},
-    invoke:async(input,ctx)=>nativeReactiveFiberPreview((input as {model:string}).model,(input as {task:string}).task,workspaceRoot,ctx.signal)});
+    invoke:async(input,ctx)=>nativeReactiveFiberRender(input as ReactiveFiberRenderSelector,workspaceRoot,ctx.signal)});
 }
