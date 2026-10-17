@@ -123,10 +123,11 @@ describe("Furnace Work retry while Run establishment is uncertain (wb-0kg.4)", (
     const observed = await sameAttemptReexecution(env);
     expect(observed.armed).toBe(true);
     const receipt = observed.beforeClose;
-    expect(receipt.limits.retry).toBe("furnace-parks-never-retries");
+    // wb-lrz.1: the disclosed retry semantics replace the retired universal negative "furnace-parks-never-retries".
+    expect(receipt.limits.retry).toBe("adapter-never-retries; furnace-auto-retries-by-recorded-retry-policy; work_failure-and-indeterminate-park");
     expect(receipt.identityViolations.some((v) => /frn-atm-same executed 2 times/.test(v))).toBe(true);
     // O2: the full disclosed limits object (layered beside test/workbench-furnace-hosted.test.ts)
-    expect(receipt.limits).toEqual({ crashDurability: "none", observe: "unsupported", identity: "per-attempt", replyBounds: "none", retry: "furnace-parks-never-retries" });
+    expect(receipt.limits).toEqual({ crashDurability: "none", observe: "unsupported", identity: "per-attempt", replyBounds: "none", retry: "adapter-never-retries; furnace-auto-retries-by-recorded-retry-policy; work_failure-and-indeterminate-park" });
   });
 
   it("an observer connection sees no control: its cancel for another session's execution is unknown_execution and the workflow is never aborted", async () => {

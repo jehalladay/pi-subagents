@@ -89,7 +89,7 @@ interface Observed {
 }
 
 const clone = <T>(value: T): T => structuredClone(value);
-const LIMITS = { crashDurability: "none", observe: "unsupported", identity: "per-attempt", replyBounds: "none", retry: "furnace-parks-never-retries" };
+const LIMITS = { crashDurability: "none", observe: "unsupported", identity: "per-attempt", replyBounds: "none", retry: "adapter-never-retries; furnace-auto-retries-by-recorded-retry-policy; work_failure-and-indeterminate-park" };
 
 function attempt(invocation: number, attemptId: string, ordinal: number, terminal: string, extra: Partial<Attempt> = {}): Attempt {
   return {
@@ -178,6 +178,12 @@ function clean(): Observed {
 
 function rules(observed: Observed): string[] {
   return assessRetryFaultJourneys(observed).findings.map((finding: { rule: string }) => finding.rule);
+}
+/** The furnace-retry-premise details alone, so a mutant row can pin WHICH journey and phase the judge flagged. */
+function premiseDetails(observed: Observed): string[] {
+  return assessRetryFaultJourneys(observed)
+    .findings.filter((finding: { rule: string }) => finding.rule === "furnace-retry-premise")
+    .map((finding: { detail: string }) => finding.detail);
 }
 function receiptInput(observed: Observed) {
   return {
@@ -392,6 +398,15 @@ describe("furnace-hosted retry-fault receipt: judge falsifiers", () => {
     const after = clone(clean());
     after.journeys.observerNoControl.afterClose.limits.retry = "furnace-retries";
     expect(rules(after)).toContain("furnace-retry-premise");
+    // wb-lrz.1: the retired universal negative now misstates Furnace's recorded retry.* policy, so it is a flagged premise
+    // too, and ONLY where it was planted: every clean journey and phase states the disclosed semantics.
+    const retired = clone(clean());
+    retired.journeys.lostConnectionRetry.beforeClose.limits.retry = "furnace-parks-never-retries";
+    expect(premiseDetails(retired)).toEqual([`lostConnectionRetry before close: limits.retry is furnace-parks-never-retries, not ${LIMITS.retry}.`]);
+    // wb-lrz.2: so is the opposite over-claim, Furnace retrying the two parked classes.
+    const overClaim = clone(clean());
+    overClaim.journeys.dropBeforeAdmissionReply.afterClose.limits.retry = "adapter-never-retries; furnace-auto-retries-work_failure-and-indeterminate";
+    expect(premiseDetails(overClaim)).toEqual([`dropBeforeAdmissionReply after close: limits.retry is adapter-never-retries; furnace-auto-retries-work_failure-and-indeterminate, not ${LIMITS.retry}.`]);
   });
 
   it("flags limits that misstate crash durability, Observe, per-Attempt identity or reply bounds", () => {
