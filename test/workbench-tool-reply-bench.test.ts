@@ -118,6 +118,7 @@ const run = runToolReplyBench as (input: {
   observeInvocation: Observe;
   fixture: GroupedFixture;
   host: Host;
+  production?: { defaultMaxBytes: number; maxMaxBytes: number; maxLimit: number };
 }) => Receipt;
 const assess = assessToolReplyReceipt as (receipt: Receipt) => {
   realised: boolean;

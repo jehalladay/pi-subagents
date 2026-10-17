@@ -568,6 +568,32 @@ describe("W21 known duration: inspector-evidence-retained-bench", () => {
     expectRankFloors("wall.cycle", cycle, cycleFloor);
     for (const [i, sample] of receipt.outliers.entries()) expectSpan(`outliers[${i}]`, sample.ms, cycleFloor(cycle.samples - 1 - i));
   }, 120_000);
+
+  // Respin r24 re-measure under fleet load: at the step above (0.1 ms per render, 0.9 ms per cycle) a cycle's own
+  // request, settle and abort work (measured 1.3 to 3.8 ms warm, 25 to 37 ms on the first cycle) outweighs the
+  // per-cycle step, so a minority of wrong-span cycle walls (ER-G2: every third cycle 0.0001 ms) cleared every floor
+  // in this file before this case (12 passed (12)).
+  // Here the step dominates that work, as the header asks: 2.5 ms per render, 22.5 ms per cycle, so the same rank
+  // floors close a minority wrong span on either series by tens of milliseconds, on any host load.
+  it("holds both series at their ramp floors when the render step dominates a cycle's own work (gate ER-G2, ER-G1)", async () => {
+    const render = new Ramp(500, 25_000);
+    const receipt = await evidenceRun({
+      Projection: ObservationProjection,
+      EvidenceStore,
+      inspector: rampedLayout(render),
+      fixture: build({ seed: 9, nodes: 120, depth: 5, ticks: 20 }),
+      host: HOST,
+      limits: { cycles: 12, warmupCycles: 4, sampleEvery: 4, payloadBytes: 262_144, maxEntries: 4, maxBytes: 4_096, timeoutMs: 5_000, controlBytes: 4_194_304 },
+    });
+    const { cycle, detailsRender } = receipt.wall;
+    const perCycle = detailsRender.samples / cycle.samples;
+    expect(perCycle).toBe(3);
+    expect(render.calls).toBe(detailsRender.samples);
+    expectRankFloors("wall.detailsRender", detailsRender, i => render.at(i));
+    const cycleFloor = (c: number): number => Array.from({ length: perCycle }, (_, r) => render.at(perCycle * c + r)).reduce((sum, ms) => sum + ms, 0);
+    expectRankFloors("wall.cycle", cycle, cycleFloor);
+    for (const [i, sample] of receipt.outliers.entries()) expectSpan(`outliers[${i}]`, sample.ms, cycleFloor(cycle.samples - 1 - i));
+  }, 120_000);
 });
 
 describe("W21 known duration: topology-slice-grouped-bench (its timed selectLinkedTopology call; gate TS-K1, TS-G1)", () => {
