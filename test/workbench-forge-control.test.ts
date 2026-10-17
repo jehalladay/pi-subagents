@@ -789,8 +789,8 @@ const ACCEPTANCE: readonly Probe[] = ACCEPTANCE_UNITS.flatMap(([name, unit]) =>
     return { id: `${name} ${position}`, raw: shape(unit, secret), secret };
   }),
 );
-/** What a display string may never keep (the corpus's UNSAFE_DISPLAY). */
-const DISPLAY_UNSAFE = /[\x00-\x1f\x7f-\x9f\u{2028}\u{2029}]|\p{Default_Ignorable_Code_Point}|[\u{d800}-\u{dfff}]/u;
+/** What a display string may never keep (the corpus's UNSAFE_DISPLAY, wb-rqd format controls included). */
+const DISPLAY_UNSAFE = /[\x00-\x1f\x7f-\x9f\u{2028}\u{2029}\u{fff9}-\u{fffb}\u{13430}-\u{1343f}]|\p{Default_Ignorable_Code_Point}|[\u{d800}-\u{dfff}]/u;
 
 type FreeTextPath = "surface.mode" | "echo.operationId" | "echo.cancelIntent" | "echo.cancelAcceptance" | "echo.establishment";
 const FREE_TEXT_PATHS: readonly FreeTextPath[] = ["surface.mode", "echo.operationId", "echo.cancelIntent", "echo.cancelAcceptance", "echo.establishment"];
