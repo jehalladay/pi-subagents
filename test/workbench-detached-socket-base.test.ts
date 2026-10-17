@@ -41,8 +41,13 @@ function exactDir(prefix: string, bytes: number): string {
   mkdirSync(dir, { mode: 0o700 }); chmodSync(dir, 0o700); return dir;
 }
 function saveEnv(): void { savedEnv = { tmpdir: process.env.TMPDIR, xdg: process.env.XDG_RUNTIME_DIR }; }
-afterEach(() => {
-  for (const pid of hosts.splice(0)) { try { process.kill(pid, "SIGTERM"); } catch {} }
+afterEach(async () => {
+  const stopping = hosts.splice(0);
+  for (const pid of stopping) { try { process.kill(pid, "SIGTERM"); } catch {} }
+  // A stopping host unlinks its socket and removes its per-launch socket directory. Removing the fixtures while it
+  // does so races that removal, and rmSync returns early, without an error, when an entry vanishes mid-walk: the
+  // fixture survives and the scratch guard names it (wb-e37). So each host has exited (bounded) before cleanup.
+  await Promise.all(stopping.map(gone));
   if (savedEnv) {
     if (savedEnv.tmpdir === undefined) delete process.env.TMPDIR; else process.env.TMPDIR = savedEnv.tmpdir;
     if (savedEnv.xdg === undefined) delete process.env.XDG_RUNTIME_DIR; else process.env.XDG_RUNTIME_DIR = savedEnv.xdg;
