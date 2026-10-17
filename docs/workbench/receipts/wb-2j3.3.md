@@ -12,8 +12,8 @@
 
 ## 2026-10-17 receipt: INDEX union re-cut onto cf0068f (seat ws-05, run g6-work-s4, haiku tier)
 
-- Cause: landing 87 (wb-a2g.12) appended a line to `docs/workbench/receipts/INDEX.md`; trunk cf0068f merged INTO this branch (merge, not rebase). The only conflict was INDEX.md, resolved as an append-only union with the landed lines first and this bead's line last. No other file conflicted.
-- Re-measure on the merged tree: red = the new disclosure test with both src files at their cf0068f blobs gives 2 failed | 2 passed (4); green = full `npx vitest run` 292 files, 10746 passed | 1 expected fail | 7 skipped; `forge run lint` rc 0; `forge run typing` rc 0; biome clean; no `.only`.
+- Cause: landing 87 (wb-a2g.12) appended a line to `docs/workbench/receipts/INDEX.md`; trunk cf0068f, then a080ddd (landing 88, wb-973.1), merged INTO this branch (merge, not rebase). Conflicts: INDEX.md (append-only union, landed lines first, this bead's line last) and, after landing 88, `src/workbench/providers/reactivefiber.ts` (owner-authorised union per the ORCH-UPDATE on the bead): the landed INPUT oneOf and native invoke line (`nativeReactiveFiberRender`) are kept verbatim and only the two description strings differ from trunk.
+- Re-measure on the merged tree: red = the new disclosure test with both src files at their a080ddd blobs gives 2 failed | 2 passed (4); green = full `npx vitest run` on the a080ddd merge 293 files, 10770 passed | 1 expected fail | 7 skipped (landed guard test/workbench-reactivefiber-view-arm-guard.test.ts plus test/workbench-provider-envelope-audit.test.ts: 2 files, 59/59); `forge run lint` rc 0; `forge run typing` rc 0; biome clean; no `.only`.
 - `npm run typecheck:test`: 36 rows tree-wide, 0 rows in the delivered files (none introduced by this cut).
 - wb-era's source-hygiene grep ran over my files and returned nothing.
 - Display paths added: none (static literals). Direct forge; no furnace-fallback row.
