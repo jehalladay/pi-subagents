@@ -4,6 +4,9 @@
  * (src/workbench/control.ts, decideControl) through the vendored @forge/sdk 0.1.0 cancel verb, and records Forge's own
  * answers through the core's acknowledge and settle. It decides nothing: grants, scope, lifecycle ownership and operator
  * confirmation are the core's rules, the caller owns the decision, and nothing here registers a tool or wires a host.
+ * Provenance comes first: only the very decision object decideControl returned in this process executes
+ * (isCoreMintedDecision), so a copy, a decision replayed from the audit or the journal and a hand-built look-alike never
+ * reach the seam, however exact their shape.
  *
  * The measured surface, the only native verb:
  * - OperationClient.cancel(operationId): Promise<CancelReceipt> (dist/operation.d.ts:77) writes exactly one
@@ -47,8 +50,10 @@ import {
   acknowledge,
   CONTROL_CONTRACT_VERSION,
   CONTROL_PERMIT_POLICY,
+  CONTROL_UNMINTED_REASON,
   type ControlDecision,
   type ControlDenyPolicy,
+  isCoreMintedDecision,
   NATIVE_CONTROL_ACTIONS,
   type NativeControlReceipt,
   type RequestedControlReceipt,
@@ -258,11 +263,38 @@ function shown(value: string): string {
 }
 
 /**
- * The receipt of a permitted decision as the core mints it: frozen, requested, under the core's contract and policy, for
- * an action the core admits for its provider, under the canonical control:<provider>.<action> grant. Nothing is
- * recomputed; a look-alike the core could not have minted is unvetted.
+ * Why a decision the core did not mint is refused. The core mints only permits, so a denial keeps its typed denied-decision
+ * refusal and a re-wrapped receipt this adapter already sent stays permit-consumed; anything else, including a value whose
+ * reads throw (a revoked or trapping proxy), gets the core's fixed text and echoes nothing. No branch reaches the seam.
+ */
+function unminted(decision: unknown): ForgeControlRefusal {
+  try {
+    if (frozenRecord(decision)) {
+      if (own(decision, "decision") === "denied") {
+        const policy = own(decision, "policy");
+        return new ForgeControlRefusal(own(decision, "category") === "validation" ? "validation" : "authorization", "denied-decision",
+          "Forge control refuses a denied decision; nothing was sent.", isDenyPolicy(policy) ? policy : undefined);
+      }
+      const receipt = own(decision, "receipt");
+      if (record(receipt) && issued.has(receipt)) {
+        return new ForgeControlRefusal("validation", "permit-consumed", "This control permit already sent its cancel; a reissue needs a fresh decision.");
+      }
+    }
+  } catch {
+    // A value whose reads throw is no decision the core minted.
+  }
+  return new ForgeControlRefusal("validation", "unvetted-decision", CONTROL_UNMINTED_REASON);
+}
+/**
+ * The receipt of a permitted decision the core minted. Provenance first: only the very decision object decideControl minted
+ * in this process (isCoreMintedDecision) passes on to structural vetting, so a copy, a decision replayed from the audit or the
+ * journal and a hand-built look-alike never reach the seam, however exact their shape. Structural vetting stays behind it as
+ * defense in depth: frozen, requested, under the core's contract and policy, for an action the core admits for its provider,
+ * under the canonical control:<provider>.<action> grant. Nothing is recomputed; a look-alike the core could not have minted
+ * is unvetted.
  */
 function permitted(decision: unknown): RequestedControlReceipt {
+  if (!isCoreMintedDecision(decision)) throw unminted(decision);
   if (!frozenRecord(decision)) throw new ForgeControlRefusal("validation", "unvetted-decision", UNVETTED);
   const verdict = own(decision, "decision");
   if (verdict === "denied") {

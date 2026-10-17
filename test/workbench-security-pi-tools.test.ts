@@ -270,4 +270,13 @@ describe("claude:transcript grant on the inspector transcript path", () => {
     expect(ui.editor).toHaveBeenCalledWith("Claude session sess-allowed", "assistant: native transcript row");
     expect(ui.notify).not.toHaveBeenCalledWith(expect.stringContaining("Permission denied"), "warning");
   });
+  it("wb-idq: a row the adapter clipped at its bound renders with a visible marker line; an uncut row renders exactly as before", async () => {
+    const { view, ui, menuContext } = await transcriptSurface(["claude:transcript"]);
+    vi.spyOn(transcript, "readClaudeTranscript").mockResolvedValue([
+      { type: "assistant", uuid: "u-1", text: "whole row" },
+      { type: "user", uuid: "u-2", text: "cut row", clipped: true },
+    ]);
+    await view(menuContext, "sess-clipped");
+    expect(ui.editor).toHaveBeenCalledWith("Claude session sess-clipped", "assistant: whole row\n\nuser: cut row\n… truncated (row bound)");
+  });
 });

@@ -1,6 +1,7 @@
 /** Read-only producer metadata projection. The original JSON remains the authoritative result. */
 import type { JsonValue } from "./capability-registry.js";
 import type { NativeRef } from "./observation.js";
+import { REACTIVE_FIBER_CLI_SCHEMA } from "./providers/reactivefiber.js";
 
 export interface NativeEvidence {
   provider?: "forge" | "hyperunix" | "furnace" | "reactivefiber";
@@ -73,7 +74,7 @@ export function nativeEvidence(capabilityId: string, value: JsonValue): NativeEv
       break;
     }
     case "reactivefiber.render.preview": {
-      if (source.schema !== "reactive-fiber.cli/v1" || source.command !== "context.render") return {};
+      if (source.schema !== REACTIVE_FIBER_CLI_SCHEMA || source.command !== "context.render") return {};
       metadata.provider = "reactivefiber";
       id = text(source.operation_id);
       basis = text(record(record(source.result)?.provenance)?.graph_revision_id);
