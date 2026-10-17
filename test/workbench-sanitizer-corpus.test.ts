@@ -21,8 +21,9 @@
  */
 import { createHash } from "node:crypto";
 import type { SDKMessage } from "@anthropic-ai/claude-agent-sdk";
+import type * as ForgeSdk from "@forge/sdk";
 import type { LogsReadDto, Response } from "@furnace/sdk";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { safeWorkflowTerminalText } from "../src/ui/workflow-card.js";
 import { type InspectorModel, initialInspectorState, layoutInspector } from "../src/ui/workflow-inspector.js";
 import { ATTENTION_CLOCK_CAVEAT, ATTENTION_CONTRACT, type AttentionReport, selectAttention } from "../src/workbench/attention.js";
@@ -57,6 +58,24 @@ import { buildWorkflowCatalogReply, buildWorkflowInspectReply, type CapabilityCa
 import { selectLinkedTopology } from "../src/workbench/topology-slice.js";
 import { reconcileGrant } from "../src/workflow/reconcile.js";
 import { detachedCatchDriver } from "./helpers/detached-peer.js";
+import { forgeGateCatchDriver } from "./helpers/forge-gate-catch.js";
+
+/**
+ * wb-a3s.1 seam: @forge/sdk's ServerConnection.spawn() returns a connection whose initialize() rejects with the text the
+ * DIRECT-CALLER row below sets (a mock is registered per test file, so it lives here; the driver lives in
+ * test/helpers/forge-gate-catch.ts). Nothing else in @forge/sdk is replaced, and no other corpus site spawns a connection.
+ */
+const forgeSeam = vi.hoisted(() => ({ message: "" }));
+vi.mock("@forge/sdk", async importOriginal => {
+  const original = await importOriginal<typeof ForgeSdk>();
+  const connection = {
+    initialize: async (): Promise<never> => {
+      throw new Error(forgeSeam.message);
+    },
+    close: async (): Promise<void> => {},
+  };
+  return { ...original, ServerConnection: { spawn: () => connection } };
+});
 
 const cp = (code: number): string => String.fromCodePoint(code);
 const NUL = cp(0x00);
@@ -731,6 +750,15 @@ function observeTexts(raw: string): string[] {
  */
 const detachedCatchTexts = detachedCatchDriver();
 
+/**
+ * DIRECT-CALLER row (wb-a3s.1, owner follow-up to wb-a3s): the forge_gate_run catch in src/index.ts hands the connection's error
+ * message (compatibility verdicts, capability refusals, start-timeout, transport errors) straight to the one helper (text layout).
+ * The hoisted @forge/sdk fake rejects initialize() with the probe text; the registered tool replies for a target inside the sandbox.
+ */
+const forgeGateCatchTexts = forgeGateCatchDriver(raw => {
+  forgeSeam.message = raw;
+});
+
 /** wb-h8f.10: latency.ts displayText (selectLatencyDecomposition), the provider and the evidence-ref paths, joined to the corpus in the same commit as its routing through the one helper. */
 function latencyTexts(raw: string): string[] {
   const node: ObservedNode = {
@@ -859,6 +887,7 @@ const SITES: readonly Site[] = [
   { site: "claude-evidence.ts sanitizeRow (readClaudeMessageEvidence preview lines)", texts: claudeEvidenceTexts },
   { site: "site 18 detached-observer.ts shown (projectDetachedReading)", texts: detachedTexts },
   { site: "src/index.ts workflow_detached launch/inspect catch (DIRECT-CALLER, the detached refusal text)", texts: detachedCatchTexts },
+  { site: "src/index.ts forge_gate_run catch (DIRECT-CALLER, the forge connection error text)", texts: forgeGateCatchTexts },
   { site: "sites 19/20 workflow_inspect and workbench_catalog replies", texts: replyTexts },
   { site: "site 12 execute.ts buildWorkflowExecuteReply (DIRECT-CALLER: reason, policy value and key, native reference id and scope, definition id, invocation reference)", texts: executeTexts },
   { site: "site 22 observe-query.ts clean (observeInvocation)", texts: observeTexts },
@@ -875,6 +904,13 @@ describe("wb-952 one-helper corpus through every census site's public function",
       expectClean(await texts(probe.raw), probe);
     });
   }
+});
+
+describe("wb-a3s.1 forge_gate_run catch row is not vacuous", () => {
+  it("a plain connection refusal reaches the catch and comes back as the reply text", async () => {
+    const plain = "wb-a3s.1 obviously fake forge connection refusal";
+    expect(await forgeGateCatchTexts(plain)).toEqual([plain]);
+  });
 });
 
 describe("wb-952 acceptance set (17:32Z): every unit between, inside and both, through every census site", () => {
