@@ -109,9 +109,11 @@ function reply(body: ControlEnvelope) {
  * projection (evidence refs name the receipt and the producer's own ack/result refs; the event carries no presentation,
  * so the target keeps the producer's last reading and, having been acted on, reads stale until a producer re-read
  * confirms it), and in the control audit of the task that owns the target, when one does. The receipt object itself is
- * the core's or the adapter's, never one this shell composed.
+ * the core's or the adapter's, never one this shell composed. The production Claude settle path (wb-hqa) records the result
+ * phase a producer reports after the reply returned through this same function, so the event id, kind, evidence refs and the
+ * audit FIFO cannot drift.
  */
-function record(deps: WorkflowControlDeps, receipt: NativeControlReceipt, scope: ObservationScope): void {
+export function recordControlReceipt(deps: Pick<WorkflowControlDeps, "projection" | "tasks">, receipt: NativeControlReceipt, scope: ObservationScope): void {
   const target = { provider: receipt.target.provider, type: receipt.target.type, id: receipt.target.id, ...(receipt.target.scope !== undefined ? { scope: receipt.target.scope } : {}) };
   const node = deps.projection.query({ scope, ref: target, limit: 1 }).nodes[0];
   const evidenceRefs = [`control-receipt:${receipt.requestId}`];
@@ -176,7 +178,7 @@ export function createWorkflowControlTool(deps: WorkflowControlDeps) {
         });
       }
       // The requested phase is the core's own receipt, recorded before any adapter runs, so an audit never lacks it.
-      record(deps, decision.receipt, scope);
+      recordControlReceipt(deps, decision.receipt, scope);
       const provider = decision.receipt.target.provider;
       // Own-property lookup, so __proto__, constructor and other unlisted names resolve no executor.
       const executor = Object.hasOwn(deps.executors, provider) ? deps.executors[provider] : undefined;
@@ -208,7 +210,7 @@ export function createWorkflowControlTool(deps: WorkflowControlDeps) {
         });
       }
       // The producer's own answer, as the adapter settled it: recorded only when it moved past the requested phase.
-      if (summary.receipt.phase !== "requested") record(deps, summary.receipt, scope);
+      if (summary.receipt.phase !== "requested") recordControlReceipt(deps, summary.receipt, scope);
       const folded = buildControlReply(summary.receipt, { maxBytes: CONTROL_REPLY_BYTES });
       return reply({
         ok: true, invoked: true,

@@ -660,7 +660,7 @@ describe("row 7: wiring pins", () => {
       '[build.commands.detached-control-live]\ncommand = "./node_modules/.bin/vitest run --config vitest.detached-control-live.config.ts"\ntimeout = 600\n',
     );
     expect(forge.match(/\[build\.commands\.detached-control-live\]/g)).toHaveLength(1);
-    expect(forge).toContain('gate = ["lint", "typing", "build", "test", "workbench-shell", "package-smoke"]\n');
+    expect(forge).toContain('gate = ["lint", "typing", "build", "test", "census", "workbench-shell", "package-smoke"]\n');
     const gate = /^gate = \[(.*)\]$/m.exec(forge)?.[1] ?? "";
     expect(gate).not.toContain("detached-control-live");
   });

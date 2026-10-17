@@ -34,7 +34,7 @@ export const RECONCILE = "Claude interrupt outcome unknown: no usable answer to 
   + "control request.";
 /** The native statement the harness seeds the session-owns-call edge from: the SDK's own system/init session_id (owner ruling R1). */
 export const OWNERSHIP_SOURCE = "system/init session_id";
-/** The beads every strict booted-tool UNREALISED declaration must cite (owner ruling R2): the registration gap and the wiring gap. */
+/** The beads every strict booted-tool UNREALISED declaration must cite (owner ruling R2): the registration gap and the landed wiring bead. */
 export const STRICT_BOOTED_CITATIONS: readonly string[] = Object.freeze(["wb-69g.4", "wb-hqa"]);
 export const PHASES = Object.freeze(["requested", "acknowledged", "result", "denied", "uncertain", "observer-close", "sibling", "terminal-measurement"] as const);
 export type Phase = (typeof PHASES)[number];
@@ -109,8 +109,8 @@ export const NON_CLAIMS: readonly string[] = Object.freeze([
   "no security claims beyond same-process authorization evidence",
   "no proof of Anthropic model inference: the served model is the gateway's answer recorded from an assistant frame",
   "no claim that Query.interrupt() is supported on string-prompt queries in general (one live measurement, wb-69g.4 stays BLOCKED)",
-  "the booted registered tool's claude leg is unreachable today: strict booted-tool reading UNREALISED (wb-69g.4 + wb-hqa)",
-  "the result phase was settled by the harness tee, never by the production wiring (src never calls settleClaudeInterrupt)",
+  "this tier's strict booted-tool reading is UNREALISED by construction: it mirrors the src/index.ts leg and boots no extension; the landed wiring (wb-hqa) is measured by the default-gate booted row; wb-69g.4 stays BLOCKED",
+  "the result phases of this tier were settled by the harness tee from the teed execution (resultDrivenBy harness-tee), never by the production settle path this tier does not exercise",
   "completion never asserted; transport success is not domain verification",
 ]);
 

@@ -10,8 +10,8 @@
 // Exit 0 = realised and clean, 1 = realised with findings, 2 = not realised, 3 = the receipt was printed but could not
 // be written to $FURNACE_HOSTED_RETRY_FAULT_RECEIPT. The receipt is ONE JSON line on stdout, printed BEFORE any write.
 // Bind it to a commit by running from a clean committed tree after `npm run build` (revision and revisionClean say so).
-import {execFileSync} from 'node:child_process';
-import {writeFileSync} from 'node:fs';
+import {spawnSync} from 'node:child_process';
+import {realpathSync, writeFileSync} from 'node:fs';
 import {fileURLToPath} from 'node:url';
 import {buildRetryFaultReceipt, exitCodeFor, RETRY_FAULT_JOURNEYS} from './furnace-hosted-retry-fault-receipt.mjs';
 
@@ -22,23 +22,52 @@ let sdk = null;
 let scratch = null;
 const message = error => (error instanceof Error ? error.message : String(error));
 
-function git(args) {
-  return execFileSync('git', args, {cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore']}).trim();
+// wb-0yw (vko row 405 F3): the receipt stamp is the canonical wb-vko block below, inlined byte-for-byte (this runner's guards
+// allow only node: imports and the one receipt module, so it is not imported). ROOT is the module's own repository root, and
+// the block describes it only when ROOT IS that repository's toplevel: a runner vendored inside a foreign checkout stamps no
+// HEAD, and a status read that fails is never reported as a clean tree. revisionOf rides along for byte identity only.
+// git-stamp:begin (copied byte-for-byte into status-ledger.mjs, local-detached-faults.mjs and local-detached-shared-child.mjs, whose
+// guards allow only node: imports; test/workbench-git-stamp.test.ts fails on any drift)
+const HEX = /^[0-9a-f]{7,64}$/;
+
+function git(root, args) {
+  const run = spawnSync('git', args, {cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore']});
+  return run.status === 0 && typeof run.stdout === 'string' ? run.stdout : undefined;
 }
-function revision() {
+
+function sameDir(a, b) {
   try {
-    const head = git(['rev-parse', 'HEAD']);
-    return /^[0-9a-f]{7,64}$/.test(head) ? head : 'working-tree';
+    return realpathSync(a) === realpathSync(b);
   } catch {
-    return 'working-tree';
+    return false;
   }
+}
+
+/** `{head, porcelain}` for `root`: both null unless root is the repository toplevel with a valid HEAD; porcelain alone is null when the status read fails. */
+function gitStamp(root) {
+  const top = git(root, ['rev-parse', '--show-toplevel']);
+  if (top === undefined || !sameDir(top.trim(), root)) return {head: null, porcelain: null};
+  const head = (git(root, ['rev-parse', 'HEAD']) ?? '').trim();
+  if (!HEX.test(head)) return {head: null, porcelain: null};
+  return {head, porcelain: git(root, ['status', '--porcelain']) ?? null};
+}
+
+/** HEAD sha, suffixed `-dirty` when the tree has changes; `working-tree` when root is not a toplevel or its status cannot be read. */
+function revisionOf(root) {
+  const {head, porcelain} = gitStamp(root);
+  if (head === null || porcelain === null) return 'working-tree';
+  return porcelain.trim().length > 0 ? `${head}-dirty` : head;
+}
+// git-stamp:end
+
+// Read at emit time (after the journeys ran), as the clean bit always was.
+function revision() {
+  const {head, porcelain} = gitStamp(ROOT);
+  return head === null || porcelain === null ? 'working-tree' : head;
 }
 function revisionClean() {
-  try {
-    return git(['status', '--porcelain']) === '';
-  } catch {
-    return null;
-  }
+  const {head, porcelain} = gitStamp(ROOT);
+  return head === null || porcelain === null ? null : porcelain.trim().length === 0;
 }
 
 function emit() {

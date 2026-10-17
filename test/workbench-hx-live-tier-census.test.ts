@@ -449,7 +449,7 @@ describe('wb-tz2.2 census: the live tier stays separate from the default gate', 
     const pkg: unknown = JSON.parse(readRepo('package.json'));
     const script = typeof pkg === 'object' && pkg !== null && 'scripts' in pkg && typeof pkg.scripts === 'object' && pkg.scripts !== null &&
       'test' in pkg.scripts ? pkg.scripts.test : undefined;
-    expect(script).toBe('vitest run');
+    expect(script).toBe('vitest run --reporter=default --reporter=json --outputFile=.forge/vitest-report.json --includeTaskLocation --expect.requireAssertions');
   });
 });
 
