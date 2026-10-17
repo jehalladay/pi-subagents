@@ -91,6 +91,23 @@ describe("createWorkbenchEvidenceStore (host wiring)", () => {
     expect(store.get(scope, otherRef, "claude-message:u1")).toMatchObject({ state: "unavailable", reason: "unauthorized" });
   });
 
+  it("loads a claude transcript row when the host supplies no clock (the shipped index.ts shape), stamping a parseable capturedAt", async () => {
+    // Without the wiring's own clock injection every shipped claude load would refuse transport at the loader.
+    const { deps } = wiringDeps(["claude:transcript"]);
+    const { now, ...clockless } = deps;
+    expect(now).toBeTypeOf("function");
+    expect("now" in clockless).toBe(false);
+    const store = createWorkbenchEvidenceStore(clockless as never);
+    const sessionRef: NativeRef = { provider: "claude-agent-sdk", type: "session", id: "sess-1" };
+    await store.request(scope, sessionRef, "claude-message:u1");
+    const loaded = store.get(scope, sessionRef, "claude-message:u1");
+    expect(loaded.state).toBe("loaded");
+    if (loaded.state === "loaded") {
+      expect(Number.isNaN(Date.parse(loaded.capturedAt))).toBe(false);
+      expect(loaded.preview.join("\n")).toContain("hello sess-1");
+    }
+  });
+
   it("loads a furnace attempt log through the landed reader, bound to the owning run node", async () => {
     const { deps } = wiringDeps(["furnace:inspect"]);
     const store = createWorkbenchEvidenceStore(deps as never);

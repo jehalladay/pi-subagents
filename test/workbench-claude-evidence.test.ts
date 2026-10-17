@@ -76,7 +76,7 @@ describe("C1 docs/workbench/20 § Producer mapping (claude-agent-sdk session): s
     const read = seam();
     const content = await readClaudeMessageEvidence(refOf(TARGET), deps(read));
     expect(content).toStrictEqual({
-      contract: "workbench.claude-evidence/v1", kind: "claude.message", provider: "claude-agent-sdk",
+      contract: "workbench.claude-evidence/v1", kind: "claude-message", provider: "claude-agent-sdk",
       nativeRef: { provider: "claude-agent-sdk", type: "message", id: TARGET },
       capturedAt: CLOCK, bytes: 11, truncated: false, preview: ["target body"], freshness: "current",
     });
@@ -85,6 +85,12 @@ describe("C1 docs/workbench/20 § Producer mapping (claude-agent-sdk session): s
     expect(read).toHaveBeenCalledWith(SESSION, CWD, 40);
     // No other window row's text anywhere in the answer.
     expect(JSON.stringify(content)).not.toContain("message body");
+  });
+
+  it("wb-idq: the kind is the docs/20 ref prefix spelling, claude-message, the one spelling the store path shares", async () => {
+    const content = await previewOf("x");
+    expect(content.kind).toBe("claude-message");
+    expect(refOf(TARGET).startsWith(`${content.kind}:`)).toBe(true);
   });
 
   it("a uuid outside the bounded window is a transport refusal that states the bound, with no preview and no fabricated row", async () => {
@@ -351,6 +357,25 @@ describe("C3 docs/workbench/09 § Data retention and privacy: bounded redacted p
     expect(JSON.stringify(content)).not.toContain("mutated afterwards");
     expect(JSON.stringify(content)).toContain("keep me out");
   });
+  it("wb-idq truncation honesty: a row the transcript adapter clipped at its bound (clipped: true) loads truncated with the marker even though its text fits every budget", async () => {
+    const read = seam([{ type: "assistant", uuid: TARGET, text: "cut at the row bound", clipped: true }]);
+    const content = await readClaudeMessageEvidence(refOf(TARGET), deps(read));
+    expect(content.truncated).toBe(true);
+    expect(content.preview[0]).toBe("cut at the row bound");
+    expect(content.preview.at(-1)).toMatch(/^… truncated/);
+    expect(content.bytes).toBe(Buffer.byteLength("cut at the row bound", "utf8"));
+    const whole = await previewOf("cut at the row bound");
+    expect(whole.truncated).toBe(false);
+    expect(whole.preview).toStrictEqual(["cut at the row bound"]);
+  });
+
+  it("wb-idq truncation honesty: a clipped flag that is present but not the literal true is a malformed seam answer, never read as whole", async () => {
+    const read = seam([{ type: "assistant", uuid: TARGET, text: "plain", clipped: "yes" } as unknown as ClaudeTranscriptRow]);
+    const error = await refusal(readClaudeMessageEvidence(refOf(TARGET), deps(read)));
+    expect(error.category).toBe("unavailable");
+    expect(error.message).not.toContain("plain");
+  });
+
 });
 
 describe("C4 docs/workbench/20 § Refusal and freshness rules: no verification upgrade", () => {
