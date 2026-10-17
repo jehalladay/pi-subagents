@@ -125,7 +125,11 @@ function gated(options: EvidenceProducerOptions, grant: string): void {
  * splits it into rows, so splitting a row here would hand it a credential's scheme or key and its value as two entries.
  */
 
-const sameNativeRef = (left: NativeRef, right: NativeRef): boolean =>
+/**
+ * The one native-ref equality the producers and the host wiring share (wb-cz9 F3): an absent scope and an empty scope
+ * name the same node. Exported so the forge wiring calls this predicate instead of carrying its own copy of the comparison.
+ */
+export const sameNativeRef = (left: NativeRef, right: NativeRef): boolean =>
   left.provider === right.provider && left.type === right.type && left.id === right.id && (left.scope ?? "") === (right.scope ?? "");
 
 function claudeLoader(options: EvidenceProducerOptions, seam: ClaudeEvidenceSeam): EvidenceLoader {

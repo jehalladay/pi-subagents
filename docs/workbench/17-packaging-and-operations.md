@@ -31,10 +31,10 @@ Separate:
 
 ```sh
 hook="$(git rev-parse --git-path hooks)/pre-push"
-printf '#!/bin/sh\nexec node "%s/qa/workbench/pre-push-commit-message-scan.mjs" "$@"\n' "$PWD" > "$hook" && chmod +x "$hook"
+printf '#!/bin/sh\nexec node '\''%s/qa/workbench/pre-push-commit-message-scan.mjs'\'' "$@"\n' "$(printf '%s' "$PWD" | sed "s/'/'\\\\''/g")" > "$hook" && chmod +x "$hook"
 ```
 
-The wrapper names the script by absolute path and hands it the push. If that path later goes missing (the clone moved, the worktree removed), node exits non-zero and the push is refused; a symlink install would instead be skipped by git without a word. Run the two lines again after moving or re-cloning.
+The wrapper names the script by absolute path, single-quoted for sh with any apostrophe in the path written as `'\''`, so a clone path that carries a double quote, a dollar sign, a backtick or an apostrophe still runs the scan; it hands the push straight to the script. If that path later goes missing (the clone moved, the worktree removed), node exits non-zero and the push is refused; a symlink install would instead be skipped by git without a word. Run the two lines again after moving or re-cloning.
 
 ## Operations telemetry
 

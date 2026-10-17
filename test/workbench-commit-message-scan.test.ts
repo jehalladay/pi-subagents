@@ -8,8 +8,9 @@
  */
 import { execFileSync, type SpawnSyncReturns, spawnSync } from "node:child_process";
 import { mkdtempSync, rmSync } from "node:fs";
+import { readFile, symlink } from "node:fs/promises";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { join, relative } from "node:path";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { GUARD_CODE_POINTS, isGuardCodePoint, scanCommitMessage, scanCommitMessages, scanCommitObject } from "../qa/workbench/commit-message-scan.mjs";
 
@@ -400,12 +401,75 @@ describe("wb-a9s gate U2: EVERY author and committer header line is scanned", ()
     expect(r.stdout).not.toContain(cp(0x202e));
   });
 
+  it("S3 (wb-a9s F1): two committer lines with U+202E in the FIRST exit 3 and label the committer field (a last-line-only read, gate mutant GB4, passes S2 and fails here)", () => {
+    const repo = makeRepo();
+    const base = repo.commit("base commit");
+    const bad = craftCommit(repo, [AUTHOR, `committer t${cp(0x202e)}x <t@example.invalid> 0 +0000`, COMMITTER], Buffer.from("feat: clean\n"));
+    const r = repo.run("--base", base);
+    expect(r.status).toBe(3);
+    expect(r.stdout).toContain(`${bad} committer column 2 U+202E`);
+    expect(r.stdout).toContain("1 commits, 1 offenders");
+    expect(r.stdout).not.toContain(cp(0x202e));
+  });
+
   it("unit: both lines are reported, in header order, each with its own column", () => {
     const raw = Buffer.from(`tree x\nauthor a${cp(0x200b)} <e@x.invalid> 0 +0000\nauthor b${cp(0x200c)} <e@x.invalid> 0 +0000\n${COMMITTER}\n\nm\n`, "utf8");
     expect(scanCommitObject("abc", raw)).toEqual([
       { sha: "abc", field: "author", column: 2, codePoint: "U+200B" },
       { sha: "abc", field: "author", column: 2, codePoint: "U+200C" },
     ]);
+  });
+});
+
+/** The CLI spawned from a path other than SCRIPT (a symlink to it, or a relative spelling), in the fixture's directory with the
+ * same scrubbed environment makeRepo gives its git children. */
+function runVia(repo: Repo, script: string, ...args: string[]): SpawnSyncReturns<string> {
+  const env: NodeJS.ProcessEnv = { ...scrubGitEnv(process.env), GIT_CONFIG_GLOBAL: "/dev/null", GIT_CONFIG_SYSTEM: "/dev/null" };
+  return spawnSync(process.execPath, [script, ...args], { cwd: repo.dir, env, encoding: "utf8" });
+}
+
+describe("wb-vic F9: the CLI entry guard resolves argv[1] (a symlink or a relative path still runs the scan)", () => {
+  it("a symlink to the CLI, run on a repository with one offender, exits 3 and names the offender (a raw-argv[1] guard exits 0 with no output)", async () => {
+    const repo = makeRepo();
+    const base = repo.commit("base commit");
+    const bad = repo.commit(`fix: bad${cp(0x202e)}message`);
+    const link = join(repo.dir, "scan-link.mjs");
+    await symlink(SCRIPT, link);
+    const r = runVia(repo, link, "--base", base);
+    expect(r.status).toBe(3);
+    expect(r.stdout).toContain(`${bad} line 1 column 9 U+202E`);
+    expect(r.stdout).toContain("commit-message-scan: 1 commits, 1 offenders");
+    expect(r.stdout).not.toContain(cp(0x202e));
+  });
+
+  it("a symlink to the CLI with an unresolvable --base exits 2 with no summary line, never 0", async () => {
+    const repo = makeRepo();
+    repo.commit("base commit");
+    const link = join(repo.dir, "scan-link.mjs");
+    await symlink(SCRIPT, link);
+    const r = runVia(repo, link, "--base", "not-a-rev");
+    expect(r.status).toBe(2);
+    expect(r.stdout).toBe("");
+    expect(r.stderr).toContain("nothing was scanned");
+  });
+
+  it("control: a RELATIVE path to the CLI exits 3 on the same offender (green before and after the guard change)", () => {
+    const repo = makeRepo();
+    const base = repo.commit("base commit");
+    const bad = repo.commit(`fix: bad${cp(0x202e)}message`);
+    const r = runVia(repo, relative(repo.dir, SCRIPT), "--base", base);
+    expect(r.status).toBe(3);
+    expect(r.stdout).toContain(`${bad} line 1 column 9 U+202E`);
+    expect(r.stdout).toContain("commit-message-scan: 1 commits, 1 offenders");
+  });
+});
+
+describe("wb-vic F8: the CLI header describes the guard set in plain input-hygiene terms", () => {
+  it("names bidi and invisible display controls and carries no 'trojan' wording anywhere in the file", async () => {
+    const source = await readFile(SCRIPT, "utf8");
+    const header = source.slice(0, source.indexOf("\nimport "));
+    expect(header).toContain("bidi and invisible display controls that change how a commit message reads");
+    expect(source).not.toMatch(/trojan/i);
   });
 });
 

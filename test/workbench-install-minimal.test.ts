@@ -258,6 +258,48 @@ describe("assertReadOnlyReceipt (runner cross-check on the probe receipt: wb-nh3
   });
 });
 
+/**
+ * Blanks // and block comments outside string and template literals, keeping newlines, so a
+ * commented-out cross-check call never satisfies the own-statement-line row below (wb-nh3 F1).
+ * Known limits: template-literal ${...} expressions and regex literals are not parsed (the runner
+ * carries neither at the pinned lines).
+ */
+function stripComments(source: string): string {
+  let out = "";
+  let quote = "";
+  let i = 0;
+  while (i < source.length) {
+    const ch = source.charAt(i);
+    const next = source.charAt(i + 1);
+    if (quote !== "") {
+      out += ch;
+      if (ch === "\\") {
+        out += next;
+        i += 2;
+        continue;
+      }
+      if (ch === quote) quote = "";
+      i += 1;
+      continue;
+    }
+    if (ch === "/" && next === "/") {
+      while (i < source.length && source.charAt(i) !== "\n") i += 1;
+      continue;
+    }
+    if (ch === "/" && next === "*") {
+      const end = source.indexOf("*/", i + 2);
+      const stop = end === -1 ? source.length : end + 2;
+      out += source.slice(i, stop).replace(/[^\n]/g, " ");
+      i = stop;
+      continue;
+    }
+    if (ch === '"' || ch === "'" || ch === "`") quote = ch;
+    out += ch;
+    i += 1;
+  }
+  return out;
+}
+
 describe("harness sources and wiring", () => {
   it("the runner copies the lib beside the probe and the probe uses probeInstalledWrite with the shared uid predicate", () => {
     const runner = readRepo("qa/workbench/install-minimal.mjs");
@@ -308,6 +350,16 @@ describe("harness sources and wiring", () => {
     const crossCheck = runner.indexOf("assertReadOnlyReceipt(probeReceipt,ownUid);");
     expect(parsed >= 0, "runner no longer parses the probe receipt").toBe(true);
     expect(crossCheck > parsed, "cross-check must follow the receipt parse").toBe(true);
+  });
+
+  it("the cross-check call is its own statement line after the parse in the comment-stripped runner, so a commented-out or try/catch-wrapped call cannot pass (wb-nh3 F1)", () => {
+    const runner = readRepo("qa/workbench/install-minimal.mjs");
+    const stripped = stripComments(runner);
+    const parsed = stripped.indexOf("const probeReceipt=JSON.parse(");
+    expect(parsed >= 0, "runner no longer parses the probe receipt (comment-stripped text)").toBe(true);
+    const call = /^[ \t]*assertReadOnlyReceipt\(probeReceipt,ownUid\);[ \t]*$/m.exec(stripped);
+    expect(call !== null, "the cross-check is no longer its own statement line in the comment-stripped runner").toBe(true);
+    expect((call?.index ?? -1) > parsed, "cross-check must follow the receipt parse in the comment-stripped text").toBe(true);
   });
 
   it("the runner spawns the probe with the scrubbed environment only", () => {

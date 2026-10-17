@@ -9,7 +9,9 @@
 // stdout names every offending commit as sha, line, column and a U+ hex label (labels only, never the raw points).
 //   - a deleted-ref line (local sha all zeros) pushes no commits and is skipped
 //   - every line is scanned, then the exit is decided: 3 when any ref has an offender, else 2 when any ref could not be
-//     scanned (an unresolvable sha, a malformed line), else 0. Non-zero refuses the push; nothing fails open.
+//     scanned (an unresolvable sha, a malformed line), else 0. Non-zero refuses the push; nothing fails open. The refusal
+//     line on stderr says which: "offending commits are listed above" only for scan exit 3; an unscannable ref says its
+//     commits could not be scanned, with the scan exit it saw
 //   - a sha that is not 40 or 64 hex digits is refused before it reaches the CLI as an argument
 //   - refs echoed in the refusal line are projected to printable ASCII so the report cannot carry a raw guard point
 // Install, once per clone, as a two-line wrapper script that execs node on this file, so a missing target fails the push
@@ -63,15 +65,20 @@ export function runHook(stdin) {
     }
     const result = spawnSync(process.execPath, [SCAN, '--base', parsed.remoteSha, '--tip', parsed.localSha], {stdio: ['ignore', 'inherit', 'inherit']});
     if (result.status === 0) continue;
-    if (result.status === 3) offended = true;
-    else unscannable = true;
-    process.stderr.write(`pre-push-commit-message-scan: push of ${parsed.localRef} refused (scan exit ${result.status ?? 'none'}); offending commits are listed above\n`);
+    if (result.status === 3) {
+      offended = true;
+      process.stderr.write(`pre-push-commit-message-scan: push of ${parsed.localRef} refused (scan exit 3); offending commits are listed above\n`);
+    } else {
+      unscannable = true;
+      process.stderr.write(`pre-push-commit-message-scan: push of ${parsed.localRef} refused; its commits could not be scanned (scan exit ${result.status ?? 'none'})\n`);
+    }
   }
   if (offended) return 3;
   return unscannable ? 2 : 0;
 }
 
-// When this file is reached through a SYMLINK (an alternative to the wrapper install): argv[1] is the link path while
-// import.meta.url is the resolved file, so the entry check compares the resolved path (comparing the raw link path would skip
-// the scan and exit 0, failing open).
+// When this file is reached through a SYMLINK (not an install form: docs/workbench/17-packaging-and-operations.md documents the
+// wrapper only, because git skips a dangling symlinked hook without a word): argv[1] is the link path while import.meta.url is
+// the resolved file, so the entry check compares the resolved path (comparing the raw link path would skip the scan and exit 0,
+// failing open).
 if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href) process.exitCode = runHook(readFileSync(0, 'utf8'));

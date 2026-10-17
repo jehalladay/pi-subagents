@@ -2,3 +2,4 @@
 - [wb-a3s](wb-a3s.md) | forge operations the Pi host starts are observed into the session projection from the server's own frames, so the booted workflow_control admits and cancels them over the retained connection | 2026-10-17
 - [wb-tz2.13](wb-tz2.13.md) | native-tier HX receipt names the runtime-licence invariant and the binary identity, never a verdict | 2026-10-17
 - [wb-0kg.8](wb-0kg.8.md) | live local-detached adverse cancellation journey tier (real detached hosts, workflow_control cancel mid-execution under the exact grant, host-echoed receipts, typed denials with no socket opened, shutdown surfaces unresolvedEffects) | 2026-10-17
+- [wb-19q](wb-19q.md) | Deferred groom bundle: owner-routed pin and falsifier hardening roster; ONE cut carries every member and cannot land partial (members listed in first note; routes also recorded on each source bead) | 2026-10-17

@@ -40,9 +40,11 @@ import {
   type RetryFaultEnv,
   SCRATCH_BASE_MAX_BYTES,
   SCRATCH_FALLBACK_BASE,
+  SETTLED_CLOSE_CONTROL_ATTEMPT,
   SETTLED_CLOSE_GRACE_MS,
   sameAttemptReexecution,
   settledCloseTimers,
+  settledCloseTimersSensitivity,
   shippedSdkRecord,
 } from "./helpers/furnace-hosted-retry-journeys.js";
 
@@ -173,6 +175,23 @@ describe("Furnace Work retry while Run establishment is uncertain (wb-0kg.4)", (
     // A leaked abort listener arms one SETTLED_CLOSE_GRACE_MS timer per settled Attempt when close() aborts; none may remain.
     expect(observed.timeoutsAfterClose - observed.timeoutsBeforeClose).toBeLessThanOrEqual(0);
     expect(observed.afterClose.attempts.map((attempt) => attempt.cancel)).toEqual([{ requested: false }, { requested: false }, { requested: false }]);
+  });
+
+  it("wb-19q member 18 (wb-21k F2): the dangling-timer measurement is sensitive: a timer armed by close()'s abort of a parked fourth Attempt raises the after-close count, so a count taken before close() cannot pass as clean", async () => {
+    const observed = await settledCloseTimersSensitivity(env);
+    expect(observed.armed).toBe(true);
+    expect(observed.controlTimerArmed).toBe(true);
+    expect(observed.settledAttempts).toBe(3);
+    // The control timer is armed INSIDE close() (by the abort of the parked Attempt), so only a count taken after close()
+    // can see it: a measurement that read its after-close count before close() reads 0 here and fails this row.
+    expect(observed.timeoutsAfterClose - observed.timeoutsBeforeClose).toBeGreaterThanOrEqual(1);
+    // the three settled Attempts stay untouched beside the parked control Attempt, which close() ends as host_closed/indeterminate
+    expect(observed.afterClose.attempts.map((attempt) => [attempt.attemptId, attempt.terminal, attempt.cancel])).toEqual([
+      ["frn-atm-t1", "success", { requested: false }],
+      ["frn-atm-t2", "success", { requested: false }],
+      ["frn-atm-t3", "success", { requested: false }],
+      [SETTLED_CLOSE_CONTROL_ATTEMPT, "indeterminate", { requested: true, reason: "host_closed" }],
+    ]);
   });
 
   it("the host scratch base follows the host rule: XDG_RUNTIME_DIR first, /tmp only as the recorded fallback, never first", () => {

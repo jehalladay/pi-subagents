@@ -367,6 +367,55 @@ describe("furnace-hosted retry-fault receipt: judge falsifiers", () => {
     expect(rules(clean())).toEqual([]);
   });
 
+  it("wb-19q member 17 (wb-21k F1): a settled Attempt whose afterClose record is missing or misaligned is itself a finding, never a silent skip (K1-K4)", () => {
+    // The two journeys without a beforeClose/afterClose alignment rule (observerNoControl, sameAttemptReexecution) used to
+    // let a settled Attempt slip past the wb-21k rule whenever its afterClose record was gone or carried another id, so a
+    // host_closed stamp behind a swapped id went unseen (K2). Each row names the settled ids the judge must now report.
+    const cancelledByClose = (observed: Observed) =>
+      assessRetryFaultJourneys(observed).findings.filter((finding: { rule: string }) => finding.rule === "settled-attempt-cancelled-by-close");
+    const unaligned: readonly (readonly [string, (observed: Observed) => void, readonly string[]])[] = [
+      ["K1 observer afterClose emptied", (o) => { o.journeys.observerNoControl.afterClose.attempts = []; }, ["frn-atm-o1"]],
+      [
+        "K2 observer afterClose id swapped and stamped host_closed",
+        (o) => {
+          // a fresh record, not an in-place edit: clean() aliases the owner between beforeClose and afterClose, and the
+          // real journeys snapshot executor.receipt() twice, so only afterClose changes here
+          const closed = o.journeys.observerNoControl.afterClose.attempts[0];
+          if (!closed) throw new Error("fixture lost its attempts");
+          o.journeys.observerNoControl.afterClose.attempts = [{ ...closed, attemptId: "frn-atm-o9", cancel: closedByHost }];
+        },
+        ["frn-atm-o1"],
+      ],
+      ["K3 same-id afterClose emptied", (o) => { o.journeys.sameAttemptReexecution.afterClose.attempts = []; }, ["frn-atm-same", "frn-atm-same"]],
+      ["K4 same-id second afterClose record dropped", (o) => { o.journeys.sameAttemptReexecution.afterClose.attempts.pop(); }, ["frn-atm-same"]],
+    ];
+    for (const [label, mutate, settledIds] of unaligned) {
+      const stale = clone(clean());
+      mutate(stale);
+      const assessed = assessRetryFaultJourneys(stale);
+      expect(assessed.realised, label).toBe(true);
+      expect(assessed.findings.length, label).toBeGreaterThan(0);
+      const found = cancelledByClose(stale);
+      expect(found, label).toHaveLength(settledIds.length);
+      for (const [index, attemptId] of settledIds.entries()) {
+        expect(found[index].detail, label).toContain(attemptId);
+        expect(found[index].detail, label).toMatch(/no aligned record/);
+      }
+      // the runner would exit 1 on such a receipt, where it used to exit 0 with pass true
+      expect(exitCodeFor(buildRetryFaultReceipt(receiptInput(stale))), label).toBe(1);
+    }
+    // control: a retry journey with its afterClose emptied is caught by uncertain-merged AND, for its settled retry
+    // Attempt only, by the fail-closed wb-21k rule; the first Attempt was pending at beforeClose and is not this rule's business
+    const k5 = clone(clean());
+    k5.journeys.lostConnectionRetry.afterClose.attempts = [];
+    expect(rules(k5)).toContain("uncertain-merged");
+    expect(cancelledByClose(k5)).toHaveLength(1);
+    expect(cancelledByClose(k5)[0].detail).toContain("frn-atm-r2");
+    expect(cancelledByClose(k5)[0].detail).not.toContain("frn-atm-r1");
+    // control: the clean fixture stays silent
+    expect(rules(clean())).toEqual([]);
+  });
+
   it("flags an operator retry that did not reach its own success", () => {
     const wire = clone(clean());
     wire.journeys.lostConnectionRetry.retriedWireStatus = "indeterminate";
