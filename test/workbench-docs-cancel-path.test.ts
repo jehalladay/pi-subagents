@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { Lexer, Marked } from "marked";
 import { describe, expect, it } from "vitest";
 
 // wb-2t2 acceptance: "docs quote the receipt; no src change without an owner
@@ -20,18 +21,37 @@ import { describe, expect, it } from "vitest";
 // spaces, tabs and carriage returns are trimmed from each line, runs of blank
 // lines collapse to one, and leading and trailing blank lines are dropped.
 //
-// VIEW MODEL (gate-1 2026-10-17T02:22Z U1/U3/U4; roster-style, fail-closed).
-// The view is the source split into lines at LF, CRLF or a lone CR (the
-// CommonMark line endings). It resolves only the constructs on this roster:
-// - ``` fenced code is visible code: its lines are never a heading, a comment
-//   or a section end, and an unterminated fence runs to EOF;
+// PAGE CHECK (owner ruling 2026-10-17T04:46Z on gate-1 row 403, R1=(b): the
+// renderer-verified cure, closed by construction). marked 18.0.11, pinned
+// exactly as a devDependency, lexes the whole document as the page renders it
+// (GFM). The view below is refused, so every pin goes red, when marked reports
+// an html token, block or inline, whose raw is not exactly one complete
+// comment: `<!--` through the first point a browser ends it (`-->`, `--!>`, or
+// the abrupt `<!-->` and `<!--->`), with only spaces, tabs and line breaks
+// around it. It is refused too (C3, strengthened) when marked reports a link
+// reference definition: the page shows none of a definition's lines, and
+// marked lets its title or label run over line breaks, a heading line included
+// (measured below), with no html token to show it. Today's three docs produce
+// 0 html tokens and 0 link reference definitions (asserted below). The gate-1
+// battery of record (row 403: 8 controls, 24 falsifiers) is folded in below as
+// a negative-control table.
+//
+// VIEW MODEL (gate-1 2026-10-17T02:22Z U1/U3/U4 and row 403 C1-C6;
+// roster-style, fail-closed; the roster view runs first and the page check
+// gates what it accepts). The view is the source split into lines at LF, CRLF
+// or a lone CR (the CommonMark line endings). It resolves only the constructs
+// on this roster:
+// - ``` fenced code opened at column 0 is visible code: its lines are never a
+//   heading, a comment or a section end. It closes at a line of 0-3 spaces, at
+//   least as many backticks, any further backticks or tildes, then spaces
+//   (marked's closing fence), and an unterminated fence runs to EOF;
 // - an HTML comment is hidden. An opener at the start of a line begins an HTML
 //   block that ends at the first later `-->`, and with none it hides everything
-//   to EOF. Any other opener ends on its own line, and with no `-->` there it
-//   hides everything after it (marked closes it later in the paragraph or
-//   prints it as text);
-// - a code span that closes on its own line, a backslash escape and an
-//   autolink stay verbatim as visible text.
+//   to EOF (the page check refuses that document). Any other opener must close
+//   on its own line;
+// - a code span that closes on its own line (in a GFM table row, inside its
+//   cell), a backslash escape and an autolink in marked's grammar stay
+//   verbatim as visible text.
 // All other text stays verbatim as visible text, except that the model REFUSES
 // the whole document (no slice, so every pin goes red) when, outside fenced
 // code, comments and code spans, it meets:
@@ -44,16 +64,52 @@ import { describe, expect, it } from "vitest";
 //   `<` is code);
 // - an HTML comment whose text holds `--!>` (a browser ends the comment there,
 //   marked does not);
-// - a ~~~ fence (marked renders it as code).
+// - a ~~~ fence (marked renders it as code);
+// - C1: anything but spaces and tabs after a comment's closing `-->` on its
+//   line, block or inline (marked's comment HTML block runs to the end of that
+//   line, so the rest of it is raw HTML, not markdown); a rest of line that
+//   holds a refused construct of its own, such as raw HTML, is refused as that;
+// - C2: an inline `<!--` that does not close on its own line;
+// - C3: a backtick or `<` inside a link or image destination or title, or in a
+//   link reference definition's (marked consumes the backtick in the link, so
+//   it pairs no code span);
+// - C4: a backtick inside a whitespace-delimited token from a GFM extended
+//   autolink prefix (`www.` or `<scheme>://`), or inside a `<...>` autolink
+//   candidate (autolinks follow marked's grammar, which admits no control
+//   octet);
+// - C5: in a GFM table row, a cell (split at each `|` no backslash escapes, as
+//   marked splits a row before inline parsing) whose backticks do not pair
+//   inside the cell;
+// - C6: a fence opener that is not at column 0: indented, or inside a list or
+//   block quote container.
 // It also refuses a bidirectional control code point anywhere in a line it
 // shows outside fenced code (the page would show that line in another order
-// than the source). Scope, checked against the installed marked 18.0.11: under
-// these rules no line the view shows outside fenced code sits inside a comment
-// or raw HTML in the rendered page. The view is not a renderer. It hides more
-// than marked in one case (the inline `<!--` above) and keeps as visible text
-// what marked does not show (markup characters, link destinations, link
-// reference definitions, character references), so it can red a pin where the
-// page reads correctly, never pass a pin whose pinned text the page hides.
+// than the source).
+// SCOPE (gate-1 row 403 U3, measured): the roster alone does not establish that
+// no line the view shows sits inside raw HTML in the page. Three gate cycles
+// measured renderer-authored shapes that keep a roster member green while
+// marked emits raw HTML (comment-end lines, link destinations and titles, GFM
+// autolinks, autolink precedence, table cells, container fences). The page
+// check closes that class by construction: a document the pins accept holds
+// no raw HTML but complete comments and no link reference definition, and
+// under C1 and C2 each comment the view hides is the span marked hides.
+// DIRECTION: the view hides only comment text: a complete comment, or a
+// line-start comment left open to EOF (which the page check refuses). The page
+// hides the same text, except a comment inside indented code, which it shows
+// as code; neither can hold a heading or label the page shows, so the view
+// never hides one, and the uniqueness counts see every duplicate the page
+// shows. It keeps as plain visible text what the page does not show (markup
+// characters, link destinations and titles, character references) or shows as
+// code (indented code), and it refuses some documents the page reads correctly
+// (the battery controls K3 and K4). Showing what the page hides is fail-closed
+// for the uniqueness counts, but fail-open for a pin's own text if the page
+// hides the pinned lines inside a construct the view shows as text: raw HTML
+// other than a complete comment and a link reference definition can hide any
+// line, a heading included, and the page check refuses both; a link or image
+// hides text only inside one paragraph, which a pinned ATX heading interrupts
+// and which ends at the docs/15 VC-1 label (the list under it interrupts it),
+// so it can hide a pinned line only by changing the slice. The view is not a
+// renderer: no hiding construct outside these is claimed closed.
 //
 // HEADING KEY (gate-1 2026-10-17T02:22Z U2, route (a): a folded key; route (b),
 // "any non-ASCII code point in a heading-form line refuses", is not taken: the
@@ -167,18 +223,45 @@ interface ViewLine {
 
 type View = { readonly ok: true; readonly lines: readonly ViewLine[] } | { readonly ok: false; readonly reason: string };
 
-const FENCE_OPEN = /^ {0,3}(`{3,})[^`]*$/;
-const FENCE_CLOSE = /^ {0,3}(`{3,})[ \t]*$/;
+/** A fence opens only at column 0 (C6), and a backtick fence's info string holds no backtick (marked's rule). */
+const FENCE_OPEN = /^(`{3,})[^`]*$/;
+/** marked's closing fence: 0-3 spaces, at least the opener's backticks, any further backticks or tildes, then spaces only. */
+const FENCE_CLOSE = /^ {0,3}(`{3,})[~`]* *$/;
 const TILDE_FENCE = /^ {0,3}~{3,}/;
+const TILDE_RUN = /^~{3,}/;
 const BLOCK_COMMENT = /^ {0,3}<!--/;
 const TAG_START = /^<[A-Za-z/!?]/;
-const AUTOLINK = /^(?:<[A-Za-z][A-Za-z0-9+.-]{1,31}:[^\s<>]*>|<[^\s<>@\\]+@[^\s<>\\]+>)/;
+/** marked 18.0.11's own autolink grammar: a URI or an email address between `<` and `>`, no control octet (C4). */
+const AUTOLINK = Lexer.rules.inline.gfm.autolink;
+/** What a `<...>` autolink could be: text between `<` and `>` with no white space and no other angle bracket (C4). */
+const AUTOLINK_CANDIDATE = /^<[^\s<>]*>/;
+/** marked 18.0.11's own inline link and image grammar (destination in group 2, title in group 3) and link reference definition grammar (C3). */
+const LINK = Lexer.rules.inline.gfm.link;
+const DEFINITION = Lexer.rules.block.gfm.def;
+/** A GFM extended autolink starts at `www.`, or at a scheme followed by `://` (C4). */
+const WWW_PREFIX = /www\./iy;
+const SCHEME_PREFIX = /[A-Za-z][A-Za-z0-9+.-]*:\/\//y;
+const SCHEME_CHARACTER = /^[A-Za-z0-9+.-]$/;
+const ASCII_LETTER = /^[A-Za-z]$/;
+const TOKEN = /\S+/y;
+/** marked's GFM table delimiter row; the line above it is the table's header (C5). */
+const TABLE_DELIMITER = /^(?:\| *)?:?-+:? *(?:\| *:?-+:? *)*(?:\| *)?$/;
+const TABLE_DELIMITER_MARK = /[:|]/;
+const CODE_OR_TAG = /[`<]/;
+const BLANK = /^[ \t]*$/;
 const ASCII_PUNCTUATION = /^[!-/:-@[-`{-~]$/;
 /** A browser also ends an HTML comment at `--!>`; marked and this view end it only at `-->`. */
 const BANG_CLOSE = "--!>";
 const BANG_REFUSAL = `a comment holding ${BANG_CLOSE} is not modelled`;
 /** A bidirectional control makes the page show text in another order than the source. */
 const BIDI_CONTROL = /\p{Bidi_Control}/u;
+/** The roster refusals of the gate-1 row 403 cure (C1-C6), each named in its reason. */
+const C1_REFUSAL = "text after a comment's closing --> on its line is not modelled (C1)";
+const C2_REFUSAL = "an inline comment that does not close on its own line is not modelled (C2)";
+const C3_REFUSAL = "a backtick or < in a link destination, title or reference definition is not modelled (C3)";
+const C4_REFUSAL = "a backtick in an autolink or a GFM extended autolink is not modelled (C4)";
+const C5_REFUSAL = "a table cell whose backticks do not pair inside the cell is not modelled (C5)";
+const C6_REFUSAL = "a fence opener that is not at column 0 is not modelled (C6)";
 
 /** Index of the next run of exactly `run` backticks at or after `from`, or -1. */
 function closingRun(text: string, from: number, run: number): number {
@@ -198,12 +281,28 @@ function closingRun(text: string, from: number, run: number): number {
 
 interface InlineScan {
   readonly visible: string;
-  readonly hidesRest: boolean;
   readonly refusal: string | null;
 }
 
-/** Visible text of one line outside fenced code and block comments (code spans, escapes, inline comments, autolinks), or the refusal. */
-function scanInline(segment: string): InlineScan {
+/** True when `part` (a link destination or title, as marked's grammar captures it) holds a backtick or a `<` (C3). */
+function holdsCodeOrTag(part: string | undefined): boolean {
+  return part !== undefined && CODE_OR_TAG.test(part);
+}
+
+/** True when a GFM extended autolink can start at `index`: `www.` anywhere, or a scheme and `://` where a scheme-like run starts (C4). */
+function extendedAutolinkAt(text: string, index: number): boolean {
+  WWW_PREFIX.lastIndex = index;
+  if (WWW_PREFIX.test(text)) return true;
+  if (SCHEME_CHARACTER.test(text[index - 1] ?? "")) return false;
+  SCHEME_PREFIX.lastIndex = index;
+  return SCHEME_PREFIX.test(text);
+}
+
+/**
+ * Visible text of one line outside fenced code and block comments (code spans, escapes, inline comments, links,
+ * autolinks), or the refusal. `continuation` returns the rest of the paragraph, since marked's link grammar may span lines.
+ */
+function scanInline(segment: string, continuation: () => string): InlineScan {
   let visible = "";
   let index = 0;
   while (index < segment.length) {
@@ -217,40 +316,125 @@ function scanInline(segment: string): InlineScan {
       let run = 1;
       while (segment[index + run] === "`") run++;
       const close = closingRun(segment, index + run, run);
-      if (close < 0) return { visible, hidesRest: false, refusal: `a code span that does not close on its line is not modelled: ${segment.slice(index, index + 32)}` };
+      if (close < 0) return { visible, refusal: `a code span that does not close on its line is not modelled: ${segment.slice(index, index + 32)}` };
       visible += segment.slice(index, close + run);
       index = close + run;
       continue;
     }
     if (segment.startsWith("<!--", index)) {
       const close = segment.indexOf("-->", index + 2);
-      if (close < 0) return { visible, hidesRest: true, refusal: null };
-      if (segment.slice(index + 4, close).includes(BANG_CLOSE)) return { visible, hidesRest: false, refusal: BANG_REFUSAL };
+      if (close < 0) return { visible, refusal: `${C2_REFUSAL}: ${segment.slice(index, index + 32)}` };
+      if (segment.slice(index + 4, close).includes(BANG_CLOSE)) return { visible, refusal: BANG_REFUSAL };
+      if (!BLANK.test(segment.slice(close + 3))) return { visible, refusal: commentTailRefusal(segment.slice(close + 3), segment.slice(close, close + 32), continuation) };
       index = close + 3;
       continue;
     }
     if (char === "<") {
       const rest = segment.slice(index);
       const link = AUTOLINK.exec(rest)?.[0];
+      const candidate = link ?? AUTOLINK_CANDIDATE.exec(rest)?.[0];
+      if (candidate?.includes("`")) return { visible, refusal: `${C4_REFUSAL}: ${candidate.slice(0, 32)}` };
       if (link !== undefined) {
         visible += link;
         index += link.length;
         continue;
       }
-      if (TAG_START.test(rest)) return { visible, hidesRest: false, refusal: `raw HTML is not modelled: ${rest.slice(0, 32)}` };
+      if (TAG_START.test(rest)) return { visible, refusal: `raw HTML is not modelled: ${rest.slice(0, 32)}` };
+    }
+    if (char === "[") {
+      const link = LINK.exec(`${segment.slice(index)}${continuation()}`);
+      if (link !== null && (holdsCodeOrTag(link[2]) || holdsCodeOrTag(link[3]))) return { visible, refusal: `${C3_REFUSAL}: ${link[0].slice(0, 32)}` };
+    }
+    if (ASCII_LETTER.test(char) && extendedAutolinkAt(segment, index)) {
+      TOKEN.lastIndex = index;
+      const token = TOKEN.exec(segment)?.[0] ?? "";
+      if (token.includes("`")) return { visible, refusal: `${C4_REFUSAL}: ${token.slice(0, 32)}` };
     }
     visible += char;
     index++;
   }
-  return { visible, hidesRest: false, refusal: null };
+  return { visible, refusal: null };
 }
 
-/** The rendered view of a markdown document under the VIEW MODEL above, or the reason the model refuses it. */
+/**
+ * C1's refusal for the non-blank `tail` after a comment's closing `-->` on its line (`at` quotes the source from `-->`):
+ * the refusal the tail itself gives when it holds one, so raw HTML after `-->` is named as raw HTML; else C1.
+ */
+function commentTailRefusal(tail: string, at: string, continuation: () => string): string {
+  return scanInline(tail, continuation).refusal ?? `${C1_REFUSAL}: ${at}`;
+}
+
+/** The source lines after `index` up to the next blank line, each after a line feed: the rest of a paragraph, for marked's multi-line grammars. */
+function paragraphAfter(source: readonly string[], index: number): string {
+  let rest = "";
+  for (let next = index + 1; next < source.length; next++) {
+    const line = source[next] ?? "";
+    if (BLANK.test(line)) break;
+    rest += `\n${line}`;
+  }
+  return rest;
+}
+
+/** Source line indexes inside a GFM table: a header line, a delimiter row holding `|` or `:`, and every line under it to a blank line (never fewer than marked's table). */
+function tableLines(source: readonly string[]): ReadonlySet<number> {
+  const rows = new Set<number>();
+  for (let index = 0; index + 1 < source.length; index++) {
+    const delimiter = containerFree(source[index + 1] ?? "");
+    if (containerFree(source[index] ?? "") === "" || !TABLE_DELIMITER.test(delimiter) || !TABLE_DELIMITER_MARK.test(delimiter)) continue;
+    for (let row = index; row < source.length && !BLANK.test(source[row] ?? ""); row++) rows.add(row);
+  }
+  return rows;
+}
+
+/** The cells of a GFM table row: split at every `|` that no backslash escapes, as marked splits a row before parsing its cells. */
+function tableCells(row: string): string[] {
+  const cells: string[] = [];
+  let cell = "";
+  let index = 0;
+  while (index < row.length) {
+    const char = row[index] ?? "";
+    if (char === "\\") {
+      cell += row.slice(index, index + 2);
+      index += 2;
+      continue;
+    }
+    if (char === "|") cells.push(cell);
+    cell = char === "|" ? "" : cell + char;
+    index++;
+  }
+  cells.push(cell);
+  return cells;
+}
+
+/** True when every backtick string in a table cell closes inside the cell (C5); backslash escapes as in the view. */
+function pairsInCell(cell: string): boolean {
+  let index = 0;
+  while (index < cell.length) {
+    if (cell[index] === "\\" && ASCII_PUNCTUATION.test(cell[index + 1] ?? "")) {
+      index += 2;
+      continue;
+    }
+    if (cell[index] !== "`") {
+      index++;
+      continue;
+    }
+    let run = 1;
+    while (cell[index + run] === "`") run++;
+    const close = closingRun(cell, index + run, run);
+    if (close < 0) return false;
+    index = close + run;
+  }
+  return true;
+}
+
+/** The roster view of a markdown document under the VIEW MODEL above, or the reason the roster refuses it. The pins read pageView. */
 function renderView(markdown: string): View {
+  const source = markdown.split(LINE_END);
+  const tables = tableLines(source);
   const lines: ViewLine[] = [];
   let fence = 0;
   let comment: string | null = null;
-  for (const line of markdown.split(LINE_END)) {
+  for (const [index, line] of source.entries()) {
     if (fence > 0) {
       lines.push({ text: line, code: true });
       const close = FENCE_CLOSE.exec(line)?.[1] ?? "";
@@ -268,6 +452,7 @@ function renderView(markdown: string): View {
       if (`${comment}\n${line.slice(0, close)}`.includes(BANG_CLOSE)) return { ok: false, reason: BANG_REFUSAL };
       comment = null;
       segment = line.slice(close + 3);
+      if (!BLANK.test(segment)) return { ok: false, reason: commentTailRefusal(segment, line.slice(close, close + 32), () => paragraphAfter(source, index)) };
     } else {
       const open = FENCE_OPEN.exec(line)?.[1];
       if (open !== undefined) {
@@ -276,6 +461,13 @@ function renderView(markdown: string): View {
         continue;
       }
       if (TILDE_FENCE.test(line)) return { ok: false, reason: "a ~~~ fence is not modelled" };
+      const inner = containerFree(line);
+      if (inner !== line && (FENCE_OPEN.test(inner) || TILDE_RUN.test(inner))) return { ok: false, reason: `${C6_REFUSAL}: ${line.slice(0, 32)}` };
+      if (inner.startsWith("[")) {
+        const definition = DEFINITION.exec(`${inner}${paragraphAfter(source, index)}`);
+        if (definition !== null && (holdsCodeOrTag(definition[2]) || holdsCodeOrTag(definition[3]))) return { ok: false, reason: `${C3_REFUSAL}: ${line.slice(0, 32)}` };
+      }
+      if (tables.has(index) && !tableCells(line).every(pairsInCell)) return { ok: false, reason: `${C5_REFUSAL}: ${line.slice(0, 32)}` };
       if (BLOCK_COMMENT.test(line)) {
         const opener = line.indexOf("<!--");
         const close = line.indexOf("-->", opener + 2);
@@ -287,20 +479,83 @@ function renderView(markdown: string): View {
         }
         if (line.slice(opener + 4, close).includes(BANG_CLOSE)) return { ok: false, reason: BANG_REFUSAL };
         segment = line.slice(close + 3);
+        if (!BLANK.test(segment)) return { ok: false, reason: commentTailRefusal(segment, line.slice(close, close + 32), () => paragraphAfter(source, index)) };
       }
     }
-    const scan = scanInline(segment);
+    const scan = scanInline(segment, () => paragraphAfter(source, index));
     if (scan.refusal !== null) return { ok: false, reason: scan.refusal };
     if (BIDI_CONTROL.test(prefix + scan.visible)) return { ok: false, reason: "a bidirectional control is not modelled" };
     lines.push({ text: prefix + scan.visible, code: false });
-    if (scan.hidesRest) break;
   }
   return { ok: true, lines };
+}
+
+/** marked 18.0.11 (pinned exactly as a devDependency) with GFM on: the page the docs render to (PAGE CHECK). */
+const PAGE = new Marked({ gfm: true });
+const PAGE_REFUSAL = "marked reports raw HTML that is not one complete comment";
+
+const DEFINITION_REFUSAL = "marked reports a link reference definition, none of whose lines the page shows (C3)";
+
+/** The raw text of every token of `type` marked reports for `markdown`, at any depth, in document order. */
+function tokenRaws(markdown: string, type: "html" | "def"): string[] {
+  const raws: string[] = [];
+  PAGE.walkTokens(PAGE.lexer(markdown), (token) => {
+    if (token.type === type) raws.push(token.raw);
+  });
+  return raws;
+}
+
+/** The raw text of every html token marked reports for `markdown`, block and inline, in document order. */
+function htmlTokens(markdown: string): string[] {
+  return tokenRaws(markdown, "html");
+}
+
+/** The raw text of every link reference definition marked reports for `markdown` (a later one with a label already defined is consumed without a token, after the first one). */
+function definitionTokens(markdown: string): string[] {
+  return tokenRaws(markdown, "def");
+}
+
+/** True when `raw`, spaces, tabs and line breaks around it aside, is exactly one HTML comment: it ends where a browser ends the comment it opens. */
+function isOneCompleteComment(raw: string): boolean {
+  const text = raw.replace(/^[ \t\r\n]+|[ \t\r\n]+$/g, "");
+  if (!text.startsWith("<!--")) return false;
+  if (text.startsWith("<!-->")) return text.length === 5;
+  if (text.startsWith("<!--->")) return text.length === 6;
+  const ends = ["-->", BANG_CLOSE].map((close) => {
+    const at = text.indexOf(close, 4);
+    return at < 0 ? Number.POSITIVE_INFINITY : at + close.length;
+  });
+  return Math.min(...ends) === text.length;
+}
+
+/** The page check (owner R1=(b)): its refusal when marked reports an html token that is not exactly one complete comment, else null. */
+function rawHtmlRefusal(markdown: string): string | null {
+  const raw = htmlTokens(markdown).find((token) => !isOneCompleteComment(token));
+  return raw === undefined ? null : `${PAGE_REFUSAL}: ${raw.slice(0, 32)}`;
+}
+
+/** C3, strengthened: its refusal when marked reports any link reference definition (a title or label may span lines), else null. */
+function definitionRefusal(markdown: string): string | null {
+  const raw = definitionTokens(markdown)[0];
+  return raw === undefined ? null : `${DEFINITION_REFUSAL}: ${raw.slice(0, 32)}`;
+}
+
+/** The view every pin reads: the roster view, refused when the page check refuses the document. */
+function pageView(markdown: string): View {
+  const view = renderView(markdown);
+  if (!view.ok) return view;
+  const refusal = rawHtmlRefusal(markdown) ?? definitionRefusal(markdown);
+  return refusal === null ? view : { ok: false, reason: refusal };
 }
 
 /** View texts, or one refusal line, for the model rows below. */
 function texts(view: View): readonly string[] {
   return view.ok ? view.lines.map((line) => line.text) : [`REFUSED: ${view.reason}`];
+}
+
+/** A pattern for a refusal line that gives `reason` (and any quoted source after it). */
+function refusedBy(reason: string): RegExp {
+  return new RegExp(`^REFUSED: ${reason.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`);
 }
 
 /** The only normalization the pins allow (see PIN RULE). */
@@ -553,16 +808,19 @@ function sliceFrom(view: View, opener: string, names: number, closes: (line: Vie
 
 const closesLevel2 = (line: ViewLine): boolean => atxLevel(line) === 1 || atxLevel(line) === 2;
 
+/** How a slice reads its view: pageView (every pin), or renderView where a model row asks for the roster alone. */
+type ViewOf = (markdown: string) => View;
+
 /** The level-2 section under `heading`: the only heading the view could show with its text, bounded by the next level-1/2 ATX heading or EOF. */
-function sectionOf(markdown: string, heading: string): string {
-  const view = renderView(markdown);
+function sectionOf(markdown: string, heading: string, viewOf: ViewOf = pageView): string {
+  const view = viewOf(markdown);
   const names = view.ok ? headingNames(view.lines, heading) : 0;
   return sliceFrom(view, heading, names, closesLevel2);
 }
 
 /** The docs/15 VC-1 block: the only `VC-1:` label the view could show, to the next `**VC-<n>:` label or level-1/2 ATX heading. */
-function vc1BlockOf(markdown: string): string {
-  const view = renderView(markdown);
+function vc1BlockOf(markdown: string, viewOf: ViewOf = pageView): string {
+  const view = viewOf(markdown);
   const names = view.ok ? labelNames(view.lines) : 0;
   return sliceFrom(view, VC1_LABEL, names, (line) => closesLevel2(line) || (!line.code && /^\*\*VC-\d+:/.test(line.text)));
 }
@@ -647,19 +905,22 @@ describe("wb-2t2 the pinned slices quote the committed v2 receipt of record, nev
 });
 
 describe("wb-2t2 the rendered view model (gate-1 U2: rendered-text docs truth)", () => {
-  it("a closed comment hides exactly its own span", () => {
-    expect(texts(renderView("a <!-- x --> b\n<!-- y -->\nc <!--> d <!---> e\nf\n<!-- g\nh\ni --> j"))).toEqual(["a  b", "", "c  d  e", "f", "", " j"]);
+  it("a closed comment hides exactly its own span; C1: only spaces and tabs may follow its closing --> on the line", () => {
+    expect(texts(renderView("a <!-- x -->\n<!-- y -->\nc <!-->\nd <!--->\nf\n<!-- g\nh\ni -->"))).toEqual(["a ", "", "c ", "d ", "f", "", ""]);
+    expect(texts(renderView("a <!-- x --> b\n<!-- y -->\nc <!--> d <!---> e\nf\n<!-- g\nh\ni --> j"))[0]).toMatch(refusedBy(C1_REFUSAL));
   });
 
-  it("an unterminated opener at the start of a line hides everything to EOF", () => {
+  it("an unterminated opener at the start of a line hides everything to EOF in the roster view, and the page check refuses the document", () => {
     const doc = "## A\n\nkept\n<!--\n## B\n\nhidden\n";
     expect(texts(renderView(doc))).toEqual(["## A", "", "kept", ""]);
-    expect(sectionOf(doc, "## B")).toBe('REFUSED: "## B" names 0 sections');
-    expect(sectionOf(doc, "## A")).toBe("## A\n\nkept");
+    expect(sectionOf(doc, "## B", renderView)).toBe('REFUSED: "## B" names 0 sections');
+    expect(sectionOf(doc, "## A", renderView)).toBe("## A\n\nkept");
+    expect(rawHtmlRefusal(doc)).toMatch(/^marked reports raw HTML that is not one complete comment: <!--/);
+    for (const heading of ["## A", "## B"]) expect(sectionOf(doc, heading), heading).toMatch(refusedBy(PAGE_REFUSAL));
   });
 
-  it("an inline opener that does not close on its own line hides everything after it (stricter than marked)", () => {
-    expect(texts(renderView("p <!-- q\nr -->\n## B\nhidden"))).toEqual(["p "]);
+  it("C2: an inline opener that does not close on its own line refuses the document (hiding everything after it was fail-open for the uniqueness pins)", () => {
+    expect(texts(renderView("p <!-- q\nr -->\n## B\nhidden"))[0]).toMatch(refusedBy(C2_REFUSAL));
   });
 
   it("fenced code is visible code: never a heading, never a comment, never a section end; an unterminated fence runs to EOF", () => {
@@ -691,15 +952,18 @@ describe("wb-2t2 the rendered view model (gate-1 U2: rendered-text docs truth)",
     const doc = lf(read(TRACE));
     const anchor = "\n\n## VC-1 measured gap: Ctrl-C does not stop a background workflow (wb-2t2)";
     expect(doc.split(anchor)).toHaveLength(2);
-    expect(sectionOf(doc.replace(anchor, () => `\n\n<!--${anchor}`), TRACE_2T2_HEADING)).toBe(`REFUSED: "${TRACE_2T2_HEADING}" names 0 sections`);
+    const opened = doc.replace(anchor, () => `\n\n<!--${anchor}`);
+    expect(sectionOf(opened, TRACE_2T2_HEADING, renderView)).toBe(`REFUSED: "${TRACE_2T2_HEADING}" names 0 sections`);
+    expect(sectionOf(opened, TRACE_2T2_HEADING)).toMatch(refusedBy(PAGE_REFUSAL));
   });
 
-  it("S3b falsifier: an unterminated <!-- right after the docs/10 heading leaves the heading alone in the slice", () => {
+  it("S3b falsifier: an unterminated <!-- right after the docs/10 heading leaves the heading alone in the roster slice, and the page check refuses the document", () => {
     const doc = lf(read(DOC_10));
     const anchor = "## Cancelling a background workflow\n\nMeasured by the wb-a2g.3 live operator receipt";
     expect(doc.split(anchor)).toHaveLength(2);
     const opened = doc.replace(anchor, () => anchor.replace("\n\n", "\n<!--\n\n"));
-    expect(sectionOf(opened, DOC_10_HEADING)).toBe("## Cancelling a background workflow");
+    expect(sectionOf(opened, DOC_10_HEADING, renderView)).toBe("## Cancelling a background workflow");
+    expect(sectionOf(opened, DOC_10_HEADING)).toMatch(refusedBy(PAGE_REFUSAL));
   });
 
   it("control: a ```-fenced copy of the docs/10 heading before the section leaves the slice equal", () => {
@@ -833,9 +1097,14 @@ describe("wb-2t2 a pinned heading or label names one section under the folded he
   });
 
   it("markup that renders nothing: a docs/10 duplicate followed by an empty link, an empty image or an empty reference link names a second section", () => {
-    for (const heading of [`${DOC_10_HEADING}[](x)`, `${DOC_10_HEADING}![](x)`, `${DOC_10_HEADING}[][r]\n\n[r]: x`]) {
+    for (const heading of [`${DOC_10_HEADING}[](x)`, `${DOC_10_HEADING}![](x)`]) {
       expect(sectionOf(withTail(lf(read(DOC_10)), `${heading}\n\n${WEAKER_DOC_10}`), DOC_10_HEADING), heading).toBe(DOC_10_NAMES_2);
     }
+    // the empty reference link needs a definition, which the page check now refuses (C3, strengthened): the folded key
+    // still counts the duplicate in the roster view, and every pin refuses the document for the definition
+    const reference = withTail(lf(read(DOC_10)), `${DOC_10_HEADING}[][r]\n\n[r]: x\n\n${WEAKER_DOC_10}`);
+    expect(sectionOf(reference, DOC_10_HEADING, renderView)).toBe(DOC_10_NAMES_2);
+    expect(sectionOf(reference, DOC_10_HEADING)).toMatch(refusedBy(DEFINITION_REFUSAL));
   });
 
   it("markup around nothing visible: a docs/10 duplicate ending in emphasis, strong, strikethrough or a code span around a ZWSP names a second section", () => {
@@ -875,6 +1144,237 @@ describe("wb-2t2 line endings (gate-1 2026-10-17T02:22Z U4)", () => {
     const doc = withTail(lf(read(DOC_10)), `Moved.${CR}${DOC_10_HEADING}\n\n${WEAKER_DOC_10}`);
     expect(sectionOf(doc, DOC_10_HEADING)).toBe(DOC_10_NAMES_2);
   });
+});
+
+const SOH = String.fromCodePoint(0x01);
+const RAW_HTML = "raw HTML is not modelled";
+
+/** `text` with every line ending written as CRLF. */
+function crlfOf(text: string): string {
+  return lf(text).split("\n").join(`${CR}\n`);
+}
+
+describe("wb-2t2 the page check: marked 18.0.11 html tokens and link reference definitions over the whole document (owner ruling 2026-10-17T04:46Z, R1=(b))", () => {
+  it("today's three docs produce 0 html tokens and 0 link reference definitions, in LF and in CRLF, so the page check passes them", () => {
+    for (const path of [DOC_15, DOC_10, TRACE]) {
+      expect(htmlTokens(read(path)), path).toEqual([]);
+      expect(htmlTokens(crlfOf(read(path))), `${path} (CRLF)`).toEqual([]);
+      expect(rawHtmlRefusal(read(path)), path).toBeNull();
+      expect(definitionTokens(read(path)), path).toEqual([]);
+      expect(definitionTokens(crlfOf(read(path))), `${path} (CRLF)`).toEqual([]);
+      expect(definitionRefusal(read(path)), path).toBeNull();
+    }
+  });
+
+  it("positive controls: marked reports a planted raw tag and a planted comment, and only the comment is one complete comment", () => {
+    const tagged = htmlTokens("x\n\n<div hidden>\n\ny");
+    expect(tagged).toHaveLength(1);
+    expect(tagged[0]?.startsWith("<div hidden>")).toBe(true);
+    expect(rawHtmlRefusal("x\n\n<div hidden>\n\ny")).toMatch(/^marked reports raw HTML that is not one complete comment: <div hidden>/);
+    expect(htmlTokens("a <!-- x --> b")).toEqual(["<!-- x -->"]);
+    expect(rawHtmlRefusal("a <!-- x --> b")).toBeNull();
+  });
+
+  it("one complete comment ends where a browser ends the comment it opens, with only spaces, tabs and line breaks around it", () => {
+    for (const raw of ["<!-- x -->", "  <!-- x -->\n\n", "<!-->", "<!--->", "<!---->", "<!--\nx\n-->"]) expect(isOneCompleteComment(raw), raw).toBe(true);
+    for (const raw of ["<!-- x --> y", "<!-- x -->`y`", "<!-- x", "<!-- x --!> y -->", "<!-- x --><!-- y -->", "<!--> x -->", "<div hidden>", `<!-- x -->${NBSP}`]) {
+      expect(isOneCompleteComment(raw), raw).toBe(false);
+    }
+  });
+
+  it("every pin reads the page view: the roster view accepts a line-start comment left open, and the page check refuses that document", () => {
+    const doc = withOnce(lf(read(DOC_10)), DOC_10_ANCHOR, `\n\n<!--${DOC_10_ANCHOR}`);
+    expect(renderView(doc).ok).toBe(true);
+    expect(pageView(doc).ok).toBe(false);
+    expect(sectionOf(doc, DOC_10_HEADING)).toMatch(refusedBy(PAGE_REFUSAL));
+  });
+
+  it("C3, strengthened: marked renders none of a link reference definition's lines, and a title or label may run over a heading, with no html token", () => {
+    expect(PAGE.parse("## H\n")).toBe("<h2>H</h2>\n");
+    for (const doc of ['[r]: x "t\n\n## H\n"\n', "[r]: x 't\n## H\n'\n", "[r]: x (t\n## H\n)\n", "[r\n## H\n]: x\n"]) {
+      expect(PAGE.parse(doc), doc).toBe("");
+      expect(htmlTokens(doc), doc).toEqual([]);
+      expect(definitionTokens(doc), doc).toHaveLength(1);
+      expect(definitionRefusal(doc)?.startsWith(`${DEFINITION_REFUSAL}: `), doc).toBe(true);
+    }
+    expect(definitionTokens("[r]: x\n\n[r]: y\n"), "a second definition of a label is consumed without a token").toHaveLength(1);
+    expect(definitionTokens("p\n[r]: x\n"), "a definition cannot interrupt a paragraph: it stays paragraph text").toEqual([]);
+  });
+
+  it("two-edit definition falsifiers: an opener before each pinned opener and a closer after its slice hide the pinned text in the page; the roster view alone passes each pin, and the page check refuses it", () => {
+    const scalability = "\n## Scalability targets (proposed, not measured)\n";
+    const vc2 = "\n**VC-2: node() + real SDK operation** (P0/P1)\n";
+    const rows = [
+      {
+        copy: withTail(withOnce(lf(read(TRACE)), TRACE_2T2_ANCHOR, `\n\n[r${TRACE_2T2_ANCHOR}`), "## Addendum\n\n]: x"),
+        pristine: lf(read(TRACE)),
+        shown: "<h2>VC-1 measured gap: Ctrl-C does not stop a background workflow (wb-2t2)</h2>",
+        pin: (markdown: string, viewOf: ViewOf): string => sectionOf(markdown, TRACE_2T2_HEADING, viewOf),
+        committed: TRACE_2T2_SECTION,
+      },
+      {
+        copy: withOnce(withOnce(lf(read(DOC_10)), DOC_10_ANCHOR, `\n\n[r]: x "t${DOC_10_ANCHOR}`), scalability, `${scalability}"\n`),
+        pristine: lf(read(DOC_10)),
+        shown: "<h2>Cancelling a background workflow</h2>",
+        pin: (markdown: string, viewOf: ViewOf): string => sectionOf(markdown, DOC_10_HEADING, viewOf),
+        committed: DOC_10_SECTION,
+      },
+      {
+        copy: withOnce(withOnce(lf(read(DOC_15)), VC1_ANCHOR, `\n\n[r${VC1_ANCHOR}`), vc2, `${vc2}]: x\n`),
+        pristine: lf(read(DOC_15)),
+        shown: "<strong>VC-1: Pi -&gt; Claude SDK workflow</strong>",
+        pin: (markdown: string, viewOf: ViewOf): string => vc1BlockOf(markdown, viewOf),
+        committed: DOC_15_VC1_BLOCK,
+      },
+    ];
+    for (const row of rows) {
+      expect(PAGE.parse(row.pristine), row.shown).toContain(row.shown);
+      expect(PAGE.parse(row.copy), row.shown).not.toContain(row.shown);
+      expect(row.pin(row.copy, renderView), row.shown).toBe(row.committed);
+      expect(rawHtmlRefusal(row.copy), row.shown).toBeNull();
+      expect(row.pin(row.copy, pageView), row.shown).toMatch(refusedBy(DEFINITION_REFUSAL));
+    }
+  });
+});
+
+describe("wb-2t2 the roster refusals C1-C6 (gate-1 row 403 cure; each is zero-cost on today's docs, whose pins stay equal above)", () => {
+  it("C1: text after a comment's closing --> on its line refuses, block or inline; a comment with nothing after it stays hidden", () => {
+    for (const doc of ["<!-- note --> `x`", "<!--\nnote\n--> `x`", "a <!-- x --> b", `<!-- a -->${TAB}<!-- b -->`]) expect(texts(renderView(doc))[0], doc).toMatch(refusedBy(C1_REFUSAL));
+    expect(texts(renderView("<!-- note -->\nkept\n<!--\nnote\n-->  \nalso <!-- x -->"))).toEqual(["", "kept", "", "  ", "also "]);
+  });
+
+  it("C1 names a refused construct after --> as itself: H7's inline tag after battery K1's comment line above the TRACEABILITY wb-2t2 heading is refused as raw HTML", () => {
+    const k1 = withOnce(lf(read(TRACE)), TRACE_2T2_ANCHOR, `\n\n<!-- gate -->${TRACE_2T2_ANCHOR}`);
+    expect(sectionOf(k1, TRACE_2T2_HEADING)).toBe(TRACE_2T2_SECTION);
+    const doc = withOnce(k1, TRACE_2T2_ANCHOR, ` <div hidden title="<">${TRACE_2T2_ANCHOR}`);
+    expect(sectionOf(doc, TRACE_2T2_HEADING)).toMatch(RAW_HTML_REFUSED);
+    for (const shape of ["<!-- x --> <b>", "a <!-- x --> <b>", "<!--\nx\n--> <b>"]) expect(texts(renderView(shape))[0], shape).toMatch(refusedBy(`${RAW_HTML}: <b>`));
+  });
+
+  it("C2: an inline <!-- that does not close on its own line refuses; a line-start comment may span lines", () => {
+    for (const doc of ["p <!-- q\nr -->", "p <!-- q", "- <!-- q\n- r -->"]) expect(texts(renderView(doc))[0], doc).toMatch(refusedBy(C2_REFUSAL));
+    expect(texts(renderView("<!-- q\nr -->\np"))).toEqual(["", "", "p"]);
+  });
+
+  it("C3: a backtick or < in a link or image destination or title, or in a reference definition's, refuses; links without them stay visible text", () => {
+    for (const doc of ["[x](a`b) c`", "![x](a`b)", '[x](a "t`")', "[x](<a> )", '[x](a\n"t`")', "[r]: a`b", '[r]: a\n"t`"', "[r]: <a>"]) {
+      expect(texts(renderView(doc))[0], doc).toMatch(refusedBy(C3_REFUSAL));
+    }
+    for (const doc of ["[x](a) `c`", "[](x)", "![x](a 't')", "[r]: x 't'"]) expect(texts(renderView(doc)), doc).toEqual([doc]);
+  });
+
+  it("C4: a backtick in a GFM extended autolink token or in a <...> autolink candidate refuses; autolinks follow marked's grammar", () => {
+    for (const doc of ["https://example.com/`c d`", "www.example.com/`c d`", "see:https://x.io/`a b`", "<a`b@c>", `<a:${SOH}\`>`, `<ab:${SOH}\`>`, "<https://x.io/`a>"]) {
+      expect(texts(renderView(doc))[0], doc).toMatch(refusedBy(C4_REFUSAL));
+    }
+    for (const doc of ["<https://example.com>", "<mailto:a@b.c>", "see https://example.com/x and `code`", "<a@b.co>"]) expect(texts(renderView(doc)), doc).toEqual([doc]);
+    expect(texts(renderView(`<ab:${SOH}> x`))[0]).toMatch(refusedBy(`${RAW_HTML}: <ab:`));
+  });
+
+  it("C5: a GFM table cell whose backticks do not pair inside the cell refuses; cells split at unescaped pipes first", () => {
+    const table = (row: string): string => `| h | h |\n| - | - |\n${row}`;
+    for (const row of ["| `a | b` |", "| x | `a \\\\| b` |"]) expect(texts(renderView(table(row)))[0], row).toMatch(refusedBy(C5_REFUSAL));
+    for (const row of ["| `a` | `b \\| c` |", "| a \\| b | c |"]) expect(texts(renderView(table(row))), row).toEqual(["| h | h |", "| - | - |", row]);
+  });
+
+  it("C6: a fence opener that is not at column 0 refuses (indented, in a list or a block quote); a column-0 fence closes at marked's closing fence", () => {
+    for (const doc of ["  ```\nx\n```", "- ```\nx\n```", "> ```\nx", "1. item\n   ```\nx\n```", "- ~~~\nx", "    ```"]) expect(texts(renderView(doc))[0], doc).toMatch(refusedBy(C6_REFUSAL));
+    expect(sectionOf("```\n## A\n```~\n\n## A\nbody", "## A")).toBe("## A\nbody");
+    expect(sectionOf(`\`\`\`\n## A\n\`\`\`${TAB}\n\n## A\nbody`, "## A")).toBe('REFUSED: "## A" names 0 sections');
+  });
+});
+
+/** Each document the battery mutates: its path, the pinned opener it inserts before, the pin that reads it and the committed text that pin equals. */
+const PINNED = {
+  TRACE: { path: TRACE, anchor: TRACE_2T2_ANCHOR, pin: (markdown: string): string => sectionOf(markdown, TRACE_2T2_HEADING), committed: TRACE_2T2_SECTION },
+  DOC_10: { path: DOC_10, anchor: DOC_10_ANCHOR, pin: (markdown: string): string => sectionOf(markdown, DOC_10_HEADING), committed: DOC_10_SECTION },
+  DOC_15: { path: DOC_15, anchor: VC1_ANCHOR, pin: (markdown: string): string => vc1BlockOf(markdown), committed: DOC_15_VC1_BLOCK },
+} as const;
+
+/**
+ * One row of the gate-1 battery of record (outbox row 403, gate g4-gate-r2 on f812fbc; copied durable at
+ * machines/flywheel/state/batteries/wb-2t2-f812fbc/: cases1.json holds 25 rows and cases2.json 7, and battery.mjs reads
+ * its rows from those two files and carries none of its own, so the battery is these 32 rows). Each payload goes into a
+ * throwaway copy before the pinned opener ("before") or after one blank line at EOF ("eof"), exactly as battery.mjs
+ * mutates it. `pin` is the refusal the pin itself must give (null: the pin stays equal to the committed text); `page` is
+ * whether the page check alone refuses the copy.
+ */
+interface BatteryRow {
+  readonly id: string;
+  readonly kind: "control" | "falsifier";
+  readonly doc: keyof typeof PINNED;
+  readonly at: "before" | "eof";
+  readonly payload: string;
+  readonly construct: string;
+  readonly pin: string | null;
+  readonly page: boolean;
+}
+
+const DUPLICATE_DOC_10 = `## Cancelling a background workflow\n\n${WEAKER_DOC_10}`;
+const DUPLICATE_DOC_15 = "**VC-1: Pi -> Claude SDK workflow** (P0)\n- Ctrl-C stops a background workflow; no explicit cancel path is needed.";
+const DUPLICATE_TRACE = `## VC-1 measured gap: Ctrl-C does not stop a background workflow (wb-2t2)\n\n${WEAKER_TRACE}`;
+const TABLE_HEAD = "| h | h | h |\n| - | - | - |\n";
+
+const BATTERY: readonly BatteryRow[] = [
+  { id: "K0", kind: "control", doc: "TRACE", at: "eof", payload: "## Addendum control\n\nplain text", construct: "true green: a plain section at EOF after the TRACEABILITY wb-2t2 section", pin: null, page: false },
+  { id: "K1", kind: "control", doc: "TRACE", at: "before", payload: "<!-- gate -->", construct: "true green: one complete comment alone on its line", pin: null, page: false },
+  { id: "K2", kind: "control", doc: "DOC_10", at: "before", payload: "`<div hidden>`", construct: "true green: a tag inside a closed code span", pin: null, page: false },
+  { id: "K3", kind: "control", doc: "TRACE", at: "before", payload: "[x](a`b) c`", construct: "false-closed (the page shows the section): a backtick in a link destination, refused by C3", pin: C3_REFUSAL, page: false },
+  { id: "K4", kind: "control", doc: "DOC_15", at: "before", payload: "<!-- gate --> `x`", construct: "false-closed (the page shows the label): text after -->, refused by C1 and by the page check", pin: C1_REFUSAL, page: true },
+  { id: "K5", kind: "control", doc: "DOC_10", at: "eof", payload: `Note <!-- draft -->\n\n${DUPLICATE_DOC_10}`, construct: "true red: a closed inline comment, then a visible EOF duplicate of the docs/10 heading", pin: `"${DOC_10_HEADING}" names 2 sections`, page: false },
+  { id: "H2", kind: "control", doc: "TRACE", at: "before", payload: '<div hidden title="<">', construct: "true red: a hidden div whose attribute holds <", pin: RAW_HTML, page: true },
+  { id: "H5", kind: "control", doc: "DOC_15", at: "before", payload: "<script", construct: "true red: an unclosed <script line before the VC-1 label", pin: RAW_HTML, page: true },
+  { id: "G1", kind: "falsifier", doc: "TRACE", at: "before", payload: "<!-- gate --> `<div hidden>`", construct: "comment-end line: a code span after --> is raw HTML in marked's comment block", pin: C1_REFUSAL, page: true },
+  { id: "G2", kind: "falsifier", doc: "DOC_10", at: "before", payload: "<!-- gate --> \\<div hidden>", construct: "comment-end line: an escaped < after --> is raw HTML in marked's comment block", pin: C1_REFUSAL, page: true },
+  { id: "G3", kind: "falsifier", doc: "DOC_15", at: "before", payload: "<!--\ngate note\n--> `<div hidden>`", construct: "comment-end line: a three-line comment whose closing line goes on with a code span", pin: C1_REFUSAL, page: true },
+  { id: "G4", kind: "falsifier", doc: "TRACE", at: "before", payload: "[x](a`b) <div hidden> c`", construct: "link destination: marked consumes the backtick the view paired as a code span", pin: C3_REFUSAL, page: true },
+  { id: "G5", kind: "falsifier", doc: "DOC_15", at: "before", payload: '[x](a "t`") <div hidden> c`', construct: "link title: marked consumes the backtick the view paired as a code span", pin: C3_REFUSAL, page: true },
+  { id: "G6", kind: "falsifier", doc: "DOC_10", at: "before", payload: "![x](a`b) <div hidden> c`", construct: "image destination: marked consumes the backtick the view paired as a code span", pin: C3_REFUSAL, page: true },
+  { id: "G7", kind: "falsifier", doc: "TRACE", at: "before", payload: "https://example.com/`c <div hidden> d`", construct: "GFM extended autolink from scheme://: the URL consumes the backtick", pin: C4_REFUSAL, page: true },
+  { id: "G8", kind: "falsifier", doc: "DOC_10", at: "before", payload: "www.example.com/`c <div hidden> d`", construct: "GFM extended autolink from www.: the URL consumes the backtick", pin: C4_REFUSAL, page: true },
+  { id: "G9", kind: "falsifier", doc: "TRACE", at: "before", payload: "- item\n  ```\n<div hidden>\n```", construct: "container-indented fence: marked closes the list item's fence where the item ends", pin: C6_REFUSAL, page: true },
+  { id: "G10", kind: "falsifier", doc: "DOC_10", at: "before", payload: "<a`b@c> `<div hidden>` x", construct: "autolink precedence: an email-like <...> holding a backtick is no autolink in marked", pin: C4_REFUSAL, page: true },
+  { id: "G11", kind: "falsifier", doc: "TRACE", at: "before", payload: `<a:${SOH}\`> \`<div hidden>\` x`, construct: "autolink superset: a one-letter scheme, a control octet and a backtick", pin: C4_REFUSAL, page: true },
+  { id: "G12", kind: "falsifier", doc: "DOC_15", at: "before", payload: "<!-- gate --> `<template>`", construct: "comment-end line: a template tag after -->", pin: C1_REFUSAL, page: true },
+  { id: "G13", kind: "falsifier", doc: "TRACE", at: "before", payload: "<!-- gate --> `<style>`", construct: "comment-end line: a style tag after -->", pin: C1_REFUSAL, page: true },
+  { id: "G14", kind: "falsifier", doc: "DOC_10", at: "eof", payload: `Note <!-- draft\nend -->\n\n${DUPLICATE_DOC_10}`, construct: "over-hide: an inline <!-- closing on the next line, then a visible EOF duplicate of the docs/10 heading", pin: C2_REFUSAL, page: false },
+  { id: "G15", kind: "falsifier", doc: "DOC_15", at: "eof", payload: `Note <!-- draft\nend -->\n\n${DUPLICATE_DOC_15}`, construct: "over-hide: an inline <!-- closing on the next line, then a visible EOF duplicate of the VC-1 label", pin: C2_REFUSAL, page: false },
+  { id: "G16", kind: "falsifier", doc: "TRACE", at: "eof", payload: `## Addendum\n\nNote <!-- draft\nend -->\n\n${DUPLICATE_TRACE}`, construct: "over-hide: an inline <!-- closing on the next line, then a visible EOF duplicate of the TRACEABILITY wb-2t2 heading", pin: C2_REFUSAL, page: false },
+  { id: "G17", kind: "falsifier", doc: "DOC_10", at: "eof", payload: `Note <!-- draft\n\n<!-- x -->\n\n${DUPLICATE_DOC_10}`, construct: "over-hide: a stray '<!-- draft' paragraph, then a visible EOF duplicate of the docs/10 heading", pin: C2_REFUSAL, page: false },
+  { id: "G9b", kind: "falsifier", doc: "TRACE", at: "before", payload: "- item\n  ```\n<div hidden>\n```\n\nfiller paragraph", construct: "container-indented fence, then a filler paragraph", pin: C6_REFUSAL, page: true },
+  { id: "G11b", kind: "falsifier", doc: "TRACE", at: "before", payload: `<ab:${SOH}\`> \`<div hidden>\` x`, construct: "autolink superset: a control octet the old view's autolink admitted and marked's grammar does not", pin: C4_REFUSAL, page: true },
+  { id: "G18", kind: "falsifier", doc: "DOC_10", at: "before", payload: `${TABLE_HEAD}| \`a | <style> | b\` |`, construct: "GFM table: cells split at | before code spans pair (style)", pin: C5_REFUSAL, page: true },
+  { id: "G18b", kind: "falsifier", doc: "TRACE", at: "before", payload: `${TABLE_HEAD}| \`a | <div hidden> | b\` |`, construct: "GFM table: cells split at | before code spans pair (div; the cell closes it)", pin: C5_REFUSAL, page: true },
+  { id: "G19", kind: "falsifier", doc: "DOC_15", at: "before", payload: `${TABLE_HEAD}| \`a | <script> | b\` |`, construct: "GFM table: cells split at | before code spans pair (script)", pin: C5_REFUSAL, page: true },
+  { id: "G20", kind: "falsifier", doc: "TRACE", at: "before", payload: "<!-- gate -->`<details>`", construct: "comment-end line: a details tag right after -->", pin: C1_REFUSAL, page: true },
+  { id: "G21", kind: "falsifier", doc: "DOC_10", at: "before", payload: "1. item\n   ```\n<div hidden>\n```\n\nfiller paragraph", construct: "container-indented fence in an ordered list, then a filler paragraph", pin: C6_REFUSAL, page: true },
+];
+
+/** A throwaway copy of the row's document with its payload placed as battery.mjs places it. */
+function batteryCopy(row: BatteryRow): string {
+  const pinned = PINNED[row.doc];
+  const doc = lf(read(pinned.path));
+  return row.at === "eof" ? withTail(doc, row.payload) : withOnce(doc, pinned.anchor, `\n\n${row.payload}${pinned.anchor}`);
+}
+
+describe("wb-2t2 the gate-1 battery of record as a negative-control table (row 403, folded in under owner R1=(b))", () => {
+  it("the table is the whole battery: 32 rows, 8 controls (K0-K5, H2, H5) and 24 falsifiers, each id once", () => {
+    expect(new Set(BATTERY.map((row) => row.id)).size).toBe(32);
+    expect(BATTERY.filter((row) => row.kind === "control").map((row) => row.id)).toEqual(["K0", "K1", "K2", "K3", "K4", "K5", "H2", "H5"]);
+    expect(BATTERY.filter((row) => row.kind === "falsifier")).toHaveLength(24);
+    expect(BATTERY.filter((row) => row.kind === "falsifier" && row.pin === null)).toEqual([]);
+    expect(BATTERY.filter((row) => row.kind === "falsifier" && row.page).map((row) => row.id)).toHaveLength(20);
+  });
+
+  for (const row of BATTERY) {
+    it(`${row.id} (${row.kind}) ${row.construct}`, () => {
+      const copy = batteryCopy(row);
+      const pinned = PINNED[row.doc];
+      if (row.pin === null) expect(pinned.pin(copy)).toBe(pinned.committed);
+      else expect(pinned.pin(copy)).toMatch(refusedBy(row.pin));
+      expect(rawHtmlRefusal(copy) !== null, "the page check alone refuses the copy").toBe(row.page);
+    });
+  }
 });
 
 describe("wb-2t2 the documented cancel path exists in src", () => {
