@@ -18,7 +18,7 @@ import type {
 import { resolveWorkflowSource } from "../workflow/saved.js";
 import type { CapabilityRegistry } from "./capability-registry.js";
 import { CLAUDE_CAPABILITY_TOOL_NAMES, createCuratedTools } from "./claude-capability-tools.js";
-import { redactWorkbenchText } from "./redaction.js";
+import { sanitizeWorkbenchText, WORKBENCH_TEXT_LIMIT } from "./redaction.js";
 
 /** SDK query injection exists for the fixture integration suite, not a fallback backend. */
 export type ClaudeQuery = (params: { prompt: string; options: Options }) => AsyncIterable<SDKMessage>;
@@ -89,9 +89,19 @@ function resolvedModel(input: string | undefined): string | undefined {
  */
 const AUTH_REQUIRED_CODE = "CLAUDE_AUTH_REQUIRED";
 
+/**
+ * SDK text in an outcome error is untrusted producer text bound for display (cards, labels, replies). It passes the one
+ * shared helper with the "label" layout (a single-line outcome string): redaction sees every reading of an invisible
+ * inside a credential before the gaps are rendered. A plain redactor here collapses those readings and the display
+ * helper downstream then glues the credential tail back together (wb-cax.5 gate F1, wb-wyr).
+ */
+function outcomeText(value: string, maxTextLength = WORKBENCH_TEXT_LIMIT): string {
+  return sanitizeWorkbenchText(value, maxTextLength, "label");
+}
+
 function authRequiredError(detail: string): string {
-  const reason = redactWorkbenchText(detail, 160);
-  return redactWorkbenchText(
+  const reason = outcomeText(detail, 160);
+  return outcomeText(
     `${AUTH_REQUIRED_CODE}: Claude SDK authentication is missing or rejected; sign in with \`claude /login\` or set ANTHROPIC_API_KEY. The workflow does not fall back to a Pi model.${reason ? ` (SDK detail: ${reason})` : ""}`,
   );
 }
@@ -243,7 +253,7 @@ export function createClaudeWorkflowHost(config: ClaudeWorkflowHostOptions): Wor
       if (controller.signal.aborted) return { ...common, ok: false, skipped: true, error: "Claude SDK query was cancelled." };
       if (terminal.subtype !== "success" || terminal.is_error) {
         if (authFailed) return { ...common, ok: false, error: authRequiredError(terminal.subtype === "success" ? terminal.result : terminal.errors.join("; ") || terminal.subtype) };
-        return { ...common, ok: false, error: terminal.subtype === "success" ? redactWorkbenchText(terminal.result) : redactWorkbenchText(terminal.errors.join("; ") || terminal.subtype) };
+        return { ...common, ok: false, error: outcomeText(terminal.subtype === "success" ? terminal.result : terminal.errors.join("; ") || terminal.subtype) };
       }
       if (!sessionId) return { ...common, ok: false, error: "Claude SDK succeeded without a session ID." };
       if (previous && sessionId !== previous.sessionId) {
@@ -274,7 +284,7 @@ export function createClaudeWorkflowHost(config: ClaudeWorkflowHostOptions): Wor
         return { ok: false, skipped: true, error: "Claude SDK query was cancelled.", ...(sessionId ? { sessionId } : {}) };
       }
       if (authFailed) return { ok: false, error: authRequiredError(error instanceof Error ? error.message : String(error)), ...(sessionId ? { sessionId } : {}) };
-      return { ok: false, error: `Claude SDK query failed: ${redactWorkbenchText(error instanceof Error ? error.message : String(error))}`, ...(sessionId ? { sessionId } : {}) };
+      return { ok: false, error: `Claude SDK query failed: ${outcomeText(error instanceof Error ? error.message : String(error))}`, ...(sessionId ? { sessionId } : {}) };
     } finally {
       config.signal?.removeEventListener("abort", onAbort);
       controllers.delete(agentId);
