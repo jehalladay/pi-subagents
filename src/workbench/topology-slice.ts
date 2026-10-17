@@ -136,9 +136,11 @@ function parseKey(key: unknown): ParsedKey | undefined {
   return { workspace, principal, ref: { provider, type, id, ...(scope ? { scope } : {}) } };
 }
 
-/** Producer text bound for display: the shared helper's label layout, cut to MAX_LABEL with a visible marker. */
+/** Producer text bound for display: the shared helper's label layout, cut to MAX_LABEL with a visible marker. The helper examines
+ * at most MAX_SCAN raw characters, with its straddle-safe scan option (wb-y5y): a value or escape sequence the scan bound splits
+ * is read as the whole text reads it, never cut open before the helper sees it. */
 function labelOf(raw: string): string {
-  return sanitizeWorkbenchText(raw.slice(0, MAX_SCAN), MAX_LABEL, "label");
+  return sanitizeWorkbenchText(raw, MAX_LABEL, "label", { scan: MAX_SCAN });
 }
 const refLabel = (ref: NativeRef): string => labelOf(`${ref.provider}:${ref.type}:${ref.id}`);
 const nativeRefOf = (ref: NativeRef): NativeRef => ({ provider: ref.provider, type: ref.type, id: ref.id, ...(ref.scope !== undefined ? { scope: ref.scope } : {}) });

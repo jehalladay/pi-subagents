@@ -506,14 +506,25 @@ function coverMixed(value: string, covered: Uint8Array): void {
   }
 }
 
-/** Visible text and gaps as the layout displays them, every covered run as one [REDACTED]. */
-function render(parts: readonly Segment[], covered: Uint8Array, display: Rendering): string {
+/**
+ * Visible text and gaps as the layout displays them, every covered run as one [REDACTED]. A cell `hidden` holds is never
+ * shown, covered or not (wb-y5y: the closing quotes a scan window is read with); `marks` puts text in place of one of them.
+ */
+function render(parts: readonly Segment[], covered: Uint8Array, display: Rendering, hidden?: Uint8Array, marks?: ReadonlyMap<number, string>): string {
   let out = "";
   let cell = 0;
   let redacting = false;
   for (const part of parts) {
     const units = typeof part === "string" ? part.length : 1;
     for (let index = 0; index < units; index++, cell++) {
+      if (hidden?.[cell] === 1) {
+        const mark = marks?.get(cell);
+        if (mark !== undefined) {
+          out += mark;
+          redacting = false;
+        }
+        continue;
+      }
       if (covered[cell] === 1) {
         if (!redacting) out += REDACTED;
         redacting = true;
@@ -530,6 +541,144 @@ function render(parts: readonly Segment[], covered: Uint8Array, display: Renderi
 }
 
 const collapse = (text: string): string => text.replace(/\s+/g, " ").trim();
+
+/**
+ * A caller's scan bound (wb-y5y), the opt-in of a display path that bounds producer text before display: the helper examines at
+ * most `scan` code units of one producer string, and nothing after them is ever read or shown. Without it the helper reads the
+ * whole value it is given, which is what a caller that cut the text first handed it.
+ */
+export interface WorkbenchTextScan {
+  /** The most UTF-16 code units of one producer string the helper examines; below 1 reads as 1. */
+  readonly scan: number;
+  /**
+   * Rows mode: the value is producer strings of these lengths joined by LF, each bounded by `scan` on its own, and each one the
+   * bound cuts ends in `marker`, a literal of the caller's that redaction never reads. Lengths that do not spell the value make
+   * it one producer string. Without rows the value is one producer string, and a caller marks its own cut.
+   */
+  readonly rows?: { readonly lengths: readonly number[]; readonly marker: string };
+}
+
+/** Read after a window the scan bound cut, so a quoted assignment value the cut left open is redacted whole; never shown. */
+const SCAN_CLOSERS = "\"'";
+const SCAN_BEL = 0x07;
+const SCAN_ESC = 0x1b;
+const SCAN_BACKSLASH = 0x5c;
+const SCAN_LEFT_BRACKET = 0x5b;
+/** CSI and ST in their 8-bit forms. */
+const SCAN_CSI_8 = 0x9b;
+const SCAN_ST_8 = 0x9c;
+/** After ESC, ] P X ^ _ open the string sequences OSC, DCS, SOS, PM and APC. */
+const isStringFinal = (code: number): boolean => code === 0x5d || code === 0x50 || code === 0x58 || code === 0x5e || code === 0x5f;
+/** The same five string sequences opened in 8-bit form: U+009D, U+0090, U+0098, U+009E and U+009F. */
+const isStringIntroducer8 = (code: number): boolean => code === 0x9d || code === 0x90 || code === 0x98 || code === 0x9e || code === 0x9f;
+
+/**
+ * Where a scan bound of `bound` code units cuts a producer string longer than it (wb-y5y), reading no unit at or past the bound.
+ * The cut never falls inside an escape sequence that either reading the helper takes leaves open at the bound: by UNSAFE_UNIT,
+ * where ESC [ or U+009B opens a CSI through its parameter, intermediate and final bytes, and ESC ] P X ^ _ or an 8-bit
+ * introducer opens a string through BEL or ST (ESC \ or U+009C); and by LONE_C1_UNIT, where only ESC opens one and a 7-bit
+ * string runs through BEL or ESC \ past any U+009C, so it never ends before the UNSAFE_UNIT reading of the same string and the
+ * walk reads 7-bit strings by it. A sequence whose end the window does not hold may end past the bound, where the whole text
+ * reads its body as part of it, so the window stops where that sequence starts; an ESC the bound ends on is held back the same
+ * way. A surrogate pair the bound splits leaves one lone surrogate last in the window, which the helper reads as an unsafe code
+ * point like any other. This is the overlap window wider than the longest unsafe unit: a string sequence has no longest form,
+ * so no fixed margin is wide enough, and the walk reads every unit from the start of the string instead, the unit-aware cut of
+ * wb-ig7's transcript pre-bound held inside the bound.
+ */
+function scanCut(value: string, bound: number): number {
+  const open = bound + 1;
+  // The first BEL or ESC, and the first BEL, ESC or ST, at or after a body's start and before the bound. Body starts only move
+  // forward, so each search resumes where the last one stopped and reads every code unit at most once.
+  let stop = -1;
+  let stopOrSt = -1;
+  const findStop = (from: number): number => {
+    if (stop < from) {
+      stop = from;
+      while (stop < bound && value.charCodeAt(stop) !== SCAN_BEL && value.charCodeAt(stop) !== SCAN_ESC) stop++;
+    }
+    return stop;
+  };
+  const findStopOrSt = (from: number): number => {
+    if (stopOrSt < from) {
+      stopOrSt = from;
+      while (stopOrSt < bound && value.charCodeAt(stopOrSt) !== SCAN_BEL && value.charCodeAt(stopOrSt) !== SCAN_ESC && value.charCodeAt(stopOrSt) !== SCAN_ST_8) stopOrSt++;
+    }
+    return stopOrSt;
+  };
+  /** Where a string opened at `start` ends when its body stops at `at`; start + 1 when it does not end there; open when only units past the bound could tell. */
+  const stringEnd = (start: number, at: number): number => {
+    if (at >= bound) return open;
+    const code = value.charCodeAt(at);
+    if (code === SCAN_BEL || code === SCAN_ST_8) return at + 1;
+    if (at + 1 >= bound) return open;
+    return value.charCodeAt(at + 1) === SCAN_BACKSLASH ? at + 2 : start + 1;
+  };
+  /** Where a CSI opened at `start` ends, its parameter bytes from `from`; start + 1 when no final byte follows them; open when the bound comes first. */
+  const csiEnd = (start: number, from: number): number => {
+    let at = from;
+    while (at < bound && value.charCodeAt(at) >= 0x30 && value.charCodeAt(at) <= 0x3f) at++;
+    while (at < bound && value.charCodeAt(at) >= 0x20 && value.charCodeAt(at) <= 0x2f) at++;
+    if (at >= bound) return open;
+    const final = value.charCodeAt(at);
+    return final >= 0x40 && final <= 0x7e ? at + 1 : start + 1;
+  };
+  for (let at = 0; at < bound; ) {
+    const code = value.charCodeAt(at);
+    let end = at + 1;
+    if (code === SCAN_ESC) {
+      if (at + 1 >= bound) return at;
+      const next = value.charCodeAt(at + 1);
+      if (next === SCAN_LEFT_BRACKET) end = csiEnd(at, at + 2);
+      else if (isStringFinal(next)) end = stringEnd(at, findStop(at + 2));
+    } else if (code === SCAN_CSI_8) end = csiEnd(at, at + 1);
+    else if (isStringIntroducer8(code)) end = stringEnd(at, findStopOrSt(at + 1));
+    if (end > bound) return at;
+    at = end;
+  }
+  return bound;
+}
+
+/** The producer rows `lengths` spells out of `value` joined by LF, or undefined when they do not spell it. */
+function scanRows(value: string, lengths: readonly number[]): string[] | undefined {
+  const rows: string[] = [];
+  let at = 0;
+  for (let index = 0; index < lengths.length; index++) {
+    const length = lengths[index];
+    if (!Number.isSafeInteger(length) || length < 0 || at + length > value.length) return undefined;
+    rows.push(value.slice(at, at + length));
+    at += length;
+    if (index === lengths.length - 1) break;
+    if (value.charCodeAt(at) !== 0x0a) return undefined;
+    at += 1;
+  }
+  return lengths.length > 0 && at === value.length ? rows : undefined;
+}
+
+/**
+ * The value read through a scan bound (wb-y5y), or undefined when no producer string passes it, so the option changes nothing.
+ * Each string the bound cuts is read as its window (scanCut) and SCAN_CLOSERS, the closers' cells hidden from the display, and
+ * in rows mode the row's marker shown in their place; rows are joined by LF as the caller joined them.
+ */
+function scanned(value: string, option: WorkbenchTextScan): { read: string; hiddenAt: number[]; markAt: Map<number, string> } | undefined {
+  const scan = option.scan >= 1 ? Math.floor(option.scan) : 1;
+  const rows = option.rows === undefined ? [value] : (scanRows(value, option.rows.lengths) ?? [value]);
+  if (!rows.some(row => row.length > scan)) return undefined;
+  let read = "";
+  const hiddenAt: number[] = [];
+  const markAt = new Map<number, string>();
+  rows.forEach((row, index) => {
+    if (index > 0) read += "\n";
+    if (row.length <= scan) {
+      read += row;
+      return;
+    }
+    read += row.slice(0, scanCut(row, scan));
+    hiddenAt.push(read.length, read.length + 1);
+    if (option.rows !== undefined) markAt.set(read.length + 1, option.rows.marker);
+    read += SCAN_CLOSERS;
+  });
+  return { read, hiddenAt, markAt };
+}
 
 /**
  * Untrusted text bound for display, the ONE helper every display path uses: normalize once, redact once, strip once.
@@ -550,16 +699,31 @@ const collapse = (text: string): string => text.replace(/\s+/g, " ").trim();
  *   PS each become one LF), other whitespace one space, every other unsafe unit deleted. Newline collapse is for
  *   single-line labels only.
  * Text without any unsafe unit is exactly redactWorkbenchText's output (after the label collapse).
+ * With a scan bound (wb-y5y, WorkbenchTextScan), a caller that bounds producer text opts in to reading it here instead of cutting
+ * it first: a producer string the bound passes is read as its straddle-safe window (scanCut: never inside an escape sequence
+ * open at the bound) followed by closing quotes, so a value or sequence the bound splits is read as the whole
+ * text reads it and shows nothing the whole text hides; the quotes are never displayed. A value inside the bound displays
+ * exactly as without the option.
  */
-export function sanitizeWorkbenchText(value: string, maxTextLength = WORKBENCH_TEXT_LIMIT, layout: WorkbenchTextLayout = "text"): string {
-  if (!HAS_UNSAFE_UNIT.test(value)) return redactWorkbenchText(layout === "label" ? collapse(value) : value, maxTextLength);
-  const parts = segments(value);
+export function sanitizeWorkbenchText(value: string, maxTextLength = WORKBENCH_TEXT_LIMIT, layout: WorkbenchTextLayout = "text", scan?: WorkbenchTextScan): string {
+  const windowed = scan === undefined ? undefined : scanned(value, scan);
+  if (windowed === undefined && !HAS_UNSAFE_UNIT.test(value)) return redactWorkbenchText(layout === "label" ? collapse(value) : value, maxTextLength);
+  const read = windowed?.read ?? value;
+  const parts = segments(read);
   const display = DISPLAY[layout];
   const covered = new Uint8Array(cellCount(parts));
   cover(parts, covered);
-  coverRaw(value, covered);
-  if (EIGHT_BIT_CONTROL.test(value)) coverMixed(value, covered);
-  const shown = render(parts, covered, display);
+  coverRaw(read, covered);
+  if (EIGHT_BIT_CONTROL.test(read)) coverMixed(read, covered);
+  let shown: string;
+  if (windowed === undefined) shown = render(parts, covered, display);
+  else {
+    // The closers are visible text, one cell per code unit, so their cells are the cells of their offsets.
+    const cellOf = cellsOf(read, read.matchAll(UNSAFE_UNIT));
+    const hidden = new Uint8Array(covered.length);
+    for (const at of windowed.hiddenAt) hidden[cellOf[at]] = 1;
+    shown = render(parts, covered, display, hidden, new Map([...windowed.markAt].map(([at, mark]) => [cellOf[at], mark])));
+  }
   return bounded(layout === "label" ? collapse(shown) : shown, maxTextLength);
 }
 
