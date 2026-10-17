@@ -9,11 +9,12 @@ import {type ExecutionStatusKind, resultFromJson, resultToJson} from '@hyperunix
 import {afterEach, describe, expect, expectTypeOf, it, vi} from 'vitest';
 import {CapabilityError, CapabilityRegistry, type JsonValue} from '../src/workbench/capability-registry.js';
 import {
-  HYPERUNIX_EXECUTION_KINDS, HYPERUNIX_OBSERVATION_CONTRACT, type HyperUnixObservedRelation, type HyperUnixProjectionTopology,
-  type HyperUnixTopologyContext, hyperunixTopology,
+  HYPERUNIX_EXECUTION_KINDS, HYPERUNIX_OBSERVATION_CONTRACT, type HyperUnixLiveClause, type HyperUnixObservedRelation,
+  type HyperUnixProjectionTopology, type HyperUnixTopologyContext, hxLiveInvariant, hyperunixTopology,
 } from '../src/workbench/hyperunix-observer.js';
 import {type NativeRef, type NativeSnapshot, ObservationProjection, type ObservationScope} from '../src/workbench/observation.js';
 import {registerHyperUnixFind} from '../src/workbench/providers/hyperunix.js';
+import {HX_NATIVE_RECEIPT, hxLiveReceipt} from './helpers/hx-live-receipt.js';
 
 type Json = {[key: string]: JsonValue};
 /** The runtime identity the measured live read of this workspace reported (hx 0.1.0, 2026-10-15). */
@@ -30,7 +31,7 @@ const PARTIAL_KINDS = ['incomplete', 'budget-exhausted', 'cancelled', 'view-inva
 const FAILURE_KINDS = ['provider-failed', 'schema-failed', 'internal-failed', 'protocol-failed', 'usage-error'] as const;
 const MUTATION_KINDS = ['mutation-rejected', 'mutation-partial'] as const;
 const MUTATION = new Set<string>(MUTATION_KINDS);
-const UNSAFE = /[\u0000-\u001f\u007f-\u009f‪-‮⁦-⁩]/;
+const UNSAFE = /[\u0000-\u001f\u007f-\u009f\u202A-\u202E\u2066-\u2069]/;
 const LIFECYCLE = /ownership|causation|dependency|hypothesis|nativeConfirmationRef/;
 const DERIVED = 'query id is a derived digest, not a native identifier';
 
@@ -76,6 +77,11 @@ function sdkDocument(overrides: Json = {}): Json {
 /** What registerHyperUnixFind returns for a native result, built on the provider's own path (resultToJson, JSON round trip). */
 const providerReading = (document: Json): JsonValue => JSON.parse(JSON.stringify({contract: 'hyperunix.find/v1',
   source: resultToJson(resultFromJson(document)), workspaceRoot: WS, runtime: {version: '0.1.0', binarySha256: BINARY}})) as JsonValue;
+/** The runtime-licensed complete-empty overrides of the :595-597 provider read (the one known-empty success), shared by the
+ * wb-tz2.1 rows below. */
+const LICENSED_COMPLETE_EMPTY: Json = {execution_status: {kind: 'complete-empty', diagnostic_code: null}, rows: [],
+  coverage_summary: {modes: ['complete-within-scope'], completeness: 'complete', licenses_absence: true, certificates_license_absence: true,
+    incomplete_regions: [], result_coverage: null, answer_count: 0}};
 function thrown(fn: () => unknown): unknown {
   try { fn(); } catch (error) { return error; }
   throw new Error('expected hyperunixTopology to refuse');
@@ -433,7 +439,7 @@ describe('HyperUnix hyperunix.find reader adapter', () => {
     ['a missing target', {...context, target: undefined}],
     ['a non-string query root', {...context, target: {kind: 'hx.fs/regular-file', root: 7}}],
     ['an oversized invocation id', {...context, invocationId: 'i'.repeat(257)}],
-    ['an invocation id carrying a bidi override', {...context, invocationId: 'wf_‮hx'}],
+    ['an invocation id carrying a bidi override', {...context, invocationId: 'wf_\u202Ehx'}],
     ['an operation reference carrying a terminal escape', {...context, operationRef: {...operationRef, id: 'wf\u001b[2J'}}],
     ['an operation reference without a type', {...context, operationRef: {provider: 'pi-workflow', id: 'wf_hx_1:0'}}],
     ['an operation reference with an empty native scope', {...context, operationRef: {...operationRef, scope: ''}}],
@@ -458,7 +464,7 @@ describe('HyperUnix hyperunix.find reader adapter', () => {
   // ANSI injection)." docs/workbench/09 § "Acceptance/negative controls" item 10: "Large/secret payload does not leak into Pi tool
   // result or screen by default."
   it('H6: hostile operation and target text reach title and diagnostics stripped, redacted and bounded', () => {
-    const hostile = {...context, target: {kind: 'hx.fs/‮regular', root: 'src Bearer abc123'}};
+    const hostile = {...context, target: {kind: 'hx.fs/\u202Eregular', root: 'src Bearer abc123'}};
     const topology = hyperunixTopology(measured({operation: 'find\u001b[31m'}), hostile);
     const [snapshot] = topology.snapshots;
     // Unsafe sequences become spaces before the shared redactor runs; the shared sanitizers then redact and strip.
@@ -471,13 +477,13 @@ describe('HyperUnix hyperunix.find reader adapter', () => {
     }
     expect(JSON.stringify(topology)).not.toContain('abc123');
     // The derived id hashes the raw native and host strings: sanitization is for display, never for identity.
-    expect(snapshot.source.id).toBe(derivedId(WS, 'find\u001b[31m', 'hx.fs/‮regular', 'src Bearer abc123', []));
+    expect(snapshot.source.id).toBe(derivedId(WS, 'find\u001b[31m', 'hx.fs/\u202Eregular', 'src Bearer abc123', []));
     const projection = new ObservationProjection();
     expect(projection.refresh(snapshot)).toBe('applied');
   });
 
   it('H6: a credential glued to an escape or bidi mark is still redacted, and a 10,000-character target stays within 120', () => {
-    const glued = hyperunixTopology(measured({operation: 'find\u001b[0mBearer abc123'}), {...context, target: {kind: 'Bearer‮def456', root: 'password=ghi789'}});
+    const glued = hyperunixTopology(measured({operation: 'find\u001b[0mBearer abc123'}), {...context, target: {kind: 'Bearer\u202Edef456', root: 'password=ghi789'}});
     const title = glued.snapshots[0].node.title;
     for (const secret of ['abc123', 'def456', 'ghi789']) expect(JSON.stringify(glued)).not.toContain(secret);
     expect(title).toBe('HX find [REDACTED] [REDACTED] password=[REDACTED]');
@@ -607,5 +613,196 @@ describe('HyperUnix adapter consumes the registered hyperunix.find provider outp
   it('refuses a mutation outcome that reached it through the provider path', async () => {
     const value = await invoked(sdkDocument({execution_status: {kind: 'mutation-partial', diagnostic_code: null}}));
     expect(thrown(() => hyperunixTopology(value, context))).toMatchObject({category: 'validation'});
+  });
+
+  // wb-tz2.1 acceptance 3: the live HX statements stay green against a GC-D10-fixed hx returning a licensed-complete verdict as
+  // well as against today's measured read. Statement for statement the rewritten test/workbench-ecosystem-native.test.ts HX case,
+  // replayed through the same registered-provider path over both verdict shapes.
+  it('R1: the rewritten live HX statements hold over the measured incomplete read and a licensed complete-empty read alike', async () => {
+    for (const document of [sdkDocument(), sdkDocument(LICENSED_COMPLETE_EMPTY)]) {
+      const result = await invoked(document);
+      expect(result).toMatchObject({contract: 'hyperunix.find/v1', source: {representation: 'hyperunix.result/1'},
+        runtime: {binarySha256: expect.stringMatching(/^[0-9a-f]{64}$/)}});
+      expect(hxLiveInvariant(result)).toMatchObject({holds: true, violations: []});
+      expect(JSON.stringify(result)).not.toContain('"verified":true');
+    }
+  });
+});
+
+// wb-tz2.1 (HX-ORIGINAL-GOALS-CLOSURE-R1): the two live-binary HX tests assert the program-normative runtime-licence invariant
+// through one shared pure predicate instead of any concrete verdict, so a correct hx fix (GC-D10) or a version bump cannot turn
+// Pi's only live HX witness red. These rows run in the default gate over the existing fixtures of this file.
+describe('hxLiveInvariant: the shared live-tier runtime-licence invariant (wb-tz2.1)', () => {
+  const withVersion = (version: JsonValue): Json => measured({}, {runtime: {version, binarySha256: BINARY}});
+
+  // Acceptance 1: "accepts BOTH the measured incomplete fixture (:37-43) and the runtime-licensed complete-empty fixture (:592-605)".
+  it('R1: accepts the measured incomplete read and the runtime-licensed complete-empty read, licensing absence only for the second', () => {
+    expect(hxLiveInvariant(measured())).toStrictEqual({holds: true, violations: [], absenceLicensed: false, versionClass: 'unstamped'});
+    expect(hxLiveInvariant(providerReading(sdkDocument()))).toStrictEqual(hxLiveInvariant(measured()));
+    expect(hxLiveInvariant(providerReading(sdkDocument(LICENSED_COMPLETE_EMPTY))))
+      .toStrictEqual({holds: true, violations: [], absenceLicensed: true, versionClass: 'unstamped'});
+    expect(Object.isFrozen(hxLiveInvariant(measured()).violations)).toBe(true);
+  });
+
+  // Acceptance 2: "Predicate rejects, each as its own unit assertion: licence true on a non-complete kind; a kind outside
+  // HYPERUNIX_EXECUTION_KINDS (e.g. 'done', mirroring refusal fixture :346); binarySha256 failing the 64-hex regex (:348);
+  // missing/empty runtime.version (:349)." Every row names exactly the clause it breaks.
+  const rejections: [string, JsonValue, HyperUnixLiveClause[]][] = [
+    ['licence true on the non-complete kind incomplete', kindOf('incomplete', true), ['licence-without-complete-kind']],
+    ["execution kind 'done' (refusal fixture :346)", measured({execution_status: {kind: 'done'}}), ['execution-kind']],
+    ["binarySha256 'abc' (refusal fixture :348)", measured({}, {runtime: {version: '0.1.0', binarySha256: 'abc'}}), ['binary-sha256']],
+    ['a missing runtime.version (refusal fixture :349)', measured({}, {runtime: {binarySha256: BINARY}}), ['runtime-version']],
+    ['an empty runtime.version (refusal fixture :371)', withVersion(''), ['runtime-version']],
+    ["licenses_absence 'false' as a string (refusal fixture :347)", measured({coverage_summary: {licenses_absence: 'false'}}), ['licence-boolean']],
+    ['a missing coverage_summary', omitSource('coverage_summary'), ['licence-boolean']],
+    ['a non-string execution kind', measured({execution_status: {kind: 1}}), ['execution-kind']],
+    ['an inherited-name execution kind', measured({execution_status: {kind: 'constructor'}}), ['execution-kind']],
+    ['an uppercase binary digest', measured({}, {runtime: {version: '0.1.0', binarySha256: BINARY.toUpperCase()}}), ['binary-sha256']],
+    ['a 63-character binary digest', measured({}, {runtime: {version: '0.1.0', binarySha256: BINARY.slice(1)}}), ['binary-sha256']],
+    ['a prefixed binary digest', measured({}, {runtime: {version: '0.1.0', binarySha256: `sha256:${BINARY}`}}), ['binary-sha256']],
+    ['a numeric runtime.version', withVersion(1), ['runtime-version']],
+    ['a runtime.version carrying a terminal escape', withVersion('0.1.0\u001b[31m'), ['runtime-version']],
+    ['a runtime.version longer than 256 bytes', withVersion(`0.1.0+${'x'.repeat(256)}`), ['runtime-version']],
+    ['a missing runtime', omit(measured(), 'runtime'), ['binary-sha256', 'runtime-version']],
+    ['a null reading', null, ['execution-kind', 'licence-boolean', 'binary-sha256', 'runtime-version']],
+    ['an array reading', [measured()], ['execution-kind', 'licence-boolean', 'binary-sha256', 'runtime-version']],
+    ['a string reading', 'hyperunix.find/v1', ['execution-kind', 'licence-boolean', 'binary-sha256', 'runtime-version']],
+  ];
+  it.each(rejections)('R1: rejects %s, naming exactly the broken clauses', (_name, value, clauses) => {
+    expect(hxLiveInvariant(value)).toMatchObject({holds: false, violations: clauses, absenceLicensed: false});
+  });
+
+  it.each([...PARTIAL_KINDS, ...FAILURE_KINDS])('R1: a licence on the non-complete kind %s breaks the invariant; without one it holds unlicensed', kind => {
+    expect(hxLiveInvariant(kindOf(kind, true))).toMatchObject({holds: false, violations: ['licence-without-complete-kind'], absenceLicensed: false});
+    expect(hxLiveInvariant(kindOf(kind, false))).toMatchObject({holds: true, violations: [], absenceLicensed: false});
+  });
+
+  it.each(MUTATION_KINDS)('R1: a %s outcome breaks the invariant under either licence: the live reads are finds', kind => {
+    expect(hxLiveInvariant(kindOf(kind, false)).violations).toStrictEqual(['read-outcome']);
+    expect(hxLiveInvariant(kindOf(kind, true)).violations).toStrictEqual(['read-outcome', 'licence-without-complete-kind']);
+  });
+
+  it('R1: only a licensed complete or complete-empty kind licenses absence; the same kinds without the licence hold unlicensed', () => {
+    for (const kind of ['complete', 'complete-empty']) {
+      expect(hxLiveInvariant(kindOf(kind, true))).toStrictEqual({holds: true, violations: [], absenceLicensed: true, versionClass: 'unstamped'});
+      expect(hxLiveInvariant(kindOf(kind, false))).toStrictEqual({holds: true, violations: [], absenceLicensed: false, versionClass: 'unstamped'});
+    }
+  });
+
+  // Acceptance 4 (negative): "completeness decided only from execution_status.kind + coverage_summary.licenses_absence - a result
+  // with rows [] and exit 0 and licence false never reads complete/known-empty; no exit_code or rows.length branch decides completeness".
+  it('R1: rows [], exit 0 and no licence never read complete, and no row, retention, exit or answer-count field moves the verdict', () => {
+    const unlicensed = providerReading(sdkDocument({...LICENSED_COMPLETE_EMPTY, coverage_summary: {modes: ['complete-within-scope'],
+      completeness: 'complete', licenses_absence: false, certificates_license_absence: true, incomplete_regions: [], result_coverage: null,
+      answer_count: 0}}));
+    expect(unlicensed).toMatchObject({source: {rows: [], status: {exit_code: 0}, execution_status: {kind: 'complete-empty'}}});
+    expect(hxLiveInvariant(unlicensed)).toMatchObject({holds: true, absenceLicensed: false});
+    const cells: [string, boolean][] = [['complete-empty', true], ['complete', true], ['complete', false], ['incomplete', false], ['provider-failed', false]];
+    const variants: Json[] = [{rows: []}, {rows: [{path: 'a'}, {path: 'b'}]}, {rows_retained: false}, {status: {exit_code: 0, signal: null}},
+      {status: {exit_code: 1, signal: 'SIGTERM'}}, {terminal: 'incomplete'}];
+    for (const [kind, licensed] of cells) {
+      const reference = hxLiveInvariant(kindOf(kind, licensed));
+      for (const variant of variants) expect(hxLiveInvariant(kindOf(kind, licensed, variant))).toStrictEqual(reference);
+      const counted = kindOf(kind, licensed, {coverage_summary: {licenses_absence: licensed, answer_count: 75, completeness: 'complete'}});
+      expect(hxLiveInvariant(counted)).toStrictEqual(reference);
+    }
+    // ...and the predicate's own source never reads those fields, so no such branch can exist.
+    const text = readFileSync(new URL('../src/workbench/hyperunix-observer.ts', import.meta.url), 'utf8');
+    const start = text.indexOf('export function hxLiveInvariant(');
+    expect(start).toBeGreaterThan(0);
+    const body = text.slice(start, text.indexOf('\n}\n', start));
+    expect(body.length).toBeGreaterThan(0);
+    expect(body).not.toMatch(/\brows\b|rows_retained|exit_code|\bstatus\b|answer_count|\bterminal\b|completeness/);
+  });
+
+  it('R1: agrees with the adapter over every kind and licence: a holding verdict projects, and absence is licensed exactly on complete coverage', () => {
+    for (const kind of HYPERUNIX_EXECUTION_KINDS) {
+      for (const licensed of [true, false]) {
+        const value = kindOf(kind, licensed);
+        const verdict = hxLiveInvariant(value);
+        if (MUTATION.has(kind)) {
+          expect(thrown(() => hyperunixTopology(value, context))).toMatchObject({category: 'validation'});
+          expect(verdict.holds).toBe(false);
+          continue;
+        }
+        const [snapshot] = hyperunixTopology(value, context).snapshots;
+        expect(verdict.absenceLicensed).toBe(snapshot.coverage === 'complete');
+        if (snapshot.coverage === 'complete') expect(verdict.holds).toBe(true);
+      }
+    }
+  });
+
+  // Fold-in HXFS-PI-3 (bead notes): "classify runtime.version as a build identity (<version>+<family>.<commit>) versus a bare
+  // semver ... a bare 0.1.0 is recorded as 'unstamped binary - provenance unknown'. The sha256 stays the identity pin; the version
+  // class is a label, never a branch that decides completeness or fails the read."
+  it('R1 fold-in HXFS-PI-3: runtime.version is classed installed only for an installed build identity, and the class never moves the verdict', () => {
+    for (const stamped of ['0.1.0+primary.3f2a1b9c', '0.1.0+primary.3f2a1b9', '1.2.3+dogfood.x86.0123456789abcdef0123456789abcdef01234567',
+      '0.2.0-rc.1+primary.3f2a1b9c']) {
+      expect(hxLiveInvariant(withVersion(stamped))).toStrictEqual({holds: true, violations: [], absenceLicensed: false, versionClass: 'installed'});
+    }
+    for (const bare of ['0.1.0', '0.1.0+primary', '0.1.0+primary.', '0.1.0+.3f2a1b9c', '0.1.0+primary.3F2A1B9C', '0.1.0+primary.3f2a1b',
+      'v0.1.0+primary.3f2a1b9c', 'hx 0.1.0+primary.3f2a1b9c', '0.1.0+primary.3f2a1b9c ', '0.1+primary.3f2a1b9c', 'unknown']) {
+      expect(hxLiveInvariant(withVersion(bare))).toStrictEqual({holds: true, violations: [], absenceLicensed: false, versionClass: 'unstamped'});
+    }
+    // An unclassifiable or undisplayable version is never installed, and the version clause still decides holds on its own.
+    expect(hxLiveInvariant(withVersion('0.1.0+primary.3f2a1b9c\u001b[31m'))).toMatchObject({holds: false, versionClass: 'unstamped'});
+    expect(hxLiveInvariant(omit(measured(), 'runtime'))).toMatchObject({holds: false, versionClass: 'unstamped'});
+    const {versionClass: installed, ...stampedRest} = hxLiveInvariant(withVersion('0.1.0+primary.3f2a1b9c'));
+    const {versionClass: unstamped, ...bareRest} = hxLiveInvariant(withVersion('0.1.0'));
+    expect([installed, unstamped]).toStrictEqual(['installed', 'unstamped']);
+    expect(stampedRest).toStrictEqual(bareRest);
+  });
+});
+
+// Fold-in HXFS-PI-3: the receipt line both live HX cases print (test/helpers/hx-live-receipt.ts). It says "installed" only for an
+// installed build identity, records a bare 0.1.0 as "unstamped binary — provenance unknown", and echoes no identity from a read
+// the invariant refuses.
+describe('hxLiveReceipt: the live HX receipt line (wb-tz2.1 fold-in HXFS-PI-3)', () => {
+  const withVersion = (version: JsonValue): Json => measured({}, {runtime: {version, binarySha256: BINARY}});
+  const PREFIX = `${HX_NATIVE_RECEIPT} `;
+  const body = (line: string): JsonValue => {
+    expect(line.startsWith(PREFIX)).toBe(true);
+    expect(line).not.toContain('\n');
+    return JSON.parse(line.slice(PREFIX.length)) as JsonValue;
+  };
+
+  it('R1 fold-in HXFS-PI-3: the measured bare 0.1.0 read is recorded as an unstamped binary of unknown provenance, never as installed', () => {
+    const line = hxLiveReceipt(measured());
+    expect(body(line)).toStrictEqual({version: '0.1.0', versionClass: 'unstamped', provenance: 'unstamped binary — provenance unknown',
+      binarySha256: BINARY, kind: 'incomplete', absenceLicensed: false});
+    expect(line).not.toMatch(/installed/i);
+  });
+
+  it('R1 fold-in HXFS-PI-3: only an installed build identity is called installed; every other version reads unstamped', () => {
+    for (const stamped of ['0.1.0+primary.3f2a1b9c', '0.2.0-rc.1+primary.3f2a1b9c']) {
+      const line = hxLiveReceipt(withVersion(stamped));
+      expect(body(line)).toMatchObject({version: stamped, versionClass: 'installed', provenance: 'installed build identity'});
+      expect(line).toMatch(/installed/);
+    }
+    for (const bare of ['0.1.0', '0.2.0', '0.1.0+primary', 'v0.1.0+primary.3f2a1b9c', 'unknown']) {
+      const line = hxLiveReceipt(withVersion(bare));
+      expect(body(line)).toMatchObject({version: bare, versionClass: 'unstamped', provenance: 'unstamped binary — provenance unknown'});
+      expect(line).not.toMatch(/installed/i);
+    }
+  });
+
+  it('R1 fold-in HXFS-PI-3: the receipt records a licensed complete-empty read as licensed and carries no row, certificate or diagnostic body', () => {
+    expect(body(hxLiveReceipt(providerReading(sdkDocument(LICENSED_COMPLETE_EMPTY)))))
+      .toMatchObject({kind: 'complete-empty', absenceLicensed: true, versionClass: 'unstamped'});
+    const line = hxLiveReceipt(providerReading(sdkDocument()));
+    expect(body(line)).toStrictEqual(body(hxLiveReceipt(measured())));
+    for (const secret of ['SECRET-ROW-BODY', 'SECRET-CERT', 'SECRET-DIAGNOSTIC', 'src/index.ts', 'HX-COVERAGE-INCOMPLETE', WS, '"verified"']) {
+      expect(line).not.toContain(secret);
+    }
+  });
+
+  it('R1 fold-in HXFS-PI-3: a read the invariant refuses prints no identity at all, only the broken clauses', () => {
+    const escaped = hxLiveReceipt(withVersion('0.1.0+primary.3f2a1b9c\u001b[31m'));
+    expect(escaped).toBe(`${PREFIX}{"withheld":true,"violations":["runtime-version"]}`);
+    const unknownKind = hxLiveReceipt(measured({execution_status: {kind: 'done'}}));
+    expect(body(unknownKind)).toStrictEqual({withheld: true, violations: ['execution-kind']});
+    expect(unknownKind).not.toContain(BINARY);
+    expect(body(hxLiveReceipt(null))).toStrictEqual({withheld: true,
+      violations: ['execution-kind', 'licence-boolean', 'binary-sha256', 'runtime-version']});
   });
 });

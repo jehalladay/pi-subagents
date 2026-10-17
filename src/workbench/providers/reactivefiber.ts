@@ -2,6 +2,17 @@
 import { spawn } from "node:child_process";
 import { CapabilityError, type CapabilityRegistry, type JsonValue } from "../capability-registry.js";
 
+export const REACTIVE_FIBER_CLI_SCHEMA = "reactive-fiber.cli/v1";
+export const REACTIVEFIBER_RENDER_PREVIEW_CONTRACT = "reactivefiber.render.preview/v1";
+/**
+ * The single rf contractSource carrier (program rfcli-performance-mathematical-optimization R2, wb-2j3.12): the
+ * `rf@<release>` prefix states the producer release MEASURED by the R8 live receipt, never a hand-maintained literal.
+ * Receipt of record: `forge run rf-preview` forge cmd_c8fa1da3d9c4 on 2026-10-17 against the installed rf
+ * (RF_PREVIEW_RECEIPT cli_version "0.1.723"; docs/workbench/receipts/wb-2j3.7.md). Re-pin only from a newer stamped
+ * receipt row; both registered reactivefiber.render.preview descriptors consume this constant by identifier.
+ */
+export const REACTIVE_FIBER_CONTRACT_SOURCE = "rf@0.1.723:reactive-fiber.cli/v1 context.render --no-commit";
+
 interface RfEnvelope {
   schema: string; ok: boolean; command: string; operation_id: string;
   workspace: { id: string; root: string }; transaction_id: null;
@@ -29,7 +40,7 @@ function isRfDiagnostic(value: unknown): value is Record<string, JsonValue> {
 function isRfEnvelope(source: unknown): source is Record<string, JsonValue> {
   return record(source) && Object.keys(source).length===RF_KEYS.length &&
     RF_KEYS.every(key=>Object.hasOwn(source,key)) &&
-    source.schema==="reactive-fiber.cli/v1" && source.command==="context.render" &&
+    source.schema===REACTIVE_FIBER_CLI_SCHEMA && source.command==="context.render" &&
     typeof source.ok==="boolean" && typeof source.operation_id==="string" &&
     RF_ID.test(source.operation_id) &&
     (source.workspace===null || (record(source.workspace) &&
@@ -60,23 +71,53 @@ function isPreviewEnvelope(source: unknown, exit: number|null, workspaceRoot: st
       typeof result.diagnostics_summary.has_warnings!=="boolean" ||
       !record(work) || Object.keys(work).length!==6 || work.storage_write_count!==0 ||
       !["source_capture_count","fiber_signal_count","component_render_count","lens_resolution_count","necessity_eval_count","storage_write_count"].every(key=>nonnegativeInteger(work[key]))) return false;
+  // wb-693.4: engine_metrics rides committed and ephemeral forms alike and is closed to the two TSX counters; a pre-TSX rf states none.
+  if (Object.hasOwn(result,"engine_metrics")) {
+    const metrics=result.engine_metrics;
+    if (!record(metrics) || Object.keys(metrics).length!==2 ||
+        !["tsx_worker_spawns","tsx_resource_rounds"].every(key=>Object.hasOwn(metrics,key) && nonnegativeInteger(metrics[key]))) return false;
+  }
   return true;
 }
-const INPUT={type:"object",properties:{model:{type:"string",minLength:1},task:{type:"string",minLength:1}},required:["model","task"],additionalProperties:false};
+const LEGACY_INPUT={type:"object",properties:{model:{type:"string",minLength:1},task:{type:"string",minLength:1}},required:["model","task"],additionalProperties:false};
+const VIEW_INPUT={type:"object",properties:{view:{type:"string",minLength:1},taskId:{type:"string",minLength:1},model:{type:"string",minLength:1}},required:["view","taskId"],additionalProperties:false};
+/** Exactly one arm admits an input (wb-973.1 SCG-R1): the legacy {model, task} preview or the served view render; the
+ * registry refuses every mixed shape at input validation, before a provider (and so an rf process) ever runs. */
+const INPUT={type:"object",oneOf:[LEGACY_INPUT,VIEW_INPUT]};
+
+/** The two input arms the descriptor admits, as the provider receives them. */
+export type ReactiveFiberRenderSelector=
+  | {readonly model:string;readonly task:string}
+  | {readonly view:string;readonly taskId:string;readonly model?:string};
+
+/** The spawned argv. The legacy arm is the measured rf@0.1.583 form byte for byte; the view arm is the served
+ * `--view V --task-id T` render with `--model M` (optional only under --view) after --task-id (wb-973.3 SCG-R3). Every
+ * form ends with --no-commit --no-input --json and adds no selector the pinned build parses but does not serve. */
+function renderArgv(selector:ReactiveFiberRenderSelector,workspaceRoot:string):string[] {
+  const select="view" in selector
+    ? ["--view",selector.view,"--task-id",selector.taskId,...(selector.model===undefined?[]:["--model",selector.model])]
+    : ["--model",selector.model,"--task",selector.task];
+  return ["--workspace",workspaceRoot,"context","render",...select,"--no-commit","--no-input","--json"];
+}
 
 export function registerReactiveFiberRender(registry:CapabilityRegistry,invoke:()=>Promise<RfEnvelope>,workspaceRoot:string):void {
-  registry.register({descriptor:{id:"reactivefiber.render.preview",version:"1.0.0",description:"Preview native RF context with provenance and no durable write",inputSchema:INPUT,effectClass:"read",permissions:["reactivefiber:render"],supportedModes:["invoke"],contractSource:"rf@0.1.583:reactive-fiber.cli/v1 context.render --no-commit"},
+  registry.register({descriptor:{id:"reactivefiber.render.preview",version:"1.0.0",description:"Preview native RF context with provenance and no durable write",inputSchema:INPUT,effectClass:"read",permissions:["reactivefiber:render"],supportedModes:["invoke"],contractSource:REACTIVE_FIBER_CONTRACT_SOURCE},
     async invoke(_input,context){
       if(context.signal.aborted) throw new CapabilityError("transport","RF preview cancelled before invocation.");
       const source=await invoke();
       if(context.signal.aborted) throw new CapabilityError("transport","RF preview cancelled.");
-      return JSON.parse(JSON.stringify({contract:"reactivefiber.render.preview/v1",workspaceRoot,source})) as JsonValue;
+      return JSON.parse(JSON.stringify({contract:REACTIVEFIBER_RENDER_PREVIEW_CONTRACT,workspaceRoot,source})) as JsonValue;
     }});
 }
 
 export async function nativeReactiveFiberPreview(model:string,task:string,workspaceRoot:string,signal?:AbortSignal):Promise<JsonValue> {
+  return nativeReactiveFiberRender({model,task},workspaceRoot,signal);
+}
+
+/** One noncommitted rf render for either input arm; the reading and its envelope checks are the same for both. */
+export async function nativeReactiveFiberRender(selector:ReactiveFiberRenderSelector,workspaceRoot:string,signal?:AbortSignal):Promise<JsonValue> {
   if(signal?.aborted) throw new CapabilityError("transport","RF preview cancelled before launch.");
-  const argv=["--workspace",workspaceRoot,"context","render","--model",model,"--task",task,"--no-commit","--no-input","--json"];
+  const argv=renderArgv(selector,workspaceRoot);
   const child=spawn("rf",argv,{stdio:["ignore","pipe","pipe"]});
   const MAX_BYTES=256*1024;
   const chunks:Buffer[]=[];
@@ -129,7 +170,7 @@ export async function nativeReactiveFiberPreview(model:string,task:string,worksp
     }
     if(!isPreviewEnvelope(source,exit,workspaceRoot)) throw new CapabilityError("transport","RF preview returned an unrecognized or contradictory envelope.");
     if(signal?.aborted) throw new CapabilityError("transport","RF preview cancelled.");
-    return JSON.parse(JSON.stringify({contract:"reactivefiber.render.preview/v1",workspaceRoot,source})) as JsonValue;
+    return JSON.parse(JSON.stringify({contract:REACTIVEFIBER_RENDER_PREVIEW_CONTRACT,workspaceRoot,source})) as JsonValue;
   }finally{
     clearTimeout(timer);
     if(escalation) clearTimeout(escalation);
@@ -139,6 +180,6 @@ export async function nativeReactiveFiberPreview(model:string,task:string,worksp
 }
 
 export function registerNativeReactiveFiberRender(registry:CapabilityRegistry,workspaceRoot:string):void {
-  registry.register({descriptor:{id:"reactivefiber.render.preview",version:"1.0.0",description:"RF noncommitted context with native provenance",inputSchema:INPUT,effectClass:"read",permissions:["reactivefiber:render"],supportedModes:["invoke"],contractSource:"rf@0.1.583:reactive-fiber.cli/v1 context.render --no-commit"},
-    invoke:async(input,ctx)=>nativeReactiveFiberPreview((input as {model:string}).model,(input as {task:string}).task,workspaceRoot,ctx.signal)});
+  registry.register({descriptor:{id:"reactivefiber.render.preview",version:"1.0.0",description:"RF noncommitted context with native provenance",inputSchema:INPUT,effectClass:"read",permissions:["reactivefiber:render"],supportedModes:["invoke"],contractSource:REACTIVE_FIBER_CONTRACT_SOURCE},
+    invoke:async(input,ctx)=>nativeReactiveFiberRender(input as ReactiveFiberRenderSelector,workspaceRoot,ctx.signal)});
 }
