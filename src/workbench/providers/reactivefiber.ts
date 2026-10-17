@@ -101,7 +101,7 @@ function renderArgv(selector:ReactiveFiberRenderSelector,workspaceRoot:string):s
 }
 
 export function registerReactiveFiberRender(registry:CapabilityRegistry,invoke:()=>Promise<RfEnvelope>,workspaceRoot:string):void {
-  registry.register({descriptor:{id:"reactivefiber.render.preview",version:"1.0.0",description:"Preview native RF context with provenance and no durable write",inputSchema:INPUT,effectClass:"read",permissions:["reactivefiber:render"],supportedModes:["invoke"],contractSource:REACTIVE_FIBER_CONTRACT_SOURCE},
+  registry.register({descriptor:{id:"reactivefiber.render.preview",version:"1.0.0",description:"Preview native RF context with provenance; no authoritative or journal store write (disposable, reconstructible cache-plane writes may occur)",inputSchema:INPUT,effectClass:"read",permissions:["reactivefiber:render"],supportedModes:["invoke"],contractSource:REACTIVE_FIBER_CONTRACT_SOURCE},
     async invoke(_input,context){
       if(context.signal.aborted) throw new CapabilityError("transport","RF preview cancelled before invocation.");
       const source=await invoke();
@@ -180,6 +180,6 @@ export async function nativeReactiveFiberRender(selector:ReactiveFiberRenderSele
 }
 
 export function registerNativeReactiveFiberRender(registry:CapabilityRegistry,workspaceRoot:string):void {
-  registry.register({descriptor:{id:"reactivefiber.render.preview",version:"1.0.0",description:"RF noncommitted context with native provenance",inputSchema:INPUT,effectClass:"read",permissions:["reactivefiber:render"],supportedModes:["invoke"],contractSource:REACTIVE_FIBER_CONTRACT_SOURCE},
+  registry.register({descriptor:{id:"reactivefiber.render.preview",version:"1.0.0",description:"RF noncommitted context with native provenance; no authoritative or journal store write (disposable, reconstructible cache-plane writes may occur)",inputSchema:INPUT,effectClass:"read",permissions:["reactivefiber:render"],supportedModes:["invoke"],contractSource:REACTIVE_FIBER_CONTRACT_SOURCE},
     invoke:async(input,ctx)=>nativeReactiveFiberRender(input as ReactiveFiberRenderSelector,workspaceRoot,ctx.signal)});
 }
