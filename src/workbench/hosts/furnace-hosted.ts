@@ -19,7 +19,8 @@
  *  - Cancel is a request: the callback's AbortSignal is aborted and the workflow
  *    must stop cooperatively. A workflow that ignores it is reported
  *    indeterminate after a bounded grace, never cancelled.
- *  - Observe is unsupported by the resident session and is stated, not faked.
+ *  - Observe is answered by the resident session from its own admission record (running / terminal /
+ *    unknown, @furnace/sdk ResidentSession.observe); the adapter adds no producer-side observation and says so.
  *
  * Disclosed limits (also carried on every receipt as `limits`):
  *  - No crash durability. Death of this process or of the controller leaves the
@@ -108,7 +109,7 @@ export interface HostedReceipt {
   readonly run?: { readonly runId: string; readonly beadsRunId: string; readonly requestId: string };
   readonly limits: {
     readonly crashDurability: "none";
-    readonly observe: "unsupported";
+    readonly observe: "session-word";
     readonly identity: "per-attempt";
     readonly replyBounds: "none";
     readonly retry: "adapter-never-retries; furnace-auto-retries-by-recorded-retry-policy; work_failure-and-indeterminate-park";
@@ -116,7 +117,7 @@ export interface HostedReceipt {
   readonly attempts: readonly HostedAttemptReceipt[];
   readonly identityViolations: readonly string[];
 }
-const LIMITS: HostedReceipt["limits"] = { crashDurability: "none", observe: "unsupported", identity: "per-attempt", replyBounds: "none", retry: "adapter-never-retries; furnace-auto-retries-by-recorded-retry-policy; work_failure-and-indeterminate-park" };
+const LIMITS: HostedReceipt["limits"] = { crashDurability: "none", observe: "session-word", identity: "per-attempt", replyBounds: "none", retry: "adapter-never-retries; furnace-auto-retries-by-recorded-retry-policy; work_failure-and-indeterminate-park" };
 
 /** The slice of the SDK client this adapter calls; injectable so tests never spawn Furnace. */
 export interface FurnaceHostedClient {
