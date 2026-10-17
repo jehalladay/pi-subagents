@@ -45,7 +45,7 @@ Requirements are individually assignable and independently testable. P0 = first 
 | WB-039 | P1 | No automatic code-edit and live replacement of already pinned running execution. |
 | WB-040 | P1 | Control actions have native preconditions, permission checks, prompts/confirmations and acknowledgements. |
 | WB-041 | P2 | Optional detached workbench host permits Pi client disconnect/reconnect, without falsely claiming crash durability. |
-| WB-042 | P2 | Optional Furnace host uses the verified per-Attempt extension-driver semantics (one host session per Attempt; failure and indeterminate terminals park the Run for the operator ladder, never auto-retried), avoiding another durable scheduler. |
+| WB-042 | P2 | Optional Furnace host uses the verified per-Attempt extension-driver semantics (one host session per Attempt; work_failure and resident-host indeterminate terminals park the Run for the operator ladder and are never auto-retried, while Furnace's own recorded retry.* policy admits automatic re-attempts for other classes — timeout under retry.retry_timeout, default false; infrastructure_failure under retry.retry_infrastructure_failure, default true, bounded by retry.max_attempts — per Furnace README.md:749-759@15fd6f8ee), avoiding another durable scheduler. |
 | WB-043 | P2 | Optional HX-based cross-product provenance queries, without mandating HX as event store. |
 | WB-044 | P2 | RCP-assisted continuation only where explicitly supported and conformance-tested. |
 | WB-045 | P2 | Hierarchical agent-swarm aggregation and profile comparisons handle 10k+ nodes subject to benchmarked limits. |
