@@ -42,7 +42,7 @@ import { readForgeOperationEvidence } from "../src/workbench/forge-evidence.js";
 import { forgeGateTopology } from "../src/workbench/forge-observer.js";
 import { readFurnaceAttemptLogEvidence } from "../src/workbench/furnace-evidence.js";
 import { FurnaceHostedExecutor, SHIPPED_FURNACE_SDK } from "../src/workbench/hosts/furnace-hosted.js";
-import { decodeDetachedCommand } from "../src/workbench/hosts/local-detached.js";
+import { DetachedFrameDecoder, decodeDetachedCommand, detachedFrame } from "../src/workbench/hosts/local-detached.js";
 import { type HyperUnixTopologyContext, hyperunixTopology } from "../src/workbench/hyperunix-observer.js";
 import { WORKFLOW_SCRIPT_SCHEMA_VERSION } from "../src/workbench/identity.js";
 import { selectLatencyDecomposition } from "../src/workbench/latency.js";
@@ -1131,5 +1131,98 @@ describe("wb-rqd false-positive census over the 952 corpus", () => {
     expect(probes.filter(fromRqd).length).toBe(6 + units.length * (BETWEEN_TOKENS.length + WITHIN_TOKENS.length));
     expect(probes.filter(probe => formatControls(probe.raw).length > 0 !== fromRqd(probe)).map(probe => probe.id)).toEqual([]);
     expect(probes.filter(probe => formatControls(probe.raw).some(code => !units.includes(code))).map(probe => probe.id)).toEqual([]);
+  });
+});
+
+/**
+ * wb-yr9 (machine-filed on owner order from the wb-0kg.6 gate-1 F1, verbatim): "bounded() slices UTF-16 code units, so an
+ * odd-boundary astral reason leaves a lone high surrogate before the truncation marker (latent until wb-cra; no corpus probe
+ * reaches a bound); cure: surrogate-safe cut in bounded() plus a bound-reaching odd-boundary astral probe red-first through
+ * every SITES row". One helper fix for every caller and no per-site residual row (owner ruling): a lone surrogate is unsafe on
+ * every display path (UNSAFE_DISPLAY), and no site strips one after the helper (F6).
+ */
+const ASTRAL = cp(0x1f600);
+const TRUNCATED = " [truncated]";
+/** A lone surrogate: with the u flag a well-formed pair reads as one astral code point, so only an unpaired half matches. */
+const LONE_SURROGATE = /[\u{d800}-\u{dfff}]/u;
+/**
+ * Bound-reaching probes at an odd boundary. After a one-letter lead every pair starts at an odd offset, so a cut at an even
+ * offset falls inside a pair; after a two-letter lead every odd cut does. Whatever a site writes before the raw text, one of
+ * the two leads splits a pair where its bound cuts. 1,000 pairs pass the 2,000-unit default bound by one unit (the gate's
+ * measured shape); 3,000 pass every finite bound a census site names (control-reply.ts's 4,200 is the largest).
+ */
+const ASTRAL_PROBES: readonly Probe[] = [1_000, 3_000].flatMap(count =>
+  ["a", "ab"].map(lead => ({ id: `${lead.length}-letter lead, ${count} x U+1F600`, raw: `${lead}${ASTRAL.repeat(count)}`, secrets: [] })),
+);
+
+describe("wb-yr9 the bound never cuts a surrogate pair: one surrogate-safe cut in redaction.ts, through every census site", () => {
+  for (const { site, texts } of SITES) {
+    it.each(ASTRAL_PROBES)(`${site}: $id`, async probe => {
+      expectClean(await texts(probe.raw), probe);
+    });
+  }
+
+  it("the gate's measurement of record: the 400- and 300-unit label bounds keep whole pairs, 391 and 291 units", () => {
+    const raw = `a${ASTRAL.repeat(1_000)}`;
+    // Measured at the gate: 392 and 292 units, each a lone high surrogate before the marker.
+    expect(sanitizeWorkbenchText(raw, 400, "label")).toBe(`a${ASTRAL.repeat(189)}${TRUNCATED}`);
+    expect(sanitizeWorkbenchText(raw, 300, "label")).toBe(`a${ASTRAL.repeat(139)}${TRUNCATED}`);
+  });
+
+  it("the gate's measurement of record through site 23: the client frame, detachedFrame and decodeDetachedCommand on the wire, and the host audit keep whole pairs, 450 units", async () => {
+    const raw = `a${ASTRAL.repeat(1_000)}`;
+    const frames: string[] = [];
+    const settled = await controlExecution(raw, async frame => {
+      frames.push(frame);
+      return { accepted: true, terminalConfirmed: false };
+    });
+    if (settled.status !== "settled") throw new Error(`site 23: the frame did not reach the host (${settled.status})`);
+    // "<contract> <request id>: " (59 units), then the operator note the 400-unit label bound cut. Measured at the gate: 451
+    // units, a lone high surrogate before the marker.
+    expect(frames).toEqual([`${CONTROL_CONTRACT_VERSION} ${settled.requested.requestId}: a${ASTRAL.repeat(189)}${TRUNCATED}`]);
+    expect(frames[0].length).toBe(450);
+    // The wire as the host reads it: the client's frame encoding, the host's frame decoder and command decoder, then the reason
+    // the host stores in its control audit (local-detached.ts redacts the decoded reason).
+    const [decoded] = new DetachedFrameDecoder().push(detachedFrame({ command: "cancel", invocationId: CONTROL_INVOCATION.id, reason: frames[0] }));
+    const command = decodeDetachedCommand(decoded);
+    const audited = redactWorkbenchText("reason" in command ? command.reason : "");
+    expect(audited).toBe(frames[0]);
+    expect([...frames, audited, ...strings(settled)].filter(text => LONE_SURROGATE.test(text))).toEqual([]);
+  });
+
+  it("cuts at the bound, one unit earlier exactly where a pair straddles it: every layout, the plain redactor and the JSON sanitizer", () => {
+    // Pairs at both ends of both surrogate ranges and between them: U+10000 (D800 DC00), U+1D7FF (D835 DFFF), U+1F600 (D83D DE00),
+    // U+10FFFD (DBFF DFFD). No lead: the pairs start at even offsets; a one-letter lead: at odd ones; an invisible first: the
+    // helper's unsafe-unit path.
+    const inputs = [0x10000, 0x1d7ff, 0x1f600, 0x10fffd].flatMap(code => {
+      const pairs = cp(code).repeat(1_100);
+      const name = `U+${code.toString(16).toUpperCase()}`;
+      return [{ id: `${name}, no lead`, raw: pairs }, { id: `${name}, one-letter lead`, raw: `a${pairs}` }, { id: `${name}, unsafe-unit path`, raw: `${ZWSP}a${pairs}` }];
+    });
+    const layouts = ["text", "label", "terminal", "lines"] as const;
+    const paths: readonly (readonly [name: string, cut: (raw: string, max: number) => string])[] = [
+      ...layouts.map(layout => [`sanitizeWorkbenchText ${layout}`, (raw: string, max: number) => sanitizeWorkbenchText(raw, max, layout)] as const),
+      ["redactWorkbenchText", redactWorkbenchText],
+      ["sanitizeWorkbenchJson value", (raw, max) => strings(sanitizeWorkbenchJson([raw], max)).join("")],
+    ];
+    const bounds = [...Array.from({ length: 44 }, (_, index) => 21 + index), 120, 121, 300, 301, 400, 401, 2_000, 2_001];
+    const failures: string[] = [];
+    for (const [name, cut] of paths) {
+      for (const max of bounds) {
+        // A text of exactly the bound is kept whole; one unit more is cut.
+        const plain = "x".repeat(max);
+        if (cut(plain, max) !== plain || cut(`${plain}x`, max) !== `${"x".repeat(max - 20)}${TRUNCATED}`) failures.push(`${name}, threshold ${max}`);
+      }
+      for (const { id, raw } of inputs) {
+        const whole = cut(raw, Number.MAX_SAFE_INTEGER);
+        for (const max of bounds) {
+          // The kept text ends at max - 20, unless a pair starts one unit before that: then the pair is dropped whole.
+          const end = (whole.codePointAt(max - 21) ?? 0) > 0xffff ? max - 21 : max - 20;
+          const shown = cut(raw, max);
+          if (shown !== `${whole.slice(0, end)}${TRUNCATED}` || LONE_SURROGATE.test(shown)) failures.push(`${id}, ${name}, bound ${max}`);
+        }
+      }
+    }
+    expect(failures).toEqual([]);
   });
 });
