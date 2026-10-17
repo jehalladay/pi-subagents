@@ -13,8 +13,9 @@
 //   2  the measurement is not the W21 claim (fixture shape, fewer than 1,000 operation focuses, an unsampled group
 //      depth or series, or a pass that did not retain the whole fixture)
 //   3  nothing could be measured (an exception, reported on stderr; no receipt)
-// The revision comes from $W21_REVISION (else "working-tree"). $W21_SEED, $W21_NODES, $W21_DEPTH and $W21_TICKS override
-// the fixture; any override below the W21 shape is still measured and exits 2.
+// The revision is git rev-parse HEAD of this checkout plus a dirty flag, stamped by qa/workbench/bench-revision.mjs (wb-oq3);
+// $W21_REVISION only overrides the revision and the receipt names the source. $W21_SEED, $W21_NODES, $W21_DEPTH and
+// $W21_TICKS override the fixture; any override below the W21 shape is still measured and exits 2.
 //
 // Measurement-only. No production cap or default moves: the page-cap fix has three other homes, and this receipt is the
 // evidence they read. The measured function and its read pattern are the dist selector's own; reads are counted in an
@@ -22,6 +23,7 @@
 import {readFileSync, writeFileSync} from 'node:fs';
 import {cpus} from 'node:os';
 import {pathToFileURL} from 'node:url';
+import {benchRevision, withBenchRevision} from './bench-revision.mjs';
 import {
   assessFixtureShape,
   BENCH_ONLY_LIMITS,
@@ -372,13 +374,14 @@ async function main() {
       ticks: integerFromEnv('W21_TICKS', GROUPED_FIXTURE_DEFAULTS.ticks),
     });
     const processors = cpus();
-    receipt = runTopologyBench({
+    const stamp = benchRevision();
+    receipt = withBenchRevision(runTopologyBench({
       Projection: ObservationProjection,
       topology,
       fixture,
       host: {
         utc: new Date().toISOString(),
-        revision: process.env.W21_REVISION ?? 'working-tree',
+        revision: stamp.revision,
         node: process.version,
         arch: process.arch,
         platform: process.platform,
@@ -390,7 +393,7 @@ async function main() {
         },
         command: 'node qa/workbench/topology-slice-grouped-bench.mjs',
       },
-    });
+    }), stamp);
   } catch (error) {
     console.error(JSON.stringify({benchmark: BENCHMARK, measured: false, error: error instanceof Error ? error.stack ?? error.message : String(error)}));
     process.exit(3);

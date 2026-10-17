@@ -631,6 +631,7 @@ describe("W21-D CLI and Forge registration", () => {
         "../../dist/ui/workflow-inspector.js",
         "../../dist/workbench/observation.js",
         "../../dist/workflow/runtime.js",
+        "./bench-revision.mjs",
         "./cap-saturation.mjs",
         "./grouped-fixture.mjs",
         "node:fs",
@@ -651,7 +652,8 @@ describe("W21-D CLI and Forge registration", () => {
     expect(printed).toBeGreaterThan(-1);
     expect(written).toBeGreaterThan(printed);
     expect(settled).toBeGreaterThan(written);
-    const measured = text.indexOf("receipt = runCapSaturationBench(");
+    // wb-oq3 re-cut (gate U1a): the measured receipt is bound through the git revision stamp.
+    const measured = text.indexOf("receipt = withBenchRevision(runCapSaturationBench(");
     const exit = text.indexOf(
       "process.exitCode = publishReceipt(receipt, {path: process.env.CAP_BENCH_RECEIPT, log: console.log, logError: console.error, writeFile: writeFileSync});",
     );
