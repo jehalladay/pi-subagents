@@ -1,13 +1,14 @@
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
-import { tmpdir } from 'node:os';
+import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { gitStamp } from './git-stamp.mjs';
 import { buildPackageReceipt, bundledLockEntries, classifyPackedPaths, missingRequiredPackedPaths } from './package-boundary.mjs';
+import { installScratchLeakGuard, makeScratch, removeScratch } from './scratch.mjs';
+installScratchLeakGuard();
 const root = process.cwd();
-const scratch = mkdtempSync(join(tmpdir(), 'pi-workbench-pack-'));
-const scratch2 = mkdtempSync(join(tmpdir(), 'pi-workbench-pack2-'));
+const scratch = makeScratch('pi-workbench-pack-');
+const scratch2 = makeScratch('pi-workbench-pack2-');
 try {
   const packArgs = ['pack', '--ignore-scripts', '--json', '--pack-destination', scratch];
   const packed = spawnSync('npm', packArgs, {cwd: root, encoding: 'utf8'});
@@ -39,4 +40,4 @@ try {
     node: process.version, npm: npmVersion.status === 0 ? npmVersion.stdout.trim() : 'unknown', platform: process.platform, arch: process.arch,
     utc: new Date().toISOString(), command: `npm ${[...packArgs.slice(0, -1), "<scratch>"].join(" ")}`, topLevel, bundled,
   })));
-} finally { rmSync(scratch, {recursive:true,force:true}); rmSync(scratch2, {recursive:true,force:true}); }
+} finally { removeScratch(scratch, scratch2); }

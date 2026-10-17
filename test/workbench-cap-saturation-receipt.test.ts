@@ -2,8 +2,7 @@
  * Measurement-only: the bench module is ESM over the wb-9x5.2 fixture, the CLI drives compiled dist/, and no
  * production cap moves. Overflow past the caps must be a counted remainder; a silent drop fails the run.
  */
-import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
-import { tmpdir } from "node:os";
+import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { beforeAll, describe, expect, it } from "vitest";
 import {
@@ -22,6 +21,9 @@ import {
 import { buildGroupedFixture, NAVIGATION_TARGET_MS } from "../qa/workbench/grouped-fixture.mjs";
 import { initialInspectorState, layoutInspector, reduceInspectorKey } from "../src/ui/workflow-inspector.js";
 import { type ObservationLimits, ObservationProjection } from "../src/workbench/observation.js";
+import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
+
+installScratchLeakGuard();
 
 interface Violation {
   rule: string;
@@ -775,7 +777,7 @@ describe("W21-D receipt publication: printed before the file write; a failed wri
   });
 
   it("with the real node:fs writer: the file holds the printed line, and an unwritable path exits 3 with the receipt on stdout", () => {
-    const directory = mkdtempSync(join(tmpdir(), "w21-cap-"));
+    const directory = makeScratch("w21-cap-");
     try {
       const receipt = receiptExiting(0);
       const printed: string[] = [];
@@ -800,7 +802,7 @@ describe("W21-D receipt publication: printed before the file write; a failed wri
       const diagnostic: unknown = JSON.parse(errors[0] ?? "null");
       expect(diagnostic).toMatchObject({ benchmark: "inspector-cap-saturation", error: "receipt-write-failed", path: unwritable });
     } finally {
-      rmSync(directory, { recursive: true, force: true });
+      removeScratch(directory);
     }
   });
 });
