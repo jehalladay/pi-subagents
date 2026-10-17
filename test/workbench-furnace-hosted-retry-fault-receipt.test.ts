@@ -4,7 +4,8 @@
  * Spec lines pinned (docs/workbench/14-qa-and-benchmarks.md "Fault-injection locations"):
  *   "Parent Furnace Work retry while child Run establishment is uncertain."
  * wb-zmd constraint set: "one bridge host session per Attempt"; receipts must state "no crash durability
- *   (controller or Pi death leaves running Attempts needing operator recovery), Observe unsupported, per-Attempt identity".
+ *   (controller or Pi death leaves running Attempts needing operator recovery), Observe answered by the resident session
+ *   (session-word, wb-zby), per-Attempt identity".
  * Owner Q1 ruling (22:15Z): (a) a FIXTURE receipt per the W18 family pattern -- pure builder, runner, offline vitest and
  *   ONE additive forge command outside the default gate -- honestly labelled as driven through the REPAIRED SDK copy;
  *   (c) the LIVE receipt is wb-3hc.
@@ -89,7 +90,7 @@ interface Observed {
 }
 
 const clone = <T>(value: T): T => structuredClone(value);
-const LIMITS = { crashDurability: "none", observe: "unsupported", identity: "per-attempt", replyBounds: "none", retry: "adapter-never-retries; furnace-auto-retries-by-recorded-retry-policy; work_failure-and-indeterminate-park" };
+const LIMITS = { crashDurability: "none", observe: "session-word", identity: "per-attempt", replyBounds: "none", retry: "adapter-never-retries; furnace-auto-retries-by-recorded-retry-policy; work_failure-and-indeterminate-park" };
 
 function attempt(invocation: number, attemptId: string, ordinal: number, terminal: string, extra: Partial<Attempt> = {}): Attempt {
   return {
@@ -159,7 +160,7 @@ function clean(): Observed {
         cancelRequestId: "oc",
         observeRequestId: "oo",
         cancelReply: { protocol_version: 1, op: "cancel", request_id: "oc", output: { status: "unknown_execution" } },
-        observeReply: { protocol_version: 1, op: "observe", request_id: "oo", output: { status: "unsupported" } },
+        observeReply: { protocol_version: 1, op: "observe", request_id: "oo", output: { status: "unknown" } },
         aborted: false,
         ownerWireStatus: "success",
         beforeClose: receipt([owner]),
@@ -446,15 +447,15 @@ describe("furnace-hosted retry-fault receipt: judge falsifiers", () => {
     expect(rules(ownerWire)).toContain("observer-gained-control");
   });
 
-  it("flags an Observe reply that is anything but the stated unsupported answer", () => {
+  it("flags an Observe reply that is anything but the session's own unknown answer", () => {
     const faked = clone(clean());
     faked.journeys.observerNoControl.observeReply = { protocol_version: 1, op: "observe", request_id: "oo", output: { status: "success" } };
     expect(rules(faked)).toContain("observe-faked");
     const leaking = clone(clean());
-    leaking.journeys.observerNoControl.observeReply = { protocol_version: 1, op: "observe", request_id: "oo", output: { status: "unsupported", execution_id: "ex-frn-atm-o1" } };
+    leaking.journeys.observerNoControl.observeReply = { protocol_version: 1, op: "observe", request_id: "oo", output: { status: "unknown", execution_id: "ex-frn-atm-o1" } };
     expect(rules(leaking)).toContain("observe-faked");
     const wrongVersion = clone(clean());
-    wrongVersion.journeys.observerNoControl.observeReply = { protocol_version: 2, op: "observe", request_id: "oo", output: { status: "unsupported" } };
+    wrongVersion.journeys.observerNoControl.observeReply = { protocol_version: 2, op: "observe", request_id: "oo", output: { status: "unknown" } };
     expect(rules(wrongVersion)).toContain("observe-faked");
   });
 
@@ -520,7 +521,7 @@ describe("furnace-hosted retry-fault receipt: evidence-grade shape", () => {
     expect(RETRY_FAULT_TIER_STATEMENT).toMatch(/REPAIRED copy of the vendored @furnace\/sdk/);
     expect(RETRY_FAULT_TIER_STATEMENT).toMatch(/no Furnace binary, no live Run/);
     expect(RETRY_FAULT_TIER_STATEMENT).toMatch(/wb-3hc/);
-    expect(built.limitsStatement).toBe("no crash durability (controller or Pi death leaves running Attempts needing operator recovery); Observe unsupported; per-Attempt identity");
+    expect(built.limitsStatement).toBe("no crash durability (controller or Pi death leaves running Attempts needing operator recovery); Observe answered by the resident session (session-word); per-Attempt identity");
     expect(RETRY_FAULT_LIMITS_STATEMENT).toBe(built.limitsStatement);
     for (const field of ["utc", "revision", "revisionClean", "node", "arch", "platform", "sdk", "scratch", "journeys", "findings", "diagnostics", "realised", "pass"]) {
       expect(built).toHaveProperty(field);
@@ -542,7 +543,7 @@ describe("furnace-hosted retry-fault receipt: evidence-grade shape", () => {
     expect(built.journeys.explicitUncertainRetry.markersAfterClose).toEqual(["frn-atm-u1", "frn-atm-u2"]);
     expect(built.journeys.sameAttemptReexecution.beforeClose.identityViolations).toEqual(["attempt frn-atm-same executed 2 times"]);
     expect(built.journeys.observerNoControl.cancelReply.output).toEqual({ status: "unknown_execution" });
-    expect(built.journeys.observerNoControl.observeReply.output).toEqual({ status: "unsupported" });
+    expect(built.journeys.observerNoControl.observeReply.output).toEqual({ status: "unknown" });
   });
 
   it("records a /tmp fallback with its reason and never records the scratch path itself", () => {

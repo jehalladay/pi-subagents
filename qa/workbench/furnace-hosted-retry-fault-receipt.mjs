@@ -4,7 +4,7 @@
 // clock or environment; its only import is the wb-0kg.1 fault receipt's path scrubber, reused, never copied.
 // Spec: docs/workbench/14 "Parent Furnace Work retry while child Run establishment is uncertain."; wb-zmd "one bridge
 // host session per Attempt" with receipts stating "no crash durability (controller or Pi death leaves running Attempts
-// needing operator recovery), Observe unsupported, per-Attempt identity"; BOUNDARY 07:30Z "never reintroduce a
+// needing operator recovery), Observe answered by the resident session (session-word), per-Attempt identity"; BOUNDARY 07:30Z "never reintroduce a
 // Furnace-owned-retry premise" (every retry here is the operator path). Owner Q1 (22:15Z): (a) this FIXTURE receipt,
 // (c) the LIVE receipt is wb-3hc.
 import {basenameOnly} from './local-detached-faults-receipt.mjs';
@@ -14,7 +14,7 @@ export const RETRY_FAULT_TIER = 'fixture';
 export const RETRY_FAULT_TIER_STATEMENT =
   'FIXTURE tier: the landed wb-zmd adapter (built dist) over its real per-Attempt EmbeddedHost bridge, driven by a scripted operator through a REPAIRED copy of the vendored @furnace/sdk (manifest digest realigned to the generated validators); no Furnace binary, no live Run, no Furnace verb, no furnace doctor or probe. The LIVE receipt is wb-3hc.';
 export const RETRY_FAULT_LIMITS_STATEMENT =
-  'no crash durability (controller or Pi death leaves running Attempts needing operator recovery); Observe unsupported; per-Attempt identity';
+  'no crash durability (controller or Pi death leaves running Attempts needing operator recovery); Observe answered by the resident session (session-word); per-Attempt identity';
 /** Journey keys the measurement needs; any one missing or unarmed means "not realised" (runner exit 2). */
 export const RETRY_FAULT_JOURNEYS = Object.freeze([
   'lostConnectionRetry',
@@ -42,7 +42,7 @@ export const RETRY_FAULT_FINDING_RULES = Object.freeze([
 /** The adapter receipt's disclosed limits (src/workbench/hosts/furnace-hosted.ts LIMITS). */
 export const EXPECTED_LIMITS = Object.freeze({
   crashDurability: 'none',
-  observe: 'unsupported',
+  observe: 'session-word',
   identity: 'per-attempt',
   replyBounds: 'none',
   retry: 'adapter-never-retries; furnace-auto-retries-by-recorded-retry-policy; work_failure-and-indeterminate-park',
@@ -183,7 +183,8 @@ export function assessRetryFaultJourneys(observed) {
     if (!violations.some(text => /executed 2 times/.test(String(text)))) add('reexecution-unrecorded', 'sameAttemptReexecution: re-executing one Attempt id was not recorded as an identity violation.');
   }
 
-  // Claim 4: an observer without ownership gains no control; Observe is stated unsupported, never faked.
+  // Claim 4: an observer without ownership gains no control; Observe for an id this session never admitted is the
+  // resident session's own 'unknown' (wb-zby: the rebuilt SDK answers observe from its admission record), never a faked state.
   const observer = journeys.observerNoControl;
   if (isObject(observer)) {
     if (!replyIs(observer.cancelReply, 'cancel', observer.cancelRequestId, 'unknown_execution')) {
@@ -195,8 +196,8 @@ export function assessRetryFaultJourneys(observed) {
     if (!owner || ownerCancel.requested !== false || owner.terminal !== 'success' || observer.ownerWireStatus !== 'success') {
       add('observer-gained-control', `observerNoControl: the owner's Attempt was disturbed (terminal ${owner?.terminal}, wire ${observer.ownerWireStatus}, cancel ${JSON.stringify(ownerCancel)}).`);
     }
-    if (!replyIs(observer.observeReply, 'observe', observer.observeRequestId, 'unsupported')) {
-      add('observe-faked', `observerNoControl: the Observe reply was not exactly the stated unsupported answer (${JSON.stringify(observer.observeReply)}).`);
+    if (!replyIs(observer.observeReply, 'observe', observer.observeRequestId, 'unknown')) {
+      add('observe-faked', `observerNoControl: the Observe reply was not exactly the session's unknown answer (${JSON.stringify(observer.observeReply)}).`);
     }
   }
 

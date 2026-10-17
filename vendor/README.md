@@ -5,10 +5,10 @@ The Workbench imports the local npm artifacts below. Their exact bytes are part 
 | Artifact | SHA-256 |
 | --- | --- |
 | forge-sdk-0.1.0.tgz | c108a25c0f7ae4cac9b882c1ab16469c4918752ea4a0dceb2d71dd107ce0d8d6 |
-| furnace-sdk-0.1.0.tgz | 6a6f55160c60749b9b76d3eaaaa787931e91cc73aedde40b3cfa66e6463689bd |
+| furnace-sdk-0.1.0.tgz | aaa57dcfb1c205ec1f23f07cdffd6af32901bc4b972d81301758a7467ea865a9 |
 | hyperunix-sdk-0.1.0.tgz | 655e08b09febcad67732d6e25d6de4bd8e4a683f594c1d5d3d6ff24ff70b107b |
 
-Artifacts were packaged from the corresponding in-house TypeScript SDK distributions during development on 2026-10-15. The checksums identify what this consumer installs. They do not establish that the producing checkouts were clean or that every native runtime supports every SDK method. The adapters use independently exercised methods and preserve native errors, coverage, and evidence.
+Artifacts were packaged from the corresponding in-house TypeScript SDK distributions during development on 2026-10-15. furnace-sdk-0.1.0.tgz was re-packaged on 2026-10-17 (wb-zby) from Furnace revision 9970621d8 (`sdk/typescript`: `npm run build && npm pack`, 0 tsc diagnostics), whose contract manifest `smithy_model_digest` and generated provenance digest agree (sha256:2cf7c539f9f3...); the 2026-10-15 artifact carried a manifest digest (b044cbe9...) beside validators generated from another model (e5995480...), so its `loadContract()` refused every context decode and the Furnace-hosted adapter failed closed on it. The checksums identify what this consumer installs. They do not establish that the producing checkouts were clean or that every native runtime supports every SDK method. The adapters use independently exercised methods and preserve native errors, coverage, and evidence.
 
 ReactiveFiberCLI currently uses its installed CLI JSON envelope. No unverified TypeScript client or invented SDK method is substituted. Its preview is explicitly noncommitted and carries no durable render identifier.
 

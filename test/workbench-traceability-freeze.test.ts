@@ -4,8 +4,11 @@ import { describe, expect, it } from "vitest";
 
 // wb-xox R1 (scope items 1, 4 and 6): docs/workbench/TRACEABILITY.md is frozen as the historical record.
 // The wb-xox cut is its last writer. It appended ONE cutover pointer row, after one blank separator line,
-// to the file exactly as trunk 130785e held it: git blob 3ffc7495bab9902f48eee51b7d71401dbf460d35, the
-// blob the wb-cra landing bd33094 wrote with the last row of the old EOF-append convention. This census
+// to the file exactly as trunk 5636365 held it: git blob 9d959bbfa68448b7f61a2fee74a4babb9b08d04c, the
+// blob the wb-5x0.1 landing 5636365 wrote with the last row of the old EOF-append convention. The row was
+// first cut on trunk 130785e (blob 3ffc7495bab9902f48eee51b7d71401dbf460d35, ending with the wb-cra row);
+// the wb-5x0.1 row landed after that cut, so the union re-cut took the landed file first and re-anchored
+// the cutover row after it, still the last line. This census
 // pins the bytes three ways: the historical record is a byte-exact prefix, the only bytes after it are the
 // separator and the cutover row, and the whole file carries one pinned content hash. Any later diff to the
 // file therefore fails here: an appended receipt, a correction edited into a historical row, a row slipped
@@ -26,14 +29,14 @@ const CUTOVER_ROW = "## Continued in receipts/ per wb-xox";
 /** Everything the cutover appended after the historical record: one blank separator line, then the row. */
 const CUTOVER_TAIL = `\n${CUTOVER_ROW}\n`;
 
-/** Byte length of the historical record (the file at trunk 130785e). */
-const HISTORICAL_BYTES = 104960;
+/** Byte length of the historical record (the file at trunk 5636365). */
+const HISTORICAL_BYTES = 112023;
 
-/** sha256 of the historical record, as `git show 130785e:docs/workbench/TRACEABILITY.md | sha256sum` prints it. */
-const HISTORICAL_SHA256 = "f03ba24f9da290e2efb1c62ba57b1d2c02687c18a76151938c85f436b64a9735";
+/** sha256 of the historical record, as `git show 5636365:docs/workbench/TRACEABILITY.md | sha256sum` prints it. */
+const HISTORICAL_SHA256 = "797d58ad3ecb17b8dc39379c04a883368d2ff47a8fea8f2aa24224a8015af04a";
 
 /** sha256 of the frozen file: the historical record, then CUTOVER_TAIL. */
-const FROZEN_SHA256 = "49464205ace07970d5a11b020391b761e098c402a8c08508958a2a48e5a583e6";
+const FROZEN_SHA256 = "8ec4715e5b8cbec7d24e5926c79388c3018cc57780c05251b015d36411e462d4";
 
 function sha256(bytes: Uint8Array): string {
   return createHash("sha256").update(bytes).digest("hex");

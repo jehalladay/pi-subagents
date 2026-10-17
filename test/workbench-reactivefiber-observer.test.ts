@@ -127,6 +127,18 @@ describe('ReactiveFiber render preview reader adapter', () => {
     ['graph digest short', withResult({provenance: {graph_revision_id: `sha256:${'a1'.repeat(31)}`}})],
     ['graph digest without prefix', withResult({provenance: {graph_revision_id: 'a1'.repeat(32)}})],
     ['graph digest missing', withResult({provenance: {}})],
+    // wb-2j3.9 (R10) envelope-strictness pins that stay under the 2j3.2/2j3.1 landing: null or non-string graph digest, the six-key work object
+    // both ways, a non-numeric storage_write_count, and each required top-level key. Test-only; no loosening.
+    ['graph digest null', withResult({provenance: {graph_revision_id: null}})],
+    ['graph digest number', withResult({provenance: {graph_revision_id: 7}})],
+    ['graph digest only the bare prefix', withResult({provenance: {graph_revision_id: 'sha256:'}})],
+    ['work with a seventh key', withResult({work: work({seventh_count: 0})})],
+    ['work with five keys', withResult({work: without(work(), 'necessity_eval_count')})],
+    ['work not an object', withResult({work: 0})],
+    ['storage_write_count 2', withResult({work: work({storage_write_count: 2})})],
+    ['storage_write_count the string 0', withResult({work: work({storage_write_count: '0'})})],
+    ['storage_write_count null', withResult({work: work({storage_write_count: null})})],
+    ...['schema', 'ok', 'command', 'operation_id', 'workspace', 'transaction_id', 'result', 'diagnostics'].map(key => [`top-level ${key} absent`, reading(without(envelope(), key))] as const),
     ['output text not a string', withResult({output: {text: 7}})],
     ['budget missing', reading(envelope({result: without(result(), 'budget')}))],
     ['budget term negative', withResult({budget: {formula_terms: formula({overhead: -1})}})],
@@ -150,6 +162,17 @@ describe('ReactiveFiber render preview reader adapter', () => {
     ['source not an object', reading(envelope(), {source: 'text'})],
   ] as const)('R3: refuses with a typed error and projects nothing: %s', (_name, value) => {
     expect(refusal(value as Json).category).toBe('validation');
+  });
+
+  // wb-2j3.9 (R10) acceptance (c): "R1's cli_version admission adds no required key: the absent-field fixture (R1) still validates and projects."
+  it('R10: the baseline fixture is the eight-key, six-work-key, cli_version-free envelope, and it still validates and projects without adding a required key', () => {
+    const source = envelope() as Json;
+    expect(Object.keys(source)).toHaveLength(8);
+    expect(Object.keys((source.result as Json).work as Json)).toHaveLength(6);
+    expect(JSON.stringify(source)).not.toContain('cli_version');
+    const topology = reactivefiberTopology(reading(source) as JsonValue, context);
+    expect(topology.snapshots).toHaveLength(1);
+    expect(JSON.stringify(topology)).not.toContain('cli_version');
   });
 
   it('R3: a reading of another workspace is an authorization refusal', () => {

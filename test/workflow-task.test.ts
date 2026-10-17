@@ -291,3 +291,16 @@ describe("operator reconcile provenance in the task summary", () => {
     expect(text).toMatch(/1 acknowledged as effect-absent \(position 2\)[^.]*until overridden/);
   });
 });
+
+describe("the resume notice counts a node position once (wb-5x0.1)", () => {
+  it("counts a journaled effect and its dispatched marker as one effect, as the runtime consults one row per position", () => {
+    const dispatched: WorkflowJournalEntry = { index: 0, key: "w", ok: false, kind: "node", capabilityId: "furnace.run.start", effectClass: "external", dispatched: true };
+    const settled: WorkflowJournalEntry = { index: 0, key: "w", ok: true, kind: "node", capabilityId: "furnace.run.start", effectClass: "external" };
+    const unclassifiedDispatch: WorkflowJournalEntry = { index: 1, key: "u", ok: false, kind: "node", capabilityId: "legacy.op", dispatched: true };
+    const unclassified: WorkflowJournalEntry = { index: 1, key: "u", ok: true, kind: "node", capabilityId: "legacy.op" };
+
+    const text = describeResumeJournal("wf_prior1", [dispatched, settled, unclassifiedDispatch, unclassified]);
+    expect(text).toMatch(/1 journaled effect \(furnace\)/);
+    expect(text).toMatch(/1 node call without effect metadata will stop the resume/);
+  });
+});
