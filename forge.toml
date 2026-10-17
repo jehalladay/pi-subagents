@@ -81,6 +81,10 @@ timeout = 120
 command = "node qa/workbench/inspector-bench.mjs"
 timeout = 180
 
+[build.commands.tool-reply-bench]
+command = "node qa/workbench/tool-reply-bench.mjs"
+timeout = 600
+
 [build.commands.observation-recovery-bench]
 command = "node qa/workbench/observation-recovery-bench.mjs"
 timeout = 300
@@ -96,6 +100,10 @@ timeout = 300
 [build.commands.reducer-selector-bench]
 command = "node qa/workbench/reducer-selector-bench.mjs"
 timeout = 300
+
+[build.commands.inspector-cap-saturation-bench]
+command = "node --expose-gc qa/workbench/inspector-cap-saturation-bench.mjs"
+timeout = 600
 
 [build.commands.line-diff-bench]
 command = "node qa/workbench/line-diff-bench.mjs"
