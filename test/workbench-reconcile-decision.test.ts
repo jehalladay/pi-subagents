@@ -307,3 +307,57 @@ describe("inspect and evidence", () => {
     expect(EVIDENCE_GUIDANCE.join(" ")).toContain("not evidence of absence");
   });
 });
+
+/* --------------------------------------------------------------------------
+ * wb-5x0.1: a non-read node is journaled at dispatch with a typed marker row,
+ * and its settled row at the same position supersedes it. The decision core
+ * lists and decides the row a resume consults — the last node row at the
+ * position, as runtime.ts keys them — so a decision binds by the digest the
+ * resume compares, and the settled row's native refs drive evidence binding.
+ * ------------------------------------------------------------------------ */
+
+describe("a dispatched marker row and its settlement (wb-5x0.1)", () => {
+  const { nativeRefs: _settledRefs, ...settledShape } = nodeRow;
+  const dispatchedRow: WorkflowJournalEntry = { ...settledShape, ok: false, dispatched: true };
+  const inspect = (entries: WorkflowJournalEntry[], changes: Partial<ReconcileDeps> = {}) => {
+    const decision = decideReconcile(request({ action: "inspect", grants: ["workbench:observe"] }), deps({ entries, ...changes }));
+    if (decision.decision !== "inspect") throw new Error(`expected inspect, got ${decision.decision}`);
+    return decision.roster.positions;
+  };
+
+  it("lists and decides the settled row that supersedes its dispatched marker, with the settled row's native refs", () => {
+    const positions = inspect([dispatchedRow, nodeRow]);
+    expect(positions).toHaveLength(1);
+    expect(positions[0]).toMatchObject({ position: 0, entryDigest: entryDigestOf(nodeRow), recordedNativeRefs: nodeRow.nativeRefs, state: "pending" });
+    expect(positions[0]).not.toHaveProperty("dispatched");
+
+    const evidence = decideReconcile(
+      request({ action: "evidence", grants: ["workbench:observe", "furnace:inspect"], params: { evidence: { capabilityId: "furnace.run.inspect", input: { runId: "frn-run-r1" } } } }),
+      deps({ entries: [dispatchedRow, nodeRow] }),
+    );
+    expect(evidence.decision === "evidence" ? evidence.read.recordedNativeRefs : undefined).toEqual(nodeRow.nativeRefs);
+
+    const acknowledged = decideReconcile(request(), deps({ entries: [dispatchedRow, nodeRow] }));
+    expect(acknowledged.decision === "acknowledge" ? acknowledged.entry.reconcile?.entry.entryDigest : undefined).toBe(entryDigestOf(nodeRow));
+  });
+
+  it("lists a dispatch marker that names a read, as the runtime refuses a marker whatever its class", () => {
+    const readMarker: WorkflowJournalEntry = { ...dispatchedRow, capabilityId: "record.read", effectClass: "read" };
+    // The capability still declares a read, so only the marker can make the row refuse.
+    const stillRead = (capabilityId: string) => (capabilityId === "record.read" || capabilityId === "furnace.run.inspect" ? "read" : "external");
+    const positions = inspect([readMarker], { currentEffectClass: stillRead }).filter((row) => row.capabilityId === "record.read");
+    expect(positions).toEqual([expect.objectContaining({ position: 0, effectClass: "read", state: "pending", dispatched: true })]);
+  });
+
+  it("lists a dispatched row nothing settled as pending and marked dispatched, and binds a decision to it", () => {
+    const positions = inspect([dispatchedRow]);
+    expect(positions).toHaveLength(1);
+    expect(positions[0]).toMatchObject({
+      position: 0, capabilityId: "furnace.run.start", effectClass: "external", entryDigest: entryDigestOf(dispatchedRow),
+      recordedNativeRefs: [], state: "pending", dispatched: true,
+    });
+
+    const acknowledged = decideReconcile(request(), deps({ entries: [dispatchedRow] }));
+    expect(acknowledged.decision === "acknowledge" ? acknowledged.entry.reconcile?.entry.entryDigest : undefined).toBe(entryDigestOf(dispatchedRow));
+  });
+});
