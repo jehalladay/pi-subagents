@@ -152,6 +152,19 @@ function makeRepo(inherited: NodeJS.ProcessEnv = process.env): Repo {
   };
 }
 
+/** A commit object written byte for byte (git hash-object --literally), so a crafted header or raw byte reaches the scanner. */
+function craftCommit(repo: Repo, headerLines: readonly string[], message: Buffer): string {
+  const tree = repo.git("rev-parse", "HEAD^{tree}");
+  const parent = repo.git("rev-parse", "HEAD");
+  const head = Buffer.from(`tree ${tree}\nparent ${parent}\n${headerLines.join("\n")}\n\n`, "utf8");
+  const sha = execFileSync("git", ["hash-object", "-t", "commit", "-w", "--literally", "--stdin"], { cwd: repo.dir, input: Buffer.concat([head, message]), encoding: "utf8", env: scrubGitEnv(process.env) }).trim();
+  repo.git("update-ref", "HEAD", sha);
+  return sha;
+}
+const IDENT = "t <t@example.invalid> 0 +0000";
+const AUTHOR = `author ${IDENT}`;
+const COMMITTER = `committer ${IDENT}`;
+
 describe("wb-a9s CLI against a real repository (base..HEAD only)", () => {
   let repo: Repo;
   let old: string;
@@ -200,6 +213,17 @@ describe("wb-a9s CLI against a real repository (base..HEAD only)", () => {
     expect(r.stdout).not.toContain(cp(0x202e));
     expect(r.stderr).not.toContain(cp(0x202e));
     expect(r.stderr).toContain("unknown argument");
+  });
+
+  it("gate U4: an unknown argument beside a RESOLVABLE --base exits 2 for that cause alone and prints no summary line", () => {
+    // The base resolves, so exit 2 cannot come from the base-resolution refusal: a report-and-continue handler would scan
+    // base..HEAD, print the summary and exit 0 or 3 (gate mutant GM12).
+    const r = repo.run("--base", base, `--bsae${cp(0x202e)}`, base);
+    expect(r.status).toBe(2);
+    expect(r.stdout).not.toMatch(/commit-message-scan: \d+ commits/);
+    expect(r.stdout).toBe("");
+    expect(r.stderr).toContain("unknown argument");
+    expect(r.stderr).not.toContain(cp(0x202e));
   });
 });
 
@@ -288,7 +312,130 @@ describe("wb-a9s CLI reads the raw commit object (owner F7 NUL, F8 identity)", (
   }
 });
 
+describe("wb-a9s gate U1: a non-UTF-8 encoding header fails closed (exit 3, name projected to printable ASCII)", () => {
+  it("E1: a UTF-7 commit (porcelain, i18n.commitEncoding) is an offender and its message is not trusted", () => {
+    const repo = makeRepo();
+    const base = repo.commit("base commit");
+    execFileSync("git", ["-c", "i18n.commitEncoding=UTF-7", "commit", "--allow-empty", "-q", "-m", "subject +IC4- tail"], { cwd: repo.dir, env: { ...scrubGitEnv(process.env), GIT_AUTHOR_NAME: "t", GIT_AUTHOR_EMAIL: "t@example.invalid", GIT_COMMITTER_NAME: "t", GIT_COMMITTER_EMAIL: "t@example.invalid", GIT_CONFIG_GLOBAL: "/dev/null", GIT_CONFIG_SYSTEM: "/dev/null" } });
+    const bad = repo.git("rev-parse", "HEAD");
+    const r = repo.run("--base", base);
+    expect(r.status).toBe(3);
+    expect(r.stdout).toContain(`${bad} encoding UTF-7\n`);
+    expect(r.stdout).toContain("commit-message-scan: 1 commits, 1 offenders");
+  });
+
+  it("E3: windows-1256 byte 0xFE in the message (a guard point the UTF-8 reading drops) is an offender", () => {
+    const repo = makeRepo();
+    const base = repo.commit("base commit");
+    const bad = craftCommit(repo, [AUTHOR, COMMITTER, "encoding windows-1256"], Buffer.from([...Buffer.from("subject "), 0xfe, ...Buffer.from(" tail\n")]));
+    const r = repo.run("--base", base);
+    expect(r.status).toBe(3);
+    expect(r.stdout).toContain(`${bad} encoding windows-1256\n`);
+    expect(r.stdout).toContain("1 commits, 1 offenders");
+  });
+
+  it("I1: windows-1256 byte 0xFE in the author name (clean message) is an offender", () => {
+    const repo = makeRepo();
+    const base = repo.commit("base commit");
+    const ident = Buffer.concat([Buffer.from("author a"), Buffer.from([0xfe]), Buffer.from("b <t@example.invalid> 0 +0000")]);
+    const tree = repo.git("rev-parse", "HEAD^{tree}");
+    const body = Buffer.concat([Buffer.from(`tree ${tree}\nparent ${base}\n`), ident, Buffer.from(`\n${COMMITTER}\nencoding windows-1256\n\nfeat: a clean message\n`)]);
+    const bad = execFileSync("git", ["hash-object", "-t", "commit", "-w", "--literally", "--stdin"], { cwd: repo.dir, input: body, encoding: "utf8", env: scrubGitEnv(process.env) }).trim();
+    repo.git("update-ref", "HEAD", bad);
+    const r = repo.run("--base", base);
+    expect(r.status).toBe(3);
+    expect(r.stdout).toContain(`${bad} encoding windows-1256\n`);
+  });
+
+  it("projects a hostile encoding name to printable ASCII and never echoes a raw point or non-ASCII byte", () => {
+    const repo = makeRepo();
+    const base = repo.commit("base commit");
+    const bad = craftCommit(repo, [AUTHOR, COMMITTER, `encoding x${cp(0x202e)}y${String.fromCharCode(0xe9)}`], Buffer.from("feat: clean\n"));
+    const r = repo.run("--base", base);
+    expect(r.status).toBe(3);
+    expect(r.stdout).toContain(`${bad} encoding x?y`);
+    expect(r.stdout).not.toContain(cp(0x202e));
+    expect(/^[\x20-\x7e\n]*$/.test(r.stdout)).toBe(true);
+  });
+
+  it("control: an explicit encoding UTF-8 header (any case) and an absent header stay clean", () => {
+    const repo = makeRepo();
+    const base = repo.commit("base commit");
+    craftCommit(repo, [AUTHOR, COMMITTER, "encoding UTF-8"], Buffer.from("feat: explicit header\n"));
+    craftCommit(repo, [AUTHOR, COMMITTER, "encoding utf8"], Buffer.from("feat: lower no hyphen\n"));
+    const r = repo.run("--base", base);
+    expect(r.status).toBe(0);
+    expect(r.stdout).toContain("commit-message-scan: 2 commits, 0 offenders");
+  });
+
+  it("unit: scanCommitObject names the encoding field and still scans the UTF-8 reading", () => {
+    const raw = Buffer.from(`tree x\n${AUTHOR}\n${COMMITTER}\nencoding ISO-8859-1\n\nbody${cp(0x200b)}\n`, "utf8");
+    expect(scanCommitObject("abc", raw)).toEqual([
+      { sha: "abc", field: "encoding", name: "ISO-8859-1" },
+      { sha: "abc", field: "message", line: 1, column: 5, codePoint: "U+200B" },
+    ]);
+  });
+});
+
+describe("wb-a9s gate U2: EVERY author and committer header line is scanned", () => {
+  it("S1: two author lines with U+202E in the second exit 3 and label the author field", () => {
+    const repo = makeRepo();
+    const base = repo.commit("base commit");
+    const bad = craftCommit(repo, [AUTHOR, `author t${cp(0x202e)}x <t@example.invalid> 0 +0000`, COMMITTER], Buffer.from("feat: clean\n"));
+    const r = repo.run("--base", base);
+    expect(r.status).toBe(3);
+    expect(r.stdout).toContain(`${bad} author column 2 U+202E`);
+    expect(r.stdout).toContain("1 commits, 1 offenders");
+    expect(r.stdout).not.toContain(cp(0x202e));
+  });
+
+  it("S2: two committer lines with U+202E in the second exit 3 and label the committer field", () => {
+    const repo = makeRepo();
+    const base = repo.commit("base commit");
+    const bad = craftCommit(repo, [AUTHOR, COMMITTER, `committer t${cp(0x202e)}x <t@example.invalid> 0 +0000`], Buffer.from("feat: clean\n"));
+    const r = repo.run("--base", base);
+    expect(r.status).toBe(3);
+    expect(r.stdout).toContain(`${bad} committer column 2 U+202E`);
+    expect(r.stdout).toContain("1 commits, 1 offenders");
+    expect(r.stdout).not.toContain(cp(0x202e));
+  });
+
+  it("unit: both lines are reported, in header order, each with its own column", () => {
+    const raw = Buffer.from(`tree x\nauthor a${cp(0x200b)} <e@x.invalid> 0 +0000\nauthor b${cp(0x200c)} <e@x.invalid> 0 +0000\n${COMMITTER}\n\nm\n`, "utf8");
+    expect(scanCommitObject("abc", raw)).toEqual([
+      { sha: "abc", field: "author", column: 2, codePoint: "U+200B" },
+      { sha: "abc", field: "author", column: 2, codePoint: "U+200C" },
+    ]);
+  });
+});
+
+/** Gate U3: the owner-named scrub set, written out independently. It is never derived from GIT_LOCATING, so a name dropped
+ * from GIT_LOCATING (gate mutants TM1 GIT_COMMON_DIR, TM2 GIT_INDEX_FILE, TM3 GIT_NAMESPACE) fails a row below. */
+const OWNER_NAMED_SCRUB_SET: readonly string[] = [
+  "GIT_DIR",
+  "GIT_WORK_TREE",
+  "GIT_INDEX_FILE",
+  "GIT_COMMON_DIR",
+  "GIT_NAMESPACE",
+  "GIT_OBJECT_DIRECTORY",
+  "GIT_ALTERNATE_OBJECT_DIRECTORIES",
+  "GIT_CONFIG_PARAMETERS",
+  "GIT_CONFIG_COUNT",
+];
+
 describe("wb-a9s fixture isolation (owner O1, O3)", () => {
+  for (const name of OWNER_NAMED_SCRUB_SET) {
+    it(`gate U3: scrubGitEnv removes ${name} from an inherited environment (independent literal list)`, () => {
+      const scrubbed = scrubGitEnv({ PATH: process.env.PATH, KEEP: "1", [name]: "/sentinel" });
+      expect(Object.keys(scrubbed)).not.toContain(name);
+      expect(scrubbed.KEEP).toBe("1");
+    });
+  }
+
+  it("gate U3: GIT_LOCATING covers the whole independent literal list", () => {
+    expect(GIT_LOCATING).toEqual(expect.arrayContaining([...OWNER_NAMED_SCRUB_SET]));
+  });
+
   it("scrubs every repository-locating git variable from an inherited environment", () => {
     const inherited: NodeJS.ProcessEnv = { PATH: process.env.PATH, KEEP: "1", GIT_CONFIG_KEY_0: "x", GIT_CONFIG_VALUE_0: "y" };
     for (const key of GIT_LOCATING) inherited[key] = "/sentinel";

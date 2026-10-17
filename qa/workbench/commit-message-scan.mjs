@@ -14,9 +14,14 @@
 // message is permanent once a merge-only landing carries it, and the guard set includes U+202E, the
 // trojan-source display vector. Motivation of record: wb-era F1.
 //   0  every new commit message and identity is clean
-//   2  the scan could not run (unresolvable base or tip, bad arguments); never a silent pass
-//   3  a new commit carries a guard-set point; each offender is printed as sha, line, column, U+XXXX for a message
-//      and as sha, author|committer, column, U+XXXX for an identity
+//   2  the scan could not run (unresolvable base or tip, bad arguments, an unknown argument); never a silent pass, and no
+//      summary line is printed on stdout in this case
+//   3  a new commit carries a guard-set point, or declares a non-UTF-8 encoding; each offender is printed as sha, line,
+//      column, U+XXXX for a message, as sha, author|committer, column, U+XXXX for an identity (EVERY author and committer
+//      header line is scanned, not only the first), and as sha, encoding, name for an encoding header
+// Encoding: the scan decodes the object as UTF-8. A commit whose encoding header names anything but UTF-8 (utf-8 or utf8,
+// case-insensitive) cannot be read that way (windows-1256 0xFE is U+200E, UTF-7 spells a point in ASCII), so it FAILS CLOSED
+// as an offender; the name is projected to printable ASCII so the report cannot carry a raw point.
 // Output prints only code point labels, never the raw points, so the report cannot itself carry them.
 import {execFileSync} from 'node:child_process';
 import {pathToFileURL} from 'node:url';
@@ -26,6 +31,7 @@ import {pathToFileURL} from 'node:url';
  * @typedef {{sha: string, message: string}} CommitMessage
  * @typedef {{sha: string, field: 'message', line: number, column: number, codePoint: string}} ObjectMessageOffender
  * @typedef {{sha: string, field: 'author' | 'committer', column: number, codePoint: string}} IdentityOffender
+ * @typedef {{sha: string, field: 'encoding', name: string}} EncodingOffender
  * @typedef {{sha: string, raw: Buffer}} CommitObject
  */
 
@@ -85,32 +91,39 @@ function scanIdentity(sha, field, value) {
   let column = 0;
   for (const ch of value) {
     column += 1;
-    const codePoint = /** @type {number} */ (ch.codePointAt(0));
-    if (isGuardCodePoint(codePoint)) out.push({sha, field, column, codePoint: label(codePoint)});
+    const codePoint = ch.codePointAt(0);
+    if (codePoint !== undefined && isGuardCodePoint(codePoint)) out.push({sha, field, column, codePoint: label(codePoint)});
   }
   return out;
 }
 
+/** Header lines whose first token is `name`, in object order (continuation lines start with a space and never match). @param {string[]} lines @param {string} name @returns {string[]} */
+const headerValues = (lines, name) => lines.filter(l => l.startsWith(`${name} `)).map(l => l.slice(name.length + 1));
+/** @param {string} value @returns {string} printable ASCII only; everything else becomes ? */
+const projectAscii = value => value.replace(/[^\x20-\x7e]/g, '?');
+/** @param {string} name @returns {boolean} */
+const isUtf8Name = name => name.toLowerCase() === 'utf-8' || name.toLowerCase() === 'utf8';
+
 /**
- * Offenders in one RAW commit object: the author line, the committer line, then the message. The object is split at the
- * first blank line (headers above, message below), so a header-lookalike line inside the message is message text, and a
- * NUL byte in the message is an ordinary character: nothing after it is dropped.
+ * Offenders in one RAW commit object: every encoding header that is not UTF-8, every author line, every committer line,
+ * then the message. The object is split at the first blank line (headers above, message below), so a header-lookalike
+ * line inside the message is message text, and a NUL byte in the message is an ordinary character: nothing after it is
+ * dropped.
  * @param {string} sha
  * @param {Buffer | Uint8Array} raw
- * @returns {Array<IdentityOffender | ObjectMessageOffender>}
+ * @returns {Array<EncodingOffender | IdentityOffender | ObjectMessageOffender>}
  */
 export function scanCommitObject(sha, raw) {
   const bytes = Buffer.from(raw);
   const split = bytes.indexOf('\n\n');
-  const headers = (split === -1 ? bytes : bytes.subarray(0, split)).toString('utf8');
+  const lines = (split === -1 ? bytes : bytes.subarray(0, split)).toString('utf8').split('\n');
   const message = split === -1 ? '' : bytes.subarray(split + 2).toString('utf8');
-  /** @type {Array<IdentityOffender | ObjectMessageOffender>} */
+  /** @type {Array<EncodingOffender | IdentityOffender | ObjectMessageOffender>} */
   const out = [];
-  for (const field of /** @type {const} */ (['author', 'committer'])) {
-    const line = headers.split('\n').find(l => l.startsWith(`${field} `));
-    if (line !== undefined) out.push(...scanIdentity(sha, field, line.slice(field.length + 1)));
-  }
-  for (const o of scanCommitMessage(sha, message)) out.push({...o, field: /** @type {const} */ ('message')});
+  for (const name of headerValues(lines, 'encoding')) if (!isUtf8Name(name)) out.push({sha, field: 'encoding', name: projectAscii(name)});
+  for (const value of headerValues(lines, 'author')) out.push(...scanIdentity(sha, 'author', value));
+  for (const value of headerValues(lines, 'committer')) out.push(...scanIdentity(sha, 'committer', value));
+  for (const o of scanCommitMessage(sha, message)) out.push({sha: o.sha, field: 'message', line: o.line, column: o.column, codePoint: o.codePoint});
   return out;
 }
 
@@ -184,6 +197,7 @@ export function main(argv) {
   const offenders = commits.flatMap(({sha, raw}) => scanCommitObject(sha, raw));
   for (const o of offenders) {
     if (o.field === 'message') process.stdout.write(`${o.sha} line ${o.line} column ${o.column} ${o.codePoint}\n`);
+    else if (o.field === 'encoding') process.stdout.write(`${o.sha} encoding ${o.name}\n`);
     else process.stdout.write(`${o.sha} ${o.field} column ${o.column} ${o.codePoint}\n`);
   }
   process.stdout.write(`commit-message-scan: ${commits.length} commits, ${offenders.length} offenders\n`);
