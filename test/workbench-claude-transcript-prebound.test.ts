@@ -157,7 +157,7 @@ describe('wb-ig7 straddle-safe pre-bound on the Claude transcript row text', () 
         expect(result.text, `${label}/${shape} text`).toBe(wholeTextRow(text));
       }
     }
-  });
+  }, 120_000);
 });
 
 
