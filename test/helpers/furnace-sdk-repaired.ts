@@ -11,12 +11,12 @@
  * behaviour can be proven against the real SDK code. Production code never
  * uses this; the adapter's preflight refuses the shipped drift instead.
  */
-import { cpSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import { cpSync, readFileSync, writeFileSync } from "node:fs";
 import { createRequire } from "node:module";
-import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { pathToFileURL } from "node:url";
 import type { FurnaceSdk } from "../../src/workbench/hosts/furnace-hosted.js";
+import { makeScratch, removeScratch } from "./scratch.js";
 
 const DIGEST = /sha256:[0-9a-f]{64}/;
 
@@ -25,12 +25,15 @@ export interface RepairedSdk {
   readonly root: string;
   readonly repairedDigest: string;
   readonly shippedManifestDigest: string;
+  /** Removes the temp copy (wb-g5o). Call from afterAll. */
+  readonly dispose: () => void;
 }
 
 export async function loadRepairedFurnaceSdk(): Promise<RepairedSdk> {
   const require = createRequire(import.meta.url);
   const source = dirname(require.resolve("@furnace/sdk/package.json"));
-  const root = join(mkdtempSync(join(tmpdir(), "pi-furnace-sdk-repaired-")), "sdk");
+  const copyDir = makeScratch("pi-furnace-sdk-repaired-");
+  const root = join(copyDir, "sdk");
   cpSync(source, root, { recursive: true });
   const provenance = readFileSync(join(root, "dist/contract/furnace-executor-contract/provenance.js"), "utf8");
   const generated = DIGEST.exec(provenance)?.[0];
@@ -44,5 +47,5 @@ export async function loadRepairedFurnaceSdk(): Promise<RepairedSdk> {
   const index = (await load("dist/src/index.js")) as unknown as Pick<FurnaceSdk, "ExecutorApp" | "ExecutionResult" | "Furnace" | "decodeContextValue">;
   const embedded = (await load("dist/src/embedded.js")) as unknown as Pick<FurnaceSdk, "EmbeddedHost">;
   const resident = (await load("dist/src/resident_session.js")) as unknown as Pick<FurnaceSdk, "ResidentSession">;
-  return { sdk: { ...index, ...embedded, ...resident }, root, repairedDigest: generated, shippedManifestDigest: shipped };
+  return { sdk: { ...index, ...embedded, ...resident }, root, repairedDigest: generated, shippedManifestDigest: shipped, dispose: () => removeScratch(copyDir) };
 }

@@ -4,6 +4,10 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { installScratchLeakGuard, makeScratch, removeAllScratch, removeScratch, trackScratch } from "./helpers/scratch.js";
+
+installScratchLeakGuard();
+
 import {
   cleanupWorktree,
   createWorktree,
@@ -55,7 +59,7 @@ function failingPi(match: (args: string[]) => boolean, failure: { code: number; 
  * Helper: create a temporary git repo with an initial commit.
  */
 function initGitRepo(): string {
-  const dir = mkdtempSync(join(tmpdir(), "pi-wt-test-"));
+  const dir = makeScratch("pi-wt-test-");
   execFileSync("git", ["init"], { cwd: dir, stdio: "pipe" });
   execFileSync("git", ["config", "user.email", "test@test.com"], { cwd: dir, stdio: "pipe" });
   execFileSync("git", ["config", "user.name", "Test"], { cwd: dir, stdio: "pipe" });
@@ -77,7 +81,8 @@ describe("worktree", () => {
   afterEach(async () => {
     // Clean up any lingering worktrees first, then remove repo
     try { await pruneWorktrees(pi, repoDir); } catch { /* ignore */ }
-    rmSync(repoDir, { recursive: true, force: true });
+    removeScratch(repoDir);
+    removeAllScratch(); // worktree directories the test registered with trackScratch
   });
 
   describe("createWorktree", () => {
@@ -386,7 +391,8 @@ describe("cleanupWorktree — failure path", () => {
   beforeEach(() => { repoDir = initGitRepo(); pi = mockPi(); });
   afterEach(async () => {
     try { await pruneWorktrees(pi, repoDir); } catch { /* ignore */ }
-    rmSync(repoDir, { recursive: true, force: true });
+    removeScratch(repoDir);
+    removeAllScratch(); // worktree directories the test registered with trackScratch
   });
 
   it("short-circuits when the worktree directory is already gone", async () => {
@@ -410,6 +416,8 @@ describe("cleanupWorktree — failure path", () => {
     // either way; what matters is that cleanup does not reject out of the
     // manager's settle path and take the whole record down with it.
     const wt = (await createWorktree(pi, repoDir, "corrupt"))!;
+    // git can no longer remove this worktree once its link is broken, so the directory is ours to remove.
+    trackScratch(wt.path);
     writeFileSync(join(wt.path, "work.txt"), "agent output");
     // Break the worktree's link back to the repo.
     writeFileSync(join(wt.path, ".git"), "gitdir: /nonexistent/path/that/is/not/a/repo");

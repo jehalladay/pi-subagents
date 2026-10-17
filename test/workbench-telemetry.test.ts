@@ -9,7 +9,7 @@ import { CapabilityError } from "../src/workbench/capability-registry.js";
 import {
   type NativeRef, type ObservationEvent, ObservationProjection, type ObservationScope, type Presentation,
 } from "../src/workbench/observation.js";
-import { sanitizeWorkbenchText, WORKBENCH_TEXT_LIMIT } from "../src/workbench/redaction.js";
+import { sanitizeWorkbenchJsonText, sanitizeWorkbenchText, WORKBENCH_TEXT_LIMIT } from "../src/workbench/redaction.js";
 import {
   buildOperationsTelemetry, createTelemetryEmitter, emitOperationsTelemetry, type OperationsTelemetry, TELEMETRY_CLOCK_CAVEAT,
   TELEMETRY_CONTRACT, type TelemetryEvent, type TelemetryMetric,
@@ -713,5 +713,135 @@ describe("C6 wb-cax.13 respin 2 U1/U2: provider names are the one helper's label
   it("composes no sanitizer locally: one helper call with the named label layout, no primitive and no deletion class (F6 rule)", () => {
     expect(MODULE).toContain('WORKBENCH_TEXT_LIMIT, "label")');
     for (const forbidden of ["stripUnsafeText", "redactWorkbenchText", "Default_Ignorable_Code_Point", "{Cf}"]) expect(MODULE, forbidden).not.toContain(forbidden);
+  });
+});
+
+/** wb-9iu: the cax.13 15:45Z deferred bundle. Each case kills one mutant that survived the landed tip (de79272); the
+ * mutant it kills is named in the case title so a later reader can replay it. */
+type StructuralProjection = Parameters<typeof buildOperationsTelemetry>[0];
+const structuralEvents = (provider: string): StructuralProjection => ({
+  query: () => ({ nodes: [], truncated: false }) as never,
+  stats: () => ({ nodes: 0, events: 1, edges: 0 }),
+  events: () => ({
+    events: [{ projectionEventId: "d1", source: ref(provider, "run", "src"), scope: alice, observedAt: at(-1), kind: "native.event", sourceTimestamp: at(-2) }],
+    truncated: false,
+    completeness: "complete",
+  }),
+});
+const structuralNodes = (nodes: ReadonlyArray<{ freshness: string; connection: string }>): StructuralProjection => ({
+  query: () => ({
+    nodes: nodes.map((node, index) => ({
+      key: `n${index}`, kind: "workflow", nativeRef: ref("furnace", "run", `n${index}`), evidenceRefs: [],
+      freshness: node.freshness, sourceConnectionState: node.connection,
+      presentation: { type: "workflow", title: `Node ${index}`, statusText: "RUNNING", statusTone: "active" },
+    })),
+    truncated: false,
+  }) as never,
+  stats: () => ({ nodes: nodes.length, events: 0, edges: 0 }),
+  events: () => ({ events: [], truncated: false, completeness: "complete" }),
+});
+const shownProviders = (projection: StructuralProjection): string[] => measured(buildOperationsTelemetry(projection, { scope: alice, now: T }).eventLag).value.providers;
+
+describe("D1 wb-9iu M3: the 64-unit provider cap never leaves half a surrogate pair", () => {
+  const FACE = cp(0x1f600);
+  it("keeps 63 units when the pair would straddle the cap (kills the surrogate-guard-removed mutant)", () => {
+    const shown = shownProviders(structuralEvents(`${"a".repeat(63)}${FACE}b`));
+    expect(shown).toEqual(["a".repeat(63)]);
+    expect(shown[0]).not.toMatch(/[\ud800-\udbff]$/);
+  });
+
+  it("controls: a pair wholly inside the cap and a name of exactly 64 units are kept whole", () => {
+    expect(shownProviders(structuralEvents(`${"a".repeat(62)}${FACE}b`))).toEqual([`${"a".repeat(62)}${FACE}`]);
+    expect(shownProviders(structuralEvents("a".repeat(64)))).toEqual(["a".repeat(64)]);
+    expect(shownProviders(structuralEvents("a".repeat(65)))).toEqual(["a".repeat(64)]);
+  });
+});
+
+describe("D2 wb-9iu M4: telemetry is enabled only by the boolean true", () => {
+  const TRUTHY_FLAGS: ReadonlyArray<readonly [string, unknown]> = [
+    ["number 1", 1],
+    ["string true", "true"],
+    ["string yes", "yes"],
+    ["empty object", {}],
+    ["empty array", []],
+  ];
+  it.each(TRUTHY_FLAGS)("emits nothing for a truthy non-boolean enabled flag: %s", (_label, flag) => {
+    const received: TelemetryEvent[] = [];
+    const sink = { emit: (event: TelemetryEvent): void => { received.push(event); } };
+    const report = build(fixtureView());
+    expect(emitOperationsTelemetry(report, sink, { enabled: flag as never })).toBe("disabled");
+    const emitter = createTelemetryEmitter(sink, { enabled: flag as never });
+    expect(emitter.emit(report)).toBe("disabled");
+    expect(emitter.droppedEvents()).toBe(0);
+    expect(received).toEqual([]);
+  });
+
+  it("control: enabled true still emits", () => {
+    const received: TelemetryEvent[] = [];
+    expect(emitOperationsTelemetry(build(fixtureView()), { emit: event => { received.push(event); } }, { enabled: true })).toBe("emitted");
+    expect(received).toHaveLength(1);
+  });
+});
+
+describe("D3 wb-9iu M5 / gate F1: the authorization outcome key survives the report and is redacted only by the JSON reply path", () => {
+  const OUTCOMES = { returned: 1, validation: 2, authorization: 3, unavailable: 4, transport: 5, "uncertain-effect": 6 } as const;
+  it.each(Object.keys(OUTCOMES))("accepts %s as a supplied outcome key and preserves its count in the in-memory report", key => {
+    const count = OUTCOMES[key as keyof typeof OUTCOMES];
+    const report = build(fixtureView(), { supplied: { providerCallOutcomes: { [key]: count } } });
+    expect(report.providerCallOutcomes).toEqual({ state: "measured", value: { [key]: count }, source: "supplied" });
+  });
+
+  it("characterizes the known loss: sanitizeWorkbenchJsonText turns the authorization count into [REDACTED] and keeps every other count", () => {
+    const report = build(fixtureView(), { supplied: { providerCallOutcomes: OUTCOMES } });
+    expect(measured(report.providerCallOutcomes).value.authorization).toBe(3);
+    const reply = JSON.parse(sanitizeWorkbenchJsonText(report)) as { providerCallOutcomes: { value: Record<string, unknown> } };
+    expect(reply.providerCallOutcomes.value).toEqual({ ...OUTCOMES, authorization: "[REDACTED]" });
+  });
+});
+
+describe("D4 wb-9iu M6: a disconnected node counts as last-known even when its freshness says current", () => {
+  const stale = (nodes: ReadonlyArray<{ freshness: string; connection: string }>): number =>
+    measured(buildOperationsTelemetry(structuralNodes(nodes), { scope: alice, now: T }).activeWorkflows).value.lastKnownRunningStale;
+  it("counts a current-but-disconnected active workflow as stale (kills the disconnected-clause-removed mutant)", () => {
+    expect(stale([{ freshness: "current", connection: "disconnected" }])).toBe(1);
+  });
+
+  it("counts a non-current but connected node as stale and a current connected or unknown-connection node as live", () => {
+    expect(stale([{ freshness: "stale", connection: "connected" }])).toBe(1);
+    expect(stale([{ freshness: "current", connection: "connected" }])).toBe(0);
+    expect(stale([{ freshness: "current", connection: "unknown" }])).toBe(0);
+    expect(stale([
+      { freshness: "current", connection: "disconnected" }, { freshness: "current", connection: "connected" }, { freshness: "unknown", connection: "unknown" },
+    ])).toBe(2);
+  });
+});
+
+describe("D5 wb-9iu M8 / gate F6: an invalid maxBytes falls back to the 8192-byte default, never used raw", () => {
+  const oversize = (): OperationsTelemetry => ({ ...build(fixtureView()), now: `${T}${"x".repeat(9000)}` });
+  const small = (): OperationsTelemetry => build(fixtureView());
+  const INVALID_MAX_BYTES: ReadonlyArray<readonly [string, unknown]> = [
+    ["zero", 0],
+    ["negative one", -1],
+    ["fractional 1.5", 1.5],
+    ["NaN", Number.NaN],
+    ["positive Infinity", Number.POSITIVE_INFINITY],
+    ["unsafe integer", Number.MAX_SAFE_INTEGER + 2],
+    ["string 64", "64"],
+  ];
+  it.each(INVALID_MAX_BYTES)(
+    "applies the default cap to maxBytes %s: a small event is delivered and an event over 8192 bytes is dropped", (_label, bad) => {
+      const received: TelemetryEvent[] = [];
+      const sink = { emit: (event: TelemetryEvent): void => { received.push(event); } };
+      expect(emitOperationsTelemetry(small(), sink, { enabled: true, maxBytes: bad as never })).toBe("emitted");
+      expect(emitOperationsTelemetry(oversize(), sink, { enabled: true, maxBytes: bad as never })).toBe("dropped-oversize");
+      expect(received).toHaveLength(1);
+    },
+  );
+
+  it("control: a valid positive-integer maxBytes is honored in both directions", () => {
+    const received: TelemetryEvent[] = [];
+    const sink = { emit: (event: TelemetryEvent): void => { received.push(event); } };
+    expect(emitOperationsTelemetry(oversize(), sink, { enabled: true, maxBytes: 64 * 1024 })).toBe("emitted");
+    expect(emitOperationsTelemetry(small(), sink, { enabled: true, maxBytes: 64 })).toBe("dropped-oversize");
   });
 });

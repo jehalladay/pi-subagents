@@ -92,16 +92,22 @@ interface Slot {
   pending?: Promise<void>;
 }
 
-/** One preview line to its bounded, redacted, terminal-safe chunks: the shared helper runs before any split so a secret cannot straddle a chunk. */
-function safeChunks(raw: string): string[] {
-  const cleaned = sanitizeWorkbenchText(raw, Number.MAX_SAFE_INTEGER, "terminal");
-  if (cleaned.length === 0) return [""];
+/**
+ * One loader preview entry as display rows (wb-ktf): the shared helper redacts the WHOLE entry exactly once, before it is split
+ * or cut to the budget, so a credential whose scheme or key and value straddle a line break is still one credential. Its "lines"
+ * layout keeps the row structure (CRLF, CR, NEL, LS and PS each become one LF); every step after this one is per row.
+ */
+const redactedRows = (entry: string): string[] => sanitizeWorkbenchText(entry, Number.MAX_SAFE_INTEGER, "lines").split("\n");
+
+/** One redacted row to its bounded, terminal-safe chunks, never cut between the two halves of a surrogate pair. */
+function safeChunks(row: string): string[] {
+  if (row.length === 0) return [""];
   const chunks: string[] = [];
   let at = 0;
-  while (at < cleaned.length) {
-    let end = Math.min(at + EVIDENCE_LINE_CHARS, cleaned.length);
-    if (end < cleaned.length && isHighSurrogate(cleaned.charCodeAt(end - 1))) end -= 1;
-    chunks.push(safeWorkflowTerminalText(cleaned.slice(at, end)));
+  while (at < row.length) {
+    let end = Math.min(at + EVIDENCE_LINE_CHARS, row.length);
+    if (end < row.length && isHighSurrogate(row.charCodeAt(end - 1))) end -= 1;
+    chunks.push(safeWorkflowTerminalText(row.slice(at, end)));
     at = end;
   }
   return chunks;
@@ -122,17 +128,17 @@ function prefixWithinBytes(text: string, budget: number): string {
   return kept;
 }
 
-/** Fit loader-supplied preview lines inside the byte and line budgets; raw payload is never retained. */
+/** Fit loader-supplied preview entries inside the byte and line budgets, which count redacted rows; raw payload is never retained. */
 function boundPreview(preview: readonly string[], maxBytes: number): { lines: string[]; clipped: boolean } {
   const lines: string[] = [];
   let remaining = maxBytes;
   let clipped = false;
   for (const entry of preview) {
     if (typeof entry !== "string") continue;
-    for (const part of entry.split(/\r\n|\r|\n/)) {
+    for (const row of redactedRows(entry)) {
       if (remaining <= 0 || lines.length >= EVIDENCE_MAX_PREVIEW_LINES) { clipped = true; break; }
-      const size = Buffer.byteLength(part);
-      const kept = size > remaining ? prefixWithinBytes(part, remaining) : part;
+      const size = Buffer.byteLength(row);
+      const kept = size > remaining ? prefixWithinBytes(row, remaining) : row;
       if (size > remaining) clipped = true;
       remaining -= Math.min(size, remaining);
       if (kept === "" && size > 0) continue;

@@ -213,7 +213,7 @@ describe("decideControl deny rules (first match wins; every rule refuses on its 
       expect(decide({ params: params as JsonValue })).toStrictEqual(denied("operator-confirmation", "validation", "operator confirmation required"));
     }
     expect(getter).not.toHaveBeenCalled();
-    expect([...DESTRUCTIVE_CONTROL_ACTIONS]).toStrictEqual(["stop", "cancel", "interrupt", "kill", "delete"]);
+    expect([...DESTRUCTIVE_CONTROL_ACTIONS]).toStrictEqual(["stop", "cancel", "interrupt", "kill", "delete", "shutdown"]);
     expect(Object.isFrozen(DESTRUCTIVE_CONTROL_ACTIONS)).toBe(true);
     // Every allowlisted native verb is destructive, so none can be permitted without operator confirmation.
     for (const actions of Object.values(NATIVE_CONTROL_ACTIONS)) for (const action of actions) expect(DESTRUCTIVE_CONTROL_ACTIONS).toContain(action);
@@ -330,7 +330,8 @@ describe("permitted receipt and its native phases", () => {
 
 describe("allowlist and purity", () => {
   it("freezes the per-provider allowlist; an unlisted provider such as hyperunix has no permitted action at all", () => {
-    expect(Object.entries(NATIVE_CONTROL_ACTIONS)).toStrictEqual([["furnace", ["stop"]], ["claude-agent-sdk", ["interrupt"]], ["forge", ["cancel"]]]);
+    expect(Object.entries(NATIVE_CONTROL_ACTIONS)).toStrictEqual([["furnace", ["stop"]], ["claude-agent-sdk", ["interrupt"]], ["forge", ["cancel"]],
+      ["local-detached", ["cancel", "shutdown"]]]);
     expect(Object.isFrozen(NATIVE_CONTROL_ACTIONS)).toBe(true);
     for (const actions of Object.values(NATIVE_CONTROL_ACTIONS)) expect(Object.isFrozen(actions)).toBe(true);
     expect(() => { (NATIVE_CONTROL_ACTIONS as Record<string, readonly string[]>).hyperunix = ["stop"]; }).toThrow(TypeError);
