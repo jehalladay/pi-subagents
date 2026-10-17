@@ -37,6 +37,7 @@ export const RETRY_FAULT_FINDING_RULES = Object.freeze([
   'limits-misstated',
   'observer-gained-control',
   'observe-faked',
+  'settled-attempt-cancelled-by-close',
 ]);
 /** The adapter receipt's disclosed limits (src/workbench/hosts/furnace-hosted.ts LIMITS). */
 export const EXPECTED_LIMITS = Object.freeze({
@@ -154,6 +155,24 @@ export function assessRetryFaultJourneys(observed) {
     }
     if (retry.terminal !== 'success' || retryAfter.terminal !== 'success' || retryWire !== 'success') {
       add('retry-not-settled', `${name}: the operator retry ${retry.attemptId} must reach its own success (before close ${retry.terminal}, after close ${retryAfter.terminal}, wire ${retryWire}).`);
+    }
+  }
+
+  // wb-21k: close() must leave an Attempt that settled BEFORE it alone. Every Attempt not pending at beforeClose (each
+  // retry Attempt, the same-id pair, the observer's owner, an explicitly uncertain first Attempt) must still carry
+  // cancel {requested: false} afterClose; only an Attempt parked until the host closed may carry host_closed (above).
+  for (const name of RETRY_FAULT_JOURNEYS) {
+    const journey = journeys[name];
+    if (!isObject(journey)) continue;
+    const after = attemptsOf(journey.afterClose);
+    for (const [index, settled] of attemptsOf(journey.beforeClose).entries()) {
+      if (settled.terminal === 'pending') continue;
+      const closed = after[index];
+      if (!closed || closed.attemptId !== settled.attemptId) continue;
+      const cancel = isObject(closed.cancel) ? closed.cancel : {};
+      if (cancel.requested !== false) {
+        add('settled-attempt-cancelled-by-close', `${name}: ${settled.attemptId} had settled ${settled.terminal} before the host closed, yet carries cancel ${JSON.stringify(closed.cancel)} afterClose.`);
+      }
     }
   }
 

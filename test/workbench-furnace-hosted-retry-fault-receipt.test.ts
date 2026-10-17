@@ -228,6 +228,7 @@ describe("furnace-hosted retry-fault receipt: judge falsifiers", () => {
       "limits-misstated",
       "observer-gained-control",
       "observe-faked",
+      "settled-attempt-cancelled-by-close",
     ]);
     expect({ ...EXPECTED_LIMITS }).toEqual(LIMITS);
   });
@@ -321,6 +322,39 @@ describe("furnace-hosted retry-fault receipt: judge falsifiers", () => {
     const reordered = clone(clean());
     reordered.journeys.lostConnectionRetry.afterClose.attempts.reverse();
     expect(rules(reordered)).toContain("uncertain-merged");
+  });
+
+  it("flags an Attempt that settled before the host closed yet carries a cancel after close (wb-21k: the stale close-abort listener)", () => {
+    // Every settled Attempt the tier produces: each retry Attempt, the same-id pair, the observer owner, and the explicit
+    // uncertain first Attempt that threw before close. One mutant each, stamped host_closed the way the unfixed adapter does.
+    const settledAfterClose: readonly (readonly [keyof Observed["journeys"], number])[] = [
+      ["lostConnectionRetry", 1],
+      ["explicitUncertainRetry", 0],
+      ["explicitUncertainRetry", 1],
+      ["sameAttemptReexecution", 0],
+      ["sameAttemptReexecution", 1],
+      ["observerNoControl", 0],
+      ["dropBeforeAdmissionReply", 1],
+    ];
+    for (const [name, index] of settledAfterClose) {
+      const stale = clone(clean());
+      const closed = stale.journeys[name].afterClose.attempts[index];
+      if (!closed) throw new Error(`fixture lost ${name} attempt ${index}`);
+      closed.cancel = closedByHost;
+      const found = assessRetryFaultJourneys(stale).findings.filter((finding: { rule: string }) => finding.rule === "settled-attempt-cancelled-by-close");
+      expect(found, `${name}[${index}]`).toHaveLength(1);
+      expect(found[0].detail).toContain(closed.attemptId);
+    }
+    // a missing cancel record is not {requested:false} either
+    const dropped = clone(clean());
+    const bare = dropped.journeys.lostConnectionRetry.afterClose.attempts[1] as Partial<Attempt>;
+    delete bare.cancel;
+    expect(rules(dropped)).toContain("settled-attempt-cancelled-by-close");
+    // controls: the clean fixture is silent, and an Attempt parked until the host closed keeps its host_closed cancel
+    expect(rules(clean())).not.toContain("settled-attempt-cancelled-by-close");
+    const parked = clean().journeys.dropBeforeAdmissionReply.afterClose.attempts[0];
+    expect(parked?.cancel).toEqual(closedByHost);
+    expect(rules(clean())).toEqual([]);
   });
 
   it("flags an operator retry that did not reach its own success", () => {
