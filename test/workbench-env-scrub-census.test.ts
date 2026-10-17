@@ -27,8 +27,9 @@
  * (local-detached.ts resolveDetachedSocket) and is the pin that proves the 16-name proposal is
  * superseded. Failure messages print KEY NAMES only, never a value and never an environment dump:
  * every assertion over a recorded options object projects to key names or scalar fields before
- * expect(), and the failure-path falsifier in the harness sanity block proves it with a synthetic
- * canary value.
+ * expect(). The Worker-env checks run through ONE helper (expectPlainEmptyEnv) and its failure-path
+ * falsifier in the harness sanity block proves it with a synthetic env whose prototype carries a probe
+ * value plus an own key: the rendered failure names the failed check and contains neither value.
  */
 import { mkdtempSync, realpathSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -150,11 +151,15 @@ function expectScrubbed(env: unknown, seam: string): void {
 }
 
 /**
- * Asserts a recorded options object carries no env key. The assertion is made over the KEY NAMES only
- * (a projection taken before expect()), so a failure can never serialize an env value (E3).
+ * The Worker env option must be an explicit plain object with ZERO names (owner seam rule 1). Every check
+ * is a scalar or a key-name projection taken BEFORE expect(), so a failure can never serialize an env
+ * value, an inherited prototype's values or the ambient environment (E3).
  */
-function expectNoEnvOption(options: Record<string, unknown> | undefined, seam: string): void {
-  expect(Object.keys(options ?? {}), `${seam} options carry an env key`).not.toContain("env");
+function expectPlainEmptyEnv(env: unknown, seam: string): void {
+  expect(typeof env, `${seam}: type of the env option`).toBe("object");
+  expect(env === null, `${seam}: the env option is not null`).toBe(false);
+  expect(Object.getPrototypeOf(env) === Object.prototype, `${seam}: the env option is a plain object`).toBe(true);
+  expect(Object.keys(env as Record<string, unknown>), `${seam}: names in the env option`).toEqual([]);
 }
 
 function withCanaries<T>(run: () => Promise<T>): Promise<T> {
@@ -224,18 +229,37 @@ describe("W19 env-scrub census: harness sanity (plain, must pass)", () => {
     expect(censusEnv({ CLAUDE_CODE_OAUTH_TOKEN: "x" }).credentialShaped, "the regex arm is unchanged").toEqual(["CLAUDE_CODE_OAUTH_TOKEN"]);
     expect(() => expectScrubbed({ PATH: "/bin", CLAUDE_OTHER: "x" }, "claude-other")).toThrow();
   });
-  it("a failing options assertion names the key and never prints a value (E3 failure-path falsifier)", () => {
+  it("a failing Worker-env assertion names the failed check and never prints a value (E3 failure-path falsifier)", () => {
     const probe = "W19_FALSIFIER_LEAK_PROBE_VALUE";
-    let message = "";
-    try {
-      expectNoEnvOption({ eval: true, env: { W19_PROBE_KEY: probe } }, "synthetic seam");
-    } catch (error) {
-      message = inspect(error, { depth: null });
-    }
-    expect(message === "", "the synthetic env option must make the helper throw").toBe(false);
-    expect(message.includes("env"), "the failure rendering (message plus the actual/expected diff vitest prints) names the env key").toBe(true);
-    expect(message.includes(probe), "the failure rendering must not contain the env value").toBe(false);
-    expect(message.includes("W19_PROBE_KEY"), "the failure rendering must not dump the env object").toBe(false);
+    const ownValue = "W19_FALSIFIER_OWN_KEY_VALUE";
+    const render = (env: unknown): string => {
+      try {
+        expectPlainEmptyEnv(env, "synthetic seam");
+      } catch (error) {
+        return inspect(error, { depth: null });
+      }
+      return "";
+    };
+    // An env whose PROTOTYPE carries a probe value (the Object.create(process.env) regression shape) plus one own key.
+    const inherited = Object.create({ W19_PROBE_PROTO_KEY: probe }) as Record<string, string>;
+    inherited.W19_PROBE_OWN_KEY = ownValue;
+    const rendering = render(inherited);
+    expect(rendering === "", "the inheriting env must make the helper throw").toBe(false);
+    expect(rendering.includes("the env option is a plain object"), "the rendering names the failed check").toBe(true);
+    expect(rendering.includes(probe), "the rendering must not contain the prototype-carried value").toBe(false);
+    expect(rendering.includes(ownValue), "the rendering must not contain the own key value").toBe(false);
+    expect(rendering.includes("W19_PROBE_OWN_KEY"), "the rendering must not dump the env object").toBe(false);
+    // A plain env carrying one own key: the zero-names check may name the key, never its value.
+    const plain: Record<string, string> = { W19_PROBE_OWN_KEY: ownValue };
+    const namesRendering = render(plain);
+    expect(namesRendering.includes("names in the env option"), "the zero-names check is the one that failed").toBe(true);
+    expect(namesRendering.includes(ownValue), "the zero-names failure must not contain the own key value").toBe(false);
+  });
+  it("withCanaries sets every canary name inside the callback and restores the prior state afterwards (names only)", async () => {
+    const before = CANARIES.filter(name => name in process.env);
+    const missingInside = await withCanaries(async () => CANARIES.filter(name => !(name in process.env)));
+    expect(missingInside, "canary names absent from process.env inside withCanaries").toEqual([]);
+    expect(CANARIES.filter(name => name in process.env), "canary names present after withCanaries differ from before").toEqual(before);
   });
   it("the allowlist of record (DETACHED_HOST_ENV_ALLOWLIST) contains no credential-shaped name and names XDG_RUNTIME_DIR", () => {
     expect([...ALLOWLIST].filter(credentialShaped)).toEqual([]);
@@ -256,11 +280,7 @@ describe("W19 env-scrub census: embedded interpreter seam (src/workflow/runtime.
   it("the Worker env option is an explicit plain object with ZERO names (owner seam rule 1)", async () => {
     captured.workerOptions.length = 0;
     await withCanaries(() => runWorkflow({ script: `${META("env-census-embedded-fact")}return 1;`, host: host() }));
-    const env = captured.workerOptions[0]?.env;
-    expect(typeof env, "type of the Worker env option").toBe("object");
-    expect(env === null, "the Worker env option is not null").toBe(false);
-    expect(Object.getPrototypeOf(env), "the Worker env option is a plain object").toBe(Object.prototype);
-    expect(Object.keys(env as Record<string, unknown>), "names in the Worker env option").toEqual([]);
+    expectPlainEmptyEnv(captured.workerOptions[0]?.env, "runtime.ts Worker");
   });
   it("runtime.ts new Worker hands an allowlist-only env object with no canary credential names", async () => {
     captured.workerOptions.length = 0;
