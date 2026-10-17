@@ -21,8 +21,11 @@
  *     holding only DETACHED_HOST_ENV_ALLOWLIST names.
  * A regression to an inherited env fails the plain rows; it is never a pass and never a warning.
  *
- * ALLOWLIST OF RECORD: ALLOWLIST below IS the DETACHED_HOST_ENV_ALLOWLIST export (31 names,
- * src/workbench/process-env.ts:22), the owner's 12:4xZ allowlist (16 + 15 names). ORACLE: beads
+ * ALLOWLIST OF RECORD: ALLOWLIST below IS the DETACHED_HOST_ENV_ALLOWLIST export (33 names,
+ * src/workbench/process-env.ts:22), the owner's 12:4xZ allowlist (16 + 15 names) plus the two rf
+ * workspace locators RF_WORKSPACE and SWARM_RF_WORKSPACE (wb-973.6 SCG-R6, owner grooming ruling at
+ * the wb-ksz.3 landing; registry entry 13: an allowlist addition updates this census in the same
+ * commit). ORACLE: beads
  * wb-ksz and wb-ksz.8; the operational name XDG_RUNTIME_DIR is read by the detached socket base
  * (local-detached.ts resolveDetachedSocket) and is the pin that proves the 16-name proposal is
  * superseded. Failure messages print KEY NAMES only, never a value and never an environment dump:
@@ -36,7 +39,9 @@ import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { inspect } from "node:util";
+import type { Options, SDKMessage } from "@anthropic-ai/claude-agent-sdk";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
+import { createClaudeWorkflowHost } from "../src/workbench/claude-host.js";
 import { DETACHED_HOST_ENV_ALLOWLIST } from "../src/workbench/process-env.js";
 import { runWorkflow, type WorkflowHost } from "../src/workflow/runtime.js";
 
@@ -170,6 +175,31 @@ function withCanaries<T>(run: () => Promise<T>): Promise<T> {
   });
 }
 
+/**
+ * SCG-R6 (wb-973.6): the two rf workspace locators, set in the parent env by the parity rows. Both are
+ * directory paths (operational locators, not credentials); distinct values so a swapped copy is red.
+ */
+const WORKSPACE_LOCATORS = { RF_WORKSPACE: "/srv/swarm/rf", SWARM_RF_WORKSPACE: "/srv/swarm/rf-swarm" } as const;
+type LocatorName = keyof typeof WORKSPACE_LOCATORS;
+const LOCATOR_NAMES: readonly LocatorName[] = ["RF_WORKSPACE", "SWARM_RF_WORKSPACE"];
+
+function withWorkspaceLocators<T>(run: () => Promise<T>): Promise<T> {
+  const prior = new Map<string, string | undefined>();
+  for (const name of LOCATOR_NAMES) { prior.set(name, process.env[name]); process.env[name] = WORKSPACE_LOCATORS[name]; }
+  return run().finally(() => {
+    for (const [name, value] of prior) { if (value === undefined) delete process.env[name]; else process.env[name] = value; }
+  });
+}
+
+/** Names-only projection: per locator, whether `env` carries it with the parent's value: a boolean, never the value. */
+function locatorProjection(env: unknown): Record<LocatorName, boolean> {
+  const record = env !== null && typeof env === "object" ? (env as Record<string, unknown>) : undefined;
+  return {
+    RF_WORKSPACE: record?.RF_WORKSPACE === WORKSPACE_LOCATORS.RF_WORKSPACE,
+    SWARM_RF_WORKSPACE: record?.SWARM_RF_WORKSPACE === WORKSPACE_LOCATORS.SWARM_RF_WORKSPACE,
+  };
+}
+
 const META = (name: string) => `export const meta={name:${JSON.stringify(name)},description:"w19 env-scrub census"};\n`;
 const host = (): WorkflowHost => ({ spawnAgent: vi.fn(async () => ({ ok: true })), abortAgent: vi.fn(), callNode: vi.fn(async () => ({ ok: true })) });
 
@@ -197,6 +227,32 @@ async function launchAndCaptureSpawn(): Promise<Record<string, unknown> | undefi
     backend: "deterministic", permissions: ["inspect"], autoStart: false,
   })).rejects.toThrow(/exited before handshake/);
   return captured.spawnOptions.length > before ? captured.spawnOptions[captured.spawnOptions.length - 1] : undefined;
+}
+
+/**
+ * One agent() call through the EMBEDDED Claude host (src/workbench/claude-host.ts) with the SDK query injected:
+ * records the SDK Options it builds and, as a names-only projection, the env its SDK CLI child receives. SDK
+ * contract (@anthropic-ai/claude-agent-sdk 0.3.300, Options.env): "When set, this value REPLACES the subprocess
+ * environment entirely ... When omitted, the subprocess inherits process.env." Test only: claude-host.ts is read,
+ * never edited (owner hot set).
+ */
+async function captureClaudeOptions(): Promise<{ options: Options | undefined; childEnv: Record<LocatorName, boolean> }> {
+  let options: Options | undefined;
+  let childEnv = locatorProjection(undefined);
+  const host = createClaudeWorkflowHost({
+    cwd: scratch,
+    query: params => {
+      options = params.options;
+      childEnv = locatorProjection(Object.hasOwn(params.options, "env") ? params.options.env : process.env);
+      return (async function* () {
+        yield { type: "system", subtype: "init", session_id: "scg-r6", model: "claude-sonnet-5", tools: [] } as unknown as SDKMessage;
+        yield { type: "result", subtype: "success", session_id: "scg-r6", result: "done", is_error: false, modelUsage: {} } as unknown as SDKMessage;
+      })();
+    },
+  });
+  const result = await host.spawnAgent({ agentId: "scg-r6-embedded", index: 0, label: "scg-r6", prompt: "census", agentType: "general-purpose" });
+  expect(result.ok, "the embedded agent call settled through the injected query").toBe(true);
+  return { options, childEnv };
 }
 
 describe("W19 env-scrub census: harness sanity (plain, must pass)", () => {
@@ -265,7 +321,26 @@ describe("W19 env-scrub census: harness sanity (plain, must pass)", () => {
     expect([...ALLOWLIST].filter(credentialShaped)).toEqual([]);
     expect(ALLOWLIST.has("XDG_RUNTIME_DIR"), "the operational oracle name read by the detached socket base").toBe(true);
     expect(ALLOWLIST.has("CLAUDE_CONFIG_DIR"), "the owner-granted exemption name is on the allowlist of record").toBe(true);
-    expect(ALLOWLIST.size, "size of the allowlist of record").toBe(31);
+    expect(ALLOWLIST.size, "size of the allowlist of record").toBe(33);
+  });
+  it("the allowlist of record names the two rf workspace locators and neither is credential-shaped (SCG-R6 MEMBERS, names only)", () => {
+    for (const name of LOCATOR_NAMES) {
+      expect(ALLOWLIST.has(name), `${name} is on the allowlist of record`).toBe(true);
+      expect(credentialShaped(name), `${name} is credential-shaped under the census check`).toBe(false);
+    }
+    expect(ALLOWLIST.has("RF_ACTOR"), "RF_ACTOR is on the allowlist of record (it needs its own ruling)").toBe(false);
+  });
+  it("the locator projection is names-only: a missing or different value projects to false and no value is carried", () => {
+    const wrong = "/srv/elsewhere/not-the-locator";
+    const projection = locatorProjection({ RF_WORKSPACE: wrong, SWARM_RF_WORKSPACE: WORKSPACE_LOCATORS.SWARM_RF_WORKSPACE });
+    expect(projection).toEqual({ RF_WORKSPACE: false, SWARM_RF_WORKSPACE: true });
+    expect(JSON.stringify(projection).includes(wrong), "the projection carries the value it judged").toBe(false);
+    expect(locatorProjection(undefined)).toEqual({ RF_WORKSPACE: false, SWARM_RF_WORKSPACE: false });
+    expect(locatorProjection(null)).toEqual({ RF_WORKSPACE: false, SWARM_RF_WORKSPACE: false });
+    const nullPrototype: Record<string, string> = Object.create(null);
+    nullPrototype.RF_WORKSPACE = WORKSPACE_LOCATORS.RF_WORKSPACE;
+    nullPrototype.SWARM_RF_WORKSPACE = WORKSPACE_LOCATORS.SWARM_RF_WORKSPACE;
+    expect(locatorProjection(nullPrototype), "a null-prototype env is judged like any other").toEqual({ RF_WORKSPACE: true, SWARM_RF_WORKSPACE: true });
   });
 });
 
@@ -327,5 +402,25 @@ describe("W19 env-scrub census: detached host seam (src/workbench/hosts/local-de
     } finally {
       if (priorProxy === undefined) delete process.env.HTTPS_PROXY; else process.env.HTTPS_PROXY = priorProxy;
     }
+  });
+});
+
+describe("W19 env-scrub census: SCG-R6 rf workspace locators reach the SDK child equally at both seams (wb-973.6)", () => {
+  it("local-detached.ts spawn carries RF_WORKSPACE and SWARM_RF_WORKSPACE with the parent's values and stays allowlist-only", async () => {
+    const options = await withWorkspaceLocators(() => withCanaries(launchAndCaptureSpawn));
+    expect(locatorProjection(options?.env), "locators carried with the parent's values (names only)").toEqual({ RF_WORKSPACE: true, SWARM_RF_WORKSPACE: true });
+    expectScrubbed(options?.env, "local-detached.ts spawn (with the rf workspace locators)");
+  });
+  it("claude-host.ts builds the SDK Options with no env override, so the SDK CLI child inherits process.env carrying both locators", async () => {
+    const { options, childEnv } = await withWorkspaceLocators(captureClaudeOptions);
+    expect(options !== undefined, "the injected query observed the SDK Options").toBe(true);
+    expect(Object.hasOwn(options ?? {}, "env"), "the SDK Options carry an env override").toBe(false);
+    expect(childEnv, "locators the SDK CLI child receives (names only)").toEqual({ RF_WORKSPACE: true, SWARM_RF_WORKSPACE: true });
+  });
+  it("both seams answer equally: the detached child is handed exactly what the embedded child inherits, for each locator", async () => {
+    const detached = locatorProjection((await withWorkspaceLocators(() => withCanaries(launchAndCaptureSpawn)))?.env);
+    const embedded = (await withWorkspaceLocators(captureClaudeOptions)).childEnv;
+    expect(detached, "detached seam vs embedded seam (names only)").toEqual(embedded);
+    expect(LOCATOR_NAMES.every(name => detached[name]), "both seams carry both locators").toBe(true);
   });
 });
