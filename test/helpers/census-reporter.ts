@@ -51,7 +51,10 @@ export default class CensusReporter implements Reporter {
   private scheduled: readonly string[] = [];
   private frame: string | undefined;
 
-  /** The census run names its frame as --outputFile.census=<frame>; configured any other way, this reporter writes nothing. */
+  /**
+   * The census run names its frame as --outputFile.census=<frame>; configured any other way, this reporter writes
+   * nothing (row x-u62r4-reporter-unselected, with its selected control).
+   */
   onInit(vitest: Vitest): void {
     const outputs = vitest.config.outputFile;
     const frame = typeof outputs === "object" ? outputs.census : undefined;

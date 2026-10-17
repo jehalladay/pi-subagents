@@ -1607,6 +1607,14 @@ const CONFIG_ROWS: readonly ConfigRow[] = [
     oracle: "passed",
     verdict: OK,
   },
+  {
+    id: "c-u62r4-frame-mid-line",
+    routed:
+      "u62 respin-4 T4 standing rule 11 transport cost: a config echoing its own command line - the run's real frame mid-line, as a script banner that does not redact the nonce prints it - is never read as a report: the pin is judged ok",
+    configPrelude: 'process.stdout.write("\\nconfig loaded for: " + process.argv.slice(2).join(" ") + "\\n");',
+    oracle: "passed",
+    verdict: OK,
+  },
 ];
 
 
@@ -2751,11 +2759,13 @@ const ROUTED_MODES: Readonly<Record<string, readonly string[]>> = {
     "T1",
     "T2",
     "T3",
+    "T4",
+    "T5",
   ],
 };
 
 /** Exact table sizes: deleting or emptying a falsifier table goes red (each-liveness of this file's own rows). */
-const TABLE_SIZES = [55, 8, 22, 46, 15, 10, 31, 34, 5, 16, 43, 14, 4, 76];
+const TABLE_SIZES = [55, 8, 22, 46, 15, 10, 32, 34, 5, 16, 43, 14, 5, 76];
 
 
 /**
@@ -2998,6 +3008,16 @@ const plainNodeJudge = (): string =>
     "process.stdout.write(JSON.stringify({ codes: verdicts.map(verdict => verdict.code), writes }));",
     "",
   ].join("\n");
+
+/**
+ * u62 respin-4 T5 (standing rule 11 transport): the census reporter reads its frame from --outputFile.census only.
+ * Two plain vitest runs of one project, no census around them: selected with that key the reporter writes its ONE
+ * report line (the control); selected without it - configured any other way - it writes nothing to the run's stdout.
+ */
+const REPORTER_PINNED = "test/reporter-pinned.test.ts";
+const REPORTER_MODULE = join(ROOT, "test", "helpers", "census-reporter.ts");
+const VITEST_CLI = join(ROOT, "node_modules", "vitest", "vitest.mjs");
+const REPORTER_FRAME = "census-report:t5-control:";
 
 /** U1 E2E: the gate's one-run adoption shape - an adopting census asserting ok for three judge-detecting pins. */
 const E2E_PINNED = "test/e2e-pinned.test.ts";
@@ -3255,6 +3275,8 @@ let e2eReportVerdicts: readonly PinVerdict[] = [];
 let capVerdicts: readonly PinVerdict[] = [];
 let capIntervals: readonly (readonly number[])[] = [];
 let plainNode: { readonly code: number | null; readonly stdout: string; readonly stderr: string } | undefined;
+let reporterSelected: { readonly code: number | null; readonly stdout: string; readonly stderr: string } | undefined;
+let reporterUnselected: { readonly code: number | null; readonly stdout: string; readonly stderr: string } | undefined;
 
 const SMOKE_PIN: CasePin = { file: SMOKE_FILE, title: SMOKE_TITLE, tier: DEFAULT_GATE_TIER };
 
@@ -3274,6 +3296,7 @@ beforeAll(async () => {
   const capRoot = writeTree(join(synthBase, "cap"), projectFiles("vitest run", Object.fromEntries(CAP_FILES.map(file => [file, capFile()]))));
   const plainNodeRoot = writeTree(join(synthBase, "plain-node"), projectFiles("vitest run", { [PLAIN_NODE_PINNED]: testFile({ body: PLAIN }) }));
   writeFileSync(join(synthBase, PLAIN_NODE_SCRIPT), plainNodeJudge());
+  const reporterRoot = writeTree(join(synthBase, "reporter"), projectFiles("vitest run", { [REPORTER_PINNED]: testFile({ body: PLAIN }) }));
   const tasks: (() => Promise<void>)[] = [
     async () => {
       const verdicts = await judgePins(mainRoot, MAIN_PINS.map(entry => entry.pin));
@@ -3340,6 +3363,10 @@ beforeAll(async () => {
     },
     async () => {
       plainNode = await nodeRun(join(synthBase, PLAIN_NODE_SCRIPT), [plainNodeRoot], synthBase);
+    },
+    async () => {
+      reporterSelected = await nodeRun(VITEST_CLI, ["run", `--reporter=${REPORTER_MODULE}`, `--outputFile.census=${REPORTER_FRAME}`], reporterRoot);
+      reporterUnselected = await nodeRun(VITEST_CLI, ["run", `--reporter=${REPORTER_MODULE}`], reporterRoot);
     },
   ];
   for (const row of CONFIG_ROWS) {
@@ -3513,6 +3540,20 @@ const REAL_PATH_ROWS: readonly StandaloneRow[] = [
     check: () => {
       expect(plainNode?.code, plainNode?.stderr.slice(-2000)).toBe(0);
       expect(JSON.parse(plainNode?.stdout ?? "{}") as unknown).toEqual({ codes: ["ok"], writes: [] });
+    },
+  },
+  {
+    id: "x-u62r4-reporter-unselected",
+    routed:
+      "u62 respin-4 T5 standing rule 11 transport: the census reporter reads its frame from --outputFile.census only - selected with it, it writes its one report line (the control); selected without it, it writes nothing to the run's stdout",
+    check: () => {
+      expect(reporterSelected?.code, reporterSelected?.stderr.slice(-2000)).toBe(0);
+      const framed = (reporterSelected?.stdout ?? "").split("\n").filter(line => line.startsWith(REPORTER_FRAME));
+      expect(framed, "the control: with its frame the reporter writes its one report line").toHaveLength(1);
+      expect(JSON.parse((framed[0] ?? "").slice(REPORTER_FRAME.length)) as unknown).toMatchObject({ complete: true });
+      expect(reporterUnselected?.code, reporterUnselected?.stderr.slice(-2000)).toBe(0);
+      const reported = (reporterUnselected?.stdout ?? "").split("\n").filter(line => line.includes('"complete":true'));
+      expect(reported, "without its frame the reporter writes no report line").toEqual([]);
     },
   },
   {

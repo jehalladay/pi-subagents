@@ -89,8 +89,11 @@
  *   (standing rule 11): nothing is written to disk by the judging process, and the helper keeps no relative import, so
  *   plain node loads it by path as the gate batteries do (row x-u62r4-plain-node-no-scratch). Exactly ONE framed report
  *   line is read; a second (a frame forged from the command line) is refused (row c-u62r4-forged-frame), a line that
- *   begins like a frame without the run's nonce is never read (row c-u62r4-frame-collision), and a tier whose own
- *   command sets --outputFile is refused by vitest itself (its CLI rejects the mixed forms, measured).
+ *   begins like a frame without the run's nonce is never read (row c-u62r4-frame-collision), nor is a line carrying
+ *   the run's frame anywhere but at its start, as a tool echoing the command line prints it (row
+ *   c-u62r4-frame-mid-line; npm 11 redacts the nonce in its own script banner, measured, so only that row tells a
+ *   line-led read from a substring read), and a tier whose own command sets --outputFile is refused by vitest itself
+ *   (its CLI rejects the mixed forms, measured).
  *   NAMED RESIDUAL (executing mode): a judge that re-executes stays detectable through channels other than the
  *   environment - the parent-process argv (the census reporter and its --outputFile.census frame on the vitest command
  *   line, the very word the recursion guard reads), timing, and the narrowed file set. That is why executing mode is
