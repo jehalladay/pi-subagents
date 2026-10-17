@@ -1,7 +1,8 @@
-// wb-vko: one truthful git stamp for the seven qa git-discovery members. Three inline the block below
+// wb-vko: one truthful git stamp for the eight qa git-discovery members. Three inline the block below
 // byte-for-byte (status-ledger revisionOf, local-detached-faults revision(), local-detached-shared-child
-// revision()); four import this module (package-smoke, the live-operator-receipt revision-stamp block,
-// headless-host-census, install-minimal). Pure node. A stamp describes `root` only when root IS the
+// revision()); five import this module (package-smoke, the live-operator-receipt revision-stamp block,
+// headless-host-census, install-minimal, and the live-furnace-vc4 runner's gitFacts, which answers 'unknown' with a
+// null dirty bit inside its own block whenever the stamp is not complete). Pure node. A stamp describes `root` only when root IS the
 // repository toplevel: a package nested in a foreign checkout, or a directory outside any repository,
 // yields no head so a receipt can never carry another repository's HEAD; and a status read that fails
 // is never reported as a clean tree.
