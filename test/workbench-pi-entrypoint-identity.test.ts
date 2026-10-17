@@ -33,6 +33,49 @@ function streamed(id: string) { return (async function*(){
   yield {type:'result',subtype:'success',session_id:id,uuid:`result-${id}`,result:'SECRET_RESULT',is_error:false,modelUsage:{}};
 })(); }
 
+/**
+ * wb-7v7: a SETTLE-DETECTING wait for a run launched from a switched cwd. `waitFor`'s fixed 300 x 10 ms budget raced
+ * full-suite contention twice on that run, whose agent goes through the backend re-resolved for the new cwd; this waits
+ * on the state transition the assertions need instead of a clock - the run's terminal status, read through the
+ * registered tool's own render seam, AND its completion notice. A run that never settles still fails, at a generous
+ * ceiling, naming only the states it was observed in: never an id, a path or a payload.
+ */
+type RunState = { status: string; agent: string; notice: 'delivered'|'pending'; claude: 'dispatched'|'not-dispatched' };
+type Launch = { content: unknown[]; details: { taskId: string } };
+type Theme = { fg: (color: string, value: string) => string; bold: (value: string) => string };
+type RenderedTool = { renderResult: (result: Launch, options: { expanded: boolean; isPartial: boolean }, theme: Theme, context: { isError: boolean }) => unknown };
+const SETTLE_CEILING_MS = 20_000;
+const TERMINAL = new Set(['completed','failed','killed']);
+function stateName(value: unknown, otherwise: string): string { return typeof value === 'string' && /^[a-z_]+$/.test(value) ? value : otherwise; }
+function observeRun(sendMessage: { mock: { calls: unknown[][] } }, workflow: RenderedTool, launch: Launch): () => RunState {
+  const render = vi.spyOn(cards, 'renderWorkflowCard');
+  const theme: Theme = { fg: (_color, value) => value, bold: value => value };
+  return () => {
+    const before = render.mock.calls.length;
+    workflow.renderResult(launch, { expanded: false, isPartial: false }, theme, { isError: false });
+    const card = render.mock.calls.length > before ? render.mock.calls.at(-1)?.[0] : undefined;
+    const agent = card?.progress.filter(entry => entry.type === 'workflow_agent').at(-1);
+    return {
+      status: card ? stateName(card.task.status, 'unnamed') : 'absent',
+      agent: agent && 'state' in agent ? stateName(agent.state, 'unnamed') : 'none',
+      notice: sendMessage.mock.calls.some(([value]) => text(value).includes(launch.details.taskId)) ? 'delivered' : 'pending',
+      claude: sdk.query.mock.calls.length > 0 ? 'dispatched' : 'not-dispatched',
+    };
+  };
+}
+async function waitForSettle(observe: () => RunState, ceilingMs = SETTLE_CEILING_MS): Promise<RunState> {
+  const deadline = Date.now() + ceilingMs;
+  const trail: string[] = [];
+  do {
+    const state = observe();
+    const name = `${state.status}/${state.agent}/${state.notice}/${state.claude}`;
+    if (trail.at(-1) !== name) trail.push(name);
+    if (TERMINAL.has(state.status) && state.notice === 'delivered') return state;
+    await new Promise(resolve => setTimeout(resolve, 10));
+  } while (Date.now() < deadline);
+  throw new Error(`Pi workflow did not settle within ${ceilingMs} ms; observed states: ${trail.join(' -> ')}`);
+}
+
 describe('registered Workbench entrypoint identity and projection',()=>{
   it('denies absent observation grants and keeps discovery independent of invoke grants',async()=>{
     const {pi,context,workflow,observe,catalog}=await boot({capabilityGrants:['forge:inspect']});
@@ -102,11 +145,32 @@ describe('registered Workbench entrypoint identity and projection',()=>{
       // explicit Workbench configuration. Never substitute process.cwd.
       const other=ctx({cwd:second});
       const launch=await workflow.execute('other',{script:source},undefined,undefined,other);
-      await waitFor(()=>pi.pi.sendMessage.mock.calls.some(([value]:[unknown])=>text(value).includes(launch.details.taskId)));
+      // Settled on the backend re-resolved from the switched cwd: terminal, notified, and never the boot workspace's Claude path.
+      const settled=await waitForSettle(observeRun(pi.pi.sendMessage,workflow,launch));
+      expect(settled).toMatchObject({status:'completed',notice:'delivered',claude:'not-dispatched'});
       expect(sdk.query).not.toHaveBeenCalled();
       expect(context.cwd).not.toBe(second);
     } finally { removeScratch(second); }
-  });
+  },SETTLE_CEILING_MS+10_000);
+
+  it('reports a switched-cwd run that has not settled by state names at its ceiling, never by values (wb-7v7)',async()=>{
+    const {pi,workflow}=await boot({capabilityGrants:['workbench:observe']});
+    const second=makeScratch('pi-workspace-unsettled-');
+    try {
+      sdk.query.mockImplementation(()=>streamed('should-not-exist'));
+      const launch=await workflow.execute('other',{script:source},undefined,undefined,ctx({cwd:second}));
+      const observe=observeRun(pi.pi.sendMessage,workflow,launch);
+      // A zero ceiling cannot be met by a run that has only just started: the wait must refuse, never pass or hang.
+      const report=await waitForSettle(observe,0).then(()=>'settled',(error:unknown)=>error instanceof Error ? error.message : 'not an Error');
+      expect(report).toBe('Pi workflow did not settle within 0 ms; observed states: running/none/pending/not-dispatched');
+      // The same run then settles under the real ceiling, and the run id the observer keys on is visible in the notice
+      // channel it reads - so that value's absence from the report is the names-only format, not a blind instrument.
+      expect(await waitForSettle(observe)).toMatchObject({status:'completed',notice:'delivered',claude:'not-dispatched'});
+      expect(text(pi.pi.sendMessage.mock.calls)).toContain(launch.details.taskId);
+      expect(report).not.toContain(launch.details.taskId);
+      expect(report).not.toContain(second);
+    } finally { removeScratch(second); }
+  },SETTLE_CEILING_MS+10_000);
 
   it('does not expose model Workbench tools on an ordinary Pi-only session',async()=>{
     sandbox=hermeticDir({settings:{workflowsEnabled:true}});

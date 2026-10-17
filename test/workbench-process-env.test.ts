@@ -115,3 +115,151 @@ describe("scrubbedEnvironment (wb-ksz, W19 credential boundary)", () => {
     }
   });
 });
+
+/**
+ * wb-973.6 / wb-973.7 (SCG-R6 / SCG-R7, one cut by owner grooming ruling): the swarm rf workspace
+ * locators. docs/workbench/13 "Host boundary" names RF_WORKSPACE and SWARM_RF_WORKSPACE as the
+ * documented channel a hosted agent reads its rf workspace from; the detached host's child receives
+ * them by allowlist exactly as the embedded host's child inherits them (test/workbench-env-scrub-census
+ * pins both seams). Both are directory paths: operational locators, not credentials.
+ */
+const WORKSPACE_LOCATORS = ["RF_WORKSPACE", "SWARM_RF_WORKSPACE"] as const;
+
+/**
+ * SCG-R7 frozen expectation: the allowlist of record at 9df9a03 (wb-ksz.8, 31 names), copied here so
+ * that ANY later change to DETACHED_HOST_ENV_ALLOWLIST is a reviewed change to this list as well.
+ */
+const ALLOWLIST_AT_9DF9A03: readonly string[] = Object.freeze([
+  "PATH",
+  "HOME",
+  "TMPDIR",
+  "TMP",
+  "TEMP",
+  "LANG",
+  "LC_ALL",
+  "LC_CTYPE",
+  "TERM",
+  "TZ",
+  "PWD",
+  "USER",
+  "LOGNAME",
+  "SHELL",
+  "NODE_ENV",
+  "CI",
+  "XDG_RUNTIME_DIR",
+  "XDG_CONFIG_HOME",
+  "XDG_CACHE_HOME",
+  "XDG_DATA_HOME",
+  "XDG_STATE_HOME",
+  "HTTP_PROXY",
+  "HTTPS_PROXY",
+  "NO_PROXY",
+  "http_proxy",
+  "https_proxy",
+  "no_proxy",
+  "NODE_EXTRA_CA_CERTS",
+  "SSL_CERT_FILE",
+  "SSL_CERT_DIR",
+  "CLAUDE_CONFIG_DIR",
+]);
+
+/** Invisible format characters for the lookalike rows, built from code points (never raw in source). */
+const ZERO_WIDTH_SPACE = String.fromCodePoint(0x200b);
+const ZERO_WIDTH_JOINER = String.fromCodePoint(0x200d);
+
+/**
+ * SCG-R7 negative pin: names that must NOT be allowlisted. RF_ACTOR needs its own ruling (dossier R9);
+ * the RF_SECRET_* rows are obviously fake placeholders of the credential-shaped family; the rest are
+ * lookalikes of the two locators that exact-name membership refuses.
+ */
+const NOT_ALLOWLISTED: readonly string[] = [
+  "RF_ACTOR",
+  "RF_SECRET_TOKEN",
+  "RF_SECRET_EXAMPLE_PLACEHOLDER",
+  "SWARM_RF_SECRET_EXAMPLE_PLACEHOLDER",
+  "RF_WORKSPACE_TOKEN",
+  "RF_WORKSPACES",
+  "rf_workspace",
+  `RF_WORKSPACE${ZERO_WIDTH_SPACE}`,
+  `SWARM_RF${ZERO_WIDTH_JOINER}_WORKSPACE`,
+];
+
+/** A name as printable ASCII: every code point outside the printable range is shown as U+XXXX. */
+function printable(name: string): string {
+  return [...name]
+    .map(unit => {
+      const point = unit.codePointAt(0) ?? 0;
+      return point >= 0x20 && point <= 0x7e ? unit : `U+${point.toString(16).toUpperCase().padStart(4, "0")}`;
+    })
+    .join("");
+}
+
+describe("SCG-R6/R7: the swarm rf workspace locators (wb-973.6, wb-973.7)", () => {
+  it("SCG-R6: carries RF_WORKSPACE and SWARM_RF_WORKSPACE verbatim beside the operational names", () => {
+    const env = scrubbedEnvironment({
+      RF_WORKSPACE: "/srv/swarm/rf",
+      SWARM_RF_WORKSPACE: "/srv/swarm/rf",
+      AWS_SECRET_ACCESS_KEY: CANARY_VALUE,
+      PATH: "/bin",
+    });
+    const names = Object.keys(env).sort();
+    expect(names, "AWS_SECRET_ACCESS_KEY reached the scrubbed environment").not.toContain("AWS_SECRET_ACCESS_KEY");
+    expect(names).toEqual(["PATH", "RF_WORKSPACE", "SWARM_RF_WORKSPACE"]);
+    expect(env.RF_WORKSPACE).toBe("/srv/swarm/rf");
+    expect(env.SWARM_RF_WORKSPACE).toBe("/srv/swarm/rf");
+    // Distinct values: each locator is copied from its own variable, never from the other one.
+    const distinct = scrubbedEnvironment({ RF_WORKSPACE: "/srv/swarm/rf-own", SWARM_RF_WORKSPACE: "/srv/swarm/rf-swarm" });
+    expect(distinct.RF_WORKSPACE).toBe("/srv/swarm/rf-own");
+    expect(distinct.SWARM_RF_WORKSPACE).toBe("/srv/swarm/rf-swarm");
+  });
+
+  it("SCG-R6: the hostile environment plus both locators yields the operational names and both locators, no canary", () => {
+    const names = Object.keys(
+      scrubbedEnvironment({ ...hostile(), RF_WORKSPACE: "/srv/swarm/rf", SWARM_RF_WORKSPACE: "/srv/swarm/rf" }),
+    ).sort();
+    for (const name of CANARIES) expect(names, `${name} reached the scrubbed environment`).not.toContain(name);
+    expect(names).toEqual(
+      [
+        "CLAUDE_CONFIG_DIR",
+        "HOME",
+        "HTTPS_PROXY",
+        "LANG",
+        "NODE_EXTRA_CA_CERTS",
+        "PATH",
+        "RF_WORKSPACE",
+        "SWARM_RF_WORKSPACE",
+        "TMPDIR",
+        "XDG_RUNTIME_DIR",
+        "no_proxy",
+      ].sort(),
+    );
+  });
+
+  it("SCG-R7: DETACHED_HOST_ENV_ALLOWLIST equals the 9df9a03 list plus exactly RF_WORKSPACE and SWARM_RF_WORKSPACE (set equality; any third addition is red)", () => {
+    const expected = new Set<string>([...ALLOWLIST_AT_9DF9A03, ...WORKSPACE_LOCATORS]);
+    const actual = new Set<string>(DETACHED_HOST_ENV_ALLOWLIST);
+    expect(ALLOWLIST_AT_9DF9A03.length, "size of the frozen 9df9a03 expectation").toBe(31);
+    expect(
+      [...actual].filter(name => !expected.has(name)).map(printable).sort(),
+      "names beyond the frozen expectation",
+    ).toEqual([]);
+    expect(
+      [...expected].filter(name => !actual.has(name)).sort(),
+      "names of the frozen expectation missing from the allowlist",
+    ).toEqual([]);
+    expect(DETACHED_HOST_ENV_ALLOWLIST.length, "entries (a duplicate would hide behind set equality)").toBe(expected.size);
+  });
+
+  it("SCG-R7 negative pin: RF_ACTOR, RF_SECRET_*-shaped names and lookalikes of the locators are not allowlisted and never pass", () => {
+    for (const name of NOT_ALLOWLISTED) {
+      expect(DETACHED_HOST_ENV_ALLOWLIST.includes(name), `${printable(name)} is allowlisted`).toBe(false);
+    }
+    expect(
+      DETACHED_HOST_ENV_ALLOWLIST.filter(name => /^(SWARM_)?RF_/i.test(name)).sort(),
+      "rf-family names on the allowlist",
+    ).toEqual([...WORKSPACE_LOCATORS]);
+    const source: NodeJS.ProcessEnv = { RF_WORKSPACE: "/srv/swarm/rf", SWARM_RF_WORKSPACE: "/srv/swarm/rf" };
+    for (const name of NOT_ALLOWLISTED) source[name] = CANARY_VALUE;
+    expect(Object.keys(scrubbedEnvironment(source)).map(printable).sort(), "names that passed").toEqual([...WORKSPACE_LOCATORS]);
+  });
+});
