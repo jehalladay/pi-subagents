@@ -7,6 +7,7 @@
 import {createHash} from 'node:crypto';
 import {describe, expect, expectTypeOf, it} from 'vitest';
 import {CapabilityError, type JsonValue} from '../src/workbench/capability-registry.js';
+import {nativeEvidence} from '../src/workbench/native-evidence.js';
 import {type NativeRef, ObservationProjection, type ObservationScope} from '../src/workbench/observation.js';
 import {
   REACTIVEFIBER_OBSERVATION_CONTRACT, type ReactiveFiberObservedRelation, type ReactiveFiberProjectionTopology,
@@ -272,5 +273,142 @@ describe('ReactiveFiber render preview reader adapter', () => {
     everyObject(first, item => { expect(Object.isFrozen(item)).toBe(true); });
     expect(first.relations[0].from).not.toBe(ctx.operationRef);
     expect(first.snapshots[0].scope).not.toBe(scope);
+  });
+});
+
+/** wb-2j3.1 + wb-2j3.2 (RFCLI-PERFORMANCE-MATHEMATICAL-OPTIMIZATION R1 and R3), one cut at the head of the RF lane. Owner ruling
+ * G-A (2026-10-17, bound on wb-x32): bundle_revision_id owns NativeSnapshot.sourceVersion; the producer CLI release travels as a
+ * distinct rf-cli:<cli_version> evidence reference plus a snapshot note, never as sourceVersion (it supersedes the older R1
+ * acceptance text "sourceVersion === '0.1.716'"). R1: "When a validated reactivefiber.render.preview envelope carries
+ * result.provenance.cli_version ... native-evidence metadata shall expose it; an envelope without cli_version shall project
+ * byte-identically to today." R3: "when result.provenance.cli_version is absent from the envelope, no snapshot,
+ * evidence-metadata, receipt or docs field shall present any release as measured from that envelope (absent stays absent)";
+ * acceptance: "The R1 no-cli_version fixture asserts no producer-release facet, note or metadata field is synthesized
+ * (projection byte-identical to today's)" and "an implementation that defaults absent cli_version to the carrier release (or
+ * any literal) FAILS that fixture assertion." Input-hygiene rows only: every invisible is built with String.fromCodePoint and
+ * every credential-shaped literal is obviously fake. A later cut that deliberately changes today's projection (wb-2j3.3 rewords
+ * the storage-writes note) re-pins TODAY in its own commit and keeps every no-synthesis assertion below. */
+describe('producer release from result.provenance.cli_version (wb-2j3.1 reader, wb-2j3.2 no-synthesis guard)', () => {
+  const CAPABILITY = 'reactivefiber.render.preview';
+  const RELEASE = '0.1.716';
+  /** The release both registered descriptors still hard-code in contractSource: the default the R3 guard must catch. */
+  const CARRIER_RELEASE = '0.1.583';
+  const invoked: ReactiveFiberTopologyContext = {...context, invocationId: 'wf_rf_1'};
+  const stating = (cliVersion: JsonValue): Json => withResult({provenance: {graph_revision_id: GRAPH, cli_version: cliVersion}});
+  const noteOf = (release: string): string => `producer release from result.provenance.cli_version: rf@${release}`;
+  const cp = (code: number): string => String.fromCodePoint(code);
+  const PLAIN_REFS = [`rf-graph:${GRAPH}`, `rf-workspace:${WORKSPACE_ID}`];
+  /** The R1 fixture's projection exactly as the wb-6ze.9 adapter emits it today, key order included. */
+  const TODAY = {
+    snapshots: [{
+      source: {provider: 'reactivefiber', type: 'context-preview', id: OPERATION, scope: WS}, scope: {workspace: WS, principal: scope.principal},
+      capturedAt: context.capturedAt, observedAt: context.observedAt, coverage: 'complete',
+      node: {title: `RF context preview ${OPERATION}`, type: 'sdk-operation',
+        statusText: 'noncommitted preview (rf-cli) · 5968 of 8192 context tokens available · necessity evals 4 · 0 errors, 1 warnings', statusTone: 'success'},
+      kind: 'reactivefiber.render.preview.snapshot', evidenceRefs: PLAIN_REFS, sourceRevision: GRAPH, nativePayloadRef: `rf-output:sha256:${digestOf(TEXT)}`,
+      trace: {invocationId: 'wf_rf_1'},
+    }],
+    relations: [],
+    diagnostics: ['ephemeral noncommitted preview: render_id null, transaction_id null, 0 storage writes', 'context text withheld: referenced by sha256 digest',
+      'no native interval supplied'],
+  };
+  const [PREVIEW_NOTE, WITHHELD_NOTE, INTERVAL_NOTE] = TODAY.diagnostics;
+  const TODAY_EVIDENCE = {provider: 'reactivefiber', nativeId: OPERATION, sourceBasis: GRAPH};
+
+  it('R3: the R1 no-cli_version fixture synthesizes no producer-release facet, note or metadata field: the projection is byte-identical to today', () => {
+    const topology = reactivefiberTopology(reading() as JsonValue, invoked);
+    expect(JSON.stringify(topology)).toBe(JSON.stringify(TODAY));
+    expect(topology).toStrictEqual(TODAY);
+    expect(topology.snapshots[0]).not.toHaveProperty('sourceVersion');
+    const evidence = nativeEvidence(CAPABILITY, reading() as JsonValue);
+    expect(evidence).toStrictEqual(TODAY_EVIDENCE);
+    const surfaced = `${JSON.stringify(topology)}\n${JSON.stringify(evidence)}`;
+    for (const synthesized of ['rf-cli:', 'rf@', 'cli_version', 'producer release', CARRIER_RELEASE]) expect(surfaced).not.toContain(synthesized);
+  });
+
+  it('R1: a stated cli_version travels as one distinct rf-cli evidence reference and one note, never as sourceVersion (owner ruling G-A)', () => {
+    const topology = reactivefiberTopology(stating(RELEASE) as JsonValue, invoked);
+    const [snapshot] = topology.snapshots;
+    expect(snapshot).toStrictEqual({...TODAY.snapshots[0], evidenceRefs: [...PLAIN_REFS, `rf-cli:${RELEASE}`]});
+    expect(snapshot).not.toHaveProperty('sourceVersion');
+    expect(topology.relations).toStrictEqual([]);
+    expect(topology.diagnostics).toStrictEqual([PREVIEW_NOTE, WITHHELD_NOTE, noteOf(RELEASE), INTERVAL_NOTE]);
+    bounded(topology);
+    everyObject(topology, item => { expect(Object.isFrozen(item)).toBe(true); });
+    const projection = new ObservationProjection();
+    expect(projection.refresh(snapshot)).toBe('applied');
+    const node = projection.query({scope, limit: 10}).nodes.find(item => item.nativeRef.id === OPERATION);
+    // The version cohort stays keyed on the graph revision the snapshot already reports; the CLI release never takes it.
+    expect(node).toMatchObject({sourceVersion: GRAPH, evidenceRefs: [...PLAIN_REFS, `rf-cli:${RELEASE}`]});
+    expect(projection.query({scope, limit: 10, evidence: `rf-cli:${RELEASE}`}).nodes.map(item => item.nativeRef.id)).toStrictEqual([OPERATION]);
+    expect(projection.query({scope, limit: 10, version: RELEASE}).nodes).toStrictEqual([]);
+  });
+
+  it('R1: native-evidence metadata exposes the stated release as producerRelease, read from RF provenance only', () => {
+    expect(nativeEvidence(CAPABILITY, stating(RELEASE) as JsonValue)).toStrictEqual({...TODAY_EVIDENCE, producerRelease: RELEASE});
+    // A failed render carries no result, so it states no release and none is read from anywhere else in the envelope.
+    expect(nativeEvidence(CAPABILITY, reading(failure()) as JsonValue)).not.toHaveProperty('producerRelease');
+    // Another provider's contract is not RF provenance, whatever its payload holds.
+    const forge = {contract: 'forge.gate.status/v1', source: {operation_id: 'forge-op', status: 'success', result: {provenance: {cli_version: RELEASE}}}};
+    expect(nativeEvidence('forge.gate.status', forge)).not.toHaveProperty('producerRelease');
+  });
+
+  it('R1: the value is carried, not hard-coded: other releases round-trip verbatim through the reference, the note and the metadata', () => {
+    for (const release of ['0.1.717', '0.1.716+local.1', '0.2.0rc1']) {
+      const topology = reactivefiberTopology(stating(release) as JsonValue, context);
+      expect(topology.snapshots[0].evidenceRefs).toStrictEqual([...PLAIN_REFS, `rf-cli:${release}`]);
+      expect(topology.diagnostics).toContain(noteOf(release));
+      expect(nativeEvidence(CAPABILITY, stating(release) as JsonValue)).toStrictEqual({...TODAY_EVIDENCE, producerRelease: release});
+    }
+  });
+
+  it('R1: a release of exactly 256 UTF-8 bytes is carried whole in its reference and metadata while every note stays inside the diagnostic bound', () => {
+    const ascii = 'a'.repeat(256);
+    const wide = cp(0xe9).repeat(128);
+    for (const release of [ascii, wide]) {
+      const topology = reactivefiberTopology(stating(release) as JsonValue, context);
+      expect(topology.snapshots[0].evidenceRefs).toStrictEqual([...PLAIN_REFS, `rf-cli:${release}`]);
+      expect(nativeEvidence(CAPABILITY, stating(release) as JsonValue)).toHaveProperty('producerRelease', release);
+      bounded(topology);
+    }
+    // 184 characters: the note fits whole. 312 characters: the shared bound cuts it and says so.
+    expect(reactivefiberTopology(stating(wide) as JsonValue, context).diagnostics).toContain(noteOf(wide));
+    const cut = reactivefiberTopology(stating(ascii) as JsonValue, context).diagnostics.find(text => text.startsWith(noteOf('')));
+    expect(cut).toMatch(/ \[truncated\]$/);
+  });
+
+  it('R1: the release note follows every partial-render note and the diagnostic bound still holds', () => {
+    const source = envelope({result: result({provenance: {graph_revision_id: GRAPH, cli_version: RELEASE},
+      diagnostics_summary: {errors: 2, warnings: 0, has_errors: true, has_warnings: false}, budget: {formula_terms: formula({available_context_tokens: -40})}})});
+    const topology = reactivefiberTopology(reading(source) as JsonValue, {...context, seam: 'injected-fixture'});
+    expect(topology.diagnostics).toStrictEqual([PREVIEW_NOTE, WITHHELD_NOTE, 'fixture seam: not a real generated context',
+      'render reported errors: partial, not a clean render', 'context exceeds the available budget: partial', noteOf(RELEASE), INTERVAL_NOTE]);
+    expect(topology.snapshots[0].evidenceRefs).toStrictEqual([...PLAIN_REFS, `rf-cli:${RELEASE}`]);
+    bounded(topology);
+  });
+
+  const DROPPED: [string, JsonValue][] = [
+    ['empty', ''],
+    ['a number', 716],
+    ['null', null],
+    ['a boolean', true],
+    ['an object', {major: 0, minor: 1, patch: 716}],
+    ['an array', [RELEASE]],
+    ['257 UTF-8 bytes', 'a'.repeat(257)],
+    ['258 UTF-8 bytes in 129 characters', cp(0xe9).repeat(129)],
+    ['a terminal escape sequence', `${RELEASE}${cp(0x1b)}[31m`],
+    ['a bidi override', `0.1.${cp(0x202e)}716`],
+    ['a zero-width space', `${RELEASE}${cp(0x200b)}`],
+    ['a line break', `${RELEASE}${cp(0x0a)}`],
+    ['surrounding whitespace', ` ${RELEASE} `],
+    ['a whitespace run', `${RELEASE}  local`],
+    ['text the shared label layout redacts (an obviously fake assignment)', 'api_key=OBVIOUSLY-FAKE'],
+    ['text the shared label layout redacts (an obviously fake bearer value)', 'Bearer OBVIOUSLY-FAKE-VALUE'],
+  ];
+  it.each(DROPPED)('R3: a cli_version that is %s is dropped, never rewritten or defaulted: the projection equals the absent case', (_name, value) => {
+    const topology = reactivefiberTopology(stating(value) as JsonValue, invoked);
+    expect(JSON.stringify(topology)).toBe(JSON.stringify(TODAY));
+    expect(topology).toStrictEqual(TODAY);
+    expect(nativeEvidence(CAPABILITY, stating(value) as JsonValue)).toStrictEqual(TODAY_EVIDENCE);
   });
 });
