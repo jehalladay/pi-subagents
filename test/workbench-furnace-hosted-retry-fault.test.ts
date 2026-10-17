@@ -19,18 +19,17 @@
  * exactly; O1 the connection-drop-before-admission-reply variant; O2 the full limits object;
  * F5 the host scratch base is XDG_RUNTIME_DIR first and /tmp only as the recorded fallback.
  *
- * Uses the COPY of the vendored SDK that the FIXTURE-tier receipt runner also loads
- * (qa/workbench/furnace-hosted-repaired-sdk.mjs), so both tiers exercise one artifact. Since
- * wb-zby re-packaged the vendored SDK from a Furnace revision whose digests agree, the copy's
- * manifest realignment is the identity and the shipped SDK decodes every context itself; one
- * case below pins both. No live tier, no furnace doctor, no capability probe.
+ * Drives the SHIPPED vendored SDK (SHIPPED_FURNACE_SDK), the same package the FIXTURE-tier
+ * receipt runner drives through the built adapter, so both tiers exercise one artifact. Since
+ * wb-zby re-packaged the vendored SDK from a Furnace revision whose digests agree, wb-zby.2
+ * retired the copy-and-rewrite loader: no copy, no manifest rewrite. One case below pins the
+ * shipped-SDK record both tiers hand the receipt judge (shippedSdkRecord). No live tier, no
+ * furnace doctor, no capability probe.
  */
-import { tmpdir } from "node:os";
-import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import { loadRepairedSdkCopy } from "../qa/workbench/furnace-hosted-repaired-sdk.mjs";
+import { describe, expect, it } from "vitest";
 import { assessRetryFaultJourneys, RETRY_FAULT_JOURNEYS } from "../qa/workbench/furnace-hosted-retry-fault-receipt.mjs";
 import { CapabilityError } from "../src/workbench/capability-registry.js";
-import { FurnaceHostedExecutor, type FurnaceSdk, type HostedReceipt, SHIPPED_FURNACE_SDK } from "../src/workbench/hosts/furnace-hosted.js";
+import { FurnaceHostedExecutor, type HostedReceipt, SHIPPED_FURNACE_SDK } from "../src/workbench/hosts/furnace-hosted.js";
 import {
   chooseScratchBase,
   dropBeforeAdmissionReply,
@@ -44,25 +43,11 @@ import {
   SETTLED_CLOSE_GRACE_MS,
   sameAttemptReexecution,
   settledCloseTimers,
+  shippedSdkRecord,
 } from "./helpers/furnace-hosted-retry-journeys.js";
 
-/** The shape qa/workbench/furnace-hosted-repaired-sdk.mjs returns. */
-interface RepairedCopy {
-  readonly sdk: FurnaceSdk;
-  readonly root: string;
-  readonly repairedDigest: string;
-  readonly shippedManifestDigest: string;
-  readonly dispose: () => void;
-}
-let repaired: RepairedCopy;
-let env: RetryFaultEnv;
-beforeAll(async () => {
-  repaired = await loadRepairedSdkCopy(tmpdir());
-  env = { Executor: FurnaceHostedExecutor, CapabilityError, sdk: repaired.sdk, scratchBase: chooseScratchBase(process.env).path };
-});
-afterAll(() => {
-  repaired.dispose();
-});
+/** The SHIPPED vendored SDK as installed: no copy to make, so nothing to dispose (wb-zby.2). */
+const env: RetryFaultEnv = { Executor: FurnaceHostedExecutor, CapabilityError, sdk: SHIPPED_FURNACE_SDK, scratchBase: chooseScratchBase(process.env).path };
 
 const count = (markers: readonly string[], attemptId: string): number => markers.filter((m) => m === attemptId).length;
 
@@ -218,10 +203,36 @@ describe("Furnace Work retry while Run establishment is uncertain (wb-0kg.4)", (
     expect(asked).toEqual(["/run/user/1000"]);
   });
 
-  it("the receipt's SDK copy is the shipped artifact (wb-zby): its manifest and provenance digests agree, and both the copy and the shipped SDK decode the context", () => {
-    expect(repaired.repairedDigest).toMatch(/^sha256:[0-9a-f]{64}$/);
-    expect(repaired.shippedManifestDigest).toBe(repaired.repairedDigest);
-    expect(Object.keys(repaired.sdk).sort()).toEqual(["EmbeddedHost", "ExecutionResult", "ExecutorApp", "Furnace", "ResidentSession", "decodeContextValue"]);
+  it("the tier and the receipt runner drive the SHIPPED SDK (wb-zby.2): no copy, and the record both hand the judge names copy shipped with the installed manifest and provenance digests, equal, each read from its own file", () => {
+    // No copy: this tier's SDK IS the adapter's SHIPPED_FURNACE_SDK (the runner drives the built adapter's own), the
+    // vendored package as installed, and the shipped SDK decodes the canonical context itself.
+    expect(env.sdk).toBe(SHIPPED_FURNACE_SDK);
+    expect(Object.keys(env.sdk).sort()).toEqual(["EmbeddedHost", "ExecutionResult", "ExecutorApp", "Furnace", "ResidentSession", "decodeContextValue"]);
+    const record = shippedSdkRecord();
+    expect(Object.keys(record).sort()).toEqual(["copy", "manifestDigest", "provenanceDigest"]);
+    expect(record.copy).toBe("shipped");
+    expect(record.manifestDigest).toMatch(/^sha256:[0-9a-f]{64}$/);
+    expect(record.provenanceDigest).toBe(record.manifestDigest);
+    // Each digest comes from its own file: an in-memory drifted package (a decoy digest before each stated one) reads as
+    // two different digests, and a package stating neither well-formed digest reads "<none>" twice, which the judge refuses.
+    const fixturePackage =
+      (files: Readonly<Record<string, string>>) =>
+      (path: string): string => {
+        const text = files[path];
+        if (text === undefined) throw new Error(`the fixture package has no ${path}`);
+        return text;
+      };
+    const drifted = { manifest: `sha256:${"a".repeat(64)}`, provenance: `sha256:${"b".repeat(64)}`, decoy: `sha256:${"e".repeat(64)}` };
+    const driftedPackage = fixturePackage({
+      "contract/manifest.json": JSON.stringify({ decoy_digest: drifted.decoy, smithy_model_digest: drifted.manifest }),
+      "dist/contract/furnace-executor-contract/provenance.js": `// generated from ${drifted.decoy}\nexport const SMITHY_MODEL_DIGEST = "${drifted.provenance}";\n`,
+    });
+    expect(shippedSdkRecord(driftedPackage)).toEqual({ copy: "shipped", manifestDigest: drifted.manifest, provenanceDigest: drifted.provenance });
+    const unstatedPackage = fixturePackage({
+      "contract/manifest.json": JSON.stringify({ smithy_model_digest: 7 }),
+      "dist/contract/furnace-executor-contract/provenance.js": 'export const SMITHY_MODEL_DIGEST = "sha256:short";\n',
+    });
+    expect(shippedSdkRecord(unstatedPackage)).toEqual({ copy: "shipped", manifestDigest: "<none>", provenanceDigest: "<none>" });
     const document = {
       context_version: 1,
       run: { furnace_run_id: "frn-run-x", beads_run_id: "bd-run-x", formula: null },
@@ -230,14 +241,13 @@ describe("Furnace Work retry while Run establishment is uncertain (wb-0kg.4)", (
       workspace: { root: "/" },
     };
     expect(SHIPPED_FURNACE_SDK.decodeContextValue(document).context.attempt.attempt_id).toBe("frn-atm-x");
-    expect(repaired.sdk.decodeContextValue(document).context.attempt.attempt_id).toBe("frn-atm-x");
   });
 
   it("the five journeys the receipt runner measures satisfy the receipt judge here in the default gate (realised, no finding)", async () => {
     expect(Object.keys(RETRY_FAULT_JOURNEY_RUNNERS)).toEqual([...RETRY_FAULT_JOURNEYS]);
     const journeys: Record<string, unknown> = {};
     for (const name of RETRY_FAULT_JOURNEYS) journeys[name] = await RETRY_FAULT_JOURNEY_RUNNERS[name as keyof typeof RETRY_FAULT_JOURNEY_RUNNERS](env);
-    const assessed = assessRetryFaultJourneys({ journeys, sdk: { copy: "repaired", repairedDigest: repaired.repairedDigest, shippedManifestDigest: repaired.shippedManifestDigest } });
+    const assessed = assessRetryFaultJourneys({ journeys, sdk: shippedSdkRecord() });
     expect(assessed.findings).toEqual([]);
     expect(assessed.realised).toBe(true);
   }, 30_000);

@@ -13,8 +13,9 @@
  * verb, no furnace doctor, no capability probe.
  */
 import { mkdtempSync, readFileSync, rmSync, statSync } from "node:fs";
+import { createRequire } from "node:module";
 import { connect, type Socket } from "node:net";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 import { createInterface } from "node:readline";
 import type { FurnaceOptions } from "@furnace/sdk";
 import type { CapabilityError } from "../../src/workbench/capability-registry.js";
@@ -26,10 +27,42 @@ export interface RetryFaultEnv {
   /** The adapter class: src through vitest in the default gate, the BUILT dist copy in the receipt runner. */
   readonly Executor: typeof FurnaceHostedExecutor;
   readonly CapabilityError: typeof CapabilityError;
-  /** The SDK: the shipped vendored package, or the receipt runner's copy of it (qa/workbench/furnace-hosted-repaired-sdk.mjs; identical digests since wb-zby). */
+  /** The SDK: the SHIPPED vendored package in both drivers (SHIPPED_FURNACE_SDK; no copy since wb-zby.2); shippedSdkRecord() records its digests. */
   readonly sdk: FurnaceSdk;
   /** chooseScratchBase(...).path: every journey runs with TMPDIR set to a fresh private directory under it. */
   readonly scratchBase: string;
+}
+
+/** The receipt's record of the SDK both drivers drive: the SHIPPED vendored package as installed (wb-zby.2). */
+export interface ShippedSdkRecord {
+  readonly copy: "shipped";
+  /** contract/manifest.json's smithy_model_digest, or "<none>" when the manifest states none. */
+  readonly manifestDigest: string;
+  /** The generated validators' SMITHY_MODEL_DIGEST (their provenance module), or "<none>" when it states none. */
+  readonly provenanceDigest: string;
+}
+
+/** The generated provenance module's exported model digest. */
+const PROVENANCE_DIGEST = /\bSMITHY_MODEL_DIGEST = "(sha256:[0-9a-f]{64})"/;
+
+/** One file of the installed @furnace/sdk package (the vendored tarball as npm installed it), by package-relative path. */
+function readInstalledSdkFile(path: string): string {
+  return readFileSync(join(dirname(createRequire(import.meta.url).resolve("@furnace/sdk/package.json")), path), "utf8");
+}
+
+/**
+ * Read an @furnace/sdk package's two model digests, each from its own file: contract/manifest.json's
+ * smithy_model_digest and the generated validators' provenance SMITHY_MODEL_DIGEST, which agree since wb-zby
+ * re-vendored the SDK. `read` defaults to the installed package (a test hands it an in-memory drifted package).
+ * Read-only: nothing is copied or rewritten. The receipt judge realises a measurement only on copy "shipped" with two
+ * well-formed, EQUAL digests, so a digest stated nowhere ("<none>") or a drifted pair is a recorded "not realised",
+ * never a pass.
+ */
+export function shippedSdkRecord(read: (path: string) => string = readInstalledSdkFile): ShippedSdkRecord {
+  const manifest: unknown = JSON.parse(read("contract/manifest.json"));
+  const stated = typeof manifest === "object" && manifest !== null && "smithy_model_digest" in manifest ? manifest.smithy_model_digest : undefined;
+  const provenance = PROVENANCE_DIGEST.exec(read("dist/contract/furnace-executor-contract/provenance.js"))?.[1];
+  return { copy: "shipped", manifestDigest: typeof stated === "string" ? stated : "<none>", provenanceDigest: provenance ?? "<none>" };
 }
 
 /**
