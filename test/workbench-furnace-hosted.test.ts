@@ -3,7 +3,8 @@ import { createRequire } from "node:module";
 import { connect, type Socket } from "node:net";
 import { dirname, join } from "node:path";
 import { createInterface } from "node:readline";
-import type { FurnaceOptions, RunStartRequest } from "@furnace/sdk";
+import type { ExecutorCallback, ExecutorOptions, FurnaceOptions, RunStartRequest } from "@furnace/sdk";
+import ts from "typescript";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { CapabilityError } from "../src/workbench/capability-registry.js";
 import {
@@ -243,6 +244,169 @@ describe("Furnace-hosted execution adapter", () => {
     }
     expect(receipt.identityViolations).toEqual([]);
     await h.executor.close();
+  });
+
+  /**
+   * wb-lrz.5 (FURNACE-PI-R1, FHFD-PI-1): the adapter registers its executor with no durability declaration, so the hello
+   * reply its bridge host gives Furnace's extension driver advertises a DurabilityProfile whose every member is false: the
+   * executor claims no resolve, reattach, checkpoint, restore, replay or cancel-continuity capability. Furnace sends a
+   * durable operation only to an executor whose profile sets that member true and reads an absent profile as all-false
+   * (Furnace:executor-protocol/registry/durability-profile-rules.json@8f20e9bb8; docs/durable-execution/
+   * 00-scope-and-decisions.md:346 "An executor without `durability` claims nothing: every member reads false"). The
+   * shipped SDK (SHIPPED_FURNACE_SDK, vendored from Furnace 9970621d8 since wb-zby) emits `durability` on EVERY hello
+   * (dist/src/resident_session.js hello: `this.app.durability(name).toDocument()`), so these rows pin the WIRE claim read
+   * from a captured hello reply, beside the receipt's own `limits.crashDurability: "none"`, rather than the absence of a
+   * declaration in the source alone. The negative control drives the same assertion against an executor registered WITH
+   * `{ durability: { checkpoint: true } }` and requires it to fail, proving the assertion reads the wire. The census pins
+   * the registration's two-argument form so a copied `{ durability }` example or a re-vendored SDK (wb-lrz.4 re-runs
+   * these rows) cannot turn the claim true unnoticed.
+   */
+  describe("advertises no durability claim on the wire (wb-lrz.5)", () => {
+    /** The nine DurabilityProfile members of the vendored registry (contract/registry/durability-profile-rules.json), sorted. */
+    const PROFILE_MEMBERS = [
+      "cancel_after_controller_restart",
+      "checkpoint",
+      "checkpoint_survives_host_restart",
+      "checkpoint_survives_machine_restart",
+      "deduplicate_admission",
+      "event_replay",
+      "reattach_after_controller_restart",
+      "resolve_by_execution_id",
+      "restore",
+    ];
+    const isObject = (value: unknown): value is Record<string, unknown> => typeof value === "object" && value !== null && !Array.isArray(value);
+
+    /** The descriptor a captured hello reply advertises for `executor`: exactly one entry must carry that name. */
+    const advertised = (helloReply: Line, executor: string): Record<string, unknown> => {
+      const output = helloReply.output;
+      expect(isObject(output), "the hello reply carries an output object").toBe(true);
+      const executors = isObject(output) ? output.executors : undefined;
+      expect(Array.isArray(executors), "the hello output lists executors").toBe(true);
+      const named = (Array.isArray(executors) ? executors : []).filter((entry): entry is Record<string, unknown> => isObject(entry) && entry.name === executor);
+      expect(named, `the hello advertises exactly one executor named ${executor}`).toHaveLength(1);
+      return named[0] ?? {};
+    };
+
+    /** The one assertion the wire row and the negative control share: exactly the nine members, every one false. */
+    const expectNoDurabilityClaim = (helloReply: Line, executor: string): void => {
+      const entry = advertised(helloReply, executor);
+      expect(isObject(entry.durability), "the descriptor carries a durability object").toBe(true);
+      const profile = isObject(entry.durability) ? entry.durability : {};
+      expect(Object.keys(profile).sort()).toStrictEqual(PROFILE_MEMBERS);
+      for (const member of PROFILE_MEMBERS) expect(profile[member], `durability.${member}`).toBe(false);
+      expect(Array.isArray(entry.capabilities), "the descriptor lists capabilities").toBe(true);
+      const capabilities = Array.isArray(entry.capabilities) ? entry.capabilities : [];
+      expect(capabilities, "the capability list read is the real one").toContain("execute");
+      for (const capability of capabilities) {
+        expect(PROFILE_MEMBERS, `capability ${String(capability)} names no profile member`).not.toContain(capability);
+        expect(String(capability), `capability ${String(capability)} carries no durability token`).not.toMatch(/durab/i);
+      }
+    };
+
+    interface RegistrationCensus {
+      readonly executorCalls: ReadonlyArray<{ readonly arguments: number; readonly spread: boolean }>;
+      readonly registerCalls: number;
+      readonly durabilityKeys: number;
+    }
+    const PINNED_REGISTRATION: RegistrationCensus = { executorCalls: [{ arguments: 2, spread: false }], registerCalls: 0, durabilityKeys: 0 };
+    const parse = (source: string): ts.SourceFile => ts.createSourceFile("furnace-hosted.ts", source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+    const visitAll = (node: ts.Node, visit: (node: ts.Node) => void): void => {
+      visit(node);
+      ts.forEachChild(node, (child) => visitAll(child, visit));
+    };
+    /** Every `this.app.<method>(...)` call in the file, read from its syntax tree (a comment or a string is never a call). */
+    const appCalls = (file: ts.SourceFile, method: "executor" | "register"): ts.CallExpression[] => {
+      const calls: ts.CallExpression[] = [];
+      visitAll(file, (node) => {
+        if (!ts.isCallExpression(node) || !ts.isPropertyAccessExpression(node.expression) || node.expression.name.text !== method) return;
+        const receiver = node.expression.expression;
+        if (ts.isPropertyAccessExpression(receiver) && receiver.expression.kind === ts.SyntaxKind.ThisKeyword && receiver.name.text === "app") calls.push(node);
+      });
+      return calls;
+    };
+    const keyText = (name: ts.Node): string | undefined => {
+      if (ts.isIdentifier(name) || ts.isStringLiteral(name) || ts.isNoSubstitutionTemplateLiteral(name)) return name.text;
+      if (ts.isComputedPropertyName(name)) return keyText(name.expression);
+      return undefined;
+    };
+    /** How the file registers executors: each `this.app.executor` call's shape, `this.app.register` calls, and `durability` keys in any object literal. */
+    const registrationCensus = (source: string): RegistrationCensus => {
+      const file = parse(source);
+      let durabilityKeys = 0;
+      visitAll(file, (node) => {
+        if ((ts.isPropertyAssignment(node) || ts.isShorthandPropertyAssignment(node)) && keyText(node.name) === "durability") durabilityKeys += 1;
+      });
+      return {
+        executorCalls: appCalls(file, "executor").map((call) => ({ arguments: call.arguments.length, spread: call.arguments.some((argument) => ts.isSpreadElement(argument)) })),
+        registerCalls: appCalls(file, "register").length,
+        durabilityKeys,
+      };
+    };
+
+    it("advertises exactly the nine DurabilityProfile members on the wire, every one false, beside the receipt's crashDurability none", async () => {
+      let helloReply: Line | undefined;
+      const h = harness(SHIPPED_FURNACE_SDK, success, async (socketPath) => {
+        helloReply = (await driveAttempt(socketPath, "pi-hosted", "frn-atm-durability", 1)).helloReply;
+      });
+      await h.executor.start({ formula: "fixture" });
+      expect(helloReply, "a hello reply was captured from the bridge").toBeDefined();
+      expectNoDurabilityClaim(helloReply ?? {}, "pi-hosted");
+      expect(h.executor.receipt().limits.crashDurability).toBe("none");
+      await h.executor.close();
+    });
+
+    it("fails that same assertion for an executor registered with { durability: { checkpoint: true } }: it reads the wire, not a constant", async () => {
+      const ShippedApp = SHIPPED_FURNACE_SDK.ExecutorApp;
+      /** A fixture SDK that adds ONE durability claim to the adapter's own registration; nothing else differs from the shipped SDK. */
+      class CheckpointClaimingApp extends ShippedApp {
+        override executor(name: string, callback: ExecutorCallback, options: ExecutorOptions = {}): ExecutorCallback {
+          return super.executor(name, callback, { ...options, durability: { checkpoint: true } });
+        }
+      }
+      const claiming: FurnaceSdk = { ...SHIPPED_FURNACE_SDK, ExecutorApp: CheckpointClaimingApp };
+      let helloReply: Line | undefined;
+      const h = harness(claiming, success, async (socketPath) => {
+        helloReply = (await driveAttempt(socketPath, "pi-hosted", "frn-atm-claims-checkpoint", 1)).helloReply;
+      });
+      await h.executor.start({ formula: "fixture" });
+      expect(helloReply, "a hello reply was captured from the bridge").toBeDefined();
+      const captured = helloReply ?? {};
+      expect(() => expectNoDurabilityClaim(captured, "pi-hosted")).toThrow(/durability\.checkpoint/);
+      // The failure is exactly that one claim: the same nine members travel and only checkpoint reads true.
+      expect(advertised(captured, "pi-hosted").durability).toStrictEqual(Object.fromEntries(PROFILE_MEMBERS.map((member) => [member, member === "checkpoint"])));
+      await h.executor.close();
+    });
+
+    it("registers through exactly one two-argument this.app.executor call and writes no durability option key (source census)", () => {
+      const source = readFileSync(new URL("../src/workbench/hosts/furnace-hosted.ts", import.meta.url), "utf8");
+      expect(registrationCensus(source)).toStrictEqual(PINNED_REGISTRATION);
+      expect(source.split("this.app.executor(").length - 1, "exactly one this.app.executor( site").toBe(1);
+      expect(source.match(/\bdurability\s*:/g) ?? [], "no durability: option key").toEqual([]);
+      // Not a token ban: the file legitimately discloses crash durability (header and the receipt's limits).
+      expect(source).toMatch(/crashDurability/);
+      // Falsifiers: every registration shape that would carry a durability claim, or a second registration, moves the census.
+      const [registration] = appCalls(parse(source), "executor");
+      expect(registration, "the registration call was located").toBeDefined();
+      const start = registration?.getStart() ?? 0;
+      const end = registration?.getEnd() ?? 0;
+      const site = source.slice(start, end);
+      const args = (registration?.arguments ?? []).map((argument) => argument.getText());
+      expect(args).toHaveLength(2);
+      const mutants: ReadonlyArray<readonly [string, string]> = [
+        ["inline declaration", `this.app.executor(${args.join(", ")}, { durability: { checkpoint: true } })`],
+        ["shorthand declaration", `this.app.executor(${args.join(", ")}, { durability })`],
+        ["computed key", `this.app.executor(${args.join(", ")}, { ["durability"]: { checkpoint: true } })`],
+        ["options variable", `this.app.executor(${args.join(", ")}, registrationOptions)`],
+        ["register alias", `this.app.register(${args.join(", ")}, { durability: { checkpoint: true } })`],
+        ["spread arguments", `this.app.executor(...[${args.join(", ")}, { durability: { checkpoint: true } }])`],
+        ["second registration", `${site};\n    this.app.executor("pi-shadow", ${args[1] ?? ""})`],
+      ];
+      for (const [name, replacement] of mutants) {
+        const mutant = `${source.slice(0, start)}${replacement}${source.slice(end)}`;
+        expect(mutant, name).not.toBe(source);
+        expect(registrationCensus(mutant), name).not.toStrictEqual(PINNED_REGISTRATION);
+      }
+    });
   });
 
   it("flags a second Attempt served on one session and a repeated Attempt identity as violations, never merging them", async () => {
