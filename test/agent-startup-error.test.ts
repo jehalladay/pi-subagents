@@ -7,8 +7,6 @@
  * diagnostic reaches the parent model as a subagent that ran and reported
  * this — and the model retries the same doomed call.
  */
-import { mkdtempSync, rmSync } from "node:fs";
-import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -18,6 +16,9 @@ vi.mock("../src/worktree.js", async () => {
 });
 
 import subagentsExtension from "../src/index.js";
+import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
+
+installScratchLeakGuard();
 
 function boot() {
   const tools = new Map<string, any>();
@@ -57,7 +58,7 @@ function ctx() {
 describe("Agent startup failures fail the tool call (#179)", () => {
   beforeEach(() => {
     originalCwd = process.cwd();
-    cwd = mkdtempSync(join(tmpdir(), "startup-error-"));
+    cwd = makeScratch("startup-error-");
     process.chdir(cwd);
     originalAgentDir = process.env.PI_CODING_AGENT_DIR;
     originalHome = process.env.HOME;
@@ -72,7 +73,7 @@ describe("Agent startup failures fail the tool call (#179)", () => {
     else process.env.PI_CODING_AGENT_DIR = originalAgentDir;
     if (originalHome == null) delete process.env.HOME;
     else process.env.HOME = originalHome;
-    rmSync(cwd, { recursive: true, force: true });
+    removeScratch(cwd);
   });
 
   for (const background of [false, true]) {

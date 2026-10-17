@@ -9,8 +9,7 @@
  * spawns would be no fix at all. The fallback tests assert the opposite — that
  * it ran, and which agent it ran.
  */
-import { mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
-import { tmpdir } from "node:os";
+import { mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -22,6 +21,9 @@ vi.mock("../src/agent-runner.js", async () => {
 import { runAgent } from "../src/agent-runner.js";
 import { getAllTypes, getAvailableTypes, NO_FALLBACK, registerAgents, setFallbackSubagent } from "../src/agent-types.js";
 import subagentsExtension from "../src/index.js";
+import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
+
+installScratchLeakGuard();
 
 function makePi() {
   const tools = new Map<string, any>();
@@ -74,7 +76,7 @@ const textOf = (r: any): string => r.content[0].text;
 describe("fallbackSubagent gates dispatch through the real Agent tool", () => {
   beforeEach(() => {
     originalCwd = process.cwd();
-    cwd = mkdtempSync(join(tmpdir(), "fallback-wiring-"));
+    cwd = makeScratch("fallback-wiring-");
     writeAgents();
     process.chdir(cwd);
     // A developer's real ~/.pi/subagents.json would otherwise set this very
@@ -95,7 +97,7 @@ describe("fallbackSubagent gates dispatch through the real Agent tool", () => {
     if (originalHome == null) delete process.env.HOME;
     else process.env.HOME = originalHome;
     registerAgents(new Map());
-    rmSync(cwd, { recursive: true, force: true });
+    removeScratch(cwd);
   });
 
   function boot() {
