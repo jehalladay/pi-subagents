@@ -19,8 +19,11 @@
  *    in run status/attempt inspect) and corroborated by the admission receipts the session roster records."
  */
 import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import { RETRY_FAULT_RECEIPT_CONTRACT, RETRY_FAULT_TIER } from "../qa/workbench/furnace-hosted-retry-fault-receipt.mjs";
+import furnaceHostedConfig from "../vitest.furnace-hosted.config.js";
+import { resolveTier } from "./helpers/census.js";
 import {
   assessRetryLive,
   buildRetryLiveReceipt,
@@ -581,6 +584,18 @@ describe("furnace-hosted LIVE retry receipt: evidence-grade shape", () => {
   });
 });
 
+/** The two vitest test options the live tier's focus protection reads from its config module (wb-464 pattern). */
+interface TierTestOptionsShape {
+  readonly allowOnly?: boolean;
+  readonly include?: readonly string[];
+}
+
+interface TierConfigShape {
+  readonly test?: TierTestOptionsShape;
+}
+
+const REPO_ROOT = fileURLToPath(new URL("..", import.meta.url));
+
 describe("furnace-hosted LIVE retry receipt: module and live-tier boundaries", () => {
   const read = (path: string): string => readFileSync(new URL(`../${path}`, import.meta.url), "utf8");
   const receiptModule = read("test/helpers/furnace-hosted-retry-live-receipt.ts");
@@ -606,6 +621,15 @@ describe("furnace-hosted LIVE retry receipt: module and live-tier boundaries", (
     // every Furnace client of the retry rows is pinned to the /tmp workspace and its own state directory
     for (const stateDir of [".furnace-hosted-state-retry", ".furnace-hosted-state-park"]) expect(live).toContain(`stateDir: join(workspace, "${stateDir}")`);
     expect(live).not.toMatch(/['"](?:doctor|--persistent)['"]|capability-probe/);
-    expect(live).not.toMatch(/\b(?:it|describe|test)\.only\b/);
+  });
+
+  it("refuses a focused live row through the tier's own vitest config: forge's furnace-hosted-live command runs vitest.furnace-hosted.config.ts, whose module pins allowOnly false over the live file", () => {
+    // wb-3hc respin 1 (row 508 U1, owner ruling R508): the focus protection is read from the parsed tier command and the
+    // loaded config module (the wb-464 way), never from the tier's source text, so a comment naming a focus modifier
+    // cannot red this row and a real focused row fails the tier run itself (vitest refuses it under allowOnly false).
+    expect(resolveTier(REPO_ROOT, "furnace-hosted-live")).toMatchObject({ ok: true, argv: ["run", "--config", "vitest.furnace-hosted.config.ts"] });
+    const loaded = furnaceHostedConfig as unknown as TierConfigShape;
+    expect(loaded.test?.allowOnly).toBe(false);
+    expect(loaded.test?.include).toEqual(["test/workbench-furnace-hosted-real.test.ts"]);
   });
 });
