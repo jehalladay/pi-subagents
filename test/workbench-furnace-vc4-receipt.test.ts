@@ -7,7 +7,7 @@
  * usable fixture identity, in front of a sentinel furnace that records any call it receives.
  */
 import { spawnSync } from "node:child_process";
-import { chmodSync, existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { chmodSync, existsSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
@@ -32,6 +32,9 @@ import {
   UNREALISED_STEPS,
   verbOf,
 } from "../qa/workbench/live-furnace-vc4-receipt.mjs";
+import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
+
+installScratchLeakGuard();
 
 interface Transition {
   phase: string;
@@ -1132,7 +1135,7 @@ describe("wb-752.3 respin: the runner executed without a usable fixture identity
 
   function run(extra: Record<string, string>): Outcome {
     expect(existsSync(join(repoRoot, "dist/workbench/providers/furnace.js")), "the runner drives dist/: run `npm run build` (the forge gate builds before test)").toBe(true);
-    const sandbox = mkdtempSync(join(tmpdir(), "vc4-identity-"));
+    const sandbox = makeScratch("vc4-identity-");
     try {
       const sentinel = join(sandbox, "furnace-calls.log");
       const fake = join(sandbox, "furnace");
@@ -1152,7 +1155,7 @@ describe("wb-752.3 respin: the runner executed without a usable fixture identity
         calls: existsSync(sentinel) ? readFileSync(sentinel, "utf8") : "",
       };
     } finally {
-      rmSync(sandbox, { recursive: true, force: true });
+      removeScratch(sandbox);
     }
   }
 
