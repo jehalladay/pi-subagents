@@ -9,3 +9,7 @@
 - Live tier (`forge run forge-control-live`, worktree pre-gate run): 6 of 6 rows green, receipt contract `workbench.forge-control-live/v1`, verb counts gate.run 7 / operation.cancel 6, native operation ids op-5200fe6f92ad4fe28f78ea54342217e4, op-7973e3ebf2734e47af7acede521dbb3d, op-a0d54c9c8cc540f3927d396b0d0d307d, op-6eeee55dbb24431ab01373db1c314ea3, op-b48bfadfc7494021a0049a99819731d4, op-d61d0d8930b8423aa1fb2a2ccd69b383, op-1c77ac604cff4f8383249cd60d621e79. The strict booted-tool reading is REALISED: the booted extension's registered tools admitted and cancelled op-1c77ac604cff4f8383249cd60d621e79: projection admission measured through workflow_control itself, over the connection forge_gate_run retained; a never-started id stayed cross-scope.
 - Docs: `docs/workflows.md` names the tool and its grant. `docs/workbench/feature-matrix.md` rows for W16-K/VC-7 still describe the forge leg as unavailable pending retention; a follow-up docs entry updates them.
 - Gate and landing records for this cut go in later entries of this file.
+
+## 2026-10-17 gate and landing record
+
+- Owner gate cmd_6fb2b7202180: all 6 steps passed on the exact tip 576bb9c (lint, typing, build, test, workbench-shell, package-smoke). Landed as landing 70 by fast-forward push on 405e2fc; era grep rc 1. Bead wb-a3s closed in the ledger hop a457f82; the wb-6hb.5 receipt of record's UNREALISED strict reading is closed by this landing (note bound on wb-6hb.5).
