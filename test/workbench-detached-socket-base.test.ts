@@ -1,6 +1,6 @@
 /** wb-71q: the detached Unix socket base prefers a short per-user runtime dir over a long TMPDIR. wb-70b: typed same-id
  * relaunch refusal (R2), per-launch tmpdir socket directory (PF2), receipt socket containment (F3), cleanup contract (PF4). */
-import { chmodSync, existsSync, lstatSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, realpathSync, rmSync, writeFileSync } from "node:fs";
+import { chmodSync, existsSync, lstatSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, realpathSync, writeFileSync } from "node:fs";
 import { createServer } from "node:net";
 import { tmpdir } from "node:os";
 import { basename, dirname, join } from "node:path";
@@ -18,6 +18,9 @@ import {
 } from "../src/workbench/hosts/local-detached.js";
 import { sanitizeWorkbenchText, WORKBENCH_TEXT_LIMIT } from "../src/workbench/redaction.js";
 import { ctx, hermeticDir, makePi } from "./helpers/boot-extension.js";
+import { installScratchLeakGuard, removeScratch, trackScratch } from "./helpers/scratch.js";
+
+installScratchLeakGuard();
 
 const uid = process.getuid?.() ?? 0;
 const scratch: string[] = [];
@@ -25,10 +28,12 @@ const hosts: number[] = [];
 let sandbox: ReturnType<typeof hermeticDir> | undefined;
 let savedEnv: { tmpdir?: string; xdg?: string } | undefined;
 /** Ratified constraint (4): this suite passes under ANY inherited TMPDIR (default, 60 B, the 141 B seat form),
- * so every fixture root sits under this short root and never under tmpdir(). */
+ * so every fixture root sits under this short root and never under tmpdir(). The short parent is why this suite
+ * registers its fixtures through trackScratch rather than makeScratch (which always allocates under tmpdir()):
+ * the leak guard still audits every fixture and its session tree (wb-e37). */
 const SHORT_ROOT = "/tmp";
 function private0700(prefix: string, parent = SHORT_ROOT): string {
-  const dir = realpathSync(mkdtempSync(join(parent, prefix))); chmodSync(dir, 0o700); scratch.push(dir); return dir;
+  const dir = trackScratch(realpathSync(mkdtempSync(join(parent, prefix)))); chmodSync(dir, 0o700); scratch.push(dir); return dir;
 }
 /** A directory of exactly `bytes` bytes under a fresh short-root fixture; the padding is derived from the measured prefix. */
 function exactDir(prefix: string, bytes: number): string {
@@ -36,15 +41,20 @@ function exactDir(prefix: string, bytes: number): string {
   mkdirSync(dir, { mode: 0o700 }); chmodSync(dir, 0o700); return dir;
 }
 function saveEnv(): void { savedEnv = { tmpdir: process.env.TMPDIR, xdg: process.env.XDG_RUNTIME_DIR }; }
-afterEach(() => {
-  for (const pid of hosts.splice(0)) { try { process.kill(pid, "SIGTERM"); } catch {} }
+afterEach(async () => {
+  const stopping = hosts.splice(0);
+  for (const pid of stopping) { try { process.kill(pid, "SIGTERM"); } catch {} }
+  // A stopping host unlinks its socket and removes its per-launch socket directory. Removing the fixtures while it
+  // does so races that removal, and rmSync returns early, without an error, when an entry vanishes mid-walk: the
+  // fixture survives and the scratch guard names it (wb-e37). So each host has exited (bounded) before cleanup.
+  await Promise.all(stopping.map(gone));
   if (savedEnv) {
     if (savedEnv.tmpdir === undefined) delete process.env.TMPDIR; else process.env.TMPDIR = savedEnv.tmpdir;
     if (savedEnv.xdg === undefined) delete process.env.XDG_RUNTIME_DIR; else process.env.XDG_RUNTIME_DIR = savedEnv.xdg;
     savedEnv = undefined;
   }
   sandbox?.restore(); sandbox = undefined;
-  for (const dir of scratch.splice(0)) rmSync(dir, { recursive: true, force: true });
+  removeScratch(...scratch.splice(0));
 });
 const LONG_ROOT = `/${"x".repeat(100)}`;
 /** Bytes the resolver appends to a private runtime base: "/pw-<uid>/<16 hex>.sock". */
