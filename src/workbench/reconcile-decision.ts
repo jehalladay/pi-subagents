@@ -41,7 +41,7 @@ import {
 import { identityDigest } from "./identity.js";
 import { nativeEvidence, nativeRefOf } from "./native-evidence.js";
 import type { NativeRef } from "./observation.js";
-import { stripUnsafeText } from "./redaction.js";
+import { sanitizeWorkbenchText, stripUnsafeText } from "./redaction.js";
 
 export type ReconcileDenyPolicy =
   | "unknown-permission-data"
@@ -236,7 +236,9 @@ export function mintEvidenceReceipt(input: {
     observedAt: input.observedAt,
     outcome: input.failure ?? "returned",
     ...(nativeRef !== undefined ? { nativeRef } : {}),
-    ...(evidence.domainStatus !== undefined ? { domainStatus: stripUnsafeText(evidence.domainStatus).slice(0, 256) } : {}),
+    // Producer text bound for display (wb-71w): the one helper's single-line label layout, which redacts every reading
+    // before it strips and cuts, never a local strip-then-slice.
+    ...(evidence.domainStatus !== undefined ? { domainStatus: sanitizeWorkbenchText(evidence.domainStatus, 256, "label") } : {}),
     evidenceRefs: Object.freeze([...(evidence.evidenceRefs ?? [])]),
     ...(evidence.sourceBasis !== undefined ? { sourceBasis: evidence.sourceBasis } : {}),
     binding,
