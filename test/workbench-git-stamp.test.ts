@@ -252,10 +252,34 @@ const HEADLESS_DIST: Record<string, string> = {
   "dist/workbench/capability-registry.js": "export class CapabilityRegistry {}\n",
 };
 
+/**
+ * The stand-in probe is truthful about enforcement (wb-vko second-lander re-cut after wb-nh3): it attempts a real write into the
+ * read-only installed tree and reports what it observed, so the runner-side assertReadOnlyReceipt accepts it only for a refused
+ * write (EACCES, EPERM, EROFS) or, for a privileged runner, a successful write recorded as privileged-uid. It never prints a
+ * hard-coded readOnlyEnforced.
+ */
+const INSTALL_MINIMAL_PROBE = [
+  'import { rmSync, writeFileSync } from "node:fs";',
+  "const target = new URL(\"./node_modules/.stand-in-write-probe\", import.meta.url);",
+  "const refused = new Set([\"EACCES\", \"EPERM\", \"EROFS\"]);",
+  "let readOnlyEnforced = false;",
+  "let readOnlyReason;",
+  "try {",
+  "  writeFileSync(target, \"x\");",
+  "  rmSync(target, { force: true });",
+  "  if (typeof process.getuid === \"function\" && process.getuid() === 0) readOnlyReason = \"privileged-uid\";",
+  "} catch (error) {",
+  "  if (error && refused.has(error.code)) readOnlyEnforced = true;",
+  "  else throw error;",
+  "}",
+  'console.log(JSON.stringify({ contract: "workbench.install-minimal/v1", readOnlyEnforced, ...(readOnlyReason ? { readOnlyReason } : {}), workflowValue: 42 }));',
+  "",
+].join("\n");
+
 /** A stand-in package npm packs and installs for real, and the probe that reports the one value the harness asserts. */
 const INSTALL_MINIMAL_FIXTURES: Record<string, string> = {
   "package.json": `${JSON.stringify({ name: "git-stamp-install-fixture", version: "0.0.0", type: "module", files: ["package.json"] })}\n`,
-  "qa/workbench/installed-minimal.mjs": 'console.log(JSON.stringify({ contract: "workbench.install-minimal/v1", workflowValue: 42 }));\n',
+  "qa/workbench/installed-minimal.mjs": INSTALL_MINIMAL_PROBE,
 };
 
 const MEMBERS: Member[] = [
@@ -402,6 +426,53 @@ describe.each(MEMBERS)("member entry point $name stamps only its own repository"
     expect(stdout).not.toContain(head);
     expect(stdout).not.toContain(head.slice(0, 7));
     if (member.cleanFlag) expect(receipt.worktreeClean).toBe(false);
+  });
+});
+
+/**
+ * 04:10Z/16:26Z gate F2 (X5a-e) + owner R1 default (b): the five MODULE-ROOTED members root their stamp at the module's
+ * own repository (import.meta.url), never at the caller's cwd. install-minimal and package-smoke are cwd-rooted BY DESIGN
+ * (root = process.cwd()), so they carry no row here.
+ */
+const MODULE_ROOTED = [
+  "status-ledger.mjs",
+  "local-detached-faults.mjs",
+  "local-detached-shared-child.mjs",
+  "live-operator-receipt.mjs",
+  "headless-host-census.mjs",
+];
+
+/** A second, different repository: its HEAD differs from any other fixture's even inside the same second. */
+function otherRepo(): { top: string; head: string } {
+  const { top } = foreignRepo();
+  writeFileSync(join(top, "other-only.txt"), `${top}\n`);
+  git(top, "add", "-A");
+  git(top, "commit", "-q", "-m", "other repository");
+  return { top, head: git(top, "rev-parse", "HEAD") };
+}
+
+describe("module-rooted members stamp the module's repository, never the caller's cwd (X5)", () => {
+  it("the module-rooted table names the five members and each is a member-entry row", () => {
+    expect(MODULE_ROOTED).toHaveLength(5);
+    for (const name of MODULE_ROOTED) expect(MEMBERS.map((member) => member.name)).toContain(name);
+    expect(MEMBERS.map((member) => member.name).filter((name) => !MODULE_ROOTED.includes(name))).toEqual(["install-minimal.mjs"]);
+  });
+
+  describe.each(MEMBERS.filter((member) => MODULE_ROOTED.includes(member.name)))("$name", (member) => {
+    it("stamps repository A's HEAD when spawned with cwd = a different repository B's toplevel", { timeout: 60_000 }, () => {
+      const a = foreignRepo();
+      const entry = stage(a.top, member);
+      git(a.top, "add", "-A");
+      git(a.top, "commit", "-q", "-m", "stage member");
+      const headA = git(a.top, "rev-parse", "HEAD");
+      const b = otherRepo();
+      expect(b.head).not.toBe(headA);
+      const { revision, stdout, receipt } = runMember(member, entry, b.top);
+      expect(revision).toBe((member.form ?? ((full: string) => full))(headA));
+      expect(stdout).not.toContain(b.head);
+      expect(stdout).not.toContain(b.head.slice(0, 7));
+      if (member.cleanFlag) expect(receipt.worktreeClean).toBe(true);
+    });
   });
 });
 
