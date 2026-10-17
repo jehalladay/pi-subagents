@@ -4,6 +4,14 @@ import { CapabilityError, type CapabilityRegistry, type JsonValue } from "../cap
 
 export const REACTIVE_FIBER_CLI_SCHEMA = "reactive-fiber.cli/v1";
 export const REACTIVEFIBER_RENDER_PREVIEW_CONTRACT = "reactivefiber.render.preview/v1";
+/**
+ * The single rf contractSource carrier (program rfcli-performance-mathematical-optimization R2, wb-2j3.12): the
+ * `rf@<release>` prefix states the producer release MEASURED by the R8 live receipt, never a hand-maintained literal.
+ * Receipt of record: `forge run rf-preview` forge cmd_c8fa1da3d9c4 on 2026-10-17 against the installed rf
+ * (RF_PREVIEW_RECEIPT cli_version "0.1.723"; docs/workbench/receipts/wb-2j3.7.md). Re-pin only from a newer stamped
+ * receipt row; both registered reactivefiber.render.preview descriptors consume this constant by identifier.
+ */
+export const REACTIVE_FIBER_CONTRACT_SOURCE = "rf@0.1.723:reactive-fiber.cli/v1 context.render --no-commit";
 
 interface RfEnvelope {
   schema: string; ok: boolean; command: string; operation_id: string;
@@ -87,7 +95,7 @@ function renderArgv(selector:ReactiveFiberRenderSelector,workspaceRoot:string):s
 }
 
 export function registerReactiveFiberRender(registry:CapabilityRegistry,invoke:()=>Promise<RfEnvelope>,workspaceRoot:string):void {
-  registry.register({descriptor:{id:"reactivefiber.render.preview",version:"1.0.0",description:"Preview native RF context with provenance; no authoritative or journal store write (disposable, reconstructible cache-plane writes may occur)",inputSchema:INPUT,effectClass:"read",permissions:["reactivefiber:render"],supportedModes:["invoke"],contractSource:"rf@0.1.583:reactive-fiber.cli/v1 context.render --no-commit"},
+  registry.register({descriptor:{id:"reactivefiber.render.preview",version:"1.0.0",description:"Preview native RF context with provenance; no authoritative or journal store write (disposable, reconstructible cache-plane writes may occur)",inputSchema:INPUT,effectClass:"read",permissions:["reactivefiber:render"],supportedModes:["invoke"],contractSource:REACTIVE_FIBER_CONTRACT_SOURCE},
     async invoke(_input,context){
       if(context.signal.aborted) throw new CapabilityError("transport","RF preview cancelled before invocation.");
       const source=await invoke();
@@ -166,6 +174,6 @@ export async function nativeReactiveFiberRender(selector:ReactiveFiberRenderSele
 }
 
 export function registerNativeReactiveFiberRender(registry:CapabilityRegistry,workspaceRoot:string):void {
-  registry.register({descriptor:{id:"reactivefiber.render.preview",version:"1.0.0",description:"RF noncommitted context with native provenance; no authoritative or journal store write (disposable, reconstructible cache-plane writes may occur)",inputSchema:INPUT,effectClass:"read",permissions:["reactivefiber:render"],supportedModes:["invoke"],contractSource:"rf@0.1.583:reactive-fiber.cli/v1 context.render --no-commit"},
+  registry.register({descriptor:{id:"reactivefiber.render.preview",version:"1.0.0",description:"RF noncommitted context with native provenance; no authoritative or journal store write (disposable, reconstructible cache-plane writes may occur)",inputSchema:INPUT,effectClass:"read",permissions:["reactivefiber:render"],supportedModes:["invoke"],contractSource:REACTIVE_FIBER_CONTRACT_SOURCE},
     invoke:async(input,ctx)=>nativeReactiveFiberRender(input as ReactiveFiberRenderSelector,workspaceRoot,ctx.signal)});
 }
