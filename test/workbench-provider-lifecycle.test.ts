@@ -1,8 +1,7 @@
 /** Provider-boundary regression tests: native custody, typed grants, and bounded CLI output. */
-import { spawnSync } from "node:child_process";
-import { chmodSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { chmodSync, existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { delimiter, join } from "node:path";
 import { HyperUnix, type Workspace } from "@hyperunix/sdk";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { CapabilityRegistry } from "../src/workbench/capability-registry.js";
@@ -50,9 +49,9 @@ function fakeRf(body: string): void {
   const folder = mkdtempSync(join(tmpdir(), "workbench-rf-lifecycle-"));
   folders.push(folder);
   const script = join(folder, "rf");
-  writeFileSync(script, `#!/usr/bin/env node\n${body}\n`);
+  writeFileSync(script, `#!${process.execPath}\n${body}\n`);
   chmodSync(script, 0o700);
-  process.env.PATH = `${folder}:${oldPath ?? ""}`;
+  process.env.PATH = folder;
 }
 
 describe("HyperUnix SDK custody", () => {
@@ -128,16 +127,34 @@ describe("Furnace SDK read ownership", () => {
   });
 });
 
+describe("RF stand-in hermeticity (wb-n0z: a refusal row never goes green through the host rf)", () => {
+  it("the stand-in is the only PATH entry, so no host rf can ever be resolved behind it", () => {
+    fakeRf('process.stdout.write("{}");');
+    expect(process.env.PATH?.split(delimiter)).toHaveLength(1);
+  });
+
+  it("a stand-in that cannot be executed refuses as could-not-launch, never through the host rf", async () => {
+    fakeRf('process.stdout.write("{}");');
+    chmodSync(join(process.env.PATH ?? "", "rf"), 0o600);
+    await expect(nativeReactiveFiberPreview("model", "task", process.cwd())).rejects.toMatchObject({ category: "transport", message: "RF preview could not launch the installed binary." });
+  });
+
+  it("the stand-in interpreter is the absolute node of this run, not a PATH lookup", () => {
+    fakeRf('process.stdout.write("{}");');
+    expect(readFileSync(join(process.env.PATH ?? "", "rf"), "utf8").split("\n")[0]).toBe(`#!${process.execPath}`);
+  });
+});
+
 describe("RF CLI process custody", () => {
   it("turns malformed JSON into a typed transport error without echoing untrusted bytes", async () => {
     fakeRf('process.stdout.write("{private-key:secret-token");');
-    await expect(nativeReactiveFiberPreview("model", "task", process.cwd())).rejects.toMatchObject({ category: "transport" });
+    await expect(nativeReactiveFiberPreview("model", "task", process.cwd())).rejects.toMatchObject({ category: "transport", message: "RF preview returned malformed JSON." });
     await expect(nativeReactiveFiberPreview("model", "task", process.cwd())).rejects.not.toThrow(/secret-token/);
   });
 
   it("rejects a forged success envelope that cannot prove ephemeral provenance", async () => {
     fakeRf('process.stdout.write(JSON.stringify({schema:"reactive-fiber.cli/v1",ok:true,command:"context.render",transaction_id:"txn",result:{ephemeral:false,render_id:"committed",provenance:{graph_revision_id:"x"}},diagnostics:[]}));');
-    await expect(nativeReactiveFiberPreview("model", "task", process.cwd())).rejects.toMatchObject({category:"transport"});
+    await expect(nativeReactiveFiberPreview("model", "task", process.cwd())).rejects.toMatchObject({category:"transport", message: "RF preview returned an unrecognized native envelope."});
   });
 
   it("caps stderr independently even when the child ignores SIGTERM", async () => {
@@ -187,15 +204,15 @@ describe("RF CLI process custody", () => {
     folders.push(folder);
     const marker = join(folder, "started");
     fakeRf(`require("node:fs").writeFileSync(${JSON.stringify(marker)},"started")`);
-    await expect(nativeReactiveFiberPreview("model", "task", process.cwd(), controller.signal)).rejects.toMatchObject({category:"transport"});
-    expect(spawnSync("test",["-f",marker]).status).toBe(1);
+    await expect(nativeReactiveFiberPreview("model", "task", process.cwd(), controller.signal)).rejects.toMatchObject({category:"transport", message: "RF preview cancelled before launch."});
+    expect(existsSync(marker)).toBe(false);
   });
 
   it("returns a typed error when rf cannot be spawned", async () => {
     const folder = mkdtempSync(join(tmpdir(), "workbench-rf-absent-"));
     folders.push(folder);
     process.env.PATH = folder;
-    await expect(nativeReactiveFiberPreview("model", "task", process.cwd())).rejects.toMatchObject({category:"transport"});
+    await expect(nativeReactiveFiberPreview("model", "task", process.cwd())).rejects.toMatchObject({category:"transport", message: "RF preview could not launch the installed binary."});
   });
 
   it("escalates aborted noncooperative children to SIGKILL within a deadline", async () => {
@@ -205,7 +222,7 @@ describe("RF CLI process custody", () => {
     fakeRf(`const fs=require("node:fs"); process.on("SIGTERM",()=>{}); fs.writeFileSync(${JSON.stringify(marker)},"ready"); setInterval(()=>{},1000);`);
     const controller = new AbortController();
     const result = nativeReactiveFiberPreview("model", "task", process.cwd(), controller.signal);
-    await vi.waitFor(() => expect(spawnSync("test", ["-f", marker]).status).toBe(0));
+    await vi.waitFor(() => expect(existsSync(marker)).toBe(true));
     const start = Date.now(); controller.abort();
     await expect(result).rejects.toMatchObject({ category: "transport" });
     expect(Date.now()-start).toBeLessThan(5000);

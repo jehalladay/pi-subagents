@@ -5,8 +5,8 @@
  * acceptance criteria 1-7. Nothing here needs an rf binary, a TTY or the network: the live rf tests stay untouched, and this
  * module never invokes rf (it projects an envelope the host already holds, so it can never issue a history-creating verb). */
 import {createHash} from 'node:crypto';
-import {chmodSync, writeFileSync} from 'node:fs';
-import {join} from 'node:path';
+import {chmodSync, readFileSync, writeFileSync} from 'node:fs';
+import {delimiter, join} from 'node:path';
 import {afterEach, describe, expect, expectTypeOf, it} from 'vitest';
 import {CapabilityError, type JsonValue} from '../src/workbench/capability-registry.js';
 import {nativeEvidence} from '../src/workbench/native-evidence.js';
@@ -537,20 +537,32 @@ describe('engine identity from result.provenance.sdk_versions (wb-693.1 R1, wb-6
     else process.env.PATH = originalPath;
     removeScratch(...stubs.splice(0));
   });
-  /** A stub rf first on PATH that prints `source` and exits 0, so the provider's own envelope validator decides. */
+  /** A stub rf as the ONLY PATH entry (absolute-node shebang, no host rf behind it) that prints `source` and exits 0, so the provider's own envelope validator decides. */
   function stubRf(source: Json): void {
     const dir = makeScratch('rf-engine-identity-');
     stubs.push(dir);
     const binary = join(dir, 'rf');
     writeFileSync(binary, `#!${process.execPath}\nprocess.stdout.write(${JSON.stringify(JSON.stringify(source))});\n`);
     chmodSync(binary, 0o700);
-    process.env.PATH = `${dir}:${originalPath ?? ''}`;
+    process.env.PATH = dir;
   }
   /** One call of the native provider through the stub: the reading the registered reactivefiber.render.preview returns. */
   async function provided(source: Json): Promise<JsonValue> {
     stubRf(source);
     return nativeReactiveFiberPreview('claude-opus-5', 'Summarize workbench integration', WS);
   }
+  // wb-n0z: the stand-in is hermetic - the only PATH entry, so a refusal or a success can never be produced by the host rf.
+  it('wb-n0z: the stand-in is the only PATH entry and its interpreter is the absolute node of this run', () => {
+    stubRf(envelope());
+    const entries = (process.env.PATH ?? '').split(delimiter);
+    expect(entries).toHaveLength(1);
+    expect(readFileSync(join(entries[0] ?? '', 'rf'), 'utf8').split('\n')[0]).toBe(`#!${process.execPath}`);
+  });
+  it('wb-n0z: a stand-in that cannot be executed refuses as could-not-launch, never through the host rf', async () => {
+    stubRf(envelope());
+    chmodSync(join(process.env.PATH ?? '', 'rf'), 0o600);
+    await expect(nativeReactiveFiberPreview('claude-opus-5', 'Summarize workbench integration', WS)).rejects.toMatchObject({category: 'transport', message: 'RF preview could not launch the installed binary.'});
+  });
   const STUB_TEXT = 'hermetic stub render';
   /** A TSX-era noncommitted preview (wb-693.1 acceptance 4): object sdk_versions with both engine keys, engine_metrics and the
    * seven-key formula_terms (max_output_tokens beside the five terms and available_context_tokens), plus a later result key. */

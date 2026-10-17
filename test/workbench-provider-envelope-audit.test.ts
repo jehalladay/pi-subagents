@@ -1,7 +1,7 @@
 /** External producer-boundary regressions for Forge and RF read envelopes. */
 import { chmodSync, existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { join } from 'node:path';
+import { delimiter, dirname, join } from 'node:path';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { CapabilityRegistry } from '../src/workbench/capability-registry.js';
 import { readForgeGateStatus } from '../src/workbench/providers/forge.js';
@@ -64,15 +64,15 @@ const validRf = () => ({
 const dirs: string[] = [];
 const originalPath = process.env.PATH;
 afterEach(() => { process.env.PATH = originalPath; for (const dir of dirs.splice(0)) rmSync(dir, { recursive: true, force: true }); });
-/** Installs a stub rf first on PATH that records the argv it was spawned with (wb-973.1/.3) and returns that record's path. */
+/** Installs a stub rf as the ONLY PATH entry (absolute-node shebang, so no PATH lookup and no host rf behind it) that records the argv it was spawned with (wb-973.1/.3) and returns that record's path. */
 function producer(reply: unknown): string {
   const dir = mkdtempSync(join(tmpdir(), 'rf-envelope-audit-'));
   dirs.push(dir);
   const binary = join(dir, 'rf');
   const argvRecord = join(dir, 'argv.json');
-  writeFileSync(binary, `#!/usr/bin/env node\nrequire('node:fs').writeFileSync(${JSON.stringify(argvRecord)}, JSON.stringify(process.argv.slice(2)));\nprocess.stdout.write(JSON.stringify(${JSON.stringify(reply)}));\nprocess.exit(${(reply as {ok?:boolean})?.ok===false ? 3 : 0});\n`);
+  writeFileSync(binary, `#!${process.execPath}\nrequire('node:fs').writeFileSync(${JSON.stringify(argvRecord)}, JSON.stringify(process.argv.slice(2)));\nprocess.stdout.write(JSON.stringify(${JSON.stringify(reply)}));\nprocess.exit(${(reply as {ok?:boolean})?.ok===false ? 3 : 0});\n`);
   chmodSync(binary, 0o700);
-  process.env.PATH = `${dir}:${originalPath ?? ''}`;
+  process.env.PATH = dir;
   return argvRecord;
 }
 /** The argv the stub rf recorded, or undefined when no rf process was ever spawned. */
@@ -86,6 +86,22 @@ function recordedArgv(record: string): string[] | undefined {
     return token;
   });
 }
+
+describe('RF stand-in hermeticity (wb-n0z: a refusal row never goes green through the host rf)', () => {
+  it('the stand-in is the only PATH entry, so no host rf can ever be resolved behind it', () => {
+    producer(validRf());
+    expect(process.env.PATH?.split(delimiter)).toHaveLength(1);
+  });
+  it('a stand-in that cannot be executed refuses as could-not-launch, never through the host rf', async () => {
+    const record = producer(validRf());
+    chmodSync(join(dirname(record), 'rf'), 0o600);
+    await expect(nativeReactiveFiberPreview('model', 'task', process.cwd())).rejects.toMatchObject({ category: 'transport', message: 'RF preview could not launch the installed binary.' });
+  });
+  it('the stand-in interpreter is the absolute node of this run, not a PATH lookup', () => {
+    const record = producer(validRf());
+    expect(readFileSync(join(dirname(record), 'rf'), 'utf8').split('\n')[0]).toBe(`#!${process.execPath}`);
+  });
+});
 
 describe('RF external CLI preview producer', () => {
   it('retains native ephemeral text and structured graph provenance', async () => {
@@ -128,7 +144,7 @@ describe('RF external CLI preview producer', () => {
     ['string spawn count', { tsx_worker_spawns: '1', tsx_resource_rounds: 0 }],
   ])('refuses %s as a transport error instead of presenting it as a preview', async (_label, engineMetrics) => {
     producer({ ...validRf(), result: { ...validRf().result, engine_metrics: engineMetrics } });
-    await expect(nativeReactiveFiberPreview('model', 'task', process.cwd())).rejects.toMatchObject({ category: 'transport' });
+    await expect(nativeReactiveFiberPreview('model', 'task', process.cwd())).rejects.toMatchObject({ category: 'transport', message: 'RF preview returned an unrecognized or contradictory envelope.' });
   });
   it.each([
     ['absent operation id', () => { const e = validRf(); return { ...e, operation_id: undefined }; }],
@@ -161,7 +177,8 @@ describe('RF external CLI preview producer', () => {
     ['missing output text', () => ({ ...validRf(), result: { ...validRf().result, output: {} } })],
   ])('refuses %s instead of presenting producer data as a preview', async (_label, mutate) => {
     producer(mutate());
-    await expect(nativeReactiveFiberPreview('model', 'task', process.cwd())).rejects.toMatchObject({ category: 'transport' });
+    // wb-n0z: pin the CAUSE, not just the category - a could-not-launch or malformed-JSON transport refusal must not pass this row.
+    await expect(nativeReactiveFiberPreview('model', 'task', process.cwd())).rejects.toMatchObject({ category: 'transport', message: expect.stringMatching(/^RF preview returned an unrecognized (native|or contradictory)/) });
   });
 });
 
