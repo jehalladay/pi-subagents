@@ -96,12 +96,26 @@ export function inspectorEvidenceTarget(model: InspectorModel, state: InspectorS
   const evidenceRef=node?.evidenceRefs[Math.min(Math.max(0,state.evidenceIndex),Math.max(0,(node?.evidenceRefs.length??0)-1))];
   return node && evidenceRef!==undefined ? {scope:node.scope,nativeRef:node.nativeRef,evidenceRef} : undefined;
 }
+/** The page of `count` rows around the row index, centred on it and clamped to the viewport end, from ONE window() read per pane
+ * (P6, wb-feo). Where the page lands depends on the viewport total, which only that read returns, so the read spans every page a
+ * total consistent with the row can select: from the page that ends at the row through the page centred on it. That is at most
+ * half a page read above the drawn rows (docs/10 "Virtualized visible rows + modest overscan"), count + ceil(count/2) - 1 rows in
+ * all, and the drawn page is cut out of it. A row index the read finds past the viewport end (the selection left the viewport and
+ * the stored index outlived it) takes one more read, of the clamped page; a row index that is not a safe integer reads from the
+ * top and is clamped the same way. */
 function rowWindow(model: InspectorModel, state: InspectorState, count: number): {nodes:ObservedNode[];offset:number;total:number;revision:number} {
-  const head=model.projection.window({scope:model.scope,invocationId:model.invocationId,offset:0,limit:1});
-  const index=Math.min(Math.max(0,state.index),Math.max(0,head.total-1));
-  const offset=Math.max(0,Math.min(index-Math.floor(count/2),head.total-count));
-  const page=model.projection.window({scope:model.scope,invocationId:model.invocationId,offset,limit:count});
-  return {...page,offset};
+  const query={scope:model.scope,invocationId:model.invocationId};
+  const half=Math.floor(count/2);
+  const row=Math.max(0,state.index);
+  const exact=Number.isSafeInteger(row);
+  const from=exact ? Math.max(0,row-count+1) : 0;
+  const read=model.projection.window({...query,offset:from,limit:exact ? Math.min(Math.max(0,row-half),count-1-half)+count : count});
+  const index=Math.min(row,Math.max(0,read.total-1));
+  const offset=Math.max(0,Math.min(index-half,read.total-count));
+  const end=Math.min(read.total,offset+count);
+  if(end<=offset) return {nodes:[],offset,total:read.total,revision:read.revision};
+  if(offset>=from && end-from<=read.nodes.length) return {nodes:read.nodes.slice(offset-from,end-from),offset,total:read.total,revision:read.revision};
+  return {...model.projection.window({...query,offset,limit:count}),offset};
 }
 /** One node's bounded relation pages, cached per topology revision. */
 interface RelationPage {revision:number; relations:Relation[]; incoming:Relation[]; partial:boolean; incomingPartial:boolean}

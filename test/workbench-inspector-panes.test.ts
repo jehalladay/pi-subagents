@@ -196,6 +196,8 @@ describe("(d) shared geometry: header, hint, caps, selection", () => {
     draw(model, selectedState("overview"), 100, 30, {});
     const perColumn = window.mock.calls.length;
     expect(perColumn).toBeGreaterThan(0);
+    // P6 (wb-feo, owner R505 N1): "at most one window() call per rendered pane" - the single column is one pane.
+    expect(perColumn).toBe(1);
     window.mockClear();
     draw(model, selectedState("overview"), 100, 30);
     expect(window.mock.calls.length).toBe(2 * perColumn);
@@ -686,6 +688,8 @@ describe("(e) U4 bounded work in a three-pane render", () => {
     layoutInspector(model, selectedState("overview"), { width: 140, rows: 40 });
     const perColumn = window.mock.calls.length;
     expect(perColumn).toBeGreaterThan(0);
+    // P6 (wb-feo, owner R505 N1): one window() call per rendered pane, so the three-pane render below reads three.
+    expect(perColumn).toBe(1);
     for (const spy of [...history, window, truncation, get]) spy.mockClear();
     const lines = draw(model, selectedState("overview"), 140, 40);
     expect(lines.join("\n")).toContain("ev:fake-alpha");
@@ -698,5 +702,143 @@ describe("(e) U4 bounded work in a three-pane render", () => {
     expect(request).not.toHaveBeenCalled();
     expect(abortAll).not.toHaveBeenCalled();
     expect(loads).toBe(0);
+  });
+});
+
+// ---------------------------------------------------------------------------------------------------------------------------
+// wb-feo (owner ruling R505 N1, the src follow-up of wb-6ze.23): P6 "at most one window() call per rendered pane". Measured on
+// 400ece7 (gate cmd_4461460cb0f9) the column read the viewport twice - a 1-row head read for the total, then the page - so a
+// frame cost 2 (single column) / 4 (two panes) / 6 (three panes); each pane now reads its page with one window() call.
+// ---------------------------------------------------------------------------------------------------------------------------
+
+/** Node `at` of modelOf's fixture: even ids are furnace operations, odd ids forge operations. */
+const rowRef = (at: number): NativeRef => ref(at % 2 ? "forge" : "furnace", String(at));
+/** The state the reducer leaves after selecting row `at` with j/k: the row's key and its index. */
+const rowState = (view: InspectorView, at: number): InspectorState => ({ ...initialInspectorState(), view, selected: keyOf(rowRef(at)), index: at });
+/** The column body's page height at a terminal height: the layout's row budget, min(32, rows - 9), as U6 pins it. */
+const pageHeight = (rows: number): number => Math.min(32, rows - 9);
+/** Rows that put the column's page at the top of the viewport, centred mid-viewport and clamped at its end, plus a viewport
+ * shorter than one page. */
+const P6_SELECTIONS = [
+  { name: "first row of 60", count: 60, at: 0 },
+  { name: "middle row of 60", count: 60, at: 30 },
+  { name: "last row of 60", count: 60, at: 59 },
+  { name: "last row of 12", count: 12, at: 11 },
+] as const;
+const P6_SIZES = [
+  [100, 30],
+  [140, 40],
+] as const;
+/** The eight frames one state draws at a size - the single column, then the opted-in panes, each in overview, graph, timeline,
+ * details order, every frame followed by one empty line - as one sha256. */
+function framesDigest(model: InspectorModel, stateOf: (view: InspectorView) => InspectorState, width: number, rows: number): string {
+  const lines: string[] = [];
+  for (const panes of [false, true]) for (const view of VIEWS) lines.push(...layoutInspector(model, stateOf(view), { width, rows, panes }), "");
+  return digest(lines);
+}
+/** Each window() read, as {offset, limit}, the draws of one state issue: one list per draw. */
+function readsOf(model: InspectorModel, draws: readonly (() => unknown)[]): { offset: number; limit: number }[][] {
+  const window = vi.spyOn(model.projection, "window");
+  try {
+    return draws.map((drawOnce) => {
+      window.mockClear();
+      drawOnce();
+      return window.mock.calls.map(([input]) => ({ offset: input.offset, limit: input.limit }));
+    });
+  } finally {
+    window.mockRestore();
+  }
+}
+/** The pre-change renderer's frames for the P6 selections, captured from trunk d56e8a2's renderer (two reads per pane) before
+ * this cut and never re-pinned: one read per pane changes what is read, never what is drawn. */
+const P6_BASE_DIGESTS: Readonly<Record<string, string>> = {
+  "first row of 60 100x30": "ec2fde65bae3b241c3b918268180b4c6533132473254b4b040ca4953f3a8ded1",
+  "first row of 60 140x40": "de633a1b883f4c5bba9f7bacb70ee821dc128a2268c985402585997030452b52",
+  "middle row of 60 100x30": "b763e98007618c7d7bcf93e2212526d09b92aefb1e411d487a260f397f9aeaf5",
+  "middle row of 60 140x40": "f5c801cd1f103c369dc8678d61af56392d1ef1240a4119747811fe572d095af7",
+  "last row of 60 100x30": "caaa5ab9d2839e2edf803bd9482419a785efb58eddbb6dae9422fdd41b28bf6a",
+  "last row of 60 140x40": "7838027a6395f52c060e18585c1745039db5b841a0732e142e1808bd40bd1a81",
+  "last row of 12 100x30": "39bef703896ee0d4ba1e190556c234816a045c5ed1336e1a3d47329ac74f5d55",
+  "last row of 12 140x40": "ec2646dc6c4f4cf9b272328975ca98bf18586bb516cb41bb191ae39b9d0c60a0",
+};
+
+describe("(f) P6 at most one window() call per rendered pane (wb-feo)", () => {
+  it.each(P6_SIZES)("at %ix%i every view reads exactly one window() for the single column and exactly one per rendered pane", (width, rows) => {
+    const panes = paneWidths(width).length;
+    expect(panes).toBe(width >= 120 ? 3 : 2);
+    for (const selection of P6_SELECTIONS) {
+      const model = modelOf(selection.count);
+      for (const view of VIEWS) {
+        const state = rowState(view, selection.at);
+        const [single, composed] = readsOf(model, [() => layoutInspector(model, state, { width, rows }), () => layoutInspector(model, state, { width, rows, panes: true })]);
+        expect(single, `${selection.name} ${view} single column`).toHaveLength(1);
+        expect(composed, `${selection.name} ${view} ${panes} panes`).toHaveLength(panes);
+      }
+    }
+  });
+  it.each(P6_SIZES)("at %ix%i an unselected view and a selection the projection no longer holds read one window() per rendered pane too", (width, rows) => {
+    const model = modelOf(60);
+    const unselected = (view: InspectorView): InspectorState => ({ ...initialInspectorState(), view });
+    const unheld = (view: InspectorView): InspectorState => ({ ...initialInspectorState(), view, selected: keyOf(ref("gone", "fake-evicted")), index: 30 });
+    for (const stateOf of [unselected, unheld])
+      for (const view of VIEWS) {
+        const [single, composed] = readsOf(model, [() => layoutInspector(model, stateOf(view), { width, rows }), () => layoutInspector(model, stateOf(view), { width, rows, panes: true })]);
+        expect(single, `${view} single column`).toHaveLength(1);
+        expect(composed, `${view} panes`).toHaveLength(paneWidths(width).length);
+      }
+    // Same frames as the held rows they stand on: row 0 when nothing is selected, the stored row 30 when its key left the viewport.
+    expect(framesDigest(model, unselected, width, rows)).toBe(P6_BASE_DIGESTS[`first row of 60 ${width}x${rows}`]);
+    expect(framesDigest(model, unheld, width, rows)).toBe(P6_BASE_DIGESTS[`middle row of 60 ${width}x${rows}`]);
+  });
+  it.each(P6_SIZES)("at %ix%i the one read holds the drawn page and reads at most half a page above it (docs/10 'Virtualized visible rows + modest overscan')", (width, rows) => {
+    const page = pageHeight(rows);
+    for (const selection of P6_SELECTIONS) {
+      const model = modelOf(selection.count);
+      let lines: string[] = [];
+      const [reads] = readsOf(model, [() => (lines = layoutInspector(model, rowState("overview", selection.at), { width, rows }))]);
+      expect(reads, selection.name).toHaveLength(1);
+      const [read] = reads;
+      // The drawn rows: the paged footer's range when the page is a slice of the viewport, else the whole (shorter) viewport.
+      const footer = lines.map((line) => /^ Rows (\d+)-(\d+)\/(\d+) · viewport only$/u.exec(line)).find((match) => match !== null);
+      const [first, last] = footer ? [Number(footer[1]) - 1, Number(footer[2]) - 1] : [0, selection.count - 1];
+      expect(last - first + 1, selection.name).toBe(Math.min(page, selection.count));
+      expect(read.offset, selection.name).toBeLessThanOrEqual(first);
+      expect(read.offset + read.limit, selection.name).toBeGreaterThan(last);
+      // Overscan only above the page, never below its lowest possible start (the page that ends at the row) and never more than
+      // half a page: the end clamp needs the viewport total, which only this same read reports.
+      expect(read.offset, selection.name).toBeGreaterThanOrEqual(Math.max(0, selection.at - page + 1));
+      expect(read.limit, selection.name).toBeLessThanOrEqual(page + Math.ceil(page / 2) - 1);
+      // A row in the first half page cannot shift the page, so its read is exactly the page.
+      if (selection.at <= Math.floor(page / 2)) expect(read, selection.name).toEqual({ offset: 0, limit: page });
+      // Below 32 terminal rows the read also stays inside the interim 32-row bound of wb-6ze.23 at every selection.
+      if (rows < 32) expect(read.limit, selection.name).toBeLessThanOrEqual(32);
+    }
+  });
+  it.each(P6_SIZES)("at %ix%i one read per pane draws byte for byte the frames the two-read renderer drew: centred page, clamped at the end", (width, rows) => {
+    const page = pageHeight(rows);
+    const half = Math.floor(page / 2);
+    for (const selection of P6_SELECTIONS) {
+      const model = modelOf(selection.count);
+      expect(framesDigest(model, (view) => rowState(view, selection.at), width, rows), selection.name).toBe(P6_BASE_DIGESTS[`${selection.name} ${width}x${rows}`]);
+      if (selection.count <= page) continue;
+      // The paging rule the frames carry, restated from docs/10's viewport: the page centres the row and stops at the viewport end.
+      const offset = Math.max(0, Math.min(selection.at - half, selection.count - page));
+      const column = layoutInspector(model, rowState("overview", selection.at), { width, rows });
+      expect(column, selection.name).toContain(` Rows ${offset + 1}-${offset + page}/${selection.count} · viewport only`);
+      expect(column.filter((line) => line.includes("❯")), selection.name).toEqual([expect.stringContaining(`Operation ${selection.at} ·`)]);
+    }
+  });
+  it.each(P6_SIZES)("at %ix%i the one corrective read: a row index past the viewport end with no held selection reads twice and draws the clamped last page", (width, rows) => {
+    // Reachable when the selected node leaves the viewport (cap eviction) after the keypress and the stored index outruns the
+    // rows left: only the read itself reports the end, so the clamped page needs a second read. The frames are the last row's.
+    const model = modelOf(60);
+    const stale = (view: InspectorView): InspectorState => ({ ...initialInspectorState(), view, index: 100 });
+    for (const view of VIEWS) {
+      const [single, composed] = readsOf(model, [() => layoutInspector(model, stale(view), { width, rows }), () => layoutInspector(model, stale(view), { width, rows, panes: true })]);
+      expect(single, `${view} single column`).toHaveLength(2);
+      expect(composed, `${view} panes`).toHaveLength(2 * paneWidths(width).length);
+      for (const read of [...single, ...composed]) expect(read.limit, view).toBeLessThanOrEqual(pageHeight(rows) + Math.ceil(pageHeight(rows) / 2) - 1);
+    }
+    expect(framesDigest(model, stale, width, rows)).toBe(P6_BASE_DIGESTS[`last row of 60 ${width}x${rows}`]);
   });
 });
