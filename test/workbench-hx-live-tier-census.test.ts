@@ -299,6 +299,36 @@ function printsReceipt(body: ts.Node): boolean {
   return hit;
 }
 
+/** The receipt must reach stdout directly (wb-tz2.14, the wb-bj6 class): vitest 4.1.10 selects the agent reporter under AI_AGENT /
+ * CLAUDECODE (forge inherits the env) and that reporter drops the console output of passing tests, so a receipt printed with
+ * console.log vanishes from the canonical native-read launch. True when the case writes hxLiveReceipt(...) through
+ * process.stdout.write and routes it through no console member (log, info, debug, ...). */
+function isProcessStdoutWrite(call: ts.CallExpression): boolean {
+  const callee = call.expression;
+  return ts.isPropertyAccessExpression(callee) && callee.name.text === 'write' && ts.isPropertyAccessExpression(callee.expression) &&
+    callee.expression.name.text === 'stdout' && ts.isIdentifier(callee.expression.expression) && callee.expression.expression.text === 'process';
+}
+function isConsoleCall(call: ts.CallExpression): boolean {
+  return ts.isPropertyAccessExpression(call.expression) && ts.isIdentifier(call.expression.expression) && call.expression.expression.text === 'console';
+}
+function containsReceiptCall(node: ts.Node): boolean {
+  let hit = false;
+  each(node, inner => {
+    if (callsNamed(inner, 'hxLiveReceipt')) hit = true;
+  });
+  return hit;
+}
+function writesReceiptToStdout(body: ts.Node): boolean {
+  let written = false;
+  let consoled = false;
+  each(body, node => {
+    if (!ts.isCallExpression(node)) return;
+    if (isProcessStdoutWrite(node) && node.arguments.some(containsReceiptCall)) written = true;
+    if (isConsoleCall(node) && node.arguments.some(containsReceiptCall)) consoled = true;
+  });
+  return written && !consoled;
+}
+
 interface Pins {
   readonly cases: number;
   readonly parked: string[];
@@ -308,6 +338,7 @@ interface Pins {
   readonly leak: boolean;
   readonly invariantInEveryCase: boolean;
   readonly receiptInEveryCase: boolean;
+  readonly receiptOnStdout: boolean;
 }
 /** The kept pins of one live source: each must sit in a running HX case; the predicate and the receipt in every HX case. */
 function pinsOf(name: string, text: string): Pins {
@@ -324,6 +355,7 @@ function pinsOf(name: string, text: string): Pins {
     leak: someRunning(pinsLeakCheck),
     invariantInEveryCase: every(assertsInvariant),
     receiptInEveryCase: every(printsReceipt),
+    receiptOnStdout: every(writesReceiptToStdout),
   };
 }
 
@@ -395,6 +427,10 @@ describe('wb-tz2.2 census: the two live-binary HX test sources', () => {
     expect(pinsOf(file, readRepo(file)).receiptInEveryCase).toBe(true);
   });
 
+  it.each(LIVE)('wb-tz2.14: every HX case in %s writes its receipt with process.stdout.write, never console.log/info (the wb-bj6 class: the agent reporter drops console output)', file => {
+    expect(pinsOf(file, readRepo(file)).receiptOnStdout).toBe(true);
+  });
+
   it.each(LIVE)('R1 fold-in HXFS-PI-3: no describe or it title in %s claims an installed binary', file => {
     const sf = parse(file, readRepo(file));
     const titles = [...suiteTitles(sf), ...casesOf(sf).map(item => item.title)];
@@ -449,7 +485,7 @@ describe('wb-tz2.2 census: the live tier stays separate from the default gate', 
     const pkg: unknown = JSON.parse(readRepo('package.json'));
     const script = typeof pkg === 'object' && pkg !== null && 'scripts' in pkg && typeof pkg.scripts === 'object' && pkg.scripts !== null &&
       'test' in pkg.scripts ? pkg.scripts.test : undefined;
-    expect(script).toBe('vitest run');
+    expect(script).toBe('vitest run --reporter=default --reporter=json --outputFile=.forge/vitest-report.json --includeTaskLocation --expect.requireAssertions');
   });
 });
 
@@ -460,7 +496,7 @@ const WELL_FORMED: readonly string[] = [
   'const verdict = hxLiveInvariant(result);',
   'expect(verdict).toMatchObject({holds: true, violations: []});',
   "expect(JSON.stringify(result)).not.toContain('\"verified\":true');",
-  'console.log(hxLiveReceipt(result, verdict));',
+  'process.stdout.write(hxLiveReceipt(result, verdict) + "\\n");',
 ];
 /** Builds a live HX case source for the falsifier rows; modifiers are spliced at runtime so this file spells none of them. */
 function liveSource(options: {member?: string; option?: string; suiteMember?: string; param?: string; statements?: readonly string[]; title?: string} = {}): string {
@@ -482,7 +518,7 @@ function liveSource(options: {member?: string; option?: string; suiteMember?: st
 describe('wb-tz2.2 census: the scanner itself is falsifiable', () => {
   it('a well-formed live source passes every pin and carries no forbidden expectation', () => {
     const pins = pinsOf('probe.ts', liveSource());
-    expect(pins).toStrictEqual({cases: 1, parked: [], contract: true, representation: true, digest: true, leak: true, invariantInEveryCase: true, receiptInEveryCase: true});
+    expect(pins).toStrictEqual({cases: 1, parked: [], contract: true, representation: true, digest: true, leak: true, invariantInEveryCase: true, receiptInEveryCase: true, receiptOnStdout: true});
     expect(forbiddenExpectations(parse('probe.ts', liveSource()))).toStrictEqual([]);
   });
 
@@ -517,15 +553,37 @@ describe('wb-tz2.2 census: the scanner itself is falsifiable', () => {
       "// expect(result).toMatchObject({contract: 'hyperunix.find/v1', source: {representation: 'hyperunix.result/1'}, runtime: {binarySha256: expect.stringMatching(/^[0-9a-f]{64}$/)}});",
       '/* const verdict = hxLiveInvariant(result); expect(verdict).toMatchObject({holds: true}); */',
       "// expect(JSON.stringify(result)).not.toContain('\"verified\":true');",
-      '// console.log(hxLiveReceipt(result, verdict));',
+      '// process.stdout.write(hxLiveReceipt(result, verdict) + "\\n");',
     ]});
-    expect(pinsOf('probe.ts', commented)).toMatchObject({cases: 1, contract: false, representation: false, digest: false, leak: false, invariantInEveryCase: false, receiptInEveryCase: false});
+    expect(pinsOf('probe.ts', commented)).toMatchObject({cases: 1, contract: false, representation: false, digest: false, leak: false, invariantInEveryCase: false, receiptInEveryCase: false, receiptOnStdout: false});
+  });
+
+  it.each(['console.log', 'console.info', 'console.debug', 'console.warn', 'console.error'])('wb-tz2.14: a receipt printed with %s is refused by the stdout pin while printsReceipt still sees it', member => {
+    const statements = [...WELL_FORMED.slice(0, -1), `${member}(hxLiveReceipt(result, verdict));`];
+    expect(pinsOf('probe.ts', liveSource({statements}))).toMatchObject({receiptInEveryCase: true, receiptOnStdout: false});
+  });
+
+  it('wb-tz2.14: the template-literal form the live tests use passes the stdout pin', () => {
+    const template = [...WELL_FORMED.slice(0, -1), ['process.stdout.write(`$', '{hxLiveReceipt(result, verdict)}\\n`);'].join('')];
+    expect(pinsOf('probe.ts', liveSource({statements: template})).receiptOnStdout).toBe(true);
+  });
+
+  it('wb-tz2.14: a receipt also echoed through console is refused; a bare process.stdout.write argument passes', () => {
+    const both = [...WELL_FORMED, 'console.log(hxLiveReceipt(result, verdict));'];
+    expect(pinsOf('probe.ts', liveSource({statements: both})).receiptOnStdout).toBe(false);
+    const bare = [...WELL_FORMED.slice(0, -1), 'process.stdout.write(hxLiveReceipt(result, verdict));'];
+    expect(pinsOf('probe.ts', liveSource({statements: bare})).receiptOnStdout).toBe(true);
+  });
+
+  it('wb-tz2.14: a process.stdout.write of something other than the receipt does not satisfy the stdout pin', () => {
+    const unrelated = [...WELL_FORMED.slice(0, -1), "process.stdout.write('done\\n');", 'const line = hxLiveReceipt(result, verdict);'];
+    expect(pinsOf('probe.ts', liveSource({statements: unrelated}))).toMatchObject({receiptInEveryCase: true, receiptOnStdout: false});
   });
 
   it.each(['skip', 'todo', 'only', 'fails', 'skipIf(true)', 'runIf(false)', 'unknownModifier'])('a case registered through it.%s is parked and pins nothing', member => {
     const pins = pinsOf('probe.ts', liveSource({member}));
     expect(pins.parked).toHaveLength(1);
-    expect(pins).toMatchObject({contract: false, representation: false, digest: false, leak: false, invariantInEveryCase: false, receiptInEveryCase: false});
+    expect(pins).toMatchObject({contract: false, representation: false, digest: false, leak: false, invariantInEveryCase: false, receiptInEveryCase: false, receiptOnStdout: false});
   });
 
   it.each(['skip', 'todo', 'only', 'fails'])('a case carrying the options flag %s: true is parked', option => {

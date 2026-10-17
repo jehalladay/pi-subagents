@@ -71,6 +71,12 @@ function isPreviewEnvelope(source: unknown, exit: number|null, workspaceRoot: st
       typeof result.diagnostics_summary.has_warnings!=="boolean" ||
       !record(work) || Object.keys(work).length!==6 || work.storage_write_count!==0 ||
       !["source_capture_count","fiber_signal_count","component_render_count","lens_resolution_count","necessity_eval_count","storage_write_count"].every(key=>nonnegativeInteger(work[key]))) return false;
+  // wb-693.4: engine_metrics rides committed and ephemeral forms alike and is closed to the two TSX counters; a pre-TSX rf states none.
+  if (Object.hasOwn(result,"engine_metrics")) {
+    const metrics=result.engine_metrics;
+    if (!record(metrics) || Object.keys(metrics).length!==2 ||
+        !["tsx_worker_spawns","tsx_resource_rounds"].every(key=>Object.hasOwn(metrics,key) && nonnegativeInteger(metrics[key]))) return false;
+  }
   return true;
 }
 const LEGACY_INPUT={type:"object",properties:{model:{type:"string",minLength:1},task:{type:"string",minLength:1}},required:["model","task"],additionalProperties:false};
@@ -95,7 +101,7 @@ function renderArgv(selector:ReactiveFiberRenderSelector,workspaceRoot:string):s
 }
 
 export function registerReactiveFiberRender(registry:CapabilityRegistry,invoke:()=>Promise<RfEnvelope>,workspaceRoot:string):void {
-  registry.register({descriptor:{id:"reactivefiber.render.preview",version:"1.0.0",description:"Preview native RF context with provenance and no durable write",inputSchema:INPUT,effectClass:"read",permissions:["reactivefiber:render"],supportedModes:["invoke"],contractSource:REACTIVE_FIBER_CONTRACT_SOURCE},
+  registry.register({descriptor:{id:"reactivefiber.render.preview",version:"1.0.0",description:"Preview native RF context with provenance; no authoritative or journal store write (disposable, reconstructible cache-plane writes may occur)",inputSchema:INPUT,effectClass:"read",permissions:["reactivefiber:render"],supportedModes:["invoke"],contractSource:REACTIVE_FIBER_CONTRACT_SOURCE},
     async invoke(_input,context){
       if(context.signal.aborted) throw new CapabilityError("transport","RF preview cancelled before invocation.");
       const source=await invoke();
@@ -174,6 +180,6 @@ export async function nativeReactiveFiberRender(selector:ReactiveFiberRenderSele
 }
 
 export function registerNativeReactiveFiberRender(registry:CapabilityRegistry,workspaceRoot:string):void {
-  registry.register({descriptor:{id:"reactivefiber.render.preview",version:"1.0.0",description:"RF noncommitted context with native provenance",inputSchema:INPUT,effectClass:"read",permissions:["reactivefiber:render"],supportedModes:["invoke"],contractSource:REACTIVE_FIBER_CONTRACT_SOURCE},
+  registry.register({descriptor:{id:"reactivefiber.render.preview",version:"1.0.0",description:"RF noncommitted context with native provenance; no authoritative or journal store write (disposable, reconstructible cache-plane writes may occur)",inputSchema:INPUT,effectClass:"read",permissions:["reactivefiber:render"],supportedModes:["invoke"],contractSource:REACTIVE_FIBER_CONTRACT_SOURCE},
     invoke:async(input,ctx)=>nativeReactiveFiberRender(input as ReactiveFiberRenderSelector,workspaceRoot,ctx.signal)});
 }

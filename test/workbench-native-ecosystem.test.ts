@@ -12,7 +12,7 @@ describe('native SDK ecosystem',()=>{
     const result=await nativeHyperUnixFind(process.cwd(),'hx.fs/regular-file','src');
     expect(result).toMatchObject({contract:'hyperunix.find/v1',source:{representation:'hyperunix.result/1'},runtime:{binarySha256:expect.stringMatching(/^[0-9a-f]{64}$/)}});
     expect(hxLiveInvariant(result)).toMatchObject({holds:true,violations:[]});
-    console.log(hxLiveReceipt(result));
+    process.stdout.write(`${hxLiveReceipt(result)}\n`);
   },60_000);
   it('Furnace inspect reports missing state without creating a Run',async()=>{
     await expect(nativeFurnaceRunInspect(process.cwd(),'frn-run-nonexistent')).rejects.toThrow(/state_error|not initialized/i);

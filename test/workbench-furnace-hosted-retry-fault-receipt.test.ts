@@ -858,7 +858,7 @@ describe("furnace-hosted retry-fault receipt: module, runner and helper boundari
     const block = '[build.commands.furnace-hosted-retry-fault]\ncommand = "node qa/workbench/furnace-hosted-retry-fault.mjs"\ntimeout = 120\n';
     expect(forge).toContain(block);
     expect(forge.match(/\[build\.commands\.furnace-hosted-retry-fault\]/g)).toHaveLength(1);
-    expect(forge).toContain('gate = ["lint", "typing", "build", "test", "workbench-shell", "package-smoke"]\n');
+    expect(forge).toContain('gate = ["lint", "typing", "build", "test", "census", "workbench-shell", "package-smoke"]\n');
     const gate = /^gate = \[(.*)\]$/m.exec(forge)?.[1] ?? "";
     expect(gate).not.toContain("furnace-hosted-retry-fault");
     const at = forge.indexOf(block);

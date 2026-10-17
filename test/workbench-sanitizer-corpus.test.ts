@@ -21,8 +21,9 @@
  */
 import { createHash } from "node:crypto";
 import type { SDKMessage } from "@anthropic-ai/claude-agent-sdk";
+import type * as ForgeSdk from "@forge/sdk";
 import type { LogsReadDto, Response } from "@furnace/sdk";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { safeWorkflowTerminalText } from "../src/ui/workflow-card.js";
 import { type InspectorModel, initialInspectorState, layoutInspector } from "../src/ui/workflow-inspector.js";
 import { ATTENTION_CLOCK_CAVEAT, ATTENTION_CONTRACT, type AttentionReport, selectAttention } from "../src/workbench/attention.js";
@@ -57,6 +58,24 @@ import { buildWorkflowCatalogReply, buildWorkflowInspectReply, type CapabilityCa
 import { selectLinkedTopology } from "../src/workbench/topology-slice.js";
 import { reconcileGrant } from "../src/workflow/reconcile.js";
 import { detachedCatchDriver } from "./helpers/detached-peer.js";
+import { forgeGateCatchDriver } from "./helpers/forge-gate-catch.js";
+
+/**
+ * wb-a3s.1 seam: @forge/sdk's ServerConnection.spawn() returns a connection whose initialize() rejects with the text the
+ * DIRECT-CALLER row below sets (a mock is registered per test file, so it lives here; the driver lives in
+ * test/helpers/forge-gate-catch.ts). Nothing else in @forge/sdk is replaced, and no other corpus site spawns a connection.
+ */
+const forgeSeam = vi.hoisted(() => ({ message: "" }));
+vi.mock("@forge/sdk", async importOriginal => {
+  const original = await importOriginal<typeof ForgeSdk>();
+  const connection = {
+    initialize: async (): Promise<never> => {
+      throw new Error(forgeSeam.message);
+    },
+    close: async (): Promise<void> => {},
+  };
+  return { ...original, ServerConnection: { spawn: () => connection } };
+});
 
 const cp = (code: number): string => String.fromCodePoint(code);
 const NUL = cp(0x00);
@@ -731,6 +750,15 @@ function observeTexts(raw: string): string[] {
  */
 const detachedCatchTexts = detachedCatchDriver();
 
+/**
+ * DIRECT-CALLER row (wb-a3s.1, owner follow-up to wb-a3s): the forge_gate_run catch in src/index.ts hands the connection's error
+ * message (compatibility verdicts, capability refusals, start-timeout, transport errors) straight to the one helper (text layout).
+ * The hoisted @forge/sdk fake rejects initialize() with the probe text; the registered tool replies for a target inside the sandbox.
+ */
+const forgeGateCatchTexts = forgeGateCatchDriver(raw => {
+  forgeSeam.message = raw;
+});
+
 /** wb-h8f.10: latency.ts displayText (selectLatencyDecomposition), the provider and the evidence-ref paths, joined to the corpus in the same commit as its routing through the one helper. */
 function latencyTexts(raw: string): string[] {
   const node: ObservedNode = {
@@ -859,6 +887,7 @@ const SITES: readonly Site[] = [
   { site: "claude-evidence.ts sanitizeRow (readClaudeMessageEvidence preview lines)", texts: claudeEvidenceTexts },
   { site: "site 18 detached-observer.ts shown (projectDetachedReading)", texts: detachedTexts },
   { site: "src/index.ts workflow_detached launch/inspect catch (DIRECT-CALLER, the detached refusal text)", texts: detachedCatchTexts },
+  { site: "src/index.ts forge_gate_run catch (DIRECT-CALLER, the forge connection error text)", texts: forgeGateCatchTexts },
   { site: "sites 19/20 workflow_inspect and workbench_catalog replies", texts: replyTexts },
   { site: "site 12 execute.ts buildWorkflowExecuteReply (DIRECT-CALLER: reason, policy value and key, native reference id and scope, definition id, invocation reference)", texts: executeTexts },
   { site: "site 22 observe-query.ts clean (observeInvocation)", texts: observeTexts },
@@ -875,6 +904,13 @@ describe("wb-952 one-helper corpus through every census site's public function",
       expectClean(await texts(probe.raw), probe);
     });
   }
+});
+
+describe("wb-a3s.1 forge_gate_run catch row is not vacuous", () => {
+  it("a plain connection refusal reaches the catch and comes back as the reply text", async () => {
+    const plain = "wb-a3s.1 obviously fake forge connection refusal";
+    expect(await forgeGateCatchTexts(plain)).toEqual([plain]);
+  });
 });
 
 describe("wb-952 acceptance set (17:32Z): every unit between, inside and both, through every census site", () => {
@@ -1261,5 +1297,258 @@ describe("wb-yr9 the bound never cuts a surrogate pair: one surrogate-safe cut i
       }
     }
     expect(failures).toEqual([]);
+  });
+});
+
+// ---------------------------------------------------------------------------------------------------------------------
+// wb-y5y: the straddle-safe scan option, through every census site that bounds producer text before the helper reads it.
+// ---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * wb-y5y (W19 input hygiene; owner row 443 R1+R3 in one bead, row-462 F3 routed into it). Spec lines pinned, quoted from the
+ * bead: "a straddle-safe scan option in redaction.ts (clip with an overlap window wider than the longest unsafe unit, the ig7
+ * transcript pre-bound shape) ... no caller-level bound changes, no MAX_SCAN contract change"; SCOPE: "redaction.ts gains a
+ * straddle-safe scan OPTION (overlap window wider than the longest unsafe unit; callers opt in); the three named sites adopt it";
+ * ACCEPTANCE: "A straddle probe (payload split across the scan window by a run of zero-width units) through furnace-evidence.ts,
+ * claude-evidence.ts and selectLinkedTopology leaves no unsafe unit visible in the output; the opt-in helper option is covered by
+ * red-first rows and a throwaway mutant that narrows the overlap window goes RED". Routed F3 (owner note): "evidence-loader
+ * admit() carries a pre-existing slice-before-sanitize site ... fold it into this bead's overlap-window scan option so the cure
+ * covers furnace-evidence.ts:96-97, claude-evidence.ts:228, the topology labelOf straddle, AND the admit() site in one shape".
+ *
+ * Each scanned site examines a producer string only up to its own bound (topology-slice.ts 1,024; furnace-evidence.ts 2,000 for
+ * a log line, the request id, the next cursor and the native failure message; claude-evidence.ts 4,000; evidence-loader.ts 120
+ * for the producer receipt). A probe is a lead letter, a run of zero-width spaces and then an obviously fake payload, placed so
+ * the bound falls at every offset across the payload. Two payload classes: a quoted assignment value (the bound cuts the value
+ * open) and an escape sequence (the bound cuts the sequence open, so its body or parameter bytes would be text). The whole-text
+ * read hides every payload; a window may show less than the whole text, never more. A plain tail placed at the bound pins each
+ * site's bound itself: the unit before it can show, the unit at it never does, as before the site opted in.
+ */
+const Y5Y_ELLIPSIS = cp(0x2026);
+const Y5Y_CREDENTIALS: readonly (readonly [name: string, payload: string])[] = [
+  ["double-quoted assignment", 'password: "y5yfakeone Y5YFAKETWO Y5YFAKETHREE"'],
+  ["single-quoted assignment", "secret: 'y5yfakeone Y5YFAKETWO Y5YFAKETHREE'"],
+];
+const Y5Y_BODY = "Y5YBODY".repeat(16);
+/** Escape sequences longer than any fixed margin: 112-unit bodies, and CSI parameter runs of 80 units (one with an intermediate byte). */
+const Y5Y_UNITS: readonly (readonly [name: string, unit: string, fragment: string])[] = [
+  ["OSC ended by BEL", `${ESC}]0;${Y5Y_BODY}${BEL}`, "Y5YBODY"],
+  ["OSC ended by ESC backslash", `${ESC}]2;${Y5Y_BODY}${ESC}\\`, "Y5YBODY"],
+  ["DCS ended by ESC backslash", `${ESC}P${Y5Y_BODY}${ESC}\\`, "Y5YBODY"],
+  ["APC ended by ESC backslash", `${ESC}_${Y5Y_BODY}${ESC}\\`, "Y5YBODY"],
+  ["8-bit OSC ended by 8-bit ST", `${C1_OSC}0;${Y5Y_BODY}${C1_ST}`, "Y5YBODY"],
+  ["8-bit DCS ended by BEL", `${C1_DCS}${Y5Y_BODY}${BEL}`, "Y5YBODY"],
+  ["CSI with a long parameter run", `${ESC}[${"7;".repeat(40)}m`, "7;7;"],
+  ["8-bit CSI with a long parameter run", `${C1_CSI}${"6;".repeat(40)}m`, "6;6;"],
+  ["CSI with a long parameter run and an intermediate byte", `${ESC}[${"5;".repeat(40)} q`, "5;5;"],
+];
+
+interface ScannedSite {
+  readonly site: string;
+  /** The site's own scan bound, in UTF-16 code units of the string it examines. */
+  readonly scan: number;
+  /** Code units the site writes before the raw text inside the string it bounds. */
+  readonly prefix: number;
+  readonly texts: (raw: string) => string[] | Promise<string[]>;
+  /** The texts the site's own bound applies to, when `texts` also holds display paths that bound the raw text by limits of their own. */
+  readonly bounded?: (raw: string) => string[] | Promise<string[]>;
+}
+
+const Y5Y_FURNACE_RUN = "frn-run-evidence-1";
+const Y5Y_FURNACE_ATTEMPT = "frn-atm-evidence-1-2";
+/** The furnace read's receipt and failure paths: the request id, the next cursor, or the native failure message carry the raw text. */
+async function furnaceReceiptTexts(raw: string, field: "requestId" | "nextCursor" | "failure"): Promise<string[]> {
+  const data: LogsReadDto = {
+    run_id: Y5Y_FURNACE_RUN, attempt_id: Y5Y_FURNACE_ATTEMPT, stream: "stderr", complete: true, limit: 4096, returned: 1,
+    next_cursor: field === "nextCursor" ? raw : null, lossy: false, lines: ["ok"],
+  };
+  const response: Response<LogsReadDto> = { protocolVersion: 1, kind: "logs_read", requestId: field === "requestId" ? raw : "req-logs", data, exit: { code: 0, signal: null }, stderr: "" };
+  const read = field === "failure" ? async (): Promise<Response<LogsReadDto>> => { throw new Error(raw); } : async (): Promise<Response<LogsReadDto>> => response;
+  try {
+    const content = await readFurnaceAttemptLogEvidence({
+      client: { logs: { read } }, runId: Y5Y_FURNACE_RUN, workspaceRoot: "/tmp/furnace-evidence-ws",
+      owningRunNode: { nativeRef: { provider: "furnace", type: "run", id: Y5Y_FURNACE_RUN, scope: "/tmp/furnace-evidence-ws" }, evidenceRefs: [Y5Y_FURNACE_ATTEMPT] },
+      attemptId: Y5Y_FURNACE_ATTEMPT, stream: "stderr", maxBytes: 4096, maxLines: 200, timeoutMs: 2000,
+      signal: new AbortController().signal, capturedAt: () => NOW,
+    });
+    if (field === "failure") throw new Error("expected the native failure to surface");
+    return field === "requestId" ? [content.producerReceipt.requestId] : [content.producerReceipt.nextCursor ?? ""];
+  } catch (error) {
+    if (field !== "failure" || !(error instanceof CapabilityError)) throw error;
+    return [error.message];
+  }
+}
+
+/** The producer receipt alone: storeTexts lists it last, after the preview lines and the kind, which have bounds of their own. */
+async function storeReceiptTexts(raw: string): Promise<string[]> {
+  return (await storeTexts(raw)).slice(-1);
+}
+
+const FURNACE_FAILURE_PREFIX = "Furnace evidence read unavailable: ";
+const SCANNED_SITES: readonly ScannedSite[] = [
+  { site: "site 7 topology-slice.ts labelOf (selectLinkedTopology)", scan: 1_024, prefix: 0, texts: topologyTexts },
+  { site: "site 15 furnace-evidence.ts redactedRows (a log line)", scan: 2_000, prefix: 0, texts: furnaceEvidenceTexts },
+  { site: "site 15 furnace-evidence.ts sanitize (the request id)", scan: 2_000, prefix: 0, texts: raw => furnaceReceiptTexts(raw, "requestId") },
+  { site: "site 15 furnace-evidence.ts sanitize (the next cursor)", scan: 2_000, prefix: 0, texts: raw => furnaceReceiptTexts(raw, "nextCursor") },
+  { site: "site 15 furnace-evidence.ts sanitize (the native failure message)", scan: 2_000, prefix: FURNACE_FAILURE_PREFIX.length, texts: raw => furnaceReceiptTexts(raw, "failure") },
+  { site: "claude-evidence.ts sanitizeRow (readClaudeMessageEvidence)", scan: 4_000, prefix: 0, texts: claudeEvidenceTexts },
+  { site: "site 16 evidence-loader.ts admit (the producer receipt, routed F3)", scan: 120, prefix: 0, texts: storeTexts, bounded: storeReceiptTexts },
+];
+
+/** A lead letter and zero-width spaces put the bound `inside` code units into the payload; `inside` runs from 0 to its length. */
+function straddle(site: ScannedSite, payload: string, inside: number): string {
+  return `x${ZWSP.repeat(site.scan - site.prefix - 1 - inside)}${payload}`;
+}
+
+/** Every cut across a payload, from just before its first unit to just after its last. */
+const everyCut = (payload: string): number[] => Array.from({ length: payload.length + 1 }, (_, inside) => inside);
+/** The cuts near both ends of a long sequence and every fifth one between them, deep inside its body included. */
+const sequenceCuts = (unit: string): number[] => everyCut(unit).filter(inside => inside <= 8 || inside >= unit.length - 8 || inside % 5 === 0);
+
+function straddleProbes(site: ScannedSite, name: string, payload: string, cuts: readonly number[], secrets: readonly string[]): Probe[] {
+  return cuts.map(inside => ({ id: `${name}, cut ${inside} units in`, raw: straddle(site, payload, inside), secrets }));
+}
+
+describe("wb-y5y a payload split across the scan bound by a run of zero-width units shows nothing the whole text hides", () => {
+  for (const site of SCANNED_SITES) {
+    it(`${site.site}: a quoted assignment value the bound cuts open stays hidden at every cut`, async () => {
+      const failures: string[] = [];
+      for (const [name, payload] of Y5Y_CREDENTIALS) {
+        for (const probe of straddleProbes(site, name, payload, everyCut(payload), ["y5y", "Y5Y"])) {
+          // The whole text hides the value; a window may show less, never more.
+          expect(sanitizeWorkbenchText(probe.raw, Number.MAX_SAFE_INTEGER, "lines")).not.toMatch(/y5y/i);
+          const texts = await site.texts(probe.raw);
+          if (texts.some(text => /y5y/i.test(text) || UNSAFE_DISPLAY.test(text))) failures.push(probe.id);
+        }
+      }
+      expect(failures).toEqual([]);
+    });
+
+    it(`${site.site}: an escape sequence the bound cuts open shows none of its body or parameter bytes`, async () => {
+      const failures: string[] = [];
+      for (const [name, unit, fragment] of Y5Y_UNITS) {
+        for (const probe of straddleProbes(site, name, unit, sequenceCuts(unit), [fragment])) {
+          expect(sanitizeWorkbenchText(probe.raw, Number.MAX_SAFE_INTEGER, "lines")).not.toContain(fragment);
+          const texts = await site.texts(probe.raw);
+          if (texts.some(text => text.includes(fragment) || UNSAFE_DISPLAY.test(text))) failures.push(probe.id);
+        }
+      }
+      expect(failures).toEqual([]);
+    });
+  }
+});
+
+describe("wb-y5y each adopting site examines exactly the bound it examined before it opted in", () => {
+  for (const site of SCANNED_SITES) {
+    it(`${site.site}: the unit before the bound can show, the unit at the bound and every later one never do`, async () => {
+      const texts = site.bounded ?? site.texts;
+      // Zero-width spaces display as nothing, so a plain tail read past the bound would show right after the lead letter.
+      const atBound = await texts(straddle(site, "Y5YBEYOND", 0));
+      expect(atBound.filter(text => text.includes("Y5Y"))).toEqual([]);
+      const oneIn = await texts(straddle(site, "Y5YBEYOND", 1));
+      expect(oneIn.filter(text => text.includes("Y5"))).toEqual([]);
+      expect(oneIn.filter(text => text.includes("xY"))).not.toEqual([]);
+    });
+  }
+});
+
+describe("wb-y5y the opt-in scan option of the one helper (redaction.ts sanitizeWorkbenchText)", () => {
+  const LAYOUTS = ["text", "terminal", "label", "lines"] as const;
+
+  it("examines at most `scan` code units: nothing after the bound shows, in every layout", () => {
+    const raw = `${"a".repeat(16)}Y5YBEYONDTHEBOUND`;
+    for (const layout of LAYOUTS) expect(sanitizeWorkbenchText(raw, 2_000, layout, { scan: 16 })).toBe("a".repeat(16));
+  });
+
+  it("depends only on the units before the bound: two texts that share them display the same, whatever follows", () => {
+    for (const [, unit] of Y5Y_UNITS) {
+      const head = `lead ${unit.slice(0, 40)}`;
+      const scan = head.length;
+      const ended = `${head}${unit.slice(40)} visible after`;
+      const unended = `${head} Y5YTAIL never ended`;
+      for (const layout of LAYOUTS) {
+        expect(sanitizeWorkbenchText(ended, 2_000, layout, { scan })).toBe(sanitizeWorkbenchText(unended, 2_000, layout, { scan }));
+      }
+    }
+  });
+
+  it("never ends its window inside an escape sequence: the cut moves back to where the open sequence starts, in every layout", () => {
+    for (const [, unit, fragment] of Y5Y_UNITS) {
+      for (let inside = 1; inside < unit.length; inside++) {
+        const raw = `lead ${unit} tail`;
+        for (const layout of LAYOUTS) {
+          const shown = sanitizeWorkbenchText(raw, 2_000, layout, { scan: 5 + inside });
+          expect(shown).toBe(sanitizeWorkbenchText("lead ", 2_000, layout));
+          expect(shown).not.toContain(fragment);
+        }
+      }
+    }
+  });
+
+  it("ends its window only where both readings close a 7-bit string: an 8-bit ST inside one ends it under one reading only", () => {
+    const raw = `lead ${ESC}]0;y5yfakeone${C1_ST}Y5YFAKETWO Y5YFAKETHREE${BEL} tail`;
+    for (let scan = raw.indexOf(ESC) + 1; scan <= raw.indexOf(BEL); scan++) {
+      for (const layout of LAYOUTS) {
+        expect(sanitizeWorkbenchText(raw, 2_000, layout, { scan })).toBe(sanitizeWorkbenchText("lead ", 2_000, layout));
+      }
+    }
+  });
+
+  it("reads a scan bound below 1, or not a whole number, as the whole number at or below it and never less than 1", () => {
+    expect(sanitizeWorkbenchText("abc", 100, "text", { scan: 0 })).toBe("a");
+    expect(sanitizeWorkbenchText("abc", 100, "text", { scan: -5 })).toBe("a");
+    expect(sanitizeWorkbenchText("abc", 100, "text", { scan: Number.NaN })).toBe("a");
+    expect(sanitizeWorkbenchText("abcd", 100, "text", { scan: 2.7 })).toBe("ab");
+  });
+
+  it("ends its window at the bound when every sequence before it is closed: the window holds each closed sequence whole", () => {
+    for (const [, unit] of Y5Y_UNITS) {
+      const raw = `lead ${unit} shown after Y5YBEYOND`;
+      const scan = raw.indexOf("Y5YBEYOND");
+      for (const layout of LAYOUTS) {
+        expect(sanitizeWorkbenchText(raw, 2_000, layout, { scan })).toBe(sanitizeWorkbenchText(raw.slice(0, scan), 2_000, layout));
+      }
+    }
+  });
+
+  it("reads a quoted value the bound cuts open as closed, and never shows the closing quotes it reads", () => {
+    for (const [, payload] of Y5Y_CREDENTIALS) {
+      const open = payload.indexOf(payload.includes('"') ? '"' : "'");
+      for (let cut = open + 1; cut < payload.length; cut++) {
+        for (const layout of LAYOUTS) {
+          const shown = sanitizeWorkbenchText(payload, 2_000, layout, { scan: cut });
+          expect(shown).toBe(`${payload.slice(0, open)}[REDACTED]`);
+        }
+      }
+    }
+  });
+
+  it("shows no half of a surrogate pair the bound splits, in every layout", () => {
+    const raw = `${"a".repeat(15)}${cp(0x1f600)}z`;
+    for (const layout of LAYOUTS) {
+      const shown = sanitizeWorkbenchText(raw, 2_000, layout, { scan: 16 });
+      expect(shown).toBe("a".repeat(15));
+      expect(shown).not.toMatch(LONE_SURROGATE);
+    }
+  });
+
+  it("changes nothing for a text inside the bound: every corpus and acceptance row displays as without the option", () => {
+    for (const { raw } of [...CORPUS, ...ACCEPTANCE]) {
+      for (const layout of LAYOUTS) {
+        expect(sanitizeWorkbenchText(raw, 2_000, layout, { scan: raw.length })).toBe(sanitizeWorkbenchText(raw, 2_000, layout));
+      }
+    }
+  });
+
+  it("leaves the card's one-argument terminal text safe to hand to an array map, which passes each index as a second argument", () => {
+    const texts = ["lead text one", "lead text two", "lead text three"];
+    expect(texts.map(safeWorkflowTerminalText)).toEqual(texts.map(text => safeWorkflowTerminalText(text)));
+    expect(texts.map(safeWorkflowTerminalText)).toEqual(texts);
+  });
+
+  it("bounds each producer row by itself in rows mode, and ends each row the bound cut in the caller's marker", () => {
+    // A row inside the bound, a row the bound cuts in plain text, one it cuts inside a quoted value, and one inside a sequence.
+    const rows = ["ok", `${"a".repeat(16)}Y5YBEYOND`, 'password: "y5yfakeone Y5YFAKETWO"', `x${ESC}]0;${Y5Y_BODY}${BEL}`];
+    const shown = sanitizeWorkbenchText(rows.join(LF), Number.MAX_SAFE_INTEGER, "lines", { scan: 16, rows: { lengths: rows.map(row => row.length), marker: Y5Y_ELLIPSIS } });
+    expect(shown).toBe(["ok", `${"a".repeat(16)}${Y5Y_ELLIPSIS}`, `password: [REDACTED]${Y5Y_ELLIPSIS}`, `x${Y5Y_ELLIPSIS}`].join(LF));
   });
 });

@@ -21,7 +21,7 @@ describe('in-house native provider contracts',()=>{
     expect(result).toMatchObject({contract:'hyperunix.find/v1',source:{representation:'hyperunix.result/1'},runtime:{binarySha256:expect.stringMatching(/^[0-9a-f]{64}$/)}});
     expect(hxLiveInvariant(result)).toMatchObject({holds:true,violations:[]});
     expect(JSON.stringify(result)).not.toContain('"verified":true');
-    console.log(hxLiveReceipt(result));
+    process.stdout.write(`${hxLiveReceipt(result)}\n`);
   });
   it('Furnace inspect preserves a missing Run as a typed unavailable refusal',async()=>{
     const registry=new CapabilityRegistry();

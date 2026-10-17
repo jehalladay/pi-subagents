@@ -12,14 +12,16 @@
  *
  * Receipts stay phase-honest: requested, acknowledged and result are distinct; the acknowledged phase echoes the SDK's own
  * interrupt answer (receipt or none) as the adapter recorded it; the result exists only because THIS harness settles the
- * teed execution from the observer's report of the interrupted call's own terminal (src never calls settleClaudeInterrupt),
- * disclosed as resultDrivenBy "harness-tee". The measured terminal shape is recorded raw, never asserted.
+ * teed execution from the observer's report of the interrupted call's own terminal (this tier settles its own teed executions; the
+ * production settle path landed by wb-hqa is not exercised by the mirrored journeys), disclosed as resultDrivenBy "harness-tee". The
+ * measured terminal shape is recorded raw, never asserted.
  *
- * OWNERSHIP SEEDING (owner ruling R1, disclosed): the booted projection never receives an ownership edge FROM a claude
- * session, so this harness-owned projection, fed only by the mirrored production emitter, relates session -> agent-call
- * ownership with provenance source claude-agent-sdk and nativeConfirmationRef = the SDK's own system/init session_id, and
- * the receipt says so (ownership.seededBy "harness"). STRICT-READING LIMIT: the booted registered tool's claude leg is
- * unreachable today (wb-69g.4 BLOCKED, wb-hqa wiring gap); the receipt records that reading as UNREALISED, never fakes it.
+ * OWNERSHIP SEEDING (owner ruling R1, disclosed): since wb-hqa the booted extension's projection gains its session -> agent-call
+ * ownership edge from the production observer path at system/init; THIS tier boots no extension, so its harness-owned projection,
+ * fed only by the mirrored production emitter, relates that edge itself with provenance source claude-agent-sdk and
+ * nativeConfirmationRef = the SDK's own system/init session_id, and the receipt says so (ownership.seededBy "harness").
+ * STRICT-READING LIMIT: the booted registered tool's claude leg is not exercised by these mirrored journeys (UNREALISED by
+ * construction until the booted strict row of Cut 2 lands; wb-69g.4 stays BLOCKED); the receipt records that reading as UNREALISED, never fakes it.
  *
  * Runs ONLY from its own forge command (vitest.claude-control-live.config.ts); excluded from the default gate. A failed
  * credential preflight is honest unavailability: the receipt is typed UNREALISED (credentials-unavailable) and every row
@@ -150,12 +152,13 @@ const evidence: ReceiptEvidence = {
   ownership: { seededBy: "harness", source: OWNERSHIP_SOURCE, nativeConfirmationRef: "" },
   strictBooted: {
     realised: false,
-    detail: "UNREALISED: the booted extension's projection never receives an ownership edge FROM a claude-agent-sdk session node (src/index.ts ingests claude.stream nodes only "
-      + "and never calls projection.relate; projectClaudeTopology has no production caller and its edge is agent-call->session with provenance.source 'pi-workflow'), so the "
-      + "booted workflow_control denies every real claude session target no-confirmed-ownership: the wb-69g.8 F1 'declare unreachable, never fake it' case. This tier measured "
-      + "the PRODUCTION tool constructor and PRODUCTION adapter over a harness-owned projection seeded from real system/init data with the ownership edge disclosed as "
-      + "harness-seeded, and a mirrored replica of the src/index.ts executor leg, text-pinned by the offline census. Citation: wb-69g.4 (BLOCKED) for the string-prompt "
-      + "streaming registration gap; wb-hqa (filed) for the wiring gap: the booted projection never gains a session-sourced ownership edge and src never settles a claude interrupt.",
+    detail: "UNREALISED by construction: this tier mirrors the src/index.ts claude executor leg and its retention hooks line for line and boots no extension, so the"
+      + " registered tool of the booted extension is never exercised here. The production wiring landed by wb-hqa states the session -> agent-call ownership edge on"
+      + " the SDK's own system/init session_id (provenance source claude-agent-sdk, nativeConfirmationRef = that session id) through the production claude observer"
+      + " path and settles the acknowledged interrupt from the observer's report of the call's own terminal, measured by the default-gate booted row"
+      + " test/workbench-pi-claude-control.test.ts (a value-returning query fixture, no credential); the live realised strict reading is the owed Cut 2 hop. This tier"
+      + " still feeds a harness-owned projection from the mirrored emitter and seeds the ownership edge itself, disclosed as harness-seeded. Citation: wb-69g.4"
+      + " (BLOCKED) for the string-prompt streaming registration gap; wb-hqa (landed, Cut 1) for the wiring this tier does not boot.",
   },
   nonClaims: [...NON_CLAIMS],
   workspaces: [],

@@ -68,6 +68,7 @@ import { openWorkflowFromFleet, showWorkflowsMenu, type WorkflowMenuDeps } from 
 import { getLifetimeCost, getLifetimeTotal, getSessionContextPercent, type LifetimeUsage, PendingUsagePool, toReportedUsage } from "./usage.js";
 import { type CapabilityDescriptor, CapabilityError, CapabilityRegistry } from "./workbench/capability-registry.js";
 import { executeClaudeControl } from "./workbench/claude-control.js";
+import { createClaudeControlObserver, createClaudeControlRetention } from "./workbench/claude-control-observer.js";
 import type { ClaudeCallIdentity } from "./workbench/claude-host.js";
 import { type ControlExecutionSummary, type ControlExecutor, createWorkflowControlTool } from "./workbench/control-tool.js";
 import { type CompareRun, catalogWorkflows, compareWorkflowRuns, inspectWorkflowSource, validateWorkflowSource } from "./workbench/designer.js";
@@ -326,6 +327,13 @@ export const WORKBENCH_PROJECTION_MAX_QUERY = 40;
  * WB-028), so a bar the model places inside its viewport is never cut by the screen.
  */
 export const WORKBENCH_TIMELINE_COLUMNS = 24;
+/**
+ * The bottleneck cap of the inspector overview's attention panel: how many producer-stated open intervals the
+ * workbench.attention/v1 report lists, longest first (wb-6ze.36). The selector's documented default, declared here so the
+ * wiring passes a cap the host stated rather than a literal; the report examines one projection page of
+ * WORKBENCH_PROJECTION_MAX_QUERY nodes, and rows the overlay cannot fit are dropped from the bottom and counted.
+ */
+export const WORKBENCH_ATTENTION_BOTTLENECKS = 5;
 
 /**
  * Re-exported from where they now live, because this is where they were
@@ -1194,6 +1202,7 @@ export default function (pi: ExtensionAPI) {
     // as well as its children, and only its own signal terminates that.
     for (const task of workflowTasks.values()) task.abortController.abort();
     workflowTasks.clear();
+    claudeControlRetention.dispose();
     // Forge operations this process started: dispose releases their retentions and closes the owned connections (no cancel verb).
     await Promise.all([...liveForgeOperations.values()].map(operation => operation.dispose().catch(() => undefined)));
     liveForgeOperations.clear();
@@ -2415,6 +2424,12 @@ Terse command-style prompts produce shallow, generic work.
   const liveClaudeQueries = new Map<string, LiveClaudeQuery>();
   const liveClaudeSessions = new Map<string, string>();
   const liveClaudeKey = (invocationId: string, call: ClaudeCallIdentity): string => `${invocationId}:${call.index}`;
+  /**
+   * workflow_control (wb-hqa): the acknowledged Claude interrupts awaiting the observer's report of the call's own terminal,
+   * keyed like liveClaudeQueries. Separate from the live maps because onQueryDone deletes those BEFORE onSettled publishes
+   * the terminal; the observer's control hooks settle from here, and session_shutdown disposes it.
+   */
+  const claudeControlRetention = createClaudeControlRetention({ projection, tasks: workflowTasks, now: () => new Date().toISOString() });
   const registries = new Map<string, CapabilityRegistry>();
   let workbenchToolsRegistered = false;
   function registryFor(cwd: string): CapabilityRegistry {
@@ -2802,6 +2817,7 @@ Terse command-style prompts produce shallow, generic work.
           call: { invocationId: live.invocationId, index: live.call.index, ...(live.sessionId !== undefined ? { sessionId: live.sessionId } : {}) },
           now: controlNow, timeoutMs: 10_000, ...(signal !== undefined ? { signal } : {}),
         });
+        claudeControlRetention.retain(execution);
         return { receipt: execution.receipt, status: execution.status };
       },
       furnace: async (decision, request, signal): Promise<ControlExecutionSummary> => {
@@ -2929,7 +2945,7 @@ Terse command-style prompts produce shallow, generic work.
         };
         nativeRows.set(call.index, updated);
         updateWorkflowProgressBatch(task, [updated]);
-      });
+      }, createClaudeControlObserver({ invocationId: task.id, scope, projection, now: () => new Date().toISOString(), retention: claudeControlRetention }));
       let beforeDispatch: (() => void) | undefined;
       if (settings) {
         const registry = registryFor(ctx.cwd);
@@ -4650,6 +4666,9 @@ Write the file using the write tool. Only write the file, nothing else.`;
       projection,
       relationPage: WORKBENCH_PROJECTION_MAX_QUERY,
       timelineColumns: WORKBENCH_TIMELINE_COLUMNS,
+      // The overview's attention report (wb-6ze.36). Its open times are measured against this host clock, the caller clock
+      // ATTENTION_CLOCK_CAVEAT names, read here at the seam and never inside the wiring.
+      attention: { bottlenecks: WORKBENCH_ATTENTION_BOTTLENECKS, now: () => new Date().toISOString() },
       scope: task => task.observationScope ? { workspace: task.observationScope.workspace, principal: task.observationScope.principal } : undefined,
       // Loaders exist for the landed readers; authorization is the live
       // exact-grant check each load runs (docs/workbench/20, wb-g1g.1 ruling).

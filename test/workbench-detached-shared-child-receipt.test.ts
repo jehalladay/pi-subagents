@@ -401,7 +401,7 @@ describe("shared-child receipt: module and runner boundaries", () => {
       '[build.commands.local-detached-shared-child]\ncommand = "node qa/workbench/local-detached-shared-child.mjs"\ntimeout = 240\n',
     );
     expect(forge.match(/\[build\.commands\.local-detached-shared-child\]/g)).toHaveLength(1);
-    expect(forge).toContain('gate = ["lint", "typing", "build", "test", "workbench-shell", "package-smoke"]\n');
+    expect(forge).toContain('gate = ["lint", "typing", "build", "test", "census", "workbench-shell", "package-smoke"]\n');
     const gate = /^gate = \[(.*)\]$/m.exec(forge)?.[1] ?? "";
     expect(gate).not.toContain("local-detached-shared-child");
   });
