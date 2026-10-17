@@ -147,6 +147,33 @@ describe("RF CLI process custody", () => {
     expect(Date.now()-start).toBeLessThan(5000);
   }, 10_000);
 
+  it("keeps the preview reading to exactly {contract, workspaceRoot, source} when rf writes perf-counter JSON to stderr (wb-2j3.8 R9)", async () => {
+    // ACCEPTANCE (1): nativeReactiveFiberPreview carries exactly {contract, workspaceRoot, source} and no stderr-derived field.
+    // ACCEPTANCE (2): stderr is byte-counted only; sub-cap stderr content never reaches the reading.
+    const id = "a".repeat(22);
+    const envelope = {
+      schema: "reactive-fiber.cli/v1", ok: true, command: "context.render",
+      operation_id: `rfo_${id}`, workspace: { id: `rfw_${id}`, root: process.cwd() },
+      transaction_id: null,
+      result: {
+        ephemeral: true, render_id: null, output: { text: "context" },
+        provenance: { graph_revision_id: `sha256:${"a".repeat(64)}` },
+        budget: { formula_terms: { context_window: 1000000, output_reserve: 8192, occupied_tokens: 0, overhead: 0, safety_margin: 2048, available_context_tokens: 989760 } },
+        diagnostics_summary: { errors: 0, warnings: 0, has_errors: false, has_warnings: false },
+        work: { source_capture_count: 0, fiber_signal_count: 0, component_render_count: 0, lens_resolution_count: 0, necessity_eval_count: 0, storage_write_count: 0 },
+      },
+      diagnostics: [],
+    };
+    const perfRecord = JSON.stringify({ perf_counters: { wall_ms: 12, graph_nodes: 7 }, debug_event: "stderr-canary-wb-2j3-8" });
+    fakeRf(`process.stderr.write(${JSON.stringify(`${perfRecord}\n${"d".repeat(100000)}`)}); process.stdout.write(${JSON.stringify(JSON.stringify(envelope))});`);
+    const reading = await nativeReactiveFiberPreview("model", "task", process.cwd());
+    expect(Object.keys(reading as Record<string, unknown>).sort()).toEqual(["contract", "source", "workspaceRoot"]);
+    expect(reading).toEqual({ contract: "reactivefiber.render.preview/v1", workspaceRoot: process.cwd(), source: envelope });
+    const serialized = JSON.stringify(reading);
+    expect(serialized).not.toContain("stderr-canary-wb-2j3-8");
+    expect(serialized).not.toContain("perf_counters");
+  }, 10_000);
+
   it("caps stdout independently and reaps a child that ignores SIGTERM", async () => {
     fakeRf('process.on("SIGTERM",()=>{}); process.stdout.write("x".repeat(300000)); setInterval(()=>{},1000);');
     const start = Date.now();
