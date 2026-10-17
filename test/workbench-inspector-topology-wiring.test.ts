@@ -451,14 +451,20 @@ describe("display path: producer text reaching the operator through the wired sl
     const run = await openRun(runTask(), depsOf(observationOf(projection)));
     run.press(DETAILS);
     const rows = edgeRows(run.lines());
-    expect(rows).toHaveLength(1);
-    expect(rows[0].startsWith(" → furnace/operation/")).toBe(true);
-    expect(rows[0]).toContain("[REDACTED]");
-    for (const secret of [fakeKey, "FAKE0PLACEHOLDER0KEY", fakeToken]) expect(rows[0]).not.toContain(secret);
-    const unsafe = [...rows[0]].filter(unit => {
-      const point = unit.codePointAt(0) ?? 0;
-      return point < 0x20 || (point >= 0x7f && point <= 0x9f) || (point >= 0x202a && point <= 0x202e) || (point >= 0x2066 && point <= 0x2069) || point === 0x200b;
+    // Names-only projections: the rendered row may carry producer text, so no assertion below touches it raw; a
+    // failure names the broken check, the leaked placeholder or the unsafe code point, never the row itself.
+    expect(rows.length).toBe(1);
+    const row = rows[0] ?? "";
+    expect({ neighbourRow: row.startsWith(" → furnace/operation/"), redactionMarker: row.includes("[REDACTED]") }).toEqual({
+      neighbourRow: true,
+      redactionMarker: true,
     });
+    const placeholders = { fakeKey, fakeKeyBody: "FAKE0PLACEHOLDER0KEY", fakeToken };
+    expect(Object.entries(placeholders).filter(([, secret]) => row.includes(secret)).map(([name]) => name)).toEqual([]);
+    const unsafe = [...row]
+      .map(unit => unit.codePointAt(0) ?? 0)
+      .filter(point => point < 0x20 || (point >= 0x7f && point <= 0x9f) || (point >= 0x202a && point <= 0x202e) || (point >= 0x2066 && point <= 0x2069) || point === 0x200b)
+      .map(point => `U+${point.toString(16).toUpperCase().padStart(4, "0")}`);
     expect(unsafe).toEqual([]);
   });
 });
