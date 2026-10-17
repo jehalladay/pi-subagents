@@ -77,6 +77,10 @@ timeout = 120
 command = "node qa/workbench/inspector-bench.mjs"
 timeout = 180
 
+[build.commands.tool-reply-bench]
+command = "node qa/workbench/tool-reply-bench.mjs"
+timeout = 600
+
 [build.commands.observation-recovery-bench]
 command = "node qa/workbench/observation-recovery-bench.mjs"
 timeout = 300
