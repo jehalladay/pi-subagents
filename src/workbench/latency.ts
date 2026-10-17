@@ -150,6 +150,9 @@ function unionMs(spans: readonly Interval[]): number {
 /** An evidence ref is kept whole or not at all: the drop is decided on the SANITIZED length before any cut, because a
  * truncated ref is a wrong ref. */
 function evidenceText(raw: unknown): string {
+  // A ref whose RAW length exceeds the scan bound is dropped first, before the scan cut: sanitizedText reads only the
+  // first MAX_PROVIDER_SCAN units, so a longer ref whose prefix shrinks under the label layout would pass truncated.
+  if (typeof raw === "string" && raw.length > MAX_PROVIDER_SCAN) return "";
   const shown = sanitizedText(raw);
   return shown.length <= MAX_EVIDENCE_CHARS ? shown : "";
 }
