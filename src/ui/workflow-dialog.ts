@@ -49,6 +49,7 @@ import {
   visibleWidth,
   wrapTextWithAnsi,
 } from "@earendil-works/pi-tui";
+import type { AttentionReport } from "../workbench/attention.js";
 import type { TimelineModel } from "../workbench/timeline.js";
 import type { WorkflowMeta } from "../workflow/meta.js";
 import {
@@ -302,6 +303,11 @@ export interface WorkflowDialogSource {
    * the timeline view alone, on each redraw; absent, the timeline view renders exactly as it does without a model.
    */
   timelineLanes?: (view: InspectorTimelineView) => TimelineModel;
+  /**
+   * The host's workbench.attention/v1 report for the observed invocation (wb-6ze.36). Read by the overview alone, on each
+   * redraw; absent, the overview renders exactly as it does without a report.
+   */
+  attention?: () => AttentionReport;
   meta?: WorkflowMeta;
   /** Agents the runtime has scheduled, which can exceed those that reported. */
   agentCount?: number;
@@ -1288,10 +1294,13 @@ export class WorkflowDialog implements Component {
     const hasLegacyRows = source.progress.some(entry => entry.type === "workflow_agent");
     const rich = source.observation?.projection.window({scope:source.observation.scope,invocationId:source.observation.invocationId,offset:0,limit:1}).total;
     if (source.observation && rich && (this.preferRich || !hasLegacyRows)) {
-      // Only the timeline view asks the host for its lane model; every other view, and a host that supplies none, draws
-      // the observation exactly as before (wb-6ze.35).
+      // Only the timeline view asks the host for its lane model and only the overview for its attention report; every
+      // other view, and a host that supplies neither, draws the observation exactly as before (wb-6ze.35, wb-6ze.36).
       const timeline = this.inspectorState.view === "timeline" ? source.timelineLanes?.(this.inspectorState) : undefined;
-      const model = timeline !== undefined ? { ...source.observation, timeline } : source.observation;
+      const attention = this.inspectorState.view === "overview" ? source.attention?.() : undefined;
+      const model = timeline !== undefined ? { ...source.observation, timeline }
+        : attention !== undefined ? { ...source.observation, attention }
+        : source.observation;
       return styleWorkflowCardLines(layoutInspector(model,this.inspectorState,{width,rows:this.tui.terminal?.rows??24}).map(text=>[{text}]),this.theme);
     }
     const lines = layoutWorkflowDialog({
