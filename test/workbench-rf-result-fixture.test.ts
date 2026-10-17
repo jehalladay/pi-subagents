@@ -1,23 +1,54 @@
 /** wb-973.11 (SCG-R11): the offline RF result fixture carries every result key the pinned rf 0.1.716 emits on a --no-commit render,
  * so additive-key admission and the exact pins (eight envelope keys, six work keys, ten work_metrics keys) are proven in the
  * default gate against the real pinned shape. The roster lives in test/fixtures/rf-result-keys.json with its rf version, source
- * kind and capture receipt recorded beside it. Nothing here needs an rf binary on the machine: a scripted stand-in prints the
- * fixture exactly as the provider's own producer-boundary suite does. */
-import { chmodSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
-import { tmpdir } from 'node:os';
+ * kind and capture receipt recorded beside it, and is itself pinned here to a literal roster authored independently from the
+ * ReactiveFiberCLI emitter at 8a8b83e4d, so an emptied, shrunken or renamed roster cannot hold the census green. The fixture home
+ * is test/helpers/rf-render-fixture.ts (owner ruling R1 (b'), row 481): validRf()/result() in the envelope-audit and observer
+ * suites stay the minimal cli_version-free pins. Provider rows run a scripted rf stand-in HERMETICALLY: an absolute node shebang
+ * (process.execPath) and PATH restricted to the stand-in's own directory, so the provider can resolve no other rf and a stand-in
+ * fault refuses as a launch failure, never as a render by a host rf; each refusal row pins its cause (category and message). The
+ * live drift diff of a real capture against the same roster is the rf-preview tier's row (test/workbench-native-rf-preview.test.ts). */
+import { createHash } from 'node:crypto';
+import { chmodSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { afterEach, describe, expect, it } from 'vitest';
 import { CapabilityError, type JsonValue } from '../src/workbench/capability-registry.js';
-import { type ObservationScope } from '../src/workbench/observation.js';
+import { ObservationProjection, type ObservationScope } from '../src/workbench/observation.js';
 import { nativeReactiveFiberPreview } from '../src/workbench/providers/reactivefiber.js';
-import { reactivefiberTopology } from '../src/workbench/reactivefiber-observer.js';
-import { fullShapeRf, fullShapeWork, type Json, RF_FIXTURE_OPERATION_ID } from './helpers/rf-render-fixture.js';
+import { type ReactiveFiberTopologyContext, reactivefiberTopology } from '../src/workbench/reactivefiber-observer.js';
+import {
+  diffAgainstRoster, fullShapeRf, fullShapeWork, fullShapeWorkMetrics, type Json, RF_FIXTURE_GRAPH_REVISION, RF_FIXTURE_OPERATION_ID,
+  RF_FIXTURE_RELEASE, RF_FIXTURE_TEXT, RF_FIXTURE_WORKSPACE_ID, readRfResultRoster,
+} from './helpers/rf-render-fixture.js';
+import { installScratchLeakGuard, makeScratch, removeScratch } from './helpers/scratch.js';
 
-interface Roster {
-  rfVersion: string; source: 'captured' | 'constructed'; receipt: string | null; basis: string;
-  resultKeys: string[]; provenanceKeys: string[]; workKeys: string[]; workMetricsKeys: string[];
-}
-const roster = JSON.parse(readFileSync(new URL('./fixtures/rf-result-keys.json', import.meta.url), 'utf8')) as Roster;
+installScratchLeakGuard();
+
+/* The roster authored independently of test/fixtures/rf-result-keys.json (U5): read off the ReactiveFiberCLI emitter at
+ * 8a8b83e4d, in the dossier's listing order, never from the JSON. A key is listed only when every finished --no-commit legacy
+ * render carries it; view_id, effective_scopes, view_contract and necessity are conditional (render_service.py:1515-1532). */
+/** result: render_service.py:1494-1513 (output .. observations), :1533-1539 (attempts, superseded_transaction_ids,
+ * fiber_transaction_refs), render.py:3569-3580 (the step-P ephemeral keys render_id, ephemeral, commit_seq, effects, plan) and
+ * render_service.py:1549 (session_id). */
+const PINNED_RESULT_KEYS = [
+  'output', 'budget', 'diagnostics_summary', 'blocks', 'components', 'provenance', 'work_metrics', 'work',
+  'engine_metrics', 'scope', 'audience', 'bundle_revision_id', 'observations', 'attempts',
+  'superseded_transaction_ids', 'fiber_transaction_refs',
+  'ephemeral', 'render_id', 'commit_seq', 'session_id', 'effects', 'plan',
+];
+/** result.provenance, at least: context_show.py:313-339 (render_provenance emits seven keys; these three are the dossier's floor). */
+const PINNED_PROVENANCE_KEYS = ['graph_revision_id', 'cli_version', 'sdk_versions'];
+/** result.work: rendering.py:2606-2613 (WORK_KEYS, emission order). */
+const PINNED_WORK_KEYS = [
+  'source_capture_count', 'fiber_signal_count', 'component_render_count', 'lens_resolution_count', 'necessity_eval_count', 'storage_write_count',
+];
+/** result.work_metrics: integrations/fiber.py:2474-2485 (WORK_METRICS_KEYS, the ten-key set rendering.py:2617 names). */
+const PINNED_WORK_METRICS_KEYS = [
+  'source_capture_count', 'fiber_signal_count', 'fiber_transaction_count', 'invalidated_component_count', 'rendered_component_count',
+  'state_read_count', 'state_write_count', 'journal_records_scanned', 'blob_bytes_written', 'history_rows_materialized',
+];
+
+const roster = readRfResultRoster();
 
 type Obj = { [key: string]: Json };
 const asObject = (value: Json | undefined): Obj => {
@@ -25,96 +56,177 @@ const asObject = (value: Json | undefined): Obj => {
   return value;
 };
 const resultOf = (envelope: Obj): Obj => asObject(envelope.result);
-/** The census predicate: every roster key a fixture result lacks, by section. */
-function missingKeys(result: Obj): string[] {
-  const missing: string[] = [];
-  for (const key of roster.resultKeys) if (!Object.hasOwn(result, key)) missing.push(`result.${key}`);
-  const provenance = Object.hasOwn(result, 'provenance') ? asObject(result.provenance) : {};
-  for (const key of roster.provenanceKeys) if (!Object.hasOwn(provenance, key)) missing.push(`provenance.${key}`);
-  return missing;
+const without = (value: Obj, key: string): Obj => Object.fromEntries(Object.entries(value).filter(([name]) => name !== key));
+const withResult = (envelope: Obj, over: Obj): Obj => ({ ...envelope, result: { ...resultOf(envelope), ...over } });
+const digestOf = (text: string): string => createHash('sha256').update(text).digest('hex');
+
+/** The diff a fixture whose result drops `key` must produce: that key, plus every roster key of a subtree it takes with it. */
+function droppedFailures(key: string): string[] {
+  const subtree = (name: string, keys: readonly string[]): string[] => [`missing result.${name}`, ...keys.map(child => `missing result.${name}.${child}`)];
+  if (key === 'provenance') return subtree('provenance', PINNED_PROVENANCE_KEYS);
+  if (key === 'work') return subtree('work', PINNED_WORK_KEYS);
+  if (key === 'work_metrics') return subtree('work_metrics', PINNED_WORK_METRICS_KEYS);
+  return [`missing result.${key}`];
 }
 
-const dirs: string[] = [];
 const originalPath = process.env.PATH;
-afterEach(() => { process.env.PATH = originalPath; for (const dir of dirs.splice(0)) rmSync(dir, { recursive: true, force: true }); });
-function producer(reply: unknown): void {
-  const dir = mkdtempSync(join(tmpdir(), 'rf-result-fixture-'));
-  dirs.push(dir);
+const standIns: string[] = [];
+afterEach(() => {
+  if (originalPath === undefined) Reflect.deleteProperty(process.env, 'PATH');
+  else process.env.PATH = originalPath;
+  removeScratch(...standIns.splice(0));
+});
+/** A hermetic rf stand-in that prints `reply` and exits 0: an absolute node shebang, and PATH holding only its own directory for
+ * the call, so the provider's spawn("rf") resolves this file or nothing. `mode` 0o600 leaves it unexecutable (the hermeticity row). */
+function standIn(reply: unknown, mode = 0o700): void {
+  const dir = makeScratch('rf-result-fixture-');
+  standIns.push(dir);
   const binary = join(dir, 'rf');
-  writeFileSync(binary, `#!/usr/bin/env node\nprocess.stdout.write(JSON.stringify(${JSON.stringify(reply)}));\nprocess.exit(0);\n`);
-  chmodSync(binary, 0o700);
-  process.env.PATH = `${dir}:${originalPath ?? ''}`;
+  writeFileSync(binary, `#!${process.execPath}\nprocess.stdout.write(${JSON.stringify(JSON.stringify(reply))});\n`);
+  chmodSync(binary, mode);
+  process.env.PATH = dir;
+}
+
+/** The error a synchronous observer call throws; fails the row when it returns instead. */
+function thrownBy(fn: () => unknown): unknown {
+  try {
+    fn();
+  } catch (error) {
+    return error;
+  }
+  throw new Error('expected the observer to refuse');
 }
 
 const ws = process.cwd();
 const scope: ObservationScope = { workspace: ws, principal: 'local-operator:tester' };
-const context = { scope, seam: 'rf-cli' as const, capturedAt: '2026-10-17T10:00:00Z', observedAt: '2026-10-17T10:00:01Z' };
+const context: ReactiveFiberTopologyContext = { scope, seam: 'rf-cli', capturedAt: '2026-10-17T10:00:00Z', observedAt: '2026-10-17T10:00:01Z' };
+const reading = (source: Obj): Json => ({ contract: 'reactivefiber.render.preview/v1', workspaceRoot: ws, source });
+const UNRECOGNIZED = 'RF preview returned an unrecognized native envelope.';
+const CONTRADICTORY = 'RF preview returned an unrecognized or contradictory envelope.';
 
 describe('SCG-R11: full-shape offline RF result fixture', () => {
-  // Acceptance 1 (census-grade RED on 9df9a03): the fixture's result keys are a superset of the frozen roster.
+  // U5 (independent oracle): the roster file equals the independently authored literal, key for key and in order, at the
+  // dossier's lengths (22 result / 3 provenance / 6 work / 10 work_metrics), so an emptied, shrunken or renamed roster is red here.
+  it('the frozen roster equals the independently authored literal roster: 22 result, 3 provenance, 6 work and 10 work_metrics keys', () => {
+    expect([PINNED_RESULT_KEYS.length, PINNED_PROVENANCE_KEYS.length, PINNED_WORK_KEYS.length, PINNED_WORK_METRICS_KEYS.length]).toStrictEqual([22, 3, 6, 10]);
+    expect(roster.resultKeys).toStrictEqual(PINNED_RESULT_KEYS);
+    expect(roster.provenanceKeys).toStrictEqual(PINNED_PROVENANCE_KEYS);
+    expect(roster.workKeys).toStrictEqual(PINNED_WORK_KEYS);
+    expect(roster.workMetricsKeys).toStrictEqual(PINNED_WORK_METRICS_KEYS);
+  });
+
+  // Acceptance 1 (census-grade): the fixture's result keys are a superset of the frozen roster, provenance carries the three
+  // named keys, work has exactly 6 keys and work_metrics exactly 10, beside the eight envelope keys.
   it('SCG-R11: the offline RF result fixture carries every key the pinned rf emits', () => {
     const fixture = fullShapeRf(ws);
     const result = resultOf(fixture);
-    expect(missingKeys(result)).toEqual([]);
+    const provenance = asObject(result.provenance);
+    expect(roster.resultKeys.filter(key => !Object.keys(result).includes(key))).toStrictEqual([]);
+    expect(['graph_revision_id', 'cli_version', 'sdk_versions'].filter(key => !Object.hasOwn(provenance, key))).toStrictEqual([]);
     expect(Object.keys(asObject(result.work))).toHaveLength(6);
     expect(Object.keys(asObject(result.work_metrics))).toHaveLength(10);
-    expect(Object.keys(asObject(result.work)).sort()).toEqual([...roster.workKeys].sort());
-    expect(Object.keys(asObject(result.work_metrics)).sort()).toEqual([...roster.workMetricsKeys].sort());
+    expect(diffAgainstRoster(roster, result)).toStrictEqual({ failures: [], extraResultKeys: [] });
     expect(Object.keys(fixture)).toHaveLength(8);
+    expect(provenance.cli_version).toBe(roster.rfVersion);
   });
 
+  // Acceptance 4: the mirrored rf version, the source kind and the receipt; 'captured' only with a cmd_ receipt, else null.
   it('records the mirrored rf version, source kind and capture receipt beside the roster', () => {
     expect(roster.rfVersion).toBe('0.1.716');
     expect(['captured', 'constructed']).toContain(roster.source);
     if (roster.source === 'captured') expect(roster.receipt).toMatch(/^cmd_[0-9a-f]{12}$/);
     else expect(roster.receipt).toBeNull();
-    expect(roster.basis.length).toBeGreaterThan(0);
-    expect(new Set(roster.resultKeys).size).toBe(roster.resultKeys.length);
-    expect(roster.workKeys).toHaveLength(6);
-    expect(roster.workMetricsKeys).toHaveLength(10);
+    expect(roster.basis).toContain('8a8b83e4d');
   });
 
-  // Falsifier: the census itself fails when the fixture silently loses a roster key (never vacuous).
-  it.each(roster.resultKeys)('the census names a fixture that drops result.%s', key => {
-    const fixture = fullShapeRf(ws);
-    const { [key]: _dropped, ...rest } = resultOf(fixture);
-    // Dropping provenance also drops every provenance key beneath it, so the census names the whole subtree.
-    const expected = key === 'provenance' ? ['result.provenance', ...roster.provenanceKeys.map(name => `provenance.${name}`)] : [`result.${key}`];
-    expect(missingKeys(rest)).toEqual(expected);
+  // Falsifiers over the literal roster (each table registers its cases whatever the JSON holds): the census names the drift.
+  it.each(PINNED_RESULT_KEYS)('the census names a fixture that drops result.%s', key => {
+    expect(diffAgainstRoster(roster, without(resultOf(fullShapeRf(ws)), key))).toStrictEqual({ failures: droppedFailures(key), extraResultKeys: [] });
   });
-  it.each(roster.provenanceKeys)('the census names a fixture whose provenance drops %s', key => {
+  it.each(PINNED_PROVENANCE_KEYS)('the census names a fixture whose provenance drops %s', key => {
     const result = resultOf(fullShapeRf(ws));
-    const { [key]: _dropped, ...provenance } = asObject(result.provenance);
-    expect(missingKeys({ ...result, provenance })).toEqual([`provenance.${key}`]);
+    expect(diffAgainstRoster(roster, { ...result, provenance: without(asObject(result.provenance), key) }).failures).toStrictEqual([`missing result.provenance.${key}`]);
+  });
+  it.each(PINNED_WORK_KEYS)('the census names a fixture whose work drops %s', key => {
+    expect(diffAgainstRoster(roster, { ...resultOf(fullShapeRf(ws)), work: without(fullShapeWork(), key) }).failures).toStrictEqual([`missing result.work.${key}`]);
+  });
+  it.each(PINNED_WORK_METRICS_KEYS)('the census names a fixture whose work_metrics drops %s', key => {
+    expect(diffAgainstRoster(roster, { ...resultOf(fullShapeRf(ws)), work_metrics: without(fullShapeWorkMetrics(), key) }).failures)
+      .toStrictEqual([`missing result.work_metrics.${key}`]);
+  });
+  it('the census names a work or work_metrics key beyond the roster, and records an extra result key without failing on it', () => {
+    const result = resultOf(fullShapeRf(ws));
+    expect(diffAgainstRoster(roster, { ...result, work: { ...fullShapeWork(), seventh_count: 0 } }).failures).toStrictEqual(['unexpected result.work.seventh_count']);
+    expect(diffAgainstRoster(roster, { ...result, work_metrics: { ...fullShapeWorkMetrics(), eleventh_count: 0 } }).failures)
+      .toStrictEqual(['unexpected result.work_metrics.eleventh_count']);
+    // The measured rf 0.1.723 shape: necessity (conditional at the pin) and retry_work (after the pin) ride beside the roster.
+    expect(diffAgainstRoster(roster, { ...result, necessity: [], retry_work: { superseded_attempts: [] } }))
+      .toStrictEqual({ failures: [], extraResultKeys: ['necessity', 'retry_work'] });
   });
 
-  // Acceptance 2: nativeReactiveFiberPreview round-trips the full-shape fixture toEqual (extends the envelope-audit :76-80 row).
+  // Acceptance 2: nativeReactiveFiberPreview round-trips the full-shape fixture (extends the envelope-audit admission row).
+  // Positive protection (gate F4): these full-shape rows are the guard of additive-key admission; keep them.
   it('admits the full-shape envelope: additive result keys survive the provider round-trip unchanged', async () => {
     const fixture = fullShapeRf(ws);
-    producer(fixture);
-    const result = await nativeReactiveFiberPreview('model', 'task', ws);
-    expect(result).toEqual({ contract: 'reactivefiber.render.preview/v1', workspaceRoot: ws, source: fixture });
+    standIn(fixture);
+    expect(await nativeReactiveFiberPreview('model', 'task', ws)).toStrictEqual({ contract: 'reactivefiber.render.preview/v1', workspaceRoot: ws, source: fixture });
   });
 
-  // Acceptance 2 (observer): the clean R1 case passes on the full shape.
-  it('the observer projects the full-shape preview as one clean snapshot keyed by operation_id', async () => {
-    producer(fullShapeRf(ws));
-    const reading = await nativeReactiveFiberPreview('model', 'task', ws);
-    const topology = reactivefiberTopology(reading as JsonValue, context);
+  // Acceptance 2 (observer), at the landed R1 row's strength: the full-shape provider reading projects one clean snapshot,
+  // toStrictEqual, with the stated release as the distinct rf-cli reference and never as sourceVersion (owner ruling G-A).
+  it('R1 on the full shape: the observer projects the provider reading as one clean snapshot with the rf-cli release reference', async () => {
+    standIn(fullShapeRf(ws));
+    const topology = reactivefiberTopology((await nativeReactiveFiberPreview('model', 'task', ws)) as JsonValue, { ...context, invocationId: 'wf_rf_1' });
     expect(topology.snapshots).toHaveLength(1);
-    expect(topology.snapshots[0]?.source).toMatchObject({ provider: 'reactivefiber', type: 'context-preview', id: RF_FIXTURE_OPERATION_ID });
-    expect(topology.snapshots[0]?.coverage).toBe('complete');
+    const snapshot = topology.snapshots[0];
+    expect(snapshot).toStrictEqual({
+      source: { provider: 'reactivefiber', type: 'context-preview', id: RF_FIXTURE_OPERATION_ID, scope: ws }, scope,
+      capturedAt: context.capturedAt, observedAt: context.observedAt, coverage: 'complete',
+      node: { title: `RF context preview ${RF_FIXTURE_OPERATION_ID}`, type: 'sdk-operation', statusTone: 'success',
+        statusText: 'noncommitted preview (rf-cli) · 989760 of 1000000 context tokens available · necessity evals 0 · 0 errors, 0 warnings' },
+      kind: 'reactivefiber.render.preview.snapshot',
+      evidenceRefs: [`rf-graph:${RF_FIXTURE_GRAPH_REVISION}`, `rf-workspace:${RF_FIXTURE_WORKSPACE_ID}`, `rf-cli:${RF_FIXTURE_RELEASE}`],
+      sourceRevision: RF_FIXTURE_GRAPH_REVISION, nativePayloadRef: `rf-output:sha256:${digestOf(RF_FIXTURE_TEXT)}`, trace: { invocationId: 'wf_rf_1' },
+    });
+    expect(snapshot).not.toHaveProperty('sourceVersion');
+    expect(topology.relations).toStrictEqual([]);
+    expect(topology.diagnostics).toContain(`producer release from result.provenance.cli_version: rf@${RF_FIXTURE_RELEASE}`);
+    expect(topology.diagnostics.join('\n')).toContain('noncommitted');
+    const projection = new ObservationProjection();
+    expect(projection.refresh(snapshot)).toBe('applied');
+    expect(projection.query({ scope, limit: 10, evidence: `rf-cli:${RF_FIXTURE_RELEASE}` }).nodes.map(node => node.nativeRef.id)).toStrictEqual([RF_FIXTURE_OPERATION_ID]);
+    expect(projection.query({ scope, limit: 10, version: RF_FIXTURE_RELEASE }).nodes).toStrictEqual([]);
   });
 
-  // Acceptance 3: the refusal tables stay green on the full shape (strictness is not loosened by the additive keys).
+  // Acceptance 3 (observer): the named refusal rows replayed on the full shape, each for its own cause.
   it.each([
-    ['extra top-level key', (e: Obj): Obj => ({ ...e, error: 'pretend success' })],
-    ['claimed ephemeral storage write', (e: Obj): Obj => ({ ...e, result: { ...resultOf(e), work: { ...fullShapeWork(), storage_write_count: 1 } } })],
-    ['seventh result.work key', (e: Obj): Obj => ({ ...e, result: { ...resultOf(e), work: { ...fullShapeWork(), seventh_count: 0 } } })],
-    ['non-null ephemeral render id', (e: Obj): Obj => ({ ...e, result: { ...resultOf(e), render_id: 'rfr_aaaaaaaaaaaaaaaaaaaaaa' } })],
-    ['non-null ephemeral commit sequence', (e: Obj): Obj => ({ ...e, result: { ...resultOf(e), commit_seq: 1 } })],
-  ])('still refuses %s on the full shape', async (_label, mutate) => {
-    producer(mutate(fullShapeRf(ws)));
-    await expect(nativeReactiveFiberPreview('model', 'task', ws)).rejects.toBeInstanceOf(CapabilityError);
+    ['ninth envelope key', (): Obj => ({ ...fullShapeRf(ws), extra: 1 }), 'source must be the strict eight-key rf envelope'],
+    ['work with an extra key', (): Obj => withResult(fullShapeRf(ws), { work: { ...fullShapeWork(), extra: 1 } }), 'result.work needs exactly the six non-negative integer counters'],
+    ['schema other', (): Obj => ({ ...fullShapeRf(ws), schema: 'reactive-fiber.cli/v2' }), 'source must be a reactive-fiber.cli/v1 context.render envelope'],
+  ] as const)('the observer still refuses %s on the full shape', (_label, source, cause) => {
+    const error = thrownBy(() => reactivefiberTopology(reading(source()) as JsonValue, context));
+    expect(error).toBeInstanceOf(CapabilityError);
+    expect(error).toMatchObject({ category: 'validation', message: `ReactiveFiber topology refused: ${cause}.` });
+  });
+
+  // Acceptance 3 (provider): strictness is not loosened by the additive keys, and each row refuses for its own cause.
+  it.each([
+    ['extra top-level key', (e: Obj): Obj => ({ ...e, error: 'pretend success' }), UNRECOGNIZED],
+    ['claimed ephemeral storage write', (e: Obj): Obj => withResult(e, { work: { ...fullShapeWork(), storage_write_count: 1 } }), CONTRADICTORY],
+    ['seventh result.work key', (e: Obj): Obj => withResult(e, { work: { ...fullShapeWork(), seventh_count: 0 } }), CONTRADICTORY],
+    ['non-null ephemeral render id', (e: Obj): Obj => withResult(e, { render_id: 'rfr_aaaaaaaaaaaaaaaaaaaaaa' }), CONTRADICTORY],
+    ['non-null ephemeral commit sequence', (e: Obj): Obj => withResult(e, { commit_seq: 1 }), CONTRADICTORY],
+  ] as const)('still refuses %s on the full shape, for that cause', async (_label, mutate, message) => {
+    standIn(mutate(fullShapeRf(ws)));
+    const refusal = nativeReactiveFiberPreview('model', 'task', ws);
+    await expect(refusal).rejects.toBeInstanceOf(CapabilityError);
+    await expect(refusal).rejects.toMatchObject({ category: 'transport', message });
+  });
+
+  // Hermeticity: with PATH restricted to the stand-in's directory, a stand-in that cannot execute is a launch failure; it can
+  // never fall through to a host rf (which would refuse 'unavailable' for its own workspace instead).
+  it('the stand-in is hermetic: one that cannot execute refuses as a launch failure and never reaches a host rf', async () => {
+    standIn(fullShapeRf(ws), 0o600);
+    await expect(nativeReactiveFiberPreview('model', 'task', ws)).rejects.toMatchObject({ category: 'transport', message: 'RF preview could not launch the installed binary.' });
   });
 });
