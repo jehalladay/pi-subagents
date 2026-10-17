@@ -66,10 +66,15 @@ import { selectItem } from "./ui/select-item.js";
 import { renderWorkflowCard, renderWorkflowEntryCard } from "./ui/workflow-card.js";
 import { openWorkflowFromFleet, showWorkflowsMenu, type WorkflowMenuDeps } from "./ui/workflow-menu.js";
 import { getLifetimeCost, getLifetimeTotal, getSessionContextPercent, type LifetimeUsage, PendingUsagePool, toReportedUsage } from "./usage.js";
-import { type CapabilityDescriptor, CapabilityRegistry } from "./workbench/capability-registry.js";
+import { type CapabilityDescriptor, CapabilityError, CapabilityRegistry } from "./workbench/capability-registry.js";
+import { executeClaudeControl } from "./workbench/claude-control.js";
+import type { ClaudeCallIdentity } from "./workbench/claude-host.js";
+import { type ControlExecutionSummary, type ControlExecutor, createWorkflowControlTool } from "./workbench/control-tool.js";
 import { type CompareRun, catalogWorkflows, compareWorkflowRuns, inspectWorkflowSource, validateWorkflowSource } from "./workbench/designer.js";
+import { executeDetachedControl } from "./workbench/detached-control.js";
 import { createWorkbenchEvidenceStore } from "./workbench/evidence-wiring.js";
 import { createWorkflowExecuteTool, type ExecuteLaunch } from "./workbench/execute-tool.js";
+import { executeFurnaceControl } from "./workbench/furnace-control.js";
 import { FurnaceObserver } from "./workbench/furnace-observer.js";
 import { captureInvocationIdentity, type IdentityCaptureInput, identityDigest, verifyInvocationIdentity, WORKFLOW_SCRIPT_SCHEMA_VERSION } from "./workbench/identity.js";
 import { loadWorkbenchNative, workbenchNative } from "./workbench/native-modules.js";
@@ -306,6 +311,12 @@ export function formatToolsSuffix(cfg: AgentConfig | undefined): string {
 
 /** CLI flag that runs a workflow script at session start. */
 export const WORKFLOW_FILE_FLAG = "subagents-workflow-file";
+
+/**
+ * The session ObservationProjection's read cap (its maxQuery). The inspector's linked topology wiring reads relation
+ * pages of exactly this size, so a slice never asks for more rows than the projection can return (wb-6ze.24).
+ */
+export const WORKBENCH_PROJECTION_MAX_QUERY = 40;
 
 /**
  * Re-exported from where they now live, because this is where they were
@@ -2375,7 +2386,17 @@ Terse command-style prompts produce shallow, generic work.
    * background run.
    */
   const workflowTasks = new Map<string, WorkflowTask>();
-  const projection = new ObservationProjection({ maxEvents: 4_096, maxNodes: 2_000, maxEdges: 4_000, maxQuery: 40 });
+  const projection = new ObservationProjection({ maxEvents: 4_096, maxNodes: 2_000, maxEdges: 4_000, maxQuery: WORKBENCH_PROJECTION_MAX_QUERY });
+  /**
+   * workflow_control (wb-cra): the live Claude SDK queries THIS process runs, keyed by invocation and call index, each
+   * with the SDK session it has reported. The host fires onQueryLive/onQueryDone around every query whose stream exposes
+   * interrupt(); the session binding comes from the init message. An ended query is dropped the moment the host says so,
+   * so a control request can only ever reach a query that is live here — never a detached host's, never a replay.
+   */
+  interface LiveClaudeQuery { readonly invocationId: string; readonly call: ClaudeCallIdentity; readonly seam: { interrupt(): Promise<unknown> }; sessionId?: string }
+  const liveClaudeQueries = new Map<string, LiveClaudeQuery>();
+  const liveClaudeSessions = new Map<string, string>();
+  const liveClaudeKey = (invocationId: string, call: ClaudeCallIdentity): string => `${invocationId}:${call.index}`;
   const registries = new Map<string, CapabilityRegistry>();
   let workbenchToolsRegistered = false;
   function registryFor(cwd: string): CapabilityRegistry {
@@ -2711,6 +2732,64 @@ Terse command-style prompts produce shallow, generic work.
       launchEmbedded: launchEmbeddedWorkflow,
       launchDetached: launchDetachedWorkflow,
     }));
+    // workflow_control (wb-cra): the explicit native control tool over the pure decision core (control.ts) and the
+    // adapter legs. Grants, principal, workspace and session come from host context on every call; the target, the
+    // action and the operator's confirmed flag are the only params. Forge keeps no retained operation connection in this
+    // process (cancel needs the connection that issued the operation), so its leg is the typed unavailable refusal.
+    const controlNow = (): string => new Date().toISOString();
+    const controlExecutors: Readonly<Record<string, ControlExecutor>> = {
+      "claude-agent-sdk": async (decision, request, signal): Promise<ControlExecutionSummary> => {
+        const key = liveClaudeSessions.get(request.target.id);
+        const live = key !== undefined ? liveClaudeQueries.get(key) : undefined;
+        if (live === undefined) {
+          throw Object.assign(new CapabilityError("unavailable", "No live Claude SDK query is retained in this process for the target session."), { code: "no-live-query" });
+        }
+        const execution = await executeClaudeControl(decision, {
+          seam: live.seam,
+          call: { invocationId: live.invocationId, index: live.call.index, ...(live.sessionId !== undefined ? { sessionId: live.sessionId } : {}) },
+          now: controlNow, timeoutMs: 10_000, ...(signal !== undefined ? { signal } : {}),
+        });
+        return { receipt: execution.receipt, status: execution.status };
+      },
+      furnace: async (decision, request, signal): Promise<ControlExecutionSummary> => {
+        const { Furnace } = workbenchNative();
+        const client = new Furnace({ binary: "furnace", cwd: request.scope.workspace, timeoutMs: 10_000 });
+        const execution = await executeFurnaceControl(decision, {
+          client, workspaceRoot: request.scope.workspace, now: controlNow, timeoutMs: 10_000, ...(signal !== undefined ? { signal } : {}),
+        });
+        return { receipt: execution.receipt, status: execution.status };
+      },
+      "local-detached": async (_decision, request): Promise<ControlExecutionSummary> => {
+        const directory = join(getAgentDir(), "workbench-detached");
+        const execution = await executeDetachedControl({
+          request, deps: { projection }, connect: invocationId => workbenchNative().connectDetachedWorkflow(directory, invocationId), now: controlNow,
+        });
+        // The adapter decides from the same host-bound request; its own denial or refusal surfaces as the typed error it is.
+        if (execution.status === "denied") {
+          throw Object.assign(new CapabilityError(execution.decision.category, execution.decision.reason), { code: execution.decision.policy });
+        }
+        if (execution.status === "refused") {
+          throw Object.assign(new CapabilityError(execution.refusal.category, `Detached control refused (${execution.refusal.category}).`), { code: "detached-refused" });
+        }
+        return { receipt: execution.receipt, status: execution.status };
+      },
+      forge: async (): Promise<ControlExecutionSummary> => {
+        throw Object.assign(
+          new CapabilityError("unavailable", "Forge cancel needs the connection that issued the operation; this process retains none, so no Forge control leg is wired."),
+          { code: "no-retained-connection" },
+        );
+      },
+    };
+    pi.registerTool(createWorkflowControlTool({
+      grants,
+      observerScope,
+      localPrincipal,
+      sessionIdOf: toolCtx => toolCtx.sessionManager.getSessionId(),
+      projection,
+      tasks: workflowTasks,
+      now: controlNow,
+      executors: controlExecutors,
+    }));
   }
 
   /**
@@ -2842,8 +2921,21 @@ Terse command-style prompts produce shallow, generic work.
               invocationId: task.id,
               principal: { id: scope.principal, role: "local-operator" },
               beforeDispatch,
-              onMessage: observer.onMessage,
+              onMessage: (message, call) => {
+                if (message.type === "system" && message.subtype === "init") {
+                  const live = liveClaudeQueries.get(liveClaudeKey(task.id, call));
+                  if (live !== undefined) { live.sessionId = message.session_id; liveClaudeSessions.set(message.session_id, liveClaudeKey(task.id, call)); }
+                }
+                observer.onMessage(message, call);
+              },
               onSettled: observer.onSettled,
+              onQueryLive: (call, seam) => { liveClaudeQueries.set(liveClaudeKey(task.id, call), { invocationId: task.id, call, seam }); },
+              onQueryDone: call => {
+                const key = liveClaudeKey(task.id, call);
+                const live = liveClaudeQueries.get(key);
+                if (live?.sessionId !== undefined && liveClaudeSessions.get(live.sessionId) === key) liveClaudeSessions.delete(live.sessionId);
+                liveClaudeQueries.delete(key);
+              },
             })
           : createWorkflowHost({
               pi, ctx, manager, signal: task.abortController.signal,
@@ -4508,6 +4600,7 @@ Write the file using the write tool. Only write the file, nothing else.`;
     tasks: workflowTasks,
     observation: {
       projection,
+      relationPage: WORKBENCH_PROJECTION_MAX_QUERY,
       scope: task => task.observationScope ? { workspace: task.observationScope.workspace, principal: task.observationScope.principal } : undefined,
       // Loaders exist for the landed readers; authorization is the live
       // exact-grant check each load runs (docs/workbench/20, wb-g1g.1 ruling).

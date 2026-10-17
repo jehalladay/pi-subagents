@@ -15,6 +15,7 @@
  */
 
 import { randomUUID } from "node:crypto";
+import type { NativeControlReceipt } from "../workbench/control.js";
 import type { InvocationSnapshot } from "../workbench/identity.js";
 import { sanitizeWorkbenchText } from "../workbench/redaction.js";
 import { escapeXml } from "../xml.js";
@@ -75,6 +76,11 @@ export interface WorkflowTask {
   reconciledNodeCount: number;
   /** Session-held reconcile evidence receipts for this task (max 16, FIFO), written by workflow_reconcile. */
   reconcile?: { receipts: EvidenceReceipt[] };
+  /**
+   * Session-held control audit for this task (max 64 receipts, FIFO), written by workflow_control: every receipt phase the
+   * decision core minted or a producer adapter settled (requested, acknowledged, result), never one the tool composed.
+   */
+  controlAudit?: { receipts: NativeControlReceipt[] };
 
   /** The append-only event log, in emission order. */
   workflowProgress: WorkflowEntry[];

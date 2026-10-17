@@ -25,6 +25,17 @@ Separate:
 - Shutdown: stop accepting calls, notify owned local tasks, attempt graceful end, report unresolved effects, and release owned resources.
 - A Pi UI reconnect is only an observer/client action; it must not restart external work.
 
+## Pre-push commit-message scan (per-clone install)
+
+`qa/workbench/pre-push-commit-message-scan.mjs` is a git pre-push hook around the commit-range scan `qa/workbench/commit-message-scan.mjs`. Git writes one `<local ref> <local sha> <remote ref> <remote sha>` line per pushed ref to a pre-push hook's stdin; the hook scans `remote..local` for every line (every commit, not the tip; every commit reachable from the local sha when the remote sha is all zeros, a new branch) and skips a deleted-ref line. A commit message, author or committer that carries a source-hygiene guard code point refuses the push (exit 3, offenders listed as sha, line, column and a `U+` hex label); a line that cannot be scanned also refuses (exit 2). Install it once per clone, from the repository root, as a two-line wrapper script:
+
+```sh
+hook="$(git rev-parse --git-path hooks)/pre-push"
+printf '#!/bin/sh\nexec node "%s/qa/workbench/pre-push-commit-message-scan.mjs" "$@"\n' "$PWD" > "$hook" && chmod +x "$hook"
+```
+
+The wrapper names the script by absolute path and hands it the push. If that path later goes missing (the clone moved, the worktree removed), node exits non-zero and the push is refused; a symlink install would instead be skipped by git without a word. Run the two lines again after moving or re-cloning.
+
 ## Operations telemetry
 
 Report actual: active workflows, Claude SDK sessions, provider call outcomes, event lag, dropped/late observations, projection size, number of visible rows, UI render p95, memory, token use from SDK, native evidence coverage and ambiguous external effects. Hide/redact prompt/tool bodies by default.
