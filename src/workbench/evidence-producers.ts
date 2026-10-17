@@ -89,7 +89,7 @@ export interface ForgeEvidenceRead {
   readonly producerReceipt?: string;
 }
 export interface ForgeEvidenceReader {
-  (input: { readonly operationId: string; readonly signal: AbortSignal }): Promise<ForgeEvidenceRead>;
+  (input: { readonly operationId: string; readonly nativeRef: NativeRef; readonly signal: AbortSignal }): Promise<ForgeEvidenceRead>;
 }
 
 interface EvidenceProducerBase {
@@ -214,7 +214,8 @@ function forgeLoader(options: EvidenceProducerOptions, read: ForgeEvidenceReader
       gated(options, FORGE_INSPECT_GRANT);
       const operationId = FORGE_REF.exec(request.evidenceRef)?.[1];
       if (operationId === undefined) throw new EvidenceRefusal("no-loader");
-      const result = await read({ operationId, signal: request.signal });
+      // The requested node travels with the read so the host resolves ownership by it, never by the evidence ref alone (wb-cz9).
+      const result = await read({ operationId, nativeRef: request.nativeRef, signal: request.signal });
       // A failed or partial domain verdict is a legitimate loaded result shown as its own status; transport success is not verification.
       const preview = result.preview !== undefined
         ? [...result.preview]

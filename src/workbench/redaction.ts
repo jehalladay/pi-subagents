@@ -35,9 +35,13 @@ export function redactWorkbenchText(value: string, maxTextLength = WORKBENCH_TEX
 /**
  * One unsafe code point: a C0 or C1 control, the line and paragraph separators, a bidi embedding, override or isolate, any
  * default-ignorable code point (zero-width characters, joiners, bidi marks, the BOM, the soft hyphen, variation selectors,
- * tags) or a lone surrogate.
+ * tags), a format control that hides or rearranges the text beside it although Unicode does not make it default-ignorable
+ * (wb-rqd: the interlinear annotation controls U+FFF9-U+FFFB and the Egyptian hieroglyph format controls U+13430-U+1343F),
+ * or a lone surrogate. The other format controls that are not default-ignorable, the prepended concatenation marks (Arabic
+ * number signs and ayah ends, the Syriac abbreviation mark, the Kaithi number signs), are drawn with a visible glyph and
+ * stay text.
  */
-const UNSAFE_CODE_POINT = String.raw`[\x00-\x1f\x7f-\x9f\u{2028}\u{2029}\u{202a}-\u{202e}\u{2066}-\u{2069}\u{d800}-\u{dfff}]|\p{Default_Ignorable_Code_Point}`;
+const UNSAFE_CODE_POINT = String.raw`[\x00-\x1f\x7f-\x9f\u{2028}\u{2029}\u{202a}-\u{202e}\u{2066}-\u{2069}\u{d800}-\u{dfff}\u{fff9}-\u{fffb}\u{13430}-\u{1343f}]|\p{Default_Ignorable_Code_Point}`;
 /** A terminated ANSI CSI or string sequence (OSC, DCS, SOS, PM, APC) as ESC introduces it in its 7-bit form. */
 const SEVEN_BIT_SEQUENCE = String.raw`\x1b\[[0-?]*[ -/]*[@-~]|\x1b[\]P^X_][^\x07\x1b]*(?:\x07|\x1b\\)`;
 /**
@@ -85,7 +89,7 @@ interface Gap {
   control: boolean;
   /** A terminated escape sequence (CSI or a string sequence). */
   escape: boolean;
-  /** Any other default-ignorable code point, or a lone surrogate. */
+  /** Any other default-ignorable code point, a format control that hides or rearranges the text beside it, or a lone surrogate. */
   invisible: boolean;
   /** Line breaks, a CRLF counting once. */
   breaks: number;
@@ -98,7 +102,8 @@ type Rendering = (gap: Gap) => string;
 function absorb(gap: Gap, unit: string): void {
   const code = unit.charCodeAt(0);
   if (unit.length > 1) {
-    // An escape sequence (ESC or an 8-bit C1 introducer opens it), or an astral default-ignorable (a surrogate pair).
+    // An escape sequence (ESC or an 8-bit C1 introducer opens it), or an astral invisible (a surrogate pair: a
+    // default-ignorable or an Egyptian hieroglyph format control).
     if (code === 0x1b || (code >= 0x80 && code <= 0x9f)) gap.escape = true;
     else gap.invisible = true;
     gap.carriage = false;

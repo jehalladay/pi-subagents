@@ -2,6 +2,9 @@
 import { spawn } from "node:child_process";
 import { CapabilityError, type CapabilityRegistry, type JsonValue } from "../capability-registry.js";
 
+export const REACTIVE_FIBER_CLI_SCHEMA = "reactive-fiber.cli/v1";
+export const REACTIVEFIBER_RENDER_PREVIEW_CONTRACT = "reactivefiber.render.preview/v1";
+
 interface RfEnvelope {
   schema: string; ok: boolean; command: string; operation_id: string;
   workspace: { id: string; root: string }; transaction_id: null;
@@ -29,7 +32,7 @@ function isRfDiagnostic(value: unknown): value is Record<string, JsonValue> {
 function isRfEnvelope(source: unknown): source is Record<string, JsonValue> {
   return record(source) && Object.keys(source).length===RF_KEYS.length &&
     RF_KEYS.every(key=>Object.hasOwn(source,key)) &&
-    source.schema==="reactive-fiber.cli/v1" && source.command==="context.render" &&
+    source.schema===REACTIVE_FIBER_CLI_SCHEMA && source.command==="context.render" &&
     typeof source.ok==="boolean" && typeof source.operation_id==="string" &&
     RF_ID.test(source.operation_id) &&
     (source.workspace===null || (record(source.workspace) &&
@@ -70,7 +73,7 @@ export function registerReactiveFiberRender(registry:CapabilityRegistry,invoke:(
       if(context.signal.aborted) throw new CapabilityError("transport","RF preview cancelled before invocation.");
       const source=await invoke();
       if(context.signal.aborted) throw new CapabilityError("transport","RF preview cancelled.");
-      return JSON.parse(JSON.stringify({contract:"reactivefiber.render.preview/v1",workspaceRoot,source})) as JsonValue;
+      return JSON.parse(JSON.stringify({contract:REACTIVEFIBER_RENDER_PREVIEW_CONTRACT,workspaceRoot,source})) as JsonValue;
     }});
 }
 
@@ -129,7 +132,7 @@ export async function nativeReactiveFiberPreview(model:string,task:string,worksp
     }
     if(!isPreviewEnvelope(source,exit,workspaceRoot)) throw new CapabilityError("transport","RF preview returned an unrecognized or contradictory envelope.");
     if(signal?.aborted) throw new CapabilityError("transport","RF preview cancelled.");
-    return JSON.parse(JSON.stringify({contract:"reactivefiber.render.preview/v1",workspaceRoot,source})) as JsonValue;
+    return JSON.parse(JSON.stringify({contract:REACTIVEFIBER_RENDER_PREVIEW_CONTRACT,workspaceRoot,source})) as JsonValue;
   }finally{
     clearTimeout(timer);
     if(escalation) clearTimeout(escalation);
