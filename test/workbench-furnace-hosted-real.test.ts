@@ -63,7 +63,7 @@ afterAll(() => {
 });
 
 describe("Furnace-hosted adapter over the real bridge (disposable /tmp workspace, wisp mode)", () => {
-  it("serves one bridge host session per real Attempt and agrees with Furnace's own Attempt records", async () => {
+  it("serves a Run's sequential Attempts on one kept bridge session, receipts each by its own admission receipt, and agrees with Furnace's persisted executor_identity", async () => {
     const before = mainTreeState();
     const ran: string[] = [];
     const workflow: HostedWorkflow = async ({ identity }) => {
@@ -78,7 +78,9 @@ describe("Furnace-hosted adapter over the real bridge (disposable /tmp workspace
       const status = await client.runs.get(started.runId).status({ timeoutMs: 30_000 });
       const attempts = await client.attempts.list(started.runId, {}, { timeoutMs: 30_000 });
       const receipt = executor.receipt();
-      process.stdout.write(`\nHOSTED-RECEIPT-PAIR ${JSON.stringify({ run: receipt.run, runState: status.data.state, furnaceAttempts: attempts.data.attempts.map((a) => [a.attempt_id, a.ordinal, a.state, a.outcome]), receipt: receipt.attempts.map((a) => [a.attemptId, a.ordinal, a.sessionInstanceId, a.terminal]) })}\n`);
+      const identityOf = new Map<string, unknown>();
+      for (const row of receipt.attempts) identityOf.set(row.attemptId, (await client.attempts.inspect(row.attemptId, { timeoutMs: 30_000 })).data.executor_identity);
+      process.stdout.write(`\nHOSTED-RECEIPT-PAIR ${JSON.stringify({ run: receipt.run, runState: status.data.state, furnaceAttempts: attempts.data.attempts.map((a) => [a.attempt_id, a.ordinal, a.state, a.outcome]), receipt: receipt.attempts.map((a) => [a.attemptId, a.ordinal, a.sessionInstanceId, a.executionId, a.admissionReceipt, a.terminal]), sessions: receipt.sessions, executorIdentity: receipt.attempts.map((a) => identityOf.get(a.attemptId)) })}\n`);
       expect(status.data.state).toBe("completed");
       expect(attempts.data.attempts).toHaveLength(2);
       expect(attempts.data.attempts.map((a) => a.state)).toEqual(["succeeded", "succeeded"]);
@@ -86,7 +88,18 @@ describe("Furnace-hosted adapter over the real bridge (disposable /tmp workspace
       const identities = (rows: Array<[string, number]>): Array<[string, number]> => rows.sort((a, b) => a[0].localeCompare(b[0]));
       expect(identities(receipt.attempts.map((a) => [a.attemptId, a.ordinal]))).toEqual(identities(attempts.data.attempts.map((a) => [a.attempt_id, a.ordinal])));
       expect(ran).toEqual(receipt.attempts.map((a) => a.attemptId));
-      expect(new Set(receipt.attempts.map((a) => a.sessionInstanceId)).size).toBe(2);
+      expect(new Set(receipt.attempts.map((a) => a.admissionReceipt)).size).toBe(2);
+      // One kept connection serves a Run's sequential Attempts (executor-platform.md §6; measured on furnace 0.1.0
+      // 9970621d87e0, receipts/wb-zby.1.md). A driver that stops keeping the connection reds this row — the intended falsifier.
+      const sessions = new Set(receipt.attempts.map((a) => a.sessionInstanceId));
+      expect(sessions.size).toBe(1);
+      const [s] = sessions;
+      expect(receipt.sessions).toEqual([{ sessionInstanceId: s, admissionReceipts: receipt.attempts.map((a) => a.admissionReceipt) }]);
+      for (const [i, row] of receipt.attempts.entries()) {
+        // The SDK mints receipts as <instance_id>/<process token>/<n> (ResidentSession.mintReceipt, @furnace/sdk at Furnace 9970621d8).
+        expect(row.admissionReceipt).toMatch(new RegExp(`^${s}/[0-9a-f]{16}/${i + 1}$`));
+        expect(identityOf.get(row.attemptId)).toMatchObject({ host_instance_id: row.sessionInstanceId, receipt: row.admissionReceipt, execution_id: row.executionId });
+      }
       expect(receipt.attempts.every((a) => a.terminal === "success")).toBe(true);
       expect(receipt.identityViolations).toEqual([]);
     } finally {
@@ -129,7 +142,7 @@ describe("Furnace-hosted adapter over the real bridge (disposable /tmp workspace
       const frozen = effects.length;
       await sleep(500);
       const inspected = await client.attempts.inspect(attemptId as string, { timeoutMs: 30_000 });
-      process.stdout.write(`\nHOSTED-RECEIPT-CANCEL ${JSON.stringify({ run: receipt.run, stopKind: stop.kind, attemptState: inspected.data.state, attemptOutcome: inspected.data.outcome, receipt: attempt, effectsAtAbort: abortedAtEffects, effectsAfter: effects.length })}\n`);
+      process.stdout.write(`\nHOSTED-RECEIPT-CANCEL ${JSON.stringify({ run: receipt.run, stopKind: stop.kind, attemptState: inspected.data.state, attemptOutcome: inspected.data.outcome, receipt: attempt, sessions: receipt.sessions, effectsAtAbort: abortedAtEffects, effectsAfter: effects.length })}\n`);
       expect(started.runId).toBe(receipt.run?.runId);
       expect(attempt).toMatchObject({ terminal: "cancelled", cancel: { requested: true }, unsettledAfterCancel: false });
       expect(attempt?.cancel.reason).toMatch(/operator_stop/);

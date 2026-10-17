@@ -8,7 +8,7 @@
  * "every capture sanitized through redaction.ts", "measurement-only".
  */
 import { execFileSync } from 'node:child_process';
-import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterAll, describe, expect, it } from 'vitest';
@@ -186,6 +186,63 @@ const stripComments = (source: string): string => {
   return out;
 };
 
+/**
+ * The stripped code with every '…'/"…" string BODY removed (quotes kept): a decoy planted inside a string literal can
+ * never satisfy a shape pin, and a regex literal whose quote desyncs the lexer only blanks the swallowed decoy with it
+ * (wb-a2g.6 F4: R12/R13/R14 die). Template text is kept verbatim — the stderr capture site lives inside one.
+ */
+const blankStrings = (code: string): string => {
+  type Mode = { kind: 'code'; depth: number } | { kind: 'template' };
+  const stack: Mode[] = [{ kind: 'code', depth: 0 }];
+  let out = '';
+  let at = 0;
+  while (at < code.length) {
+    const mode = stack[stack.length - 1] as Mode;
+    const ch = code.charAt(at);
+    const next = code.charAt(at + 1);
+    if (mode.kind === 'template') {
+      if (ch === '\\') {
+        out += code.slice(at, at + 2);
+        at += 2;
+      } else if (ch === '`') {
+        stack.pop();
+        out += ch;
+        at += 1;
+      } else if (ch === '$' && next === '{') {
+        stack.push({ kind: 'code', depth: 0 });
+        out += '$' + '{';
+        at += 2;
+      } else {
+        out += ch;
+        at += 1;
+      }
+    } else if (ch === "'" || ch === '"') {
+      let end = at + 1;
+      while (end < code.length && code.charAt(end) !== ch && code.charAt(end) !== '\n') end += code.charAt(end) === '\\' ? 2 : 1;
+      out += ch;
+      if (code.charAt(end) === ch) {
+        out += ch;
+        at = end + 1;
+      } else {
+        at = end;
+      }
+    } else if (ch === '`') {
+      stack.push({ kind: 'template' });
+      out += ch;
+      at += 1;
+    } else {
+      if (ch === '{') mode.depth += 1;
+      else if (ch === '}') {
+        if (mode.depth === 0 && stack.length > 1) stack.pop();
+        else mode.depth -= 1;
+      }
+      out += ch;
+      at += 1;
+    }
+  }
+  return out;
+};
+
 /** Every capture site of the runner and the routed form it must keep; a site that no longer matches bypasses preview(). */
 const CAPTURE_SITES: readonly [string, RegExp][] = [
   ['native model string', /model: preview\(model, MODEL_PREVIEW\)/],
@@ -197,7 +254,7 @@ const CAPTURE_SITES: readonly [string, RegExp][] = [
   ['harness-failure stdout receipt', /harnessFailure: preview\(/],
 ];
 const bypassedSites = (source: string): string[] => {
-  const code = stripComments(source);
+  const code = blankStrings(stripComments(source));
   const failures = CAPTURE_SITES.filter(([, shape]) => !shape.test(code)).map(([name]) => name);
   const rawMessages = (code.match(/error\.message/g) ?? []).length;
   const routedMessages = (code.match(/preview\(error instanceof Error \? error\.message : error, \d+\)/g) ?? []).length;
@@ -230,7 +287,7 @@ describe('runner shape', () => {
   });
   it('takes revision and the dirty bit from the toplevel-checked gitStamp, never a bare git read or a literal (wb-a2g.6 U1: N11 dies)', () => {
     expect(runner).toContain("from './live-served-model-stamp.mjs'");
-    expect(runner).toMatch(/gitStamp\(/);
+    expect(runner).toMatch(/gitStamp\(fileURLToPath\(new URL\('\.\.\/\.\.', import\.meta\.url\)\)\)/);
     expect(runner).toMatch(/revision: stamp\.revision,/);
     expect(runner).toMatch(/dirty: stamp\.dirty,/);
     expect(runner).not.toMatch(/dirty: (?:true|false|null)\b/);
@@ -277,6 +334,24 @@ describe('runner shape', () => {
       expect(rawRunner).toContain(from);
       expect(bypassedSites(rawRunner.replace(from, to))).toContain(name);
     }
+  });
+  it('R12: a decoy string literal carrying the exact requested-alias site never hides its bypass (wb-a2g.6 F4)', () => {
+    const site = 'requestedModel: preview(MODEL, MODEL_PREVIEW)';
+    expect(rawRunner).toContain(site);
+    const mutant = rawRunner.replace(site, `requestedModel: MODEL, decoyNote: '${site}'`);
+    expect(bypassedSites(mutant)).toContain('requested alias');
+  });
+  it('R13: a decoy string literal carrying the exact assistant-error site never hides its bypass (wb-a2g.6 F4)', () => {
+    const site = 'assistantError: preview(message.error, 60)';
+    expect(rawRunner).toContain(site);
+    const mutant = rawRunner.replace(site, `assistantError: message.error, decoyNote: "${site}"`);
+    expect(bypassedSites(mutant)).toContain('assistant error flag');
+  });
+  it('R14: a regex literal with a quote cannot desync the lexer into keeping a decoy comment alive (wb-a2g.6 F4)', () => {
+    const site = 'model: preview(model, MODEL_PREVIEW)';
+    const mutant = rawRunner.replace(site, `model, quoted: /'/.test(String(model)) // ${site}`);
+    expect(mutant).not.toBe(rawRunner);
+    expect(bypassedSites(mutant)).toContain('native model string');
   });
 });
 
@@ -349,11 +424,8 @@ describe('buildPreview: the pure, behaviourally pinned display path (wb-a2g.6 U1
   });
 });
 
-describe('builder backstop is as wide as the shared redactor and the unsafe-unit set (wb-a2g.6 U1)', () => {
-  const rejects = (requestedModel: string): void => {
-    expect(() => buildServedModelReceipt(input({ requestedModel }))).toThrow(TypeError);
-  };
-  it.each([
+/** The three refusal tables, hoisted so a hollowed table is a failed length pin, never a silently smaller suite (wb-a2g.6 F7). */
+const BACKSTOP_ROWS = [
     ['Bearer', 'Bearer abc123'],
     ['Basic scheme', 'Basic dXNlcjpwYXNz'],
     ['sk-ant- prefix', 'sk-ant-api03-x'],
@@ -367,18 +439,14 @@ describe('builder backstop is as wide as the shared redactor and the unsafe-unit
     ['aws_session_token assignment', 'aws_session_token = abcdef'],
     ['secret assignment', 'secret="abcdef"'],
     ['api key name', 'api_key'],
-  ])('refuses %s', (_name, value) => rejects(value));
-  it.each([
+] as const;
+const GLUED_BEARER_PROBES = [
     ['JSON-escaped newline glued to Bearer', 'x\\nBearer abc123def456'],
     ['JSON-escaped tab glued to Bearer', 'x\\tBearer abc123def456'],
     ['authBearer', 'authBearer abc123def456'],
     ['x1Bearer', 'x1Bearer abc123def456'],
-  ])('refuses a word-glued Bearer token: %s (a2g.1 J7 four-probe set)', (_name, value) => rejects(value));
-  it('still admits an already-redacted assignment and a plain model id', () => {
-    expect(buildServedModelReceipt(input({ requestedModel: 'password=[REDACTED]' })).requestedModel).toBe('password=[REDACTED]');
-    expect(buildServedModelReceipt(input()).requestedModel).toBe(REQUESTED);
-  });
-  it.each([
+] as const;
+const UNSAFE_UNITS = [
     ['ZWSP', ZWSP],
     ['RLO', RLO],
     ['LS', LS],
@@ -387,7 +455,24 @@ describe('builder backstop is as wide as the shared redactor and the unsafe-unit
     ['LRM', LRM],
     ['NEL', NEL],
     ['lone surrogate', LONE_HIGH],
-  ])('refuses %s in a string field', (_name, unit) => rejects(`claude${unit}haiku`));
+] as const;
+
+describe('builder backstop is as wide as the shared redactor and the unsafe-unit set (wb-a2g.6 U1)', () => {
+  const rejects = (requestedModel: string): void => {
+    expect(() => buildServedModelReceipt(input({ requestedModel }))).toThrow(TypeError);
+  };
+  it.each(BACKSTOP_ROWS)('refuses %s', (_name, value) => rejects(value));
+  it.each(GLUED_BEARER_PROBES)('refuses a word-glued Bearer token: %s (a2g.1 J7 four-probe set)', (_name, value) => rejects(value));
+  it('still admits an already-redacted assignment and a plain model id', () => {
+    expect(buildServedModelReceipt(input({ requestedModel: 'password=[REDACTED]' })).requestedModel).toBe('password=[REDACTED]');
+    expect(buildServedModelReceipt(input()).requestedModel).toBe(REQUESTED);
+  });
+  it.each(UNSAFE_UNITS)('refuses %s in a string field', (_name, unit) => rejects(`claude${unit}haiku`));
+  it('table liveness: every refusal row is registered, none hollowed away (wb-a2g.6 F7)', () => {
+    expect(BACKSTOP_ROWS).toHaveLength(13);
+    expect(GLUED_BEARER_PROBES).toHaveLength(4);
+    expect(UNSAFE_UNITS).toHaveLength(8);
+  });
 });
 
 describe('receipt dirty bit (wb-a2g.6 O4, the vko family standard)', () => {
@@ -404,20 +489,45 @@ const POINTER_HEADING = '## Actual Pi terminal journey';
 const POINTER_PARAGRAPH =
   'Evidence of record for the alias-versus-native split (wb-a2g.6, owner-designated): the one-turn served-model journey, bound by gate receipt `cmd_59b070680f65` at commit `30af7a6`, observed the deployed gateway serve `claude-sonnet-5-5` in the genuine assistant `message.model` for the requested `claude-haiku-4-5` alias while system/init echoed `claude-haiku-4-5`. The receipt records `matchesRequested` and never judges the mismatch.';
 /**
- * The pointer pin over ONE rendered view (gate-2 R1 O2): HTML comments and fenced blocks removed first, the heading must be
- * unique (a later duplicate cannot hijack first-match extraction), the section runs to the next level-1/2 heading or EOF
- * (a ### subsection stays inside), and the whole pointer paragraph must appear in it exactly once, verbatim.
+ * The pointer pin over ONE rendered view (gate-2 R1 O2 + wb-a2g.6 F5): HTML comments and fenced blocks removed first
+ * (backtick AND tilde fences, openers and closers indented up to three spaces), the heading must be unique (a later
+ * duplicate cannot hijack first-match extraction), the section runs to the next level-1/2 heading or EOF (a ###
+ * subsection stays inside), the whole pointer paragraph must appear in it exactly once, verbatim, no raw-HTML block
+ * line may share the section (a wrap can restyle or hide the paragraph), and exactly one blank-line-delimited block
+ * must BE the paragraph (a 4-space code indent or a same-line suffix is never the paragraph of record).
  */
 const pointerFailures = (docs: string): string[] => {
-  const view = docs.replace(/<!--[\s\S]*?(?:-->|$)/g, '').replace(/^```[^\n]*\n[\s\S]*?(?:^```[^\n]*$|$(?![\s\S]))/gm, '');
+  const view = docs
+    .replace(/<!--[\s\S]*?(?:-->|$)/g, '')
+    .replace(/^ {0,3}(?:```|~~~)[^\n]*\n[\s\S]*?(?:^ {0,3}(?:```|~~~)[^\n]*$|$(?![\s\S]))/gm, '');
   const lines = view.split('\n');
   const starts = lines.flatMap((line, index) => (line.trimEnd() === POINTER_HEADING ? [index] : []));
   if (starts.length !== 1) return [`the heading "${POINTER_HEADING}" must occur exactly once in the rendered view, found ${starts.length}`];
   const first = (starts[0] ?? 0) + 1;
   const stop = lines.findIndex((line, index) => index >= first && /^#{1,2} /.test(line));
-  const section = lines.slice(first, stop === -1 ? lines.length : stop).join('\n');
+  const sectionLines = lines.slice(first, stop === -1 ? lines.length : stop);
+  const section = sectionLines.join('\n');
+  const failures: string[] = [];
   const count = section.split(POINTER_PARAGRAPH).length - 1;
-  return count === 1 ? [] : [`the pointer paragraph must occur exactly once inside the section, found ${count}`];
+  if (count !== 1) failures.push(`the pointer paragraph must occur exactly once inside the section, found ${count}`);
+  const html = sectionLines.filter((line) => /^ {0,3}<[a-zA-Z!/]/.test(line));
+  if (html.length > 0) failures.push(`raw HTML in the pointer section can restyle or hide the paragraph in the rendered view: ${html[0]}`);
+  const blocks: string[] = [];
+  let current: string[] = [];
+  for (const line of sectionLines) {
+    if (line.trim() === '') {
+      if (current.length > 0) {
+        blocks.push(current.join('\n'));
+        current = [];
+      }
+    } else {
+      current.push(line);
+    }
+  }
+  if (current.length > 0) blocks.push(current.join('\n'));
+  const exact = blocks.filter((block) => block === POINTER_PARAGRAPH).length;
+  if (exact !== 1) failures.push(`exactly one blank-line-delimited block must BE the pointer paragraph, found ${exact}`);
+  return failures;
 };
 
 describe('TRACEABILITY alias-vs-native pointer (wb-a2g.6 U3 + gate-2 R1 O2, the hardened docs recipe)', () => {
@@ -444,6 +554,20 @@ describe('TRACEABILITY alias-vs-native pointer (wb-a2g.6 U3 + gate-2 R1 O2, the 
     expect(pointerFailures(duplicated).length).toBeGreaterThan(0);
     const renamed = trace.replace('## Actual Pi terminal journey', '## Actual Pi terminal journeys');
     expect(pointerFailures(renamed).length).toBeGreaterThan(0);
+  });
+  const X_FALSIFIERS: ReadonlyArray<readonly [string, (paragraph: string) => string]> = [
+    ['X1 same-line raw-HTML wrap', (paragraph) => `<div>${paragraph}</div>`],
+    ['X2 adjacent-line raw-HTML wrap', (paragraph) => `<div>\n${paragraph}\n</div>`],
+    ['X3 blank-line-separated hidden raw-HTML wrap', (paragraph) => `<div hidden>\n\n${paragraph}\n\n</div>`],
+    ['X4 tilde fence', (paragraph) => `~~~text\n${paragraph}\n~~~`],
+    ['X5 three-space-indented backtick fence', (paragraph) => `   \`\`\`text\n${paragraph}\n   \`\`\``],
+    ['X6 four-space code indent', (paragraph) => `    ${paragraph}`],
+    ['X7 same-line advisory suffix', (paragraph) => `${paragraph} — advisory only, superseded`],
+  ];
+  it.each(X_FALSIFIERS)('is red when the pointer paragraph is neutralised in the rendered view: %s (wb-a2g.6 F5)', (_name, mutate) => {
+    const mutated = trace.replace(POINTER_PARAGRAPH, mutate(POINTER_PARAGRAPH));
+    expect(mutated).not.toBe(trace);
+    expect(pointerFailures(mutated).length).toBeGreaterThan(0);
   });
 });
 
@@ -473,6 +597,15 @@ describe('gitStamp: toplevel-checked revision and dirty bit (wb-a2g.6 U1, the vk
     const dir = repo('fresh');
     expect(gitStamp(dir)).toEqual({ revision: git(dir, 'rev-parse', 'HEAD'), dirty: false });
     expect(gitStamp(dir).revision).toMatch(HEX);
+  });
+
+  it('canonicalises the root spelling before the toplevel equality: a trailing slash and a symlinked spelling both stamp (S5 dies)', () => {
+    const dir = repo('spelling');
+    const head = git(dir, 'rev-parse', 'HEAD');
+    expect(gitStamp(`${dir}/`)).toEqual({ revision: head, dirty: false });
+    const link = join(scratch, 'spelling-link');
+    symlinkSync(dir, link);
+    expect(gitStamp(link)).toEqual({ revision: head, dirty: false });
   });
 
   it('stamps dirty true when the tree differs from HEAD (untracked and modified)', () => {

@@ -644,6 +644,58 @@ describe("wb-752.4 folds: policy pin, completionBasis, dead-code removal, era hy
   });
 });
 
+describe("wb-19q member 5: the wb-752.4 deferred survivors GM13 (M5), M12 and M16 die on hand-built inputs; M11 is recorded equivalent", () => {
+  // Gate-1 table (M5 "requiredGrant allowlist check removed", M12 "denied category unvalidated", M16 "outcome allowlist removed") and
+  // gate-2 F3 (GM13 == M5): each survived every delivered row because it is reachable only through input the core did not mint. The
+  // suite's hostile reason fails MISSING_GRANT before the allowlist branch runs, and every core decision or receipt carries a listed
+  // category and outcome. Each row below is a hand-built input beside a positive control from the real core.
+  // M11 "permitted decision any phase" (the phase check on the permit branch, control-reply.ts:195) is EQUIVALENT at HEAD since wb-5a7
+  // (60d9fab): the branch first requires isCoreMintedDecision(source), and control.ts freezes the minted receipt with phase "requested"
+  // (:239-243) and the permit around it (:244), so no core-minted permit carries a receipt of another phase and every look-alike is
+  // refused before the phase is read. Recorded, not re-implemented: no row can redden it (probe: the file stays green with M11 applied).
+  const MALFORMED = { contractVersion: CONTROL_REPLY_CONTRACT_VERSION, kind: "control-reply", status: "denied", category: "validation",
+    policy: "malformed-input", effect: "none", reason: "The reply input is not a control decision or receipt.", truncated: false };
+  /** The MISSING_GRANT shape (control-reply.ts:84), copied so each row provably reaches the allowlist branch the hostile reason at :93 never did. */
+  const REGEX_VALID = /^missing exact grant control:[a-z][a-z0-9-]*\.[a-z][a-z0-9-]*$/;
+  const UNLISTED: readonly (readonly [grant: string, needle: string])[] = [
+    ["control:evil.rm", "evil"],
+    ["control:furnace.obliterate", "obliterate"],
+  ];
+  it("GM13 (M5): a regex-valid missing-exact-grant reason naming an unlisted provider or action names no requiredGrant and is never echoed", () => {
+    for (const [grant, needle] of UNLISTED) {
+      const unlisted: ControlDecision = { decision: "denied", category: "authorization", policy: "missing-exact-grant", reason: `missing exact grant ${grant}` };
+      expect(REGEX_VALID.test(unlisted.reason), grant).toBe(true);
+      const out = buildControlReply(unlisted);
+      const body = parse(out.text);
+      expect(body, grant).toMatchObject({ status: "denied", policy: "missing-exact-grant", category: "authorization", truncated: false });
+      expect(body, grant).not.toHaveProperty("requiredGrant");
+      expect(out.text, grant).not.toContain(needle);
+    }
+    // Positive control: the same shape naming an allowlisted provider.action names the grant.
+    const listed: ControlDecision = { decision: "denied", category: "authorization", policy: "missing-exact-grant", reason: `missing exact grant ${GRANT}` };
+    expect(parse(buildControlReply(listed).text).requiredGrant).toBe(GRANT);
+  });
+  it("M12: a denied decision whose category is outside the core's categories renders the typed malformed-input refusal and never echoes the category", () => {
+    const base = { decision: "denied", policy: "missing-exact-grant", reason: `missing exact grant ${GRANT}` } as const;
+    const foreign = { ...base, category: "caller-supplied-category" } as unknown as ControlDecision;
+    const out = buildControlReply(foreign);
+    expect(parse(out.text)).toStrictEqual(MALFORMED);
+    expect(out.text).not.toContain("caller-supplied-category");
+    // Positive control: the same decision with a core category renders its policy and names the grant.
+    expect(parse(buildControlReply({ ...base, category: "authorization" }).text)).toMatchObject({ status: "denied", policy: "missing-exact-grant", category: "authorization", requiredGrant: GRANT });
+  });
+  it("M16: a result receipt whose outcome is outside the core's outcomes renders the typed malformed-input refusal and never echoes the outcome", () => {
+    const foreign = { ...settled(), outcome: "caller-supplied-outcome" } as unknown as NativeControlReceipt;
+    const out = buildControlReply(foreign);
+    expect(parse(out.text)).toStrictEqual(MALFORMED);
+    expect(out.text).not.toContain("caller-supplied-outcome");
+    // Positive control: every core outcome renders the result phase carrying that outcome.
+    for (const outcome of ["completed", "failed", "cancelled", "unknown"] as const) {
+      expect(parse(buildControlReply(settle(acked(), { ...RESULT, outcome })).text), outcome).toMatchObject({ status: "result", result: { outcome } });
+    }
+  });
+});
+
 /** The permitted decision decideControl minted for this file's request: the one value the builder renders as a permit. */
 function permit(): Extract<ControlDecision, { decision: "permitted" }> {
   const decision = decide();

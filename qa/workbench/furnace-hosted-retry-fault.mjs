@@ -1,20 +1,19 @@
 // wb-0kg.4 (VC-7 / W18-D): Furnace Work retry while child Run establishment is uncertain -- FIXTURE-tier receipt runner.
 // Measures the five journeys of test/helpers/furnace-hosted-retry-journeys.ts (the same journeys the default gate
-// asserts in test/workbench-furnace-hosted-retry-fault.test.ts) through the BUILT wb-zmd adapter (dist) and a REPAIRED
-// copy of the vendored @furnace/sdk made by ./furnace-hosted-repaired-sdk.mjs (the wb-zmd helper's recipe, pinned to it
-// by the default-gate tier). The journeys helper is erasable TypeScript with type-only project imports, which node loads
-// through its built-in type stripping (engines.node >= 24). Every retry is the scripted operator path; no Furnace binary,
-// no live Run, no Furnace verb, no furnace doctor or probe. The host socket lives under chooseScratchBase():
-// XDG_RUNTIME_DIR first, /tmp only as the recorded fallback; the repaired copy lives under the inherited tmpdir().
+// asserts in test/workbench-furnace-hosted-retry-fault.test.ts) through the BUILT wb-zmd adapter (dist) and the SHIPPED
+// vendored @furnace/sdk that adapter loads (its SHIPPED_FURNACE_SDK; wb-zby.2: no copy, no manifest rewrite). The
+// receipt's sdk record is the journeys helper's shippedSdkRecord(): copy "shipped" with the installed package's manifest
+// and provenance digests, the record the default-gate tier hands the same judge. The journeys helper is erasable
+// TypeScript with type-only project imports, which node loads through its built-in type stripping (engines.node >= 24).
+// Every retry is the scripted operator path; no Furnace binary, no live Run, no Furnace verb, no furnace doctor or probe.
+// The host socket lives under chooseScratchBase(): XDG_RUNTIME_DIR first, /tmp only as the recorded fallback.
 // Exit 0 = realised and clean, 1 = realised with findings, 2 = not realised, 3 = the receipt was printed but could not
 // be written to $FURNACE_HOSTED_RETRY_FAULT_RECEIPT. The receipt is ONE JSON line on stdout, printed BEFORE any write.
 // Bind it to a commit by running from a clean committed tree after `npm run build` (revision and revisionClean say so).
 import {execFileSync} from 'node:child_process';
 import {writeFileSync} from 'node:fs';
-import {tmpdir} from 'node:os';
 import {fileURLToPath} from 'node:url';
 import {buildRetryFaultReceipt, exitCodeFor, RETRY_FAULT_JOURNEYS} from './furnace-hosted-retry-fault-receipt.mjs';
-import {loadRepairedSdkCopy} from './furnace-hosted-repaired-sdk.mjs';
 
 const ROOT = fileURLToPath(new URL('../..', import.meta.url));
 const diagnostics = [];
@@ -81,13 +80,11 @@ try {
 }
 if (!journeyModule) process.exit(emit());
 
-let repaired;
 let code = 2;
 try {
   scratch = journeyModule.chooseScratchBase(process.env);
-  repaired = await loadRepairedSdkCopy(tmpdir());
-  sdk = {copy: 'repaired', repairedDigest: repaired.repairedDigest, shippedManifestDigest: repaired.shippedManifestDigest};
-  const env = {Executor: adapter.FurnaceHostedExecutor, CapabilityError: registry.CapabilityError, sdk: repaired.sdk, scratchBase: scratch.path};
+  sdk = journeyModule.shippedSdkRecord();
+  const env = {Executor: adapter.FurnaceHostedExecutor, CapabilityError: registry.CapabilityError, sdk: adapter.SHIPPED_FURNACE_SDK, scratchBase: scratch.path};
   for (const name of RETRY_FAULT_JOURNEYS) {
     const run = journeyModule.RETRY_FAULT_JOURNEY_RUNNERS[name];
     if (typeof run !== 'function') {
@@ -103,7 +100,6 @@ try {
 } catch (error) {
   diagnostics.push(`measurement error: ${message(error)}`);
 } finally {
-  if (repaired) repaired.dispose();
   code = emit();
 }
 process.exit(code);

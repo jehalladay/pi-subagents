@@ -23,8 +23,18 @@ const BEARER = new RegExp(String.raw`\b(?:${SCHEMES})\s+[^\s,;"']+`, "gi");
 const PREFIXED = new RegExp(String.raw`\b(?:${KEY_PREFIXES})[a-zA-Z0-9_-]+`, "g");
 const ASSIGNED = new RegExp(String.raw`((?:${ASSIGNMENT_KEYS})["']?\s*[=:]\s*)(?:\[REDACTED\](?=[}\]]*(?:$|[\s,;]))|"[^"\n]*"|'[^'\n]*'|[^\s,;]+)`, "gi");
 
+/**
+ * The bound every sanitizer ends with: a longer text keeps its first maxTextLength - 20 code units and the truncation marker,
+ * and the cut never falls between the two halves of a surrogate pair (wb-yr9): a pair it would split is dropped whole, one
+ * unit earlier, so no caller displays a lone surrogate the bound made.
+ */
 function bounded(value: string, maxTextLength: number): string {
-  return value.length > maxTextLength ? `${value.slice(0, Math.max(0, maxTextLength - 20))} [truncated]` : value;
+  if (value.length <= maxTextLength) return value;
+  const cut = Math.max(0, maxTextLength - 20);
+  const high = value.charCodeAt(cut - 1);
+  const low = value.charCodeAt(cut);
+  const splitsPair = high >= 0xd800 && high <= 0xdbff && low >= 0xdc00 && low <= 0xdfff;
+  return `${value.slice(0, splitsPair ? cut - 1 : cut)} [truncated]`;
 }
 
 export function redactWorkbenchText(value: string, maxTextLength = WORKBENCH_TEXT_LIMIT): string {

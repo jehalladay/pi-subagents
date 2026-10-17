@@ -150,7 +150,7 @@ function stampBlock(name: string): string {
 const INLINED = ["status-ledger.mjs", "local-detached-faults.mjs", "local-detached-shared-child.mjs"];
 
 /** The members that import the canonical module (statically, or dynamically inside live-operator's bounded block). */
-const IMPORTERS = ["package-smoke.mjs", "live-operator-receipt.mjs", "headless-host-census.mjs", "install-minimal.mjs"];
+const IMPORTERS = ["package-smoke.mjs", "live-operator-receipt.mjs", "headless-host-census.mjs", "install-minimal.mjs", "live-furnace-vc4.mjs"];
 
 async function importBlock(name: string): Promise<{ revisionOf: (root: string) => string }> {
   const file = join(scratchDir("git-stamp-inline-"), "inline.mjs");
@@ -158,7 +158,7 @@ async function importBlock(name: string): Promise<{ revisionOf: (root: string) =
   return (await import(pathToFileURL(file).href)) as { revisionOf: (root: string) => string };
 }
 
-describe("the qa git-discovery members share the one canonical stamp (three inlined copies, four importers)", () => {
+describe("the qa git-discovery members share the one canonical stamp (three inlined copies, five importers)", () => {
   it("package-smoke runs no HEAD-only rev-parse of its own", () => {
     expect(readFileSync(join(qa, "package-smoke.mjs"), "utf8")).not.toMatch(/rev-parse['"],\s*['"]HEAD['"]\]/);
   });
@@ -232,11 +232,14 @@ interface Member {
   foreign?: string;
   /** The member also reports `worktreeClean`, which must be true only for a clean HEAD it can describe. */
   cleanFlag?: boolean;
+  /** wb-4xz: the member records a bare HEAD plus a separate `dirty` bit (true / false / null = not read), never a suffix. */
+  splitDirty?: boolean;
 }
 
 interface MemberReceipt {
   revision: string;
   worktreeClean?: unknown;
+  dirty?: unknown;
 }
 
 /** The three modules the headless census child imports, as a stand-in dist with no other closure. */
@@ -245,6 +248,20 @@ const HEADLESS_DIST: Record<string, string> = {
   "dist/workbench/hosts/local-detached.js": 'import "node:path";\nexport function createDetachedWorkflowHost() {\n  return { callNode() {} };\n}\n',
   "dist/workflow/runtime.js": 'export function validateScript() {\n  return { meta: { name: "headless-census" } };\n}\n',
   "dist/workbench/capability-registry.js": "export class CapabilityRegistry {}\n",
+};
+
+/**
+ * wb-4xz: stand-ins for what the VC-4 runner imports (the compiled observer modules and the SDK). With no fixture identity
+ * in the environment the runner speaks to no furnace at all and prints its not-realised receipt, so the stamp under test is
+ * the only real code path; nothing here runs a furnace verb or a Run.
+ */
+const VC4_STAND_INS: Record<string, string> = {
+  "dist/package.json": '{"type":"module"}\n',
+  "dist/workbench/furnace-observer.js": "export class FurnaceObserver {}\n",
+  "dist/workbench/observation.js": "export class ObservationProjection {}\n",
+  "dist/workbench/providers/furnace.js": "export function nativeFurnaceRunInspect() {}\n",
+  "node_modules/@furnace/sdk/package.json": '{"name":"@furnace/sdk","version":"0.0.0","type":"module","main":"index.js"}\n',
+  "node_modules/@furnace/sdk/index.js": "export class Furnace {}\n",
 };
 
 /**
@@ -310,6 +327,16 @@ const MEMBERS: Member[] = [
     extra: [],
     fixtures: INSTALL_MINIMAL_FIXTURES,
   },
+  // wb-4xz (vko gate follow-on, 752.3 F1): the VC-4 runner's gitFacts takes the canonical stamp; a stamp it cannot read to
+  // the end is 'unknown' with a null dirty bit INSIDE gitFacts, and the receipt it prints is otherwise byte-identical.
+  {
+    name: "live-furnace-vc4.mjs",
+    files: ["live-furnace-vc4.mjs", "live-furnace-vc4-receipt.mjs", "git-stamp.mjs"],
+    extra: [],
+    fixtures: VC4_STAND_INS,
+    foreign: "unknown",
+    splitDirty: true,
+  },
 ];
 
 function stage(root: string, member: Member): string {
@@ -337,6 +364,10 @@ function receiptRevision(
   // install-minimal: an explicit WB_REVISION replaces the stamp under test, and its receipt file stays unwritten.
   delete env.WB_REVISION;
   delete env.WB_INSTALL_MINIMAL_RECEIPT;
+  // wb-4xz: no fixture identity and no receipt path, so the VC-4 runner prints its not-realised receipt and speaks to no furnace.
+  delete env.PI_FURNACE_FIXTURE_ROOT;
+  delete env.PI_FURNACE_FIXTURE_RUN_ID;
+  delete env.VC4_RECEIPT;
   const run = spawnSync(process.execPath, [entry, ...argv], { cwd, encoding: "utf8", env: { ...env, ...overrides } });
   const text = run.stdout.trim();
   expect(text, `${entry} printed no receipt (exit ${run.status}): ${run.stderr}`).not.toBe("");
@@ -353,11 +384,11 @@ describe("member tables are live (owner F4: emptying a table must redden)", () =
     expect(INLINED).toEqual(["status-ledger.mjs", "local-detached-faults.mjs", "local-detached-shared-child.mjs"]);
   });
 
-  it("the importer table names its four importers", () => {
-    expect(IMPORTERS).toEqual(["package-smoke.mjs", "live-operator-receipt.mjs", "headless-host-census.mjs", "install-minimal.mjs"]);
+  it("the importer table names its five importers", () => {
+    expect(IMPORTERS).toEqual(["package-smoke.mjs", "live-operator-receipt.mjs", "headless-host-census.mjs", "install-minimal.mjs", "live-furnace-vc4.mjs"]);
   });
 
-  it("the member-entry table names all six members", () => {
+  it("the member-entry table names all seven members", () => {
     expect(MEMBERS.map((member) => member.name)).toEqual([
       "local-detached-faults.mjs",
       "local-detached-shared-child.mjs",
@@ -365,6 +396,7 @@ describe("member tables are live (owner F4: emptying a table must redden)", () =
       "live-operator-receipt.mjs",
       "headless-host-census.mjs",
       "install-minimal.mjs",
+      "live-furnace-vc4.mjs",
     ]);
   });
 });
@@ -378,6 +410,7 @@ describe.each(MEMBERS)("member entry point $name stamps only its own repository"
     expect(stdout).not.toContain(head);
     expect(stdout).not.toContain(head.slice(0, 7));
     if (member.cleanFlag) expect(receipt.worktreeClean).toBe(false);
+    if (member.splitDirty) expect(receipt.dirty).toBeNull();
   });
 
   it("reports HEAD at a clean toplevel and HEAD-dirty once an untracked file exists", { timeout: 60_000 }, () => {
@@ -390,9 +423,11 @@ describe.each(MEMBERS)("member entry point $name stamps only its own repository"
     const clean = runMember(member, entry, top);
     expect(clean.revision).toBe(expected);
     if (member.cleanFlag) expect(clean.receipt.worktreeClean).toBe(true);
+    if (member.splitDirty) expect(clean.receipt.dirty).toBe(false);
     writeFileSync(join(top, "untracked.txt"), "x\n");
     const dirty = runMember(member, entry, top);
-    expect(dirty.revision).toBe(`${expected}-dirty`);
+    expect(dirty.revision).toBe(member.splitDirty ? expected : `${expected}-dirty`);
+    if (member.splitDirty) expect(dirty.receipt.dirty).toBe(true);
     if (member.cleanFlag) expect(dirty.receipt.worktreeClean).toBe(false);
   });
 
@@ -407,6 +442,7 @@ describe.each(MEMBERS)("member entry point $name stamps only its own repository"
     expect(stdout).not.toContain(head);
     expect(stdout).not.toContain(head.slice(0, 7));
     if (member.cleanFlag) expect(receipt.worktreeClean).toBe(false);
+    if (member.splitDirty) expect(receipt.dirty).toBeNull();
   });
 
   it("never reports a clean HEAD when git status fails at its own toplevel (corrupt index)", { timeout: 60_000 }, () => {
@@ -421,11 +457,12 @@ describe.each(MEMBERS)("member entry point $name stamps only its own repository"
     expect(stdout).not.toContain(head);
     expect(stdout).not.toContain(head.slice(0, 7));
     if (member.cleanFlag) expect(receipt.worktreeClean).toBe(false);
+    if (member.splitDirty) expect(receipt.dirty).toBeNull();
   });
 });
 
 /**
- * 04:10Z/16:26Z gate F2 (X5a-e) + owner R1 default (b): the five MODULE-ROOTED members root their stamp at the module's
+ * 04:10Z/16:26Z gate F2 (X5a-e) + owner R1 default (b): the six MODULE-ROOTED members root their stamp at the module's
  * own repository (import.meta.url), never at the caller's cwd. install-minimal and package-smoke are cwd-rooted BY DESIGN
  * (root = process.cwd()), so they carry no row here.
  */
@@ -435,6 +472,7 @@ const MODULE_ROOTED = [
   "local-detached-shared-child.mjs",
   "live-operator-receipt.mjs",
   "headless-host-census.mjs",
+  "live-furnace-vc4.mjs",
 ];
 
 /** A second, different repository: its HEAD differs from any other fixture's even inside the same second. */
@@ -447,8 +485,8 @@ function otherRepo(): { top: string; head: string } {
 }
 
 describe("module-rooted members stamp the module's repository, never the caller's cwd (X5)", () => {
-  it("the module-rooted table names the five members and each is a member-entry row", () => {
-    expect(MODULE_ROOTED).toHaveLength(5);
+  it("the module-rooted table names the six members and each is a member-entry row", () => {
+    expect(MODULE_ROOTED).toHaveLength(6);
     for (const name of MODULE_ROOTED) expect(MEMBERS.map((member) => member.name)).toContain(name);
     expect(MEMBERS.map((member) => member.name).filter((name) => !MODULE_ROOTED.includes(name))).toEqual(["install-minimal.mjs"]);
   });
@@ -467,6 +505,7 @@ describe("module-rooted members stamp the module's repository, never the caller'
       expect(stdout).not.toContain(b.head);
       expect(stdout).not.toContain(b.head.slice(0, 7));
       if (member.cleanFlag) expect(receipt.worktreeClean).toBe(true);
+      if (member.splitDirty) expect(receipt.dirty).toBe(false);
     });
   });
 });
@@ -552,5 +591,77 @@ describe("the importing members stamp through the canonical module only (one imp
     expect(source).toMatch(/(?:from |import\()["']\.\/git-stamp\.mjs["']/);
     expect(source).not.toMatch(/['"]git['"]/);
     expect(source).not.toMatch(/--show-toplevel|rev-parse|--porcelain/);
+  });
+});
+
+/**
+ * wb-4xz (vko gate follow-on, 752.3 F1; cure shape = vko gate verdict U2): the VC-4 runner's gitFacts composes the canonical
+ * stamp and answers its fail-closed value INSIDE the same bounded function. Mutants (the vko G1 analogue: swallow the status
+ * failure) are applied to the STAGED copies and the corrupt-index fixture is run at the runner's real entry point; each must
+ * stop reporting a HEAD with a null dirty bit as 'unknown', i.e. the fixture row must kill it. The unmutated control passes
+ * the same predicate, so each kill is attributable to its mutation.
+ */
+describe("live-furnace-vc4 gitFacts fails closed on a failed status read (mutants die)", () => {
+  const vc4 = MEMBERS.find((member) => member.name === "live-furnace-vc4.mjs");
+
+  function corruptRun(mutate?: (qaDir: string) => void): { revision: string; dirty: unknown; stdout: string; head: string } {
+    expect(vc4).toBeDefined();
+    if (!vc4) throw new Error("live-furnace-vc4.mjs member row missing");
+    const { top } = foreignRepo();
+    const entry = stage(top, vc4);
+    git(top, "add", "-A");
+    git(top, "commit", "-q", "-m", "stage member");
+    const head = git(top, "rev-parse", "HEAD");
+    corruptIndex(top);
+    mutate?.(join(top, "qa", "workbench"));
+    const { revision, stdout, receipt } = runMember(vc4, entry, top);
+    return { revision, dirty: receipt.dirty, stdout, head };
+  }
+
+  const failClosed = (outcome: { revision: string; dirty: unknown }): boolean => outcome.revision === "unknown" && outcome.dirty === null;
+
+  function replaceOnce(file: string, from: string, to: string): void {
+    const text = readFileSync(file, "utf8");
+    expect(text.split(from).length - 1, `${file} carries exactly one \`${from}\``).toBe(1);
+    writeFileSync(file, text.replace(from, to));
+  }
+
+  it("control: the unmutated runner answers unknown with a null dirty bit and carries no HEAD", { timeout: 60_000 }, () => {
+    const outcome = corruptRun();
+    expect(failClosed(outcome)).toBe(true);
+    expect(outcome.stdout).not.toContain(outcome.head);
+  });
+
+  it("mutant G1 (the canonical stamp swallows a failed status read as an empty listing) dies", { timeout: 60_000 }, () => {
+    const outcome = corruptRun((dir) => replaceOnce(join(dir, "git-stamp.mjs"), "git(root, ['status', '--porcelain']) ?? null", "git(root, ['status', '--porcelain']) ?? ''"));
+    expect(failClosed(outcome)).toBe(false);
+  });
+
+  it("mutant G1b (gitFacts accepts a stamp whose status read failed and reads the null listing as clean) dies", { timeout: 60_000 }, () => {
+    const outcome = corruptRun((dir) => {
+      const file = join(dir, "live-furnace-vc4.mjs");
+      replaceOnce(file, "head === null || porcelain === null", "head === null");
+      replaceOnce(file, "porcelain.trim().length > 0", "(porcelain ?? '').trim().length > 0");
+    });
+    expect(failClosed(outcome)).toBe(false);
+  });
+
+  it("mutant G2 (the dirty bit inverted) dies on the dirty-toplevel fixture", { timeout: 60_000 }, () => {
+    expect(vc4).toBeDefined();
+    if (!vc4) return;
+    const { top } = foreignRepo();
+    const entry = stage(top, vc4);
+    // Mutated BEFORE the commit, so the staged tree is clean and the unmutated runner reports dirty false (the member row).
+    replaceOnce(join(top, "qa", "workbench", "live-furnace-vc4.mjs"), "porcelain.trim().length > 0", "porcelain.trim().length === 0");
+    git(top, "add", "-A");
+    git(top, "commit", "-q", "-m", "stage member");
+    expect(runMember(vc4, entry, top).receipt.dirty).not.toBe(false);
+  });
+
+  it("gitFacts is the one place the runner reads git: it imports the canonical stamp and spawns git nowhere", () => {
+    const runner = readFileSync(join(qa, "live-furnace-vc4.mjs"), "utf8");
+    expect(runner).toMatch(/import \{ gitStamp \} from '\.\/git-stamp\.mjs';/);
+    expect(runner.match(/gitStamp\(/g)).toHaveLength(1);
+    expect(runner).not.toMatch(/spawnSync/);
   });
 });

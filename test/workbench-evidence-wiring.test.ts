@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs";
 import { describe, expect, it, vi } from "vitest";
 import { WorkflowDialog } from "../src/ui/workflow-dialog.js";
 import { CapabilityError } from "../src/workbench/capability-registry.js";
-import { CLAUDE_TRANSCRIPT_GRANT } from "../src/workbench/evidence-producers.js";
+import { CLAUDE_TRANSCRIPT_GRANT, sameNativeRef } from "../src/workbench/evidence-producers.js";
 import { createWorkbenchEvidenceStore, type WorkbenchEvidenceDeps } from "../src/workbench/evidence-wiring.js";
 import { type NativeRef, ObservationProjection, type ObservationScope } from "../src/workbench/observation.js";
 
@@ -287,6 +287,40 @@ describe("createWorkbenchEvidenceStore (host wiring)", () => {
 });
 
 /**
+ * wb-cz9 F3: the forge wiring's requested-node check and the claude producer's ownership check are ONE predicate,
+ * `sameNativeRef` from evidence-producers.ts (an absent scope and an empty scope name the same node); a second inline copy of
+ * the four-field comparison could drift from it. These rows pin the predicate the wiring now calls; the R1-R4 rows below stay
+ * the regression guard for the wired path itself.
+ */
+describe("wb-cz9 F3: sameNativeRef is the one native-ref equality the producers and the forge wiring share", () => {
+  const ref: NativeRef = { provider: "forge", type: "gate-status", id: "pkg-a", scope: "/ws" };
+  /** One field changed per row; every other field is the reference's own. */
+  const MISMATCHES: readonly { field: keyof NativeRef; other: NativeRef }[] = [
+    { field: "provider", other: { ...ref, provider: "furnace" } },
+    { field: "type", other: { ...ref, type: "run" } },
+    { field: "id", other: { ...ref, id: "pkg-b" } },
+    { field: "scope", other: { ...ref, scope: "/other" } },
+  ];
+
+  it("a ref equals itself and a field-for-field copy", () => {
+    expect(sameNativeRef(ref, ref)).toBe(true);
+    expect(sameNativeRef(ref, { ...ref })).toBe(true);
+  });
+
+  it("an absent scope and an empty scope name the same node, in either order", () => {
+    expect(sameNativeRef({ ...ref, scope: undefined }, { ...ref, scope: "" })).toBe(true);
+    expect(sameNativeRef({ ...ref, scope: "" }, { ...ref, scope: undefined })).toBe(true);
+  });
+
+  it("the mismatch table is live: one row per NativeRef field, so an emptied table reddens", () => expect(MISMATCHES).toHaveLength(4));
+
+  it.each(MISMATCHES)("a single $field mismatch is a different node, in either order", ({ other }) => {
+    expect(sameNativeRef(ref, other)).toBe(false);
+    expect(sameNativeRef(other, ref)).toBe(false);
+  });
+});
+
+/**
  * wb-cz9 (owner F-text): the forge adapter resolved its owning node by the evidence ref alone, so a forge-operation ref
  * requested on a node that does not list it was served the FIRST listing node's re-read and cached under the requesting
  * node's key. Ownership now resolves by the REQUESTED node (projection query by nativeRef, then evidenceRefs.includes plus
@@ -377,8 +411,10 @@ describe("wb-cz9: the forge adapter resolves ownership by the requested node, ne
 /**
  * wb-cz9 leg 2 (measured red first): on the wired furnace store path a lossy, incomplete or paged read rendered TWO truncation
  * marks, the reader's own trailing "... truncated (producer: ...)" line inside the joined text plus the store's single [truncated].
- * One visible marker: the loader strips the reader's trailing marker when the store marks the read; a budget-only cut, which the
- * furnace loader does not mark, keeps the reader's line as its one marker.
+ * One visible marker: the loader strips the reader's trailing marker when the store marks the read.
+ * wb-10v (owner ruling, the leg-2 pin re-ruled, the one-marker invariant kept): a budget-only cut, a whole read the reader cut to
+ * its own line or row budget, is marked like the other three. Its budget fact crosses the FurnaceEvidenceRead seam as budgetCut,
+ * so the entry reports truncated true, and the store's single [truncated] is its one visible marker.
  */
 describe("wb-cz9 leg 2: one visible truncation marker on the wired furnace store path", () => {
   const ATTEMPT = "frn-atm-a1";
@@ -409,11 +445,16 @@ describe("wb-cz9 leg 2: one visible truncation marker on the wired furnace store
     if (entry.state === "loaded") expect(entry.preview).toEqual(["stdout:", "line one", "line two"]);
   });
 
-  it.each([
+  /** The three reads the furnace loader marks truncated; hoisted so an emptied table reddens the liveness pin (wb-cz9 F4). */
+  const LEG2_REASONS = [
     { reason: "lossy", complete: true, lossy: true, next_cursor: null },
     { reason: "incomplete", complete: false, lossy: false, next_cursor: null },
     { reason: "paged", complete: true, lossy: false, next_cursor: "cursor-1" },
-  ])("$reason: the store's single [truncated] is the only marker, never the reader's line beside it", async ({ complete, lossy, next_cursor }) => {
+  ] as const;
+
+  it("the leg-2 table is live: exactly the three loader-marked reasons, so an emptied table reddens", () => expect(LEG2_REASONS).toHaveLength(3));
+
+  it.each(LEG2_REASONS)("$reason: the store's single [truncated] is the only marker, never the reader's line beside it", async ({ complete, lossy, next_cursor }) => {
     const entry = await furnaceEntry({ lines: ["line one", "line two"], complete, lossy, next_cursor });
     expect(entry).toMatchObject({ state: "loaded", truncated: true });
     if (entry.state === "loaded") expect(entry.preview).toEqual(["stdout:", "line one", "line two", "[truncated]"]);
@@ -425,12 +466,21 @@ describe("wb-cz9 leg 2: one visible truncation marker on the wired furnace store
     if (entry.state === "loaded") expect(entry.preview).toEqual(["stdout:", "line one", `${"y".repeat(199)}${ELLIPSIS}`, "[truncated]"]);
   });
 
-  it("positive protection: a budget-only cut the loader does not mark keeps exactly one visible marker, never zero", async () => {
+  it("wb-10v: a budget-only cut reports truncated true and keeps exactly one visible marker, the store's [truncated]", async () => {
     const entry = await furnaceEntry({ lines: ["line one", "y".repeat(201)], complete: true, lossy: false, next_cursor: null });
-    expect(entry.state).toBe("loaded");
+    expect(entry).toMatchObject({ state: "loaded", truncated: true });
     if (entry.state === "loaded") {
-      expect(entry.preview.filter(isMarker)).toHaveLength(1);
-      expect(entry.preview.slice(0, 3)).toEqual(["stdout:", "line one", `${"y".repeat(199)}${ELLIPSIS}`]);
+      expect(entry.preview.filter(isMarker)).toEqual(["[truncated]"]);
+      expect(entry.preview).toEqual(["stdout:", "line one", `${"y".repeat(199)}${ELLIPSIS}`, "[truncated]"]);
+    }
+  });
+
+  it("wb-10v: a producer line past the reader's scan window is a budget-only cut too: truncated true, the store's [truncated] its one marker", async () => {
+    const entry = await furnaceEntry({ lines: ["line one", "z".repeat(2001)], complete: true, lossy: false, next_cursor: null });
+    expect(entry).toMatchObject({ state: "loaded", truncated: true });
+    if (entry.state === "loaded") {
+      expect(entry.preview.filter(isMarker)).toEqual(["[truncated]"]);
+      expect(entry.preview).toEqual(["stdout:", "line one", `${"z".repeat(199)}${ELLIPSIS}`, "[truncated]"]);
     }
   });
 });

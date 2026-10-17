@@ -153,6 +153,7 @@ async function expectNoReach(before: NativeReach, where: string): Promise<void> 
 
 const LEGACY_TOOLS = ["Agent", "SubagentWorkflow", "get_subagent_result", "steer_subagent"];
 const WORKBENCH_TOOLS = [
+  "forge_gate_run",
   "furnace_observe",
   "workbench_catalog",
   "workflow_catalog",
@@ -173,6 +174,7 @@ const GRANTS = [
   "workbench:observe",
   "furnace:inspect",
   "forge:inspect",
+  "forge:run",
   "claude:transcript",
   "discover:forge.gate.status",
   "invoke:forge.gate.status",
@@ -257,6 +259,8 @@ const PROBES: Array<{ tool: string; params: Params; zeroGrant: string; sameWhenU
   { tool: "workflow_catalog", params: {}, zeroGrant: "Permission denied: workbench:design grant required." },
   { tool: "workflow_compare", params: { referenceTask: "wf_a", candidateTask: "wf_b" }, zeroGrant: "Permission denied: design and observe grants required." },
   { tool: "furnace_observe", params: { runId: "not-a-run" }, zeroGrant: "Permission denied: furnace:inspect grant required." },
+  // wb-a3s: an absolute target that resolves nowhere inside the bound workspace is refused before any connection is opened.
+  { tool: "forge_gate_run", params: { target: "/census/not-within-the-workspace" }, zeroGrant: "Permission denied: forge:run grant required." },
   { tool: "workflow_detached", params: { action: "inspect", invocationId: "inv-census" }, zeroGrant: "Permission denied: explicit detached launch or observe grant required." },
   // Exact workbench:execute (not in mode D's list) gates this tool; the typed refusal is identical for every caller without it
   // and names no invocation reference (nothing addressable was launched), so mode D asserts only that it is not a permission denial.

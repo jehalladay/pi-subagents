@@ -1294,7 +1294,7 @@ describe('W15-A lazy bounded evidence in the details view (wb-g1g.1, docs/workbe
      const readRows=vi.fn(async()=>[{type:'assistant' as const,uuid,text:'claude says hi'}]);
      const claude:ClaudeEvidenceSeam={readTranscript:readRows,cwd:()=>'/ws',owningNode:(owningScope,nativeRef,ref)=>{
        const owner=projection.query({scope:owningScope,ref:nativeRef,limit:1}).nodes[0];
-       return owner&&owner.evidenceRefs.includes(ref)?{nativeRef:owner.nativeRef,evidenceRefs:owner.evidenceRefs,freshness:owner.freshness}:undefined;
+       return owner?.evidenceRefs.includes(ref)?{nativeRef:owner.nativeRef,evidenceRefs:owner.evidenceRefs,freshness:owner.freshness}:undefined;
      }};
      const store=new EvidenceStore({loaders:createEvidenceLoaders({grants:()=>grants,claude,now:()=>new Date(now)}),maxEntries:4,maxBytes:1024,timeoutMs:200,scope});
      const model:InspectorModel={projection,scope,invocationId:'wf-c',title:'C',status:'running',evidence:store};

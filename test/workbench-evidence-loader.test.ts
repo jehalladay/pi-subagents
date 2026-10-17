@@ -397,7 +397,7 @@ describe('grant-gated producer loaders (docs/workbench/20 § Producer mapping)',
 
   const runRef = native('furnace', 'run-1', 'run');
   const furnaceRead = (over: Partial<FurnaceEvidenceRead> = {}): FurnaceEvidenceRead => ({
-    runId: 'run-1', attemptId: 'attempt-1', stream: 'stdout', text: 'built\nok', complete: true, lossy: false, capturedAt: at, ...over,
+    runId: 'run-1', attemptId: 'attempt-1', stream: 'stdout', text: 'built\nok', complete: true, lossy: false, budgetCut: false, capturedAt: at, ...over,
   });
 
   it('furnace: reads the attempt log with run/attempt identity checks', async () => {
@@ -414,6 +414,12 @@ describe('grant-gated producer loaders (docs/workbench/20 § Producer mapping)',
       await s.request(scope, runRef, 'attempt-1');
       expect(s.get(scope, runRef, 'attempt-1')).toMatchObject({ state: 'loaded', truncated: true });
     }
+  });
+
+  it('wb-10v: furnace: a budget-only cut of an otherwise whole read is loaded with truncated true, the store marking it once', async () => {
+    const s = store(createEvidenceLoaders({ grants: () => [FURNACE_INSPECT_GRANT], furnace: async () => furnaceRead({ budgetCut: true }) }));
+    await s.request(scope, runRef, 'attempt-1');
+    expect(s.get(scope, runRef, 'attempt-1')).toMatchObject({ state: 'loaded', truncated: true, preview: ['stdout:', 'built', 'ok', '[truncated]'] });
   });
 
   it('furnace: an attempt belonging to another run is unauthorized, without its text', async () => {
@@ -551,7 +557,7 @@ describe('producer-mapping conformance pass (wb-6ze.20, docs/workbench/20 § Pro
   const forgeRead = (over: Record<string, unknown> = {}) => ({ status: 'passed', capturedAt: at, ...over });
   const readers = () => {
     const claude = claudeSeam([{ type: 'user', uuid, text: 'hi' }]);
-    const furnace = vi.fn(async () => ({ runId: 'run-1', attemptId: 'attempt-1', stream: 'stdout', text: 'ok', complete: true, lossy: false, capturedAt: at }));
+    const furnace = vi.fn(async () => ({ runId: 'run-1', attemptId: 'attempt-1', stream: 'stdout', text: 'ok', complete: true, lossy: false, budgetCut: false, capturedAt: at }));
     const forge = vi.fn(async () => forgeRead());
     return { fns: { claude: claude.seam, furnace, forge }, spies: [claude.readTranscript, furnace, forge] as const };
   };

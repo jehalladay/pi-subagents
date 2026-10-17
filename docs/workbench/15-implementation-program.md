@@ -86,3 +86,13 @@ When an SDK blocks work, file a requirement in owning package with concrete meth
 ## Agent handoff
 
 Every work item assignment must include: baseline SHA, required docs, target file list, expected public contract, integration fixture/test, negative controls, Forge gate, upstream blocker reporting, and independent outcome evidence. Implementation agents should update docs/00-current-state-and-source-map.md and this plan as shipped behavior changes.
+
+## Delivery receipts
+
+From wb-xox on, a delivery's receipt goes to a per-bead file under `docs/workbench/receipts/`, never to `docs/workbench/TRACEABILITY.md`.
+
+- `docs/workbench/TRACEABILITY.md` is frozen as the historical record: no row is moved, rewritten or corrected in place, and no row is appended to it. Its last line is the cutover pointer row `## Continued in receipts/ per wb-xox`, which wb-xox appended once, in commit `2979307908b9808b0eec77c4ad08d8d0cd7810c1` cut on trunk `130785e`. `test/workbench-traceability-freeze.test.ts` pins the file's content hash, so any later diff to the file fails that test.
+- A new receipt goes to `docs/workbench/receipts/<bead-id>.md`, one file per bead, named after the bead id (for example `docs/workbench/receipts/wb-xox.md`). The file opens with the line `# <bead-id>: <bead title>` and is append-only: a respin, a re-cut or a landing record for the same bead appends a new entry to the same file, and no earlier entry is rewritten.
+- A bead's first receipt also appends one line to `docs/workbench/receipts/INDEX.md`, in the form `- [<bead-id>](<bead-id>.md) | <bead title> | <first-receipt date as YYYY-MM-DD>`. The index holds that one line per receipt file and nothing else, so two cuts that deliver at once meet there as a one-line union at worst.
+- A correction to a historical row of `docs/workbench/TRACEABILITY.md` is filed as an entry in the correcting bead's `docs/workbench/receipts/<bead-id>.md` that names the corrected row (its matrix ID, or its section heading). `TRACEABILITY.md` is never edited for a correction, so its freeze census holds for corrections too.
+- `test/workbench-receipts-shape.test.ts` pins the directory: every file in `docs/workbench/receipts/` except `INDEX.md` is named `wb-*.md` after a bead id, and `INDEX.md` has exactly one line per sibling file. `test/workbench-receipts-convention.test.ts` pins this section as written.

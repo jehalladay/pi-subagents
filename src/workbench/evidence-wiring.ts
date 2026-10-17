@@ -21,7 +21,7 @@
 import type { CapabilityRegistry } from "./capability-registry.js";
 import type { ClaudeTranscriptRow } from "./claude-transcript.js";
 import { EVIDENCE_TRUNCATED_MARK, EvidenceRefusal, EvidenceStore } from "./evidence-loader.js";
-import { createEvidenceLoaders, type ForgeEvidenceRead, type FurnaceEvidenceRead } from "./evidence-producers.js";
+import { createEvidenceLoaders, type ForgeEvidenceRead, type FurnaceEvidenceRead, sameNativeRef } from "./evidence-producers.js";
 import { ForgeEvidenceError, readForgeOperationEvidence } from "./forge-evidence.js";
 import { readFurnaceAttemptLogEvidence } from "./furnace-evidence.js";
 import type { FurnaceObserverClient } from "./furnace-observer.js";
@@ -78,8 +78,7 @@ export function createWorkbenchEvidenceStore(deps: WorkbenchEvidenceDeps): Evide
           // refuses unauthorized with no capability call issued, never served another node's re-read under its own key.
           const owningNode = deps.projection.query({ scope, ref: nativeRef, limit: 1 }).nodes[0];
           const owner = owningNode?.nativeRef;
-          const requested = owner !== undefined && owner.provider === nativeRef.provider && owner.type === nativeRef.type &&
-            owner.id === nativeRef.id && (owner.scope ?? "") === (nativeRef.scope ?? "");
+          const requested = owner !== undefined && sameNativeRef(owner, nativeRef);
           if (owningNode === undefined || !requested || !owningNode.evidenceRefs.includes(ref)) throw new EvidenceRefusal("unauthorized");
           try {
             const content = await readForgeOperationEvidence(ref, {
@@ -163,12 +162,13 @@ export function createWorkbenchEvidenceStore(deps: WorkbenchEvidenceDeps): Evide
         signal,
         capturedAt: () => deps.now().toISOString(),
       });
-      // The furnace loader marks a lossy, incomplete or paged read truncated and the store then adds its single [truncated];
-      // the reader's own trailing "truncated (producer: ...)" line would otherwise show beside it (wb-cz9 leg 2). A budget-only
-      // cut is not loader-marked, so the reader's line stays its one visible marker.
+      // The furnace loader marks a lossy, incomplete or paged read truncated, and a budget-only cut too: a whole read the reader cut
+      // to its own line or row budget crosses the seam as budgetCut (wb-10v), so a read that dropped bytes is never reported whole.
+      // The store then adds its single [truncated], so the reader's own trailing "truncated (producer: ...)" line, present whenever
+      // the reader marked its read truncated, is stripped here and never shows beside it (wb-cz9 leg 2: one visible marker).
       const receipt = content.producerReceipt;
       const loaderMarked = !receipt.complete || receipt.lossy || receipt.nextCursor !== null;
-      const preview = loaderMarked && content.truncated ? content.preview.slice(0, -1) : content.preview;
+      const preview = content.truncated ? content.preview.slice(0, -1) : content.preview;
       return {
         runId,
         attemptId,
@@ -176,6 +176,7 @@ export function createWorkbenchEvidenceStore(deps: WorkbenchEvidenceDeps): Evide
         text: preview.join("\n"),
         complete: content.producerReceipt.complete,
         lossy: content.producerReceipt.lossy,
+        budgetCut: content.truncated && !loaderMarked,
         ...(content.producerReceipt.nextCursor !== null ? { nextCursor: content.producerReceipt.nextCursor } : {}),
         capturedAt: content.capturedAt,
         producerReceipt: content.producerReceipt.requestId,
