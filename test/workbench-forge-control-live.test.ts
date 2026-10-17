@@ -13,6 +13,9 @@
  * and cancels it over that retained connection. The earlier rows keep the harness-owned projection so each falsifier
  * is isolated at the seam; the strict row is where admission is measured through the registered tool itself.
  *
+ * RECEIPT OF RECORD (wb-6hb.12): the live rows' afterAll writes the FORGE_CONTROL_LIVE_RECEIPT line exactly once; the shape
+ * row then judges THAT line as captured from this run's own stdout, never a re-evaluation of the receipt object.
+ *
  * Runs ONLY from its own forge command (vitest.forge-control-live.config.ts); excluded from the default gate.
  * Exit semantics: an absent forge binary or SDK is honest unavailability (the suite fails naming it, never skips).
  */
@@ -89,12 +92,31 @@ function parseReceiptLine(line: string): Receipt {
 const scenario = (name: string, realised: boolean, detail: string): void => {
   receipt.scenarios[name] = { realised, detail };
 };
+/**
+ * This run's own stdout, captured at the stream: every chunk the process hands to process.stdout.write is recorded, then passed
+ * through unchanged. The receipt shape row parses the receipt line found HERE (the line the run actually wrote), never a
+ * re-evaluation of receiptLine(), so a receipt of record that loses its typed fields reds the row (wb-6hb.12, row 497 U3).
+ */
+const stdoutWritten: string[] = [];
+const passStdoutThrough = process.stdout.write;
+process.stdout.write = ((...args: Parameters<typeof process.stdout.write>): boolean => {
+  const [chunk] = args;
+  stdoutWritten.push(typeof chunk === "string" ? chunk : Buffer.from(chunk).toString("utf8"));
+  return passStdoutThrough.apply(process.stdout, args);
+}) as typeof process.stdout.write;
 afterAll(() => {
+  process.stdout.write = passStdoutThrough;
+});
+/** The receipt lines this run wrote to stdout, read back from the capture. */
+const emittedReceiptLines = (): string[] =>
+  stdoutWritten.join("").split("\n").filter(line => line.startsWith(RECEIPT_PREFIX));
+/** Writes the receipt of record ONCE, after the live rows have all run (pass or fail): the only writer of a receipt line. */
+function emitReceiptOfRecord(): void {
   if (receipt.scenarios["strict-booted-tool-reading"] === undefined) {
     scenario("strict-booted-tool-reading", false, "UNREALISED: the booted-extension row did not record its outcome.");
   }
   process.stdout.write(`\n${receiptLine()}\n`);
-});
+}
 
 /** A disposable fixture package whose explicit gate runs one bounded long command. */
 function fixtureWorkspace(sleepSeconds: number, dir = makeScratch("fgc-")): string {
@@ -210,6 +232,8 @@ function terminalFields(terminal: unknown): PhaseFields {
 const cancelParams = (target: NativeRef): Record<string, unknown> => ({ target: { ...target }, action: "cancel", confirmed: true });
 
 describe("live forge adverse cancellation journey (wb-6hb.5)", () => {
+  afterAll(emitReceiptOfRecord);
+
   it("cancels a running real gate operation through the production control path: acknowledged echoes the server receipt, result only from the operation's own terminal envelope", async () => {
     const root = fixtureWorkspace(90);
     const live = await startLiveOperation(root);
@@ -389,9 +413,14 @@ describe("live forge adverse cancellation journey (wb-6hb.5)", () => {
       sandbox.restore();
     }
   }, 120_000);
+});
 
+describe("the receipt of record this run emitted (wb-6hb.12)", () => {
   it("the emitted receipt line, parsed as a captured run, carries typed phase fields beside the capped text (wb-6hb.12)", () => {
-    const parsed = parseReceiptLine(receiptLine());
+    // Judge the line this run wrote to stdout (captured at the stream once the live rows' afterAll emitted it), not receiptLine().
+    const emitted = emittedReceiptLines();
+    expect(emitted, "receipt lines this run wrote to stdout").toHaveLength(1);
+    const parsed = parseReceiptLine(emitted[0] ?? "");
     const byPhase = new Map(parsed.phases.map(phase => [phase.phase, phase]));
     for (const name of ["acknowledged", "result", "settled-cancel", "transport-error-cancel", "booted-requested", "booted-acknowledged"]) {
       const phase = byPhase.get(name);
