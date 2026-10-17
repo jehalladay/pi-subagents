@@ -735,7 +735,10 @@ describe("W19 slice 2: the census input tables are non-empty (R2 E1-E4; an empti
     expect(NON_STRING_METHODS.map(([label]) => label)).toEqual(["missing", "null", "0", "7", "true", "false", "[]", '["agent"]', '["node","workflow"]', "{}", '{"method":"node"}']);
   });
 
-  it("E3 the hostile verb list is non-empty, duplicate-free and holds no registered verb", () => {
+  it("E3 the hostile verb list holds exactly the 113 hand-authored verbs, duplicate-free, and holds no registered verb", () => {
+    // Exact-count pin (wb-ksz.5 F2, wb-19q member 7): a table one non-duplicate verb short still clears the ">100"
+    // floor and the duplicate and registered-verb legs below, so the count is what reddens a quietly thinned list.
+    expect(HOSTILE_VERBS).toHaveLength(113);
     expect(HOSTILE_VERBS.length).toBeGreaterThan(100);
     expect(new Set(HOSTILE_VERBS).size).toBe(HOSTILE_VERBS.length);
     expect(HOSTILE_VERBS.filter(verb => (RPC_VERBS as readonly string[]).includes(verb))).toEqual([]);

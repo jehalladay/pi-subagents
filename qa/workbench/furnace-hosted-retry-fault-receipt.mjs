@@ -165,6 +165,8 @@ export function assessRetryFaultJourneys(observed) {
   // wb-21k: close() must leave an Attempt that settled BEFORE it alone. Every Attempt not pending at beforeClose (each
   // retry Attempt, the same-id pair, the observer's owner, an explicitly uncertain first Attempt) must still carry
   // cancel {requested: false} afterClose; only an Attempt parked until the host closed may carry host_closed (above).
+  // wb-19q member 17 (wb-21k F1): a settled Attempt with no aligned afterClose record (missing, or another id at its
+  // index) is reported under the same rule: its cancel after close cannot be shown, so the judge fails closed, never skips.
   for (const name of RETRY_FAULT_JOURNEYS) {
     const journey = journeys[name];
     if (!isObject(journey)) continue;
@@ -172,7 +174,10 @@ export function assessRetryFaultJourneys(observed) {
     for (const [index, settled] of attemptsOf(journey.beforeClose).entries()) {
       if (settled.terminal === 'pending') continue;
       const closed = after[index];
-      if (!closed || closed.attemptId !== settled.attemptId) continue;
+      if (!closed || closed.attemptId !== settled.attemptId) {
+        add('settled-attempt-cancelled-by-close', `${name}: ${settled.attemptId} had settled ${settled.terminal} before the host closed, yet afterClose has no aligned record for it (afterClose[${index}] is ${closed ? closed.attemptId : 'missing'}), so its cancel after close is unverified.`);
+        continue;
+      }
       const cancel = isObject(closed.cancel) ? closed.cancel : {};
       if (cancel.requested !== false) {
         add('settled-attempt-cancelled-by-close', `${name}: ${settled.attemptId} had settled ${settled.terminal} before the host closed, yet carries cancel ${JSON.stringify(closed.cancel)} afterClose.`);

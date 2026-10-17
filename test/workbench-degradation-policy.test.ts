@@ -21,7 +21,7 @@ import { AgentManager } from "../src/agent-manager.js";
 import { safeWorkflowTerminalText } from "../src/ui/workflow-card.js";
 import { CapabilityRegistry } from "../src/workbench/capability-registry.js";
 import { type ClaudeQuery, createClaudeWorkflowHost } from "../src/workbench/claude-host.js";
-import { sanitizeWorkbenchJsonText, sanitizeWorkbenchText } from "../src/workbench/redaction.js";
+import { sanitizeWorkbenchJsonText, sanitizeWorkbenchText, WORKBENCH_TEXT_LIMIT } from "../src/workbench/redaction.js";
 import { runWorkflow, type WorkflowSpawnResult } from "../src/workflow/runtime.js";
 
 const HEAD = 'export const meta = { name: "degradation", description: "degradation policy probe" };\n';
@@ -357,4 +357,66 @@ describe("wb-wyr producer outcomes route through the one helper with a named lay
     expect(thrown).toMatchObject({ ok: false, error: "Claude SDK query failed: Claude Code process exited with code 1" });
     expect(`${settled.error} ${thrown.error}`).not.toContain(AUTH_CODE);
   });
+});
+
+/**
+ * wb-19q members 11-12, from the wb-wyr gate (cmd_59554c602cf6) survivors.
+ *
+ * Member 11 (wb-wyr F1): the NAMED "label" layout at the one producer helper (claude-host.ts
+ * outcomeText) was pinned by no test — GM6 ("label" -> "text"), GM7 (the layout argument dropped,
+ * so the "text" default) and GM10 ("label" -> "terminal") survived the whole delivered suite.
+ * Under "label" an escape-sequence gap renders as one separating space, whitespace runs collapse
+ * and the ends are trimmed; under "text" and "terminal" an escape gap renders as nothing and
+ * nothing collapses. One exact-equality row per producer arm therefore reds under all three.
+ */
+const LABEL_RAW = `find${cpWy(0x1b)}[0mok  end `;
+const LABEL_SHOWN = "find ok end";
+/** The composed auth outcome, verbatim from authRequiredError (claude-host.ts). */
+const AUTH_MESSAGE = (reason: string): string =>
+  `${AUTH_CODE}: Claude SDK authentication is missing or rejected; sign in with \`claude /login\` or set ANTHROPIC_API_KEY. The workflow does not fall back to a Pi model. (SDK detail: ${reason})`;
+
+describe("wb-19q member 11: every producer arm renders the label layout exactly (GM6/GM7/GM10)", () => {
+  const ARMS: readonly (readonly [arm: string, query: ClaudeQuery, expected: string])[] = [
+    ["terminal.result arm (success-subtype error result)", framesQuery([initFrame(), resultFrame({ subtype: "success", result: LABEL_RAW })]), LABEL_SHOWN],
+    ["terminal.errors arm (error-subtype result)", framesQuery([initFrame(), resultFrame({ subtype: "error_during_execution", errors: [LABEL_RAW] })]), LABEL_SHOWN],
+    ["catch arm (thrown SDK error)", framesQuery([initFrame()], new Error(LABEL_RAW)), `Claude SDK query failed: ${LABEL_SHOWN}`],
+    ["auth terminal path (authRequiredError inner detail)", framesQuery(authFailureStream(LABEL_RAW)), AUTH_MESSAGE(LABEL_SHOWN)],
+    ["auth catch path (authRequiredError over the thrown message)", framesQuery(authFailureStream(LABEL_RAW).slice(0, 2), new Error(LABEL_RAW)), AUTH_MESSAGE(LABEL_SHOWN)],
+  ];
+
+  for (const [arm, query, expected] of ARMS) {
+    it(`m11 ${arm}: an escape gap separates, whitespace collapses and the ends are trimmed`, async () => {
+      const result = await createClaudeWorkflowHost({ cwd: CWD, query }).spawnAgent(spawnRequest());
+      expect(result.ok).toBe(false);
+      expect(result.error).toBe(expected);
+    });
+  }
+});
+
+/**
+ * Member 12 (wb-wyr gate survivor GM5, "auth outer pass -> plain"): the gate's only discriminator
+ * was the bounded() cut splitting an astral pair — the inner 160-unit pass over the SDK detail
+ * cuts at unit 140, and before wb-yr9 that cut could leave a lone surrogate which only the OUTER
+ * authRequiredError pass removed. Post-wb-yr9 (ce7ec7f) bounded() drops a pair it would split, so
+ * the inner pass hands the composition clean text on every arm and this probe stays GREEN with GM5
+ * applied (measured in an isolated copy; the record evidence on wb-19q member 12). A future red
+ * here means the outer pass became load-bearing again. U+110BD is a prepended concatenation mark:
+ * an astral code point the sanitizer keeps as visible text, so it reaches the bound intact.
+ */
+describe("wb-19q member 12: the GM5 probe — an astral pair straddling the inner cut never leaves a lone surrogate", () => {
+  const GM5_DETAIL = `${"x".repeat(139)}${cpWy(0x110bd)}${"y".repeat(WORKBENCH_TEXT_LIMIT)}`;
+  const GM5_SHOWN = AUTH_MESSAGE(`${"x".repeat(139)} [truncated]`);
+  const PATHS: readonly (readonly [path: string, query: ClaudeQuery])[] = [
+    ["auth terminal path", framesQuery(authFailureStream(GM5_DETAIL))],
+    ["auth catch path", framesQuery(authFailureStream(GM5_DETAIL).slice(0, 2), new Error(GM5_DETAIL))],
+  ];
+
+  for (const [path, query] of PATHS) {
+    it(`m12 ${path}: the over-limit detail truncates on the pair boundary and the composed outcome is exact`, async () => {
+      const result = await createClaudeWorkflowHost({ cwd: CWD, query }).spawnAgent(spawnRequest());
+      expect(result.ok).toBe(false);
+      expect(result.error ?? "").not.toMatch(/[\u{d800}-\u{dfff}]/u);
+      expect(result.error).toBe(GM5_SHOWN);
+    });
+  }
 });

@@ -765,6 +765,10 @@ describe("D2 wb-9iu M4: telemetry is enabled only by the boolean true", () => {
     ["empty object", {}],
     ["empty array", []],
   ];
+
+  it("table liveness: all five truthy-flag rows are present", () => {
+    expect(TRUTHY_FLAGS).toHaveLength(5);
+  });
   it.each(TRUTHY_FLAGS)("emits nothing for a truthy non-boolean enabled flag: %s", (_label, flag) => {
     const received: TelemetryEvent[] = [];
     const sink = { emit: (event: TelemetryEvent): void => { received.push(event); } };
@@ -828,6 +832,10 @@ describe("D5 wb-9iu M8 / gate F6: an invalid maxBytes falls back to the 8192-byt
     ["unsafe integer", Number.MAX_SAFE_INTEGER + 2],
     ["string 64", "64"],
   ];
+
+  it("table liveness: all seven invalid-maxBytes rows are present", () => {
+    expect(INVALID_MAX_BYTES).toHaveLength(7);
+  });
   it.each(INVALID_MAX_BYTES)(
     "applies the default cap to maxBytes %s: a small event is delivered and an event over 8192 bytes is dropped", (_label, bad) => {
       const received: TelemetryEvent[] = [];
