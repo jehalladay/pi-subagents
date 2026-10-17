@@ -41,11 +41,17 @@
  * Window scoping (wb-d1q). Every zero-reach assertion first awaits a macrotask drain (a zero-delay timer, then an
  *   immediate), so reach deferred with setTimeout(0), setImmediate, process.nextTick or queueMicrotask lands inside the
  *   assertion's own window and reds ITS row instead of surfacing in the calibration row. A file-level afterAll then
- *   drains once more and holds the TOTAL reach equal to the calibration's own reach (the sum of what each calibration
- *   case below declares it caused), so a longer deferral that fires while the file is still running reds the file too.
- *   Measured residual (a scratch spawn deferred on the workflow_observe refusal path): 0ms and 25ms red, 100ms, 250ms,
- *   400ms and 1500ms still pass because the file has ended first; deferral past the file's lifetime stays outside the
- *   witness by construction.
+ *   asserts ONE named judgment, fileTotalReachProblem (a drain, then the TOTAL reach held equal to the calibration's own
+ *   reach: the sum of what each calibration case below declares it caused), and a falsifier row at the end of this file
+ *   defers one counted reach past every row window and requires that same judgment to name it, so a bound compared with
+ *   itself or read without its drain reds in-file. What a deferral that outlives the drain does: one longer than the drain
+ *   but inside the file's lifetime reds the file through the total bound AND may red whichever later row's window it lands
+ *   in, for the WRONG cause (measured: 10 and 25 ms land in the mode D boot and probe rows, 30 and 40 ms in the calibration
+ *   rows); the boundaries are timing-dependent, not exact (a 60 ms deferral measured both red,
+ *   by the afterAll alone, and green). Outside the witness by construction, and not provable by any in-file row: (1) a deferral that
+ *   fires after the file has ended (measured: 100 ms, 250 ms, 400 ms and 1500 ms scratch spawns on the workflow_observe
+ *   refusal path still pass; no in-process window can see them, and fake timers are a forbidden marker here); (2) deletion
+ *   of the afterAll hook call itself, because the falsifier row asserts the judgment function, not that the hook calls it.
  * A later registration bead updates WORKBENCH_TOOLS in the same change (a one-line edit): that is the census doing its job.
  */
 import { execFile } from "node:child_process";
@@ -102,8 +108,7 @@ vi.mock("@furnace/sdk", async importOriginal => {
 });
 afterAll(async () => {
   try {
-    await drain();
-    const problem = totalReachProblem(reach(), calibrated);
+    const problem = await fileTotalReachProblem();
     expect(problem, "the file's total native reach must equal the calibration's own reach").toBeUndefined();
   } finally {
     native.restore();
@@ -133,6 +138,11 @@ function totalReachProblem(total: NativeReach, expected: NativeReach): string | 
   const keys = ["spawns", "connects", "furnaceClients"] as const;
   const differing = keys.filter(key => total[key] !== expected[key]).map(key => `${key} ${total[key]} (calibration ${expected[key]})`);
   return differing.length ? `total native reach differs from the calibration reach: ${differing.join(", ")}` : undefined;
+}
+/** The file-level judgment the afterAll asserts: after a macrotask drain, the file's total native reach against the calibration's own reach; undefined when equal. */
+async function fileTotalReachProblem(): Promise<string | undefined> {
+  await drain();
+  return totalReachProblem(reach(), calibrated);
 }
 /** Asserts, after a macrotask drain, that nothing since `before` reached a native or provider path; the message carries the exact counts. */
 async function expectNoReach(before: NativeReach, where: string): Promise<void> {
@@ -417,6 +427,10 @@ const DEFERRALS: Array<[string, (bump: () => void) => void]> = [
 ];
 
 describe("zero-reach drain and total-reach bound (wb-d1q: deferred native reach cannot hide past the assertion window)", () => {
+  it("the deferral modes are exactly the four named, in order (an emptied or shortened table cannot pass silently)", () => {
+    expect(DEFERRALS.map(([name]) => name)).toEqual(["zero-delay setTimeout", "setImmediate", "process.nextTick", "queueMicrotask"]);
+  });
+
   it.each(DEFERRALS)("a native effect deferred through %s reds its OWN zero-reach assertion, naming where", async (_name, defer) => {
     const before = reach();
     const bump = (): void => {
@@ -438,11 +452,36 @@ describe("zero-reach drain and total-reach bound (wb-d1q: deferred native reach 
   it("totalReachProblem is silent at exactly the calibration reach and names every field that differs in either direction", () => {
     const calibration: NativeReach = { spawns: 3, connects: 1, furnaceClients: 1 };
     expect(totalReachProblem({ ...calibration }, calibration)).toBeUndefined();
+    const checked: string[] = [];
     for (const key of ["spawns", "connects", "furnaceClients"] as const) {
       for (const delta of [1, -1]) {
         const total = { ...calibration, [key]: calibration[key] + delta };
         expect(totalReachProblem(total, calibration), `${key} ${delta > 0 ? "above" : "below"} calibration`).toContain(key);
+        checked.push(`${key} ${delta > 0 ? "above" : "below"}`);
       }
+    }
+    expect(checked, "all six field x direction checks ran").toEqual([
+      "spawns above",
+      "spawns below",
+      "connects above",
+      "connects below",
+      "furnaceClients above",
+      "furnaceClients below",
+    ]);
+  });
+
+  it("the file-level judgment names a counted reach deferred past every row window (the afterAll's own falsifier)", async () => {
+    const bump = (): void => {
+      native.spawns += 1;
+    };
+    // Deferred, and deliberately not awaited by this row: only the judgment's own drain can see it.
+    setTimeout(bump, 0);
+    try {
+      const problem = await fileTotalReachProblem();
+      expect(String(problem), "the file-level judgment must name the deferred spawn").toContain("spawns");
+    } finally {
+      await drain();
+      native.spawns -= 1;
     }
   });
 });
