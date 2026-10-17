@@ -18,10 +18,38 @@
  *   cannot carry, report mode reads from the source and fails closed on: the fails inversion (an inverted case is
  *   recorded as passed) and the third leg (no runtime assertion count, so an exit reachable before the first assertion
  *   reddens, a break out of a labeled block included). A pinned file changed after the report, or a report that records
- *   the judging file itself, is refused. DESIGN INVARIANT (owner, 2026-10-16 21:29Z, the U1 lesson of record): every
- *   value flow report mode reads fails closed to options-unknown when it cannot resolve - the inversion is read only
- *   through a callee whose chain root is vitest's it / test (U1), inside callbacks held by vitest's describe / suite
- *   (I1), with same-file const options; anything else is options-unknown naming what it could not resolve.
+ *   the judging file itself, is refused. DESIGN INVARIANT (owner, 2026-10-16 21:29Z; made STRUCTURAL by the 23:16Z
+ *   respin-3 ruling - no shape lists): every value flow the census reads fails closed when it cannot resolve. Three
+ *   flows, each closed by construction:
+ *   (1) REGISTRATION (report mode; U1 / I1): a chain resolves only through links vitest's own API defines - a root that
+ *       IS vitest's it / test / describe / suite or one of its hooks (a named or namespace import, a global, a const
+ *       alias of a resolved chain) and members its runtime objects carry (REGISTRATION_MEMBERS, pinned against the
+ *       installed vitest). The inversion is read only for a case chain resolving to it / test, every enclosing body
+ *       running WHERE IT IS WRITTEN inside a callback a resolved describe / suite holds (a method, accessor,
+ *       constructor or instance initializer runs where it is CALLED), with same-file const options, in a file whose
+ *       registration API does not escape (written, handed to a call, aliased outside a const, read through a member
+ *       vitest does not define, imported again from @vitest/runner, loaded dynamically). Anything else is
+ *       options-unknown, naming the link it could not resolve.
+ *   (2) CONTEXT (both modes): the test context - the case's context parameter, every parameter of every vitest hook of
+ *       the pin's own chain (afterEach / afterAll included: vitest reads fails after them), and every parameter of a
+ *       handler registered through onTestFailed / onTestFinished that the walk reaches - is followed with all runner
+ *       state reached through it until it provably stops being runner state; a write through it, or a use the walk
+ *       cannot follow, is context-unknown. vitest flips fails after the last hook and handler, and its main process
+ *       syncs only a task's result and meta (vitest 4.1.10, measured), so neither the JSON report nor the reporter's
+ *       task sees such a write: executing mode reads it from the source too (the R2 runtime read of the final
+ *       task.fails is infeasible there - TestCase.task is not public and never carries the write).
+ *   (3) ASSERTION (both modes): third-leg evidence is an assertion vitest builds and checks - expect(x) /
+ *       expect.soft(x) / expect.poll(fn) (ctx.expect and a namespace's included) whose first call is a matcher, an
+ *       assert call, or a member of expect that fails the case when reached (FAILING_MEMBERS: unreachable, fail); any
+ *       other static expect member (getState, assertions, extend ...), a bare expect(x) and a member every object or
+ *       function carries (toString, bind, call ...) assert nothing.
+ *   NAMED RESIDUALS - what the invariant does NOT cover, so no census may claim it: code neither in the pin's own
+ *   chain nor followed by the walk (setup files, config, sibling cases, package modules, and a custom matcher or a
+ *   callback passed by name that receives a checked value); a hook registered by a wrapper outside same-file and
+ *   relative-module code; the registration API reached through the global object (globals: true); runner state reached
+ *   through vitest internals beyond its public routes (chai's assertion flags, through which an expect(x) object carries
+ *   its test; the worker-state global; dynamic code). Each fail-closed rule's cost on test/** is measured on the respin
+ *   record, never assumed.
  * - EXECUTING MODE, for fixtures and non-default tiers only (never the default tier once wb-nl8 lands): judgePins
  *   EXECUTES each claimed tier's real command - the forge.toml step through its npm script, with setupFiles /
  *   globalSetup, testNamePattern, include/exclude and every CLI flag as the gate runs them (owner ruling on the 6hb.7
@@ -34,9 +62,9 @@
  *   recursion guard reads), timing, and the narrowed file set. That is why executing mode is never the default-tier
  *   judgment: full closure is report mode, judging the gate's own run.
  * - inner legs (both modes; keep-or-match floors): a parse-aware TypeScript AST scan of the case the RUNNER located
- *   (its reported line:column, never a title search) - a reachable test-context skip in the case body or in a vitest
- *   hook of the pin's own enclosing call chain (never file-wide); the runner's public current-test routes
- *   (getCurrentTest / getCurrentSuite from vitest/suite or @vitest/runner, TestRunner from vitest) read as context
+ *   (its reported line:column, never a title search) - a reachable test-context skip or runner-state write in the case
+ *   body or in a vitest hook of the pin's own enclosing call chain (never file-wide); the runner's public current-test
+ *   routes (getCurrentTest / getCurrentSuite from vitest/suite or @vitest/runner, TestRunner from vitest) read as context
  *   references, fail-closed (J5, the test.extend precedent); fail-closed on context uses it cannot follow; and a bare
  *   expect(x) with no matcher, which the runtime assertion count accepts.
  * - docs: sections from the RENDERED view (marked's lexer, resolved through the pinned @earendil-works/pi-tui
@@ -229,7 +257,6 @@ export interface RunReport {
 }
 
 const REPORTER = join(dirname(fileURLToPath(import.meta.url)), "census-reporter.ts");
-const HOOKS = new Set(["beforeEach", "beforeAll", "aroundEach", "aroundAll"]);
 const NODE_ASSERT = new Set(["node:assert", "node:assert/strict", "assert", "assert/strict"]);
 const VITEST_BINARIES = new Set(["vitest", "./node_modules/.bin/vitest", "node_modules/.bin/vitest"]);
 
@@ -949,62 +976,330 @@ function bindingKey(element: ts.BindingElement): string | undefined {
   return undefined;
 }
 
+/**
+ * The test context's value flow (u62 gate-3 U2 / respin-3, the design invariant in BOTH modes). vitest reads a case's
+ * fails AFTER its last hook and handler and flips the result then (@vitest/runner runTest), so code holding the context
+ * can invert a case, or rewrite its result, after collection - and neither the JSON report nor the reporter's collected
+ * task sees it (vitest 4.1.10 syncs only a task's result and meta to the main process; measured). ROOTS are the context
+ * itself and its task: every use is classified, anything else is unknown. DERIVED values are runner state reached
+ * through a root (a task's result, suite, meta, file, a fixture), followed until they provably stop being that state;
+ * a write through either is context-unknown, and so is any use the walk cannot follow.
+ */
+class ContextFlow {
+  readonly roots = new Set<ts.Symbol>();
+  readonly derived = new Set<ts.Symbol>();
+  /** A destructured onTestFailed / onTestFinished: the handlers it registers receive the context. */
+  readonly registrars = new Set<ts.Symbol>();
+  /** The context's destructured expect: the assertion API, never runner state. */
+  readonly expects = new Set<ts.Symbol>();
+  skip: Hazard | undefined;
+  unknown: Hazard | undefined;
+  readonly a: SourceAnalysis;
+  /** Functions whose context flow is already being read (a handler that registers itself stops there). */
+  readonly seen: Set<ts.Node>;
+
+  constructor(a: SourceAnalysis, seen: Set<ts.Node>) {
+    this.a = a;
+    this.seen = seen;
+  }
+
+  size(): number {
+    return this.roots.size + this.derived.size + this.registrars.size + this.expects.size;
+  }
+
+  /** A reachable skip is the more specific finding, so it outranks an unknown use found anywhere in the same walk. */
+  record(hazard: Hazard | undefined): void {
+    if (hazard === undefined) return;
+    if (hazard.kind === "skip") this.skip ??= hazard;
+    else this.unknown ??= hazard;
+  }
+}
+
+/** The members of vitest 4.1's TestContext that carry no runner state: the assertion, annotation and abort APIs. */
+const CONTEXT_API: ReadonlySet<string> = new Set(["expect", "annotate", "signal"]);
+/** The context members (and vitest exports) that register a handler vitest calls WITH the context (OnTestFailedHandler / OnTestFinishedHandler). */
+const CONTEXT_REGISTRARS: ReadonlySet<string> = new Set(["onTestFailed", "onTestFinished"]);
+/** Operators that read a value into a fresh primitive (it stops being runner state there). */
+const READ_OPERATORS: ReadonlySet<ts.SyntaxKind> = new Set([
+  ts.SyntaxKind.EqualsEqualsToken,
+  ts.SyntaxKind.ExclamationEqualsToken,
+  ts.SyntaxKind.EqualsEqualsEqualsToken,
+  ts.SyntaxKind.ExclamationEqualsEqualsToken,
+  ts.SyntaxKind.LessThanToken,
+  ts.SyntaxKind.GreaterThanToken,
+  ts.SyntaxKind.LessThanEqualsToken,
+  ts.SyntaxKind.GreaterThanEqualsToken,
+  ts.SyntaxKind.InstanceOfKeyword,
+  ts.SyntaxKind.InKeyword,
+  ts.SyntaxKind.PlusToken,
+  ts.SyntaxKind.MinusToken,
+  ts.SyntaxKind.AsteriskToken,
+  ts.SyntaxKind.SlashToken,
+  ts.SyntaxKind.PercentToken,
+  ts.SyntaxKind.AsteriskAsteriskToken,
+]);
+/** Operators whose result may BE an operand (a || b, a ?? b, the right of a && b or of a comma), so the value flows on through them. */
+const FLOW_OPERATORS: ReadonlySet<ts.SyntaxKind> = new Set([ts.SyntaxKind.AmpersandAmpersandToken, ts.SyntaxKind.BarBarToken, ts.SyntaxKind.QuestionQuestionToken, ts.SyntaxKind.CommaToken]);
+
+/** A node's source text, whitespace collapsed and clipped, so a red names what it could not follow. */
+function nodeText(node: ts.Node, a: SourceAnalysis): string {
+  const text = node.getText(a.sf).replace(/\s+/g, " ");
+  return text.length > 60 ? `${text.slice(0, 57)}...` : text;
+}
+
+/** The outermost expression a node is wrapped into by parentheses and type assertions. */
+function climbWrappers(node: ts.Expression): ts.Expression {
+  let current = node;
+  while (
+    ts.isParenthesizedExpression(current.parent) ||
+    ts.isAsExpression(current.parent) ||
+    ts.isSatisfiesExpression(current.parent) ||
+    ts.isNonNullExpression(current.parent) ||
+    ts.isTypeAssertionExpression(current.parent)
+  ) {
+    current = current.parent;
+  }
+  return current;
+}
+
+/**
+ * Does an expression get written: an assignment target (compound included), a delete operand, or an increment /
+ * decrement? Exact, unlike isWritten (which also takes ! and - for writes, the options read's fail-closed shortcut),
+ * since the context flow reads that runner state is only tested there.
+ */
+function writes(target: ts.Expression): boolean {
+  const node = climbWrappers(target);
+  const parent = node.parent;
+  if (ts.isBinaryExpression(parent) && parent.left === node) return parent.operatorToken.kind >= ts.SyntaxKind.FirstAssignment && parent.operatorToken.kind <= ts.SyntaxKind.LastAssignment;
+  if (ts.isDeleteExpression(parent)) return true;
+  const update = (operator: ts.SyntaxKind): boolean => operator === ts.SyntaxKind.PlusPlusToken || operator === ts.SyntaxKind.MinusMinusToken;
+  return (ts.isPrefixUnaryExpression(parent) && update(parent.operator)) || (ts.isPostfixUnaryExpression(parent) && update(parent.operator));
+}
+
+function addSymbol(into: Set<ts.Symbol>, name: ts.Identifier, a: SourceAnalysis): void {
+  const symbol = a.checker.getSymbolAtLocation(name);
+  if (symbol !== undefined) into.add(symbol);
+}
+
+/** Every identifier a binding name introduces joins the derived values (patterns and rests included). */
+function bindDerived(name: ts.BindingName, flow: ContextFlow): void {
+  if (ts.isIdentifier(name)) {
+    addSymbol(flow.derived, name, flow.a);
+    return;
+  }
+  for (const element of name.elements) if (!ts.isOmittedExpression(element)) bindDerived(element.name, flow);
+}
+
 /** A destructuring of the context: skip is a hazard; task / context lead back to the context; a rest or computed key is unknowable. */
-function bindingHazard(pattern: ts.ObjectBindingPattern, roots: Set<ts.Symbol>, a: SourceAnalysis): Hazard | undefined {
+function bindingHazard(pattern: ts.ObjectBindingPattern, flow: ContextFlow): Hazard | undefined {
+  const a = flow.a;
   for (const element of pattern.elements) {
     if (element.dotDotDotToken !== undefined) return unknownAt(a, element, "a rest element collects the test context");
     const key = bindingKey(element);
     if (key === undefined) return unknownAt(a, element, "a computed key destructures the test context");
     if (key === "skip") return skipAt(a, element, "the test context's skip is destructured");
-    if (key !== "task" && key !== "context") continue;
-    if (ts.isIdentifier(element.name)) {
-      const symbol = a.checker.getSymbolAtLocation(element.name);
-      if (symbol !== undefined) roots.add(symbol);
-    } else if (ts.isObjectBindingPattern(element.name)) {
-      const nested = bindingHazard(element.name, roots, a);
-      if (nested !== undefined) return nested;
-    } else return unknownAt(a, element, "the test context is destructured through an array pattern");
+    if (key === "task" || key === "context") {
+      if (ts.isIdentifier(element.name)) addSymbol(flow.roots, element.name, a);
+      else if (ts.isObjectBindingPattern(element.name)) {
+        const nested = bindingHazard(element.name, flow);
+        if (nested !== undefined) return nested;
+      } else return unknownAt(a, element, "the test context is destructured through an array pattern");
+      continue;
+    }
+    if (CONTEXT_API.has(key)) {
+      if (key === "expect" && ts.isIdentifier(element.name)) addSymbol(flow.expects, element.name, a);
+      continue;
+    }
+    if (CONTEXT_REGISTRARS.has(key)) {
+      if (!ts.isIdentifier(element.name)) return unknownAt(a, element, `the test context's ${key} is destructured through a pattern`);
+      addSymbol(flow.registrars, element.name, a);
+      continue;
+    }
+    bindDerived(element.name, flow);
   }
   return undefined;
 }
 
-function memberHazard(access: ts.Expression, name: string, roots: Set<ts.Symbol>, a: SourceAnalysis): Hazard | undefined {
+/** A parameter vitest fills with the context (a case's, a hook's, a registered handler's) joins the roots. */
+function seedParameter(parameter: ts.ParameterDeclaration, flow: ContextFlow): Hazard | undefined {
+  const a = flow.a;
+  if (parameter.dotDotDotToken !== undefined) return unknownAt(a, parameter, "a rest parameter collects the test context");
+  if (ts.isIdentifier(parameter.name)) {
+    addSymbol(flow.roots, parameter.name, a);
+    return undefined;
+  }
+  if (ts.isObjectBindingPattern(parameter.name)) return bindingHazard(parameter.name, flow);
+  return unknownAt(a, parameter, "the test context is destructured through an array pattern");
+}
+
+/** The arguments object a function (not an arrow) reads in its own body, nested arrows included, or undefined. */
+function argumentsRead(fn: AnalysedFunction): ts.Identifier | undefined {
+  if (fn.body === undefined || ts.isArrowFunction(fn)) return undefined;
+  let reads: ts.Identifier | undefined;
+  const visit = (node: ts.Node): void => {
+    if (reads !== undefined || ts.isFunctionExpression(node) || ts.isFunctionDeclaration(node)) return;
+    if (ts.isIdentifier(node) && node.text === "arguments" && isReference(node)) reads = node;
+    else ts.forEachChild(node, visit);
+  };
+  ts.forEachChild(fn.body, visit);
+  return reads;
+}
+
+/**
+ * A handler vitest calls WITH the test context (onTestFailed / onTestFinished): its own parameters are context roots,
+ * read as a flow of their own - a function literal, or a same-file function by name; anything else is unreadable.
+ */
+function handlerHazard(call: ts.CallExpression, registrar: string, a: SourceAnalysis, seen: Set<ts.Node>): Hazard | undefined {
+  const handler = call.arguments[0];
+  if (handler === undefined) return undefined;
+  const literal = unwrap(handler);
+  const fn = isFunctionLiteral(literal) ? literal : localFunction(handler, a);
+  if (fn === undefined) return unknownAt(a, handler, `the handler ${registrar} registers is not a function the census can read`);
+  const reads = argumentsRead(fn);
+  if (reads !== undefined) return unknownAt(a, reads, `the handler ${registrar} registers reads the arguments object`);
+  const found = contextHazard(fn, { from: 0 }, a, seen);
+  if (found === undefined || fn === literal) return found;
+  return { kind: found.kind, detail: `the handler ${nodeText(handler, a)} that ${registrar} registers: ${found.detail}` };
+}
+
+/** vitest's onTestFailed / onTestFinished export (or a destructured context registrar) a call invokes, or undefined. */
+function registrarCalled(call: ts.CallExpression, flow: ContextFlow): string | undefined {
+  const callee = unwrap(call.expression);
+  if (ts.isIdentifier(callee)) {
+    const symbol = flow.a.checker.getSymbolAtLocation(callee);
+    if (symbol !== undefined && flow.registrars.has(symbol)) return callee.text;
+  }
+  const exported = vitestExport(call.expression, flow.a);
+  return exported !== undefined && CONTEXT_REGISTRARS.has(exported) ? exported : undefined;
+}
+
+/** How the context flow reads an identifier for the assertion predicates: a context root, its expect, or an import. */
+const contextRootOf =
+  (flow: ContextFlow): RootOf =>
+  (id: ts.Identifier): AssertionRoot | undefined => {
+    const symbol = flow.a.checker.getSymbolAtLocation(id);
+    if (symbol !== undefined && flow.roots.has(symbol)) return "context";
+    if (symbol !== undefined && flow.expects.has(symbol)) return "expect";
+    return importedAssertionRoot(id, flow.a);
+  };
+
+/** Is a call one vitest checks a value through: expect(v) / expect.soft(v) / ctx.expect(v), a matcher on one, or an assert call? */
+function checksValue(call: ts.CallExpression, flow: ContextFlow): boolean {
+  const rootOf = contextRootOf(flow);
+  if (isExpectConstructor(call.expression, rootOf) || isAssertBase(call.expression, rootOf)) return true;
+  let subject = unwrap(call.expression);
+  while (ts.isPropertyAccessExpression(subject) || ts.isElementAccessExpression(subject)) {
+    if (isAssertBase(subject, rootOf)) return true;
+    subject = unwrap(subject.expression);
+  }
+  return isAssertBase(subject, rootOf) || (ts.isCallExpression(subject) && isExpectConstructor(subject.expression, rootOf));
+}
+
+/**
+ * Runner state an assertion checks reaches the callbacks its chain is handed (toSatisfy((value) => ...)): their
+ * parameters join the derived values, so a write there is read like one in the case body.
+ */
+function bindCallbacks(call: ts.CallExpression, flow: ContextFlow): void {
+  let top: ts.Expression = call;
+  for (;;) {
+    const node = climbWrappers(top);
+    const parent = node.parent;
+    if (((ts.isPropertyAccessExpression(parent) || ts.isElementAccessExpression(parent)) && parent.expression === node) || (ts.isCallExpression(parent) && parent.expression === node)) top = parent;
+    else break;
+  }
+  for (let link: ts.Expression = unwrap(top); ; ) {
+    if (ts.isCallExpression(link)) {
+      for (const argument of link.arguments) {
+        const fn = unwrap(argument);
+        if (isFunctionLiteral(fn)) for (const parameter of fn.parameters) bindDerived(parameter.name, flow);
+      }
+      link = unwrap(link.expression);
+    } else if (ts.isPropertyAccessExpression(link) || ts.isElementAccessExpression(link)) link = unwrap(link.expression);
+    else break;
+  }
+}
+
+/** One member read off a ROOT: a write fails closed, skip is the hazard, task / context re-enter, the APIs are benign. */
+function memberHazard(access: ts.Expression, name: string, flow: ContextFlow): Hazard | undefined {
+  const a = flow.a;
+  if (writes(access)) return unknownAt(a, access, `${nodeText(access, a)} is written through the test context`);
   if (name === "skip") return skipAt(a, access, `${access.getText(a.sf)} reaches the test context's skip`);
-  if (name === "task" || name === "context") return useHazard(access, roots, a);
-  return undefined;
+  if (name === "task" || name === "context") return useHazard(access, flow);
+  if (CONTEXT_API.has(name)) return undefined;
+  if (CONTEXT_REGISTRARS.has(name)) {
+    const node = climbWrappers(access);
+    const parent = node.parent;
+    if (!ts.isCallExpression(parent) || parent.expression !== node) return unknownAt(a, parent, `${nodeText(access, a)} is used other than by calling it`);
+    return handlerHazard(parent, nodeText(access, a), a, flow.seen);
+  }
+  return derivedHazard(access, flow);
 }
 
-/** How one reference to the context (or a value that leads back to it) is used. */
-function useHazard(reference: ts.Expression, roots: Set<ts.Symbol>, a: SourceAnalysis): Hazard | undefined {
-  let node: ts.Node = reference;
-  while (
-    ts.isParenthesizedExpression(node.parent) ||
-    ts.isAsExpression(node.parent) ||
-    ts.isSatisfiesExpression(node.parent) ||
-    ts.isNonNullExpression(node.parent) ||
-    ts.isTypeAssertionExpression(node.parent)
-  ) {
-    node = node.parent;
-  }
+/** How one reference to a ROOT (the context, its task, or an alias of either) is used. */
+function useHazard(reference: ts.Expression, flow: ContextFlow): Hazard | undefined {
+  const a = flow.a;
+  const node = climbWrappers(reference);
   const parent = node.parent;
-  if (ts.isPropertyAccessExpression(parent) && parent.expression === node) return memberHazard(parent, parent.name.text, roots, a);
+  if (ts.isPropertyAccessExpression(parent) && parent.expression === node) return memberHazard(parent, parent.name.text, flow);
   if (ts.isElementAccessExpression(parent) && parent.expression === node) {
     const key = unwrap(parent.argumentExpression);
-    return ts.isStringLiteralLike(key) ? memberHazard(parent, key.text, roots, a) : unknownAt(a, parent, "the test context is read through a computed key");
+    return ts.isStringLiteralLike(key) ? memberHazard(parent, key.text, flow) : unknownAt(a, parent, "the test context is read through a computed key");
   }
   if (ts.isVariableDeclaration(parent) && parent.initializer === node) {
     if (ts.isIdentifier(parent.name)) {
-      const symbol = a.checker.getSymbolAtLocation(parent.name);
-      if (symbol !== undefined) roots.add(symbol);
+      addSymbol(flow.roots, parent.name, a);
       return undefined;
     }
-    if (ts.isObjectBindingPattern(parent.name)) return bindingHazard(parent.name, roots, a);
+    if (ts.isObjectBindingPattern(parent.name)) return bindingHazard(parent.name, flow);
     return unknownAt(a, parent, "the test context is destructured through an array pattern");
   }
   if (ts.isVoidExpression(parent) || ts.isTypeOfExpression(parent) || ts.isExpressionStatement(parent)) return undefined;
   if (ts.isCallExpression(parent) && parent.expression === node) return unknownAt(a, parent, "the test context is called");
   if ((ts.isCallExpression(parent) || ts.isNewExpression(parent)) && parent.arguments?.some(argument => argument === node)) return unknownAt(a, parent, "the test context is handed to a call");
   return unknownAt(a, parent, `the test context is used as ${ts.SyntaxKind[parent.kind] ?? "an expression"}`);
+}
+
+/**
+ * How runner state reached through the context (DERIVED) is used: read on, compared, tested, interpolated, or checked
+ * by a vitest assertion it stops mattering; through || / ?? / a ternary branch it flows on; written it is
+ * context-unknown; called, handed to any other call, or flowing anywhere else it fails closed.
+ */
+function derivedHazard(value: ts.Expression, flow: ContextFlow): Hazard | undefined {
+  const a = flow.a;
+  const node = climbWrappers(value);
+  const parent = node.parent;
+  const what = `${nodeText(node, a)}, reached through the test context,`;
+  if ((ts.isPropertyAccessExpression(parent) || ts.isElementAccessExpression(parent)) && parent.expression === node) {
+    if (writes(parent)) return unknownAt(a, parent, `${nodeText(parent, a)} is written through the test context`);
+    return derivedHazard(parent, flow);
+  }
+  if (writes(node)) return unknownAt(a, node, `${nodeText(node, a)} is written through the test context`);
+  if (ts.isCallExpression(parent) && parent.expression === node) return unknownAt(a, parent, `${what} is called`);
+  if ((ts.isCallExpression(parent) || ts.isNewExpression(parent)) && parent.arguments?.some(argument => argument === node)) {
+    if (!ts.isCallExpression(parent) || !checksValue(parent, flow)) return unknownAt(a, parent, `${what} is handed to a call`);
+    bindCallbacks(parent, flow);
+    return undefined;
+  }
+  if (ts.isVariableDeclaration(parent) && parent.initializer === node) {
+    bindDerived(parent.name, flow);
+    return undefined;
+  }
+  if ((ts.isForOfStatement(parent) || ts.isForInStatement(parent)) && parent.expression === node) {
+    if (!ts.isVariableDeclarationList(parent.initializer)) return unknownAt(a, parent, `${what} is iterated into an assignment target`);
+    for (const declaration of parent.initializer.declarations) bindDerived(declaration.name, flow);
+    return undefined;
+  }
+  if (ts.isBinaryExpression(parent) && FLOW_OPERATORS.has(parent.operatorToken.kind)) {
+    // a && b only TESTS a: it flows on only when falsy, a primitive; a comma's left operand is discarded
+    const tested = parent.left === node && (parent.operatorToken.kind === ts.SyntaxKind.AmpersandAmpersandToken || parent.operatorToken.kind === ts.SyntaxKind.CommaToken);
+    return tested ? undefined : derivedHazard(parent, flow);
+  }
+  if (ts.isConditionalExpression(parent)) return parent.condition === node ? undefined : derivedHazard(parent, flow);
+  if (ts.isExpressionStatement(parent) || ts.isVoidExpression(parent) || ts.isTypeOfExpression(parent) || ts.isTemplateSpan(parent)) return undefined;
+  if (ts.isPrefixUnaryExpression(parent) || (ts.isBinaryExpression(parent) && READ_OPERATORS.has(parent.operatorToken.kind))) return undefined;
+  if (ts.isIfStatement(parent) || ts.isWhileStatement(parent) || ts.isDoStatement(parent) || ts.isSwitchStatement(parent) || ts.isCaseClause(parent)) return undefined;
+  if (ts.isForStatement(parent) && parent.condition === node) return undefined;
+  return unknownAt(a, parent, `${what} is used as ${ts.SyntaxKind[parent.kind] ?? "an expression"}`);
 }
 
 /** Identifiers that read a binding (not declaration names, member names or object keys). */
@@ -1017,54 +1312,51 @@ function isReference(id: ts.Identifier): boolean {
   return !ts.isImportSpecifier(parent) && !ts.isImportClause(parent) && !ts.isLabeledStatement(parent) && !ts.isBreakOrContinueStatement(parent);
 }
 
-/** Does fn reach the vitest test context's skip through its context parameter (or the arguments object)? */
-function contextHazard(fn: AnalysedFunction, index: number, a: SourceAnalysis): Hazard | undefined {
+/** vitest's around hooks take the run function first (aroundEach(runTest, context, suite)); a hook's later parameters, like every other hook's, are runner state. */
+const RUN_FIRST: ReadonlySet<string> = new Set(["aroundEach", "aroundAll"]);
+/** The parameters contextHazard seeds: the case's context parameter by its index, or a hook's or handler's from an index on. */
+type ContextSeed = number | { readonly from: number };
+
+/**
+ * Does fn reach the vitest test context's skip, or write runner state through it, through its context parameter(s), the
+ * arguments object, or a handler it registers? A skip anywhere outranks an unknown use; anything unread is unknown.
+ */
+function contextHazard(fn: AnalysedFunction, seed: ContextSeed, a: SourceAnalysis, seen: Set<ts.Node> = new Set()): Hazard | undefined {
   const body = fn.body;
-  if (body === undefined) return undefined;
-  if (ts.isFunctionExpression(fn) || ts.isFunctionDeclaration(fn)) {
-    let reads: ts.Identifier | undefined;
-    const visit = (node: ts.Node): void => {
-      if (reads !== undefined || ts.isFunctionExpression(node) || ts.isFunctionDeclaration(node)) return;
-      if (ts.isIdentifier(node) && node.text === "arguments" && isReference(node)) reads = node;
-      else ts.forEachChild(node, visit);
-    };
-    ts.forEachChild(body, visit);
-    if (reads !== undefined) return unknownAt(a, reads, "the case reads the arguments object");
-  }
-  if (index < 0) return undefined;
-  const parameter = fn.parameters[index];
-  if (parameter === undefined) return undefined;
-  if (parameter.dotDotDotToken !== undefined) return unknownAt(a, parameter, "a rest parameter collects the test context");
-  const roots = new Set<ts.Symbol>();
-  if (ts.isIdentifier(parameter.name)) {
-    const symbol = a.checker.getSymbolAtLocation(parameter.name);
-    if (symbol !== undefined) roots.add(symbol);
-  } else if (ts.isObjectBindingPattern(parameter.name)) {
-    const hazard = bindingHazard(parameter.name, roots, a);
+  if (body === undefined || seen.has(fn)) return undefined;
+  seen.add(fn);
+  const reads = argumentsRead(fn);
+  if (reads !== undefined) return unknownAt(a, reads, "the case reads the arguments object");
+  const flow = new ContextFlow(a, seen);
+  const seeded = typeof seed === "number" ? fn.parameters.filter((_parameter, position) => position === seed) : fn.parameters.slice(seed.from);
+  for (const parameter of seeded) {
+    const hazard = seedParameter(parameter, flow);
     if (hazard !== undefined) return hazard;
-  } else return unknownAt(a, parameter, "the test context is destructured through an array pattern");
+  }
   let known = -1;
-  while (known !== roots.size) {
-    known = roots.size;
-    let hazard: Hazard | undefined;
+  while (known !== flow.size()) {
+    known = flow.size();
     const visit = (node: ts.Node): void => {
-      if (hazard !== undefined) return;
+      if (ts.isCallExpression(node)) {
+        const registrar = registrarCalled(node, flow);
+        if (registrar !== undefined) flow.record(handlerHazard(node, registrar, a, seen));
+      }
       if (ts.isShorthandPropertyAssignment(node)) {
         const value = a.checker.getShorthandAssignmentValueSymbol(node);
-        if (value !== undefined && roots.has(value)) hazard = unknownAt(a, node, "the test context is placed into an object literal");
+        if (value !== undefined && (flow.roots.has(value) || flow.derived.has(value))) flow.record(unknownAt(a, node, "the test context is placed into an object literal"));
         return;
       }
       if (ts.isIdentifier(node) && isReference(node)) {
         const symbol = a.checker.getSymbolAtLocation(node);
-        if (symbol !== undefined && roots.has(symbol)) hazard = useHazard(node, roots, a);
+        if (symbol !== undefined && flow.roots.has(symbol)) flow.record(useHazard(node, flow));
+        else if (symbol !== undefined && flow.derived.has(symbol)) flow.record(derivedHazard(node, flow));
         return;
       }
       ts.forEachChild(node, visit);
     };
     visit(body);
-    if (hazard !== undefined) return hazard;
   }
-  return undefined;
+  return flow.skip ?? flow.unknown;
 }
 
 function moduleOf(declaration: ts.Declaration): string | undefined {
@@ -1121,18 +1413,21 @@ function chainHazard(call: ts.CallExpression, a: SourceAnalysis, registered: Rea
     const visit = (node: ts.Node): void => {
       if (hazard !== undefined || isFunctionLiteral(node) || ts.isFunctionDeclaration(node) || ts.isClassLike(node)) return;
       if (ts.isCallExpression(node)) {
-        // A registration (located by the runner, or resolved to vitest's API) is a sibling test or suite, never a hook.
-        if (a.callKeys(node).some(key => registered.has(key)) || registrationApi(node, a) !== undefined) return;
-        const hook = vitestExport(node.expression, a);
-        if (hook !== undefined && HOOKS.has(hook)) {
+        // u62 respin-3: EVERY vitest hook - afterEach / afterAll run before the runner reads fails too - however vitest's
+        // API reaches it (imported, aliased, a namespace member, the test API's own it.beforeEach), read before the
+        // registration skip, which would otherwise take it.beforeEach for a sibling registration of it.
+        const hook = hookCalled(node, a);
+        if (hook !== undefined) {
           // A vitest hook's callback is its first argument; a second argument is its timeout.
           const callback = node.arguments[0];
           const fn = callback === undefined ? undefined : localFunction(callback, a);
           if (callback !== undefined && fn === undefined) hazard = unknownAt(a, callback, `the ${hook} callback is not statically analysable`);
-          const found = fn === undefined ? undefined : (contextHazard(fn, 0, a) ?? (fn.body === undefined ? undefined : runnerRoute(fn.body, a, sources, `the ${hook} callback`)));
+          const found = fn === undefined ? undefined : (contextHazard(fn, { from: RUN_FIRST.has(hook) ? 1 : 0 }, a) ?? (fn.body === undefined ? undefined : runnerRoute(fn.body, a, sources, `the ${hook} callback`)));
           if (found !== undefined) hazard = { kind: found.kind, detail: `${hook} at ${a.where(node)}: ${found.detail}` };
           return;
         }
+        // A registration (located by the runner, or resolved to vitest's API) is a sibling test or suite, never a hook.
+        if (a.callKeys(node).some(key => registered.has(key)) || registrationApi(node, a) !== undefined) return;
         // J5: a call of the pin's own chain that reaches the runner's current suite or test, e.g. getCurrentSuite().on(...).
         const runner = runnerRoute(node.expression, a, sources, "a call in the pin's own call chain");
         if (runner !== undefined) {
@@ -1253,6 +1548,13 @@ function runnerRoute(root: ts.Node, a: SourceAnalysis, sources: SourceCache, wha
         hazard = unknownAt(at, child, `${what} imports ${loaded} dynamically, which reaches the runner's current test`);
         return;
       }
+      if (ts.isCallExpression(child)) {
+        const reached = registrationFlow(child, at);
+        if (reached !== undefined) {
+          hazard = { kind: reached.kind, detail: `${what} reaches ${reached.detail}` };
+          return;
+        }
+      }
       if (ts.isIdentifier(child) && isReference(child)) {
         const binding = runnerBinding(child, at);
         if (binding !== undefined) {
@@ -1268,6 +1570,26 @@ function runnerRoute(root: ts.Node, a: SourceAnalysis, sources: SourceCache, wha
   };
   scan(root, a, 0);
   return hazard;
+}
+
+/**
+ * u62 respin-3: a vitest hook, or an onTestFailed / onTestFinished registration, that the J5 walk reaches in code the
+ * pin's chain calls (a same-file or relative-module helper) hands its callback the test context, so each is read as a
+ * context flow of its own; undefined when the call is neither, or its flow reads clean.
+ */
+function registrationFlow(call: ts.CallExpression, a: SourceAnalysis): Hazard | undefined {
+  const exported = vitestExport(call.expression, a);
+  if (exported !== undefined && CONTEXT_REGISTRARS.has(exported)) {
+    const found = handlerHazard(call, exported, a, new Set());
+    return found === undefined ? undefined : { kind: found.kind, detail: `the handler ${exported} registers at ${a.where(call)}: ${found.detail}` };
+  }
+  const hook = hookCalled(call, a);
+  const callback = hook === undefined ? undefined : call.arguments[0];
+  if (hook === undefined || callback === undefined) return undefined;
+  const fn = localFunction(callback, a);
+  if (fn === undefined) return { kind: "unknown", detail: `the ${hook} at ${a.where(call)}, whose callback is not statically analysable` };
+  const found = contextHazard(fn, { from: RUN_FIRST.has(hook) ? 1 : 0 }, a);
+  return found === undefined ? undefined : { kind: found.kind, detail: `the ${hook} at ${a.where(call)}: ${found.detail}` };
 }
 
 /** vitest's registration APIs: a call starting from one registers a test or a suite, never a hook. */
@@ -1299,6 +1621,223 @@ function registrationRoot(expression: ts.Expression, a: SourceAnalysis, depth: n
 }
 
 const registrationApi = (call: ts.CallExpression, a: SourceAnalysis): string | undefined => registrationRoot(call.expression, a, 0);
+
+
+// ---------------------------------------------------------------------------------------------
+// The registration flow read STRICTLY (u62 gate-3 U1, the design invariant): a chain resolves only through links vitest's
+// own API defines - a root that IS vitest's it / test / describe / suite or one of its hooks (a named import, a namespace
+// member, a global, or a const alias of a resolved chain) and members its runtime objects carry. Anything else - a
+// user-added member, a let alias, a parameter, a call result that is not a chain method's - is unresolved, naming the link.
+// ---------------------------------------------------------------------------------------------
+
+/** vitest 4.1.10 (@vitest/runner createChainable / createTaskCollector): the flags and methods of it / test and of describe / suite. */
+const TEST_FLAGS: ReadonlySet<string> = new Set(["concurrent", "sequential", "skip", "only", "todo", "fails"]);
+const SUITE_FLAGS: ReadonlySet<string> = new Set(["concurrent", "sequential", "shuffle", "skip", "only", "todo"]);
+/** Members that, called, return the chain's next registration function. */
+const TEST_METHODS: ReadonlySet<string> = new Set(["each", "for", "skipIf", "runIf", "override", "scoped", "extend"]);
+const SUITE_METHODS: ReadonlySet<string> = new Set(["each", "for", "skipIf", "runIf"]);
+/** it.describe / it.suite are vitest's describe itself (taskFn.describe = suite): the chain switches to the suite API, its flags dropped. */
+const SUITE_SWITCH: ReadonlySet<string> = new Set(["describe", "suite"]);
+/** vitest's hooks: exported, and carried by it / test (taskFn.beforeEach = beforeEach, ...). */
+const HOOK_NAMES: ReadonlySet<string> = new Set(["beforeEach", "afterEach", "beforeAll", "afterAll", "aroundEach", "aroundAll"]);
+
+/** Every member report mode reads on vitest's registration objects (a row pins both lists against the installed runtime). */
+export const REGISTRATION_MEMBERS: { readonly test: readonly string[]; readonly suite: readonly string[] } = {
+  test: [...TEST_FLAGS, ...TEST_METHODS, ...SUITE_SWITCH, ...HOOK_NAMES].sort(),
+  suite: [...SUITE_FLAGS, ...SUITE_METHODS].sort(),
+};
+
+/** A strictly resolved chain: which API it reaches, its root (or hook) name, the members along it, and whether its last link is a chain method still to be called. */
+interface ResolvedChain {
+  readonly api: "test" | "suite" | "hook";
+  readonly name: string;
+  readonly members: readonly string[];
+  readonly method: boolean;
+}
+type ChainResolution = ResolvedChain | { readonly unresolved: string };
+
+const rootChain = (name: string): ResolvedChain | undefined =>
+  REGISTRATIONS.has(name) ? { api: name === "it" || name === "test" ? "test" : "suite", name, members: [], method: false } : HOOK_NAMES.has(name) ? { api: "hook", name, members: [], method: false } : undefined;
+
+/** The member a property or element access reads, or undefined for a computed non-literal key. */
+function accessedName(access: ts.PropertyAccessExpression | ts.ElementAccessExpression): string | undefined {
+  if (ts.isPropertyAccessExpression(access)) return access.name.text;
+  const key = unwrap(access.argumentExpression);
+  return ts.isStringLiteralLike(key) ? key.text : undefined;
+}
+
+/** Is an identifier a namespace import of vitest (import * as v from "vitest")? */
+function isVitestNamespace(id: ts.Identifier, a: SourceAnalysis): boolean {
+  const declaration = a.checker.getSymbolAtLocation(id)?.declarations?.[0];
+  return declaration !== undefined && ts.isNamespaceImport(declaration) && moduleOf(declaration) === "vitest";
+}
+
+/** One member link of a resolved chain, or why it does not resolve. */
+function memberLink(chain: ResolvedChain, name: string): ChainResolution {
+  if (chain.method) return { unresolved: `${name} is read off the uncalled chain method ${chain.members[chain.members.length - 1] ?? ""}` };
+  if (chain.api === "hook") return { unresolved: `${name} is not a member of vitest's ${chain.name} hook` };
+  const members = [...chain.members, name];
+  if (chain.api === "test") {
+    if (TEST_FLAGS.has(name)) return { ...chain, members };
+    if (TEST_METHODS.has(name)) return { ...chain, members, method: true };
+    if (SUITE_SWITCH.has(name)) return { api: "suite", name, members: [], method: false };
+    if (HOOK_NAMES.has(name)) return { api: "hook", name, members: [], method: false };
+    return { unresolved: `${name} is not a member of vitest's test API` };
+  }
+  if (SUITE_FLAGS.has(name)) return { ...chain, members };
+  if (SUITE_METHODS.has(name)) return { ...chain, members, method: true };
+  return { unresolved: `${name} is not a member of vitest's suite API` };
+}
+
+/** The vitest registration API (or hook) an identifier binds, read strictly. */
+function resolveRoot(id: ts.Identifier, a: SourceAnalysis, depth: number): ChainResolution {
+  const declaration = a.checker.getSymbolAtLocation(id)?.declarations?.[0];
+  // no declaration at all: a vitest global (globals: true)
+  if (declaration === undefined) return rootChain(id.text) ?? { unresolved: `${id.text} at ${a.where(id)} is neither declared nor a vitest global` };
+  if (ts.isImportSpecifier(declaration)) {
+    const from = moduleOf(declaration);
+    const chain = from === "vitest" ? rootChain((declaration.propertyName ?? declaration.name).text) : undefined;
+    return chain ?? { unresolved: `${id.text} at ${a.where(id)} is imported from ${from ?? "a module"}, not vitest's registration API` };
+  }
+  if (ts.isVariableDeclaration(declaration)) {
+    if (!isConst(declaration)) return { unresolved: `${id.text} at ${a.where(id)} is not a const binding` };
+    if (declaration.initializer === undefined || depth >= 6) return { unresolved: `${id.text} at ${a.where(id)} has no initializer report mode follows` };
+    return resolveChain(declaration.initializer, a, depth + 1);
+  }
+  return { unresolved: `${id.text} at ${a.where(id)} is bound by a ${ts.SyntaxKind[declaration.kind] ?? "declaration"}, not to vitest's registration API` };
+}
+
+/** Resolves a callee chain strictly: every link must be one vitest's API defines. */
+function resolveChain(expression: ts.Expression, a: SourceAnalysis, depth = 0): ChainResolution {
+  const node = unwrap(expression);
+  if (ts.isIdentifier(node)) return resolveRoot(node, a, depth);
+  if (ts.isPropertyAccessExpression(node) || ts.isElementAccessExpression(node)) {
+    const name = accessedName(node);
+    if (name === undefined) return { unresolved: `the registration at ${a.where(node)} reaches a computed member` };
+    const object = unwrap(node.expression);
+    if (ts.isIdentifier(object) && isVitestNamespace(object, a)) return rootChain(name) ?? { unresolved: `${name} is not vitest's it / test / describe / suite or one of its hooks` };
+    const inner = resolveChain(node.expression, a, depth);
+    return "unresolved" in inner ? inner : memberLink(inner, name);
+  }
+  if (ts.isCallExpression(node) || ts.isTaggedTemplateExpression(node)) {
+    const callee = resolveChain(ts.isCallExpression(node) ? node.expression : node.tag, a, depth);
+    if ("unresolved" in callee) return callee;
+    if (!callee.method) return { unresolved: `the call ${nodeText(node, a)} at ${a.where(node)} returns what a registration returns, not vitest's API` };
+    return { ...callee, method: false };
+  }
+  return { unresolved: `${nodeText(node, a)} at ${a.where(node)} is not vitest's registration API` };
+}
+
+/** The vitest hook a call registers - imported, aliased, a namespace member or the test API's own (it.beforeEach) - or undefined. */
+function hookCalled(call: ts.CallExpression, a: SourceAnalysis): string | undefined {
+  const resolved = resolveChain(call.expression, a);
+  if (!("unresolved" in resolved) && resolved.api === "hook") return resolved.name;
+  const exported = vitestExport(call.expression, a);
+  return exported !== undefined && HOOK_NAMES.has(exported) ? exported : undefined;
+}
+
+/** Per file: where vitest's registration API escapes the forms report mode reads (computed once). */
+const API_ESCAPES = new WeakMap<SourceAnalysis, { readonly leak: string | undefined }>();
+
+/** Is a node inside a type (typeof it, a type argument): no runtime value flows there. */
+function inTypePosition(node: ts.Node): boolean {
+  for (let current: ts.Node | undefined = node.parent; current !== undefined && !ts.isSourceFile(current); current = current.parent) {
+    if (ts.isTypeNode(current)) return true;
+    if (ts.isExpression(current) || ts.isStatement(current)) return false;
+  }
+  return false;
+}
+
+/** Where one reference to vitest's registration API leaves the forms report mode reads, or undefined if it stays in them. */
+function apiUse(reference: ts.Expression, a: SourceAnalysis): string | undefined {
+  let node = reference;
+  for (;;) {
+    const current = climbWrappers(node);
+    const parent = current.parent;
+    if ((ts.isPropertyAccessExpression(parent) || ts.isElementAccessExpression(parent)) && parent.expression === current) {
+      if (writes(parent)) return `${nodeText(parent, a)} is written at ${a.where(parent)}`;
+      node = parent;
+      continue;
+    }
+    if ((ts.isCallExpression(parent) && parent.expression === current) || (ts.isTaggedTemplateExpression(parent) && parent.tag === current)) {
+      const resolved = resolveChain(current, a);
+      if ("unresolved" in resolved) return `${nodeText(current, a)} at ${a.where(current)} is called, but ${resolved.unresolved}`;
+      // a registration or a hook returns no API; a chain method returns the next registration function
+      if (!resolved.method) return undefined;
+      node = parent;
+      continue;
+    }
+    if (ts.isVariableDeclaration(parent) && parent.initializer === current && ts.isIdentifier(parent.name) && isConst(parent)) {
+      const resolved = resolveChain(current, a);
+      return "unresolved" in resolved ? `${nodeText(current, a)} at ${a.where(current)} is aliased, but ${resolved.unresolved}` : undefined;
+    }
+    if (ts.isExpressionStatement(parent) || ts.isVoidExpression(parent) || ts.isTypeOfExpression(parent)) return undefined;
+    const handed = (ts.isCallExpression(parent) || ts.isNewExpression(parent)) && parent.arguments?.some(argument => argument === current);
+    return `${nodeText(current, a)} at ${a.where(current)} is ${handed ? "handed to a call" : `used as ${ts.SyntaxKind[parent.kind] ?? "an expression"}`}`;
+  }
+}
+
+/**
+ * The registration API's integrity in one file (the design invariant on the API object itself): vitest's it / test /
+ * describe / suite are mutable objects - it.runIf = () => it.fails turns it.runIf(true)(...) into an inverted
+ * registration - so a file in which the API escapes (written, handed to a call, stored outside a const alias, read
+ * through a member vitest does not define) has no readable inversion.
+ */
+function registrationEscape(a: SourceAnalysis): string | undefined {
+  const cached = API_ESCAPES.get(a);
+  if (cached !== undefined) return cached.leak;
+  let leak: string | undefined;
+  const visit = (node: ts.Node): void => {
+    if (leak !== undefined) return;
+    // the same API objects reached through a handle the scan does not track: @vitest/runner (vitest re-exports its
+    // registration API from there) imported, or a runner module loaded dynamically
+    const handle = ts.isImportDeclaration(node) ? alternateHandle(node) : undefined;
+    if (handle !== undefined) {
+      leak = `an alternate handle to vitest's registration API, ${handle}, is imported at ${a.where(node)}`;
+      return;
+    }
+    const loaded = loadedModule(node);
+    if (loaded !== undefined && RUNNER_LOADS.has(loaded)) {
+      leak = `${loaded} is loaded dynamically at ${a.where(node)}`;
+      return;
+    }
+    if (ts.isIdentifier(node) && isReference(node) && !inTypePosition(node)) {
+      if (isVitestNamespace(node, a)) {
+        const parent = node.parent;
+        if ((ts.isPropertyAccessExpression(parent) || ts.isElementAccessExpression(parent)) && parent.expression === node) {
+          const name = accessedName(parent);
+          const member = name === undefined ? undefined : rootChain(name);
+          if (name === undefined) leak = `the vitest namespace ${node.text} at ${a.where(node)} is read through a computed key`;
+          else if (member !== undefined && member.api !== "hook") leak = apiUse(parent, a);
+        } else leak = `the vitest namespace ${node.text} at ${a.where(node)} is used other than to read its members`;
+        return;
+      }
+      const resolved = resolveRoot(node, a, 0);
+      if (!("unresolved" in resolved) && resolved.api !== "hook") leak = apiUse(node, a);
+      return;
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(a.sf);
+  API_ESCAPES.set(a, { leak });
+  return leak;
+}
+
+/** A registration name (or the whole module) an import binds from a runner module, which holds the same API objects as vitest. */
+function alternateHandle(declaration: ts.ImportDeclaration): string | undefined {
+  const from = ts.isStringLiteral(declaration.moduleSpecifier) ? declaration.moduleSpecifier.text : undefined;
+  const bindings = declaration.importClause?.namedBindings;
+  if (from === undefined || !RUNNER_MODULES.has(from) || bindings === undefined) return undefined;
+  if (ts.isNamespaceImport(bindings)) return `${bindings.name.text} from ${from}`;
+  const named = bindings.elements.find(element => REGISTRATIONS.has((element.propertyName ?? element.name).text));
+  return named === undefined ? undefined : `${named.name.text} from ${from}`;
+}
+
+/** The inversion read's verdict where the file lets the registration API escape. */
+function apiEscapeHazard(a: SourceAnalysis): { readonly kind: "unknown"; readonly detail: string } | undefined {
+  const leak = registrationEscape(a);
+  return leak === undefined ? undefined : { kind: "unknown", detail: `the registration API escapes in this file: ${leak}, so report mode cannot read what a registration through it sets (fails included)` };
+}
 
 // ---------------------------------------------------------------------------------------------
 // The third leg: at least one REACHED vitest (or node:assert) assertion in the case body.
@@ -1401,12 +1940,13 @@ function isInvoked(fn: ts.Node): boolean {
 }
 
 type AssertionRoot = "expect" | "assert" | "context" | "namespace";
+/** How an assertion predicate classifies an identifier (the third leg through its EvidenceScope, the context flow through its roots). */
+type RootOf = (id: ts.Identifier) => AssertionRoot | undefined;
 
-function assertionRoot(id: ts.Identifier, scope: EvidenceScope): AssertionRoot | undefined {
-  const symbol = scope.a.checker.getSymbolAtLocation(id);
+/** The assertion an identifier imports (vitest's expect / assert, node:assert, a vitest namespace), or a vitest global's. */
+function importedAssertionRoot(id: ts.Identifier, a: SourceAnalysis): AssertionRoot | undefined {
+  const symbol = a.checker.getSymbolAtLocation(id);
   if (symbol === undefined) return id.text === "expect" ? "expect" : id.text === "assert" ? "assert" : undefined;
-  if (scope.contextRoots.has(symbol)) return "context";
-  if (scope.contextExpect.has(symbol)) return "expect";
   const declaration = symbol.declarations?.[0];
   if (declaration === undefined) return undefined;
   const from = ts.isImportSpecifier(declaration) || ts.isImportClause(declaration) || ts.isNamespaceImport(declaration) ? moduleOf(declaration) : undefined;
@@ -1418,34 +1958,87 @@ function assertionRoot(id: ts.Identifier, scope: EvidenceScope): AssertionRoot |
   return name === "expect" ? "expect" : name === "assert" ? "assert" : undefined;
 }
 
-/** expect(x).matcher(...), expect.soft/poll(...).matcher, ctx.expect(x).matcher, assert(...) / assert.equal(...). A bare expect(x) asserts nothing. */
-function assertionEvidence(call: ts.CallExpression, scope: EvidenceScope): string | undefined {
-  let members = 0;
-  let nameAtRoot = "";
-  let node: ts.Expression = call.expression;
-  for (;;) {
-    node = unwrap(node);
-    if (ts.isPropertyAccessExpression(node)) {
-      members += 1;
-      nameAtRoot = node.name.text;
-      node = node.expression;
-    } else if (ts.isElementAccessExpression(node)) {
-      members += 1;
-      const key = unwrap(node.argumentExpression);
-      nameAtRoot = ts.isStringLiteralLike(key) ? key.text : "";
-      node = node.expression;
-    } else if (ts.isCallExpression(node)) node = node.expression;
-    else break;
-  }
-  if (!ts.isIdentifier(node)) return undefined;
-  const root = assertionRoot(node, scope);
-  const at = `${basename(scope.a.file)} ${scope.a.where(call)}`;
-  if (root === "assert") return `assert at ${at}`;
-  if (root === "expect" && members >= 1) return `expect at ${at}`;
-  if ((root === "context" || root === "namespace") && members >= 2 && nameAtRoot === "expect") return `${root} expect at ${at}`;
-  if (root === "namespace" && nameAtRoot === "assert") return `assert at ${at}`;
-  return undefined;
+function assertionRoot(id: ts.Identifier, scope: EvidenceScope): AssertionRoot | undefined {
+  const symbol = scope.a.checker.getSymbolAtLocation(id);
+  if (symbol !== undefined && scope.contextRoots.has(symbol)) return "context";
+  if (symbol !== undefined && scope.contextExpect.has(symbol)) return "expect";
+  return importedAssertionRoot(id, scope.a);
 }
+
+/** expect's members that FAIL the case when reached (vitest's unreachable, chai's fail): an assertion like assert.fail, pinned against the runtime. */
+export const FAILING_MEMBERS: readonly string[] = ["fail", "unreachable"];
+
+/** Members every object or function carries (Object.prototype, Function.prototype): never a matcher, never an assert method. */
+const PROTOTYPE_MEMBERS: ReadonlySet<string> = new Set([...Object.getOwnPropertyNames(Object.prototype), ...Object.getOwnPropertyNames(Function.prototype)]);
+
+/** vitest's expect itself: expect, ctx.expect, or a vitest namespace's expect. */
+function isExpectBase(expression: ts.Expression, rootOf: RootOf): boolean {
+  const target = unwrap(expression);
+  if (ts.isIdentifier(target)) return rootOf(target) === "expect";
+  if (!ts.isPropertyAccessExpression(target) || target.name.text !== "expect") return false;
+  const object = unwrap(target.expression);
+  if (!ts.isIdentifier(object)) return false;
+  const root = rootOf(object);
+  return root === "context" || root === "namespace";
+}
+
+/** The callee of a call that BUILDS a vitest assertion: expect(x), expect.soft(x), expect.poll(fn) (through ctx or a namespace). */
+function isExpectConstructor(expression: ts.Expression, rootOf: RootOf): boolean {
+  const target = unwrap(expression);
+  if (isExpectBase(target, rootOf)) return true;
+  return ts.isPropertyAccessExpression(target) && (target.name.text === "soft" || target.name.text === "poll") && isExpectBase(target.expression, rootOf);
+}
+
+/** vitest's (chai's) assert or node:assert, directly or as a vitest namespace's assert. */
+function isAssertBase(expression: ts.Expression, rootOf: RootOf): boolean {
+  const target = unwrap(expression);
+  if (ts.isIdentifier(target)) return rootOf(target) === "assert";
+  if (!ts.isPropertyAccessExpression(target) || target.name.text !== "assert") return false;
+  const object = unwrap(target.expression);
+  return ts.isIdentifier(object) && rootOf(object) === "namespace";
+}
+
+/**
+ * The third leg's ASSERTION flow (u62 gate-3 U3, the design invariant in BOTH modes): evidence is an assertion vitest
+ * builds and checks - expect(x) / expect.soft(x) / expect.poll(fn) (ctx.expect and a namespace's included) whose FIRST call
+ * is a matcher (not / resolves / rejects may sit between), an assert call (assert(x), assert.equal(...),
+ * assert.strict.equal(...)), or a member of expect that fails the case when reached (expect.unreachable(), expect.fail()).
+ * Any other static expect member (expect.getState(), expect.assertions(n), expect.extend(...)) builds nothing to check,
+ * and a member every object or function carries (toString, bind, call, ...) is never the matcher - so a bare expect(x),
+ * expect(x).toString() and assert.isTrue.bind(...) assert nothing.
+ */
+function assertionEvidence(call: ts.CallExpression, scope: EvidenceScope): string | undefined {
+  const rootOf: RootOf = id => assertionRoot(id, scope);
+  const at = `${basename(scope.a.file)} ${scope.a.where(call)}`;
+  const callee = unwrap(call.expression);
+  if (isAssertBase(callee, rootOf)) return `assert at ${at}`;
+  if (!ts.isPropertyAccessExpression(callee) && !ts.isElementAccessExpression(callee)) return undefined;
+  const method = accessedName(callee);
+  if (method === undefined || PROTOTYPE_MEMBERS.has(method)) return undefined;
+  // down the plain member reads (not / resolves / rejects, assert.strict) to the value the method is called on
+  let subject = unwrap(callee.expression);
+  while ((ts.isPropertyAccessExpression(subject) || ts.isElementAccessExpression(subject)) && !isExpectBase(subject, rootOf) && !isAssertBase(subject, rootOf)) {
+    const name = accessedName(subject);
+    if (name === undefined || PROTOTYPE_MEMBERS.has(name)) return undefined;
+    subject = unwrap(subject.expression);
+  }
+  if (isAssertBase(subject, rootOf)) return `assert at ${at}`;
+  if (FAILING_MEMBERS.includes(method) && isExpectBase(subject, rootOf)) return `${expectRoute(subject, rootOf)} at ${at}`;
+  if (!ts.isCallExpression(subject) || !isExpectConstructor(subject.expression, rootOf)) return undefined;
+  // expect.soft / expect.poll read as their expect
+  let base = unwrap(subject.expression);
+  if (ts.isPropertyAccessExpression(base) && base.name.text !== "expect") base = unwrap(base.expression);
+  return `${expectRoute(base, rootOf)} at ${at}`;
+}
+
+/** How an expect base is reached, for the evidence text: expect itself, or ctx.expect / a namespace's expect by its root. */
+function expectRoute(base: ts.Expression, rootOf: RootOf): string {
+  const target = unwrap(base);
+  const object = ts.isPropertyAccessExpression(target) ? unwrap(target.expression) : undefined;
+  const via = object !== undefined && ts.isIdentifier(object) ? rootOf(object) : undefined;
+  return via === "context" || via === "namespace" ? `${via} expect` : "expect";
+}
+
 
 /** A function a call reaches statically: same-file declarations, const-bound literals, relative-module exports. */
 function calledFunction(call: ts.CallExpression, scope: EvidenceScope): { readonly fn: AnalysedFunction; readonly a: SourceAnalysis } | undefined {
@@ -2196,29 +2789,10 @@ function optionsFails(expression: ts.Expression, a: SourceAnalysis, depth = 0): 
   return { fails };
 }
 
-/** The member names along a registration's callee chain (it.skip.fails: skip, fails), through const aliases, or why they are unreadable. */
-function chainMembers(expression: ts.Expression, a: SourceAnalysis, depth = 0): { readonly names: readonly string[] } | { readonly unknown: string } {
-  const names: string[] = [];
-  let head = expression;
-  for (let guard = 0; guard < 16; guard += 1) {
-    head = unwrap(head);
-    if (ts.isPropertyAccessExpression(head)) {
-      names.unshift(head.name.text);
-      head = head.expression;
-    } else if (ts.isElementAccessExpression(head)) {
-      const key = unwrap(head.argumentExpression);
-      if (!ts.isStringLiteralLike(key)) return { unknown: `the registration at ${a.where(head)} reaches a computed member, so report mode cannot read its fails` };
-      names.unshift(key.text);
-      head = head.expression;
-    } else if (ts.isCallExpression(head)) head = head.expression;
-    else break;
-  }
-  if (!ts.isIdentifier(head) || depth >= 6) return { names };
-  const declaration = a.checker.getSymbolAtLocation(head)?.declarations?.[0];
-  if (declaration === undefined || !ts.isVariableDeclaration(declaration) || declaration.initializer === undefined) return { names };
-  if (!isConst(declaration)) return { unknown: `the registration ${head.text} at ${a.where(head)} is not a const binding, so report mode cannot read its fails` };
-  const inner = chainMembers(declaration.initializer, a, depth + 1);
-  return "unknown" in inner ? inner : { names: [...inner.names, ...names] };
+/** The member names along a registration's callee chain (it.skip.fails: skip, fails) as the strict resolver reads them, or why they are unreadable. */
+function chainMembers(expression: ts.Expression, a: SourceAnalysis): { readonly names: readonly string[] } | { readonly unknown: string } {
+  const resolved = resolveChain(expression, a);
+  return "unresolved" in resolved ? { unknown: `the chain of the registration at ${a.where(expression)} is unreadable, so report mode cannot read its fails: ${resolved.unresolved}` } : { names: resolved.members };
 }
 
 /** The options a registration passes (vitest 4: test(name, options, fn); a second argument that is the function passes none). */
@@ -2242,25 +2816,48 @@ function calleeText(call: ts.CallExpression, a: SourceAnalysis): string {
 }
 
 /**
+ * A class or object member whose code runs where it is CALLED or constructed, not where it is written (u62 gate-3
+ * (1)-(5)), named for the red; undefined for anything else (a static block or static field runs where it is written).
+ */
+function deferredMember(member: ts.Node, child: ts.Node, a: SourceAnalysis): string | undefined {
+  // a member's computed name and its decorators are evaluated where the class or object is written
+  if (ts.isComputedPropertyName(child) || ts.isDecorator(child)) return undefined;
+  const named = (name: ts.PropertyName): string => propertyKey(name) ?? "with a computed name";
+  if (ts.isMethodDeclaration(member)) return `the method ${named(member.name)} at ${a.where(member)}`;
+  if (ts.isGetAccessorDeclaration(member)) return `the getter ${named(member.name)} at ${a.where(member)}`;
+  if (ts.isSetAccessorDeclaration(member)) return `the setter ${named(member.name)} at ${a.where(member)}`;
+  if (ts.isConstructorDeclaration(member)) return `the constructor of a class at ${a.where(member)}`;
+  if (!ts.isPropertyDeclaration(member) || member.initializer !== child) return undefined;
+  // an instance field initializer runs at each construction; a static one runs where the class is written
+  return (ts.getCombinedModifierFlags(member) & ts.ModifierFlags.Static) !== 0 ? undefined : `the instance property initializer ${named(member.name)} at ${a.where(member)}`;
+}
+
+/**
  * The fails flag the report cannot carry, read from the source the way vitest 4 merges it: the case's chain modifiers
  * (it.fails, through const aliases), then each enclosing suite's options outermost first and the case's own options last
- * (options override the chain). Fail-closed: options or enclosing suites it cannot read statically are unknown, an
- * enclosing callback whose holder is not vitest's describe / suite included (I1). judgeReported calls it only for a
- * callee whose chain root resolves to vitest's it / test (U1).
+ * (options override the chain). Fail-closed (the design invariant's registration flow): every enclosing body must run
+ * WHERE IT IS WRITTEN inside a callback a strictly resolved describe / suite holds - a method, accessor, constructor or
+ * instance initializer runs where it is called, and a wrapper function or any other holder may register a suite with
+ * fails the source does not show (I1) - the options must be same-file constants, and the file must not let the
+ * registration API escape (A1). judgeReported calls it only for a callee the strict resolver reads as it / test (U1).
  */
 function inversionHazard(call: ts.CallExpression, a: SourceAnalysis): { readonly kind: "inverted" | "unknown"; readonly detail: string } | undefined {
   const suites: ts.CallExpression[] = [];
   for (let node: ts.Node = call; node.parent !== undefined && !ts.isSourceFile(node.parent); node = node.parent) {
     const parent = node.parent;
+    const deferred = deferredMember(parent, node, a);
+    if (deferred !== undefined) return { kind: "unknown", detail: `the case is registered inside ${deferred}, which runs where it is called, so report mode cannot read the enclosing suites' fails` };
     if (!(isFunctionLiteral(parent) || ts.isFunctionDeclaration(parent))) continue;
     const holder = ts.isFunctionDeclaration(parent) ? undefined : callHolding(parent);
     if (holder === undefined) return { kind: "unknown", detail: `the case is registered inside a function at ${a.where(parent)} that is not a suite callback, so report mode cannot read the enclosing suites' fails` };
-    const api = registrationApi(holder, a);
+    const resolved = resolveChain(holder.expression, a);
+    const api = "unresolved" in resolved ? undefined : resolved.name;
     if (api === "describe" || api === "suite") suites.unshift(holder);
-    // I1 (the design invariant): any other holder - a wrapper function, an object-held describe, an array's forEach - may
-    // itself register a suite with fails that the source does not show, so the enclosing suites are unreadable.
+    // I1 (the design invariant): any other holder - a wrapper function, an object-held describe, an array's forEach, a
+    // member vitest's suite API does not define - may itself register a suite with fails that the source does not show.
     if (!suites.includes(holder)) {
-      return { kind: "unknown", detail: `the case is registered inside a callback of ${calleeText(holder, a)} at ${a.where(holder)}, which does not resolve to vitest's describe / suite, so report mode cannot read whether it registers a suite with fails` };
+      const why = "unresolved" in resolved ? resolved.unresolved : `${resolved.name} is vitest's ${resolved.api === "hook" ? "hook" : "test API"}, not its suite API`;
+      return { kind: "unknown", detail: `the case is registered inside a callback of ${calleeText(holder, a)} at ${a.where(holder)}, which does not resolve to vitest's describe / suite: ${why}, so report mode cannot read whether it registers a suite with fails` };
     }
   }
   let state: boolean | "unknown" | undefined;
@@ -2283,11 +2880,11 @@ function inversionHazard(call: ts.CallExpression, a: SourceAnalysis): { readonly
   }
   if (state === "unknown") return { kind: "unknown", detail: unknown };
   if (state === true) return { kind: "inverted", detail: `registered with fails through ${source}: it passes only when its assertions fail, and the report records it passed` };
-  if (state === false) return undefined;
+  if (state === false) return apiEscapeHazard(a);
   const members = chainMembers(call.expression, a);
   if ("unknown" in members) return { kind: "unknown", detail: members.unknown };
   if (members.names.includes("fails")) return { kind: "inverted", detail: `registered with fails at ${a.where(call)}: it passes only when its assertions fail, and the report records it passed` };
-  return undefined;
+  return apiEscapeHazard(a);
 }
 
 // ---- the report-mode judge ----
@@ -2336,10 +2933,12 @@ function judgeReported(pin: CasePin, context: ReportContext): PinVerdict {
   const registered = new Set(module.tests.map(test => `${test.line}:${test.column}`));
   const call = place.call;
   const fn = call === undefined ? undefined : caseFunction(call, a);
-  // U1 (the design invariant): the inversion is read only through a callee whose chain root resolves to vitest's it /
-  // test; any other callee (object-held, destructured, function-returned, class-static, Object.assign-built ...) may
-  // carry fails the source does not show, so it is options-unknown below, naming the callee - never read as no fails.
-  const api = call === undefined ? undefined : registrationApi(call, a);
+  // U1 (the design invariant's registration flow): the inversion is read only through a callee the STRICT resolver reads
+  // as vitest's it / test - every link one vitest's API defines; any other callee (object-held, destructured,
+  // function-returned, class-static, a member vitest does not define ...) may carry fails the source does not show, so
+  // it is options-unknown below, naming the link it could not resolve - never read as no fails.
+  const resolved = call === undefined ? undefined : resolveChain(call.expression, a);
+  const api = resolved === undefined || "unresolved" in resolved ? undefined : resolved.name;
   const readable = api === "it" || api === "test";
   const inversion = call === undefined || !readable ? undefined : inversionHazard(call, a);
   if (inversion?.kind === "inverted") return verdict(pin, "asserts", "inverted", inversion.detail, count);
@@ -2366,8 +2965,9 @@ function judgeReported(pin: CasePin, context: ReportContext): PinVerdict {
   if (call === undefined) return verdict(pin, "asserts", "unmapped-location", "the report's location maps to no call expression", count);
   if (fn === undefined) return verdict(pin, "asserts", "body-unresolved", `the case function at ${a.where(call)} is not statically resolvable`, count);
   if (!readable) {
-    const route = "report mode follows const aliases, .each / .for heads, test.extend and namespace imports";
-    return verdict(pin, "asserts", "options-unknown", `the registration ${calleeText(call, a)} at ${a.where(call)} does not resolve to vitest's it / test (${route}), so report mode cannot read its fails, which the report does not record`, count);
+    const route = "report mode resolves a registration only through vitest's own API: its imports, globals and const aliases, and the members its runtime objects define";
+    const why = resolved === undefined ? "it reaches no registration chain" : "unresolved" in resolved ? resolved.unresolved : `${resolved.name} is vitest's ${resolved.api === "hook" ? "hook" : "suite API"}, not its test API`;
+    return verdict(pin, "asserts", "options-unknown", `the registration ${calleeText(call, a)} at ${a.where(call)} does not resolve to vitest's it / test: ${why} (${route}), so report mode cannot read its fails, which the report does not record`, count);
   }
   const cause = chainCause(call, fn, a, registered, context.sources);
   if (cause !== undefined) return verdict(pin, "runs-where", cause.code, cause.detail, count);

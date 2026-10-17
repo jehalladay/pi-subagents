@@ -30,6 +30,11 @@
  *   adoption shape, U2 A1a/A1b (a red names only what it observed and every remaining route), U4 GM19 (two npm hops)
  *   and GM21 (real-path recursion), and wb-9x5.6 D1-D3 (relocation, HTML-comment wrap, withdrawn ### inside the
  *   section) with the D2 raw-text footgun closed.
+ * - The wb-u62 gate-3 battery (cmd_52185d639797; the respin-3 red-first corpus by owner order 2026-10-16 23:16Z): (1)-(7)
+ *   the inversion read's enclosure and member flows, (1c)/(6c) their fail-closed costs, (8)-(10) the context-write flow in
+ *   both modes, (11)-(16) the third leg's assertion flow; plus the respin-3 seat's A1-A12 routes of the same flows and
+ *   the K1-K4 controls (the registration model's mirror against vitest's runtime objects is its own file,
+ *   workbench-census-registration-model.test.ts, since reading the API objects reflectively is itself an escape).
  *
  * REPORT MODE (the default-tier judgment once wb-nl8 lands): judge(reportPath, pins) reads vitest's own JSON report of
  * the run and never re-executes it. Every main, tier and config row is judged in BOTH modes: the runner oracle's
@@ -549,6 +554,250 @@ const INVERSION_ROWS: readonly Row[] = [
     verdict: OK,
     report: red("options-unknown", "asserts", /inside a callback of \[0\]\.forEach at line \d+:\d+, which does not resolve to vitest's describe \/ suite/),
   },
+  // u62 gate-3 (cmd_52185d639797, the battery mirrored at machines/flywheel/state/gate3-u62-notes-c02d9b1/g3-falsify.mts):
+  // the design invariant on the inversion read's ENCLOSURE flow. A case registered inside a body that runs where it is
+  // CALLED (a method, accessor, constructor or instance property initializer) does not show its enclosing suites in the
+  // source. Runner truth for each: an expect(1).toBe(2)-only case reported passed. Fail-open in report mode on c02d9b1.
+  {
+    id: "r-u62g3-1-object-method",
+    routed: "u62 gate-3 (1) an object METHOD holder registering the pin, invoked inside a { fails: true } describe",
+    source: { prelude: `const holder = {\n  register(): void {\n    it("${PIN}", () => {\n      expect(1).toBe(2);\n    });\n  },\n};`, body: `  describe("inner", { fails: true }, () => {\n    holder.register();\n  });` },
+    oracle: { kind: "inverted" },
+    verdict: red("inverted", "asserts", /registered with fails/),
+    report: red("options-unknown", "asserts", /inside the method register at line \d+:\d+, which runs where it is called/),
+  },
+  {
+    id: "r-u62g3-2-class-static-method",
+    routed: "u62 gate-3 (2) a class STATIC METHOD holder registering the pin, invoked inside a { fails: true } describe",
+    source: { prelude: `class Holder {\n  static register(): void {\n    it("${PIN}", () => {\n      expect(1).toBe(2);\n    });\n  }\n}`, body: `  describe("inner", { fails: true }, () => {\n    Holder.register();\n  });` },
+    oracle: { kind: "inverted" },
+    verdict: red("inverted", "asserts", /registered with fails/),
+    report: red("options-unknown", "asserts", /inside the method register at line \d+:\d+, which runs where it is called/),
+  },
+  {
+    id: "r-u62g3-3-getter",
+    routed: "u62 gate-3 (3) an object GETTER registering the pin, read inside a { fails: true } describe",
+    source: { prelude: `const holder = {\n  get registered(): number {\n    it("${PIN}", () => {\n      expect(1).toBe(2);\n    });\n    return 1;\n  },\n};`, body: `  describe("inner", { fails: true }, () => {\n    void holder.registered;\n  });` },
+    oracle: { kind: "inverted" },
+    verdict: red("inverted", "asserts", /registered with fails/),
+    report: red("options-unknown", "asserts", /inside the getter registered at line \d+:\d+, which runs where it is called/),
+  },
+  {
+    id: "r-u62g3-4-constructor",
+    routed: "u62 gate-3 (4) a class CONSTRUCTOR registering the pin, constructed inside a { fails: true } describe",
+    source: { prelude: `class Holder {\n  constructor() {\n    it("${PIN}", () => {\n      expect(1).toBe(2);\n    });\n  }\n}`, body: `  describe("inner", { fails: true }, () => {\n    new Holder();\n  });` },
+    oracle: { kind: "inverted" },
+    verdict: red("inverted", "asserts", /registered with fails/),
+    report: red("options-unknown", "asserts", /inside the constructor of a class at line \d+:\d+, which runs where it is called/),
+  },
+  {
+    id: "r-u62g3-5-property-initializer",
+    routed: "u62 gate-3 (5) a class instance PROPERTY INITIALIZER registering the pin, constructed inside a { fails: true } describe",
+    source: { prelude: `class Holder {\n  readonly registered = it("${PIN}", () => {\n    expect(1).toBe(2);\n  });\n}`, body: `  describe("inner", { fails: true }, () => {\n    new Holder();\n  });` },
+    oracle: { kind: "inverted" },
+    verdict: red("inverted", "asserts", /registered with fails/),
+    report: red("options-unknown", "asserts", /inside the instance property initializer registered at line \d+:\d+, which runs where it is called/),
+  },
+  // u62 gate-3, the invariant on the CALLEE and HOLDER member flows: every member along a registration chain must be one
+  // vitest's API defines (the model is pinned against the runtime objects below); a user-added member is unresolved.
+  {
+    id: "r-u62g3-6-callee-unknown-member",
+    routed: "u62 gate-3 (6) a callee member the model does not know: Object.assign(it, { inv: it.fails }); api.inv(...)",
+    source: { prelude: "const api = it as typeof it & { inv: typeof it.fails };\nObject.assign(it, { inv: it.fails });", body: `  api.inv("${PIN}", () => {\n    expect(1).toBe(2);\n  });` },
+    oracle: { kind: "inverted" },
+    verdict: red("inverted", "asserts", /registered with fails/),
+    report: red("options-unknown", "asserts", /the registration api\.inv at line \d+:\d+ does not resolve to vitest's it \/ test: inv is not a member of vitest's test API/),
+  },
+  {
+    id: "r-u62g3-7-holder-unknown-member",
+    routed: "u62 gate-3 (7) a holder member the model does not know: Object.assign(describe, { failing }) then suites.failing(...)",
+    source: {
+      prelude:
+        "const suites = describe as typeof describe & { failing: (name: string, fn: () => void) => void };\nObject.assign(describe, { failing: (name: string, fn: () => void): void => describe(name, { fails: true }, fn) });",
+      body: `  suites.failing("inner", () => {\n    it("${PIN}", () => {\n      expect(1).toBe(2);\n    });\n  });`,
+    },
+    oracle: { kind: "inverted" },
+    verdict: red("inverted", "asserts", /registered with fails/),
+    report: red("options-unknown", "asserts", /inside a callback of suites\.failing at line \d+:\d+, which does not resolve to vitest's describe \/ suite: failing is not a member of vitest's suite API/),
+  },
+  {
+    id: "r-u62g3-1c-method-holder-cost",
+    routed: "u62 gate-3 (1c) the fail-closed cost: a method-held registration of a PASSING case in a plain describe (0 in test/** today)",
+    source: { prelude: `const holder = {\n  register(): void {\n    it("${PIN}", () => {\n      expect(1).toBe(1);\n    });\n  },\n};`, body: `  describe("inner", () => {\n    holder.register();\n  });` },
+    oracle: RUNS,
+    verdict: OK,
+    report: red("options-unknown", "asserts", /inside the method register at line \d+:\d+, which runs where it is called/),
+  },
+  {
+    id: "r-u62g3-6c-unknown-member-cost",
+    routed: "u62 gate-3 (6c) the fail-closed cost: a user-added member that is plain it (0 in test/** today)",
+    source: { prelude: "const api = it as typeof it & { inv: typeof it };\nObject.assign(it, { inv: it });", body: `  api.inv("${PIN}", ${BODY});` },
+    oracle: RUNS,
+    verdict: OK,
+    report: red("options-unknown", "asserts", /the registration api\.inv at line \d+:\d+ does not resolve to vitest's it \/ test: inv is not a member of vitest's test API/),
+  },
+  // u62 gate-3, the CONTEXT flow in BOTH modes: the runner flips a case after its last hook (@vitest/runner reads test.fails
+  // post-run), so a write through the test context inverts it while the report and the reporter's collected fails both
+  // say passed. Every write through the context - the case body, a hook of its own chain, a handler it registers - is
+  // context-unknown. The executing verdict is context-unknown, never inverted: the reporter never sees the flip (measured,
+  // vitest 4.1.10 syncs only a task's result and meta to the main process).
+  {
+    id: "r-u62g3-8-context-write-task",
+    routed: "u62 gate-3 (8) the case sets task.fails = true through its own destructured test context",
+    source: { body: `  it("${PIN}", ({ task }) => {\n    task.fails = true;\n    expect(1).toBe(2);\n  });` },
+    oracle: { kind: "inverted" },
+    verdict: red("context-unknown", "runs-where", /task\.fails is written through the test context/),
+  },
+  {
+    id: "r-u62g3-9-context-write-ctx",
+    routed: "u62 gate-3 (9) the case sets ctx.task.fails = true",
+    source: { body: `  it("${PIN}", (ctx) => {\n    ctx.task.fails = true;\n    expect(1).toBe(2);\n  });` },
+    oracle: { kind: "inverted" },
+    verdict: red("context-unknown", "runs-where", /ctx\.task\.fails is written through the test context/),
+  },
+  {
+    id: "r-u62g3-10-context-write-hook",
+    routed: "u62 gate-3 (10) a beforeEach of the pin's own describe sets task.fails = true",
+    source: { body: `  describe("inner", () => {\n    beforeEach(({ task }) => {\n      task.fails = true;\n    });\n    it("${PIN}", () => {\n      expect(1).toBe(2);\n    });\n  });` },
+    oracle: { kind: "inverted" },
+    verdict: red("context-unknown", "runs-where", /beforeEach at line \d+:\d+: task\.fails is written through the test context/),
+  },
+  // u62 respin-3 (seat-measured, beyond the battery): the same three flows through routes the battery did not probe.
+  // Each runner-verified (the case's only assertion is false, the run passes it) and fail-open in both modes on c02d9b1.
+  {
+    id: "r-u62r3-a1-api-member-overwrite",
+    routed: "u62 respin-3 A1 the registration API itself mutated: it.runIf = () => it.fails, then it.runIf(true)(...)",
+    source: { prelude: "it.runIf = (() => it.fails) as unknown as typeof it.runIf;", body: `  it.runIf(true)("${PIN}", () => {\n    expect(1).toBe(2);\n  });` },
+    oracle: { kind: "inverted" },
+    verdict: red("inverted", "asserts", /registered with fails/),
+    report: red("options-unknown", "asserts", /the registration API escapes in this file: it\.runIf is written at line \d+:\d+/),
+  },
+  {
+    id: "r-u62r3-a2-test-api-hook",
+    routed: "u62 respin-3 A2 a hook registered through the test API, it.beforeEach, sets task.fails = true",
+    source: { body: `  describe("inner", () => {\n    it.beforeEach(({ task }) => {\n      task.fails = true;\n    });\n    it("${PIN}", () => {\n      expect(1).toBe(2);\n    });\n  });` },
+    oracle: { kind: "inverted" },
+    verdict: red("context-unknown", "runs-where", /beforeEach at line \d+:\d+: task\.fails is written through the test context/),
+  },
+  {
+    id: "r-u62r3-a3-aftereach-write",
+    routed: "u62 respin-3 A3 an afterEach of the pin's own describe sets task.fails = true (it runs before the runner's flip)",
+    source: {
+      imports: 'import { afterEach, beforeEach, describe, expect, it, test } from "vitest";',
+      body: `  describe("inner", () => {\n    afterEach(({ task }) => {\n      task.fails = true;\n    });\n    it("${PIN}", () => {\n      expect(1).toBe(2);\n    });\n  });`,
+    },
+    oracle: { kind: "inverted" },
+    verdict: red("context-unknown", "runs-where", /afterEach at line \d+:\d+: task\.fails is written through the test context/),
+  },
+  {
+    id: "r-u62r3-a4-registrar-handler",
+    routed: "u62 respin-3 A4 a handler registered through ctx.onTestFailed sets failed.task.fails = true",
+    source: { body: `  it("${PIN}", (ctx) => {\n    ctx.onTestFailed((failed) => {\n      failed.task.fails = true;\n    });\n    expect(1).toBe(2);\n  });` },
+    oracle: { kind: "inverted" },
+    verdict: red("context-unknown", "runs-where", /failed\.task\.fails is written through the test context/),
+  },
+  {
+    id: "r-u62r3-a5-result-rewrite",
+    routed: "u62 respin-3 A5 the case rewrites its own result after a failing expect.soft: task.result.state = pass",
+    source: { body: `  it("${PIN}", ({ task }) => {\n    expect.soft(1).toBe(2);\n    if (task.result) {\n      task.result.state = "pass";\n      task.result.errors = [];\n    }\n  });` },
+    oracle: { kind: "inverted" },
+    verdict: red("context-unknown", "runs-where", /task\.result\.state is written through the test context/),
+  },
+  {
+    id: "r-u62r3-a6-imported-registrar",
+    routed: "u62 respin-3 A6 a handler registered through vitest's onTestFinished export sets task.fails = true",
+    source: {
+      imports: 'import { beforeEach, describe, expect, it, onTestFinished, test } from "vitest";',
+      body: `  it("${PIN}", () => {\n    onTestFinished(({ task }) => {\n      task.fails = true;\n    });\n    expect(1).toBe(2);\n  });`,
+    },
+    oracle: { kind: "inverted" },
+    verdict: red("context-unknown", "runs-where", /task\.fails is written through the test context/),
+  },
+  {
+    id: "r-u62r3-a11-runner-handle",
+    routed: "u62 respin-3 A11 the registration API mutated through @vitest/runner, which holds the same objects: runnerIt.runIf = () => runnerIt.fails",
+    source: {
+      imports: 'import { beforeEach, describe, expect, it, test } from "vitest";\nimport { it as runnerIt } from "@vitest/runner";',
+      prelude: "runnerIt.runIf = (() => runnerIt.fails) as unknown as typeof runnerIt.runIf;",
+      body: `  it.runIf(true)("${PIN}", () => {\n    expect(1).toBe(2);\n  });`,
+    },
+    oracle: { kind: "inverted" },
+    verdict: red("inverted", "asserts", /registered with fails/),
+    report: red("options-unknown", "asserts", /the registration API escapes in this file: an alternate handle to vitest's registration API, runnerIt from @vitest\/runner, is imported at line \d+:\d+/),
+  },
+  {
+    id: "r-u62r3-a12-dynamic-load",
+    routed: "u62 respin-3 A12 the registration API mutated through a dynamic import of vitest: runtime.it.runIf = () => runtime.it.fails",
+    source: {
+      prelude: 'const runtime = await import("vitest");\nruntime.it.runIf = (() => runtime.it.fails) as unknown as typeof runtime.it.runIf;',
+      body: `  it.runIf(true)("${PIN}", () => {\n    expect(1).toBe(2);\n  });`,
+    },
+    oracle: { kind: "inverted" },
+    verdict: red("inverted", "asserts", /registered with fails/),
+    report: red("options-unknown", "asserts", /the registration API escapes in this file: vitest is loaded dynamically at line \d+:\d+/),
+  },
+  {
+    id: "r-u62r3-k1-static-block",
+    routed: "u62 respin-3 K1 control: a class static block runs where it is written, so the walk reaches the { fails: true } describe",
+    source: { body: `  describe("inner", { fails: true }, () => {\n    class Holder {\n      static {\n        it("${PIN}", () => {\n          expect(1).toBe(2);\n        });\n      }\n    }\n    void Holder;\n  });` },
+    oracle: { kind: "inverted" },
+    verdict: red("inverted", "asserts", /registered with fails/),
+    report: red("inverted", "asserts", /registered with fails through the options of the enclosing suite/),
+  },
+  {
+    id: "r-u62r3-k2-context-subject",
+    routed: "u62 respin-3 K2 control: a value read through the test context as an assertion's subject stays ok",
+    source: { body: `  it("${PIN}", (ctx) => {\n    expect(ctx.task.name).toBe("${PIN}");\n  });` },
+    oracle: RUNS,
+    verdict: OK,
+  },
+  // u62 respin-3, the handler flow: vitest calls an onTestFailed / onTestFinished handler WITH the test context, so a
+  // handler's parameters are context roots wherever the census reaches the registration - a same-file helper the case
+  // calls (the J5 walk), a named handler, a function expression reading its arguments object.
+  {
+    id: "r-u62r3-a7-helper-registrar",
+    routed: "u62 respin-3 A7 a same-file helper the case calls registers onTestFinished(({ task }) => { task.fails = true })",
+    source: {
+      imports: 'import { beforeEach, describe, expect, it, onTestFinished, test } from "vitest";',
+      prelude: "function invertCurrent(): void {\n  onTestFinished(({ task }) => {\n    task.fails = true;\n  });\n}",
+      body: `  it("${PIN}", () => {\n    invertCurrent();\n    expect(1).toBe(2);\n  });`,
+    },
+    oracle: { kind: "inverted" },
+    verdict: red("context-unknown", "runs-where", /the case reaches the handler onTestFinished registers at line \d+:\d+: task\.fails is written through the test context/),
+  },
+  {
+    id: "r-u62r3-a8-named-handler",
+    routed: "u62 respin-3 A8 a NAMED handler with a context parameter: ctx.onTestFinished(flip), flip setting task.fails = true",
+    source: {
+      prelude: "function flip({ task }: { task: { fails?: boolean } }): void {\n  task.fails = true;\n}",
+      body: `  it("${PIN}", (ctx) => {\n    ctx.onTestFinished(flip);\n    expect(1).toBe(2);\n  });`,
+    },
+    oracle: { kind: "inverted" },
+    verdict: red("context-unknown", "runs-where", /the handler flip that ctx\.onTestFinished registers: task\.fails is written through the test context/),
+  },
+  {
+    id: "r-u62r3-a9-handler-arguments",
+    routed: "u62 respin-3 A9 a function-expression handler reaching its context through the arguments object",
+    source: { body: `  it("${PIN}", (ctx) => {\n    ctx.onTestFinished(function () {\n      (arguments[0] as { task: { fails: boolean } }).task.fails = true;\n    });\n    expect(1).toBe(2);\n  });` },
+    oracle: { kind: "inverted" },
+    verdict: red("context-unknown", "runs-where", /the handler ctx\.onTestFinished registers reads the arguments object/),
+  },
+  {
+    id: "r-u62r3-a10-assertion-callback",
+    routed: "u62 respin-3 A10 runner state an assertion checks reaches its callback: expect(task.result).toSatisfy((result) => ...) rewrites the result",
+    source: {
+      body: `  it("${PIN}", ({ task }) => {\n    expect.soft(1).toBe(2);\n    expect(task.result).toSatisfy((result) => {\n      if (result) {\n        result.state = "pass";\n        result.errors = [];\n      }\n      return true;\n    });\n  });`,
+    },
+    oracle: { kind: "inverted" },
+    verdict: red("context-unknown", "runs-where", /\]: result\.state is written through the test context/),
+  },
+  {
+    id: "r-u62r3-k3-derived-read",
+    routed: "u62 respin-3 K3 control: runner state read through ?. and ?? into an assertion's subject stays ok",
+    source: { body: `  it("${PIN}", ({ task }) => {\n    expect(task.result?.state ?? "none").toBe("run");\n  });` },
+    oracle: RUNS,
+    verdict: OK,
+  },
 ];
 
 /** it.each / it.for pins: each-liveness (05:42Z) is the runner's case count at the template's call site, once per table row (13:36Z). */
@@ -950,6 +1199,65 @@ const ASSERT_ROWS: readonly Row[] = [
     source: { body: `  it("${PIN}", () => {\n    if (process.env.CENSUS_HELPER_NEVER_SET === "1") {\n      expect(0).toBe(0);\n    } else {\n      expect(1).toBe(1);\n    }\n  });` },
     oracle: RUNS,
     verdict: OK,
+  },
+  {
+    id: "a-u62r3-k4-unreachable",
+    routed: "u62 respin-3 K4 control: expect.unreachable() after the call that must throw is an assertion (it fails the case when reached), the trunk shape of workbench-beads-observer",
+    source: { body: `  it("${PIN}", async () => {\n    try {\n      await Promise.reject(new Error("refused"));\n      expect.unreachable();\n    } catch (error) {\n      expect(error).toBeInstanceOf(Error);\n    }\n  });` },
+    oracle: RUNS,
+    verdict: OK,
+  },
+  // u62 gate-3 (11)-(16), the third leg's ASSERTION flow: evidence is an assertion the runtime builds and checks - an
+  // expect(x) / expect.soft(x) / expect.poll(fn) whose first call is a matcher, or an assert call - never a static expect
+  // member and never a member every object or function carries. (11)-(14) assert nothing the runtime counts (the
+  // hasAssertions oracle fails them); (15)/(16) count one assertion with no matcher (planted-false: the value is false).
+  {
+    id: "a-u62g3-11-expect-getstate",
+    routed: "u62 gate-3 (11) expect.getState() only - zero expect() calls",
+    source: { body: `  it("${PIN}", () => {\n    void expect.getState();\n  });` },
+    oracle: { kind: "vacuous" },
+    verdict: red("no-assertion", "asserts", /reached no assertion when test ran it/),
+    report: red("no-assertion", "asserts", /no matcher-bearing vitest assertion is reachable/),
+  },
+  {
+    id: "a-u62g3-12-expect-assertions-zero",
+    routed: "u62 gate-3 (12) expect.assertions(0) only",
+    source: { body: `  it("${PIN}", () => {\n    expect.assertions(0);\n  });` },
+    oracle: { kind: "vacuous" },
+    verdict: red("no-assertion", "asserts", /reached no assertion when test ran it/),
+    report: red("no-assertion", "asserts", /no matcher-bearing vitest assertion is reachable/),
+  },
+  {
+    id: "a-u62g3-13-assert-tostring",
+    routed: "u62 gate-3 (13) assert.toString() only",
+    source: { imports: 'import { assert, beforeEach, describe, expect, it, test } from "vitest";', body: `  it("${PIN}", () => {\n    void assert.toString();\n  });` },
+    oracle: { kind: "vacuous" },
+    verdict: red("no-assertion", "asserts", /reached no assertion when test ran it/),
+    report: red("no-assertion", "asserts", /no matcher-bearing vitest assertion is reachable/),
+  },
+  {
+    id: "a-u62g3-14-assert-bound",
+    routed: "u62 gate-3 (14) assert.isTrue.bind(null, true) - bound, never called",
+    source: { imports: 'import { assert, beforeEach, describe, expect, it, test } from "vitest";', body: `  it("${PIN}", () => {\n    void assert.isTrue.bind(null, true);\n  });` },
+    oracle: { kind: "vacuous" },
+    verdict: red("no-assertion", "asserts", /reached no assertion when test ran it/),
+    report: red("no-assertion", "asserts", /no matcher-bearing vitest assertion is reachable/),
+  },
+  {
+    id: "a-u62g3-15-expect-tostring",
+    routed: "u62 gate-3 (15) expect(x).toString() - no matcher, one counted assertion",
+    source: { body: `  it("${PIN}", () => {\n    void expect(false).toString();\n  });` },
+    oracle: { kind: "planted-false" },
+    verdict: red("no-assertion", "asserts", /the run counted an assertion, but no matcher-bearing vitest assertion is reachable/),
+    report: red("no-assertion", "asserts", /no matcher-bearing vitest assertion is reachable/),
+  },
+  {
+    id: "a-u62g3-16-expect-soft-bare",
+    routed: "u62 gate-3 (16) expect.soft(x) with no matcher, one counted assertion",
+    source: { body: `  it("${PIN}", () => {\n    void expect.soft(false);\n  });` },
+    oracle: { kind: "planted-false" },
+    verdict: red("no-assertion", "asserts", /the run counted an assertion, but no matcher-bearing vitest assertion is reachable/),
+    report: red("no-assertion", "asserts", /no matcher-bearing vitest assertion is reachable/),
   },
 ];
 
@@ -1708,10 +2016,12 @@ const ROUTED_MODES: Readonly<Record<string, readonly string[]>> = {
   "6hb.11": ["J1", "J4", "SD1", "X17", "S10b", "S18", "S19", "S20", "S21", "E1", "F4", "T7", "T8"],
   "752.15": ["M1", "M2", "M3", "M4", "M5", "M6", "M7", "M9", "M10", "M11", "M12", "M13", "M14", "M15"],
   "u62 gate-2": ["U1.1", "U1.2", "U1.3", "U1.4", "U1.5", "U2", "I1.1", "I1.2", "I1.3"],
+  "u62 gate-3": ["(1)", "(2)", "(3)", "(4)", "(5)", "(6)", "(7)", "(1c)", "(6c)", "(8)", "(9)", "(10)", "(11)", "(12)", "(13)", "(14)", "(15)", "(16)"],
+  "u62 respin-3": ["A1", "A2", "A3", "A4", "A5", "A6", "A7", "A8", "A9", "A10", "A11", "A12", "K1", "K2", "K3", "K4"],
 };
 
 /** Exact table sizes: deleting or emptying a falsifier table goes red (each-liveness of this file's own rows). */
-const TABLE_SIZES = [55, 8, 22, 39, 15, 10, 29, 34, 5, 16, 16, 14, 3];
+const TABLE_SIZES = [55, 8, 22, 46, 15, 10, 29, 34, 5, 16, 43, 14, 3];
 
 
 /**
