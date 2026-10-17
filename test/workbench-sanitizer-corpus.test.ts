@@ -20,6 +20,7 @@
  * four-digit escape.
  */
 import { createHash } from "node:crypto";
+import type { SDKMessage } from "@anthropic-ai/claude-agent-sdk";
 import type { LogsReadDto, Response } from "@furnace/sdk";
 import { describe, expect, it } from "vitest";
 import { safeWorkflowTerminalText } from "../src/ui/workflow-card.js";
@@ -28,6 +29,7 @@ import { ATTENTION_CLOCK_CAVEAT, ATTENTION_CONTRACT, type AttentionReport, selec
 import { type BeadsReadClient, projectBeadsWork, readBeadsWork } from "../src/workbench/beads-observer.js";
 import { type CapabilityDescriptor, CapabilityError, type JsonValue } from "../src/workbench/capability-registry.js";
 import { readClaudeMessageEvidence } from "../src/workbench/claude-evidence.js";
+import { type ClaudeQuery, createClaudeWorkflowHost } from "../src/workbench/claude-host.js";
 import { type ClaudeTopologyInput, projectClaudeTopology } from "../src/workbench/claude-topology.js";
 import { CONTROL_CONTRACT_VERSION, CONTROL_PERMIT_POLICY, type NativeControlReceipt } from "../src/workbench/control.js";
 import { buildControlReply, MAX_CONTROL_REPLY_BYTES } from "../src/workbench/control-reply.js";
@@ -71,6 +73,14 @@ const RLO = cp(0x202e);
 const WJ = cp(0x2060);
 const BOM = cp(0xfeff);
 const LONE_HIGH = cp(0xd800);
+// wb-xbq: the 8-bit C1 introducers and ST, each the same control as its 7-bit ESC form.
+const C1_DCS = cp(0x90);
+const C1_SOS = cp(0x98);
+const C1_CSI = cp(0x9b);
+const C1_ST = cp(0x9c);
+const C1_OSC = cp(0x9d);
+const C1_PM = cp(0x9e);
+const C1_APC = cp(0x9f);
 
 /** Anything a display string must never carry: C0/C1 controls, line/paragraph separators, default-ignorables, lone surrogates. */
 const UNSAFE_DISPLAY = /[\x00-\x1f\x7f-\x9f\u{2028}\u{2029}]|\p{Default_Ignorable_Code_Point}|[\u{d800}-\u{dfff}]/u;
@@ -104,7 +114,19 @@ function classProbe(separators: readonly GapClassName[], index: number): Probe {
   return { id: `C${index} separators {${separators.join(",")}}`, raw: `${before}${scheme}${after}CLASSTOKEN${index}`, secrets: [`CLASSTOKEN${index}`] };
 }
 
-const CORPUS: readonly Probe[] = [
+/** Each 7-bit escape introducer, and the 7-bit ST, beside the one C1 code point that is the same control (wb-xbq). */
+const EIGHT_BIT_FORMS: readonly (readonly [seven: string, eight: string])[] = [
+  [`${ESC}[`, C1_CSI], [`${ESC}P`, C1_DCS], [`${ESC}X`, C1_SOS], [`${ESC}\\`, C1_ST], [`${ESC}]`, C1_OSC], [`${ESC}^`, C1_PM], [`${ESC}_`, C1_APC],
+];
+/** The 8-bit twin of a text: every 7-bit introducer and ST in it written as its C1 form, nothing else changed. */
+const eightBit = (raw: string): string => EIGHT_BIT_FORMS.reduce((text, [seven, eight]) => text.replaceAll(seven, eight), raw);
+/** The probes, then the 8-bit twin of every probe holding a 7-bit escape introducer or ST, with the same secrets (wb-xbq). */
+function withEightBitTwins(probes: readonly Probe[]): readonly Probe[] {
+  const twins = probes.filter(probe => eightBit(probe.raw) !== probe.raw).map(probe => ({ id: `${probe.id} (8-bit twin)`, raw: eightBit(probe.raw), secrets: probe.secrets }));
+  return [...probes, ...twins];
+}
+
+const CORPUS: readonly Probe[] = withEightBitTwins([
   // The seat probe corpus named by the gate (U4, /tmp/fw-g1r3-g1g1-scripts/redaction-probe.mjs).
   { id: "S1 bearer", raw: "Authorization: Bearer abc123", secrets: ["abc123"] },
   { id: "S2 bearer wrapped in SGR", raw: `Authorization: ${ESC}[1mBearer${ESC}[0m abc123`, secrets: ["abc123"] },
@@ -165,7 +187,21 @@ const CORPUS: readonly Probe[] = [
   { id: "X8 NUL before and inside the scheme", raw: `x${NUL}Ba${NUL}sic MIXEIGHTSECRET`, secrets: ["MIXEIGHTSECRET"] },
   // Class-level probes: each choice of at most two separator classes, every other class glued inside the scheme.
   ...SEPARATOR_CHOICES.map(classProbe),
-];
+  // wb-xbq: the four shapes the wb-69g.5 gate measured on the landing merge (gate-2 cmd_bd3343f25a3d): the 8-bit SGR forms
+  // showed the token, the 7-bit forms redacted. Every 7-bit row here, these and the SGR rows above, gains its 8-bit twin.
+  { id: "W1 8-bit SGR around the scheme", raw: `${C1_CSI}1mBearer${C1_CSI}0m TOKENAAA`, secrets: ["TOKENAAA"] },
+  { id: "W2 7-bit SGR around the scheme", raw: `${ESC}[1mBearer${ESC}[0m TOKENBBB`, secrets: ["TOKENBBB"] },
+  { id: "W3 8-bit SGR before sk-ant-", raw: `key=${C1_CSI}31msk-ant-TOKENCCC`, secrets: ["TOKENCCC"] },
+  { id: "W4 7-bit SGR before sk-ant-", raw: `key=${ESC}[31msk-ant-TOKENDDD`, secrets: ["TOKENDDD"] },
+  // wb-xbq: every string sequence glued inside a keyword in its 7-bit form (twinned), and ST in the other form.
+  { id: "Q1 OSC inside password", raw: `pass${ESC}]0;title${BEL}word=OSCSECRET`, secrets: ["OSCSECRET"] },
+  { id: "Q2 DCS inside the scheme", raw: `Authorization: Bea${ESC}Pq${ESC}\\rer DCSSECRET`, secrets: ["DCSSECRET"] },
+  { id: "Q3 SOS inside ghp_", raw: `see gh${ESC}Xs${ESC}\\p_SOSSECRET`, secrets: ["SOSSECRET"] },
+  { id: "Q4 PM inside api_key", raw: `api${ESC}^p${ESC}\\_key=PMSECRET`, secrets: ["PMSECRET"] },
+  { id: "Q5 APC inside sk-ant-", raw: `key sk-${ESC}_a${ESC}\\ant-APCSECRET`, secrets: ["APCSECRET"] },
+  { id: "Q6 OSC ended by the 8-bit ST", raw: `pass${ESC}]0;t${C1_ST}word=STEIGHTSECRET`, secrets: ["STEIGHTSECRET"] },
+  { id: "Q7 8-bit OSC ended by the 7-bit ST", raw: `pass${C1_OSC}0;t${ESC}\\word=STSEVENSECRET`, secrets: ["STSEVENSECRET"] },
+]);
 
 /**
  * The 17:32Z acceptance set. Units: every code point the wb-752.2 respin gate measured as the ONLY separator before
@@ -174,7 +210,8 @@ const CORPUS: readonly Probe[] = [
  * real-path classes (U+0080, U+009F, U+202A, U+202C, U+2069 beside the rest), further default-ignorables, the bidi marks
  * and an SGR sequence. Positions: between two tokens (before each \b-anchored start, and as the space after a scheme),
  * inside a keyword, prefix, key or token (the G11 keyword splits and the U+202E in-token regression), and the
- * position-aware mixes.
+ * position-aware mixes. wb-xbq: the OSC and DCS string sequences, ST in either form, and the 8-bit twin of every shape
+ * holding a 7-bit escape unit.
  */
 const ACCEPTANCE_CODES = [
   0x200b, 0x07, 0x1b, 0x202e, 0xad, 0x2060, 0x200d, 0x200c, 0x7f, 0x2066, 0x9b, 0x180e, 0x34f, 0xfe0f, 0x3164, 0x08, 0x00, 0xfeff, 0x85,
@@ -184,6 +221,10 @@ const ACCEPTANCE_CODES = [
 const ACCEPTANCE_UNITS: readonly (readonly [name: string, unit: string])[] = [
   ...ACCEPTANCE_CODES.map(code => [`U+${code.toString(16).toUpperCase().padStart(4, "0")}`, cp(code)] as const),
   ["SGR", `${ESC}[0m`],
+  ["OSC", `${ESC}]0;t${BEL}`],
+  ["DCS", `${ESC}Pq${ESC}\\`],
+  ["OSC ended by the 8-bit ST", `${ESC}]0;t${C1_ST}`],
+  ["8-bit OSC ended by the 7-bit ST", `${C1_OSC}0;t${ESC}\\`],
 ];
 type Shape = (unit: string, secret: string) => string;
 /** A unit here sits between two tokens: a separator reading exposes the credential. */
@@ -213,12 +254,12 @@ const WITHIN_TOKENS: readonly (readonly [position: string, shape: Shape])[] = [
  */
 const WHITESPACE_UNITS: ReadonlySet<string> = new Set([0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x85, 0x2028, 0x2029].map(cp));
 const isWhitespace = (unit: string): boolean => WHITESPACE_UNITS.has(unit);
-const ACCEPTANCE: readonly Probe[] = ACCEPTANCE_UNITS.flatMap(([name, unit]) =>
+const ACCEPTANCE: readonly Probe[] = withEightBitTwins(ACCEPTANCE_UNITS.flatMap(([name, unit]) =>
   [...BETWEEN_TOKENS, ...(isWhitespace(unit) ? [] : WITHIN_TOKENS)].map(([position, shape]) => {
     const secret = `ACCEPT${name.replace(/[^A-Z0-9]/g, "")}${position.replace(/[^a-z]/g, "").slice(0, 24)}`;
     return { id: `${name} ${position}`, raw: shape(unit, secret), secrets: [secret] };
   }),
-);
+));
 
 /** Every string leaf of a value, keys included. */
 function strings(value: unknown, into: string[] = []): string[] {
@@ -696,6 +737,35 @@ function controlReplyTexts(raw: string): string[] {
   return strings(buildControlReply(receipt, { maxBytes: MAX_CONTROL_REPLY_BYTES }).reply);
 }
 
+/**
+ * wb-wyr: claude-host.ts producer outcomes (createClaudeWorkflowHost.spawnAgent over the ClaudeQuery seam). The SDK text
+ * reaches the outcome error on five paths: the auth error from a result and from a thrown error (authRequiredError), the
+ * success-subtype and error-subtype result arms, and the thrown catch message. Every one routes through the one helper
+ * with the "label" layout; the display strings are the outcome error and its card/dialog rendering.
+ */
+async function claudeHostTexts(raw: string): Promise<string[]> {
+  const init = { type: "system", subtype: "init", session_id: "sdk-corpus", model: "claude-opus-5-5" } as unknown as SDKMessage;
+  const authed = { type: "assistant", session_id: "sdk-corpus", parent_tool_use_id: null, error: "authentication_failed", message: { id: "msg-corpus", role: "assistant", model: "claude-opus-5-5", content: [] } } as unknown as SDKMessage;
+  const failed = (fields: Record<string, unknown>): SDKMessage => ({ type: "result", session_id: "sdk-corpus", is_error: true, modelUsage: {}, ...fields }) as unknown as SDKMessage;
+  const stream = (frames: readonly SDKMessage[], thrown?: Error): ClaudeQuery => () => (async function* () {
+    for (const frame of frames) yield frame;
+    if (thrown) throw thrown;
+  })();
+  const queries = [
+    stream([init, authed, failed({ subtype: "success", result: raw })]),
+    stream([init, authed], new Error(raw)),
+    stream([init, failed({ subtype: "success", result: raw })]),
+    stream([init, failed({ subtype: "error_during_execution", errors: [raw] })]),
+    stream([init], new Error(raw)),
+  ];
+  const errors: string[] = [];
+  for (const query of queries) {
+    const result = await createClaudeWorkflowHost({ cwd: "/tmp", query }).spawnAgent({ agentId: "wf-agent-0", index: 0, prompt: "hello", label: "hello", agentType: "general-purpose" });
+    errors.push(result.error ?? "");
+  }
+  return [...errors, ...errors.map(safeWorkflowTerminalText)];
+}
+
 interface Site {
   readonly site: string;
   readonly texts: (raw: string) => string[] | Promise<string[]>;
@@ -738,6 +808,7 @@ const SITES: readonly Site[] = [
   { site: "site 22 observe-query.ts clean (observeInvocation)", texts: observeTexts },
   { site: "wb-h8f.10 latency.ts displayText (selectLatencyDecomposition provider and evidence paths)", texts: latencyTexts },
   { site: "site 23 detached-control.ts sanitized (executeDetachedControl)", texts: detachedControlTexts },
+  { site: "wb-wyr claude-host.ts producer outcomes (createClaudeWorkflowHost.spawnAgent, five failure paths)", texts: claudeHostTexts },
 ];
 
 describe("wb-952 one-helper corpus through every census site's public function", () => {
@@ -921,5 +992,102 @@ describe("wb-952 the one helper: normalize once, redact the union of every readi
     const text = JSON.stringify(sanitizeWorkbenchJson({ [`pass${BEL}word`]: "opaque-key-secret", [`api${ZWSP}_key`]: "second-opaque" }));
     expect(text).not.toContain("opaque-key-secret");
     expect(text).not.toContain("second-opaque");
+  });
+});
+
+/**
+ * wb-xbq (owner-filed from the wb-69g.5 gate F1): "parse 8-bit C1 CSI/string sequences as WHOLE ESCAPE UNITS mirroring the
+ * 7-bit forms. RED-FIRST: the four measured shapes through the 952 corpus SITES; the 952 corpus gains the 8-BIT TWINS of
+ * every 7-bit SGR shape; EQUIVALENCE CHECK 7-bit vs 8-bit on every corpus row." CORPUS and ACCEPTANCE above carry the measured
+ * shapes and the twins through every census site. Every assertion here names its probe and never prints a secret-bearing value.
+ */
+describe("wb-xbq 8-bit C1 sequences are whole escape units, as their 7-bit forms", () => {
+  const LAYOUTS = ["text", "label", "terminal", "lines"] as const;
+  /**
+   * Site 9's displayed text alone. Its reply also carries the sha256 of the raw candidate and the designer's verdict on it,
+   * both read from the raw source rather than displayed from it: designer.ts refuses the 7-bit candidate for its C0 ESC and
+   * admits the 8-bit one, whose C1 introducers it does not refuse (a validator asymmetry outside the one helper).
+   */
+  function patchDisplayTexts(raw: string): string[] {
+    const commented = raw.split(LF).map(line => `// ${line}`).join(LF);
+    const proposal = proposeWorkflowPatch({ base: memorySource("return 1;"), candidateSource: `${HEADER}${commented}\nreturn 1;`, rationale: raw });
+    return [proposal.rationale, ...proposal.diff.hunks.map(hunk => hunk.text)];
+  }
+
+  it("every corpus row and its 8-bit twin display identically through every census site (a row without a 7-bit unit is its own twin)", async () => {
+    const twinned = [...CORPUS, ...ACCEPTANCE].filter(probe => eightBit(probe.raw) !== probe.raw);
+    // Not vacuous: the measured 7-bit shapes, every SGR row, the class probes and every string sequence are twinned.
+    const named = ["W2 7-bit SGR around the scheme", "W4 7-bit SGR before sk-ant-", "S2 bearer wrapped in SGR", "S3 SGR after the scheme", "S6 SGR around the keyword", "X7 SGR before and inside sk-ant-", "C0 separators {}", "Q1 OSC inside password", "Q2 DCS inside the scheme", "Q3 SOS inside ghp_", "Q4 PM inside api_key", "Q5 APC inside sk-ant-", "Q6 OSC ended by the 8-bit ST", "Q7 8-bit OSC ended by the 7-bit ST", "SGR inside password", "OSC inside Bearer", "DCS before ghp_"];
+    expect(named.filter(id => !twinned.some(probe => probe.id === id))).toEqual([]);
+    // The same displayed strings, in any order: the execute policy echo keeps its keys in canonical raw code-unit order, which
+    // puts ESC before the letters and U+009B after them.
+    const displayed = async (texts: Site["texts"], raw: string): Promise<string> => JSON.stringify([...(await texts(raw))].sort());
+    const failures: string[] = [];
+    for (const { site, texts } of SITES) {
+      const shown = texts === patchTexts ? patchDisplayTexts : texts;
+      for (const probe of twinned) if ((await displayed(shown, probe.raw)) !== (await displayed(shown, eightBit(probe.raw)))) failures.push(`${site}: ${probe.id}`);
+    }
+    expect(failures).toEqual([]);
+  });
+
+  it("the four shapes the wb-69g.5 gate measured: the 8-bit SGR forms render exactly as the 7-bit forms, in every layout", () => {
+    const measured = [
+      { id: "scheme", eight: `${C1_CSI}1mBearer${C1_CSI}0m TOKENAAA`, seven: `${ESC}[1mBearer${ESC}[0m TOKENBBB`, shown: { text: "[REDACTED]", label: "[REDACTED]", terminal: "[REDACTED]", lines: "[REDACTED]" } },
+      { id: "prefix", eight: `key=${C1_CSI}31msk-ant-TOKENCCC`, seven: `key=${ESC}[31msk-ant-TOKENDDD`, shown: { text: "key=[REDACTED]", label: "key= [REDACTED]", terminal: "key=[REDACTED]", lines: "key=[REDACTED]" } },
+    ];
+    const failures: string[] = [];
+    for (const { id, eight, seven, shown } of measured) {
+      for (const layout of LAYOUTS) {
+        if (sanitizeWorkbenchText(seven, 2000, layout) !== shown[layout]) failures.push(`${id} 7-bit (${layout})`);
+        if (sanitizeWorkbenchText(eight, 2000, layout) !== shown[layout]) failures.push(`${id} 8-bit (${layout})`);
+      }
+    }
+    expect(failures).toEqual([]);
+  });
+
+  it("stripUnsafeText removes an 8-bit sequence whole, as its 7-bit form, and an unterminated introducer on its own", () => {
+    expect(stripUnsafeText(`a${C1_CSI}1;31mb`)).toBe(stripUnsafeText(`a${ESC}[1;31mb`));
+    expect(stripUnsafeText(`a${C1_CSI}1;31mb`)).toBe("ab");
+    for (const introducer of [C1_DCS, C1_SOS, C1_OSC, C1_PM, C1_APC]) {
+      for (const end of [BEL, C1_ST, `${ESC}\\`]) expect(stripUnsafeText(`a${introducer}0;body${end}b`), `U+${introducer.codePointAt(0)?.toString(16)}`).toBe("ab");
+    }
+    // ST is one control in either form, whichever form opened the string, and the first one ends it.
+    expect(stripUnsafeText(`a${ESC}]0;body${C1_ST}b`)).toBe("ab");
+    expect(stripUnsafeText(`a${C1_OSC}0;t${C1_ST}b${BEL}c`)).toBe(stripUnsafeText(`a${ESC}]0;t${ESC}\\b${BEL}c`));
+    expect(stripUnsafeText(`a${C1_OSC}0;t${C1_ST}b${BEL}c`)).toBe("abc");
+    // Unterminated, the introducer is one unit and the rest stays text, as ESC is for the 7-bit prefix.
+    expect(stripUnsafeText(`a${C1_OSC}0;title`)).toBe("a0;title");
+    expect(stripUnsafeText(`a${ESC}]0;title`)).toBe("a]0;title");
+    expect(stripUnsafeText(`a${C1_CSI}1;`)).toBe("a1;");
+    expect(stripUnsafeText(C1_CSI)).toBe("");
+  });
+
+  it("an 8-bit introducer or ST is still one C1 control: the reading that drops it alone stays covered", () => {
+    const lone = [
+      // The final byte of the CSI read whole is also the next letter of the keyword when the introducer is dropped alone.
+      { id: "CSI inside Bearer", raw: `Authorization: Bea${C1_CSI}rer LONESECRETONE` },
+      { id: "CSI inside password", raw: `pass${C1_CSI}word=LONESECRETTWO` },
+      { id: "CSI inside ghp_", raw: `see gh${C1_CSI}p_LONESECRETTHREE` },
+      // The body of the string read whole is the rest of the keyword when its introducer and ST are dropped alone.
+      { id: "OSC body inside Bearer", raw: `Authorization: Bea${C1_OSC}rer${C1_ST} LONESECRETFOUR` },
+      // Read as one control, U+009C is body inside a 7-bit string, which then ends at BEL instead.
+      { id: "ST inside a 7-bit string", raw: `Authorization: Bea${ESC}]0;x${C1_ST}rer${BEL}rer LONESECRETFIVE` },
+    ];
+    const failures: string[] = [];
+    for (const { id, raw } of lone) {
+      for (const layout of LAYOUTS) if (sanitizeWorkbenchText(raw, 2000, layout).includes("LONESECRET")) failures.push(`${id} (${layout})`);
+    }
+    expect(failures).toEqual([]);
+  });
+
+  it("a JSON key an 8-bit sequence splits is still a secret field, as with the 7-bit form, and so is one a lone introducer splits", () => {
+    const fields = [
+      { name: "8-bit SGR inside password", key: `pass${C1_CSI}0mword`, value: "opaque-c1-secret" },
+      { name: "8-bit OSC inside api_key", key: `api${C1_OSC}0;t${C1_ST}_key`, value: "opaque-c1-string" },
+      { name: "7-bit SGR inside password", key: `pass${ESC}[0mword`, value: "opaque-esc-secret" },
+      { name: "lone U+009B inside password", key: `pass${C1_CSI}word`, value: "opaque-c1-lone" },
+    ];
+    const text = JSON.stringify(sanitizeWorkbenchJson(Object.fromEntries(fields.map(({ key, value }) => [key, value]))));
+    expect(fields.filter(({ value }) => text.includes(value)).map(({ name }) => name)).toEqual([]);
   });
 });

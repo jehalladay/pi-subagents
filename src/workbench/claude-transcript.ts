@@ -34,7 +34,9 @@ export function createClaudeObserver(emit: (call: ClaudeCallIdentity, snapshot: 
       const snapshot = entry.snapshot;
       snapshot.observedMessages++;
       if ("session_id" in message) snapshot.sessionId = message.session_id;
-      if ("uuid" in message) snapshot.lastMessageId = message.uuid;
+      // The evidence identity names only a frame the bounded transcript read can return: user and assistant rows. Stream
+      // events, results and system frames carry uuids too, but getSessionMessages never returns them as rows (wb-idq).
+      if ((message.type === "user" || message.type === "assistant") && "uuid" in message) snapshot.lastMessageId = message.uuid;
       let semantic = false;
       if (message.type === "system" && message.subtype === "init") semantic = true;
       if (message.type === "stream_event" && message.event.type === "content_block_delta" && message.event.delta.type === "text_delta") {
@@ -114,16 +116,21 @@ function summary(message: SessionMessage): { text: string; clipped: boolean } {
   return clipRow(sanitizeWorkbenchText(rawText(message), Number.MAX_SAFE_INTEGER, "lines"));
 }
 
-/** SDK session_id only; never reinterpret it as a Pi AgentRecord id. */
+/**
+ * SDK session_id only; never reinterpret it as a Pi AgentRecord id. The bounded window is the TAIL of the conversation
+ * chain (wb-idq): the rows a host lists as evidence are the newest ones, and the SDK counts its own limit and offset from the
+ * START, so the whole chain is read and the last `limit` rows (1..CLAUDE_TRANSCRIPT_MAX_ROWS) are kept.
+ */
 export async function readClaudeTranscript(
   sessionId: string,
   cwd: string,
   limit = 40,
   read: ClaudeSessionReader = getSessionMessages,
 ): Promise<ClaudeTranscriptRow[]> {
-  const messages = await read(sessionId, { dir: cwd, limit: Math.min(Math.max(1, limit), CLAUDE_TRANSCRIPT_MAX_ROWS) });
+  const bounded = Math.min(Math.max(1, limit), CLAUDE_TRANSCRIPT_MAX_ROWS);
+  const messages = await read(sessionId, { dir: cwd });
   // uuid and type pass through untouched; only the text is sanitized (see summary). A cut row says so, and only a cut row.
-  return messages.map(message => {
+  return messages.slice(-bounded).map(message => {
     const { text, clipped } = summary(message);
     return { type: message.type, uuid: message.uuid, text, ...(clipped ? { clipped: true as const } : {}) };
   });

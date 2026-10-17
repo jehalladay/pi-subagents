@@ -31,7 +31,7 @@ import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { loadRepairedSdkCopy } from "../qa/workbench/furnace-hosted-repaired-sdk.mjs";
 import { assessRetryFaultJourneys, RETRY_FAULT_JOURNEYS } from "../qa/workbench/furnace-hosted-retry-fault-receipt.mjs";
 import { CapabilityError } from "../src/workbench/capability-registry.js";
-import { FurnaceHostedExecutor, type FurnaceSdk, SHIPPED_FURNACE_SDK } from "../src/workbench/hosts/furnace-hosted.js";
+import { FurnaceHostedExecutor, type FurnaceSdk, type HostedReceipt, SHIPPED_FURNACE_SDK } from "../src/workbench/hosts/furnace-hosted.js";
 import {
   chooseScratchBase,
   dropBeforeAdmissionReply,
@@ -42,7 +42,9 @@ import {
   type RetryFaultEnv,
   SCRATCH_BASE_MAX_BYTES,
   SCRATCH_FALLBACK_BASE,
+  SETTLED_CLOSE_GRACE_MS,
   sameAttemptReexecution,
+  settledCloseTimers,
 } from "./helpers/furnace-hosted-retry-journeys.js";
 import { loadRepairedFurnaceSdk } from "./helpers/furnace-sdk-repaired.js";
 
@@ -158,6 +160,34 @@ describe("Furnace Work retry while Run establishment is uncertain (wb-0kg.4)", (
     expect(observed.afterClose.attempts[0]).toMatchObject({ terminal: "indeterminate", cancel: { requested: true, reason: "host_closed" } });
     expect(observed.afterClose.attempts[1]?.terminal).toBe("success");
     expect(observed.afterClose.identityViolations).toEqual([]);
+  });
+
+  it("wb-21k: executor.close() leaves every Attempt that settled before it with cancel requested:false, in all five journeys (the parked Attempts keep host_closed)", async () => {
+    for (const name of RETRY_FAULT_JOURNEYS) {
+      const observed = (await RETRY_FAULT_JOURNEY_RUNNERS[name as keyof typeof RETRY_FAULT_JOURNEY_RUNNERS](env)) as { beforeClose: HostedReceipt; afterClose: HostedReceipt };
+      const before = observed.beforeClose.attempts;
+      let settledChecked = 0;
+      for (const [index, attempt] of before.entries()) {
+        const closed = observed.afterClose.attempts[index];
+        if (attempt.terminal === "pending") {
+          expect(closed?.cancel, `${name}: the parked ${attempt.attemptId}`).toEqual({ requested: true, reason: "host_closed" });
+          continue;
+        }
+        settledChecked += 1;
+        expect(closed?.cancel, `${name}: ${attempt.attemptId} settled ${attempt.terminal} before close`).toEqual({ requested: false });
+      }
+      expect(settledChecked, `${name} produced no settled Attempt to check`).toBeGreaterThan(0);
+    }
+  }, 30_000);
+
+  it("wb-21k: executor.close() leaves no grace timer armed for Attempts that already settled (3 settled success Attempts, default-sized grace)", async () => {
+    expect(SETTLED_CLOSE_GRACE_MS).toBe(5000);
+    const observed = await settledCloseTimers(env);
+    expect(observed.armed).toBe(true);
+    expect(observed.settledAttempts).toBe(3);
+    // A leaked abort listener arms one SETTLED_CLOSE_GRACE_MS timer per settled Attempt when close() aborts; none may remain.
+    expect(observed.timeoutsAfterClose - observed.timeoutsBeforeClose).toBeLessThanOrEqual(0);
+    expect(observed.afterClose.attempts.map((attempt) => attempt.cancel)).toEqual([{ requested: false }, { requested: false }, { requested: false }]);
   });
 
   it("the host scratch base follows the host rule: XDG_RUNTIME_DIR first, /tmp only as the recorded fallback, never first", () => {
