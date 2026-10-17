@@ -16,9 +16,10 @@
  * declines the cache (pinned separately in workbench-host-contract.test.ts).
  */
 
+import type { SDKMessage } from "@anthropic-ai/claude-agent-sdk";
 import { describe, expect, it } from "vitest";
 import { CapabilityRegistry } from "../src/workbench/capability-registry.js";
-import { createClaudeWorkflowHost } from "../src/workbench/claude-host.js";
+import { type ClaudeQuery, createClaudeWorkflowHost } from "../src/workbench/claude-host.js";
 import { nodeJournalKey, type WorkflowJournalEntry } from "../src/workflow/journal.js";
 import {
   ACKNOWLEDGEMENT_VALUE_CONTRACT,
@@ -81,10 +82,9 @@ function effectHost(options: {
   };
 }
 
-const nodeDone = (result: { progress: readonly { type: string }[] }) =>
+const nodeDone = <Entry extends { type: string }>(result: { progress: readonly Entry[] }) =>
   result.progress.filter(
-    (entry): entry is Extract<(typeof result.progress)[number], { type: "workflow_node" }> =>
-      entry.type === "workflow_node",
+    (entry): entry is Extract<Entry, { type: "workflow_node" }> => entry.type === "workflow_node",
   );
 
 /**
@@ -487,6 +487,7 @@ describe("a journaled node with no effect class stops a resume (wb-tu1)", () => 
  * basis, and the host stamps each node's registry effect class.
  * ------------------------------------------------------------------------ */
 
+/** Deliberately partial SDK frames (a subset of each SDK message's fields), so they are cast through unknown. */
 const sdkMessages = (sessionId = "sdk-session-1") => [
   { type: "system", subtype: "init", session_id: sessionId, model: "claude-opus-5-5", permissionMode: "dontAsk", tools: [], cwd: "/tmp" },
   { type: "assistant", session_id: sessionId, uuid: "m1", parent_tool_use_id: null,
@@ -494,9 +495,9 @@ const sdkMessages = (sessionId = "sdk-session-1") => [
   { type: "result", subtype: "success", session_id: sessionId, uuid: "r1", is_error: false, result: "OK",
     structured_output: undefined, modelUsage: { "claude-opus-5-5": { inputTokens: 4, outputTokens: 3, cacheReadInputTokens: 0, cacheCreationInputTokens: 0, costUSD: 0.01 } },
     usage: { input_tokens: 4, output_tokens: 3 }, total_cost_usd: 0.01 },
-] as const;
+] as unknown as readonly SDKMessage[];
 
-function sdkQuery(calls: Array<{ prompt: string; options: Record<string, unknown> }>) {
+function sdkQuery(calls: Array<{ prompt: string; options: Record<string, unknown> }>): ClaudeQuery {
   return ({ prompt, options }: { prompt: string; options: Record<string, unknown> }) => {
     calls.push({ prompt, options });
     return (async function* () { for (const message of sdkMessages()) yield message; })();
