@@ -81,9 +81,20 @@ const C1_ST = cp(0x9c);
 const C1_OSC = cp(0x9d);
 const C1_PM = cp(0x9e);
 const C1_APC = cp(0x9f);
+// wb-rqd: format controls (General_Category Cf, not default-ignorable) that defeat a reader: the interlinear annotation
+// anchor, separator and terminator, and two of the Egyptian hieroglyph format controls.
+const ANNOTATION_ANCHOR = cp(0xfff9);
+const ANNOTATION_SEPARATOR = cp(0xfffa);
+const ANNOTATION_TERMINATOR = cp(0xfffb);
+const HIEROGLYPH_JOINER = cp(0x13430);
+const HIEROGLYPH_OVERLAY = cp(0x13436);
 
-/** Anything a display string must never carry: C0/C1 controls, line/paragraph separators, default-ignorables, lone surrogates. */
-const UNSAFE_DISPLAY = /[\x00-\x1f\x7f-\x9f\u{2028}\u{2029}]|\p{Default_Ignorable_Code_Point}|[\u{d800}-\u{dfff}]/u;
+/**
+ * Anything a display string must never carry: C0/C1 controls, line/paragraph separators, default-ignorables, lone surrogates,
+ * and the format controls that defeat a reader (wb-rqd: the interlinear annotation controls and the Egyptian hieroglyph format
+ * controls).
+ */
+const UNSAFE_DISPLAY = /[\x00-\x1f\x7f-\x9f\u{2028}\u{2029}\u{fff9}-\u{fffb}\u{13430}-\u{1343f}]|\p{Default_Ignorable_Code_Point}|[\u{d800}-\u{dfff}]/u;
 
 interface Probe {
   readonly id: string;
@@ -201,6 +212,15 @@ const CORPUS: readonly Probe[] = withEightBitTwins([
   { id: "Q5 APC inside sk-ant-", raw: `key sk-${ESC}_a${ESC}\\ant-APCSECRET`, secrets: ["APCSECRET"] },
   { id: "Q6 OSC ended by the 8-bit ST", raw: `pass${ESC}]0;t${C1_ST}word=STEIGHTSECRET`, secrets: ["STEIGHTSECRET"] },
   { id: "Q7 8-bit OSC ended by the 7-bit ST", raw: `pass${C1_OSC}0;t${ESC}\\word=STSEVENSECRET`, secrets: ["STSEVENSECRET"] },
+  // wb-rqd: the two shapes the wb-69g.5 gate measured showing the secret on all six execute display paths (an interlinear
+  // annotation anchor inside the keyword and inside the scheme), the other two annotation controls, and two Egyptian
+  // hieroglyph format controls, the overlay both before and inside the scheme.
+  { id: "R1 U+FFF9 inside password", raw: `pass${ANNOTATION_ANCHOR}word=ANCHORSECRET`, secrets: ["ANCHORSECRET"] },
+  { id: "R2 U+FFF9 inside the scheme", raw: `Authorization: Bea${ANNOTATION_ANCHOR}rer ANCHORTOKEN`, secrets: ["ANCHORTOKEN"] },
+  { id: "R3 U+FFFA inside api_key", raw: `api${ANNOTATION_SEPARATOR}_key=SEPARATORSECRET`, secrets: ["SEPARATORSECRET"] },
+  { id: "R4 U+FFFB inside sk-ant-", raw: `key sk-${ANNOTATION_TERMINATOR}ant-TERMINATORSECRET`, secrets: ["TERMINATORSECRET"] },
+  { id: "R5 U+13430 inside ghp_", raw: `see gh${HIEROGLYPH_JOINER}p_JOINERSECRET`, secrets: ["JOINERSECRET"] },
+  { id: "R6 U+13436 before and inside the scheme", raw: `x${HIEROGLYPH_OVERLAY}Bea${HIEROGLYPH_OVERLAY}rer OVERLAYSECRET`, secrets: ["OVERLAYSECRET"] },
 ]);
 
 /**
@@ -211,12 +231,13 @@ const CORPUS: readonly Probe[] = withEightBitTwins([
  * and an SGR sequence. Positions: between two tokens (before each \b-anchored start, and as the space after a scheme),
  * inside a keyword, prefix, key or token (the G11 keyword splits and the U+202E in-token regression), and the
  * position-aware mixes. wb-xbq: the OSC and DCS string sequences, ST in either form, and the 8-bit twin of every shape
- * holding a 7-bit escape unit.
+ * holding a 7-bit escape unit. wb-rqd: the three interlinear annotation controls and the first, the overlay and the last of
+ * the Egyptian hieroglyph format controls.
  */
 const ACCEPTANCE_CODES = [
   0x200b, 0x07, 0x1b, 0x202e, 0xad, 0x2060, 0x200d, 0x200c, 0x7f, 0x2066, 0x9b, 0x180e, 0x34f, 0xfe0f, 0x3164, 0x08, 0x00, 0xfeff, 0x85,
   0x2061, 0x2064, 0x206a, 0x115f, 0xffa0, 0xe0020, 0x1d173, 0x200e, 0x200f, 0x61c, 0x80, 0x9f, 0x202a, 0x202c, 0x2069, 0x1160, 0x17b4,
-  0x17b5, 0x180b, 0x2062, 0x2063, 0x206f, 0xfe00, 0x1bca0, 0xe0001, 0xe007f, 0xfff0,
+  0x17b5, 0x180b, 0x2062, 0x2063, 0x206f, 0xfe00, 0x1bca0, 0xe0001, 0xe007f, 0xfff0, 0xfff9, 0xfffa, 0xfffb, 0x13430, 0x13436, 0x1343f,
 ];
 const ACCEPTANCE_UNITS: readonly (readonly [name: string, unit: string])[] = [
   ...ACCEPTANCE_CODES.map(code => [`U+${code.toString(16).toUpperCase().padStart(4, "0")}`, cp(code)] as const),
@@ -1089,5 +1110,26 @@ describe("wb-xbq 8-bit C1 sequences are whole escape units, as their 7-bit forms
     ];
     const text = JSON.stringify(sanitizeWorkbenchJson(Object.fromEntries(fields.map(({ key, value }) => [key, value]))));
     expect(fields.filter(({ value }) => text.includes(value)).map(({ name }) => name)).toEqual([]);
+  });
+});
+
+/**
+ * wb-rqd (owner-filed from the wb-69g.5 gate F2): "a FALSE-POSITIVE CENSUS over the 952 corpus and the fixture texts". CORPUS
+ * rows R1-R6 and the ACCEPTANCE shapes of six wb-rqd units carry the refused format controls through every census site; no
+ * other row holds a format control that is not default-ignorable, so the widening changes no other row's display. The rest of
+ * the census (the engine's format controls, the fixture texts, identity admission) is test/workbench-format-control-census.test.ts.
+ */
+describe("wb-rqd false-positive census over the 952 corpus", () => {
+  it("only the wb-rqd rows hold a format control that is not default-ignorable, and each such control is one of its six refused units", () => {
+    const FORMAT = /\p{Cf}/u;
+    const IGNORABLE = /\p{Default_Ignorable_Code_Point}/u;
+    const units = [0xfff9, 0xfffa, 0xfffb, 0x13430, 0x13436, 0x1343f];
+    const formatControls = (text: string): number[] => [...text].filter(unit => FORMAT.test(unit) && !IGNORABLE.test(unit)).map(unit => unit.codePointAt(0) ?? -1);
+    const names = units.map(code => `U+${code.toString(16).toUpperCase().padStart(4, "0")}`);
+    const fromRqd = (probe: Probe): boolean => /^R[1-6] /.test(probe.id) || names.some(name => probe.id.startsWith(`${name} `));
+    const probes = [...CORPUS, ...ACCEPTANCE];
+    expect(probes.filter(fromRqd).length).toBe(6 + units.length * (BETWEEN_TOKENS.length + WITHIN_TOKENS.length));
+    expect(probes.filter(probe => formatControls(probe.raw).length > 0 !== fromRqd(probe)).map(probe => probe.id)).toEqual([]);
+    expect(probes.filter(probe => formatControls(probe.raw).some(code => !units.includes(code))).map(probe => probe.id)).toEqual([]);
   });
 });
