@@ -3066,11 +3066,11 @@ const ROUTED_MODES: Readonly<Record<string, readonly string[]>> = {
     "T5",
   ],
   "u62 gate-3r4": ["O1", "O3", "O4", "O6", "P1", "P2", "P3", "P5", "P6", "P7", "P8"],
-  "u62 respin-5": ["E1", "F1", "F2", "RS1", "RS2", "G-not-first", "G-parallel", "G-list", "G-altered", "G-pool", "G-env", "G-global-setup", "G-config-code", "G-config-import", "G-value-code", "G-server"],
+  "u62 respin-5": ["E1", "F1", "F2", "RS1", "RS2", "G-not-first", "G-parallel", "G-list", "G-altered", "G-pool", "G-env", "G-global-setup", "G-config-code", "G-config-import", "G-value-code", "G-server", "G-server-deps", "G-coverage", "G-define", "G-no-default", "G-no-test", "G-sequence", "G-setup-literal", "G-cli-dash", "G-cli-value", "G-cli-config-missing"],
 };
 
 /** Exact table sizes: deleting or emptying a falsifier table goes red (each-liveness of this file's own rows). */
-const TABLE_SIZES = [55, 8, 22, 46, 15, 10, 46, 34, 5, 16, 43, 16, 5, 76, 15, 31];
+const TABLE_SIZES = [55, 8, 22, 46, 15, 10, 46, 34, 5, 16, 43, 16, 5, 76, 15, 44];
 
 
 /**
@@ -3416,6 +3416,97 @@ const GUARD_ROWS: readonly GuardRow[] = [
     routed: "u62 respin-5 G-server control: test.server.deps.inline, this repository's own shape",
     files: { "vitest.config.ts": vitestConfig(defaultOptions("server: { deps: { inline: [/@earendil-works\\/pi-/] } }")) },
     ok: true,
+  },
+  // Rows for vouch branches the respin-5 mutant table found without a row (M24 coverage keys, M25 defineConfig's import),
+  // and for the vouch's other refusal branches that no G row reached.
+  {
+    id: "g-u62r5-server-deps-key",
+    routed: "u62 respin-5 G-server-deps: test.server.deps sets a key outside the closed list (vitest 4.1.10's ServerDepsOptions names external, inline and fallbackCJS only)",
+    files: { "vitest.config.ts": vitestConfig(defaultOptions('server: { deps: { cacheDir: ".census-deps" } }')) },
+    ok: false,
+    why: /test\.server\.deps\.cacheDir/,
+  },
+  {
+    id: "g-u62r5-coverage-enabled",
+    routed: "u62 respin-5 G-coverage: test.coverage.enabled loads a coverage provider into the run without a --coverage flag",
+    files: { "vitest.config.ts": vitestConfig(defaultOptions('coverage: { enabled: true, provider: "istanbul" }')) },
+    ok: false,
+    why: /test\.coverage\.enabled/,
+  },
+  {
+    id: "g-u62r5-coverage-provider",
+    routed: "u62 respin-5 G-coverage: test.coverage.customProviderModule names a module of code for the run to load",
+    files: { "vitest.config.ts": vitestConfig(defaultOptions('coverage: { provider: "custom", customProviderModule: "./census-other.setup.ts" }')), ...OTHER_SETUP },
+    ok: false,
+    why: /test\.coverage\.customProviderModule/,
+  },
+  {
+    id: "g-u62r5-coverage-options",
+    routed: "u62 respin-5 G-coverage control: coverage options that load nothing unless coverage is enabled (this repository's own shape)",
+    files: { "vitest.config.ts": vitestConfig(defaultOptions('coverage: { provider: "istanbul", reporter: ["text", "html"], include: ["src/**/*.ts"] }')) },
+    ok: true,
+  },
+  {
+    id: "g-u62r5-define-unbound",
+    routed: "u62 respin-5 G-define: the default export calls a defineConfig no import binds",
+    files: { "vitest.config.ts": rawConfig(`export default defineConfig({ test: { ${GUARDED_TEST} } });`, "") },
+    ok: false,
+    why: /default-exports a call that is not defineConfig\(<object literal>\) imported from vitest\/config/,
+  },
+  {
+    id: "g-u62r5-define-alias",
+    routed: "u62 respin-5 G-define control: defineConfig imported from vitest/config under a local alias",
+    files: { "vitest.config.ts": rawConfig(`export default dc({ test: { ${GUARDED_TEST} } });`, 'import { defineConfig as dc } from "vitest/config";') },
+    ok: true,
+  },
+  {
+    id: "g-u62r5-no-default",
+    routed: "u62 respin-5 G-no-default: the config module has no default export, so the vouch reads no options vitest receives",
+    files: { "vitest.config.ts": rawConfig(`export const config = defineConfig({ test: { ${GUARDED_TEST} } });`) },
+    ok: false,
+    why: /has no single default export/,
+  },
+  {
+    id: "g-u62r5-no-test",
+    routed: "u62 respin-5 G-no-test: the config sets no test options, so it names no setup file",
+    files: { "vitest.config.ts": rawConfig('export default defineConfig({ cacheDir: ".census-cache" });') },
+    ok: false,
+    why: /sets no test options/,
+  },
+  {
+    id: "g-u62r5-sequence-key",
+    routed: "u62 respin-5 G-sequence: test.sequence.sequencer names a sequencer, which is code",
+    files: { "vitest.config.ts": vitestConfig(defaultOptions('sequence: { sequencer: "./census-other.setup.ts" }')), ...OTHER_SETUP },
+    ok: false,
+    why: /test\.sequence\.sequencer/,
+  },
+  {
+    id: "g-u62r5-setup-literal",
+    routed: "u62 respin-5 G-setup-literal: test.setupFiles is an expression, not a literal string or string array",
+    files: { "vitest.config.ts": vitestConfig(defaultOptions(`setupFiles: ["./${GUARD_FILE}"].concat([])`)) },
+    ok: false,
+    why: /sets test\.setupFiles to something other than a literal string or string array/,
+  },
+  {
+    id: "g-u62r5-cli-dash",
+    routed: 'u62 respin-5 G-cli-dash: the tier passes "--", after which vitest reads the words as it chooses',
+    files: { "forge.toml": forgeToml("./node_modules/.bin/vitest run -- test/cfg-target.test.ts") },
+    ok: false,
+    why: /passes "--"/,
+  },
+  {
+    id: "g-u62r5-cli-value",
+    routed: "u62 respin-5 G-cli-value: the tier's --config carries no value, so the vouch cannot tell which config vitest loads",
+    files: { "forge.toml": forgeToml("./node_modules/.bin/vitest run --config") },
+    ok: false,
+    why: /carries --config without a value/,
+  },
+  {
+    id: "g-u62r5-cli-config-missing",
+    routed: "u62 respin-5 G-cli-config-missing: the tier's --config names a file that does not exist",
+    files: { "forge.toml": forgeToml("./node_modules/.bin/vitest run --config vitest.none.config.ts") },
+    ok: false,
+    why: /the --config file vitest\.none\.config\.ts does not exist/,
   },
 ];
 
