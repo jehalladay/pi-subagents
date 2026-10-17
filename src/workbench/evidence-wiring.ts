@@ -26,7 +26,7 @@ import { ForgeEvidenceError, readForgeOperationEvidence } from "./forge-evidence
 import { readFurnaceAttemptLogEvidence } from "./furnace-evidence.js";
 import type { FurnaceObserverClient } from "./furnace-observer.js";
 import { loadWorkbenchNative } from "./native-modules.js";
-import type { ObservationProjection, ObservationScope } from "./observation.js";
+import type { NativeRef, ObservationProjection, ObservationScope } from "./observation.js";
 
 const EVIDENCE_MAX_ENTRIES = 32;
 const EVIDENCE_MAX_BYTES = 65_536;
@@ -69,14 +69,18 @@ export function createWorkbenchEvidenceStore(deps: WorkbenchEvidenceDeps): Evide
   const forge =
     registry === undefined
       ? undefined
-      : async ({ operationId, signal }: { operationId: string; signal: AbortSignal }): Promise<ForgeEvidenceRead> => {
+      : async ({ operationId, nativeRef, signal }: { operationId: string; nativeRef: NativeRef; signal: AbortSignal }): Promise<ForgeEvidenceRead> => {
           const scope = deps.scope();
           if (scope === undefined) throw new EvidenceRefusal("transport");
           const ref = `forge-operation:${operationId}`;
-          // Only an operation some observed forge node lists as evidence is ever re-read; an
-          // unobserved one refuses unauthorized with no capability call issued.
-          const owningNode = deps.projection.query({ scope, evidence: ref, limit: 1 }).nodes[0];
-          if (owningNode === undefined || !owningNode.evidenceRefs.includes(ref)) throw new EvidenceRefusal("unauthorized");
+          // Ownership resolves by the REQUESTED node, the furnace adapter's bound shape below (wb-cz9): only an operation the
+          // node the request names lists as evidence is ever re-read. An unobserved node, or one that does not list the ref,
+          // refuses unauthorized with no capability call issued, never served another node's re-read under its own key.
+          const owningNode = deps.projection.query({ scope, ref: nativeRef, limit: 1 }).nodes[0];
+          const owner = owningNode?.nativeRef;
+          const requested = owner !== undefined && owner.provider === nativeRef.provider && owner.type === nativeRef.type &&
+            owner.id === nativeRef.id && (owner.scope ?? "") === (nativeRef.scope ?? "");
+          if (owningNode === undefined || !requested || !owningNode.evidenceRefs.includes(ref)) throw new EvidenceRefusal("unauthorized");
           try {
             const content = await readForgeOperationEvidence(ref, {
               grants: deps.grants,
@@ -159,11 +163,17 @@ export function createWorkbenchEvidenceStore(deps: WorkbenchEvidenceDeps): Evide
         signal,
         capturedAt: () => deps.now().toISOString(),
       });
+      // The furnace loader marks a lossy, incomplete or paged read truncated and the store then adds its single [truncated];
+      // the reader's own trailing "truncated (producer: ...)" line would otherwise show beside it (wb-cz9 leg 2). A budget-only
+      // cut is not loader-marked, so the reader's line stays its one visible marker.
+      const receipt = content.producerReceipt;
+      const loaderMarked = !receipt.complete || receipt.lossy || receipt.nextCursor !== null;
+      const preview = loaderMarked && content.truncated ? content.preview.slice(0, -1) : content.preview;
       return {
         runId,
         attemptId,
         stream: content.stream,
-        text: content.preview.join("\n"),
+        text: preview.join("\n"),
         complete: content.producerReceipt.complete,
         lossy: content.producerReceipt.lossy,
         ...(content.producerReceipt.nextCursor !== null ? { nextCursor: content.producerReceipt.nextCursor } : {}),
