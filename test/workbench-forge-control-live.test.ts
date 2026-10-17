@@ -37,7 +37,10 @@ const WORKSPACE = realpathSync(process.cwd());
 const SCOPE: ObservationScope = { workspace: WORKSPACE, principal: "local-operator:live:s-6hb5" };
 const nowIso = (): string => new Date().toISOString();
 
-type Phase = { phase: string; at: string; detail: string };
+/** Typed phase fields: scalar values the row observed itself, recorded beside (never instead of) the capped free-text detail. */
+type PhaseFieldValue = string | boolean | number | null;
+type PhaseFields = Record<string, PhaseFieldValue>;
+type Phase = { phase: string; at: string; detail: string; fields?: PhaseFields };
 interface Receipt {
   contract: string;
   revision: string;
@@ -69,14 +72,24 @@ const receipt: Receipt = {
   verbCounts: { "gate.run": 0, "operation.cancel": 0 },
   findings: [],
 };
-const record = (phase: string, detail: string): void => void receipt.phases.push({ phase, at: nowIso(), detail });
+const record = (phase: string, detail: string, fields?: PhaseFields): void =>
+  void receipt.phases.push({ phase, at: nowIso(), detail, ...(fields !== undefined ? { fields } : {}) });
+/** The values each row observed itself, kept apart from the receipt so the receipt shape row compares against an independent copy. */
+const observed: Record<string, PhaseFields> = {};
+const RECEIPT_PREFIX = "FORGE_CONTROL_LIVE_RECEIPT ";
+const receiptLine = (): string => `${RECEIPT_PREFIX}${JSON.stringify(receipt)}`;
+/** Parses an emitted receipt line exactly as a reader of a captured run would. */
+function parseReceiptLine(line: string): Receipt {
+  expect(line.startsWith(RECEIPT_PREFIX)).toBe(true);
+  return JSON.parse(line.slice(RECEIPT_PREFIX.length)) as Receipt;
+}
 const scenario = (name: string, realised: boolean, detail: string): void => {
   receipt.scenarios[name] = { realised, detail };
 };
 afterAll(() => {
   scenario("strict-booted-tool-reading", false,
     "UNREALISED: the booted extension's projection admits no forge-operation nodes (wb-a3s), so the booted registered tool cannot permit a forge target; this journey ran the registered tool's constructor and production executor with a harness-owned projection fed only from operation.started frames.");
-  process.stdout.write(`\nFORGE_CONTROL_LIVE_RECEIPT ${JSON.stringify(receipt)}\n`);
+  process.stdout.write(`\n${receiptLine()}\n`);
 });
 
 /** A disposable fixture package whose explicit gate runs one bounded long command. */
@@ -87,12 +100,15 @@ function fixtureWorkspace(sleepSeconds: number): string {
   return dir;
 }
 
+type SdkCancelReceipt = Awaited<ReturnType<ForgeCancelOperations["cancel"]>>;
 interface LiveOperation {
   connection: ServerConnection;
   operations: ForgeCancelOperations;
   operationId: string;
   gateResult: Promise<unknown>;
   cancelCalls: () => number;
+  /** The SDK's own CancelReceipt for the latest cancel that was answered; undefined when none was. */
+  sdkReceipt: () => SdkCancelReceipt | undefined;
   close: () => Promise<void>;
 }
 /** Starts gate.run on `root` over a fresh connection and resolves once the server names the operation id. */
@@ -123,8 +139,14 @@ async function startLiveOperation(root: string): Promise<LiveOperation> {
     },
   };
   let cancels = 0;
-  const counting: ForgeCancelOperations = { cancel: id => { cancels += 1; return operations.cancel(id); } };
-  return { connection, operations: counting, operationId, gateResult, cancelCalls: () => cancels, close: () => connection.close() };
+  let answered: SdkCancelReceipt | undefined;
+  const counting: ForgeCancelOperations = {
+    cancel: id => {
+      cancels += 1;
+      return operations.cancel(id).then(answer => { answered = answer; return answer; });
+    },
+  };
+  return { connection, operations: counting, operationId, gateResult, cancelCalls: () => cancels, sdkReceipt: () => answered, close: () => connection.close() };
 }
 
 /** The harness projection: the operation node observed FROM the server's started frame, never minted blind. */
@@ -167,6 +189,21 @@ function controlTool(target: NativeRef, grants: readonly string[]) {
     return JSON.parse(text) as Reply;
   };
 }
+const isRecord = (value: unknown): value is Record<string, unknown> => value !== null && typeof value === "object" && !Array.isArray(value);
+const scalar = (value: unknown): PhaseFieldValue => (typeof value === "string" || typeof value === "boolean" || typeof value === "number" ? value : null);
+/** The terminal envelope's own typed answers, read from the parsed object (never from the capped text). */
+function terminalFields(terminal: unknown): PhaseFields {
+  const data = isRecord(terminal) && isRecord(terminal.data) ? terminal.data : {};
+  const cancellation = isRecord(data.cancellation) ? data.cancellation : {};
+  return {
+    // The envelope's own terminal answers: data.outcome_class and data.terminal_disposition (the bead text's "data.outcome" names this pair).
+    outcomeClass: scalar(data.outcome_class),
+    terminalDisposition: scalar(data.terminal_disposition),
+    cancellationEstablishment: scalar(cancellation.establishment),
+    cancelRequested: scalar(data.cancel_requested),
+    operationId: scalar(data.operation_id),
+  };
+}
 const cancelParams = (target: NativeRef): Record<string, unknown> => ({ target: { ...target }, action: "cancel", confirmed: true });
 
 describe("live forge adverse cancellation journey (wb-6hb.5)", () => {
@@ -178,13 +215,23 @@ describe("live forge adverse cancellation journey (wb-6hb.5)", () => {
     try {
       record("requested", `workflow_control cancel of ${live.operationId} under ${GRANT}`);
       const reply = await controlTool(target, [GRANT])(cancelParams(target));
-      record("acknowledged", JSON.stringify({ status: reply.status, control: reply.control ?? null }).slice(0, 400));
+      const sdk = live.sdkReceipt();
+      const acknowledged = reply.control?.acknowledged;
+      observed.acknowledged = {
+        status: reply.status,
+        nativeAckRef: isRecord(acknowledged) && typeof acknowledged.nativeAckRef === "string" ? acknowledged.nativeAckRef : null,
+        cancelIntent: sdk?.cancelIntent ?? null,
+        cancelAcceptance: sdk?.cancelAcceptance ?? null,
+        cancellationEstablished: sdk?.cancellationEstablished ?? null,
+      };
+      record("acknowledged", JSON.stringify({ status: reply.status, control: reply.control ?? null }).slice(0, 400), { ...observed.acknowledged });
       expect(reply.ok).toBe(true);
       expect(reply.invoked).toBe(true);
       expect(reply.status).toBe("acknowledged");
       expect(live.cancelCalls()).toBe(1);
       const terminal = await live.gateResult;
-      record("result", `operation terminal envelope: ${JSON.stringify(terminal).slice(0, 400)}`);
+      observed.result = terminalFields(terminal);
+      record("result", `operation terminal envelope: ${JSON.stringify(terminal).slice(0, 400)}`, { ...observed.result });
       // The result phase is the operation's own terminal answer; the acknowledgement never claimed it.
       expect(terminal).toBeTruthy();
       scenario("adverse-cancel-mid-flight", true, `op ${live.operationId} acknowledged then terminally settled by its own envelope`);
@@ -223,7 +270,8 @@ describe("live forge adverse cancellation journey (wb-6hb.5)", () => {
     try {
       await live.gateResult;
       const reply = await controlTool(target, [GRANT])(cancelParams(target));
-      record("settled-cancel", JSON.stringify({ status: reply.status, error: reply.error ?? null, control: reply.control ?? null }).slice(0, 400));
+      observed["settled-cancel"] = { status: reply.status, cancelAcceptance: live.sdkReceipt()?.cancelAcceptance ?? null };
+      record("settled-cancel", JSON.stringify({ status: reply.status, error: reply.error ?? null, control: reply.control ?? null }).slice(0, 400), { ...observed["settled-cancel"] });
       expect(reply.status === "not-accepted" || reply.status === "uncertain").toBe(true);
       expect(reply.status).not.toBe("settled");
       expect(live.cancelCalls()).toBe(1);
@@ -279,7 +327,8 @@ describe("live forge adverse cancellation journey (wb-6hb.5)", () => {
       await live.close();
       await live.gateResult;
       const reply = await controlTool(target, [GRANT])(cancelParams(target));
-      record("transport-error-cancel", JSON.stringify({ status: reply.status, error: reply.error ?? null }).slice(0, 300));
+      observed["transport-error-cancel"] = { status: reply.status, verbsIssued: live.cancelCalls() };
+      record("transport-error-cancel", JSON.stringify({ status: reply.status, error: reply.error ?? null }).slice(0, 300), { ...observed["transport-error-cancel"] });
       expect(reply.status).toBe("uncertain");
       expect(live.cancelCalls()).toBe(1);
       scenario("transport-error-parks-uncertain", true, "dead-transport cancel parked uncertain after exactly one issued verb");
@@ -288,4 +337,30 @@ describe("live forge adverse cancellation journey (wb-6hb.5)", () => {
       removeScratch(root);
     }
   }, 120_000);
+
+  it("the emitted receipt line, parsed as a captured run, carries typed phase fields beside the capped text (wb-6hb.12)", () => {
+    const parsed = parseReceiptLine(receiptLine());
+    const byPhase = new Map(parsed.phases.map(phase => [phase.phase, phase]));
+    for (const name of ["acknowledged", "result", "settled-cancel", "transport-error-cancel"]) {
+      const phase = byPhase.get(name);
+      expect(phase, `phase ${name} recorded`).toBeDefined();
+      // The capped free text stays: typed fields are additive and never replace it.
+      expect(typeof phase?.detail).toBe("string");
+      expect(phase?.fields, `phase ${name} typed fields`).toEqual(observed[name]);
+    }
+    const acknowledged = byPhase.get("acknowledged")?.fields;
+    // The CancelReceipt echo is legible without the cut text: the ack ref is built from the SDK's own intent and acceptance.
+    expect(acknowledged?.cancelAcceptance).toBe("ACCEPTED");
+    expect(acknowledged?.cancellationEstablished).toBe(false);
+    expect(acknowledged?.nativeAckRef).toBe(`forge-operation:${parsed.nativeOperationIds[0]}:operation.cancel:${String(acknowledged?.cancelIntent)}:${String(acknowledged?.cancelAcceptance)}`);
+    const result = byPhase.get("result")?.fields;
+    expect(result?.operationId).toBe(parsed.nativeOperationIds[0]);
+    expect(result?.cancelRequested).toBe(true);
+    expect(typeof result?.outcomeClass).toBe("string");
+    expect(typeof result?.terminalDisposition).toBe("string");
+    expect(result?.cancellationEstablishment).toBe("CANCELLED_CONFIRMED");
+    expect(byPhase.get("transport-error-cancel")?.fields).toEqual({ status: "uncertain", verbsIssued: 1 });
+    expect(Object.keys(parsed).sort()).toEqual(Object.keys(receipt).sort());
+    expect(parsed.contract).toBe(CONTRACT);
+  });
 });
