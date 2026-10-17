@@ -11,7 +11,7 @@ import {afterEach, describe, expect, expectTypeOf, it} from 'vitest';
 import {CapabilityError, type JsonValue} from '../src/workbench/capability-registry.js';
 import {nativeEvidence} from '../src/workbench/native-evidence.js';
 import {type NativeRef, ObservationProjection, type ObservationScope} from '../src/workbench/observation.js';
-import {nativeReactiveFiberPreview} from '../src/workbench/providers/reactivefiber.js';
+import {nativeReactiveFiberPreview, REACTIVE_FIBER_CONTRACT_SOURCE} from '../src/workbench/providers/reactivefiber.js';
 import {
   REACTIVEFIBER_OBSERVATION_CONTRACT, type ReactiveFiberObservedRelation, type ReactiveFiberProjectionTopology,
   type ReactiveFiberTopologyContext, reactivefiberTopology,
@@ -337,8 +337,9 @@ describe('ReactiveFiber render preview reader adapter', () => {
 describe('producer release from result.provenance.cli_version (wb-2j3.1 reader, wb-2j3.2 no-synthesis guard)', () => {
   const CAPABILITY = 'reactivefiber.render.preview';
   const RELEASE = '0.1.716';
-  /** The release both registered descriptors still hard-code in contractSource: the default the R3 guard must catch. */
-  const CARRIER_RELEASE = '0.1.583';
+  /** The release the single rf contractSource carrier states (wb-2j3.12, R2; read by identifier so the R3 guard tracks the
+   * live carrier, never a stale literal): the default an implementation must never synthesize for an absent cli_version. */
+  const CARRIER_RELEASE = REACTIVE_FIBER_CONTRACT_SOURCE.slice('rf@'.length, REACTIVE_FIBER_CONTRACT_SOURCE.indexOf(':'));
   const invoked: ReactiveFiberTopologyContext = {...context, invocationId: 'wf_rf_1'};
   const stating = (cliVersion: JsonValue): Json => withResult({provenance: {graph_revision_id: GRAPH, cli_version: cliVersion}});
   const noteOf = (release: string): string => `producer release from result.provenance.cli_version: rf@${release}`;
@@ -614,6 +615,16 @@ describe('engine identity from result.provenance.sdk_versions (wb-693.1 R1, wb-6
     expect(topology.diagnostics.indexOf(ENGINE_NOTE)).toBe(topology.diagnostics.indexOf(releaseNote('0.1.716')) + 1);
   });
 
+  // wb-1c6 (G8 kill margin): the engine note is the last note before the interval note even behind every partial-render note.
+  it('R10: the engine note follows the release note and every partial-render note, and precedes the interval note', () => {
+    const over = {diagnostics_summary: {errors: 2, warnings: 0, has_errors: true, has_warnings: false}, budget: {formula_terms: formula({available_context_tokens: -40})}};
+    const topology = project(stating(ENGINE_OBJECT, over, {cli_version: '0.1.716'}));
+    const plain = today(over, {cli_version: '0.1.716'});
+    expect(topology.diagnostics).toStrictEqual([...plain.diagnostics.slice(0, -1), ENGINE_NOTE, INTERVAL_NOTE]);
+    expect(topology.diagnostics.indexOf(ENGINE_NOTE)).toBe(topology.diagnostics.indexOf(releaseNote('0.1.716')) + 1);
+    expect(topology.diagnostics.indexOf(releaseNote('0.1.716'))).toBeGreaterThan(topology.diagnostics.indexOf('context exceeds the available budget: partial'));
+  });
+
   it('R10: the identities are carried, not hard-coded: other versions and fingerprints round-trip verbatim into their references', () => {
     const cases: [Json, string][] = [
       [{distribution_version: '2.1.4', contract_fingerprint: `sha256:${'0f'.repeat(32)}`}, `2.1.4:sha256:${'0f'.repeat(32)}`],
@@ -675,9 +686,16 @@ describe('engine identity from result.provenance.sdk_versions (wb-693.1 R1, wb-6
   });
 
   it('R11: only the two engine keys are read: an engine-shaped entry under another name or out of case adds nothing', () => {
-    for (const key of ['tsx_runtime_v2', 'TSX_RUNTIME', 'Tsx_Sdk', 'tsx', 'runtime', 'deno']) {
+    for (const key of ['tsx_runtime_v2', 'TSX_RUNTIME', 'Tsx_Sdk', 'Tsx_Runtime', 'TSX_SDK', 'tsx', 'runtime', 'deno']) {
       expect(JSON.stringify(project(stating({...SIBLINGS, [key]: RUNTIME})))).toBe(JSON.stringify(today()));
     }
+  });
+
+  // wb-1c6 (G11 kill margin): an out-of-case engine key beside a correctly cased one never adds a reference of its own.
+  it('R11: an out-of-case engine key beside the correctly cased one adds no second reference and no second note', () => {
+    const topology = project(stating({...SIBLINGS, tsx_runtime: RUNTIME, TSX_SDK: SDK, Tsx_Runtime: SDK}));
+    expect(engineRefsOf(topology)).toStrictEqual([RUNTIME_REF]);
+    expect(topology.diagnostics.filter(note => note === ENGINE_NOTE)).toHaveLength(1);
   });
 
   // R12 (wb-693.2 acceptance 1): "sdk_versions [{name:'fiber_optics_wire_format', version:'2'}] projects with no validation
@@ -686,7 +704,15 @@ describe('engine identity from result.provenance.sdk_versions (wb-693.1 R1, wb-6
     ['the rf <= 0.1.709 wire-format list', [{name: 'fiber_optics_wire_format', version: '2'}]],
     ['an empty list', []],
     ['a list whose elements look like engine entries', [{name: 'tsx_runtime', ...RUNTIME}, {tsx_sdk: SDK}]],
+    // wb-1c6 (G3 kill margin): a list scanned as entries would read these two keyed, fully valid engine entries.
+    ['a list of keyed, valid engine entries', [{tsx_runtime: RUNTIME}, {tsx_sdk: SDK}]],
+    ['a list holding the bare identity objects', [RUNTIME, SDK]],
   ];
+  // wb-1c6 (wb-19q member 36 / wb-693.1 R2): each-liveness. A table that is emptied or thinned registers fewer cases and would
+  // otherwise stay green; the count below is the fact that every row is still registered.
+  it('R12: the LISTS table registers all 5 rows', () => {
+    expect(LISTS.length).toBe(5);
+  });
   it.each(LISTS)('R12: a LIST-shaped sdk_versions (%s) records no engine identity and is never a refusal', (_name, list) => {
     const releases: Json[] = [{}, {cli_version: '0.1.709'}];
     for (const provenance of releases) {
@@ -697,6 +723,9 @@ describe('engine identity from result.provenance.sdk_versions (wb-693.1 R1, wb-6
   });
 
   const OTHER_SHAPES: [string, JsonValue][] = [['null', null], ['a string', 'tsx_runtime 2.9.7'], ['a number', 2], ['a boolean', true]];
+  it('R12: the OTHER_SHAPES table registers all 4 rows', () => {
+    expect(OTHER_SHAPES.length).toBe(4);
+  });
   it.each(OTHER_SHAPES)('R12: an sdk_versions that is %s records no engine identity and is never a refusal either', (_name, value) => {
     expect(JSON.stringify(project(stating(value)))).toBe(JSON.stringify(today()));
   });
@@ -767,6 +796,9 @@ describe('engine identity from result.provenance.sdk_versions (wb-693.1 R1, wb-6
     ['a sha512 fingerprint', {distribution_version: '2.9.7', contract_fingerprint: `sha512:${'b2'.repeat(64)}`}],
     ['UNKNOWN as the fingerprint', {distribution_version: '2.9.7', contract_fingerprint: 'UNKNOWN'}],
     ['unknown with a trailing space', {distribution_version: '2.9.7', contract_fingerprint: 'unknown '}],
+    // wb-1c6 kill margins: G1 (case-insensitive fingerprint regex) and G2 ('unknown' compared after trim) each had one killing row.
+    ['a mixed-case-hex fingerprint', {distribution_version: '2.9.7', contract_fingerprint: `sha256:${'b2'.repeat(31)}B2`}],
+    ['unknown with a leading line break', {distribution_version: '2.9.7', contract_fingerprint: `${cp(0x0a)}unknown`}],
     ['placeholder text as the fingerprint', {distribution_version: '2.9.7', contract_fingerprint: 'SECRET-ENGINE-FINGERPRINT'}],
     ['a null fingerprint', {distribution_version: '2.9.7', contract_fingerprint: null}],
     ['a numeric fingerprint', {distribution_version: '2.9.7', contract_fingerprint: 0}],
@@ -776,6 +808,9 @@ describe('engine identity from result.provenance.sdk_versions (wb-693.1 R1, wb-6
     ['an entry that is a list', ['2.9.7', 'unknown']],
     ['an entry that is null', null],
   ];
+  it('R13: the DROPPED table registers all 32 rows', () => {
+    expect(DROPPED.length).toBe(32);
+  });
   it.each(DROPPED)('R13: an engine entry with %s is dropped, never rewritten: no reference, no note, the projection equals today', (_name, entry) => {
     const topology = project(stating({...SIBLINGS, tsx_runtime: entry, tsx_sdk: entry}));
     expect(JSON.stringify(topology)).toBe(JSON.stringify(today()));
@@ -798,6 +833,9 @@ describe('engine identity from result.provenance.sdk_versions (wb-693.1 R1, wb-6
     ['diagnostics_summary.has_errors (R4)', {diagnostics_summary: {errors: 2, warnings: 0, has_errors: true, has_warnings: false}}, context, /^noncommitted preview \(rf-cli\) · .* 2 errors, 0 warnings$/],
     ['an over-budget render (R4)', {budget: {formula_terms: formula({available_context_tokens: -40})}}, context, /^noncommitted preview \(rf-cli\) · over budget by 40 /],
   ];
+  it('R13: the PARTIAL table registers all 3 rows', () => {
+    expect(PARTIAL.length).toBe(3);
+  });
   it.each(PARTIAL)('R13: %s with both engine entries still reads partial and unknown, its status text and seam label unchanged', (_name, over, ctx, label) => {
     const engine = project(stating(ENGINE_OBJECT, over), ctx).snapshots[0];
     const plain = today(over, {}, ctx).snapshots[0];
