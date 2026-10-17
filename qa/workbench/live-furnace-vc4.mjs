@@ -17,7 +17,6 @@
 // and FURNACE_* variables are removed from the environment first, so no other store can be addressed. One JSON receipt
 // (workbench.furnace-vc4/v1) is printed and written to $VC4_RECEIPT (when set) before the exit code is set:
 // 0 realised clean; 1 realised with findings (never tuned away); 2 not realised (the diagnostic names the step).
-import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { accessSync, chmodSync, constants, mkdtempSync, readdirSync, readFileSync, realpathSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -38,6 +37,7 @@ import {
   LAUNCHER_RECORD,
   RUN_ID_PATTERN,
 } from './live-furnace-vc4-receipt.mjs';
+import { gitStamp } from './git-stamp.mjs';
 
 const COMMAND = 'node qa/workbench/live-furnace-vc4.mjs';
 const PRINCIPAL = 'vc4-live-reader';
@@ -49,6 +49,7 @@ const SOURCES = Object.freeze([
   'qa/workbench/live-furnace-vc4.mjs',
   'qa/workbench/live-furnace-vc4-receipt.mjs',
   'qa/workbench/live-furnace-vc4-launch.mjs',
+  'qa/workbench/git-stamp.mjs',
   'dist/workbench/furnace-observer.js',
   'dist/workbench/observation.js',
   'dist/workbench/providers/furnace.js',
@@ -186,14 +187,16 @@ async function independentRead(client, runId) {
   };
 }
 
+/**
+ * wb-4xz (vko gate follow-on, 752.3 F1; cure shape = vko gate verdict U2): the canonical fail-closed stamp
+ * (./git-stamp.mjs), rooted at this repository's toplevel. A stamp that cannot describe REPO_ROOT to the end (not the
+ * repository toplevel, no valid HEAD, or a status read that failed) is 'unknown' with a null dirty bit, never a HEAD
+ * beside a clean-looking tree; the value is decided in this one block and nowhere else.
+ */
 function gitFacts() {
-  const git = (args) => {
-    const result = spawnSync('git', args, { cwd: REPO_ROOT, encoding: 'utf8' });
-    return result.status === 0 ? result.stdout : null;
-  };
-  const head = git(['rev-parse', 'HEAD']);
-  const status = git(['status', '--porcelain']);
-  return { revision: head ? head.trim() : 'unknown', dirty: status === null ? null : status.trim().length > 0 };
+  const { head, porcelain } = gitStamp(REPO_ROOT);
+  if (head === null || porcelain === null) return { revision: 'unknown', dirty: null };
+  return { revision: head, dirty: porcelain.trim().length > 0 };
 }
 
 function sourceDigests() {
