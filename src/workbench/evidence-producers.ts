@@ -16,6 +16,23 @@ export { CLAUDE_TRANSCRIPT_GRANT } from "./claude-evidence.js";
 export const FURNACE_INSPECT_GRANT = "furnace:inspect";
 export const FORGE_INSPECT_GRANT = "forge:inspect";
 
+/** One row of the docs/workbench/20 § Producer mapping table: the only producers that ever get a loader. */
+export interface EvidenceLoaderRow {
+  readonly provider: string;
+  readonly requiredGrant: string;
+  readonly refKind: string;
+}
+
+/**
+ * The docs/workbench/20 § Producer mapping table and nothing else, in loader order. Any other provider has no
+ * row and therefore no loader, so its refs render `unavailable: no-loader`.
+ */
+export const EVIDENCE_LOADER_ROWS: readonly EvidenceLoaderRow[] = Object.freeze([
+  Object.freeze({ provider: "claude-agent-sdk", requiredGrant: CLAUDE_TRANSCRIPT_GRANT, refKind: "claude-message:<uuid>" }),
+  Object.freeze({ provider: "furnace", requiredGrant: FURNACE_INSPECT_GRANT, refKind: "native Attempt id listed on the owning run node" }),
+  Object.freeze({ provider: "forge", requiredGrant: FORGE_INSPECT_GRANT, refKind: "forge-operation:<operation_id>" }),
+]);
+
 /** The projection node a claude-message ref was requested on, as the host observes it. */
 export interface ClaudeOwningNode {
   readonly nativeRef: NativeRef;
