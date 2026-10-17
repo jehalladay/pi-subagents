@@ -78,6 +78,16 @@ describe('RF external CLI preview producer', () => {
     const result = await nativeReactiveFiberPreview('model', 'task', process.cwd());
     expect(result).toEqual({ contract: 'reactivefiber.render.preview/v1', workspaceRoot: process.cwd(), source: validRf() });
   });
+  // wb-2j3.9 (R10) acceptance (c): R1's cli_version admission adds no required key, so the cli_version-free fixture must keep validating.
+  it('admits the cli_version-free envelope: eight top-level keys, six work keys, no cli_version required', async () => {
+    const fixture = validRf();
+    expect(Object.keys(fixture)).toHaveLength(8);
+    expect(Object.keys(fixture.result.work)).toHaveLength(6);
+    expect(JSON.stringify(fixture)).not.toContain('cli_version');
+    producer(fixture);
+    const result = await nativeReactiveFiberPreview('model', 'task', process.cwd());
+    expect(result).toEqual({ contract: 'reactivefiber.render.preview/v1', workspaceRoot: process.cwd(), source: fixture });
+  });
   it('preserves a genuine RF workspace refusal as an unavailable native result', async () => {
     producer({ ...validRf(), ok: false, workspace: null, result: null, diagnostics: [{ code: 'RF_WORKSPACE_INVALID', severity: 'error', message: 'No initialized workspace', hint: null, source: 'host', metadata: {} }] });
     await expect(nativeReactiveFiberPreview('model', 'task', process.cwd())).rejects.toMatchObject({ category: 'unavailable', message: expect.stringContaining('RF_WORKSPACE_INVALID') });
@@ -92,6 +102,17 @@ describe('RF external CLI preview producer', () => {
     ['boolean provenance', () => ({ ...validRf(), result: { ...validRf().result, provenance: true } })],
     ['absent graph digest', () => ({ ...validRf(), result: { ...validRf().result, provenance: {} } })],
     ['malformed graph digest', () => ({ ...validRf(), result: { ...validRf().result, provenance: { graph_revision_id: 'sha256:abc' } } })],
+    // wb-2j3.9 (R10): envelope strictness stays under the R1/R2/R4 landing (test-only pins, no loosening).
+    ['null graph digest', () => ({ ...validRf(), result: { ...validRf().result, provenance: { graph_revision_id: null } } })],
+    ['numeric graph digest', () => ({ ...validRf(), result: { ...validRf().result, provenance: { graph_revision_id: 7 } } })],
+    ['uppercase graph digest', () => ({ ...validRf(), result: { ...validRf().result, provenance: { graph_revision_id: `sha256:${'A'.repeat(64)}` } } })],
+    ['seventh result.work key', () => ({ ...validRf(), result: { ...validRf().result, work: { ...validRf().result.work, seventh_count: 0 } } })],
+    ['five-key result.work', () => { const { necessity_eval_count: _dropped, ...five } = validRf().result.work; return { ...validRf(), result: { ...validRf().result, work: five } }; }],
+    ['string storage write count', () => ({ ...validRf(), result: { ...validRf().result, work: { ...validRf().result.work, storage_write_count: '0' } } })],
+    ['null storage write count', () => ({ ...validRf(), result: { ...validRf().result, work: { ...validRf().result.work, storage_write_count: null } } })],
+    ['seven-key top-level (diagnostics absent)', () => ({ ...validRf(), diagnostics: undefined })],
+    ['seven-key top-level (transaction_id absent)', () => ({ ...validRf(), transaction_id: undefined })],
+    ['seven-key top-level (result absent)', () => ({ ...validRf(), result: undefined })],
     ['non-null ephemeral transaction id', () => ({ ...validRf(), transaction_id: `rft_${id}` })],
     ['non-null ephemeral render id', () => ({ ...validRf(), result: { ...validRf().result, render_id: `rfr_${id}` } })],
     ['non-null ephemeral commit sequence', () => ({ ...validRf(), result: { ...validRf().result, commit_seq: 1 } })],
