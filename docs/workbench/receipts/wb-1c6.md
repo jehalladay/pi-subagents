@@ -9,3 +9,4 @@
 - Green: `npx vitest run test/workbench-reactivefiber-observer.test.ts` 162 of 162 (was 152); the nine reader suites that import the observer 372 of 372; `forge run lint` and `forge run typing` exit 0; `typecheck:test` 36 errors identical to the base tree, none in the file.
 - Revision: the test file is git blob c388f92d86aaf8e61bc02986ad3384c1b91072b0 in the pushed commit (blob ids are stable across the receipt amend).
 - Display paths added: none. No src change.
+- Re-cut: merged trunk cf0068f (landing 87) INTO the branch; the only conflict was this receipt directory's INDEX.md (append-only union, landed lines first, the wb-1c6 line last). Re-measured on the merged tree: observer 162 of 162; hollowing one table at a time 1 failed each, all four emptied at registration 4 failed | 114 passed (118); 7 src mutants each 2 failed | 160 passed (162).
