@@ -6,6 +6,7 @@ import { type InspectorModel, initialInspectorState, inspectorEvidenceTarget, la
 import { ATTENTION_CLOCK_CAVEAT, ATTENTION_CONTRACT, ATTENTION_CRITICAL_PATH_CAVEAT, type AttentionBottleneck, type AttentionReport } from '../src/workbench/attention.js';
 import { type EvidenceContent, type EvidenceLoader, EvidenceRefusal, EvidenceStore } from '../src/workbench/evidence-loader.js';
 import { CLAUDE_TRANSCRIPT_GRANT, createEvidenceLoaders } from '../src/workbench/evidence-producers.js';
+import { buildGraphView, GRAPH_VIEW_CONTRACT } from '../src/workbench/graph-view.js';
 import { type NativeRef, ObservationProjection, type ObservationScope } from '../src/workbench/observation.js';
 
 const scope: ObservationScope = {workspace:'workspace',principal:'reader'};
@@ -691,6 +692,419 @@ describe('W15/VC-5 closing the nested overview (wb-6ze.1)',()=>{
    expect(onKill).not.toHaveBeenCalled();
    for(const spy of mutators) expect(spy).not.toHaveBeenCalled();
    dialog.dispose();
+ });
+});
+
+// wb-6ze.34 (W15-B6 / VC-5): with InspectorModel.graph set the graph view draws the wb-6ze.32 graph-view model; absent, the
+// graph view is byte-identical to the base. Spec quotes: docs/workbench/10-terminal-inspector.md § Four views (Graph) and
+// § Rendering pipeline; docs/workbench/09-observation-and-provenance.md § Relationships are typed and provenanced; BOUNDARY
+// 2026-10-15T10:58:33Z ("declared edge to unobserved endpoint -> 'unobserved endpoint' marker, never unknown-dynamic").
+describe('W15-B6 graph view draws the graph-view model (wb-6ze.34)',()=>{
+ type Graph=NonNullable<InspectorModel['graph']>;
+ type Kind=Parameters<ObservationProjection['relate']>[0]['kind'];
+ type State=ReturnType<typeof initialInspectorState>;
+ interface Size {width:number; rows:number; ascii?:boolean}
+ const graphState=(over:Partial<State>={}):State=>({...initialInspectorState(),view:'graph',...over});
+ const draw=(model:InspectorModel,over:Partial<State>={},size:Size={width:120,rows:40,ascii:true})=>layoutInspector(model,graphState(over),size);
+ /** Code point ranges no drawn line may carry: C0 and C1 controls with DEL, the Arabic letter mark, zero-width and bidi marks,
+  * line and paragraph separators, embeddings and overrides, word joiner and isolates, lone surrogates and the BOM. Built from
+  * numbers so this file carries none of them raw (wb-era); hostile inputs below are composed from the same code points. */
+ const UNSAFE_RANGES:readonly (readonly [number,number])[]=[[0x00,0x1f],[0x7f,0x9f],[0x61c,0x61c],[0x200b,0x200f],[0x2028,0x202e],[0x2060,0x2069],[0xd800,0xdfff],[0xfeff,0xfeff]];
+ const unsafe=(line:string)=>Array.from(line).some(char=>{const point=char.codePointAt(0)??0;return UNSAFE_RANGES.some(([low,high])=>point>=low&&point<=high);});
+ const [NUL,BEL,ESC,NEL,CSI8,ZWSP,ZWJ,PDF,RLO,LRI,PDI]=[0x00,0x07,0x1b,0x85,0x9b,0x200b,0x200d,0x202c,0x202e,0x2066,0x2069].map(point=>String.fromCodePoint(point));
+ const glyphs=(ascii:boolean)=>({sep:ascii?' | ':' · ',arrow:ascii?'->':'→',back:ascii?'<-':'←',active:ascii?'*':'◌',dots:ascii?'...':'…'});
+ /** Rows of an observed node in the model branch: its tone glyph, its label, then the field separator. */
+ const nodeRows=(lines:readonly string[],label:string,ascii:boolean)=>{const {sep,active}=glyphs(ascii);return lines.filter(line=>line.includes(`${active} ${label}${sep}`));};
+ const isReference=(line:string)=>line.trimStart().startsWith('reference ');
+ /** A wb-6ze.32 model over a real projection: two fan-outs above the default cap of 8 (one aggregate each), a declared edge
+  * between shown rows, a self-loop (a cycle reference), a causation edge to a never-observed endpoint (an unknown-dynamic
+  * reference) and a declared edge to another never-observed endpoint. */
+ function graphFixture(){
+   const projection=new ObservationProjection({maxEvents:64,maxNodes:200,maxEdges:200,maxQuery:100});
+   const observe=(provider:string,id:string,title:string)=>projection.refresh({source:ref(provider,id),scope,capturedAt:now,observedAt:now,node:presentation(title),trace:{invocationId:'graph'}});
+   const relate=(from:NativeRef,to:NativeRef,kind:Kind)=>projection.relate({scope,from,to,kind,provenance:{source:'fixture-producer',observedAt:now}});
+   observe('forge','hub-a','Hub A');observe('furnace','hub-b','Hub B');
+   for(let i=0;i<9;i++){observe('forge',`a${i}`,`Fan A${i}`);relate(ref('forge','hub-a'),ref('forge',`a${i}`),'causation');}
+   for(let i=0;i<10;i++){const provider=i%2?'forge':'furnace';observe(provider,`b${i}`,`Fan B${i}`);relate(ref('furnace','hub-b'),ref(provider,`b${i}`),'grouping');}
+   for(const [id,title] of [['build','Build'],['test','Test'],['loop','Loop'],['caller','Caller'],['planner','Planner']] as const) observe('forge',id,title);
+   relate(ref('forge','build'),ref('forge','test'),'dependency');
+   relate(ref('forge','loop'),ref('forge','loop'),'grouping');
+   relate(ref('forge','caller'),ref('forge','spawned-later'),'causation');
+   relate(ref('forge','planner'),ref('forge','declared-only'),'dependency');
+   const base:InspectorModel={projection,scope,invocationId:'graph',title:'Graph workflow',status:'running'};
+   const graph=buildGraphView(projection,{scope,invocationId:'graph',viewport:{offset:0,limit:100},caps:{maxNodes:100}});
+   const keyOf=(label:string)=>graph.nodes.find(node=>node.label===label)?.key??'';
+   return {base,graph,model:{...base,graph},keyOf};
+ }
+
+ it('AC1 draws counted aggregates before node rows, each edge with a direction glyph, its class and [source], and both references as reference rows',()=>{
+   // docs/workbench/10 § Four views, Graph: "explicit dependency arrows, fan-out collapsing, cross-provider nodes ... Cycles/unknown
+   // dynamic edges represented explicitly as \"references\" rather than rendered as a fake acyclic plan."; § Rendering pipeline:
+   // "For large graphs show aggregate supernodes first."; docs/workbench/09: "Store edge provenance with timestamp and source;
+   // Graph view styles each differently."
+   const {graph,model}=graphFixture();
+   expect(graph.supernodes.map(entry=>entry.count)).toEqual([9,10]);
+   expect(graph.references.map(entry=>entry.reason)).toEqual(['cycle','endpoint-not-in-view','endpoint-not-in-view']);
+   for(const ascii of [true,false]){
+     const {arrow,sep}=glyphs(ascii);
+     const lines=draw(model,{},{width:120,rows:40,ascii});
+     const aggregates=lines.flatMap((line,at)=>line.includes(`aggregate${sep}`)?[at]:[]);
+     expect(aggregates).toHaveLength(2);
+     expect(lines[aggregates[0]]).toContain('9 targets collapsed from Hub A (fan-out above 8)');
+     expect(lines[aggregates[1]]).toContain('10 targets collapsed from Hub B (fan-out above 8)');
+     const rows=['Hub A','Hub B','Build','Test','Loop','Caller','Planner'].map(label=>lines.findIndex(line=>nodeRows([line],label,ascii).length===1));
+     expect(rows.every(at=>at>aggregates[1])).toBe(true);
+     // Collapsed fan-out targets are counted in their aggregate, never expanded into rows (F3).
+     expect(lines.some(line=>/Fan [AB]\d/.test(line))).toBe(false);
+     const edge=lines[rows[2]+1];
+     expect(edge).toContain(`declared dependency ${arrow} Test`);
+     expect(edge).toContain('[fixture-producer]');
+     const references=lines.filter(isReference);
+     expect(references).toHaveLength(2);
+     expect(references[0]).toContain(`reference${sep}cycle${sep}grouping${sep}Loop ${arrow} Loop [fixture-producer]`);
+     expect(references[1]).toContain(`reference${sep}unknown dynamic edge (not in view)${sep}observed causal${sep}Caller ${arrow} forge/operation/spawned-later`);
+     // A cycle is never also drawn as an arrow (F1).
+     expect(lines.filter(line=>line.includes('Loop')&&!isReference(line)&&line.includes(arrow))).toHaveLength(0);
+   }
+ });
+ it('AC2 a declared edge to a never-observed endpoint is a declared dependency marked unobserved endpoint, never unknown-dynamic',()=>{
+   const {model}=graphFixture();
+   for(const ascii of [true,false]){
+     const {arrow,sep}=glyphs(ascii);
+     const lines=draw(model,{},{width:120,rows:40,ascii});
+     const declared=lines.filter(line=>line.includes('forge/operation/declared-only'));
+     expect(declared).toHaveLength(1);
+     expect(declared[0]).toContain(`declared dependency${sep}unobserved endpoint (not in view) ${arrow} forge/operation/declared-only [fixture-producer]`);
+     expect(declared[0]).not.toContain('unknown dynamic');
+     expect(isReference(declared[0])).toBe(false);
+     // It is drawn with its observed source row, directly below it.
+     expect(lines.indexOf(declared[0])).toBe(lines.findIndex(line=>nodeRows([line],'Planner',ascii).length===1)+1);
+   }
+ });
+ it('AC3 a truncated read draws its counted partial labels and a complete model draws none',()=>{
+   const projection=new ObservationProjection({maxEvents:64,maxNodes:64,maxEdges:64,maxQuery:40});
+   for(let i=0;i<12;i++) projection.refresh({source:ref('forge',`r${i}`),scope,capturedAt:now,observedAt:now,node:presentation(`Row ${i}`),trace:{invocationId:'cut'}});
+   for(let i=1;i<8;i++) projection.relate({scope,from:ref('forge','r0'),to:ref('forge',`r${i}`),kind:'causation',provenance:{source:'fixture-producer',observedAt:now}});
+   const graph=buildGraphView(projection,{scope,invocationId:'cut',viewport:{offset:0,limit:6},caps:{relationLimit:5}});
+   expect(graph.complete).toBe(false);
+   expect(graph.partials.map(entry=>entry.scope)).toEqual(['window','relations']);
+   const model={projection,scope,invocationId:'cut',title:'Cut',status:'running',graph};
+   for(const ascii of [true,false]){
+     const {sep}=glyphs(ascii);
+     const lines=draw(model,{},{width:120,rows:40,ascii});
+     const partial=lines.filter(line=>line.includes(`partial${sep}`));
+     expect(partial).toHaveLength(2);
+     expect(partial[0]).toContain('showing 6 of 12 rows');
+     expect(partial[1]).toContain('Row 0: showing 5 outgoing relations, more exist (page truncated)');
+     expect(lines.at(-2)).toContain('Topology incomplete unless native relationships are explicitly supplied.');
+   }
+   const complete=graphFixture();
+   expect(complete.graph.complete).toBe(true);
+   expect(draw(complete.model).some(line=>line.includes('partial'))).toBe(false);
+ });
+ it('AC3 under a small row budget partial labels are kept before any block, and every block left over is counted',()=>{
+   const projection=new ObservationProjection({maxEvents:64,maxNodes:64,maxEdges:64,maxQuery:40});
+   for(let i=0;i<12;i++) projection.refresh({source:ref('forge',`r${i}`),scope,capturedAt:now,observedAt:now,node:presentation(`Row ${i}`),trace:{invocationId:'cut'}});
+   for(let i=1;i<8;i++) projection.relate({scope,from:ref('forge','r0'),to:ref('forge',`r${i}`),kind:'causation',provenance:{source:'fixture-producer',observedAt:now}});
+   const graph=buildGraphView(projection,{scope,invocationId:'cut',viewport:{offset:0,limit:12},caps:{relationLimit:5}});
+   const model={projection,scope,invocationId:'cut',title:'Cut',status:'running',graph};
+   for(const rows of [10,12,14]) for(const ascii of [true,false]){
+     const {sep}=glyphs(ascii);
+     const lines=draw(model,{},{width:120,rows,ascii});
+     expect(lines.length).toBeLessThanOrEqual(rows);
+     expect(lines.some(line=>line.includes(`partial${sep}Row 0: showing 5 outgoing relations, more exist (page truncated)`))).toBe(true);
+     expect(lines.some(line=>line.includes('(row budget)'))).toBe(true);
+     expect(lines.at(-1)).toContain('Esc');
+   }
+ });
+
+ /** Every graph-view render the pre-existing cases of this file perform, rebuilt from the same fixed inputs, in order. */
+ const graphText=(model:InspectorModel,over:Partial<State>,size:Size)=>draw(model,over,size).join('\n');
+ const FALLBACK:readonly (readonly [string,()=>string[]])[]=[
+  ['four-view: observed relation provenance, 120x40 ascii',()=>[graphText(fixture(),{},{width:120,rows:40,ascii:true})]],
+  ['four-view: dialog GRAPH after Tab, 80x24',()=>[layoutInspector(fixture(),{...initialInspectorState(),view:'graph',previousView:'overview'},{width:80,rows:24}).join('\n')]],
+  ...[true,false].map(ascii=>[`four-view: capped width and unsafe title, ascii=${ascii}`,()=>{
+    const model=fixture();model.title='\x1b[2J secret\n漢字';
+    return [32,79,80,120].map(width=>graphText(model,{},{width,rows:24,ascii}));
+  }] as const),
+  ['navigation: Enter collapses the highlighted row, 80x24',()=>{
+    const model=fixture();const collapsed=reduceInspectorKey('\r',initialInspectorState(),model)!.state;
+    return [layoutInspector(model,{...collapsed,view:'graph'},{width:80,rows:24}).join('\n')];
+  }],
+  ['relation fidelity: direction and native kind, 120x40 ascii',()=>[graphText(fixture(),{},{width:120,rows:40,ascii:true})]],
+  ['viewport: Escape hint at 32/80 x 18/24 ascii',()=>{const model=fixture();return [32,80].flatMap(width=>[18,24].map(rows=>graphText(model,{},{width,rows,ascii:true})));}],
+  ['graph footer under fan-out, 80x24 ascii',()=>{
+    const model=fixture();
+    for(let i=1;i<15;i++)model.projection.relate({scope,from:ref('furnace','0'),to:ref(i%2?'forge':'furnace',String(i)),kind:'causation',provenance:{source:'furnace',observedAt:now}});
+    return [graphText(model,{},{width:80,rows:24,ascii:true})];
+  }],
+  ['graph direction: reverse reader edge at index 1, 120x40 ascii',()=>[graphText(fixture(),{index:1},{width:120,rows:40,ascii:true})]],
+  ['graph preview: two redraws without a topology change, 80x24',()=>{const model=fixture();return [graphText(model,{},{width:80,rows:24}),graphText(model,{},{width:80,rows:24})];}],
+  ['graph cache invalidation: before and after a new edge, 120x40 ascii',()=>{
+    const model=fixture();const before=graphText(model,{},{width:120,rows:40,ascii:true});
+    model.projection.relate({scope,from:ref('furnace','0'),to:ref('furnace','2'),kind:'grouping',provenance:{source:'furnace',observedAt:now}});
+    return [before,graphText(model,{},{width:120,rows:40,ascii:true})];
+  }],
+  ['B3 grouping cycles at three sizes, both tiers',()=>{
+    const projection=new ObservationProjection({maxEvents:16,maxNodes:64,maxEdges:64,maxQuery:40});
+    for(const id of ['A','B','C','D','E','F','S']) projection.refresh({source:nested('furnace','operation',id),scope,capturedAt:now,observedAt:now,node:presentation(`Cycle ${id}`),trace:{invocationId:'cycle'}});
+    for(const [from,to] of [['A','B'],['B','A'],['C','D'],['D','E'],['E','C'],['D','F'],['S','S']]) projection.relate({scope,from:nested('furnace','operation',from),to:nested('furnace','operation',to),kind:'grouping',provenance:nestingProvenance});
+    const model={projection,scope,invocationId:'cycle',title:'Cycles',status:'running'};
+    return ([[80,24],[32,18],[120,40]] as const).flatMap(([width,rows])=>[true,false].map(ascii=>graphText(model,{},{width,rows,ascii})));
+  }],
+  ['B5 first two relations then a +N more count, 120x40 ascii',()=>{
+    const model=fixture();
+    for(const id of ['3','5','7','9']) model.projection.relate({scope,from:ref('furnace','0'),to:ref('forge',id),kind:'causation',provenance:{source:'furnace',observedAt:now}});
+    return [graphText(model,{},{width:120,rows:40,ascii:true})];
+  }],
+  ['B5 a self-loop listed once, 120x24 ascii',()=>{
+    const projection=new ObservationProjection({maxEvents:16,maxNodes:64,maxEdges:64,maxQuery:40});
+    const self=nested('furnace','operation','self');
+    projection.refresh({source:self,scope,capturedAt:now,observedAt:now,node:presentation('Self loop'),trace:{invocationId:'loop'}});
+    projection.relate({scope,from:self,to:self,kind:'grouping',provenance:nestingProvenance});
+    return [graphText({projection,scope,invocationId:'loop',title:'Loop',status:'running'},{},{width:120,rows:24,ascii:true})];
+  }],
+  ['B5 a full relation page is suffixed (partial), 120x24 ascii',()=>{
+    const projection=new ObservationProjection();
+    const hub=nested('furnace','operation','hub');
+    projection.refresh({source:hub,scope,capturedAt:now,observedAt:now,node:presentation('Hub'),trace:{invocationId:'hub'}});
+    for(let i=0;i<105;i++) projection.relate({scope,from:hub,to:nested('forge','operation',`t-${i}`),kind:'causation',provenance:{source:'furnace',observedAt:now}});
+    return [graphText({projection,scope,invocationId:'hub',title:'Hub',status:'running'},{},{width:120,rows:24,ascii:true})];
+  }],
+  ['B6 bounds after 100k ingest updates, four widths, both tiers',()=>{
+    const projection=new ObservationProjection({maxEvents:16,maxNodes:1200,maxEdges:1200,maxQuery:40});
+    for(let i=0;i<90;i++) projection.refresh({source:ref('forge',String(i)),scope,capturedAt:now,observedAt:now,node:presentation(`Grouped ${i}`),trace:{invocationId:'scale'}});
+    for(let i=1;i<90;i++) projection.relate({scope,from:ref('forge',String(Math.floor((i-1)/3))),to:ref('forge',String(i)),kind:'grouping',provenance:nestingProvenance});
+    const model={projection,scope,invocationId:'scale',title:'Scale',status:'running'};
+    const state=reduceInspectorKey('j',initialInspectorState(),model)!.state;
+    for(let i=0;i<100_000;i++) projection.ingest({projectionEventId:`g-${i}`,source:ref('forge',String(i%90)),scope,sourceSequence:Math.floor(i/90)+1,observedAt:now,kind:'native.status',node:{presentation:presentation(`Grouped ${i%90}`)}});
+    return [32,79,80,120].flatMap(width=>[true,false].map(ascii=>layoutInspector(model,{...state,view:'graph'},{width,rows:24,ascii}).join('\n')));
+  }],
+  ['B6 graph blocks that do not fit are counted, 80x24 ascii',()=>[graphText(groupedFixture(),{},{width:80,rows:24,ascii:true})]],
+  ['B6 a graph selection past the row budget, 80x24 ascii',()=>[graphText(groupedFixture(),{index:7},{width:80,rows:24,ascii:true})]],
+  ['A1 evidence journey graph redraw, 80x24',()=>{
+    const projection=new ObservationProjection({maxEvents:16,maxNodes:100,maxEdges:100,maxQuery:40});
+    projection.refresh({source:ref('forge','gate'),scope,capturedAt:now,observedAt:now,node:{...presentation('Gate'),statusText:'success',statusTone:'success'},trace:{invocationId:'workflow-ev'},coverage:'complete',evidenceRefs:['ev:alpha','ev:beta','ev:gamma']});
+    projection.refresh({source:ref('furnace','run'),scope,capturedAt:now,observedAt:now,node:presentation('Run'),trace:{invocationId:'workflow-ev'},coverage:'partial'});
+    const loader:EvidenceLoader={provider:'forge',requiredGrant:'forge:inspect',canLoad:item=>item.startsWith('ev:'),
+      load:async request=>({kind:'fixture',provider:'forge',capturedAt:now,bytes:request.evidenceRef.length,truncated:false,preview:[`payload for ${request.evidenceRef}`],freshness:'current'})};
+    const store=new EvidenceStore({loaders:[loader],maxEntries:8,maxBytes:2048,timeoutMs:200,scope});
+    const model:InspectorModel={projection,scope,invocationId:'workflow-ev',title:'Evidence workflow',status:'running',evidence:store};
+    return [layoutInspector(model,reduceInspectorKey('\t',initialInspectorState(),model)!.state,{width:80,rows:24}).join('\n')];
+  }],
+  ['attention AC6: the fixture graph view at 80x24 and 120x40, both tiers',()=>([[80,24],[120,40]] as const).flatMap(([width,rows])=>[true,false].map(ascii=>graphText(fixture(),{},{width,rows,ascii})))],
+ ];
+ /** sha256 of each case's renders, captured with the graph branch unchanged (wb-6ze.34 AC4): at base 4becba1, and the attention
+  * row at base 5d0f71e where its case first exists (wb-6ze.21 landed); never re-pinned. */
+ const BASE_DIGESTS:Readonly<Record<string,string>>={
+  'four-view: observed relation provenance, 120x40 ascii':'3d364b7f18376bcef4114d7b80487d2e03c8bc150a9c1f3ce26f217c1cc91e7f',
+  'four-view: dialog GRAPH after Tab, 80x24':'cf5fc7275bd4218b015e8f1a0478e17453e016f8da373980e2cd4dc91380b3a7',
+  'four-view: capped width and unsafe title, ascii=true':'6a4d3cc0601cc8d6daf1e2594fc2735817f4b65e1afd977062daf49a751540bc',
+  'four-view: capped width and unsafe title, ascii=false':'203511a64e591ae0a2edf140b54d9ec8700a324fb97c7f211d110e0c94494755',
+  'navigation: Enter collapses the highlighted row, 80x24':'ea24af365fa0ea59ca32c3667df4cd128a68ff5db0694a93c7005648c7e32671',
+  'relation fidelity: direction and native kind, 120x40 ascii':'3d364b7f18376bcef4114d7b80487d2e03c8bc150a9c1f3ce26f217c1cc91e7f',
+  'viewport: Escape hint at 32/80 x 18/24 ascii':'e0559356fa67981e86c8c60beb9644bd9f09e0a8030e310995bad82718e03f20',
+  'graph footer under fan-out, 80x24 ascii':'95166a7f5eae5f03cf9a54cf10c83f71c1fb34b8195a8e94024adacad1d47b81',
+  'graph direction: reverse reader edge at index 1, 120x40 ascii':'caca0731f8f74c31951eaa17e807da57d7a4a804c7a9048e6a9df45ca5e29fc7',
+  'graph preview: two redraws without a topology change, 80x24':'7652ad55f053b116874b5627f078fec6249f44b2f70c18caab68f7f217c1b789',
+  'graph cache invalidation: before and after a new edge, 120x40 ascii':'6de47acf1d5d4af165a678ca0d8ccd989baa66a74ac6c9fec7d5786370b24920',
+  'B3 grouping cycles at three sizes, both tiers':'72ce56673b3b2b661d09dcdb6ef83c451adbd958caa49a39e5263eef6ceeeeaf',
+  'B5 first two relations then a +N more count, 120x40 ascii':'44d7adc723b11d8440330fafd582f0b1bee4cbb9e01d2b0a79f20d8352ac7b2a',
+  'B5 a self-loop listed once, 120x24 ascii':'2aa6e22facc092587537f8c261355ac804c843250156391c59d6f2d4ca17378f',
+  'B5 a full relation page is suffixed (partial), 120x24 ascii':'79775a1645d814621f28a27b8c1aac172a3def55aba1287acf301b8f2c5d5a4c',
+  'B6 bounds after 100k ingest updates, four widths, both tiers':'974fc52d6a9848b24891796e828bea3af50793c50a5dc9533bf3dd800777df35',
+  'B6 graph blocks that do not fit are counted, 80x24 ascii':'55da4bdfc3bff0db72b1b922602f263fc4f4a5cd509ce6e10c714750882e8021',
+  'B6 a graph selection past the row budget, 80x24 ascii':'61a97da12485d4f39cfdefa57267c921a78844f49b31853c84e19a4de8193dd7',
+  'A1 evidence journey graph redraw, 80x24':'8dd8a047a9646dd859b0cbcd598c460c660e2150ac0b6d6630aabbe9789e0bc4',
+  'attention AC6: the fixture graph view at 80x24 and 120x40, both tiers':'751aaf1213e8b6d9dc946cdcec953dfded5a56bad448ff311d0497b4d370042e',
+ };
+ const digest=async(text:string):Promise<string>=>Buffer.from(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(text))).toString('hex');
+ it('AC4 the fallback table names every pre-existing graph-view case exactly once',()=>{
+   expect(FALLBACK.map(([name])=>name).sort()).toEqual(Object.keys(BASE_DIGESTS).sort());
+   expect(new Set(FALLBACK.map(([name])=>name)).size).toBe(FALLBACK.length);
+ });
+ it.each(FALLBACK)('AC4 without a model the graph view equals the base output: %s',async(name,render)=>{
+   const outputs=render();
+   expect(outputs.length).toBeGreaterThan(0);
+   expect(outputs.every(text=>text.includes('Observed reference graph'))).toBe(true);
+   expect(await digest(outputs.join('\n\u0000\n'))).toBe(BASE_DIGESTS[name]);
+ });
+ it('AC4 an explicitly undefined graph is the same as an absent one',()=>{
+   const model=fixture();
+   for(const size of [{width:80,rows:24,ascii:true},{width:120,rows:40}]) expect(draw({...model,graph:undefined},{},size)).toEqual(draw(model,{},size));
+ });
+
+ it('AC5 hostile producer text reaches no line raw through the real projection and model, and no line exceeds the terminal',()=>{
+   // AC5: "a node label and a provenance source containing control, escape, zero-width and bidi characters render only through
+   // safe()/visibleWidth". The credential literal is an obvious placeholder (standing rule 7).
+   const hostile=`Bea${ZWSP}rer sk-ant-api03-FAKEPLACEHOLDERFAKEPLACEHOLDER ${RLO}flip${PDF} ${LRI}iso${PDI} ${CSI8}31mred${NEL} 漢字`;
+   const projection=new ObservationProjection({maxEvents:32,maxNodes:32,maxEdges:32,maxQuery:40});
+   for(const id of ['a','b','c','d']) projection.refresh({source:ref('forge',id),scope,capturedAt:now,observedAt:now,node:{...presentation(`${hostile} ${id}`),statusText:hostile},trace:{invocationId:'hostile'}});
+   const relate=(from:string,to:string,kind:Kind)=>projection.relate({scope,from:ref('forge',from),to:ref('forge',to),kind,provenance:{source:hostile,observedAt:now}});
+   relate('a','b','dependency');relate('c','c','grouping');relate('a','unseen','causation');relate('b','declared','dependency');
+   for(const id of ['x1','x2','x3']) relate('d',id,'hypothesis');
+   const graph=buildGraphView(projection,{scope,invocationId:'hostile',viewport:{offset:0,limit:4},caps:{relationLimit:2}});
+   expect(graph.partials.some(entry=>entry.scope==='relations')).toBe(true);
+   const model={projection,scope,invocationId:'hostile',title:hostile,status:'running',graph};
+   for(const width of [80,120]) for(const ascii of [true,false]){
+     const lines=draw(model,{},{width,rows:40,ascii});
+     expect(lines.filter(line=>unsafe(line)).length,'lines with a raw unsafe unit').toBe(0);
+     expect(lines.filter(line=>line.includes('FAKEPLACEHOLDER')).length,'lines with the credential tail').toBe(0);
+     expect(lines.filter(line=>visibleWidth(line)>width).length,'lines wider than the terminal').toBe(0);
+     // Every surface drew: four node rows, the edge, the declared row, the cycle and dynamic references, the partial label.
+     expect(lines.filter(line=>line.includes('[REDACTED]')).length).toBeGreaterThanOrEqual(4);
+     expect(lines.filter(line=>line.includes('unobserved endpoint'))).toHaveLength(1);
+     expect(lines.filter(isReference).length).toBeGreaterThanOrEqual(2);
+     expect(lines.some(line=>line.includes('partial'))).toBe(true);
+   }
+ });
+ it('F6 a model carrying raw producer text on every string surface is still drawn only through safe()',()=>{
+   const raw=`${ESC}[2J${ESC}]0;pwn${BEL}Bea${ZWSP}rer sk-ant-api03-FAKEPLACEHOLDERFAKEPLACEHOLDER ${RLO}flip${PDF} ${LRI}iso${PDI} ${CSI8}31m${NUL}end`;
+   const projection=new ObservationProjection({maxEvents:16,maxNodes:16,maxEdges:16,maxQuery:40});
+   for(const id of ['a','b']) projection.refresh({source:ref('forge',id),scope,capturedAt:now,observedAt:now,node:presentation(`Plain ${id}`),trace:{invocationId:'raw'}});
+   const nodes=projection.window({scope,invocationId:'raw',offset:0,limit:2}).nodes;
+   const [a,b]=nodes.map(node=>node.key);
+   const unseen=JSON.stringify([scope.workspace,scope.principal,'forge','operation','',raw]);
+   const graph:Graph={contract:GRAPH_VIEW_CONTRACT,revisionBasis:{revision:1,topologyRevision:1},complete:false,
+     supernodes:[{key:`fanout:${a}`,from:a,label:raw,count:9,lowerBound:true,providers:[{provider:raw,count:9}],tones:[{tone:'active',count:9}],classes:['causation']}],
+     nodes:nodes.map(node=>({key:node.key,nativeRef:node.nativeRef,provider:raw,type:'sdk-operation',label:`${raw} ${node.nativeRef.id}`,status:raw,tone:'active',freshness:'current'})),
+     edges:[{from:a,to:b,class:'dependency',source:raw,confirmed:false,crossProvider:false}],
+     references:[{reason:'cycle',from:b,to:b,class:'grouping',source:raw,confirmed:false},
+       {reason:'endpoint-not-in-view',from:a,to:unseen,class:'causation',source:raw,confirmed:false},
+       {reason:'endpoint-not-in-view',from:b,to:unseen,class:'dependency',source:raw,confirmed:false}],
+     partials:[{scope:'relations',subject:a,direction:'outgoing',shown:1,label:raw}]};
+   const model={projection,scope,invocationId:'raw',title:'Raw',status:'running',graph};
+   for(const width of [80,120]) for(const ascii of [true,false]){
+     const {sep}=glyphs(ascii);
+     const lines=draw(model,{},{width,rows:40,ascii});
+     expect(lines.filter(line=>unsafe(line)).length,'lines with a raw unsafe unit').toBe(0);
+     expect(lines.filter(line=>line.includes('FAKEPLACEHOLDER')||line.includes('[2J')).length,'lines with raw producer text').toBe(0);
+     expect(lines.filter(line=>visibleWidth(line)>width).length,'lines wider than the terminal').toBe(0);
+     expect(lines.filter(line=>line.includes(`aggregate${sep}`))).toHaveLength(1);
+     expect(lines.filter(line=>line.includes('unobserved endpoint'))).toHaveLength(1);
+     expect(lines.filter(isReference)).toHaveLength(2);
+     expect(lines.filter(line=>line.includes(`partial${sep}`))).toHaveLength(1);
+     expect(lines.filter(line=>line.includes('[REDACTED]')).length).toBeGreaterThanOrEqual(6);
+   }
+ });
+ it('SG a bidi or zero-width identity from the real projection never reaches a graph line raw; what the model holds is drawn through the label layout',()=>{
+   // wb-6ze.34 SURFACE-GATE line (owner ruling ii on wb-6ze.32 F4): keys and nativeRef reach the model verbatim, so this view
+   // renders only sanitized label fields and routes any other identity through the named label layout. Admission decides what
+   // reaches the model (trunk admits these identities; a typed identity refusal would keep them out), so the drawn counts follow
+   // what the model holds and the raw-unit census holds either way.
+   const projection=new ObservationProjection({maxEvents:16,maxNodes:32,maxEdges:32,maxQuery:40});
+   projection.refresh({source:ref('forge','planner'),scope,capturedAt:now,observedAt:now,node:presentation('Planner'),trace:{invocationId:'identity'}});
+   projection.refresh({source:{provider:`for${ZWSP}ge`,type:'operation',id:`agent${RLO}`},scope,capturedAt:now,observedAt:now,node:presentation('Agent'),trace:{invocationId:'identity'}});
+   projection.relate({scope,from:ref('forge','planner'),to:ref('forge',`ghost${ZWSP}${RLO}`),kind:'dependency',provenance:{source:'fixture-producer',observedAt:now}});
+   projection.relate({scope,from:ref('forge','planner'),to:{provider:'forge',type:`op${LRI}`,id:`dyn${ZWJ}`},kind:'causation',provenance:{source:'fixture-producer',observedAt:now}});
+   const graph=buildGraphView(projection,{scope,invocationId:'identity',viewport:{offset:0,limit:10}});
+   const declared=graph.references.filter(entry=>entry.class==='dependency').length;
+   const dynamic=graph.references.filter(entry=>entry.class==='causation').length;
+   const agent=graph.nodes.filter(node=>node.label==='Agent').length;
+   const model={projection,scope,invocationId:'identity',title:'Identity',status:'running',graph};
+   for(const width of [80,120]) for(const ascii of [true,false]){
+     const lines=draw(model,{},{width,rows:40,ascii});
+     expect(lines.filter(line=>unsafe(line)).length,'lines with a raw unsafe unit').toBe(0);
+     expect(lines.filter(line=>visibleWidth(line)>width).length,'lines wider than the terminal').toBe(0);
+     // The fixed vocabulary leads each row, so the markers survive any width.
+     expect(lines.filter(line=>line.includes('unobserved endpoint')).length).toBe(declared);
+     expect(lines.filter(line=>isReference(line)&&line.includes('unknown dynamic edge')).length).toBe(dynamic);
+   }
+   // At 120 columns the identities are drawn whole: through the label layout, invisibles gone and controls spaced.
+   for(const ascii of [true,false]){
+     const lines=draw(model,{},{width:120,rows:40,ascii});
+     expect(lines.filter(line=>line.includes('forge/operation/ghost')&&line.includes('unobserved endpoint')).length).toBe(declared);
+     expect(lines.filter(line=>isReference(line)&&line.includes('forge/op /dyn')).length).toBe(dynamic);
+     expect(nodeRows(lines,'Agent',ascii).filter(line=>line.includes(`${glyphs(ascii).sep}forge${glyphs(ascii).sep}`)).length).toBe(agent);
+   }
+ });
+ it('SG an over-long identity is drawn through the label layout bound, so the provenance tail stays on a wide row',()=>{
+   // The named label layout bounds identity text (topologyText, 160 units); the terminal pass in add() alone would draw a
+   // never-observed key at its full length and push the provenance tail out of the row.
+   const projection=new ObservationProjection({maxEvents:16,maxNodes:16,maxEdges:16,maxQuery:40});
+   projection.refresh({source:ref('forge','planner'),scope,capturedAt:now,observedAt:now,node:presentation('Planner'),trace:{invocationId:'long'}});
+   const id='x'.repeat(200);
+   projection.relate({scope,from:ref('forge','planner'),to:ref('forge',id),kind:'dependency',provenance:{source:'fixture-producer',observedAt:now}});
+   projection.relate({scope,from:ref('forge','planner'),to:ref('forge',`y${id}`),kind:'causation',provenance:{source:'fixture-producer',observedAt:now}});
+   const graph=buildGraphView(projection,{scope,invocationId:'long',viewport:{offset:0,limit:10}});
+   expect(graph.references.map(entry=>entry.class).sort()).toEqual(['causation','dependency']);
+   const model={projection,scope,invocationId:'long',title:'Long',status:'running',graph};
+   for(const ascii of [true,false]){
+     const lines=draw(model,{},{width:400,rows:40,ascii});
+     expect(lines.filter(line=>line.includes(id)).length,'rows drawing the identity unbounded').toBe(0);
+     expect(lines.filter(line=>line.includes('unobserved endpoint')&&line.includes(' [truncated] [fixture-producer]'))).toHaveLength(1);
+     expect(lines.filter(line=>isReference(line)&&line.includes(' [truncated] [fixture-producer]'))).toHaveLength(1);
+   }
+ });
+ it('draws from the model alone: no relation page is read and the legacy per-node blocks are gone',()=>{
+   const {model}=graphFixture();
+   const relations=vi.spyOn(model.projection,'relations');
+   const pages=vi.spyOn(model.projection,'relationsPage');
+   try {
+     const lines=[true,false].flatMap(ascii=>draw(model,{},{width:120,rows:40,ascii}));
+     expect(relations).not.toHaveBeenCalled();
+     expect(pages).not.toHaveBeenCalled();
+     expect(lines.some(line=>line.includes('fan-out collapsed; bounded'))).toBe(false);
+   } finally {relations.mockRestore();pages.mockRestore();}
+ });
+ it('keeps selection, collapse, focus and filter semantics over the model rows',()=>{
+   const {model,keyOf}=graphFixture();
+   const selected=draw(model,{selected:keyOf('Build')});
+   expect(selected.filter(line=>line.startsWith(' > '))).toHaveLength(1);
+   expect(nodeRows(selected,'Build',true)[0]?.startsWith(' > ')).toBe(true);
+   const folded=draw(model,{collapsed:[keyOf('Build')]});
+   expect(folded.some(line=>line.includes('declared dependency -> Test'))).toBe(false);
+   expect(folded.some(line=>line.includes('... 1 relation collapsed'))).toBe(true);
+   // Focus keeps the focused row with every edge drawn with it, whichever end it is.
+   const focused=draw(model,{focused:keyOf('Test')});
+   expect(nodeRows(focused,'Test',true)).toHaveLength(1);
+   expect(nodeRows(focused,'Build',true)).toHaveLength(0);
+   expect(focused.some(line=>line.includes('declared dependency <- Build [fixture-producer]'))).toBe(true);
+   expect(focused.some(line=>line.includes('aggregate'))).toBe(false);
+   expect(focused.some(isReference)).toBe(false);
+   // A filter matches the label or the native provider/type/id, as the legacy blocks did.
+   const hubs=draw(model,{filter:'HUB'});
+   expect(hubs.filter(line=>line.includes('aggregate | '))).toHaveLength(2);
+   expect(nodeRows(hubs,'Hub A',true)).toHaveLength(1);
+   expect(nodeRows(hubs,'Build',true)).toHaveLength(0);
+   expect(hubs.some(isReference)).toBe(false);
+   expect(nodeRows(draw(model,{filter:'operation/planner'}),'Planner',true)).toHaveLength(1);
+ });
+ it('draws each block whole or counts it: at every height each model entry is drawn or counted, with the footer and key hint kept',()=>{
+   const {model,graph,keyOf}=graphFixture();
+   const declared=graph.references.filter(entry=>entry.reason==='endpoint-not-in-view'&&entry.class==='dependency').length;
+   const totalEdges=graph.edges.length+declared;
+   const totalReferences=graph.references.length-declared;
+   for(const rows of [10,12,14,16,18,24]) for(const ascii of [true,false]) for(const selected of [null,keyOf('Planner')]){
+     const {sep,dots}=glyphs(ascii);
+     const lines=draw(model,{selected},{width:120,rows,ascii});
+     expect(lines.length).toBeLessThanOrEqual(rows);
+     expect(lines.at(-1)).toContain('Esc');
+     expect(lines.some(line=>line.includes('Topology incomplete unless native relationships are explicitly supplied.'))).toBe(true);
+     const notice=lines.find(line=>line.includes('(row budget)'))??'';
+     const counted=(word:string)=>Number(new RegExp(`(\\d+) ${word}`).exec(notice)?.[1]??0);
+     const drawnNodes=graph.nodes.filter(node=>nodeRows(lines,node.label,ascii).length===1).length;
+     expect(drawnNodes+counted('node')).toBe(graph.nodes.length);
+     expect(lines.filter(line=>line.includes(`aggregate${sep}`)).length+counted('aggregate')).toBe(graph.supernodes.length);
+     expect(lines.filter(isReference).length+counted('reference')).toBe(totalReferences);
+     const edgeRows=lines.filter(line=>!isReference(line)&&/^(declared dependency|observed causal|grouping) /.test(line.trimStart())&&/ (->|<-|→|←) /.test(line)).length;
+     expect(edgeRows+counted('edge')).toBe(totalEdges);
+     // A selection the budget cuts stays visible on the notice.
+     if(selected!==null && !lines.some(line=>line.includes('Planner'+sep))) expect(notice.startsWith(` ${ascii?'>':'❯'} ${dots}`)).toBe(true);
+   }
+ });
+ it('bounds one block: a focused row with more than eight edges lists eight and counts the rest',()=>{
+   const projection=new ObservationProjection({maxEvents:32,maxNodes:32,maxEdges:32,maxQuery:40});
+   projection.refresh({source:ref('forge','sink'),scope,capturedAt:now,observedAt:now,node:presentation('Sink'),trace:{invocationId:'sink'}});
+   for(let i=0;i<12;i++){
+     projection.refresh({source:ref('forge',`s${i}`),scope,capturedAt:now,observedAt:now,node:presentation(`Source ${i}`),trace:{invocationId:'sink'}});
+     projection.relate({scope,from:ref('forge',`s${i}`),to:ref('forge','sink'),kind:'dependency',provenance:{source:'fixture-producer',observedAt:now}});
+   }
+   const graph=buildGraphView(projection,{scope,invocationId:'sink',viewport:{offset:0,limit:13}});
+   const sink=graph.nodes.find(node=>node.label==='Sink')?.key??null;
+   const lines=draw({projection,scope,invocationId:'sink',title:'Sink',status:'running',graph},{focused:sink});
+   expect(lines.filter(line=>line.includes('declared dependency <- Source'))).toHaveLength(8);
+   expect(lines.some(line=>line.includes('... +4 more edges of this node (bounded)'))).toBe(true);
  });
 });
 
