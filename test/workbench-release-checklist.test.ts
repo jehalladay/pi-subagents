@@ -1,10 +1,11 @@
 import { spawnSync } from "node:child_process";
-import { chmodSync, copyFileSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { chmodSync, copyFileSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { arch, cpus, platform, tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { afterEach, describe, expect, it } from "vitest";
 import { buildReceipt, CONTRACT, DISCLAIMER, exitCodeFor, ITEMS, pinProblems, repoIdentity } from "../qa/workbench/release-checklist-receipt.mjs";
+import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
 
 interface Suite {
   path: string;
@@ -55,6 +56,7 @@ const CONTROL = "denies the forged grant";
 const fake: Item[] = [{ item: 6, text: "Authorized provider invocation and denial tests pass.", suites: [{ path: "test/fake-a.test.ts", negativeControls: [CONTROL] }] }];
 const bytes = Buffer.from(`it("${CONTROL}", () => {});\n`);
 const roots: string[] = [];
+installScratchLeakGuard();
 
 function load(name: string): unknown {
   return JSON.parse(readFileSync(join(fixtures, `${name}.json`), "utf8"));
@@ -63,7 +65,7 @@ function receiptFor(reports: Record<number, unknown>, read: (path: string) => Bu
   return build({ items: fake, root: "/repo", reports, read, meta });
 }
 afterEach(() => {
-  for (const path of roots.splice(0)) rmSync(path, { recursive: true, force: true });
+  removeScratch(...roots.splice(0));
 });
 
 describe("pinned suite tables (docs/workbench/17 Release checklist items 6 and 7)", () => {
@@ -83,12 +85,12 @@ describe("pinned suite tables (docs/workbench/17 Release checklist items 6 and 7
   });
 
   it("goes red naming the path for a missing suite and the suite and title for an absent control", () => {
-    const root = mkdtempSync(join(tmpdir(), "rc-pin-"));
+    const root = makeScratch("rc-pin-");
     roots.push(root);
     mkdirSync(join(root, "test"));
     writeFileSync(join(root, "test", "fake-a.test.ts"), 'it("some other case", () => {});\n');
     expect(problemsOf(root, fake)).toEqual([{ item: 6, path: "test/fake-a.test.ts", kind: "missing-negative-control", title: CONTROL }]);
-    const empty = mkdtempSync(join(tmpdir(), "rc-pin-"));
+    const empty = makeScratch("rc-pin-");
     roots.push(empty);
     expect(problemsOf(empty, fake)).toEqual([{ item: 6, path: "test/fake-a.test.ts", kind: "missing-suite" }]);
   });
@@ -207,7 +209,7 @@ describe("vitest's own verdict is part of the item verdict (U1: suite-level fail
 
 describe("a pinned control converted to it.fails with a broken body is never receipted present (U3)", () => {
   it("the guard goes red naming the suite and the title for it.fails, it.skip and it.todo declarations", () => {
-    const root = mkdtempSync(join(tmpdir(), "rc-pin-"));
+    const root = makeScratch("rc-pin-");
     roots.push(root);
     mkdirSync(join(root, "test"));
     const file = join(root, "test", "fake-a.test.ts");
@@ -232,7 +234,7 @@ describe("a pinned control converted to it.fails with a broken body is never rec
 
 describe("pin matching is the quoted test-call form (F2)", () => {
   it("a title extended with a suffix, or surviving only in a comment or string, is a missing control", () => {
-    const root = mkdtempSync(join(tmpdir(), "rc-pin-"));
+    const root = makeScratch("rc-pin-");
     roots.push(root);
     mkdirSync(join(root, "test"));
     const file = join(root, "test", "fake-a.test.ts");
@@ -256,7 +258,7 @@ describe("revision and dirty come from the repository that owns the root (F1)", 
   });
 
   it("reports unknown for both when the root is nested inside another repository or inside none", () => {
-    const outer = mkdtempSync(join(tmpdir(), "rc-git-"));
+    const outer = makeScratch("rc-git-");
     roots.push(outer);
     const git = (args: string[]) => spawnSync("git", args, { cwd: outer, encoding: "utf8" });
     git(["init", "-q"]);
@@ -264,7 +266,7 @@ describe("revision and dirty come from the repository that owns the root (F1)", 
     const nested = join(outer, "nested");
     mkdirSync(nested);
     expect(identityOf(nested)).toEqual({ revision: "unknown", dirty: "unknown" });
-    const bare = mkdtempSync(join(tmpdir(), "rc-nogit-"));
+    const bare = makeScratch("rc-nogit-");
     roots.push(bare);
     expect(identityOf(bare)).toEqual({ revision: "unknown", dirty: "unknown" });
   });
@@ -396,7 +398,7 @@ describe("the CLI plumbs vitest's exit status into the verdict (U2: the exit leg
   // A test-scoped executable at the runner's own vitest spawn seam: it writes an all-pass success:true report for the paths it
   // receives and exits with FAKE_VITEST_EXIT, the shape vitest 4.1.10 produces for an error thrown in a timer after a passing test.
   function scratchRoot(): string {
-    const root = mkdtempSync(join(tmpdir(), "rc-cli-"));
+    const root = makeScratch("rc-cli-");
     roots.push(root);
     for (const item of items) {
       for (const suite of item.suites) {
@@ -490,7 +492,7 @@ describe("the CLI plumbs vitest's exit status into the verdict (U2: the exit leg
 
   it("O1 the CLI receipt records the vitest version, node version, host, an in-window utc and each item's exact command, and W22_CHECKLIST_RECEIPT (outside the repo) byte-equals stdout", () => {
     const { root } = gitToplevelRoot();
-    const outside = mkdtempSync(join(tmpdir(), "rc-receipt-out-"));
+    const outside = makeScratch("rc-receipt-out-");
     roots.push(outside);
     const receiptFile = join(outside, "receipt.json");
     const before = Date.now();
@@ -517,7 +519,7 @@ describe("the CLI plumbs vitest's exit status into the verdict (U2: the exit leg
 
 describe("repoIdentity fails closed when git status itself fails (U3: the vko corrupt-index shape)", () => {
   it("a repository whose index is corrupt (git status rc 128, rev-parse HEAD ok) reports unknown for both, never a clean or dirty claim", () => {
-    const repoDir = mkdtempSync(join(tmpdir(), "rc-corrupt-"));
+    const repoDir = makeScratch("rc-corrupt-");
     roots.push(repoDir);
     const git = (args: string[]) => spawnSync("git", args, { cwd: repoDir, encoding: "utf8" });
     git(["init", "-q"]);
@@ -537,7 +539,7 @@ describe("repoIdentity reads the toplevel's own HEAD and a real dirty bit (U1(a)
   };
 
   it("U1 a scratch toplevel with two commits is {its own HEAD, dirty false} when clean and {same HEAD, dirty true} after an untracked file", () => {
-    const dir = mkdtempSync(join(tmpdir(), "rc-ident-"));
+    const dir = makeScratch("rc-ident-");
     roots.push(dir);
     gitAt(dir, ["init", "-q"]);
     writeFileSync(join(dir, "a.txt"), "a\n");
@@ -554,7 +556,7 @@ describe("repoIdentity reads the toplevel's own HEAD and a real dirty bit (U1(a)
   });
 
   it("O2 a toplevel with an unborn HEAD (git init, no commit) is {unknown, unknown}: the revision key never drops out", () => {
-    const dir = mkdtempSync(join(tmpdir(), "rc-unborn-"));
+    const dir = makeScratch("rc-unborn-");
     roots.push(dir);
     gitAt(dir, ["init", "-q"]);
     const identity = identityOf(dir);
