@@ -467,7 +467,7 @@ describe('preview bounding cuts on code-point boundaries (wb-v53)', () => {
     if (entry.state !== 'loaded') throw new Error('expected a loaded entry');
     const body = entry.preview.filter(line => line !== '[truncated]');
     expect(entry.truncated).toBe(true);
-    expect(body.join('')).not.toContain('�');
+    expect(body.join('')).not.toContain(String.fromCodePoint(0xfffd));
     expect(body.reduce((sum, line) => sum + Buffer.byteLength(line), 0)).toBeLessThanOrEqual(100);
   });
 
