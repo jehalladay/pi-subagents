@@ -124,6 +124,15 @@ describe("createWorkbenchEvidenceStore (host wiring)", () => {
     const source = readFileSync(new URL("../src/index.ts", import.meta.url), "utf8");
     const call = source.slice(source.indexOf("evidence: createWorkbenchEvidenceStore({"));
     expect(call.slice(0, call.indexOf("}),"))).toMatch(/\bnow: \(\) => new Date\(\)/);
+    // The gate's typing step compiles src only, so the type refusal above is also pinned at the source: the wiring's clock is
+    // required, neither the wiring nor the producers keep a clock of their own, and a claude seam is typed together with the clock.
+    const wiring = readFileSync(new URL("../src/workbench/evidence-wiring.ts", import.meta.url), "utf8");
+    expect(wiring).toMatch(/^\s*now\(\): Date;/m);
+    expect(wiring).not.toMatch(/\bnow\?\s*[(:]/);
+    expect(wiring).not.toMatch(/new Date\(\)/);
+    const producers = readFileSync(new URL("../src/workbench/evidence-producers.ts", import.meta.url), "utf8");
+    expect(producers).toMatch(/\{ readonly claude: ClaudeEvidenceSeam; readonly now: \(\) => Date \}/);
+    expect(producers).not.toMatch(/new Date\(\)/);
   });
 
   it("wb-idq: ownership is the requested node's own listing: a session that does not list the ref, an unobserved session and a tool-use node refuse unauthorized with no read", async () => {
@@ -134,6 +143,8 @@ describe("createWorkbenchEvidenceStore (host wiring)", () => {
     projection.refresh({ source: silent, scope, capturedAt: NOW, observedAt: NOW, node: { title: "Claude silent", type: "agent" as const, statusText: "running", statusTone: "active" as const }, trace: { invocationId: "wf-evidence-1" } });
     const toolUse: NativeRef = { provider: "claude-agent-sdk", type: "tool-use", id: "tool-1" };
     projection.refresh({ source: toolUse, scope, capturedAt: NOW, observedAt: NOW, node: { title: "Tool", type: "agent" as const, statusText: "running", statusTone: "active" as const }, trace: { invocationId: "wf-evidence-1" }, evidenceRefs: [CLAUDE_REF] });
+    // A stale non-session node: the module's authorization refusal carries no freshness, exactly like the loader's own.
+    projection.markStale({ scope, ref: toolUse });
     for (const requester of [silent, claudeRef("sess-unobserved"), toolUse]) {
       await store.request(scope, requester, CLAUDE_REF);
       expect(store.get(scope, requester, CLAUDE_REF), requester.id).toEqual({ state: "unavailable", reason: "unauthorized" });

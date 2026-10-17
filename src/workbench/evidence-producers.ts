@@ -153,9 +153,11 @@ function claudeLoader(options: EvidenceProducerOptions, seam: ClaudeEvidenceSeam
         } satisfies EvidenceContent;
       } catch (error) {
         if (error instanceof EvidenceRefusal) throw error;
-        // The module's typed refusal becomes the store's: authorization stays unauthorized, everything else is a visible
-        // transport failure carrying the owning node's staleness. No message text crosses the seam.
-        throw new EvidenceRefusal(error instanceof CapabilityError && error.category === "authorization" ? "unauthorized" : "transport", staleness);
+        // The module's typed refusal becomes the store's: authorization stays unauthorized (and, like the loader's own
+        // ownership refusal, carries no freshness), everything else is a visible transport failure carrying the owning
+        // node's staleness. No message text crosses the seam.
+        const authorization = error instanceof CapabilityError && error.category === "authorization";
+        throw new EvidenceRefusal(authorization ? "unauthorized" : "transport", authorization ? undefined : staleness);
       }
     },
   };

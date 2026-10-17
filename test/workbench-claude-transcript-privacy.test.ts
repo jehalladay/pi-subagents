@@ -271,13 +271,28 @@ describe('Claude transcript adapter privacy and bounds', () => {
       expect(row.text).not.toContain('BEYOND-MARKER');
     }
     for (const requested of [0, -5, 1000]) await readClaudeTranscript('native-session', '/work', requested, read);
-    expect(calls.slice(1).map(call => call.options?.limit)).toEqual([1, 1, 100]);
-    expect(calls[0]?.options?.dir).toBe('/work');
+    // The SDK counts its limit and offset from the START of the chain, so the adapter asks for the whole chain and keeps the
+    // bounded TAIL itself (T2e); every call carries the project directory and no SDK limit.
+    expect(calls.map(call => call.options)).toEqual(calls.map(() => ({ dir: '/work' })));
+    expect(calls).toHaveLength(4);
     const source = readFileSync(new URL('../src/workbench/claude-transcript.ts', import.meta.url), 'utf8');
     for (const literal of ['500', '100']) {
       const lines = source.split('\n').filter(line => new RegExp(`\\b${literal}\\b`).test(line));
       expect(lines.length).toBe(1);
       expect(lines[0]).toMatch(/^export const CLAUDE_TRANSCRIPT_/);
+    }
+  });
+
+  it('T2e (wb-idq): the bounded window is the TAIL of the chain, where the rows hosts list as evidence live: a 45-message chain read at 40 keeps messages 5..44', async () => {
+    const chain = Array.from({ length: 45 }, (_, index) => session('assistant', `tail-${index}`, { content: `message ${index}` }));
+    const { read, calls } = fixtureReader(chain);
+    const rows = await readClaudeTranscript('native-session', '/work', 40, read);
+    expect(rows.map(row => row.uuid)).toEqual(chain.slice(5).map(message => message.uuid));
+    expect(rows.map(row => row.text)).toEqual(chain.slice(5).map((_, index) => `message ${index + 5}`));
+    expect(calls).toEqual([{ sessionId: 'native-session', options: { dir: '/work' } }]);
+    for (const [requested, kept] of [[0, 1], [-5, 1], [1000, 45]] as const) {
+      const bounded = await readClaudeTranscript('native-session', '/work', requested, read);
+      expect(bounded.map(row => row.uuid), `requested ${requested}`).toEqual(chain.slice(-kept).map(message => message.uuid));
     }
   });
 
@@ -473,6 +488,14 @@ describe('SITE 21 separator corpus: readClaudeTranscript rows and the real Evide
     const entry = store.get(SCOPE, ref, `claude-message:${uuid}`);
     return entry.state === 'loaded' ? entry.preview : `state ${entry.state}`;
   }
+
+  it('wb-idq store path: the latest message of a 45-row chain loads (inside the 40-row tail) and the first message is a visible transport failure (outside it)', async () => {
+    const chain = Array.from({ length: 45 }, (_, index) => session('assistant', `${index.toString(16).padStart(8, '0')}-0000-4000-8000-00000000c0de`, { content: `message ${index}` }));
+    const sdkRead = async (): Promise<SessionMessage[]> => [...chain];
+    const store = hostStore((sessionId, cwd) => readClaudeTranscript(sessionId, cwd, 40, sdkRead));
+    expect(await preview(store, 'chain-session', chain[44]?.uuid ?? '')).toEqual(['assistant:', 'message 44']);
+    expect(await preview(store, 'chain-session', chain[0]?.uuid ?? '')).toBe('state unavailable');
+  });
 
   it('mirrors the full corpus breadth, every shape short enough that the row clip never touches it', () => {
     // Each-liveness: an emptied or shrunk table fails here instead of passing every loop below vacuously.
