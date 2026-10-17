@@ -32,10 +32,12 @@ describe('RF native context producer',()=>{
     // wb-693.5: python-only fixture => zero TSX overhead when rf reports engine_metrics.
     // Absence is EMITTED into the run output below (RF_ABSENT_NOTE); a source comment is not a record.
     const metrics=producer.engine_metrics;
-    // Recording lines (wb-2j3.6 + wb-693.5): stdout of the forge rf-preview command is the receipt; no file is written.
+    // Recording lines (wb-2j3.6 + wb-693.5): written straight to the vitest process stdout, which is the receipt; no file is written.
+    // process.stdout.write bypasses vitest's console interception, so the lines are visible under every reporter
+    // (the agent reporter drops console.* output of passing tests; a direct write is not console output).
     // They run before the engine_metrics assertion so a non-zero value is observable in the failing run too.
-    console.log(metrics===undefined?RF_ABSENT_NOTE:`engine_metrics present: ${JSON.stringify(metrics)}`);
-    console.log('RF_PREVIEW_RECEIPT',JSON.stringify({cli_version:stamp(producer.provenance.cli_version),engine_metrics:metrics===undefined?RF_ABSENT_NOTE:metrics,rf_identity:rfIdentity()}));
+    process.stdout.write(`\n${metrics===undefined?RF_ABSENT_NOTE:`engine_metrics present: ${JSON.stringify(metrics)}`}\n`);
+    process.stdout.write(`\nRF_PREVIEW_RECEIPT ${JSON.stringify({cli_version:stamp(producer.provenance.cli_version),engine_metrics:metrics===undefined?RF_ABSENT_NOTE:metrics,rf_identity:rfIdentity()})}\n`);
     if(metrics!==undefined) expect(metrics).toEqual({tsx_worker_spawns:0,tsx_resource_rounds:0});
   },60_000);
 });
