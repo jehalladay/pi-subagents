@@ -12,8 +12,8 @@
 //     scanned (an unresolvable sha, a malformed line), else 0. Non-zero refuses the push; nothing fails open.
 //   - a sha that is not 40 or 64 hex digits is refused before it reaches the CLI as an argument
 //   - refs echoed in the refusal line are projected to printable ASCII so the report cannot carry a raw guard point
-// Install, once per clone (see docs/workbench/17-packaging-and-operations.md):
-//   ln -sf "$PWD/qa/workbench/pre-push-commit-message-scan.mjs" "$(git rev-parse --git-path hooks)/pre-push"
+// Install, once per clone, as a two-line wrapper script that execs node on this file, so a missing target fails the push
+// (see docs/workbench/17-packaging-and-operations.md).
 import {spawnSync} from 'node:child_process';
 import {readFileSync, realpathSync} from 'node:fs';
 import {dirname, join} from 'node:path';
@@ -71,6 +71,7 @@ export function runHook(stdin) {
   return unscannable ? 2 : 0;
 }
 
-// The installed hook is a SYMLINK named pre-push: argv[1] is the link path while import.meta.url is the resolved file, so the
-// entry check compares the resolved path (comparing the raw link path would skip the scan and exit 0, failing open).
+// When this file is reached through a SYMLINK (an alternative to the wrapper install): argv[1] is the link path while
+// import.meta.url is the resolved file, so the entry check compares the resolved path (comparing the raw link path would skip
+// the scan and exit 0, failing open).
 if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href) process.exitCode = runHook(readFileSync(0, 'utf8'));
