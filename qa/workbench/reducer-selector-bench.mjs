@@ -11,8 +11,9 @@
 //      a series with no samples, a non-positive timing, no redraws)
 //   3  nothing could be measured (an exception, reported on stderr; no receipt), or the receipt file could
 //      not be written (reported on stderr; the receipt is already on stdout, never a silent exit 1)
-// The revision comes from $W21_REVISION (else "working-tree"). $W21_SEED, $W21_NODES, $W21_DEPTH and
-// $W21_TICKS override the fixture; an override below the W21 shape is still measured and exits 2.
+// The revision is git rev-parse HEAD of this checkout plus a dirty flag, stamped by qa/workbench/bench-revision.mjs
+// (wb-oq3); $W21_REVISION only overrides the revision and the receipt names the source. $W21_SEED, $W21_NODES,
+// $W21_DEPTH and $W21_TICKS override the fixture; an override below the W21 shape is still measured and exits 2.
 //
 // BOUNDS, stated here before any run and exported below; none is derived from a measurement:
 //   - selector p95 <= 20 ms per view and per churn band: the one numeric target docs/workbench/14 gives
@@ -33,6 +34,7 @@
 import {readFileSync, writeFileSync} from 'node:fs';
 import {cpus} from 'node:os';
 import {pathToFileURL} from 'node:url';
+import {benchRevision, withBenchRevision} from './bench-revision.mjs';
 import {
   assessFixtureShape, BENCH_ONLY_LIMITS, buildGroupedFixture, GROUPED_FIXTURE_DEFAULTS, INVOCATION_ID, NAVIGATION_TARGET_MS, SCOPE, SIZES,
 } from './grouped-fixture.mjs';
@@ -396,13 +398,14 @@ async function main() {
     ticks: integerFromEnv('W21_TICKS', GROUPED_FIXTURE_DEFAULTS.ticks),
   });
   const processors = cpus();
-  return runReducerSelectorBench({
+  const stamp = benchRevision();
+  const receipt = runReducerSelectorBench({
     Projection: ObservationProjection,
     inspector: {initialInspectorState, layoutInspector, reduceInspectorKey},
     fixture,
     host: {
       utc: process.env.W21_UTC ?? new Date().toISOString(),
-      revision: process.env.W21_REVISION ?? 'working-tree',
+      revision: stamp.revision,
       node: process.version,
       arch: process.arch,
       platform: process.platform,
@@ -416,6 +419,7 @@ async function main() {
       command: 'node qa/workbench/reducer-selector-bench.mjs',
     },
   });
+  return withBenchRevision(receipt, stamp);
 }
 
 if (process.argv[1] !== undefined && import.meta.url === pathToFileURL(process.argv[1]).href) {

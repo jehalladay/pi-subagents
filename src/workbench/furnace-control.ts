@@ -147,7 +147,7 @@ const DENY_POLICIES: Readonly<Record<ControlDenyPolicy, true>> = Object.freeze({
 const NATIVE_INSTANT = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,9})?(?:Z|[+-]\d{2}:\d{2})$/;
 const ECHO_TEXT = 256;
 const MAX_TIMER_MS = 2_147_483_647;
-const UNVETTED = "Furnace control executes only a permitted workbench.control/v1 decision minted by the control core.";
+const UNVETTED = `Furnace control executes only a permitted ${CONTROL_CONTRACT_VERSION} decision minted by the control core.`;
 /** Receipts whose one native call was issued: a permit executes once. */
 const issued = new WeakSet<object>();
 

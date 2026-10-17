@@ -14,8 +14,9 @@
 //      unavailable, focusedCycles or detailsCycles not equal to cycles, no loads, no aborts, a series with no
 //      samples, a positive control that is not detected and released)
 //   3  nothing could be measured (an exception, reported on stderr; no receipt)
-// The revision comes from $W21_REVISION (else "working-tree"). $W21_SEED, $W21_NODES, $W21_DEPTH and $W21_TICKS
-// override the fixture; an override below the W21 shape is still measured and exits 2.
+// The revision is git rev-parse HEAD of this checkout plus a dirty flag, stamped by qa/workbench/bench-revision.mjs
+// (wb-oq3); $W21_REVISION only overrides the revision and the receipt names the source. $W21_SEED, $W21_NODES,
+// $W21_DEPTH and $W21_TICKS override the fixture; an override below the W21 shape is still measured and exits 2.
 //
 // BOUNDS, stated here before any run and exported below; none is derived from a measurement:
 //   - retained growth <= 8 MiB: post-GC (heapUsed + external) after the last cycle minus the same after the
@@ -43,6 +44,7 @@ import {cpus} from 'node:os';
 import {pathToFileURL} from 'node:url';
 import {runInNewContext} from 'node:vm';
 import {setFlagsFromString} from 'node:v8';
+import {benchRevision, withBenchRevision} from './bench-revision.mjs';
 import {
   assessFixtureShape, BENCH_ONLY_LIMITS, buildGroupedFixture, GROUPED_FIXTURE_DEFAULTS, INVOCATION_ID, NAVIGATION_TARGET_MS, PROVIDERS, SCOPE, SIZES,
 } from './grouped-fixture.mjs';
@@ -455,14 +457,15 @@ async function main() {
     ticks: integerFromEnv('W21_TICKS', GROUPED_FIXTURE_DEFAULTS.ticks),
   });
   const processors = cpus();
-  return runEvidenceRetainedBench({
+  const stamp = benchRevision();
+  const receipt = await runEvidenceRetainedBench({
     Projection: ObservationProjection,
     EvidenceStore,
     inspector: {initialInspectorState, inspectorEvidenceTarget, layoutInspector, reduceInspectorKey},
     fixture,
     host: {
       utc: process.env.W21_UTC ?? new Date().toISOString(),
-      revision: process.env.W21_REVISION ?? 'working-tree',
+      revision: stamp.revision,
       node: process.version,
       arch: process.arch,
       platform: process.platform,
@@ -476,6 +479,7 @@ async function main() {
       command: 'node --expose-gc qa/workbench/inspector-evidence-retained-bench.mjs',
     },
   });
+  return withBenchRevision(receipt, stamp);
 }
 
 if (process.argv[1] !== undefined && import.meta.url === pathToFileURL(process.argv[1]).href) {

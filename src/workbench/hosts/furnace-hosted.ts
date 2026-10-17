@@ -4,18 +4,23 @@
  * A Pi process registers ONE deterministic workflow callback as a Furnace
  * ExecutorApp executor, opens an EmbeddedHost for ONE Run, writes the Run's
  * extension-driver config, and starts the Run with the public Furnace client.
- * Furnace reaches the host through its bridge: every Attempt is its own bridge
- * connection and therefore its own host session with its own instance id and
+ * Furnace reaches the host through its bridge: a Run's sequential Attempts share one
+ * kept bridge connection and host session, and each Attempt is identified by its own
  * admission receipt. This module adds no scheduler, no retry and no checkpoint.
  *
  * Verified protocol only (@furnace/sdk 0.1.0, furnace.executor.v1):
  *  - Only the result `status` word is mapped; failure_class and data are never read.
- *  - failure and indeterminate PARK the Run for the manual operator ladder.
- *    Furnace never retries an Attempt on its own, and neither does this adapter.
+ *  - failure and indeterminate PARK the Run for the manual operator ladder
+ *    (README.md §5/§7 @15fd6f8ee): Furnace records this adapter's failure as
+ *    work_failure and never retries work_failure or a resident host's
+ *    indeterminate. Furnace automatically re-attempts only what the Run's
+ *    recorded retry.* policy admits, for example infrastructure_failure by
+ *    default and timeout only when opted in. This adapter never retries an Attempt.
  *  - Cancel is a request: the callback's AbortSignal is aborted and the workflow
  *    must stop cooperatively. A workflow that ignores it is reported
  *    indeterminate after a bounded grace, never cancelled.
- *  - Observe is unsupported by the resident session and is stated, not faked.
+ *  - Observe is answered by the resident session from its own admission record (running / terminal /
+ *    unknown, @furnace/sdk ResidentSession.observe); the adapter adds no producer-side observation and says so.
  *
  * Disclosed limits (also carried on every receipt as `limits`):
  *  - No crash durability. Death of this process or of the controller leaves the
@@ -70,8 +75,15 @@ export interface HostedAttemptIdentity {
   readonly ordinal: number;
   readonly deadline: string | null;
   readonly workspaceRoot: string;
-  /** The bridge host session that admitted this Attempt (ResidentSession.instanceId). */
+  /** The bridge host session that admitted this Attempt (ResidentSession.instanceId). A Run's sequential
+   *  Attempts share one kept session, so this is NOT unique per Attempt; admissionReceipt is. */
   readonly sessionInstanceId: string;
+  /** The Furnace execution this admission names (execute input.execution_id); "unknown" outside a bridge frame. */
+  readonly executionId: string;
+  /** The admission receipt the resident session minted for this execution, `<instance_id>/<process token>/<n>`
+   *  (ResidentSession.mintReceipt; opaque here, never parsed); "unknown" outside a bridge frame or when the
+   *  session holds none for the execution. Unique per admission: the per-Attempt identity. */
+  readonly admissionReceipt: string;
 }
 export interface HostedAttemptInvocation {
   readonly identity: HostedAttemptIdentity;
@@ -88,6 +100,8 @@ export interface HostedAttemptReceipt {
   readonly runId: string;
   readonly beadsRunId: string;
   readonly sessionInstanceId: string;
+  readonly executionId: string;
+  readonly admissionReceipt: string;
   terminal: HostedStatus | "pending";
   summary?: string;
   cancel: { requested: boolean; reason?: string };
@@ -95,6 +109,12 @@ export interface HostedAttemptReceipt {
   unsettledAfterCancel: boolean;
   /** What a workflow that outlived its reported terminal finally returned. */
   lateSettlement?: HostedStatus;
+}
+export interface HostedSessionReceipt {
+  /** One bridge connection's session ("unknown" collects callbacks that ran outside any frame). */
+  readonly sessionInstanceId: string;
+  /** Admission receipts recorded on it, in admission order; a connection that admitted nothing has none. */
+  readonly admissionReceipts: readonly string[];
 }
 export type HostedState = "idle" | "starting" | "started" | "start-uncertain" | "failed" | "closed";
 export interface HostedReceipt {
@@ -104,15 +124,19 @@ export interface HostedReceipt {
   readonly run?: { readonly runId: string; readonly beadsRunId: string; readonly requestId: string };
   readonly limits: {
     readonly crashDurability: "none";
-    readonly observe: "unsupported";
+    readonly observe: "session-word";
     readonly identity: "per-attempt";
     readonly replyBounds: "none";
-    readonly retry: "furnace-parks-never-retries";
+    readonly retry: "adapter-never-retries; furnace-auto-retries-by-recorded-retry-policy; work_failure-and-indeterminate-park";
   };
   readonly attempts: readonly HostedAttemptReceipt[];
+  /** The per-session roster (connection open order): the admission count per session is its length. */
+  readonly sessions: readonly HostedSessionReceipt[];
   readonly identityViolations: readonly string[];
 }
-const LIMITS: HostedReceipt["limits"] = { crashDurability: "none", observe: "unsupported", identity: "per-attempt", replyBounds: "none", retry: "furnace-parks-never-retries" };
+// identity "per-attempt": each Attempt is identified by its own admission receipt (one per admission); a kept bridge
+// session serves a Run's sequential Attempts (measured 2026-10-17 on furnace 0.1.0 9970621d87e0, receipts/wb-zby.1.md).
+const LIMITS: HostedReceipt["limits"] = { crashDurability: "none", observe: "session-word", identity: "per-attempt", replyBounds: "none", retry: "adapter-never-retries; furnace-auto-retries-by-recorded-retry-policy; work_failure-and-indeterminate-park" };
 
 /** The slice of the SDK client this adapter calls; injectable so tests never spawn Furnace. */
 export interface FurnaceHostedClient {
@@ -155,6 +179,29 @@ const isRecord = (value: unknown): value is Record<string, unknown> => typeof va
 function hasCancellation(context: ExecutionContext): context is CallbackContext {
   return "cancellation" in context && isRecord(context) && context.cancellation instanceof AbortSignal;
 }
+const isIdentifier = (value: unknown): value is string => typeof value === "string" && value !== "";
+/** The execution an execute line admits, read as ResidentSession.execute reads it (resident_session.js:283-288). */
+function admittedExecutionId(raw: string): string | undefined {
+  let request: unknown;
+  try {
+    request = JSON.parse(raw);
+  } catch {
+    return undefined;
+  }
+  if (!isRecord(request) || request.op !== "execute" || !isRecord(request.input)) return undefined;
+  return isIdentifier(request.input.execution_id) ? request.input.execution_id : undefined;
+}
+/**
+ * The Run a start reply names, read from the members the receipt needs and nothing else (FRN-PRO-002 forward field
+ * tolerance: additive members beside them are not read). A reply missing one names no Run that could be reconciled, so
+ * it throws here and start() reports an uncertain start, as for an unreadable answer; no Run is recorded without them.
+ */
+function startedRun(started: unknown): NonNullable<HostedReceipt["run"]> {
+  const record = isRecord(started) ? started.record : undefined;
+  const requestId = isRecord(started) ? started.requestId : undefined;
+  if (!isRecord(record) || !isIdentifier(record.run_id) || !isIdentifier(record.beads_run_id) || !isIdentifier(requestId)) throw new TypeError("Furnace run start reply names no Run.");
+  return { runId: record.run_id, beadsRunId: record.beads_run_id, requestId };
+}
 const CANONICAL_CONTEXT = {
   context_version: 1,
   run: { furnace_run_id: "frn-run-preflight", beads_run_id: "bd-preflight", formula: null },
@@ -166,6 +213,10 @@ const CANONICAL_CONTEXT = {
 type Settlement = { kind: "outcome"; value: unknown } | { kind: "error"; error: unknown };
 interface SessionFrame {
   readonly sessionInstanceId: string;
+  /** The execution an `execute` line admits (input.execution_id); undefined for every other line. */
+  readonly executionId: string | undefined;
+  /** ResidentSession.receiptOf bound to the framing session (public, resident_session.d.ts:32). */
+  readonly receiptOf: (executionId: string) => string | undefined;
 }
 
 export class FurnaceHostedExecutor {
@@ -197,6 +248,7 @@ export class FurnaceHostedExecutor {
       ...(this.run ? { run: this.run } : {}),
       limits: LIMITS,
       attempts: this.attempts,
+      sessions: [...this.perSession].map(([sessionInstanceId, admissionReceipts]) => ({ sessionInstanceId, admissionReceipts })),
       identityViolations: this.violations,
     });
   }
@@ -218,7 +270,7 @@ export class FurnaceHostedExecutor {
       const startRequest: RunStartRequest = { formula: request.formula, ...(request.vars ? { vars: { ...request.vars } } : {}) };
       const call = { ...(this.options.startTimeoutMs !== undefined ? { timeoutMs: this.options.startTimeoutMs } : {}), ...(request.requestId !== undefined ? { requestId: request.requestId } : {}) };
       const started = await client.runs.start(startRequest, call);
-      this.run = { runId: started.record.run_id, beadsRunId: started.record.beads_run_id, requestId: started.requestId };
+      this.run = startedRun(started);
       this.state = "started";
       return { ...this.run };
     } catch (error) {
@@ -262,7 +314,7 @@ export class FurnaceHostedExecutor {
         onOpen(this.instanceId);
       }
       override handle(raw: string): Promise<void> {
-        return frames.run({ sessionInstanceId: this.instanceId }, () => super.handle(raw));
+        return frames.run({ sessionInstanceId: this.instanceId, executionId: admittedExecutionId(raw), receiptOf: (id) => this.receiptOf(id) }, () => super.handle(raw));
       }
     };
     return new (class extends this.sdk.EmbeddedHost {
@@ -298,13 +350,17 @@ export class FurnaceHostedExecutor {
   }
 
   private record(context: ExecutionContext): HostedAttemptReceipt {
-    const sessionInstanceId = this.frames.getStore()?.sessionInstanceId ?? "unknown";
+    const frame = this.frames.getStore();
+    const sessionInstanceId = frame?.sessionInstanceId ?? "unknown";
+    const executionId = frame?.executionId ?? "unknown";
+    const admissionReceipt = (frame?.executionId !== undefined ? frame.receiptOf(frame.executionId) : undefined) ?? "unknown";
     const attemptId = context.attempt.attempt_id;
-    const served = this.perSession.get(sessionInstanceId) ?? [];
-    served.push(attemptId);
-    this.perSession.set(sessionInstanceId, served);
-    if (sessionInstanceId === "unknown") this.violations.push(`attempt ${attemptId} ran outside a bridge session frame`);
-    if (served.length > 1) this.violations.push(`session ${sessionInstanceId} served ${served.length} attempts`);
+    if (frame === undefined) this.violations.push(`attempt ${attemptId} ran outside a bridge session frame`);
+    else if (admissionReceipt === "unknown") this.violations.push(`attempt ${attemptId} ran on session ${sessionInstanceId} with no admission receipt for execution ${executionId}`);
+    else if (this.attempts.some((a) => a.admissionReceipt === admissionReceipt)) this.violations.push(`admission receipt ${admissionReceipt} recorded twice`);
+    const roster = this.perSession.get(sessionInstanceId) ?? [];
+    roster.push(admissionReceipt);
+    this.perSession.set(sessionInstanceId, roster);
     const prior = this.attempts.filter((a) => a.attemptId === attemptId).length;
     if (prior > 0) this.violations.push(`attempt ${attemptId} executed ${prior + 1} times`);
     const receipt: HostedAttemptReceipt = {
@@ -315,6 +371,8 @@ export class FurnaceHostedExecutor {
       runId: context.run.furnace_run_id,
       beadsRunId: context.run.beads_run_id,
       sessionInstanceId,
+      executionId,
+      admissionReceipt,
       terminal: "pending",
       cancel: { requested: false },
       unsettledAfterCancel: false,
@@ -341,6 +399,8 @@ export class FurnaceHostedExecutor {
       deadline: context.attempt.deadline,
       workspaceRoot: context.workspace.root,
       sessionInstanceId: receipt.sessionInstanceId,
+      executionId: receipt.executionId,
+      admissionReceipt: receipt.admissionReceipt,
     };
     const run: Promise<Settlement> = Promise.resolve()
       .then(() => this.options.workflow({ identity, signal }))
@@ -349,15 +409,20 @@ export class FurnaceHostedExecutor {
         (error: unknown): Settlement => ({ kind: "error", error }),
       );
     let timer: ReturnType<typeof setTimeout> | undefined;
+    let armGrace = (): void => {};
     const grace = new Promise<"grace">((resolve) => {
-      const arm = (): void => {
+      armGrace = (): void => {
         timer = setTimeout(() => resolve("grace"), this.options.cancelGraceMs ?? DEFAULT_CANCEL_GRACE_MS);
       };
-      if (signal.aborted) arm();
-      else signal.addEventListener("abort", arm, { once: true });
+      if (signal.aborted) armGrace();
+      else signal.addEventListener("abort", armGrace, { once: true });
     });
     const first = await Promise.race([run, grace]);
     if (timer) clearTimeout(timer);
+    // wb-21k: the Attempt has settled (or the grace elapsed after an abort already fired), so a later
+    // close() abort must not stamp a cancel onto it; drop both listeners here.
+    signal.removeEventListener("abort", noteCancel);
+    signal.removeEventListener("abort", armGrace);
     if (first === "grace") {
       receipt.unsettledAfterCancel = true;
       receipt.terminal = "indeterminate";
