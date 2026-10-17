@@ -12,8 +12,11 @@ import type { JsonValue } from "../../src/workbench/capability-registry.js";
 export type JsonRecord = { [key: string]: JsonValue };
 
 const CONTRACT_TEST = new URL("../workbench-forge-contract.test.ts", import.meta.url);
-/** SOURCE_WITH_STATE spreads its one row as `{...( <row> as Record<string,unknown>)}`; the row itself is one JSON object. */
-const SPREAD_ROW = /\{\.\.\.\(\s*(\{.*\})\s*as Record<string,\s*unknown>\)\}/;
+/**
+ * SOURCE_WITH_STATE spreads its one row as `{...( <row> as Record<string,unknown>)}` (or `Record<string,JsonValue>` once the
+ * contract test types the cast, wb-zsv.4); the row itself is one JSON object.
+ */
+const SPREAD_ROW = /\{\.\.\.\(\s*(\{.*\})\s*as Record<string,\s*(?:unknown|JsonValue)>\)\}/;
 
 const isRecord = (value: unknown): value is JsonRecord => value !== null && typeof value === "object" && !Array.isArray(value);
 

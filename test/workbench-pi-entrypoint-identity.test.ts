@@ -199,7 +199,7 @@ describe('registered Workbench entrypoint identity and projection',()=>{
     const script='export const meta={name:"nested-source",description:"subdir"};\nawait agent("one"); return await agent("two");';
     const launch=await workflow.execute('subdir',{script},undefined,undefined,nested);
     await waitFor(()=>pi.pi.sendMessage.mock.calls.some(([value]:[unknown])=>text(value).includes(launch.details.taskId)));
-    expect(sdk.query.mock.calls.map(([arg]:[any])=>arg.prompt)).toEqual(['one']);
+    expect(sdk.query.mock.calls.map(([arg]:Array<{prompt:string}>)=>arg.prompt)).toEqual(['one']);
     const result=await observe.execute('observe',{taskId:launch.details.taskId,limit:10},undefined,undefined,nested);
     expect(JSON.parse(result.content[0].text).workspaceSourceState).toBe('measured');
     expect(text(result)).toContain('IDENTITY_CONFLICT');
@@ -219,7 +219,7 @@ describe('registered Workbench entrypoint identity and projection',()=>{
     const script='export const meta={name:"candidate",description:"mutate"};\nawait agent("one");\nreturn await agent("two");';
     const launch=await workflow.execute('run',{script},undefined,undefined,context);
     await waitFor(()=>pi.pi.sendMessage.mock.calls.some(([value]:[unknown])=>text(value).includes(launch.details.taskId)));
-    expect(sdk.query.mock.calls.map(([arg]:[any])=>arg.prompt)).toEqual(['one']);
+    expect(sdk.query.mock.calls.map(([arg]:Array<{prompt:string}>)=>arg.prompt)).toEqual(['one']);
     const observation=await observe.execute('observe',{taskId:launch.details.taskId,limit:25},undefined,undefined,context);
     expect(text(observation)).toMatch(/IDENTITY_CONFLICT|basis changed|identity/i);
     const render=vi.spyOn(cards,'renderWorkflowCard');
