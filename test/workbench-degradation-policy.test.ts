@@ -23,6 +23,7 @@ import { CapabilityRegistry } from "../src/workbench/capability-registry.js";
 import { type ClaudeQuery, createClaudeWorkflowHost } from "../src/workbench/claude-host.js";
 import { sanitizeWorkbenchJsonText, sanitizeWorkbenchText, WORKBENCH_TEXT_LIMIT } from "../src/workbench/redaction.js";
 import { runWorkflow, type WorkflowSpawnResult } from "../src/workflow/runtime.js";
+import { UNSAFE_DISPLAY } from "./helpers/unsafe-display.js";
 
 const HEAD = 'export const meta = { name: "degradation", description: "degradation policy probe" };\n';
 const CWD = tmpdir();
@@ -245,7 +246,6 @@ describe("D2 an absent optional provider is a typed capability-unavailable outco
  * Seat rule F11: every invisible code point is built with String.fromCodePoint.
  */
 const cpWy = (code: number): string => String.fromCodePoint(code);
-const UNSAFE_OUTCOME = /[\x00-\x1f\x7f-\x9f\u{2028}\u{2029}]|\p{Default_Ignorable_Code_Point}|[\u{d800}-\u{dfff}]/u;
 
 interface WyProbe {
   readonly id: string;
@@ -289,7 +289,7 @@ describe("wb-wyr producer outcomes route through the one helper with a named lay
       expect(result.ok).toBe(false);
       expect(error.length).toBeGreaterThan(0);
       expect(error, `${probe.id} leaked at the producer`).not.toContain(probe.secret);
-      expect(error, `${probe.id} kept an unsafe code point at the producer`).not.toMatch(UNSAFE_OUTCOME);
+      expect(error, `${probe.id} kept an unsafe code point at the producer`).not.toMatch(UNSAFE_DISPLAY);
       // The composed display (what a card, a label, a reply or a JSON text then shows) stays clean too.
       for (const shown of [safeWorkflowTerminalText(error), sanitizeWorkbenchText(error, 2000, "label"), sanitizeWorkbenchText(error), sanitizeWorkbenchJsonText({ error })]) {
         expect(shown, `${probe.id} leaked at display`).not.toContain(probe.secret);
