@@ -43,7 +43,11 @@
  *     (wb-6hb.1, NOT wb-0kg.1): "refuses a write whose first attempt lost its
  *     answer instead of retrying it".
  * A citation is not an assertion: this file makes no claim that those rows
- * still exist or run; their own files are the evidence.
+ * still exist or run; their own files are the evidence. Whether they still ran,
+ * passed and asserted in the gate is judged OUTSIDE this file, in REPORT MODE
+ * over the gate's own vitest JSON report, by
+ * test/workbench-child-crash-faults.census.ts (the census gate step; nothing is
+ * re-executed, and no text of any source file is read).
  *
  * Test-only. No src, qa or docs edit.
  */
