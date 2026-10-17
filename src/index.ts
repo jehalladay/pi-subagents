@@ -74,6 +74,7 @@ import { type CompareRun, catalogWorkflows, compareWorkflowRuns, inspectWorkflow
 import { executeDetachedControl } from "./workbench/detached-control.js";
 import { createWorkbenchEvidenceStore } from "./workbench/evidence-wiring.js";
 import { createWorkflowExecuteTool, type ExecuteLaunch } from "./workbench/execute-tool.js";
+import { createRetainedForgeControlExecutor } from "./workbench/forge-control-retention.js";
 import { executeFurnaceControl } from "./workbench/furnace-control.js";
 import { FurnaceObserver } from "./workbench/furnace-observer.js";
 import { captureInvocationIdentity, type IdentityCaptureInput, identityDigest, verifyInvocationIdentity, WORKFLOW_SCRIPT_SCHEMA_VERSION } from "./workbench/identity.js";
@@ -2773,12 +2774,7 @@ Terse command-style prompts produce shallow, generic work.
         }
         return { receipt: execution.receipt, status: execution.status };
       },
-      forge: async (): Promise<ControlExecutionSummary> => {
-        throw Object.assign(
-          new CapabilityError("unavailable", "Forge cancel needs the connection that issued the operation; this process retains none, so no Forge control leg is wired."),
-          { code: "no-retained-connection" },
-        );
-      },
+      forge: createRetainedForgeControlExecutor(controlNow),
     };
     pi.registerTool(createWorkflowControlTool({
       grants,
