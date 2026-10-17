@@ -7,8 +7,8 @@ import { createHash } from 'node:crypto';
 import { visibleWidth } from '@earendil-works/pi-tui';
 import { describe, expect, it } from 'vitest';
 import { type InspectorModel, initialInspectorState, layoutInspector } from '../src/ui/workflow-inspector.js';
-import { type NativeRef, ObservationProjection, type ObservationScope, type ObservedNode, type RelationKind } from '../src/workbench/observation.js';
-import { type LinkedTopology, selectLinkedTopology, TOPOLOGY_CAVEAT, TOPOLOGY_CONTRACT } from '../src/workbench/topology-slice.js';
+import { type NativeRef, ObservationProjection, type ObservationScope, type ObservedNode, type Relation, type RelationKind } from '../src/workbench/observation.js';
+import { type LinkedTopology, selectLinkedTopology, TOPOLOGY_CAVEAT, TOPOLOGY_CONTRACT, type TopologyRelationsInput } from '../src/workbench/topology-slice.js';
 
 const scope: ObservationScope = {workspace:'workspace',principal:'reader'};
 const T = '2026-10-15T12:00:00.000Z';
@@ -56,6 +56,37 @@ const edgeOf = (id: string, relation: LinkedTopology['upstream']['edges'][number
   key:keyOf(id),nativeRef:ref(id),label:`furnace:operation:${id}`,relation,authoritative:relation!=='inferred-hypothesis',
   provenance:{sourceLabel:source,...(observedAt!==undefined?{observedAt}:{})},
 });
+
+/** wb-0br typed identity admission: what the REAL projection does with a declared edge from `focus` to a neighbour id that
+ * carries an unsafe identity unit, and the one outcome it may have (one closed-vocabulary row naming the `to` end's id and
+ * the code point, no edge stored). */
+interface NeighbourRefusal {
+  refusals: ReturnType<ObservationProjection['identityRefusals']>;
+  relations: Relation[];
+}
+function refusedNeighbour(projection: ObservationProjection, id: string): NeighbourRefusal {
+  relate(projection,'focus',id);
+  return {refusals:projection.identityRefusals({scope,limit:10}),relations:projection.relations({scope})};
+}
+const refusedAt = (codePoint: string): NeighbourRefusal => ({
+  refusals:{refusals:[{path:'relate',ref:'to',field:'id',codePoint,reason:'unsafe-identity'}],total:1,truncated:false},
+  relations:[],
+});
+/** The topology section of a refused edge's focus: an empty, complete slice states itself, so an absent row is never vacuous. */
+const NO_RELATIONS = 'Topology: no observed relations (missing edges do not imply independence)';
+/** wb-0br: the selector's declared relations input as a plain object holding exactly the declared edge `focus` -> `id` that
+ * the real projection stored before its typed identity admission (it now refuses `id`, typed). The hostile neighbour still
+ * reaches the REAL selector and the renderer's keyRef path, so the row's presence and redaction stay pinned. */
+function structurallyHeld(id: string): NonNullable<InspectorModel['topology']> {
+  const held: Relation[] = [{from:keyOf('focus'),to:keyOf(id),kind:'dependency',provenance:{source:'declared workflow',observedAt:T}}];
+  const read = (input: {scope: ObservationScope; from?: string; to?: string; limit?: number}): Relation[] =>
+    held.filter(row=>(input.from===undefined || row.from===input.from) && (input.to===undefined || row.to===input.to)).slice(0,input.limit);
+  const relations: TopologyRelationsInput['relations'] = {
+    relations:read,
+    relationsPage:input=>{const rows=read(input);return {relations:rows,examined:rows.length,truncated:false,limitApplied:input.limit ?? 100};},
+  };
+  return node=>selectLinkedTopology({scope,relations},node.key);
+}
 
 describe('B1 docs/workbench/10 § Four views (Details): "upstream/downstream" with the neighbour identity',()=>{
   function twoUpThreeDown(): InspectorModel {
@@ -218,11 +249,25 @@ describe('B4 docs/workbench/10 § Layout responsiveness and docs/workbench/12 §
   const SEPARATORS=[['C1 NEL',String.fromCharCode(0x85)],['bidi RLO',String.fromCharCode(0x202e)],['bidi LRI',String.fromCharCode(0x2066)],['zero-width',String.fromCharCode(0x200b)],['C1 PAD',String.fromCharCode(0x80)]] as const;
   const SCHEMES = ['Bearer','Basic'] as const;
   const GLUED = SCHEMES.flatMap(scheme=>SEPARATORS.map(([name,sep])=>[scheme,name,sep] as const));
-  it.each(GLUED)('U2 %s + %s separator in a declared edge neighbour id never leaks the token through the real projection (keyRef path)',(scheme,_name,sep)=>{
+  /** wb-0br: the first unsafe code point the real projection's typed identity refusal names for each separator above. */
+  const SEPARATOR_REFUSED_AT: Readonly<Record<string,string>> = {'C1 NEL':'U+0085','bidi RLO':'U+202E','bidi LRI':'U+2066','zero-width':'U+200B','C1 PAD':'U+0080'};
+  // wb-0br second-lander re-expression (known-conflicts entry 14, owner 11:42Z PASS-order): the real projection refuses an unsafe
+  // unit in a declared neighbour id as identity, so its keyRef path renders no row. Each probe pins that typed refusal and the
+  // absent row with the token still absent, then feeds the edge the projection held before the widening through a structural
+  // reader to the real selector, where the row's presence and redaction assertions are unchanged.
+  it.each(GLUED)('U2 %s + %s separator in a declared edge neighbour id never leaks the token: the real projection refuses it as identity (typed, no row) and a structural reader row renders redacted (keyRef path, wb-0br)',(scheme,name,sep)=>{
+    const id=`${scheme}${sep}${SECRET}`;
     const projection=projectionOf(['focus']);
-    relate(projection,'focus',`${scheme}${sep}${SECRET}`);
+    expect(refusedNeighbour(projection,id)).toStrictEqual(refusedAt(SEPARATOR_REFUSED_AT[name]));
     for(const size of SIZES) for(const ascii of TIERS){
       const text=joined(details(modelOf(projection,selected(projection)),size,ascii));
+      expect(text).not.toContain(SECRET);
+      expect(neighbourRows(text,ascii)).toEqual([]);
+      expect(text).toContain(NO_RELATIONS);
+    }
+    const held=modelOf(projection,structurallyHeld(id));
+    for(const size of SIZES) for(const ascii of TIERS){
+      const text=joined(details(held,size,ascii));
       expect(text).not.toContain(SECRET);
       expect(neighbourRows(text,ascii)).toEqual([expect.stringContaining('[REDACTED]')]);
     }
@@ -403,11 +448,30 @@ describe('wb-6ze.16 respin U1 (gate-3 07:18Z, owner 07:23Z): a unit glued inside
       'F5 U+0085 inside a Bearer token','F5 U+009F inside a Bearer token',
     ]);
   });
-  it.each(IN_TOKEN)('%s as a declared edge neighbour id: the row renders redacted and the credential never leaks (real projection, keyRef path)',(_id,raw,secret)=>{
+  /** wb-0br: the first unsafe code point the real projection's typed identity refusal names for each probe above. */
+  const IN_TOKEN_REFUSED_AT: Readonly<Record<string,string>> = {
+    'CORPUS S4 ZWSP inside the scheme':'U+200B','CORPUS K2 RLO inside password':'U+202E','CORPUS K5 WJ inside api_key':'U+2060',
+    'ACCEPTANCE U+200B inside Bearer':'U+200B','ACCEPTANCE U+200B inside ghp_':'U+200B','ACCEPTANCE U+200B inside a Bearer token':'U+200B','ACCEPTANCE U+200B inside password':'U+200B',
+    'ACCEPTANCE U+202E inside Bearer':'U+202E','ACCEPTANCE U+202E inside ghp_':'U+202E','ACCEPTANCE U+202E inside a Bearer token':'U+202E','ACCEPTANCE U+202E inside password':'U+202E',
+    'F5 U+0085 inside a Bearer token':'U+0085','F5 U+009F inside a Bearer token':'U+009F',
+  };
+  // wb-0br second-lander re-expression (known-conflicts entry 14, owner 11:42Z PASS-order): every probe here is refused as identity
+  // by the real projection, typed, so no row renders there and the credential and every unit stay absent; fed through a
+  // structural reader holding the edge the projection held before the widening, the real selector's row still renders
+  // redacted on the keyRef path, every assertion of that half unchanged.
+  it.each(IN_TOKEN)('%s as a declared edge neighbour id: the real projection refuses it as identity (typed, no row) and the credential never leaks; a structural reader row renders redacted (keyRef path, wb-0br)',(id,raw,secret)=>{
     const projection=projectionOf(['focus']);
-    relate(projection,'focus',raw);
+    expect(refusedNeighbour(projection,raw)).toStrictEqual(refusedAt(IN_TOKEN_REFUSED_AT[id]));
     for(const size of SIZES) for(const ascii of TIERS){
       const text=joined(details(modelOf(projection,selected(projection)),size,ascii));
+      expect(neighbourRows(text,ascii)).toEqual([]);
+      expect(text).toContain(NO_RELATIONS);
+      expect(text).not.toContain(secret);
+      for(const unit of [ZWSP,RLO,WJ,NEL,APC]) expect(text).not.toContain(unit);
+    }
+    const held=modelOf(projection,structurallyHeld(raw));
+    for(const size of SIZES) for(const ascii of TIERS){
+      const text=joined(details(held,size,ascii));
       expect(neighbourRows(text,ascii)).toEqual([expect.stringContaining('[REDACTED]')]);
       expect(text).not.toContain(secret);
       for(const unit of [ZWSP,RLO,WJ,NEL,APC]) expect(text).not.toContain(unit);
