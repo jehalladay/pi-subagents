@@ -318,6 +318,13 @@ export const WORKFLOW_FILE_FLAG = "subagents-workflow-file";
  * pages of exactly this size, so a slice never asks for more rows than the projection can return (wb-6ze.24).
  */
 export const WORKBENCH_PROJECTION_MAX_QUERY = 40;
+/**
+ * The bar viewport of the inspector timeline view, in cells: the columns of the workbench.timeline/v1 lane model the menu
+ * builds (wb-6ze.35). Fixed rather than read from the terminal, so the model is rebuilt only on a projection change or a
+ * window, zoom or pan change. 24 cells fit the bar area the timeline view leaves at the 80-column overlay (docs/workbench/02
+ * WB-028), so a bar the model places inside its viewport is never cut by the screen.
+ */
+export const WORKBENCH_TIMELINE_COLUMNS = 24;
 
 /**
  * Re-exported from where they now live, because this is where they were
@@ -4597,6 +4604,7 @@ Write the file using the write tool. Only write the file, nothing else.`;
     observation: {
       projection,
       relationPage: WORKBENCH_PROJECTION_MAX_QUERY,
+      timelineColumns: WORKBENCH_TIMELINE_COLUMNS,
       scope: task => task.observationScope ? { workspace: task.observationScope.workspace, principal: task.observationScope.principal } : undefined,
       // Loaders exist for the landed readers; authorization is the live
       // exact-grant check each load runs (docs/workbench/20, wb-g1g.1 ruling).

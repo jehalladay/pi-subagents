@@ -1,0 +1,1 @@
+- [wb-xox](wb-xox.md) | receipts: per-bead receipt files under receipts/ replace the TRACEABILITY EOF-append for NEW receipts; historical TRACEABILITY frozen append-only | 2026-10-17
