@@ -11,7 +11,7 @@ import {mkdirSync, mkdtempSync, readdirSync, rmSync, writeFileSync, readFileSync
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {fileURLToPath} from 'node:url';
-import {buildFaultReceipt, exitCodeFor, faultProviderSource} from './local-detached-faults-receipt.mjs';
+import {buildFaultReceipt, builtinAccessViolations, CLAIMS_NO_EFFECT, exitCodeFor, faultProviderSource, PROVIDER_FIXTURES, reachedTerminal} from './local-detached-faults-receipt.mjs';
 
 const HOLD_MS = 10000;
 const BOUND_MS = 5000;
@@ -21,6 +21,7 @@ const WAIT = 'local.wait';
 
 const diagnostics = [];
 const journeys = {};
+const providerLint = {surveyed: [], violations: []};
 const pids = new Set();
 const now = () => new Date().toISOString();
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
@@ -56,6 +57,7 @@ function emit(markerCounts) {
     platform: process.platform,
     journeys,
     markerCounts,
+    providerLint,
     diagnostics,
   });
   const line = JSON.stringify(receipt);
@@ -91,18 +93,19 @@ const markerCounts = () => {
   return counts;
 };
 
-function writeFixture(name, text) {
+function writeFixture(name, text, lint = false) {
+  if (lint) {
+    providerLint.surveyed.push(name);
+    for (const violation of builtinAccessViolations(text)) providerLint.violations.push(`${name}: ${violation}`);
+  }
   const path = join(workspace, name);
   writeFileSync(path, text, {mode: 0o600});
   return path;
 }
 
-const crashPath = writeFixture('effect-crash-provider.mjs', faultProviderSource({capabilityId: EFFECT, markerDirectory: markers, crashAfterEffect: true}));
-const holdPath = writeFixture('effect-hold-provider.mjs', faultProviderSource({capabilityId: EFFECT, markerDirectory: markers, crashAfterEffect: false, holdMs: HOLD_MS}));
-const waitPath = writeFixture(
-  'wait-provider.mjs',
-  `export function register(registry){registry.register({descriptor:{id:${JSON.stringify(WAIT)},version:'1.0.0',description:'controlled test provider, not native',inputSchema:{type:'object',properties:{ms:{type:'integer',minimum:1,maximum:10000}},required:['ms'],additionalProperties:false},effectClass:'read',permissions:['fixture:wait'],supportedModes:['invoke'],contractSource:'fixture:source'},async invoke(input,ctx){await new Promise((resolve,reject)=>{const t=setTimeout(resolve,input.ms);ctx.signal.addEventListener('abort',()=>{clearTimeout(t);reject(Error('fixture cancelled'));},{once:true});});return {coverage:'fixture',invocationId:ctx.invocationId};}});}`,
-);
+const crashPath = writeFixture(PROVIDER_FIXTURES.crash, faultProviderSource({capabilityId: EFFECT, markerDirectory: markers, crashAfterEffect: true}), true);
+const holdPath = writeFixture(PROVIDER_FIXTURES.hold, faultProviderSource({capabilityId: EFFECT, markerDirectory: markers, crashAfterEffect: false, holdMs: HOLD_MS}), true);
+const waitPath = writeFixture(PROVIDER_FIXTURES.wait, `export function register(registry){registry.register({descriptor:{id:${JSON.stringify(WAIT)},version:'1.0.0',description:'controlled test provider, not native',inputSchema:{type:'object',properties:{ms:{type:'integer',minimum:1,maximum:10000}},required:['ms'],additionalProperties:false},effectClass:'read',permissions:['fixture:wait'],supportedModes:['invoke'],contractSource:'fixture:source'},async invoke(input,ctx){await new Promise((resolve,reject)=>{const t=setTimeout(resolve,input.ms);ctx.signal.addEventListener('abort',()=>{clearTimeout(t);reject(Error('fixture cancelled'));},{once:true});});return {coverage:'fixture',invocationId:ctx.invocationId};}});}`, true);
 const effectScript = writeFixture('effect-workflow.js', `export const meta={name:"fault-effect",description:"controlled fault fixture"};\nreturn await node(${JSON.stringify(EFFECT)},args);`);
 const waitScript = writeFixture('wait-workflow.js', `export const meta={name:"fault-wait",description:"controlled fault fixture"};\nreturn await node(${JSON.stringify(WAIT)},args);`);
 
@@ -143,24 +146,29 @@ async function crashingInvocation(id) {
   const started = performance.now();
   const firstExecute = await client.execute().then(() => 'replied', () => 'reply-lost-to-crash');
   const seen = [];
-  const unknown = await until(async () => { const snapshot = await client.inspect(); seen.push(snapshot); return snapshot; }, snapshot => snapshot.terminal === 'unknown');
+  const unknown = await until(async () => { const snapshot = await client.inspect(); seen.push(snapshot); return snapshot; }, reachedTerminal);
   return {receipt, client, launchedAt, firstExecute, seen, unknown, latencyMs: Math.round((performance.now() - started) * 100) / 100};
+}
+
+/** Try to launch the SAME invocation id again; a refusal naming exists/conflict is the only accepted rejection. */
+async function attemptRelaunch(id) {
+  return await host.launchDetachedWorkflow(request(id, 'crash', {autoStart: false, permissions: ['inspect', 'execute']})).then(
+    receipt => { pids.add(receipt.pid); return {rejected: false, diagnostic: 'same-id relaunch accepted'}; },
+    error => ({rejected: /exists|conflict/i.test(message(error)), diagnostic: message(error)}),
+  );
 }
 
 async function effectCrashJourney() {
   const id = 'effect-crash';
   const first = await crashingInvocation(id);
-  const journey = {invocationId: id, armed: first.unknown.ok, launchedAt: first.launchedAt, unknownAt: now(), latencyMs: first.latencyMs, firstExecute: first.firstExecute, claimsNoEffect: false};
+  const journey = {invocationId: id, armed: first.unknown.ok, launchedAt: first.launchedAt, unknownAt: now(), latencyMs: first.latencyMs, firstExecute: first.firstExecute, claimsNoEffect: CLAIMS_NO_EFFECT.honest};
   if (!first.unknown.ok) diagnostics.push(`${id}: the crashing provider did not terminate the host within ${BOUND_MS} ms.`);
   const crashCount = markerCount(id);
   const inspected = await first.client.inspect();
   const afterInspect = markerCount(id);
   const executeRejected = await first.client.execute().then(() => false, () => true);
   const afterExecute = markerCount(id);
-  const relaunch = await host.launchDetachedWorkflow(request(id, 'crash', {autoStart: false, permissions: ['inspect', 'execute']})).then(
-    receipt => { pids.add(receipt.pid); return {rejected: false, diagnostic: 'same-id relaunch accepted'}; },
-    error => ({rejected: /exists|conflict/i.test(message(error)), diagnostic: message(error)}),
-  );
+  const relaunch = await attemptRelaunch(id);
   const afterRelaunch = markerCount(id);
   Object.assign(journey, {
     effectObserved: crashCount >= 1,
@@ -176,7 +184,10 @@ async function effectCrashJourney() {
   const second = await crashingInvocation(secondId).then(result => ({accepted: true, result}), error => ({accepted: false, error: message(error)}));
   if (!second.accepted) diagnostics.push(`${secondId}: ${second.error}`);
   const secondMarkers = markerCount(secondId);
+  // The original id must still be refused once the deliberate second logical invocation exists.
+  const relaunchAfterSecond = await attemptRelaunch(id);
   Object.assign(journey, {
+    relaunchRejectedAfterSecond: relaunchAfterSecond.rejected,
     second: {invocationId: secondId, accepted: second.accepted, markers: secondMarkers},
     explicitSecondRequest: true,
     totalMarkers: afterRelaunch + secondMarkers,
@@ -199,8 +210,11 @@ async function cancelIsolationJourney() {
   const reply = await a.cancel('fault journey: cancel one host only');
   const firstInspect = await a.inspect();
   polls.push(view(await b.inspect()));
-  const cancelled = await until(() => a.inspect(), snapshot => snapshot.terminal === 'cancelled');
+  const cancelled = await until(() => a.inspect(), reachedTerminal);
   const latencyMs = Math.round((performance.now() - started) * 100) / 100;
+  // One poll interval after the terminal, inspect again: the terminal must hold, and the record reads this fresh snapshot.
+  await sleep(POLL_MS);
+  const postCancel = await a.inspect();
   polls.push(view(await b.inspect()));
   await sleep(100);
   polls.push(view(await b.inspect()));
@@ -216,9 +230,11 @@ async function cancelIsolationJourney() {
       terminalConfirmed: reply.terminalConfirmed,
       cancellationRequestedAtFirstInspect: firstInspect.cancellationRequested === true,
       terminal: cancelled.value.terminal,
+      terminalObservedAt: cancelled.value.observedAt,
       latencyMs,
       cancelledAt,
     },
+    postCancelInspect: {terminal: postCancel.terminal, observedAt: postCancel.observedAt, cancellationRequested: postCancel.cancellationRequested === true, controlAuditLength: Array.isArray(postCancel.controlAudit) ? postCancel.controlAudit.length : 0, hasResult: Object.hasOwn(postCancel, 'result')},
     sibling: {invocationId: siblingId, polls, endedByOwnShutdown: shutdown.accepted === true},
   };
 }
@@ -233,9 +249,9 @@ async function shutdownUnresolvedJourney() {
   const live = await until(() => running.inspect(), snapshot => snapshot.observation === 'observed-running');
   const runningReply = await running.shutdown('fault journey: shutdown a running host');
   const idleReply = await idle.shutdown('fault journey: shutdown a host that never executed');
-  const after = await until(() => running.inspect(), snapshot => snapshot.terminal === 'unknown');
+  const after = await until(() => running.inspect(), reachedTerminal);
   if (!live.ok) diagnostics.push(`${runningId}: the host did not reach observed-running before shutdown.`);
-  if (!after.ok) diagnostics.push(`${runningId}: inspect did not reach unknown after shutdown within the bound.`);
+  if (!after.ok) diagnostics.push(`${runningId}: inspect did not reach a terminal after shutdown within the bound.`);
   return {
     armed: live.ok && after.ok,
     running: {invocationId: runningId, unresolvedEffects: runningReply.unresolvedEffects, afterTerminal: after.value.terminal, afterReconcileHint: after.value.reconcileHint ?? ''},
@@ -253,12 +269,12 @@ async function sigtermJourney() {
   const started = performance.now();
   process.kill(receipt.pid, 'SIGTERM');
   const seen = [];
-  const lost = await until(async () => { const snapshot = await client.inspect(); seen.push(snapshot); return snapshot; }, snapshot => snapshot.terminal === 'unknown');
+  const lost = await until(async () => { const snapshot = await client.inspect(); seen.push(snapshot); return snapshot; }, reachedTerminal);
   const latencyMs = Math.round((performance.now() - started) * 100) / 100;
   const executeRejected = await client.execute().then(() => false, () => true);
   await sleep(300);
   if (!live.ok) diagnostics.push(`${id}: the host did not reach observed-running with its effect marker before SIGTERM.`);
-  if (!lost.ok) diagnostics.push(`${id}: inspect did not reach unknown after SIGTERM within the bound.`);
+  if (!lost.ok) diagnostics.push(`${id}: inspect did not reach a terminal after SIGTERM within the bound.`);
   return {
     armed: live.ok && lost.ok,
     invocationId: id,
