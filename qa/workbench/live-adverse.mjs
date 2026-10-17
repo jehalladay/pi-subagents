@@ -21,21 +21,23 @@
  * lookup retry are bounded by the receipt's disclosed constants and measured.
  *
  * The host is wired to the run's abort signal exactly as production wires it
- * (src/index.ts 2762-2769: one task abort signal passed both as the runWorkflow
- * signal and as the createClaudeWorkflowHost signal), so the tier measures the
- * production cancellation path, not only runtime host.abortAgent. Each
+ * (src/index.ts, the workflow tool's runWorkflow({ ... }) call: one task abort
+ * signal, task.abortController.signal, passed both as the runWorkflow signal and
+ * as the signal of the createClaudeWorkflowHost({ ... }) it builds inline; cited
+ * by content, never by line number, and located by content in the test), so the
+ * tier measures the production cancellation path, not only runtime host.abortAgent. Each
  * agent's startedAt is the runtime's own stamp from its agent-started progress
  * entry; J3 judges a post-abort start by it (see live-adverse-receipt.mjs).
  *
  * Usage: node qa/workbench/live-adverse.mjs [cwd]   (CLAUDE_ADVERSE_RECEIPT=path writes the receipt)
  */
-import { execFileSync } from 'node:child_process';
-import { readFileSync, writeFileSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
+import { readFileSync, realpathSync, writeFileSync } from 'node:fs';
 import { getSessionInfo } from '@anthropic-ai/claude-agent-sdk';
 import { createClaudeWorkflowHost } from '../../dist/workbench/claude-host.js';
 import { sanitizeWorkbenchText } from '../../dist/workbench/redaction.js';
 import { runWorkflow } from '../../dist/workflow/runtime.js';
-import { ACK_WAIT_BOUND_MS, buildAdverseReceipt, buildPreview, SESSION_LOOKUP_BOUND_MS, servedModelFrom } from './live-adverse-receipt.mjs';
+import { ACK_WAIT_BOUND_MS, buildAdverseReceipt, buildPreview, receiptStamp, SESSION_LOOKUP_BOUND_MS, servedModelFrom } from './live-adverse-receipt.mjs';
 
 const cwd = process.argv[2] ?? process.cwd();
 const MODEL = process.env.CLAUDE_ADVERSE_MODEL ?? 'claude-opus-5-5';
@@ -102,8 +104,9 @@ function recorder(onInit) {
 }
 
 /**
- * Production wiring (src/index.ts 2762-2769): the run abort signal is also
- * the host's own signal. Production additionally passes an identity
+ * Production wiring (src/index.ts runWorkflow({ signal: task.abortController.signal,
+ * host: createClaudeWorkflowHost({ signal: task.abortController.signal, ... }) })):
+ * the run abort signal is also the host's own signal. Production additionally passes an identity
  * re-verifying beforeDispatch, capabilities, grants, roles, invocationId and
  * principal built from src-only modules; this tier passes none of them.
  */
@@ -273,22 +276,48 @@ async function invalidModel() {
   };
 }
 
-function revision() {
+/**
+ * The receipt's git stamp (owner R2 ALT, 23:39Z): the canonical wb-vko block from origin machine/flywheel/wb-vko
+ * d733101 qa/workbench/git-stamp.mjs, inlined below byte-for-byte as its three inline members and the wb-a2g.6 re-cut
+ * carry it (the queued module is not on trunk, so it is not imported). It describes the package root only when that
+ * root IS the repository toplevel, so a copy nested in a foreign checkout or outside any repository stamps no HEAD,
+ * and a failed status read is porcelain null, never a clean tree. revisionOf rides along for byte identity only: the
+ * receipt takes its revision and its separate dirty bit from receiptStamp(gitStamp(root)) in the pure receipt module.
+ * test/workbench-claude-adverse-receipt.test.ts pins the block's sha256 and runs the block extracted from this file.
+ */
+// git-stamp:begin (copied byte-for-byte into status-ledger.mjs, local-detached-faults.mjs and local-detached-shared-child.mjs, whose
+// guards allow only node: imports; test/workbench-git-stamp.test.ts fails on any drift)
+const HEX = /^[0-9a-f]{7,64}$/;
+
+function git(root, args) {
+  const run = spawnSync('git', args, {cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore']});
+  return run.status === 0 && typeof run.stdout === 'string' ? run.stdout : undefined;
+}
+
+function sameDir(a, b) {
   try {
-    return execFileSync('git', ['rev-parse', 'HEAD'], { cwd: new URL('../..', import.meta.url), encoding: 'utf8' }).trim() || 'working-tree';
+    return realpathSync(a) === realpathSync(b);
   } catch {
-    return 'working-tree';
+    return false;
   }
 }
 
-/** The receipt dirty bit: true when the working tree differs from HEAD, false when clean, null when git cannot say. */
-function dirty() {
-  try {
-    return execFileSync('git', ['status', '--porcelain'], { cwd: new URL('../..', import.meta.url), encoding: 'utf8' }).trim().length > 0;
-  } catch {
-    return null;
-  }
+/** `{head, porcelain}` for `root`: both null unless root is the repository toplevel with a valid HEAD; porcelain alone is null when the status read fails. */
+function gitStamp(root) {
+  const top = git(root, ['rev-parse', '--show-toplevel']);
+  if (top === undefined || !sameDir(top.trim(), root)) return {head: null, porcelain: null};
+  const head = (git(root, ['rev-parse', 'HEAD']) ?? '').trim();
+  if (!HEX.test(head)) return {head: null, porcelain: null};
+  return {head, porcelain: git(root, ['status', '--porcelain']) ?? null};
 }
+
+/** HEAD sha, suffixed `-dirty` when the tree has changes; `working-tree` when root is not a toplevel or its status cannot be read. */
+function revisionOf(root) {
+  const {head, porcelain} = gitStamp(root);
+  if (head === null || porcelain === null) return 'working-tree';
+  return porcelain.trim().length > 0 ? `${head}-dirty` : head;
+}
+// git-stamp:end
 
 function sdkVersion() {
   return JSON.parse(readFileSync(new URL('../../node_modules/@anthropic-ai/claude-agent-sdk/package.json', import.meta.url), 'utf8')).version;
@@ -305,10 +334,11 @@ try {
   const invalid = await invalidModel();
   const types = new Set();
   for (const message of [...mid.messages, ...pre.messages, ...invalid.messages]) types.add(message.subtype ? `${message.type}/${message.subtype}` : message.type);
+  const stamp = receiptStamp(gitStamp(new URL('../..', import.meta.url)));
   const receipt = buildAdverseReceipt({
     utc: new Date().toISOString(),
-    revision: revision(),
-    dirty: dirty(),
+    revision: stamp.revision,
+    dirty: stamp.dirty,
     node: process.version,
     arch: process.arch,
     platform: process.platform,

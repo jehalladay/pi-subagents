@@ -5,10 +5,17 @@
  * real SDK. A live run is evidence of the surfaces it exercised; these tests
  * are evidence the measurement cannot quietly stop measuring.
  */
-import { readFileSync } from 'node:fs';
-import { describe, expect, it } from 'vitest';
-import { ACK_WAIT_BOUND_MS, assessAdverseJourneys, buildAdverseReceipt, buildPreview, SESSION_LOOKUP_BOUND_MS, servedModelFrom } from '../qa/workbench/live-adverse-receipt.mjs';
+import { execFileSync, spawnSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
+import { mkdirSync, mkdtempSync, readFileSync, realpathSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { pathToFileURL } from 'node:url';
+import ts from 'typescript';
+import { afterEach, describe, expect, it } from 'vitest';
+import { ACK_WAIT_BOUND_MS, assessAdverseJourneys, buildAdverseReceipt, buildPreview, receiptStamp, SESSION_LOOKUP_BOUND_MS, servedModelFrom } from '../qa/workbench/live-adverse-receipt.mjs';
 import { sanitizeWorkbenchText } from '../src/workbench/redaction.js';
+import { nonRepoScratch } from './helpers/non-repo-scratch';
 
 const CANCELLED = 'Claude SDK query was cancelled.';
 const SID_A = '3f2a9c1e-7b64-4d0a-9e1f-0a1b2c3d4e5f';
@@ -752,18 +759,108 @@ describe('respin item 2: ackToTerminalMs states its sign convention', () => {
   });
 });
 
-describe('respin item 3: src/index.ts line references are current', () => {
-  it('cites the trunk lines where runWorkflow and the host receive the task abort signal', () => {
-    const runner = readFileSync(new URL('../qa/workbench/live-adverse.mjs', import.meta.url), 'utf8');
-    const lines = readFileSync(new URL('../src/index.ts', import.meta.url), 'utf8').split('\n');
-    const cited = [...runner.matchAll(/src\/index\.ts (\d+)-(\d+)/g)];
-    expect(cited.length).toBeGreaterThan(0);
-    for (const [, from, to] of cited) {
-      const window = lines.slice(Number(from) - 1, Number(to)).join('\n');
-      expect(window).toMatch(/runWorkflow\(/);
-      expect(window).toMatch(/createClaudeWorkflowHost\(/);
-      expect(window.match(/signal: task\.abortController\.signal/g)?.length).toBeGreaterThanOrEqual(2);
+/**
+ * wb-a2g.1 r16 U1 (owner R1 = (b), 23:39Z): the runner cites the production cancellation wiring by CONTENT. The old
+ * line-window pin went red at two of two trunk merges that moved src/index.ts (2748-2755 -> 2762-2769 -> 2767-2774)
+ * while the wiring itself never changed. The pin now LOCATES the wiring in the src/index.ts syntax tree: every
+ * createClaudeWorkflowHost({ ... }) call sits inside a runWorkflow({ ... }) call whose own signal is
+ * task.abortController.signal and carries that same signal itself. Blind to comments (a syntax tree has none) and to
+ * unrelated line moves; non-vacuous by the falsifier row, whose mutants are spliced at the located nodes so that a
+ * reformat of src/index.ts cannot quietly disarm them. For reference only, never asserted: at trunk 06015e7 the call
+ * is src/index.ts:2767 and the host :2772.
+ */
+const TASK_SIGNAL = 'task.abortController.signal';
+
+interface HostWiring {
+  /** The `signal` initializer of the runWorkflow({ ... }) call enclosing the host; undefined when none encloses it. */
+  runSignal: string | undefined;
+  /** The host call's own `signal` initializer; undefined when it passes none. */
+  hostSignal: string | undefined;
+  /** Source span of the host's `signal` property, for the spliced falsifiers. */
+  hostSignalSpan: [number, number] | undefined;
+  /** Source span of the enclosing run's `signal` initializer, for the spliced falsifiers. */
+  runSignalSpan: [number, number] | undefined;
+}
+
+function calleeName(call: ts.CallExpression): string | undefined {
+  if (ts.isIdentifier(call.expression)) return call.expression.text;
+  if (ts.isPropertyAccessExpression(call.expression)) return call.expression.name.text;
+  return undefined;
+}
+
+function signalOf(call: ts.CallExpression | undefined): ts.PropertyAssignment | undefined {
+  const options = call?.arguments[0];
+  if (options === undefined || !ts.isObjectLiteralExpression(options)) return undefined;
+  return options.properties.find((property): property is ts.PropertyAssignment => ts.isPropertyAssignment(property) && ts.isIdentifier(property.name) && property.name.text === 'signal');
+}
+
+/** Every createClaudeWorkflowHost call in `text`, with its own signal and the signal of the runWorkflow call enclosing it. */
+function hostWiring(text: string): HostWiring[] {
+  const file = ts.createSourceFile('index.ts', text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const found: HostWiring[] = [];
+  const visit = (node: ts.Node, run: ts.CallExpression | undefined): void => {
+    let enclosing = run;
+    if (ts.isCallExpression(node)) {
+      const name = calleeName(node);
+      if (name === 'createClaudeWorkflowHost') {
+        const host = signalOf(node);
+        const runSignal = signalOf(run);
+        found.push({
+          runSignal: runSignal?.initializer.getText(file),
+          hostSignal: host?.initializer.getText(file),
+          hostSignalSpan: host ? [host.getStart(file), host.getEnd()] : undefined,
+          runSignalSpan: runSignal ? [runSignal.initializer.getStart(file), runSignal.initializer.getEnd()] : undefined,
+        });
+      }
+      if (name === 'runWorkflow') enclosing = node;
     }
+    ts.forEachChild(node, (child) => visit(child, enclosing));
+  };
+  visit(file, undefined);
+  return found;
+}
+
+/** The runner's claim: at least one native host, and every one of them shares the run's task signal. */
+const wiredAsCited = (text: string): boolean => {
+  const wiring = hostWiring(text);
+  return wiring.length > 0 && wiring.every((host) => host.runSignal === TASK_SIGNAL && host.hostSignal === TASK_SIGNAL);
+};
+
+const splice = (text: string, [start, end]: [number, number], replacement: string): string => `${text.slice(0, start)}${replacement}${text.slice(end)}`;
+
+describe('respin item 3 (r16 U1, owner R1 = (b)): the src/index.ts wiring the runner cites is located by content, never by line number', () => {
+  const index = readFileSync(new URL('../src/index.ts', import.meta.url), 'utf8');
+
+  it('locates every createClaudeWorkflowHost({ ... }) inside a runWorkflow({ ... }) and both carry task.abortController.signal', () => {
+    const wiring = hostWiring(index);
+    expect(wiring.length).toBeGreaterThan(0);
+    for (const host of wiring) expect({ runSignal: host.runSignal, hostSignal: host.hostSignal }).toEqual({ runSignal: TASK_SIGNAL, hostSignal: TASK_SIGNAL });
+    expect(wiredAsCited(index)).toBe(true);
+  });
+
+  it('is non-vacuous: moving either signal off the task controller, hiding it in a comment, or a host outside the run reddens it', () => {
+    const [host] = hostWiring(index);
+    expect(host?.hostSignalSpan).toBeDefined();
+    expect(host?.runSignalSpan).toBeDefined();
+    if (host?.hostSignalSpan === undefined || host.runSignalSpan === undefined) return;
+    const mutants = [
+      splice(index, host.hostSignalSpan, 'signal: hostController.signal'),
+      splice(index, host.hostSignalSpan, 'abortSignal: task.abortController.signal'),
+      splice(index, host.hostSignalSpan, '/* signal: task.abortController.signal */ label: "host"'),
+      splice(index, host.runSignalSpan, 'runController.signal'),
+      `${index}\nnative.createClaudeWorkflowHost({ cwd: ".", signal: task.abortController.signal });\n`,
+    ];
+    for (const mutant of mutants) {
+      expect(mutant).not.toBe(index);
+      expect(wiredAsCited(mutant)).toBe(false);
+    }
+  });
+
+  it('the runner cites the wiring by content: the task signal named, no src/index.ts line number anywhere', () => {
+    const runner = readFileSync(new URL('../qa/workbench/live-adverse.mjs', import.meta.url), 'utf8');
+    expect(runner).not.toMatch(/index\.ts:?\s*\d/);
+    expect((runner.match(/src\/index\.ts/g) ?? []).length).toBeGreaterThanOrEqual(2);
+    expect(runner.match(/task\.abortController\.signal/g)?.length).toBeGreaterThanOrEqual(2);
   });
 });
 
@@ -871,6 +968,8 @@ describe('J7 respin: the builder refuses word-glued and JSON-escaped Bearer toke
     }
   }
 
+  it('the glued-probe table is live: exactly the four measured probes, so an emptied table reddens (r16 U2c each-liveness)', () => expect(GLUED).toHaveLength(4));
+
   it.each(GLUED)('throws on %s, a value the J7 verbatim pattern refuses', (_name, value) => {
     expect(J7_VERBATIM.test(value)).toBe(true);
     const o = cleanObserved();
@@ -916,15 +1015,213 @@ describe('O3 (bound by the owner): receipt dirty bit (the wb-a2g.6 O4 family sta
     expect(buildAdverseReceipt({ ...meta(), dirty: 'yes', journeys: cleanObserved() }).dirty).toBeNull();
   });
 
-  it('the runner reads git status --porcelain from the package root and passes the bit to the builder (comment-blind)', () => {
+  it('the runner stamps the package root through the canonical block and passes the tested revision and bit to the builder (comment-blind; r16 re-expression of the 6c31f02 status-read pin)', () => {
     const code = codeOnly(readFileSync(new URL('../qa/workbench/live-adverse.mjs', import.meta.url), 'utf8'));
-    expect(code).toMatch(/execFileSync\('git', \['status', '--porcelain'\], \{ cwd: new URL\('\.\.\/\.\.', import\.meta\.url\)/);
-    expect(code).toMatch(/\bdirty: dirty\(\),/);
+    expect(code).toMatch(/\bconst stamp = receiptStamp\(gitStamp\(new URL\('\.\.\/\.\.', import\.meta\.url\)\)\);/);
+    expect(code).toMatch(/\brevision: stamp\.revision,/);
+    expect(code).toMatch(/\bdirty: stamp\.dirty,/);
   });
 
   it('the comment stripper is not satisfied by a commented-out call', () => {
     expect(codeOnly("const a = 'x'; // dirty: dirty(),\n")).not.toMatch(/dirty: dirty\(\),/);
     expect(codeOnly("/* execFileSync('git', ['status', '--porcelain'] */ const b = 1;")).not.toContain('--porcelain');
     expect(codeOnly("const u = new URL('http://x'); // note")).toBe("const u = new URL('http://x'); ");
+  });
+});
+
+/**
+ * wb-a2g.1 r16 U2 (owner R2 = ALT, 23:39Z; gate-1 U2): the runner's stamp is the canonical wb-vko git-stamp block,
+ * inlined byte-for-byte from origin machine/flywheel/wb-vko d733101 qa/workbench/git-stamp.mjs exactly as its three
+ * inline members carry it (status-ledger, local-detached-faults and local-detached-shared-child share one sha256).
+ * gitStamp(root) checks toplevel equality before either git read, so a copy nested in a foreign checkout, or outside
+ * any repository, stamps no HEAD, and a failed status read is porcelain null, never a clean tree. The receipt's
+ * revision and dirty bit come from the pure receiptStamp() over that stamp. Gate mutants G1 (a failed status read
+ * stamped clean) and G2 (the bit inverted) survived every text-shape pin of the 6c31f02 stamp; here they die by rows
+ * that run the block extracted from the runner itself, in plain node as the runner runs, against real repositories.
+ */
+const CANONICAL_STAMP_SHA256 = '26509a221e725ba07ef2b6fe7905d98ee9d06a7426593565157055c6e7548af8';
+const STAMP_BEGIN = '// git-stamp:begin';
+const STAMP_END = '// git-stamp:end';
+
+/** Git variables that would point fixture commands and the stamp child at an outer repository (the wb-a9s F1 class). */
+const GIT_LOCATING = ['GIT_DIR', 'GIT_WORK_TREE', 'GIT_INDEX_FILE', 'GIT_OBJECT_DIRECTORY', 'GIT_ALTERNATE_OBJECT_DIRECTORIES', 'GIT_COMMON_DIR'];
+
+function fixtureEnv(): NodeJS.ProcessEnv {
+  const env = { ...process.env };
+  for (const name of GIT_LOCATING) delete env[name];
+  return env;
+}
+
+function fixtureGit(cwd: string, ...args: string[]): string {
+  return execFileSync('git', ['-c', 'user.name=t', '-c', 'user.email=t@example.invalid', '-c', 'commit.gpgsign=false', ...args], {
+    cwd,
+    encoding: 'utf8',
+    env: fixtureEnv(),
+    stdio: ['ignore', 'pipe', 'pipe'],
+  }).trim();
+}
+
+const stampDirs: string[] = [];
+afterEach(() => {
+  for (const dir of stampDirs.splice(0)) rmSync(dir, { recursive: true, force: true });
+});
+
+/** A real repository with one commit; `nested` is a directory inside it that is NOT its toplevel. */
+function fixtureRepo(): { top: string; nested: string; head: string } {
+  const top = realpathSync(mkdtempSync(join(tmpdir(), 'a2g1-stamp-')));
+  stampDirs.push(top);
+  fixtureGit(top, 'init', '-q');
+  mkdirSync(join(top, 'pkg'));
+  writeFileSync(join(top, 'pkg', 'a.txt'), 'a\n');
+  fixtureGit(top, 'add', '-A');
+  fixtureGit(top, 'commit', '-q', '-m', 'init');
+  return { top, nested: join(top, 'pkg'), head: fixtureGit(top, 'rev-parse', 'HEAD') };
+}
+
+/** Garbage over .git/index: the status read now fails while both rev-parse reads still succeed (proved before the stamp reads it). */
+function corruptIndex(top: string): void {
+  writeFileSync(join(top, '.git', 'index'), 'this is not a git index\n');
+  const status = (args: string[]) => spawnSync('git', args, { cwd: top, env: fixtureEnv(), stdio: 'ignore' }).status;
+  expect(status(['status', '--porcelain'])).not.toBe(0);
+  expect(status(['rev-parse', '--show-toplevel'])).toBe(0);
+  expect(status(['rev-parse', 'HEAD'])).toBe(0);
+}
+
+const runnerText = () => readFileSync(new URL('../qa/workbench/live-adverse.mjs', import.meta.url), 'utf8');
+
+/** The runner's stamp block, from its begin marker through its end marker inclusive. */
+function runnerStampBlock(): string {
+  const text = runnerText();
+  const start = text.indexOf(STAMP_BEGIN);
+  const end = text.indexOf(STAMP_END);
+  expect(start, 'the runner carries the git-stamp block').toBeGreaterThanOrEqual(0);
+  expect(end).toBeGreaterThan(start);
+  return text.slice(start, end + STAMP_END.length);
+}
+
+interface Stamp {
+  head: string | null;
+  porcelain: string | null;
+}
+
+/**
+ * gitStamp(root) from the block extracted from the runner, executed by plain node with only the two node: imports the
+ * block needs. `asUrl` passes root the way the runner does, a file URL with a trailing slash.
+ */
+function stampOf(root: string, asUrl = false): Stamp {
+  const arg = asUrl ? `new URL(${JSON.stringify(pathToFileURL(`${root}/`).href)})` : JSON.stringify(root);
+  const program = `import {spawnSync} from 'node:child_process';\nimport {realpathSync} from 'node:fs';\n${runnerStampBlock()}\nprocess.stdout.write(JSON.stringify(gitStamp(${arg})));\n`;
+  const run = spawnSync(process.execPath, ['--input-type=module', '-e', program], { encoding: 'utf8', env: fixtureEnv() });
+  expect(run.status, run.stderr).toBe(0);
+  return JSON.parse(run.stdout) as Stamp;
+}
+
+describe('r16 U2 (owner R2 = ALT): the receipt stamp is the canonical toplevel-checked git-stamp block, falsified offline', () => {
+  it('inlines the canonical wb-vko git-stamp block byte-for-byte (sha256 of the d733101 git-stamp.mjs begin..end block)', () => {
+    expect(createHash('sha256').update(runnerStampBlock()).digest('hex')).toBe(CANONICAL_STAMP_SHA256);
+  });
+
+  it('stamps a clean repository at its own toplevel: revision HEAD, dirty false', () => {
+    const { top, head } = fixtureRepo();
+    const stamp = stampOf(top);
+    expect(stamp).toEqual({ head, porcelain: '' });
+    expect(receiptStamp(stamp)).toEqual({ revision: head, dirty: false });
+  });
+
+  it('stamps an untracked file as dirty: revision stays HEAD, dirty true (G2 dies)', () => {
+    const { top, head } = fixtureRepo();
+    writeFileSync(join(top, 'untracked.txt'), 'u\n');
+    const stamp = stampOf(top);
+    expect(stamp.head).toBe(head);
+    expect(stamp.porcelain).toContain('untracked.txt');
+    expect(receiptStamp(stamp)).toEqual({ revision: head, dirty: true });
+  });
+
+  it('stamps a failed status read as porcelain null and dirty null, never a clean tree (G1 dies; the dirty-null positive kept)', () => {
+    const { top, head } = fixtureRepo();
+    corruptIndex(top);
+    const stamp = stampOf(top);
+    expect(stamp).toEqual({ head, porcelain: null });
+    expect(receiptStamp(stamp)).toEqual({ revision: head, dirty: null });
+  });
+
+  it('stamps no HEAD for a package nested in a foreign checkout: never the foreign repository revision (leg closed in this cut)', () => {
+    const { nested, head } = fixtureRepo();
+    const stamp = stampOf(nested);
+    expect(stamp).toEqual({ head: null, porcelain: null });
+    expect(receiptStamp(stamp)).toEqual({ revision: 'working-tree', dirty: null });
+    expect(JSON.stringify(receiptStamp(stamp))).not.toContain(head);
+  });
+
+  it('stamps no HEAD for a repository with no commit yet (no valid HEAD)', () => {
+    const top = realpathSync(mkdtempSync(join(tmpdir(), 'a2g1-stamp-empty-')));
+    stampDirs.push(top);
+    fixtureGit(top, 'init', '-q');
+    expect(stampOf(top)).toEqual({ head: null, porcelain: null });
+  });
+
+  it('stamps no HEAD for a directory outside any repository', () => {
+    const scratch = nonRepoScratch('a2g1-stamp-plain-');
+    try {
+      expect(stampOf(scratch.dir)).toEqual({ head: null, porcelain: null });
+    } finally {
+      scratch.dispose();
+    }
+  });
+
+  it('reads the root the way the runner passes it, a file URL with a trailing slash, exactly as a path', () => {
+    const { top, nested, head } = fixtureRepo();
+    expect(stampOf(top, true)).toEqual({ head, porcelain: '' });
+    expect(stampOf(nested, true)).toEqual({ head: null, porcelain: null });
+    writeFileSync(join(top, 'pkg', 'a.txt'), 'changed\n');
+    expect(receiptStamp(stampOf(top, true))).toEqual({ revision: head, dirty: true });
+  });
+
+  it('outside the canonical block the runner makes no git read of its own: one gitStamp call, no bare rev-parse or status read (comment-blind)', () => {
+    const outside = codeOnly(runnerText().replace(runnerStampBlock(), ''));
+    expect(outside).not.toMatch(/execFileSync|spawnSync\(|'rev-parse'|'--porcelain'|'status'/);
+    expect(outside.match(/\bgitStamp\(/g) ?? []).toHaveLength(1);
+    expect(outside.match(/\breceiptStamp\(/g) ?? []).toHaveLength(1);
+  });
+
+  it('the comment stripper is not satisfied by a commented-out stamp call', () => {
+    expect(codeOnly("const a = 'x'; // dirty: stamp.dirty,\n")).not.toMatch(/dirty: stamp\.dirty,/);
+    expect(codeOnly('/* const stamp = receiptStamp(gitStamp(new URL(x))); */ const b = 1;')).not.toContain('receiptStamp');
+  });
+});
+
+describe('r16 U2: receiptStamp derives the receipt revision and dirty bit from the stamp, fail-closed', () => {
+  const HEAD = 'a'.repeat(40);
+
+  it('reads empty porcelain as a clean tree and any change line as dirty (G2 dies)', () => {
+    expect(receiptStamp({ head: HEAD, porcelain: '' })).toEqual({ revision: HEAD, dirty: false });
+    expect(receiptStamp({ head: HEAD, porcelain: '\n' })).toEqual({ revision: HEAD, dirty: false });
+    expect(receiptStamp({ head: HEAD, porcelain: ' M qa/workbench/live-adverse.mjs\n' })).toEqual({ revision: HEAD, dirty: true });
+    expect(receiptStamp({ head: HEAD, porcelain: '?? untracked.txt\n' })).toEqual({ revision: HEAD, dirty: true });
+  });
+
+  it('reads a failed status read (porcelain null) as dirty null at the known revision, never clean (G1 dies)', () => {
+    expect(receiptStamp({ head: HEAD, porcelain: null })).toEqual({ revision: HEAD, dirty: null });
+  });
+
+  it('stamps working-tree with dirty null when there is no HEAD, whatever the porcelain says', () => {
+    expect(receiptStamp({ head: null, porcelain: null })).toEqual({ revision: 'working-tree', dirty: null });
+    expect(receiptStamp({ head: null, porcelain: '' })).toEqual({ revision: 'working-tree', dirty: null });
+    expect(receiptStamp({ head: null, porcelain: ' M x\n' })).toEqual({ revision: 'working-tree', dirty: null });
+  });
+
+  it('refuses a malformed stamp fail-closed: never a revision it was not given as a sha, never a guessed bit', () => {
+    for (const bad of [undefined, null, 'abc', [], {}, { head: 42, porcelain: '' }, { head: '', porcelain: '' }, { head: 'not-a-sha', porcelain: '' }, { head: `${HEAD} `, porcelain: '' }]) {
+      expect(receiptStamp(bad)).toEqual({ revision: 'working-tree', dirty: null });
+    }
+    expect(receiptStamp({ head: HEAD, porcelain: 7 })).toEqual({ revision: HEAD, dirty: null });
+    expect(receiptStamp({ head: HEAD })).toEqual({ revision: HEAD, dirty: null });
+  });
+
+  it('feeds the builder: a receipt carries exactly the stamp it was given', () => {
+    const clean = receiptStamp({ head: HEAD, porcelain: '' });
+    expect(buildAdverseReceipt({ ...meta(), ...clean, journeys: cleanObserved() })).toMatchObject({ revision: HEAD, dirty: false });
+    const unknown = receiptStamp({ head: null, porcelain: null });
+    expect(buildAdverseReceipt({ ...meta(), ...unknown, journeys: cleanObserved() })).toMatchObject({ revision: 'working-tree', dirty: null });
   });
 });

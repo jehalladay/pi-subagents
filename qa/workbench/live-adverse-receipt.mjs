@@ -408,6 +408,22 @@ function scanStrings(value, path) {
   }
 }
 
+/** A HEAD the receipt may carry: the canonical stamp's own sha shape (7 to 64 lowercase hex). */
+const HEAD_SHA = /^[0-9a-f]{7,64}$/;
+
+/**
+ * The receipt's revision and dirty bit from the runner's toplevel-checked git stamp ({head, porcelain}: the canonical
+ * wb-vko gitStamp the runner inlines byte-for-byte, owner R2 ALT). revision is the HEAD sha only when the stamp carries
+ * one, else 'working-tree' (root not the repository toplevel, no repository, or no valid HEAD); dirty is true when the
+ * status read listed a change, false when it listed none, and null whenever it was not read or failed: a failed status
+ * read is never a clean tree. Pure; anything malformed fails closed to working-tree with a null bit.
+ */
+export function receiptStamp(stamp) {
+  const head = isObject(stamp) && typeof stamp.head === 'string' && HEAD_SHA.test(stamp.head) ? stamp.head : null;
+  if (head === null) return { revision: 'working-tree', dirty: null };
+  return { revision: head, dirty: typeof stamp.porcelain === 'string' ? stamp.porcelain.trim().length > 0 : null };
+}
+
 const REQUIRED_TEXT = ['utc', 'revision', 'node', 'arch', 'platform', 'sdkVersion', 'model'];
 
 /**
