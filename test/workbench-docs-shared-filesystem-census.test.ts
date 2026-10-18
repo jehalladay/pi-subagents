@@ -6,15 +6,20 @@
  *
  * GREP. Every .md file under docs/workbench, receipts included, is read from its SOURCE, so text the page hides (an HTML
  * comment, a fenced block) is held to the rule as well. Each source line is split into sentences after a `.`, `!` or `?`
- * followed by white space. A sentence MATCHES when it names one of four families, case-insensitively: NFS or EFS as a
- * whole word (so "refs" never matches), shared filesystem (with the shared-filesystem, shared file system and plural
- * spellings) or multi-host (multi host, multihost, plural). A matching sentence must say "unsupported" or "not safe", and
- * may use the word "safe" (or "safely") only inside "not safe". A sentence wrapped over two source lines is judged line by
- * line, so the qualifier has to share the family's line.
+ * followed by white space. A sentence MATCHES when it names one of four families, case-insensitively: NFS or EFS at the
+ * start of a word (so NFSv4 matches while "refs" and "confs" never do), shared filesystem (also shared-filesystem, shared
+ * file system, shared file-system and the plural) or multi-host (multi host, multihost, plural). A matching sentence must
+ * say "unsupported" or "not safe", in any case, and may use the word "safe" (or "safely") only inside "not safe"; "unsafe"
+ * is not the word "safe". A sentence wrapped over two source lines is judged line by line, so the qualifier has to share
+ * the family's line.
  * ROOT SENTENCE. docs/workbench/13-contracts-and-config.md holds exactly one sentence citing ADR-SCG-010; it names the RF
  * workspace root and states single-host, local-coordinated scope.
- * The falsifier tables run the same judges over synthetic text, so each family, the qualifier, the sentence split, the
- * safety-word rule and every root-sentence clause are shown live, independent of what the docs say today.
+ * The falsifier tables run the same judges over synthetic text, so each family and spelling, the qualifier, the sentence
+ * split, the safety-word rule and every root-sentence clause are shown live, independent of what the docs say today.
+ * FROZEN SHAPE (standing rule 16, owner order 2026-10-18T18:14:19Z). One row pins the family table, the three judge
+ * patterns and every synthetic table as literals derived from them at this cut, so deleting a family or a row, narrowing a
+ * pattern or swapping a row's text for an unrelated passing case reds the census. The live docs match set is not frozen:
+ * the census is a rule over every page, and any page may add a sentence that complies.
  */
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { dirname, join, posix, sep } from "node:path";
@@ -27,8 +32,8 @@ const ROOT_SENTENCE_FILE = `${DOCS}/13-contracts-and-config.md`;
 const ADR = "ADR-SCG-010";
 
 const FAMILIES: ReadonlyArray<readonly [string, RegExp]> = [
-  ["NFS", /\bNFS\b/i],
-  ["EFS", /\bEFS\b/i],
+  ["NFS", /\bNFS/i],
+  ["EFS", /\bEFS/i],
   ["shared filesystem", /\bshared[- ]?file[- ]?systems?\b/i],
   ["multi-host", /\bmulti[- ]?hosts?\b/i],
 ];
@@ -127,19 +132,55 @@ describe("SCG-R5 AC4 (wb-973.5): docs/workbench never presents a shared-filesyst
   });
 });
 
+/** Synthetic sentences each judge must refuse: [case, text, families it names, problem]. */
+const REFUSED: ReadonlyArray<readonly [string, string, readonly string[], Problem]> = [
+  ["NFS, unqualified", "Pi supports NFS swarm workspaces.", ["NFS"], "unqualified"],
+  ["EFS, unqualified", "An EFS mount is fine for the swarm.", ["EFS"], "unqualified"],
+  ["shared filesystem, unqualified", "A shared filesystem works across machines.", ["shared filesystem"], "unqualified"],
+  ["multi-host, claimed supported", "Multi-host swarms are supported.", ["multi-host"], "unqualified"],
+  ["lower-case nfs", "nfs mounts work for the swarm.", ["NFS"], "unqualified"],
+  ["shared-filesystem spelling", "A shared-filesystem workspace works.", ["shared filesystem"], "unqualified"],
+  ["shared file system spelling", "A shared file system works.", ["shared filesystem"], "unqualified"],
+  ["multihost spelling", "Multihost swarms work.", ["multi-host"], "unqualified"],
+  ["a safety claim beside the qualifier", "NFS is safe for multi-host use; clusters are unsupported.", ["NFS", "multi-host"], "safety-claim"],
+  ["safely beside the qualifier", "EFS works safely here, though NFS is unsupported.", ["NFS", "EFS"], "safety-claim"],
+  ["versioned NFSv4", "NFSv4 mounts work for the swarm.", ["NFS"], "unqualified"],
+  ["lower-case efs", "efs mounts work for the swarm.", ["EFS"], "unqualified"],
+  ["capitalised shared filesystem", "Shared filesystem workspaces work.", ["shared filesystem"], "unqualified"],
+  ["plural shared filesystems", "The swarm runs on shared filesystems.", ["shared filesystem"], "unqualified"],
+  ["shared file-system spelling", "A shared file-system works.", ["shared filesystem"], "unqualified"],
+  ["multi host spelling", "Multi host swarms work.", ["multi-host"], "unqualified"],
+  ["plural multi-hosts", "The swarm spans multi-hosts.", ["multi-host"], "unqualified"],
+  ["a capitalised safety claim", "Safe on NFS, though multi-host use is unsupported.", ["NFS", "multi-host"], "safety-claim"],
+];
+/** Synthetic sentences that name a family and comply: [case, text]. */
+const COMPLIANT: ReadonlyArray<readonly [string, string]> = [
+  ["unsupported", "NFS is unsupported."],
+  ["not safe", "An EFS workspace is not safe for the swarm."],
+  ["both qualifiers", "Multi-host use of a shared filesystem is unsupported and not safe."],
+  ["a capitalised Unsupported", "Unsupported: NFS swarm workspaces."],
+  ["a capitalised Not safe", "Not safe: an EFS swarm workspace."],
+  ["unsafe (not the word safe)", "An NFS workspace is unsafe and unsupported."],
+];
+/** Synthetic sentences that name no family: [case, text]. */
+const NO_MATCH: ReadonlyArray<readonly [string, string]> = [
+  ["refs", "Evidence refs are digests."],
+  ["confs", "Both confs load first."],
+  ["single-host", "The root has single-host scope."],
+  ["host alone", "Each host binds its own root."],
+];
+const SENTENCE = "That RF workspace root has single-host, local-coordinated scope (ADR-SCG-010): multi-host use is unsupported and not safe.";
+/** Root-sentence texts the judge must refuse: [case, text, problems]. */
+const ROOT_REFUSED: ReadonlyArray<readonly [string, string, readonly string[]]> = [
+  ["no citing sentence", "The RF workspace root has single-host, local-coordinated scope.", ["0 sentences cite ADR-SCG-010"]],
+  ["two citing sentences", `${SENTENCE} ${SENTENCE}`, ["2 sentences cite ADR-SCG-010"]],
+  ["the root unnamed", "It has single-host, local-coordinated scope (ADR-SCG-010).", ["does not name the RF workspace root"]],
+  ["single-host missing", "The RF workspace root has local-coordinated scope (ADR-SCG-010).", ["does not state single-host scope"]],
+  ["local-coordinated missing", "The RF workspace root has single-host scope (ADR-SCG-010).", ["does not state local-coordinated scope"]],
+];
+
 describe("SCG-R5 AC4 falsifiers: the judges over synthetic text", () => {
-  it.each([
-    ["NFS, unqualified", "Pi supports NFS swarm workspaces.", ["NFS"], "unqualified"],
-    ["EFS, unqualified", "An EFS mount is fine for the swarm.", ["EFS"], "unqualified"],
-    ["shared filesystem, unqualified", "A shared filesystem works across machines.", ["shared filesystem"], "unqualified"],
-    ["multi-host, claimed supported", "Multi-host swarms are supported.", ["multi-host"], "unqualified"],
-    ["lower-case nfs", "nfs mounts work for the swarm.", ["NFS"], "unqualified"],
-    ["shared-filesystem spelling", "A shared-filesystem workspace works.", ["shared filesystem"], "unqualified"],
-    ["shared file system spelling", "A shared file system works.", ["shared filesystem"], "unqualified"],
-    ["multihost spelling", "Multihost swarms work.", ["multi-host"], "unqualified"],
-    ["a safety claim beside the qualifier", "NFS is safe for multi-host use; clusters are unsupported.", ["NFS", "multi-host"], "safety-claim"],
-    ["safely beside the qualifier", "EFS works safely here, though NFS is unsupported.", ["NFS", "EFS"], "safety-claim"],
-  ] as const)("SCG-R5 falsifier: %s is refused", (_case, text, families, problem) => {
+  it.each(REFUSED)("SCG-R5 falsifier: %s is refused", (_case, text, families, problem) => {
     expect(judge("synthetic.md", text)).toEqual([{ file: "synthetic.md", line: 1, sentence: text, families, problem }]);
   });
 
@@ -155,36 +196,76 @@ describe("SCG-R5 AC4 falsifiers: the judges over synthetic text", () => {
     expect(problems(judge("synthetic.md", "Text.\n<!-- NFS works for the swarm. -->\n"))).toEqual(["synthetic.md:2 unqualified: <!-- NFS works for the swarm."]);
   });
 
-  it.each([
-    ["unsupported", "NFS is unsupported."],
-    ["not safe", "An EFS workspace is not safe for the swarm."],
-    ["both qualifiers", "Multi-host use of a shared filesystem is unsupported and not safe."],
-  ] as const)("SCG-R5 control: a sentence saying %s complies", (_case, text) => {
+  it.each(COMPLIANT)("SCG-R5 control: a sentence saying %s complies", (_case, text) => {
     const matches = judge("synthetic.md", text);
     expect(matches).toHaveLength(1);
     expect(matches[0]?.problem).toBeNull();
   });
 
-  it.each([
-    ["refs", "Evidence refs are digests."],
-    ["single-host", "The root has single-host scope."],
-    ["host alone", "Each host binds its own root."],
-  ] as const)("SCG-R5 control: %s is no match", (_case, text) => {
+  it.each(NO_MATCH)("SCG-R5 control: %s is no match", (_case, text) => {
     expect(judge("synthetic.md", text)).toEqual([]);
   });
 
-  const SENTENCE = "That RF workspace root has single-host, local-coordinated scope (ADR-SCG-010): multi-host use is unsupported and not safe.";
   it("SCG-R5 control: a root sentence stating every clause has no problem", () => {
     expect(rootSentenceProblems(`# 13\n\n${SENTENCE}\n`)).toEqual([]);
   });
 
-  it.each([
-    ["no citing sentence", "The RF workspace root has single-host, local-coordinated scope.", ["0 sentences cite ADR-SCG-010"]],
-    ["two citing sentences", `${SENTENCE} ${SENTENCE}`, ["2 sentences cite ADR-SCG-010"]],
-    ["the root unnamed", "It has single-host, local-coordinated scope (ADR-SCG-010).", ["does not name the RF workspace root"]],
-    ["single-host missing", "The RF workspace root has local-coordinated scope (ADR-SCG-010).", ["does not state single-host scope"]],
-    ["local-coordinated missing", "The RF workspace root has single-host scope (ADR-SCG-010).", ["does not state local-coordinated scope"]],
-  ] as const)("SCG-R5 falsifier: a root sentence with %s is refused", (_case, text, expected) => {
+  it.each(ROOT_REFUSED)("SCG-R5 falsifier: a root sentence with %s is refused", (_case, text, expected) => {
     expect(rootSentenceProblems(text)).toEqual(expected);
+  });
+
+  it("SCG-R5 frozen shape (rule 16): the family table, the judge patterns and every synthetic table keep their rows", () => {
+    expect(FAMILIES.map(([name, pattern]) => `${name} ${String(pattern)}`)).toEqual([
+      "NFS /\\bNFS/i",
+      "EFS /\\bEFS/i",
+      "shared filesystem /\\bshared[- ]?file[- ]?systems?\\b/i",
+      "multi-host /\\bmulti[- ]?hosts?\\b/i",
+    ]);
+    expect([QUALIFIER, SAFE_WORD, NOT_SAFE].map(pattern => String(pattern))).toEqual([
+      "/\\bunsupported\\b|\\bnot safe\\b/i",
+      "/\\bsafe(?:ly)?\\b/gi",
+      "/\\bnot safe\\b/gi",
+    ]);
+    expect(REFUSED.map(([name, text, families, problem]) => `${name} | ${text} | ${families.join(" + ")} | ${problem}`)).toEqual([
+      "NFS, unqualified | Pi supports NFS swarm workspaces. | NFS | unqualified",
+      "EFS, unqualified | An EFS mount is fine for the swarm. | EFS | unqualified",
+      "shared filesystem, unqualified | A shared filesystem works across machines. | shared filesystem | unqualified",
+      "multi-host, claimed supported | Multi-host swarms are supported. | multi-host | unqualified",
+      "lower-case nfs | nfs mounts work for the swarm. | NFS | unqualified",
+      "shared-filesystem spelling | A shared-filesystem workspace works. | shared filesystem | unqualified",
+      "shared file system spelling | A shared file system works. | shared filesystem | unqualified",
+      "multihost spelling | Multihost swarms work. | multi-host | unqualified",
+      "a safety claim beside the qualifier | NFS is safe for multi-host use; clusters are unsupported. | NFS + multi-host | safety-claim",
+      "safely beside the qualifier | EFS works safely here, though NFS is unsupported. | NFS + EFS | safety-claim",
+      "versioned NFSv4 | NFSv4 mounts work for the swarm. | NFS | unqualified",
+      "lower-case efs | efs mounts work for the swarm. | EFS | unqualified",
+      "capitalised shared filesystem | Shared filesystem workspaces work. | shared filesystem | unqualified",
+      "plural shared filesystems | The swarm runs on shared filesystems. | shared filesystem | unqualified",
+      "shared file-system spelling | A shared file-system works. | shared filesystem | unqualified",
+      "multi host spelling | Multi host swarms work. | multi-host | unqualified",
+      "plural multi-hosts | The swarm spans multi-hosts. | multi-host | unqualified",
+      "a capitalised safety claim | Safe on NFS, though multi-host use is unsupported. | NFS + multi-host | safety-claim",
+    ]);
+    expect(COMPLIANT.map(([name, text]) => `${name} | ${text}`)).toEqual([
+      "unsupported | NFS is unsupported.",
+      "not safe | An EFS workspace is not safe for the swarm.",
+      "both qualifiers | Multi-host use of a shared filesystem is unsupported and not safe.",
+      "a capitalised Unsupported | Unsupported: NFS swarm workspaces.",
+      "a capitalised Not safe | Not safe: an EFS swarm workspace.",
+      "unsafe (not the word safe) | An NFS workspace is unsafe and unsupported.",
+    ]);
+    expect(NO_MATCH.map(([name, text]) => `${name} | ${text}`)).toEqual([
+      "refs | Evidence refs are digests.",
+      "confs | Both confs load first.",
+      "single-host | The root has single-host scope.",
+      "host alone | Each host binds its own root.",
+    ]);
+    expect(ROOT_REFUSED.map(([name, text, expected]) => `${name} | ${text} | ${expected.join(" + ")}`)).toEqual([
+      "no citing sentence | The RF workspace root has single-host, local-coordinated scope. | 0 sentences cite ADR-SCG-010",
+      "two citing sentences | That RF workspace root has single-host, local-coordinated scope (ADR-SCG-010): multi-host use is unsupported and not safe. That RF workspace root has single-host, local-coordinated scope (ADR-SCG-010): multi-host use is unsupported and not safe. | 2 sentences cite ADR-SCG-010",
+      "the root unnamed | It has single-host, local-coordinated scope (ADR-SCG-010). | does not name the RF workspace root",
+      "single-host missing | The RF workspace root has local-coordinated scope (ADR-SCG-010). | does not state single-host scope",
+      "local-coordinated missing | The RF workspace root has single-host scope (ADR-SCG-010). | does not state local-coordinated scope",
+    ]);
   });
 });
