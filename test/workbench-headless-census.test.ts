@@ -321,31 +321,25 @@ describe("headless census receipt builder (fixture closures)", () => {
   it("uses the frozen default allowlist when none is injected", () => {
     const receipt = build({ edges: baseEdges(), entryUrl: ENTRY, root: ROOT, ttyFree: true, utc: "u", revision: "r", node: "n" });
     expect(receipt.pass).toBe(false);
-    expect(receipt.findings.map(entry => entry.rule)).toContain("stale-allowlist-row");
+    // wb-nl8.3: the frozen tables are empty, so every Pi package of the fixture closure is unlisted under the default
+    // allowlist, while the same closure passes under FIXTURE_ALLOWLIST.
+    expect(receipt.findings.map(entry => [entry.rule, entry.module])).toEqual([
+      ["unlisted-pi-package", "@earendil-works/pi-ai"],
+      ["unlisted-pi-package", "@earendil-works/pi-coding-agent"],
+      ["unlisted-pi-package", "@earendil-works/pi-tui"],
+    ]);
+    expect(receiptFor(baseEdges()).pass).toBe(true);
   });
 });
 
 describe("frozen allowlist (H3)", () => {
-  it("pins pi-coding-agent via memory.js and saved.js and pi-tui through pi-coding-agent, with the caveat text", () => {
+  // wb-nl8.3 trimmed the pi-coding-agent row (getAgentDir via memory.js and saved.js), the pi-tui row reached through it
+  // and the four transitive rows under the stale-row rule: src/agent-dir.ts replaced the package import.
+  it("pins an empty Pi closure and an empty transitive list: the headless boot loads no @earendil-works package", () => {
     expect(Object.isFrozen(EXPECTED_PI_CLOSURE)).toBe(true);
-    expect(Object.keys(EXPECTED_PI_CLOSURE)).toEqual(["@earendil-works/pi-coding-agent", "@earendil-works/pi-tui"]);
-    const coding = EXPECTED_PI_CLOSURE["@earendil-works/pi-coding-agent"];
-    const tui = EXPECTED_PI_CLOSURE["@earendil-works/pi-tui"];
-    expect(coding.via).toEqual(["dist/memory.js", "dist/workflow/saved.js"]);
-    expect(tui.via).toEqual([]);
-    expect(tui.through).toBe("@earendil-works/pi-coding-agent");
-    expect(Object.isFrozen(coding)).toBe(true);
-    expect(Object.isFrozen(coding.via)).toBe(true);
-    for (const entry of [coding, tui]) {
-      expect(entry.caveat).toMatch(/headless boot currently loads/);
-    }
+    expect(Object.keys(EXPECTED_PI_CLOSURE)).toEqual([]);
     expect(Object.isFrozen(EXPECTED_PI_TRANSITIVE)).toBe(true);
-    expect(EXPECTED_PI_TRANSITIVE).toEqual([
-      "@earendil-works/pi-agent-core",
-      "@earendil-works/pi-ai",
-      "@earendil-works/pi-codemode",
-      "@earendil-works/pi-mcp",
-    ]);
+    expect(EXPECTED_PI_TRANSITIVE).toEqual([]);
     expect(EXPECTED_PI_TRANSITIVE.some((name: string) => name in EXPECTED_PI_CLOSURE)).toBe(false);
     expect(Object.isFrozen(EXPECTED_UI_MODULES)).toBe(true);
     expect(EXPECTED_UI_MODULES).toEqual([]);
@@ -378,10 +372,17 @@ describe("headless census runner over the built dist (H1, H4, H5)", () => {
     expect(stderr).not.toMatch(/tracer not active/);
     expect(receipt?.schema).toBe(CENSUS_SCHEMA);
     expect(receipt?.ttyFree).toBe(true);
-    expect(receipt?.closure.length ?? 0).toBeGreaterThan(50);
+    // wb-nl8.3: 47 entries measured once the pi-coding-agent graph left the closure (21 first-party dist modules, 7
+    // packages, 19 builtins), so the real-closure floor is 40, backed by the claude-host -> saved -> memory -> agent-dir
+    // chain, which a trace stopping near the entry would not reach.
+    expect(receipt?.closure.length ?? 0).toBeGreaterThan(40);
     expect(receipt?.closure).toContain("dist/workbench/hosts/local-detached.js");
+    expect(receipt?.closure).toEqual(
+      expect.arrayContaining(["dist/workbench/claude-host.js", "dist/workflow/saved.js", "dist/memory.js"]),
+    );
     expect(receipt?.uiModules).toEqual([]);
-    expect(receipt?.piPackages.filter(entry => entry.direct).map(entry => entry.name)).toEqual(["@earendil-works/pi-coding-agent"]);
+    expect(receipt?.closure).toContain("dist/agent-dir.js");
+    expect(receipt?.piPackages.filter(entry => entry.direct).map(entry => entry.name)).toEqual([]);
     expect(receipt?.piPackages.map(entry => entry.name)).toEqual([...Object.keys(EXPECTED_PI_CLOSURE), ...EXPECTED_PI_TRANSITIVE].sort());
     expect(receipt?.findings).toEqual([]);
     expect(receipt?.pass).toBe(true);
@@ -427,7 +428,8 @@ describe("headless census runner over the built dist (H1, H4, H5)", () => {
       expect(receipt?.pass).toBe(true);
       expect(status).toBe(0);
       expect(receipt?.dist?.root).toBe(realpathSync(packageRoot));
-      expect(receipt?.closure.length ?? 0).toBeGreaterThan(50);
+      expect(receipt?.closure.length ?? 0).toBeGreaterThan(40);
+      expect(receipt?.closure).toContain("dist/agent-dir.js");
     } finally {
       removeScratch(scratch);
     }

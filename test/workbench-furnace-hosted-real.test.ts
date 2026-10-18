@@ -11,7 +11,7 @@
  *
  * wb-3hc (VC-7 / W18-D follow-up, owner Q1(c)) adds the LIVE retry rows: RETRY (the operator's `attempt stop` of an
  * Attempt whose child Run establishment is never acknowledged, then the operator's `work retry`), PARK (an indeterminate
- * first Attempt Furnace parks, then the operator's `work retry`) and RECEIPT (both bound into one LIVE receipt,
+ * first Attempt Furnace parks, then the operator's `run resume` and `work retry`; wb-0m7) and RECEIPT (both bound into one LIVE receipt,
  * contract workbench.furnace-hosted-retry-live/v1, printed producer-side on the committed revision). Each runs in this
  * file's disposable /tmp workspace with its own Furnace state directory; never the owner bead store, the rig or a
  * candidate worktree.
@@ -47,7 +47,7 @@ const mainTreeState = (): string => `${execFileSync("git", ["-C", REPO, "status"
 // The live retry rows below hand plain records to test/helpers/furnace-hosted-retry-live-receipt.ts (pure, judged
 // offline by test/workbench-furnace-hosted-retry-live-receipt.test.ts). Every Furnace verb they issue carries this
 // file's disposable /tmp workspace (`-C`) and a row-own state directory; the operator path is the shipped SDK's
-// Attempts.stop and Work.retry (argv.d.ts attemptStop / workRetry).
+// Attempts.stop, Runs.resume and Work.retry (argv.d.ts attemptStop / runResume / workRetry).
 const liveObserved: { operatorRetry: OperatorRetryObservation | null; uncertainPark: UncertainParkObservation | null } = { operatorRetry: null, uncertainPark: null };
 type FurnaceClient = InstanceType<FurnaceSdk["Furnace"]>;
 interface BridgeFrame {
@@ -442,9 +442,10 @@ describe("Furnace-hosted adapter over the real bridge (disposable /tmp workspace
     expect(mainTreeState()).toBe(before);
   });
 
-  // wb-3hc: the first Attempt settles indeterminate, so Furnace parks it; then the operator tries `work retry`. The row
-  // asserts Furnace's own records of the park; the adapter's report of the parked start (parked-start-misreported,
-  // operator-retry-unreachable: wb-3hc finding F1) is recorded in the receipt and deliberately not asserted here.
+  // wb-3hc: the first Attempt settles indeterminate, so Furnace parks it; then the operator resumes the parked Run (`run
+  // resume`, wb-0m7) and tries `work retry`. The row asserts Furnace's own records of the park; the adapter's report of the
+  // parked start (parked-start-misreported, operator-retry-unreachable: wb-3hc finding F1) is recorded in the receipt and
+  // deliberately not asserted here.
   it("PARK: an indeterminate first Attempt is parked by Furnace (needs_reconciliation, Run needs_attention) and never retried by anyone; the adapter's report of the parked start is recorded, not asserted", async () => {
     const before = mainTreeState();
     const frames: BridgeFrame[] = [];
@@ -480,10 +481,20 @@ describe("Furnace-hosted adapter over the real bridge (disposable /tmp workspace
       const parkedMarkers = [...markers];
       const parkedBridge = bridgeReadings(frames, new Set());
       const workId = receipt.attempts[0]?.workId;
+      let resume: UncertainParkObservation["resume"] = { attempted: false, ok: false, code: null, state: null };
       let retry: UncertainParkObservation["retry"] = { attempted: false, ok: false, code: null, kind: null };
       let attemptsAfterRetry: number | null = null;
       if (runId !== null && workId !== undefined) {
         const operator = new SHIPPED_FURNACE_SDK.Furnace({ ...furnace, config });
+        // wb-0m7: Furnace 0.1.0 admits `work retry` only on an active Run (its retry gate refuses every other state with
+        // invalid_state_transition), and a parked Run's exit is the operator's `run resume <run>`, which in default mode
+        // reconciles, re-enables scheduling and starts nothing. So the operator resumes the parked Run, then retries it.
+        try {
+          const resumed = await operator.runs.resume(runId, {}, { timeoutMs: 90_000 });
+          resume = { attempted: true, ok: true, code: null, state: resumed.data.state };
+        } catch (error) {
+          resume = { attempted: true, ok: false, code: codeOf(error), state: null };
+        }
         try {
           const replied = await operator.work.retry(workId, { runId }, { timeoutMs: 90_000 });
           retry = { attempted: true, ok: true, code: null, kind: replied.kind };
@@ -503,6 +514,7 @@ describe("Furnace-hosted adapter over the real bridge (disposable /tmp workspace
         events: records?.events ?? [],
         eventsComplete: records?.eventsComplete ?? false,
         bridge: parkedBridge,
+        resume,
         retry,
         attemptsAfterRetry,
       };
@@ -514,8 +526,12 @@ describe("Furnace-hosted adapter over the real bridge (disposable /tmp workspace
     const assessed = assessRetryLive({ operatorRetry: null, uncertainPark: observation });
     process.stdout.write(`\nHOSTED-RECEIPT-PARK ${JSON.stringify({ measured: assessed.measured, findings: assessed.findings, unrealised: assessed.unrealised })}\n`);
     expect(assessed.unrealised.map((gap) => gap.step)).toEqual(["operator-retry"]);
+    // Furnace's own answer to the operator's resume of the parked Run (wb-0m7): the Run reads active again.
+    expect(observation.resume).toEqual({ attempted: true, ok: true, code: null, state: "active" });
     const adapterReport = new Set(["parked-start-misreported", "operator-retry-unreachable"]);
     expect(assessed.findings.filter((finding) => !adapterReport.has(finding.rule))).toEqual([]);
+    expect(argv.runResume("r", {}, {})).toEqual(["run", "resume", "r", "--json"]);
+    expect(clientOperations.find((operation) => operation.builder === "runResume")).toMatchObject({ operation: "Runs.resume", kind: "run_resume" });
     expect(mainTreeState()).toBe(before);
   });
 
