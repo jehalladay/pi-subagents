@@ -80,6 +80,10 @@ const MAX_STATUS_WORDS = 4;
 const STATUS_WORD = /^[A-Za-z0-9_.-]{1,24}$/;
 /** Marks the not-observed status words the note does not list. */
 const UNLISTED = '…';
+/** A --view render's view id: the INIT-FS-A14 declared-id grammar and bound of result.view_id and result.view_contract.view_id
+ * (context.render.schema.json :1029-1033 and :1199-1203 at ReactiveFiberCLI 8a8b83e4d), so a named id is plain ASCII. */
+const VIEW_ID = /^[a-z][a-z0-9_-]*(?:\.[a-z][a-z0-9_-]*)*$/;
+const MAX_VIEW_ID = 128;
 
 type JsonRecord = {[key: string]: JsonValue};
 interface CheckedContext {
@@ -169,6 +173,37 @@ function frozen<T>(value: T): T {
     Object.freeze(value);
   }
   return value;
+}
+
+/** The view_contract demotion leg of a --view render (wb-973.2, SCG-R2), beside the observation leg: what result.view_contract
+ * contributes, which can only demote. Of the outcome (ViewContractOutcome.to_json at ReactiveFiberCLI 8a8b83e4d,
+ * domain/view_contract.py:236-249) it reads the satisfied and degraded flags, the length of the failures list and the view id,
+ * and nothing else, so no check row, expected or actual text, unavailable lens source, view revision or contract digest reaches a
+ * surfaced string; the object stays open to additive keys. The pinned contradictions are refused: satisfied holds exactly when
+ * failures is empty and degraded is its negation (view_contract.py:217-225, the flags-versus-counts fence of diagnostics_summary),
+ * the outcome names the view the render was scoped to (result.view_id, context.render.schema.json :1199-1203), and a --view render
+ * carries a null result.scope (render_service.py:1509 and :1515-1526; schema :1033). An unsatisfied outcome demotes the preview to
+ * partial with one note naming only the failed-check count; a satisfied one demotes nothing and carries a witness note naming the
+ * view id, which the caller states on a clean render alone. A render without result.view_contract, a --view render of an rf that
+ * predates the contract included, adds nothing. */
+function viewContractLeg(result: JsonRecord): {demotes: true; note: string} | {demotes: false; witness?: string} {
+  const viewed = Object.hasOwn(result, 'view_id');
+  if (viewed && Object.hasOwn(result, 'scope') && result.scope !== null) throw refused('a --view render (result.view_id) must carry a null result.scope');
+  if (!Object.hasOwn(result, 'view_contract')) return {demotes: false};
+  const outcome = record(result.view_contract);
+  if (!outcome) throw refused('result.view_contract must be an object');
+  const {view_id: viewId, satisfied, degraded, failures} = outcome;
+  if (typeof satisfied !== 'boolean' || typeof degraded !== 'boolean' || !Array.isArray(failures)) {
+    throw refused('result.view_contract needs boolean satisfied and degraded flags and a failures array');
+  }
+  if (typeof viewId !== 'string' || viewId.length > MAX_VIEW_ID || !VIEW_ID.test(viewId)) {
+    throw refused(`result.view_contract.view_id must be a declared view id of at most ${MAX_VIEW_ID} characters`);
+  }
+  if (!viewed || result.view_id !== viewId) throw refused('result.view_contract must name the view the render was scoped to (result.view_id)');
+  if (degraded === satisfied) throw refused('result.view_contract degraded must be the negation of satisfied');
+  if (satisfied !== (failures.length === 0)) throw refused('result.view_contract satisfied contradicts its failures');
+  if (satisfied) return {demotes: false, witness: `view contract: satisfied (${viewId})`};
+  return {demotes: true, note: `view contract: ${failures.length} failed ${failures.length === 1 ? 'check' : 'checks'}: partial`};
 }
 
 /** The host context, copied field by field after validation; scope, invocation and operation identities must already be displayable. */
@@ -268,6 +303,9 @@ function previewSnapshot(envelope: JsonRecord, diagnostics: readonly JsonRecord[
   // wb-973.10 (SCG-R10): observation rows, read through their status words only; a row can demote the preview, never upgrade it.
   const observations = observationRows(result.observations);
 
+  // wb-973.2 (SCG-R2): the view_contract leg beside the observation leg; an unsatisfied contract can demote, never upgrade.
+  const contractLeg = viewContractLeg(result);
+
   const window = Number(formula.context_window);
   const available = formula.available_context_tokens;
   const overBudget = available < 0;
@@ -276,8 +314,11 @@ function previewSnapshot(envelope: JsonRecord, diagnostics: readonly JsonRecord[
   const live = host.seam === 'rf-cli';
   const budget = overBudget ? `over budget by ${-available} (context window ${window} tokens)` : `${available} of ${window} context tokens available`;
   const statusText = `${SEAM_LABEL[host.seam]} · ${budget} · necessity evals ${work.necessity_eval_count} · ${counts.errors} errors, ${counts.warnings} warnings`;
-  const clean = live && !flagged && !overBudget && observations.notObserved === 0;
+  const clean = live && !flagged && !overBudget && observations.notObserved === 0 && !contractLeg.demotes;
   const notes = ['ephemeral noncommitted preview: render_id null, transaction_id null, 0 authoritative storage writes (envelope storage_write_count)', 'context text withheld: referenced by sha256 digest'];
+  // The contract leg states its note when it demotes and its witness on a clean render alone, so a partial render is unchanged.
+  if (contractLeg.demotes) notes.push(contractLeg.note);
+  else if (clean && contractLeg.witness !== undefined) notes.push(contractLeg.witness);
   if (!live) notes.push('fixture seam: not a real generated context');
   if (flagged) notes.push('render reported errors: partial, not a clean render');
   if (overBudget) notes.push('context exceeds the available budget: partial');

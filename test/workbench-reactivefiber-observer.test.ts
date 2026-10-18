@@ -353,6 +353,328 @@ describe('ReactiveFiber render preview reader adapter', () => {
   });
 });
 
+/** wb-973.2 (SCG-R2): the view_contract leg of a --view render. Statement: "When a --view render's result.view_contract is
+ * unsatisfied, the RF reader adapter shall project coverage 'partial' with a statusTone other than 'success', naming only the
+ * failed-check count and never the checks' expected/actual text. R1 shall not land without R2." The producer shape is
+ * ViewContractOutcome.to_json at ReactiveFiberCLI 8a8b83e4d (domain/view_contract.py:236-249): {view_id, view_revision, satisfied,
+ * degraded, checks[{check, expected, actual, status}], failures[{check, expected, actual}], unavailable_sources[lens:<key>],
+ * contract_digest}, where satisfied is "no failed row" and degraded its negation (:217-225). It rides exactly the --view render,
+ * beside view_id and effective_scopes, with result.scope null (render_service.py:1509 and :1515-1526; context.render.schema.json
+ * :1029-1033, whose view_contract.view_id is "result.view_id"). The reader reads the satisfied and degraded flags, the failures
+ * count and the outcome's view id, and nothing else: no check row, expected or actual text, unavailable source, revision or digest
+ * reaches a surfaced string. The acceptance fixture names its check 'required_sources_present' (the pinned CHECK_NAMES spell it
+ * 'required_source_present'); the reader never reads a check name, so either spelling projects alike. Every refusal is a typed
+ * CapabilityError 'validation', mirroring the diagnostics_summary flags-versus-counts fence. Input hygiene: the SECRET-
+ * placeholders are obviously fake.
+ *
+ * Retirement (wb-973.1 re-cut R468(b), ORCH-DUTY at landing 88): this cut deletes test/workbench-reactivefiber-view-arm-guard.test.ts,
+ * whose census held this projection back; the rows below replace its protection by pinning the reader itself. R475 routed the
+ * guard's two census survivors here: G3 (an export-star re-export of the observer module, which spells no reactivefiberTopology
+ * identifier) and G6 (a spread-merged {...{view}, ...{taskId}} literal, no single object literal of which carries both keys). Both
+ * are recorded as ACCEPTED SURVIVORS: each escaped a syntactic census whose only purpose was the R1-without-R2 hold this cut
+ * discharges, and with R2 landed neither shape reaches an unguarded projection, because whatever path reaches reactivefiberTopology
+ * and however the view-arm input is spelled, an unsatisfied view_contract projects partial and non-success naming only the
+ * failed-check count. Every it.each table carries a length pin and a registration-site pin (the wb-4v6 convention). */
+describe('view_contract on a --view render (wb-973.2 SCG-R2)', () => {
+  const VIEW = 'swarm.worker';
+  const VIEW_BUNDLE = `sha256:${'e5'.repeat(32)}`;
+  const VIEW_REVISION = `sha256:${'b6'.repeat(32)}`;
+  const CONTRACT_DIGEST = `sha256:${'f9'.repeat(32)}`;
+  const cp = (code: number): string => String.fromCodePoint(code);
+  /** The acceptance fixture's failed check row, in the checks[] shape. */
+  const FAILED_CHECK: Json = {check: 'required_sources_present', expected: 'SECRET-EXPECTED', actual: 'SECRET-ACTUAL', status: 'failed'};
+  /** A checks[] row as its failures[] entry (ViewContractCheck.failure: the row without its status). */
+  const failureOf = (check: Json): Json => without(check, 'status');
+  const PASSED_CHECKS: JsonValue[] = [
+    {check: 'required_source_present', expected: 'SECRET-EXPECTED-PASSED', actual: 'SECRET-ACTUAL-PASSED', status: 'passed'},
+    {check: 'latency_ms', expected: 'SECRET-EXPECTED-ADVISORY', actual: 'SECRET-ACTUAL-ADVISORY', status: 'advisory'},
+  ];
+  /** A ViewContractOutcome.to_json object for VIEW: satisfied, not degraded and without failures unless overridden. */
+  const viewContract = (over: Json = {}): Json => ({view_id: VIEW, view_revision: VIEW_REVISION, satisfied: true, degraded: false,
+    checks: PASSED_CHECKS, failures: [], unavailable_sources: [], contract_digest: CONTRACT_DIGEST, ...over});
+  /** The acceptance fixture's unsatisfied outcome: one failed required-source check and one unavailable lens source. */
+  const unsatisfied = (over: Json = {}): Json => viewContract({satisfied: false, degraded: true, checks: [FAILED_CHECK],
+    failures: [failureOf(FAILED_CHECK)], unavailable_sources: ['lens:beads.current'], ...over});
+  /** The result keys a --view render adds beside the clean R1 result (render_service.py:1515-1526). */
+  const viewResult = (contract: JsonValue, over: Json = {}): Json =>
+    ({view_id: VIEW, effective_scopes: [{kind: 'shared', revision: VIEW_BUNDLE}], view_contract: contract, ...over});
+  const viewRender = (contract: JsonValue, over: Json = {}): Json => withResult(viewResult(contract, over));
+  const project = (value: Json, ctx: ReactiveFiberTopologyContext = context): ReactiveFiberProjectionTopology => reactivefiberTopology(value as JsonValue, ctx);
+  const contractNotes = (topology: ReactiveFiberProjectionTopology): string[] => topology.diagnostics.filter(note => note.startsWith('view contract: '));
+  const SATISFIED_NOTE = `view contract: satisfied (${VIEW})`;
+  const ONE_FAILED = 'view contract: 1 failed check: partial';
+  /** Every key and every string value anywhere in the topology, the R6 everyObject walk: what any display of it can show. */
+  function surfaced(topology: ReactiveFiberProjectionTopology): string[] {
+    const texts: string[] = [];
+    everyObject(topology, item => {
+      for (const [key, value] of Object.entries(item)) {
+        texts.push(key);
+        if (typeof value === 'string') texts.push(value);
+      }
+    });
+    return texts;
+  }
+  /** One observation row in the pinned context.render shape, observed and fresh unless overridden. */
+  const observationRow = (over: Json = {}): Json => ({observation_id: 'rfl_0123456789abcdefghijkl', lens_key: 'beads.current',
+    value_digest: `sha256:${'d4'.repeat(32)}`, status: 'observed', code: null, freshness: 'captured_at_render', replayed: false,
+    required: true, degraded: false, persisted: true, ...over});
+
+  // Acceptance 1, the fixture verbatim: an unsatisfied view_contract on a clean rf-cli envelope.
+  it('SCG-R2: an unsatisfied view_contract projects partial and never success', () => {
+    const topology = project(withResult({view_id: VIEW, effective_scopes: [{kind: 'shared', revision: VIEW_BUNDLE}], view_contract: unsatisfied()}));
+    const [snapshot] = topology.snapshots;
+    expect(snapshot.coverage).toBe('partial');
+    expect(snapshot.node.statusTone).not.toBe('success');
+    expect(topology.diagnostics.filter(note => /view contract: 1 failed check/.test(note))).toHaveLength(1);
+    const text = JSON.stringify(topology);
+    for (const hidden of ['SECRET-EXPECTED', 'SECRET-ACTUAL', 'lens:beads.current']) expect(text).not.toContain(hidden);
+    bounded(topology);
+  });
+
+  it('SCG-R2: only coverage and tone move off the clean projection, and the one added note names the failed-check count alone', () => {
+    const plain = project(reading());
+    const topology = project(viewRender(unsatisfied()));
+    const [snapshot] = topology.snapshots;
+    const [clean] = plain.snapshots;
+    expect(snapshot.node.statusTone).toBe('unknown');
+    expect({...snapshot, coverage: clean.coverage, node: {...snapshot.node, statusTone: clean.node.statusTone}}).toStrictEqual(clean);
+    expect(topology.relations).toStrictEqual(plain.relations);
+    expect(topology.diagnostics).toStrictEqual([...plain.diagnostics.slice(0, 2), ONE_FAILED, ...plain.diagnostics.slice(2)]);
+    expect(topology.diagnostics.join('\n')).not.toContain(VIEW);
+  });
+
+  const COUNTS: [string, number, string][] = [
+    ['one failed check', 1, ONE_FAILED],
+    ['two failed checks', 2, 'view contract: 2 failed checks: partial'],
+    ['five failed checks, every deterministic check', 5, 'view contract: 5 failed checks: partial'],
+    ['ten thousand failed rows', 10_000, 'view contract: 10000 failed checks: partial'],
+  ];
+  it('SCG-R2: the failed-check count table registers all 4 counts', () => {
+    expect(COUNTS.length).toBe(4);
+  });
+  it.each(COUNTS)('SCG-R2: %s surface as one bounded count note and nothing of any row', (name, failed, note) => {
+    record('SCG-R2 COUNTS', name);
+    const failures = Array.from({length: failed}, (_, index) => failureOf({...FAILED_CHECK, expected: `SECRET-EXPECTED-${index}`}));
+    const topology = project(viewRender(unsatisfied({checks: [...PASSED_CHECKS, ...failures.map(row => ({...row, status: 'failed'}))], failures})));
+    expect(topology.snapshots[0].coverage).toBe('partial');
+    expect(contractNotes(topology)).toStrictEqual([note]);
+    expect(JSON.stringify(topology)).not.toContain('SECRET-');
+    bounded(topology);
+  });
+  it('SCG-R2: every failed-check count is registered at the it.each call and runs', () => {
+    expectEveryRowRan('SCG-R2 COUNTS', COUNTS);
+  });
+
+  // The leak walk (the R6 everyObject walk of SCG-R10 (a)): extra producer keys in view_contract, in every check and failure row and
+  // in effective_scopes, and, on the unsatisfied verdict, the warning-severity RF_VIEW_CONTRACT_FAILED envelope diagnostic a
+  // permissive degraded render carries (render.py view_contract_failure): none of it reaches a surfaced string on either verdict.
+  const leakyCheck = (status: string): Json => ({check: 'required_source_present', expected: 'SECRET-EXPECTED', actual: 'SECRET-ACTUAL', status,
+    detail: {note: 'SECRET-CHECK-DETAIL'}});
+  const CONTRACT_FAILED = rfDiagnostic({code: 'RF_VIEW_CONTRACT_FAILED', severity: 'warning', message: 'view contract failed SECRET-DIAGNOSTIC',
+    metadata: {view: VIEW, failures: [failureOf(leakyCheck('failed'))], contract_digest: CONTRACT_DIGEST}});
+  const LEAKY: [string, Json, JsonValue[]][] = [
+    ['an unsatisfied contract', unsatisfied({checks: [leakyCheck('passed'), leakyCheck('failed'), leakyCheck('advisory')],
+      failures: [failureOf(leakyCheck('failed'))], unavailable_sources: ['lens:beads.current', 'lens:SECRET-LENS'], extra: {secret: 'SECRET-CONTRACT-EXTRA'}}),
+      [CONTRACT_FAILED]],
+    ['a satisfied contract', viewContract({checks: [leakyCheck('passed'), leakyCheck('advisory')], extra: {secret: 'SECRET-CONTRACT-EXTRA'}}), []],
+  ];
+  const HIDDEN = ['SECRET-', 'lens:', VIEW_REVISION, CONTRACT_DIGEST, VIEW_BUNDLE, 'RF_VIEW_CONTRACT_FAILED'];
+  const VIEW_FIELDS = /\bexpected\b|\bactual\b|unavailable_sources|contract_digest|view_revision|effective_scopes|view_contract|view_id/;
+  const CHECK_NAMES = /required_sources?_present|max_output_bytes|non_empty_output|no_truncated_blocks|required_keys_observed|latency_ms/;
+  it('SCG-R2: the leak-walk table registers both verdicts', () => {
+    expect(LEAKY.length).toBe(2);
+  });
+  it.each(LEAKY)('SCG-R2: %s surfaces no check row, expected or actual text, unavailable source, revision, digest or view_contract field name', (name, contract, diagnostics) => {
+    record('SCG-R2 LEAKY', name);
+    const scopes: JsonValue = [{kind: 'shared', revision: VIEW_BUNDLE, secret: 'SECRET-SCOPE'}];
+    const topology = project(reading(envelope({result: result(viewResult(contract, {effective_scopes: scopes})), diagnostics})));
+    const texts = surfaced(topology);
+    expect(texts.length).toBeGreaterThan(0);
+    for (const text of texts) {
+      for (const hidden of HIDDEN) expect(text).not.toContain(hidden);
+      expect(text).not.toMatch(VIEW_FIELDS);
+      expect(text).not.toMatch(CHECK_NAMES);
+    }
+    bounded(topology);
+  });
+  it('SCG-R2: every leak-walk verdict is registered at the it.each call and runs', () => {
+    expectEveryRowRan('SCG-R2 LEAKY', LEAKY);
+  });
+
+  // Acceptance 2: "satisfied:true, degraded:false, failures:[] leaves the projection toStrictEqual the clean R1 expectation except one
+  // note naming the view id." Advisory rows never count against a contract.
+  it('SCG-R2: a satisfied, non-degraded contract without failures leaves the clean R1 projection plus one note naming the view id', () => {
+    const ctx: ReactiveFiberTopologyContext = {...context, invocationId: 'wf_rf_1'};
+    const plain = project(reading(), ctx);
+    const topology = project(viewRender(viewContract()), ctx);
+    expect(topology.snapshots).toStrictEqual(plain.snapshots);
+    expect(topology.snapshots[0]).toMatchObject({coverage: 'complete', node: {statusTone: 'success'}});
+    expect(topology.relations).toStrictEqual(plain.relations);
+    expect(topology.diagnostics).toStrictEqual([...plain.diagnostics.slice(0, 2), SATISFIED_NOTE, ...plain.diagnostics.slice(2)]);
+    expect(topology.diagnostics.filter(note => note.includes(VIEW))).toStrictEqual([SATISFIED_NOTE]);
+  });
+
+  it('SCG-R2: a 128-character view id, the declared bound, is named whole', () => {
+    const longest = `v${'a'.repeat(127)}`;
+    const topology = project(viewRender(viewContract({view_id: longest}), {view_id: longest}));
+    expect(contractNotes(topology)).toStrictEqual([`view contract: satisfied (${longest})`]);
+    bounded(topology);
+  });
+
+  // Acceptance 3, the contradiction fence (mirroring the diagnostics_summary flags-versus-counts fence): satisfied must hold exactly
+  // when failures is empty, degraded must be its negation, the outcome must name the render's view, and a --view render carries a
+  // null result.scope (context.render.schema.json :1029-1033).
+  const CONTRADICTIONS: [string, Json, string][] = [
+    ['satisfied true with a non-empty failures list', viewRender(viewContract({failures: [failureOf(FAILED_CHECK)]})), 'satisfied contradicts its failures'],
+    ['satisfied false with an empty failures list', viewRender(unsatisfied({failures: []})), 'satisfied contradicts its failures'],
+    ['satisfied true with degraded true', viewRender(viewContract({degraded: true})), 'degraded must be the negation of satisfied'],
+    ['satisfied false with degraded false', viewRender(unsatisfied({degraded: false})), 'degraded must be the negation of satisfied'],
+    ['an outcome naming another view than result.view_id', viewRender(viewContract({view_id: 'swarm.reviewer'})), 'must name the view the render was scoped to'],
+    ['an outcome on a render without result.view_id', withResult({view_contract: unsatisfied()}), 'must name the view the render was scoped to'],
+    ['view_id beside a non-null result.scope', viewRender(unsatisfied(), {scope: {component_id: 'cmp.worker'}}), 'must carry a null result.scope'],
+    ['view_id beside a non-null result.scope and no view_contract', withResult({view_id: VIEW, scope: {component_id: 'cmp.worker'}}), 'must carry a null result.scope'],
+  ];
+  it('SCG-R2: the contradiction table registers all 8 rows', () => {
+    expect(CONTRADICTIONS.length).toBe(8);
+  });
+  it.each(CONTRADICTIONS)('SCG-R2: %s is refused with a typed validation error that echoes nothing of the outcome', (name, value, cause) => {
+    record('SCG-R2 CONTRADICTIONS', name);
+    const error = refusal(value);
+    expect(error.category).toBe('validation');
+    expect(error.message).toContain(cause);
+    for (const hidden of ['SECRET-', 'lens:']) expect(error.message).not.toContain(hidden);
+  });
+  it('SCG-R2: every contradiction row is registered at the it.each call and runs', () => {
+    expectEveryRowRan('SCG-R2 CONTRADICTIONS', CONTRADICTIONS);
+  });
+
+  // What the reader reads must be well formed: an object outcome, boolean flags, a failures array and a view id in the declared
+  // grammar (^[a-z][a-z0-9_-]*(\.[a-z][a-z0-9_-]*)*$, at most 128 characters), so nothing it names can carry a control, a bidi
+  // override or an unbounded identity.
+  /** A --view render whose result.view_id and outcome view id are both `id`, so only the grammar and bound can refuse it. */
+  const namedView = (id: JsonValue): Json => viewRender(viewContract({view_id: id}), {view_id: id});
+  const MALFORMED: [string, Json, string][] = [
+    ['view_contract null', viewRender(null), 'must be an object'],
+    ['view_contract an array', viewRender([viewContract()]), 'must be an object'],
+    ['view_contract a string', viewRender('satisfied'), 'must be an object'],
+    ['satisfied missing', viewRender(without(viewContract(), 'satisfied')), 'needs boolean satisfied and degraded flags and a failures array'],
+    ['satisfied the string true', viewRender(viewContract({satisfied: 'true'})), 'needs boolean satisfied and degraded flags and a failures array'],
+    ['degraded missing', viewRender(without(viewContract(), 'degraded')), 'needs boolean satisfied and degraded flags and a failures array'],
+    ['degraded null', viewRender(viewContract({degraded: null})), 'needs boolean satisfied and degraded flags and a failures array'],
+    ['failures missing', viewRender(without(viewContract(), 'failures')), 'needs boolean satisfied and degraded flags and a failures array'],
+    ['failures an object', viewRender(viewContract({failures: {count: 0}})), 'needs boolean satisfied and degraded flags and a failures array'],
+    ['view_id missing', viewRender(without(viewContract(), 'view_id')), 'must be a declared view id'],
+    ['view_id a number', namedView(7), 'must be a declared view id'],
+    ['view_id empty', namedView(''), 'must be a declared view id'],
+    ['view_id with a terminal escape', namedView(`swarm${cp(0x1b)}[31m.worker`), 'must be a declared view id'],
+    ['view_id with a bidi override', namedView(`swarm.${cp(0x202e)}rekrow`), 'must be a declared view id'],
+    ['view_id outside the declared grammar', namedView('Swarm.Worker'), 'must be a declared view id'],
+    ['view_id of 129 characters', namedView(`v${'a'.repeat(128)}`), 'must be a declared view id'],
+  ];
+  it('SCG-R2: the malformed-outcome table registers all 16 rows', () => {
+    expect(MALFORMED.length).toBe(16);
+  });
+  it.each(MALFORMED)('SCG-R2: an outcome with %s is refused with a typed validation error', (name, value, cause) => {
+    record('SCG-R2 MALFORMED', name);
+    const error = refusal(value);
+    expect(error.category).toBe('validation');
+    expect(error.message).toContain(cause);
+  });
+  it('SCG-R2: every malformed-outcome row is registered at the it.each call and runs', () => {
+    expectEveryRowRan('SCG-R2 MALFORMED', MALFORMED);
+  });
+
+  // The fence's positive controls: only a --view render is held to a null scope, and a --view render without a contract outcome (an
+  // rf that predates the contract) is projected exactly like a legacy render.
+  it('SCG-R2: a legacy render keeps its non-null scope, a --view render with scope null projects, and view_id without an outcome adds nothing', () => {
+    const plain = JSON.stringify(project(reading()));
+    expect(JSON.stringify(project(withResult({scope: {component_id: 'cmp.worker'}})))).toBe(plain);
+    expect(JSON.stringify(project(withResult({view_id: VIEW, effective_scopes: [{kind: 'shared', revision: VIEW_BUNDLE}]})))).toBe(plain);
+    expect(JSON.stringify(project(withResult({view_id: VIEW, scope: null})))).toBe(plain);
+    const scoped = project(viewRender(viewContract(), {scope: null}));
+    expect(scoped.snapshots[0]).toMatchObject({coverage: 'complete', node: {statusTone: 'success'}});
+    expect(contractNotes(scoped)).toStrictEqual([SATISFIED_NOTE]);
+    expect(project(viewRender(unsatisfied(), {scope: null})).snapshots[0].coverage).toBe('partial');
+  });
+
+  // One-directional: the contract leg can only demote. On a render that is already partial an unsatisfied contract adds only its
+  // count note, and a satisfied one leaves the render byte-identical to the same render without the view keys (its note is a witness
+  // a clean render states alone).
+  const PARTIAL_BASES: [string, Json, Json, ReactiveFiberTopologyContext][] = [
+    ['diagnostics_summary.has_errors (R4)', {diagnostics_summary: {errors: 2, warnings: 0, has_errors: true, has_warnings: false}}, {}, context],
+    ['an error-severity envelope diagnostic beside has_errors false (R4)', {}, {diagnostics: [rfDiagnostic()]}, context],
+    ['an over-budget render (R4)', {budget: {formula_terms: formula({available_context_tokens: -40})}}, {}, context],
+    ['the injected-fixture seam (R2)', {}, {}, {...context, seam: 'injected-fixture'}],
+  ];
+  const partialRender = (resultOver: Json, envelopeOver: Json, contract?: JsonValue): Json =>
+    reading(envelope({result: result(contract === undefined ? resultOver : {...resultOver, ...viewResult(contract)}), ...envelopeOver}));
+  it('SCG-R2: the one-directional table registers all 4 partial renders', () => {
+    expect(PARTIAL_BASES.length).toBe(4);
+  });
+  it.each(PARTIAL_BASES)('SCG-R2: on %s an unsatisfied contract adds only its count note and a satisfied one changes nothing', (name, resultOver, envelopeOver, ctx) => {
+    record('SCG-R2 PARTIAL_BASES', name);
+    const plain = project(partialRender(resultOver, envelopeOver), ctx);
+    expect(plain.snapshots[0].coverage).toBe('partial');
+    const demoted = project(partialRender(resultOver, envelopeOver, unsatisfied()), ctx);
+    expect(demoted.snapshots).toStrictEqual(plain.snapshots);
+    expect(demoted.relations).toStrictEqual(plain.relations);
+    expect(demoted.diagnostics).toStrictEqual([...plain.diagnostics.slice(0, 2), ONE_FAILED, ...plain.diagnostics.slice(2)]);
+    expect(JSON.stringify(project(partialRender(resultOver, envelopeOver, viewContract()), ctx))).toBe(JSON.stringify(plain));
+  });
+  it('SCG-R2: every one-directional partial render is registered at the it.each call and runs', () => {
+    expectEveryRowRan('SCG-R2 PARTIAL_BASES', PARTIAL_BASES);
+  });
+
+  // Composition with the observation-row leg (wb-973.10 SCG-R10; wb-973.9 composes beside it): each leg demotes on its own, fresh
+  // rows leave an unsatisfied render byte-identical, a not-observed row adds only its own note, and neither leg's witness is stated
+  // on a render the other leg demoted.
+  it('SCG-R2: beside observation rows the two demotion legs compose and neither upgrades the other', () => {
+    const fresh: JsonValue[] = [observationRow(), observationRow({status: 'null', lens_key: 'beads.ready'})];
+    const contracted = project(viewRender(unsatisfied()));
+    expect(JSON.stringify(project(viewRender(unsatisfied(), {observations: fresh})))).toBe(JSON.stringify(contracted));
+    const denied = project(viewRender(unsatisfied(), {observations: [...fresh, observationRow({status: 'denied', code: 'RF_OBSERVATION_DENIED'})]}));
+    expect(denied.snapshots).toStrictEqual(contracted.snapshots);
+    expect(denied.diagnostics.filter(note => !note.startsWith('observations: '))).toStrictEqual(contracted.diagnostics);
+    expect(denied.diagnostics.filter(note => note.startsWith('observations: '))).toStrictEqual(['observations: 3 rows, 1 not observed (denied): partial']);
+    expect(project(withResult({observations: fresh})).snapshots[0].coverage).toBe('complete');
+    const rowsOnly = project(withResult({observations: [observationRow({status: 'denied', code: 'RF_OBSERVATION_DENIED'})]}));
+    const satisfiedRows = project(viewRender(viewContract(), {observations: [observationRow({status: 'denied', code: 'RF_OBSERVATION_DENIED'})]}));
+    expect(rowsOnly.snapshots[0].coverage).toBe('partial');
+    expect(JSON.stringify(satisfiedRows)).toBe(JSON.stringify(rowsOnly));
+  });
+
+  // The demotion reason is never cut by the 8-note bound: under every other partial cause, a release note and an engine note, the
+  // count note keeps its place right after the two preview notes.
+  it('SCG-R2: the count note survives the 8-note bound on a render carrying every other note', () => {
+    const provenance: JsonValue = {...(LEAKY_ENGINE_FIELDS.provenance as Json), cli_version: '0.1.716'};
+    const value = reading(envelope({result: result({provenance, diagnostics_summary: {errors: 1, warnings: 0, has_errors: true, has_warnings: false},
+      budget: {formula_terms: formula({available_context_tokens: -5})}, observations: [observationRow({status: 'denied', code: 'RF_OBSERVATION_DENIED'})],
+      ...viewResult(unsatisfied())})}));
+    const topology = project(value, {...context, seam: 'injected-fixture'});
+    expect(topology.diagnostics).toHaveLength(8);
+    expect(topology.diagnostics[2]).toBe(ONE_FAILED);
+    bounded(topology);
+  });
+
+  it('SCG-R2: an unsatisfied render applies to the projection partial with tone unknown, a satisfied one complete and successful', () => {
+    const held = new ObservationProjection();
+    expect(held.refresh(project(viewRender(unsatisfied())).snapshots[0])).toBe('applied');
+    expect(held.query({scope, limit: 10}).nodes.find(item => item.nativeRef.id === OPERATION)).toMatchObject({completeness: 'partial', presentation: {statusTone: 'unknown'}});
+    const clean = new ObservationProjection();
+    expect(clean.refresh(project(viewRender(viewContract())).snapshots[0])).toBe('applied');
+    expect(clean.query({scope, limit: 10}).nodes.find(item => item.nativeRef.id === OPERATION)).toMatchObject({completeness: 'complete', presentation: {statusTone: 'success'}});
+  });
+
+  it('SCG-R2: the projection of a --view render is pure: deterministic, deeply frozen and leaving its input untouched', () => {
+    const input = viewRender(unsatisfied());
+    const before = JSON.stringify(input);
+    const first = project(input);
+    expect(JSON.stringify(input)).toBe(before);
+    expect(first).toStrictEqual(project(input));
+    everyObject(first, item => { expect(Object.isFrozen(item)).toBe(true); });
+  });
+});
+
 /** wb-2j3.1 + wb-2j3.2 (RFCLI-PERFORMANCE-MATHEMATICAL-OPTIMIZATION R1 and R3), one cut at the head of the RF lane. Owner ruling
  * G-A (2026-10-17, bound on wb-x32): bundle_revision_id owns NativeSnapshot.sourceVersion; the producer CLI release travels as a
  * distinct rf-cli:<cli_version> evidence reference plus a snapshot note, never as sourceVersion (it supersedes the older R1
