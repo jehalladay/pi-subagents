@@ -182,29 +182,68 @@
  * - RETRY CENSUS (wb-nl8.4, from the wb-nl8.1 design Q13): retryCensus(root) pins that no case any vitest tier runs is
  *   retried. vitest 4.1.10 runs a failed case again while its retry lasts and reports one that failed, then passed, as
  *   PASSED, so retry silences a flake - and the JSON report the judge reads carries no retry. Per forge.toml tier (tier
- *   truth: the config that runs the files): the tier's vitest argv through vitest's own parseCLI (cli-retry: --retry,
- *   --retry.count), its config through vitest's own resolveConfig (config-retry: test.retry; config-tag-retry: a tag
- *   definition carrying retry; config-projects: projects the census does not resolve), and every file its resolved
- *   include / exclude select plus every setup file it loads, through their relative import closures, read with the
- *   strict registration resolver above, never a text grep: case-options; suite-options, which its cases and nested
- *   suites inherit; options-unknown (fail-closed: options the census cannot read); runtime-config (vi.setConfig carrying
- *   retry, or vi / its setConfig used where the census cannot follow). A file whose registrations the static read cannot
- *   bound - its registration API escapes (registration.integrity), or it keeps a suite collector, whose options code may
- *   write - is read through the COLLECTED read: vitest collects it under that tier's config with a never-matching name
- *   filter (no case body or hook runs) and test/helpers/retry-reporter.ts reports, behind a per-run nonce frame read
- *   exactly once, the retry vitest resolved for each collected case (collected-retry; collected-unread: no report, a
- *   collection error, or no case collected). A tier's command is split at its top-level && operators (quotes read as
- *   the tokenizer reads them; a single &, ||, ;, | and an npm script's own body are never split) and each arm is
- *   resolved as its own command (the wb-nl8.4 re-cut, owner direction at landing 122: the wb-zsv typing step chains two
- *   tsc scripts); an arm is tier-unread unless it reaches vitest, runs a script program (node, bash, sh), runs a
- *   program that runs no test runner (tsc, biome), or is an exact RETRY_ADMITTED_CHAINS chain, and a tier is read as
- *   the strongest of its arms (unread, vitest, script, admitted, tool). An npm script body chained with && stays
- *   tier-unread unless its whole chain is admitted.
- *   MEASURED on the delivered bytes: the file set (node's fs.globSync over the resolved include / exclude) equals
- *   vitest's own list (vitest list --filesOnly) for the default, census, native-read and furnace-observe configs; one
- *   falsifier project per route is a row of test/workbench-retry-census.test.ts, red through that route and nothing
- *   else, beside controls a text grep would read red (a comment, a string literal) and the executed leg (the bead's
- *   { retry: 2 } mutant passes under vitest, its retry-free twin fails). NAMED RESIDUALS of the retry census:
+ *   truth: the config that runs the files) the census reads what it can resolve and refuses the rest as tier-unread,
+ *   naming it (enumerate-the-resolvable, wb-nl8.4 respin 1, outbox row 525):
+ *   - the npm hop: npm's lifecycle and the npm configuration around every npm hop the census resolves - the whole
+ *     command and each && arm on its own, each npm script of its chain (a nested npm run included) - through the
+ *     vouch's own readers: pre<script> / post<script> pass only as an exact CENSUS_LIFECYCLE_SCRIPTS literal
+ *     (lifecycleGuard), the project .npmrc is read closed (npmrcGuard) and an enclosing package.json that declares
+ *     workspaces is refused (ancestorGuard), whatever the hop reaches (vitest, a tool, a script, an admitted chain);
+ *     anything else names the script or the key (R525 U1);
+ *   - the argv: the tier's vitest argv through vitest's own parseCLI (cli-retry: --retry, --retry.count), CLOSED
+ *     against RETRY_CLI_FLAGS - the vouch's flag lists, -c / -t, "--" with nothing after it, --expect only as
+ *     --expect.requireAssertions, --reporter only a builtin name, one --config file; any other flag (--globalSetup,
+ *     --includeSource, --root, --globals, --no-config, a path reporter) names the flag;
+ *   - the config: vitest's own resolveConfig (config-retry: test.retry; config-tag-retry: a tag definition carrying
+ *     retry; config-projects: projects the census does not resolve), and the config FILE read CLOSED through the
+ *     vouch's readers (retryConfigUnread): only imports of defineConfig and types beside one default export,
+ *     defineConfig(<one object literal>) from vitest/config or the literal itself; top-level keys GUARD_TOP_KEYS
+ *     (resolve only as resolve.dedupe); test keys RETRY_CONFIG_TEST_KEYS (the vouch's GUARD_TEST_KEYS plus retry, tags
+ *     and projects); pool forks / threads; environment node; no NODE_* / VITE* test.env name; test.server only as deps
+ *     (external, fallbackCJS, inline); no test.coverage enabled / customProviderModule; test.sequence within the
+ *     vouch's list; every level an object literal and every value a plain literal. A key that may load code or add
+ *     test files beyond include / exclude / setupFiles - globalSetup, includeSource, runner, globals, plugins,
+ *     resolve.alias, any key outside the sets - names the key (R525 U2 / U3);
+ *   - the files: vitest's own list for the tier's config (createVitest, globTestSpecifications: vitest's glob, dot
+ *     paths included - the delivered fs.globSync read skipped them) plus every setup file the resolved config loads,
+ *     each read through its relative import closure with the strict registration resolver above, never a text grep:
+ *     case-options; suite-options, which its cases and nested suites inherit; options-unknown (fail-closed: options
+ *     the census cannot read, and a setup file whose registrations the static read cannot bound, since the collected
+ *     read collects test files only); runtime-config (vi.setConfig carrying retry, or vi / its setConfig used where the
+ *     census cannot follow); source-unread (a file the tier runs that the static read cannot load or parse). A test
+ *     file whose registrations the static read cannot bound - its registration API escapes (registration.integrity),
+ *     or it keeps a suite collector, whose options code may write - is read through the COLLECTED read: vitest
+ *     collects it under that tier's config with a never-matching name filter (no case body or hook runs) and
+ *     test/helpers/retry-reporter.ts reports, behind a per-run nonce frame read exactly once, the retry vitest resolved
+ *     for each collected case (collected-retry; collected-unread: the run wrote no single readable report, the file
+ *     was not collected, was collected with an error, or was collected with no case).
+ *   A tier's command is split at its top-level && operators (quotes read as the tokenizer reads them; a single &, ||,
+ *   ;, | and an npm script's own body are never split) and each arm is resolved as its own command (the wb-nl8.4
+ *   re-cut, owner direction at landing 122: the wb-zsv typing step chains two tsc scripts); an arm is tier-unread
+ *   unless it reaches vitest, runs a script program (node, bash, sh), runs a program that runs no test runner (tsc,
+ *   biome), or is an exact RETRY_ADMITTED_CHAINS chain, and a tier is read as the strongest of its arms (unread,
+ *   vitest, script, admitted, tool). An npm script body chained with && stays tier-unread unless its whole chain is
+ *   admitted.
+ *   MEASURED on the delivered bytes (test/workbench-retry-census.test.ts): every RetryRoute member carries at least one
+ *   falsifier project red through that route and nothing else (each row pins its project's exact route set; the
+ *   route-set row holds the routes the rows exercise equal to the twelve), and each refusal named above that a shape
+ *   reaches carries a row of its own: three of the four collected-unread branches (the fourth below), source-unread,
+ *   the unbounded setup file, each lifecycle and npm-config read (a nested hop's included), the parseCLI refusal, each
+ *   closed flag rule, each level of the closed config read, the file list's own failure and its dot paths. Of the 47
+ *   mutants of the respin's battery (scratch, never shipped: each drops or bypasses one refusal above, M-CU all four
+ *   collected-unread emissions at once), 44 die in this suite - the gate's M-CU, M-CU-ERR, M-SU and M-SETUP-UNKNOWN
+ *   among them, each surviving the delivered 47 rows - and the three that survive are the defense-in-depth branches
+ *   below. Beside the falsifiers stand controls a text grep would read red (a comment, a string literal), the one
+ *   admitted lifecycle literal, and the executed leg (the bead's { retry: 2 } mutant passes under vitest, its
+ *   retry-free twin fails).
+ *   DEFENSE IN DEPTH - branches no shape reaches on these bytes, kept fail-closed, each probed once: the collected
+ *   read's not-collected branch (a listed file whose worker kills itself lands in the no-case branch, process.exit in
+ *   the with-error branch, the parent killed in the run-level branch); a bare --expect, which parseCLI refuses before
+ *   the closed flag read ("Unexpected value for --expect: true"); and a config file vitest loaded that the census then
+ *   cannot read (UNMEASURED: only a file changed between the two reads). Within two reached refusals, a config with no
+ *   default export and a zero-argument defineConfig are refused by vite before the closed read ("config must export or
+ *   return an object."): those refusals are reached by two default exports and by a second argument. NAMED RESIDUALS
+ *   of the retry census:
  *   - inherited retry (MEASURED, the wb-nl8.4 probe: the flaky case passes): retry placed on Object.prototype, which
  *     vitest reads through the prototype chain (task(): options.retry); the census guard closes fails and fixtures
  *     only, and the static read does not see the placement (the collected read does, in a file it reads).
@@ -216,20 +255,31 @@
  *     unbuilt ../dist module), unreadable, or that TypeScript cannot parse drops out of the closure; package modules
  *     are not read; and the VOUCH_RESIDUALS routes reach retry as they reach fails (a preload, a user npm config or a
  *     vitest shim adding --retry).
+ *   - the forge step beyond its command (UNMEASURED as a retry route): resolveTier reads the step's command alone; the
+ *     vouch's closed forge-step read (forgeGuard) is not applied here, since trunk's census step carries after /
+ *     consumes, keys outside its GUARD_FORGE_STEP_KEYS.
+ *   - vitest internals beyond the public routes (UNMEASURED as retry routes): a test or setup file writing the worker
+ *     state's config, or reaching retry through dynamic code (eval, new Function) - the vouch's residual of that name,
+ *     read for retry.
+ *   - closed-set membership (by construction, not by row): the rows pin the refusal of the keys and flags they name;
+ *     a key or a flag added to RETRY_CONFIG_TEST_KEYS, RETRY_CLI_FLAGS or the vouch's lists without a row passes
+ *     unpinned.
  *
  * Fail-closed throughout: an unreadable or unparseable file or report, a run error, a tier command outside the
- * modelled grammar or an unanalysable case body is a red verdict naming its cause, never a pass.
+ * modelled grammar or an unanalysable case body is a red verdict naming its cause, never a pass. In the retry census
+ * each such branch is pinned by its own falsifier row and the mutant that removes it, or named above as defense in
+ * depth (the RETRY CENSUS paragraph).
  */
 
 import { spawn, spawnSync } from "node:child_process";
 import { createHash, randomUUID } from "node:crypto";
-import { existsSync, globSync, readFileSync, realpathSync, statSync } from "node:fs";
+import { existsSync, readFileSync, realpathSync, statSync } from "node:fs";
 import { basename, dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { marked, type Token, type Tokens } from "marked";
 import ts from "typescript";
 import { expect } from "vitest";
-import { parseCLI, resolveConfig } from "vitest/node";
+import { createVitest, parseCLI, resolveConfig } from "vitest/node";
 
 /** The forge.toml command the complete gate runs for vitest (forge.toml [build] gate must list it). */
 export const DEFAULT_GATE_TIER = "test";
@@ -944,6 +994,7 @@ function resolveWords(words: readonly string[], scripts: Readonly<Record<string,
     if (npm !== undefined) {
       npm.npm = true;
       npm.script ??= script;
+      npm.scripts = [...(npm.scripts ?? []), script];
     }
     chain.push(`package.json scripts.${script} = ${JSON.stringify(body)}`);
     const nested = tokenize(body);
@@ -987,6 +1038,13 @@ function forgeGuard(toml: TomlTables, tier: string): string | undefined {
 export interface NpmHop {
   npm: boolean;
   script?: string;
+  /**
+   * wb-nl8.4 respin 1 (R525 U1): every npm script the chain runs, in order. npm runs pre<script> / post<script> around
+   * each hop, a nested npm run included (measured, npm 11.19.0: a lint script whose body is npm run lint:biome runs
+   * prelint:biome and postlint:biome around it), so the retry census reads the lifecycle of each one; the vouch reads
+   * script, its one hop.
+   */
+  scripts?: string[];
 }
 
 /** Resolves a forge.toml command to the vitest argv it runs, read-only; anything outside the modelled grammar fails closed. */
@@ -1255,11 +1313,11 @@ const GUARD_SERVER_DEPS_KEYS = new Set(["external", "fallbackCJS", "inline"]);
 const GUARD_ENV_REFUSED = /^(?:node_|vite)/i;
 
 /** An object literal's plain properties by key, or why the vouch cannot read them (a spread, a computed key, a method, an accessor, a shorthand, a repeat). */
-function literalKeys(literal: ts.ObjectLiteralExpression, label: string, where: string): ReadonlyMap<string, ts.Expression> | string {
+function literalKeys(literal: ts.ObjectLiteralExpression, label: string, where: string, reader = "the vouch"): ReadonlyMap<string, ts.Expression> | string {
   const keys = new Map<string, ts.Expression>();
   for (const property of literal.properties) {
     if (ts.isSpreadAssignment(property)) return `${label} spreads a value into ${where}, which may carry any key`;
-    if (!ts.isPropertyAssignment(property)) return `${label} sets ${where} through a ${ts.isShorthandPropertyAssignment(property) ? "shorthand property" : "method or accessor"}, which the vouch does not read`;
+    if (!ts.isPropertyAssignment(property)) return `${label} sets ${where} through a ${ts.isShorthandPropertyAssignment(property) ? "shorthand property" : "method or accessor"}, which ${reader} does not read`;
     const key = propertyKey(property.name);
     if (key === undefined) return `${label} sets a computed key in ${where}, which may name any option`;
     if (keys.has(key)) return `${label} sets ${where}.${key} twice`;
@@ -1269,9 +1327,9 @@ function literalKeys(literal: ts.ObjectLiteralExpression, label: string, where: 
 }
 
 /** A value's object-literal properties (see literalKeys), or why it is not an object literal the vouch reads. */
-function literalAt(value: ts.Expression, label: string, where: string): ReadonlyMap<string, ts.Expression> | string {
+function literalAt(value: ts.Expression, label: string, where: string, reader = "the vouch"): ReadonlyMap<string, ts.Expression> | string {
   const literal = unwrap(value);
-  return ts.isObjectLiteralExpression(literal) ? literalKeys(literal, label, where) : `${label} sets ${where} to something other than an object literal`;
+  return ts.isObjectLiteralExpression(literal) ? literalKeys(literal, label, where, reader) : `${label} sets ${where} to something other than an object literal`;
 }
 
 const stringValue = (value: ts.Expression): string | undefined => {
@@ -1297,7 +1355,7 @@ function stringList(value: ts.Expression): readonly string[] | undefined {
  * workers spawn and may set NODE_OPTIONS for them (rows c-u62r5-rs*), so the vouch reads only imports of defineConfig
  * from vitest/config, type-only imports and declarations, and the default export.
  */
-function configStatements(sf: ts.SourceFile, label: string): string | undefined {
+function configStatements(sf: ts.SourceFile, label: string, reader = "the vouch"): string | undefined {
   for (const statement of sf.statements) {
     if (ts.isExportAssignment(statement) && statement.isExportEquals !== true) continue;
     if (ts.isInterfaceDeclaration(statement) || ts.isTypeAliasDeclaration(statement)) continue;
@@ -1309,7 +1367,7 @@ function configStatements(sf: ts.SourceFile, label: string): string | undefined 
       const onlyDefineConfig =
         clause !== undefined && clause.name === undefined && named !== undefined && ts.isNamedImports(named) && named.elements.every(element => element.isTypeOnly || (element.propertyName ?? element.name).text === "defineConfig");
       if (module === "vitest/config" && onlyDefineConfig) continue;
-      return `${label} imports ${module}${clause === undefined ? " for its side effects" : ""}, and the vouch reads a config module that imports only defineConfig from vitest/config (and types): an imported module's top-level code runs in the main process when vitest loads the config, before the workers spawn, and may set NODE_OPTIONS for them`;
+      return `${label} imports ${module}${clause === undefined ? " for its side effects" : ""}, and ${reader} reads a config module that imports only defineConfig from vitest/config (and types): an imported module's top-level code runs in the main process when vitest loads the config, before the workers spawn, and may set NODE_OPTIONS for them`;
     }
     const line = sf.getLineAndCharacterOfPosition(statement.getStart(sf)).line + 1;
     return `${label} holds a statement besides its imports and its default export (line ${line}), which runs in the main process when vitest loads the config, before the workers spawn, and may set NODE_OPTIONS for them`;
@@ -1331,7 +1389,7 @@ const describeCode = (node: ts.Expression): string =>
             : "an expression";
 
 /** Is a config value a plain literal - so loading the config evaluates nothing - or what code it holds. */
-function plainLiteral(value: ts.Expression, label: string, where: string): string | undefined {
+function plainLiteral(value: ts.Expression, label: string, where: string, reader = "the vouch"): string | undefined {
   const node = unwrap(value);
   if (ts.isStringLiteralLike(node) || ts.isNumericLiteral(node) || ts.isRegularExpressionLiteral(node)) return undefined;
   if (node.kind === ts.SyntaxKind.TrueKeyword || node.kind === ts.SyntaxKind.FalseKeyword || node.kind === ts.SyntaxKind.NullKeyword) return undefined;
@@ -1339,16 +1397,16 @@ function plainLiteral(value: ts.Expression, label: string, where: string): strin
   if (ts.isArrayLiteralExpression(node)) {
     for (const [index, element] of node.elements.entries()) {
       if (ts.isSpreadElement(element) || ts.isOmittedExpression(element)) return `${label} sets ${where}[${index}] to ${ts.isSpreadElement(element) ? "a spread" : "a hole"}, not a plain literal`;
-      const why = plainLiteral(element, label, `${where}[${index}]`);
+      const why = plainLiteral(element, label, `${where}[${index}]`, reader);
       if (why !== undefined) return why;
     }
     return undefined;
   }
   if (ts.isObjectLiteralExpression(node)) {
-    const keys = literalKeys(node, label, where);
+    const keys = literalKeys(node, label, where, reader);
     if (typeof keys === "string") return keys;
     for (const [key, entry] of keys) {
-      const why = plainLiteral(entry, label, `${where}.${key}`);
+      const why = plainLiteral(entry, label, `${where}.${key}`, reader);
       if (why !== undefined) return why;
     }
     return undefined;
@@ -5619,7 +5677,7 @@ function andArms(command: string): readonly string[] {
 }
 
 /** One arm of a compound command, resolved as resolveTier resolves a whole command: its chain names the arm, one npm hop at most. */
-function resolveArm(root: string, tier: string, head: readonly string[], text: string, index: number, count: number): TierResolution {
+function resolveArm(root: string, tier: string, head: readonly string[], text: string, index: number, count: number, npm: NpmHop): TierResolution {
   const command = text.trim();
   const arm = `arm ${index + 1} of ${count}`;
   const chain = [...head, `${arm}: ${JSON.stringify(command)}`];
@@ -5628,23 +5686,182 @@ function resolveArm(root: string, tier: string, head: readonly string[], text: s
   if (!words.ok) return fail(`forge.toml command ${tier} ${arm}: ${words.why}`);
   const scripts = readScripts(root);
   if (!scripts.ok) return fail(scripts.why);
-  const argv = resolveWords(words.value, scripts.value.scripts, chain, 0);
+  const argv = resolveWords(words.value, scripts.value.scripts, chain, 0, npm);
   if (!argv.ok) return fail(argv.why);
   if (chain.length > head.length + 2) return fail("the arm reaches vitest through more than one npm script; only one npm hop is read faithfully");
   return { ok: true, tier, command, argv: argv.value, chain, why: "" };
 }
 
-/** One resolved command (a whole tier command, or one arm of a compound one): its argv through vitest's parseCLI, its config through vitest's resolveConfig, its files through their include / exclude. */
-async function readCommand(root: string, at: string, resolution: TierResolution, findings: RetryFinding[]): Promise<ArmRead> {
+/**
+ * wb-nl8.4 respin 1 (outbox row 525 U1-U3): the vitest flags the retry census reads CLOSED - the vouch's own lists
+ * (GUARD_BOOLEAN_FLAGS, GUARD_VALUE_FLAGS: flags that load no code and leave the pool, the environment and the setup
+ * files alone), the short aliases parseCLI echoes for them (-c, -t), "--" when nothing follows it, and expect only as
+ * --expect.requireAssertions. A --retry in any form is read (cli-retry); any other flag may load code or move the
+ * config the census reads (--globals, --globalSetup, --includeSource, --root, a path --reporter) and is tier-unread.
+ */
+const RETRY_CLI_FLAGS: ReadonlySet<string> = new Set([...GUARD_BOOLEAN_FLAGS, ...GUARD_VALUE_FLAGS, "c", "t", "--", "expect"]);
+/**
+ * wb-nl8.4 respin 1 (R525 U2 / U3): the test keys the retry census reads CLOSED - the vouch's GUARD_TEST_KEYS plus the
+ * three the census reads as routes (retry, tags, projects). The top level is the vouch's GUARD_TOP_KEYS (resolve only
+ * as resolve.dedupe) and the nested keys are the vouch's lists; a key outside them may load code or add test files
+ * beyond include / exclude / setupFiles (globalSetup, includeSource, runner, globals, plugins, resolve.alias, ...) and is
+ * tier-unread, naming it. Every value is a plain literal (plainLiteral) and the module holds nothing but the imports of
+ * defineConfig and its default export (configStatements).
+ */
+export const RETRY_CONFIG_TEST_KEYS: ReadonlySet<string> = new Set([...GUARD_TEST_KEYS, "retry", "tags", "projects"]);
+
+/** The tier's parsed vitest flags against RETRY_CLI_FLAGS: the first flag the census does not read, or undefined. */
+function retryCliUnread(options: Readonly<Record<string, unknown>>): string | undefined {
+  for (const [key, value] of Object.entries(options)) {
+    if (!RETRY_CLI_FLAGS.has(key)) return `--${key}, a flag outside the closed list the retry census reads (RETRY_CLI_FLAGS): it may load code, or move the pool, the environment, the setup files or the files the tier runs`;
+    if (key === "--" && !(Array.isArray(value) && value.length === 0)) return `"--" followed by ${JSON.stringify(value)}, words vitest receives that the retry census does not read`;
+    if (key === "reporter") {
+      for (const name of Array.isArray(value) ? value : [value]) {
+        if (typeof name !== "string" || !GUARD_BUILTIN_REPORTERS.has(name)) return `--reporter ${JSON.stringify(name)}, a reporter outside vitest's builtin reporters (GUARD_BUILTIN_REPORTERS): a path or package reporter is code the run loads`;
+      }
+    }
+    if (key === "expect") {
+      if (!isRecord(value)) return `--expect ${JSON.stringify(value)}, which the retry census does not read`;
+      for (const sub of Object.keys(value)) if (sub !== "requireAssertions") return `--expect.${sub}, outside --expect.requireAssertions, the one expect flag the retry census reads`;
+    }
+    // parseCLI echoes --config as config and c alike; --no-config parses to config "false" and c false (measured)
+    if ((key === "config" || key === "c") && (typeof options.config !== "string" || options.c !== options.config)) {
+      return `--no-config or --config ${JSON.stringify(options.config)} (-c ${JSON.stringify(options.c)}), not one config file the retry census reads`;
+    }
+  }
+  return undefined;
+}
+
+/**
+ * The config file vitest loaded for a tier, read CLOSED with the vouch's readers (configStatements, literalKeys,
+ * plainLiteral) against GUARD_TOP_KEYS, RETRY_CONFIG_TEST_KEYS and the vouch's nested lists: the first thing it holds
+ * that the census does not read, naming it, or undefined.
+ */
+function retryConfigUnread(root: string, config: string): string | undefined {
+  const label = relative(root, config);
+  const reader = "the retry census";
+  let text: string;
+  try {
+    text = readFileSync(config, "utf8");
+  } catch (error) {
+    return `${label} is unreadable: ${errorText(error)}`;
+  }
+  const sf = ts.createSourceFile(config, text, ts.ScriptTarget.Latest, true, /\.[cm]?ts$/.test(config) ? ts.ScriptKind.TS : ts.ScriptKind.JS);
+  const statements = configStatements(sf, label, reader);
+  if (statements !== undefined) return statements;
+  const defaults = sf.statements.filter((statement): statement is ts.ExportAssignment => ts.isExportAssignment(statement) && statement.isExportEquals !== true);
+  const exported = defaults[0];
+  if (exported === undefined || defaults.length > 1) return `${label} has no single default export ${reader} reads`;
+  let value = unwrap(exported.expression);
+  if (ts.isCallExpression(value)) {
+    const callee = unwrap(value.expression);
+    const argument = value.arguments[0];
+    if (!ts.isIdentifier(callee) || !importedFrom(sf, callee.text, "defineConfig", "vitest/config") || argument === undefined || value.arguments.length !== 1) {
+      return `${label} default-exports a call that is not defineConfig(<object literal>) imported from vitest/config`;
+    }
+    value = unwrap(argument);
+  }
+  if (!ts.isObjectLiteralExpression(value)) return `${label} default-exports no object literal - defineConfig(<object literal>) from vitest/config, or the literal itself - so ${reader} cannot read the options vitest receives`;
+  const outside = (where: string, list: string): string => `${label} sets ${where}, outside the keys ${reader} reads (${list}): it may load code or add test files beyond include / exclude / setupFiles`;
+  const top = literalKeys(value, label, "the config", reader);
+  if (typeof top === "string") return top;
+  for (const key of top.keys()) if (!GUARD_TOP_KEYS.has(key)) return outside(key, "cacheDir, resolve, test");
+  const resolveOptions = top.get("resolve");
+  if (resolveOptions !== undefined) {
+    const keys = literalAt(resolveOptions, label, "resolve", reader);
+    if (typeof keys === "string") return keys;
+    for (const key of keys.keys()) if (key !== "dedupe") return outside(`resolve.${key}`, "resolve.dedupe");
+  }
+  const testOptions = top.get("test");
+  if (testOptions !== undefined) {
+    const options = literalAt(testOptions, label, "test", reader);
+    if (typeof options === "string") return options;
+    for (const key of options.keys()) if (!RETRY_CONFIG_TEST_KEYS.has(key)) return outside(`test.${key}`, "RETRY_CONFIG_TEST_KEYS");
+    const pool = options.get("pool");
+    const poolName = pool === undefined ? undefined : stringValue(pool);
+    if (pool !== undefined && (poolName === undefined || !GUARD_POOLS.has(poolName))) {
+      return `${label} sets test.pool to ${poolName === undefined ? `a value ${reader} cannot read` : JSON.stringify(poolName)}, outside forks / threads: another pool runs the test modules in a realm (or through a pool module) ${reader} does not read`;
+    }
+    const environment = options.get("environment");
+    const environmentName = environment === undefined ? undefined : stringValue(environment);
+    if (environment !== undefined && environmentName !== "node") {
+      return `${label} sets test.environment to ${environmentName === undefined ? `a value ${reader} cannot read` : JSON.stringify(environmentName)}, not node: an environment module runs in the worker before the test modules register`;
+    }
+    const env = options.get("env");
+    if (env !== undefined) {
+      const keys = literalAt(env, label, "test.env", reader);
+      if (typeof keys === "string") return keys;
+      for (const key of keys.keys()) {
+        if (GUARD_ENV_REFUSED.test(key)) return `${label} sets test.env.${key}: vitest hands test.env to the workers it forks, where node reads NODE_* names at start (NODE_OPTIONS preloads code) and vitest reads VITE* names`;
+      }
+    }
+    const server = options.get("server");
+    if (server !== undefined) {
+      const keys = literalAt(server, label, "test.server", reader);
+      if (typeof keys === "string") return keys;
+      for (const key of keys.keys()) if (key !== "deps") return outside(`test.server.${key}`, "test.server.deps");
+      const deps = keys.get("deps");
+      if (deps !== undefined) {
+        const depsKeys = literalAt(deps, label, "test.server.deps", reader);
+        if (typeof depsKeys === "string") return depsKeys;
+        for (const key of depsKeys.keys()) if (!GUARD_SERVER_DEPS_KEYS.has(key)) return outside(`test.server.deps.${key}`, "external, fallbackCJS, inline");
+      }
+    }
+    const coverage = options.get("coverage");
+    if (coverage !== undefined) {
+      const keys = literalAt(coverage, label, "test.coverage", reader);
+      if (typeof keys === "string") return keys;
+      for (const key of ["enabled", "customProviderModule"]) if (keys.has(key)) return `${label} sets test.coverage.${key}, which loads coverage code into the run`;
+    }
+    const sequence = options.get("sequence");
+    if (sequence !== undefined) {
+      const keys = literalAt(sequence, label, "test.sequence", reader);
+      if (typeof keys === "string") return keys;
+      for (const key of keys.keys()) if (!GUARD_SEQUENCE_KEYS.has(key)) return outside(`test.sequence.${key}`, "concurrent, hooks, seed, setupFiles, shuffle: a sequencer is code");
+    }
+  }
+  for (const [key, entry] of top) {
+    const code = plainLiteral(entry, label, key, reader);
+    if (code !== undefined) return code;
+  }
+  return undefined;
+}
+
+/** The files vitest itself lists for a config (globTestSpecifications: its own glob, dot paths included), absolute, sorted. */
+async function vitestFiles(root: string, config: string | undefined): Promise<string[]> {
+  const vitest = await createVitest("test", { root, ...(config === undefined ? {} : { config }), watch: false, run: true }, { logLevel: "error" });
+  try {
+    return [...new Set((await vitest.globTestSpecifications()).map(spec => spec.moduleId))].sort();
+  } finally {
+    await vitest.close();
+  }
+}
+
+/**
+ * One resolved command (a whole tier command, or one arm of a compound one): the npm lifecycle and the npm config around
+ * its npm hop, its argv through vitest's parseCLI and RETRY_CLI_FLAGS, its config through vitest's resolveConfig and the
+ * closed read (retryConfigUnread), its files through vitest's own list.
+ */
+async function readCommand(root: string, at: string, resolution: TierResolution, hop: NpmHop, findings: RetryFinding[]): Promise<ArmRead> {
   const none = (kind: RetryKind): ArmRead => ({ arm: { command: resolution.command, kind, config: undefined, files: 0 }, run: undefined });
+  const unread = (why: string): ArmRead => {
+    const hops = resolution.chain.length > 0 ? ` (${resolution.chain.join(" -> ")})` : "";
+    findings.push({ route: "tier-unread", at, detail: `the census cannot read whether the tier passes vitest a retry: ${why}${hops}` });
+    return none("unread");
+  };
+  // wb-nl8.4 respin 1 (R525 U1): npm runs pre<script> and post<script> around each script of the chain (a nested npm run
+  // included) and loads the project's npm config for whatever it runs, so both are read around every npm hop - whatever
+  // the hop reaches (vitest, a tool, a script, an admitted chain) - with the vouch's readers: CENSUS_LIFECYCLE_SCRIPTS
+  // admits a lifecycle body as written.
+  const lifecycle = (hop.scripts ?? []).map(script => lifecycleGuard(root, script)).find(why => why !== undefined);
+  const npm = lifecycle ?? (hop.npm ? (npmrcGuard(root, []) ?? ancestorGuard(root, [])) : undefined);
+  if (npm !== undefined) return unread(npm);
   if (!resolution.ok) {
     const program = /^the tier runs (\S+), not vitest$/.exec(resolution.why)?.[1];
     if (program !== undefined && SCRIPT_PROGRAMS.has(program)) return none("script");
     if (program !== undefined && TOOL_PROGRAMS.has(program)) return none("tool");
     if (RETRY_ADMITTED_CHAINS.some(admitted => admitted.chain.length === resolution.chain.length && admitted.chain.every((hop, index) => hop === resolution.chain[index]))) return none("admitted");
-    const hops = resolution.chain.length > 0 ? ` (${resolution.chain.join(" -> ")})` : "";
-    findings.push({ route: "tier-unread", at, detail: `the census cannot read whether the tier passes vitest a retry: ${resolution.why}${hops}` });
-    return none("unread");
+    return unread(resolution.why);
   }
   const hops = resolution.chain.join(" -> ");
   let cli: ReturnType<typeof parseCLI>;
@@ -5654,18 +5871,31 @@ async function readCommand(root: string, at: string, resolution: TierResolution,
     findings.push({ route: "tier-unread", at, detail: `vitest's parseCLI refuses the tier's argv ${JSON.stringify(resolution.argv)} (${hops}): ${errorText(error)}` });
     return none("unread");
   }
+  // a spread: CliOptions is an interface (no index signature), the copy is the same own keys and values
+  const flag = retryCliUnread({ ...cli.options });
+  if (flag !== undefined) {
+    findings.push({ route: "tier-unread", at, detail: `the tier's vitest argv ${JSON.stringify(resolution.argv)} (${hops}) carries ${flag}` });
+    return none("unread");
+  }
   if (cli.options.retry !== undefined) {
     findings.push({ route: "cli-retry", at, detail: `the tier's vitest argv ${JSON.stringify(resolution.argv)} (${hops}) sets retry ${JSON.stringify(cli.options.retry)}, so every failed case of the tier runs again` });
   }
   let resolved: Awaited<ReturnType<typeof resolveConfig>>["vitestConfig"];
   try {
     // logLevel error: vite's config-loader advisories are not the census's findings (an unreadable config still throws)
-    resolved = (await resolveConfig({ ...cli.options, root: resolve(root, cli.options.root ?? ".") }, { logLevel: "error" })).vitestConfig;
+    resolved = (await resolveConfig({ ...cli.options, root }, { logLevel: "error" })).vitestConfig;
   } catch (error) {
     findings.push({ route: "tier-unread", at, detail: `vitest cannot resolve the tier's config (${hops}): ${errorText(error)}` });
     return none("unread");
   }
   const config = typeof resolved.config === "string" ? resolved.config : undefined;
+  if (config !== undefined) {
+    const closed = retryConfigUnread(root, config);
+    if (closed !== undefined) {
+      findings.push({ route: "tier-unread", at, detail: `${closed} (${hops})` });
+      return none("unread");
+    }
+  }
   const where = config === undefined ? "the tier's resolved vitest config" : `${relative(root, config)} (resolved by vitest)`;
   if (cli.options.retry === undefined && resolved.retry !== undefined) {
     findings.push({ route: "config-retry", at, detail: `${where} sets test.retry ${JSON.stringify(resolved.retry)}, so every failed case of the tier runs again` });
@@ -5675,24 +5905,34 @@ async function readCommand(root: string, at: string, resolution: TierResolution,
   }
   const projects = resolved.projects ?? [];
   if (projects.length > 0) findings.push({ route: "config-projects", at, detail: `${where} defines ${projects.length} project(s), whose own configs and files the census does not resolve` });
-  const dir = resolved.dir ?? resolved.root;
-  const files = globSync([...resolved.include], { cwd: dir, exclude: [...resolved.exclude] })
-    .map(file => resolve(dir, file))
-    .sort();
+  let files: string[];
+  try {
+    files = await vitestFiles(root, config);
+  } catch (error) {
+    findings.push({ route: "tier-unread", at, detail: `vitest cannot list the tier's test files (${hops}): ${errorText(error)}` });
+    return none("unread");
+  }
   return { arm: { command: resolution.command, kind: "vitest", config, files: files.length }, run: { config, files, setup: resolved.setupFiles.map(file => resolve(root, file)) } };
 }
 
 /**
  * One forge.toml tier: its command split at its top-level && operators, each arm read as its own command (wb-nl8.4
- * re-cut, owner direction at landing 122). A command without && is one arm, read exactly as resolveTier resolves it.
+ * re-cut, owner direction at landing 122). A command without && is one arm, read exactly as resolveTier resolves it;
+ * each arm carries its own npm hop, so the lifecycle and the npm config are read around every hop (respin 1, R525 U1).
  */
 async function readTier(root: string, tier: string, findings: RetryFinding[]): Promise<TierRead> {
   const at = `forge.toml ${tier}`;
-  const resolution = resolveTier(root, tier);
+  const hop: NpmHop = { npm: false };
+  const resolution = resolveTier(root, tier, hop);
   const texts = andArms(resolution.command);
   const reads: ArmRead[] = [];
-  if (texts.length === 1) reads.push(await readCommand(root, at, resolution, findings));
-  else for (const [index, text] of texts.entries()) reads.push(await readCommand(root, at, resolveArm(root, tier, resolution.chain, text, index, texts.length), findings));
+  if (texts.length === 1) reads.push(await readCommand(root, at, resolution, hop, findings));
+  else {
+    for (const [index, text] of texts.entries()) {
+      const armHop: NpmHop = { npm: false };
+      reads.push(await readCommand(root, at, resolveArm(root, tier, resolution.chain, text, index, texts.length, armHop), armHop, findings));
+    }
+  }
   const arms = reads.map(read => read.arm);
   const runs = reads.flatMap(read => (read.run === undefined ? [] : [read.run]));
   const kind = RETRY_KIND_ORDER.find(candidate => arms.some(arm => arm.kind === candidate)) ?? "unread";

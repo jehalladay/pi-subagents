@@ -19,14 +19,26 @@
  *   tier, an arm outside the grammar stays tier-unread named by its own refusal, and neither a single & nor a quoted &&
  *   is split;
  * - the executed leg: the bead's mutant ({ retry: 2 } on a case whose assertion fails on its first attempt) PASSES under
- *   vitest while its retry-free twin fails - the silent pass the census refuses is real, its assertion reached.
+ *   vitest while its retry-free twin fails - the silent pass the census refuses is real, its assertion reached;
+ * - respin 1 (outbox row 525, ORCH-REC-R525; enumerate-the-resolvable): npm's lifecycle and the npm configuration are
+ *   read around every npm hop, the whole command and each && arm (P01 pretest, P02 posttest, P24 preunit, a tool tier's
+ *   prelint, a project .npmrc, an enclosing workspaces package.json, a non-string lifecycle entry), and the tier's argv
+ *   and config file are read CLOSED (P12 includeSource, P19 globalSetup, P23 runner, globals, plugins, resolve.alias,
+ *   pool, environment, test.env, test.server, test.coverage, test.sequence, a spread at each config level, a call
+ *   value, a statement, a function export, a second defineConfig argument, two default exports; on the CLI
+ *   --globalSetup, --includeSource, --root, --globals, --no-config, a path reporter, --expect.poll, words after "--"
+ *   and a bare --expect that parseCLI refuses), each red through tier-unread naming what it could not read, beside a
+ *   control for the one admitted lifecycle literal; the file set is vitest's own list (f-dot-path); one row per
+ *   reachable fail-closed branch of the collected read (a killed run, a collection error, an empty suite, a todo-only
+ *   suite), source-unread and the unbounded setup file; and the route-set row holds the routes the rows exercise equal
+ *   to the twelve the census can name.
  */
 import { spawnSync } from "node:child_process";
 import { mkdirSync, realpathSync, symlinkSync, writeFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import { DEFAULT_GATE_TIER, type RetryCensus, type RetryRoute, retryCensus } from "./helpers/census.js";
+import { CENSUS_LIFECYCLE_SCRIPTS, DEFAULT_GATE_TIER, type RetryCensus, type RetryRoute, retryCensus } from "./helpers/census.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -44,24 +56,37 @@ const testFile = (body: string): string => `import { describe, expect, it, vi } 
 const forgeToml = (test: string, extra = ""): string => `[build]\ngate = ["test"]\n\n[build.commands]\ntest = ${JSON.stringify(test)}\n${extra}`;
 const packageJson = (scripts: Readonly<Record<string, string>>): string => `${JSON.stringify({ name: "retry-falsifier", private: true, type: "module", scripts }, null, 2)}\n`;
 const config = (test: string): string => `import { defineConfig } from "vitest/config";\n\nexport default defineConfig({ test: { include: ["test/**/*.test.ts"]${test} } });\n`;
+/** wb-nl8.4 respin 1: an npm lifecycle body that runs the flaky case under vitest with a retry (gate probes P01, P02, P24). */
+const RETRY_LIFECYCLE_BODY = "vitest run --retry 2 test/flaky.test.ts";
+/** An in-source test (gate probe P12): vitest runs it when the config's includeSource selects the file. */
+const IN_SOURCE_FLAKY =
+  'export const answer = 42;\n\nif (import.meta.vitest) {\n  const { expect, it } = import.meta.vitest;\n  let attempts = 0;\n  it("in-source flaky", { retry: 2 }, () => {\n    attempts += 1;\n    expect(attempts).toBeGreaterThan(1);\n  });\n}\n';
+/** A globalSetup module (gate probe P19): it runs in the main process before any worker and writes the project's retry. */
+const GLOBAL_SETUP_RETRY = "export default function setup(project: { config: { retry: number } }): void {\n  project.config.retry = 2;\n}\n";
 
 interface Shape {
   /** The flaky case file's body (test/flaky.test.ts), after the flake. */
   readonly body?: string;
   /** The config's extra test keys, appended after include. */
   readonly test?: string;
+  /** The whole vitest.config.ts, in place of the one built from test (wb-nl8.4 respin 1: top-level keys, statements, a function export). */
+  readonly config?: string;
   readonly script?: string;
   readonly forge?: string;
   readonly files?: Readonly<Record<string, string>>;
   readonly scripts?: Readonly<Record<string, string>>;
   readonly extraTiers?: string;
+  /** The project root's directory under the row's own directory (wb-nl8.4 respin 1: a project nested in an enclosing package). */
+  readonly nest?: string;
+  /** Files written in the row's own directory, around a nested project root. */
+  readonly outer?: Readonly<Record<string, string>>;
 }
 
 function files(shape: Shape): Record<string, string> {
   return {
     "forge.toml": forgeToml(shape.forge ?? "npm run test", shape.extraTiers),
     "package.json": packageJson({ test: shape.script ?? "vitest run", ...shape.scripts }),
-    "vitest.config.ts": config(shape.test ?? ""),
+    "vitest.config.ts": shape.config ?? config(shape.test ?? ""),
     "test/flaky.test.ts": testFile(shape.body ?? 'it("flaky", flake);'),
     ...shape.files,
   };
@@ -178,6 +203,293 @@ const FALSIFIERS: readonly Row[] = [
     routes: ["tier-unread"],
     detail: "the arm reaches vitest through more than one npm script",
   },
+  // ---- wb-nl8.4 respin 1 (outbox row 525, ORCH-REC-R525): U1 - the npm lifecycle around every npm hop the census resolves ----
+  {
+    id: "f-pretest",
+    routed: "npm runs scripts.pretest before the tier's npm hop, and its body runs vitest with --retry 2 (gate probe P01)",
+    shape: { scripts: { pretest: RETRY_LIFECYCLE_BODY } },
+    routes: ["tier-unread"],
+    detail: "package.json scripts.pretest",
+  },
+  {
+    id: "f-posttest",
+    routed: "npm runs scripts.posttest after the tier's npm hop, and its body runs vitest with --retry 2 (gate probe P02)",
+    shape: { scripts: { posttest: RETRY_LIFECYCLE_BODY } },
+    routes: ["tier-unread"],
+    detail: "package.json scripts.posttest",
+  },
+  {
+    id: "f-arm-lifecycle",
+    routed: "a compound step (&&) whose second arm's npm hop has a pre script running vitest with --retry 2 (gate probe P24: preunit around arm 2 of npm run typecheck && npm run unit)",
+    shape: { forge: "npm run typecheck && npm run unit", scripts: { typecheck: "tsc --noEmit", unit: "vitest run", preunit: RETRY_LIFECYCLE_BODY } },
+    routes: ["tier-unread"],
+    detail: "package.json scripts.preunit",
+  },
+  {
+    id: "f-tool-lifecycle",
+    routed: "a tool tier's npm hop (lint, biome) has a pre script running vitest with --retry 2: the lifecycle is read around every hop, whatever the hop reaches",
+    shape: { extraTiers: 'lint = "npm run lint"\n', scripts: { lint: "biome check test/", prelint: RETRY_LIFECYCLE_BODY } },
+    routes: ["tier-unread"],
+    detail: "package.json scripts.prelint",
+  },
+  {
+    id: "f-nested-lifecycle",
+    routed: "a tool tier's npm script runs a second npm script, and npm runs that nested hop's pre script (vitest with --retry 2) around it: the lifecycle is read around every hop of the chain, not the first one only",
+    shape: { extraTiers: 'lint = "npm run lint"\n', scripts: { lint: "npm run lint:biome", "lint:biome": "biome check test/", "prelint:biome": RETRY_LIFECYCLE_BODY } },
+    routes: ["tier-unread"],
+    detail: "package.json scripts.prelint:biome",
+  },
+  {
+    id: "f-npmrc",
+    routed: "the project .npmrc hands every npm hop node-options (a preload that runs before vitest), read closed as the vouch reads it (npm-project-config)",
+    shape: { files: { ".npmrc": "node-options=--require ./preload.cjs\n", "preload.cjs": "\n" } },
+    routes: ["tier-unread"],
+    detail: ".npmrc sets node-options",
+  },
+  {
+    id: "f-ancestor-workspaces",
+    routed: "an enclosing package.json declares workspaces, so npm takes it for the workspace root and loads ITS .npmrc around the hop",
+    shape: { nest: "inner", outer: { "package.json": `${JSON.stringify({ name: "retry-outer", private: true, workspaces: ["inner"] })}\n` } },
+    routes: ["tier-unread"],
+    detail: "declares workspaces",
+  },
+  // ---- U2 / U3: the tier's config read through a closed key set (GUARD_TOP_KEYS, RETRY_CONFIG_TEST_KEYS and the vouch's nested lists) ----
+  {
+    id: "f-include-source",
+    routed: "the config's includeSource adds in-source tests (import.meta.vitest) whose case carries retry: 2 (gate probe P12)",
+    shape: { test: ', includeSource: ["src/**/*.ts"]', files: { "src/flaky.ts": IN_SOURCE_FLAKY } },
+    routes: ["tier-unread"],
+    detail: "vitest.config.ts sets test.includeSource",
+  },
+  {
+    id: "f-global-setup",
+    routed: "the config's globalSetup module writes project.config.retry = 2 in the main process before any worker (gate probe P19)",
+    shape: { test: ', globalSetup: ["./global.ts"]', files: { "global.ts": GLOBAL_SETUP_RETRY } },
+    routes: ["tier-unread"],
+    detail: "vitest.config.ts sets test.globalSetup",
+  },
+  {
+    id: "f-runner",
+    routed: "the config names a custom test runner, code that may write a collected task's retry (gate finding F5, probe P23)",
+    shape: { test: ', runner: "./runner.ts"', files: { "runner.ts": "export default class Runner {}\n" } },
+    routes: ["tier-unread"],
+    detail: "vitest.config.ts sets test.runner",
+  },
+  {
+    id: "f-globals",
+    routed: "the config turns on globals, so a case may register through a global it the static read does not resolve",
+    shape: { test: ", globals: true" },
+    routes: ["tier-unread"],
+    detail: "vitest.config.ts sets test.globals",
+  },
+  {
+    id: "f-plugins",
+    routed: "the config carries vite plugins, code that may transform a test module to add retry before vitest collects it",
+    shape: { config: 'import { defineConfig } from "vitest/config";\n\nexport default defineConfig({ plugins: [], test: { include: ["test/**/*.test.ts"] } });\n' },
+    routes: ["tier-unread"],
+    detail: "vitest.config.ts sets plugins",
+  },
+  {
+    id: "f-resolve-alias",
+    routed: "the config aliases a module (resolve.alias), so an import of vitest may reach a shim that registers with retry",
+    shape: { config: 'import { defineConfig } from "vitest/config";\n\nexport default defineConfig({ resolve: { alias: { shim: "./test/shim.ts" } }, test: { include: ["test/**/*.test.ts"] } });\n' },
+    routes: ["tier-unread"],
+    detail: "vitest.config.ts sets resolve.alias",
+  },
+  {
+    id: "f-pool",
+    routed: "the config names a pool outside forks / threads, another realm or a pool module the census does not read",
+    shape: { test: ', pool: "vmThreads"' },
+    routes: ["tier-unread"],
+    detail: 'vitest.config.ts sets test.pool to "vmThreads"',
+  },
+  {
+    id: "f-config-code",
+    routed: "a config value is code (a call), evaluated in the main process when vitest loads the config",
+    shape: { test: ', testTimeout: Number("5000")' },
+    routes: ["tier-unread"],
+    detail: "vitest.config.ts sets test.testTimeout to a call",
+  },
+  {
+    id: "f-config-statement",
+    routed: "the config module holds a statement besides its imports and its default export, code that runs before the workers spawn",
+    shape: { config: 'import { defineConfig } from "vitest/config";\n\nprocess.env.RETRY_FALSIFIER = "1";\n\nexport default defineConfig({ test: { include: ["test/**/*.test.ts"] } });\n' },
+    routes: ["tier-unread"],
+    detail: "holds a statement besides its imports and its default export",
+  },
+  {
+    id: "f-config-function",
+    routed: "the config default-exports a function (defineConfig(() => ...)), whose returned options the census cannot read statically",
+    shape: { config: 'import { defineConfig } from "vitest/config";\n\nexport default defineConfig(() => ({ test: { include: ["test/**/*.test.ts"] } }));\n' },
+    routes: ["tier-unread"],
+    detail: "default-exports no object literal",
+  },
+  {
+    id: "f-config-unresolvable",
+    routed: "the tier's config does not parse, so vitest itself cannot resolve it",
+    shape: { config: 'import { defineConfig } from "vitest/config";\n\nexport default defineConfig({ test: { include: ["test/**/*.test.ts"] }\n' },
+    routes: ["tier-unread"],
+    detail: "vitest cannot resolve the tier's config",
+  },
+  // ---- the tier's vitest flags, read through a closed list (the resolved config is the config file and the flags) ----
+  { id: "f-cli-flag", routed: "the tier's vitest argv passes --globals, a flag outside the list the census reads", shape: { script: "vitest run --globals" }, routes: ["tier-unread"], detail: "carries --globals" },
+  {
+    id: "f-cli-reporter",
+    routed: "the tier's vitest argv names a reporter file, code loaded in the main process",
+    shape: { script: "vitest run --reporter ./reporter.ts", files: { "reporter.ts": "export default class Reporter {}\n" } },
+    routes: ["tier-unread"],
+    detail: 'carries --reporter "./reporter.ts"',
+  },
+  { id: "f-cli-expect", routed: "the tier's vitest argv passes an expect flag besides --expect.requireAssertions", shape: { script: "vitest run --expect.poll.timeout=10" }, routes: ["tier-unread"], detail: "carries --expect.poll" },
+  { id: "f-cli-dashdash", routed: 'the tier\'s vitest argv passes words after "--", which the census does not read', shape: { script: "vitest run -- --retry 2" }, routes: ["tier-unread"], detail: 'carries "--"' },
+  // ---- the closed reads' remaining branches: a non-string lifecycle, the CLI forms of U2 / U3, the vouch's nested config lists, vitest's own list ----
+  {
+    id: "f-lifecycle-nonstring",
+    routed: "package.json carries a pretest that is not a string, so the census cannot read what npm runs around the hop",
+    shape: { files: { "package.json": `${JSON.stringify({ name: "retry-falsifier", private: true, type: "module", scripts: { test: "vitest run", pretest: 1 } }, null, 2)}\n` } },
+    routes: ["tier-unread"],
+    detail: "package.json scripts.pretest is not a string",
+  },
+  {
+    id: "f-cli-global-setup",
+    routed: "the tier's vitest argv passes --globalSetup, a module that writes project.config.retry = 2 in the main process (gate probe P19's CLI form)",
+    shape: { script: "vitest run --globalSetup ./global.ts", files: { "global.ts": GLOBAL_SETUP_RETRY } },
+    routes: ["tier-unread"],
+    detail: "carries --globalSetup",
+  },
+  {
+    id: "f-cli-include-source",
+    routed: "the tier's vitest argv passes --includeSource, adding an in-source test whose case carries retry: 2 (gate probe P12's CLI form)",
+    shape: { script: "vitest run --includeSource src/flaky.ts", files: { "src/flaky.ts": IN_SOURCE_FLAKY } },
+    routes: ["tier-unread"],
+    detail: "carries --includeSource",
+  },
+  { id: "f-cli-root", routed: "the tier's vitest argv passes --root, which moves the config and the files the census reads", shape: { script: "vitest run --root ." }, routes: ["tier-unread"], detail: "carries --root" },
+  { id: "f-cli-no-config", routed: "the tier's vitest argv passes --no-config, not a config file the census reads", shape: { script: "vitest run --no-config" }, routes: ["tier-unread"], detail: 'carries --no-config or --config "false"' },
+  { id: "f-config-environment", routed: "the config names an environment other than node, a module that runs in the worker before the test modules", shape: { test: ', environment: "happy-dom"' }, routes: ["tier-unread"], detail: 'vitest.config.ts sets test.environment to "happy-dom"' },
+  {
+    id: "f-config-env",
+    routed: "the config hands the workers NODE_OPTIONS through test.env, a preload that runs before any test module",
+    shape: { test: ', env: { NODE_OPTIONS: "--require ./preload.cjs" }', files: { "preload.cjs": "\n" } },
+    routes: ["tier-unread"],
+    detail: "vitest.config.ts sets test.env.NODE_OPTIONS",
+  },
+  { id: "f-config-server", routed: "the config sets a test.server key besides deps", shape: { test: ', server: { sourcemap: "inline" }' }, routes: ["tier-unread"], detail: "vitest.config.ts sets test.server.sourcemap" },
+  { id: "f-config-coverage", routed: "the config enables coverage, code the run loads beside the test modules", shape: { test: ", coverage: { enabled: true }" }, routes: ["tier-unread"], detail: "vitest.config.ts sets test.coverage.enabled" },
+  { id: "f-config-sequence", routed: "the config sets a test.sequence key outside the vouch's list (a sequencer is code)", shape: { test: ", sequence: { groupOrder: 1 }" }, routes: ["tier-unread"], detail: "vitest.config.ts sets test.sequence.groupOrder" },
+  {
+    id: "f-config-spread",
+    routed: "the config spreads a value into its test options, which may carry any key",
+    shape: { config: 'import { defineConfig } from "vitest/config";\n\nexport default defineConfig({ test: { ...{ include: ["test/**/*.test.ts"] } } });\n' },
+    routes: ["tier-unread"],
+    detail: "spreads a value into test",
+  },
+  {
+    id: "f-list-unread",
+    routed: "the config defines two projects of one name, so vitest cannot list the tier's files (config-projects, and the list itself fails closed)",
+    shape: { test: ', projects: [{ test: { name: "twin" } }, { test: { name: "twin" } }]' },
+    routes: ["config-projects", "tier-unread"],
+    detail: "vitest cannot list the tier's test files",
+  },
+  { id: "f-cli-parse", routed: "the tier's vitest argv passes --expect with no sub-option, which vitest's own parseCLI refuses", shape: { script: "vitest run --expect" }, routes: ["tier-unread"], detail: "vitest's parseCLI refuses the tier's argv" },
+  {
+    id: "f-config-call",
+    routed: "the config default-exports defineConfig with a second argument, code vite evaluates when it loads the config (zero arguments: vite refuses the config first)",
+    shape: { config: 'import { defineConfig } from "vitest/config";\n\nexport default defineConfig({ test: { include: ["test/**/*.test.ts"] } }, {});\n' },
+    routes: ["tier-unread"],
+    detail: "default-exports a call that is not defineConfig(<object literal>)",
+  },
+  {
+    id: "f-config-two-defaults",
+    routed: "the config module carries two default exports, which vite 8.2.1 loads (measured; no default export at all: vite refuses the config first)",
+    shape: { config: 'import { defineConfig } from "vitest/config";\n\nexport default defineConfig({ test: { include: ["test/**/*.test.ts"] } });\nexport default defineConfig({ test: { include: ["test/**/*.test.ts"] } });\n' },
+    routes: ["tier-unread"],
+    detail: "has no single default export",
+  },
+  // ---- every nested level of the closed config read refuses what it cannot read (a spread here) at its own level ----
+  {
+    id: "f-config-top-spread",
+    routed: "the config spreads a value into its top level, which may carry any key (plugins, resolve.alias)",
+    shape: { config: 'import { defineConfig } from "vitest/config";\n\nexport default defineConfig({ ...{ test: { include: ["test/**/*.test.ts"] } } });\n' },
+    routes: ["tier-unread"],
+    detail: "spreads a value into the config",
+  },
+  {
+    id: "f-config-resolve-spread",
+    routed: "the config spreads a value into resolve, which may carry resolve.alias",
+    shape: { config: 'import { defineConfig } from "vitest/config";\n\nexport default defineConfig({ resolve: { ...{ dedupe: [] } }, test: { include: ["test/**/*.test.ts"] } });\n' },
+    routes: ["tier-unread"],
+    detail: "spreads a value into resolve",
+  },
+  { id: "f-config-env-spread", routed: "the config spreads a value into test.env, which may carry NODE_OPTIONS", shape: { test: ', env: { ...{ RETRY_FALSIFIER: "1" } }' }, routes: ["tier-unread"], detail: "spreads a value into test.env" },
+  { id: "f-config-server-spread", routed: "the config spreads a value into test.server, which may carry any server key", shape: { test: ", server: { ...{ deps: {} } }" }, routes: ["tier-unread"], detail: "spreads a value into test.server" },
+  { id: "f-config-deps-spread", routed: "the config spreads a value into test.server.deps, which may carry any deps key", shape: { test: ", server: { deps: { ...{ inline: [] } } }" }, routes: ["tier-unread"], detail: "spreads a value into test.server.deps" },
+  {
+    id: "f-config-deps-key",
+    routed: "the config sets a test.server.deps key outside the vouch's list (external, fallbackCJS, inline)",
+    shape: { test: ', server: { deps: { cacheDir: "node_modules/.retry-falsifier" } }' },
+    routes: ["tier-unread"],
+    detail: "vitest.config.ts sets test.server.deps.cacheDir",
+  },
+  { id: "f-config-coverage-spread", routed: "the config spreads a value into test.coverage, which may carry enabled", shape: { test: ", coverage: { ...{ reporter: [] } }" }, routes: ["tier-unread"], detail: "spreads a value into test.coverage" },
+  { id: "f-config-sequence-spread", routed: "the config spreads a value into test.sequence, which may carry a sequencer", shape: { test: ", sequence: { ...{ shuffle: false } }" }, routes: ["tier-unread"], detail: "spreads a value into test.sequence" },
+  // ---- the file set is vitest's own (globTestSpecifications): its glob reads dot paths, node's globSync does not ----
+  {
+    id: "f-dot-path",
+    routed: "a case with retry: 2 in a test file under a dot directory, which vitest's own glob (dot: true) runs and node's globSync skips",
+    shape: { files: { "test/.dot/flaky.test.ts": testFile('it("flaky", { retry: 2 }, flake);') } },
+    routes: ["case-options"],
+  },
+  // ---- U4: one falsifier per fail-closed branch the header claims (gate mutants M-CU, M-CU-ERR, M-SU, M-SETUP-UNKNOWN) ----
+  {
+    id: "f-collected-killed",
+    routed: "a file the static read cannot bound kills its collected run before the reporter writes, so the run writes no framed report (collected-unread, the run-level branch)",
+    shape: { test: ', pool: "forks"', body: 'const register = [it][0];\nregister("flaky", flake);\nif (typeof process.send === "function") process.kill(process.ppid, "SIGKILL");' },
+    routes: ["collected-unread"],
+    detail: "framed reports, not one",
+  },
+  {
+    id: "f-collected-error",
+    routed: "a file the static read cannot bound registers a case, then throws while vitest collects it (collected-unread, the with-error branch)",
+    shape: { body: 'const register = [it][0];\nregister("flaky", flake);\nthrow new Error("the module fails while vitest collects it");' },
+    routes: ["collected-unread"],
+    detail: "collected the file with an error",
+  },
+  {
+    id: "f-collected-empty",
+    routed: "a file the static read cannot bound (a kept suite collector) registers no case: vitest 4.1.10 reports it as a collection error (No test found in suite), the with-error branch",
+    shape: { body: 'const collector = describe("empty suite", () => {});\nvoid collector;' },
+    routes: ["collected-unread"],
+    detail: "No test found in suite",
+  },
+  {
+    id: "f-collected-nocase",
+    routed: "a file the static read cannot bound (a kept suite collector) declares only a todo suite: vitest 4.1.10 collects it with no case and no error, so the collected read proves nothing (collected-unread, the no-case branch)",
+    shape: { body: 'const collector = describe.todo("todo suite");\nvoid collector;' },
+    routes: ["collected-unread"],
+    detail: "collected no case of the file",
+  },
+  {
+    id: "f-source-unread",
+    routed: "a test file vitest includes does not parse, so the static read cannot read it (source-unread)",
+    shape: { files: { "test/flaky.test.ts": 'import { it } from "vitest";\n\nit("broken", () => {\n' } },
+    routes: ["source-unread"],
+    detail: "the file does not parse",
+  },
+  {
+    id: "f-setup-unbounded",
+    routed: "a setup file whose registration API escapes, so its registrations cannot be bounded, and the collected read collects test files only (options-unknown)",
+    shape: { test: ', setupFiles: ["./test/setup.ts"]', files: { "test/setup.ts": 'import { it } from "vitest";\n\nconst register = [it][0];\nvoid register;\n' } },
+    routes: ["options-unknown"],
+    detail: "a setup file whose registrations the static read cannot bound",
+  },
+  {
+    id: "f-forge-unread",
+    routed: "forge.toml declares an array table the census does not read, so no tier is read at all",
+    shape: { extraTiers: '\n[[build.gate.steps]]\nname = "extra"\n' },
+    routes: ["tier-unread"],
+    detail: "an array table",
+  },
 ];
 
 /** Controls: the same project shapes with nothing that retries - text that only LOOKS like retry, and tiers the census need not read. */
@@ -209,18 +521,44 @@ const CONTROLS: readonly Row[] = [
     shape: { forge: "npm run test && vitest run --config vitest.other.config.ts", files: { "vitest.other.config.ts": config("") } },
     routes: [],
   },
+  {
+    id: "c-lifecycle-admitted",
+    routed: "the tier's npm hop has the one admitted lifecycle literal (the default tier's pretest rotation, CENSUS_LIFECYCLE_SCRIPTS), as trunk does",
+    shape: { scripts: { pretest: CENSUS_LIFECYCLE_SCRIPTS[0] ?? "(no admitted lifecycle literal)" } },
+    routes: [],
+  },
 ];
+
+/** Every route the census can name (wb-nl8.4 respin 1, R525 U4): typed against RetryRoute, so a new route without an entry here fails the type check. */
+const ROUTES: Readonly<Record<RetryRoute, true>> = {
+  "case-options": true,
+  "suite-options": true,
+  "options-unknown": true,
+  "runtime-config": true,
+  "config-retry": true,
+  "config-tag-retry": true,
+  "config-projects": true,
+  "cli-retry": true,
+  "tier-unread": true,
+  "source-unread": true,
+  "collected-retry": true,
+  "collected-unread": true,
+};
 
 let scratch = "";
 let base = "";
 const censuses = new Map<string, Promise<RetryCensus>>();
 
 function writeProject(id: string, shape: Shape): string {
-  const root = join(base, id);
-  for (const [path, text] of Object.entries(files(shape))) {
-    mkdirSync(dirname(join(root, path)), { recursive: true });
-    writeFileSync(join(root, path), text);
-  }
+  const write = (dir: string, entries: Readonly<Record<string, string>>): void => {
+    for (const [path, text] of Object.entries(entries)) {
+      mkdirSync(dirname(join(dir, path)), { recursive: true });
+      writeFileSync(join(dir, path), text);
+    }
+  };
+  write(join(base, id), shape.outer ?? {});
+  const root = shape.nest === undefined ? join(base, id) : join(base, id, shape.nest);
+  write(root, files(shape));
   symlinkSync(join(ROOT, "node_modules"), join(root, "node_modules"), "dir");
   return root;
 }
@@ -283,6 +621,15 @@ describe("retry census (wb-nl8.4): one falsifier per claimed route, each red thr
       SLOW,
     );
   }
+});
+
+describe("retry census (wb-nl8.4 respin 1): the falsifier record is complete - every route the census can name carries a row", () => {
+  it("the routes the falsifier rows exercise are exactly the routes the census can name, and every row's project is its own [route-set]", () => {
+    const exercised = [...new Set(FALSIFIERS.flatMap(row => row.routes))].sort();
+    expect(exercised).toEqual(Object.keys(ROUTES).sort());
+    const ids = [...FALSIFIERS, ...CONTROLS].map(row => row.id);
+    expect(new Set(ids).size).toBe(ids.length);
+  });
 });
 
 describe("retry census (wb-nl8.4): controls stay green - the read is parse-aware, never a text grep", () => {
