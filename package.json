@@ -53,7 +53,7 @@
     "typecheck:test": "tsc --noEmit -p tsconfig.test.json",
     "lint": "biome check src/ test/",
     "lint:fix": "biome check --fix src/ test/",
-    "check": "npm run lint && npm run typecheck && npm run test",
+    "check": "npm run lint && npm run typecheck && npm run typecheck:test && npm run test",
     "test:coverage": "vitest run --coverage",
     "bench": "vitest bench",
     "bench:ab": "node test/perf/ab.mjs"
