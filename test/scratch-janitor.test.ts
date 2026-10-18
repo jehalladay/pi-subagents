@@ -7,20 +7,25 @@
  *  - "a janitor arm: the makeScratch family sweeps > 24 h siblings it OWNS at startup, mtime-guarded, children-only,
  *    root never removed, and never while another live process has a cwd inside"
  *  - "mutants per branch (skip-mtime-guard, sweep-non-owned, remove-root, hard-red-on-warning)"
- * The janitor rows run sweepStaleScratch over a private layout (scratch parent, session root, manifest directory) built
- * inside one makeScratch directory per row, so no row reads or writes the host's real roots. A dead owner is a pid no
- * process can hold (above Linux pid_max); a live one is a real sleeping child. The census row at the top reads the real
- * root, after this process's own startup sweep, and only ever reports.
+ *  - owner addendum: "every test and every mutant battery in this cut that exercises sweep/janitor behavior MUST run
+ *    against a PRIVATE per-test TMPDIR root created and owned by the test (never the real session root)"
+ * The file pins itself to a private scratch root at module scope (isolateScratchRoot, before anything allocates), so its
+ * own startup janitor and exit sweep never reach the host's roots; against a helper without that primitive it fails to
+ * load instead. The janitor rows then run sweepStaleScratch over a private layout (scratch parent, session root,
+ * manifest directory) built inside one makeScratch directory per row. A dead owner is a pid no process can hold (above
+ * Linux pid_max); a live one is a real sleeping child. The census row at the top reads the HOST's session root, which
+ * nothing in this file sweeps, and only ever reports.
  */
 import { type ChildProcess, spawn } from "node:child_process";
 import { randomUUID } from "node:crypto";
 import { existsSync, lstatSync, mkdirSync, readdirSync, utimesSync, writeFileSync } from "node:fs";
-import { dirname, join } from "node:path";
+import { dirname, join, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { afterEach, beforeAll, describe, expect, it } from "vitest";
 import { encodeCwd } from "../src/output-file.js";
 import {
   installScratchLeakGuard,
+  isolateScratchRoot,
   makeScratch,
   removeScratch,
   SCRATCH_STALE_MS,
@@ -29,12 +34,13 @@ import {
   scratchLeakCensus,
   scratchLeakWarning,
   scratchManifestDir,
-  scratchStartup,
   sessionScratchRoot,
   sweepStaleScratch,
 } from "./helpers/scratch.js";
 
 installScratchLeakGuard();
+/** Before anything allocates: every sweep this file runs stays inside a private root it created (owner addendum). */
+const isolation = isolateScratchRoot();
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const UID = process.getuid?.() ?? 0;
@@ -45,21 +51,28 @@ const AGED_MS = 25 * HOUR_MS;
 const DEAD_PID = 2_147_483_646;
 
 describe("wb-gbu leak census at suite start (WARNING-class report row)", () => {
-  let startup: ScratchJanitorReport;
   let census: ScratchLeakCensus;
   beforeAll(() => {
-    startup = scratchStartup();
-    census = scratchLeakCensus();
+    census = scratchLeakCensus({ sessionRoot: isolation.hostRoot });
   });
 
-  it("no scratch child under the root is older than 24 h at suite start: any that is, is reported as a warning and never fails the row", async ({ annotate }) => {
+  it("no scratch child under the host's session root is older than 24 h at suite start: any that is, is reported as a warning and never fails the row; the census only reads that root", async ({ annotate }) => {
     const warning = scratchLeakWarning(census);
     if (warning !== undefined) await annotate(warning.message, warning.level);
-    if (startup.swept.length > 0) await annotate(`scratch janitor swept ${startup.swept.length} stale owned path(s) at startup`, "notice");
     // The row's whole contract: a warning exactly when the census holds a stale child, and the row passes either way.
     expect(warning === undefined).toBe(census.stale.length === 0);
-    expect(census.root).toBe(sessionScratchRoot());
+    expect(census.root).toBe(isolation.hostRoot);
     expect(census.stale.every((child) => child.ageMs > SCRATCH_STALE_MS)).toBe(true);
+  });
+
+  it("this file runs against the private root it created at module scope (owner addendum): TMPDIR, the session root, the manifest directory and every row's layout live inside it, never in the host's roots", () => {
+    expect(process.env.TMPDIR).toBe(isolation.dir);
+    expect(dirname(isolation.dir)).toBe(isolation.hostTmp);
+    expect(isolation.hostRoot).toBe(join(isolation.hostTmp, `pi-subagents-${UID}`));
+    expect(sessionScratchRoot()).toBe(join(isolation.dir, `pi-subagents-${UID}`));
+    expect(scratchManifestDir()).toBe(join(isolation.dir, `pi-subagents-${UID}-scratch-manifests`));
+    expect(layout().parent.startsWith(`${isolation.dir}${sep}`)).toBe(true);
+    expect(isolateScratchRoot()).toBe(isolation);
   });
 });
 

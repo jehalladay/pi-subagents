@@ -34,6 +34,12 @@
  *    non-empty list a WARNING-class record a suite annotates and never fails on: a shared host also holds other
  *    runs' and other tools' trees, trackScratch paths (audited by the guard, never manifested) and leaks whose
  *    manifest was lost.
+ *  - PRIVATE ROOT (owner addendum, bound at 07cc484). A suite that exercises these sweeps calls isolateScratchRoot once
+ *    at module scope, before anything allocates: TMPDIR then names a fresh private directory for the rest of the
+ *    process, so every later makeScratch, session tree, manifest, startup janitor and exit sweep stays inside it,
+ *    whatever the sweep code does, and the host's roots are only ever read (a census). The exit sweep removes the
+ *    directory; one line in the host's manifest directory names it, so a later run's janitor sweeps it once stale if
+ *    the process is killed first.
  * Bounded assumptions: a dead run's pid reused by a new process reads as alive, so that leak waits (never the
  * reverse); a process whose cwd this user cannot read (another user's) is not seen, and mkdtemp makes these
  * directories 0700, so only this user or root can hold a cwd inside one.
@@ -109,10 +115,15 @@ export function sessionScratchFor(dir: string): string[] {
  */
 export function makeScratch(prefix: string): string {
   scratchStartup();
-  const dir = mkdtempSync(join(tmpdir(), prefix));
+  const dir = allocate(prefix);
   created.add(dir);
   manifest(dir);
   return dir;
+}
+
+/** The helper's one allocation: a fresh mkdtemp directory (0700) under tmpdir(), for makeScratch and isolateScratchRoot. */
+function allocate(prefix: string): string {
+  return mkdtempSync(join(tmpdir(), prefix));
 }
 
 /**
@@ -193,6 +204,8 @@ interface ScratchProcessState {
   manifests: Map<string, string | null>;
   hooked: boolean;
   startup: ScratchJanitorReport | undefined;
+  /** The private root isolateScratchRoot made, once it has. */
+  isolation: ScratchIsolation | undefined;
 }
 
 const PROCESS_STATE: unique symbol = Symbol.for("pi-subagents.test-scratch.process-state");
@@ -200,7 +213,7 @@ type ScratchGlobal = typeof globalThis & { [PROCESS_STATE]?: ScratchProcessState
 
 function processState(): ScratchProcessState {
   const holder: ScratchGlobal = globalThis;
-  const state: ScratchProcessState = holder[PROCESS_STATE] ?? { owned: [], manifests: new Map<string, string | null>(), hooked: false, startup: undefined };
+  const state: ScratchProcessState = holder[PROCESS_STATE] ?? { owned: [], manifests: new Map<string, string | null>(), hooked: false, startup: undefined, isolation: undefined };
   holder[PROCESS_STATE] = state;
   return state;
 }
@@ -212,7 +225,12 @@ function manifest(dir: string): void {
   const entry: OwnedScratch = { dir, real: resolvedOr(dir), sessionRoot };
   state.owned.push(entry);
   armExitSweep(state);
-  const file = manifestFileIn(state, manifestDirFor(sessionRoot));
+  record(state, manifestDirFor(sessionRoot), entry);
+}
+
+/** Append one line naming `entry` to this process's manifest in `manifestDir`. Best effort: it is only the crash record. */
+function record(state: ScratchProcessState, manifestDir: string, entry: { dir: string; real: string }): void {
+  const file = manifestFileIn(state, manifestDir);
   if (file === null) return;
   try {
     appendFileSync(file, `${JSON.stringify({ dir: entry.dir, real: entry.real })}\n`, { mode: 0o600 });
@@ -256,7 +274,10 @@ function armExitSweep(state: ScratchProcessState): void {
   }
 }
 
-/** Remove what this process's makeScratch allocated, the session trees keyed by it, and this process's manifests. */
+/**
+ * Remove what this process's makeScratch allocated, the session trees keyed by it, and this process's manifests; then
+ * the private root isolateScratchRoot made, if it made one.
+ */
 function sweepOwnScratch(state: ScratchProcessState): void {
   const keysByRoot = new Map<string, Set<string>>();
   for (const entry of state.owned) {
@@ -270,6 +291,48 @@ function sweepOwnScratch(state: ScratchProcessState): void {
   }
   for (const entry of state.owned) removeQuietly(entry.dir);
   for (const file of state.manifests.values()) if (file !== null) removeQuietly(file);
+  if (state.isolation !== undefined) removeQuietly(state.isolation.dir);
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+// wb-gbu owner addendum: a private scratch root for a suite that exercises the sweeps.
+
+/** What isolateScratchRoot hands a suite: the private root its TMPDIR now names, and the host's roots it may only read. */
+export interface ScratchIsolation {
+  /** The private root: a fresh child of the host's tmpdir(), this process's TMPDIR from here on, removed on the way out. */
+  dir: string;
+  /** The host's tmpdir(), as it was before isolation. */
+  hostTmp: string;
+  /** The host's session root. A suite may census it; nothing this process runs afterwards sweeps it. */
+  hostRoot: string;
+}
+
+/** The private root's mkdtemp prefix. Not "pi-subagents-", so a later run's janitor may sweep one a killed run left. */
+const ISOLATION_PREFIX = "pi-scratch-root-";
+
+/**
+ * Pin this process's scratch to a PRIVATE root before it allocates or sweeps any (the wb-gbu owner addendum): a fresh
+ * directory under the host's tmpdir() becomes TMPDIR for the rest of the process, so every later makeScratch, session
+ * tree, manifest, startup janitor and exit sweep lives inside it and none reaches the host's roots, whatever the sweep
+ * code does. A suite that exercises the sweeps calls it once at module scope. The exit sweep removes the directory, and
+ * one line in the host's manifest directory names it, so a later run's startup janitor sweeps it once stale should this
+ * process be killed first. Idempotent. Throws once this process has allocated or swept scratch, since that work already
+ * reached the host's roots and isolating afterwards would hide it rather than prevent it.
+ */
+export function isolateScratchRoot(): ScratchIsolation {
+  const state = processState();
+  if (state.isolation !== undefined) return state.isolation;
+  if (state.owned.length > 0 || state.startup !== undefined) {
+    throw new Error("isolateScratchRoot: call it at module scope, before this process allocates or sweeps any scratch (makeScratch, scratchStartup)");
+  }
+  const hostRoot = sessionScratchRoot();
+  const dir = allocate(ISOLATION_PREFIX);
+  const isolation: ScratchIsolation = { dir, hostTmp: dirname(hostRoot), hostRoot };
+  state.isolation = isolation;
+  armExitSweep(state);
+  record(state, manifestDirFor(hostRoot), { dir, real: resolvedOr(dir) });
+  process.env.TMPDIR = dir;
+  return isolation;
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
