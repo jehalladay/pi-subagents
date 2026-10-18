@@ -3,7 +3,7 @@ import { createRequire } from "node:module";
 import { connect, type Socket } from "node:net";
 import { dirname, join } from "node:path";
 import { createInterface } from "node:readline";
-import type { ExecutorCallback, ExecutorOptions, FurnaceOptions, RunStartRequest } from "@furnace/sdk";
+import { type ExecutorCallback, type ExecutorOptions, FurnaceCommandError, type FurnaceOptions, type RunStartRequest } from "@furnace/sdk";
 import ts from "typescript";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { CapabilityError } from "../src/workbench/capability-registry.js";
@@ -20,6 +20,7 @@ import {
 } from "../src/workbench/hosts/furnace-hosted.js";
 import { chooseScratchBase, SOCKET_PATH_BOUND, scratchBaseBudget } from "./helpers/fixture-roots.js";
 import { installScratchLeakGuard } from "./helpers/scratch.js";
+import { UNSAFE_DISPLAY } from "./helpers/unsafe-display.js";
 
 installScratchLeakGuard();
 
@@ -750,6 +751,141 @@ describe("Furnace-hosted execution adapter", () => {
     expect(failure).toMatchObject({ category: "unavailable" });
     expect(String((failure as Error).message)).not.toContain("SECRETTOKEN12345");
     expect(h.executor.receipt().state).toBe("failed");
+  });
+
+  /**
+   * wb-0m7 (docs/workbench/receipts/wb-3hc.md, finding F1): Furnace answers a start whose Run it created and then parked
+   * with an error envelope, not a Run record, and names the Run on that error. Furnace 9970621d8 attaches the Furnace Run
+   * id and the Beads molecule id together to every run start failure after run.created (crates/furnace-cli/src/application/
+   * run.rs RunIdentity::with_run_identity, "so no producer can attach one identifier and forget the other"); a refusal that
+   * created no Furnace Run names the Beads molecule alone (RunIdAlreadyRecorded, RunNotPersisted) or nothing. The live tier
+   * measured the landed adapter reporting that parked Run as "no Run was started" (parked-start-misreported) and releasing
+   * the host whose config the operator's verbs read (operator-retry-unreachable: config_invalid). These rows drive the same
+   * shape through the injected client: the real SDK error class, thrown after Attempt 1 ran over the bridge.
+   */
+  describe("a start Furnace refuses after creating its Run (wb-0m7)", () => {
+    const PARKED = { runId: "frn-run-parked", beadsRunId: "bd-run-parked", requestId: "frn-req-parked" };
+    const IDENTITY = { run_id: PARKED.runId, beads_run_id: PARKED.beadsRunId };
+    function refusal(details: unknown, requestId: string = PARKED.requestId): FurnaceCommandError {
+      return new FurnaceCommandError({
+        code: "reconciliation_required",
+        message: "the executor could not observe its own outcome",
+        retryable: false,
+        hint: `inspect the Attempt, then resume with \`run resume ${PARKED.runId}\``,
+        details,
+        responseKind: "error",
+        requestId,
+        protocolVersion: 1,
+        exit: { code: 5, signal: null },
+        stderr: "",
+      });
+    }
+    /** Attempt 1 settles unobserved over its own connection, then Furnace answers the start with the parked refusal. */
+    const parkedFirst: HostedWorkflow = async ({ identity }) => (identity.ordinal === 1 ? { status: "indeterminate", summary: "outcome not observed" } : { status: "success", summary: "operator attempt" });
+    function parkedHarness(details: unknown = IDENTITY, requestId?: string): Harness {
+      return harness(SHIPPED_FURNACE_SDK, parkedFirst, async (socketPath) => {
+        await driveAttempt(socketPath, "pi-hosted", "frn-atm-parked-1", 1);
+        throw refusal(details, requestId);
+      });
+    }
+    const embedded = (): string[] => readdirSync(scratch).filter((name) => name.startsWith("furnace-embedded-"));
+
+    it("reports the parked start as an uncertain effect naming the Run, records that Run, and keeps the host (parked-start-misreported)", async () => {
+      const h = parkedHarness();
+      const failure = await h.executor.start({ formula: "fixture" }).catch((error: unknown) => error);
+      expect(failure).toBeInstanceOf(CapabilityError);
+      expect(failure).toMatchObject({ category: "uncertain-effect" });
+      const message = String((failure as Error).message);
+      expect(message).toContain("reconciliation_required");
+      expect(message).toContain(PARKED.runId);
+      expect(message).toContain(PARKED.beadsRunId);
+      expect(message).not.toMatch(/no Run was started/);
+      const receipt = h.executor.receipt();
+      expect(receipt.state).toBe("started");
+      expect(receipt.run).toStrictEqual(PARKED);
+      expect(receipt.attempts.map((a) => [a.attemptId, a.ordinal, a.terminal])).toEqual([["frn-atm-parked-1", 1, "indeterminate"]]);
+      expect(embedded()).toHaveLength(1);
+      // One Run per adapter, as for a started one: the adapter never issues a second start over a Run that exists.
+      await expect(h.executor.start({ formula: "fixture" })).rejects.toMatchObject({ category: "validation" });
+      expect(h.starts).toHaveLength(1);
+      await h.executor.close();
+    });
+
+    it("keeps the operator's verbs reachable: the kept host's config names a live socket that admits the next Attempt on a new connection until close() (operator-retry-unreachable)", async () => {
+      const h = parkedHarness();
+      await expect(h.executor.start({ formula: "fixture" })).rejects.toMatchObject({ category: "uncertain-effect" });
+      const options = h.clients[0];
+      if (options === undefined) throw new Error("the adapter built no client");
+      const config = options.config ?? "";
+      expect(existsSync(config)).toBe(true);
+      const next = await driveAttempt(socketOf(options), "pi-hosted", "frn-atm-parked-2", 2);
+      expect(next.result.status).toBe("success");
+      const receipt = h.executor.receipt();
+      expect(receipt.attempts.map((a) => [a.attemptId, a.ordinal, a.terminal])).toEqual([
+        ["frn-atm-parked-1", 1, "indeterminate"],
+        ["frn-atm-parked-2", 2, "success"],
+      ]);
+      expect(receipt.identityViolations).toEqual([]);
+      await h.executor.close();
+      expect(h.executor.receipt().state).toBe("closed");
+      expect(existsSync(config)).toBe(false);
+      expect(embedded()).toEqual([]);
+    });
+
+    it.each([
+      ["no details", null],
+      ["details that are not a record", PARKED.runId],
+      ["the Beads molecule alone (RunIdAlreadyRecorded, RunNotPersisted)", { beads_run_id: PARKED.beadsRunId }],
+      ["other details and no run_id", { attention: "needs_attention", beads_run_id: PARKED.beadsRunId, beads_run_id_disposition: "untouched" }],
+    ])("a refusal naming no Furnace Run (%s) keeps the plain refusal: unavailable, no Run recorded, the host released", async (_shape, details) => {
+      const h = parkedHarness(details);
+      const failure = await h.executor.start({ formula: "fixture" }).catch((error: unknown) => error);
+      expect(failure).toMatchObject({ category: "unavailable" });
+      expect(String((failure as Error).message)).toMatch(/no Run was started/);
+      const receipt = h.executor.receipt();
+      expect(receipt.state).toBe("failed");
+      expect(receipt.run).toBeUndefined();
+      expect(embedded()).toEqual([]);
+    });
+
+    it.each([
+      ["the Furnace Run alone", { run_id: PARKED.runId }, PARKED.requestId],
+      ["an empty run_id", { ...IDENTITY, run_id: "" }, PARKED.requestId],
+      ["a run_id that is not a string", { ...IDENTITY, run_id: 7 }, PARKED.requestId],
+      ["an empty beads_run_id", { ...IDENTITY, beads_run_id: "" }, PARKED.requestId],
+      ["an empty envelope request id", IDENTITY, ""],
+    ])("a refusal naming a run_id without the identity a receipt records (%s) is an uncertain start: no Run recorded, the host released, no blind second start", async (_shape, details, requestId) => {
+      const h = parkedHarness(details, requestId);
+      const failure = await h.executor.start({ formula: "fixture" }).catch((error: unknown) => error);
+      expect(failure).toMatchObject({ category: "uncertain-effect" });
+      expect(String((failure as Error).message)).not.toMatch(/no Run was started/);
+      const receipt = h.executor.receipt();
+      expect(receipt.state).toBe("start-uncertain");
+      expect(receipt.run).toBeUndefined();
+      expect(embedded()).toEqual([]);
+      await expect(h.executor.start({ formula: "fixture" })).rejects.toMatchObject({ category: "uncertain-effect" });
+      expect(h.starts).toHaveLength(1);
+    });
+
+    it("routes the Run identifiers it names through the shared sanitizer: hostile Furnace text never reaches the message (display path)", async () => {
+      const ESC = String.fromCodePoint(0x1b);
+      const CSI = String.fromCodePoint(0x9b);
+      const RLO = String.fromCodePoint(0x202e);
+      const ZWSP = String.fromCodePoint(0x200b);
+      const NUL = String.fromCodePoint(0);
+      const FAKE = "FAKESECRETTOKEN0000";
+      const hostile = [`frn-run-${ESC}[31mred${ESC}[0m`, `frn-run-${RLO}desrever`, `frn-run-${ZWSP}hidden${NUL}`, `frn-run-${CSI}2J`, `frn-run Bearer ${FAKE}`];
+      for (const value of hostile) {
+        const h = parkedHarness({ run_id: value, beads_run_id: `bd-${value}` });
+        const failure = await h.executor.start({ formula: "fixture" }).catch((error: unknown) => error);
+        expect(failure, JSON.stringify(value)).toMatchObject({ category: "uncertain-effect" });
+        const message = String((failure as Error).message);
+        expect(message, JSON.stringify(value)).not.toContain(FAKE);
+        expect(message, JSON.stringify(value)).not.toMatch(UNSAFE_DISPLAY);
+        expect(h.executor.receipt().state, JSON.stringify(value)).toBe("started");
+        await h.executor.close();
+      }
+    });
   });
 
   it("owns the embedded host lifecycle: one Run per adapter, idempotent close, nothing left on disk", async () => {

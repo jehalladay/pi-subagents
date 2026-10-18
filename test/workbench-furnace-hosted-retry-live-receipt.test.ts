@@ -163,6 +163,7 @@ function parkObservation(): UncertainParkObservation {
     ],
     eventsComplete: true,
     bridge: [{ session: S3, executionId: "frn-exe-frn-atm-park-1", kind: "terminal", status: "indeterminate", at: at(2) }],
+    resume: { attempted: true, ok: true, code: null, state: "active" },
     retry: { attempted: true, ok: true, code: null, kind: "work_retry" },
     attemptsAfterRetry: 2,
   };
@@ -179,6 +180,7 @@ function measuredPark(): UncertainParkObservation {
     park.receipt.state = "failed";
     delete park.receipt.run;
   }
+  park.resume = { attempted: false, ok: false, code: null, state: null };
   park.retry = { attempted: true, ok: false, code: "config_invalid", kind: null };
   park.attemptsAfterRetry = 1;
   return park;
@@ -581,6 +583,22 @@ describe("furnace-hosted LIVE retry receipt: evidence-grade shape", () => {
     for (const field of ["utc", "node", "bd", "sdk"] as const) expect(() => buildRetryLiveReceipt(input(clean(), { [field]: "" }))).toThrow(new RegExp(field));
     expect(() => buildRetryLiveReceipt(input(clean(), { revision: "HEAD" }))).toThrow(/revision/);
     expect(() => buildRetryLiveReceipt(input(clean(), { revision: "0123456" }))).toThrow(/revision/);
+  });
+});
+
+describe("furnace-hosted LIVE retry receipt: the operator path it states (wb-0m7)", () => {
+  it("names every operator verb the live rows issue, the parked Run's run resume before its work retry included, and carries the resume as observed", () => {
+    // Furnace 0.1.0 (9970621d8) admits `work retry` only on an active Run; a parked (needs_attention) Run's exit is the
+    // operator's default-mode `run resume <run>` (it reconciles, re-enables scheduling and starts nothing), so the PARK row
+    // resumes before it retries and the receipt states that path.
+    expect(RETRY_LIVE_TIER_STATEMENT).toContain("the operator's `attempt stop`, `run resume` and `work retry` issued through that SDK's client (argv.d.ts attemptStop / runResume / workRetry)");
+    const operatorPath = RETRY_LIVE_NON_CLAIMS.filter((claim) => claim.startsWith("The operator path exercised"));
+    expect(operatorPath).toHaveLength(1);
+    expect(operatorPath[0]).toContain("Attempts.stop, Runs.resume and Work.retry");
+    expect(operatorPath[0]).toContain("runResume: `run resume <run> --json`");
+    expect(buildRetryLiveReceipt(input(clean())).scenarios.uncertainPark?.resume).toEqual({ attempted: true, ok: true, code: null, state: "active" });
+    const measured = buildRetryLiveReceipt(input({ operatorRetry: retryObservation(), uncertainPark: measuredPark() }));
+    expect(measured.scenarios.uncertainPark?.resume).toEqual({ attempted: false, ok: false, code: null, state: null });
   });
 });
 
