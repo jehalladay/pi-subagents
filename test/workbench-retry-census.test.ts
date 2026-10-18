@@ -32,6 +32,10 @@
  *   reachable fail-closed branch of the collected read (a killed run, a collection error, an empty suite, a todo-only
  *   suite), source-unread and the unbounded setup file; and the route-set row holds the routes the rows exercise equal
  *   to the twelve the census can name.
+ * - wb-9of (owner F7(b) at the wb-nl8.4 landing, ORCH-REC-R541): an npm script's own body is tokenized whole and never
+ *   split at its && - the check-script form (npm run check, check = "tsc --noEmit && vitest run --retry 2") reads
+ *   tier-unread, named by the body's own shell operator (f-check-and-body). An && inside a quoted sh -c string is not
+ *   refused: it stays the named script-tier residual (gate F13), and this slice does not widen the refusal to it.
  */
 import { spawnSync } from "node:child_process";
 import { mkdirSync, realpathSync, symlinkSync, writeFileSync } from "node:fs";
@@ -202,6 +206,17 @@ const FALSIFIERS: readonly Row[] = [
     shape: { forge: "npm run typecheck && npm run outer", scripts: { typecheck: "tsc --noEmit", outer: "npm run test" } },
     routes: ["tier-unread"],
     detail: "the arm reaches vitest through more than one npm script",
+  },
+  // wb-9of (owner F7(b), ORCH-REC-R541): the row that kills the nl8.4 gate mutants M-BODY-AND (the tokenizer keeps &&
+  // as word text), M-BODY-FIRST-ARM and M-BODY-LAST-ARM (a body split at && and read by its first / last arm only);
+  // each of the three survives every other row of this file
+  {
+    id: "f-check-and-body",
+    routed:
+      "the tier runs npm run check, whose package.json body chains tsc and vitest with --retry 2 through && (the check-script form): an npm script's own body is tokenized whole, never split at its &&, so the tier stays tier-unread, named by the body's shell operator",
+    shape: { forge: "npm run check", scripts: { check: "tsc --noEmit && vitest run --retry 2" } },
+    routes: ["tier-unread"],
+    detail: 'package.json scripts.check: the command uses the shell operator "&"',
   },
   // ---- wb-nl8.4 respin 1 (outbox row 525, ORCH-REC-R525): U1 - the npm lifecycle around every npm hop the census resolves ----
   {
