@@ -47,8 +47,6 @@ export const MEASUREMENT_BOUND =
   "registerHooks is per-thread: worker-thread module graphs and lazy imports made at run time while a workflow script executes are outside this receipt; it covers the import, construct and validateScript boot of the detached host in one thread.";
 
 const PI_SCOPE = "@earendil-works/";
-const HEADLESS_CAVEAT =
-  "A headless boot currently loads this Pi package as a library; that is a caveat to record, not a TUI launch (docs/workbench/16 Migration acceptance is about launching Pi's TUI process). Homing it out of the detached closure is owner-held W16 refactor work.";
 
 function deepFreeze(value) {
   for (const inner of Object.values(value)) {
@@ -59,28 +57,20 @@ function deepFreeze(value) {
 
 /** Pi/TUI packages permitted in the headless closure today, keyed by package. `via` lists the
  * only first-party importers permitted (package-root-relative dist paths); an empty `via` with
- * `through` names a package reached only through another allowlisted Pi package. Frozen: a new
- * entry or importer goes red until this table is edited in the same commit, and a row whose
- * measurement disappears goes red until it is trimmed (stale-row rule). */
-export const EXPECTED_PI_CLOSURE = deepFreeze({
-  "@earendil-works/pi-coding-agent": {
-    via: ["dist/memory.js", "dist/workflow/saved.js"],
-    caveat: `getAgentDir via src/workflow/saved.ts and src/memory.ts (saved.ts is reached from src/workbench/claude-host.ts). ${HEADLESS_CAVEAT}`,
-  },
-  "@earendil-works/pi-tui": {
-    via: [],
-    through: "@earendil-works/pi-coding-agent",
-    caveat: `Not imported by any first-party module: pi-coding-agent's own import graph reaches it (the bead text attributed it to src/memory.ts, which imports pi-coding-agent). ${HEADLESS_CAVEAT}`,
-  },
-});
+ * `through` names a package reached only through another allowlisted Pi package; `caveat` records
+ * why the package is there. Frozen: a new entry or importer goes red until this table is edited in
+ * the same commit, and a row whose measurement disappears goes red until it is trimmed (stale-row rule).
+ *
+ * Empty since wb-nl8.3: the headless boot loads no @earendil-works package. The pi-coding-agent row
+ * (getAgentDir via dist/memory.js and dist/workflow/saved.js) and the pi-tui row reached through it
+ * were trimmed in the commit that gave src/memory.ts and src/workflow/saved.ts the local
+ * src/agent-dir.ts getAgentDir, under this stale-row rule. */
+export const EXPECTED_PI_CLOSURE = deepFreeze({});
 
-/** Pi-family packages reached only THROUGH the allowlisted ones (no first-party importer), as measured. */
-export const EXPECTED_PI_TRANSITIVE = deepFreeze([
-  "@earendil-works/pi-agent-core",
-  "@earendil-works/pi-ai",
-  "@earendil-works/pi-codemode",
-  "@earendil-works/pi-mcp",
-]);
+/** Pi-family packages reached only THROUGH the allowlisted ones (no first-party importer), as measured.
+ * Empty since wb-nl8.3: pi-agent-core, pi-ai, pi-codemode and pi-mcp were reached only through
+ * pi-coding-agent and were trimmed with its row. */
+export const EXPECTED_PI_TRANSITIVE = deepFreeze([]);
 
 /** UI modules permitted in the headless closure. Empty: no src/ui/* and no src/index.js. */
 export const EXPECTED_UI_MODULES = deepFreeze([]);
