@@ -572,6 +572,20 @@ function attentionModel(): InspectorModel {
   return { projection, scope, invocationId: "workflow-u10", title: "Attention workflow", status: "running" };
 }
 const treeRow = /^ [ ❯] [◌○✓✘?*o+x] S\d/u;
+/** The overview's two fixed lines without a report (wb-8na, owner R505 N2): its attention and critical-path reading. */
+const ATTENTION_FIXED = "Attention: stale/unknown is last-known state, not live progress.";
+const CRITICAL_FIXED = "Critical path: incomplete trace (no complete dependency/interval proof).";
+/** One overview pane's no-report block: its "Attention:" row through the last continuation row (three leading spaces: the row's
+ * one and the compact panel's two) of the "Critical path:" row that follows it. */
+function fixedBlock(pane: readonly string[]): string[] {
+  const start = pane.findIndex((text) => text.startsWith(" Attention: stale/unknown"));
+  const critical = pane.findIndex((text, at) => at > start && text.startsWith(" Critical path:"));
+  expect(start).toBeGreaterThan(0);
+  expect(critical).toBeGreaterThan(start);
+  let end = critical;
+  while (end + 1 < pane.length && pane[end + 1].startsWith("   ")) end++;
+  return pane.slice(start, end + 1);
+}
 
 describe("(e) U10 deception defenses in the overview pane", () => {
   it("with an AttentionReport the overview pane draws the compact attention panel whole, line for line as the single column at that width", () => {
@@ -634,12 +648,13 @@ describe("(e) U10 deception defenses in the overview pane", () => {
       ]);
     }
   });
-  it("without a report the fixed attention and critical-path lines end the overview pane, cut at the pane width with the visible ellipsis (measured)", () => {
-    // Measured reading, not a target: in a pane narrower than a line the line is cut like any pane text, so the full sentence is
-    // drawn only from a 68-column (attention) / 76-column (critical path) pane; the single column keeps both whole from 68/76.
-    const attention = " Attention: stale/unknown is last-known state, not live progress.";
-    const critical = " Critical path: incomplete trace (no complete dependency/interval proof).";
-    const cut = (text: string, paneWidth: number) => (visibleWidth(text) <= paneWidth - 3 ? text : `${text.slice(0, paneWidth - 4)}…`);
+  it("without a report the fixed attention and critical-path lines end the overview pane whole, wrapped at the pane width with the compact panel's continuation indent (wb-8na cures the cut this row measured)", () => {
+    // This row recorded the cut as a measured reading, not a target ("in a pane narrower than a line the line is cut like any pane
+    // text"); owner ruling R505 N2 filed the cure as wb-8na. A line that fits the pane is still drawn on one row exactly as the
+    // single column draws it (the reading kept from the measured row); a longer one wraps at word boundaries, never cut.
+    const attention = ` ${ATTENTION_FIXED}`;
+    const critical = ` ${CRITICAL_FIXED}`;
+    const fits = (text: string, paneWidth: number) => visibleWidth(text) <= paneWidth - 3;
     for (const [width, rows] of [
       [80, 24],
       [120, 40],
@@ -647,8 +662,16 @@ describe("(e) U10 deception defenses in the overview pane", () => {
     ] as const) {
       const [paneWidth] = paneWidths(width);
       const pane = bodyRows(draw(modelOf(), selectedState("overview"), width, rows)).map((line) => panesOf(line, width)[0].trimEnd());
-      expect(pane, `${width}x${rows}`).toContain(cut(attention, paneWidth));
-      expect(pane, `${width}x${rows}`).toContain(cut(critical, paneWidth));
+      const block = fixedBlock(pane);
+      expect(block.map((text) => text.trim()).join(" "), `${width}x${rows}`).toBe(`${ATTENTION_FIXED} ${CRITICAL_FIXED}`);
+      expect(block.filter((text) => text.endsWith("…")), `${width}x${rows}`).toEqual([]);
+      for (const text of block) expect(visibleWidth(text), `${width}x${rows}`).toBeLessThanOrEqual(paneWidth);
+      // Every row after a sentence's first is its indented continuation.
+      for (const text of block) if (!text.startsWith(" Attention:") && !text.startsWith(" Critical path:")) expect(text, `${width}x${rows}`).toMatch(/^ {3}\S/u);
+      for (const text of [attention, critical]) if (fits(text, paneWidth)) expect(pane, `${width}x${rows}`).toContain(text);
+      // The block still ends the overview pane: only the blank padding of a longer neighbouring pane follows it.
+      const at = pane.findIndex((text) => text.startsWith(" Attention: stale/unknown"));
+      expect(pane.slice(at + block.length).every((text) => text === ""), `${width}x${rows}`).toBe(true);
     }
     expect(layoutInspector(modelOf(), selectedState("overview"), { width: 80, rows: 24 })).toEqual(expect.arrayContaining([attention, critical]));
   });
@@ -749,17 +772,19 @@ function readsOf(model: InspectorModel, draws: readonly (() => unknown)[]): { of
     window.mockRestore();
   }
 }
-/** The pre-change renderer's frames for the P6 selections, captured from trunk d56e8a2's renderer (two reads per pane) before
- * this cut and never re-pinned: one read per pane changes what is read, never what is drawn. */
+/** The P6 selections' frames: one read per pane changes what is read, never what is drawn. First captured from trunk d56e8a2's
+ * renderer (two reads per pane), which wb-feo's one read per pane drew byte for byte; re-captured once at wb-8na from its cured
+ * renderer, the cure changing only the overview pane's no-report attention and critical-path block (block (h)): outside the
+ * overview pane every frame here is the pre-cure renderer's byte for byte (OUTSIDE_OVERVIEW_DIGESTS). */
 const P6_BASE_DIGESTS: Readonly<Record<string, string>> = {
-  "first row of 60 100x30": "ec2fde65bae3b241c3b918268180b4c6533132473254b4b040ca4953f3a8ded1",
-  "first row of 60 140x40": "de633a1b883f4c5bba9f7bacb70ee821dc128a2268c985402585997030452b52",
-  "middle row of 60 100x30": "b763e98007618c7d7bcf93e2212526d09b92aefb1e411d487a260f397f9aeaf5",
-  "middle row of 60 140x40": "f5c801cd1f103c369dc8678d61af56392d1ef1240a4119747811fe572d095af7",
-  "last row of 60 100x30": "caaa5ab9d2839e2edf803bd9482419a785efb58eddbb6dae9422fdd41b28bf6a",
-  "last row of 60 140x40": "7838027a6395f52c060e18585c1745039db5b841a0732e142e1808bd40bd1a81",
-  "last row of 12 100x30": "39bef703896ee0d4ba1e190556c234816a045c5ed1336e1a3d47329ac74f5d55",
-  "last row of 12 140x40": "ec2646dc6c4f4cf9b272328975ca98bf18586bb516cb41bb191ae39b9d0c60a0",
+  "first row of 60 100x30": "e1485d7a7e8e71e8e63db756cc5f6bcc6dc450e1919eb2280bcf46c1f9f76d02",
+  "first row of 60 140x40": "82d3b87a77145855ec14c5feb3f8eba9d6977d4f2c1160d29f924017b47aa490",
+  "middle row of 60 100x30": "518ea4ba88c977033bc3585fedf030b3f2b8c46ea7b1beb65472800b48e1a81d",
+  "middle row of 60 140x40": "56d4011b5d71054e8f42ad68bbfa5973d0a3d059da19e3e453c7dff99177f588",
+  "last row of 60 100x30": "8707aeb3e1caf5635755241b43cc3e904e371f470e1434bf82bc24cef225b17a",
+  "last row of 60 140x40": "3754848f0bca86cb53a6fcbaecdf91f191c6e4ab5613ab3ed7ace4cc09df3f6a",
+  "last row of 12 100x30": "827f09d18389d4eb70186efe2a46ee8e5a6af3349b96c52811e166d474669e55",
+  "last row of 12 140x40": "edc749302e7ee6e81df3a86121378c3c5e4e783bbaedda814efd6a6ce1855ad1",
 };
 
 describe("(f) P6 at most one window() call per rendered pane (wb-feo)", () => {
@@ -855,18 +880,19 @@ describe("(f) P6 at most one window() call per rendered pane (wb-feo)", () => {
 const storedIndex =
   (index: number) =>
   (view: InspectorView): InspectorState => ({ ...initialInspectorState(), view, index });
-/** The two-read renderer's frames (trunk blob 841c988) for stored fractions, captured from it before this respin and never
- * re-pinned: a fraction draws the page that renderer drew, with no row marked current. A fraction past the last row clamps to
- * it and draws the last row's frames (P6_BASE_DIGESTS). */
+/** The frames of stored fractions: a fraction draws the page the two-read renderer drew, with no row marked current. First
+ * captured from that renderer (trunk blob 841c988) before this respin; re-captured once at wb-8na with P6_BASE_DIGESTS, the cure
+ * changing only the overview pane's no-report block (block (h), OUTSIDE_OVERVIEW_DIGESTS). A fraction past the last row clamps
+ * to it and draws the last row's frames (P6_BASE_DIGESTS). */
 const FRACTION_BASE_DIGESTS: Readonly<Record<string, string>> = {
-  "5.5 of 60 100x30": "9f866b43cf319a792e53337abc70c207a23018ca73ffff281a89b5b9f83a58ce",
-  "5.5 of 60 140x40": "0e21bb35fa6d69af10cfe243ded9b95ed122badad587e1b548885c60c456479d",
-  "49.5 of 60 100x30": "09aded324cb035e96d8134c452604b457382a81702951a6c0b2b0d74cf56915b",
-  "44.5 of 60 140x40": "f1ff08bc409f58f726d68f10d8114d28d767544a2ee2b72b563858f2746b2434",
-  "55.5 of 60 100x30": "ac278f76630a5084b28429f0462453d9289b2f42b4447c331d46b86bbb61f33b",
-  "55.5 of 60 140x40": "89abd86841f29943042ecd928a64855adcc08f20825d359229e5347a1fd8174a",
-  "5.5 of 12 100x30": "825bdbb8c54323f6bbc0be48b52e5aa14ca95e9d17cd8b84c998bd853cd7104e",
-  "5.5 of 12 140x40": "39e04cc62d4de263b20379c0071dcb11fe5941a48d31a50445650b702f955aa2",
+  "5.5 of 60 100x30": "6266ba32a3e11845ae1fe2da55f54c62fdf5d736be062135dd0832bb0bb8a38e",
+  "5.5 of 60 140x40": "a14c7441c33948b0c9f48b157ed22d0086615de1e1ad22391e24f2bfdcb9187c",
+  "49.5 of 60 100x30": "626a7fe8cdc39480e2ec2e3651a2b482343e4f0662ac731991c001c18d2b7dfc",
+  "44.5 of 60 140x40": "98dcab5a3dda4c7edcf63af5b76ba7e57f4bc5b0efe096455bb97db96c5b3e32",
+  "55.5 of 60 100x30": "877c28cdfdc4f43cd54f4270259d184c58f84473ec5cb06403838bc0c492ac04",
+  "55.5 of 60 140x40": "0f061246926aeecd01f81cb4e072e99eb35d835b91b29058ef47a67b58056d01",
+  "5.5 of 12 100x30": "6015ea2a1509518bc5e455929933eae46df6701f5c2284df925ede7de3051b60",
+  "5.5 of 12 140x40": "1bf9f929b620d3c21b186263a992e23edb279c0e4cde53b17f6f846181c71151",
 };
 /** The projection's refusal of a viewport offset that is not a whole number (ObservationProjection.window). */
 const OFFSET_REFUSAL = "Invalid observation viewport offset or limit (1..100).";
@@ -930,5 +956,111 @@ describe("(g) N2 stays the only second read for row indices the reducers never s
       for (const view of VIEWS)
         for (const panes of [false, true])
           expect(() => layoutInspector(model, storedIndex(index)(view), { width, rows, panes }), `${index} ${view} panes ${panes}`).toThrow(OFFSET_REFUSAL);
+  });
+});
+
+// ---------------------------------------------------------------------------------------------------------------------------
+// wb-8na (owner ruling R505 N2, the src follow-up of wb-6ze.23): with NO AttentionReport the overview's two fixed lines must not
+// be cut at the pane width. Measured on 400ece7 (gate cmd_4461460cb0f9) both ended cut with the visible ellipsis at 100x30 (two
+// panes) and 140x40 (three panes), while the single column draws them whole and the compact panel wraps its own lines whole when a
+// report is supplied. A pane now wraps them as the compact panel wraps its lines: whole words, continuation rows indented two
+// columns, and the tree yields the rows they take.
+// ---------------------------------------------------------------------------------------------------------------------------
+
+/** The views whose first pane is the overview: every view in three panes, overview and details in two (layoutPanes). */
+const overviewFirst = (width: number): readonly InspectorView[] => (paneWidths(width).length === 3 ? VIEWS : ["overview", "details"]);
+/** The no-report block at 100x30 and 140x40, whose overview panes have 44 and 40 body columns: each sentence wraps once. */
+const WRAPPED_AT_P6_SIZES = [" Attention: stale/unknown is last-known", "   state, not live progress.", " Critical path: incomplete trace (no", "   complete dependency/interval proof)."];
+/** framesDigest with the overview pane taken out: the four single-column frames whole, then each composed frame with its first
+ * pane dropped where that pane draws the overview (header rows, the other panes' rows less the trailing rows every one of them
+ * leaves blank, key hint): the body is as tall as its tallest pane, so the overview pane's own height is not read either. */
+function outsideOverviewDigest(model: InspectorModel, stateOf: (view: InspectorView) => InspectorState, width: number, rows: number): string {
+  const lines: string[] = [];
+  for (const view of VIEWS) lines.push(...layoutInspector(model, stateOf(view), { width, rows }), "");
+  for (const view of VIEWS) {
+    const frame = layoutInspector(model, stateOf(view), { width, rows, panes: true });
+    if (!overviewFirst(width).includes(view)) {
+      lines.push(...frame, "");
+      continue;
+    }
+    const body = bodyRows(frame);
+    const others = body.map((line) =>
+      panesOf(line, width)
+        .slice(1)
+        .map((text) => text.trimEnd()),
+    );
+    while (others.length > 0 && others[others.length - 1].every((text) => text === "")) others.pop();
+    lines.push(...frame.slice(0, frame.length - 1 - body.length), ...others.map((cells) => cells.join(" | ").trimEnd()), frame[frame.length - 1], "");
+  }
+  return digest(lines);
+}
+/** outsideOverviewDigest of the P6 selections and the stored fractions, captured from the renderer before the wb-8na cure (trunk
+ * c8b7243, blob of src/ui/workflow-inspector.ts as landed by wb-feo) and never re-pinned: the cure draws nothing new outside the
+ * overview pane. */
+const OUTSIDE_OVERVIEW_DIGESTS: Readonly<Record<string, string>> = {
+  "first row of 60 100x30": "d204388edb5b8c967ab1ffccf780a5c88a6eeffad4c986f646eb88822089e859",
+  "first row of 60 140x40": "967584cdf13f57615c106c93b9336b7145c19752bfadadbf8505912280c0669a",
+  "middle row of 60 100x30": "abc70d9fd2fcfee2c5ad957389c73c31d1379556f8a0eeaa86fa5a94b94b82d7",
+  "middle row of 60 140x40": "14d4833c3438add34f5bdca3e80417982ddadbc9d46b58195d7ecfb464b905a7",
+  "last row of 60 100x30": "095305597845bafc670cdebe72dc661cca621f661ad0fbb901f50f46fc8f781c",
+  "last row of 60 140x40": "7c95a83a02e8122cbb03a13547d322e250beb9e2eaa1d2d1c25a24cb71a23c7e",
+  "last row of 12 100x30": "87033896fe9f24f5a105c8285f4d1126622bf57d325dc3336d22cd611788e82e",
+  "last row of 12 140x40": "ea9c2cc051fb1f2fe2f5e8a0340f25cdd42843b8aa7c9fad405376ee81932ede",
+  "5.5 of 60 100x30": "c21d8d9d338057d7794108cf19cf8e6115d13a0ed32ea75143c57a93eda87c58",
+  "5.5 of 60 140x40": "1678213a270410c0ff49a7702489ae3a687fbd99a506c5e2e871f4ded6f0fbc9",
+  "49.5 of 60 100x30": "0062b0aec333ae6541a23a49b68f3fb82efd3532b57613cfee0570178a863422",
+  "44.5 of 60 140x40": "9f0725d90760bb0253537d365b1d7a6f2cdaa663b9b6b777a7df67f2f6eb2c09",
+  "55.5 of 60 100x30": "99bb7e062809ad615e4035572afee4119b3baa44a4f67a030c57f349c45cee10",
+  "55.5 of 60 140x40": "c68333cdfd979d82785c7f65a5c789570aa2284829b6fc66773539d9b994accb",
+  "5.5 of 12 100x30": "5023e1224f600630501cb520b403696117008d3fabe5ce6221e1ee9a587d0d9b",
+  "5.5 of 12 140x40": "88610582e7f2affcf87707953094df67316ab51c484b18198ce942a8fa2cd3b4",
+};
+
+describe("(h) the no-report attention and critical-path lines are never cut at the pane width (wb-8na, owner R505 N2)", () => {
+  it.each(P6_SIZES)("at %ix%i with no AttentionReport every overview pane draws both fixed lines whole, wrapped as the compact panel wraps, in both charsets", (width, rows) => {
+    const [paneWidth] = paneWidths(width);
+    for (const count of [12, 60])
+      for (const ascii of [false, true])
+        for (const view of overviewFirst(width)) {
+          const model = modelOf(count);
+          expect(model.attention).toBeUndefined();
+          const label = `${count} rows, ${view}, ascii ${ascii}`;
+          const lines = draw(model, selectedState(view), width, rows, { panes: true, ascii });
+          expect(lines.length, label).toBeLessThanOrEqual(rows);
+          const pane = bodyRows(lines).map((line) => panesOf(line, width)[0].trimEnd());
+          const block = fixedBlock(pane);
+          // Whole: both sentences read back word for word, no row ends in the cut marker, every row fits the pane.
+          expect(block.map((text) => text.trim()).join(" "), label).toBe(`${ATTENTION_FIXED} ${CRITICAL_FIXED}`);
+          expect(block.filter((text) => text.endsWith(ascii ? "~" : "…")), label).toEqual([]);
+          for (const text of block) expect(visibleWidth(text), label).toBeLessThanOrEqual(paneWidth);
+          expect(block, label).toEqual(WRAPPED_AT_P6_SIZES);
+        }
+  });
+  it.each(P6_SIZES)("at %ix%i the tree yields the rows the wrapped lines take: drawn rows plus the counted rest are the whole page, and no pane-cap notice hides a row", (width, rows) => {
+    const page = pageHeight(rows);
+    for (const ascii of [false, true])
+      for (const view of overviewFirst(width)) {
+        const label = `${view}, ascii ${ascii}`;
+        const pane = bodyRows(draw(modelOf(60), selectedState(view), width, rows, { panes: true, ascii })).map((line) => panesOf(line, width)[0].trimEnd());
+        expect(fixedBlock(pane), label).toEqual(WRAPPED_AT_P6_SIZES);
+        const drawn = pane.filter((text) => (ascii ? /^ [ >] \* Operation \d+/u : /^ [ ❯] ◌ Operation \d+/u).test(text)).length;
+        const notices = pane.filter((text) => (ascii ? /^ \.\.\. \d+ more rows? in this page/u : /^ … \d+ more rows? in this page/u).test(text));
+        expect(notices, label).toHaveLength(1);
+        expect(drawn + Number(/(\d+) more rows?/u.exec(notices[0])?.[1]), label).toBe(page);
+        expect(pane.filter((text) => /more rows? in this pane/u.test(text)), label).toEqual([]);
+      }
+  });
+  it.each(P6_SIZES)("at %ix%i outside the overview pane every P6 and stored-fraction frame is the pre-cure renderer's, byte for byte", (width, rows) => {
+    for (const selection of P6_SELECTIONS)
+      expect(outsideOverviewDigest(modelOf(selection.count), (view) => rowState(view, selection.at), width, rows), selection.name).toBe(OUTSIDE_OVERVIEW_DIGESTS[`${selection.name} ${width}x${rows}`]);
+    const page = pageHeight(rows);
+    const edge = 60 - page + Math.floor(page / 2) + 0.5;
+    for (const [count, index] of [
+      [60, 5.5],
+      [60, edge],
+      [60, 55.5],
+      [12, 5.5],
+    ] as const)
+      expect(outsideOverviewDigest(modelOf(count), storedIndex(index), width, rows), `${index} of ${count}`).toBe(OUTSIDE_OVERVIEW_DIGESTS[`${index} of ${count} ${width}x${rows}`]);
   });
 });
