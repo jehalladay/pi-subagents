@@ -26,3 +26,4 @@
 - [wb-zsv.8](wb-zsv.8.md) | OWNER-LANE: ci.yml still type-checks src only — add typecheck:test to CI steps and the AGENTS.md isolation list (post-zsv gate/CI typing drift) | 2026-10-18
 - [wb-0m7](wb-0m7.md) | furnace-hosted host: parked-start-misreported + operator-retry-unreachable (wb-3hc receipt findings, row 524 F2) | 2026-10-18
 - [wb-nl8.3](wb-nl8.3.md) | lazy/local getAgentDir so saved.ts and memory.ts stop importing the 21 MB pi-coding-agent entry in 158 test files, preserving the single-pi-ai-instance guarantee (wb-nl8.1 design Q12) | 2026-10-18
+- [wb-gbu](wb-gbu.md) | scratch helper leaks dirs under /tmp/pi-subagents root on killed runs — manifest-based self-sweep + >24h janitor with leak-census warning row (row 524 F7) | 2026-10-18
