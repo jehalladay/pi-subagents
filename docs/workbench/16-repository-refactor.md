@@ -72,12 +72,14 @@ Record fork divergence in this documentation. Preserve MIT copyright, license an
 
 ## Measured fork divergence
 
-Pre-existing upstream paths under `src/` and `test/` (outside `src/workbench` and `test/workbench*`) that the fork has modified since the baseline fork commit. The baseline sha is carried only by the `Baseline:` line in `docs/workbench/TRACEABILITY.md`. `test/workbench-upstream-divergence.test.ts` measures `git diff --name-only --diff-filter=M <baseline> HEAD` and fails on any unrecorded, stale or misrecorded row. This table is the measured record; the source-level refactor plan above stays a plan.
+Pre-existing upstream paths under `src/` and `test/` (outside `src/workbench` and `test/workbench*`) that the fork has modified since the baseline fork commit. The baseline sha is carried only by the `Baseline:` line in `docs/workbench/TRACEABILITY.md`. `test/workbench-upstream-divergence.test.ts` measures `git diff --name-only --diff-filter=M <baseline> HEAD` and fails on any unrecorded, stale, misrecorded, malformed, duplicate or mis-dated row. A missing section counts as an empty record, so every measured path is named. Each row's recorded-at commit must be an ancestor of HEAD at which the path already differed from the baseline. This table is the measured record; the source-level refactor plan above stays a plan.
 
 | path | recorded at | note |
 | --- | --- | --- |
 | `src/index.ts` | b44f1ce | +482 -18 lines against the baseline |
+| `src/memory.ts` | cc63071 | +1 -1 lines against the baseline |
 | `src/settings.ts` | b44f1ce | +79 -1 lines against the baseline |
+| `src/ui/fleet-list.ts` | cc63071 | +12 -1 lines against the baseline |
 | `src/ui/workflow-card.ts` | b44f1ce | +55 -12 lines against the baseline |
 | `src/ui/workflow-dialog.ts` | b44f1ce | +303 -62 lines against the baseline |
 | `src/ui/workflow-menu.ts` | b44f1ce | +44 -12 lines against the baseline |
@@ -90,12 +92,46 @@ Pre-existing upstream paths under `src/` and `test/` (outside `src/workbench` an
 | `src/workflow/task.ts` | b44f1ce | +111 -25 lines against the baseline |
 | `src/workflow/tool-description.ts` | b44f1ce | +4 -1 lines against the baseline |
 | `src/workflow/worker-source.ts` | b44f1ce | +151 -48 lines against the baseline |
+| `test/agent-color-surfaces.test.ts` | cc63071 | +5 -1 lines against the baseline |
+| `test/agent-manager.test.ts` | cc63071 | +2 -2 lines against the baseline |
+| `test/agent-runner.test.ts` | cc63071 | +3 -1 lines against the baseline |
+| `test/agent-startup-error.test.ts` | cc63071 | +5 -4 lines against the baseline |
+| `test/agent-widget.test.ts` | cc63071 | +9 -7 lines against the baseline |
+| `test/clear-completed-wiring.test.ts` | cc63071 | +8 -6 lines against the baseline |
+| `test/e2e/workflow.e2e.test.ts` | cc63071 | +10 -3 lines against the baseline |
+| `test/env.test.ts` | cc63071 | +4 -3 lines against the baseline |
+| `test/fallback-subagent-wiring.test.ts` | cc63071 | +6 -4 lines against the baseline |
+| `test/fleet-list.test.ts` | cc63071 | +43 -0 lines against the baseline |
+| `test/fleet-wiring.test.ts` | cc63071 | +8 -6 lines against the baseline |
+| `test/foreground-result-retrieval.test.ts` | cc63071 | +8 -6 lines against the baseline |
+| `test/group-join.test.ts` | cc63071 | +3 -1 lines against the baseline |
+| `test/helpers/boot-extension.ts` | cc63071 | +15 -8 lines against the baseline |
+| `test/helpers/print-mode-runner.ts` | cc63071 | +26 -12 lines against the baseline |
+| `test/nested-delegation-e2e.test.ts` | cc63071 | +8 -5 lines against the baseline |
+| `test/output-file-compaction-e2e.test.ts` | cc63071 | +15 -4 lines against the baseline |
+| `test/schedule-e2e.test.ts` | cc63071 | +75 -5 lines against the baseline |
+| `test/schedule-menu.test.ts` | cc63071 | +1 -1 lines against the baseline |
+| `test/settings.test.ts` | cc63071 | +4 -0 lines against the baseline |
+| `test/status-note-wiring.test.ts` | cc63071 | +3 -3 lines against the baseline |
+| `test/strict-agent-files-wiring.test.ts` | cc63071 | +10 -5 lines against the baseline |
+| `test/subagent-error-status-e2e.test.ts` | cc63071 | +2 -1 lines against the baseline |
+| `test/subagents-nested-print-mode-e2e.test.ts` | cc63071 | +6 -4 lines against the baseline |
+| `test/subagents-print-mode-e2e.test.ts` | cc63071 | +6 -6 lines against the baseline |
+| `test/tool-description-mode.test.ts` | cc63071 | +18 -17 lines against the baseline |
+| `test/usage.test.ts` | cc63071 | +2 -2 lines against the baseline |
+| `test/wait-queued.test.ts` | cc63071 | +1 -1 lines against the baseline |
+| `test/workflow-effective-config.test.ts` | cc63071 | +1 -1 lines against the baseline |
+| `test/workflow-examples.test.ts` | cc63071 | +4 -0 lines against the baseline |
+| `test/workflow-isolated.test.ts` | cc63071 | +3 -3 lines against the baseline |
 | `test/workflow-journal.test.ts` | b44f1ce | +91 -0 lines against the baseline |
 | `test/workflow-meta.test.ts` | b44f1ce | +4 -5 lines against the baseline |
 | `test/workflow-progress.test.ts` | b44f1ce | +17 -0 lines against the baseline |
 | `test/workflow-render.test.ts` | b44f1ce | +29 -0 lines against the baseline |
 | `test/workflow-task.test.ts` | b44f1ce | +148 -0 lines against the baseline |
 | `test/workflow-tool-description.test.ts` | b44f1ce | +9 -0 lines against the baseline |
+| `test/workflow-tool.test.ts` | cc63071 | +14 -14 lines against the baseline |
+| `test/worktree-isolation-e2e.test.ts` | cc63071 | +17 -5 lines against the baseline |
+| `test/worktree.test.ts` | cc63071 | +66 -21 lines against the baseline |
 
 ## Migration acceptance
 
