@@ -17,14 +17,16 @@
  * env var to leave it alone — the pre-publish smoke sets PI_E2E_LIVE globally.
  */
 import { execFileSync } from "node:child_process";
-import { existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
-import { tmpdir } from "node:os";
+import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import type { Context } from "@earendil-works/pi-ai";
 import { fauxToolCall } from "@earendil-works/pi-ai";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { setWorktreeIsolationEnabled } from "../src/worktree.js";
 import { agentCall, type FauxReply, type PrintModeRun, runPrintMode } from "./helpers/print-mode-runner.js";
+import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
+
+installScratchLeakGuard();
 
 vi.setConfig({ testTimeout: 30_000 });
 
@@ -40,7 +42,7 @@ function git(cwd: string, ...args: string[]): string {
 
 /** A real repo with one commit — `git worktree add` needs a HEAD to branch from. */
 function initGitRepo(): string {
-  const dir = mkdtempSync(join(tmpdir(), "wt-iso-e2e-"));
+  const dir = makeScratch("wt-iso-e2e-");
   git(dir, "init");
   git(dir, "config", "user.email", "test@test.com");
   git(dir, "config", "user.name", "Test");
@@ -63,8 +65,18 @@ function toolResultNames(context: Context): string[] {
     .map((m) => (m as { toolName?: string }).toolName ?? "");
 }
 
+/**
+ * The transcript fields agentResultText reads. A faux-model `Context` and the
+ * live parent `AgentSession` both carry them; the session's `messages` are
+ * `AgentMessage[]` (pi's custom entries included), which a `Context` parameter
+ * does not accept.
+ */
+interface TranscriptLike {
+  messages: ReadonlyArray<{ role: string; toolName?: string; content?: unknown }>;
+}
+
 /** Every Agent tool result the parent session received, concatenated. */
-function agentResultText(session: Context): string {
+function agentResultText(session: TranscriptLike): string {
   return session.messages
     .filter((m) => m.role === "toolResult" && (m as { toolName?: string }).toolName === "Agent")
     .flatMap((m) => ((m.content ?? []) as Array<{ text?: string }>).map((b) => b.text ?? ""))
@@ -115,7 +127,7 @@ describe("worktree isolation e2e (real git, real pi-mono, faux model)", () => {
     setWorktreeIsolationEnabled(true);
     for (const dir of repos.splice(0)) {
       try { git(dir, "worktree", "prune"); } catch { /* repo may be gone */ }
-      rmSync(dir, { recursive: true, force: true });
+      removeScratch(dir);
     }
   });
 

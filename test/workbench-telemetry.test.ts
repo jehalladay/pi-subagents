@@ -9,7 +9,7 @@ import { CapabilityError } from "../src/workbench/capability-registry.js";
 import {
   type NativeRef, type ObservationEvent, ObservationProjection, type ObservationScope, type Presentation,
 } from "../src/workbench/observation.js";
-import { sanitizeWorkbenchText, WORKBENCH_TEXT_LIMIT } from "../src/workbench/redaction.js";
+import { sanitizeWorkbenchJsonText, sanitizeWorkbenchText, WORKBENCH_TEXT_LIMIT } from "../src/workbench/redaction.js";
 import {
   buildOperationsTelemetry, createTelemetryEmitter, emitOperationsTelemetry, type OperationsTelemetry, TELEMETRY_CLOCK_CAVEAT,
   TELEMETRY_CONTRACT, type TelemetryEvent, type TelemetryMetric,
@@ -232,11 +232,10 @@ describe("B3 docs/workbench/09 § Observation event envelope: event lag with an 
   });
 
   it("sanitizes and bounds provider names, and caps the provider list with a visible omitted count", () => {
-    const view = new ObservationProjection();
-    ingest(view, { id: "1", provider: "furnace\u200b", sourceTimestamp: at(-2), observedAt: at(-1) });
-    ingest(view, { id: "2", provider: "Bearer abc123", sourceTimestamp: at(-2), observedAt: at(-1) });
-    ingest(view, { id: "3", provider: "x".repeat(120), sourceTimestamp: at(-2), observedAt: at(-1) });
-    const lag = measured(build(view).eventLag).value;
+    // wb-0br: the real projection refuses "furnace" plus a zero-width space as identity (typed refusal pinned in the next
+    // case), so the three producer names reach the report through the structural projection, every assertion unchanged.
+    const view = structuralView("furnace\u200b", "Bearer abc123", "x".repeat(120));
+    const lag = measured(buildOperationsTelemetry(view, { scope: alice, now: T }).eventLag).value;
     expect(lag.providers).toEqual(["[REDACTED]", "furnace", "x".repeat(64)]);
     const json = JSON.stringify(lag);
     expect(json).not.toMatch(/\u001b|\u200b|abc123|Bearer/);
@@ -245,6 +244,15 @@ describe("B3 docs/workbench/09 § Observation event envelope: event lag with an 
     const many = measured(build(crowd).eventLag).value;
     expect(many.providers.length).toBeLessThanOrEqual(16);
     expect(many.providers.length + many.providersOmitted).toBe(40);
+  });
+
+  it("refuses the zero-width-space provider as identity through the real projection: one typed refusal row, nothing sampled (wb-0br)", () => {
+    expect(realRefusal("furnace\u200b")).toStrictEqual(refusedAt("U+200B"));
+    // The two names the real projection still admits keep their real-path reading, sanitized and bounded as before.
+    const view = new ObservationProjection();
+    ingest(view, { id: "2", provider: "Bearer abc123", sourceTimestamp: at(-2), observedAt: at(-1) });
+    ingest(view, { id: "3", provider: "x".repeat(120), sourceTimestamp: at(-2), observedAt: at(-1) });
+    expect(measured(build(view).eventLag).value.providers).toEqual(["[REDACTED]", "x".repeat(64)]);
   });
 });
 
@@ -446,16 +454,31 @@ const SPLIT_CREDENTIALS: ReadonlyArray<readonly [string, string]> = [
   // The C1 next-line row is re-expressed in its own case below (respin 2 U3): NEL is a separator under the one helper.
   ["Arabic letter mark inside a ghp_ prefix", `ghp_\u061c${CREDENTIAL}`],
 ];
+/** wb-0br: the first unsafe code point the real projection's typed identity refusal names for each split shape above. */
+const SPLIT_REFUSED_AT: Readonly<Record<string, string>> = {
+  "zero-width space inside the sk-ant- prefix": "U+200B",
+  "word joiner inside the sk- prefix": "U+2060",
+  "soft hyphen inside Bearer": "U+00AD",
+  "zero-width space inside Bearer": "U+200B",
+  "zero-width space before the password separator": "U+200B",
+  "bidi override inside the sk-ant- prefix": "U+202E",
+  "Arabic letter mark inside a ghp_ prefix": "U+061C",
+};
 
 describe("C1 wb-cax.13 respin U1: split credentials never reassemble in the report", () => {
-  it.each(SPLIT_CREDENTIALS)("redacts %s through a real projection", (_label, provider) => {
-    const view = new ObservationProjection();
-    ingest(view, { id: "1", provider, sourceTimestamp: at(-2), observedAt: at(-1) });
-    const lag = measured(build(view).eventLag).value;
-    const json = JSON.stringify(build(view));
+  // wb-0br: the real projection refuses every split shape as identity (typed refusals pinned in the next case), so each
+  // still reaches the report through the structural projection, every redaction and secret-absence assertion unchanged.
+  it.each(SPLIT_CREDENTIALS)("redacts %s fed through a structural projection (the real one refuses it as identity, wb-0br)", (_label, provider) => {
+    const view = structuralView(provider);
+    const lag = measured(buildOperationsTelemetry(view, { scope: alice, now: T }).eventLag).value;
+    const json = JSON.stringify(buildOperationsTelemetry(view, { scope: alice, now: T }));
     for (const secret of [CREDENTIAL, "abc123secret", "hunter2hunter2", "api03"]) expect(json, secret).not.toContain(secret);
     expect(lag.providers.length).toBe(1);
     expect(lag.providers[0]).toMatch(/\[REDACTED\]/);
+  });
+
+  it.each(SPLIT_CREDENTIALS)("refuses %s as identity through the real projection: one typed refusal row, nothing sampled (wb-0br)", (label, provider) => {
+    expect(realRefusal(provider)).toStrictEqual(refusedAt(SPLIT_REFUSED_AT[label]));
   });
 
   it("re-expresses the C1 next-line-inside-the-sk-ant-prefix row to the one helper's ruled reading: NEL separates two plain words", () => {
@@ -464,10 +487,12 @@ describe("C1 wb-cax.13 respin U1: split credentials never reassemble in the repo
     // visible-space split class under every layout of the one helper. Reading NEL inside a key prefix as glue would be a wb-952
     // helper change (the authorized 952-F2 follow-up), never a local pre-pass in this module.
     const provider = `sk-ant-${NEL}api03-${CREDENTIAL}`;
-    const view = new ObservationProjection();
-    ingest(view, { id: "1", provider, sourceTimestamp: at(-2), observedAt: at(-1) });
-    expect(measured(build(view).eventLag).value.providers).toEqual([`sk-ant- api03-${CREDENTIAL}`]);
+    // wb-0br: the real projection refuses NEL in identity (typed refusal pinned last), so the producer name reaches the
+    // report through the structural projection; the ruled reading is unchanged.
+    const view = structuralView(provider);
+    expect(measured(buildOperationsTelemetry(view, { scope: alice, now: T }).eventLag).value.providers).toEqual([`sk-ant- api03-${CREDENTIAL}`]);
     expect(sanitizeWorkbenchText(provider, WORKBENCH_TEXT_LIMIT, "label")).toBe(`sk-ant- api03-${CREDENTIAL}`);
+    expect(realRefusal(provider)).toStrictEqual(refusedAt("U+0085"));
   });
 
   it("control: a plain credential provider name becomes [REDACTED]", () => {
@@ -576,20 +601,49 @@ describe("C5 wb-cax.13 respin S1: the module and its test carry no raw invisible
   });
 });
 
-/** The module's declared input as a plain object: it hands the report the producer's raw provider, which is the only way a
- * C0 control such as BEL or ESC reaches the provider path (the real projection refuses C0 controls in identity at ingest). */
-function structuralView(provider: string): Parameters<typeof buildOperationsTelemetry>[0] {
-  const event: ObservationEvent = {
-    projectionEventId: "between-1", source: ref(provider, "run", "src"), scope: alice, observedAt: at(-1), kind: "native.event", sourceTimestamp: at(-2),
-  };
+/** The module's declared input as a plain object: it hands the report each producer's raw provider, one event apiece, which
+ * is the only way a provider carrying an unsafe identity unit reaches the provider path: a C0 control such as BEL or ESC
+ * and, since wb-0br, every unit of the shared unsafe set (the real projection refuses them in identity at ingest, typed). */
+function structuralView(...providers: string[]): Parameters<typeof buildOperationsTelemetry>[0] {
+  const events = providers.map((provider, index): ObservationEvent => ({
+    projectionEventId: `between-${index + 1}`, source: ref(provider, "run", "src"), scope: alice, observedAt: at(-1), kind: "native.event", sourceTimestamp: at(-2),
+  }));
   return {
     query: () => ({ nodes: [], examined: 0, truncated: false }),
-    stats: () => ({ nodes: 0, events: 1, edges: 0 }),
-    events: () => ({ events: [event], truncated: false, completeness: "complete" }),
+    stats: () => ({ nodes: 0, events: events.length, edges: 0 }),
+    events: () => ({ events: [...events], truncated: false, completeness: "complete" }),
   };
 }
 const providersOf = (projection: Parameters<typeof buildOperationsTelemetry>[0]): string[] =>
   measured(buildOperationsTelemetry(projection, { scope: alice, now: T }).eventLag).value.providers;
+/** What the REAL projection does with one producer event, and what the report then samples. */
+interface RealRefusal {
+  outcome: ReturnType<ObservationProjection["ingest"]>;
+  refusals: ReturnType<ObservationProjection["identityRefusals"]>;
+  stats: ReturnType<ObservationProjection["stats"]>;
+  eventLag: OperationsTelemetry["eventLag"];
+}
+/**
+ * wb-0br typed identity admission through the REAL projection: a provider carrying an unsafe unit (U+2028 and U+2029
+ * included, owner ruling R1(a) 2026-10-16) is refused at ingest with one closed-vocabulary row naming its first unsafe
+ * code point, and nothing is ingested, so the report has no event to sample.
+ */
+function realRefusal(provider: string): RealRefusal {
+  const view = new ObservationProjection();
+  const outcome = view.ingest({
+    projectionEventId: "refused-1", source: ref(provider, "run", "src"), scope: alice, observedAt: at(-1), kind: "native.event", sourceTimestamp: at(-2),
+  });
+  return { outcome, refusals: view.identityRefusals({ scope: alice, limit: 10 }), stats: view.stats(), eventLag: build(view).eventLag };
+}
+/** The one outcome realRefusal accepts: refused, one row naming the provider part and the code point, nothing sampled. */
+function refusedAt(codePoint: string): RealRefusal {
+  return {
+    outcome: "refused",
+    refusals: { refusals: [{ path: "ingest", ref: "source", field: "provider", codePoint, reason: "unsafe-identity" }], total: 1, truncated: false },
+    stats: { nodes: 0, events: 0, edges: 0 },
+    eventLag: { state: "unknown", reason: "no-events" },
+  };
+}
 
 const BETWEEN_SECRET = "BETWEENTOKEN0123456789";
 /**
@@ -603,6 +657,8 @@ const STRUCTURAL_BETWEEN: ReadonlyArray<readonly [label: string, provider: strin
   ["an SGR sequence before Bearer", `x${ESC}[0mBearer ${BETWEEN_SECRET}`, "x [REDACTED]"],
   ["a BEL as the space after Bearer", `Authorization: Bearer${BEL}${BETWEEN_SECRET}`, "Authorization: [REDACTED]"],
 ];
+/** The between-token shapes the real projection admitted until wb-0br's typed identity admission (U+2028 joined the
+ * refused set by owner ruling R1(a)); each is now a typed refusal there and reaches the report through structuralView. */
 const REAL_BETWEEN: ReadonlyArray<readonly [label: string, provider: string, shown: string]> = [
   ["a BOM as the space after Bearer", `Authorization: Bearer${BOM}${BETWEEN_SECRET}`, "Authorization: [REDACTED]"],
   ["a soft hyphen before Bearer", `x${SHY}Bearer ${BETWEEN_SECRET}`, "x[REDACTED]"],
@@ -610,6 +666,14 @@ const REAL_BETWEEN: ReadonlyArray<readonly [label: string, provider: string, sho
   ["a line separator before sk-ant-", `x${LS}sk-ant-api03-${BETWEEN_SECRET}`, "x [REDACTED]"],
   ["a line separator as the space after Bearer", `Authorization: Bearer${LS}${BETWEEN_SECRET}`, "Authorization: [REDACTED]"],
 ];
+/** wb-0br: the first unsafe code point the real projection's typed identity refusal names for each REAL_BETWEEN shape. */
+const REAL_BETWEEN_REFUSED_AT: Readonly<Record<string, string>> = {
+  "a BOM as the space after Bearer": "U+FEFF",
+  "a soft hyphen before Bearer": "U+00AD",
+  "a next-line as the space after Bearer": "U+0085",
+  "a line separator before sk-ant-": "U+2028",
+  "a line separator as the space after Bearer": "U+2028",
+};
 
 describe("C6 wb-cax.13 respin 2 U1/U2: provider names are the one helper's label output, falsified between tokens", () => {
   it.each(STRUCTURAL_BETWEEN)("redacts a credential after %s fed through a structural projection", (_label, provider, shown) => {
@@ -618,15 +682,17 @@ describe("C6 wb-cax.13 respin 2 U1/U2: provider names are the one helper's label
     expect(JSON.stringify(providers)).not.toContain(BETWEEN_SECRET);
   });
 
-  it.each(REAL_BETWEEN)("redacts a credential after %s ingested through a real projection", (_label, provider, shown) => {
-    const view = new ObservationProjection();
-    const event: ObservationEvent = {
-      projectionEventId: "between-real", source: ref(provider, "run", "src"), scope: alice, observedAt: at(-1), kind: "native.event", sourceTimestamp: at(-2),
-    };
-    expect(view.ingest(event)).toBe("applied");
-    const report = build(view);
+  // wb-0br: the pin flip of the "applied" ingest these rows asserted - each shape is now refused as identity by the real
+  // projection (typed refusal pinned in the next case) and reaches the report through the structural projection, the
+  // expected label and the secret-absence assertion unchanged.
+  it.each(REAL_BETWEEN)("redacts a credential after %s fed through a structural projection (the real one refuses it as identity, wb-0br)", (_label, provider, shown) => {
+    const report = buildOperationsTelemetry(structuralView(provider), { scope: alice, now: T });
     expect(measured(report.eventLag).value.providers).toEqual([shown]);
     expect(JSON.stringify(report)).not.toContain(BETWEEN_SECRET);
+  });
+
+  it.each(REAL_BETWEEN)("refuses a provider with %s as identity through the real projection: one typed refusal row, nothing sampled (wb-0br)", (label, provider) => {
+    expect(realRefusal(provider)).toStrictEqual(refusedAt(REAL_BETWEEN_REFUSED_AT[label]));
   });
 
   it("renders exactly what sanitizeWorkbenchText renders in the label layout for every split and between-token shape", () => {
@@ -647,5 +713,143 @@ describe("C6 wb-cax.13 respin 2 U1/U2: provider names are the one helper's label
   it("composes no sanitizer locally: one helper call with the named label layout, no primitive and no deletion class (F6 rule)", () => {
     expect(MODULE).toContain('WORKBENCH_TEXT_LIMIT, "label")');
     for (const forbidden of ["stripUnsafeText", "redactWorkbenchText", "Default_Ignorable_Code_Point", "{Cf}"]) expect(MODULE, forbidden).not.toContain(forbidden);
+  });
+});
+
+/** wb-9iu: the cax.13 15:45Z deferred bundle. Each case kills one mutant that survived the landed tip (de79272); the
+ * mutant it kills is named in the case title so a later reader can replay it. */
+type StructuralProjection = Parameters<typeof buildOperationsTelemetry>[0];
+const structuralEvents = (provider: string): StructuralProjection => ({
+  query: () => ({ nodes: [], truncated: false }) as never,
+  stats: () => ({ nodes: 0, events: 1, edges: 0 }),
+  events: () => ({
+    events: [{ projectionEventId: "d1", source: ref(provider, "run", "src"), scope: alice, observedAt: at(-1), kind: "native.event", sourceTimestamp: at(-2) }],
+    truncated: false,
+    completeness: "complete",
+  }),
+});
+const structuralNodes = (nodes: ReadonlyArray<{ freshness: string; connection: string }>): StructuralProjection => ({
+  query: () => ({
+    nodes: nodes.map((node, index) => ({
+      key: `n${index}`, kind: "workflow", nativeRef: ref("furnace", "run", `n${index}`), evidenceRefs: [],
+      freshness: node.freshness, sourceConnectionState: node.connection,
+      presentation: { type: "workflow", title: `Node ${index}`, statusText: "RUNNING", statusTone: "active" },
+    })),
+    truncated: false,
+  }) as never,
+  stats: () => ({ nodes: nodes.length, events: 0, edges: 0 }),
+  events: () => ({ events: [], truncated: false, completeness: "complete" }),
+});
+const shownProviders = (projection: StructuralProjection): string[] => measured(buildOperationsTelemetry(projection, { scope: alice, now: T }).eventLag).value.providers;
+
+describe("D1 wb-9iu M3: the 64-unit provider cap never leaves half a surrogate pair", () => {
+  const FACE = cp(0x1f600);
+  it("keeps 63 units when the pair would straddle the cap (kills the surrogate-guard-removed mutant)", () => {
+    const shown = shownProviders(structuralEvents(`${"a".repeat(63)}${FACE}b`));
+    expect(shown).toEqual(["a".repeat(63)]);
+    expect(shown[0]).not.toMatch(/[\ud800-\udbff]$/);
+  });
+
+  it("controls: a pair wholly inside the cap and a name of exactly 64 units are kept whole", () => {
+    expect(shownProviders(structuralEvents(`${"a".repeat(62)}${FACE}b`))).toEqual([`${"a".repeat(62)}${FACE}`]);
+    expect(shownProviders(structuralEvents("a".repeat(64)))).toEqual(["a".repeat(64)]);
+    expect(shownProviders(structuralEvents("a".repeat(65)))).toEqual(["a".repeat(64)]);
+  });
+});
+
+describe("D2 wb-9iu M4: telemetry is enabled only by the boolean true", () => {
+  const TRUTHY_FLAGS: ReadonlyArray<readonly [string, unknown]> = [
+    ["number 1", 1],
+    ["string true", "true"],
+    ["string yes", "yes"],
+    ["empty object", {}],
+    ["empty array", []],
+  ];
+
+  it("table liveness: all five truthy-flag rows are present", () => {
+    expect(TRUTHY_FLAGS).toHaveLength(5);
+  });
+  it.each(TRUTHY_FLAGS)("emits nothing for a truthy non-boolean enabled flag: %s", (_label, flag) => {
+    const received: TelemetryEvent[] = [];
+    const sink = { emit: (event: TelemetryEvent): void => { received.push(event); } };
+    const report = build(fixtureView());
+    expect(emitOperationsTelemetry(report, sink, { enabled: flag as never })).toBe("disabled");
+    const emitter = createTelemetryEmitter(sink, { enabled: flag as never });
+    expect(emitter.emit(report)).toBe("disabled");
+    expect(emitter.droppedEvents()).toBe(0);
+    expect(received).toEqual([]);
+  });
+
+  it("control: enabled true still emits", () => {
+    const received: TelemetryEvent[] = [];
+    expect(emitOperationsTelemetry(build(fixtureView()), { emit: event => { received.push(event); } }, { enabled: true })).toBe("emitted");
+    expect(received).toHaveLength(1);
+  });
+});
+
+describe("D3 wb-9iu M5 / gate F1: the authorization outcome key survives the report and is redacted only by the JSON reply path", () => {
+  const OUTCOMES = { returned: 1, validation: 2, authorization: 3, unavailable: 4, transport: 5, "uncertain-effect": 6 } as const;
+  it.each(Object.keys(OUTCOMES))("accepts %s as a supplied outcome key and preserves its count in the in-memory report", key => {
+    const count = OUTCOMES[key as keyof typeof OUTCOMES];
+    const report = build(fixtureView(), { supplied: { providerCallOutcomes: { [key]: count } } });
+    expect(report.providerCallOutcomes).toEqual({ state: "measured", value: { [key]: count }, source: "supplied" });
+  });
+
+  it("characterizes the known loss: sanitizeWorkbenchJsonText turns the authorization count into [REDACTED] and keeps every other count", () => {
+    const report = build(fixtureView(), { supplied: { providerCallOutcomes: OUTCOMES } });
+    expect(measured(report.providerCallOutcomes).value.authorization).toBe(3);
+    const reply = JSON.parse(sanitizeWorkbenchJsonText(report)) as { providerCallOutcomes: { value: Record<string, unknown> } };
+    expect(reply.providerCallOutcomes.value).toEqual({ ...OUTCOMES, authorization: "[REDACTED]" });
+  });
+});
+
+describe("D4 wb-9iu M6: a disconnected node counts as last-known even when its freshness says current", () => {
+  const stale = (nodes: ReadonlyArray<{ freshness: string; connection: string }>): number =>
+    measured(buildOperationsTelemetry(structuralNodes(nodes), { scope: alice, now: T }).activeWorkflows).value.lastKnownRunningStale;
+  it("counts a current-but-disconnected active workflow as stale (kills the disconnected-clause-removed mutant)", () => {
+    expect(stale([{ freshness: "current", connection: "disconnected" }])).toBe(1);
+  });
+
+  it("counts a non-current but connected node as stale and a current connected or unknown-connection node as live", () => {
+    expect(stale([{ freshness: "stale", connection: "connected" }])).toBe(1);
+    expect(stale([{ freshness: "current", connection: "connected" }])).toBe(0);
+    expect(stale([{ freshness: "current", connection: "unknown" }])).toBe(0);
+    expect(stale([
+      { freshness: "current", connection: "disconnected" }, { freshness: "current", connection: "connected" }, { freshness: "unknown", connection: "unknown" },
+    ])).toBe(2);
+  });
+});
+
+describe("D5 wb-9iu M8 / gate F6: an invalid maxBytes falls back to the 8192-byte default, never used raw", () => {
+  const oversize = (): OperationsTelemetry => ({ ...build(fixtureView()), now: `${T}${"x".repeat(9000)}` });
+  const small = (): OperationsTelemetry => build(fixtureView());
+  const INVALID_MAX_BYTES: ReadonlyArray<readonly [string, unknown]> = [
+    ["zero", 0],
+    ["negative one", -1],
+    ["fractional 1.5", 1.5],
+    ["NaN", Number.NaN],
+    ["positive Infinity", Number.POSITIVE_INFINITY],
+    ["unsafe integer", Number.MAX_SAFE_INTEGER + 2],
+    ["string 64", "64"],
+  ];
+
+  it("table liveness: all seven invalid-maxBytes rows are present", () => {
+    expect(INVALID_MAX_BYTES).toHaveLength(7);
+  });
+  it.each(INVALID_MAX_BYTES)(
+    "applies the default cap to maxBytes %s: a small event is delivered and an event over 8192 bytes is dropped", (_label, bad) => {
+      const received: TelemetryEvent[] = [];
+      const sink = { emit: (event: TelemetryEvent): void => { received.push(event); } };
+      expect(emitOperationsTelemetry(small(), sink, { enabled: true, maxBytes: bad as never })).toBe("emitted");
+      expect(emitOperationsTelemetry(oversize(), sink, { enabled: true, maxBytes: bad as never })).toBe("dropped-oversize");
+      expect(received).toHaveLength(1);
+    },
+  );
+
+  it("control: a valid positive-integer maxBytes is honored in both directions", () => {
+    const received: TelemetryEvent[] = [];
+    const sink = { emit: (event: TelemetryEvent): void => { received.push(event); } };
+    expect(emitOperationsTelemetry(oversize(), sink, { enabled: true, maxBytes: 64 * 1024 })).toBe("emitted");
+    expect(emitOperationsTelemetry(small(), sink, { enabled: true, maxBytes: 64 })).toBe("dropped-oversize");
   });
 });

@@ -25,7 +25,7 @@ vi.mock("../src/worktree.js", () => ({
 }));
 
 import { AgentManager } from "../src/agent-manager.js";
-import { runAgent } from "../src/agent-runner.js";
+import { type RunOptions, runAgent } from "../src/agent-runner.js";
 import { registerAgents } from "../src/agent-types.js";
 import { createWorkflowHost } from "../src/workflow/host.js";
 import type { WorkflowSpawnRequest } from "../src/workflow/runtime.js";
@@ -43,8 +43,8 @@ const spawnRequest = (overrides: Partial<WorkflowSpawnRequest> = {}): WorkflowSp
 });
 
 /** The spawn options the manager handed to `runAgent` for the first child. */
-function runAgentOptions(): Record<string, unknown> {
-  return vi.mocked(runAgent).mock.calls[0]?.[3] as Record<string, unknown>;
+function runAgentOptions(): RunOptions {
+  return vi.mocked(runAgent).mock.calls[0]?.[3];
 }
 
 describe("the workflow host forwards an agent's `isolated`", () => {

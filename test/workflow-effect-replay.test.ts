@@ -16,9 +16,10 @@
  * declines the cache (pinned separately in workbench-host-contract.test.ts).
  */
 
+import type { SDKMessage } from "@anthropic-ai/claude-agent-sdk";
 import { describe, expect, it } from "vitest";
 import { CapabilityRegistry } from "../src/workbench/capability-registry.js";
-import { createClaudeWorkflowHost } from "../src/workbench/claude-host.js";
+import { type ClaudeQuery, createClaudeWorkflowHost } from "../src/workbench/claude-host.js";
 import { nodeJournalKey, type WorkflowJournalEntry } from "../src/workflow/journal.js";
 import {
   ACKNOWLEDGEMENT_VALUE_CONTRACT,
@@ -81,11 +82,30 @@ function effectHost(options: {
   };
 }
 
-const nodeDone = (result: { progress: readonly { type: string }[] }) =>
+const nodeDone = <Entry extends { type: string }>(result: { progress: readonly Entry[] }) =>
   result.progress.filter(
-    (entry): entry is Extract<(typeof result.progress)[number], { type: "workflow_node" }> =>
-      entry.type === "workflow_node",
+    (entry): entry is Extract<Entry, { type: "workflow_node" }> => entry.type === "workflow_node",
   );
+
+/**
+ * The row a resume consults at each node position: the LAST node row there. A
+ * non-read node is journaled at dispatch and again once it settles (wb-5x0.1),
+ * and runtime.ts keys node rows last-wins, so "the" row of a position is the
+ * one that came last.
+ */
+const consultedNodes = (entries: readonly WorkflowJournalEntry[]): WorkflowJournalEntry[] => [
+  ...new Map(entries.filter(entry => entry.kind === "node").map(entry => [entry.index, entry])).values(),
+];
+
+/** The consulted row of a run's single node position. */
+const recordedNode = (entries: readonly WorkflowJournalEntry[]): WorkflowJournalEntry => {
+  const row = consultedNodes(entries)[0];
+  if (row === undefined) throw new Error("no node row journaled");
+  return row;
+};
+
+const isDispatched = (entry: WorkflowJournalEntry): boolean => entry.dispatched === true;
+const isSettledNode = (entry: WorkflowJournalEntry): boolean => entry.kind === "node" && !isDispatched(entry);
 
 describe("node journal entries", () => {
   it("journals a read node with its capability, key and host-declared effect class", async () => {
@@ -118,15 +138,19 @@ describe("node journal entries", () => {
     const result = await run('return await node("effect.write", { value: "x" });', { host, journal });
 
     expect(result.status).toBe("completed");
-    expect(journal.entries).toHaveLength(1);
-    expect(journal.entries[0]).toMatchObject({
+    // The settled row, preceded by the dispatched marker it supersedes (wb-5x0.1).
+    expect(journal.entries).toHaveLength(2);
+    expect(journal.entries[0]).toMatchObject({ kind: "node", index: 0, ok: false, capabilityId: "effect.write", effectClass: "write", dispatched: true });
+    expect(journal.entries[1]).toMatchObject({
       kind: "node",
       index: 0,
       ok: true,
       capabilityId: "effect.write",
       effectClass: "write",
     });
+    expect(journal.entries[1]).not.toHaveProperty("dispatched");
     expect(journal.entries[0].text).toBeUndefined();
+    expect(journal.entries[1].text).toBeUndefined();
   });
 
   it("journals a failed node too, so resume positions stay aligned", async () => {
@@ -251,7 +275,7 @@ describe("read effect replay", () => {
     const first = effectHost({});
     const journal = recorder();
     await run(script, { host: first.host, journal });
-    expect(journal.entries[0].effectClass).toBeUndefined();
+    expect(recordedNode(journal.entries).effectClass).toBeUndefined();
 
     const second = effectHost({});
     const result = await run(script, { host: second.host, journal: { entries: journal.entries } });
@@ -362,12 +386,6 @@ describe("non-read effects on resume", () => {
  * re-running a call that may have performed an effect.
  * ------------------------------------------------------------------------ */
 
-const recordedNode = (entries: readonly WorkflowJournalEntry[]): WorkflowJournalEntry => {
-  const row = entries.find(entry => entry.kind === "node");
-  if (row === undefined) throw new Error("no node row journaled");
-  return row;
-};
-
 type NodeProgressRow = Extract<WorkflowRunResult["progress"][number], { type: "workflow_node" }>;
 
 /** The node row a refusal settles to: typed, so its reconcile provenance is checked by the compiler too. */
@@ -469,6 +487,7 @@ describe("a journaled node with no effect class stops a resume (wb-tu1)", () => 
  * basis, and the host stamps each node's registry effect class.
  * ------------------------------------------------------------------------ */
 
+/** Deliberately partial SDK frames (a subset of each SDK message's fields), so they are cast through unknown. */
 const sdkMessages = (sessionId = "sdk-session-1") => [
   { type: "system", subtype: "init", session_id: sessionId, model: "claude-opus-5-5", permissionMode: "dontAsk", tools: [], cwd: "/tmp" },
   { type: "assistant", session_id: sessionId, uuid: "m1", parent_tool_use_id: null,
@@ -476,9 +495,9 @@ const sdkMessages = (sessionId = "sdk-session-1") => [
   { type: "result", subtype: "success", session_id: sessionId, uuid: "r1", is_error: false, result: "OK",
     structured_output: undefined, modelUsage: { "claude-opus-5-5": { inputTokens: 4, outputTokens: 3, cacheReadInputTokens: 0, cacheCreationInputTokens: 0, costUSD: 0.01 } },
     usage: { input_tokens: 4, output_tokens: 3 }, total_cost_usd: 0.01 },
-] as const;
+] as unknown as readonly SDKMessage[];
 
-function sdkQuery(calls: Array<{ prompt: string; options: Record<string, unknown> }>) {
+function sdkQuery(calls: Array<{ prompt: string; options: Record<string, unknown> }>): ClaudeQuery {
   return ({ prompt, options }: { prompt: string; options: Record<string, unknown> }) => {
     calls.push({ prompt, options });
     return (async function* () { for (const message of sdkMessages()) yield message; })();
@@ -553,7 +572,7 @@ describe("Claude host effect policy", () => {
       journal,
     });
     expect(one.status).toBe("completed");
-    expect(journal.entries[0]).toMatchObject({ kind: "node", effectClass: "write" });
+    expect(recordedNode(journal.entries)).toMatchObject({ kind: "node", effectClass: "write" });
 
     const second = claudeRegistry("write");
     const rerun = await runWorkflow({
@@ -614,6 +633,16 @@ describe("node read replay is scoped by the recording host's basis", () => {
       },
     ]);
     expect(write.entries).toEqual([
+      {
+        kind: "node",
+        index: 0,
+        key: nodeJournalKey("effect.write", JSON.stringify({ value: "x" })),
+        ok: false,
+        capabilityId: "effect.write",
+        effectClass: "write",
+        basis: "basis-A",
+        dispatched: true,
+      },
       {
         kind: "node",
         index: 0,
@@ -782,7 +811,7 @@ describe("a journaled effect carries the producer's native reference when the pa
     const host = effectHost({ effect: "external", node: () => payload });
     const live = await run(script, { host: host.host, journal });
     expect(live.status).toBe("completed");
-    const entry = journal.entries.find(item => item.kind === "node");
+    const entry = recordedNode(journal.entries);
     expect(entry).toMatchObject({ capabilityId: "furnace.run.inspect", effectClass: "external", ok: true, nativeRefs: [{ provider: "furnace", type: "run", id: "frn-run-7" }] });
     expect(entry).not.toHaveProperty("text");
     const resumed = await run(script, { host: effectHost({ effect: "external", node: () => payload }).host, journal: { entries: journal.entries } });
@@ -792,7 +821,7 @@ describe("a journaled effect carries the producer's native reference when the pa
   it("records no reference when the payload carries none, and a read entry keeps its text instead", async () => {
     const blank = recorder();
     await run('return await node("record.write", { value: 1 });', { host: effectHost({ effect: "write", node: () => ({ accepted: true }) }).host, journal: blank });
-    expect(blank.entries.find(item => item.kind === "node")).not.toHaveProperty("nativeRefs");
+    expect(recordedNode(blank.entries)).not.toHaveProperty("nativeRefs");
     const reads = recorder();
     await run(script, { host: effectHost({ effect: "read", node: () => payload }).host, journal: reads });
     const read = reads.entries.find(item => item.kind === "node");
@@ -882,8 +911,7 @@ describe("operator reconciliation at a refusing position", () => {
     const journal = recorder();
     const one = await run(script, { host: first.host, journal });
     expect(one.status).toBe("completed");
-    const recorded = journal.entries.find(entry => entry.kind === "node");
-    if (recorded === undefined) throw new Error("no node row journaled");
+    const recorded = recordedNode(journal.entries);
     return { entries: journal.entries, recorded, firstRun: one };
   }
 
@@ -976,8 +1004,9 @@ describe("operator reconciliation at a refusing position", () => {
       state: "overridden", overrideId: `ovr_${"2".repeat(32)}`, principal: OPERATOR_PRINCIPAL,
       duplicateRisk: "possible-duplicate", outcome: "re-run-ok",
     });
-    // The new journal: a fresh node row, the consumed override, and no carried acknowledgement.
-    expect(rec2.entries.find(entry => entry.kind === "node")).toMatchObject({ ok: true, capabilityId: "furnace.run.start", effectClass: "external" });
+    // The new journal: a fresh node row (its dispatched marker first, wb-5x0.1), the consumed override, and no carried acknowledgement.
+    expect(rec2.entries.filter(entry => entry.kind === "node").map(isDispatched)).toEqual([true, false]);
+    expect(recordedNode(rec2.entries)).toMatchObject({ ok: true, capabilityId: "furnace.run.start", effectClass: "external" });
     const consumed = rec2.entries.find(entry => entry.kind === "override");
     expect(consumed?.reconcile).toMatchObject({ decision: "override", consumed: { outcome: "re-run-ok" } });
     expect(rec2.entries.some(entry => entry.kind === "acknowledge")).toBe(false);
@@ -1004,6 +1033,370 @@ describe("operator reconciliation at a refusing position", () => {
     expect(result.reconciledNodeCount).toBe(1);
     const consumed = rec2.entries.find(entry => entry.kind === "override");
     expect(consumed?.reconcile).toMatchObject({ consumed: { outcome: "re-run-failed" } });
-    expect(rec2.entries.find(entry => entry.kind === "node")).toMatchObject({ ok: false });
+    expect(recordedNode(rec2.entries)).toMatchObject({ ok: false });
+    expect(isDispatched(recordedNode(rec2.entries))).toBe(false);
+  });
+});
+
+/* --------------------------------------------------------------------------
+ * wb-5x0.1: the tripwire exists from dispatch, not from settlement.
+ *
+ * docs/workbench/14 "Fault-injection locations": "Before provider call; after
+ * provider side effect but before host result; after result before journal
+ * append; ...". docs/workbench/08 "Adversarial test matrix": "kill after
+ * workspace edit before recorded result; ... Required outcomes:
+ * reconciliation/uncertainty/conflict; no duplicate effects". A non-read node
+ * (an undefined class included, as at admission) appends a typed dispatched
+ * row before its provider can act; the settled row at the same position
+ * supersedes it, and a resume that finds only the dispatched row refuses
+ * there as an uncertain effect. Owner rulings on the bead: Q1 a typed marker
+ * row, never failure-shaped; Q2 a failed pre-call append refuses a NON-READ
+ * call fail-closed while reads keep "failure to write is not failure to run".
+ * ------------------------------------------------------------------------ */
+
+/** The external world a provider acts on, shared across runs: "exactly once" is counted here. */
+interface World {
+  effects: number;
+}
+
+/**
+ * A host whose provider performs its side effect and then never answers: the
+ * process dies between the effect and the host result. `landed` settles once
+ * the effect is done, so the test can kill the run at exactly that point.
+ */
+function diesAfterEffect(world: World, effect?: "write" | "external") {
+  let signal!: () => void;
+  const landed = new Promise<void>(resolve => {
+    signal = resolve;
+  });
+  const host: WorkflowHost = {
+    async spawnAgent(request) {
+      return { ok: true, text: `live:${request.prompt}` };
+    },
+    abortAgent() {},
+    callNode() {
+      world.effects++;
+      signal();
+      return new Promise<never>(() => {});
+    },
+    ...(effect !== undefined ? { describeNodeEffect: () => effect } : {}),
+  };
+  return { host, landed };
+}
+
+/**
+ * A journal whose process dies the moment `diesAt` names a row: that row and
+ * everything after it never reach the file, and the run is killed there.
+ */
+function diesAtAppend(kill: AbortController, diesAt: (entry: WorkflowJournalEntry) => boolean) {
+  const entries: WorkflowJournalEntry[] = [];
+  let dead = false;
+  return {
+    entries,
+    append(entry: WorkflowJournalEntry) {
+      if (dead) return;
+      if (diesAt(entry)) {
+        dead = true;
+        kill.abort();
+        return;
+      }
+      entries.push(entry);
+    },
+  };
+}
+
+/** A journal whose appends throw for the rows `fails` names, as a full disk does. */
+function failingJournal(fails: (entry: WorkflowJournalEntry) => boolean) {
+  const entries: WorkflowJournalEntry[] = [];
+  return {
+    entries,
+    append(entry: WorkflowJournalEntry) {
+      if (fails(entry)) throw new Error("ENOSPC: no space left on device, write");
+      entries.push(entry);
+    },
+  };
+}
+
+describe("a non-read node is on record from dispatch (wb-5x0.1)", () => {
+  const script = 'await agent("first");\nawait node("effect.write", { value: "x" });\nreturn await agent("second");';
+  const key = nodeJournalKey("effect.write", JSON.stringify({ value: "x" }));
+
+  it.each([
+    ['the non-read class "write"', "write"],
+    ["no declared class (undefined is non-read, wb-tu1 F3)", undefined],
+  ] as const)("B1 after provider side effect but before host result: the resume refuses and the effect happens exactly once (%s)", async (_label, effect) => {
+    const world: World = { effects: 0 };
+    const dying = diesAfterEffect(world, effect);
+    const journal = recorder();
+    const kill = new AbortController();
+    const running = run(script, { host: dying.host, journal, signal: kill.signal });
+    await dying.landed;
+    kill.abort();
+    expect((await running).status).toBe("killed");
+
+    const resumed = effectHost({
+      ...(effect !== undefined ? { effect } : {}),
+      node: () => {
+        world.effects++;
+        return { answer: "again" };
+      },
+    });
+    const result = await run(script, { host: resumed.host, journal: { entries: journal.entries } });
+
+    expect(world.effects).toBe(1);
+    expect(result.status).toBe("failed");
+    expect(result.capabilityError?.category).toBe("uncertain-effect");
+    expect(resumed.nodeCalls).toHaveLength(0);
+    expect(resumed.spawns).toHaveLength(0);
+    expect(result.error).toContain("node(effect.write) at position 0 was dispatched by the resumed run");
+    expect(result.error).toContain("has no settled record");
+    expect(result.error).toContain('producer "effect"');
+    expect(result.error).toContain("workflow_reconcile (position 0)");
+    const dispatched = consultedNodes(journal.entries)[0];
+    if (dispatched === undefined) throw new Error("no node row survived the kill");
+    expect(refusedRow(result)?.reconcile).toEqual({
+      state: "pending", position: 0, capabilityId: "effect.write", effectClass: effect ?? "", producer: "effect",
+      key, entryDigest: entryDigestOf(dispatched),
+      decisions: { acknowledged: 0, overridesLive: 0, overridesSpent: 0 },
+    });
+  });
+
+  it("B1 after result before journal append: the resume refuses and the effect happens exactly once", async () => {
+    const world: World = { effects: 0 };
+    const kill = new AbortController();
+    // The process dies as the settled node row is about to land: the result exists, its record never does.
+    const journal = diesAtAppend(kill, isSettledNode);
+    const first = effectHost({
+      effect: "write",
+      node: () => {
+        world.effects++;
+        return { accepted: true };
+      },
+    });
+    expect((await run(script, { host: first.host, journal, signal: kill.signal })).status).toBe("killed");
+
+    const resumed = effectHost({
+      effect: "write",
+      node: () => {
+        world.effects++;
+        return { accepted: true };
+      },
+    });
+    const result = await run(script, { host: resumed.host, journal: { entries: journal.entries } });
+
+    expect(world.effects).toBe(1);
+    expect(result.status).toBe("failed");
+    expect(result.capabilityError?.category).toBe("uncertain-effect");
+    expect(resumed.nodeCalls).toHaveLength(0);
+    expect(refusedRow(result)?.reconcile).toMatchObject({ state: "pending", position: 0, producer: "effect", effectClass: "write" });
+  });
+
+  it("appends the typed dispatched row before the provider can act, and the settled row supersedes it", async () => {
+    const journal = recorder();
+    let atDispatch: WorkflowJournalEntry[] = [];
+    const { host } = basisHost("basis-A", {
+      effect: "write",
+      node: () => {
+        atDispatch = [...journal.entries];
+        return { accepted: true };
+      },
+    });
+    const result = await run('return await node("effect.write", { value: "x" });', { host, journal });
+
+    expect(result.status).toBe("completed");
+    const dispatched = { kind: "node", index: 0, key, ok: false, capabilityId: "effect.write", effectClass: "write", basis: "basis-A", dispatched: true };
+    expect(atDispatch).toEqual([dispatched]);
+    expect(journal.entries).toEqual([
+      dispatched,
+      { kind: "node", index: 0, key, ok: true, capabilityId: "effect.write", effectClass: "write", basis: "basis-A" },
+    ]);
+  });
+
+  it("dispatches an unclassified call on record too, without inventing a class for it", async () => {
+    const journal = recorder();
+    let atDispatch: WorkflowJournalEntry[] = [];
+    const { host } = effectHost({
+      node: () => {
+        atDispatch = [...journal.entries];
+        return { accepted: true };
+      },
+    });
+    expect((await run('return await node("effect.write", { value: "x" });', { host, journal })).status).toBe("completed");
+    expect(atDispatch).toEqual([{ kind: "node", index: 0, key, ok: false, capabilityId: "effect.write", dispatched: true }]);
+  });
+
+  it("writes no pre-call row for a read: a read-only journal stays exactly as before", async () => {
+    const journal = recorder();
+    let atDispatch: WorkflowJournalEntry[] | undefined;
+    const { host } = effectHost({
+      effect: "read",
+      node: () => {
+        atDispatch = [...journal.entries];
+        return { answer: 42 };
+      },
+    });
+    expect((await run('return await node("record.read", { value: "x" });', { host, journal })).status).toBe("completed");
+    expect(atDispatch).toEqual([]);
+    expect(journal.entries).toEqual([
+      { kind: "node", index: 0, key: nodeJournalKey("record.read", JSON.stringify({ value: "x" })), ok: true, capabilityId: "record.read", effectClass: "read", text: JSON.stringify({ answer: 42 }) },
+    ]);
+  });
+
+  it("B4 carries the dispatched row forward verbatim, and a resume of the failed resume refuses identically", async () => {
+    const world: World = { effects: 0 };
+    const dying = diesAfterEffect(world, "write");
+    const one = recorder();
+    const kill = new AbortController();
+    const running = run(script, { host: dying.host, journal: one, signal: kill.signal });
+    await dying.landed;
+    kill.abort();
+    await running;
+    const dispatched = consultedNodes(one.entries)[0];
+    expect(dispatched !== undefined && isDispatched(dispatched)).toBe(true);
+
+    const two = recorder();
+    const second = effectHost({ effect: "write", node: () => { world.effects++; return {}; } });
+    const refused = await run(script, { host: second.host, journal: { entries: one.entries, append: two.append } });
+    expect(refused.capabilityError?.category).toBe("uncertain-effect");
+    expect(consultedNodes(two.entries)).toEqual([dispatched]);
+
+    const third = effectHost({ effect: "write", node: () => { world.effects++; return {}; } });
+    const again = await run(script, { host: third.host, journal: { entries: two.entries } });
+    expect(again.status).toBe("failed");
+    expect(again.capabilityError).toEqual(refused.capabilityError);
+    expect(again.error).toBe(refused.error);
+    expect(world.effects).toBe(1);
+  });
+
+  it("B2 an operator acknowledgement binds to the dispatched row by digest and settles the resume; nothing re-runs", async () => {
+    const world: World = { effects: 0 };
+    const dying = diesAfterEffect(world, "external");
+    const journal = recorder();
+    const kill = new AbortController();
+    const reconcileScript = 'const v = await node("furnace.run.start", { value: "x" });\nawait agent("after");\nreturn v;';
+    const running = run(reconcileScript, { host: dying.host, journal, signal: kill.signal });
+    await dying.landed;
+    kill.abort();
+    await running;
+    const dispatched = consultedNodes(journal.entries)[0];
+    if (dispatched === undefined) throw new Error("no dispatched row journaled");
+
+    const second = effectHost({ effect: "external", node: () => { world.effects++; return {}; } });
+    const result = await run(reconcileScript, { host: second.host, journal: { entries: [...journal.entries, acknowledgeRowFor(dispatched)] } });
+
+    expect(result.status).toBe("completed");
+    expect(result.value).toMatchObject({ contract: ACKNOWLEDGEMENT_VALUE_CONTRACT, decision: "acknowledged", position: 0, capabilityId: "furnace.run.start" });
+    expect(result.reconciledNodeCount).toBe(1);
+    expect(second.nodeCalls).toHaveLength(0);
+    expect(world.effects).toBe(1);
+  });
+
+  it("dispatches an override re-run on record too: a kill inside it leaves a row the next resume refuses on", async () => {
+    const reconcileScript = 'const v = await node("furnace.run.start", { value: "x" });\nawait agent("after");\nreturn v;';
+    const settled = recorder();
+    expect((await run(reconcileScript, { host: effectHost({ effect: "external" }).host, journal: settled })).status).toBe("completed");
+    const recorded = consultedNodes(settled.entries)[0];
+    if (recorded === undefined) throw new Error("no node row journaled");
+    const decided = [...settled.entries, acknowledgeRowFor(recorded, { determination: "effect-absent", settlement: "none" }), overrideRowFor(recorded)];
+
+    const world: World = { effects: 0 };
+    const dying = diesAfterEffect(world, "external");
+    const rerun = recorder();
+    const kill = new AbortController();
+    const running = run(reconcileScript, { host: dying.host, journal: { entries: decided, append: rerun.append }, signal: kill.signal });
+    await dying.landed;
+    kill.abort();
+    expect((await running).status).toBe("killed");
+
+    const next = effectHost({ effect: "external", node: () => { world.effects++; return {}; } });
+    const result = await run(reconcileScript, { host: next.host, journal: { entries: rerun.entries } });
+    expect(result.status).toBe("failed");
+    expect(result.capabilityError?.category).toBe("uncertain-effect");
+    expect(next.nodeCalls).toHaveLength(0);
+    expect(world.effects).toBe(1);
+  });
+
+  it.each([
+    ['the non-read class "write"', "write"],
+    ["no declared class (undefined is non-read, wb-tu1 F3)", undefined],
+  ] as const)("Q2 refuses a non-read call whose dispatched row cannot be written, before the provider can act (%s)", async (_label, effect) => {
+    const journal = failingJournal(isDispatched);
+    const host = effectHost(effect !== undefined ? { effect } : {});
+    const result = await run('await node("effect.write", { value: "x" });\nreturn await agent("after");', { host: host.host, journal });
+
+    expect(result.status).toBe("failed");
+    expect(result.capabilityError).toMatchObject({ name: "CapabilityError", category: "unavailable" });
+    expect(result.error).toContain("node(effect.write) at position 0 was not dispatched");
+    expect(result.error).toContain("its dispatched journal row could not be written");
+    expect(host.nodeCalls).toHaveLength(0);
+    expect(host.spawns).toHaveLength(0);
+    expect(journal.entries.filter(entry => entry.kind === "node")).toEqual([]);
+    expect(nodeDone(result).at(-1)).toMatchObject({ state: "error" });
+  });
+
+  it("refuses a dispatch marker whatever class it names, a read included: no row says how that call settled", async () => {
+    // The runtime never writes a marker for a read; one in a journal was not
+    // written by this runtime, and a marker carrying an answer contradicts
+    // itself. Neither is replayed.
+    const forged: WorkflowJournalEntry = {
+      kind: "node", index: 0, key: nodeJournalKey("record.read", JSON.stringify({ value: "x" })), ok: true,
+      capabilityId: "record.read", effectClass: "read", basis: "basis-A", text: JSON.stringify({ answer: "forged" }), dispatched: true,
+    };
+    const resumed = basisHost("basis-A", { effect: "read", node: () => ({ answer: "live" }) });
+    const result = await run('return await node("record.read", { value: "x" });', { host: resumed.host, journal: { entries: [forged] } });
+
+    expect(result.status).toBe("failed");
+    expect(result.capabilityError?.category).toBe("uncertain-effect");
+    expect(result.error).toContain("was dispatched by the resumed run");
+    expect(result.value).toBeUndefined();
+    expect(resumed.nodeCalls).toHaveLength(0);
+  });
+
+  it("Q2 refuses an override re-run whose marker cannot be written, and carries the original effect row forward", async () => {
+    const reconcileScript = 'const v = await node("furnace.run.start", { value: "x" });\nawait agent("after");\nreturn v;';
+    const settled = recorder();
+    expect((await run(reconcileScript, { host: effectHost({ effect: "external" }).host, journal: settled })).status).toBe("completed");
+    const recorded = recordedNode(settled.entries);
+    const decided = [...settled.entries, acknowledgeRowFor(recorded, { determination: "effect-absent", settlement: "none" }), overrideRowFor(recorded)];
+
+    const second = effectHost({ effect: "external" });
+    const rerun = failingJournal(isDispatched);
+    const refused = await run(reconcileScript, { host: second.host, journal: { entries: decided, append: rerun.append } });
+    expect(refused.status).toBe("failed");
+    expect(refused.capabilityError?.category).toBe("unavailable");
+    expect(second.nodeCalls).toHaveLength(0);
+    // Nothing ran, so the position keeps the record it had: a resume of this run still stops there.
+    expect(consultedNodes(rerun.entries)).toEqual([recorded]);
+
+    const third = effectHost({ effect: "external" });
+    const again = await run(reconcileScript, { host: third.host, journal: { entries: rerun.entries } });
+    expect(again.capabilityError?.category).toBe("uncertain-effect");
+    expect(third.nodeCalls).toHaveLength(0);
+  });
+
+  it("Q2 keeps a read running when the journal cannot be written: failure to write is not failure to run", async () => {
+    const journal = failingJournal(() => true);
+    const host = effectHost({ effect: "read", node: () => ({ answer: "live" }) });
+    const result = await run('return await node("record.read", { value: "x" });', { host: host.host, journal });
+
+    expect(result.status).toBe("completed");
+    expect(result.value).toEqual({ answer: "live" });
+    expect(host.nodeCalls).toHaveLength(1);
+  });
+
+  it("a lost settled row is not a failed call: the result reaches the script and the dispatched row keeps the position protected", async () => {
+    const world: World = { effects: 0 };
+    const journal = failingJournal(isSettledNode);
+    const first = effectHost({ effect: "write", node: () => { world.effects++; return { accepted: true }; } });
+    const live = await run('return await node("effect.write", { value: "x" });', { host: first.host, journal });
+
+    expect(live.status).toBe("completed");
+    expect(live.value).toEqual({ accepted: true });
+    expect(consultedNodes(journal.entries).map(isDispatched)).toEqual([true]);
+
+    const second = effectHost({ effect: "write", node: () => { world.effects++; return { accepted: true }; } });
+    const result = await run('return await node("effect.write", { value: "x" });', { host: second.host, journal: { entries: journal.entries } });
+    expect(result.capabilityError?.category).toBe("uncertain-effect");
+    expect(world.effects).toBe(1);
   });
 });

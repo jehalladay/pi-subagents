@@ -1,5 +1,6 @@
 /** Producer-specific metadata is a projection of actual fields, not a PASS or workspace pin. */
 import { describe, expect, it, vi } from "vitest";
+import type { JsonValue } from "../src/workbench/capability-registry.js";
 import { nativeEvidence } from "../src/workbench/native-evidence.js";
 import type { WorkflowJournalEntry } from "../src/workflow/journal.js";
 import { runWorkflow, type WorkflowHost } from "../src/workflow/runtime.js";
@@ -17,7 +18,7 @@ describe("native evidence projection", () => {
   it("maps RF ephemeral operation and graph provenance without inventing a durable render ID", () => {
     expect(nativeEvidence("reactivefiber.render.preview", { contract: "reactivefiber.render.preview/v1", source: { schema: "reactive-fiber.cli/v1", operation_id: "rf-operation", ok: true, command: "context.render", result: { ephemeral: true, render_id: null, provenance: { graph_revision_id: "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc" } } } })).toEqual({ provider: "reactivefiber", nativeId: "rf-operation", sourceBasis: "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc" });
   });
-  it.each([null, [], {}, { contract: "forge.gate.status/v1", source: { status: true, operation_id: 2 } }])("does not invent evidence for absent/malformed fields %j", value => {
+  it.each<JsonValue>([null, [], {}, { contract: "forge.gate.status/v1", source: { status: true, operation_id: 2 } }])("does not invent evidence for absent/malformed fields %j", value => {
     expect(nativeEvidence("unknown.capability", value)).toEqual({});
     expect(nativeEvidence("forge.gate.status", value)).not.toHaveProperty("nativeId");
     expect(nativeEvidence("forge.gate.status", value)).not.toHaveProperty("domainStatus");

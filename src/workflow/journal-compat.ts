@@ -24,7 +24,8 @@
  *     this build does not know is kept and refused, never read as another.
  *   - Mirroring, never relaxing: each line's replay disposition restates the
  *     admission rules in runtime.ts — the agent prefix replay's basis check,
- *     node admission per recorded effect class, the position map that
+ *     node admission per recorded effect class, the dispatch marker a
+ *     non-read call writes before its provider acts, the position map that
  *     consults the last node row at a position — as conditions a resuming
  *     host must meet. No classification marks an effectful entry
  *     replay-eligible.
@@ -61,6 +62,7 @@ export const JOURNAL_ENTRY_FIELDS = [
   "effectClass",
   "basis",
   "nativeRefs",
+  "dispatched",
   "reconcile",
 ] as const;
 
@@ -85,6 +87,7 @@ interface AcceptedJournalEntry {
   effectClass?: string;
   basis?: string;
   nativeRefs?: readonly NativeRef[];
+  dispatched?: true;
   reconcile?: ReconcileRecord;
 }
 
@@ -160,7 +163,11 @@ export type JournalUnsupportedReason =
 
 /** The verdict warning docs/workbench/16 asks for: a dropped line or a foreign schema version raises it. */
 export const JOURNAL_UNSUPPORTED_WARNING = "journal unsupported";
-/** Node positions recorded more than once, where only the last row counts. */
+/**
+ * Node positions recorded more than once, where only the last row counts. A
+ * dispatch marker its own settled row supersedes is a non-read call's normal
+ * lifecycle (wb-5x0.1), not a duplicate, and raises no such warning.
+ */
 export const JOURNAL_DUPLICATE_POSITION_WARNING = "journal duplicate position";
 /** Journaled effects a resume will stop on. */
 export const JOURNAL_UNCERTAIN_EFFECT_WARNING = "journal uncertain effect";
@@ -188,6 +195,8 @@ export interface ReadJournalLine {
   readonly effectClass: string | null;
   /** The typed refusal a resume reaching this line raises whatever its host, if any. */
   readonly refusal: "uncertain-effect" | null;
+  /** A node row written at dispatch, before its provider was called (wb-5x0.1): a call with no settled record unless a later row supersedes it. */
+  readonly dispatched: boolean;
   /** On a refusing node row: operator decisions in this file that bind to it by digest. */
   readonly boundDecisions: number;
   /** On a decision row: the line of the node row it binds to, or null when it binds to none. */
@@ -275,6 +284,7 @@ const EXPECTED: Readonly<Record<JournalEntryField, string>> = {
   effectClass: "a string when present",
   basis: "a string when present",
   nativeRefs: "a list of native references (provider, type and id strings, optional string scope) when present",
+  dispatched: "true on a node entry when present",
   reconcile: "a valid operator decision record on an acknowledge or override row, and absent elsewhere",
 };
 
@@ -363,7 +373,7 @@ function parseEntry(value: unknown): Parsed {
   if (!plainObject(value)) {
     return refused("not-an-object", null, `the line is JSON ${jsonTypeOf(value)}, not an entry object`);
   }
-  const { index, key, ok, text, resumed, kind, capabilityId, effectClass, basis, nativeRefs, reconcile } = value;
+  const { index, key, ok, text, resumed, kind, capabilityId, effectClass, basis, nativeRefs, dispatched, reconcile } = value;
   const entryKind = JOURNAL_ENTRY_KINDS.find((known) => known === kind);
   if (kind !== undefined && entryKind === undefined) {
     return typeof kind === "string"
@@ -383,6 +393,7 @@ function parseEntry(value: unknown): Parsed {
   if (effectClass !== undefined && typeof effectClass !== "string") return invalid("effectClass");
   if (basis !== undefined && typeof basis !== "string") return invalid("basis");
   if (nativeRefs !== undefined && !isNativeRefList(nativeRefs)) return invalid("nativeRefs");
+  if (dispatched !== undefined && (dispatched !== true || entryKind !== "node")) return invalid("dispatched");
   if (entryKind === "node" && capabilityId === undefined) {
     return refused(
       "node-without-capability",
@@ -437,7 +448,10 @@ function parseEntry(value: unknown): Parsed {
       : sanitizeWorkbenchText(typeof declared === "string" ? declared : JSON.stringify(declared), DISPLAY_LIMIT);
   return {
     kept: true,
-    entry: { index, key, ok, text, resumed, kind: entryKind, capabilityId, effectClass, basis, nativeRefs, reconcile: record },
+    entry: {
+      index, key, ok, text, resumed, kind: entryKind, capabilityId, effectClass, basis, nativeRefs,
+      dispatched: dispatched === true ? true : undefined, reconcile: record,
+    },
     ignoredFields,
     foreignSchemaVersion,
   };
@@ -481,6 +495,23 @@ function unvouchedNote(bound: number): string {
   );
 }
 
+function dispatchedNote(effectClass: string | undefined, capabilityId: string, bound: number): string {
+  const recorded = effectClass === undefined ? "with no effect class" : `with effect class ${quoted(effectClass)}`;
+  return (
+    `Node entry dispatched ${recorded} by producer ${quoted(producerOf(capabilityId))} with no settled record: written before ` +
+    "its provider was called, and nothing recorded how the call settled, so whether its effect happened is unknown. A resume " +
+    "that reaches this position stops with a typed uncertain-effect refusal unless a bound operator decision settles it; " +
+    `${bound} bound decision(s) recorded here.`
+  );
+}
+
+function settledNote(settledLine: number): string {
+  return (
+    `Dispatch marker superseded by its settled row (line ${settledLine}), the normal lifecycle of a non-read call: ` +
+    "a resume consults only that row, so nothing recorded here is replayed or refused."
+  );
+}
+
 function shadowNote(consultedLine: number): string {
   return (
     `Shadowed: a later node row at the same position (line ${consultedLine}) is the only one a resume consults, ` +
@@ -501,6 +532,7 @@ function decisionNote(decision: JournalEntryKind, index: number, target: Consult
 interface ConsultedRow {
   readonly line: number;
   readonly digest: string;
+  readonly entry: WorkflowJournalEntry;
 }
 
 interface Context {
@@ -510,6 +542,8 @@ interface Context {
   readonly consulted: ReadonlyMap<number, ConsultedRow>;
   /** Node row line to the operator decisions in this file that bind to it by digest. */
   readonly bound: ReadonlyMap<number, number>;
+  /** Lines of dispatch markers their own settled row supersedes (same call, no marker): the lifecycle, not a duplicate. */
+  readonly settledMarkers: ReadonlySet<number>;
 }
 
 function classifyEntry(line: number, parsed: KeptLine, context: Context): ReadJournalLine {
@@ -531,6 +565,7 @@ function classifyEntry(line: number, parsed: KeptLine, context: Context): ReadJo
     capabilityId: entry.capabilityId ?? null,
     effectClass: entry.effectClass ?? null,
     refusal: extra.refusal ?? null,
+    dispatched: entry.dispatched === true,
     boundDecisions: extra.boundDecisions ?? 0,
     bindsToLine: extra.bindsToLine ?? null,
     ignoredFields: parsed.ignoredFields,
@@ -550,7 +585,20 @@ function classifyEntry(line: number, parsed: KeptLine, context: Context): ReadJo
   if (entry.kind === "node") {
     const consulted = context.consulted.get(entry.index);
     if (consulted !== undefined && consulted.line !== line) {
-      return shape(entry.effectClass === "read" ? "node-read" : "node-effectful", "shadowed", shadowNote(consulted.line));
+      return shape(
+        entry.effectClass === "read" ? "node-read" : "node-effectful",
+        "shadowed",
+        context.settledMarkers.has(line) ? settledNote(consulted.line) : shadowNote(consulted.line),
+      );
+    }
+    // runtime.ts admission refuses a dispatch marker nothing superseded first,
+    // whatever its class: no row says how the call settled (wb-5x0.1).
+    if (entry.dispatched === true) {
+      const bound = context.bound.get(line) ?? 0;
+      return shape("node-effectful", "refuse-uncertain-effect", dispatchedNote(entry.effectClass, entry.capabilityId ?? "", bound), {
+        refusal: "uncertain-effect",
+        boundDecisions: bound,
+      });
     }
     // runtime.ts node admission: replay only a recorded read, under the same
     // basis (basis-on-every-entry, so a read without one is the legacy class),
@@ -632,7 +680,20 @@ export function classifyJournal(raw: string): JournalCompatReport {
   // stable, so the last node row at a position is the only one consulted.
   const consulted = new Map<number, ConsultedRow>();
   for (const { line, entry } of keptLines) {
-    if (entry.kind === "node") consulted.set(entry.index, { line, digest: entryDigestOf(entry) });
+    if (entry.kind === "node") consulted.set(entry.index, { line, digest: entryDigestOf(entry), entry });
+  }
+  // A marker's settlement is the same call recorded again without the marker:
+  // runtime.ts writes both rows from one key, capability, class and basis.
+  const settledMarkers = new Set<number>();
+  for (const { line, entry } of keptLines) {
+    const settled = entry.kind === "node" && entry.dispatched === true ? consulted.get(entry.index) : undefined;
+    if (
+      settled !== undefined && settled.line !== line && settled.entry.dispatched !== true &&
+      settled.entry.key === entry.key && settled.entry.capabilityId === entry.capabilityId &&
+      settled.entry.effectClass === entry.effectClass && settled.entry.basis === entry.basis
+    ) {
+      settledMarkers.add(line);
+    }
   }
   const bound = new Map<number, number>();
   for (const { entry } of keptLines) {
@@ -646,6 +707,7 @@ export function classifyJournal(raw: string): JournalCompatReport {
     agentReplayDeclined: keptLines.some(({ entry }) => entry.kind === undefined && entry.resumed === true),
     consulted,
     bound,
+    settledMarkers,
   };
 
   const lines: ClassifiedJournalLine[] = slots.map(({ line, parsed }) =>
@@ -701,7 +763,7 @@ export function classifyJournal(raw: string): JournalCompatReport {
         "and its reader takes such a line as one of its own without checking.",
     );
   }
-  const shadowed = read.filter((line) => line.replay === "shadowed");
+  const shadowed = read.filter((line) => line.replay === "shadowed" && !settledMarkers.has(line.line));
   if (shadowed.length > 0) {
     warnings.push(
       `${JOURNAL_DUPLICATE_POSITION_WARNING}: ${listed(shadowed.map((line) => `position ${line.index} (line ${line.line})`))} recorded again later in the file; ` +
@@ -712,7 +774,7 @@ export function classifyJournal(raw: string): JournalCompatReport {
   if (refusing.length > 0) {
     const named = refusing.map(
       (line) =>
-        `position ${line.index} (line ${line.line}, ${quoted(line.capabilityId ?? "")} ${line.effectClass === null ? "unclassified" : quoted(line.effectClass)})`,
+        `position ${line.index} (line ${line.line}, ${quoted(line.capabilityId ?? "")} ${line.effectClass === null ? "unclassified" : quoted(line.effectClass)}${line.dispatched ? ", dispatched with no settled record" : ""})`,
     );
     warnings.push(
       `${JOURNAL_UNCERTAIN_EFFECT_WARNING}: ${listed(named)} record(s) an effect a resume never re-runs or replays; ` +
