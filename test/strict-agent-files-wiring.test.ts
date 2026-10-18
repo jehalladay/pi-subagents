@@ -8,12 +8,14 @@
  * `Agent` call, so a strict reload would kill the session on an unrelated spawn
  * long after the bad edit, where the failure looks disconnected from its cause.
  */
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
-import { tmpdir } from "node:os";
+import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { registerAgents } from "../src/agent-types.js";
 import subagentsExtension from "../src/index.js";
+import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
+
+installScratchLeakGuard();
 
 function makePi() {
   const tools = new Map<string, any>();
@@ -57,7 +59,7 @@ describe("strictAgentFiles gates extension activation", () => {
 
   beforeEach(() => {
     originalCwd = process.cwd();
-    cwd = mkdtempSync(join(tmpdir(), "strict-agent-files-"));
+    cwd = makeScratch("strict-agent-files-");
     process.chdir(cwd);
     // A developer's real ~/.pi/subagents.json would otherwise set this very
     // setting under the tests, and their global agents would pollute the roster.
@@ -68,7 +70,10 @@ describe("strictAgentFiles gates extension activation", () => {
     warn = vi.spyOn(console, "warn").mockImplementation(() => {});
   });
 
-  afterEach(() => {
+  afterEach(async () => {
+    // Activation starts fire-and-forget work against the agent dir that lands after the test
+    // body returns; removing the directory first lets it re-create the tree (agent-dir/auth.json).
+    await new Promise(resolve => setTimeout(resolve, 100));
     warn.mockRestore();
     delete (globalThis as any)[Symbol.for("pi-subagents:manager")];
     process.chdir(originalCwd);
@@ -77,7 +82,7 @@ describe("strictAgentFiles gates extension activation", () => {
     if (originalHome == null) delete process.env.HOME;
     else process.env.HOME = originalHome;
     registerAgents(new Map());
-    rmSync(cwd, { recursive: true, force: true });
+    removeScratch(cwd);
   });
 
   it("aborts activation naming the file when enabled", () => {

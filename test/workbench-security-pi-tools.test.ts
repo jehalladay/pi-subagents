@@ -231,10 +231,12 @@ describe("remaining registered tool display boundaries", () => {
       const launched = await pi.tools.get("SubagentWorkflow").execute("compare", { scriptPath }, undefined, undefined, context);
       ids.push(launched.details.taskId as string);
     }
+    // A deliberately partial comparison: this row checks the source and diagnostic strings at the
+    // result boundary, so cohort, perMetric and claim are left out of the fixture.
     vi.spyOn(designer, "compareWorkflowRuns").mockReturnValueOnce({
       status: "unknown", diagnostics: [{ code: "COMPARISON_UNKNOWN", message: `${risk} api_key=${SECRET}`, severity: "warning" }],
       sourceDigests: { reference: [risk], candidate: [risk] }, metrics: [], causalClaim: false, criticalPath: "unestablished", limitations: [],
-    });
+    } as unknown as designer.WorkflowComparison);
     const response = await invoke(pi.tools.get("workflow_compare"), context, { referenceTask: ids[0], candidateTask: ids[1] });
     expect(JSON.parse(response).causalClaim).toBe(false);
     clean(response);
@@ -269,5 +271,14 @@ describe("claude:transcript grant on the inspector transcript path", () => {
     expect(read).toHaveBeenCalledWith("sess-allowed", dir);
     expect(ui.editor).toHaveBeenCalledWith("Claude session sess-allowed", "assistant: native transcript row");
     expect(ui.notify).not.toHaveBeenCalledWith(expect.stringContaining("Permission denied"), "warning");
+  });
+  it("wb-idq: a row the adapter clipped at its bound renders with a visible marker line; an uncut row renders exactly as before", async () => {
+    const { view, ui, menuContext } = await transcriptSurface(["claude:transcript"]);
+    vi.spyOn(transcript, "readClaudeTranscript").mockResolvedValue([
+      { type: "assistant", uuid: "u-1", text: "whole row" },
+      { type: "user", uuid: "u-2", text: "cut row", clipped: true },
+    ]);
+    await view(menuContext, "sess-clipped");
+    expect(ui.editor).toHaveBeenCalledWith("Claude session sess-clipped", "assistant: whole row\n\nuser: cut row\n… truncated (row bound)");
   });
 });

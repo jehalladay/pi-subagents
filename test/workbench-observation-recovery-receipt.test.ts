@@ -867,9 +867,9 @@ describe("W21-B observation recovery receipt: source boundaries", () => {
   const bench = sourceOf("../qa/workbench/observation-recovery-bench.mjs");
   const receipt = sourceOf("../qa/workbench/observation-recovery-receipt.mjs");
 
-  it("keeps the bench CLI on exactly the allowed static imports: the compiled projection, the receipt module, node:os and node:fs", () => {
+  it("keeps the bench CLI on exactly the allowed static imports: the compiled projection, the receipt module, the revision helper, node:os and node:fs", () => {
     expect(specifiersOf(bench)).toEqual(
-      ["../../dist/workbench/observation.js", "./observation-recovery-receipt.mjs", "node:fs", "node:os"].sort(),
+      ["../../dist/workbench/observation.js", "./bench-revision.mjs", "./observation-recovery-receipt.mjs", "node:fs", "node:os"].sort(),
     );
     expect(bench).not.toMatch(DYNAMIC_LOAD);
   });

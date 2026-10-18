@@ -110,6 +110,8 @@ describe("settling a run", () => {
     progress: [],
     agentCount: 0,
     replayedCount: 0,
+    replayedNodeCount: 0,
+    reconciledNodeCount: 0,
   };
 
   it("drops the control so a finished run cannot be paused", () => {
@@ -144,7 +146,7 @@ describe("settling a run", () => {
 describe("replay provenance in the task summary", () => {
   const settled = (replayedCount: number, replayedNodeCount: number) => {
     const task = createWorkflowTask({ id: "wf_abc123", script: "", startTime: 1_000, resumedFrom: "wf_prior1" });
-    completeWorkflowTask(task, { status: "completed", value: 1, meta: { name: "wf", description: "d" }, progress: [], agentCount: 2, replayedCount, replayedNodeCount });
+    completeWorkflowTask(task, { status: "completed", value: 1, meta: { name: "wf", description: "d" }, progress: [], agentCount: 2, replayedCount, replayedNodeCount, reconciledNodeCount: 0 });
     return task;
   };
 
@@ -289,5 +291,18 @@ describe("operator reconcile provenance in the task summary", () => {
     expect(text).toMatch(/1 acknowledged by operator \(position 1\)/);
     expect(text).toMatch(/1 operator override \(position 3\)[^.]*re-run once/);
     expect(text).toMatch(/1 acknowledged as effect-absent \(position 2\)[^.]*until overridden/);
+  });
+});
+
+describe("the resume notice counts a node position once (wb-5x0.1)", () => {
+  it("counts a journaled effect and its dispatched marker as one effect, as the runtime consults one row per position", () => {
+    const dispatched: WorkflowJournalEntry = { index: 0, key: "w", ok: false, kind: "node", capabilityId: "furnace.run.start", effectClass: "external", dispatched: true };
+    const settled: WorkflowJournalEntry = { index: 0, key: "w", ok: true, kind: "node", capabilityId: "furnace.run.start", effectClass: "external" };
+    const unclassifiedDispatch: WorkflowJournalEntry = { index: 1, key: "u", ok: false, kind: "node", capabilityId: "legacy.op", dispatched: true };
+    const unclassified: WorkflowJournalEntry = { index: 1, key: "u", ok: true, kind: "node", capabilityId: "legacy.op" };
+
+    const text = describeResumeJournal("wf_prior1", [dispatched, settled, unclassifiedDispatch, unclassified]);
+    expect(text).toMatch(/1 journaled effect \(furnace\)/);
+    expect(text).toMatch(/1 node call without effect metadata will stop the resume/);
   });
 });
