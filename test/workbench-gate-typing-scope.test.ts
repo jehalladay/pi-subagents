@@ -164,3 +164,16 @@ describe("wb-zsv guards: what the flip must not move", () => {
     expect(resolveTscConfigs("npm run typecheck && npm run typecheck:test")).toEqual(["tsconfig.json", "tsconfig.test.json"]);
   });
 });
+
+/**
+ * wb-zsv.6 (ruling R485): the npm-side developer loop matches the gate's typing scope — `check` chains lint, then both
+ * gate typing arms in the gate's own order (so TYPING_VALUE is contained verbatim), then the test suite. prepublishOnly
+ * STAYS src-only typecheck by the same ruling (the publish path is guarded by the seven-step complete gate), so it is
+ * deliberately not pinned here.
+ */
+describe("wb-zsv.6 guard: npm run check carries the gate's typing scope", () => {
+  it("G5: scripts.check is byte-exact and contains the gate's typing chain verbatim", () => {
+    expect(scripts.check).toBe("npm run lint && npm run typecheck && npm run typecheck:test && npm run test");
+    expect(scripts.check).toContain(TYPING_VALUE);
+  });
+});

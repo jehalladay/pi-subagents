@@ -41,7 +41,7 @@ Read the file that covers a surface before changing its behavior; update it in t
 
 - After code changes (not docs), run the full check suite and fix all errors and warnings:
   ```bash
-  npm run check       # lint + typecheck + test (what CI runs)
+  npm run check       # lint + typecheck + typecheck:test + test (what CI runs, plus typecheck:test)
   ```
   The steps individually, when you need to isolate a failure:
   ```bash
@@ -136,7 +136,7 @@ Before a release:
 - Update `README.md` if user-facing behavior changed (features list, settings, usage), and the matching guide in `docs/` if the change touches workflows or the event/RPC surface.
 - Run the full check suite plus the e2e tests, and fix anything that fails:
   ```bash
-  npm run check                    # lint + typecheck + test
+  npm run check                    # lint + typecheck + typecheck:test + test
   npm run test:e2e                 # faux/scripted e2e — no network, no keys
   npm run build
   ```
