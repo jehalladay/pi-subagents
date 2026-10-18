@@ -9,8 +9,7 @@
  * and that `session_shutdown` tears it down. runAgent is mocked (no LLM); the
  * manager, settings load, completion routing, and lifecycle handlers are real.
  */
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
-import { tmpdir } from "node:os";
+import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -21,6 +20,9 @@ vi.mock("../src/agent-runner.js", async () => {
 
 import { runAgent } from "../src/agent-runner.js";
 import subagentsExtension from "../src/index.js";
+import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
+
+installScratchLeakGuard();
 
 function makePi() {
   const tools = new Map<string, any>();
@@ -78,8 +80,8 @@ describe("FleetView wiring (real extension lifecycle)", () => {
   let prevHome: string | undefined;
 
   beforeEach(() => {
-    tmpDir = mkdtempSync(join(tmpdir(), "pi-fleet-"));
-    agentDir = mkdtempSync(join(tmpdir(), "pi-fleet-agentdir-"));
+    tmpDir = makeScratch("pi-fleet-");
+    agentDir = makeScratch("pi-fleet-agentdir-");
     prevAgentDir = process.env.PI_CODING_AGENT_DIR;
     prevHome = process.env.HOME;
     process.env.PI_CODING_AGENT_DIR = agentDir;
@@ -98,8 +100,8 @@ describe("FleetView wiring (real extension lifecycle)", () => {
     else process.env.PI_CODING_AGENT_DIR = prevAgentDir;
     if (prevHome == null) delete process.env.HOME;
     else process.env.HOME = prevHome;
-    rmSync(tmpDir, { recursive: true, force: true });
-    rmSync(agentDir, { recursive: true, force: true });
+    removeScratch(tmpDir);
+    removeScratch(agentDir);
     vi.restoreAllMocks();
   });
 

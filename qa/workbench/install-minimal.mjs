@@ -4,7 +4,9 @@ import {spawnSync} from 'node:child_process';
 import {chmodSync,copyFileSync,lstatSync,mkdirSync,mkdtempSync,readdirSync,readFileSync,rmSync,writeFileSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
+import {revisionOf} from './git-stamp.mjs';
 import {resolveNodeBinary,scrubbedEnvironment,treeCensus} from './install-minimal-lib.mjs';
+import {assertReadOnlyReceipt} from './install-minimal-lib.mjs';
 const root=process.cwd();
 const scratch=mkdtempSync(join(tmpdir(),'pi-workbench-install-minimal-'));
 const consumer=join(scratch,'consumer');
@@ -42,9 +44,11 @@ try{
   assert.equal(probe.status,0,probe.stderr||probe.stdout);
   assert.equal(censusBefore,censusAfter,'installed tree changed during the probe');
   const probeReceipt=JSON.parse(probe.stdout.trim().split('\n').pop());
+  const ownUid=typeof process.getuid==='function'?process.getuid():undefined;
+  assertReadOnlyReceipt(probeReceipt,ownUid);
   assert.equal(probeReceipt.workflowValue,42);
-  const git=spawnSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'});
-  const revision=process.env.WB_REVISION??(git.status===0?git.stdout.trim():'working-tree');
+  // wb-vko (owner O1, cax.2 F7): the canonical stamp - HEAD, HEAD-dirty, or working-tree when root is not its repository toplevel or its status cannot be read.
+  const revision=process.env.WB_REVISION??revisionOf(root);
   const receipt={contract:'workbench.install-minimal/v1',revision,commands:{pack:['npm',...packArgv],install:['npm',...installArgv],probe:probeArgv},tarball:{filename:tarball.filename,shasum:tarball.shasum,integrity:tarball.integrity,fileCount:tarball.entryCount??tarball.files?.length??null},censusDigest:censusAfter,censusBefore,censusAfter,probe:probeReceipt,host:{nodeBinary,node:process.version,platform:process.platform,arch:process.arch,uid:typeof process.getuid==='function'?process.getuid():null},utc:new Date().toISOString()};
   const line=JSON.stringify(receipt);
   if(process.env.WB_INSTALL_MINIMAL_RECEIPT)writeFileSync(process.env.WB_INSTALL_MINIMAL_RECEIPT,`${line}\n`);

@@ -18,7 +18,7 @@ vi.mock("../src/worktree.js", () => ({
   isWorktreeIsolationEnabled: vi.fn(() => true),
 }));
 
-import { resumeAgent, runAgent } from "../src/agent-runner.js";
+import { type RunResult, resumeAgent, runAgent } from "../src/agent-runner.js";
 import { addUsage } from "../src/usage.js";
 import { isWorktreeIsolationEnabled } from "../src/worktree.js";
 
@@ -1632,7 +1632,7 @@ describe("AgentManager — resolved runs with a failed final turn map to error (
 
   it("an external stop still wins over a late failure resolution", async () => {
     manager = new AgentManager();
-    let resolveRun: ((v: unknown) => void) | undefined;
+    let resolveRun: ((v: RunResult) => void) | undefined;
     const session = mockSession();
     vi.mocked(runAgent).mockImplementation(() => new Promise((r) => { resolveRun = r; }));
 

@@ -49,6 +49,8 @@ import {
   visibleWidth,
   wrapTextWithAnsi,
 } from "@earendil-works/pi-tui";
+import type { AttentionReport } from "../workbench/attention.js";
+import type { TimelineModel } from "../workbench/timeline.js";
 import type { WorkflowMeta } from "../workflow/meta.js";
 import {
   buildPhaseGroups,
@@ -287,12 +289,25 @@ export function initialWorkflowDialogState(initialPhaseIndex = 0): WorkflowDialo
   };
 }
 
+/** What the host's timeline lane model is built from: the window the inspector draws, and its zoom and pan (wb-6ze.35). */
+export type InspectorTimelineView = Pick<InspectorState, "selected" | "index" | "zoom" | "pan">;
+
 /** Everything the dialog reads about a run, so it can be driven from a stub. */
 export interface WorkflowDialogSource {
   progress: readonly WorkflowEntry[];
   task: WorkflowCardTask;
   /** Present only when a producer-backed, scoped Workbench read projection exists. */
   observation?: InspectorModel;
+  /**
+   * The host's workbench.timeline/v1 lane model for the window, zoom and pan the inspector draws (wb-6ze.35). Read by
+   * the timeline view alone, on each redraw; absent, the timeline view renders exactly as it does without a model.
+   */
+  timelineLanes?: (view: InspectorTimelineView) => TimelineModel;
+  /**
+   * The host's workbench.attention/v1 report for the observed invocation (wb-6ze.36). Read by the overview alone, on each
+   * redraw; absent, the overview renders exactly as it does without a report.
+   */
+  attention?: () => AttentionReport;
   meta?: WorkflowMeta;
   /** Agents the runtime has scheduled, which can exceed those that reported. */
   agentCount?: number;
@@ -1279,7 +1294,14 @@ export class WorkflowDialog implements Component {
     const hasLegacyRows = source.progress.some(entry => entry.type === "workflow_agent");
     const rich = source.observation?.projection.window({scope:source.observation.scope,invocationId:source.observation.invocationId,offset:0,limit:1}).total;
     if (source.observation && rich && (this.preferRich || !hasLegacyRows)) {
-      return styleWorkflowCardLines(layoutInspector(source.observation,this.inspectorState,{width,rows:this.tui.terminal?.rows??24}).map(text=>[{text}]),this.theme);
+      // Only the timeline view asks the host for its lane model and only the overview for its attention report; every
+      // other view, and a host that supplies neither, draws the observation exactly as before (wb-6ze.35, wb-6ze.36).
+      const timeline = this.inspectorState.view === "timeline" ? source.timelineLanes?.(this.inspectorState) : undefined;
+      const attention = this.inspectorState.view === "overview" ? source.attention?.() : undefined;
+      const model = timeline !== undefined ? { ...source.observation, timeline }
+        : attention !== undefined ? { ...source.observation, attention }
+        : source.observation;
+      return styleWorkflowCardLines(layoutInspector(model,this.inspectorState,{width,rows:this.tui.terminal?.rows??24}).map(text=>[{text}]),this.theme);
     }
     const lines = layoutWorkflowDialog({
       ...source,
