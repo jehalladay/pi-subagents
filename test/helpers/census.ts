@@ -207,9 +207,10 @@
  *     (qa/workbench's receipt runners do), outside the forge-step to npm-script to vitest-argv read.
  *   - writes after collection (UNMEASURED; the probe's beforeAll shape errored before it measured): a hook or a case
  *     writing a collected task's retry through the runner's task tree.
- *   - the static read's edges (UNMEASURED): a relative module TypeScript cannot parse drops out of the closure, package
- *     modules are not read, and the VOUCH_RESIDUALS routes reach retry as they reach fails (a preload, a user npm
- *     config or a vitest shim adding --retry).
+ *   - the static read's edges (UNMEASURED as retry routes): a relative module absent when the census runs (an
+ *     unbuilt ../dist module), unreadable, or that TypeScript cannot parse drops out of the closure; package modules
+ *     are not read; and the VOUCH_RESIDUALS routes reach retry as they reach fails (a preload, a user npm config or a
+ *     vitest shim adding --retry).
  *
  * Fail-closed throughout: an unreadable or unparseable file or report, a run error, a tier command outside the
  * modelled grammar or an unanalysable case body is a red verdict naming its cause, never a pass.
