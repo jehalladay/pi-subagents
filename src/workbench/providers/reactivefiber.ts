@@ -37,6 +37,13 @@ function isRfDiagnostic(value: unknown): value is Record<string, JsonValue> {
     (value.hint===null || typeof value.hint==="string") &&
     (value.source===null || typeof value.source==="string") && record(value.metadata);
 }
+/** wb-973.9 (SCG-R9): a stated result.observations is a list of rows, each an object stating a string status, a string freshness
+ * and a boolean replayed. The observer reads those values, refuses the pinned contradictions and demotes; a pre-observations rf
+ * states no list at all. */
+function isObservationRows(value: JsonValue): boolean {
+  return Array.isArray(value) && value.every(row=>record(row) && typeof row.status==="string" &&
+    typeof row.freshness==="string" && typeof row.replayed==="boolean");
+}
 function isRfEnvelope(source: unknown): source is Record<string, JsonValue> {
   return record(source) && Object.keys(source).length===RF_KEYS.length &&
     RF_KEYS.every(key=>Object.hasOwn(source,key)) &&
@@ -77,6 +84,7 @@ function isPreviewEnvelope(source: unknown, exit: number|null, workspaceRoot: st
     if (!record(metrics) || Object.keys(metrics).length!==2 ||
         !["tsx_worker_spawns","tsx_resource_rounds"].every(key=>Object.hasOwn(metrics,key) && nonnegativeInteger(metrics[key]))) return false;
   }
+  if (Object.hasOwn(result,"observations") && !isObservationRows(result.observations)) return false;
   return true;
 }
 const LEGACY_INPUT={type:"object",properties:{model:{type:"string",minLength:1},task:{type:"string",minLength:1}},required:["model","task"],additionalProperties:false};
