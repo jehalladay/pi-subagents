@@ -41,12 +41,13 @@ Read the file that covers a surface before changing its behavior; update it in t
 
 - After code changes (not docs), run the full check suite and fix all errors and warnings:
   ```bash
-  npm run check       # lint + typecheck + typecheck:test + test (what CI runs, plus typecheck:test)
+  npm run check       # lint + typecheck + typecheck:test + test (what CI runs)
   ```
   The steps individually, when you need to isolate a failure:
   ```bash
   npm run lint        # biome
   npm run typecheck   # tsc --noEmit
+  npm run typecheck:test   # tsc --noEmit -p tsconfig.test.json
   npm run test        # vitest run
   ```
 - `npm run lint:fix` auto-fixes most style issues.
