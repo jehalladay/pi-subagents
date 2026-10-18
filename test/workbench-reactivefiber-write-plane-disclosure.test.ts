@@ -52,6 +52,7 @@ describe('wb-2j3.3 reactivefiber preview write-plane disclosure', () => {
       expect(item.description, item.via).toMatch(JOURNAL_SCOPE);
       expect(item.description, item.via).toMatch(CACHE_PLANE);
       expect(item.description, item.via).toMatch(DISPOSABLE);
+      expect(item.description, item.via).toContain('no authoritative or journal store write');
     }
   });
 

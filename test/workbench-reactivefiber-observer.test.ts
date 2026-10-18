@@ -1016,10 +1016,18 @@ describe('engine_metrics spawn surfacing (wb-693.4 R6, R15)', () => {
     ['a list', [1, 0]],
     ['a string', 'tsx_worker_spawns'],
   ];
-  it.each(MALFORMED)('R15: engine_metrics with %s is refused as a validation error that echoes no producer text', (_name, engineMetrics) => {
+  it('R15: the MALFORMED table registers all 12 rows', () => {
+    expect(MALFORMED.length).toBe(12);
+  });
+  it.each(MALFORMED)('R15: engine_metrics with %s is refused as a validation error that echoes no producer text', (name, engineMetrics) => {
+    record('MALFORMED', name);
     const error = refusal(withResult({engine_metrics: engineMetrics}));
     expect(error.category).toBe('validation');
     expect(error.message).toMatch(/result\.engine_metrics/);
     expect(error.message).not.toContain('SECRET-');
+  });
+
+  it('R15: every MALFORMED row is registered at the it.each call and runs', () => {
+    expectEveryRowRan('MALFORMED', MALFORMED);
   });
 });

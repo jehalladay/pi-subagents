@@ -26,13 +26,14 @@ installScratchLeakGuard();
 
 /* The roster authored independently of test/fixtures/rf-result-keys.json (U5): read off the ReactiveFiberCLI emitter at
  * 8a8b83e4d, in the dossier's listing order, never from the JSON. A key is listed only when every finished --no-commit legacy
- * render carries it; view_id, effective_scopes, view_contract and necessity are conditional (render_service.py:1515-1532). */
+ * render carries it; view_id, effective_scopes and view_contract are conditional (render_service.py:1515-1526). necessity is NOT
+ * conditional: step L always runs, so every finished --no-commit render emits it (render_service.py:1527-1532 and its comment). */
 /** result: render_service.py:1494-1513 (output .. observations), :1533-1539 (attempts, superseded_transaction_ids,
  * fiber_transaction_refs), render.py:3569-3580 (the step-P ephemeral keys render_id, ephemeral, commit_seq, effects, plan) and
- * render_service.py:1549 (session_id). */
+ * render_service.py:1527-1532 (necessity) and :1549 (session_id). */
 const PINNED_RESULT_KEYS = [
   'output', 'budget', 'diagnostics_summary', 'blocks', 'components', 'provenance', 'work_metrics', 'work',
-  'engine_metrics', 'scope', 'audience', 'bundle_revision_id', 'observations', 'attempts',
+  'engine_metrics', 'scope', 'audience', 'bundle_revision_id', 'observations', 'necessity', 'attempts',
   'superseded_transaction_ids', 'fiber_transaction_refs',
   'ephemeral', 'render_id', 'commit_seq', 'session_id', 'effects', 'plan',
 ];
@@ -104,11 +105,26 @@ const reading = (source: Obj): Json => ({ contract: 'reactivefiber.render.previe
 const UNRECOGNIZED = 'RF preview returned an unrecognized native envelope.';
 const CONTRADICTORY = 'RF preview returned an unrecognized or contradictory envelope.';
 
+/* The two Acceptance 3 refusal tables are named so each carries a length pin: an it.each over an unpinned literal registers
+ * whatever rows it holds, so a dropped row (provider 5 -> 4, observer 3 -> 2) would leave every remaining case green. */
+const OBSERVER_REFUSAL_ROWS = [
+  ['ninth envelope key', (): Obj => ({ ...fullShapeRf(ws), extra: 1 }), 'source must be the strict eight-key rf envelope'],
+  ['work with an extra key', (): Obj => withResult(fullShapeRf(ws), { work: { ...fullShapeWork(), extra: 1 } }), 'result.work needs exactly the six non-negative integer counters'],
+  ['schema other', (): Obj => ({ ...fullShapeRf(ws), schema: 'reactive-fiber.cli/v2' }), 'source must be a reactive-fiber.cli/v1 context.render envelope'],
+] as const;
+const PROVIDER_REFUSAL_ROWS = [
+  ['extra top-level key', (e: Obj): Obj => ({ ...e, error: 'pretend success' }), UNRECOGNIZED],
+  ['claimed ephemeral storage write', (e: Obj): Obj => withResult(e, { work: { ...fullShapeWork(), storage_write_count: 1 } }), CONTRADICTORY],
+  ['seventh result.work key', (e: Obj): Obj => withResult(e, { work: { ...fullShapeWork(), seventh_count: 0 } }), CONTRADICTORY],
+  ['non-null ephemeral render id', (e: Obj): Obj => withResult(e, { render_id: 'rfr_aaaaaaaaaaaaaaaaaaaaaa' }), CONTRADICTORY],
+  ['non-null ephemeral commit sequence', (e: Obj): Obj => withResult(e, { commit_seq: 1 }), CONTRADICTORY],
+] as const;
+
 describe('SCG-R11: full-shape offline RF result fixture', () => {
   // U5 (independent oracle): the roster file equals the independently authored literal, key for key and in order, at the
-  // dossier's lengths (22 result / 3 provenance / 6 work / 10 work_metrics), so an emptied, shrunken or renamed roster is red here.
-  it('the frozen roster equals the independently authored literal roster: 22 result, 3 provenance, 6 work and 10 work_metrics keys', () => {
-    expect([PINNED_RESULT_KEYS.length, PINNED_PROVENANCE_KEYS.length, PINNED_WORK_KEYS.length, PINNED_WORK_METRICS_KEYS.length]).toStrictEqual([22, 3, 6, 10]);
+  // dossier's lengths (23 result / 3 provenance / 6 work / 10 work_metrics), so an emptied, shrunken or renamed roster is red here.
+  it('the frozen roster equals the independently authored literal roster: 23 result, 3 provenance, 6 work and 10 work_metrics keys', () => {
+    expect([PINNED_RESULT_KEYS.length, PINNED_PROVENANCE_KEYS.length, PINNED_WORK_KEYS.length, PINNED_WORK_METRICS_KEYS.length]).toStrictEqual([23, 3, 6, 10]);
     expect(roster.resultKeys).toStrictEqual(PINNED_RESULT_KEYS);
     expect(roster.provenanceKeys).toStrictEqual(PINNED_PROVENANCE_KEYS);
     expect(roster.workKeys).toStrictEqual(PINNED_WORK_KEYS);
@@ -159,9 +175,9 @@ describe('SCG-R11: full-shape offline RF result fixture', () => {
     expect(diffAgainstRoster(roster, { ...result, work: { ...fullShapeWork(), seventh_count: 0 } }).failures).toStrictEqual(['unexpected result.work.seventh_count']);
     expect(diffAgainstRoster(roster, { ...result, work_metrics: { ...fullShapeWorkMetrics(), eleventh_count: 0 } }).failures)
       .toStrictEqual(['unexpected result.work_metrics.eleventh_count']);
-    // The measured rf 0.1.723 shape: necessity (conditional at the pin) and retry_work (after the pin) ride beside the roster.
-    expect(diffAgainstRoster(roster, { ...result, necessity: [], retry_work: { superseded_attempts: [] } }))
-      .toStrictEqual({ failures: [], extraResultKeys: ['necessity', 'retry_work'] });
+    // The measured rf 0.1.723 shape: retry_work (after the pin) rides beside the roster; necessity is a roster member since the pin.
+    expect(diffAgainstRoster(roster, { ...result, retry_work: { superseded_attempts: [] } }))
+      .toStrictEqual({ failures: [], extraResultKeys: ['retry_work'] });
   });
 
   // Acceptance 2: nativeReactiveFiberPreview round-trips the full-shape fixture (extends the envelope-audit admission row).
@@ -199,24 +215,20 @@ describe('SCG-R11: full-shape offline RF result fixture', () => {
   });
 
   // Acceptance 3 (observer): the named refusal rows replayed on the full shape, each for its own cause.
-  it.each([
-    ['ninth envelope key', (): Obj => ({ ...fullShapeRf(ws), extra: 1 }), 'source must be the strict eight-key rf envelope'],
-    ['work with an extra key', (): Obj => withResult(fullShapeRf(ws), { work: { ...fullShapeWork(), extra: 1 } }), 'result.work needs exactly the six non-negative integer counters'],
-    ['schema other', (): Obj => ({ ...fullShapeRf(ws), schema: 'reactive-fiber.cli/v2' }), 'source must be a reactive-fiber.cli/v1 context.render envelope'],
-  ] as const)('the observer still refuses %s on the full shape', (_label, source, cause) => {
+  it('the observer refusal table keeps its 3 rows', () => {
+    expect(OBSERVER_REFUSAL_ROWS).toHaveLength(3);
+  });
+  it.each(OBSERVER_REFUSAL_ROWS)('the observer still refuses %s on the full shape', (_label, source, cause) => {
     const error = thrownBy(() => reactivefiberTopology(reading(source()) as JsonValue, context));
     expect(error).toBeInstanceOf(CapabilityError);
     expect(error).toMatchObject({ category: 'validation', message: `ReactiveFiber topology refused: ${cause}.` });
   });
 
   // Acceptance 3 (provider): strictness is not loosened by the additive keys, and each row refuses for its own cause.
-  it.each([
-    ['extra top-level key', (e: Obj): Obj => ({ ...e, error: 'pretend success' }), UNRECOGNIZED],
-    ['claimed ephemeral storage write', (e: Obj): Obj => withResult(e, { work: { ...fullShapeWork(), storage_write_count: 1 } }), CONTRADICTORY],
-    ['seventh result.work key', (e: Obj): Obj => withResult(e, { work: { ...fullShapeWork(), seventh_count: 0 } }), CONTRADICTORY],
-    ['non-null ephemeral render id', (e: Obj): Obj => withResult(e, { render_id: 'rfr_aaaaaaaaaaaaaaaaaaaaaa' }), CONTRADICTORY],
-    ['non-null ephemeral commit sequence', (e: Obj): Obj => withResult(e, { commit_seq: 1 }), CONTRADICTORY],
-  ] as const)('still refuses %s on the full shape, for that cause', async (_label, mutate, message) => {
+  it('the provider refusal table keeps its 5 rows', () => {
+    expect(PROVIDER_REFUSAL_ROWS).toHaveLength(5);
+  });
+  it.each(PROVIDER_REFUSAL_ROWS)('still refuses %s on the full shape, for that cause', async (_label, mutate, message) => {
     standIn(mutate(fullShapeRf(ws)));
     const refusal = nativeReactiveFiberPreview('model', 'task', ws);
     await expect(refusal).rejects.toBeInstanceOf(CapabilityError);

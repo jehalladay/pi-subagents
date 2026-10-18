@@ -107,27 +107,40 @@ interface Rig {
   readonly loadWorkflow: ReturnType<typeof vi.fn<(ref: WorkflowScriptRef) => ReturnType<typeof resolveWorkflowSource>>>;
   readonly host: WorkflowHost;
   readonly release: () => void;
+  /** Resolves when the real worker's agent("park") call has reached host.spawnAgent (wb-nl8.1): the event park() samples on. */
+  readonly parkedReached: Promise<void>;
 }
 /**
  * A registry-backed host holding one granted and one ungranted capability; callNode is the REAL registry path and
  * loadWorkflow is the production resolver (mirrors claude-host.ts). Only the parking agent waits.
  */
-function rig(grants: readonly string[]): Rig {
+function rig(grants: readonly string[], options: { readonly providerDelayMs?: number } = {}): Rig {
   const registry = new CapabilityRegistry();
-  const invoked = vi.fn(async () => ({ ok: true }));
+  // wb-nl8.1 H2 seam (off by default): a host-side provider delay before the granted capability answers, so a script
+  // that calls node() before agent("park") reaches its park later than any fixed sample window.
+  const invoked = vi.fn(async () => {
+    if (options.providerDelayMs !== undefined) await new Promise(resolve => setTimeout(resolve, options.providerDelayMs));
+    return { ok: true };
+  });
   registry.register({ descriptor: { id: REGISTERED, version: "1.0.0", description: "granted", inputSchema: { type: "object" }, effectClass: "read", permissions: ["fixture:read"], supportedModes: ["invoke"] }, invoke: invoked });
   registry.register({ descriptor: { id: PROTECTED, version: "1.0.0", description: "ungranted", inputSchema: { type: "object" }, effectClass: "read", permissions: ["fixture:admin"], supportedModes: ["invoke"] }, invoke: invoked });
   let release: () => void = () => {};
   const parked = new Promise<void>(resolve => { release = resolve; });
+  let reached: () => void = () => {};
+  const parkedReached = new Promise<void>(resolve => { reached = resolve; });
   const callNode = vi.fn(async (request: { capabilityId: string; input: unknown; signal: AbortSignal }) =>
     registry.invoke(request.capabilityId, request.input, { grants, signal: request.signal }));
+  // The latch lives in this host stub (the rig), not in node:worker_threads: the SpyWorker above is untouched (owner Q8).
   const spawnAgent = vi.fn(async (request: WorkflowSpawnRequest) => {
-    if (request.prompt === PARK) await parked;
+    if (request.prompt === PARK) {
+      reached();
+      await parked;
+    }
     return { ok: true, text: "" };
   });
   const loadWorkflow = vi.fn((ref: WorkflowScriptRef) => resolveWorkflowSource(ref, tmpdir()));
   const host: WorkflowHost = { spawnAgent, abortAgent: () => {}, callNode, loadWorkflow };
-  return { invoked, callNode, spawnAgent, loadWorkflow, host, release };
+  return { invoked, callNode, spawnAgent, loadWorkflow, host, release, parkedReached };
 }
 
 interface Parked {
@@ -137,11 +150,18 @@ interface Parked {
   readonly finish: () => Promise<Awaited<ReturnType<typeof runWorkflow>>>;
 }
 /** Start a script that parks on a real agent call and hand back the captured real Worker. */
-async function park(rg: Rig): Promise<Parked> {
+async function park(rg: Rig, script = `${HEAD}return await agent("${PARK}");`): Promise<Parked> {
   spawned.workers.length = 0; spawned.sent.length = 0;
   const controller = new AbortController();
-  const run = runWorkflow({ script: `${HEAD}return await agent("${PARK}");`, host: rg.host, signal: controller.signal });
-  await flush();
+  const run = runWorkflow({ script, host: rg.host, signal: controller.signal });
+  // wb-nl8.1: sample on the EVENT the rows read, not on a clock. runtime.ts invokes host.spawnAgent (the rig's vi.fn,
+  // which records the call before its body runs), so once parkedReached resolves mock.calls already holds exactly
+  // [park]; a worker that settles before parking is named by its status word instead of hanging to the vitest cap.
+  const outcome = await Promise.race([
+    rg.parkedReached.then(() => "parked" as const),
+    run.then(result => `settled-early:${result.status}` as const),
+  ]);
+  expect(outcome).toBe("parked");
   const worker = spawned.workers[0];
   expect(worker).toBeDefined();
   return {
@@ -151,10 +171,27 @@ async function park(rg: Rig): Promise<Parked> {
   };
 }
 
+/**
+ * wb-nl8.1: wait until every one of callIds has a host reply, or deadlineMs passes; the existing reads and assertions
+ * then judge unchanged. Every call frame with a valid callId draws a reply (unknown methods and malformed node
+ * payloads synchronously, agent and workflow through their handlers), so the poll runs to its deadline only where a
+ * row's own "no reply" assertion would already fail: a slower red, never a false green. Callers keep their flush()
+ * after it as the quiet window for the negatives (unknown frame types must draw nothing).
+ */
+async function repliesSettled(parked: Parked, callIds: readonly unknown[], deadlineMs = 2000): Promise<void> {
+  const deadline = Date.now() + deadlineMs;
+  while (Date.now() < deadline) {
+    const replies = parked.replies();
+    if (callIds.every(id => replies.has(id))) return;
+    await new Promise(resolve => setTimeout(resolve, 5));
+  }
+}
+
 /** Run a script that parks on a real agent call, inject raw frames on the host side, then abort. */
 async function withCraftedFrames(rg: Rig, frames: readonly Frame[]): Promise<{ replies: Frame[]; settle: Awaited<ReturnType<typeof runWorkflow>> }> {
   const parked = await park(rg);
   for (const frame of frames) parked.worker.emit("message", frame);
+  await repliesSettled(parked, frames.map(frame => frame.callId));
   await flush();
   const replies = [...parked.replies().values()];
   return { replies, settle: await parked.finish() };
@@ -297,6 +334,8 @@ function hostSurface(): Promise<HostSurface> {
       parked.worker.emit("message", { type, callId, method: "node", payload });
     }
     sentinel();
+    // typeIds are excluded on purpose: an unknown frame type must draw nothing, so only the flush below waits for them.
+    await repliesSettled(parked, [...sentinelIds, ...verbIds.keys(), ...nonStringIds.keys()]);
     await flush();
     const replies = parked.replies();
     const settle = await parked.finish();
@@ -489,6 +528,17 @@ describe("W19 slice 2 harness: the recording Worker is call-through (marker clas
     expect(liveThreadIds.every(id => id > 0)).toBe(true);
     expect(spawned.sent.filter(message => message.type === "response").map(message => message.callId)).toEqual([1, 2]);
   });
+
+  it("H2 (wb-nl8.1 red-first): the park sample is event-ordered: a 150 ms host-side provider delay before agent('park') is still sampled as exactly [park]", async () => {
+    // The producer of the sampled entry is the real worker thread reaching runtime.ts's host.spawnAgent call; a sample
+    // taken on a clock (one 40 ms flush) read [] whenever the thread's boot plus the script's prefix outran the window
+    // (the wb-nl8 review's full-suite red at R2 :574). The delay here is injected host-side, never awaited from a neighbour.
+    const rg = rig(["fixture:read"], { providerDelayMs: 150 });
+    const parked = await park(rg, `${HEAD}await node("${REGISTERED}", {}); return await agent("${PARK}");`);
+    const sample = rg.spawnAgent.mock.calls.map(([request]) => request.prompt);
+    const settle = await parked.finish();
+    expect({ sample, status: settle.status, provided: rg.invoked.mock.calls.length }).toEqual({ sample: [PARK], status: "killed", provided: 1 });
+  });
 });
 
 describe("W19 slice 2: the host-accepted RPC surface, enumerated behaviourally through the real listener (U1)", () => {
@@ -677,6 +727,7 @@ async function malformedAgentFrames(rg: Rig): Promise<Array<{ label: string; rep
       const callId = 9800 + index;
       const before = rejections.length;
       parked.worker.emit("message", { type: "call", callId, method: "agent", payload });
+      await repliesSettled(parked, [callId]);
       await flush();
       rows.push({ label, reply: shape(parked.replies().get(callId)), rejections: rejections.slice(before).map(signature) });
     }

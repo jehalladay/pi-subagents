@@ -45,6 +45,8 @@ import {
   sameAttemptReexecution,
   settledCloseTimers,
   settledCloseTimersSensitivity,
+  settledCloseTimersSensitivityUnderChurn,
+  settledCloseTimersUnderChurn,
   shippedSdkRecord,
 } from "./helpers/furnace-hosted-retry-journeys.js";
 
@@ -167,7 +169,12 @@ describe("Furnace Work retry while Run establishment is uncertain (wb-0kg.4)", (
     }
   }, 30_000);
 
-  it("wb-21k: executor.close() leaves no grace timer armed for Attempts that already settled (3 settled success Attempts, default-sized grace)", async () => {
+  // Instrument budget (wb-nl8.1), not a behavioral assertion: the four timer-census rows below sample the refed-Timeout
+  // count only once it has been quiet for 150 ms (helper quiescentTimeouts, up to 1500 ms per census, two censuses per
+  // row), on top of a body that already runs ~0.3-1 s under the 63-fork default; the vitest 5000 ms default left no room
+  // for that. 15_000 covers the derived worst case (5000 grace + 5000 close bound + 2 x 1500 quiescence + attempts) and
+  // keeps a dragging close() visible as a named red (controlTimerExpiredBeforeCensus) rather than a long hang.
+  it("wb-21k: executor.close() leaves no grace timer armed for Attempts that already settled (3 settled success Attempts, default-sized grace)", { timeout: 15_000 }, async () => {
     expect(SETTLED_CLOSE_GRACE_MS).toBe(5000);
     const observed = await settledCloseTimers(env);
     expect(observed.armed).toBe(true);
@@ -177,7 +184,7 @@ describe("Furnace Work retry while Run establishment is uncertain (wb-0kg.4)", (
     expect(observed.afterClose.attempts.map((attempt) => attempt.cancel)).toEqual([{ requested: false }, { requested: false }, { requested: false }]);
   });
 
-  it("wb-19q member 18 (wb-21k F2): the dangling-timer measurement is sensitive: a timer armed by close()'s abort of a parked fourth Attempt raises the after-close count, so a count taken before close() cannot pass as clean", async () => {
+  it("wb-19q member 18 (wb-21k F2): the dangling-timer measurement is sensitive: a timer armed by close()'s abort of a parked fourth Attempt raises the after-close count, so a count taken before close() cannot pass as clean", { timeout: 15_000 }, async () => {
     const observed = await settledCloseTimersSensitivity(env);
     expect(observed.armed).toBe(true);
     expect(observed.controlTimerArmed).toBe(true);
@@ -185,6 +192,8 @@ describe("Furnace Work retry while Run establishment is uncertain (wb-0kg.4)", (
     // The control timer is armed INSIDE close() (by the abort of the parked Attempt), so only a count taken after close()
     // can see it: a measurement that read its after-close count before close() reads 0 here and fails this row.
     expect(observed.timeoutsAfterClose - observed.timeoutsBeforeClose).toBeGreaterThanOrEqual(1);
+    // wb-nl8.1: a close() that dragged past the control timer's own grace would read a bare 0 above; it is named here instead.
+    expect(observed.controlTimerExpiredBeforeCensus).toBe(false);
     // the three settled Attempts stay untouched beside the parked control Attempt, which close() ends as host_closed/indeterminate
     expect(observed.afterClose.attempts.map((attempt) => [attempt.attemptId, attempt.terminal, attempt.cancel])).toEqual([
       ["frn-atm-t1", "success", { requested: false }],
@@ -192,6 +201,39 @@ describe("Furnace Work retry while Run establishment is uncertain (wb-0kg.4)", (
       ["frn-atm-t3", "success", { requested: false }],
       [SETTLED_CLOSE_CONTROL_ATTEMPT, "indeterminate", { requested: true, reason: "host_closed" }],
     ]);
+  });
+
+  // wb-nl8.1 churn rows: the SAME measurement body as the two rows above (helper measureSettledCloseTimers) with an
+  // off-by-default knob switched on, so the roster rows and these cannot drift apart. The churn is injected (a refed
+  // ambient timer of the vitest runner throttle's class; a held control settlement), never awaited from a neighbour,
+  // so each row is deterministic on an unloaded host: red on instant samples, green on quiescent ones.
+  it("wb-nl8.1 churn: a 100 ms refed ambient timer armed before the before-census and a parked control Attempt that settles 150 ms after its abort still read a delta >= 1 (member-18 tuple unchanged)", { timeout: 15_000 }, async () => {
+    const observed = await settledCloseTimersSensitivityUnderChurn(env);
+    expect(observed.churn.ambientArmed).toBe(true);
+    expect(observed.churn.controlSettleDelayedMs).toBeGreaterThanOrEqual(150);
+    expect(observed.armed).toBe(true);
+    expect(observed.controlTimerArmed).toBe(true);
+    expect(observed.settledAttempts).toBe(3);
+    // Instant samples read base + 1 (the ambient) before and base + 1 (the control timer, the ambient expired inside
+    // the >= 150 ms close) after: the field red "expected 0 to be greater than or equal to 1".
+    expect(observed.timeoutsAfterClose - observed.timeoutsBeforeClose).toBeGreaterThanOrEqual(1);
+    expect(observed.controlTimerExpiredBeforeCensus).toBe(false);
+    expect(observed.afterClose.attempts.map((attempt) => [attempt.attemptId, attempt.terminal, attempt.cancel])).toEqual([
+      ["frn-atm-t1", "success", { requested: false }],
+      ["frn-atm-t2", "success", { requested: false }],
+      ["frn-atm-t3", "success", { requested: false }],
+      [SETTLED_CLOSE_CONTROL_ATTEMPT, "indeterminate", { requested: true, reason: "host_closed" }],
+    ]);
+  });
+
+  it("wb-nl8.1 churn: a 100 ms refed ambient timer armed inside the close window still reads a delta <= 0 for three settled Attempts (settled tuple unchanged)", { timeout: 15_000 }, async () => {
+    const observed = await settledCloseTimersUnderChurn(env);
+    expect(observed.churn.ambientArmed).toBe(true);
+    expect(observed.armed).toBe(true);
+    expect(observed.settledAttempts).toBe(3);
+    // Instant samples count the transient at the after-census: the mirrored field red "expected 1 to be less than or equal to 0".
+    expect(observed.timeoutsAfterClose - observed.timeoutsBeforeClose).toBeLessThanOrEqual(0);
+    expect(observed.afterClose.attempts.map((attempt) => attempt.cancel)).toEqual([{ requested: false }, { requested: false }, { requested: false }]);
   });
 
   it("the host scratch base follows the host rule: XDG_RUNTIME_DIR first, /tmp only as the recorded fallback, never first", () => {

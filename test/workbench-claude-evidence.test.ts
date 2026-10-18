@@ -10,6 +10,7 @@ import {
   CLAUDE_EVIDENCE_CONTRACT, CLAUDE_EVIDENCE_TRUNCATED_MARK, CLAUDE_MESSAGE_REF, type ClaudeEvidenceContent, type ClaudeEvidenceDeps, readClaudeMessageEvidence,
 } from "../src/workbench/claude-evidence.js";
 import type { ClaudeTranscriptRow } from "../src/workbench/claude-transcript.js";
+import { UNSAFE_DISPLAY } from "./helpers/unsafe-display.js";
 
 type Read = (sessionId: string, cwd: string, limit: number) => Promise<readonly ClaudeTranscriptRow[]>;
 
@@ -541,10 +542,6 @@ const ZWSP = cp(0x200b);
 const LS = cp(0x2028);
 const PS = cp(0x2029);
 const BOM = cp(0xfeff);
-/** The trunk corpus's display set (test/workbench-sanitizer-corpus.test.ts UNSAFE_DISPLAY): C0/C1 controls, the line and
- * paragraph separators, every default-ignorable code point and lone surrogates. */
-const UNSAFE_DISPLAY = /[\x00-\x1f\x7f-\x9f\u{2028}\u{2029}]|\p{Default_Ignorable_Code_Point}|[\u{d800}-\u{dfff}]/u;
-
 describe("wb-6ze.10 respin-2 U2: the glue controls the first cut kept clean stay clean (the raw reading is load-bearing)", () => {
   // Trunk corpus ids D1 (U5 glue control), Y1 (16:44Z: a zero-width space can split a token) and P1 (16:44Z: the BOM is a
   // separator). Deleting the unit before redaction glues the key to the word before it, or the token to its scheme.
