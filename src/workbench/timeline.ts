@@ -20,7 +20,9 @@ import type { Interval, NativeRef, ObservationProjection, ObservationScope, Obse
 import { sanitizeWorkbenchText } from "./redaction.js";
 
 export const TIMELINE_CONTRACT = "workbench.timeline/v1";
-export type TimelineReader = Pick<ObservationProjection, "window" | "relations" | "relationRevision">;
+/** relationsPage is optional: a reader that has it reports whether a relation page hides a further edge, one that lacks it
+ * (a producer stand-in) is read exactly as before, where a page holding relationLimit rows is the only sign of a full page. */
+export type TimelineReader = Pick<ObservationProjection, "window" | "relations" | "relationRevision"> & Partial<Pick<ObservationProjection, "relationsPage">>;
 
 export interface TimelineRequest {
   scope: ObservationScope;
@@ -39,9 +41,10 @@ export interface TimelineRequest {
   maxLanes?: number;
   /** Rows kept per lane, 1..100 (default 40). */
   maxRowsPerLane?: number;
-  /** Incoming relations read per row, 1..100 (default 40). A page that returns this many marks truncated.relations. Keep
-   * it at or below the reader's own page cap (ObservationProjection caps a page at its maxQuery, 40 in the extension):
-   * relations() reports no truncation, so a page capped below this limit cannot be told from a complete one. */
+  /** Incoming relations read per row, 1..100 (default 40). A page that returns this many marks truncated.relations, and so
+   * does a page the reader reports truncated (ObservationProjection.relationsPage, whose page is capped at the projection's
+   * maxQuery, 40 in the extension). A reader without relationsPage reports no truncation, so keep this at or below its page
+   * cap: a page capped below this limit cannot be told from a complete one. */
   relationLimit?: number;
 }
 export type TimelineTiming =
@@ -357,8 +360,17 @@ export function buildTimelineLanes(reader: TimelineReader, request: TimelineRequ
   let relationsFull = false;
   let multipleParents = false;
   for (const row of rows) {
-    const incoming = reader.relations({ scope: { ...scope }, to: row.observed.key, limit: relationLimit });
-    if (incoming.length >= relationLimit) relationsFull = true;
+    const query = { scope: { ...scope }, to: row.observed.key, limit: relationLimit };
+    let incoming: Relation[];
+    if (typeof reader.relationsPage === "function") {
+      const page = reader.relationsPage(query);
+      incoming = page.relations;
+      // Reported truncation or the exact-relationLimit rule: never less conservative than the size rule alone.
+      if (page.truncated || incoming.length >= relationLimit) relationsFull = true;
+    } else {
+      incoming = reader.relations(query);
+      if (incoming.length >= relationLimit) relationsFull = true;
+    }
     const parent = parentOf(incoming.slice(0, relationLimit), row.observed.key, scopePrefix);
     if (parent?.multiple) multipleParents = true;
     const provider = row.observed.nativeRef.provider;

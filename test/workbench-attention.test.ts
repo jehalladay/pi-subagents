@@ -469,14 +469,17 @@ describe("selector purity and bounds (docs/workbench/10 § Rendering pipeline)",
     relate(view, "other", "A");
     const query = vi.spyOn(view, "query");
     const relations = vi.spyOn(view, "relations");
+    // wb-6ze.29: a projection that has relationsPage is read through it, so a relation read is a call of either method.
+    const pages = vi.spyOn(view, "relationsPage");
+    const reads = () => [...relations.mock.calls, ...pages.mock.calls];
     const revision = view.window({ scope: alice, invocationId: INVOCATION, offset: 0, limit: 1 }).revision;
     const topology = view.relationRevision();
     const first = report(view);
     expect(query).toHaveBeenCalledTimes(1);
     expect(query.mock.calls[0][0]).toEqual({ scope: alice, invocationId: INVOCATION, limit: 100 });
     const examined = new Set(["A", "B", "C", "D"].map(id => keyOf(view, id)));
-    expect(relations.mock.calls.length).toBe(4);
-    for (const [input] of relations.mock.calls) expect(examined.has(input.from ?? "")).toBe(true);
+    expect(reads().length).toBe(4);
+    for (const [input] of reads()) expect(examined.has(input.from ?? "")).toBe(true);
     query.mockClear();
     report(view, { limit: 7 });
     expect(query.mock.calls[0][0]).toMatchObject({ limit: 7 });
@@ -695,10 +698,17 @@ describe("B7 docs/workbench/14 § Truth labels and release gates: brute-force fa
         const page = fixture.view.query({ scope: alice, invocationId, limit });
         const relations = vi.spyOn(fixture.view, "relations");
         const actual = selectAttention(fixture.view, { scope: alice, invocationId, now: T, limit, bottlenecks: wanted });
+        // wb-6ze.29: the real projection reports its pages whole, so the adopted read re-reads no pair. The same projection
+        // with relationsPage hidden takes the pair re-read path: its relations() calls are the pair reads counted here.
+        const legacy = selectAttention({ query: filter => fixture.view.query(filter), relations: input => fixture.view.relations(input) }, {
+          scope: alice, invocationId, now: T, limit, bottlenecks: wanted,
+        });
         pairReads += relations.mock.calls.filter(([input]) => input.to !== undefined).length;
         relations.mockRestore();
         const { examined, counts, disconnectedProviders, bottlenecks, unmeasured, clockSkew, criticalPath } = actual;
         expect({ examined, counts, disconnectedProviders, bottlenecks, unmeasured, clockSkew, criticalPath }).toEqual(bruteForce(fixture, page, wanted));
+        // The pair re-read path reaches the same report, so it is held to the same brute force.
+        expect(legacy).toEqual(actual);
         labels.add(criticalPath.label);
         if (criticalPath.label === "incomplete-trace") for (const reason of criticalPath.reasons) reasons.add(reason);
         compared++;
