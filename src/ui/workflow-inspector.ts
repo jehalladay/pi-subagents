@@ -404,6 +404,14 @@ function attentionPanel(report: AttentionReport, inner: number, ascii: boolean, 
   if(report.clockSkew>0) panel.notes.push(`clock skew ${report.clockSkew} (clamped)`);
   return panel;
 }
+/** The overview's attention and critical-path reading when no AttentionReport is supplied: fixed text, no producer string. */
+const NO_REPORT_READING = ['Attention: stale/unknown is last-known state, not live progress.', 'Critical path: incomplete trace (no complete dependency/interval proof).'] as const;
+/** The no-report reading as one pane of a composition draws it (wb-8na, owner R505 N2): each line passes the shared helper once (the
+ * inspector's safe(), the "terminal" layout) and is word-wrapped to the pane as the compact panel wraps its own lines, continuation
+ * rows indented, so a pane narrower than a sentence never cuts it. The rows are emitted width-bounded only, as panel rows are. */
+function noReportPaneReading(inner: number, ascii: boolean): string[] {
+  return NO_REPORT_READING.flatMap(text=>wrapWords(safe(text,ascii),inner-PANEL_CONTINUATION.length).map((part,at)=>at===0 ? part : `${PANEL_CONTINUATION}${part}`));
+}
 /** The optional panel lines (bottleneck rows, a dropped-row note, the clock caveat, the unmeasured and skew notes) that fit `budget`.
  * Notes are kept first; bottleneck rows are dropped from the bottom and the dropped ones are counted, never silent. */
 function fitAttentionPanel(panel: AttentionPanel, budget: number): string[] {
@@ -825,8 +833,10 @@ function layoutColumn(model:InspectorModel,state:InspectorState,size:InspectorSi
     const last=lastSiblings(entries);
     // Rows never displace the selected, attention, critical-path, row-range and key-hint lines.
     const panel=model.attention ? attentionPanel(model.attention,inner,ascii,compact || width<80 || height<20) : undefined;
+    // Without a report a pane wraps the fixed reading to its width (wb-8na); the single column draws it as before, one row a line.
+    const reading=panel || !compact ? undefined : noReportPaneReading(inner,ascii);
     const available=height-lines.length-(current && !compact && width>=80 ? 1 : 0)-(paged ? 1 : 0)-1-(capLine ? 1 : 0);
-    const fixed=panel ? panel.head.length+panel.tail.length : 2;
+    const fixed=panel ? panel.head.length+panel.tail.length : reading ? reading.length : NO_REPORT_READING.length;
     // The tree keeps a few rows; bottleneck rows and notes take only what remains, dropping from the bottom.
     const optional=panel ? fitAttentionPanel(panel,Math.max(0,available-fixed-Math.min(entries.length,MAX_PANEL_TREE_MIN))) : [];
     const room=available-fixed-optional.length;
@@ -851,10 +861,8 @@ function layoutColumn(model:InspectorModel,state:InspectorState,size:InspectorSi
     }
     if(current && !compact && width>=80) add(`Selected  ${safe(ref(current),ascii)} · ${current.evidenceRefs.length} evidence ref${current.evidenceRefs.length===1?'':'s'}`);
     if(panel) for(const text of [...panel.head,...optional,...panel.tail]) addPanel(text);
-    else {
-      add('Attention: stale/unknown is last-known state, not live progress.');
-      add('Critical path: incomplete trace (no complete dependency/interval proof).');
-    }
+    else if(reading) for(const text of reading) addPanel(text);
+    else for(const text of NO_REPORT_READING) add(text);
   } else if(state.view==='graph'){
     add('Observed reference graph · cycles allowed; missing edges are unknown');
     // With a graph-view model (wb-6ze.34) the model is drawn alone and no relation page is read; without one the per-node blocks
