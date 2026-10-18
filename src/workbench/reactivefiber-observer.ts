@@ -5,9 +5,10 @@
  * clock, randomness, environment, file, process or SDK access and no projection mutation; the caller applies the frozen result with
  * ObservationProjection.refresh and relate. This module never invokes rf, so it can never issue a history-creating verb; it only
  * reads an envelope the host already holds. Only the full noncommitted-preview shape (ok, ephemeral, render_id null, transaction_id
- * null, zero storage writes, a sha256 graph basis) can read as a render; an error summary or an exhausted budget is partial, an
- * RF_ failure stays a failure and anything malformed or contradictory is refused. The context text itself is never copied: it is
- * referenced by its sha256 digest, so no output, budget payload or diagnostic body reaches any surfaced string.
+ * null, zero storage writes, a sha256 graph basis) can read as a render; an error summary, an exhausted budget or an observation
+ * row that observed no value is partial, an RF_ failure stays a failure and anything malformed or contradictory is refused. The
+ * context text itself is never copied: it is referenced by its sha256 digest, so no output, budget payload or diagnostic body
+ * reaches any surfaced string, and of an observation row only its status word and the row counts ever do.
  */
 import {createHash} from 'node:crypto';
 import {CapabilityError, type JsonValue} from './capability-registry.js';
@@ -70,6 +71,15 @@ const ENGINE_NOTE = 'TSX engine identity from result.provenance.sdk_versions: a 
 /** The producer-closed result.engine_metrics counters (wb-693.4): exactly these two, each a non-negative integer. */
 const ENGINE_METRIC_KEYS = ['tsx_worker_spawns', 'tsx_resource_rounds'];
 const SPAWN_NOTE = 'TSX worker spawned (result.engine_metrics.tsx_worker_spawns): a foreign runtime executed component source';
+/** The pinned rf observed-value statuses (domain/observation.py:100@8a8b83e4d): a row reading either one observed a value. */
+const OBSERVED_STATUSES: ReadonlySet<string> = new Set(['observed', 'null']);
+/** At most this many distinct not-observed status words are listed in the observations note (wb-973.10). */
+const MAX_STATUS_WORDS = 4;
+/** A status word the note lists verbatim: a bounded ASCII token like every pinned word, so four of them, their separators and
+ * the counts always fit inside DIAGNOSTIC and no listed word can carry a separator, a gap or a line break. */
+const STATUS_WORD = /^[A-Za-z0-9_.-]{1,24}$/;
+/** Marks the not-observed status words the note does not list. */
+const UNLISTED = '…';
 
 type JsonRecord = {[key: string]: JsonValue};
 interface CheckedContext {
@@ -122,6 +132,33 @@ function engineSpawns(result: JsonRecord): number {
     throw refused('result.engine_metrics needs exactly the two non-negative integer counters tsx_worker_spawns and tsx_resource_rounds');
   }
   return Number(metrics.tsx_worker_spawns);
+}
+
+/** What result.observations contributes (wb-973.10, SCG-R10): read from each row's status word alone, it can only demote. A row
+ * whose status is an observed value adds nothing; any other string, an unknown word included, counts as not observed (rf's
+ * vocabulary is open, so no word is refused). A status that is not a string, a row that is not an object and an observations
+ * value that is not an array are refused. No other row field is read, so a row's executable, binding_ref, observed_dep_refs,
+ * freshness_witness, timestamps, ids and digests never reach a surfaced string; the note lists at most MAX_STATUS_WORDS
+ * distinct words, each one the shared label layout shows unchanged, and marks any other not-observed status with UNLISTED.
+ * An absent key, an empty list and a list of observed values leave the projection exactly as it was. */
+function observationRows(value: JsonValue | undefined): {notObserved: number; note?: string} {
+  if (value === undefined) return {notObserved: 0};
+  if (!Array.isArray(value)) throw refused('result.observations must be an array of rows');
+  const listed: string[] = [];
+  let notObserved = 0;
+  let unlisted = false;
+  for (const item of value) {
+    const status = record(item)?.status;
+    if (typeof status !== 'string') throw refused('every result.observations row must be an object with a string status');
+    if (OBSERVED_STATUSES.has(status)) continue;
+    notObserved += 1;
+    if (listed.includes(status)) continue;
+    if (listed.length < MAX_STATUS_WORDS && STATUS_WORD.test(status) && shown(status, DIAGNOSTIC) === status) listed.push(status);
+    else unlisted = true;
+  }
+  if (notObserved === 0) return {notObserved};
+  const words = unlisted ? [...listed, UNLISTED] : listed;
+  return {notObserved, note: `observations: ${value.length} ${value.length === 1 ? 'row' : 'rows'}, ${notObserved} not observed (${words.join(', ')}): partial`};
 }
 
 /** Freezes a tree this module just built; nothing in it is shared with the caller's input. */
@@ -228,6 +265,8 @@ function previewSnapshot(envelope: JsonRecord, diagnostics: readonly JsonRecord[
   const work = record(result.work);
   if (!work || !hasExactKeys(work, WORK_KEYS) || !WORK_KEYS.every(key => count(work[key]))) throw refused('result.work needs exactly the six non-negative integer counters');
   if (work.storage_write_count !== 0) throw refused('result.work.storage_write_count must be 0: a preview writes nothing');
+  // wb-973.10 (SCG-R10): observation rows, read through their status words only; a row can demote the preview, never upgrade it.
+  const observations = observationRows(result.observations);
 
   const window = Number(formula.context_window);
   const available = formula.available_context_tokens;
@@ -237,11 +276,12 @@ function previewSnapshot(envelope: JsonRecord, diagnostics: readonly JsonRecord[
   const live = host.seam === 'rf-cli';
   const budget = overBudget ? `over budget by ${-available} (context window ${window} tokens)` : `${available} of ${window} context tokens available`;
   const statusText = `${SEAM_LABEL[host.seam]} · ${budget} · necessity evals ${work.necessity_eval_count} · ${counts.errors} errors, ${counts.warnings} warnings`;
-  const clean = live && !flagged && !overBudget;
+  const clean = live && !flagged && !overBudget && observations.notObserved === 0;
   const notes = ['ephemeral noncommitted preview: render_id null, transaction_id null, 0 authoritative storage writes (envelope storage_write_count)', 'context text withheld: referenced by sha256 digest'];
   if (!live) notes.push('fixture seam: not a real generated context');
   if (flagged) notes.push('render reported errors: partial, not a clean render');
   if (overBudget) notes.push('context exceeds the available budget: partial');
+  if (observations.note !== undefined) notes.push(observations.note);
   if (release !== undefined) notes.push(`producer release from result.provenance.cli_version: rf@${release}`);
   // One foreign-runtime note: the identity note already states it, so the spawn note is added only beside no identity.
   if (engines.length > 0) notes.push(ENGINE_NOTE);
