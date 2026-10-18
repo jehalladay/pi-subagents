@@ -4,6 +4,9 @@
  * feature-matrix W10 row must cite at least one RF receipt row stamped with the release measured during that run, and the
  * stamped release must match the R2 carrier." It reads docs/workbench/receipts/ (the receipt convention, wb-xox), never
  * TRACEABILITY.md (frozen; test/workbench-traceability-freeze.test.ts), and imports the R2 carrier, never an rf@ literal.
+ * It also carries R5 (wb-2j3.4) AC1 on the same rendered model (gate-1 row 547, respin default (a): the raw-text line census
+ * it replaces read the markdown source, not the page): "A wb-6hb.11-style census falsifier binds the W10 row: FAILS while
+ * /zero durable writes/ remains in feature-matrix.md:105 (RED at 9df9a03), passes with the plane-scoped phrase."
  *
  * READING (respin on gate-3 row 487; owner ruling R1(a): the docs-pin floor binds this guard over the acceptance's
  * "string-level census" wording; respin on gate-1 row 500 adds SECTION CONTENT, the pinned claim cells and EVIDENCE
@@ -35,6 +38,13 @@
  *   body row of a top-level table inside the W10 section whose header names an Evidence column. Its Feature, Status and
  *   Caveats cells (located by header) render their committed text; the Evidence cell is judged below. wb-2j3.4's re-cut of
  *   this row updates W10_COMMITTED (and evidenceLead() or stampSentence() where their wording moves) in the same change.
+ * - WITHDRAWN CLAIM (R5 AC1): no rendered cell of any row that reads as the W10 claim row (the CLAIM ROW reading, so a
+ *   duplicate claim row anywhere on the page is read as well as the one in W10) reads as containing a WITHDRAWN_CLAIMS entry
+ *   under the FOLDED KEY: the universal negative in both spellings it was published in, the row's "zero durable writes"
+ *   and the descriptor's "no durable write" (wb-2j3.3). The claim row's rendered Feature cell (its first cell, the one read
+ *   as CLAIM_KEY) carries PLANE_SCOPED_CLAUSE instead, as exact rendered text (required text is never folded, so a
+ *   look-alike or an invisible inside the clause is refused). Neither reading consults W10_COMMITTED, so a later re-cut of
+ *   the committed row cannot carry the claim back.
  * - EVIDENCE COMPOSITION (J7): the rendered Evidence cell, split into sentences at each ". ", is exactly its five committed
  *   sentences in order: the lead (evidenceLead(): its carrier slot renders the R2 carrier, its receipt slot the stamped
  *   receipt, its retired release is the retirement-clause carve-out below), the Tests sentence, the legacy receipt clause
@@ -52,13 +62,16 @@
  * - FOLDED KEY (receipts-convention form): character references decoded, NFKC, white-space runs one space, control, format
  *   and combining code points dropped, case folded; each remaining non-ASCII code point matches any 0-3 characters, so a
  *   non-ASCII look-alike counts.
- * FALSIFIER FLOOR (U5): the gate-3 row-487 battery (G1-G9 with G6b evasions, K1-K3 kills, R1-R2 rendering-neutral controls)
- * and the gate-1 row-500 battery (J1-J27 docs, receipt and rendered-index variants; N1-N10 rendering-neutral controls) are carried
- * below as the same edits of the committed docs, judged in memory: every G, K and J variant is refused with its named
- * diagnosis and every R and N control is accepted. N6 (an unrelated row above the claim row) changes the committed first
- * cells, so it is carried as a kill. The F rows keep the fefe71f protections; the H rows add hiding and duplication shapes
- * outside the batteries; the C rows are rendering-neutral controls. Every look-alike is built with String.fromCodePoint;
- * none is typed raw.
+ * FALSIFIER FLOOR (U5): the gate-3 row-487 battery (G1-G9 with G6b evasions, K1-K3 kills, R1-R2 rendering-neutral controls),
+ * the gate-1 row-500 battery (J1-J27 docs, receipt and rendered-index variants; N1-N10 rendering-neutral controls) and the
+ * gate-1 row-547 battery (X1-X7 rendered-claim variants; its N1/N2 controls carried as XN1/XN2) are carried below as the
+ * same edits of the committed docs, judged in memory: every G, K, J and X variant is refused with its named diagnosis and
+ * every R, N and XN control is accepted. N6 (an unrelated row above the claim row) changes the committed first cells, so it
+ * is carried as a kill. The F rows keep the fefe71f protections; the H rows add hiding and duplication shapes outside the
+ * batteries; the C rows are rendering-neutral controls; the W rows carry AC1's own inputs (W1 the row as it read at
+ * 9df9a03, W2 the descriptor's spelling, W3 a look-alike, W4 a header-row claim row, W5 a look-alike inside the required
+ * clause, W6 an ASCII control character inside the claim). Every look-alike and invisible is built with
+ * String.fromCodePoint; none is typed raw.
  * MUTANT AUTHORING (C1): every page and rendered-index edit is located through the lexer (the top-level token raws tile the page; a
  * table's raw lines are its header, delimiter and rows; each rendered character of a cell or heading maps back to the
  * source span it renders from) and authored at those positions, never located by a raw-text regex, so a rendering-neutral
@@ -69,10 +82,16 @@
  * rendering-neutral control rewrites a receipt; named scope).
  * EACH-LIVENESS (U3): every for-of falsifier and control table carries a length pin and an ordered roster pin, and every
  * loop inside one row counts the entries it ran against a literal, so deleting any entry (G1 included) turns the suite red.
+ * FROZEN SHAPE (standing rule 16, owner order 2026-10-18T18:14:19Z): one row pins WITHDRAWN_CLAIMS, PLANE_SCOPED_CLAUSE,
+ * every W and X row with its diagnoses, and the XN control names as literals derived from the tables at this cut, so
+ * dropping a diagnosis, shortening a claim or a diagnosis, or swapping one for an unrelated diagnosis the variant also
+ * draws turns it red.
  * RESIDUALS (named, not closed): ASCII look-alikes (I for l, 0 for O) in a heading or a first cell are not folded; a
  * tolerated bare cell tag outside W10 is assumed inert; styling applied from outside the page; prose outside the W10
  * section (another section may still describe the capability); the receipt beyond its newest stamp entry and the rendered index
- * beyond its one link.
+ * beyond its one link; a withdrawn claim outside the claim rows' cells is not named by WITHDRAWN CLAIM (the section-level
+ * class, wb-64x): in another W10 row's cell (gate X9) it is silent, in a W10 paragraph (gate X8) SECTION CONTENT refuses it
+ * under its own diagnosis.
  * Spawns nothing; writes nothing; reads two docs files and the receipts directory and imports the carrier.
  */
 import { existsSync, readFileSync } from "node:fs";
@@ -98,6 +117,10 @@ const RELEASE_TOKEN_ALL = /rf@([0-9]+(?:\.[0-9]+)*)/g;
 const RETIREMENT_CLAUSE_ALL = /the earlier rf@[0-9]+(?:\.[0-9]+)* literal is retired/g;
 const CMD_ID_ALL = /cmd_[0-9a-f]{12}/g;
 const STAMP_MARK = "RF_PREVIEW_RECEIPT {";
+/** The withdrawn universal negative (R5 AC1, wb-2j3.4) in both spellings it was published in: the row's and the descriptor's. */
+const WITHDRAWN_CLAIMS = ["zero durable writes", "no durable write"] as const;
+/** The plane-scoped clause the claim row's rendered Feature cell carries in place of the withdrawn claim (wb-2j3.4 STATEMENT). */
+const PLANE_SCOPED_CLAUSE = "no authoritative or journal write, disposable cache-plane writes possible per the pinned producer trace";
 /** Elements a bare cell tag may never name: they can leave their cell, swallow what follows, or hide by construction. */
 const ESCAPING_ELEMENTS: ReadonlySet<string> = new Set([
   "script", "style", "textarea", "title", "xmp", "iframe", "noembed", "noframes", "noscript", "plaintext", "template",
@@ -219,6 +242,25 @@ function readsAsPrefix(folded: string, key: string): boolean {
       }
     }
     if (next.size === 0) return false;
+    reach = next;
+  }
+  return reach.has(key.length);
+}
+
+/** True when some run of `folded` reads as `key` (readsAsPrefix's reading, started at every code point). */
+function readsAsContaining(folded: string, key: string): boolean {
+  let reach = new Set<number>([0]);
+  for (const char of folded) {
+    if (reach.has(key.length)) return true;
+    const wild = (char.codePointAt(0) ?? 0) > 0x7f;
+    const next = new Set<number>([0]);
+    for (const position of reach) {
+      if (wild) {
+        for (let width = 0; width <= 3 && position + width <= key.length; width++) next.add(position + width);
+      } else if (key[position] === char) {
+        next.add(position + 1);
+      }
+    }
     reach = next;
   }
   return reach.has(key.length);
@@ -366,6 +408,46 @@ function claimRows(tokens: TokensList): ClaimRow[] {
   return found;
 }
 
+/** The WITHDRAWN CLAIM diagnosis for one cell (the judge appends its reason; the falsifier rows pin this text). */
+const withdrawnCause = (cell: string, claim: string): string => `a row that reads as the W10 claim row renders the withdrawn claim ${JSON.stringify(claim)} in its ${cell} cell`;
+/** The diagnosis for a claim row whose rendered Feature cell lacks PLANE_SCOPED_CLAUSE. */
+const PLANE_SCOPED_CAUSE = `the W10 claim row's rendered Feature cell does not carry the plane-scoped clause ${JSON.stringify(PLANE_SCOPED_CLAUSE)}`;
+
+/** A claim row cell's name in a diagnosis: its column header on a body row, its position on a header row. */
+function cellLabel(row: ClaimRow, index: number): string {
+  const header = row.header ? undefined : row.table.header[index];
+  return header === undefined ? `column ${index + 1}` : cellText(header);
+}
+
+/** Why rows that read as the W10 claim row render a withdrawn claim (WITHDRAWN CLAIM): every rendered cell of every such row. */
+function withdrawnClaimFindings(rows: readonly ClaimRow[]): string[] {
+  const findings: string[] = [];
+  for (const row of rows) {
+    for (const [index, cell] of row.cells.entries()) {
+      const folded = foldKey(cellText(cell));
+      for (const claim of WITHDRAWN_CLAIMS) {
+        if (readsAsContaining(folded, claim)) findings.push(withdrawnCause(cellLabel(row, index), claim));
+      }
+    }
+  }
+  return findings;
+}
+
+/** Why the claim row's rendered Feature cell (its first cell, the one read as CLAIM_KEY) does not carry PLANE_SCOPED_CLAUSE
+ * as exact rendered text (never folded: the clause is required, so a look-alike or an invisible inside it is refused). */
+function planeScopedFindings(row: ClaimRow): string[] {
+  const feature = row.cells[0];
+  return feature !== undefined && cellText(feature).includes(PLANE_SCOPED_CLAUSE) ? [] : [PLANE_SCOPED_CAUSE];
+}
+
+/** The WITHDRAWN CLAIM reading alone over a page's claim rows (the L7 row). */
+function withdrawnClaimView(page: string): string[] {
+  const rows = claimRows(new Lexer({ gfm: true }).lex(page));
+  const row = rows[0];
+  if (rows.length !== 1 || row === undefined) return [...withdrawnClaimFindings(rows), `${rows.length} table rows on the page read as the W10 claim row, not exactly one`];
+  return [...withdrawnClaimFindings(rows), ...planeScopedFindings(row)];
+}
+
 /** Rendered text read as a cell reads it: every white-space run one space, trimmed. */
 function collapsed(text: string): string {
   return text.replace(/[ \t\n\r\f]+/g, " ").trim();
@@ -487,6 +569,7 @@ function w10View(page: string): ClaimView {
   if (section !== undefined) findings.push(...ancestryFindings(tokens, section), ...sectionFindings(tokens, section));
   findings.push(...htmlRefusals(tokens, MATRIX, (top) => section === undefined || top < section.start || top >= section.end));
   const rows = claimRows(tokens);
+  findings.push(...withdrawnClaimFindings(rows));
   const row = rows[0];
   if (rows.length !== 1 || row === undefined) return { findings: [...findings, `${rows.length} table rows on the page read as the W10 claim row, not exactly one`] };
   if (section === undefined) return { findings };
@@ -495,7 +578,7 @@ function w10View(page: string): ClaimView {
   const evidenceIndex = row.table.header.findIndex((cell) => cellText(cell) === EVIDENCE_HEADER);
   const evidence = row.cells[evidenceIndex];
   if (evidenceIndex < 0 || evidence === undefined) return { findings: [...findings, "the W10 claim row's table names no Evidence column"] };
-  findings.push(...claimCellFindings(row));
+  findings.push(...claimCellFindings(row), ...planeScopedFindings(row));
   return { findings, evidence: cellText(evidence), row: row.cells.map(cellText).join(" | ") };
 }
 
@@ -1092,6 +1175,12 @@ function breakStamp(receipt: string, replacement: string): string {
 /** The 9df9a03 row without its capability token: an unstamped duplicate claim row (G5-G7). */
 const DUP_NO_TOKEN = ROW_AT_9DF9A03.replace(" (reactivefiber.render.preview/v1)", "");
 
+/** The 9df9a03 Feature cell: the withdrawn claim as the row published it. */
+const FEATURE_AT_9DF9A03 = ROW_AT_9DF9A03.slice(2, ROW_AT_9DF9A03.indexOf(" | "));
+/** The gate-1 row-547 battery's withdrawn claim row, its cells as that battery wrote them. */
+const WITHDRAWN_CELLS = [FEATURE_AT_9DF9A03, "landed-gated", "Evidence sentence.", "Caveat sentence."] as const;
+const WITHDRAWN_ROW = `| ${WITHDRAWN_CELLS.join(" | ")} |`;
+
 /** A duplicate, unstamped claim row in the gate-1 battery's form (J8, J9, J11). */
 const unstampedRow = (first: string): string =>
   `| ${[first, "landed-gated", "Tests: test/workbench-native-rf-preview.test.ts. TRACEABILITY 'Native ecosystem receipts': cmd_994da817d4cd, cmd_7e50a487da08, cmd_386a32a0323b (unstamped 0.1.583-era runs).", "none"].join(" | ")} |`;
@@ -1477,6 +1566,81 @@ const N_PAGE: readonly Control[] = [
 /** The gate-1 row-500 rendering-neutral control on the INDEX. */
 const N_INDEX: readonly IndexVariant[] = [["N10 the INDEX link destination wrapped in angle brackets", angleIndexLink]];
 
+/** The R5 AC1 rows (W) and the gate-1 row-547 battery (X1-X7, wb-2j3.4 respin), each refused with every named diagnosis. */
+const W_PAGE: readonly PageVariant[] = [
+  ["W1 (AC1, RED at 9df9a03) the claim row as it read at 9df9a03", (source) => editRow(source, () => [ROW_AT_9DF9A03]), [withdrawnCause("Feature", "zero durable writes"), PLANE_SCOPED_CAUSE]],
+  [
+    "W2 the descriptor's spelling of the withdrawn claim appended to the claim row's Caveats cell",
+    (source) =>
+      editClaim(source, (site) => {
+        const caveats = cellUnder(site, "Caveats");
+        return [[caveats.end, caveats.end, " The preview makes no durable writes."]];
+      }),
+    [withdrawnCause("Caveats", "no durable write"), "the W10 claim row's rendered Caveats cell reads"],
+  ],
+  [
+    "W3 the withdrawn claim with a Cyrillic look-alike o in a new Evidence sentence",
+    (source) => inEvidence(source, "Bead wb-x32 (open).", `Bead wb-x32 (open). The preview has zer${at(0x43e)} durable writes.`),
+    [withdrawnCause("Evidence", "zero durable writes"), "the rendered Evidence cell holds a sentence outside its committed slice"],
+  ],
+  [
+    "W4 a one-column table at EOF whose header row is the 9df9a03 Feature cell (a header row reads as a claim row too)",
+    (source) => `${source}\n\n| ${FEATURE_AT_9DF9A03} |\n| --- |\n`,
+    ["2 table rows on the page read as the W10 claim row", withdrawnCause("column 1", "zero durable writes")],
+  ],
+  [
+    "W5 the plane-scoped clause with a Cyrillic look-alike o in its first word (required text is read exactly, never folded)",
+    (source) =>
+      editClaim(source, (site) => {
+        const [start, end] = spanOf(firstCell(site), "no authoritative");
+        return [[start, end, `n${at(0x43e)} authoritative`]];
+      }),
+    [PLANE_SCOPED_CAUSE, "the W10 claim row's rendered Feature cell reads"],
+  ],
+  [
+    "W6 the withdrawn claim split by an ASCII control character inside its first word in a new Evidence sentence",
+    (source) => inEvidence(source, "Bead wb-x32 (open).", `Bead wb-x32 (open). The preview has ze${at(0x1)}ro durable writes.`),
+    [withdrawnCause("Evidence", "zero durable writes"), "the rendered Evidence cell holds a sentence outside its committed slice"],
+  ],
+  [
+    "X1 a duplicate W10 heading at EOF carrying the withdrawn claim row",
+    (source) => `${source}\n\n## W10: ReactiveFiber provider/interop\n\n| Feature | Status | Evidence | Caveats |\n| --- | --- | --- | --- |\n${WITHDRAWN_ROW}\n`,
+    ["2 headings on the page read as a W10 heading", "2 table rows on the page read as the W10 claim row", withdrawnCause("Feature", "zero durable writes")],
+  ],
+  [
+    "X2 a second claim row carrying the withdrawn claim, two leading spaces (still a table row)",
+    (source) => editRow(source, (row) => [row, `  ${WITHDRAWN_ROW}`]),
+    ["2 table rows on the page read as the W10 claim row", withdrawnCause("Feature", "zero durable writes")],
+  ],
+  [
+    "X3 a second claim row carrying the withdrawn claim, tight pipes",
+    (source) => editRow(source, (row) => [row, `|${WITHDRAWN_CELLS.join("|")}|`]),
+    ["2 table rows on the page read as the W10 claim row", withdrawnCause("Feature", "zero durable writes")],
+  ],
+  [
+    "X4 a level-1 heading between the W10 heading and its table (the row leaves W10 when rendered)",
+    (source) => afterW10Heading(source, "# Appendix: withdrawn rows\n"),
+    ["the W10 claim row is not inside the W10 section", "the W10 section holds 0 tables"],
+  ],
+  ["X5 the claim row hidden in a multi-line HTML comment (it renders nothing)", (source) => editRow(source, (row) => ["<!--", row, "-->"]), ["0 table rows on the page read as the W10 claim row"]],
+  [
+    "X6 the claim row moved into a fenced code block (it renders as code, not a row)",
+    (source) => editRow(source, (row) => ["```", row, "```"]),
+    ["0 table rows on the page read as the W10 claim row", "the W10 section holds a code block"],
+  ],
+  [
+    "X7 the withdrawn claim split by a zero-width space in a new Evidence sentence",
+    (source) => inEvidence(source, "Bead wb-x32 (open).", `Bead wb-x32 (open). The preview has zero${at(0x200b)} durable writes.`),
+    [withdrawnCause("Evidence", "zero durable writes"), "the rendered Evidence cell holds a sentence outside its committed slice"],
+  ],
+];
+
+/** The gate-1 row-547 rendering-neutral controls (that battery's N1/N2, carried as XN1/XN2): each is accepted. */
+const XN_CONTROLS: readonly Control[] = [
+  ["XN1 trailing spaces after the claim row's last pipe", (source) => editRow(source, (row) => [`${row}   `])],
+  ["XN2 an extra blank line between the W10 heading and its table", (source) => afterW10Heading(source, "")],
+];
+
 /** The F rows' page edits (the F tests below author through the same helpers), each with its diagnosis, for C1. */
 const F_PAGE: readonly (readonly [string, (source: string) => string, readonly string[], ((receipt: string) => string)?])[] = [
   ["F1", (source) => editRow(source, () => [ROW_AT_9DF9A03]), ["the rendered Evidence cell carries no stamped receipt sentence", "names rf@0.1.583 outside the retirement clause"]],
@@ -1502,6 +1666,7 @@ const PAGE_VARIANTS: readonly (readonly [string, (source: string) => string, rea
   ...GK_PAGE.map(([name, mutate, cause]) => [name, mutate, [cause]] as const),
   ...H_PAGE.map(([name, mutate, cause]) => [name, mutate, [cause]] as const),
   ...J_PAGE,
+  ...W_PAGE,
 ];
 
 /** Every receipt variant in this file with its diagnosis. */
@@ -1516,7 +1681,7 @@ const RECEIPT_VARIANTS: readonly ReceiptVariant[] = [
 const INDEX_VARIANTS: readonly IndexVariant[] = [["H16", commentIndexLine], ...J_INDEX];
 
 /** Every page control in this file. */
-const CONTROLS: readonly Control[] = [...R_CONTROLS, ...C_CONTROLS];
+const CONTROLS: readonly Control[] = [...R_CONTROLS, ...C_CONTROLS, ...XN_CONTROLS];
 
 describe("W10 stamped-release claim guard (wb-2j3.5, R6), read as the page renders", () => {
   const carrier = REACTIVE_FIBER_CONTRACT_SOURCE;
@@ -1559,6 +1724,10 @@ describe("W10 stamped-release claim guard (wb-2j3.5, R6), read as the page rende
     expect(lead?.carrier).toBe(carrier);
     expect(lead?.receipt).toBe(stampedParts(page())?.slots.receipt);
     expect(evidenceFindings(evidence, carrier)).toEqual([]);
+  });
+
+  it("L7 (wb-2j3.4 AC1): no live row that reads as the W10 claim row renders the withdrawn durable-writes claim, and its Feature cell carries the plane-scoped clause", () => {
+    expect(withdrawnClaimView(page())).toEqual([]);
   });
 
   describe("falsifiers on the judge's own inputs (the fefe71f protections, kept)", () => {
@@ -1821,6 +1990,69 @@ describe("W10 stamped-release claim guard (wb-2j3.5, R6), read as the page rende
     });
   });
 
+  describe("W10 withdrawn-claim rows (wb-2j3.4 AC1) and the gate-1 row-547 battery, carried as lexer-located edits: every W and X variant is refused with each named diagnosis and every XN control accepted", () => {
+    for (const [name, mutate, causes] of W_PAGE) {
+      it(`refuses ${name}`, () => {
+        const variant = mutate(page());
+        expect(variant).not.toBe(page());
+        const findings = judgeW10Claim(variant, liveReceipt, carrier);
+        expect(findings, name).not.toEqual([]);
+        let ran = 0;
+        for (const cause of causes) {
+          expect(findings.join("\n"), name).toContain(cause);
+          ran++;
+        }
+        expect(ran, name).toBe(causes.length);
+        expect(ran, name).toBeGreaterThan(0);
+      });
+    }
+
+    for (const [name, neutral] of XN_CONTROLS) {
+      it(`still accepts ${name} (rendering-neutral)`, () => {
+        const variant = neutral(page());
+        expect(variant).not.toBe(page());
+        expect(judgeW10Claim(variant, liveReceipt, carrier)).toEqual([]);
+        expect(withdrawnClaimView(variant)).toEqual([]);
+      });
+    }
+
+    it("W0: the 9df9a03 row alone, read by the WITHDRAWN CLAIM reading only, names its withdrawn claim and its missing plane-scoped clause", () => {
+      const findings = withdrawnClaimView(editRow(page(), () => [ROW_AT_9DF9A03]));
+      expect(findings).toHaveLength(2);
+      expect(findings[0]).toContain(withdrawnCause("Feature", "zero durable writes"));
+      expect(findings[1]).toBe(PLANE_SCOPED_CAUSE);
+    });
+
+    it("U3 (EACH-LIVENESS): the W table and the XN controls hold exactly their named rows, in order", () => {
+      expect(W_PAGE).toHaveLength(13);
+      expect(rowIds(W_PAGE)).toEqual(["W1", "W2", "W3", "W4", "W5", "W6", "X1", "X2", "X3", "X4", "X5", "X6", "X7"]);
+      expect(XN_CONTROLS).toHaveLength(2);
+      expect(rowIds(XN_CONTROLS)).toEqual(["XN1", "XN2"]);
+    });
+
+    it("W-SHAPE (standing rule 16 frozen shape): the withdrawn claims, the plane-scoped clause, every W and X row with its diagnoses and the XN controls are their frozen literal", () => {
+      expect(WITHDRAWN_CLAIMS).toEqual(["zero durable writes", "no durable write"]);
+      expect(PLANE_SCOPED_CLAUSE).toBe("no authoritative or journal write, disposable cache-plane writes possible per the pinned producer trace");
+      expect(W_PAGE.map(([name, , causes]) => `${name.split(" ")[0] ?? name}:${causes.length}`)).toEqual(["W1:2", "W2:2", "W3:2", "W4:2", "W5:2", "W6:2", "X1:3", "X2:2", "X3:2", "X4:2", "X5:1", "X6:2", "X7:2"]);
+      expect(W_PAGE.map(([name, , causes]) => [name, ...causes])).toEqual([
+        ["W1 (AC1, RED at 9df9a03) the claim row as it read at 9df9a03", 'a row that reads as the W10 claim row renders the withdrawn claim "zero durable writes" in its Feature cell', 'the W10 claim row\'s rendered Feature cell does not carry the plane-scoped clause "no authoritative or journal write, disposable cache-plane writes possible per the pinned producer trace"'],
+        ["W2 the descriptor's spelling of the withdrawn claim appended to the claim row's Caveats cell", 'a row that reads as the W10 claim row renders the withdrawn claim "no durable write" in its Caveats cell', "the W10 claim row's rendered Caveats cell reads"],
+        ["W3 the withdrawn claim with a Cyrillic look-alike o in a new Evidence sentence", 'a row that reads as the W10 claim row renders the withdrawn claim "zero durable writes" in its Evidence cell', "the rendered Evidence cell holds a sentence outside its committed slice"],
+        ["W4 a one-column table at EOF whose header row is the 9df9a03 Feature cell (a header row reads as a claim row too)", "2 table rows on the page read as the W10 claim row", 'a row that reads as the W10 claim row renders the withdrawn claim "zero durable writes" in its column 1 cell'],
+        ["W5 the plane-scoped clause with a Cyrillic look-alike o in its first word (required text is read exactly, never folded)", 'the W10 claim row\'s rendered Feature cell does not carry the plane-scoped clause "no authoritative or journal write, disposable cache-plane writes possible per the pinned producer trace"', "the W10 claim row's rendered Feature cell reads"],
+        ["W6 the withdrawn claim split by an ASCII control character inside its first word in a new Evidence sentence", 'a row that reads as the W10 claim row renders the withdrawn claim "zero durable writes" in its Evidence cell', "the rendered Evidence cell holds a sentence outside its committed slice"],
+        ["X1 a duplicate W10 heading at EOF carrying the withdrawn claim row", "2 headings on the page read as a W10 heading", "2 table rows on the page read as the W10 claim row", 'a row that reads as the W10 claim row renders the withdrawn claim "zero durable writes" in its Feature cell'],
+        ["X2 a second claim row carrying the withdrawn claim, two leading spaces (still a table row)", "2 table rows on the page read as the W10 claim row", 'a row that reads as the W10 claim row renders the withdrawn claim "zero durable writes" in its Feature cell'],
+        ["X3 a second claim row carrying the withdrawn claim, tight pipes", "2 table rows on the page read as the W10 claim row", 'a row that reads as the W10 claim row renders the withdrawn claim "zero durable writes" in its Feature cell'],
+        ["X4 a level-1 heading between the W10 heading and its table (the row leaves W10 when rendered)", "the W10 claim row is not inside the W10 section", "the W10 section holds 0 tables"],
+        ["X5 the claim row hidden in a multi-line HTML comment (it renders nothing)", "0 table rows on the page read as the W10 claim row"],
+        ["X6 the claim row moved into a fenced code block (it renders as code, not a row)", "0 table rows on the page read as the W10 claim row", "the W10 section holds a code block"],
+        ["X7 the withdrawn claim split by a zero-width space in a new Evidence sentence", 'a row that reads as the W10 claim row renders the withdrawn claim "zero durable writes" in its Evidence cell', "the rendered Evidence cell holds a sentence outside its committed slice"],
+      ]);
+      expect(XN_CONTROLS.map(([name]) => name)).toEqual(["XN1 trailing spaces after the claim row's last pipe", "XN2 an extra blank line between the W10 heading and its table"]);
+    });
+  });
+
   describe("C1: authoring follows the rendered page, so on every rendering-neutral base (N) each variant is still authored and refused with its diagnosis and each control still accepted", () => {
     for (const [name, neutral] of N_PAGE) {
       const id = name.split(" ")[0] ?? name;
@@ -1845,7 +2077,7 @@ describe("W10 stamped-release claim guard (wb-2j3.5, R6), read as the page rende
           expect(judgeW10Claim(mutate(base), liveReceipt, carrier), `${id} + ${control}`).toEqual([]);
           ran++;
         }
-        expect(ran).toBe(77);
+        expect(ran).toBe(92);
       }, 120_000);
     }
 
@@ -1869,15 +2101,15 @@ describe("W10 stamped-release claim guard (wb-2j3.5, R6), read as the page rende
     }
 
     it("U3 (EACH-LIVENESS): the C1 tables hold exactly the file's page, receipt, INDEX and control rows", () => {
-      expect(PAGE_VARIANTS).toHaveLength(58);
+      expect(PAGE_VARIANTS).toHaveLength(71);
       expect(rowIds(F_PAGE)).toEqual(["F1", "F2", "F3", "F4", "F5", "F12", "F12", "F12", "F13", "F14"]);
-      expect(PAGE_VARIANTS.map(([name]) => name)).toEqual([...F_PAGE, ...GK_PAGE, ...H_PAGE, ...J_PAGE].map(([name]) => name));
+      expect(PAGE_VARIANTS.map(([name]) => name)).toEqual([...F_PAGE, ...GK_PAGE, ...H_PAGE, ...J_PAGE, ...W_PAGE].map(([name]) => name));
       expect(RECEIPT_VARIANTS).toHaveLength(12);
       expect(rowIds(RECEIPT_VARIANTS)).toEqual(["F6", "F7", "F7", "F7", "F8", "G8", "K3", "H15", "J20", "J21", "J22", "J23"]);
       expect(INDEX_VARIANTS).toHaveLength(2);
       expect(rowIds(INDEX_VARIANTS)).toEqual(["H16", "J24"]);
-      expect(CONTROLS).toHaveLength(7);
-      expect(rowIds(CONTROLS)).toEqual(["R1", "R2", "C1", "C2", "C3", "C4", "C5"]);
+      expect(CONTROLS).toHaveLength(9);
+      expect(rowIds(CONTROLS)).toEqual(["R1", "R2", "C1", "C2", "C3", "C4", "C5", "XN1", "XN2"]);
     });
   });
 });
