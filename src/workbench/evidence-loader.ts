@@ -3,7 +3,7 @@
  * A reference is only a pointer; nothing here fetches until a host asks, nothing unreadable is invented,
  * and a failed read is a visible `unavailable` entry that never carries preview text.
  */
-import { safeWorkflowTerminalText } from "../ui/workflow-card.js";
+import { safeWorkflowTerminalText, scannedWorkflowTerminalText } from "../ui/workflow-card.js";
 import { CapabilityError } from "./capability-registry.js";
 import type { NativeRef, ObservationScope } from "./observation.js";
 import { sanitizeWorkbenchText } from "./redaction.js";
@@ -92,22 +92,33 @@ interface Slot {
   pending?: Promise<void>;
 }
 
-/** One preview line to its bounded, redacted, terminal-safe chunks: the shared helper runs before any split so a secret cannot straddle a chunk. */
-function safeChunks(raw: string): string[] {
-  const cleaned = sanitizeWorkbenchText(raw, Number.MAX_SAFE_INTEGER, "terminal");
-  if (cleaned.length === 0) return [""];
+/**
+ * One loader preview entry as display rows (wb-ktf): the shared helper redacts the WHOLE entry exactly once, before it is split
+ * or cut to the budget, so a credential whose scheme or key and value straddle a line break is still one credential. Its "lines"
+ * layout keeps the row structure (CRLF, CR, NEL, LS and PS each become one LF); every step after this one is per row.
+ */
+const redactedRows = (entry: string): string[] => sanitizeWorkbenchText(entry, Number.MAX_SAFE_INTEGER, "lines").split("\n");
+
+/** One redacted row to its bounded, terminal-safe chunks, never cut between the two halves of a surrogate pair. */
+function safeChunks(row: string): string[] {
+  if (row.length === 0) return [""];
   const chunks: string[] = [];
   let at = 0;
-  while (at < cleaned.length) {
-    let end = Math.min(at + EVIDENCE_LINE_CHARS, cleaned.length);
-    if (end < cleaned.length && isHighSurrogate(cleaned.charCodeAt(end - 1))) end -= 1;
-    chunks.push(safeWorkflowTerminalText(cleaned.slice(at, end)));
+  while (at < row.length) {
+    let end = Math.min(at + EVIDENCE_LINE_CHARS, row.length);
+    if (end < row.length && isHighSurrogate(row.charCodeAt(end - 1))) end -= 1;
+    chunks.push(safeWorkflowTerminalText(row.slice(at, end)));
     at = end;
   }
   return chunks;
 }
 
 const isHighSurrogate = (unit: number): boolean => unit >= 0xd800 && unit <= 0xdbff;
+
+/** At most `length` UTF-16 units of display text, never ending inside a surrogate pair, as safeChunks cuts (wb-yr9). */
+function headWithin(text: string, length: number): string {
+  return text.slice(0, text.length > length && isHighSurrogate(text.charCodeAt(length - 1)) ? length - 1 : length);
+}
 
 /** The longest prefix of `text` whose UTF-8 size fits `budget` bytes, cut only on code-point boundaries. */
 function prefixWithinBytes(text: string, budget: number): string {
@@ -122,17 +133,17 @@ function prefixWithinBytes(text: string, budget: number): string {
   return kept;
 }
 
-/** Fit loader-supplied preview lines inside the byte and line budgets; raw payload is never retained. */
+/** Fit loader-supplied preview entries inside the byte and line budgets, which count redacted rows; raw payload is never retained. */
 function boundPreview(preview: readonly string[], maxBytes: number): { lines: string[]; clipped: boolean } {
   const lines: string[] = [];
   let remaining = maxBytes;
   let clipped = false;
   for (const entry of preview) {
     if (typeof entry !== "string") continue;
-    for (const part of entry.split(/\r\n|\r|\n/)) {
+    for (const row of redactedRows(entry)) {
       if (remaining <= 0 || lines.length >= EVIDENCE_MAX_PREVIEW_LINES) { clipped = true; break; }
-      const size = Buffer.byteLength(part);
-      const kept = size > remaining ? prefixWithinBytes(part, remaining) : part;
+      const size = Buffer.byteLength(row);
+      const kept = size > remaining ? prefixWithinBytes(row, remaining) : row;
       if (size > remaining) clipped = true;
       remaining -= Math.min(size, remaining);
       if (kept === "" && size > 0) continue;
@@ -158,17 +169,21 @@ function unavailableFor(error: unknown): EvidenceEntry {
   return { state: "unavailable", reason: "transport" };
 }
 
-/** Validate and bound one loader result into a loaded entry, or a visible unavailable. Raw error text never enters an entry. */
+/**
+ * Validate and bound one loader result into a loaded entry, or a visible unavailable. Raw error text never enters an entry. The
+ * producer receipt is examined only up to MAX_RECEIPT_CHARS raw characters, by the shared helper's straddle-safe scan option
+ * (wb-y5y): a value or escape sequence that bound splits is read as the whole receipt reads it, never cut open first.
+ */
 function admit(loader: EvidenceLoader, content: EvidenceContent, maxBytes: number): EvidenceEntry {
   if (typeof content !== "object" || content === null || !Array.isArray(content.preview)) return { state: "unavailable", reason: "transport" };
   if (!Number.isFinite(content.bytes) || content.bytes < 0 || Number.isNaN(Date.parse(content.capturedAt))) return { state: "unavailable", reason: "transport" };
   const { lines, clipped } = boundPreview(content.preview, maxBytes);
   const truncated = content.truncated === true || clipped || content.bytes > maxBytes;
   const preview = truncated ? [...lines.slice(0, EVIDENCE_MAX_PREVIEW_LINES - 1), EVIDENCE_TRUNCATED_MARK] : lines;
-  const receipt = typeof content.producerReceipt === "string" ? safeWorkflowTerminalText(content.producerReceipt.slice(0, MAX_RECEIPT_CHARS)) : "";
+  const receipt = typeof content.producerReceipt === "string" ? scannedWorkflowTerminalText(content.producerReceipt, MAX_RECEIPT_CHARS) : "";
   return {
     state: "loaded",
-    kind: safeWorkflowTerminalText(String(content.kind)).slice(0, 64),
+    kind: headWithin(safeWorkflowTerminalText(String(content.kind)), 64),
     provider: loader.provider,
     capturedAt: content.capturedAt,
     bytes: Math.max(content.bytes, preview.reduce((sum, line) => sum + Buffer.byteLength(line), 0)),

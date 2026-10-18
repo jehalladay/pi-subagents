@@ -3,13 +3,15 @@
 // with a mock pi (same pattern as print-mode.test.ts) inside a temp cwd, then
 // inspects the registered Agent tool's description.
 
-import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
-import { tmpdir } from "node:os";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import subagentsExtension from "../src/index.js";
 import { setWorktreeIsolationEnabled } from "../src/worktree.js";
+import { installScratchLeakGuard, makeScratch, removeAllScratch, removeScratch } from "./helpers/scratch.js";
+
+installScratchLeakGuard();
 
 const EXAMPLE_TEMPLATE = fileURLToPath(new URL("../examples/agent-tool-description.md", import.meta.url));
 
@@ -45,21 +47,20 @@ function makePi() {
 describe("toolDescriptionMode", () => {
   let tmpDir: string;
   let hermeticAgentDir: string;
-  let prevCwd: string;
-  let prevAgentDir: string | undefined;
-  let prevHome: string | undefined;
+  // Captured once: a test that calls setup() twice would otherwise record the first
+  // setup's scratch dir as the "previous" cwd/env, and chdir into a removed dir.
+  const startCwd = process.cwd();
+  const startAgentDir = process.env.PI_CODING_AGENT_DIR;
+  const startHome = process.env.HOME;
   let shutdown: (() => Promise<void>) | undefined;
 
   function setup(settings?: Record<string, unknown>, beforeInstantiate?: () => void) {
-    tmpDir = mkdtempSync(join(tmpdir(), "pi-tooldesc-"));
+    tmpDir = makeScratch("pi-tooldesc-");
     // Isolate global settings (getAgentDir / ~/.pi) so the dev's real
     // subagents.json can't leak into the "default is full" assertion.
-    hermeticAgentDir = mkdtempSync(join(tmpdir(), "pi-tooldesc-agentdir-"));
-    prevAgentDir = process.env.PI_CODING_AGENT_DIR;
-    prevHome = process.env.HOME;
+    hermeticAgentDir = makeScratch("pi-tooldesc-agentdir-");
     process.env.PI_CODING_AGENT_DIR = hermeticAgentDir;
     process.env.HOME = hermeticAgentDir;
-    prevCwd = process.cwd();
     mkdirSync(join(tmpDir, ".pi"), { recursive: true });
     if (settings) {
       writeFileSync(join(tmpDir, ".pi", "subagents.json"), JSON.stringify(settings));
@@ -83,13 +84,13 @@ describe("toolDescriptionMode", () => {
     // previous test left it. Reset it so each setup()'s settings decide, and
     // so the "default" assertions below really test the default.
     setWorktreeIsolationEnabled(true);
-    process.chdir(prevCwd);
-    if (prevAgentDir == null) delete process.env.PI_CODING_AGENT_DIR;
-    else process.env.PI_CODING_AGENT_DIR = prevAgentDir;
-    if (prevHome == null) delete process.env.HOME;
-    else process.env.HOME = prevHome;
-    rmSync(tmpDir, { recursive: true, force: true });
-    rmSync(hermeticAgentDir, { recursive: true, force: true });
+    process.chdir(startCwd);
+    if (startAgentDir == null) delete process.env.PI_CODING_AGENT_DIR;
+    else process.env.PI_CODING_AGENT_DIR = startAgentDir;
+    if (startHome == null) delete process.env.HOME;
+    else process.env.HOME = startHome;
+    removeScratch(tmpDir, hermeticAgentDir);
+    removeAllScratch(); // a test that calls setup() twice leaks the first pair otherwise
   });
 
   it("defaults to the full description", () => {
