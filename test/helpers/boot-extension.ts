@@ -3,8 +3,8 @@
  * REAL extension (src/index.ts) and drive its registered tools directly.
  *
  * The 14 pre-existing wiring tests each inline their own near-identical copy of
- * this. They are deliberately NOT migrated: `test/` is outside the tsconfig
- * `include`, so that churn would be unchecked by `tsc`, and those copies have
+ * this. They are deliberately NOT migrated: `test/` is type-checked by the gate
+ * since wb-zsv (`tsconfig.test.json`), but those copies have
  * small divergences that would have to be reconciled blind. New files use this.
  */
 

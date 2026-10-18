@@ -13,10 +13,12 @@ import { describe, expect, it } from "vitest";
 import { CLAUDE_CONTROL_RECONCILE, CLAUDE_INTERRUPT_NO_RECEIPT, CLAUDE_INTERRUPT_OUTCOMES } from "../src/workbench/claude-control.js";
 import {
   assess,
+  type BootedBlock,
   buildReceipt,
   CONTRACT,
   DENY_POLICIES,
   EVIDENCE_CLASS,
+  echoFromAckRef,
   FINDING_RULES,
   GRANT,
   MARKER,
@@ -91,6 +93,7 @@ const ROWS: readonly Row[] = [
   { scenario: SCENARIOS.settled, session: 6, requestDigit: "c", tag: "c" },
   { scenario: SCENARIOS.ambiguous, session: 7, requestDigit: "d", tag: "d" },
   { scenario: SCENARIOS.revoked, session: 8, requestDigit: "e", tag: "e" },
+  { scenario: SCENARIOS.strictBooted, session: 10, requestDigit: "f", tag: "f" },
 ];
 const rowOf = (scenario: string): Row => {
   const row = ROWS.find(candidate => candidate.scenario === scenario);
@@ -134,13 +137,14 @@ function measurement(row: Row, ackToTerminalMs = 376): PhaseRecord {
     },
   };
 }
-function result(row: Row): PhaseRecord {
+function result(row: Row, resultDrivenBy: "harness-tee" | "production-wiring" = "harness-tee"): PhaseRecord {
   const session = sessionOf(row.session);
   return {
-    scenario: row.scenario, phase: "result", at: T(13), text: "settled by the harness tee from the observed terminal",
+    scenario: row.scenario, phase: "result", at: T(13),
+    text: resultDrivenBy === "harness-tee" ? "settled by the harness tee from the observed terminal" : "settled by the production observer path from the call's own terminal",
     fields: {
       phase: "result", requestId: requestIdOf(row.requestDigit), outcome: MEASURED_OUTCOME, nativeResultRef: resultRefOf(session, MEASURED.observerTerminal, 12), settledAt: T(13),
-      resultDrivenBy: "harness-tee",
+      resultDrivenBy,
     },
   };
 }
@@ -172,6 +176,43 @@ function sibling(): PhaseRecord {
     fields: { phase: "sibling", siblingSessionId: SIBLING_SESSION, targetSessionId: sessionOf(row.session), siblingTerminal: "succeeded", siblingSeamCalls: 0, siblingOk: true },
   };
 }
+const STRICT_SESSION = sessionOf(10);
+const STRICT_TASK = "wf_fake0000strict";
+const STRICT_DETAIL = `REALISED by the booted strict row: the booted extension admitted ${STRICT_SESSION} after its system/init through the registered workflow_control and the production`
+  + ` observer path settled the acknowledged interrupt from the call's own terminal. Citation: ${STRICT_BOOTED_CITATIONS.join(", ")}.`;
+function strictAcknowledged(): PhaseRecord {
+  const row = rowOf(SCENARIOS.strictBooted);
+  return {
+    scenario: row.scenario, phase: "acknowledged", at: T(11), text: "the booted tool reply echoed the adapter's nativeAckRef; the echo is parsed from that reply's own ref",
+    fields: {
+      phase: "acknowledged", status: "acknowledged", requestId: requestIdOf(row.requestDigit), nativeAckRef: MEASURED.nativeAckRef, acknowledgedAt: T(11),
+      echo: { receipt: "interrupt_receipt_v1", stillQueued: 0 }, echoBasis: "parsed-from-ref",
+    },
+  };
+}
+function strictMeasurement(): PhaseRecord {
+  const row = rowOf(SCENARIOS.strictBooted);
+  return {
+    scenario: row.scenario, phase: "terminal-measurement", at: T(12), text: "the booted call's own terminal as the production observer reported it; the raw SDK result frame is host-internal, so its fields are null",
+    fields: {
+      phase: "terminal-measurement", sessionId: STRICT_SESSION, observerTerminal: MEASURED.observerTerminal, freshness: MEASURED.freshness, resultSubtype: null,
+      isError: null, stopReason: null, terminalReason: null, assistantAborted: null,
+      hostResult: { ok: MEASURED.hostOk, skipped: false, errorSanitized: MEASURED.hostError }, observedAt: T(12), ackToTerminalMs: 376,
+    },
+  };
+}
+function bootedBlock(): BootedBlock {
+  const row = rowOf(SCENARIOS.strictBooted);
+  const requestId = requestIdOf(row.requestDigit);
+  const nativeResultRef = resultRefOf(STRICT_SESSION, MEASURED.observerTerminal, 12);
+  return {
+    extension: "src/index.js", backend: "claude", tool: "workflow_control", taskId: STRICT_TASK, sessionId: STRICT_SESSION, requestId,
+    nativeAckRef: MEASURED.nativeAckRef, auditPhases: ["requested", "acknowledged", "result"], outcome: MEASURED_OUTCOME, nativeResultRef,
+    acknowledgedAt: T(11), settledAt: T(13), nodeFreshness: "stale", evidenceRefs: [`control-receipt:${requestId}`, `native-result:${nativeResultRef}`],
+    logs: [], controlCalls: 1, seamBasis: "sdk-ack-echo", homeRestored: true,
+    ownership: { statedBy: "production-observer", source: OWNERSHIP_SOURCE, nativeConfirmationRef: STRICT_SESSION, to: { provider: "pi-workflow", type: "agent-call", id: `${STRICT_TASK}:0` } },
+  };
+}
 
 type Json = string | number | boolean | null | Json[] | { [key: string]: Json };
 function replyOf(scenario: string, body: { [key: string]: Json }): { scenario: string; raw: string } {
@@ -196,6 +237,7 @@ const NO_LIVE_QUERY_REPLY = replyOf(SCENARIOS.settled, {
 
 function satisfying(): ReceiptEvidence {
   const adverse = rowOf(SCENARIOS.adverse);
+  const strict = rowOf(SCENARIOS.strictBooted);
   const siblingRow = rowOf(SCENARIOS.sibling);
   const settled = rowOf(SCENARIOS.settled);
   const ambiguous = rowOf(SCENARIOS.ambiguous);
@@ -209,15 +251,13 @@ function satisfying(): ReceiptEvidence {
     requested(settled), uncertain(settled, "seam-failure", { category: "query-closed" }),
     measurement(ambiguous, -1), requested(ambiguous), uncertain(ambiguous, "wait-timeout"),
     requested(revoked), acknowledged(revoked), measurement(revoked, 362), result(revoked), denied(SCENARIOS.revoked, "missing-exact-grant", "authorization"),
+    requested(strict), strictAcknowledged(), strictMeasurement(), result(strict, "production-wiring"),
   ];
   const scenarios: ReceiptEvidence["scenarios"] = {};
   for (const name of REQUIRED_SCENARIOS) scenarios[name] = { realised: true, detail: `${name} measured` };
-  const strictBooted = {
-    realised: false as const,
-    detail: `UNREALISED: the booted projection never receives an ownership edge from a claude-agent-sdk session node. Citation: ${STRICT_BOOTED_CITATIONS.join(", ")}.`,
-  };
-  scenarios[SCENARIOS.strictBooted] = strictBooted;
-  const sessions = [adverse, siblingRow, settled, ambiguous, revoked].map(row => sessionOf(row.session));
+  const strictBooted = { realised: true as const, detail: STRICT_DETAIL, booted: bootedBlock() };
+  scenarios[SCENARIOS.strictBooted] = { realised: true, detail: STRICT_DETAIL };
+  const sessions = [adverse, siblingRow, settled, ambiguous, revoked, strict].map(row => sessionOf(row.session));
   return {
     utc: T(30), command: "forge run claude-control-live (./node_modules/.bin/vitest run --config vitest.claude-control-live.config.ts)",
     revision: "0123456789abcdef0123456789abcdef01234567", dirty: false,
@@ -231,9 +271,9 @@ function satisfying(): ReceiptEvidence {
     phases,
     nativeReferences: {
       sessionIds: [...sessions, SIBLING_SESSION, DENIED_SESSION, OBSERVER_SESSION, REVOKED_SECOND_SESSION],
-      controlRequestIds: [adverse, siblingRow, settled, ambiguous, revoked].map(row => requestIdOf(row.requestDigit)),
+      controlRequestIds: [adverse, siblingRow, settled, ambiguous, revoked, strict].map(row => requestIdOf(row.requestDigit)),
       nativeAckRefs: [MEASURED.nativeAckRef],
-      nativeResultRefs: [adverse, siblingRow, revoked].map(row => resultRefOf(sessionOf(row.session), MEASURED.observerTerminal, 12)),
+      nativeResultRefs: [adverse, siblingRow, revoked, strict].map(row => resultRefOf(sessionOf(row.session), MEASURED.observerTerminal, 12)),
       ownershipConfirmationRefs: [...sessions, SIBLING_SESSION, DENIED_SESSION, OBSERVER_SESSION, REVOKED_SECOND_SESSION],
     },
     verbCounts: { seam: { interrupt: 5 } },
@@ -243,6 +283,7 @@ function satisfying(): ReceiptEvidence {
       deniedReply(SCENARIOS.crossScope, "cross-scope", "authorization"),
       NO_LIVE_QUERY_REPLY, uncertainReply(settled), uncertainReply(ambiguous),
       acknowledgedReply(revoked), deniedReply(SCENARIOS.revoked, "missing-exact-grant", "authorization"),
+      acknowledgedReply(strict),
     ],
     ownership: { seededBy: "harness", source: OWNERSHIP_SOURCE, nativeConfirmationRef: sessionOf(adverse.session) },
     strictBooted,
@@ -285,7 +326,7 @@ describe("wb-a2g.12 live claude control receipt: assessor (O1)", () => {
     expect(truthLabelOf({ realised: false, pass: false })).toBe("not realised");
   });
 
-  it("interrupt-verb-count: a counted seam total that is not one interrupt per acknowledged or uncertain phase is a finding", () => {
+  it("interrupt-verb-count: the counted seam equals one interrupt per MIRRORED acknowledged or uncertain phase; folding the strict booted verb into the total (6) or dropping a mirrored one (4) is a finding", () => {
     const extra = satisfying();
     extra.verbCounts.seam.interrupt = 6;
     expect(rulesOf(extra)).toEqual(["interrupt-verb-count"]);
@@ -353,7 +394,7 @@ describe("wb-a2g.12 live claude control receipt: assessor (O1)", () => {
     expect(rulesOf(survivor)).toEqual(["ack-not-sdk-shaped"]);
   });
 
-  it("result-without-native-echo: a result lacking the session:<id>:<terminal>@<instant> reference, naming another terminal than the measured one, not driven by the harness tee, or standing without its acknowledged phase is a finding", () => {
+  it("result-without-native-echo: a result lacking the session:<id>:<terminal>@<instant> reference, naming another terminal than the measured one, driven by the wrong settler (the strict row by anything but the production wiring, a mirrored one by anything but the harness tee), or standing without its acknowledged phase is a finding", () => {
     const ref = satisfying();
     fieldsOf(ref, SCENARIOS.adverse, "result").nativeResultRef = `claude-agent-sdk:session:${sessionOf(1)}:acknowledged`;
     expect(rulesOf(ref)).toEqual(["result-without-native-echo"]);
@@ -363,6 +404,9 @@ describe("wb-a2g.12 live claude control receipt: assessor (O1)", () => {
     const driver = satisfying() as ReceiptEvidence;
     (fieldsOf(driver, SCENARIOS.adverse, "result") as { resultDrivenBy: string }).resultDrivenBy = "production-wiring";
     expect(rulesOf(driver)).toEqual(["result-without-native-echo"]);
+    const teeOnStrict = satisfying() as ReceiptEvidence;
+    (fieldsOf(teeOnStrict, SCENARIOS.strictBooted, "result") as { resultDrivenBy: string }).resultDrivenBy = "harness-tee";
+    expect(rulesOf(teeOnStrict)).toEqual(["result-without-native-echo"]);
     const orphan = satisfying();
     orphan.phases = orphan.phases.filter(entry => !(entry.scenario === SCENARIOS.adverse && entry.phase === "acknowledged"));
     orphan.verbCounts.seam.interrupt = 4;
@@ -387,7 +431,7 @@ describe("wb-a2g.12 live claude control receipt: assessor (O1)", () => {
     expect(OUTCOME_BY_TERMINAL).toEqual(CLAUDE_INTERRUPT_OUTCOMES);
   });
 
-  it("terminal-shape-undetermined: an interrupted journey without its measurement record, or a record missing any raw field, is a finding", () => {
+  it("terminal-shape-undetermined: an interrupted journey without its measurement record, or a record missing any raw field, is a finding; the strict row's assistantAborted admits null but nothing else non-boolean, and a mirrored null is still a finding", () => {
     const missing = satisfying();
     missing.phases = missing.phases.filter(entry => !(entry.scenario === SCENARIOS.adverse && entry.phase === "terminal-measurement"));
     expect(rulesOf(missing)).toEqual(["terminal-shape-undetermined"]);
@@ -396,6 +440,16 @@ describe("wb-a2g.12 live claude control receipt: assessor (O1)", () => {
       delete (fieldsOf(evidence, SCENARIOS.adverse, "terminal-measurement") as unknown as Record<string, unknown>)[key];
       expect(rulesOf(evidence), key).toEqual(["terminal-shape-undetermined"]);
     }
+    // The strict-only null admission (Q5) is not a blanket admission: an invented non-boolean on the strict row, or a null on a mirrored row, is the same finding.
+    const strictInvented = satisfying();
+    (fieldsOf(strictInvented, SCENARIOS.strictBooted, "terminal-measurement") as unknown as Record<string, unknown>).assistantAborted = "aborted";
+    expect(rulesOf(strictInvented), "strict assistantAborted neither null nor boolean").toEqual(["terminal-shape-undetermined"]);
+    const strictAbsent = satisfying();
+    delete (fieldsOf(strictAbsent, SCENARIOS.strictBooted, "terminal-measurement") as unknown as Record<string, unknown>).assistantAborted;
+    expect(rulesOf(strictAbsent), "strict assistantAborted absent").toEqual(["terminal-shape-undetermined"]);
+    const mirroredNull = satisfying();
+    (fieldsOf(mirroredNull, SCENARIOS.adverse, "terminal-measurement") as unknown as Record<string, unknown>).assistantAborted = null;
+    expect(rulesOf(mirroredNull), "mirrored assistantAborted null").toEqual(["terminal-shape-undetermined"]);
   });
 
   it("uncertain-retried: an uncertain phase with two seam calls, retried true, or a status other than uncertain is a finding", () => {
@@ -481,6 +535,9 @@ describe("wb-a2g.12 live claude control receipt: assessor (O1)", () => {
     const foreign = satisfying();
     fieldsOf(foreign, SCENARIOS.adverse, "requested").ownershipConfirmationRef = "frn-req-attempts-01";
     expect(rulesOf(foreign)).toEqual(["ownership-undisclosed"]);
+    const strictForeign = satisfying();
+    fieldsOf(strictForeign, SCENARIOS.strictBooted, "requested").ownershipConfirmationRef = "frn-req-attempts-02";
+    expect(rulesOf(strictForeign)).toEqual(["ownership-undisclosed"]);
     const drift = satisfying();
     drift.nonClaims = drift.nonClaims.map(claim => claim.replace("never", "always"));
     expect(rulesOf(drift)).toEqual(["ownership-undisclosed"]);
@@ -498,7 +555,63 @@ describe("wb-a2g.12 live claude control receipt: assessor (O1)", () => {
     expect(rulesOf(honest)).toEqual([]);
   });
 
-  it("unrealised steps pre-empt findings: a recorded step, an unrealised or missing required scenario, an uncited or realised strict reading, no assistant-frame served model, or an interrupt not provably mid-stream is not realised, never graded", () => {
+  it("booted-block-inconsistent: a realised strict block whose identities, audit phases, ownership edge, counts, logs, freshness, settle order (or a non-instant stamp), home restoration or seam basis disagree with the strict phases is a finding", () => {
+    const bootedOf = (evidence: ReceiptEvidence): Record<string, unknown> => {
+      const strict = evidence.strictBooted;
+      if (strict.realised !== true) throw new Error("the fixture is not realised");
+      return strict.booted as unknown as Record<string, unknown>;
+    };
+    const mutants: Array<[string, (evidence: ReceiptEvidence) => void]> = [
+      ["session-vs-confirmation", evidence => { (bootedOf(evidence).ownership as Record<string, unknown>).nativeConfirmationRef = sessionOf(2); }],
+      ["requestId-vs-phases", evidence => { bootedOf(evidence).requestId = requestIdOf("9"); }],
+      ["audit-missing-result", evidence => { bootedOf(evidence).auditPhases = ["requested", "acknowledged"]; }],
+      ["result-ref-foreign-session", evidence => { bootedOf(evidence).nativeResultRef = resultRefOf(sessionOf(2), MEASURED.observerTerminal, 12); }],
+      ["ack-ref-not-sdk-shaped", evidence => { bootedOf(evidence).nativeAckRef = "minted:ack"; }],
+      ["two-control-calls", evidence => { bootedOf(evidence).controlCalls = 2; }],
+      ["diagnostic-logs", evidence => { bootedOf(evidence).logs = ["workflow_control ctl: result not established (stale-observation)"]; }],
+      ["node-freshness-not-stale", evidence => { bootedOf(evidence).nodeFreshness = "current"; }],
+      ["settled-before-acknowledged", evidence => { bootedOf(evidence).settledAt = T(5); }],
+      // Date.parse of a non-instant is NaN and NaN < x is false: the order check alone would pass two unreadable stamps.
+      ["settled-at-not-instant", evidence => { bootedOf(evidence).settledAt = "not-an-instant"; }],
+      ["acknowledged-at-not-instant", evidence => { bootedOf(evidence).acknowledgedAt = "later"; }],
+      ["ownership-to-claude", evidence => { ((bootedOf(evidence).ownership as Record<string, unknown>).to as Record<string, unknown>).provider = "claude-agent-sdk"; }],
+      ["home-not-restored", evidence => { bootedOf(evidence).homeRestored = false; }],
+      ["counted-seam-basis", evidence => { bootedOf(evidence).seamBasis = "counted-seam"; }],
+    ];
+    for (const [name, mutate] of mutants) {
+      const evidence = satisfying();
+      mutate(evidence);
+      expect(rulesOf(evidence), name).toEqual(["booted-block-inconsistent"]);
+    }
+    expect(rulesOf(satisfying())).toEqual([]);
+  });
+
+  it("ack-not-sdk-shaped (echo basis): the strict acknowledged phase must disclose echoBasis parsed-from-ref with its echo equal to echoFromAckRef(nativeAckRef); a mirrored phase claiming the basis is the same finding; echoFromAckRef parses both SDK answer forms", () => {
+    expect(echoFromAckRef(NO_RECEIPT)).toEqual({ receipt: "none" });
+    expect(echoFromAckRef(ackRefOf(0))).toEqual({ receipt: "interrupt_receipt_v1", stillQueued: 0 });
+    expect(echoFromAckRef("claude-agent-sdk:interrupt_receipt_v1:still_queued=2:cancelled=1")).toEqual({ receipt: "interrupt_receipt_v1", stillQueued: 2, cancelled: 1 });
+    expect(echoFromAckRef("not-an-sdk-answer")).toEqual({ receipt: "none" });
+    const missingBasis = satisfying();
+    delete (fieldsOf(missingBasis, SCENARIOS.strictBooted, "acknowledged") as unknown as Record<string, unknown>).echoBasis;
+    expect(rulesOf(missingBasis)).toEqual(["ack-not-sdk-shaped"]);
+    const mirroredBasis = satisfying();
+    (fieldsOf(mirroredBasis, SCENARIOS.adverse, "acknowledged") as unknown as Record<string, unknown>).echoBasis = "parsed-from-ref";
+    expect(rulesOf(mirroredBasis)).toEqual(["ack-not-sdk-shaped"]);
+    const disagreeing = satisfying();
+    fieldsOf(disagreeing, SCENARIOS.strictBooted, "acknowledged").echo = { receipt: "interrupt_receipt_v1", stillQueued: 0, stillQueuedIds: [], idsTruncated: false };
+    expect(rulesOf(disagreeing)).toEqual(["ack-not-sdk-shaped"]);
+  });
+
+  it("the strict interrupt must be provably mid-stream like the mirrored adverse rows: a strict requested phase without a session observation instant is no-session-observed and one with zero streamed characters is not-mid-stream", () => {
+    const unobserved = satisfying();
+    (fieldsOf(unobserved, SCENARIOS.strictBooted, "requested") as unknown as Record<string, unknown>).sessionObservedAt = "";
+    expect(assess(unobserved).unrealised[0]).toMatchObject({ step: "no-session-observed" });
+    const early = satisfying();
+    fieldsOf(early, SCENARIOS.strictBooted, "requested").midStreamBasis = { assistantCharacters: 0 };
+    expect(assess(early).unrealised[0]).toMatchObject({ step: "not-mid-stream" });
+  });
+
+  it("unrealised steps pre-empt findings: a recorded step, an unrealised or missing required scenario, an uncited, parked or block-less strict reading, no assistant-frame served model, or an interrupt not provably mid-stream is not realised, never graded", () => {
     const recorded = satisfying();
     recorded.unrealised.push({ step: "credentials-unavailable", diagnostic: "CLAUDE_AUTH_REQUIRED: the preflight turn was refused" });
     recorded.dirty = true;
@@ -512,12 +625,18 @@ describe("wb-a2g.12 live claude control receipt: assessor (O1)", () => {
     delete absent.scenarios[SCENARIOS.observer];
     expect(assess(absent).unrealised[0]).toMatchObject({ step: "scenario-unrealised" });
     const uncited = satisfying();
-    uncited.scenarios[SCENARIOS.strictBooted] = { realised: false, detail: "UNREALISED: citation wb-69g.4 only; wiring-gap bead: to be filed" };
-    uncited.strictBooted = { realised: false, detail: uncited.scenarios[SCENARIOS.strictBooted].detail };
-    expect(assess(uncited).unrealised[0]).toMatchObject({ step: "scenario-unrealised" });
-    const faked = satisfying();
-    faked.scenarios[SCENARIOS.strictBooted] = { realised: true, detail: `claimed realised ${STRICT_BOOTED_CITATIONS.join(" ")}` };
-    expect(assess(faked).unrealised[0]).toMatchObject({ step: "scenario-unrealised" });
+    uncited.scenarios[SCENARIOS.strictBooted] = { realised: true, detail: "realised with no citations" };
+    uncited.strictBooted = { realised: true, detail: "realised with no citations", booted: bootedBlock() };
+    const uncitedStop = assess(uncited).unrealised[0];
+    expect(uncitedStop).toMatchObject({ step: "scenario-unrealised" });
+    expect(uncitedStop?.diagnostic).toContain("wb-69g.4");
+    const parked = satisfying();
+    parked.scenarios[SCENARIOS.strictBooted] = { realised: false, detail: `pending until the booted row runs. Citation: ${STRICT_BOOTED_CITATIONS.join(", ")}.` };
+    parked.strictBooted = { realised: false, detail: `pending until the booted row runs. Citation: ${STRICT_BOOTED_CITATIONS.join(", ")}.` };
+    expect(assess(parked).unrealised[0]).toMatchObject({ step: "scenario-unrealised" });
+    const blockless = satisfying();
+    blockless.strictBooted = { realised: true, detail: STRICT_DETAIL } as ReceiptEvidence["strictBooted"];
+    expect(assess(blockless).unrealised[0]).toMatchObject({ step: "scenario-unrealised" });
     const relayed = satisfying();
     relayed.servedModelSource = null;
     relayed.servedModel = null;
@@ -554,13 +673,13 @@ describe("wb-a2g.12 live claude control receipt: assessor (O1)", () => {
     expect([...FINDING_RULES]).toEqual([
       "interrupt-verb-count", "control-call-on-observer-close", "denial-reached-seam", "acknowledged-not-echoed", "ack-not-sdk-shaped", "result-without-native-echo",
       "result-outcome-undisclosed", "terminal-shape-undetermined", "uncertain-retried", "sibling-changed", "session-affected-by-close", "settled-call-terminal-minted",
-      "phase-fields-missing", "uncommitted-tree", "ownership-undisclosed", "label-mismatch", "credential-shaped",
+      "phase-fields-missing", "uncommitted-tree", "ownership-undisclosed", "label-mismatch", "credential-shaped", "booted-block-inconsistent",
     ]);
     expect([...UNREALISED_STEPS]).toEqual(["credentials-unavailable", "no-seam", "no-session-observed", "not-mid-stream", "projection-seed-refused", "scenario-unrealised", "harness-failure"]);
     expect([...PHASES]).toEqual(["requested", "acknowledged", "result", "denied", "uncertain", "observer-close", "sibling", "terminal-measurement"]);
     expect([...REQUIRED_SCENARIOS]).toEqual([
       "credential-preflight", "adverse-interrupt-mid-stream", "sibling-unaffected", "denied-without-grant", "observer-close-interrupts-nothing", "cross-scope-denials",
-      "interrupt-of-settled-typed-outcome", "ambiguous-interrupt-parks-uncertain", "revoked-grant-denies-next",
+      "interrupt-of-settled-typed-outcome", "ambiguous-interrupt-parks-uncertain", "revoked-grant-denies-next", "strict-booted-tool-reading",
     ]);
     expect(SCENARIOS.strictBooted).toBe("strict-booted-tool-reading");
     expect([...STRICT_BOOTED_CITATIONS]).toEqual(["wb-69g.4", "wb-hqa"]);
@@ -570,9 +689,9 @@ describe("wb-a2g.12 live claude control receipt: assessor (O1)", () => {
     expect(OWNERSHIP_SOURCE).toBe("system/init session_id");
     expect(NO_RECEIPT).toBe(CLAUDE_INTERRUPT_NO_RECEIPT);
     expect(RECONCILE).toBe(CLAUDE_CONTROL_RECONCILE);
-    expect(NON_CLAIMS).toHaveLength(6);
+    expect(NON_CLAIMS).toHaveLength(4);
     for (const claim of NON_CLAIMS) expect(claim).not.toMatch(/to be filed/);
-    expect(NON_CLAIMS.some(claim => claim.includes("wb-hqa") && claim.includes("wb-69g.4"))).toBe(true);
+    expect(NON_CLAIMS.some(claim => claim.includes("wb-69g.4"))).toBe(true);
   });
 });
 
@@ -615,15 +734,17 @@ describe("wb-a2g.12 the live suite and the helper, read as text (O3)", () => {
   it("the live suite imports only node, vitest, the vendored SDK, the workbench modules it exercises, the workflow runtime and types, and the test helpers", () => {
     const suite = suiteText();
     const allowed = new Set([
-      "@anthropic-ai/claude-agent-sdk", "vitest", "../src/workbench/control-tool.js", "../src/workbench/claude-control.js", "../src/workbench/control.js",
+      "@anthropic-ai/claude-agent-sdk", "vitest", "../src/index.js", "../src/workbench/control-tool.js", "../src/workbench/claude-control.js", "../src/workbench/control.js",
       "../src/workbench/capability-registry.js", "../src/workbench/claude-host.js", "../src/workbench/claude-transcript.js", "../src/workbench/observation.js",
-      "../src/workbench/redaction.js", "../src/workflow/runtime.js", "../src/workflow/task.js", "../src/workflow/progress.js", "./helpers/scratch.js",
-      "./helpers/claude-control-live-receipt.js",
+      "../src/workbench/redaction.js", "../src/workflow/runtime.js", "../src/workflow/task.js", "../src/workflow/progress.js", "./helpers/boot-extension.js",
+      "./helpers/scratch.js", "./helpers/claude-control-live-receipt.js",
     ]);
     for (const specifier of specifiersOf(suite)) expect(specifier.startsWith("node:") || allowed.has(specifier), specifier).toBe(true);
     expect(specifiersOf(suite)).toContain("./helpers/claude-control-live-receipt.js");
     expect(specifiersOf(suite)).toContain("../src/workbench/claude-host.js");
     expect(specifiersOf(suite)).toContain("@anthropic-ai/claude-agent-sdk");
+    expect(specifiersOf(suite)).toContain("../src/index.js");
+    expect(specifiersOf(suite)).toContain("./helpers/boot-extension.js");
     expect(suite).not.toMatch(DYNAMIC_LOAD);
     expect(suite).not.toMatch(/:\s*any\b|as\s+any\b|<any>/);
   });
@@ -664,6 +785,14 @@ describe("wb-a2g.12 the live suite and the helper, read as text (O3)", () => {
     expect(helper).not.toMatch(DYNAMIC_LOAD);
     expect(helper).not.toMatch(/Date\.now|new Date\(|Math\.random|process\./);
     expect(helper).not.toMatch(/:\s*any\b|as\s+any\b|<any>/);
+  });
+
+  it("the live suite and the helper carry no retired Cut 1 strings: the strict reading is realised by J8b, never declared unrealised by construction", () => {
+    const suite = suiteText();
+    expect(suite).not.toContain("UNREALISED by construction");
+    expect(suite).not.toContain("boots no extension");
+    expect(suite).not.toContain("the only way a result exists live");
+    expect(helperText()).not.toContain("UNREALISED by construction");
   });
 });
 
