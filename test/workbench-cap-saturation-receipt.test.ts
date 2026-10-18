@@ -805,8 +805,10 @@ describe("W21-D owner rulings F1/F3/F5 (wb-9x5.6 respin)", () => {
     expect(result.strictFindings).toEqual([]);
   });
 
-  // What the bench counts as a label is the frame header's ' · capped' suffix: OVERFLOW_WORDS matches 'capped' and cannot see
-  // the remainder line's 'not shown' (gate GM2/GM3 on wb-ea1). The --strict arm learning the remainder line is wb-j0b (R473 R2).
+  // What the bench counts as a label is the inspector's whole counted remainder line ("N nodes not shown: projection cap M",
+  // optionally " · K events not shown"); the frame header's ' · capped' suffix is not one (wb-j0b, R473 R2). The mutant rows that
+  // drop that line are judged in test/workbench-cap-saturation-remainder-label.test.ts: one real bench run, mutant rows re-judged
+  // over its kept projections (wb-rvv).
   it("F1 (wb-ea1): withdrawing only the projection's eviction counts withdraws every label: the bench's labels follow the projection's truncation counts", () => {
     const silent = unlabeledRun();
     expect(Object.keys(silent.passes)).toEqual(Object.keys(realRun().receipt.passes));
