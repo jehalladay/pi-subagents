@@ -61,7 +61,9 @@ export interface AttentionReport {
   clockCaveat: typeof ATTENTION_CLOCK_CAVEAT;
 }
 
-type Projection = Pick<ObservationProjection, "query" | "relations">;
+/** The read side the selector uses. relationsPage is optional: a projection that has it reports whether a relation page
+ * hides a further edge, one that lacks it (a producer stand-in, a query-only fake) is read exactly as before. */
+type Projection = Pick<ObservationProjection, "query" | "relations"> & Partial<Pick<ObservationProjection, "relationsPage">>;
 type Tone = Presentation["statusTone"];
 type Freshness = ObservedNode["freshness"];
 
@@ -135,11 +137,23 @@ const nativeRefOf = (ref: NativeRef): NativeRef =>
 
 interface ObservedEdges { successors: Map<string, Set<string>>; dependencyEdges: number; hypothesis: boolean; unread: boolean }
 
+/** One relation page and, when the projection reports it, whether a further matching edge exists past the page. */
+interface PageRead { rows: Relation[]; reported?: boolean }
+function readPage(projection: Projection, input: { scope: ObservationScope; from: string; to?: string; limit: number }): PageRead {
+  if (typeof projection.relationsPage === "function") {
+    const page = projection.relationsPage(input);
+    return { rows: page.relations, reported: page.truncated };
+  }
+  return { rows: projection.relations(input) };
+}
+
 /** Dependency and hypothesis edges between examined nodes, read from examined keys only.
- * relations() reports no truncation and the projection caps each page at its own maxQuery, which this selector cannot
- * see. The projection's query just returned these keys, so that cap is at least `keys.length`: a page holding fewer
- * rows than both the page size and the examined count is provably whole. A fuller page is re-read pair by pair over
- * the examined nodes; a pair page that is itself that full, or a spent pair budget, leaves an edge possibly unread. */
+ * A projection with relationsPage reports whether a page hides a further edge: a page reported whole is read as it is,
+ * with no pair re-read and no budget spent. Without relationsPage the page size is the only signal: the projection caps
+ * each page at its own maxQuery, which this selector cannot see, but its query just returned these keys, so that cap is
+ * at least `keys.length` and a page holding fewer rows than both the page size and the examined count is provably whole.
+ * A page reported truncated, or (unreported) a fuller page, is re-read pair by pair over the examined nodes; a pair page
+ * reported truncated or holding that many rows, or a spent pair budget, leaves an edge possibly unread. */
 function observedEdges(projection: Projection, scope: ObservationScope, keys: readonly string[]): ObservedEdges {
   const examined = new Set(keys);
   const whole = Math.min(RELATION_PAGE, keys.length);
@@ -149,16 +163,17 @@ function observedEdges(projection: Projection, scope: ObservationScope, keys: re
   let unread = false;
   let pairReads = MAX_PAIR_READS;
   for (const key of keys) {
-    let rows: Relation[] = projection.relations({ scope, from: key, limit: RELATION_PAGE });
-    if (rows.length >= whole) {
+    const page = readPage(projection, { scope, from: key, limit: RELATION_PAGE });
+    let rows: Relation[] = page.rows;
+    if (page.reported ?? rows.length >= whole) {
       if (pairReads < keys.length) unread = true;
       else {
         pairReads -= keys.length;
         rows = [];
         for (const to of keys) {
-          const pair = projection.relations({ scope, from: key, to, limit: RELATION_PAGE });
-          if (pair.length >= whole) unread = true;
-          rows.push(...pair);
+          const pair = readPage(projection, { scope, from: key, to, limit: RELATION_PAGE });
+          if (pair.reported === true || pair.rows.length >= whole) unread = true;
+          rows.push(...pair.rows);
         }
       }
     }
