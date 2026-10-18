@@ -4,11 +4,15 @@
 // receipt records the package's manifest and provenance digests, which agree since wb-zby). This module does no I/O
 // and reads no clock or environment; its only import is the wb-0kg.1 fault receipt's path scrubber, reused, never
 // copied.
-// Spec: docs/workbench/14 "Parent Furnace Work retry while child Run establishment is uncertain."; wb-zmd "one bridge
-// host session per Attempt" with receipts stating "no crash durability (controller or Pi death leaves running Attempts
-// needing operator recovery), Observe answered by the resident session (session-word), per-Attempt identity"; BOUNDARY 07:30Z "never reintroduce a
-// Furnace-owned-retry premise" (every retry here is the operator path). Owner Q1 (22:15Z): (a) this FIXTURE receipt,
-// (c) the LIVE receipt is wb-3hc.
+// Spec: docs/workbench/14 "Parent Furnace Work retry while child Run establishment is uncertain."; wb-zmd's constraint
+// set as re-worded of record on wb-3hc (owner, 2026-10-17, from the wb-zby.1 measurement): a Run's sequential Attempts
+// share ONE kept bridge connection and resident session, per-Attempt identity is the admission receipt
+// <instance_id>/<process token>/<n>, and claim 1 ('retry-session-reused') is keyed on admission-receipt distinctness plus
+// the sessions roster, never on sessionInstanceId inequality alone (the retired "one bridge host session per Attempt"
+// reading is gone); receipts state "no crash durability (controller or Pi death leaves running Attempts needing operator
+// recovery), Observe answered by the resident session (session-word), per-Attempt identity"; BOUNDARY 07:30Z "never
+// reintroduce a Furnace-owned-retry premise" (every retry here is the operator path). Owner Q1 (22:15Z): (a) this
+// FIXTURE receipt, (c) the LIVE receipt is wb-3hc, which shares retryAdmissionProblems and retrySessionReading below.
 import {basenameOnly} from './local-detached-faults-receipt.mjs';
 
 export const RETRY_FAULT_RECEIPT_CONTRACT = 'workbench.furnace-hosted-retry-fault/v1';
@@ -50,11 +54,17 @@ export const EXPECTED_LIMITS = Object.freeze({
   retry: 'adapter-never-retries; furnace-auto-retries-by-recorded-retry-policy; work_failure-and-indeterminate-park',
 });
 
-/** The operator-retry journeys: an uncertain first Attempt, then a NEW Attempt on a NEW bridge connection. */
+/**
+ * The operator-retry journeys: an uncertain first Attempt, then a NEW Attempt by the operator path. Whether the retry's
+ * bridge session is new or the kept one is MEASURED (retrySessionReading), never presumed: the scripted operator here
+ * opens a new connection, and the wb-3hc LIVE receipt records which one a real `work retry` used.
+ */
 const RETRY_JOURNEYS = ['lostConnectionRetry', 'explicitUncertainRetry', 'dropBeforeAdmissionReply'];
 /** Retry journeys whose first Attempt parks (pending) until the host closes, then settles indeterminate. */
 const PARKED_UNTIL_CLOSE = new Set(['lostConnectionRetry', 'dropBeforeAdmissionReply']);
 const SHA256 = /^sha256:[0-9a-f]{64}$/;
+/** An SDK admission receipt (ResidentSession.mintReceipt): <instance_id>/<process token, 16 lowercase hex>/<n, from 1>. */
+const ADMISSION_RECEIPT = /^([^/]+)\/([0-9a-f]{16})\/([1-9][0-9]*)$/;
 const isText = value => typeof value === 'string' && value.length > 0;
 /**
  * The facts that show each fault was actually injected and observed. A journey is armed only when its own `armed`
@@ -77,6 +87,72 @@ function deepFreeze(value) {
     for (const child of Object.values(value)) deepFreeze(child);
   }
   return value;
+}
+
+/**
+ * How the operator retry's bridge session relates to the uncertain Attempt's: 'kept' (the same resident session), 'new'
+ * (another session) or 'unknown' (a session id is missing). A measurement, never a verdict: wb-3hc's re-wording of
+ * record expects an operator `work retry` to open a new session but asserts neither shape in advance.
+ * @param {unknown} first the uncertain Attempt's receipt row
+ * @param {unknown} retry the operator retry's receipt row
+ * @returns {'kept' | 'new' | 'unknown'}
+ */
+export function retrySessionReading(first, retry) {
+  const a = isObject(first) ? first.sessionInstanceId : undefined;
+  const b = isObject(retry) ? retry.sessionInstanceId : undefined;
+  if (!isText(a) || !isText(b)) return 'unknown';
+  return a === b ? 'kept' : 'new';
+}
+
+/**
+ * Claim 1 as re-worded of record on wb-3hc: keyed on admission-receipt distinctness PLUS the sessions roster, never on
+ * sessionInstanceId inequality alone. Each Attempt carries a session id and a well-formed admission receipt naming that
+ * session; the two receipts differ; a retry in the kept session is a FURTHER admission there (the same token, a larger
+ * counter, later in that session's roster entry); and each receipt is listed exactly once in the roster, under its own
+ * session. A retry in a new session is accepted on the same terms, with no assertion about its token or counter.
+ * @param {unknown} first the uncertain Attempt's receipt row
+ * @param {unknown} retry the operator retry's receipt row
+ * @param {unknown} sessions the same adapter receipt's sessions roster
+ * @returns {string[]} the problems found, empty when none
+ */
+export function retryAdmissionProblems(first, retry, sessions) {
+  const problems = [];
+  const roster = arrayOf(sessions).filter(isObject);
+  const rows = [isObject(first) ? first : {}, isObject(retry) ? retry : {}];
+  const parsed = [];
+  for (const [index, row] of rows.entries()) {
+    const label = `${index === 0 ? 'the uncertain Attempt' : 'the operator retry'} ${row.attemptId}`;
+    const session = row.sessionInstanceId;
+    const receipt = row.admissionReceipt;
+    if (!isText(session)) problems.push(`${label} has no bridge session id (${JSON.stringify(session)}).`);
+    const match = typeof receipt === 'string' ? ADMISSION_RECEIPT.exec(receipt) : null;
+    parsed.push(match ? {token: match[2], n: Number(match[3])} : null);
+    if (!match) {
+      problems.push(`${label} has no well-formed admission receipt <instance>/<16 hex token>/<n from 1> (${JSON.stringify(receipt)}).`);
+    } else if (match[1] !== session) {
+      problems.push(`${label}'s admission receipt ${receipt} names session ${match[1]}, not its own ${session}.`);
+    }
+    if (!isText(receipt)) continue;
+    const holders = roster.filter(entry => arrayOf(entry.admissionReceipts).includes(receipt));
+    const listed = roster.reduce((sum, entry) => sum + arrayOf(entry.admissionReceipts).filter(item => item === receipt).length, 0);
+    if (listed === 0) problems.push(`${label}'s admission receipt ${receipt} is missing from the sessions roster.`);
+    else if (listed > 1) problems.push(`${label}'s admission receipt ${receipt} is listed ${listed} times in the sessions roster.`);
+    else if (holders[0].sessionInstanceId !== session) problems.push(`${label}'s admission receipt ${receipt} is listed under session ${holders[0].sessionInstanceId}, not its own ${session}.`);
+  }
+  const [a, b] = rows;
+  if (isText(a.admissionReceipt) && a.admissionReceipt === b.admissionReceipt) {
+    problems.push(`the operator retry ${b.attemptId} repeats ${a.attemptId}'s admission receipt ${a.admissionReceipt}: not a distinct admission.`);
+  }
+  const [pa, pb] = parsed;
+  if (retrySessionReading(a, b) === 'kept' && pa && pb) {
+    if (pa.token !== pb.token) problems.push(`the operator retry ${b.attemptId} shares session ${a.sessionInstanceId} with ${a.attemptId} under another process token (${pa.token}, then ${pb.token}): not a further admission of one session.`);
+    if (pb.n <= pa.n) problems.push(`the operator retry ${b.attemptId} shares session ${a.sessionInstanceId} with ${a.attemptId} but its admission counter did not advance (${pa.n}, then ${pb.n}).`);
+    const entry = roster.find(item => item.sessionInstanceId === a.sessionInstanceId);
+    const order = entry ? arrayOf(entry.admissionReceipts) : [];
+    const at = [order.indexOf(a.admissionReceipt), order.indexOf(b.admissionReceipt)];
+    if (at[0] >= 0 && at[1] >= 0 && at[1] < at[0]) problems.push(`the operator retry's admission ${b.admissionReceipt} precedes ${a.admissionReceipt} in session ${a.sessionInstanceId}'s roster entry.`);
+  }
+  return problems;
 }
 
 /** A bridge reply is exactly {protocol_version: 1, op, request_id, output: {status}}: nothing echoed beside the status. */
@@ -117,7 +193,8 @@ export function assessRetryFaultJourneys(observed) {
     }
   }
 
-  // Claims 1-3: a fresh per-Attempt session, establishment exactly once per Attempt, the uncertain Attempt parked and never merged.
+  // Claims 1-3: a distinct admission for the retry (receipt and roster, in either phase), establishment exactly once per
+  // Attempt, the uncertain Attempt parked and never merged.
   for (const name of RETRY_JOURNEYS) {
     const journey = journeys[name];
     if (!isObject(journey)) continue;
@@ -130,8 +207,9 @@ export function assessRetryFaultJourneys(observed) {
       add('uncertain-merged', `${name}: the uncertain Attempt and the operator retry must stay two distinct Attempt records in order (before close ${before.length}, after close ${after.length}).`);
       continue;
     }
-    if (typeof first.sessionInstanceId !== 'string' || first.sessionInstanceId === '' || first.sessionInstanceId === retry.sessionInstanceId) {
-      add('retry-session-reused', `${name}: ${retry.attemptId} ran in bridge session ${retry.sessionInstanceId}, which is not a fresh session beside ${first.attemptId}'s ${first.sessionInstanceId}.`);
+    for (const [phase, receipt, uncertain, operator] of [['before close', journey.beforeClose, first, retry], ['after close', journey.afterClose, firstAfter, retryAfter]]) {
+      const problems = retryAdmissionProblems(uncertain, operator, isObject(receipt) ? receipt.sessions : undefined);
+      if (problems.length > 0) add('retry-session-reused', `${name} ${phase}: ${problems.join(' ')}`);
     }
     for (const [phase, markers] of [['before close', journey.markersBeforeClose], ['after close', journey.markersAfterClose]]) {
       const list = arrayOf(markers);
