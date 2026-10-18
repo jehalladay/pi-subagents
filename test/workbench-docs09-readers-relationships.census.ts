@@ -15,10 +15,24 @@
  * - TIER TRUTH: each row is labelled "default-gate"; judge() refuses a pin of any other tier (tier-mismatch) and reports
  *   a file the default config does not run as not-collected (a brace-glob or exclusion misreading is a tier cause, never
  *   a missing title), so the label is only ever carried by the gate's own report.
- * - UNPINNED HALVES: five clauses have no landed case today. Each is listed WITH a reason and a title probe. The probe is
- *   a REPORTER-VERIFIED title probe: it tests the registered case names the gate's own report holds (fullName), never a
- *   file's text, so a comment, a string or a docs quotation can never move it (the false-red class of the 06:52Z
- *   landing-merge red). A registered case that names the clause turns the half red until it is pinned.
+ * - UNPINNED HALVES: five clauses have no landed case at base 1a36ece (CLAIM_BASE, the trunk this cut merges). Each is
+ *   listed WITH a reason and a title probe, and SLOT_ROUTING records who holds its pin flip as the bead store read at
+ *   that sha: an open producer (RA4/b wb-5uh and wb-4ap.17, RA5/b wb-4ap.13) or a blocked one (RA7/a,b wb-04s, wb-w12),
+ *   whose lander pins the half in the same commit, or, where the store holds no producer (RA2/b), the census owner
+ *   wb-752.15. A closed bead whose acceptance quoted a clause without landing a case that evidences it is named as such
+ *   (RA2/b wb-6ze.3, RA5/b wb-6ze.7). Every claim is dated by that sha, never by a day. The probe is a REPORTER-VERIFIED
+ *   title probe: it tests the registered case names the gate's own report holds (fullName), never a file's text, so a
+ *   comment, a string or a docs quotation can never move it (the false-red class of the 06:52Z landing-merge red). A
+ *   registered case that names the clause turns the half red until it is pinned. The RA5/b and RA4/b probes carry their
+ *   producers' wording (typed directional refs, related-to, a bounded or HX-scoped neighborhood, ancestry or traversal;
+ *   verdict axes, gated_commit); the bare kind verbs (produces, consumes, depends, blocks, verifies), a bare
+ *   neighborhood, a path traversal and a relation kind stay out, because registered names at that sha already carry
+ *   them and would flip the half falsely.
+ * - RECORD HONESTY (gate cmd_e7d15ee63790 U1): each unpinned reason is checked against SLOT_ROUTING: it names the base
+ *   sha and no calendar day, names every producer with the landing-order duty, claims that no producer is on file only
+ *   where none is, and names each closed quoter with its reading. These rows prove the record agrees with itself; that
+ *   the record agrees with the bead store is the dated search the delivery note records, re-runnable at that sha. The
+ *   store is never read here: it moves, and a text-level read would turn the leg red on any later bead edit.
  * - RL3 ("Graph view styles each differently."): wb-6ze.34 landed the graph-view rendering and is the ASSERTED oracle;
  *   the half is pinned to its named cases under its named describe.
  * - DOCS: both sections are read through the helper's rendered view (docsSection / sectionMatches): each heading unique
@@ -28,8 +42,9 @@
  *   reworded clause breaks. The docs fixtures below are string-built and independent of the live document.
  * - NON-CLAIMS: a title's presence is never evidence that a case proves the clause; the evidence token each pinned half
  *   carries only shows that a pinned title talks about the clause. Half RA9/b ("optional change stream with cursor") is
- *   pinned to the observation layer's hot-cursor case because no adapter-side cursor case exists. No text-level focus
- *   focused-case check lives here: allowOnly is false in the tier configs. Mutants of the helper itself belong to wb-u62.
+ *   pinned to the observation layer's hot-cursor case because no adapter-side cursor case exists at base 1a36ece. No
+ *   text-level focused-case check lives here: allowOnly is false in the tier configs. Mutants of the helper itself
+ *   belong to wb-u62.
  */
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -128,7 +143,22 @@ const GRAPH_AC2: Pin = {
   suite: [GRAPH_VIEW_SUITE],
 };
 
-const NO_PRODUCER_CASE = "no landed case evidences this clause and no producer bead for it is on file at the 2026-10-18 base, so the census owner wb-752.15 holds the slot until one is filed: ";
+/**
+ * The trunk sha this cut merges, at which every unpinned-half claim in the table was verified: the bead store's title,
+ * description and acceptance fields searched with each half's slot words, and the default gate's report searched with
+ * each probe. A claim is dated by this sha, never by a day; the delivery note records the commands and the hit lists.
+ */
+const CLAIM_BASE = "1a36ece";
+/** The census owner: it holds a half's slot while the bead store holds no producer for the clause. */
+const CENSUS_OWNER = "wb-752.15";
+const NO_PRODUCER_CLAIM = `no producer bead for it is on file at base ${CLAIM_BASE}`;
+const BLOCKED_AT_BASE = `blocked at base ${CLAIM_BASE}`;
+/** The landing-order duty of a producer-owned half: the bead that lands the clause's case pins the half with it. */
+const landerPins = (key: string): string => `pins ${key} in the same commit`;
+/** The reading for a closed bead whose acceptance quoted the clause while none of its landed cases evidences it. */
+const quotedWithoutEvidence = (bead: string): string => `${bead} (closed) quoted this clause in its acceptance without landing a case that evidences it`;
+/** The reason prefix of a half no producer bead is on file for: the census owner holds its slot. */
+const NO_PRODUCER_CASE = `no landed case evidences this clause and ${NO_PRODUCER_CLAIM}, so the census owner ${CENSUS_OWNER} holds the slot until one is filed: `;
 
 /** Freezes the table and everything it holds, so no row, half or pin can be edited at runtime. */
 function freezeDeep<T>(value: T): T {
@@ -160,7 +190,7 @@ const ROWS: readonly Row[] = freezeDeep<readonly Row[]>([
       unpinned(
         "b",
         "external Claude sessions may be unobservable unless records are available",
-        `${NO_PRODUCER_CASE}no registered case speaks of external, unrecorded Claude sessions being unobservable.`,
+        `${NO_PRODUCER_CASE}no registered case speaks of external, unrecorded Claude sessions being unobservable; ${quotedWithoutEvidence("wb-6ze.3")}, as its landed claude-topology cases (pinned on RA1/a and RA2/a) project sessions Workbench controls.`,
         /external (claude )?sessions?|unobservable/iu,
         "an external Claude session is unobservable without records",
       ),
@@ -185,8 +215,8 @@ const ROWS: readonly Row[] = freezeDeep<readonly Row[]>([
       unpinned(
         "b",
         "build revision and gate axes",
-        `${NO_PRODUCER_CASE}the forge cases pinned above speak of verdict, evidence and projection, not of a build revision or per-axis gate state.`,
-        /build revision|gate axes/iu,
+        `no landed case evidences this clause at base ${CLAIM_BASE}: the forge cases pinned above speak of verdict, evidence and projection, and the landed wb-4ap collective-adaptation forge cases echo a per-package invalidation-basis descriptor (its digest and freshness word, docs/07's source basis); none states a build revision or a per-axis gate state. Its producers are open: wb-5uh (W08 Forge provider: "Preserve native verdict axes, source basis") owns the gate axes, and wb-4ap.17 (a gate.run consumer whose subjectBasis echoes the envelope's gated_commit, decided under wb-5uh) owns the build revision; whichever lands its case first ${landerPins("RA4/b")}, splitting the half if that case evidences only one of the two.`,
+        /build revision|gate axes|verdict axes|gated[_ ]commit/iu,
         "projects the forge build revision and the gate axes",
       ),
     ],
@@ -202,8 +232,8 @@ const ROWS: readonly Row[] = freezeDeep<readonly Row[]>([
       unpinned(
         "b",
         "optional graph traversal of linked native refs",
-        `${NO_PRODUCER_CASE}the HX cases pin the query snapshot only; no case follows linked native refs.`,
-        /graph traversal|linked native ref/iu,
+        `no landed case evidences this clause at base ${CLAIM_BASE}: the HX cases pin the query snapshot only and none follows linked native refs; ${quotedWithoutEvidence("wb-6ze.7")}, as its landed cases are the query-snapshot cases pinned on RA5/a. Its producer is open: wb-4ap.13 (HyperUnix H0/H1: typed directional refs and bounded neighborhood/ancestry queries, consumed additively with per-edge coverage); the wb-4ap.13 lander ${landerPins("RA5/b")}, and the probe carries that bead's wording, so the flip fires on case titles phrased the way the bead is.`,
+        /graph traversal|linked native refs?|typed (?:directional )?refs?\b|directional refs?\b|related-to|bounded (?:neighbou?rhood|traversal|ancestry)|^(?=.*(?:\bhx\b|hyperunix))(?=.*(?:(?<!path )traversal|neighbou?rhood|ancestry))/iu,
         "follows a graph traversal of linked native refs",
       ),
     ],
@@ -220,14 +250,14 @@ const ROWS: readonly Row[] = freezeDeep<readonly Row[]>([
       unpinned(
         "a",
         "invocation outcome, service spans if instrumented",
-        "no landed default-gate case projects a MechanicalWorkflows invocation outcome or service span; the MechanicalWorkflows binding host is wb-04s under the native-composition epic wb-w12 and both are still blocked.",
+        `no landed default-gate case projects a MechanicalWorkflows invocation outcome or service span; the MechanicalWorkflows binding host is wb-04s under the native-composition epic wb-w12, both ${BLOCKED_AT_BASE}, and whichever lands the case ${landerPins("RA7/a")}.`,
         /invocation outcome|service spans?/iu,
         "projects the invocation outcome and the service span",
       ),
       unpinned(
         "b",
         "arbitrary plain TypeScript calls are not magically discoverable",
-        "no landed case asserts that arbitrary plain TypeScript calls are not discoverable as MechanicalWorkflows; the sentence is a non-capability statement with no executable oracle until the binding host wb-04s lands.",
+        `no landed case asserts that arbitrary plain TypeScript calls are not discoverable as MechanicalWorkflows; the sentence is a non-capability statement with no executable oracle until the binding host wb-04s (${BLOCKED_AT_BASE}) lands, and its lander ${landerPins("RA7/b")}.`,
         /magically discoverable|not discoverable|undiscoverable/iu,
         "plain TypeScript calls are not magically discoverable",
       ),
@@ -327,6 +357,31 @@ const ROWS: readonly Row[] = freezeDeep<readonly Row[]>([
 const EXPECTED_ROW_IDS: readonly string[] = ["RA1", "RA2", "RA3", "RA4", "RA5", "RA6", "RA7", "RA8", "RA9", "RA10", "RA11", "RL1", "RL2", "RL3", "RL4", "RL5"];
 const EXPECTED_UNPINNED: readonly string[] = ["RA2/b", "RA4/b", "RA5/b", "RA7/a", "RA7/b"];
 const DISTINCT_PINS = 36;
+
+/** Who holds an unpinned half's pin flip, as the bead store read at CLAIM_BASE. */
+interface SlotRouting {
+  /** Open beads whose landing evidences the clause: whichever lands the case pins the half in the same commit. */
+  readonly openProducers: readonly string[];
+  /** Blocked beads the clause waits on; their lander carries the same duty. */
+  readonly blockedProducers: readonly string[];
+  /** Closed beads whose acceptance quoted the clause without landing a case that evidences it. */
+  readonly closedQuoters: readonly string[];
+}
+
+/**
+ * The routing of the five unpinned halves (gate cmd_e7d15ee63790 U1, F2, F5). It is a record dated by CLAIM_BASE and is
+ * never read from the bead store here: the store moves, so a text-level read would turn the leg red on any bead edit.
+ * A half with neither an open nor a blocked producer is held by the census owner.
+ */
+const SLOT_ROUTING: Readonly<Record<string, SlotRouting>> = freezeDeep<Readonly<Record<string, SlotRouting>>>({
+  "RA2/b": { openProducers: [], blockedProducers: [], closedQuoters: ["wb-6ze.3"] },
+  "RA4/b": { openProducers: ["wb-5uh", "wb-4ap.17"], blockedProducers: [], closedQuoters: [] },
+  "RA5/b": { openProducers: ["wb-4ap.13"], blockedProducers: [], closedQuoters: ["wb-6ze.7"] },
+  "RA7/a": { openProducers: [], blockedProducers: ["wb-04s", "wb-w12"], closedQuoters: [] },
+  "RA7/b": { openProducers: [], blockedProducers: ["wb-04s"], closedQuoters: [] },
+});
+/** A half's routing, undefined for a key the record does not hold. */
+const routingOf = (key: string): SlotRouting | undefined => SLOT_ROUTING[key];
 
 const isPinned = (half: Half): half is PinnedHalf => half.pins.length > 0 && "token" in half;
 const isUnpinned = (half: Half): half is UnpinnedHalf => "titleProbe" in half;
@@ -461,6 +516,15 @@ function flipFindings(report: ReportJson): string[] {
     return hit === undefined ? [] : [`row ${halfKey(row, half)} [pin-flip]: a registered case now names the clause ("${hit}"); pin it instead of listing the half as unpinned`];
   });
 }
+
+/** A report registering one passed decoy case per name under a decoy describe: the probes read fullName only. */
+const reportOf = (names: readonly string[]): ReportJson => ({
+  testResults: [{ name: join(ROOT, "test/decoy.test.ts"), assertionResults: names.map(title => ({ title, fullName: `decoy ${title}`, ancestorTitles: ["decoy"], status: "passed" })) }],
+});
+
+const escapeRegExp = (text: string): string => text.replace(/[.*+?^${}()|[\]\\]/gu, "\\$&");
+/** A bead id as a whole token, so wb-4ap.1 never matches inside wb-4ap.13. */
+const beadMention = (bead: string): RegExp => new RegExp(`(?<![\\w.-])${escapeRegExp(bead)}(?![\\w-]|\\.\\d)`, "u");
 
 describe("wb-752.15 docs/workbench/09 § Reader adapters and § Relationships census (report mode)", () => {
   it("AC1: both sections render exactly their pinned block lists, every row's clause verbatim", () => {
@@ -770,5 +834,79 @@ describe("wb-752.15 docs drift names the row or the section, over string-built f
   it("M15 a <div> line directly above a heading turns the heading into HTML, so the section is refused", () => {
     const lines = docsFailures(good.replace(`## ${READERS}\n`, `<div>\n## ${READERS}\n`));
     expect(refused(lines, READERS)).toBeDefined();
+  });
+});
+
+describe("wb-752.15 record honesty: each unpinned half names who holds its pin flip, dated by the base sha (gate cmd_e7d15ee63790 U1)", () => {
+  const routed = UNPINNED_HALVES.map(({ row, half }) => ({ key: halfKey(row, half), half, routing: routingOf(halfKey(row, half)) }));
+
+  it("the routing record is deeply frozen and covers exactly the five unpinned halves, naming each bead once by id", () => {
+    expect(isDeepFrozen(SLOT_ROUTING)).toBe(true);
+    expect(Object.keys(SLOT_ROUTING)).toEqual(EXPECTED_UNPINNED);
+    for (const [key, routing] of Object.entries(SLOT_ROUTING)) {
+      const beads = [...routing.openProducers, ...routing.blockedProducers, ...routing.closedQuoters];
+      expect(new Set(beads).size, `half ${key}: no bead is named twice`).toBe(beads.length);
+      for (const bead of beads) expect(bead, `half ${key}: a bead id`).toMatch(/^wb-[a-z0-9]+(?:\.[0-9]+)?$/u);
+    }
+  });
+
+  it.each(routed)("U1 $key: the claim is dated by the base sha it was verified at, never by a day", ({ key, half }) => {
+    expect(half.reason, `half ${key}: names the base sha`).toContain(`base ${CLAIM_BASE}`);
+    expect(half.reason, `half ${key}: no calendar day dates the claim`).not.toMatch(/\b\d{4}-\d{2}-\d{2}\b/u);
+  });
+
+  it.each(routed)("U1 $key: names every producer on file and routes the pin flip to its lander, or says none is on file and the census owner holds the slot", ({ key, half, routing }) => {
+    expect(routing, `half ${key} has a routing record`).toBeDefined();
+    if (routing === undefined) return;
+    const producers = [...routing.openProducers, ...routing.blockedProducers];
+    for (const bead of producers) expect(half.reason, `half ${key}: names its producer ${bead}`).toMatch(beadMention(bead));
+    if (routing.blockedProducers.length > 0) expect(half.reason, `half ${key}: says its producer is blocked at the base`).toContain(BLOCKED_AT_BASE);
+    if (producers.length > 0) {
+      expect(half.reason, `half ${key}: the producer's lander pins the half in the same commit`).toContain(landerPins(key));
+      expect(half.reason, `half ${key}: a half with a producer on file never claims that none is`).not.toContain("no producer bead");
+    } else {
+      expect(half.reason, `half ${key}: no producer is on file, and the reason says so`).toContain(NO_PRODUCER_CLAIM);
+      expect(half.reason, `half ${key}: the census owner holds the slot`).toMatch(beadMention(CENSUS_OWNER));
+    }
+  });
+
+  it.each(routed.filter(({ routing }) => (routing?.closedQuoters.length ?? 0) > 0))("U1 $key: names each closed bead that quoted the clause without landing a case that evidences it", ({ key, half, routing }) => {
+    for (const bead of routing?.closedQuoters ?? []) expect(half.reason, `half ${key}: the reading for ${bead}`).toContain(quotedWithoutEvidence(bead));
+  });
+
+  it.each([
+    "follows a graph traversal of linked native refs",
+    "maps each typed directional ref kind to a distinct relation kind or counts it unmapped, never merged",
+    "keeps related-to refs apart from depends refs",
+    "a bounded neighborhood query is partial with the remainder counted",
+    "a bounded ancestry query carries per-edge coverage and the source revision",
+    "HyperUnix observer: an ancestry query past its bound is partial, never complete",
+  ])("the RA5/b probe fires on the wording of its producer wb-4ap.13, and only RA5/b flips: %s", name => {
+    expect(namedRows(flipFindings(reportOf([name])))).toEqual(["RA5/b"]);
+  });
+
+  it.each([
+    "projects the forge build revision and the gate axes",
+    "subjectBasis echoes the gate.run envelope's gated_commit verbatim",
+    "preserves the native verdict axes of a gate.status answer",
+  ])("the RA4/b probe fires on the wording of its producers wb-5uh and wb-4ap.17, and only RA4/b flips: %s", name => {
+    expect(namedRows(flipFindings(reportOf([name])))).toEqual(["RA4/b"]);
+  });
+
+  it("the widened probes stay quiet on near misses: a bare neighborhood, a path traversal (also under HX), a relation kind, a typed refusal, gate.run, bare axes and a bare ref-kind verb", () => {
+    expect(
+      flipFindings(
+        reportOf([
+          "states a hypothesis-only focus as an incomplete trace, not as an authoritative neighborhood",
+          "rejects path traversal",
+          "reports an unknown endpoint, an unknown relation kind and an unprovenanced edge as references with no invented fields",
+          "a typed refusal names the missing variable",
+          "refuses a gate.run protocol method with a typed validation error",
+          "Forge's refusals are echoed verbatim with Forge's axes echoed",
+          "HyperUnix provider consumes the find result and produces one snapshot",
+          "HyperUnix rejects a path traversal in the query root",
+        ]),
+      ),
+    ).toEqual([]);
   });
 });
