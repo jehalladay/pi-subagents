@@ -5,6 +5,10 @@
  * a broken one is documentation that lies. Nothing else guards them: `biome.json`
  * scopes linting to `src/**` and `test/**`, and `tsconfig.json` compiles only
  * `src/**`, so these files are neither linted nor typechecked. This suite is it.
+ * Clarification (2026-10-18, wb-zsv.7): since 26d3103 (wb-zsv) the complete
+ * gate's typing step also runs `npm run typecheck:test`, whose
+ * `tsconfig.test.json` includes only `src/**` and `test/**` `.ts` files, so
+ * `examples/` is still outside every type-check and the sentence above holds.
  *
  * Three tiers, cheapest first:
  *
