@@ -100,16 +100,20 @@ export function inspectorEvidenceTarget(model: InspectorModel, state: InspectorS
  * (P6, wb-feo). Where the page lands depends on the viewport total, which only that read returns, so the read spans every page a
  * total consistent with the row can select: from the page that ends at the row through the page centred on it. That is at most
  * half a page read above the drawn rows (docs/10 "Virtualized visible rows + modest overscan"), count + ceil(count/2) - 1 rows in
- * all, and the drawn page is cut out of it. A row index the read finds past the viewport end (the selection left the viewport and
- * the stored index outlived it) takes one more read, of the clamped page; a row index that is not a safe integer reads from the
- * top and is clamped the same way. */
+ * all, and the drawn page is cut out of it. The single exception is N2 (owner ruling 2026-10-17T23:33Z): a stored row index at or
+ * past the end of a non-empty viewport and a page or more down (index >= total > 0 and index >= count; the selection left the
+ * viewport and the index outlived it) takes one more read, of the clamped page. A row index the reducers never store adds no
+ * other second read: a fraction is read as its whole part is, and 2^53 or more reads from the top (a second read only past the end
+ * of a viewport longer than a page, N2's case); NaN, or a fraction whose page would start between rows, throws in the projection
+ * as the two-read renderer did. */
 function rowWindow(model: InspectorModel, state: InspectorState, count: number): {nodes:ObservedNode[];offset:number;total:number;revision:number} {
   const query={scope:model.scope,invocationId:model.invocationId};
   const half=Math.floor(count/2);
   const row=Math.max(0,state.index);
-  const exact=Number.isSafeInteger(row);
-  const from=exact ? Math.max(0,row-count+1) : 0;
-  const read=model.projection.window({...query,offset:from,limit:exact ? Math.min(Math.max(0,row-half),count-1-half)+count : count});
+  const at=Math.floor(row);
+  const exact=Number.isSafeInteger(at);
+  const from=exact ? Math.max(0,at-count+1) : 0;
+  const read=model.projection.window({...query,offset:from,limit:exact ? Math.min(Math.max(0,at-half),count-1-half)+count : count});
   const index=Math.min(row,Math.max(0,read.total-1));
   const offset=Math.max(0,Math.min(index-half,read.total-count));
   const end=Math.min(read.total,offset+count);

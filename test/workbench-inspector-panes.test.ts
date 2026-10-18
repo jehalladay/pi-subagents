@@ -842,3 +842,93 @@ describe("(f) P6 at most one window() call per rendered pane (wb-feo)", () => {
     expect(framesDigest(model, stale, width, rows)).toBe(P6_BASE_DIGESTS[`last row of 60 ${width}x${rows}`]);
   });
 });
+
+// ---------------------------------------------------------------------------------------------------------------------------
+// wb-feo respin 1 (gate row 522 U1/U2, R2(a)): N2 above is the ONE exception to P6, not a general allowance. The reducers store
+// whole row indices only (initialInspectorState sets 0; the j/k reducer clamps a whole index into the viewport), but a host can
+// hand layoutInspector a number of its own, so the indices nothing in src stores are pinned here: 2^53 or more and +Infinity
+// read from the top, a fraction is read exactly as its whole part, and NaN or a page that would start between rows throws in
+// the projection as the two-read renderer did. No second read happens outside N2.
+// ---------------------------------------------------------------------------------------------------------------------------
+
+/** An unselected state storing row index `index`. */
+const storedIndex =
+  (index: number) =>
+  (view: InspectorView): InspectorState => ({ ...initialInspectorState(), view, index });
+/** The two-read renderer's frames (trunk blob 841c988) for stored fractions, captured from it before this respin and never
+ * re-pinned: a fraction draws the page that renderer drew, with no row marked current. A fraction past the last row clamps to
+ * it and draws the last row's frames (P6_BASE_DIGESTS). */
+const FRACTION_BASE_DIGESTS: Readonly<Record<string, string>> = {
+  "5.5 of 60 100x30": "9f866b43cf319a792e53337abc70c207a23018ca73ffff281a89b5b9f83a58ce",
+  "5.5 of 60 140x40": "0e21bb35fa6d69af10cfe243ded9b95ed122badad587e1b548885c60c456479d",
+  "49.5 of 60 100x30": "09aded324cb035e96d8134c452604b457382a81702951a6c0b2b0d74cf56915b",
+  "44.5 of 60 140x40": "f1ff08bc409f58f726d68f10d8114d28d767544a2ee2b72b563858f2746b2434",
+  "55.5 of 60 100x30": "ac278f76630a5084b28429f0462453d9289b2f42b4447c331d46b86bbb61f33b",
+  "55.5 of 60 140x40": "89abd86841f29943042ecd928a64855adcc08f20825d359229e5347a1fd8174a",
+  "5.5 of 12 100x30": "825bdbb8c54323f6bbc0be48b52e5aa14ca95e9d17cd8b84c998bd853cd7104e",
+  "5.5 of 12 140x40": "39e04cc62d4de263b20379c0071dcb11fe5941a48d31a50445650b702f955aa2",
+};
+/** The projection's refusal of a viewport offset that is not a whole number (ObservationProjection.window). */
+const OFFSET_REFUSAL = "Invalid observation viewport offset or limit (1..100).";
+
+describe("(g) N2 stays the only second read for row indices the reducers never store (wb-feo respin 1, R2(a))", () => {
+  it.each(P6_SIZES)("at %ix%i an index of 2^53 or more reads from the top: N2's corrective read of the last page on a viewport longer than a page, one read on a shorter one", (width, rows) => {
+    const page = pageHeight(rows);
+    const panes = paneWidths(width).length;
+    for (const index of [Number.POSITIVE_INFINITY, 2 ** 53, 1e300]) {
+      for (const count of [60, 12]) {
+        const model = modelOf(count);
+        // The read starts at the top; only a viewport longer than the page needs N2's second read, of the clamped last page.
+        const expected = count > page ? [{ offset: 0, limit: page }, { offset: count - page, limit: page }] : [{ offset: 0, limit: page }];
+        for (const view of VIEWS) {
+          const state = storedIndex(index)(view);
+          const [single, composed] = readsOf(model, [() => layoutInspector(model, state, { width, rows }), () => layoutInspector(model, state, { width, rows, panes: true })]);
+          expect(single, `${index} of ${count} ${view} single column`).toEqual(expected);
+          expect(composed, `${index} of ${count} ${view} ${panes} panes`).toEqual(Array.from({ length: panes }, () => expected).flat());
+        }
+        expect(framesDigest(model, storedIndex(index), width, rows), `${index} of ${count}`).toBe(P6_BASE_DIGESTS[`last row of ${count} ${width}x${rows}`]);
+      }
+    }
+  });
+  it.each(P6_SIZES)("at %ix%i a fraction is read exactly as its whole part: one read in the last-page band and at the last row, N2's two only past the end, the two-read renderer's frames", (width, rows) => {
+    const page = pageHeight(rows);
+    const half = Math.floor(page / 2);
+    // The lowest fraction whose centred page clamps to the last page of 60 rows: the first one above the throwing range.
+    const edge = 60 - page + half + 0.5;
+    const long = modelOf(60);
+    const short = modelOf(12);
+    const cases = [
+      { model: long, count: 60, index: 5.5, frames: FRACTION_BASE_DIGESTS[`5.5 of 60 ${width}x${rows}`] },
+      { model: long, count: 60, index: edge, frames: FRACTION_BASE_DIGESTS[`${edge} of 60 ${width}x${rows}`] },
+      { model: long, count: 60, index: 55.5, frames: FRACTION_BASE_DIGESTS[`55.5 of 60 ${width}x${rows}`] },
+      { model: long, count: 60, index: 59.5, frames: P6_BASE_DIGESTS[`last row of 60 ${width}x${rows}`] },
+      { model: long, count: 60, index: 100.5, frames: P6_BASE_DIGESTS[`last row of 60 ${width}x${rows}`] },
+      { model: short, count: 12, index: 5.5, frames: FRACTION_BASE_DIGESTS[`5.5 of 12 ${width}x${rows}`] },
+      { model: short, count: 12, index: 30.5, frames: P6_BASE_DIGESTS[`last row of 12 ${width}x${rows}`] },
+    ];
+    for (const { model, count, index, frames } of cases) {
+      // N2's predicate on the whole part: at or past the end of the (non-empty) viewport and a page or more down. 30.5 of 12
+      // meets it below a 31-row page and misses it at one, so the second read follows the predicate, not the fraction.
+      const whole = Math.floor(index);
+      const reads = whole >= count && whole >= page ? 2 : 1;
+      for (const view of VIEWS) {
+        const draws = (at: number) => [() => layoutInspector(model, storedIndex(at)(view), { width, rows }), () => layoutInspector(model, storedIndex(at)(view), { width, rows, panes: true })];
+        const fraction = readsOf(model, draws(index));
+        expect(fraction, `${index} of ${count} ${view} reads as ${Math.floor(index)}`).toEqual(readsOf(model, draws(Math.floor(index))));
+        expect(fraction[0], `${index} of ${count} ${view} single column`).toHaveLength(reads);
+        expect(fraction[1], `${index} of ${count} ${view} panes`).toHaveLength(reads * paneWidths(width).length);
+      }
+      expect(framesDigest(model, storedIndex(index), width, rows), `${index} of ${count}`).toBe(frames);
+    }
+  });
+  it.each(P6_SIZES)("at %ix%i NaN, and a fraction whose centred page would start between rows, throw in the projection as the two-read renderer did", (width, rows) => {
+    const page = pageHeight(rows);
+    const half = Math.floor(page / 2);
+    const model = modelOf(60);
+    // half + 0.5 is the lowest fraction past the first-page clamp, 60 - page + half - 0.5 the highest below the last-page clamp.
+    for (const index of [Number.NaN, half + 0.5, 30.5, 60 - page + half - 0.5])
+      for (const view of VIEWS)
+        for (const panes of [false, true])
+          expect(() => layoutInspector(model, storedIndex(index)(view), { width, rows, panes }), `${index} ${view} panes ${panes}`).toThrow(OFFSET_REFUSAL);
+  });
+});
