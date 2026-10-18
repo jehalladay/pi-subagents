@@ -59,7 +59,7 @@ export function fullShapeRf(workspaceRoot: string): JsonObject {
       },
       work_metrics: fullShapeWorkMetrics(), work: fullShapeWork(),
       engine_metrics: { tsx_worker_spawns: 0, tsx_resource_rounds: 0 },
-      scope: null, audience: 'model', bundle_revision_id: digest('2'), observations: [], attempts: 1,
+      scope: null, audience: 'model', bundle_revision_id: digest('2'), observations: [], necessity: [], attempts: 1,
       superseded_transaction_ids: [], fiber_transaction_refs: [],
       render_id: null, ephemeral: true, commit_seq: null, session_id: null, effects: [], plan: { operations: [], would_commit: false },
     },
