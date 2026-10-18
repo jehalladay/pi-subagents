@@ -15,8 +15,9 @@
 //      production cap, an unsampled series)
 //   3  nothing could be measured (an exception, reported on stderr; no receipt), or the receipt file could not be
 //      written (reported on stderr; the receipt is already on stdout, never a silent exit 1)
-// --strict is the falsifier arm: the Forge command stays plain until the inspector remainder line
-// (wb-ea1) lands. The receipt header states the bench-only bounds (benchOnlyBounds) before any measurement.
+// --strict is the falsifier arm: the Forge command stays plain. The inspector remainder line landed with wb-ea1, and since
+// wb-j0b --strict counts only that whole counted remainder line as a label (the frame header's ' · capped' suffix is not
+// one). The receipt header states the bench-only bounds (benchOnlyBounds) before any measurement.
 // The revision is git rev-parse HEAD of this checkout plus a dirty flag, stamped by qa/workbench/bench-revision.mjs
 // (wb-oq3); $W21_REVISION, the one override name of the W21 family, read by that stamp alone, only overrides the
 // revision and the receipt names the source. $CAP_BENCH_REVISION is retired (wb-oq3 re-cut decision: one override
