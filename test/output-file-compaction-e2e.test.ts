@@ -11,6 +11,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { fauxAssistantMessage, fauxText } from "@earendil-works/pi-ai";
 import {
+  type CreateAgentSessionOptions,
   createAgentSession,
   DefaultResourceLoader,
   getAgentDir,
@@ -23,6 +24,14 @@ import { fauxModelBackend } from "./helpers/faux-model-backend.js";
 import { registerFauxProvider } from "./helpers/pi-ai.js";
 
 const TURNS_BEFORE_COMPACT = 6;
+
+/**
+ * `createAgentSession` options plus the pre-0.80.8 `modelRegistry` slot. The
+ * installed Pi no longer declares that option; both sessions below pass it
+ * beside `modelRuntime` on purpose (each Pi version ignores the other's), so the
+ * extra key is typed here instead of casting the whole options literal.
+ */
+type DualVersionSessionOptions = CreateAgentSessionOptions & { modelRegistry?: unknown };
 
 describe("output-file streaming across a real compaction (#145)", () => {
   let tmp: string;
@@ -86,7 +95,7 @@ describe("output-file streaming across a real compaction (#145)", () => {
     });
     await loader.reload();
 
-    const { session } = await createAgentSession({
+    const sessionOptions: DualVersionSessionOptions = {
       cwd,
       agentDir,
       model,
@@ -101,7 +110,8 @@ describe("output-file streaming across a real compaction (#145)", () => {
         compaction: { enabled: false, keepRecentTokens: 500 },
         retry: { enabled: false },
       }),
-    });
+    };
+    const { session } = await createAgentSession(sessionOptions);
 
     const outPath = join(tmp, "agent.output");
     writeInitialEntry(outPath, "agent-145", "repro", cwd);
@@ -165,7 +175,7 @@ describe("output-file streaming across a real compaction (#145)", () => {
         noContextFiles: true,
       });
       await loader.reload();
-      const { session } = await createAgentSession({
+      const sessionOptions: DualVersionSessionOptions = {
         cwd,
         agentDir,
         model,
@@ -174,7 +184,8 @@ describe("output-file streaming across a real compaction (#145)", () => {
         resourceLoader: loader,
         sessionManager: SessionManager.inMemory(cwd),
         settingsManager: SettingsManager.inMemory({ compaction: { enabled: false }, retry: { enabled: false } }),
-      });
+      };
+      const { session } = await createAgentSession(sessionOptions);
 
       const outPath = join(tmp, "agent.output");
       writeInitialEntry(outPath, "agent-sys", "the spawn prompt", cwd);

@@ -18,6 +18,7 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - run: npm run typecheck
+      - run: npm run typecheck:test
       - run: npm run test
 
   # The pi devDependencies pin the compile baseline (1.1.0), so the `build`

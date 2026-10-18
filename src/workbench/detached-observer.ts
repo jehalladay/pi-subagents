@@ -31,7 +31,7 @@ export interface DetachedReading {
   stale: NativeRef[];
 }
 export interface DetachedApplyResult {
-  snapshots: Array<"applied" | "out-of-order">;
+  snapshots: Array<ReturnType<ObservationProjection["refresh"]>>;
   related: number;
   stale: number;
 }
@@ -63,10 +63,9 @@ function clampBytes(text: string, max: number): string {
   }
   return out;
 }
-/** Producer text bound for display: unsafe sequences become spaces BEFORE the shared redactor runs (so an escape
- * glued to a credential cannot hide it), then the shared sanitizer redacts, bounds and strips again. */
+/** Producer text bound for display: the shared helper's label layout, then clamped to the byte budget. */
 const shown = (value: string | undefined, maxBytes: number): string =>
-  value === undefined ? "" : clampBytes(sanitizeWorkbenchText(stripUnsafeText(value, " ").replace(/\s+/g, " ").trim(), maxBytes), maxBytes);
+  value === undefined ? "" : clampBytes(sanitizeWorkbenchText(value, maxBytes, "label"), maxBytes);
 
 function checked(input: DetachedReadingInput): void {
   const { receipt, snapshot, scope, observedAt } = input;

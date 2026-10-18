@@ -10,7 +10,7 @@
 import {createHash} from 'node:crypto';
 import {CapabilityError, type JsonValue} from './capability-registry.js';
 import type {NativeRef, NativeSnapshot, ObservationProjection, ObservationScope, Presentation} from './observation.js';
-import {redactWorkbenchText, stripUnsafeText} from './redaction.js';
+import {redactWorkbenchText, sanitizeWorkbenchText, stripUnsafeText} from './redaction.js';
 
 /** This adapter's projection contract, for the tool wiring that will surface it. */
 export const HYPERUNIX_OBSERVATION_CONTRACT = 'workbench.hyperunix-observation/v1';
@@ -39,6 +39,25 @@ export interface HyperUnixProjectionTopology {
   relations: readonly HyperUnixObservedRelation[];
   diagnostics: readonly string[];
 }
+/** One clause of the runtime-licence invariant hxLiveInvariant checks, in check order. */
+export type HyperUnixLiveClause =
+  | 'execution-kind' | 'read-outcome' | 'licence-boolean' | 'licence-without-complete-kind' | 'binary-sha256' | 'runtime-version';
+/** How runtime.version reads: 'installed' only for the build identity an installed hx prints (HyperUnix-CLI
+ * skill/hyper-unix/SKILL.md:22-23@d60f277a26 "`<version>+<family>.<commit>`", tools/install-local.sh:5 "`<version>+<family>.<sha8>`");
+ * anything else, the bare `0.1.0` of a plain checkout build included, is 'unstamped' and its provenance unknown. A label only:
+ * it never decides the verdict or the coverage reading, and the binary sha-256 stays the identity pin. */
+export type HyperUnixVersionClass = 'installed' | 'unstamped';
+/** Deeply frozen verdict of hxLiveInvariant over one hyperunix.find provider output. */
+export interface HyperUnixLiveVerdict {
+  /** Every clause holds. */
+  readonly holds: boolean;
+  /** The clauses the output breaks, in check order; empty exactly when holds. */
+  readonly violations: readonly HyperUnixLiveClause[];
+  /** Absence is licensed (complete coverage): the invariant holds, the kind reads complete and licenses_absence is true. Rows,
+   * row counts, exit codes and transport success never move it. */
+  readonly absenceLicensed: boolean;
+  readonly versionClass: HyperUnixVersionClass;
+}
 
 const CONTRACT = 'hyperunix.find/v1';
 const REPRESENTATION = 'hyperunix.result/1';
@@ -49,6 +68,8 @@ const MAX_DIAGNOSTICS = 8;
 /** ObservationProjection admits at most 32 evidence references per snapshot. */
 const MAX_EVIDENCE = 32;
 const BINARY_DIGEST = /^[0-9a-f]{64}$/;
+/** An installed build identity: a SemVer version, then `+<family>.<commit>` with a hex commit (the installer's `<family>.<sha8>`). */
+const BUILD_IDENTITY = /^\d+\.\d+\.\d+(?:-[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?\+[0-9A-Za-z.-]+\.[0-9a-f]{7,40}$/;
 /** A zone-qualified ISO-8601 instant; looser text that Date.parse still accepts names no comparable host clock reading. */
 const ISO_INSTANT = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2}(?:\.\d{1,9})?)?(?:Z|[+-]\d{2}:\d{2})$/;
 /** A UTF-16 code unit orphaned when a length bound cuts through a surrogate pair. */
@@ -82,12 +103,9 @@ const identity = (value: unknown): value is string =>
 const exact = (value: unknown): value is string => identity(value) && redactWorkbenchText(value) === value;
 const instant = (value: unknown): value is string => typeof value === 'string' && ISO_INSTANT.test(value) && Number.isFinite(Date.parse(value));
 
-/** Producer or host text bound for display. Unsafe sequences become spaces BEFORE the shared redactor runs, so an escape or bidi
- * mark glued to a credential cannot hide it; redactWorkbenchText then redacts and bounds, stripUnsafeText strips, and a code unit
- * the bound orphaned is dropped. */
+/** Producer or host text bound for display: the shared helper's label layout, then a code unit the bound orphaned is dropped. */
 function shown(value: string, max: number): string {
-  const spaced = stripUnsafeText(value, ' ').replace(/\s+/g, ' ').trim();
-  return stripUnsafeText(redactWorkbenchText(spaced, max)).replace(LONE_SURROGATE, '').trim();
+  return sanitizeWorkbenchText(value, max, 'label').replace(LONE_SURROGATE, '').trim();
 }
 
 /** Freezes a tree this module just built; nothing in it is shared with the caller's input. */
@@ -98,6 +116,36 @@ function frozen<T>(value: T): T {
     Object.freeze(value);
   }
   return value;
+}
+
+/** The runtime-licence invariant the live HX tier asserts instead of any concrete verdict (wb-tz2.1): the kind is a vendored SDK
+ * ExecutionStatusKind and not a mutation outcome (the live reads are finds), licenses_absence is a boolean that is true only on
+ * a complete kind, runtime.binarySha256 is 64 lowercase hex and runtime.version a bounded, displayable string. It restates the
+ * checks hyperunixTopology enforces on those fields, without any host context, and decides absence from the kind and the
+ * licence alone. Pure: it reads only those five fields and returns a frozen verdict built here. */
+export function hxLiveInvariant(result: JsonValue): HyperUnixLiveVerdict {
+  const value = record(result);
+  const source = record(value?.source);
+  const kind = record(source?.execution_status)?.kind;
+  const licensed = record(source?.coverage_summary)?.licenses_absence;
+  const runtime = record(value?.runtime);
+  const binary = runtime?.binarySha256;
+  const version = runtime?.version;
+  const reads = isKind(kind) ? READING[kind] : undefined;
+  const violations: HyperUnixLiveClause[] = [];
+  if (reads === undefined) violations.push('execution-kind');
+  else if (reads === 'mutation') violations.push('read-outcome');
+  if (typeof licensed !== 'boolean') violations.push('licence-boolean');
+  else if (licensed && reads !== 'complete') violations.push('licence-without-complete-kind');
+  if (typeof binary !== 'string' || !BINARY_DIGEST.test(binary)) violations.push('binary-sha256');
+  if (!exact(version)) violations.push('runtime-version');
+  const holds = violations.length === 0;
+  return frozen({
+    holds,
+    violations,
+    absenceLicensed: holds && reads === 'complete' && licensed === true,
+    versionClass: typeof version === 'string' && BUILD_IDENTITY.test(version) ? 'installed' : 'unstamped',
+  });
 }
 
 /** The host context, copied field by field after validation. Target text is display and identity input, never refused for its

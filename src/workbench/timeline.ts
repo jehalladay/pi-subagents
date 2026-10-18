@@ -17,7 +17,7 @@
  */
 import { CapabilityError } from "./capability-registry.js";
 import type { Interval, NativeRef, ObservationProjection, ObservationScope, ObservedNode, Presentation, Relation } from "./observation.js";
-import { redactWorkbenchText, stripUnsafeText } from "./redaction.js";
+import { sanitizeWorkbenchText } from "./redaction.js";
 
 export const TIMELINE_CONTRACT = "workbench.timeline/v1";
 export type TimelineReader = Pick<ObservationProjection, "window" | "relations" | "relationRevision">;
@@ -106,7 +106,11 @@ export interface TimelineModel {
 }
 
 const MAX_WINDOW = 100;
+/** Largest zoom (cells per second) the workbench.timeline/v1 request contract accepts; the inspector zoom reducer clamps to it. */
 const MAX_ZOOM = 8;
+
+export { MAX_ZOOM };
+
 const MIN_COLUMNS = 8;
 const MAX_COLUMNS = 200;
 const DEFAULT_LANES = 16;
@@ -134,10 +138,6 @@ const FRESHNESS: readonly string[] = ["current", "stale", "unknown"];
 /** RFC 3339 date-time with a zone. The host date parser alone also reads prose such as a weekday-first date, control
  * characters included, which would be timing inferred from text; the shape also keeps every copied instant display-safe. */
 const INSTANT = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2}(?:\.\d{1,9})?)?(?:Z|[+-]\d{2}:\d{2})$/;
-/** Default-ignorable code points (zero-width spaces and joiners, bidi marks, variation selectors, tag characters, soft
- * hyphen, BOM) render as nothing. The shared strip keeps most of them, so one inside a keyword would hide a credential
- * from the redactor unseen. */
-const INVISIBLE = /\p{Default_Ignorable_Code_Point}/gu;
 /** A UTF-16 code unit orphaned when a length bound cuts through a surrogate pair. */
 const LONE_SURROGATE = /[\ud800-\udbff](?![\udc00-\udfff])|(?<![\ud800-\udbff])[\udc00-\udfff]/g;
 
@@ -192,13 +192,11 @@ function validated(request: TimelineRequest): Bounds {
   };
 }
 
-/** Producer text bound for display. Invisible characters are dropped and unsafe sequences become spaces BEFORE the shared
- * redactor runs, so neither can split or hide a credential; redactWorkbenchText then redacts and bounds to 80,
- * stripUnsafeText strips, and a code unit the bound orphaned is dropped. May be empty; callers choose the fallback. */
+/** Producer text bound for display: the shared helper's label layout bounded to 80, then a code unit the bound orphaned is
+ * dropped. May be empty; callers choose the fallback. */
 function shown(value: unknown): string {
   if (typeof value !== "string") return "";
-  const spaced = stripUnsafeText(value.slice(0, LABEL_SCAN).replace(INVISIBLE, ""), " ").replace(/\s+/g, " ").trim();
-  return stripUnsafeText(redactWorkbenchText(spaced, LABEL)).replace(LONE_SURROGATE, "").trim();
+  return sanitizeWorkbenchText(value.slice(0, LABEL_SCAN), LABEL, "label").replace(LONE_SURROGATE, "").trim();
 }
 
 /** provider/type/id of a projection key (the reference form the inspector prints), sanitized; the raw key otherwise. Never
