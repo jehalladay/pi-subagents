@@ -34,7 +34,7 @@ export const RECONCILE = "Claude interrupt outcome unknown: no usable answer to 
   + "control request.";
 /** The native statement the harness seeds the session-owns-call edge from: the SDK's own system/init session_id (owner ruling R1). */
 export const OWNERSHIP_SOURCE = "system/init session_id";
-/** The beads every strict booted-tool UNREALISED declaration must cite (owner ruling R2): the registration gap and the landed wiring bead. */
+/** The beads every strict booted-tool reading, realised or declared unrealised, must cite (owner ruling R2): the registration gap and the landed wiring bead. */
 export const STRICT_BOOTED_CITATIONS: readonly string[] = Object.freeze(["wb-69g.4", "wb-hqa"]);
 export const PHASES = Object.freeze(["requested", "acknowledged", "result", "denied", "uncertain", "observer-close", "sibling", "terminal-measurement"] as const);
 export type Phase = (typeof PHASES)[number];
@@ -50,9 +50,10 @@ export const SCENARIOS = Object.freeze({
   revoked: "revoked-grant-denies-next",
   strictBooted: "strict-booted-tool-reading",
 } as const);
-/** Every scenario a realised receipt must have measured; the strict booted-tool reading is recorded unrealised by design. */
+/** Every scenario a realised receipt must have measured; since Cut 2 the strict booted-tool reading joins them, realised only by the booted row itself. */
 export const REQUIRED_SCENARIOS: readonly string[] = Object.freeze([
   SCENARIOS.preflight, SCENARIOS.adverse, SCENARIOS.sibling, SCENARIOS.denied, SCENARIOS.observer, SCENARIOS.crossScope, SCENARIOS.settled, SCENARIOS.ambiguous, SCENARIOS.revoked,
+  SCENARIOS.strictBooted,
 ]);
 /** The decision core's denial vocabulary (src/workbench/control.ts ControlDenyPolicy), spelled out because this module imports nothing. */
 export const DENY_POLICIES: readonly string[] = Object.freeze([
@@ -86,6 +87,7 @@ export const FINDING_RULES = Object.freeze([
   "ownership-undisclosed",
   "label-mismatch",
   "credential-shaped",
+  "booted-block-inconsistent",
 ] as const);
 export type FindingRule = (typeof FINDING_RULES)[number];
 /** Steps that did not run to the claimed measurement, in the order assess checks them. */
@@ -109,8 +111,6 @@ export const NON_CLAIMS: readonly string[] = Object.freeze([
   "no security claims beyond same-process authorization evidence",
   "no proof of Anthropic model inference: the served model is the gateway's answer recorded from an assistant frame",
   "no claim that Query.interrupt() is supported on string-prompt queries in general (one live measurement, wb-69g.4 stays BLOCKED)",
-  "this tier's strict booted-tool reading is UNREALISED by construction: it mirrors the src/index.ts leg and boots no extension; the landed wiring (wb-hqa) is measured by the default-gate booted row; wb-69g.4 stays BLOCKED",
-  "the result phases of this tier were settled by the harness tee from the teed execution (resultDrivenBy harness-tee), never by the production settle path this tier does not exercise",
   "completion never asserted; transport success is not domain verification",
 ]);
 
@@ -121,11 +121,11 @@ export interface InterruptEcho { receipt: "interrupt_receipt_v1" | "none"; still
 export interface HostResult { ok: boolean; skipped: boolean; errorSanitized: string }
 export type PhaseFields =
   | { phase: "requested"; requestId: string; grant: string; policy: string; ownershipConfirmationRef: string; target: NativeRef; decidedAt: string; sessionObservedAt: string; midStreamBasis: { assistantCharacters: number } }
-  | { phase: "acknowledged"; status: string; requestId: string; nativeAckRef: string; acknowledgedAt: string; echo: InterruptEcho }
-  | { phase: "result"; requestId: string; outcome: string; nativeResultRef: string; settledAt: string; resultDrivenBy: "harness-tee" }
+  | { phase: "acknowledged"; status: string; requestId: string; nativeAckRef: string; acknowledgedAt: string; echo: InterruptEcho; echoBasis?: "parsed-from-ref" }
+  | { phase: "result"; requestId: string; outcome: string; nativeResultRef: string; settledAt: string; resultDrivenBy: "harness-tee" | "production-wiring" }
   | {
       phase: "terminal-measurement"; sessionId: string; observerTerminal: string; freshness: string; resultSubtype: string | null; isError: boolean | null; stopReason: string | null;
-      terminalReason: string | null; assistantAborted: boolean; hostResult: HostResult; observedAt: string; ackToTerminalMs: number;
+      terminalReason: string | null; assistantAborted: boolean | null; hostResult: HostResult; observedAt: string; ackToTerminalMs: number;
     }
   | { phase: "denied"; policy: string; category: string; status: string; invoked: boolean; seamCalls: number }
   | { phase: "uncertain"; requestId: string; status: string; reason: string; failure?: { category: string; code?: string }; seamCalls: number; retried: boolean }
@@ -136,6 +136,33 @@ export interface PhaseRecord { scenario: string; phase: Phase; at: string; text:
 
 /** How the harness seeded the ownership edge decideControl requires: disclosed, never presented as production-emitted. */
 export interface Ownership { seededBy: "harness"; source: typeof OWNERSHIP_SOURCE; nativeConfirmationRef: string }
+/**
+ * What the booted strict row J8b measured of the real extension: the production path's own identities, audit, node evidence
+ * and ownership edge, judged by the booted-block-inconsistent rule. seamBasis "sdk-ack-echo" discloses that the booted verb
+ * is attested by the SDK's own echoed receipt, exactly one acknowledged audit receipt and the adapter's issue-once guard,
+ * never by the counted seam (the booted retention is closure-private to the extension).
+ */
+export interface BootedBlock {
+  extension: string;
+  backend: string;
+  tool: string;
+  taskId: string;
+  sessionId: string;
+  requestId: string;
+  nativeAckRef: string;
+  auditPhases: readonly string[];
+  outcome: string;
+  nativeResultRef: string;
+  acknowledgedAt: string;
+  settledAt: string;
+  nodeFreshness: string;
+  evidenceRefs: readonly string[];
+  logs: readonly string[];
+  controlCalls: number;
+  seamBasis: string;
+  homeRestored: boolean;
+  ownership: { statedBy: "production-observer"; source: typeof OWNERSHIP_SOURCE; nativeConfirmationRef: string; to: NativeRef };
+}
 export interface NativeReferences { sessionIds: string[]; controlRequestIds: string[]; nativeAckRefs: string[]; nativeResultRefs: string[]; ownershipConfirmationRefs: string[] }
 export interface Finding { rule: FindingRule; detail: string }
 export interface Unrealised { step: UnrealisedStep; diagnostic: string }
@@ -164,7 +191,7 @@ export interface ReceiptEvidence {
   /** The exact tool-reply/v1 text the model would read: actual output. */
   replies: Array<{ scenario: string; raw: string }>;
   ownership: Ownership;
-  strictBooted: { realised: false; detail: string };
+  strictBooted: { realised: false; detail: string } | { realised: true; detail: string; booted: BootedBlock };
   nonClaims: readonly string[];
   /** The disposable scratch workspaces every session ran in. */
   workspaces: string[];
@@ -190,6 +217,16 @@ const RESULT_REF = /^claude-agent-sdk:session:([0-9a-f-]{36}):(succeeded|failed|
 /** A survivor id the adapter shows verbatim (claude-control.ts SURVIVOR_ID). */
 const SURVIVOR_ID = /^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$/;
 const SURVIVORS_SHOWN = 16;
+/**
+ * The SDK's answer parsed back from a nativeAckRef the production reply echoed. The booted strict row has no teed execution
+ * (the booted extension's adapter record is closure-private), so its echo is derived from the reply's own ref and the phase
+ * discloses echoBasis "parsed-from-ref"; a mirrored phase records the adapter's own echo and never claims the basis.
+ */
+export function echoFromAckRef(nativeAckRef: string): InterruptEcho {
+  const match = RECEIPT_V1_REF.exec(nativeAckRef);
+  if (match === null) return { receipt: "none" };
+  return { receipt: "interrupt_receipt_v1", stillQueued: Number(match[1]), ...(match[2] !== undefined ? { cancelled: Number(match[2]) } : {}) };
+}
 // Input hygiene (plain): a scheme and a token, a vendor key prefix, or a secret-named assignment or field, anywhere in the
 // JSON text, in a value or in a key. Nothing it reads is displayed, so an over-refusal costs an honest throw, never a leak.
 const CREDENTIAL = /(?<![a-z0-9])(?:bearer|basic)\s+[^\s,;"']{6,}|(?:sk-ant-|sk-proj-|ghp_|github_pat_)[a-z0-9_-]|(?:authorization|api[_-]?key|access[_-]?token|refresh[_-]?token|password|secret|aws_secret_access_key|aws_session_token)["']?\s*[:=]/i;
@@ -263,8 +300,12 @@ function parsedReplies(record: ReceiptEvidence, scenario: string): ParsedReply[]
   return out;
 }
 
-/** Why a terminal-measurement record is not a complete raw reading, in field order; empty when every field is present and typed. */
-function measurementProblems(fields: FieldsOf<"terminal-measurement">): string[] {
+/**
+ * Why a terminal-measurement record is not a complete raw reading, in field order; empty when every field is present and
+ * typed. For the strict booted row only, assistantAborted admits null (the streamed frame's aborted flag is host-internal to
+ * the booted extension and is never invented, Q5); every mirrored journey still records it as a boolean.
+ */
+function measurementProblems(fields: FieldsOf<"terminal-measurement">, strict = false): string[] {
   const problems: string[] = [];
   const raw = fields as unknown as Record<string, unknown>;
   if (!nonblank(raw.sessionId)) problems.push("sessionId");
@@ -274,7 +315,7 @@ function measurementProblems(fields: FieldsOf<"terminal-measurement">): string[]
   if (raw.isError !== null && typeof raw.isError !== "boolean") problems.push("isError");
   if (raw.stopReason !== null && typeof raw.stopReason !== "string") problems.push("stopReason");
   if (raw.terminalReason !== null && typeof raw.terminalReason !== "string") problems.push("terminalReason");
-  if (typeof raw.assistantAborted !== "boolean") problems.push("assistantAborted");
+  if (strict ? raw.assistantAborted !== null && typeof raw.assistantAborted !== "boolean" : typeof raw.assistantAborted !== "boolean") problems.push("assistantAborted");
   const host = raw.hostResult as Partial<HostResult> | undefined;
   if (host === undefined || host === null || typeof host !== "object" || typeof host.ok !== "boolean" || typeof host.skipped !== "boolean" || typeof host.errorSanitized !== "string") problems.push("hostResult");
   if (!isInstant(raw.observedAt)) problems.push("observedAt");
@@ -285,9 +326,13 @@ const measurementOf = (record: ReceiptEvidence, scenario: string): FieldsOf<"ter
   phasesOf(record, "terminal-measurement").find(entry => entry.scenario === scenario)?.fields;
 
 function assessVerbCount(record: ReceiptEvidence, findings: Finding[]): void {
-  const permits = phasesOf(record, "acknowledged").length + phasesOf(record, "uncertain").length;
+  const mirrored = (entry: { scenario: string }): boolean => entry.scenario !== SCENARIOS.strictBooted;
+  const permits = phasesOf(record, "acknowledged").filter(mirrored).length + phasesOf(record, "uncertain").filter(mirrored).length;
   const seam = record.verbCounts.seam.interrupt;
-  if (seam !== permits) findings.push(finding("interrupt-verb-count", `the counted seam issued ${seam} interrupt() calls for ${permits} acknowledged or uncertain phases`));
+  if (seam !== permits) {
+    findings.push(finding("interrupt-verb-count",
+      `the counted seam issued ${seam} interrupt() calls for ${permits} acknowledged or uncertain phases of the mirrored journeys (the strict booted verb is judged by its block, never folded into the counted total)`));
+  }
 }
 /** The projection's stats() as the suite serialised them; undefined when the text is not that shape. */
 function statsOf(text: string): { nodes: number; events: number; edges: number } | undefined {
@@ -361,6 +406,19 @@ function assessAcknowledged(record: ReceiptEvidence, findings: Finding[]): void 
       for (const id of ids) if (!SURVIVOR_ID.test(id)) shapeProblems.push(`${scenario}: a survivor id is not a plain identifier`);
       if ((echo?.idsTruncated === true) !== ids.length < stillQueued) shapeProblems.push(`${scenario}: idsTruncated disagrees with the ids shown`);
     }
+    if (scenario === SCENARIOS.strictBooted) {
+      if (fields.echoBasis !== "parsed-from-ref") {
+        shapeProblems.push(`${scenario}: the strict acknowledged phase must disclose echoBasis parsed-from-ref`);
+      } else {
+        const derived = echoFromAckRef(fields.nativeAckRef);
+        if (fields.echo?.receipt !== derived.receipt || fields.echo?.stillQueued !== derived.stillQueued || fields.echo?.cancelled !== derived.cancelled
+          || fields.echo?.stillQueuedIds !== undefined || fields.echo?.idsTruncated !== undefined) {
+          shapeProblems.push(`${scenario}: the echo ${JSON.stringify(fields.echo)} is not parsed from ${fields.nativeAckRef}`);
+        }
+      }
+    } else if (fields.echoBasis !== undefined) {
+      shapeProblems.push(`${scenario}: a mirrored acknowledged phase claims echoBasis ${String(fields.echoBasis)}; the adapter's own echo is recorded, never parsed`);
+    }
   }
   if (echoProblems.length > 0) findings.push(finding("acknowledged-not-echoed", echoProblems.join("; ")));
   if (shapeProblems.length > 0) findings.push(finding("ack-not-sdk-shaped", shapeProblems.join("; ")));
@@ -375,7 +433,8 @@ function assessResults(record: ReceiptEvidence, findings: Finding[]): void {
     const requested = requestedOf(record, scenario, fields.requestId);
     if (requested === undefined) echoProblems.push(`${scenario}: result ${fields.requestId} has no requested phase`);
     if (!phasesOf(record, "acknowledged").some(ack => ack.scenario === scenario && ack.fields.requestId === fields.requestId)) echoProblems.push(`${scenario}: result without a distinct acknowledged phase`);
-    if (fields.resultDrivenBy !== "harness-tee") echoProblems.push(`${scenario}: result driven by ${String(fields.resultDrivenBy)}, not disclosed as the harness tee`);
+    const expectedDriver = scenario === SCENARIOS.strictBooted ? "production-wiring" : "harness-tee";
+    if (fields.resultDrivenBy !== expectedDriver) echoProblems.push(`${scenario}: result driven by ${String(fields.resultDrivenBy)}, not disclosed as ${expectedDriver}`);
     if (!isInstant(fields.settledAt)) echoProblems.push(`${scenario}: settledAt ${fields.settledAt} is not an instant`);
     const match = RESULT_REF.exec(fields.nativeResultRef);
     if (match === null || !isInstant(match[3])) {
@@ -389,7 +448,7 @@ function assessResults(record: ReceiptEvidence, findings: Finding[]): void {
       shapeProblems.push(`${scenario}: no terminal-measurement record`);
       continue;
     }
-    const problems = measurementProblems(measurement);
+    const problems = measurementProblems(measurement, scenario === SCENARIOS.strictBooted);
     if (problems.length > 0) {
       shapeProblems.push(`${scenario}: terminal-measurement lacks ${problems.join(", ")}`);
       continue;
@@ -439,6 +498,40 @@ function assessSettledCall(record: ReceiptEvidence, findings: Finding[]): void {
   if (replies.some(reply => reply.ok === true && reply.control?.phase === "result")) problems.push("a settled-call reply claims a result phase");
   if (problems.length > 0) findings.push(finding("settled-call-terminal-minted", problems.join("; ")));
 }
+/** The realised strict block must agree with the strict-scenario phases and the production shapes it claims; any drift is one named finding (rule 18). */
+function assessBootedBlock(record: ReceiptEvidence, findings: Finding[]): void {
+  const strict = record.strictBooted;
+  if (strict.realised !== true) return;
+  const raw = strict.booted as unknown as Record<string, unknown>;
+  const rawOwnership = (typeof raw.ownership === "object" && raw.ownership !== null ? raw.ownership : {}) as Record<string, unknown>;
+  const rawTo = (typeof rawOwnership.to === "object" && rawOwnership.to !== null ? rawOwnership.to : {}) as Record<string, unknown>;
+  const sessionId = typeof raw.sessionId === "string" ? raw.sessionId : "";
+  const requestId = typeof raw.requestId === "string" ? raw.requestId : "";
+  const nativeAckRef = typeof raw.nativeAckRef === "string" ? raw.nativeAckRef : "";
+  const nativeResultRef = typeof raw.nativeResultRef === "string" ? raw.nativeResultRef : "";
+  const auditPhases = Array.isArray(raw.auditPhases) ? raw.auditPhases : [];
+  const logs = Array.isArray(raw.logs) ? raw.logs : ["unreadable"];
+  const problems: string[] = [];
+  if (rawOwnership.nativeConfirmationRef !== sessionId) problems.push(`the block's session ${sessionId} differs from its ownership nativeConfirmationRef ${String(rawOwnership.nativeConfirmationRef)}`);
+  const requested = phasesOf(record, "requested").find(entry => entry.scenario === SCENARIOS.strictBooted)?.fields;
+  const acknowledged = phasesOf(record, "acknowledged").find(entry => entry.scenario === SCENARIOS.strictBooted)?.fields;
+  const result = phasesOf(record, "result").find(entry => entry.scenario === SCENARIOS.strictBooted)?.fields;
+  if (requested === undefined || requested.requestId !== requestId || requested.target.id !== sessionId) problems.push("the strict requested phase does not carry the block's requestId and sessionId");
+  if (acknowledged === undefined || acknowledged.requestId !== requestId || acknowledged.nativeAckRef !== nativeAckRef) problems.push("the strict acknowledged phase does not carry the block's requestId and nativeAckRef");
+  if (result === undefined || result.requestId !== requestId || result.nativeResultRef !== nativeResultRef) problems.push("the strict result phase does not carry the block's requestId and nativeResultRef");
+  if (auditPhases.length !== 3 || auditPhases[0] !== "requested" || auditPhases[1] !== "acknowledged" || auditPhases[2] !== "result") problems.push(`auditPhases read ${auditPhases.join(", ")}`);
+  if (!nativeResultRef.startsWith(`${RESULT_REF_PREFIX}${sessionId}:`)) problems.push(`nativeResultRef ${nativeResultRef} does not name session ${sessionId}`);
+  if (nativeAckRef !== NO_RECEIPT && RECEIPT_V1_REF.exec(nativeAckRef) === null) problems.push(`nativeAckRef ${nativeAckRef} is neither the no-receipt marker nor an interrupt_receipt_v1 count`);
+  if (raw.controlCalls !== 1) problems.push(`controlCalls ${String(raw.controlCalls)}`);
+  if (logs.length !== 0) problems.push(`${logs.length} diagnostic lines on the booted task`);
+  if (raw.nodeFreshness !== "stale") problems.push(`nodeFreshness ${String(raw.nodeFreshness)} (an acted-on node reads stale until a producer re-read confirms it)`);
+  if (!isInstant(raw.acknowledgedAt) || !isInstant(raw.settledAt)) problems.push("acknowledgedAt or settledAt is not an instant");
+  else if (Date.parse(raw.settledAt) < Date.parse(raw.acknowledgedAt)) problems.push("settledAt predates acknowledgedAt");
+  if (rawTo.provider !== "pi-workflow") problems.push(`the ownership edge's to end names provider ${String(rawTo.provider)}, not pi-workflow`);
+  if (raw.homeRestored !== true) problems.push("homeRestored is not true");
+  if (raw.seamBasis !== "sdk-ack-echo") problems.push(`seamBasis ${String(raw.seamBasis)}`);
+  if (problems.length > 0) findings.push(finding("booted-block-inconsistent", problems.join("; ")));
+}
 function assessOwnership(record: ReceiptEvidence, findings: Finding[]): void {
   const problems: string[] = [];
   const ownership = record.ownership as unknown as Record<string, unknown> | null | undefined;
@@ -471,14 +564,15 @@ export function assess(record: ReceiptEvidence & { truthLabel?: string }): Asses
     if (scenario === undefined || scenario.realised !== true) return stop("scenario-unrealised", `${name}: ${scenario?.detail ?? "not recorded"}`);
   }
   const strict = record.scenarios[SCENARIOS.strictBooted];
-  if (strict === undefined || strict.realised !== false || record.strictBooted?.realised !== false) {
-    return stop("scenario-unrealised", `${SCENARIOS.strictBooted}: must be declared UNREALISED, never measured as realised`);
+  const strictRecord = record.strictBooted;
+  if (strict === undefined || strict.realised !== true || strictRecord?.realised !== true || typeof strictRecord.booted !== "object" || strictRecord.booted === null) {
+    return stop("scenario-unrealised", `${SCENARIOS.strictBooted}: must be measured realised by the booted row with its booted block in both places (a pending or block-less reading stops the receipt): ${strict?.detail ?? "not recorded"}`);
   }
   for (const citation of STRICT_BOOTED_CITATIONS) {
-    if (!strict.detail.includes(citation) || !record.strictBooted.detail.includes(citation)) return stop("scenario-unrealised", `${SCENARIOS.strictBooted}: the declaration does not cite ${citation}`);
+    if (!strict.detail.includes(citation) || !strictRecord.detail.includes(citation)) return stop("scenario-unrealised", `${SCENARIOS.strictBooted}: the reading does not cite ${citation}`);
   }
   for (const { scenario, fields } of phasesOf(record, "requested")) {
-    if (scenario !== SCENARIOS.adverse && scenario !== SCENARIOS.sibling && scenario !== SCENARIOS.revoked) continue;
+    if (scenario !== SCENARIOS.adverse && scenario !== SCENARIOS.sibling && scenario !== SCENARIOS.revoked && scenario !== SCENARIOS.strictBooted) continue;
     if (!isInstant(fields.sessionObservedAt)) return stop("no-session-observed", `${scenario}: no system/init session id was observed before the interrupt`);
     if (!(fields.midStreamBasis?.assistantCharacters > 0)) return stop("not-mid-stream", `${scenario}: the interrupt was issued before any assistant text streamed`);
   }
@@ -495,6 +589,7 @@ export function assess(record: ReceiptEvidence & { truthLabel?: string }): Asses
   assessSettledCall(record, findings);
   if (record.dirty !== false) findings.push(finding("uncommitted-tree", record.dirty === null ? "the tree's status could not be read" : "the receipt was produced from a tree with uncommitted changes"));
   assessOwnership(record, findings);
+  assessBootedBlock(record, findings);
   if (record.truthLabel !== undefined && record.truthLabel !== truthLabelOf({ realised: true, pass: findings.length === 0 })) {
     findings.push(finding("label-mismatch", `labelled ${record.truthLabel} with ${findings.length} findings`));
   }

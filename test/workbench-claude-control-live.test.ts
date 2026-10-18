@@ -8,20 +8,24 @@
  * the host's real one: createClaudeWorkflowHost retains the real SDK Query and exposes its own interrupt() through
  * onQueryLive; this file never substitutes the SDK. Three disclosed substitutions, and only those: the retained seam is
  * wrapped by a counter (one method, the production ClaudeInterruptSeam shape), the adapter's typed execution is teed by
- * request id after the leg's call, and the recorder reads every SDK message before the verbatim init-binding body.
+ * request id after the leg's call, and the recorder reads every SDK message before the verbatim init-binding body. Row J8b
+ * is different by design: it boots the real extension itself (src/index.ts default export) and substitutes no behaviour (its
+ * one call-through spy on createWorkflowTask only reads the closure-private task record and is restored in the finally); its
+ * phases are the production path's own.
  *
  * Receipts stay phase-honest: requested, acknowledged and result are distinct; the acknowledged phase echoes the SDK's own
- * interrupt answer (receipt or none) as the adapter recorded it; the result exists only because THIS harness settles the
- * teed execution from the observer's report of the interrupted call's own terminal (this tier settles its own teed executions; the
- * production settle path landed by wb-hqa is not exercised by the mirrored journeys), disclosed as resultDrivenBy "harness-tee". The
- * measured terminal shape is recorded raw, never asserted.
+ * interrupt answer (receipt or none) as the adapter recorded it; the mirrored journeys J1-J8 settle their own teed executions
+ * from the observer's report of the interrupted call's own terminal, disclosed as resultDrivenBy "harness-tee", while the
+ * booted strict row J8b boots the real extension (src/index.ts default export) and its result phase is settled by the
+ * production observer path (wb-hqa), disclosed as resultDrivenBy "production-wiring". The measured terminal shape is
+ * recorded raw, never asserted.
  *
- * OWNERSHIP SEEDING (owner ruling R1, disclosed): since wb-hqa the booted extension's projection gains its session -> agent-call
- * ownership edge from the production observer path at system/init; THIS tier boots no extension, so its harness-owned projection,
- * fed only by the mirrored production emitter, relates that edge itself with provenance source claude-agent-sdk and
- * nativeConfirmationRef = the SDK's own system/init session_id, and the receipt says so (ownership.seededBy "harness").
- * STRICT-READING LIMIT: the booted registered tool's claude leg is not exercised by these mirrored journeys (UNREALISED by
- * construction until the booted strict row of Cut 2 lands; wb-69g.4 stays BLOCKED); the receipt records that reading as UNREALISED, never fakes it.
+ * OWNERSHIP SEEDING (owner ruling R1, disclosed): the mirrored journeys feed a harness-owned projection through the mirrored
+ * production emitter, so the harness relates the session -> agent-call ownership edge itself with provenance source
+ * claude-agent-sdk and nativeConfirmationRef = the SDK's own system/init session_id, and the receipt says so
+ * (ownership.seededBy "harness"). J8b relates nothing: the booted extension's production observer path states its edge to
+ * { pi-workflow, agent-call } at system/init, recorded inside strictBooted.booted.ownership. STRICT READING: realised by J8b
+ * through the registered workflow_control of the booted extension; wb-69g.4 stays BLOCKED and bounds every wording.
  *
  * Runs ONLY from its own forge command (vitest.claude-control-live.config.ts); excluded from the default gate. A failed
  * credential preflight is honest unavailability: the receipt is typed UNREALISED (credentials-unavailable) and every row
@@ -33,7 +37,8 @@ import { readFileSync, realpathSync, writeFileSync } from "node:fs";
 import { hostname, release } from "node:os";
 import { join } from "node:path";
 import { getSessionInfo, type SDKMessage } from "@anthropic-ai/claude-agent-sdk";
-import { afterAll, describe, expect, it } from "vitest";
+import { afterAll, describe, expect, it, vi } from "vitest";
+import subagentsExtension from "../src/index.js";
 import { CapabilityError } from "../src/workbench/capability-registry.js";
 import {
   CLAUDE_CONTROL_RECONCILE,
@@ -47,14 +52,19 @@ import { createClaudeObserver } from "../src/workbench/claude-transcript.js";
 import { type ControlExecutionSummary, type ControlExecutor, createWorkflowControlTool, type WorkflowControlDeps } from "../src/workbench/control-tool.js";
 import { type NativeRef, ObservationProjection, type ObservationScope, type Presentation } from "../src/workbench/observation.js";
 import { sanitizeWorkbenchText, stripUnsafeText } from "../src/workbench/redaction.js";
-import type { ClaudeNativeObservation } from "../src/workflow/progress.js";
+import { type ClaudeNativeObservation, collapse } from "../src/workflow/progress.js";
 import { runWorkflow, type WorkflowHost, type WorkflowRunResult, type WorkflowSpawnResult } from "../src/workflow/runtime.js";
 import type { WorkflowTask } from "../src/workflow/task.js";
+import * as taskModule from "../src/workflow/task.js";
+import { ctx, hermeticDir, makePi, textOf } from "./helpers/boot-extension.js";
 import {
   buildReceipt,
   CONTRACT,
+  echoFromAckRef,
   GRANT,
+  type HostResult,
   type InterruptEcho,
+  NO_RECEIPT,
   NON_CLAIMS,
   OWNERSHIP_SOURCE,
   type PhaseFields,
@@ -90,9 +100,10 @@ const SESSION_LOOKUP_BOUND_MS = 3_000;
 const SETTLE_WAIT_BOUND_MS = 30_000;
 const CONSTANTS = { INIT_WATCHDOG_MS, RUN_CEILING_MS, ACK_WAIT_BOUND_MS, SESSION_LOOKUP_BOUND_MS, SETTLE_WAIT_BOUND_MS, TEXT_CAP, retries: 0 };
 const SOURCES = [
-  "test/workbench-claude-control-live.test.ts", "test/helpers/claude-control-live-receipt.ts", "test/workbench-claude-control-live-receipt.test.ts", "vitest.claude-control-live.config.ts",
+  "test/workbench-claude-control-live.test.ts", "test/helpers/claude-control-live-receipt.ts", "test/workbench-claude-control-live-receipt.test.ts", "test/helpers/boot-extension.ts",
+  "vitest.claude-control-live.config.ts",
   "vitest.config.ts", "forge.toml", "src/index.ts", "src/workbench/control.ts", "src/workbench/control-tool.ts", "src/workbench/control-reply.ts", "src/workbench/claude-control.ts",
-  "src/workbench/claude-host.ts", "src/workbench/claude-transcript.ts", "src/workbench/observation.ts", "src/workbench/redaction.ts",
+  "src/workbench/claude-control-observer.ts", "src/workbench/claude-host.ts", "src/workbench/claude-transcript.ts", "src/workbench/observation.ts", "src/workbench/redaction.ts",
 ];
 const ESSAY = (topic: string): string => `Write an extensive, flowing essay of about 600 words on ${topic}. Do not use any tools. Do not stop early.`;
 const SINGLE_WORD = "Reply with the single word OK. Do not use any tools.";
@@ -152,13 +163,11 @@ const evidence: ReceiptEvidence = {
   ownership: { seededBy: "harness", source: OWNERSHIP_SOURCE, nativeConfirmationRef: "" },
   strictBooted: {
     realised: false,
-    detail: "UNREALISED by construction: this tier mirrors the src/index.ts claude executor leg and its retention hooks line for line and boots no extension, so the"
-      + " registered tool of the booted extension is never exercised here. The production wiring landed by wb-hqa states the session -> agent-call ownership edge on"
-      + " the SDK's own system/init session_id (provenance source claude-agent-sdk, nativeConfirmationRef = that session id) through the production claude observer"
-      + " path and settles the acknowledged interrupt from the observer's report of the call's own terminal, measured by the default-gate booted row"
-      + " test/workbench-pi-claude-control.test.ts (a value-returning query fixture, no credential); the live realised strict reading is the owed Cut 2 hop. This tier"
-      + " still feeds a harness-owned projection from the mirrored emitter and seeds the ownership edge itself, disclosed as harness-seeded. Citation: wb-69g.4"
-      + " (BLOCKED) for the string-prompt streaming registration gap; wb-hqa (landed, Cut 1) for the wiring this tier does not boot.",
+    detail: "UNREALISED until the booted strict row J8b of this file has run: J8b boots the real extension (src/index.ts default export) under the claude backend"
+      + " through test/helpers/boot-extension.ts, admits one real SDK session after its system/init through the registered workflow_control, and reads the"
+      + " observer-settled result phase from the production path. On its success this pending declaration is replaced by the realised reading with its booted block;"
+      + " on any failure it stands and the receipt is typed not realised, never faked. Citation: wb-69g.4 (BLOCKED) for the string-prompt streaming registration gap;"
+      + " wb-hqa (landed Cut 1; realised live by this file's Cut 2 row J8b) for the production wiring J8b exercises.",
   },
   nonClaims: [...NON_CLAIMS],
   workspaces: [],
@@ -514,7 +523,7 @@ async function measureTerminal(journey: Journey, index: number, acknowledgedAt: 
   }, `observer terminal ${snapshot.terminal} (${snapshot.freshness}); result frame ${JSON.stringify(frame ?? null)}; assistant aborted ${String(journey.assistantAborted.get(index) === true)}; host ${JSON.stringify({ ok: settled?.result.ok, skipped: settled?.result.skipped })}`);
   return { terminal: snapshot.terminal, freshness: snapshot.freshness, observedAt, snapshot, settled };
 }
-/** Settles the teed execution from the observed terminal (the harness tee: the only way a result exists live) and records it. */
+/** Settles the teed execution from the observed terminal (the harness tee of the mirrored journeys J1-J8; J8b's result phase is settled by the production path) and records it. */
 function settleFromObservation(journey: Journey, interrupted: Interrupted, measured: Measured): ClaudeControlExecution {
   const { execution, requestId, mid } = interrupted;
   const result = settleClaudeInterrupt(execution, {
@@ -548,6 +557,37 @@ async function sessionRecord(journey: Journey, sessionId: string): Promise<{ fou
     if (!found) await sleep(100);
   } while (!found && Date.now() - started < SESSION_LOOKUP_BOUND_MS);
   return { found, attempts, ms: Date.now() - started };
+}
+
+// ---------- The booted strict row J8b (Cut 2): the real extension, its registered tools, the production settle path ----------
+interface ObservedBootedNode { nativeRef: NativeRef; kind: string; freshness: string; evidenceRefs: string[] }
+interface ObservedBooted { taskId: string; status: string; nodes: ObservedBootedNode[] }
+/** Everything J8b measured inside its boot, captured before teardown so the phases are recorded after HOME and cwd are restored. */
+interface StrictMeasured {
+  taskId: string;
+  sid: string;
+  requestId: string;
+  grant: string;
+  policy: string;
+  ownershipRef: string;
+  decidedAt: string;
+  sessionObservedAt: string;
+  assistantCharacters: number;
+  nativeAckRef: string;
+  acknowledgedAt: string;
+  echo: InterruptEcho;
+  terminal: string;
+  freshness: string;
+  outcome: string;
+  nativeResultRef: string;
+  settledAt: string;
+  observedAt: string;
+  ackToTerminalMs: number;
+  nodeFreshness: string;
+  evidenceRefs: string[];
+  logs: string[];
+  auditPhases: string[];
+  hostResult: HostResult;
 }
 
 // ---------- Receipt emission (producer-side; the vitest agent reporter drops passing-test console output) ----------
@@ -929,9 +969,179 @@ describe("live claude interrupt adverse cancellation journey (wb-a2g.12)", () =>
     expect(treeState()).toBe(TREE_AT_START);
   }, 240_000);
 
-  it("J9 strict booted-tool reading is declared UNREALISED citing wb-69g.4 and wb-hqa; the receipt is built, parses from its marker line and judges the measured journeys", () => {
-    expect(evidence.scenarios[SCENARIOS.strictBooted]).toEqual({ realised: false, detail: evidence.strictBooted.detail });
-    for (const citation of STRICT_BOOTED_CITATIONS) expect(evidence.strictBooted.detail).toContain(citation);
+  it("J8b strict booted-tool reading: the booted extension (src/index.js, claude backend, hermetic settings) admits one real SDK session after its system/init through its registered workflow_control, and the production observer path settles the result phase from the call's own terminal", async () => {
+    requirePreflight();
+    const homeBefore = process.env.HOME;
+    const sandbox = hermeticDir({ settings: { workflowsEnabled: true, workbench: { workflowAgentBackend: "claude", model: MODEL, tools: [], capabilityGrants: [GRANT, OBSERVE] } } });
+    const created = vi.spyOn(taskModule, "createWorkflowTask");
+    const bootedPi = makePi();
+    subagentsExtension(bootedPi.pi);
+    const context = ctx({ cwd: sandbox.dir });
+    evidence.workspaces.push(realpathSync(sandbox.dir));
+    let strictMeasured: StrictMeasured | undefined;
+    /** The row's own registered workflow_control calls, counted: the block records this reading, never a literal. */
+    let controlCalls = 0;
+    try {
+      await bootedPi.lifecycle.get("session_start")?.({}, context);
+      const control = bootedPi.tools.get("workflow_control");
+      const observeTool = bootedPi.tools.get("workflow_observe");
+      const launch = bootedPi.tools.get("SubagentWorkflow");
+      if (control === undefined || observeTool === undefined || launch === undefined) throw new Error("the booted extension registered no workflow_control, workflow_observe or SubagentWorkflow");
+      const spawned = await launch.execute("hqa2-launch", { script: essayScript("ccl-booted-strict", "the construction of canal locks") }, undefined, undefined, context);
+      const taskId = (spawned.details as { taskId?: string } | undefined)?.taskId;
+      if (taskId === undefined) throw new Error(`SubagentWorkflow started no task: ${label(textOf(spawned))}`);
+      const task = created.mock.results.map(entry => (entry.type === "return" ? entry.value : undefined)).find(candidate => candidate?.id === taskId);
+      if (task === undefined) throw new Error(`no task record minted for ${taskId}`);
+      const observe = async (): Promise<ObservedBooted> => JSON.parse(textOf(await observeTool.execute("hqa2-observe", { taskId }, undefined, undefined, context))) as ObservedBooted;
+      const nativeOf = (): ClaudeNativeObservation | undefined => collapse(task.workflowProgress).agents[0]?.nativeObservation;
+      const sessionNodeOf = (seen: ObservedBooted, id: string): ObservedBootedNode | undefined =>
+        seen.nodes.find(node => node.nativeRef.provider === "claude-agent-sdk" && node.nativeRef.type === "session" && node.nativeRef.id === id);
+      // Admission basis under ONE init-watchdog budget (D1.7; the midStream() discipline): the PRODUCTION emit publishes the claude-agent-sdk
+      // session node only once system/init bound the SDK's own session id, and the same budget must also see assistant text streamed with no
+      // terminal. Row budget by construction: 90 s here + the leg's 10 s adapter wait + 30 s settle + 30 s run end = 160 s of bounded waits
+      // under the 240 s row timeout, so a slow gateway reaches the typed catch below (Q14), never vitest's timeout.
+      const watchdogStarted = Date.now();
+      let sid = "";
+      while (sid === "" && Date.now() - watchdogStarted < INIT_WATCHDOG_MS) {
+        const native = nativeOf();
+        if (typeof native?.sessionId === "string" && native.sessionId !== "" && sessionNodeOf(await observe(), native.sessionId) !== undefined) {
+          sid = native.sessionId;
+          break;
+        }
+        await sleep(50);
+      }
+      if (sid === "") throw new Error(`no claude-agent-sdk session node was observed through workflow_observe within ${INIT_WATCHDOG_MS} ms`);
+      const sessionObservedAt = nowIso();
+      const streamed = await until(nativeOf, native => (native?.assistantCharacters ?? 0) > 0 || native?.terminal !== undefined, INIT_WATCHDOG_MS - (Date.now() - watchdogStarted));
+      const assistantCharacters = streamed.value?.assistantCharacters ?? 0;
+      if (!streamed.ok || assistantCharacters <= 0 || streamed.value?.terminal !== undefined) {
+        throw new Error(`the booted call streamed ${assistantCharacters} assistant characters (terminal ${streamed.value?.terminal ?? "none"}) within the shared ${INIT_WATCHDOG_MS} ms watchdog`);
+      }
+      // EXACTLY ONE registered workflow_control interrupt; admission after init (R481): the FIRST reply must be acknowledged, never poll-retried.
+      controlCalls += 1;
+      const rawReply = textOf(await control.execute("hqa2-interrupt", interruptParams(sid), undefined, undefined, context));
+      evidence.replies.push({ scenario: SCENARIOS.strictBooted, raw: rawReply });
+      const reply = JSON.parse(rawReply) as Reply;
+      expect(reply.ok).toBe(true);
+      expect(reply.invoked).toBe(true);
+      expect(reply.completion).toBe("not-asserted");
+      expect(reply.status).toBe("acknowledged");
+      expect(reply.error).toBeUndefined();
+      expect(reply.control?.phase).toBe("acknowledged");
+      expect(reply.control?.completionBasis).toBe("not-established");
+      const requestId = reply.control?.requested?.requestId ?? "";
+      expect(requestId).toMatch(/^ctl_[0-9a-f]{32}$/);
+      expect(reply.control?.requested?.policy).toBe("exact-grant+confirmed-owner+operator-confirmed");
+      expect(reply.control?.requested?.grant).toBe(GRANT);
+      expect(reply.control?.requested?.ownershipConfirmationRef).toBe(sid);
+      expect(reply.control?.result).toBeUndefined();
+      const nativeAckRef = reply.control?.acknowledged?.nativeAckRef ?? "";
+      expect(nativeAckRef === NO_RECEIPT || /^claude-agent-sdk:interrupt_receipt_v1:still_queued=\d+(?::cancelled=\d+)?$/.test(nativeAckRef)).toBe(true);
+      const acknowledgedAt = reply.control?.acknowledged?.acknowledgedAt ?? "";
+      expect((task.controlAudit?.receipts ?? []).map(receipt => receipt.phase)).toEqual(["requested", "acknowledged"]);
+      expect(new Set((task.controlAudit?.receipts ?? []).map(receipt => receipt.requestId))).toEqual(new Set([requestId]));
+      expect(task.logs).toEqual([]);
+      // Observer-settled result phase (B2 shape): the production retention settles from the call's OWN terminal, read, never assumed.
+      const settledAudit = await until(() => task.controlAudit?.receipts.length ?? 0, length => length === 3, SETTLE_WAIT_BOUND_MS);
+      if (!settledAudit.ok) throw new Error(`the production path recorded no result receipt within ${SETTLE_WAIT_BOUND_MS} ms (audit ${JSON.stringify((task.controlAudit?.receipts ?? []).map(receipt => receipt.phase))})`);
+      const receipts = task.controlAudit?.receipts ?? [];
+      expect(receipts.map(receipt => receipt.phase)).toEqual(["requested", "acknowledged", "result"]);
+      expect(new Set(receipts.map(receipt => receipt.requestId))).toEqual(new Set([requestId]));
+      const resultReceipt = receipts[2];
+      if (resultReceipt === undefined || resultReceipt.phase !== "result") throw new Error("expected a result receipt");
+      const native = nativeOf();
+      const terminal = native?.terminal;
+      const freshness = native?.freshness;
+      if (terminal === undefined || freshness === undefined) throw new Error("the production snapshot reports no terminal although the result receipt exists");
+      const expectedOutcome = freshness === "current" ? CLAUDE_INTERRUPT_OUTCOMES[terminal] : "unknown";
+      expect(resultReceipt.outcome).toBe(expectedOutcome);
+      expect(resultReceipt.nativeResultRef.startsWith(`claude-agent-sdk:session:${sid}:${terminal}@`)).toBe(true);
+      expect(resultReceipt.nativeAckRef).toBe(nativeAckRef);
+      expect(Date.parse(resultReceipt.settledAt)).toBeGreaterThanOrEqual(Date.parse(resultReceipt.acknowledgedAt));
+      const observedAt = resultReceipt.nativeResultRef.slice(resultReceipt.nativeResultRef.lastIndexOf("@") + 1);
+      // The acknowledged tool reply is never amended: the recorded raw string still parses with no result block.
+      expect((JSON.parse(rawReply) as Reply).control?.result).toBeUndefined();
+      expect(evidence.replies.at(-1)?.raw).toBe(rawReply);
+      const seenAfter = await observe();
+      const node = sessionNodeOf(seenAfter, sid);
+      expect(node?.evidenceRefs).toEqual(expect.arrayContaining([`control-receipt:${requestId}`, `native-result:${resultReceipt.nativeResultRef}`]));
+      expect(node?.freshness).toBe("stale");
+      expect(task.logs).toEqual([]);
+      // The run's own end after its call's terminal is a settle wait (the terminal is observed and the result receipt recorded), not a fresh run ceiling.
+      const run = await until(() => task.status, status => status !== "running", SETTLE_WAIT_BOUND_MS);
+      if (!run.ok) throw new Error(`the booted run did not settle within ${SETTLE_WAIT_BOUND_MS} ms of its result receipt`);
+      const row = collapse(task.workflowProgress).agents[0];
+      strictMeasured = {
+        taskId, sid, requestId, grant: reply.control?.requested?.grant ?? "", policy: reply.control?.requested?.policy ?? "",
+        ownershipRef: reply.control?.requested?.ownershipConfirmationRef ?? "", decidedAt: reply.control?.requested?.decidedAt ?? "",
+        sessionObservedAt, assistantCharacters, nativeAckRef, acknowledgedAt, echo: echoFromAckRef(nativeAckRef),
+        terminal, freshness, outcome: resultReceipt.outcome, nativeResultRef: resultReceipt.nativeResultRef, settledAt: resultReceipt.settledAt,
+        observedAt, ackToTerminalMs: Date.parse(observedAt) - Date.parse(acknowledgedAt),
+        nodeFreshness: node?.freshness ?? "", evidenceRefs: [...(node?.evidenceRefs ?? [])], logs: [...task.logs],
+        auditPhases: receipts.map(receipt => receipt.phase),
+        hostResult: { ok: row?.state === "done", skipped: row?.skipped === true, errorSanitized: label(row?.error ?? "") },
+      };
+    } catch (error) {
+      const diagnostic = label(error instanceof Error ? error.message : String(error), 300);
+      scenario(SCENARIOS.strictBooted, false, `UNREALISED: the booted strict row failed before its measurement completed: ${diagnostic}. Citation: wb-69g.4 (BLOCKED); wb-hqa.`);
+      throw unrealised("scenario-unrealised", `${SCENARIOS.strictBooted}: ${diagnostic}`);
+    } finally {
+      await bootedPi.lifecycle.get("session_shutdown")?.({}, context);
+      sandbox.restore();
+      vi.restoreAllMocks();
+    }
+    const homeRestored = process.env.HOME === homeBefore && realpathSync(process.cwd()) === REPO;
+    expect(homeRestored).toBe(true);
+    expect(controlCalls).toBe(1);
+    expect(treeState()).toBe(TREE_AT_START);
+    const m = strictMeasured;
+    if (m === undefined) throw unrealised("harness-failure", "the strict measurement vanished after teardown");
+    record(SCENARIOS.strictBooted, {
+      phase: "requested", requestId: m.requestId, grant: m.grant, policy: m.policy, ownershipConfirmationRef: m.ownershipRef, target: sessionRef(m.sid), decidedAt: m.decidedAt,
+      sessionObservedAt: m.sessionObservedAt, midStreamBasis: { assistantCharacters: m.assistantCharacters },
+    }, `the booted workflow_control admitted the interrupt of ${m.sid} after its production session node was observed; ${m.assistantCharacters} assistant characters streamed before the request`);
+    record(SCENARIOS.strictBooted, {
+      phase: "acknowledged", status: "acknowledged", requestId: m.requestId, nativeAckRef: m.nativeAckRef, acknowledgedAt: m.acknowledgedAt, echo: m.echo, echoBasis: "parsed-from-ref",
+    }, `the SDK answered interrupt(): ${m.nativeAckRef}; no teed execution exists in the booted extension, so the echo is parsed from the reply's own ref`);
+    record(SCENARIOS.strictBooted, {
+      phase: "terminal-measurement", sessionId: m.sid, observerTerminal: m.terminal, freshness: m.freshness, resultSubtype: null, isError: null, stopReason: null, terminalReason: null,
+      assistantAborted: null, hostResult: m.hostResult, observedAt: m.observedAt, ackToTerminalMs: m.ackToTerminalMs,
+    }, `production observer terminal ${m.terminal} (${m.freshness}); the raw SDK result frame is host-internal to the booted extension, so its fields are null, never invented; host row ${JSON.stringify(m.hostResult)}`);
+    record(SCENARIOS.strictBooted, {
+      phase: "result", requestId: m.requestId, outcome: m.outcome, nativeResultRef: m.nativeResultRef, settledAt: m.settledAt, resultDrivenBy: "production-wiring",
+    }, `the production observer path settled ${m.requestId} from the call's own terminal ${m.terminal}: outcome ${m.outcome}`);
+    noted(evidence.nativeReferences.sessionIds, m.sid);
+    noted(evidence.nativeReferences.ownershipConfirmationRefs, m.ownershipRef);
+    noted(evidence.nativeReferences.controlRequestIds, m.requestId);
+    noted(evidence.nativeReferences.nativeAckRefs, m.nativeAckRef);
+    noted(evidence.nativeReferences.nativeResultRefs, m.nativeResultRef);
+    const detail = `REALISED by J8b: the booted extension (src/index.js default export, claude backend) admitted the real SDK session ${m.sid} after its system/init through the`
+      + ` registered workflow_control and the production observer path settled the acknowledged interrupt from the call's own terminal ${m.terminal} (outcome ${m.outcome},`
+      + ` resultDrivenBy production-wiring). Citation: wb-69g.4 (BLOCKED, the standing bound on every wording); wb-hqa (the landed wiring this row realises live).`;
+    evidence.strictBooted = {
+      realised: true, detail,
+      booted: {
+        extension: "src/index.js", backend: "claude", tool: "workflow_control", taskId: m.taskId, sessionId: m.sid, requestId: m.requestId, nativeAckRef: m.nativeAckRef,
+        auditPhases: m.auditPhases, outcome: m.outcome, nativeResultRef: m.nativeResultRef, acknowledgedAt: m.acknowledgedAt, settledAt: m.settledAt,
+        nodeFreshness: m.nodeFreshness, evidenceRefs: m.evidenceRefs, logs: m.logs, controlCalls, seamBasis: "sdk-ack-echo", homeRestored,
+        ownership: { statedBy: "production-observer", source: OWNERSHIP_SOURCE, nativeConfirmationRef: m.ownershipRef, to: { provider: "pi-workflow", type: "agent-call", id: `${m.taskId}:0` } },
+      },
+    };
+    scenario(SCENARIOS.strictBooted, true, detail);
+  }, 240_000);
+
+  it("J9 strict booted-tool reading is realised by J8b (citing wb-69g.4 and wb-hqa); the receipt is built, parses from its marker line and judges the measured journeys", () => {
+    const strictRecord = evidence.strictBooted;
+    expect(strictRecord.realised).toBe(true);
+    expect(evidence.scenarios[SCENARIOS.strictBooted]).toEqual({ realised: true, detail: strictRecord.detail });
+    for (const citation of STRICT_BOOTED_CITATIONS) expect(strictRecord.detail).toContain(citation);
+    if (strictRecord.realised === true) {
+      expect(strictRecord.booted.controlCalls).toBe(1);
+      expect(strictRecord.booted.homeRestored).toBe(true);
+      expect(evidence.nativeReferences.sessionIds).toContain(strictRecord.booted.sessionId);
+      expect(evidence.nativeReferences.controlRequestIds).toContain(strictRecord.booted.requestId);
+      expect(evidence.nativeReferences.nativeResultRefs).toContain(strictRecord.booted.nativeResultRef);
+    }
     requirePreflight();
     const emitted = receipt();
     const parsed = JSON.parse(`CLAUDE_CONTROL_LIVE_RECEIPT ${JSON.stringify(emitted)}`.slice("CLAUDE_CONTROL_LIVE_RECEIPT ".length)) as Receipt;
