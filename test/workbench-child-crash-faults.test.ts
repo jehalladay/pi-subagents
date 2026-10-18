@@ -46,8 +46,10 @@
  * still exist or run; their own files are the evidence. Whether they still ran,
  * passed and asserted in the gate is judged OUTSIDE this file, in REPORT MODE
  * over the gate's own vitest JSON report, by
- * test/workbench-child-crash-faults.census.ts (the census gate step; nothing is
- * re-executed, and no text of any source file is read).
+ * test/workbench-child-crash-faults.census.ts (the census gate step). The census
+ * executes nothing and text-matches nothing: the u62 judge reads and parses each
+ * pinned file to locate its case (AST, never a string match), refuses a report
+ * older than any file it reads, and judges the gate report's rows.
  *
  * Test-only. No src, qa or docs edit.
  */
@@ -58,7 +60,7 @@ import { runWorkflow, type WorkflowHost, type WorkflowNodeRequest, type Workflow
 
 const FAKE_MARKER = "fake-worker-injected-death";
 const HEAD = 'export const meta = { name: "child-crash", description: "injected worker death" };\n';
-/** runtime.ts:1642-1645, the "exit" listener's literal. */
+/** The literal of the worker "exit" listener inside runWorkflow (src/workflow/runtime.ts). */
 const EXITED_BEFORE_COMPLETING = "Workflow worker exited before completing.";
 
 /** A scripted stand-in for a worker thread: records what the host does to it. */
