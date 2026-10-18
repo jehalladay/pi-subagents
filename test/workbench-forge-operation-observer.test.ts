@@ -6,7 +6,7 @@ import { describe, expect, it } from "vitest";
 import { CapabilityError } from "../src/workbench/capability-registry.js";
 import { decideControl } from "../src/workbench/control.js";
 import { createWorkflowControlTool, type WorkflowControlDeps } from "../src/workbench/control-tool.js";
-import type { CancelReceipt } from "../src/workbench/forge-control.js";
+import type { ForgeCancelOperations } from "../src/workbench/forge-control.js";
 import { createRetainedForgeControlExecutor, lookupForgeOperation, releaseForgeOperation, retainForgeOperation } from "../src/workbench/forge-control-retention.js";
 import {
   decodeForgeOperationFrame,
@@ -32,6 +32,15 @@ const T1 = "2026-10-17T13:00:01.000Z";
 const T2 = "2026-10-17T13:00:02.000Z";
 const GRANT = "control:forge.cancel";
 const options = { scope: SCOPE };
+
+type CancelReceipt = Awaited<ReturnType<ForgeCancelOperations["cancel"]>>;
+
+/** The first content part of a tool result, narrowed to its text part before the reply is read. */
+function firstText(result: { content: ReadonlyArray<{ type: string; text?: string }> }): string {
+  const part = result.content[0];
+  if (part === undefined || part.type !== "text" || typeof part.text !== "string") throw new Error("tool result carries no text content part");
+  return part.text;
+}
 
 function acceptedReceipt(operationId: string): CancelReceipt {
   return {
@@ -263,10 +272,10 @@ describe("the live observer over the issuing connection", () => {
     const tool = createWorkflowControlTool(toolDeps);
     const ctx = { cwd: SCOPE.workspace, sessionManager: { getSessionId: () => "s-a3s" } } as never;
     try {
-      const reply = JSON.parse((await tool.execute("a3s", { target: target(), action: "cancel", confirmed: true } as never, undefined, undefined, ctx)).content[0].text as string);
+      const reply = JSON.parse(firstText(await tool.execute("a3s", { target: target(), action: "cancel", confirmed: true } as never, undefined, undefined, ctx)));
       expect(reply).toMatchObject({ ok: true, invoked: true, status: "acknowledged" });
       expect(fake.cancels()).toBe(1);
-      const foreign = JSON.parse((await tool.execute("a3s-2", { target: { provider: "forge", type: "operation", id: "op-never00000000000000000000000000" }, action: "cancel", confirmed: true } as never, undefined, undefined, ctx)).content[0].text as string);
+      const foreign = JSON.parse(firstText(await tool.execute("a3s-2", { target: { provider: "forge", type: "operation", id: "op-never00000000000000000000000000" }, action: "cancel", confirmed: true } as never, undefined, undefined, ctx)));
       expect(foreign).toMatchObject({ ok: false, invoked: false, error: { code: "cross-scope" } });
       expect(fake.cancels()).toBe(1);
     } finally {

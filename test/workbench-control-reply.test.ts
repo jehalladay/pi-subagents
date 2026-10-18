@@ -20,6 +20,7 @@ import {
 import { buildControlReply, CONTROL_REPLY_CONTRACT_VERSION, DEFAULT_CONTROL_REPLY_BYTES, MAX_CONTROL_REPLY_BYTES, MIN_CONTROL_REPLY_BYTES } from "../src/workbench/control-reply.js";
 import { type NativeRef, ObservationProjection, type ObservationScope, type Relation } from "../src/workbench/observation.js";
 import { sanitizeWorkbenchText } from "../src/workbench/redaction.js";
+import { UNSAFE_DISPLAY } from "./helpers/unsafe-display.js";
 
 const SCOPE: ObservationScope = { workspace: "/tmp/external-ws", principal: "tester" };
 const AT = "2026-10-15T06:00:00Z";
@@ -269,8 +270,6 @@ const ZWJ = cp(0x200d);
 const WJ = cp(0x2060);
 const BOM = cp(0xfeff);
 const RLO = cp(0x202e);
-/** Anything a display string must never carry: C0/C1 controls, line/paragraph separators, default-ignorables, lone surrogates. */
-const UNSAFE = /[\x00-\x1f\x7f-\x9f\u{2028}\u{2029}]|\p{Default_Ignorable_Code_Point}|[\u{d800}-\u{dfff}]/u;
 /** Every string leaf of a reply, keys included. */
 function strings(value: unknown, into: string[] = []): string[] {
   if (typeof value === "string") into.push(value);
@@ -435,7 +434,7 @@ describe("wb-752.4 respin U1: between-token separators reach the one helper unto
         const out = buildControlReply(build(probe.raw), { maxBytes: MAX_CONTROL_REPLY_BYTES });
         if (field(parse(out.text)) !== sanitizeWorkbenchText(probe.raw, Number.POSITIVE_INFINITY, "text")) failures.push(`${probe.id}: not the helper's text layout`);
         if (!probe.control && out.text.includes(probe.secret)) failures.push(`${probe.id}: leaked`);
-        if (strings(out.reply).some(text => UNSAFE.test(text))) failures.push(`${probe.id}: kept an unsafe unit`);
+        if (strings(out.reply).some(text => UNSAFE_DISPLAY.test(text))) failures.push(`${probe.id}: kept an unsafe unit`);
       }
       expect(failures).toEqual([]);
     });

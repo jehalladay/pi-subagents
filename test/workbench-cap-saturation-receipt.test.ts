@@ -21,6 +21,7 @@ import {
 import { buildGroupedFixture, NAVIGATION_TARGET_MS } from "../qa/workbench/grouped-fixture.mjs";
 import { initialInspectorState, layoutInspector, reduceInspectorKey } from "../src/ui/workflow-inspector.js";
 import { type ObservationLimits, ObservationProjection } from "../src/workbench/observation.js";
+import { type DocsSection, docsSection, type RenderedBlock, type SectionMatch, sectionMatches } from "./helpers/census.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
 
 installScratchLeakGuard();
@@ -134,6 +135,8 @@ interface Inspector {
 }
 interface GroupedFixture {
   snapshots: unknown[];
+  relations: unknown[];
+  updates: unknown[];
   shape: { nodes: number };
 }
 
@@ -237,6 +240,131 @@ beforeAll(() => {
 }, 240_000);
 const rules = (list: Array<{ rule: string }>): string[] => list.map(item => item.rule);
 
+// ---- wb-36l: the docs pin, re-expressed through the wb-u62 docs floor (test/helpers/census.ts) ----
+
+type Quoted = (typeof DOC_QUOTES)[keyof typeof DOC_QUOTES];
+/** One of the two docs sections this receipt answers, as the u62 docs floor pins it (registry entry 6). */
+interface DocsPin {
+  readonly key: keyof typeof DOC_QUOTES;
+  /** The section heading's exact rendered parent heading path, outermost first (D9). */
+  readonly parents: readonly string[];
+  /** The section's WHOLE rendered block list (sectionMatches: exact, block by block; never an includes check). */
+  readonly blocks: readonly RenderedBlock[];
+}
+/** A rendered paragraph; its source markdown is its rendered text unless the paragraph carries inline markup. */
+const paragraph = (text: string, markdown: string = text): RenderedBlock => ({ kind: "paragraph", text, markdown });
+/** A rendered bullet list whose items carry no inline markup. */
+const bullets = (...items: readonly string[]): RenderedBlock => ({ kind: "list", ordered: false, items: items.map(text => ({ text, markdown: text })) });
+
+/**
+ * wb-36l (the W21 adoption carrier, re-homed from wb-oq3 by the owner's oq3 R1 = (a) ruling; landing-order registry
+ * entry 6, wb-9x5.6 docs-pinning): the two docs sections this receipt answers, pinned WHOLE through the u62 docs floor
+ * (whole-section exactness is the floor's adoption form, so every block of both sections is pinned, not only the five
+ * quoted clauses). A lander editing either section updates this table in the same commit (the 752.10 rule).
+ */
+const DOCS_PINS: readonly DocsPin[] = [
+  {
+    key: "scalability",
+    parents: ["10 \u2014 Terminal-native rich workflow inspector, interaction and performance"],
+    blocks: [
+      paragraph(
+        "Benchmark >=1000 visible-reachable operations and >=100k synthetic event updates. Typical viewport 30\u2013100 rows; layout/nav calculation target <=20ms on benchmark host and memory bounded by active projection rather than accumulating full prompt bodies. 10k+ grouped operations P2. Record wall time, p50/p95 UI compute, max allocation, file IO and resize metrics; don't declare targets met without measured runs.",
+      ),
+    ],
+  },
+  {
+    key: "performance",
+    parents: ["14 \u2014 Test strategy, conformance suite, benchmark and adversarial controls"],
+    blocks: [
+      paragraph("Construct deterministic fixture with >=1000 nodes, >=100000 events, 1\u2013100 active changes per tick, 5 nested groups depth, partial graph links, long Unicode paths and large transcript payload refs. Measure:"),
+      bullets(
+        "observer ingest events/s and projection memory",
+        "p50/p95 reducer update and UI selector time",
+        "p50/p95 layout render/navigate/resize time",
+        "number of visible rendered rows vs total nodes",
+        "terminal bytes per update (with line diff)",
+        "recover snapshot/cursor latency",
+        "Pi model tool response size under bounded queries",
+      ),
+      paragraph("Proposed responsive target <=20ms per navigation/layout calculation on declared reference host, redraw <=4Hz live; no full 100k-event fold per redraw; report measured hardware/toolchain and outliers. No invented pass numbers."),
+      paragraph(
+        "Every landed W21 bench is a CLI at qa/workbench/*-bench.mjs whose first line is a // W21 comment. test/helpers/w21-bench-clis.ts exports that first-line rule (W21_HEADER, isW21BenchHeader) and enumerates the benches from it, the W21 falsifier suites read the enumeration instead of a hand-kept list, and the known-duration suite's header census reports a // W21 header displaced below a shebang or licence line as misplaced rather than leaving the bench silently outside both censuses.",
+        "Every landed W21 bench is a CLI at `qa/workbench/*-bench.mjs` whose first line is a `// W21` comment. `test/helpers/w21-bench-clis.ts` exports that first-line rule (`W21_HEADER`, `isW21BenchHeader`) and enumerates the benches from it, the W21 falsifier suites read the enumeration instead of a hand-kept list, and the known-duration suite's header census reports a `// W21` header displaced below a shebang or licence line as misplaced rather than leaving the bench silently outside both censuses.",
+      ),
+    ],
+  },
+];
+
+/** What a reader sees of a section, in block order (an html block renders nothing). */
+const renderedText = (section: DocsSection): string =>
+  section.blocks.map(block => (block.kind === "list" ? block.items.map(item => item.text).join(" ") : block.text)).join(" ");
+
+/** The pre-adoption form (the heading and every quote anywhere in the raw document): the D-rows prove it blind to each shape. */
+const includesEveryQuote = (markdown: string, quoted: Quoted): boolean =>
+  markdown.includes(`## ${quoted.section}`) && quoted.quotes.every(quote => markdown.includes(quote));
+
+/**
+ * The docs floor over one pinned section of `markdown`: docsSection locates the unique rendered level-2 heading under
+ * its exact parent heading path (D9) and refuses an HTML block or code fence spanning a heading line inside the section
+ * (D10); sectionMatches demands the WHOLE rendered block list and refuses any HTML, so a quoted clause relocated out of
+ * the section (D1), wrapped in an HTML comment (D2) or kept beside a withdrawn subsection (D3) reddens; and every quoted
+ * clause must render inside the section.
+ */
+function docsPinVerdict(markdown: string, quoted: Quoted, pin: DocsPin): SectionMatch {
+  const section = docsSection(markdown, quoted.section, 2, pin.parents);
+  const matched = sectionMatches(section, pin.blocks);
+  if (!matched.ok) return matched;
+  const text = renderedText(section);
+  const unrendered = quoted.quotes.filter(quote => !text.includes(quote));
+  return unrendered.length === 0 ? { ok: true, why: "" } : { ok: false, why: `the pinned section renders without the quoted clauses ${JSON.stringify(unrendered)}` };
+}
+
+/** `markdown` with its one occurrence of `target` replaced; a target found other than once fails the row, never a vacuous pass. */
+function replaceOnce(markdown: string, target: string, replacement: string): string {
+  const at = markdown.indexOf(target);
+  if (at < 0 || markdown.indexOf(target, at + 1) >= 0) throw new Error(`docs-floor falsifier: ${JSON.stringify(target)} must occur exactly once in the document`);
+  return markdown.slice(0, at) + replacement + markdown.slice(at + target.length);
+}
+/** The heading line that closes the pinned section: the next level-2 heading after it. */
+function closingHeading(markdown: string, quoted: Quoted): string {
+  const heading = `\n## ${quoted.section}\n`;
+  const start = markdown.indexOf(heading);
+  const next = start < 0 ? -1 : markdown.indexOf("\n## ", start + heading.length - 1);
+  if (next < 0) throw new Error(`docs-floor falsifier: no level-2 heading closes "## ${quoted.section}" in ${quoted.doc}`);
+  const end = markdown.indexOf("\n", next + 1);
+  return markdown.slice(next + 1, end < 0 ? undefined : end);
+}
+function firstQuote(quoted: Quoted): string {
+  const quote = quoted.quotes.at(0);
+  if (quote === undefined) throw new Error(`docs-floor falsifier: ${quoted.doc} carries no quoted clause`);
+  return quote;
+}
+/** A docs-floor falsifier shape: one edit to the real document that the raw includes form cannot see. */
+type DocsShape = (markdown: string, quoted: Quoted) => string;
+/** D1 (wb-9x5.6 gate falsifier): the first quoted clause relocated out of its section into an EOF appendix. */
+const D1_RELOCATED: DocsShape = (markdown, quoted) => `${replaceOnce(markdown, firstQuote(quoted), "")}\n## Appendix\n\n${firstQuote(quoted)}\n`;
+/** D2 (wb-9x5.6 gate falsifier): the first quoted clause (docs/14: a quoted bullet) wrapped in an HTML comment where it stands. */
+const D2_COMMENTED: DocsShape = (markdown, quoted) => replaceOnce(markdown, firstQuote(quoted), `<!-- ${firstQuote(quoted)} -->`);
+/** D3 (wb-9x5.6 gate falsifier): a weakening ### subsection inserted inside the section, before its closing heading. */
+const D3_WITHDRAWN: DocsShape = (markdown, quoted) => {
+  const closing = closingHeading(markdown, quoted);
+  return replaceOnce(markdown, `\n${closing}\n`, `\n### Withdrawn\n\nNothing in this section binds.\n\n${closing}\n`);
+};
+/** D9 (u62 floor, parent heading path): a non-normative level-1 heading inserted above the section re-homes it. */
+const D9_REHOMED: DocsShape = (markdown, quoted) => replaceOnce(markdown, `\n## ${quoted.section}\n`, `\n# Appendix (non-normative)\n\n## ${quoted.section}\n`);
+/** D10 (u62 floor, spanning range): an HTML comment opened inside the section and closed past its closing heading. */
+const D10_SPANNING: DocsShape = (markdown, quoted) => {
+  const closing = closingHeading(markdown, quoted);
+  return replaceOnce(markdown, `\n${closing}\n`, `\n<!--\n\n${closing}\n-->\n`);
+};
+/** Both pinned sections of the real documents under one shape: the raw includes form against the docs floor. */
+const underShape = (shape: DocsShape): Array<{ key: string; includes: boolean; floor: SectionMatch }> =>
+  DOCS_PINS.map(pin => {
+    const quoted = DOC_QUOTES[pin.key];
+    const mutated = shape(readRepo(quoted.doc), quoted);
+    return { key: pin.key, includes: includesEveryQuote(mutated, quoted), floor: docsPinVerdict(mutated, quoted, pin) };
+  });
+
 describe("W21-D pass plan and constants", () => {
   it("names the receipt contract and the production caps it is measured against", () => {
     expect(CAP_RECEIPT_CONTRACT).toBe("workbench.inspector-cap-saturation/v1");
@@ -264,11 +392,69 @@ describe("W21-D pass plan and constants", () => {
   });
 
   it("quotes the two docs sections it answers verbatim, so doc drift fails here", () => {
+    expect(DOCS_PINS.map(pin => [pin.key, DOC_QUOTES[pin.key].doc, docsPinVerdict(readRepo(DOC_QUOTES[pin.key].doc), DOC_QUOTES[pin.key], pin)])).toEqual([
+      ["scalability", "docs/workbench/10-terminal-inspector.md", { ok: true, why: "" }],
+      ["performance", "docs/workbench/14-qa-and-benchmarks.md", { ok: true, why: "" }],
+    ]);
+    expect(Object.keys(DOC_QUOTES)).toEqual(DOCS_PINS.map(pin => pin.key));
     for (const quoted of [DOC_QUOTES.scalability, DOC_QUOTES.performance]) {
       const text = readRepo(quoted.doc);
       expect(text).toContain(`## ${quoted.section}`);
       for (const quote of quoted.quotes) expect(text).toContain(quote);
     }
+  });
+});
+
+describe("W21-D docs floor (wb-36l adoption carrier): the docs pin kills the wb-9x5.6 gate's D1-D3 survivors and the u62 floor's D9/D10 shapes", () => {
+  it("D1 relocation: the first quoted clause moved out of its section into an EOF appendix keeps the raw includes form green and reddens the docs floor", () => {
+    const rows = underShape(D1_RELOCATED);
+    expect(rows.map(row => [row.key, row.includes, row.floor.ok])).toEqual([
+      ["scalability", true, false],
+      ["performance", true, false],
+    ]);
+    expect(rows.map(row => row.floor.why)).toEqual([expect.stringMatching(/^block 1 differs: /), expect.stringMatching(/^block 2 differs: /)]);
+  });
+
+  it("D2 HTML-comment wrap: the first quoted clause wrapped in an HTML comment inside its section keeps the raw includes form green and reddens the docs floor", () => {
+    const rows = underShape(D2_COMMENTED);
+    expect(rows.map(row => [row.key, row.includes, row.floor.ok])).toEqual([
+      ["scalability", true, false],
+      ["performance", true, false],
+    ]);
+    expect(rows.map(row => row.floor.why)).toEqual([expect.stringMatching(/^the section carries HTML \(a comment or a tag\)/), expect.stringMatching(/^the section carries HTML \(a comment or a tag\)/)]);
+  });
+
+  it("D3 withdrawn subsection: a weakening ### subsection inserted inside the section keeps the raw includes form green and reddens the docs floor", () => {
+    const rows = underShape(D3_WITHDRAWN);
+    expect(rows.map(row => [row.key, row.includes, row.floor.ok])).toEqual([
+      ["scalability", true, false],
+      ["performance", true, false],
+    ]);
+    expect(rows.map(row => row.floor.why)).toEqual(["the section has 3 blocks; the census pins 1", "the section has 6 blocks; the census pins 4"]);
+  });
+
+  it("D9 parent heading path: a non-normative level-1 heading inserted above the section keeps the raw includes form green and reddens the docs floor", () => {
+    const rows = underShape(D9_REHOMED);
+    expect(rows.map(row => [row.key, row.includes, row.floor.ok])).toEqual([
+      ["scalability", true, false],
+      ["performance", true, false],
+    ]);
+    expect(rows.map(row => row.floor.why)).toEqual([
+      expect.stringMatching(/^the heading "Scalability targets \(proposed, not measured\)" sits under the parent heading path \["Appendix \(non-normative\)"\]; the census binds it under \["10 /),
+      expect.stringMatching(/^the heading "Performance benchmark" sits under the parent heading path \["Appendix \(non-normative\)"\]; the census binds it under \["14 /),
+    ]);
+  });
+
+  it("D10 spanning range: an HTML comment opened inside the section and closed past its closing heading keeps the raw includes form green and reddens the docs floor", () => {
+    const rows = underShape(D10_SPANNING);
+    expect(rows.map(row => [row.key, row.includes, row.floor.ok])).toEqual([
+      ["scalability", true, false],
+      ["performance", true, false],
+    ]);
+    expect(rows.map(row => row.floor.why)).toEqual([
+      expect.stringMatching(/^an HTML block inside the section spans the heading line "## Failure and deception defenses"/),
+      expect.stringMatching(/^an HTML block inside the section spans the heading line "## Truth labels and release gates"/),
+    ]);
   });
 });
 

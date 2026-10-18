@@ -89,6 +89,20 @@ function bounded(topology: ReactiveFiberProjectionTopology): void {
   }
 }
 
+// wb-4v6 (wb-1c6 gate rows 475/483 F1-F2): registration-site liveness for the it.each tables. A constant's length pin proves the
+// TABLE is whole; it cannot see a table thinned AT THE it.each CALL (DROPPED.slice(1), a filter over the argument), which registers
+// fewer cases and stays green. Each table's callback records the row name it ran under; the pin that follows the it.each in
+// definition order (vitest runs a file's tests in order) compares the ran names to the table's row names, so a row that is not
+// registered and run turns that pin red naming the table. Names are compared as sorted unique lists, so a retry cannot double-count.
+const RAN = new Map<string, string[]>();
+function record(table: string, name: string): void {
+  RAN.set(table, [...(RAN.get(table) ?? []), name]);
+}
+function expectEveryRowRan(table: string, rows: readonly (readonly unknown[])[]): void {
+  const unique = (names: string[]): string[] => [...new Set(names)].sort();
+  expect(unique(RAN.get(table) ?? [])).toStrictEqual(unique(rows.map(row => String(row[0]))));
+}
+
 describe('ReactiveFiber render preview reader adapter', () => {
   it('exports the observation contract and exactly the relation statement ObservationProjection.relate accepts', () => {
     expect(REACTIVEFIBER_OBSERVATION_CONTRACT).toBe('workbench.reactivefiber-observation/v1');
@@ -132,7 +146,7 @@ describe('ReactiveFiber render preview reader adapter', () => {
   });
 
   // R3: the success-shape guards: each hand mutant of the noncommitted-preview shape is refused, never projected.
-  it.each([
+  const REFUSED = [
     ['ephemeral false', withResult({ephemeral: false})],
     ['ephemeral missing', reading(envelope({result: without(result(), 'ephemeral')}))],
     ['render_id set', withResult({render_id: 'rfr_0123456789abcdefghijkl'})],
@@ -178,8 +192,16 @@ describe('ReactiveFiber render preview reader adapter', () => {
     ['wrong contract', reading(envelope(), {contract: 'reactivefiber.render.other/v1'})],
     ['source missing', without(reading(), 'source')],
     ['source not an object', reading(envelope(), {source: 'text'})],
-  ] as const)('R3: refuses with a typed error and projects nothing: %s', (_name, value) => {
+  ] as const;
+  it('R3: the REFUSED table registers all 50 rows', () => {
+    expect(REFUSED.length).toBe(50);
+  });
+  it.each(REFUSED)('R3: refuses with a typed error and projects nothing: %s', (name, value) => {
+    record('REFUSED', name);
     expect(refusal(value as Json).category).toBe('validation');
+  });
+  it('R3: every REFUSED row is registered at the it.each call and runs', () => {
+    expectEveryRowRan('REFUSED', REFUSED);
   });
 
   // wb-2j3.9 (R10) acceptance (c): "R1's cli_version admission adds no required key: the absent-field fixture (R1) still validates and projects."
@@ -214,14 +236,22 @@ describe('ReactiveFiber render preview reader adapter', () => {
     expect(reactivefiberTopology(reading(failure({workspace: null})) as JsonValue, context).snapshots[0].node.statusTone).toBe('failure');
   });
 
-  it.each([
+  const CONTRADICTORY = [
     ['a non-RF code', failure({diagnostics: [rfDiagnostic({code: 'HX_FAILED'})]})],
     ['a warning-severity primary diagnostic', failure({diagnostics: [rfDiagnostic({severity: 'warning'})]})],
     ['no diagnostic at all', failure({diagnostics: []})],
     ['a non-null result', failure({result: result()})],
     ['a transaction id', failure({transaction_id: 'rft_0123456789abcdefghijkl'})],
-  ] as const)('R4: ok:false with %s is a contradictory failure envelope and is refused', (_name, source) => {
+  ] as const;
+  it('R4: the CONTRADICTORY table registers all 5 rows', () => {
+    expect(CONTRADICTORY.length).toBe(5);
+  });
+  it.each(CONTRADICTORY)('R4: ok:false with %s is a contradictory failure envelope and is refused', (name, source) => {
+    record('CONTRADICTORY', name);
     expect(refusal(reading(source as Json)).category).toBe('validation');
+  });
+  it('R4: every CONTRADICTORY row is registered at the it.each call and runs', () => {
+    expectEveryRowRan('CONTRADICTORY', CONTRADICTORY);
   });
 
   it('R4: ok:true with diagnostics_summary.has_errors projects partial and never clean success', () => {
@@ -356,7 +386,7 @@ describe('producer release from result.provenance.cli_version (wb-2j3.1 reader, 
       trace: {invocationId: 'wf_rf_1'},
     }],
     relations: [],
-    diagnostics: ['ephemeral noncommitted preview: render_id null, transaction_id null, 0 storage writes', 'context text withheld: referenced by sha256 digest',
+    diagnostics: ['ephemeral noncommitted preview: render_id null, transaction_id null, 0 authoritative storage writes (envelope storage_write_count)', 'context text withheld: referenced by sha256 digest',
       'no native interval supplied'],
   };
   const [PREVIEW_NOTE, WITHHELD_NOTE, INTERVAL_NOTE] = TODAY.diagnostics;
@@ -455,11 +485,19 @@ describe('producer release from result.provenance.cli_version (wb-2j3.1 reader, 
     // bound alone drops it; a reader admitting 257 bytes carries it and fails this row (the 257-ASCII row above is also cut by the layout).
     ['257 UTF-8 bytes in 129 characters (the multibyte boundary)', `a${cp(0xe9).repeat(128)}`],
   ];
-  it.each(DROPPED)('R3: a cli_version that is %s is dropped, never rewritten or defaulted: the projection equals the absent case', (_name, value) => {
+  it('R3: the cli_version DROPPED table registers all 17 rows', () => {
+    expect(DROPPED.length).toBe(17);
+  });
+  it.each(DROPPED)('R3: a cli_version that is %s is dropped, never rewritten or defaulted: the projection equals the absent case', (name, value) => {
+    record('R3 DROPPED', name);
     const topology = reactivefiberTopology(stating(value) as JsonValue, invoked);
     expect(JSON.stringify(topology)).toBe(JSON.stringify(TODAY));
     expect(topology).toStrictEqual(TODAY);
     expect(nativeEvidence(CAPABILITY, stating(value) as JsonValue)).toStrictEqual(TODAY_EVIDENCE);
+  });
+
+  it('R3: every cli_version DROPPED row is registered at the it.each call and runs', () => {
+    expectEveryRowRan('R3 DROPPED', DROPPED);
   });
 
   // wb-19q (2j3.2 F2) decoy: a release is read from result.provenance.cli_version only. A cli_version beside provenance
@@ -725,7 +763,8 @@ describe('engine identity from result.provenance.sdk_versions (wb-693.1 R1, wb-6
   it('R12: the LISTS table registers all 5 rows', () => {
     expect(LISTS.length).toBe(5);
   });
-  it.each(LISTS)('R12: a LIST-shaped sdk_versions (%s) records no engine identity and is never a refusal', (_name, list) => {
+  it.each(LISTS)('R12: a LIST-shaped sdk_versions (%s) records no engine identity and is never a refusal', (name, list) => {
+    record('LISTS', name);
     const releases: Json[] = [{}, {cli_version: '0.1.709'}];
     for (const provenance of releases) {
       const topology = project(stating(list, {}, provenance));
@@ -734,12 +773,21 @@ describe('engine identity from result.provenance.sdk_versions (wb-693.1 R1, wb-6
     }
   });
 
+  it('R12: every LISTS row is registered at the it.each call and runs', () => {
+    expectEveryRowRan('LISTS', LISTS);
+  });
+
   const OTHER_SHAPES: [string, JsonValue][] = [['null', null], ['a string', 'tsx_runtime 2.9.7'], ['a number', 2], ['a boolean', true]];
   it('R12: the OTHER_SHAPES table registers all 4 rows', () => {
     expect(OTHER_SHAPES.length).toBe(4);
   });
-  it.each(OTHER_SHAPES)('R12: an sdk_versions that is %s records no engine identity and is never a refusal either', (_name, value) => {
+  it.each(OTHER_SHAPES)('R12: an sdk_versions that is %s records no engine identity and is never a refusal either', (name, value) => {
+    record('OTHER_SHAPES', name);
     expect(JSON.stringify(project(stating(value)))).toBe(JSON.stringify(today()));
+  });
+
+  it('R12: every OTHER_SHAPES row is registered at the it.each call and runs', () => {
+    expectEveryRowRan('OTHER_SHAPES', OTHER_SHAPES);
   });
 
   // R12 (wb-693.2 acceptance 2): sdk_versions and cli_version never become required envelope fields.
@@ -823,11 +871,16 @@ describe('engine identity from result.provenance.sdk_versions (wb-693.1 R1, wb-6
   it('R13: the DROPPED table registers all 32 rows', () => {
     expect(DROPPED.length).toBe(32);
   });
-  it.each(DROPPED)('R13: an engine entry with %s is dropped, never rewritten: no reference, no note, the projection equals today', (_name, entry) => {
+  it.each(DROPPED)('R13: an engine entry with %s is dropped, never rewritten: no reference, no note, the projection equals today', (name, entry) => {
+    record('R13 DROPPED', name);
     const topology = project(stating({...SIBLINGS, tsx_runtime: entry, tsx_sdk: entry}));
     expect(JSON.stringify(topology)).toBe(JSON.stringify(today()));
     expect(JSON.stringify(topology)).not.toContain('SECRET-');
     expect(topology.snapshots[0].evidenceRefs?.length).toBeLessThanOrEqual(32);
+  });
+
+  it('R13: every DROPPED row is registered at the it.each call and runs', () => {
+    expectEveryRowRan('R13 DROPPED', DROPPED);
   });
 
   it('R13: placeholders in every engine-era field beside the identities never surface; only bounded references do, refs <= 32', () => {
@@ -848,7 +901,8 @@ describe('engine identity from result.provenance.sdk_versions (wb-693.1 R1, wb-6
   it('R13: the PARTIAL table registers all 3 rows', () => {
     expect(PARTIAL.length).toBe(3);
   });
-  it.each(PARTIAL)('R13: %s with both engine entries still reads partial and unknown, its status text and seam label unchanged', (_name, over, ctx, label) => {
+  it.each(PARTIAL)('R13: %s with both engine entries still reads partial and unknown, its status text and seam label unchanged', (name, over, ctx, label) => {
+    record('PARTIAL', name);
     const engine = project(stating(ENGINE_OBJECT, over), ctx).snapshots[0];
     const plain = today(over, {}, ctx).snapshots[0];
     expect(engine.coverage).toBe('partial');
@@ -856,6 +910,10 @@ describe('engine identity from result.provenance.sdk_versions (wb-693.1 R1, wb-6
     expect(engine.node.statusText).toMatch(label);
     expect(engine.node).toStrictEqual(plain.node);
     expect(engine.coverage).toBe(plain.coverage);
+  });
+
+  it('R13: every PARTIAL row is registered at the it.each call and runs', () => {
+    expectEveryRowRan('PARTIAL', PARTIAL);
   });
 
   it('R13: an error-severity envelope diagnostic beside engine entries still cannot read as success, and its text stays withheld', () => {
@@ -958,10 +1016,18 @@ describe('engine_metrics spawn surfacing (wb-693.4 R6, R15)', () => {
     ['a list', [1, 0]],
     ['a string', 'tsx_worker_spawns'],
   ];
-  it.each(MALFORMED)('R15: engine_metrics with %s is refused as a validation error that echoes no producer text', (_name, engineMetrics) => {
+  it('R15: the MALFORMED table registers all 12 rows', () => {
+    expect(MALFORMED.length).toBe(12);
+  });
+  it.each(MALFORMED)('R15: engine_metrics with %s is refused as a validation error that echoes no producer text', (name, engineMetrics) => {
+    record('MALFORMED', name);
     const error = refusal(withResult({engine_metrics: engineMetrics}));
     expect(error.category).toBe('validation');
     expect(error.message).toMatch(/result\.engine_metrics/);
     expect(error.message).not.toContain('SECRET-');
+  });
+
+  it('R15: every MALFORMED row is registered at the it.each call and runs', () => {
+    expectEveryRowRan('MALFORMED', MALFORMED);
   });
 });

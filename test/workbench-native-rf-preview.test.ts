@@ -2,6 +2,7 @@
 import {spawnSync} from 'node:child_process';
 import {describe,expect,it} from 'vitest';
 import {nativeReactiveFiberPreview} from '../src/workbench/providers/reactivefiber.js';
+import {diffAgainstRoster,readRfResultRoster} from './helpers/rf-render-fixture.js';
 
 const RF_ABSENT_NOTE='engine_metrics absent: pre-TSX rf';
 const STAMP=/^[0-9A-Za-z.+_-]{1,64}$/;
@@ -40,4 +41,27 @@ describe('RF native context producer',()=>{
     process.stdout.write(`\nRF_PREVIEW_RECEIPT ${JSON.stringify({cli_version:stamp(producer.provenance.cli_version),engine_metrics:metrics===undefined?RF_ABSENT_NOTE:metrics,rf_identity:rfIdentity()})}\n`);
     if(metrics!==undefined) expect(metrics).toEqual({tsx_worker_spawns:0,tsx_resource_rounds:0});
   },60_000);
+
+  // wb-973.11 (SCG-R11 acceptance 4, second clause): the live drift diff. The default gate holds the offline full-shape fixture to
+  // test/fixtures/rf-result-keys.json (source 'constructed'); this row holds a --no-commit capture from the installed rf to the same
+  // roster with the same diff (diffAgainstRoster). A roster result or provenance key missing from the capture, or a work or
+  // work_metrics key set that differs from the roster's exactly, fails the tier; result keys beyond the roster are recorded on the
+  // RF_RESULT_KEY_DIFF line and never failed (an rf newer than the pin adds keys the provider admits). Fail-not-skip like the row above.
+  it('SCG-R11 live diff: the installed rf capture carries every roster key and the exact work and work_metrics sets; extra result keys are recorded',async()=>{
+    const workspace=process.env.WORKBENCH_RF_FIXTURE;
+    if(!workspace) throw Error('WORKBENCH_RF_FIXTURE must name an initialized test workspace');
+    const roster=readRfResultRoster();
+    const reading=await nativeReactiveFiberPreview('claude-opus-5','Summarize workbench integration',workspace);
+    const source=record(reading)?reading.source:undefined;
+    const captured=record(source)&&record(source.result)?source.result:undefined;
+    if(captured===undefined) throw Error('the provider reading carries no result object');
+    const provenance=record(captured.provenance)?captured.provenance:{};
+    const diff=diffAgainstRoster(roster,captured);
+    // Recording line (written straight to the process stdout, as RF_PREVIEW_RECEIPT above): the roster it was held to, the capture's
+    // release, whether that release is the pin (a 'captured' promotion needs it), the failure count and the extra result keys.
+    process.stdout.write(`\nRF_RESULT_KEY_DIFF ${JSON.stringify({roster:stamp(roster.rfVersion),source:roster.source,cli_version:stamp(provenance.cli_version),pinned:provenance.cli_version===roster.rfVersion,failures:diff.failures.length,extra_result_keys:diff.extraResultKeys.map(stamp)})}\n`);
+    expect(diff.failures).toStrictEqual([]);
+  },60_000);
 });
+/** A JSON object, never an array or null. */
+function record(value:unknown):value is Record<string,unknown>{return value!==null&&typeof value==='object'&&!Array.isArray(value);}
