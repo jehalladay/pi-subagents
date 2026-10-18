@@ -13,6 +13,11 @@
  * - the tree row: no case any vitest tier runs is retried, on these bytes, non-vacuously;
  * - one independently authored falsifier project per claimed route, each red through its own route and nothing else;
  *   controls (a comment, a string literal, retry-free options, a script and a tool tier) stay green;
+ * - compound steps (the wb-nl8.4 re-cut, owner direction at landing 122): a forge.toml command chained with && is read
+ *   arm by arm, each arm resolved as its own command - a vitest arm's retry is found in either position and under its
+ *   own config (the files only that config includes read with it), two tsc arms (the wb-zsv typing form) read as a tool
+ *   tier, an arm outside the grammar stays tier-unread named by its own refusal, and neither a single & nor a quoted &&
+ *   is split;
  * - the executed leg: the bead's mutant ({ retry: 2 } on a case whose assertion fails on its first attempt) PASSES under
  *   vitest while its retry-free twin fails - the silent pass the census refuses is real, its assertion reached.
  */
@@ -69,6 +74,8 @@ interface Row {
   readonly shape: Shape;
   /** The routes the census must name: exactly these, nothing else (a control names none). */
   readonly routes: readonly RetryRoute[];
+  /** Text the findings must carry: the refusal that says why (an unread arm's own, never the && the census splits). */
+  readonly detail?: string;
 }
 
 /** One falsifier per claimed route (vitest 4.1.10 retries a case through each; the probe record is the bead's delivery note). */
@@ -126,6 +133,51 @@ const FALSIFIERS: readonly Row[] = [
     shape: { extraTiers: '\n[build.commands.extra]\ncommand = "npm run extra"\n', scripts: { extra: "vitest run --retry 2 | cat" } },
     routes: ["tier-unread"],
   },
+  {
+    id: "f-and-cli",
+    routed: "a compound step (&&) whose first arm runs vitest with --retry 2 and whose second runs tsc: each arm is read as its own command",
+    shape: { forge: "npm run test && npm run typecheck", script: "vitest run --retry 2", scripts: { typecheck: "tsc --noEmit" } },
+    routes: ["cli-retry"],
+  },
+  {
+    id: "f-and-case",
+    routed: "a compound step (&&) whose second arm runs vitest over a case whose options carry retry: 2",
+    shape: { forge: "npm run typecheck && npm run test", body: 'it("flaky", { retry: 2 }, flake);', scripts: { typecheck: "tsc --noEmit" } },
+    routes: ["case-options"],
+  },
+  {
+    id: "f-and-second-config",
+    routed: "a compound step (&&) whose second arm runs vitest under its own config, over a file only that config includes, whose case options carry retry: 2",
+    shape: {
+      forge: "npm run test && vitest run --config vitest.other.config.ts",
+      files: {
+        "vitest.other.config.ts": 'import { defineConfig } from "vitest/config";\n\nexport default defineConfig({ test: { include: ["other/**/*.test.ts"] } });\n',
+        "other/flaky.test.ts": testFile('it("flaky", { retry: 2 }, flake);'),
+      },
+    },
+    routes: ["case-options"],
+  },
+  {
+    id: "f-and-unread",
+    routed: "a compound step (&&) whose second arm is outside the modelled grammar (a pipe) stays tier-unread, named by that arm's own refusal",
+    shape: { extraTiers: '\n[build.commands.extra]\ncommand = "npm run typecheck && npm run extra"\n', scripts: { typecheck: "tsc --noEmit", extra: "vitest run --retry 2 | cat" } },
+    routes: ["tier-unread"],
+    detail: 'package.json scripts.extra: the command uses the shell operator "|"',
+  },
+  {
+    id: "f-background",
+    routed: "a single & (a background job, not &&) between two arms is not split: the step stays tier-unread",
+    shape: { forge: "npm run typecheck & npm run test", scripts: { typecheck: "tsc --noEmit" } },
+    routes: ["tier-unread"],
+    detail: 'forge.toml command test: the command uses the shell operator "&"',
+  },
+  {
+    id: "f-and-two-hops",
+    routed: "a compound step (&&) whose second arm reaches vitest through two npm scripts stays tier-unread, as a whole command does",
+    shape: { forge: "npm run typecheck && npm run outer", scripts: { typecheck: "tsc --noEmit", outer: "npm run test" } },
+    routes: ["tier-unread"],
+    detail: "the arm reaches vitest through more than one npm script",
+  },
 ];
 
 /** Controls: the same project shapes with nothing that retries - text that only LOOKS like retry, and tiers the census need not read. */
@@ -139,6 +191,22 @@ const CONTROLS: readonly Row[] = [
     id: "c-tiers",
     routed: "a tool tier (biome) and a script tier (node) beside the vitest tier",
     shape: { extraTiers: 'lint = "npm run lint"\nshell = "node qa/run.mjs"\n', scripts: { lint: "biome check test/" } },
+    routes: [],
+  },
+  {
+    id: "c-and-tools",
+    routed: "the wb-zsv typing form: a compound step (&&) whose two arms each run tsc through an npm script, inline and as a table",
+    shape: {
+      extraTiers: 'typing = "npm run typecheck && npm run typecheck:test"\n\n[build.commands.typecheck]\ncommand = "npm run typecheck && npm run typecheck:test"\n',
+      scripts: { typecheck: "tsc --noEmit", "typecheck:test": "tsc --noEmit -p tsconfig.test.json" },
+    },
+    routes: [],
+  },
+  { id: "c-quoted-and", routed: "a script tier whose && sits inside single quotes is one arm, the script it is", shape: { extraTiers: "shell = \"node -e '0 && 1'\"\n" }, routes: [] },
+  {
+    id: "c-and-two-configs",
+    routed: "a compound step (&&) whose two arms each run vitest, under two configs over the same file: both arms read, the file counted once",
+    shape: { forge: "npm run test && vitest run --config vitest.other.config.ts", files: { "vitest.other.config.ts": config("") } },
     routes: [],
   },
 ];
@@ -210,6 +278,7 @@ describe("retry census (wb-nl8.4): one falsifier per claimed route, each red thr
         const census = await censusOf(row);
         expect(routesOf(census), shown(census)).toEqual([...row.routes].sort());
         expect(census.findings.length).toBeGreaterThan(0);
+        if (row.detail !== undefined) expect(shown(census)).toContain(row.detail);
       },
       SLOW,
     );
@@ -241,6 +310,54 @@ describe("retry census (wb-nl8.4): controls stay green - the read is parse-aware
         ["lint", "tool"],
         ["shell", "script"],
       ]);
+    },
+    SLOW,
+  );
+
+  it(
+    "a compound step is read arm by arm, each arm resolved as its own command, the tier as the strongest of its arms (unread, vitest, script, admitted, tool) [c-and-kinds]",
+    async () => {
+      const tools = CONTROLS.find(control => control.id === "c-and-tools");
+      const quoted = CONTROLS.find(control => control.id === "c-quoted-and");
+      const mixed = FALSIFIERS.find(row => row.id === "f-and-cli");
+      const unread = FALSIFIERS.find(row => row.id === "f-and-unread");
+      const twice = CONTROLS.find(control => control.id === "c-and-two-configs");
+      if (tools === undefined || quoted === undefined || mixed === undefined || unread === undefined || twice === undefined) {
+        throw new Error("c-and-tools, c-quoted-and, f-and-cli, f-and-unread or c-and-two-configs missing");
+      }
+      const [toolsRead, quotedRead, mixedRead, unreadRead, twiceRead] = await Promise.all([censusOf(tools), censusOf(quoted), censusOf(mixed), censusOf(unread), censusOf(twice)]);
+      const arms = (census: RetryCensus): unknown[] => census.tiers.map(tier => [tier.tier, tier.kind, tier.arms.map(arm => [arm.command, arm.kind])]);
+      expect(arms(toolsRead)).toEqual([
+        ["test", "vitest", [["npm run test", "vitest"]]],
+        ["typing", "tool", [["npm run typecheck", "tool"], ["npm run typecheck:test", "tool"]]],
+        ["typecheck", "tool", [["npm run typecheck", "tool"], ["npm run typecheck:test", "tool"]]],
+      ]);
+      expect(arms(quotedRead)).toEqual([
+        ["test", "vitest", [["npm run test", "vitest"]]],
+        ["shell", "script", [["node -e '0 && 1'", "script"]]],
+      ]);
+      expect(arms(mixedRead)).toEqual([["test", "vitest", [["npm run test", "vitest"], ["npm run typecheck", "tool"]]]]);
+      // an unread arm is the tier's kind whatever its other arms read: the tree row's every-tier check sees it
+      expect(arms(unreadRead)).toEqual([
+        ["test", "vitest", [["npm run test", "vitest"]]],
+        ["extra", "unread", [["npm run typecheck", "tool"], ["npm run extra", "unread"]]],
+      ]);
+      // the compound tier's one vitest arm carries the tier's config and its file, as a plain vitest tier does
+      const config = join(base, mixed.id, "vitest.config.ts");
+      expect(mixedRead.tiers[0]?.config).toBe(config);
+      expect(mixedRead.tiers[0]?.arms[0]?.config).toBe(config);
+      expect(mixedRead.tiers[0]?.files).toBe(1);
+      expect(mixedRead.files).toContain("test/flaky.test.ts");
+      // two vitest arms under two configs: each arm names its own config, the tier none, and the one file both include counts once
+      expect(arms(twiceRead)).toEqual([["test", "vitest", [["npm run test", "vitest"], ["vitest run --config vitest.other.config.ts", "vitest"]]]]);
+      const twiceTier = twiceRead.tiers[0];
+      expect(twiceTier?.arms.map(arm => [arm.config, arm.files])).toEqual([
+        [join(base, twice.id, "vitest.config.ts"), 1],
+        [join(base, twice.id, "vitest.other.config.ts"), 1],
+      ]);
+      expect(twiceTier?.config).toBeUndefined();
+      expect(twiceTier?.files).toBe(1);
+      expect(twiceRead.files.filter(file => file === "test/flaky.test.ts")).toHaveLength(1);
     },
     SLOW,
   );

@@ -193,8 +193,13 @@
  *   write - is read through the COLLECTED read: vitest collects it under that tier's config with a never-matching name
  *   filter (no case body or hook runs) and test/helpers/retry-reporter.ts reports, behind a per-run nonce frame read
  *   exactly once, the retry vitest resolved for each collected case (collected-retry; collected-unread: no report, a
- *   collection error, or no case collected). A tier is tier-unread unless it reaches vitest, runs a script program
- *   (node, bash, sh), runs a program that runs no test runner (tsc, biome), or is an exact RETRY_ADMITTED_CHAINS chain.
+ *   collection error, or no case collected). A tier's command is split at its top-level && operators (quotes read as
+ *   the tokenizer reads them; a single &, ||, ;, | and an npm script's own body are never split) and each arm is
+ *   resolved as its own command (the wb-nl8.4 re-cut, owner direction at landing 122: the wb-zsv typing step chains two
+ *   tsc scripts); an arm is tier-unread unless it reaches vitest, runs a script program (node, bash, sh), runs a
+ *   program that runs no test runner (tsc, biome), or is an exact RETRY_ADMITTED_CHAINS chain, and a tier is read as
+ *   the strongest of its arms (unread, vitest, script, admitted, tool). An npm script body chained with && stays
+ *   tier-unread unless its whole chain is admitted.
  *   MEASURED on the delivered bytes: the file set (node's fs.globSync over the resolved include / exclude) equals
  *   vitest's own list (vitest list --filesOnly) for the default, census, native-read and furnace-observe configs; one
  *   falsifier project per route is a row of test/workbench-retry-census.test.ts, red through that route and nothing
@@ -5489,21 +5494,37 @@ export interface RetryFinding {
   readonly detail: string;
 }
 
+/** vitest: argv and resolved config read; script: a script program the census does not read (named residual); tool: a program that runs no test runner; admitted: an exact RETRY_ADMITTED_CHAINS chain; unread: a finding. */
+export type RetryKind = "vitest" | "script" | "tool" | "admitted" | "unread";
+
+/** How the census read one arm of a tier's command: the command split at its top-level && operators, each arm resolved as its own command. */
+export interface RetryArm {
+  /** The arm's command text, trimmed (a command without && is one arm: the whole command). */
+  readonly command: string;
+  readonly kind: RetryKind;
+  /** A vitest arm's resolved config file. */
+  readonly config: string | undefined;
+  /** How many files a vitest arm's config includes (setup files apart). */
+  readonly files: number;
+}
+
 /** How the census read one forge.toml tier. */
 export interface RetryTier {
   readonly tier: string;
-  /** vitest: argv and resolved config read; script: a script program the census does not read (named residual); tool: a program that runs no test runner; admitted: an exact RETRY_ADMITTED_CHAINS chain; unread: a finding. */
-  readonly kind: "vitest" | "script" | "tool" | "admitted" | "unread";
-  /** A vitest tier's resolved config file. */
+  /** The strongest of its arms' kinds, in the order unread, vitest, script, admitted, tool. */
+  readonly kind: RetryKind;
+  /** A vitest tier's resolved config file: the one its vitest arms resolve (undefined when they resolve more than one; each arm names its own). */
   readonly config: string | undefined;
-  /** How many files a vitest tier's config includes (setup files apart). */
+  /** How many files the tier's vitest arms include (setup files apart), each file counted once. */
   readonly files: number;
+  /** Each arm of the tier's command, in order. */
+  readonly arms: readonly RetryArm[];
 }
 
 export interface RetryCensus {
   readonly findings: readonly RetryFinding[];
   readonly tiers: readonly RetryTier[];
-  /** Every file a vitest tier includes or loads as a setup file, relative to the root, sorted. */
+  /** Every file a vitest arm includes or loads as a setup file, relative to the root, sorted (each file once). */
   readonly files: readonly string[];
   /** Modules the static read covered: those files and their relative import closures. */
   readonly modules: number;
@@ -5523,7 +5544,8 @@ const BUILD_SCRIPT = "node -e \"require('fs').rmSync('dist',{recursive:true,forc
 
 /**
  * Tier commands the census cannot tokenize, admitted only as these exact hop chains (resolveTier's chain, the npm
- * script's body included), each naming why it reaches no vitest; any other spelling, or any edit, is tier-unread.
+ * script's body included), each naming why it reaches no vitest; any other spelling, or any edit, is tier-unread. An
+ * arm of a compound command is matched by its own chain, its arm hop included, so no entry here admits an arm.
  */
 export const RETRY_ADMITTED_CHAINS: readonly { readonly chain: readonly string[]; readonly why: string }[] = [
   {
@@ -5550,19 +5572,71 @@ function forgeTierNames(root: string): Parsed<readonly string[]> {
   return { ok: true, value: [...new Set(names)] };
 }
 
-interface TierRead {
-  readonly tier: RetryTier;
-  /** Absolute: the files the tier's resolved include / exclude select. */
+/** One vitest read: the config it resolved, the files its include / exclude select and the setup files it loads (absolute). */
+interface RunRead {
+  readonly config: string | undefined;
   readonly files: readonly string[];
-  /** Absolute: the setup files the tier's resolved config loads. */
   readonly setup: readonly string[];
 }
 
-/** One forge.toml tier: its argv through vitest's parseCLI, its config through vitest's resolveConfig, its files through their include / exclude. */
-async function readTier(root: string, tier: string, findings: RetryFinding[]): Promise<TierRead> {
-  const at = `forge.toml ${tier}`;
-  const none = (kind: RetryTier["kind"]): TierRead => ({ tier: { tier, kind, config: undefined, files: 0 }, files: [], setup: [] });
-  const resolution = resolveTier(root, tier);
+/** One command or arm, read: how the census classified it, and its vitest read when it runs vitest. */
+interface ArmRead {
+  readonly arm: RetryArm;
+  readonly run: RunRead | undefined;
+}
+
+interface TierRead {
+  readonly tier: RetryTier;
+  /** The vitest reads of the tier's arms, in order. */
+  readonly runs: readonly RunRead[];
+}
+
+/** A tier's kind is the strongest of its arms': an unread arm is a finding, a vitest arm is read, a script arm is the named residual. */
+const RETRY_KIND_ORDER: readonly RetryKind[] = ["unread", "vitest", "script", "admitted", "tool"];
+
+/** The command split at its top-level && operators, quotes read as tokenize reads them; a command without one is one arm. */
+function andArms(command: string): readonly string[] {
+  const arms: string[] = [];
+  let quote = "";
+  let start = 0;
+  let i = 0;
+  while (i < command.length) {
+    const ch = command.charAt(i);
+    if (quote !== "") {
+      if (ch === quote) quote = "";
+    } else if (ch === "'" || ch === '"') {
+      quote = ch;
+    } else if (ch === "&" && command.charAt(i + 1) === "&") {
+      arms.push(command.slice(start, i));
+      start = i + 2;
+      i = start;
+      continue;
+    }
+    i += 1;
+  }
+  arms.push(command.slice(start));
+  return arms;
+}
+
+/** One arm of a compound command, resolved as resolveTier resolves a whole command: its chain names the arm, one npm hop at most. */
+function resolveArm(root: string, tier: string, head: readonly string[], text: string, index: number, count: number): TierResolution {
+  const command = text.trim();
+  const arm = `arm ${index + 1} of ${count}`;
+  const chain = [...head, `${arm}: ${JSON.stringify(command)}`];
+  const fail = (why: string): TierResolution => ({ ok: false, tier, command, argv: [], chain, why });
+  const words = tokenize(command);
+  if (!words.ok) return fail(`forge.toml command ${tier} ${arm}: ${words.why}`);
+  const scripts = readScripts(root);
+  if (!scripts.ok) return fail(scripts.why);
+  const argv = resolveWords(words.value, scripts.value.scripts, chain, 0);
+  if (!argv.ok) return fail(argv.why);
+  if (chain.length > head.length + 2) return fail("the arm reaches vitest through more than one npm script; only one npm hop is read faithfully");
+  return { ok: true, tier, command, argv: argv.value, chain, why: "" };
+}
+
+/** One resolved command (a whole tier command, or one arm of a compound one): its argv through vitest's parseCLI, its config through vitest's resolveConfig, its files through their include / exclude. */
+async function readCommand(root: string, at: string, resolution: TierResolution, findings: RetryFinding[]): Promise<ArmRead> {
+  const none = (kind: RetryKind): ArmRead => ({ arm: { command: resolution.command, kind, config: undefined, files: 0 }, run: undefined });
   if (!resolution.ok) {
     const program = /^the tier runs (\S+), not vitest$/.exec(resolution.why)?.[1];
     if (program !== undefined && SCRIPT_PROGRAMS.has(program)) return none("script");
@@ -5605,7 +5679,26 @@ async function readTier(root: string, tier: string, findings: RetryFinding[]): P
   const files = globSync([...resolved.include], { cwd: dir, exclude: [...resolved.exclude] })
     .map(file => resolve(dir, file))
     .sort();
-  return { tier: { tier, kind: "vitest", config, files: files.length }, files, setup: resolved.setupFiles.map(file => resolve(root, file)) };
+  return { arm: { command: resolution.command, kind: "vitest", config, files: files.length }, run: { config, files, setup: resolved.setupFiles.map(file => resolve(root, file)) } };
+}
+
+/**
+ * One forge.toml tier: its command split at its top-level && operators, each arm read as its own command (wb-nl8.4
+ * re-cut, owner direction at landing 122). A command without && is one arm, read exactly as resolveTier resolves it.
+ */
+async function readTier(root: string, tier: string, findings: RetryFinding[]): Promise<TierRead> {
+  const at = `forge.toml ${tier}`;
+  const resolution = resolveTier(root, tier);
+  const texts = andArms(resolution.command);
+  const reads: ArmRead[] = [];
+  if (texts.length === 1) reads.push(await readCommand(root, at, resolution, findings));
+  else for (const [index, text] of texts.entries()) reads.push(await readCommand(root, at, resolveArm(root, tier, resolution.chain, text, index, texts.length), findings));
+  const arms = reads.map(read => read.arm);
+  const runs = reads.flatMap(read => (read.run === undefined ? [] : [read.run]));
+  const kind = RETRY_KIND_ORDER.find(candidate => arms.some(arm => arm.kind === candidate)) ?? "unread";
+  const configs = [...new Set(runs.map(run => run.config))];
+  const files = new Set(runs.flatMap(run => run.files)).size;
+  return { tier: { tier, kind, config: configs.length === 1 ? configs[0] : undefined, files, arms }, runs };
 }
 
 type RetryRead = { readonly retry: string | undefined } | { readonly unknown: string };
@@ -5787,10 +5880,10 @@ function collectedRead(root: string, config: string | undefined, files: readonly
 }
 
 /**
- * The retry census of a repository root (the header's RETRY CENSUS paragraph): every forge.toml tier read, then every
- * file a vitest tier includes or loads as a setup file read statically through its relative import closure, and each
- * file the static read cannot bound read through the collected read under the config of the first tier that includes
- * it. Fail-closed: whatever the census cannot read is a finding, never a pass.
+ * The retry census of a repository root (the header's RETRY CENSUS paragraph): every forge.toml tier read arm by arm,
+ * then every file a vitest arm includes or loads as a setup file read statically through its relative import closure,
+ * and each file the static read cannot bound read through the collected read under the config of the first vitest arm
+ * that includes it. Fail-closed: whatever the census cannot read is a finding, never a pass.
  */
 export async function retryCensus(root: string): Promise<RetryCensus> {
   const findings: RetryFinding[] = [];
@@ -5802,11 +5895,13 @@ export async function retryCensus(root: string): Promise<RetryCensus> {
   for (const tier of names.ok ? names.value : []) {
     const read = await readTier(root, tier, findings);
     tiers.push(read.tier);
-    for (const file of read.files) {
-      roots.add(file);
-      if (!configOf.has(file)) configOf.set(file, read.tier.config);
+    for (const run of read.runs) {
+      for (const file of run.files) {
+        roots.add(file);
+        if (!configOf.has(file)) configOf.set(file, run.config);
+      }
+      for (const file of run.setup) roots.add(file);
     }
-    for (const file of read.setup) roots.add(file);
   }
   const files = [...roots].sort();
   const sources = new SourceCache();
