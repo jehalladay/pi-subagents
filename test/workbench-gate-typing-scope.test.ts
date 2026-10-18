@@ -164,3 +164,38 @@ describe("wb-zsv guards: what the flip must not move", () => {
     expect(resolveTscConfigs("npm run typecheck && npm run typecheck:test")).toEqual(["tsconfig.json", "tsconfig.test.json"]);
   });
 });
+
+/**
+ * wb-zsv.6 (ruling R485): the npm-side developer loop matches the gate's typing scope — `check` chains lint, then both
+ * gate typing arms in the gate's own order (so TYPING_VALUE is contained verbatim), then the test suite. prepublishOnly
+ * STAYS src-only typecheck by the same ruling (the publish path is guarded by the seven-step complete gate), so it is
+ * deliberately not pinned here.
+ */
+describe("wb-zsv.6 guard: npm run check carries the gate's typing scope", () => {
+  it("G5: scripts.check is byte-exact and contains the gate's typing chain verbatim", () => {
+    expect(scripts.check).toBe("npm run lint && npm run typecheck && npm run typecheck:test && npm run test");
+    expect(scripts.check).toContain(TYPING_VALUE);
+  });
+});
+
+/**
+ * wb-zsv.8 (ruling R488): .github/workflows/ci.yml's build job carries the gate's typing scope — after npm ci its run
+ * steps are exactly check's four scripts in check's order (lint, typecheck, typecheck:test, test), so a test-file type
+ * error that reds the complete gate's typing step reds CI too. The compat jobs STAY vitest-focused per R488(2), whose
+ * recorded rationale is node-version runtime intent; in the yml itself their axis is the installed Pi (floor/latest,
+ * node pinned at 22 in all three jobs), so a typecheck:test arm there would be a new measurement -- test/** against
+ * floor/latest Pi, which no job runs today -- that R488(2) deliberately leaves out of scope; they are not pinned here.
+ */
+describe("wb-zsv.8 guard: the ci.yml build job carries the typecheck:test step", () => {
+  it("G6: the build job's run steps are npm ci then check's four scripts, in order", () => {
+    const ci = readRepo(".github/workflows/ci.yml");
+    expect(ci.match(/^ {2}build:$/gm)).toHaveLength(1);
+    const body = ci.split("\n");
+    const section = body.slice(body.indexOf("  build:") + 1);
+    const nextJob = section.findIndex((line) => /^ {2}[\w-]+:/.test(line));
+    const steps = nextJob === -1 ? section : section.slice(0, nextJob);
+    const prefix = "      - run: ";
+    const runs = steps.filter((line) => line.startsWith(prefix)).map((line) => line.slice(prefix.length));
+    expect(runs).toEqual(["npm ci", "npm run lint", "npm run typecheck", "npm run typecheck:test", "npm run test"]);
+  });
+});
