@@ -5,9 +5,9 @@
 // (exit 1) and is never fixed or hidden here. Exit 0 = realised and clean, 1 = realised with findings,
 // 2 = not realised (diagnostics say why). The receipt is printed as one JSON line and written to
 // $DETACHED_FAULTS_RECEIPT when set, before the process exits.
-import {execFileSync} from 'node:child_process';
+import {spawnSync} from 'node:child_process';
 import {createHash} from 'node:crypto';
-import {mkdirSync, mkdtempSync, readdirSync, rmSync, writeFileSync, readFileSync} from 'node:fs';
+import {realpathSync, mkdirSync, mkdtempSync, readdirSync, rmSync, writeFileSync, readFileSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {fileURLToPath} from 'node:url';
@@ -38,14 +38,42 @@ async function until(read, done, bound = BOUND_MS) {
   return {value, ok: done(value), ms: Math.round((performance.now() - start) * 100) / 100};
 }
 
-function revision() {
+// git-stamp:begin (copied byte-for-byte into status-ledger.mjs, local-detached-faults.mjs and local-detached-shared-child.mjs, whose
+// guards allow only node: imports; test/workbench-git-stamp.test.ts fails on any drift)
+const HEX = /^[0-9a-f]{7,64}$/;
+
+function git(root, args) {
+  const run = spawnSync('git', args, {cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore']});
+  return run.status === 0 && typeof run.stdout === 'string' ? run.stdout : undefined;
+}
+
+function sameDir(a, b) {
   try {
-    const root = fileURLToPath(new URL('../..', import.meta.url));
-    const head = execFileSync('git', ['rev-parse', 'HEAD'], {cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore']}).trim();
-    return /^[0-9a-f]{7,64}$/.test(head) ? head : 'working-tree';
+    return realpathSync(a) === realpathSync(b);
   } catch {
-    return 'working-tree';
+    return false;
   }
+}
+
+/** `{head, porcelain}` for `root`: both null unless root is the repository toplevel with a valid HEAD; porcelain alone is null when the status read fails. */
+function gitStamp(root) {
+  const top = git(root, ['rev-parse', '--show-toplevel']);
+  if (top === undefined || !sameDir(top.trim(), root)) return {head: null, porcelain: null};
+  const head = (git(root, ['rev-parse', 'HEAD']) ?? '').trim();
+  if (!HEX.test(head)) return {head: null, porcelain: null};
+  return {head, porcelain: git(root, ['status', '--porcelain']) ?? null};
+}
+
+/** HEAD sha, suffixed `-dirty` when the tree has changes; `working-tree` when root is not a toplevel or its status cannot be read. */
+function revisionOf(root) {
+  const {head, porcelain} = gitStamp(root);
+  if (head === null || porcelain === null) return 'working-tree';
+  return porcelain.trim().length > 0 ? `${head}-dirty` : head;
+}
+// git-stamp:end
+
+function revision() {
+  return revisionOf(fileURLToPath(new URL('../..', import.meta.url)));
 }
 
 function emit(markerCounts) {

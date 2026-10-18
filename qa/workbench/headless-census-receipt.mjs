@@ -7,14 +7,46 @@
 
 export const CENSUS_SCHEMA = "workbench.headless-census/v1";
 
+/**
+ * Contract types (JSDoc that TypeScript callers read under allowJs; nothing here runs).
+ *
+ * @typedef {{readonly parent?: string | null, readonly url: string}} CensusEdge
+ *   One resolved edge the child recorded: importing module url (null or absent for the entry itself) to resolved url.
+ * @typedef {{readonly via: ReadonlyArray<string>, readonly through?: string, readonly caveat: string}} CensusPiClosureRow
+ * @typedef {{
+ *   readonly piClosure: Readonly<Record<string, CensusPiClosureRow>>,
+ *   readonly piTransitive: ReadonlyArray<string>,
+ *   readonly uiModules: ReadonlyArray<string>,
+ * }} CensusAllowlist The shape of the frozen EXPECTED_PI_CLOSURE, EXPECTED_PI_TRANSITIVE and EXPECTED_UI_MODULES tables.
+ * @typedef {{root: string, builtUtc: string | null, olderThanSrc: boolean | null, revisionDescribesDist: boolean}} CensusDistRecord
+ *   The measured dist record headless-host-census.mjs passes in.
+ * @typedef {{rule: string, module: string, chain: string[], detail: string}} CensusFinding
+ * @typedef {{
+ *   schema: string,
+ *   utc: string,
+ *   revision: string,
+ *   node: string,
+ *   worktreeClean: boolean | undefined,
+ *   entry: string,
+ *   closure: string[],
+ *   packageChains: Record<string, string[]>,
+ *   piPackages: Array<{name: string, direct: boolean, importers: string[], chain: string[]}>,
+ *   uiModules: Array<{module: string, chain: string[]}>,
+ *   ttyFree: boolean,
+ *   measurementBound: string,
+ *   dist: CensusDistRecord | null,
+ *   warnings: string[],
+ *   findings: CensusFinding[],
+ *   pass: boolean,
+ * }} CensusReceipt The receipt buildReceipt returns (schema CENSUS_SCHEMA): worktreeClean and dist are echoed as given.
+ */
+
 /** What this receipt does and does not measure (F8). module.registerHooks is per-thread, so the
  * trace covers one thread's static boot only. An unstated bound reads as a claim about everything. */
 export const MEASUREMENT_BOUND =
   "registerHooks is per-thread: worker-thread module graphs and lazy imports made at run time while a workflow script executes are outside this receipt; it covers the import, construct and validateScript boot of the detached host in one thread.";
 
 const PI_SCOPE = "@earendil-works/";
-const HEADLESS_CAVEAT =
-  "A headless boot currently loads this Pi package as a library; that is a caveat to record, not a TUI launch (docs/workbench/16 Migration acceptance is about launching Pi's TUI process). Homing it out of the detached closure is owner-held W16 refactor work.";
 
 function deepFreeze(value) {
   for (const inner of Object.values(value)) {
@@ -25,28 +57,20 @@ function deepFreeze(value) {
 
 /** Pi/TUI packages permitted in the headless closure today, keyed by package. `via` lists the
  * only first-party importers permitted (package-root-relative dist paths); an empty `via` with
- * `through` names a package reached only through another allowlisted Pi package. Frozen: a new
- * entry or importer goes red until this table is edited in the same commit, and a row whose
- * measurement disappears goes red until it is trimmed (stale-row rule). */
-export const EXPECTED_PI_CLOSURE = deepFreeze({
-  "@earendil-works/pi-coding-agent": {
-    via: ["dist/memory.js", "dist/workflow/saved.js"],
-    caveat: `getAgentDir via src/workflow/saved.ts and src/memory.ts (saved.ts is reached from src/workbench/claude-host.ts). ${HEADLESS_CAVEAT}`,
-  },
-  "@earendil-works/pi-tui": {
-    via: [],
-    through: "@earendil-works/pi-coding-agent",
-    caveat: `Not imported by any first-party module: pi-coding-agent's own import graph reaches it (the bead text attributed it to src/memory.ts, which imports pi-coding-agent). ${HEADLESS_CAVEAT}`,
-  },
-});
+ * `through` names a package reached only through another allowlisted Pi package; `caveat` records
+ * why the package is there. Frozen: a new entry or importer goes red until this table is edited in
+ * the same commit, and a row whose measurement disappears goes red until it is trimmed (stale-row rule).
+ *
+ * Empty since wb-nl8.3: the headless boot loads no @earendil-works package. The pi-coding-agent row
+ * (getAgentDir via dist/memory.js and dist/workflow/saved.js) and the pi-tui row reached through it
+ * were trimmed in the commit that gave src/memory.ts and src/workflow/saved.ts the local
+ * src/agent-dir.ts getAgentDir, under this stale-row rule. */
+export const EXPECTED_PI_CLOSURE = deepFreeze({});
 
-/** Pi-family packages reached only THROUGH the allowlisted ones (no first-party importer), as measured. */
-export const EXPECTED_PI_TRANSITIVE = deepFreeze([
-  "@earendil-works/pi-agent-core",
-  "@earendil-works/pi-ai",
-  "@earendil-works/pi-codemode",
-  "@earendil-works/pi-mcp",
-]);
+/** Pi-family packages reached only THROUGH the allowlisted ones (no first-party importer), as measured.
+ * Empty since wb-nl8.3: pi-agent-core, pi-ai, pi-codemode and pi-mcp were reached only through
+ * pi-coding-agent and were trimmed with its row. */
+export const EXPECTED_PI_TRANSITIVE = deepFreeze([]);
 
 /** UI modules permitted in the headless closure. Empty: no src/ui/* and no src/index.js. */
 export const EXPECTED_UI_MODULES = deepFreeze([]);
@@ -120,6 +144,23 @@ function traceActive(edges, entryUrl) {
   return edges.some(edge => edge.parent === entryUrl);
 }
 
+/**
+ * The census receipt over one recorded closure. Pure: the same input always builds the same receipt.
+ *
+ * @param {object} input
+ * @param {ReadonlyArray<CensusEdge>} input.edges every resolved edge the child recorded
+ * @param {string} input.entryUrl the detached host entry url the closure is walked from
+ * @param {string} input.root the package-root file url that makes first-party paths relative
+ * @param {boolean} input.ttyFree whether the child measured no TTY on stdin, stdout and stderr
+ * @param {string} input.utc
+ * @param {string} input.revision
+ * @param {string} input.node
+ * @param {boolean} [input.worktreeClean] the runner's clean-HEAD flag, echoed as given; a fixture caller that stamps
+ *   no checkout omits it
+ * @param {CensusAllowlist} [input.allowlist] defaults to the frozen EXPECTED_* tables
+ * @param {CensusDistRecord | null} [input.dist] the measured dist record; defaults to null
+ * @returns {CensusReceipt}
+ */
 export function buildReceipt({ edges, entryUrl, root, ttyFree, utc, revision, node, worktreeClean, allowlist = DEFAULT_ALLOWLIST, dist = null }) {
   const graph = buildClosure({ edges, entryUrl, root });
   const findings = [];

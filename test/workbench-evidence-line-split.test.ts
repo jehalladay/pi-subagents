@@ -11,8 +11,9 @@
 import type { LogsReadDto, Response } from "@furnace/sdk";
 import { describe, expect, it } from "vitest";
 import { type InspectorModel, initialInspectorState, inspectorEvidenceTarget, layoutInspector, reduceInspectorKey } from "../src/ui/workflow-inspector.js";
+import type { ClaudeTranscriptRow } from "../src/workbench/claude-transcript.js";
 import { type EvidenceContent, type EvidenceLoader, EvidenceStore } from "../src/workbench/evidence-loader.js";
-import { CLAUDE_TRANSCRIPT_GRANT, createEvidenceLoaders, FURNACE_INSPECT_GRANT } from "../src/workbench/evidence-producers.js";
+import { CLAUDE_TRANSCRIPT_GRANT, type ClaudeEvidenceSeam, createEvidenceLoaders, FURNACE_INSPECT_GRANT } from "../src/workbench/evidence-producers.js";
 import { createWorkbenchEvidenceStore } from "../src/workbench/evidence-wiring.js";
 import { type FurnaceEvidenceRequest, readFurnaceAttemptLogEvidence } from "../src/workbench/furnace-evidence.js";
 import { type NativeRef, ObservationProjection, type ObservationScope } from "../src/workbench/observation.js";
@@ -58,6 +59,12 @@ const STORE_ROWS: Readonly<Record<string, readonly string[]>> = {
 const scope: ObservationScope = { workspace: "/ws", principal: "local-operator:1:s1" };
 const NOW = "2026-10-16T09:00:00Z";
 const UUID = "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee";
+/** The module-shaped claude seam (wb-idq): the fixture rows, a cwd, and an owning node listing exactly the requested ref. */
+const claudeSeam = (rows: readonly ClaudeTranscriptRow[]): ClaudeEvidenceSeam => ({
+  readTranscript: async () => rows,
+  cwd: () => "/ws",
+  owningNode: (_scope, nativeRef, ref) => ({ nativeRef, evidenceRefs: [ref], freshness: "current" }),
+});
 const presentation = (title: string) => ({ title, type: "sdk-operation" as const, statusText: "running", statusTone: "active" as const });
 
 /** A fixture loader handing `preview` verbatim, reporting the true UTF-8 size of its source unless told otherwise. */
@@ -201,7 +208,7 @@ describe("wb-ktf: producers hand each row's WHOLE text to the store, never pre-s
 
   it.each(LINE_SPLIT)("claude: $id is one credential to the store", async ({ id, text, secret }) => {
     const store = new EvidenceStore({
-      loaders: createEvidenceLoaders({ grants: () => [CLAUDE_TRANSCRIPT_GRANT], claude: async () => [{ type: "assistant", uuid: UUID, text }], now: () => new Date(NOW) }),
+      loaders: createEvidenceLoaders({ grants: () => [CLAUDE_TRANSCRIPT_GRANT], claude: claudeSeam([{ type: "assistant", uuid: UUID, text }]), now: () => new Date(NOW) }),
       maxEntries: 4, maxBytes: 4096, timeoutMs: 200,
     });
     await store.request(scope, claudeRef, `claude-message:${UUID}`);
@@ -215,7 +222,7 @@ describe("wb-ktf: producers hand each row's WHOLE text to the store, never pre-s
     const store = new EvidenceStore({
       loaders: createEvidenceLoaders({
         grants: () => [FURNACE_INSPECT_GRANT],
-        furnace: async () => ({ runId: "run-1", attemptId: "attempt-1", stream: "stdout", text, complete: true, lossy: false, capturedAt: NOW }),
+        furnace: async () => ({ runId: "run-1", attemptId: "attempt-1", stream: "stdout", text, complete: true, lossy: false, budgetCut: false, capturedAt: NOW }),
       }),
       maxEntries: 4, maxBytes: 4096, timeoutMs: 200,
     });

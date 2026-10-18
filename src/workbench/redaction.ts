@@ -23,8 +23,18 @@ const BEARER = new RegExp(String.raw`\b(?:${SCHEMES})\s+[^\s,;"']+`, "gi");
 const PREFIXED = new RegExp(String.raw`\b(?:${KEY_PREFIXES})[a-zA-Z0-9_-]+`, "g");
 const ASSIGNED = new RegExp(String.raw`((?:${ASSIGNMENT_KEYS})["']?\s*[=:]\s*)(?:\[REDACTED\](?=[}\]]*(?:$|[\s,;]))|"[^"\n]*"|'[^'\n]*'|[^\s,;]+)`, "gi");
 
+/**
+ * The bound every sanitizer ends with: a longer text keeps its first maxTextLength - 20 code units and the truncation marker,
+ * and the cut never falls between the two halves of a surrogate pair (wb-yr9): a pair it would split is dropped whole, one
+ * unit earlier, so no caller displays a lone surrogate the bound made.
+ */
 function bounded(value: string, maxTextLength: number): string {
-  return value.length > maxTextLength ? `${value.slice(0, Math.max(0, maxTextLength - 20))} [truncated]` : value;
+  if (value.length <= maxTextLength) return value;
+  const cut = Math.max(0, maxTextLength - 20);
+  const high = value.charCodeAt(cut - 1);
+  const low = value.charCodeAt(cut);
+  const splitsPair = high >= 0xd800 && high <= 0xdbff && low >= 0xdc00 && low <= 0xdfff;
+  return `${value.slice(0, splitsPair ? cut - 1 : cut)} [truncated]`;
 }
 
 export function redactWorkbenchText(value: string, maxTextLength = WORKBENCH_TEXT_LIMIT): string {
@@ -33,14 +43,39 @@ export function redactWorkbenchText(value: string, maxTextLength = WORKBENCH_TEX
 }
 
 /**
- * One unsafe unit: a terminated ANSI CSI or string sequence (OSC, DCS, SOS, PM, APC), a C0 or C1 control, the line and
- * paragraph separators, a bidi embedding, override or isolate, any default-ignorable code point (zero-width characters,
- * joiners, bidi marks, the BOM, the soft hyphen, variation selectors, tags) or a lone surrogate. An unterminated sequence
- * prefix is not one unit, but its ESC is, so no sequence survives either way. The one place this set lives.
+ * One unsafe code point: a C0 or C1 control, the line and paragraph separators, a bidi embedding, override or isolate, any
+ * default-ignorable code point (zero-width characters, joiners, bidi marks, the BOM, the soft hyphen, variation selectors,
+ * tags), a format control that hides or rearranges the text beside it although Unicode does not make it default-ignorable
+ * (wb-rqd: the interlinear annotation controls U+FFF9-U+FFFB and the Egyptian hieroglyph format controls U+13430-U+1343F),
+ * or a lone surrogate. The other format controls that are not default-ignorable, the prepended concatenation marks (Arabic
+ * number signs and ayah ends, the Syriac abbreviation mark, the Kaithi number signs), are drawn with a visible glyph and
+ * stay text.
  */
-const UNSAFE_UNIT =
-  /\x1b\[[0-?]*[ -/]*[@-~]|\x1b[\]P^X_][^\x07\x1b]*(?:\x07|\x1b\\)|[\x00-\x1f\x7f-\x9f\u{2028}\u{2029}\u{202a}-\u{202e}\u{2066}-\u{2069}\u{d800}-\u{dfff}]|\p{Default_Ignorable_Code_Point}/gu;
+const UNSAFE_CODE_POINT = String.raw`[\x00-\x1f\x7f-\x9f\u{2028}\u{2029}\u{202a}-\u{202e}\u{2066}-\u{2069}\u{d800}-\u{dfff}\u{fff9}-\u{fffb}\u{13430}-\u{1343f}]|\p{Default_Ignorable_Code_Point}`;
+/** A terminated ANSI CSI or string sequence (OSC, DCS, SOS, PM, APC) as ESC introduces it in its 7-bit form. */
+const SEVEN_BIT_SEQUENCE = String.raw`\x1b\[[0-?]*[ -/]*[@-~]|\x1b[\]P^X_][^\x07\x1b]*(?:\x07|\x1b\\)`;
+/**
+ * The same sequences with either form of introducer (wb-xbq): U+009B is CSI, and U+0090, U+0098, U+009D, U+009E and U+009F
+ * are DCS, SOS, OSC, PM and APC, each the same control as its ESC form, so the bytes after one belong to its sequence
+ * exactly as after ESC; a string sequence ends at BEL or at ST in either form, ESC \ or U+009C.
+ */
+const SEQUENCE = String.raw`(?:\x1b\[|\x9b)[0-?]*[ -/]*[@-~]|(?:\x1b[\]P^X_]|[\x90\x98\x9d-\x9f])[^\x07\x1b\x9c]*(?:\x07|\x1b\\|\x9c)`;
+/**
+ * One unsafe unit: a terminated escape sequence, 7-bit or 8-bit, or one unsafe code point. An unterminated sequence prefix
+ * is not one unit, but its introducer is, so no sequence survives either way. The one place this set lives.
+ */
+const UNSAFE_UNIT = new RegExp(`${SEQUENCE}|${UNSAFE_CODE_POINT}`, "gu");
 const HAS_UNSAFE_UNIT = new RegExp(UNSAFE_UNIT.source, "u");
+/**
+ * The other reading of an 8-bit introducer or ST (wb-xbq): it is also one C1 control, which a reader may drop on its own and
+ * so glue the bytes after it to the text before it. Here every C1 code point is its own unit and only ESC opens a sequence.
+ * Sticky, for readingsOf, which takes one unit at a time.
+ */
+const LONE_C1_UNIT = new RegExp(`${SEVEN_BIT_SEQUENCE}|${UNSAFE_CODE_POINT}`, "uy");
+/** The unit a reader that honours every 8-bit introducer takes at an offset: UNSAFE_UNIT, sticky. */
+const WHOLE_UNIT = new RegExp(UNSAFE_UNIT.source, "uy");
+/** An 8-bit introducer or ST: the two readings agree on every text without one. */
+const EIGHT_BIT_CONTROL = /[\x90\x98\x9b-\x9f]/u;
 
 /**
  * Replace every unsafe unit with `replacement`. A value equal to its stripped form carries none, which is how identity
@@ -67,7 +102,7 @@ interface Gap {
   control: boolean;
   /** A terminated escape sequence (CSI or a string sequence). */
   escape: boolean;
-  /** Any other default-ignorable code point, or a lone surrogate. */
+  /** Any other default-ignorable code point, a format control that hides or rearranges the text beside it, or a lone surrogate. */
   invisible: boolean;
   /** Line breaks, a CRLF counting once. */
   breaks: number;
@@ -80,8 +115,9 @@ type Rendering = (gap: Gap) => string;
 function absorb(gap: Gap, unit: string): void {
   const code = unit.charCodeAt(0);
   if (unit.length > 1) {
-    // An escape sequence, or an astral default-ignorable (a surrogate pair).
-    if (code === 0x1b) gap.escape = true;
+    // An escape sequence (ESC or an 8-bit C1 introducer opens it), or an astral invisible (a surrogate pair: a
+    // default-ignorable or an Egyptian hieroglyph format control).
+    if (code === 0x1b || (code >= 0x80 && code <= 0x9f)) gap.escape = true;
     else gap.invisible = true;
     gap.carriage = false;
     return;
@@ -95,12 +131,18 @@ function absorb(gap: Gap, unit: string): void {
   gap.carriage = code === 0x0d;
 }
 
-/** The input as visible stretches and the gaps between them; nothing is dropped or rewritten yet. */
-function segments(value: string): Segment[] {
+/** One unsafe unit as a reading takes it: where it starts and its text. A RegExpExecArray from matchAll is one. */
+interface UnitMatch {
+  readonly index: number;
+  readonly 0: string;
+}
+
+/** The input as visible stretches and the gaps between them, units as `units` takes them; nothing is dropped or rewritten yet. */
+function segments(value: string, units: Iterable<UnitMatch> = value.matchAll(UNSAFE_UNIT)): Segment[] {
   const parts: Segment[] = [];
   let at = 0;
   let gap: Gap | undefined;
-  for (const match of value.matchAll(UNSAFE_UNIT)) {
+  for (const match of units) {
     if (match.index > at) {
       if (gap) parts.push(gap);
       gap = undefined;
@@ -114,6 +156,9 @@ function segments(value: string): Segment[] {
   if (at < value.length) parts.push(value.slice(at));
   return parts;
 }
+
+/** One cell per visible character and one per gap. */
+const cellCount = (parts: readonly Segment[]): number => parts.reduce((cells, part) => cells + (typeof part === "string" ? part.length : 1), 0);
 
 /** A display renders a gap as a space when it holds whitespace or any of `classes`, and as nothing otherwise. */
 const separates = (gap: Gap, classes: readonly GapClass[]): boolean => gap.whitespace || classes.some(name => gap[name]);
@@ -246,16 +291,13 @@ function cover(parts: readonly Segment[], covered: Uint8Array): void {
   }
 }
 
-/**
- * The raw text as the plain redactor reads it, every unsafe unit in place: whatever plain redaction hides stays hidden
- * (a U+0085 inside a token, say, which JavaScript's \s does not hold). Same-length placeholders keep every offset.
- */
-function coverRaw(value: string, covered: Uint8Array): void {
+/** The cell of every offset as segments numbers them with `units`: a visible character's own, or its gap's for a unit. */
+function cellsOf(value: string, units: Iterable<UnitMatch>): Int32Array {
   const cellOf = new Int32Array(value.length);
   let cell = 0;
   let at = 0;
   let gap = -1;
-  for (const match of value.matchAll(UNSAFE_UNIT)) {
+  for (const match of units) {
     if (match.index > at || gap < 0) {
       for (; at < match.index; at++) cellOf[at] = cell++;
       gap = cell++;
@@ -263,6 +305,15 @@ function coverRaw(value: string, covered: Uint8Array): void {
     for (const end = match.index + match[0].length; at < end; at++) cellOf[at] = gap;
   }
   for (; at < value.length; at++) cellOf[at] = cell++;
+  return cellOf;
+}
+
+/**
+ * The raw text as the plain redactor reads it, every unsafe unit in place: whatever plain redaction hides stays hidden
+ * (a U+0085 inside a token, say, which JavaScript's \s does not hold). Same-length placeholders keep every offset.
+ */
+function coverRaw(value: string, covered: Uint8Array): void {
+  const cellOf = cellsOf(value, value.matchAll(UNSAFE_UNIT));
   const conceal = (offset: number, match: string, kept = ""): string => {
     for (let index = offset + kept.length; index < offset + match.length; index++) covered[cellOf[index]] = 1;
     return kept + "\x01".repeat(match.length - kept.length);
@@ -273,14 +324,207 @@ function coverRaw(value: string, covered: Uint8Array): void {
     .replace(ASSIGNED, (match: string, key: string, offset: number) => conceal(offset, match, key));
 }
 
-/** Visible text and gaps as the layout displays them, every covered run as one [REDACTED]. */
-function render(parts: readonly Segment[], covered: Uint8Array, display: Rendering): string {
+/** The most readings of one cluster of 8-bit introducers and ST a text is covered under; a cluster with more hides the text whole. */
+const MAX_READINGS = 1024;
+/**
+ * Introducers no more than this many kept code units apart form one cluster, read in every combination (wb-mrg). A kept
+ * code unit lies inside no unit any reading may take, so every reading keeps it as text: a unit with one reading (a 7-bit
+ * sequence, a run of default-ignorables) puts no distance between two introducers, however long it is. Introducers farther
+ * apart are combined only in the two uniform readings, so a credential that only a reading choosing differently on the two
+ * sides of a longer stretch of kept text exposes is not covered. Clusters suffice where two premises hold, each with its
+ * limit: the keyword of a detection (a scheme, a key prefix or an assignment key) and the start of its value fit inside
+ * this distance unless whitespace stands between them (an assignment key more than this many spaces before its '='); and
+ * an introducer in a token's tail, read whole, lets the token reach at least as far as reading it alone would, except for
+ * a closing quote that only the lone reading shows.
+ */
+const CLUSTER_GAP = 32;
+/**
+ * The most work (readings listed times code units of text) one text is covered under, checked as the readings are listed
+ * and once more after the last; a text that needs more is hidden whole.
+ */
+const MAX_READING_WORK = 2 ** 23;
+/** Where a unit may start under either reading: at an unsafe code point, and nowhere else. */
+const UNIT_START = new RegExp(UNSAFE_CODE_POINT, "gu");
+
+/** The first index of `sorted` whose value is at least `value`. */
+function lowerBound(sorted: readonly number[], value: number): number {
+  let low = 0;
+  let high = sorted.length;
+  while (low < high) {
+    const middle = (low + high) >> 1;
+    if (sorted[middle] < value) low = middle + 1;
+    else high = middle;
+  }
+  return low;
+}
+
+/**
+ * The readings of the text's 8-bit introducers and ST that redaction covers (wb-xbq, wb-mrg), each a list of the units it
+ * takes in order. An introducer is either the start of the sequence it opens (U+009B is CSI, U+0090/0098/009D/009E/009F
+ * open the string sequences) or one C1 control a reader drops on its own, and ST in the same way ends a string or is one
+ * control; a reader decides at EACH one. The readings listed, and no others:
+ * - the all-whole reading, every introducer opening its sequence (UNSAFE_UNIT), first;
+ * - for each cluster (CLUSTER_GAP), every combination of the choices inside it, with every introducer outside it whole;
+ * - the all-alone reading, every introducer one control (LONE_C1_UNIT), when there are two clusters or more (with one, it
+ *   is one of that cluster's combinations).
+ * So both uniform readings are always members. A cluster with more combinations than MAX_READINGS, or a text whose readings
+ * times its code units exceed MAX_READING_WORK, has none to list: `undefined`, which callers answer by hiding the whole
+ * text, never by guessing at the readings left out. A cluster's combinations are counted before any is built, so this
+ * holds at any cluster size (wb-mrg respin 2); the walk that builds a cluster within the bound recurses once per choice on a
+ * path, and every choice adds a reading, so it runs at most MAX_READINGS frames deep.
+ */
+function readingsOf(value: string): UnitMatch[][] | undefined {
+  // The ends the unit at each offset may take, the whole sequence first; offsets in no unit are visible text.
+  const ends = new Map<number, number[]>();
+  const units: number[] = [];
+  for (const { index: at } of value.matchAll(UNIT_START)) {
+    WHOLE_UNIT.lastIndex = at;
+    LONE_C1_UNIT.lastIndex = at;
+    const taken = [WHOLE_UNIT.exec(value), LONE_C1_UNIT.exec(value)].flatMap(match => (match ? [at + match[0].length] : []));
+    if (taken.length === 0) continue;
+    ends.set(at, [...new Set(taken)]);
+    units.push(at);
+  }
+  // kept[i]: how many of the first i code units are kept, inside no unit any reading may take.
+  const kept = new Int32Array(value.length + 1);
+  let removedTo = 0;
+  for (let index = 0, slot = 0; index < value.length; index++) {
+    for (; slot < units.length && units[slot] === index; slot++) removedTo = Math.max(removedTo, ...(ends.get(index) ?? []));
+    kept[index + 1] = kept[index] + (index < removedTo ? 0 : 1);
+  }
+  // Each cluster of offsets where the readings differ, as the first offset and the last offset a reading may reach; the
+  // distance from the farthest reach so far to the next such offset counts kept code units only.
+  const clusters: { first: number; last: number }[] = [];
+  let reach = 0;
+  for (const at of units) {
+    const options = ends.get(at) ?? [];
+    if (options.length < 2) continue;
+    const last = Math.max(...options);
+    const open = clusters[clusters.length - 1];
+    if (open && kept[at] - kept[reach] <= CLUSTER_GAP) open.last = Math.max(open.last, last);
+    else clusters.push({ first: at, last });
+    reach = Math.max(reach, last);
+  }
+  const unitAt = (at: number, end: number): UnitMatch => ({ index: at, 0: value.slice(at, end) });
+  /**
+   * How many readings within lists for [first, last], counted without building any and capped at `cap` (wb-mrg respin 2):
+   * from the last unit back, the readings from a unit on are the sum, over the ends it may take there, of the readings from
+   * the unit each end leaves next; a unit outside [first, last], or with one end, takes its whole one.
+   */
+  const counted = (first: number, last: number, cap: number): number => {
+    const from = new Int32Array(units.length + 1);
+    from[units.length] = 1;
+    for (let slot = units.length - 1; slot >= 0; slot--) {
+      const at = units[slot];
+      const options = ends.get(at) ?? [];
+      const choices = options.length > 1 && at >= first && at <= last ? options.length : Math.min(1, options.length);
+      let total = 0;
+      for (let option = 0; option < choices; option++) total += from[lowerBound(units, options[option])];
+      from[slot] = Math.min(cap, total);
+    }
+    return from[0];
+  };
+  /** Up to `limit` readings in which the introducers in [first, last] choose freely and every other follows the whole sequence. */
+  const within = (first: number, last: number, limit: number): UnitMatch[][] | undefined => {
+    // Counted before the walk, which recurses once per choice it makes: a cluster past the bound is never walked.
+    if (counted(first, last, Math.max(1, limit + 1)) > limit) return undefined;
+    const found: UnitMatch[][] = [];
+    const walk = (from: number, prior: readonly UnitMatch[]): boolean => {
+      const taken = [...prior];
+      let slot = lowerBound(units, from);
+      while (slot < units.length) {
+        const at = units[slot];
+        const options = ends.get(at) ?? [];
+        if (options.length > 1 && at >= first && at <= last) {
+          for (const end of options) if (!walk(end, [...taken, unitAt(at, end)])) return false;
+          return true;
+        }
+        taken.push(unitAt(at, options[0]));
+        slot = lowerBound(units, options[0]);
+      }
+      found.push(taken);
+      return found.length <= limit;
+    };
+    return walk(0, []) ? found : undefined;
+  };
+  /** The all-alone reading: every introducer and ST one control, the units LONE_C1_UNIT takes. */
+  const allAlone = (): UnitMatch[] => {
+    const taken: UnitMatch[] = [];
+    for (let slot = 0; slot < units.length; ) {
+      const options = ends.get(units[slot]) ?? [];
+      const end = options[options.length - 1];
+      taken.push(unitAt(units[slot], end));
+      slot = lowerBound(units, end);
+    }
+    return taken;
+  };
+  const readings = within(1, 0, 1);
+  if (!readings || clusters.length === 0) return readings;
+  // The most readings MAX_READING_WORK lets this text list; a cluster's first reading is the all-whole one again.
+  const room = Math.floor(MAX_READING_WORK / value.length);
+  for (const { first, last } of clusters) {
+    const found = within(first, last, Math.min(MAX_READINGS, room - readings.length + 1));
+    if (!found) return undefined;
+    readings.push(...found.slice(1));
+  }
+  if (clusters.length > 1) readings.push(allAlone());
+  return readings.length > room ? undefined : readings;
+}
+
+/** The text with the units of one reading removed. */
+function withoutUnits(value: string, units: readonly UnitMatch[]): string {
+  let kept = "";
+  let at = 0;
+  for (const unit of units) {
+    kept += value.slice(at, unit.index);
+    at = unit.index + unit[0].length;
+  }
+  return kept + value.slice(at);
+}
+
+/**
+ * The text read under every reading of its 8-bit introducers and ST that readingsOf lists, each reading covered as cover
+ * reads any text, and every offset it covers then covered in the cells displayed (wb-xbq, wb-mrg): reading the introducers
+ * as the sequences they open never uncovers what reading some as single controls would hide, such as a keyword whose next
+ * letter is the final byte of a CSI, and a text whose introducers are read differently from one another is covered as each
+ * listed reading covers it. A text readingsOf lists no readings for has every cell covered.
+ */
+function coverMixed(value: string, covered: Uint8Array): void {
+  const readings = readingsOf(value);
+  if (!readings) {
+    covered.fill(1);
+    return;
+  }
+  const cell = cellsOf(value, value.matchAll(UNSAFE_UNIT));
+  // The first reading takes every introducer whole, the one cover has already read.
+  for (const reading of readings.slice(1)) {
+    const parts = segments(value, reading);
+    const read = new Uint8Array(cellCount(parts));
+    cover(parts, read);
+    const own = cellsOf(value, reading);
+    for (let index = 0; index < value.length; index++) if (read[own[index]] === 1) covered[cell[index]] = 1;
+  }
+}
+
+/**
+ * Visible text and gaps as the layout displays them, every covered run as one [REDACTED]. A cell `hidden` holds is never
+ * shown, covered or not (wb-y5y: the closing quotes a scan window is read with); `marks` puts text in place of one of them.
+ */
+function render(parts: readonly Segment[], covered: Uint8Array, display: Rendering, hidden?: Uint8Array, marks?: ReadonlyMap<number, string>): string {
   let out = "";
   let cell = 0;
   let redacting = false;
   for (const part of parts) {
     const units = typeof part === "string" ? part.length : 1;
     for (let index = 0; index < units; index++, cell++) {
+      if (hidden?.[cell] === 1) {
+        const mark = marks?.get(cell);
+        if (mark !== undefined) {
+          out += mark;
+          redacting = false;
+        }
+        continue;
+      }
       if (covered[cell] === 1) {
         if (!redacting) out += REDACTED;
         redacting = true;
@@ -299,12 +543,153 @@ function render(parts: readonly Segment[], covered: Uint8Array, display: Renderi
 const collapse = (text: string): string => text.replace(/\s+/g, " ").trim();
 
 /**
+ * A caller's scan bound (wb-y5y), the opt-in of a display path that bounds producer text before display: the helper examines at
+ * most `scan` code units of one producer string, and nothing after them is ever read or shown. Without it the helper reads the
+ * whole value it is given, which is what a caller that cut the text first handed it.
+ */
+export interface WorkbenchTextScan {
+  /** The most UTF-16 code units of one producer string the helper examines; below 1 reads as 1. */
+  readonly scan: number;
+  /**
+   * Rows mode: the value is producer strings of these lengths joined by LF, each bounded by `scan` on its own, and each one the
+   * bound cuts ends in `marker`, a literal of the caller's that redaction never reads. Lengths that do not spell the value make
+   * it one producer string. Without rows the value is one producer string, and a caller marks its own cut.
+   */
+  readonly rows?: { readonly lengths: readonly number[]; readonly marker: string };
+}
+
+/** Read after a window the scan bound cut, so a quoted assignment value the cut left open is redacted whole; never shown. */
+const SCAN_CLOSERS = "\"'";
+const SCAN_BEL = 0x07;
+const SCAN_ESC = 0x1b;
+const SCAN_BACKSLASH = 0x5c;
+const SCAN_LEFT_BRACKET = 0x5b;
+/** CSI and ST in their 8-bit forms. */
+const SCAN_CSI_8 = 0x9b;
+const SCAN_ST_8 = 0x9c;
+/** After ESC, ] P X ^ _ open the string sequences OSC, DCS, SOS, PM and APC. */
+const isStringFinal = (code: number): boolean => code === 0x5d || code === 0x50 || code === 0x58 || code === 0x5e || code === 0x5f;
+/** The same five string sequences opened in 8-bit form: U+009D, U+0090, U+0098, U+009E and U+009F. */
+const isStringIntroducer8 = (code: number): boolean => code === 0x9d || code === 0x90 || code === 0x98 || code === 0x9e || code === 0x9f;
+
+/**
+ * Where a scan bound of `bound` code units cuts a producer string longer than it (wb-y5y), reading no unit at or past the bound.
+ * The cut never falls inside an escape sequence that either reading the helper takes leaves open at the bound: by UNSAFE_UNIT,
+ * where ESC [ or U+009B opens a CSI through its parameter, intermediate and final bytes, and ESC ] P X ^ _ or an 8-bit
+ * introducer opens a string through BEL or ST (ESC \ or U+009C); and by LONE_C1_UNIT, where only ESC opens one and a 7-bit
+ * string runs through BEL or ESC \ past any U+009C, so it never ends before the UNSAFE_UNIT reading of the same string and the
+ * walk reads 7-bit strings by it. A sequence whose end the window does not hold may end past the bound, where the whole text
+ * reads its body as part of it, so the window stops where that sequence starts; an ESC the bound ends on is held back the same
+ * way. A surrogate pair the bound splits leaves one lone surrogate last in the window, which the helper reads as an unsafe code
+ * point like any other. This is the overlap window wider than the longest unsafe unit: a string sequence has no longest form,
+ * so no fixed margin is wide enough, and the walk reads every unit from the start of the string instead, the unit-aware cut of
+ * wb-ig7's transcript pre-bound held inside the bound.
+ */
+function scanCut(value: string, bound: number): number {
+  const open = bound + 1;
+  // The first BEL or ESC, and the first BEL, ESC or ST, at or after a body's start and before the bound. Body starts only move
+  // forward, so each search resumes where the last one stopped and reads every code unit at most once.
+  let stop = -1;
+  let stopOrSt = -1;
+  const findStop = (from: number): number => {
+    if (stop < from) {
+      stop = from;
+      while (stop < bound && value.charCodeAt(stop) !== SCAN_BEL && value.charCodeAt(stop) !== SCAN_ESC) stop++;
+    }
+    return stop;
+  };
+  const findStopOrSt = (from: number): number => {
+    if (stopOrSt < from) {
+      stopOrSt = from;
+      while (stopOrSt < bound && value.charCodeAt(stopOrSt) !== SCAN_BEL && value.charCodeAt(stopOrSt) !== SCAN_ESC && value.charCodeAt(stopOrSt) !== SCAN_ST_8) stopOrSt++;
+    }
+    return stopOrSt;
+  };
+  /** Where a string opened at `start` ends when its body stops at `at`; start + 1 when it does not end there; open when only units past the bound could tell. */
+  const stringEnd = (start: number, at: number): number => {
+    if (at >= bound) return open;
+    const code = value.charCodeAt(at);
+    if (code === SCAN_BEL || code === SCAN_ST_8) return at + 1;
+    if (at + 1 >= bound) return open;
+    return value.charCodeAt(at + 1) === SCAN_BACKSLASH ? at + 2 : start + 1;
+  };
+  /** Where a CSI opened at `start` ends, its parameter bytes from `from`; start + 1 when no final byte follows them; open when the bound comes first. */
+  const csiEnd = (start: number, from: number): number => {
+    let at = from;
+    while (at < bound && value.charCodeAt(at) >= 0x30 && value.charCodeAt(at) <= 0x3f) at++;
+    while (at < bound && value.charCodeAt(at) >= 0x20 && value.charCodeAt(at) <= 0x2f) at++;
+    if (at >= bound) return open;
+    const final = value.charCodeAt(at);
+    return final >= 0x40 && final <= 0x7e ? at + 1 : start + 1;
+  };
+  for (let at = 0; at < bound; ) {
+    const code = value.charCodeAt(at);
+    let end = at + 1;
+    if (code === SCAN_ESC) {
+      if (at + 1 >= bound) return at;
+      const next = value.charCodeAt(at + 1);
+      if (next === SCAN_LEFT_BRACKET) end = csiEnd(at, at + 2);
+      else if (isStringFinal(next)) end = stringEnd(at, findStop(at + 2));
+    } else if (code === SCAN_CSI_8) end = csiEnd(at, at + 1);
+    else if (isStringIntroducer8(code)) end = stringEnd(at, findStopOrSt(at + 1));
+    if (end > bound) return at;
+    at = end;
+  }
+  return bound;
+}
+
+/** The producer rows `lengths` spells out of `value` joined by LF, or undefined when they do not spell it. */
+function scanRows(value: string, lengths: readonly number[]): string[] | undefined {
+  const rows: string[] = [];
+  let at = 0;
+  for (let index = 0; index < lengths.length; index++) {
+    const length = lengths[index];
+    if (!Number.isSafeInteger(length) || length < 0 || at + length > value.length) return undefined;
+    rows.push(value.slice(at, at + length));
+    at += length;
+    if (index === lengths.length - 1) break;
+    if (value.charCodeAt(at) !== 0x0a) return undefined;
+    at += 1;
+  }
+  return lengths.length > 0 && at === value.length ? rows : undefined;
+}
+
+/**
+ * The value read through a scan bound (wb-y5y), or undefined when no producer string passes it, so the option changes nothing.
+ * Each string the bound cuts is read as its window (scanCut) and SCAN_CLOSERS, the closers' cells hidden from the display, and
+ * in rows mode the row's marker shown in their place; rows are joined by LF as the caller joined them.
+ */
+function scanned(value: string, option: WorkbenchTextScan): { read: string; hiddenAt: number[]; markAt: Map<number, string> } | undefined {
+  const scan = option.scan >= 1 ? Math.floor(option.scan) : 1;
+  const rows = option.rows === undefined ? [value] : (scanRows(value, option.rows.lengths) ?? [value]);
+  if (!rows.some(row => row.length > scan)) return undefined;
+  let read = "";
+  const hiddenAt: number[] = [];
+  const markAt = new Map<number, string>();
+  rows.forEach((row, index) => {
+    if (index > 0) read += "\n";
+    if (row.length <= scan) {
+      read += row;
+      return;
+    }
+    read += row.slice(0, scanCut(row, scan));
+    hiddenAt.push(read.length, read.length + 1);
+    if (option.rows !== undefined) markAt.set(read.length + 1, option.rows.marker);
+    read += SCAN_CLOSERS;
+  });
+  return { read, hiddenAt, markAt };
+}
+
+/**
  * Untrusted text bound for display, the ONE helper every display path uses: normalize once, redact once, strip once.
  * Redaction sees every reading of the gaps the unsafe units leave: whitespace always separates; NUL and the BOM (the
  * 16:44Z policy), controls, escape sequences and invisibles may each separate two tokens or sit glued inside one,
  * independently at every position (see cover), and the raw text is read as the plain redactor reads it (see coverRaw).
- * A credential any reading exposes is redacted, so an invisible can neither split a keyword nor glue a key to the text
- * before it, deletion never precedes redaction, and no reading is chosen over another. Only then are the gaps rendered:
+ * A credential any such reading exposes is redacted, so an invisible can neither split a keyword nor glue a key to the
+ * text before it, and deletion never precedes redaction. An 8-bit introducer or ST opens or ends the sequence its 7-bit
+ * form would and is read as one control as well, under the readings readingsOf lists: both uniform readings, and every
+ * combination of choices inside a cluster of introducers (see coverMixed); a text past its bounds is hidden whole. Only
+ * then are the gaps rendered:
  * - "text": model-facing text. Whitespace controls become one space; every other unsafe unit vanishes.
  * - "terminal": the terminal card. Escape sequences vanish as its terminal parser removes them; controls and separators
  *   become a space; invisibles vanish; no trim.
@@ -314,19 +699,45 @@ const collapse = (text: string): string => text.replace(/\s+/g, " ").trim();
  *   PS each become one LF), other whitespace one space, every other unsafe unit deleted. Newline collapse is for
  *   single-line labels only.
  * Text without any unsafe unit is exactly redactWorkbenchText's output (after the label collapse).
+ * With a scan bound (wb-y5y, WorkbenchTextScan), a caller that bounds producer text opts in to reading it here instead of cutting
+ * it first: a producer string the bound passes is read as its straddle-safe window (scanCut: never inside an escape sequence
+ * open at the bound) followed by closing quotes, so a value or sequence the bound splits is read as the whole
+ * text reads it and shows nothing the whole text hides; the quotes are never displayed. A value inside the bound displays
+ * exactly as without the option.
  */
-export function sanitizeWorkbenchText(value: string, maxTextLength = WORKBENCH_TEXT_LIMIT, layout: WorkbenchTextLayout = "text"): string {
-  if (!HAS_UNSAFE_UNIT.test(value)) return redactWorkbenchText(layout === "label" ? collapse(value) : value, maxTextLength);
-  const parts = segments(value);
+export function sanitizeWorkbenchText(value: string, maxTextLength = WORKBENCH_TEXT_LIMIT, layout: WorkbenchTextLayout = "text", scan?: WorkbenchTextScan): string {
+  const windowed = scan === undefined ? undefined : scanned(value, scan);
+  if (windowed === undefined && !HAS_UNSAFE_UNIT.test(value)) return redactWorkbenchText(layout === "label" ? collapse(value) : value, maxTextLength);
+  const read = windowed?.read ?? value;
+  const parts = segments(read);
   const display = DISPLAY[layout];
-  const covered = new Uint8Array(parts.reduce((cells, part) => cells + (typeof part === "string" ? part.length : 1), 0));
+  const covered = new Uint8Array(cellCount(parts));
   cover(parts, covered);
-  coverRaw(value, covered);
-  const shown = render(parts, covered, display);
+  coverRaw(read, covered);
+  if (EIGHT_BIT_CONTROL.test(read)) coverMixed(read, covered);
+  let shown: string;
+  if (windowed === undefined) shown = render(parts, covered, display);
+  else {
+    // The closers are visible text, one cell per code unit, so their cells are the cells of their offsets.
+    const cellOf = cellsOf(read, read.matchAll(UNSAFE_UNIT));
+    const hidden = new Uint8Array(covered.length);
+    for (const at of windowed.hiddenAt) hidden[cellOf[at]] = 1;
+    shown = render(parts, covered, display, hidden, new Map([...windowed.markAt].map(([at, mark]) => [cellOf[at], mark])));
+  }
   return bounded(layout === "label" ? collapse(shown) : shown, maxTextLength);
 }
 
 const SECRET_FIELD = /^(?:authorization|api[_-]?key|access[_-]?token|refresh[_-]?token|password|secret|aws_secret_access_key|aws_session_token)$/i;
+/**
+ * A key naming a native secret field once its unsafe units are gone, under any reading of its 8-bit introducers that
+ * readingsOf lists (wb-xbq, wb-mrg); a key it lists no readings for is one.
+ */
+function isSecretField(key: string): boolean {
+  if (SECRET_FIELD.test(stripUnsafeText(key))) return true;
+  if (!EIGHT_BIT_CONTROL.test(key)) return false;
+  const readings = readingsOf(key);
+  return !readings || readings.some(reading => SECRET_FIELD.test(withoutUnits(key, reading)));
+}
 
 /** All strings (including keys) are data, sanitized for bounded model display. */
 export function sanitizeWorkbenchJson(value: JsonValue, maxTextLength = WORKBENCH_TEXT_LIMIT): JsonValue {
@@ -337,7 +748,7 @@ export function sanitizeWorkbenchJson(value: JsonValue, maxTextLength = WORKBENC
     for (const [key, child] of Object.entries(value)) {
       // Native secret fields require redaction even when their value alone has no recognizable credential prefix
       // (e.g. { password: "opaque" }), and an invisible inside the key name does not hide the field.
-      result[sanitizeWorkbenchText(key, maxTextLength)] = SECRET_FIELD.test(stripUnsafeText(key)) ? REDACTED : sanitizeWorkbenchJson(child, maxTextLength);
+      result[sanitizeWorkbenchText(key, maxTextLength)] = isSecretField(key) ? REDACTED : sanitizeWorkbenchJson(child, maxTextLength);
     }
     return result;
   }

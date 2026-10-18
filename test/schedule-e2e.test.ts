@@ -8,7 +8,7 @@
  * outcome. Catches integration bugs that fake-timer microtask scheduling
  * can hide.
  *
- * Uses very short timings (100–300ms) so the test stays fast.
+ * Uses short timings (hundreds of ms) so the test stays fast.
  */
 
 import { mkdtempSync, readFileSync, rmSync } from "node:fs";
@@ -58,8 +58,36 @@ function makeCtx() {
   } as any;
 }
 
+/**
+ * Lead time of the one-shot rows' schedule time, measured from a `Date.now()`
+ * taken AFTER the scheduler and manager are set up (wb-irx, vko row 435 F1).
+ *
+ * `SubagentScheduler.detectSchedule` refuses a one-shot ISO time that is
+ * `<= Date.now()` at validation ("Scheduled time ... is in the past."), so any
+ * wall-clock stall between computing the time and `addJob`'s validation
+ * consumes this margin. src/schedule.ts has no clock seam (it reads
+ * `Date.now()` directly), so the cure is a margin that outweighs the stall:
+ * the original 100ms lost to a >100ms stall under cap-8 suite contention
+ * (cmd_07d7b33b9643, 1 of 3+ runs). Measured addJob validation latency over
+ * 2500 calls (500 x 5 runs) with 96 CPU burners on top of 8 vitest workers:
+ * p50 0ms, p99 <= 11ms, max 29ms. 500ms is ~17x that max and 5x the stall that
+ * actually broke the row; the cost is ~400ms of real wait per one-shot row.
+ */
+const ONE_SHOT_MARGIN_MS = 500;
+
+/** A schedule time ONE_SHOT_MARGIN_MS ahead of the current wall clock. */
+function oneShotIso(): string {
+  return new Date(Date.now() + ONE_SHOT_MARGIN_MS).toISOString();
+}
+
+/** Synchronously stall the event loop — a deterministic stand-in for CPU contention. */
+function stall(ms: number): void {
+  const end = Date.now() + ms;
+  while (Date.now() < end) { /* spin */ }
+}
+
 /** Wait for a predicate, polling at 5ms intervals, with a deadline. */
-async function waitFor(predicate: () => boolean, timeoutMs = 1500): Promise<void> {
+async function waitFor(predicate: () => boolean, timeoutMs = ONE_SHOT_MARGIN_MS + 2000): Promise<void> {
   const start = Date.now();
   while (!predicate()) {
     if (Date.now() - start > timeoutMs) {
@@ -92,7 +120,7 @@ describe("SubagentScheduler — end-to-end with real timers", () => {
 
     // Fire ~100ms in the future. detectSchedule normalizes "+100ms" — but our
     // parser only accepts s/m/h/d, so use a near-future ISO timestamp instead.
-    const future = new Date(Date.now() + 100).toISOString();
+    const future = oneShotIso();
     const job = scheduler.addJob({
       name: "e2e-once",
       description: "test",
@@ -119,7 +147,7 @@ describe("SubagentScheduler — end-to-end with real timers", () => {
     const pi = makePi();
     scheduler.start(pi, makeCtx(), manager, store);
 
-    const future = new Date(Date.now() + 100).toISOString();
+    const future = oneShotIso();
     const job = scheduler.addJob({
       name: "e2e-fail",
       description: "test",
@@ -214,7 +242,7 @@ describe("SubagentScheduler — end-to-end with real timers", () => {
     const pi = makePi();
     scheduler.start(pi, makeCtx(), manager, store);
 
-    const future = new Date(Date.now() + 100).toISOString();
+    const future = oneShotIso();
     const job = scheduler.addJob({
       name: "events", description: "x", schedule: future,
       subagent_type: "general-purpose", prompt: "x",
@@ -234,5 +262,47 @@ describe("SubagentScheduler — end-to-end with real timers", () => {
       .filter((c: any[]) => c[0] === "subagents:scheduled")
       .map((c: any[]) => c[1].type);
     expect(after).toContain("removed");
+  });
+
+  it("one-shot job survives a pre-validation stall wider than the old 100ms margin (wb-irx R1)", async () => {
+    const manager = makeFaithfulManager("completed");
+    const pi = makePi();
+    scheduler.start(pi, makeCtx(), manager, store);
+
+    // Deterministic contention: compute the schedule time, then lose 250ms
+    // (> the original 100ms margin, < ONE_SHOT_MARGIN_MS) before addJob
+    // validates it. With a 100ms margin this throws "is in the past".
+    const future = oneShotIso();
+    stall(250);
+    const job = scheduler.addJob({
+      name: "e2e-stalled",
+      description: "test",
+      schedule: future,
+      subagent_type: "general-purpose",
+      prompt: "hello",
+    });
+    expect(job.scheduleType).toBe("once");
+
+    await waitFor(() => manager.spawn.mock.calls.length === 1);
+    await waitFor(() => scheduler.list().find(j => j.id === job.id)?.lastStatus === "success");
+    expect(scheduler.list().find(j => j.id === job.id)?.runCount).toBe(1);
+  });
+
+  it("control: a genuinely past schedule time is still refused and nothing is created (wb-irx R2)", () => {
+    const manager = makeFaithfulManager("completed");
+    scheduler.start(makePi(), makeCtx(), manager, store);
+
+    for (const offsetMs of [-1, -1000, -ONE_SHOT_MARGIN_MS]) {
+      const past = new Date(Date.now() + offsetMs).toISOString();
+      expect(() => scheduler.addJob({
+        name: `e2e-past${offsetMs}`,
+        description: "test",
+        schedule: past,
+        subagent_type: "general-purpose",
+        prompt: "never",
+      })).toThrow(/is in the past/);
+    }
+    expect(scheduler.list()).toHaveLength(0);
+    expect(manager.spawn).not.toHaveBeenCalled();
   });
 });

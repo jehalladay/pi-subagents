@@ -18,9 +18,12 @@ import { tmpdir } from "node:os";
 import type { SDKAssistantMessageError, SDKMessage } from "@anthropic-ai/claude-agent-sdk";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { AgentManager } from "../src/agent-manager.js";
+import { safeWorkflowTerminalText } from "../src/ui/workflow-card.js";
 import { CapabilityRegistry } from "../src/workbench/capability-registry.js";
 import { type ClaudeQuery, createClaudeWorkflowHost } from "../src/workbench/claude-host.js";
+import { sanitizeWorkbenchJsonText, sanitizeWorkbenchText, WORKBENCH_TEXT_LIMIT } from "../src/workbench/redaction.js";
 import { runWorkflow, type WorkflowSpawnResult } from "../src/workflow/runtime.js";
+import { UNSAFE_DISPLAY } from "./helpers/unsafe-display.js";
 
 const HEAD = 'export const meta = { name: "degradation", description: "degradation policy probe" };\n';
 const CWD = tmpdir();
@@ -232,4 +235,188 @@ describe("D2 an absent optional provider is a typed capability-unavailable outco
     expect(JSON.stringify(result)).not.toContain(SECRET);
     expect(JSON.stringify(result)).not.toContain('"fabricated"');
   });
+});
+
+/**
+ * wb-wyr (wb-cax.5 gate F1, owner R1=(a)): every producer-side outcome of claude-host.ts is untrusted SDK text and
+ * routes through the one helper with a NAMED layout ("label": a single-line outcome string). A plain redactor upstream
+ * of display commits to the separator reading of an invisible inside a credential and consumes the key prefix; the
+ * display helper then deletes the glued code point and the tail survives. Driven through the REAL host
+ * (createClaudeWorkflowHost.spawnAgent) over the documented ClaudeQuery seam, on every failure path that carries SDK text.
+ * Seat rule F11: every invisible code point is built with String.fromCodePoint.
+ */
+const cpWy = (code: number): string => String.fromCodePoint(code);
+
+interface WyProbe {
+  readonly id: string;
+  readonly raw: string;
+  readonly secret: string;
+}
+
+/** The ten corpus credential tails the cax.5 gate measured leaking through every census-clean helper (10/756). */
+const WY_PROBES: readonly WyProbe[] = [
+  ...[0xad, 0x2061, 0x180e, 0x34f, 0xfe0f, 0x200e, 0xe0041, 0x61c].map((code, index) => ({
+    id: `I${index + 1} U+${code.toString(16).toUpperCase()} inside a key`,
+    raw: `sk-ant-aaaa${cpWy(code)}TAILIGNORABLE${index + 1}`,
+    secret: `TAILIGNORABLE${index + 1}`,
+  })),
+  { id: "Z5 lone surrogate inside a key", raw: `sk-ant-aaaa${cpWy(0xd800)}SURROGATETAIL`, secret: "SURROGATETAIL" },
+  { id: "B1 U+FEFF inside a Bearer token", raw: `Bearer abc${cpWy(0xfeff)}BEARERTAIL`, secret: "BEARERTAIL" },
+];
+
+function initFrame(): SDKMessage {
+  return { type: "system", subtype: "init", session_id: "sdk-wy", model: "claude-opus-5-5", permissionMode: "dontAsk", tools: [] } as unknown as SDKMessage;
+}
+
+function resultFrame(fields: Record<string, unknown>): SDKMessage {
+  return { type: "result", session_id: "sdk-wy", is_error: true, num_turns: 1, stop_reason: "end_turn", total_cost_usd: 0, modelUsage: {}, permission_denials: [], ...fields } as unknown as SDKMessage;
+}
+
+/** The five failure paths that carry SDK text into an outcome: two auth paths, the two result arms, the thrown catch. */
+const WY_PATHS: readonly (readonly [name: string, query: (raw: string) => ClaudeQuery])[] = [
+  ["auth-flagged frame then error result (authRequiredError, terminal path)", raw => framesQuery(authFailureStream(raw))],
+  ["auth-flagged frame then thrown error (authRequiredError, catch path)", raw => framesQuery(authFailureStream(raw).slice(0, 2), new Error(raw))],
+  ["unflagged success-subtype error result (terminal.result arm)", raw => framesQuery([initFrame(), resultFrame({ subtype: "success", result: raw })])],
+  ["unflagged error-subtype result (terminal.errors arm)", raw => framesQuery([initFrame(), resultFrame({ subtype: "error_during_execution", errors: [raw] })])],
+  ["unflagged thrown error (catch message)", raw => framesQuery([initFrame()], new Error(raw))],
+];
+
+describe("wb-wyr producer outcomes route through the one helper with a named layout", () => {
+  for (const [path, queryFor] of WY_PATHS) {
+    it.each(WY_PROBES)(`${path}: $id`, async probe => {
+      const result = await createClaudeWorkflowHost({ cwd: CWD, query: queryFor(probe.raw) }).spawnAgent(spawnRequest());
+      const error = result.error ?? "";
+      expect(result.ok).toBe(false);
+      expect(error.length).toBeGreaterThan(0);
+      expect(error, `${probe.id} leaked at the producer`).not.toContain(probe.secret);
+      expect(error, `${probe.id} kept an unsafe code point at the producer`).not.toMatch(UNSAFE_DISPLAY);
+      // The composed display (what a card, a label, a reply or a JSON text then shows) stays clean too.
+      for (const shown of [safeWorkflowTerminalText(error), sanitizeWorkbenchText(error, 2000, "label"), sanitizeWorkbenchText(error), sanitizeWorkbenchJsonText({ error })]) {
+        expect(shown, `${probe.id} leaked at display`).not.toContain(probe.secret);
+      }
+    });
+  }
+
+  it("G1 the error-subtype detail arm keeps the joined errors and the bare subtype, redacted", async () => {
+    const joined = await createClaudeWorkflowHost({ cwd: CWD, query: framesQuery([initFrame(), resultFrame({ subtype: "error_during_execution", errors: ["first failure", `second ${SECRET}`] })]) })
+      .spawnAgent(spawnRequest());
+    expect(joined).toMatchObject({ ok: false });
+    expect(joined.error).toMatch(/^first failure; second /);
+    expect(joined.error).not.toContain(SECRET);
+    const bare = await createClaudeWorkflowHost({ cwd: CWD, query: framesQuery([initFrame(), resultFrame({ subtype: "error_max_turns", errors: [] })]) }).spawnAgent(spawnRequest());
+    expect(bare).toMatchObject({ ok: false, error: "error_max_turns" });
+  });
+
+  it("G2 the terminal auth return keeps the session, the usage and the tool-call count", async () => {
+    const [init, assistant, result] = authFailureStream("Invalid API key. Please run /login");
+    const usageFrame = { ...(result as object), modelUsage: { "claude-opus-5-5": { inputTokens: 10, outputTokens: 4, cacheReadInputTokens: 1, cacheCreationInputTokens: 2 } } } as unknown as SDKMessage;
+    const withTool = { ...(assistant as object), message: { id: "msg-auth", role: "assistant", model: "claude-opus-5-5", content: [{ type: "tool_use", id: "toolu_1", name: "Read", input: {} }] } } as unknown as SDKMessage;
+    const settled = await createClaudeWorkflowHost({ cwd: CWD, query: framesQuery([init, withTool, usageFrame]) }).spawnAgent(spawnRequest());
+    expect(settled.error).toMatch(new RegExp(`^${AUTH_CODE}: `));
+    expect(settled).toMatchObject({ ok: false, sessionId: "sdk-auth", tokens: 17, outputTokens: 4, toolCalls: 1 });
+  });
+
+  /** An auth-flagged frame, then the run's own abort lands, then the SDK reports its failure on the given path. */
+  async function abortedAfterAuthFrame(thrown: boolean): Promise<WorkflowSpawnResult> {
+    const controller = new AbortController();
+    const [init, assistant, result] = authFailureStream("Invalid API key. Please run /login");
+    const query: ClaudeQuery = () => (async function* () {
+      yield init;
+      yield assistant;
+      controller.abort();
+      if (thrown) throw new Error("Claude Code process exited with code 1");
+      yield result;
+    })();
+    return createClaudeWorkflowHost({ cwd: CWD, query, signal: controller.signal }).spawnAgent(spawnRequest());
+  }
+
+  it.each([["terminal path", false], ["catch path", true]] as const)("G5/G6 a cancel that lands after an auth-flagged frame is a skipped cancellation, never the auth error (%s)", async (_name, thrown) => {
+    const outcome = await abortedAfterAuthFrame(thrown);
+    expect(outcome).toMatchObject({ ok: false, skipped: true, error: "Claude SDK query was cancelled." });
+    expect(outcome.error).not.toContain(AUTH_CODE);
+  });
+
+  /**
+   * G7: every SDKAssistantMessageError member at SDK 0.3.300 other than authentication_failed is deliberately NOT mapped to
+   * the auth error. The Record type makes the table exhaustive: a member added by an SDK upgrade fails strict tsc here until
+   * it is classified, and an auth-adjacent member (oauth_org_not_allowed, billing_error, account_on_hold,
+   * verification_required, cloud_credential_error) is an asserted exclusion, not an omission.
+   */
+  const UNMAPPED: Readonly<Record<Exclude<SDKAssistantMessageError, "authentication_failed">, true>> = {
+    oauth_org_not_allowed: true, account_on_hold: true, verification_required: true, billing_error: true, rate_limit: true, overloaded: true,
+    invalid_request: true, model_not_found: true, server_error: true, unknown: true, max_output_tokens: true, cloud_credential_error: true,
+  };
+
+  it.each(Object.keys(UNMAPPED) as (keyof typeof UNMAPPED)[])("G7 a frame flagged %s keeps its own wording on the result path and the thrown path", async flag => {
+    const detail = `API Error: ${flag}`;
+    const stream = flaggedFailureStream(flag, detail);
+    expect(stream[1]).toMatchObject({ type: "assistant", error: flag });
+    const settled = await createClaudeWorkflowHost({ cwd: CWD, query: framesQuery(stream) }).spawnAgent(spawnRequest());
+    expect(settled).toMatchObject({ ok: false, error: detail });
+    const thrown = await createClaudeWorkflowHost({ cwd: CWD, query: framesQuery(stream.slice(0, 2), new Error("Claude Code process exited with code 1")) }).spawnAgent(spawnRequest());
+    expect(thrown).toMatchObject({ ok: false, error: "Claude SDK query failed: Claude Code process exited with code 1" });
+    expect(`${settled.error} ${thrown.error}`).not.toContain(AUTH_CODE);
+  });
+});
+
+/**
+ * wb-19q members 11-12, from the wb-wyr gate (cmd_59554c602cf6) survivors.
+ *
+ * Member 11 (wb-wyr F1): the NAMED "label" layout at the one producer helper (claude-host.ts
+ * outcomeText) was pinned by no test — GM6 ("label" -> "text"), GM7 (the layout argument dropped,
+ * so the "text" default) and GM10 ("label" -> "terminal") survived the whole delivered suite.
+ * Under "label" an escape-sequence gap renders as one separating space, whitespace runs collapse
+ * and the ends are trimmed; under "text" and "terminal" an escape gap renders as nothing and
+ * nothing collapses. One exact-equality row per producer arm therefore reds under all three.
+ */
+const LABEL_RAW = `find${cpWy(0x1b)}[0mok  end `;
+const LABEL_SHOWN = "find ok end";
+/** The composed auth outcome, verbatim from authRequiredError (claude-host.ts). */
+const AUTH_MESSAGE = (reason: string): string =>
+  `${AUTH_CODE}: Claude SDK authentication is missing or rejected; sign in with \`claude /login\` or set ANTHROPIC_API_KEY. The workflow does not fall back to a Pi model. (SDK detail: ${reason})`;
+
+describe("wb-19q member 11: every producer arm renders the label layout exactly (GM6/GM7/GM10)", () => {
+  const ARMS: readonly (readonly [arm: string, query: ClaudeQuery, expected: string])[] = [
+    ["terminal.result arm (success-subtype error result)", framesQuery([initFrame(), resultFrame({ subtype: "success", result: LABEL_RAW })]), LABEL_SHOWN],
+    ["terminal.errors arm (error-subtype result)", framesQuery([initFrame(), resultFrame({ subtype: "error_during_execution", errors: [LABEL_RAW] })]), LABEL_SHOWN],
+    ["catch arm (thrown SDK error)", framesQuery([initFrame()], new Error(LABEL_RAW)), `Claude SDK query failed: ${LABEL_SHOWN}`],
+    ["auth terminal path (authRequiredError inner detail)", framesQuery(authFailureStream(LABEL_RAW)), AUTH_MESSAGE(LABEL_SHOWN)],
+    ["auth catch path (authRequiredError over the thrown message)", framesQuery(authFailureStream(LABEL_RAW).slice(0, 2), new Error(LABEL_RAW)), AUTH_MESSAGE(LABEL_SHOWN)],
+  ];
+
+  for (const [arm, query, expected] of ARMS) {
+    it(`m11 ${arm}: an escape gap separates, whitespace collapses and the ends are trimmed`, async () => {
+      const result = await createClaudeWorkflowHost({ cwd: CWD, query }).spawnAgent(spawnRequest());
+      expect(result.ok).toBe(false);
+      expect(result.error).toBe(expected);
+    });
+  }
+});
+
+/**
+ * Member 12 (wb-wyr gate survivor GM5, "auth outer pass -> plain"): the gate's only discriminator
+ * was the bounded() cut splitting an astral pair — the inner 160-unit pass over the SDK detail
+ * cuts at unit 140, and before wb-yr9 that cut could leave a lone surrogate which only the OUTER
+ * authRequiredError pass removed. Post-wb-yr9 (ce7ec7f) bounded() drops a pair it would split, so
+ * the inner pass hands the composition clean text on every arm and this probe stays GREEN with GM5
+ * applied (measured in an isolated copy; the record evidence on wb-19q member 12). A future red
+ * here means the outer pass became load-bearing again. U+110BD is a prepended concatenation mark:
+ * an astral code point the sanitizer keeps as visible text, so it reaches the bound intact.
+ */
+describe("wb-19q member 12: the GM5 probe — an astral pair straddling the inner cut never leaves a lone surrogate", () => {
+  const GM5_DETAIL = `${"x".repeat(139)}${cpWy(0x110bd)}${"y".repeat(WORKBENCH_TEXT_LIMIT)}`;
+  const GM5_SHOWN = AUTH_MESSAGE(`${"x".repeat(139)} [truncated]`);
+  const PATHS: readonly (readonly [path: string, query: ClaudeQuery])[] = [
+    ["auth terminal path", framesQuery(authFailureStream(GM5_DETAIL))],
+    ["auth catch path", framesQuery(authFailureStream(GM5_DETAIL).slice(0, 2), new Error(GM5_DETAIL))],
+  ];
+
+  for (const [path, query] of PATHS) {
+    it(`m12 ${path}: the over-limit detail truncates on the pair boundary and the composed outcome is exact`, async () => {
+      const result = await createClaudeWorkflowHost({ cwd: CWD, query }).spawnAgent(spawnRequest());
+      expect(result.ok).toBe(false);
+      expect(result.error ?? "").not.toMatch(/[\u{d800}-\u{dfff}]/u);
+      expect(result.error).toBe(GM5_SHOWN);
+    });
+  }
 });

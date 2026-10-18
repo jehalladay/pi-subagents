@@ -11,7 +11,9 @@
  * same look-alike battery runs against each. No live binary, SDK process or network: every seam is a counting fake.
  */
 import { readFileSync } from "node:fs";
+import { type CancelReceipt, type CapabilityMap, decodeCancelResponse, negotiatedCapabilityMap } from "@forge/sdk";
 import type { CallOptions } from "@furnace/sdk";
+import ts from "typescript";
 import { describe, expect, it, vi } from "vitest";
 import { CapabilityError } from "../src/workbench/capability-registry.js";
 import { ClaudeControlRefusal, type ClaudeInterruptSeam, executeClaudeControl } from "../src/workbench/claude-control.js";
@@ -23,11 +25,14 @@ import {
   type NativeControlRequest,
   settle,
 } from "../src/workbench/control.js";
+import { executeForgeControl, ForgeControlRefusal } from "../src/workbench/forge-control.js";
 import { executeFurnaceControl, type FurnaceControlClient, FurnaceControlRefusal } from "../src/workbench/furnace-control.js";
 import { type NativeRef, ObservationProjection, type ObservationScope } from "../src/workbench/observation.js";
 
 /** The fixed provenance refusal text the bead specifies; every adapter refuses an unminted decision with exactly this. */
 const UNMINTED_TEXT = "decision was not minted by the decision core";
+/** The fixed text of the forge adapter's denied-decision refusal: a caller-held denial contributes nothing to it, not even its reason (wb-n9z F2). */
+const FORGE_DENIED_TEXT = "Forge control refuses a denied decision; nothing was sent.";
 
 const WS = "/tmp/provenance-ws";
 const SCOPE: ObservationScope = { workspace: WS, principal: "operator" };
@@ -43,6 +48,14 @@ const ATTEMPT: NativeRef = { provider: "furnace", type: "attempt", id: "frn-atm-
 const SESSION_ID = "8f14e45f-ceea-467f-a8d5-2b1c3e6f0a9d";
 const SESSION: NativeRef = { provider: "claude-agent-sdk", type: "session", id: SESSION_ID };
 const SUBAGENT: NativeRef = { provider: "claude-agent-sdk", type: "subagent", id: `${SESSION_ID}:sub-1` };
+
+/** The forge adapter's own workspace and native operation: a uuid4 hex, the id the Forge operations service allocates. */
+const FORGE_WS = "/tmp/provenance-forge-ws";
+const FORGE_SCOPE: ObservationScope = { workspace: FORGE_WS, principal: "operator" };
+const OP_ID = "3f2a9c1e7b4d4e0f9a8b7c6d5e4f3a2b";
+const FOREIGN_OP_ID = "5f2a9c1e7b4d4e0f9a8b7c6d5e4f3a2b";
+const OPERATION: NativeRef = { provider: "forge", type: "operation", id: OP_ID, scope: FORGE_WS };
+const STEP: NativeRef = { provider: "forge", type: "step", id: `${OP_ID}:lint`, scope: FORGE_WS };
 
 type Permit = ControlDecision & { decision: "permitted" };
 
@@ -71,6 +84,29 @@ const decide = (overrides: Partial<NativeControlRequest> = {}): ControlDecision 
   decideControl(request(overrides), { projection: furnaceProjection(), now: () => DECIDED_AT });
 function furnacePermit(overrides: Partial<NativeControlRequest> = {}): Permit {
   const decision = decide(overrides);
+  if (decision.decision !== "permitted") throw new Error(`expected a permitted decision, got ${JSON.stringify(decision)}`);
+  return decision;
+}
+
+function forgeProjection(): ObservationProjection {
+  const projection = new ObservationProjection();
+  for (const source of [OPERATION, STEP]) {
+    projection.refresh({ source, scope: FORGE_SCOPE, capturedAt: AT, observedAt: AT, kind: `${source.provider}.${source.type}.snapshot`,
+      node: { title: `${source.provider} ${source.type} ${source.id}`, type: "sdk-operation", statusText: "active", statusTone: "active" } });
+  }
+  projection.relate({ scope: FORGE_SCOPE, from: OPERATION, to: STEP, kind: "ownership", provenance: { source: "forge", observedAt: AT, nativeConfirmationRef: `forge-operation-started:${OP_ID}` } });
+  return projection;
+}
+function forgeRequest(overrides: Partial<NativeControlRequest> = {}): NativeControlRequest {
+  return {
+    scope: { ...FORGE_SCOPE }, principal: { id: FORGE_SCOPE.principal, role: "local-operator" }, grants: ["observe:forge.operation", "control:forge.cancel"],
+    target: { ...OPERATION }, action: "cancel", params: { confirmed: true }, invocationId: "inv-provenance-forge-1", requestedAt: REQUESTED_AT, ...overrides,
+  };
+}
+const decideForge = (overrides: Partial<NativeControlRequest> = {}): ControlDecision =>
+  decideControl(forgeRequest(overrides), { projection: forgeProjection(), now: () => DECIDED_AT });
+function forgePermit(overrides: Partial<NativeControlRequest> = {}): Permit {
+  const decision = decideForge(overrides);
   if (decision.decision !== "permitted") throw new Error(`expected a permitted decision, got ${JSON.stringify(decision)}`);
   return decision;
 }
@@ -287,7 +323,32 @@ const SUBJECTS: readonly ProvenanceSubject[] = [
     refusal: ClaudeControlRefusal,
     unobservedTargetId: "0b1c2d3e-0000-4000-8000-000000000000",
   },
+  {
+    adapter: "forge (src/workbench/forge-control.ts)",
+    permit: () => forgePermit(),
+    decide: overrides => decideForge(overrides),
+    async attempt(decision) {
+      const cancel = vi.fn(async (operationId: string): Promise<CancelReceipt> => decodeCancelResponse(operationId,
+        { operation_id: operationId, cancel_intent: "CANCEL_REQUESTED", cancel_acceptance: "ACCEPTED", cancellation_established: false }));
+      const capabilities: CapabilityMap = negotiatedCapabilityMap("app_server", new Map([["gate.status", true], ["operation.cancel", true]]));
+      try {
+        await executeForgeControl(decision as ControlDecision, { operations: { cancel }, connection: { capabilities }, workspaceRoot: FORGE_WS, now: clock(ACKED_AT), timeoutMs: TIMEOUT_MS });
+        return { outcome: "resolved", calls: cancel.mock.calls.length };
+      } catch (error) {
+        return { outcome: "rejected", error, calls: cancel.mock.calls.length };
+      }
+    },
+    refusal: ForgeControlRefusal,
+    unobservedTargetId: FOREIGN_OP_ID,
+  },
 ];
+
+/** The SUBJECTS row for one adapter, bound by its name: a reordered table can never re-point an adapter-specific case at another adapter. */
+function subjectNamed(adapter: string): ProvenanceSubject {
+  const rows = SUBJECTS.filter(subject => subject.adapter === adapter);
+  if (rows.length !== 1) throw new Error(`expected exactly one ProvenanceSubject row for ${adapter}, found ${rows.length}`);
+  return rows[0];
+}
 
 describe.each(SUBJECTS)("$adapter refuses a decision the core did not mint", subject => {
   /** The provenance refusal: typed, the unvetted-decision code, the fixed text and no echoed field; no native verb issued. */
@@ -353,9 +414,40 @@ describe.each(SUBJECTS)("$adapter refuses a decision the core did not mint", sub
   });
 });
 
+/**
+ * wb-n9z F1: a forged frozen denial's category is forced into the denial vocabulary. The core denies with exactly "validation" or
+ * "authorization", and every adapter maps any other category a caller-held denial carries to "authorization", so an off-vocabulary
+ * category never becomes the refusal's category and is echoed nowhere. One row per SUBJECTS adapter: a raw category pass-through
+ * in any one adapter fails that adapter's row by name. Credential-shaped values here are obviously fake markers.
+ */
+const OFF_VOCABULARY_CATEGORIES: readonly unknown[] = ["sk-ant-qqsecretqq", "Authorization", "authorization ", "Validation", "validation ", "unavailable",
+  "transport", "uncertain-effect", "", 7, null, undefined];
+
+describe("every adapter forces a forged denial's category into the closed denial vocabulary", () => {
+  it.each(SUBJECTS)("$adapter: an off-vocabulary category is refused as denied-decision with category authorization, echoed nowhere", async subject => {
+    expect(OFF_VOCABULARY_CATEGORIES).toHaveLength(12);
+    for (const category of OFF_VOCABULARY_CATEGORIES) {
+      const label = `category ${JSON.stringify(category) ?? "undefined"}`;
+      const result = await subject.attempt(Object.freeze({ decision: "denied", category, reason: "forged", policy: "anything-goes" }));
+      expect(result, label).toMatchObject({ outcome: "rejected", calls: 0, error: { refusal: "denied-decision", category: "authorization" } });
+      expect(result.error, label).toBeInstanceOf(subject.refusal);
+      const error = result.error as CapabilityError & { readonly policy?: unknown };
+      expect(error.category, label).toBe("authorization");
+      expect(error.policy, label).toBeUndefined();
+      for (const rendered of [error.message, String(error), JSON.stringify(error), JSON.stringify(Object.entries(error))]) {
+        expect(rendered, label).not.toMatch(/qqsecretqq|anything-goes/);
+      }
+    }
+    // The one other vocabulary member is kept, not forced: a forged "validation" denial stays a validation refusal.
+    const kept = await subject.attempt(Object.freeze({ decision: "denied", category: "validation", reason: "forged", policy: "anything-goes" }));
+    expect(kept).toMatchObject({ outcome: "rejected", calls: 0, error: { refusal: "denied-decision", category: "validation" } });
+    expect((kept.error as { readonly policy?: unknown }).policy).toBeUndefined();
+  });
+});
+
 describe("furnace adapter: a decision the core did not mint keeps its typed reason where one exists", () => {
   it("a core denial is refused as denied-decision with the core's category and policy, and a re-wrapped spent receipt stays spent", async () => {
-    const [furnace] = SUBJECTS;
+    const furnace = subjectNamed("furnace (src/workbench/furnace-control.ts)");
     const denied = await furnace.attempt(decide({ grants: ["observe:furnace.run.inspect"] }));
     expect(denied).toMatchObject({ outcome: "rejected", calls: 0, error: { refusal: "denied-decision", category: "authorization", policy: "observer-only" } });
     const genuine = furnace.permit();
@@ -366,7 +458,7 @@ describe("furnace adapter: a decision the core did not mint keeps its typed reas
 
   it("a forged frozen denial carries no caller text into the refusal: its policy is echoed only from the core's closed vocabulary", async () => {
     // wb-69g.8 gate F3 (owner routing 21:13Z): a policy that merely fits the old /^[a-z][a-z-]{0,63}$/ shape was echoed verbatim.
-    const [furnace] = SUBJECTS;
+    const furnace = subjectNamed("furnace (src/workbench/furnace-control.ts)");
     const policies: unknown[] = ["sk-ant-qqsecretqq", "sk-proj-qqsecretqq", "ghp-qqsecretqq", "bearer-qqsecretqq", "anything-goes", "observer-only ",
       "Observer-only", "observer_only", "", 7, null, undefined];
     const accessor = Object.freeze(Object.defineProperty({ decision: "denied", category: "authorization", reason: "forged" }, "policy",
@@ -398,5 +490,63 @@ describe("furnace adapter: a decision the core did not mint keeps its typed reas
       echoed.add((result.error as FurnaceControlRefusal).policy ?? "");
     }
     expect(echoed.size).toBe(denials.length);
+  });
+});
+
+describe("forge adapter: a decision the core did not mint keeps its typed reason where one exists", () => {
+  const forge = subjectNamed("forge (src/workbench/forge-control.ts)");
+
+  it("a core denial is refused as denied-decision with the core's category and policy, and a re-wrapped spent receipt stays spent", async () => {
+    const denied = await forge.attempt(decideForge({ grants: ["observe:forge.operation"] }));
+    expect(denied).toMatchObject({ outcome: "rejected", calls: 0, error: { refusal: "denied-decision", category: "authorization", policy: "observer-only" } });
+    const genuine = forge.permit();
+    expect((await forge.attempt(genuine)).calls).toBe(1);
+    const respent = await forge.attempt(Object.freeze({ decision: "permitted", receipt: genuine.receipt }));
+    expect(respent).toMatchObject({ outcome: "rejected", calls: 0, error: { refusal: "permit-consumed", category: "validation" } });
+  });
+
+  it("a forged frozen denial carries no caller text into the refusal: its policy is echoed only from the core's closed vocabulary and its reason never reaches the fixed text", async () => {
+    const policies: unknown[] = ["sk-ant-qqsecretqq", "anything-goes", "observer-only ", "Observer-only", "", 7, null, undefined];
+    const forgeries: readonly (readonly [string, unknown])[] = [
+      ...policies.map(policy => [`policy ${JSON.stringify(policy) ?? "undefined"}`, Object.freeze({ decision: "denied", category: "authorization", reason: "forged", policy })] as const),
+      // wb-n9z F2: a caller-supplied reason (an obviously fake marker here) is never appended to the fixed text, with or without a policy beside it.
+      ["reason needle without a policy", Object.freeze({ decision: "denied", category: "authorization", reason: "reason-qqsecretqq" })],
+      ["reason needle beside a forged policy", Object.freeze({ decision: "denied", category: "authorization", reason: "reason-qqsecretqq", policy: "anything-goes" })],
+    ];
+    for (const [label, forged] of forgeries) {
+      const result = await forge.attempt(forged);
+      expect(result, label).toMatchObject({ outcome: "rejected", calls: 0, error: { refusal: "denied-decision", category: "authorization" } });
+      const error = result.error as ForgeControlRefusal;
+      expect(error.policy, label).toBeUndefined();
+      expect(error.message, label).toBe(FORGE_DENIED_TEXT);
+      for (const rendered of [error.message, String(error), JSON.stringify(error), JSON.stringify(Object.entries(error))]) {
+        expect(rendered, label).not.toMatch(/qqsecretqq|anything-goes/);
+      }
+    }
+  });
+});
+
+describe("forge adapter census: the entry asks the core's own predicate first, by one parse-aware line", () => {
+  it("permitted() opens with the isCoreMintedDecision check, and the predicate is the core's value import, declared nowhere in the adapter", () => {
+    const text = readFileSync(new URL("../src/workbench/forge-control.ts", import.meta.url), "utf8");
+    const file = ts.createSourceFile("forge-control.ts", text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+    const printed = (node: ts.Node): string => ts.createPrinter({ removeComments: true }).printNode(ts.EmitHint.Unspecified, node, file).replace(/\s+/g, " ").trim();
+    const permitted = file.statements.filter(ts.isFunctionDeclaration).filter(fn => fn.name?.text === "permitted");
+    expect(permitted, "exactly one module-level permitted()").toHaveLength(1);
+    expect(permitted[0].body?.statements.map(printed)[0]).toBe("if (!isCoreMintedDecision(decision)) throw unminted(decision);");
+    const bindings = file.statements.filter(ts.isImportDeclaration)
+      .filter(declaration => ts.isStringLiteral(declaration.moduleSpecifier) && declaration.moduleSpecifier.text === "./control.js" && declaration.importClause?.isTypeOnly !== true)
+      .flatMap(declaration => {
+        const named = declaration.importClause?.namedBindings;
+        return named && ts.isNamedImports(named) ? named.elements.filter(element => !element.isTypeOnly).map(element => `${(element.propertyName ?? element.name).text} as ${element.name.text}`) : [];
+      });
+    expect(bindings).toContain("isCoreMintedDecision as isCoreMintedDecision");
+    const declared: string[] = [];
+    const walk = (node: ts.Node): void => {
+      if ((ts.isFunctionDeclaration(node) || ts.isVariableDeclaration(node) || ts.isParameter(node)) && node.name && ts.isIdentifier(node.name)) declared.push(node.name.text);
+      ts.forEachChild(node, walk);
+    };
+    walk(file);
+    expect(declared).not.toContain("isCoreMintedDecision");
   });
 });

@@ -789,11 +789,13 @@ const ACCEPTANCE: readonly Probe[] = ACCEPTANCE_UNITS.flatMap(([name, unit]) =>
     return { id: `${name} ${position}`, raw: shape(unit, secret), secret };
   }),
 );
-/** What a display string may never keep (the corpus's UNSAFE_DISPLAY). */
-const DISPLAY_UNSAFE = /[\x00-\x1f\x7f-\x9f\u{2028}\u{2029}]|\p{Default_Ignorable_Code_Point}|[\u{d800}-\u{dfff}]/u;
+/** What a display string may never keep (the corpus's UNSAFE_DISPLAY, wb-rqd format controls included). */
+const DISPLAY_UNSAFE = /[\x00-\x1f\x7f-\x9f\u{2028}\u{2029}\u{fff9}-\u{fffb}\u{13430}-\u{1343f}]|\p{Default_Ignorable_Code_Point}|[\u{d800}-\u{dfff}]/u;
 
 type FreeTextPath = "surface.mode" | "echo.operationId" | "echo.cancelIntent" | "echo.cancelAcceptance" | "echo.establishment";
 const FREE_TEXT_PATHS: readonly FreeTextPath[] = ["surface.mode", "echo.operationId", "echo.cancelIntent", "echo.cancelAcceptance", "echo.establishment"];
+/** The fixed text of the denied-decision refusal: a caller-held denial contributes nothing to it, not even its reason (wb-n9z F2). */
+const DENIED_TEXT = "Forge control refuses a denied decision; nothing was sent.";
 /**
  * One producer string through each free-text display path, as the gate drove them: the capability map's mode on a refused
  * connection; operation_id, cancel_intent and cancel_acceptance on an unattributable answer; establishment on Forge's
@@ -852,17 +854,21 @@ describe("wb-69g.9 respin: every display path is the one helper with a named lay
     }
   });
 
-  it("a denied decision's policy is echoed only from the core's closed ControlDenyPolicy vocabulary: a forged frozen denial's policy is withheld (kills G11)", async () => {
+  it("a denied decision's policy is echoed only from the core's closed ControlDenyPolicy vocabulary and its reason never reaches the fixed text: a forged frozen denial's policy is withheld (kills G11, G13)", async () => {
     let invoked = false;
     const accessor = Object.freeze(Object.defineProperty({ decision: "denied", category: "authorization", reason: "forged" }, "policy",
       { enumerable: true, get: () => { invoked = true; return "observer-only"; } }));
     const policies: unknown[] = ["sk-ant-qqsecretqq", "sk-proj-qqsecretqq", "anything-goes", "observer-only ", "Observer-only", "observer_only", "", 7, null];
-    const forgeries: unknown[] = [...policies.map(policy => Object.freeze({ decision: "denied", category: "authorization", reason: "forged", policy })), accessor];
+    const forgeries: unknown[] = [...policies.map(policy => Object.freeze({ decision: "denied", category: "authorization", reason: "forged", policy })), accessor,
+      // A caller-supplied reason (an obviously fake marker here) is never appended to the fixed text, with or without a policy beside it.
+      Object.freeze({ decision: "denied", category: "authorization", reason: "reason-qqsecretqq" }),
+      Object.freeze({ decision: "denied", category: "authorization", reason: "reason-qqsecretqq", policy: "anything-goes" })];
     for (const forged of forgeries) {
       const fake = fakeSeam();
       const seen = untouchable(deps(fake));
       const failure = await refused(executeForgeControl(forged as ControlDecision, seen.proxy), "denied-decision", "authorization");
       expect(failure.policy).toBeUndefined();
+      expect(failure.message).toBe(DENIED_TEXT);
       expect(JSON.stringify({ message: failure.message, policy: failure.policy })).not.toMatch(/qqsecretqq|anything-goes/);
       expect(seen.touched).toStrictEqual([]);
       expect(fake.cancel).not.toHaveBeenCalled();
@@ -873,6 +879,7 @@ describe("wb-69g.9 respin: every display path is the one helper with a named lay
     const named = Object.freeze({ decision: "denied", category: "validation", reason: "forged", policy: "malformed-request" }) as ControlDecision;
     const failure = await refused(executeForgeControl(named, deps(fakeSeam())), "denied-decision", "validation");
     expect(failure.policy).toBe("malformed-request");
+    expect(failure.message).toBe(DENIED_TEXT);
   });
 
   it("a credential-shaped terminal_disposition settles unknown with the disposition withheld from nativeResultRef, never repaired; the echo reads [REDACTED]", async () => {

@@ -5,12 +5,14 @@ import {mkdtempSync, rmSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import type * as ForgeSdk from '@forge/sdk';
+import ts from 'typescript';
 import {afterAll, describe, expect, expectTypeOf, it, vi} from 'vitest';
 import {CapabilityError, CapabilityRegistry, type JsonValue} from '../src/workbench/capability-registry.js';
 import {type ForgeObservedRelation, forgeGateTopology} from '../src/workbench/forge-observer.js';
 import {nativeEvidence} from '../src/workbench/native-evidence.js';
 import {type NativeRef, ObservationProjection} from '../src/workbench/observation.js';
 import {readForgeGateStatus, registerForgeGateStatus, registerNativeForgeGateStatus} from '../src/workbench/providers/forge.js';
+import {A, B, basis, DESCRIPTORLESS, described, FRESHNESS_WORDS, MEASURED_BASIS, MEASURED_ROW, MEASURED_STATE, workbenchSource} from './helpers/forge-last-result-state.js';
 
 // Only the native SDK process is replaced by a canned reply; decodeResultEnvelope and every other export stay real.
 const sdk = vi.hoisted(() => ({reply: null as unknown, methods: [] as string[]}));
@@ -48,6 +50,9 @@ describe('Forge gate.status reader adapter', () => {
   it('states exactly the relation statement ObservationProjection.relate accepts', () => {
     expectTypeOf<ForgeObservedRelation>().toEqualTypeOf<Parameters<ObservationProjection['relate']>[0]>();
     expectTypeOf(forgeGateTopology).parameter(0).toEqualTypeOf<JsonValue>();
+    // wb-nl8 (--expect.requireAssertions, R1 default): the two type-level statements assert nothing at runtime; this states
+    // what the case already proves - the reader whose first parameter type is pinned above exists as a function.
+    expect(typeof forgeGateTopology).toBe('function');
   });
 
   // docs/workbench/00 § "2026-10-15 implementation update (experimental; evidence-scoped)": "authoritative_current=false
@@ -340,5 +345,338 @@ describe('Forge gate.status adapter consumes the registered provider output unch
     registerForgeGateStatus(registry, {gate: {status: async () => ({protocolMethod: 'gate.status', raw: SOURCE})}}, '0.1.0');
     const value = await registry.invoke('forge.gate.status', {target: '.'}, {grants: ['forge:inspect'], signal: new AbortController().signal});
     expect(forgeGateTopology(value, context)).toStrictEqual(forgeGateTopology(reading(SOURCE), context));
+  });
+});
+
+// ---------------------------------------------------------------------------------------------------------------------
+// Collective adaptation (program-triage-2026-10-17, epic wb-4ap): a package row's last_result_state. Every case below pins
+// the measured SOURCE_WITH_STATE row of test/workbench-forge-contract.test.ts (wb-4ap.11) through
+// test/helpers/forge-last-result-state.ts, and every malformed or planted variant mutates that row. Hermetic, default test
+// gate, no SDK process: the fixture is the recorded wire shape, not a live read. One describe block per bead.
+// ---------------------------------------------------------------------------------------------------------------------
+
+/** The F8 literal (:288): the measured row's native text and authority label, which every descriptor case keeps verbatim. */
+const F8_TEXT = 'success (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED)';
+const REASON = 'FORGE_CURRENT_STATE_UNVERIFIED';
+/** A whole freshness word. The measured reason code holds CURRENT inside one word (FORGE_CURRENT_STATE_UNVERIFIED), never as one. */
+const word = (value: string): RegExp => new RegExp(`\\b${value}\\b`);
+const ownKeys = (value: object): string[] => Object.keys(value);
+/** The measured STALE row (basis(A, B)) and a CURRENT twin over equal digests (basis(A, A)) on its own ref. */
+const staleRow = MEASURED_ROW;
+const currentRow = described({invalidation_basis: basis(A, A), freshness: 'CURRENT'}, {ref: 'code:other'});
+
+describe('wb-4ap measured descriptor (B2): every collective-adaptation case mutates the landed SOURCE_WITH_STATE row', () => {
+  it('B2: the row is the measured wb-4ap.11 shape - kind invalidation-basis/v2, a closed-set freshness, digest-shaped and distinct digests', () => {
+    expect(MEASURED_ROW).toMatchObject({ref: 'code:pi-subagents', last_result: 'success', authoritative_current: false, unverified_reason: REASON});
+    expect(MEASURED_BASIS.kind).toBe('invalidation-basis/v2');
+    expect(MEASURED_STATE.freshness).toBe('STALE');
+    expect(FRESHNESS_WORDS).toContain(MEASURED_STATE.freshness);
+    for (const digest of [A, B]) expect(digest).toMatch(/^sha256:[0-9a-f]{64}$/);
+    expect(A).not.toBe(B);
+    expect(ownKeys(DESCRIPTORLESS)).not.toContain('last_result_state');
+    expect(ownKeys(DESCRIPTORLESS)).toHaveLength(ownKeys(MEASURED_ROW).length - 1);
+  });
+});
+
+describe('wb-4ap.2 COLLECTIVE-ADAPTATION-R2: a well-formed descriptor quotes its freshness word beside the historical label', () => {
+  it('F10 (wb-4ap.2): the measured STALE row and a CURRENT row each quote their own word after the unchanged native text and authority label', () => {
+    const stale = forgeGateTopology(withPackages(staleRow), context).snapshots[1].node.statusText;
+    expect(stale).toMatch(/STALE/);
+    expect(stale).toMatch(/historical/);
+    expect(stale).toMatch(/authoritative_current=false/);
+    expect(stale).toBe(`${F8_TEXT} · basis STALE`);
+    const fresh = forgeGateTopology(withPackages(currentRow), context).snapshots[1].node.statusText;
+    expect(fresh).toMatch(word('CURRENT'));
+    expect(fresh).toBe(`${F8_TEXT} · basis CURRENT`);
+  });
+
+  it('L5 (wb-4ap.2): each of the four closed words appears, whole and verbatim, in its own row and in no other row', () => {
+    const rows = FRESHNESS_WORDS.map(freshness => described({freshness}, {ref: `code:${freshness.toLowerCase()}`}));
+    const result = forgeGateTopology(withPackages(...rows), context);
+    expect(result.diagnostics).toStrictEqual([]);
+    FRESHNESS_WORDS.forEach((own, index) => {
+      const text = result.snapshots[index + 1].node.statusText;
+      expect(text).toBe(`${F8_TEXT} · basis ${own}`);
+      for (const other of FRESHNESS_WORDS) if (other !== own) expect(text, `${own} row`).not.toMatch(word(other));
+    });
+  });
+
+  it('wb-4ap.2: the text stays within MAX_TEXT (200) on the longest row - a 256-byte ref, 48-character result and reason, the longest word', () => {
+    const longest = described({freshness: 'NOT_APPLICABLE'}, {ref: 'é'.repeat(128), last_result: 'L'.repeat(48), authoritative_current: 'maybe', unverified_reason: 'R'.repeat(48)});
+    expect(Buffer.byteLength(String(longest.ref))).toBe(256);
+    const [, pkg] = forgeGateTopology(withPackages(longest), context).snapshots;
+    expect(pkg.node.statusText).toBe(`${'L'.repeat(48)} (historical; authoritative_current=unknown; ${'R'.repeat(48)}) · basis NOT_APPLICABLE`);
+    expect(pkg.node.statusText.length).toBeLessThanOrEqual(200);
+    expect(pkg.node.title.length).toBeLessThanOrEqual(200);
+  });
+});
+
+describe('wb-4ap.3 COLLECTIVE-ADAPTATION-R3: a malformed descriptor is withheld with one diagnostic and renders basis UNKNOWN, never CURRENT', () => {
+  // The six F11 shapes, each a mutation of the measured row.
+  const malformed: [string, Json][] = [
+    ['freshness FRESH (outside the closed set)', described({freshness: 'FRESH'})],
+    ['freshness CURRENT over kind invalidation-basis/v1', described({freshness: 'CURRENT', invalidation_basis: {...MEASURED_BASIS, kind: 'invalidation-basis/v1'}})],
+    ['derived_from /home/me/workspace (a path, not a digest)', described({invalidation_basis: basis(A, '/home/me/workspace')})],
+    ['derived_from sha256: + z x 64 (not hex)', described({invalidation_basis: basis(A, `sha256:${'z'.repeat(64)}`)})],
+    ['invalidation_basis null with freshness CURRENT', described({invalidation_basis: null, freshness: 'CURRENT'})],
+    ['last_result_state text (not an object)', {...MEASURED_ROW, last_result_state: 'text'}],
+  ];
+
+  it('F11 table liveness (wb-4ap.2): the malformed table holds all six shapes', () => expect(malformed).toHaveLength(6));
+
+  it.each(malformed)('F11 (wb-4ap.3): %s sets no subjectBasis, pushes exactly one withheld-basis diagnostic for the ref and renders basis UNKNOWN', (_name, row) => {
+    const result = forgeGateTopology(withPackages(row), context);
+    const [, pkg] = result.snapshots;
+    expect(ownKeys(pkg)).not.toContain('subjectBasis');
+    expect(result.diagnostics).toHaveLength(1);
+    expect(result.diagnostics[0]).toContain('code:pi-subagents');
+    expect(result.diagnostics[0]).toMatch(/\bbasis\b/);
+    expect(result.diagnostics[0]).toMatch(/\bwithheld\b/);
+    expect(pkg.node.statusText).toMatch(/basis UNKNOWN/);
+    expect(pkg.node.statusText).not.toMatch(word('CURRENT'));
+    // The acceptance's literal /CURRENT/ once the producer's own reason code, which holds CURRENT inside one word, is set aside.
+    expect(pkg.node.statusText.replace(REASON, '')).not.toMatch(/CURRENT/);
+    expect(pkg.node.statusText).toBe(`${F8_TEXT} · basis UNKNOWN`);
+  });
+
+  it('wb-4ap.3 (c) boundary: each of the three accepted digest shapes is well formed - quoted word, no diagnostic, derived_from as the basis', () => {
+    // native-evidence.ts accepts exactly these three digest shapes; a sha256-only check would withhold the other two.
+    for (const derivedFrom of [B, 'c'.repeat(64), `dirty-tree/v1:${'d'.repeat(40)}:sha256:${'e'.repeat(64)}`]) {
+      const result = forgeGateTopology(withPackages(described({invalidation_basis: basis(A, derivedFrom)})), context);
+      expect(result.diagnostics, derivedFrom).toStrictEqual([]);
+      expect(result.snapshots[1].node.statusText, derivedFrom).toBe(`${F8_TEXT} · basis STALE`);
+      expect(result.snapshots[1].subjectBasis, derivedFrom).toBe(derivedFrom);
+    }
+  });
+
+  it('F11 (wb-4ap.3): no malformed text reaches the result - neither the bad derived_from nor either digest of the withheld basis', () => {
+    for (const [name, row] of malformed) {
+      const serialized = JSON.stringify(forgeGateTopology(withPackages(row), context));
+      for (const raw of ['/home/me/workspace', 'z'.repeat(64), A, B]) expect(serialized, name).not.toContain(raw);
+    }
+  });
+
+  it('wb-4ap.3: no malformed descriptor moves the base row off unknown tone and partial coverage, or changes the workspace snapshot or the edges', () => {
+    const base = forgeGateTopology(withPackages(DESCRIPTORLESS), context);
+    for (const [name, row] of malformed) {
+      const result = forgeGateTopology(withPackages(row), context);
+      expect(result.snapshots[1].node.statusTone, name).toBe('unknown');
+      expect(result.snapshots[1].coverage, name).toBe('partial');
+      expect(result.snapshots[0], name).toStrictEqual(base.snapshots[0]);
+      expect(result.relations, name).toStrictEqual(base.relations);
+    }
+  });
+
+  it('wb-4ap.3: a malformed row neither throws nor poisons its sibling - in [malformed, stale] the stale sibling keeps subjectBasis B', () => {
+    for (const [name, row] of malformed) {
+      const result = forgeGateTopology(withPackages(row, {...staleRow, ref: 'code:sibling'}), context);
+      expect(ownKeys(result.snapshots[1]), name).not.toContain('subjectBasis');
+      expect(result.snapshots[2].subjectBasis, name).toBe(B);
+      expect(result.snapshots[2].node.statusText, name).toBe(`${F8_TEXT} · basis STALE`);
+      expect(result.diagnostics, name).toHaveLength(1);
+    }
+  });
+
+  it('wb-4ap.3: the withheld-basis diagnostic names its package through the shared label layout - a credential-shaped ref is redacted there as in the title', () => {
+    const result = forgeGateTopology(withPackages(described({freshness: 'FRESH'}, {ref: 'code:Bearer PLANTED-FAKE-TOKEN'})), context);
+    expect(result.diagnostics).toHaveLength(1);
+    expect(result.diagnostics[0]).toMatch(/\bwithheld\b/);
+    expect(result.diagnostics[0]).toContain('[REDACTED]');
+    expect(result.diagnostics[0]).not.toContain('PLANTED-FAKE-TOKEN');
+    expect(result.snapshots[1].node.title).not.toContain('PLANTED-FAKE-TOKEN');
+  });
+});
+
+describe('wb-4ap.4 COLLECTIVE-ADAPTATION-R4: a row without a descriptor gets no basis, no basis word and its 9df9a03 node; the workspace digest is never a package basis', () => {
+  it('F12 (wb-4ap.4): reading(SOURCE) keeps the F8 node literal, no subjectBasis and the 9df9a03 diagnostics (none)', () => {
+    const result = forgeGateTopology(reading(SOURCE), context);
+    expect(result.snapshots[1].node).toStrictEqual({title: 'Forge package code:pi-subagents', type: 'sdk-operation', statusText: F8_TEXT, statusTone: 'unknown'});
+    expect(ownKeys(result.snapshots[1])).not.toContain('subjectBasis');
+    expect(result.diagnostics).toStrictEqual([]);
+    expect(result.snapshots[1].node.statusText).not.toMatch(/\bbasis\b/);
+  });
+
+  it('wb-4ap.4: last_result_state null (the producer value for a null last_result) is descriptor-less - byte-identical projection, no basis word, no diagnostic', () => {
+    expect(JSON.stringify(forgeGateTopology(withPackages({...HISTORICAL, last_result_state: null}), context))).toBe(JSON.stringify(forgeGateTopology(withPackages(HISTORICAL), context)));
+    expect(JSON.stringify(forgeGateTopology(withPackages({...MEASURED_ROW, last_result_state: null}), context))).toBe(JSON.stringify(forgeGateTopology(withPackages(DESCRIPTORLESS), context)));
+    const fresh = forgeGateTopology(withPackages({ref: 'code:fresh', last_result: null, last_result_state: null}), context);
+    expect(fresh.snapshots[1].node).toMatchObject({statusText: 'no last_result (historical; authoritative_current=unknown)', statusTone: 'unknown'});
+    expect(ownKeys(fresh.snapshots[1])).not.toContain('subjectBasis');
+    expect(fresh.diagnostics).toStrictEqual([]);
+  });
+
+  it('wb-4ap.4 never-case: the measured row without its descriptor, every other measured producer field kept, renders the F8 node with no basis', () => {
+    const result = forgeGateTopology(withPackages(DESCRIPTORLESS), context);
+    expect(result.snapshots[1].node).toStrictEqual({title: 'Forge package code:pi-subagents', type: 'sdk-operation', statusText: F8_TEXT, statusTone: 'unknown'});
+    for (const snapshot of result.snapshots) expect(ownKeys(snapshot)).not.toContain('subjectBasis');
+    expect(JSON.stringify(result)).not.toMatch(/\bbasis\b/);
+    expect(result.diagnostics).toStrictEqual([]);
+  });
+
+  it('wb-4ap.4 never-case: mixed [HISTORICAL, stale] under a workspace source_snapshot_id/gated_tree - only the described row has a basis, B, and the workspace digest appears nowhere', () => {
+    const workspaceDigest = `dirty-tree/v1:${'a'.repeat(40)}:sha256:${'c'.repeat(64)}`;
+    const value = reading({...SOURCE, data: {source_snapshot_id: workspaceDigest, gated_tree: workspaceDigest, packages: [HISTORICAL, {...staleRow, ref: 'code:described'}]}});
+    // native-evidence reads that digest as the workspace source basis; it is never a package's basis.
+    expect(nativeEvidence('forge.gate.status', value).sourceBasis).toBe(workspaceDigest);
+    const result = forgeGateTopology(value, context);
+    expect(ownKeys(result.snapshots[0])).not.toContain('subjectBasis');
+    expect(ownKeys(result.snapshots[1])).not.toContain('subjectBasis');
+    expect(result.snapshots[2].subjectBasis).toBe(B);
+    expect(JSON.stringify(result)).not.toContain(workspaceDigest);
+  });
+});
+
+describe('wb-4ap.5 COLLECTIVE-ADAPTATION-R5: a quoted freshness never confers current authority', () => {
+  it('F13 (wb-4ap.5): withPackages(current) keeps unknown tone, partial coverage, the historical label and the workspace literal', () => {
+    const result = forgeGateTopology(withPackages(currentRow), context);
+    expect(result.snapshots[1].node.statusTone).toBe('unknown');
+    expect(result.snapshots[1].coverage).toBe('partial');
+    expect(result.snapshots[1].node.statusText).toMatch(/historical; authoritative_current=false/);
+    expect(result.snapshots[0].node.statusTone).toBe('unknown');
+    expect(result.snapshots[0].node.statusText).toBe('success · FORGE_OK · verification indeterminate');
+    expect(result.snapshots[0].coverage).toBe('partial');
+  });
+
+  it('wb-4ap.5 never-case: no word changes a tone, a coverage, the workspace snapshot or the native label, on historical and current rows alike', () => {
+    for (const freshness of FRESHNESS_WORDS) {
+      for (const authoritative of [false, true]) {
+        const plain = {...DESCRIPTORLESS, authoritative_current: authoritative};
+        const before = forgeGateTopology(withPackages(plain), context);
+        const after = forgeGateTopology(withPackages({...plain, last_result_state: {...MEASURED_STATE, freshness}}), context);
+        const facets = (topology: typeof before) => topology.snapshots.map(snapshot => [snapshot.node.statusTone, snapshot.coverage]);
+        expect(facets(after), `${freshness}/${authoritative}`).toStrictEqual(facets(before));
+        expect(after.snapshots[0], `${freshness}/${authoritative}`).toStrictEqual(before.snapshots[0]);
+        expect(after.snapshots[1].node.statusText.startsWith(before.snapshots[1].node.statusText), `${freshness}/${authoritative}`).toBe(true);
+      }
+    }
+  });
+
+  it("wb-4ap.5: a current('code:a', 'success') row with freshness STALE keeps the success tone and the (current) label, and the workspace stays success", () => {
+    const result = forgeGateTopology(withPackages({...current('code:a', 'success'), last_result_state: MEASURED_STATE}), context);
+    expect(result.snapshots[1].node.statusTone).toBe('success');
+    expect(result.snapshots[1].node.statusText.startsWith('success (current)')).toBe(true);
+    expect(result.snapshots[0].node.statusTone).toBe('success');
+    expect(result.snapshots[0].node.statusText).toBe('success · FORGE_OK · current gate passed');
+    expect(result.snapshots.map(snapshot => snapshot.coverage)).toStrictEqual(['complete', 'complete']);
+  });
+
+  it('wb-4ap.5 static pin: the tone and coverage expressions of forge-observer.ts read pkg.current, pkg.lastResult, readSucceeded and verdict only - no freshness identifier', () => {
+    const source = ts.createSourceFile('forge-observer.ts', workbenchSource('forge-observer.ts'), ts.ScriptTarget.Latest, true);
+    const derivations: ts.Node[] = [];
+    const locate = (node: ts.Node): void => {
+      if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && ['judged', 'allCurrentSuccess', 'tone', 'packageTone'].includes(node.name.text) && node.initializer) derivations.push(node.initializer);
+      if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === 'snapshot' && node.arguments[2]) derivations.push(node.arguments[2]);
+      if (ts.isPropertyAssignment(node) && ts.isIdentifier(node.name) && node.name.text === 'statusTone') derivations.push(node.initializer);
+      ts.forEachChild(node, locate);
+    };
+    locate(source);
+    // judged, allCurrentSuccess, tone and packageTone; the workspace and package coverage arguments; the two statusTone fields.
+    expect(derivations).toHaveLength(8);
+    const names = new Set<string>();
+    const members = new Set<string>();
+    const collect = (node: ts.Node): void => {
+      if (ts.isIdentifier(node)) names.add(node.text);
+      if (ts.isPropertyAccessExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === 'pkg') members.add(node.name.text);
+      ts.forEachChild(node, collect);
+    };
+    for (const node of derivations) collect(node);
+    expect(names.has('freshness')).toBe(false);
+    const allowed = new Set(['packages', 'length', 'every', 'some', 'pkg', 'current', 'lastResult', 'judged', 'allCurrentSuccess', 'FAILED', 'has', 'readSucceeded', 'verdict', 'undefined', 'tone', 'packageTone']);
+    expect([...names].filter(name => !allowed.has(name))).toStrictEqual([]);
+    expect([...members].sort()).toStrictEqual(['current', 'lastResult']);
+  });
+});
+
+describe('wb-4ap.6 COLLECTIVE-ADAPTATION-R6: the word is echoed from the producer, never derived from the digests, the filesystem or Git', () => {
+  it('F14 (wb-4ap.6): basis(A, A) with STALE renders STALE and basis(A, B) with CURRENT renders CURRENT, the tone still unknown', () => {
+    const equal = forgeGateTopology(withPackages(described({invalidation_basis: basis(A, A), freshness: 'STALE'})), context).snapshots[1];
+    expect(equal.node.statusText).toMatch(word('STALE'));
+    expect(equal.node.statusText).not.toMatch(word('CURRENT'));
+    const differ = forgeGateTopology(withPackages(described({invalidation_basis: basis(A, B), freshness: 'CURRENT'})), context).snapshots[1];
+    expect(differ.node.statusText).toMatch(word('CURRENT'));
+    expect(differ.node.statusText).not.toMatch(word('STALE'));
+    expect(differ.node.statusTone).toBe('unknown');
+  });
+
+  it('wb-4ap.6: subjectBasis is derived_from in both cases (A, then B) and never source_digest', () => {
+    expect(forgeGateTopology(withPackages(described({invalidation_basis: basis(A, A), freshness: 'STALE'})), context).snapshots[1].subjectBasis).toBe(A);
+    expect(forgeGateTopology(withPackages(described({invalidation_basis: basis(A, B), freshness: 'CURRENT'})), context).snapshots[1].subjectBasis).toBe(B);
+    expect(forgeGateTopology(withPackages(described({invalidation_basis: basis(B, A), freshness: 'STALE'})), context).snapshots[1].subjectBasis).toBe(A);
+  });
+
+  it('wb-4ap.6: the quoted word is exactly the producer field - every closed word over equal, differing and swapped digests is echoed verbatim', () => {
+    for (const freshness of FRESHNESS_WORDS) {
+      for (const [sourceDigest, derivedFrom] of [[A, A], [A, B], [B, A]]) {
+        const pkg = forgeGateTopology(withPackages(described({invalidation_basis: basis(sourceDigest, derivedFrom), freshness})), context).snapshots[1];
+        expect(pkg.node.statusText, freshness).toBe(`${F8_TEXT} · basis ${freshness}`);
+        expect(pkg.subjectBasis, freshness).toBe(derivedFrom);
+      }
+    }
+  });
+
+  it('wb-4ap.6 static pin: forge-observer.ts imports no node:fs, node:child_process or Git helper (exactly its four modules) and never names source_digest', () => {
+    const text = workbenchSource('forge-observer.ts');
+    expect(text).not.toMatch(/from\s+['"]node:(fs|child_process)/);
+    expect(text).not.toMatch(/\brequire\s*\(|\bimport\s*\(/);
+    expect([...text.matchAll(/^import\s[^;]*?\sfrom\s+['"]([^'"]+)['"]/gm)].map(match => match[1]).sort()).toStrictEqual(['./capability-registry.js', './native-evidence.js', './observation.js', './redaction.js']);
+    expect(text).not.toMatch(/source_digest/);
+  });
+
+  it('wb-4ap.6: forgeGateTopology stays synchronous and pure - a declared non-async function, a non-thenable result, equal on a re-read, the reading untouched', () => {
+    const source = ts.createSourceFile('forge-observer.ts', workbenchSource('forge-observer.ts'), ts.ScriptTarget.Latest, true);
+    const declaration = source.statements.find((statement): statement is ts.FunctionDeclaration => ts.isFunctionDeclaration(statement) && statement.name?.text === 'forgeGateTopology');
+    expect(declaration).toBeDefined();
+    expect(declaration?.modifiers?.some(modifier => modifier.kind === ts.SyntaxKind.AsyncKeyword) ?? false).toBe(false);
+    expect(declaration?.asteriskToken).toBeUndefined();
+    const value = withPackages(structuredClone(staleRow));
+    const before = structuredClone(value);
+    const first = forgeGateTopology(value, context);
+    expect(first).not.toBeInstanceOf(Promise);
+    expect('then' in first).toBe(false);
+    expect(forgeGateTopology(value, context)).toStrictEqual(first);
+    expect(value).toStrictEqual(before);
+  });
+});
+
+describe('wb-4ap.8 COLLECTIVE-ADAPTATION-R8: descriptor prose never surfaces; the descriptor contributes only its word and the subjectBasis facet', () => {
+  const ESC = String.fromCodePoint(0x1b);
+  const RLO = String.fromCodePoint(0x202e);
+  const planted = described({note: `PLANTED-NOTE ${ESC}[2Jwipe${RLO}`, source_ref: ['PLANTED-REF#cmd_9'], state_class: 'PLANTED-CLASS', semantic_owner: 'PLANTED-OWNER', authoritative_read_source: 'PLANTED-SOURCE'});
+
+  it('F16 (wb-4ap.8): a planted note, source_ref, state_class, semantic_owner and authoritative_read_source never surface, nor any control or bidi unit', () => {
+    const result = forgeGateTopology(withPackages(planted), context);
+    expect(JSON.stringify(result)).not.toMatch(/PLANTED-/);
+    expect(JSON.stringify(result)).not.toMatch(UNSAFE);
+    for (const snapshot of result.snapshots) for (const text of [snapshot.node.title, snapshot.node.statusText]) expect(text).not.toMatch(UNSAFE);
+    for (const diagnostic of result.diagnostics) {
+      expect(diagnostic).not.toMatch(/PLANTED-/);
+      expect(diagnostic).not.toMatch(UNSAFE);
+    }
+  });
+
+  it('wb-4ap.8: the measured descriptor prose never surfaces either - its note, source_ref entries, state_class and declared roots', () => {
+    const serialized = JSON.stringify(forgeGateTopology(withPackages(staleRow), context));
+    const refs = Array.isArray(MEASURED_STATE.source_ref) ? MEASURED_STATE.source_ref.filter((ref): ref is string => typeof ref === 'string') : [];
+    const roots = Array.isArray(MEASURED_BASIS.declared_roots) ? MEASURED_BASIS.declared_roots.filter((root): root is string => typeof root === 'string' && root.includes('/')) : [];
+    expect(refs.length).toBeGreaterThan(0);
+    expect(roots.length).toBeGreaterThan(0);
+    for (const prose of [String(MEASURED_STATE.note), String(MEASURED_STATE.state_class), ...refs, ...roots]) expect(serialized).not.toContain(prose);
+  });
+
+  it('wb-4ap.8: the descriptor contributes exactly its word and the subjectBasis facet - planted equals measured, and measured is the descriptor-less twin plus those two', () => {
+    expect(forgeGateTopology(withPackages(planted), context)).toStrictEqual(forgeGateTopology(withPackages(staleRow), context));
+    const plain = forgeGateTopology(withPackages(DESCRIPTORLESS), context).snapshots[1];
+    expect(forgeGateTopology(withPackages(staleRow), context).snapshots[1]).toStrictEqual({...plain, subjectBasis: B, node: {...plain.node, statusText: `${plain.node.statusText} · basis STALE`}});
+  });
+
+  it('wb-4ap.8: a 300-character freshness is malformed under R3 - withheld as basis UNKNOWN, never truncated into presentation', () => {
+    const long = `CURRENT${'Q'.repeat(293)}`;
+    expect(long).toHaveLength(300);
+    const result = forgeGateTopology(withPackages(described({freshness: long})), context);
+    expect(result.snapshots[1].node.statusText).toBe(`${F8_TEXT} · basis UNKNOWN`);
+    expect(ownKeys(result.snapshots[1])).not.toContain('subjectBasis');
+    expect(result.diagnostics).toHaveLength(1);
+    expect(JSON.stringify(result)).not.toContain('QQQQ');
+    expect(JSON.stringify(result)).not.toContain('[truncated]');
   });
 });

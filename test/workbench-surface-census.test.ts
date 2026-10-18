@@ -34,8 +34,24 @@
  *   binary, and it opens no network socket. Every boot and reload in modes A-D and the workflowsEnabled=false
  *   variant, and every grant probe in modes C and D, must add zero to all three. Outside the witness: process creation
  *   that bypasses node:child_process (native addons, process.binding), a synchronous entry point captured before this
- *   file ran (vitest's own runtime only; nothing under test loads earlier), UDP (dgram) and DNS lookups. Every boot is
- *   hermetic (hermeticDir isolates HOME and the agent dir).
+ *   file ran (vitest's own runtime only; nothing under test loads earlier), UDP (dgram) and DNS lookups, and native reach
+ *   DEFERRED past the file's lifetime: no in-process window can see a timer that fires after the file has ended (fake
+ *   timers are a forbidden marker here, so none is used). Every boot is hermetic (hermeticDir isolates HOME and the agent
+ *   dir).
+ * Window scoping (wb-d1q). Every zero-reach assertion first awaits a macrotask drain (a zero-delay timer, then an
+ *   immediate), so reach deferred with setTimeout(0), setImmediate, process.nextTick or queueMicrotask lands inside the
+ *   assertion's own window and reds ITS row instead of surfacing in the calibration row. A file-level afterAll then
+ *   asserts ONE named judgment, fileTotalReachProblem (a drain, then the TOTAL reach held equal to the calibration's own
+ *   reach: the sum of what each calibration case below declares it caused), and a falsifier row at the end of this file
+ *   defers one counted reach past every row window and requires that same judgment to name it, so a bound compared with
+ *   itself or read without its drain reds in-file. What a deferral that outlives the drain does: one longer than the drain
+ *   but inside the file's lifetime reds the file through the total bound AND may red whichever later row's window it lands
+ *   in, for the WRONG cause (measured: 10 and 25 ms land in the mode D boot and probe rows, 30 and 40 ms in the calibration
+ *   rows); the boundaries are timing-dependent, not exact (a 60 ms deferral measured both red,
+ *   by the afterAll alone, and green). Outside the witness by construction, and not provable by any in-file row: (1) a deferral that
+ *   fires after the file has ended (measured: 100 ms, 250 ms, 400 ms and 1500 ms scratch spawns on the workflow_observe
+ *   refusal path still pass; no in-process window can see them, and fake timers are a forbidden marker here); (2) deletion
+ *   of the afterAll hook call itself, because the falsifier row asserts the judgment function, not that the hook calls it.
  * A later registration bead updates WORKBENCH_TOOLS in the same change (a one-line edit): that is the census doing its job.
  */
 import { execFile } from "node:child_process";
@@ -90,7 +106,14 @@ vi.mock("@furnace/sdk", async importOriginal => {
   }
   return { ...original, Furnace: CountedFurnace };
 });
-afterAll(() => native.restore());
+afterAll(async () => {
+  try {
+    const problem = await fileTotalReachProblem();
+    expect(problem, "the file's total native reach must equal the calibration's own reach").toBeUndefined();
+  } finally {
+    native.restore();
+  }
+});
 
 interface NativeReach {
   spawns: number;
@@ -103,19 +126,41 @@ function reachedSince(before: NativeReach): NativeReach {
   const now = reach();
   return { spawns: now.spawns - before.spawns, connects: now.connects - before.connects, furnaceClients: now.furnaceClients - before.furnaceClients };
 }
-/** Asserts that nothing since `before` reached a native or provider path; the message carries the exact counts. */
-function expectNoReach(before: NativeReach, where: string): void {
+/** The reach each calibration case below has declared it caused; the afterAll total bound compares against this sum. */
+const calibrated: NativeReach = { spawns: 0, connects: 0, furnaceClients: 0 };
+/** One macrotask drain: a zero-delay timer, then an immediate, so a deferred effect lands before the counters are read. */
+async function drain(): Promise<void> {
+  await new Promise<void>(resolve => setTimeout(resolve, 0));
+  await new Promise<void>(resolve => setImmediate(resolve));
+}
+/** Names every field where the file-level total differs from the calibration's own reach; undefined when equal. */
+function totalReachProblem(total: NativeReach, expected: NativeReach): string | undefined {
+  const keys = ["spawns", "connects", "furnaceClients"] as const;
+  const differing = keys.filter(key => total[key] !== expected[key]).map(key => `${key} ${total[key]} (calibration ${expected[key]})`);
+  return differing.length ? `total native reach differs from the calibration reach: ${differing.join(", ")}` : undefined;
+}
+/** The file-level judgment the afterAll asserts: after a macrotask drain, the file's total native reach against the calibration's own reach; undefined when equal. */
+async function fileTotalReachProblem(): Promise<string | undefined> {
+  await drain();
+  return totalReachProblem(reach(), calibrated);
+}
+/** Asserts, after a macrotask drain, that nothing since `before` reached a native or provider path; the message carries the exact counts. */
+async function expectNoReach(before: NativeReach, where: string): Promise<void> {
+  await drain();
   const reached = reachedSince(before);
   expect(reached, `${where} reached a native or provider path: ${JSON.stringify(reached)}`).toEqual(NO_NATIVE);
 }
 
 const LEGACY_TOOLS = ["Agent", "SubagentWorkflow", "get_subagent_result", "steer_subagent"];
 const WORKBENCH_TOOLS = [
+  "forge_gate_run",
   "furnace_observe",
   "workbench_catalog",
   "workflow_catalog",
   "workflow_compare",
+  "workflow_control",
   "workflow_detached",
+  "workflow_execute",
   "workflow_inspect",
   "workflow_observe",
   "workflow_reconcile",
@@ -129,6 +174,7 @@ const GRANTS = [
   "workbench:observe",
   "furnace:inspect",
   "forge:inspect",
+  "forge:run",
   "claude:transcript",
   "discover:forge.gate.status",
   "invoke:forge.gate.status",
@@ -167,7 +213,7 @@ async function boot(settings: Record<string, unknown>): Promise<Census> {
   const context = ctx({ cwd: sandbox.dir });
   const start = booted.lifecycle.get("session_start");
   await start?.({}, context);
-  expectNoReach(before, `booting ${JSON.stringify(settings)}`);
+  await expectNoReach(before, `booting ${JSON.stringify(settings)}`);
   return {
     booted,
     tools: [...booted.tools.keys()].sort(),
@@ -179,7 +225,7 @@ async function boot(settings: Record<string, unknown>): Promise<Census> {
     reload: async () => {
       const reloading = reach();
       await start?.({}, context);
-      expectNoReach(reloading, `reloading ${JSON.stringify(settings)}`);
+      await expectNoReach(reloading, `reloading ${JSON.stringify(settings)}`);
     },
   };
 }
@@ -213,9 +259,18 @@ const PROBES: Array<{ tool: string; params: Params; zeroGrant: string; sameWhenU
   { tool: "workflow_catalog", params: {}, zeroGrant: "Permission denied: workbench:design grant required." },
   { tool: "workflow_compare", params: { referenceTask: "wf_a", candidateTask: "wf_b" }, zeroGrant: "Permission denied: design and observe grants required." },
   { tool: "furnace_observe", params: { runId: "not-a-run" }, zeroGrant: "Permission denied: furnace:inspect grant required." },
+  // wb-a3s: an absolute target that resolves nowhere inside the bound workspace is refused before any connection is opened.
+  { tool: "forge_gate_run", params: { target: "/census/not-within-the-workspace" }, zeroGrant: "Permission denied: forge:run grant required." },
   { tool: "workflow_detached", params: { action: "inspect", invocationId: "inv-census" }, zeroGrant: "Permission denied: explicit detached launch or observe grant required." },
+  // Exact workbench:execute (not in mode D's list) gates this tool; the typed refusal is identical for every caller without it
+  // and names no invocation reference (nothing addressable was launched), so mode D asserts only that it is not a permission denial.
+  { tool: "workflow_execute", sameWhenUngranted: true, params: { definitionRef: { kind: "script", id: "missing.js", schemaVersion: "workflow-script/v1", artifactDigest: `sha256:${"0".repeat(64)}` }, input: null, hostMode: "embedded" }, zeroGrant: '{"contract":"workbench.tool-reply/v1","tool":"workflow_execute","ok":false,"invoked":false,"status":"refused","completion":"not-asserted","nativeRefs":[],"error":{"code":"missing-execute-grant","message":"missing exact grant workbench:execute"}}' },
   { tool: "workflow_observe", params: { taskId: "bad" }, zeroGrant: "Permission denied: workbench:observe grant required." },
   { tool: "workflow_reconcile", params: { taskId: "wf_abcdef123456", action: "inspect" }, zeroGrant: "Permission denied: workbench:observe grant required." },
+  // Exact control:<provider>.<action> grants (not in mode D's list) gate this tool; the decision core's observer-only denial
+  // is identical for every caller without a control grant and names no target state, so mode D asserts only that it is not
+  // a permission denial. The denial renders before any adapter or native path is reached.
+  { tool: "workflow_control", sameWhenUngranted: true, params: { target: { provider: "furnace", type: "run", id: "frn-run-census" }, action: "stop", confirmed: true }, zeroGrant: '{"contract":"workbench.tool-reply/v1","tool":"workflow_control","ok":false,"invoked":false,"status":"refused","completion":"not-asserted","control":{"status":"denied","category":"authorization","policy":"observer-only","effect":"none","reason":"Observer grants never control; no control grant is present."},"truncated":false,"error":{"code":"observer-only","category":"authorization","message":"observer-only"}}' },
 ];
 const DENIAL = /Permission denied|grant required/i;
 
@@ -320,7 +375,7 @@ describe("registered Pi surface census", () => {
     expect(PROBES.map(probe => probe.tool).sort()).toEqual(WORKBENCH_TOOLS);
     const before = reach();
     for (const probe of PROBES) expect(await reply(census, probe.tool, probe.params, dir), probe.tool).toBe(probe.zeroGrant);
-    expectNoReach(before, "the zero-grant refusal path");
+    await expectNoReach(before, "the zero-grant refusal path");
   });
 
   it("mode D (every grant) answers no workbench tool with a permission denial and reaches no native path", async () => {
@@ -332,7 +387,7 @@ describe("registered Pi surface census", () => {
       expect(text, `${probe.tool} must answer past the grant check`).not.toMatch(DENIAL);
       if (!probe.sameWhenUngranted) expect(text, `${probe.tool} must not equal its zero-grant refusal`).not.toBe(probe.zeroGrant);
     }
-    expectNoReach(before, "the granted probe path");
+    await expectNoReach(before, "the granted probe path");
   });
 });
 
@@ -354,11 +409,16 @@ describe("native-path witness calibration (the zero-reach assertions above can f
       pending.end();
     });
     expect(reachedSince(before), "Node's http client connects through net.Socket.prototype.connect").toEqual({ spawns: 2, connects: 1, furnaceClients: 0 });
+    calibrated.spawns += 2;
+    calibrated.connects += 1;
   });
 
   it("keeps child_process behaviour real: execFile still carries util.promisify.custom and promisifies to {stdout, stderr}", async () => {
     expect(Object.getOwnPropertySymbols(execFile), "util.promisify.custom on the execFile modules under test import").toContain(promisify.custom);
+    const before = reach();
     expect(await promisify(execFile)("true")).toEqual({ stdout: "", stderr: "" });
+    expect(reachedSince(before), "the promisified execFile spawns `true` once through the counted funnel").toEqual({ spawns: 1, connects: 0, furnaceClients: 0 });
+    calibrated.spawns += 1;
   });
 
   it("counts Furnace clients through a call-through subclass: the real constructor runs", () => {
@@ -367,5 +427,74 @@ describe("native-path witness calibration (the zero-reach assertions above can f
     expect(client.binary, "the real Furnace constructor ran").toBe("furnace-census");
     expect(typeof client.version, "the real client surface is present").toBe("function");
     expect(reachedSince(before)).toEqual({ spawns: 0, connects: 0, furnaceClients: 1 });
+    calibrated.furnaceClients += 1;
+  });
+});
+
+/** Reach the witness can only see after a macrotask: each mode defers one counted native effect past the call that made it. */
+const DEFERRALS: Array<[string, (bump: () => void) => void]> = [
+  ["zero-delay setTimeout", bump => void setTimeout(bump, 0)],
+  ["setImmediate", bump => void setImmediate(bump)],
+  ["process.nextTick", bump => process.nextTick(bump)],
+  ["queueMicrotask", bump => queueMicrotask(bump)],
+];
+
+describe("zero-reach drain and total-reach bound (wb-d1q: deferred native reach cannot hide past the assertion window)", () => {
+  it("the deferral modes are exactly the four named, in order (an emptied or shortened table cannot pass silently)", () => {
+    expect(DEFERRALS.map(([name]) => name)).toEqual(["zero-delay setTimeout", "setImmediate", "process.nextTick", "queueMicrotask"]);
+  });
+
+  it.each(DEFERRALS)("a native effect deferred through %s reds its OWN zero-reach assertion, naming where", async (_name, defer) => {
+    const before = reach();
+    const bump = (): void => {
+      native.spawns += 1;
+    };
+    defer(bump);
+    try {
+      await expect(expectNoReach(before, "the deferred-reach row")).rejects.toThrow(/the deferred-reach row reached a native or provider path.*"spawns":1/);
+    } finally {
+      await new Promise<void>(resolve => setImmediate(resolve));
+      native.spawns -= 1;
+    }
+  });
+
+  it("an assertion with nothing deferred still resolves (the drain does not manufacture reach)", async () => {
+    await expect(expectNoReach(reach(), "the control row")).resolves.toBeUndefined();
+  });
+
+  it("totalReachProblem is silent at exactly the calibration reach and names every field that differs in either direction", () => {
+    const calibration: NativeReach = { spawns: 3, connects: 1, furnaceClients: 1 };
+    expect(totalReachProblem({ ...calibration }, calibration)).toBeUndefined();
+    const checked: string[] = [];
+    for (const key of ["spawns", "connects", "furnaceClients"] as const) {
+      for (const delta of [1, -1]) {
+        const total = { ...calibration, [key]: calibration[key] + delta };
+        expect(totalReachProblem(total, calibration), `${key} ${delta > 0 ? "above" : "below"} calibration`).toContain(key);
+        checked.push(`${key} ${delta > 0 ? "above" : "below"}`);
+      }
+    }
+    expect(checked, "all six field x direction checks ran").toEqual([
+      "spawns above",
+      "spawns below",
+      "connects above",
+      "connects below",
+      "furnaceClients above",
+      "furnaceClients below",
+    ]);
+  });
+
+  it("the file-level judgment names a counted reach deferred past every row window (the afterAll's own falsifier)", async () => {
+    const bump = (): void => {
+      native.spawns += 1;
+    };
+    // Deferred, and deliberately not awaited by this row: only the judgment's own drain can see it.
+    setTimeout(bump, 0);
+    try {
+      const problem = await fileTotalReachProblem();
+      expect(String(problem), "the file-level judgment must name the deferred spawn").toContain("spawns");
+    } finally {
+      await drain();
+      native.spawns -= 1;
+    }
   });
 });

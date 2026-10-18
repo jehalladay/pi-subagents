@@ -5,6 +5,9 @@
  * the claude transcript read, the furnace attempt-log read and the forge
  * operation read are adapted to the docs/20 reader seams and handed to
  * `createEvidenceLoaders`, whose live exact-grant check governs every load.
+ * The claude seam resolves the REQUESTED node's own listing (wb-idq), never
+ * the first node in scope that lists the ref, and every capture time comes
+ * from the clock the host injects at boot: this module reads no host clock.
  * The forge adapter re-reads through the registered `forge.gate.status`
  * capability under the operator's grants and carries the reader's own
  * freshness and truncation labels through unchanged. Wiring only: the store
@@ -18,12 +21,12 @@
 import type { CapabilityRegistry } from "./capability-registry.js";
 import type { ClaudeTranscriptRow } from "./claude-transcript.js";
 import { EVIDENCE_TRUNCATED_MARK, EvidenceRefusal, EvidenceStore } from "./evidence-loader.js";
-import { createEvidenceLoaders, type ForgeEvidenceRead, type FurnaceEvidenceRead } from "./evidence-producers.js";
+import { createEvidenceLoaders, type ForgeEvidenceRead, type FurnaceEvidenceRead, sameNativeRef } from "./evidence-producers.js";
 import { ForgeEvidenceError, readForgeOperationEvidence } from "./forge-evidence.js";
 import { readFurnaceAttemptLogEvidence } from "./furnace-evidence.js";
 import type { FurnaceObserverClient } from "./furnace-observer.js";
 import { loadWorkbenchNative } from "./native-modules.js";
-import type { ObservationProjection, ObservationScope } from "./observation.js";
+import type { NativeRef, ObservationProjection, ObservationScope } from "./observation.js";
 
 const EVIDENCE_MAX_ENTRIES = 32;
 const EVIDENCE_MAX_BYTES = 65_536;
@@ -46,15 +49,16 @@ export interface WorkbenchEvidenceDeps {
    */
   registry?(workspace: string): Pick<CapabilityRegistry, "invoke">;
   /** Test seams; the defaults are the landed reader and the real SDK client, loaded on first use. */
-  claudeRead?(sessionId: string, cwd: string): Promise<readonly ClaudeTranscriptRow[]>;
+  claudeRead?(sessionId: string, cwd: string, limit: number): Promise<readonly ClaudeTranscriptRow[]>;
   furnaceClient?(workspace: string): Pick<FurnaceObserverClient, "logs"> | Promise<Pick<FurnaceObserverClient, "logs">>;
-  now?(): Date;
+  /** The host's capture clock, injected once at boot; the store never falls back to a clock of its own. */
+  now(): Date;
 }
 
 export function createWorkbenchEvidenceStore(deps: WorkbenchEvidenceDeps): EvidenceStore {
   const readTranscript =
     deps.claudeRead ??
-    (async (sessionId: string, cwd: string) => (await loadWorkbenchNative()).readClaudeTranscript(sessionId, cwd));
+    (async (sessionId: string, cwd: string, limit: number) => (await loadWorkbenchNative()).readClaudeTranscript(sessionId, cwd, limit));
   const furnaceClient =
     deps.furnaceClient ??
     (async (workspace: string) => {
@@ -65,14 +69,17 @@ export function createWorkbenchEvidenceStore(deps: WorkbenchEvidenceDeps): Evide
   const forge =
     registry === undefined
       ? undefined
-      : async ({ operationId, signal }: { operationId: string; signal: AbortSignal }): Promise<ForgeEvidenceRead> => {
+      : async ({ operationId, nativeRef, signal }: { operationId: string; nativeRef: NativeRef; signal: AbortSignal }): Promise<ForgeEvidenceRead> => {
           const scope = deps.scope();
           if (scope === undefined) throw new EvidenceRefusal("transport");
           const ref = `forge-operation:${operationId}`;
-          // Only an operation some observed forge node lists as evidence is ever re-read; an
-          // unobserved one refuses unauthorized with no capability call issued.
-          const owningNode = deps.projection.query({ scope, evidence: ref, limit: 1 }).nodes[0];
-          if (owningNode === undefined || !owningNode.evidenceRefs.includes(ref)) throw new EvidenceRefusal("unauthorized");
+          // Ownership resolves by the REQUESTED node, the furnace adapter's bound shape below (wb-cz9): only an operation the
+          // node the request names lists as evidence is ever re-read. An unobserved node, or one that does not list the ref,
+          // refuses unauthorized with no capability call issued, never served another node's re-read under its own key.
+          const owningNode = deps.projection.query({ scope, ref: nativeRef, limit: 1 }).nodes[0];
+          const owner = owningNode?.nativeRef;
+          const requested = owner !== undefined && sameNativeRef(owner, nativeRef);
+          if (owningNode === undefined || !requested || !owningNode.evidenceRefs.includes(ref)) throw new EvidenceRefusal("unauthorized");
           try {
             const content = await readForgeOperationEvidence(ref, {
               grants: deps.grants,
@@ -86,7 +93,7 @@ export function createWorkbenchEvidenceStore(deps: WorkbenchEvidenceDeps): Evide
                   principal: { id: scope.principal, role: "local-operator" },
                   workspace: scope.workspace,
                 }),
-              now: () => (deps.now?.() ?? new Date()).toISOString(),
+              now: () => deps.now().toISOString(),
               maxBytes: EVIDENCE_FORGE_MAX_BYTES,
               signal,
               // The owning node's freshness is the host's view of the source: anything but current labels the read stale.
@@ -116,12 +123,18 @@ export function createWorkbenchEvidenceStore(deps: WorkbenchEvidenceDeps): Evide
         };
   const loaders = createEvidenceLoaders({
     grants: deps.grants,
-    now: () => (deps.now?.() ?? new Date()),
+    now: () => deps.now(),
     ...(forge !== undefined ? { forge } : {}),
-    claude: async ({ sessionId }) => {
-      const cwd = deps.cwd();
-      if (cwd === undefined) throw new EvidenceRefusal("transport");
-      return readTranscript(sessionId, cwd);
+    claude: {
+      readTranscript: (sessionId, cwd, limit) => readTranscript(sessionId, cwd, limit),
+      cwd: () => deps.cwd(),
+      // Only the node the ref was requested on, and only when it lists the ref: the loader refuses unauthorized otherwise.
+      owningNode: (scope, nativeRef, evidenceRef) => {
+        const node = deps.projection.query({ scope, ref: nativeRef, limit: 1 }).nodes[0];
+        return node === undefined || !node.evidenceRefs.includes(evidenceRef)
+          ? undefined
+          : { nativeRef: node.nativeRef, evidenceRefs: node.evidenceRefs, freshness: node.freshness };
+      },
     },
     furnace: async ({ runId, attemptId, maxBytes, signal }) => {
       const scope = deps.scope();
@@ -147,15 +160,23 @@ export function createWorkbenchEvidenceStore(deps: WorkbenchEvidenceDeps): Evide
         maxLines: EVIDENCE_MAX_LINES,
         timeoutMs: EVIDENCE_TIMEOUT_MS,
         signal,
-        capturedAt: () => (deps.now?.() ?? new Date()).toISOString(),
+        capturedAt: () => deps.now().toISOString(),
       });
+      // The furnace loader marks a lossy, incomplete or paged read truncated, and a budget-only cut too: a whole read the reader cut
+      // to its own line or row budget crosses the seam as budgetCut (wb-10v), so a read that dropped bytes is never reported whole.
+      // The store then adds its single [truncated], so the reader's own trailing "truncated (producer: ...)" line, present whenever
+      // the reader marked its read truncated, is stripped here and never shows beside it (wb-cz9 leg 2: one visible marker).
+      const receipt = content.producerReceipt;
+      const loaderMarked = !receipt.complete || receipt.lossy || receipt.nextCursor !== null;
+      const preview = content.truncated ? content.preview.slice(0, -1) : content.preview;
       return {
         runId,
         attemptId,
         stream: content.stream,
-        text: content.preview.join("\n"),
+        text: preview.join("\n"),
         complete: content.producerReceipt.complete,
         lossy: content.producerReceipt.lossy,
+        budgetCut: content.truncated && !loaderMarked,
         ...(content.producerReceipt.nextCursor !== null ? { nextCursor: content.producerReceipt.nextCursor } : {}),
         capturedAt: content.capturedAt,
         producerReceipt: content.producerReceipt.requestId,

@@ -6,11 +6,11 @@ language = "typescript"
 
 [build]
 backend = "typescript"
-gate = ["lint", "typing", "build", "test", "workbench-shell", "package-smoke"]
+gate = ["lint", "typing", "build", "test", "census", "workbench-shell", "package-smoke"]
 
 [build.commands]
 lint = "npm run lint"
-typing = "npm run typecheck"
+typing = "npm run typecheck && npm run typecheck:test"
 test = "npm run test"
 build = "npm run build"
 
@@ -19,7 +19,7 @@ command = "bash qa/workbench/smoke.sh"
 timeout = 120
 
 [build.commands.typecheck]
-command = "npm run typecheck"
+command = "npm run typecheck && npm run typecheck:test"
 
 [build.commands.native-read]
 command = "./node_modules/.bin/vitest run --config vitest.native.config.ts"
@@ -41,13 +41,25 @@ timeout = 120
 command = "./node_modules/.bin/vitest run --config vitest.furnace-hosted.config.ts"
 timeout = 240
 
+[build.commands.furnace-vc4-live]
+command = "node qa/workbench/live-furnace-vc4.mjs"
+timeout = 240
+
 [build.commands.claude-live]
 command = "./node_modules/.bin/vitest run --config vitest.claude-live.config.ts"
 timeout = 210
 
+[build.commands.claude-adverse-live]
+command = "node qa/workbench/live-adverse.mjs"
+timeout = 300
+
 [build.commands.package-smoke]
 command = "bash qa/workbench/package-smoke.sh"
 timeout = 120
+
+[build.commands.release-checklist]
+command = "node qa/workbench/release-checklist-receipt.mjs"
+timeout = 600
 
 [build.commands.install-smoke]
 command = "node qa/workbench/install-smoke.mjs"
@@ -152,3 +164,29 @@ timeout = 60
 [build.commands.timeline-grouped-bench]
 command = "node qa/workbench/timeline-grouped-bench.mjs"
 timeout = 300
+
+[build.commands.rf-preview-tsx]
+command = "./node_modules/.bin/vitest run --config vitest.rf-tsx.config.ts"
+timeout = 180
+
+[build.commands.forge-control-live]
+command = "./node_modules/.bin/vitest run --config vitest.forge-control-live.config.ts"
+timeout = 600
+
+[build.commands.furnace-control-live]
+command = "./node_modules/.bin/vitest run --config vitest.furnace-control-live.config.ts"
+timeout = 900
+
+[build.commands.detached-control-live]
+command = "./node_modules/.bin/vitest run --config vitest.detached-control-live.config.ts"
+timeout = 600
+
+[build.commands.claude-control-live]
+command = "./node_modules/.bin/vitest run --config vitest.claude-control-live.config.ts"
+timeout = 900
+
+[build.commands.census]
+command = "npm run test:census"
+timeout = 300
+after = ["test"]
+consumes = ["test"]

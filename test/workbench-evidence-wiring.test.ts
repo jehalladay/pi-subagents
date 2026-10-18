@@ -1,8 +1,10 @@
 /** wb-6ze.17: the owner wiring slice — host-built EvidenceStore and the dialog's load-evidence/abortAll wiring. */
+import { readFileSync } from "node:fs";
 import { describe, expect, it, vi } from "vitest";
 import { WorkflowDialog } from "../src/ui/workflow-dialog.js";
 import { CapabilityError } from "../src/workbench/capability-registry.js";
-import { createWorkbenchEvidenceStore } from "../src/workbench/evidence-wiring.js";
+import { CLAUDE_TRANSCRIPT_GRANT, sameNativeRef } from "../src/workbench/evidence-producers.js";
+import { createWorkbenchEvidenceStore, type WorkbenchEvidenceDeps } from "../src/workbench/evidence-wiring.js";
 import { type NativeRef, ObservationProjection, type ObservationScope } from "../src/workbench/observation.js";
 
 const scope: ObservationScope = { workspace: "/ws", principal: "local-operator:1:s1" };
@@ -10,6 +12,9 @@ const NOW = "2026-10-15T11:00:00Z";
 const runRef: NativeRef = { provider: "furnace", type: "run", id: "frn-run-r1", scope: "/ws" };
 const forgeRef: NativeRef = { provider: "forge", type: "gate-status", id: "workspace", scope: "/ws" };
 const OPERATION = "op_8f2c41";
+const CLAUDE_UUID = "11111111-2222-4333-8444-555555555555";
+const CLAUDE_REF = `claude-message:${CLAUDE_UUID}`;
+const claudeRef = (id: string): NativeRef => ({ provider: "claude-agent-sdk", type: "session", id });
 
 function projectionWithRun(): ObservationProjection {
   const projection = new ObservationProjection({ maxEvents: 16, maxNodes: 16, maxEdges: 16, maxQuery: 8 });
@@ -25,6 +30,15 @@ function projectionWithRun(): ObservationProjection {
     trace: { invocationId: "wf-evidence-1" },
     evidenceRefs: ["forge:gate.status:FORGE_OK", `forge-operation:${OPERATION}`],
   });
+  // The two Claude session nodes the claude cases request on; ownership is each node's own listing (wb-idq).
+  for (const id of ["sess-1", "sess-2"]) {
+    projection.refresh({
+      source: claudeRef(id), scope, capturedAt: NOW, observedAt: NOW,
+      node: { title: `Claude ${id}`, type: "agent" as const, statusText: "running", statusTone: "active" as const },
+      trace: { invocationId: "wf-evidence-1" },
+      evidenceRefs: [CLAUDE_REF],
+    });
+  }
   return projection;
 }
 
@@ -48,7 +62,7 @@ function wiringDeps(grants: string[]) {
       scope: () => scope,
       projection,
       cwd: () => "/ws",
-      claudeRead: async (sessionId: string) => [{ type: "assistant" as const, uuid: "u1", text: `hello ${sessionId}` }],
+      claudeRead: async (sessionId: string) => [{ type: "assistant" as const, uuid: CLAUDE_UUID, text: `hello ${sessionId}` }],
       furnaceClient: () => ({
         logs: {
           read: async (runId: string, options: { attempt: string; limit: number; stream: string }) => ({
@@ -80,32 +94,113 @@ describe("createWorkbenchEvidenceStore (host wiring)", () => {
     const { deps } = wiringDeps(grants);
     const store = createWorkbenchEvidenceStore(deps as never);
     const sessionRef: NativeRef = { provider: "claude-agent-sdk", type: "session", id: "sess-1" };
-    await store.request(scope, sessionRef, "claude-message:u1");
-    const loaded = store.get(scope, sessionRef, "claude-message:u1");
+    await store.request(scope, sessionRef, CLAUDE_REF);
+    const loaded = store.get(scope, sessionRef, CLAUDE_REF);
     expect(loaded.state).toBe("loaded");
     if (loaded.state === "loaded") expect(loaded.preview.join("\n")).toContain("hello sess-1");
     // Mid-view revocation: the next load refuses unauthorized; nothing cached is consulted.
     grants.length = 0;
     const otherRef: NativeRef = { provider: "claude-agent-sdk", type: "session", id: "sess-2" };
-    await store.request(scope, otherRef, "claude-message:u1");
-    expect(store.get(scope, otherRef, "claude-message:u1")).toMatchObject({ state: "unavailable", reason: "unauthorized" });
+    await store.request(scope, otherRef, CLAUDE_REF);
+    expect(store.get(scope, otherRef, CLAUDE_REF)).toMatchObject({ state: "unavailable", reason: "unauthorized" });
   });
 
-  it("loads a claude transcript row when the host supplies no clock (the shipped index.ts shape), stamping a parseable capturedAt", async () => {
-    // Without the wiring's own clock injection every shipped claude load would refuse transport at the loader.
+  it("wb-idq: the claude row is served by the claude-evidence module through the wiring: role prefix, module-bounded preview, the host's injected clock, the claude-message kind", async () => {
     const { deps } = wiringDeps(["claude:transcript"]);
-    const { now, ...clockless } = deps;
-    expect(now).toBeTypeOf("function");
-    expect("now" in clockless).toBe(false);
-    const store = createWorkbenchEvidenceStore(clockless as never);
-    const sessionRef: NativeRef = { provider: "claude-agent-sdk", type: "session", id: "sess-1" };
-    await store.request(scope, sessionRef, "claude-message:u1");
-    const loaded = store.get(scope, sessionRef, "claude-message:u1");
-    expect(loaded.state).toBe("loaded");
-    if (loaded.state === "loaded") {
-      expect(Number.isNaN(Date.parse(loaded.capturedAt))).toBe(false);
-      expect(loaded.preview.join("\n")).toContain("hello sess-1");
+    const store = createWorkbenchEvidenceStore(deps as never);
+    await store.request(scope, claudeRef("sess-1"), CLAUDE_REF);
+    const loaded = store.get(scope, claudeRef("sess-1"), CLAUDE_REF);
+    expect(loaded).toMatchObject({ state: "loaded", kind: "claude-message", provider: "claude-agent-sdk", freshness: "current", truncated: false, capturedAt: new Date(NOW).toISOString() });
+    if (loaded.state === "loaded") expect(loaded.preview).toStrictEqual(["assistant:", "hello sess-1"]);
+  });
+
+  it("wb-idq: a clockless host cannot build the store (the type refuses it) and index.ts injects the host clock at the boot seam", () => {
+    const { deps, projection } = wiringDeps(["claude:transcript"]);
+    expect(deps.now).toBeTypeOf("function");
+    const minimal: Omit<WorkbenchEvidenceDeps, "now"> = { grants: () => [], scope: () => scope, projection, cwd: () => "/ws" };
+    // @ts-expect-error the wiring requires the host clock, so a clockless store is unrepresentable (wb-563 F4 follow-up, wb-idq)
+    const build = () => createWorkbenchEvidenceStore(minimal);
+    expect(build).toBeTypeOf("function");
+    const source = readFileSync(new URL("../src/index.ts", import.meta.url), "utf8");
+    const call = source.slice(source.indexOf("evidence: createWorkbenchEvidenceStore({"));
+    expect(call.slice(0, call.indexOf("}),"))).toMatch(/\bnow: \(\) => new Date\(\)/);
+    // The gate's typing step compiles src only, so the type refusal above is also pinned at the source: the wiring's clock is
+    // required, neither the wiring nor the producers keep a clock of their own, and a claude seam is typed together with the clock.
+    const wiring = readFileSync(new URL("../src/workbench/evidence-wiring.ts", import.meta.url), "utf8");
+    expect(wiring).toMatch(/^\s*now\(\): Date;/m);
+    expect(wiring).not.toMatch(/\bnow\?\s*[(:]/);
+    expect(wiring).not.toMatch(/new Date\(\)/);
+    const producers = readFileSync(new URL("../src/workbench/evidence-producers.ts", import.meta.url), "utf8");
+    expect(producers).toMatch(/\{ readonly claude: ClaudeEvidenceSeam; readonly now: \(\) => Date \}/);
+    expect(producers).not.toMatch(/new Date\(\)/);
+  });
+
+  it("wb-idq: ownership is the requested node's own listing: a session that does not list the ref, an unobserved session and a tool-use node refuse unauthorized with no read", async () => {
+    const { deps, projection } = wiringDeps(["claude:transcript"]);
+    const readTranscript = vi.fn(async (sessionId: string) => [{ type: "assistant" as const, uuid: CLAUDE_UUID, text: `hello ${sessionId}` }]);
+    const store = createWorkbenchEvidenceStore({ ...deps, claudeRead: readTranscript } as never);
+    const silent = claudeRef("sess-silent");
+    projection.refresh({ source: silent, scope, capturedAt: NOW, observedAt: NOW, node: { title: "Claude silent", type: "agent" as const, statusText: "running", statusTone: "active" as const }, trace: { invocationId: "wf-evidence-1" } });
+    const toolUse: NativeRef = { provider: "claude-agent-sdk", type: "tool-use", id: "tool-1" };
+    projection.refresh({ source: toolUse, scope, capturedAt: NOW, observedAt: NOW, node: { title: "Tool", type: "agent" as const, statusText: "running", statusTone: "active" as const }, trace: { invocationId: "wf-evidence-1" }, evidenceRefs: [CLAUDE_REF] });
+    // A stale non-session node: the module's authorization refusal carries no freshness, exactly like the loader's own.
+    projection.markStale({ scope, ref: toolUse });
+    for (const requester of [silent, claudeRef("sess-unobserved"), toolUse]) {
+      await store.request(scope, requester, CLAUDE_REF);
+      expect(store.get(scope, requester, CLAUDE_REF), requester.id).toEqual({ state: "unavailable", reason: "unauthorized" });
     }
+    expect(readTranscript).not.toHaveBeenCalled();
+    await store.request(scope, claudeRef("sess-1"), CLAUDE_REF);
+    expect(store.get(scope, claudeRef("sess-1"), CLAUDE_REF)).toMatchObject({ state: "loaded" });
+    expect(readTranscript).toHaveBeenCalledTimes(1);
+  });
+
+  it("wb-idq: between sessions (no cwd) the claude row is a visible transport failure, never no-loader, and the transcript is never read", async () => {
+    const { deps } = wiringDeps(["claude:transcript"]);
+    const readTranscript = vi.fn(async () => []);
+    const store = createWorkbenchEvidenceStore({ ...deps, cwd: () => undefined, claudeRead: readTranscript } as never);
+    await store.request(scope, claudeRef("sess-1"), CLAUDE_REF);
+    expect(store.get(scope, claudeRef("sess-1"), CLAUDE_REF)).toEqual({ state: "unavailable", reason: "transport" });
+    expect(readTranscript).not.toHaveBeenCalled();
+  });
+
+  it("wb-idq: a failing transcript read on a stale owning node is transport plus stale with no native text; a clock seam that is not an instant is transport", async () => {
+    const { deps, projection } = wiringDeps(["claude:transcript"]);
+    projection.markStale({ scope, ref: claudeRef("sess-1") });
+    const failing = createWorkbenchEvidenceStore({ ...deps, claudeRead: async () => { throw new Error("socket closed: token=abc"); } } as never);
+    await failing.request(scope, claudeRef("sess-1"), CLAUDE_REF);
+    const entry = failing.get(scope, claudeRef("sess-1"), CLAUDE_REF);
+    expect(entry).toEqual({ state: "unavailable", reason: "transport", freshness: "stale" });
+    expect(JSON.stringify(entry)).not.toContain("token=abc");
+    const badClock = createWorkbenchEvidenceStore({ ...deps, now: () => new Date(Number.NaN) } as never);
+    await badClock.request(scope, claudeRef("sess-2"), CLAUDE_REF);
+    expect(badClock.get(scope, claudeRef("sess-2"), CLAUDE_REF)).toMatchObject({ state: "unavailable", reason: "transport" });
+  });
+
+  it("wb-idq: one visible truncation marker: a row the adapter clipped loads truncated with the store's [truncated] line only, and a whole row that merely ends in the module's marker text is kept verbatim", async () => {
+    const { deps } = wiringDeps(["claude:transcript"]);
+    const marker = "… truncated (bounded preview)";
+    const clipped = createWorkbenchEvidenceStore({ ...deps, claudeRead: async () => [{ type: "assistant" as const, uuid: CLAUDE_UUID, text: "cut here", clipped: true as const }] } as never);
+    await clipped.request(scope, claudeRef("sess-1"), CLAUDE_REF);
+    const entry = clipped.get(scope, claudeRef("sess-1"), CLAUDE_REF);
+    expect(entry).toMatchObject({ state: "loaded", truncated: true });
+    if (entry.state === "loaded") {
+      expect(entry.preview.filter(line => line === "[truncated]")).toEqual(["[truncated]"]);
+      expect(entry.preview.some(line => line.startsWith("… truncated"))).toBe(false);
+      expect(entry.preview.slice(0, 2)).toEqual(["assistant:", "cut here"]);
+    }
+    const literal = createWorkbenchEvidenceStore({ ...deps, claudeRead: async () => [{ type: "assistant" as const, uuid: CLAUDE_UUID, text: `line one\n${marker}` }] } as never);
+    await literal.request(scope, claudeRef("sess-2"), CLAUDE_REF);
+    expect(literal.get(scope, claudeRef("sess-2"), CLAUDE_REF)).toMatchObject({ state: "loaded", truncated: false, preview: ["assistant:", "line one", marker] });
+  });
+
+  it("wb-idq: the claude:transcript grant has one definition (claude-evidence.ts) and evidence-producers re-exports it", () => {
+    const root = new URL("../src/workbench/", import.meta.url);
+    const defining = ["claude-evidence.ts", "evidence-producers.ts", "evidence-wiring.ts", "claude-transcript.ts"]
+      .filter(file => /export const CLAUDE_TRANSCRIPT_GRANT\b/.test(readFileSync(new URL(file, root), "utf8")));
+    expect(defining).toEqual(["claude-evidence.ts"]);
+    expect(readFileSync(new URL("evidence-producers.ts", root), "utf8")).toMatch(/export \{ CLAUDE_TRANSCRIPT_GRANT \} from "\.\/claude-evidence\.js"/);
+    expect(CLAUDE_TRANSCRIPT_GRANT).toBe("claude:transcript");
   });
 
   it("loads a furnace attempt log through the landed reader, bound to the owning run node", async () => {
@@ -176,12 +271,217 @@ describe("createWorkbenchEvidenceStore (host wiring)", () => {
     invoke.mockRejectedValueOnce(new CapabilityError("authorization", "Forge read denied outside the authorized workspace scope."));
     await store.request(scope, forgeRef, `forge-operation:${OPERATION}`);
     expect(store.get(scope, forgeRef, `forge-operation:${OPERATION}`)).toMatchObject({ state: "unavailable", reason: "unauthorized" });
-    // A reading that names another operation is a visible transport failure, never a substituted result.
-    invoke.mockResolvedValueOnce(forgeReading(1, "op_other"));
+    // wb-cz9 re-expression: a never-ingested node id requesting a listed operation is refused by ownership before any
+    // re-read (this row used to reach the capability through the first node listing the ref, the fail-open path).
     const otherRef: NativeRef = { ...forgeRef, id: "second" };
     await store.request(scope, otherRef, `forge-operation:${OPERATION}`);
-    expect(store.get(scope, otherRef, `forge-operation:${OPERATION}`)).toMatchObject({ state: "unavailable" });
-    expect(JSON.stringify(store.get(scope, otherRef, `forge-operation:${OPERATION}`))).not.toContain("op_other");
+    expect(store.get(scope, otherRef, `forge-operation:${OPERATION}`)).toEqual({ state: "unavailable", reason: "unauthorized" });
+    expect(invoke).toHaveBeenCalledTimes(1);
+    // A reading that names another operation is a visible transport failure, never a substituted result: read on the owning node.
+    invoke.mockResolvedValueOnce(forgeReading(1, "op_other"));
+    await store.request(scope, forgeRef, `forge-operation:${OPERATION}`);
+    expect(store.get(scope, forgeRef, `forge-operation:${OPERATION}`)).toEqual({ state: "unavailable", reason: "transport" });
+    expect(JSON.stringify(store.get(scope, forgeRef, `forge-operation:${OPERATION}`))).not.toContain("op_other");
+    expect(invoke).toHaveBeenCalledTimes(2);
+  });
+});
+
+/**
+ * wb-cz9 F3: the forge wiring's requested-node check and the claude producer's ownership check are ONE predicate,
+ * `sameNativeRef` from evidence-producers.ts (an absent scope and an empty scope name the same node); a second inline copy of
+ * the four-field comparison could drift from it. These rows pin the predicate the wiring now calls; the R1-R4 rows below stay
+ * the regression guard for the wired path itself.
+ */
+describe("wb-cz9 F3: sameNativeRef is the one native-ref equality the producers and the forge wiring share", () => {
+  const ref: NativeRef = { provider: "forge", type: "gate-status", id: "pkg-a", scope: "/ws" };
+  /** One field changed per row; every other field is the reference's own. */
+  const MISMATCHES: readonly { field: keyof NativeRef; other: NativeRef }[] = [
+    { field: "provider", other: { ...ref, provider: "furnace" } },
+    { field: "type", other: { ...ref, type: "run" } },
+    { field: "id", other: { ...ref, id: "pkg-b" } },
+    { field: "scope", other: { ...ref, scope: "/other" } },
+  ];
+
+  it("a ref equals itself and a field-for-field copy", () => {
+    expect(sameNativeRef(ref, ref)).toBe(true);
+    expect(sameNativeRef(ref, { ...ref })).toBe(true);
+  });
+
+  it("an absent scope and an empty scope name the same node, in either order", () => {
+    expect(sameNativeRef({ ...ref, scope: undefined }, { ...ref, scope: "" })).toBe(true);
+    expect(sameNativeRef({ ...ref, scope: "" }, { ...ref, scope: undefined })).toBe(true);
+  });
+
+  it("the mismatch table is live: one row per NativeRef field, so an emptied table reddens", () => expect(MISMATCHES).toHaveLength(4));
+
+  it.each(MISMATCHES)("a single $field mismatch is a different node, in either order", ({ other }) => {
+    expect(sameNativeRef(ref, other)).toBe(false);
+    expect(sameNativeRef(other, ref)).toBe(false);
+  });
+});
+
+/**
+ * wb-cz9 (owner F-text): the forge adapter resolved its owning node by the evidence ref alone, so a forge-operation ref
+ * requested on a node that does not list it was served the FIRST listing node's re-read and cached under the requesting
+ * node's key. Ownership now resolves by the REQUESTED node (projection query by nativeRef, then evidenceRefs.includes plus
+ * nativeRef equality), the furnace adapter's bound shape.
+ */
+describe("wb-cz9: the forge adapter resolves ownership by the requested node, never the first node listing the ref", () => {
+  const OPERATION_REF = `forge-operation:${OPERATION}`;
+  /** Never ingested: the projection holds no node under this id. */
+  const ghostRef: NativeRef = { ...forgeRef, id: "second" };
+  /** Ingested in scope, listing only its own gate-status ref and never the operation. */
+  const bystanderRef: NativeRef = { provider: "forge", type: "gate-status", id: "pkg-b", scope: "/ws" };
+  /** Ingested after the owner and listing the SAME operation, then marked stale. */
+  const secondOwnerRef: NativeRef = { provider: "forge", type: "gate-status", id: "pkg-c", scope: "/ws" };
+  const gateNode = (title: string) => ({ title, type: "sdk-operation" as const, statusText: "success · FORGE_OK", statusTone: "success" as const });
+
+  /** The forge wiring with a call-through spy on the registered capability re-read, so a refused path is counted, not assumed. */
+  function ownershipDeps(options: { secondOwner?: boolean } = {}) {
+    const { deps, projection } = wiringDeps(["forge:inspect"]);
+    projection.refresh({
+      source: bystanderRef, scope, capturedAt: NOW, observedAt: NOW, node: gateNode("Forge gate status pkg-b"),
+      trace: { invocationId: "wf-evidence-1" }, evidenceRefs: ["forge:gate.status:FORGE_OK"],
+    });
+    if (options.secondOwner === true) {
+      projection.refresh({
+        source: secondOwnerRef, scope, capturedAt: NOW, observedAt: NOW, node: gateNode("Forge gate status pkg-c"),
+        trace: { invocationId: "wf-evidence-1" }, evidenceRefs: [OPERATION_REF],
+      });
+      projection.markStale({ scope, ref: secondOwnerRef });
+    }
+    const capability = { invoke: async (_id: string, _input: unknown, _context: unknown) => forgeReading(1) };
+    const invoke = vi.spyOn(capability, "invoke");
+    return { deps: { ...deps, registry: () => capability }, invoke };
+  }
+
+  it("R1: a forge-operation ref requested on a never-ingested node id refuses unauthorized with no re-read", async () => {
+    const { deps, invoke } = ownershipDeps();
+    const store = createWorkbenchEvidenceStore(deps as never);
+    await store.request(scope, ghostRef, OPERATION_REF);
+    expect(store.get(scope, ghostRef, OPERATION_REF)).toEqual({ state: "unavailable", reason: "unauthorized" });
+    expect(invoke).toHaveBeenCalledTimes(0);
+  });
+
+  it("R2: a node that exists but does not list the ref refuses unauthorized with no re-read", async () => {
+    const { deps, invoke } = ownershipDeps();
+    const store = createWorkbenchEvidenceStore(deps as never);
+    await store.request(scope, bystanderRef, OPERATION_REF);
+    expect(store.get(scope, bystanderRef, OPERATION_REF)).toEqual({ state: "unavailable", reason: "unauthorized" });
+    expect(invoke).toHaveBeenCalledTimes(0);
+  });
+
+  it("R3: the legitimate owning node is served once and cached under its own key, and under no other node's", async () => {
+    const { deps, invoke } = ownershipDeps();
+    const store = createWorkbenchEvidenceStore(deps as never);
+    await store.request(scope, forgeRef, OPERATION_REF);
+    expect(store.get(scope, forgeRef, OPERATION_REF)).toMatchObject({ state: "loaded", provider: "forge", freshness: "current", producerReceipt: OPERATION });
+    expect(invoke).toHaveBeenCalledTimes(1);
+    expect(invoke.mock.calls[0]?.[2]).toMatchObject({ callId: `evidence:${OPERATION_REF}`, workspace: "/ws" });
+    for (const other of [ghostRef, bystanderRef]) expect(store.get(scope, other, OPERATION_REF)).toEqual({ state: "not-requested" });
+    await store.request(scope, forgeRef, OPERATION_REF);
+    expect(invoke).toHaveBeenCalledTimes(1);
+  });
+
+  it("R3b: a ref two nodes list is read for the requested node, carrying that node's own freshness under its own key", async () => {
+    const { deps, invoke } = ownershipDeps({ secondOwner: true });
+    const store = createWorkbenchEvidenceStore(deps as never);
+    await store.request(scope, secondOwnerRef, OPERATION_REF);
+    expect(store.get(scope, secondOwnerRef, OPERATION_REF)).toMatchObject({ state: "loaded", freshness: "stale" });
+    expect(store.get(scope, forgeRef, OPERATION_REF)).toEqual({ state: "not-requested" });
+    await store.request(scope, forgeRef, OPERATION_REF);
+    expect(store.get(scope, forgeRef, OPERATION_REF)).toMatchObject({ state: "loaded", freshness: "current" });
+    expect(invoke).toHaveBeenCalledTimes(2);
+  });
+
+  it("R4: no cross-node cache poisoning: after the owner's read, refused requesters hold only the refusal, never the owner's read", async () => {
+    const { deps, invoke } = ownershipDeps();
+    const store = createWorkbenchEvidenceStore(deps as never);
+    await store.request(scope, forgeRef, OPERATION_REF);
+    expect(store.get(scope, forgeRef, OPERATION_REF).state).toBe("loaded");
+    for (const requester of [ghostRef, bystanderRef]) {
+      await store.request(scope, requester, OPERATION_REF);
+      expect(store.get(scope, requester, OPERATION_REF)).toEqual({ state: "unavailable", reason: "unauthorized" });
+    }
+    expect(invoke).toHaveBeenCalledTimes(1);
+    expect(store.get(scope, forgeRef, OPERATION_REF)).toMatchObject({ state: "loaded", producerReceipt: OPERATION });
+  });
+});
+
+/**
+ * wb-cz9 leg 2 (measured red first): on the wired furnace store path a lossy, incomplete or paged read rendered TWO truncation
+ * marks, the reader's own trailing "... truncated (producer: ...)" line inside the joined text plus the store's single [truncated].
+ * One visible marker: the loader strips the reader's trailing marker when the store marks the read.
+ * wb-10v (owner ruling, the leg-2 pin re-ruled, the one-marker invariant kept): a budget-only cut, a whole read the reader cut to
+ * its own line or row budget, is marked like the other three. Its budget fact crosses the FurnaceEvidenceRead seam as budgetCut,
+ * so the entry reports truncated true, and the store's single [truncated] is its one visible marker.
+ */
+describe("wb-cz9 leg 2: one visible truncation marker on the wired furnace store path", () => {
+  const ATTEMPT = "frn-atm-a1";
+  const ELLIPSIS = String.fromCodePoint(0x2026);
+  const isMarker = (line: string): boolean => line === "[truncated]" || line.startsWith(`${ELLIPSIS} truncated (producer: `);
+
+  async function furnaceEntry(reply: { lines: readonly string[]; complete: boolean; lossy: boolean; next_cursor: string | null }) {
+    const { deps } = wiringDeps(["furnace:inspect"]);
+    const store = createWorkbenchEvidenceStore({
+      ...deps,
+      furnaceClient: () => ({
+        logs: {
+          read: async (runId: string, options: { attempt: string; limit: number; stream: string }) => ({
+            kind: "logs_read",
+            requestId: "rq-cz9",
+            data: { run_id: runId, attempt_id: options.attempt, stream: options.stream, lines: [...reply.lines], returned: reply.lines.length, complete: reply.complete, lossy: reply.lossy, next_cursor: reply.next_cursor },
+          }),
+        },
+      }),
+    } as never);
+    await store.request(scope, runRef, ATTEMPT);
+    return store.get(scope, runRef, ATTEMPT);
+  }
+
+  it("positive protection: an untruncated read keeps every row and shows no marker", async () => {
+    const entry = await furnaceEntry({ lines: ["line one", "line two"], complete: true, lossy: false, next_cursor: null });
+    expect(entry).toMatchObject({ state: "loaded", truncated: false });
+    if (entry.state === "loaded") expect(entry.preview).toEqual(["stdout:", "line one", "line two"]);
+  });
+
+  /** The three reads the furnace loader marks truncated; hoisted so an emptied table reddens the liveness pin (wb-cz9 F4). */
+  const LEG2_REASONS = [
+    { reason: "lossy", complete: true, lossy: true, next_cursor: null },
+    { reason: "incomplete", complete: false, lossy: false, next_cursor: null },
+    { reason: "paged", complete: true, lossy: false, next_cursor: "cursor-1" },
+  ] as const;
+
+  it("the leg-2 table is live: exactly the three loader-marked reasons, so an emptied table reddens", () => expect(LEG2_REASONS).toHaveLength(3));
+
+  it.each(LEG2_REASONS)("$reason: the store's single [truncated] is the only marker, never the reader's line beside it", async ({ complete, lossy, next_cursor }) => {
+    const entry = await furnaceEntry({ lines: ["line one", "line two"], complete, lossy, next_cursor });
+    expect(entry).toMatchObject({ state: "loaded", truncated: true });
+    if (entry.state === "loaded") expect(entry.preview).toEqual(["stdout:", "line one", "line two", "[truncated]"]);
+  });
+
+  it("a lossy read whose row the reader also clipped shows one marker and keeps the clipped row", async () => {
+    const entry = await furnaceEntry({ lines: ["line one", "y".repeat(201)], complete: true, lossy: true, next_cursor: null });
+    expect(entry).toMatchObject({ state: "loaded", truncated: true });
+    if (entry.state === "loaded") expect(entry.preview).toEqual(["stdout:", "line one", `${"y".repeat(199)}${ELLIPSIS}`, "[truncated]"]);
+  });
+
+  it("wb-10v: a budget-only cut reports truncated true and keeps exactly one visible marker, the store's [truncated]", async () => {
+    const entry = await furnaceEntry({ lines: ["line one", "y".repeat(201)], complete: true, lossy: false, next_cursor: null });
+    expect(entry).toMatchObject({ state: "loaded", truncated: true });
+    if (entry.state === "loaded") {
+      expect(entry.preview.filter(isMarker)).toEqual(["[truncated]"]);
+      expect(entry.preview).toEqual(["stdout:", "line one", `${"y".repeat(199)}${ELLIPSIS}`, "[truncated]"]);
+    }
+  });
+
+  it("wb-10v: a producer line past the reader's scan window is a budget-only cut too: truncated true, the store's [truncated] its one marker", async () => {
+    const entry = await furnaceEntry({ lines: ["line one", "z".repeat(2001)], complete: true, lossy: false, next_cursor: null });
+    expect(entry).toMatchObject({ state: "loaded", truncated: true });
+    if (entry.state === "loaded") {
+      expect(entry.preview.filter(isMarker)).toEqual(["[truncated]"]);
+      expect(entry.preview).toEqual(["stdout:", "line one", `${"z".repeat(199)}${ELLIPSIS}`, "[truncated]"]);
+    }
   });
 });
 

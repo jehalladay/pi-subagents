@@ -14,8 +14,7 @@
  * mutant (H4). Measurement only: nothing under src/ is touched or mocked.
  */
 import { spawnSync } from "node:child_process";
-import { cpSync, existsSync, mkdtempSync, readFileSync, realpathSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
-import { tmpdir } from "node:os";
+import { cpSync, existsSync, readFileSync, realpathSync, symlinkSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { describe, expect, it } from "vitest";
@@ -28,6 +27,9 @@ import {
   exitCodeFor,
   MEASUREMENT_BOUND,
 } from "../qa/workbench/headless-census-receipt.mjs";
+import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
+
+installScratchLeakGuard();
 
 interface PiPackage {
   name: string;
@@ -319,31 +321,25 @@ describe("headless census receipt builder (fixture closures)", () => {
   it("uses the frozen default allowlist when none is injected", () => {
     const receipt = build({ edges: baseEdges(), entryUrl: ENTRY, root: ROOT, ttyFree: true, utc: "u", revision: "r", node: "n" });
     expect(receipt.pass).toBe(false);
-    expect(receipt.findings.map(entry => entry.rule)).toContain("stale-allowlist-row");
+    // wb-nl8.3: the frozen tables are empty, so every Pi package of the fixture closure is unlisted under the default
+    // allowlist, while the same closure passes under FIXTURE_ALLOWLIST.
+    expect(receipt.findings.map(entry => [entry.rule, entry.module])).toEqual([
+      ["unlisted-pi-package", "@earendil-works/pi-ai"],
+      ["unlisted-pi-package", "@earendil-works/pi-coding-agent"],
+      ["unlisted-pi-package", "@earendil-works/pi-tui"],
+    ]);
+    expect(receiptFor(baseEdges()).pass).toBe(true);
   });
 });
 
 describe("frozen allowlist (H3)", () => {
-  it("pins pi-coding-agent via memory.js and saved.js and pi-tui through pi-coding-agent, with the caveat text", () => {
+  // wb-nl8.3 trimmed the pi-coding-agent row (getAgentDir via memory.js and saved.js), the pi-tui row reached through it
+  // and the four transitive rows under the stale-row rule: src/agent-dir.ts replaced the package import.
+  it("pins an empty Pi closure and an empty transitive list: the headless boot loads no @earendil-works package", () => {
     expect(Object.isFrozen(EXPECTED_PI_CLOSURE)).toBe(true);
-    expect(Object.keys(EXPECTED_PI_CLOSURE)).toEqual(["@earendil-works/pi-coding-agent", "@earendil-works/pi-tui"]);
-    const coding = EXPECTED_PI_CLOSURE["@earendil-works/pi-coding-agent"];
-    const tui = EXPECTED_PI_CLOSURE["@earendil-works/pi-tui"];
-    expect(coding.via).toEqual(["dist/memory.js", "dist/workflow/saved.js"]);
-    expect(tui.via).toEqual([]);
-    expect(tui.through).toBe("@earendil-works/pi-coding-agent");
-    expect(Object.isFrozen(coding)).toBe(true);
-    expect(Object.isFrozen(coding.via)).toBe(true);
-    for (const entry of [coding, tui]) {
-      expect(entry.caveat).toMatch(/headless boot currently loads/);
-    }
+    expect(Object.keys(EXPECTED_PI_CLOSURE)).toEqual([]);
     expect(Object.isFrozen(EXPECTED_PI_TRANSITIVE)).toBe(true);
-    expect(EXPECTED_PI_TRANSITIVE).toEqual([
-      "@earendil-works/pi-agent-core",
-      "@earendil-works/pi-ai",
-      "@earendil-works/pi-codemode",
-      "@earendil-works/pi-mcp",
-    ]);
+    expect(EXPECTED_PI_TRANSITIVE).toEqual([]);
     expect(EXPECTED_PI_TRANSITIVE.some((name: string) => name in EXPECTED_PI_CLOSURE)).toBe(false);
     expect(Object.isFrozen(EXPECTED_UI_MODULES)).toBe(true);
     expect(EXPECTED_UI_MODULES).toEqual([]);
@@ -376,10 +372,17 @@ describe("headless census runner over the built dist (H1, H4, H5)", () => {
     expect(stderr).not.toMatch(/tracer not active/);
     expect(receipt?.schema).toBe(CENSUS_SCHEMA);
     expect(receipt?.ttyFree).toBe(true);
-    expect(receipt?.closure.length ?? 0).toBeGreaterThan(50);
+    // wb-nl8.3: 47 entries measured once the pi-coding-agent graph left the closure (21 first-party dist modules, 7
+    // packages, 19 builtins), so the real-closure floor is 40, backed by the claude-host -> saved -> memory -> agent-dir
+    // chain, which a trace stopping near the entry would not reach.
+    expect(receipt?.closure.length ?? 0).toBeGreaterThan(40);
     expect(receipt?.closure).toContain("dist/workbench/hosts/local-detached.js");
+    expect(receipt?.closure).toEqual(
+      expect.arrayContaining(["dist/workbench/claude-host.js", "dist/workflow/saved.js", "dist/memory.js"]),
+    );
     expect(receipt?.uiModules).toEqual([]);
-    expect(receipt?.piPackages.filter(entry => entry.direct).map(entry => entry.name)).toEqual(["@earendil-works/pi-coding-agent"]);
+    expect(receipt?.closure).toContain("dist/agent-dir.js");
+    expect(receipt?.piPackages.filter(entry => entry.direct).map(entry => entry.name)).toEqual([]);
     expect(receipt?.piPackages.map(entry => entry.name)).toEqual([...Object.keys(EXPECTED_PI_CLOSURE), ...EXPECTED_PI_TRANSITIVE].sort());
     expect(receipt?.findings).toEqual([]);
     expect(receipt?.pass).toBe(true);
@@ -387,7 +390,7 @@ describe("headless census runner over the built dist (H1, H4, H5)", () => {
   });
 
   it.skipIf(!built)("goes red naming src/ui/workflow-card.js when the detached host imports a UI module (mutant)", { timeout: 180_000 }, () => {
-    const scratch = mkdtempSync(join(tmpdir(), "hc."));
+    const scratch = makeScratch("hc.");
     try {
       cpSync(join(packageRoot, "dist"), join(scratch, "dist"), { recursive: true });
       cpSync(join(packageRoot, "package.json"), join(scratch, "package.json"));
@@ -401,7 +404,7 @@ describe("headless census runner over the built dist (H1, H4, H5)", () => {
       const finding = receipt?.findings.find(entry => entry.rule === "ui-module" && entry.module === "dist/ui/workflow-card.js");
       expect(finding?.chain).toEqual(["dist/workbench/hosts/local-detached.js", "dist/ui/workflow-card.js"]);
     } finally {
-      rmSync(scratch, { recursive: true, force: true });
+      removeScratch(scratch);
     }
   });
 
@@ -415,7 +418,7 @@ describe("headless census runner over the built dist (H1, H4, H5)", () => {
   });
 
   it.skipIf(!built)("measures a symlinked dist root as itself, not as an inactive tracer (F3)", { timeout: 120_000 }, () => {
-    const scratch = mkdtempSync(join(tmpdir(), "hc."));
+    const scratch = makeScratch("hc.");
     try {
       const link = join(scratch, "linked-root");
       symlinkSync(packageRoot, link, "dir");
@@ -425,14 +428,15 @@ describe("headless census runner over the built dist (H1, H4, H5)", () => {
       expect(receipt?.pass).toBe(true);
       expect(status).toBe(0);
       expect(receipt?.dist?.root).toBe(realpathSync(packageRoot));
-      expect(receipt?.closure.length ?? 0).toBeGreaterThan(50);
+      expect(receipt?.closure.length ?? 0).toBeGreaterThan(40);
+      expect(receipt?.closure).toContain("dist/agent-dir.js");
     } finally {
-      rmSync(scratch, { recursive: true, force: true });
+      removeScratch(scratch);
     }
   });
 
   it.skipIf(!built)("the child itself traces from the real path when handed a symlinked dist root (F3)", { timeout: 120_000 }, () => {
-    const scratch = mkdtempSync(join(tmpdir(), "hc."));
+    const scratch = makeScratch("hc.");
     try {
       const link = join(scratch, "linked-root");
       symlinkSync(packageRoot, link, "dir");
@@ -449,7 +453,7 @@ describe("headless census runner over the built dist (H1, H4, H5)", () => {
       expect(measured.entryUrl).toBe(realEntry);
       expect(measured.edges.some(edge => edge.parent === realEntry)).toBe(true);
     } finally {
-      rmSync(scratch, { recursive: true, force: true });
+      removeScratch(scratch);
     }
   });
 
@@ -486,7 +490,7 @@ describe("TTY measurement is made inside the child on all three standard streams
 
   /** Runs the child under util-linux `script` so every stream left unredirected is a PTY. */
   function measureUnderPty(attached: Attached): { ttyFree: boolean | undefined; status: number | null } {
-    const scratch = mkdtempSync(join(tmpdir(), "hc."));
+    const scratch = makeScratch("hc.");
     try {
       const outFile = join(scratch, "out.json");
       const parts = [quote(process.execPath), quote(child), quote(packageRoot)];
@@ -505,7 +509,7 @@ describe("TTY measurement is made inside the child on all three standard streams
       const parsed = flag === undefined ? undefined : { ttyFree: flag === "true" };
       return { ttyFree: parsed?.ttyFree, status: run.status };
     } finally {
-      rmSync(scratch, { recursive: true, force: true });
+      removeScratch(scratch);
     }
   }
 

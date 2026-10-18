@@ -7,6 +7,7 @@
  * `forge run local-detached-faults`, never by this file.
  */
 import { readFileSync } from "node:fs";
+import ts from "typescript";
 import { describe, expect, it } from "vitest";
 import {
   assessFaultJourneys,
@@ -519,7 +520,7 @@ describe("detached fault-injection receipt: module and runner boundaries", () =>
       '[build.commands.local-detached-faults]\ncommand = "node qa/workbench/local-detached-faults.mjs"\ntimeout = 240\n',
     );
     expect(forge.match(/\[build\.commands\.local-detached-faults\]/g)).toHaveLength(1);
-    expect(forge).toContain('gate = ["lint", "typing", "build", "test", "workbench-shell", "package-smoke"]\n');
+    expect(forge).toContain('gate = ["lint", "typing", "build", "test", "census", "workbench-shell", "package-smoke"]\n');
     const gate = /^gate = \[(.*)\]$/m.exec(forge)?.[1] ?? "";
     expect(gate).not.toContain("local-detached-faults");
   });
@@ -861,5 +862,132 @@ describe("wb-0kg.10: same-id relaunch is re-checked after the second request (do
       "  const secondMarkers = markerCount(secondId);\n  // The original id must still be refused once the deliberate second logical invocation exists.\n  const relaunchAfterSecond = await attemptRelaunch(id);\n",
     );
     expect(runner).toContain("    relaunchRejectedAfterSecond: relaunchAfterSecond.rejected,\n");
+  });
+});
+
+/**
+ * wb-p5a (wb-0kg.7 gate F1): the wb-0kg.1 receipt carries the same runner exit mapping the 0kg.7 gate found
+ * unpinned. A judge whose exit code cannot fail cannot certify the live tier.
+ */
+describe("detached fault-injection receipt: runner exit mapping (wb-p5a X1, X2)", () => {
+  it("maps 0 for a realised clean receipt, 1 for a realised receipt with findings, 2 whenever it is not realised", () => {
+    expect(exitCodeFor(buildFaultReceipt(receiptInput(clean())))).toBe(0);
+    const duplicate = clone(clean());
+    duplicate.markerCounts["effect-crash"] = 2;
+    const withFindings = buildFaultReceipt(receiptInput(duplicate));
+    expect(withFindings.realised).toBe(true);
+    expect(withFindings.findings.length).toBeGreaterThan(0);
+    expect(exitCodeFor(withFindings)).toBe(1);
+    const unarmed = clone(clean());
+    unarmed.journeys.sigterm.armed = false;
+    const notRealised = buildFaultReceipt(receiptInput(unarmed));
+    expect(notRealised.realised).toBe(false);
+    expect(exitCodeFor(notRealised)).toBe(2);
+    const both = clone(clean());
+    both.journeys.sigterm.armed = false;
+    both.markerCounts["effect-crash"] = 2;
+    const notRealisedWithFindings = buildFaultReceipt(receiptInput(both));
+    expect(notRealisedWithFindings.findings.length).toBeGreaterThan(0);
+    expect(exitCodeFor(notRealisedWithFindings)).toBe(2);
+  });
+  it("pins the survivors of the 0kg.7 gate table in the wb-0kg.1 judge: empty sibling polls, afterTerminal and sigterm terminal must be unknown", () => {
+    const noPolls = clone(clean());
+    noPolls.journeys.cancelIsolation.sibling.polls = [];
+    expect(assessFaultJourneys(noPolls).realised).toBe(false);
+    const afterShutdown = clone(clean());
+    afterShutdown.journeys.shutdownUnresolved.running.afterTerminal = "cancelled";
+    expect(rules(afterShutdown)).toContain("unknown-not-reconcilable");
+    const sigterm = clone(clean());
+    sigterm.journeys.sigterm.terminal = "cancelled";
+    expect(rules(sigterm)).toContain("unknown-not-reconcilable");
+  });
+});
+
+/**
+ * wb-p5a R7 (owner binding 03:3xZ: "a SIX-LINE VERBATIM PIN of the attemptRelaunch function in
+ * qa/workbench/local-detached-faults.mjs"); the wb-0kg.10 15:34Z F4 item "attemptRelaunch body unpinned" closes with this pin.
+ * docs/workbench/08: "Logical invocation: caller-created unique identity stable across retry of same request; distinct from
+ * identical intentional second request."
+ *
+ * Re-expressed at the second-lander re-cut (known-conflicts entry 5: wb-0kg.10 landed first): the inline same-id relaunch
+ * block this pin was first restated against is the landed attemptRelaunch function now, so the six lines pinned verbatim are
+ * that function, as parsed code. Counting any error as a rejection (G14), reporting an accepted relaunch as rejected (G15,
+ * fabricated-green-capable on a broken host) or launching a different id (G16) changes them; a commented-out copy can never
+ * stand in for them; and no second binding of the name can shadow, reassign or alias the function, which is only ever called.
+ */
+describe("detached fault-injection receipt: same-id relaunch pinned verbatim (wb-p5a R7)", () => {
+  const ATTEMPT_RELAUNCH = [
+    "async function attemptRelaunch(id) {",
+    "  return await host.launchDetachedWorkflow(request(id, 'crash', {autoStart: false, permissions: ['inspect', 'execute']})).then(",
+    "    receipt => { pids.add(receipt.pid); return {rejected: false, diagnostic: 'same-id relaunch accepted'}; },",
+    "    error => ({rejected: /exists|conflict/i.test(message(error)), diagnostic: message(error)}),",
+    "  );",
+    "}",
+  ];
+  // effectCrashJourney's first same-id attempt with the marker counts on either side (statement text starts at its first token).
+  const STATEMENTS = ["const afterExecute = markerCount(id);", "const relaunch = await attemptRelaunch(id);", "const afterRelaunch = markerCount(id);"];
+
+  function runner(): ts.SourceFile {
+    return ts.createSourceFile("local-detached-faults.mjs", readRepo("qa/workbench/local-detached-faults.mjs"), ts.ScriptTarget.Latest, true, ts.ScriptKind.JS);
+  }
+
+  function effectCrashJourney(): { file: ts.SourceFile; journey: ts.FunctionDeclaration } {
+    const file = runner();
+    const journeys = file.statements.filter(ts.isFunctionDeclaration).filter((fn) => fn.name?.text === "effectCrashJourney");
+    expect(journeys, "exactly one top-level effectCrashJourney()").toHaveLength(1);
+    return { file, journey: journeys[0] };
+  }
+
+  function propertyAssignments(root: ts.Node, found: ts.PropertyAssignment[] = []): ts.PropertyAssignment[] {
+    if (ts.isPropertyAssignment(root)) found.push(root);
+    ts.forEachChild(root, (child) => {
+      propertyAssignments(child, found);
+    });
+    return found;
+  }
+
+  function identifiersNamed(root: ts.Node, name: string, found: ts.Identifier[] = []): ts.Identifier[] {
+    if (ts.isIdentifier(root) && root.text === name) found.push(root);
+    ts.forEachChild(root, (child) => {
+      identifiersNamed(child, name, found);
+    });
+    return found;
+  }
+
+  it("attemptRelaunch stands verbatim, exactly once, as the runner's one top-level function of that name", () => {
+    expect(readRepo("qa/workbench/local-detached-faults.mjs").split(`${ATTEMPT_RELAUNCH.join("\n")}\n`)).toHaveLength(2);
+    const file = runner();
+    const declarations = file.statements.filter(ts.isFunctionDeclaration).filter((fn) => fn.name?.text === "attemptRelaunch");
+    expect(declarations, "exactly one top-level attemptRelaunch()").toHaveLength(1);
+    expect(declarations[0].getText(file)).toBe(ATTEMPT_RELAUNCH.join("\n"));
+  });
+
+  it("the name attemptRelaunch is bound once and otherwise only called as attemptRelaunch(id): nothing shadows, reassigns or aliases it", () => {
+    const file = runner();
+    const uses = identifiersNamed(file, "attemptRelaunch").map((identifier) => {
+      const parent = identifier.parent;
+      if (ts.isFunctionDeclaration(parent) && parent.name === identifier && parent.parent === file) return "top-level declaration";
+      if (ts.isCallExpression(parent) && parent.expression === identifier) return `call ${parent.getText(file)}`;
+      return `other ${ts.SyntaxKind[parent.kind]}: ${parent.getText(file)}`;
+    });
+    expect(uses).toEqual(["top-level declaration", "call attemptRelaunch(id)", "call attemptRelaunch(id)"]);
+  });
+
+  it("effectCrashJourney counts markers around its first same-id attempt as three consecutive statements", () => {
+    const { file, journey } = effectCrashJourney();
+    const statements = journey.body?.statements.map((statement) => statement.getText(file)) ?? [];
+    expect(statements.filter((statement) => statement === STATEMENTS[1]), "the first attempt is live code, once").toHaveLength(1);
+    const at = statements.indexOf(STATEMENTS[1]);
+    expect(statements.slice(at - 1, at + 2)).toEqual(STATEMENTS);
+  });
+
+  it("the journey record reads that relaunch outcome itself, never a constant", () => {
+    const { file, journey } = effectCrashJourney();
+    const initializers = (name: string): string[] =>
+      propertyAssignments(journey)
+        .filter((property) => ts.isIdentifier(property.name) && property.name.text === name)
+        .map((property) => property.initializer.getText(file));
+    expect(initializers("relaunchRejected")).toEqual(["relaunch.rejected"]);
+    expect(initializers("relaunchDiagnostic")).toEqual(["relaunch.diagnostic"]);
   });
 });

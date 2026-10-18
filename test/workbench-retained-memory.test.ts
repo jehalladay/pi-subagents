@@ -138,7 +138,30 @@ function publishWith(receipt: Receipt, io?: PublishIo): number {
 }
 
 setFlagsFromString("--expose-gc");
-const gc = runInNewContext("gc") as Gc;
+const rawGc = runInNewContext("gc") as Gc;
+// wb-wkz: a counting tap on the REAL raw collector. Every case below still performs real collections through it (the
+// tap allocates nothing), and the wiring pins read rawCollections to observe how many real collections the composed
+// injected binding performs.
+let rawCollections = 0;
+const gc: Gc = () => {
+  rawCollections++;
+  rawGc();
+};
+/**
+ * wb-xn2: the collector the exit-0 window case injects. The release probe's last collection is the one that frees the
+ * 4 MiB body, and V8 releases an ArrayBuffer backing store on a background sweeper after a full collection returns, so
+ * a memory sample taken straight after that last collection can still count a body that is already unreachable. A
+ * second back-to-back collection starts by completing the first one's pending sweep, so by the time it returns the
+ * counter no longer includes the freed store. That is a mechanism, not a wait: nothing here depends on how long the
+ * sweeper takes. (Incidents: cmd_87bc2bf80c37, cmd_ddbff06f7b99, cmd_f4ba202b79b1, cmd_db26a7fa13ab.)
+ */
+function collectTwice(collect: Gc): Gc {
+  return () => {
+    collect();
+    collect();
+  };
+}
+const doubleGc: Gc = collectTwice(gc);
 const inspector: Inspector = { initialInspectorState, layoutInspector, reduceInspectorKey };
 const HOST: Host = {
   utc: "2026-10-15T00:00:00.000Z",
@@ -437,8 +460,26 @@ describe("W21-C bounded re-collect before a body counts as retained (wb-9x5.3 re
     // The first look follows one collection (two event-loop turns) and each round adds two more, so a holder that drops
     // the body on turn 2 * (1 + RELEASE_RECHECK_ROUNDS) is caught by the last round's second collection.
     const lastTurn = 2 * (1 + recheckRounds());
+    // wb-xn2: this is the only case whose body is freed by the probe's LAST collection, so it alone sampled
+    // process.memoryUsage().arrayBuffers before V8's background sweeper had finished with the freed store (red in four
+    // full-suite landing gates, 1 test in ~6800, never in serial). The injected `doubleGc` collects twice per call; the
+    // second collection completes the first one's pending sweep before it starts, so the sample does not depend on
+    // sweeper timing. The module, RETAINED_BOUNDS and RELEASE_RECHECK_ROUNDS are untouched; no allowlist, no skip.
+    // (An earlier cut, eea4eda, waited for the counter to stop moving; that criterion never engaged, because each 2 ms
+    // pause allocated a fresh 4-byte SharedArrayBuffer and so moved the very counter it watched by 4 B: every call ran
+    // to its 200-read bound, an accidental ~420 ms fixed wait. Replaced.)
+    // wb-wkz: wrap the injected binding in a call counter so the case itself pins that the run was driven by the composed
+    // `doubleGc` (not the raw collector): every injected call performs exactly two real collections.
+    let injectedCalls = 0;
+    const injected: Gc = () => {
+      injectedCalls++;
+      doubleGc();
+    };
+    const collectionsBefore = rawCollections;
     const delayed = delayedReleaseInspector(lastTurn);
-    const receipt = await run({ Projection: ObservationProjection, inspector: delayed.inspector, fixture: small(), host: HOST, gc, sampling: DELAYED });
+    const receipt = await run({ Projection: ObservationProjection, inspector: delayed.inspector, fixture: small(), host: HOST, gc: injected, sampling: DELAYED });
+    expect(injectedCalls).toBeGreaterThan(0);
+    expect(rawCollections - collectionsBefore).toBe(2 * injectedCalls);
     expect(receipt.falsifier?.reachableAfterBlur).toBe(0);
     expect(receipt.falsifier?.lateCollectedCycles).toEqual(Array.from({ length: DELAYED.cycles }, (_, cycle) => cycle));
     for (const sample of receipt.series) {
@@ -719,5 +760,15 @@ describe("W21-C receipt publication: printed before the file write; a failed wri
     } finally {
       rmSync(dir, { recursive: true, force: true });
     }
+  });
+});
+
+describe("wb-xn2 collectTwice: the composed doubleGc binding performs exactly two REAL collections per call (wb-wkz wiring pin)", () => {
+  it("each call of the real doubleGc runs two collections on the tapped raw collector, and none between calls", () => {
+    const before = rawCollections;
+    doubleGc();
+    expect(rawCollections - before).toBe(2);
+    doubleGc();
+    expect(rawCollections - before).toBe(4);
   });
 });

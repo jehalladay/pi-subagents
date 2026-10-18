@@ -122,6 +122,27 @@ describe("designer bounded source and metric integrity", () => {
     expect(() => inspectWorkflowSource({name:"../secret"},cwd)).toThrow();
     const snapshot = source("return 1;\u0000"); expect(validateWorkflowSource(snapshot).diagnostics[0].code).toBe("SOURCE_CONTROL_CHARACTERS");
   });
+  /**
+   * wb-mrg (owner-ruled wb-xbq F3(b), W19 input hygiene): the designer refused every C0 control (but TAB, LF and CR) and DEL,
+   * and admitted every C1 control, so the 8-bit twin of a refused candidate validated. Every code point is built with
+   * String.fromCodePoint, never typed raw.
+   */
+  it("refuses every C1 control as it refuses C0 and DEL, and still admits ordinary text", () => {
+    const refused = (code: number): boolean => validateWorkflowSource(source(`return 1;${String.fromCodePoint(code)}`)).diagnostics.some(item => item.code === "SOURCE_CONTROL_CHARACTERS");
+    const c1 = Array.from({ length: 0x20 }, (_unused, index) => 0x80 + index);
+    expect(c1.filter(code => !refused(code)).map(code => `U+${code.toString(16).toUpperCase().padStart(4, "0")}`)).toEqual([]);
+    // The controls it already refused stay refused: C0 but TAB, LF and CR, and DEL.
+    const c0 = [0x00, 0x08, 0x0b, 0x0c, 0x0e, 0x1b, 0x1f, 0x7f];
+    expect(c0.filter(code => !refused(code)).map(code => `U+${code.toString(16).toUpperCase().padStart(4, "0")}`)).toEqual([]);
+    // The 8-bit twin of a refused 7-bit candidate is refused too.
+    const csi7 = `return 1;${String.fromCodePoint(0x1b)}[0m`;
+    const csi8 = `return 1;${String.fromCodePoint(0x9b)}0m`;
+    expect([csi7, csi8].map(body => validateWorkflowSource(source(body)).status)).toEqual(["invalid", "invalid"]);
+    // TAB, LF, CR and ordinary text, including the first characters after the C1 block, validate as before.
+    for (const body of ["return 1;\t// tab", "return 1;\r\n// crlf", `return 1; // ${String.fromCodePoint(0xa0)}${String.fromCodePoint(0xe9)} caf${String.fromCodePoint(0xe9)} ${String.fromCodePoint(0x4e2d)}`]) {
+      expect(validateWorkflowSource(source(body)).diagnostics.some(item => item.code === "SOURCE_CONTROL_CHARACTERS"), body).toBe(false);
+    }
+  });
   it("source changes are explicit independent variables, not config confounds", () => {
     const baseline = run("a",10); const cand = run("b",5); const scriptSource = `${cand.snapshot.scriptSource}\n//candidate`;
     const scriptDigest = `sha256:${createHash("sha256").update(scriptSource).digest("hex")}`;

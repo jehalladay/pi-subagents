@@ -194,7 +194,7 @@ const SURVIVORS_SHOWN = 16;
 /** Beyond this many entries a list is not an SDK receipt, which lists uuid-stamped main-thread commands only. */
 const RECEIPT_ENTRIES = 1024;
 const MAX_TIMER_MS = 2_147_483_647;
-const UNVETTED = "Claude control executes only a permitted workbench.control/v1 decision minted by the control core.";
+const UNVETTED = `Claude control executes only a permitted ${CONTROL_CONTRACT_VERSION} decision minted by the control core.`;
 /** Receipts whose one interrupt() was issued: a permit executes once. */
 const issued = new WeakSet<object>();
 /** Acknowledged executions this module returned and has not settled, each with the acknowledged phase it settles from. */

@@ -298,16 +298,39 @@ describe("L5 scope and bounds", () => {
 
 /**
  * wb-h8f.10 (wb-h8f.5 gate cmd_526b2de7ee90 findings F1 and F2, owner rulings at the 895e26b landing):
- *   A1 "displayText calls sanitizeWorkbenchText(raw.slice(0, MAX_PROVIDER_SCAN), MAX_PROVIDER_SCAN, "label") before the 64/121/128
- *      cuts; the local INVISIBLE constant and its deletion are removed (deletion never precedes redaction). Red-first acceptance:
- *      the merged-tree separator-corpus shapes (leak = either 7-char half of a 14-char secret visible in JSON.stringify(report))
- *      driven through the PUBLIC selectLatencyDecomposition on BOTH the provider path and the evidence path; plus the E5 pin
- *      (provider "Bearer <tok>" renders "[REDACTED]")."
- *   A2 "when the component union exceeds the root wall, overhead is {measured: false} with a NEW entry in the frozen
- *      LATENCY_REASONS vocabulary, never {measured: true, ms: 0}; the latency.overhead.ms MeasuredMetric row is then declined;
- *      the Math.max clamp is gone (probe E3: root [10 s, 20 s], child [0 s, 30 s])."
+ *   A1 (owner F1 ruling (b) at the wb-h8f.5 landing 895e26b; gate cmd_526b2de7ee90; wb-h8f.5 acceptance L5 quoted:
+ *   "provider strings pass the shared sanitizers in src/workbench/redaction.ts (stripUnsafeText today; the single exported
+ *   display helper once wb-952's respin lands)"): displayText calls sanitizeWorkbenchText(raw.slice(0, MAX_PROVIDER_SCAN),
+ *   MAX_PROVIDER_SCAN, "label") before the 64/121/128 cuts; the local INVISIBLE constant and its deletion are removed
+ *   (16:43Z rule: deletion never precedes redaction). Red-first acceptance: the 181 merged-tree separator-corpus shapes
+ *   (13 templates x 40 gaps; leak = either 7-char half of a 14-char secret visible in JSON.stringify(report)) driven
+ *   through the PUBLIC selectLatencyDecomposition on BOTH the provider path and the evidence path, red at f63fd79 and 0
+ *   leaks after; plus the E5 pin (provider "Bearer <tok>" renders "[REDACTED]", kills gate mutant G14). displayText joins
+ *   the SITES corpus in the same commit (owner F6 standing seat rule).
+ *   A2 (owner F2 ruling (a); docs/workbench/09-observation-and-provenance.md section "Aggregates and profiling":
+ *   "Distinguish measured actual from estimated projected metrics."): when the component union exceeds the root wall,
+ *   overhead is {measured: false} with a NEW entry in the frozen LATENCY_REASONS vocabulary, never {measured: true, ms:
+ *   0}; the latency.overhead.ms MeasuredMetric row is then declined for compareWorkflowRuns; red-first via the gate E3
+ *   probe (root [10 s, 20 s], child [0 s, 30 s]) and the Math.max clamp is gone (gate mutant G1 dies).
+ * wb-k10 (wb-h8f.10 gate F3(b)): the A1 text above is the bead acceptance criterion VERBATIM. The H1 corpus below is the
+ * acceptance set of the sanitizer corpus (SHAPES, units by positions), not the 181-shape 13-template by 40-gap gate
+ * reconstruction; wb-k10 adds the two templates H1 did not hold itself (T08 in-token prefixed, T13 after-prefix) so this file
+ * carries the class on its own beside the SITES row.
  * Mutation table: dropping the label-layout call (local deletion before redaction) fails H1 provider and evidence paths;
  * re-adding the Math.max(0, ...) clamp fails H2 "declines overhead...". Every invisible unit is built with String.fromCodePoint.
+ * wb-k10 mutation table: dropping the containment check fails H3 (outside-wall x5); cutting before the length check in evidenceText
+ * fails H4 (astral at 120 and the over-120 sweep); "label" -> "terminal" fails H5 F4; the raw invocationId in the report fails H5 F5.
+ * wb-k10 respin (gate-3 verdict U1/U2/U3 + owner R1=O1): src stays byte-identical to the delivered 3c0f242 cut; this respin is one test file.
+ * U1: the first-node (root) path of evidenceOf is a separate production line from the rest path; H4 holds three root-path twins of the
+ * 126-character probe (presentation-type "workflow" closed root; assert report.evidenceRefs excludes the ref). Measured red-first
+ * against gate mutant G12 (ONLY the add line reverted to displayText(item, MAX_EVIDENCE_CHARS + 1) plus an item.length <= 120
+ * filter): the delivered file survived G12 at 47/47, the respin file fails 2 of 50 (root astral-at-120 and root over-120 sweep).
+ * O1: H1 WITHIN holds `sk-ant-aaaa${unit}${secret}` and `sk-ant-${unit}${secret}` beside the ghp_ twins, so the file carries both prefix
+ * families. Measured against gap-to-space redaction mutants spelled for this respin (a non-whitespace gap right after the literal
+ * sk-ant- read as a space = M16s; after sk-ant-<token chars> = M17s): the delivered file survived both at 47/47, the respin file fails
+ * 2 of 50 on each (provider and evidence leak paths).
+ * Era statement: wb-era's source-hygiene grep ran over my files and returned nothing (guard = test/source-hygiene.test.ts BIDI set
+ * U+061C, U+200E/U+200F, U+202A-U+202E, U+2066-U+2069). `npm run typecheck:test` reports no row in the delivered files.
  */
 describe("H1 wb-h8f.10 A1: provider and evidence strings pass the shared label-layout sanitizer, deletion never precedes redaction", () => {
   const cp = (code: number): string => String.fromCodePoint(code);
@@ -337,6 +360,12 @@ describe("H1 wb-h8f.10 A1: provider and evidence strings pass the shared label-l
     (unit, secret) => `Authorization: Bea${unit}rer${unit}${secret}`,
     (unit, secret) => `x${unit}Bea${unit}rer${unit}${secret}`,
     (unit, secret) => `ghp_abc${unit}pass${unit}word=${secret}`,
+    // wb-k10 F3(b): the two gate-reconstruction templates H1 did not hold on its own (T08 in-token prefixed, T13 after-prefix).
+    (unit, secret) => `ghp_abc${unit}${secret}`,
+    (unit, secret) => `ghp_${unit}${secret}`,
+    // wb-k10 respin O1 (owner R1): the sk-ant- twins of those two templates, so the file holds both prefix families on its own.
+    (unit, secret) => `sk-ant-aaaa${unit}${secret}`,
+    (unit, secret) => `sk-ant-${unit}${secret}`,
   ];
   interface Shaped { id: string; raw: string; halves: [string, string] }
   const SHAPES: Shaped[] = [];
@@ -397,5 +426,120 @@ describe("H2 wb-h8f.10 A2: overhead declines when the component union exceeds th
   it("keeps measuring a positive overhead unchanged", () => {
     const report = decompose(stand([rootRow(0, 100), row("child", "forge", { interval: span(10, 40) })]));
     expect(report.overhead).toEqual({ measured: true, ms: 70_000 });
+  });
+});
+
+
+describe("H3 wb-k10 F1: overhead declines when a component interval lies outside the root interval", () => {
+  const rootRow = (start: number, end: number): ObservedNode =>
+    row("root", "pi-workflow", { interval: span(start, end), presentation: { title: "root", type: "workflow", statusText: "DONE", statusTone: "success" } });
+  const overheadRow = (report: LatencyDecomposition) => toMeasuredMetrics(report, { subjectBasis: "basis", freshness: "current" }).find(item => item.name === "latency.overhead.ms");
+  it("declares a new frozen reason after components-exceed-wall", () => {
+    expect(LATENCY_REASONS).toContain("components-outside-wall");
+    expect(LATENCY_REASONS.indexOf("components-outside-wall")).toBeGreaterThan(LATENCY_REASONS.indexOf("components-exceed-wall"));
+  });
+  it.each([
+    ["straddling the end: child [15 s, 25 s] in root [10 s, 20 s]", 15, 25],
+    ["before the root: child [0 s, 5 s]", 0, 5],
+    ["after the root: child [25 s, 30 s]", 25, 30],
+    ["straddling the start: child [5 s, 12 s]", 5, 12],
+  ])("declines overhead with components-outside-wall, never a measured figure: %s", (_label, start, end) => {
+    const report = decompose(stand([rootRow(10, 20), row("child", "forge", { interval: span(start, end) })]));
+    expect(report.wall).toEqual({ measured: true, ms: 10_000, from: "root-interval" });
+    expect(report.overhead).toEqual({ measured: false, reasons: ["components-outside-wall"] });
+    expect(overheadRow(report)).toBeUndefined();
+  });
+  it("declines when only one of several components is outside the root", () => {
+    const report = decompose(stand([rootRow(10, 20), row("in", "forge", { interval: span(11, 14) }), row("out", "furnace", { interval: span(25, 26) })]));
+    expect(report.overhead).toEqual({ measured: false, reasons: ["components-outside-wall"] });
+  });
+  it("keeps E3 as delivered: a union above the wall reports components-exceed-wall alone", () => {
+    const report = decompose(stand([rootRow(10, 20), row("child", "forge", { interval: span(0, 30) })]));
+    expect(report.overhead).toEqual({ measured: false, reasons: ["components-exceed-wall"] });
+  });
+  it("measures a component that fills the root exactly (closed containment) and a contained one unchanged", () => {
+    expect(decompose(stand([rootRow(10, 20), row("child", "forge", { interval: span(10, 20) })])).overhead).toEqual({ measured: true, ms: 0 });
+    expect(decompose(stand([rootRow(10, 20), row("child", "forge", { interval: span(12, 18) })])).overhead).toEqual({ measured: true, ms: 4000 });
+  });
+  it("reports the earlier overhead reasons alone when the page is not whole, never adding an outside-wall guess", () => {
+    const report = decompose(stand([rootRow(10, 20), row("out", "forge", { interval: span(0, 5) }), row("open", "furnace", { interval: { startedAt: at(11) } })]));
+    expect(report.overhead).toEqual({ measured: false, reasons: ["open-intervals"] });
+  });
+});
+
+describe("H4 wb-k10 F2: an evidence ref over 120 characters is dropped on its sanitized length before any cut", () => {
+  const astral = String.fromCodePoint(0x1f600);
+  const kept = (ref: string): string[] => component(decompose(stand([row("e", "forge", { evidenceRefs: [ref] })])), "build").evidenceRefs;
+  const reportKept = (ref: string): string[] => decompose(stand([row("e", "forge", { evidenceRefs: [ref] })])).evidenceRefs;
+  it("drops a 126-character ref whose astral character starts at index 120, never a truncated 120-unit ref", () => {
+    const ref = `${"e".repeat(120)}${astral}tail`;
+    expect(ref.length).toBe(126);
+    expect(ref.charCodeAt(120)).toBeGreaterThanOrEqual(0xd800);
+    expect(kept(ref)).toEqual([]);
+    expect(reportKept(ref)).toEqual([]);
+  });
+  it("drops every over-120 length whatever character sits at the cut", () => {
+    for (const ref of ["e".repeat(121), "e".repeat(126), `${"e".repeat(119)}${astral}`, `${"e".repeat(120)}${astral}`, `${"e".repeat(121)}${astral}`]) {
+      expect(kept(ref), `${ref.length} units`).toEqual([]);
+    }
+  });
+  it("keeps a ref of exactly 120 units, with or without an astral character at the end", () => {
+    const plain = "e".repeat(120);
+    const wide = `${"e".repeat(118)}${astral}`;
+    expect(wide.length).toBe(120);
+    expect(kept(plain)).toEqual([plain]);
+    expect(kept(wide)).toEqual([wide]);
+  });
+  // wb-k10 respin U1: the first-node (root) path of evidenceOf is a separate production line from the rest path above, and the
+  // root's refs reach report.evidenceRefs (the list behind latency.wall.ms / latency.overhead.ms -> compareWorkflowRuns).
+  const rootRefs = (refs: string[]): string[] =>
+    decompose(stand([row("root", "pi-workflow", { presentation: { title: "root", type: "workflow", statusText: "DONE", statusTone: "success" }, evidenceRefs: refs, interval: span(0, 10) })])).evidenceRefs;
+  it("root path: drops a 126-character ref whose astral character starts at index 120, never a truncated 120-unit ref", () => {
+    const ref = `${"e".repeat(120)}${astral}tail`;
+    expect(ref.length).toBe(126);
+    expect(ref.charCodeAt(120)).toBeGreaterThanOrEqual(0xd800);
+    expect(rootRefs([ref])).toEqual([]);
+    expect(rootRefs([ref, "ev:root"])).toEqual(["ev:root"]);
+  });
+  it("root path: drops every over-120 length whatever character sits at the cut, and keeps exactly 120 whole", () => {
+    for (const ref of ["e".repeat(121), "e".repeat(126), `${"e".repeat(119)}${astral}`, `${"e".repeat(120)}${astral}`, `${"e".repeat(121)}${astral}`]) {
+      const expected = ref.length <= 120 ? [ref] : [];
+      expect(rootRefs([ref]), `${ref.length} units`).toEqual(expected);
+    }
+    const wide = `${"e".repeat(118)}${astral}`;
+    expect(wide.length).toBe(120);
+    expect(rootRefs([wide])).toEqual([wide]);
+  });
+  it("root path: measures the sanitized length, so a raw ref over 120 units that sanitizes to 100 is kept whole", () => {
+    const ref = `${"e".repeat(100)}${String.fromCodePoint(0x200b).repeat(40)}`;
+    expect(rootRefs([ref])).toEqual(["e".repeat(100)]);
+  });
+  it("measures the sanitized length: a raw ref over 120 units that sanitizes to 100 is kept whole", () => {
+    const ref = `${"e".repeat(100)}${String.fromCodePoint(0x200b).repeat(40)}`;
+    expect(ref.length).toBe(140);
+    expect(kept(ref)).toEqual(["e".repeat(100)]);
+  });
+});
+
+describe("H5 wb-k10 F4/F5: the label layout and the invocation display path are pinned", () => {
+  const BEL = String.fromCodePoint(0x07);
+  it("F4: a provider with a leading control and an internal double space renders trimmed and collapsed (label, not terminal)", () => {
+    const report = decompose(stand([row("p", `${BEL}acme  thing `)]));
+    expect(component(report, "other").providers).toEqual(["acme thing"]);
+  });
+  it("F4: a provider with an internal control renders one space between its words", () => {
+    const report = decompose(stand([row("p", `acme${BEL}${BEL}thing`)]));
+    expect(component(report, "other").providers).toEqual(["acme thing"]);
+  });
+  it("F5: the invocation id passes the shared label layout before it appears in the report", () => {
+    const raw = `inv${BEL}one  two Bearer abcdef1234567890`;
+    const report = decompose(stand([row("n", "forge", { invocationId: raw })]), { invocationId: raw });
+    expect(report.invocationId).toBe("inv one two [REDACTED]");
+    expect(JSON.stringify(report)).not.toContain("abcdef1234567890");
+  });
+  it("F5: a long invocation id is cut at 128 characters without half a surrogate pair", () => {
+    const raw = `${"i".repeat(127)}${String.fromCodePoint(0x1f600)}tail`;
+    const report = decompose(stand([row("n", "forge", { invocationId: raw })]), { invocationId: raw });
+    expect(report.invocationId).toBe("i".repeat(127));
   });
 });

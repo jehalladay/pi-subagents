@@ -18,7 +18,7 @@ import type {
 import { resolveWorkflowSource } from "../workflow/saved.js";
 import type { CapabilityRegistry } from "./capability-registry.js";
 import { CLAUDE_CAPABILITY_TOOL_NAMES, createCuratedTools } from "./claude-capability-tools.js";
-import { redactWorkbenchText } from "./redaction.js";
+import { sanitizeWorkbenchText, WORKBENCH_TEXT_LIMIT } from "./redaction.js";
 
 /** SDK query injection exists for the fixture integration suite, not a fallback backend. */
 export type ClaudeQuery = (params: { prompt: string; options: Options }) => AsyncIterable<SDKMessage>;
@@ -45,6 +45,25 @@ export interface ClaudeWorkflowHostOptions {
   getSession?: typeof getSessionInfo;
   /** Re-observe the host-owned invocation basis before every agent or SDK operation. */
   beforeDispatch?: () => void | Promise<void>;
+  /**
+   * Live-query retention seam (wb-cra): fired once per SDK query whose stream exposes a native interrupt(),
+   * BEFORE the first message is read, with the call identity and a seam that proxies that one method. The host
+   * keeps no registry itself; workflow_control wiring owns the map and the session binding (from onMessage init).
+   */
+  onQueryLive?: (call: ClaudeCallIdentity, seam: { interrupt(): Promise<unknown> }) => void;
+  /** Fired in the query's own finally, pairing every onQueryLive so a wiring registry never leaks an ended query. */
+  onQueryDone?: (call: ClaudeCallIdentity) => void;
+}
+
+/**
+ * The retained SDK Query's control channel, read structurally (wb-cra): the vendored Query extends the message
+ * AsyncIterable with interrupt() (sdk.d.ts), while the fixture seam's plain generators have no such method. Only a
+ * function-valued own interrupt yields a seam; everything else means no control channel, never a throw.
+ */
+function interruptSeamOf(stream: AsyncIterable<SDKMessage>): { interrupt(): Promise<unknown> } | undefined {
+  const candidate: unknown = (stream as AsyncIterable<SDKMessage> & { interrupt?: unknown }).interrupt;
+  if (typeof candidate !== "function") return undefined;
+  return { interrupt: () => Promise.resolve((candidate as () => unknown).call(stream)) };
 }
 
 export interface ClaudeCallIdentity {
@@ -89,9 +108,28 @@ function resolvedModel(input: string | undefined): string | undefined {
  */
 const AUTH_REQUIRED_CODE = "CLAUDE_AUTH_REQUIRED";
 
+/**
+ * SDK text in an outcome error is untrusted producer text bound for display (cards, labels, replies). It passes the one
+ * shared helper with the "label" layout (a single-line outcome string): redaction sees every reading of an invisible
+ * inside a credential before the gaps are rendered. A plain redactor here collapses those readings and the display
+ * helper downstream then glues the credential tail back together (wb-cax.5 gate F1, wb-wyr).
+ */
+function outcomeText(value: string, maxTextLength = WORKBENCH_TEXT_LIMIT): string {
+  return sanitizeWorkbenchText(value, maxTextLength, "label");
+}
+
+/**
+ * wb-19q member 12 (wb-wyr gate survivor GM5): the outer outcomeText pass below is retained as
+ * defense-in-depth. Its only measured discriminator was the bounded() cut splitting an astral pair
+ * in the inner 160-unit reason — gone since wb-yr9 (ce7ec7f), whose bounded() drops a pair it
+ * would split rather than leave a lone surrogate. With that cut fixed, GM5 ("outer pass -> plain
+ * redactor") measures equivalent on every probe, including the member-12 straddle probe in
+ * test/workbench-degradation-policy.test.ts (green with GM5 applied in an isolated copy). Keeping
+ * the outer pass re-covers any future drift in what the inner pass can hand this composition.
+ */
 function authRequiredError(detail: string): string {
-  const reason = redactWorkbenchText(detail, 160);
-  return redactWorkbenchText(
+  const reason = outcomeText(detail, 160);
+  return outcomeText(
     `${AUTH_REQUIRED_CODE}: Claude SDK authentication is missing or rejected; sign in with \`claude /login\` or set ANTHROPIC_API_KEY. The workflow does not fall back to a Pi model.${reason ? ` (SDK detail: ${reason})` : ""}`,
   );
 }
@@ -210,8 +248,15 @@ export function createClaudeWorkflowHost(config: ClaudeWorkflowHostOptions): Wor
     let toolCalls = 0;
     let authFailed = false;
     let terminal: SDKMessage & { type: "result" } | undefined;
+    let retained = false;
     try {
-      for await (const message of query({ prompt, options })) {
+      const live = query({ prompt, options });
+      const liveSeam = interruptSeamOf(live);
+      if (liveSeam !== undefined) {
+        retained = true;
+        config.onQueryLive?.(request ?? previous!.call, liveSeam);
+      }
+      for await (const message of live) {
         config.onMessage?.(message, request ?? previous!.call);
         if (message.type === "system" && message.subtype === "init") {
           sessionId = message.session_id;
@@ -243,7 +288,7 @@ export function createClaudeWorkflowHost(config: ClaudeWorkflowHostOptions): Wor
       if (controller.signal.aborted) return { ...common, ok: false, skipped: true, error: "Claude SDK query was cancelled." };
       if (terminal.subtype !== "success" || terminal.is_error) {
         if (authFailed) return { ...common, ok: false, error: authRequiredError(terminal.subtype === "success" ? terminal.result : terminal.errors.join("; ") || terminal.subtype) };
-        return { ...common, ok: false, error: terminal.subtype === "success" ? redactWorkbenchText(terminal.result) : redactWorkbenchText(terminal.errors.join("; ") || terminal.subtype) };
+        return { ...common, ok: false, error: outcomeText(terminal.subtype === "success" ? terminal.result : terminal.errors.join("; ") || terminal.subtype) };
       }
       if (!sessionId) return { ...common, ok: false, error: "Claude SDK succeeded without a session ID." };
       if (previous && sessionId !== previous.sessionId) {
@@ -274,10 +319,11 @@ export function createClaudeWorkflowHost(config: ClaudeWorkflowHostOptions): Wor
         return { ok: false, skipped: true, error: "Claude SDK query was cancelled.", ...(sessionId ? { sessionId } : {}) };
       }
       if (authFailed) return { ok: false, error: authRequiredError(error instanceof Error ? error.message : String(error)), ...(sessionId ? { sessionId } : {}) };
-      return { ok: false, error: `Claude SDK query failed: ${redactWorkbenchText(error instanceof Error ? error.message : String(error))}`, ...(sessionId ? { sessionId } : {}) };
+      return { ok: false, error: `Claude SDK query failed: ${outcomeText(error instanceof Error ? error.message : String(error))}`, ...(sessionId ? { sessionId } : {}) };
     } finally {
       config.signal?.removeEventListener("abort", onAbort);
       controllers.delete(agentId);
+      if (retained) config.onQueryDone?.(request ?? previous!.call);
     }
   }
 

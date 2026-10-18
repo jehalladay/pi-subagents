@@ -3,7 +3,7 @@
  * A reference is only a pointer; nothing here fetches until a host asks, nothing unreadable is invented,
  * and a failed read is a visible `unavailable` entry that never carries preview text.
  */
-import { safeWorkflowTerminalText } from "../ui/workflow-card.js";
+import { safeWorkflowTerminalText, scannedWorkflowTerminalText } from "../ui/workflow-card.js";
 import { CapabilityError } from "./capability-registry.js";
 import type { NativeRef, ObservationScope } from "./observation.js";
 import { sanitizeWorkbenchText } from "./redaction.js";
@@ -115,6 +115,11 @@ function safeChunks(row: string): string[] {
 
 const isHighSurrogate = (unit: number): boolean => unit >= 0xd800 && unit <= 0xdbff;
 
+/** At most `length` UTF-16 units of display text, never ending inside a surrogate pair, as safeChunks cuts (wb-yr9). */
+function headWithin(text: string, length: number): string {
+  return text.slice(0, text.length > length && isHighSurrogate(text.charCodeAt(length - 1)) ? length - 1 : length);
+}
+
 /** The longest prefix of `text` whose UTF-8 size fits `budget` bytes, cut only on code-point boundaries. */
 function prefixWithinBytes(text: string, budget: number): string {
   let used = 0;
@@ -164,17 +169,21 @@ function unavailableFor(error: unknown): EvidenceEntry {
   return { state: "unavailable", reason: "transport" };
 }
 
-/** Validate and bound one loader result into a loaded entry, or a visible unavailable. Raw error text never enters an entry. */
+/**
+ * Validate and bound one loader result into a loaded entry, or a visible unavailable. Raw error text never enters an entry. The
+ * producer receipt is examined only up to MAX_RECEIPT_CHARS raw characters, by the shared helper's straddle-safe scan option
+ * (wb-y5y): a value or escape sequence that bound splits is read as the whole receipt reads it, never cut open first.
+ */
 function admit(loader: EvidenceLoader, content: EvidenceContent, maxBytes: number): EvidenceEntry {
   if (typeof content !== "object" || content === null || !Array.isArray(content.preview)) return { state: "unavailable", reason: "transport" };
   if (!Number.isFinite(content.bytes) || content.bytes < 0 || Number.isNaN(Date.parse(content.capturedAt))) return { state: "unavailable", reason: "transport" };
   const { lines, clipped } = boundPreview(content.preview, maxBytes);
   const truncated = content.truncated === true || clipped || content.bytes > maxBytes;
   const preview = truncated ? [...lines.slice(0, EVIDENCE_MAX_PREVIEW_LINES - 1), EVIDENCE_TRUNCATED_MARK] : lines;
-  const receipt = typeof content.producerReceipt === "string" ? safeWorkflowTerminalText(content.producerReceipt.slice(0, MAX_RECEIPT_CHARS)) : "";
+  const receipt = typeof content.producerReceipt === "string" ? scannedWorkflowTerminalText(content.producerReceipt, MAX_RECEIPT_CHARS) : "";
   return {
     state: "loaded",
-    kind: safeWorkflowTerminalText(String(content.kind)).slice(0, 64),
+    kind: headWithin(safeWorkflowTerminalText(String(content.kind)), 64),
     provider: loader.provider,
     capturedAt: content.capturedAt,
     bytes: Math.max(content.bytes, preview.reduce((sum, line) => sum + Buffer.byteLength(line), 0)),

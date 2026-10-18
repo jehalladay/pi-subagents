@@ -26,6 +26,7 @@ import {
 import { type connectDetachedWorkflow, type DetachedCommand, decodeDetachedCommand } from "../src/workbench/hosts/local-detached.js";
 import { type NativeRef, ObservationProjection, type ObservationScope, type Relation, type RelationKind } from "../src/workbench/observation.js";
 import { redactWorkbenchText } from "../src/workbench/redaction.js";
+import { UNSAFE_DISPLAY } from "./helpers/unsafe-display.js";
 
 const OWNER = "local-os:uid:1000";
 const SCOPE: ObservationScope = { workspace: "/tmp/detached-ws", principal: OWNER };
@@ -670,7 +671,6 @@ describe("A7: reasons, diagnostics and echoed host text route through the shared
       ...IGNORABLES.map((code, index) => [`I${index + 1} U+${code.toString(16).toUpperCase()} inside a key`, `sk-ant-aaaa${unit(code)}TAILIGNORABLE${index + 1}`,
         `TAILIGNORABLE${index + 1}`] as const),
     ];
-    const UNSAFE = /[\x00-\x1f\x7f-\x9f\u{2028}\u{2029}]|\p{Default_Ignorable_Code_Point}|[\u{d800}-\u{dfff}]/u;
     const failures: string[] = [];
     let checked = 0;
     for (const [id, raw, secret] of probes) {
@@ -697,7 +697,7 @@ describe("A7: reasons, diagnostics and echoed host text route through the shared
       for (const [path, text] of shown) {
         checked += 1;
         if (text.includes(secret)) failures.push(`${id}: ${path} leaked`);
-        if (UNSAFE.test(text)) failures.push(`${id}: ${path} kept an unsafe code point`);
+        if (UNSAFE_DISPLAY.test(text)) failures.push(`${id}: ${path} kept an unsafe code point`);
       }
     }
     expect(probes).toHaveLength(12);
