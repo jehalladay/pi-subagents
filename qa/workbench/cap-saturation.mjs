@@ -272,7 +272,15 @@ const PRODUCTION_EVENTS_AND_QUERY = Object.freeze({maxEvents: 20_000, maxQuery: 
 export const MEMORY_COMPARABILITY = `non-comparable (bench-only limits ${EVENTS_AND_QUERY.maxEvents}/${EVENTS_AND_QUERY.maxQuery} vs production ${PRODUCTION_EVENTS_AND_QUERY.maxEvents.toLocaleString('en-US')}/${PRODUCTION_EVENTS_AND_QUERY.maxQuery})`;
 const UNLABELED_OVERFLOW = 'unlabeled-product-overflow';
 const VIEW_CYCLE = 4;
-const OVERFLOW_WORDS = /trunc|overflow|evict|dropp|not retained|omitted|capped/i;
+/**
+ * What counts as the inspector naming the dropped remainder (wb-j0b, owner R473 R2(a)): the counted remainder line the inspector
+ * draws as a whole line ("N nodes not shown: projection cap M", optionally " · K events not shown", or "K events not shown:
+ * projection event cap E"; counts and fixed words only, one leading pad space). The frame header's " · capped" suffix is NOT a
+ * label here: it is a second signal of the same drop, and a judge that counted it let a frame without the remainder line pass
+ * (gate mutant GM3 on wb-ea1) and one without the suffix fail (GM2). The anchors keep the same words inside a producer-supplied
+ * row, which always carries a tree lead, from counting.
+ */
+const COUNTED_REMAINDER = /^ ?(?:\d+ nodes? not shown: projection cap \d+(?: [·|] \d+ events? not shown)?|\d+ events? not shown: projection event cap \d+)$/m;
 /** The two docs sections this receipt answers, quoted so the test can pin them against drift. */
 export const DOC_QUOTES = Object.freeze({
   scalability: Object.freeze({
@@ -340,9 +348,21 @@ function offeredOf(subset) {
   return {nodes: subset.snapshots.length, groups, operations: subset.snapshots.length - groups, edges: subset.relations.length, updates: subset.updates.length};
 }
 
-/** What the terminal shows: rows per size from the opening frame, and whether any frame of any view names an overflow. */
-function surfaceOf(projection, inspector, offered) {
+/**
+ * What the terminal shows: rows per size from the opening frame, and whether any frame of any view names an overflow.
+ * measurePass calls it last, after navigation, so it judges a projection in the state its pass left it. Exported for
+ * test/workbench-cap-saturation-remainder-label.test.ts (wb-j0b respin, gate row 512 U2): that file judges its inspector
+ * mutants with this function over the projections one real run built, where five full runs (one per inspector) took
+ * 243-256 s against the default gate's 300 s test step.
+ *
+ * @param {CapProjection} projection a projection measurePass built and fed
+ * @param {CapInspector} inspector
+ * @param {{readonly nodes: number}} offered the pass's offered counts; only nodes is read
+ * @returns {CapPass['surface']}
+ */
+export function surfaceOf(projection, inspector, offered) {
   const model = {projection, scope: SCOPE, invocationId: INVOCATION_ID, title: 'W21 cap saturation', status: 'running'};
+  /** @type {Record<string, number>} */
   const rowsBySize = {};
   let labelled = false;
   let namesOffered = false;
@@ -352,7 +372,7 @@ function surfaceOf(projection, inspector, offered) {
       const lines = inspector.layoutInspector(model, state, size);
       if (view === 0) rowsBySize[size.label] = lines.length;
       const text = lines.join('\n');
-      if (OVERFLOW_WORDS.test(text)) labelled = true;
+      if (COUNTED_REMAINDER.test(text)) labelled = true;
       if (text.includes(String(offered.nodes))) namesOffered = true;
     }
     state = inspector.reduceInspectorKey('\t', state, model)?.state ?? state;
@@ -586,7 +606,7 @@ function findingsOf(passes, memoryJudged, runtimeNodeCalls) {
   ];
   const overflowing = Object.values(passes).filter(pass => pass.overflow.occurred);
   if (unlabeledOverflowOf(passes).length > 0) {
-    findings.push({id: UNLABELED_OVERFLOW, detail: `No frame of any view in ${overflowing.length} overflowing passes names the dropped remainder; FIFO eviction is counted by this receipt only. Plain mode records this finding and exits 0; --strict exits 1 until the inspector remainder line (wb-ea1) lands.`});
+    findings.push({id: UNLABELED_OVERFLOW, detail: `No frame of any view in ${overflowing.length} overflowing passes names the dropped remainder; FIFO eviction is counted by this receipt only. Plain mode records this finding and exits 0; --strict exits 1. The label is the inspector's counted remainder line (landed with wb-ea1), and only that whole line counts (wb-j0b).`});
   }
   const edgeLoss = overflowing.filter(pass => pass.retained.edges < pass.afterRelations.edges);
   if (edgeLoss.length > 0) {

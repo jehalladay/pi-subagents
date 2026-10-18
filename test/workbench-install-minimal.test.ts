@@ -378,6 +378,6 @@ describe("harness sources and wiring", () => {
   it("forge.toml has the install-minimal command with timeout 300 outside the default gate", () => {
     const toml = readRepo("forge.toml");
     expect(toml).toMatch(/\[build\.commands\.install-minimal\]\ncommand = "node qa\/workbench\/install-minimal\.mjs"\ntimeout = 300\n/);
-    expect(toml).toContain('gate = ["lint", "typing", "build", "test", "workbench-shell", "package-smoke"]');
+    expect(toml).toContain('gate = ["lint", "typing", "build", "test", "census", "workbench-shell", "package-smoke"]');
   });
 });

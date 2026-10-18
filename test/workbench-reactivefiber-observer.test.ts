@@ -5,13 +5,13 @@
  * acceptance criteria 1-7. Nothing here needs an rf binary, a TTY or the network: the live rf tests stay untouched, and this
  * module never invokes rf (it projects an envelope the host already holds, so it can never issue a history-creating verb). */
 import {createHash} from 'node:crypto';
-import {chmodSync, writeFileSync} from 'node:fs';
-import {join} from 'node:path';
+import {chmodSync, readFileSync, writeFileSync} from 'node:fs';
+import {delimiter, join} from 'node:path';
 import {afterEach, describe, expect, expectTypeOf, it} from 'vitest';
 import {CapabilityError, type JsonValue} from '../src/workbench/capability-registry.js';
 import {nativeEvidence} from '../src/workbench/native-evidence.js';
 import {type NativeRef, ObservationProjection, type ObservationScope} from '../src/workbench/observation.js';
-import {nativeReactiveFiberPreview} from '../src/workbench/providers/reactivefiber.js';
+import {nativeReactiveFiberPreview, REACTIVE_FIBER_CONTRACT_SOURCE} from '../src/workbench/providers/reactivefiber.js';
 import {
   REACTIVEFIBER_OBSERVATION_CONTRACT, type ReactiveFiberObservedRelation, type ReactiveFiberProjectionTopology,
   type ReactiveFiberTopologyContext, reactivefiberTopology,
@@ -45,7 +45,9 @@ const rfDiagnostic = (over: Json = {}): Json => ({code: 'RF_RENDER_FAILED', seve
   source: null, metadata: {secret: 'SECRET-METADATA'}, ...over});
 /** wb-693.3: result fields that put this file's obviously fake SECRET- placeholders in every engine-era field beside the two
  * bounded identity strings an engine entry states (an unexpected entry field, nested entry metadata, an engine metric and a
- * sibling SDK entry); only those two identity strings may ever surface. */
+ * sibling SDK entry); only those two identity strings may ever surface. wb-693.4 closes engine_metrics to its two producer
+ * counters, so the engine-metric placeholder moved out of this fixture into the extra-key refusal row (which asserts the
+ * refusal text echoes no placeholder) and the fixture's own counts surface only as the bounded rf-engine-spawns:<n> reference. */
 const LEAKY_ENGINE_FIELDS: Json = {
   provenance: {graph_revision_id: GRAPH, sdk_versions: {
     fiber_optics: {distribution_version: 'SECRET-SIBLING-VERSION', contract_fingerprint: 'unknown', note: 'SECRET-SIBLING-NOTE'},
@@ -53,7 +55,7 @@ const LEAKY_ENGINE_FIELDS: Json = {
       metadata: {detail: 'SECRET-ENGINE-METADATA'}},
     tsx_sdk: {distribution_version: '0.1.341', contract_fingerprint: 'unknown', hint: 'SECRET-ENGINE-HINT'},
   }},
-  engine_metrics: {tsx_worker_spawns: 1, tsx_resource_rounds: 0, detail: 'SECRET-ENGINE-METRICS'},
+  engine_metrics: {tsx_worker_spawns: 1, tsx_resource_rounds: 0},
 };
 /** The validated rf CLI envelope the provider returns as `source`, in the measured reactive-fiber.cli/v1 shape. */
 function envelope(over: Json = {}): Json {
@@ -86,6 +88,20 @@ function bounded(topology: ReactiveFiberProjectionTopology): void {
     expect(diagnostic.length).toBeLessThanOrEqual(200);
     expect(diagnostic).not.toMatch(UNSAFE);
   }
+}
+
+// wb-4v6 (wb-1c6 gate rows 475/483 F1-F2): registration-site liveness for the it.each tables. A constant's length pin proves the
+// TABLE is whole; it cannot see a table thinned AT THE it.each CALL (DROPPED.slice(1), a filter over the argument), which registers
+// fewer cases and stays green. Each table's callback records the row name it ran under; the pin that follows the it.each in
+// definition order (vitest runs a file's tests in order) compares the ran names to the table's row names, so a row that is not
+// registered and run turns that pin red naming the table. Names are compared as sorted unique lists, so a retry cannot double-count.
+const RAN = new Map<string, string[]>();
+function record(table: string, name: string): void {
+  RAN.set(table, [...(RAN.get(table) ?? []), name]);
+}
+function expectEveryRowRan(table: string, rows: readonly (readonly unknown[])[]): void {
+  const unique = (names: string[]): string[] => [...new Set(names)].sort();
+  expect(unique(RAN.get(table) ?? [])).toStrictEqual(unique(rows.map(row => String(row[0]))));
 }
 
 describe('ReactiveFiber render preview reader adapter', () => {
@@ -131,7 +147,7 @@ describe('ReactiveFiber render preview reader adapter', () => {
   });
 
   // R3: the success-shape guards: each hand mutant of the noncommitted-preview shape is refused, never projected.
-  it.each([
+  const REFUSED = [
     ['ephemeral false', withResult({ephemeral: false})],
     ['ephemeral missing', reading(envelope({result: without(result(), 'ephemeral')}))],
     ['render_id set', withResult({render_id: 'rfr_0123456789abcdefghijkl'})],
@@ -177,8 +193,16 @@ describe('ReactiveFiber render preview reader adapter', () => {
     ['wrong contract', reading(envelope(), {contract: 'reactivefiber.render.other/v1'})],
     ['source missing', without(reading(), 'source')],
     ['source not an object', reading(envelope(), {source: 'text'})],
-  ] as const)('R3: refuses with a typed error and projects nothing: %s', (_name, value) => {
+  ] as const;
+  it('R3: the REFUSED table registers all 50 rows', () => {
+    expect(REFUSED.length).toBe(50);
+  });
+  it.each(REFUSED)('R3: refuses with a typed error and projects nothing: %s', (name, value) => {
+    record('REFUSED', name);
     expect(refusal(value as Json).category).toBe('validation');
+  });
+  it('R3: every REFUSED row is registered at the it.each call and runs', () => {
+    expectEveryRowRan('REFUSED', REFUSED);
   });
 
   // wb-2j3.9 (R10) acceptance (c): "R1's cli_version admission adds no required key: the absent-field fixture (R1) still validates and projects."
@@ -213,14 +237,22 @@ describe('ReactiveFiber render preview reader adapter', () => {
     expect(reactivefiberTopology(reading(failure({workspace: null})) as JsonValue, context).snapshots[0].node.statusTone).toBe('failure');
   });
 
-  it.each([
+  const CONTRADICTORY = [
     ['a non-RF code', failure({diagnostics: [rfDiagnostic({code: 'HX_FAILED'})]})],
     ['a warning-severity primary diagnostic', failure({diagnostics: [rfDiagnostic({severity: 'warning'})]})],
     ['no diagnostic at all', failure({diagnostics: []})],
     ['a non-null result', failure({result: result()})],
     ['a transaction id', failure({transaction_id: 'rft_0123456789abcdefghijkl'})],
-  ] as const)('R4: ok:false with %s is a contradictory failure envelope and is refused', (_name, source) => {
+  ] as const;
+  it('R4: the CONTRADICTORY table registers all 5 rows', () => {
+    expect(CONTRADICTORY.length).toBe(5);
+  });
+  it.each(CONTRADICTORY)('R4: ok:false with %s is a contradictory failure envelope and is refused', (name, source) => {
+    record('CONTRADICTORY', name);
     expect(refusal(reading(source as Json)).category).toBe('validation');
+  });
+  it('R4: every CONTRADICTORY row is registered at the it.each call and runs', () => {
+    expectEveryRowRan('CONTRADICTORY', CONTRADICTORY);
   });
 
   it('R4: ok:true with diagnostics_summary.has_errors projects partial and never clean success', () => {
@@ -336,8 +368,9 @@ describe('ReactiveFiber render preview reader adapter', () => {
 describe('producer release from result.provenance.cli_version (wb-2j3.1 reader, wb-2j3.2 no-synthesis guard)', () => {
   const CAPABILITY = 'reactivefiber.render.preview';
   const RELEASE = '0.1.716';
-  /** The release both registered descriptors still hard-code in contractSource: the default the R3 guard must catch. */
-  const CARRIER_RELEASE = '0.1.583';
+  /** The release the single rf contractSource carrier states (wb-2j3.12, R2; read by identifier so the R3 guard tracks the
+   * live carrier, never a stale literal): the default an implementation must never synthesize for an absent cli_version. */
+  const CARRIER_RELEASE = REACTIVE_FIBER_CONTRACT_SOURCE.slice('rf@'.length, REACTIVE_FIBER_CONTRACT_SOURCE.indexOf(':'));
   const invoked: ReactiveFiberTopologyContext = {...context, invocationId: 'wf_rf_1'};
   const stating = (cliVersion: JsonValue): Json => withResult({provenance: {graph_revision_id: GRAPH, cli_version: cliVersion}});
   const noteOf = (release: string): string => `producer release from result.provenance.cli_version: rf@${release}`;
@@ -354,7 +387,7 @@ describe('producer release from result.provenance.cli_version (wb-2j3.1 reader, 
       trace: {invocationId: 'wf_rf_1'},
     }],
     relations: [],
-    diagnostics: ['ephemeral noncommitted preview: render_id null, transaction_id null, 0 storage writes', 'context text withheld: referenced by sha256 digest',
+    diagnostics: ['ephemeral noncommitted preview: render_id null, transaction_id null, 0 authoritative storage writes (envelope storage_write_count)', 'context text withheld: referenced by sha256 digest',
       'no native interval supplied'],
   };
   const [PREVIEW_NOTE, WITHHELD_NOTE, INTERVAL_NOTE] = TODAY.diagnostics;
@@ -453,11 +486,19 @@ describe('producer release from result.provenance.cli_version (wb-2j3.1 reader, 
     // bound alone drops it; a reader admitting 257 bytes carries it and fails this row (the 257-ASCII row above is also cut by the layout).
     ['257 UTF-8 bytes in 129 characters (the multibyte boundary)', `a${cp(0xe9).repeat(128)}`],
   ];
-  it.each(DROPPED)('R3: a cli_version that is %s is dropped, never rewritten or defaulted: the projection equals the absent case', (_name, value) => {
+  it('R3: the cli_version DROPPED table registers all 17 rows', () => {
+    expect(DROPPED.length).toBe(17);
+  });
+  it.each(DROPPED)('R3: a cli_version that is %s is dropped, never rewritten or defaulted: the projection equals the absent case', (name, value) => {
+    record('R3 DROPPED', name);
     const topology = reactivefiberTopology(stating(value) as JsonValue, invoked);
     expect(JSON.stringify(topology)).toBe(JSON.stringify(TODAY));
     expect(topology).toStrictEqual(TODAY);
     expect(nativeEvidence(CAPABILITY, stating(value) as JsonValue)).toStrictEqual(TODAY_EVIDENCE);
+  });
+
+  it('R3: every cli_version DROPPED row is registered at the it.each call and runs', () => {
+    expectEveryRowRan('R3 DROPPED', DROPPED);
   });
 
   // wb-19q (2j3.2 F2) decoy: a release is read from result.provenance.cli_version only. A cli_version beside provenance
@@ -535,20 +576,32 @@ describe('engine identity from result.provenance.sdk_versions (wb-693.1 R1, wb-6
     else process.env.PATH = originalPath;
     removeScratch(...stubs.splice(0));
   });
-  /** A stub rf first on PATH that prints `source` and exits 0, so the provider's own envelope validator decides. */
+  /** A stub rf as the ONLY PATH entry (absolute-node shebang, no host rf behind it) that prints `source` and exits 0, so the provider's own envelope validator decides. */
   function stubRf(source: Json): void {
     const dir = makeScratch('rf-engine-identity-');
     stubs.push(dir);
     const binary = join(dir, 'rf');
     writeFileSync(binary, `#!${process.execPath}\nprocess.stdout.write(${JSON.stringify(JSON.stringify(source))});\n`);
     chmodSync(binary, 0o700);
-    process.env.PATH = `${dir}:${originalPath ?? ''}`;
+    process.env.PATH = dir;
   }
   /** One call of the native provider through the stub: the reading the registered reactivefiber.render.preview returns. */
   async function provided(source: Json): Promise<JsonValue> {
     stubRf(source);
     return nativeReactiveFiberPreview('claude-opus-5', 'Summarize workbench integration', WS);
   }
+  // wb-n0z: the stand-in is hermetic - the only PATH entry, so a refusal or a success can never be produced by the host rf.
+  it('wb-n0z: the stand-in is the only PATH entry and its interpreter is the absolute node of this run', () => {
+    stubRf(envelope());
+    const entries = (process.env.PATH ?? '').split(delimiter);
+    expect(entries).toHaveLength(1);
+    expect(readFileSync(join(entries[0] ?? '', 'rf'), 'utf8').split('\n')[0]).toBe(`#!${process.execPath}`);
+  });
+  it('wb-n0z: a stand-in that cannot be executed refuses as could-not-launch, never through the host rf', async () => {
+    stubRf(envelope());
+    chmodSync(join(process.env.PATH ?? '', 'rf'), 0o600);
+    await expect(nativeReactiveFiberPreview('claude-opus-5', 'Summarize workbench integration', WS)).rejects.toMatchObject({category: 'transport', message: 'RF preview could not launch the installed binary.'});
+  });
   const STUB_TEXT = 'hermetic stub render';
   /** A TSX-era noncommitted preview (wb-693.1 acceptance 4): object sdk_versions with both engine keys, engine_metrics and the
    * seven-key formula_terms (max_output_tokens beside the five terms and available_context_tokens), plus a later result key. */
@@ -613,6 +666,16 @@ describe('engine identity from result.provenance.sdk_versions (wb-693.1 R1, wb-6
     expect(topology.diagnostics.indexOf(ENGINE_NOTE)).toBe(topology.diagnostics.indexOf(releaseNote('0.1.716')) + 1);
   });
 
+  // wb-1c6 (G8 kill margin): the engine note is the last note before the interval note even behind every partial-render note.
+  it('R10: the engine note follows the release note and every partial-render note, and precedes the interval note', () => {
+    const over = {diagnostics_summary: {errors: 2, warnings: 0, has_errors: true, has_warnings: false}, budget: {formula_terms: formula({available_context_tokens: -40})}};
+    const topology = project(stating(ENGINE_OBJECT, over, {cli_version: '0.1.716'}));
+    const plain = today(over, {cli_version: '0.1.716'});
+    expect(topology.diagnostics).toStrictEqual([...plain.diagnostics.slice(0, -1), ENGINE_NOTE, INTERVAL_NOTE]);
+    expect(topology.diagnostics.indexOf(ENGINE_NOTE)).toBe(topology.diagnostics.indexOf(releaseNote('0.1.716')) + 1);
+    expect(topology.diagnostics.indexOf(releaseNote('0.1.716'))).toBeGreaterThan(topology.diagnostics.indexOf('context exceeds the available budget: partial'));
+  });
+
   it('R10: the identities are carried, not hard-coded: other versions and fingerprints round-trip verbatim into their references', () => {
     const cases: [Json, string][] = [
       [{distribution_version: '2.1.4', contract_fingerprint: `sha256:${'0f'.repeat(32)}`}, `2.1.4:sha256:${'0f'.repeat(32)}`],
@@ -656,7 +719,8 @@ describe('engine identity from result.provenance.sdk_versions (wb-693.1 R1, wb-6
 
   it('R10 end to end: the provider reading of a TSX-era envelope projects both rf-engine references and the foreign-runtime note', async () => {
     const topology = project(await provided(tsxEra()));
-    expect(topology.snapshots[0].evidenceRefs).toStrictEqual([...PLAIN_REFS, 'rf-cli:0.1.716', RUNTIME_REF, SDK_REF]);
+    // wb-693.4: the envelope's engine_metrics.tsx_worker_spawns 1 adds the bounded spawn reference after the identities.
+    expect(topology.snapshots[0].evidenceRefs).toStrictEqual([...PLAIN_REFS, 'rf-cli:0.1.716', RUNTIME_REF, SDK_REF, 'rf-engine-spawns:1']);
     expect(topology.diagnostics).toContain(ENGINE_NOTE);
     expect(topology.snapshots[0].coverage).toBe('complete');
   }, 30_000);
@@ -673,9 +737,16 @@ describe('engine identity from result.provenance.sdk_versions (wb-693.1 R1, wb-6
   });
 
   it('R11: only the two engine keys are read: an engine-shaped entry under another name or out of case adds nothing', () => {
-    for (const key of ['tsx_runtime_v2', 'TSX_RUNTIME', 'Tsx_Sdk', 'tsx', 'runtime', 'deno']) {
+    for (const key of ['tsx_runtime_v2', 'TSX_RUNTIME', 'Tsx_Sdk', 'Tsx_Runtime', 'TSX_SDK', 'tsx', 'runtime', 'deno']) {
       expect(JSON.stringify(project(stating({...SIBLINGS, [key]: RUNTIME})))).toBe(JSON.stringify(today()));
     }
+  });
+
+  // wb-1c6 (G11 kill margin): an out-of-case engine key beside a correctly cased one never adds a reference of its own.
+  it('R11: an out-of-case engine key beside the correctly cased one adds no second reference and no second note', () => {
+    const topology = project(stating({...SIBLINGS, tsx_runtime: RUNTIME, TSX_SDK: SDK, Tsx_Runtime: SDK}));
+    expect(engineRefsOf(topology)).toStrictEqual([RUNTIME_REF]);
+    expect(topology.diagnostics.filter(note => note === ENGINE_NOTE)).toHaveLength(1);
   });
 
   // R12 (wb-693.2 acceptance 1): "sdk_versions [{name:'fiber_optics_wire_format', version:'2'}] projects with no validation
@@ -684,8 +755,17 @@ describe('engine identity from result.provenance.sdk_versions (wb-693.1 R1, wb-6
     ['the rf <= 0.1.709 wire-format list', [{name: 'fiber_optics_wire_format', version: '2'}]],
     ['an empty list', []],
     ['a list whose elements look like engine entries', [{name: 'tsx_runtime', ...RUNTIME}, {tsx_sdk: SDK}]],
+    // wb-1c6 (G3 kill margin): a list scanned as entries would read these two keyed, fully valid engine entries.
+    ['a list of keyed, valid engine entries', [{tsx_runtime: RUNTIME}, {tsx_sdk: SDK}]],
+    ['a list holding the bare identity objects', [RUNTIME, SDK]],
   ];
-  it.each(LISTS)('R12: a LIST-shaped sdk_versions (%s) records no engine identity and is never a refusal', (_name, list) => {
+  // wb-1c6 (wb-19q member 36 / wb-693.1 R2): each-liveness. A table that is emptied or thinned registers fewer cases and would
+  // otherwise stay green; the count below is the fact that every row is still registered.
+  it('R12: the LISTS table registers all 5 rows', () => {
+    expect(LISTS.length).toBe(5);
+  });
+  it.each(LISTS)('R12: a LIST-shaped sdk_versions (%s) records no engine identity and is never a refusal', (name, list) => {
+    record('LISTS', name);
     const releases: Json[] = [{}, {cli_version: '0.1.709'}];
     for (const provenance of releases) {
       const topology = project(stating(list, {}, provenance));
@@ -694,9 +774,21 @@ describe('engine identity from result.provenance.sdk_versions (wb-693.1 R1, wb-6
     }
   });
 
+  it('R12: every LISTS row is registered at the it.each call and runs', () => {
+    expectEveryRowRan('LISTS', LISTS);
+  });
+
   const OTHER_SHAPES: [string, JsonValue][] = [['null', null], ['a string', 'tsx_runtime 2.9.7'], ['a number', 2], ['a boolean', true]];
-  it.each(OTHER_SHAPES)('R12: an sdk_versions that is %s records no engine identity and is never a refusal either', (_name, value) => {
+  it('R12: the OTHER_SHAPES table registers all 4 rows', () => {
+    expect(OTHER_SHAPES.length).toBe(4);
+  });
+  it.each(OTHER_SHAPES)('R12: an sdk_versions that is %s records no engine identity and is never a refusal either', (name, value) => {
+    record('OTHER_SHAPES', name);
     expect(JSON.stringify(project(stating(value)))).toBe(JSON.stringify(today()));
+  });
+
+  it('R12: every OTHER_SHAPES row is registered at the it.each call and runs', () => {
+    expectEveryRowRan('OTHER_SHAPES', OTHER_SHAPES);
   });
 
   // R12 (wb-693.2 acceptance 2): sdk_versions and cli_version never become required envelope fields.
@@ -713,12 +805,13 @@ describe('engine identity from result.provenance.sdk_versions (wb-693.1 R1, wb-6
   it('R12: the dogfood-shaped rf 0.1.709 preview (list sdk_versions, tsx_worker_spawns 1, seven-key formula_terms) projects normally', () => {
     const topology = project(reading(dogfood709()));
     const [snapshot] = topology.snapshots;
-    expect(snapshot.evidenceRefs).toStrictEqual([...PLAIN_REFS, 'rf-cli:0.1.709']);
+    // wb-693.4: tsx_worker_spawns 1 adds the bounded spawn reference (and the spawn note); no engine identity is recorded.
+    expect(snapshot.evidenceRefs).toStrictEqual([...PLAIN_REFS, 'rf-cli:0.1.709', 'rf-engine-spawns:1']);
     expect(snapshot.coverage).toBe('complete');
     expect(snapshot.node.statusTone).toBe('success');
     expect(snapshot.node.statusText).toBe('noncommitted preview (rf-cli) · 989760 of 1000000 context tokens available · necessity evals 4 · 0 errors, 0 warnings');
     expect(topology.diagnostics).toContain(releaseNote('0.1.709'));
-    expect(topology.diagnostics.some(note => ENGINE_NOTE_PATTERN.test(note))).toBe(false);
+    expect(topology.diagnostics).not.toContain(ENGINE_NOTE);
   });
 
   it('R12 end to end: the dogfood-shaped 0.1.709 preview passes the provider unchanged and projects with no engine identity', async () => {
@@ -726,7 +819,7 @@ describe('engine identity from result.provenance.sdk_versions (wb-693.1 R1, wb-6
     const preview = await provided(source);
     expect(preview).toStrictEqual({contract: 'reactivefiber.render.preview/v1', workspaceRoot: WS, source});
     const topology = project(preview);
-    expect(topology.snapshots[0].evidenceRefs).toStrictEqual([...PLAIN_REFS, 'rf-cli:0.1.709']);
+    expect(topology.snapshots[0].evidenceRefs).toStrictEqual([...PLAIN_REFS, 'rf-cli:0.1.709', 'rf-engine-spawns:1']);
     expect(engineRefsOf(topology)).toStrictEqual([]);
   }, 30_000);
 
@@ -764,6 +857,9 @@ describe('engine identity from result.provenance.sdk_versions (wb-693.1 R1, wb-6
     ['a sha512 fingerprint', {distribution_version: '2.9.7', contract_fingerprint: `sha512:${'b2'.repeat(64)}`}],
     ['UNKNOWN as the fingerprint', {distribution_version: '2.9.7', contract_fingerprint: 'UNKNOWN'}],
     ['unknown with a trailing space', {distribution_version: '2.9.7', contract_fingerprint: 'unknown '}],
+    // wb-1c6 kill margins: G1 (case-insensitive fingerprint regex) and G2 ('unknown' compared after trim) each had one killing row.
+    ['a mixed-case-hex fingerprint', {distribution_version: '2.9.7', contract_fingerprint: `sha256:${'b2'.repeat(31)}B2`}],
+    ['unknown with a leading line break', {distribution_version: '2.9.7', contract_fingerprint: `${cp(0x0a)}unknown`}],
     ['placeholder text as the fingerprint', {distribution_version: '2.9.7', contract_fingerprint: 'SECRET-ENGINE-FINGERPRINT'}],
     ['a null fingerprint', {distribution_version: '2.9.7', contract_fingerprint: null}],
     ['a numeric fingerprint', {distribution_version: '2.9.7', contract_fingerprint: 0}],
@@ -773,11 +869,19 @@ describe('engine identity from result.provenance.sdk_versions (wb-693.1 R1, wb-6
     ['an entry that is a list', ['2.9.7', 'unknown']],
     ['an entry that is null', null],
   ];
-  it.each(DROPPED)('R13: an engine entry with %s is dropped, never rewritten: no reference, no note, the projection equals today', (_name, entry) => {
+  it('R13: the DROPPED table registers all 32 rows', () => {
+    expect(DROPPED.length).toBe(32);
+  });
+  it.each(DROPPED)('R13: an engine entry with %s is dropped, never rewritten: no reference, no note, the projection equals today', (name, entry) => {
+    record('R13 DROPPED', name);
     const topology = project(stating({...SIBLINGS, tsx_runtime: entry, tsx_sdk: entry}));
     expect(JSON.stringify(topology)).toBe(JSON.stringify(today()));
     expect(JSON.stringify(topology)).not.toContain('SECRET-');
     expect(topology.snapshots[0].evidenceRefs?.length).toBeLessThanOrEqual(32);
+  });
+
+  it('R13: every DROPPED row is registered at the it.each call and runs', () => {
+    expectEveryRowRan('R13 DROPPED', DROPPED);
   });
 
   it('R13: placeholders in every engine-era field beside the identities never surface; only bounded references do, refs <= 32', () => {
@@ -795,7 +899,11 @@ describe('engine identity from result.provenance.sdk_versions (wb-693.1 R1, wb-6
     ['diagnostics_summary.has_errors (R4)', {diagnostics_summary: {errors: 2, warnings: 0, has_errors: true, has_warnings: false}}, context, /^noncommitted preview \(rf-cli\) · .* 2 errors, 0 warnings$/],
     ['an over-budget render (R4)', {budget: {formula_terms: formula({available_context_tokens: -40})}}, context, /^noncommitted preview \(rf-cli\) · over budget by 40 /],
   ];
-  it.each(PARTIAL)('R13: %s with both engine entries still reads partial and unknown, its status text and seam label unchanged', (_name, over, ctx, label) => {
+  it('R13: the PARTIAL table registers all 3 rows', () => {
+    expect(PARTIAL.length).toBe(3);
+  });
+  it.each(PARTIAL)('R13: %s with both engine entries still reads partial and unknown, its status text and seam label unchanged', (name, over, ctx, label) => {
+    record('PARTIAL', name);
     const engine = project(stating(ENGINE_OBJECT, over), ctx).snapshots[0];
     const plain = today(over, {}, ctx).snapshots[0];
     expect(engine.coverage).toBe('partial');
@@ -803,6 +911,10 @@ describe('engine identity from result.provenance.sdk_versions (wb-693.1 R1, wb-6
     expect(engine.node.statusText).toMatch(label);
     expect(engine.node).toStrictEqual(plain.node);
     expect(engine.coverage).toBe(plain.coverage);
+  });
+
+  it('R13: every PARTIAL row is registered at the it.each call and runs', () => {
+    expectEveryRowRan('PARTIAL', PARTIAL);
   });
 
   it('R13: an error-severity envelope diagnostic beside engine entries still cannot read as success, and its text stays withheld', () => {
@@ -824,6 +936,103 @@ describe('engine identity from result.provenance.sdk_versions (wb-693.1 R1, wb-6
   });
 });
 
+/** wb-693.4 (RF-TSX-AND-EMBEDDING-R6): "When result.engine_metrics is present, previewSnapshot shall require exactly the
+ * producer-closed keys {tsx_worker_spawns, tsx_resource_rounds} as non-negative integers (mirroring work handling) and, when
+ * tsx_worker_spawns > 0, add one bounded ref rf-engine-spawns:<n> and a foreign-runtime note; zero spawns or an absent object
+ * leaves the projection unchanged." Acceptance 1: R15 spawns 1 -> the ref plus the note; spawns 0 -> neither; absent -> unchanged.
+ * Acceptance 2 (closedness mutant): "a missing or extra key -> validation refusal mirroring work". */
+describe('engine_metrics spawn surfacing (wb-693.4 R6, R15)', () => {
+  const PLAIN = [`rf-graph:${GRAPH}`, `rf-workspace:${WORKSPACE_ID}`];
+  const SPAWN_NOTE = 'TSX worker spawned (result.engine_metrics.tsx_worker_spawns): a foreign runtime executed component source';
+  const INTERVAL = 'no native interval supplied';
+  const metrics = (spawns: JsonValue, rounds: JsonValue = 0, extra: Json = {}): Json => ({tsx_worker_spawns: spawns, tsx_resource_rounds: rounds, ...extra});
+  const rendered = (engineMetrics: JsonValue | undefined, provenance: Json = {}): ReactiveFiberProjectionTopology =>
+    reactivefiberTopology(withResult({provenance: {graph_revision_id: GRAPH, ...provenance}, ...(engineMetrics === undefined ? {} : {engine_metrics: engineMetrics})}) as JsonValue, context);
+  const baseline = (provenance: Json = {}): ReactiveFiberProjectionTopology => rendered(undefined, provenance);
+
+  it('R15: tsx_worker_spawns 1 adds exactly one rf-engine-spawns:1 reference and one foreign-runtime note, nothing else moves', () => {
+    const topology = rendered(metrics(1, 1));
+    const plain = baseline();
+    expect(topology.snapshots[0].evidenceRefs).toStrictEqual([...PLAIN, 'rf-engine-spawns:1']);
+    expect(topology.diagnostics).toStrictEqual([...plain.diagnostics.slice(0, -1), SPAWN_NOTE, INTERVAL]);
+    expect(SPAWN_NOTE).toMatch(/foreign runtime/);
+    expect({...topology.snapshots[0], evidenceRefs: PLAIN}).toStrictEqual(plain.snapshots[0]);
+  });
+
+  it('R15: the count is carried verbatim, including the largest safe integer, and the reference stays applicable to the projection', () => {
+    for (const spawns of [2, 17, Number.MAX_SAFE_INTEGER]) {
+      const topology = rendered(metrics(spawns));
+      expect(topology.snapshots[0].evidenceRefs).toStrictEqual([...PLAIN, `rf-engine-spawns:${spawns}`]);
+      expect(topology.snapshots[0].evidenceRefs?.at(-1)).toMatch(/^rf-engine-spawns:[1-9][0-9]{0,15}$/);
+      const projection = new ObservationProjection();
+      expect(projection.refresh(topology.snapshots[0])).toBe('applied');
+      expect(projection.query({scope, limit: 10, evidence: `rf-engine-spawns:${spawns}`}).nodes.map(item => item.nativeRef.id)).toStrictEqual([OPERATION]);
+    }
+  });
+
+  it('R15: zero spawns (any rounds) and an absent object leave the projection byte-identical to today', () => {
+    for (const engineMetrics of [metrics(0, 0), metrics(0, 3)]) {
+      expect(JSON.stringify(rendered(engineMetrics))).toBe(JSON.stringify(baseline()));
+    }
+    const topology = baseline();
+    expect(topology.snapshots[0].evidenceRefs).toStrictEqual(PLAIN);
+    expect(topology.diagnostics.some(note => /foreign runtime/.test(note))).toBe(false);
+  });
+
+  it('R15: beside an engine identity the spawn reference follows the identity references and the foreign-runtime note is stated once', () => {
+    const runtime: Json = {distribution_version: '2.9.7', contract_fingerprint: 'unknown'};
+    const topology = rendered(metrics(1, 1), {cli_version: '0.1.716', sdk_versions: {tsx_runtime: runtime}});
+    expect(topology.snapshots[0].evidenceRefs).toStrictEqual([...PLAIN, 'rf-cli:0.1.716', 'rf-engine:tsx_runtime:2.9.7:unknown', 'rf-engine-spawns:1']);
+    expect(topology.diagnostics.filter(note => /foreign runtime/.test(note))).toHaveLength(1);
+  });
+
+  it('R15: a list-shaped sdk_versions (rf <= 0.1.709) with spawns 1 still projects, carrying the spawn reference and note', () => {
+    const topology = rendered(metrics(1, 0), {cli_version: '0.1.709', sdk_versions: [{name: 'fiber_optics_wire_format', version: '2'}]});
+    expect(topology.snapshots[0].evidenceRefs).toStrictEqual([...PLAIN, 'rf-cli:0.1.709', 'rf-engine-spawns:1']);
+    expect(topology.diagnostics).toContain(SPAWN_NOTE);
+  });
+
+  it('R15: with every partial note, a release, an engine identity and spawns the diagnostics stay inside the shared bound and the interval note is last', () => {
+    const over: Json = {diagnostics_summary: {errors: 2, warnings: 0, has_errors: true, has_warnings: false}, budget: {formula_terms: formula({available_context_tokens: -40})}};
+    const runtime: Json = {distribution_version: '2.9.7', contract_fingerprint: 'unknown'};
+    const topology = reactivefiberTopology(withResult({provenance: {graph_revision_id: GRAPH, cli_version: '0.1.716', sdk_versions: {tsx_runtime: runtime}}, engine_metrics: metrics(1), ...over}) as JsonValue,
+      {...context, seam: 'injected-fixture'});
+    expect(topology.diagnostics.length).toBeLessThanOrEqual(8);
+    expect(topology.diagnostics.at(-1)).toBe(INTERVAL);
+    expect(topology.diagnostics.some(note => /foreign runtime/.test(note))).toBe(true);
+  });
+
+  // Closedness (acceptance 2): exactly the two producer keys, each a non-negative safe integer; absence alone is tolerated.
+  const MALFORMED: [string, JsonValue][] = [
+    ['a missing tsx_resource_rounds', {tsx_worker_spawns: 1}],
+    ['a missing tsx_worker_spawns', {tsx_resource_rounds: 0}],
+    ['an empty object', {}],
+    ['an extra key', metrics(1, 0, {detail: 'SECRET-ENGINE-METRICS'})],
+    ['a negative spawn count', metrics(-1)],
+    ['a fractional spawn count', metrics(1.5)],
+    ['a string spawn count', metrics('1')],
+    ['a null round count', metrics(1, null)],
+    ['an unsafe integer round count', metrics(1, 2 ** 53)],
+    ['a null object', null],
+    ['a list', [1, 0]],
+    ['a string', 'tsx_worker_spawns'],
+  ];
+  it('R15: the MALFORMED table registers all 12 rows', () => {
+    expect(MALFORMED.length).toBe(12);
+  });
+  it.each(MALFORMED)('R15: engine_metrics with %s is refused as a validation error that echoes no producer text', (name, engineMetrics) => {
+    record('MALFORMED', name);
+    const error = refusal(withResult({engine_metrics: engineMetrics}));
+    expect(error.category).toBe('validation');
+    expect(error.message).toMatch(/result\.engine_metrics/);
+    expect(error.message).not.toContain('SECRET-');
+  });
+
+  it('R15: every MALFORMED row is registered at the it.each call and runs', () => {
+    expectEveryRowRan('MALFORMED', MALFORMED);
+  });
+});
+
 /** wb-973.10 (SWARM-CONTEXT-GRAPH-R10, the negative requirement of dossier C22; it extends R6 above). Statement: "No surfaced
  * string shall carry an observation row's executable, binding_ref, observed_dep_refs, freshness_witness, timestamps or any digest
  * preimage - only bounded, sanitized lens_key and status words and counts; a row can only demote coverage/tone, never upgrade a
@@ -832,7 +1041,8 @@ describe('engine identity from result.provenance.sdk_versions (wb-693.1 R1, wb-6
  * suppressed, invalid, timeout, nonzero, truncated and denied, of which observed and null are observed values; a planned vocabulary
  * migration adds words, so a word outside that enum reads as not observed and is never refused. A row's freshness, replayed and
  * degraded legs belong to wb-973.9 (SCG-R9), not to this cut. Input-hygiene rows only: the SECRET- placeholders and the
- * FAKEPLACEHOLDER credential shapes are obviously fake. Every it.each table below carries its own length pin (each-liveness). */
+ * FAKEPLACEHOLDER credential shapes are obviously fake. Every it.each table below carries its own length pin and, after the wb-4v6
+ * convention this file landed with, a registration-site pin (each-liveness: a table thinned at the it.each call turns that pin red). */
 describe('observation rows from result.observations (wb-973.10 SCG-R10)', () => {
   const STARTED = '2026-10-17T00:00:00Z';
   const OBSERVATION_ID = 'rfl_0123456789abcdefghijkl';
@@ -871,6 +1081,7 @@ describe('observation rows from result.observations (wb-973.10 SCG-R10)', () => 
     expect(LEAK_STATUSES.length).toBe(4);
   });
   it.each(LEAK_STATUSES)('SCG-R10 (a): %s rows carrying executable, binding_ref, observed_dep_refs, freshness_witness and timestamps surface none of them, nor any row id, digest or code', status => {
+    record('SCG-R10 LEAK_STATUSES', status);
     const code = status === 'denied' ? 'RF_OBSERVATION_DENIED' : null;
     const topology = project(withRows([row({...LEAKY, status, code}), row({...LEAKY, status, code, lens_key: 'beads.ready'})]));
     const texts = surfaced(topology);
@@ -880,6 +1091,9 @@ describe('observation rows from result.observations (wb-973.10 SCG-R10)', () => 
       expect(text).not.toMatch(ROW_FIELDS);
     }
     bounded(topology);
+  });
+  it('SCG-R10 (a): every leak-walk status is registered at the it.each call and runs', () => {
+    expectEveryRowRan('SCG-R10 LEAK_STATUSES', LEAK_STATUSES.map(status => [status]));
   });
 
   // Acceptance 2: "One-directional: a flagged (has_errors:true) or over-budget render with all-fresh observed rows stays
@@ -897,7 +1111,8 @@ describe('observation rows from result.observations (wb-973.10 SCG-R10)', () => 
   it('SCG-R10 (b): the one-directional table registers all 4 partial renders', () => {
     expect(PARTIAL_RENDERS.length).toBe(4);
   });
-  it.each(PARTIAL_RENDERS)('SCG-R10 (b): %s with all-fresh observed rows stays partial and non-success, byte-identical to the row-free render', (_name, resultOver, envelopeOver, ctx) => {
+  it.each(PARTIAL_RENDERS)('SCG-R10 (b): %s with all-fresh observed rows stays partial and non-success, byte-identical to the row-free render', (name, resultOver, envelopeOver, ctx) => {
+    record('SCG-R10 PARTIAL_RENDERS', name);
     const plain = project(render(resultOver, envelopeOver), ctx);
     const fresh = project(render(resultOver, envelopeOver, FRESH), ctx);
     expect(fresh.snapshots[0].coverage).toBe('partial');
@@ -908,6 +1123,9 @@ describe('observation rows from result.observations (wb-973.10 SCG-R10)', () => 
     expect(demoted.relations).toStrictEqual(plain.relations);
     expect(demoted.diagnostics.filter(note => !note.startsWith('observations: '))).toStrictEqual(plain.diagnostics);
     expect(observationNotes(demoted)).toStrictEqual(['observations: 5 rows, 2 not observed (denied): partial']);
+  });
+  it('SCG-R10 (b): every one-directional partial render is registered at the it.each call and runs', () => {
+    expectEveryRowRan('SCG-R10 PARTIAL_RENDERS', PARTIAL_RENDERS);
   });
 
   // The positive controls a demote-only reader keeps: observed values ('observed' and 'null'), an empty list and an absent key
@@ -948,10 +1166,14 @@ describe('observation rows from result.observations (wb-973.10 SCG-R10)', () => 
     expect(NOT_OBSERVED.length).toBe(10);
   });
   it.each(NOT_OBSERVED)('SCG-R10 (c): status %s is not an observed value: beside a fresh row the render reads partial and unknown, listing the word', status => {
+    record('SCG-R10 NOT_OBSERVED', status);
     const topology = project(withRows([row(), row({status})]));
     expect(topology.snapshots[0].coverage).toBe('partial');
     expect(topology.snapshots[0].node.statusTone).toBe('unknown');
     expect(observationNotes(topology)).toStrictEqual([`observations: 2 rows, 1 not observed (${status}): partial`]);
+  });
+  it('SCG-R10 (c): every not-observed word is registered at the it.each call and runs', () => {
+    expectEveryRowRan('SCG-R10 NOT_OBSERVED', NOT_OBSERVED.map(status => [status]));
   });
 
   const UNREADABLE: [string, JsonValue][] = [
@@ -973,8 +1195,12 @@ describe('observation rows from result.observations (wb-973.10 SCG-R10)', () => 
   it('SCG-R10 (c): the refusal table registers all 14 shapes', () => {
     expect(UNREADABLE.length).toBe(14);
   });
-  it.each(UNREADABLE)('SCG-R10 (c): %s is refused with a typed validation error before anything projects', (_name, rows) => {
+  it.each(UNREADABLE)('SCG-R10 (c): %s is refused with a typed validation error before anything projects', (name, rows) => {
+    record('SCG-R10 UNREADABLE', name);
     expect(refusal(withRows(rows)).category).toBe('validation');
+  });
+  it('SCG-R10 (c): every refusal shape is registered at the it.each call and runs', () => {
+    expectEveryRowRan('SCG-R10 UNREADABLE', UNREADABLE);
   });
 
   // Acceptance 4: "Bound: 10 000 rows with 10 000 distinct status words project one note listing at most 4 words plus '…',
@@ -1035,7 +1261,8 @@ describe('observation rows from result.observations (wb-973.10 SCG-R10)', () => 
   it('SCG-R10 (d): the unlisted-word table registers all 13 shapes', () => {
     expect(UNLISTED.length).toBe(13);
   });
-  it.each(UNLISTED)('SCG-R10 (d): a not-observed status word that is %s counts and demotes but is never listed: the note marks it …', (_name, status) => {
+  it.each(UNLISTED)('SCG-R10 (d): a not-observed status word that is %s counts and demotes but is never listed: the note marks it …', (name, status) => {
+    record('SCG-R10 UNLISTED', name);
     const topology = project(withRows([row({status}), row({status: 'denied'})]));
     expect(topology.snapshots[0].coverage).toBe('partial');
     expect(observationNotes(topology)).toStrictEqual([`observations: 2 rows, 2 not observed (denied, ${ELLIPSIS}): partial`]);
@@ -1045,6 +1272,9 @@ describe('observation rows from result.observations (wb-973.10 SCG-R10)', () => 
       expect(text).not.toContain('FAKEPLACEHOLDER');
     }
     bounded(topology);
+  });
+  it('SCG-R10 (d): every unlisted-word shape is registered at the it.each call and runs', () => {
+    expectEveryRowRan('SCG-R10 UNLISTED', UNLISTED);
   });
 
   // The observations note is a partial-render note: after the errors and budget notes, before the release and engine notes.
@@ -1067,6 +1297,41 @@ describe('observation rows from result.observations (wb-973.10 SCG-R10)', () => 
     expect(topology.diagnostics.slice(2, 7)).toStrictEqual(['fixture seam: not a real generated context', 'render reported errors: partial, not a clean render',
       'context exceeds the available budget: partial', 'observations: 1 row, 1 not observed (denied): partial', 'producer release from result.provenance.cli_version: rf@0.1.716']);
     expect(topology.diagnostics.at(-1)).toBe('TSX engine identity from result.provenance.sdk_versions: a foreign runtime executed component source');
+    bounded(topology);
+  });
+
+  // wb-693.4 landed a second foreign-runtime note (result.engine_metrics.tsx_worker_spawns) on this render path after this cut was
+  // first delivered (gate F2, re-measured here). It shares the engine-identity note's slot - it is stated only beside no identity -
+  // so the worst case is still nine notes for MAX_DIAGNOSTICS (8) slots and the one cut is still the constant interval note: the
+  // observations note is kept beside the spawn note, and beside an identity plus spawns.
+  const SPAWNS: Json = {engine_metrics: {tsx_worker_spawns: 1, tsx_resource_rounds: 0}};
+  const SPAWN_TEXT = 'TSX worker spawned (result.engine_metrics.tsx_worker_spawns): a foreign runtime executed component source';
+  const IDENTITY_TEXT = 'TSX engine identity from result.provenance.sdk_versions: a foreign runtime executed component source';
+  const NO_IDENTITY: Json = {...EVERY_NOTE, provenance: {graph_revision_id: GRAPH, cli_version: '0.1.716'}, ...SPAWNS};
+  const OBSERVED_NOTE = 'observations: 1 row, 1 not observed (denied): partial';
+  const RELEASE_TEXT = 'producer release from result.provenance.cli_version: rf@0.1.716';
+  it('SCG-R10 (e): beside the wb-693.4 spawn note on the rf-cli seam no note is cut and the observations note precedes the release and spawn notes', () => {
+    const topology = project(withRows([row({status: 'denied'})], NO_IDENTITY));
+    expect(topology.diagnostics).toHaveLength(8);
+    expect(topology.diagnostics.slice(4)).toStrictEqual([OBSERVED_NOTE, RELEASE_TEXT, SPAWN_TEXT, 'no native interval supplied']);
+    expect(topology.snapshots[0].evidenceRefs).toContain('rf-engine-spawns:1');
+    bounded(topology);
+  });
+
+  it('SCG-R10 (e): with the fixture-seam note and the spawn note the diagnostics stay at MAX_DIAGNOSTICS, the observations note is kept and only the interval note is cut', () => {
+    const topology = project(withRows([row({status: 'denied'})], NO_IDENTITY), {...context, seam: 'injected-fixture'});
+    expect(topology.diagnostics).toHaveLength(8);
+    expect(topology.diagnostics.slice(2)).toStrictEqual(['fixture seam: not a real generated context', 'render reported errors: partial, not a clean render',
+      'context exceeds the available budget: partial', OBSERVED_NOTE, RELEASE_TEXT, SPAWN_TEXT]);
+    expect(topology.diagnostics).not.toContain('no native interval supplied');
+    bounded(topology);
+  });
+
+  it('SCG-R10 (e): beside both an engine identity and spawns on the rf-cli seam one foreign-runtime note is stated, the observations note is kept and no note is cut', () => {
+    const topology = project(withRows([row({status: 'denied'})], {...EVERY_NOTE, ...SPAWNS}));
+    expect(topology.diagnostics).toHaveLength(8);
+    expect(topology.diagnostics.filter(note => /foreign runtime/.test(note))).toStrictEqual([IDENTITY_TEXT]);
+    expect(topology.diagnostics.slice(4)).toStrictEqual([OBSERVED_NOTE, RELEASE_TEXT, IDENTITY_TEXT, 'no native interval supplied']);
     bounded(topology);
   });
 });

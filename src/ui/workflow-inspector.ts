@@ -5,7 +5,7 @@ import { matchesKey, stripTerminalSequences, truncateToWidth, visibleWidth } fro
 import type { AttentionBottleneck, AttentionReport } from '../workbench/attention.js';
 import type { EvidenceEntry, EvidenceStore } from '../workbench/evidence-loader.js';
 import type { GraphEdge, GraphReference, GraphViewModel } from '../workbench/graph-view.js';
-import type { NativeRef, ObservationProjection, ObservationScope, ObservedNode, Relation } from '../workbench/observation.js';
+import type { NativeRef, ObservationProjection, ObservationScope, ObservationTruncation, ObservedNode, Relation } from '../workbench/observation.js';
 import { sanitizeWorkbenchText } from '../workbench/redaction.js';
 import { MAX_ZOOM, type TimelineModel, type TimelineNote, type TimelineRow } from '../workbench/timeline.js';
 import type { LinkedTopology, TopologyEdge, TopologyReference, TopologyReferenceReason, TopologyRelationClass } from '../workbench/topology-slice.js';
@@ -46,7 +46,14 @@ export interface InspectorState {
   /** Selected evidence reference of the current node in the details view. */
   evidenceIndex: number;
 }
-export interface InspectorSize { width: number; rows: number; ascii?: boolean }
+export interface InspectorSize {
+  width: number;
+  rows: number;
+  ascii?: boolean;
+  /** Opt in to the docs/10 pane tiers (two panes at 80-119 columns, three at 120 and above, both needing 20 rows). Absent or false keeps
+   * the single-column rendering at every size, so a host that passes only width and rows is unchanged. */
+  panes?: boolean;
+}
 export type InspectorAction = 'close' | 'transcript' | 'load-evidence';
 export const initialInspectorState = (): InspectorState => ({
   view: 'overview', selected: null, index: 0, focused: null, filter: '', editingFilter: false,
@@ -89,12 +96,30 @@ export function inspectorEvidenceTarget(model: InspectorModel, state: InspectorS
   const evidenceRef=node?.evidenceRefs[Math.min(Math.max(0,state.evidenceIndex),Math.max(0,(node?.evidenceRefs.length??0)-1))];
   return node && evidenceRef!==undefined ? {scope:node.scope,nativeRef:node.nativeRef,evidenceRef} : undefined;
 }
+/** The page of `count` rows around the row index, centred on it and clamped to the viewport end, from ONE window() read per pane
+ * (P6, wb-feo). Where the page lands depends on the viewport total, which only that read returns, so the read spans every page a
+ * total consistent with the row can select: from the page that ends at the row through the page centred on it. That is at most
+ * half a page read above the drawn rows (docs/10 "Virtualized visible rows + modest overscan"), count + ceil(count/2) - 1 rows in
+ * all, and the drawn page is cut out of it. The single exception is N2 (owner ruling 2026-10-17T23:33Z): a stored row index at or
+ * past the end of a non-empty viewport and a page or more down (index >= total > 0 and index >= count; the selection left the
+ * viewport and the index outlived it) takes one more read, of the clamped page. A row index the reducers never store adds no
+ * other second read: a fraction is read as its whole part is, and 2^53 or more reads from the top (a second read only past the end
+ * of a viewport longer than a page, N2's case); NaN, or a fraction whose page would start between rows, throws in the projection
+ * as the two-read renderer did. */
 function rowWindow(model: InspectorModel, state: InspectorState, count: number): {nodes:ObservedNode[];offset:number;total:number;revision:number} {
-  const head=model.projection.window({scope:model.scope,invocationId:model.invocationId,offset:0,limit:1});
-  const index=Math.min(Math.max(0,state.index),Math.max(0,head.total-1));
-  const offset=Math.max(0,Math.min(index-Math.floor(count/2),head.total-count));
-  const page=model.projection.window({scope:model.scope,invocationId:model.invocationId,offset,limit:count});
-  return {...page,offset};
+  const query={scope:model.scope,invocationId:model.invocationId};
+  const half=Math.floor(count/2);
+  const row=Math.max(0,state.index);
+  const at=Math.floor(row);
+  const exact=Number.isSafeInteger(at);
+  const from=exact ? Math.max(0,at-count+1) : 0;
+  const read=model.projection.window({...query,offset:from,limit:exact ? Math.min(Math.max(0,at-half),count-1-half)+count : count});
+  const index=Math.min(row,Math.max(0,read.total-1));
+  const offset=Math.max(0,Math.min(index-half,read.total-count));
+  const end=Math.min(read.total,offset+count);
+  if(end<=offset) return {nodes:[],offset,total:read.total,revision:read.revision};
+  if(offset>=from && end-from<=read.nodes.length) return {nodes:read.nodes.slice(offset-from,end-from),offset,total:read.total,revision:read.revision};
+  return {...model.projection.window({...query,offset,limit:count}),offset};
 }
 /** One node's bounded relation pages, cached per topology revision. */
 interface RelationPage {revision:number; relations:Relation[]; incoming:Relation[]; partial:boolean; incomingPartial:boolean}
@@ -448,6 +473,15 @@ interface TimelineView { zoom: number; pan: number; filter: string; focused: str
 const MAX_BAR_CELLS = 200;
 const barCells = (value: number): number => Number.isSafeInteger(value) && value > 0 ? Math.min(value, MAX_BAR_CELLS) : 0;
 const plural = (count: number, word: string): string => `${count} ${word}${count===1?'':'s'}`;
+/** The cap remainder line (wb-ea1): counts and fixed words only, so nothing a producer supplies can reach it. Undefined when
+ * the projection dropped nothing for this invocation, so an uncapped frame is drawn byte-identically. */
+const capRemainder = (cut: ObservationTruncation, ascii: boolean): string | undefined => {
+  if(cut.nodes===0 && cut.events===0) return undefined;
+  const events=`${plural(cut.events,'event')} not shown`;
+  if(cut.nodes===0) return `${events}: projection event cap ${cut.maxEvents}`;
+  const nodes=`${plural(cut.nodes,'node')} not shown: projection cap ${cut.maxNodes}`;
+  return cut.events===0 ? nodes : `${nodes}${ascii?' | ':' · '}${events}`;
+};
 const NOTE_PHRASES: Readonly<Record<Exclude<TimelineNote['code'],'intervals-missing'>,string>> = {
   'clocks-may-differ': 'clocks may differ across sources',
   'open-intervals-present': 'open intervals present (drawn open, no end observed)',
@@ -704,11 +738,22 @@ function graphModelRows(graph: GraphViewModel, view: GraphViewState, room: numbe
 }
 
 /** Pure viewport layout; capped rows fetched from indexed nodes, never raw event history. */
-export function layoutInspector(model:InspectorModel,state:InspectorState,size:InspectorSize):string[]{
+interface ColumnOptions {
+  /** Treat the render as one pane of a composition: the wide-terminal "Selected" line and the full attention panel are suppressed. */
+  compact: boolean;
+  /** Width the header lines (title, view, filter, focus, rule) are built for; the body keeps the column width. */
+  headerWidth: number;
+  /** View name the header prints, so a pane that renders another view still labels the real state. */
+  headerView: InspectorView;
+}
+interface ColumnResult { lines: string[]; headerCount: number; hasCurrent: boolean; hinted: boolean }
+function layoutColumn(model:InspectorModel,state:InspectorState,size:InspectorSize,options?:ColumnOptions):ColumnResult{
   const width=Math.max(12,Math.trunc(size.width));
   const height=Math.max(5,Math.trunc(size.rows));
   const ascii=size.ascii??false;
   const inner=Math.max(1,width-4);
+  const compact=options?.compact??false;
+  const headerInner=Math.max(1,(options?.headerWidth??width)-4);
   const bodyCount=Math.max(1,Math.min(32,height-9));
   const selectedIndex=state.selected ? model.projection.indexOf({scope:model.scope,invocationId:model.invocationId,key:state.selected}) : undefined;
   const page=rowWindow(model,selectedIndex===undefined?state:{...state,index:selectedIndex},bodyCount);
@@ -722,12 +767,22 @@ export function layoutInspector(model:InspectorModel,state:InspectorState,size:I
   // An attention panel line is built from producer strings attentionPanel already passed through the helper once, so it is only
   // width-bounded here: a second pass is a text change (a JSON closing brace after a marker), never a no-op.
   const addPanel=(text:string)=>{if(lines.length<height) lines.push(` ${stripTerminalSequences(truncateToWidth(text,inner,ascii?'~':'…'))}`);};
-  const title=limitLine(model.title,Math.max(1,inner-28),ascii);
-  add(`${ascii?'[':'╭'} ${title}  ${safe(model.status,ascii)} ${ascii?']':'╮'}`);
-  add(`${state.view.toUpperCase()}  ${page.total} observed operation${page.total===1?'':'s'} · ${state.follow?'following':'paused view'} · ${index+1}/${Math.max(1,page.total)}`);
-  if(state.filter) add(`Filter (viewport): ${state.filter}${state.editingFilter?'_':''}`);
-  if(state.focused) add('Focused on selected node and confirmed direct relations only');
-  add(ascii?'-'.repeat(Math.min(inner,48)):'─'.repeat(Math.min(inner,48)));
+  // Header lines are built for the full terminal width even when the body is one pane of a composition.
+  const addHeader=(text:string)=>{if(lines.length<height) lines.push(` ${limitLine(text,headerInner,ascii)}`);};
+  // What the projection's caps dropped for this invocation (wb-ea1): one counted line in the overview and details views, and
+  // nothing at all when nothing was dropped. The header names node truncation in every view: an evicted node is a row no view
+  // can draw, while an evicted event hides no row of any view (the inspector draws no event history), so an event-only drop
+  // is counted on the remainder line alone.
+  const cut=model.projection.truncation({scope:model.scope,invocationId:model.invocationId});
+  const capLine=capRemainder(cut,ascii);
+  const capped=cut.nodes===0 ? '' : ascii ? ' | capped' : ' · capped';
+  const title=limitLine(model.title,Math.max(1,headerInner-28-capped.length),ascii);
+  addHeader(`${ascii?'[':'╭'} ${title}  ${safe(model.status,ascii)}${capped} ${ascii?']':'╮'}`);
+  addHeader(`${(options?.headerView??state.view).toUpperCase()}  ${page.total} observed operation${page.total===1?'':'s'} · ${state.follow?'following':'paused view'} · ${index+1}/${Math.max(1,page.total)}`);
+  if(state.filter) addHeader(`Filter (viewport): ${state.filter}${state.editingFilter?'_':''}`);
+  if(state.focused) addHeader('Focused on selected node and confirmed direct relations only');
+  addHeader(ascii?'-'.repeat(Math.min(headerInner,48)):'─'.repeat(Math.min(headerInner,48)));
+  const headerCount=lines.length;
   if(page.total===0) add('No source observations for this invocation; no graph or timeline is inferred.');
   if(state.view==='overview') {
     add('Observed tree · nesting from observed grouping/ownership edges only');
@@ -769,8 +824,8 @@ export function layoutInspector(model:InspectorModel,state:InspectorState,size:I
     };
     const last=lastSiblings(entries);
     // Rows never displace the selected, attention, critical-path, row-range and key-hint lines.
-    const panel=model.attention ? attentionPanel(model.attention,inner,ascii,width<80 || height<20) : undefined;
-    const available=height-lines.length-(current && width>=80 ? 1 : 0)-(paged ? 1 : 0)-1;
+    const panel=model.attention ? attentionPanel(model.attention,inner,ascii,compact || width<80 || height<20) : undefined;
+    const available=height-lines.length-(current && !compact && width>=80 ? 1 : 0)-(paged ? 1 : 0)-1-(capLine ? 1 : 0);
     const fixed=panel ? panel.head.length+panel.tail.length : 2;
     // The tree keeps a few rows; bottleneck rows and notes take only what remains, dropping from the bottom.
     const optional=panel ? fitAttentionPanel(panel,Math.max(0,available-fixed-Math.min(entries.length,MAX_PANEL_TREE_MIN))) : [];
@@ -789,7 +844,12 @@ export function layoutInspector(model:InspectorModel,state:InspectorState,size:I
       const holds=remainder.some(entry=>entry.type==='node' ? entry.at===selectedAt : entry.type==='collapsed' && entry.holdsSelection);
       add(`${holds?ascii?'> ':'❯ ':''}${ascii?'...':'…'} ${rest} more row${rest===1?'':'s'} in this page (row budget)`);
     }
-    if(current && width>=80) add(`Selected  ${safe(ref(current),ascii)} · ${current.evidenceRefs.length} evidence ref${current.evidenceRefs.length===1?'':'s'}`);
+    if(capLine){
+      // The cap remainder ends the tree; only a header block taller than the terminal yields a row to it.
+      while(lines.length>0 && lines.length>=height) lines.pop();
+      add(capLine);
+    }
+    if(current && !compact && width>=80) add(`Selected  ${safe(ref(current),ascii)} · ${current.evidenceRefs.length} evidence ref${current.evidenceRefs.length===1?'':'s'}`);
     if(panel) for(const text of [...panel.head,...optional,...panel.tail]) addPanel(text);
     else {
       add('Attention: stale/unknown is last-known state, not live progress.');
@@ -862,17 +922,17 @@ export function layoutInspector(model:InspectorModel,state:InspectorState,size:I
       add(`Evidence: ${current.evidenceRefs.length} reference${current.evidenceRefs.length===1?'':'s'}${model.evidence && current.evidenceRefs.length>0 ? ` · ${Math.min(Math.max(0,state.evidenceIndex),current.evidenceRefs.length-1)+1}/${current.evidenceRefs.length} selected · e next · Enter load` : ''}`);
       if(model.evidence){
         // Room for evidence rows: the footer, the relations line and the transcript hint stay.
-        for(const text of evidenceRows(model.evidence,current,state.evidenceIndex,height-lines.length-(paged?1:0)-4,ascii)) add(text);
+        for(const text of evidenceRows(model.evidence,current,state.evidenceIndex,height-lines.length-(paged?1:0)-4-(capLine?1:0),ascii)) add(text);
       } else {
-        const evidenceShown = Math.min(current.evidenceRefs.length,Math.max(0,height-lines.length-5));
+        const evidenceShown = Math.min(current.evidenceRefs.length,Math.max(0,height-lines.length-5-(capLine?1:0)));
         for(const evidence of current.evidenceRefs.slice(0,evidenceShown)) add(`  ${safe(evidence,ascii)}`);
         if(current.evidenceRefs.length>evidenceShown) add('  Further references available at producer.');
       }
       const transcript=current.nativeRef.provider==='claude-agent-sdk' && current.nativeRef.type==='session';
       const topology=model.topology?.(current);
       if(topology){
-        // Room for topology rows: the paged line, the key hint and the transcript hint stay.
-        const roomLeft=():number=>height-lines.length-(paged?1:0)-1-(transcript?1:0);
+        // Room for topology rows: the paged line, the key hint, the transcript hint and the cap remainder stay.
+        const roomLeft=():number=>height-lines.length-(paged?1:0)-1-(transcript?1:0)-(capLine?1:0);
         if(roomLeft()<1){
           // Owner F5: a hidden section is never silent. One header row yields its line to the marker (the hint and paged line stay).
           while(lines.length>0 && roomLeft()<1) lines.pop();
@@ -880,13 +940,88 @@ export function layoutInspector(model:InspectorModel,state:InspectorState,size:I
         } else for(const text of topologyRows(model,topology,roomLeft(),ascii)) add(text);
       } else {
         const related=relationsFor(model,current);
-        if(related.relations.length) add(`Relations: ${related.relations.map(r=>r.kind).slice(0,3).join(', ')}${related.partial?' (partial)':''}`);
+        // Remainder item 2 of the wb-6ze.16 gate, owner ruling R473 R1(b): where the base Relations line cannot fit with the
+        // paged line, the key hint, the transcript hint and the cap remainder, header rows yield (the F5 pop above) and the
+        // one-line section itself takes the freed row. The marker stays the fallback only where no row can be freed, which
+        // would need a height below 2 + paged + transcript + cap remainder with every header row yielded: under the 5-row floor.
+        const roomLeft=():number=>height-lines.length-(paged?1:0)-1-(transcript?1:0)-(capLine?1:0);
+        if(related.relations.length){
+          while(lines.length>0 && roomLeft()<1) lines.pop();
+          add(roomLeft()<1 ? 'relations hidden: terminal height' : `Relations: ${related.relations.map(r=>r.kind).slice(0,3).join(', ')}${related.partial?' (partial)':''}`);
+        }
       }
       if(transcript) add('c transcript (loaded on focus)');
     } else add('Select an observed operation with j/k.');
+    if(capLine){
+      // The cap remainder sits under the node body; header rows yield to it so the paged line and key hint stay.
+      while(lines.length>0 && height-lines.length-(paged?1:0)-1<1) lines.pop();
+      add(capLine);
+    }
   }
   if(paged) add(`Rows ${page.offset+1}-${page.offset+page.nodes.length}/${page.total} · viewport only`);
   while(lines.length<Math.min(height-1,5)) add('');
+  const hinted=lines.length<height;
   add('Tab views · j/k · Esc back/close');
-  return lines.slice(0,height);
+  return {lines:lines.slice(0,height),headerCount:Math.min(headerCount,lines.length),hasCurrent:current!==undefined,hinted};
 }
+
+/** Pane geometry (docs/10 "Layout responsiveness"): the two-pane left pane never narrower than PANE_MIN_WIDTH_LEFT, every pane of a
+ * three-pane composition at least PANE_MIN_WIDTH_THREE, no pane wider than PANE_MAX_WIDTH. Exported so tests compute tier
+ * boundaries from the values the layout uses instead of restating them. */
+export const PANE_MIN_WIDTH_LEFT=40;
+export const PANE_MIN_WIDTH_THREE=36;
+export const PANE_MAX_WIDTH=80;
+/** Fixed text only: no producer string reaches the separator or the cap notice, so nothing here needs the shared sanitizers. */
+const paneSeparator=(ascii:boolean):string=>ascii?' | ':' │ ';
+
+/** Docs/10 "Layout responsiveness" pane tiers over the single-column renderer. Each pane is one column render of its own view
+ * (one projection window per pane); the header spans the full width above the panes and the key hint stays the last row. */
+function layoutPanes(model:InspectorModel,state:InspectorState,size:InspectorSize):string[]{
+  const width=Math.max(12,Math.trunc(size.width));
+  const height=Math.max(5,Math.trunc(size.rows));
+  const ascii=size.ascii??false;
+  const separator=paneSeparator(ascii);
+  const gap=visibleWidth(separator);
+  const threePane=width>=120 && Math.min(PANE_MAX_WIDTH,Math.floor((width-2*gap)/3))>=PANE_MIN_WIDTH_THREE;
+  const widths=threePane
+    ? Array<number>(3).fill(Math.min(PANE_MAX_WIDTH,Math.floor((width-2*gap)/3)))
+    : (()=>{const left=Math.min(PANE_MAX_WIDTH,Math.max(PANE_MIN_WIDTH_LEFT,Math.floor((width-gap)/2)));return [left,Math.min(PANE_MAX_WIDTH,width-gap-left)];})();
+  const render=(view:InspectorView,paneWidth:number):ColumnResult=>
+    layoutColumn(model,{...state,view},{width:paneWidth,rows:height,ascii},{compact:true,headerWidth:width,headerView:state.view});
+  // Panes after the first are chosen from what the first one found: a selected node gets details, otherwise the timeline summary.
+  const first=render(threePane?'overview':state.view==='details'?'overview':state.view,widths[0]);
+  const bodies=[first];
+  if(threePane){
+    bodies.push(render(state.view==='overview' || state.view==='graph'?'graph':'timeline',widths[1]));
+    bodies.push(render('details',widths[2]));
+  } else bodies.push(render(first.hasCurrent?'details':'timeline',widths[1]));
+  const headerCount=first.headerCount;
+  const rowsLeft=Math.max(1,height-headerCount-1);
+  const columns=bodies.map(body=>{
+    const rows=body.lines.slice(headerCount,body.hinted?body.lines.length-1:body.lines.length);
+    if(rows.length<=rowsLeft) return rows;
+    // Rows past the cap end with a notice, never a silent cut.
+    return [...rows.slice(0,rowsLeft-1),` ${ascii?'...':'…'} ${rows.length-(rowsLeft-1)} more row${rows.length-(rowsLeft-1)===1?'':'s'} in this pane`];
+  });
+  const padPane=(text:string,paneWidth:number):string=>{
+    const cut=visibleWidth(text)>paneWidth?truncateToWidth(text,paneWidth,''):text;
+    return cut+' '.repeat(Math.max(0,paneWidth-visibleWidth(cut)));
+  };
+  const out=first.lines.slice(0,headerCount);
+  for(let row=0;row<rowsLeft;row++){
+    if(columns.every(column=>row>=column.length)) break;
+    out.push(columns.map((column,at)=>padPane(column[row]??'',widths[at])).join(separator).trimEnd());
+  }
+  while(out.length<Math.min(height-1,5)) out.push('');
+  out.push(first.hinted ? first.lines[first.lines.length-1] : ' Tab views · j/k · Esc back/close');
+  return out.slice(0,height);
+}
+
+export function layoutInspector(model:InspectorModel,state:InspectorState,size:InspectorSize):string[]{
+  const width=Math.max(12,Math.trunc(size.width));
+  const height=Math.max(5,Math.trunc(size.rows));
+  // Below 80 columns or 20 rows the single column is the specified layout and is reached unchanged.
+  if(size.panes===true && width>=80 && height>=20) return layoutPanes(model,state,size);
+  return layoutColumn(model,state,size).lines;
+}
+

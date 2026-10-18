@@ -654,7 +654,7 @@ describe('forge.toml placement', () => {
   });
 
   it('leaves the default gate list byte-for-byte unchanged', () => {
-    expect(toml).toContain('gate = ["lint", "typing", "build", "test", "workbench-shell", "package-smoke"]\n');
+    expect(toml).toContain('gate = ["lint", "typing", "build", "test", "census", "workbench-shell", "package-smoke"]\n');
     expect((toml.match(/^gate = /gm) ?? []).length).toBe(1);
   });
 });

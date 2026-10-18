@@ -44,14 +44,16 @@
   "scripts": {
     "build": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\" && tsc",
     "prepublishOnly": "npm run lint && npm run typecheck && npm run test && npm run build",
-    "test": "vitest run",
+    "pretest": "node -e \"require('fs').rmSync('.forge/vitest-report.json',{force:true})\"",
+    "test": "vitest run --reporter=default --reporter=json --outputFile=.forge/vitest-report.json --includeTaskLocation --expect.requireAssertions",
     "test:watch": "vitest",
     "test:e2e": "vitest run e2e --reporter=verbose",
+    "test:census": "vitest run --config vitest.census.config.ts",
     "typecheck": "tsc --noEmit",
     "typecheck:test": "tsc --noEmit -p tsconfig.test.json",
     "lint": "biome check src/ test/",
     "lint:fix": "biome check --fix src/ test/",
-    "check": "npm run lint && npm run typecheck && npm run test",
+    "check": "npm run lint && npm run typecheck && npm run typecheck:test && npm run test",
     "test:coverage": "vitest run --coverage",
     "bench": "vitest bench",
     "bench:ab": "node test/perf/ab.mjs"

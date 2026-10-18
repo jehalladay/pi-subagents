@@ -109,11 +109,35 @@ export interface IdentityRefusal {
 }
 /** Refusal rows one projection retains, the oldest dropped first; each scope's total keeps counting past them. */
 export const MAX_IDENTITY_REFUSALS = 256;
+/** What the projection's caps dropped for one scope or one invocation viewport (wb-ea1), read through truncation(). */
+export interface ObservationTruncation {
+  /** Nodes the maxNodes cap evicted and the projection has not admitted again. */
+  nodes: number;
+  /** Events the maxEvents cap evicted from the retained history. */
+  events: number;
+  /** The node cap that evicted them. */
+  maxNodes: number;
+  /** The event cap that evicted them. */
+  maxEvents: number;
+}
+/** Evicted node keys one projection remembers per unit of maxNodes (wb-ea1), so a node admitted again leaves the count.
+ * Past maxNodes times this the oldest key is forgotten and stays counted: a count can over-state, never under-state. */
+export const EVICTION_MEMORY_PER_NODE = 10;
+/** Cap evictions one scope or one invocation viewport has lost (wb-ea1). */
+interface DropCount { nodes: number; events: number }
 
 const MAX_DEFAULT = {maxEvents:20_000,maxNodes:2_000,maxEdges:4_000,maxPayloadBytes:4_096,maxQuery:100};
 const keyOf = (scope: ObservationScope, ref: NativeRef): string => JSON.stringify([scope.workspace,scope.principal,ref.provider,ref.type,ref.scope ?? "",ref.id]);
 const scopeOf = (scope: ObservationScope): string => JSON.stringify([scope.workspace,scope.principal]);
 const eventKey = (event: ObservationEvent): string => JSON.stringify([keyOf(event.scope,event.source),event.projectionEventId]);
+const dropCount = (index: Map<string, DropCount>, key: string): DropCount => {
+  let count = index.get(key);
+  if (!count) {
+    count = {nodes:0,events:0};
+    index.set(key,count);
+  }
+  return count;
+};
 const indexed = (index: Map<string, Set<string>>, field: string | undefined, key: string, add: boolean): void => {
   if (field === undefined) return;
   if (add) {
@@ -348,6 +372,13 @@ export class ObservationProjection {
   /** Identity refusals (wb-0br), oldest first and bounded by MAX_IDENTITY_REFUSALS; totals count every one per scope. */
   private readonly refused: {scope: string; row: IdentityRefusal}[] = [];
   private readonly refusedTotals = new Map<string, number>();
+  /** Cap evictions (wb-ea1) per scope and per invocation viewport; a counter exists once its scope or viewport lost one. */
+  private readonly scopeDrops = new Map<string, DropCount>();
+  private readonly viewportDrops = new Map<string, DropCount>();
+  /** Keys the node cap evicted and has not admitted again, oldest first, each with the counters its eviction moved. */
+  private readonly evicted = new Map<string, readonly DropCount[]>();
+  /** The invocation each retained event was admitted under, so its eviction is counted where its node was shown. */
+  private readonly eventInvocations = new Map<string, string>();
 
   constructor(limits: ObservationLimits = {}) {
     this.limits = {...MAX_DEFAULT,...limits};
@@ -512,9 +543,38 @@ export class ObservationProjection {
     if (rebuild) this.rebuildAround(from);
   }
 
+  /** The counters one cap eviction moves: its scope's and, when it was shown in an invocation viewport, that viewport's. */
+  private dropCounters(scope: ObservationScope, invocationId: string | undefined): DropCount[] {
+    const counters = [dropCount(this.scopeDrops,scopeOf(scope))];
+    if (invocationId !== undefined) counters.push(dropCount(this.viewportDrops,this.viewportGroup(scope,invocationId)));
+    return counters;
+  }
+
+  /** The node cap's FIFO eviction (wb-ea1): counted for the evicted node's scope and viewport, and remembered so that a
+   * later admission of the same key un-counts it; past the memory bound the oldest key is forgotten and stays counted. */
+  private evict(key: string): void {
+    const node = this.nodes.get(key);
+    if (node) {
+      const counters = this.dropCounters(node.scope,node.invocationId);
+      for (const count of counters) count.nodes++;
+      this.evicted.set(key,counters);
+      if (this.evicted.size > this.limits.maxNodes * EVICTION_MEMORY_PER_NODE) this.evicted.delete(this.evicted.keys().next().value as string);
+    }
+    this.discard(key);
+  }
+
+  /** A key the node cap evicted is admitted again (wb-ea1): it is shown again, so it leaves the counts it was added to. */
+  private readmit(key: string): void {
+    const counters = this.evicted.get(key);
+    if (!counters) return;
+    this.evicted.delete(key);
+    for (const count of counters) count.nodes--;
+  }
+
   private store(node: ObservedNode, sequence?: bigint, cursor?: string, stale = false): void {
     const prior = this.nodes.get(node.key);
-    if (!prior && this.nodes.size >= this.limits.maxNodes) this.discard(this.nodes.keys().next().value as string);
+    if (!prior && this.nodes.size >= this.limits.maxNodes) this.evict(this.nodes.keys().next().value as string);
+    if (!prior) this.readmit(node.key);
     const before = this.nestedParents.has(node.key) ? contributionOf(prior) : undefined;
     if (prior) this.updateIndexes(prior,false);
     const record: ObservedNode = {
@@ -608,6 +668,8 @@ export class ObservationProjection {
       if (oldest) {
         this.eventsById.delete(oldest[0]);
         indexed(this.seenEvents,keyOf(oldest[1].scope,oldest[1].source),oldest[1].projectionEventId,false);
+        for (const count of this.dropCounters(oldest[1].scope,this.eventInvocations.get(oldest[0]))) count.events++;
+        this.eventInvocations.delete(oldest[0]);
       }
     }
     const previous = this.nodes.get(key);
@@ -628,6 +690,8 @@ export class ObservationProjection {
       interval:event.interval ?? previous?.interval,
       payloadRef:event.payloadRef ?? previous?.payloadRef,
     };
+    if (node.invocationId === undefined) this.eventInvocations.delete(eventId);
+    else this.eventInvocations.set(eventId,node.invocationId);
     this.store(node,sequence ?? prior?.sequence,event.sourceCursor ?? prior?.cursor,stale);
     return "applied";
   }
@@ -887,6 +951,13 @@ export class ObservationProjection {
       refusals.push({...entry.row});
     }
     return {refusals,total:this.refusedTotals.get(scope) ?? 0,truncated};
+  }
+
+  /** What the caps dropped for one scope, or for one invocation viewport when invocationId is given (wb-ea1), as a fresh
+   * copy: reading it changes nothing, and another scope's or viewport's evictions never show. */
+  truncation(filter: {scope: ObservationScope; invocationId?: string}): ObservationTruncation {
+    const count = filter.invocationId === undefined ? this.scopeDrops.get(scopeOf(filter.scope)) : this.viewportDrops.get(this.viewportGroup(filter.scope,filter.invocationId));
+    return {nodes:count?.nodes ?? 0,events:count?.events ?? 0,maxNodes:this.limits.maxNodes,maxEvents:this.limits.maxEvents};
   }
 
   /** Copied ancestor aggregate of one observed node: an O(1) read, no traversal. Unknown and cross-scope keys are undefined. */

@@ -3,9 +3,13 @@
  *
  * Spec lines pinned (docs/workbench/14-qa-and-benchmarks.md "Fault-injection locations"):
  *   "Parent Furnace Work retry while child Run establishment is uncertain."
- * wb-zmd constraint set: "one bridge host session per Attempt"; receipts must state "no crash durability
- *   (controller or Pi death leaves running Attempts needing operator recovery), Observe answered by the resident session
- *   (session-word, wb-zby), per-Attempt identity".
+ * wb-zmd constraint set, as re-worded of record on wb-3hc (owner, 2026-10-17, from the wb-zby.1 measurement): a Run's
+ *   sequential Attempts share ONE kept bridge connection and resident session, and per-Attempt identity is the admission
+ *   receipt <instance_id>/<process token>/<n>; the retired "one bridge host session per Attempt" reading is gone, so
+ *   claim 1 ('retry-session-reused') is keyed on admission-receipt distinctness plus the sessions roster, never on
+ *   sessionInstanceId inequality alone. Receipts must state "no crash durability (controller or Pi death leaves running
+ *   Attempts needing operator recovery), Observe answered by the resident session (session-word, wb-zby), per-Attempt
+ *   identity".
  * Owner Q1 ruling (22:15Z): (a) a FIXTURE receipt per the W18 family pattern -- pure builder, runner, offline vitest and
  *   ONE additive forge command outside the default gate -- honestly labelled with the SDK it drives (the REPAIRED copy
  *   then; since wb-zby.2 the SHIPPED vendored SDK, whose manifest and provenance digests agree since wb-zby);
@@ -32,6 +36,8 @@ import {
   RETRY_FAULT_RECEIPT_CONTRACT,
   RETRY_FAULT_TIER,
   RETRY_FAULT_TIER_STATEMENT,
+  retryAdmissionProblems,
+  retrySessionReading,
 } from "../qa/workbench/furnace-hosted-retry-fault-receipt.mjs";
 
 interface Attempt {
@@ -42,10 +48,16 @@ interface Attempt {
   runId: string;
   beadsRunId: string;
   sessionInstanceId: string;
+  executionId: string;
+  admissionReceipt: string;
   terminal: string;
   summary?: string;
   cancel: { requested: boolean; reason?: string };
   unsettledAfterCancel: boolean;
+}
+interface Session {
+  sessionInstanceId: string;
+  admissionReceipts: string[];
 }
 interface Receipt {
   contract: string;
@@ -54,6 +66,7 @@ interface Receipt {
   run: { runId: string; beadsRunId: string; requestId: string };
   limits: Record<string, string>;
   attempts: Attempt[];
+  sessions: Session[];
   identityViolations: string[];
 }
 interface Reply {
@@ -95,7 +108,12 @@ const clone = <T>(value: T): T => structuredClone(value);
 const FAKE_DIGEST = `sha256:${"c".repeat(64)}`;
 const LIMITS = { crashDurability: "none", observe: "session-word", identity: "per-attempt", replyBounds: "none", retry: "adapter-never-retries; furnace-auto-retries-by-recorded-retry-policy; work_failure-and-indeterminate-park" };
 
+/** An obviously fake per-session process token: 16 lowercase hex digits, the shape the SDK mints (ResidentSession.processToken). */
+const FAKE_TOKEN = "0123456789abcdef";
+/** A second obviously fake token: a kept-session retry minted under it changed tokens inside one session's allocator. */
+const OTHER_TOKEN = "fedcba9876543210";
 function attempt(invocation: number, attemptId: string, ordinal: number, terminal: string, extra: Partial<Attempt> = {}): Attempt {
+  const sessionInstanceId = extra.sessionInstanceId ?? `session-${attemptId}`;
   return {
     invocation,
     attemptId,
@@ -103,12 +121,25 @@ function attempt(invocation: number, attemptId: string, ordinal: number, termina
     workId: "bd-work-retry",
     runId: "frn-run-fake",
     beadsRunId: "bd-run-fake",
-    sessionInstanceId: `session-${attemptId}`,
+    sessionInstanceId,
+    executionId: `ex-${attemptId}`,
+    // Per-Attempt identity is the admission receipt <instance_id>/<process token>/<n> (wb-zby.1); one admission per session here.
+    admissionReceipt: `${sessionInstanceId}/${FAKE_TOKEN}/1`,
     terminal,
     cancel: { requested: false },
     unsettledAfterCancel: false,
     ...extra,
   };
+}
+/** The adapter's sessions roster: every session in first-seen order with the admission receipts it minted, in order. */
+function rosterOf(attempts: readonly Attempt[]): Session[] {
+  const roster: Session[] = [];
+  for (const row of attempts) {
+    const entry = roster.find((session) => session.sessionInstanceId === row.sessionInstanceId);
+    if (entry) entry.admissionReceipts.push(row.admissionReceipt);
+    else roster.push({ sessionInstanceId: row.sessionInstanceId, admissionReceipts: [row.admissionReceipt] });
+  }
+  return roster;
 }
 function receipt(attempts: Attempt[], identityViolations: string[] = []): Receipt {
   return {
@@ -118,8 +149,23 @@ function receipt(attempts: Attempt[], identityViolations: string[] = []): Receip
     run: { runId: "frn-run-fake", beadsRunId: "bd-run-fake", requestId: "req-fake" },
     limits: { ...LIMITS },
     attempts,
+    sessions: rosterOf(attempts),
     identityViolations,
   };
+}
+/**
+ * Re-mint a retry journey's operator retry as a FURTHER admission in the uncertain Attempt's kept session (same instance
+ * id, same token, the next n), in both phases, with each phase's roster rebuilt: the kept-connection shape wb-zby.1
+ * measured for a Run's sequential Attempts, which this judge must neither require nor refuse for an operator retry.
+ */
+function keepSession(journey: RetryJourney): void {
+  for (const phase of [journey.beforeClose, journey.afterClose]) {
+    const [first, retry] = phase.attempts;
+    if (!first || !retry) throw new Error("fixture lost its attempts");
+    retry.sessionInstanceId = first.sessionInstanceId;
+    retry.admissionReceipt = `${first.sessionInstanceId}/${FAKE_TOKEN}/2`;
+    phase.sessions = rosterOf(phase.attempts);
+  }
 }
 const closedByHost = { requested: true, reason: "host_closed" };
 function parkedRetry(first: string, retry: string): RetryJourney {
@@ -243,7 +289,7 @@ describe("furnace-hosted retry-fault receipt: judge falsifiers", () => {
     expect({ ...EXPECTED_LIMITS }).toEqual(LIMITS);
   });
 
-  it("flags an operator retry served by the uncertain Attempt's bridge session (claim 1)", () => {
+  it("flags an operator retry whose bridge session was swapped to the uncertain Attempt's while its admission receipt still names another session, and a blank session id (claim 1, re-keyed on admission receipts)", () => {
     for (const name of ["lostConnectionRetry", "explicitUncertainRetry", "dropBeforeAdmissionReply"] as const) {
       const reused = clone(clean());
       const [first, retry] = reused.journeys[name].beforeClose.attempts;
@@ -256,6 +302,99 @@ describe("furnace-hosted retry-fault receipt: judge falsifiers", () => {
     if (!first) throw new Error("fixture lost its attempts");
     first.sessionInstanceId = "";
     expect(rules(blank)).toContain("retry-session-reused");
+  });
+
+  // wb-3hc (owner re-wording of record, 2026-10-17): "re-key the judge claim retry-session-reused ... on
+  // admission-receipt distinctness PLUS the sessions roster, never on sessionInstanceId inequality alone"; the retry is
+  // "EXPECTED but NOT MEASURED to open a new connection/session - MEASURE which it is and record it, asserting neither
+  // in advance".
+  it("accepts an operator retry that is a further admission in the uncertain Attempt's kept session, and records which shape it measured (claim 1, kept-connection model)", () => {
+    for (const name of ["lostConnectionRetry", "explicitUncertainRetry", "dropBeforeAdmissionReply"] as const) {
+      const kept = clone(clean());
+      keepSession(kept.journeys[name]);
+      expect(rules(kept)).not.toContain("retry-session-reused");
+      const [first, retry] = kept.journeys[name].beforeClose.attempts;
+      expect(retryAdmissionProblems(first, retry, kept.journeys[name].beforeClose.sessions)).toEqual([]);
+      expect(retrySessionReading(first, retry)).toBe("kept");
+    }
+    const [first, retry] = clean().journeys.lostConnectionRetry.beforeClose.attempts;
+    expect(retrySessionReading(first, retry)).toBe("new");
+  });
+
+  it("never passes on sessionInstanceId inequality alone: distinct sessions with a repeated, blank or malformed admission receipt are flagged (claim 1)", () => {
+    const shapes: Array<[string, (retry: Attempt, first: Attempt) => void]> = [
+      ["the uncertain Attempt's receipt repeated", (retry, first) => {
+        retry.admissionReceipt = first.admissionReceipt;
+      }],
+      ["a blank receipt", (retry) => {
+        retry.admissionReceipt = "";
+      }],
+      ["a receipt naming another session's instance", (retry) => {
+        retry.admissionReceipt = `session-elsewhere/${FAKE_TOKEN}/1`;
+      }],
+      ["a receipt whose token is not 16 lowercase hex digits", (retry) => {
+        retry.admissionReceipt = `${retry.sessionInstanceId}/NOT-HEX-TOKEN-00/1`;
+      }],
+      ["a receipt whose counter is zero", (retry) => {
+        retry.admissionReceipt = `${retry.sessionInstanceId}/${FAKE_TOKEN}/0`;
+      }],
+    ];
+    for (const [shape, mutate] of shapes) {
+      for (const name of ["lostConnectionRetry", "explicitUncertainRetry", "dropBeforeAdmissionReply"] as const) {
+        const observed = clone(clean());
+        const [first, retry] = observed.journeys[name].beforeClose.attempts;
+        if (!first || !retry) throw new Error("fixture lost its attempts");
+        mutate(retry, first);
+        observed.journeys[name].beforeClose.sessions = rosterOf(observed.journeys[name].beforeClose.attempts);
+        expect(retry.sessionInstanceId, shape).not.toBe(first.sessionInstanceId);
+        expect(rules(observed), `${name}: ${shape}`).toContain("retry-session-reused");
+      }
+    }
+  });
+
+  it("flags an operator retry whose admission is missing from, misplaced in, or doubled in the sessions roster, before or after close (claim 1)", () => {
+    const mutants: Array<[string, (phase: Receipt) => void]> = [
+      ["no roster at all", (phase) => {
+        phase.sessions = [];
+      }],
+      ["the retry's receipt dropped from its session", (phase) => {
+        phase.sessions = phase.sessions.map((session) => ({ ...session, admissionReceipts: session.admissionReceipts.filter((r) => r !== phase.attempts[1]?.admissionReceipt) }));
+      }],
+      ["the retry's receipt listed under the uncertain Attempt's session", (phase) => {
+        const retryReceipt = phase.attempts[1]?.admissionReceipt ?? "";
+        phase.sessions = phase.sessions.map((session, index) => ({ ...session, admissionReceipts: index === 0 ? [...session.admissionReceipts, retryReceipt] : session.admissionReceipts.filter((r) => r !== retryReceipt) }));
+      }],
+      ["the retry's receipt listed twice", (phase) => {
+        const retryReceipt = phase.attempts[1]?.admissionReceipt ?? "";
+        phase.sessions = [...phase.sessions, { sessionInstanceId: phase.attempts[1]?.sessionInstanceId ?? "", admissionReceipts: [retryReceipt] }];
+      }],
+    ];
+    for (const [shape, mutate] of mutants) {
+      for (const phaseName of ["beforeClose", "afterClose"] as const) {
+        const observed = clone(clean());
+        mutate(observed.journeys.explicitUncertainRetry[phaseName]);
+        expect(rules(observed), `${phaseName}: ${shape}`).toContain("retry-session-reused");
+      }
+    }
+  });
+
+  it("flags a kept-session retry that is not a FURTHER admission: the counter did not advance, or the token changed inside the session (claim 1)", () => {
+    // Distinct receipts, one session, one token, but the counter ran backwards: not the session allocator's next admission.
+    const stalled = clone(clean());
+    keepSession(stalled.journeys.lostConnectionRetry);
+    const [stalledFirst, stalledRetry] = stalled.journeys.lostConnectionRetry.beforeClose.attempts;
+    if (!stalledFirst || !stalledRetry) throw new Error("fixture lost its attempts");
+    stalledFirst.admissionReceipt = `${stalledFirst.sessionInstanceId}/${FAKE_TOKEN}/2`;
+    stalledRetry.admissionReceipt = `${stalledRetry.sessionInstanceId}/${FAKE_TOKEN}/1`;
+    stalled.journeys.lostConnectionRetry.beforeClose.sessions = rosterOf(stalled.journeys.lostConnectionRetry.beforeClose.attempts);
+    expect(rules(stalled)).toContain("retry-session-reused");
+    const retokened = clone(clean());
+    keepSession(retokened.journeys.dropBeforeAdmissionReply);
+    const [, retokenedRetry] = retokened.journeys.dropBeforeAdmissionReply.afterClose.attempts;
+    if (!retokenedRetry) throw new Error("fixture lost its attempts");
+    retokenedRetry.admissionReceipt = `${retokenedRetry.sessionInstanceId}/${OTHER_TOKEN}/2`;
+    retokened.journeys.dropBeforeAdmissionReply.afterClose.sessions = rosterOf(retokened.journeys.dropBeforeAdmissionReply.afterClose.attempts);
+    expect(rules(retokened)).toContain("retry-session-reused");
   });
 
   it("flags an establishment marker that is not exactly once per Attempt, before or after close (claim 2; gate mutants G3/G4)", () => {
@@ -719,7 +858,7 @@ describe("furnace-hosted retry-fault receipt: module, runner and helper boundari
     const block = '[build.commands.furnace-hosted-retry-fault]\ncommand = "node qa/workbench/furnace-hosted-retry-fault.mjs"\ntimeout = 120\n';
     expect(forge).toContain(block);
     expect(forge.match(/\[build\.commands\.furnace-hosted-retry-fault\]/g)).toHaveLength(1);
-    expect(forge).toContain('gate = ["lint", "typing", "build", "test", "workbench-shell", "package-smoke"]\n');
+    expect(forge).toContain('gate = ["lint", "typing", "build", "test", "census", "workbench-shell", "package-smoke"]\n');
     const gate = /^gate = \[(.*)\]$/m.exec(forge)?.[1] ?? "";
     expect(gate).not.toContain("furnace-hosted-retry-fault");
     const at = forge.indexOf(block);

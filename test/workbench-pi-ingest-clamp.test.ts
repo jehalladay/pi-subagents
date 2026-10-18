@@ -25,15 +25,13 @@ import { describe, expect, it } from "vitest";
 import subagentsExtension from "../src/index.js";
 import { sanitizeWorkbenchJsonText, sanitizeWorkbenchText } from "../src/workbench/redaction.js";
 import { ctx, hermeticDir, makePi, textOf } from "./helpers/boot-extension.js";
+import { UNSAFE_DISPLAY } from "./helpers/unsafe-display.js";
 
 const cp = (code: number): string => String.fromCodePoint(code);
 const BEL = cp(0x07);
 const ESC = cp(0x1b);
 const ZWSP = cp(0x200b);
 const BOM = cp(0xfeff);
-
-/** Anything a display string must never carry: C0/C1 controls, line/paragraph separators, default-ignorables, lone surrogates. */
-const UNSAFE_DISPLAY = /[\x00-\x1f\x7f-\x9f\u{2028}\u{2029}]|\p{Default_Ignorable_Code_Point}|[\u{d800}-\u{dfff}]/u;
 
 interface Probe {
   readonly id: string;

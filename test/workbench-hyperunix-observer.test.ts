@@ -408,8 +408,8 @@ describe('HyperUnix hyperunix.find reader adapter', () => {
 
   it('H5: the kind tuple is pinned to the vendored SDK ExecutionStatusKind at type level and against its shipped declaration', () => {
     expectTypeOf<(typeof HYPERUNIX_EXECUTION_KINDS)[number]>().toEqualTypeOf<ExecutionStatusKind>();
-    // The package typing gate type-checks src/ only (tsconfig include), so the same pin is also read at runtime from the
-    // vendored declaration: an SDK enum change fails this test even where nothing type-checks test files.
+    // Since wb-zsv the gate's typing step type-checks test/ too (forge.toml typing -> npm run typecheck:test over tsconfig.test.json),
+    // so the pin above is gate-enforced; the runtime read below is kept as a second, tsc-free witness of the same SDK enum.
     const declaration = readFileSync(new URL('../node_modules/@hyperunix/sdk/dist/result.d.ts', import.meta.url), 'utf8');
     const start = declaration.indexOf('export type ExecutionStatus =');
     const end = declaration.indexOf('export type ExecutionStatusKind');

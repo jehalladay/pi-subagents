@@ -34,6 +34,7 @@ import {
 } from "../src/workbench/control.js";
 import { type NativeRef, ObservationProjection, type ObservationScope } from "../src/workbench/observation.js";
 import { sanitizeWorkbenchText, stripUnsafeText } from "../src/workbench/redaction.js";
+import { UNSAFE_DISPLAY } from "./helpers/unsafe-display.js";
 
 const SCOPE: ObservationScope = { workspace: "/tmp/admission-ws", principal: "tester" };
 const AT = "2026-10-15T06:00:00Z";
@@ -82,8 +83,6 @@ const LRI = cp(0x2066);
 const PDI = cp(0x2069);
 const HAN = cp(0x6f22);
 const SMILE = cp(0x1f642);
-/** Anything a receipt string must never carry once the chokepoint has run: controls, separators, default-ignorables, lone surrogates. */
-const UNSAFE = /[\x00-\x1f\x7f-\x9f\u{2028}\u{2029}\u{fff9}-\u{fffb}\u{13430}-\u{1343f}]|\p{Default_Ignorable_Code_Point}|[\u{d800}-\u{dfff}]/u;
 
 /** Every string leaf of a value, keys included. */
 function strings(value: unknown, into: string[] = []): string[] {
@@ -129,7 +128,7 @@ function expectWithheld(receipt: AcknowledgedControlReceipt | ResultControlRecei
   for (const entry of receipt.refusals ?? []) expect(Object.isFrozen(entry), `${id}: each refusal is frozen`).toBe(true);
   const text = JSON.stringify(receipt);
   for (const placeholder of placeholders) expect(text, `${id}: the refused text never reaches the receipt`).not.toContain(placeholder);
-  for (const value of strings(receipt)) expect(value, `${id}: no unsafe unit in the receipt`).not.toMatch(UNSAFE);
+  for (const value of strings(receipt)) expect(value, `${id}: no unsafe unit in the receipt`).not.toMatch(UNSAFE_DISPLAY);
 }
 /** Acknowledges `ref` against `receipt` without a throw and returns the acknowledged phase. */
 function acknowledged(receipt: RequestedControlReceipt, ref: string, id: string): AcknowledgedControlReceipt {

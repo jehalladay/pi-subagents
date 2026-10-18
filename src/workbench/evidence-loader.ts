@@ -3,7 +3,7 @@
  * A reference is only a pointer; nothing here fetches until a host asks, nothing unreadable is invented,
  * and a failed read is a visible `unavailable` entry that never carries preview text.
  */
-import { safeWorkflowTerminalText } from "../ui/workflow-card.js";
+import { safeWorkflowTerminalText, scannedWorkflowTerminalText } from "../ui/workflow-card.js";
 import { CapabilityError } from "./capability-registry.js";
 import type { NativeRef, ObservationScope } from "./observation.js";
 import { sanitizeWorkbenchText } from "./redaction.js";
@@ -169,14 +169,18 @@ function unavailableFor(error: unknown): EvidenceEntry {
   return { state: "unavailable", reason: "transport" };
 }
 
-/** Validate and bound one loader result into a loaded entry, or a visible unavailable. Raw error text never enters an entry. */
+/**
+ * Validate and bound one loader result into a loaded entry, or a visible unavailable. Raw error text never enters an entry. The
+ * producer receipt is examined only up to MAX_RECEIPT_CHARS raw characters, by the shared helper's straddle-safe scan option
+ * (wb-y5y): a value or escape sequence that bound splits is read as the whole receipt reads it, never cut open first.
+ */
 function admit(loader: EvidenceLoader, content: EvidenceContent, maxBytes: number): EvidenceEntry {
   if (typeof content !== "object" || content === null || !Array.isArray(content.preview)) return { state: "unavailable", reason: "transport" };
   if (!Number.isFinite(content.bytes) || content.bytes < 0 || Number.isNaN(Date.parse(content.capturedAt))) return { state: "unavailable", reason: "transport" };
   const { lines, clipped } = boundPreview(content.preview, maxBytes);
   const truncated = content.truncated === true || clipped || content.bytes > maxBytes;
   const preview = truncated ? [...lines.slice(0, EVIDENCE_MAX_PREVIEW_LINES - 1), EVIDENCE_TRUNCATED_MARK] : lines;
-  const receipt = typeof content.producerReceipt === "string" ? safeWorkflowTerminalText(content.producerReceipt.slice(0, MAX_RECEIPT_CHARS)) : "";
+  const receipt = typeof content.producerReceipt === "string" ? scannedWorkflowTerminalText(content.producerReceipt, MAX_RECEIPT_CHARS) : "";
   return {
     state: "loaded",
     kind: headWithin(safeWorkflowTerminalText(String(content.kind)), 64),

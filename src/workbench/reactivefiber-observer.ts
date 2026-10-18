@@ -68,6 +68,9 @@ const ENGINE_KEYS = ['tsx_runtime', 'tsx_sdk'] as const;
 /** The fingerprint an engine entry states when its lock pins no digest. */
 const UNKNOWN_FINGERPRINT = 'unknown';
 const ENGINE_NOTE = 'TSX engine identity from result.provenance.sdk_versions: a foreign runtime executed component source';
+/** The producer-closed result.engine_metrics counters (wb-693.4): exactly these two, each a non-negative integer. */
+const ENGINE_METRIC_KEYS = ['tsx_worker_spawns', 'tsx_resource_rounds'];
+const SPAWN_NOTE = 'TSX worker spawned (result.engine_metrics.tsx_worker_spawns): a foreign runtime executed component source';
 /** The pinned rf observed-value statuses (domain/observation.py:100@8a8b83e4d): a row reading either one observed a value. */
 const OBSERVED_STATUSES: ReadonlySet<string> = new Set(['observed', 'null']);
 /** At most this many distinct not-observed status words are listed in the observations note (wb-973.10). */
@@ -118,6 +121,17 @@ function engineRefs(versions: JsonValue | undefined): string[] {
       (GRAPH_DIGEST.test(fingerprint) || fingerprint === UNKNOWN_FINGERPRINT)) refs.push(`rf-engine:${key}:${version}:${fingerprint}`);
   }
   return refs;
+}
+
+/** The tsx_worker_spawns of a stated, exactly-closed result.engine_metrics (wb-693.4), else 0 when it is absent: only a validated
+ * non-negative safe integer reaches the reference, so no producer text is ever surfaced. */
+function engineSpawns(result: JsonRecord): number {
+  if (!Object.hasOwn(result, 'engine_metrics')) return 0;
+  const metrics = record(result.engine_metrics);
+  if (!metrics || !hasExactKeys(metrics, ENGINE_METRIC_KEYS) || !ENGINE_METRIC_KEYS.every(key => count(metrics[key]))) {
+    throw refused('result.engine_metrics needs exactly the two non-negative integer counters tsx_worker_spawns and tsx_resource_rounds');
+  }
+  return Number(metrics.tsx_worker_spawns);
 }
 
 /** What result.observations contributes (wb-973.10, SCG-R10): read from each row's status word alone, it can only demote. A row
@@ -246,6 +260,8 @@ function previewSnapshot(envelope: JsonRecord, diagnostics: readonly JsonRecord[
   if (summary.has_errors !== summary.errors > 0 || summary.has_warnings !== summary.warnings > 0) {
     throw refused('result.diagnostics_summary flags contradict its counts');
   }
+  // wb-693.4: engine_metrics is read only when stated (a pre-TSX rf states none and is never refused); a stated one is closed.
+  const spawns = engineSpawns(result);
   const work = record(result.work);
   if (!work || !hasExactKeys(work, WORK_KEYS) || !WORK_KEYS.every(key => count(work[key]))) throw refused('result.work needs exactly the six non-negative integer counters');
   if (work.storage_write_count !== 0) throw refused('result.work.storage_write_count must be 0: a preview writes nothing');
@@ -261,16 +277,18 @@ function previewSnapshot(envelope: JsonRecord, diagnostics: readonly JsonRecord[
   const budget = overBudget ? `over budget by ${-available} (context window ${window} tokens)` : `${available} of ${window} context tokens available`;
   const statusText = `${SEAM_LABEL[host.seam]} · ${budget} · necessity evals ${work.necessity_eval_count} · ${counts.errors} errors, ${counts.warnings} warnings`;
   const clean = live && !flagged && !overBudget && observations.notObserved === 0;
-  const notes = ['ephemeral noncommitted preview: render_id null, transaction_id null, 0 storage writes', 'context text withheld: referenced by sha256 digest'];
+  const notes = ['ephemeral noncommitted preview: render_id null, transaction_id null, 0 authoritative storage writes (envelope storage_write_count)', 'context text withheld: referenced by sha256 digest'];
   if (!live) notes.push('fixture seam: not a real generated context');
   if (flagged) notes.push('render reported errors: partial, not a clean render');
   if (overBudget) notes.push('context exceeds the available budget: partial');
   if (observations.note !== undefined) notes.push(observations.note);
   if (release !== undefined) notes.push(`producer release from result.provenance.cli_version: rf@${release}`);
+  // One foreign-runtime note: the identity note already states it, so the spawn note is added only beside no identity.
   if (engines.length > 0) notes.push(ENGINE_NOTE);
+  else if (spawns > 0) notes.push(SPAWN_NOTE);
   return {
     operationId: String(envelope.operation_id), coverage: clean ? 'complete' : 'partial', statusTone: clean ? 'success' : 'unknown', statusText,
-    evidenceRefs: [`rf-graph:${graph}`, `rf-workspace:${workspaceId}`, ...(release !== undefined ? [`rf-cli:${release}`] : []), ...engines], notes, sourceRevision: graph,
+    evidenceRefs: [`rf-graph:${graph}`, `rf-workspace:${workspaceId}`, ...(release !== undefined ? [`rf-cli:${release}`] : []), ...engines, ...(spawns > 0 ? [`rf-engine-spawns:${spawns}`] : [])], notes, sourceRevision: graph,
     nativePayloadRef: `rf-output:sha256:${createHash('sha256').update(output.text).digest('hex')}`,
   };
 }

@@ -114,9 +114,11 @@ function clipBytes(value: string, bytes: number): string {
 }
 
 /** One whole producer row bound for display: the shared helper with the transcript-class layout, so redaction reads the
- * whole row before anything is deleted and LF is the one row break left in its answer. */
+ * whole row before anything is deleted and LF is the one row break left in its answer. The helper examines the row only up to
+ * MAX_SCAN raw characters, with its straddle-safe scan option (wb-y5y): a value or escape sequence the scan bound splits is
+ * read as the whole row reads it, never cut open before the helper sees it. */
 function sanitizeRow(raw: string): string {
-  return sanitizeWorkbenchText(raw, ROW_TEXT_CAP, "lines");
+  return sanitizeWorkbenchText(raw, ROW_TEXT_CAP, "lines", { scan: MAX_SCAN });
 }
 
 /** One display line: width-bounded, with an ellipsis when clipped. */
@@ -225,11 +227,10 @@ export async function readClaudeMessageEvidence(ref: string, deps: ClaudeEvidenc
   // The adapter's row-bound cut is part of the truth: a flag that is present must be the literal true.
   if (clipped !== undefined && clipped !== true) throw malformed();
 
-  const scanned = clip(text, MAX_SCAN);
-  const sanitized = sanitizeRow(scanned);
+  const sanitized = sanitizeRow(text);
   const rows = sanitized.length === 0 ? [] : sanitized.split("\n");
   if (rows.length > 0 && rows[rows.length - 1] === "") rows.pop();
-  const { preview, truncated } = shape(rows.map(boundLine), scanned.length !== text.length || clipped === true, maxLines, maxBytes);
+  const { preview, truncated } = shape(rows.map(boundLine), text.length > MAX_SCAN || clipped === true, maxLines, maxBytes);
 
   const stamp: unknown = capturedAt();
   if (typeof stamp !== "string" || stamp.length > 64 || !ISO_INSTANT.test(stamp) || !Number.isFinite(Date.parse(stamp))) throw refused("capturedAt clock reading");

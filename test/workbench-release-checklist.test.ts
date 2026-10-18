@@ -277,7 +277,7 @@ describe("CLI contract", () => {
     const toml = readFileSync(join(repo, "forge.toml"), "utf8");
     expect(toml).toContain("[build.commands.release-checklist]");
     expect(toml).toContain('command = "node qa/workbench/release-checklist-receipt.mjs"');
-    expect(toml).toContain('gate = ["lint", "typing", "build", "test", "workbench-shell", "package-smoke"]');
+    expect(toml).toContain('gate = ["lint", "typing", "build", "test", "census", "workbench-shell", "package-smoke"]');
   });
 
   it("places the block whole at the package-smoke boundary, not the shared end of file (16:56Z whole-block rule)", () => {

@@ -16,6 +16,7 @@
 
 import type { ExtensionCommandContext } from "@earendil-works/pi-coding-agent";
 import type { AgentRecord } from "../types.js";
+import { type AttentionReport, selectAttention } from "../workbench/attention.js";
 import { CapabilityError } from "../workbench/capability-registry.js";
 import type { EvidenceStore } from "../workbench/evidence-loader.js";
 import type { ObservationProjection, ObservationScope, ObservedNode } from "../workbench/observation.js";
@@ -50,6 +51,14 @@ export interface WorkflowMenuDeps {
      * relationPage rows (wb-6ze.35). Either one undeclared, the timeline view renders exactly as it does without a model.
      */
     timelineColumns?: number;
+    /**
+     * The overview's attention inputs (src/index.ts hands over the host clock and WORKBENCH_ATTENTION_BOTTLENECKS): `now`
+     * reads the caller clock as an ISO-8601 instant and `bottlenecks` caps the open intervals listed. Declared together with
+     * relationPage, the overview draws the workbench.attention/v1 report selectAttention computes over this projection for
+     * the observed invocation, examining one page of relationPage nodes (wb-6ze.36). Either one undeclared, the overview
+     * renders exactly as it does without a report.
+     */
+    attention?: { now: () => string; bottlenecks: number };
   };
   /** The record behind an agent id, or undefined once it has been swept. */
   getRecord(id: string): AgentRecord | undefined;
@@ -124,6 +133,32 @@ function timelineLanes(
 }
 
 /**
+ * The overview's attention read side for one open dialog (wb-6ze.36; docs/workbench/10, Four views: Overview). It hands
+ * the inspector the workbench.attention/v1 report selectAttention computes over the live projection for the dialog's own
+ * invocation: one page of `page` nodes, at most `bottlenecks` open intervals listed, each measured against the host clock
+ * `now`. Every cap in the input is a value the host declared and the clock is the host's (ATTENTION_CLOCK_CAVEAT), never a
+ * literal or a clock read here. The report is held for the scope it was computed for and recomputed only when the
+ * projection revision changes (a relation change moves it too), so a redraw, a key or a moving clock computes nothing and
+ * reads no clock. A clock the selector refuses is its typed refusal and is not caught. Reading is all it does, so closing
+ * the dialog leaves it nothing to cancel.
+ */
+function attentionReport(
+  projection: ObservationProjection,
+  invocationId: string,
+  page: number,
+  bottlenecks: number,
+  now: () => string,
+): (scope: ObservationScope) => AttentionReport {
+  let held: { key: string; report: AttentionReport } | undefined;
+  return scope => {
+    const { revision } = projection.window({ scope, invocationId, offset: 0, limit: 1 });
+    const key = JSON.stringify([revision, scope.workspace, scope.principal]);
+    if (held?.key !== key) held = { key, report: selectAttention(projection, { scope, invocationId, now: now(), limit: page, bottlenecks }) };
+    return held.report;
+  };
+}
+
+/**
  * Open the inspector for a workflow run.
  *
  * All six controls are wired: `onKill` aborts the run's controller, while
@@ -159,6 +194,10 @@ export async function showWorkflowDialog(
   const lanes = host?.relationPage !== undefined && host.timelineColumns !== undefined
     ? timelineLanes(host.projection, host.relationPage, host.timelineColumns)
     : undefined;
+  // And one attention read side for this run's overview, for a host that declares its read cap, clock and bottleneck cap (wb-6ze.36).
+  const attention = host?.relationPage !== undefined && host.attention !== undefined
+    ? attentionReport(host.projection, task.id, host.relationPage, host.attention.bottlenecks, host.attention.now)
+    : undefined;
   await ctx.ui.custom<undefined>(
     (tui, theme, _keybindings, done) =>
       new WorkflowDialog(
@@ -180,6 +219,8 @@ export async function showWorkflowDialog(
             } } : {}),
             // The timeline view's lane model goes with the observation it is built from (wb-6ze.35).
             ...(observationScope && lanes !== undefined ? { timelineLanes: (view: InspectorTimelineView) => lanes(observationScope, task.id, view) } : {}),
+            // And the overview's attention report, for the scope this render reads (wb-6ze.36).
+            ...(observationScope && attention !== undefined ? { attention: () => attention(observationScope) } : {}),
             task: {
               status: task.status,
               workflowName: task.workflowName,
