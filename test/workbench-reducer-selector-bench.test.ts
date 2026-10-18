@@ -3,8 +3,7 @@
  * This guard checks receipt completeness, determinism of the measured path, the fold falsifier, the exit
  * semantics, and that src/ stays untouched. It never asserts a measured latency value.
  */
-import { mkdtempSync, readdirSync, readFileSync, rmSync } from "node:fs";
-import { tmpdir } from "node:os";
+import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import {
@@ -30,6 +29,9 @@ import {
 } from "../qa/workbench/reducer-selector-bench.mjs";
 import { initialInspectorState, layoutInspector, reduceInspectorKey } from "../src/ui/workflow-inspector.js";
 import { type ObservationEvent, ObservationProjection } from "../src/workbench/observation.js";
+import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
+
+installScratchLeakGuard();
 
 interface Distribution {
   samples: number;
@@ -439,7 +441,7 @@ describe("W21 reducer/selector determinism and fixture reuse (C5)", () => {
   it("reuses the grouped fixture builder and forks no second fixture or limits literal", () => {
     const text = readRepo("qa/workbench/reducer-selector-bench.mjs");
     const specifiers = [...text.matchAll(/^import\s[^'"]*['"]([^'"]+)['"]/gm)].map(match => match[1]).sort();
-    expect(specifiers).toEqual(["./grouped-fixture.mjs", "node:fs", "node:os", "node:url"].sort());
+    expect(specifiers).toEqual(["./bench-revision.mjs", "./grouped-fixture.mjs", "node:fs", "node:os", "node:url"].sort());
     expect(text).toMatch(/buildGroupedFixture/);
     expect(text).toMatch(/BENCH_ONLY_LIMITS/);
     expect(text).not.toMatch(/function\s+(?:buildGroupedFixture|seeded|mulberry32)\b|maxNodes|maxEdges/);
@@ -878,7 +880,7 @@ describe("W21 receipt publication: printed before the file write; a failed write
   }
 
   it("uses the real file writer by default: the file holds the printed line, and an unwritable path exits 3", () => {
-    const directory = mkdtempSync(join(tmpdir(), "w21-rs-"));
+    const directory = makeScratch("w21-rs-");
     try {
       const receipt = withStoredExit(0);
       const printed: string[] = [];
@@ -895,7 +897,7 @@ describe("W21 receipt publication: printed before the file write; a failed write
       const diagnostic: unknown = JSON.parse(errors[0]);
       expect(diagnostic).toMatchObject({ benchmark: "reducer-selector-grouped-10k", error: "receipt-write-failed", path: unwritable });
     } finally {
-      rmSync(directory, { recursive: true, force: true });
+      removeScratch(directory);
     }
   }, 120_000);
 });

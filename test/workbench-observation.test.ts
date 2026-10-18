@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { type NativeRef, type ObservationEvent, ObservationProjection } from "../src/workbench/observation.js";
+import { type NativeRef, type ObservationEvent, ObservationProjection, type ObservationQuery } from "../src/workbench/observation.js";
 
 const alice = { workspace: "ws-1", principal: "alice" };
 const bob = { workspace: "ws-1", principal: "bob" };
@@ -66,10 +66,10 @@ describe("bounded, provenance-preserving observation projection", () => {
     expect(view.query({scope:alice,dependency,limit:3}).nodes.map(n=>n.key)).toContain(key);
     expect(view.relations({scope:alice,to:key}).map(e=>e.kind).sort()).toEqual(["causation","dependency"]);
     view.ingest({...event("e2",native,2,"FAILED"),trace:{invocationId:"inv-2"},subjectBasis:"sha-new",evidenceRefs:["ev-new"],sourceVersion:"v2",interval:{startedAt:clock(3),endedAt:clock(4)}});
-    for (const filter of [{invocationId:"inv-1"},{basis:"sha-old"},{evidence:"ev-old"},{version:"v1"},{statusTone:"active"},{time:{from:clock(1),to:clock(2)}}]) {
+    for (const filter of [{invocationId:"inv-1"},{basis:"sha-old"},{evidence:"ev-old"},{version:"v1"},{statusTone:"active"},{time:{from:clock(1),to:clock(2)}}] satisfies Array<Omit<ObservationQuery, "scope" | "limit">>) {
       expect(view.query({scope:alice,limit:5,...filter}).nodes).toEqual([]);
     }
-    for (const filter of [{invocationId:"inv-2"},{basis:"sha-new"},{evidence:"ev-new"},{version:"v2"},{statusTone:"failure"},{kind:"native.status",statusTone:"failure"},{time:{from:clock(3),to:clock(4)}}]) {
+    for (const filter of [{invocationId:"inv-2"},{basis:"sha-new"},{evidence:"ev-new"},{version:"v2"},{statusTone:"failure"},{kind:"native.status",statusTone:"failure"},{time:{from:clock(3),to:clock(4)}}] satisfies Array<Omit<ObservationQuery, "scope" | "limit">>) {
       expect(view.query({scope:alice,limit:5,...filter}).nodes.map(n=>n.key)).toEqual([key]);
     }
   });

@@ -17,7 +17,7 @@
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { initTheme } from "@earendil-works/pi-coding-agent";
+import { type ExtensionAPI, initTheme } from "@earendil-works/pi-coding-agent";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { AgentManager } from "../src/agent-manager.js";
 import { SUBAGENT_TOOL_NAMES } from "../src/agent-runner.js";
@@ -568,7 +568,7 @@ describe("createWorkflowHost — abort, resume and gate", () => {
   });
 
   it("runs a gate through pi.exec in the child's own tree", async () => {
-    const exec = vi.fn(async () => execResult({ stdout: "3 passing" }));
+    const exec = vi.fn<ExtensionAPI["exec"]>(async () => execResult({ stdout: "3 passing" }));
     const host = createWorkflowHost({
       pi: { exec } as any,
       ctx: ctx({ cwd: "/session" }),
@@ -582,7 +582,7 @@ describe("createWorkflowHost — abort, resume and gate", () => {
   });
 
   it("falls back to the session's cwd when the child had no tree of its own", async () => {
-    const exec = vi.fn(async () => execResult());
+    const exec = vi.fn<ExtensionAPI["exec"]>(async () => execResult());
     const host = createWorkflowHost({
       pi: { exec } as any,
       ctx: ctx({ cwd: "/session" }),
@@ -1316,8 +1316,8 @@ describe("collisions with another extension", () => {
 
     await booted.lifecycle.get("session_start")?.({}, context);
 
-    expect(warnings(context).some(m => /already registers a "SubagentWorkflow" tool/.test(m))).toBe(true);
-    expect(warnings(context).some(m => /other-ext/.test(m))).toBe(true);
+    expect(warnings(context).some((m: string) => /already registers a "SubagentWorkflow" tool/.test(m))).toBe(true);
+    expect(warnings(context).some((m: string) => /other-ext/.test(m))).toBe(true);
   });
 
   it("stays quiet when the registered tool is our own", async () => {
@@ -1330,7 +1330,7 @@ describe("collisions with another extension", () => {
 
     await booted.lifecycle.get("session_start")?.({}, context);
 
-    expect(warnings(context).filter(m => /SubagentWorkflow/.test(m))).toEqual([]);
+    expect(warnings(context).filter((m: string) => /SubagentWorkflow/.test(m))).toEqual([]);
   });
 
   it("does not check the tool name while workflows are off", async () => {
@@ -1344,7 +1344,7 @@ describe("collisions with another extension", () => {
 
     await booted.lifecycle.get("session_start")?.({}, context);
 
-    expect(warnings(context).filter(m => /SubagentWorkflow/.test(m))).toEqual([]);
+    expect(warnings(context).filter((m: string) => /SubagentWorkflow/.test(m))).toEqual([]);
   });
 
   it("survives a host where the listing methods are unavailable", async () => {
@@ -1394,8 +1394,8 @@ describe("collisions with another extension", () => {
     expect(booted.pi.getActiveTools()).not.toContain("SubagentWorkflow");
     // Everything else this extension registered stays.
     expect(booted.pi.getActiveTools()).toContain("Agent");
-    expect(warnings(context).some(m => /already provides a "Workflow" tool/.test(m))).toBe(true);
-    expect(warnings(context).some(m => /other-ext/.test(m))).toBe(true);
+    expect(warnings(context).some((m: string) => /already provides a "Workflow" tool/.test(m))).toBe(true);
+    expect(warnings(context).some((m: string) => /other-ext/.test(m))).toBe(true);
   });
 
   it("withdraws its tool when another extension provides a lowercase `workflow` tool", async () => {
@@ -1415,8 +1415,8 @@ describe("collisions with another extension", () => {
 
     expect(booted.pi.getActiveTools()).not.toContain("SubagentWorkflow");
     expect(booted.pi.getActiveTools()).toContain("Agent");
-    expect(warnings(context).some(m => /already provides a "workflow" tool/.test(m))).toBe(true);
-    expect(warnings(context).some(m => /pi-dynamic-workflows/.test(m))).toBe(true);
+    expect(warnings(context).some((m: string) => /already provides a "workflow" tool/.test(m))).toBe(true);
+    expect(warnings(context).some((m: string) => /pi-dynamic-workflows/.test(m))).toBe(true);
   });
 
   it("names the setting that keeps both", async () => {
@@ -1426,7 +1426,7 @@ describe("collisions with another extension", () => {
 
     await booted.lifecycle.get("session_start")?.({}, context);
 
-    expect(warnings(context).some(m => /workflowsEnabled/.test(m))).toBe(true);
+    expect(warnings(context).some((m: string) => /workflowsEnabled/.test(m))).toBe(true);
   });
 
   it("stands down without withdrawing when the foreign tool took our own name", async () => {
@@ -1440,7 +1440,7 @@ describe("collisions with another extension", () => {
     await booted.lifecycle.get("session_start")?.({}, context);
 
     expect(booted.pi.setActiveTools).not.toHaveBeenCalled();
-    expect(warnings(context).some(m => /already provides a "SubagentWorkflow" tool/.test(m))).toBe(true);
+    expect(warnings(context).some((m: string) => /already provides a "SubagentWorkflow" tool/.test(m))).toBe(true);
   });
 
   it("refuses the startup flag once it has stood down", async () => {
@@ -1471,7 +1471,7 @@ describe("collisions with another extension", () => {
 
     expect(booted.pi.setActiveTools).not.toHaveBeenCalled();
     expect(booted.pi.getActiveTools()).toContain("SubagentWorkflow");
-    expect(warnings(context).filter(m => /disabled for this session/.test(m))).toEqual([]);
+    expect(warnings(context).filter((m: string) => /disabled for this session/.test(m))).toEqual([]);
   });
 
   /**

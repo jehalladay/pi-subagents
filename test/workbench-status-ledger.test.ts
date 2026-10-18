@@ -261,7 +261,7 @@ describe("status ledger L6 receipt and gate placement", () => {
     const toml = readFileSync(join(repo, "forge.toml"), "utf8");
     expect(toml.match(/^\[build\.commands\.status-ledger\]$/gm)).toHaveLength(1);
     expect(toml).toMatch(/\[build\.commands\.status-ledger\]\ncommand = "node qa\/workbench\/status-ledger\.mjs"\ntimeout = 60\n/);
-    expect(toml).toContain('gate = ["lint", "typing", "build", "test", "workbench-shell", "package-smoke"]');
+    expect(toml).toContain('gate = ["lint", "typing", "build", "test", "census", "workbench-shell", "package-smoke"]');
     const gateLine = toml.split("\n").find((line) => line.startsWith("gate ="));
     expect(gateLine).not.toContain("status-ledger");
   });
