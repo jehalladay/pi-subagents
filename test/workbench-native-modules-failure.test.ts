@@ -62,4 +62,24 @@ describe("native-modules loader failure path (wb-cax.10)", () => {
     expect(rejectionText(await loadWorkbenchNative().then(() => undefined, (error: unknown) => error))).toMatch(/native module unavailable/);
     expect(isWorkbenchNativeLoaded()).toBe(false);
   });
+
+  // wb-nl8.2 (wb-nl8.1 design Q9): the row above cannot tell a fresh retry from the cached rejection, because vitest serves
+  // the mock factory's one failure to every import of the mocked module (measured at trunk 5778421: the factory ran once
+  // and two sequential failed loads rejected with the identical Error object), so the rejection text and identity are the
+  // same whether or not native-modules.ts resets `loading = undefined` in its rejection handler. The loader's own
+  // observable is the PROMISE it returns: concurrent callers share one in-flight promise, and after that promise rejects
+  // the next call must build a new one. Removing the reset serves the settled rejected promise again, and this row reds.
+  it("returns a new in-flight promise on the call after a failed load, not the cached rejected one", { timeout: 20_000 }, async () => {
+    const first = loadWorkbenchNative();
+    const concurrent = loadWorkbenchNative();
+    expect(concurrent).toBe(first);
+    expect(rejectionText(await first.then(() => undefined, (error: unknown) => error))).toMatch(/native module unavailable/);
+    const retry = loadWorkbenchNative();
+    expect(retry).not.toBe(first);
+    expect(rejectionText(await retry.then(() => undefined, (error: unknown) => error))).toMatch(/native module unavailable/);
+    const afterRetry = loadWorkbenchNative();
+    expect(afterRetry).not.toBe(retry);
+    expect(rejectionText(await afterRetry.then(() => undefined, (error: unknown) => error))).toMatch(/native module unavailable/);
+    expect(isWorkbenchNativeLoaded()).toBe(false);
+  });
 });
