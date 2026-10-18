@@ -2,8 +2,11 @@
 
 import { realpathSync } from "node:fs";
 import { isAbsolute } from "node:path";
-import { type DecodedEnvelope, decodeResultEnvelope, EnvelopeDecodeError, ServerConnection } from "@forge/sdk";
+import { type DecodedEnvelope, decodeResultEnvelope, EnvelopeDecodeError, OperationClient, ServerConnection } from "@forge/sdk";
 import { CapabilityError, type CapabilityRegistry, type JsonValue } from "../capability-registry.js";
+import type { ForgeOperationConnection } from "../forge-operation-observer.js";
+
+export const FORGE_GATE_STATUS_CONTRACT = "forge.gate.status/v1";
 
 export interface ForgeReadClient {
   gate: {
@@ -37,7 +40,7 @@ export function registerForgeGateStatus(registry: CapabilityRegistry, client: Fo
       if (native.protocolMethod !== "gate.status") {
         throw new CapabilityError("transport", `Forge SDK returned wrong protocol method: ${native.protocolMethod}.`);
       }
-      return { contract: "forge.gate.status/v1", protocolMethod: native.protocolMethod, source: native.raw };
+      return { contract: FORGE_GATE_STATUS_CONTRACT, protocolMethod: native.protocolMethod, source: native.raw };
     },
   });
 }
@@ -72,6 +75,39 @@ export function registerNativeForgeGateStatus(registry: CapabilityRegistry, auth
       return await readForgeGateStatus(target, context.signal);
     },
   });
+}
+
+/**
+ * Opens one pinned, owned app-server connection for an operation this host is about to start and observe (wb-a3s): spawn,
+ * initialize, require the compatible verdict and an explicit gate.run declaration, and hand back the seams the
+ * forge-operation observer and the retained control executor need. The caller owns the connection and closes it; a refused
+ * handshake closes the spawned process here.
+ */
+export async function openForgeOperationConnection(): Promise<ForgeOperationConnection> {
+  const connection = ServerConnection.spawn("forge");
+  try {
+    const verdict = await connection.initialize();
+    if (verdict !== "compatible") {
+      throw new CapabilityError("unavailable", `Forge protocol compatibility is ${verdict}; refusing to start an operation over an unverified connection.`);
+    }
+    const capabilities = connection.capabilities;
+    if (!capabilities) throw new CapabilityError("unavailable", "Forge SDK did not negotiate capability declarations.");
+    if (capabilities.stateOf("gate.run") !== "supported") {
+      throw new CapabilityError("unavailable", "Forge server did not explicitly declare gate.run supported.");
+    }
+  } catch (error) {
+    await connection.close();
+    throw error;
+  }
+  const operations = OperationClient.over(connection);
+  return {
+    get capabilities() { return connection.capabilities; },
+    operations,
+    onNotification: sink => connection.onNotification(sink),
+    // @forge/sdk@0.1.0 GateFacade.run sends {target}; the served application operation requires {root} (as gate.status).
+    request: (method, params) => connection.request(method, { root: params.root }),
+    close: () => connection.close(),
+  };
 }
 
 /** Open a pinned native SDK connection for one read, then close the owned process. */
@@ -118,7 +154,7 @@ export async function readForgeGateStatus(target: string, signal?: AbortSignal):
       !native.data || typeof native.data !== "object" || Array.isArray(native.data)) {
       throw new CapabilityError("transport", "Forge gate.status returned an unrecognized native envelope.");
     }
-    return { contract: "forge.gate.status/v1", protocolMethod: "gate.status", source: JSON.parse(JSON.stringify(result)) as JsonValue };
+    return { contract: FORGE_GATE_STATUS_CONTRACT, protocolMethod: "gate.status", source: JSON.parse(JSON.stringify(result)) as JsonValue };
   } finally {
     signal?.removeEventListener("abort", onAbort);
     await connection.close();

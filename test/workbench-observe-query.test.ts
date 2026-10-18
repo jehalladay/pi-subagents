@@ -635,7 +635,8 @@ describe("workflow_observe reply builder (workbench.observe/v1)", () => {
     expect(sanitized.nodes[0]).toMatchObject({
       nativeRef: { provider: "furnace", type: "run", id: "frn-run-hostile" },
       kind: "native.status",
-      presentation: { title: "Red evil Authorization: [REDACTED]", statusText: "RUNNING31m [REDACTED]", statusTone: "active" },
+      // wb-xbq: the 8-bit CSI "\u009b31m" is one escape unit, as "\u001b[31m" is, so its parameters are not displayed.
+      presentation: { title: "Red evil Authorization: [REDACTED]", statusText: "RUNNING [REDACTED]", statusTone: "active" },
       evidenceRefs: ["ev-1"],
       subjectBasis: "sha-1",
       interval: { startedAt: clock(1) },
@@ -864,15 +865,15 @@ describe("workflow_observe reply builder (workbench.observe/v1)", () => {
     ]);
     expect(Object.values(kinds).every((count) => typeof count === "number")).toBe(true);
 
-    // The shared redactor is not idempotent on a JSON-shaped secret (owner-filed wb-3l3): each string is repeated through it
-    // until it settles, so the reply stays a fixed point and its byte count stays exact. A bound that cuts a surrogate pair
-    // drops the orphaned half instead of emitting it.
+    // The shared redactor's second pass keeps the marker of a JSON-shaped secret and otherwise only over-redacts (wb-3l3,
+    // docs/20 ruling 2): each string is still repeated through it until it settles, so the reply stays a fixed point and its
+    // byte count stays exact. A bound that cuts a surrogate pair drops the orphaned half instead of emitting it.
     const settled = new ObservationProjection();
     snapshot(settled, ref("forge", "json-secret"), "inv-settle", shown("RUNNING", "active", 'config {"password":"x"} end'));
     const pair = String.fromCodePoint(0x1f600);
     snapshot(settled, ref("forge", "split-pair"), "inv-settle", shown("RUNNING", "active", `${"x".repeat(179)}${pair}${"y".repeat(50)}`));
     const settledReply = observeInvocation(settled, { scope: alice, invocationId: "inv-settle" });
-    expect(settledReply.nodes.map((node) => node.presentation.title)).toEqual(['config {"password":[REDACTED] end', `${"x".repeat(179)} [truncated]`]);
+    expect(settledReply.nodes.map((node) => node.presentation.title)).toEqual(['config {"password":[REDACTED]} end', `${"x".repeat(179)} [truncated]`]);
     const settledText = JSON.stringify(settledReply);
     expect(sanitizeWorkbenchJsonText(settledReply)).toBe(settledText);
     expect(settledReply.bytes).toBe(Buffer.byteLength(settledText));
@@ -1093,13 +1094,16 @@ describe("workflow_observe reply builder: separators normalize before redaction 
   });
 
   it("redacts a separator-split credential in evidenceRefs, subjectBasis, nativeRef.id, event kind and event provider", () => {
+    // wb-0br (owner ruling R1(a)): the real projection now refuses a line separator in nativeRef.id and in the event provider
+    // as identity (typed refusals pinned in the next case), so the stub reader hands over exactly what the projection held
+    // before the widening; every assertion below is unchanged.
     const glued = `Authorization: Bearer${LS}${TOK}`;
-    const view = new ObservationProjection();
-    snapshot(view, ref("forge", `run${LS}Bearer ${TOK}`), "inv-fields", shown("RUNNING", "active", "fields"), 1, {
+    const held: ObservedNode = {
+      ...stubNode(`run${LS}Bearer ${TOK}`, alice, shown("RUNNING", "active", "fields")),
       evidenceRefs: [glued, `see${LS}${GH}`],
       subjectBasis: `x${LS}Bearer ${TOK}`,
-    });
-    view.ingest({
+    };
+    const event: ObservationEvent = {
       projectionEventId: "evt-kind",
       source: ref(`prov${LS}Bearer ${TOK}`, "job-1"),
       scope: alice,
@@ -1108,8 +1112,9 @@ describe("workflow_observe reply builder: separators normalize before redaction 
       kind: `native${LS}${SK}`,
       node: { presentation: shown("RUNNING", "active", "event") },
       trace: { invocationId: "inv-fields" },
-    });
-    const reply = observeInvocation(view, { scope: alice, invocationId: "inv-fields", selectors: { events: { limit: 5 } } });
+    };
+    const reader = stubReader(held, { events: [event], truncated: false, completeness: "complete" });
+    const reply = observeInvocation(reader, { scope: alice, invocationId: "inv-fields", selectors: { events: { limit: 5 } } });
     const node = reply.nodes[0];
     expect(node.evidenceRefs.every((value) => value.includes("[REDACTED]"))).toBe(true);
     expect(node.subjectBasis).toContain("[REDACTED]");
@@ -1117,6 +1122,51 @@ describe("workflow_observe reply builder: separators normalize before redaction 
     const events = onlyEvents(reply);
     expect(Object.keys(events.kinds).every((kind) => kind.includes("[REDACTED]"))).toBe(true);
     expect(events.providers.every((provider) => provider.includes("[REDACTED]"))).toBe(true);
+    expect(JSON.stringify(reply)).not.toContain(CANARY);
+  });
+
+  it("refuses a line separator in nativeRef.id and in the event provider as identity through the REAL projection, typed, and still redacts the evidenceRefs, subjectBasis and event kind it admits (wb-0br)", () => {
+    const view = new ObservationProjection();
+    const refused = view.refresh({
+      source: ref("forge", `run${LS}Bearer ${TOK}`),
+      scope: alice,
+      capturedAt: clock(1),
+      observedAt: clock(1),
+      sequence: 1,
+      node: shown("RUNNING", "active", "fields"),
+      trace: { invocationId: "inv-fields" },
+    });
+    const event = (provider: string, projectionEventId: string): ObservationEvent => ({
+      projectionEventId,
+      source: ref(provider, "job-1"),
+      scope: alice,
+      sourceSequence: 1,
+      observedAt: clock(2),
+      kind: `native${LS}${SK}`,
+      node: { presentation: shown("RUNNING", "active", "event") },
+      trace: { invocationId: "inv-fields" },
+    });
+    expect([refused, view.ingest(event(`prov${LS}Bearer ${TOK}`, "evt-kind"))]).toStrictEqual(["refused", "refused"]);
+    expect(view.identityRefusals({ scope: alice, limit: 10 })).toStrictEqual({
+      refusals: [
+        { path: "refresh", ref: "source", field: "id", codePoint: "U+2028", reason: "unsafe-identity" },
+        { path: "ingest", ref: "source", field: "provider", codePoint: "U+2028", reason: "unsafe-identity" },
+      ],
+      total: 2,
+      truncated: false,
+    });
+    expect(view.stats()).toStrictEqual({ nodes: 0, events: 0, edges: 0 });
+    // The same separator-split text outside identity still passes the real projection, and the reply still redacts it.
+    snapshot(view, ref("forge", "run-clean"), "inv-fields", shown("RUNNING", "active", "fields"), 1, {
+      evidenceRefs: [`Authorization: Bearer${LS}${TOK}`, `see${LS}${GH}`],
+      subjectBasis: `x${LS}Bearer ${TOK}`,
+    });
+    expect(view.ingest(event("prov", "evt-kind-clean"))).toBe("applied");
+    const reply = observeInvocation(view, { scope: alice, invocationId: "inv-fields", selectors: { events: { limit: 5 } } });
+    const held = reply.nodes.find((node) => node.nativeRef.id === "run-clean");
+    expect(held?.evidenceRefs.every((value) => value.includes("[REDACTED]"))).toBe(true);
+    expect(held?.subjectBasis).toContain("[REDACTED]");
+    expect(Object.keys(onlyEvents(reply).kinds).every((kind) => kind.includes("[REDACTED]"))).toBe(true);
     expect(JSON.stringify(reply)).not.toContain(CANARY);
   });
 

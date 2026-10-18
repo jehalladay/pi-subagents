@@ -1,6 +1,6 @@
 /** L3/L4: typed node RPC, authorization, evidence truth and no blind replay. */
 import { describe, expect, it, vi } from 'vitest';
-import { CapabilityRegistry } from '../src/workbench/capability-registry.js';
+import { CapabilityRegistry, type JsonValue } from '../src/workbench/capability-registry.js';
 import { runWorkflow, type WorkflowHost } from '../src/workflow/runtime.js';
 
 const HEAD = 'export const meta = {name:"node-contract",description:"test"};\n';
@@ -78,7 +78,7 @@ describe('Workbench node() host authorization',()=>{
   });
   it('L4: effectful provider output that cannot be serialized remains uncertain after invocation',async()=>{
     const registry=new CapabilityRegistry();
-    const invoked=vi.fn(async()=>({value:()=>true}));
+    const invoked=vi.fn(async()=>({value:()=>true}) as unknown as JsonValue);
     registry.register({descriptor:{id:'effect.bad',version:'1.0.0',description:'write with lost output',inputSchema:SCHEMA,effectClass:'write',permissions:['effect:write'],supportedModes:['invoke']},invoke:invoked});
     const host:WorkflowHost={spawnAgent:async()=>({ok:true,text:''}),abortAgent:()=>{},callNode:req=>registry.invoke(req.capabilityId,req.input,{grants:['effect:write'],signal:req.signal})};
     const result=await run('return await node("effect.bad",{value:"x"});',host);
@@ -120,7 +120,7 @@ describe('Workbench node() host authorization',()=>{
 
   it('L4: non-serializable provider output cannot cross the worker boundary',async()=>{
     const {host,registry}=harness();
-    registry.register({descriptor:{id:'record.bad',version:'1.0.0',description:'bad output',inputSchema:SCHEMA,effectClass:'read',permissions:['record:read'],supportedModes:['invoke']},invoke:async()=>({value:()=>true})});
+    registry.register({descriptor:{id:'record.bad',version:'1.0.0',description:'bad output',inputSchema:SCHEMA,effectClass:'read',permissions:['record:read'],supportedModes:['invoke']},invoke:async()=>({value:()=>true}) as unknown as JsonValue});
     const result=await run('return await node("record.bad", {value:"x"});',host);
     expect(result.status).toBe('failed');
     expect(result.error).toMatch(/boundary|function|serializ/i);

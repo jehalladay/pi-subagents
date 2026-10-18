@@ -18,12 +18,23 @@ Separate:
 
 ## Runtime and host requirements
 
-- Credentials sourced from deployment/SDK supported mechanism; no secret copied into script VM.
+- Credentials sourced from deployment/SDK supported mechanism; no secret copied into script VM. The two interpreter launch seams pass an allowlisted environment only (`src/workbench/process-env.ts`): the embedded worker gets none of `process.env`, the detached host gets the named operational variables and no credential-shaped name; a deployment that authenticates the SDK through an environment variable must instead provision the SDK's credential store for detached hosts.
 - Workspace materialization pinned to correct basis and permissions.
 - Provider clients initialized lazily with scoped resource ownership.
 - Streaming bounded by max in-flight node calls, backend admission and configured quota.
 - Shutdown: stop accepting calls, notify owned local tasks, attempt graceful end, report unresolved effects, and release owned resources.
 - A Pi UI reconnect is only an observer/client action; it must not restart external work.
+
+## Pre-push commit-message scan (per-clone install)
+
+`qa/workbench/pre-push-commit-message-scan.mjs` is a git pre-push hook around the commit-range scan `qa/workbench/commit-message-scan.mjs`. Git writes one `<local ref> <local sha> <remote ref> <remote sha>` line per pushed ref to a pre-push hook's stdin; the hook scans `remote..local` for every line (every commit, not the tip; every commit reachable from the local sha when the remote sha is all zeros, a new branch) and skips a deleted-ref line. A commit message, author or committer that carries a source-hygiene guard code point refuses the push (exit 3, offenders listed as sha, line, column and a `U+` hex label); a line that cannot be scanned also refuses (exit 2). Install it once per clone, from the repository root, as a two-line wrapper script:
+
+```sh
+hook="$(git rev-parse --git-path hooks)/pre-push"
+printf '#!/bin/sh\nexec node '\''%s/qa/workbench/pre-push-commit-message-scan.mjs'\'' "$@"\n' "$(printf '%s' "$PWD" | sed "s/'/'\\\\''/g")" > "$hook" && chmod +x "$hook"
+```
+
+The wrapper names the script by absolute path, single-quoted for sh with any apostrophe in the path written as `'\''`, so a clone path that carries a double quote, a dollar sign, a backtick or an apostrophe still runs the scan; it hands the push straight to the script. If that path later goes missing (the clone moved, the worktree removed), node exits non-zero and the push is refused; a symlink install would instead be skipped by git without a word. Run the two lines again after moving or re-cloning.
 
 ## Operations telemetry
 

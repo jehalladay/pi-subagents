@@ -17,6 +17,7 @@ import { cpus } from "node:os";
 import { Worker } from "node:worker_threads";
 import { type CapabilityDescriptor, type CapabilityDiagnostic, CapabilityError, type JsonValue, validatedCapabilityJson } from "../workbench/capability-registry.js";
 import { nativeEvidence, nativeRefOf } from "../workbench/native-evidence.js";
+import { sanitizeWorkbenchText } from "../workbench/redaction.js";
 import { type JournalKeyInput, journalKey, nodeJournalKey, type WorkflowJournalEntry } from "./journal.js";
 import { type CompiledSchema, compileJsonSchema } from "./json-schema.js";
 import { extractMeta, type WorkflowMeta } from "./meta.js";
@@ -366,8 +367,15 @@ export interface RunWorkflowOptions {
   journal?: {
     /** A previous run's settled calls, in position order. Empty replays nothing. */
     entries?: readonly WorkflowJournalEntry[];
-    /** Called as each call of *this* run settles, so it can be resumed in turn. */
-    append?(entry: WorkflowJournalEntry): void;
+    /**
+     * Called for each row this run records — as each call settles, and once
+     * BEFORE a non-read node is dispatched (its `dispatched` marker) — so it
+     * can be resumed in turn. Report a row that did not reach the journal by
+     * returning `false` or throwing; any other return means written. A lost
+     * dispatch marker refuses that call fail-closed (docs/workbench/08); every
+     * other lost row costs a later resume, never this run (journal.ts).
+     */
+    append?(entry: WorkflowJournalEntry): unknown;
   };
 }
 
@@ -549,6 +557,51 @@ const CONTROL_CHARACTERS = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/;
 const preview = (text: string) =>
   text.length <= PREVIEW_LENGTH ? text : `${text.slice(0, PREVIEW_LENGTH - 1)}…`;
 
+const MALFORMED_AGENT_RPC = "Malformed workflow agent RPC payload.";
+
+const optionalString = (value: unknown): boolean => value === undefined || typeof value === "string";
+
+/**
+ * Whether a worker frame is an agent call the host can act on.
+ *
+ * Worker messages are untrusted protocol frames — the same stance `handleNode`
+ * takes: an escaping script can post this payload without going through the
+ * worker-side `agent()` checks. Measured on the wb-ksz.5 gate
+ * (cmd_d9d8fb0cb7b5): a missing, null or non-string `prompt` threw inside
+ * `handleAgent` and escaped the `message` listener as an unhandled rejection,
+ * which Node exits on by default (owner bead wb-3l9). Shape only — no length
+ * bounds the worker side does not already apply, so a well-formed frame is
+ * never refused here.
+ */
+function isAgentCallPayload(payload: unknown): payload is AgentCallPayload {
+  if (!payload || typeof payload !== "object" || Array.isArray(payload)) return false;
+  const frame = payload as Record<string, unknown>;
+  return typeof frame.prompt === "string" &&
+    optionalString(frame.label) && optionalString(frame.model) && optionalString(frame.agentType) &&
+    optionalString(frame.gate) && optionalString(frame.resume) && optionalString(frame.effort) &&
+    optionalString(frame.phaseTitle) &&
+    (frame.isolation === undefined || frame.isolation === "worktree") &&
+    (frame.phaseIndex === undefined ||
+      (typeof frame.phaseIndex === "number" && Number.isSafeInteger(frame.phaseIndex) && frame.phaseIndex >= 0));
+}
+
+const WORKFLOW_ENTRY_TYPES: ReadonlySet<string> = new Set(["workflow_phase", "workflow_log", "workflow_agent", "workflow_node"]);
+
+/**
+ * Whether a worker `progress` frame carries entries the host can surface.
+ *
+ * Untrusted like every worker frame (wb-zin, the wb-3l9 sibling; measured by
+ * the wb-ksz.5 gate): a crafted `entries` value threw synchronously out of the
+ * host's message listener as an uncaughtException. Shape only — each element
+ * must be a plain object whose `type` is one of the four entry discriminants;
+ * field-level validation stays with the consumers, which already treat entry
+ * text as untrusted display input.
+ */
+function isWorkflowEntries(value: unknown): value is WorkflowEntry[] {
+  return Array.isArray(value) && value.every(entry => !!entry && typeof entry === "object" && !Array.isArray(entry) &&
+    typeof (entry as { type?: unknown }).type === "string" && WORKFLOW_ENTRY_TYPES.has((entry as { type: string }).type));
+}
+
 /** First line of the prompt, trimmed — the fallback display name for an agent. */
 function derivedLabel(prompt: string): string {
   const line = prompt.split("\n", 1)[0].trim();
@@ -705,11 +758,27 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
   const nodeCap = 1000;
   let aborted = false;
   let settled = false;
+  /** One diagnostic per run: a hostile worker must not spam the log with drops (wb-zin). */
+  let droppedProgressFrame = false;
 
   /* --- resume state ---------------------------------------------------- */
 
   const journalEntries = options.journal?.entries ?? [];
   const recordJournal = options.journal?.append;
+  /**
+   * Hand one row to the journal; true when it was written. Never throws, so a
+   * failing journal cannot strand the call that wrote it: what a lost row
+   * costs is decided by the one caller that reads the answer (a non-read
+   * dispatch), and nowhere else.
+   */
+  const appendRow = (entry: WorkflowJournalEntry): boolean => {
+    if (recordJournal === undefined) return false;
+    try {
+      return recordJournal(entry) !== false;
+    } catch {
+      return false;
+    }
+  };
   /** Agent entries only, in position order — the prefix walk never sees nodes. */
   const agentJournal = journalEntries.filter(entry => entry.kind === undefined);
   /**
@@ -836,6 +905,12 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
 
   const worker = new Worker(WORKER_SOURCE, {
     eval: true,
+    // Nothing is the interpreter's environment allowlist: the script realm
+    // runs no subprocess, opens no file and resolves no proxy, so a VM escape
+    // to this thread finds no credential in process.env. Without the option
+    // Node hands the worker a copy of the parent's environment (wb-ksz, W19;
+    // the detached seam in hosts/local-detached.ts takes the named allowlist).
+    env: {},
     workerData: {
       body,
       metaJson: JSON.stringify(meta),
@@ -897,7 +972,13 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
       options.signal.addEventListener("abort", onAbort, { once: true });
     }
 
-    async function handleAgent(callId: number, payload: AgentCallPayload): Promise<void> {
+    async function handleAgent(callId: number, payload: unknown): Promise<void> {
+      // Untrusted frame first (see isAgentCallPayload): answered as a typed
+      // refusal, never thrown — every line below assumes the shape.
+      if (!isAgentCallPayload(payload)) {
+        respond(callId, false, undefined, MALFORMED_AGENT_RPC, true, { name: "CapabilityError", category: "validation", message: MALFORMED_AGENT_RPC });
+        return;
+      }
       // Bound now: the optional methods are checked once, up front, so a
       // capability the host lacks fails before an agent is spawned rather than
       // after — a gate that never ran must not be mistaken for a gate that
@@ -1036,7 +1117,7 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
         // Re-recorded so this run's journal is complete on its own terms: a
         // resume of a resume must not have to walk back through a chain of
         // earlier files to find the prefix.
-        recordJournal?.({ index, key: replayed.key, ok: true, text: replayedText, ...basisMark });
+        appendRow({ index, key: replayed.key, ok: true, text: replayedText, ...basisMark });
         respond(callId, true, replayedText);
         return;
       }
@@ -1046,7 +1127,7 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
 
       /** A skip the user asked for, before the child ever started. */
       const settleSkipped = (extra: Partial<WorkflowAgentEntry>) => {
-        recordJournal?.({ index, key, ok: false, ...resumeMark, ...basisMark });
+        appendRow({ index, key, ok: false, ...resumeMark, ...basisMark });
         emit([{ ...base, queuedAt, ...extra, state: "error", skipped: true, error: "Skipped by user." }]);
         // `null`, exactly as a terminal failure gives — a skipped agent is one
         // the script's `.filter(Boolean)` was already written to survive.
@@ -1222,14 +1303,14 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
           if (result.ok) {
             const text = result.text ?? "";
             emit([{ ...common, state: "done", resultPreview: preview(text) }]);
-            recordJournal?.({ index, key, ok: true, text, ...resumeMark, ...basisMark });
+            appendRow({ index, key, ok: true, text, ...resumeMark, ...basisMark });
             respond(callId, true, text);
             return;
           }
           // Recorded as a failure rather than left out: a gap would be read as an
           // unchanged prefix on the next resume, silently skipping the retry this
           // whole mechanism exists to make cheap.
-          recordJournal?.({ index, key, ok: false, ...resumeMark, ...basisMark });
+          appendRow({ index, key, ok: false, ...resumeMark, ...basisMark });
           // A dead agent is a null in the script, not a thrown error: Claude Code
           // scripts .filter(Boolean) rather than try/catch around every call.
           emit([
@@ -1260,7 +1341,9 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
      * recorded effect, and an entry recorded with no class at all, stops the run
      * with an uncertain-effect diagnostic naming the owning producer. The one
      * thing a resume never does is re-execute a journaled effect, so a position
-     * with no safe answer fails rather than runs.
+     * with no safe answer fails rather than runs. A non-read call is journaled
+     * twice — a dispatched marker before its provider acts, then its settled
+     * row — so that answer exists even when the run dies mid-call (wb-5x0.1).
      */
     async function handleNode(callId: number, payload: NodeCallPayload): Promise<void> {
       // Treat worker messages as untrusted protocol frames; an escaping script
@@ -1323,7 +1406,16 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
         const producer = producerOf(recordedCapability);
         const tail = `Reconcile with ${producer} before resuming: inspect its native evidence and acknowledge or override the position explicitly with workflow_reconcile (position ${index}), or re-run without resumeFromRunId for a fresh run.`;
         let refusal: { entry: WorkflowJournalEntry; hint: string } | undefined;
-        if (recorded.effectClass === undefined) {
+        if (recorded.dispatched === true) {
+          // wb-5x0.1: the marker a non-read call writes before its provider
+          // acts, superseded by nothing. Whatever its class, nothing recorded
+          // how the call settled, so whether its effect happened is unknown.
+          const cause = recorded.effectClass === undefined ? "with no effect class" : `with effect class "${recorded.effectClass}"`;
+          refusal = {
+            entry: recorded,
+            hint: `node(${recordedCapability}) at position ${index} was dispatched by the resumed run ${cause} (producer "${producer}") and has no settled record, so whether its effect happened is unknown. A dispatched SDK effect is never re-executed or silently replayed. ${tail}`,
+          };
+        } else if (recorded.effectClass === undefined) {
           // Fail closed (wb-tu1): an entry nobody classified — an older journal,
           // or a host that declared nothing — is an uncertain effect, not a
           // read. Today's declaration cannot vouch for what that call did then.
@@ -1429,7 +1521,7 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
         // Carried forward verbatim: the journal this run writes must stay as
         // protective as the one it read, or resuming the failed resume would
         // re-run the effect after all.
-        recordJournal?.({ ...admission.entry });
+        appendRow({ ...admission.entry });
         openNodes.delete(callId);
         respond(callId, false, undefined, admission.hint, true, { name: "CapabilityError", category: "uncertain-effect", message: admission.hint });
         return;
@@ -1448,7 +1540,7 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
           // The row reads as done because the recorded read is; `cached` says it was not this run's call.
           cached: true,
           resultPreview: preview(JSON.stringify(admission.value) ?? "null") }]);
-        recordJournal?.({ kind: "node", index, key: admission.entry.key, ok: true,
+        appendRow({ kind: "node", index, key: admission.entry.key, ok: true,
           capabilityId: payload.capabilityId, effectClass: "read", text: admission.entry.text, ...basisMark });
         openNodes.delete(callId);
         respond(callId, true, admission.value);
@@ -1473,8 +1565,8 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
           resultPreview: preview(JSON.stringify(admission.value) ?? "null") }]);
         // The tripwire stays on the record, verbatim, and the acknowledgement
         // is carried stamped applied — a resume of this resume settles again.
-        recordJournal?.({ ...admission.entry });
-        recordJournal?.(markApplied(admission.acknowledgement, { at: new Date(at).toISOString(), ...basisMark }));
+        appendRow({ ...admission.entry });
+        appendRow(markApplied(admission.acknowledgement, { at: new Date(at).toISOString(), ...basisMark }));
         openNodes.delete(callId);
         respond(callId, true, admission.value);
         return;
@@ -1494,6 +1586,27 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
       emit([{ ...base, startedAt }]);
       try {
         const input = validatedCapabilityJson(payload.input, `node(${payload.capabilityId}) input`);
+        // The tripwire exists from dispatch, not from settlement (wb-5x0.1): a
+        // non-read call — an unclassified one included, as at admission — goes
+        // on record BEFORE its provider can act, so a kill between the effect
+        // and its result, or between the result and the settled append below,
+        // still leaves a row the next resume refuses on. A marker that does not
+        // reach the journal refuses the call fail-closed: an unrecorded non-read
+        // dispatch is exactly that unprotected window. A read writes no marker
+        // and keeps "failure to write is not failure to run".
+        if (currentEffect !== "read" && recordJournal !== undefined &&
+          !appendRow({ kind: "node", index, key: key ?? "", ok: false, capabilityId: payload.capabilityId, ...effectMark, ...basisMark, dispatched: true })) {
+          const reason = `node(${payload.capabilityId}) at position ${index} was not dispatched: its dispatched journal row could not be written, and a non-read call runs only once its dispatch is on record, so a later resume can refuse it rather than repeat it.`;
+          const finishedAt = Date.now();
+          emit([{ ...base, startedAt, lastProgressAt: finishedAt, durationMs: finishedAt - startedAt, state: "error", error: reason }]);
+          // Nothing ran, so nothing new goes on record. An override's original
+          // effect row is carried forward, so a resume of this run still stops
+          // at the position instead of finding it empty.
+          if (admission.kind === "override-live") appendRow({ ...admission.entry });
+          openNodes.delete(callId);
+          respond(callId, false, undefined, reason, true, { name: "CapabilityError", category: "unavailable", message: reason });
+          return;
+        }
         const output = await callNode({
           callId, index, capabilityId: payload.capabilityId,
           input, label: payload.label,
@@ -1521,14 +1634,14 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
         // An effect keeps the producer's reference instead of its answer: what a
         // reconciliation can later bind native evidence to (docs/workbench/08).
         const nativeRef = currentEffect !== undefined && currentEffect !== "read" ? nativeRefOf(evidence) : undefined;
-        recordJournal?.({ kind: "node", index, key: key ?? "", ok: true, capabilityId: payload.capabilityId,
+        appendRow({ kind: "node", index, key: key ?? "", ok: true, capabilityId: payload.capabilityId,
           ...effectMark, ...(currentEffect === "read" ? { text: JSON.stringify(value) } : {}), ...(nativeRef ? { nativeRefs: [nativeRef] } : {}), ...basisMark });
         if (override !== undefined) {
           // Consumed on success AND failure: a re-run is itself an attempted
           // effect, so the authorization is spent either way and the tripwire
           // re-arms for the next resume. The acknowledgement is deliberately
           // not carried — the re-run invalidated its determination.
-          recordJournal?.(markConsumed(override, { at: new Date(finishedAt).toISOString(), outcome: "re-run-ok" }));
+          appendRow(markConsumed(override, { at: new Date(finishedAt).toISOString(), outcome: "re-run-ok" }));
           reconciledNodeCount++;
         }
         openNodes.delete(callId);
@@ -1545,9 +1658,9 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
         // would shift every later node's position on the next resume. A failed
         // read re-runs; a failed effect is still an attempted effect, and the
         // tripwire above refuses to step over it.
-        recordJournal?.({ kind: "node", index, key: key ?? "", ok: false, capabilityId: payload.capabilityId, ...effectMark, ...basisMark });
+        appendRow({ kind: "node", index, key: key ?? "", ok: false, capabilityId: payload.capabilityId, ...effectMark, ...basisMark });
         if (override !== undefined) {
-          recordJournal?.(markConsumed(override, { at: new Date(finishedAt).toISOString(), outcome: "re-run-failed" }));
+          appendRow(markConsumed(override, { at: new Date(finishedAt).toISOString(), outcome: "re-run-failed" }));
           reconciledNodeCount++;
         }
         // Validation/authorization/uncertain effects cannot become null under
@@ -1605,8 +1718,19 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
         finish({ status: "failed", error: "Malformed workflow worker message." });
         return;
       }
+      try {
       switch (message.type) {
         case "progress":
+          // Untrusted frame (wb-zin): a malformed `entries` is DROPPED, never
+          // thrown — progress is fire-and-forget, so there is no callId to
+          // answer — and the drop is recorded once as a log entry.
+          if (!isWorkflowEntries(message.entries)) {
+            if (!droppedProgressFrame) {
+              droppedProgressFrame = true;
+              emit([{ type: "workflow_log", message: "Dropped a malformed workflow progress frame from the worker." }]);
+            }
+            break;
+          }
           emit(message.entries);
           break;
         case "call":
@@ -1622,7 +1746,14 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
             respond(message.callId, false, undefined, `Unknown workflow host method "${message.method}".`, true);
             break;
           }
-          void handleAgent(message.callId, message.payload as AgentCallPayload);
+          void handleAgent(message.callId, message.payload).catch((error: unknown) => {
+            // Backstop for the frame check inside: nothing past it is meant to
+            // throw, but a rejection that escaped here would reach the process
+            // as an unhandled rejection — Node exits on those by default — so
+            // it is answered as a typed refusal and the run stays up (wb-3l9).
+            const detail = sanitizeWorkbenchText(error instanceof Error ? error.message : String(error));
+            respond(message.callId, false, undefined, detail, true, { name: "CapabilityError", category: error instanceof CapabilityError ? error.category : "transport", message: detail });
+          });
           break;
         case "complete": {
           // The script is done, so every launch it made should have been
@@ -1638,15 +1769,39 @@ export async function runWorkflow(options: RunWorkflowOptions): Promise<Workflow
             finish({ status: "failed", error: unawaitedLaunchMessage(unawaited) });
             break;
           }
-          finish({
-            status: "completed",
-            ...(message.resultJson === undefined ? {} : { value: JSON.parse(message.resultJson) }),
-          });
+          if (message.resultJson === undefined) {
+            finish({ status: "completed" });
+            break;
+          }
+          let value: unknown;
+          try {
+            value = JSON.parse(message.resultJson);
+          } catch {
+            // A crafted or truncated frame threw out of this listener here
+            // before the guard (wb-zin). The run fails typed instead.
+            finish({ status: "failed", error: "Workflow worker posted a completion whose result is not valid JSON." });
+            break;
+          }
+          finish({ status: "completed", value });
           break;
         }
-        case "error":
-          finish({ status: "failed", error: message.message, ...(message.capabilityError ? { capabilityError: message.capabilityError } : {}) });
+        case "error": {
+          // Same stance as every frame: a crafted non-string message must not
+          // flow into the run result, and a capabilityError is carried only in
+          // its declared shape (wb-zin).
+          const detail = typeof message.message === "string" ? message.message : "Workflow worker reported a malformed error frame.";
+          const diagnostic = message.capabilityError;
+          const capabilityError = diagnostic && typeof diagnostic === "object" && diagnostic.name === "CapabilityError" && typeof diagnostic.category === "string" && typeof diagnostic.message === "string" ? diagnostic : undefined;
+          finish({ status: "failed", error: detail, ...(capabilityError ? { capabilityError } : {}) });
           break;
+        }
+      }
+      } catch (error) {
+        // Backstop (wb-zin): no message case may throw out of this listener —
+        // a synchronous throw here is an uncaughtException that kills the host
+        // process. The run fails typed and the worker is torn down by finish().
+        const detail = sanitizeWorkbenchText(error instanceof Error ? error.message : String(error));
+        finish({ status: "failed", error: `Workflow host message handling failed: ${detail}` });
       }
     });
 

@@ -4,6 +4,8 @@ import { isAbsolute } from "node:path";
 import { Bounds, type ClaimBody, HyperUnix, type QueryResult, resultToJson } from "@hyperunix/sdk";
 import { CapabilityError, type CapabilityRegistry, type JsonValue } from "../capability-registry.js";
 
+export const HYPERUNIX_FIND_CONTRACT = "hyperunix.find/v1";
+
 export interface HyperUnixReader {
   find(options: {kind:string;root?:string;bestEffort?:boolean;bounds?:Bounds;timeoutMs?:number}): Promise<QueryResult<ClaimBody>>;
   runtime(): Promise<{version:string;binarySha256:string}>;
@@ -21,7 +23,7 @@ export function registerHyperUnixFind(registry:CapabilityRegistry,reader:HyperUn
       const runtime=await reader.runtime();
       if(context.signal.aborted) throw new CapabilityError("transport","HX read cancelled.");
       const source=resultToJson(native);
-      return JSON.parse(JSON.stringify({contract:"hyperunix.find/v1",source,workspaceRoot,runtime:{version:runtime.version,binarySha256:runtime.binarySha256}})) as JsonValue;
+      return JSON.parse(JSON.stringify({contract:HYPERUNIX_FIND_CONTRACT,source,workspaceRoot,runtime:{version:runtime.version,binarySha256:runtime.binarySha256}})) as JsonValue;
     }});
 }
 
@@ -39,7 +41,7 @@ export async function nativeHyperUnixFind(workspaceRoot:string,kind:string,root=
     if(signal?.aborted) throw new CapabilityError("transport","HX read cancelled during SDK launch.");
     const result=await workspace.find({kind,root,bestEffort:true,bounds:Bounds.create({wall:"30s"}),timeoutMs:60_000});
     if(signal?.aborted) throw new CapabilityError("transport","HX read cancelled.");
-    return JSON.parse(JSON.stringify({contract:"hyperunix.find/v1",source:resultToJson(result),workspaceRoot:realpathSync(workspaceRoot),runtime:{version:runtime.version,binarySha256:runtime.binarySha256}})) as JsonValue;
+    return JSON.parse(JSON.stringify({contract:HYPERUNIX_FIND_CONTRACT,source:resultToJson(result),workspaceRoot:realpathSync(workspaceRoot),runtime:{version:runtime.version,binarySha256:runtime.binarySha256}})) as JsonValue;
   }finally{signal?.removeEventListener("abort",onAbort);await client.close()}
 }
 

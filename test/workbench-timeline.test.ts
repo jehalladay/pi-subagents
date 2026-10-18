@@ -708,8 +708,9 @@ describe("acceptance 6: docs/workbench/12 § Input and output hardening: \"Valid
 
   it("sanitizes the same way when the real projection admits an 8-bit CSI, a bidi override and a zero-width character", () => {
     const model = buildTimelineLanes(hostileFixture(hostile("\u009b31m")), request());
-    expectSanitized(laneOf(model, keyOf(parent)).label, "31m");
-    expectSanitized(rowOf(model, parent).title, "31m");
+    // wb-xbq: the 8-bit CSI is one escape unit, as its 7-bit form is, so none of it is displayed: the same prefix as above.
+    expectSanitized(laneOf(model, keyOf(parent)).label, "");
+    expectSanitized(rowOf(model, parent).title, "");
   });
 
   it("admits from a producer stand-in only this scope's and this invocation's rows, each once and at most limit, in the known vocabulary", () => {
@@ -740,11 +741,14 @@ describe("acceptance 6: docs/workbench/12 § Input and output hardening: \"Valid
     observe(projection, { ref: forge("emoji"), title: `${"x".repeat(59)}\u{1F600}${"y".repeat(100)}` });
     // ObservationProjection admits a title made only of zero-width characters.
     observe(projection, { ref: forge("blank"), title: "\u200b\u200b" });
-    // ...and a provider made only of one.
+    // ...but refuses a provider made only of one (wb-0br, owner F2 ruling 21:43Z: admission refuses default-ignorables in
+    // nativeRef identity), so a producer stand-in delivers it, as it delivers the glued title.
     const ghost: NativeRef = { provider: "\u200b", type: "operation", id: "ghost" };
-    observe(projection, { ref: ghost, title: "\u200b" });
+    expect(projection.refresh({ source: ghost, scope, capturedAt: at(30), observedAt: at(30), node: { title: "\u200b", type: "sdk-operation", statusText: "running", statusTone: "active" } })).toBe("refused");
+    observe(projection, { ref: forge("ghost"), title: "\u200b" });
     relate(projection, forge("blank"), forge("glued"), "grouping");
-    const reader = standIn(projection, item => item.nativeRef.id === "glued" ? { ...item, presentation: { ...item.presentation, title: "Authorization: Bearer\x1b[0mabc123" } } : item);
+    const reader = standIn(projection, item => item.nativeRef.id === "glued" ? { ...item, presentation: { ...item.presentation, title: "Authorization: Bearer\x1b[0mabc123" } }
+      : item.nativeRef.id === "ghost" ? { ...item, key: keyOf(ghost), nativeRef: { ...ghost } } : item);
     const model = buildTimelineLanes(reader, request());
     expect(rowOf(model, forge("glued")).title).toBe("Authorization: [REDACTED]");
     expect(rowOf(model, forge("emoji")).title).toBe(`${"x".repeat(59)} [truncated]`);
