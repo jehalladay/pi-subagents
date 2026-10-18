@@ -1,6 +1,7 @@
 /** wb-71q: the detached Unix socket base prefers a short per-user runtime dir over a long TMPDIR. wb-70b: typed same-id
  * relaunch refusal (R2), per-launch tmpdir socket directory (PF2), receipt socket containment (F3), cleanup contract (PF4). */
-import { chmodSync, existsSync, lstatSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, realpathSync, writeFileSync } from "node:fs";
+import { spawnSync } from "node:child_process";
+import { chmodSync, closeSync, constants, existsSync, lstatSync, mkdirSync, mkdtempSync, openSync, readdirSync, readFileSync, realpathSync, writeFileSync, writeSync } from "node:fs";
 import { createServer } from "node:net";
 import { tmpdir } from "node:os";
 import { basename, dirname, join } from "node:path";
@@ -444,10 +445,17 @@ async function holdSocket(path: string, mode: number): Promise<() => Promise<voi
   chmodSync(path, mode);
   return () => new Promise<void>(resolveClose => holder.close(() => resolveClose()));
 }
-/** The host writes its receipt before it binds, so a launch refused before its handshake still names the host to wait for. */
+/** True once the receipt at `path` parses whole. The host's write is an O_EXCL create and then the write (writePrivate in
+ * src/workbench/hosts/local-detached.ts), so between those two calls the receipt exists EMPTY; an absent receipt and a
+ * partial one do not parse either, so none of the three is a verdict yet (wb-dfx). */
+function receiptWritten(path: string): boolean {
+  try { JSON.parse(readFileSync(path, "utf8")); return true; } catch { return false; }
+}
+/** The host writes its receipt before it binds, so a launch refused before its handshake still names the host to wait for.
+ * The wait reads the receipt only once it is written whole, within the same 250 x 20 ms budget (wb-dfx). */
 async function hostGone(root: string, id: string): Promise<boolean> {
   const receipt = join(root, id, "receipt.json");
-  for (let i = 0; i < 250 && !existsSync(receipt); i++) await new Promise(r => setTimeout(r, 20));
+  for (let i = 0; i < 250 && !receiptWritten(receipt); i++) await new Promise(r => setTimeout(r, 20));
   return gone((JSON.parse(readFileSync(receipt, "utf8")) as { pid: number }).pid);
 }
 const socketRefusal = (path: string): string => `Authorization: socket must be owned by uid ${uid} with exact private permissions: ${path}.`;
@@ -482,4 +490,40 @@ describe("the launch handshake and the host's socket bind mode (wb-70b re-cut, l
       expect(await hostGone(f.root, "open-mode")).toBe(true);
     } finally { await release(); }
   }, 30000);
+});
+
+/** The host's receipt write (writePrivate in src/workbench/hosts/local-detached.ts) is two calls: an O_EXCL create, then
+ * the write. Between them the receipt exists EMPTY, and the measured flake (row 522 F5: "Unexpected end of JSON input" at
+ * load1 43.56, gate run cmd_7ff602230273) was hostGone reading it there. This row holds each window open under the
+ * test's own control, for five of hostGone's 20 ms polls, never by load. */
+const RECEIPT_WINDOW_MS = 100;
+
+describe("the refused-launch receipt wait (wb-dfx)", () => {
+  it("never takes an absent, empty or partial receipt for the verdict: hostGone waits for a receipt that parses whole", async () => {
+    const root = private0700("dfx-"); const id = "partial-receipt";
+    mkdirSync(join(root, id), { mode: 0o700 });
+    const receipt = join(root, id, "receipt.json");
+    // A host that has already exited, so the verdict the receipt leads to is known: gone.
+    const exited = spawnSync(process.execPath, ["-e", ""], { stdio: "ignore" });
+    expect(exited.status).toBe(0); expect(alive(exited.pid)).toBe(false);
+    const whole = JSON.stringify({ pid: exited.pid });
+    const partial = whole.slice(0, Math.floor(whole.length / 2));
+    expect(() => JSON.parse(partial)).toThrow(SyntaxError);
+    let outcome: { verdict: boolean } | { error: unknown } | undefined;
+    const settled = hostGone(root, id).then(verdict => { outcome = { verdict }; }, (error: unknown) => { outcome = { error }; });
+    const hold = () => new Promise(r => setTimeout(r, RECEIPT_WINDOW_MS));
+    // Absent: the host has not reached its write.
+    await hold(); expect(outcome, "absent receipt").toBeUndefined();
+    // Empty: the O_EXCL create has run, with the host's own flags and mode, and the write has not.
+    const fd = openSync(receipt, constants.O_CREAT | constants.O_EXCL | constants.O_WRONLY | constants.O_NOFOLLOW, 0o600);
+    try {
+      await hold(); expect(outcome, "empty receipt").toBeUndefined();
+      // Partial: the write has begun.
+      writeSync(fd, partial);
+      await hold(); expect(outcome, "partial receipt").toBeUndefined();
+      writeSync(fd, whole.slice(partial.length));
+    } finally { closeSync(fd); }
+    await settled;
+    expect(outcome).toEqual({ verdict: true });
+  });
 });
