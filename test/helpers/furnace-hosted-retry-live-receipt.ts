@@ -23,7 +23,7 @@ export const RETRY_LIVE_TIER = "live";
 /** The receipt line the live rows print producer-side (straight to stdout), never through console.log. */
 export const RETRY_LIVE_LINE_MARKER = "FURNACE_HOSTED_RETRY_LIVE_RECEIPT";
 export const RETRY_LIVE_TIER_STATEMENT =
-  "LIVE tier: a real Furnace binary and bd in a disposable /tmp workspace with fixture formulas, its own bd store and Furnace state directory (wisp mode); the landed wb-zmd adapter over its real EmbeddedHost bridge on the SHIPPED vendored @furnace/sdk; the operator's `attempt stop` and `work retry` issued through that SDK's client (argv.d.ts attemptStop / workRetry); Furnace run status, attempt records and events read back. Never the owner bead store, the rig or a candidate worktree; no furnace doctor, no capability probe, no --persistent. Not the FIXTURE receipt (workbench.furnace-hosted-retry-fault/v1, wb-0kg.4), whose scripted operator proves only that an observer gains no control.";
+  "LIVE tier: a real Furnace binary and bd in a disposable /tmp workspace with fixture formulas, its own bd store and Furnace state directory (wisp mode); the landed wb-zmd adapter over its real EmbeddedHost bridge on the SHIPPED vendored @furnace/sdk; the operator's `attempt stop`, `run resume` and `work retry` issued through that SDK's client (argv.d.ts attemptStop / runResume / workRetry); Furnace run status, attempt records and events read back. Never the owner bead store, the rig or a candidate worktree; no furnace doctor, no capability probe, no --persistent. Not the FIXTURE receipt (workbench.furnace-hosted-retry-fault/v1, wb-0kg.4), whose scripted operator proves only that an observer gains no control.";
 /** Measured semantic violations, in the order assessRetryLive reports them. */
 export const RETRY_LIVE_FINDING_RULES = Object.freeze([
   "retry-session-reused",
@@ -52,7 +52,7 @@ export const RETRY_LIVE_NON_CLAIMS = Object.freeze([
   "The owner session's Observe answers and terminal frames are read through a tap on the shipped ResidentSession (a subclass handed to the adapter as FurnaceHostedOptions.sdk) that records the frames the session reads and writes and changes none of them.",
   "No crash durability is measured or claimed: controller or Pi death leaves running Attempts needing operator recovery (limits.crashDurability 'none').",
   "One measurement on one Furnace build in one disposable /tmp workspace: the retry's session reading (new or kept) is recorded for this run and is no guarantee for another build, load or driver.",
-  "The operator path exercised is the shipped SDK's Attempts.stop and Work.retry (argv.d.ts attemptStop: `attempt stop <attempt> --json`; workRetry: `work retry <work> --run <run> --json`); no other retry path is driven.",
+  "The operator path exercised is the shipped SDK's Attempts.stop, Runs.resume and Work.retry (argv.d.ts attemptStop: `attempt stop <attempt> --json`; runResume: `run resume <run> --json`, default mode, issued for the parked Run before its retry because Furnace admits `work retry` only on an active Run; workRetry: `work retry <work> --run <run> --json`); no other retry path is driven.",
   "Transport success is not domain verification: a work_retry reply says Furnace accepted the retry; the outcome is read from Furnace's own attempt records and events.",
   "The observer is one non-owner bridge connection and Furnace read verbs: it shows that this observer gained no control and that the state change is readable without ownership, not that every possible client is refused.",
 ]);
@@ -142,6 +142,12 @@ export interface UncertainParkObservation {
   readonly events: readonly FurnaceEventRecord[];
   readonly eventsComplete: boolean;
   readonly bridge: readonly BridgeReading[];
+  /**
+   * The operator's `run resume <run>` (default mode) before the retry (wb-0m7): Furnace 0.1.0 admits `work retry` only on an
+   * active Run, and a parked Run's exit is that resume, which reconciles, re-enables scheduling and starts nothing. Whether
+   * it was issued, whether it succeeded, its error code when it did not, and the Run state its reply reported.
+   */
+  readonly resume: { readonly attempted: boolean; readonly ok: boolean; readonly code: string | null; readonly state: string | null };
   readonly retry: { readonly attempted: boolean; readonly ok: boolean; readonly code: string | null; readonly kind: string | null };
   readonly attemptsAfterRetry: number | null;
 }
