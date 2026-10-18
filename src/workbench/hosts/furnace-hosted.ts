@@ -21,6 +21,9 @@
  *    indeterminate after a bounded grace, never cancelled.
  *  - Observe is answered by the resident session from its own admission record (running / terminal /
  *    unknown, @furnace/sdk ResidentSession.observe); the adapter adds no producer-side observation and says so.
+ *  - A start Furnace refuses after creating its Run names that Run on the refusal (details.run_id and
+ *    details.beads_run_id, as for a first Attempt it parked): start() rejects uncertain-effect naming the Run,
+ *    the receipt records it, and the host stays open for the operator's verbs until close() (wb-0m7).
  *
  * Disclosed limits (also carried on every receipt as `limits`):
  *  - No crash durability. Death of this process or of the controller leaves the
@@ -173,7 +176,7 @@ export interface HostedStart {
 const EXECUTOR_NAME = /^[A-Za-z][A-Za-z0-9_-]{0,63}$/;
 /** Untrusted text bound for a receipt or a wire result: the shared helper, which redacts every reading before it strips. */
 function safeText(value: unknown): string {
-  return sanitizeWorkbenchText(typeof value === "string" ? value : String(value), HOSTED_TEXT_LIMIT);
+  return sanitizeWorkbenchText(typeof value === "string" ? value : String(value), HOSTED_TEXT_LIMIT, "text");
 }
 const isRecord = (value: unknown): value is Record<string, unknown> => typeof value === "object" && value !== null;
 function hasCancellation(context: ExecutionContext): context is CallbackContext {
@@ -201,6 +204,21 @@ function startedRun(started: unknown): NonNullable<HostedReceipt["run"]> {
   const requestId = isRecord(started) ? started.requestId : undefined;
   if (!isRecord(record) || !isIdentifier(record.run_id) || !isIdentifier(record.beads_run_id) || !isIdentifier(requestId)) throw new TypeError("Furnace run start reply names no Run.");
   return { runId: record.run_id, beadsRunId: record.beads_run_id, requestId };
+}
+/**
+ * The Run a refused start left behind (wb-0m7), read from the refusal's members and nothing else. Furnace attaches the
+ * Furnace Run id and the Beads molecule id together to every run start failure after run.created (crates/furnace-cli/src/
+ * application/run.rs RunIdentity::with_run_identity at 9970621d8: "so no producer can attach one identifier and forget the
+ * other"); a refusal that created no Furnace Run names the Beads molecule alone (RunIdAlreadyRecorded, RunNotPersisted) or
+ * nothing. undefined: the refusal carries no run_id member, so it names no Run. "unreadable": it carries one without the
+ * identity a receipt records (both ids and the envelope's request id), so start() reports an uncertain start, as for a reply
+ * that names no Run; no Run is recorded without them.
+ */
+function leftBehind(refusal: Record<string, unknown>): NonNullable<HostedReceipt["run"]> | "unreadable" | undefined {
+  const details = refusal.details;
+  if (!isRecord(details) || !("run_id" in details)) return undefined;
+  if (!isIdentifier(details.run_id) || !isIdentifier(details.beads_run_id) || !isIdentifier(refusal.requestId)) return "unreadable";
+  return { runId: details.run_id, beadsRunId: details.beads_run_id, requestId: refusal.requestId };
 }
 const CANONICAL_CONTEXT = {
   context_version: 1,
@@ -274,7 +292,15 @@ export class FurnaceHostedExecutor {
       this.state = "started";
       return { ...this.run };
     } catch (error) {
-      const uncertain = !isRecord(error) || error.kind !== "command_error";
+      const refusal = isRecord(error) && error.kind === "command_error" ? error : undefined;
+      const run = refusal === undefined ? undefined : leftBehind(refusal);
+      if (refusal !== undefined && typeof run === "object") {
+        // The Run exists: record it and keep the host, whose socket and config the operator's verbs reach, until close().
+        this.run = run;
+        this.state = "started";
+        throw this.leftBehindFailure(refusal, run);
+      }
+      const uncertain = refusal === undefined || run === "unreadable";
       this.state = uncertain ? "start-uncertain" : "failed";
       await this.releaseHost();
       throw this.startFailure(error, uncertain);
@@ -303,6 +329,12 @@ export class FurnaceHostedExecutor {
     const code = isRecord(error) && typeof error.code === "string" ? safeText(error.code) : isRecord(error) && typeof error.kind === "string" ? safeText(error.kind) : "unknown";
     if (uncertain) return new CapabilityError("uncertain-effect", `Furnace run start did not return a readable answer (${code}); a Run may or may not exist. Reconcile with Furnace before retrying; the host was closed.`);
     return new CapabilityError("unavailable", `Furnace refused the run start (${code}); no Run was started.`);
+  }
+
+  /** A refusal naming the Run it left behind: an uncertain effect, never "no Run was started" (wb-0m7). */
+  private leftBehindFailure(refusal: Record<string, unknown>, run: NonNullable<HostedReceipt["run"]>): CapabilityError {
+    const code = typeof refusal.code === "string" ? safeText(refusal.code) : "unknown";
+    return new CapabilityError("uncertain-effect", `Furnace refused the run start (${code}) after creating Run ${safeText(run.runId)} (Beads ${safeText(run.beadsRunId)}); the Run exists and needs the operator. This host stays open, its config reachable, until close().`);
   }
 
   private openHost(): EmbeddedHost {
