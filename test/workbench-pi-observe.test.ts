@@ -5,15 +5,15 @@
  * the still-running node of B2 is an honest hang through a real seam (a blocking `furnace` executable
  * first on a test-scoped PATH, spawned by the real @furnace/sdk), and the F3 reader spy calls through.
  */
-import { chmodSync, existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
-import { tmpdir } from "node:os";
+import { chmodSync, existsSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { delimiter, join } from "node:path";
 import type { ExtensionContext } from "@earendil-works/pi-coding-agent";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import subagentsExtension from "../src/index.js";
 import { ObservationProjection } from "../src/workbench/observation.js";
-import { OBSERVE_MAX_MAX_BYTES, OBSERVE_MIN_MAX_BYTES, type ObserveReply } from "../src/workbench/observe-query.js";
+import { OBSERVE_MAX_LIMIT, OBSERVE_MAX_MAX_BYTES, OBSERVE_MIN_MAX_BYTES, type ObserveReply } from "../src/workbench/observe-query.js";
 import { ctx, hermeticDir, makePi, textOf } from "./helpers/boot-extension.js";
+import { makeScratch, removeScratch } from "./helpers/scratch.js";
 
 /** The registered tool's reply: the task-level envelope beside the builder's ObserveReply. */
 interface ObservedReply extends ObserveReply {
@@ -32,7 +32,7 @@ afterEach(() => {
   else process.env.PATH = originalPath;
   sandbox?.restore();
   sandbox = undefined;
-  for (const dir of scratch.splice(0)) rmSync(dir, { recursive: true, force: true });
+  removeScratch(...scratch.splice(0));
   vi.restoreAllMocks();
 });
 
@@ -96,7 +96,7 @@ async function settledReply(booted: Booted, taskId: string): Promise<ObservedRep
  * no envelope, which the real SDK reports, and the run settles failed.
  */
 function blockingFurnaceOnPath(): { readonly spawned: string; readonly release: () => void } {
-  const dir = mkdtempSync(join(tmpdir(), "pi-observe-furnace-"));
+  const dir = makeScratch("pi-observe-furnace-");
   scratch.push(dir);
   if (dir.includes("'")) throw new Error("the scratch directory must not contain a single quote");
   const spawned = join(dir, "spawned");
@@ -163,6 +163,10 @@ function keepsUnsafeUnit(text: string): boolean {
 }
 
 const TIMEOUT = 60_000;
+/** The B3/F5 envelope sweep spans this many maxBytes up from the floor: several node widths of a 30-node page. */
+const ENVELOPE_SWEEP_BYTES = 1_200;
+/** Its step: narrower than either task envelope, so every slack window an envelope needs is sampled. */
+const ENVELOPE_SWEEP_STEP = 7;
 
 describe("workflow_observe adopts the workbench.observe/v1 reply builder (wb-752.9)", () => {
   it("B1/F1: cursor paging over a >limit workflow round-trips and the union of pages equals the window; a foreign or malformed cursor is refused typed", async () => {
@@ -275,6 +279,34 @@ describe("workflow_observe adopts the workbench.observe/v1 reply builder (wb-752
     expect(await observeText(booted, { taskId: id, maxBytes: 70_000 })).toMatch(/^Invalid observe request: /);
   }, TIMEOUT);
 
+  it("B3/F5 envelope exactness: from the floor the refusal names, every maxBytes answers within itself and never refuses, and once a size carries the full task envelope every larger size does (the builder is given maxBytes minus the measured envelope)", async () => {
+    // The node-granular slack the builder leaves under its cap can hide an envelope the builder was never told about, so
+    // the sweep steps more finely than either envelope across several node widths: every slack window is sampled.
+    const booted = await boot();
+    const id = await runNodes(booted, 30);
+    const refusal = await observeText(booted, { taskId: id, limit: OBSERVE_MAX_LIMIT, maxBytes: OBSERVE_MIN_MAX_BYTES });
+    const needed = Number(/at least (\d+) needed/.exec(refusal)?.[1]);
+    expect(needed).toBeGreaterThan(OBSERVE_MIN_MAX_BYTES);
+    const failures: string[] = [];
+    let fullFrom: number | undefined;
+    for (let maxBytes = needed; maxBytes < needed + ENVELOPE_SWEEP_BYTES; maxBytes += ENVELOPE_SWEEP_STEP) {
+      const text = await observeText(booted, { taskId: id, limit: OBSERVE_MAX_LIMIT, maxBytes });
+      const bytes = Buffer.byteLength(text, "utf8");
+      if (bytes > maxBytes) failures.push(`${maxBytes}: ${bytes} bytes`);
+      if (!text.startsWith("{")) {
+        failures.push(`${maxBytes}: refused`);
+        continue;
+      }
+      const full = (JSON.parse(text) as ObservedReply).envelopeOmitted === undefined;
+      if (full && fullFrom === undefined) fullFrom = maxBytes;
+      if (!full && fullFrom !== undefined) failures.push(`${maxBytes}: envelope omitted after ${fullFrom} carried it`);
+    }
+    expect(failures).toEqual([]);
+    // Non-vacuous: the sweep starts in the omitted-envelope range and crosses into the full-envelope range.
+    expect(fullFrom).toBeGreaterThan(needed);
+    expect(fullFrom).toBeLessThan(needed + ENVELOPE_SWEEP_BYTES);
+  }, TIMEOUT);
+
   it("F2 bound (gate 2026-10-16T14:44Z, folded by the owner ruling): a maxBytes outside OBSERVE_MIN_MAX_BYTES..OBSERVE_MAX_MAX_BYTES is refused typed before the task envelope is subtracted", async () => {
     // The gate measured 65537..66000 answered at execute: the envelope was subtracted first, so the builder never saw the out-of-range request.
     const booted = await boot();
@@ -330,7 +362,9 @@ describe("workflow_observe adopts the workbench.observe/v1 reply builder (wb-752
     expect(start).toBeGreaterThan(0);
     expect(end).toBeGreaterThan(start);
     const block = source.slice(start, end);
-    expect(block).not.toMatch(/(?<![\w.])(?:20|40|256|16_?384|1_?024|65_?536)(?![\w.])/);
+    // A bound spelled anywhere in the block counts, a range like "1..40" and a sentence-final "40." included; only a
+    // decimal such as 0.40 is not a spelled bound.
+    expect(block).not.toMatch(/(?<!\w)(?<!\d\.)(?:20|40|256|16_?384|1_?024|65_?536)(?!\w|\.\d)/);
     for (const name of ["OBSERVE_MAX_LIMIT", "OBSERVE_CURSOR_MAX_BYTES", "OBSERVE_MIN_MAX_BYTES", "OBSERVE_MAX_MAX_BYTES", "OBSERVE_DEFAULT_MAX_BYTES", "observeInvocation"]) expect(block).toContain(name);
   });
 });
