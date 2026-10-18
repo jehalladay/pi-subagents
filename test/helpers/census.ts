@@ -984,11 +984,12 @@ export function resolveTier(root: string, tier: string, npm?: NpmHop): TierResol
 
 /**
  * u62 respin-6 V2 (npm-script): the npm lifecycle scripts npm runs around the hop's own script, admitted only as exact
- * literals of this closed list - anything else is code around the tier's hop and is refused, naming it. EMPTY at this cut:
- * the list's membership is wb-nl8's (its pretest rotation hook joins it in nl8's own cut; owner R470: never an outright
- * refusal of lifecycle scripts).
+ * literals of this closed list - anything else is code around the tier's hop and is refused, naming it. Its membership is
+ * wb-nl8's (owner R470: never an outright refusal of lifecycle scripts): ONE member, the default tier's pretest rotation
+ * hook, which npm runs before scripts.test so a run that never writes the report leaves none for the census step to judge
+ * (report-unreadable, never the previous run's report). Admitted as written; a near-miss (whitespace, another path) is refused.
  */
-export const CENSUS_LIFECYCLE_SCRIPTS: readonly string[] = [];
+export const CENSUS_LIFECYCLE_SCRIPTS: readonly string[] = ["node -e \"require('fs').rmSync('.forge/vitest-report.json',{force:true})\""];
 
 /** u62 respin-6 V3 (npm-project-config): the .npmrc keys the vouch admits - they load no code and move no config layer. */
 const GUARD_NPMRC_KEYS = ["registry", "audit", "fund", "loglevel", "update-notifier", "engine-strict", "save-exact", "package-lock"];
@@ -1116,8 +1117,8 @@ export const VOUCH_READ_SET: readonly VouchRead[] = [
   },
   {
     id: "vitest-argv",
-    reads: "the vitest argv the hop reaches: the closed boolean and value flag lists",
-    refuses: 'any other flag, "--", a value flag without a value, a --config file that does not exist',
+    reads: "the vitest argv the hop reaches: the closed boolean and value flag lists (wb-nl8: --expect.requireAssertions, --reporter), and a --reporter value against the closed list of vitest's builtin reporter names (GUARD_BUILTIN_REPORTERS)",
+    refuses: 'any other flag (the dotted --outputFile.<reporter>= form included), "--", a value flag without a value, a --reporter value outside the builtin list (a path or package reporter), a --config file that does not exist',
   },
   {
     id: "vitest-config",
@@ -1176,8 +1177,14 @@ export interface GuardState {
 /** vitest 4.1.10's config lookup (dist/chunks/constants: CONFIG_NAMES x CONFIG_EXTENSIONS, first match wins, searching upward). */
 const CONFIG_FILES = ["vitest.config", "vite.config"].flatMap(name => [".ts", ".mts", ".cts", ".js", ".mjs", ".cjs"].map(extension => `${name}${extension}`));
 /** Tier flags that load no code and leave the pool, the environment and the setup files alone (a closed list). */
-const GUARD_BOOLEAN_FLAGS = new Set(["allowOnly", "cache", "clearScreen", "color", "disableConsoleIntercept", "expandSnapshotDiff", "fileParallelism", "hideSkippedTests", "includeTaskLocation", "isolate", "logHeapUsage", "passWithNoTests", "printConsoleTrace", "run", "strictTags"]);
-const GUARD_VALUE_FLAGS = new Set(["bail", "config", "exclude", "hookTimeout", "maxConcurrency", "maxWorkers", "outputFile", "retry", "shard", "slowTestThreshold", "tagsFilter", "teardownTimeout", "testNamePattern", "testTimeout"]);
+const GUARD_BOOLEAN_FLAGS = new Set(["allowOnly", "cache", "clearScreen", "color", "disableConsoleIntercept", "expandSnapshotDiff", "expect.requireAssertions", "fileParallelism", "hideSkippedTests", "includeTaskLocation", "isolate", "logHeapUsage", "passWithNoTests", "printConsoleTrace", "run", "strictTags"]);
+const GUARD_VALUE_FLAGS = new Set(["bail", "config", "exclude", "hookTimeout", "maxConcurrency", "maxWorkers", "outputFile", "reporter", "retry", "shard", "slowTestThreshold", "tagsFilter", "teardownTimeout", "testNamePattern", "testTimeout"]);
+/**
+ * wb-nl8: the --reporter values the vouch admits, vitest 4.1.10's ReportersMap by name (a closed list). A path or package
+ * reporter is code loaded before the test modules and is refused, naming it. Only the bare --outputFile=<path> form is
+ * admitted (GUARD_VALUE_FLAGS): the dotted --outputFile.<reporter>= form keeps its dot through camel() and stays refused.
+ */
+const GUARD_BUILTIN_REPORTERS = new Set(["agent", "blob", "default", "dot", "github-actions", "hanging-process", "json", "junit", "minimal", "tap", "tap-flat", "tree", "verbose"]);
 /** Config keys the vouch reads: anything else may load code, redirect a module or move the tests to another realm. */
 const GUARD_TOP_KEYS = new Set(["cacheDir", "resolve", "test"]);
 const GUARD_TEST_KEYS = new Set([
@@ -1374,6 +1381,9 @@ export function censusGuard(root: string, tier: string): GuardState {
       const value = equals === -1 ? argv[index + 1] : body.slice(equals + 1);
       if (equals === -1) index += 1;
       if (value === undefined || value === "" || value.startsWith("-")) return refuse(`its command carries ${word} without a value the vouch reads`);
+      if (name === "reporter" && !GUARD_BUILTIN_REPORTERS.has(value)) {
+        return refuse(`its command carries ${word}${equals === -1 ? ` ${value}` : ""}, a reporter outside the closed list of vitest's builtin reporters (a path or package reporter is code loaded before the test modules)`);
+      }
       if (name === "config") configured = value;
       continue;
     }

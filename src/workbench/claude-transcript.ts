@@ -3,11 +3,16 @@ import { getSessionMessages, type SDKMessage, type SessionMessage } from "@anthr
 
 import type { ClaudeNativeObservation } from "../workflow/progress.js";
 import type { WorkflowSpawnResult } from "../workflow/runtime.js";
+import type { ClaudeObserverControlHooks } from "./claude-control-observer.js";
 import type { ClaudeCallIdentity } from "./claude-host.js";
 import { sanitizeWorkbenchText } from "./redaction.js";
 
-/** At most 64 sampled snapshots per call plus its terminal acknowledgement. */
-export function createClaudeObserver(emit: (call: ClaudeCallIdentity, snapshot: ClaudeNativeObservation) => void) {
+/**
+ * At most 64 sampled snapshots per call plus its terminal acknowledgement. The optional control hooks (wb-hqa) fire AFTER the
+ * display emit of the same frame: onInit on the system/init frame with the SDK's own session_id, onTerminal after the terminal
+ * publish and before the call is forgotten; a one-argument caller is unchanged.
+ */
+export function createClaudeObserver(emit: (call: ClaudeCallIdentity, snapshot: ClaudeNativeObservation) => void, control?: ClaudeObserverControlHooks) {
   const calls = new Map<string, { snapshot: ClaudeNativeObservation; emitted: number; lastEmit: number; sawResult: boolean }>();
   function state(call: ClaudeCallIdentity) {
     let entry = calls.get(call.agentId);
@@ -60,6 +65,7 @@ export function createClaudeObserver(emit: (call: ClaudeCallIdentity, snapshot: 
       }
       // Tokens and tool bodies stay in the native transcript, not the overview.
       if (entry.emitted < 64 && (semantic || Date.now() - entry.lastEmit >= 250)) publish(call, entry);
+      if (message.type === "system" && message.subtype === "init") control?.onInit(call, message.session_id);
     },
     onSettled(result: WorkflowSpawnResult, call: ClaudeCallIdentity) {
       const entry = state(call);
@@ -67,6 +73,7 @@ export function createClaudeObserver(emit: (call: ClaudeCallIdentity, snapshot: 
       entry.snapshot.terminal = result.ok ? "succeeded" : result.skipped ? "cancelled" : !entry.sawResult && entry.snapshot.observedMessages > 0 ? "observation_lost" : "failed";
       if (entry.snapshot.terminal === "observation_lost") entry.snapshot.freshness = "unknown";
       publish(call, entry);
+      control?.onTerminal(call, { provider: entry.snapshot.provider, sessionId: entry.snapshot.sessionId, freshness: entry.snapshot.freshness, terminal: entry.snapshot.terminal });
       calls.delete(call.agentId);
     },
   };

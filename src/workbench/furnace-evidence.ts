@@ -90,12 +90,13 @@ function clip(value: string, length: number): string {
 
 /** One producer string bound for display: the shared helper, which redacts every reading of the gaps an escape, control or
  * zero-width character leaves before it strips them, so a credential split from its scheme cannot reassemble (the property
- * docs/20 owner ruling 2 asked of the double redaction). Tabs become spaces so columns stay apart. A value longer than
- * MAX_LINE, or than the scan window, ends in an ellipsis inside MAX_LINE. */
+ * docs/20 owner ruling 2 asked of the double redaction). Tabs become spaces so columns stay apart. The helper examines the
+ * string only up to MAX_SCAN raw characters, with its straddle-safe scan option (wb-y5y): a value or escape sequence the scan
+ * bound splits is read as the whole string reads it, never cut open before the helper sees it. A value longer than MAX_LINE,
+ * or than the scan window, ends in an ellipsis inside MAX_LINE. */
 function sanitize(raw: string): { text: string; clipped: boolean } {
-  const scanned = clip(raw, MAX_SCAN);
-  const text = sanitizeWorkbenchText(scanned, MAX_SCAN);
-  return text.length <= MAX_LINE && scanned.length === raw.length ? { text, clipped: false } : { text: `${clip(text, MAX_LINE - 1)}…`, clipped: true };
+  const text = sanitizeWorkbenchText(raw, MAX_SCAN, "text", { scan: MAX_SCAN });
+  return text.length <= MAX_LINE && raw.length <= MAX_SCAN ? { text, clipped: false } : { text: `${clip(text, MAX_LINE - 1)}…`, clipped: true };
 }
 
 /**
@@ -103,17 +104,14 @@ function sanitize(raw: string): { text: string; clipped: boolean } {
  * ends one line while its value starts the next is one credential only in the joined text, so the shared helper redacts the
  * WHOLE reply exactly once, in its "lines" layout (LF rows kept; CR, NEL, LS and PS end a row too), before the tail is taken or
  * any row is clipped: a scheme on a line the tail drops still hides the value the tail keeps. A line is still examined only up
- * to MAX_SCAN raw characters; a longer one ends in an ellipsis before redaction, so its row shows the cut.
+ * to MAX_SCAN raw characters, by the helper's straddle-safe scan option in rows mode (wb-y5y): each line is bounded on its own,
+ * a value or escape sequence the bound splits is read as the whole line reads it, and a longer line ends in an ellipsis, so its
+ * row shows the cut.
  */
 function redactedRows(lines: readonly string[]): { rows: string[]; scanClipped: boolean } {
   if (lines.length === 0) return { rows: [], scanClipped: false };
-  let scanClipped = false;
-  const scanned = lines.map(line => {
-    if (line.length <= MAX_SCAN) return line;
-    scanClipped = true;
-    return `${clip(line, MAX_SCAN)}…`;
-  });
-  return { rows: sanitizeWorkbenchText(scanned.join("\n"), Number.MAX_SAFE_INTEGER, "lines").split("\n"), scanClipped };
+  const scan = { scan: MAX_SCAN, rows: { lengths: lines.map(line => line.length), marker: "…" } };
+  return { rows: sanitizeWorkbenchText(lines.join("\n"), Number.MAX_SAFE_INTEGER, "lines", scan).split("\n"), scanClipped: lines.some(line => line.length > MAX_SCAN) };
 }
 
 /** One redacted row bounded for display: a row longer than MAX_LINE ends in an ellipsis inside MAX_LINE. */

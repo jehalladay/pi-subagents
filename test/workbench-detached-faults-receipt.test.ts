@@ -520,7 +520,7 @@ describe("detached fault-injection receipt: module and runner boundaries", () =>
       '[build.commands.local-detached-faults]\ncommand = "node qa/workbench/local-detached-faults.mjs"\ntimeout = 240\n',
     );
     expect(forge.match(/\[build\.commands\.local-detached-faults\]/g)).toHaveLength(1);
-    expect(forge).toContain('gate = ["lint", "typing", "build", "test", "workbench-shell", "package-smoke"]\n');
+    expect(forge).toContain('gate = ["lint", "typing", "build", "test", "census", "workbench-shell", "package-smoke"]\n');
     const gate = /^gate = \[(.*)\]$/m.exec(forge)?.[1] ?? "";
     expect(gate).not.toContain("local-detached-faults");
   });

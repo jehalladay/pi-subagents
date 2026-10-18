@@ -166,6 +166,11 @@ describe("rf planned-leaf refusal mapping (wb-973.14 R14, wb-cax.5)", () => {
 
   it("does not map the same refusal when the exit code contradicts it", async () => {
     fakeRf(refusal, 0);
-    await expect(nativeReactiveFiberPreview("model", "task", process.cwd())).rejects.toMatchObject({ category: "transport" });
+    // Pin the row's own cause (wb-9bu, row 494 F3): "could not launch the installed binary" is also category transport,
+    // so a category-only pin would stay green when the stand-in cannot launch.
+    await expect(nativeReactiveFiberPreview("model", "task", process.cwd())).rejects.toMatchObject({
+      category: "transport",
+      message: "RF preview returned an unrecognized or contradictory failure envelope.",
+    });
   });
 });

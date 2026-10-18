@@ -430,6 +430,24 @@ export async function dropBeforeAdmissionReply(env: RetryFaultEnv): Promise<Drop
 /** The grace the dangling-timer measurement runs under: long enough that a leaked grace timer is still alive when it is counted. */
 export const SETTLED_CLOSE_GRACE_MS = 5000;
 const activeTimeouts = (): number => process.getActiveResourcesInfo().filter((name) => name === "Timeout").length;
+/**
+ * wb-nl8.1: the refed-Timeout count once two consecutive samples quietMs apart agree. A transient shorter than quietMs
+ * (the vitest runner's 100 ms task-update throttle is the named class) cannot sit in two consecutive samples, so it is
+ * never counted; the two timers the census rows exist for live SETTLED_CLOSE_GRACE_MS. The sleep is itself a Timeout
+ * and is gone once awaited. The deadline only bounds the wait: the row's assertion stays the sole judge, so the poll
+ * never throws and never seeks a value.
+ */
+async function quiescentTimeouts(quietMs = 150, deadlineMs = 1500): Promise<number> {
+  const deadline = Date.now() + deadlineMs;
+  let last = activeTimeouts();
+  while (Date.now() < deadline) {
+    await sleep(quietMs);
+    const next = activeTimeouts();
+    if (next === last) return next;
+    last = next;
+  }
+  return last;
+}
 /** The three Attempts that settle success before close(); the sensitivity control parks a fourth until close() aborts it. */
 const SETTLED_ATTEMPT_IDS = ["frn-atm-t1", "frn-atm-t2", "frn-atm-t3"] as const;
 export const SETTLED_CLOSE_CONTROL_ATTEMPT = "frn-atm-t4";
@@ -440,17 +458,42 @@ export interface SettledCloseTimers {
   readonly timeoutsBeforeClose: number;
   readonly timeoutsAfterClose: number;
   readonly afterClose: HostedReceipt;
+  /** Churn knob receipts (wb-nl8.1): the churn that actually armed, so a no-op knob cannot pass a churn row trivially. All false/0 on the roster rows. */
+  readonly churn: SettledCloseChurnReceipt;
 }
 /** settledCloseTimers plus the sensitivity control's own fact (wb-19q member 18, wb-21k F2). */
 export interface SettledCloseTimersControl extends SettledCloseTimers {
   /** True once close()'s abort of the parked control Attempt armed the control timer; the timer is cleared after the after-close count. */
   readonly controlTimerArmed: boolean;
+  /** wb-nl8.1: true when the control timer had already EXPIRED (armed >= SETTLED_CLOSE_GRACE_MS before the after-close census): a close() that dragged past the grace names itself here instead of reading as a bare delta. */
+  readonly controlTimerExpiredBeforeCensus: boolean;
+}
+
+/**
+ * wb-nl8.1 churn knobs (OFF by default; the roster rows run with none): deterministic, injected stand-ins for the
+ * load pollution the instant-sample form of this measurement could not exclude, never anything awaited from a
+ * neighbour. Each knob arms a REFED timer of the same class as the vitest runner's 100 ms task-update throttle (the
+ * only refed un-unref'd ambient timer found in the runner path).
+ */
+export interface SettledCloseChurn {
+  /** Arms a refed ambient timer of this TTL immediately before the before-close census (the masking direction: it expires inside the close window). */
+  readonly ambientBeforeMs?: number;
+  /** Arms a refed ambient timer of this TTL after the before-close census and before close() (the +1 direction: a transient alive at the after-close census). */
+  readonly ambientAtCloseMs?: number;
+  /** Holds the parked control Attempt's settlement this many ms after close()'s abort armed its timer, stretching settleOpenAttempts past the ambient's TTL. */
+  readonly controlSettleDelayMs?: number;
+}
+/** What the body actually did for a SettledCloseChurn request. */
+export interface SettledCloseChurnReceipt {
+  readonly ambientArmed: boolean;
+  readonly controlSettleDelayedMs: number;
 }
 
 /** ONE measurement body for the roster-side row and its sensitivity control, so the two cannot drift apart. */
-async function measureSettledCloseTimers(env: RetryFaultEnv, parkControlAttempt: boolean): Promise<SettledCloseTimersControl> {
+async function measureSettledCloseTimers(env: RetryFaultEnv, parkControlAttempt: boolean, churn: SettledCloseChurn = {}): Promise<SettledCloseTimersControl> {
   return withScratch(env.scratchBase, async () => {
-    const control: { timer: ReturnType<typeof setTimeout> | undefined; armed: boolean } = { timer: undefined, armed: false };
+    const control: { timer: ReturnType<typeof setTimeout> | undefined; armed: boolean; armedAt: number } = { timer: undefined, armed: false, armedAt: 0 };
+    const churnReceipt: { ambientArmed: boolean; controlSettleDelayedMs: number } = { ambientArmed: false, controlSettleDelayedMs: 0 };
     const workflow: HostedWorkflow = async ({ identity, signal }) => {
       if (identity.attemptId !== SETTLED_CLOSE_CONTROL_ATTEMPT) return { status: "success" };
       // wb-19q member 18 (wb-21k F2): the control Attempt parks until close() aborts it and arms its own
@@ -459,11 +502,20 @@ async function measureSettledCloseTimers(env: RetryFaultEnv, parkControlAttempt:
         const arm = (): void => {
           control.timer = setTimeout(() => undefined, SETTLED_CLOSE_GRACE_MS);
           control.armed = true;
+          control.armedAt = Date.now();
           resolve();
         };
         if (signal.aborted) arm();
         else signal.addEventListener("abort", arm, { once: true });
       });
+      // wb-nl8.1 churn knob: hold the settlement after the arm, stretching close()'s settleOpenAttempts window. The
+      // receipt is the MEASURED hold (re-slept until the clock agrees, since a timer may fire a tick early), never the knob echoed.
+      if (churn.controlSettleDelayMs !== undefined) {
+        const held = Date.now();
+        await sleep(churn.controlSettleDelayMs);
+        while (Date.now() - held < churn.controlSettleDelayMs) await sleep(1);
+        churnReceipt.controlSettleDelayedMs = Date.now() - held;
+      }
       return { status: "indeterminate", summary: "control attempt parked until host close" };
     };
     const executor = harness(
@@ -485,9 +537,24 @@ async function measureSettledCloseTimers(env: RetryFaultEnv, parkControlAttempt:
     );
     await executor.start({ formula: "fixture" });
     const settledAttempts = executor.receipt().attempts.filter((attempt) => attempt.terminal === "success").length;
-    const timeoutsBeforeClose = activeTimeouts();
+    // wb-nl8.1 churn knob: an ambient refed timer armed at the before-census's shoulder (the masking direction).
+    const ambient: Array<ReturnType<typeof setTimeout>> = [];
+    if (churn.ambientBeforeMs !== undefined) {
+      ambient.push(setTimeout(() => undefined, churn.ambientBeforeMs));
+      churnReceipt.ambientArmed = true;
+    }
+    // wb-nl8.1: both censuses are QUIESCENT samples (the count once it has been quiet for 150 ms), not instants: a
+    // refed transient alive at one instant and gone inside the close window masked the control timer (member 18 read
+    // 0), and one born inside the window read +1 on the settled row. The sample's definition changes; no assertion does.
+    const timeoutsBeforeClose = await quiescentTimeouts();
+    // wb-nl8.1 churn knob: an ambient refed timer armed inside the close window (the +1 direction).
+    if (churn.ambientAtCloseMs !== undefined) {
+      ambient.push(setTimeout(() => undefined, churn.ambientAtCloseMs));
+      churnReceipt.ambientArmed = true;
+    }
     await executor.close();
-    const timeoutsAfterClose = activeTimeouts();
+    const timeoutsAfterClose = await quiescentTimeouts();
+    for (const timer of ambient) clearTimeout(timer);
     if (control.timer !== undefined) clearTimeout(control.timer);
     return {
       armed: settledAttempts === SETTLED_ATTEMPT_IDS.length && control.armed === parkControlAttempt,
@@ -495,6 +562,8 @@ async function measureSettledCloseTimers(env: RetryFaultEnv, parkControlAttempt:
       timeoutsBeforeClose,
       timeoutsAfterClose,
       controlTimerArmed: control.armed,
+      controlTimerExpiredBeforeCensus: control.armed && Date.now() - control.armedAt >= SETTLED_CLOSE_GRACE_MS,
+      churn: churnReceipt,
       afterClose: executor.receipt(),
     };
   });
@@ -516,6 +585,26 @@ export async function settledCloseTimers(env: RetryFaultEnv): Promise<SettledClo
  */
 export async function settledCloseTimersSensitivity(env: RetryFaultEnv): Promise<SettledCloseTimersControl> {
   return measureSettledCloseTimers(env, true);
+}
+
+/**
+ * wb-nl8.1 churn row R1: the member-18 measurement with a 100 ms refed ambient timer armed at the before-census's
+ * shoulder (the vitest runner throttle's class) and the control Attempt's settlement held 150 ms past its arm, so
+ * the ambient expires INSIDE the close window. Instant samples read BEFORE = base + 1 (ambient) and AFTER = base + 1
+ * (control), a delta of 0 with the control timer provably armed: the field red "expected 0 to be greater than or
+ * equal to 1" on an unloaded host. The hardened (quiescent) samples exclude the 100 ms transient and read delta 1.
+ */
+export async function settledCloseTimersSensitivityUnderChurn(env: RetryFaultEnv): Promise<SettledCloseTimersControl> {
+  return measureSettledCloseTimers(env, true, { ambientBeforeMs: 100, controlSettleDelayMs: 150 });
+}
+
+/**
+ * wb-nl8.1 churn row R2: the settled measurement with a 100 ms refed ambient timer armed inside the close window.
+ * Instant samples count it at the after-census, a delta of +1 with every Attempt settled: the mirrored field red
+ * "expected 1 to be less than or equal to 0" on an unloaded host. The hardened samples exclude it and read delta 0.
+ */
+export async function settledCloseTimersUnderChurn(env: RetryFaultEnv): Promise<SettledCloseTimers> {
+  return measureSettledCloseTimers(env, false, { ambientAtCloseMs: 100 });
 }
 
 /** The receipt roster's runners, in roster order (pinned against qa RETRY_FAULT_JOURNEYS by the default-gate tier). */

@@ -833,7 +833,7 @@ describe("wb-752.3 VC-4 live Furnace receipt: placement and runner shape", () =>
     expect(forge).toContain('[build.commands.furnace-vc4-live]\ncommand = "node qa/workbench/live-furnace-vc4.mjs"\ntimeout = 240\n');
     expect(forge.match(/\[build\.commands\.furnace-vc4-live\]/g)).toHaveLength(1);
     const gate = /^gate = \[(.*)\]$/m.exec(forge)?.[0];
-    expect(gate).toBe('gate = ["lint", "typing", "build", "test", "workbench-shell", "package-smoke"]');
+    expect(gate).toBe('gate = ["lint", "typing", "build", "test", "census", "workbench-shell", "package-smoke"]');
   });
 });
 
