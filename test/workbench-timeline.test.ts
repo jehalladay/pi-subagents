@@ -527,11 +527,14 @@ describe("acceptance 4: docs/workbench/09 § Relationships are typed and provena
   it("reads relations at most once per returned node, within relationLimit, and flags a full page", () => {
     const projection = relationsFixture();
     const relations = vi.spyOn(projection, "relations");
+    // wb-6ze.29: a projection that has relationsPage is read through it, so a row's incoming page is a call of either method.
+    const pages = vi.spyOn(projection, "relationsPage");
+    const reads = () => [...relations.mock.calls, ...pages.mock.calls];
     const model = buildTimelineLanes(projection, request({ relationLimit: 2 }));
     const keys = allRows(model).map(row => row.key);
-    expect(relations).toHaveBeenCalledTimes(keys.length);
-    expect(new Set(relations.mock.calls.map(([input]) => input.to)).size).toBe(keys.length);
-    for (const [input] of relations.mock.calls) {
+    expect(reads()).toHaveLength(keys.length);
+    expect(new Set(reads().map(([input]) => input.to)).size).toBe(keys.length);
+    for (const [input] of reads()) {
       expect(input).toStrictEqual({ scope, to: input.to, limit: 2 });
       expect(keys).toContain(input.to);
     }
@@ -539,8 +542,10 @@ describe("acceptance 4: docs/workbench/09 § Relationships are typed and provena
     expect(model.truncated.relations).toBe(true);
     expect(notesOf(model)).toContain("relation-page-full");
     relations.mockClear();
+    pages.mockClear();
     const roomy = buildTimelineLanes(projection, request());
-    for (const [input] of relations.mock.calls) expect(input.limit).toBe(40);
+    expect(reads()).toHaveLength(keys.length);
+    for (const [input] of reads()) expect(input.limit).toBe(40);
     expect(roomy.truncated.relations).toBe(false);
     expect(notesOf(roomy)).not.toContain("relation-page-full");
     // A page cut at relationLimit 1 hides twin's second owner: the lane follows what was read, and the page is flagged.
@@ -787,6 +792,8 @@ describe("acceptance 7: docs/workbench/02 WB-029: \"Over 1000 nodes: render cost
     expect(projection.stats()).toStrictEqual({ nodes: 2_000, events: 20_000, edges: 4_000 });
     const window = vi.spyOn(projection, "window");
     const relations = vi.spyOn(projection, "relations");
+    // wb-6ze.29: a projection that has relationsPage is read through it; the per-row bound covers both relation reads.
+    const pages = vi.spyOn(projection, "relationsPage");
     const untouched = [
       vi.spyOn(projection, "events"), vi.spyOn(projection, "query"), vi.spyOn(projection, "ingest"), vi.spyOn(projection, "refresh"),
       vi.spyOn(projection, "relate"), vi.spyOn(projection, "markStale"), vi.spyOn(projection, "disconnect"), vi.spyOn(projection, "reconnect"),
@@ -794,6 +801,8 @@ describe("acceptance 7: docs/workbench/02 WB-029: \"Over 1000 nodes: render cost
     const model = buildTimelineLanes(projection, { scope, invocationId: "inv-big", offset: 0, limit: 100, zoom: 1, pan: 0, columns: 80 });
     expect(window).toHaveBeenCalledTimes(1);
     expect(relations.mock.calls.length).toBeLessThanOrEqual(100);
+    expect(relations.mock.calls.length + pages.mock.calls.length).toBeLessThanOrEqual(100);
+    expect(relations.mock.calls.length + pages.mock.calls.length).toBeGreaterThan(0);
     for (const spy of untouched) expect(spy).not.toHaveBeenCalled();
     expect(model.lanes.length).toBeLessThanOrEqual(16);
     expect(model.lanes).toHaveLength(16);

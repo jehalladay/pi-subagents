@@ -547,13 +547,17 @@ describe("(e) every cap in the TimelineRequest comes from the host's exported co
     for (let i = 0; i < 9; i++) observe(projection, { id: `s${i}`, start: i * 3, end: i * 3 + 2 });
     const relations = vi.spyOn(projection, "relations");
     const windows = vi.spyOn(projection, "window");
+    // wb-6ze.29: the timeline selector reads a projection that has relationsPage through it; either method is a page read,
+    // as counted() above already reads them.
+    const pages = vi.spyOn(projection, "relationsPage");
     const run = await openRun(runTask(), depsOf(observationOf(projection, { relationPage: 7, timelineColumns: 16 })));
     run.press(...TIMELINE);
     relations.mockClear();
     windows.mockClear();
+    pages.mockClear();
     const lines = run.lines();
     // The reads of this one redraw, taken before the expected lines below read the same projection.
-    const incoming = relations.mock.calls.map(([input]) => input).filter(input => input.to !== undefined);
+    const incoming = [...relations.mock.calls, ...pages.mock.calls].map(([input]) => input).filter(input => input.to !== undefined);
     const windowLimits = windows.mock.calls.map(([input]) => input.limit);
     expect(incoming).toHaveLength(7);
     for (const input of incoming) expect(input.limit).toBe(7);
