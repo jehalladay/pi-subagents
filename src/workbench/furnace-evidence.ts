@@ -2,9 +2,9 @@
  * Bounded Furnace Attempt log evidence (docs/workbench/20 § Producer mapping, the "furnace run" row). One native
  * bounded logs read per call, for an Attempt id listed on the owning run node, behind the run/attempt/stream identity
  * checks the external observer applies (furnace-observer.ts). A lossy, incomplete or paged producer read, and lines a
- * local budget dropped or clipped, load with truncated true and are named in a final preview line. Preview lines are
- * bounded and pass the shared sanitizers (redaction.ts) plus a local zero-width strip; no raw line, envelope, cursor or
- * error text is retained.
+ * local budget dropped or clipped, load with truncated true and are named in a final preview line. The shared helper
+ * (redaction.ts) redacts the producer's whole reply once before its tail is taken, and preview lines are bounded rows of that
+ * redacted text; no raw line, envelope, cursor or error text is retained.
  *
  * This is the read the furnace EvidenceLoader wraps (wb-g1g.1): it registers nothing, checks no grant (the loader's
  * furnace:inspect gate does), states no verification and leaves the owning node's freshness to the store. The client
@@ -90,13 +90,33 @@ function clip(value: string, length: number): string {
 
 /** One producer string bound for display: the shared helper, which redacts every reading of the gaps an escape, control or
  * zero-width character leaves before it strips them, so a credential split from its scheme cannot reassemble (the property
- * docs/20 owner ruling 2 asked of the double redaction). Tabs become spaces so columns stay apart. A value longer than
- * MAX_LINE, or than the scan window, ends in an ellipsis inside MAX_LINE. */
+ * docs/20 owner ruling 2 asked of the double redaction). Tabs become spaces so columns stay apart. The helper examines the
+ * string only up to MAX_SCAN raw characters, with its straddle-safe scan option (wb-y5y): a value or escape sequence the scan
+ * bound splits is read as the whole string reads it, never cut open before the helper sees it. A value longer than MAX_LINE,
+ * or than the scan window, ends in an ellipsis inside MAX_LINE. */
 function sanitize(raw: string): { text: string; clipped: boolean } {
-  const scanned = clip(raw, MAX_SCAN);
-  const text = sanitizeWorkbenchText(scanned, MAX_SCAN);
-  return text.length <= MAX_LINE && scanned.length === raw.length ? { text, clipped: false } : { text: `${clip(text, MAX_LINE - 1)}…`, clipped: true };
+  const text = sanitizeWorkbenchText(raw, MAX_SCAN, "text", { scan: MAX_SCAN });
+  return text.length <= MAX_LINE && raw.length <= MAX_SCAN ? { text, clipped: false } : { text: `${clip(text, MAX_LINE - 1)}…`, clipped: true };
 }
+
+/**
+ * The producer's lines as display rows (wb-ktf). The producer splits its log into lines, and a credential whose scheme or key
+ * ends one line while its value starts the next is one credential only in the joined text, so the shared helper redacts the
+ * WHOLE reply exactly once, in its "lines" layout (LF rows kept; CR, NEL, LS and PS end a row too), before the tail is taken or
+ * any row is clipped: a scheme on a line the tail drops still hides the value the tail keeps. A line is still examined only up
+ * to MAX_SCAN raw characters, by the helper's straddle-safe scan option in rows mode (wb-y5y): each line is bounded on its own,
+ * a value or escape sequence the bound splits is read as the whole line reads it, and a longer line ends in an ellipsis, so its
+ * row shows the cut.
+ */
+function redactedRows(lines: readonly string[]): { rows: string[]; scanClipped: boolean } {
+  if (lines.length === 0) return { rows: [], scanClipped: false };
+  const scan = { scan: MAX_SCAN, rows: { lengths: lines.map(line => line.length), marker: "…" } };
+  return { rows: sanitizeWorkbenchText(lines.join("\n"), Number.MAX_SAFE_INTEGER, "lines", scan).split("\n"), scanClipped: lines.some(line => line.length > MAX_SCAN) };
+}
+
+/** One redacted row bounded for display: a row longer than MAX_LINE ends in an ellipsis inside MAX_LINE. */
+const clipRow = (row: string): { text: string; clipped: boolean } =>
+  row.length <= MAX_LINE ? { text: row, clipped: false } : { text: `${clip(row, MAX_LINE - 1)}…`, clipped: true };
 
 /** A native failure is untrusted text: only its message, sanitized and bounded, ever leaves here. */
 function nativeFailure(error: unknown): CapabilityError {
@@ -161,14 +181,15 @@ export async function readFurnaceAttemptLogEvidence(request: FurnaceEvidenceRequ
   if (typeof complete !== "boolean" || typeof lossy !== "boolean" || (nextCursor !== null && typeof nextCursor !== "string")) throw malformed();
   if (typeof requestId !== "string" || requestId.length === 0) throw malformed();
 
-  // The producer returns a tail, so the newest maxLines lines are the ones kept.
-  const shown = lines.slice(-maxLines).map(sanitize);
+  // The producer returns a tail, so the newest maxLines rows are the ones kept, taken only once the whole reply is redacted.
+  const { rows, scanClipped } = redactedRows(lines);
+  const shown = rows.slice(-maxLines).map(clipRow);
   const reasons: TruncationReason[] = [];
   if (lossy) reasons.push("lossy");
   if (!complete) reasons.push("incomplete");
   if (nextCursor !== null) reasons.push("paged");
-  if (lines.length > maxLines || shown.some(line => line.clipped)) reasons.push("budget");
-  const preview = shown.map(line => line.text);
+  if (rows.length > maxLines || scanClipped || shown.some(row => row.clipped)) reasons.push("budget");
+  const preview = shown.map(row => row.text);
   if (reasons.length > 0) preview.push(`… truncated (producer: ${reasons.join(", ")})`);
 
   const stamp: unknown = capturedAt();

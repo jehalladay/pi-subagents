@@ -11,6 +11,8 @@ import { GroupJoinManager } from "../src/group-join.js";
 import type { AgentRecord } from "../src/types.js";
 
 function makeRecord(id: string, overrides: Partial<AgentRecord> = {}): AgentRecord {
+  // A deliberately minimal record: it omits required fields GroupJoinManager never
+  // reads (compactionCount among them), so the literal is asserted to the record type.
   return {
     id,
     type: "general-purpose",
@@ -20,7 +22,7 @@ function makeRecord(id: string, overrides: Partial<AgentRecord> = {}): AgentReco
     startedAt: 0,
     lifetimeUsage: { input: 0, output: 0, cacheWrite: 0 },
     ...overrides,
-  };
+  } as AgentRecord;
 }
 
 describe("GroupJoinManager", () => {

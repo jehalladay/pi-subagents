@@ -154,6 +154,8 @@ No provider should be silently enabled with broad write permissions. Configurati
 
 Local implementation may be in-process services; detached hosting needs explicit authenticated transport but should not require changes to MechanicalWorkflows direct-function usage.
 
+A hosted agent learns the swarm's rf workspace from two environment variables, the documented channel for it: `RF_WORKSPACE` (rf's own workspace default) and `SWARM_RF_WORKSPACE` (what agent instructions pass as `rf --workspace "$SWARM_RF_WORKSPACE"`). Both hold a directory path, operational workspace locators rather than credentials, and both reach the Claude SDK child the same way on either host: the embedded host builds its SDK options with no `env` override, so the child inherits `process.env`; the detached host carries the two names on its launch allowlist (`DETACHED_HOST_ENV_ALLOWLIST` in `src/workbench/process-env.ts`). The channel adds no other variable.
+
 ## Key validations
 
 Contract hashes and source digests must be pinned in execution receipt; typed payload validated at boundary; no arbitrary code from descriptor field; compare controlled vs observed state; unrecognized SDK message version => diagnostic rather than silent success. All date/timestamp strings have timezone and are not used as total global event order.

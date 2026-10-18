@@ -41,9 +41,6 @@
  * what you register in `beforeRun` and which `subagent_type` the `Agent` call
  * names. See `test/subagents-print-mode-e2e.test.ts` for usage.
  */
-import { mkdtempSync, rmSync } from "node:fs";
-import { tmpdir } from "node:os";
-import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
   type AssistantMessage,
@@ -60,6 +57,7 @@ import {
 import {
   type AgentSession,
   type AgentSessionEvent,
+  type CreateAgentSessionOptions,
   createAgentSession,
   DefaultResourceLoader,
   getAgentDir,
@@ -68,6 +66,17 @@ import {
 } from "@earendil-works/pi-coding-agent";
 import { fauxModelBackend } from "./faux-model-backend.js";
 import { getModel, registerFauxProvider } from "./pi-ai.js";
+import { installScratchLeakGuard, makeScratch, removeScratch } from "./scratch.js";
+
+installScratchLeakGuard();
+
+/**
+ * `createAgentSession` options spanning the supported Pi range (see
+ * faux-model-backend.ts): Pi < 0.80.8 reads `modelRegistry`, which the installed
+ * `CreateAgentSessionOptions` no longer declares; each Pi ignores the option it
+ * does not know, so both stay on the call.
+ */
+type CrossVersionSessionOptions = CreateAgentSessionOptions & { modelRegistry?: unknown };
 
 /** Path to the pi-subagents extension entrypoint (repo `src/index.ts`). */
 const EXTENSION_PATH = fileURLToPath(new URL("../../src/index.ts", import.meta.url));
@@ -255,9 +264,16 @@ export async function runPrintMode(options: RunPrintModeOptions): Promise<PrintM
   const isolateGlobals = options.isolateGlobals ?? !live;
   const timeoutMs = options.timeoutMs ?? 30_000;
 
+  // Validate before touching anything: this throw happens before the caller can receive a
+  // dispose handle, so creating the scratch dir, chdir'ing and isolating env first would
+  // leak all three (wb-g5o).
+  if (!live && !options.steps && !options.respond) {
+    throw new Error("runPrintMode (faux mode): provide `respond` or `steps`");
+  }
+
   // --- working dir (own it only if we created it) ---
   const ownsCwd = options.cwd == null;
-  const cwd = options.cwd ?? mkdtempSync(join(tmpdir(), "subagents-print-"));
+  const cwd = options.cwd ?? makeScratch("subagents-print-");
 
   // chdir into cwd: the extension discovers project custom agents from process.cwd()
   // (not ctx.cwd), and re-reads them on every Agent invocation — so a custom agent
@@ -271,7 +287,7 @@ export async function runPrintMode(options: RunPrintModeOptions): Promise<PrintM
   const prevHome = process.env.HOME;
   let hermeticDir: string | undefined;
   if (isolateGlobals) {
-    hermeticDir = mkdtempSync(join(tmpdir(), "subagents-print-home-"));
+    hermeticDir = makeScratch("subagents-print-home-");
     process.env.PI_CODING_AGENT_DIR = hermeticDir;
     process.env.HOME = hermeticDir;
   }
@@ -307,9 +323,6 @@ export async function runPrintMode(options: RunPrintModeOptions): Promise<PrintM
     modelRegistry = undefined;
     modelRuntime = undefined;
   } else {
-    if (!options.steps && !options.respond) {
-      throw new Error("runPrintMode (faux mode): provide `respond` or `steps`");
-    }
     faux = registerFauxProvider({ provider: "faux", models: [{ id: "faux-1", contextWindow: 200_000 }] });
     model = faux.getModel();
     // Structural faux registry + runtime (see faux-model-backend.ts): the parent
@@ -354,7 +367,7 @@ export async function runPrintMode(options: RunPrintModeOptions): Promise<PrintM
   // are isolated but before the parent turn spawns anything.
   await options.beforeRun?.();
 
-  const { session } = await createAgentSession({
+  const sessionOptions: CrossVersionSessionOptions = {
     cwd,
     agentDir,
     model,
@@ -369,7 +382,8 @@ export async function runPrintMode(options: RunPrintModeOptions): Promise<PrintM
     settingsManager: live
       ? SettingsManager.create(cwd, agentDir)
       : SettingsManager.inMemory({ compaction: { enabled: false }, retry: { enabled: false } }),
-  });
+  };
+  const { session } = await createAgentSession(sessionOptions);
   session.setSessionName("print-mode-host");
 
   // Binding fires session_start so the extension initializes and publishes its
@@ -447,9 +461,9 @@ export async function runPrintMode(options: RunPrintModeOptions): Promise<PrintM
       else process.env.PI_CODING_AGENT_DIR = prevAgentDir;
       if (prevHome == null) delete process.env.HOME;
       else process.env.HOME = prevHome;
-      if (hermeticDir) rmSync(hermeticDir, { recursive: true, force: true });
+      removeScratch(hermeticDir);
     }
-    if (ownsCwd) rmSync(cwd, { recursive: true, force: true });
+    if (ownsCwd) removeScratch(cwd);
   };
 
   // --- drive the turn under a wall-clock guard ---
