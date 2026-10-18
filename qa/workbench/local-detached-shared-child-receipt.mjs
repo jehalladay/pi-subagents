@@ -8,6 +8,12 @@
 import {basenameOnly} from './local-detached-faults-receipt.mjs';
 
 export const SHARED_CHILD_RECEIPT_CONTRACT = 'workbench.detached-shared-child/v1';
+/**
+ * Ownership model of the measured host: a stop is authorised by an explicit per-invocation grant held by the
+ * caller, not by a per-reader identity, so a same-child owner/non-owner reader pair is inexpressible
+ * (wb-0kg.7 gate F5, accepted by the owner as a documented capability limit).
+ */
+export const SHARED_CHILD_OWNERSHIP_MODEL = 'per-invocation-grant';
 /** The four reader-close injections: the stop-one-reader fault before and after the child's first effect marker. */
 export const SHARED_CHILD_CASES = Object.freeze([
   Object.freeze({when: 'before', close: 'pi-exit'}),
@@ -30,10 +36,16 @@ export const SHARED_CHILD_FINDING_RULES = Object.freeze([
   'owner-stop-unaudited',
   'owner-stop-unrequested',
 ]);
+/**
+ * True once a snapshot carries ANY terminal string. The owner stop arms on this, so a host that ends a stopped child in a
+ * fabricated (non-cancelled) terminal is judged owner-stop-not-effective (exit 1), never hidden as not realised (exit 2).
+ */
+export const reachedTerminal = snapshot => typeof snapshot === 'object' && snapshot !== null && typeof snapshot.terminal === 'string' && snapshot.terminal.length > 0;
 
 const TYPED_DENIAL = /authoriz|grant denied/i;
 const isObject = value => typeof value === 'object' && value !== null && !Array.isArray(value);
 const isNumber = value => typeof value === 'number' && Number.isFinite(value);
+const isPid = value => Number.isSafeInteger(value) && value > 0;
 const arrayOf = value => (Array.isArray(value) ? value : []);
 
 function deepFreeze(value) {
@@ -46,8 +58,8 @@ function deepFreeze(value) {
 
 /**
  * Judge observed journeys. Returns {findings: {rule, detail}[], realised}. A missing or unarmed journey,
- * a missing injection combination or a single-reader case makes the measurement not realised; it never
- * produces a pass and never a finding.
+ * a missing or repeated injection combination, a single-reader case or a journey without its host pid
+ * makes the measurement not realised; it never produces a pass and never a finding.
  */
 export function assessSharedChildJourneys(observed) {
   const findings = [];
@@ -63,6 +75,11 @@ export function assessSharedChildJourneys(observed) {
   for (const wanted of SHARED_CHILD_CASES) {
     const matching = cases.filter(entry => entry.when === wanted.when && entry.close === wanted.close);
     if (matching.length !== 1 || !(matching[0].readers >= 2)) realised = false;
+  }
+  // The launched host's pid is evidence, not decoration: a stop journey or reader-close case that does not carry it as a
+  // positive integer cannot say which child it observed (a dropped, nulled or severed hostPid never exits 0).
+  for (const journey of [nonOwner, owner, ...cases]) {
+    if (journey !== undefined && !isPid(journey.hostPid)) realised = false;
   }
 
   for (const [id, count] of Object.entries(markerCounts)) {
@@ -150,6 +167,7 @@ export function buildSharedChildReceipt(input) {
     node,
     arch,
     platform,
+    ownershipModel: SHARED_CHILD_OWNERSHIP_MODEL,
     journeys,
     markerCounts,
     findings: basenameOnly(findings),
