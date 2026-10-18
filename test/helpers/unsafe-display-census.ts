@@ -1,6 +1,6 @@
 /**
  * unsafe-display-census.ts - the structural census behind test/workbench-unsafe-display-oracle.test.ts (wb-8bi respin; the
- * enumeration below is wb-85h's, the row-514 follow-up).
+ * enumeration below is wb-85h's, the row-514 follow-up, with the row-529 rows P1-P12 of its respin 1).
  *
  * The question: does any regular expression under test/ act as the display-safety oracle while being something other than the
  * one shared definition in test/helpers/unsafe-display.ts? The first cut asked by NAME, with a line regex over *.test.ts files.
@@ -21,8 +21,8 @@
  *   every module under test/ ..."); name order is by UTF-16 code unit, which a directory read's own byte order is not ("orders
  *   each directory by UTF-16 code unit ..."). Each file is parsed by the TypeScript compiler under its own script kind (.tsx,
  *   .jsx, .js, .mjs and .cjs with JSX; .ts, .mts and .cts without), so text in a comment, a string, a template or JSX is never
- *   a pattern and neither is a division (rows FR1, FR2, S24, S25, S26, N4, N5, N6, HR3, W2, W3), and a .ts type assertion is
- *   not JSX (rows W4).
+ *   a pattern and neither is a division (rows FR1, FR2, S24, S25, S26, N4, N5, N6, HR3, W2, W3, P3, P4), and a type assertion
+ *   in a .ts, .mts or .cts module is not JSX (rows W4, P1, P2).
  * - PATTERNS: every regular-expression literal wherever it sits: any binding name, let, var or const, a property, a class
  *   field, an argument, a table, a wrapper, no binding at all (rows C1, C2, C3, C4, C5, F1, F2, F3, F4, F5, F7, F8, F10, S1, S2,
  *   S3, G17, G21, G22); and every RegExp(...) or new RegExp(...) call whose callee is RegExp or globalThis.RegExp, parenthesized
@@ -33,27 +33,32 @@
  *   `as`, `satisfies` and `!` (rows W4); an identifier with exactly one initialized variable declaration of that name in the
  *   same file (rows S7, G6), a name declared twice being a hole (rows W9); `.source` and `.flags` of a readable regular
  *   expression (rows S9, S10, W10, W11); a readable regular expression (a literal, such a binding, or a construction) as the
- *   pattern argument, its flags replaced by a flags argument when one is given (rows G16, W12); `[...].join(separator)` over an
- *   array literal without spreads, no separator reading as a comma (rows W13, W14); String.fromCodePoint and
- *   String.fromCharCode of numeric literals (rows W15, W16). Anything else is a HOLE and reads as empty text, and so is any part
- *   nested more than eight levels deep: an eight-part `+` chain reads whole, a nine-part one loses two parts (rows W17, W18).
+ *   pattern argument, keeping its own flags when no flags argument is given (rows G16, W12) and taking the flags argument's
+ *   when one is (rows P5); `[...].join(separator)` over an array literal without spreads, no separator reading as a comma
+ *   (rows W13, W14), a spread making the whole join a hole (rows P7); String.fromCodePoint and String.fromCharCode of numeric
+ *   literals (rows W15, W16), String.fromCodePoint reading an astral code point whole (rows P6). Anything else is a HOLE and
+ *   reads as empty text, and so is any part nested more than eight levels deep: an eight-part `+` chain reads whole, a
+ *   nine-part one loses two parts (rows W17, W18), and a literal reached through six aliases reads whole, through seven it is a
+ *   hole and its construction OPAQUE (rows P9, P8).
  * - PARTIAL: a pattern read with holes is classified like any other, and a PARTIAL oracle always drifts, its detail naming the
  *   unread parts, even when its readable text equals the shared oracle's: a hole after, before or inside the shared body (rows
  *   G27, W19, W20), the same on the unwidened body (rows G24, G25, W21), a hole in the flags argument (rows W22), parts past the
  *   depth bound (rows W18).
  * - OPAQUE: a construction whose pattern argument is nothing but holes (a call result, an import, String.prototype.concat, join
- *   over a binding, a parameter, .source of an import, a name declared twice) is listed by file and line and never classified
- *   (rows S28, S29, G7, G8, G9, N1, W9).
+ *   over a binding or with a spread, a parameter, .source of an import, a name declared twice, a literal aliased past the depth
+ *   bound) is listed by file and line and never classified (rows S28, S29, G7, G8, G9, N1, W9, P7, P8).
  * - UNCOMPILED: a pattern whose read does not compile under its own flags is listed, never dropped (rows G18, G26), and the live
  *   census fails on any such site under test/ ("every pattern the census read compiles ...").
  * - CLASSIFIER: a pattern is the display-safety oracle when it keeps every TEXT_PROBES code point and refuses every sample of at
- *   least ORACLE_CLASS_FLOOR (four) of the five ORACLE_CLASSES, probed with its own flags, g, y and d dropped. The lists and the
- *   floor are pinned by value ("the classifier constants ...", "the read extensions, the text probes ..."); other flags (rows
- *   G2, G3) and another spelling of the same classes (rows G4) are read by behaviour; a copy drifts at four classes (rows S12,
- *   S13), stays quiet below the floor (rows S19, S20, S21, S30), and is never the oracle when it keeps no text (rows S22, S23).
+ *   least ORACLE_CLASS_FLOOR (four) of the five ORACLE_CLASSES, probed with its own flags, g, y and d dropped, so a global or
+ *   sticky copy is read like any other (rows S18, P10, P12). The lists and the floor are pinned by value ("the classifier
+ *   constants ...", "the read extensions, the text probes ..."); other flags (rows G2, G3) and another spelling of the same
+ *   classes (rows G4) are read by behaviour; a copy drifts at four classes (rows S12, S13), stays quiet below the floor (rows
+ *   S19, S20, S21, S30), and is never the oracle when it keeps no text (rows S22, S23).
  * - VERDICT: an oracle DRIFTS unless its source and flags (g, y and d dropped) equal the shared oracle's byte for byte: equal
- *   copies stay quiet (rows S17, S18), the same verdicts spelled or flagged differently drift (rows S14, W23), and a drift
- *   names what the copy accepts or refuses that the shared oracle does not (rows S11, G19, G20).
+ *   copies stay quiet, a g, y or d flag included (rows S17, S18, P11, P12), the same verdicts spelled or flagged differently
+ *   drift (rows S14, W23), and a drift names what the copy accepts or refuses that the shared oracle does not (rows S11, G19,
+ *   G20).
  * - BINDING AND IMPORTS: a pattern's binding is the variable, property, class field or assignment target it initializes,
  *   through wrappers, and none for an argument ("names the binding ..."); importsValue reads a value import under any alias and
  *   never a type-only one, another module, another name or a namespace import ("importsValue reads ...").
@@ -68,8 +73,8 @@
  *   marks, emoji, a CJK block) keeps no text, so it is never the oracle.
  * - R4 below the floor (rows S30, G12): a copy narrowed below four classes, or an oracle split across patterns that each refuse
  *   fewer, no longer behaves as this oracle.
- * - R5 opaque constructions (rows S28, S29, G7, G8, G9, N1, W9): listed, never classified, and the live census neither fails on
- *   them nor pins their roster, so a new opaque copy lands green.
+ * - R5 opaque constructions (rows S28, S29, G7, G8, G9, N1, W9, P7, P8): listed, never classified, and the live census neither
+ *   fails on them nor pins their roster, so a new opaque copy lands green.
  * - R6 over-refusal (rows G18): a legitimate partial read that does not compile (a regex-escape helper) is listed uncompiled,
  *   and the live census fails on it.
  * - R7 not read (rows S27): files with another extension; files outside the root and symbolic links ("reads every

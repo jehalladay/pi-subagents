@@ -17,6 +17,12 @@
  * "sweep", W1-W23, each naming the mutant it kills), pins every origin's ids and the MIGRATED and PINNED_COPIES tables, pins the
  * census constants by value, and checks the census header against the table: the header cites only BATTERY rows, cites every
  * one, and lists each named residual with exactly the rows that pin it.
+ *
+ * wb-85h respin 1 (gate row 529, ORCH-REC-R529): the row-529 gate's own mutant battery left nine single-edit mutants of the
+ * census alive inside modes the header claims: the .mts, .cts, .mjs and .cjs script kinds, a flags argument replacing the inner
+ * flags, an astral String.fromCodePoint member, a spread in a join, the depth bound of the regular-expression reader, and y and d
+ * dropped from the probe and the pin. Origin "row529" rows P1-P12 re-author the gate's plants, each naming the gate mutant it
+ * kills (P9 is the near side of the depth bound P8 pins), and the header cites them where it makes the claim.
  */
 
 import { mkdirSync, readdirSync, readFileSync, symlinkSync, writeFileSync } from "node:fs";
@@ -139,9 +145,10 @@ interface Row {
   /**
    * "gate" rows re-author the 17 shapes row 478 names (the gate's planted texts were not available to this seat); "seat" rows
    * extend them; "row514" rows re-author the row-514 gate's shapes under its ids; "sweep" rows kill the census clauses a mutant
-   * battery found unkilled (wb-85h).
+   * battery found unkilled (wb-85h); "row529" rows re-author the row-529 gate's plants, each killing one of its surviving
+   * mutants (wb-85h respin 1).
    */
-  readonly origin: "gate" | "seat" | "row514" | "sweep";
+  readonly origin: "gate" | "seat" | "row514" | "sweep" | "row529";
   readonly shape: string;
   readonly path: string;
   readonly text: string;
@@ -240,6 +247,9 @@ const U_LESS = [
   `(?<!${HIGH_SURROGATES})${LOW_SURROGATES}`,
 ].join("|");
 const chain = (empties: number): string => [...Array.from({ length: empties }, () => '""'), SHARED_Q].join(" + ");
+/** A literal bound to r0 and reached through `links` aliases (r1 = r0, r2 = r1, ...), then constructed (wb-85h respin 1). */
+const aliased = (literal: string, links: number, name: string): string =>
+  [`const r0 = ${literal};`, ...Array.from({ length: links }, (_, at) => `const r${at + 1} = r${at};`), `export const ${name} = new RegExp(r${links});`, ""].join("\n");
 
 /** The falsifier table: the gate's 17 shapes (5 controls, F1-F10, FR1, FR2), the seat's extensions, and wb-85h's row-514 and sweep rows, each planted alone. */
 const BATTERY: readonly Row[] = [
@@ -516,6 +526,45 @@ const BATTERY: readonly Row[] = [
     partialDetail(1),
   ),
   drift("W23", "sweep", "VERDICT: the shared body with the i flag drifts, flags being part of the pin (kills M-PIN-FLAGS)", `export const CASELESS = /${SHARED}/ui;\n`, "CASELESS", SPELLED),
+  // wb-85h respin 1: the row-529 gate's plants (ORCH-REC-R529), one row per surviving gate mutant it kills, plus P9, the near side of P8.
+  drift("P1", "row529", "READ: a type assertion in a .mts module is not JSX, so the copy is read and drifts (kills GR-KIND-MTS-TSX)", `export const UNSAFE = <RegExp>${LEGACY_LITERAL};\n`, LEGACY_LITERAL, ACCEPTS_RQD, "helpers/planted-assert.mts"),
+  drift("P2", "row529", "READ: a type assertion in a .cts module is not JSX, so the copy is read and drifts (kills GR-KIND-CTS-TSX)", `export const UNSAFE = <RegExp>${LEGACY_LITERAL};\n`, LEGACY_LITERAL, ACCEPTS_RQD, "helpers/planted-assert.cts"),
+  quiet("P3", "row529", "READ: JSX text in a .mjs module is not a pattern (kills GR-KIND-MJS-TS)", `export const View = () => <div>${LEGACY_LITERAL}</div>;\n`, "not code", "fixtures/planted-view.mjs"),
+  quiet("P4", "row529", "READ: JSX text in a .cjs module is not a pattern (kills GR-KIND-CJS-TS)", `export const View = () => <div>${LEGACY_LITERAL}</div>;\n`, "not code", "fixtures/planted-view.cjs"),
+  counted(
+    drift(
+      "P5",
+      "row529",
+      'EVALUATOR: a flags argument replaces the inner literal\'s flags, so new RegExp(BASE, "iu") drifts (kills GE-INNER-FLAGS-KEEP; W12\'s "gu" reads as "u" once g is dropped, so it cannot tell replacing from keeping)',
+      `const BASE = ${SHARED_LITERAL};\nexport const CASELESS = new RegExp(BASE, "iu");\n`,
+      "new RegExp(",
+      SPELLED,
+    ),
+    { oracles: 2, drifted: 1 },
+  ),
+  drift(
+    "P6",
+    "row529",
+    "EVALUATOR: String.fromCodePoint reads an astral code point whole, so a U+10061 class member is not its low unit U+0061 (kills GE-FCP-SWAP)",
+    `export const COPY = new RegExp(${quoted(CONTROLS.slice(0, -1))} + String.fromCodePoint(0x10061) + ${quoted(`]|${IGNORABLES}|${SURROGATES}`)}, "u");\n`,
+    "new RegExp(",
+    RQD_REFUSED,
+  ),
+  residualOf(
+    quiet("P7", "row529", "EVALUATOR: a spread in a joined array literal is a hole, so the construction is OPAQUE (kills GE-JOIN-SPREAD)", `const EXTRA: string[] = [];\nexport const COPY = new RegExp([...EXTRA, ${LEGACY_Q}].join(""), "u");\n`, "opaque"),
+    "R5",
+  ),
+  residualOf(
+    counted(
+      quiet("P8", "row529", "EVALUATOR: a literal reached through seven aliases is nine levels deep, a hole, so the construction is OPAQUE (kills GE-DEPTH-REGEX-OFF)", aliased(SHARED_LITERAL, 7, "DEEP"), "opaque"),
+      { patterns: 1, oracles: 1 },
+    ),
+    "R5",
+  ),
+  equalCopies("P9", "row529", "EVALUATOR: a literal reached through six aliases is eight levels deep and reads whole (the near side of P8's bound)", aliased(SHARED_LITERAL, 6, "NEAR"), 2),
+  drift("P10", "row529", "CLASSIFIER: a y-flagged unwidened copy is probed without y, so it is the oracle and drifts (kills GC-PROBEFLAGS-G-ONLY)", `export const STICKY = /${LEGACY}/uy;\n`, "STICKY"),
+  quiet("P11", "row529", "VERDICT: a d-flagged equal copy stays quiet, d dropped from the pin (kills GC-PROBEFLAGS-G-ONLY)", `export const INDICES = /${SHARED}/du;\n`, "equal copy"),
+  quiet("P12", "row529", "VERDICT: a y-flagged equal copy stays quiet, y dropped from the probe and the pin (kills GC-PROBEFLAGS-G-ONLY)", `export const STICKY = /${SHARED}/uy;\n`, "equal copy"),
 ];
 
 const GATE_IDS = ["C1", "C2", "C3", "C4", "C5", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "FR1", "FR2"];
@@ -563,6 +612,8 @@ const ROW514_IDS = [
   "HR3",
 ];
 const SWEEP_IDS = Array.from({ length: 23 }, (_, at) => `W${at + 1}`);
+/** wb-85h respin 1: the row-529 rows, pinned in table order like every other origin. */
+const ROW529_IDS = Array.from({ length: 12 }, (_, at) => `P${at + 1}`);
 /** The census header's NAMED RESIDUALS, in header order. */
 const RESIDUAL_IDS = ["R1", "R2", "R3", "R4", "R5", "R6", "R7"];
 const lineOf = (text: string, needle: string): number => text.slice(0, text.indexOf(needle)).split("\n").length;
@@ -581,7 +632,8 @@ describe("display-oracle census falsifier table (wb-8bi respin, R2(a))", () => {
     expect(ids("seat")).toEqual(SEAT_IDS);
     expect(ids("row514")).toEqual(ROW514_IDS);
     expect(ids("sweep")).toEqual(SWEEP_IDS);
-    expect(BATTERY).toHaveLength(GATE_IDS.length + SEAT_IDS.length + ROW514_IDS.length + SWEEP_IDS.length);
+    expect(ids("row529")).toEqual(ROW529_IDS);
+    expect(BATTERY).toHaveLength(GATE_IDS.length + SEAT_IDS.length + ROW514_IDS.length + SWEEP_IDS.length + ROW529_IDS.length);
     for (const row of BATTERY.filter(candidate => candidate.why === "residual")) expect(row.sites, row.id).toBeDefined();
   });
 
