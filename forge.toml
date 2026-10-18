@@ -10,7 +10,7 @@ gate = ["lint", "typing", "build", "test", "census", "workbench-shell", "package
 
 [build.commands]
 lint = "npm run lint"
-typing = "npm run typecheck"
+typing = "npm run typecheck && npm run typecheck:test"
 test = "npm run test"
 build = "npm run build"
 
@@ -19,7 +19,7 @@ command = "bash qa/workbench/smoke.sh"
 timeout = 120
 
 [build.commands.typecheck]
-command = "npm run typecheck"
+command = "npm run typecheck && npm run typecheck:test"
 
 [build.commands.native-read]
 command = "./node_modules/.bin/vitest run --config vitest.native.config.ts"
