@@ -1,32 +1,79 @@
 /**
- * unsafe-display-census.ts - the structural census behind test/workbench-unsafe-display-oracle.test.ts (wb-8bi respin).
+ * unsafe-display-census.ts - the structural census behind test/workbench-unsafe-display-oracle.test.ts (wb-8bi respin; the
+ * enumeration below is wb-85h's, the row-514 follow-up).
  *
  * The question: does any regular expression under test/ act as the display-safety oracle while being something other than the
  * one shared definition in test/helpers/unsafe-display.ts? The first cut asked by NAME, with a line regex over *.test.ts files.
  * The row-478 gate planted 17 shapes and found it blind to 9 (the names UNSAFE and UNSAFE_OUTCOME, let, var, new RegExp, a
  * trailing comment, no semicolon, a non-test helper, a second statement on the line) and red on 2 that are not code (a block
- * comment, a template literal). This census asks by BODY:
+ * comment, a template literal). This census asks by BODY.
  *
- * - READ: every file under the root whose extension is in CENSUS_EXTENSIONS (TypeScript and JavaScript modules, test files or
- *   not, at any depth), parsed with the TypeScript compiler. Text inside a comment, a string or a template is never a pattern.
- * - PATTERNS: every regular-expression literal wherever it sits (any binding name, let/var/const, a property, a class field, an
- *   argument, no binding at all), and every RegExp(...) or new RegExp(...) call whose callee is RegExp or globalThis.RegExp.
- * - EVALUATOR for RegExp arguments (closed list): string literals; no-substitution templates; templates whose substitutions
- *   evaluate; String.raw templates; `+` concatenation; parentheses, type assertions, `as`, `satisfies` and `!`; an identifier
- *   with exactly one initialized variable declaration of that name in the same file; `.source` and `.flags` of an evaluable
- *   regular expression; `[...].join(separator)`; String.fromCodePoint and String.fromCharCode of numeric literals. Anything
- *   else is a HOLE and reads as empty text. A pattern with holes is PARTIAL and is still classified. A construction whose
- *   pattern is nothing but holes is OPAQUE: listed by file and line, never classified, because the census cannot see it.
- * - CLASSIFIER: a pattern is the display-safety oracle when it keeps every TEXT_PROBES code point and refuses every sample of
- *   at least ORACLE_CLASS_FLOOR of the five ORACLE_CLASSES (probed with its own flags, g, y and d dropped). The floor is four,
- *   so a copy that lost one whole class is still found. Patterns that refuse text (negated classes, empty matches) are never
- *   the oracle however many classes they refuse.
- * - VERDICT: an oracle DRIFTS unless its source and flags (g, y and d dropped) equal the shared oracle's byte for byte, and a
- *   PARTIAL oracle always drifts (a copy built from values the census cannot read is not pinned equal).
+ * WHAT THIS HEADER CLAIMS, AND ONLY THAT. Each PINNED MODE names the BATTERY rows of the census test that go red when the mode
+ * breaks; each NAMED RESIDUAL is a mode the census does not catch, named with the rows that pin its silence, so the census
+ * turning louder or quieter on it is seen either way. The census test checks this header against its table: every cited row
+ * exists, every BATTERY row is cited, and each residual cites exactly the rows that carry it. A mode found later joins one of
+ * the two lists; nothing outside them is claimed. Rows outside BATTERY are named by their test titles, in quotes.
  *
- * Not read (named residuals): files outside the root or with another extension; symbolic links (not followed); patterns whose
- * text comes only from imports, parameters or call results (OPAQUE); a copy narrowed below ORACLE_CLASS_FLOOR classes (it no
- * longer behaves as this oracle). The falsifier table in the census test pins every mode above, the blind ones included.
+ * PINNED MODES
+ * - READ: every file under the root, at any depth, whose extension is in CENSUS_EXTENSIONS (.ts .mts .cts .tsx .js .mjs .cjs
+ *   .jsx), test files or not, in name order within each directory (rows F9, S15, S16, G1a, G1b, G1c, G1d, W1), pinned by value
+ *   and over a planted tree and the live tree too ("the read extensions ...", "reads every census-extension file ...", "reads
+ *   every module under test/ ..."); name order is by UTF-16 code unit, which a directory read's own byte order is not ("orders
+ *   each directory by UTF-16 code unit ..."). Each file is parsed by the TypeScript compiler under its own script kind (.tsx,
+ *   .jsx, .js, .mjs and .cjs with JSX; .ts, .mts and .cts without), so text in a comment, a string, a template or JSX is never
+ *   a pattern and neither is a division (rows FR1, FR2, S24, S25, S26, N4, N5, N6, HR3, W2, W3), and a .ts type assertion is
+ *   not JSX (rows W4).
+ * - PATTERNS: every regular-expression literal wherever it sits: any binding name, let, var or const, a property, a class
+ *   field, an argument, a table, a wrapper, no binding at all (rows C1, C2, C3, C4, C5, F1, F2, F3, F4, F5, F7, F8, F10, S1, S2,
+ *   S3, G17, G21, G22); and every RegExp(...) or new RegExp(...) call whose callee is RegExp or globalThis.RegExp, parenthesized
+ *   or not (rows F6, S4, S5, W5), RegExp() with no argument reading as the empty pattern (rows W6).
+ * - EVALUATOR, a closed list, for a construction's pattern and flags arguments: string literals (rows F6) and numeric literals
+ *   (rows W7); no-substitution templates (rows G5); templates whose substitutions evaluate (rows G14); String.raw templates,
+ *   read raw, with or without substitutions (rows S6, N2, W8); `+` concatenation (rows S8, N3); parentheses, type assertions,
+ *   `as`, `satisfies` and `!` (rows W4); an identifier with exactly one initialized variable declaration of that name in the
+ *   same file (rows S7, G6), a name declared twice being a hole (rows W9); `.source` and `.flags` of a readable regular
+ *   expression (rows S9, S10, W10, W11); a readable regular expression (a literal, such a binding, or a construction) as the
+ *   pattern argument, its flags replaced by a flags argument when one is given (rows G16, W12); `[...].join(separator)` over an
+ *   array literal without spreads, no separator reading as a comma (rows W13, W14); String.fromCodePoint and
+ *   String.fromCharCode of numeric literals (rows W15, W16). Anything else is a HOLE and reads as empty text, and so is any part
+ *   nested more than eight levels deep: an eight-part `+` chain reads whole, a nine-part one loses two parts (rows W17, W18).
+ * - PARTIAL: a pattern read with holes is classified like any other, and a PARTIAL oracle always drifts, its detail naming the
+ *   unread parts, even when its readable text equals the shared oracle's: a hole after, before or inside the shared body (rows
+ *   G27, W19, W20), the same on the unwidened body (rows G24, G25, W21), a hole in the flags argument (rows W22), parts past the
+ *   depth bound (rows W18).
+ * - OPAQUE: a construction whose pattern argument is nothing but holes (a call result, an import, String.prototype.concat, join
+ *   over a binding, a parameter, .source of an import, a name declared twice) is listed by file and line and never classified
+ *   (rows S28, S29, G7, G8, G9, N1, W9).
+ * - UNCOMPILED: a pattern whose read does not compile under its own flags is listed, never dropped (rows G18, G26), and the live
+ *   census fails on any such site under test/ ("every pattern the census read compiles ...").
+ * - CLASSIFIER: a pattern is the display-safety oracle when it keeps every TEXT_PROBES code point and refuses every sample of at
+ *   least ORACLE_CLASS_FLOOR (four) of the five ORACLE_CLASSES, probed with its own flags, g, y and d dropped. The lists and the
+ *   floor are pinned by value ("the classifier constants ...", "the read extensions, the text probes ..."); other flags (rows
+ *   G2, G3) and another spelling of the same classes (rows G4) are read by behaviour; a copy drifts at four classes (rows S12,
+ *   S13), stays quiet below the floor (rows S19, S20, S21, S30), and is never the oracle when it keeps no text (rows S22, S23).
+ * - VERDICT: an oracle DRIFTS unless its source and flags (g, y and d dropped) equal the shared oracle's byte for byte: equal
+ *   copies stay quiet (rows S17, S18), the same verdicts spelled or flagged differently drift (rows S14, W23), and a drift
+ *   names what the copy accepts or refuses that the shared oracle does not (rows S11, G19, G20).
+ * - BINDING AND IMPORTS: a pattern's binding is the variable, property, class field or assignment target it initializes,
+ *   through wrappers, and none for an argument ("names the binding ..."); importsValue reads a value import under any alias and
+ *   never a type-only one, another module, another name or a namespace import ("importsValue reads ...").
+ *
+ * NAMED RESIDUALS (known blind modes; each row pins today's silence)
+ * - R1 the empty alternative (rows G23): a hole that forms a whole alternative reads as an EMPTY alternative, which matches
+ *   every input, so the copy keeps no text and is never classified: not drifted, not opaque, not uncompiled (the owner default
+ *   R1(a), standing per R484).
+ * - R2 other constructor spellings (rows G10, G11, G15): Reflect.construct(RegExp, ...), an aliased constructor and
+ *   globalThis["RegExp"] are not read at all, not even listed opaque.
+ * - R3 over-strict copies (rows G13a, G13b, G13c): the unwidened body plus one alternative that refuses a text probe (combining
+ *   marks, emoji, a CJK block) keeps no text, so it is never the oracle.
+ * - R4 below the floor (rows S30, G12): a copy narrowed below four classes, or an oracle split across patterns that each refuse
+ *   fewer, no longer behaves as this oracle.
+ * - R5 opaque constructions (rows S28, S29, G7, G8, G9, N1, W9): listed, never classified, and the live census neither fails on
+ *   them nor pins their roster, so a new opaque copy lands green.
+ * - R6 over-refusal (rows G18): a legitimate partial read that does not compile (a regex-escape helper) is listed uncompiled,
+ *   and the live census fails on it.
+ * - R7 not read (rows S27): files with another extension; files outside the root and symbolic links ("reads every
+ *   census-extension file ...").
  */
 
 import { readdirSync, readFileSync } from "node:fs";
@@ -51,7 +98,7 @@ export const censusRoot = (moduleUrl: string): string => dirname(fileURLToPath(m
 
 const byName = (left: { name: string }, right: { name: string }): number => (left.name < right.name ? -1 : left.name > right.name ? 1 : 0);
 
-/** Every in-scope file under the root, at any depth, in a stable order. Symbolic links are not followed. */
+/** Every in-scope file under the root, at any depth, in name order (by UTF-16 code unit) within each directory. Symbolic links are not followed. */
 export function readCensusFiles(root: string): CensusFile[] {
   const files: CensusFile[] = [];
   const walk = (dir: string): void => {
