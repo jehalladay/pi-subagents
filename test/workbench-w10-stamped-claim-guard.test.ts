@@ -15,7 +15,7 @@
  *   because raw HTML can hide text the lexer still reads. One carve-out, outside the W10 section only: a bare tag (`<name>`
  *   or `</name>`, no attributes) inside a GFM table cell naming an element that cannot leave its cell or hide what follows
  *   it (never a raw-text, template, table-structure, document or foreign-content element) is tolerated and stripped; today
- *   that is exactly the invoke:<id> cells of the W03 and W06 rows. The receipt and INDEX files admit complete comments only.
+ *   that is exactly the invoke:<id> cells of the W03 and W06 rows. The receipt files and the rendered index admit complete comments only.
  * - RENDERED TEXT: text, backslash escapes, code spans, code blocks and link text (never a destination or a title), with
  *   numeric and common named character references decoded in text; images and struck-through (del) text are not asserted;
  *   html tokens render nothing; in a table cell every white-space run reads as one space. Fenced and indented code is
@@ -53,16 +53,16 @@
  *   and combining code points dropped, case folded; each remaining non-ASCII code point matches any 0-3 characters, so a
  *   non-ASCII look-alike counts.
  * FALSIFIER FLOOR (U5): the gate-3 row-487 battery (G1-G9 with G6b evasions, K1-K3 kills, R1-R2 rendering-neutral controls)
- * and the gate-1 row-500 battery (J1-J27 docs, receipt and INDEX variants; N1-N10 rendering-neutral controls) are carried
+ * and the gate-1 row-500 battery (J1-J27 docs, receipt and rendered-index variants; N1-N10 rendering-neutral controls) are carried
  * below as the same edits of the committed docs, judged in memory: every G, K and J variant is refused with its named
  * diagnosis and every R and N control is accepted. N6 (an unrelated row above the claim row) changes the committed first
  * cells, so it is carried as a kill. The F rows keep the fefe71f protections; the H rows add hiding and duplication shapes
  * outside the batteries; the C rows are rendering-neutral controls. Every look-alike is built with String.fromCodePoint;
  * none is typed raw.
- * MUTANT AUTHORING (C1): every page and INDEX edit is located through the lexer (the top-level token raws tile the page; a
+ * MUTANT AUTHORING (C1): every page and rendered-index edit is located through the lexer (the top-level token raws tile the page; a
  * table's raw lines are its header, delimiter and rows; each rendered character of a cell or heading maps back to the
  * source span it renders from) and authored at those positions, never located by a raw-text regex, so a rendering-neutral
- * rewrite of the committed docs moves no authoring site: the C1 rows re-author every page, receipt and INDEX variant on
+ * rewrite of the committed docs moves no authoring site: the C1 rows re-author every page, receipt and rendered-index variant on
  * each N base and require the same diagnosis. Every N control is stack-safe: applied to a page that already carries it (the
  * gate battery rewrites the committed docs on disk), it adds a further rendering-neutral edit instead of none or a breaking
  * one, so the N and C1 rows stay green on every N-rewritten docs tree. Receipt edits keep fail-closed raw anchors (no
@@ -71,19 +71,20 @@
  * loop inside one row counts the entries it ran against a literal, so deleting any entry (G1 included) turns the suite red.
  * RESIDUALS (named, not closed): ASCII look-alikes (I for l, 0 for O) in a heading or a first cell are not folded; a
  * tolerated bare cell tag outside W10 is assumed inert; styling applied from outside the page; prose outside the W10
- * section (another section may still describe the capability); the receipt beyond its newest stamp entry and the INDEX
+ * section (another section may still describe the capability); the receipt beyond its newest stamp entry and the rendered index
  * beyond its one link.
- * Spawns nothing; writes nothing; reads three docs files and imports the carrier.
+ * Spawns nothing; writes nothing; reads two docs files and the receipts directory and imports the carrier.
  */
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { Lexer, type Token, type Tokens, type TokensList } from "marked";
 import { describe, expect, it } from "vitest";
+import { readReceiptsListing, renderReceiptsIndex } from "../qa/workbench/receipts-index.mjs";
 import { REACTIVE_FIBER_CONTRACT_SOURCE } from "../src/workbench/providers/reactivefiber.js";
 
 const ROOT = process.cwd();
 const MATRIX = "docs/workbench/feature-matrix.md";
-const INDEX = "docs/workbench/receipts/INDEX.md";
+const RECEIPTS_DIR = "docs/workbench/receipts";
 const W10_KEY = "w10";
 const CLAIM_KEY = "node() rf noncommitted context preview capability";
 const STAMP_KEY = "stamped receipt row";
@@ -636,11 +637,11 @@ function stampedParts(page: string): { sentence: string; slots: StampSlots; rele
   return sentence === undefined || shape === undefined ? undefined : { sentence, ...shape };
 }
 
-/** Why the receipts INDEX page fails to list `name`.md as rendered text; empty when it does. */
+/** Why the rendered receipts index fails to list `name`.md as rendered text; empty when it does. */
 function indexFindings(markdown: string, name: string): string[] {
   const tokens = new Lexer({ gfm: true }).lex(markdown);
-  const findings = htmlRefusals(tokens, INDEX, () => false);
-  if (!assertedHrefs(tokens).includes(`${name}.md`)) findings.push(`INDEX.md renders no link to ${name}.md`);
+  const findings = htmlRefusals(tokens, "the rendered receipts index", () => false);
+  if (!assertedHrefs(tokens).includes(`${name}.md`)) findings.push(`the rendered receipts index renders no link to ${name}.md`);
   return findings;
 }
 
@@ -652,6 +653,9 @@ function liveReceipt(name: string): string | undefined {
   const rel = `docs/workbench/receipts/${name}.md`;
   return existsSync(join(ROOT, rel)) ? readText(rel) : undefined;
 }
+
+/** The receipts index as it renders at this cut: generated from the directory listing (wb-5zz), never read from a file. */
+const renderedIndex = (): string => renderReceiptsIndex(readReceiptsListing(join(ROOT, RECEIPTS_DIR)));
 
 // ---- Mutant authoring only, never the judge (C1). Every page and INDEX edit is located through the lexer: the top-level
 // token raws tile the page, a table's raw lines are its header, delimiter and rows, and each rendered character of a cell or
@@ -1523,10 +1527,10 @@ describe("W10 stamped-release claim guard (wb-2j3.5, R6), read as the page rende
     expect(judgeW10Claim(page(), liveReceipt, carrier)).toEqual([]);
   });
 
-  it("L2: the receipt the stamped sentence names is listed in the rendered receipts INDEX (the one-line append convention)", () => {
+  it("L2: the receipt the stamped sentence names is listed in the rendered receipts index (generated from the directory listing, wb-5zz)", () => {
     const parts = stampedParts(page());
     expect(parts).toBeDefined();
-    expect(indexFindings(readText(INDEX), parts?.slots.receipt ?? "")).toEqual([]);
+    expect(indexFindings(renderedIndex(), parts?.slots.receipt ?? "")).toEqual([]);
   });
 
   it("L3: the live stamped sentence fills every release slot with the carrier release and equals its own slice", () => {
@@ -1719,7 +1723,7 @@ describe("W10 stamped-release claim guard (wb-2j3.5, R6), read as the page rende
 
     it("refuses H16 the receipt's INDEX line wrapped in a complete comment", () => {
       const named = stampedParts(page())?.slots.receipt ?? "";
-      const index = readText(INDEX);
+      const index = renderedIndex();
       const variant = commentIndexLine(index, named);
       expect(named).not.toBe("");
       expect(variant).not.toBe(index);
@@ -1777,7 +1781,7 @@ describe("W10 stamped-release claim guard (wb-2j3.5, R6), read as the page rende
     for (const [name, mutate] of J_INDEX) {
       it(`refuses ${name}`, () => {
         const named = stampedParts(page())?.slots.receipt ?? "";
-        const index = readText(INDEX);
+        const index = renderedIndex();
         const variant = mutate(index, named);
         expect(named).not.toBe("");
         expect(variant).not.toBe(index);
@@ -1796,7 +1800,7 @@ describe("W10 stamped-release claim guard (wb-2j3.5, R6), read as the page rende
     for (const [name, neutral] of N_INDEX) {
       it(`still accepts ${name} (rendering-neutral)`, () => {
         const named = stampedParts(page())?.slots.receipt ?? "";
-        const index = readText(INDEX);
+        const index = renderedIndex();
         const variant = neutral(index, named);
         expect(variant).not.toBe(index);
         expect(indexFindings(variant, named)).toEqual([]);
@@ -1849,7 +1853,7 @@ describe("W10 stamped-release claim guard (wb-2j3.5, R6), read as the page rende
       const id = name.split(" ")[0] ?? name;
       it(`on the ${id} INDEX base every INDEX variant is re-authored and refused, and the base itself accepted`, () => {
         const named = stampedParts(page())?.slots.receipt ?? "";
-        const index = readText(INDEX);
+        const index = renderedIndex();
         const base = neutral(index, named);
         expect(base).not.toBe(index);
         expect(indexFindings(base, named)).toEqual([]);
