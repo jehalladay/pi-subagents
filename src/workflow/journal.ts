@@ -41,7 +41,8 @@
  * differently loses cache hits, it never returns another agent's answer.
  *
  * The file is JSON Lines, appended as each agent settles, so a run that is
- * killed mid-flight still leaves everything it had finished.
+ * killed mid-flight still leaves everything it had finished. A non-read node
+ * is the one row written before anything settles (below).
  *
  * ## SDK node entries
  *
@@ -52,6 +53,21 @@
  * a tripwire — the resume stops on it rather than re-running or silently
  * replaying an effect the previous run already performed. The admission rules
  * live in runtime.ts; this file only keeps the record honest.
+ *
+ * The tripwire has to exist from dispatch, not from settlement: a run killed
+ * between a provider's side effect and its result, or between the result and
+ * its append, would otherwise leave no row for the resume to stop on. So a
+ * non-read node (an unclassified one included) is appended once BEFORE its
+ * provider is called, as a `dispatched` marker row, and its settled row at the
+ * same position supersedes the marker — the runtime keys node rows last-wins.
+ * A marker nothing superseded is a dispatch with no settled record, and a
+ * resume refuses there as an uncertain effect.
+ *
+ * Failure to write is not failure to run — for agents and node reads, whose
+ * lost row costs a later resume nothing worse than re-running work that can
+ * safely run again. A non-read dispatch is the exception: an unrecorded one
+ * is exactly the window the marker closes, so runtime.ts refuses the call,
+ * fail-closed, when its marker row does not reach the file.
  */
 
 import { createHash } from "node:crypto";
@@ -114,6 +130,16 @@ export interface WorkflowJournalEntry {
    * Recorded only for non-read entries, whose answers are deliberately not kept.
    */
   nativeRefs?: readonly NativeRef[];
+  /**
+   * Marks a node row written BEFORE its provider was called (`kind: "node"`
+   * only), so a kill between the effect and its settled row still leaves a
+   * row a resume refuses on. The settled row at the same position supersedes
+   * it. The marker, not `ok`, is what the row says: `ok` is false because no
+   * result had returned when it was written, never because the call failed.
+   * Written for non-read effect classes and unclassified calls; never for a
+   * read, so read-only journals are byte-identical to the pre-marker shape.
+   */
+  dispatched?: true;
   /**
    * The operator's recorded decision, on `kind: "acknowledge" | "override"`
    * rows only. The record binds to its node row by digest (reconcile.ts), and
@@ -210,12 +236,18 @@ export function readJournal(path: string): WorkflowJournalEntry[] {
   return entries;
 }
 
-/** Append one settled call. Failure to write is not failure to run. */
-export function appendJournal(path: string, entry: WorkflowJournalEntry): void {
+/**
+ * Append one row, reporting whether it reached the file. Never throws: what a
+ * lost row costs is the caller's call. For agents and node reads, failure to
+ * write is not failure to run; for a non-read node's dispatched marker it is a
+ * refusal, decided in runtime.ts (see the header above).
+ */
+export function appendJournal(path: string, entry: WorkflowJournalEntry): boolean {
   try {
     appendFileSync(path, `${JSON.stringify(entry)}\n`, "utf-8");
+    return true;
   } catch {
-    // A journal that cannot be written costs a future resume, nothing more.
+    return false;
   }
 }
 
@@ -244,6 +276,9 @@ function isEntry(value: unknown): value is WorkflowJournalEntry {
     (entry.effectClass === undefined || typeof entry.effectClass === "string") &&
     (entry.basis === undefined || typeof entry.basis === "string") &&
     (entry.nativeRefs === undefined || (Array.isArray(entry.nativeRefs) && entry.nativeRefs.every(isNativeRef))) &&
+    // The dispatch marker means something only on a node row; anything but a
+    // literal true, or a marker on any other kind, is as mangled as a bad field.
+    (entry.dispatched === undefined || (entry.dispatched === true && entry.kind === "node")) &&
     // A node entry that cannot name its capability cannot name a producer to
     // reconcile with, so it is as unusable as any other mangled line.
     (entry.kind !== "node" || typeof entry.capabilityId === "string") &&

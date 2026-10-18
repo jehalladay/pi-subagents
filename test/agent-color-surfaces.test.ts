@@ -66,13 +66,17 @@ function makeRecord(): AgentRecord {
 }
 
 function makeActivity(): AgentActivity {
-  return {
+  // `lifetimeUsage` is the tracker's pre-#249 shape: AgentActivity no longer
+  // declares it (spend is read from the record), so the fixture's extra key is
+  // typed here rather than dropped. No src reader touches it.
+  const activity: AgentActivity & Pick<AgentRecord, "lifetimeUsage"> = {
     activeTools: new Map(),
     toolUses: 0,
     responseText: "",
     turnCount: 1,
     lifetimeUsage: { input: 0, output: 0, cacheWrite: 0 },
   };
+  return activity;
 }
 
 function makePi() {

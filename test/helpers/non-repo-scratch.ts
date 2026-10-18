@@ -10,9 +10,9 @@
  */
 
 import { execFileSync } from "node:child_process";
-import { mkdtempSync, realpathSync, rmSync } from "node:fs";
-import { tmpdir } from "node:os";
-import { dirname, join } from "node:path";
+import { realpathSync } from "node:fs";
+import { dirname } from "node:path";
+import { makeScratch, removeScratch } from "./scratch.js";
 
 const CEILING = "GIT_CEILING_DIRECTORIES";
 
@@ -59,21 +59,21 @@ export function pinNonRepo(dir: string): () => void {
   return restore;
 }
 
-/** A fresh temp directory under tmpdir() pinned outside any repository. */
+/** A fresh temp directory under tmpdir() pinned outside any repository, allocated through the tracked scratch path (wb-g5o) so the leak guard covers it. */
 export function nonRepoScratch(prefix: string): NonRepoScratch {
-  const dir = mkdtempSync(join(tmpdir(), prefix));
+  const dir = makeScratch(prefix);
   let restore: () => void;
   try {
     restore = pinNonRepo(dir);
   } catch (error) {
-    rmSync(dir, { recursive: true, force: true });
+    removeScratch(dir);
     throw error;
   }
   return {
     dir,
     dispose() {
       restore();
-      rmSync(dir, { recursive: true, force: true });
+      removeScratch(dir);
     },
   };
 }

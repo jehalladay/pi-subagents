@@ -1,0 +1,28 @@
+{
+  "numTotalTests": 2,
+  "success": true,
+  "testResults": [
+    {
+      "name": "/repo/test/fake-a.test.ts",
+      "status": "passed",
+      "assertionResults": [
+        {
+          "ancestorTitles": [
+            "fake"
+          ],
+          "fullName": "fake denies the forged grant",
+          "status": "passed",
+          "title": "denies the forged grant"
+        },
+        {
+          "ancestorTitles": [
+            "fake"
+          ],
+          "fullName": "fake plain case",
+          "status": "passed",
+          "title": "plain case"
+        }
+      ]
+    }
+  ]
+}
