@@ -15,6 +15,7 @@
  */
 
 import { randomUUID } from "node:crypto";
+import type { NativeControlReceipt } from "../workbench/control.js";
 import type { InvocationSnapshot } from "../workbench/identity.js";
 import { sanitizeWorkbenchText } from "../workbench/redaction.js";
 import { escapeXml } from "../xml.js";
@@ -75,6 +76,11 @@ export interface WorkflowTask {
   reconciledNodeCount: number;
   /** Session-held reconcile evidence receipts for this task (max 16, FIFO), written by workflow_reconcile. */
   reconcile?: { receipts: EvidenceReceipt[] };
+  /**
+   * Session-held control audit for this task (max 64 receipts, FIFO), written by workflow_control: every receipt phase the
+   * decision core minted or a producer adapter settled (requested, acknowledged, result), never one the tool composed.
+   */
+  controlAudit?: { receipts: NativeControlReceipt[] };
 
   /** The append-only event log, in emission order. */
   workflowProgress: WorkflowEntry[];
@@ -242,12 +248,15 @@ export function failWorkflowTask(task: WorkflowTask, error: string): void {
  * What a resume journal holds, by what the runtime will do with each entry:
  * agent calls and node reads can come back from it, a journaled effect stops
  * the resume at its position until the producer reconciles it, and a node call
- * recorded without effect metadata runs live. Said up front so the caller is
- * not surprised by a refusal halfway through.
+ * recorded without effect metadata stops it too — the runtime fails closed on
+ * an unclassified entry. Said up front so the caller is not surprised by a
+ * refusal halfway through.
  */
 export function describeResumeJournal(from: string, entries: readonly WorkflowJournalEntry[]): string {
   const agents = entries.filter(entry => entry.kind === undefined).length;
-  const nodes = entries.filter(entry => entry.kind === "node");
+  // One row per node position, the last, as runtime.ts consults them: a
+  // non-read call is journaled at dispatch and again once settled (wb-5x0.1).
+  const nodes = [...new Map(entries.filter(entry => entry.kind === "node").map(entry => [entry.index, entry])).values()];
   const reads = nodes.filter(entry => entry.effectClass === "read" && entry.ok && entry.text !== undefined).length;
   const effects = nodes.filter(entry => entry.effectClass !== undefined && entry.effectClass !== "read");
   const untyped = nodes.filter(entry => entry.effectClass === undefined).length;
@@ -281,7 +290,7 @@ export function describeResumeJournal(from: string, entries: readonly WorkflowJo
   if (settledPositions.length > 0) parts.push(`${settledPositions.length} acknowledged by operator (${positions(settledPositions)}) settle from the acknowledgement`);
   if (overridePositions.length > 0) parts.push(`${overridePositions.length} operator ${overridePositions.length === 1 ? "override" : "overrides"} (${positions(overridePositions)}) re-run once`);
   if (absentPositions.length > 0) parts.push(`${absentPositions.length} acknowledged as effect-absent (${positions(absentPositions)}) still stop the resume until overridden`);
-  if (untyped > 0) parts.push(`${count(untyped, "node call")} without effect metadata will run live`);
+  if (untyped > 0) parts.push(`${count(untyped, "node call")} without effect metadata will stop the resume at its position (fail-closed: an unclassified call is an uncertain effect)`);
   return `${parts.join("; ")}.`;
 }
 

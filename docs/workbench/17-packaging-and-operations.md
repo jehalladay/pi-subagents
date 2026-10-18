@@ -18,12 +18,23 @@ Separate:
 
 ## Runtime and host requirements
 
-- Credentials sourced from deployment/SDK supported mechanism; no secret copied into script VM.
+- Credentials sourced from deployment/SDK supported mechanism; no secret copied into script VM. The two interpreter launch seams pass an allowlisted environment only (`src/workbench/process-env.ts`): the embedded worker gets none of `process.env`, the detached host gets the named operational variables and no credential-shaped name; a deployment that authenticates the SDK through an environment variable must instead provision the SDK's credential store for detached hosts.
 - Workspace materialization pinned to correct basis and permissions.
 - Provider clients initialized lazily with scoped resource ownership.
 - Streaming bounded by max in-flight node calls, backend admission and configured quota.
 - Shutdown: stop accepting calls, notify owned local tasks, attempt graceful end, report unresolved effects, and release owned resources.
 - A Pi UI reconnect is only an observer/client action; it must not restart external work.
+
+## Pre-push commit-message scan (per-clone install)
+
+`qa/workbench/pre-push-commit-message-scan.mjs` is a git pre-push hook around the commit-range scan `qa/workbench/commit-message-scan.mjs`. Git writes one `<local ref> <local sha> <remote ref> <remote sha>` line per pushed ref to a pre-push hook's stdin; the hook scans `remote..local` for every line (every commit, not the tip; every commit reachable from the local sha when the remote sha is all zeros, a new branch) and skips a deleted-ref line. A commit message, author or committer that carries a source-hygiene guard code point refuses the push (exit 3, offenders listed as sha, line, column and a `U+` hex label); a line that cannot be scanned also refuses (exit 2). Install it once per clone, from the repository root, as a two-line wrapper script:
+
+```sh
+hook="$(git rev-parse --git-path hooks)/pre-push"
+printf '#!/bin/sh\nexec node '\''%s/qa/workbench/pre-push-commit-message-scan.mjs'\'' "$@"\n' "$(printf '%s' "$PWD" | sed "s/'/'\\\\''/g")" > "$hook" && chmod +x "$hook"
+```
+
+The wrapper names the script by absolute path, single-quoted for sh with any apostrophe in the path written as `'\''`, so a clone path that carries a double quote, a dollar sign, a backtick or an apostrophe still runs the scan; it hands the push straight to the script. If that path later goes missing (the clone moved, the worktree removed), node exits non-zero and the push is refused; a symlink install would instead be skipped by git without a word. Run the two lines again after moving or re-cloning.
 
 ## Operations telemetry
 
@@ -42,6 +53,23 @@ Report actual: active workflows, Claude SDK sessions, provider call outcomes, ev
 ## Versioning / distribution
 
 Version parser language and node-provider contract independently of bundle version. Changed semantics require migration notes and fixture tests. Pin immutable deploy artifact for reproducible observations. Release docs include feature matrix with status (not claimed based only on source commit).
+
+## Declared support matrix (release checklist item 4)
+
+What this fork is tested against and declares as supported, measured at the time of writing (2026-10-15, trunk `06f7071`). Every row names where the declaration lives; the measured census and its drift guard are wb-cax.20's receipt, which compares the live pins against this table and goes red when they diverge. Nothing here is a claim beyond what the gate runs: Python is not a runtime dependency of this package (no Python row), and a version outside the declared set is unsupported until a gate run on it is recorded.
+
+| Component | Declared | Where declared / how measured |
+|---|---|---|
+| Node.js runtime | tested on v24.20.0; declared floor `>=24` (package.json `engines`) | `node --version` on the gate host; no `.node-version` pin exists, the floor is the only declaration |
+| TypeScript | `6.0.3` exact (runtime AST dependency of the source designer) | package.json dependency pin + lockfile |
+| @anthropic-ai/claude-agent-sdk | `0.3.300` exact | package.json dependency pin + lockfile |
+| @forge/sdk | `0.1.0` vendored tarball (`file:vendor/forge-sdk-0.1.0.tgz`), checksum-pinned by the lockfile | lockfile integrity |
+| @furnace/sdk | `0.1.0` vendored tarball (`file:vendor/furnace-sdk-0.1.0.tgz`), checksum-pinned by the lockfile | lockfile integrity |
+| @hyperunix/sdk | `0.1.0` vendored tarball (`file:vendor/hyperunix-sdk-0.1.0.tgz`), checksum-pinned by the lockfile | lockfile integrity |
+| Pi host packages (peer) | `@earendil-works/pi-ai` >=1.1.0, `@earendil-works/pi-coding-agent` >=1.1.0, `@earendil-works/pi-tui` >=1.1.0 | peerDependencies; the host supplies them, tested against the lockfile's 1.1.0 |
+| Test and lint toolchain (dev) | vitest `4.1.10`, biome `2.4.15` | lockfile; not a runtime requirement |
+
+Policy: the Node floor and the exact pins change only by an owner commit that re-runs the complete gate on the new version and updates this table in the same commit; a drift found by wb-cax.20's guard is a defect in whichever side moved without the other.
 
 ## Release checklist
 

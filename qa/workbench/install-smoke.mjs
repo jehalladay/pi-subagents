@@ -1,11 +1,12 @@
 /** Clean external npm consumer. No publication or changes to the development install. */
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { mkdtempSync, mkdirSync, readFileSync, writeFileSync, rmSync } from 'node:fs';
-import { tmpdir } from 'node:os';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { installScratchLeakGuard, makeScratch, removeScratch } from './scratch.mjs';
+installScratchLeakGuard();
 const root = process.cwd();
-const scratch = mkdtempSync(join(tmpdir(), 'pi-workbench-install-'));
+const scratch = makeScratch('pi-workbench-install-');
 try {
   const packed = spawnSync('npm', ['pack','--ignore-scripts','--json','--pack-destination',scratch], {cwd:root,encoding:'utf8',timeout:60000});
   assert.equal(packed.status,0,packed.stderr);
@@ -18,4 +19,4 @@ try {
   const probe=spawnSync(process.execPath,['probe.mjs'],{cwd:consumer,encoding:'utf8',timeout:30000});
   assert.equal(probe.status,0,probe.stderr);
   console.log(probe.stdout.trim());
-} finally {rmSync(scratch,{recursive:true,force:true});}
+} finally {removeScratch(scratch);}

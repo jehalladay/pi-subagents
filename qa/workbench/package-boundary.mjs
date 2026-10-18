@@ -11,9 +11,22 @@ export const DENIED_PREFIXES = Object.freeze([
   '.reactive-fiber/', '.github/', 'machines/', 'test/', 'tests/',
 ]);
 
-export const DENIED_BASENAMES = Object.freeze(['AGENTS.md', 'CLAUDE.md', 'biome.json', 'tsconfig.json']);
+export const DENIED_BASENAMES = Object.freeze(['AGENTS.md', 'CLAUDE.md', 'biome.json', 'tsconfig.json', 'tsconfig.test.json']);
 
 export const DENIED_PATTERNS = Object.freeze([/\.jsonl$/, /^vitest\..*config\.ts$/, /\.test\.ts$/]);
+
+// Positive presence pins: the packed file list must CONTAIN these, so a stray ignore rule cannot
+// silently drop a shipping surface (the denylists above only prove absence of private state).
+export const REQUIRED_PACKED_PATHS = Object.freeze([
+  'LICENSE', 'package.json', 'src/index.ts', 'dist/workbench/claude-host.js',
+  'vendor/forge-sdk-0.1.0.tgz', 'vendor/furnace-sdk-0.1.0.tgz', 'vendor/hyperunix-sdk-0.1.0.tgz',
+  'vendor/dependency-lock.json',
+  'node_modules/@forge/sdk/package.json', 'node_modules/@furnace/sdk/package.json',
+  'node_modules/@hyperunix/sdk/package.json',
+]);
+
+// Directories that must ship at least one file (docs/ and qa/ ship deliberately).
+export const REQUIRED_PACKED_PREFIXES = Object.freeze(['docs/', 'qa/', 'dist/']);
 
 export const UNKNOWN_REVISION = 'unknown:not-a-git-checkout';
 
@@ -57,6 +70,19 @@ export function classifyPackedPaths(paths, { bundledLockEntries = [] } = {}) {
   return { violations, topLevel };
 }
 
+// Every required exact path or directory prefix that the packed listing does not contain.
+export function missingRequiredPackedPaths(paths) {
+  const present = new Set(paths);
+  const missing = [];
+  for (const path of REQUIRED_PACKED_PATHS) {
+    if (!present.has(path)) missing.push({ path, rule: 'missing-required-path' });
+  }
+  for (const prefix of REQUIRED_PACKED_PREFIXES) {
+    if (!paths.some(path => path.startsWith(prefix))) missing.push({ path: prefix, rule: 'missing-required-prefix' });
+  }
+  return missing;
+}
+
 // Lock `packages` keys whose entry has inBundle === true, with the leading node_modules/ removed.
 export function bundledLockEntries(lock) {
   const names = [];
@@ -77,7 +103,7 @@ export function buildPackageReceipt(input) {
     integrity: input.integrity,
     privateStateIncluded: false,
     revision: known ? head : UNKNOWN_REVISION,
-    dirty: known ? (input.git.porcelain ?? '').trim().length > 0 : null,
+    dirty: known && typeof input.git.porcelain === 'string' ? input.git.porcelain.trim().length > 0 : null,
     node: input.node,
     npm: input.npm,
     platform: input.platform,

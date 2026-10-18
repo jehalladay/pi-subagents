@@ -18,9 +18,10 @@ export interface FurnaceAttemptReference {
   id:string;runId:string;workId:string;ordinal:number;executor:string;state:AttemptState;outcome?:AttemptOutcome;
   createdAt:string;startedAt?:string;finishedAt?:string;exitCode?:number;terminationCause?:AttemptDto['termination_cause'];
 }
+export const FURNACE_EXTERNAL_OBSERVATION_CONTRACT = 'furnace.external-observation/v1';
 export interface FurnaceLogReference {attemptId:string;stream:'stdout'|'stderr';complete:boolean;lossy:boolean;returned:number;nextCursor:string|null}
 export interface FurnaceReading {
-  contract:'furnace.external-observation/v1';
+  contract:typeof FURNACE_EXTERNAL_OBSERVATION_CONTRACT;
   source:{provider:'furnace';runId:string;beadsRunId:string;workspaceRoot:string;ownership:'external';sdk:'@furnace/sdk@0.1.0';producerVersion:string;producerRevision?:string;producerDigest?:string;resolvedRuntimeConfigDigest?:string;requestIds:{status:string;attempts:string;logs:string[]}};
   capturedAt:string;observedAt:string;lastConfirmedAt:string;
   freshness:'current'|'stale';connection:'connected'|'disconnected';completeness:'complete'|'partial'|'unknown';
@@ -105,7 +106,7 @@ export class FurnaceObserver {
       }
       const now=new Date().toISOString();
       const incomplete=!history.complete||history.unreadable.length>0||run.unreadable.length>0||run.failed_total>run.failed.length||run.corrupt_events_total>run.corrupt_events.length||run.progress_unavailable!==undefined||logs.some(log=>!log.complete||log.lossy);
-      const reading:FurnaceReading={contract:'furnace.external-observation/v1',source:{provider:'furnace',runId,beadsRunId:run.beads_run_id,workspaceRoot,ownership:'external',sdk:'@furnace/sdk@0.1.0',producerVersion:run.furnace_version,
+      const reading:FurnaceReading={contract:FURNACE_EXTERNAL_OBSERVATION_CONTRACT,source:{provider:'furnace',runId,beadsRunId:run.beads_run_id,workspaceRoot,ownership:'external',sdk:'@furnace/sdk@0.1.0',producerVersion:run.furnace_version,
         ...(run.binary_revision?{producerRevision:run.binary_revision}:{}),...(run.binary_digest?{producerDigest:run.binary_digest}:{}),...(run.resolved_runtime_config_digest?{resolvedRuntimeConfigDigest:run.resolved_runtime_config_digest}:{}),requestIds:{status:status.requestId,attempts:attempts.requestId,logs:logRequests}},
         capturedAt:now,observedAt:now,lastConfirmedAt:now,freshness:'current',connection:'connected',completeness:incomplete?'partial':'complete',
         run:{state:run.state,mode:run.mode,controllerLive:run.controller?.live===true?'yes':run.controller?.live===false?'no':'unknown',stateSince:run.state_since,updatedAt:run.updated_at,

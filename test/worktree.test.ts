@@ -1,16 +1,22 @@
 import { execFileSync } from "node:child_process";
-import { existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, realpathSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { installScratchLeakGuard, makeScratch, removeAllScratch, removeScratch, trackScratch } from "./helpers/scratch.js";
+
+installScratchLeakGuard();
+
 import {
   cleanupWorktree,
   createWorktree,
   isWorktreeIsolationEnabled,
   pruneWorktrees,
   setWorktreeIsolationEnabled,
+  type WorktreeInfo,
 } from "../src/worktree.js";
+import { nonRepoScratch } from "./helpers/non-repo-scratch.js";
 
 /**
  * Minimal stand-in for pi.exec(): runs the command for real, and — like the
@@ -54,7 +60,7 @@ function failingPi(match: (args: string[]) => boolean, failure: { code: number; 
  * Helper: create a temporary git repo with an initial commit.
  */
 function initGitRepo(): string {
-  const dir = mkdtempSync(join(tmpdir(), "pi-wt-test-"));
+  const dir = makeScratch("pi-wt-test-");
   execFileSync("git", ["init"], { cwd: dir, stdio: "pipe" });
   execFileSync("git", ["config", "user.email", "test@test.com"], { cwd: dir, stdio: "pipe" });
   execFileSync("git", ["config", "user.name", "Test"], { cwd: dir, stdio: "pipe" });
@@ -76,7 +82,8 @@ describe("worktree", () => {
   afterEach(async () => {
     // Clean up any lingering worktrees first, then remove repo
     try { await pruneWorktrees(pi, repoDir); } catch { /* ignore */ }
-    rmSync(repoDir, { recursive: true, force: true });
+    removeScratch(repoDir);
+    removeAllScratch(); // worktree directories the test registered with trackScratch
   });
 
   describe("createWorktree", () => {
@@ -97,12 +104,12 @@ describe("worktree", () => {
     });
 
     it("returns undefined for non-git directory", async () => {
-      const nonGit = mkdtempSync(join(tmpdir(), "pi-wt-nongit-"));
+      const nonGit = nonRepoScratch("pi-wt-nongit-");
       try {
-        const wt = await createWorktree(pi, nonGit, "test-id-2");
+        const wt = await createWorktree(pi, nonGit.dir, "test-id-2");
         expect(wt).toBeUndefined();
       } finally {
-        rmSync(nonGit, { recursive: true, force: true });
+        nonGit.dispose();
       }
     });
 
@@ -363,11 +370,11 @@ describe("worktree", () => {
     });
 
     it("does not reject on non-git directory", async () => {
-      const nonGit = mkdtempSync(join(tmpdir(), "pi-wt-nongit-"));
+      const nonGit = nonRepoScratch("pi-wt-nongit-");
       try {
-        await expect(pruneWorktrees(pi, nonGit)).resolves.toBeUndefined();
+        await expect(pruneWorktrees(pi, nonGit.dir)).resolves.toBeUndefined();
       } finally {
-        rmSync(nonGit, { recursive: true, force: true });
+        nonGit.dispose();
       }
     });
   });
@@ -385,7 +392,8 @@ describe("cleanupWorktree — failure path", () => {
   beforeEach(() => { repoDir = initGitRepo(); pi = mockPi(); });
   afterEach(async () => {
     try { await pruneWorktrees(pi, repoDir); } catch { /* ignore */ }
-    rmSync(repoDir, { recursive: true, force: true });
+    removeScratch(repoDir);
+    removeAllScratch(); // worktree directories the test registered with trackScratch
   });
 
   it("short-circuits when the worktree directory is already gone", async () => {
@@ -409,6 +417,8 @@ describe("cleanupWorktree — failure path", () => {
     // either way; what matters is that cleanup does not reject out of the
     // manager's settle path and take the whole record down with it.
     const wt = (await createWorktree(pi, repoDir, "corrupt"))!;
+    // git can no longer remove this worktree once its link is broken, so the directory is ours to remove.
+    trackScratch(wt.path);
     writeFileSync(join(wt.path, "work.txt"), "agent output");
     // Break the worktree's link back to the repo.
     writeFileSync(join(wt.path, ".git"), "gitdir: /nonexistent/path/that/is/not/a/repo");
@@ -462,6 +472,45 @@ describe("cleanupWorktree — failure path", () => {
   });
 });
 
+/** Every worktree git has registered for `repoDir`, as the resolved paths `git worktree list` prints. */
+function registeredWorktrees(repoDir: string): string[] {
+  return execFileSync("git", ["worktree", "list", "--porcelain"], { cwd: repoDir, encoding: "utf-8", stdio: "pipe" })
+    .split("\n")
+    .filter(line => line.startsWith("worktree "))
+    .map(line => line.slice("worktree ".length));
+}
+
+/**
+ * The body of "does not disable createWorktree directly", with createWorktree
+ * injected so the row after that case can run these exact assertions against a
+ * createWorktree that yields nothing. The case used to call the pre-async
+ * signatures without awaiting them (wb-ana): it asserted on a pending Promise,
+ * so it passed whatever createWorktree did, and no worktree was ever created.
+ */
+async function expectSwitchOffStillCreatesWorktree(create: typeof createWorktree): Promise<void> {
+  const pi = mockPi();
+  const repoDir = initGitRepo();
+  let wt: WorktreeInfo | undefined;
+  try {
+    setWorktreeIsolationEnabled(false);
+    expect(isWorktreeIsolationEnabled()).toBe(false);
+    wt = await create(pi, repoDir, "switch-test");
+    expect(wt).toBeDefined();
+    // A real worktree of this repo: on disk, holding the repo's files, registered with git.
+    expect(existsSync(join(wt!.path, "README.md"))).toBe(true);
+    const registered = realpathSync(wt!.path);
+    expect(registeredWorktrees(repoDir)).toContain(registered);
+
+    const result = await cleanupWorktree(pi, repoDir, wt!, "switch test");
+    expect(result.hasChanges).toBe(false);
+    expect(existsSync(wt!.path)).toBe(false);
+    expect(registeredWorktrees(repoDir)).not.toContain(registered);
+  } finally {
+    await pruneWorktrees(pi, repoDir);
+    removeScratch(wt?.path, repoDir);
+  }
+}
+
 /**
  * The project switch itself (`worktreeIsolation`, #184). Its consumers —
  * agent-manager, both tool schemas, the invocation resolver — all mock this
@@ -486,16 +535,12 @@ describe("worktree isolation switch", () => {
   // The switch gates callers; it deliberately does not disarm createWorktree
   // itself, so a caller that has already decided (agent-manager checks first)
   // still gets a real worktree rather than a silent no-op.
-  it("does not disable createWorktree directly", () => {
-    const repoDir = initGitRepo();
-    try {
-      setWorktreeIsolationEnabled(false);
-      const wt = createWorktree(repoDir, "switch-test");
-      expect(wt).toBeDefined();
-      cleanupWorktree(repoDir, wt!, "switch test");
-    } finally {
-      pruneWorktrees(repoDir);
-      rmSync(repoDir, { recursive: true, force: true });
-    }
+  it("does not disable createWorktree directly", async () => {
+    await expectSwitchOffStillCreatesWorktree(createWorktree);
+  });
+
+  it("the case above fails when createWorktree yields no worktree", async () => {
+    const disabled: typeof createWorktree = async () => undefined;
+    await expect(expectSwitchOffStillCreatesWorktree(disabled)).rejects.toThrow("expected undefined to be defined");
   });
 });

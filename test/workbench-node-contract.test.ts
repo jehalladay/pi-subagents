@@ -1,6 +1,6 @@
 /** L3/L4: typed node RPC, authorization, evidence truth and no blind replay. */
 import { describe, expect, it, vi } from 'vitest';
-import { CapabilityRegistry } from '../src/workbench/capability-registry.js';
+import { CapabilityRegistry, type JsonValue } from '../src/workbench/capability-registry.js';
 import { runWorkflow, type WorkflowHost } from '../src/workflow/runtime.js';
 
 const HEAD = 'export const meta = {name:"node-contract",description:"test"};\n';
@@ -78,7 +78,7 @@ describe('Workbench node() host authorization',()=>{
   });
   it('L4: effectful provider output that cannot be serialized remains uncertain after invocation',async()=>{
     const registry=new CapabilityRegistry();
-    const invoked=vi.fn(async()=>({value:()=>true}));
+    const invoked=vi.fn(async()=>({value:()=>true}) as unknown as JsonValue);
     registry.register({descriptor:{id:'effect.bad',version:'1.0.0',description:'write with lost output',inputSchema:SCHEMA,effectClass:'write',permissions:['effect:write'],supportedModes:['invoke']},invoke:invoked});
     const host:WorkflowHost={spawnAgent:async()=>({ok:true,text:''}),abortAgent:()=>{},callNode:req=>registry.invoke(req.capabilityId,req.input,{grants:['effect:write'],signal:req.signal})};
     const result=await run('return await node("effect.bad",{value:"x"});',host);
@@ -100,12 +100,17 @@ describe('Workbench node() host authorization',()=>{
   });
 
   it('L4: a node between identical agents invalidates downstream journal replay',async()=>{
-    const {host:base,invoke}=harness();
+    const {host:base,invoke,registry}=harness();
     const calls=vi.fn(async()=>({ok:true,text:'fresh'}));
     const host:WorkflowHost={...base,spawnAgent:calls};
     const script=HEAD+'const first=await agent("first"); await node("record.read",{value:"x"}); return await agent("second");';
     const journaled: import('../src/workflow/journal.js').WorkflowJournalEntry[]=[];
-    await runWorkflow({script,host,journal:{entries:[],append:e=>journaled.push(e)}});
+    // Recorded under the registry's declared class, as every Workbench host
+    // records it, and resumed under a host that vouches for no class: the read
+    // runs live rather than replaying, and a live node ends the replayable
+    // prefix. (A node journaled with no class at all stops the resume: wb-tu1.)
+    await runWorkflow({script,host:{...host,describeNodeEffect:id=>registry.effectClassOf(id)},journal:{entries:[],append:e=>journaled.push(e)}});
+    expect(journaled.find(e=>e.kind==='node')?.effectClass).toBe('read');
     const before=calls.mock.calls.length;
     const replay=await runWorkflow({script,host,journal:{entries:journaled}});
     expect(replay.status).toBe('completed');
@@ -115,7 +120,7 @@ describe('Workbench node() host authorization',()=>{
 
   it('L4: non-serializable provider output cannot cross the worker boundary',async()=>{
     const {host,registry}=harness();
-    registry.register({descriptor:{id:'record.bad',version:'1.0.0',description:'bad output',inputSchema:SCHEMA,effectClass:'read',permissions:['record:read'],supportedModes:['invoke']},invoke:async()=>({value:()=>true})});
+    registry.register({descriptor:{id:'record.bad',version:'1.0.0',description:'bad output',inputSchema:SCHEMA,effectClass:'read',permissions:['record:read'],supportedModes:['invoke']},invoke:async()=>({value:()=>true}) as unknown as JsonValue});
     const result=await run('return await node("record.bad", {value:"x"});',host);
     expect(result.status).toBe('failed');
     expect(result.error).toMatch(/boundary|function|serializ/i);

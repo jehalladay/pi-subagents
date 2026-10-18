@@ -3,15 +3,18 @@
  * REAL extension (src/index.ts) and drive its registered tools directly.
  *
  * The 14 pre-existing wiring tests each inline their own near-identical copy of
- * this. They are deliberately NOT migrated: `test/` is outside the tsconfig
- * `include`, so that churn would be unchecked by `tsc`, and those copies have
+ * this. They are deliberately NOT migrated: `test/` is type-checked by the gate
+ * since wb-zsv (`tsconfig.test.json`), but those copies have
  * small divergences that would have to be reconciled blind. New files use this.
  */
 
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
-import { tmpdir } from "node:os";
+import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { vi } from "vitest";
+import { pinNonRepo } from "./non-repo-scratch.js";
+import { installScratchLeakGuard, makeScratch, removeScratch } from "./scratch.js";
+
+installScratchLeakGuard();
 
 export interface BootedPi {
   pi: any;
@@ -115,9 +118,11 @@ export interface Hermetic {
 export function hermeticDir(opts: {
   settings?: Record<string, unknown>;
   agentFiles?: Record<string, string>;
+  /** Pin git discovery so the sandbox is outside any enclosing repository, wherever TMPDIR lives. */
+  nonRepo?: boolean;
 } = {}): Hermetic {
-  const dir = mkdtempSync(join(tmpdir(), "pi-boot-"));
-  const agentDir = mkdtempSync(join(tmpdir(), "pi-boot-agentdir-"));
+  const dir = makeScratch("pi-boot-");
+  const agentDir = makeScratch("pi-boot-agentdir-");
   const prevCwd = process.cwd();
   const prevAgentDir = process.env.PI_CODING_AGENT_DIR;
   const prevHome = process.env.HOME;
@@ -136,17 +141,19 @@ export function hermeticDir(opts: {
   process.env.PI_CODING_AGENT_DIR = agentDir;
   process.env.HOME = agentDir;
   process.chdir(dir);
+  const unpinRepo = opts.nonRepo ? pinNonRepo(dir) : undefined;
 
   return {
     dir,
     restore() {
+      unpinRepo?.();
       process.chdir(prevCwd);
       if (prevAgentDir == null) delete process.env.PI_CODING_AGENT_DIR;
       else process.env.PI_CODING_AGENT_DIR = prevAgentDir;
       if (prevHome == null) delete process.env.HOME;
       else process.env.HOME = prevHome;
-      rmSync(dir, { recursive: true, force: true });
-      rmSync(agentDir, { recursive: true, force: true });
+      removeScratch(dir);
+      removeScratch(agentDir);
     },
   };
 }

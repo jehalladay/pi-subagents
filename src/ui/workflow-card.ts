@@ -32,7 +32,7 @@
  */
 
 import { stripTerminalSequences, Text, truncateToWidth, visibleWidth } from "@earendil-works/pi-tui";
-import { redactWorkbenchText, stripUnsafeText } from "../workbench/redaction.js";
+import { sanitizeWorkbenchText, WORKBENCH_TEXT_LIMIT } from "../workbench/redaction.js";
 import type { WorkflowEntryData } from "../workflow/entry.js";
 import type { WorkflowMeta } from "../workflow/meta.js";
 import {
@@ -146,9 +146,18 @@ export interface WorkflowCardSegment {
 
 export type WorkflowCardLine = WorkflowCardSegment[];
 
-/** Native producer strings are untrusted terminal input, not Pi theme markup. */
+/** Native producer strings are untrusted terminal input, not Pi theme markup: the shared helper's terminal layout. */
 export function safeWorkflowTerminalText(value: string): string {
-  return stripUnsafeText(stripTerminalSequences(redactWorkbenchText(value)), " ").replace(/ +/g, " ");
+  return sanitizeWorkbenchText(value, WORKBENCH_TEXT_LIMIT, "terminal").replace(/ +/g, " ");
+}
+
+/**
+ * safeWorkflowTerminalText for a caller that bounds the producer string (wb-y5y): the helper examines at most `scan` raw code
+ * units through its straddle-safe scan option, never a raw cut of the caller's own. A function of its own, so the one-argument
+ * form stays safe to hand to Array.prototype.map, which passes each element's index as a second argument.
+ */
+export function scannedWorkflowTerminalText(value: string, scan: number): string {
+  return sanitizeWorkbenchText(value, WORKBENCH_TEXT_LIMIT, "terminal", { scan }).replace(/ +/g, " ");
 }
 
 /** The subset of the task record the card reads. */

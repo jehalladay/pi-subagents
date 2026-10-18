@@ -58,11 +58,24 @@ const CAPABILITY_ID = /^[a-z][a-z0-9]*(?:[.-][a-z][a-z0-9]*)+$/;
 export const CAPABILITY_MAX_BYTES = 256 * 1024;
 export const CAPABILITY_MAX_DEPTH = 64;
 export const CAPABILITY_DEADLINE_MS = 30_000;
+/** One registry-wide bound on provider calls in flight, invoke and inspect alike. */
+export const CAPABILITY_MAX_IN_FLIGHT = 32;
 
 export interface CapabilityLimits {
   maxBytes?: number;
   maxDepth?: number;
   deadlineMs?: number;
+  maxInFlight?: number;
+}
+
+/** Counts-only admission state for operations telemetry: no ids, provider names or payloads. */
+export interface CapabilityAdmission {
+  readonly maxInFlight: number;
+  readonly inFlight: number;
+  readonly peakInFlight: number;
+  readonly admitted: number;
+  readonly refused: number;
+  readonly cancelledWhileQueued: number;
 }
 const SCHEMA_TYPES = new Set(["object", "array", "string", "number", "integer", "boolean", "null"]);
 const SCHEMA_ANNOTATIONS = new Set(["title", "description", "$comment", "default", "examples", "deprecated", "readOnly", "writeOnly"]);
@@ -136,6 +149,46 @@ function assertSupportedSchema(schema: unknown, path: string): void {
 }
 
 
+/** Own keys every capability JSON boundary refuses: written by assignment, one can replace a prototype. */
+export type PrototypePollutionKey = "__proto__" | "constructor" | "prototype";
+
+/** The one prototype-pollution key predicate: the registry walk and every invoking surface call it, never a copy. */
+export function isPrototypePollutionKey(key: PropertyKey): key is PrototypePollutionKey {
+  return key === "__proto__" || key === "constructor" || key === "prototype";
+}
+
+/** The registry's refusal text for a prototype-pollution key met under a boundary path. */
+export function prototypePollutionMessage(path: string, key: PrototypePollutionKey): string {
+  return `Prototype pollution key at ${path}.${key}.`;
+}
+
+/** The boundary path the registry names when it refuses a dispatched input. */
+export function capabilityInputPath(mode: "invoke" | "inspect", id: string): string {
+  return `${mode}(${id}) input`;
+}
+
+/**
+ * The first own prototype-pollution key in a raw value, met in the registry walk's order (depth first, own keys in
+ * Reflect.ownKeys order, arrays included), for a surface whose parser would drop such a key before the registry sees
+ * it. It reads property descriptors only, so accessors are never evaluated, and it stops at the registry's depth
+ * bound: a value nested deeper than that is refused for its depth on every surface.
+ */
+export function findPrototypePollutionKey(value: unknown, maxDepth = CAPABILITY_MAX_DEPTH): PrototypePollutionKey | undefined {
+  const seen = new Set<object>();
+  const find = (current: unknown, depth: number): PrototypePollutionKey | undefined => {
+    if (current === null || typeof current !== "object" || depth > maxDepth || seen.has(current)) return undefined;
+    seen.add(current);
+    for (const key of Reflect.ownKeys(current)) {
+      if (isPrototypePollutionKey(key)) return key;
+      const property = Object.getOwnPropertyDescriptor(current, key);
+      const found = property !== undefined && "value" in property ? find(property.value, depth + 1) : undefined;
+      if (found !== undefined) return found;
+    }
+    return undefined;
+  };
+  return find(value, 0);
+}
+
 /** Strict JSON walk checks bounds before serialization and never evaluates accessors. */
 export function validatedCapabilityJson(value: unknown, path: string, maxDepth = CAPABILITY_MAX_DEPTH, maxBytes = CAPABILITY_MAX_BYTES): JsonValue {
   const seen = new Set<unknown>();
@@ -161,7 +214,7 @@ export function validatedCapabilityJson(value: unknown, path: string, maxDepth =
       for (const key of keys) {
         if (array && key === "length") continue;
         if (typeof key !== "string") throw new Error(`Symbol key at ${path}.`);
-        if (key === "__proto__" || key === "constructor" || key === "prototype") throw new Error(`Prototype pollution key at ${path}.${key}.`);
+        if (isPrototypePollutionKey(key)) throw new Error(prototypePollutionMessage(path, key));
         if (array && (!/^(0|[1-9][0-9]*)$/.test(key) || Number(key) >= current.length)) throw new Error(`Extra array property at ${path}.`);
         const property = Object.getOwnPropertyDescriptor(current, key);
         if (!property?.enumerable || !("value" in property)) throw new Error(`Accessor or hidden property at ${path}.${key}.`);
@@ -193,12 +246,17 @@ export class CapabilityRegistry {
   private readonly maxBytes: number;
   private readonly maxDepth: number;
   private readonly deadlineMs: number;
+  private readonly maxInFlight: number;
+  /** Requests waiting for a slot, oldest first; each starts its provider when handed one. */
+  private readonly waiters = new Set<() => void>();
+  private readonly counts = { inFlight: 0, peakInFlight: 0, admitted: 0, refused: 0, cancelledWhileQueued: 0 };
 
   constructor(limits: CapabilityLimits = {}) {
     this.maxBytes = limits.maxBytes ?? CAPABILITY_MAX_BYTES;
     this.maxDepth = limits.maxDepth ?? CAPABILITY_MAX_DEPTH;
     this.deadlineMs = limits.deadlineMs ?? CAPABILITY_DEADLINE_MS;
-    for (const [name, value] of Object.entries({ maxBytes: this.maxBytes, maxDepth: this.maxDepth, deadlineMs: this.deadlineMs })) {
+    this.maxInFlight = limits.maxInFlight ?? CAPABILITY_MAX_IN_FLIGHT;
+    for (const [name, value] of Object.entries({ maxBytes: this.maxBytes, maxDepth: this.maxDepth, deadlineMs: this.deadlineMs, maxInFlight: this.maxInFlight })) {
       if (!Number.isSafeInteger(value) || value < 1 || (name === "deadlineMs" && value > 2_147_483_647)) {
         throw new CapabilityError("validation", `Invalid capability limit ${name}.`);
       }
@@ -251,6 +309,24 @@ export class CapabilityRegistry {
   }
 
   /**
+   * A metadata-only snapshot for the read-only catalog and inspect replies: cloned descriptors plus whether the
+   * provider implements `inspect`. It carries no provider function, so a caller cannot invoke or inspect through it.
+   * Ungated, like effectClassOf: the reply builders apply the exact discover/inspect grants.
+   */
+  catalogSnapshot(): ReadonlyArray<{ readonly descriptor: CapabilityDescriptor; readonly inspectImplemented: boolean }> {
+    return [...this.providers.values()].map(({ descriptor, inspect }) => ({
+      descriptor: {
+        ...descriptor,
+        inputSchema: structuredClone(descriptor.inputSchema),
+        ...(descriptor.outputSchema ? { outputSchema: structuredClone(descriptor.outputSchema) } : {}),
+        permissions: [...descriptor.permissions],
+        supportedModes: [...descriptor.supportedModes],
+      },
+      inspectImplemented: typeof inspect === "function",
+    }));
+  }
+
+  /**
    * Policy metadata only: the declared effect class of a registered capability,
    * ungated — it exposes no payload, and no existence information beyond what
    * dispatch refusal text already names. The reconcile decision core uses it to
@@ -258,6 +334,11 @@ export class CapabilityRegistry {
    */
   effectClassOf(id: string): CapabilityDescriptor["effectClass"] | undefined {
     return this.providers.get(id)?.descriptor.effectClass;
+  }
+
+  /** A frozen counts-only snapshot of registry-wide admission. */
+  admission(): CapabilityAdmission {
+    return Object.freeze({ maxInFlight: this.maxInFlight, ...this.counts });
   }
 
   async invoke(id: string, input: unknown, context: InvocationContext): Promise<JsonValue> {
@@ -280,7 +361,7 @@ export class CapabilityRegistry {
     if (!descriptor.supportedModes.includes(mode) || (mode === "inspect" && !provider.inspect)) {
       throw new CapabilityError("unavailable", `Capability ${id} does not support ${mode}.`);
     }
-    const value = validatedCapabilityJson(input, `${mode}(${id}) input`, this.maxDepth, this.maxBytes);
+    const value = validatedCapabilityJson(input, capabilityInputPath(mode, id), this.maxDepth, this.maxBytes);
     if (mode === "invoke" && !Check(descriptor.inputSchema, value)) {
       throw new CapabilityError("validation", `Invalid input schema for capability ${id}.`);
     }
@@ -293,20 +374,38 @@ export class CapabilityRegistry {
     const effectful = mode === "invoke" && descriptor.effectClass !== "read";
     let timer: ReturnType<typeof setTimeout> | undefined;
     let abort: () => void = () => {};
+    // Set while this request waits for admission: until a slot starts it, no provider was called.
+    let queued: (() => void) | undefined;
+    let started = false;
     try {
+      // One deadline and one caller signal bound the admission wait and the provider wait alike.
       const interrupted = new Promise<never>((_resolve, reject) => {
-        abort = () => { controller.abort(); reject(new CapabilityError("transport", `Capability ${id} wait was cancelled.`)); };
+        abort = () => {
+          if (queued !== undefined && this.waiters.delete(queued)) {
+            this.counts.cancelledWhileQueued++;
+            reject(new CapabilityError("transport", `Capability ${id} was cancelled while waiting for admission.`));
+            return;
+          }
+          controller.abort(); reject(new CapabilityError("transport", `Capability ${id} wait was cancelled.`));
+        };
         context.signal.addEventListener("abort", abort, { once: true });
         timer = setTimeout(() => {
+          if (queued !== undefined && this.waiters.delete(queued)) {
+            this.counts.refused++;
+            reject(new CapabilityError("unavailable", `Capability ${id} admission exhausted: ${this.maxInFlight} in flight after ${this.deadlineMs}ms.`));
+            return;
+          }
           controller.abort();
           reject(new CapabilityError("transport", `Capability ${id} exceeded its deadline of ${this.deadlineMs}ms.`));
         }, this.deadlineMs);
       });
       // The provider starts once. Timing out stops the wait, not proof of rollback.
-      const output = await Promise.race([
-        mode === "invoke" ? provider.invoke(value, pinnedContext) : provider.inspect!(value, pinnedContext),
-        interrupted,
-      ]);
+      const admission = this.admit(() => {
+        started = true;
+        return mode === "invoke" ? provider.invoke(value, pinnedContext) : provider.inspect!(value, pinnedContext);
+      });
+      queued = admission.queued;
+      const output = await Promise.race([admission.call, interrupted]);
       if (controller.signal.aborted) throw new CapabilityError("transport", `Capability ${id} wait was cancelled.`);
       const result = validatedCapabilityJson(output, `${mode}(${id}) output`, this.maxDepth, this.maxBytes);
       if (mode === "invoke" && descriptor.outputSchema && !Check(descriptor.outputSchema, result)) {
@@ -315,12 +414,53 @@ export class CapabilityRegistry {
       return result;
     } catch (error) {
       const detail = redactWorkbenchText(error instanceof Error ? error.message : String(error));
-      if (effectful) throw new CapabilityError("uncertain-effect", `Capability ${id} has an uncertain external effect: ${detail}. Reconcile with the producer before retrying.`);
+      // Refused or cancelled while queued, the provider never ran: no effect to be uncertain about.
+      if (effectful && started) throw new CapabilityError("uncertain-effect", `Capability ${id} has an uncertain external effect: ${detail}. Reconcile with the producer before retrying.`);
       if (error instanceof CapabilityError) throw new CapabilityError(error.category, detail);
       throw new CapabilityError("transport", `Capability ${id} failed: ${detail}`);
     } finally {
       clearTimeout(timer);
       context.signal.removeEventListener("abort", abort);
     }
+  }
+
+  /**
+   * Starts a provider call under one in-flight slot, or queues it FIFO while the
+   * bound is saturated. The slot is held until the provider's promise settles,
+   * not until its caller is answered, so a hung provider stays counted.
+   */
+  private admit(start: () => Promise<JsonValue>): { call: Promise<JsonValue>; queued?: () => void } {
+    const run = (): Promise<JsonValue> => {
+      this.counts.admitted++;
+      let call: Promise<JsonValue>;
+      try {
+        call = Promise.resolve(start());
+      } catch (error) {
+        call = Promise.reject(error);
+      }
+      call.then(() => this.release(), () => this.release());
+      return call;
+    };
+    if (this.waiters.size === 0 && this.counts.inFlight < this.maxInFlight) {
+      this.counts.inFlight++;
+      this.counts.peakInFlight = Math.max(this.counts.peakInFlight, this.counts.inFlight);
+      return { call: run() };
+    }
+    let handOver: (call: Promise<JsonValue>) => void = () => {};
+    const call = new Promise<JsonValue>(resolve => { handOver = resolve; });
+    const queued = (): void => { handOver(run()); };
+    this.waiters.add(queued);
+    return { call, queued };
+  }
+
+  /** A settled provider's slot passes to the oldest waiter, or frees. */
+  private release(): void {
+    const [next] = this.waiters;
+    if (next === undefined) {
+      this.counts.inFlight--;
+      return;
+    }
+    this.waiters.delete(next);
+    next();
   }
 }

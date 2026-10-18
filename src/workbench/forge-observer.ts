@@ -1,7 +1,9 @@
 /** Forge gate.status reader adapter (docs/workbench/09 § Reader adapters).
  * It consumes exactly the value readForgeGateStatus (providers/forge.ts) returns and projects read-model snapshots
  * plus display-scope grouping edges. It never reads, decodes or runs Forge itself. A package's last_result without
- * authoritative_current === true is history, never current verification, and transport success is never a PASS.
+ * authoritative_current === true is history, never current verification, and transport success is never a PASS. A package's
+ * published last_result_state is echoed, never judged: its freshness word is quoted beside that label and its derived_from
+ * becomes the package subjectBasis, and neither changes a tone or a coverage.
  */
 import {CapabilityError, type JsonValue} from './capability-registry.js';
 import {nativeEvidence} from './native-evidence.js';
@@ -23,9 +25,17 @@ const MAX_TEXT = 200;
 const MAX_FIELD = 48;
 /** Forge records a gate that ran to completion and failed as CommandStatus 'error'; 'failure' carries the same meaning. */
 const FAILED = new Set(['failure', 'error']);
+/** Forge's closed freshness vocabulary; a word outside it is malformed and never displayed. */
+const FRESHNESS = new Set(['CURRENT', 'STALE', 'UNKNOWN', 'NOT_APPLICABLE']);
+/** The one invalidation-basis kind whose derived_from is read as a package's basis; any other kind is malformed. */
+const BASIS_KIND = 'invalidation-basis/v2';
+/** A withheld-basis diagnostic quotes a whole package ref (at most MAX_IDENTITY_BYTES) inside one fixed sentence. */
+const MAX_DIAGNOSTIC = MAX_TEXT + MAX_IDENTITY_BYTES;
 
 type JsonRecord = {[key: string]: JsonValue};
-interface ForgePackage {ref: string; lastResult?: string; current: boolean; authority: JsonValue | undefined; reason?: string}
+/** A package's last_result_state as read here: the producer's freshness word and verdict basis, or withheld when malformed. */
+type DerivedState = {freshness: string; basis: string} | 'withheld';
+interface ForgePackage {ref: string; lastResult?: string; current: boolean; authority: JsonValue | undefined; reason?: string; state?: DerivedState}
 
 const record = (value: JsonValue | undefined): JsonRecord | undefined =>
   value !== null && typeof value === 'object' && !Array.isArray(value) ? value : undefined;
@@ -35,11 +45,29 @@ const identity = (value: unknown): value is string =>
   typeof value === 'string' && value.length > 0 && Buffer.byteLength(value) <= MAX_IDENTITY_BYTES && stripUnsafeText(value) === value;
 const instant = (value: unknown): value is string =>
   typeof value === 'string' && value.length <= 64 && /(?:Z|[+-]\d\d:\d\d)$/.test(value) && Number.isFinite(Date.parse(value));
-/** Producer text bound for display. Unsafe sequences become spaces BEFORE the shared redactor runs, so an escape glued
- * to a credential cannot hide it from the redactor; the shared sanitizer then redacts, bounds and strips. */
-const shown = (value: string, max: number): string => sanitizeWorkbenchText(stripUnsafeText(value, ' ').replace(/\s+/g, ' ').trim(), max);
+/** Producer text bound for display: the shared helper's label layout (normalize once, redact every reading, strip once). */
+const shown = (value: string, max: number): string => sanitizeWorkbenchText(value, max, 'label');
 /** An evidence reference is listed only when it displays exactly as stored, never as a mangled identity. */
 const exact = (value: string): boolean => identity(value) && sanitizeWorkbenchText(value, MAX_TEXT) === value;
+/** One of the three digest shapes native-evidence.ts accepts as a source basis, decided by that module's one rule rather than
+ * a copy of it: the value must come back unchanged as the sourceBasis of a minimal reading of this contract. */
+const digestShaped = (value: string): boolean =>
+  nativeEvidence('forge.gate.status', {contract: CONTRACT, source: {data: {source_snapshot_id: value}}}).sourceBasis === value;
+
+/** A package's last_result_state, read for exactly two fields: its freshness word and invalidation_basis.derived_from, the
+ * digest the verdict was derived from. Absent, or null (the producer's value for a null last_result), is no descriptor. Any
+ * other shape (not an object, a word outside the closed set, another basis kind, a derived_from that is not digest-shaped) is
+ * malformed and withheld whole. The word is echoed as published: the adapter never compares the basis digests, never resolves
+ * them against a tree or a repository and never mints a word of its own. */
+function derivedState(value: JsonValue | undefined): DerivedState | undefined {
+  if (value === undefined || value === null) return undefined;
+  const state = record(value);
+  const basis = record(state?.invalidation_basis);
+  const freshness = state?.freshness;
+  const derivedFrom = basis?.derived_from;
+  return typeof freshness === 'string' && FRESHNESS.has(freshness) && basis?.kind === BASIS_KIND && typeof derivedFrom === 'string' && digestShaped(derivedFrom)
+    ? {freshness, basis: derivedFrom} : 'withheld';
+}
 
 function checkedContext(context: ForgeGateObservationContext): ForgeGateObservationContext {
   const {scope, target, capturedAt, observedAt, invocationId} = context;
@@ -51,7 +79,8 @@ function checkedContext(context: ForgeGateObservationContext): ForgeGateObservat
   return {scope: {workspace: scope.workspace, principal: scope.principal}, target, capturedAt, observedAt, ...(invocationId !== undefined ? {invocationId} : {})};
 }
 
-/** Known package fields only; unknown producer fields are tolerated and never read, so they never reach presentation. */
+/** Known package fields only; unknown producer fields are tolerated and never read, so they never reach presentation.
+ * last_result_state is read through derivedState alone, so none of its other fields is read either. */
 function packagesOf(source: JsonRecord): ForgePackage[] {
   const packages = record(source.data)?.packages;
   if (!Array.isArray(packages)) throw refused('source.data.packages must be an array');
@@ -64,14 +93,17 @@ function packagesOf(source: JsonRecord): ForgePackage[] {
     if (ref === WORKSPACE_ID) throw refused(`package ${index} ref aliases the workspace node`);
     if (seen.has(ref)) throw refused(`package ${index} repeats an earlier ref`);
     seen.add(ref);
+    const state = derivedState(pkg.last_result_state);
     return {ref, ...(typeof pkg.last_result === 'string' ? {lastResult: pkg.last_result} : {}), current: pkg.authoritative_current === true,
-      authority: pkg.authoritative_current, ...(typeof pkg.unverified_reason === 'string' ? {reason: pkg.unverified_reason} : {})};
+      authority: pkg.authoritative_current, ...(typeof pkg.unverified_reason === 'string' ? {reason: pkg.unverified_reason} : {}),
+      ...(state !== undefined ? {state} : {})};
   });
 }
 
 /** One workspace snapshot, one snapshot and one workspace->package grouping edge per package, plus diagnostics.
- * Forge gate status carries no timestamps, basis or lifecycle confirmation, so no snapshot has an interval,
- * subjectBasis or definitionDigest, and no edge claims ownership, dependency, causation or a hypothesis. */
+ * Forge gate status carries no timestamps or lifecycle confirmation, so no snapshot has an interval or definitionDigest
+ * and no edge claims ownership, dependency, causation or a hypothesis. A package that publishes a well-formed
+ * last_result_state carries its derived_from as subjectBasis; the workspace snapshot and every other package carry none. */
 export function forgeGateTopology(reading: JsonValue, context: ForgeGateObservationContext): ForgeGateTopology {
   const {scope, target, capturedAt, observedAt, invocationId} = checkedContext(context);
   // native-evidence.ts owns the pinned contract gate and the native status/operation shaping; nothing is re-decoded here.
@@ -110,9 +142,10 @@ export function forgeGateTopology(reading: JsonValue, context: ForgeGateObservat
     if (exact(operationRef)) evidenceRefs.push(operationRef);
     else diagnostics.push('Forge gate.status operation_id is not an exact displayable identity, so its forge-operation evidence reference is withheld.');
   }
-  const snapshot = (ref: NativeRef, kind: string, coverage: 'complete' | 'partial', node: Presentation, refs: readonly string[] = []): NativeSnapshot => ({
+  const snapshot = (ref: NativeRef, kind: string, coverage: 'complete' | 'partial', node: Presentation, refs: readonly string[] = [], subjectBasis?: string): NativeSnapshot => ({
     source: ref, scope: {...scope}, capturedAt, observedAt, coverage, sourceVersion: CONTRACT, node, kind,
-    ...(refs.length > 0 ? {evidenceRefs: [...refs]} : {}), ...(invocationId !== undefined ? {trace: {invocationId}} : {}),
+    ...(refs.length > 0 ? {evidenceRefs: [...refs]} : {}), ...(subjectBasis !== undefined ? {subjectBasis} : {}),
+    ...(invocationId !== undefined ? {trace: {invocationId}} : {}),
   });
   const workspace: NativeRef = {provider: 'forge', type: 'gate-status', id: WORKSPACE_ID, scope: target};
   const snapshots: NativeSnapshot[] = [snapshot(workspace, 'forge.gate.status.snapshot', readSucceeded && packages.every(pkg => pkg.current) ? 'complete' : 'partial',
@@ -123,12 +156,20 @@ export function forgeGateTopology(reading: JsonValue, context: ForgeGateObservat
     const result = pkg.lastResult === undefined ? 'no last_result' : shown(pkg.lastResult, MAX_FIELD) || 'unprintable last_result';
     const reason = pkg.reason === undefined ? '' : shown(pkg.reason, MAX_FIELD);
     // The native value is always quoted: a tone classifies it and never replaces it (docs/workbench/13 § Observation projection).
-    const text = pkg.current ? `${result} (current)`
+    const label = pkg.current ? `${result} (current)`
       : `${result} (historical; authoritative_current=${pkg.authority === false ? 'false' : 'unknown'}${reason ? `; ${reason}` : ''})`;
+    // A descriptor appends its quoted word after the native text and authority label, never in place of either; a withheld
+    // (malformed) descriptor reads basis UNKNOWN, never CURRENT, and names its package in one diagnostic.
+    const word = pkg.state === undefined ? undefined : pkg.state === 'withheld' ? 'UNKNOWN' : shown(pkg.state.freshness, MAX_FIELD);
+    const text = word === undefined ? label : `${label} · basis ${word}`;
+    if (pkg.state === 'withheld') {
+      diagnostics.push(shown(`Forge gate.status package ${pkg.ref} published a last_result_state that is not well formed, so its basis is withheld and shown as basis UNKNOWN.`, MAX_DIAGNOSTIC));
+    }
+    const basis = typeof pkg.state === 'object' ? pkg.state.basis : undefined;
     const packageTone: Presentation['statusTone'] = !pkg.current ? 'unknown'
       : pkg.lastResult === 'success' ? 'success' : FAILED.has(pkg.lastResult ?? '') ? 'failure' : 'unknown';
     snapshots.push(snapshot(ref, 'forge.gate.status.package.snapshot', pkg.current && readSucceeded ? 'complete' : 'partial',
-      {title: shown(`Forge package ${pkg.ref}`, MAX_TEXT), type: 'sdk-operation', statusText: text, statusTone: packageTone}));
+      {title: shown(`Forge package ${pkg.ref}`, MAX_TEXT), type: 'sdk-operation', statusText: text, statusTone: packageTone}, [], basis));
     // Grouping is display scope only: gate.status names no native lifecycle confirmation, so ownership is never stated.
     relations.push({scope: {...scope}, from: {...workspace}, to: {...ref}, kind: 'grouping', provenance: {source: 'forge-observer', observedAt}});
   }
