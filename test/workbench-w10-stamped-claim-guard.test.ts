@@ -134,11 +134,11 @@ const W10_COMMITTED = {
   heading: "W10: ReactiveFiber provider/interop",
   header: ["Feature", "Status", "Evidence", "Caveats"],
   firstCells: [
-    "node() RF noncommitted context preview capability (reactivefiber.render.preview/v1) with graph provenance and zero durable writes",
+    "node() RF noncommitted context preview capability (reactivefiber.render.preview/v1) with graph provenance; no authoritative or journal write, disposable cache-plane writes possible per the pinned producer trace",
     "ReactiveFiber reader adapter projecting NativeSnapshots from reactivefiber.render.preview/v1 envelopes into the observation projection",
   ],
   cells: [
-    ["Feature", "node() RF noncommitted context preview capability (reactivefiber.render.preview/v1) with graph provenance and zero durable writes"],
+    ["Feature", "node() RF noncommitted context preview capability (reactivefiber.render.preview/v1) with graph provenance; no authoritative or journal write, disposable cache-plane writes possible per the pinned producer trace"],
     ["Status", "landed-gated"],
     ["Caveats", "Bead wb-x32 open: 'Full interop contract remains open.' Preview deliberately yields null render/transaction IDs (no durable render); W10 acceptance is 'real render or honest blocker' - the landed slice is the noncommitted preview via the CLI envelope, not a committed render or production TS SDK interop."],
   ],
@@ -1261,7 +1261,7 @@ const J_PAGE: readonly PageVariant[] = [
         const feature = cellUnder(site, "Feature");
         return [[feature.end, feature.end, " (withdrawn: never measured)"]];
       }),
-    ["the W10 claim row's rendered Feature cell reads", "zero durable writes (withdrawn: never measured)", "the W10 table's rendered first cells read"],
+    ["the W10 claim row's rendered Feature cell reads", "possible per the pinned producer trace (withdrawn: never measured)", "the W10 table's rendered first cells read"],
   ],
   [
     "J7 a trailing sentence after the stamped sentence that contradicts it",
