@@ -38,7 +38,7 @@
 
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { isAbsolute, join } from "node:path";
-import { getAgentDir } from "@earendil-works/pi-coding-agent";
+import { getAgentDir } from "../agent-dir.js";
 import { isSymlink, isUnsafeName, safeReadFile } from "../memory.js";
 import { hasMetaDeclaration } from "./meta.js";
 import { MAX_SCRIPT_LENGTH } from "./runtime.js";

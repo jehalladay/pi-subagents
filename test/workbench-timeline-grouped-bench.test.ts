@@ -568,7 +568,7 @@ describe("W21 the sampled function is the lane model, timed only around the call
     const text = readRepo("qa/workbench/timeline-grouped-bench.mjs");
     const specifiers = [...text.matchAll(/^import\s[^'"]*['"]([^'"]+)['"]/gm)].map(match => match[1]).sort();
     expect(specifiers).toEqual(
-      ["../../dist/workbench/observation.js", "../../dist/workbench/timeline.js", "./grouped-fixture.mjs", "./timeline-grouped-core.mjs", "node:fs", "node:os"].sort(),
+      ["../../dist/workbench/observation.js", "../../dist/workbench/timeline.js", "./bench-revision.mjs", "./grouped-fixture.mjs", "./timeline-grouped-core.mjs", "node:fs", "node:os"].sort(),
     );
     expect(text).toMatch(/import \{buildTimelineLanes\} from '\.\.\/\.\.\/dist\/workbench\/timeline\.js';/);
     expect(text).not.toMatch(/\bimport\s*\(|\brequire\s*\(/);
@@ -643,7 +643,7 @@ describe("W21 Forge registration (C6)", () => {
     const toml = readRepo("forge.toml");
     expect(toml).toMatch(/\[build\.commands\.timeline-grouped-bench\]\ncommand = "node qa\/workbench\/timeline-grouped-bench\.mjs"\ntimeout = 300\n/);
     expect(toml.match(/\[build\.commands\.timeline-grouped-bench\]/g)).toHaveLength(1);
-    expect(/^gate = \[([^\]]*)\]/m.exec(toml)?.[1]).toBe('"lint", "typing", "build", "test", "workbench-shell", "package-smoke"');
+    expect(/^gate = \[([^\]]*)\]/m.exec(toml)?.[1]).toBe('"lint", "typing", "build", "test", "census", "workbench-shell", "package-smoke"');
     expect(toml).toMatch(/\[build\.commands\.inspector-grouped-bench\]\ncommand = "node qa\/workbench\/inspector-grouped-bench\.mjs"\ntimeout = 300\n/);
   });
 });

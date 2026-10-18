@@ -76,7 +76,7 @@ describe("curated capability MCP surface", () => {
     for (const item of [returned, inspected]) { expect(item.text).not.toContain(SECRET); expect(item.text).toContain("[REDACTED]"); }
   });
   it("hostile caller-added outer identity/grants never reach provider; inner authority fields are refused", async () => {
-    const seen = vi.fn(async (_input: JsonValue, current: InvocationContext) => ({ principal: current.principal?.id, workspace: current.workspace, grants: [...current.grants] }));
+    const seen = vi.fn(async (_input: JsonValue, current: InvocationContext) => ({ principal: current.principal?.id, workspace: current.workspace, grants: [...current.grants] }) as JsonValue);
     const { call } = await clientFor(seen, "Fixture only");
     const outer = await call("capability_invoke", { ...invocation, principal: { id: "admin" }, workspace: "/foreign", grants: ["*"], scope: "all" });
     expect(outer.payload).toMatchObject({ kind: "returned", value: { principal: "actual-operator", workspace: "/local/allowed" } });
@@ -120,7 +120,7 @@ describe("native provider scope using local fixtures, not native producer claims
       const escaped = join(inside, "escape"); symlinkSync(outside, escaped);
       const registry = new CapabilityRegistry(); registerNativeForgeGateStatus(registry, inside);
       await expect(registry.invoke("forge.gate.status", { target: escaped }, context(["forge:inspect"]))).rejects.toMatchObject({ category: "authorization" });
-      await expect(registry.invoke("forge.gate.status", { target: join(inside, "..", outside.split("/").at(-1)) }, context(["forge:inspect"]))).rejects.toMatchObject({ category: "authorization" });
+      await expect(registry.invoke("forge.gate.status", { target: join(inside, "..", outside.split("/").at(-1) as string) }, context(["forge:inspect"]))).rejects.toMatchObject({ category: "authorization" });
     } finally { rmSync(inside, { recursive: true, force: true }); rmSync(outside, { recursive: true, force: true }); }
   });
   it("Furnace provider must not return a foreign workspace's Run record", async () => {

@@ -41,7 +41,7 @@ import {
   validatedCapabilityJson,
 } from "../workbench/capability-registry.js";
 import type { NativeRef } from "../workbench/observation.js";
-import { stripUnsafeText } from "../workbench/redaction.js";
+import { sanitizeWorkbenchText, stripUnsafeText } from "../workbench/redaction.js";
 import type { WorkflowJournalEntry } from "./journal.js";
 
 /** Version pin every record carries; a future shape change is a new version, never a reinterpretation. */
@@ -270,7 +270,7 @@ export function reconcileGrant(producer: string, decision: "acknowledge" | "over
   if (!Object.hasOwn(RECONCILE_EVIDENCE_READS, producer)) {
     throw new CapabilityError(
       "validation",
-      `No reconcile grants exist for producer "${stripUnsafeText(producer).slice(0, 64)}": only producers with a declared evidence read can be reconciled.`,
+      `No reconcile grants exist for producer "${sanitizeWorkbenchText(producer, 64, "label")}": only producers with a declared evidence read can be reconciled.`,
     );
   }
   return `reconcile:${producer}.${decision}`;
