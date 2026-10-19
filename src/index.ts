@@ -2597,7 +2597,9 @@ Terse command-style prompts produce shallow, generic work.
       await loadWorkbenchNative();
     } catch (error) {
       workbenchToolsRegistered = false;
-      const reason = stripUnsafeText(error instanceof Error ? error.message : String(error), " ").slice(0, 300);
+      // The load error's message is a producer string, so it is display text: the one helper's label layout redacts every
+      // reading of a gap before anything is stripped (wb-72c), where deleting unsafe units first left a split credential readable.
+      const reason = sanitizeWorkbenchText(error instanceof Error ? error.message : String(error), 300, "label");
       const message = `Workbench tools not registered: native modules failed to load (${reason}).`;
       if (ctx.hasUI) ctx.ui.notify(message, "warning");
       else console.warn(`[pi-subagents] ${message}`);

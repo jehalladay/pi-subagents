@@ -47,6 +47,7 @@ import { DetachedFrameDecoder, decodeDetachedCommand, detachedFrame } from "../s
 import { type HyperUnixTopologyContext, hyperunixTopology } from "../src/workbench/hyperunix-observer.js";
 import { WORKFLOW_SCRIPT_SCHEMA_VERSION } from "../src/workbench/identity.js";
 import { selectLatencyDecomposition } from "../src/workbench/latency.js";
+import type * as NativeModulesModule from "../src/workbench/native-modules.js";
 import { type NativeRef, ObservationProjection, type ObservationScope, type ObservedNode, type Relation } from "../src/workbench/observation.js";
 import { type ObserveReader, observeInvocation } from "../src/workbench/observe-query.js";
 import { proposeWorkflowPatch } from "../src/workbench/patch-proposal.js";
@@ -59,6 +60,7 @@ import { selectLinkedTopology } from "../src/workbench/topology-slice.js";
 import { reconcileGrant } from "../src/workflow/reconcile.js";
 import { detachedCatchDriver } from "./helpers/detached-peer.js";
 import { forgeGateCatchDriver } from "./helpers/forge-gate-catch.js";
+import { nativeLoadNotifyDriver } from "./helpers/native-load-notify.js";
 
 /**
  * wb-a3s.1 seam: @forge/sdk's ServerConnection.spawn() returns a connection whose initialize() rejects with the text the
@@ -75,6 +77,18 @@ vi.mock("@forge/sdk", async importOriginal => {
     close: async (): Promise<void> => {},
   };
   return { ...original, ServerConnection: { spawn: () => connection } };
+});
+
+/**
+ * wb-72c seam: loadWorkbenchNative() rejects with the text the DIRECT-CALLER row below sets, and passes through to the real
+ * loader whenever no text is set (the forge_gate_run row above needs the real natives). A factory that makes an SDK import throw
+ * reaches the notify path wrapped in vitest's own mocking message and cannot carry a probe, so the rejection is the seam. The
+ * driver lives in test/helpers/native-load-notify.ts.
+ */
+const nativeLoadSeam = vi.hoisted(() => ({ rejectWith: undefined as string | undefined }));
+vi.mock("../src/workbench/native-modules.js", async importOriginal => {
+  const original = await importOriginal<typeof NativeModulesModule>();
+  return { ...original, loadWorkbenchNative: () => (nativeLoadSeam.rejectWith === undefined ? original.loadWorkbenchNative() : Promise.reject(new Error(nativeLoadSeam.rejectWith))) };
 });
 
 const cp = (code: number): string => String.fromCodePoint(code);
@@ -759,6 +773,15 @@ const forgeGateCatchTexts = forgeGateCatchDriver(raw => {
   forgeSeam.message = raw;
 });
 
+/**
+ * DIRECT-CALLER row (wb-72c, zo9 gate F-G2): the native-load notify path in src/index.ts registerWorkbenchTools hands the load
+ * error's message (a producer string) to the one helper (label layout, bounded at 300). The seam above makes loadWorkbenchNative
+ * reject with the probe text; the real extension tells the headless operator why through console.warn.
+ */
+const nativeLoadNotifyTexts = nativeLoadNotifyDriver(raw => {
+  nativeLoadSeam.rejectWith = raw;
+});
+
 /** wb-h8f.10: latency.ts displayText (selectLatencyDecomposition), the provider and the evidence-ref paths, joined to the corpus in the same commit as its routing through the one helper. */
 function latencyTexts(raw: string): string[] {
   const node: ObservedNode = {
@@ -888,6 +911,7 @@ const SITES: readonly Site[] = [
   { site: "site 18 detached-observer.ts shown (projectDetachedReading)", texts: detachedTexts },
   { site: "src/index.ts workflow_detached launch/inspect catch (DIRECT-CALLER, the detached refusal text)", texts: detachedCatchTexts },
   { site: "src/index.ts forge_gate_run catch (DIRECT-CALLER, the forge connection error text)", texts: forgeGateCatchTexts },
+  { site: "src/index.ts native-load notify (DIRECT-CALLER, the load error text the operator is warned with)", texts: nativeLoadNotifyTexts },
   { site: "sites 19/20 workflow_inspect and workbench_catalog replies", texts: replyTexts },
   { site: "site 12 execute.ts buildWorkflowExecuteReply (DIRECT-CALLER: reason, policy value and key, native reference id and scope, definition id, invocation reference)", texts: executeTexts },
   { site: "site 22 observe-query.ts clean (observeInvocation)", texts: observeTexts },
@@ -910,6 +934,13 @@ describe("wb-a3s.1 forge_gate_run catch row is not vacuous", () => {
   it("a plain connection refusal reaches the catch and comes back as the reply text", async () => {
     const plain = "wb-a3s.1 obviously fake forge connection refusal";
     expect(await forgeGateCatchTexts(plain)).toEqual([plain]);
+  });
+});
+
+describe("wb-72c native-load notify row is not vacuous", () => {
+  it("a plain load refusal reaches the notify path and comes back as the reason in the warning", async () => {
+    const plain = "wb-72c obviously fake optional install missing";
+    expect((await nativeLoadNotifyTexts(plain))[0]).toContain(`native modules failed to load (${plain})`);
   });
 });
 
