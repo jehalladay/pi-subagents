@@ -2,11 +2,55 @@ import { createHash } from "node:crypto";
 import { cpSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+import ts from "typescript";
 import { afterEach, describe, expect, it } from "vitest";
 import { canonicalJson, captureInvocationIdentity, IdentityConflictError, identityDigest, verifyInvocationIdentity } from "../src/workbench/identity.js";
 
 const packageRoot = resolve(import.meta.dirname, "..");
 const dirs: string[] = [];
+/**
+ * The explicit budget of every package-copy row in this file (wb-hk9l), file-local so no other suite's budget moves.
+ * A row that copies package.json, package-lock.json and vendor/ into a scratch package root and then hashes every pinned
+ * artifact takes a wall time set by host contention rather than by identity logic: the owner relay for wb-gs2.3 measured
+ * the package/vendor pin row at 8363 ms serial at load1 350-400, inside which vitest's default 5000 ms budget fails it
+ * (the a2g.13 trunk control, the wb-973.2 owner gate and both wb-gs2.3 machine runs). The owner floor is 20000 ms; 30000 ms
+ * is 3.6 x the 8363 ms measurement. A row's synchronous file work cannot be interrupted, so the budget only decides when a
+ * finished row is failed; it never retries one.
+ */
+const PACKAGE_COPY_ROW_BUDGET_MS = 30_000;
+/** The worst measured serial wall of a package-copy row (wb-gs2.3 relay F1, load1 350-400). */
+const WORST_MEASURED_WALL_MS = 8_363;
+const PACKAGE_COPY_ROW: { readonly timeout: number } = { timeout: PACKAGE_COPY_ROW_BUDGET_MS };
+/** The rows that carry PACKAGE_COPY_ROW, in file order: every row whose body calls cpSync. */
+const PACKAGE_COPY_ROWS = [
+  "pins actual package.json, package-lock.json and local vendor artifact bytes, not declared fiction",
+  "uses the shipped dependency lock only when npm has excluded package-lock.json",
+  "rejects lockfile changes, missing artifact and lockfile/manifest mismatch",
+];
+/** Every it() row of this file in source order: whether it carries PACKAGE_COPY_ROW and whether its body calls cpSync (the wb-hk9l pin). */
+function sourceRows(): { title: string; budgeted: boolean; copies: boolean }[] {
+  const file = fileURLToPath(import.meta.url);
+  const source = ts.createSourceFile(file, readFileSync(file, "utf8"), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const callsCopy = (node: ts.Node): boolean =>
+    (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "cpSync") ||
+    ts.forEachChild(node, child => (callsCopy(child) ? true : undefined)) === true;
+  const rows: { title: string; budgeted: boolean; copies: boolean }[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "it") {
+      const [title, second] = node.arguments;
+      const body = node.arguments[node.arguments.length - 1];
+      rows.push({
+        title: title !== undefined && ts.isStringLiteralLike(title) ? title.text : "<a row with a non-literal title>",
+        budgeted: node.arguments.length === 3 && second !== undefined && ts.isIdentifier(second) && second.text === "PACKAGE_COPY_ROW",
+        copies: body !== undefined && callsCopy(body),
+      });
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  return rows;
+}
 function fixture() {
   const workspace = mkdtempSync(join(tmpdir(), "workbench-identity-"));
   dirs.push(workspace);
@@ -85,7 +129,7 @@ describe("WB-014 immutable invocation identity", () => {
     expect(() => verifyInvocationIdentity(pin, changed)).toThrow();
   });
 
-  it("pins actual package.json, package-lock.json and local vendor artifact bytes, not declared fiction", () => {
+  it("pins actual package.json, package-lock.json and local vendor artifact bytes, not declared fiction", PACKAGE_COPY_ROW, () => {
     const f = fixture();
     const root = join(f.workspace, "package");
     mkdirSync(root);
@@ -132,7 +176,7 @@ describe("WB-014 immutable invocation identity", () => {
     expect(() => captureInvocationIdentity(f.request)).toThrow(IdentityConflictError);
   });
 
-  it("uses the shipped dependency lock only when npm has excluded package-lock.json", () => {
+  it("uses the shipped dependency lock only when npm has excluded package-lock.json", PACKAGE_COPY_ROW, () => {
     const f = fixture();
     const root = join(f.workspace, "installed-package");
     mkdirSync(root);
@@ -156,7 +200,7 @@ describe("WB-014 immutable invocation identity", () => {
     expect(() => captureInvocationIdentity(request)).toThrow(IdentityConflictError);
   });
 
-  it("rejects lockfile changes, missing artifact and lockfile/manifest mismatch", () => {
+  it("rejects lockfile changes, missing artifact and lockfile/manifest mismatch", PACKAGE_COPY_ROW, () => {
     const f = fixture();
     const root = join(f.workspace, "package");
     mkdirSync(root);
@@ -189,5 +233,16 @@ describe("WB-014 immutable invocation identity", () => {
     expect(() => captureInvocationIdentity({ ...f.request, hostAbi: { ...f.request.hostAbi, interfaceVersion: "" } })).toThrow();
     expect(() => captureInvocationIdentity({ ...f.request, providerDescriptors: [{ ...f.request.providerDescriptors[0], contractSource: "" }] })).toThrow();
     expect(() => captureInvocationIdentity({ ...f.request, providerDescriptors: [f.request.providerDescriptors[0], f.request.providerDescriptors[0]] })).toThrow();
+  });
+
+  it("wb-hk9l: every package-copy row runs under the explicit file-local budget, none rides the 5000 ms default", () => {
+    const rows = sourceRows();
+    expect(rows.filter(row => row.budgeted).map(row => row.title)).toEqual(PACKAGE_COPY_ROWS);
+    expect(rows.filter(row => row.copies).map(row => row.title)).toEqual(PACKAGE_COPY_ROWS);
+    expect(rows.filter(row => row.title === "<a row with a non-literal title>")).toEqual([]);
+    expect(PACKAGE_COPY_ROW).toEqual({ timeout: PACKAGE_COPY_ROW_BUDGET_MS });
+    expect(PACKAGE_COPY_ROW_BUDGET_MS).toBeGreaterThanOrEqual(20_000);
+    expect(PACKAGE_COPY_ROW_BUDGET_MS).toBeGreaterThan(2 * WORST_MEASURED_WALL_MS);
+    expect(WORST_MEASURED_WALL_MS).toBeGreaterThan(5_000);
   });
 });
