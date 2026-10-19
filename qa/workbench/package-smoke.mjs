@@ -1,12 +1,14 @@
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
-import { tmpdir } from 'node:os';
+import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { gitStamp } from './git-stamp.mjs';
 import { buildPackageReceipt, bundledLockEntries, classifyPackedPaths, missingRequiredPackedPaths } from './package-boundary.mjs';
+import { installScratchLeakGuard, makeScratch, removeScratch } from './scratch.mjs';
+installScratchLeakGuard();
 const root = process.cwd();
-const scratch = mkdtempSync(join(tmpdir(), 'pi-workbench-pack-'));
-const scratch2 = mkdtempSync(join(tmpdir(), 'pi-workbench-pack2-'));
+const scratch = makeScratch('pi-workbench-pack-');
+const scratch2 = makeScratch('pi-workbench-pack2-');
 try {
   const packArgs = ['pack', '--ignore-scripts', '--json', '--pack-destination', scratch];
   const packed = spawnSync('npm', packArgs, {cwd: root, encoding: 'utf8'});
@@ -30,14 +32,12 @@ try {
   const second = JSON.parse(repacked.stdout)[0];
   assert.ok(second.shasum === receipts[0].shasum && second.integrity === receipts[0].integrity, `pack is not deterministic: first shasum=${receipts[0].shasum} integrity=${receipts[0].integrity}; second shasum=${second.shasum} integrity=${second.integrity}`);
   const run = (cmd, args) => spawnSync(cmd, args, {cwd: root, encoding: 'utf8'});
-  const head = run('git', ['rev-parse', 'HEAD']);
-  const known = head.status === 0 && head.stdout.trim().length > 0;
-  const porcelain = known ? run('git', ['status', '--porcelain']) : undefined;
+  const stamp = gitStamp(root);
   const npmVersion = run('npm', ['--version']);
   console.log(JSON.stringify(buildPackageReceipt({
     fileCount: names.length, shasum: receipts[0].shasum, integrity: receipts[0].integrity,
-    git: {head: known ? head.stdout.trim() : null, porcelain: known && porcelain?.status === 0 ? porcelain.stdout : null},
+    git: stamp,
     node: process.version, npm: npmVersion.status === 0 ? npmVersion.stdout.trim() : 'unknown', platform: process.platform, arch: process.arch,
     utc: new Date().toISOString(), command: `npm ${[...packArgs.slice(0, -1), "<scratch>"].join(" ")}`, topLevel, bundled,
   })));
-} finally { rmSync(scratch, {recursive:true,force:true}); rmSync(scratch2, {recursive:true,force:true}); }
+} finally { removeScratch(scratch, scratch2); }

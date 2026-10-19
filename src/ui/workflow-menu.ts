@@ -16,10 +16,14 @@
 
 import type { ExtensionCommandContext } from "@earendil-works/pi-coding-agent";
 import type { AgentRecord } from "../types.js";
+import { type AttentionReport, selectAttention } from "../workbench/attention.js";
+import { CapabilityError } from "../workbench/capability-registry.js";
 import type { EvidenceStore } from "../workbench/evidence-loader.js";
-import type { ObservationProjection, ObservationScope } from "../workbench/observation.js";
+import type { ObservationProjection, ObservationScope, ObservedNode } from "../workbench/observation.js";
+import { buildTimelineLanes, type TimelineModel, type TimelineRequest } from "../workbench/timeline.js";
+import { type LinkedTopology, selectLinkedTopology } from "../workbench/topology-slice.js";
 import { pauseWorkflowTask, resumeWorkflowTask, type WorkflowTask } from "../workflow/task.js";
-import { WorkflowDialog } from "./workflow-dialog.js";
+import { type InspectorTimelineView, WorkflowDialog } from "./workflow-dialog.js";
 
 /** Everything the menu and the inspector need from the extension around them. */
 export interface WorkflowMenuDeps {
@@ -29,7 +33,33 @@ export interface WorkflowMenuDeps {
    * crash.
    */
   tasks: ReadonlyMap<string, WorkflowTask>;
-  observation?: { projection: ObservationProjection; scope(task: WorkflowTask): ObservationScope | undefined; evidence?: EvidenceStore };
+  observation?: {
+    projection: ObservationProjection;
+    scope(task: WorkflowTask): ObservationScope | undefined;
+    evidence?: EvidenceStore;
+    /**
+     * The read cap `projection` was built with (its maxQuery; src/index.ts hands over the constant it builds the
+     * projection with). Declared, the details view shows the selected node's linked topology slice, read in pages of
+     * exactly this size so the slice never asks for more rows than the projection returns (wb-6ze.24). Undeclared, the
+     * details view renders exactly as it does without one.
+     */
+    relationPage?: number;
+    /**
+     * The bar viewport, in cells, of the timeline view's lane model (src/index.ts hands over WORKBENCH_TIMELINE_COLUMNS).
+     * Declared together with relationPage, the timeline view draws the workbench.timeline/v1 lanes buildTimelineLanes
+     * builds over this projection for the window, zoom and pan the inspector shows, reading windows and relation pages of
+     * relationPage rows (wb-6ze.35). Either one undeclared, the timeline view renders exactly as it does without a model.
+     */
+    timelineColumns?: number;
+    /**
+     * The overview's attention inputs (src/index.ts hands over the host clock and WORKBENCH_ATTENTION_BOTTLENECKS): `now`
+     * reads the caller clock as an ISO-8601 instant and `bottlenecks` caps the open intervals listed. Declared together with
+     * relationPage, the overview draws the workbench.attention/v1 report selectAttention computes over this projection for
+     * the observed invocation, examining one page of relationPage nodes (wb-6ze.36). Either one undeclared, the overview
+     * renders exactly as it does without a report.
+     */
+    attention?: { now: () => string; bottlenecks: number };
+  };
   /** The record behind an agent id, or undefined once it has been swept. */
   getRecord(id: string): AgentRecord | undefined;
   /** The conversation overlay `c` opens on an agent row. */
@@ -41,6 +71,91 @@ export interface WorkflowMenuDeps {
    * sessions, which is a no-op rather than an error.
    */
   getCtx(): ExtensionCommandContext | undefined;
+}
+
+/**
+ * The details view's linked topology read side for one open dialog (wb-6ze.24; docs/workbench/10, Four views: Details).
+ * It computes the bounded slice of the one node the inspector draws as current from the projection's typed relations,
+ * read through relationsPage so a full page comes back as a lower bound, and holds that slice alone: a redraw reads
+ * nothing until the selection or the relation topology changes. Reading is all it does, so a selection change reaches no
+ * producer and no control verb, and closing the dialog leaves it nothing to cancel. A focus or a page the selector
+ * refuses yields no slice, and the details view then renders exactly as it does without one.
+ */
+function selectedNodeTopology(
+  projection: ObservationProjection,
+  relationPage: number,
+): (scope: ObservationScope, node: ObservedNode) => LinkedTopology | undefined {
+  let held: { workspace: string; principal: string; key: string; revision: number; slice: LinkedTopology | undefined } | undefined;
+  return (scope, node) => {
+    const revision = projection.relationRevision();
+    if (held?.key === node.key && held.revision === revision && held.workspace === scope.workspace && held.principal === scope.principal) {
+      return held.slice;
+    }
+    let slice: LinkedTopology | undefined;
+    try {
+      slice = selectLinkedTopology({ scope, relations: projection }, node.key, { relationPage });
+    } catch (error) {
+      if (!(error instanceof CapabilityError)) throw error;
+    }
+    held = { workspace: scope.workspace, principal: scope.principal, key: node.key, revision, slice };
+    return slice;
+  };
+}
+
+/**
+ * The timeline view's lane read side for one open dialog (wb-6ze.35; docs/workbench/10, Four views: Timeline). It hands
+ * the inspector the workbench.timeline/v1 model buildTimelineLanes computes over the live projection for the window the
+ * inspector draws, the page of `page` rows holding the row it draws as current, at the inspector's zoom and pan, with
+ * bars laid out in `columns` cells. Every cap in the request is a value the host declared, never a literal here. The
+ * model is held and rebuilt only when the projection revision, its relation revision or the request changes, so a
+ * redraw, a selection inside the window, a filter or a focus reads no relation. An out-of-contract request is the
+ * selector's typed refusal and is not caught: zoom and pan arrive within the inspector reducer's bounds. Reading is all
+ * it does, so closing the dialog leaves it nothing to cancel.
+ */
+function timelineLanes(
+  projection: ObservationProjection,
+  page: number,
+  columns: number,
+): (scope: ObservationScope, invocationId: string, view: InspectorTimelineView) => TimelineModel {
+  let held: { key: string; model: TimelineModel } | undefined;
+  return (scope, invocationId, view) => {
+    // The row the inspector draws as current: the selected key's row, else the cursor, clamped to the rows that exist.
+    const wanted = (view.selected ? projection.indexOf({ scope, invocationId, key: view.selected }) : undefined) ?? view.index;
+    const probe = projection.window({ scope, invocationId, offset: wanted - (wanted % page), limit: page });
+    const current = Math.min(wanted, Math.max(0, probe.total - 1));
+    const request: TimelineRequest = {
+      scope, invocationId, offset: current - (current % page), limit: page, zoom: view.zoom, pan: view.pan, columns, relationLimit: page,
+    };
+    const key = JSON.stringify([probe.revision, projection.relationRevision(), request]);
+    if (held?.key !== key) held = { key, model: buildTimelineLanes(projection, request) };
+    return held.model;
+  };
+}
+
+/**
+ * The overview's attention read side for one open dialog (wb-6ze.36; docs/workbench/10, Four views: Overview). It hands
+ * the inspector the workbench.attention/v1 report selectAttention computes over the live projection for the dialog's own
+ * invocation: one page of `page` nodes, at most `bottlenecks` open intervals listed, each measured against the host clock
+ * `now`. Every cap in the input is a value the host declared and the clock is the host's (ATTENTION_CLOCK_CAVEAT), never a
+ * literal or a clock read here. The report is held for the scope it was computed for and recomputed only when the
+ * projection revision changes (a relation change moves it too), so a redraw, a key or a moving clock computes nothing and
+ * reads no clock. A clock the selector refuses is its typed refusal and is not caught. Reading is all it does, so closing
+ * the dialog leaves it nothing to cancel.
+ */
+function attentionReport(
+  projection: ObservationProjection,
+  invocationId: string,
+  page: number,
+  bottlenecks: number,
+  now: () => string,
+): (scope: ObservationScope) => AttentionReport {
+  let held: { key: string; report: AttentionReport } | undefined;
+  return scope => {
+    const { revision } = projection.window({ scope, invocationId, offset: 0, limit: 1 });
+    const key = JSON.stringify([revision, scope.workspace, scope.principal]);
+    if (held?.key !== key) held = { key, report: selectAttention(projection, { scope, invocationId, now: now(), limit: page, bottlenecks }) };
+    return held.report;
+  };
 }
 
 /**
@@ -72,6 +187,17 @@ export async function showWorkflowDialog(
    * closes.
    */
   let overlay: { setHidden(hidden: boolean): void } | undefined;
+  // One topology read side per open dialog: it holds the selected node's slice and goes with the overlay (wb-6ze.24).
+  const host = deps.observation;
+  const topology = host?.relationPage !== undefined ? selectedNodeTopology(host.projection, host.relationPage) : undefined;
+  // And one timeline lane read side, for a host that declares both its read cap and its bar viewport (wb-6ze.35).
+  const lanes = host?.relationPage !== undefined && host.timelineColumns !== undefined
+    ? timelineLanes(host.projection, host.relationPage, host.timelineColumns)
+    : undefined;
+  // And one attention read side for this run's overview, for a host that declares its read cap, clock and bottleneck cap (wb-6ze.36).
+  const attention = host?.relationPage !== undefined && host.attention !== undefined
+    ? attentionReport(host.projection, task.id, host.relationPage, host.attention.bottlenecks, host.attention.now)
+    : undefined;
   await ctx.ui.custom<undefined>(
     (tui, theme, _keybindings, done) =>
       new WorkflowDialog(
@@ -89,7 +215,12 @@ export async function showWorkflowDialog(
               title: task.meta?.name ?? task.workflowName ?? task.id,
               status: task.status,
               ...(deps.observation.evidence !== undefined ? { evidence: deps.observation.evidence } : {}),
+              ...(topology !== undefined ? { topology: (node: ObservedNode) => topology(observationScope, node) } : {}),
             } } : {}),
+            // The timeline view's lane model goes with the observation it is built from (wb-6ze.35).
+            ...(observationScope && lanes !== undefined ? { timelineLanes: (view: InspectorTimelineView) => lanes(observationScope, task.id, view) } : {}),
+            // And the overview's attention report, for the scope this render reads (wb-6ze.36).
+            ...(observationScope && attention !== undefined ? { attention: () => attention(observationScope) } : {}),
             task: {
               status: task.status,
               workflowName: task.workflowName,

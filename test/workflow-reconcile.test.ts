@@ -5,6 +5,7 @@ import type { WorkflowJournalEntry } from "../src/workflow/journal.js";
 import {
   ACKNOWLEDGEMENT_VALUE_CONTRACT,
   type AcknowledgeRecord,
+  type AcknowledgeRow,
   acknowledgementValue,
   admitReconcile,
   consumeOverridesAtResume,
@@ -15,6 +16,7 @@ import {
   markApplied,
   markConsumed,
   type OverrideRecord,
+  type OverrideRow,
   producerOf,
   RECONCILE_CONTRACT_VERSION,
   RECONCILE_EVIDENCE_READS,
@@ -47,8 +49,8 @@ function override(changes: Partial<OverrideRecord> = {}): OverrideRecord {
     acknowledgementId: `ack_${"b".repeat(32)}`, duplicateRisk: "none",
     confirmation: { confirmed: true, position: 0, capabilityId: "furnace.run.start", acceptDuplicateRisk: true }, ...changes };
 }
-const ackRow = (record = ack()): WorkflowJournalEntry => ({ index: 0, key: "k0", ok: true, kind: "acknowledge", capabilityId: "furnace.run.start", effectClass: "external", basis: "b1", reconcile: record });
-const overrideRow = (record = override()): WorkflowJournalEntry => ({ index: 0, key: "k0", ok: true, kind: "override", capabilityId: "furnace.run.start", effectClass: "external", basis: "b1", reconcile: record });
+const ackRow = (record = ack()): AcknowledgeRow => ({ index: 0, key: "k0", ok: true, kind: "acknowledge", capabilityId: "furnace.run.start", effectClass: "external", basis: "b1", reconcile: record });
+const overrideRow = (record = override()): OverrideRow => ({ index: 0, key: "k0", ok: true, kind: "override", capabilityId: "furnace.run.start", effectClass: "external", basis: "b1", reconcile: record });
 const admit = (entries: WorkflowJournalEntry[], currentKey = "k0", currentCapabilityId = "furnace.run.start") =>
   admitReconcile({ recorded: effect, index: 0, currentKey, currentCapabilityId }, indexReconciliations(entries).get(0));
 
