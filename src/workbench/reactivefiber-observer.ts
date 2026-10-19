@@ -139,6 +139,17 @@ function engineSpawns(result: JsonRecord): number {
   return Number(metrics.tsx_worker_spawns);
 }
 
+/** The bundle the render pinned (wb-973.8 SCG-R8), or nothing when the envelope states none. The pinned rf schema types a stated
+ * result.bundle_revision_id as sha256:<64 lowercase hex>, never null, and keeps an envelope without it valid, so a stated value
+ * of any other shape is refused, never dropped or rewritten. Owner ruling G-A: the bundle owns the snapshot's sourceVersion (the
+ * version cohort key) and rides as the rf-bundle reference; graph_revision_id stays sourceRevision and the rf-graph reference. */
+function bundleRevision(result: JsonRecord): string | undefined {
+  if (!Object.hasOwn(result, 'bundle_revision_id')) return undefined;
+  const bundle = result.bundle_revision_id;
+  if (typeof bundle !== 'string' || !GRAPH_DIGEST.test(bundle)) throw refused('result.bundle_revision_id must be sha256:<64 lowercase hex> when stated');
+  return bundle;
+}
+
 /** The observation-row demotion leg (wb-973.10 SCG-R10, wb-973.9 SCG-R9): what result.observations contributes, which can only
  * demote. Every row states a string status, a freshness from the pinned closed pair captured_at_render or reused, a boolean
  * replayed and, when it states one, a boolean degraded; anything else is refused, and so are the two pinned contradictions this
@@ -252,6 +263,7 @@ interface ProjectionParts {
   statusText: string;
   evidenceRefs: readonly string[];
   notes: readonly string[];
+  sourceVersion?: string;
   sourceRevision?: string;
   nativePayloadRef?: string;
 }
@@ -273,6 +285,8 @@ function previewSnapshot(envelope: JsonRecord, diagnostics: readonly JsonRecord[
   const release = reportedRelease(provenance?.cli_version);
   // RF ruling A28 engine identity, read only from an object-shaped sdk_versions: references and one note, never coverage or tone.
   const engines = engineRefs(provenance?.sdk_versions);
+  // wb-973.8 (SCG-R8): the pinned bundle, read only when stated; it keys the version cohort beside the graph digest's revision.
+  const bundle = bundleRevision(result);
   const formula = record(record(result.budget)?.formula_terms);
   if (!formula || !FORMULA_KEYS.every(key => count(formula[key])) || typeof formula.available_context_tokens !== 'number' ||
     !Number.isSafeInteger(formula.available_context_tokens)) {
@@ -315,7 +329,9 @@ function previewSnapshot(envelope: JsonRecord, diagnostics: readonly JsonRecord[
   else if (spawns > 0) notes.push(SPAWN_NOTE);
   return {
     operationId: String(envelope.operation_id), coverage: clean ? 'complete' : 'partial', statusTone: clean ? 'success' : 'unknown', statusText,
-    evidenceRefs: [`rf-graph:${graph}`, `rf-workspace:${workspaceId}`, ...(release !== undefined ? [`rf-cli:${release}`] : []), ...engines, ...(spawns > 0 ? [`rf-engine-spawns:${spawns}`] : [])], notes, sourceRevision: graph,
+    evidenceRefs: [`rf-graph:${graph}`, `rf-workspace:${workspaceId}`, ...(bundle !== undefined ? [`rf-bundle:${bundle}`] : []),
+      ...(release !== undefined ? [`rf-cli:${release}`] : []), ...engines, ...(spawns > 0 ? [`rf-engine-spawns:${spawns}`] : [])], notes,
+    ...(bundle !== undefined ? {sourceVersion: bundle} : {}), sourceRevision: graph,
     nativePayloadRef: `rf-output:sha256:${createHash('sha256').update(output.text).digest('hex')}`,
   };
 }
@@ -365,6 +381,7 @@ export function reactivefiberTopology(reading: JsonValue, context: ReactiveFiber
     source: ref, scope: {...host.scope}, capturedAt: host.capturedAt, observedAt: host.observedAt, coverage: parts.coverage,
     node: {title: shown(`RF context preview ${parts.operationId}`, 120), type: 'sdk-operation', statusText: shown(parts.statusText, 200), statusTone: parts.statusTone},
     kind: 'reactivefiber.render.preview.snapshot', evidenceRefs: [...parts.evidenceRefs],
+    ...(parts.sourceVersion !== undefined ? {sourceVersion: parts.sourceVersion} : {}),
     ...(parts.sourceRevision !== undefined ? {sourceRevision: parts.sourceRevision} : {}),
     ...(parts.nativePayloadRef !== undefined ? {nativePayloadRef: parts.nativePayloadRef} : {}),
     ...(host.invocationId !== undefined ? {trace: {invocationId: host.invocationId}} : {}),
