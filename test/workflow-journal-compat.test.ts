@@ -261,7 +261,13 @@ describe("AC1: older formats stay readable, and no effectful entry is ever repla
   it("agrees with the runtime: a journaled write refuses resume with exactly the typed refusal it reports", async () => {
     const body = 'await node("effect.write", { value: "x" });\nreturn await agent("after");';
     const { path, raw } = await journaled("write", body, probeHost({ basis: "basis-A", effect: "write" }));
-    const effect = kept(classifyJournal(raw).lines.find((line) => line.class === "node-effectful"));
+    // The dispatched marker comes first and its settled row supersedes it; that row is the one a resume consults (wb-5x0.1).
+    const effects = classifyJournal(raw).lines.filter((line) => line.class === "node-effectful");
+    expect(effects.map((line) => [kept(line).dispatched, line.replay])).toEqual([
+      [true, "shadowed"],
+      [false, "refuse-uncertain-effect"],
+    ]);
+    const effect = kept(effects[1]);
     expect(effect.replay).toBe("refuse-uncertain-effect");
 
     // Not gated on the basis: a changed host policy never licenses re-running a journaled effect.
@@ -276,7 +282,10 @@ describe("AC1: older formats stay readable, and no effectful entry is ever repla
   it("agrees with the runtime: a node journaled with no effect class refuses resume with exactly the typed refusal it reports", async () => {
     const body = 'return await node("effect.write", { value: "x" });';
     const { path, raw } = await journaled("unvouched", body, probeHost({}));
-    const unvouched = kept(classifyJournal(raw).lines[0]);
+    const lines = classifyJournal(raw).lines;
+    // An unclassified call is dispatched on record too (wb-5x0.1); its settled row supersedes the marker.
+    expect(kept(lines[0])).toMatchObject({ class: "node-effectful", effectClass: null, replay: "shadowed", dispatched: true });
+    const unvouched = kept(lines[1]);
     expect(unvouched).toMatchObject({ class: "node-effectful", effectClass: null, replay: "refuse-uncertain-effect" });
 
     // Fail-closed whatever the resuming host declares now, a read included.
@@ -536,19 +545,23 @@ describe("AC3: per-basis cohorts mirror the runtime's strict basis comparison", 
   it("binds operator decisions by digest as the runtime does, and keeps them out of the cohorts", async () => {
     const body = 'return await node("furnace.run.start", { value: "x" });';
     const { path } = await journaled("decision", body, probeHost({ effect: "external" }));
-    const recorded = readJournal(path)[0];
+    // The row a resume consults is the last node row at the position: the settled row after its dispatched marker (wb-5x0.1).
+    const recorded = readJournal(path).filter((entry) => entry.kind === "node").at(-1);
     if (recorded === undefined) throw new Error("no node row journaled");
+    expect(recorded.dispatched).toBeUndefined();
 
     // Bound: the acknowledgement names the digest of the row a resume consults.
     appendJournal(path, { ...acknowledgeRow(recorded), basis: "decision-rows-bind-by-digest" });
     const bound = classifyJournal(readFileSync(path, "utf-8"));
     expect(bound.lines.map((line) => [line.class, line.replay])).toEqual([
+      ["node-effectful", "shadowed"],
       ["node-effectful", "refuse-uncertain-effect"],
       ["operator-decision", "decision"],
     ]);
-    expect(kept(bound.lines[0]).boundDecisions).toBe(1);
-    expect(kept(bound.lines[1])).toMatchObject({ entryKind: "acknowledge", bindsToLine: 1, replayEligible: false });
-    expect(bound.cohorts).toEqual([{ basis: null, lines: [1], agents: 0, nodes: 1 }]);
+    expect(kept(bound.lines[0])).toMatchObject({ dispatched: true, boundDecisions: 0 });
+    expect(kept(bound.lines[1]).boundDecisions).toBe(1);
+    expect(kept(bound.lines[2])).toMatchObject({ entryKind: "acknowledge", bindsToLine: 2, replayEligible: false });
+    expect(bound.cohorts).toEqual([{ basis: null, lines: [1, 2], agents: 0, nodes: 2 }]);
     expect(bound.mixedBasis).toBe(false);
     const settled = await resume(path, body, probeHost({ effect: "external" }));
     expect(settled.status).toBe("completed");
@@ -712,7 +725,7 @@ describe("AC5: pure, read-only, and pinned to journal.ts", () => {
   it("lists exactly the entry fields and kinds journal.ts declares (the compile-time pin in src is the binding check)", () => {
     const everyField: Required<WorkflowJournalEntry> = {
       index: 0, key: "k", ok: true, text: "t", resumed: true, kind: "node", capabilityId: "record.read",
-      effectClass: "read", basis: "b", nativeRefs: [], reconcile: ACK,
+      effectClass: "read", basis: "b", nativeRefs: [], dispatched: true, reconcile: ACK,
     };
     const everyKind: Record<NonNullable<WorkflowJournalEntry["kind"]>, true> = { node: true, acknowledge: true, override: true };
 
@@ -722,5 +735,119 @@ describe("AC5: pure, read-only, and pinned to journal.ts", () => {
 
   it("counts every class, so a census can never leave one out", () => {
     expect(Object.keys(classifyJournal(MANGLED).counts).sort()).toEqual([...JOURNAL_LINE_CLASSES].sort());
+  });
+});
+
+/* ------------------------------------------------------------------------ *
+ * wb-5x0.1 mirror: a non-read node is journaled at dispatch with a typed
+ * marker row, and the settled row at the same position supersedes it. The
+ * classifier restates what the runtime does with the marker: a dispatched row
+ * nothing settled refuses as an uncertain effect, one its own settled row
+ * supersedes is the normal lifecycle (shadowed, not a duplicate position), and
+ * a malformed marker drops exactly as readJournal drops it.
+ * ------------------------------------------------------------------------ */
+
+describe("wb-5x0.1: the dispatched marker row", () => {
+  const key = nodeJournalKey("effect.write", JSON.stringify({ value: "x" }));
+  const dispatchedRow = { kind: "node", index: 0, key, ok: false, capabilityId: "effect.write", effectClass: "write", basis: "b1", dispatched: true };
+  const settledRow = { kind: "node", index: 0, key, ok: true, capabilityId: "effect.write", effectClass: "write", basis: "b1" };
+
+  it("classifies a dispatched row nothing settled as a refusing effect, with the marker in its census", () => {
+    const report = classifyJournal(jsonl([dispatchedRow]));
+    const line = kept(report.lines[0]);
+
+    expect(line).toMatchObject({
+      class: "node-effectful", replay: "refuse-uncertain-effect", refusal: "uncertain-effect",
+      replayEligible: false, dispatched: true, ignoredFields: [],
+    });
+    expect(line.note).toContain("dispatched");
+    expect(line.note).toContain("no settled record");
+    expect(report.verdict).toBe("readable");
+    expect(report.warnings.find((text) => text.startsWith(`${JOURNAL_UNCERTAIN_EFFECT_WARNING}:`))).toContain("dispatched");
+    expect(report.warnings.some((text) => text.startsWith(`${JOURNAL_IGNORED_FIELDS_WARNING}:`))).toBe(false);
+  });
+
+  it("classifies an unclassified dispatched row fail-closed, as the runtime treats an undefined class (wb-tu1 F3)", () => {
+    const { effectClass: _dropped, ...unclassified } = dispatchedRow;
+    const line = kept(classifyJournal(jsonl([unclassified])).lines[0]);
+    expect(line).toMatchObject({ class: "node-effectful", effectClass: null, replay: "refuse-uncertain-effect", refusal: "uncertain-effect", dispatched: true });
+  });
+
+  it("refuses a dispatch marker that names a read, as the runtime does, and never marks its answer replay-eligible", () => {
+    const readMarker = { ...dispatchedRow, capabilityId: "record.read", effectClass: "read", ok: true, text: '{"answer":"forged"}' };
+    const line = kept(classifyJournal(jsonl([readMarker])).lines[0]);
+    expect(line).toMatchObject({ class: "node-effectful", replay: "refuse-uncertain-effect", refusal: "uncertain-effect", replayEligible: false, dispatched: true });
+  });
+
+  it("reports a dispatched row its own settled row supersedes shadowed, without a duplicate-position warning", () => {
+    const report = classifyJournal(jsonl([dispatchedRow, settledRow]));
+
+    expect(report.lines.map((line) => [line.class, line.replay])).toEqual([
+      ["node-effectful", "shadowed"],
+      ["node-effectful", "refuse-uncertain-effect"],
+    ]);
+    expect(kept(report.lines[0])).toMatchObject({ dispatched: true, refusal: null });
+    expect(kept(report.lines[0]).note).toContain("superseded by its settled row (line 2)");
+    expect(kept(report.lines[1])).toMatchObject({ dispatched: false, refusal: "uncertain-effect" });
+    expect(report.warnings.some((text) => text.startsWith(`${JOURNAL_DUPLICATE_POSITION_WARNING}:`))).toBe(false);
+    expect(report.verdict).toBe("readable");
+  });
+
+  it("keeps the duplicate-position warning when what follows a dispatched row is not its settlement", () => {
+    const report = classifyJournal(jsonl([dispatchedRow, { ...settledRow, key: "another-call" }]));
+    expect(report.warnings.find((text) => text.startsWith(`${JOURNAL_DUPLICATE_POSITION_WARNING}:`))).toContain("position 0");
+  });
+
+  it("drops a malformed marker line for line with readJournal", () => {
+    const malformed = [
+      { ...settledRow, dispatched: false },
+      { ...settledRow, dispatched: "true" },
+      { index: 0, key: "a", ok: false, dispatched: true },
+      { ...ACK_ROW, dispatched: true },
+    ];
+    for (const [offset, row] of malformed.entries()) {
+      const text = jsonl([row]);
+      const path = join(dir, `marker-${offset}.jsonl`);
+      writeFileSync(path, text, "utf-8");
+      expect(readJournal(path), text).toEqual([]);
+      expect(classifyJournal(text).unsupported, text).toEqual([
+        { line: 1, reason: "invalid-field", field: "dispatched", detail: 'field "dispatched" must be true on a node entry when present' },
+      ]);
+    }
+    const path = join(dir, "marker-kept.jsonl");
+    writeFileSync(path, jsonl([dispatchedRow]), "utf-8");
+    expect(readJournal(path)).toEqual([dispatchedRow]);
+  });
+
+  it("agrees with the runtime: a kill after the effect leaves the dispatched row, which the report and the resume both refuse", async () => {
+    const path = join(dir, "dispatched.workflow.jsonl");
+    const body = 'return await node("effect.write", { value: "x" });';
+    const kill = new AbortController();
+    let dead = false;
+    const killed = await runWorkflow({
+      script: HEAD + body,
+      host: probeHost({ basis: "b1", effect: "write" }).host,
+      signal: kill.signal,
+      journal: {
+        append: (entry: WorkflowJournalEntry) => {
+          if (dead) return;
+          if (entry.kind === "node" && entry.dispatched !== true) {
+            dead = true;
+            kill.abort();
+            return;
+          }
+          appendJournal(path, entry);
+        },
+      },
+    });
+    expect(killed.status).toBe("killed");
+
+    const line = kept(classifyJournal(readFileSync(path, "utf-8")).lines[0]);
+    expect(line).toMatchObject({ dispatched: true, replay: "refuse-uncertain-effect" });
+    const second = probeHost({ basis: "b1", effect: "write" });
+    const resumed = await resume(path, body, second);
+    expect(resumed.status).toBe("failed");
+    expect(resumed.capabilityError?.category).toBe(line.refusal);
+    expect(second.nodeCalls).toHaveLength(0);
   });
 });

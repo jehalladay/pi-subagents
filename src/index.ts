@@ -66,15 +66,25 @@ import { selectItem } from "./ui/select-item.js";
 import { renderWorkflowCard, renderWorkflowEntryCard } from "./ui/workflow-card.js";
 import { openWorkflowFromFleet, showWorkflowsMenu, type WorkflowMenuDeps } from "./ui/workflow-menu.js";
 import { getLifetimeCost, getLifetimeTotal, getSessionContextPercent, type LifetimeUsage, PendingUsagePool, toReportedUsage } from "./usage.js";
-import { type CapabilityDescriptor, CapabilityRegistry } from "./workbench/capability-registry.js";
+import { type CapabilityDescriptor, CapabilityError, CapabilityRegistry } from "./workbench/capability-registry.js";
+import { executeClaudeControl } from "./workbench/claude-control.js";
+import { createClaudeControlObserver, createClaudeControlRetention } from "./workbench/claude-control-observer.js";
+import type { ClaudeCallIdentity } from "./workbench/claude-host.js";
+import { type ControlExecutionSummary, type ControlExecutor, createWorkflowControlTool } from "./workbench/control-tool.js";
 import { type CompareRun, catalogWorkflows, compareWorkflowRuns, inspectWorkflowSource, validateWorkflowSource } from "./workbench/designer.js";
+import { executeDetachedControl } from "./workbench/detached-control.js";
 import { createWorkbenchEvidenceStore } from "./workbench/evidence-wiring.js";
+import { createWorkflowExecuteTool, type ExecuteLaunch } from "./workbench/execute-tool.js";
+import { createRetainedForgeControlExecutor, retainForgeOperation } from "./workbench/forge-control-retention.js";
+import { type ForgeOperationObserver, observeForgeGateRun } from "./workbench/forge-operation-observer.js";
+import { executeFurnaceControl } from "./workbench/furnace-control.js";
 import { FurnaceObserver } from "./workbench/furnace-observer.js";
 import { captureInvocationIdentity, type IdentityCaptureInput, identityDigest, verifyInvocationIdentity, WORKFLOW_SCRIPT_SCHEMA_VERSION } from "./workbench/identity.js";
 import { loadWorkbenchNative, workbenchNative } from "./workbench/native-modules.js";
 import { type NativeRef, ObservationProjection, type ObservationScope, type Presentation } from "./workbench/observation.js";
+import { OBSERVE_CURSOR_MAX_BYTES, OBSERVE_DEFAULT_MAX_BYTES, OBSERVE_MAX_LIMIT, OBSERVE_MAX_MAX_BYTES, OBSERVE_MIN_MAX_BYTES, observeInvocation } from "./workbench/observe-query.js";
 import { createWorkflowReconcileTool } from "./workbench/reconcile-tool.js";
-import { sanitizeWorkbenchJsonText, sanitizeWorkbenchText, stripUnsafeText } from "./workbench/redaction.js";
+import { sanitizeWorkbenchJsonText, sanitizeWorkbenchText, stripUnsafeText, WORKBENCH_TEXT_LIMIT } from "./workbench/redaction.js";
 import { buildWorkflowInspectReply, INSPECT_VIEWS } from "./workbench/tool-replies.js";
 import { decideWorkflowCollision, FOREIGN_WORKFLOW_TOOL_NAMES } from "./workflow/collisions.js";
 import { WORKFLOW_ENTRY_TYPE, type WorkflowEntryData, workflowEntryData } from "./workflow/entry.js";
@@ -305,6 +315,26 @@ export function formatToolsSuffix(cfg: AgentConfig | undefined): string {
 
 /** CLI flag that runs a workflow script at session start. */
 export const WORKFLOW_FILE_FLAG = "subagents-workflow-file";
+
+/**
+ * The session ObservationProjection's read cap (its maxQuery). The inspector's linked topology wiring reads relation
+ * pages of exactly this size, so a slice never asks for more rows than the projection can return (wb-6ze.24).
+ */
+export const WORKBENCH_PROJECTION_MAX_QUERY = 40;
+/**
+ * The bar viewport of the inspector timeline view, in cells: the columns of the workbench.timeline/v1 lane model the menu
+ * builds (wb-6ze.35). Fixed rather than read from the terminal, so the model is rebuilt only on a projection change or a
+ * window, zoom or pan change. 24 cells fit the bar area the timeline view leaves at the 80-column overlay (docs/workbench/02
+ * WB-028), so a bar the model places inside its viewport is never cut by the screen.
+ */
+export const WORKBENCH_TIMELINE_COLUMNS = 24;
+/**
+ * The bottleneck cap of the inspector overview's attention panel: how many producer-stated open intervals the
+ * workbench.attention/v1 report lists, longest first (wb-6ze.36). The selector's documented default, declared here so the
+ * wiring passes a cap the host stated rather than a literal; the report examines one projection page of
+ * WORKBENCH_PROJECTION_MAX_QUERY nodes, and rows the overlay cannot fit are dropped from the bottom and counted.
+ */
+export const WORKBENCH_ATTENTION_BOTTLENECKS = 5;
 
 /**
  * Re-exported from where they now live, because this is where they were
@@ -1173,6 +1203,10 @@ export default function (pi: ExtensionAPI) {
     // as well as its children, and only its own signal terminates that.
     for (const task of workflowTasks.values()) task.abortController.abort();
     workflowTasks.clear();
+    claudeControlRetention.dispose();
+    // Forge operations this process started: dispose releases their retentions and closes the owned connections (no cancel verb).
+    await Promise.all([...liveForgeOperations.values()].map(operation => operation.dispose().catch(() => undefined)));
+    liveForgeOperations.clear();
     manager.abortAll();
     for (const timer of pendingNudges.values()) clearTimeout(timer);
     pendingNudges.clear();
@@ -2374,7 +2408,29 @@ Terse command-style prompts produce shallow, generic work.
    * background run.
    */
   const workflowTasks = new Map<string, WorkflowTask>();
-  const projection = new ObservationProjection({ maxEvents: 4_096, maxNodes: 2_000, maxEdges: 4_000, maxQuery: 40 });
+  const projection = new ObservationProjection({ maxEvents: 4_096, maxNodes: 2_000, maxEdges: 4_000, maxQuery: WORKBENCH_PROJECTION_MAX_QUERY });
+  /**
+   * forge_gate_run (wb-a3s): the Forge operations THIS process started and still observes, keyed by the server's operation
+   * id. Each owns its connection; session_shutdown disposes them, which reaps the spawned app-servers — process ownership at
+   * teardown, never a control verb.
+   */
+  const liveForgeOperations = new Map<string, ForgeOperationObserver>();
+  /**
+   * workflow_control (wb-cra): the live Claude SDK queries THIS process runs, keyed by invocation and call index, each
+   * with the SDK session it has reported. The host fires onQueryLive/onQueryDone around every query whose stream exposes
+   * interrupt(); the session binding comes from the init message. An ended query is dropped the moment the host says so,
+   * so a control request can only ever reach a query that is live here — never a detached host's, never a replay.
+   */
+  interface LiveClaudeQuery { readonly invocationId: string; readonly call: ClaudeCallIdentity; readonly seam: { interrupt(): Promise<unknown> }; sessionId?: string }
+  const liveClaudeQueries = new Map<string, LiveClaudeQuery>();
+  const liveClaudeSessions = new Map<string, string>();
+  const liveClaudeKey = (invocationId: string, call: ClaudeCallIdentity): string => `${invocationId}:${call.index}`;
+  /**
+   * workflow_control (wb-hqa): the acknowledged Claude interrupts awaiting the observer's report of the call's own terminal,
+   * keyed like liveClaudeQueries. Separate from the live maps because onQueryDone deletes those BEFORE onSettled publishes
+   * the terminal; the observer's control hooks settle from here, and session_shutdown disposes it.
+   */
+  const claudeControlRetention = createClaudeControlRetention({ projection, tasks: workflowTasks, now: () => new Date().toISOString() });
   const registries = new Map<string, CapabilityRegistry>();
   let workbenchToolsRegistered = false;
   function registryFor(cwd: string): CapabilityRegistry {
@@ -2400,6 +2456,16 @@ Terse command-style prompts produce shallow, generic work.
   }
   function grants(ctx: ExtensionContext): readonly string[] {
     return loadSettings(ctx.cwd).workbench?.capabilityGrants ?? [];
+  }
+  /** The gate.run root: an absolute path resolving to the bound workspace or a package inside it; anything else is undefined, never repaired. */
+  function forgeRunRoot(target: string, workspace: string): string | undefined {
+    if (!isAbsolute(target)) return undefined;
+    try {
+      const resolved = realpathSync(target);
+      return resolved === workspace || resolved.startsWith(`${workspace}/`) ? resolved : undefined;
+    } catch {
+      return undefined;
+    }
   }
   function sourceSettings(ctx: ExtensionContext): WorkbenchSettings | undefined {
     return loadSettings(ctx.cwd).workbench;
@@ -2469,6 +2535,52 @@ Terse command-style prompts produce shallow, generic work.
         supportedModes: descriptor.supportedModes,
       })),
     };
+  }
+
+  /** A native reference scope the pure reply builder admits (clean text within its 256-byte identity bound), else none. */
+  function referenceScope(path: string): { scope: string } | Record<string, never> {
+    return Buffer.byteLength(path) <= 256 && stripUnsafeText(path) === path ? { scope: path } : {};
+  }
+  // workflow_execute launchers (wb-syh). Each receives the admission and its host-bound provenance (principal,
+  // workspace scope, session, grant, admission policy); neither reads authority from the model, and each resolves to
+  // the native references the host can report now, never to completion.
+  async function launchEmbeddedWorkflow(ctx: ExtensionContext, launch: ExecuteLaunch): Promise<readonly NativeRef[]> {
+    if (!isWorkflowsEnabled()) throw new Error("Workflows are disabled in this session.");
+    const meta = extractMeta(launch.source.source).meta;
+    const runId = launch.invocationId;
+    let journalPath: string | undefined;
+    try {
+      const dir = sessionTaskDir(ctx.cwd, ctx.sessionManager.getSessionId());
+      writeFileSync(join(dir, `${runId}.workflow.js`), launch.source.source, "utf-8");
+      journalPath = join(dir, `${runId}.workflow.jsonl`);
+    } catch (err) {
+      console.warn(`[pi-subagents] could not persist workflow script: ${err instanceof Error ? err.message : String(err)}`);
+    }
+    const task = createWorkflowTask({
+      id: runId, script: launch.source.source, scriptPath: launch.source.sourceRef, args: launch.input, meta,
+      toolCallId: launch.toolCallId, ...(journalPath !== undefined ? { journalPath } : {}),
+    });
+    workflowTasks.set(runId, task);
+    widget.update();
+    fleet.update();
+    // Background, like SubagentWorkflow: the reference comes back now and completion is read through workflow_observe.
+    void runWorkflowTask(ctx, task).then(() => notifyWorkflowFinished(task));
+    return [{ provider: "pi-workflow", type: "task", id: runId, ...referenceScope(launch.scope.workspace) }];
+  }
+  async function launchDetachedWorkflow(ctx: ExtensionContext, launch: ExecuteLaunch): Promise<readonly NativeRef[]> {
+    const settings = sourceSettings(ctx);
+    const claude = settings?.workflowAgentBackend === "claude";
+    // The review assertion is the operator's own: a digest-pinned saved source launched under the execute+detach conjunction.
+    const receipt = await workbenchNative().launchDetachedWorkflow({
+      directory: join(getAgentDir(), "workbench-detached"), invocationId: launch.invocationId, scriptPath: launch.source.sourceRef,
+      cwd: ctx.cwd, input: launch.input, trustedScript: true, backend: claude ? "claude" : "deterministic",
+      providers: [], grants: [], permissions: ["inspect", "execute"], sourceFiles: [launch.source.sourceRef],
+      ...(claude ? { claude: { model: settings?.model, tools: settings?.tools ?? [], roles: settings?.roles } } : {}),
+    });
+    return [
+      { provider: "local-detached", type: "invocation", id: receipt.invocationId, ...referenceScope(receipt.invocationDirectory) },
+      { provider: "local-detached", type: "host-instance", id: receipt.hostInstanceId },
+    ];
   }
 
   // Both tools are registered through Pi, so their permissions apply on the
@@ -2572,6 +2684,31 @@ Terse command-style prompts produce shallow, generic work.
       },
     }));
     pi.registerTool(defineTool({
+      name: "forge_gate_run",
+      label: "Run a Forge gate as an observed operation",
+      description: "Start one Forge gate.run on an absolute package path inside this workspace over a connection this process keeps open, observe the server's own operation and gate-step frames into the session projection, and return the server-named operation id. Requires forge:run. The operation outlives the call and completes on its own; cancel it through workflow_control under control:forge.cancel.",
+      parameters: Type.Object({ target: Type.String({ minLength: 1, maxLength: 1024 }) }),
+      execute: async (_id, params, _signal, _onUpdate, ctx) => {
+        if (!grants(ctx).includes("forge:run")) return textResult("Permission denied: forge:run grant required.");
+        const scope = observerScope(ctx);
+        const root = forgeRunRoot(params.target, scope.workspace);
+        if (root === undefined) return textResult("Forge gate.run denied outside the authorized workspace scope.");
+        try {
+          const connection = await workbenchNative().openForgeOperationConnection();
+          const observer = await observeForgeGateRun(connection, {
+            root, projection, scope, now: controlNow, timeoutMs: 30_000,
+            // wb-cra.1: the issuing connection is retained under the server's operation id, so workflow_control's forge leg can reach it.
+            retain: (operationId, issuing) => retainForgeOperation(operationId, { operations: issuing.operations, connection: issuing, workspaceRoot: scope.workspace }),
+          });
+          liveForgeOperations.set(observer.operationId, observer);
+          void observer.settled.then(() => { liveForgeOperations.delete(observer.operationId); });
+          return textResult(sanitizeWorkbenchJsonText({ contract: "workbench.forge-gate-run/v1", operationId: observer.operationId, target: root, startedAt: observer.startedAt, completion: "not-asserted" }));
+        } catch (error) {
+          return textResult(sanitizeWorkbenchText(error instanceof Error ? error.message : String(error)));
+        }
+      },
+    }));
+    pi.registerTool(defineTool({
       name: "furnace_observe",
       label: "Observe external Furnace Run",
       description: "Read one bounded snapshot of an externally launched native Run and Attempt/log references in this workspace. Requires furnace:inspect. Never controls the Run.",
@@ -2619,27 +2756,64 @@ Terse command-style prompts produce shallow, generic work.
     pi.registerTool(defineTool({
       name: "workflow_observe",
       label: "Observe workflow",
-      description: "Read a bounded, redacted workflow projection by task ID. Requires workbench:observe; not an execution authority.",
-      parameters: Type.Object({ taskId: Type.String(), limit: Type.Optional(Type.Integer({ minimum: 1, maximum: 40 })) }),
+      description: "Read a bounded, redacted workflow projection by task ID: paged nodes (cursor), tone/kind/relations/events selectors, freshness summary, anomalies and a byte cap. Requires workbench:observe; not an execution authority.",
+      parameters: Type.Object({
+        taskId: Type.String(),
+        limit: Type.Optional(Type.Integer({ minimum: 1, maximum: OBSERVE_MAX_LIMIT })),
+        cursor: Type.Optional(Type.String({ maxLength: OBSERVE_CURSOR_MAX_BYTES })),
+        maxBytes: Type.Optional(Type.Integer({ minimum: OBSERVE_MIN_MAX_BYTES, maximum: OBSERVE_MAX_MAX_BYTES })),
+        selectors: Type.Optional(Type.Object({
+          tone: Type.Optional(Type.Union([Type.Literal("active"), Type.Literal("success"), Type.Literal("failure"), Type.Literal("waiting"), Type.Literal("unknown")])),
+          kind: Type.Optional(Type.String({ minLength: 1 })),
+          relations: Type.Optional(Type.Boolean()),
+          events: Type.Optional(Type.Object({
+            limit: Type.Integer({ minimum: 1, maximum: OBSERVE_MAX_LIMIT }),
+            after: Type.Optional(Type.Object({
+              source: Type.Object({ provider: Type.String(), type: Type.String(), id: Type.String(), scope: Type.Optional(Type.String()) }),
+              projectionEventId: Type.String(),
+            })),
+          })),
+        })),
+      }),
       execute: async (_id, params, _signal, _onUpdate, ctx) => {
         if (!grants(ctx).includes("workbench:observe")) return textResult("Permission denied: workbench:observe grant required.");
         if (!/^wf_[a-z0-9-]{6,}$/.test(params.taskId)) return textResult("Invalid workflow task ID.");
-        if (params.limit !== undefined && (!Number.isSafeInteger(params.limit) || params.limit < 1 || params.limit > 40))
-          return textResult("Invalid observation limit (1..40).");
+        if (params.limit !== undefined && (!Number.isSafeInteger(params.limit) || params.limit < 1 || params.limit > OBSERVE_MAX_LIMIT))
+          return textResult(`Invalid observation limit (1..${OBSERVE_MAX_LIMIT}).`);
         const task = workflowTasks.get(params.taskId);
         const scope = observerScope(ctx);
         if (!task || task.observationScope?.sessionId !== ctx.sessionManager.getSessionId() ||
           task.observationScope.workspace !== scope.workspace || task.observationScope.principal !== scope.principal)
           return textResult("Workflow unavailable in this local operator/session/workspace scope.");
-        const { nodes, truncated } = projection.query({ scope, invocationId: task.id, limit: params.limit ?? 20 });
-        const compact = nodes.map(node => ({ nativeRef: node.nativeRef, kind: node.kind,
-          presentation: node.presentation, freshness: node.freshness, completeness: node.completeness,
-          observedAt: node.observedAt, lastConfirmedAt: node.lastConfirmedAt,
-          subjectBasis: node.subjectBasis, evidenceRefs: node.evidenceRefs }));
-        // Node labels come from the script and `error` from whatever it threw; both are redacted and stripped here.
-        return textResult(sanitizeWorkbenchJsonText({ taskId: task.id, status: task.status,
-          identity: task.identityReceipt?.identity ?? null, inputDigest: task.inputDigest ?? null, workspaceSourceState: task.workspaceSourceState ?? "unknown",
-          nodes: compact, truncated, error: task.error ?? null }));
+        // Node labels come from the script and `error` from whatever it threw; both are redacted and stripped by the shared serializer.
+        const envelopes = [
+          { taskId: task.id, status: task.status, identity: task.identityReceipt?.identity ?? null, inputDigest: task.inputDigest ?? null,
+            workspaceSourceState: task.workspaceSourceState ?? "unknown", error: task.error ?? null },
+          // A tight maxBytes cannot carry the digests and the error text: say so instead of dropping them silently.
+          { taskId: task.id, status: task.status, envelopeOmitted: ["identity", "inputDigest", "workspaceSourceState", "error"] },
+        ];
+        // maxBytes bounds the WHOLE reply, so it is checked as requested, before the task envelope is subtracted from it (gate F2).
+        if (params.maxBytes !== undefined && (!Number.isSafeInteger(params.maxBytes) || params.maxBytes < OBSERVE_MIN_MAX_BYTES || params.maxBytes > OBSERVE_MAX_MAX_BYTES))
+          return textResult(`Invalid observe request: maxBytes must be a safe integer ${OBSERVE_MIN_MAX_BYTES}..${OBSERVE_MAX_MAX_BYTES}.`);
+        const requested = params.maxBytes ?? OBSERVE_DEFAULT_MAX_BYTES;
+        const request = { scope, invocationId: task.id, ...(params.cursor === undefined ? {} : { cursor: params.cursor }),
+          ...(params.limit === undefined ? {} : { limit: params.limit }), ...(params.selectors === undefined ? {} : { selectors: params.selectors }) };
+        try {
+          let floor = 0;
+          for (const envelope of envelopes) {
+            // The builder's cap leaves room for the task-level envelope, so truncatedForBytes/droppedForBytes stay the only truncation path.
+            const overhead = Buffer.byteLength(sanitizeWorkbenchJsonText(envelope), "utf8");
+            floor = OBSERVE_MIN_MAX_BYTES + overhead;
+            if (requested < floor) continue;
+            const reply = observeInvocation(projection, { ...request, maxBytes: requested - overhead });
+            const text = sanitizeWorkbenchJsonText({ ...envelope, ...reply });
+            if (Buffer.byteLength(text, "utf8") <= requested) return textResult(text);
+          }
+          return textResult(`Invalid observe request: maxBytes ${requested} leaves under ${OBSERVE_MIN_MAX_BYTES} bytes for the reply after the task envelope (at least ${floor} needed).`);
+        } catch (error) {
+          if (error instanceof CapabilityError && error.category === "validation") return textResult(`Invalid observe request: ${sanitizeWorkbenchText(error.message, WORKBENCH_TEXT_LIMIT, "text")}`);
+          throw error;
+        }
       },
     }));
     pi.registerTool(createWorkflowReconcileTool({
@@ -2650,6 +2824,73 @@ Terse command-style prompts produce shallow, generic work.
       localPrincipal,
       sessionIdOf: toolCtx => toolCtx.sessionManager.getSessionId(),
       now: () => new Date().toISOString(),
+    }));
+    // workflow_execute (wb-syh): the launch tool over the pure admission module in execute.ts. Grants, principal,
+    // workspace and session come from host context on every call; a script definition's id is its saved source
+    // path (designer.ts) and the shell re-checks the pinned digest against the bytes before either launcher runs.
+    pi.registerTool(createWorkflowExecuteTool({
+      grants,
+      observerScope,
+      localPrincipal,
+      sessionIdOf: toolCtx => toolCtx.sessionManager.getSessionId(),
+      mintInvocationId: workflowRunId,
+      resolveSource: (definition, cwd) => inspectWorkflowSource({ scriptPath: definition.id }, cwd),
+      launchEmbedded: launchEmbeddedWorkflow,
+      launchDetached: launchDetachedWorkflow,
+    }));
+    // workflow_control (wb-cra): the explicit native control tool over the pure decision core (control.ts) and the
+    // adapter legs. Grants, principal, workspace and session come from host context on every call; the target, the
+    // action and the operator's confirmed flag are the only params. Forge keeps no retained operation connection in this
+    // process (cancel needs the connection that issued the operation), so its leg is the typed unavailable refusal.
+    const controlNow = (): string => new Date().toISOString();
+    const controlExecutors: Readonly<Record<string, ControlExecutor>> = {
+      "claude-agent-sdk": async (decision, request, signal): Promise<ControlExecutionSummary> => {
+        const key = liveClaudeSessions.get(request.target.id);
+        const live = key !== undefined ? liveClaudeQueries.get(key) : undefined;
+        if (live === undefined) {
+          throw Object.assign(new CapabilityError("unavailable", "No live Claude SDK query is retained in this process for the target session."), { code: "no-live-query" });
+        }
+        const execution = await executeClaudeControl(decision, {
+          seam: live.seam,
+          call: { invocationId: live.invocationId, index: live.call.index, ...(live.sessionId !== undefined ? { sessionId: live.sessionId } : {}) },
+          now: controlNow, timeoutMs: 10_000, ...(signal !== undefined ? { signal } : {}),
+        });
+        claudeControlRetention.retain(execution);
+        return { receipt: execution.receipt, status: execution.status };
+      },
+      furnace: async (decision, request, signal): Promise<ControlExecutionSummary> => {
+        const { Furnace } = workbenchNative();
+        const client = new Furnace({ binary: "furnace", cwd: request.scope.workspace, timeoutMs: 10_000 });
+        const execution = await executeFurnaceControl(decision, {
+          client, workspaceRoot: request.scope.workspace, now: controlNow, timeoutMs: 10_000, ...(signal !== undefined ? { signal } : {}),
+        });
+        return { receipt: execution.receipt, status: execution.status };
+      },
+      "local-detached": async (_decision, request): Promise<ControlExecutionSummary> => {
+        const directory = join(getAgentDir(), "workbench-detached");
+        const execution = await executeDetachedControl({
+          request, deps: { projection }, connect: invocationId => workbenchNative().connectDetachedWorkflow(directory, invocationId), now: controlNow,
+        });
+        // The adapter decides from the same host-bound request; its own denial or refusal surfaces as the typed error it is.
+        if (execution.status === "denied") {
+          throw Object.assign(new CapabilityError(execution.decision.category, execution.decision.reason), { code: execution.decision.policy });
+        }
+        if (execution.status === "refused") {
+          throw Object.assign(new CapabilityError(execution.refusal.category, `Detached control refused (${execution.refusal.category}).`), { code: "detached-refused" });
+        }
+        return { receipt: execution.receipt, status: execution.status };
+      },
+      forge: createRetainedForgeControlExecutor(controlNow),
+    };
+    pi.registerTool(createWorkflowControlTool({
+      grants,
+      observerScope,
+      localPrincipal,
+      sessionIdOf: toolCtx => toolCtx.sessionManager.getSessionId(),
+      projection,
+      tasks: workflowTasks,
+      now: controlNow,
+      executors: controlExecutors,
     }));
   }
 
@@ -2707,8 +2948,13 @@ Terse command-style prompts produce shallow, generic work.
           ...(evidenceRefs?.length ? { evidenceRefs: evidenceRefs.slice(0, 32) } : {}),
         });
       }
-      // Script labels enter the projection here; bidi marks are stripped with the control bytes.
-      const clamp = (value: string) => stripUnsafeText(value, " ").slice(0, 120);
+      // Script labels and statuses are display text, so they take the one helper's label layout, which redacts every
+      // reading of a gap before anything is stripped: a separator put in first splits the very credential it hides
+      // (wb-zo9). The projection refuses an empty title, so text that sanitizes to nothing shows a fixed placeholder.
+      const clamp = (value: string) => sanitizeWorkbenchText(value, 120, "label") || "unknown";
+      // An evidence reference is an identity, not display text: docs/workbench/20 lists claude-message:<uuid> only when
+      // exact, and neither the layout's deletions nor a placeholder may make one. It keeps the clamp it had (wb-zo9 F1).
+      const reference = (value: string) => stripUnsafeText(value, " ").slice(0, 120);
       // The Claude backend is the only native path of a run; the Pi backend
       // never touches the SDKs, so nothing native is loaded for it (wb-cax.10).
       const native = settings ? await loadWorkbenchNative() : undefined;
@@ -2723,7 +2969,7 @@ Terse command-style prompts produce shallow, generic work.
           { title: clamp(call.label), type: "agent", statusText: snapshot.terminal ?? (live ? "observed-running" : "unknown"),
             statusTone: snapshot.terminal === "succeeded" ? "success" : snapshot.terminal === "failed" ? "failure"
               : snapshot.terminal ? "unknown" : "active" }, "claude.stream",
-          snapshot.lastMessageId ? [`claude-message:${clamp(snapshot.lastMessageId)}`] : undefined,
+          snapshot.lastMessageId ? [`claude-message:${reference(snapshot.lastMessageId)}`] : undefined,
           task.identityReceipt?.identity.subjectBasis);
         if (!row) return;
         const rowLive = row.state === "start" || row.state === "progress";
@@ -2737,7 +2983,7 @@ Terse command-style prompts produce shallow, generic work.
         };
         nativeRows.set(call.index, updated);
         updateWorkflowProgressBatch(task, [updated]);
-      });
+      }, createClaudeControlObserver({ invocationId: task.id, scope, projection, now: () => new Date().toISOString(), retention: claudeControlRetention }));
       let beforeDispatch: (() => void) | undefined;
       if (settings) {
         const registry = registryFor(ctx.cwd);
@@ -2777,8 +3023,21 @@ Terse command-style prompts produce shallow, generic work.
               invocationId: task.id,
               principal: { id: scope.principal, role: "local-operator" },
               beforeDispatch,
-              onMessage: observer.onMessage,
+              onMessage: (message, call) => {
+                if (message.type === "system" && message.subtype === "init") {
+                  const live = liveClaudeQueries.get(liveClaudeKey(task.id, call));
+                  if (live !== undefined) { live.sessionId = message.session_id; liveClaudeSessions.set(message.session_id, liveClaudeKey(task.id, call)); }
+                }
+                observer.onMessage(message, call);
+              },
               onSettled: observer.onSettled,
+              onQueryLive: (call, seam) => { liveClaudeQueries.set(liveClaudeKey(task.id, call), { invocationId: task.id, call, seam }); },
+              onQueryDone: call => {
+                const key = liveClaudeKey(task.id, call);
+                const live = liveClaudeQueries.get(key);
+                if (live?.sessionId !== undefined && liveClaudeSessions.get(live.sessionId) === key) liveClaudeSessions.delete(live.sessionId);
+                liveClaudeQueries.delete(key);
+              },
             })
           : createWorkflowHost({
               pi, ctx, manager, signal: task.abortController.signal,
@@ -4443,6 +4702,11 @@ Write the file using the write tool. Only write the file, nothing else.`;
     tasks: workflowTasks,
     observation: {
       projection,
+      relationPage: WORKBENCH_PROJECTION_MAX_QUERY,
+      timelineColumns: WORKBENCH_TIMELINE_COLUMNS,
+      // The overview's attention report (wb-6ze.36). Its open times are measured against this host clock, the caller clock
+      // ATTENTION_CLOCK_CAVEAT names, read here at the seam and never inside the wiring.
+      attention: { bottlenecks: WORKBENCH_ATTENTION_BOTTLENECKS, now: () => new Date().toISOString() },
       scope: task => task.observationScope ? { workspace: task.observationScope.workspace, principal: task.observationScope.principal } : undefined,
       // Loaders exist for the landed readers; authorization is the live
       // exact-grant check each load runs (docs/workbench/20, wb-g1g.1 ruling).
@@ -4451,6 +4715,9 @@ Write the file using the write tool. Only write the file, nothing else.`;
         scope: () => { const c = currentCtx as unknown as ExtensionCommandContext | undefined; return c ? observerScope(c) : undefined; },
         projection,
         cwd: () => (currentCtx as unknown as ExtensionCommandContext | undefined)?.cwd,
+        // The one place the host clock enters the evidence path (wb-idq): every
+        // capturedAt below is stamped from this injection, never from a fallback.
+        now: () => new Date(),
         // The forge evidence re-read goes through the same registry the workflow
         // tools use, so one authorization ladder governs both (wb-6ze.17).
         registry: workspace => registryFor(workspace),
@@ -4469,7 +4736,8 @@ Write the file using the write tool. Only write the file, nothing else.`;
       const rows = await (await loadWorkbenchNative()).readClaudeTranscript(sessionId, ctx.cwd);
       const text = rows.length === 0
         ? `No Claude transcript available for session ${sessionId}.`
-        : rows.map(row => `${row.type}: ${row.text}`).join("\n\n");
+        // A row the adapter cut at its bound says so on its own line, so a bounded row never reads as whole (wb-idq).
+        : rows.map(row => `${row.type}: ${row.text}${row.clipped ? "\n… truncated (row bound)" : ""}`).join("\n\n");
       await ctx.ui.editor(`Claude session ${sessionId}`, text);
     },
     // Read lazily: `currentCtx` is rebound on every session_start, and the

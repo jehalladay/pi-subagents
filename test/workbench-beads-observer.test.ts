@@ -275,6 +275,95 @@ describe('wb-752.6 Beads Work readiness reader', () => {
     expectTypeOf<BeadsWorkRelation>().toEqualTypeOf<Parameters<ObservationProjection['relate']>[0]>();
   });
 
+  // wb-752.11 A1 (F3): the mapped literals are compared on the RAW dependency_type, never on sanitized text.
+  it('wb-752.11 A1: a hostile type that sanitizes onto a mapped literal mints zero edges and is counted under its sanitized label', async () => {
+    const reading = await read(
+      fake(
+        ok([
+          issue({
+            dependencies: [
+              dep('wb-h.1', 'blo\u200bcks'),
+              dep('wb-h.2', '\u001b[1mblocks\u001b[0m'),
+              dep('wb-h.3', 'parent-\u200bchild'),
+              dep('wb-g1g.2', 'blocks'),
+            ],
+          }),
+        ]),
+      ),
+    );
+    const {relations} = projectBeadsWork(reading, scope);
+    expect(relations.map((relation) => [relation.kind, relation.to.id])).toEqual([['dependency', 'wb-g1g.2']]);
+    // Post-wb-952 the shared helper strips U+200B and ANSI, so every hostile form sanitizes onto a mapped literal and is
+    // counted under that sanitized label; the RAW comparison keeps all of them from minting an edge.
+    expect(reading.unmappedDependencyTypes).toEqual({blocks: 2, 'parent-child': 1});
+    expect(reading.work.parent).toBeUndefined();
+    expect(JSON.stringify(reading)).not.toMatch(/[\u200b\u001b]/);
+  });
+
+  // wb-752.11 A2 (F5): the parent FIELD is authoritative and a naming entry collapses into it.
+  it('wb-752.11 A2: the parent field is authoritative; a parent-child entry naming another pair adds no second grouping edge', async () => {
+    const reading = await read(fake(ok([issue({parent: 'wb-752', dependencies: [dep('wb-other.1', 'parent-child'), dep('wb-752', 'parent-child')]})])));
+    const grouping = projectBeadsWork(reading, scope).relations.filter((relation) => relation.kind === 'grouping');
+    expect(grouping.map((relation) => relation.from.id)).toEqual(['wb-752']);
+    expect(reading.work.parent).toBe('wb-752');
+  });
+
+  // wb-752.11 A3 (F4): symmetric self-reference refusal.
+  it('wb-752.11 A3: an entry or parent field naming the work itself mints no edge in either direction and is counted', async () => {
+    const reading = await read(fake(ok([issue({dependencies: [dep(workId, 'blocks'), dep(workId, 'parent-child'), dep('wb-g1g.2', 'blocks')]})])));
+    const {relations} = projectBeadsWork(reading, scope);
+    expect(relations.map((relation) => [relation.kind, relation.from.id, relation.to.id])).toEqual([['dependency', workId, 'wb-g1g.2']]);
+    expect(reading.selfReferences).toBe(2);
+    expect(reading.work.parent).toBeUndefined();
+    const field = await read(fake(ok([issue({parent: workId, dependencies: []})])));
+    expect(projectBeadsWork(field, scope).relations).toEqual([]);
+    expect(field.selfReferences).toBe(1);
+    // The reading layer itself never exports a self parent (the projection guard below must not be the only defense).
+    expect(field.work.parent).toBeUndefined();
+    expect(Object.hasOwn(field.work, 'parent')).toBe(false);
+    // The projection layer independently refuses a reading whose parent already names the work.
+    const forged: BeadsWorkReading = {...field, work: {...field.work, parent: workId}};
+    expect(projectBeadsWork(forged, scope).relations).toEqual([]);
+    const clean = await read(fake(ok([issue()])));
+    expect(Object.hasOwn(clean, 'selfReferences')).toBe(false);
+  });
+
+  // wb-752.11 A4 (F6): the unrecognized bucket carries an exact count.
+  it('wb-752.11 A4: types outside the bd type shape are counted exactly under the unrecognized bucket', async () => {
+    const reading = await read(
+      fake(ok([issue({dependencies: [dep('wb-u.1', 'Weird Type!'), dep('wb-u.2', 'x'.repeat(40)), dep('wb-u.3', '9lives'), dep('wb-u.4', 'related')]})])),
+    );
+    expect(reading.unmappedDependencyTypes).toEqual({unrecognized: 3, related: 1});
+    expect(reading.dependencies.items.map((item) => item.dependencyType)).toEqual(['unrecognized', 'unrecognized', 'unrecognized', 'related']);
+    expect(projectBeadsWork(reading, scope).relations).toEqual([]);
+  });
+
+  // wb-752.11 U4 (gate default reading, pinned): with no parent field, the FIRST parent-child entry is the single parent.
+  it('wb-752.11 U4: no parent field and two distinct parent-child entries give one grouping edge from the first; the second is retained in items only', async () => {
+    const reading = await read(fake(ok([issue({dependencies: [dep('wb-p.1', 'parent-child'), dep('wb-p.2', 'parent-child')]})])));
+    const grouping = projectBeadsWork(reading, scope).relations.filter((relation) => relation.kind === 'grouping');
+    expect(grouping.map((relation) => relation.from.id)).toEqual(['wb-p.1']);
+    expect(reading.work.parent).toBe('wb-p.1');
+    expect(reading.dependencies.items.map((item) => item.id)).toEqual(['wb-p.1', 'wb-p.2']);
+    expect(reading.unmappedDependencyTypes).toEqual({});
+  });
+
+  // wb-752.11 O1: a self entry of an unmapped type is counted under its type, never as a self-reference.
+  it('wb-752.11 O1: a self entry of an unmapped type counts under its type and never in selfReferences', async () => {
+    const reading = await read(fake(ok([issue({dependencies: [dep(workId, 'related')]})])));
+    expect(reading.unmappedDependencyTypes).toEqual({related: 1});
+    expect(Object.hasOwn(reading, 'selfReferences')).toBe(false);
+    expect(projectBeadsWork(reading, scope).relations).toEqual([]);
+  });
+
+  // wb-752.11 O2: a self parent field suppresses the entry fallback.
+  it('wb-752.11 O2: a self parent field suppresses the parent-child entry fallback', async () => {
+    const reading = await read(fake(ok([issue({parent: workId, dependencies: [dep('wb-752', 'parent-child')]})])));
+    expect(reading.work.parent).toBeUndefined();
+    expect(reading.selfReferences).toBe(1);
+    expect(projectBeadsWork(reading, scope).relations.filter((relation) => relation.kind === 'grouping')).toEqual([]);
+  });
+
   // Falsifier 4: C6 closed is never success.
   it('F4: a closed work item never renders statusTone success; statuses map as pinned', async () => {
     const tone = async (status: string): Promise<[string, string]> => {
@@ -318,7 +407,7 @@ describe('wb-752.6 Beads Work readiness reader', () => {
 
   // Falsifier 5: C7 retention and sanitization.
   it('F5: a hostile title is sanitized and bounded; description, notes, acceptance and close_reason never appear', async () => {
-    const hostile = `\u001b[31mTitle\u001b[0m ‮evil\u0007 Bearer abc.def.ghi password=hunter2 ${'x'.repeat(500)}`;
+    const hostile = `\u001b[31mTitle\u001b[0m \u202Eevil\u0007 Bearer abc.def.ghi password=hunter2 ${'x'.repeat(500)}`;
     const reading = await read(
       fake(ok([issue({title: hostile, status: 'closed', close_reason: 'CLOSE-SECRET', closed_at: '2026-10-15T07:59:00Z', dependencies: [{...dep('wb-g1g.2', 'blocks'), title: hostile}]})])),
     );
@@ -327,7 +416,7 @@ describe('wb-752.6 Beads Work readiness reader', () => {
     for (const secret of ['DESCRIPTION-SECRET', 'NOTES-SECRET', 'ACCEPTANCE-SECRET', 'CLOSE-SECRET', 'DEP-DESCRIPTION-SECRET', 'DEP-NOTES-SECRET', 'someone@example.com']) {
       expect(text).not.toContain(secret);
     }
-    for (const unsafe of ['\u001b', '‮', '‮', '\u0007', 'abc.def.ghi', 'hunter2']) expect(text).not.toContain(unsafe);
+    for (const unsafe of ['\u001b', '\u202E', '\u202E', '\u0007', 'abc.def.ghi', 'hunter2']) expect(text).not.toContain(unsafe);
     expect(reading.work.title.length).toBeLessThanOrEqual(limits.maxTitleChars);
     expect(reading.work.title).toContain('Title');
     expect(text).not.toContain('title of');

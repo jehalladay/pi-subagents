@@ -26,11 +26,11 @@ describe('Furnace native external observer',()=>{
   });
   it('refuses wrong workspace, run identity and mismatched attempt provenance before exposing a reading',async()=>{
     for (const data of [{...run,workspace:'/tmp/other'}, {...run,run_id:'frn-run-other'}]) {
-      const c=client(); c.status.mockResolvedValueOnce({kind:'run_status',requestId:'r',exit:{code:0,signal:null},data});
+      const c=client(); c.status.mockResolvedValueOnce({kind:'run_status',requestId:'r',exit:{code:0,signal:null},data} as Awaited<ReturnType<typeof c.status>>);
       await expect(new FurnaceObserver(c.client,opts).snapshot()).rejects.toMatchObject({category:'authorization'});
       expect(c.list).not.toHaveBeenCalled();
     }
-    const c=client(); c.list.mockResolvedValueOnce({kind:'attempt_list',requestId:'r',exit:{code:0,signal:null},data:{run_id:run.run_id,beads_run_id:run.beads_run_id,complete:true,limit:5,returned:1,next_cursor:null,attempts:[{...attempt,run_id:'other'}],unreadable:[]}});
+    const c=client(); c.list.mockResolvedValueOnce({kind:'attempt_list',requestId:'r',exit:{code:0,signal:null},data:{run_id:run.run_id,beads_run_id:run.beads_run_id,complete:true,limit:5,returned:1,next_cursor:null,attempts:[{...attempt,run_id:'other'}],unreadable:[]}} as unknown as Awaited<ReturnType<typeof c.list>>);
     await expect(new FurnaceObserver(c.client,opts).snapshot()).rejects.toMatchObject({category:'unavailable'});
     expect(c.read).not.toHaveBeenCalled();
   });

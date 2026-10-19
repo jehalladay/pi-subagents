@@ -11,7 +11,7 @@ export const DENIED_PREFIXES = Object.freeze([
   '.reactive-fiber/', '.github/', 'machines/', 'test/', 'tests/',
 ]);
 
-export const DENIED_BASENAMES = Object.freeze(['AGENTS.md', 'CLAUDE.md', 'biome.json', 'tsconfig.json']);
+export const DENIED_BASENAMES = Object.freeze(['AGENTS.md', 'CLAUDE.md', 'biome.json', 'tsconfig.json', 'tsconfig.test.json']);
 
 export const DENIED_PATTERNS = Object.freeze([/\.jsonl$/, /^vitest\..*config\.ts$/, /\.test\.ts$/]);
 
