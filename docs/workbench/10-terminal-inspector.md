@@ -68,6 +68,10 @@ For ASCII: +-|>, * running, x failed, ? unknown. Color is redundant to glyph/tex
 - Bound memory: store highlights/current snapshots; stream older event/traces lazily.
 - Pi observation tools paginate/filter/limit and return compact JSON, never rendered ANSI.
 
+## Cancelling a background workflow
+
+Measured by the wb-a2g.3 live operator receipt, contract v2 (iteration 9, pi 1.2.0, rev e07474a, committed at `qa/workbench/receipts/wb-a2g.3-operator-receipt.json`): a Ctrl-C byte sent through the pty while a SubagentWorkflow run is live has no effect on the background workflow (native session 361ea747 seen 22:36:54.474Z, Ctrl-C 22:36:54.974Z, `ctrlCStoppedWorkflow:false`, 2.5s window). Pi's turn interrupt key is Esc (widget footer 'esc to interrupt'); a background run is not tied to the turn, so neither key stops it. The explicit cancel is the fleet list (Down) -> workflow row (Enter) -> dialog `x stop` (`src/ui/workflow-dialog.ts` kind `kill` -> `onKill` aborts the run controller, then the menu notifies 'Stopped workflow'). While a roster workflow is running or paused the fleet-list inactive footer names this path: 'esc to interrupt · ← for agents · ↓ to manage or stop a workflow' (wb-2t2 scope B, landed at `4c5744d`, `src/ui/fleet-list.ts`); no new keybinding was added.
+
 ## Scalability targets (proposed, not measured)
 
 Benchmark >=1000 visible-reachable operations and >=100k synthetic event updates. Typical viewport 30–100 rows; layout/nav calculation target <=20ms on benchmark host and memory bounded by active projection rather than accumulating full prompt bodies. 10k+ grouped operations P2. Record wall time, p50/p95 UI compute, max allocation, file IO and resize metrics; don't declare targets met without measured runs.

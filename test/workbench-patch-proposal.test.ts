@@ -226,15 +226,15 @@ describe("W17-A pure digest-pinned workflow patch proposal", () => {
 
   it("strips terminal escapes and bidi marks and redacts credentials in diff text", () => {
     const base = inMemory("return 1;");
-    const candidate = `${HEADER}// \u001b[31mred\u001b[0m ‮evil Authorization: Bearer abc123\n// split Bear\u001b[0mer\nreturn 1;`;
+    const candidate = `${HEADER}// \u001b[31mred\u001b[0m \u202Eevil Authorization: Bearer abc123\n// split Bear\u001b[0mer\nreturn 1;`;
     const proposal = proposeWorkflowPatch({ base, candidateSource: candidate, rationale: "tok Authorization: Bearer topsecret999" });
     const text = proposal.diff.hunks.map(hunk => hunk.text).join("\n");
     expect(text).not.toContain("\u001b");
-    expect(text).not.toContain("‮");
+    expect(text).not.toContain("\u202E");
     expect(text).not.toContain("abc123");
     expect(text).toContain("[REDACTED]");
     expect(JSON.stringify(proposal)).not.toContain("topsecret999");
-    expect(JSON.stringify(proposal)).not.toMatch(/\u001b|‮/);
+    expect(JSON.stringify(proposal)).not.toMatch(/\u001b|\u202E/);
     const credentialSplit = proposeWorkflowPatch({ base, candidateSource: `${HEADER}// Bearer\u001b[0m zzz-secret-token\nreturn 1;`, rationale: "r" });
     expect(JSON.stringify(credentialSplit.diff)).not.toContain("zzz-secret-token");
   });
