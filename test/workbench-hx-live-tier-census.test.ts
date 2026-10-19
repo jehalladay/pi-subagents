@@ -25,10 +25,14 @@
  * variable or imported from another module is outside it; the predicate rows in the observer suite and the gate review own
  * semantic equivalence. Case liveness is structural (registration modifiers, options flags, enclosing suites, context skip calls); it
  * proves the HX cases are registered to run, never that the native tier ran them - the native receipt does that.
+ * wb-drd: the receipt-on-stdout pin is structural (a straight-line write, no console echo in any spelling). The executed leg - running a case and
+ * counting the receipt lines that reach process.stdout.write - covers only the synthetic probes of the falsifier rows (executedReceipts, a vm
+ * sandbox with stubbed identifiers); the real live sources need the hx binary, so their execution stays the native-read receipt's job.
  */
 import {readdirSync, readFileSync} from 'node:fs';
 import {dirname, join} from 'node:path';
 import {fileURLToPath} from 'node:url';
+import {runInNewContext} from 'node:vm';
 import ts from 'typescript';
 import {describe, expect, it} from 'vitest';
 
@@ -52,6 +56,7 @@ const VALUE_MATCHERS = new Set(['toBe', 'toEqual', 'toStrictEqual']);
 const HX_TITLE = /^HX\b/;
 const SHA_REGEX = '/^[0-9a-f]{64}$/';
 const LEAK = '"verified":true';
+const RECEIPT_MARKER = 'HX-RECEIPT-MARKER';
 
 function readRepo(relative: string): string {
   return readFileSync(join(ROOT, relative), 'utf8');
@@ -302,14 +307,45 @@ function printsReceipt(body: ts.Node): boolean {
 /** The receipt must reach stdout directly (wb-tz2.14, the wb-bj6 class): vitest 4.1.10 selects the agent reporter under AI_AGENT /
  * CLAUDECODE (forge inherits the env) and that reporter drops the console output of passing tests, so a receipt printed with
  * console.log vanishes from the canonical native-read launch. True when the case writes hxLiveReceipt(...) through
- * process.stdout.write and routes it through no console member (log, info, debug, ...). */
+ * process.stdout.write on a straight-line path (wb-drd: not under if, a loop, a ternary or a closure, and not after a return/throw) and routes it
+ * through no console member in any spelling (console.log, console['log'], globalThis.console.log, ...). */
 function isProcessStdoutWrite(call: ts.CallExpression): boolean {
   const callee = call.expression;
   return ts.isPropertyAccessExpression(callee) && callee.name.text === 'write' && ts.isPropertyAccessExpression(callee.expression) &&
     callee.expression.name.text === 'stdout' && ts.isIdentifier(callee.expression.expression) && callee.expression.expression.text === 'process';
 }
+/** A reference to the console object in any member-access spelling (wb-drd): the bare identifier, a property named console
+ * (globalThis.console, window.console) or an element access with the literal key 'console'. */
+function isConsoleReference(node: ts.Expression): boolean {
+  let current = node;
+  while (ts.isParenthesizedExpression(current) || ts.isNonNullExpression(current)) current = current.expression;
+  if (ts.isIdentifier(current)) return current.text === 'console';
+  if (ts.isPropertyAccessExpression(current)) return current.name.text === 'console';
+  if (ts.isElementAccessExpression(current)) return literal(current.argumentExpression) === 'console';
+  return false;
+}
+/** A call through any console member, however the member is spelled: console.log, console['log'], globalThis.console.log. */
 function isConsoleCall(call: ts.CallExpression): boolean {
-  return ts.isPropertyAccessExpression(call.expression) && ts.isIdentifier(call.expression.expression) && call.expression.expression.text === 'console';
+  const callee = call.expression;
+  return (ts.isPropertyAccessExpression(callee) || ts.isElementAccessExpression(callee)) && isConsoleReference(callee.expression);
+}
+/** True when the statement runs on every straight-line pass through the case body (wb-drd): an expression statement directly in the body, or in
+ * plain nested blocks of it, with no unconditional return, throw, break or continue before it at any level. A write under if/else, a loop, a
+ * ternary, a closure or after a terminator is dead or conditional and does not count as the receipt reaching stdout. */
+function runsUnconditionally(statement: ts.Node, caseNode: ts.Node): boolean {
+  const body = ts.isArrowFunction(caseNode) || ts.isFunctionExpression(caseNode) ? caseNode.body : caseNode;
+  let node = statement;
+  while (node !== body) {
+    const parent = node.parent;
+    if (!ts.isBlock(parent)) return false;
+    for (const prior of parent.statements) {
+      if (prior === node) break;
+      if (ts.isReturnStatement(prior) || ts.isThrowStatement(prior) || ts.isBreakStatement(prior) || ts.isContinueStatement(prior)) return false;
+    }
+    if (parent !== body && !ts.isBlock(parent.parent)) return false;
+    node = parent;
+  }
+  return true;
 }
 function containsReceiptCall(node: ts.Node): boolean {
   let hit = false;
@@ -323,7 +359,7 @@ function writesReceiptToStdout(body: ts.Node): boolean {
   let consoled = false;
   each(body, node => {
     if (!ts.isCallExpression(node)) return;
-    if (isProcessStdoutWrite(node) && node.arguments.some(containsReceiptCall)) written = true;
+    if (isProcessStdoutWrite(node) && node.arguments.some(containsReceiptCall) && ts.isExpressionStatement(node.parent) && runsUnconditionally(node.parent, body)) written = true;
     if (isConsoleCall(node) && node.arguments.some(containsReceiptCall)) consoled = true;
   });
   return written && !consoled;
@@ -515,6 +551,35 @@ function liveSource(options: {member?: string; option?: string; suiteMember?: st
   ].join('\n');
 }
 
+/** Runs the case callbacks of a live-source probe in a vm sandbox and counts the receipt lines that really reach process.stdout.write
+ * and the console members (wb-drd): the executed leg beside the structural stdout pin. The sandbox stubs every free identifier the probe
+ * uses; hxLiveReceipt returns a fixed marker so a count is a count of receipt prints, never of anything else. */
+async function executedReceipts(source: string): Promise<{stdout: number; echoed: number}> {
+  const counts = {stdout: 0, echoed: 0};
+  const callbacks: (() => Promise<unknown>)[] = [];
+  const echo = (): void => {
+    counts.echoed += 1;
+  };
+  const expectStub = Object.assign(() => ({toMatchObject: () => undefined, not: {toContain: () => undefined}}), {stringMatching: () => undefined});
+  const sandbox = {
+    exports: {},
+    require: () => ({describe: (_title: string, body: () => void) => body(), it: (_title: string, body: () => Promise<unknown>) => callbacks.push(body), expect: expectStub}),
+    process: {stdout: {write: (text: string) => {
+      if (text.includes(RECEIPT_MARKER)) counts.stdout += 1;
+      return true;
+    }}},
+    console: {log: echo, info: echo, debug: echo, warn: echo, error: echo},
+    read: async () => ({}),
+    hxLiveInvariant: () => ({holds: true, violations: []}),
+    hxLiveReceipt: () => RECEIPT_MARKER,
+    expect: expectStub,
+  };
+  const output = ts.transpileModule(source, {compilerOptions: {module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022}}).outputText;
+  runInNewContext(output, sandbox, {timeout: 2000});
+  for (const body of callbacks) await body();
+  return counts;
+}
+
 describe('wb-tz2.2 census: the scanner itself is falsifiable', () => {
   it('a well-formed live source passes every pin and carries no forbidden expectation', () => {
     const pins = pinsOf('probe.ts', liveSource());
@@ -578,6 +643,36 @@ describe('wb-tz2.2 census: the scanner itself is falsifiable', () => {
   it('wb-tz2.14: a process.stdout.write of something other than the receipt does not satisfy the stdout pin', () => {
     const unrelated = [...WELL_FORMED.slice(0, -1), "process.stdout.write('done\\n');", 'const line = hxLiveReceipt(result, verdict);'];
     expect(pinsOf('probe.ts', liveSource({statements: unrelated}))).toMatchObject({receiptInEveryCase: true, receiptOnStdout: false});
+  });
+
+  /** wb-drd (row 479 F6): the five named survivors of the wb-tz2.14 receipt census, each kept as a named falsifier. The dead-write
+   * shapes print the receipt where it can never run; the echo shapes print it through console beside the stdout write. */
+  const SURVIVORS: readonly {readonly id: string; readonly why: string; readonly statements: readonly string[]; readonly stdout: number; readonly echoed: number}[] = [
+    {id: 'dead-write-if-false', why: 'a write inside if (false)', statements: [...WELL_FORMED.slice(0, -1), 'if (false) {', '  process.stdout.write(hxLiveReceipt(result, verdict) + "\\n");', '}'], stdout: 0, echoed: 0},
+    {id: 'dead-write-after-return', why: 'a write unreached after return', statements: [...WELL_FORMED.slice(0, -1), 'return;', 'process.stdout.write(hxLiveReceipt(result, verdict) + "\\n");'], stdout: 0, echoed: 0},
+    {id: 'dead-write-uninvoked-closure', why: 'a write inside an uninvoked closure', statements: [...WELL_FORMED.slice(0, -1), 'const emit = () => {', '  process.stdout.write(hxLiveReceipt(result, verdict) + "\\n");', '};'], stdout: 0, echoed: 0},
+    {id: 'echo-element-access', why: "console['log'] beside the stdout write", statements: [...WELL_FORMED, "console['log'](hxLiveReceipt(result, verdict));"], stdout: 1, echoed: 1},
+    {id: 'echo-globalThis-console', why: 'globalThis.console.log beside the stdout write', statements: [...WELL_FORMED, 'globalThis.console.log(hxLiveReceipt(result, verdict));'], stdout: 1, echoed: 1},
+  ];
+
+  it('wb-drd: the five named survivors are the frozen falsifier set (a deleted or renamed row reds here)', () => {
+    expect(SURVIVORS.map(item => item.id)).toStrictEqual(['dead-write-if-false', 'dead-write-after-return', 'dead-write-uninvoked-closure', 'echo-element-access', 'echo-globalThis-console']);
+  });
+
+  it('wb-drd control: the well-formed case executes exactly one stdout receipt line, echoes none, and passes the stdout pin', async () => {
+    expect(await executedReceipts(liveSource())).toStrictEqual({stdout: 1, echoed: 0});
+    expect(pinsOf('probe.ts', liveSource()).receiptOnStdout).toBe(true);
+  });
+
+  it.each(SURVIVORS)('wb-drd survivor $id ($why): execution confirms the shape, and the stdout pin refuses it', async item => {
+    expect(await executedReceipts(liveSource({statements: item.statements}))).toStrictEqual({stdout: item.stdout, echoed: item.echoed});
+    expect(pinsOf('probe.ts', liveSource({statements: item.statements}))).toMatchObject({receiptInEveryCase: true, receiptOnStdout: false});
+  });
+
+  it('wb-drd: a receipt write in a plain nested block still runs, so it still passes the stdout pin', async () => {
+    const nested = [...WELL_FORMED.slice(0, -1), '{', '  process.stdout.write(hxLiveReceipt(result, verdict) + "\\n");', '}'];
+    expect(await executedReceipts(liveSource({statements: nested}))).toStrictEqual({stdout: 1, echoed: 0});
+    expect(pinsOf('probe.ts', liveSource({statements: nested})).receiptOnStdout).toBe(true);
   });
 
   it.each(['skip', 'todo', 'only', 'fails', 'skipIf(true)', 'runIf(false)', 'unknownModifier'])('a case registered through it.%s is parked and pins nothing', member => {
