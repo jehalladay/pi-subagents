@@ -7,14 +7,14 @@
 // the wb-0kg.1 provider fixture, adds no hook to the host, and records a violation (exit 1), never fixes
 // it. Exit 0 = realised and clean, 1 = realised with findings, 2 = not realised. The receipt is printed
 // as one JSON line and written to $DETACHED_SHARED_CHILD_RECEIPT when set, before the process exits.
-import {execFileSync, spawn} from 'node:child_process';
+import {spawn, spawnSync} from 'node:child_process';
 import {createHash} from 'node:crypto';
-import {mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync} from 'node:fs';
+import {mkdirSync, mkdtempSync, readdirSync, readFileSync, realpathSync, rmSync, writeFileSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {faultProviderSource} from './local-detached-faults-receipt.mjs';
-import {buildSharedChildReceipt, exitCodeFor, SHARED_CHILD_CASES} from './local-detached-shared-child-receipt.mjs';
+import {buildSharedChildReceipt, exitCodeFor, reachedTerminal, SHARED_CHILD_CASES} from './local-detached-shared-child-receipt.mjs';
 
 const HOLD_MS = 2500;
 const BOUND_MS = 6000;
@@ -44,14 +44,42 @@ async function until(read, done, bound = BOUND_MS) {
   return {value, ok: done(value), ms: round(performance.now() - start)};
 }
 
-function revision() {
+// git-stamp:begin (copied byte-for-byte into status-ledger.mjs, local-detached-faults.mjs and local-detached-shared-child.mjs, whose
+// guards allow only node: imports; test/workbench-git-stamp.test.ts fails on any drift)
+const HEX = /^[0-9a-f]{7,64}$/;
+
+function git(root, args) {
+  const run = spawnSync('git', args, {cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore']});
+  return run.status === 0 && typeof run.stdout === 'string' ? run.stdout : undefined;
+}
+
+function sameDir(a, b) {
   try {
-    const root = fileURLToPath(new URL('../..', import.meta.url));
-    const head = execFileSync('git', ['rev-parse', 'HEAD'], {cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore']}).trim();
-    return /^[0-9a-f]{7,64}$/.test(head) ? head : 'working-tree';
+    return realpathSync(a) === realpathSync(b);
   } catch {
-    return 'working-tree';
+    return false;
   }
+}
+
+/** `{head, porcelain}` for `root`: both null unless root is the repository toplevel with a valid HEAD; porcelain alone is null when the status read fails. */
+function gitStamp(root) {
+  const top = git(root, ['rev-parse', '--show-toplevel']);
+  if (top === undefined || !sameDir(top.trim(), root)) return {head: null, porcelain: null};
+  const head = (git(root, ['rev-parse', 'HEAD']) ?? '').trim();
+  if (!HEX.test(head)) return {head: null, porcelain: null};
+  return {head, porcelain: git(root, ['status', '--porcelain']) ?? null};
+}
+
+/** HEAD sha, suffixed `-dirty` when the tree has changes; `working-tree` when root is not a toplevel or its status cannot be read. */
+function revisionOf(root) {
+  const {head, porcelain} = gitStamp(root);
+  if (head === null || porcelain === null) return 'working-tree';
+  return porcelain.trim().length > 0 ? `${head}-dirty` : head;
+}
+// git-stamp:end
+
+function revision() {
+  return revisionOf(fileURLToPath(new URL('../..', import.meta.url)));
 }
 
 function emit(markerCounts) {
@@ -81,7 +109,31 @@ try {
 if (!host) process.exit(emit({}));
 
 const hostUrl = new URL('../../dist/workbench/hosts/local-detached.js', import.meta.url).href;
-const directory = mkdtempSync(join(tmpdir(), 'wb-shared-'));
+// wb-70b R1 (owner ruling on the wb-0kg.7 gate, 2026-10-15T22:40Z, the shortScratchBase() rule): the fixture root never
+// inherits the caller's TMPDIR depth. XDG_RUNTIME_DIR first, /tmp only as the recorded fallback (with its reason), never
+// the inherited TMPDIR; TMPDIR then names the root, so the host's own tmpdir socket fallback stays short as well. The
+// host's typed fail-closed socket-path refusal is unchanged.
+const SCRATCH_BASE_MAX_BYTES = 103 - Buffer.byteLength(`/wb-shared-XXXXXX/pw-${process.getuid?.() ?? 0}-XXXXXX/${'0'.repeat(16)}.sock`);
+function shortScratchRoot(prefix) {
+  const runtime = process.env.XDG_RUNTIME_DIR;
+  let reason = 'XDG_RUNTIME_DIR is unset';
+  if (runtime && !runtime.startsWith('/')) reason = 'XDG_RUNTIME_DIR is not an absolute path';
+  else if (runtime && Buffer.byteLength(runtime) > SCRATCH_BASE_MAX_BYTES) reason = `XDG_RUNTIME_DIR is longer than ${SCRATCH_BASE_MAX_BYTES} bytes`;
+  else if (runtime) {
+    try {
+      return {directory: mkdtempSync(join(runtime, prefix)), source: 'xdg-runtime-dir'};
+    } catch (error) {
+      reason = `XDG_RUNTIME_DIR is not usable (${error?.code ?? message(error)})`;
+    }
+  }
+  return {directory: mkdtempSync(join('/tmp', prefix)), source: 'tmp-fallback', reason};
+}
+const scratch = shortScratchRoot('wb-shared-');
+const directory = scratch.directory;
+process.env.TMPDIR = directory;
+// The launcher's own tmpdir() now names the root, so the host's tmpdir socket fallback resolves under it.
+if (tmpdir() !== directory) diagnostics.push(`scratch base: TMPDIR does not name the fixture root (${tmpdir()})`);
+if (scratch.source === 'tmp-fallback') diagnostics.push(`scratch base: /tmp is the recorded fallback (${scratch.reason})`);
 const workspace = join(directory, 'source');
 const markers = join(workspace, 'markers');
 const hosts = join(directory, 'hosts');
@@ -243,7 +295,7 @@ async function readerCloseJourney() {
 
 async function nonOwnerStopJourney() {
   const id = 'shared-nonowner';
-  await launch(id, READ_ONLY_PERMISSIONS);
+  const receipt = await launch(id, READ_ONLY_PERMISSIONS);
   const first = reader(id);
   const second = reader(id);
   const live = await until(async () => ({snapshot: await first.inspect(), markers: markerCount(id)}), state => running(state.snapshot) && state.markers >= 1);
@@ -263,6 +315,7 @@ async function nonOwnerStopJourney() {
   return {
     armed: live.ok && finished.ok,
     invocationId: id,
+    hostPid: receipt.pid,
     cancelRefusal,
     shutdownRefusal,
     observationAfter: after.observation,
@@ -275,7 +328,7 @@ async function nonOwnerStopJourney() {
 
 async function ownerStopJourney() {
   const id = 'shared-owner';
-  await launch(id, ALL_PERMISSIONS);
+  const receipt = await launch(id, ALL_PERMISSIONS);
   const owner = reader(id);
   const live = await until(async () => ({snapshot: await owner.inspect(), markers: markerCount(id)}), state => running(state.snapshot) && state.markers >= 1);
   const closed = await readerProcess(id);
@@ -284,12 +337,14 @@ async function ownerStopJourney() {
   const startedAt = performance.now();
   const reply = await owner.cancel('shared-child journey: explicit owner stop after a reader closed');
   const firstInspect = await owner.inspect();
-  const finished = await until(() => owner.inspect(), snapshot => snapshot.terminal === 'cancelled');
+  // Arm on ANY reached terminal: a non-cancelled terminal after the owner stop is the judge's finding, not an unrealised run.
+  const finished = await until(() => owner.inspect(), reachedTerminal);
   if (!live.ok) diagnostics.push(`${id}: the child did not reach observed-running with its effect marker.`);
-  if (!finished.ok) diagnostics.push(`${id}: the child did not reach cancelled after the explicit owner stop.`);
+  if (!finished.ok) diagnostics.push(`${id}: the child did not reach a terminal after the explicit owner stop.`);
   return {
     armed: live.ok && finished.ok && closed.report.attached === true,
     invocationId: id,
+    hostPid: receipt.pid,
     readerClosedFirst: closed.exited === true && closed.report.attached === true,
     markersBeforeStop,
     terminalBeforeStop: typeof before.terminal === 'string' ? before.terminal : null,

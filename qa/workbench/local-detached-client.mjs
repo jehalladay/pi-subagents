@@ -1,14 +1,15 @@
 import assert from 'node:assert/strict';
 import {spawnSync} from 'node:child_process';
-import {mkdirSync, chmodSync, symlinkSync, mkdtempSync, writeFileSync, readFileSync, statSync, rmSync} from 'node:fs';
-import {tmpdir} from 'node:os';
+import {mkdirSync, chmodSync, symlinkSync, writeFileSync, readFileSync, statSync} from 'node:fs';
 import {join} from 'node:path';
 import {createHash} from 'node:crypto';
 import {pathToFileURL} from 'node:url';
 import {createConnection} from 'node:net';
 import {launchDetachedWorkflow, connectDetachedWorkflow,detachedFrame,DetachedFrameDecoder} from '../../dist/workbench/hosts/local-detached.js';
+import {installScratchLeakGuard, makeScratch, removeScratch} from './scratch.mjs';
 
-const directory = mkdtempSync(join(tmpdir(), 'wb-det-'));
+installScratchLeakGuard();
+const directory = makeScratch('wb-det-');
 const workspace = join(directory, 'source');
 mkdirSync(workspace, {mode:0o700});
 const scriptPath=join(workspace,'workflow.js');
@@ -118,5 +119,5 @@ try {
   console.log('L1 detached: actual setsid process survives parent exit, reattach same UID, fixture-only node result, exact DAC modes, no rerun, owned cancel, observer denial, unknown after loss, injection denied. Other-UID denial is OS DAC, not claimed as exercised by this unprivileged test.');
 } finally {
   for(const pid of pids){try {process.kill(pid,'SIGTERM');} catch {}}
-  rmSync(directory,{recursive:true,force:true});
+  removeScratch(directory);
 }

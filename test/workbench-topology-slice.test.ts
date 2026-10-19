@@ -8,7 +8,7 @@ import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { CapabilityError } from "../src/workbench/capability-registry.js";
 import {
-  type NativeRef, ObservationProjection, type ObservationQuery, type ObservationScope, type ObservedNode, type Relation, type RelationKind,
+  type NativeRef, ObservationProjection, type ObservationQuery, type ObservationScope, type ObservedNode, type Relation, type RelationKind, type RelationPage,
 } from "../src/workbench/observation.js";
 import {selectLinkedTopology,
   TOPOLOGY_CONTRACT, TOPOLOGY_RELATION_CLASSES, type TopologyEdge, type TopologySlice, 
@@ -17,7 +17,7 @@ import {selectLinkedTopology,
 const alice: ObservationScope = { workspace: "ws-topology", principal: "alice" };
 const bob: ObservationScope = { workspace: "ws-topology", principal: "bob" };
 const T = "2026-10-15T12:00:00.000Z";
-const UNSAFE = /[\u0000-\u001f\u007f-\u009f‪-‮⁦-⁩]/;
+const UNSAFE = /[\u0000-\u001f\u007f-\u009f\u202A-\u202E\u2066-\u2069]/;
 const CAVEAT = "Observed typed relations only; missing edges do not imply independence.";
 
 const ref = (id: string, provider = "furnace"): NativeRef => ({ provider, type: "operation", id });
@@ -372,7 +372,7 @@ describe("B5 gate: labels pass the shared sanitizers; nothing outside the pure s
     expect(edge.provenance.sourceLabel).not.toContain(token);
     expect(edge.provenance.sourceLabel).toContain("[REDACTED]");
 
-    const evil = `\u001b]0;pwn\u0007id-${token}‮`;
+    const evil = `\u001b]0;pwn\u0007id-${token}\u202E`;
     const rows = stand([edgeRow(keyOf("F"), JSON.stringify([alice.workspace, alice.principal, "furnace", "operation", "", evil]), "dependency")]);
     const out = select(rows, "F").downstream.edges[0];
     expect(out.label).not.toMatch(UNSAFE);
@@ -414,5 +414,97 @@ describe("falsifier hygiene: the fixtures themselves", () => {
     expect(view.relations({ scope: alice, from: keyOf("A") })).toHaveLength(1);
     const node: ObservedNode | undefined = view.query({ scope: alice, ref: ref("A"), limit: 1 } satisfies ObservationQuery).nodes[0];
     expect(node?.key).toBe(keyOf("A"));
+  });
+});
+
+/** A projection read cap the slice cannot see through `relations()` alone: the production projection uses maxQuery 40. */
+const capped = (maxQuery: number, ids: readonly string[]): ObservationProjection => {
+  const view = new ObservationProjection({ maxQuery });
+  for (const id of ids) observe(view, id);
+  return view;
+};
+const manyIds = (prefix: string, count: number): string[] => Array.from({ length: count }, (_, i) => `${prefix}${String(i).padStart(2, "0")}`);
+/** Stand-in that reports its own page truncation the way ObservationProjection.relationsPage does. */
+function standPaged(edges: Relation[], page: (rows: Relation[], limit: number) => Omit<RelationPage, "relations">): Pick<ObservationProjection, "relations" | "relationsPage"> {
+  const read = (input: { from?: string; to?: string; limit?: number }): Relation[] =>
+    edges.filter(edge => (input.from === undefined || edge.from === input.from) && (input.to === undefined || edge.to === input.to)).slice(0, input.limit ?? 100);
+  return {
+    relations: read,
+    relationsPage: input => {
+      const rows = read(input);
+      return { relations: rows, ...page(rows, input.limit ?? 100) };
+    },
+  };
+}
+
+describe("B5 docs/workbench/10 § Four-view viewport increment: missing edges are visible unknowns, never fabricated (wb-6ze.30 page-full honesty)", () => {
+  it("45 downstream edges at a projection read cap of 40 are a lower bound with a counted remainder and an incomplete trace", () => {
+    const targets = manyIds("t", 45);
+    const view = capped(40, ["F", ...targets]);
+    for (const id of targets) relate(view, "F", id);
+    const slice = select(view, "F");
+    expect(slice.downstream.edges).toHaveLength(10);
+    expect(slice.downstream.remainder).toMatchObject({ count: 30, atLeast: true });
+    expect(slice.trace).toMatchObject({ label: "incomplete-trace", reasons: ["relations-truncated"] });
+  });
+
+  it("45 upstream edges at a projection read cap of 40 are a lower bound too", () => {
+    const sources = manyIds("s", 45);
+    const view = capped(40, ["F", ...sources]);
+    for (const id of sources) relate(view, id, "F");
+    const slice = select(view, "F");
+    expect(slice.upstream.remainder).toMatchObject({ count: 30, atLeast: true });
+    expect(slice.trace).toMatchObject({ label: "incomplete-trace", reasons: ["relations-truncated"] });
+  });
+
+  it("adopts a reported RelationPage.truncated even when fewer rows came back than the requested page", () => {
+    const rows = standPaged(
+      [edgeRow(keyOf("F"), keyOf("A"), "dependency"), edgeRow(keyOf("F"), keyOf("B"), "dependency")],
+      () => ({ examined: 3, truncated: true, limitApplied: 100 }),
+    );
+    const slice = select(rows, "F");
+    expect(ids(slice.downstream)).toEqual(["A", "B"]);
+    expect(slice.downstream.remainder).toMatchObject({ count: 0, atLeast: true });
+    expect(slice.trace).toMatchObject({ label: "incomplete-trace", reasons: ["relations-truncated"] });
+  });
+
+  it("treats rows reaching the page's applied limit as full even when truncated is false, never less conservative than the timeline rule", () => {
+    const rows = standPaged(
+      [edgeRow(keyOf("F"), keyOf("A"), "dependency"), edgeRow(keyOf("F"), keyOf("B"), "dependency")],
+      () => ({ examined: 2, truncated: false, limitApplied: 2 }),
+    );
+    expect(select(rows, "F").trace.reasons).toEqual(["relations-truncated"]);
+  });
+
+  it("falls back to the requested page when the supplied projection exposes no relationsPage: no dropped edge is ever silent", () => {
+    const edges = Array.from({ length: 12 }, (_, i) => edgeRow(keyOf("F"), keyOf(`d${String(i).padStart(2, "0")}`), "dependency"));
+    const legacy = stand(edges);
+    expect("relationsPage" in legacy).toBe(false);
+    expect(select(legacy, "F", { relationPage: 12 }).downstream.remainder.atLeast).toBe(true);
+    expect(select(legacy, "F", { relationPage: 13 }).downstream.remainder.atLeast).toBe(false);
+  });
+
+  it("is byte-identical to the legacy reading when nothing is truncated", () => {
+    const targets = manyIds("t", 5);
+    const view = capped(40, ["F", ...targets]);
+    for (const id of targets) relate(view, "F", id);
+    const legacy: Pick<ObservationProjection, "relations"> = { relations: input => view.relations(input) };
+    const modern = select(view, "F");
+    expect(JSON.stringify(modern)).toBe(JSON.stringify(select(legacy, "F")));
+    expect(modern.trace).toMatchObject({ label: "observed", reasons: [] });
+  });
+
+  it("a cycle-search read that hits the projection read cap is reported as cycle-search-truncated", () => {
+    const fan = manyIds("x", 45);
+    const view = capped(40, ["F", "U", "N1", ...fan]);
+    relate(view, "U", "F");
+    relate(view, "F", "N1");
+    for (const id of fan) relate(view, "N1", id);
+    expect(select(view, "F").trace.reasons).toEqual(["cycle-search-truncated"]);
+    const roomy = capped(100, ["F", "U", "N1", ...fan]);
+    relate(roomy, "U", "F");
+    relate(roomy, "F", "N1");
+    for (const id of fan) relate(roomy, "N1", id);
+    expect(select(roomy, "F").trace.reasons).toEqual([]);
   });
 });
