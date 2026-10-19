@@ -17,6 +17,7 @@ import {
   type ReactiveFiberTopologyContext, reactivefiberTopology,
 } from '../src/workbench/reactivefiber-observer.js';
 import {sanitizeWorkbenchText} from '../src/workbench/redaction.js';
+import {fullShapeRf} from './helpers/rf-render-fixture.js';
 import {installScratchLeakGuard, makeScratch, removeScratch} from './helpers/scratch.js';
 
 type Json = {[key: string]: JsonValue};
@@ -1130,10 +1131,18 @@ describe('observation rows from result.observations (wb-973.10 SCG-R10)', () => 
 
   // The positive controls a demote-only reader keeps: observed values ('observed' and 'null'), an empty list and an absent key
   // leave a clean render complete and successful, byte-identical to today. wb-973.9 (SCG-R9) owns the reused, replayed and degraded
-  // legs; a cut that adds a fresh-row count note re-pins this row in its own commit.
+  // legs; a cut that adds a fresh-row count note re-pins this row in its own commit. wb-973.9 re-pinned it (its acceptance 2): the
+  // projected snapshot and relations stay byte-identical to the row-free projection, an empty list adds nothing, and a non-empty
+  // all-fresh list adds exactly one witness note, 'observations: <n> rows, 0 reused', in the observations slot.
   it('SCG-R10 (b): observed values and an empty list never demote a clean render: byte-identical to the row-free projection', () => {
-    const plain = JSON.stringify(project(reading()));
-    for (const rows of [FRESH, [row({status: 'null'})], [row(), row()], []]) expect(JSON.stringify(project(withRows(rows)))).toBe(plain);
+    const plain = project(reading());
+    const witness = (count: number): string => `observations: ${count} ${count === 1 ? 'row' : 'rows'}, 0 reused`;
+    for (const rows of [FRESH, [row({status: 'null'})], [row(), row()], []]) {
+      const topology = project(withRows(rows));
+      expect(JSON.stringify(topology.snapshots)).toBe(JSON.stringify(plain.snapshots));
+      expect(JSON.stringify(topology.relations)).toBe(JSON.stringify(plain.relations));
+      expect(topology.diagnostics).toStrictEqual(rows.length === 0 ? plain.diagnostics : [...plain.diagnostics.slice(0, 2), witness(rows.length), ...plain.diagnostics.slice(2)]);
+    }
     expect(project(withRows(FRESH)).snapshots[0]).toMatchObject({coverage: 'complete', node: {statusTone: 'success'}});
   });
 
@@ -1333,5 +1342,274 @@ describe('observation rows from result.observations (wb-973.10 SCG-R10)', () => 
     expect(topology.diagnostics.filter(note => /foreign runtime/.test(note))).toStrictEqual([IDENTITY_TEXT]);
     expect(topology.diagnostics.slice(4)).toStrictEqual([OBSERVED_NOTE, RELEASE_TEXT, IDENTITY_TEXT, 'no native interval supplied']);
     bounded(topology);
+  });
+
+  /** wb-973.9 (SWARM-CONTEXT-GRAPH-R9, dossier G5 CONFIRMED-GAP observations-rows-reused-not-current; it extends the SCG-R10
+   * status-word leg above). Statement: "When result.observations carries any row that is not a fresh observed value - replayed===true,
+   * or freshness==='reused', or degraded===true, or a status outside the pin's observed-value set {observed, null} (including any
+   * unknown word) - the RF reader adapter shall project coverage 'partial' and a statusTone other than 'success', with one note
+   * naming the row count, the reused/replayed count and the verbatim status words; all-fresh rows, observations [] or absent keep
+   * today's output byte-identical." The pinned row (context.render.schema.json:1112-1152@8a8b83e4d, unchanged in the installed rf):
+   * freshness is the closed pair captured_at_render | reused (:1136-1140), replayed is true exactly when a recorded observation
+   * stood in (:1144) and degraded is true exactly when the status is unusable (:1152). Acceptance 2 adds one witness note to a clean
+   * render whose rows are all fresh, so the byte identity holds for the projected snapshot and relations, and for every partial
+   * render; the SCG-R10 positive-control row above is re-pinned to exactly that in this cut. Rows are the SCG-R10 row() in the pin's
+   * required-key shape; the provider rows run the landed wb-973.11 full-shape fixture through a hermetic rf stand-in. */
+  describe('observation freshness, replay and degradation (wb-973.9 SCG-R9)', () => {
+    const REUSED = row({freshness: 'reused', replayed: true});
+    const DENIED = row({status: 'denied', code: 'RF_OBSERVATION_DENIED', degraded: true});
+    const STATUS_CAUSE = 'every result.observations row must be an object with a string status';
+    const FRESHNESS_CAUSE = 'every result.observations row must state freshness captured_at_render or reused';
+    const REPLAYED_CAUSE = 'every result.observations row must state a boolean replayed';
+    const DEGRADED_CAUSE = 'a stated result.observations degraded flag must be a boolean';
+    const AGREEMENT_CAUSE = 'a result.observations row is replayed exactly when its freshness is reused';
+    const OBSERVED_DEGRADED_CAUSE = 'a degraded result.observations row cannot have status observed';
+    const REFUSED_ENVELOPE = 'RF preview returned an unrecognized or contradictory envelope.';
+
+    // Acceptance 1, rows (a)-(c) verbatim on an otherwise clean rf-cli envelope: "each asserts coverage==='partial',
+    // statusTone!=='success', a note matching /observations: 1 row/ naming reused/replayed for (a) and the verbatim status word for
+    // (b),(c); HEAD projects complete/success for all three". Row (d) is the one only the degraded leg demotes: the pin makes degraded
+    // true beside status null a contradiction as well (:1152), but acceptance 3 fences only status observed, so this reader demotes
+    // it - fail-closed, never success - and lists its verbatim status word.
+    const NOT_FRESH: [string, Json, RegExp, string][] = [
+      ['(a) a reused, replayed observed value', REUSED, /reused|replayed/, 'observations: 1 row, 1 reused: partial'],
+      ['(b) a denied, degraded row', DENIED, /\(denied\)/, 'observations: 1 row, 1 not observed (denied): partial'],
+      ['(c) the unknown status word stale_inputs', row({status: 'stale_inputs'}), /\(stale_inputs\)/, 'observations: 1 row, 1 not observed (stale_inputs): partial'],
+      ['(d) a degraded null value', row({status: 'null', degraded: true}), /\(null\)/, 'observations: 1 row, 1 not observed (null): partial'],
+    ];
+    it('SCG-R9: the not-fresh table registers all 4 rows', () => {
+      expect(NOT_FRESH.length).toBe(4);
+    });
+    it.each(NOT_FRESH)('SCG-R9: %s on an otherwise clean rf-cli envelope projects partial and non-success with one note naming it', (name, value, named, note) => {
+      record('SCG-R9 NOT_FRESH', name);
+      const topology = project(withRows([value]));
+      const [snapshot] = topology.snapshots;
+      expect(snapshot.coverage).toBe('partial');
+      expect(snapshot.node.statusTone).not.toBe('success');
+      expect(snapshot.node.statusTone).toBe('unknown');
+      const notes = observationNotes(topology);
+      expect(notes).toHaveLength(1);
+      expect(notes[0]).toMatch(/observations: 1 row/);
+      expect(notes[0]).toMatch(named);
+      expect(notes).toStrictEqual([note]);
+      // Only coverage and tone move: the status text, references, revision and payload reference are the clean render's.
+      const [clean] = project(reading()).snapshots;
+      expect({...snapshot, coverage: clean.coverage, node: {...snapshot.node, statusTone: clean.node.statusTone}}).toStrictEqual(clean);
+      bounded(topology);
+    });
+    it('SCG-R9: every not-fresh row is registered at the it.each call and runs', () => {
+      expectEveryRowRan('SCG-R9 NOT_FRESH', NOT_FRESH);
+    });
+
+    // Acceptance 2: "Positive controls: observations [], absent, and one row {status:'observed', freshness:'captured_at_render',
+    // replayed:false, degraded:false} leave the clean R1 expectation toStrictEqual unchanged except, for the fresh row, one added note
+    // 'observations: 1 row, 0 reused'." The witness takes the observations slot: after the base notes, before the interval note.
+    it('SCG-R9: observations [] or absent leave the clean R1 projection unchanged, and one fresh row adds only the note "observations: 1 row, 0 reused"', () => {
+      const r1 = {...context, invocationId: 'wf_rf_1'};
+      const plain = project(reading(), r1);
+      expect(Object.hasOwn(result(), 'observations')).toBe(false);
+      expect(project(withResult({}), r1)).toStrictEqual(plain);
+      expect(project(withRows([]), r1)).toStrictEqual(plain);
+      expect(row()).toMatchObject({status: 'observed', freshness: 'captured_at_render', replayed: false, degraded: false});
+      const fresh = project(withRows([row()]), r1);
+      expect(fresh.snapshots).toStrictEqual(plain.snapshots);
+      expect(fresh.relations).toStrictEqual(plain.relations);
+      expect(fresh.diagnostics).toStrictEqual([...plain.diagnostics.slice(0, 2), 'observations: 1 row, 0 reused', ...plain.diagnostics.slice(2)]);
+      expect(fresh.snapshots[0]).toMatchObject({coverage: 'complete', node: {statusTone: 'success'}});
+    });
+
+    it('SCG-R9: one note names the row count, the reused count and the verbatim not-observed words together; all-fresh rows name 0 reused', () => {
+      const withTimeout = row({status: 'timeout', code: 'RF_OBSERVATION_TIMEOUT', freshness: 'reused', replayed: true, degraded: true});
+      expect(observationNotes(project(withRows([REUSED, DENIED, row(), withTimeout])))).toStrictEqual(['observations: 4 rows, 2 reused, 2 not observed (denied, timeout): partial']);
+      expect(observationNotes(project(withRows([REUSED, row(), REUSED])))).toStrictEqual(['observations: 3 rows, 2 reused: partial']);
+      expect(observationNotes(project(withRows([row(), row({status: 'null'}), row({lens_key: 'beads.ready'})])))).toStrictEqual(['observations: 3 rows, 0 reused']);
+    });
+
+    // The bound the SCG-R10 note keeps (four 24-character words, their separators and the counts inside DIAGNOSTIC) still holds with
+    // the reused term beside it: the longest note is one whole note, never cut by the shared bound.
+    it('SCG-R9: the longest note - 10 000 reused rows beside four 24-character words and … - stays one whole note inside the 200-byte bound', () => {
+      const longest = ['a', 'b', 'c', 'd', 'e'].map(letter => `${letter.repeat(23)}_`);
+      const rows = Array.from({length: 10_000}, (_, index) => row({status: longest[index % longest.length], freshness: 'reused', replayed: true}));
+      const topology = project(withRows(rows));
+      const [note] = observationNotes(topology);
+      expect(note).toBe(`observations: 10000 rows, 10000 reused, 10000 not observed (${longest.slice(0, 4).join(', ')}, ${ELLIPSIS}): partial`);
+      expect(Buffer.byteLength(note)).toBeLessThanOrEqual(200);
+      expect(sanitizeWorkbenchText(note, 200, 'label')).toBe(note);
+      bounded(topology);
+    });
+
+    // DELTA-B-AMEND (MWRL-PI-4), accepted: until RFCLI's status enum gains an unknown class, an all-unknown row set stays partial -
+    // never coverage 'unknown' - with the fail-closed non-success tone and its word listed verbatim.
+    it('SCG-R9: an all-unknown row set stays partial, never coverage unknown, with a non-success tone and the word listed verbatim', () => {
+      const topology = project(withRows([row({status: 'unknown'}), row({status: 'unknown'})]));
+      const [snapshot] = topology.snapshots;
+      expect(snapshot.coverage).toBe('partial');
+      expect(snapshot.coverage).not.toBe('unknown');
+      expect(snapshot.node.statusTone).not.toBe('success');
+      expect(observationNotes(topology)).toStrictEqual(['observations: 2 rows, 2 not observed (unknown): partial']);
+    });
+
+    // One-directional on the R9 legs too: on every SCG-R10 partial render a reused row adds only its own note.
+    it('SCG-R9: on every SCG-R10 partial render a reused row adds only its own note: the snapshot and relations stay the row-free render', () => {
+      for (const [, resultOver, envelopeOver, ctx] of PARTIAL_RENDERS) {
+        const plain = project(render(resultOver, envelopeOver), ctx);
+        const reused = project(render(resultOver, envelopeOver, [REUSED]), ctx);
+        expect(reused.snapshots).toStrictEqual(plain.snapshots);
+        expect(reused.relations).toStrictEqual(plain.relations);
+        expect(reused.diagnostics.filter(note => !note.startsWith('observations: '))).toStrictEqual(plain.diagnostics);
+        expect(observationNotes(reused)).toStrictEqual(['observations: 1 row, 1 reused: partial']);
+      }
+    });
+
+    it('SCG-R9: degraded is read only when stated: a row without it reads by its status, freshness and replay alone', () => {
+      expect(observationNotes(project(withRows([without(row(), 'degraded')])))).toStrictEqual(['observations: 1 row, 0 reused']);
+      expect(observationNotes(project(withRows([without(row({status: 'timeout'}), 'degraded')])))).toStrictEqual(['observations: 1 row, 1 not observed (timeout): partial']);
+      expect(observationNotes(project(withRows([without(REUSED, 'degraded')])))).toStrictEqual(['observations: 1 row, 1 reused: partial']);
+    });
+
+    const LEAKY_OVERS: Json[] = [{freshness: 'reused', replayed: true}, {status: 'denied', code: 'RF_OBSERVATION_DENIED', degraded: true}, {status: 'null', degraded: true}];
+    it('SCG-R9: reused, replayed and degraded rows carrying the leak fields surface none of them, nor any row id, digest or code', () => {
+      for (const over of LEAKY_OVERS) {
+        const topology = project(withRows([row({...LEAKY, ...over}), row(LEAKY)]));
+        const texts = surfaced(topology);
+        expect(texts.length).toBeGreaterThan(0);
+        for (const text of texts) {
+          for (const hidden of HIDDEN) expect(text).not.toContain(hidden);
+          expect(text).not.toMatch(ROW_FIELDS);
+        }
+        bounded(topology);
+      }
+    });
+
+    // Acceptance 4: "Projection effect: after ObservationProjection.refresh the node's completeness==='partial'; the adapter writes no
+    // projection freshness field (freshness semantics stay projection-owned; the note is the row-level witness)."
+    it('SCG-R9: after ObservationProjection.refresh every not-fresh row leaves the node partial, and freshness stays projection-owned', () => {
+      const nodeOf = (snapshot: ReactiveFiberProjectionTopology['snapshots'][number]) => {
+        const projection = new ObservationProjection();
+        expect(projection.refresh(snapshot)).toBe('applied');
+        return projection.query({scope, limit: 10}).nodes.find(item => item.nativeRef.id === OPERATION);
+      };
+      const [clean] = project(reading()).snapshots;
+      const cleanNode = nodeOf(clean);
+      expect(cleanNode?.freshness).toBe('current');
+      for (const [, value, , note] of NOT_FRESH) {
+        const topology = project(withRows([value]));
+        const [snapshot] = topology.snapshots;
+        expect(Object.keys(snapshot).sort()).toStrictEqual(Object.keys(clean).sort());
+        expect(Object.keys(snapshot.node).sort()).toStrictEqual(Object.keys(clean.node).sort());
+        expect(snapshot).not.toHaveProperty('freshness');
+        const node = nodeOf(snapshot);
+        expect(node).toMatchObject({completeness: 'partial', presentation: {statusTone: 'unknown'}});
+        expect(node?.freshness).toBe(cleanNode?.freshness);
+        expect(topology.diagnostics).toContain(note);
+      }
+    });
+
+    // Acceptance 3: "Contradiction fences (schema :1140,:1144): replayed:true with freshness 'captured_at_render', replayed:false with
+    // freshness 'reused', degraded:true with status 'observed' -> refused 'validation'". Each refusal pins its cause, beside a fresh row.
+    const CONTRADICTIONS: [string, Json, string][] = [
+      ['replayed true with freshness captured_at_render', row({replayed: true}), AGREEMENT_CAUSE],
+      ['replayed false with freshness reused', row({freshness: 'reused'}), AGREEMENT_CAUSE],
+      ['degraded true with status observed', row({degraded: true}), OBSERVED_DEGRADED_CAUSE],
+    ];
+    it('SCG-R9: the contradiction table registers all 3 fences', () => {
+      expect(CONTRADICTIONS.length).toBe(3);
+    });
+    it.each(CONTRADICTIONS)('SCG-R9: a row with %s is refused with a typed validation error before anything projects', (name, value, cause) => {
+      record('SCG-R9 CONTRADICTIONS', name);
+      expect(refusal(withRows([row(), value]))).toMatchObject({category: 'validation', message: `ReactiveFiber topology refused: ${cause}.`});
+    });
+    it('SCG-R9: every contradiction fence is registered at the it.each call and runs', () => {
+      expectEveryRowRan('SCG-R9 CONTRADICTIONS', CONTRADICTIONS);
+    });
+
+    // Acceptance 3: "a row missing status/freshness/replayed or a non-array observations -> 'validation' (observer)". Beside them the
+    // shapes no pinned row can take: a freshness outside the closed pair, a non-boolean replayed and a stated non-boolean degraded.
+    const UNSTATED: [string, JsonValue, string][] = [
+      ['a row without status', [without(row(), 'status')], STATUS_CAUSE],
+      ['a row without freshness', [without(row(), 'freshness')], FRESHNESS_CAUSE],
+      ['a row without replayed', [without(row(), 'replayed')], REPLAYED_CAUSE],
+      ['observations as an object', {rows: [row()]}, 'result.observations must be an array of rows'],
+      ['a numeric freshness', [row({freshness: 1})], FRESHNESS_CAUSE],
+      ['a null freshness', [row({freshness: null})], FRESHNESS_CAUSE],
+      ['a freshness word outside the pin', [row({freshness: 'stale'})], FRESHNESS_CAUSE],
+      ['a freshness differing only in case', [row({freshness: 'Reused', replayed: true})], FRESHNESS_CAUSE],
+      ['a string replayed', [row({replayed: 'true'})], REPLAYED_CAUSE],
+      ['a null replayed', [row({replayed: null})], REPLAYED_CAUSE],
+      ['a string degraded', [row({degraded: 'false'})], DEGRADED_CAUSE],
+      ['a null degraded', [row({degraded: null})], DEGRADED_CAUSE],
+    ];
+    it('SCG-R9: the unstated-field table registers all 12 shapes', () => {
+      expect(UNSTATED.length).toBe(12);
+    });
+    it.each(UNSTATED)('SCG-R9: %s is refused with a typed validation error that names its cause', (name, rows, cause) => {
+      record('SCG-R9 UNSTATED', name);
+      expect(refusal(withRows(rows))).toMatchObject({category: 'validation', message: `ReactiveFiber topology refused: ${cause}.`});
+    });
+    it('SCG-R9: every unstated-field shape is registered at the it.each call and runs', () => {
+      expectEveryRowRan('SCG-R9 UNSTATED', UNSTATED);
+    });
+
+    // Acceptance 3, the provider half: "... -> 'transport' (provider)". Each row is the landed wb-973.11 full-shape envelope with only
+    // result.observations replaced, printed by a hermetic stand-in (the only PATH entry, absolute-node shebang), so the provider's own
+    // envelope validator decides and no host rf can answer.
+    const originalPath = process.env.PATH;
+    const stubs: string[] = [];
+    afterEach(() => {
+      if (originalPath === undefined) Reflect.deleteProperty(process.env, 'PATH');
+      else process.env.PATH = originalPath;
+      removeScratch(...stubs.splice(0));
+    });
+    const fullShape = (observations: JsonValue): Json => {
+      const source = fullShapeRf(WS);
+      const fixture = source.result;
+      if (fixture === null || typeof fixture !== 'object' || Array.isArray(fixture)) throw new Error('the wb-973.11 fixture result must be an object');
+      return {...source, result: {...fixture, observations}};
+    };
+    async function provided(source: Json): Promise<JsonValue> {
+      const dir = makeScratch('rf-observation-rows-');
+      stubs.push(dir);
+      const binary = join(dir, 'rf');
+      writeFileSync(binary, `#!${process.execPath}\nprocess.stdout.write(${JSON.stringify(JSON.stringify(source))});\n`);
+      chmodSync(binary, 0o700);
+      process.env.PATH = dir;
+      return nativeReactiveFiberPreview('claude-opus-5', 'Summarize workbench integration', WS);
+    }
+    const PROVIDER: [string, JsonValue][] = [
+      ['observations as an object', {rows: [row()]}],
+      ['a row without status', [row(), without(row(), 'status')]],
+      ['a row without freshness', [row(), without(row(), 'freshness')]],
+      ['a row without replayed', [row(), without(row(), 'replayed')]],
+    ];
+    it('SCG-R9 provider: the refusal table registers all 4 shapes', () => {
+      expect(PROVIDER.length).toBe(4);
+    });
+    it.each(PROVIDER)('SCG-R9 provider: the full-shape envelope with %s is refused as a transport error', async (name, observations) => {
+      record('SCG-R9 PROVIDER', name);
+      const preview = provided(fullShape(observations));
+      await expect(preview).rejects.toBeInstanceOf(CapabilityError);
+      await expect(preview).rejects.toMatchObject({category: 'transport', message: REFUSED_ENVELOPE});
+    }, 30_000);
+    it('SCG-R9 provider: every refusal shape is registered at the it.each call and runs', () => {
+      expectEveryRowRan('SCG-R9 PROVIDER', PROVIDER);
+    });
+
+    it('SCG-R9 provider: the full-shape envelope with fresh and not-fresh rows passes unchanged and projects partial end to end', async () => {
+      const source = fullShape([row(), ...NOT_FRESH.map(([, value]) => value)]);
+      const preview = await provided(source);
+      expect(preview).toStrictEqual({contract: 'reactivefiber.render.preview/v1', workspaceRoot: WS, source});
+      const topology = reactivefiberTopology(preview, context);
+      expect(topology.snapshots[0]).toMatchObject({coverage: 'partial', node: {statusTone: 'unknown'}});
+      expect(observationNotes(topology)).toStrictEqual(['observations: 5 rows, 1 reused, 3 not observed (denied, stale_inputs, null): partial']);
+    }, 30_000);
+
+    it('SCG-R9 provider: the full-shape envelope with one fresh row passes unchanged and projects complete with the witness note', async () => {
+      const source = fullShape([row()]);
+      const preview = await provided(source);
+      expect(preview).toStrictEqual({contract: 'reactivefiber.render.preview/v1', workspaceRoot: WS, source});
+      const topology = reactivefiberTopology(preview, context);
+      expect(topology.snapshots[0]).toMatchObject({coverage: 'complete', node: {statusTone: 'success'}});
+      expect(observationNotes(topology)).toStrictEqual(['observations: 1 row, 0 reused']);
+    }, 30_000);
   });
 });
