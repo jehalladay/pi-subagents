@@ -2,6 +2,7 @@
 import {spawnSync} from 'node:child_process';
 import {describe,expect,it} from 'vitest';
 import {nativeReactiveFiberPreview} from '../src/workbench/providers/reactivefiber.js';
+import {judgeRfReleaseDrift,parseInstalledRfVersion,recordedRfRelease} from './helpers/rf-release-drift.js';
 import {diffAgainstRoster,readRfResultRoster} from './helpers/rf-render-fixture.js';
 
 const RF_ABSENT_NOTE='engine_metrics absent: pre-TSX rf';
@@ -61,6 +62,25 @@ describe('RF native context producer',()=>{
     // release, whether that release is the pin (a 'captured' promotion needs it), the failure count and the extra result keys.
     process.stdout.write(`\nRF_RESULT_KEY_DIFF ${JSON.stringify({roster:stamp(roster.rfVersion),source:roster.source,cli_version:stamp(provenance.cli_version),pinned:provenance.cli_version===roster.rfVersion,failures:diff.failures.length,extra_result_keys:diff.extraResultKeys.map(stamp)})}\n`);
     expect(diff.failures).toStrictEqual([]);
+  },60_000);
+
+  // wb-973.12 (SCG-R12): the live drift guard. The release recorded in the single contractSource carrier (wb-2j3.12) must equal the
+  // installed `rf --version --json` result.version and this preview's result.provenance.cli_version. A mismatch, or a value that
+  // cannot be read, FAILS the tier with a failure naming recorded vs installed (never skips); a missing WORKBENCH_RF_FIXTURE throws
+  // like the rows above. Re-pinning the carrier is a separate act made beside a newer stamped receipt row, never by editing this row.
+  it('SCG-R12 live drift guard: the installed rf version and the preview cli_version equal the release recorded in the contractSource carrier',async()=>{
+    const workspace=process.env.WORKBENCH_RF_FIXTURE;
+    if(!workspace) throw Error('WORKBENCH_RF_FIXTURE must name an initialized test workspace');
+    const run=spawnSync('rf',['--json','--version'],{encoding:'utf8',timeout:10_000});
+    const installed=run.error||run.status!==0?undefined:parseInstalledRfVersion(run.stdout);
+    const reading=await nativeReactiveFiberPreview('claude-opus-5','Summarize workbench integration',workspace);
+    const source=record(reading)?reading.source:undefined;
+    const captured=record(source)&&record(source.result)?source.result:undefined;
+    const provenance=captured!==undefined&&record(captured.provenance)?captured.provenance:{};
+    const verdict=judgeRfReleaseDrift({recorded:recordedRfRelease(),installed,previewCliVersion:provenance.cli_version});
+    // Recording line (straight to the process stdout, as RF_PREVIEW_RECEIPT above): recorded, installed, preview, failure count.
+    process.stdout.write(`\nRF_RELEASE_DRIFT ${JSON.stringify({recorded:recordedRfRelease(),installed:stamp(installed),preview:stamp(provenance.cli_version),failures:verdict.failures.length})}\n`);
+    expect(verdict.failures).toStrictEqual([]);
   },60_000);
 });
 /** A JSON object, never an array or null. */
