@@ -527,11 +527,14 @@ describe("acceptance 4: docs/workbench/09 § Relationships are typed and provena
   it("reads relations at most once per returned node, within relationLimit, and flags a full page", () => {
     const projection = relationsFixture();
     const relations = vi.spyOn(projection, "relations");
+    // wb-6ze.29: a projection that has relationsPage is read through it, so a row's incoming page is a call of either method.
+    const pages = vi.spyOn(projection, "relationsPage");
+    const reads = () => [...relations.mock.calls, ...pages.mock.calls];
     const model = buildTimelineLanes(projection, request({ relationLimit: 2 }));
     const keys = allRows(model).map(row => row.key);
-    expect(relations).toHaveBeenCalledTimes(keys.length);
-    expect(new Set(relations.mock.calls.map(([input]) => input.to)).size).toBe(keys.length);
-    for (const [input] of relations.mock.calls) {
+    expect(reads()).toHaveLength(keys.length);
+    expect(new Set(reads().map(([input]) => input.to)).size).toBe(keys.length);
+    for (const [input] of reads()) {
       expect(input).toStrictEqual({ scope, to: input.to, limit: 2 });
       expect(keys).toContain(input.to);
     }
@@ -539,8 +542,10 @@ describe("acceptance 4: docs/workbench/09 § Relationships are typed and provena
     expect(model.truncated.relations).toBe(true);
     expect(notesOf(model)).toContain("relation-page-full");
     relations.mockClear();
+    pages.mockClear();
     const roomy = buildTimelineLanes(projection, request());
-    for (const [input] of relations.mock.calls) expect(input.limit).toBe(40);
+    expect(reads()).toHaveLength(keys.length);
+    for (const [input] of reads()) expect(input.limit).toBe(40);
     expect(roomy.truncated.relations).toBe(false);
     expect(notesOf(roomy)).not.toContain("relation-page-full");
     // A page cut at relationLimit 1 hides twin's second owner: the lane follows what was read, and the page is flagged.
@@ -708,8 +713,9 @@ describe("acceptance 6: docs/workbench/12 § Input and output hardening: \"Valid
 
   it("sanitizes the same way when the real projection admits an 8-bit CSI, a bidi override and a zero-width character", () => {
     const model = buildTimelineLanes(hostileFixture(hostile("\u009b31m")), request());
-    expectSanitized(laneOf(model, keyOf(parent)).label, "31m");
-    expectSanitized(rowOf(model, parent).title, "31m");
+    // wb-xbq: the 8-bit CSI is one escape unit, as its 7-bit form is, so none of it is displayed: the same prefix as above.
+    expectSanitized(laneOf(model, keyOf(parent)).label, "");
+    expectSanitized(rowOf(model, parent).title, "");
   });
 
   it("admits from a producer stand-in only this scope's and this invocation's rows, each once and at most limit, in the known vocabulary", () => {
@@ -740,11 +746,14 @@ describe("acceptance 6: docs/workbench/12 § Input and output hardening: \"Valid
     observe(projection, { ref: forge("emoji"), title: `${"x".repeat(59)}\u{1F600}${"y".repeat(100)}` });
     // ObservationProjection admits a title made only of zero-width characters.
     observe(projection, { ref: forge("blank"), title: "\u200b\u200b" });
-    // ...and a provider made only of one.
+    // ...but refuses a provider made only of one (wb-0br, owner F2 ruling 21:43Z: admission refuses default-ignorables in
+    // nativeRef identity), so a producer stand-in delivers it, as it delivers the glued title.
     const ghost: NativeRef = { provider: "\u200b", type: "operation", id: "ghost" };
-    observe(projection, { ref: ghost, title: "\u200b" });
+    expect(projection.refresh({ source: ghost, scope, capturedAt: at(30), observedAt: at(30), node: { title: "\u200b", type: "sdk-operation", statusText: "running", statusTone: "active" } })).toBe("refused");
+    observe(projection, { ref: forge("ghost"), title: "\u200b" });
     relate(projection, forge("blank"), forge("glued"), "grouping");
-    const reader = standIn(projection, item => item.nativeRef.id === "glued" ? { ...item, presentation: { ...item.presentation, title: "Authorization: Bearer\x1b[0mabc123" } } : item);
+    const reader = standIn(projection, item => item.nativeRef.id === "glued" ? { ...item, presentation: { ...item.presentation, title: "Authorization: Bearer\x1b[0mabc123" } }
+      : item.nativeRef.id === "ghost" ? { ...item, key: keyOf(ghost), nativeRef: { ...ghost } } : item);
     const model = buildTimelineLanes(reader, request());
     expect(rowOf(model, forge("glued")).title).toBe("Authorization: [REDACTED]");
     expect(rowOf(model, forge("emoji")).title).toBe(`${"x".repeat(59)} [truncated]`);
@@ -783,6 +792,8 @@ describe("acceptance 7: docs/workbench/02 WB-029: \"Over 1000 nodes: render cost
     expect(projection.stats()).toStrictEqual({ nodes: 2_000, events: 20_000, edges: 4_000 });
     const window = vi.spyOn(projection, "window");
     const relations = vi.spyOn(projection, "relations");
+    // wb-6ze.29: a projection that has relationsPage is read through it; the per-row bound covers both relation reads.
+    const pages = vi.spyOn(projection, "relationsPage");
     const untouched = [
       vi.spyOn(projection, "events"), vi.spyOn(projection, "query"), vi.spyOn(projection, "ingest"), vi.spyOn(projection, "refresh"),
       vi.spyOn(projection, "relate"), vi.spyOn(projection, "markStale"), vi.spyOn(projection, "disconnect"), vi.spyOn(projection, "reconnect"),
@@ -790,6 +801,8 @@ describe("acceptance 7: docs/workbench/02 WB-029: \"Over 1000 nodes: render cost
     const model = buildTimelineLanes(projection, { scope, invocationId: "inv-big", offset: 0, limit: 100, zoom: 1, pan: 0, columns: 80 });
     expect(window).toHaveBeenCalledTimes(1);
     expect(relations.mock.calls.length).toBeLessThanOrEqual(100);
+    expect(relations.mock.calls.length + pages.mock.calls.length).toBeLessThanOrEqual(100);
+    expect(relations.mock.calls.length + pages.mock.calls.length).toBeGreaterThan(0);
     for (const spy of untouched) expect(spy).not.toHaveBeenCalled();
     expect(model.lanes.length).toBeLessThanOrEqual(16);
     expect(model.lanes).toHaveLength(16);

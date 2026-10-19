@@ -1,0 +1,618 @@
+{
+  "contract": "workbench.dependency-census/v1",
+  "rows": [
+    {
+      "id": "node:runtime",
+      "kind": "node-runtime",
+      "name": "node",
+      "status": "measured",
+      "version": "v24.20.0",
+      "source": "node --version (process.version of the executing runtime)",
+      "label": "measured-at-run"
+    },
+    {
+      "id": "engines:package.json:node",
+      "kind": "engines",
+      "name": "node",
+      "status": "measured",
+      "version": ">=24",
+      "source": "package.json engines[\"node\"]"
+    },
+    {
+      "id": "engines:package-lock.json:node",
+      "kind": "engines",
+      "name": "node",
+      "status": "measured",
+      "version": ">=24",
+      "source": "package-lock.json packages[\"\"].engines[\"node\"]"
+    },
+    {
+      "id": "engines:vendor/dependency-lock.json:node",
+      "kind": "engines",
+      "name": "node",
+      "status": "measured",
+      "version": ">=24",
+      "source": "vendor/dependency-lock.json packages[\"\"].engines[\"node\"]"
+    },
+    {
+      "id": "pin:dependencies:@anthropic-ai/claude-agent-sdk",
+      "kind": "package-pin",
+      "name": "@anthropic-ai/claude-agent-sdk",
+      "status": "measured",
+      "version": "0.3.300",
+      "source": "package.json dependencies[\"@anthropic-ai/claude-agent-sdk\"]"
+    },
+    {
+      "id": "pin:dependencies:@forge/sdk",
+      "kind": "package-pin",
+      "name": "@forge/sdk",
+      "status": "measured",
+      "version": "file:vendor/forge-sdk-0.1.0.tgz",
+      "source": "package.json dependencies[\"@forge/sdk\"]"
+    },
+    {
+      "id": "pin:dependencies:@furnace/sdk",
+      "kind": "package-pin",
+      "name": "@furnace/sdk",
+      "status": "measured",
+      "version": "file:vendor/furnace-sdk-0.1.0.tgz",
+      "source": "package.json dependencies[\"@furnace/sdk\"]"
+    },
+    {
+      "id": "pin:dependencies:@hyperunix/sdk",
+      "kind": "package-pin",
+      "name": "@hyperunix/sdk",
+      "status": "measured",
+      "version": "file:vendor/hyperunix-sdk-0.1.0.tgz",
+      "source": "package.json dependencies[\"@hyperunix/sdk\"]"
+    },
+    {
+      "id": "pin:dependencies:croner",
+      "kind": "package-pin",
+      "name": "croner",
+      "status": "measured",
+      "version": "^10.0.1",
+      "source": "package.json dependencies[\"croner\"]"
+    },
+    {
+      "id": "pin:dependencies:nanoid",
+      "kind": "package-pin",
+      "name": "nanoid",
+      "status": "measured",
+      "version": "^5.1.16",
+      "source": "package.json dependencies[\"nanoid\"]"
+    },
+    {
+      "id": "pin:dependencies:typescript",
+      "kind": "package-pin",
+      "name": "typescript",
+      "status": "measured",
+      "version": "6.0.3",
+      "source": "package.json dependencies[\"typescript\"]"
+    },
+    {
+      "id": "pin:devDependencies:@biomejs/biome",
+      "kind": "package-pin",
+      "name": "@biomejs/biome",
+      "status": "measured",
+      "version": "^2.4.14",
+      "source": "package.json devDependencies[\"@biomejs/biome\"]"
+    },
+    {
+      "id": "pin:devDependencies:@earendil-works/pi-ai",
+      "kind": "package-pin",
+      "name": "@earendil-works/pi-ai",
+      "status": "measured",
+      "version": "1.1.0",
+      "source": "package.json devDependencies[\"@earendil-works/pi-ai\"]"
+    },
+    {
+      "id": "pin:devDependencies:@earendil-works/pi-coding-agent",
+      "kind": "package-pin",
+      "name": "@earendil-works/pi-coding-agent",
+      "status": "measured",
+      "version": "1.1.0",
+      "source": "package.json devDependencies[\"@earendil-works/pi-coding-agent\"]"
+    },
+    {
+      "id": "pin:devDependencies:@earendil-works/pi-tui",
+      "kind": "package-pin",
+      "name": "@earendil-works/pi-tui",
+      "status": "measured",
+      "version": "1.1.0",
+      "source": "package.json devDependencies[\"@earendil-works/pi-tui\"]"
+    },
+    {
+      "id": "pin:devDependencies:@sinclair/typebox",
+      "kind": "package-pin",
+      "name": "@sinclair/typebox",
+      "status": "measured",
+      "version": "^0.34.49",
+      "source": "package.json devDependencies[\"@sinclair/typebox\"]"
+    },
+    {
+      "id": "pin:devDependencies:@types/node",
+      "kind": "package-pin",
+      "name": "@types/node",
+      "status": "measured",
+      "version": "^25.5.0",
+      "source": "package.json devDependencies[\"@types/node\"]"
+    },
+    {
+      "id": "pin:devDependencies:@vitest/coverage-istanbul",
+      "kind": "package-pin",
+      "name": "@vitest/coverage-istanbul",
+      "status": "measured",
+      "version": "^4.1.10",
+      "source": "package.json devDependencies[\"@vitest/coverage-istanbul\"]"
+    },
+    {
+      "id": "pin:devDependencies:marked",
+      "kind": "package-pin",
+      "name": "marked",
+      "status": "measured",
+      "version": "18.0.11",
+      "source": "package.json devDependencies[\"marked\"]"
+    },
+    {
+      "id": "pin:devDependencies:typebox",
+      "kind": "package-pin",
+      "name": "typebox",
+      "status": "measured",
+      "version": "^1.3.27",
+      "source": "package.json devDependencies[\"typebox\"]"
+    },
+    {
+      "id": "pin:devDependencies:vitest",
+      "kind": "package-pin",
+      "name": "vitest",
+      "status": "measured",
+      "version": "^4.0.18",
+      "source": "package.json devDependencies[\"vitest\"]"
+    },
+    {
+      "id": "pin:peerDependencies:@earendil-works/pi-ai",
+      "kind": "package-pin",
+      "name": "@earendil-works/pi-ai",
+      "status": "measured",
+      "version": ">=1.1.0",
+      "source": "package.json peerDependencies[\"@earendil-works/pi-ai\"]"
+    },
+    {
+      "id": "pin:peerDependencies:@earendil-works/pi-coding-agent",
+      "kind": "package-pin",
+      "name": "@earendil-works/pi-coding-agent",
+      "status": "measured",
+      "version": ">=1.1.0",
+      "source": "package.json peerDependencies[\"@earendil-works/pi-coding-agent\"]"
+    },
+    {
+      "id": "pin:peerDependencies:@earendil-works/pi-tui",
+      "kind": "package-pin",
+      "name": "@earendil-works/pi-tui",
+      "status": "measured",
+      "version": ">=1.1.0",
+      "source": "package.json peerDependencies[\"@earendil-works/pi-tui\"]"
+    },
+    {
+      "id": "pin:peerDependencies:typebox",
+      "kind": "package-pin",
+      "name": "typebox",
+      "status": "measured",
+      "version": "*",
+      "source": "package.json peerDependencies[\"typebox\"]"
+    },
+    {
+      "id": "lock:dependencies:@anthropic-ai/claude-agent-sdk",
+      "kind": "lock-resolution",
+      "name": "@anthropic-ai/claude-agent-sdk",
+      "status": "measured",
+      "version": "0.3.300",
+      "source": "vendor/dependency-lock.json packages[\"node_modules/@anthropic-ai/claude-agent-sdk\"]",
+      "integrity": "sha512-3NGPEUj+VTMQAQ0vaUUQtrce6rNb9a4XhY8QKIOLUp9mDkdbwrrjjD9oMKcDpcLhFKqZdTc02RBUo55GrbY9CA=="
+    },
+    {
+      "id": "lock:dependencies:@forge/sdk",
+      "kind": "lock-resolution",
+      "name": "@forge/sdk",
+      "status": "measured",
+      "version": "0.1.0",
+      "source": "vendor/dependency-lock.json packages[\"node_modules/@forge/sdk\"]",
+      "integrity": "sha512-uqUv0dDwUfg1fcSsPcZ5gZKGPFtCeAJtzavarx4AP9u3r/GDAHzK7hXDbLLa+uLJbpGUsnrwgWdXKysBOTc+uw=="
+    },
+    {
+      "id": "lock:dependencies:@furnace/sdk",
+      "kind": "lock-resolution",
+      "name": "@furnace/sdk",
+      "status": "measured",
+      "version": "0.1.0",
+      "source": "vendor/dependency-lock.json packages[\"node_modules/@furnace/sdk\"]",
+      "integrity": "sha512-6lFWkwqpUYOtnrhSFSwVt7O/QrsjiPItMakXzSSkDxpRtDZtMCbuD18cMybmgY6MnyWMtv0RXmuYoDfHDxXYEA=="
+    },
+    {
+      "id": "lock:dependencies:@hyperunix/sdk",
+      "kind": "lock-resolution",
+      "name": "@hyperunix/sdk",
+      "status": "measured",
+      "version": "0.1.0",
+      "source": "vendor/dependency-lock.json packages[\"node_modules/@hyperunix/sdk\"]",
+      "integrity": "sha512-hP4oOt5yVnrtj7FN1xVzNPe1aCMMAz/vBJtnL6pn5zNB3Ax3JTcomAQVtcdmd2bFMjZUPMwAPFLCIFwMFNJqSA=="
+    },
+    {
+      "id": "lock:dependencies:croner",
+      "kind": "lock-resolution",
+      "name": "croner",
+      "status": "measured",
+      "version": "10.0.1",
+      "source": "vendor/dependency-lock.json packages[\"node_modules/croner\"]",
+      "integrity": "sha512-ixNtAJndqh173VQ4KodSdJEI6nuioBWI0V1ITNKhZZsO0pEMoDxz539T4FTTbSZ/xIOSuDnzxLVRqBVSvPNE2g=="
+    },
+    {
+      "id": "lock:dependencies:nanoid",
+      "kind": "lock-resolution",
+      "name": "nanoid",
+      "status": "measured",
+      "version": "5.1.16",
+      "source": "vendor/dependency-lock.json packages[\"node_modules/nanoid\"]",
+      "integrity": "sha512-kVrnsrJqMR8+oLJnGEmSWw9BivK5mt7H3FZatVRjrc5wGqFYuBxX1yG7+A7Gi5AefkX6t/oCkizcQgpu0cY1dQ=="
+    },
+    {
+      "id": "lock:dependencies:typescript",
+      "kind": "lock-resolution",
+      "name": "typescript",
+      "status": "measured",
+      "version": "6.0.3",
+      "source": "vendor/dependency-lock.json packages[\"node_modules/typescript\"]",
+      "integrity": "sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw=="
+    },
+    {
+      "id": "lock:devDependencies:@biomejs/biome",
+      "kind": "lock-resolution",
+      "name": "@biomejs/biome",
+      "status": "measured",
+      "version": "2.4.15",
+      "source": "vendor/dependency-lock.json packages[\"node_modules/@biomejs/biome\"]",
+      "integrity": "sha512-j5VH3a/h/HXTKBM50MDMxRCzkeLv9S2XJcW2WgnZT1+xyisi+0bISrXR82gCX+8S9lvK0skEvHJRN+3Ktr2hlw=="
+    },
+    {
+      "id": "lock:devDependencies:@earendil-works/pi-ai",
+      "kind": "lock-resolution",
+      "name": "@earendil-works/pi-ai",
+      "status": "measured",
+      "version": "1.1.0",
+      "source": "vendor/dependency-lock.json packages[\"node_modules/@earendil-works/pi-ai\"]",
+      "integrity": "sha512-1T7LAkc/5Bvc0v6w4vAGVdCrli0o/E0pEmYKTnixu95vSFArBjvbhS/G4ZwI0RUePgf0Imcu0VyqlM4EcXxqfw=="
+    },
+    {
+      "id": "lock:devDependencies:@earendil-works/pi-coding-agent",
+      "kind": "lock-resolution",
+      "name": "@earendil-works/pi-coding-agent",
+      "status": "measured",
+      "version": "1.1.0",
+      "source": "vendor/dependency-lock.json packages[\"node_modules/@earendil-works/pi-coding-agent\"]",
+      "integrity": "sha512-SeEi/4hdcHNgA9UWlefZl7ZZpm3dzi2OoxNjDHsBJ9o298LNOtbL4DGKgitlEj6uCTccvtw6f2hlCkTPVJ2RXg=="
+    },
+    {
+      "id": "lock:devDependencies:@earendil-works/pi-tui",
+      "kind": "lock-resolution",
+      "name": "@earendil-works/pi-tui",
+      "status": "measured",
+      "version": "1.1.0",
+      "source": "vendor/dependency-lock.json packages[\"node_modules/@earendil-works/pi-tui\"]",
+      "integrity": "sha512-v7wkS0y2ErZvZkSfemqd9RrBZJ5x6p8Ujsv7NdJj01IXJyFM0kNL6rMdcKcvTe7EVTd6ugvDB9VPZSoaBF9QxQ=="
+    },
+    {
+      "id": "lock:devDependencies:@sinclair/typebox",
+      "kind": "lock-resolution",
+      "name": "@sinclair/typebox",
+      "status": "measured",
+      "version": "0.34.49",
+      "source": "vendor/dependency-lock.json packages[\"node_modules/@sinclair/typebox\"]",
+      "integrity": "sha512-brySQQs7Jtn0joV8Xh9ZV/hZb9Ozb0pmazDIASBkYKCjXrXU3mpcFahmK/z4YDhGkQvP9mWJbVyahdtU5wQA+A=="
+    },
+    {
+      "id": "lock:devDependencies:@types/node",
+      "kind": "lock-resolution",
+      "name": "@types/node",
+      "status": "measured",
+      "version": "25.9.1",
+      "source": "vendor/dependency-lock.json packages[\"node_modules/@types/node\"]",
+      "integrity": "sha512-xfrlY7UD5rMJk3ZVJP8BNzS28J36YJg+xp+LPXV1TdWxr8uMH5A860QNxYDGQe/ylDSgjxE52Q9VnO7p75tJxg=="
+    },
+    {
+      "id": "lock:devDependencies:@vitest/coverage-istanbul",
+      "kind": "lock-resolution",
+      "name": "@vitest/coverage-istanbul",
+      "status": "measured",
+      "version": "4.1.10",
+      "source": "vendor/dependency-lock.json packages[\"node_modules/@vitest/coverage-istanbul\"]",
+      "integrity": "sha512-AyNJ5pQRFqCX7pwB9PSTmoVKPaZ4H5IEVJfJsT+q1DYkXvZMEFYgJlyk5sfStmt9rVYRyYYRRsuBeImCOc39ww=="
+    },
+    {
+      "id": "lock:devDependencies:marked",
+      "kind": "lock-resolution",
+      "name": "marked",
+      "status": "measured",
+      "version": "18.0.11",
+      "source": "vendor/dependency-lock.json packages[\"node_modules/marked\"]",
+      "integrity": "sha512-HnslJfsZkRPBDJRHvVtAaWlZHEpSu7u8LgQuJCELjRKuWR+hpq4A7sLq3p8HaI9ypVoXDXxV34CsQJEe1+J5Aw=="
+    },
+    {
+      "id": "lock:devDependencies:typebox",
+      "kind": "lock-resolution",
+      "name": "typebox",
+      "status": "measured",
+      "version": "1.3.27",
+      "source": "vendor/dependency-lock.json packages[\"node_modules/typebox\"]",
+      "integrity": "sha512-zu+jc1pcy4UiNThxikUr36f0Rybk9PEeCg/NE6adeWr/SKsdNO4EzZHYRDlv2YCVAfj3Odq3dESSo/jNyoBXzA=="
+    },
+    {
+      "id": "lock:devDependencies:vitest",
+      "kind": "lock-resolution",
+      "name": "vitest",
+      "status": "measured",
+      "version": "4.1.10",
+      "source": "vendor/dependency-lock.json packages[\"node_modules/vitest\"]",
+      "integrity": "sha512-R9jUTe5S4Qb0HCd4TNqpC7oGcrMssMRGXLW80ubjWsW9VH5GF8y1Y0SFLY9AbqSk6nt0PnOx4H4WNJYZ13GUPw=="
+    },
+    {
+      "id": "lockfile:package-lock.json",
+      "kind": "lockfile",
+      "name": "package-lock.json",
+      "status": "measured",
+      "version": "lockfileVersion 3",
+      "source": "package-lock.json",
+      "integrity": "sha512-YhMVtKBXiG3dN5j54CoPxif8VOZsKS9qB3xTRltD66lwuwIwUv3Zxp5rNkTRdk3vut+A595Wj7yWg9hozhBhaw==",
+      "matchesVendorLock": true
+    },
+    {
+      "id": "lockfile:vendor/dependency-lock.json",
+      "kind": "lockfile",
+      "name": "vendor/dependency-lock.json",
+      "status": "measured",
+      "version": "lockfileVersion 3",
+      "source": "vendor/dependency-lock.json",
+      "integrity": "sha512-YhMVtKBXiG3dN5j54CoPxif8VOZsKS9qB3xTRltD66lwuwIwUv3Zxp5rNkTRdk3vut+A595Wj7yWg9hozhBhaw=="
+    },
+    {
+      "id": "vendor:forge-sdk-0.1.0.tgz",
+      "kind": "vendor-tarball",
+      "name": "forge-sdk",
+      "status": "measured",
+      "version": "0.1.0",
+      "source": "vendor/forge-sdk-0.1.0.tgz",
+      "integrity": "sha512-uqUv0dDwUfg1fcSsPcZ5gZKGPFtCeAJtzavarx4AP9u3r/GDAHzK7hXDbLLa+uLJbpGUsnrwgWdXKysBOTc+uw==",
+      "lockIntegrity": "sha512-uqUv0dDwUfg1fcSsPcZ5gZKGPFtCeAJtzavarx4AP9u3r/GDAHzK7hXDbLLa+uLJbpGUsnrwgWdXKysBOTc+uw==",
+      "integrityMatchesLock": true
+    },
+    {
+      "id": "vendor:furnace-sdk-0.1.0.tgz",
+      "kind": "vendor-tarball",
+      "name": "furnace-sdk",
+      "status": "measured",
+      "version": "0.1.0",
+      "source": "vendor/furnace-sdk-0.1.0.tgz",
+      "integrity": "sha512-6lFWkwqpUYOtnrhSFSwVt7O/QrsjiPItMakXzSSkDxpRtDZtMCbuD18cMybmgY6MnyWMtv0RXmuYoDfHDxXYEA==",
+      "lockIntegrity": "sha512-6lFWkwqpUYOtnrhSFSwVt7O/QrsjiPItMakXzSSkDxpRtDZtMCbuD18cMybmgY6MnyWMtv0RXmuYoDfHDxXYEA==",
+      "integrityMatchesLock": true
+    },
+    {
+      "id": "vendor:hyperunix-sdk-0.1.0.tgz",
+      "kind": "vendor-tarball",
+      "name": "hyperunix-sdk",
+      "status": "measured",
+      "version": "0.1.0",
+      "source": "vendor/hyperunix-sdk-0.1.0.tgz",
+      "integrity": "sha512-hP4oOt5yVnrtj7FN1xVzNPe1aCMMAz/vBJtnL6pn5zNB3Ax3JTcomAQVtcdmd2bFMjZUPMwAPFLCIFwMFNJqSA==",
+      "lockIntegrity": "sha512-hP4oOt5yVnrtj7FN1xVzNPe1aCMMAz/vBJtnL6pn5zNB3Ax3JTcomAQVtcdmd2bFMjZUPMwAPFLCIFwMFNJqSA==",
+      "integrityMatchesLock": true
+    },
+    {
+      "id": "declared:node:floor",
+      "kind": "declared",
+      "name": "node",
+      "status": "measured",
+      "version": ">=24",
+      "checks": [
+        "equals engines:package.json:node",
+        "equals engines:package-lock.json:node",
+        "equals engines:vendor/dependency-lock.json:node",
+        "floor-of node:runtime"
+      ],
+      "source": "docs/workbench/17-packaging-and-operations.md table row \"Node.js runtime\""
+    },
+    {
+      "id": "declared:node:tested",
+      "kind": "declared",
+      "name": "node",
+      "status": "measured",
+      "version": "v24.20.0",
+      "checks": [],
+      "source": "docs/workbench/17-packaging-and-operations.md table row \"Node.js runtime\""
+    },
+    {
+      "id": "declared:typescript",
+      "kind": "declared",
+      "name": "typescript",
+      "status": "measured",
+      "version": "6.0.3",
+      "checks": [
+        "equals pin:dependencies:typescript",
+        "equals lock:dependencies:typescript"
+      ],
+      "source": "docs/workbench/17-packaging-and-operations.md table row \"TypeScript\""
+    },
+    {
+      "id": "declared:@anthropic-ai/claude-agent-sdk",
+      "kind": "declared",
+      "name": "@anthropic-ai/claude-agent-sdk",
+      "status": "measured",
+      "version": "0.3.300",
+      "checks": [
+        "equals pin:dependencies:@anthropic-ai/claude-agent-sdk",
+        "equals lock:dependencies:@anthropic-ai/claude-agent-sdk"
+      ],
+      "source": "docs/workbench/17-packaging-and-operations.md table row \"@anthropic-ai/claude-agent-sdk\""
+    },
+    {
+      "id": "declared:@forge/sdk",
+      "kind": "declared",
+      "name": "@forge/sdk",
+      "status": "measured",
+      "version": "0.1.0",
+      "checks": [
+        "equals lock:dependencies:@forge/sdk",
+        "equals vendor:forge-sdk-0.1.0.tgz"
+      ],
+      "source": "docs/workbench/17-packaging-and-operations.md table row \"@forge/sdk\""
+    },
+    {
+      "id": "declared:@forge/sdk:spec",
+      "kind": "declared",
+      "name": "@forge/sdk",
+      "status": "measured",
+      "version": "file:vendor/forge-sdk-0.1.0.tgz",
+      "checks": [
+        "equals pin:dependencies:@forge/sdk",
+        "integrity-matches-lock vendor:forge-sdk-0.1.0.tgz"
+      ],
+      "source": "docs/workbench/17-packaging-and-operations.md table row \"@forge/sdk\""
+    },
+    {
+      "id": "declared:@furnace/sdk",
+      "kind": "declared",
+      "name": "@furnace/sdk",
+      "status": "measured",
+      "version": "0.1.0",
+      "checks": [
+        "equals lock:dependencies:@furnace/sdk",
+        "equals vendor:furnace-sdk-0.1.0.tgz"
+      ],
+      "source": "docs/workbench/17-packaging-and-operations.md table row \"@furnace/sdk\""
+    },
+    {
+      "id": "declared:@furnace/sdk:spec",
+      "kind": "declared",
+      "name": "@furnace/sdk",
+      "status": "measured",
+      "version": "file:vendor/furnace-sdk-0.1.0.tgz",
+      "checks": [
+        "equals pin:dependencies:@furnace/sdk",
+        "integrity-matches-lock vendor:furnace-sdk-0.1.0.tgz"
+      ],
+      "source": "docs/workbench/17-packaging-and-operations.md table row \"@furnace/sdk\""
+    },
+    {
+      "id": "declared:@hyperunix/sdk",
+      "kind": "declared",
+      "name": "@hyperunix/sdk",
+      "status": "measured",
+      "version": "0.1.0",
+      "checks": [
+        "equals lock:dependencies:@hyperunix/sdk",
+        "equals vendor:hyperunix-sdk-0.1.0.tgz"
+      ],
+      "source": "docs/workbench/17-packaging-and-operations.md table row \"@hyperunix/sdk\""
+    },
+    {
+      "id": "declared:@hyperunix/sdk:spec",
+      "kind": "declared",
+      "name": "@hyperunix/sdk",
+      "status": "measured",
+      "version": "file:vendor/hyperunix-sdk-0.1.0.tgz",
+      "checks": [
+        "equals pin:dependencies:@hyperunix/sdk",
+        "integrity-matches-lock vendor:hyperunix-sdk-0.1.0.tgz"
+      ],
+      "source": "docs/workbench/17-packaging-and-operations.md table row \"@hyperunix/sdk\""
+    },
+    {
+      "id": "declared:peer:@earendil-works/pi-ai",
+      "kind": "declared",
+      "name": "@earendil-works/pi-ai",
+      "status": "measured",
+      "version": ">=1.1.0",
+      "checks": [
+        "equals pin:peerDependencies:@earendil-works/pi-ai"
+      ],
+      "source": "docs/workbench/17-packaging-and-operations.md table row \"Pi host packages (peer)\""
+    },
+    {
+      "id": "declared:peer:@earendil-works/pi-ai:tested",
+      "kind": "declared",
+      "name": "@earendil-works/pi-ai",
+      "status": "measured",
+      "version": "1.1.0",
+      "checks": [
+        "equals lock:devDependencies:@earendil-works/pi-ai"
+      ],
+      "source": "docs/workbench/17-packaging-and-operations.md table row \"Pi host packages (peer)\""
+    },
+    {
+      "id": "declared:peer:@earendil-works/pi-coding-agent",
+      "kind": "declared",
+      "name": "@earendil-works/pi-coding-agent",
+      "status": "measured",
+      "version": ">=1.1.0",
+      "checks": [
+        "equals pin:peerDependencies:@earendil-works/pi-coding-agent"
+      ],
+      "source": "docs/workbench/17-packaging-and-operations.md table row \"Pi host packages (peer)\""
+    },
+    {
+      "id": "declared:peer:@earendil-works/pi-coding-agent:tested",
+      "kind": "declared",
+      "name": "@earendil-works/pi-coding-agent",
+      "status": "measured",
+      "version": "1.1.0",
+      "checks": [
+        "equals lock:devDependencies:@earendil-works/pi-coding-agent"
+      ],
+      "source": "docs/workbench/17-packaging-and-operations.md table row \"Pi host packages (peer)\""
+    },
+    {
+      "id": "declared:peer:@earendil-works/pi-tui",
+      "kind": "declared",
+      "name": "@earendil-works/pi-tui",
+      "status": "measured",
+      "version": ">=1.1.0",
+      "checks": [
+        "equals pin:peerDependencies:@earendil-works/pi-tui"
+      ],
+      "source": "docs/workbench/17-packaging-and-operations.md table row \"Pi host packages (peer)\""
+    },
+    {
+      "id": "declared:peer:@earendil-works/pi-tui:tested",
+      "kind": "declared",
+      "name": "@earendil-works/pi-tui",
+      "status": "measured",
+      "version": "1.1.0",
+      "checks": [
+        "equals lock:devDependencies:@earendil-works/pi-tui"
+      ],
+      "source": "docs/workbench/17-packaging-and-operations.md table row \"Pi host packages (peer)\""
+    },
+    {
+      "id": "declared:dev:vitest",
+      "kind": "declared",
+      "name": "vitest",
+      "status": "measured",
+      "version": "4.1.10",
+      "checks": [
+        "equals lock:devDependencies:vitest"
+      ],
+      "source": "docs/workbench/17-packaging-and-operations.md table row \"Test and lint toolchain (dev)\""
+    },
+    {
+      "id": "declared:dev:@biomejs/biome",
+      "kind": "declared",
+      "name": "@biomejs/biome",
+      "status": "measured",
+      "version": "2.4.15",
+      "checks": [
+        "equals lock:devDependencies:@biomejs/biome"
+      ],
+      "source": "docs/workbench/17-packaging-and-operations.md table row \"Test and lint toolchain (dev)\""
+    }
+  ]
+}

@@ -797,7 +797,7 @@ describe("W21 honest exit semantics (C4)", () => {
     const text = readRepo("qa/workbench/inspector-grouped-bench.mjs");
     const specifiers = [...text.matchAll(/^import\s[^'"]*['"]([^'"]+)['"]/gm)].map(match => match[1]).sort();
     expect(specifiers).toEqual(
-      ["../../dist/ui/workflow-inspector.js", "../../dist/workbench/observation.js", "./grouped-fixture.mjs", "node:fs", "node:os"].sort(),
+      ["../../dist/ui/workflow-inspector.js", "../../dist/workbench/observation.js", "./bench-revision.mjs", "./grouped-fixture.mjs", "node:fs", "node:os"].sort(),
     );
     expect(text).not.toMatch(/\bimport\s*\(|\brequire\s*\(/);
     expect(text).not.toMatch(/maxNodes|maxEdges|new ObservationProjection/);

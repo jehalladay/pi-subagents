@@ -5,6 +5,8 @@ import { Furnace } from "@furnace/sdk";
 import { CapabilityError, type CapabilityRegistry, type JsonValue } from "../capability-registry.js";
 import { redactWorkbenchText } from "../redaction.js";
 
+export const FURNACE_RUN_INSPECT_CONTRACT = "furnace.run.inspect/v1";
+
 export interface FurnaceReadClient {
   runs:{get(id:string):{inspect():Promise<{kind:string;data:unknown;requestId?:string;exit?:unknown}>}};
 }
@@ -29,7 +31,7 @@ export function registerFurnaceRunInspect(registry:CapabilityRegistry,client:Fur
       const response=await client.runs.get(runId).inspect();
       if(context.signal.aborted) throw new CapabilityError("transport","Furnace inspect cancelled.");
       assertRunRecordScope(response,runId,workspaceRoot);
-      return JSON.parse(JSON.stringify({contract:"furnace.run.inspect/v1",workspaceRoot,source:response})) as JsonValue;
+      return JSON.parse(JSON.stringify({contract:FURNACE_RUN_INSPECT_CONTRACT,workspaceRoot,source:response})) as JsonValue;
     }});
 }
 
@@ -43,7 +45,7 @@ export async function nativeFurnaceRunInspect(workspaceRoot:string,runId:string,
     const response=await client.runs.get(runId).inspect();
     if(signal?.aborted) throw new CapabilityError("transport","Furnace inspect cancelled.");
     assertRunRecordScope(response,runId,workspaceRoot);
-    return JSON.parse(JSON.stringify({contract:"furnace.run.inspect/v1",workspaceRoot,version:version.data,source:{kind:response.kind,data:response.data,requestId:response.requestId,exit:response.exit}})) as JsonValue;
+    return JSON.parse(JSON.stringify({contract:FURNACE_RUN_INSPECT_CONTRACT,workspaceRoot,version:version.data,source:{kind:response.kind,data:response.data,requestId:response.requestId,exit:response.exit}})) as JsonValue;
   }catch(error){
     if(error instanceof CapabilityError) throw error;
     if(signal?.aborted) throw new CapabilityError("transport","Furnace inspect cancelled.");
