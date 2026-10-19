@@ -19,6 +19,7 @@ import type { CapabilityRegistry } from "./capability-registry.js";
 import type { createClaudeWorkflowHost } from "./claude-host.js";
 import type { createClaudeObserver, readClaudeTranscript } from "./claude-transcript.js";
 import type { connectDetachedWorkflow, launchDetachedWorkflow } from "./hosts/local-detached.js";
+import type { openForgeOperationConnection } from "./providers/forge.js";
 
 export interface WorkbenchNativeModules {
   readonly Furnace: typeof Furnace;
@@ -27,6 +28,8 @@ export interface WorkbenchNativeModules {
   readonly readClaudeTranscript: typeof readClaudeTranscript;
   readonly connectDetachedWorkflow: typeof connectDetachedWorkflow;
   readonly launchDetachedWorkflow: typeof launchDetachedWorkflow;
+  /** One pinned, owned Forge app-server connection for an operation this host starts and observes (wb-a3s). */
+  readonly openForgeOperationConnection: typeof openForgeOperationConnection;
   /**
    * Registers the four native read capabilities on one registry for one
    * authorized workspace root, in the order the identity capture has always
@@ -76,6 +79,9 @@ async function importAll(): Promise<WorkbenchNativeModules> {
     },
     get launchDetachedWorkflow() {
       return detached.launchDetachedWorkflow;
+    },
+    get openForgeOperationConnection() {
+      return forge.openForgeOperationConnection;
     },
     registerNativeProviders(registry: CapabilityRegistry, workspaceRoot: string): void {
       forge.registerNativeForgeGateStatus(registry, workspaceRoot);
