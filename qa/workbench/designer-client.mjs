@@ -1,11 +1,12 @@
 // L1/L2: external client imports the built public service; no Pi host or script execution.
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, rmSync } from 'node:fs';
-import { tmpdir } from 'node:os';
+import { mkdirSync, writeFileSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { catalogWorkflows, inspectWorkflowSource, validateWorkflowSource, compareWorkflowRuns } from '../../dist/workbench/designer.js';
-const root = mkdtempSync(join(tmpdir(), 'designer-client-'));
+import { installScratchLeakGuard, makeScratch, removeScratch } from './scratch.mjs';
+installScratchLeakGuard();
+const root = makeScratch('designer-client-');
 try {
   const dir = join(root, '.pi/workflows'); mkdirSync(dir, { recursive: true });
   const script = 'export const meta = { name: "inspect", description: "never execute" };\nthrow new Error("must not run");\nawait node("forge.gate.status", { root: "." });\nif (args.flag) await agent("review");\nreturn 1;';
@@ -22,4 +23,4 @@ try {
   assert.equal(readFileSync(join(dir, 'inspect.js'), 'utf8'), script);
   assert.equal(compareWorkflowRuns([], []).status, 'unknown');
   console.log('designer external client: source digest, AST projection, no execution/edit, empty-cohort refusal PASS');
-} finally { rmSync(root, { recursive: true, force: true }); }
+} finally { removeScratch(root); }

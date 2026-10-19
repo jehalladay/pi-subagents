@@ -8,9 +8,12 @@
 // not run). No recovery-latency threshold is specified, so latency is reported and never judged.
 // The compiled module is a static top-level import: without a build the module fails to load before any
 // receipt exists, which is a missing precondition, never a measurement.
+// The revision is git rev-parse HEAD of this checkout plus a dirty flag, stamped by qa/workbench/bench-revision.mjs
+// (wb-oq3); $W21_REVISION only overrides the revision and the receipt names the source.
 import {writeFileSync} from 'node:fs';
 import {cpus} from 'node:os';
 import {ObservationProjection} from '../../dist/workbench/observation.js';
+import {benchRevision, withBenchRevision} from './bench-revision.mjs';
 import {buildFixture, buildReceipt, exitCodeFor, measureRecovery} from './observation-recovery-receipt.mjs';
 
 const PROVIDERS = Object.freeze(['forge', 'furnace', 'claude-agent-sdk']);
@@ -51,9 +54,10 @@ function runPass(ProjectionClass, pass) {
 const passes = [DEFAULT_PASS, BENCH_ONLY_PASS].map(pass => runPass(ObservationProjection, pass));
 
 const machine = cpus();
-const receipt = buildReceipt({
+const stamp = benchRevision();
+const receipt = withBenchRevision(buildReceipt({
   utc: new Date().toISOString(),
-  revision: process.env.W21_REVISION ?? 'working-tree',
+  revision: stamp.revision,
   command: COMMAND,
   node: process.version,
   arch: process.arch,
@@ -61,7 +65,7 @@ const receipt = buildReceipt({
   cpus: machine.length,
   cpuModel: machine[0]?.model ?? 'unknown',
   passes,
-});
+}), stamp);
 
 const line = JSON.stringify(receipt);
 console.log(line);

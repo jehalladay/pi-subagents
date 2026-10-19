@@ -87,7 +87,7 @@ export function validateWorkflowSource(source: WorkflowSource, options: { regist
   function error(code: string, message: string): void { diagnostics.push({code,message:sanitizeWorkbenchText(message),severity:"error"}); }
   if (source.definition.artifactDigest !== digest(source.source)) error("SOURCE_DIGEST_MISMATCH", "Source bytes do not match their pinned definition.");
   if (source.source.length > MAX_SCRIPT_LENGTH) error("SOURCE_TOO_LARGE", "Source exceeds runtime limit.");
-  if (/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/.test(source.source)) error("SOURCE_CONTROL_CHARACTERS", "Source contains unsupported control characters.");
+  if (/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f-\u009f]/.test(source.source)) error("SOURCE_CONTROL_CHARACTERS", "Source contains unsupported control characters.");
   if (diagnostics.length > 0) return {status:"invalid",syntax:"invalid",definition:source.definition,diagnostics,projection,executed:false};
   const ast = ts.createSourceFile(source.sourceRef, source.source, ts.ScriptTarget.ESNext, true, ts.ScriptKind.JS);
   const metaDeclarations = ast.statements.filter(ts.isVariableStatement).flatMap(statement => statement.modifiers?.some(mod => mod.kind === ts.SyntaxKind.ExportKeyword) ? statement.declarationList.declarations.filter(decl => ts.isIdentifier(decl.name) && decl.name.text === "meta").map(decl => ({statement,decl})) : []);

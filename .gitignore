@@ -47,3 +47,6 @@ CLAUDE.md
 *.db
 .beads-credential-key
 .beads/proxieddb/
+
+# Forge state and the default-gate test report (wb-nl8: .forge/vitest-report.json)
+.forge/
