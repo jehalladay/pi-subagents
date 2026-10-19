@@ -355,7 +355,7 @@ describe("W21-K attention receipt: production caps unchanged and the CLI stays t
   it("loads only dist for the product code, writes and prints the receipt before setting the exit code", () => {
     const text = readRepo("qa/workbench/attention-grouped-bench.mjs");
     const staticSpecifiers = [...text.matchAll(/^import[\s\S]*?from\s*['"]([^'"]+)['"]/gm)].map(match => match[1]).sort();
-    expect(staticSpecifiers).toEqual(["./grouped-fixture.mjs", "node:fs", "node:os", "node:url"].sort());
+    expect(staticSpecifiers).toEqual(["./bench-revision.mjs", "./grouped-fixture.mjs", "node:fs", "node:os", "node:url"].sort());
     const dynamic = [...text.matchAll(/await import\('([^']+)'\)/g)].map(match => match[1]).sort();
     expect(dynamic).toEqual(["../../dist/workbench/attention.js", "../../dist/workbench/observation.js"]);
     expect(text).not.toMatch(/\.\.\/\.\.\/src|new ObservationProjection|maxNodes: \d|maxEdges: \d/);
