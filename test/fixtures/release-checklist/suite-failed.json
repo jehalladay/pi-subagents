@@ -1,0 +1,30 @@
+{
+  "numTotalTests": 2,
+  "success": false,
+  "testResults": [
+    {
+      "name": "/repo/test/fake-a.test.ts",
+      "status": "failed",
+      "assertionResults": [
+        {
+          "ancestorTitles": [
+            "fake"
+          ],
+          "fullName": "fake denies the forged grant",
+          "status": "passed",
+          "title": "denies the forged grant"
+        },
+        {
+          "ancestorTitles": [
+            "fake"
+          ],
+          "fullName": "fake plain case",
+          "status": "passed",
+          "title": "plain case"
+        }
+      ],
+      "message": "afterAll hook failed: boom"
+    }
+  ],
+  "numFailedTestSuites": 1
+}

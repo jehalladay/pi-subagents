@@ -15,6 +15,7 @@
  */
 
 import { randomUUID } from "node:crypto";
+import type { NativeControlReceipt } from "../workbench/control.js";
 import type { InvocationSnapshot } from "../workbench/identity.js";
 import { sanitizeWorkbenchText } from "../workbench/redaction.js";
 import { escapeXml } from "../xml.js";
@@ -75,6 +76,11 @@ export interface WorkflowTask {
   reconciledNodeCount: number;
   /** Session-held reconcile evidence receipts for this task (max 16, FIFO), written by workflow_reconcile. */
   reconcile?: { receipts: EvidenceReceipt[] };
+  /**
+   * Session-held control audit for this task (max 64 receipts, FIFO), written by workflow_control: every receipt phase the
+   * decision core minted or a producer adapter settled (requested, acknowledged, result), never one the tool composed.
+   */
+  controlAudit?: { receipts: NativeControlReceipt[] };
 
   /** The append-only event log, in emission order. */
   workflowProgress: WorkflowEntry[];
@@ -248,7 +254,9 @@ export function failWorkflowTask(task: WorkflowTask, error: string): void {
  */
 export function describeResumeJournal(from: string, entries: readonly WorkflowJournalEntry[]): string {
   const agents = entries.filter(entry => entry.kind === undefined).length;
-  const nodes = entries.filter(entry => entry.kind === "node");
+  // One row per node position, the last, as runtime.ts consults them: a
+  // non-read call is journaled at dispatch and again once settled (wb-5x0.1).
+  const nodes = [...new Map(entries.filter(entry => entry.kind === "node").map(entry => [entry.index, entry])).values()];
   const reads = nodes.filter(entry => entry.effectClass === "read" && entry.ok && entry.text !== undefined).length;
   const effects = nodes.filter(entry => entry.effectClass !== undefined && entry.effectClass !== "read");
   const untyped = nodes.filter(entry => entry.effectClass === undefined).length;
