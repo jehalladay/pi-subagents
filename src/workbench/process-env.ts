@@ -9,9 +9,11 @@
  * known-bad names from `process.env` cannot deliver that — a credential the
  * list did not anticipate passes — so the two seams that launch an
  * interpreter (the embedded worker in src/workflow/runtime.ts and the detached
- * host in src/workbench/hosts/local-detached.ts) take only what is named here.
- * The wb-ksz.3 census pins both seams from the outside; this module is the
- * one place the names live.
+ * host in src/workbench/hosts/local-detached.ts) take only what is named here,
+ * and so does the rf CLI child (src/workbench/providers/reactivefiber.ts),
+ * under its own narrower list, RF_CHILD_ENV_ALLOWLIST below (wb-2j3.11).
+ * The wb-ksz.3 census pins all three seams from the outside; this module is
+ * the one place the names live.
  *
  * Every name is operational and none is credential-shaped: paths and locale
  * for a Node process, the runtime directory the detached socket base reads,
@@ -62,6 +64,40 @@ export const DETACHED_HOST_ENV_ALLOWLIST: readonly string[] = Object.freeze([
   "CLAUDE_CONFIG_DIR",
   "RF_WORKSPACE",
   "SWARM_RF_WORKSPACE",
+]);
+
+/**
+ * The environment handed to the rf CLI child: the single `spawn("rf", ...)` in
+ * src/workbench/providers/reactivefiber.ts (wb-2j3.11, program
+ * rfcli-performance-mathematical-optimization R12). It is narrower than the
+ * detached host's list and a subset of it: the rf child is no Node or SDK
+ * host, needs no proxy, CA or Claude-config name for a noncommitted preview,
+ * and its workspace travels in argv (`--workspace`), never in the environment.
+ *
+ * rf's RF_PERF_BASELINE seat (RFCLI PMO-12-F) selects a baseline perf seam for
+ * the whole rf process and is "never persisted, never in currentness or any
+ * cache key", so a preview envelope cannot say which seam produced it. The
+ * launcher is the one place the default seam can be made certain, and it is
+ * made certain here, by naming no RF_* variable at all; the same holds for the
+ * sibling selectors RF_PERF_OPTIMIZED and RF_ADAPTIVE and for every other rf
+ * switch.
+ *
+ * Every name is operational and none is credential-shaped: PATH resolves rf
+ * and the engine rf's TSX worker looks up by name; HOME and the three
+ * temporary-directory names are read by the rf process (Python's tempfile
+ * reads TMPDIR, TEMP and TMP); LANG, LC_ALL, LC_CTYPE and TZ are the ambient
+ * variables rf's TSX worker forwards to its engine child.
+ */
+export const RF_CHILD_ENV_ALLOWLIST: readonly string[] = Object.freeze([
+  "PATH",
+  "HOME",
+  "TMPDIR",
+  "TMP",
+  "TEMP",
+  "LANG",
+  "LC_ALL",
+  "LC_CTYPE",
+  "TZ",
 ]);
 
 /** Proxy variables: allowlisted by name, but a URL carrying userinfo is a credential by content. */
