@@ -544,10 +544,10 @@ const identityOf = (row: Row): string[] => [
 const named = (lines: readonly string[]): string[] => lines.filter(line => line.startsWith("row ")).map(line => line.slice(0, line.indexOf(":")));
 
 describe("wb-6hb.11 docs/workbench/07 provider-rules census (report mode)", () => {
-  it("AC1: the table holds the twenty-one frozen rows in order, deeply frozen, each quote verbatim in its section's source", () => {
+  it("AC1: the table holds the twenty-two frozen rows in order, deeply frozen, each quote verbatim in its section's source", () => {
     expect(isDeepFrozen(TABLE)).toBe(true);
     expect(TABLE.map(row => row.row)).toEqual(ROW_IDS);
-    expect(TABLE).toHaveLength(21);
+    expect(TABLE).toHaveLength(22);
     expect(JUDGED.map(({ row, half }) => `${row.row}/${half.id}:${half.pins.length}`)).toEqual(FROZEN_JUDGED_SHAPE);
     expect(docsFailures(readRepo(DOCS_FILE))).toEqual([]);
   });

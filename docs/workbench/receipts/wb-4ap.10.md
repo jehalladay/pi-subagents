@@ -40,3 +40,28 @@
   - CT3, swap the F10 pin for an unrelated passing case: 1 failed | 59.
   - Controls, which show what kills each mutant: without the F4 identity test, CT3 survives 59 of 59 and CT2 dies only by K4. Without both the F4 identity test and K4, CT2 survives 58 of 58.
   - Acceptance falsifiers, with the report regenerated for each: renaming F10 or F9 L3 reads absent, and `.skip` on F13, F12 or the F11 template reads skipped. Each fails exactly one F4 half (1 failed | 59) and names row F4 and that half.
+
+## 2026-10-20 respin: census row F4 rejoined with row R4 on trunk a7fcfce (sweep-171 re-cut)
+
+- Why: the queued cut f01e389 (base bc06f80) reads red on any trunk at or after 4939c97. Landing 171 (wb-693.9, merge 78a6500) added the ReactiveFiberCLI "SDK package + revision" sentence to docs/07 and census row R4, while f01e389's census still froze the older ReactiveFiberCLI paragraph. The re-cut was routed by the bead note of 2026-10-20T10:06:55Z (sweep-171 flag; knownRedAtLanding on the queue entry).
+- Merge: trunk a7fcfce was merged into machine/flywheel/wb-4ap.10 (merge, never rebase). `docs/workbench/07-native-integrations.md` merged clean, so § Forge provider carries the basis sentence and § ReactiveFiberCLI provider carries the wb-693.9 sentence. The census conflicted in two hunks, the header row list and ROW_IDS. Both were resolved as the union: rows F1-F4 and R1-R4, 22 rows in all.
+- Count: both cuts had moved AC1 from twenty to twenty-one with identical text, so that line merged silently while the union held 22 rows. AC1 now reads "twenty-two" and asserts `toHaveLength(22)`.
+- Frozen shapes (standing rule 16), kept from both cuts: FROZEN_F4 (row F4's sentence and its eleven pins); FROZEN_IDENTITY_QUOTE and FROZEN_IDENTITY_BINDING (row R4, wb-693.9); and FROZEN_JUDGED_SHAPE, which holds the seven F4 halves and the two R4 halves.
+- wb-4ap.1 landed at landing 169 (merge e5c480e). Trunk's `test/workbench-forge-observer.test.ts` is blob 7123156, so F4/derived-basis-echoed reads ok on trunk itself, with no probe. The first entry's "lands after wb-4ap.1" is now met.
+- Every count below is judged over a partial default-tier report of the 13 census-pinned files, which passed 790 of 790 on the merged tree.
+  - Base control: trunk a7fcfce's census over trunk's docs/07 passes 55 of 55.
+  - Red, the known-red reproduced (f01e389's census over the merged docs/07): 2 failed | 58 passed (60). AC1 table fails on "§ ReactiveFiberCLI provider is not exactly its frozen paragraph", and AC1 sections-render fails on the ReactiveFiberCLI provider.
+  - Red, the union with the stale count: 1 failed | 64 passed (65). AC1 table fails with "expected ... to have a length of 21 but got 22".
+  - Green: 65 of 65.
+- Mutants on the green census, each restored byte-identical and sha256-checked:
+  - CT1, delete a pin of a multi-pin half: row F4 3 failed | 62; row R4 3 failed | 62.
+  - CT1b, delete the U4 furnace-control pin: 1 failed | 64.
+  - CT1c, delete the second F4 malformed-no-basis pin: 3 failed | 62.
+  - CT2, shorten a row's quote to its leading clause: row F4 2 failed | 63; row R4 1 failed | 64.
+  - CT2b, shorten the F4 malformed-no-basis label: 2 failed | 63.
+  - CT3, swap a pin for an unrelated passing case of the same file: row F4 (F10 for F8) 1 failed | 64; row R4 (the round-trip pin for the producerRelease metadata case under the same describe) 1 failed | 64.
+  - Drop a union row whole: row F4 4 failed | 54 (58); row R4 4 failed | 59 (63).
+- Acceptance falsifiers, with the report regenerated for each:
+  - Renaming F10, F9 L3, F14 or the wb-4ap.4 never-case reads absent. `.skip` on F13, on F12 or on the F11 it.each template reads skipped.
+  - Each fails exactly one F4 half (1 failed | 64 passed) and names row F4 and that half, for example "row F4/freshness-quoted: absent: test/workbench-forge-observer.test.ts ...".
+- The wb-cax.1 validator `node qa/workbench/status-ledger.mjs` returns rc 0 on the merged tree (50 rows, integrity [], vocabulary []).
