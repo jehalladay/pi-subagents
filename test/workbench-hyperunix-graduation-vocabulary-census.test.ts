@@ -24,25 +24,47 @@
  * JUDGED SURFACES (SURFACES): S1 and S2 the "<id>: <description>" line of every hyperunix.* descriptor registered through the
  * native provider registration (native-modules.ts registerNativeProviders) and through the injected-reader registration
  * (registerHyperUnixFind); S3 every string leaf of the reader adapter's topology (title, status text, tone, coverage, evidence
- * references, diagnostics, the grouping edge) over READINGS, one row of which travels the registered provider end to end; S4
- * the reader adapter's refusal messages over REFUSALS (one case per refusal branch, the mutation branch under both licences);
- * S5 the provider refusals reachable without an hx binary (PROVIDER_REFUSALS); S6 every string leaf of the native-evidence
- * projection of each reading and of the native reference it yields: src/workflow/runtime.ts:1621 spreads that projection into
- * the workflow node and src/ui/workflow-card.ts:435 shows its domain status as the outcome; S7 every string and template literal of
- * src/workbench/providers/hyperunix.ts and src/workbench/hyperunix-observer.ts, the backstop for branches no table drives.
+ * references, diagnostics, the grouping edge) over READINGS, one row of which (R19) travels the registered provider end to
+ * end; S4 the reader adapter's refusal messages over REFUSALS (one case per refusal branch, the mutation branch under both
+ * licences: F15 unlicensed, F16 licensed); S5 the provider refusals reachable without an hx binary (PROVIDER_REFUSALS); S6 every
+ * string leaf of the native-evidence projection of each reading and of the native reference it yields: src/workflow/runtime.ts
+ * builds that projection at :1621 and spreads it into the workflow node at :1624, and src/ui/workflow-card.ts:435 shows its domain
+ * status as the outcome; S7 every string and template literal of src/workbench/providers/hyperunix.ts and
+ * src/workbench/hyperunix-observer.ts, the backstop for branches no table drives.
  * INPUTS carry no vocabulary term (asserted), so a hit in a surface is Pi's own wording, never an echo.
- * LIVENESS: every surface yields at least its floor and its anchor (S7 also holds every S1/S2 description, so it reads the real
- * module); S3 and S6 re-derive each reading's strings from the subject and S6 carries each reading's own kind as its domain
- * status, so a collapsed or swapped collector is refused; every table carries a length pin and an ordered roster pin, and
- * every loop counts the entries it ran against it. Measured at base aa34b71: S1 1, S2 1, S3 413, S4 19, S5 5, S6 46, S7 212
- * (45 + 167) strings, 626 input strings; the floors sit below these, so an emptied collector reds and an additive change does not.
- * FROZEN SHAPE (standing rule 16): one row pins VOCABULARY (ids, sources, terms), SURFACES (ids, floors, anchors), every table's
- * case names and the matcher controls; one row pins each reading's input selector; so deleting or shortening a term, or
- * dropping or swapping a reading, a refusal or a control, turns the census red.
+ * LIVENESS: every surface yields at least its floor and its anchor. S1 and S2 anchor on their own registration's descriptor
+ * ("hyperunix.find: Native ", "hyperunix.find: Read ") and share no line, and the registry S1 reads also registers the forge,
+ * furnace and reactivefiber native providers, so a swapped registration is refused. S7 holds every S1/S2 description and the
+ * observer's template head "HyperUnix topology refused: ", and its collector reads one literal of every node kind (string,
+ * no-substitution template, template head, middle and tail) from a control text and nothing from a comment. S3 and S6
+ * re-derive each reading's strings from the subject and S6 carries each reading's own kind as its domain status, so a collapsed
+ * or swapped collector is refused. Every table carries a length pin and an ordered roster pin, every loop counts the entries it
+ * ran against it, and the per-term matcher rows are counted in the collected suite. Measured on this branch merged with trunk
+ * c40afc6: S1 1, S2 1,
+ * S3 413, S4 19, S5 5, S6 46, S7 212 strings (providers/hyperunix.ts 45 string literals; hyperunix-observer.ts 131 string
+ * literals, 15 template heads, 6 middles, 15 tails), 626 input strings; the floors sit below these, so an emptied collector reds
+ * and an additive change does not.
+ * FROZEN SHAPE (standing rule 16), three rows. One pins VOCABULARY (ids, sources, terms), SURFACES (ids, labels, floors,
+ * anchors), MODULES, every table's case names and categories, the near misses and the matcher controls. One pins each reading's
+ * branch selector, read from its own input. One pins each judged case's payload identity: every reading's reader witness (the
+ * reader calls it was served: only R19 is served, find then runtime) and, for every built reading, its input digest (the first
+ * 12 hex of the sha256 of its JSON input and context; R19's value is the provider's own SDK-serialised output, so its reader
+ * witness and branch selector pin it), every refusal's typed kind, licence and rows and its input digest, and every provider refusal's
+ * reader witness (P1-P3 none, P4 find, P5 find then runtime), beside the S5 row's frozen outcome literal. So deleting or
+ * shortening a term; dropping, reordering or swapping a reading or a refusal (any change to a built reading's or a refusal's
+ * input, and R19 served other reader calls or a document with another branch selector); swapping a provider refusal's run for
+ * one that ends in another outcome or is served other reader calls; swapping a surface collector for another registration or
+ * subject, emptying or collapsing it, or dropping a literal kind from the S7 scan; and narrowing or reordering the per-term
+ * matcher rows turn the census red.
  * RESIDUALS (named, not closed): producer or host text echoed verbatim (a kind, an operation or a root the input carries) is
- * echo, not invention, and stays outside the judged set; inflections outside V3 (conditionally, recommendation) and homoglyph
- * or split spellings are not matched; docs/workbench prose and generic workflow-card wording beyond the native-evidence
- * projection are not judged here; nativeHyperUnixFind's after-launch cancellation literals are judged statically only (S7).
+ * echo, not invention, and stays outside the judged set; inflections outside V3 (conditionally, recommendation), joined
+ * spellings with no separator between a term's parts (localVerified, SOURCEIMPLEMENTED: the gate's G6 probe; the owner may
+ * widen the separator) and homoglyph or split spellings are not matched; docs/workbench prose and generic workflow-card
+ * wording beyond the native-evidence projection are not judged here; nativeHyperUnixFind's after-launch cancellation literals
+ * are judged statically only (S7); a provider refusal's run swapped within its own branch (the same outcome and the same reader
+ * calls, e.g. P1 on another relative path) is equivalent for this census and stays green; R19's served SDK document is pinned
+ * through its branch selector, its reader witness and the INPUTS row, not byte for byte; a collector narrowed only partly (above
+ * its floor and keeping every anchor, e.g. an S7 scan that skips some string literals) is caught only where it drops an anchor.
  *
  * Display paths added: none. Test-only: spawns nothing, writes nothing, reads the two module sources.
  */
@@ -275,9 +297,23 @@ function injectedReader(hooks: { find?: () => void; runtime?: () => void } = {})
     async close() {},
   };
 }
-function injectedProvider(reader: HyperUnixReader): CapabilityProvider {
+/** The reader, logging each find and runtime call it serves into `served`, in order: the R19 and P3-P5 branch witnesses. */
+function recording(reader: HyperUnixReader, served: string[]): HyperUnixReader {
+  return {
+    find(options) {
+      served.push("find");
+      return reader.find(options);
+    },
+    runtime() {
+      served.push("runtime");
+      return reader.runtime();
+    },
+    close: () => reader.close(),
+  };
+}
+function injectedProvider(reader: HyperUnixReader, served: string[] = []): CapabilityProvider {
   const registry = new RecordingRegistry();
-  registerHyperUnixFind(registry, reader, WS);
+  registerHyperUnixFind(registry, recording(reader, served), WS);
   const [provider] = registry.recorded;
   if (provider === undefined) throw new Error("registerHyperUnixFind registered no provider");
   return provider;
@@ -287,14 +323,14 @@ function abortedSignal(): AbortSignal {
   controller.abort();
   return controller.signal;
 }
-/** The registered provider's own output for the injected read, through CapabilityRegistry.invoke. */
-async function providerOutput(): Promise<JsonValue> {
+/** The registered provider's own output for the injected read, through CapabilityRegistry.invoke; its reader calls go to `served`. */
+async function providerOutput(served: string[] = []): Promise<JsonValue> {
   const registry = new CapabilityRegistry();
-  registerHyperUnixFind(registry, injectedReader(), WS);
+  registerHyperUnixFind(registry, recording(injectedReader(), served), WS);
   return registry.invoke("hyperunix.find", INPUT, { grants: GRANTS, signal: new AbortController().signal });
 }
 
-type ReadingCase = readonly [name: string, read: () => Promise<JsonValue>, context: HyperUnixTopologyContext];
+type ReadingCase = readonly [name: string, read: (served?: string[]) => Promise<JsonValue>, context: HyperUnixTopologyContext];
 const READINGS: readonly ReadingCase[] = [
   ["R01 the measured incomplete read, absence not licensed", async () => reading(), CONTEXT],
   ["R02 complete, absence not licensed", async () => ofKind("complete", false), CONTEXT],
@@ -334,6 +370,28 @@ function selectorOf(name: string, value: JsonValue, context: HyperUnixTopologyCo
   return `${name.slice(0, 3)}|${String(kind)}|${String(licensed)}|rows=${rows}|retained=${String(source.rows_retained)}|batches=${coverage}|${id}|${context.operationRef ? "op" : "no-op"}`;
 }
 
+/** The first 12 hex of the sha256 of a case's JSON input and context: any change to either reds the case's identity row. */
+const inputDigest = (value: unknown, context: unknown): string =>
+  createHash("sha256").update(JSON.stringify([value, context])).digest("hex").slice(0, 12);
+/** A field's value as JSON, or "absent". */
+const typed = (value: unknown): string => (value === undefined ? "absent" : JSON.stringify(value));
+/**
+ * Per reading, its payload identity: the reader calls it was served (a built reading is served none) and, for a built reading, the
+ * digest of its input and context. A served reading's value is the registered provider's own output, whose SDK serialisation
+ * (local and structural digests, rewritten diagnostics) belongs to the subject, so R19 is pinned by its reader witness and its
+ * branch selector instead of a digest that a re-vendored SDK would move.
+ */
+async function readingIdentities(): Promise<string[]> {
+  return Promise.all(
+    READINGS.map(async ([name, read, context]) => {
+      const served: string[] = [];
+      const value = await read(served);
+      const input = served.length > 0 ? "provider-output" : inputDigest(value, context);
+      return `${name.slice(0, 3)}|served=${served.join(",") || "none"}|input=${input}`;
+    }),
+  );
+}
+
 type RefusalCase = readonly [name: string, value: JsonValue, context: HyperUnixTopologyContext, category: "validation" | "authorization"];
 const omitSource = (key: string): Json => {
   const value = reading();
@@ -369,24 +427,40 @@ const REFUSALS: readonly RefusalCase[] = [
   ],
 ];
 
-type ProviderRefusal = readonly [name: string, run: () => Promise<unknown>, category: "validation" | "transport"];
+/** Per refusal case, its payload identity: the typed kind, licence and rows of its reading, and its input digest. */
+function refusalIdentities(): string[] {
+  return REFUSALS.map(([name, value, context]) => {
+    const source = asRecord(asRecord(value).source);
+    const rows = Array.isArray(source.rows) ? String(source.rows.length) : typeof source.rows;
+    const kind = typed(asRecord(source.execution_status).kind);
+    const licence = typed(asRecord(source.coverage_summary).licenses_absence);
+    return `${name.slice(0, 3)}|kind=${kind}|licence=${licence}|rows=${rows}|input=${inputDigest(value, context)}`;
+  });
+}
+
+/** A provider refusal: its run gets the list a recording reader logs its served calls into (the native runs serve none). */
+type ProviderRefusal = readonly [name: string, run: (served: string[]) => Promise<unknown>, category: "validation" | "transport"];
 const PROVIDER_REFUSALS: readonly ProviderRefusal[] = [
   ["P1 the native read of a relative workspace", () => nativeHyperUnixFind("relative/workspace", "hx.fs/regular-file"), "validation"],
   ["P2 the native read cancelled before the SDK launches", () => nativeHyperUnixFind(WS, "hx.fs/regular-file", "src", abortedSignal()), "transport"],
-  ["P3 the injected read cancelled before invocation", () => injectedProvider(injectedReader()).invoke(INPUT, { grants: GRANTS, signal: abortedSignal() }), "transport"],
+  [
+    "P3 the injected read cancelled before invocation",
+    served => injectedProvider(injectedReader(), served).invoke(INPUT, { grants: GRANTS, signal: abortedSignal() }),
+    "transport",
+  ],
   [
     "P4 the injected read cancelled during find",
-    () => {
+    served => {
       const controller = new AbortController();
-      return injectedProvider(injectedReader({ find: () => controller.abort() })).invoke(INPUT, { grants: GRANTS, signal: controller.signal });
+      return injectedProvider(injectedReader({ find: () => controller.abort() }), served).invoke(INPUT, { grants: GRANTS, signal: controller.signal });
     },
     "transport",
   ],
   [
     "P5 the injected read cancelled during runtime",
-    () => {
+    served => {
       const controller = new AbortController();
-      return injectedProvider(injectedReader({ runtime: () => controller.abort() })).invoke(INPUT, { grants: GRANTS, signal: controller.signal });
+      return injectedProvider(injectedReader({ runtime: () => controller.abort() }), served).invoke(INPUT, { grants: GRANTS, signal: controller.signal });
     },
     "transport",
   ],
@@ -399,12 +473,18 @@ function descriptorLines(registry: CapabilityRegistry): string[] {
     .filter(descriptor => descriptor.id.startsWith(HYPERUNIX_PREFIX))
     .map(descriptor => `${descriptor.id}: ${descriptor.description}`);
 }
-async function nativeDescriptorLines(): Promise<string[]> {
+/** The registry the native provider registration fills (native-modules.ts registerNativeProviders); S1 judges its hyperunix lines. */
+async function nativeRegistry(): Promise<CapabilityRegistry> {
   const native = await loadWorkbenchNative();
   const registry = new CapabilityRegistry();
   native.registerNativeProviders(registry, process.cwd());
-  return descriptorLines(registry);
+  return registry;
 }
+async function nativeDescriptorLines(): Promise<string[]> {
+  return descriptorLines(await nativeRegistry());
+}
+/** The other native provider families the native registration registers beside hyperunix (S1's registry identity leg). */
+const NATIVE_FAMILIES = ["forge.", "furnace.", "reactivefiber."] as const;
 async function injectedDescriptorLines(): Promise<string[]> {
   const registry = new CapabilityRegistry();
   registerHyperUnixFind(registry, injectedReader(), WS);
@@ -426,18 +506,29 @@ function refusalOutcomes(): string[] {
     return `not-refused|${name}`;
   });
 }
-async function providerOutcomes(): Promise<string[]> {
+interface ProviderRun {
+  /** "<category>|<message>" of the CapabilityError the run raised. */
+  readonly outcome: string;
+  /** The reader calls the run was served before it ended, comma-joined, or "none". */
+  readonly served: string;
+}
+/** Per provider refusal, the CapabilityError it raised and the reader calls it was served first. */
+async function providerRuns(): Promise<ProviderRun[]> {
   return Promise.all(
     PROVIDER_REFUSALS.map(async ([name, run]) => {
+      const served: string[] = [];
+      let outcome = `not-refused|${name}`;
       try {
-        await run();
+        await run(served);
       } catch (error) {
-        if (error instanceof CapabilityError) return `${error.category}|${error.message}`;
-        return `not-a-capability-error|${name}`;
+        outcome = error instanceof CapabilityError ? `${error.category}|${error.message}` : `not-a-capability-error|${name}`;
       }
-      return `not-refused|${name}`;
+      return { outcome, served: served.join(",") || "none" };
     }),
   );
+}
+async function providerOutcomes(): Promise<string[]> {
+  return (await providerRuns()).map(run => run.outcome);
 }
 /** Per reading, every string leaf of the native-evidence projection and of the native reference it yields. */
 async function evidenceStrings(): Promise<string[][]> {
@@ -448,9 +539,9 @@ async function evidenceStrings(): Promise<string[][]> {
     }),
   );
 }
-/** Every string and template literal text of one module, parsed with the TypeScript compiler (comments are trivia). */
-function literalsOf(relative: string): string[] {
-  const file = ts.createSourceFile(relative, readFileSync(join(ROOT, relative), "utf8"), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+/** Every string and template literal text of a source text, parsed with the TypeScript compiler (comments are trivia). */
+function literalsIn(name: string, source: string): string[] {
+  const file = ts.createSourceFile(name, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
   const texts: string[] = [];
   const visit = (node: ts.Node): void => {
     if (
@@ -467,6 +558,12 @@ function literalsOf(relative: string): string[] {
   visit(file);
   return texts;
 }
+/** Every string and template literal text of one module. */
+function literalsOf(relative: string): string[] {
+  return literalsIn(relative, readFileSync(join(ROOT, relative), "utf8"));
+}
+/** One literal of every node kind S7 reads, in source order (string, no-substitution template, template head, middle, tail), and a comment. */
+const LITERAL_CONTROL = `const s = "s1"; const n = \`n1\`; const t = \`h1\${s}m1\${n}t1\`; // "c1" is a comment`;
 
 interface Surface {
   readonly id: string;
@@ -477,8 +574,8 @@ interface Surface {
   readonly anchor: string;
 }
 const SURFACES: readonly Surface[] = [
-  { id: "S1", label: "native registration descriptor lines", floor: 1, anchor: "hyperunix.find: " },
-  { id: "S2", label: "injected-reader registration descriptor lines", floor: 1, anchor: "hyperunix.find: " },
+  { id: "S1", label: "native registration descriptor lines", floor: 1, anchor: "hyperunix.find: Native " },
+  { id: "S2", label: "injected-reader registration descriptor lines", floor: 1, anchor: "hyperunix.find: Read " },
   { id: "S3", label: "reader adapter topology string leaves", floor: 160, anchor: "incomplete · rows 0 · absence not licensed" },
   { id: "S4", label: "reader adapter refusal messages", floor: 19, anchor: "validation|HyperUnix topology refused: " },
   { id: "S5", label: "provider refusals without an hx binary", floor: 5, anchor: "validation|HX workspace must be an absolute path." },
@@ -527,8 +624,8 @@ describe("HyperUnix graduation-vocabulary census (wb-tz2.10 R10, standing leg)",
     expect(new Set(TERMS.map(term => term.toLowerCase())).size).toBe(TERMS.length);
     expect(TERMS.filter(term => !TERM_SHAPE.test(term))).toEqual([]);
     expect(SURFACES.map(surface => `${surface.id}:${surface.label}:${surface.floor}:${surface.anchor}`)).toEqual([
-      "S1:native registration descriptor lines:1:hyperunix.find: ",
-      "S2:injected-reader registration descriptor lines:1:hyperunix.find: ",
+      "S1:native registration descriptor lines:1:hyperunix.find: Native ",
+      "S2:injected-reader registration descriptor lines:1:hyperunix.find: Read ",
       "S3:reader adapter topology string leaves:160:incomplete · rows 0 · absence not licensed",
       "S4:reader adapter refusal messages:19:validation|HyperUnix topology refused: ",
       "S5:provider refusals without an hx binary:5:validation|HX workspace must be an absolute path.",
@@ -536,6 +633,7 @@ describe("HyperUnix graduation-vocabulary census (wb-tz2.10 R10, standing leg)",
       "S7:HyperUnix module string and template literals:60:hyperunix.find/v1",
     ]);
     expect(MODULES).toEqual(["src/workbench/providers/hyperunix.ts", "src/workbench/hyperunix-observer.ts"]);
+    expect([...NATIVE_FAMILIES]).toEqual(["forge.", "furnace.", "reactivefiber."]);
     expect(READINGS.map(([name]) => name)).toEqual([
       "R01 the measured incomplete read, absence not licensed",
       "R02 complete, absence not licensed",
@@ -634,6 +732,61 @@ describe("HyperUnix graduation-vocabulary census (wb-tz2.10 R10, standing leg)",
     ]);
   });
 
+  it("FROZEN SHAPE (standing rule 16): each judged case's payload identity (reader witness, typed selector, input digest) is its frozen literal", async () => {
+    expect(await readingIdentities()).toEqual([
+      "R01|served=none|input=2546e87ec76a",
+      "R02|served=none|input=c180d648326e",
+      "R03|served=none|input=213ad8380c7f",
+      "R04|served=none|input=71742f6dc041",
+      "R05|served=none|input=da450ccff1e7",
+      "R06|served=none|input=54af9d35b390",
+      "R07|served=none|input=4da52da8f13a",
+      "R08|served=none|input=b9992d936991",
+      "R09|served=none|input=65b349506426",
+      "R10|served=none|input=3d7d5c56313c",
+      "R11|served=none|input=b72ac7be82f0",
+      "R12|served=none|input=e8098fb03ccc",
+      "R13|served=none|input=b49d28240b1d",
+      "R14|served=none|input=1f228271f8fe",
+      "R15|served=none|input=cdfad423eee8",
+      "R16|served=none|input=87f755f4e29c",
+      "R17|served=none|input=3a21bfd9905c",
+      "R18|served=none|input=a4aa404ae9b7",
+      "R19|served=find,runtime|input=provider-output",
+      "R20|served=none|input=905262b31b0a",
+    ]);
+    expect(refusalIdentities()).toEqual([
+      "F01|kind=\"incomplete\"|licence=false|rows=0|input=df3f49bcdf18",
+      "F02|kind=\"incomplete\"|licence=false|rows=0|input=dfc1858770da",
+      "F03|kind=\"incomplete\"|licence=false|rows=0|input=6b85cd8bd133",
+      "F04|kind=\"incomplete\"|licence=false|rows=0|input=94787d20049c",
+      "F05|kind=\"incomplete\"|licence=false|rows=0|input=7f6ce8a8fe84",
+      "F06|kind=\"incomplete\"|licence=false|rows=0|input=ca09c1f3e4eb",
+      "F07|kind=\"incomplete\"|licence=false|rows=0|input=f90797075063",
+      "F08|kind=\"incomplete\"|licence=false|rows=0|input=5d0ba8a5a634",
+      "F09|kind=\"done\"|licence=false|rows=0|input=14ced5c5b59b",
+      "F10|kind=\"incomplete\"|licence=\"false\"|rows=0|input=131dfa102871",
+      "F11|kind=\"incomplete\"|licence=false|rows=object|input=7c8bbe423446",
+      "F12|kind=\"incomplete\"|licence=false|rows=0|input=d81f7cef71d6",
+      "F13|kind=\"incomplete\"|licence=false|rows=0|input=95585320c6b1",
+      "F14|kind=\"incomplete\"|licence=false|rows=0|input=d90e64867a1e",
+      "F15|kind=\"mutation-rejected\"|licence=false|rows=0|input=bacf9ea09b31",
+      "F16|kind=\"mutation-partial\"|licence=true|rows=0|input=afa83e5c495e",
+      "F17|kind=\"complete-empty\"|licence=true|rows=1|input=572ab6858f4d",
+      "F18|kind=\"incomplete\"|licence=false|rows=0|input=a7d05d804501",
+      "F19|kind=\"incomplete\"|licence=false|rows=0|input=49ecbbc53613",
+    ]);
+    const runs = await providerRuns();
+    expect(runs).toHaveLength(5);
+    expect(PROVIDER_REFUSALS.map(([name], index) => `${name.slice(0, 2)}|served=${runs[index]?.served}`)).toEqual([
+      "P1|served=none",
+      "P2|served=none",
+      "P3|served=none",
+      "P4|served=find",
+      "P5|served=find,runtime",
+    ]);
+  });
+
   it.each(TERMS)("MATCHER: %s is found in every planted spelling", term => {
     const spellings = plantedSpellings(term);
     expect(spellings).toHaveLength(term.includes("-") || term.includes("_") ? 36 : 12);
@@ -643,6 +796,13 @@ describe("HyperUnix graduation-vocabulary census (wb-tz2.10 R10, standing leg)",
   it("MATCHER: the per-term rows run exactly the 22 terms in vocabulary order", () => {
     expect(PATTERNS.map(([term]) => term)).toEqual([...TERMS]);
     expect(PATTERNS).toHaveLength(22);
+  });
+
+  it("MATCHER: the suite collected exactly one per-term row per vocabulary term, in vocabulary order", ({ task }) => {
+    const collected = (task.suite?.tasks ?? []).map(sibling => sibling.name);
+    expect(collected).toContain(task.name);
+    const perTerm = collected.filter(name => name.startsWith("MATCHER: ") && name.endsWith(" is found in every planted spelling"));
+    expect(perTerm).toEqual(TERMS.map(term => `MATCHER: ${term} is found in every planted spelling`));
   });
 
   it("MATCHER: every near miss stays quiet, and a hit names its surface, its text and its terms", () => {
@@ -675,6 +835,11 @@ describe("HyperUnix graduation-vocabulary census (wb-tz2.10 R10, standing leg)",
     const lines = await surfaceTexts("S1");
     expect(lines.length).toBeGreaterThanOrEqual(1);
     expect(anchored(lines, "hyperunix.find: ")).toBe(true);
+    expect(anchored(lines, "hyperunix.find: Native ")).toBe(true);
+    const injected = await surfaceTexts("S2");
+    expect(lines.filter(line => injected.includes(line))).toEqual([]);
+    const ids = (await nativeRegistry()).catalogSnapshot().map(entry => entry.descriptor.id);
+    expect(NATIVE_FAMILIES.filter(family => !ids.some(id => id.startsWith(family)))).toEqual([]);
     expect(hitsIn("S1", lines)).toEqual([]);
   });
 
@@ -682,6 +847,7 @@ describe("HyperUnix graduation-vocabulary census (wb-tz2.10 R10, standing leg)",
     const lines = await surfaceTexts("S2");
     expect(lines.length).toBeGreaterThanOrEqual(1);
     expect(anchored(lines, "hyperunix.find: ")).toBe(true);
+    expect(anchored(lines, "hyperunix.find: Read ")).toBe(true);
     expect(hitsIn("S2", lines)).toEqual([]);
   });
 
@@ -716,6 +882,13 @@ describe("HyperUnix graduation-vocabulary census (wb-tz2.10 R10, standing leg)",
     expect(outcomes.map(outcome => outcome.split("|")[0])).toEqual(PROVIDER_REFUSALS.map(([, , category]) => category));
     expect(outcomes.filter(outcome => !outcome.split("|")[1]?.startsWith("HX "))).toEqual([]);
     expect(anchored(outcomes, "validation|HX workspace must be an absolute path.")).toBe(true);
+    expect(outcomes).toEqual([
+      "validation|HX workspace must be an absolute path.",
+      "transport|HX read cancelled before SDK launch.",
+      "transport|HX read cancelled before invocation.",
+      "transport|HX read cancelled.",
+      "transport|HX read cancelled.",
+    ]);
     expect(hitsIn("S5", outcomes)).toEqual([]);
   });
 
@@ -748,10 +921,15 @@ describe("HyperUnix graduation-vocabulary census (wb-tz2.10 R10, standing leg)",
     const literals = perModule.flat();
     expect(literals.length).toBeGreaterThanOrEqual(60);
     expect(literals).toContain("hyperunix.find/v1");
+    expect(literals).toContain("HyperUnix topology refused: ");
     const descriptions = [...(await surfaceTexts("S1")), ...(await surfaceTexts("S2"))].map(line => line.slice(line.indexOf(": ") + 2));
     expect(descriptions.length).toBeGreaterThanOrEqual(2);
     expect(descriptions.filter(description => !literals.includes(description))).toEqual([]);
     expect(hitsIn("S7", literals)).toEqual([]);
+  });
+
+  it("S7 COLLECTOR: the literal scan reads one literal of every node kind from a control text and nothing from its comment", () => {
+    expect(literalsIn("control.ts", LITERAL_CONTROL)).toEqual(["s1", "n1", "h1", "m1", "t1"]);
   });
 
   it("LIVENESS: every surface yields at least its floor and its anchor, counted against the seven surfaces", { timeout: 120_000 }, async () => {
