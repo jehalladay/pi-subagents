@@ -37,15 +37,17 @@ const MODES: readonly { mode: Mode; workbench?: { workflowAgentBackend: "pi" | "
  * Explicit per-row budgets for the layer-walk rows (wb-cvjm), file-local so no other suite's budget moves. A row that
  * boots the REAL extension and walks saved-workflow layers through SubagentWorkflow spawns real session/config work, so
  * its wall time is set by host contention rather than by precedence logic: under tenant load it exceeded vitest's default
- * 5000 ms budget and reddened the row as a lottery victim across landings 158-164 (the wb-22c gate note set measured the
- * scriptPath/inline row at 8832 ms and the re-walk row at 23949 ms serially at load1 ~353). Same cure shape as wb-gy0 and
+ * 5000 ms budget and reddened the row as a lottery victim across landings 158-164. The walls the budgets are sized against
+ * come from the wb-6hb.9 gate's run 1 (cmd_ba592c183b09, outbox row 567): a complete gate at vitest cap 8, load1 425.27 ->
+ * 383.74, in which both rows timed out against the 5000 ms default - the scriptPath/inline row (mode 'pi') at 8832 ms and
+ * the re-walk row (mode 'claude') at 23949 ms; that gate's serial leg passed the file. Same cure shape as wb-gy0 and
  * wb-hk9l: an explicit measured budget, assertions unchanged, never a retry. A row's synchronous work cannot be interrupted,
  * so a budget only decides when a finished row is failed.
  */
 const WALK_ROW_BUDGET_MS = 30_000;
 /** The re-walk row runs the whole chain twice around a second session_start (12 runs), so it carries the larger budget. */
 const REWALK_ROW_BUDGET_MS = 60_000;
-/** The worst measured serial walls (wb-22c gate note set, load1 ~353) the budgets are sized against. */
+/** The worst measured walls the budgets are sized against (wb-6hb.9 gate run 1, cmd_ba592c183b09: a complete gate at cap 8, load1 425.27 -> 383.74, both rows timed out). */
 const WORST_MEASURED_WALK_MS = 8_832;
 const WORST_MEASURED_REWALK_MS = 23_949;
 const WALK_ROW: { readonly timeout: number } = { timeout: WALK_ROW_BUDGET_MS };
@@ -239,14 +241,36 @@ describe("saved-workflow precedence — cross-mode parity", () => {
 });
 
 describe("saved-workflow precedence — wb-cvjm explicit row budgets", () => {
-  it("wb-cvjm: every layer-walk row runs under an explicit file-local budget, none rides the 5000 ms default", () => {
+  it("wb-cvjm: every layer-walk row runs under an explicit file-local budget, none rides the 5000 ms default", ({ task }) => {
+    // Runtime truth (the wb-gy0 leg): every case this file registers, with the timeout and retry the runner resolved for it.
+    const registered: { title: string; timeout: number; retry: unknown }[] = [];
+    const walk = (tasks: typeof task.file.tasks): void => {
+      for (const child of tasks) {
+        if (child.type === "test") registered.push({ title: child.name, timeout: child.timeout, retry: child.retry });
+        else if (child.type === "suite") walk(child.tasks);
+      }
+    };
+    walk(task.file.tasks);
     const rows = sourceRows();
+    const perMode = (titles: readonly string[]): string[] => MODES.flatMap(() => titles);
+    const walkRuns = registered.filter(entry => entry.timeout === WALK_ROW_BUDGET_MS).map(entry => entry.title);
+    const rewalkRuns = registered.filter(entry => entry.timeout === REWALK_ROW_BUDGET_MS).map(entry => entry.title);
+    expect([...new Set(registered.map(entry => entry.title))], "the source scan classifies every registered case").toEqual(
+      rows.map(row => row.title),
+    );
+    expect(walkRuns, "the registered cases that run under WALK_ROW_BUDGET_MS, once per mode").toEqual(perMode(WALK_ROWS));
+    expect(rewalkRuns, "the registered cases that run under REWALK_ROW_BUDGET_MS, once per mode").toEqual(perMode(REWALK_ROWS));
+    // FROZEN SHAPE (rule 16), as this cut registers them: 3 modes x 2 walk rows and 3 modes x 1 re-walk row carry a budget.
+    expect([walkRuns.length, rewalkRuns.length], "budgeted registrations [walk, re-walk]").toEqual([6, 3]);
+    expect(
+      registered.filter(entry => entry.retry !== undefined && entry.retry !== 0).map(entry => entry.title),
+      "the registered cases that carry a retry",
+    ).toEqual([]);
+    // The source scan: the budget identifier each it() row passes, and which row bodies walk layers.
     expect(rows.filter(row => row.budget === "WALK_ROW").map(row => row.title)).toEqual(WALK_ROWS);
     expect(rows.filter(row => row.budget === "REWALK_ROW").map(row => row.title)).toEqual(REWALK_ROWS);
     expect(rows.filter(row => row.walks).map(row => row.title)).toEqual([...WALK_ROWS, ...REWALK_ROWS]);
     expect(rows.filter(row => row.title === NON_LITERAL_TITLE)).toEqual([]);
-    expect(WALK_ROW).toEqual({ timeout: WALK_ROW_BUDGET_MS });
-    expect(REWALK_ROW).toEqual({ timeout: REWALK_ROW_BUDGET_MS });
     expect(WALK_ROW_BUDGET_MS).toBeGreaterThanOrEqual(20_000);
     expect(WALK_ROW_BUDGET_MS).toBeGreaterThan(2 * WORST_MEASURED_WALK_MS);
     expect(REWALK_ROW_BUDGET_MS).toBeGreaterThanOrEqual(48_000);
