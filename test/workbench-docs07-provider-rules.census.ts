@@ -4,7 +4,7 @@
  * sequenced census class (owner ruling on the held R1, 2026-10-18: adopt the gate default, the wb-cax.24 precedent).
  *
  * The Forge, Furnace, HyperUnix, ReactiveFiberCLI and Beads provider sections and "Shared integration requirements" state
- * adapter rules in single paragraphs. This leg binds each falsifiable sentence (rows F1-F3, U1-U6, H1-H2, R1-R3, B1-B2,
+ * adapter rules in single paragraphs. This leg binds each falsifiable sentence (rows F1-F4, U1-U6, H1-H2, R1-R3, B1-B2,
  * S1-S2, plus the DELTA-B-AMEND note rows U7 and U8) to existing cases by file, verbatim title and tier, or records it as
  * unpinned with a reason. It executes no pinned case and no test run: judge() from the shared helper
  * test/helpers/census.ts reads vitest's own JSON report of the default gate's test step (DEFAULT_TIER_REPORT, written by
@@ -14,6 +14,11 @@
  * therefore reads red, naming the row, the file, the title and the cause, as far as the helper's resolvable-construct
  * roster and its named residuals reach (test/helpers/census.ts, receipts/wb-u62.md). This leg scans no test source for
  * case calls itself: every title is located by the helper, from vitest's report, never from bare text.
+ *
+ * Row F4 (wb-4ap.10, COLLECTIVE-ADAPTATION-R10) is the Forge provider's gate.status basis sentence, bound clause by
+ * clause to the collective-adaptation cases F9-F14 of test/workbench-forge-observer.test.ts. Its F9 pins are wb-4ap.1's
+ * cases, so its derived-basis-echoed half reads red (absent) on every tree that does not carry them: the row lands after
+ * wb-4ap.1.
  *
  * The docs pin reads the RENDERED view through the helper's docsSection / sectionMatches: each of the six sections, under
  * its unique level-2 heading of the level-1 parent heading and bounded at the next level-1/2 heading or EOF, must render
@@ -44,6 +49,8 @@ interface Pin {
   readonly title: string;
   /** The exact enclosing describe path, outermost first, where the row binds a describe as well as its case. */
   readonly suite?: readonly string[];
+  /** An it.each template pin: the least number of table rows its call site must register (CasePin.each.minCases). */
+  readonly each?: number;
 }
 interface Half {
   /** The part of the row's sentence this half answers. */
@@ -72,14 +79,22 @@ const NATIVE_FILE = "test/workbench-native-rf-preview.test.ts";
 
 const T = (name: string): string => `test/workbench-${name}.test.ts`;
 const pin = (name: string, title: string, suite?: readonly string[]): Pin => (suite === undefined ? { file: T(name), title } : { file: T(name), title, suite });
+const eachPin = (name: string, title: string, minCases: number): Pin => ({ file: T(name), title, each: minCases });
 const gate = (id: string, pins: readonly Pin[]): Half => ({ id, tier: "default-gate", pins });
 const whole = (pins: readonly Pin[]): readonly Half[] => [gate("whole", pins)];
 const unpinned = (id: string, reason: string): Half => ({ id, tier: "default-gate", pins: [], reason });
 
+/**
+ * wb-4ap.10 (COLLECTIVE-ADAPTATION-R10): the one falsifiable sentence the Forge provider paragraph carries for the
+ * gate.status reader's per-package basis and freshness word. Row F4 quotes it whole; FROZEN_F4 repeats it as a literal.
+ */
+const BASIS_SENTENCE =
+  "The gate.status reader echoes the producer's per-package derived-verdict basis (last_result_state.invalidation_basis.derived_from) as the package snapshot basis, distinct from the workspace basis of WB-025 (02-atomic-requirements.md), and quotes the producer's freshness word verbatim; it never recomputes freshness, never fabricates a basis when the descriptor is absent or malformed, and freshness never confers current authority (authoritative_current alone does).";
+
 /** The six frozen docs/07 section paragraphs, as the markdown source says them. */
 const SECTION_MARKDOWN: Readonly<Record<string, string>> = {
   "Forge provider":
-    "Use public Forge TypeScript App Server/facade or other current SDK. Initial functions: build/verification, affected/incremental selection, inspect artifact and operation. Preserve actual source basis, full verdict axes, reason codes, reuse/cache evidence and partial/unknown states. A successful RPC or shell exit does **not** equal verified Forge PASS. Prefer Forge first for gates, test, build and packaging. Workspace Families and global cache designs must be probed for actual shipped availability before calling child creation or cache APIs.",
+    `Use public Forge TypeScript App Server/facade or other current SDK. Initial functions: build/verification, affected/incremental selection, inspect artifact and operation. Preserve actual source basis, full verdict axes, reason codes, reuse/cache evidence and partial/unknown states. ${BASIS_SENTENCE} A successful RPC or shell exit does **not** equal verified Forge PASS. Prefer Forge first for gates, test, build and packaging. Workspace Families and global cache designs must be probed for actual shipped availability before calling child creation or cache APIs.`,
   "Furnace provider":
     "Use public TypeScript client for runs.start/get/status/events/pause/stop as verified. Native Run/Work/Attempt and supervision semantics remain Furnace's. Future idempotent ensure/reconcile and convenience wait methods are upstream targets, not an assumed API. Ambiguous runs.start timeout -> uncertain/reconcile; do not issue second start blindly. A Furnace host may use ExecutorApp over the per-Attempt embedded bridge to call a MechanicalWorkflows function, with the application outcome mapped explicitly to the four-word Furnace execution result (only status is read; failure_class and data are not); failure and indeterminate park the Run rather than retrying, cancellation is a cooperative AbortSignal, and transport success is never domain verification.",
   "HyperUnix provider":
@@ -148,6 +163,38 @@ const TABLE: readonly Row[] = freezeDeep<readonly Row[]>([
         "whole",
         "no landed case probes Workspace Families or global cache availability: a grep of test/ and src/ for those terms at the cut base (trunk 757af07) found no case that asserts the probe, so the sentence has no falsifier today and is never reported as covered; a seat that lands such a case flips this half to a pin consciously (the pin-flip pattern of wb-6hb.4)",
       ),
+    ],
+  },
+  {
+    row: "F4",
+    section: "Forge provider",
+    source: "docs",
+    quote: BASIS_SENTENCE,
+    // One half per clause, in the sentence's order. The F9 pins are wb-4ap.1's cases (COLLECTIVE-ADAPTATION-R1, the reader
+    // adapter describe of the observer test); every other pin is landed. A renamed, deleted or skipped pin reads red,
+    // naming row F4 and its half.
+    halves: [
+      gate("derived-basis-echoed", [
+        pin("forge-observer", "F9 (wb-4ap.1): the measured STALE row carries its derived_from digest B as the package subjectBasis, never its source_digest A"),
+        pin("forge-observer", "F9 (wb-4ap.1): each digest shape native-evidence accepts - sha256-prefixed, bare 64-hex and dirty-tree/v1 - round-trips verbatim as subjectBasis"),
+        pin("forge-observer", "F9 (wb-4ap.1) L3: a projection refresh applies the basis-bearing package snapshot and a basis query on B returns that package node alone"),
+        pin("forge-observer", "F9 (wb-4ap.1) static pin: the forgeGateTopology doc comment states no interval or definitionDigest and that the published per-package basis is echoed, never that gate.status carries no basis"),
+      ]),
+      gate("workspace-basis-distinct", [
+        pin("forge-observer", "wb-4ap.4 never-case: mixed [HISTORICAL, stale] under a workspace source_snapshot_id/gated_tree - only the described row has a basis, B, and the workspace digest appears nowhere"),
+      ]),
+      gate("freshness-quoted", [
+        pin("forge-observer", "F10 (wb-4ap.2): the measured STALE row and a CURRENT row each quote their own word after the unchanged native text and authority label"),
+      ]),
+      gate("never-recomputed", [pin("forge-observer", "F14 (wb-4ap.6): basis(A, A) with STALE renders STALE and basis(A, B) with CURRENT renders CURRENT, the tone still unknown")]),
+      gate("absent-no-basis", [pin("forge-observer", "F12 (wb-4ap.4): reading(SOURCE) keeps the F8 node literal, no subjectBasis and the 9df9a03 diagnostics (none)")]),
+      gate("malformed-no-basis", [
+        eachPin("forge-observer", "F11 (wb-4ap.3): %s sets no subjectBasis, pushes exactly one withheld-basis diagnostic for the ref and renders basis UNKNOWN", 6),
+        pin("forge-observer", "F11 (wb-4ap.3): no malformed text reaches the result - neither the bad derived_from nor either digest of the withheld basis"),
+      ]),
+      gate("no-current-authority", [
+        pin("forge-observer", "F13 (wb-4ap.5): withPackages(current) keeps unknown tone, partial coverage, the historical label and the workspace literal"),
+      ]),
     ],
   },
   {
@@ -353,7 +400,7 @@ const TABLE: readonly Row[] = freezeDeep<readonly Row[]>([
   },
 ]);
 
-const ROW_IDS: readonly string[] = ["F1", "F2", "F3", "U1", "U2", "U3", "U4", "U5", "U6", "U7", "U8", "H1", "H2", "R1", "R2", "R3", "B1", "B2", "S1", "S2"];
+const ROW_IDS: readonly string[] = ["F1", "F2", "F3", "F4", "U1", "U2", "U3", "U4", "U5", "U6", "U7", "U8", "H1", "H2", "R1", "R2", "R3", "B1", "B2", "S1", "S2"];
 /** Every half that has no landed case, as "row/half"; a seat that lands a case flips the half consciously and edits this list. */
 const UNPINNED_HALVES: readonly string[] = ["F3/whole", "U7/events", "U8/negative-verbs", "R3/whole", "S1/owner-basis", "S1/observed-evidence", "S1/trace-correlation-recorded"];
 
@@ -361,7 +408,13 @@ const readRepo = (path: string): string => readFileSync(join(ROOT, path), "utf8"
 
 /** The forge.toml command whose own run must vouch for a half; a native-read label names no report this leg reads. */
 const tierCommand = (tier: Tier): string => (tier === "default-gate" ? DEFAULT_GATE_TIER : tier);
-const casePin = (half: Half, entry: Pin): CasePin => ({ file: entry.file, title: entry.title, tier: tierCommand(half.tier), ...(entry.suite === undefined ? {} : { suite: entry.suite }) });
+const casePin = (half: Half, entry: Pin): CasePin => ({
+  file: entry.file,
+  title: entry.title,
+  tier: tierCommand(half.tier),
+  ...(entry.suite === undefined ? {} : { suite: entry.suite }),
+  ...(entry.each === undefined ? {} : { each: { minCases: entry.each } }),
+});
 
 /** The default-gate halves that hold pins, in table order, for the row-level judging. */
 const JUDGED = TABLE.flatMap(row => row.halves.filter(half => half.tier === "default-gate" && half.pins.length > 0).map(half => ({ row, half })));
@@ -399,6 +452,13 @@ const synthetic = (edit: (heading: string, body: string) => string = (_heading, 
 const FROZEN_JUDGED_SHAPE: readonly string[] = [
   "F1/whole:3",
   "F2/whole:3",
+  "F4/derived-basis-echoed:4",
+  "F4/workspace-basis-distinct:1",
+  "F4/freshness-quoted:1",
+  "F4/never-recomputed:1",
+  "F4/absent-no-basis:1",
+  "F4/malformed-no-basis:2",
+  "F4/no-current-authority:1",
   "U1/whole:2",
   "U2/whole:2",
   "U3/whole:1",
@@ -424,13 +484,38 @@ const FROZEN_JUDGED_SHAPE: readonly string[] = [
   "S2/forge-capability:2",
 ];
 
+/**
+ * wb-4ap.10 (standing rule 16): row F4's identity frozen as a literal, never derived from TABLE - its sentence whole, then
+ * every pin as "half | file | title" (an it.each pin adds its table-row floor) - so a shortened sentence, a deleted pin or a
+ * pin swapped for an unrelated passing case cannot pass.
+ */
+const FROZEN_F4: readonly string[] = [
+  "quote | The gate.status reader echoes the producer's per-package derived-verdict basis (last_result_state.invalidation_basis.derived_from) as the package snapshot basis, distinct from the workspace basis of WB-025 (02-atomic-requirements.md), and quotes the producer's freshness word verbatim; it never recomputes freshness, never fabricates a basis when the descriptor is absent or malformed, and freshness never confers current authority (authoritative_current alone does).",
+  "derived-basis-echoed | test/workbench-forge-observer.test.ts | F9 (wb-4ap.1): the measured STALE row carries its derived_from digest B as the package subjectBasis, never its source_digest A",
+  "derived-basis-echoed | test/workbench-forge-observer.test.ts | F9 (wb-4ap.1): each digest shape native-evidence accepts - sha256-prefixed, bare 64-hex and dirty-tree/v1 - round-trips verbatim as subjectBasis",
+  "derived-basis-echoed | test/workbench-forge-observer.test.ts | F9 (wb-4ap.1) L3: a projection refresh applies the basis-bearing package snapshot and a basis query on B returns that package node alone",
+  "derived-basis-echoed | test/workbench-forge-observer.test.ts | F9 (wb-4ap.1) static pin: the forgeGateTopology doc comment states no interval or definitionDigest and that the published per-package basis is echoed, never that gate.status carries no basis",
+  "workspace-basis-distinct | test/workbench-forge-observer.test.ts | wb-4ap.4 never-case: mixed [HISTORICAL, stale] under a workspace source_snapshot_id/gated_tree - only the described row has a basis, B, and the workspace digest appears nowhere",
+  "freshness-quoted | test/workbench-forge-observer.test.ts | F10 (wb-4ap.2): the measured STALE row and a CURRENT row each quote their own word after the unchanged native text and authority label",
+  "never-recomputed | test/workbench-forge-observer.test.ts | F14 (wb-4ap.6): basis(A, A) with STALE renders STALE and basis(A, B) with CURRENT renders CURRENT, the tone still unknown",
+  "absent-no-basis | test/workbench-forge-observer.test.ts | F12 (wb-4ap.4): reading(SOURCE) keeps the F8 node literal, no subjectBasis and the 9df9a03 diagnostics (none)",
+  "malformed-no-basis | test/workbench-forge-observer.test.ts | F11 (wb-4ap.3): %s sets no subjectBasis, pushes exactly one withheld-basis diagnostic for the ref and renders basis UNKNOWN | each >= 6",
+  "malformed-no-basis | test/workbench-forge-observer.test.ts | F11 (wb-4ap.3): no malformed text reaches the result - neither the bad derived_from nor either digest of the withheld basis",
+  "no-current-authority | test/workbench-forge-observer.test.ts | F13 (wb-4ap.5): withPackages(current) keeps unknown tone, partial coverage, the historical label and the workspace literal",
+];
+/** A row's identity in FROZEN_F4's form: the sentence, then one line per pin. */
+const identityOf = (row: Row): string[] => [
+  `quote | ${row.quote}`,
+  ...row.halves.flatMap(half => half.pins.map(entry => `${half.id} | ${entry.file} | ${entry.title}${entry.each === undefined ? "" : ` | each >= ${entry.each}`}`)),
+];
+
 const named = (lines: readonly string[]): string[] => lines.filter(line => line.startsWith("row ")).map(line => line.slice(0, line.indexOf(":")));
 
 describe("wb-6hb.11 docs/workbench/07 provider-rules census (report mode)", () => {
-  it("AC1: the table holds the twenty frozen rows in order, deeply frozen, each quote verbatim in its section's source", () => {
+  it("AC1: the table holds the twenty-one frozen rows in order, deeply frozen, each quote verbatim in its section's source", () => {
     expect(isDeepFrozen(TABLE)).toBe(true);
     expect(TABLE.map(row => row.row)).toEqual(ROW_IDS);
-    expect(TABLE).toHaveLength(20);
+    expect(TABLE).toHaveLength(21);
     expect(JUDGED.map(({ row, half }) => `${row.row}/${half.id}:${half.pins.length}`)).toEqual(FROZEN_JUDGED_SHAPE);
     expect(docsFailures(readRepo(DOCS_FILE))).toEqual([]);
   });
@@ -456,6 +541,19 @@ describe("wb-6hb.11 docs/workbench/07 provider-rules census (report mode)", () =
         }
       }
     }
+  });
+
+  it("AC1 (wb-4ap.10): row F4 quotes the whole Forge basis sentence and binds every clause to F9-F14 by file and verbatim title, frozen as a literal", () => {
+    const row = TABLE.find(candidate => candidate.row === "F4");
+    expect(row).toBeDefined();
+    if (row === undefined) return;
+    expect(identityOf(row)).toEqual(FROZEN_F4);
+    expect(row.halves.every(half => half.tier === "default-gate" && half.reason === undefined)).toBe(true);
+    // The sentence is the paragraph's own: one whole sentence of the Forge provider source, between two others.
+    const markdown = SECTION_MARKDOWN["Forge provider"] ?? "";
+    expect(markdown.split(`partial/unknown states. ${row.quote} A successful RPC`)).toHaveLength(2);
+    const families = new Set(row.halves.flatMap(half => half.pins.map(entry => /^F\d+/.exec(entry.title)?.[0] ?? "")));
+    for (const family of ["F9", "F10", "F11", "F12", "F13", "F14"]) expect(families.has(family), family).toBe(true);
   });
 
   it("AC3: the unpinned halves are listed so none is ever counted as passed, each naming its reason", () => {
@@ -538,6 +636,22 @@ describe("wb-6hb.11 liveness: the adopted judge is not accept-all (the real repo
     expect(line).toContain(wrong.title);
   });
 
+  it("M4 (wb-4ap.10): every row-F4 pin renamed by one character is absent from the report and red, naming row F4, its half, the file and the title", () => {
+    const row = TABLE.find(candidate => candidate.row === "F4");
+    const pins = row === undefined ? [] : row.halves.flatMap(half => half.pins.map(entry => ({ half, entry })));
+    expect(pins).toHaveLength(11);
+    if (row === undefined) return;
+    for (const { half, entry } of pins) {
+      const wrong = { ...entry, title: `${entry.title}.` };
+      const verdicts = judge(REPORT, [casePin(half, wrong)]);
+      expect(verdicts[0]?.code, wrong.title).toBe("absent");
+      const [line] = failures(row, half, verdicts);
+      expect(line, wrong.title).toContain(`row F4/${half.id}`);
+      expect(line, wrong.title).toContain(entry.file);
+      expect(line, wrong.title).toContain(wrong.title);
+    }
+  });
+
   it("M2: a row removed from the table fails the row-set pin (the frozen ids no longer match)", () => {
     expect(TABLE.filter(row => row.row !== "B1").map(row => row.row)).not.toEqual(ROW_IDS);
   });
@@ -587,6 +701,12 @@ describe("wb-6hb.11 docs drift names the row or the section (synthetic document,
 
   it("K2 names row F1 (and only it) when the Forge sentence is weakened", () => {
     expect(named(docsFailures(synthetic(edit("Forge provider", "does **not** equal", "may equal"))))).toEqual(["row F1"]);
+  });
+
+  it("K4 (wb-4ap.10) names row F4 (and only it) when the basis sentence lets the reader fabricate a basis", () => {
+    const lines = docsFailures(synthetic(edit("Forge provider", "never fabricates a basis when", "may fabricate a basis when")));
+    expect(named(lines)).toEqual(["row F4"]);
+    expect(lines.some(line => line.includes("Forge provider is not exactly its frozen paragraph"))).toBe(true);
   });
 
   it("K3 names row B1 (and only it) when the Beads clause is reworded", () => {
