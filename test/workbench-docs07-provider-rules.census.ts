@@ -395,6 +395,35 @@ function docsFailures(markdown: string): string[] {
 /** The synthetic document the drift falsifiers run over: the frozen bodies under the real heading shape, never the live text. */
 const synthetic = (edit: (heading: string, body: string) => string = (_heading, body) => body, tail = ""): string =>
   `# ${DOCS_PARENT}\n\n## MechanicalWorkflows is an ordinary function library\n\nNo dependency.\n\n${SECTION_ORDER.map(heading => `## ${heading}\n\n${edit(heading, SECTION_MARKDOWN[heading] ?? "")}\n`).join("\n")}\n## RCP provider\n\nOptional.\n\n## First realistic vertical journey\n\nA journey.\n${tail}`;
+/** wb-pfl (ORCH-REC-R544 F1): the judged shape frozen as a literal, never derived from TABLE, so deleting a half or a pin cannot pass. */
+const FROZEN_JUDGED_SHAPE: readonly string[] = [
+  "F1/whole:3",
+  "F2/whole:3",
+  "U1/whole:2",
+  "U2/whole:2",
+  "U3/whole:1",
+  "U4/whole:2",
+  "U5/whole:1",
+  "U6/whole:2",
+  "U7/start:1",
+  "U7/get-status-attempts-logs:1",
+  "U7/pause-stop:1",
+  "H1/whole:3",
+  "H2/whole:2",
+  "R1/whole:2",
+  "R2/observer:3",
+  "B1/whole:2",
+  "B2/whole:2",
+  "S1/sdk-revision:1",
+  "S1/native-operation-ids:1",
+  "S1/error-taxonomy:1",
+  "S1/trace-correlation-boundary:1",
+  "S1/cancellation-timeout:1",
+  "S1/cleanup-ownership:1",
+  "S2/furnace-verbs:1",
+  "S2/forge-capability:2",
+];
+
 const named = (lines: readonly string[]): string[] => lines.filter(line => line.startsWith("row ")).map(line => line.slice(0, line.indexOf(":")));
 
 describe("wb-6hb.11 docs/workbench/07 provider-rules census (report mode)", () => {
@@ -402,6 +431,7 @@ describe("wb-6hb.11 docs/workbench/07 provider-rules census (report mode)", () =
     expect(isDeepFrozen(TABLE)).toBe(true);
     expect(TABLE.map(row => row.row)).toEqual(ROW_IDS);
     expect(TABLE).toHaveLength(20);
+    expect(JUDGED.map(({ row, half }) => `${row.row}/${half.id}:${half.pins.length}`)).toEqual(FROZEN_JUDGED_SHAPE);
     expect(docsFailures(readRepo(DOCS_FILE))).toEqual([]);
   });
 
