@@ -5,7 +5,7 @@
  *
  * Rows quote the bead's acceptance list:
  *  S: loadSettings accepts workbench.reactivefiberWorkspaceRoot '/srv/swarm/rf' and refuses 'relative/path', '', 42 and values
- *     containing a newline or a NUL, each error naming the key.
+ *     containing a newline, a NUL, the C0 top (unit separator) or DEL, each error naming the key.
  *  N: registerNativeProviders(registry, scope, {reactivefiberWorkspaceRoot: C}) keeps the registration order and passes C to
  *     the RF registration; the two-argument call is the default-path regression pin.
  *  P: with a configured root C different from the Pi scope, a stub envelope whose workspace.root is C validates and the recorded
@@ -15,18 +15,24 @@
  *     appears in a surfaced string.
  *  X: a configured root the installed rf refuses (exit 3, RF_WORKSPACE_INVALID) is CapabilityError('unavailable', ...), never
  *     'transport', never a retry, and the configured path text never appears in the surfaced message.
+ *  H: through the real extension (src/index.ts registryFor reads the validated setting): with C configured, a workflow node's RF
+ *     render spawns rf with --workspace C and the envelope naming C validates; with the setting absent, the same path passes the
+ *     realpath Pi project root; with C configured, forge stays bound to the Pi project root, so a node reading a target inside C
+ *     is refused 'authorization' before any forge process starts.
+ *  Row 2's own legs (C only to RF; the scope to forge, hyperunix and furnace) live in test/workbench-native-modules.test.ts.
  *
  * Nothing here needs a real rf, a TTY or the network: the rf binary is a stub script on PATH. The credential-free paths are
  * obviously fake directories.
  */
-import { chmodSync, readFileSync, writeFileSync } from "node:fs";
+import { chmodSync, existsSync, readFileSync, realpathSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
+import subagentsExtension from "../src/index.js";
 import { loadSettings } from "../src/settings.js";
 import { CapabilityError, CapabilityRegistry, type JsonValue } from "../src/workbench/capability-registry.js";
 import { loadWorkbenchNative } from "../src/workbench/native-modules.js";
 import { type ReactiveFiberTopologyContext, reactivefiberTopology } from "../src/workbench/reactivefiber-observer.js";
-import { hermeticDir } from "./helpers/boot-extension.js";
+import { ctx, hermeticDir, makePi } from "./helpers/boot-extension.js";
 import { fullShapeRf } from "./helpers/rf-render-fixture.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
 
@@ -38,6 +44,8 @@ const THIRD_ROOT = "/srv/third-fake-root";
 const KEY = "reactivefiberWorkspaceRoot";
 const GRANTS = ["reactivefiber:render", "discover:forge.gate.status", "discover:hyperunix.find", "discover:furnace.run.inspect", "discover:reactivefiber.render.preview"];
 const NUL = String.fromCodePoint(0);
+const UNIT_SEPARATOR = String.fromCodePoint(0x1f);
+const DEL = String.fromCodePoint(0x7f);
 
 let sandbox: ReturnType<typeof hermeticDir> | undefined;
 const oldPath = process.env.PATH;
@@ -101,6 +109,8 @@ describe("wb-973.4 reactivefiberWorkspaceRoot setting (S)", () => {
     ["newline inside an absolute path", "/srv/swarm\n/rf"],
     ["trailing newline", "/srv/swarm/rf\n"],
     ["NUL inside an absolute path", `/srv/swarm${NUL}/rf`],
+    ["unit separator (the top of the C0 range) inside an absolute path", `/srv/swarm${UNIT_SEPARATOR}/rf`],
+    ["DEL inside an absolute path", `/srv/swarm${DEL}/rf`],
   ])("S3: refuses %s, and the error names the key", (_label, value) => {
     sandbox = hermeticDir({ settings: settingsWith(value) });
     const dir = sandbox.dir;
@@ -239,4 +249,77 @@ describe("wb-973.4 observer authorization of the configured root (O)", () => {
       );
     }
   });
+});
+
+describe("wb-973.4 host wiring: the configured setting reaches the providers through the real extension (H)", () => {
+  /** Boot the real extension in claude mode over a hermetic project whose workbench block carries `workbench`. */
+  async function bootHost(workbench: Record<string, unknown>) {
+    sandbox = hermeticDir({ settings: { workflowsEnabled: true, workbench: { workflowAgentBackend: "claude", ...workbench } } });
+    const booted = makePi();
+    subagentsExtension(booted.pi);
+    const context = ctx({ cwd: sandbox.dir });
+    await booted.lifecycle.get("session_start")?.({}, context);
+    return { booted, context, projectRoot: realpathSync(sandbox.dir) };
+  }
+
+  /** Launch one script through the registered SubagentWorkflow tool and return the completion notification's text. */
+  async function runWorkflow(host: Awaited<ReturnType<typeof bootHost>>, body: string): Promise<string> {
+    const script = `export const meta={name:"swarm-rf-host",description:"local"}; ${body}`;
+    const launched = await host.booted.tools.get("SubagentWorkflow").execute("w", { script }, undefined, undefined, host.context);
+    const taskId: unknown = launched.details?.taskId;
+    if (typeof taskId !== "string") throw new Error("SubagentWorkflow returned no task id");
+    for (let i = 0; i < 3000; i++) {
+      const sent = host.booted.pi.sendMessage.mock.calls.find(([item]: [unknown]) => JSON.stringify(item).includes(taskId));
+      if (sent) return String((sent[0] as { content?: unknown }).content);
+      await new Promise(resolve => setTimeout(resolve, 10));
+    }
+    throw new Error("workflow did not settle in the test window");
+  }
+
+  /** A forge stand-in first on PATH that records each spawn, so a refused read is seen to start no forge process. */
+  function fakeForge(): string {
+    const folder = makeScratch("swarm-rf-workspace-forge-");
+    scratches.push(folder);
+    const log = join(folder, "spawns.jsonl");
+    const script = join(folder, "forge");
+    writeFileSync(script, `#!${process.execPath}\nrequire("node:fs").appendFileSync(${JSON.stringify(log)}, JSON.stringify(process.argv.slice(2)) + "\\n");\nprocess.exit(1);\n`);
+    chmodSync(script, 0o700);
+    process.env.PATH = `${folder}:${process.env.PATH ?? ""}`;
+    return log;
+  }
+
+  /** A real directory for the configured RF root, so forge's realpath scope check is decided by its binding alone. */
+  function configuredRoot(): string {
+    const folder = makeScratch("swarm-rf-workspace-root-");
+    scratches.push(folder);
+    return realpathSync(folder);
+  }
+
+  const RF_NODE =
+    'try { await node("reactivefiber.render.preview",{model:"model",task:"task"},{label:"rf"}); return "rf:ok"; } catch (e) { return "rf:" + e.category; }';
+
+  it("H1: with C configured, a workflow node's RF render spawns rf with --workspace C, and the envelope naming C validates", async () => {
+    const root = configuredRoot();
+    const log = fakeRf(fullShapeRf(root), 0);
+    const host = await bootHost({ capabilityGrants: ["reactivefiber:render"], [KEY]: root });
+    expect(host.projectRoot).not.toBe(root);
+    expect(await runWorkflow(host, RF_NODE)).toContain("<result>rf:ok</result>");
+    expect(spawns(log).map(workspaceArg)).toEqual([root]);
+  }, 90_000);
+
+  it("H2 (default-path pin through the host): with the setting absent, rf gets the realpath Pi project root as --workspace", async () => {
+    const host = await bootHost({ capabilityGrants: ["reactivefiber:render"] });
+    const log = fakeRf(fullShapeRf(host.projectRoot), 0);
+    expect(await runWorkflow(host, RF_NODE)).toContain("<result>rf:ok</result>");
+    expect(spawns(log).map(workspaceArg)).toEqual([host.projectRoot]);
+  }, 90_000);
+
+  it("H3: with C configured, forge stays bound to the Pi project root: a node reading a target inside C is refused 'authorization'", async () => {
+    const root = configuredRoot();
+    const log = fakeForge();
+    const host = await bootHost({ capabilityGrants: ["forge:inspect", "reactivefiber:render"], [KEY]: root });
+    const read = `try { await node("forge.gate.status",{target:${JSON.stringify(root)}},{label:"forge"}); return "forge:read"; } catch (e) { return "forge:" + e.category + ":" + e.message; }`;
+    expect(await runWorkflow(host, read)).toContain("<result>forge:authorization:Forge read denied outside the authorized workspace scope.</result>");
+    expect(existsSync(log)).toBe(false);
+  }, 90_000);
 });
