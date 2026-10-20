@@ -31,19 +31,34 @@
  * heading of the level-1 parent heading and bounded at the next level-1/2 heading or EOF, it must render as exactly its
  * one frozen table, HTML-free, and the table's cell grid (header, thirteen rows, three columns) must equal the census's
  * grid cell by cell, so a reworded cell names its row and cell. The spec's falsifier sentence of "## Truth labels and
- * release gates" is pinned clause-bounded as the last sentence of its paragraph. The drift falsifiers run over a
+ * release gates" is pinned as the exact first paragraph of that unique section (the landed wb-cax.27 shape), HTML refused,
+ * so a modifier inside the sentence, an exemption sentence before or after it in its paragraph, or a reworded sentence
+ * reads red. NAMED RESIDUAL TRUTH-SECTION-TAIL: a paragraph added after it elsewhere in that section is not judged here
+ * (the section-bounded pin of that section is wb-6ze.38's) and carries a quiet row. The drift falsifiers run over a
  * SYNTHETIC document built from the frozen grid, never over the live docs/14 text, so a legitimate edit of any other
  * section can never redden a falsifier row.
  *
+ * Frozen shape (owner standing order 2026-10-18T18:14:19Z, rule 16; the g8-gate-s4 U1/U2 cure). AC1 pins the table's
+ * shape as literals copied from the TABLE at the cut base fef0371: every half's pin count (EXPECTED_SHAPE), every pin's
+ * identity - subsystem, half, position, tier, file, title, bound describe path and it.each minimum (FROZEN_PINS) - and
+ * the judged subset the AC2 it.each runs (FROZEN_JUDGED_SHAPE); no half pins one (file, title, suite) twice. Deleting a
+ * pin, shortening a cell, swapping a pin for an unrelated passing case, putting a copy of a neighbour in a pin's place,
+ * re-binding a suite, lowering an each minimum or narrowing the judged subset reds AC1, so hollowing the census takes a
+ * second, visible edit here. The AC2 and AC4 call sites are bound as well: each judged half and each live half records
+ * that its case ran, and an afterAll asserts those sets equal FROZEN_JUDGED_SHAPE and EXPECTED_LIVE, so a narrowed it.each
+ * table reads red (so does a name-filtered run of this file, fail-closed).
+ *
  * Disclosed limits (never claimed as covered): an assertion reached only through a helper the helper's body leg does not
- * follow; a title's presence is NOT a live, native or scale pass; the MechanicalWorkflows row (both cells) and the
- * "ambiguous start no duplicate" half of the Furnace negative control have no landed case and are recorded unpinned.
+ * follow; a title's presence is NOT a live, native or scale pass; the MechanicalWorkflows row (both cells) has no landed
+ * case and is recorded unpinned; the Furnace "ambiguous start no duplicate" half binds the landed W18-C hosted start case
+ * (wb-zmd), driven through an injected Furnace client - not a live Furnace run and not the unlanded W09 provider invoke
+ * (wb-s8a); the truth-section tail residual above.
  */
 import { readFileSync } from "node:fs";
 import { basename, dirname, join, matchesGlob } from "node:path";
 import { fileURLToPath } from "node:url";
 import { marked, type Token, type Tokens } from "marked";
-import { describe, expect, it } from "vitest";
+import { afterAll, describe, expect, it } from "vitest";
 import defaultConfig from "../vitest.config.js";
 import furnaceConfig from "../vitest.furnace.config.js";
 import nativeConfig from "../vitest.native.config.js";
@@ -178,7 +193,12 @@ const TABLE: readonly Row[] = freezeDeep<readonly Row[]>([
       gate("negative-close", "negative", "observer close issues no stop", [
         pin("workbench-furnace-control.test.ts", "closing the observer of a shared client performs zero control calls, and only a permitted decision then reaches one verb"),
       ]),
-      unpinned("negative-start", "negative", "ambiguous start no duplicate", "no Furnace invoke/start surface landed (W09 wb-s8a), so there is no start to make ambiguous; the half is never counted as passed"),
+      // The landed W18-C hosted start (wb-zmd): a timed-out start reads uncertain, the host closes and a blind second start
+      // is refused with one attempt made, through an injected Furnace client (no live Furnace pass is claimed). The W09
+      // provider invoke start (wb-s8a) is unlanded and is not what this pin binds.
+      gate("negative-start", "negative", "ambiguous start no duplicate", [
+        pin("workbench-furnace-hosted.test.ts", "treats a timed-out or unreadable start as uncertain, closes the host, and refuses a blind second start"),
+      ]),
     ],
   },
   {
@@ -323,7 +343,7 @@ const EXPECTED_SHAPE: readonly string[] = [
   "Legacy scripts:positive=2,negative=1",
   "node():positive=1,negative=4",
   "MechanicalWorkflows:positive=0,negative=0",
-  "Furnace:positive-observer=1,positive-external=1,negative-close=1,negative-start=0",
+  "Furnace:positive-observer=1,positive-external=1,negative-close=1,negative-start=1",
   "Forge:positive=1,negative=2",
   "HX:positive=2,negative=1,negative-native=2",
   "RF:positive-observer=1,positive-preview=1,negative=1",
@@ -333,16 +353,121 @@ const EXPECTED_SHAPE: readonly string[] = [
   "UI:positive-80x24=2,positive-120x40=1,negative=5",
   "Designer:positive=2,negative=3",
 ];
-const PIN_COUNT = 53;
+const PIN_COUNT = 54;
 /** Every half no landed case binds, as "subsystem/half"; a seat that lands a case flips the half consciously and edits this list. */
-const EXPECTED_UNPINNED: readonly string[] = ["MechanicalWorkflows/positive", "MechanicalWorkflows/negative", "Furnace/negative-start"];
+const EXPECTED_UNPINNED: readonly string[] = ["MechanicalWorkflows/positive", "MechanicalWorkflows/negative"];
 /** Every half whose only judge is a non-default tier, as "subsystem/half": recorded with its tier, judged by no report this leg reads. */
 const EXPECTED_LIVE: readonly string[] = ["Furnace/positive-external", "HX/negative-native", "RF/positive-preview"];
 /** Cells (subsystem/which) whose pins are ALL live-tier or none: never counted as judged by the default report. */
 const EXPECTED_UNJUDGED_CELLS: readonly string[] = ["MechanicalWorkflows/positive", "MechanicalWorkflows/negative"];
+/**
+ * FROZEN SHAPE (rule 16; the g8-gate-s4 U1 cure): every pin's identity - "subsystem/half/position tier file > title", plus
+ * its bound describe path and its it.each minimum where the row binds one - in table order, copied from the TABLE at the
+ * cut base fef0371. A pin swapped for an unrelated passing case of the same file (CT3), a pin replaced by a copy of its
+ * neighbour (CT11), a moved pin, a re-bound suite or a lowered each minimum reds AC1, though judge() would pass every case.
+ */
+const FROZEN_PINS: readonly string[] = [
+  "Claude SDK host/positive/1 default-gate test/workbench-host-contract.test.ts > L3: parallel schema agents return object values from native SDK structured_output",
+  "Claude SDK host/positive/2 default-gate test/workbench-claude-adverse-faults.test.ts > control: a conforming structured_output succeeds and the text is its JSON",
+  "Claude SDK host/negative/1 default-gate test/workbench-host-contract.test.ts > L3: unchanged script uses Claude SDK query, not Pi AgentManager; session and usage are reported",
+  "Claude SDK host/negative/2 default-gate test/workbench-claude-cancel-faults.test.ts > F8 a killed run aborts exactly its in-flight agents, spawns nothing after, and leaves a concurrent run on the same host untouched",
+  "Legacy scripts/positive/1 default-gate test/workflow-claude-code-compat.test.ts > runs the canonical review-changes example",
+  "Legacy scripts/positive/2 default-gate test/workflow-examples.test.ts > ships at least the examples the guide links",
+  "Legacy scripts/negative/1 default-gate test/workflow-runtime.test.ts > names a misspelt option rather than ignoring it",
+  "node()/positive/1 default-gate test/workbench-forge-observer.test.ts > projects what readForgeGateStatus returns, carrying the native operation as a forge-operation evidence reference",
+  "node()/negative/1 default-gate test/workbench-node-contract.test.ts > L4: unknown capability and duplicate descriptor fail explicitly",
+  "node()/negative/2 default-gate test/workbench-node-contract.test.ts > L4: unauthorized invocation denied at host even with known capability id",
+  "node()/negative/3 default-gate test/workbench-node-limits.test.ts > refuses oversized input before native provider is called",
+  "node()/negative/4 default-gate test/workbench-control-degradation.test.ts > a registry control-gated invocation refuses with a typed authorization error once the grant expires and never starts the provider",
+  "Furnace/positive-observer/1 default-gate test/workbench-furnace-observer.test.ts > reads native Run, Attempt and bounded log reference without promoting output or owning the Run",
+  "Furnace/positive-external/1 furnace-observe test/workbench-external-furnace.test.ts > attaches to the existing Run, retains native identities, and leaves both stores byte-identical",
+  "Furnace/negative-close/1 default-gate test/workbench-furnace-control.test.ts > closing the observer of a shared client performs zero control calls, and only a permitted decision then reaches one verb",
+  "Furnace/negative-start/1 default-gate test/workbench-furnace-hosted.test.ts > treats a timed-out or unreadable start as uncertain, closes the host, and refuses a blind second start",
+  "Forge/positive/1 default-gate test/workbench-forge-observer.test.ts > F2: a current failed gate stays failed despite transport success, and current success is success",
+  "Forge/negative/1 default-gate test/workbench-forge-contract.test.ts > preserves last_result as historical, not verified candidate",
+  "Forge/negative/2 default-gate test/workbench-forge-evidence.test.ts > C2: authoritative_current=false stays historical and indeterminate, never current verification",
+  "HX/positive/1 default-gate test/workbench-hyperunix-observer.test.ts > H2: only a runtime-licensed complete-empty answer is known-empty, complete coverage and a success",
+  "HX/positive/2 default-gate test/workbench-hyperunix-observer.test.ts > keeps a provider-failed result failed and reads a runtime-licensed complete-empty result as the one known-empty success",
+  "HX/negative/1 default-gate test/workbench-hyperunix-observer.test.ts > H2: a 0-row incomplete answer that does not license absence stays partial and never reads as known-empty",
+  "HX/negative-native/1 native-read test/workbench-ecosystem-native.test.ts > HX partial coverage remains incomplete and does not license absence",
+  "HX/negative-native/2 native-read test/workbench-native-ecosystem.test.ts > HX typed query retains incomplete coverage and binary identity",
+  "RF/positive-observer/1 default-gate test/workbench-reactivefiber-observer.test.ts > R1: a clean noncommitted preview projects one snapshot keyed by operation_id with the graph digest as sourceRevision and a payload reference",
+  "RF/positive-preview/1 rf-preview test/workbench-native-rf-preview.test.ts > returns noncommitted text and graph provenance with no durable render ID",
+  "RF/negative/1 default-gate test/workbench-reactivefiber-observer.test.ts > R2: an injected-fixture seam is labelled as such and is never reported as a live, complete or successful render",
+  "Journal/positive/1 default-gate test/workflow-journal.test.ts > replays an identical run without spawning anything",
+  "Journal/positive/2 default-gate test/workflow-journal.test.ts > stops replaying after a changed call even when a later one still matches",
+  "Journal/negative/1 default-gate test/workbench-local-detached-effects.test.ts > neither re-runs nor replays a journaled write: the resume surfaces an uncertain effect naming its producer",
+  "Journal/negative/2 default-gate test/workflow-effect-replay.test.ts > journals a non-read node as the effect it was, without a replayable payload",
+  "Journal/negative/3 default-gate test/workflow-effect-replay.test.ts > never re-runs a journaled write because the basis changed",
+  "Observation/positive/1 default-gate test/workbench-observation.test.ts > deduplicates IDs, rejects old sequence updates, and treats a cursor gap as stale until snapshot",
+  "Observation/positive/2 default-gate test/workbench-observation.test.ts > uses provider-qualified native keys, preserves native failure and does not infer ownership",
+  "Observation/negative/1 default-gate test/workbench-observation.test.ts > disconnect invalidates known nodes; reconnect alone cannot restore current without snapshot",
+  "Observation/negative/2 default-gate test/workbench-detached-observer.test.ts > reports a host-lost reading as unknown and stale, never as a replayed terminal verdict",
+  "Security/positive/1 default-gate test/workbench-claude-role-tools.test.ts > adds only curated role MCP tools to actual SDK options without provider auto-grants",
+  "Security/positive/2 default-gate test/workbench-registry-auth.test.ts > inspect is independently granted and preserves native unknown fields",
+  "Security/negative/1 default-gate test/workbench-registry-auth.test.ts > closes the script-side raw RPC vehicle while host authorization stays typed",
+  "Security/negative/2 default-gate test/workbench-registry-auth.test.ts > copies caller grants before asynchronous dispatch and never escalates another caller",
+  "Security/negative/3 default-gate test/workflow-meta.test.ts > cannot reach host globals from the meta fragment",
+  "UI/positive-80x24/1 default-gate test/workbench-inspector.test.ts > always reserves a visible Escape hint after 1000 rows at 80x24 and 32x18",
+  "UI/positive-80x24/2 default-gate test/workbench-terminal-geometry.test.ts > inspector truncation is explicit: a page larger than the viewport names its remainder {suite release checklist item 8: deterministic terminal geometry > 80 x 24}",
+  "UI/positive-120x40/1 default-gate test/workbench-terminal-geometry.test.ts > inspector truncation is explicit: a page larger than the viewport names its remainder {suite release checklist item 8: deterministic terminal geometry > 120 x 40}",
+  "UI/negative/1 default-gate test/workbench-evidence-loader.test.ts > strips terminal escapes, bidi and zero-width characters from preview lines",
+  "UI/negative/2 default-gate test/workbench-control-degradation.test.ts > adversarial ANSI, bidi and control characters in provider, action, target and invocation never reach a denial reason",
+  "UI/negative/3 default-gate test/workflow-dialog.test.ts > counts wide characters rather than code points",
+  "UI/negative/4 default-gate test/workbench-timeline.test.ts > keeps a credential glued to an escape redacted, never splits a surrogate pair and falls back to the reference for invisible text",
+  "UI/negative/5 default-gate test/workbench-inspector.test.ts > caps viewport, terminal width and unsafe text, ASCII=%s {each min 2}",
+  "Designer/positive/1 default-gate test/workbench-designer.test.ts > source changes are explicit independent variables, not config confounds",
+  "Designer/positive/2 default-gate test/workbench-identity.test.ts > separates definition, deployment, logical request, subject basis and native reference",
+  "Designer/negative/1 default-gate test/workbench-designer.test.ts > names a mismatched subject basis (principal + workspace source) as a confound",
+  "Designer/negative/2 default-gate test/workbench-designer.test.ts > an unmeasured workspace source state is a named confound even when subject basis digests coincide",
+  "Designer/negative/3 default-gate test/workbench-pi-designer.test.ts > names an unmeasured workspace source state as a cohort confound through the real tool, never a matched basis",
+];
+/** FROZEN SHAPE (rule 16; the g8-gate-s4 U2 cure): the judged subset as "subsystem/half:pins", in table order - exactly the halves the AC2 it.each judges. */
+const FROZEN_JUDGED_SHAPE: readonly string[] = [
+  "Claude SDK host/positive:2",
+  "Claude SDK host/negative:2",
+  "Legacy scripts/positive:2",
+  "Legacy scripts/negative:1",
+  "node()/positive:1",
+  "node()/negative:4",
+  "Furnace/positive-observer:1",
+  "Furnace/negative-close:1",
+  "Furnace/negative-start:1",
+  "Forge/positive:1",
+  "Forge/negative:2",
+  "HX/positive:2",
+  "HX/negative:1",
+  "RF/positive-observer:1",
+  "RF/negative:1",
+  "Journal/positive:2",
+  "Journal/negative:3",
+  "Observation/positive:2",
+  "Observation/negative:2",
+  "Security/positive:2",
+  "Security/negative:3",
+  "UI/positive-80x24:2",
+  "UI/positive-120x40:1",
+  "UI/negative:5",
+  "Designer/positive:2",
+  "Designer/negative:3",
+];
 
 const readRepo = (path: string): string => readFileSync(join(ROOT, path), "utf8");
 const halfName = (row: Row, half: Half): string => `${row.subsystem}/${half.id}`;
+const shapeOf = (rows: readonly Row[]): string[] => rows.map(row => `${row.subsystem}:${row.halves.map(half => `${half.id}=${half.pins.length}`).join(",")}`);
+const pinIdentity = (row: Row, half: Half, entry: Pin, index: number): string =>
+  `${row.subsystem}/${half.id}/${index + 1} ${half.tier} ${entry.file} > ${entry.title}${entry.suite === undefined ? "" : ` {suite ${entry.suite.join(" > ")}}`}${entry.each === undefined ? "" : ` {each min ${entry.each.minCases}}`}`;
+const pinIdentities = (rows: readonly Row[]): string[] => rows.flatMap(row => row.halves.flatMap(half => half.pins.map((entry, index) => pinIdentity(row, half, entry, index))));
+const suiteKey = (entry: Pin): string => (entry.suite ?? []).join(" > ");
+/** Every (file, title, suite) a half pins more than once, as "subsystem/half: file > title"; the frozen table holds none. */
+const duplicatePins = (rows: readonly Row[]): string[] =>
+  rows.flatMap(row =>
+    row.halves.flatMap(half =>
+      half.pins
+        .filter((entry, index) => half.pins.findIndex(other => other.file === entry.file && other.title === entry.title && suiteKey(other) === suiteKey(entry)) !== index)
+        .map(entry => `${halfName(row, half)}: ${entry.file} > ${entry.title}`),
+    ),
+  );
 
 /** The forge.toml command whose own run must vouch for a half. */
 const tierCommand = (half: Half): string => (half.tier === "default-gate" ? DEFAULT_GATE_TIER : half.tier);
@@ -358,6 +483,26 @@ const casePin = (half: Half, entry: Pin): CasePin => ({
 const JUDGED = TABLE.flatMap(row => row.halves.filter(half => half.tier === "default-gate" && half.pins.length > 0).map(half => ({ row, half })));
 const LIVE_HALVES = TABLE.flatMap(row => row.halves.filter(half => half.tier !== "default-gate").map(half => ({ row, half })));
 const allPins = (): Pin[] => TABLE.flatMap(row => row.halves.flatMap(half => [...half.pins]));
+const judgedKey = ({ row, half }: { readonly row: Row; readonly half: Half }): string => `${row.subsystem}/${half.id}:${half.pins.length}`;
+const judgedShape = (judged: readonly { readonly row: Row; readonly half: Half }[]): string[] => judged.map(judgedKey);
+/** The judged halves whose AC2 case ran in this file's run (judgedKey) and the live halves whose AC4 case ran (halfName); the afterAll binds both call sites. */
+const AC2_RAN: string[] = [];
+const AC4_RAN: string[] = [];
+const sorted = (values: readonly string[]): string[] => [...values].sort((a, b) => a.localeCompare(b));
+/**
+ * The explicit budget of every judging case in this file (the landed wb-6hb.9 R546 shape), file-local so no other census
+ * file's budget moves: no judging case rides vitest's default 5000 ms. Each judge() call re-reads and re-validates the
+ * whole report, so its cost grows with the full default report the gate's census step reads. Sized as 5 x the larger of
+ * two measurements of the costliest judging case, rounded up to a whole 5 s: this respin's 16 runs of this file alone
+ * (2026-10-20, 8 sequential and 8 at 2-way, against the targeted 33-pinned-file default-tier report, load1 169.6-206.5):
+ * AC2 Designer/negative min 919 ms, median 1103 ms, p99 1539 ms, 0 of 16 runs above 5000 ms; and the g8-gate-s4
+ * census-tier run over the gate's own full report (load1 ~460-516, 8 workers), this file's worst row 2656 ms.
+ * 5 x 2656 ms = 13280 ms, rounded up to 15000 ms.
+ */
+const JUDGE_BUDGET_MS = 15_000;
+const JUDGING: { readonly timeout: number } = { timeout: JUDGE_BUDGET_MS };
+/** The cases that carry JUDGING: AC2 per judged half (26), AC4 per live half (3), and M1, M3, M4, M5 and O1. */
+const JUDGING_CASES = 34;
 
 /** One line per pin that is not ok, naming the row, the cell and the half; the helper's why names the file, title, tier and cause. */
 const failures = (row: Row, half: Half, verdicts: readonly PinVerdict[]): string[] =>
@@ -397,7 +542,9 @@ const GRID: readonly (readonly string[])[] = [HEADER_CELLS, ...TABLE.map(row => 
 const TABLE_TEXT = GRID.map(cells => cells.join(" ")).join(" ");
 const SECTION_BLOCKS: readonly RenderedBlock[] = [{ kind: "other", type: "table", text: TABLE_TEXT }];
 const GRID_MARKDOWN = [`| ${HEADER_CELLS.join(" | ")} |`, "| --- | --- | --- |", ...TABLE.map(row => `| ${row.subsystem} | ${row.positive} | ${row.negative} |`)].join("\n");
-const TRUTH_MARKDOWN = `Every test evidence artifact includes revision, tool versions, commands, timestamp, host, native references and actual output. ${FALSIFIER_SENTENCE}`;
+/** The docs/14 paragraph that carries the falsifier sentence, at the cut base: the first block of "Truth labels and release gates". */
+const TRUTH_PARAGRAPH = `Every test evidence artifact includes revision, tool versions, commands, timestamp, host, native references and actual output. All docs and status tables must distinguish "code present", "fixture pass", "live SDK pass", "adversarial pass", "scale benchmark pass". ${FALSIFIER_SENTENCE}`;
+const TRUTH_BLOCK: RenderedBlock = { kind: "paragraph", text: TRUTH_PARAGRAPH, markdown: TRUTH_PARAGRAPH };
 
 const isTable = (token: Token): token is Tokens.Table => token.type === "table";
 /** The cell grid of every table in the document whose header is the matrix header; the doc must hold exactly one. */
@@ -444,19 +591,23 @@ function docsFailures(markdown: string): string[] {
   return out;
 }
 
-/** The falsifier sentence is pinned clause-bounded: the last sentence of exactly one paragraph of its section, never an includes check. */
+/**
+ * The falsifier sentence is pinned as the exact first paragraph of its unique section (the landed wb-cax.27 shape), HTML
+ * refused: a modifier inside the sentence (DT1), an exemption sentence before it (DT2) or after it (DT4) in its paragraph,
+ * and a reworded or dropped sentence (DT5) all read red. NAMED RESIDUAL TRUTH-SECTION-TAIL: a paragraph added after it in
+ * the section (DT3) is not judged here; the section-bounded pin of that section is wb-6ze.38's.
+ */
 function truthFailures(markdown: string): string[] {
   const section = docsSection(markdown, TRUTH_HEADING, 2, [DOCS_PARENT]);
   if (!section.ok) return [`${DOCS_FILE} § ${TRUTH_HEADING}: the section is refused: ${section.why}`];
-  const owners = section.blocks.filter(block => block.kind === "paragraph" && block.text.includes("Each major work package must have a falsifier"));
-  if (owners.length !== 1) return [`${DOCS_FILE} § ${TRUTH_HEADING}: the falsifier sentence occurs in ${owners.length} paragraphs; it must occur in exactly one`];
-  const text = owners[0]?.kind === "paragraph" ? owners[0].text : "";
-  return text.endsWith(` ${FALSIFIER_SENTENCE}`) ? [] : [`${DOCS_FILE} § ${TRUTH_HEADING}: the falsifier sentence is not the last sentence of its paragraph, which reads: ${text}`];
+  if (section.hasHtml) return [`${DOCS_FILE} § ${TRUTH_HEADING}: the section carries HTML`];
+  const exact = sectionMatches({ ...section, blocks: section.blocks.slice(0, 1) }, [TRUTH_BLOCK]);
+  return exact.ok ? [] : [`${DOCS_FILE} § ${TRUTH_HEADING}: the falsifier paragraph is not exact: ${exact.why}`];
 }
 
 /** The synthetic document the drift falsifiers run over: the frozen grid under the real heading shape, never the live text. */
 const synthetic = (edit: (grid: string) => string = grid => grid, tail = ""): string =>
-  `# ${DOCS_PARENT}\n\n## Test classes\n\nClasses.\n\n## ${DOCS_HEADING}\n\n${edit(GRID_MARKDOWN)}\n${tail}\n## Fault-injection locations\n\nLocations.\n\n## ${TRUTH_HEADING}\n\n${TRUTH_MARKDOWN}\n`;
+  `# ${DOCS_PARENT}\n\n## Test classes\n\nClasses.\n\n## ${DOCS_HEADING}\n\n${edit(GRID_MARKDOWN)}\n${tail}\n## Fault-injection locations\n\nLocations.\n\n## ${TRUTH_HEADING}\n\n${TRUTH_PARAGRAPH}\n\nUse Forge build/test/gates as primary interface.\n`;
 const named = (lines: readonly string[]): string[] => lines.filter(line => line.startsWith("row ")).map(line => line.slice(0, line.indexOf(": ")));
 const swap = (from: string, to: string) => (grid: string): string => grid.replace(from, to);
 
@@ -476,8 +627,29 @@ describe("wb-cax.25 docs/workbench/14 matrix-by-subsystem census (report mode)",
   });
 
   it("AC1 (rule 16): the frozen shape - every row's half ids and pin counts - is an exact literal, so a dropped pin or half goes red", () => {
-    expect(TABLE.map(row => `${row.subsystem}:${row.halves.map(half => `${half.id}=${half.pins.length}`).join(",")}`)).toEqual(EXPECTED_SHAPE);
+    expect(shapeOf(TABLE)).toEqual(EXPECTED_SHAPE);
     expect(allPins()).toHaveLength(PIN_COUNT);
+  });
+
+  it("AC1 frozen shape (rule 16): every pin's identity is the literal list, so a pin swapped for an unrelated passing case reds it", () => {
+    expect(pinIdentities(TABLE), "every pin's subsystem, half, position, tier, file, title, suite and each minimum").toEqual(FROZEN_PINS);
+  });
+
+  it("AC1 frozen shape (rule 16): no half pins one case twice, so a pin replaced by a copy of its neighbour reds it", () => {
+    expect(duplicatePins(TABLE), "a (file, title, suite) triple occurs at most once per half").toEqual([]);
+  });
+
+  it("AC1 frozen shape (rule 16): the judged subset is the literal list, so a narrowed judged predicate reds it", () => {
+    expect(judgedShape(JUDGED), "the judged subset: the AC2 it.each table").toEqual(FROZEN_JUDGED_SHAPE);
+  });
+
+  it("AC1 counts at the cut base: 54 pin entries = 50 judged default-gate pins in 26 halves over 33 files + 4 recorded live-tier pins in 3 halves", () => {
+    const judgedPins = JUDGED.flatMap(({ half }) => [...half.pins]);
+    expect(judgedPins).toHaveLength(50);
+    expect(new Set(judgedPins.map(entry => `${entry.file} > ${entry.title} > ${suiteKey(entry)}`)).size, "every judged (file, title, suite) is distinct").toBe(50);
+    expect(new Set(judgedPins.map(entry => `${entry.file} > ${entry.title}`)).size, "the geometry case is bound once per suite row (80 x 24, 120 x 40)").toBe(49);
+    expect(new Set(judgedPins.map(entry => entry.file)).size).toBe(33);
+    expect(LIVE_HALVES.flatMap(({ half }) => [...half.pins])).toHaveLength(4);
   });
 
   it("AC1: the live section renders exactly its one frozen table (HTML-free) whose grid equals the census's, and the falsifier sentence closes its paragraph", () => {
@@ -515,18 +687,27 @@ describe("wb-cax.25 docs/workbench/14 matrix-by-subsystem census (report mode)",
     const reason = (row: string, id: string): string => TABLE.find(entry => entry.subsystem === row)?.halves.find(half => half.id === id)?.reason ?? "";
     expect(reason("MechanicalWorkflows", "positive")).toContain("wb-04s");
     expect(reason("MechanicalWorkflows", "negative")).toContain("wb-w12");
-    expect(reason("Furnace", "negative-start")).toContain("wb-s8a");
+    expect(reason("Furnace", "negative-start"), "the Furnace ambiguous-start half is pinned, so it carries no unpinned reason").toBe("");
   });
 
-  it("AC3: the half-coverage splits are in place - the Furnace negative control is split (covered close, unpinned start), the wide-glyph and 120x40 halves are pinned", () => {
+  it("AC3: the half-coverage splits are in place - the Furnace negative control is split (close and start, each bound), the wide-glyph and 120x40 halves are pinned", () => {
     const furnace = TABLE.find(row => row.subsystem === "Furnace");
-    expect(furnace?.halves.filter(half => half.which === "negative").map(half => `${half.claim}|${half.pins.length}`)).toEqual(["observer close issues no stop|1", "ambiguous start no duplicate|0"]);
+    expect(furnace?.halves.filter(half => half.which === "negative").map(half => `${half.claim}|${half.pins.length}`)).toEqual(["observer close issues no stop|1", "ambiguous start no duplicate|1"]);
+    expect(furnace?.halves.find(half => half.id === "negative-start")?.pins.map(entry => `${entry.file} > ${entry.title}`), "the ambiguous-start half binds the landed W18-C hosted start case").toEqual([
+      "test/workbench-furnace-hosted.test.ts > treats a timed-out or unreadable start as uncertain, closes the host, and refuses a blind second start",
+    ]);
     const ui = TABLE.find(row => row.subsystem === "UI");
     expect(ui?.halves.find(half => half.id === "negative")?.pins.map(entry => entry.file)).toContain("test/workflow-dialog.test.ts");
     expect(ui?.halves.find(half => half.id === "positive-120x40")?.pins.map(entry => entry.suite)).toEqual([[GEOMETRY_SUITE, "120 x 40"]]);
   });
 
-  it.each(JUDGED)("AC2 row $row.subsystem/$half.which ($half.id): every pinned case is collected once, passed and asserting in the default gate's own report", ({ row, half }) => {
+  afterAll(() => {
+    expect(sorted(AC2_RAN), "every frozen judged half ran its AC2 case exactly once").toEqual(sorted(FROZEN_JUDGED_SHAPE));
+    expect(sorted(AC4_RAN), "every live half ran its AC4 case exactly once").toEqual(sorted(EXPECTED_LIVE));
+  });
+
+  it.each(JUDGED)("AC2 row $row.subsystem/$half.which ($half.id): every pinned case is collected once, passed and asserting in the default gate's own report", JUDGING, ({ row, half }) => {
+    AC2_RAN.push(judgedKey({ row, half }));
     const verdicts = judge(
       REPORT,
       half.pins.map(entry => casePin(half, entry)),
@@ -536,7 +717,8 @@ describe("wb-cax.25 docs/workbench/14 matrix-by-subsystem census (report mode)",
     expect(verdicts.map(verdict => verdict.code)).toEqual(half.pins.map(() => "ok"));
   });
 
-  it.each(LIVE_HALVES)("AC4 row $row.subsystem ($half.id): the $half.tier label is true - forge.toml resolves it, its config selects the file, the default config excludes it, and no default report holds it", ({ half }) => {
+  it.each(LIVE_HALVES)("AC4 row $row.subsystem ($half.id): the $half.tier label is true - forge.toml resolves it, its config selects the file, the default config excludes it, and no default report holds it", JUDGING, ({ row, half }) => {
+    AC4_RAN.push(halfName(row, half));
     const tier = half.tier as Exclude<Tier, "default-gate">;
     expect(half.pins.length).toBeGreaterThan(0);
     for (const entry of half.pins) {
@@ -560,6 +742,19 @@ describe("wb-cax.25 docs/workbench/14 matrix-by-subsystem census (report mode)",
     expect(own.imports.filter(entry => pinned.some(name => entry.module.includes(name)))).toEqual([]);
   });
 
+  it("exactly the judging cases carry the file-local budget, and it is never vitest's default 5000 ms", ({ task }) => {
+    const timeouts: number[] = [];
+    const walk = (tasks: typeof task.file.tasks): void => {
+      for (const child of tasks) {
+        if (child.type === "test") timeouts.push(child.timeout);
+        else if (child.type === "suite") walk(child.tasks);
+      }
+    };
+    walk(task.file.tasks);
+    expect(JUDGE_BUDGET_MS, "the judging budget is above vitest's default test timeout").toBeGreaterThan(5_000);
+    expect(timeouts.filter(timeout => timeout === JUDGE_BUDGET_MS), "the cases that run under JUDGE_BUDGET_MS").toHaveLength(JUDGING_CASES);
+  });
+
   it("AC4: the leg is a census-tier file, outside the default include whose report it judges", () => {
     const self = fileURLToPath(import.meta.url);
     expect(self.endsWith(SELF)).toBe(true);
@@ -577,7 +772,7 @@ describe("wb-cax.25 liveness: the adopted judge is not accept-all (the real repo
     return { row, half, entry };
   };
 
-  it("M1: a pinned title altered by one character is absent from the report and red, naming the row, the cell, the file and the title", () => {
+  it("M1: a pinned title altered by one character is absent from the report and red, naming the row, the cell, the file and the title", JUDGING, () => {
     const { row, half, entry } = first("Security", "negative");
     const wrong = { ...entry, title: entry.title.replace("typed", "typeD") };
     const verdicts = judge(REPORT, [casePin(half, wrong)]);
@@ -588,28 +783,60 @@ describe("wb-cax.25 liveness: the adopted judge is not accept-all (the real repo
     expect(line).toContain(wrong.title);
   });
 
-  it("M2: a row removed from the table fails the row-set pin, and a pin removed from a multi-pin half fails the frozen-shape literal", () => {
+  it("M2: a row removed from the table fails the row-set pin, and a pin removed from a multi-pin half fails the frozen-shape and pin-identity literals", () => {
     expect(TABLE.filter(row => row.subsystem !== "Forge").map(row => row.subsystem)).not.toEqual(EXPECTED_ROW_IDS);
-    const shape = (rows: readonly Row[]): string[] => rows.map(row => `${row.subsystem}:${row.halves.map(half => `${half.id}=${half.pins.length}`).join(",")}`);
     const hollowed = TABLE.map(row => (row.subsystem === "Security" ? { ...row, halves: row.halves.map(half => (half.id === "negative" ? { ...half, pins: half.pins.slice(1) } : half)) } : row));
-    expect(shape(hollowed)).not.toEqual(EXPECTED_SHAPE);
-    const swapped = TABLE.map(row => (row.subsystem === "Designer" ? { ...row, halves: row.halves.map(half => (half.id === "positive" ? { ...half, pins: [half.pins[0] ?? pin("x", "x"), pin("workbench-designer.test.ts", "an unrelated passing case")] } : half)) } : row));
-    expect(shape(swapped)).toEqual(EXPECTED_SHAPE);
-    expect(swapped.flatMap(row => row.halves.flatMap(half => half.pins.map(entry => entry.title)))).not.toEqual(allPins().map(entry => entry.title));
+    expect(shapeOf(hollowed)).not.toEqual(EXPECTED_SHAPE);
+    expect(pinIdentities(hollowed)).not.toEqual(FROZEN_PINS);
   });
 
-  it("M3: a pin with no title is red (the judge finds no such case)", () => {
+  it("M7 (CT3): a pin swapped for an unrelated passing case of its own file keeps the count shape and is red only by the frozen pin identity", () => {
+    const swapped = TABLE.map(row =>
+      row.subsystem === "Security"
+        ? { ...row, halves: row.halves.map(half => (half.id === "negative" ? { ...half, pins: half.pins.map((entry, index) => (index === 1 ? { ...entry, title: "invocation permission alone never exposes catalog metadata" } : entry)) } : half)) }
+        : row,
+    );
+    expect(shapeOf(swapped)).toEqual(EXPECTED_SHAPE);
+    expect(duplicatePins(swapped)).toEqual([]);
+    expect(pinIdentities(swapped)).not.toEqual(FROZEN_PINS);
+  });
+
+  it("M8 (CT11): a pin replaced by a copy of its half's neighbour keeps the count shape and is red by the frozen pin identity and the per-half uniqueness", () => {
+    const copied = TABLE.map(row =>
+      row.subsystem === "Journal" ? { ...row, halves: row.halves.map(half => (half.id === "negative" ? { ...half, pins: half.pins.map((entry, index, all) => (index === 2 ? (all[1] ?? entry) : entry)) } : half)) } : row,
+    );
+    expect(shapeOf(copied)).toEqual(EXPECTED_SHAPE);
+    expect(pinIdentities(copied)).not.toEqual(FROZEN_PINS);
+    expect(duplicatePins(copied)).toEqual(["Journal/negative: test/workflow-effect-replay.test.ts > journals a non-read node as the effect it was, without a replayable payload"]);
+  });
+
+  it("M9 (CT7): a judged predicate narrowed to the multi-pin halves leaves the table and its count shape untouched and is red by the frozen judged subset", () => {
+    const narrowed = TABLE.flatMap(row => row.halves.filter(half => half.tier === "default-gate" && half.pins.length > 1).map(half => ({ row, half })));
+    expect(shapeOf(TABLE), "a narrowed predicate leaves the table's count shape untouched").toEqual(EXPECTED_SHAPE);
+    expect(judgedShape(narrowed)).toHaveLength(16);
+    expect(judgedShape(narrowed)).not.toEqual(FROZEN_JUDGED_SHAPE);
+  });
+
+  it("M10 (CTEACHMIN): an it.each pin whose minimum is lowered keeps every count and is red by the frozen pin identity", () => {
+    const lowered = TABLE.map(row =>
+      row.subsystem === "UI" ? { ...row, halves: row.halves.map(half => ({ ...half, pins: half.pins.map(entry => (entry.each === undefined ? entry : { ...entry, each: { minCases: 1 } })) })) } : row,
+    );
+    expect(shapeOf(lowered)).toEqual(EXPECTED_SHAPE);
+    expect(pinIdentities(lowered)).not.toEqual(FROZEN_PINS);
+  });
+
+  it("M3: a pin with no title is red (the judge finds no such case)", JUDGING, () => {
     const { half, entry } = first("Forge", "positive");
     const [verdict] = judge(REPORT, [casePin(half, { ...entry, title: "" })]);
     expect(verdict?.ok).toBe(false);
   });
 
-  it("M4: a file the default config excludes is never in the default report: a default-gate pin there is red, not collected", () => {
+  it("M4: a file the default config excludes is never in the default report: a default-gate pin there is red, not collected", JUDGING, () => {
     const [verdict] = judge(REPORT, [{ file: "test/workbench-native-rf-preview.test.ts", title: "any title", tier: DEFAULT_GATE_TIER }]);
     expect(verdict?.code).toBe("not-collected");
   });
 
-  it("M5: a pin that names the right title in the wrong file is red, never borrowed from a neighbour", () => {
+  it("M5: a pin that names the right title in the wrong file is red, never borrowed from a neighbour", JUDGING, () => {
     const { half, entry } = first("Observation", "negative");
     const [verdict] = judge(REPORT, [casePin(half, { ...entry, file: "test/workbench-observation-recovery-receipt.test.ts" })]);
     expect(verdict?.ok).toBe(false);
@@ -620,7 +847,7 @@ describe("wb-cax.25 liveness: the adopted judge is not accept-all (the real repo
     expect(new Set(security).size).toBe(security?.length);
   });
 
-  it("O1 each-liveness: a table that registers fewer rows than the pin's minimum, and a describe.each geometry row the suite no longer registers, are both red", () => {
+  it("O1 each-liveness: a table that registers fewer rows than the pin's minimum, and a describe.each geometry row the suite no longer registers, are both red", JUDGING, () => {
     const { half, entry } = first("UI", "negative");
     const eachPin = half.pins.find(candidate => candidate.each !== undefined) ?? entry;
     const [few] = judge(REPORT, [casePin(half, { ...eachPin, each: { minCases: 3 } })]);
@@ -763,9 +990,29 @@ describe("wb-cax.25 docs drift names the row and cell or the section (synthetic 
   it("D9 (O1 falsifier sentence) goes red when an exemption sentence is appended to its paragraph, and when the sentence is dropped or reworded", () => {
     const appended = synthetic().replace(FALSIFIER_SENTENCE, `${FALSIFIER_SENTENCE} A package may waive this.`);
     expect(truthFailures(appended)).toHaveLength(1);
-    expect(truthFailures(appended)[0]).toContain("is not the last sentence of its paragraph");
+    expect(truthFailures(appended)[0]).toContain("the falsifier paragraph is not exact");
     expect(truthFailures(synthetic().replace(FALSIFIER_SENTENCE, "")).length).toBe(1);
     expect(truthFailures(synthetic().replace("quietly weakened", "weakened")).length).toBe(1);
+  });
+
+  it("D10 (DT1) goes red when a modifier is prefixed inside the falsifier sentence itself (the start is bounded, not only the end)", () => {
+    const lines = truthFailures(synthetic().replace(FALSIFIER_SENTENCE, `Advisory only: ${FALSIFIER_SENTENCE}`));
+    expect(lines).toHaveLength(1);
+    expect(lines[0]).toContain("the falsifier paragraph is not exact");
+  });
+
+  it("D11 (DT2) goes red when an exemption sentence is inserted before the falsifier sentence in its paragraph", () => {
+    const lines = truthFailures(synthetic().replace(FALSIFIER_SENTENCE, `Packages marked experimental are exempt from the falsifier rule. ${FALSIFIER_SENTENCE}`));
+    expect(lines).toHaveLength(1);
+    expect(lines[0]).toContain("the falsifier paragraph is not exact");
+  });
+
+  it("D12 goes red when the falsifier paragraph is hidden in an HTML comment", () => {
+    expect(truthFailures(synthetic().replace(FALSIFIER_SENTENCE, `<!-- ${FALSIFIER_SENTENCE} -->`))).toHaveLength(1);
+  });
+
+  it("NAMED RESIDUAL TRUTH-SECTION-TAIL (DT3, quiet row): an exemption paragraph after the falsifier paragraph is not judged here - the section-bounded pin of that section is wb-6ze.38's", () => {
+    expect(truthFailures(synthetic().replace(`${FALSIFIER_SENTENCE}\n`, `${FALSIFIER_SENTENCE}\n\nThe falsifier rule above is waived for every W22 package.\n`))).toEqual([]);
   });
 
   it("an edit of any other section never reddens a row: the test-classes and fault-injection sections are free to change", () => {
