@@ -13,6 +13,43 @@
  * binding: a frozen table that ties each location to its truth label, to the cases that prove it, or to an OPEN row
  * naming what is missing.
  *
+ * ENUMERATION under R596 (fifth cut). Only the following local modes are claimed. Each names an actual
+ * falsifier title below; the R596 case checks the quote, quiet-row and independent vocabulary
+ * falsifiers registered exactly once in run mode. Existing AC1/AC2 pins protect their judged set.
+ * PINNED P1 row/pin/label/receipt shape: AC1 row shape; M2; R0-R13; G1/G2; U2 real corpus.
+ * PINNED P2 judged title identity and iteration: EXPECTED_JUDGED, EXPECTED_JUDGED_ROWS,
+ * AC2 completeness, and M1/M3/M4/M5/M6/M7; no alternative report or re-execution is accepted.
+ * PINNED P3 per-row location/whole-clause quote: U1 frozen quote literal and H3b/H3c/H3d/H3f/H3g/H3h/H3i/H3j.
+ * PINNED P4 label vocabulary: U2 independent literals; R1 and R8 per pass label; G1/G2 real corpus.
+ * PINNED P5 rendered section exactness: K1-K4 and D1-D9, including comment/fence hiding.
+ * PINNED P6 split/merged-location arithmetic and tier truth: O1/O2 and A3; only the recorded receipts
+ * vouch for command runs. Subject rename/delete/modifier/exclusion/hollowing is the shared judge's
+ * report-mode reading, not a new scanner here; M1/M3/M4/M5 measure this leg's use of that interface.
+ *
+ * NAMED RESIDUALS (quiet readings below, not pass claims):
+ * R1 G23 empty-alternative precedent: NOT a mode of this leg (it never classifies a RegExp oracle).
+ * The analogous receipt-text alternative is named: a line recording the right id and command alongside
+ * contradictory verdict alternatives remains quiet (Q1). No verdict is parsed or earned from those words.
+ * R2 receipt verdict fields are not parsed: pass false/findings alongside a matching run id stay quiet (Q2).
+ * R3 historical revision is not re-measured against HEAD: a matching line naming an old revision stays quiet (Q3).
+ * R4 receipt label meaning beyond its frozen row: synthetic receipted live/adversarial/scale labels
+ * with the same valid record all stay quiet (Q4); only the current table's literal chooses its label.
+ * R5 report-body semantic adequacy: the case's assertion must be reached through the shared helper's
+ * resolvable roster, but an assertion need not prove this location. An unrelated passing real case can
+ * be judged ok (Q5); EXPECTED_JUDGED, not semantic inference, refuses swapping it into the table.
+ * R6 actual command execution: this leg does not run/re-run the command; the synthetic matching
+ * receipt text stays quiet even when it says the command was not re-run at HEAD (Q6).
+ * R7 uncovered locations: L10/L11b/L12/L14b remain open and never claim a pass (Q7).
+ *
+ * The four refusal notes' earlier S1-S16/C1-C3, seven floor skip routes, T1-T6/config exclusions,
+ * early-return hollowing and FILE_HAZARD/misattribution belong to the RETIRED hand scanner.
+ * They now route through wb-u62 judge/report truth, with that helper's own named residuals (C1 sibling
+ * task writes; package modules; vouch routes outside its read set; callbacks/branches/loop reachability).
+ * This census does not claim to close or independently re-measure that helper roster. The local quiet
+ * semantic witness Q5 names the report/interface boundary. The prior cuts' docs K/D and receipt G/R
+ * modes stay pinned here. A newly found mode outside this enumeration is a residual-list addition
+ * under R596, not a false assertion that every JavaScript construct is resolved.
+ *
  * Judging. This leg executes no pinned case, injects no fault and scans no test source for case calls itself. judge()
  * reads vitest's own JSON report of the default gate's test step (DEFAULT_TIER_REPORT, written by `npm run test` before
  * the census step runs), so a pinned case counts only when the gate's own run collected it exactly once, recorded it
@@ -631,10 +668,26 @@ function docsClauses(items: readonly string[]): string[] {
 }
 
 function covers(row: Row, clause: string): boolean {
-  if (row.quote.includes(clause)) return true;
-  const match = /^(Before|after) (.+)$/.exec(clause);
-  return match !== null && row.quote.includes(`Before/after ${match[2] ?? ""}`);
+  return docsClauses([row.quote]).includes(clause);
 }
+
+/** U1: whole clauses bound to their OWN location, not borrowed from another split row. */
+const LOCATION_QUOTES: Readonly<Record<string, string>> = {
+  L1: "Before provider call",
+  L2: "after provider side effect but before host result",
+  L3: "after result before journal append",
+  L4: "before event persist",
+  L5: "after reconnect but before snapshot",
+  L6: "Before/after Claude SDK session ID first received",
+  L7: "Before/after Claude SDK session ID first received",
+  L8: "during tool execution",
+  L9: "after output tokens streamed but before final",
+  L10: "Inside worktree after edits but before Forge gate",
+  L11: "after Forge evidence while workspace mutates",
+  L12: "after isolated cleanup",
+  L13: "Parent Furnace Work retry while child Run establishment is uncertain",
+  L14: "Concurrent readers with one shared child; stopping one reader must not stop child without ownership",
+};
 
 /** The rendered list items of a docs section, or undefined when the section holds no single list. */
 const listItems = (blocks: readonly RenderedBlock[]): readonly string[] | undefined => {
@@ -655,11 +708,25 @@ function docsFailures(markdown: string): string[] {
   }
   const rendered = section.blocks.flatMap(block => (block.kind === "list" ? block.items.map(item => item.text) : []));
   for (const row of ROWS) {
-    if (!rendered.some(text => text.includes(row.quote))) out.push(`row ${row.row}: its quote "${row.quote}" no longer renders in ${DOCS_FILE} § ${DOCS_HEADING}`);
+    out.push(...quoteProblems(row, rendered));
   }
   const exact = sectionMatches(section, SECTION_BLOCKS);
   if (!exact.ok) out.push(`${DOCS_FILE} § ${DOCS_HEADING} is not exactly its frozen blocks: ${exact.why}`);
   return out;
+}
+
+/** U1: the Before/after pair is one verbatim quote; L14 joins its two whole clauses explicitly. */
+function quoteProblems(row: Row, items: readonly string[]): string[] {
+  const expected = LOCATION_QUOTES[row.location];
+  const problem = `row ${row.row}: its own location ${row.location} requires the whole quote "${expected ?? "(unknown)"}", got "${row.quote}"`;
+  if (expected === undefined || row.quote !== expected) return [problem];
+  const raw = items.flatMap(item => item.replace(/\.$/, "").split(";").map(clause => clause.trim()));
+  const clauses = expected.split(";").map(clause => clause.trim());
+  // Keep the Before/after pair intact: narrowing it to Before must name BOTH session-id rows (K4).
+  if (!clauses.every(clause => raw.includes(clause))) return [`row ${row.row}: its whole quote "${row.quote}" no longer renders in ${DOCS_FILE} § ${DOCS_HEADING}`];
+  // L14's declared merge must not lose its second clause.
+  if (row.location === "L14" && row.merges !== MERGED_CLAUSE) return [`row ${row.row}: L14 must name its merged ownership clause`];
+  return [];
 }
 
 /** The synthetic document the drift falsifiers run over: the frozen bullets under the real heading shape, never the live text. */
@@ -680,6 +747,8 @@ describe("wb-0kg.12 docs/workbench/14 fault-injection-locations census (report m
   });
 
   it("AC1: the live section renders exactly its five frozen bullets as one list, HTML-free", () => {
+    const drift = docsFailures(readRepo(DOCS_FILE));
+    expect(drift, drift.join(" | ")).toEqual([]);
     const section = docsSection(readRepo(DOCS_FILE), DOCS_HEADING, 2, [DOCS_PARENT]);
     expect(sectionMatches(section, SECTION_BLOCKS)).toEqual({ ok: true, why: "" });
     expect(section.blocks).toHaveLength(1);
@@ -949,11 +1018,35 @@ describe("wb-0kg.12 A3 receipt rule falsifiers (synthetic rows over a synthetic 
     return row;
   };
 
+  it("Q1 residual G23 analogue: contradictory alternatives on a matching receipt line are quiet; no regex-oracle mode is claimed", () => {
+    const alternative = corpusOf([{ file: `${RECEIPTS_DIR}/wb-live.md`, text: `forge run demo-live ${SYNTHETIC_RUN}: pass true OR pass false; verdict unknown` }]);
+    expect(labelProblems(clean, alternative)).toEqual([]);
+  });
+
+  it("Q2 residual receipt verdict fields: a matching receipt saying pass false and findings stays quiet", () => {
+    const failed = corpusOf([{ file: `${RECEIPTS_DIR}/wb-live.md`, text: `forge run demo-live ${SYNTHETIC_RUN}: pass false, findings [fixture finding]` }]);
+    expect(labelProblems(clean, failed)).toEqual([]);
+  });
+
+  it("Q3 residual historical revision: a matching old revision is not re-measured against HEAD", () => {
+    const historical = corpusOf([{ file: `${RECEIPTS_DIR}/wb-live.md`, text: `forge run demo-live ${SYNTHETIC_RUN}: revision 0000000, dirty true, historical only` }]);
+    expect(labelProblems(clean, historical)).toEqual([]);
+  });
+
+  it("Q4 residual label semantics: a valid synthetic record is quiet for each receipt label; the current table's literal is its label authority", () => {
+    for (const label of FROZEN_RECEIPT_LABELS) expect(labelProblems({ ...clean, label }, corpus), label).toEqual([]);
+  });
+
+  it("Q6 residual command execution: matching receipt text is quiet without re-running its command at HEAD", () => {
+    const notRerun = corpusOf([{ file: `${RECEIPTS_DIR}/wb-live.md`, text: `forge run demo-live ${SYNTHETIC_RUN}: not re-run at HEAD` }]);
+    expect(labelProblems(clean, notRerun)).toEqual([]);
+  });
+
   it("R0 control: a receipted live row whose run of record sits on its own receipt line beside its command reads clean", () => {
     expect(labelProblems(clean, corpus)).toEqual([]);
   });
 
-  it.each(RECEIPT_LABELS.map(label => ({ label })))("R1 an unreceipted '$label' row is red", ({ label }) => {
+  it.each(FROZEN_RECEIPT_LABELS.map(label => ({ label })))("R1 an unreceipted '$label' row is red", ({ label }) => {
     expectRed({ ...clean, label, receipt: undefined }, `"${label}" rests on a cmd_ run of record, and the row carries none`);
   });
 
@@ -985,6 +1078,10 @@ describe("wb-0kg.12 A3 receipt rule falsifiers (synthetic rows over a synthetic 
     expectRed({ ...clean, status: "open" }, 'an open row is never counted passed, yet it claims "live SDK pass"');
   });
 
+  it.each(FROZEN_PASS_LABELS.map(label => ({ label })))("R8 per pass label: an open '$label' row is red", ({ label }) => {
+    expectRed({ ...clean, status: "open", label }, `an open row is never counted passed, yet it claims "${label}"`);
+  });
+
   it("R9 a receipt that is not the tracking bead's own receipt file is red", () => {
     expectRed({ ...clean, trackingBead: "wb-other" }, "is not its tracking bead's own receipt (tracking bead wb-other)");
   });
@@ -1010,7 +1107,7 @@ describe("wb-0kg.12 A3 receipt rule falsifiers (synthetic rows over a synthetic 
 
   it("G1/G2 over the real corpus: the real L1 row relabelled with any receipt label is red twice (no run of record; a default-gate row claims at most fixture pass)", () => {
     const real = receiptsCorpus();
-    for (const label of RECEIPT_LABELS) {
+    for (const label of FROZEN_RECEIPT_LABELS) {
       expect(labelProblems({ ...realRow("L1"), label }, real)).toEqual([`row L1: "${label}" rests on a cmd_ run of record, and the row carries none`, `row L1: a default-gate row claims at most "fixture pass", never "${label}"`]);
     }
   });
@@ -1129,5 +1226,115 @@ describe("wb-0kg.12 docs drift names the row or the section (synthetic document,
 
   it("an edit of any other section never reddens a row: the matrix and the benchmark sections are free to change", () => {
     expect(docsFailures(synthetic().replace("Rows.", "Rows, changed.").replace("Text.", "Different text."))).toEqual([]);
+  });
+});
+
+/** Rule 16/U1: each row's OWN location and whole quote, literal at cut time, including split rows. */
+const EXPECTED_QUOTES: readonly string[] = [
+  "L1:L1:Before provider call",
+  "L2a:L2:after provider side effect but before host result",
+  "L2b:L2:after provider side effect but before host result",
+  "L2c:L2:after provider side effect but before host result",
+  "L3:L3:after result before journal append",
+  "L4:L4:before event persist",
+  "L5:L5:after reconnect but before snapshot",
+  "L6:L6:Before/after Claude SDK session ID first received",
+  "L7:L7:Before/after Claude SDK session ID first received",
+  "L8:L8:during tool execution",
+  "L9:L9:after output tokens streamed but before final",
+  "L10:L10:Inside worktree after edits but before Forge gate",
+  "L11a:L11:after Forge evidence while workspace mutates",
+  "L11b:L11:after Forge evidence while workspace mutates",
+  "L12:L12:after isolated cleanup",
+  "L13a:L13:Parent Furnace Work retry while child Run establishment is uncertain",
+  "L13b:L13:Parent Furnace Work retry while child Run establishment is uncertain",
+  "L13c:L13:Parent Furnace Work retry while child Run establishment is uncertain",
+  "L14a:L14:Concurrent readers with one shared child; stopping one reader must not stop child without ownership",
+  "L14b:L14:Concurrent readers with one shared child; stopping one reader must not stop child without ownership",
+];
+
+/** U2: independent falsifier inputs, never derived from the rule vocabulary they judge. */
+const FROZEN_PASS_LABELS: readonly TruthLabel[] = ["fixture pass", "live SDK pass", "adversarial pass", "scale benchmark pass"];
+const FROZEN_RECEIPT_LABELS: readonly TruthLabel[] = ["live SDK pass", "adversarial pass", "scale benchmark pass"];
+const FROZEN_OPEN_LABELS: readonly TruthLabel[] = ["code present", "not started"];
+
+const QUOTE_MUTANTS: readonly { readonly id: string; readonly row: string; readonly quote: string }[] = [
+  { id: "H3b", row: "L2b", quote: "after provider side effect" },
+  { id: "H3c", row: "L14b", quote: "Concurrent readers with one shared child" },
+  { id: "H3d", row: "L13c", quote: "Parent Furnace Work retry" },
+  { id: "H3f", row: "L11b", quote: "after Forge evidence" },
+  { id: "H3g", row: "L2a", quote: "Before provider call" },
+  { id: "H3h", row: "L6", quote: "Before/after Claude SDK session ID" },
+  { id: "H3i", row: "L2b", quote: "" },
+  { id: "H3j", row: "L11a", quote: "after Forge evidence while workspace" },
+];
+
+describe("wb-0kg.12 R596 frozen quotes and label vocabulary", () => {
+  it("U1: every row's own location and verbatim quote is frozen, not just the unique-quote rows", () => {
+    expect(ROWS.map(row => `${row.row}:${row.location}:${row.quote}`)).toEqual(EXPECTED_QUOTES);
+  });
+
+  it("U2: pass, receipt and open label vocabularies equal their independent docs/14 literals", () => {
+    expect(PASS_LABELS).toEqual(FROZEN_PASS_LABELS);
+    expect(RECEIPT_LABELS).toEqual(FROZEN_RECEIPT_LABELS);
+    expect(OPEN_LABELS).toEqual(FROZEN_OPEN_LABELS);
+    const docs = readRepo(DOCS_FILE);
+    for (const label of FROZEN_PASS_LABELS) expect(docs).toContain(`"${label}"`);
+    expect(docs).toContain('"code present"');
+  });
+
+  it("the eight gate-named quote mutant ids and targets are frozen, so shrinking this falsifier table reads red", () => {
+    expect(QUOTE_MUTANTS.map(row => `${row.id}:${row.row}`)).toEqual(["H3b:L2b", "H3c:L14b", "H3d:L13c", "H3f:L11b", "H3g:L2a", "H3h:L6", "H3i:L2b", "H3j:L11a"]);
+  });
+
+  it.each(QUOTE_MUTANTS)("$id: shortened, empty or swapped quote fails naming its OWN row $row", mutant => {
+    expect.hasAssertions();
+    const row = ROWS.find(candidate => candidate.row === mutant.row);
+    if (row === undefined) throw new Error(`missing row ${mutant.row}`);
+    const problems = quoteProblems({ ...row, quote: mutant.quote }, ITEMS);
+    expect(problems.length, mutant.id).toBeGreaterThan(0);
+    expect(problems.every(line => line.startsWith(`row ${mutant.row}:`)), mutant.id).toBe(true);
+  });
+});
+
+
+describe("wb-0kg.12 R596 enumeration and named residual quiet rows", () => {
+  it("Q5 residual semantic adequacy: an unrelated real passing pin is ok to the report judge but not a member of this row's frozen judged set", () => {
+    const donor = ROWS.find(row => row.row === "L6")?.pins[0];
+    if (donor === undefined) throw new Error("L6 donor pin missing");
+    const [verdict] = judge(REPORT, [casePin(donor)]);
+    expect(verdict?.code).toBe("ok");
+    expect(EXPECTED_JUDGED).not.toContain(judgedKey("L9", "pin", donor));
+  });
+
+  it("Q7 residual uncovered locations: the four unfiled locations remain open, receiptless and unpassed", () => {
+    const open = ROWS.filter(row => row.status === "open");
+    expect(open.map(row => row.row)).toEqual(["L10", "L11b", "L12", "L14b"]);
+    for (const row of open) {
+      expect(FROZEN_OPEN_LABELS).toContain(row.label);
+      expect(row.pins).toEqual([]);
+      expect(row.receipt).toBeUndefined();
+    }
+  });
+
+  it("R596: the header enumerates exactly P1-P6 and R1-R7, and every named quote and quiet row is registered once in run mode", ({ task }) => {
+    const header = readRepo(SELF).split("*/")[0] ?? "";
+    expect([...header.matchAll(/PINNED (P[0-9]+) /g)].map(match => match[1])).toEqual(["P1", "P2", "P3", "P4", "P5", "P6"]);
+    expect([...header.matchAll(/^ \* (R[0-9]+) /gm)].map(match => match[1])).toEqual(["R1", "R2", "R3", "R4", "R5", "R6", "R7"]);
+    const registered: { readonly name: string; readonly mode: string }[] = [];
+    const walk = (tasks: typeof task.file.tasks): void => {
+      for (const child of tasks) {
+        if (child.type === "test") registered.push({ name: child.name, mode: child.mode });
+        else if (child.type === "suite") walk(child.tasks);
+      }
+    };
+    walk(task.file.tasks);
+    for (const id of ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "H3b", "H3c", "H3d", "H3f", "H3g", "H3h", "H3i", "H3j"]) {
+      const cases = registered.filter(child => child.name.startsWith(`${id} `) || child.name.startsWith(`${id}:`) || child.name.startsWith(`'${id}':`));
+      expect(cases.map(child => child.mode), id).toEqual(["run"]);
+      expect(header, id).toContain(id);
+    }
+    for (const label of FROZEN_RECEIPT_LABELS) expect(registered.filter(child => child.name === `R1 an unreceipted ''${label}'' row is red`).map(child => child.mode), label).toEqual(["run"]);
+    for (const label of FROZEN_PASS_LABELS) expect(registered.filter(child => child.name === `R8 per pass label: an open ''${label}'' row is red`).map(child => child.mode), label).toEqual(["run"]);
   });
 });
