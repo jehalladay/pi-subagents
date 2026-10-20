@@ -190,7 +190,10 @@ describe('SCG-R11: full-shape offline RF result fixture', () => {
 
   // Acceptance 2 (observer), at the landed R1 row's strength: the full-shape provider reading projects one clean snapshot,
   // toStrictEqual, with the stated release as the distinct rf-cli reference and never as sourceVersion (owner ruling G-A).
+  // wb-973.8 (SCG-R8): the fixture's result.bundle_revision_id rides as the rf-bundle reference and owns sourceVersion.
   it('R1 on the full shape: the observer projects the provider reading as one clean snapshot with the rf-cli release reference', async () => {
+    const bundle = resultOf(fullShapeRf(ws)).bundle_revision_id;
+    if (typeof bundle !== 'string') throw new Error('the full-shape fixture must state a string bundle_revision_id');
     standIn(fullShapeRf(ws));
     const topology = reactivefiberTopology((await nativeReactiveFiberPreview('model', 'task', ws)) as JsonValue, { ...context, invocationId: 'wf_rf_1' });
     expect(topology.snapshots).toHaveLength(1);
@@ -201,10 +204,11 @@ describe('SCG-R11: full-shape offline RF result fixture', () => {
       node: { title: `RF context preview ${RF_FIXTURE_OPERATION_ID}`, type: 'sdk-operation', statusTone: 'success',
         statusText: 'noncommitted preview (rf-cli) · 989760 of 1000000 context tokens available · necessity evals 0 · 0 errors, 0 warnings' },
       kind: 'reactivefiber.render.preview.snapshot',
-      evidenceRefs: [`rf-graph:${RF_FIXTURE_GRAPH_REVISION}`, `rf-workspace:${RF_FIXTURE_WORKSPACE_ID}`, `rf-cli:${RF_FIXTURE_RELEASE}`],
-      sourceRevision: RF_FIXTURE_GRAPH_REVISION, nativePayloadRef: `rf-output:sha256:${digestOf(RF_FIXTURE_TEXT)}`, trace: { invocationId: 'wf_rf_1' },
+      evidenceRefs: [`rf-graph:${RF_FIXTURE_GRAPH_REVISION}`, `rf-workspace:${RF_FIXTURE_WORKSPACE_ID}`, `rf-bundle:${bundle}`, `rf-cli:${RF_FIXTURE_RELEASE}`],
+      sourceVersion: bundle, sourceRevision: RF_FIXTURE_GRAPH_REVISION, nativePayloadRef: `rf-output:sha256:${digestOf(RF_FIXTURE_TEXT)}`,
+      trace: { invocationId: 'wf_rf_1' },
     });
-    expect(snapshot).not.toHaveProperty('sourceVersion');
+    expect(snapshot.sourceVersion).not.toBe(RF_FIXTURE_RELEASE);
     expect(topology.relations).toStrictEqual([]);
     expect(topology.diagnostics).toContain(`producer release from result.provenance.cli_version: rf@${RF_FIXTURE_RELEASE}`);
     expect(topology.diagnostics.join('\n')).toContain('noncommitted');
@@ -212,6 +216,7 @@ describe('SCG-R11: full-shape offline RF result fixture', () => {
     expect(projection.refresh(snapshot)).toBe('applied');
     expect(projection.query({ scope, limit: 10, evidence: `rf-cli:${RF_FIXTURE_RELEASE}` }).nodes.map(node => node.nativeRef.id)).toStrictEqual([RF_FIXTURE_OPERATION_ID]);
     expect(projection.query({ scope, limit: 10, version: RF_FIXTURE_RELEASE }).nodes).toStrictEqual([]);
+    expect(projection.query({ scope, limit: 10, version: bundle }).nodes.map(node => node.nativeRef.id)).toStrictEqual([RF_FIXTURE_OPERATION_ID]);
   });
 
   // Acceptance 3 (observer): the named refusal rows replayed on the full shape, each for its own cause.

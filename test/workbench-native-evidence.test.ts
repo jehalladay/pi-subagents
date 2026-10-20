@@ -18,6 +18,14 @@ describe("native evidence projection", () => {
   it("maps RF ephemeral operation and graph provenance without inventing a durable render ID", () => {
     expect(nativeEvidence("reactivefiber.render.preview", { contract: "reactivefiber.render.preview/v1", source: { schema: "reactive-fiber.cli/v1", operation_id: "rf-operation", ok: true, command: "context.render", result: { ephemeral: true, render_id: null, provenance: { graph_revision_id: "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc" } } } })).toEqual({ provider: "reactivefiber", nativeId: "rf-operation", sourceBasis: "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc" });
   });
+  // wb-973.8 (SCG-R8): "nativeEvidence of a reading with bundle_revision_id yields sourceBasis===BUNDLE; without it sourceBasis===GRAPH".
+  it("prefers a stated sha256 RF bundle_revision_id as the immutable basis and keeps the graph digest when the key is absent", () => {
+    const graph = `sha256:${"c".repeat(64)}`;
+    const bundle = `sha256:${"e".repeat(64)}`;
+    const rf = (extra: Record<string, JsonValue>): JsonValue => ({ contract: "reactivefiber.render.preview/v1", source: { schema: "reactive-fiber.cli/v1", operation_id: "rf-operation", ok: true, command: "context.render", result: { ephemeral: true, render_id: null, provenance: { graph_revision_id: graph }, ...extra } } });
+    expect(nativeEvidence("reactivefiber.render.preview", rf({ bundle_revision_id: bundle }))).toStrictEqual({ provider: "reactivefiber", nativeId: "rf-operation", sourceBasis: bundle });
+    expect(nativeEvidence("reactivefiber.render.preview", rf({}))).toStrictEqual({ provider: "reactivefiber", nativeId: "rf-operation", sourceBasis: graph });
+  });
   it.each<JsonValue>([null, [], {}, { contract: "forge.gate.status/v1", source: { status: true, operation_id: 2 } }])("does not invent evidence for absent/malformed fields %j", value => {
     expect(nativeEvidence("unknown.capability", value)).toEqual({});
     expect(nativeEvidence("forge.gate.status", value)).not.toHaveProperty("nativeId");
@@ -40,6 +48,16 @@ describe("immutable basis syntax", () => {
   it("refuses directory strings even in a producer digest field", () => {
     expect(nativeEvidence("forge.gate.status", { contract: "forge.gate.status/v1", source: { data: { source_snapshot_id: "/workspace", gated_tree: "/workspace" } } })).not.toHaveProperty("sourceBasis");
     expect(nativeEvidence("reactivefiber.render.preview", { contract: "reactivefiber.render.preview/v1", source: { schema: "reactive-fiber.cli/v1", command: "context.render", result: { provenance: { graph_revision_id: "/workspace" } } } })).not.toHaveProperty("sourceBasis");
+  });
+  // wb-973.8 (SCG-R8): the bundle id is preferred only as a sha256 digest; a directory string or any other shape is never a basis.
+  it("never presents a directory string or malformed RF bundle_revision_id as a basis: the graph digest stands, and without one nothing does", () => {
+    const graph = `sha256:${"c".repeat(64)}`;
+    const rf = (bundle: JsonValue, graphRevision: JsonValue): JsonValue => ({ contract: "reactivefiber.render.preview/v1", source: { schema: "reactive-fiber.cli/v1", command: "context.render", result: { bundle_revision_id: bundle, provenance: { graph_revision_id: graphRevision } } } });
+    const malformed: JsonValue[] = ["/workspace", "e".repeat(64), `sha256:${"E".repeat(64)}`, "", 7, { digest: graph }, null];
+    for (const bundle of malformed) {
+      expect(nativeEvidence("reactivefiber.render.preview", rf(bundle, graph))).toHaveProperty("sourceBasis", graph);
+      expect(nativeEvidence("reactivefiber.render.preview", rf(bundle, "/workspace"))).not.toHaveProperty("sourceBasis");
+    }
   });
 });
 
