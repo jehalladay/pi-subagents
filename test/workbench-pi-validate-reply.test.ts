@@ -285,6 +285,39 @@ describe("V4 docs/15 W16 'compact bounded result and ACL'", () => {
     expect(whole).toBeGreaterThan(0);
   }, 60_000);
 
+  // Respin U2 (the g9-gate-s1 G17 probe, kept as the gate wrote it): the cap counts UTF-8 bytes, not UTF-16 units. A
+  // description of U+4E2D takes three bytes per unit, so with 174 possible calls the folded envelope crosses the cap near
+  // length 49, and an overshoot measured as text.length undercounts by two bytes per unit: that mutant let 14 of these 200
+  // replies past the cap. Every size is measured and every size over the cap is listed, never only the first.
+  it("the cap counts bytes: a multibyte description at every length from 1 to 200 keeps the folded envelope inside it", async () => {
+    const booted = await boot(["workbench:design"]);
+    const calls = Array.from({ length: 174 }, (_, index) => `await agent("p${index}");`).join("\n");
+    const wide = cp(0x4e2d);
+    const over: string[] = [];
+    let cut = 0;
+    let whole = 0;
+    for (let length = 1; length <= 200; length += 1) {
+      const description = wide.repeat(length);
+      save(booted, "multibyte", `export const meta={name:"multibyte",description:${JSON.stringify(description)}};\n${calls}\nreturn 1;`);
+      const text = await validateText(booted, { name: "multibyte" });
+      const bytes = Buffer.byteLength(text);
+      if (bytes > TOOL_REPLY_DEFAULT_MAX_BYTES) over.push(`length ${length}: ${bytes} bytes`);
+      const reply = JSON.parse(text) as ValidateToolReply;
+      // Not vacuous: the description reaches the model whole at every length, so the text carries at least two more bytes
+      // than UTF-16 units per description unit, the very surplus a length-measured overshoot never sees.
+      expect(reply.meta?.description, `description length ${length}`).toBe(description);
+      expect(bytes - text.length, `description length ${length}`).toBeGreaterThanOrEqual(2 * length);
+      const dropped = Object.values(reply.counts).some(count => count.returned < count.offered);
+      expect(reply.truncated, `description length ${length}`).toEqual(dropped ? { reason: "byte-cap", maxBytes: TOOL_REPLY_DEFAULT_MAX_BYTES } : undefined);
+      if (dropped) cut += 1;
+      else whole += 1;
+    }
+    expect(over).toEqual([]);
+    // The sweep crosses the cap in bytes: some lengths fit whole and some are cut.
+    expect(cut).toBeGreaterThan(0);
+    expect(whole).toBeGreaterThan(0);
+  }, 180_000);
+
   it("adversarial ANSI, bidi and zero-width metadata and a line-split credential render sanitized", async () => {
     const booted = await boot(["workbench:design"]);
     save(booted, "hostile", `export const meta={name:${JSON.stringify(`name ${HOSTILE}`)},description:${JSON.stringify(`desc ${HOSTILE} ${LINE_SPLIT}`)}};\nreturn 1;`);

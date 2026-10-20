@@ -399,58 +399,6 @@ function workspaceCandidateBasis(cwd: string): { sourceBasis: string; state: "me
 }
 
 /**
- * workflow_validate shows the model one dialect (wb-h8f.6; the wb-69g.6 gate F2 wiring requirement, owner 14:55Z): the
- * builder's workbench.validate-reply/v1 record is folded into workbench.tool-reply/v1 member by member, and its own
- * contract string never reaches the model. A refusal takes tool-reply's error shape, with the builder's fixed typed
- * reason as the message. A cut reply carries tool-reply's byte-cap marker naming the tool's cap. Every string is the
- * builder's, already through its per-field sanitizers, and the folded envelope passes sanitizeWorkbenchJsonText again.
- */
-interface WorkflowValidateToolRefusal {
-  readonly contract: typeof TOOL_REPLY_CONTRACT_VERSION;
-  readonly tool: "workflow_validate";
-  readonly ok: false;
-  readonly invoked: false;
-  readonly executed: false;
-  readonly status: "refused";
-  readonly error: { readonly code: ValidateRefusalCode; readonly category: CapabilityErrorCategory; readonly message: string };
-}
-type WorkflowValidateToolCompleted = Omit<ValidateCompletedReply, "contractVersion" | "truncation"> & {
-  readonly contract: typeof TOOL_REPLY_CONTRACT_VERSION;
-  readonly tool: "workflow_validate";
-  readonly ok: true;
-  readonly invoked: false;
-  readonly truncated?: ByteCapMarker;
-};
-
-function workflowValidateToolReply(reply: WorkflowValidateReply, maxBytes: number): WorkflowValidateToolRefusal | WorkflowValidateToolCompleted {
-  if (reply.status === "refused") {
-    const { code, category, reason } = reply.refusal;
-    return { contract: TOOL_REPLY_CONTRACT_VERSION, tool: "workflow_validate", ok: false, invoked: false, executed: false, status: "refused", error: { code, category, message: reason } };
-  }
-  const { contractVersion: _builderContract, truncation, ...body } = reply;
-  return {
-    contract: TOOL_REPLY_CONTRACT_VERSION, tool: "workflow_validate", ok: true, invoked: false, ...body,
-    ...(truncation ? { truncated: { reason: "byte-cap", maxBytes } } : {}),
-  };
-}
-
-/**
- * The tool's cap is tool-reply's default and holds for the folded text the model reads. The builder fits its own record
- * to the budget it is given, and its 4096-byte throwing floor stays internal, so an envelope over the cap is rebuilt
- * under a budget smaller by the measured overshoot.
- */
-function workflowValidateToolText(input: Omit<BuildWorkflowValidateReplyInput, "maxBytes">): string {
-  const cap = TOOL_REPLY_DEFAULT_MAX_BYTES;
-  let budget = cap;
-  for (;;) {
-    const text = sanitizeWorkbenchJsonText(workflowValidateToolReply(buildWorkflowValidateReply({ ...input, maxBytes: budget }).reply, cap));
-    const over = Buffer.byteLength(text) - cap;
-    if (over <= 0) return text;
-    budget -= over;
-  }
-}
-
-/**
  * What a caller other than Pi may hand the extension factory (wb-72c). Pi's extension loader calls the factory with its API
  * alone, so in a Pi session every field is absent and the factory behaves exactly as it always has. The injection exists for the
  * native-load notify suites (test/helpers/native-load-notify.ts, which drives the DIRECT-CALLER SITES row of
@@ -2717,6 +2665,58 @@ Terse command-style prompts produce shallow, generic work.
       execute: async (_id, params, _signal, _onUpdate, ctx) =>
         textResult(sanitizeWorkbenchJsonText(buildWorkflowInspectReply(registryFor(ctx.cwd).catalogSnapshot(), grants(ctx), params.target, params.view))),
     }));
+    /**
+     * workflow_validate shows the model one dialect (wb-h8f.6; the wb-69g.6 gate F2 wiring requirement, owner 14:55Z): the
+     * builder's workbench.validate-reply/v1 record is folded into workbench.tool-reply/v1 member by member, and its own
+     * contract string never reaches the model. A refusal takes tool-reply's error shape, with the builder's fixed typed
+     * reason as the message. A cut reply carries tool-reply's byte-cap marker naming the tool's cap. Every string is the
+     * builder's, already through its per-field sanitizers, and the folded envelope passes sanitizeWorkbenchJsonText again.
+     */
+    interface WorkflowValidateToolRefusal {
+      readonly contract: typeof TOOL_REPLY_CONTRACT_VERSION;
+      readonly tool: "workflow_validate";
+      readonly ok: false;
+      readonly invoked: false;
+      readonly executed: false;
+      readonly status: "refused";
+      readonly error: { readonly code: ValidateRefusalCode; readonly category: CapabilityErrorCategory; readonly message: string };
+    }
+    type WorkflowValidateToolCompleted = Omit<ValidateCompletedReply, "contractVersion" | "truncation"> & {
+      readonly contract: typeof TOOL_REPLY_CONTRACT_VERSION;
+      readonly tool: "workflow_validate";
+      readonly ok: true;
+      readonly invoked: false;
+      readonly truncated?: ByteCapMarker;
+    };
+
+    function workflowValidateToolReply(reply: WorkflowValidateReply, maxBytes: number): WorkflowValidateToolRefusal | WorkflowValidateToolCompleted {
+      if (reply.status === "refused") {
+        const { code, category, reason } = reply.refusal;
+        return { contract: TOOL_REPLY_CONTRACT_VERSION, tool: "workflow_validate", ok: false, invoked: false, executed: false, status: "refused", error: { code, category, message: reason } };
+      }
+      const { contractVersion: _builderContract, truncation, ...body } = reply;
+      return {
+        contract: TOOL_REPLY_CONTRACT_VERSION, tool: "workflow_validate", ok: true, invoked: false, ...body,
+        ...(truncation ? { truncated: { reason: "byte-cap", maxBytes } } : {}),
+      };
+    }
+
+    /**
+     * The tool's cap is tool-reply's default and holds for the folded text the model reads. The builder fits its own record
+     * to the budget it is given, and its 4096-byte throwing floor stays internal, so an envelope over the cap is rebuilt
+     * under a budget smaller by the measured overshoot.
+     */
+    function workflowValidateToolText(input: Omit<BuildWorkflowValidateReplyInput, "maxBytes">): string {
+      const cap = TOOL_REPLY_DEFAULT_MAX_BYTES;
+      let budget = cap;
+      for (;;) {
+        const text = sanitizeWorkbenchJsonText(workflowValidateToolReply(buildWorkflowValidateReply({ ...input, maxBytes: budget }).reply, cap));
+        const over = Buffer.byteLength(text) - cap;
+        if (over <= 0) return text;
+        budget -= over;
+      }
+    }
+
     // wb-h8f.6: the wb-69g.6 builder over the host-resolved source, with the grant snapshot from grants(ctx) only; its
     // reply reaches the model folded into workbench.tool-reply/v1 (workflowValidateToolText). The grant refusal and the
     // outside-workspace denial keep today's bytes and run before any source read.
