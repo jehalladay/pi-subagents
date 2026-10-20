@@ -30,6 +30,21 @@
  * frozen blocks and carry no HTML. A dropped, reworded or hidden clause names its row; any other edit names the section.
  * The drift falsifiers run over SYNTHETIC documents built from the frozen blocks, never over the live docs text.
  *
+ * Frozen shape (rule 16; respin U1 of the g8-gate-s3 refusal). AC1 pins the table's shape as literals copied from the
+ * table at the cut's base: the row ids in order, every row's pin and quote counts, every judged (row, file, title)
+ * triple, every row's label verbatim and every quote's section and text verbatim. The label and quote literals are
+ * written out in full, never derived from the constants the table reads, so shortening the never-silent-null label
+ * (which no docs check reads) or one of its boundary quotes (which keeps rendering, and so silently drops the row from
+ * the attribution of a mid-sentence weakening) reds AC1. K6 and K7 weaken a mid-sentence clause of each boundary
+ * sentence and expect the row named.
+ *
+ * Judging cost (respin U2; the wb-6hb.9 R546 cure form). Each judge() call re-reads and re-validates the whole report
+ * and re-parses every pinned file it touches, so the leg judges every table pin in ONE judge() call, at most once per
+ * run (verdictsOf's memo, keyed by file and title), and every AC2 row reads that memo; only a liveness falsifier that
+ * judges a deliberately mutated pin makes a call of its own. Every judging case carries the explicit file-local budget
+ * JUDGE_BUDGET_MS (sized from a measured p99, see its comment), so no case rides vitest's default 5000 ms; a U2 case pins
+ * exactly which cases run under it.
+ *
  * Truth label: "fixture pass" only. The census adds no behaviour test for a category; every row here is pinned, and a
  * category whose typed diagnostic goes missing is recorded unpinned in the same commit with a reason, never implemented here.
  */
@@ -233,16 +248,125 @@ const EXPECTED_JUDGED: readonly string[] = [
 ];
 /** The eight docs/05 categories, in docs order: a new (i) in the docs has no row and goes red. */
 const EXPECTED_CATEGORIES: readonly string[] = ["a", "b", "c", "d", "e", "f", "g", "h"];
+/**
+ * Rule 16 (frozen labels, respin U1): "<row>|<label>" for every row, written out in full. The never-silent-null label is
+ * read by no docs check, so a shortened label reads red here (and in AC1's label-in-quote check) or nowhere.
+ */
+const EXPECTED_LABELS: readonly string[] = [
+  "a|syntax/validation error before invocation",
+  "b|capability unavailable",
+  "c|permission denied",
+  "d|transport/runtime failure",
+  "e|producer domain result unsuccessful",
+  "f|uncertain external effect",
+  "g|cancelled/aborted wait",
+  "h|stale observation",
+  "never-silent-null|do not silently return null for every failure",
+];
+/**
+ * Rule 16 (frozen quotes, respin U1): "<row>|<section>|<text>" for every quote of every row, written out in full. A
+ * shortened quote still renders, so the docs checks stay green while a weakening of the clause it dropped no longer names
+ * the row; only this literal sees the shortening itself.
+ */
+const EXPECTED_QUOTES: readonly string[] = [
+  "a|taxonomy|(a) syntax/validation error before invocation",
+  "b|taxonomy|(b) capability unavailable",
+  "c|taxonomy|(c) permission denied",
+  "d|taxonomy|(d) transport/runtime failure",
+  "e|taxonomy|(e) producer domain result unsuccessful",
+  "f|taxonomy|(f) uncertain external effect",
+  "g|taxonomy|(g) cancelled/aborted wait",
+  "h|taxonomy|(h) stale observation",
+  "never-silent-null|taxonomy|Expose typed diagnostics; do not silently return null for every failure.",
+  "never-silent-null|boundary|The host now transports a typed CapabilityError with its category across worker RPC.",
+  "never-silent-null|boundary|fatal authorization, validation and uncertain-effect failures are not converted to ordinary null item failures by parallel composition.",
+];
+/** The mid-sentence clause of the typed CapabilityError sentence K6 weakens, and its weakened form. */
+const RPC_CLAUSE = "with its category across worker RPC";
+const RPC_WEAKENED = "without its category across worker RPC";
+/** The head clause of the parallel-composition sentence K7 weakens (one failure class dropped), and its weakened form. */
+const FATAL_CLAUSE = "fatal authorization, validation and uncertain-effect failures";
+const FATAL_WEAKENED = "fatal authorization and uncertain-effect failures";
 
 const readRepo = (path: string): string => readFileSync(join(ROOT, path), "utf8");
 const casePin = (entry: Pin): CasePin => ({ file: entry.file, title: entry.title, tier: DEFAULT_GATE_TIER });
 const shapeOf = (row: TaxonomyRow): string => `${row.row}:${row.pins.length}:${row.quotes.length}`;
 const judgedOf = (rows: readonly TaxonomyRow[]): string[] => rows.flatMap(row => row.pins.map(entry => `${row.row}|${basename(entry.file)}|${entry.title}`));
+const labelOf = (row: TaxonomyRow): string => `${row.row}|${row.label}`;
+const quotesOf = (row: TaxonomyRow): string[] => row.quotes.map(quote => `${row.row}|${quote.where}|${quote.text}`);
+/** The rows whose label is not a clause of their own taxonomy quote: the read that makes a shortened label red. */
+const labelsOutsideQuotes = (rows: readonly TaxonomyRow[]): string[] =>
+  rows.filter(row => !row.quotes.some(quote => quote.where === "taxonomy" && quote.text.includes(row.label))).map(row => row.row);
 
 const JUDGED_ROWS = ROWS.filter(row => row.pins.length > 0);
 
 /** One line per pin that is not ok, naming the row; the helper's why names the file, title, tier and cause. */
 const failures = (row: TaxonomyRow, verdicts: readonly PinVerdict[]): string[] => verdicts.filter(verdict => !verdict.ok).map(verdict => `row ${row.row}: ${verdict.code}: ${verdict.why}`);
+
+/**
+ * The explicit budget of every judging case in this file (respin U2), file-local so no other census file's budget moves.
+ * Sized as 5 x the measured p99 of the costliest judging case (U2's one table judgment), rounded up to a whole 5 s.
+ * Measured 2026-10-20 against a full default-tier report (321 files, 12603 tests) on the shared fleet host with other
+ * lanes live: this file alone, 8 sequential (load1 381-432) p99 6346 ms and 16 at 8-way (load1 391-397) p99 8562 ms;
+ * 16 whole census-tier runs, 8 sequential (load1 300-366) p99 6682 ms and 8 at 2-way (load1 333-507) p99 12659 ms. The
+ * table judgment ran over vitest's default 5000 ms in 31 of those 40 runs, and no judging case reached 30000 ms.
+ * 5 x 12659 ms = 63295 ms, rounded up to 65000 ms.
+ */
+const JUDGE_BUDGET_MS = 65_000;
+const JUDGING: { readonly timeout: number } = { timeout: JUDGE_BUDGET_MS };
+/** The cases that run under JUDGE_BUDGET_MS, by title head: U2's table judgment, AC2 per row and the five liveness falsifiers. */
+const EXPECTED_BUDGETED: readonly string[] = [
+  "U2 memo",
+  "AC2 row 'a'",
+  "AC2 row 'b'",
+  "AC2 row 'c'",
+  "AC2 row 'd'",
+  "AC2 row 'e'",
+  "AC2 row 'f'",
+  "AC2 row 'g'",
+  "AC2 row 'h'",
+  "AC2 row 'never-silent-null'",
+  "M1",
+  "M2",
+  "M3",
+  "M4",
+  "M5",
+];
+
+/** A pin's identity for the memo: its verdict depends on the file and the title (the tier is the default gate's). */
+const pinKey = (entry: Pin): string => JSON.stringify([entry.file, entry.title]);
+/** U2 memo: every verdict verdictsOf judged this run, by pin identity, so no pin is judged twice per run. */
+const verdictMemo = new Map<string, PinVerdict>();
+/** The judge() calls verdictsOf made this run: U2 pins that the table is judged once and a row read judges nothing. */
+let memoJudgeCalls = 0;
+
+/** Every pin's verdict in pin order; the pins this run has not judged yet are judged together, in ONE judge() call. */
+function verdictsOf(pins: readonly Pin[]): readonly PinVerdict[] {
+  const fresh = [...new Map(pins.filter(entry => !verdictMemo.has(pinKey(entry))).map(entry => [pinKey(entry), entry] as const)).values()];
+  if (fresh.length > 0) {
+    memoJudgeCalls += 1;
+    const judged = judge(
+      REPORT,
+      fresh.map(entry => casePin(entry)),
+    );
+    fresh.forEach((entry, index) => {
+      const verdict = judged[index];
+      if (verdict !== undefined) verdictMemo.set(pinKey(entry), verdict);
+    });
+  }
+  return pins.flatMap(entry => {
+    const verdict = verdictMemo.get(pinKey(entry));
+    return verdict === undefined ? [] : [verdict];
+  });
+}
+
+/** Every table pin, in table order. */
+const TABLE_PINS: readonly Pin[] = ROWS.flatMap(row => row.pins);
+/** A row's verdicts from the memo; the first read judges the whole table in one call, so no row takes a judge() call of its own. */
+function judgeRow(row: Pick<TaxonomyRow, "pins">): readonly PinVerdict[] {
+  verdictsOf(TABLE_PINS);
+  return verdictsOf(row.pins);
+}
 
 /** The rendered paragraph texts of a section's blocks. */
 const paragraphTexts = (blocks: readonly RenderedBlock[]): string[] => blocks.flatMap(block => (block.kind === "paragraph" ? [block.text] : []));
@@ -255,7 +379,7 @@ function categoriesIn(text: string): { letter: string; label: string }[] {
 }
 
 /** docs/05 drifts, each naming the row or the section it breaks. The per-row quote checks run independently of the exactness checks. */
-function docs05Failures(markdown: string): string[] {
+function docs05Failures(markdown: string, rows: readonly TaxonomyRow[] = ROWS): string[] {
   const out: string[] = [];
   const sections: { where: Where; heading: string; blocks: readonly RenderedBlock[] }[] = [
     { where: "taxonomy", heading: HEADING_TAXONOMY, blocks: BLOCKS_TAXONOMY },
@@ -268,7 +392,7 @@ function docs05Failures(markdown: string): string[] {
       continue;
     }
     const rendered = paragraphTexts(section.blocks);
-    for (const row of ROWS) {
+    for (const row of rows) {
       for (const quote of row.quotes) {
         if (quote.where === where && !rendered.some(text => text.includes(quote.text))) out.push(`row ${row.row}: its quote "${quote.text}" no longer renders in ${DOC_05} § ${heading}`);
       }
@@ -308,6 +432,12 @@ describe("wb-6hb.7 docs/workbench/05 error-taxonomy census (report mode)", () =>
     expect(ROWS.map(shapeOf)).toEqual(EXPECTED_SHAPE);
     expect(judgedOf(ROWS)).toEqual(EXPECTED_JUDGED);
     expect(JUDGED_ROWS).toHaveLength(9);
+  });
+
+  it("AC1: every row's label and every quote's section and text are frozen verbatim, and every label is a clause of its taxonomy quote (rule 16, respin U1)", () => {
+    expect(ROWS.map(labelOf), "row|label over the whole table").toEqual(EXPECTED_LABELS);
+    expect(ROWS.flatMap(quotesOf), "row|section|text over every quote").toEqual(EXPECTED_QUOTES);
+    expect(labelsOutsideQuotes(ROWS), "rows whose label is not part of their taxonomy quote").toEqual([]);
   });
 
   it("AC1: every row is pinned on the default gate and names a verbatim quote; an unpinned row would carry a reason", () => {
@@ -353,11 +483,34 @@ describe("wb-6hb.7 docs/workbench/05 error-taxonomy census (report mode)", () =>
     expect(ROWS.filter(row => row.row !== "never-silent-null").map(row => row.row)).toEqual(EXPECTED_CATEGORIES);
   });
 
-  it.each(JUDGED_ROWS.map(row => ({ row })))("AC2 row $row.row: every named default-gate case is collected once, passed and asserting in the gate's own report", ({ row }) => {
-    const verdicts = judge(
-      REPORT,
-      row.pins.map(entry => casePin(entry)),
-    );
+  it("U2 memo: one judge() call judges every table pin, at most once per run, and re-reading the table or any row judges nothing", JUDGING, () => {
+    expect(TABLE_PINS).toHaveLength(EXPECTED_JUDGED.length);
+    const before = memoJudgeCalls;
+    const verdicts = verdictsOf(TABLE_PINS);
+    expect(verdicts).toHaveLength(TABLE_PINS.length);
+    expect(memoJudgeCalls - before, "the whole table takes one judge() call, or none once judged").toBeLessThanOrEqual(1);
+    const judged = memoJudgeCalls;
+    expect(verdictsOf(TABLE_PINS)).toEqual(verdicts);
+    expect(memoJudgeCalls - judged, "a second read of the table judges nothing").toBe(0);
+    for (const row of ROWS) expect(judgeRow(row)).toHaveLength(row.pins.length);
+    expect(memoJudgeCalls - judged, "a read of every row judges nothing").toBe(0);
+  });
+
+  it("U2 budget: exactly the judging cases carry the file-local budget, and it is above vitest's default 5000 ms", ({ task }) => {
+    const budgeted: string[] = [];
+    const walk = (tasks: typeof task.file.tasks): void => {
+      for (const child of tasks) {
+        if (child.type === "test" && child.timeout === JUDGE_BUDGET_MS) budgeted.push(child.name.slice(0, child.name.indexOf(":")));
+        else if (child.type === "suite") walk(child.tasks);
+      }
+    };
+    walk(task.file.tasks);
+    expect(JUDGE_BUDGET_MS, "the judging budget is above vitest's default test timeout").toBeGreaterThan(5_000);
+    expect(budgeted, "the cases that run under JUDGE_BUDGET_MS, by title head").toEqual(EXPECTED_BUDGETED);
+  });
+
+  it.each(JUDGED_ROWS.map(row => ({ row })))("AC2 row $row.row: every named default-gate case is collected once, passed and asserting in the gate's own report", JUDGING, ({ row }) => {
+    const verdicts = judgeRow(row);
     expect(verdicts).toHaveLength(row.pins.length);
     expect(failures(row, verdicts)).toEqual([]);
     expect(verdicts.map(verdict => verdict.code)).toEqual(row.pins.map(() => "ok"));
@@ -391,7 +544,7 @@ describe("wb-6hb.7 liveness: the adopted judge is not accept-all (the real repor
     return { row, entry };
   };
 
-  it("M1: a pinned title altered by one character is absent from the report and red, naming the row, the file and the title", () => {
+  it("M1: a pinned title altered by one character is absent from the report and red, naming the row, the file and the title", JUDGING, () => {
     const { row, entry } = firstPin("d");
     const wrong = { ...entry, title: entry.title.replace("abandoned", "abandonEd") };
     const verdicts = judge(REPORT, [casePin(wrong)]);
@@ -402,24 +555,24 @@ describe("wb-6hb.7 liveness: the adopted judge is not accept-all (the real repor
     expect(line).toContain(wrong.title);
   });
 
-  it("M2: a pin with no title is red (the judge finds no such case)", () => {
+  it("M2: a pin with no title is red (the judge finds no such case)", JUDGING, () => {
     const { entry } = firstPin("g");
     const [verdict] = judge(REPORT, [casePin({ file: entry.file, title: "" })]);
     expect(verdict?.ok).toBe(false);
   });
 
-  it("M3: a file the default config excludes is never in the default report: a pin there is red, not collected", () => {
+  it("M3: a file the default config excludes is never in the default report: a pin there is red, not collected", JUDGING, () => {
     const [verdict] = judge(REPORT, [{ file: "test/workbench-native-rf-preview.test.ts", title: "any title", tier: DEFAULT_GATE_TIER }]);
     expect(verdict?.code).toBe("not-collected");
   });
 
-  it("M4: a pin that names the right title in the wrong file is red, never borrowed from a neighbour", () => {
+  it("M4: a pin that names the right title in the wrong file is red, never borrowed from a neighbour", JUDGING, () => {
     const { entry } = firstPin("e");
     const [verdict] = judge(REPORT, [casePin({ file: "test/workbench-claude-cancel-faults.test.ts", title: entry.title })]);
     expect(verdict?.ok).toBe(false);
   });
 
-  it("M5: a pin claimed under a non-default tier is refused by the default report (a live-tier label is never vouched here)", () => {
+  it("M5: a pin claimed under a non-default tier is refused by the default report (a live-tier label is never vouched here)", JUDGING, () => {
     const { entry } = firstPin("c");
     const [verdict] = judge(REPORT, [{ file: entry.file, title: entry.title, tier: "forge-command" }]);
     expect(verdict?.ok).toBe(false);
@@ -467,6 +620,37 @@ describe("wb-6hb.7 rule 16 / O1 / O2: hollowing the table reddens the frozen lit
   it("H6: removing a row from the table fails the row-set pin", () => {
     expect(ROWS.filter(row => row.row !== "never-silent-null").map(row => row.row)).not.toEqual(EXPECTED_ROW_IDS);
   });
+
+  it("H7: shortening the never-silent-null label (the GT5b shape) keeps the count and title literals but changes the label literal and leaves the label outside its quote", () => {
+    const mutated = withRow("never-silent-null", row => ({ ...row, label: "do not return null" }));
+    expect(mutated.map(shapeOf)).toEqual(EXPECTED_SHAPE);
+    expect(judgedOf(mutated)).toEqual(EXPECTED_JUDGED);
+    expect(mutated.map(labelOf)).not.toEqual(EXPECTED_LABELS);
+    expect(labelsOutsideQuotes(mutated)).toEqual(["never-silent-null"]);
+  });
+
+  it("H8: shortening any quote of any row by its last word keeps the count literal but changes the quote literal (the GT5 / GT5c / GT5d shapes)", () => {
+    let shortened = 0;
+    for (const row of ROWS) {
+      row.quotes.forEach((quote, index) => {
+        const text = quote.text.slice(0, quote.text.lastIndexOf(" "));
+        const mutated = withRow(row.row, entry => ({ ...entry, quotes: entry.quotes.map((other, at) => (at === index ? { ...other, text } : other)) }));
+        expect(mutated.map(shapeOf), `row ${row.row} quote ${index + 1}`).toEqual(EXPECTED_SHAPE);
+        expect(mutated.flatMap(quotesOf), `row ${row.row} quote ${index + 1}`).not.toEqual(EXPECTED_QUOTES);
+        shortened += 1;
+      });
+    }
+    expect(shortened).toBe(EXPECTED_QUOTES.length);
+  });
+
+  it("H9: a boundary quote shortened to its head (the GT5d shape) still renders, so the K6 weakening no longer names the row: only the quote literal sees it", () => {
+    const head = "The host now transports a typed CapabilityError";
+    const mutated = withRow("never-silent-null", row => ({ ...row, quotes: row.quotes.map(quote => (quote.text === BOUNDARY_RPC ? boundary(head) : quote)) }));
+    expect(mutated.flatMap(quotesOf)).not.toEqual(EXPECTED_QUOTES);
+    const weakened = synthetic05((_text, boundaryText) => ({ boundary: boundaryText.replace(RPC_CLAUSE, RPC_WEAKENED) }));
+    expect(named(docs05Failures(weakened))).toEqual(["row never-silent-null"]);
+    expect(named(docs05Failures(weakened, mutated))).toEqual([]);
+  });
 });
 
 describe("wb-6hb.7 docs drift names the row or the section (synthetic documents, rendered view)", () => {
@@ -497,6 +681,18 @@ describe("wb-6hb.7 docs drift names the row or the section (synthetic documents,
   it("K5 names the never-silent-null row when the typed CapabilityError sentence is dropped from the boundary section", () => {
     const lines = docs05Failures(synthetic05((_text, boundaryText) => ({ boundary: boundaryText.replace("The host now transports a typed `CapabilityError` with its category across worker RPC. ", "") })));
     expect(named(lines)).toEqual(["row never-silent-null"]);
+  });
+
+  it("K6 names the never-silent-null row (and only it) when a mid-sentence clause of the typed CapabilityError sentence is weakened (respin U1)", () => {
+    const lines = docs05Failures(synthetic05((_text, boundaryText) => ({ boundary: boundaryText.replace(RPC_CLAUSE, RPC_WEAKENED) })));
+    expect(named(lines)).toEqual(["row never-silent-null"]);
+    expect(lines.some(line => line.includes(`${HEADING_BOUNDARY} is not exactly its frozen blocks`))).toBe(true);
+  });
+
+  it("K7 names the never-silent-null row (and only it) when the parallel-composition sentence drops a failure class from its head clause (respin U1)", () => {
+    const lines = docs05Failures(synthetic05((_text, boundaryText) => ({ boundary: boundaryText.replace(FATAL_CLAUSE, FATAL_WEAKENED) })));
+    expect(named(lines)).toEqual(["row never-silent-null"]);
+    expect(lines.some(line => line.includes(`${HEADING_BOUNDARY} is not exactly its frozen blocks`))).toBe(true);
   });
 
   it("D1 goes red on the taxonomy section, naming no row, when a sentence is appended", () => {
