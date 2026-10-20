@@ -35,6 +35,12 @@ function makePi() {
 
 const BROKEN = "---\nname: broken\ndescription: Use this: that\n---\n\nBroken.\n";
 
+/** Where activation publishes its manager registry (src/index.ts MANAGER_KEY); waitForAll settles every background agent. */
+const MANAGER_KEY = Symbol.for("pi-subagents:manager");
+interface ManagerRegistry {
+  waitForAll(): Promise<void>;
+}
+
 let cwd: string;
 let originalCwd: string;
 let originalAgentDir: string | undefined;
@@ -74,6 +80,12 @@ describe("strictAgentFiles gates extension activation", () => {
     // Activation starts fire-and-forget work against the agent dir that lands after the test
     // body returns; removing the directory first lets it re-create the tree (agent-dir/auth.json).
     await new Promise(resolve => setTimeout(resolve, 100));
+    // wb-0xjp: the unknown-type Agent call runs a detached background child (the general-purpose
+    // fallback) whose session setup writes agent-dir/auth.json, models-store.json and sessions/ -
+    // measured 375 ms after the call at load1 ~300, past the fixed wait above - so under host load
+    // it re-created this directory after removeScratch and the leak guard failed the suite with
+    // every test passed. Settle the background agents before the directory goes.
+    await (globalThis as Record<symbol, ManagerRegistry | undefined>)[MANAGER_KEY]?.waitForAll();
     warn.mockRestore();
     delete (globalThis as any)[Symbol.for("pi-subagents:manager")];
     process.chdir(originalCwd);
