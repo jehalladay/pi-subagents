@@ -13,12 +13,19 @@
  * binding: a frozen table that ties each location to its truth label, to the cases that prove it, or to an OPEN row
  * naming what is missing.
  *
- * ENUMERATION under R596 (fifth cut). Only the following local modes are claimed. Each names an actual
- * falsifier title below; the R596 case checks the quote, quiet-row and independent vocabulary
- * falsifiers registered exactly once in run mode. Existing AC1/AC2 pins protect their judged set.
- * PINNED P1 row/pin/label/receipt shape: AC1 row shape; M2; R0-R13; G1/G2; U2 real corpus.
- * PINNED P2 judged title identity and iteration: EXPECTED_JUDGED, EXPECTED_JUDGED_ROWS,
- * AC2 completeness, and M1/M3/M4/M5/M6/M7; no alternative report or re-execution is accepted.
+ * ENUMERATION under R596 (fifth cut, extended by the wb-0kg.14 residual-list cut). Only the following local modes
+ * are claimed. Each names an actual falsifier title below; the R596 case checks the quote, quiet-row, independent
+ * vocabulary and verdict-consumption falsifiers registered exactly once in run mode, and the R596 roster freezes
+ * every case this file registers by run mode and title, in registration order (never its body). Existing AC1/AC2
+ * pins protect their judged set.
+ * PINNED P1 row/pin/label/receipt shape and row prose: AC1 row shape; AC1 prose (each row's text verbatim, its
+ * reason, truth note and merged clause by digest); M2; R0-R13; G1/G2; U2 real corpus.
+ * PINNED P2 judged title identity, iteration and verdict consumption: EXPECTED_JUDGED, EXPECTED_JUDGED_ROWS,
+ * AC2 completeness, AC2 consumption (each frozen judged case's verdict reaches failures() exactly once, as a
+ * verdict the report judge itself returned; V1/V2), and M1/M3/M4/M5/M6/M7; no alternative report or re-execution
+ * is accepted. AC4 own reads: the leg's one file reader refuses every file outside docs/14, the census config,
+ * this file and the receipts corpus (forge.toml included), and every reference to that reader or to the fs reader
+ * in this file's own source sits in readRepo or in the reader itself.
  * PINNED P3 per-row location/whole-clause quote: U1 frozen quote literal and H3b/H3c/H3d/H3f/H3g/H3h/H3i/H3j.
  * PINNED P4 label vocabulary: U2 independent literals; R1 and R8 per pass label; G1/G2 real corpus.
  * PINNED P5 rendered section exactness: K1-K4 and D1-D9, including comment/fence hiding.
@@ -40,6 +47,11 @@
  * R6 actual command execution: this leg does not run/re-run the command; the synthetic matching
  * receipt text stays quiet even when it says the command was not re-run at HEAD (Q6).
  * R7 uncovered locations: L10/L11b/L12/L14b remain open and never claim a pass (Q7).
+ * R8 verdict read but not asserted: AC2 consumption is recorded where failures() reads a verdict, so a
+ * failures() call whose lines no assertion reads still counts as consumed (Q8).
+ * R9 helper-routed reads: a read a helper module makes goes through the helper's own reader, never this leg's,
+ * so it stays quiet - the adopted judge's vouch reads forge.toml by design (VOUCH_READ_SET forge-step), and
+ * sourceStructure reads any file it is handed (Q9).
  *
  * The four refusal notes' earlier S1-S16/C1-C3, seven floor skip routes, T1-T6/config exclusions,
  * early-return hollowing and FILE_HAZARD/misattribution belong to the RETIRED hand scanner.
@@ -98,11 +110,13 @@
  * flips it to pinned or receipted here.
  */
 
-import { readdirSync, readFileSync } from "node:fs";
-import { basename, dirname, join } from "node:path";
+import { createHash } from "node:crypto";
+import { readFileSync as readDisk, readdirSync } from "node:fs";
+import { basename, dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
+import ts from "typescript";
 import { describe, expect, it } from "vitest";
-import { type CasePin, DEFAULT_GATE_TIER, DEFAULT_TIER_REPORT, docsSection, judge, type PinVerdict, type RenderedBlock, sectionMatches, sourceStructure } from "./helpers/census.js";
+import { type CasePin, DEFAULT_GATE_TIER, DEFAULT_TIER_REPORT, docsSection, judge as judgeReport, type PinVerdict, type RenderedBlock, sectionMatches, sourceStructure, VOUCH_READ_SET } from "./helpers/census.js";
 
 type TruthLabel = "code present" | "fixture pass" | "live SDK pass" | "adversarial pass" | "scale benchmark pass" | "not started";
 type Tier = "default-gate" | "forge-command";
@@ -178,6 +192,21 @@ const RECEIPTS_DIR = "docs/workbench/receipts";
 const TRACEABILITY_FILE = "docs/workbench/TRACEABILITY.md";
 /** A forge run id, matched as a whole token. */
 const RUN_ID = /^cmd_[0-9a-f]{12}$/;
+/** The census tier's config, which the AC4 tier check reads. */
+const CENSUS_CONFIG = "vitest.census.config.ts";
+/**
+ * AC4 own reads (wb-0kg.14, F4): the files this leg's own code reads - docs/14, the census config, this file and the
+ * receipts corpus (TRACEABILITY.md and docs/workbench/receipts/*.md). forge.toml is outside it: the leg's own code never
+ * reads it (the adopted judge's vouch reads it by design, through the helper's own reader: residual R9).
+ */
+const OWN_READS: readonly string[] = [DOCS_FILE, CENSUS_CONFIG, SELF, TRACEABILITY_FILE];
+const ownReadable = (path: string): boolean => OWN_READS.includes(path) || (dirname(path) === RECEIPTS_DIR && path.endsWith(".md"));
+/** The leg's one file reader (readRepo reads through it): a path outside its read set throws, naming it, before a byte is read. */
+const readFileSync = (path: string, encoding: "utf8"): string => {
+  const repoPath = relative(ROOT, path);
+  if (!ownReadable(repoPath)) throw new Error(`${SELF} reads only docs/14, the census config, itself and the receipts corpus; it refused to read ${repoPath}`);
+  return readDisk(path, encoding);
+};
 
 const PASS_LABELS: readonly TruthLabel[] = ["fixture pass", "live SDK pass", "adversarial pass", "scale benchmark pass"];
 const OPEN_LABELS: readonly TruthLabel[] = ["code present", "not started"];
@@ -567,17 +596,80 @@ const EXPECTED_JUDGED_ROWS: readonly string[] = ["L1", "L2a", "L2b", "L2c", "L3"
 const UNFILED_ROWS: readonly string[] = ["L10", "L11b", "L12", "L14b"];
 /** O1: the split locations every row of which is covered (each half carries its own proof). */
 const FULLY_COVERED_SPLITS: readonly string[] = ["L2", "L13"];
+/** Rule 16 (wb-0kg.14, F3): "<row>|<text>|<digest of reason, truth note and merged clause>" per row, literal at cut time. */
+const EXPECTED_PROSE: readonly string[] = [
+  "L1|before provider call|127ec9fccda1",
+  "L2a|after provider side effect but before host result (resume refusal half)|67fb922f2e0f",
+  "L2b|after provider side effect but before host result (detached-profile marker, static text)|bdb5b422bcd9",
+  "L2c|after provider side effect but before host result (runtime.ts dispatched-row-before-call half)|831b756e3f20",
+  "L3|after result before journal append|243dffd59e3d",
+  "L4|before event persist|8a8e7960c09b",
+  "L5|after reconnect but before snapshot|a0c407eeec8c",
+  "L6|before Claude SDK session ID first received|a0f012612729",
+  "L7|after Claude SDK session ID first received|3236a6347368",
+  "L8|during tool execution|0c3296331f79",
+  "L9|after output tokens streamed but before final|2781a2845633",
+  "L10|inside worktree after edits but before Forge gate|94318c0f86ea",
+  "L11a|after Forge evidence while workspace mutates (failed-gate observer half)|434de105464c",
+  "L11b|after Forge evidence while workspace mutates (forge-contract basis-change half)|91589aa081c7",
+  "L12|after isolated cleanup|b18f3e3392c5",
+  "L13a|Furnace Work retry while child Run establishment is uncertain (fixture journey half)|0e5955c3f367",
+  "L13b|Furnace Work retry while child Run establishment is uncertain (fixture runner command half)|804bef52696f",
+  "L13c|Furnace Work retry while child Run establishment is uncertain (live leg half)|17d505761273",
+  "L14a|concurrent readers with one shared child (judge and ownership half)|64afa7d17ded",
+  "L14b|concurrent readers with one shared child (real-process realisation half)|50371f346f46",
+];
 
 const readRepo = (path: string): string => readFileSync(join(ROOT, path), "utf8");
 const casePin = (entry: Pin): CasePin => ({ file: entry.file, title: entry.title, tier: DEFAULT_GATE_TIER });
 const shapeOf = (row: Row): string => `${row.row}:${row.status}:${row.label}:${row.pins.length}:${row.registers === undefined ? 0 : 1}:${row.evidence?.length ?? 0}:${row.receipt?.id ?? "-"}`;
+/** Rule 16 (wb-0kg.14, F3): a short digest of a row's reason, truth note and merged clause; a rewritten one changes it. */
+const proseDigest = (row: Row): string => createHash("sha256").update(JSON.stringify([row.reason, row.truth ?? "", row.merges ?? ""])).digest("hex").slice(0, 12);
+const proseOf = (row: Row): string => `${row.row}|${row.text}|${proseDigest(row)}`;
 
 /** Every default-gate case a row names, judged against the gate's own report: its coverage pins, its registration pin and its evidence. */
 const JUDGED = ROWS.flatMap(row => [...row.pins.map(entry => ({ row, kind: "pin", entry })), ...(row.registers === undefined ? [] : [{ row, kind: "registers", entry: row.registers }]), ...(row.evidence ?? []).map(entry => ({ row, kind: "evidence", entry }))]);
 const JUDGED_ROWS = ROWS.filter(row => row.pins.length > 0 || row.registers !== undefined || (row.evidence?.length ?? 0) > 0);
 
-/** One line per pin that is not ok, naming the row; the helper's why names the file, title, tier and cause. */
-const failures = (row: Row, kind: string, verdicts: readonly PinVerdict[]): string[] => verdicts.filter(verdict => !verdict.ok).map(verdict => `row ${row.row}/${kind}: ${verdict.code}: ${verdict.why}`);
+/**
+ * AC2 consumption (wb-0kg.14, F1): every verdict the report judge returned, held by identity, so a verdict fabricated
+ * in this file is told apart from a judged one however closely it copies the judge's fields.
+ */
+const MINTED = new WeakSet<PinVerdict>();
+/** Every judge() call in this leg is the helper's report judge, unchanged; the wrapper only records what it returned. */
+const judge = (reportPath: string, pins: readonly CasePin[]): readonly PinVerdict[] => {
+  const verdicts = judgeReport(reportPath, pins);
+  for (const verdict of verdicts) MINTED.add(verdict);
+  return verdicts;
+};
+
+/** A verdict as failures() read it, keyed like the frozen judged set. */
+interface Consumed {
+  readonly key: string;
+  readonly verdict: PinVerdict;
+}
+/** AC2 consumption: every verdict failures() reads, in read order (the AC2 cases are its first readers). */
+const CONSUMED: Consumed[] = [];
+
+/** One line per pin that is not ok, naming the row; the helper's why names the file, title, tier and cause. It records each verdict it reads. */
+const failures = (row: Row, kind: string, verdicts: readonly PinVerdict[]): string[] => {
+  for (const verdict of verdicts) CONSUMED.push({ key: judgedKey(row.row, kind, verdict.pin), verdict });
+  return verdicts.filter(verdict => !verdict.ok).map(verdict => `row ${row.row}/${kind}: ${verdict.code}: ${verdict.why}`);
+};
+
+/**
+ * AC2 consumption (V1/V2): one problem per frozen judged case whose verdict failures() did not read exactly once (J2:
+ * an AC2 case that judges and never asserts on the verdicts) or read as a verdict the report judge never returned (J1:
+ * an AC2 case that fabricates them), and one per read of a case outside the frozen set.
+ */
+const consumptionProblems = (expected: readonly string[], consumed: readonly Consumed[], minted: WeakSet<PinVerdict>): string[] => [
+  ...expected.flatMap(key => {
+    const reads = consumed.filter(entry => entry.key === key);
+    if (reads.length !== 1) return [`${key}: failures() read its verdict ${reads.length} times, not exactly once`];
+    return reads.every(entry => minted.has(entry.verdict)) ? [] : [`${key}: the verdict failures() read is not one the report judge returned`];
+  }),
+  ...consumed.filter(entry => !expected.includes(entry.key)).map(entry => `${entry.key}: failures() read a verdict outside the frozen judged set`),
+];
 
 /** F1: every entry the AC2 cases actually hand the judge, accumulated as they run, so the iteration is measured. */
 const AC2_JUDGED: string[] = [];
@@ -600,6 +692,27 @@ const receiptsCorpus = (): CorpusLine[] =>
         .map(name => `${RECEIPTS_DIR}/${name}`),
     ].map(file => ({ file, text: readRepo(file) })),
   );
+
+/**
+ * AC4 own reads (F4): every identifier reference to the given names in this file's own source, as
+ * "<name><-<enclosing top-level binding>" ("<top level>" outside one); imports and a binding's own name are not references.
+ */
+function referencesOf(names: readonly string[]): string[] {
+  const sf = ts.createSourceFile(SELF, readRepo(SELF), ts.ScriptTarget.Latest, true);
+  const out: string[] = [];
+  for (const statement of sf.statements) {
+    if (ts.isImportDeclaration(statement)) continue;
+    const declarations = ts.isVariableStatement(statement) ? statement.declarationList.declarations : [];
+    const owner = declarations.length > 0 ? declarations.map(declaration => declaration.name.getText(sf)).join(",") : ts.isFunctionDeclaration(statement) ? (statement.name?.text ?? "<top level>") : "<top level>";
+    const own = new Set<ts.Node>(declarations.map(declaration => declaration.name));
+    const visit = (node: ts.Node): void => {
+      if (ts.isIdentifier(node) && names.includes(node.text) && !own.has(node)) out.push(`${node.text}<-${owner}`);
+      ts.forEachChild(node, visit);
+    };
+    visit(statement);
+  }
+  return out;
+}
 
 /**
  * A3, the receipt rule, as one pure reading of a row against a receipts corpus; every problem names the row. A run of
@@ -744,6 +857,10 @@ describe("wb-0kg.12 docs/workbench/14 fault-injection-locations census (report m
     expect(ROWS.map(shapeOf)).toEqual(EXPECTED_SHAPE);
     expect(JUDGED.map(judged => `${judged.row.row}|${judged.kind}|${judged.entry.file.split("/").pop()}|${judged.entry.title}`)).toEqual(EXPECTED_JUDGED);
     expect(JUDGED_ROWS.map(row => row.row)).toEqual(EXPECTED_JUDGED_ROWS);
+  });
+
+  it("AC1 prose (rule 16, wb-0kg.14 F3): every row's text is frozen verbatim, and its reason, truth note and merged clause by digest", () => {
+    expect(ROWS.map(proseOf)).toEqual(EXPECTED_PROSE);
   });
 
   it("AC1: the live section renders exactly its five frozen bullets as one list, HTML-free", () => {
@@ -899,6 +1016,11 @@ describe("wb-0kg.12 docs/workbench/14 fault-injection-locations census (report m
     expect([...AC2_JUDGED].sort()).toEqual([...EXPECTED_JUDGED].sort());
   });
 
+  it("AC2 consumption (wb-0kg.14 F1): every frozen judged case's verdict reached failures() exactly once, as a verdict the report judge itself returned", () => {
+    expect(CONSUMED, "the verdicts the AC2 cases' assertions read").toHaveLength(EXPECTED_JUDGED.length);
+    expect(consumptionProblems(EXPECTED_JUDGED, CONSUMED, MINTED)).toEqual([]);
+  });
+
   it("AC4: the leg judges the gate's own report and executes nothing: it imports judge, never judgePins, reads no forge.toml and loads no module at runtime", () => {
     const own = sourceStructure(ROOT, SELF);
     expect(own.ok, own.why).toBe(true);
@@ -909,6 +1031,15 @@ describe("wb-0kg.12 docs/workbench/14 fault-injection-locations census (report m
     expect(own.imports.filter(entry => entry.module === "node:child_process" || entry.module === "child_process")).toEqual([]);
     const pinned = JUDGED.map(entry => basename(entry.entry.file, ".ts"));
     expect(own.imports.filter(entry => pinned.some(name => entry.module.includes(name)))).toEqual([]);
+    // wb-0kg.14 F4: the leg's own code reads no forge.toml. Its one file reader admits only OWN_READS and the receipts
+    // corpus, only readRepo reaches that reader, only the reader reaches the fs reader, and node:fs is imported for
+    // nothing else (the adopted judge's vouch reads forge.toml through the helper's own reader: residual R9).
+    expect(OWN_READS).toEqual(["docs/workbench/14-qa-and-benchmarks.md", "vitest.census.config.ts", "test/workbench-fault-injection-census.census.ts", "docs/workbench/TRACEABILITY.md"]);
+    expect(["docs/workbench/receipts/wb-3hc.md", "forge.toml", "docs/workbench/receipts/nested/wb-3hc.md", "docs/workbench/receipts/wb-3hc.json"].map(ownReadable)).toEqual([true, false, false, false]);
+    expect(() => readRepo("forge.toml")).toThrow("it refused to read forge.toml");
+    expect(referencesOf(["readDisk", "readFileSync"]), "every reference to the fs reader and to the leg's reader, by enclosing top-level binding").toEqual(["readDisk<-readFileSync", "readFileSync<-readRepo"]);
+    const fsImports = own.imports.filter(entry => entry.module === "fs" || entry.module === "node:fs" || entry.module.startsWith("fs/") || entry.module.startsWith("node:fs/"));
+    expect(fsImports.map(entry => `${entry.module}:${entry.names.join(",")}:${entry.kind}`)).toEqual(["node:fs:readFileSync,readdirSync:static"]);
   });
 
   it("AC4: the leg is a census-tier file, outside the default include whose report it judges", () => {
@@ -1317,10 +1448,10 @@ describe("wb-0kg.12 R596 enumeration and named residual quiet rows", () => {
     }
   });
 
-  it("R596: the header enumerates exactly P1-P6 and R1-R7, and every named quote and quiet row is registered once in run mode", ({ task }) => {
+  it("R596: the header enumerates exactly P1-P6 and R1-R9, and every named quote, quiet row and consumption falsifier is registered once in run mode", ({ task }) => {
     const header = readRepo(SELF).split("*/")[0] ?? "";
     expect([...header.matchAll(/PINNED (P[0-9]+) /g)].map(match => match[1])).toEqual(["P1", "P2", "P3", "P4", "P5", "P6"]);
-    expect([...header.matchAll(/^ \* (R[0-9]+) /gm)].map(match => match[1])).toEqual(["R1", "R2", "R3", "R4", "R5", "R6", "R7"]);
+    expect([...header.matchAll(/^ \* (R[0-9]+) /gm)].map(match => match[1])).toEqual(["R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9"]);
     const registered: { readonly name: string; readonly mode: string }[] = [];
     const walk = (tasks: typeof task.file.tasks): void => {
       for (const child of tasks) {
@@ -1329,12 +1460,176 @@ describe("wb-0kg.12 R596 enumeration and named residual quiet rows", () => {
       }
     };
     walk(task.file.tasks);
-    for (const id of ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "H3b", "H3c", "H3d", "H3f", "H3g", "H3h", "H3i", "H3j"]) {
+    for (const id of ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Q9", "V1", "V2", "H3b", "H3c", "H3d", "H3f", "H3g", "H3h", "H3i", "H3j"]) {
       const cases = registered.filter(child => child.name.startsWith(`${id} `) || child.name.startsWith(`${id}:`) || child.name.startsWith(`'${id}':`));
       expect(cases.map(child => child.mode), id).toEqual(["run"]);
       expect(header, id).toContain(id);
     }
     for (const label of FROZEN_RECEIPT_LABELS) expect(registered.filter(child => child.name === `R1 an unreceipted ''${label}'' row is red`).map(child => child.mode), label).toEqual(["run"]);
     for (const label of FROZEN_PASS_LABELS) expect(registered.filter(child => child.name === `R8 per pass label: an open ''${label}'' row is red`).map(child => child.mode), label).toEqual(["run"]);
+  });
+});
+
+/** A registered case as the R596 roster reads vitest's task tree: its title, run mode and it.fails flag. */
+interface RosterTask {
+  readonly type: string;
+  readonly name: string;
+  readonly mode: string;
+  readonly fails?: boolean;
+  readonly tasks?: readonly RosterTask[];
+}
+const rosterCases = (tasks: readonly RosterTask[]): RosterTask[] => tasks.flatMap(child => (child.type === "test" ? [child] : child.type === "suite" ? rosterCases(child.tasks ?? []) : []));
+const rosterEntry = (entry: RosterTask): string => `${entry.mode}${entry.fails === true ? "+fails" : ""}|${entry.name}`;
+
+/** R596 roster (wb-0kg.14, F2): every case this file registers, in registration order, literal at cut time; each one runs. */
+const EXPECTED_ROSTER: readonly string[] = [
+  "AC1: the table holds the twenty frozen rows in order, deeply frozen, with the frozen per-row status, label, pin and receipt shape",
+  "AC1 prose (rule 16, wb-0kg.14 F3): every row's text is frozen verbatim, and its reason, truth note and merged clause by digest",
+  "AC1: the live section renders exactly its five frozen bullets as one list, HTML-free",
+  "AC1/O2: docs/14 splits to fifteen clauses, the table enumerates fourteen locations L1-L14, and the one merged clause is named by the L14 rows",
+  "AC1: every docs/14 clause is covered by a row quote, so a new docs location goes red",
+  "O1: every half-covered location is split into a covered row with its own proof and an uncovered open row with its own tier label and reason",
+  "A3: no open row is counted passed, a pinned row claims fixture pass (code present for an injection stand-in) and never more, a receipted row rests on its run of record, and unfiled gaps are exactly the listed ones",
+  "A3: a forge-command row names its command and the default-gate case that registers it outside the gate; no report vouches for the command run, so it is open with code present unless a run of record carries it",
+  "A3 receipt rule: every row's label is earned over the receipts corpus at HEAD (docs/workbench/receipts and TRACEABILITY.md)",
+  "U2: L13 is restated against its runs of record - the fixture runner's (receipts/wb-3hc.md) and the live leg forge run furnace-hosted-live (receipts/wb-0m7.md, superseding the wb-3hc live run) - and the live file is outside the default gate",
+  "AC2 row 'L1': every named default-gate case is collected once, passed and asserting in the gate's own report",
+  "AC2 row 'L2a': every named default-gate case is collected once, passed and asserting in the gate's own report",
+  "AC2 row 'L2b': every named default-gate case is collected once, passed and asserting in the gate's own report",
+  "AC2 row 'L2c': every named default-gate case is collected once, passed and asserting in the gate's own report",
+  "AC2 row 'L3': every named default-gate case is collected once, passed and asserting in the gate's own report",
+  "AC2 row 'L4': every named default-gate case is collected once, passed and asserting in the gate's own report",
+  "AC2 row 'L5': every named default-gate case is collected once, passed and asserting in the gate's own report",
+  "AC2 row 'L6': every named default-gate case is collected once, passed and asserting in the gate's own report",
+  "AC2 row 'L7': every named default-gate case is collected once, passed and asserting in the gate's own report",
+  "AC2 row 'L8': every named default-gate case is collected once, passed and asserting in the gate's own report",
+  "AC2 row 'L9': every named default-gate case is collected once, passed and asserting in the gate's own report",
+  "AC2 row 'L10': every named default-gate case is collected once, passed and asserting in the gate's own report",
+  "AC2 row 'L11a': every named default-gate case is collected once, passed and asserting in the gate's own report",
+  "AC2 row 'L12': every named default-gate case is collected once, passed and asserting in the gate's own report",
+  "AC2 row 'L13a': every named default-gate case is collected once, passed and asserting in the gate's own report",
+  "AC2 row 'L13b': every named default-gate case is collected once, passed and asserting in the gate's own report",
+  "AC2 row 'L13c': every named default-gate case is collected once, passed and asserting in the gate's own report",
+  "AC2 row 'L14a': every named default-gate case is collected once, passed and asserting in the gate's own report",
+  "AC2 row 'L14b': every named default-gate case is collected once, passed and asserting in the gate's own report",
+  "AC2 completeness (F1): the AC2 cases handed the judge exactly the frozen judged set, every row and every kind, none skipped",
+  "AC2 consumption (wb-0kg.14 F1): every frozen judged case's verdict reached failures() exactly once, as a verdict the report judge itself returned",
+  "AC4: the leg judges the gate's own report and executes nothing: it imports judge, never judgePins, reads no forge.toml and loads no module at runtime",
+  "AC4: the leg is a census-tier file, outside the default include whose report it judges",
+  "M1: a pinned title altered by one character is absent from the report and red, naming the row, the file and the title",
+  "M2: a row removed from the table fails the row-set pin (the frozen ids no longer match)",
+  "M3: a pin with no title is red (the judge finds no such case)",
+  "M4: a file the default config excludes is never in the default report: a pin there is red, not collected",
+  "M5: a pin that names the right title in the wrong file is red, never borrowed from a neighbour",
+  "M6: a forge-command tier label is carried by no report this leg reads: the default report refuses a registration pin relabelled as the command run",
+  "M7: an evidence case never counts as coverage: the open rows that cite one carry no coverage pin",
+  "Q1 residual G23 analogue: contradictory alternatives on a matching receipt line are quiet; no regex-oracle mode is claimed",
+  "Q2 residual receipt verdict fields: a matching receipt saying pass false and findings stays quiet",
+  "Q3 residual historical revision: a matching old revision is not re-measured against HEAD",
+  "Q4 residual label semantics: a valid synthetic record is quiet for each receipt label; the current table's literal is its label authority",
+  "Q6 residual command execution: matching receipt text is quiet without re-running its command at HEAD",
+  "R0 control: a receipted live row whose run of record sits on its own receipt line beside its command reads clean",
+  "R1 an unreceipted ''live SDK pass'' row is red",
+  "R1 an unreceipted ''adversarial pass'' row is red",
+  "R1 an unreceipted ''scale benchmark pass'' row is red",
+  "R2 a receipt id absent from the receipts is red",
+  "R3 a default-gate pinned row with a live label is red, even beside a found receipt",
+  "R4 a receipt that is not a forge run id is red",
+  "R5 a borrowed receipt (the id sits only on a line naming another command) is red",
+  "R6 a receipt the named receipt file does not record is red",
+  "R7 a forge-command row with no receipt while the corpus records a run of its command is red (the stale-reason class)",
+  "R8 an open row with a pass label is red",
+  "R8 per pass label: an open ''fixture pass'' row is red",
+  "R8 per pass label: an open ''live SDK pass'' row is red",
+  "R8 per pass label: an open ''adversarial pass'' row is red",
+  "R8 per pass label: an open ''scale benchmark pass'' row is red",
+  "R9 a receipt that is not the tracking bead's own receipt file is red",
+  "R10 a run id a row's text cites that no receipt records is red",
+  "R11 a forge-command fixture pass with no receipt is red",
+  "R12 a superseded run of record that no receipt records is red",
+  "R13 an injection command that has a run of record while the row carries no receipt is red",
+  "G1/G2 over the real corpus: the real L1 row relabelled with any receipt label is red twice (no run of record; a default-gate row claims at most fixture pass)",
+  "U2 over the real corpus: the prior cut's L13b (open, code present, no receipt) reads red naming the run of record its command has in receipts/wb-3hc.md",
+  "U2 over the real corpus: the live leg pointed at the fixture runner's run of record is a borrowed receipt, and the live run of record does not stand for the fixture runner",
+  "U2 over the real corpus: a receiptless forge-command row whose command has no run of record stays clean (L14b), and so does the L2b injection stand-in",
+  "accepts the section exactly as written, at EOF and bounded by a following level-2 heading",
+  "K1 names the Furnace-retry rows (and only them) when bullet four is dropped",
+  "K2 names the shared-child rows (and only them) when the reader clause is reworded",
+  "K3 names the cleanup row (and only it) when its clause is dropped",
+  "K4 names both session-id rows (and only them) when Before/after is narrowed to Before",
+  "D1 goes red on the section, naming no row, when a sixth location is appended inside a bullet",
+  "D2 goes red on the section when a sixth bullet is added to the list",
+  "D3 goes red when the section heading is renamed away",
+  "D4 goes red when a weakening ### subsection is appended inside the section",
+  "D5 names the cleanup row when its clause is hidden in an HTML comment, and the section refuses the HTML",
+  "D6 goes red when a level-1 heading inserted above re-homes the section",
+  "D7 goes red on the section, naming no row, when two bullets swap places",
+  "D8 goes red when an HTML comment opened before the heading and closed after the next heading hides the section from the rendered view",
+  "D9 goes red when a code fence opened before the heading and closed after the next heading hides the section from the rendered view",
+  "an edit of any other section never reddens a row: the matrix and the benchmark sections are free to change",
+  "U1: every row's own location and verbatim quote is frozen, not just the unique-quote rows",
+  "U2: pass, receipt and open label vocabularies equal their independent docs/14 literals",
+  "the eight gate-named quote mutant ids and targets are frozen, so shrinking this falsifier table reads red",
+  "'H3b': shortened, empty or swapped quote fails naming its OWN row 'L2b'",
+  "'H3c': shortened, empty or swapped quote fails naming its OWN row 'L14b'",
+  "'H3d': shortened, empty or swapped quote fails naming its OWN row 'L13c'",
+  "'H3f': shortened, empty or swapped quote fails naming its OWN row 'L11b'",
+  "'H3g': shortened, empty or swapped quote fails naming its OWN row 'L2a'",
+  "'H3h': shortened, empty or swapped quote fails naming its OWN row 'L6'",
+  "'H3i': shortened, empty or swapped quote fails naming its OWN row 'L2b'",
+  "'H3j': shortened, empty or swapped quote fails naming its OWN row 'L11a'",
+  "Q5 residual semantic adequacy: an unrelated real passing pin is ok to the report judge but not a member of this row's frozen judged set",
+  "Q7 residual uncovered locations: the four unfiled locations remain open, receiptless and unpassed",
+  "R596: the header enumerates exactly P1-P6 and R1-R9, and every named quote, quiet row and consumption falsifier is registered once in run mode",
+  "V1: a verdict copied field for field from a judged one, which the report judge never returned, is red naming its case (J1 shape)",
+  "V2: a judged case whose verdict failures() never read, read twice, or read outside the frozen set is red naming its case (J2 shape)",
+  "Q8 residual verdict read but not asserted: a failures() call whose lines no assertion reads still counts as consumed",
+  "Q9 residual helper-routed reads: a read a helper module makes never meets this leg's reader - the adopted judge's vouch reads forge.toml by design and sourceStructure reads any file it is handed - so it stays quiet",
+  "R596 roster (wb-0kg.14 F2): every case this file registers is frozen by run mode and title, in registration order, and each one runs",
+];
+
+describe("wb-0kg.14 residual-list cut: verdict consumption, the leg's own reads and the case roster", () => {
+  /** The table's first judged case, judged afresh by the report judge (a real verdict, recorded as minted). */
+  const firstJudged = (): { readonly key: string; readonly verdict: PinVerdict; readonly row: Row; readonly kind: string } => {
+    const [entry] = JUDGED;
+    if (entry === undefined) throw new Error("the table judges no case");
+    const [verdict] = judge(REPORT, [casePin(entry.entry)]);
+    if (verdict === undefined) throw new Error("the report judge returned no verdict");
+    return { key: judgedKey(entry.row.row, entry.kind, entry.entry), verdict, row: entry.row, kind: entry.kind };
+  };
+
+  it("V1: a verdict copied field for field from a judged one, which the report judge never returned, is red naming its case (J1 shape)", () => {
+    const { key, verdict } = firstJudged();
+    expect(verdict.code).toBe("ok");
+    expect(consumptionProblems([key], [{ key, verdict }], MINTED)).toEqual([]);
+    const copy: PinVerdict = { ...verdict };
+    expect(copy).toEqual(verdict);
+    expect(consumptionProblems([key], [{ key, verdict: copy }], MINTED)).toEqual([`${key}: the verdict failures() read is not one the report judge returned`]);
+  });
+
+  it("V2: a judged case whose verdict failures() never read, read twice, or read outside the frozen set is red naming its case (J2 shape)", () => {
+    const { key, verdict } = firstJudged();
+    expect(consumptionProblems([key], [], MINTED)).toEqual([`${key}: failures() read its verdict 0 times, not exactly once`]);
+    expect(consumptionProblems([key], [{ key, verdict }, { key, verdict }], MINTED)).toEqual([`${key}: failures() read its verdict 2 times, not exactly once`]);
+    expect(consumptionProblems([], [{ key, verdict }], MINTED)).toEqual([`${key}: failures() read a verdict outside the frozen judged set`]);
+  });
+
+  it("Q8 residual verdict read but not asserted: a failures() call whose lines no assertion reads still counts as consumed", () => {
+    const { key, verdict, row, kind } = firstJudged();
+    const before = CONSUMED.length;
+    failures(row, kind, [verdict]);
+    expect(consumptionProblems([key], CONSUMED.slice(before), MINTED)).toEqual([]);
+  });
+
+  it("Q9 residual helper-routed reads: a read a helper module makes never meets this leg's reader - the adopted judge's vouch reads forge.toml by design and sourceStructure reads any file it is handed - so it stays quiet", () => {
+    expect(VOUCH_READ_SET.find(entry => entry.id === "forge-step")?.reads.startsWith("forge.toml, read CLOSED")).toBe(true);
+    expect(() => readRepo("forge.toml")).toThrow("it refused to read forge.toml");
+    expect(firstJudged().verdict.code).toBe("ok");
+    expect(() => readRepo("vitest.config.ts")).toThrow("it refused to read vitest.config.ts");
+    expect(sourceStructure(ROOT, "vitest.config.ts").ok, "a file outside the leg's read set, read through the helper").toBe(true);
+  });
+
+  it("R596 roster (wb-0kg.14 F2): every case this file registers is frozen by run mode and title, in registration order, and each one runs", ({ task }) => {
+    expect(rosterCases(task.file.tasks).map(rosterEntry)).toEqual(EXPECTED_ROSTER.map(title => `run|${title}`));
   });
 });
