@@ -251,7 +251,9 @@ const normalise = (name: string) => name.toLowerCase().replace(/[-_]/g, "");
 type Params = Record<string, unknown>;
 /** Parameters that pass TypeBox shape but fail on the first host check, so a granted call still reaches no native path. */
 const PROBES: Array<{ tool: string; params: Params; zeroGrant: string; sameWhenUngranted?: true }> = [
-  { tool: "workbench_catalog", params: {}, zeroGrant: '{"capabilities":[]}' },
+  // wb-h8f.6 (owner R2 on the wb-h8f.4 gate): workbench_catalog answers with the wb-69g.2 builder's tool-reply/v1 page, so
+  // zero grants read as an empty page; the builder's own tool member names the docs/11 catalog surface it serves.
+  { tool: "workbench_catalog", params: {}, zeroGrant: '{"contract":"workbench.tool-reply/v1","tool":"workflow_catalog","ok":true,"invoked":false,"limit":20,"matched":0,"offered":0,"returned":0,"rows":[]}' },
   // Exact inspect:<id> grant (not in mode D's list) gates this tool, and the typed "unavailable" reply is deliberately
   // identical for every ungranted caller (non-disclosure), so mode D asserts only that it is not a permission denial.
   { tool: "workflow_inspect", sameWhenUngranted: true, params: { target: "forge.gate.status" }, zeroGrant: `{"contract":"workbench.tool-reply/v1","tool":"workflow_inspect","ok":false,"invoked":false,"error":{"code":"unavailable","reason":"not-granted","message":"Inspection is not available for this target."}}` },

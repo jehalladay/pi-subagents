@@ -66,12 +66,12 @@ import { selectItem } from "./ui/select-item.js";
 import { renderWorkflowCard, renderWorkflowEntryCard } from "./ui/workflow-card.js";
 import { openWorkflowFromFleet, showWorkflowsMenu, type WorkflowMenuDeps } from "./ui/workflow-menu.js";
 import { getLifetimeCost, getLifetimeTotal, getSessionContextPercent, type LifetimeUsage, PendingUsagePool, toReportedUsage } from "./usage.js";
-import { type CapabilityDescriptor, CapabilityError, CapabilityRegistry } from "./workbench/capability-registry.js";
+import { type CapabilityDescriptor, CapabilityError, type CapabilityErrorCategory, CapabilityRegistry } from "./workbench/capability-registry.js";
 import { executeClaudeControl } from "./workbench/claude-control.js";
 import { createClaudeControlObserver, createClaudeControlRetention } from "./workbench/claude-control-observer.js";
 import type { ClaudeCallIdentity } from "./workbench/claude-host.js";
 import { type ControlExecutionSummary, type ControlExecutor, createWorkflowControlTool } from "./workbench/control-tool.js";
-import { type CompareRun, catalogWorkflows, compareWorkflowRuns, inspectWorkflowSource, validateWorkflowSource } from "./workbench/designer.js";
+import { type CompareRun, catalogWorkflows, compareWorkflowRuns, inspectWorkflowSource } from "./workbench/designer.js";
 import { executeDetachedControl } from "./workbench/detached-control.js";
 import { createWorkbenchEvidenceStore } from "./workbench/evidence-wiring.js";
 import { createWorkflowExecuteTool, type ExecuteLaunch } from "./workbench/execute-tool.js";
@@ -85,7 +85,16 @@ import { type NativeRef, ObservationProjection, type ObservationScope, type Pres
 import { OBSERVE_CURSOR_MAX_BYTES, OBSERVE_DEFAULT_MAX_BYTES, OBSERVE_MAX_LIMIT, OBSERVE_MAX_MAX_BYTES, OBSERVE_MIN_MAX_BYTES, observeInvocation } from "./workbench/observe-query.js";
 import { createWorkflowReconcileTool } from "./workbench/reconcile-tool.js";
 import { sanitizeWorkbenchJsonText, sanitizeWorkbenchText, stripUnsafeText, WORKBENCH_TEXT_LIMIT } from "./workbench/redaction.js";
-import { buildWorkflowInspectReply, INSPECT_VIEWS } from "./workbench/tool-replies.js";
+import { type ByteCapMarker, buildWorkflowCatalogReply, buildWorkflowInspectReply, INSPECT_VIEWS, TOOL_REPLY_CONTRACT_VERSION, TOOL_REPLY_DEFAULT_MAX_BYTES, TOOL_REPLY_MAX_LIMIT } from "./workbench/tool-replies.js";
+import {
+  type BuildWorkflowValidateReplyInput,
+  buildWorkflowValidateReply,
+  VALIDATE_REPLY_GRANT,
+  type ValidateCompletedReply,
+  type ValidateRefusalCode,
+  type WorkflowValidateReply,
+  type WorkflowValidateRequest,
+} from "./workbench/validate-reply.js";
 import { decideWorkflowCollision, FOREIGN_WORKFLOW_TOOL_NAMES } from "./workflow/collisions.js";
 import { WORKFLOW_ENTRY_TYPE, type WorkflowEntryData, workflowEntryData } from "./workflow/entry.js";
 import { createWorkflowHost } from "./workflow/host.js";
@@ -387,6 +396,58 @@ function workspaceCandidateBasis(cwd: string): { sourceBasis: string; state: "me
     }
     return { sourceBasis: identityDigest("git-candidate", { root, tree, index: `sha256:${createHash("sha256").update(index).digest("hex")}`, files }), state: "measured" };
   } catch { return unavailable; }
+}
+
+/**
+ * workflow_validate shows the model one dialect (wb-h8f.6; the wb-69g.6 gate F2 wiring requirement, owner 14:55Z): the
+ * builder's workbench.validate-reply/v1 record is folded into workbench.tool-reply/v1 member by member, and its own
+ * contract string never reaches the model. A refusal takes tool-reply's error shape, with the builder's fixed typed
+ * reason as the message. A cut reply carries tool-reply's byte-cap marker naming the tool's cap. Every string is the
+ * builder's, already through its per-field sanitizers, and the folded envelope passes sanitizeWorkbenchJsonText again.
+ */
+interface WorkflowValidateToolRefusal {
+  readonly contract: typeof TOOL_REPLY_CONTRACT_VERSION;
+  readonly tool: "workflow_validate";
+  readonly ok: false;
+  readonly invoked: false;
+  readonly executed: false;
+  readonly status: "refused";
+  readonly error: { readonly code: ValidateRefusalCode; readonly category: CapabilityErrorCategory; readonly message: string };
+}
+type WorkflowValidateToolCompleted = Omit<ValidateCompletedReply, "contractVersion" | "truncation"> & {
+  readonly contract: typeof TOOL_REPLY_CONTRACT_VERSION;
+  readonly tool: "workflow_validate";
+  readonly ok: true;
+  readonly invoked: false;
+  readonly truncated?: ByteCapMarker;
+};
+
+function workflowValidateToolReply(reply: WorkflowValidateReply, maxBytes: number): WorkflowValidateToolRefusal | WorkflowValidateToolCompleted {
+  if (reply.status === "refused") {
+    const { code, category, reason } = reply.refusal;
+    return { contract: TOOL_REPLY_CONTRACT_VERSION, tool: "workflow_validate", ok: false, invoked: false, executed: false, status: "refused", error: { code, category, message: reason } };
+  }
+  const { contractVersion: _builderContract, truncation, ...body } = reply;
+  return {
+    contract: TOOL_REPLY_CONTRACT_VERSION, tool: "workflow_validate", ok: true, invoked: false, ...body,
+    ...(truncation ? { truncated: { reason: "byte-cap", maxBytes } } : {}),
+  };
+}
+
+/**
+ * The tool's cap is tool-reply's default and holds for the folded text the model reads. The builder fits its own record
+ * to the budget it is given, and its 4096-byte throwing floor stays internal, so an envelope over the cap is rebuilt
+ * under a budget smaller by the measured overshoot.
+ */
+function workflowValidateToolText(input: Omit<BuildWorkflowValidateReplyInput, "maxBytes">): string {
+  const cap = TOOL_REPLY_DEFAULT_MAX_BYTES;
+  let budget = cap;
+  for (;;) {
+    const text = sanitizeWorkbenchJsonText(workflowValidateToolReply(buildWorkflowValidateReply({ ...input, maxBytes: budget }).reply, cap));
+    const over = Buffer.byteLength(text) - cap;
+    if (over <= 0) return text;
+    budget -= over;
+  }
 }
 
 export default function (pi: ExtensionAPI) {
@@ -2603,16 +2664,19 @@ Terse command-style prompts produce shallow, generic work.
       else console.warn(`[pi-subagents] ${message}`);
       return;
     }
+    // Metadata only (wb-h8f.6, owner R2 on the wb-h8f.4 gate): the wb-69g.2 catalog builder's tool-reply/v1 page applies
+    // the exact discover:<id> grant, and no provider invoke() or inspect() is ever called from here.
     pi.registerTool(defineTool({
       name: "workbench_catalog",
       label: "Workbench catalog",
-      description: "List host-registered native capabilities visible under independent discover grants.",
-      parameters: Type.Object({}),
-      execute: async (_id, _params, _signal, _onUpdate, ctx) => {
-        const descriptors = registryFor(ctx.cwd).discover({ grants: grants(ctx) });
-        return textResult(sanitizeWorkbenchJsonText({ capabilities: descriptors.map(({ id, version, description, effectClass, permissions, supportedModes, contractSource }) =>
-          ({ id, version, description, effectClass, permissions, supportedModes, contractSource })) }));
-      },
+      description: `List host-registered native capabilities visible under independent discover grants, as a bounded ${TOOL_REPLY_CONTRACT_VERSION} page: filter matches a capability id or description, limit sizes the page and nextCursor continues it. Discovery never implies invoke.`,
+      parameters: Type.Object({
+        filter: Type.Optional(Type.String()),
+        limit: Type.Optional(Type.Integer({ minimum: 1, maximum: TOOL_REPLY_MAX_LIMIT })),
+        cursor: Type.Optional(Type.String()),
+      }),
+      execute: async (_id, params, _signal, _onUpdate, ctx) =>
+        textResult(sanitizeWorkbenchJsonText(buildWorkflowCatalogReply(registryFor(ctx.cwd).catalogSnapshot(), grants(ctx), { filter: params.filter, limit: params.limit, cursor: params.cursor }))),
     }));
     // Metadata only: the reply builder applies the exact inspect:<id> grant and an advertised, implemented
     // inspect mode, and no provider invoke() or inspect() is ever called from here.
@@ -2627,23 +2691,45 @@ Terse command-style prompts produce shallow, generic work.
       execute: async (_id, params, _signal, _onUpdate, ctx) =>
         textResult(sanitizeWorkbenchJsonText(buildWorkflowInspectReply(registryFor(ctx.cwd).catalogSnapshot(), grants(ctx), params.target, params.view))),
     }));
+    // wb-h8f.6: the wb-69g.6 builder over the host-resolved source, with the grant snapshot from grants(ctx) only; its
+    // reply reaches the model folded into workbench.tool-reply/v1 (workflowValidateToolText). The grant refusal and the
+    // outside-workspace denial keep today's bytes and run before any source read.
     pi.registerTool(defineTool({
       name: "workflow_validate",
       label: "Validate workflow source",
-      description: "Read and validate saved workflow syntax, literal metadata and possible calls without executing or editing source. Requires workbench:design.",
-      parameters: Type.Object({ name: Type.Optional(Type.String()), scriptPath: Type.Optional(Type.String()) }),
+      description: `Read and validate saved workflow syntax, literal metadata and possible calls without executing or editing source. Requires workbench:design. Name the source by name or scriptPath, or by the sourceRef a catalog lists; a digest (sha256:<64 lowercase hex>) beside sourceRef pins its exact bytes, and a source that does not match is refused, never validated. mode is "static" only: syntax is compiled, never executed. inputs and bindings are accepted and reported as uncertain. The reply is ${TOOL_REPLY_CONTRACT_VERSION}: errors, warnings and uncertain conditions in three arrays with offered and returned counts, and a byte-cap marker when the reply was cut.`,
+      parameters: Type.Object({
+        name: Type.Optional(Type.String()),
+        scriptPath: Type.Optional(Type.String()),
+        sourceRef: Type.Optional(Type.String()),
+        digest: Type.Optional(Type.String()),
+        mode: Type.Optional(Type.Literal("static")),
+        inputs: Type.Optional(Type.Unknown()),
+        bindings: Type.Optional(Type.Unknown()),
+      }),
       execute: async (_id, params, _signal, _onUpdate, ctx) => {
-        if (!grants(ctx).includes("workbench:design")) return textResult("Permission denied: workbench:design grant required.");
+        const rights = grants(ctx);
+        if (!rights.includes(VALIDATE_REPLY_GRANT)) return textResult("Permission denied: workbench:design grant required.");
         try {
-          if (params.scriptPath) {
+          // name or scriptPath locates the source as before; sourceRef alone locates it (docs/11), and beside a locator it
+          // is an identity the builder checks against the resolved source.
+          const locator = params.name || params.scriptPath ? { name: params.name, scriptPath: params.scriptPath } : { scriptPath: params.sourceRef };
+          if (locator.scriptPath) {
             const root = realpathSync(ctx.cwd);
-            const target = realpathSync(resolve(root, params.scriptPath));
+            const target = realpathSync(resolve(root, locator.scriptPath));
             if (target !== root && !target.startsWith(`${root}${sep}`)) return textResult("Source denied outside workspace.");
           }
-          const source = inspectWorkflowSource(params, ctx.cwd);
-          // Metadata, diagnostics and source paths are author-controlled: redacted and stripped before the model reads them.
-          return textResult(sanitizeWorkbenchJsonText(validateWorkflowSource(source, { registry: registryFor(ctx.cwd), grants: grants(ctx) })));
-        } catch (error) { return textResult(sanitizeWorkbenchText(error instanceof Error ? error.message : String(error))); }
+          const source = inspectWorkflowSource(locator, ctx.cwd);
+          // An identity the caller did not assert is the host-resolved one; the builder still re-hashes the bytes against it.
+          const request: WorkflowValidateRequest = {
+            sourceRef: params.sourceRef ?? source.sourceRef,
+            digest: params.digest ?? source.definition.artifactDigest,
+            ...(params.mode !== undefined ? { mode: params.mode } : {}),
+            ...(params.inputs !== undefined ? { inputs: params.inputs } : {}),
+            ...(params.bindings !== undefined ? { bindings: params.bindings } : {}),
+          };
+          return textResult(workflowValidateToolText({ request, source, grants: rights, registry: registryFor(ctx.cwd) }));
+        } catch (error) { return textResult(sanitizeWorkbenchText(error instanceof Error ? error.message : String(error), WORKBENCH_TEXT_LIMIT, "text")); }
       },
     }));
     pi.registerTool(defineTool({
