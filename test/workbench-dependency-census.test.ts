@@ -18,10 +18,18 @@
  * integrity, a vendored tarball or a declared value that moved); (2) every docs/17 declaration against the live row it
  * binds, so a regenerated fixture can never bless a divergence from the table. Falsifiers run against throwaway copies
  * of package.json, package-lock.json, vendor/ and docs/17, never against the real tree.
+ *
+ * Subprocess budget (wb-gy0). A row that starts a git or node process (a scratch allocation's non-repo git probe, the
+ * fixture git calls, the CLI) takes a wall time set by gate contention rather than by the census, so each such row carries the
+ * explicit file-local budget SUBPROCESS_ROW_BUDGET_MS (sized from measured complete-gate walls, see its comment) and none
+ * rides vitest's default 5000 ms; a wb-gy0 row pins that exactly those rows run under it, classifying every row of this
+ * file from its own source.
  */
 import { spawnSync } from "node:child_process";
 import { cpSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+import ts from "typescript";
 import { afterEach, describe, expect, it } from "vitest";
 import {
   buildReceipt,
@@ -178,6 +186,72 @@ const receiptRevision = (root: string): string => {
   expect(result.status, result.stderr).toBe(0);
   return (JSON.parse(result.stdout) as Receipt).revision;
 };
+
+/**
+ * The explicit budget of every subprocess-spawning row in this file (wb-gy0), file-local so no other suite's budget moves.
+ * Measured 2026-10-19 from vitest per-test durations: three runs of this file alone (host load1 ~240) put F9 at 32/34/39 ms and
+ * the CLI --receipt revision row at 376/404/404 ms; two complete gates (wb-cax.26, wb-cax.27) put them at 1812/1615 ms
+ * and 2037/1099 ms, and the owner's landing-154 complete gate (load1 ~144) took both past vitest's default 5000 ms. Gate
+ * contention, not census work, sets these walls (F9 ran about 50 x its file-alone median inside a gate), so the budget is sized
+ * from the costliest complete-gate wall of any spawning row, CLI --check at 6166 ms (a default-timeout failure in the
+ * wb-cax.27 gate): 4.9 x that wall, rounded to 30000 ms. A row's synchronous spawnSync cannot be interrupted, so the
+ * budget only decides when a finished row is failed; it never retries one.
+ */
+const SUBPROCESS_ROW_BUDGET_MS = 30_000;
+/** The costliest measured complete-gate wall of a spawning row (CLI --check, wb-cax.27 gate); the budget is 4-6 x it. */
+const COSTLIEST_GATE_WALL_MS = 6_166;
+const SUBPROCESS_ROW: { readonly timeout: number } = { timeout: SUBPROCESS_ROW_BUDGET_MS };
+/** The calls that start a git or node process: spawnSync, freshScratch (its non-repo git probe), copyTree (allocates through freshScratch), git, receiptRevision. */
+const SPAWNING_HELPERS: ReadonlySet<string> = new Set(["spawnSync", "freshScratch", "copyTree", "git", "receiptRevision"]);
+/** The rows that carry SUBPROCESS_ROW, in file order: every row whose body calls a SPAWNING_HELPERS member. */
+const SUBPROCESS_ROWS = [
+  "F1: a same-name tarball with different bytes goes red on the vendor row's integrity",
+  "F2: bumping a package.json pin without regenerating the fixture names that row",
+  "F2b: a pin removed from or added to package.json is reported as a removed or added row",
+  "F2c: a pin or a declaration that only moved to a different line is not a divergence",
+  "F3: a missing dependency-lock.json is an explicit failure, never an empty pass",
+  "F3b: a missing package-lock.json is unknown-with-reason, drifts on its rows and breaks the floor",
+  "F4: an unreadable vendor dir and an empty tarball set fail explicitly",
+  "F5: removing the engines field flips its row to unknown-with-reason, drifts on that row and breaks the floor",
+  "F6: a pin moved without the table names the declared row and the live row it binds",
+  "F7: the table moved without the tree names the declared row against every row it binds",
+  "F8: a lockfile root engines divergence names that lockfile's engines row",
+  "F9: a missing declaration table is an explicit divergence for every binding, never an empty pass",
+  "F10: a table row the census has no binding for, or a renamed component, is a divergence naming the row",
+  "a vendor tarball whose bytes disagree with the lock is recorded as such and breaks its checksum declaration",
+  "CLI --check exits 0 on the real tree and 1 naming the row on a drifted copy",
+  "CLI: a regenerated fixture cannot bless a divergence from the docs/17 table",
+  "CLI --receipt prints the census with the checkout revision and every declaration check",
+  "CLI --receipt stamps a revision only for a git toplevel root, never an enclosing checkout's HEAD",
+  "CLI exits 2 with a named error when the lock is missing",
+];
+/** The two rows the landing-154 gate timed out (wb-gy0's named rows). */
+const LANDING_154_ROWS = [
+  "F9: a missing declaration table is an explicit divergence for every binding, never an empty pass",
+  "CLI --receipt stamps a revision only for a git toplevel root, never an enclosing checkout's HEAD",
+];
+/** Every it() row of this file in source order, with whether its body calls a SPAWNING_HELPERS member (the wb-gy0 pin). */
+function sourceRows(): { title: string; spawns: boolean }[] {
+  const file = fileURLToPath(import.meta.url);
+  const source = ts.createSourceFile(file, readFileSync(file, "utf8"), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const callsSpawningHelper = (node: ts.Node): boolean =>
+    (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && SPAWNING_HELPERS.has(node.expression.text)) ||
+    ts.forEachChild(node, child => (callsSpawningHelper(child) ? true : undefined)) === true;
+  const rows: { title: string; spawns: boolean }[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "it") {
+      const [title] = node.arguments;
+      const body = node.arguments[node.arguments.length - 1];
+      rows.push({
+        title: title !== undefined && ts.isStringLiteralLike(title) ? title.text : "<a row with a non-literal title>",
+        spawns: body !== undefined && callsSpawningHelper(body),
+      });
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  return rows;
+}
 
 describe("wb-cax.20 dependency census", () => {
   it("emits the workbench.dependency-census/v1 contract and the fixture records it", () => {
@@ -344,7 +418,7 @@ describe("wb-cax.20 dependency census", () => {
     expect(readFileSync(FIXTURE, "utf8")).not.toMatch(/supported/i);
   });
 
-  it("F1: a same-name tarball with different bytes goes red on the vendor row's integrity", () => {
+  it("F1: a same-name tarball with different bytes goes red on the vendor row's integrity", SUBPROCESS_ROW, () => {
     const dir = copyTree();
     writeFileSync(join(dir, "vendor", "forge-sdk-0.1.0.tgz"), Buffer.from("not the pinned bytes"));
     const drifts = compareCensus(recorded(), live(dir)) as Drift[];
@@ -353,7 +427,7 @@ describe("wb-cax.20 dependency census", () => {
     expect(drifts.some(d => d.row === "vendor:furnace-sdk-0.1.0.tgz")).toBe(false);
   });
 
-  it("F2: bumping a package.json pin without regenerating the fixture names that row", () => {
+  it("F2: bumping a package.json pin without regenerating the fixture names that row", SUBPROCESS_ROW, () => {
     const dir = copyTree();
     mutate(dir, "package.json", '"croner": "^10.0.1"', '"croner": "^10.0.2"');
     const drifts = compareCensus(recorded(), live(dir)) as Drift[];
@@ -362,7 +436,7 @@ describe("wb-cax.20 dependency census", () => {
     expect(formatDrift(drifts)).toContain("pin:dependencies:croner");
   });
 
-  it("F2b: a pin removed from or added to package.json is reported as a removed or added row", () => {
+  it("F2b: a pin removed from or added to package.json is reported as a removed or added row", SUBPROCESS_ROW, () => {
     const removed = copyTree();
     mutate(removed, "package.json", '    "croner": "^10.0.1",\n', "");
     const gone = compareCensus(recorded(), live(removed)) as Drift[];
@@ -376,7 +450,7 @@ describe("wb-cax.20 dependency census", () => {
     expect(drifts).toContainEqual({ row: "lock:dependencies:left-pad", field: "row", recorded: "absent", live: "present" });
   });
 
-  it("F2c: a pin or a declaration that only moved to a different line is not a divergence", () => {
+  it("F2c: a pin or a declaration that only moved to a different line is not a divergence", SUBPROCESS_ROW, () => {
     const dir = copyTree();
     mutate(dir, "package.json", '  "keywords": [', '  "keywords": [\n    "census-padding",');
     mutate(dir, DOCS_17, "## Declared support matrix", "Padding paragraph.\n\n## Declared support matrix");
@@ -386,14 +460,14 @@ describe("wb-cax.20 dependency census", () => {
     expect(row(census, "pin:dependencies:typescript").at).not.toBe(row(live(), "pin:dependencies:typescript").at);
   });
 
-  it("F3: a missing dependency-lock.json is an explicit failure, never an empty pass", () => {
+  it("F3: a missing dependency-lock.json is an explicit failure, never an empty pass", SUBPROCESS_ROW, () => {
     const dir = copyTree();
     rmSync(join(dir, "vendor", "dependency-lock.json"));
     expect(() => live(dir)).toThrow(CensusError);
     expect(() => live(dir)).toThrow(/dependency-lock\.json/);
   });
 
-  it("F3b: a missing package-lock.json is unknown-with-reason, drifts on its rows and breaks the floor", () => {
+  it("F3b: a missing package-lock.json is unknown-with-reason, drifts on its rows and breaks the floor", SUBPROCESS_ROW, () => {
     const dir = copyTree();
     rmSync(join(dir, "package-lock.json"));
     const census = live(dir, "v24.20.0");
@@ -409,7 +483,7 @@ describe("wb-cax.20 dependency census", () => {
     ]);
   });
 
-  it("F4: an unreadable vendor dir and an empty tarball set fail explicitly", () => {
+  it("F4: an unreadable vendor dir and an empty tarball set fail explicitly", SUBPROCESS_ROW, () => {
     const missing = copyTree();
     rmSync(join(missing, "vendor"), { recursive: true });
     expect(() => live(missing)).toThrow(CensusError);
@@ -418,7 +492,7 @@ describe("wb-cax.20 dependency census", () => {
     expect(() => live(empty)).toThrow(/tarball/);
   });
 
-  it("F5: removing the engines field flips its row to unknown-with-reason, drifts on that row and breaks the floor", () => {
+  it("F5: removing the engines field flips its row to unknown-with-reason, drifts on that row and breaks the floor", SUBPROCESS_ROW, () => {
     const dir = copyTree();
     mutate(dir, "package.json", '  "engines": {\n    "node": ">=24"\n  },\n', "");
     const census = live(dir, "v24.20.0");
@@ -430,7 +504,7 @@ describe("wb-cax.20 dependency census", () => {
     ]);
   });
 
-  it("F6: a pin moved without the table names the declared row and the live row it binds", () => {
+  it("F6: a pin moved without the table names the declared row and the live row it binds", SUBPROCESS_ROW, () => {
     const dir = copyTree();
     mutate(dir, "package.json", '"typescript": "6.0.3"', '"typescript": "6.0.4"');
     const failures = failing(live(dir, "v24.20.0"));
@@ -442,7 +516,7 @@ describe("wb-cax.20 dependency census", () => {
     expect(message).toContain("pin:dependencies:typescript");
   });
 
-  it("F7: the table moved without the tree names the declared row against every row it binds", () => {
+  it("F7: the table moved without the tree names the declared row against every row it binds", SUBPROCESS_ROW, () => {
     const dir = copyTree();
     mutate(dir, DOCS_17, "declared floor `>=24`", "declared floor `>=26`");
     const census = live(dir, "v24.20.0");
@@ -472,7 +546,7 @@ describe("wb-cax.20 dependency census", () => {
     );
   });
 
-  it("F8: a lockfile root engines divergence names that lockfile's engines row", () => {
+  it("F8: a lockfile root engines divergence names that lockfile's engines row", SUBPROCESS_ROW, () => {
     const dir = copyTree();
     const path = join(dir, "package-lock.json");
     const lock = JSON.parse(readFileSync(path, "utf8")) as { packages: Record<string, { engines?: Record<string, string> }> };
@@ -489,7 +563,7 @@ describe("wb-cax.20 dependency census", () => {
     expect(drifted).toContain("lockfile:package-lock.json matchesVendorLock");
   });
 
-  it("F9: a missing declaration table is an explicit divergence for every binding, never an empty pass", () => {
+  it("F9: a missing declaration table is an explicit divergence for every binding, never an empty pass", SUBPROCESS_ROW, () => {
     const moved = copyTree();
     mutate(moved, DOCS_17, "## Declared support matrix", "## Declared matrix renamed");
     const census = live(moved, "v24.20.0");
@@ -507,7 +581,7 @@ describe("wb-cax.20 dependency census", () => {
     expect(reshapedFailures.every(check => /header/.test(check.reason ?? ""))).toBe(true);
   });
 
-  it("F10: a table row the census has no binding for, or a renamed component, is a divergence naming the row", () => {
+  it("F10: a table row the census has no binding for, or a renamed component, is a divergence naming the row", SUBPROCESS_ROW, () => {
     const added = copyTree();
     mutate(added, DOCS_17, "| Test and lint toolchain (dev) |", "| Python | `3.12` | none |\n| Test and lint toolchain (dev) |");
     expect(failing(live(added, "v24.20.0"))).toEqual([expect.objectContaining({ row: "declared:unbound:python", holds: false })]);
@@ -521,7 +595,7 @@ describe("wb-cax.20 dependency census", () => {
     ]);
   });
 
-  it("a vendor tarball whose bytes disagree with the lock is recorded as such and breaks its checksum declaration", () => {
+  it("a vendor tarball whose bytes disagree with the lock is recorded as such and breaks its checksum declaration", SUBPROCESS_ROW, () => {
     const dir = copyTree();
     writeFileSync(join(dir, "vendor", "hyperunix-sdk-0.1.0.tgz"), Buffer.from("other bytes"));
     const census = live(dir, "v24.20.0");
@@ -546,7 +620,7 @@ describe("wb-cax.20 dependency census", () => {
     expect(receipt.rows.some(entry => entry.at !== undefined)).toBe(true);
   });
 
-  it("CLI --check exits 0 on the real tree and 1 naming the row on a drifted copy", () => {
+  it("CLI --check exits 0 on the real tree and 1 naming the row on a drifted copy", SUBPROCESS_ROW, () => {
     const ok = spawnSync(process.execPath, [CLI, "--check", "--root", ROOT, "--fixture", FIXTURE], { encoding: "utf8" });
     expect(ok.status, ok.stderr).toBe(0);
     const dir = copyTree();
@@ -556,7 +630,7 @@ describe("wb-cax.20 dependency census", () => {
     expect(bad.stderr).toContain("pin:dependencies:nanoid");
   });
 
-  it("CLI: a regenerated fixture cannot bless a divergence from the docs/17 table", () => {
+  it("CLI: a regenerated fixture cannot bless a divergence from the docs/17 table", SUBPROCESS_ROW, () => {
     const dir = copyTree();
     mutate(dir, "package.json", '"typescript": "6.0.3"', '"typescript": "6.0.4"');
     const fixture = join(dir, "census.json");
@@ -569,7 +643,7 @@ describe("wb-cax.20 dependency census", () => {
     expect(check.stderr).not.toContain("dependency census drift");
   });
 
-  it("CLI --receipt prints the census with the checkout revision and every declaration check", () => {
+  it("CLI --receipt prints the census with the checkout revision and every declaration check", SUBPROCESS_ROW, () => {
     const result = spawnSync(process.execPath, [CLI, "--receipt", "--root", ROOT], { encoding: "utf8" });
     expect(result.status, result.stderr).toBe(0);
     const receipt = JSON.parse(result.stdout) as Receipt;
@@ -578,7 +652,7 @@ describe("wb-cax.20 dependency census", () => {
     expect(receipt.declarationChecks.every(check => check.holds)).toBe(true);
   });
 
-  it("CLI --receipt stamps a revision only for a git toplevel root, never an enclosing checkout's HEAD", () => {
+  it("CLI --receipt stamps a revision only for a git toplevel root, never an enclosing checkout's HEAD", SUBPROCESS_ROW, () => {
     const outside = copyTree();
     expect(receiptRevision(outside)).toBe("working-tree");
     const repo = freshScratch();
@@ -599,11 +673,32 @@ describe("wb-cax.20 dependency census", () => {
     expect(receiptRevision(top)).toBe(`${head}-dirty`);
   });
 
-  it("CLI exits 2 with a named error when the lock is missing", () => {
+  it("CLI exits 2 with a named error when the lock is missing", SUBPROCESS_ROW, () => {
     const dir = copyTree();
     rmSync(join(dir, "vendor", "dependency-lock.json"));
     const result = spawnSync(process.execPath, [CLI, "--check", "--root", dir, "--fixture", FIXTURE], { encoding: "utf8" });
     expect(result.status).toBe(2);
     expect(result.stderr).toContain("dependency-lock.json");
+  });
+
+  it("wb-gy0: exactly the subprocess-spawning rows carry the measured budget, and it is never vitest's default 5000 ms", ({ task }) => {
+    const registered: { title: string; timeout: number }[] = [];
+    const walk = (tasks: typeof task.file.tasks): void => {
+      for (const child of tasks) {
+        if (child.type === "test") registered.push({ title: child.name, timeout: child.timeout });
+        else if (child.type === "suite") walk(child.tasks);
+      }
+    };
+    walk(task.file.tasks);
+    expect(SUBPROCESS_ROW_BUDGET_MS, "the subprocess budget is above vitest's default test timeout").toBeGreaterThan(5_000);
+    const multiple = SUBPROCESS_ROW_BUDGET_MS / COSTLIEST_GATE_WALL_MS;
+    expect(multiple, "the budget is 4-6 x the costliest measured complete-gate wall").toBeGreaterThanOrEqual(4);
+    expect(multiple, "the budget is 4-6 x the costliest measured complete-gate wall").toBeLessThanOrEqual(6);
+    const budgeted = registered.filter(entry => entry.timeout === SUBPROCESS_ROW_BUDGET_MS).map(entry => entry.title);
+    expect(budgeted, "the rows that run under SUBPROCESS_ROW_BUDGET_MS").toEqual(SUBPROCESS_ROWS);
+    const scanned = sourceRows();
+    expect(scanned.map(entry => entry.title), "the source scan classifies every registered row").toEqual(registered.map(entry => entry.title));
+    expect(scanned.filter(entry => entry.spawns).map(entry => entry.title), "the rows whose bodies start a git or node process").toEqual(SUBPROCESS_ROWS);
+    for (const title of LANDING_154_ROWS) expect(budgeted, `landing-154 row: ${title}`).toContain(title);
   });
 });

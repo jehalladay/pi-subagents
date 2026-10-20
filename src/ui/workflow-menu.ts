@@ -19,11 +19,12 @@ import type { AgentRecord } from "../types.js";
 import { type AttentionReport, selectAttention } from "../workbench/attention.js";
 import { CapabilityError } from "../workbench/capability-registry.js";
 import type { EvidenceStore } from "../workbench/evidence-loader.js";
+import { createGraphViewBuilder, type GraphViewModel } from "../workbench/graph-view.js";
 import type { ObservationProjection, ObservationScope, ObservedNode } from "../workbench/observation.js";
 import { buildTimelineLanes, type TimelineModel, type TimelineRequest } from "../workbench/timeline.js";
 import { type LinkedTopology, selectLinkedTopology } from "../workbench/topology-slice.js";
 import { pauseWorkflowTask, resumeWorkflowTask, type WorkflowTask } from "../workflow/task.js";
-import { type InspectorTimelineView, WorkflowDialog } from "./workflow-dialog.js";
+import { type InspectorGraphView, type InspectorTimelineView, WorkflowDialog } from "./workflow-dialog.js";
 
 /** Everything the menu and the inspector need from the extension around them. */
 export interface WorkflowMenuDeps {
@@ -41,7 +42,8 @@ export interface WorkflowMenuDeps {
      * The read cap `projection` was built with (its maxQuery; src/index.ts hands over the constant it builds the
      * projection with). Declared, the details view shows the selected node's linked topology slice, read in pages of
      * exactly this size so the slice never asks for more rows than the projection returns (wb-6ze.24). Undeclared, the
-     * details view renders exactly as it does without one.
+     * details view renders exactly as it does without one. Declared, the graph view also draws the workbench.graph-view/v1 model
+     * buildGraphView builds over this projection, reading windows and relation pages of exactly this size (wb-6ze.37).
      */
     relationPage?: number;
     /**
@@ -159,6 +161,32 @@ function attentionReport(
 }
 
 /**
+ * The graph view's model read side for one open dialog (wb-6ze.37; docs/workbench/10, Four views: Graph, and Rendering pipeline:
+ * graph layout cached by topology revision). It hands the inspector the workbench.graph-view/v1 model createGraphViewBuilder
+ * computes over the live projection for the dialog's own invocation: the window of `page` rows holding the row the inspector
+ * draws as current, with relation pages of `page` rows. Every cap in the request is the value the host declared, never a literal
+ * here. The builder is made once per dialog and holds the topology-revision cache, so a redraw, a key or a status-only change
+ * reads no relation page and only a topology change reads again; focus and filter narrow the drawing in the renderer, not the
+ * request. An out-of-contract request is the builder's typed refusal and is not caught. Reading is all it does, so closing the
+ * dialog leaves it nothing to cancel.
+ */
+function graphViewModel(
+  projection: ObservationProjection,
+  page: number,
+): (scope: ObservationScope, invocationId: string, view: InspectorGraphView) => GraphViewModel {
+  const builder = createGraphViewBuilder(projection);
+  return (scope, invocationId, view) => {
+    // The row the inspector draws as current: the selected key's row, else the cursor, clamped to the rows that exist.
+    const wanted = (view.selected ? projection.indexOf({ scope, invocationId, key: view.selected }) : undefined) ?? view.index;
+    const probe = projection.window({ scope, invocationId, offset: wanted - (wanted % page), limit: page });
+    const current = Math.min(wanted, Math.max(0, probe.total - 1));
+    return builder.build({
+      scope, invocationId, viewport: { offset: current - (current % page), limit: page }, caps: { maxNodes: page, relationLimit: page },
+    });
+  };
+}
+
+/**
  * Open the inspector for a workflow run.
  *
  * All six controls are wired: `onKill` aborts the run's controller, while
@@ -198,6 +226,8 @@ export async function showWorkflowDialog(
   const attention = host?.relationPage !== undefined && host.attention !== undefined
     ? attentionReport(host.projection, task.id, host.relationPage, host.attention.bottlenecks, host.attention.now)
     : undefined;
+  // And one graph-view model read side, for a host that declares its read cap (wb-6ze.37).
+  const graph = host?.relationPage !== undefined ? graphViewModel(host.projection, host.relationPage) : undefined;
   await ctx.ui.custom<undefined>(
     (tui, theme, _keybindings, done) =>
       new WorkflowDialog(
@@ -221,6 +251,8 @@ export async function showWorkflowDialog(
             ...(observationScope && lanes !== undefined ? { timelineLanes: (view: InspectorTimelineView) => lanes(observationScope, task.id, view) } : {}),
             // And the overview's attention report, for the scope this render reads (wb-6ze.36).
             ...(observationScope && attention !== undefined ? { attention: () => attention(observationScope) } : {}),
+            // And the graph view's model, for the invocation this dialog observes (wb-6ze.37).
+            ...(observationScope && graph !== undefined ? { graphView: (view: InspectorGraphView) => graph(observationScope, task.id, view) } : {}),
             task: {
               status: task.status,
               workflowName: task.workflowName,
