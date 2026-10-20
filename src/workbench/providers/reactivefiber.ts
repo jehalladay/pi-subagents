@@ -1,6 +1,7 @@
 /** ReactiveFiberCLI context render via installed CLI JSON contract (no TS SDK published). */
 import { spawn } from "node:child_process";
 import { CapabilityError, type CapabilityRegistry, type JsonValue } from "../capability-registry.js";
+import { RF_CHILD_ENV_ALLOWLIST, scrubbedEnvironment } from "../process-env.js";
 
 export const REACTIVE_FIBER_CLI_SCHEMA = "reactive-fiber.cli/v1";
 export const REACTIVEFIBER_RENDER_PREVIEW_CONTRACT = "reactivefiber.render.preview/v1";
@@ -130,7 +131,10 @@ export async function nativeReactiveFiberPreview(model:string,task:string,worksp
 export async function nativeReactiveFiberRender(selector:ReactiveFiberRenderSelector,workspaceRoot:string,signal?:AbortSignal):Promise<JsonValue> {
   if(signal?.aborted) throw new CapabilityError("transport","RF preview cancelled before launch.");
   const argv=renderArgv(selector,workspaceRoot);
-  const child=spawn("rf",argv,{stdio:["ignore","pipe","pipe"]});
+  // wb-2j3.11: an allowlist-only environment (src/workbench/process-env.ts), built from process.env at each launch. No
+  // RF_* variable reaches the child, so a process-scoped selector such as RF_PERF_BASELINE can never pick the preview's
+  // perf seam, and the argv's --workspace is the only workspace the child is told.
+  const child=spawn("rf",argv,{stdio:["ignore","pipe","pipe"],env:scrubbedEnvironment(process.env,RF_CHILD_ENV_ALLOWLIST)});
   const MAX_BYTES=256*1024;
   const chunks:Buffer[]=[];
   let stdoutBytes=0;
