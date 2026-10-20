@@ -13,7 +13,12 @@
  *   installScratchLeakGuard();                 // once, at module scope
  *   const cwd = makeScratch("my-suite-");      // instead of mkdtempSync(join(tmpdir(), ...))
  *   afterEach(() => removeScratch(cwd));       // dir AND its session tree
- * The guard runs after the suite and fails it, naming each path that survived.
+ * The guard runs after the suite and fails it, naming each path that survived. A path still present when the suite drains
+ * gets a bounded settle wait first (wb-0xjp): a teardown still in flight that releases it (a SIGTERM'd detached host
+ * removing what it holds as it exits, a cleanup nothing awaited) does not red the suite, while a path nobody releases is
+ * still there at the bound and is named exactly as before. Work that RE-CREATES a path after its removeScratch is a leak
+ * the guard cannot tell from a regression, so the suite settles that work before removing (strict-agent-files-wiring
+ * awaits its detached background agents).
  *
  * A run that dies before its cleanup (wb-gbu, row 524 F7): a SIGKILL, a crash or a killed worker skips the suite's
  * cleanup and the guard alike, so both paths outlived the run. Three backstops, none of which replaces either:
@@ -151,6 +156,16 @@ export function removeAllScratch(): void {
   removeScratch(...created);
 }
 
+/** Every path the leak audit covers: the tracked ones and the removed ones (a re-created removed path is a leak). */
+function auditedScratch(): Set<string> {
+  return new Set([...created, ...removed]);
+}
+
+/** `dir` and the session trees keyed by it, as many of them as exist right now. */
+function survivorsOf(dir: string): string[] {
+  return [dir, ...sessionScratchFor(dir)].filter(path => existsSync(path));
+}
+
 /**
  * The tracked paths (and their session trees) that still exist, removing each so a
  * failing run does not make the leak worse. Removed paths are audited too: a directory or
@@ -158,33 +173,79 @@ export function removeAllScratch(): void {
  */
 export function drainLeaks(): string[] {
   const leaked: string[] = [];
-  for (const dir of new Set([...created, ...removed])) {
-    for (const path of [dir, ...sessionScratchFor(dir)]) {
-      if (existsSync(path)) leaked.push(path);
-    }
+  for (const dir of auditedScratch()) {
+    leaked.push(...survivorsOf(dir));
     removeScratch(dir);
   }
   return leaked;
+}
+
+/** The paths drainLeaks would name right now, removing nothing: what the guard's settle wait watches. */
+export function scratchSurvivors(): string[] {
+  return [...auditedScratch()].flatMap(survivorsOf);
 }
 
 /** How long the guard waits for fire-and-forget work to land before it audits (ms). */
 export const SCRATCH_SETTLE_MS = 150;
 
 /**
+ * The longest the guard then waits for survivors to be released, re-reading them every SCRATCH_SETTLE_POLL_MS (ms).
+ * A teardown can still be running when the suite drains: under host load a SIGTERM'd detached host removes the scratch
+ * it holds as it exits, or a cleanup nothing awaited lands, after SCRATCH_SETTLE_MS (wb-0xjp, owner filing: the
+ * suites red with every test passed). The wait removes nothing and ends the moment nothing survives, so a suite that
+ * leaks nothing pays nothing and a path nobody releases - a forgotten removeScratch, a tree re-created after it - is
+ * still on disk at the bound, where it is named and removed exactly as before. It never re-runs a test.
+ */
+export const SCRATCH_SETTLE_BOUND_MS = 10_000;
+
+/** How often the settle wait re-reads the survivors (ms). */
+export const SCRATCH_SETTLE_POLL_MS = 100;
+
+/** What the guard's own hook timeout keeps above the settle and the bound, for the final drain (ms). Vitest's default
+ * hook timeout (10 s) would otherwise end a waiting guard first and report a bare hook timeout instead of the leak. */
+const GUARD_HOOK_HEADROOM_MS = 5_000;
+
+/** A shorter bound or poll interval than the defaults, for a test driving the guard directly. */
+export interface ScratchSettleOptions {
+  boundMs?: number;
+  pollMs?: number;
+}
+
+function sleep(ms: number): Promise<void> {
+  return new Promise<void>(resolve => setTimeout(resolve, ms));
+}
+
+/** Re-read the survivors until none remain or `boundMs` has passed. Observation only: it never removes a path. */
+async function awaitSurvivorRelease(boundMs: number, pollMs: number): Promise<void> {
+  const deadline = performance.now() + boundMs;
+  while (scratchSurvivors().length > 0) {
+    const left = deadline - performance.now();
+    if (left <= 0) return;
+    await sleep(Math.min(pollMs, left));
+  }
+}
+
+/**
  * Fail the calling suite if any directory made through `makeScratch` — or the
  * session tree created for it — survives the suite. Call once at module scope.
  * The guard settles for SCRATCH_SETTLE_MS first, so work that lands after the last
- * `removeScratch` (activation's fire-and-forget agent-dir writes) is audited, not missed.
- * `register` defaults to vitest's `afterAll`; a test injects its own to run the hook directly.
+ * `removeScratch` (activation's fire-and-forget agent-dir writes) is audited, not missed;
+ * then, while anything survives, it waits up to SCRATCH_SETTLE_BOUND_MS for a teardown
+ * still in flight to release it, and fails naming whatever survives the bound.
+ * `register` defaults to vitest's `afterAll`, handed a timeout that covers the settle and
+ * the bound; a test injects its own to run the hook directly.
  */
-export function installScratchLeakGuard(register: (hook: () => Promise<void>) => void = afterAll): void {
+export function installScratchLeakGuard(register: (hook: () => Promise<void>, timeout: number) => void = afterAll, settle: ScratchSettleOptions = {}): void {
+  const boundMs = settle.boundMs ?? SCRATCH_SETTLE_BOUND_MS;
+  const pollMs = settle.pollMs ?? SCRATCH_SETTLE_POLL_MS;
   register(async () => {
-    await new Promise<void>(resolve => setTimeout(resolve, SCRATCH_SETTLE_MS));
+    await sleep(SCRATCH_SETTLE_MS);
+    await awaitSurvivorRelease(boundMs, pollMs);
     const leaked = drainLeaks();
     if (leaked.length > 0) {
       throw new Error(`scratch leaked under ${tmpdir()} (${leaked.length}):\n  ${leaked.join("\n  ")}`);
     }
-  });
+  }, SCRATCH_SETTLE_MS + boundMs + GUARD_HOOK_HEADROOM_MS);
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
