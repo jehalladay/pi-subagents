@@ -47,7 +47,6 @@ import { DetachedFrameDecoder, decodeDetachedCommand, detachedFrame } from "../s
 import { type HyperUnixTopologyContext, hyperunixTopology } from "../src/workbench/hyperunix-observer.js";
 import { WORKFLOW_SCRIPT_SCHEMA_VERSION } from "../src/workbench/identity.js";
 import { selectLatencyDecomposition } from "../src/workbench/latency.js";
-import type * as NativeModulesModule from "../src/workbench/native-modules.js";
 import { type NativeRef, ObservationProjection, type ObservationScope, type ObservedNode, type Relation } from "../src/workbench/observation.js";
 import { type ObserveReader, observeInvocation } from "../src/workbench/observe-query.js";
 import { proposeWorkflowPatch } from "../src/workbench/patch-proposal.js";
@@ -77,18 +76,6 @@ vi.mock("@forge/sdk", async importOriginal => {
     close: async (): Promise<void> => {},
   };
   return { ...original, ServerConnection: { spawn: () => connection } };
-});
-
-/**
- * wb-72c seam: loadWorkbenchNative() rejects with the text the DIRECT-CALLER row below sets, and passes through to the real
- * loader whenever no text is set (the forge_gate_run row above needs the real natives). A factory that makes an SDK import throw
- * reaches the notify path wrapped in vitest's own mocking message and cannot carry a probe, so the rejection is the seam. The
- * driver lives in test/helpers/native-load-notify.ts.
- */
-const nativeLoadSeam = vi.hoisted(() => ({ rejectWith: undefined as string | undefined }));
-vi.mock("../src/workbench/native-modules.js", async importOriginal => {
-  const original = await importOriginal<typeof NativeModulesModule>();
-  return { ...original, loadWorkbenchNative: () => (nativeLoadSeam.rejectWith === undefined ? original.loadWorkbenchNative() : Promise.reject(new Error(nativeLoadSeam.rejectWith))) };
 });
 
 const cp = (code: number): string => String.fromCodePoint(code);
@@ -775,12 +762,11 @@ const forgeGateCatchTexts = forgeGateCatchDriver(raw => {
 
 /**
  * DIRECT-CALLER row (wb-72c, zo9 gate F-G2): the native-load notify path in src/index.ts registerWorkbenchTools hands the load
- * error's message (a producer string) to the one helper (label layout, bounded at 300). The seam above makes loadWorkbenchNative
- * reject with the probe text; the real extension tells the headless operator why through console.warn.
+ * error's message (a producer string) to the one helper (label layout, bounded at 300). Nothing is mocked (wb-72c respin U1):
+ * the driver hands the real extension factory a loader that rejects with the probe text (src/index.ts
+ * SubagentsExtensionInjection), and the real extension tells the interactive operator why through ctx.ui.notify.
  */
-const nativeLoadNotifyTexts = nativeLoadNotifyDriver(raw => {
-  nativeLoadSeam.rejectWith = raw;
-});
+const nativeLoadNotifyTexts = nativeLoadNotifyDriver();
 
 /** wb-h8f.10: latency.ts displayText (selectLatencyDecomposition), the provider and the evidence-ref paths, joined to the corpus in the same commit as its routing through the one helper. */
 function latencyTexts(raw: string): string[] {

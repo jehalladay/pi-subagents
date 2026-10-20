@@ -389,7 +389,31 @@ function workspaceCandidateBasis(cwd: string): { sourceBasis: string; state: "me
   } catch { return unavailable; }
 }
 
-export default function (pi: ExtensionAPI) {
+/**
+ * What a caller other than Pi may hand the extension factory (wb-72c). Pi's extension loader calls the factory with its API
+ * alone, so in a Pi session every field is absent and the factory behaves exactly as it always has. The injection exists for the
+ * native-load notify suites (test/helpers/native-load-notify.ts, which drives the DIRECT-CALLER SITES row of
+ * test/workbench-sanitizer-corpus.test.ts and test/workbench-native-load-notify.test.ts): they reach the real notify path with a
+ * load that fails with their own text and replace no module. It is not a second loader.
+ */
+export interface SubagentsExtensionInjection {
+  /** What registerWorkbenchTools awaits before the Workbench tools register; native-modules.ts loadWorkbenchNative when absent. */
+  readonly loadWorkbenchNative?: () => Promise<unknown>;
+}
+
+/**
+ * The evidence reference a Claude stream observation lists for its session's last message: the F1 identity-ref closure of
+ * runWorkflowTask (wb-72c). A reference is an identity, not display text, and docs/workbench/20 lists claude-message:<uuid> only
+ * when exact, so the id goes through the one helper as an identity check (the forge-evidence.ts operationIdOf shape): it is listed
+ * verbatim when the label layout at the 120 bound leaves it unchanged, and withheld otherwise, never repaired into a reference
+ * the session did not report. An absent or empty id lists nothing.
+ */
+export function claudeMessageEvidenceRef(lastMessageId: string | undefined): string | undefined {
+  if (!lastMessageId) return undefined;
+  return sanitizeWorkbenchText(lastMessageId, 120, "label") === lastMessageId ? `claude-message:${lastMessageId}` : undefined;
+}
+
+export default function (pi: ExtensionAPI, injected: SubagentsExtensionInjection = {}) {
   // Child AgentSessions load normal extensions. Re-entering this extension there
   // would create another manager and leak handlers. Nested orchestration is
   // injected as scoped custom tools by the existing manager instead.
@@ -2594,7 +2618,7 @@ Terse command-style prompts produce shallow, generic work.
     // them. A load that fails leaves the standard upstream surface intact,
     // says why, and lets the next session start try again.
     try {
-      await loadWorkbenchNative();
+      await (injected.loadWorkbenchNative ?? loadWorkbenchNative)();
     } catch (error) {
       workbenchToolsRegistered = false;
       // The load error's message is a producer string, so it is display text: the one helper's label layout redacts every
@@ -2954,9 +2978,6 @@ Terse command-style prompts produce shallow, generic work.
       // reading of a gap before anything is stripped: a separator put in first splits the very credential it hides
       // (wb-zo9). The projection refuses an empty title, so text that sanitizes to nothing shows a fixed placeholder.
       const clamp = (value: string) => sanitizeWorkbenchText(value, 120, "label") || "unknown";
-      // An evidence reference is an identity, not display text: docs/workbench/20 lists claude-message:<uuid> only when
-      // exact, and neither the layout's deletions nor a placeholder may make one. It keeps the clamp it had (wb-zo9 F1).
-      const reference = (value: string) => stripUnsafeText(value, " ").slice(0, 120);
       // The Claude backend is the only native path of a run; the Pi backend
       // never touches the SDKs, so nothing native is loaded for it (wb-cax.10).
       const native = settings ? await loadWorkbenchNative() : undefined;
@@ -2964,6 +2985,8 @@ Terse command-style prompts produce shallow, generic work.
         nativeSnapshots.set(call.index, snapshot);
         const row = nativeRows.get(call.index);
         const live = !snapshot.terminal;
+        // An evidence reference is an identity, not display text: exact or withheld, never repaired (wb-72c, the F1 closure).
+        const messageRef = claudeMessageEvidenceRef(snapshot.lastMessageId);
         // Native session id is supplied by the SDK, never derived from a Pi
         // workflow agent id. Before init the node is explicitly local-only.
         emitObservation({ provider: snapshot.sessionId ? "claude-agent-sdk" : "pi-workflow",
@@ -2971,7 +2994,7 @@ Terse command-style prompts produce shallow, generic work.
           { title: clamp(call.label), type: "agent", statusText: snapshot.terminal ?? (live ? "observed-running" : "unknown"),
             statusTone: snapshot.terminal === "succeeded" ? "success" : snapshot.terminal === "failed" ? "failure"
               : snapshot.terminal ? "unknown" : "active" }, "claude.stream",
-          snapshot.lastMessageId ? [`claude-message:${reference(snapshot.lastMessageId)}`] : undefined,
+          messageRef ? [messageRef] : undefined,
           task.identityReceipt?.identity.subjectBasis);
         if (!row) return;
         const rowLive = row.state === "start" || row.state === "progress";
