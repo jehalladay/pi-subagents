@@ -17,6 +17,8 @@
 
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
+import { fileURLToPath } from "node:url";
+import ts from "typescript";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import subagentsExtension from "../src/index.js";
 import { loadSettings } from "../src/settings.js";
@@ -30,6 +32,58 @@ const MODES: readonly { mode: Mode; workbench?: { workflowAgentBackend: "pi" | "
   { mode: "pi", workbench: { workflowAgentBackend: "pi" } },
   { mode: "claude", workbench: { workflowAgentBackend: "claude" } },
 ];
+
+/**
+ * Explicit per-row budgets for the layer-walk rows (wb-cvjm), file-local so no other suite's budget moves. A row that
+ * boots the REAL extension and walks saved-workflow layers through SubagentWorkflow spawns real session/config work, so
+ * its wall time is set by host contention rather than by precedence logic: under tenant load it exceeded vitest's default
+ * 5000 ms budget and reddened the row as a lottery victim across landings 158-164 (the wb-22c gate note set measured the
+ * scriptPath/inline row at 8832 ms and the re-walk row at 23949 ms serially at load1 ~353). Same cure shape as wb-gy0 and
+ * wb-hk9l: an explicit measured budget, assertions unchanged, never a retry. A row's synchronous work cannot be interrupted,
+ * so a budget only decides when a finished row is failed.
+ */
+const WALK_ROW_BUDGET_MS = 30_000;
+/** The re-walk row runs the whole chain twice around a second session_start (12 runs), so it carries the larger budget. */
+const REWALK_ROW_BUDGET_MS = 60_000;
+/** The worst measured serial walls (wb-22c gate note set, load1 ~353) the budgets are sized against. */
+const WORST_MEASURED_WALK_MS = 8_832;
+const WORST_MEASURED_REWALK_MS = 23_949;
+const WALK_ROW: { readonly timeout: number } = { timeout: WALK_ROW_BUDGET_MS };
+const REWALK_ROW: { readonly timeout: number } = { timeout: REWALK_ROW_BUDGET_MS };
+/** The rows carrying each budget, in file order: every row whose body calls walkLayers or checkExplicitSources. */
+const WALK_ROWS = [
+  "resolves a colliding name .pi/workflows -> .agents/workflows -> user agent dir, one layer at a time",
+  "lets scriptPath and inline script both outrank a colliding name, scriptPath first",
+];
+const REWALK_ROWS = [
+  "re-walks the full layer chain and the explicit-source rows after a second session_start, with tool surface and settings bytes unchanged",
+];
+const NON_LITERAL_TITLE = "<a row with a non-literal title>";
+/** Every it() row of this file in source order: the budget identifier it carries (if any) and whether its body walks layers (the wb-cvjm pin). */
+function sourceRows(): { title: string; budget: string | undefined; walks: boolean }[] {
+  const file = fileURLToPath(import.meta.url);
+  const source = ts.createSourceFile(file, readFileSync(file, "utf8"), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const callsWalk = (node: ts.Node): boolean =>
+    (ts.isCallExpression(node) &&
+      ts.isIdentifier(node.expression) &&
+      (node.expression.text === "walkLayers" || node.expression.text === "checkExplicitSources")) ||
+    ts.forEachChild(node, child => (callsWalk(child) ? true : undefined)) === true;
+  const rows: { title: string; budget: string | undefined; walks: boolean }[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "it") {
+      const [title, second] = node.arguments;
+      const body = node.arguments[node.arguments.length - 1];
+      rows.push({
+        title: title !== undefined && ts.isStringLiteralLike(title) ? title.text : NON_LITERAL_TITLE,
+        budget: node.arguments.length === 3 && second !== undefined && ts.isIdentifier(second) ? second.text : undefined,
+        walks: body !== undefined && callsWalk(body),
+      });
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  return rows;
+}
 
 const script = (name: string): string => `export const meta = { name: "${name}", description: "${name} source" };\n`;
 
@@ -109,12 +163,12 @@ describe.each(MODES)("saved-workflow precedence and config parity — mode $mode
     vi.restoreAllMocks();
   });
 
-  it("resolves a colliding name .pi/workflows -> .agents/workflows -> user agent dir, one layer at a time", async () => {
+  it("resolves a colliding name .pi/workflows -> .agents/workflows -> user agent dir, one layer at a time", WALK_ROW, async () => {
     await boot();
     await walkLayers("first");
   });
 
-  it("lets scriptPath and inline script both outrank a colliding name, scriptPath first", async () => {
+  it("lets scriptPath and inline script both outrank a colliding name, scriptPath first", WALK_ROW, async () => {
     await boot();
     await checkExplicitSources("first");
   });
@@ -143,7 +197,7 @@ describe.each(MODES)("saved-workflow precedence and config parity — mode $mode
     }
   });
 
-  it("re-walks the full layer chain and the explicit-source rows after a second session_start, with tool surface and settings bytes unchanged", async () => {
+  it("re-walks the full layer chain and the explicit-source rows after a second session_start, with tool surface and settings bytes unchanged", REWALK_ROW, async () => {
     await boot();
     const toolNamesBefore = [...booted.tools.keys()].sort();
     await walkLayers("pre");
@@ -181,5 +235,23 @@ describe("saved-workflow precedence — cross-mode parity", () => {
       }
     }
     expect(picks).toEqual({ legacy: PROJECT_AGENTS, pi: PROJECT_AGENTS, claude: PROJECT_AGENTS });
+  });
+});
+
+describe("saved-workflow precedence — wb-cvjm explicit row budgets", () => {
+  it("wb-cvjm: every layer-walk row runs under an explicit file-local budget, none rides the 5000 ms default", () => {
+    const rows = sourceRows();
+    expect(rows.filter(row => row.budget === "WALK_ROW").map(row => row.title)).toEqual(WALK_ROWS);
+    expect(rows.filter(row => row.budget === "REWALK_ROW").map(row => row.title)).toEqual(REWALK_ROWS);
+    expect(rows.filter(row => row.walks).map(row => row.title)).toEqual([...WALK_ROWS, ...REWALK_ROWS]);
+    expect(rows.filter(row => row.title === NON_LITERAL_TITLE)).toEqual([]);
+    expect(WALK_ROW).toEqual({ timeout: WALK_ROW_BUDGET_MS });
+    expect(REWALK_ROW).toEqual({ timeout: REWALK_ROW_BUDGET_MS });
+    expect(WALK_ROW_BUDGET_MS).toBeGreaterThanOrEqual(20_000);
+    expect(WALK_ROW_BUDGET_MS).toBeGreaterThan(2 * WORST_MEASURED_WALK_MS);
+    expect(REWALK_ROW_BUDGET_MS).toBeGreaterThanOrEqual(48_000);
+    expect(REWALK_ROW_BUDGET_MS).toBeGreaterThan(2 * WORST_MEASURED_REWALK_MS);
+    expect(WORST_MEASURED_WALK_MS).toBeGreaterThan(5_000);
+    expect(WORST_MEASURED_REWALK_MS).toBeGreaterThan(5_000);
   });
 });
