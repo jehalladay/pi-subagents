@@ -1075,9 +1075,13 @@ describe('engine identity from result.provenance.sdk_versions (wb-693.1 R1, wb-6
   }, 30_000);
 
   it('R10 end to end: the provider reading of a TSX-era envelope projects both rf-engine references and the foreign-runtime note', async () => {
-    const topology = project(await provided(tsxEra()));
+    const source = tsxEra();
+    const topology = project(await provided(source));
     // wb-693.4: the envelope's engine_metrics.tsx_worker_spawns 1 adds the bounded spawn reference after the identities.
-    expect(topology.snapshots[0].evidenceRefs).toStrictEqual([...PLAIN_REFS, 'rf-cli:0.1.716', RUNTIME_REF, SDK_REF, 'rf-engine-spawns:1']);
+    // wb-973.8 (SCG-R8): its bundle_revision_id rides as the rf-bundle reference after the workspace reference and keys sourceVersion.
+    const bundle = String((source.result as Json).bundle_revision_id);
+    expect(topology.snapshots[0].evidenceRefs).toStrictEqual([...PLAIN_REFS, `rf-bundle:${bundle}`, 'rf-cli:0.1.716', RUNTIME_REF, SDK_REF, 'rf-engine-spawns:1']);
+    expect(topology.snapshots[0].sourceVersion).toBe(bundle);
     expect(topology.diagnostics).toContain(ENGINE_NOTE);
     expect(topology.snapshots[0].coverage).toBe('complete');
   }, 30_000);
@@ -1968,4 +1972,210 @@ describe('observation rows from result.observations (wb-973.10 SCG-R10)', () => 
       expect(observationNotes(topology)).toStrictEqual(['observations: 1 row, 0 reused']);
     }, 30_000);
   });
+});
+
+/** wb-973.8 (SWARM-CONTEXT-GRAPH-R8): "When result.bundle_revision_id is present (sha256 digest), the RF reader adapter shall
+ * carry it as a distinct evidence ref rf-bundle:<digest>, use it as the snapshot's sourceVersion (version cohort key), and
+ * nativeEvidence shall prefer it as sourceBasis; graph_revision_id stays sourceRevision and rf-graph:<digest>; an absent key
+ * keeps today's output byte-identical." Owner ruling G-A (bound on wb-x32): bundle_revision_id owns NativeSnapshot.sourceVersion,
+ * and the CLI release keeps travelling as rf-cli:<cli_version> plus a note, never as sourceVersion. The pinned schema
+ * (ReactiveFiberCLI context.render.schema.json :1025-1027 and $defs/digest :132-136 @8a8b83e4d) types the key as
+ * sha256:<64 lowercase hex>, not nullable and not required (an envelope recorded without it stays valid), so a present value of
+ * any other shape is refused: 'validation' by this reader and 'transport' by the provider's isPreviewEnvelope. The wb-6ze.9 R1
+ * row and the wb-2j3.2 TODAY pins above stay the byte-identity fence for the absent key. Input-hygiene rows only: every invisible
+ * is built with String.fromCodePoint. The provider rows run nativeReactiveFiberPreview against a hermetic stub rf (the only PATH
+ * entry, absolute-node shebang) written into tracked scratch, so the provider's own envelope validator decides. */
+describe('bundle revision from result.bundle_revision_id (wb-973.8 SCG-R8)', () => {
+  const CAPABILITY = 'reactivefiber.render.preview';
+  const BUNDLE = `sha256:${'b2'.repeat(32)}`;
+  const OTHER_BUNDLE = `sha256:${'c3'.repeat(32)}`;
+  const SECOND_OPERATION = 'rfo_lkjihgfedcba9876543210';
+  const THIRD_OPERATION = `rfo_${'m'.repeat(22)}`;
+  const PLAIN_REFS = [`rf-graph:${GRAPH}`, `rf-workspace:${WORKSPACE_ID}`];
+  const BUNDLE_CAUSE = 'result.bundle_revision_id must be sha256:<64 lowercase hex> when stated';
+  const PROVIDER_REFUSAL = 'RF preview returned an unrecognized or contradictory envelope.';
+  const cp = (code: number): string => String.fromCodePoint(code);
+  const project = (value: Json, ctx: ReactiveFiberTopologyContext = context): ReactiveFiberProjectionTopology => reactivefiberTopology(value as JsonValue, ctx);
+  /** One preview of `operation` stating `bundle` beside the fixture's graph digest. */
+  const previewOf = (operation: string, bundle: JsonValue): Json => reading(envelope({operation_id: operation, result: result({bundle_revision_id: bundle})}));
+  const idsAt = (projection: ObservationProjection, version: string): string[] =>
+    projection.query({scope, limit: 10, version}).nodes.map(node => node.nativeRef.id).sort();
+
+  // Acceptance 1 (the named RED row): "withResult({bundle_revision_id: BUNDLE}) asserts evidenceRefs contains rf-graph:${GRAPH}
+  // and rf-bundle:${BUNDLE}, sourceVersion === BUNDLE, sourceRevision === GRAPH; HEAD has no rf-bundle ref and sourceVersion undefined."
+  it('SCG-R8: bundle_revision_id rides as rf-bundle evidence and the version cohort key', () => {
+    const topology = project(withResult({bundle_revision_id: BUNDLE}));
+    const [snapshot] = topology.snapshots;
+    expect(snapshot.evidenceRefs).toEqual(expect.arrayContaining([`rf-graph:${GRAPH}`, `rf-bundle:${BUNDLE}`]));
+    expect(snapshot.sourceVersion).toBe(BUNDLE);
+    expect(snapshot.sourceRevision).toBe(GRAPH);
+    // Exactly: today's two references, then the bundle; everything else is today's projection (coverage, tone, status, notes).
+    const today = project(reading());
+    expect(snapshot.evidenceRefs).toStrictEqual([...PLAIN_REFS, `rf-bundle:${BUNDLE}`]);
+    expect({...snapshot, evidenceRefs: PLAIN_REFS}).toStrictEqual({...today.snapshots[0], sourceVersion: BUNDLE});
+    expect(topology.diagnostics).toStrictEqual(today.diagnostics);
+    expect(topology.relations).toStrictEqual(today.relations);
+    bounded(topology);
+    everyObject(topology, item => { expect(Object.isFrozen(item)).toBe(true); });
+    // Applied, the bundle keys the node's version cohort; both digest references stay queryable evidence.
+    const projection = new ObservationProjection();
+    expect(projection.refresh(snapshot)).toBe('applied');
+    expect(projection.query({scope, limit: 10}).nodes.find(node => node.nativeRef.id === OPERATION)).toMatchObject({sourceVersion: BUNDLE});
+    expect(idsAt(projection, BUNDLE)).toStrictEqual([OPERATION]);
+    expect(idsAt(projection, GRAPH)).toStrictEqual([]);
+    for (const ref of [`rf-bundle:${BUNDLE}`, `rf-graph:${GRAPH}`]) {
+      expect(projection.query({scope, limit: 10, evidence: ref}).nodes.map(node => node.nativeRef.id)).toStrictEqual([OPERATION]);
+    }
+  });
+
+  it('SCG-R8: the value is carried, not hard-coded: another bundle digest round-trips verbatim into the reference and sourceVersion', () => {
+    const snapshot = project(withResult({bundle_revision_id: OTHER_BUNDLE})).snapshots[0];
+    expect(snapshot.evidenceRefs).toStrictEqual([...PLAIN_REFS, `rf-bundle:${OTHER_BUNDLE}`]);
+    expect(snapshot.sourceVersion).toBe(OTHER_BUNDLE);
+    expect(snapshot.sourceRevision).toBe(GRAPH);
+  });
+
+  it('SCG-R8: the bundle reference sits after the workspace reference and before a stated rf-cli release, which still never becomes sourceVersion', () => {
+    const topology = project(withResult({bundle_revision_id: BUNDLE, provenance: {graph_revision_id: GRAPH, cli_version: '0.1.716'}}));
+    const [snapshot] = topology.snapshots;
+    expect(snapshot.evidenceRefs).toStrictEqual([...PLAIN_REFS, `rf-bundle:${BUNDLE}`, 'rf-cli:0.1.716']);
+    expect(snapshot.sourceVersion).toBe(BUNDLE);
+    expect(topology.diagnostics).toContain('producer release from result.provenance.cli_version: rf@0.1.716');
+    const projection = new ObservationProjection();
+    expect(projection.refresh(snapshot)).toBe('applied');
+    expect(idsAt(projection, '0.1.716')).toStrictEqual([]);
+  });
+
+  // Acceptance 2: "two snapshots (distinct operation_ids) with equal GRAPH and bundle ids B1≠B2 applied to an ObservationProjection
+  // - query({version:B1}) returns exactly the first node; equal bundle ids share the cohort."
+  it('SCG-R8: equal graph digests with distinct bundle ids split the version cohort, and equal bundle ids share it', () => {
+    const projection = new ObservationProjection();
+    expect(projection.refresh(project(previewOf(OPERATION, BUNDLE)).snapshots[0])).toBe('applied');
+    expect(projection.refresh(project(previewOf(SECOND_OPERATION, OTHER_BUNDLE)).snapshots[0])).toBe('applied');
+    expect(idsAt(projection, BUNDLE)).toStrictEqual([OPERATION]);
+    expect(idsAt(projection, OTHER_BUNDLE)).toStrictEqual([SECOND_OPERATION]);
+    // The shared graph digest no longer stands in for the cohort once a bundle is stated.
+    expect(idsAt(projection, GRAPH)).toStrictEqual([]);
+    expect(projection.refresh(project(previewOf(THIRD_OPERATION, BUNDLE)).snapshots[0])).toBe('applied');
+    expect(idsAt(projection, BUNDLE)).toStrictEqual([OPERATION, THIRD_OPERATION].sort());
+    expect(idsAt(projection, OTHER_BUNDLE)).toStrictEqual([SECOND_OPERATION]);
+  });
+
+  // Acceptance 4: "Absent key: the clean R1 case passes toStrictEqual unchanged (wb-6ze.9 suite is the fence)." This row adds the
+  // cohort fallback: without a bundle the snapshot states no sourceVersion and the projection keys the cohort on the graph digest.
+  it('SCG-R8: an envelope without bundle_revision_id states no rf-bundle reference and no sourceVersion, and its cohort stays the graph digest', () => {
+    const topology = project(reading());
+    const [snapshot] = topology.snapshots;
+    expect(snapshot).not.toHaveProperty('sourceVersion');
+    expect(snapshot.evidenceRefs).toStrictEqual(PLAIN_REFS);
+    expect(snapshot.sourceRevision).toBe(GRAPH);
+    expect(JSON.stringify(topology)).not.toContain('rf-bundle:');
+    const projection = new ObservationProjection();
+    expect(projection.refresh(snapshot)).toBe('applied');
+    expect(projection.refresh(project(reading(envelope({operation_id: SECOND_OPERATION}))).snapshots[0])).toBe('applied');
+    expect(idsAt(projection, GRAPH)).toStrictEqual([OPERATION, SECOND_OPERATION].sort());
+  });
+
+  it('SCG-R8: a failed render carries no result, so it states no bundle reference and no sourceVersion', () => {
+    const [snapshot] = project(reading(failure())).snapshots;
+    expect(snapshot).not.toHaveProperty('sourceVersion');
+    expect(snapshot.evidenceRefs).toStrictEqual([`rf-workspace:${WORKSPACE_ID}`]);
+  });
+
+  it('SCG-R8: nativeEvidence of the same reading prefers the bundle as sourceBasis while the snapshot keeps the graph digest as sourceRevision', () => {
+    expect(nativeEvidence(CAPABILITY, withResult({bundle_revision_id: BUNDLE}) as JsonValue)).toStrictEqual({provider: 'reactivefiber', nativeId: OPERATION, sourceBasis: BUNDLE});
+    expect(nativeEvidence(CAPABILITY, reading() as JsonValue)).toStrictEqual({provider: 'reactivefiber', nativeId: OPERATION, sourceBasis: GRAPH});
+  });
+
+  // Acceptance 5: "Malformed value (non-sha256 string, number, object) refused 'validation' by the observer and 'transport' by
+  // isPreviewEnvelope." The schema types a stated key as the digest and never null, so null and every other shape is refused too.
+  const MALFORMED: [string, JsonValue][] = [
+    ['a bare 64-hex digest without the sha256: prefix', 'b2'.repeat(32)],
+    ['an uppercase-hex digest', `sha256:${'B2'.repeat(32)}`],
+    ['a 63-hex digest', `sha256:${'b'.repeat(63)}`],
+    ['a 65-hex digest', `sha256:${'b'.repeat(65)}`],
+    ['another algorithm prefix', `sha512:${'b2'.repeat(32)}`],
+    ['a directory string', '/workspace'],
+    ['an empty string', ''],
+    ['a digest followed by a line break', `${BUNDLE}${cp(0x0a)}`],
+    ['a digest followed by a zero-width space', `${BUNDLE}${cp(0x200b)}`],
+    ['a digest carrying a bidi override', `sha256:${cp(0x202e)}${'b2'.repeat(32)}`],
+    ['a number', 716],
+    ['an object', {digest: BUNDLE}],
+    ['an array', [BUNDLE]],
+    ['a boolean', true],
+    ['null', null],
+  ];
+  it('SCG-R8: the malformed bundle_revision_id table registers all 15 shapes', () => {
+    expect(MALFORMED.length).toBe(15);
+  });
+  it.each(MALFORMED)('SCG-R8: a bundle_revision_id that is %s is refused with a typed validation error naming its cause', (name, value) => {
+    record('SCG-R8 MALFORMED', name);
+    const error = refusal(withResult({bundle_revision_id: value}));
+    expect(error).toMatchObject({category: 'validation', message: `ReactiveFiber topology refused: ${BUNDLE_CAUSE}.`});
+  });
+  it('SCG-R8: every malformed bundle_revision_id shape is registered at the it.each call and runs', () => {
+    expectEveryRowRan('SCG-R8 MALFORMED', MALFORMED);
+  });
+
+  const originalPath = process.env.PATH;
+  const stubs: string[] = [];
+  afterEach(() => {
+    if (originalPath === undefined) Reflect.deleteProperty(process.env, 'PATH');
+    else process.env.PATH = originalPath;
+    removeScratch(...stubs.splice(0));
+  });
+  /** One provider call through a stub rf that prints `source` and exits 0 as the only PATH entry. */
+  async function provided(source: Json): Promise<JsonValue> {
+    const dir = makeScratch('rf-bundle-revision-');
+    stubs.push(dir);
+    const binary = join(dir, 'rf');
+    writeFileSync(binary, `#!${process.execPath}\nprocess.stdout.write(${JSON.stringify(JSON.stringify(source))});\n`);
+    chmodSync(binary, 0o700);
+    process.env.PATH = dir;
+    return nativeReactiveFiberPreview('claude-opus-5', 'Summarize workbench integration', WS);
+  }
+  const PROVIDER_MALFORMED: [string, JsonValue][] = [
+    ['a non-sha256 string', 'b2'.repeat(32)],
+    ['a directory string', '/workspace'],
+    ['a number', 716],
+    ['an object', {digest: BUNDLE}],
+    ['null', null],
+  ];
+  it('SCG-R8 provider: the malformed bundle_revision_id table registers all 5 shapes', () => {
+    expect(PROVIDER_MALFORMED.length).toBe(5);
+  });
+  it.each(PROVIDER_MALFORMED)('SCG-R8 provider: an envelope whose bundle_revision_id is %s is refused as a transport error', async (name, value) => {
+    record('SCG-R8 PROVIDER', name);
+    const preview = provided(envelope({result: result({bundle_revision_id: value})}));
+    await expect(preview).rejects.toBeInstanceOf(CapabilityError);
+    await expect(preview).rejects.toMatchObject({category: 'transport', message: PROVIDER_REFUSAL});
+  }, 30_000);
+  it('SCG-R8 provider: every malformed bundle_revision_id shape is registered at the it.each call and runs', () => {
+    expectEveryRowRan('SCG-R8 PROVIDER', PROVIDER_MALFORMED);
+  });
+
+  it('SCG-R8 provider: an envelope stating a sha256 bundle_revision_id passes unchanged and projects the rf-bundle reference end to end', async () => {
+    const source = envelope({result: result({bundle_revision_id: BUNDLE})});
+    const preview = await provided(source);
+    expect(preview).toStrictEqual({contract: 'reactivefiber.render.preview/v1', workspaceRoot: WS, source});
+    const [snapshot] = reactivefiberTopology(preview, context).snapshots;
+    expect(snapshot.evidenceRefs).toStrictEqual([...PLAIN_REFS, `rf-bundle:${BUNDLE}`]);
+    expect(snapshot.sourceVersion).toBe(BUNDLE);
+  }, 30_000);
+
+  // "Gate: default gate (full-shape case needs R11's fixture keys)": the landed wb-973.11 full-shape envelope states a bundle id.
+  it('SCG-R8 provider: the wb-973.11 full-shape envelope passes unchanged and its bundle_revision_id keys the snapshot cohort', async () => {
+    const source = fullShapeRf(WS);
+    const fixture = source.result;
+    if (fixture === null || typeof fixture !== 'object' || Array.isArray(fixture)) throw new Error('the wb-973.11 fixture result must be an object');
+    const bundle = fixture.bundle_revision_id;
+    if (typeof bundle !== 'string') throw new Error('the wb-973.11 fixture must state a string bundle_revision_id');
+    const preview = await provided(source);
+    expect(preview).toStrictEqual({contract: 'reactivefiber.render.preview/v1', workspaceRoot: WS, source});
+    const [snapshot] = reactivefiberTopology(preview, context).snapshots;
+    expect(snapshot.evidenceRefs).toEqual(expect.arrayContaining([`rf-bundle:${bundle}`]));
+    expect(snapshot.sourceVersion).toBe(bundle);
+    expect(snapshot.sourceVersion).not.toBe(snapshot.sourceRevision);
+  }, 30_000);
 });

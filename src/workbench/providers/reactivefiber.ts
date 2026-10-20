@@ -85,6 +85,10 @@ function isPreviewEnvelope(source: unknown, exit: number|null, workspaceRoot: st
         !["tsx_worker_spawns","tsx_resource_rounds"].every(key=>Object.hasOwn(metrics,key) && nonnegativeInteger(metrics[key]))) return false;
   }
   if (Object.hasOwn(result,"observations") && !isObservationRows(result.observations)) return false;
+  // wb-973.8 (SCG-R8): a stated result.bundle_revision_id is the pinned schema's digest, sha256:<64 lowercase hex>, never null;
+  // an rf that states none stays admitted.
+  if (Object.hasOwn(result,"bundle_revision_id") &&
+      (typeof result.bundle_revision_id!=="string" || !SHA256.test(result.bundle_revision_id))) return false;
   return true;
 }
 const LEGACY_INPUT={type:"object",properties:{model:{type:"string",minLength:1},task:{type:"string",minLength:1}},required:["model","task"],additionalProperties:false};
