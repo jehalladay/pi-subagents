@@ -11,8 +11,10 @@
  *    argument is stripped by the SDK's tool schema (the landed "does not accept SDK-stripped identity arguments as host
  *    authority" row pins the stripping); the row below pins that it never moves --workspace off the bound root.
  *  - AC3, an environment variable: RF_WORKSPACE and SWARM_RF_WORKSPACE in Pi's own process.env are the wb-973.6/973.7
- *    hosted-agent channel (DETACHED_HOST_ENV_ALLOWLIST; the embedded host's child inherits process.env). The spawned rf
- *    sees them, yet the argv is byte-identical to the unset run, and an rf that answered for the env's directory
+ *    hosted-agent channel (DETACHED_HOST_ENV_ALLOWLIST; the embedded host's child inherits process.env). Pi's process
+ *    carries them across the invoke, yet the argv is byte-identical to the unset run. The rf child itself spawns on
+ *    RF_CHILD_ENV_ALLOWLIST (wb-2j3.11, src/workbench/process-env.ts), which names neither: its workspace travels in
+ *    argv, never in the environment, so the spawned rf sees neither name. An rf that answered for the env's directory
  *    instead of the bound root is refused by the provider's workspace.root pin.
  * The stand-in rf is the envelope-audit pattern on tracked scratch: the ONLY PATH entry, an absolute-node shebang, that
  * records its argv and the two environment values it saw, and replies with the full-shape offline envelope
@@ -26,7 +28,7 @@ import { afterEach, describe, expect, it } from "vitest";
 import { CapabilityRegistry } from "../src/workbench/capability-registry.js";
 import { createCuratedTools } from "../src/workbench/claude-capability-tools.js";
 import { createClaudeWorkflowHost } from "../src/workbench/claude-host.js";
-import { DETACHED_HOST_ENV_ALLOWLIST } from "../src/workbench/process-env.js";
+import { DETACHED_HOST_ENV_ALLOWLIST, RF_CHILD_ENV_ALLOWLIST } from "../src/workbench/process-env.js";
 import { registerNativeReactiveFiberRender } from "../src/workbench/providers/reactivefiber.js";
 import { runWorkflow } from "../src/workflow/runtime.js";
 import { fullShapeRf } from "./helpers/rf-render-fixture.js";
@@ -284,9 +286,18 @@ function steerEnv(names: readonly EnvName[]): Record<EnvName, string | null> {
   return values;
 }
 
+/** The RF_WORKSPACE / SWARM_RF_WORKSPACE values in Pi's own process.env (null when unset), read at the call. */
+function piEnv(): Record<EnvName, string | null> {
+  return { RF_WORKSPACE: process.env.RF_WORKSPACE ?? null, SWARM_RF_WORKSPACE: process.env.SWARM_RF_WORKSPACE ?? null };
+}
+
 describe("SCG-R5 AC3 (wb-973.5): Pi's own RF_WORKSPACE / SWARM_RF_WORKSPACE never steer --workspace", () => {
   it("SCG-R5: the two names are the wb-973.6/973.7 hosted-agent channel on DETACHED_HOST_ENV_ALLOWLIST, composed rather than duplicated", () => {
     for (const name of ENV_NAMES) expect(DETACHED_HOST_ENV_ALLOWLIST).toContain(name);
+  });
+
+  it("SCG-R5: the rf child spawns on RF_CHILD_ENV_ALLOWLIST (wb-2j3.11), which names neither, so the spawned rf never inherits them", () => {
+    for (const name of ENV_NAMES) expect(RF_CHILD_ENV_ALLOWLIST).not.toContain(name);
   });
 
   it.each(ADMITTED_INPUTS)("SCG-R5: with both names set in Pi's process.env, %s spawns the byte-identical argv and --workspace stays the bound root", async (_shape, input) => {
@@ -298,8 +309,10 @@ describe("SCG-R5 AC3 (wb-973.5): Pi's own RF_WORKSPACE / SWARM_RF_WORKSPACE neve
     const values = steerEnv(ENV_NAMES);
     const set = standIn(fullShapeRf(root));
     await boundRegistry(root).invoke(RF_CAPABILITY, input, invokeContext());
-    // Non-vacuous: the spawned rf saw both names; Pi's argv still names only the bound root.
-    expect(recordedEnv(set)).toEqual(values);
+    // Non-vacuous: Pi's own process.env carried both names across the invoke; the rf child (RF_CHILD_ENV_ALLOWLIST,
+    // wb-2j3.11) saw neither, and Pi's argv still names only the bound root.
+    expect(piEnv()).toEqual(values);
+    expect(recordedEnv(set)).toEqual({ RF_WORKSPACE: null, SWARM_RF_WORKSPACE: null });
     const steered = recordedArgv(set);
     expect(JSON.stringify(steered)).toBe(JSON.stringify(recordedArgv(unset)));
     expect(steered?.slice(0, 2)).toEqual(["--workspace", root]);
@@ -311,7 +324,9 @@ describe("SCG-R5 AC3 (wb-973.5): Pi's own RF_WORKSPACE / SWARM_RF_WORKSPACE neve
     const values = steerEnv([name]);
     const record = standIn(fullShapeRf(root));
     await boundRegistry(root).invoke(RF_CAPABILITY, input, invokeContext());
-    expect(recordedEnv(record)).toEqual(values);
+    // Non-vacuous: Pi's own process.env carried the name across the invoke; the rf child saw neither name.
+    expect(piEnv()).toEqual(values);
+    expect(recordedEnv(record)).toEqual({ RF_WORKSPACE: null, SWARM_RF_WORKSPACE: null });
     expect(recordedArgv(record)).toEqual(expectedArgv(root, input));
   });
 

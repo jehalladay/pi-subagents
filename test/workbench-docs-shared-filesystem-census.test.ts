@@ -7,10 +7,14 @@
  * READING (respin on gate row 553, ORCH-REC-R554): the docs-pin floor binds this census over the acceptance's "grep"
  * wording (row 487 R1(a); row 547 / ORCH-REC-R548 precedent). Every .md file under docs/workbench, receipts included, is
  * judged in two legs, and a sentence either leg refuses reds the census.
- * - FAMILY RULE (both legs): a sentence MATCHES when it names, case-insensitively, NFS or EFS at the start of a word
- *   (NFSv4 matches; refs and confs never do), shared filesystem (shared-filesystem, shared file system, shared
- *   file-system, plural) or multi-host (multi host, multihost, plural). A matching sentence must say "unsupported" or
- *   "not safe", in any case, and may use the word "safe" (or "safely") only inside "not safe"; "unsafe" is not the word.
+ * - FAMILY RULE (both legs; respin 2 on gate row 600: a SUPERSET of the AC4 grep NFS|EFS|shared filesystem|multi-host,
+ *   a case-sensitive substring match, so every sentence that grep matches is a family match): a sentence MATCHES when
+ *   it names NFS or EFS at the start of a word in any case (nfs, NFSv4; refs and confs never do) or in capitals
+ *   anywhere in a word (pNFS, AmazonEFS), or names, case-insensitively and anywhere in a word, shared filesystem
+ *   (shared-filesystem, shared file system, shared file-system, plural, unshared filesystem, filesystem_root) or
+ *   multi-host (multi host, multihost, plural, multi-hosted, multi-hosting, nonmulti-host). A matching sentence must
+ *   say "unsupported" or "not safe", in any case, and may use the word "safe" (or "safely") only inside "not safe";
+ *   "unsafe" is not the word.
  * - RENDERED LEG (what a reader sees; rendered-text truth, 9x5.17): marked 18.0.11 (GFM, the lexer test/helpers/census.ts
  *   and test/workbench-w10-stamped-claim-guard.test.ts use) lexes the page once. A unit is a paragraph, a heading, the
  *   text of a list item or block quote, a table cell, a code block or an HTML block. A unit renders its text, backslash
@@ -43,20 +47,28 @@
  * each judged in memory over the whole docs tree by docsFindings and compared with the findings its row names. R1-R7
  * and the controls C1-C2 edit docs/13 at its root paragraph, located through the lexer (whose top-level raws tile each
  * page), and compare every finding but liveness, which another page may satisfy at any time; W1-W8, W15, W18, W19 and
- * the controls C3-C5 add a page and compare every finding. W9 and W10 are accepted rows naming residual F3 below. The H
- * rows add shapes this header claims beyond the battery; the N rows are compliant controls the census accepts; the L
- * rows judge liveness alone, each leg over synthetic docs trees, so no row depends on which committed page names a
- * family. Every look-alike is built with String.fromCodePoint.
+ * the controls C3-C5 add a page and compare every finding, and so do X1-X4, the AC4 grep mutants of gate row 600. W9
+ * and W10 are accepted rows naming residual F3 below. The H rows add shapes this header claims beyond the battery; the
+ * N rows are compliant controls the census accepts; the L rows judge liveness alone, each leg over synthetic docs
+ * trees, so no row depends on which committed page names a family. Every look-alike is built with String.fromCodePoint.
+ * GREP FLOOR (row 600 U2): three rows hold the family rule to the AC4 grep as the acceptance writes it (AC4_GREP). Each
+ * grep alternative set inside a word (GREP_FLOOR_BEFORE x GREP_FLOOR_AFTER, 168 sentences) is refused unqualified by
+ * both legs; every synthetic sentence the grep matches is a family match and no NO_MATCH control is a grep match; and
+ * every docs sentence the grep matches, raw or rendered, is a family match that says unsupported or not safe.
  * FROZEN SHAPE (standing rule 16, owner order 2026-10-18T18:14:19Z). One row pins the family table, the judge patterns
  * and every table as literals derived from them at this cut (the ed1be42 literals unchanged; the respin's reference
  * table, fold and HTML patterns, pinned blocks and battery tables appended), so deleting a family or a row, narrowing a
  * pattern or swapping a row for an unrelated passing case reds the census. The live docs are not frozen: any page may
  * add a sentence that complies.
- * RESIDUALS (named, not closed): letters NFKC leaves distinct (a Cyrillic or Greek look-alike of N, E, F or S) and
- * sentence ends NFKC does not fold to ".", "!" or "?"; a named reference written without its ";", and a numeric reference
- * from 0x80 to 0x9F, which browsers read as Windows-1252 but this census as a control code point; an HTML block's text is
+ * RESIDUALS (named, not closed; the GREP FLOOR makes every AC4 grep match a family match, so none of these leaves an
+ * AC4 grep match unjudged): letters NFKC leaves distinct (a Cyrillic or Greek look-alike of N, E, F or S) and sentence
+ * ends NFKC does not fold to ".", "!" or "?"; a named reference written without its ";", and a numeric reference from
+ * 0x80 to 0x9F, which browsers read as Windows-1252 but this census as a control code point; an HTML block's text is
  * read with its tags removed, not laid out; a qualifier that is negated or belongs to another clause of the sentence (W9,
- * W10, finding F3: a sentence-meaning judge is outside this AC); styling applied from outside the page.
+ * W10, finding F3: a sentence-meaning judge is outside this AC); styling applied from outside the page; NFS or EFS inside
+ * a longer word in lower or mixed case (pnfs, AmazonEfs: NO_MATCH quiet rows; the case-sensitive AC4 grep matches
+ * neither); a sentence describing multi-host or shared-filesystem use without a family word (multiple hosts, shared
+ * files: NO_MATCH quiet rows; F3 again).
  * Spawns nothing; writes nothing; reads docs/workbench.
  */
 import { readdirSync, readFileSync, statSync } from "node:fs";
@@ -72,15 +84,20 @@ const ROOT_SENTENCE_FILE = `${DOCS}/13-contracts-and-config.md`;
 const ADR = "ADR-SCG-010";
 
 const FAMILIES: ReadonlyArray<readonly [string, RegExp]> = [
-  ["NFS", /\bNFS/i],
-  ["EFS", /\bEFS/i],
-  ["shared filesystem", /\bshared[- ]?file[- ]?systems?\b/i],
-  ["multi-host", /\bmulti[- ]?hosts?\b/i],
+  ["NFS", /\b[Nn][Ff][Ss]|NFS/],
+  ["EFS", /\b[Ee][Ff][Ss]|EFS/],
+  ["shared filesystem", /shared[- ]?file[- ]?system/i],
+  ["multi-host", /multi[- ]?host/i],
 ];
 const FAMILY_NAMES = FAMILIES.map(([name]) => name);
 const QUALIFIER = /\bunsupported\b|\bnot safe\b/i;
 const SAFE_WORD = /\bsafe(?:ly)?\b/gi;
 const NOT_SAFE = /\bnot safe\b/gi;
+/** The AC4 grep exactly as the acceptance writes it: a case-sensitive substring match, which the family rule must cover. */
+const AC4_GREP = /NFS|EFS|shared filesystem|multi-host/;
+/** The text the grep-floor rows set before and after each AC4 grep alternative: word characters, a digit, nothing. */
+const GREP_FLOOR_BEFORE: readonly string[] = ["", "p", "Amazon", "un", "x_", "9"];
+const GREP_FLOOR_AFTER: readonly string[] = ["", "v4", "ed", "ing", "s", "_root", "d"];
 
 type Problem = "unqualified" | "safety-claim";
 interface Match {
@@ -219,6 +236,10 @@ const NO_MATCH: ReadonlyArray<readonly [string, string]> = [
   ["confs", "Both confs load first."],
   ["single-host", "The root has single-host scope."],
   ["host alone", "Each host binds its own root."],
+  ["pnfs (residual: lower case inside a word)", "A pnfs layout stays on one host."],
+  ["AmazonEfs (residual: mixed case inside a word)", "An AmazonEfs mount stays on one host."],
+  ["multiple hosts (residual: no family word)", "Multiple hosts can share one swarm workspace."],
+  ["shared files (residual: no family word)", "Shared files on one network mount serve every machine."],
 ];
 const SENTENCE = "That RF workspace root has single-host, local-coordinated scope (ADR-SCG-010): multi-host use is unsupported and not safe.";
 /** Root-sentence texts the judge must refuse: [case, text, problems]. */
@@ -380,6 +401,10 @@ interface PageView {
   readonly headings: readonly string[];
   /** Every rendered sentence citing ADR-SCG-010, with whether it sits in a top-level paragraph of section "Host boundary". */
   readonly citing: readonly Cited[];
+  /** Every rendered sentence of the page, folded, in page order. */
+  readonly renderedSentences: readonly string[];
+  /** Every source sentence of the page, in page order. */
+  readonly rawSentences: readonly string[];
 }
 
 function lexPage(markdown: string): PageView {
@@ -407,6 +432,8 @@ function lexPage(markdown: string): PageView {
     rawFamilies: familiesOf(raw),
     headings: headingsIn(tokens).map(heading => foldKey(inlineText(heading.tokens, [])).toLowerCase()),
     citing,
+    renderedSentences: rendered,
+    rawSentences: raw,
   };
 }
 
@@ -772,6 +799,55 @@ const PAGE_ROWS: readonly PageRow[] = [
     findings: ["rendered safety-claim: NFS is safe for teams, though multi-host use is unsupported.", "raw safety-claim: NFS is *safe* for teams, though multi-host use is unsupported."],
   },
   { id: "H15", cls: "raw/char-reference", what: "the qualifier spelled through a numeric character reference", page: "NFS is &#117;nsupported.", findings: ["raw unqualified: NFS is &#117;nsupported."] },
+  {
+    id: "X1",
+    cls: "grep/derived-word",
+    what: "a derived multi-host word (multi-hosted: the AC4 grep matches it)",
+    page: "A multi-hosted swarm workspace on one mount works fine.",
+    findings: ["rendered unqualified: A multi-hosted swarm workspace on one mount works fine.", "raw unqualified: A multi-hosted swarm workspace on one mount works fine."],
+  },
+  {
+    id: "X2",
+    cls: "grep/derived-word",
+    what: "a derived multi-host word (multi-hosting: the AC4 grep matches it)",
+    page: "Swarm workspaces support multi-hosting across machines.",
+    findings: ["rendered unqualified: Swarm workspaces support multi-hosting across machines.", "raw unqualified: Swarm workspaces support multi-hosting across machines."],
+  },
+  {
+    id: "X3",
+    cls: "grep/inside-word",
+    what: "NFS in capitals inside a word (pNFS: the AC4 grep matches it)",
+    page: "A pNFS swarm workspace works across machines.",
+    findings: ["rendered unqualified: A pNFS swarm workspace works across machines.", "raw unqualified: A pNFS swarm workspace works across machines."],
+  },
+  {
+    id: "X4",
+    cls: "grep/inside-word",
+    what: "EFS in capitals inside a word (AmazonEFS: the AC4 grep matches it)",
+    page: "An AmazonEFS swarm workspace works across machines.",
+    findings: ["rendered unqualified: An AmazonEFS swarm workspace works across machines.", "raw unqualified: An AmazonEFS swarm workspace works across machines."],
+  },
+  {
+    id: "H18",
+    cls: "grep/inside-word",
+    what: "shared filesystem after a word character (unshared filesystem: the AC4 grep matches it)",
+    page: "An unshared filesystem works across machines.",
+    findings: ["rendered unqualified: An unshared filesystem works across machines.", "raw unqualified: An unshared filesystem works across machines."],
+  },
+  {
+    id: "H19",
+    cls: "grep/derived-word",
+    what: "a word character after shared filesystem (filesystem_root: the AC4 grep matches it)",
+    page: "A shared filesystem_root works across machines.",
+    findings: ["rendered unqualified: A shared filesystem_root works across machines.", "raw unqualified: A shared filesystem_root works across machines."],
+  },
+  {
+    id: "H20",
+    cls: "grep/inside-word",
+    what: "multi-host after a word character (nonmulti-host: the AC4 grep matches it)",
+    page: "A nonmulti-host swarm workspace works.",
+    findings: ["rendered unqualified: A nonmulti-host swarm workspace works.", "raw unqualified: A nonmulti-host swarm workspace works."],
+  },
 ];
 
 const ACCEPTED_ROWS: readonly AcceptedRow[] = [
@@ -882,10 +958,10 @@ describe("SCG-R5 AC4 falsifiers: the judges over synthetic text", () => {
 
   it("SCG-R5 frozen shape (rule 16): the family table, the judge patterns and every synthetic table keep their rows", () => {
     expect(FAMILIES.map(([name, pattern]) => `${name} ${String(pattern)}`)).toEqual([
-      "NFS /\\bNFS/i",
-      "EFS /\\bEFS/i",
-      "shared filesystem /\\bshared[- ]?file[- ]?systems?\\b/i",
-      "multi-host /\\bmulti[- ]?hosts?\\b/i",
+      "NFS /\\b[Nn][Ff][Ss]|NFS/",
+      "EFS /\\b[Ee][Ff][Ss]|EFS/",
+      "shared filesystem /shared[- ]?file[- ]?system/i",
+      "multi-host /multi[- ]?host/i",
     ]);
     expect([QUALIFIER, SAFE_WORD, NOT_SAFE].map(pattern => String(pattern))).toEqual([
       "/\\bunsupported\\b|\\bnot safe\\b/i",
@@ -925,6 +1001,10 @@ describe("SCG-R5 AC4 falsifiers: the judges over synthetic text", () => {
       "confs | Both confs load first.",
       "single-host | The root has single-host scope.",
       "host alone | Each host binds its own root.",
+      "pnfs (residual: lower case inside a word) | A pnfs layout stays on one host.",
+      "AmazonEfs (residual: mixed case inside a word) | An AmazonEfs mount stays on one host.",
+      "multiple hosts (residual: no family word) | Multiple hosts can share one swarm workspace.",
+      "shared files (residual: no family word) | Shared files on one network mount serve every machine.",
     ]);
     expect(ROOT_REFUSED.map(([name, text, expected]) => `${name} | ${text} | ${expected.join(" + ")}`)).toEqual([
       "no citing sentence | The RF workspace root has single-host, local-coordinated scope. | 0 sentences cite ADR-SCG-010",
@@ -1036,6 +1116,13 @@ describe("SCG-R5 AC4 falsifiers: the judges over synthetic text", () => {
       "H13 | raw/wrap | a qualifier only on the next source line of a wrapped sentence | A shared filesystem swarm workspace\\nis unsupported. | raw unqualified: A shared filesystem swarm workspace",
       "H14 | rendered/emphasis | an emphasized safety word beside the qualifier | NFS is *safe* for teams, though multi-host use is unsupported. | rendered safety-claim: NFS is safe for teams, though multi-host use is unsupported. + raw safety-claim: NFS is *safe* for teams, though multi-host use is unsupported.",
       "H15 | raw/char-reference | the qualifier spelled through a numeric character reference | NFS is &#117;nsupported. | raw unqualified: NFS is &#117;nsupported.",
+      "X1 | grep/derived-word | a derived multi-host word (multi-hosted: the AC4 grep matches it) | A multi-hosted swarm workspace on one mount works fine. | rendered unqualified: A multi-hosted swarm workspace on one mount works fine. + raw unqualified: A multi-hosted swarm workspace on one mount works fine.",
+      "X2 | grep/derived-word | a derived multi-host word (multi-hosting: the AC4 grep matches it) | Swarm workspaces support multi-hosting across machines. | rendered unqualified: Swarm workspaces support multi-hosting across machines. + raw unqualified: Swarm workspaces support multi-hosting across machines.",
+      "X3 | grep/inside-word | NFS in capitals inside a word (pNFS: the AC4 grep matches it) | A pNFS swarm workspace works across machines. | rendered unqualified: A pNFS swarm workspace works across machines. + raw unqualified: A pNFS swarm workspace works across machines.",
+      "X4 | grep/inside-word | EFS in capitals inside a word (AmazonEFS: the AC4 grep matches it) | An AmazonEFS swarm workspace works across machines. | rendered unqualified: An AmazonEFS swarm workspace works across machines. + raw unqualified: An AmazonEFS swarm workspace works across machines.",
+      "H18 | grep/inside-word | shared filesystem after a word character (unshared filesystem: the AC4 grep matches it) | An unshared filesystem works across machines. | rendered unqualified: An unshared filesystem works across machines. + raw unqualified: An unshared filesystem works across machines.",
+      "H19 | grep/derived-word | a word character after shared filesystem (filesystem_root: the AC4 grep matches it) | A shared filesystem_root works across machines. | rendered unqualified: A shared filesystem_root works across machines. + raw unqualified: A shared filesystem_root works across machines.",
+      "H20 | grep/inside-word | multi-host after a word character (nonmulti-host: the AC4 grep matches it) | A nonmulti-host swarm workspace works. | rendered unqualified: A nonmulti-host swarm workspace works. + raw unqualified: A nonmulti-host swarm workspace works.",
     ]);
     expect(ACCEPTED_ROWS.map(row => `${row.id} | ${row.cls} | ${row.what} | ${visible(row.page)} | ${row.families.join(" + ")}`)).toEqual([
       "W9 | residual/F3 clause | a qualifier attached to another clause of the same sentence | NFS swarm workspaces work across hosts, and local disks are unsupported. | NFS",
@@ -1052,6 +1139,11 @@ describe("SCG-R5 AC4 falsifiers: the judges over synthetic text", () => {
       "L3 | liveness/raw | the families spelled only through numeric character references | Multi&#45;host use of a shared&#32;filesystem (N&#70;S or E&#70;S) is unsupported. | raw liveness: no source docs sentence names NFS + raw liveness: no source docs sentence names EFS + raw liveness: no source docs sentence names shared filesystem + raw liveness: no source docs sentence names multi-host",
       "L4 | liveness/each | one family left unnamed | NFS and EFS mounts are unsupported for multi-host use. | rendered liveness: no rendered docs sentence names shared filesystem + raw liveness: no source docs sentence names shared filesystem",
       "L5 | control | the four families named across two pages | NFS and EFS are unsupported. ~ Multi-host use of a shared filesystem is unsupported. | none",
+    ]);
+    expect([String(AC4_GREP), JSON.stringify(GREP_FLOOR_BEFORE), JSON.stringify(GREP_FLOOR_AFTER)]).toEqual([
+      "/NFS|EFS|shared filesystem|multi-host/",
+      '["","p","Amazon","un","x_","9"]',
+      '["","v4","ed","ing","s","_root","d"]',
     ]);
   });
 });
@@ -1120,5 +1212,52 @@ describe("SCG-R5 AC4 liveness: each leg judged over synthetic docs trees, whiche
     const tree = livenessTree(pages);
     expect([...tree.keys()].filter(path => livePages().has(path))).toEqual([]);
     expect(docsFindings(tree).filter(finding => LIVENESS.test(finding))).toEqual(findings);
+  });
+});
+
+/** The text a docs/13 edit carries, both sides of a replace. */
+const editTexts = (edit: DocEdit): string[] =>
+  edit.op === "replace" ? [edit.from, edit.to] : edit.op === "wrap" ? [edit.before, edit.after] : edit.op === "move-under" ? [edit.heading] : [edit.text];
+/** Whether `leg` refuses exactly `sentence` as unqualified. */
+const refusesUnqualified = (leg: ReadonlyArray<readonly [Problem, string]>, sentence: string): boolean =>
+  leg.some(([problem, judged]) => problem === "unqualified" && judged === sentence);
+
+describe("SCG-R5 AC4 grep floor (gate row 600 U2): every sentence the AC4 grep matches is a family match", () => {
+  it("SCG-R5 grep floor: each AC4 grep alternative inside any word is a family match that both legs refuse unqualified", () => {
+    const sentences = AC4_GREP.source
+      .split("|")
+      .flatMap(alternative => GREP_FLOOR_BEFORE.flatMap(before => GREP_FLOOR_AFTER.map(after => `A ${before}${alternative}${after} swarm workspace works.`)));
+    expect(sentences).toHaveLength(168);
+    const escapes = sentences.filter(sentence => {
+      const view = pageView(probePage(sentence));
+      return !AC4_GREP.test(sentence) || !refusesUnqualified(view.renderedProblems, sentence) || !refusesUnqualified(view.rawProblems, sentence);
+    });
+    expect(escapes).toEqual([]);
+  });
+
+  it("SCG-R5 grep floor: every synthetic sentence the AC4 grep matches is a family match, and no NO_MATCH control is an AC4 grep match", () => {
+    const texts = [
+      ...REFUSED.map(([, text]) => text),
+      ...COMPLIANT.map(([, text]) => text),
+      ...ROOT_REFUSED.map(([, text]) => text),
+      ...DOC_ROWS.flatMap(row => editTexts(row.edit)),
+      ...PAGE_ROWS.map(row => row.page),
+      ...ACCEPTED_ROWS.map(row => row.page),
+      ...LIVENESS_ROWS.flatMap(row => row.pages),
+    ];
+    const matched = texts.flatMap(text => linesOf(text).flatMap(sentencesOf)).filter(sentence => AC4_GREP.test(sentence));
+    expect(matched.length).toBeGreaterThan(0);
+    expect(matched.filter(sentence => classify(sentence).families.length === 0)).toEqual([]);
+    expect(NO_MATCH.filter(([, text]) => AC4_GREP.test(text))).toEqual([]);
+  });
+
+  it("SCG-R5 grep floor: the AC4 grep over docs/workbench finds only family matches saying unsupported or not safe, in both legs", () => {
+    const found = docsPages().flatMap(path => {
+      const view = pageView(read(path));
+      const legs = [...view.rawSentences.map(sentence => ({ leg: "raw", path, sentence })), ...view.renderedSentences.map(sentence => ({ leg: "rendered", path, sentence }))];
+      return legs.filter(({ sentence }) => AC4_GREP.test(sentence));
+    });
+    expect(found.filter(({ sentence }) => classify(sentence).families.length === 0 || !QUALIFIER.test(sentence))).toEqual([]);
+    expect([...new Set(found.map(({ leg }) => leg))].sort()).toEqual(["raw", "rendered"]);
   });
 });
