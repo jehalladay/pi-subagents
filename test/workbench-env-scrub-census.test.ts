@@ -33,8 +33,17 @@
  * expect(). The Worker-env checks run through ONE helper (expectPlainEmptyEnv) and its failure-path
  * falsifier in the harness sanity block proves it with a synthetic env whose prototype carries a probe
  * value plus an own key: the rendered failure names the failed check and contains neither value.
+ *
+ * RF CLI CHILD SEAM (wb-2j3.11, program rfcli-performance-mathematical-optimization R12): the third launch seam,
+ * src/workbench/providers/reactivefiber.ts spawn("rf", ...), hands the rf child
+ * scrubbedEnvironment(process.env, RF_CHILD_ENV_ALLOWLIST), its own allowlist of record (9 names, every one also on
+ * the allowlist above), pinned below by exact members. rf's RF_PERF_BASELINE seat (RFCLI PMO-12-F) is process-scoped,
+ * "never persisted, never in currentness or any cache key", so the envelope cannot record which perf seam a preview
+ * ran; only the launcher can attest the default seam, by allowlist. The rf rows run with PATH holding only the census
+ * scratch, which holds no rf: the recording spawn snapshots the options and the real launch ends as the typed
+ * could-not-launch refusal, so no rf ever runs.
  */
-import { mkdtempSync, realpathSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdtempSync, realpathSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -42,12 +51,14 @@ import { inspect } from "node:util";
 import type { Options, SDKMessage } from "@anthropic-ai/claude-agent-sdk";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { createClaudeWorkflowHost } from "../src/workbench/claude-host.js";
-import { DETACHED_HOST_ENV_ALLOWLIST } from "../src/workbench/process-env.js";
+import { DETACHED_HOST_ENV_ALLOWLIST, RF_CHILD_ENV_ALLOWLIST } from "../src/workbench/process-env.js";
+import { nativeReactiveFiberRender } from "../src/workbench/providers/reactivefiber.js";
 import { runWorkflow, type WorkflowHost } from "../src/workflow/runtime.js";
 
 const captured = vi.hoisted(() => ({
   workerOptions: [] as Array<Record<string, unknown>>,
   spawnOptions: [] as Array<Record<string, unknown>>,
+  rfSpawns: [] as Array<{ args: string[]; options: Record<string, unknown> }>,
   root: "",
 }));
 
@@ -64,7 +75,13 @@ vi.mock("node:worker_threads", async importOriginal => {
 
 vi.mock("node:child_process", async importOriginal => {
   const actual = await importOriginal<typeof import("node:child_process")>();
+  // An env SNAPSHOT at call time (same prototype, own keys copied): Node's spawn may add a variable of its own to the
+  // object it was handed, and the census measures what the caller handed over.
+  const snapshot = (env: unknown): unknown => (env !== null && typeof env === "object" ? Object.assign(Object.create(Object.getPrototypeOf(env)) as object, env) : env);
   const spawn = (command: string, args?: readonly string[], options?: Record<string, unknown>) => {
+    // wb-2j3.11: an rf launch is RECORDED, then launched for real; the rf rows hold PATH to the census scratch,
+    // which holds no rf, so the real launch fails at once and no rf ever runs.
+    if (command === "rf") captured.rfSpawns.push({ args: [...(args ?? [])], options: { ...(options ?? {}), env: snapshot(options?.env) } });
     const detachedHost = Array.isArray(args) && args.includes("--serve");
     if (!detachedHost) return (actual.spawn as (...a: unknown[]) => unknown)(command, args, options);
     captured.spawnOptions.push({ ...(options ?? {}) });
@@ -200,10 +217,59 @@ function locatorProjection(env: unknown): Record<LocatorName, boolean> {
   };
 }
 
+/**
+ * wb-2j3.11: the rf allowlist of record, FROZEN at the cut (exact members, in the export's order): a later change to
+ * RF_CHILD_ENV_ALLOWLIST is a reviewed change to this list as well.
+ */
+const RF_CHILD_ALLOWLIST_AT_CUT: readonly string[] = ["PATH", "HOME", "TMPDIR", "TMP", "TEMP", "LANG", "LC_ALL", "LC_CTYPE", "TZ"];
+const RF_ALLOWLIST: ReadonlySet<string> = new Set(RF_CHILD_ENV_ALLOWLIST);
+/**
+ * rf's process-scoped selector seats: RF_PERF_BASELINE (RFCLI PMO-12-F, RFCLI origin/main 2e410feb1eba cli/main.py:553),
+ * RF_PERF_OPTIMIZED (:554 there) and RF_ADAPTIVE (installed rf 0.1.768). None may reach the child; the values are
+ * syntactic only, since no rf runs in these rows.
+ */
+const RF_SELECTORS = { RF_PERF_BASELINE: "all", RF_PERF_OPTIMIZED: "all", RF_ADAPTIVE: "speculation" } as const;
+
+/** Sets each named parent variable for the duration of `run`, then restores the prior state (names only). */
+function withSourceEnv<T>(values: Readonly<Record<string, string>>, run: () => Promise<T>): Promise<T> {
+  const prior = new Map<string, string | undefined>();
+  for (const [name, value] of Object.entries(values)) { prior.set(name, process.env[name]); process.env[name] = value; }
+  return run().finally(() => {
+    for (const [name, value] of prior) { if (value === undefined) delete process.env[name]; else process.env[name] = value; }
+  });
+}
+
+/**
+ * One distinct parent value per rf allowlist name, so a dropped or swapped name is red: PATH is the hermetic census
+ * scratch; TZ is a valid zone (Node applies an assigned TZ to the running process); the rest are never consulted.
+ */
+function rfParentValues(): Record<string, string> {
+  const values: Record<string, string> = {};
+  for (const name of RF_CHILD_ALLOWLIST_AT_CUT) values[name] = `${scratch}/w19-rf-${name.toLowerCase()}`;
+  values.PATH = scratch;
+  values.TZ = "Etc/UTC";
+  values.LANG = "en_US.UTF-8";
+  values.LC_ALL = "C.UTF-8";
+  values.LC_CTYPE = "POSIX";
+  return values;
+}
+
 const META = (name: string) => `export const meta={name:${JSON.stringify(name)},description:"w19 env-scrub census"};\n`;
 const host = (): WorkflowHost => ({ spawnAgent: vi.fn(async () => ({ ok: true })), abortAgent: vi.fn(), callNode: vi.fn(async () => ({ ok: true })) });
 
 let scratch = "";
+
+/** One rf preview launch through the provider with PATH = the census scratch (no rf there): the recorded spawn, if any. */
+async function launchRfAndCaptureSpawn(values: Readonly<Record<string, string>> = {}): Promise<{ args: string[]; options: Record<string, unknown> } | undefined> {
+  const before = captured.rfSpawns.length;
+  await withSourceEnv({ PATH: scratch, ...values }, () =>
+    expect(nativeReactiveFiberRender({ model: "census-model", task: "census-task" }, scratch)).rejects.toMatchObject({
+      category: "transport",
+      message: "RF preview could not launch the installed binary.",
+    }),
+  );
+  return captured.rfSpawns.length > before ? captured.rfSpawns[captured.rfSpawns.length - 1] : undefined;
+}
 
 const loadDetachedHost = () => import("../src/workbench/hosts/local-detached.js");
 let launchDetachedWorkflow: Awaited<ReturnType<typeof loadDetachedHost>>["launchDetachedWorkflow"];
@@ -422,5 +488,39 @@ describe("W19 env-scrub census: SCG-R6 rf workspace locators reach the SDK child
     const embedded = (await withWorkspaceLocators(captureClaudeOptions)).childEnv;
     expect(detached, "detached seam vs embedded seam (names only)").toEqual(embedded);
     expect(LOCATOR_NAMES.every(name => detached[name]), "both seams carry both locators").toBe(true);
+  });
+});
+
+describe("W19 env-scrub census: rf CLI child seam (src/workbench/providers/reactivefiber.ts spawn, wb-2j3.11)", () => {
+  it("the rf launch reaches the recording spawn with the context-render argv; PATH holds only the census scratch, which holds no rf", async () => {
+    expect(existsSync(join(scratch, "rf")), "an rf in the census scratch, the rows' only PATH entry").toBe(false);
+    const spawned = await launchRfAndCaptureSpawn();
+    expect(spawned !== undefined, "the rf launch reached spawn").toBe(true);
+    expect(spawned?.args.slice(2, 4), "the rf argv is a context render").toEqual(["context", "render"]);
+    expect(spawned?.args.slice(-3), "the rf argv ends noncommitted, noninteractive, json").toEqual(["--no-commit", "--no-input", "--json"]);
+    expect(typeof spawned?.options.env, "type of the rf spawn env option").toBe("object");
+  });
+  it("reactivefiber.ts rf spawn hands an allowlist-only env: no canary, no credential-shaped name, nothing outside the rf allowlist of record", async () => {
+    const spawned = await withCanaries(() => launchRfAndCaptureSpawn());
+    expectScrubbed(spawned?.options.env, "reactivefiber.ts rf spawn");
+    const names = Object.keys((spawned?.options.env ?? {}) as Record<string, unknown>);
+    expect(names.filter(name => !RF_ALLOWLIST.has(name)).sort(), "names outside the rf allowlist of record in the rf spawn env").toEqual([]);
+  });
+  it("RF_PERF_BASELINE=all in the parent env never reaches the rf child (nor RF_PERF_OPTIMIZED or RF_ADAPTIVE), while every rf allowlist name is carried with the parent's value", async () => {
+    const parent = rfParentValues();
+    const spawned = await withCanaries(() => launchRfAndCaptureSpawn({ ...parent, ...RF_SELECTORS }));
+    const verdict = censusEnv(spawned?.options.env);
+    expect(verdict.inherited, "the rf spawn env is an explicit object").toBe(false);
+    const env = (verdict.inherited ? {} : spawned?.options.env) as Record<string, unknown>;
+    expect(Object.keys(RF_SELECTORS).filter(name => Object.hasOwn(env, name)), "rf process-scoped selectors in the rf spawn env").toEqual([]);
+    expect(Object.keys(env).sort(), "names in the rf spawn env").toEqual([...RF_CHILD_ALLOWLIST_AT_CUT].sort());
+    expect(RF_CHILD_ALLOWLIST_AT_CUT.filter(name => env[name] !== parent[name]), "rf allowlist names not carried with the parent's value (names only)").toEqual([]);
+  });
+  it("the rf allowlist of record is the frozen operational set: exact members in order, all on the detached allowlist of record, no credential-shaped and no rf-family name, frozen", () => {
+    expect(RF_CHILD_ENV_ALLOWLIST, "the rf allowlist of record (exact members, in order)").toEqual(RF_CHILD_ALLOWLIST_AT_CUT);
+    expect(RF_CHILD_ALLOWLIST_AT_CUT.filter(name => !ALLOWLIST.has(name)), "rf allowlist names the detached allowlist of record does not carry").toEqual([]);
+    expect(RF_CHILD_ALLOWLIST_AT_CUT.filter(credentialShaped), "credential-shaped names on the rf allowlist").toEqual([]);
+    expect(RF_CHILD_ALLOWLIST_AT_CUT.filter(name => /^(SWARM_)?RF_/i.test(name)), "rf-family names on the rf allowlist").toEqual([]);
+    expect(Object.isFrozen(RF_CHILD_ENV_ALLOWLIST), "the rf allowlist of record is frozen").toBe(true);
   });
 });

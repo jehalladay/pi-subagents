@@ -4561,7 +4561,7 @@ describe("census helper: read-only pins of this repository's tier commands, and 
       command: "npm run test",
       argv: ["run", "--reporter=default", "--reporter=json", "--outputFile=.forge/vitest-report.json", "--includeTaskLocation", "--expect.requireAssertions"],
       chain: [
-        'forge.toml [build.commands] test = "npm run test"',
+        'forge.toml [build.commands.test] command = "npm run test"',
         'package.json scripts.test = "vitest run --reporter=default --reporter=json --outputFile=.forge/vitest-report.json --includeTaskLocation --expect.requireAssertions"',
       ],
       why: "",
