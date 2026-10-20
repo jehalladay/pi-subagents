@@ -747,6 +747,21 @@ describe('wb-4ap.7 COLLECTIVE-ADAPTATION-R7: reading last_result_state adds no r
     ['relation-shaped keys: an ownership kind, a dependency relation and a forge provenance with a native confirmation reference', described({kind: 'ownership', relation: 'dependency', provenance: {source: 'forge', nativeConfirmationRef: 'forge-operation:op-planted'}})],
     ['a malformed (withheld) descriptor carrying the F15 literals', withheldOwned],
   ];
+  /** AC3's pairs: a descriptor carrying the two planted values beside its twin without them, well formed and withheld (wb-4ap.18
+   * hoists the list out of the AC3 loop header so its shape can be pinned). */
+  const AC3_PAIRS: [string, Json, Json][] = [
+    ['well formed: the F15 descriptor beside the measured STALE row', owned, staleRow],
+    ['withheld: the malformed F15 descriptor beside the malformed FRESH descriptor', withheldOwned, described({freshness: 'FRESH'})],
+  ];
+  /** wb-4ap.18: what a row's descriptor plants beyond the measured one - each last_result_state field whose value differs from
+   * MEASURED_STATE, as key=JSON in key order; 'measured' when none differs, 'no descriptor' when the row carries none. */
+  function planted(row: Json): string {
+    const state = row.last_result_state;
+    if (state === null || typeof state !== 'object' || Array.isArray(state)) return 'no descriptor';
+    const keys = [...new Set([...Object.keys(MEASURED_STATE), ...Object.keys(state)])].sort();
+    const said = keys.filter(key => JSON.stringify(state[key]) !== JSON.stringify(MEASURED_STATE[key])).map(key => `${key}=${JSON.stringify(state[key])}`);
+    return said.length === 0 ? 'measured' : said.join(' ');
+  }
   /** A projection fed only what forgeGateTopology states for [row, SIBLING]: its snapshots, then its relations. */
   function observed(row: Json): ObservationProjection {
     const result = forgeGateTopology(withPackages(row, SIBLING), context);
@@ -765,6 +780,35 @@ describe('wb-4ap.7 COLLECTIVE-ADAPTATION-R7: reading last_result_state adds no r
 
   it('F15 table liveness (wb-4ap.7): the descriptor table holds all five sayings', () => expect(sayings).toHaveLength(5));
 
+  // wb-4ap.18 (wb-4ap.7 test strength, PREP F1/F2 of gate cmd_0dd29fa73ef0): each inline table of this block pins its own shape as
+  // an AC1-style literal derived from the table at d3404d3, so a swapped saying (H4), an emptied TARGETS (H2) or a cut AC3 pair
+  // list (H3) reds instead of passing vacuously.
+  it('F15 table shape (wb-4ap.18): the five sayings are pinned by name and by what each plants beyond the measured descriptor', () => {
+    expect(sayings.map(([name, row]) => `${name} :: ${planted(row)}`)).toStrictEqual([
+      'semantic_owner forge:gate and authoritative_read_source log:.forge/logs/commands.jsonl (the F15 literals) :: authoritative_read_source="log:.forge/logs/commands.jsonl" semantic_owner="forge:gate"',
+      'a source_ref naming each relation kind :: source_ref=["ownership:forge:gate","dependency:code:forge-sdk","causation:cmd_9d1c4826a638","hypothesis:basis-stale"]',
+      'a semantic_owner and an authoritative_read_source naming the sibling package :: authoritative_read_source="code:forge-sdk" semantic_owner="code:forge-sdk"',
+      'relation-shaped keys: an ownership kind, a dependency relation and a forge provenance with a native confirmation reference :: kind="ownership" provenance={"source":"forge","nativeConfirmationRef":"forge-operation:op-planted"} relation="dependency"',
+      'a malformed (withheld) descriptor carrying the F15 literals :: authoritative_read_source="log:.forge/logs/commands.jsonl" freshness="FRESH" semantic_owner="forge:gate"',
+    ]);
+  });
+
+  it('AC3 pair liveness (wb-4ap.18): the AC3 table holds the well-formed and the withheld pair - each row is its twin plus the two planted values', () => {
+    expect(AC3_PAIRS.map(([label, row, twin]) => `${label} :: ${planted(row)} | ${planted(twin)}`)).toStrictEqual([
+      'well formed: the F15 descriptor beside the measured STALE row :: authoritative_read_source="log:.forge/logs/commands.jsonl" semantic_owner="forge:gate" | measured',
+      'withheld: the malformed F15 descriptor beside the malformed FRESH descriptor :: authoritative_read_source="log:.forge/logs/commands.jsonl" freshness="FRESH" semantic_owner="forge:gate" | freshness="FRESH"',
+    ]);
+  });
+
+  it('L3 target liveness (wb-4ap.18): the cancel targets are the workspace and both packages - three refs, pinned whole', () => {
+    expect(TARGETS).toHaveLength(3);
+    expect(TARGETS).toStrictEqual([
+      {provider: 'forge', type: 'gate-status', id: 'workspace', scope: '/tmp/forge-ws'},
+      {provider: 'forge', type: 'gate-status', id: 'code:pi-subagents', scope: '/tmp/forge-ws'},
+      {provider: 'forge', type: 'gate-status', id: 'code:forge-sdk', scope: '/tmp/forge-ws'},
+    ]);
+  });
+
   it('F15 (wb-4ap.7): a descriptor carrying semantic_owner forge:gate and authoritative_read_source log:.forge/logs/commands.jsonl states only the single F5 grouping edge', () => {
     const result = forgeGateTopology(withPackages(owned), context);
     expect(result.relations).toStrictEqual([grouping('code:pi-subagents')]);
@@ -782,7 +826,8 @@ describe('wb-4ap.7 COLLECTIVE-ADAPTATION-R7: reading last_result_state adds no r
   });
 
   it('wb-4ap.7: the semantic_owner and authoritative_read_source values never appear in JSON.stringify(result), well formed or withheld', () => {
-    for (const [row, twin] of [[owned, staleRow], [withheldOwned, described({freshness: 'FRESH'})]]) {
+    const judged: string[] = [];
+    for (const [label, row, twin] of AC3_PAIRS) {
       const result = forgeGateTopology(withPackages(row), context);
       const serialized = JSON.stringify(result);
       // OWNER is also the prefix of the adapter's own reason reference forge:gate.status:FORGE_OK (F1), built from
@@ -793,7 +838,10 @@ describe('wb-4ap.7 COLLECTIVE-ADAPTATION-R7: reading last_result_state adds no r
       expect(serialized).not.toContain(READ_SOURCE);
       // Neither value contributes anything: the row projects exactly as its twin without them.
       expect(result).toStrictEqual(forgeGateTopology(withPackages(twin), context));
+      judged.push(label);
     }
+    // wb-4ap.18: every pinned pair is judged - a loop cut to the well-formed pair reds here, a table cut reds AC3 pair liveness.
+    expect(judged).toStrictEqual(AC3_PAIRS.map(([label]) => label));
   });
 
   it('L3 (wb-4ap.7): decideControl over a projection fed only forge-observer snapshots and relations denies a forge cancel on every node with no-confirmed-ownership, exactly as on 9df9a03', () => {
