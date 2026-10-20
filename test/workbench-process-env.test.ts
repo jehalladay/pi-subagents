@@ -16,7 +16,7 @@
  * messages name KEYS only, never values.
  */
 import { describe, expect, it } from "vitest";
-import { DETACHED_HOST_ENV_ALLOWLIST, scrubbedEnvironment } from "../src/workbench/process-env.js";
+import { DETACHED_HOST_ENV_ALLOWLIST, RF_CHILD_ENV_ALLOWLIST, scrubbedEnvironment } from "../src/workbench/process-env.js";
 
 /** One fake credential-shaped name per family the allowlist must exclude (wb-ksz.3 E3). */
 const CANARIES = [
@@ -261,5 +261,62 @@ describe("SCG-R6/R7: the swarm rf workspace locators (wb-973.6, wb-973.7)", () =
     const source: NodeJS.ProcessEnv = { RF_WORKSPACE: "/srv/swarm/rf", SWARM_RF_WORKSPACE: "/srv/swarm/rf" };
     for (const name of NOT_ALLOWLISTED) source[name] = CANARY_VALUE;
     expect(Object.keys(scrubbedEnvironment(source)).map(printable).sort(), "names that passed").toEqual([...WORKSPACE_LOCATORS]);
+  });
+});
+
+/**
+ * wb-2j3.11 (program rfcli-performance-mathematical-optimization R12): the rf CLI child's own allowlist. rf's
+ * process-scoped selector seats (RF_PERF_BASELINE, RFCLI PMO-12-F; RF_PERF_OPTIMIZED; RF_ADAPTIVE at the installed rf)
+ * and every other rf-family name stay out by construction, so a preview runs rf's default perf seam; the workspace
+ * travels in argv (--workspace), never in the environment. FROZEN expectation at the cut: any later change to
+ * RF_CHILD_ENV_ALLOWLIST is a reviewed change to this list as well.
+ */
+const RF_CHILD_ALLOWLIST_AT_CUT: readonly string[] = Object.freeze(["PATH", "HOME", "TMPDIR", "TMP", "TEMP", "LANG", "LC_ALL", "LC_CTYPE", "TZ"]);
+
+/** rf-family names that must never reach the rf child: the selector seats, rf's own switches, and the workspace locators. */
+const RF_FAMILY_NOT_ALLOWLISTED: readonly string[] = [
+  "RF_PERF_BASELINE",
+  "RF_PERF_OPTIMIZED",
+  "RF_ADAPTIVE",
+  "RF_PERF_COUNTERS",
+  "RF_LOG_LEVEL",
+  "RF_LOG_FORMAT",
+  "RF_DEBUG",
+  "RF_NO_RETRY",
+  "RF_ACTOR",
+  "RF_TEST_HOOKS",
+  "RF_SIBLING_ROOT",
+  "RF_WORKSPACE",
+  "SWARM_RF_WORKSPACE",
+];
+
+describe("wb-2j3.11: the rf CLI child allowlist (RF_CHILD_ENV_ALLOWLIST)", () => {
+  it("scrubbedEnvironment over RF_CHILD_ENV_ALLOWLIST drops RF_PERF_BASELINE=all, every rf-family name and every canary, and keeps the operational names verbatim", () => {
+    const source: NodeJS.ProcessEnv = { ...hostile(), RF_PERF_BASELINE: "all", TZ: "Etc/UTC" };
+    for (const name of RF_FAMILY_NOT_ALLOWLISTED) source[name] ??= "/w19/rf-family-placeholder";
+    const env = scrubbedEnvironment(source, RF_CHILD_ENV_ALLOWLIST);
+    const names = Object.keys(env).sort();
+    expect(names, "RF_PERF_BASELINE reached the rf child environment").not.toContain("RF_PERF_BASELINE");
+    expect(names.filter(name => RF_FAMILY_NOT_ALLOWLISTED.includes(name)), "rf-family names that passed").toEqual([]);
+    for (const name of CANARIES) expect(names, `${name} reached the rf child environment`).not.toContain(name);
+    expect(names).toEqual(["HOME", "LANG", "PATH", "TMPDIR", "TZ"]);
+    expect(env.PATH).toBe("/usr/bin");
+    expect(env.TZ).toBe("Etc/UTC");
+    expect(Object.getPrototypeOf(env)).toBeNull();
+  });
+
+  it("RF_CHILD_ENV_ALLOWLIST equals the frozen operational set (set equality; any addition is red), is frozen, and allowlists no credential-shaped, rf-family or loader name", () => {
+    const expected = new Set<string>(RF_CHILD_ALLOWLIST_AT_CUT);
+    const actual = new Set<string>(RF_CHILD_ENV_ALLOWLIST);
+    expect([...actual].filter(name => !expected.has(name)).map(printable).sort(), "names beyond the frozen expectation").toEqual([]);
+    expect([...expected].filter(name => !actual.has(name)).sort(), "names of the frozen expectation missing from the allowlist").toEqual([]);
+    expect(RF_CHILD_ENV_ALLOWLIST.length, "entries (a duplicate would hide behind set equality)").toBe(expected.size);
+    expect(Object.isFrozen(RF_CHILD_ENV_ALLOWLIST)).toBe(true);
+    for (const name of RF_CHILD_ENV_ALLOWLIST) expect(name, `${name} is credential-shaped`).not.toMatch(CREDENTIAL_SHAPED);
+    expect(RF_CHILD_ENV_ALLOWLIST.filter(name => /^(SWARM_)?RF_/i.test(name)), "rf-family names on the rf allowlist").toEqual([]);
+    expect(
+      RF_CHILD_ENV_ALLOWLIST.filter(name => name === "NODE_OPTIONS" || name === "NODE_PATH" || name.startsWith("PYTHON")),
+      "loader names on the rf allowlist",
+    ).toEqual([]);
   });
 });
