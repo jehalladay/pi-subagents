@@ -306,6 +306,82 @@ describe('Forge gate.status reader adapter', () => {
     forgeGateTopology(value, context);
     expect(value).toStrictEqual(before);
   });
+
+  // wb-4ap.1 COLLECTIVE-ADAPTATION-R1, the F9 slot of this block: "When a gate.status package row carries
+  // last_result_state.invalidation_basis with kind === "invalidation-basis/v2" and a digest-shaped derived_from, the package
+  // NativeSnapshot produced by forgeGateTopology shall carry subjectBasis === derived_from verbatim." Every row is the measured
+  // SOURCE_WITH_STATE row (wb-4ap.11) or a mutation of it through test/helpers/forge-last-result-state.ts: MEASURED_ROW is the
+  // STALE row over basis(A, B). docs/workbench/07 § Forge provider: "Preserve actual source basis".
+  it('F9 (wb-4ap.1): the measured STALE row carries its derived_from digest B as the package subjectBasis, never its source_digest A', () => {
+    // R1 L4: "forgeGateTopology(withPackages(stale), context).snapshots[1].subjectBasis equals B (the derived_from digest, not
+    // source_digest A). RED on 9df9a03: undefined."
+    expect(A).not.toBe(B);
+    const result = forgeGateTopology(withPackages(MEASURED_ROW), context);
+    const [workspace, pkg] = result.snapshots;
+    expect(pkg.source).toStrictEqual(packageRef('code:pi-subagents'));
+    expect(pkg.subjectBasis).toBe(B);
+    expect(pkg.subjectBasis).not.toBe(A);
+    expect(Object.keys(workspace)).not.toContain('subjectBasis');
+    expect(result.diagnostics).toStrictEqual([]);
+  });
+
+  it('F9 (wb-4ap.1): each digest shape native-evidence accepts - sha256-prefixed, bare 64-hex and dirty-tree/v1 - round-trips verbatim as subjectBasis', () => {
+    // R1: "Verbatim carriage across the three accepted shapes (native-evidence.ts:87@9df9a03): a bare 64-hex derived_from and a
+    // dirty-tree/v1:<40hex>:sha256:<64hex> derived_from each round-trip as subjectBasis unchanged."
+    const bare = 'c'.repeat(64);
+    const dirty = `dirty-tree/v1:${'d'.repeat(40)}:sha256:${'e'.repeat(64)}`;
+    const carried = (derivedFrom: string): string | undefined =>
+      forgeGateTopology(withPackages(described({invalidation_basis: basis(A, derivedFrom)})), context).snapshots[1].subjectBasis;
+    expect(carried(B)).toBe(B);
+    expect(carried(bare)).toBe(bare);
+    expect(carried(dirty)).toBe(dirty);
+    // The three shapes side by side on three refs of one reading: each package keeps its own derived_from.
+    const result = forgeGateTopology(withPackages(
+      described({invalidation_basis: basis(A, B)}, {ref: 'code:sha256'}),
+      described({invalidation_basis: basis(A, bare)}, {ref: 'code:bare-hex'}),
+      described({invalidation_basis: basis(A, dirty)}, {ref: 'code:dirty-tree'}),
+    ), context);
+    expect(result.snapshots.map(snapshot => [snapshot.source.id, snapshot.subjectBasis])).toStrictEqual([
+      ['workspace', undefined], ['code:sha256', B], ['code:bare-hex', bare], ['code:dirty-tree', dirty],
+    ]);
+    expect(result.diagnostics).toStrictEqual([]);
+  });
+
+  // docs/workbench/09 § "Derived view indexes": "byParent, byDependency, bySourceBasis -> child lists and reverse lookup".
+  it('F9 (wb-4ap.1) L3: a projection refresh applies the basis-bearing package snapshot and a basis query on B returns that package node alone', () => {
+    // R1 L3: "ObservationProjection.refresh(snapshot) returns 'applied' for the basis-bearing snapshot and query({scope,
+    // basis: B, limit: 10}).nodes returns the package node (ObservationQuery.basis index, observation.ts:86@9df9a03)."
+    const result = forgeGateTopology(withPackages(MEASURED_ROW, {...DESCRIPTORLESS, ref: 'code:sibling'}), context);
+    const [workspace, pkg, sibling] = result.snapshots;
+    expect(pkg.subjectBasis).toBe(B);
+    const projection = new ObservationProjection();
+    expect(projection.refresh(pkg)).toBe('applied');
+    expect(projection.refresh(workspace)).toBe('applied');
+    expect(projection.refresh(sibling)).toBe('applied');
+    const byBasis = projection.query({scope, basis: B, limit: 10});
+    expect(byBasis.truncated).toBe(false);
+    expect(byBasis.nodes.map(node => node.nativeRef)).toStrictEqual([packageRef('code:pi-subagents')]);
+    expect(byBasis.nodes[0]).toMatchObject({subjectBasis: B, kind: 'forge.gate.status.package.snapshot'});
+    // The index keys on derived_from: the source digest the producer reads now finds no node.
+    expect(projection.query({scope, basis: A, limit: 10}).nodes).toStrictEqual([]);
+  });
+
+  it('F9 (wb-4ap.1) static pin: the forgeGateTopology doc comment states no interval or definitionDigest and that the published per-package basis is echoed, never that gate.status carries no basis', () => {
+    // R1: "The header comment at forge-observer.ts:71-73 no longer asserts gate.status carries no basis; it states no interval or
+    // definitionDigest exists and the per-package derived-verdict basis is echoed when published."
+    const text = workbenchSource('forge-observer.ts');
+    const source = ts.createSourceFile('forge-observer.ts', text, ts.ScriptTarget.Latest, true);
+    const declaration = source.statements.find((statement): statement is ts.FunctionDeclaration => ts.isFunctionDeclaration(statement) && statement.name?.text === 'forgeGateTopology');
+    expect(declaration).toBeDefined();
+    const ranges = declaration === undefined ? [] : ts.getLeadingCommentRanges(text, declaration.getFullStart()) ?? [];
+    expect(ranges).toHaveLength(1);
+    // The one doc comment attached to the declaration, its line breaks and leading asterisks folded into single spaces.
+    const doc = ranges.map(range => text.slice(range.pos, range.end)).join('').replace(/\s*\n\s*\*\s?/g, ' ');
+    expect(doc.startsWith('/**')).toBe(true);
+    expect(doc).toMatch(/no snapshot has an interval or definitionDigest/);
+    expect(doc).toMatch(/carries its derived_from as subjectBasis/);
+    expect(doc).not.toMatch(/\bno\b[^.;]*\bbasis\b/i);
+  });
 });
 
 describe('Forge gate.status adapter consumes the registered provider output unchanged', () => {

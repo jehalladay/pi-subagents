@@ -4,7 +4,7 @@
  * sequenced census class (owner ruling on the held R1, 2026-10-18: adopt the gate default, the wb-cax.24 precedent).
  *
  * The Forge, Furnace, HyperUnix, ReactiveFiberCLI and Beads provider sections and "Shared integration requirements" state
- * adapter rules in single paragraphs. This leg binds each falsifiable sentence (rows F1-F4, U1-U6, H1-H2, R1-R3, B1-B2,
+ * adapter rules in single paragraphs. This leg binds each falsifiable sentence (rows F1-F4, U1-U6, H1-H2, R1-R4, B1-B2,
  * S1-S2, plus the DELTA-B-AMEND note rows U7 and U8) to existing cases by file, verbatim title and tier, or records it as
  * unpinned with a reason. It executes no pinned case and no test run: judge() from the shared helper
  * test/helpers/census.ts reads vitest's own JSON report of the default gate's test step (DEFAULT_TIER_REPORT, written by
@@ -34,14 +34,22 @@
  * NATIVE-TITLE: whether that case's title is still registered is judged by no report this leg reads, and the leg says so
  * rather than counting the pin as covered.
  *
+ * ORDERING GUARD (wb-693.9, RF-TSX-AND-EMBEDDING-R11): row R4 binds the RF sentence naming the "SDK package + revision"
+ * fields the adapter records (provenance.cli_version, provenance.sdk_versions.tsx_runtime/tsx_sdk) to the cases that
+ * assert them: the wb-693.1 R10 engine-identity cases and the wb-2j3.1 release cases, which absorbed requirement R4 under
+ * owner ruling G-A (the release is an rf-cli evidence reference, never sourceVersion). The sentence is never a docs claim
+ * without its cases: over the gate's own report with those cases removed, every R4 pin reads absent and the leg is red,
+ * naming the row, while the docs still state the sentence. Row R4's quote and binding are frozen as literals (rule 16).
+ *
  * Non-scope (no falsifiable adapter sentence, or covered by the docs/14 matrix): "MechanicalWorkflows is an ordinary
  * function library", "RCP provider", "Agent provider", "First realistic vertical journey".
  */
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { basename, dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "vitest";
 import { type CasePin, DEFAULT_GATE_TIER, DEFAULT_TIER_REPORT, docsSection, judge, type PinVerdict, type RenderedBlock, sectionMatches, sourceStructure } from "./helpers/census.js";
+import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
 
 type Tier = "default-gate" | "native-read";
 interface Pin {
@@ -100,7 +108,7 @@ const SECTION_MARKDOWN: Readonly<Record<string, string>> = {
   "HyperUnix provider":
     'Use typed TS HX SDK/HXQ builder/results; preserve source basis, coverage classification, bounds, known-empty vs incomplete/unknown and evidence. Incomplete query cannot silently authorize "nothing to do" or produce false success. Graph query as observation enhancement is optional; HX is not mandatory UI event storage.',
   "ReactiveFiberCLI provider":
-    "Use actual public render/context APIs; present Python/CLI interop honestly if no production TypeScript SDK exists at selected revision. Do not declare a typed TS context-render client exists without code evidence. Return actual context text, producer/render reference, model/input/source basis, necessity/budget result and partial/refused status. Fixture text is never reported as real generated context.",
+    "Use actual public render/context APIs; present Python/CLI interop honestly if no production TypeScript SDK exists at selected revision. Do not declare a typed TS context-render client exists without code evidence. Return actual context text, producer/render reference, model/input/source basis, necessity/budget result and partial/refused status. For the shared \"SDK package + revision\" record, the RF adapter records the producer release that provenance.cli_version states as one rf-cli evidence reference, never as sourceVersion, and the TSX engine identity that provenance.sdk_versions.tsx_runtime/tsx_sdk state as one rf-engine evidence reference per entry. Fixture text is never reported as real generated context.",
   "Beads provider":
     "Beads retains readiness, formulas and logical task dependencies. Workbench may inspect supported scopes and surface linked work; it does not store an authoritative second readiness DAG. No assumed stable Beads SDK if only other integration contracts are available.",
   "Shared integration requirements":
@@ -115,6 +123,9 @@ const sectionBlocks = (heading: string): readonly RenderedBlock[] => {
 };
 
 const CAPABILITY_SUITE = "no native cancel: the typed capability-unavailable refusal quotes the measured surface, never a shell-out or a minted verb";
+/** wb-693.9: the describe paths holding the R1/R4 cases row R4 binds (its pins bind the describe as well as the case). */
+const RELEASE_SUITE = "producer release from result.provenance.cli_version (wb-2j3.1 reader, wb-2j3.2 no-synthesis guard)";
+const ENGINE_SUITE = "engine identity from result.provenance.sdk_versions (wb-693.1 R1, wb-693.2 R2, wb-693.3 R3)";
 
 /** Freezes the table and everything it holds, so no row, half or pin can be edited at runtime. */
 function freezeDeep<T>(value: T): T {
@@ -338,6 +349,25 @@ const TABLE: readonly Row[] = freezeDeep<readonly Row[]>([
     ],
   },
   {
+    // wb-693.9 (RF-TSX-AND-EMBEDDING-R11): lands together with its cases. R4 (cli_version) was absorbed by wb-2j3.1 under
+    // owner ruling G-A, so its cases assert an rf-cli reference and never sourceVersion; R1 is wb-693.1's R10 cases.
+    row: "R4",
+    section: "ReactiveFiberCLI provider",
+    source: "docs",
+    quote:
+      'For the shared "SDK package + revision" record, the RF adapter records the producer release that provenance.cli_version states as one rf-cli evidence reference, never as sourceVersion, and the TSX engine identity that provenance.sdk_versions.tsx_runtime/tsx_sdk state as one rf-engine evidence reference per entry.',
+    halves: [
+      gate("producer-release", [
+        pin("reactivefiber-observer", "R1: a stated cli_version travels as one distinct rf-cli evidence reference and one note, never as sourceVersion (owner ruling G-A)", [RELEASE_SUITE]),
+        pin("reactivefiber-observer", "R1: the value is carried, not hard-coded: other releases round-trip verbatim through the reference, the note and the metadata", [RELEASE_SUITE]),
+      ]),
+      gate("tsx-engine-identity", [
+        pin("reactivefiber-observer", "R10: an object sdk_versions stating both engine entries adds one rf-engine reference per entry and one foreign-runtime note", [ENGINE_SUITE]),
+        pin("reactivefiber-observer", "R10: the identities are carried, not hard-coded: other versions and fingerprints round-trip verbatim into their references", [ENGINE_SUITE]),
+      ]),
+    ],
+  },
+  {
     row: "B1",
     section: "Beads provider",
     source: "docs",
@@ -400,7 +430,7 @@ const TABLE: readonly Row[] = freezeDeep<readonly Row[]>([
   },
 ]);
 
-const ROW_IDS: readonly string[] = ["F1", "F2", "F3", "F4", "U1", "U2", "U3", "U4", "U5", "U6", "U7", "U8", "H1", "H2", "R1", "R2", "R3", "B1", "B2", "S1", "S2"];
+const ROW_IDS: readonly string[] = ["F1", "F2", "F3", "F4", "U1", "U2", "U3", "U4", "U5", "U6", "U7", "U8", "H1", "H2", "R1", "R2", "R3", "R4", "B1", "B2", "S1", "S2"];
 /** Every half that has no landed case, as "row/half"; a seat that lands a case flips the half consciously and edits this list. */
 const UNPINNED_HALVES: readonly string[] = ["F3/whole", "U7/events", "U8/negative-verbs", "R3/whole", "S1/owner-basis", "S1/observed-evidence", "S1/trace-correlation-recorded"];
 
@@ -472,6 +502,8 @@ const FROZEN_JUDGED_SHAPE: readonly string[] = [
   "H2/whole:2",
   "R1/whole:2",
   "R2/observer:3",
+  "R4/producer-release:2",
+  "R4/tsx-engine-identity:2",
   "B1/whole:2",
   "B2/whole:2",
   "S1/sdk-revision:1",
@@ -750,5 +782,109 @@ describe("wb-6hb.11 docs drift names the row or the section (synthetic document,
 
   it("an edit of an unpinned section never reddens a row: the RCP provider and the journey are free to change", () => {
     expect(docsFailures(synthetic().replace("Optional.", "Optional, and changed.").replace("A journey.", "A different journey."))).toEqual([]);
+  });
+});
+
+/** wb-693.9 (rule 16): row R4's quote and binding as literals, never derived from TABLE, so a shortened quote, a dropped, swapped or re-homed pin or a relabelled tier reads red. */
+const FROZEN_IDENTITY_QUOTE =
+  'For the shared "SDK package + revision" record, the RF adapter records the producer release that provenance.cli_version states as one rf-cli evidence reference, never as sourceVersion, and the TSX engine identity that provenance.sdk_versions.tsx_runtime/tsx_sdk state as one rf-engine evidence reference per entry.';
+const FROZEN_IDENTITY_BINDING: readonly string[] = [
+  "producer-release | test | test/workbench-reactivefiber-observer.test.ts | producer release from result.provenance.cli_version (wb-2j3.1 reader, wb-2j3.2 no-synthesis guard) | R1: a stated cli_version travels as one distinct rf-cli evidence reference and one note, never as sourceVersion (owner ruling G-A)",
+  "producer-release | test | test/workbench-reactivefiber-observer.test.ts | producer release from result.provenance.cli_version (wb-2j3.1 reader, wb-2j3.2 no-synthesis guard) | R1: the value is carried, not hard-coded: other releases round-trip verbatim through the reference, the note and the metadata",
+  "tsx-engine-identity | test | test/workbench-reactivefiber-observer.test.ts | engine identity from result.provenance.sdk_versions (wb-693.1 R1, wb-693.2 R2, wb-693.3 R3) | R10: an object sdk_versions stating both engine entries adds one rf-engine reference per entry and one foreign-runtime note",
+  "tsx-engine-identity | test | test/workbench-reactivefiber-observer.test.ts | engine identity from result.provenance.sdk_versions (wb-693.1 R1, wb-693.2 R2, wb-693.3 R3) | R10: the identities are carried, not hard-coded: other versions and fingerprints round-trip verbatim into their references",
+];
+
+/** The fields of vitest's JSON report the ordering guard reads; every other field is carried through untouched. */
+interface ReportCase {
+  readonly title: string;
+  readonly ancestorTitles: readonly string[];
+}
+interface ReportFile {
+  readonly name: string;
+  readonly assertionResults: readonly ReportCase[];
+}
+interface ReportJson {
+  readonly testResults: readonly ReportFile[];
+}
+const isRecord = (value: unknown): value is Record<string, unknown> => typeof value === "object" && value !== null && !Array.isArray(value);
+const isReportCase = (value: unknown): value is ReportCase =>
+  isRecord(value) && typeof value.title === "string" && Array.isArray(value.ancestorTitles) && value.ancestorTitles.every((title: unknown) => typeof title === "string");
+const isReportJson = (value: unknown): value is ReportJson =>
+  isRecord(value) &&
+  Array.isArray(value.testResults) &&
+  value.testResults.every((file: unknown) => isRecord(file) && typeof file.name === "string" && Array.isArray(file.assertionResults) && file.assertionResults.every(isReportCase));
+
+installScratchLeakGuard();
+
+describe("wb-693.9 ordering guard: the RF identity sentence is never a docs claim without the R1/R4 cases", () => {
+  const scratch: string[] = [];
+  afterEach(() => {
+    removeScratch(...scratch.splice(0));
+  });
+  const OBSERVER_FILE = T("reactivefiber-observer");
+  const identity = TABLE.find(row => row.row === "R4");
+  const observer = TABLE.find(row => row.row === "R2")?.halves.find(half => half.id === "observer");
+  const pinsOf = (halves: readonly Half[]): readonly Pin[] => halves.flatMap(half => half.pins);
+  /** A report case is a pinned case when its title and whole describe path are the pin's. */
+  const pinned = (test: ReportCase, entry: Pin): boolean => test.title === entry.title && JSON.stringify(test.ancestorTitles) === JSON.stringify(entry.suite ?? []);
+
+  let read: ReportJson | undefined;
+  /** The gate's own report, read once; the guard writes edited copies of the pinned file's module, never the report on disk. */
+  const gateReport = (): ReportJson => {
+    if (read === undefined) {
+      const parsed: unknown = JSON.parse(readFileSync(REPORT, "utf8"));
+      if (!isReportJson(parsed)) throw new Error(`${DEFAULT_TIER_REPORT} does not have vitest's JSON reporter shape`);
+      read = parsed;
+    }
+    return read;
+  };
+
+  /** Writes the gate's own report of the observer file, keeping the cases `keep` admits, under a scratch .forge directory, and judges each half over it (root = this repository). */
+  function judgeOver(halves: readonly Half[], keep: (test: ReportCase) => boolean): readonly { readonly half: Half; readonly verdicts: readonly PinVerdict[] }[] {
+    const report = gateReport();
+    const modules = report.testResults.filter(file => file.name.endsWith(OBSERVER_FILE));
+    expect(modules, `the gate's own report holds ${OBSERVER_FILE} once`).toHaveLength(1);
+    const dir = makeScratch("census-693-9-");
+    scratch.push(dir);
+    mkdirSync(join(dir, ".forge"));
+    const path = join(dir, ".forge", "vitest-report.json");
+    writeFileSync(path, JSON.stringify({ ...report, testResults: modules.map(file => ({ ...file, assertionResults: file.assertionResults.filter(keep) })) }));
+    return halves.map(half => ({ half, verdicts: judge(path, half.pins.map(entry => casePin(half, entry)), { root: ROOT }) }));
+  }
+  const codes = (judged: readonly { readonly verdicts: readonly PinVerdict[] }[]): string[] => judged.flatMap(({ verdicts }) => verdicts.map(verdict => verdict.code));
+
+  it("ORDER: row R4 quotes the identity sentence verbatim and binds both halves to the R1/R4 cases by file, describe path, verbatim title and default tier, as frozen", () => {
+    expect(identity?.section).toBe("ReactiveFiberCLI provider");
+    expect(identity?.source).toBe("docs");
+    expect(identity?.quote).toBe(FROZEN_IDENTITY_QUOTE);
+    expect(identity?.halves.map(half => `${half.id}:${half.tier}:${half.reason ?? "pinned"}`)).toEqual(["producer-release:default-gate:pinned", "tsx-engine-identity:default-gate:pinned"]);
+    expect(identity?.halves.flatMap(half => half.pins.map(entry => [half.id, tierCommand(half.tier), entry.file, (entry.suite ?? []).join(" > "), entry.title].join(" | ")))).toEqual(FROZEN_IDENTITY_BINDING);
+  });
+
+  it("ORDER: together, the live RF section states the sentence and every R4 pin reads ok over an unedited copy of the gate's own report of the observer file", () => {
+    expect(identity !== undefined).toBe(true);
+    if (identity === undefined) return;
+    const section = docsSection(readRepo(DOCS_FILE), identity.section, 2, [DOCS_PARENT]);
+    expect(section.ok, section.why).toBe(true);
+    expect(section.blocks.map(block => (block.kind === "paragraph" ? block.text : "")).join(" ")).toContain(renderedOf(FROZEN_IDENTITY_QUOTE));
+    expect(codes(judgeOver(identity.halves, () => true))).toEqual(pinsOf(identity.halves).map(() => "ok"));
+  });
+
+  it("ORDER: with the R1/R4 cases removed from the gate's own report every R4 pin reads absent, naming the row, the file and the title, while the docs still state the sentence and R2's observer pins in the same file stay ok", () => {
+    expect(identity !== undefined && observer !== undefined).toBe(true);
+    if (identity === undefined || observer === undefined) return;
+    expect(docsFailures(readRepo(DOCS_FILE))).toEqual([]);
+    const pins = pinsOf(identity.halves);
+    const withoutCases = (test: ReportCase): boolean => !pins.some(entry => pinned(test, entry));
+    const absent = judgeOver(identity.halves, withoutCases);
+    expect(codes(absent)).toEqual(pins.map(() => "absent"));
+    const lines = absent.flatMap(({ half, verdicts }) => failures(identity, half, verdicts));
+    expect(lines.map(line => line.slice(0, line.indexOf(": absent:")))).toEqual(["row R4/producer-release", "row R4/producer-release", "row R4/tsx-engine-identity", "row R4/tsx-engine-identity"]);
+    for (const [index, entry] of pins.entries()) {
+      expect(lines[index]).toContain(entry.file);
+      expect(lines[index]).toContain(`"${entry.title}"`);
+    }
+    expect(codes(judgeOver([observer], withoutCases))).toEqual(observer.pins.map(() => "ok"));
   });
 });
