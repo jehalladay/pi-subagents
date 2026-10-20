@@ -34,6 +34,7 @@
  * cuts ran their own collect-only and probe child runs from inside the default gate (the executing-mode class this
  * program retired) and carried a hand-written config-exclusion tier audit; this leg judges the gate's report instead.
  */
+import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -368,6 +369,98 @@ const SATISFIED: readonly string[] = [
 /** Every unpinned row, in table order; a seat that lands a case flips the row consciously and edits this list. */
 const NOT_SATISFIED: readonly string[] = ["TE-pi-concise-surface", "TE-pi-commands", "TE-claude-no-generic-astools", "TE-script-agent-vs-node-side-by-side"];
 
+/**
+ * wb-22c (rule 16, F1 of the wb-6hb.10 gate): the census's own judged-row shape, frozen as literals derived from the
+ * TABLE above. Deleting or duplicating a pin, shortening a requirement phrase, swapping a pin for an unrelated passing
+ * case, or narrowing the JUDGED predicate (so fewer or zero AC2 rows run) reds the AC1 frozen-shape case below.
+ */
+const FROZEN_ROW_PINS: readonly string[] = [
+  "TE-pi-discovery-invocation-observation-tools:4",
+  "TE-pi-concise-surface:0",
+  "TE-pi-commands:0",
+  "TE-pi-no-eager-provider-tools:2",
+  "TE-pi-contract-retrieval:3",
+  "TE-claude-curated-subset:3",
+  "TE-claude-permissions:4",
+  "TE-claude-tool-identity:3",
+  "TE-claude-bounded-observations:3",
+  "TE-claude-redaction:2",
+  "TE-claude-no-generic-astools:0",
+  "TE-script-node-is-host-rpc:3",
+  "TE-script-node-calls-separately-observable:3",
+  "TE-script-agent-vs-node-side-by-side:0",
+  "IO-independent-inspect-observe:3",
+  "IO-one-shot-no-fake-polling:3",
+  "IO-snapshot-and-event-stream:2",
+  "IO-explicit-polling-freshness:3",
+  "IO-control-separate-and-explicit:4",
+  "IO-no-universal-lifecycle-methods:2",
+];
+const FROZEN_JUDGED_PINS: readonly string[] = [
+  "TE-pi-discovery-invocation-observation-tools:4",
+  "TE-pi-no-eager-provider-tools:2",
+  "TE-pi-contract-retrieval:3",
+  "TE-claude-curated-subset:3",
+  "TE-claude-permissions:4",
+  "TE-claude-tool-identity:3",
+  "TE-claude-bounded-observations:3",
+  "TE-claude-redaction:2",
+  "TE-script-node-is-host-rpc:3",
+  "TE-script-node-calls-separately-observable:3",
+  "IO-independent-inspect-observe:3",
+  "IO-one-shot-no-fake-polling:3",
+  "IO-snapshot-and-event-stream:2",
+  "IO-explicit-polling-freshness:3",
+  "IO-control-separate-and-explicit:4",
+  "IO-no-universal-lifecycle-methods:2",
+];
+const FROZEN_REQUIREMENT_LENGTHS: readonly string[] = [
+  "TE-pi-discovery-invocation-observation-tools:38",
+  "TE-pi-concise-surface:16",
+  "TE-pi-commands:15",
+  "TE-pi-no-eager-provider-tools:72",
+  "TE-pi-contract-retrieval:46",
+  "TE-claude-curated-subset:82",
+  "TE-claude-permissions:19",
+  "TE-claude-tool-identity:13",
+  "TE-claude-bounded-observations:20",
+  "TE-claude-redaction:9",
+  "TE-claude-no-generic-astools:81",
+  "TE-script-node-is-host-rpc:57",
+  "TE-script-node-calls-separately-observable:43",
+  "TE-script-agent-vs-node-side-by-side:38",
+  "IO-independent-inspect-observe:85",
+  "IO-one-shot-no-fake-polling:72",
+  "IO-snapshot-and-event-stream:79",
+  "IO-explicit-polling-freshness:59",
+  "IO-control-separate-and-explicit:117",
+  "IO-no-universal-lifecycle-methods:51",
+];
+const FROZEN_PIN_DIGESTS: readonly string[] = [
+  "TE-pi-discovery-invocation-observation-tools:c2ff5e1010e3",
+  "TE-pi-concise-surface:e3b0c44298fc",
+  "TE-pi-commands:e3b0c44298fc",
+  "TE-pi-no-eager-provider-tools:03f3f70a2ed5",
+  "TE-pi-contract-retrieval:c78d11d5b92b",
+  "TE-claude-curated-subset:13380e531174",
+  "TE-claude-permissions:ff4c1bc47710",
+  "TE-claude-tool-identity:9adc1de22cff",
+  "TE-claude-bounded-observations:58d52a978c0a",
+  "TE-claude-redaction:dbc3a01f068b",
+  "TE-claude-no-generic-astools:e3b0c44298fc",
+  "TE-script-node-is-host-rpc:d401ba81bd28",
+  "TE-script-node-calls-separately-observable:74be266fa522",
+  "TE-script-agent-vs-node-side-by-side:e3b0c44298fc",
+  "IO-independent-inspect-observe:99fbc4f43513",
+  "IO-one-shot-no-fake-polling:28508a006194",
+  "IO-snapshot-and-event-stream:a5b6068dd554",
+  "IO-explicit-polling-freshness:82d4e6a89098",
+  "IO-control-separate-and-explicit:9de213ea523a",
+  "IO-no-universal-lifecycle-methods:92f688357751",
+];
+/** A short digest of a row's ordered (file, title, tier) pins: a changed, swapped, retitled or retiered pin changes it. */
+const pinDigest = (row: Row): string => createHash("sha256").update(row.pins.map(entry => `${entry.file}\n${entry.title}\n${entry.tier}`).join("\n\n")).digest("hex").slice(0, 12);
+
 const readRepo = (path: string): string => readFileSync(join(ROOT, path), "utf8");
 
 /** Every row that holds pins, with its pins as the helper's CasePin: all default-gate (the report this leg reads). */
@@ -417,6 +510,28 @@ describe("wb-6hb.10 docs/06 tool-exposure census (report mode): the table and th
     expect(ROWS.filter(row => row.section === "inspect-observe")).toHaveLength(6);
   });
 
+  it("AC1 frozen shape (wb-22c): the row/pin-count list, the judged subset, every requirement phrase and every pin's identity are frozen literals", () => {
+    expect(
+      ROWS.map(row => `${row.id}:${row.pins.length}`),
+      "row:pin-count over the whole table",
+    ).toEqual(FROZEN_ROW_PINS);
+    expect(
+      JUDGED.map(row => `${row.id}:${row.pins.length}`),
+      "row:pin-count over the judged rows (the AC2 it.each set)",
+    ).toEqual(FROZEN_JUDGED_PINS);
+    expect(
+      ROWS.map(row => `${row.id}:${row.requirement.length}`),
+      "row:requirement length",
+    ).toEqual(FROZEN_REQUIREMENT_LENGTHS);
+    expect(
+      ROWS.map(row => `${row.id}:${pinDigest(row)}`),
+      "row:digest of the ordered (file, title, tier) pins",
+    ).toEqual(FROZEN_PIN_DIGESTS);
+    for (const row of ROWS) {
+      expect(new Set(row.pins.map(entry => `${entry.file}\n${entry.title}`)).size, `row ${row.id}: no pin repeats a (file, title) pair inside its row`).toBe(row.pins.length);
+    }
+  });
+
   it("AC1: the two sections render exactly their frozen paragraphs (HTML-free, whole-section equality) and every row's clause renders in its own section", () => {
     expect(docsFailures(readRepo(DOCS_FILE))).toEqual([]);
     for (const section of SECTION_ORDER) {
@@ -457,7 +572,7 @@ describe("wb-6hb.10 docs/06 tool-exposure census (report mode): the table and th
     expect(gap("TE-pi-no-eager-provider-tools")).toContain("numeric ceiling");
   });
 
-  it("AC3: no row pins a case from another bead's census as its own evidence", () => {
+  it("AC3: no row pins a .census.ts file, and the only pins from a file named census are the two direct wb-cax.4 surface-census boot-mode cases", () => {
     const pinnedFiles = ROWS.flatMap(row => row.pins.map(entry => entry.file));
     expect(pinnedFiles.filter(file => file.includes("census"))).toEqual([SURFACE, SURFACE]);
     expect(pinnedFiles.some(file => file.endsWith(".census.ts"))).toBe(false);
