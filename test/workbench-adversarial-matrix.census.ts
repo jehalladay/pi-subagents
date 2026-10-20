@@ -15,38 +15,54 @@
  * scenario to the cases that prove it, or to an unpinned row naming what is missing. It never counts an unpinned
  * scenario as passed and never claims a live, native or scale pass from a title being present.
  *
- * Judging. This leg executes no pinned case and scans no test source for case calls itself. judge() reads vitest's own
- * JSON report of the default gate's test step (DEFAULT_TIER_REPORT, written by `npm run test` before the census step
- * runs), so a pinned case counts only when the gate's own run collected it exactly once, recorded it passed, and its
- * body asserts - the helper's three legs, fail-closed. A renamed, deleted, duplicated, skipped, todo, inverted, excluded
- * or unregistered pinned case reads red, naming the scenario, the file, the title and the cause, as far as the helper's
- * resolvable-construct roster and its named residuals reach (test/helpers/census.ts, receipts/wb-u62.md). The hand
- * scanner and the vitest.config.ts text read this file carried before the adoption (the wb-0kg.11 first cut, 95ac0ca,
- * and its respin 68b6c53) are gone: the report is the tier truth, so a pin file excluded from the default gate is
- * not-collected here instead of passing a text match.
+ * Judging. This leg executes no pinned case and scans no test source for case calls itself (the only source it parses
+ * is its own, for the U5 file-read check). judge() reads vitest's own JSON report of the default gate's test step
+ * (DEFAULT_TIER_REPORT, written by `npm run test` before the census step runs), so a pinned case counts only when the
+ * gate's own run collected it exactly once, recorded it passed, and its body asserts - the helper's three legs,
+ * fail-closed. A renamed, deleted, duplicated, skipped, todo, inverted, excluded or unregistered pinned case reads red,
+ * naming the scenario, the file, the title and the cause, as far as the helper's resolvable-construct roster and its
+ * named residuals reach (test/helpers/census.ts, receipts/wb-u62.md). The hand scanner and the vitest.config.ts text
+ * read this file carried before the adoption (the wb-0kg.11 first cut, 95ac0ca, and its respin 68b6c53) are gone: the
+ * report is the tier truth, so a pin file excluded from the default gate is not-collected here instead of passing a
+ * text match.
+ *
+ * Frozen judged set (rule 16; respin 2 cures the g9 gate verdict of 2026-10-20 on 8b212b2, cmd_3bb7ae87a15f, U1-U6).
+ * The table's shape (EXPECTED_SHAPE: pins, registration, halves and truth label per row), its row texts (EXPECTED_TEXT:
+ * a digest of each row's reason, truth note and halves), every judged case (EXPECTED_JUDGED, it.each minimums included)
+ * and the rows the AC2 it.each judges (EXPECTED_JUDGED_ROWS) are literals. Each AC2 case keys the verdicts the helper
+ * returned and compares them with its row's EXPECTED_JUDGED entries, and the each-liveness case reads this file's own
+ * task tree, so narrowing the judged rows, a row's kinds or group, or the it.each table, skipping an AC2 case, or
+ * returning before a row's last assertion reads red. Every AC2 case runs on the file-local budget JUDGE_BUDGET_MS.
  *
  * Tiers. A pinned row's tier is the default gate (the report vouches for it). The bench-receipt command of scenario 7
  * (forge run local-detached-shared-child) and the live journey of scenario 4 (wb-0kg.3) are NOT vouched by any report
  * this leg reads: each is the UNCOVERED half of its row, recorded with its tier and never counted as covered. The
- * command's registration is judged as a default-gate pin, like any other.
+ * command's registration is judged as a default-gate pin, like any other. Every pinned row is proved by fixtures inside
+ * the default gate, so its docs/14 label is "fixture pass"; no row claims "live SDK pass", "adversarial pass" or "scale
+ * benchmark pass", labels no report this leg reads vouches for (U3).
  *
  * Docs. The section is judged through the helper's rendered view (docsSection / sectionMatches): under its unique
  * level-2 heading of the level-1 parent heading, bounded at the next level-1/2 heading or EOF, it must render as
  * exactly the one frozen paragraph. A dropped, reworded, appended-to or reordered scenario clause, or a dropped outcome
- * phrase, names its scenario; any other edit names the section. The drift falsifiers run over a SYNTHETIC document
- * built from the frozen paragraph, never over the live docs/08 text.
+ * phrase, names its scenario; any other edit names the section. The live cases assert the scenario-naming drift list
+ * FIRST, so a live drift fails naming its scenario before any exactness assertion runs (U2). The drift falsifiers run
+ * over a SYNTHETIC document built from the frozen paragraph, never over the live docs/08 text.
  *
  * Half-coverage rule (O1/U6). A scenario covered in part keeps ONE row of the nine-row table and carries a covered half
  * (its own proof, tier and truth note) and an uncovered half (its own tier label and reason): scenarios 4, 7 and 9.
  *
  * Disclosed limits (never claimed as covered): an assertion reached only through a helper the helper's body leg does not
- * follow; the real-process and live runs themselves; the helper's own named residuals. A landing that renames a pinned
- * case updates this table in the same commit (pin-flip); a landing that closes an uncovered half flips it to pinned here.
+ * follow; the real-process and live runs themselves; the helper's own named residuals; verdicts fabricated in this file
+ * instead of read from judge(); a file read routed through another module (the leg's own reads go through readRepo, U5).
+ * A landing that renames a pinned case updates this table in the same commit (pin-flip); a landing that closes an
+ * uncovered half flips it to pinned here.
  */
 
+import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { basename, dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import ts from "typescript";
 import { describe, expect, it } from "vitest";
 import { type CasePin, DEFAULT_GATE_TIER, DEFAULT_TIER_REPORT, docsSection, judge, type PinVerdict, type RenderedBlock, sectionMatches, sourceStructure } from "./helpers/census.js";
 
@@ -101,12 +117,16 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const REPORT = join(ROOT, DEFAULT_TIER_REPORT);
 const SELF = "test/workbench-adversarial-matrix.census.ts";
 const DOCS_FILE = "docs/workbench/08-lifecycle-and-recovery.md";
+const CENSUS_CONFIG = "vitest.census.config.ts";
 const DOCS_HEADING = "Adversarial test matrix";
 const EM_DASH = String.fromCodePoint(0x2014);
 const DOCS_PARENT = `08 ${EM_DASH} Execution identity, lifecycle, side effects, replay and recovery`;
 const NATIVE_FILE = "test/workbench-native-rf-preview.test.ts";
 
-const PASS_LABELS: readonly TruthLabel[] = ["fixture pass", "live SDK pass", "adversarial pass", "scale benchmark pass"];
+/** U3: the one docs/14 label the default gate's report vouches for; every pinned row here is proved by fixtures inside it. */
+const DEFAULT_GATE_LABEL: TruthLabel = "fixture pass";
+/** U3: labels no report this leg reads can vouch for (a live SDK run, an adversarial run outside the fixtures, a scale benchmark). */
+const UNVOUCHED_LABELS: readonly TruthLabel[] = ["live SDK pass", "adversarial pass", "scale benchmark pass"];
 const OPEN_LABELS: readonly TruthLabel[] = ["code present", "not started"];
 
 const FURNACE_HOSTED = "test/workbench-furnace-hosted.test.ts";
@@ -183,9 +203,13 @@ const ROWS: readonly Row[] = freezeDeep<readonly Row[]>([
     pins: [
       pin(DETACHED_FAULTS, "flags terminal completed or failed after a crash, or a result on an unknown, as fabricated-terminal"),
       pin(EFFECT_REPLAY, "neither re-runs nor replays a journaled write: the resume surfaces an uncertain effect"),
+      pin(EFFECT_REPLAY, "B1 after provider side effect but before host result: the resume refuses and the effect happens exactly once (%s)", 2),
+      pin(EFFECT_REPLAY, "B1 after result before journal append: the resume refuses and the effect happens exactly once"),
     ],
-    reason: "a terminal reported after a crash is flagged fabricated-terminal, and a resume over a journaled non-read node surfaces a typed uncertain effect instead of re-running or replaying it",
-    truth: "the detached-faults pin drives the pure receipt judge and the replay pin the in-process runtime fixture, both inside the default gate",
+    reason:
+      "a terminal reported after a crash is flagged fabricated-terminal, a resume over a journaled non-read node surfaces a typed uncertain effect instead of re-running or replaying it, and (wb-5x0.1 landed 808abff, its AC B2 bound to this clause) a kill after the provider's side effect but before the host result, or after the result but before the journal append, makes the resume refuse with the effect performed exactly once",
+    truth:
+      "the detached-faults pin drives the pure receipt judge and the three replay pins the in-process runtime fixture (the wb-5x0.1 B1 cases kill the run through an abort signal, not a real process), all inside the default gate",
   },
   {
     scenario: 3,
@@ -323,19 +347,31 @@ const ROWS: readonly Row[] = freezeDeep<readonly Row[]>([
 /** The frozen scenario numbers, in order: nine rows. */
 const SCENARIOS: readonly number[] = ROWS.map(row => row.scenario);
 const EXPECTED_SCENARIOS: readonly number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-/** Rule 16 (frozen shape): "S<n>:<pins>:<registers>:<halves>" per row, so deleting one pin or half, or swapping a pin for another row's, reads red. */
-const EXPECTED_SHAPE: readonly string[] = ["S1:2:0:0", "S2:2:0:0", "S3:3:0:0", "S4:1:0:2", "S5:2:0:0", "S6:2:0:0", "S7:4:1:2", "S8:0:0:1", "S9:3:0:2"];
-/** Rule 16 (frozen titles): "S<n>|<kind>|<file>|<title>" for every judged case, so swapping a pin for an unrelated passing case in the same file reads red. */
+/** Rule 16 (frozen shape): "S<n>:<pins>:<registers>:<halves>:<label>" per row, so deleting one pin or half, swapping a pin for another row's, or raising a row's truth label (U3) reads red. */
+const EXPECTED_SHAPE: readonly string[] = [
+  "S1:2:0:0:fixture pass",
+  "S2:4:0:0:fixture pass",
+  "S3:3:0:0:fixture pass",
+  "S4:1:0:2:fixture pass",
+  "S5:2:0:0:fixture pass",
+  "S6:2:0:0:fixture pass",
+  "S7:4:1:2:fixture pass",
+  "S8:0:0:1:not started",
+  "S9:3:0:2:fixture pass",
+];
+/** Rule 16 (frozen titles): "S<n>|<kind>|<file>|<title>[|each>=<n>]" for every judged case, so swapping a pin for an unrelated passing case in the same file, or lowering an it.each minimum, reads red. */
 const EXPECTED_JUDGED: readonly string[] = [
   "S1|pin|workbench-furnace-hosted.test.ts|treats a timed-out or unreadable start as uncertain, closes the host, and refuses a blind second start",
   "S1|pin|workbench-furnace-hosted-retry-fault.test.ts|an operator retry after an uncertain first Attempt opens a FRESH bridge session; the first Attempt stays parked and is never merged or upgraded",
   "S2|pin|workbench-detached-faults-receipt.test.ts|flags terminal completed or failed after a crash, or a result on an unknown, as fabricated-terminal",
   "S2|pin|workflow-effect-replay.test.ts|neither re-runs nor replays a journaled write: the resume surfaces an uncertain effect",
+  "S2|pin|workflow-effect-replay.test.ts|B1 after provider side effect but before host result: the resume refuses and the effect happens exactly once (%s)|each>=2",
+  "S2|pin|workflow-effect-replay.test.ts|B1 after result before journal append: the resume refuses and the effect happens exactly once",
   "S3|pin|workbench-observation.test.ts|deduplicates IDs, rejects old sequence updates, and treats a cursor gap as stale until snapshot",
   "S3|pin|workbench-observation.test.ts|disconnect invalidates known nodes; reconnect alone cannot restore current without snapshot",
   "S3|pin|workbench-furnace-observer.test.ts|reconnects only by fresh snapshot, marking a failed read stale instead of asserting last-known RUNNING",
   "S4|pin|workbench-pi-detached.test.ts|launches reviewed pure computation outside Pi ownership and reattaches by stable invocation",
-  "S5|pin|workbench-identity.test.ts|fails closed after changed %s under the pinned invocation",
+  "S5|pin|workbench-identity.test.ts|fails closed after changed %s under the pinned invocation|each>=7",
   "S5|pin|workbench-validate-reply.test.ts|a digest mismatch is its own typed refusal, never a warning, and the core never runs",
   "S6|pin|workbench-control.test.ts|rule 2: observer-only grants cannot control under any action spelling, and nothing is read before refusing",
   "S6|pin|workbench-reconcile-decision.test.ts|denies observer-only before any task lookup, identically for unknown and foreign tasks",
@@ -350,18 +386,93 @@ const EXPECTED_JUDGED: readonly string[] = [
 ];
 /** Uncovered halves with no bead filed, listed for the groom follow-up (scenario, half index). */
 const UNFILED_HALVES: readonly string[] = ["S7#1", "S8#0", "S9#1"];
+/** Rule 16 (frozen judged-row set, U1): the scenarios the AC2 it.each judges, in order (scenario 8 holds no pin). */
+const EXPECTED_JUDGED_ROWS: readonly string[] = ["S1", "S2", "S3", "S4", "S5", "S6", "S7", "S9"];
+/** Rule 16 (frozen texts): "S<n>:<digest>" of each row's reason, truth note and halves, so a reason or truth note rewritten into a coverage claim reads red. */
+const EXPECTED_TEXT: readonly string[] = [
+  "S1:8103181e3914",
+  "S2:18a522582626",
+  "S3:c7118a203e83",
+  "S4:c8faab313b2c",
+  "S5:bca0ca4bb3de",
+  "S6:0b1026bf6d3b",
+  "S7:651d58f352ad",
+  "S8:d228d6a32012",
+  "S9:c54ad31c2acd",
+];
 
-const readRepo = (path: string): string => readFileSync(join(ROOT, path), "utf8");
+/** U5: the only repository files the leg's own code reads (the adopted judge's vouch reads forge.toml by design; this leg never does). */
+const OWN_READS: readonly string[] = [DOCS_FILE, CENSUS_CONFIG, SELF];
+const readRepo = (path: string): string => {
+  if (!OWN_READS.includes(path)) throw new Error(`${SELF} reads only ${OWN_READS.join(", ")}; it refused to read ${path}`);
+  return readFileSync(join(ROOT, path), "utf8");
+};
+
+/** U5: every readFileSync call in this file's own source, named by its enclosing top-level binding ("<top level>" outside one). */
+function readFileSyncCallers(): string[] {
+  const sf = ts.createSourceFile(SELF, readRepo(SELF), ts.ScriptTarget.Latest, true);
+  const out: string[] = [];
+  for (const statement of sf.statements) {
+    const owner = ts.isVariableStatement(statement)
+      ? statement.declarationList.declarations.map(declaration => declaration.name.getText(sf)).join(",")
+      : ts.isFunctionDeclaration(statement)
+        ? (statement.name?.text ?? "<top level>")
+        : "<top level>";
+    const visit = (node: ts.Node): void => {
+      if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "readFileSync") out.push(owner);
+      ts.forEachChild(node, visit);
+    };
+    visit(statement);
+  }
+  return out;
+}
+
 const casePin = (entry: Pin): CasePin => ({ file: entry.file, title: entry.title, tier: DEFAULT_GATE_TIER, ...(entry.each === undefined ? {} : { each: { minCases: entry.each } }) });
-const shapeOf = (row: Row): string => `S${row.scenario}:${row.pins.length}:${row.registers === undefined ? 0 : 1}:${row.halves?.length ?? 0}`;
+const shapeOf = (row: Row): string => `S${row.scenario}:${row.pins.length}:${row.registers === undefined ? 0 : 1}:${row.halves?.length ?? 0}:${row.label}`;
+/** A short digest of a row's reason, truth note and halves: a rewritten reason, truth note or half changes it. */
+const textDigest = (row: Row): string =>
+  createHash("sha256")
+    .update(JSON.stringify([row.reason, row.truth ?? "", (row.halves ?? []).map(half => [half.half, half.what, half.tier, half.trackingBead ?? "", half.unfiled === true])]))
+    .digest("hex")
+    .slice(0, 12);
 const label = (row: Row): string => `scenario ${row.scenario}`;
 
+type JudgedKind = "pin" | "registers";
+interface Judged {
+  readonly row: Row;
+  readonly kind: JudgedKind;
+  readonly entry: Pin;
+}
 /** Every default-gate case a row names, judged against the gate's own report: its coverage pins and its registration pin. */
-const JUDGED = ROWS.flatMap(row => [...row.pins.map(entry => ({ row, kind: "pin", entry })), ...(row.registers === undefined ? [] : [{ row, kind: "registers", entry: row.registers }])]);
-const JUDGED_ROWS = ROWS.filter(row => row.pins.length > 0);
+const JUDGED: readonly Judged[] = ROWS.flatMap((row): Judged[] => [
+  ...row.pins.map(entry => ({ row, kind: "pin" as const, entry })),
+  ...(row.registers === undefined ? [] : [{ row, kind: "registers" as const, entry: row.registers }]),
+]);
+/** The kinds an AC2 case judges, in order. */
+const JUDGED_KINDS: readonly JudgedKind[] = ["pin", "registers"];
+/** The rows the AC2 it.each judges: every row that holds a coverage pin. */
+const JUDGED_ROWS: readonly Row[] = ROWS.filter(row => row.pins.length > 0);
+/** A judged case's frozen key, "S<n>|<kind>|<file>|<title>[|each>=<n>]", read from the CasePin the helper judged. */
+const judgedKey = (scenario: number, kind: string, judged: CasePin): string => {
+  const each = judged.each === undefined ? "" : `|each>=${judged.each.minCases}`;
+  return `S${scenario}|${kind}|${basename(judged.file)}|${judged.title}${each}`;
+};
 
 /** One line per pin that is not ok, naming the scenario; the helper's why names the file, title, tier and cause. */
 const failures = (row: Row, kind: string, verdicts: readonly PinVerdict[]): string[] => verdicts.filter(verdict => !verdict.ok).map(verdict => `${label(row)}/${kind}: ${verdict.code}: ${verdict.why}`);
+
+/**
+ * The explicit budget of every AC2 case (U1; the R546 sizing recipe), file-local so no other census file's budget moves:
+ * 5 x the costliest AC2 case measured, rounded up to a whole 5 s. Costliest: AC2 scenario 4 at 3735 ms in the g9 gate's
+ * census tier over the full default-tier report (cmd_3bb7ae87a15f); this cut's 88 AC2 readings over the 15-file pinned
+ * report at load1 239-324 peaked at 2713 ms. 5 x 3735 ms = 18675 ms, rounded up to 20000 ms.
+ */
+const JUDGE_BUDGET_MS = 20_000;
+const JUDGING: { readonly timeout: number } = { timeout: JUDGE_BUDGET_MS };
+/** The title the AC2 it.each registers for a judged scenario id ("S<n>"). */
+const AC2_CASE = (id: string): string => `AC2 scenario ${id.slice(1)}: every named default-gate case is collected once, passed and asserting in the gate's own report`;
+/** The scenarios whose AC2 case reached its last assertion this run (each-liveness, U1). */
+const completed = new Set<number>();
 
 /** The rendered paragraph of a docs section, or undefined when the section holds no single paragraph. */
 const paragraphOf = (blocks: readonly RenderedBlock[]): string | undefined => {
@@ -410,28 +521,40 @@ const editText = (from: string, to: string) => (paragraph: string): string => pa
 const named = (lines: readonly string[]): string[] => [...new Set(lines.filter(line => line.startsWith("scenario ")).map(line => line.slice(0, line.indexOf(":"))))];
 
 describe("wb-0kg.11 docs/workbench/08 adversarial-matrix census (report mode)", () => {
-  it("AC1: the table holds the nine frozen scenario rows in order, deeply frozen, with the frozen per-row pin shape and the frozen judged titles", () => {
+  it("AC1: the table holds the nine frozen scenario rows in order, deeply frozen, with the frozen per-row shape and label, row texts, judged titles and judged-row set (rule 16)", () => {
     expect(isDeepFrozen(ROWS)).toBe(true);
     expect(SCENARIOS).toEqual(EXPECTED_SCENARIOS);
     expect(new Set(SCENARIOS).size).toBe(ROWS.length);
     expect(ROWS).toHaveLength(9);
     expect(ROWS.map(shapeOf)).toEqual(EXPECTED_SHAPE);
-    expect(JUDGED.map(judged => `S${judged.row.scenario}|${judged.kind}|${judged.entry.file.split("/").pop()}|${judged.entry.title}`)).toEqual(EXPECTED_JUDGED);
+    expect(JUDGED.map(judged => judgedKey(judged.row.scenario, judged.kind, casePin(judged.entry)))).toEqual(EXPECTED_JUDGED);
+    expect(
+      JUDGED_ROWS.map(row => `S${row.scenario}`),
+      "the rows the AC2 it.each judges (rule 16, U1)",
+    ).toEqual(EXPECTED_JUDGED_ROWS);
+    expect(
+      ROWS.map(row => `S${row.scenario}:${textDigest(row)}`),
+      "each row's reason, truth note and halves (rule 16)",
+    ).toEqual(EXPECTED_TEXT);
     expect(ROWS.map(row => row.quote)).toEqual(QUOTES);
   });
 
-  it("AC1: the live section renders exactly its one frozen paragraph, HTML-free, under its unique heading of the level-1 parent", () => {
+  it("AC1: the live section renders exactly its one frozen paragraph, HTML-free, under its unique heading of the level-1 parent; a live drift fails naming its scenario first (U2)", () => {
+    const drift = docsFailures(readRepo(DOCS_FILE));
+    expect(drift, drift.join(" | ")).toEqual([]);
     const section = docsSection(readRepo(DOCS_FILE), DOCS_HEADING, 2, [DOCS_PARENT]);
     expect(sectionMatches(section, SECTION_BLOCKS)).toEqual({ ok: true, why: "" });
     expect(section.blocks).toHaveLength(1);
     expect(section.hasHtml).toBe(false);
     expect(paragraphOf(section.blocks)).toBe(PARAGRAPH);
-    expect(docsFailures(readRepo(DOCS_FILE))).toEqual([]);
   });
 
   it("AC1: the nine docs clauses are covered by the nine rows in order, each against one required-outcome phrase of the outcomes sentence", () => {
     const section = docsSection(readRepo(DOCS_FILE), DOCS_HEADING, 2, [DOCS_PARENT]);
-    const clauses = scenarioClauses(paragraphOf(section.blocks) ?? "");
+    expect(section.ok, `${DOCS_FILE} § ${DOCS_HEADING}: the section is refused: ${section.why}`).toBe(true);
+    const clauses = scenarioClauses(section.blocks.flatMap(block => (block.kind === "paragraph" ? [block.text] : [])).join(" "));
+    const misplaced = ROWS.flatMap(row => (clauses[row.scenario - 1] === row.quote ? [] : [`${label(row)}: clause ${row.scenario} reads "${clauses[row.scenario - 1] ?? ""}" where the census pins "${row.quote}"`]));
+    expect(misplaced, misplaced.join(" | ")).toEqual([]);
     expect(clauses).toHaveLength(9);
     expect(clauses).toEqual(ROWS.map(row => row.quote));
     expect([...new Set(ROWS.map(row => row.requiredOutcome))].sort()).toEqual([OUTCOME_NO_DUPLICATE, OUTCOME_NO_INVENTED_PASS, OUTCOME_NO_MASS_CANCEL, OUTCOME_RECONCILIATION].sort());
@@ -465,7 +588,7 @@ describe("wb-0kg.11 docs/workbench/08 adversarial-matrix census (report mode)", 
     expect(ROWS.find(row => row.scenario === 7)?.halves?.[1]).toMatchObject({ half: "uncovered", tier: "bench-receipt" });
   });
 
-  it("A3: no unpinned row is counted passed, every pinned row carries a pass label, and unfiled uncovered halves are exactly the listed ones", () => {
+  it("A3/U3: no unpinned row is counted passed, every pinned row carries the default-gate label fixture pass and none claims a pass no report here vouches for, and unfiled uncovered halves are exactly the listed ones", () => {
     const unpinned = ROWS.filter(row => row.status === "unpinned");
     const pinned = ROWS.filter(row => row.status === "pinned");
     expect(unpinned.length + pinned.length).toBe(ROWS.length);
@@ -477,8 +600,12 @@ describe("wb-0kg.11 docs/workbench/08 adversarial-matrix census (report mode)", 
     }
     for (const row of pinned) {
       expect(row.pins.length, `${label(row)}: a pinned row has pins`).toBeGreaterThan(0);
-      expect(PASS_LABELS, label(row)).toContain(row.label);
+      expect(row.label, `${label(row)}: its proof runs on the default gate's fixtures, so its label is ${DEFAULT_GATE_LABEL}`).toBe(DEFAULT_GATE_LABEL);
     }
+    expect(
+      ROWS.filter(row => UNVOUCHED_LABELS.includes(row.label)).map(label),
+      "rows claiming a live, adversarial or scale pass this leg reads no evidence for",
+    ).toEqual([]);
     const unfiled = ROWS.flatMap(row => (row.halves ?? []).flatMap((half, index) => (half.half === "uncovered" && half.unfiled === true ? [`S${row.scenario}#${index}`] : [])));
     expect(unfiled).toEqual(UNFILED_HALVES);
     for (const row of ROWS) {
@@ -499,9 +626,12 @@ describe("wb-0kg.11 docs/workbench/08 adversarial-matrix census (report mode)", 
     expect(ROWS.filter(row => row.registers !== undefined).map(row => row.scenario)).toEqual([7]);
   });
 
-  it.each(JUDGED_ROWS.map(row => ({ row })))("AC2 scenario $row.scenario: every named default-gate case is collected once, passed and asserting in the gate's own report", ({ row }) => {
+  it.each(JUDGED_ROWS.map(row => ({ row })))("AC2 scenario $row.scenario: every named default-gate case is collected once, passed and asserting in the gate's own report", JUDGING, ({ row }) => {
     const mine = JUDGED.filter(entry => entry.row === row);
-    for (const kind of ["pin", "registers"]) {
+    const judgedKeys: string[] = [];
+    const bad: string[] = [];
+    const codes: string[] = [];
+    for (const kind of JUDGED_KINDS) {
       const group = mine.filter(entry => entry.kind === kind);
       if (group.length === 0) continue;
       const verdicts = judge(
@@ -509,12 +639,34 @@ describe("wb-0kg.11 docs/workbench/08 adversarial-matrix census (report mode)", 
         group.map(entry => casePin(entry.entry)),
       );
       expect(verdicts).toHaveLength(group.length);
-      expect(failures(row, kind, verdicts)).toEqual([]);
-      expect(verdicts.map(verdict => verdict.code)).toEqual(group.map(() => "ok"));
+      judgedKeys.push(...verdicts.map(verdict => judgedKey(row.scenario, kind, verdict.pin)));
+      bad.push(...failures(row, kind, verdicts));
+      codes.push(...verdicts.map(verdict => verdict.code));
     }
+    expect(bad, bad.join(" | ")).toEqual([]);
+    expect(codes).toEqual(judgedKeys.map(() => "ok"));
+    expect(judgedKeys, `${label(row)}: the cases this AC2 case judged are exactly its row's frozen EXPECTED_JUDGED entries (rule 16, U1)`).toEqual(EXPECTED_JUDGED.filter(key => key.startsWith(`S${row.scenario}|`)));
+    completed.add(row.scenario);
   });
 
-  it("AC4: the leg judges the gate's own report and executes nothing: it imports judge, never judgePins, reads no forge.toml and loads no module at runtime", () => {
+  it("AC2 each-liveness (rule 16, U1): the it.each registers one run-mode AC2 case per frozen judged scenario, in order and on the judging budget, and every one reached its last assertion", ({ task }) => {
+    const registered: string[] = [];
+    const walk = (tasks: typeof task.file.tasks): void => {
+      for (const child of tasks) {
+        if (child.type === "test" && child.name.startsWith("AC2 scenario ")) registered.push(`${child.name}|${child.mode}|${child.timeout}`);
+        else if (child.type === "suite") walk(child.tasks);
+      }
+    };
+    walk(task.file.tasks);
+    expect(JUDGE_BUDGET_MS, "the judging budget is above vitest's default test timeout").toBeGreaterThan(5_000);
+    expect(registered).toEqual(EXPECTED_JUDGED_ROWS.map(id => `${AC2_CASE(id)}|run|${JUDGE_BUDGET_MS}`));
+    expect(
+      [...completed].map(scenario => `S${scenario}`),
+      "the AC2 cases that reached their last assertion this run",
+    ).toEqual(EXPECTED_JUDGED_ROWS);
+  });
+
+  it("AC4: the leg judges the gate's own report and executes nothing: it imports judge, never judgePins, no child_process and no pinned suite, and loads no module at runtime", () => {
     const own = sourceStructure(ROOT, SELF);
     expect(own.ok, own.why).toBe(true);
     const helper = own.imports.filter(entry => entry.module === "./helpers/census.js").flatMap(entry => entry.names);
@@ -530,7 +682,17 @@ describe("wb-0kg.11 docs/workbench/08 adversarial-matrix census (report mode)", 
     const self = fileURLToPath(import.meta.url);
     expect(self.endsWith(SELF)).toBe(true);
     expect(self.endsWith(".test.ts")).toBe(false);
-    expect(readRepo("vitest.census.config.ts")).toContain('include: ["test/**/*.census.ts"]');
+    expect(readRepo(CENSUS_CONFIG)).toContain('include: ["test/**/*.census.ts"]');
+  });
+
+  it("AC4/U5: the leg's own code reads no forge.toml: its one file reader admits only docs/08, the census config and this file, and it holds no other readFileSync call (the adopted judge's vouch reads forge.toml by design)", () => {
+    expect(OWN_READS).toEqual(["docs/workbench/08-lifecycle-and-recovery.md", "vitest.census.config.ts", "test/workbench-adversarial-matrix.census.ts"]);
+    expect(() => readRepo("forge.toml")).toThrow("it refused to read forge.toml");
+    expect(readFileSyncCallers(), "every readFileSync call in this file, by its enclosing top-level binding").toEqual(["readRepo"]);
+    const own = sourceStructure(ROOT, SELF);
+    expect(own.ok, own.why).toBe(true);
+    const fsImports = own.imports.filter(entry => entry.module === "fs" || entry.module === "node:fs" || entry.module.startsWith("fs/") || entry.module.startsWith("node:fs/"));
+    expect(fsImports.map(entry => `${entry.module}:${entry.names.join(",")}:${entry.kind}`)).toEqual(["node:fs:readFileSync:static"]);
   });
 });
 
@@ -686,6 +848,14 @@ describe("wb-0kg.11 docs drift names the scenario or the section (synthetic docu
     const lines = docsFailures(synthetic().replace(`## ${DOCS_HEADING}`, `\`\`\`\n## ${DOCS_HEADING}`).replace("## Experimental immutable receipt", "```\n## Experimental immutable receipt"));
     expect(lines.length).toBeGreaterThan(0);
     expect(lines.some(line => line.includes(`${DOCS_HEADING}: the section is refused`))).toBe(true);
+  });
+
+  it("DD16 names scenario 4 (and only it) when a qualifier is appended to its clause (the gate's DL1 shape)", () => {
+    expect(named(docsFailures(synthetic(editText(`${QUOTES[3]};`, `${QUOTES[3]}, where supported;`))))).toEqual(["scenario 4"]);
+  });
+
+  it("DD17 names scenarios 7 and 8 (and only them) when the two clauses swap places (the gate's DL5 shape)", () => {
+    expect(named(docsFailures(synthetic(editText(`${QUOTES[6]}; ${QUOTES[7]}`, `${QUOTES[7]}; ${QUOTES[6]}`))))).toEqual(["scenario 7", "scenario 8"]);
   });
 
   it("an edit of any other section never reddens a scenario: the identities and receipt sections are free to change", () => {
