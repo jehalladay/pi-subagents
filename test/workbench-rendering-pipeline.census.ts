@@ -15,8 +15,10 @@
  * recorded it passed, and its body asserts - the helper's three legs, fail-closed. A renamed, deleted, duplicated,
  * skipped, todo, inverted, excluded or unregistered pinned case therefore reads red, naming the row, the file, the
  * title and the cause, as far as the helper's resolvable-construct roster and its named residuals reach
- * (test/helpers/census.ts, receipts/wb-u62.md). This leg scans no test source for case calls itself, reads no
- * forge.toml and spawns no process: every title is located by the helper, from vitest's report, never from bare text.
+ * (test/helpers/census.ts, receipts/wb-u62.md). This leg scans no test source for case calls itself and spawns no
+ * process; its own code reads only docs/10 and the census-tier config, never forge.toml (the helper's tier vouch reads
+ * forge.toml through its CLOSED forge-step read, by design: the test/helpers/census.ts header), and the last case pins
+ * that (respin U4). Every title is located by the helper, from vitest's report, never from bare text.
  *
  * Tiers: a half's tier names the report that vouches for it. The default report vouches for the default gate's test
  * tier only, and judge() refuses a pin of any other tier (tier-mismatch, R2 = (i)). Bullet 1 therefore splits (the
@@ -34,10 +36,32 @@
  * over a SYNTHETIC document built from the frozen blocks, never over the live docs/10 text, so a legitimate edit of
  * any other section can never redden a falsifier row.
  *
+ * Bullet 7's no-force-directed-in-render half (respin U2, record honesty): the closed producer wb-6ze.32 maps "Graph
+ * layout cached by topology revision; no force-directed re-layout in render method" to its falsifier F3, landed as the
+ * test/workbench-graph-view.test.ts describe "A5 docs/10 Rendering pipeline: layout cached by topology revision, no full
+ * recompute (F3)". The half pins three A5 cases (a build at unmoved revisions returns the identical model with zero
+ * relation reads; a status-only change re-reads no relation; a topology change recomputes only the changed neighborhood
+ * and reuses the rest by identity) and the render-path case of the landed wb-6ze.37 wiring suite
+ * (test/workbench-inspector-graph-wiring.test.ts (b): redraws, selection and the filter at one revision read no
+ * relation page). The census claims only that those producer falsifiers are collected once, pass and assert.
+ *
+ * Frozen shape (owner standing order 2026-10-18T18:14:19Z, rule 16; respin U1 and the gate's F2/F3 findings): AC1 pins,
+ * as literals copied from the TABLE at the cut's base, the row ids, every row's half and pin counts, every pin's file and
+ * title, and the judged set (every default-gate half AC2 judges, with its pin count); AC3 pins every unpinned half's
+ * reason verbatim. EACH-LIVENESS: the AC2 call site must register exactly one case per frozen judged half, read from
+ * vitest's own task tree, and every one must run to its last assertion, so narrowing the judged predicate, the it.each
+ * table or an AC2 body reds the census by name.
+ *
+ * Judging budget (gate F1): judge() re-reads the whole report and re-parses every pinned file it touches on each call,
+ * so one judging case takes seconds over a full default-tier report at high load. Every judging case carries the
+ * explicit file-local budget JUDGE_BUDGET_MS (the landed wb-6hb.9 shape, respin R546), and a case pins that exactly the
+ * JUDGING_CASES judging cases run under it and that it exceeds vitest's default 5000 ms.
+ *
  * Disclosed limits (never claimed as covered): an assertion reached only through a helper the helper's body leg does
  * not follow; bullet 3 (the 80ms whole-dialog refresh), the visible-running-rows half of bullet 2, the Markdown
- * selected-slice half of bullet 6, the no-force-directed-in-render half of bullet 7 and the single paginate/filter/
- * limit-plus-compact-JSON case of bullet 9 have no landed case and are listed as unpinned, never passed.
+ * selected-slice half of bullet 6 and the single paginate/filter/limit-plus-compact-JSON case of bullet 9 have no landed
+ * case and are listed as unpinned, never passed. The U4 own-read check records every path readRepo reads; a file read
+ * outside readRepo (a direct node:fs call) is outside it.
  */
 import { readFileSync } from "node:fs";
 import { basename, dirname, join } from "node:path";
@@ -89,6 +113,7 @@ const PI_REPLIES = "test/workbench-pi-tool-replies.test.ts";
 const SECURITY_PI_TOOLS = "test/workbench-security-pi-tools.test.ts";
 const ATTENTION = "test/workbench-attention.test.ts";
 const GRAPH_VIEW = "test/workbench-graph-view.test.ts";
+const WIRING = "test/workbench-inspector-graph-wiring.test.ts";
 
 const pin = (file: string, title: string): Pin => ({ file, title });
 const guard = (id: string, pins: readonly Pin[]): Half => ({ id, tier: "default-gate", pins });
@@ -162,7 +187,7 @@ const TABLE: readonly Row[] = freezeDeep<readonly Row[]>([
       guard("settled-run", [pin(INSPECTOR, "does not ask TUI for a redraw on every one-second tick of a settled observed run")]),
       unpinned(
         "visible-running-rows",
-        "No landed case asserts that the seconds-only clock tick runs only for visible running rows; the settled-run half above is the only tick case, so the visible-running-rows half is recorded here and never counted as covered.",
+        "No landed case asserts that the seconds-only clock tick runs only for visible running rows; the settled-run half above is the only seconds-clock tick case (every other tick title under test/ is a fixture or redraw-cadence tick), so the visible-running-rows half is recorded here and never counted as covered.",
       ),
     ],
   },
@@ -225,10 +250,15 @@ const TABLE: readonly Row[] = freezeDeep<readonly Row[]>([
         pin(GRAPH_VIEW, "replaces the individual arrows and the absorbed target nodes with one supernode that counts them"),
         pin(GRAPH_VIEW, "lists the supernodes before the nodes in the model"),
       ]),
-      unpinned(
-        "no-force-directed-in-render",
-        "No landed case asserts that no force-directed re-layout runs in the render method; src/workbench/graph-view.ts only cites the sentence in a header comment, so this half is recorded unpinned and never counted as covered.",
-      ),
+      guard("no-force-directed-in-render", [
+        pin(GRAPH_VIEW, "returns the identical model with zero relation reads while neither revision moved"),
+        pin(GRAPH_VIEW, "re-reads no relations when only a node status changed, and shows the new status"),
+        pin(GRAPH_VIEW, "recomputes only the changed neighborhood after a topology change and reuses the rest by identity"),
+        pin(
+          WIRING,
+          "redraws, selection and the filter at one revision read no relation page; a node update or a topology change re-reads the pages at most once per shown row and the model follows",
+        ),
+      ]),
     ],
   },
   {
@@ -284,7 +314,7 @@ const EXPECTED_SHAPE: readonly string[] = [
   "tty-free-reducers:4:guard=2",
   "no-allhistory-collapse:5:guard=3",
   "virtualized-rows:6:virtualized-rows=1,markdown-selected-slice=0",
-  "graph-layout:7:topology-revision=2,supernodes-first=2,no-force-directed-in-render=0",
+  "graph-layout:7:topology-revision=2,supernodes-first=2,no-force-directed-in-render=4",
   "bound-memory:8:guard=2",
   "observation-tools:9:surfaces=4,single-case-bound=0",
 ];
@@ -306,6 +336,10 @@ const EXPECTED_PINS: readonly string[] = [
   "test/workbench-inspector.test.ts::adds a new observed edge on topology revision and reflects its provenance",
   "test/workbench-graph-view.test.ts::replaces the individual arrows and the absorbed target nodes with one supernode that counts them",
   "test/workbench-graph-view.test.ts::lists the supernodes before the nodes in the model",
+  "test/workbench-graph-view.test.ts::returns the identical model with zero relation reads while neither revision moved",
+  "test/workbench-graph-view.test.ts::re-reads no relations when only a node status changed, and shows the new status",
+  "test/workbench-graph-view.test.ts::recomputes only the changed neighborhood after a topology change and reuses the rest by identity",
+  "test/workbench-inspector-graph-wiring.test.ts::redraws, selection and the filter at one revision read no relation page; a node update or a topology change re-reads the pages at most once per shown row and the model follows",
   "test/workbench-observation-perf.test.ts::retains only a hot window, indexes 1000 nodes across 100k events, and selects one without folding history",
   "test/workbench-evidence-loader.test.ts::loads one ref lazily and idempotently while loading",
   "test/workbench-tool-replies.test.ts::pages with a stable cursor and covers every row exactly once",
@@ -321,11 +355,46 @@ const UNPINNED_HALVES: readonly string[] = [
   "clock-tick/visible-running-rows",
   "no-80ms-refresh/whole-dialog-refresh",
   "virtualized-rows/markdown-selected-slice",
-  "graph-layout/no-force-directed-in-render",
   "observation-tools/single-case-bound",
 ];
+/**
+ * Rule 16 judged-row literal (respin U1): every default-gate half AC2 judges, as "row/half:pin-count" in table order, copied
+ * from the TABLE at the cut's base, so narrowing the judged predicate, dropping a row or dropping a half from the judged
+ * set reds the census even while every TABLE literal above stays equal.
+ */
+const FROZEN_JUDGED: readonly string[] = [
+  "burst-coalescing/guard:2",
+  "clock-tick/settled-run:1",
+  "tty-free-reducers/guard:2",
+  "no-allhistory-collapse/guard:3",
+  "virtualized-rows/virtualized-rows:1",
+  "graph-layout/topology-revision:2",
+  "graph-layout/supernodes-first:2",
+  "graph-layout/no-force-directed-in-render:4",
+  "bound-memory/guard:2",
+  "observation-tools/surfaces:4",
+];
+/**
+ * Every unpinned half's reason verbatim, as "row/half: reason" in table order (gate F3): a reason rewritten into a
+ * false-coverage sentence, or shortened, reds the census; a seat that re-trues a reason edits this list in the same change.
+ */
+const EXPECTED_REASONS: readonly string[] = [
+  "burst-coalescing/receipt: the reducer-selector-bench receipt is produced only by the [build.commands.reducer-selector-bench] run outside gate = [...]; no report this leg reads vouches for it, and this leg never runs a bench or reads a receipt file, so the receipt half is recorded here with its tier and is never counted as covered",
+  "clock-tick/visible-running-rows: No landed case asserts that the seconds-only clock tick runs only for visible running rows; the settled-run half above is the only seconds-clock tick case (every other tick title under test/ is a fixture or redraw-cadence tick), so the visible-running-rows half is recorded here and never counted as covered.",
+  "no-80ms-refresh/whole-dialog-refresh: No workbench falsifier exists for the 80ms whole-dialog refresh under large-workload mode: test/perf/widget.bench.ts is an upstream AgentWidget bench, not a workbench case, and test/workflow-dialog.test.ts holds no large-workload refresh case, so this bullet is recorded unpinned and never counted as covered.",
+  "virtualized-rows/markdown-selected-slice: No workbench case binds expensive Markdown syntax parsing to the selected transcript slice; test/conversation-viewer.test.ts is the upstream viewer, not the workbench inspector, so this half is recorded unpinned and never counted as covered.",
+  "observation-tools/single-case-bound: The paginate (catalog reply), compact (attention report) and ANSI-free halves are pinned on four separate surfaces above; no single case binds paginate, filter and limit together with compact JSON for the observation tools, so that joint claim is recorded unpinned and never counted as covered.",
+];
+const reasonsOf = (rows: readonly Row[]): string[] => rows.flatMap(row => row.halves.flatMap(half => (half.reason === undefined ? [] : [`${row.row}/${half.id}: ${half.reason}`])));
 
-const readRepo = (path: string): string => readFileSync(join(ROOT, path), "utf8");
+/** Every repository path this leg's own code reads through readRepo, in read order (respin U4). */
+const READS: string[] = [];
+/** The only files the leg's own code reads: docs/10 and the census-tier config, never forge.toml. */
+const LEG_READS: readonly string[] = [DOCS_FILE, "vitest.census.config.ts"];
+const readRepo = (path: string): string => {
+  READS.push(path);
+  return readFileSync(join(ROOT, path), "utf8");
+};
 
 /** The forge.toml command whose own run must vouch for a half; a bench-receipt label names no report this leg reads. */
 const tierCommand = (half: Half): string => (half.tier === "default-gate" ? DEFAULT_GATE_TIER : (half.command ?? half.tier));
@@ -334,6 +403,40 @@ const casePin = (half: Half, entry: Pin): CasePin => ({ file: entry.file, title:
 /** The default-gate halves that hold pins, in table order, for the row-level judging. */
 const JUDGED = TABLE.flatMap(row => row.halves.filter(half => half.tier === "default-gate" && half.pins.length > 0).map(half => ({ row, half })));
 const BENCH_RECEIPTS = TABLE.flatMap(row => row.halves.filter(half => half.tier === "bench-receipt").map(half => ({ row, half })));
+/** A judged half's frozen key, "row/half:pin-count" (the FROZEN_JUDGED entry it must equal). */
+const judgedKey = ({ row, half }: { readonly row: Row; readonly half: Half }): string => `${row.row}/${half.id}:${half.pins.length}`;
+/** The AC2 case title template; vitest registers one case per JUDGED entry, quoting each interpolated string. */
+const AC2_TITLE = "AC2 row $row.row/$half.id: every pinned case is collected once, passed and asserting in the default gate's own report";
+/** The name vitest registers for one FROZEN_JUDGED entry under AC2_TITLE. */
+const ac2Name = (entry: string): string => {
+  const [row = "", half = ""] = entry.slice(0, entry.lastIndexOf(":")).split("/");
+  return AC2_TITLE.replace("$row.row", `'${row}'`).replace("$half.id", `'${half}'`);
+};
+/** EACH-LIVENESS: the key of every judged half whose AC2 case ran to its last assertion, in run order. */
+const AC2_RAN: string[] = [];
+
+/**
+ * The explicit budget of every judging case in this file (gate F1), file-local so no other census file's budget moves
+ * (the landed wb-6hb.9 shape, respin R546). Sized as 5 x the slowest judging case the gate measured on this census
+ * (6213 ms, AC2 observation-tools/surfaces, single-worker over the gate's own 6.1 MB full default-tier report at load1
+ * ~500; outbox row 577 F1), rounded up to a whole 5 s: 5 x 6213 ms = 31065 ms, rounded up to 35000 ms.
+ */
+const JUDGE_BUDGET_MS = 35_000;
+const JUDGING: { readonly timeout: number } = { timeout: JUDGE_BUDGET_MS };
+/** The cases that carry JUDGING: AC2 per judged half (10), the AC4 tier-mismatch case and the M1, M3, M4 and M5 liveness falsifiers. */
+const JUDGING_CASES = 15;
+
+/** One node of vitest's task tree, as far as this leg reads it. */
+interface TaskNode {
+  readonly type: string;
+  readonly name: string;
+  readonly timeout?: number;
+  readonly tasks?: readonly TaskNode[];
+}
+/** Every test case vitest registered in this file, in registration order, with its timeout, read from the runner's own task tree. */
+function registeredTests(tasks: readonly TaskNode[]): { readonly name: string; readonly timeout: number | undefined }[] {
+  return tasks.flatMap(child => (child.type === "test" ? [{ name: child.name, timeout: child.timeout }] : child.type === "suite" ? registeredTests(child.tasks ?? []) : []));
+}
 
 /** One line per pin that is not ok, naming the row and the half; the helper's why names the file, title, tier and cause. */
 const failures = (row: Row, half: Half, verdicts: readonly PinVerdict[]): string[] => verdicts.filter(verdict => !verdict.ok).map(verdict => `row ${row.row}/${half.id}: ${verdict.code}: ${verdict.why}`);
@@ -379,7 +482,12 @@ describe("wb-6ze.39 docs/workbench/10 rendering-pipeline census (report mode)", 
   it("AC1: rule 16 frozen shape: every row's half and pin counts equal the literal (a deleted pin, a dropped half or a swapped row reds the census)", () => {
     expect(shapeOf(TABLE)).toEqual(EXPECTED_SHAPE);
     expect(pinsOf(TABLE)).toEqual(EXPECTED_PINS);
-    expect(EXPECTED_PINS).toHaveLength(19);
+    expect(EXPECTED_PINS).toHaveLength(23);
+  });
+
+  it("AC1: rule 16 judged-row set: the default-gate halves AC2 judges equal the frozen literal (a narrowed predicate, a dropped row or a dropped half reds the census; respin U1)", () => {
+    expect(JUDGED.map(judgedKey)).toEqual(FROZEN_JUDGED);
+    expect(FROZEN_JUDGED).toHaveLength(10);
   });
 
   it("AC1: the live section renders exactly its two frozen blocks (the pipeline diagram and the nine-item list), HTML-free", () => {
@@ -416,13 +524,26 @@ describe("wb-6ze.39 docs/workbench/10 rendering-pipeline census (report mode)", 
     expect(wholly.map(row => row.row)).toEqual(["no-80ms-refresh"]);
   });
 
+  it("AC3: every unpinned half's reason is frozen verbatim, so a reason rewritten into a false-coverage sentence reds the census (gate F3)", () => {
+    expect(reasonsOf(TABLE)).toEqual(EXPECTED_REASONS);
+    expect(EXPECTED_REASONS.map(entry => entry.slice(0, entry.indexOf(": ")))).toEqual(UNPINNED_HALVES);
+  });
+
   it("AC3: the supernodes-first half is pinned now that wb-6ze.32 and wb-6ze.34 have landed, and is not in the unpinned list", () => {
     expect(UNPINNED_HALVES.some(entry => entry.startsWith("graph-layout/supernodes-first"))).toBe(false);
     const half = TABLE.find(row => row.row === "graph-layout")?.halves.find(entry => entry.id === "supernodes-first");
     expect(half?.pins.map(entry => entry.file)).toEqual([GRAPH_VIEW, GRAPH_VIEW]);
   });
 
-  it.each(JUDGED)("AC2 row $row.row/$half.id: every pinned case is collected once, passed and asserting in the default gate's own report", ({ row, half }) => {
+  it("AC3 (U2): the no-force-directed-in-render half is pinned on the wb-6ze.32 F3 falsifier (graph-view A5) and the wb-6ze.37 render-path case, and is not in the unpinned list", () => {
+    expect(UNPINNED_HALVES).not.toContain("graph-layout/no-force-directed-in-render");
+    const half = TABLE.find(row => row.row === "graph-layout")?.halves.find(entry => entry.id === "no-force-directed-in-render");
+    expect(half?.reason).toBeUndefined();
+    expect(half?.tier).toBe("default-gate");
+    expect(half?.pins.map(entry => entry.file)).toEqual([GRAPH_VIEW, GRAPH_VIEW, GRAPH_VIEW, WIRING]);
+  });
+
+  it.each(JUDGED)(AC2_TITLE, JUDGING, ({ row, half }) => {
     const verdicts = judge(
       REPORT,
       half.pins.map(entry => casePin(half, entry)),
@@ -430,9 +551,16 @@ describe("wb-6ze.39 docs/workbench/10 rendering-pipeline census (report mode)", 
     expect(verdicts).toHaveLength(half.pins.length);
     expect(failures(row, half, verdicts)).toEqual([]);
     expect(verdicts.map(verdict => verdict.code)).toEqual(half.pins.map(() => "ok"));
+    AC2_RAN.push(judgedKey({ row, half }));
   });
 
-  it("AC4: a bench-receipt label is carried by no report this leg reads: the default report refuses a guard pin relabelled as its receipt", () => {
+  it("AC2 each-liveness: the call site registers exactly one AC2 case per frozen judged half, and every one ran to its last assertion (respin U1, gate F2)", ({ task }) => {
+    const names = registeredTests(task.file.tasks).map(entry => entry.name);
+    expect(names.filter(name => name.startsWith("AC2 row "))).toEqual(FROZEN_JUDGED.map(ac2Name));
+    expect(AC2_RAN).toEqual(FROZEN_JUDGED);
+  });
+
+  it("AC4: a bench-receipt label is carried by no report this leg reads: the default report refuses a guard pin relabelled as its receipt", JUDGING, () => {
     expect(BENCH_RECEIPTS.length).toBeGreaterThan(0);
     const burst = BENCH_RECEIPTS[0];
     const cadence = TABLE[0]?.halves[0]?.pins[1];
@@ -444,7 +572,7 @@ describe("wb-6ze.39 docs/workbench/10 rendering-pipeline census (report mode)", 
     expect(verdict?.code).toBe("tier-mismatch");
   });
 
-  it("AC4: the leg judges the gate's own report and executes nothing: it imports judge, never judgePins, reads no forge.toml and loads no module at runtime", () => {
+  it("AC4: the leg judges the gate's own report and executes nothing: it imports judge, never judgePins, and loads no module at runtime", () => {
     const own = sourceStructure(ROOT, SELF);
     expect(own.ok, own.why).toBe(true);
     const helper = own.imports.filter(entry => entry.module === "./helpers/census.js").flatMap(entry => entry.names);
@@ -462,6 +590,12 @@ describe("wb-6ze.39 docs/workbench/10 rendering-pipeline census (report mode)", 
     expect(self.endsWith(".test.ts")).toBe(false);
     expect(readRepo("vitest.census.config.ts")).toContain('include: ["test/**/*.census.ts"]');
   });
+
+  it("F1: exactly the judging cases carry the file-local budget, and it is above vitest's default 5000 ms (gate F1)", ({ task }) => {
+    const timeouts = registeredTests(task.file.tasks).map(entry => entry.timeout);
+    expect(JUDGE_BUDGET_MS, "the judging budget is above vitest's default test timeout").toBeGreaterThan(5_000);
+    expect(timeouts.filter(timeout => timeout === JUDGE_BUDGET_MS), "the cases that run under JUDGE_BUDGET_MS").toHaveLength(JUDGING_CASES);
+  });
 });
 
 describe("wb-6ze.39 liveness: the adopted judge is not accept-all (the real report, no fabricated verdict)", () => {
@@ -472,7 +606,7 @@ describe("wb-6ze.39 liveness: the adopted judge is not accept-all (the real repo
     return { row: found.row, half: found.half, entry };
   };
 
-  it("M1: a pinned title altered by one character is absent from the report and red, naming the row, the file and the title", () => {
+  it("M1: a pinned title altered by one character is absent from the report and red, naming the row, the file and the title", JUDGING, () => {
     const { row, half, entry } = firstJudged("bound-memory");
     const wrong = { ...entry, title: entry.title.replace("retains", "retainS") };
     const verdicts = judge(REPORT, [casePin(half, wrong)]);
@@ -487,18 +621,18 @@ describe("wb-6ze.39 liveness: the adopted judge is not accept-all (the real repo
     expect(TABLE.filter(row => row.row !== "graph-layout").map(row => row.row)).not.toEqual(EXPECTED_ROW_IDS);
   });
 
-  it("M3: a pin with no title is red (the judge finds no such case)", () => {
+  it("M3: a pin with no title is red (the judge finds no such case)", JUDGING, () => {
     const { half } = firstJudged("burst-coalescing");
     const [verdict] = judge(REPORT, [casePin(half, { file: INSPECTOR, title: "" })]);
     expect(verdict?.ok).toBe(false);
   });
 
-  it("M4: a file the default config excludes is never in the default report: a pin there is red, not collected", () => {
+  it("M4: a file the default config excludes is never in the default report: a pin there is red, not collected", JUDGING, () => {
     const [verdict] = judge(REPORT, [{ file: NATIVE_FILE, title: "any title", tier: DEFAULT_GATE_TIER }]);
     expect(verdict?.code).toBe("not-collected");
   });
 
-  it("M5: a pin that names the right title in the wrong file is red, never borrowed from a neighbour", () => {
+  it("M5: a pin that names the right title in the wrong file is red, never borrowed from a neighbour", JUDGING, () => {
     const { half, entry } = firstJudged("bound-memory");
     const [verdict] = judge(REPORT, [casePin(half, { file: LOADER, title: entry.title })]);
     expect(verdict?.ok).toBe(false);
@@ -509,6 +643,14 @@ describe("wb-6ze.39 liveness: the adopted judge is not accept-all (the real repo
     expect(owners.map(row => row.row)).toEqual(["tty-free-reducers"]);
     const shared = TABLE.filter(row => row.halves.some(half => half.pins.some(entry => entry.file === SELECTOR)));
     expect(shared.map(row => row.row)).toEqual(["burst-coalescing", "no-allhistory-collapse"]);
+  });
+
+  it("M7: a narrowed judged predicate leaves every TABLE literal equal and is red by the frozen judged literal alone", () => {
+    const narrowed = TABLE.flatMap(row => row.halves.filter(half => half.tier === "default-gate" && half.pins.length > 1).map(half => ({ row, half }))).map(judgedKey);
+    expect(shapeOf(TABLE)).toEqual(EXPECTED_SHAPE);
+    expect(pinsOf(TABLE)).toEqual(EXPECTED_PINS);
+    expect(narrowed).not.toEqual(FROZEN_JUDGED);
+    expect(FROZEN_JUDGED.filter(entry => !narrowed.includes(entry))).toEqual(["clock-tick/settled-run:1", "virtualized-rows/virtualized-rows:1"]);
   });
 });
 
@@ -597,5 +739,12 @@ describe("wb-6ze.39 docs drift names the row or the section (synthetic document,
 
   it("an edit of any other section never reddens a row: the navigation and cancelling sections are free to change", () => {
     expect(docsFailures(synthetic().replace("Rows.", "Rows, changed.").replace("Text.", "Different text."))).toEqual([]);
+  });
+});
+
+describe("wb-6ze.39 own reads (respin U4): runs last, after every case that reads", () => {
+  it("AC4: the leg's own code reads only docs/10 and the census-tier config, never forge.toml (the helper's tier vouch reads forge.toml through its CLOSED forge-step read, by design)", () => {
+    expect(READS.filter(path => !LEG_READS.includes(path))).toEqual([]);
+    expect([...new Set(READS)].sort()).toEqual([...LEG_READS].sort());
   });
 });
