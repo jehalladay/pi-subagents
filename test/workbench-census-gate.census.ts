@@ -56,7 +56,7 @@ describe("census gate step (wb-nl8): wiring", () => {
     expect(steps.indexOf("census")).toBe(steps.indexOf("test") + 1);
     expect(toml.endsWith(`\n${CENSUS_BLOCK}`)).toBe(true);
     expect(toml.match(/^\[build\.commands\.census\]$/gm)).toHaveLength(1);
-    expect(toml).toContain('\ntest = "npm run test"\n');
+    expect(toml).toContain('\n[build.commands.test]\ncommand = "npm run test"\n');
   });
 
   it("package.json carries the report-emitting test script, its pretest rotation hook and the census tier script, each exact", () => {
