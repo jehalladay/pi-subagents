@@ -41,6 +41,11 @@
  * unclassified dispatch case and the Q2 template, and p5 pins the wb-tu1 parity template. U5: p6b's reason names the
  * nearest case and why it does not bind, the free text is digest-frozen, and the grant tripwire refuses any string that
  * starts a reconcile: grant.
+ *
+ * wb-5x0.3 (the review finding on the wb-5x0.2 PASS at 06c0305): j6 quoted the exact override-grant precondition while no
+ * default-gate case asserted it - the src mutant that skips the missing-exact-grant check for an override (SM2) survived the
+ * full default tier. j6 now also pins the decision case that denies an override holding only the acknowledge grant, or
+ * another producer's override grant, beside a control that mints it under the exact grant; SM2 reds that case.
  */
 
 import { createHash } from "node:crypto";
@@ -301,7 +306,12 @@ const ROWS: readonly ReconcileRow[] = freezeDeep<readonly ReconcileRow[]>([
     quotes: [journey(QUOTES.j7)],
     tier: "default-gate",
     status: "pinned",
-    pins: [pin(EFFECT_REPLAY, "keeps an effect-absent acknowledgement refusing, naming the principal and the override path"), pin(RECONCILE_DECISION, "forces settlement none for effect-absent"), pin(RECONCILE_DECISION, "overrides only with the latest acknowledgement cited, own-property confirmation and accepted risk")],
+    pins: [
+      pin(EFFECT_REPLAY, "keeps an effect-absent acknowledgement refusing, naming the principal and the override path"),
+      pin(RECONCILE_DECISION, "forces settlement none for effect-absent"),
+      pin(RECONCILE_DECISION, "overrides only with the latest acknowledgement cited, own-property confirmation and accepted risk"),
+      pin(RECONCILE_DECISION, "denies an override without the exact override grant, even when the acknowledge grant or another producer's override grant is held"),
+    ],
   },
   {
     row: "j7",
@@ -331,7 +341,7 @@ const ROWS: readonly ReconcileRow[] = freezeDeep<readonly ReconcileRow[]>([
 ]);
 
 const EXPECTED_ROW_IDS: readonly string[] = ["p1", "p2", "p2c", "p3", "p4", "p5", "p6a", "p6b", "p7", "j1", "j2", "j2b", "j3", "j4", "j5", "j6", "j7", "j8", "j9"];
-const EXPECTED_SHAPE: readonly string[] = ["p1:3:1", "p2:6:2", "p2c:2:1", "p3:3:1", "p4:2:1", "p5:4:1", "p6a:1:1", "p6b:0:1", "p7:2:1", "j1:1:1", "j2:3:3", "j2b:0:1", "j3:2:1", "j4:3:2", "j5:2:1", "j6:3:1", "j7:4:2", "j8:1:1", "j9:0:1"];
+const EXPECTED_SHAPE: readonly string[] = ["p1:3:1", "p2:6:2", "p2c:2:1", "p3:3:1", "p4:2:1", "p5:4:1", "p6a:1:1", "p6b:0:1", "p7:2:1", "j1:1:1", "j2:3:3", "j2b:0:1", "j3:2:1", "j4:3:2", "j5:2:1", "j6:4:1", "j7:4:2", "j8:1:1", "j9:0:1"];
 /** Every judged case's frozen key, "<row>|<file>|<title>[|each>=<n>]", in table order. */
 const EXPECTED_JUDGED: readonly string[] = [
   "p1|workflow-effect-replay.test.ts|neither re-runs nor replays a journaled write: the resume surfaces an uncertain effect",
@@ -371,6 +381,7 @@ const EXPECTED_JUDGED: readonly string[] = [
   "j6|workflow-effect-replay.test.ts|keeps an effect-absent acknowledgement refusing, naming the principal and the override path",
   "j6|workbench-reconcile-decision.test.ts|forces settlement none for effect-absent",
   "j6|workbench-reconcile-decision.test.ts|overrides only with the latest acknowledgement cited, own-property confirmation and accepted risk",
+  "j6|workbench-reconcile-decision.test.ts|denies an override without the exact override grant, even when the acknowledge grant or another producer's override grant is held",
   "j7|workflow-reconcile.test.ts|spends every live override at the start of a resume, and only those",
   "j7|workflow-effect-replay.test.ts|re-runs once under a live override, records the consumed copy, and refuses a resume of the resume",
   "j7|workflow-effect-replay.test.ts|spends the override even when the re-run throws",
@@ -401,13 +412,13 @@ const EXPECTED_ROW_DIGESTS: readonly string[] = [
   "j3:f2416b32fdad",
   "j4:05f424abce39",
   "j5:cde3667591af",
-  "j6:8cbb4c72bf66",
+  "j6:9e6e8ce432ac",
   "j7:5934a50f575f",
   "j8:7a7f8dd6bcb7",
   "j9:b33df1a9e1cc",
 ];
 /** Rule 16 / U1 (respin 1): the set the AC2 it.each runs, "<row>:<pins>" in table order; an unpinned row never rides it. */
-const EXPECTED_JUDGED_ROWS: readonly string[] = ["p1:3", "p2:6", "p2c:2", "p3:3", "p4:2", "p5:4", "p6a:1", "p7:2", "j1:1", "j2:3", "j3:2", "j4:3", "j5:2", "j6:3", "j7:4", "j8:1"];
+const EXPECTED_JUDGED_ROWS: readonly string[] = ["p1:3", "p2:6", "p2c:2", "p3:3", "p4:2", "p5:4", "p6a:1", "p7:2", "j1:1", "j2:3", "j3:2", "j4:3", "j5:2", "j6:4", "j7:4", "j8:1"];
 
 const readRepo = (path: string): string => readFileSync(join(ROOT, path), "utf8");
 const casePin = (entry: Pin): CasePin => ({ file: entry.file, title: entry.title, tier: DEFAULT_GATE_TIER, ...(entry.each === undefined ? {} : { each: { minCases: entry.each } }) });
