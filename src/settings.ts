@@ -3,7 +3,7 @@
 // - Project: <cwd>/.pi/subagents.json — written by /agents → Settings; overrides global on load
 
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { dirname, join } from "node:path";
+import { dirname, isAbsolute, join } from "node:path";
 import { getAgentDir } from "@earendil-works/pi-coding-agent";
 import { NO_FALLBACK } from "./agent-types.js";
 import type { AgentMentionMode, JoinMode, ViewerMarkdownMode, WidgetMode } from "./types.js";
@@ -17,6 +17,11 @@ export interface WorkbenchSettings {
   tools?: string[];
   /** Explicit host-owned provider permissions. Absent means deny all native capabilities. */
   capabilityGrants?: string[];
+  /**
+   * wb-973.4 (SCG-R4): the swarm's RF workspace, an absolute path. When present it, and only it, replaces the realpath Pi
+   * project root as the `--workspace` argument and the workspace.root pin of the RF capability; absent means today's behaviour.
+   */
+  reactivefiberWorkspaceRoot?: string;
   roles?: Record<string, { prompt: string; tools?: string[]; capabilities?: string[]; model?: string; effort?: "low" | "medium" | "high" | "xhigh" | "max" }>;
 }
 
@@ -365,6 +370,16 @@ const MAX_TURNS_CEILING = 10_000;
 const GRACE_TURNS_CEILING = 1_000;
 const SUBAGENT_DEPTH_CEILING = 16;
 
+/** A non-empty absolute path whose characters are all printable: no newline, NUL or other C0/DEL control character. */
+function isCleanAbsolutePath(value: unknown): value is string {
+  if (typeof value !== "string" || value.length === 0 || !isAbsolute(value)) return false;
+  for (const char of value) {
+    const code = char.codePointAt(0) ?? 0;
+    if (code <= 0x1f || code === 0x7f) return false;
+  }
+  return true;
+}
+
 /** Drop fields that don't match the expected shape. Silent — garbage becomes absent. */
 function sanitize(raw: unknown): SubagentsSettings {
   if (!raw || typeof raw !== "object") return {};
@@ -378,7 +393,7 @@ function sanitize(raw: unknown): SubagentsSettings {
     if (config.workflowAgentBackend !== "pi" && config.workflowAgentBackend !== "claude") {
       throw new Error("workbench.workflowAgentBackend must be pi or claude; no implicit fallback.");
     }
-    const keys = new Set(["workflowAgentBackend", "model", "permissionMode", "settingSources", "tools", "roles", "capabilityGrants"]);
+    const keys = new Set(["workflowAgentBackend", "model", "permissionMode", "settingSources", "tools", "roles", "capabilityGrants", "reactivefiberWorkspaceRoot"]);
     for (const key of Object.keys(config)) {
       if (!keys.has(key)) throw new Error(`Unknown workbench setting: ${key}.`);
     }
@@ -399,6 +414,9 @@ function sanitize(raw: unknown): SubagentsSettings {
       config.capabilityGrants.length > 64 || !config.capabilityGrants.every(grant =>
         typeof grant === "string" && /^[a-z][a-z0-9.-]*:[a-z][a-z0-9.-]*$/.test(grant) && !grant.includes("\n")))) {
       throw new Error("workbench.capabilityGrants must be a finite array of explicit namespace:permission identifiers without wildcards.");
+    }
+    if (config.reactivefiberWorkspaceRoot !== undefined && !isCleanAbsolutePath(config.reactivefiberWorkspaceRoot)) {
+      throw new Error("workbench.reactivefiberWorkspaceRoot must be an absolute path without control characters.");
     }
     if (config.roles !== undefined) {
       if (typeof config.roles !== "object" || config.roles === null || Array.isArray(config.roles)) {
@@ -426,6 +444,7 @@ function sanitize(raw: unknown): SubagentsSettings {
       ...(Array.isArray(config.settingSources) ? { settingSources: config.settingSources } : {}),
       ...(Array.isArray(config.tools) ? { tools: config.tools } : {}),
       ...(Array.isArray(config.capabilityGrants) ? { capabilityGrants: [...new Set(config.capabilityGrants)] } : {}),
+      ...(config.reactivefiberWorkspaceRoot !== undefined ? { reactivefiberWorkspaceRoot: config.reactivefiberWorkspaceRoot as string } : {}),
       ...(config.roles ? { roles: config.roles } : {}),
     } as WorkbenchSettings;
   }
