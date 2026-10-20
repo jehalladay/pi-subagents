@@ -27,3 +27,10 @@
 - wb-era's source-hygiene grep ran over my files and returned nothing.
 - Display paths added: none (static literals). Direct forge; no furnace-fallback row.
 - Standing landing note carried: REAL src collision with wb-973.10 44249c6 on `src/workbench/reactivefiber-observer.ts` (second lander re-cuts); this bead's INDEX line stays the standing append-collision.
+
+## 2026-10-18 receipt: row 105 correction carried by the wb-2j3.4 cut (seat ws-02, run g7-work-s9, sonnet tier)
+
+- Corrects the first entry's "Not changed, by scope" bullet, whose sentence that `docs/workbench/feature-matrix.md` row 105 still says "zero durable writes" was true when written (2026-10-17) and stops being true with the cut that carries this entry.
+- The correcting change: the wb-2j3.4 cut on branch `machine/flywheel/wb-2j3.4` (docs change first cut at 2ed6145, kept byte-identical in its respin) rewrites only row 105's Feature cell, from "... with graph provenance and zero durable writes" to "... with graph provenance; no authoritative or journal write, disposable cache-plane writes possible per the pinned producer trace". The row's Status, Evidence and Caveats cells are unchanged.
+- The same cut binds the row on its rendered page: `test/workbench-w10-stamped-claim-guard.test.ts` refuses any row that reads as the W10 claim row while one of its rendered cells reads as either published spelling of the withdrawn claim, and requires the plane-scoped clause in the claim row's Feature cell.
+- This entry is appended; no earlier line of this receipt is removed or rewritten.
