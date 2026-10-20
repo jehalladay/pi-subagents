@@ -25,10 +25,15 @@
  * variable or imported from another module is outside it; the predicate rows in the observer suite and the gate review own
  * semantic equivalence. Case liveness is structural (registration modifiers, options flags, enclosing suites, context skip calls); it
  * proves the HX cases are registered to run, never that the native tier ran them - the native receipt does that.
- * wb-drd: the receipt-on-stdout pin is structural (a straight-line write, no console echo in any spelling). The executed leg - running a case and
+ * wb-drd: the receipt-on-stdout pin is structural (a straight-line write, no direct console-member echo). The executed leg - running a case and
  * counting the receipt lines that reach process.stdout.write - covers only the synthetic probes of the falsifier rows (executedReceipts, a vm
  * sandbox with stubbed identifiers); the real live sources need the hx binary, so their execution stays the native-read receipt's job.
+ * NAMED RESIDUALS (R584 GE2-GE9): a constant-true conditional return (GE2), a receipt hidden in a dead argument branch (GE3) or
+ * uninvoked argument closure (GE4), shadowed process (GE5), and console echo via an alias (GE6), .call (GE7), comma-indirect
+ * call (GE8) or destructured member (GE9) remain outside this structural judge. It deliberately fails closed for writes under
+ * if/try, invoked closures or void expressions; it does not attempt general control-flow or binding analysis.
  */
+import {createHash} from 'node:crypto';
 import {readdirSync, readFileSync} from 'node:fs';
 import {dirname, join} from 'node:path';
 import {fileURLToPath} from 'node:url';
@@ -308,7 +313,7 @@ function printsReceipt(body: ts.Node): boolean {
  * CLAUDECODE (forge inherits the env) and that reporter drops the console output of passing tests, so a receipt printed with
  * console.log vanishes from the canonical native-read launch. True when the case writes hxLiveReceipt(...) through
  * process.stdout.write on a straight-line path (wb-drd: not under if, a loop, a ternary or a closure, and not after a return/throw) and routes it
- * through no console member in any spelling (console.log, console['log'], globalThis.console.log, ...). */
+ * through no direct console member call in the spellings recognised by isConsoleReference (console.log, console['log'], globalThis.console.log, ...). */
 function isProcessStdoutWrite(call: ts.CallExpression): boolean {
   const callee = call.expression;
   return ts.isPropertyAccessExpression(callee) && callee.name.text === 'write' && ts.isPropertyAccessExpression(callee.expression) &&
@@ -329,6 +334,12 @@ function isConsoleCall(call: ts.CallExpression): boolean {
   const callee = call.expression;
   return (ts.isPropertyAccessExpression(callee) || ts.isElementAccessExpression(callee)) && isConsoleReference(callee.expression);
 }
+/** A plain block preserves straight-line termination recursively; never follow a branch, label, loop or closure.
+ * In particular, a labelled break exits its label rather than the case, and a conditional return need not run. */
+function terminatesStraightLine(statement: ts.Statement): boolean {
+  if (ts.isReturnStatement(statement) || ts.isThrowStatement(statement) || ts.isBreakStatement(statement) || ts.isContinueStatement(statement)) return true;
+  return ts.isBlock(statement) && statement.statements.some(terminatesStraightLine);
+}
 /** True when the statement runs on every straight-line pass through the case body (wb-drd): an expression statement directly in the body, or in
  * plain nested blocks of it, with no unconditional return, throw, break or continue before it at any level. A write under if/else, a loop, a
  * ternary, a closure or after a terminator is dead or conditional and does not count as the receipt reaching stdout. */
@@ -340,7 +351,7 @@ function runsUnconditionally(statement: ts.Node, caseNode: ts.Node): boolean {
     if (!ts.isBlock(parent)) return false;
     for (const prior of parent.statements) {
       if (prior === node) break;
-      if (ts.isReturnStatement(prior) || ts.isThrowStatement(prior) || ts.isBreakStatement(prior) || ts.isContinueStatement(prior)) return false;
+      if (terminatesStraightLine(prior)) return false;
     }
     if (parent !== body && !ts.isBlock(parent.parent)) return false;
     node = parent;
@@ -432,6 +443,10 @@ function gateSteps(sections: ReadonlyMap<string, string>): string[] {
 }
 
 describe('wb-tz2.2 census: the two live-binary HX test sources', () => {
+  it('wb-drd AC1: the judged LIVE set keeps both named sources in order', () => {
+    expect(LIVE).toStrictEqual(['test/workbench-native-ecosystem.test.ts', 'test/workbench-ecosystem-native.test.ts']);
+  });
+
   const sources = LIVE.map(file => [file, readRepo(file)] as const);
 
   it.each(LIVE.flatMap(file => SPEC_FORBIDDEN.map((form, index) => [file, String(form), index] as const)))(
@@ -645,18 +660,32 @@ describe('wb-tz2.2 census: the scanner itself is falsifiable', () => {
     expect(pinsOf('probe.ts', liveSource({statements: unrelated}))).toMatchObject({receiptInEveryCase: true, receiptOnStdout: false});
   });
 
-  /** wb-drd (row 479 F6): the five named survivors of the wb-tz2.14 receipt census, each kept as a named falsifier. The dead-write
+  /** wb-drd (row 479 F6 + R584 U2): the five original survivors and GE1 of the wb-tz2.14 receipt census, each kept as a named falsifier. The dead-write
    * shapes print the receipt where it can never run; the echo shapes print it through console beside the stdout write. */
   const SURVIVORS: readonly {readonly id: string; readonly why: string; readonly statements: readonly string[]; readonly stdout: number; readonly echoed: number}[] = [
     {id: 'dead-write-if-false', why: 'a write inside if (false)', statements: [...WELL_FORMED.slice(0, -1), 'if (false) {', '  process.stdout.write(hxLiveReceipt(result, verdict) + "\\n");', '}'], stdout: 0, echoed: 0},
     {id: 'dead-write-after-return', why: 'a write unreached after return', statements: [...WELL_FORMED.slice(0, -1), 'return;', 'process.stdout.write(hxLiveReceipt(result, verdict) + "\\n");'], stdout: 0, echoed: 0},
     {id: 'dead-write-uninvoked-closure', why: 'a write inside an uninvoked closure', statements: [...WELL_FORMED.slice(0, -1), 'const emit = () => {', '  process.stdout.write(hxLiveReceipt(result, verdict) + "\\n");', '};'], stdout: 0, echoed: 0},
+    {id: 'dead-write-after-block-return', why: 'a write unreached after an unconditional return in a prior plain block', statements: [...WELL_FORMED.slice(0, -1), '{ return; }', 'process.stdout.write(hxLiveReceipt(result, verdict) + "\\n");'], stdout: 0, echoed: 0},
     {id: 'echo-element-access', why: "console['log'] beside the stdout write", statements: [...WELL_FORMED, "console['log'](hxLiveReceipt(result, verdict));"], stdout: 1, echoed: 1},
     {id: 'echo-globalThis-console', why: 'globalThis.console.log beside the stdout write', statements: [...WELL_FORMED, 'globalThis.console.log(hxLiveReceipt(result, verdict));'], stdout: 1, echoed: 1},
   ];
 
-  it('wb-drd: the five named survivors are the frozen falsifier set (a deleted or renamed row reds here)', () => {
-    expect(SURVIVORS.map(item => item.id)).toStrictEqual(['dead-write-if-false', 'dead-write-after-return', 'dead-write-uninvoked-closure', 'echo-element-access', 'echo-globalThis-console']);
+  it('wb-drd: the five original survivors plus GE1 are the frozen falsifier set (a deleted or renamed row reds here)', () => {
+    expect(SURVIVORS.map(item => item.id)).toStrictEqual(['dead-write-if-false', 'dead-write-after-return', 'dead-write-uninvoked-closure', 'dead-write-after-block-return', 'echo-element-access', 'echo-globalThis-console']);
+  });
+
+  // R584 U1 + rule 16: freeze every row's id, full requirement label, statement sequence and executed expectations.
+  // These literal digests are the cut-time content, not a hash recomputed from a second copy of SURVIVORS.
+  it('wb-drd AC1: the falsifier rows keep their complete frozen content, not only their ids', () => {
+    expect(SURVIVORS.map(item => createHash('sha256').update(JSON.stringify(item)).digest('hex'))).toStrictEqual([
+      'e1321248a4f60372f203e3d79265512fc9746d60e99263d68e1fff6c6cc8e2da', // dead-write-if-false
+      'a4d5821aabb6ee83f47a0d5da19b2ea70f0fece6143bc5ab7cee48f4ffa12a1d', // dead-write-after-return
+      'e0d09fd056bdf1012a7ed2895ee8531c9fba55528426b4b5289d995319ff7585', // dead-write-uninvoked-closure
+      'ffa5f67b7406167dc5a97de8abc72939a230b736bcea0a82076fd6ddd72dd0e8', // dead-write-after-block-return
+      '00bf1edcf66318de1b37b25f8143aa6548ab785fa4fb37f7b661362837b95338', // echo-element-access
+      'a25397c8b2a85f4a2cb869ee86d13ac3382b06b840d6a934ab2406c19ddf9a52', // echo-globalThis-console
+    ]);
   });
 
   it('wb-drd control: the well-formed case executes exactly one stdout receipt line, echoes none, and passes the stdout pin', async () => {
@@ -665,8 +694,27 @@ describe('wb-tz2.2 census: the scanner itself is falsifiable', () => {
   });
 
   it.each(SURVIVORS)('wb-drd survivor $id ($why): execution confirms the shape, and the stdout pin refuses it', async item => {
+    expect.assertions(2);
     expect(await executedReceipts(liveSource({statements: item.statements}))).toStrictEqual({stdout: item.stdout, echoed: item.echoed});
     expect(pinsOf('probe.ts', liveSource({statements: item.statements}))).toMatchObject({receiptInEveryCase: true, receiptOnStdout: false});
+  });
+
+  it('wb-drd GE1: a return in recursively nested prior plain blocks refuses an unreachable receipt', async () => {
+    const statements = [...WELL_FORMED.slice(0, -1), '{ { return; } }', WELL_FORMED.at(-1) ?? ''];
+    expect(await executedReceipts(liveSource({statements}))).toStrictEqual({stdout: 0, echoed: 0});
+    expect(pinsOf('probe.ts', liveSource({statements})).receiptOnStdout).toBe(false);
+  });
+
+  it('wb-drd GE1: a throw in a prior plain block refuses the receipt before execution fails', async () => {
+    const statements = [...WELL_FORMED.slice(0, -1), '{ { throw new Error("stop"); } }', WELL_FORMED.at(-1) ?? ''];
+    await expect(executedReceipts(liveSource({statements}))).rejects.toThrow('stop');
+    expect(pinsOf('probe.ts', liveSource({statements})).receiptOnStdout).toBe(false);
+  });
+
+  it('wb-drd control: prior blocks with conditional or closure returns do not terminate the case', async () => {
+    const statements = [...WELL_FORMED.slice(0, -1), '{ if (false) return; const neverCalled = () => { return; }; }', WELL_FORMED.at(-1) ?? ''];
+    expect(await executedReceipts(liveSource({statements}))).toStrictEqual({stdout: 1, echoed: 0});
+    expect(pinsOf('probe.ts', liveSource({statements})).receiptOnStdout).toBe(true);
   });
 
   it('wb-drd: a receipt write in a plain nested block still runs, so it still passes the stdout pin', async () => {
