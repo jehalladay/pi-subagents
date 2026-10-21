@@ -5,8 +5,10 @@
  * distributed mutation") and QA-18 (06-QA-SECURITY-ROLLOUT.md:24, "Explicit unsupported guidance; no safety claim").
  *
  * READING (respin on gate row 553, ORCH-REC-R554): the docs-pin floor binds this census over the acceptance's "grep"
- * wording (row 487 R1(a); row 547 / ORCH-REC-R548 precedent). Every .md file under docs/workbench, receipts included, is
- * judged in two legs, and a sentence either leg refuses reds the census.
+ * wording (row 487 R1(a); row 547 / ORCH-REC-R548 precedent). Every file the recursive AC4 grep reads under
+ * docs/workbench, including hidden, nested and symlinked paths, is judged in the raw leg; .md, .MD and .markdown
+ * files additionally carry the rendered leg. A sentence either leg refuses reds the census. A broken link or an
+ * unreadable non-file is named as a scope error rather than silently omitted (gate row 621 G1-G3; R607 scope identity).
  * - FAMILY RULE (both legs; respin 2 on gate row 600: a SUPERSET of the AC4 grep NFS|EFS|shared filesystem|multi-host,
  *   a case-sensitive substring match, so every sentence that grep matches is a family match): a sentence MATCHES when
  *   it names NFS or EFS at the start of a word in any case (nfs, NFSv4; refs and confs never do) or in capitals
@@ -15,7 +17,7 @@
  *   multi-host (multi host, multihost, plural, multi-hosted, multi-hosting, nonmulti-host). A matching sentence must
  *   say "unsupported" or "not safe", in any case, and may use the word "safe" (or "safely") only inside "not safe";
  *   "unsafe" is not the word.
- * - RENDERED LEG (what a reader sees; rendered-text truth, 9x5.17): marked 18.0.11 (GFM, the lexer test/helpers/census.ts
+ * - RENDERED LEG (Markdown files only; what a reader sees, rendered-text truth, 9x5.17): marked 18.0.11 (GFM, the lexer test/helpers/census.ts
  *   and test/workbench-w10-stamped-claim-guard.test.ts use) lexes the page once. A unit is a paragraph, a heading, the
  *   text of a list item or block quote, a table cell, a code block or an HTML block. A unit renders its text, backslash
  *   escapes and code spans as written, and emphasis, strikethrough (struck text still shows), link text and image alt
@@ -28,11 +30,11 @@
  *   another letter), combining marks dropped, format code points (Cf: the zero-width characters, the soft hyphen, the
  *   byte-order mark) dropped, every white-space run one space, control code points (Cc) dropped, every dash (Pd) and the
  *   minus sign read as "-". The folded unit splits into sentences after a ".", "!" or "?" followed by white space.
- * - RAW LEG (additional strictness; the ed1be42 judge unchanged): every SOURCE line, hidden text included (an HTML
+ * - RAW LEG (additional strictness): every SOURCE line of every file the AC4 grep reads, hidden text included (an HTML
  *   comment, an HTML block, a fence, a link destination), splits into sentences the same way, so an unqualified family
  *   hidden from the reader still reds, a safety word hidden beside a qualifier still reds, and a qualifier must share
  *   its family's source line.
- * - LIVENESS: each family is named by at least one rendered docs sentence and by at least one source sentence.
+ * - LIVENESS: each family is named by at least one rendered Markdown sentence and by at least one source sentence.
  * - SECTION PIN (heading uniqueness 6hb.9, section bound cax.24, slice equality 6hb.7): docsSection(markdown,
  *   "Host boundary", 2, [the page's level-1 title]) from test/helpers/census.ts finds docs/13's unique level-2 heading of
  *   that name under its title and the section up to the next level-1/2 heading; sectionMatches pins the section's WHOLE
@@ -54,29 +56,34 @@
  * GREP FLOOR (row 600 U2): three rows hold the family rule to the AC4 grep as the acceptance writes it (AC4_GREP). Each
  * grep alternative set inside a word (GREP_FLOOR_BEFORE x GREP_FLOOR_AFTER, 168 sentences) is refused unqualified by
  * both legs; every synthetic sentence the grep matches is a family match and no NO_MATCH control is a grep match; and
- * every docs sentence the grep matches, raw or rendered, is a family match that says unsupported or not safe.
+ * every sentence in the AC4 file scope that the grep matches (raw on any file, rendered on Markdown) is a family match
+ * that says unsupported or not safe. Gate row 621's G1-G3 file-scope survivors are named and refused by G1-G3 rows.
  * FROZEN SHAPE (standing rule 16, owner order 2026-10-18T18:14:19Z). One row pins the family table, the judge patterns
  * and every table as literals derived from them at this cut (the ed1be42 literals unchanged; the respin's reference
- * table, fold and HTML patterns, pinned blocks and battery tables appended), so deleting a family or a row, narrowing a
+ * table, fold and HTML patterns, pinned blocks, battery and scope tables appended), so deleting a family or a row, narrowing a
  * pattern or swapping a row for an unrelated passing case reds the census. The live docs are not frozen: any page may
  * add a sentence that complies.
- * RESIDUALS (named, not closed; the GREP FLOOR makes every AC4 grep match a family match, so none of these leaves an
- * AC4 grep match unjudged): letters NFKC leaves distinct (a Cyrillic or Greek look-alike of N, E, F or S) and sentence
+ * RESIDUALS (named, not closed; the scope rows plus GREP FLOOR make every AC4 grep match on every regular file a
+ * family match, so none of these leaves an AC4 grep match unjudged): letters NFKC leaves distinct (a Cyrillic or Greek look-alike of N, E, F or S) and sentence
  * ends NFKC does not fold to ".", "!" or "?"; a named reference written without its ";", and a numeric reference from
  * 0x80 to 0x9F, which browsers read as Windows-1252 but this census as a control code point; an HTML block's text is
  * read with its tags removed, not laid out; a qualifier that is negated or belongs to another clause of the sentence (W9,
  * W10, finding F3: a sentence-meaning judge is outside this AC); styling applied from outside the page; NFS or EFS inside
  * a longer word in lower or mixed case (pnfs, AmazonEfs: NO_MATCH quiet rows; the case-sensitive AC4 grep matches
  * neither); a sentence describing multi-host or shared-filesystem use without a family word (multiple hosts, shared
- * files: NO_MATCH quiet rows; F3 again).
- * Spawns nothing; writes nothing; reads docs/workbench.
+ * files: NO_MATCH quiet rows; F3 again). G4 (a qualifier after a period with no following white space) and G5
+ * (safer/safest/safety, outside safe/safely) remain named residuals, outside this sentence splitter/claim-word rule.
+ * Only the path-scope tests write tracked scratch fixtures; the live census reads docs/workbench.
  */
-import { readdirSync, readFileSync, statSync } from "node:fs";
-import { dirname, join, posix, sep } from "node:path";
+import { mkdirSync, readdirSync, readFileSync, realpathSync, statSync, symlinkSync, writeFileSync } from "node:fs";
+import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { marked, type Token, type Tokens } from "marked";
 import { describe, expect, it } from "vitest";
 import { docsSection, type RenderedBlock, sectionMatches } from "./helpers/census.js";
+import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
+
+installScratchLeakGuard();
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const DOCS = "docs/workbench";
@@ -156,23 +163,118 @@ function rootSentenceProblems(text: string): string[] {
   return clauseProblems(sentence);
 }
 
-/** Every Markdown page under docs/workbench, as a repo-relative POSIX path. */
-function docsPages(): string[] {
-  return readdirSync(join(ROOT, DOCS), { recursive: true, encoding: "utf8" })
-    .map(entry => `${DOCS}/${entry.split(sep).join(posix.sep)}`)
-    .filter(path => path.endsWith(".md") && statSync(join(ROOT, path)).isFile())
-    .sort();
+/** Match `grep -R docs/workbench`: every file, including hidden, nested and symlinked paths, with directory cycles stopped. */
+function docsPages(root = ROOT): string[] {
+  const pages: string[] = [];
+  function walk(dir: string, ancestors: ReadonlySet<string>): void {
+    const real = realpathSync(join(root, dir));
+    if (ancestors.has(real)) return;
+    const next = new Set([...ancestors, real]);
+    for (const name of readdirSync(join(root, dir)).sort()) {
+      const path = `${dir}/${name}`;
+      let kind: ReturnType<typeof statSync>;
+      try {
+        kind = statSync(join(root, path));
+      } catch (error) {
+        // GNU grep -R reports broken links as errors; do not quietly claim the census covered one.
+        throw new Error(`cannot read ${path} in the AC4 grep scope`, { cause: error });
+      }
+      if (kind.isDirectory()) walk(path, next);
+      else if (kind.isFile()) pages.push(path);
+      else throw new Error(`cannot read ${path} in the AC4 grep scope (not a regular file)`);
+    }
+  }
+  walk(DOCS, new Set());
+  return pages.sort();
 }
 
 const read = (path: string): string => readFileSync(join(ROOT, path), "utf8");
+const isMarkdown = (path: string): boolean => /\.(?:md|markdown)$/i.test(path);
 const liveMatches = (): Match[] => docsPages().flatMap(path => judge(path, read(path)));
 const problems = (matches: readonly Match[]): string[] => matches.filter(match => match.problem !== null).map(match => `${match.file}:${match.line} ${match.problem}: ${match.sentence}`);
 
+/** Gate row 621 G1-G3: AC4's path scope is all regular files under docs/workbench, not a Markdown extension list. */
+const GREP_SCOPE_ROWS = [
+  { id: "G1", path: "zz-gp3-probe.txt", text: "NFS swarm workspaces work across machines." },
+  { id: "G2", path: "zz-gp3-probe.MD", text: "# 99 gate probe\n\nNFS swarm workspaces work across machines." },
+  { id: "G3", path: "zz-gp3-probe.markdown", text: "# 99 gate probe\n\nNFS swarm workspaces work across machines." },
+  { id: "G9", path: "nested/deeper/zz-probe.txt", text: "NFS swarm workspaces work across machines." },
+  { id: "G10", path: ".hidden/zz-probe", text: "NFS swarm workspaces work across machines." },
+  { id: "G11", path: "zz-probe", text: "NFS swarm workspaces work across machines." },
+] as const;
+
+describe("SCG-R5 AC4 path scope (gate row 621 U1): the recursive grep's files are the census's files", () => {
+  it.each(GREP_SCOPE_ROWS)("SCG-R5 grep scope $id: $path is visited and its unqualified family sentence is refused", ({ path, text }) => {
+    const root = makeScratch("scg-r5-grep-scope-");
+    try {
+      mkdirSync(dirname(join(root, DOCS, path)), { recursive: true });
+      writeFileSync(join(root, DOCS, path), `${text}\n`);
+      const file = `${DOCS}/${path}`;
+      const pages = new Map(docsPages(root).map(name => [name, readFileSync(join(root, name), "utf8")] as const));
+      expect(docsFindings(pages).filter(finding => finding.startsWith(`${file} raw unqualified:`))).toEqual([
+        `${file} raw unqualified: NFS swarm workspaces work across machines.`,
+      ]);
+    } finally {
+      removeScratch(root);
+    }
+  });
+  it("SCG-R5 grep scope: .txt is raw-only while .MD and .markdown render their Markdown markup", () => {
+    const root = makeScratch("scg-r5-render-scope-");
+    try {
+      mkdirSync(join(root, DOCS), { recursive: true });
+      const page = "N*FS* swarm workspaces work across machines.\n";
+      for (const suffix of ["txt", "MD", "markdown"]) writeFileSync(join(root, DOCS, `probe.${suffix}`), page);
+      const files = docsPages(root);
+      const pages = new Map(files.map(name => [name, readFileSync(join(root, name), "utf8")] as const));
+      const found = docsFindings(pages).filter(finding => finding.includes("probe."));
+      expect(found).toEqual([
+        `${DOCS}/probe.MD rendered unqualified: NFS swarm workspaces work across machines.`,
+        `${DOCS}/probe.markdown rendered unqualified: NFS swarm workspaces work across machines.`,
+      ]);
+    } finally {
+      removeScratch(root);
+    }
+  });
+
+  it("SCG-R5 grep scope G12/G13: follows both a file link and a directory link, then stops a directory cycle", () => {
+    const root = makeScratch("scg-r5-grep-links-");
+    try {
+      const docs = join(root, DOCS);
+      mkdirSync(join(docs, "nested"), { recursive: true });
+      writeFileSync(join(docs, "nested", "source.txt"), "NFS swarm workspaces work across machines.\n");
+      symlinkSync("nested/source.txt", join(docs, "link.txt"));
+      symlinkSync("nested", join(docs, "linked-dir"));
+      symlinkSync("..", join(docs, "nested", "cycle"));
+      const files = docsPages(root);
+      expect(files).toEqual([
+        `${DOCS}/link.txt`, `${DOCS}/linked-dir/source.txt`, `${DOCS}/nested/source.txt`,
+      ]);
+      const pages = new Map(files.map(name => [name, readFileSync(join(root, name), "utf8")] as const));
+      expect(docsFindings(pages).filter(finding => finding.includes(" raw unqualified:"))).toEqual(files.map(file =>
+        `${file} raw unqualified: NFS swarm workspaces work across machines.`,
+      ));
+    } finally {
+      removeScratch(root);
+    }
+  });
+
+  it("SCG-R5 grep scope G14: a broken link is named rather than silently omitted", () => {
+    const root = makeScratch("scg-r5-grep-broken-");
+    try {
+      mkdirSync(join(root, DOCS), { recursive: true });
+      symlinkSync("missing.txt", join(root, DOCS, "dangling.txt"));
+      expect(() => docsPages(root)).toThrow(/cannot read docs\/workbench\/dangling.txt in the AC4 grep scope/);
+    } finally {
+      removeScratch(root);
+    }
+  });
+});
+
 describe("SCG-R5 AC4 (wb-973.5): docs/workbench never presents a shared-filesystem swarm workspace as safe", () => {
-  it("SCG-R5: the census reads every Markdown page under docs/workbench, receipts included", () => {
+  it("SCG-R5: the census reads every file under docs/workbench, receipts included", () => {
     const pages = docsPages();
-    const top = readdirSync(join(ROOT, DOCS)).filter(name => name.endsWith(".md")).map(name => `${DOCS}/${name}`);
-    const receipts = readdirSync(join(ROOT, DOCS, "receipts")).filter(name => name.endsWith(".md")).map(name => `${DOCS}/receipts/${name}`);
+    const top = readdirSync(join(ROOT, DOCS)).filter(name => statSync(join(ROOT, DOCS, name)).isFile()).map(name => `${DOCS}/${name}`);
+    const receipts = readdirSync(join(ROOT, DOCS, "receipts")).filter(name => statSync(join(ROOT, DOCS, "receipts", name)).isFile()).map(name => `${DOCS}/receipts/${name}`);
     expect(pages).toEqual([...top, ...receipts].sort());
     expect(pages).toContain(ROOT_SENTENCE_FILE);
     expect(pages).toContain(`${DOCS}/07-native-integrations.md`);
@@ -534,10 +636,17 @@ function docsFindings(pages: ReadonlyMap<string, string>): string[] {
   const rendered = new Set<string>();
   const raw = new Set<string>();
   for (const file of [...pages.keys()].sort()) {
-    const view = pageView(pages.get(file) ?? "");
-    findings.push(...pageFindings(file, view));
-    for (const name of view.renderedFamilies) rendered.add(name);
-    for (const name of view.rawFamilies) raw.add(name);
+    const content = pages.get(file) ?? "";
+    if (isMarkdown(file)) {
+      const view = pageView(content);
+      findings.push(...pageFindings(file, view));
+      for (const name of view.renderedFamilies) rendered.add(name);
+      for (const name of view.rawFamilies) raw.add(name);
+    } else {
+      const rawMatches = judge(file, content);
+      findings.push(...rawMatches.filter(match => match.problem !== null).map(match => `${file} raw ${match.problem}: ${match.sentence}`));
+      for (const match of rawMatches) for (const name of match.families) raw.add(name);
+    }
   }
   for (const name of FAMILY_NAMES) if (!rendered.has(name)) findings.push(`rendered liveness: no rendered docs sentence names ${name}`);
   for (const name of FAMILY_NAMES) if (!raw.has(name)) findings.push(`raw liveness: no source docs sentence names ${name}`);
@@ -1140,6 +1249,14 @@ describe("SCG-R5 AC4 falsifiers: the judges over synthetic text", () => {
       "L4 | liveness/each | one family left unnamed | NFS and EFS mounts are unsupported for multi-host use. | rendered liveness: no rendered docs sentence names shared filesystem + raw liveness: no source docs sentence names shared filesystem",
       "L5 | control | the four families named across two pages | NFS and EFS are unsupported. ~ Multi-host use of a shared filesystem is unsupported. | none",
     ]);
+    expect(GREP_SCOPE_ROWS.map(row => `${row.id} | ${row.path} | ${visible(row.text)}`)).toEqual([
+      "G1 | zz-gp3-probe.txt | NFS swarm workspaces work across machines.",
+      "G2 | zz-gp3-probe.MD | # 99 gate probe\\n\\nNFS swarm workspaces work across machines.",
+      "G3 | zz-gp3-probe.markdown | # 99 gate probe\\n\\nNFS swarm workspaces work across machines.",
+      "G9 | nested/deeper/zz-probe.txt | NFS swarm workspaces work across machines.",
+      "G10 | .hidden/zz-probe | NFS swarm workspaces work across machines.",
+      "G11 | zz-probe | NFS swarm workspaces work across machines.",
+    ]);
     expect([String(AC4_GREP), JSON.stringify(GREP_FLOOR_BEFORE), JSON.stringify(GREP_FLOOR_AFTER)]).toEqual([
       "/NFS|EFS|shared filesystem|multi-host/",
       '["","p","Amazon","un","x_","9"]',
@@ -1149,16 +1266,16 @@ describe("SCG-R5 AC4 falsifiers: the judges over synthetic text", () => {
 });
 
 describe("SCG-R5 AC4 rendered view (wb-973.5 respin): docs/workbench as a reader sees it", () => {
-  it("SCG-R5: marked's top-level token raws tile every docs page, so the battery's docs edits are located through the lexer", () => {
-    expect(docsPages().filter(path => marked.lexer(read(path)).map(token => token.raw).join("") !== read(path))).toEqual([]);
+  it("SCG-R5: marked's top-level token raws tile every Markdown page, so the battery's docs edits are located through the lexer", () => {
+    expect(docsPages().filter(isMarkdown).filter(path => marked.lexer(read(path)).map(token => token.raw).join("") !== read(path))).toEqual([]);
   });
 
   it("SCG-R5: every rendered docs sentence naming NFS, EFS, a shared filesystem or multi-host use says unsupported or not safe and claims no safety, and every character reference decodes", () => {
-    expect(docsPages().flatMap(path => pageFindings(path, pageView(read(path))).filter(finding => finding.startsWith(`${path} rendered `)))).toEqual([]);
+    expect(docsPages().filter(isMarkdown).flatMap(path => pageFindings(path, pageView(read(path))).filter(finding => finding.startsWith(`${path} rendered `)))).toEqual([]);
   });
 
   it("SCG-R5: the rendered leg is live on the docs: each of the four families is named by at least one rendered docs sentence", () => {
-    const named = new Set(docsPages().flatMap(path => pageView(read(path)).renderedFamilies));
+    const named = new Set(docsPages().filter(isMarkdown).flatMap(path => pageView(read(path)).renderedFamilies));
     expect(FAMILY_NAMES.filter(name => !named.has(name))).toEqual([]);
   });
 
@@ -1251,10 +1368,12 @@ describe("SCG-R5 AC4 grep floor (gate row 600 U2): every sentence the AC4 grep m
     expect(NO_MATCH.filter(([, text]) => AC4_GREP.test(text))).toEqual([]);
   });
 
-  it("SCG-R5 grep floor: the AC4 grep over docs/workbench finds only family matches saying unsupported or not safe, in both legs", () => {
+  it("SCG-R5 grep floor: AC4 grep over every docs/workbench file finds only qualified family matches in the raw leg and the Markdown rendered leg", () => {
     const found = docsPages().flatMap(path => {
-      const view = pageView(read(path));
-      const legs = [...view.rawSentences.map(sentence => ({ leg: "raw", path, sentence })), ...view.renderedSentences.map(sentence => ({ leg: "rendered", path, sentence }))];
+      const content = read(path);
+      const raw = linesOf(content).flatMap(sentencesOf).map(sentence => ({ leg: "raw", path, sentence }));
+      const rendered = isMarkdown(path) ? pageView(content).renderedSentences.map(sentence => ({ leg: "rendered", path, sentence })) : [];
+      const legs = [...raw, ...rendered];
       return legs.filter(({ sentence }) => AC4_GREP.test(sentence));
     });
     expect(found.filter(({ sentence }) => classify(sentence).families.length === 0 || !QUALIFIER.test(sentence))).toEqual([]);
