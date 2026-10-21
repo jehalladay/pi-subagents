@@ -19,15 +19,16 @@ const dirs: string[] = [];
  * value no tier runs as its default, so the runner read in the wb-hk9l row tells a budgeted row from a default one. A row's
  * synchronous file work cannot be interrupted, so the budget only decides when a finished row is failed; it never retries one.
  */
-const PACKAGE_COPY_ROW_BUDGET_MS = 90_000;
+const PACKAGE_COPY_ROW_BUDGET_MS = 120_000;
 /**
- * The worst wall of record of a package-copy row: "pins actual package.json, ..." at 36730 ms in file-alone serial attempt 3
- * at load1 417 (wb-2j3.4 gate, outbox 571). The other walls of record: the lockfile row at 15323 and 11951 ms (outbox 571,
- * attempts 2 and 3) and 8872 ms serially (outbox 569), 8363 ms at load1 350-400 (wb-gs2.3 relay F1), and 14951 / 8161 ms
+ * The worst wall of record of a package-copy row: "pins actual package.json, ..." at 50599 ms in a file-alone
+ * gate-prep-2 run on probe d7ae1c7 (g10-gate-s4, load1 324.45). Earlier wall 36730 ms in file-alone serial
+ * attempt 3 at load1 417 (wb-2j3.4 gate, outbox 571). The lockfile row ran 49772 ms in the CT1b run and
+ * 15323 and 11951 ms in outbox 571 (attempts 2 and 3), and 8872 ms serially (outbox 569), 8363 ms at load1 350-400 (wb-gs2.3 relay F1), and 14951 / 8161 ms
  * file-alone at load1 437 (wb-hk9l gate PREP). Instrument residual, never a sizing input: the lockfile row's 320 s synchronous
  * IO-stall block in outbox 571's first serial leg (IO full avg10 ~88) - no budget cures a host stall.
  */
-const WORST_MEASURED_WALL_MS = 36_730;
+const WORST_MEASURED_WALL_MS = 50_599;
 const PACKAGE_COPY_ROW: { readonly timeout: number } = { timeout: PACKAGE_COPY_ROW_BUDGET_MS };
 /** The rows that carry PACKAGE_COPY_ROW, in file order: every row whose registration reaches a copy (the wb-hk9l pin). */
 const PACKAGE_COPY_ROWS = [
@@ -52,29 +53,60 @@ type TestApi = { readonly each: boolean; readonly table: ts.Expression | undefin
  * table whose title expands by %s alone. A row it cannot read gets a title the runner never registers and a registration it
  * does not recognise is missing from its list, so either way the runner cross-check reds instead of passing the row unread.
  * A registration (title, options, table and body) copies when it names a COPY_CALLS member or a same-file binding that does:
- * every named function, const, method and property, closed to a fixpoint. Named residuals, outside the scan: a copy inside
+ * every named function, const, method and property, plus import-renamed and destructured/assigned aliases and const-keyed
+ * element reads, closed to a fixpoint. Named residuals, outside the scan: a copy inside
  * another module's function, a copy run as a subprocess, and a copy in a hook or at module scope (those run under hookTimeout
- * or at collection, never under a row's budget).
+ * or at collection, never under a row's budget). H5 is another named residual: a lockfile copy composed from
+ * readFileSync + writeFileSync is outside COPY_CALLS; as with captureInvocationIdentity's lock/vendor hashing on
+ * unbudgeted rows, this scan classifies copy calls as a proxy rather than measuring all possible file-copy behavior.
  */
 function scanRows(text: string): { title: string; copies: boolean }[] {
   const source = ts.createSourceFile("scanned.ts", text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
   const copying = new Set(COPY_CALLS);
-  const names = (node: ts.Node, own?: ts.Node): boolean =>
-    (node !== own && ts.isIdentifier(node) && copying.has(node.text)) ||
-    (ts.isElementAccessExpression(node) && ts.isStringLiteralLike(node.argumentExpression) && copying.has(node.argumentExpression.text)) ||
-    ts.forEachChild(node, child => (names(child, own) ? true : undefined)) === true;
-  const bindings: { name: ts.Identifier; declaration: ts.Node }[] = [];
+  const keys = new Map<string, string>();
+  const keyOf = (node: ts.Node): string | undefined => {
+    if (ts.isStringLiteralLike(node)) return node.text;
+    return ts.isIdentifier(node) ? keys.get(node.text) : undefined;
+  };
+  const bindings: { name: string; value: ts.Node }[] = [];
+  const bind = (name: string | undefined, value: ts.Node | undefined): void => {
+    if (name !== undefined && value !== undefined) bindings.push({ name, value });
+  };
   const collect = (node: ts.Node): void => {
-    const name = ts.isFunctionDeclaration(node) || ts.isVariableDeclaration(node) || ts.isMethodDeclaration(node) || ts.isPropertyAssignment(node) ? node.name : undefined;
-    if (name !== undefined && ts.isIdentifier(name)) bindings.push({ name, declaration: node });
+    if (ts.isImportSpecifier(node) && ts.isIdentifier(node.name)) {
+      bind(node.name.text, node.propertyName ?? node.name);
+    } else if (ts.isVariableDeclaration(node)) {
+      if (ts.isIdentifier(node.name)) {
+        bind(node.name.text, node.initializer);
+        if (node.initializer && ts.isStringLiteralLike(node.initializer)) keys.set(node.name.text, node.initializer.text);
+      } else if (ts.isObjectBindingPattern(node.name) && node.initializer) {
+        for (const element of node.name.elements) {
+          const property = element.propertyName ?? element.name;
+          bind(ts.isIdentifier(element.name) ? element.name.text : undefined, property);
+          bind(ts.isIdentifier(element.name) ? element.name.text : undefined, element.initializer);
+        }
+      }
+    } else if (ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.EqualsToken && ts.isIdentifier(node.left)) {
+      bind(node.left.text, node.right);
+    } else if (ts.isFunctionDeclaration(node) || ts.isMethodDeclaration(node) || ts.isPropertyAssignment(node)) {
+      if (node.name && ts.isIdentifier(node.name)) bind(node.name.text, node);
+    }
     ts.forEachChild(node, collect);
   };
   collect(source);
+  const names = (node: ts.Node, own?: string): boolean => {
+    if (ts.isIdentifier(node) && node.text !== own && copying.has(node.text)) return true;
+    if (ts.isElementAccessExpression(node)) {
+      const key = node.argumentExpression ? keyOf(node.argumentExpression) : undefined;
+      if (key !== undefined && copying.has(key)) return true;
+    }
+    return ts.forEachChild(node, child => (names(child, own) ? true : undefined)) === true;
+  };
   for (let grew = true; grew; ) {
     grew = false;
-    for (const { name, declaration } of bindings) {
-      if (copying.has(name.text) || !names(declaration, name)) continue;
-      copying.add(name.text);
+    for (const { name, value } of bindings) {
+      if (copying.has(name) || !names(value, name)) continue;
+      copying.add(name);
       grew = true;
     }
   }
@@ -120,7 +152,8 @@ function scanRows(text: string): { title: string; copies: boolean }[] {
  * Scan liveness (wb-hk9l): one-row sources that each reach a copy by one route the scan reads - a COPY_CALLS member called
  * directly, as a namespace member or as an element read; a function, arrow, alias, class-method or property helper; a helper
  * two hops away, declared before the helper it calls (so one pass cannot read it); a table row's function - and quiet sources
- * that reach none, plus the two unreadable shapes. SCAN_READINGS is the frozen reading of each, so a route the scan stops
+ * that reach none, plus the two unreadable shapes. Each witness source has a frozen digest independent of its route and
+ * reading. SCAN_READINGS is the frozen reading of each, so a route the scan stops
  * reading, a witness deleted or a quiet row read as a copy reds the liveness row.
  */
 const SCAN_WITNESSES: readonly (readonly [route: string, source: string])[] = [
@@ -133,6 +166,10 @@ const SCAN_WITNESSES: readonly (readonly [route: string, source: string])[] = [
   ["function helper", 'function copyInto(): void { cpSync(a, b); }\nit("row", () => { copyInto(); });'],
   ["arrow helper", 'const copyInto = (): void => cpSync(a, b);\nit("row", () => { copyInto(); });'],
   ["alias", 'const copy = cpSync;\nit("row", () => { copy(a, b); });'],
+  ["import alias", 'import { cpSync as cloneTree } from "node:fs";\nit("row", () => { cloneTree(a, b); });'],
+  ["destructured alias", 'import * as nodeFs from "node:fs";\nconst { cpSync: cloneTree } = nodeFs;\nit("row", () => { cloneTree(a, b); });'],
+  ["assigned alias", 'let cloneTree: unknown; cloneTree = cpSync;\nit("row", () => { cloneTree(a, b); });'],
+  ["const keyed element", 'const COPY_NAME = "cpSync";\nit("row", () => { nodeFs[COPY_NAME](a, b); });'],
   ["class method", 'class Io { copy(): void { cpSync(a, b); } }\nit("row", () => { new Io().copy(); });'],
   ["property helper", 'register({ copy: (): void => cpSync(a, b) });\nit("row", () => { registry.copy(); });'],
   ["two hops", 'function outer(): void { inner(); }\nfunction inner(): void { cpSync(a, b); }\nit("row", () => { outer(); });'],
@@ -143,6 +180,35 @@ const SCAN_WITNESSES: readonly (readonly [route: string, source: string])[] = [
   ["unexpandable table", 'it.each([{ name: "row" }])("$name", () => { cpSync(a, b); });'],
   ["non-literal title", "it(name, () => { cpSync(a, b); });"],
 ];
+/** Frozen independently of the live sources: a one-line source swap must not erase a scan route. */
+const SCAN_SOURCE_DIGESTS: readonly string[] = [
+  "9b30411f5e41cca5", // direct call
+  "33247f8eef2e3873", // async call
+  "610cc9a31b640dc7", // file call
+  "8d9fc75d995c09ef", // async file call
+  "a97e8481dd263fb3", // namespace member
+  "fa05617005f18541", // element read
+  "d6bc747d9aa0e310", // function helper
+  "60338d19207e4c15", // arrow helper
+  "673ec6d8ec8c8ea4", // alias
+  "8580af04d21eb509", // import alias
+  "32ce34abf1911ffa", // destructured alias
+  "6773d2f3c4b279cf", // assigned alias
+  "0003751cc734799a", // const keyed element
+  "3a9204d0f1c28ba3", // class method
+  "81f9bb1104466df1", // property helper
+  "ce4aaeb87fd883ba", // two hops
+  "3da62b69c2800986", // table function
+  "9a24a5a072b631cf", // quiet row
+  "d29637fa06af1f5f", // quiet helper
+  "f774c75996266b14", // quiet near names
+  "d21d9b647115b998", // unexpandable table
+  "a10cd2f4c27a93d3", // non-literal title
+];
+/** Owner-bound gate finding (wb-hk9l refusal #2): the 18-route cut-2 floor plus H1-H4. This contract count is
+ * outside the witness/readings/digest tables, so a coordinated hollow of their mirrored rows still reds.
+ */
+const SCAN_ROUTE_COUNT = 22;
 const SCAN_READINGS: readonly string[] = [
   "direct call: row copies",
   "async call: row copies",
@@ -153,6 +219,10 @@ const SCAN_READINGS: readonly string[] = [
   "function helper: row copies",
   "arrow helper: row copies",
   "alias: row copies",
+  "import alias: row copies",
+  "destructured alias: row copies",
+  "assigned alias: row copies",
+  "const keyed element: row copies",
   "class method: row copies",
   "property helper: row copies",
   "two hops: row copies",
@@ -361,12 +431,15 @@ describe("WB-014 immutable invocation identity", () => {
     expect(registered.filter(row => row.timeout === PACKAGE_COPY_ROW_BUDGET_MS).map(row => row.title), "the rows the runner runs under PACKAGE_COPY_ROW_BUDGET_MS").toEqual(PACKAGE_COPY_ROWS);
     expect(scanned.filter(row => row.copies).map(row => row.title), "the rows whose registration reaches a copy").toEqual(PACKAGE_COPY_ROWS);
     expect(PACKAGE_COPY_ROW_BUDGET_MS, "the owner floor").toBeGreaterThanOrEqual(20_000);
-    expect(WORST_MEASURED_WALL_MS, "the worst wall of record: 36730 ms (outbox 571)").toBeGreaterThanOrEqual(36_730);
+    expect(WORST_MEASURED_WALL_MS, "the worst wall of record: 50599 ms (g10-gate-s4 probe d7ae1c7)").toBeGreaterThanOrEqual(50_599);
     expect(PACKAGE_COPY_ROW_BUDGET_MS, "more than 2 x the worst wall of record").toBeGreaterThan(2 * WORST_MEASURED_WALL_MS);
   });
 
   it("wb-hk9l scan liveness: each copy route reads as a copy, each quiet row as quiet, and an unreadable row as its sentinel", () => {
     const readings = SCAN_WITNESSES.map(([route, source]) => `${route}: ${scanRows(source).map(row => `${row.title} ${row.copies ? "copies" : "quiet"}`).join("; ")}`);
+    expect(SCAN_WITNESSES.map(([, source]) => createHash("sha256").update(source).digest("hex").slice(0, 16)), "every witness source is frozen, not just its route and reading").toEqual(SCAN_SOURCE_DIGESTS);
+    expect(SCAN_WITNESSES.length, "owner-bound 18 original routes plus H1-H4 alias forms").toBe(SCAN_ROUTE_COUNT);
+    expect(SCAN_READINGS.length, "the frozen reading count").toBe(SCAN_ROUTE_COUNT);
     expect(readings, "the scan's reading of each witness").toEqual(SCAN_READINGS);
   });
 });
