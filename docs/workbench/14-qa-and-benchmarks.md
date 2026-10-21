@@ -79,3 +79,17 @@ Evidence of record for the five docs/workbench/11 acceptance journeys, one row p
 | 5 | fixture pass | test/workbench-control.test.ts: "rule 2: observer-only grants cannot control under any action spelling, and nothing is read before refusing" |
 | 5 | fixture pass | test/workbench-control.test.ts: "rule 3: only the frozen per-provider allowlist resolves an action (exact, case-sensitive, no prototype lookups)" |
 | 5 | fixture pass | test/workbench-native-details.test.ts: "preserves selected node on resize and closes without invoking any runtime controls" |
+
+## W10 withdrawn-claim census residuals
+
+Named residuals of test/workbench-w10-section-withdrawn-claim.test.ts, the section-level census over the feature-matrix W10 rows for the two withdrawn spellings: one row per residual family the census names and does not claim to catch. Each row names the census quiet row for that family, an exemplar its page carries exactly once and that reads quiet, and a clear form that undoes the family: with the exemplar replaced by the clear form, the page must read the withdrawn claim at the location given. The census judges this table against its quiet rows in both directions, so a family dropped, renamed or silenced on either side reads red. In a clear form, `\n` stands for a line break.
+
+| Quiet row | Residual family | Exemplar | Clear form | Clear form reads |
+| --- | --- | --- | --- | --- |
+| ENUM0 | ASCII look-alikes | `zero durab1e writes` | `zero durable writes` | W10 table 1 row 2 Caveats: zero durable writes |
+| ENUM1 | hyphenated paraphrases | `zero durable-writes` | `zero durable writes` | W10 table 1 row 2 Caveats: zero durable writes |
+| ENUM2 | new paraphrases | `No persistent writes occur.` | `No durable writes occur.` | W10 table 1 row 2 Caveats: no durable write |
+| ENUM3 | struck-through text | `~~zero durable writes~~` | `zero durable writes` | W10 table 1 row 2 Caveats: zero durable writes |
+| ENUM4 | renamed relocated W10 keys | `RF renamed adapter` | `ReactiveFiber reader adapter` | outside W10 table 1 row 1 Caveats: zero durable writes |
+| ENUM5 | relocated inline HTML including br-split claim | `zero durable<br>writes` | `zero durable writes` | outside W10 table 1 row 1 Caveats: zero durable writes |
+| ENUM6 | W10 heading text | `## W10: ReactiveFiber provider/interop zero durable writes` | `## W10: ReactiveFiber provider/interop\n\nzero durable writes` | W10 paragraph: zero durable writes |
