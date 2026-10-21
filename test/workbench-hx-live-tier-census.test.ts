@@ -31,6 +31,10 @@
  * receipt's job. Every shape the receipt judge claims to refuse is pinned by a named falsifier: the wb-tz2.14 cases (console members, a console
  * echo, a non-receipt write) and the SURVIVORS rows, whose whys the claims anchor ties to the JUDGE CLAIMS documented on writesReceiptToStdout;
  * the LIVE set is anchored to vitest.native.config.ts.
+ * wb-drd.1 (drd gate PREP F1, rule 16 clarification 1): the JUDGE CLAIMS are doc text of this file, so removing one row from SURVIVORS, the
+ * frozen ids and digest literals and its claim line together stayed green (the CT6 coordinated hollow). The SURVIVORS rows - name and why, in
+ * table order - are therefore anchored to the docs/workbench/14-qa-and-benchmarks.md table "HX live-tier receipt falsifiers" as well, a surface
+ * outside this census that a coordinated edit of its own literals cannot reach.
  * NAMED RESIDUALS (R584 GE2-GE9, wording widened at cut 3, plus seat-named S1-S3): a constant-true conditional return (GE2), a receipt hidden in a
  * dead argument branch (GE3) or uninvoked argument closure (GE4), shadowed process (GE5), and console echo via an alias (GE6), .call, .apply,
  * .bind or Reflect.apply (GE7), a comma-indirect call or reference (GE8) or a destructured member (GE9) remain outside this structural judge, as
@@ -44,8 +48,10 @@ import {readdirSync, readFileSync} from 'node:fs';
 import {dirname, join} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {runInNewContext} from 'node:vm';
+import {marked, type Tokens} from 'marked';
 import ts from 'typescript';
 import {describe, expect, it} from 'vitest';
+import {docsSection, type RenderedBlock, sectionMatches} from './helpers/census.js';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 /** This census's own source path: the claims anchor reads the judge's documented claims from it (a throwaway copy reads itself). */
@@ -54,6 +60,18 @@ const NATIVE_ECOSYSTEM = 'test/workbench-native-ecosystem.test.ts';
 const ECOSYSTEM_NATIVE = 'test/workbench-ecosystem-native.test.ts';
 const LIVE = [NATIVE_ECOSYSTEM, ECOSYSTEM_NATIVE] as const;
 const NATIVE_CONFIG = 'vitest.native.config.ts';
+/** wb-drd.1: the docs page whose falsifier table anchors the SURVIVORS rows outside this census, and that section's heading path. */
+const DOCS_14 = 'docs/workbench/14-qa-and-benchmarks.md';
+const DOCS_14_PARENT = `14 ${String.fromCodePoint(0x2014)} Test strategy, conformance suite, benchmark and adversarial controls`;
+const FALSIFIERS_HEADING = 'HX live-tier receipt falsifiers';
+const FALSIFIERS_HEADER: readonly string[] = ['Falsifier row', 'Refused receipt shape'];
+/** The section's one paragraph, verbatim: the adoption form refuses any other paragraph beside the table (a weakening sentence included). */
+const FALSIFIERS_INTRO = 'The two live-binary HX tests of the native-read tier (vitest.native.config.ts) write their receipt line with process.stdout.write, ' +
+  'because the vitest agent reporter drops the console output of passing tests. test/workbench-hx-live-tier-census.test.ts judges that write in ' +
+  'the test sources and refuses every receipt shape below; each row names one falsifier row of the census and the refused shape, verbatim, and is ' +
+  'fixture pass evidence only: the census case named for the row runs it over a synthetic probe, never the hx binary. The census reads this ' +
+  'table and requires its own falsifier rows to equal these rows in both directions and in table order, so a falsifier dropped from the census, ' +
+  'together with every census literal edited to match, still reads red against this table.';
 
 /** The three forms R2 acceptance 1 names, verbatim: native-ecosystem:10@9df9a03 carries the first and third, ecosystem-native:19
  * the first and second. Matched against the RAW source text, comments included, so even a commented-out pin is refused. */
@@ -391,6 +409,7 @@ function containsReceiptCall(node: ts.Node): boolean {
  * - a write unreached after a prior plain block whose return follows another statement
  * - a write unreached after a prior plain block whose return precedes another statement
  * - a write in a nested plain block unreached after an outer return
+ * - a write in a nested plain block unreached after a return inside that block
  * - a write in the untaken else branch of an if
  * - a write inside a loop body that never runs
  * - a write in the untaken arm of a ternary
@@ -428,6 +447,61 @@ function judgeClaims(): string[] {
     const claim = /^\s*\*\s-\s(.+?)\s*$/.exec(line)?.[1];
     return claim === undefined ? [] : [claim];
   });
+}
+
+/** A falsifier row as the docs table names it: the row id and the shape it refuses (its why). */
+interface NamedFalsifier {
+  readonly id: string;
+  readonly why: string;
+}
+/** A docs/14 falsifier cell: the value inside one code span, so a shape such as (<Console>console).log renders as text, never as HTML. */
+const codeCell = (value: string): string => `\`${value}\``;
+/** Every table in the document under the falsifier header, as raw cell source (header row first); docs/14 must hold exactly one. */
+function falsifierGrids(markdown: string): string[][][] {
+  return marked
+    .lexer(markdown)
+    .filter((token): token is Tokens.Table => token.type === 'table')
+    .map(token => [token.header.map(cell => cell.text), ...token.rows.map(cells => cells.map(cell => cell.text))])
+    .filter(grid => grid[0]?.join('|') === FALSIFIERS_HEADER.join('|'));
+}
+/** The rendered blocks the falsifier section must be (the shared adoption form): its intro paragraph and one table of the rows. */
+function falsifierBlocks(rows: readonly NamedFalsifier[]): RenderedBlock[] {
+  return [
+    {kind: 'paragraph', text: FALSIFIERS_INTRO, markdown: FALSIFIERS_INTRO},
+    {kind: 'other', type: 'table', text: [...FALSIFIERS_HEADER, ...rows.flatMap(row => [row.id, row.why])].join(' ')},
+  ];
+}
+/** Every drift between docs/14 "HX live-tier receipt falsifiers" and a falsifier table (wb-drd.1), each naming the row: the section must render
+ * as exactly its intro and one table of the rows, and that table's rows must equal the rows one by one - name and why, each in one code span - in
+ * table order. A row dropped from SURVIVORS, and so from every literal of this census edited to match, still reads red against a surface outside
+ * this file (rule 16 CT5/CT6, the 6ze.39 self-anchoring class). */
+function falsifierTableFailures(markdown: string, rows: readonly NamedFalsifier[]): string[] {
+  const where = `${DOCS_14} "${FALSIFIERS_HEADING}"`;
+  const section = docsSection(markdown, FALSIFIERS_HEADING, 2, [DOCS_14_PARENT]);
+  if (!section.ok) return [`${where}: the section is refused: ${section.why}`];
+  const out: string[] = [];
+  const exact = sectionMatches(section, falsifierBlocks(rows));
+  if (!exact.ok) out.push(`${where} is not exactly its intro paragraph and one table of the census's falsifier rows: ${exact.why}`);
+  const grids = falsifierGrids(markdown);
+  if (grids.length !== 1) return [...out, `${DOCS_14}: the falsifier table must occur exactly once; found ${grids.length}`];
+  const key = (cells: readonly string[]): string => cells.join(' | ');
+  const listed = (grids[0] ?? []).slice(1).map(key);
+  const census = rows.map(row => key([codeCell(row.id), codeCell(row.why)]));
+  for (const [index, row] of rows.entries()) {
+    if (!listed.includes(census[index] ?? '')) out.push(`falsifier ${row.id} (${row.why}) is not listed in ${where}`);
+  }
+  for (const entry of listed) if (!census.includes(entry)) out.push(`${where} lists ${entry}, which the census's falsifier rows do not carry`);
+  const sameSet = census.every(entry => listed.includes(entry)) && listed.every(entry => census.includes(entry));
+  if (sameSet && listed.join('\n') !== census.join('\n')) out.push(`${where} lists the census's falsifier rows out of table order or more than once`);
+  return out;
+}
+/** A synthetic docs/14 around the falsifier section, for the reader's own falsifiers (never the live text). */
+function syntheticFalsifiers(rows: readonly NamedFalsifier[], options: {heading?: string; before?: string; inside?: string; cell?: (value: string) => string} = {}): string {
+  const cell = options.cell ?? codeCell;
+  const table = [FALSIFIERS_HEADER, FALSIFIERS_HEADER.map(() => '---'), ...rows.map(row => [cell(row.id), cell(row.why)])].map(cells => `| ${cells.join(' | ')} |`);
+  return [`# ${DOCS_14_PARENT}`, '', '## Truth labels and release gates', '', 'Text.', '', ...(options.before === undefined ? [] : [options.before, '']),
+    `## ${options.heading ?? FALSIFIERS_HEADING}`, '', FALSIFIERS_INTRO, '', ...table, '', ...(options.inside === undefined ? [] : [options.inside, '']),
+    '## Acceptance journey evidence', '', 'Text.', ''].join('\n');
 }
 
 interface Pins {
@@ -726,8 +800,10 @@ describe('wb-tz2.2 census: the scanner itself is falsifiable', () => {
 
   /** wb-drd: the named falsifier rows of the wb-tz2.14 receipt census - the five original survivors (row 479 F6), GE1 (R584 U2), the row 626 F1
    * terminator rows plus the early-return quantifier row, the documented else, loop and ternary shapes, and the echo spellings of row 626 U1
-   * (J8/J9/J12b) plus the type-assertion and any-member echoes. The dead-write shapes print the receipt where it can never run; the echo shapes print it through
-   * console beside the stdout write. Each row's why is one JUDGE CLAIMS line of writesReceiptToStdout's doc (the claims anchor below). */
+   * (J8/J9/J12b) plus the type-assertion and any-member echoes, and the wb-drd.1 inner-block return row (drd gate PREP F2: a return before the write inside
+   * the write's own nested plain block, the D-BODY-ONLY survivor). The dead-write shapes print the receipt where it can never run; the echo shapes print it
+   * through console beside the stdout write. Each row's why is one JUDGE CLAIMS line of writesReceiptToStdout's doc (the claims anchor below), and each row's
+   * name and why are one row of the docs/14 falsifier table (the wb-drd.1 anchor below, outside this census). */
   const SURVIVORS: readonly {readonly id: string; readonly why: string; readonly statements: readonly string[]; readonly stdout: number; readonly echoed: number}[] = [
     {id: 'dead-write-if-false', why: 'a write inside if (false)', statements: [...WELL_FORMED.slice(0, -1), 'if (false) {', '  process.stdout.write(hxLiveReceipt(result, verdict) + "\\n");', '}'], stdout: 0, echoed: 0},
     {id: 'dead-write-after-return', why: 'a write unreached after return', statements: [...WELL_FORMED.slice(0, -1), 'return;', 'process.stdout.write(hxLiveReceipt(result, verdict) + "\\n");'], stdout: 0, echoed: 0},
@@ -736,6 +812,7 @@ describe('wb-tz2.2 census: the scanner itself is falsifiable', () => {
     {id: 'dead-write-after-late-block-return', why: 'a write unreached after a prior plain block whose return follows another statement', statements: [...WELL_FORMED.slice(0, -1), '{ hxLiveInvariant(result); return; }', 'process.stdout.write(hxLiveReceipt(result, verdict) + "\\n");'], stdout: 0, echoed: 0},
     {id: 'dead-write-after-early-block-return', why: 'a write unreached after a prior plain block whose return precedes another statement', statements: [...WELL_FORMED.slice(0, -1), '{ return; hxLiveInvariant(result); }', 'process.stdout.write(hxLiveReceipt(result, verdict) + "\\n");'], stdout: 0, echoed: 0},
     {id: 'dead-write-nested-after-return', why: 'a write in a nested plain block unreached after an outer return', statements: [...WELL_FORMED.slice(0, -1), 'return;', '{', '  process.stdout.write(hxLiveReceipt(result, verdict) + "\\n");', '}'], stdout: 0, echoed: 0},
+    {id: 'dead-write-inner-after-return', why: 'a write in a nested plain block unreached after a return inside that block', statements: [...WELL_FORMED.slice(0, -1), '{', '  return;', '  process.stdout.write(hxLiveReceipt(result, verdict) + "\\n");', '}'], stdout: 0, echoed: 0},
     {id: 'dead-write-else', why: 'a write in the untaken else branch of an if', statements: [...WELL_FORMED.slice(0, -1), 'if (true) {', '} else {', '  process.stdout.write(hxLiveReceipt(result, verdict) + "\\n");', '}'], stdout: 0, echoed: 0},
     {id: 'dead-write-loop', why: 'a write inside a loop body that never runs', statements: [...WELL_FORMED.slice(0, -1), 'while (false) {', '  process.stdout.write(hxLiveReceipt(result, verdict) + "\\n");', '}'], stdout: 0, echoed: 0},
     {id: 'dead-write-ternary', why: 'a write in the untaken arm of a ternary', statements: [...WELL_FORMED.slice(0, -1), 'false ? process.stdout.write(hxLiveReceipt(result, verdict) + "\\n") : undefined;'], stdout: 0, echoed: 0},
@@ -755,7 +832,8 @@ describe('wb-tz2.2 census: the scanner itself is falsifiable', () => {
   it('wb-drd: the named falsifier rows are the frozen set, in table order (a deleted or renamed row reds here)', () => {
     expect(SURVIVORS.map(item => item.id)).toStrictEqual([
       'dead-write-if-false', 'dead-write-after-return', 'dead-write-uninvoked-closure', 'dead-write-after-block-return',
-      'dead-write-after-late-block-return', 'dead-write-after-early-block-return', 'dead-write-nested-after-return', 'dead-write-else',
+      'dead-write-after-late-block-return', 'dead-write-after-early-block-return', 'dead-write-nested-after-return', 'dead-write-inner-after-return',
+      'dead-write-else',
       'dead-write-loop', 'dead-write-ternary',
       'echo-element-access', 'echo-globalThis-console', 'echo-globalThis-element-console', 'echo-window-console', 'echo-global-console',
       'echo-parenthesised-console', 'echo-nonnull-console', 'echo-as-console', 'echo-satisfies-console', 'echo-angle-assertion-console',
@@ -774,6 +852,7 @@ describe('wb-tz2.2 census: the scanner itself is falsifiable', () => {
       '9f55bc7fa8bcd2e9077c69499e509ae0740c179b1b46c991d946e0ff672f01e4', // dead-write-after-late-block-return
       'fa8356c720dbe918c74ea9f0d8cf0491d52b73c12df70d0e92410cf6bf409cb4', // dead-write-after-early-block-return
       'e5b1df2e88e764f4530da1a389c7354813fb62d23e3583b0eeafe84b83abf246', // dead-write-nested-after-return
+      'e577b4466aeb9234d1dbeb756d9cbe28256335cfb70748306a7b840d73940085', // dead-write-inner-after-return
       '3a3eabb6d95d60e076f6b252efd11feab642e9cf1a4ec9c65e1c932f0e6b7f62', // dead-write-else
       '536142dc47b78b3635cbb06e39ed8403f7103b906ca7be955bacbea31d450158', // dead-write-loop
       'b2244d37bf02316f06020170aeb03ba12b7a4766d3e41121c3f8e218ec38f8e4', // dead-write-ternary
@@ -796,6 +875,63 @@ describe('wb-tz2.2 census: the scanner itself is falsifiable', () => {
   // elements still reds here, and so does a claim documented without its row.
   it('wb-drd claims anchor: the judge documents exactly the shapes the named falsifier rows pin, in table order (a claim without its row reds)', () => {
     expect(judgeClaims()).toStrictEqual(SURVIVORS.map(item => item.why));
+  });
+
+  // wb-drd.1 (drd gate PREP F1): the claims anchor above reads this file's own doc, so a row deleted together with its ids, digest and claim line
+  // stayed green. This anchor reads docs/14, outside the census: the coordinated hollow of every census literal reds here (rule 16 CT6).
+  it('wb-drd.1 anchor: docs/14 "HX live-tier receipt falsifiers" lists exactly the named falsifier rows - name and refused shape, in table order - outside this census (rule 16 CT5/CT6)', () => {
+    expect(falsifierTableFailures(readRepo(DOCS_14), SURVIVORS)).toStrictEqual([]);
+  });
+
+  it('wb-drd.1 reader control: a synthetic docs/14 that writes exactly the falsifier rows passes', () => {
+    expect(falsifierTableFailures(syntheticFalsifiers(SURVIVORS), SURVIVORS)).toStrictEqual([]);
+  });
+
+  it('wb-drd.1 reader: a falsifier the docs table drops reds, naming the row', () => {
+    const dropped = SURVIVORS[3];
+    expect(dropped).toBeDefined();
+    const lines = falsifierTableFailures(syntheticFalsifiers(SURVIVORS.filter(item => item !== dropped)), SURVIVORS);
+    expect(lines).toContain(`falsifier ${dropped?.id} (${dropped?.why}) is not listed in ${DOCS_14} "${FALSIFIERS_HEADING}"`);
+  });
+
+  it('wb-drd.1 reader: a docs row the census does not carry reds, naming the row', () => {
+    const lines = falsifierTableFailures(syntheticFalsifiers([...SURVIVORS, {id: 'echo-extra', why: 'an extra shape'}]), SURVIVORS);
+    expect(lines).toContain(`${DOCS_14} "${FALSIFIERS_HEADING}" lists \`echo-extra\` | \`an extra shape\`, which the census's falsifier rows do not carry`);
+  });
+
+  it('wb-drd.1 reader: two swapped docs rows red as out of table order', () => {
+    const swapped = [SURVIVORS[1], SURVIVORS[0], ...SURVIVORS.slice(2)].filter((item): item is (typeof SURVIVORS)[number] => item !== undefined);
+    expect(swapped).toHaveLength(SURVIVORS.length);
+    const lines = falsifierTableFailures(syntheticFalsifiers(swapped), SURVIVORS);
+    expect(lines).toContain(`${DOCS_14} "${FALSIFIERS_HEADING}" lists the census's falsifier rows out of table order or more than once`);
+  });
+
+  it('wb-drd.1 reader: a refused shape shortened in the docs reds on both sides, so the why is anchored and not only the name', () => {
+    const shortened = SURVIVORS.map(item => (item.id === 'echo-window-console' ? {id: item.id, why: 'window.console.log'} : item));
+    const lines = falsifierTableFailures(syntheticFalsifiers(shortened), SURVIVORS);
+    expect(lines).toContain(`falsifier echo-window-console (window.console.log beside the stdout write) is not listed in ${DOCS_14} "${FALSIFIERS_HEADING}"`);
+    expect(lines).toContain(`${DOCS_14} "${FALSIFIERS_HEADING}" lists \`echo-window-console\` | \`window.console.log\`, which the census's falsifier rows do not carry`);
+  });
+
+  it('wb-drd.1 reader: a cell written without its code span reds, so the docs table keeps the one cell form the reader judges', () => {
+    const lines = falsifierTableFailures(syntheticFalsifiers(SURVIVORS, {cell: value => (value === 'a write inside a loop body that never runs' ? value : codeCell(value))}), SURVIVORS);
+    expect(lines).toContain(`falsifier dead-write-loop (a write inside a loop body that never runs) is not listed in ${DOCS_14} "${FALSIFIERS_HEADING}"`);
+  });
+
+  it('wb-drd.1 reader: a renamed, duplicated or re-homed section heading refuses the section', () => {
+    const refused = (markdown: string): string => falsifierTableFailures(markdown, SURVIVORS)[0] ?? '';
+    expect(refused(syntheticFalsifiers(SURVIVORS, {heading: 'HX receipt notes'}))).toContain('the section is refused');
+    expect(refused(syntheticFalsifiers(SURVIVORS, {inside: `## ${FALSIFIERS_HEADING}`}))).toContain('occurs 2 times');
+    expect(refused(syntheticFalsifiers(SURVIVORS, {before: '# Appendix'}))).toContain('the census binds it under');
+  });
+
+  it('wb-drd.1 reader: a paragraph added beside the table, or the table hidden in an HTML comment, is not the section the census adopts', () => {
+    const weakened = falsifierTableFailures(syntheticFalsifiers(SURVIVORS, {inside: 'A shape may be dropped from the census without a docs edit.'}), SURVIVORS);
+    expect(weakened.some(line => line.includes('is not exactly its intro paragraph and one table'))).toBe(true);
+    const hidden = syntheticFalsifiers(SURVIVORS).replace(`| ${FALSIFIERS_HEADER.join(' | ')} |`, `<!--\n| ${FALSIFIERS_HEADER.join(' | ')} |`).replace('\n\n## Acceptance', '\n-->\n\n## Acceptance');
+    const lines = falsifierTableFailures(hidden, SURVIVORS);
+    expect(lines.some(line => line.includes('is not exactly its intro paragraph and one table'))).toBe(true);
+    expect(lines).toContain(`${DOCS_14}: the falsifier table must occur exactly once; found 0`);
   });
 
   it('wb-drd control: the well-formed case executes exactly one stdout receipt line, echoes none, and passes the stdout pin', async () => {

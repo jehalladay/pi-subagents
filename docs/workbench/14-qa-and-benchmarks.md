@@ -59,6 +59,35 @@ Every test evidence artifact includes revision, tool versions, commands, timesta
 
 Use Forge build/test/gates as primary interface; run local relevant Node tests through Forge-configured paths. Never introduce GitHub CI. Pin dependencies, lockfile and package exports.
 
+## HX live-tier receipt falsifiers
+
+The two live-binary HX tests of the native-read tier (vitest.native.config.ts) write their receipt line with process.stdout.write, because the vitest agent reporter drops the console output of passing tests. test/workbench-hx-live-tier-census.test.ts judges that write in the test sources and refuses every receipt shape below; each row names one falsifier row of the census and the refused shape, verbatim, and is fixture pass evidence only: the census case named for the row runs it over a synthetic probe, never the hx binary. The census reads this table and requires its own falsifier rows to equal these rows in both directions and in table order, so a falsifier dropped from the census, together with every census literal edited to match, still reads red against this table.
+
+| Falsifier row | Refused receipt shape |
+| --- | --- |
+| `dead-write-if-false` | `a write inside if (false)` |
+| `dead-write-after-return` | `a write unreached after return` |
+| `dead-write-uninvoked-closure` | `a write inside an uninvoked closure` |
+| `dead-write-after-block-return` | `a write unreached after an unconditional return in a prior plain block` |
+| `dead-write-after-late-block-return` | `a write unreached after a prior plain block whose return follows another statement` |
+| `dead-write-after-early-block-return` | `a write unreached after a prior plain block whose return precedes another statement` |
+| `dead-write-nested-after-return` | `a write in a nested plain block unreached after an outer return` |
+| `dead-write-inner-after-return` | `a write in a nested plain block unreached after a return inside that block` |
+| `dead-write-else` | `a write in the untaken else branch of an if` |
+| `dead-write-loop` | `a write inside a loop body that never runs` |
+| `dead-write-ternary` | `a write in the untaken arm of a ternary` |
+| `echo-element-access` | `console['log'] beside the stdout write` |
+| `echo-globalThis-console` | `globalThis.console.log beside the stdout write` |
+| `echo-globalThis-element-console` | `globalThis['console'].log beside the stdout write` |
+| `echo-window-console` | `window.console.log beside the stdout write` |
+| `echo-global-console` | `global.console.log beside the stdout write` |
+| `echo-parenthesised-console` | `(console).log beside the stdout write` |
+| `echo-nonnull-console` | `console!.log beside the stdout write` |
+| `echo-as-console` | `(console as Console).log beside the stdout write` |
+| `echo-satisfies-console` | `(console satisfies Console).log beside the stdout write` |
+| `echo-angle-assertion-console` | `(<Console>console).log beside the stdout write` |
+| `echo-any-member-console` | `console.table, a member of any name, beside the stdout write` |
+
 ## Acceptance journey evidence
 
 Evidence of record for the five docs/workbench/11 acceptance journeys, one row per evidence leg. Each row carries one label from "Truth labels and release gates", or not started for a journey with no evidence yet: a fixture pass row names one pinned case by file and verbatim title, a live SDK pass row names its receipt, and an open row names its tracking bead. test/workbench-acceptance-journeys.census.ts judges this table against its own evidence rows in both directions, so a leg dropped from either side reads red.
