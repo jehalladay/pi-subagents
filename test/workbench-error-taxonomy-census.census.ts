@@ -40,10 +40,17 @@
  *
  * Judging cost (respin U2; the wb-6hb.9 R546 cure form). Each judge() call re-reads and re-validates the whole report
  * and re-parses every pinned file it touches, so the leg judges every table pin in ONE judge() call, at most once per
- * run (verdictsOf's memo, keyed by file and title), and every AC2 row reads that memo; only a liveness falsifier that
- * judges a deliberately mutated pin makes a call of its own. Every judging case carries the explicit file-local budget
- * JUDGE_BUDGET_MS (sized from a measured p99, see its comment), so no case rides vitest's default 5000 ms; a U2 case pins
- * exactly which cases run under it.
+ * run (verdictsOf's memo, keyed by file and title), and every AC2 row reads that memo; only a falsifier that judges a
+ * deliberately mutated pin (the liveness and the memo-attribution falsifiers) makes a call of its own. Every judging case
+ * carries the explicit file-local budget JUDGE_BUDGET_MS (sized from a measured p99, see its comment), so no case rides
+ * vitest's default 5000 ms; a U2 case pins exactly which cases run under it.
+ *
+ * Memo attribution (wb-6hb.13, the wb-gg9o N3/N4 shape). The memo layer is memoVerdicts, parameterized by its memo and
+ * its judge; verdictsOf is the run's one memo over the real judge. AC2 binds every verdict it reads to its own pin, and
+ * N3, N4 and P5 drive memoVerdicts itself, each over a memo of its own, against the real report with a deliberately
+ * mutated pin (a renamed title, the same title in another file), so a memo that hands every fresh pin the first verdict
+ * of its batch (the gate mutant G5, 'judged[index]' -> 'judged[0]', which survived the 6hb.7 cut) or serves one pin
+ * another pin's verdict reads red.
  *
  * Truth label: "fixture pass" only. The census adds no behaviour test for a category; every row here is pinned, and a
  * category whose typed diagnostic goes missing is recorded unpinned in the same commit with a reason, never implemented here.
@@ -311,10 +318,14 @@ const failures = (row: TaxonomyRow, verdicts: readonly PinVerdict[]): string[] =
  * 16 whole census-tier runs, 8 sequential (load1 300-366) p99 6682 ms and 8 at 2-way (load1 333-507) p99 12659 ms. The
  * table judgment ran over vitest's default 5000 ms in 31 of those 40 runs, and no judging case reached 30000 ms.
  * 5 x 12659 ms = 63295 ms, rounded up to 65000 ms.
+ * wb-6hb.13 adds N3, N4 and P5 under the same budget without moving it: P5 judges a table-sized batch (fourteen passing
+ * pins and one absent) in one call and N3 / N4 judge one passing pin per call, so U2 stays the costliest judging case.
+ * Measured 2026-10-20 against a full default-tier report (321 files, 12626 tests), this file alone, 5 sequential runs
+ * (load1 293-411): U2 4645-6135 ms, P5 3170-5485 ms (below U2 in every run), N3 330-569 ms, N4 482-900 ms.
  */
 const JUDGE_BUDGET_MS = 65_000;
 const JUDGING: { readonly timeout: number } = { timeout: JUDGE_BUDGET_MS };
-/** The cases that run under JUDGE_BUDGET_MS, by title head: U2's table judgment, AC2 per row and the five liveness falsifiers. */
+/** The cases that run under JUDGE_BUDGET_MS, by title head: U2's table judgment, AC2 per row, the five liveness falsifiers and the three memo-attribution falsifiers (wb-6hb.13). */
 const EXPECTED_BUDGETED: readonly string[] = [
   "U2 memo",
   "AC2 row 'a'",
@@ -331,6 +342,9 @@ const EXPECTED_BUDGETED: readonly string[] = [
   "M3",
   "M4",
   "M5",
+  "N3",
+  "N4",
+  "P5",
 ];
 
 /** A pin's identity for the memo: its verdict depends on the file and the title (the tier is the default gate's). */
@@ -340,25 +354,44 @@ const verdictMemo = new Map<string, PinVerdict>();
 /** The judge() calls verdictsOf made this run: U2 pins that the table is judged once and a row read judges nothing. */
 let memoJudgeCalls = 0;
 
-/** Every pin's verdict in pin order; the pins this run has not judged yet are judged together, in ONE judge() call. */
-function verdictsOf(pins: readonly Pin[]): readonly PinVerdict[] {
-  const fresh = [...new Map(pins.filter(entry => !verdictMemo.has(pinKey(entry))).map(entry => [pinKey(entry), entry] as const)).values()];
+/**
+ * The memo layer (wb-6hb.13, the wb-gg9o shape): every pin's verdict in pin order, drawn from `memo` by pin identity; the
+ * pins `memo` has not judged yet are judged together, in ONE `judgeFresh` call, and each verdict is stored under the key
+ * of the pin at its own position. Parameterized by its memo and its judge so the memo-attribution falsifiers below drive
+ * this very code with a memo of their own against the real report; verdictsOf is the run's one memo and the real judge.
+ */
+function memoVerdicts(memo: Map<string, PinVerdict>, pins: readonly Pin[], judgeFresh: (fresh: readonly Pin[]) => readonly PinVerdict[]): readonly PinVerdict[] {
+  const fresh = [...new Map(pins.filter(entry => !memo.has(pinKey(entry))).map(entry => [pinKey(entry), entry] as const)).values()];
   if (fresh.length > 0) {
-    memoJudgeCalls += 1;
-    const judged = judge(
-      REPORT,
-      fresh.map(entry => casePin(entry)),
-    );
+    const judged = judgeFresh(fresh);
     fresh.forEach((entry, index) => {
       const verdict = judged[index];
-      if (verdict !== undefined) verdictMemo.set(pinKey(entry), verdict);
+      if (verdict !== undefined) memo.set(pinKey(entry), verdict);
     });
   }
   return pins.flatMap(entry => {
-    const verdict = verdictMemo.get(pinKey(entry));
+    const verdict = memo.get(pinKey(entry));
     return verdict === undefined ? [] : [verdict];
   });
 }
+
+/** The run's judge: one judge() call over the fresh pins against the default gate's own report, counted in memoJudgeCalls. */
+function judgeAgainstReport(fresh: readonly Pin[]): readonly PinVerdict[] {
+  memoJudgeCalls += 1;
+  return judge(
+    REPORT,
+    fresh.map(entry => casePin(entry)),
+  );
+}
+
+/** Every pin's verdict in pin order; the pins this run has not judged yet are judged together, in ONE judge() call. */
+function verdictsOf(pins: readonly Pin[]): readonly PinVerdict[] {
+  return memoVerdicts(verdictMemo, pins, judgeAgainstReport);
+}
+
+/** A pin's identity as its verdict must carry it: a verdict's own pin (file, title, tier) is the pin it was judged and keyed under. */
+const pinIdentity = (entry: Pin): string => JSON.stringify([entry.file, entry.title, DEFAULT_GATE_TIER]);
+const verdictIdentity = (entry: CasePin): string => JSON.stringify([entry.file, entry.title, entry.tier]);
 
 /** Every table pin, in table order. */
 const TABLE_PINS: readonly Pin[] = ROWS.flatMap(row => row.pins);
@@ -512,6 +545,7 @@ describe("wb-6hb.7 docs/workbench/05 error-taxonomy census (report mode)", () =>
   it.each(JUDGED_ROWS.map(row => ({ row })))("AC2 row $row.row: every named default-gate case is collected once, passed and asserting in the gate's own report", JUDGING, ({ row }) => {
     const verdicts = judgeRow(row);
     expect(verdicts).toHaveLength(row.pins.length);
+    expect(verdicts.map(verdict => verdictIdentity(verdict.pin)), "each verdict the row reads is its own pin's, never a neighbour's (wb-6hb.13)").toEqual(row.pins.map(pinIdentity));
     expect(failures(row, verdicts)).toEqual([]);
     expect(verdicts.map(verdict => verdict.code)).toEqual(row.pins.map(() => "ok"));
   });
@@ -577,6 +611,87 @@ describe("wb-6hb.7 liveness: the adopted judge is not accept-all (the real repor
     const [verdict] = judge(REPORT, [{ file: entry.file, title: entry.title, tier: "forge-command" }]);
     expect(verdict?.ok).toBe(false);
     expect(verdict?.code).toBe("tier-mismatch");
+  });
+});
+
+describe("wb-6hb.13 memo attribution: the census's own memo hands each verdict to its own pin (the real report, no fabricated verdict)", () => {
+  /** A memo layer of its own over the real report: the same memoVerdicts the run uses, a local memo and a call counter. */
+  const driven = (): { readonly read: (pins: readonly Pin[]) => readonly PinVerdict[]; readonly calls: () => number } => {
+    const memo = new Map<string, PinVerdict>();
+    let calls = 0;
+    return {
+      calls: () => calls,
+      read: pins =>
+        memoVerdicts(memo, pins, fresh => {
+          calls += 1;
+          return judge(
+            REPORT,
+            fresh.map(entry => casePin(entry)),
+          );
+        }),
+    };
+  };
+  const rowOf = (id: string): TaxonomyRow => {
+    const row = ROWS.find(candidate => candidate.row === id);
+    if (row === undefined) throw new Error(`no row ${id}`);
+    return row;
+  };
+  const pinOf = (row: TaxonomyRow, index: number): Pin => {
+    const entry = row.pins[index];
+    if (entry === undefined) throw new Error(`row ${row.row} holds no pin ${index + 1}`);
+    return entry;
+  };
+  const rowH = rowOf("h");
+  /** Row h's pin 2, the pin the gate's paired probe renamed (P5a / P5b): it passes in the default gate's report. */
+  const passing = pinOf(rowH, 1);
+  /** Its renamed twin, which the report never recorded, and its title in the file of row h's pin 1: the reds are real. */
+  const renamed: Pin = { ...passing, title: `${passing.title} (renamed)` };
+  const otherFile: Pin = { ...passing, file: pinOf(rowH, 0).file };
+  const state = (verdicts: readonly PinVerdict[]): string[] => verdicts.map(entry => entry.code);
+  const owners = (verdicts: readonly PinVerdict[]): string[] => verdicts.map(entry => verdictIdentity(entry.pin));
+
+  it("N3: the same title in another file, or a renamed title in the same file, is its own pin and keeps its own verdict across reads, and a repeat read judges nothing", JUDGING, () => {
+    const later = driven();
+    expect(state(later.read([passing]))).toEqual(["ok"]);
+    expect(later.calls()).toBe(1);
+    const twins = later.read([otherFile, renamed]);
+    expect(state(twins), "a pin read after its twin is not served the twin's memoized verdict").toEqual(["absent", "absent"]);
+    expect(owners(twins), "each twin's verdict is its own").toEqual([otherFile, renamed].map(pinIdentity));
+    expect(later.calls(), "the twins were judged afresh, together").toBe(2);
+    const again = later.read([renamed, passing, otherFile]);
+    expect(later.calls(), "every pin is memoized, so the repeat judges nothing").toBe(2);
+    expect(state(again)).toEqual(["absent", "ok", "absent"]);
+    expect(owners(again), "each still attributed to its own pin").toEqual([renamed, passing, otherFile].map(pinIdentity));
+  });
+
+  it("N4: a fresh batch maps verdict i to pin i, so a passing pin and a red pin keep their own verdicts in either order", JUDGING, () => {
+    const forward = driven().read([passing, renamed]);
+    expect(state(forward)).toEqual(["ok", "absent"]);
+    expect(owners(forward)).toEqual([passing, renamed].map(pinIdentity));
+    const backward = driven().read([renamed, passing]);
+    expect(state(backward)).toEqual(["absent", "ok"]);
+    expect(owners(backward)).toEqual([renamed, passing].map(pinIdentity));
+  });
+
+  it("P5: row h with its pin 2 renamed, read the way AC2 reads it (the whole table in one fresh batch, then the row), reds row h naming that pin and no other row (the gate's paired probe, through the memo)", JUDGING, () => {
+    const probeH: TaxonomyRow = { ...rowH, pins: [pinOf(rowH, 0), renamed] };
+    const probe = ROWS.map(row => (row.row === "h" ? probeH : row));
+    const run = driven();
+    expect(run.read(probe.flatMap(row => row.pins))).toHaveLength(TABLE_PINS.length);
+    expect(run.calls(), "the probe table is judged in one call").toBe(1);
+    const verdicts = run.read(probeH.pins);
+    expect(run.calls(), "the row read judges nothing").toBe(1);
+    expect(state(verdicts)).toEqual(["ok", "absent"]);
+    expect(owners(verdicts)).toEqual(probeH.pins.map(pinIdentity));
+    const lines = failures(probeH, verdicts);
+    expect(lines).toHaveLength(1);
+    expect(lines[0]).toContain("row h:");
+    expect(lines[0]).toContain(renamed.title);
+    expect(
+      probe.filter(row => row !== probeH).flatMap(row => failures(row, run.read(row.pins))),
+      "every other row reads green from the same batch",
+    ).toEqual([]);
+    expect(run.calls(), "and judges nothing more").toBe(1);
   });
 });
 
