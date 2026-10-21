@@ -1,7 +1,8 @@
 /**
  * wb-973.5 (SWARM-CONTEXT-GRAPH-R5, negative): the RF workspace root that reactivefiber.render.preview renders against is
- * the directory the host bound when it registered the capability (registryFor's realpath of the project directory in
- * src/index.ts, through registerNativeProviders). Nothing a caller supplies moves it:
+ * the directory the host bound when it registered the capability (src/index.ts registryFor, through
+ * registerNativeProviders: the path the validated workbench.reactivefiberWorkspaceRoot setting names when the operator
+ * configures it (wb-973.4), and otherwise the realpath of the project directory). Nothing a caller supplies moves it:
  *  - AC1, a capability input: the landed wb-973.1 oneOf input schema keeps additionalProperties:false on BOTH arms and
  *    declares no path-shaped property, so CapabilityRegistry.invoke refuses `workspace`, `workspaceRoot` or `root` at
  *    input validation before any rf process runs. A workflow script's node() call reaches the same registry.invoke
@@ -77,7 +78,7 @@ afterEach(async () => {
   removeScratch(...scratch.splice(0));
 });
 
-/** A fresh tracked directory, as its real path (the form registryFor binds). */
+/** A fresh tracked directory, as its real path (the form registryFor binds by default; a configured workbench.reactivefiberWorkspaceRoot is bound as written). */
 function directory(prefix: string): string {
   const dir = makeScratch(prefix);
   scratch.push(dir);
