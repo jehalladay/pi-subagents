@@ -1,0 +1,39 @@
+{
+  "comment": "wb-5jha (R660 F1 cure, the hk9l roster pattern): the OUT-OF-FILE anchor for the named residual quiet rows of test/workbench-w10-section-withdrawn-claim.test.ts that docs/workbench/14 does not carry - the C3 control (unrelated prose outside W10) and the GN12/GN13 shape-only nesting/title-depth legs. Each row pins the quiet row's id, residual family, registered test name, the full sha256 of its quiet page and its frozen reading, in census order; the census judges its in-file rows and its registered tests against this list exactly, in both directions.",
+  "residuals": [
+    {
+      "id": "C3",
+      "family": "unrelated prose outside W10",
+      "test": "C3 unrelated W11 prose is outside the named scope",
+      "digest": "a35b114f246160ab65db382004358f6b116b469441b95117cef53bdeb27aea87",
+      "reading": {
+        "shape": [],
+        "claims": []
+      }
+    },
+    {
+      "id": "GN12",
+      "family": "shape-only nesting",
+      "test": "GN12 residual: nested level-1 heading before W10 is shape-only",
+      "digest": "df0b24aa1fce320a34e8a326750cc8aa869b5cb2c3690ebb9f8fd0d5c2349969",
+      "reading": {
+        "shape": [
+          "W10 has an intervening level-1 parent"
+        ],
+        "claims": []
+      }
+    },
+    {
+      "id": "GN13",
+      "family": "shape-only title-depth",
+      "test": "GN13 residual: demoted matrix title is shape-only",
+      "digest": "48f96be4cf10882de9017561b9fcf37a675285b096bf6f5c185ad709984db2de",
+      "reading": {
+        "shape": [
+          "W10 must belong to the matrix title"
+        ],
+        "claims": []
+      }
+    }
+  ]
+}
