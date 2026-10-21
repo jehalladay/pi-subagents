@@ -75,6 +75,7 @@
  * (safer/safest/safety, outside safe/safely) remain named residuals, outside this sentence splitter/claim-word rule.
  * Only the path-scope tests write tracked scratch fixtures; the live census reads docs/workbench.
  */
+import { createHash } from "node:crypto";
 import { mkdirSync, readdirSync, readFileSync, realpathSync, statSync, symlinkSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -1378,5 +1379,82 @@ describe("SCG-R5 AC4 grep floor (gate row 600 U2): every sentence the AC4 grep m
     });
     expect(found.filter(({ sentence }) => classify(sentence).families.length === 0 || !QUALIFIER.test(sentence))).toEqual([]);
     expect([...new Set(found.map(({ leg }) => leg))].sort()).toEqual(["raw", "rendered"]);
+  });
+});
+
+/** wb-973.19: every judged member is independently named in docs/13, not just in the in-file shape literals. */
+const EXTERNAL_ROSTER_HEADING = "SCG-R5 census evidence roster";
+const EXTERNAL_ROSTER_INTRO =
+  "This independently maintained table commits to the exact membership and order of eight judged sets. It is not a generated index: changing a judged set requires an explicit documentation revision.";
+
+/** Actual membership from the judged tables; no in-file expected member list may vouch for it. */
+const judgedMembers = (): ReadonlyArray<readonly [string, readonly string[]]> => [
+  ["DOC_ROWS", DOC_ROWS.map(row => row.id)],
+  ["PAGE_ROWS", PAGE_ROWS.map(row => row.id)],
+  ["ACCEPTED_ROWS", ACCEPTED_ROWS.map(row => row.id)],
+  ["LIVENESS_ROWS", LIVENESS_ROWS.map(row => row.id)],
+  ["GREP_SCOPE_ROWS", GREP_SCOPE_ROWS.map(row => row.id)],
+  ["REFUSED", REFUSED.map(([name]) => name)],
+  ["NO_MATCH", NO_MATCH.map(([name]) => name)],
+  ["FAMILIES", FAMILY_NAMES],
+];
+
+/** Roster rows are checked from rendered table cells as well as from the section's whole rendered block list. */
+function externalRosterFindings(markdown: string, members = judgedMembers()): string[] {
+  const section = docsSection(markdown, EXTERNAL_ROSTER_HEADING, 2, [DOCS13_TITLE]);
+  if (!section.ok) return [section.why];
+  const expectedGrid: readonly (readonly string[])[] = [
+    ["Judged set", "Count", "SHA-256"],
+    ...members.map(([name, ids]) => [name, String(ids.length), createHash("sha256").update(ids.join("\n")).digest("hex")]),
+  ];
+  const expectedBlocks: readonly RenderedBlock[] = [
+    { kind: "paragraph", text: EXTERNAL_ROSTER_INTRO, markdown: EXTERNAL_ROSTER_INTRO },
+    { kind: "other", type: "table", text: expectedGrid.map(row => row.join(" ")).join(" ") },
+  ];
+  const findings: string[] = [];
+  const exact = sectionMatches(section, expectedBlocks);
+  if (!exact.ok) findings.push(`roster section mismatch: ${exact.why}`);
+  const grids = marked.lexer(markdown).filter((token): token is Tokens.Table => token.type === "table")
+    .map(token => [token.header.map(cell => cell.text), ...token.rows.map(row => row.map(cell => cell.text))])
+    .filter(grid => grid[0]?.join("|") === "Judged set|Count|SHA-256");
+  if (grids.length !== 1) return [...findings, `expected exactly one roster table, found ${grids.length}`];
+  const actual = grids[0] ?? [];
+  if (actual.map(row => row.join(" | ")).join("\n") !== expectedGrid.map(row => row.join(" | ")).join("\n")) {
+    findings.push("the external roster membership, order, or evidence text differs from the judged tables");
+  }
+  return findings;
+}
+
+describe("wb-973.19 independent docs/13 roster anchor (rule 16 CT5/CT6)", () => {
+  it("AC1: docs/13 independently names every judged member of every census table", () => {
+    expect(externalRosterFindings(read(ROOT_SENTENCE_FILE))).toEqual([]);
+  });
+
+  it("AC2: removing any judged member from the census alone reds against docs/13 (CT4/CT5/CT6), including each of the seven gate-identified survivors", () => {
+    const docs = read(ROOT_SENTENCE_FILE);
+    const roster = judgedMembers();
+    const targeted = ["DOC_ROWS:R5", "PAGE_ROWS:W2", "ACCEPTED_ROWS:N1", "LIVENESS_ROWS:L5", "GREP_SCOPE_ROWS:G9", "REFUSED:NFS, unqualified", "NO_MATCH:refs", "FAMILIES:EFS"];
+    expect(roster.map(([name, ids]) => `${name}:${ids.find(id => targeted.includes(`${name}:${id}`)) ?? "MISSING"}`)).toEqual(targeted);
+    for (const [dimension, ids] of roster) {
+      for (const removed of ids) {
+        const hollowed = roster.map(([name, members]) => [name, name === dimension ? members.filter(id => id !== removed) : members] as const);
+        expect(externalRosterFindings(docs, hollowed).length, `${dimension}:${removed}`).toBeGreaterThan(0);
+      }
+    }
+  });
+
+  it("AC3: docs/13 roster drift, a missing section, duplicated section or re-homed section is refused even with intact census tables", () => {
+    const docs = read(ROOT_SENTENCE_FILE);
+    const section = docs.slice(docs.indexOf(`## ${EXTERNAL_ROSTER_HEADING}`));
+    expect(section.startsWith(`## ${EXTERNAL_ROSTER_HEADING}`)).toBe(true);
+    const changes = [
+      docs.replace("| DOC_ROWS | 11 |", "| DOC_ROWS | 10 |"),
+      docs.replace("| PAGE_ROWS | 36 |", "| PAGE_ROWS | 35 |"),
+      docs.replace(`## ${EXTERNAL_ROSTER_HEADING}`, "## Historical roster"),
+      `${docs}\n${section}`,
+      docs.replace(`## ${EXTERNAL_ROSTER_HEADING}`, `# Appendix\n\n## ${EXTERNAL_ROSTER_HEADING}`),
+      docs.replace("not a generated index", "a generated index"),
+    ];
+    for (const changed of changes) expect(externalRosterFindings(changed).length).toBeGreaterThan(0);
   });
 });
