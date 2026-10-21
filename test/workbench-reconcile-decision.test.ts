@@ -268,6 +268,37 @@ describe("minting decisions", () => {
     expect(permitted.warning).toContain("once");
     expect(permitted.entry.reconcile).toMatchObject({ decision: "override", duplicateRisk: "known-duplicate", acknowledgementId: ackId });
   });
+
+  it("denies an override without the exact override grant, even when the acknowledge grant or another producer's override grant is held", () => {
+    // wb-5x0.3 (docs/08: an override needs the exact grant for its producer and action). Every other rule of the ladder
+    // holds here - a bound acknowledgement cited as the latest, own-property confirmation, accepted duplicate risk - so the
+    // grant alone decides each answer below.
+    const held = receipt();
+    const acked = decideReconcile(
+      request({ params: { reason: "confirmed", determination: "effect-confirmed", receiptIds: [held.receiptId] } }),
+      deps({ receipts: [held] }),
+    );
+    if (acked.decision !== "acknowledge" || acked.entry.reconcile?.decision !== "acknowledge") throw new Error("fixture ack failed");
+    const ackId = acked.entry.reconcile.acknowledgementId;
+    const settled = deps({ entries: [nodeRow, acked.entry], receipts: [held] });
+    const override = (grants: readonly string[]): ReconcileDecision =>
+      decideReconcile(
+        request({
+          action: "override",
+          grants,
+          params: { reason: "re-run accepted", acknowledgementId: ackId, confirmed: true, confirmPosition: 0, confirmCapabilityId: "furnace.run.start", acceptDuplicateRisk: true },
+        }),
+        settled,
+      );
+    // Control: the same request holding the exact grant mints the override.
+    expect(override(["workbench:observe", "reconcile:furnace.acknowledge", "reconcile:furnace.override"]).decision).toBe("override");
+    const acknowledgeOnly = denied(override(["workbench:observe", "reconcile:furnace.acknowledge"]));
+    expect(acknowledgeOnly).toMatchObject({ policy: "missing-exact-grant", category: "authorization" });
+    expect(acknowledgeOnly.reason).toBe("Permission denied: reconcile:furnace.override grant required.");
+    const otherProducer = denied(override(["workbench:observe", "reconcile:furnace.acknowledge", "reconcile:forge.override"]));
+    expect(otherProducer).toMatchObject({ policy: "missing-exact-grant", category: "authorization" });
+    expect(otherProducer.reason).toBe("Permission denied: reconcile:furnace.override grant required.");
+  });
 });
 
 describe("inspect and evidence", () => {

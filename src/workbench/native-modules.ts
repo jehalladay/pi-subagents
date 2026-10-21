@@ -21,6 +21,15 @@ import type { createClaudeObserver, readClaudeTranscript } from "./claude-transc
 import type { connectDetachedWorkflow, launchDetachedWorkflow } from "./hosts/local-detached.js";
 import type { openForgeOperationConnection } from "./providers/forge.js";
 
+/** Host-validated options for native provider registration (wb-973.4, SCG-R4). */
+export interface NativeProviderOptions {
+  /**
+   * The swarm's RF workspace (an absolute path from the validated reactivefiberWorkspaceRoot setting). When present it, and only
+   * it, replaces the authorized workspace root for the RF render capability; the other three providers keep the scope.
+   */
+  readonly reactivefiberWorkspaceRoot?: string;
+}
+
 export interface WorkbenchNativeModules {
   readonly Furnace: typeof Furnace;
   readonly createClaudeWorkflowHost: typeof createClaudeWorkflowHost;
@@ -35,7 +44,7 @@ export interface WorkbenchNativeModules {
    * authorized workspace root, in the order the identity capture has always
    * seen them (forge, hyperunix, furnace, reactivefiber).
    */
-  readonly registerNativeProviders: (registry: CapabilityRegistry, workspaceRoot: string) => void;
+  readonly registerNativeProviders: (registry: CapabilityRegistry, workspaceRoot: string, options?: NativeProviderOptions) => void;
 }
 
 export const WORKBENCH_NATIVE_UNLOADED =
@@ -83,11 +92,11 @@ async function importAll(): Promise<WorkbenchNativeModules> {
     get openForgeOperationConnection() {
       return forge.openForgeOperationConnection;
     },
-    registerNativeProviders(registry: CapabilityRegistry, workspaceRoot: string): void {
+    registerNativeProviders(registry: CapabilityRegistry, workspaceRoot: string, options?: NativeProviderOptions): void {
       forge.registerNativeForgeGateStatus(registry, workspaceRoot);
       hyperunix.registerNativeHyperUnixFind(registry, workspaceRoot);
       furnace.registerNativeFurnaceRunInspect(registry, workspaceRoot);
-      reactivefiber.registerNativeReactiveFiberRender(registry, workspaceRoot);
+      reactivefiber.registerNativeReactiveFiberRender(registry, options?.reactivefiberWorkspaceRoot ?? workspaceRoot);
     },
   });
 }
