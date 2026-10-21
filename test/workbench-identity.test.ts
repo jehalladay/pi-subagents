@@ -95,20 +95,22 @@ type TestApi = { readonly each: boolean; readonly table: ts.Expression | undefin
  * It reads it / test with their TEST_FLAGS chains, the TEST_CONDITIONS calls, and the TEST_TABLES calls over an array-literal
  * table whose title expands by %s alone. A row it cannot read gets a title the runner never registers and a registration it
  * does not recognise is missing from its list, so either way the runner cross-check reds instead of passing the row unread.
- * ENUMERATION (R656 owner completion): the PRIMARY pin is the runtime emit judge above - a row that really copies is
- * pinned by OBSERVATION, whatever its source spelling, so no enumeration of spellings is claimed or needed for the
- * budget invariant. The static scan below is a SECONDARY liveness layer; it classifies exactly the witness forms pinned
- * in test/fixtures/hk9l-scan-roster.json (every witness has a roster row with its frozen source digest, and the
+ * ENUMERATION (R656/R670 owner completion): the PRIMARY pin is the runtime emit judge above, and it observes EXACTLY
+ * the judged surface set S - cp, cpSync, copyFile and copyFileSync on node:fs (named and default exports), the
+ * fs.promises member, and the node:fs/promises module (cp, copyFile). A row that copies through S is pinned by
+ * OBSERVATION whatever its S-spelling; a copy OUTSIDE S is NOT runtime-observed, and no wider claim is made. The
+ * static scan below is a SECONDARY liveness layer; it classifies exactly the witness forms pinned in
+ * test/fixtures/hk9l-scan-roster.json (every witness has a roster row with its frozen source digest, and the
  * scanner's dispatch vocabulary equals the roster's dispatch list - some witness forms deliberately share a dispatch
- * route). The scan makes no general alias-resolution claim; a form it reads quiet is still caught by the emit judge
- * when it really copies.
+ * route). The scan makes no general alias-resolution claim.
  * NAMED RESIDUALS (quiet rows below): H5 read+write copy; another module's helper; subprocess copy; hook copy; module-scope
- * copy; captureInvocationIdentity hashing proxy. These lie outside registration copy-call classification. Every family
- * has its own frozen input and exact quiet reading, not a prose-only pass claim, and the residual table is anchored
- * OUT OF FILE in test/fixtures/hk9l-scan-roster.json (id, family and full source digest, in table order; the census
- * anchor row enforces order, count and per-row registration exactly). These families bound the STATIC layer only - a
- * real copy through any of them inside a row is still observed by the emit judge. The 320 s synchronous IO-stall
- * remains an instrument residual: no budget cures it.
+ * copy; captureInvocationIdentity hashing proxy; createRequire requisition; getBuiltinModule requisition. These families
+ * are held by the roster and these quiet rows ONLY: a real copy through a residual family is caught by NEITHER layer -
+ * that is the stated residual risk of scoping to S, accepted and documented here, not a coverage claim. Every family
+ * has its own frozen input and exact quiet reading, and the residual table is anchored OUT OF FILE in
+ * test/fixtures/hk9l-scan-roster.json (id, family and full source digest, in table order; the census anchor row
+ * enforces order, count and per-row registration exactly). The 320 s synchronous IO-stall remains an instrument
+ * residual: no budget cures it.
  * The route/digest roster and the residual roster live in test/fixtures/hk9l-scan-roster.json (R656 out-of-file anchor).
  */
 function scanRows(text: string, visited?: Set<string>): { title: string; copies: boolean }[] {
@@ -764,8 +766,7 @@ describe("WB-014 immutable invocation identity", () => {
   });
 
   it("wrap liveness: every judged copy surface emits from this row once", async () => {
-    const scratch = mkdtempSync(join(tmpdir(), "hk9l-live-"));
-    dirs.push(scratch);
+    const scratch = fixture().workspace;
     const src = join(scratch, "a.json");
     writeFileSync(src, "{}\n");
     cpSync(src, join(scratch, "b1.json"));

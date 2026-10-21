@@ -600,7 +600,7 @@ const ALLOWLIST: Record<string, Listed> = {
   "test/workbench-furnace-vc4-receipt.test.ts": { mkdtemp: 0, tmpdir: 1, reason: TMPDIR_READ },
   "test/workbench-host-contract.test.ts": { mkdtemp: 1, tmpdir: 1, reason: OUT_OF_SCOPE },
   "test/workbench-identity-shell.test.ts": { mkdtemp: 1, tmpdir: 1, reason: OUT_OF_SCOPE },
-  "test/workbench-identity.test.ts": { mkdtemp: 3, tmpdir: 3, reason: OUT_OF_SCOPE },
+  "test/workbench-identity.test.ts": { mkdtemp: 2, tmpdir: 2, reason: OUT_OF_SCOPE },
   "test/workbench-patch-proposal.test.ts": { mkdtemp: 1, tmpdir: 1, reason: OUT_OF_SCOPE },
   "test/workbench-provider-envelope-audit.test.ts": { mkdtemp: 1, tmpdir: 1, reason: OUT_OF_SCOPE },
   "test/workbench-provider-lifecycle.test.ts": { mkdtemp: 4, tmpdir: 4, reason: OUT_OF_SCOPE },
