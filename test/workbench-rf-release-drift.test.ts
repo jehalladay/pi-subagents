@@ -11,7 +11,9 @@
  * This proves SOURCE SHAPE, not a live pass or assertion reach in an executed tier. NAMED RESIDUALS: LIVE-RUN
  * (no native-tier report is read here); CONFIG (the rf tier's inclusion, hooks, runner and binary are not vouched
  * here); OTHER-CODE (code outside the pinned row/imports may affect runtime behaviour). The live tier's measured
- * receipt owns those claims. Carrier re-pin (wb-973.17): installed 0.1.768 vs recorded 0.1.723 was the live drift finding
+ * receipt owns those claims. The live title and the frozen-shape describe title are the drift helper's exports (RF_LIVE_DRIFT_TITLE,
+ * RF_LIVE_DRIFT_SHAPE_SUITE; wb-973.20), the anchors the docs07 census binds row R5 to; FROZEN_ROW keeps the title as its own
+ * literal, so the helper's value is held to the native row. Carrier re-pin (wb-973.17): installed 0.1.768 vs recorded 0.1.723 was the live drift finding
  * the re-measure in receipts/wb-973.17.md cleared by re-pinning the carrier to 0.1.768; a later host move is a new live
  * finding, never a known-green claim. Spawns nothing and writes no fixture; launch the actual tier with forge run rf-preview.
  */
@@ -19,7 +21,7 @@ import { readFileSync } from 'node:fs';
 import ts from 'typescript';
 import { describe, expect, it } from 'vitest';
 import { REACTIVE_FIBER_CONTRACT_SOURCE } from '../src/workbench/providers/reactivefiber.js';
-import { judgeRfReleaseDrift, parseInstalledRfVersion, recordedRfRelease } from './helpers/rf-release-drift.js';
+import { judgeRfReleaseDrift, parseInstalledRfVersion, RF_LIVE_DRIFT_SHAPE_SUITE, RF_LIVE_DRIFT_TITLE, recordedRfRelease } from './helpers/rf-release-drift.js';
 
 const PREVIEW_TEST = readFileSync(new URL('./workbench-native-rf-preview.test.ts', import.meta.url), 'utf8');
 /** A sample recorded release for the pure comparison rows: the carrier's release before the wb-973.17 re-pin. */
@@ -106,7 +108,7 @@ describe('SCG-R12 installed version reader', () => {
   });
 });
 
-const LIVE_TITLE = 'SCG-R12 live drift guard: the installed rf version and the preview cli_version equal the release recorded in the contractSource carrier';
+const LIVE_TITLE = RF_LIVE_DRIFT_TITLE;
 const LIVE_HEAD = `it('${LIVE_TITLE}',async()=>{`;
 const LIVE_GUARD = "if(!workspace) throw Error('WORKBENCH_RF_FIXTURE must name an initialized test workspace');";
 const LIVE_START = PREVIEW_TEST.indexOf(LIVE_HEAD);
@@ -174,7 +176,7 @@ function judgePreviewShape(text: string): boolean {
   return EXPECTED_ROW !== undefined && matches.length === 1 && matches[0] !== undefined && shape(matches[0]) === shape(EXPECTED_ROW);
 }
 
-describe('SCG-R12 frozen live row source shape (not a live-run claim)', () => {
+describe(RF_LIVE_DRIFT_SHAPE_SUITE, () => {
   it('R12-11 the row and imports match the independent frozen AST at direct describe/it placement', () => {
     expect(judgePreviewShape(PREVIEW_TEST)).toBe(true);
   });

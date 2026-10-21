@@ -7,6 +7,19 @@
  */
 import { REACTIVE_FIBER_CONTRACT_SOURCE } from '../../src/workbench/providers/reactivefiber.js';
 
+/**
+ * The live SCG-R12 drift row's title in test/workbench-native-rf-preview.test.ts. The drift test locates and freezes that row by it
+ * (R12-11: exactly one direct `it` of this title, AST-equal to the drift test's own FROZEN_ROW literal, which repeats the title),
+ * and the docs07 census binds R5/drift-native to it (wb-973.20), so the census cannot name another row of the tier or a title no
+ * file registers.
+ */
+export const RF_LIVE_DRIFT_TITLE = 'SCG-R12 live drift guard: the installed rf version and the preview cli_version equal the release recorded in the contractSource carrier';
+/**
+ * The describe the drift test registers its frozen live row source-shape cases under (R12-11/R12-12). The docs07 census's
+ * R5/drift-wiring half binds exactly the cases the gate's own report collects under it (wb-973.20).
+ */
+export const RF_LIVE_DRIFT_SHAPE_SUITE = 'SCG-R12 frozen live row source shape (not a live-run claim)';
+
 const CARRIER_SHAPE = /^rf@([0-9]+(?:\.[0-9]+)*):/;
 const STAMP = /^[0-9A-Za-z.+_-]{1,64}$/;
 

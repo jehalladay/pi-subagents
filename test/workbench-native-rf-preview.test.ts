@@ -44,10 +44,11 @@ describe('RF native context producer',()=>{
   },60_000);
 
   // wb-973.11 (SCG-R11 acceptance 4, second clause): the live drift diff. The default gate holds the offline full-shape fixture to
-  // test/fixtures/rf-result-keys.json (source 'constructed'); this row holds a --no-commit capture from the installed rf to the same
-  // roster with the same diff (diffAgainstRoster). A roster result or provenance key missing from the capture, or a work or
-  // work_metrics key set that differs from the roster's exactly, fails the tier; result keys beyond the roster are recorded on the
-  // RF_RESULT_KEY_DIFF line and never failed (an rf newer than the pin adds keys the provider admits). Fail-not-skip like the row above.
+  // test/fixtures/rf-result-keys.json (source 'captured' since wb-973.17); this row holds a --no-commit capture from the installed rf
+  // to the same roster with the same diff (diffAgainstRoster). A roster result or provenance key missing from the capture, or a work
+  // or work_metrics key set that differs from the roster's exactly, fails the tier; result keys beyond the roster are recorded on the
+  // RF_RESULT_KEY_DIFF line, and against a captured roster each also fails the tier (owner ruling R649 (3), wb-973.20: the pin is
+  // exhaustive in both directions; a new key moves only through a gated rf-pin-bump cut). Fail-not-skip like the row above.
   it('SCG-R11 live diff: the installed rf capture carries every roster key and the exact work and work_metrics sets; extra result keys are recorded',async()=>{
     const workspace=process.env.WORKBENCH_RF_FIXTURE;
     if(!workspace) throw Error('WORKBENCH_RF_FIXTURE must name an initialized test workspace');

@@ -31,14 +31,20 @@
  * pass from a title's presence. The two native-read cases (R2 and R5, native-rf-preview, run from vitest.rf.config.ts
  * against a real initialized workspace) are RECORDED with their tier and checked at FILE level only: the file exists, the
  * default report does not hold it (not-collected), and the default judge refuses it (tier-mismatch). NAMED RESIDUAL
- * NATIVE-TITLE: whether those cases' titles are still registered is judged by no report this leg reads, and the leg says so
- * rather than counting the pins as covered.
+ * NATIVE-TITLE: whether R2's case title is still registered is judged by no report this leg reads, and the leg says so
+ * rather than counting the pin as covered. R5's native case is tied by title instead (wb-973.20): its pin must be the drift
+ * helper's RF_LIVE_DRIFT_TITLE, the title the drift-wiring case R12-11 locates and freezes in the native file, so its source
+ * registration is vouched by a case the gate's own report holds; that is still never a live pass (LIVE-RUN stays the drift
+ * test's residual).
  *
  * Row R5 (wb-973.17, SWARM-CONTEXT-GRAPH-R17 (c)) binds the RF sentence on the contractSource release and the live drift
  * guard: the recorded release to the wb-2j3.12 carrier cases R2-1/R2-3, the guard's wiring to the wb-973.12 frozen-row
  * cases R12-11/R12-12, and the live guard itself to the native-read SCG-R12 row. Its quote and binding are frozen as
  * literals (rule 16), and the RF ANCHOR reads the live paragraph: every sentence of it is one RF row's quote or the one
- * named unbound sentence, so a row removed from every literal of this file (CT5/CT6) is still red against the docs.
+ * named unbound sentence, so a row removed from every literal of this file (CT5/CT6) is still red against the docs. Its two
+ * drift halves are anchored outside this file as well (wb-973.20, gate F3/F4): drift-native to the drift helper's
+ * RF_LIVE_DRIFT_TITLE, drift-wiring to exactly the cases the gate's own report collects under the drift test's
+ * RF_LIVE_DRIFT_SHAPE_SUITE describe, so a coordinated re-point or swap across TABLE and FROZEN_R5_BINDING is red.
  *
  * Rows R6-R9 (wb-973.16, SWARM-CONTEXT-GRAPH-R16 (a)-(d)) bind the RF sentences on the capability's two input arms and
  * render flags (the wb-973.1/.3 SCG-R1/R3 cases of the envelope audit), the operator-set swarm RF workspace root under the
@@ -65,6 +71,7 @@ import { basename, dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { afterEach, describe, expect, it } from "vitest";
 import { type CasePin, DEFAULT_GATE_TIER, DEFAULT_TIER_REPORT, docsSection, judge, type PinVerdict, type RenderedBlock, sectionMatches, sourceStructure } from "./helpers/census.js";
+import { RF_LIVE_DRIFT_SHAPE_SUITE, RF_LIVE_DRIFT_TITLE } from "./helpers/rf-release-drift.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
 
 type Tier = "default-gate" | "native-read";
@@ -1008,6 +1015,41 @@ const isReportJson = (value: unknown): value is ReportJson =>
   value.testResults.every((file: unknown) => isRecord(file) && typeof file.name === "string" && Array.isArray(file.assertionResults) && file.assertionResults.every(isReportCase));
 
 installScratchLeakGuard();
+
+/** The drift test file whose frozen live row source-shape describe the R5 drift-wiring half binds. */
+const DRIFT_FILE = T("rf-release-drift");
+/** One pin as "file | describe path | title", the form both anchors compare. */
+const pinLine = (entry: Pin): string => `${entry.file} | ${(entry.suite ?? []).join(" > ")} | ${entry.title}`;
+
+/**
+ * wb-973.20 (gate F3/F4 on the wb-973.17 first cut, rule 16 LEG 2): row R5's two drift halves anchored OUTSIDE this file's
+ * literals. TABLE and FROZEN_R5_BINDING alone are self-anchoring: a coordinated edit of both re-pointed R5/drift-native at another
+ * title (L2-1a/L2-1b) and swapped R5/drift-wiring's R12-12 for the passing R12-3 (L2-4), and the leg stayed green. The live
+ * title and the frozen-shape describe are the drift helper's (test/helpers/rf-release-drift.ts), and the drift test consumes
+ * both: R12-11 locates and freezes the native row by RF_LIVE_DRIFT_TITLE, and its frozen-shape describe is registered under
+ * RF_LIVE_DRIFT_SHAPE_SUITE. The wiring half must equal what the gate's own report collects under that describe.
+ */
+describe("wb-973.20 row R5 drift anchors outside the census literals (gate F3 drift-native, F4 drift-wiring)", () => {
+  const halfOf = (id: string): Half | undefined => TABLE.find(row => row.row === "R5")?.halves.find(half => half.id === id);
+
+  it("F3: R5/drift-native names the frozen live title the drift-wiring case R12-11 locates and freezes in the native file, never another row of that file or a title no file registers", () => {
+    expect(halfOf("drift-native")?.pins.map(pinLine)).toEqual([`${NATIVE_FILE} |  | ${RF_LIVE_DRIFT_TITLE}`]);
+    expect(LIVE_DRIFT_TITLE).toBe(RF_LIVE_DRIFT_TITLE);
+  });
+
+  it("F4: R5/drift-wiring binds exactly the cases the gate's own report collects under the drift test's frozen live row source-shape describe, in report order, never a passing case of another describe", () => {
+    expect(DRIFT_SHAPE_SUITE).toBe(RF_LIVE_DRIFT_SHAPE_SUITE);
+    const parsed: unknown = JSON.parse(readFileSync(REPORT, "utf8"));
+    if (!isReportJson(parsed)) throw new Error(`${DEFAULT_TIER_REPORT} does not have vitest's JSON reporter shape`);
+    const modules = parsed.testResults.filter(file => file.name.endsWith(DRIFT_FILE));
+    expect(modules, `the gate's own report holds ${DRIFT_FILE} once`).toHaveLength(1);
+    const collected = (modules[0]?.assertionResults ?? [])
+      .filter(test => JSON.stringify(test.ancestorTitles) === JSON.stringify([RF_LIVE_DRIFT_SHAPE_SUITE]))
+      .map(test => `${DRIFT_FILE} | ${test.ancestorTitles.join(" > ")} | ${test.title}`);
+    expect(collected.length, "the frozen-shape describe collects its cases in the gate's own report").toBeGreaterThan(0);
+    expect(halfOf("drift-wiring")?.pins.map(pinLine)).toEqual(collected);
+  });
+});
 
 describe("wb-693.9 ordering guard: the RF identity sentence is never a docs claim without the R1/R4 cases", () => {
   const scratch: string[] = [];
