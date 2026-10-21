@@ -6,6 +6,10 @@
  *
  * Owner ruling: `workbench_catalog` stays registered UNCHANGED; only
  * `workflow_inspect` is new. No provider invoke() or inspect() is ever called.
+ * Superseded for the catalog's reply by owner ruling R2 on the wb-h8f.4 gate
+ * (15:40Z): wb-h8f.6 folds in "workbench_catalog adopts buildWorkflowCatalogReply
+ * under the same tool-reply/v1 convergence rule" (name unchanged), so the last
+ * case below pins the builder's page instead of the former capability list.
  */
 import { afterEach, describe, expect, it, vi } from "vitest";
 import subagentsExtension from "../src/index.js";
@@ -152,11 +156,13 @@ describe("workflow_inspect Pi registration (wb-h8f.4)", () => {
     expect(schema.required ?? []).not.toContain("view");
   });
 
-  it("leaves workbench_catalog behavior unchanged: capability section only (owner ruling)", async () => {
+  it("workbench_catalog answers with the builder's tool-reply/v1 page, discover-granted capabilities only (owner R2, wb-h8f.6)", async () => {
     const { pi, context } = await boot(["discover:fixture.inspectable"]);
     const tool = pi.tools.get("workbench_catalog");
     const parsed = JSON.parse(textOf(await tool.execute("h8f4", {}, undefined, undefined, context)));
-    expect(Object.keys(parsed)).toEqual(["capabilities"]);
-    expect(parsed.capabilities.map((c: { id: string }) => c.id)).toEqual(["fixture.inspectable"]);
+    expect(Object.keys(parsed)).toEqual(["contract", "tool", "ok", "invoked", "limit", "matched", "offered", "returned", "rows"]);
+    expect(parsed).toMatchObject({ contract: TOOL_REPLY_CONTRACT_VERSION, ok: true, invoked: false, matched: 1, offered: 1, returned: 1 });
+    expect(parsed.rows.map((c: { id: string }) => c.id)).toEqual(["fixture.inspectable"]);
+    expect(counts).toEqual({ invoke: 0, inspect: 0 });
   });
 });
