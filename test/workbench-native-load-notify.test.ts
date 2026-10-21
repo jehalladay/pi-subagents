@@ -19,9 +19,12 @@
  *   each turn red.
  * - U8 each-liveness: the probe table's ids and per-row secret counts are frozen literals, every one registered its row, and
  *   every planted secret is in its own input, so emptying the table, dropping, renaming or hollowing a row turns it red.
+ * - wb-p2ef F3 (the 72c gate's probe-content swap survivors H1/H2): the ids and counts freeze each row's name and size, not what
+ *   it plants, so each row's content (its input and its planted secrets) is frozen too, as a digest in table order.
  *
  * Every credential below is an obviously fake placeholder; the rows pin input hygiene only.
  */
+import { createHash } from "node:crypto";
 import { describe, expect, it } from "vitest";
 import { sanitizeWorkbenchText } from "../src/workbench/redaction.js";
 import { NATIVE_LOAD_WARNING, nativeLoadNotifyDriver } from "./helpers/native-load-notify.js";
@@ -103,6 +106,34 @@ const FROZEN_IDS: readonly string[] = [
 ];
 /** How many secrets each frozen row plants, in table order (S10 plants two). */
 const FROZEN_SECRET_COUNTS: readonly number[] = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1];
+/**
+ * wb-p2ef F3: what each frozen row plants, in table order. The ids and counts above pin a row's name and size, not its content,
+ * so a row swapped for a weaker probe kept every row green (the 72c gate's H1: S5's BEL-glued scheme swapped for a plain Bearer,
+ * its secret kept). Each digest is the first 16 hex digits of the sha256 of the row's JSON text [input, ...secrets]: it repeats
+ * no credential-shaped text, and a mismatch is reported by row id alone (U6 names-only).
+ */
+const FROZEN_CONTENT_DIGESTS: readonly string[] = [
+  "1634131b815e800d",
+  "ef743d166855425a",
+  "84525496eb7fad07",
+  "8b56cee61d9a4b8e",
+  "aaaddd3646faa325",
+  "14e72ca7b8860e8c",
+  "bbf8bb6517ca47ac",
+  "8d88390dfa485303",
+  "cad086997804c65a",
+  "0ae59503ba6480e3",
+  "307da9008df1c55c",
+  "bf3f0d66733015cb",
+  "21ceb8a7fb9d3aca",
+  "fd2d640ac6a408bc",
+  "646ac9ea97bc0d50",
+  "ac79f28a522decca",
+  "f8d5059508e24db0",
+  "1181bc34513c66aa",
+];
+/** A row's content digest: its input and planted secrets as JSON text, sha256, the first 16 hex digits. */
+const contentDigest = (probe: Probe): string => createHash("sha256").update(JSON.stringify([probe.raw, ...probe.secrets])).digest("hex").slice(0, 16);
 /** Every probe id a row was registered for, in registration order. */
 const REGISTERED: string[] = [];
 
@@ -143,6 +174,11 @@ describe("wb-72c native-load notify path routes through the one helper (interact
     expect(REGISTERED).toEqual(FROZEN_IDS);
     // Non-vacuous: a row whose input does not carry its planted secret would pass however the warning is made (names only).
     expect(PROBES.filter(probe => !probe.secrets.every(secret => probe.raw.includes(secret))).map(probe => probe.id)).toEqual([]);
+  });
+
+  it("wb-p2ef F3 content pin: every frozen row plants exactly its frozen input and secrets, so a swap that keeps the id, the count and the verdict is red (names only)", () => {
+    expect(FROZEN_CONTENT_DIGESTS).toHaveLength(FROZEN_IDS.length);
+    expect(PROBES.filter((probe, index) => contentDigest(probe) !== FROZEN_CONTENT_DIGESTS[index]).map(probe => probe.id)).toEqual([]);
   });
 
   it("routing pin: every probe's warning is the one helper's label layout at the 300 bound, exactly (names only)", { timeout: ROW_TIMEOUT }, async () => {

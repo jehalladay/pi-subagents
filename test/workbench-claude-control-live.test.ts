@@ -38,7 +38,7 @@ import { hostname, release } from "node:os";
 import { join } from "node:path";
 import { getSessionInfo, type SDKMessage } from "@anthropic-ai/claude-agent-sdk";
 import { afterAll, describe, expect, it, vi } from "vitest";
-import subagentsExtension from "../src/index.js";
+import subagentsExtension, { claudeMessageEvidenceRef } from "../src/index.js";
 import { CapabilityError } from "../src/workbench/capability-registry.js";
 import {
   CLAUDE_CONTROL_RECONCILE,
@@ -51,7 +51,7 @@ import { type ClaudeCallIdentity, createClaudeWorkflowHost } from "../src/workbe
 import { createClaudeObserver } from "../src/workbench/claude-transcript.js";
 import { type ControlExecutionSummary, type ControlExecutor, createWorkflowControlTool, type WorkflowControlDeps } from "../src/workbench/control-tool.js";
 import { type NativeRef, ObservationProjection, type ObservationScope, type Presentation } from "../src/workbench/observation.js";
-import { sanitizeWorkbenchText, stripUnsafeText } from "../src/workbench/redaction.js";
+import { sanitizeWorkbenchText } from "../src/workbench/redaction.js";
 import { type ClaudeNativeObservation, collapse } from "../src/workflow/progress.js";
 import { runWorkflow, type WorkflowHost, type WorkflowRunResult, type WorkflowSpawnResult } from "../src/workflow/runtime.js";
 import type { WorkflowTask } from "../src/workflow/task.js";
@@ -308,23 +308,27 @@ function emitObservation(journey: Journey, source: NativeRef, presentation: Pres
   });
 }
 const clamp = (value: string): string => sanitizeWorkbenchText(value, 120, "label") || "unknown";
-const reference = (value: string): string => stripUnsafeText(value, " ").substring(0, 120);
 /**
  * The production observer callback (src/index.ts), mirrored: the node formation ("Native session id is supplied by the SDK,
- * never derived from a Pi workflow agent id"). Then, AFTER the first mirrored ingest of a session node, the harness relates
- * the ownership edge decideControl requires (owner ruling R1): session -> agent-call, source claude-agent-sdk,
- * nativeConfirmationRef = the system/init session_id. Never after a refresh; never claimed as production-emitted.
+ * never derived from a Pi workflow agent id"), its claude-message evidence ref derived on production's own line through the
+ * shared closure claudeMessageEvidenceRef (wb-p2ef: exact or withheld, never repaired; text-pinned by
+ * test/workbench-claude-message-ref.test.ts, whose case list pins the closure). Then, AFTER the first mirrored ingest of a
+ * session node, the harness relates the ownership edge decideControl requires (owner ruling R1): session -> agent-call, source
+ * claude-agent-sdk, nativeConfirmationRef = the system/init session_id. Never after a refresh; never claimed as
+ * production-emitted.
  */
 function observerFor(journey: Journey) {
   return createClaudeObserver((call, snapshot) => {
     journey.snapshots.set(call.index, snapshot);
     if (snapshot.terminal !== undefined && !journey.terminalAt.has(call.index)) journey.terminalAt.set(call.index, nowIso());
     const live = !snapshot.terminal;
+    // An evidence reference is an identity, not display text: exact or withheld, never repaired (wb-72c, the F1 closure).
+    const messageRef = claudeMessageEvidenceRef(snapshot.lastMessageId);
     emitObservation(journey, { provider: snapshot.sessionId ? "claude-agent-sdk" : "pi-workflow",
       type: snapshot.sessionId ? "session" : "agent-call", id: snapshot.sessionId ?? `${journey.id}:${call.index}` },
       { title: clamp(call.label), type: "agent", statusText: snapshot.terminal ?? (live ? "observed-running" : "unknown"),
         statusTone: snapshot.terminal === "succeeded" ? "success" : snapshot.terminal === "failed" ? "failure" : snapshot.terminal ? "unknown" : "active" }, "claude.stream",
-      snapshot.lastMessageId ? [`claude-message:${reference(snapshot.lastMessageId)}`] : undefined);
+      messageRef ? [messageRef] : undefined);
     if (snapshot.sessionId !== undefined && !journey.seeded.has(snapshot.sessionId)) {
       journey.seeded.add(snapshot.sessionId);
       try {
