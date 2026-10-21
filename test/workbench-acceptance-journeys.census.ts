@@ -15,14 +15,14 @@
  * inverted, excluded or unregistered pinned case therefore reads red naming the journey, its sentence, the file and
  * the title, as far as the helper's resolvable-construct roster and named residuals reach (test/helpers/census.ts,
  * receipts/wb-u62.md). This leg scans no test source for case calls and spawns no process. Its own code reads docs/11,
- * docs/14, TRACEABILITY.md, the committed operator receipt and vitest.census.config.ts, and its own source through the
+ * docs/14, TRACEABILITY.md, the rule-13 per-bead receipts, the committed operator receipt and vitest.census.config.ts, and its own source through the
  * helper's sourceStructure (AC4); the helper's vouch (censusGuard) reads the default vitest config and forge.toml by
  * design, so this leg makes no "reads no config" claim.
  *
  * Evidence kinds (one label per leg, never a pass label from a title's presence alone):
  * - cases         "fixture pass" - judged by judge() over the default-gate report (tier "test").
- * - receipt       "live SDK pass" - the command id must sit in a TRACEABILITY paragraph that is not SUPERSEDED; this
- *                 leg reads TRACEABILITY.md (frozen byte-exact) and never re-runs the receipt.
+ * - receipt       "live SDK pass" - the command id must sit in a live paragraph/list item of TRACEABILITY or the
+ *                 rule-13 per-bead receipts route; this leg reads the committed evidence, never re-runs the receipt.
  * - owner-receipt "live SDK pass" - an OWNER RECEIPT with no forge-run cmd_ of its own (owner ruling
  *                 2026-10-16T01:16Z: the wb-h7r v2 operator receipt COUNTS as journey 1's live SDK pass evidence).
  *                 Admitted only when the committed file exists, itself carries the row's contract and revision and
@@ -30,7 +30,7 @@
  *                 view) cites the file at that revision in a paragraph that is not SUPERSEDED; and the row carries the
  *                 owner-worded citation - the committed path, the revision, the landing gate, the owner-receipt
  *                 statement and the alias-vs-native fact as the receipt's own preflight records it.
- * - artifact      "code present" - a committed file and the TRACEABILITY section that cites it (no row today).
+ * - artifact      "code present" - a committed file cited by a section in either evidence route (no row today).
  * - open          "code present" | "not started" - a tracking bead id; never a pass label.
  *
  * Frozen literals (rule 16), each written out in full: EXPECTED_SHAPE (journey:label:kind:pins), EXPECTED_PINS (the ten
@@ -67,7 +67,7 @@
  * it appears only in the .beads export, which this leg never reads); a strikethrough of a docs/11 bullet reds by
  * section exactness only, as the rendered text keeps struck words; no journey is run.
  */
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { basename, dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { marked, type Token, type Tokens } from "marked";
@@ -80,6 +80,7 @@ const SELF = "test/workbench-acceptance-journeys.census.ts";
 const DOCS_11 = "docs/workbench/11-designer-and-operator.md";
 const DOCS_14 = "docs/workbench/14-qa-and-benchmarks.md";
 const TRACEABILITY = "docs/workbench/TRACEABILITY.md";
+const RECEIPTS_DIR = "docs/workbench/receipts";
 const TRACEABILITY_PARENT = "Workbench requirement traceability and release evidence";
 const EM_DASH = String.fromCodePoint(0x2014);
 const DOCS_11_PARENT = `11 ${EM_DASH} Pi designer, operator tools and closed-loop experimentation`;
@@ -185,9 +186,9 @@ function isDeepFrozen(value: unknown): boolean {
  * One row per evidence leg. wb-a2g.3 is CLOSED (2026-10-15T21:22Z), so journey 1 no longer carries it as an OPEN row:
  * its operator leg is "live SDK pass" on the committed wb-h7r v2 operator receipt as an OWNER RECEIPT - the reading
  * the owner RULED on 2026-10-16T01:16Z (bound "as specified" at 12:52Z) - with the owner-worded citation. wb-752.3 is
- * CLOSED too (landed 2026-10-17, merge 24c8be2): journey 3 no longer carries it as an OPEN row, and no TRACEABILITY paragraph
- * records a live command id for it, so the census claims only what it can evidence - its vc4 receipt-builder
- * falsifier is a third "fixture pass" pin, and the live external-Furnace leg stays a visible gap (no live row).
+ * CLOSED too (landed 2026-10-17, merge 24c8be2): journey 3 no longer carries it as an OPEN row. The vc4
+ * receipt-builder falsifier is a third "fixture pass" pin; the rule-13 receipt wb-8kv (landing 173) records
+ * a realised/pass live run cmd_7cea2921543b, so the external-Furnace leg now has its own "live SDK pass" row.
  */
 const ROWS: readonly JourneyRow[] = freezeDeep<readonly JourneyRow[]>([
   row(1, "fixture pass", fixture({ file: "test/workbench-host-contract.test.ts", title: "L3: unchanged script uses Claude SDK query, not Pi AgentManager; session and usage are reported" })),
@@ -214,6 +215,7 @@ const ROWS: readonly JourneyRow[] = freezeDeep<readonly JourneyRow[]>([
       { file: "test/workbench-furnace-vc4-receipt.test.ts", title: "C2 falsifier: disconnect must make the reading and the nodes stale, keeping the last-known running label" },
     ),
   ),
+  row(3, "live SDK pass", receipt("cmd_7cea2921543b")),
   row(
     4,
     "fixture pass",
@@ -242,6 +244,7 @@ const EXPECTED_SHAPE: readonly string[] = [
   "1:live SDK pass:owner-receipt:0",
   "2:not started:open:0",
   "3:fixture pass:cases:3",
+  "3:live SDK pass:receipt:0",
   "4:fixture pass:cases:3",
   "4:code present:open:0",
   "5:fixture pass:cases:3",
@@ -276,6 +279,7 @@ const EXPECTED_EVIDENCE: readonly string[] = [
   "1|owner-receipt|qa/workbench/receipts/wb-a2g.3-operator-receipt.json|workbench.operator-journey/v2|e07474a|cmd_a4feb7db5cad|CORRECTION (wb-h7r): the wb-a2g.3 operator receipt, contract v2|committed path qa/workbench/receipts/wb-a2g.3-operator-receipt.json, revision e07474a, landing gate cmd_a4feb7db5cad; there is NO forge-run cmd_ for the receipt itself: it is an OWNER RECEIPT under contract workbench.operator-journey/v2; requested claude-opus-5-5, served openai.gpt-6.1-sol",
   "2|open|wb-04s",
   "3|cases|3",
+  "3|receipt|cmd_7cea2921543b",
   "4|cases|3",
   "4|open|wb-h8f.2",
   "5|cases|3",
@@ -296,10 +300,12 @@ const judgedShapeOf = (rows: readonly JourneyRow[]): string[] => rows.map(r => `
 interface Reader {
   readonly exists: (relative: string) => boolean;
   readonly read: (relative: string) => string;
+  readonly list: (directory: string) => readonly string[];
 }
 const REPO_READER: Reader = {
   exists: relative => existsSync(join(ROOT, relative)),
   read: relative => readFileSync(join(ROOT, relative), "utf8"),
+  list: directory => readdirSync(join(ROOT, directory)).filter(name => /^wb-[a-z0-9]+(?:\.[0-9]+)*\.md$/.test(name)).sort(),
 };
 
 const COMMAND_ID = /^cmd_[0-9a-f]{12}$/;
@@ -315,12 +321,35 @@ function allowedLabels(evidence: Evidence): readonly Label[] {
 
 const describeRow = (r: JourneyRow, quotes: readonly string[]): string => `journey ${r.journey} ("${quotes[r.journey - 1] ?? "?"}") [${r.label}]`;
 
-/** A receipt id must sit in a TRACEABILITY paragraph that is not itself SUPERSEDED. */
-function receiptProblem(traceability: string, commandId: string): string | undefined {
-  const blocks = traceability.split(/\n\s*\n/).filter(block => block.includes(commandId));
-  if (blocks.length === 0) return `receipt ${commandId} is not recorded in TRACEABILITY`;
-  if (blocks.every(block => /^\s*SUPERSEDED\b/.test(block))) return `receipt ${commandId} survives only inside a SUPERSEDED TRACEABILITY paragraph`;
+/** The historical file and the per-bead rule-13 receipts route form one evidence corpus. */
+function evidenceSources(reader: Reader): readonly { readonly file: string; readonly text: string }[] {
+  return [TRACEABILITY, ...reader.list(RECEIPTS_DIR).map(name => `${RECEIPTS_DIR}/${name}`)].map(file => ({ file, text: reader.read(file) }));
+}
+
+/** A receipt id must sit in a live paragraph of either evidence route, not a withdrawn or hidden claim. */
+function receiptProblem(reader: Reader, commandId: string): string | undefined {
+  const mentions = evidenceSources(reader).flatMap(({ text }) =>
+    marked.lexer(text).flatMap(token => {
+      if (token.type === "paragraph") return [token.text];
+      if (token.type === "list") return token.items.filter((item: Tokens.ListItem) => !item.text.trim().startsWith("<!--")).map((item: Tokens.ListItem) => item.text);
+      return [];
+    }).filter(block => new RegExp(`\\b${commandId}\\b`).test(block)),
+  );
+  if (mentions.length === 0) return `receipt ${commandId} is not recorded in TRACEABILITY or ${RECEIPTS_DIR}`;
+  if (mentions.every(block => /^\s*SUPERSEDED\b/.test(block))) return `receipt ${commandId} survives only inside a SUPERSEDED TRACEABILITY or receipts paragraph`;
   return undefined;
+}
+
+/** The heading and paragraph must occur together in one route; historical headings are level 2 under TRACEABILITY. */
+function citedSection(reader: Reader, heading: string, file: string, revision?: string): boolean {
+  for (const source of evidenceSources(reader)) {
+    const root = marked.lexer(source.text).find(token => token.type === "heading" && token.depth === 1);
+    if (root === undefined || root.type !== "heading") continue;
+    const level2 = heading.replace(/^## /, "");
+    const section = docsSection(source.text, level2, 2, [root.text]);
+    if (section.ok && section.blocks.some(block => block.kind === "paragraph" && !/^SUPERSEDED\b/.test(block.text) && block.text.includes(file) && (revision === undefined || citesRevision(block.text, revision)))) return true;
+  }
+  return false;
 }
 
 const isRecord = (value: unknown): value is Readonly<Record<string, unknown>> => value !== null && typeof value === "object" && !Array.isArray(value);
@@ -348,7 +377,7 @@ function aliasFact(fields: Readonly<Record<string, unknown>>): string | undefine
 /** True when the revision occurs in the text as a whole alphanumeric token (never inside a longer hash). */
 const citesRevision = (text: string, revision: string): boolean => text.split(/[^0-9A-Za-z]+/).includes(revision);
 
-/** Why an owner receipt does not evidence a live pass; [] when the file, its TRACEABILITY section and the row's citation all hold. */
+/** Why an owner receipt does not evidence a live pass; [] when the file, a section in either route and the row's citation all hold. */
 function ownerReceiptProblems(ev: OwnerReceipt, reader: Reader): string[] {
   const out: string[] = [];
   if (!COMMAND_ID.test(ev.landingGate)) out.push(`owner receipt landing gate ${ev.landingGate} is not a command id`);
@@ -366,10 +395,8 @@ function ownerReceiptProblems(ev: OwnerReceipt, reader: Reader): string[] {
       else parts.push(fact);
     }
   }
-  const section = docsSection(reader.read(TRACEABILITY), ev.heading, 2, [TRACEABILITY_PARENT]);
-  if (!section.ok) out.push(`TRACEABILITY section "${ev.heading}" is refused: ${section.why}`);
-  else if (!section.blocks.some(block => block.kind === "paragraph" && !/^SUPERSEDED\b/.test(block.text) && block.text.includes(ev.file) && citesRevision(block.text, ev.revision))) {
-    out.push(`TRACEABILITY section "${ev.heading}" cites ${ev.file} at revision ${ev.revision} in no live paragraph`);
+  if (!citedSection(reader, ev.heading, ev.file, ev.revision)) {
+    out.push(`TRACEABILITY or receipts section "${ev.heading}" cites ${ev.file} at revision ${ev.revision} in no live paragraph`);
   }
   const missing = parts.filter(part => !ev.citation.includes(part));
   if (missing.length > 0) out.push(`the row does not carry the owner-worded citation (missing ${missing.map(part => JSON.stringify(part)).join(", ")})`);
@@ -389,16 +416,14 @@ function auditRows(rows: readonly JourneyRow[], quotes: readonly string[], reade
     } else if (ev.kind === "receipt") {
       if (!COMMAND_ID.test(ev.commandId)) failures.push(`${who}: ${ev.commandId} is not a command id`);
       else {
-        const problem = receiptProblem(reader.read(TRACEABILITY), ev.commandId);
+        const problem = receiptProblem(reader, ev.commandId);
         if (problem !== undefined) failures.push(`${who}: ${problem}`);
       }
     } else if (ev.kind === "owner-receipt") {
       for (const problem of ownerReceiptProblems(ev, reader)) failures.push(`${who}: ${problem}`);
     } else if (ev.kind === "artifact") {
       if (!reader.exists(ev.file)) failures.push(`${who}: artifact ${ev.file} is missing`);
-      const traceability = reader.read(TRACEABILITY);
-      if (!traceability.includes(ev.file)) failures.push(`${who}: artifact ${ev.file} is not cited in TRACEABILITY`);
-      if (!traceability.split("\n").some(line => line.trim() === ev.heading)) failures.push(`${who}: TRACEABILITY lost the section "${ev.heading}"`);
+      if (!citedSection(reader, ev.heading, ev.file)) failures.push(`${who}: artifact ${ev.file} is not cited under section "${ev.heading}" in TRACEABILITY or receipts`);
     } else if (!BEAD_ID.test(ev.bead)) {
       failures.push(`${who}: open row names no tracking bead (${ev.bead})`);
     }
@@ -631,15 +656,16 @@ const synthTraceability = (...blocks: readonly string[]): string => `# ${TRACEAB
 const readerOf = (files: Readonly<Record<string, string>>): Reader => ({
   exists: relative => relative in files,
   read: relative => files[relative] ?? "",
+  list: directory => Object.keys(files).filter(file => file.startsWith(`${directory}/`) && !file.slice(directory.length + 1).includes("/")).map(file => basename(file)).sort(),
 });
 
 describe("wb-h8f.9 docs/workbench/11 acceptance-journeys census (report mode)", () => {
-  it("AC1: the table holds the eight frozen rows in order (journey:label:kind:pins), deeply frozen, covering all five journeys", () => {
+  it("AC1: the table holds the nine frozen rows in order (journey:label:kind:pins), deeply frozen, covering all five journeys", () => {
     expect(isDeepFrozen(ROWS)).toBe(true);
     expect(isDeepFrozen(JOURNEY_QUOTES)).toBe(false);
     expect(JOURNEY_QUOTES).toHaveLength(5);
     expect(shapeOf(ROWS)).toEqual(EXPECTED_SHAPE);
-    expect(ROWS).toHaveLength(8);
+    expect(ROWS).toHaveLength(9);
     expect([...new Set(ROWS.map(r => r.journey))].sort()).toEqual([1, 2, 3, 4, 5]);
     expect(auditCoverage(ROWS, JOURNEY_QUOTES)).toEqual([]);
   });
@@ -719,16 +745,15 @@ describe("wb-h8f.9 docs/workbench/11 acceptance-journeys census (report mode)", 
     expect(budgeted, "the cases that run under JUDGE_BUDGET_MS, by title head").toEqual(EXPECTED_BUDGETED);
   });
 
-  it("AC3: every row carries one honest label for its evidence kind: receipts and artifacts resolve in TRACEABILITY, open rows name a bead", () => {
+  it("AC3: every row carries one honest label for its evidence kind: receipts and artifacts resolve in TRACEABILITY or the rule-13 receipts route, open rows name a bead", () => {
     expect(auditRows(ROWS, JOURNEY_QUOTES, REPO_READER)).toEqual([]);
   });
 
-  it("AC3: every 'live SDK pass' row is receipt-backed: a forge-run receipt id in a live TRACEABILITY paragraph, or the owner receipt the 2026-10-16T01:16Z ruling admits", () => {
+  it("AC3: every 'live SDK pass' row is receipt-backed in a live TRACEABILITY or rule-13 receipts paragraph, or the owner receipt the 2026-10-16T01:16Z ruling admits", () => {
     const live = ROWS.filter(r => r.label === "live SDK pass");
-    expect(live.map(r => `${r.journey}:${r.evidence.kind}`)).toEqual(["1:receipt", "1:owner-receipt"]);
-    const traceability = REPO_READER.read(TRACEABILITY);
+    expect(live.map(r => `${r.journey}:${r.evidence.kind}`)).toEqual(["1:receipt", "1:owner-receipt", "3:receipt"]);
     for (const r of live) {
-      if (r.evidence.kind === "receipt") expect(receiptProblem(traceability, r.evidence.commandId), describeRow(r, JOURNEY_QUOTES)).toBeUndefined();
+      if (r.evidence.kind === "receipt") expect(receiptProblem(REPO_READER, r.evidence.commandId), describeRow(r, JOURNEY_QUOTES)).toBeUndefined();
       else if (r.evidence.kind === "owner-receipt") expect(ownerReceiptProblems(r.evidence, REPO_READER), describeRow(r, JOURNEY_QUOTES)).toEqual([]);
     }
     for (const r of ROWS.filter(x => x.evidence.kind === "receipt" || x.evidence.kind === "owner-receipt")) expect(r.label).toBe("live SDK pass");
@@ -829,18 +854,53 @@ describe("wb-h8f.9 liveness: the adopted judge is not accept-all (the real repor
 
 describe("wb-h8f.9 receipt, artifact, label and coverage falsifiers (synthetic TRACEABILITY, rendered docs)", () => {
   const goodRows = (): readonly JourneyRow[] => [row(1, "live SDK pass", receipt("cmd_aaaaaaaaaaaa")), row(2, "code present", artifact("qa/x.json", "## Section")), row(3, "not started", open("wb-1"))];
-  const goodTrace = synthTraceability("Live receipt cmd_aaaaaaaaaaaa here.", "See qa/x.json\n\n## Section\n\nBody.");
+  const goodTrace = synthTraceability("Live receipt cmd_aaaaaaaaaaaa here.", "## Section\n\nSee qa/x.json\n\nBody.");
   const goodFiles = { [TRACEABILITY]: goodTrace, "qa/x.json": "{}" };
 
   it("baseline: a healthy table audits clean (no false positive)", () => {
     expect(auditRows(goodRows(), JOURNEY_QUOTES, readerOf(goodFiles))).toEqual([]);
   });
 
+  it("R617 receipt-only: a journey's sole live evidence in the rule-13 receipts route earns a live SDK pass", () => {
+    const files = {
+      [TRACEABILITY]: synthTraceability("Historical row with no run of record."),
+      "docs/workbench/receipts/wb-8kv.md": "# wb-8kv: VC-4 live receipt\n\n## 2026-10-20 receipt\n\n- Run of record: forge cmd_7cea2921543b (status success, exit 0).\n- Verdict: `realised: true`, `pass: true`.\n",
+    };
+    const rows = [row(3, "live SDK pass", receipt("cmd_7cea2921543b"))];
+    expect(auditRows(rows, JOURNEY_QUOTES, readerOf(files))).toEqual([]);
+  });
+
+  it("R617 owner-receipt: a committed owner receipt cited only by a per-bead receipt file is admitted", () => {
+    const files = ownerFiles({ [TRACEABILITY]: synthTraceability("No owner receipt here."), "docs/workbench/receipts/wb-operator.md": `# wb-operator: operator receipt\n\n## 2026-10-20 Owner receipt\n\n${LIVE_CITE}\n` });
+    const ev = ownerReceipt({ file: OWNER_FILE, contract: "c/v2", revision: "abc1234", landingGate: "cmd_cccccccccccc", heading: "2026-10-20 Owner receipt", citation: OWNER_CITATION });
+    expect(ownerAudit(files, ev)).toEqual([]);
+  });
+
+  it("R617 artifact: a committed artifact cited under a per-bead receipt heading is admitted", () => {
+    const files = { [TRACEABILITY]: synthTraceability("Historical row."), "qa/x.json": "{}", "docs/workbench/receipts/wb-operator.md": "# wb-operator: operator receipt\n\n## 2026-10-20 Section\n\nSee qa/x.json.\n" };
+    expect(auditRows([row(2, "code present", artifact("qa/x.json", "## 2026-10-20 Section"))], JOURNEY_QUOTES, readerOf(files))).toEqual([]);
+  });
+
+  it("R617 hidden citation: a command id only in a receipt HTML comment or code fence earns no pass", () => {
+    const receiptFile = "docs/workbench/receipts/wb-8kv.md";
+    const preamble = "# wb-8kv: VC-4 live receipt\n\n## 2026-10-20 receipt\n\n";
+    const rows = [row(3, "live SDK pass", receipt("cmd_7cea2921543b"))];
+    for (const hidden of ["<!-- cmd_7cea2921543b -->", "```\ncmd_7cea2921543b\n```", "- <!-- cmd_7cea2921543b -->"]) {
+      const files = { [TRACEABILITY]: synthTraceability("No live run."), [receiptFile]: `${preamble}${hidden}\n` };
+      expect(auditRows(rows, JOURNEY_QUOTES, readerOf(files))[0], hidden).toContain("is not recorded");
+    }
+  });
+
+  it("R617 withdrawal: a per-bead receipt whose only citation is SUPERSEDED cannot earn a pass", () => {
+    const files = { [TRACEABILITY]: synthTraceability("Historical row."), "docs/workbench/receipts/wb-8kv.md": "# wb-8kv: VC-4 live receipt\n\n## 2026-10-20 receipt\n\nSUPERSEDED cmd_7cea2921543b was withdrawn.\n" };
+    expect(auditRows([row(3, "live SDK pass", receipt("cmd_7cea2921543b"))], JOURNEY_QUOTES, readerOf(files))[0]).toContain("SUPERSEDED");
+  });
+
   it("fabricated-receipt mutant: a command id absent from TRACEABILITY fails the live row naming the journey", () => {
     const lines = auditRows([row(1, "live SDK pass", receipt("cmd_bbbbbbbbbbbb"))], JOURNEY_QUOTES, readerOf(goodFiles));
     expect(lines).toHaveLength(1);
     expect(lines[0]).toContain("journey 1");
-    expect(lines[0]).toContain("is not recorded in TRACEABILITY");
+    expect(lines[0]).toContain("is not recorded in TRACEABILITY or docs/workbench/receipts");
   });
 
   it("malformed-receipt mutant: an id that is not a command id fails", () => {
@@ -855,8 +915,8 @@ describe("wb-h8f.9 receipt, artifact, label and coverage falsifiers (synthetic T
   it("artifact mutant: a missing receipt file, an uncited file or a lost TRACEABILITY section fails the operator row", () => {
     const op = [row(1, "code present", artifact("qa/x.json", "## Section"))];
     expect(auditRows(op, JOURNEY_QUOTES, readerOf({ [TRACEABILITY]: goodTrace }))[0]).toContain("is missing");
-    expect(auditRows(op, JOURNEY_QUOTES, readerOf({ ...goodFiles, [TRACEABILITY]: synthTraceability("See qa/x.json only.") })).some(line => line.includes("lost the section"))).toBe(true);
-    expect(auditRows(op, JOURNEY_QUOTES, readerOf({ ...goodFiles, [TRACEABILITY]: synthTraceability("## Section", "Nothing cites the file.") })).some(line => line.includes("is not cited in TRACEABILITY"))).toBe(true);
+    expect(auditRows(op, JOURNEY_QUOTES, readerOf({ ...goodFiles, [TRACEABILITY]: synthTraceability("See qa/x.json only.") })).some(line => line.includes("is not cited under section"))).toBe(true);
+    expect(auditRows(op, JOURNEY_QUOTES, readerOf({ ...goodFiles, [TRACEABILITY]: synthTraceability("## Section", "Nothing cites the file.") })).some(line => line.includes("is not cited under section"))).toBe(true);
   });
 
   it("unbacked-live mutant: 'live SDK pass' on an open row or a case row fails the label check", () => {
@@ -929,14 +989,14 @@ describe("wb-h8f.9 receipt, artifact, label and coverage falsifiers (synthetic T
 
   it("owner-receipt mutant: TRACEABILITY lost the receipt's section heading, or carries it twice", () => {
     const lost = ownerAudit(ownerFiles({ [TRACEABILITY]: synthTraceability("## Earlier", LIVE_CITE) }));
-    expect(lost.some(line => line.includes('TRACEABILITY section "Owner receipt" is refused'))).toBe(true);
+    expect(lost.some(line => line.includes('TRACEABILITY or receipts section "Owner receipt" cites qa/r.json at revision abc1234 in no live paragraph'))).toBe(true);
     const twice = ownerAudit(ownerFiles({ [TRACEABILITY]: `${ownerTrace(LIVE_CITE)}\n## Owner receipt\n\nAgain.\n` }));
-    expect(twice.some(line => line.includes("occurs 2 times"))).toBe(true);
+    expect(twice.some(line => line.includes('TRACEABILITY or receipts section "Owner receipt" cites qa/r.json at revision abc1234 in no live paragraph'))).toBe(true);
   });
 
   it("owner-receipt mutant: the section lost its live citation of the file at the revision (absent, another revision, or only SUPERSEDED)", () => {
     const cites = (body: string): readonly string[] => ownerAudit(ownerFiles({ [TRACEABILITY]: ownerTrace(body) }));
-    const lostCitation = 'TRACEABILITY section "Owner receipt" cites qa/r.json at revision abc1234 in no live paragraph';
+    const lostCitation = 'TRACEABILITY or receipts section "Owner receipt" cites qa/r.json at revision abc1234 in no live paragraph';
     expect(cites("Re-run of record at revision `abc1234`.").some(line => line.includes(lostCitation))).toBe(true);
     expect(cites("Re-run of record at revision `fff0000`, committed at `qa/r.json`.").some(line => line.includes(lostCitation))).toBe(true);
     expect(cites(`SUPERSEDED (wb-x): ${LIVE_CITE}`).some(line => line.includes(lostCitation))).toBe(true);

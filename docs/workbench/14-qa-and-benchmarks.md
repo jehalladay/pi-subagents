@@ -72,6 +72,7 @@ Evidence of record for the five docs/workbench/11 acceptance journeys, one row p
 | 3 | fixture pass | test/workbench-observation.test.ts: "disconnect invalidates known nodes; reconnect alone cannot restore current without snapshot" |
 | 3 | fixture pass | test/workbench-furnace-observer.test.ts: "reconnects only by fresh snapshot, marking a failed read stale instead of asserting last-known RUNNING" |
 | 3 | fixture pass | test/workbench-furnace-vc4-receipt.test.ts: "C2 falsifier: disconnect must make the reading and the nodes stale, keeping the last-known running label" |
+| 3 | live SDK pass | forge-run receipt cmd_7cea2921543b |
 | 4 | fixture pass | test/workbench-patch-proposal.test.ts: "validates the candidate bytes exactly as the designer does and mirrors its status" |
 | 4 | fixture pass | test/workbench-validate-reply.test.ts: "never executes or writes the candidate source" |
 | 4 | fixture pass | test/workbench-designer.test.ts: "matched cohort yields measured deltas for every shared metric and states association, not causation" |
