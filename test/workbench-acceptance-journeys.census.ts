@@ -26,12 +26,23 @@
  * - owner-receipt "live SDK pass" - an OWNER RECEIPT with no forge-run cmd_ of its own (owner ruling
  *                 2026-10-16T01:16Z: the wb-h7r v2 operator receipt COUNTS as journey 1's live SDK pass evidence).
  *                 Admitted only when the committed file exists, itself carries the row's contract and revision and
- *                 records a realised pass; the TRACEABILITY section under the row's heading (exactly once, rendered
- *                 view) cites the file at that revision in a paragraph that is not SUPERSEDED; and the row carries the
+ *                 records a realised pass; the section under the row's heading (exactly once across both evidence routes, rendered
+ *                 view) cites the file at that revision in a live paragraph, list item or nested quote; and the row carries the
  *                 owner-worded citation - the committed path, the revision, the landing gate, the owner-receipt
  *                 statement and the alias-vs-native fact as the receipt's own preflight records it.
  * - artifact      "code present" - a committed file cited by a section in either evidence route (no row today).
  * - open          "code present" | "not started" - a tracking bead id; never a pass label.
+ *
+ * wb-qys1 / R658: citation text is rendered from marked tokens, never raw markdown. Inline code/emphasis/link text
+ * counts; comments, fenced examples, images, definitions and link destinations do not. Nested lists and quotes are
+ * traversed while separate blocks remain separate claims. Owner/artifact heading uniqueness is corpus-wide and
+ * missing/duplicate section attribution remains visible. Filename membership reuses receipts-index.mjs RECEIPT_FILE.
+ * A later receipt entry withdraws a claim only by naming the original file, its exact rendered claim and a nonempty
+ * reason (Reason: or because); fields may occupy separate blocks in that same entry. Same-file entry order or a
+ * strictly later cross-file entry date establishes "later". A withdrawal quotation is not new live evidence. This is
+ * a pinned receipt convention, not an arbitrary natural-language retraction classifier. Undated cross-file entries
+ * and new withdrawal paraphrases are outside the judged convention; receipts-shape separately requires dated entries.
+ * No product display path is added. Test diagnostics do not enter the registered tool/UI surface.
  *
  * Frozen literals (rule 16), each written out in full: EXPECTED_SHAPE (journey:label:kind:pins), EXPECTED_PINS (the ten
  * pin pairs), EXPECTED_EVIDENCE (every row's evidence identity, U3) and EXPECTED_JUDGED_ROWS (the rows AC2 judges,
@@ -72,6 +83,7 @@ import { basename, dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { marked, type Token, type Tokens } from "marked";
 import { describe, expect, it } from "vitest";
+import { RECEIPT_FILE } from "../qa/workbench/receipts-index.mjs";
 import { type CasePin, DEFAULT_GATE_TIER, DEFAULT_TIER_REPORT, docsSection, judge, type PinVerdict, type RenderedBlock, sectionMatches, sourceStructure } from "./helpers/census.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -305,7 +317,7 @@ interface Reader {
 const REPO_READER: Reader = {
   exists: relative => existsSync(join(ROOT, relative)),
   read: relative => readFileSync(join(ROOT, relative), "utf8"),
-  list: directory => readdirSync(join(ROOT, directory)).filter(name => /^wb-[a-z0-9]+(?:\.[0-9]+)*\.md$/.test(name)).sort(),
+  list: directory => readdirSync(join(ROOT, directory)).filter(name => RECEIPT_FILE.test(name)).sort(),
 };
 
 const COMMAND_ID = /^cmd_[0-9a-f]{12}$/;
@@ -323,33 +335,112 @@ const describeRow = (r: JourneyRow, quotes: readonly string[]): string => `journ
 
 /** The historical file and the per-bead rule-13 receipts route form one evidence corpus. */
 function evidenceSources(reader: Reader): readonly { readonly file: string; readonly text: string }[] {
-  return [TRACEABILITY, ...reader.list(RECEIPTS_DIR).map(name => `${RECEIPTS_DIR}/${name}`)].map(file => ({ file, text: reader.read(file) }));
+  return [TRACEABILITY, ...reader.list(RECEIPTS_DIR).filter(name => RECEIPT_FILE.test(name)).map(name => `${RECEIPTS_DIR}/${name}`)].map(file => ({ file, text: reader.read(file) }));
 }
 
-/** A receipt id must sit in a live paragraph of either evidence route, not a withdrawn or hidden claim. */
-function receiptProblem(reader: Reader, commandId: string): string | undefined {
-  const mentions = evidenceSources(reader).flatMap(({ text }) =>
-    marked.lexer(text).flatMap(token => {
-      if (token.type === "paragraph") return [token.text];
-      if (token.type === "list") return token.items.filter((item: Tokens.ListItem) => !item.text.trim().startsWith("<!--")).map((item: Tokens.ListItem) => item.text);
-      return [];
-    }).filter(block => new RegExp(`\\b${commandId}\\b`).test(block)),
+/** Visible citation text: comments, fenced code, images, definitions and link destinations carry no evidence. */
+function citationText(tokens: readonly Token[]): string {
+  return tokens.map(token => {
+    if (["html", "code", "image", "def", "space", "hr"].includes(token.type)) return "";
+    if (token.type === "br") return " ";
+    if (token.type === "list") return token.items.map((item: Tokens.ListItem) => citationText(item.tokens)).join(" ");
+    if ("tokens" in token && Array.isArray(token.tokens)) return citationText(token.tokens);
+    return "text" in token && typeof token.text === "string" ? token.text : "";
+  }).join("");
+}
+const visible = (tokens: readonly Token[]): string => citationText(tokens).replace(/\s+/g, " ").trim();
+interface Citation {
+  readonly file: string;
+  readonly text: string;
+  readonly entry: number;
+  readonly date: string;
+}
+/** Separate visible blocks stay separate: nested lists/quotes are traversed, fenced examples never become claims. */
+function citationBlocks(tokens: readonly Token[]): string[] {
+  return tokens.flatMap(token => {
+    if (token.type === "list") return token.items.flatMap((item: Tokens.ListItem) => citationBlocks(item.tokens));
+    if (token.type === "blockquote") return citationBlocks(token.tokens ?? []);
+    return token.type === "paragraph" || token.type === "text" ? [visible([token])].filter(Boolean) : [];
+  });
+}
+function sourceCitations(file: string, text: string): Citation[] {
+  let entry = 0;
+  let date = "";
+  return marked.lexer(text).flatMap(token => {
+    if (token.type === "heading" && token.depth === 2) {
+      entry += 1;
+      date = /^(\d{4}-\d{2}-\d{2})(?: |$)/.exec(visible(token.tokens ?? []))?.[1] ?? "";
+    }
+    return citationBlocks([token]).map(text => ({ file, text, entry, date }));
+  });
+}
+/** R658: withdrawal fields may be separate blocks, but must belong to the same receipt entry. */
+function withdrawalEntries(citations: readonly Citation[]): readonly Citation[] {
+  const entries = new Map<string, Citation>();
+  for (const citation of citations) {
+    const key = JSON.stringify([citation.file, citation.entry]);
+    const previous = entries.get(key);
+    entries.set(key, previous === undefined ? citation : { ...citation, text: `${previous.text} ${citation.text}` });
+  }
+  return [...entries.values()];
+}
+function withdraws(correction: Citation, claim: Citation): boolean {
+  return RECEIPT_FILE.test(basename(correction.file)) &&
+    (correction.file === claim.file ? correction.entry > claim.entry : correction.date !== "" && (claim.date === "" || correction.date > claim.date)) &&
+    /\b(?:SUPERSEDED|withdrawn)\b/i.test(correction.text) &&
+    correction.text.includes(claim.file) && correction.text.includes(claim.text) &&
+    /\b(?:reason|because)\s*:?\s+\S/i.test(correction.text);
+}
+/** A withdrawal entry's quotation is not new live evidence either. */
+function withdrawn(claim: Citation, citations: readonly Citation[]): boolean {
+  return withdrawalEntries(citations).some(correction =>
+    withdraws(correction, claim) ||
+    (correction.file === claim.file && correction.entry === claim.entry && citations.some(original => withdraws(correction, original))),
   );
+}
+/** A command id must be a whole visible token in a nonwithdrawn citation. */
+function receiptProblem(reader: Reader, commandId: string): string | undefined {
+  const citations = evidenceSources(reader).flatMap(source => sourceCitations(source.file, source.text));
+  const mentions = citations.filter(block => new RegExp(`\\b${commandId}\\b`).test(block.text));
   if (mentions.length === 0) return `receipt ${commandId} is not recorded in TRACEABILITY or ${RECEIPTS_DIR}`;
-  if (mentions.every(block => /^\s*SUPERSEDED\b/.test(block))) return `receipt ${commandId} survives only inside a SUPERSEDED TRACEABILITY or receipts paragraph`;
+  if (mentions.every(block => /^\s*SUPERSEDED\b/.test(block.text) || withdrawn(block, citations))) return `receipt ${commandId} survives only inside a SUPERSEDED TRACEABILITY or receipts paragraph`;
   return undefined;
 }
 
-/** The heading and paragraph must occur together in one route; historical headings are level 2 under TRACEABILITY. */
-function citedSection(reader: Reader, heading: string, file: string, revision?: string): boolean {
-  for (const source of evidenceSources(reader)) {
-    const root = marked.lexer(source.text).find(token => token.type === "heading" && token.depth === 1);
-    if (root === undefined || root.type !== "heading") continue;
-    const level2 = heading.replace(/^## /, "");
-    const section = docsSection(source.text, level2, 2, [root.text]);
-    if (section.ok && section.blocks.some(block => block.kind === "paragraph" && !/^SUPERSEDED\b/.test(block.text) && block.text.includes(file) && (revision === undefined || citesRevision(block.text, revision)))) return true;
+/** One heading across the whole corpus, with specific missing/duplicate attribution preserved. */
+function citedSectionProblem(reader: Reader, heading: string, file: string, revision?: string): string | undefined {
+  const level2 = heading.replace(/^## /, "");
+  const sources = evidenceSources(reader);
+  const matches: Array<{ readonly source: { readonly file: string; readonly text: string }; readonly root: string }> = [];
+  let count = 0;
+  const countHeadings = (tokens: readonly Token[]): void => {
+    for (const token of tokens) {
+      if (token.type === "heading" && token.depth === 2 && visible(token.tokens ?? []) === level2) count += 1;
+      if (token.type === "list") for (const item of token.items) countHeadings(item.tokens);
+      else if ("tokens" in token && Array.isArray(token.tokens)) countHeadings(token.tokens);
+    }
+  };
+  for (const source of sources) {
+    const tokens = marked.lexer(source.text);
+    const before = count;
+    countHeadings(tokens);
+    const root = tokens.find(token => token.type === "heading" && token.depth === 1);
+    if (count > before && root?.type === "heading") matches.push({ source, root: visible(root.tokens ?? []) });
   }
-  return false;
+  if (count !== 1) return `TRACEABILITY or receipts section "${level2}" is refused: ${count === 0 ? "the rendered view has no level-2 heading" : `the heading occurs ${count} times in the rendered evidence corpus`}`;
+  const match = matches[0];
+  if (match === undefined) return `TRACEABILITY or receipts section "${level2}" is refused: lost its level-1 parent`;
+  const section = docsSection(match.source.text, level2, 2, [match.root]);
+  if (!section.ok) return `TRACEABILITY or receipts section "${level2}" is refused: ${section.why}`;
+  // Use the same token-view section bounds, keeping nested block citations separate.
+  const tokens = marked.lexer(match.source.text);
+  const start = tokens.findIndex(token => token.type === "heading" && token.depth === 2 && visible(token.tokens ?? []) === level2);
+  const end = tokens.findIndex((token, index) => index > start && token.type === "heading" && token.depth <= 2);
+  const texts = citationBlocks(tokens.slice(start + 1, end === -1 ? undefined : end));
+  const citations = sources.flatMap(source => sourceCitations(source.file, source.text));
+  if (texts.some(text => !/^SUPERSEDED\b/.test(text) && text.includes(file) && (revision === undefined || citesRevision(text, revision)) &&
+    citations.some(claim => claim.file === match.source.file && claim.text === text && !withdrawn(claim, citations)))) return undefined;
+  return `TRACEABILITY or receipts section "${heading}" cites ${file}${revision === undefined ? "" : ` at revision ${revision}`} in no live paragraph`;
 }
 
 const isRecord = (value: unknown): value is Readonly<Record<string, unknown>> => value !== null && typeof value === "object" && !Array.isArray(value);
@@ -395,8 +486,12 @@ function ownerReceiptProblems(ev: OwnerReceipt, reader: Reader): string[] {
       else parts.push(fact);
     }
   }
-  if (!citedSection(reader, ev.heading, ev.file, ev.revision)) {
-    out.push(`TRACEABILITY or receipts section "${ev.heading}" cites ${ev.file} at revision ${ev.revision} in no live paragraph`);
+  const citationProblem = citedSectionProblem(reader, ev.heading, ev.file, ev.revision);
+  if (citationProblem !== undefined) {
+    out.push(citationProblem);
+    // Retain the earlier generic diagnostic alongside the more specific refusal attribution.
+    const generic = `TRACEABILITY or receipts section "${ev.heading}" cites ${ev.file} at revision ${ev.revision} in no live paragraph`;
+    if (citationProblem !== generic) out.push(generic);
   }
   const missing = parts.filter(part => !ev.citation.includes(part));
   if (missing.length > 0) out.push(`the row does not carry the owner-worded citation (missing ${missing.map(part => JSON.stringify(part)).join(", ")})`);
@@ -423,7 +518,11 @@ function auditRows(rows: readonly JourneyRow[], quotes: readonly string[], reade
       for (const problem of ownerReceiptProblems(ev, reader)) failures.push(`${who}: ${problem}`);
     } else if (ev.kind === "artifact") {
       if (!reader.exists(ev.file)) failures.push(`${who}: artifact ${ev.file} is missing`);
-      if (!citedSection(reader, ev.heading, ev.file)) failures.push(`${who}: artifact ${ev.file} is not cited under section "${ev.heading}" in TRACEABILITY or receipts`);
+      const problem = citedSectionProblem(reader, ev.heading, ev.file);
+      if (problem !== undefined) {
+        failures.push(`${who}: artifact ${ev.file} is not cited under section "${ev.heading}" in TRACEABILITY or receipts`);
+        failures.push(`${who}: ${problem}`);
+      }
     } else if (!BEAD_ID.test(ev.bead)) {
       failures.push(`${who}: open row names no tracking bead (${ev.bead})`);
     }
@@ -775,6 +874,15 @@ describe("wb-h8f.9 docs/workbench/11 acceptance-journeys census (report mode)", 
     for (const r of openRows) expect(["code present", "not started"]).toContain(r.label);
   });
 
+  it("QYS1 MB2: the live receipt listing preserves every dotted filename and shares the renderer's filter", () => {
+    const names = REPO_READER.list(RECEIPTS_DIR);
+    expect(names).toEqual(readdirSync(join(ROOT, RECEIPTS_DIR)).filter(name => RECEIPT_FILE.test(name)).sort());
+    expect(names).toContain("wb-zsv.8.md");
+    const own = sourceStructure(ROOT, SELF);
+    expect(own.ok, own.why).toBe(true);
+    expect(own.imports.filter(entry => entry.module === "../qa/workbench/receipts-index.mjs").flatMap(entry => entry.names)).toContain("RECEIPT_FILE");
+  });
+
   it("AC4: the leg judges the gate's own report and executes nothing: it imports judge, never judgePins, and loads no module at runtime", () => {
     const own = sourceStructure(ROOT, SELF);
     expect(own.ok, own.why).toBe(true);
@@ -1028,6 +1136,161 @@ describe("wb-h8f.9 receipt, artifact, label and coverage falsifiers (synthetic T
   it("owner-receipt mutant: a landing gate that is not a command id fails", () => {
     const citation = OWNER_CITATION.replace("cmd_cccccccccccc", "cmd_short");
     expect(ownerAudit(ownerFiles(), goodOwner(citation, "cmd_short")).some(line => line.includes("landing gate cmd_short is not a command id"))).toBe(true);
+  });
+
+
+  it("QYS1 S1 artifact cited in a receipt LIST ITEM under its heading is admitted (header: cited by a section in either evidence route)", () => {
+    const files = { [TRACEABILITY]: synthTraceability("Historical row."), "qa/x.json": "{}", "docs/workbench/receipts/wb-operator.md": "# wb-operator: operator receipt\n\n## 2026-10-20 Section\n\n- See qa/x.json.\n" };
+    expect(auditRows([row(2, "code present", artifact("qa/x.json", "## 2026-10-20 Section"))], JOURNEY_QUOTES, readerOf(files))).toEqual([]);
+  });
+
+  it("QYS1 S2 owner receipt cited in a receipt LIST ITEM under its heading is admitted", () => {
+    const files = ownerFiles({ [TRACEABILITY]: synthTraceability("No owner receipt here."), "docs/workbench/receipts/wb-operator.md": `# wb-operator: operator receipt\n\n## 2026-10-20 Owner receipt\n\n- ${LIVE_CITE}\n` });
+    const ev = ownerReceipt({ file: OWNER_FILE, contract: "c/v2", revision: "abc1234", landingGate: "cmd_cccccccccccc", heading: "2026-10-20 Owner receipt", citation: OWNER_CITATION });
+    expect(ownerAudit(files, ev)).toEqual([]);
+  });
+
+  it("QYS1 S3 a command id only inside an INLINE HTML comment of a receipt paragraph earns no pass", () => {
+    const files = { [TRACEABILITY]: synthTraceability("No live run."), "docs/workbench/receipts/wb-8kv.md": "# wb-8kv: VC-4 live receipt\n\n## 2026-10-20 receipt\n\nRun of record <!-- cmd_7cea2921543b --> here.\n" };
+    expect(auditRows([row(3, "live SDK pass", receipt("cmd_7cea2921543b"))], JOURNEY_QUOTES, readerOf(files))[0] ?? "").toContain("is not recorded");
+  });
+
+  it("QYS1 S4 a command id only inside an inline HTML comment of a receipt LIST ITEM (not at its start) earns no pass", () => {
+    const files = { [TRACEABILITY]: synthTraceability("No live run."), "docs/workbench/receipts/wb-8kv.md": "# wb-8kv: VC-4 live receipt\n\n## 2026-10-20 receipt\n\n- Run of record: forge <!-- cmd_7cea2921543b --> (status success).\n" };
+    expect(auditRows([row(3, "live SDK pass", receipt("cmd_7cea2921543b"))], JOURNEY_QUOTES, readerOf(files))[0] ?? "").toContain("is not recorded");
+  });
+
+  it("QYS1 S5 a command id only inside a code fence NESTED in a receipt list item earns no pass", () => {
+    const files = { [TRACEABILITY]: synthTraceability("No live run."), "docs/workbench/receipts/wb-8kv.md": "# wb-8kv: VC-4 live receipt\n\n## 2026-10-20 receipt\n\n- Run of record:\n\n  ```\n  forge cmd_7cea2921543b\n  ```\n" };
+    expect(auditRows([row(3, "live SDK pass", receipt("cmd_7cea2921543b"))], JOURNEY_QUOTES, readerOf(files))[0] ?? "").toContain("is not recorded");
+  });
+
+  it("QYS1 S6 a command id only inside an HTML comment block NESTED in a receipt list item earns no pass", () => {
+    const files = { [TRACEABILITY]: synthTraceability("No live run."), "docs/workbench/receipts/wb-8kv.md": "# wb-8kv: VC-4 live receipt\n\n## 2026-10-20 receipt\n\n- Run of record:\n\n  <!-- forge cmd_7cea2921543b -->\n" };
+    expect(auditRows([row(3, "live SDK pass", receipt("cmd_7cea2921543b"))], JOURNEY_QUOTES, readerOf(files))[0] ?? "").toContain("is not recorded");
+  });
+
+  it("QYS1 S7 a command id only as a link destination (the rendered text omits it) earns no pass", () => {
+    const files = { [TRACEABILITY]: synthTraceability("No live run."), "docs/workbench/receipts/wb-8kv.md": "# wb-8kv: VC-4 live receipt\n\n## 2026-10-20 receipt\n\n- Run of record: [forge run](https://example.invalid/cmd_7cea2921543b) (status success).\n" };
+    expect(auditRows([row(3, "live SDK pass", receipt("cmd_7cea2921543b"))], JOURNEY_QUOTES, readerOf(files))[0] ?? "").toContain("is not recorded");
+  });
+
+  // R658 (2): withdrawal names the original file, its claim verbatim and a reason in a later entry.
+  it("QYS1 S8 append-only withdrawal names the original file and exact claim with a reason", () => {
+    const claim = "Run of record: forge cmd_7cea2921543b (status success, exit 0).";
+    const files = { [TRACEABILITY]: synthTraceability("No live run."), "docs/workbench/receipts/wb-8kv.md": `# wb-8kv: VC-4 live receipt
+
+## 2026-10-20 receipt
+
+- ${claim}
+
+## 2026-10-21 correction
+
+SUPERSEDED: original file docs/workbench/receipts/wb-8kv.md; claim: ${claim} Reason: it was not a live pass.
+` };
+    expect(auditRows([row(3, "live SDK pass", receipt("cmd_7cea2921543b"))], JOURNEY_QUOTES, readerOf(files))[0] ?? "").toContain("SUPERSEDED");
+  });
+
+  it("QYS1 S9 a duplicated TRACEABILITY owner-receipt heading is reported as a duplicate, not as a missing citation (attribution)", () => {
+    const twice = ownerAudit(ownerFiles({ [TRACEABILITY]: `${ownerTrace(LIVE_CITE)}\n## Owner receipt\n\nAgain.\n` }));
+    expect(twice.some(line => line.includes("occurs 2 times"))).toBe(true);
+  });
+
+  it("QYS1 S10 an owner-receipt heading present in two evidence sources is refused as not exactly once (header: exactly once)", () => {
+    const files = ownerFiles({ "docs/workbench/receipts/wb-dup.md": "# wb-dup: duplicate heading\n\n## Owner receipt\n\nNothing cited here.\n" });
+    expect(ownerAudit(files).length).toBeGreaterThan(0);
+  });
+
+  it("QYS1 S11 a longer token that merely starts with the command id does not count (word boundary)", () => {
+    const files = { [TRACEABILITY]: synthTraceability("No live run."), "docs/workbench/receipts/wb-8kv.md": "# wb-8kv: VC-4 live receipt\n\n## 2026-10-20 receipt\n\n- Run of record: forge cmd_7cea2921543bff (status success).\n" };
+    expect(auditRows([row(3, "live SDK pass", receipt("cmd_7cea2921543b"))], JOURNEY_QUOTES, readerOf(files))[0] ?? "").toContain("is not recorded");
+  });
+
+  it("QYS1 C1 control: the same receipt text with the id visible in a list item IS admitted", () => {
+    const files = { [TRACEABILITY]: synthTraceability("No live run."), "docs/workbench/receipts/wb-8kv.md": "# wb-8kv: VC-4 live receipt\n\n## 2026-10-20 receipt\n\n- Run of record: forge cmd_7cea2921543b (status success).\n" };
+    expect(auditRows([row(3, "live SDK pass", receipt("cmd_7cea2921543b"))], JOURNEY_QUOTES, readerOf(files))).toEqual([]);
+  });
+
+  it("QYS1 C2 control: an artifact cited in a receipt PARAGRAPH under its heading is admitted", () => {
+    const files = { [TRACEABILITY]: synthTraceability("Historical row."), "qa/x.json": "{}", "docs/workbench/receipts/wb-operator.md": "# wb-operator: operator receipt\n\n## 2026-10-20 Section\n\nSee qa/x.json.\n" };
+    expect(auditRows([row(2, "code present", artifact("qa/x.json", "## 2026-10-20 Section"))], JOURNEY_QUOTES, readerOf(files))).toEqual([]);
+  });
+
+
+  it("QYS1 F4 lost heading is attributed to the missing rendered section", () => {
+    const lost = ownerAudit(ownerFiles({ [TRACEABILITY]: synthTraceability("## Earlier", LIVE_CITE) }));
+    expect(lost.some(line => line.includes('section "Owner receipt" is refused') && line.includes("no level-2 heading"))).toBe(true);
+  });
+
+  it("QYS1 F2 nested list and blockquote citations resolve for owner receipts and artifacts", () => {
+    for (const body of [`- Container\n  - ${LIVE_CITE}`, `> ${LIVE_CITE}`, `- Container\n\n  > ${LIVE_CITE}`]) {
+      const files = ownerFiles({ [TRACEABILITY]: synthTraceability("No owner receipt here."), "docs/workbench/receipts/wb-operator.md": `# wb-operator: operator receipt\n\n## 2026-10-20 Owner receipt\n\n${body}\n` });
+      const ev = ownerReceipt({ file: OWNER_FILE, contract: "c/v2", revision: "abc1234", landingGate: "cmd_cccccccccccc", heading: "2026-10-20 Owner receipt", citation: OWNER_CITATION });
+      expect(ownerAudit(files, ev), body).toEqual([]);
+      expect(auditRows([row(2, "code present", artifact(OWNER_FILE, "2026-10-20 Owner receipt"))], JOURNEY_QUOTES, readerOf(files)), body).toEqual([]);
+    }
+  });
+
+  it("QYS1 F6 dotted receipt filenames are read and non-receipt names never earn a pass", () => {
+    const body = "# wb-x: receipt\n\n## 2026-10-20 record\n\nforge cmd_aaaaaaaaaaaa\n";
+    for (const name of ["wb-x.1.md", "wb-x.1.2.md"]) {
+      const files = { [TRACEABILITY]: synthTraceability("Nothing."), [`${RECEIPTS_DIR}/${name}`]: body };
+      expect(auditRows([row(1, "live SDK pass", receipt("cmd_aaaaaaaaaaaa"))], JOURNEY_QUOTES, readerOf(files)), name).toEqual([]);
+    }
+    for (const name of ["INDEX.md", "other.md", "wb-x.md.bak", "wb-x.a.md", "wb-X.md"]) {
+      const files = { [TRACEABILITY]: synthTraceability("Nothing."), [`${RECEIPTS_DIR}/${name}`]: body };
+      expect(auditRows([row(1, "live SDK pass", receipt("cmd_aaaaaaaaaaaa"))], JOURNEY_QUOTES, readerOf(files))[0], name).toContain("is not recorded");
+    }
+  });
+
+  it("QYS1 R658 a later correction file withdraws only its named original claim, never an unrelated remeasurement", () => {
+    const original = `${RECEIPTS_DIR}/wb-8kv.md`;
+    const claim = "Run of record: forge cmd_7cea2921543b (status success, exit 0).";
+    const base = { [TRACEABILITY]: synthTraceability("Nothing."), [original]: `# wb-8kv: receipt\n\n## 2026-10-20 record\n\n${claim}\n` };
+    const correction = (body: string, date = "2026-10-21"): string => `# wb-correction: correction\n\n## ${date} withdrawal\n\n${body}\n`;
+    const withdrawnClaim = `Withdrawn: original file ${original}; claim: ${claim} Reason: the reading was not live.`;
+    const rows = [row(3, "live SDK pass", receipt("cmd_7cea2921543b"))];
+    expect(auditRows(rows, JOURNEY_QUOTES, readerOf({ ...base, [`${RECEIPTS_DIR}/wb-correction.md`]: correction(withdrawnClaim) }))[0]).toContain("SUPERSEDED");
+    for (const body of [withdrawnClaim.replace(original, `${RECEIPTS_DIR}/wb-other.md`), withdrawnClaim.replace(claim, "Another claim cmd_7cea2921543b."), withdrawnClaim.replace("Reason: the reading was not live.", ""), `<!-- ${withdrawnClaim} -->`, `\`\`\`\n${withdrawnClaim}\n\`\`\``]) {
+      expect(auditRows(rows, JOURNEY_QUOTES, readerOf({ ...base, [`${RECEIPTS_DIR}/wb-correction.md`]: correction(body) })), body).toEqual([]);
+    }
+    expect(auditRows(rows, JOURNEY_QUOTES, readerOf({ ...base, [`${RECEIPTS_DIR}/wb-correction.md`]: correction(withdrawnClaim, "2026-10-19") }))).toEqual([]);
+    const refreshed = { ...base, [`${RECEIPTS_DIR}/wb-correction.md`]: correction(withdrawnClaim), [`${RECEIPTS_DIR}/wb-fresh.md`]: correction("New measurement: forge cmd_7cea2921543b is a live pass.") };
+    expect(auditRows(rows, JOURNEY_QUOTES, readerOf(refreshed))).toEqual([]);
+  });
+
+  it("QYS1 R658 a withdrawal section may name the file, verbatim claim and reason in separate visible list items", () => {
+    const original = `${RECEIPTS_DIR}/wb-8kv.md`;
+    const claim = "Run of record: forge cmd_7cea2921543b (status success, exit 0).";
+    const files = { [TRACEABILITY]: synthTraceability("Nothing."), [original]: `# wb-8kv: receipt\n\n## 2026-10-20 record\n\n${claim}\n\n## 2026-10-21 withdrawal\n\n- SUPERSEDED: original file ${original}\n- Claim: ${claim}\n- Reason: the reading was not live.\n` };
+    expect(auditRows([row(3, "live SDK pass", receipt("cmd_7cea2921543b"))], JOURNEY_QUOTES, readerOf(files))[0]).toContain("SUPERSEDED");
+  });
+
+  it("QYS1 R658 owner-receipt and artifact citations are withdrawn by the same later-entry definition", () => {
+    const original = `${RECEIPTS_DIR}/wb-operator.md`;
+    const files = ownerFiles({ [TRACEABILITY]: synthTraceability("Nothing."), [original]: `# wb-operator: receipt\n\n## 2026-10-20 Owner receipt\n\n- ${LIVE_CITE}\n\n## 2026-10-21 withdrawal\n\nWithdrawn: original file ${original}; claim: ${LIVE_CITE} Reason: the reading was not live.\n` });
+    const ev = ownerReceipt({ file: OWNER_FILE, contract: "c/v2", revision: "abc1234", landingGate: "cmd_cccccccccccc", heading: "2026-10-20 Owner receipt", citation: OWNER_CITATION });
+    expect(ownerAudit(files, ev).some(line => line.includes("in no live paragraph"))).toBe(true);
+    expect(auditRows([row(2, "code present", artifact(OWNER_FILE, "2026-10-20 Owner receipt"))], JOURNEY_QUOTES, readerOf(files)).some(line => line.includes("is not cited"))).toBe(true);
+  });
+
+  it("QYS1 heading uniqueness ignores hidden copies and counts nested rendered duplicates", () => {
+    for (const hidden of ["<!-- ## Owner receipt -->", "```\n## Owner receipt\n```"]) {
+      expect(ownerAudit(ownerFiles({ [`${RECEIPTS_DIR}/wb-copy.md`]: `# wb-copy: hidden copy\n\n## 2026-10-20 entry\n\n${hidden}\n` })), hidden).toEqual([]);
+    }
+    for (const nested of ["> ## Owner receipt", "- Container\n\n  ## Owner receipt"]) {
+      expect(ownerAudit(ownerFiles({ [`${RECEIPTS_DIR}/wb-copy.md`]: `# wb-copy: nested copy\n\n## 2026-10-20 entry\n\n${nested}\n` })).some(line => line.includes("occurs 2 times")), nested).toBe(true);
+    }
+  });
+
+  it("QYS1 MH a longer prefix or suffix token never earns a receipt pass; visible markdown does", () => {
+    for (const id of ["cmd_7cea2921543bff", "xcmd_7cea2921543b", "cmd_7cea2921543b_extra"]) {
+      const files = { [TRACEABILITY]: synthTraceability(`forge ${id}`) };
+      expect(auditRows([row(3, "live SDK pass", receipt("cmd_7cea2921543b"))], JOURNEY_QUOTES, readerOf(files))[0], id).toContain("is not recorded");
+    }
+    for (const text of ["forge `cmd_7cea2921543b`", "forge **cmd_7cea2921543b**", "forge [cmd_7cea2921543b](https://example.invalid/run)", "forge cmd_7cea<!-- hidden -->2921543b"]) {
+      expect(auditRows([row(3, "live SDK pass", receipt("cmd_7cea2921543b"))], JOURNEY_QUOTES, readerOf({ [TRACEABILITY]: synthTraceability(text) })), text).toEqual([]);
+    }
   });
 
   it("owner-receipt label mutant: an owner receipt labelled 'code present' fails the label check", () => {
