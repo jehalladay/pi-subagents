@@ -1,0 +1,30 @@
+{
+  "comment": "wb-vgke (owner R666 (2), the wb-h8f.14 gate's PREP F1; the hk9l / wb-5jha out-of-file roster pattern): the roster of the named residual quiet rows of test/workbench-h8f6-survivor-pins.test.ts, kept OUT OF FILE. One row per residual, in RESIDUALS order: its id, kind, family, requirement and members, and the describe (suite) and title (test) vitest registers its quiet row under. The census judges its in-file RESIDUALS rows against this list exactly, both ways, and judges the two records its quiet rows leave against it: the name each quiet row ran under (read through the expect state when its body starts) and one reached record per member, written after the member's last assertion. A quiet row dropped from the loop, renamed, or hollowed after its liveness reading reds there, and so does a residual removed from every literal of the census file.",
+  "residuals": [
+    {
+      "id": "S7",
+      "kind": "one-level-walk",
+      "family": "a sanitizer call in a same-block function the tagged wiring reaches only through another same-block function",
+      "requirement": "a sanitizeWorkbenchText call added at the head of each member's body leaves every obligation src derives unchanged",
+      "members": [
+        "workflowValidateToolReply"
+      ],
+      "suite": "wb-h8f.14 named residuals: each a named family plus a pinned quiet row, its members judged outside this file's literals",
+      "test": "S7 quiet row (a sanitizer call in a same-block function the tagged wiring reaches only through another same-block function): a sanitizeWorkbenchText call added at the head of each member's body leaves every obligation src derives unchanged"
+    },
+    {
+      "id": "L2-CP",
+      "kind": "coordinated-pin-removal",
+      "family": "a wiring row's pin removed together with its count in AC1 and the reached total",
+      "requirement": "removing one member's last pin changes no reading anchored outside this file's literals, while the same removal on the R9 row changes its fields reading",
+      "members": [
+        "G14",
+        "G15",
+        "G16",
+        "G20"
+      ],
+      "suite": "wb-h8f.14 named residuals: each a named family plus a pinned quiet row, its members judged outside this file's literals",
+      "test": "L2-CP quiet row (a wiring row's pin removed together with its count in AC1 and the reached total): removing one member's last pin changes no reading anchored outside this file's literals, while the same removal on the R9 row changes its fields reading"
+    }
+  ]
+}
