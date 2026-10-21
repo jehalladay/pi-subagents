@@ -9,7 +9,7 @@ import ts from 'typescript';
 import {afterAll, describe, expect, expectTypeOf, it, vi} from 'vitest';
 import {CapabilityError, CapabilityRegistry, type JsonValue} from '../src/workbench/capability-registry.js';
 import {type ControlDecision, decideControl} from '../src/workbench/control.js';
-import {type ForgeObservedRelation, forgeGateTopology} from '../src/workbench/forge-observer.js';
+import {type ForgeGateTopology, type ForgeObservedRelation, forgeGateTopology} from '../src/workbench/forge-observer.js';
 import {nativeEvidence} from '../src/workbench/native-evidence.js';
 import {type NativeRef, ObservationProjection} from '../src/workbench/observation.js';
 import {readForgeGateStatus, registerForgeGateStatus, registerNativeForgeGateStatus} from '../src/workbench/providers/forge.js';
@@ -778,10 +778,21 @@ describe('wb-4ap.7 COLLECTIVE-ADAPTATION-R7: reading last_result_state adds no r
   const NO_OWNER: ControlDecision = {decision: 'denied', category: 'authorization', reason: 'no confirmed lifecycle ownership', policy: 'no-confirmed-ownership'};
   const TARGETS = [workspaceRef, packageRef('code:pi-subagents'), packageRef(SIBLING_REF)];
   /** wb-4ap.19: what the it.each consumer below observed - the [name, row] each case received, recorded after its last
-   * assertion in the order the cases ran - so the consumer liveness row judges count and identity over the loop's inputs. */
-  const consumed: [string, Json][] = [];
+   * assertion in the order the cases ran - so the consumer liveness row judges count and identity over the loop's inputs.
+   * wb-4ap.20 adds the result each case judged (the very object its three assertions read), so the consumer subject row
+   * judges the result each case's assertions read, not only the row it received. */
+  const consumed: [string, Json, ForgeGateTopology][] = [];
   /** wb-4ap.19: the fixed tail of the title the consumer registers for each saying (its %s is the saying's name). */
   const CONSUMER_TAIL = ' - exactly one forge-observer grouping edge per package, the descriptor-less relations unchanged, no other relation kind';
+  /** wb-4ap.20: a row-derived observable of the topology one consumer case judged - the package node's status text, its
+   * subjectBasis (B is the measured derived_from), every relation as kind, ends and provenance source, and the diagnostic
+   * count - so a case whose subject projects differently from its own row disagrees with the frozen observable of that row. */
+  const judgedObservable = (result: ForgeGateTopology): string => {
+    const pkg = result.snapshots[1];
+    const subjectBasis = pkg.subjectBasis === undefined ? 'no subjectBasis' : pkg.subjectBasis === B ? 'subjectBasis B' : `subjectBasis ${pkg.subjectBasis}`;
+    const relations = result.relations.map(relation => `${relation.kind} ${relation.from.id}->${relation.to.id} by ${relation.provenance.source}`);
+    return `${pkg.node.statusText} | ${subjectBasis} | ${relations.join('; ')} | ${result.diagnostics.length} diagnostic(s)`;
+  };
 
   it('F15 table liveness (wb-4ap.7): the descriptor table holds all five sayings', () => expect(sayings).toHaveLength(5));
 
@@ -830,7 +841,8 @@ describe('wb-4ap.7 COLLECTIVE-ADAPTATION-R7: reading last_result_state adds no r
     expect(result.relations).toStrictEqual(forgeGateTopology(withPackages(DESCRIPTORLESS, SIBLING), context).relations);
     expect(JSON.stringify(result)).not.toMatch(RELATION_KINDS);
     // wb-4ap.19: recorded only after the last assertion, so a case that returns or throws before it is never counted as judged.
-    consumed.push([name, row]);
+    // wb-4ap.20: with the result the three assertions read, so the subject row judges that result against the case's own row.
+    consumed.push([name, row, result]);
   });
 
   // wb-4ap.19 (wb-4ap.18 PREP F1 of gate cmd_540c84bca52d): the table above is shape-pinned, but nothing pinned the loop that
@@ -856,6 +868,26 @@ describe('wb-4ap.7 COLLECTIVE-ADAPTATION-R7: reading last_result_state adds no r
     ]);
     expect(consumed.map(([name]) => name), 'the sayings the consumer judged to its last assertion this run').toStrictEqual(sayings.map(([name]) => name));
     expect(consumed.map(([, row]) => sayings.findIndex(([, own]) => own === row)), 'each judged case received its own table row object').toStrictEqual(sayings.map((_saying, index) => index));
+  });
+
+  // wb-4ap.20 (wb-4ap.19 PREP F1 of gate cmd_023706418b55): the liveness row above proves each case RECEIVED its own row and
+  // reached its last assertion, not that the subject it judged was computed from that row - K1 (the subject computed from
+  // DESCRIPTORLESS) and K1b (from saying 1's row) kept every row green 0|94, with and without G7, the src mutant only saying
+  // 3's own subject kills. This row judges the recorded result two ways: by a frozen row-derived observable per saying, and
+  // by deep equality with the projection recomputed here from the table row itself under whatever src runs. A substitute
+  // that projects exactly as the row does stays green only while the src keeps the two equal (saying 1 for saying 3 at
+  // ba59fed); a src change that splits them, as G7 does, reds this row.
+  it('F15 consumer subject (wb-4ap.20): the result each case judged equals the projection of its own table row beside the sibling - pinned by a frozen row-derived observable per saying and by the projection recomputed from that row', () => {
+    // The frozen observable of each saying's own row at ba59fed (rule 16), measured, in table order: the four well-formed
+    // descriptors read STALE with subjectBasis B and no diagnostic, the withheld one reads UNKNOWN with one diagnostic.
+    expect(consumed.map(([name, , result]) => `${name} :: ${judgedObservable(result)}`), 'what each case judged, by the frozen observable of its own row').toStrictEqual([
+      'semantic_owner forge:gate and authoritative_read_source log:.forge/logs/commands.jsonl (the F15 literals) :: success (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED) · basis STALE | subjectBasis B | grouping workspace->code:pi-subagents by forge-observer; grouping workspace->code:forge-sdk by forge-observer | 0 diagnostic(s)',
+      'a source_ref naming each relation kind :: success (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED) · basis STALE | subjectBasis B | grouping workspace->code:pi-subagents by forge-observer; grouping workspace->code:forge-sdk by forge-observer | 0 diagnostic(s)',
+      'a semantic_owner and an authoritative_read_source naming the sibling package :: success (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED) · basis STALE | subjectBasis B | grouping workspace->code:pi-subagents by forge-observer; grouping workspace->code:forge-sdk by forge-observer | 0 diagnostic(s)',
+      'relation-shaped keys: an ownership kind, a dependency relation and a forge provenance with a native confirmation reference :: success (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED) · basis STALE | subjectBasis B | grouping workspace->code:pi-subagents by forge-observer; grouping workspace->code:forge-sdk by forge-observer | 0 diagnostic(s)',
+      'a malformed (withheld) descriptor carrying the F15 literals :: success (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED) · basis UNKNOWN | no subjectBasis | grouping workspace->code:pi-subagents by forge-observer; grouping workspace->code:forge-sdk by forge-observer | 1 diagnostic(s)',
+    ]);
+    expect(consumed.map(([, , result]) => result), 'each case judged the projection of its own table row beside the sibling').toStrictEqual(sayings.map(([, row]) => forgeGateTopology(withPackages(row, SIBLING), context)));
   });
 
   it('wb-4ap.7: the semantic_owner and authoritative_read_source values never appear in JSON.stringify(result), well formed or withheld', () => {
