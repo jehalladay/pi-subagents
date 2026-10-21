@@ -52,15 +52,20 @@ type TestApi = { readonly each: boolean; readonly table: ts.Expression | undefin
  * It reads it / test with their TEST_FLAGS chains, the TEST_CONDITIONS calls, and the TEST_TABLES calls over an array-literal
  * table whose title expands by %s alone. A row it cannot read gets a title the runner never registers and a registration it
  * does not recognise is missing from its list, so either way the runner cross-check reds instead of passing the row unread.
- * ENUMERATION (R631 cut #4): registrations are classified through direct COPY_CALLS names, namespace members,
- * literal/const/asserted/chained/concatenated element keys, identifier/quoted imports, identifier/quoted/computed object
- * binding, array binding over a literal, plain/nullish/logical/property/destructuring assignments, functions/arrows,
- * object properties, class methods/fields/static fields/getters and multi-pass helper chains. A literal-key Reflect.get
- * is classified too. The SCAN_WITNESSES readings pin precisely those forms; no general alias-resolution claim is made.
+ * ENUMERATION (R631 cut #5, owner-authored completion): registrations are classified through direct COPY_CALLS names,
+ * namespace members, literal/const/as-asserted/angle-asserted/non-null-asserted/chained/concatenated element keys,
+ * identifier/quoted imports, identifier/quoted/computed object binding, array binding over a literal including binding
+ * defaults, plain/nullish/logical (??=, ||=, &&=)/property (dot and bracket)/object- and array-destructuring assignments,
+ * functions/arrows, object properties, class methods/fields/static fields/getters, private class fields and methods,
+ * multi-pass helper chains, and literal-key Reflect.get reached as Reflect.get, globalThis.Reflect.get or an element-access
+ * spelling of either. The claim is exactly the SCAN_WITNESSES pinned set - every documented form has a witness and every
+ * witness a ROUTE line - and no general alias-resolution claim is made.
  * NAMED RESIDUALS (quiet rows below): H5 read+write copy; another module's helper; subprocess copy; hook copy; module-scope
  * copy; captureInvocationIdentity hashing proxy. These lie outside registration copy-call classification. Every family
- * has its own frozen input and exact quiet reading, not a prose-only pass claim. A newly discovered form adds a residual
- * unless it contradicts a pinned form. The 320 s synchronous IO-stall remains an instrument residual: no budget cures it.
+ * has its own frozen input and exact quiet reading, not a prose-only pass claim, and the residual table itself is
+ * anchored outside the census literals in SCAN-DOC-RESIDUALS (id, family and full source digest, in order). A newly
+ * discovered form adds a residual unless it contradicts a pinned form. The 320 s synchronous IO-stall remains an
+ * instrument residual: no budget cures it.
  * SCAN-DOC-ROUTES (R631 source-of-truth route list; not a witness/reading/digest census literal):
  * ROUTE direct call | 9b30411f5e41cca5
  * ROUTE async call | 33247f8eef2e3873
@@ -94,12 +99,32 @@ type TestApi = { readonly each: boolean; readonly table: ts.Expression | undefin
  * ROUTE N9 concatenated key | 56d1013197de9a18
  * ROUTE N10 reflected key | a06d2a8925c2f91f
  * ROUTE N11 quoted import | 3ba1f0cd6bb81c39
+ * ROUTE E1 and-and assignment | 8c914952b3edbc0f
+ * ROUTE E2 array destructuring assignment | 1ca03e2d398ac89c
+ * ROUTE E3 quoted destructuring assignment | 5f01658355299e70
+ * ROUTE E4 bracket property assignment | 37fc86c6184c58a3
+ * ROUTE E4b bracket-bound dot call | b28e740d02278132
+ * ROUTE E5 private class field | 2b9204cfbed62493
+ * ROUTE E5b private class method | 09c01655348e6aa3
+ * ROUTE E6 angle-asserted key | f3ed76035439ae9b
+ * ROUTE E6b non-null asserted key | e4e6cc0208002f46
+ * ROUTE E59 array-binding default | 47fc42b74091e1b5
+ * ROUTE E48a globalThis reflected key | caef42afee068a02
+ * ROUTE E48b element reflected key | f880802b1c6ec862
  * ROUTE quiet row | 9a24a5a072b631cf
  * ROUTE quiet helper | d29637fa06af1f5f
  * ROUTE quiet near names | f774c75996266b14
  * ROUTE unexpandable table | d21d9b647115b998
  * ROUTE non-literal title | a10cd2f4c27a93d3
  * END-SCAN-DOC-ROUTES
+ * SCAN-DOC-RESIDUALS (R631 outside anchor for the residual census: id | family | full source digest, in table order):
+ * RESIDUAL R-H5 | read/write composition | 37e662375a3fe1399fc0dc95f9d9232aa058553112f7cabb7ff78afc75d4fd44
+ * RESIDUAL R-MODULE | other-module helper | 7b1094cf6f38f1bf063069022eec44a6e79829d95a623759b8654cd3f9541330
+ * RESIDUAL R-PROCESS | subprocess copy | 5ce5ee0561776868771e83048ddb13718df85f4b03315e96bdd274c8b6be2f08
+ * RESIDUAL R-HOOK | hook copy | d4ea304260e90543ce46289eeb8b61d919cf47fd31098b933cea553bc3a98117
+ * RESIDUAL R-SCOPE | module-scope copy | ba574260adf4ee02ad948307b8d00101806d0e3d2cf7158e82c0bf9ca7252885
+ * RESIDUAL R-PROXY | identity hashing proxy | c694895e6b2fdad18a9c99bdc716ce2e4fde4f0dcd2264674c6af621dc9f3b39
+ * END-SCAN-DOC-RESIDUALS
  */
 function scanRows(text: string, visited?: Set<string>): { title: string; copies: boolean }[] {
   const source = ts.createSourceFile("scanned.ts", text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
@@ -112,6 +137,8 @@ function scanRows(text: string, visited?: Set<string>): { title: string; copies:
     if (ts.isStringLiteralLike(node)) return node.text;
     if (ts.isComputedPropertyName(node)) { route("computed property"); return keyOf(node.expression); }
     if (ts.isAsExpression(node)) { route("asserted key"); return keyOf(node.expression); }
+    if (ts.isTypeAssertionExpression(node)) { route("angle-asserted key"); return keyOf(node.expression); }
+    if (ts.isNonNullExpression(node)) { route("non-null asserted key"); return keyOf(node.expression); }
     if (ts.isParenthesizedExpression(node)) return keyOf(node.expression);
     if (ts.isIdentifier(node)) return keys.get(node.text);
     if (ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.PlusToken) {
@@ -127,7 +154,9 @@ function scanRows(text: string, visited?: Set<string>): { title: string; copies:
   };
   const nameOf = (node: ts.Node): string | undefined => {
     if (ts.isIdentifier(node)) return node.text;
+    if (ts.isPrivateIdentifier(node)) return node.text;
     if (ts.isPropertyAccessExpression(node)) return node.name.text;
+    if (ts.isElementAccessExpression(node)) return node.argumentExpression ? keyOf(node.argumentExpression) : undefined;
     return keyOf(node);
   };
   const collect = (node: ts.Node): void => {
@@ -145,24 +174,36 @@ function scanRows(text: string, visited?: Set<string>): { title: string; copies:
           bind(ts.isIdentifier(element.name) ? element.name.text : undefined, ts.isStringLiteralLike(property) ? ts.factory.createIdentifier(property.text) : property);
           bind(ts.isIdentifier(element.name) ? element.name.text : undefined, element.initializer);
         }
-      } else if (ts.isArrayBindingPattern(node.name) && node.initializer && ts.isArrayLiteralExpression(node.initializer)) {
+      } else if (ts.isArrayBindingPattern(node.name) && node.initializer) {
         route("array binding");
         node.name.elements.forEach((element, index) => {
-          if (ts.isBindingElement(element)) bind(nameOf(element.name), node.initializer && ts.isArrayLiteralExpression(node.initializer) ? node.initializer.elements[index] : undefined);
+          if (!ts.isBindingElement(element)) return;
+          bind(nameOf(element.name), node.initializer && ts.isArrayLiteralExpression(node.initializer) ? node.initializer.elements[index] : undefined);
+          if (element.initializer) { route("array binding default"); bind(nameOf(element.name), element.initializer); }
         });
       }
     } else if (ts.isBinaryExpression(node) && (node.operatorToken.kind === ts.SyntaxKind.EqualsToken ||
-      node.operatorToken.kind === ts.SyntaxKind.QuestionQuestionEqualsToken || node.operatorToken.kind === ts.SyntaxKind.BarBarEqualsToken)) {
+      node.operatorToken.kind === ts.SyntaxKind.QuestionQuestionEqualsToken || node.operatorToken.kind === ts.SyntaxKind.BarBarEqualsToken ||
+      node.operatorToken.kind === ts.SyntaxKind.AmpersandAmpersandEqualsToken)) {
       if (ts.isObjectLiteralExpression(node.left)) {
         route("destructuring assignment");
         for (const property of node.left.properties) {
-          if (ts.isPropertyAssignment(property)) bind(nameOf(property.initializer), property.name);
+          if (ts.isPropertyAssignment(property)) {
+            if (ts.isStringLiteralLike(property.name)) route("quoted destructuring assignment");
+            bind(nameOf(property.initializer), ts.isStringLiteralLike(property.name) ? ts.factory.createIdentifier(property.name.text) : property.name);
+          }
         }
+      } else if (ts.isArrayLiteralExpression(node.left)) {
+        route("array destructuring assignment");
+        node.left.elements.forEach((element, index) => {
+          bind(nameOf(element), ts.isArrayLiteralExpression(node.right) ? node.right.elements[index] : node.right);
+        });
       } else {
         route("assignment alias");
         if (node.operatorToken.kind === ts.SyntaxKind.QuestionQuestionEqualsToken) route("nullish assignment");
         if (node.operatorToken.kind === ts.SyntaxKind.BarBarEqualsToken) route("logical assignment");
         if (ts.isPropertyAccessExpression(node.left)) route("property assignment");
+        if (ts.isElementAccessExpression(node.left)) route("element key assignment");
         bind(nameOf(node.left), node.right);
       }
     } else if (ts.isFunctionDeclaration(node) || ts.isMethodDeclaration(node) || ts.isPropertyAssignment(node) ||
@@ -173,6 +214,7 @@ function scanRows(text: string, visited?: Set<string>): { title: string; copies:
       if (ts.isPropertyAssignment(node)) route("object property binding");
       if (ts.isPropertyDeclaration(node)) { route("class field binding"); if (node.modifiers?.some(modifier => modifier.kind === ts.SyntaxKind.StaticKeyword)) route("static field binding"); }
       if (ts.isGetAccessorDeclaration(node)) route("getter binding");
+      if (node.name && ts.isPrivateIdentifier(node.name)) route("private member");
       if (node.name) bind(nameOf(node.name), node);
     }
     ts.forEachChild(node, collect);
@@ -187,14 +229,26 @@ function scanRows(text: string, visited?: Set<string>): { title: string; copies:
   }
   const names = (node: ts.Node, own?: string): boolean => {
     if (ts.isIdentifier(node) && node.text !== own && copying.has(node.text)) return true;
+    if (ts.isPrivateIdentifier(node) && node.text !== own && copying.has(node.text)) return true;
 
     if (ts.isComputedPropertyName(node)) {
       const key = keyOf(node);
       if (key !== undefined && copying.has(key)) return true;
     }
-    if (ts.isCallExpression(node) && ts.isPropertyAccessExpression(node.expression) && node.expression.expression.getText(source) === "Reflect" && node.expression.name.text === "get") {
-      const key = node.arguments[1] ? keyOf(node.arguments[1]) : undefined;
-      if (key !== undefined && copying.has(key)) { route("reflected key"); return true; }
+    if (ts.isCallExpression(node)) {
+      const callee = node.expression;
+      const calleeName = ts.isPropertyAccessExpression(callee) ? callee.name.text
+        : ts.isElementAccessExpression(callee) && callee.argumentExpression ? keyOf(callee.argumentExpression) : undefined;
+      if (calleeName === "get" && (ts.isPropertyAccessExpression(callee) || ts.isElementAccessExpression(callee))) {
+        const base = callee.expression;
+        const baseName = ts.isIdentifier(base) ? base.text
+          : ts.isPropertyAccessExpression(base) ? base.name.text
+          : ts.isElementAccessExpression(base) && base.argumentExpression ? keyOf(base.argumentExpression) : undefined;
+        if (baseName === "Reflect") {
+          const key = node.arguments[1] ? keyOf(node.arguments[1]) : undefined;
+          if (key !== undefined && copying.has(key)) { route("reflected key"); return true; }
+        }
+      }
     }
     if (ts.isElementAccessExpression(node)) {
       route("element read");
@@ -291,6 +345,18 @@ const SCAN_WITNESSES: readonly (readonly [route: string, source: string])[] = [
   ["N9 concatenated key", "it(\"row\", () => { nodeFs[\"cp\" + \"Sync\"](a, b); });"],
   ["N10 reflected key", "it(\"row\", () => { Reflect.get(nodeFs, \"cpSync\")(a, b); });"],
   ["N11 quoted import", "import { \"cpSync\" as cloneTree } from \"node:fs\";\nit(\"row\", () => { cloneTree(a, b); });"],
+  ["E1 and-and assignment", "let gateClone: unknown = (): void => undefined; gateClone &&= cpSync;\nit(\"row\", () => { gateClone(a, b); });"],
+  ["E2 array destructuring assignment", "let gateClone: unknown; [gateClone] = [cpSync];\nit(\"row\", () => { gateClone(a, b); });"],
+  ["E3 quoted destructuring assignment", "let gateClone: unknown; ({ \"cpSync\": gateClone } = nodeFs);\nit(\"row\", () => { gateClone(a, b); });"],
+  ["E4 bracket property assignment", "const gateIo = {}; gateIo[\"gateCloneSlot\"] = cpSync;\nit(\"row\", () => { gateIo[\"gateCloneSlot\"](a, b); });"],
+  ["E4b bracket-bound dot call", "const gateIo = {}; gateIo[\"gateCloneSlot\"] = cpSync;\nit(\"row\", () => { gateIo.gateCloneSlot(a, b); });"],
+  ["E5 private class field", "class GateIo { #gateClone = cpSync; gateRun(from: string, to: string): void { this.#gateClone(from, to); } }\nit(\"row\", () => { new GateIo().gateRun(a, b); });"],
+  ["E5b private class method", "class GateIo { #gateCopy(from: string, to: string): void { cpSync(from, to); } gateRun(from: string, to: string): void { this.#gateCopy(from, to); } }\nit(\"row\", () => { new GateIo().gateRun(a, b); });"],
+  ["E6 angle-asserted key", "const GATE_KEY = <const>\"cpSync\";\nit(\"row\", () => { nodeFs[GATE_KEY](a, b); });"],
+  ["E6b non-null asserted key", "it(\"row\", () => { nodeFs[\"cpSync\"!](a, b); });"],
+  ["E59 array-binding default", "const [gateClone = cpSync] = [];\nit(\"row\", () => { gateClone(a, b); });"],
+  ["E48a globalThis reflected key", "it(\"row\", () => { globalThis.Reflect.get(nodeFs, \"cpSync\")(a, b); });"],
+  ["E48b element reflected key", "it(\"row\", () => { Reflect[\"get\"](nodeFs, \"cpSync\")(a, b); });"],
   ["quiet row", 'it("row", () => { readFileSync(a); });'],
   ["quiet helper", 'function read(): void { readFileSync(a); }\nit("row", () => { read(); });'],
   ["quiet near names", 'it("row", () => { const copyright = cpSyncCount; expect(copyright).toBe(0); });'],
@@ -331,6 +397,18 @@ const SCAN_SOURCE_DIGESTS: readonly string[] = [
   "56d1013197de9a18", // N9 concatenated key
   "a06d2a8925c2f91f", // N10 reflected key
   "3ba1f0cd6bb81c39", // N11 quoted import
+  "8c914952b3edbc0f", // E1 and-and assignment
+  "1ca03e2d398ac89c", // E2 array destructuring assignment
+  "5f01658355299e70", // E3 quoted destructuring assignment
+  "37fc86c6184c58a3", // E4 bracket property assignment
+  "b28e740d02278132", // E4b bracket-bound dot call
+  "2b9204cfbed62493", // E5 private class field
+  "09c01655348e6aa3", // E5b private class method
+  "f3ed76035439ae9b", // E6 angle-asserted key
+  "e4e6cc0208002f46", // E6b non-null asserted key
+  "47fc42b74091e1b5", // E59 array-binding default
+  "caef42afee068a02", // E48a globalThis reflected key
+  "f880802b1c6ec862", // E48b element reflected key
   "9a24a5a072b631cf", // quiet row
   "d29637fa06af1f5f", // quiet helper
   "f774c75996266b14", // quiet near names
@@ -372,6 +450,18 @@ const SCAN_READINGS: readonly string[] = [
   "N9 concatenated key: row copies",
   "N10 reflected key: row copies",
   "N11 quoted import: row copies",
+  "E1 and-and assignment: row copies",
+  "E2 array destructuring assignment: row copies",
+  "E3 quoted destructuring assignment: row copies",
+  "E4 bracket property assignment: row copies",
+  "E4b bracket-bound dot call: row copies",
+  "E5 private class field: row copies",
+  "E5b private class method: row copies",
+  "E6 angle-asserted key: row copies",
+  "E6b non-null asserted key: row copies",
+  "E59 array-binding default: row copies",
+  "E48a globalThis reflected key: row copies",
+  "E48b element reflected key: row copies",
   "quiet row: row quiet",
   "quiet helper: row quiet",
   "quiet near names: row quiet",
@@ -646,6 +736,25 @@ describe("WB-014 immutable invocation identity", () => {
     expect(scanRows(residual.source).map(row => `${row.title} ${row.copies ? "copies" : "quiet"}`).join("; ")).toBe(residual.reading);
   });
 
+
+  it("wb-hk9l residual census anchor: the scan doc's residual list and the registered residual rows match SCAN_RESIDUALS exactly, in order", ({ task }) => {
+    const scanDoc = readFileSync(fileURLToPath(import.meta.url), "utf8").split(" * SCAN-DOC-RESIDUALS ")[1]?.split(" * END-SCAN-DOC-RESIDUALS")[0] ?? "";
+    const documented = [...scanDoc.matchAll(/^ \* RESIDUAL (\S+) \| (.+) \| ([0-9a-f]{64})$/gm)].map(match => `${match[1]}|${match[2]}|${match[3]}`);
+    expect(SCAN_RESIDUALS.map(row => `${row.id}|${row.family}|${createHash("sha256").update(row.source).digest("hex")}`),
+      "the residual table is anchored outside its own census literals").toEqual(documented);
+    expect(documented, "the anchored residual count").toHaveLength(6);
+    const registered: string[] = [];
+    const walk = (tasks: typeof task.file.tasks): void => {
+      for (const child of tasks) {
+        if (child.type === "test") registered.push(child.name);
+        else if (child.type === "suite") walk(child.tasks);
+      }
+    };
+    walk(task.file.tasks);
+    for (const row of SCAN_RESIDUALS) {
+      expect(registered, `residual ${row.id} keeps its judged registration`).toContain(`wb-hk9l residual ${row.id}: pinned quiet reading`);
+    }
+  });
 
   it("wb-hk9l residual shape: each named family's quiet page and reading is frozen", () => {
     expect(SCAN_RESIDUALS.map(row => `${row.id}|${row.family}|${row.reading}|${createHash("sha256").update(row.source).digest("hex")}`)).toEqual([
