@@ -304,6 +304,58 @@ const JUDGING: { readonly timeout: number } = { timeout: JUDGE_BUDGET_MS };
 /** The cases that carry JUDGING: AC2 per judged half (5), the AC4 live not-collected case, the U5 live leg, and M1, M4, M5 and M7. */
 const JUDGING_CASES = 11;
 
+/**
+ * R673 (wb-csne): the explicit budget of the AC2 call-site hook (the afterAll that binds AC2_RAN to FROZEN_JUDGED_SHAPE),
+ * file-local so no other census file's budget moves (the wb-hk9l PACKAGE_COPY_ROW_BUDGET_MS pattern): the hook never rides
+ * vitest's default 10000 ms hookTimeout. The land-prep try-1 red the judge keyed to this describe (hook@wb-6hb.6 at :430,
+ * landings 224, 226 and 229) was never this hook running long: it is AC2 bullet 1/guard's AssertionError carrying the
+ * parity file's collection error "Hook timed out in 10000ms" from the default report (cmd_9204c30d7a56, census
+ * diagnostic), the cascade the parity file's own budget (PARITY_SUITE_HOOK_BUDGET_MS) removes at its source. The budget is
+ * the owner floor of 20000 ms, more than 2 x the hook's worst measured wall (WORST_MEASURED_CALL_SITE_HOOK_WALL_MS).
+ * Exceeding it is a real red: withinHookBudget fails the hook with an AssertionError naming this constant.
+ */
+const CALL_SITE_HOOK_BUDGET_MS = 20_000;
+/**
+ * The worst measured wall of the AC2 call-site hook (a synchronous sort and comparison, timed by withinHookBudget): 13 ms,
+ * from wb-csne runs of this file on the 13-pinned-file default report on 2026-10-21 at load1 325-358 (6 sequential runs
+ * 1-13 ms, 8-way 1-3 ms).
+ */
+const WORST_MEASURED_CALL_SITE_HOOK_WALL_MS = 13;
+/** vitest's own timer for the hook: a backstop past the budget, so the budget's named AssertionError always fires first. */
+const CALL_SITE_HOOK_BACKSTOP_MS = 2 * CALL_SITE_HOOK_BUDGET_MS;
+const CALL_SITE_HOOK = "the docs06 census AC2 call-site hook";
+
+interface HookReading {
+  readonly hook: string;
+  readonly budgetMs: number;
+  readonly wallMs: number;
+  readonly outcome: "settled" | "overrun";
+}
+/** One reading per guarded hook run, appended by withinHookBudget before it judges the run: the evidence a hook ran under its budget. */
+const HOOK_READINGS: HookReading[] = [];
+
+/**
+ * Runs a hook body under its file-local budget (R673). The body races a timer of budgetMs; an overrun - a body that
+ * finishes late, or one still running when the timer fires - fails the hook with an AssertionError naming the budget and
+ * its value. A body's own error propagates unchanged.
+ */
+async function withinHookBudget(hook: string, budget: string, budgetMs: number, body: () => void | Promise<void>): Promise<void> {
+  const started = performance.now();
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const overrun = new Promise<"overrun">(resolve => {
+    timer = setTimeout(() => resolve("overrun"), budgetMs);
+  });
+  try {
+    const outcome = await Promise.race([Promise.resolve().then(body).then(() => "settled" as const), overrun]);
+    const wallMs = Math.round(performance.now() - started);
+    HOOK_READINGS.push({ hook, budgetMs, wallMs, outcome });
+    const still = outcome === "overrun" ? " and was still running" : "";
+    expect(outcome === "settled" && wallMs <= budgetMs, `${hook} ran ${wallMs} ms${still}, past its file-local budget ${budget} = ${budgetMs} ms (R673)`).toBe(true);
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
 /** The rendered text a bullet is looked up in: the list items of the section. */
 const bulletRenders = (row: Row, blocks: readonly RenderedBlock[]): boolean => blocks.some(block => block.kind === "list" && block.items.some(item => item.text === row.quote));
 
@@ -417,8 +469,11 @@ describe("wb-6hb.6 docs/workbench/06 conformance census (report mode)", () => {
   });
 
   afterAll(() => {
+    // R673 (wb-csne): the landed body runs inside withinHookBudget; its lines are kept byte-identical (no edits to landed lines), one level shallower than the callback they now sit in.
+    return withinHookBudget(CALL_SITE_HOOK, "CALL_SITE_HOOK_BUDGET_MS", CALL_SITE_HOOK_BUDGET_MS, () => {
     expect([...AC2_RAN].sort((a, b) => a.localeCompare(b)), "every frozen judged half ran its AC2 case exactly once").toEqual([...FROZEN_JUDGED_SHAPE].sort((a, b) => a.localeCompare(b)));
   });
+  }, CALL_SITE_HOOK_BACKSTOP_MS);
 
   it.each(JUDGED)("AC2 bullet $row.bullet/$half.id: every pinned case is collected once, passed and asserting in the default gate's own report", JUDGING, ({ row, half }) => {
     AC2_RAN.push(judgedKey({ row, half }));
@@ -639,5 +694,54 @@ describe("wb-6hb.6 docs drift names the bullet or the section (synthetic documen
 
   it("an edit of any other section never reddens a bullet: the discovery and policy-surface sections are free to change", () => {
     expect(docsFailures(synthetic().replace("Rows.", "Rows, changed.").replace("Text.", "Different text."))).toEqual([]);
+  });
+});
+
+describe("R673 (wb-csne): the AC2 call-site hook runs under its file-local budget, and an overrun is a real red naming it", () => {
+  it("the AC2 call-site hook ran once under CALL_SITE_HOOK_BUDGET_MS, settled inside the budget, never on vitest's default hookTimeout", () => {
+    const hook = HOOK_READINGS.filter(reading => reading.hook === CALL_SITE_HOOK);
+    expect(hook.map(reading => `${reading.hook}|${reading.budgetMs}|${reading.outcome}`), "the guarded call-site hook's readings").toEqual([`${CALL_SITE_HOOK}|${CALL_SITE_HOOK_BUDGET_MS}|settled`]);
+    expect(hook[0]?.wallMs, "the call-site hook's wall").toBeLessThanOrEqual(CALL_SITE_HOOK_BUDGET_MS);
+  });
+
+  it("the budget clears the owner floor and twice the worst measured wall, and vitest's own timer is a backstop past it", () => {
+    expect(CALL_SITE_HOOK_BUDGET_MS, "the owner floor").toBeGreaterThanOrEqual(20_000);
+    expect(WORST_MEASURED_CALL_SITE_HOOK_WALL_MS, "the worst measured wall: 13 ms (wb-csne)").toBeGreaterThanOrEqual(13);
+    expect(CALL_SITE_HOOK_BUDGET_MS, "more than 2 x the worst measured wall").toBeGreaterThan(2 * WORST_MEASURED_CALL_SITE_HOOK_WALL_MS);
+    expect(CALL_SITE_HOOK_BACKSTOP_MS, "vitest's backstop sits past the budget").toBeGreaterThan(CALL_SITE_HOOK_BUDGET_MS);
+  });
+
+  it("an overrun is an AssertionError naming the budget, whether the body finishes late or is still running; a body inside its budget passes", async () => {
+    const late = () =>
+      withinHookBudget("probe late", "PROBE_BUDGET_MS", 20, () => {
+        const until = performance.now() + 60;
+        while (performance.now() < until) {
+          /* busy wait: a body that finishes past its budget */
+        }
+      });
+    const hung = () => withinHookBudget("probe hung", "PROBE_BUDGET_MS", 20, () => new Promise<void>(() => undefined));
+    for (const [probe, name, still] of [
+      [late, "probe late", ""],
+      [hung, "probe hung", " and was still running"],
+    ] as const) {
+      const caught: unknown = await probe().then(
+        () => undefined,
+        (error: unknown) => error,
+      );
+      expect(caught, `${name}: an overrun fails the hook`).toBeInstanceOf(Error);
+      expect((caught as Error).name, `${name}: a real red, never a timing marker`).toBe("AssertionError");
+      expect((caught as Error).message, `${name}: the red names the budget`).toMatch(new RegExp(`^${name} ran \\d+ ms${still}, past its file-local budget PROBE_BUDGET_MS = 20 ms \\(R673\\)`));
+      expect((caught as Error).message, `${name}: never a hook timeout`).not.toContain("timed out");
+    }
+    await expect(withinHookBudget("probe quick", "PROBE_BUDGET_MS", 5_000, () => undefined)).resolves.toBeUndefined();
+  });
+
+  it("a hook body's own error propagates unchanged through the guard", async () => {
+    const own = new TypeError("the body's own failure");
+    await expect(
+      withinHookBudget("probe broken", "PROBE_BUDGET_MS", 5_000, () => {
+        throw own;
+      }),
+    ).rejects.toBe(own);
   });
 });
