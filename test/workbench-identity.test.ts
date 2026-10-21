@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { cpSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { copyFile, copyFileSync, cp, cpSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -7,12 +7,15 @@ import ts from "typescript";
 import { afterAll, afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 /**
- * The RUNTIME EMIT JUDGE (wb-hk9l, R656): the primary copy pin. Every node:fs copy call made while a row executes is
- * observed and attributed to that row, so ANY source spelling that really copies package.json joins the observed set
- * and the emit-census row below reds unless the row is in PACKAGE_COPY_ROWS with the explicit budget. Source-text
- * classification (scanRows) remains a secondary liveness layer; its blind spots are the named residual families in
- * test/fixtures/hk9l-scan-roster.json (subprocess copy, module-scope and hook attribution, read/write composition,
- * the hashing proxy), each with an id-asserted pinned quiet row.
+ * The RUNTIME EMIT JUDGE (wb-hk9l, R656/R670): the primary copy pin over the JUDGED SURFACE SET S, stated exactly:
+ * cp, cpSync, copyFile and copyFileSync on node:fs (named and default exports), the fs.promises member, and the
+ * node:fs/promises module (cp, copyFile). Every S-call made while a row executes is observed and attributed to that
+ * row; the judge reds any observed label that is not a budgeted PACKAGE_COPY_ROWS member (module-scope, outside-
+ * describe and unknown labels included), a liveness row proves every wrap live, and a uniqueness row stops a row
+ * from wearing a budgeted title it does not own. Copies OUTSIDE S are NOT runtime-observed by design: subprocess
+ * copy, read/write composition, other-module helpers, the hashing proxy, createRequire and getBuiltinModule
+ * requisition are held by the static scan layer and the named residual families in
+ * test/fixtures/hk9l-scan-roster.json only, each with an id-asserted pinned quiet row.
  */
 const emitState = vi.hoisted(() => ({ observed: [] as { row: string; call: string }[], currentRow: "<module scope>" }));
 vi.mock("node:fs", async (importOriginal) => {
@@ -22,9 +25,27 @@ vi.mock("node:fs", async (importOriginal) => {
       emitState.observed.push({ row: emitState.currentRow, call: name });
       return (actual[name] as (...callArgs: never[]) => unknown)(...args);
     }) as (typeof actual)[K];
-  return { ...actual, cp: wrap("cp"), cpSync: wrap("cpSync"), copyFile: wrap("copyFile"), copyFileSync: wrap("copyFileSync") };
+  const wrapPromise = <K extends "cp" | "copyFile">(name: K): (typeof actual.promises)[K] =>
+    ((...args: never[]) => {
+      emitState.observed.push({ row: emitState.currentRow, call: `promises.${name}` });
+      return (actual.promises[name] as (...callArgs: never[]) => unknown)(...args);
+    }) as (typeof actual.promises)[K];
+  const promises = { ...actual.promises, cp: wrapPromise("cp"), copyFile: wrapPromise("copyFile") };
+  const wrapped = { ...actual, cp: wrap("cp"), cpSync: wrap("cpSync"), copyFile: wrap("copyFile"), copyFileSync: wrap("copyFileSync"), promises };
+  return { ...wrapped, default: wrapped };
+});
+vi.mock("node:fs/promises", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("node:fs/promises")>();
+  const wrapPromise = <K extends "cp" | "copyFile">(name: K): (typeof actual)[K] =>
+    ((...args: never[]) => {
+      emitState.observed.push({ row: emitState.currentRow, call: `promises.${name}` });
+      return (actual[name] as (...callArgs: never[]) => unknown)(...args);
+    }) as (typeof actual)[K];
+  const wrapped = { ...actual, cp: wrapPromise("cp"), copyFile: wrapPromise("copyFile") };
+  return { ...wrapped, default: wrapped };
 });
 
+import { copyFile as copyFilePromise, cp as cpPromise } from "node:fs/promises";
 import { canonicalJson, captureInvocationIdentity, IdentityConflictError, identityDigest, verifyInvocationIdentity } from "../src/workbench/identity.js";
 
 const packageRoot = resolve(import.meta.dirname, "..");
@@ -55,6 +76,8 @@ const PACKAGE_COPY_ROWS = [
   "pins actual package.json, package-lock.json and local vendor artifact bytes, not declared fiction",
   "uses the shipped dependency lock only when npm has excluded package-lock.json",
   "rejects lockfile changes, missing artifact and lockfile/manifest mismatch",
+
+  "wrap liveness: every judged copy surface emits from this row once",
 ];
 /** The node:fs calls that copy a file or a tree, read by name wherever named: imported, as a namespace member or as an element read. */
 const COPY_CALLS: ReadonlySet<string> = new Set(["cp", "cpSync", "copyFile", "copyFileSync"]);
@@ -438,6 +461,8 @@ const SCAN_RESIDUALS: readonly ScanResidual[] = [
   {"id": "R-HOOK", "family": "hook copy", "source": "beforeEach(() => { cpSync(a, b); });\nit(\"row\", () => { expect(true).toBe(true); });", "reading": "row quiet"},
   {"id": "R-SCOPE", "family": "module-scope copy", "source": "cpSync(a, b);\nit(\"row\", () => { expect(true).toBe(true); });", "reading": "row quiet"},
   {"id": "R-PROXY", "family": "identity hashing proxy", "source": "it(\"row\", () => { captureInvocationIdentity(request); });", "reading": "row quiet"},
+  {"id": "R-REQUIRE", "family": "createRequire requisition", "source": "const requireFs = createRequire(import.meta.url);\nit(\"row\", () => { requireFs(\"node:fs\")[String(\"cpSync\")](a, b); });", "reading": "row quiet"},
+  {"id": "R-BUILTIN", "family": "getBuiltinModule requisition", "source": "it(\"row\", () => { process.getBuiltinModule(\"node:fs\")[String(\"cpSync\")](a, b); });", "reading": "row quiet"},
 ];
 
 function fixture() {
@@ -706,6 +731,16 @@ describe("WB-014 immutable invocation identity", () => {
     expect(residual.id, "this quiet row judges its own family, never another index").toBe("R-PROXY");
     expect(scanRows(residual.source).map(row => `${row.title} ${row.copies ? "copies" : "quiet"}`).join("; ")).toBe(residual.reading);
   });
+  it("wb-hk9l residual R-REQUIRE: pinned quiet reading", () => {
+    const residual = SCAN_RESIDUALS[6];
+    expect(residual.id, "this quiet row judges its own family, never another index").toBe("R-REQUIRE");
+    expect(scanRows(residual.source).map(row => `${row.title} ${row.copies ? "copies" : "quiet"}`).join("; ")).toBe(residual.reading);
+  });
+  it("wb-hk9l residual R-BUILTIN: pinned quiet reading", () => {
+    const residual = SCAN_RESIDUALS[7];
+    expect(residual.id, "this quiet row judges its own family, never another index").toBe("R-BUILTIN");
+    expect(scanRows(residual.source).map(row => `${row.title} ${row.copies ? "copies" : "quiet"}`).join("; ")).toBe(residual.reading);
+  });
 
 
   it("wb-hk9l residual census anchor: the roster fixture's residual list and the registered residual rows match SCAN_RESIDUALS exactly, in order", ({ task }) => {
@@ -714,7 +749,7 @@ describe("WB-014 immutable invocation identity", () => {
     };
     expect(SCAN_RESIDUALS.map(row => `${row.id}|${row.family}|${createHash("sha256").update(row.source).digest("hex")}|${row.reading}`),
       "the residual table is anchored out of file, in order").toEqual(roster.residuals.map(row => `${row.id}|${row.family}|${row.digest}|${row.reading}`));
-    expect(roster.residuals, "the anchored residual count").toHaveLength(6);
+    expect(roster.residuals, "the anchored residual count").toHaveLength(8);
     const registered: string[] = [];
     const walk = (tasks: typeof task.file.tasks): void => {
       for (const child of tasks) {
@@ -728,9 +763,38 @@ describe("WB-014 immutable invocation identity", () => {
       SCAN_RESIDUALS.map(row => `wb-hk9l residual ${row.id}: pinned quiet reading`));
   });
 
+  it("wrap liveness: every judged copy surface emits from this row once", async () => {
+    const scratch = mkdtempSync(join(tmpdir(), "hk9l-live-"));
+    dirs.push(scratch);
+    const src = join(scratch, "a.json");
+    writeFileSync(src, "{}\n");
+    cpSync(src, join(scratch, "b1.json"));
+    copyFileSync(src, join(scratch, "b2.json"));
+    await new Promise<void>((done, fail) => { cp(src, join(scratch, "b3.json"), error => (error ? fail(error) : done())); });
+    await new Promise<void>((done, fail) => { copyFile(src, join(scratch, "b4.json"), error => (error ? fail(error) : done())); });
+    await cpPromise(src, join(scratch, "b5.json"));
+    await copyFilePromise(src, join(scratch, "b6.json"));
+    const calls = [...new Set(emitState.observed.filter(entry => entry.row === "wrap liveness: every judged copy surface emits from this row once").map(entry => entry.call))].sort();
+    expect(calls, "every wrapped surface really routes through the judge: a dropped wrap reds here, deterministically").toEqual(
+      ["copyFile", "copyFileSync", "cp", "cpSync", "promises.copyFile", "promises.cp"].sort());
+  }, PACKAGE_COPY_ROW_BUDGET_MS);
+  it("wb-hk9l registered leaf titles are unique, so no row can wear a budgeted title it does not own", ({ task }) => {
+    const titles: string[] = [];
+    const walk = (tasks: typeof task.file.tasks): void => {
+      for (const child of tasks) {
+        if (child.type === "test") titles.push(child.name);
+        else if (child.type === "suite") walk(child.tasks);
+      }
+    };
+    walk(task.file.tasks);
+    const seen = new Map<string, number>();
+    for (const title of titles) seen.set(title, (seen.get(title) ?? 0) + 1);
+    const duplicates = [...seen.entries()].filter(([, count]) => count > 1).map(([title]) => title);
+    expect(duplicates, "a duplicate leaf title lets an unbudgeted row inherit a budgeted attribution").toEqual([]);
+  });
   const judgeObservedCopyRows = (): void => {
-    const copying = [...new Set(emitState.observed.filter(entry => entry.row !== "<module scope>").map(entry => entry.row))].sort();
-    expect(copying, "runtime-observed copy rows: any row that really copies must be in PACKAGE_COPY_ROWS and carry the budget, whatever its source spelling")
+    const copying = [...new Set(emitState.observed.map(entry => entry.row))].sort();
+    expect(copying, "runtime-observed copy rows over the judged surface set: every observed label must be a budgeted PACKAGE_COPY_ROWS member - a module-scope, outside-describe or unknown label is red, never filtered")
       .toEqual([...PACKAGE_COPY_ROWS].sort());
   };
   it("wb-hk9l emit census: the rows observed really copying are exactly the budgeted PACKAGE_COPY_ROWS", () => {
@@ -747,6 +811,8 @@ describe("WB-014 immutable invocation identity", () => {
       "R-HOOK|hook copy|row quiet|d4ea304260e90543ce46289eeb8b61d919cf47fd31098b933cea553bc3a98117",
       "R-SCOPE|module-scope copy|row quiet|ba574260adf4ee02ad948307b8d00101806d0e3d2cf7158e82c0bf9ca7252885",
       "R-PROXY|identity hashing proxy|row quiet|c694895e6b2fdad18a9c99bdc716ce2e4fde4f0dcd2264674c6af621dc9f3b39",
+      "R-REQUIRE|createRequire requisition|row quiet|adfce552cca2b038904b4b85d00ac638d24a787351203098ff427b73170e6622",
+      "R-BUILTIN|getBuiltinModule requisition|row quiet|1cd588866aa92cffde0b4b5e798b870fb253ef1780f1689f22f9735c978669bd",
     ]);
   });
 

@@ -1,273 +1,285 @@
 {
- "comment": "wb-hk9l scan roster (R656): the OUT-OF-FILE anchor for the identity copy census. routes pin each scan witness source digest; dispatch pins the scanner's route vocabulary; residuals pin the static scan's named blind-spot families (id, family, full source digest, frozen quiet reading, in table order). The runtime emit judge in the test file is the primary pin; this roster anchors the static liveness layer.",
- "routes": [
-  {
-   "route": "direct call",
-   "digest": "9b30411f5e41cca5"
-  },
-  {
-   "route": "async call",
-   "digest": "33247f8eef2e3873"
-  },
-  {
-   "route": "file call",
-   "digest": "610cc9a31b640dc7"
-  },
-  {
-   "route": "async file call",
-   "digest": "8d9fc75d995c09ef"
-  },
-  {
-   "route": "namespace member",
-   "digest": "a97e8481dd263fb3"
-  },
-  {
-   "route": "element read",
-   "digest": "fa05617005f18541"
-  },
-  {
-   "route": "function helper",
-   "digest": "d6bc747d9aa0e310"
-  },
-  {
-   "route": "arrow helper",
-   "digest": "60338d19207e4c15"
-  },
-  {
-   "route": "alias",
-   "digest": "673ec6d8ec8c8ea4"
-  },
-  {
-   "route": "import alias",
-   "digest": "8580af04d21eb509"
-  },
-  {
-   "route": "destructured alias",
-   "digest": "32ce34abf1911ffa"
-  },
-  {
-   "route": "assigned alias",
-   "digest": "6773d2f3c4b279cf"
-  },
-  {
-   "route": "const keyed element",
-   "digest": "0003751cc734799a"
-  },
-  {
-   "route": "class method",
-   "digest": "3a9204d0f1c28ba3"
-  },
-  {
-   "route": "property helper",
-   "digest": "81f9bb1104466df1"
-  },
-  {
-   "route": "two hops",
-   "digest": "ce4aaeb87fd883ba"
-  },
-  {
-   "route": "table function",
-   "digest": "3da62b69c2800986"
-  },
-  {
-   "route": "N1 asserted const key",
-   "digest": "490d34a6868bca6f"
-  },
-  {
-   "route": "N1b chained const key",
-   "digest": "ecfc34d3f7530302"
-  },
-  {
-   "route": "N2 quoted destructuring",
-   "digest": "abc435b2f1085826"
-  },
-  {
-   "route": "N2b computed destructuring",
-   "digest": "feae605b36fad60c"
-  },
-  {
-   "route": "N3 array destructuring",
-   "digest": "270bc85e85ee5706"
-  },
-  {
-   "route": "N4 nullish assignment",
-   "digest": "4943f856dbafa30f"
-  },
-  {
-   "route": "N4b logical assignment",
-   "digest": "bd67898fb17e5538"
-  },
-  {
-   "route": "N5 destructuring assignment",
-   "digest": "e0d8150b0ea4b945"
-  },
-  {
-   "route": "N6 class arrow field",
-   "digest": "18c4b398707a13d6"
-  },
-  {
-   "route": "N6b static field",
-   "digest": "1a0fe4aab3037172"
-  },
-  {
-   "route": "N7 class getter",
-   "digest": "c0bd5b6e9b412271"
-  },
-  {
-   "route": "N8 property assignment",
-   "digest": "ea5740c4c28069b5"
-  },
-  {
-   "route": "N9 concatenated key",
-   "digest": "56d1013197de9a18"
-  },
-  {
-   "route": "N10 reflected key",
-   "digest": "a06d2a8925c2f91f"
-  },
-  {
-   "route": "N11 quoted import",
-   "digest": "3ba1f0cd6bb81c39"
-  },
-  {
-   "route": "E1 and-and assignment",
-   "digest": "8c914952b3edbc0f"
-  },
-  {
-   "route": "E2 array destructuring assignment",
-   "digest": "1ca03e2d398ac89c"
-  },
-  {
-   "route": "E3 quoted destructuring assignment",
-   "digest": "5f01658355299e70"
-  },
-  {
-   "route": "E4 bracket property assignment",
-   "digest": "37fc86c6184c58a3"
-  },
-  {
-   "route": "E4b bracket-bound dot call",
-   "digest": "b28e740d02278132"
-  },
-  {
-   "route": "E5 private class field",
-   "digest": "2b9204cfbed62493"
-  },
-  {
-   "route": "E5b private class method",
-   "digest": "09c01655348e6aa3"
-  },
-  {
-   "route": "E6 angle-asserted key",
-   "digest": "f3ed76035439ae9b"
-  },
-  {
-   "route": "E6b non-null asserted key",
-   "digest": "e4e6cc0208002f46"
-  },
-  {
-   "route": "E59 array-binding default",
-   "digest": "47fc42b74091e1b5"
-  },
-  {
-   "route": "E48a globalThis reflected key",
-   "digest": "caef42afee068a02"
-  },
-  {
-   "route": "E48b element reflected key",
-   "digest": "f880802b1c6ec862"
-  },
-  {
-   "route": "quiet row",
-   "digest": "9a24a5a072b631cf"
-  },
-  {
-   "route": "quiet helper",
-   "digest": "d29637fa06af1f5f"
-  },
-  {
-   "route": "quiet near names",
-   "digest": "f774c75996266b14"
-  },
-  {
-   "route": "unexpandable table",
-   "digest": "d21d9b647115b998"
-  },
-  {
-   "route": "non-literal title",
-   "digest": "a10cd2f4c27a93d3"
-  }
- ],
- "dispatch": [
-  "angle-asserted key",
-  "array binding",
-  "array binding default",
-  "array destructuring assignment",
-  "asserted key",
-  "assignment alias",
-  "callable binding",
-  "chained key",
-  "class field binding",
-  "computed property",
-  "concatenated key",
-  "destructuring assignment",
-  "element key assignment",
-  "element read",
-  "function binding",
-  "getter binding",
-  "import alias",
-  "logical assignment",
-  "method binding",
-  "multi-pass binding",
-  "non-null asserted key",
-  "nullish assignment",
-  "object binding",
-  "object property binding",
-  "private member",
-  "property assignment",
-  "quoted binding",
-  "quoted destructuring assignment",
-  "quoted import",
-  "reflected key",
-  "static field binding",
-  "variable alias"
- ],
- "residuals": [
-  {
-   "id": "R-H5",
-   "family": "read/write composition",
-   "digest": "37e662375a3fe1399fc0dc95f9d9232aa058553112f7cabb7ff78afc75d4fd44",
-   "reading": "row quiet"
-  },
-  {
-   "id": "R-MODULE",
-   "family": "other-module helper",
-   "digest": "7b1094cf6f38f1bf063069022eec44a6e79829d95a623759b8654cd3f9541330",
-   "reading": "row quiet"
-  },
-  {
-   "id": "R-PROCESS",
-   "family": "subprocess copy",
-   "digest": "5ce5ee0561776868771e83048ddb13718df85f4b03315e96bdd274c8b6be2f08",
-   "reading": "row quiet"
-  },
-  {
-   "id": "R-HOOK",
-   "family": "hook copy",
-   "digest": "d4ea304260e90543ce46289eeb8b61d919cf47fd31098b933cea553bc3a98117",
-   "reading": "row quiet"
-  },
-  {
-   "id": "R-SCOPE",
-   "family": "module-scope copy",
-   "digest": "ba574260adf4ee02ad948307b8d00101806d0e3d2cf7158e82c0bf9ca7252885",
-   "reading": "row quiet"
-  },
-  {
-   "id": "R-PROXY",
-   "family": "identity hashing proxy",
-   "digest": "c694895e6b2fdad18a9c99bdc716ce2e4fde4f0dcd2264674c6af621dc9f3b39",
-   "reading": "row quiet"
-  }
- ]
+  "comment": "wb-hk9l scan roster (R656): the OUT-OF-FILE anchor for the identity copy census. routes pin each scan witness source digest; dispatch pins the scanner's route vocabulary; residuals pin the static scan's named blind-spot families (id, family, full source digest, frozen quiet reading, in table order). The runtime emit judge in the test file is the primary pin; this roster anchors the static liveness layer.",
+  "routes": [
+    {
+      "route": "direct call",
+      "digest": "9b30411f5e41cca5"
+    },
+    {
+      "route": "async call",
+      "digest": "33247f8eef2e3873"
+    },
+    {
+      "route": "file call",
+      "digest": "610cc9a31b640dc7"
+    },
+    {
+      "route": "async file call",
+      "digest": "8d9fc75d995c09ef"
+    },
+    {
+      "route": "namespace member",
+      "digest": "a97e8481dd263fb3"
+    },
+    {
+      "route": "element read",
+      "digest": "fa05617005f18541"
+    },
+    {
+      "route": "function helper",
+      "digest": "d6bc747d9aa0e310"
+    },
+    {
+      "route": "arrow helper",
+      "digest": "60338d19207e4c15"
+    },
+    {
+      "route": "alias",
+      "digest": "673ec6d8ec8c8ea4"
+    },
+    {
+      "route": "import alias",
+      "digest": "8580af04d21eb509"
+    },
+    {
+      "route": "destructured alias",
+      "digest": "32ce34abf1911ffa"
+    },
+    {
+      "route": "assigned alias",
+      "digest": "6773d2f3c4b279cf"
+    },
+    {
+      "route": "const keyed element",
+      "digest": "0003751cc734799a"
+    },
+    {
+      "route": "class method",
+      "digest": "3a9204d0f1c28ba3"
+    },
+    {
+      "route": "property helper",
+      "digest": "81f9bb1104466df1"
+    },
+    {
+      "route": "two hops",
+      "digest": "ce4aaeb87fd883ba"
+    },
+    {
+      "route": "table function",
+      "digest": "3da62b69c2800986"
+    },
+    {
+      "route": "N1 asserted const key",
+      "digest": "490d34a6868bca6f"
+    },
+    {
+      "route": "N1b chained const key",
+      "digest": "ecfc34d3f7530302"
+    },
+    {
+      "route": "N2 quoted destructuring",
+      "digest": "abc435b2f1085826"
+    },
+    {
+      "route": "N2b computed destructuring",
+      "digest": "feae605b36fad60c"
+    },
+    {
+      "route": "N3 array destructuring",
+      "digest": "270bc85e85ee5706"
+    },
+    {
+      "route": "N4 nullish assignment",
+      "digest": "4943f856dbafa30f"
+    },
+    {
+      "route": "N4b logical assignment",
+      "digest": "bd67898fb17e5538"
+    },
+    {
+      "route": "N5 destructuring assignment",
+      "digest": "e0d8150b0ea4b945"
+    },
+    {
+      "route": "N6 class arrow field",
+      "digest": "18c4b398707a13d6"
+    },
+    {
+      "route": "N6b static field",
+      "digest": "1a0fe4aab3037172"
+    },
+    {
+      "route": "N7 class getter",
+      "digest": "c0bd5b6e9b412271"
+    },
+    {
+      "route": "N8 property assignment",
+      "digest": "ea5740c4c28069b5"
+    },
+    {
+      "route": "N9 concatenated key",
+      "digest": "56d1013197de9a18"
+    },
+    {
+      "route": "N10 reflected key",
+      "digest": "a06d2a8925c2f91f"
+    },
+    {
+      "route": "N11 quoted import",
+      "digest": "3ba1f0cd6bb81c39"
+    },
+    {
+      "route": "E1 and-and assignment",
+      "digest": "8c914952b3edbc0f"
+    },
+    {
+      "route": "E2 array destructuring assignment",
+      "digest": "1ca03e2d398ac89c"
+    },
+    {
+      "route": "E3 quoted destructuring assignment",
+      "digest": "5f01658355299e70"
+    },
+    {
+      "route": "E4 bracket property assignment",
+      "digest": "37fc86c6184c58a3"
+    },
+    {
+      "route": "E4b bracket-bound dot call",
+      "digest": "b28e740d02278132"
+    },
+    {
+      "route": "E5 private class field",
+      "digest": "2b9204cfbed62493"
+    },
+    {
+      "route": "E5b private class method",
+      "digest": "09c01655348e6aa3"
+    },
+    {
+      "route": "E6 angle-asserted key",
+      "digest": "f3ed76035439ae9b"
+    },
+    {
+      "route": "E6b non-null asserted key",
+      "digest": "e4e6cc0208002f46"
+    },
+    {
+      "route": "E59 array-binding default",
+      "digest": "47fc42b74091e1b5"
+    },
+    {
+      "route": "E48a globalThis reflected key",
+      "digest": "caef42afee068a02"
+    },
+    {
+      "route": "E48b element reflected key",
+      "digest": "f880802b1c6ec862"
+    },
+    {
+      "route": "quiet row",
+      "digest": "9a24a5a072b631cf"
+    },
+    {
+      "route": "quiet helper",
+      "digest": "d29637fa06af1f5f"
+    },
+    {
+      "route": "quiet near names",
+      "digest": "f774c75996266b14"
+    },
+    {
+      "route": "unexpandable table",
+      "digest": "d21d9b647115b998"
+    },
+    {
+      "route": "non-literal title",
+      "digest": "a10cd2f4c27a93d3"
+    }
+  ],
+  "dispatch": [
+    "angle-asserted key",
+    "array binding",
+    "array binding default",
+    "array destructuring assignment",
+    "asserted key",
+    "assignment alias",
+    "callable binding",
+    "chained key",
+    "class field binding",
+    "computed property",
+    "concatenated key",
+    "destructuring assignment",
+    "element key assignment",
+    "element read",
+    "function binding",
+    "getter binding",
+    "import alias",
+    "logical assignment",
+    "method binding",
+    "multi-pass binding",
+    "non-null asserted key",
+    "nullish assignment",
+    "object binding",
+    "object property binding",
+    "private member",
+    "property assignment",
+    "quoted binding",
+    "quoted destructuring assignment",
+    "quoted import",
+    "reflected key",
+    "static field binding",
+    "variable alias"
+  ],
+  "residuals": [
+    {
+      "id": "R-H5",
+      "family": "read/write composition",
+      "digest": "37e662375a3fe1399fc0dc95f9d9232aa058553112f7cabb7ff78afc75d4fd44",
+      "reading": "row quiet"
+    },
+    {
+      "id": "R-MODULE",
+      "family": "other-module helper",
+      "digest": "7b1094cf6f38f1bf063069022eec44a6e79829d95a623759b8654cd3f9541330",
+      "reading": "row quiet"
+    },
+    {
+      "id": "R-PROCESS",
+      "family": "subprocess copy",
+      "digest": "5ce5ee0561776868771e83048ddb13718df85f4b03315e96bdd274c8b6be2f08",
+      "reading": "row quiet"
+    },
+    {
+      "id": "R-HOOK",
+      "family": "hook copy",
+      "digest": "d4ea304260e90543ce46289eeb8b61d919cf47fd31098b933cea553bc3a98117",
+      "reading": "row quiet"
+    },
+    {
+      "id": "R-SCOPE",
+      "family": "module-scope copy",
+      "digest": "ba574260adf4ee02ad948307b8d00101806d0e3d2cf7158e82c0bf9ca7252885",
+      "reading": "row quiet"
+    },
+    {
+      "id": "R-PROXY",
+      "family": "identity hashing proxy",
+      "digest": "c694895e6b2fdad18a9c99bdc716ce2e4fde4f0dcd2264674c6af621dc9f3b39",
+      "reading": "row quiet"
+    },
+    {
+      "id": "R-REQUIRE",
+      "family": "createRequire requisition",
+      "digest": "adfce552cca2b038904b4b85d00ac638d24a787351203098ff427b73170e6622",
+      "reading": "row quiet"
+    },
+    {
+      "id": "R-BUILTIN",
+      "family": "getBuiltinModule requisition",
+      "digest": "1cd588866aa92cffde0b4b5e798b870fb253ef1780f1689f22f9735c978669bd",
+      "reading": "row quiet"
+    }
+  ]
 }
