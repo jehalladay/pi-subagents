@@ -58,7 +58,9 @@ describe("registered Workbench Pi tools", () => {
     expect(await invoke(pi.tools.get("workflow_observe"), context, { taskId: "wf_abcdef123456", ...forged })).toContain("grant required");
     expect(await invoke(pi.tools.get("furnace_observe"), context, { runId: "frn-run-r1", ...forged })).toContain("grant required");
     const catalog = JSON.parse(await invoke(pi.tools.get("workbench_catalog"), context, forged));
-    expect(catalog.capabilities).toEqual([]);
+    // wb-h8f.6: workbench_catalog answers in the builder's workbench.tool-reply/v1 page; nothing forged is discoverable.
+    expect(catalog.rows).toEqual([]);
+    expect(catalog.matched).toBe(0);
     expect(furnace.status).not.toHaveBeenCalled();
   });
   it("reports a hostile saved name without reading escaped paths or revealing outside source", async () => {
@@ -91,7 +93,7 @@ describe("registered Workbench Pi tools", () => {
     const { pi, context } = await boot(["discover:forge.gate.status"], { model: `sk-ant-${SECRET}` });
     const response = await invoke(pi.tools.get("workbench_catalog"), context, { workspace: "/foreign", principal: "admin", grants: ["*"] });
     const parsed = JSON.parse(response);
-    expect(parsed.capabilities.map((capability: { id: string }) => capability.id)).toEqual(["forge.gate.status"]);
+    expect(parsed.rows.map((capability: { id: string }) => capability.id)).toEqual(["forge.gate.status"]);
     expect(response).not.toContain(SECRET);
   });
   it("furnace_observe redacts native error fields and never echoes producer exceptions", async () => {
@@ -160,13 +162,15 @@ describe("remaining registered tool display boundaries", () => {
     expect(text).toContain("[REDACTED]");
   }
   it("sanitizes workbench_catalog provider descriptions", async () => {
-    const { pi, context } = await boot(["discover:forge.gate.status"]);
-    vi.spyOn(CapabilityRegistry.prototype, "discover").mockReturnValueOnce([{
+    // wb-h8f.6: the wired catalog reads the registry's metadata snapshot under the exact discover:<id> grant, so the
+    // fixture enters through catalogSnapshot (formerly discover) and its own grant is held.
+    const { pi, context } = await boot(["discover:fixture.security.read"]);
+    vi.spyOn(CapabilityRegistry.prototype, "catalogSnapshot").mockReturnValueOnce([{ descriptor: {
       id: "fixture.security.read", version: "1.0.0", description: `${risk} api_key=${SECRET}`,
       inputSchema: {}, effectClass: "read", permissions: [], supportedModes: ["invoke"],
-    }]);
+    }, inspectImplemented: false }]);
     const response = await invoke(pi.tools.get("workbench_catalog"), context, {});
-    expect(JSON.parse(response).capabilities[0].id).toBe("fixture.security.read");
+    expect(JSON.parse(response).rows[0].id).toBe("fixture.security.read");
     clean(response);
   });
   it("sanitizes native Furnace snapshot fields and error codes", async () => {
