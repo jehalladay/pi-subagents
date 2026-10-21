@@ -28,11 +28,17 @@
  *
  * Tiers: a row's tier names the report that vouches for it. The default report vouches for the default gate's test tier
  * only; judge() refuses a pin of any other tier (tier-mismatch, R2 = (i)), so this leg never reports a live or native
- * pass from a title's presence. The one native-read case (R2, native-rf-preview, run from vitest.rf.config.ts against a
- * real initialized workspace) is RECORDED with its tier and checked at FILE level only: the file exists, the default
- * report does not hold it (not-collected), and the default judge refuses it (tier-mismatch). NAMED RESIDUAL
- * NATIVE-TITLE: whether that case's title is still registered is judged by no report this leg reads, and the leg says so
- * rather than counting the pin as covered.
+ * pass from a title's presence. The two native-read cases (R2 and R5, native-rf-preview, run from vitest.rf.config.ts
+ * against a real initialized workspace) are RECORDED with their tier and checked at FILE level only: the file exists, the
+ * default report does not hold it (not-collected), and the default judge refuses it (tier-mismatch). NAMED RESIDUAL
+ * NATIVE-TITLE: whether those cases' titles are still registered is judged by no report this leg reads, and the leg says so
+ * rather than counting the pins as covered.
+ *
+ * Row R5 (wb-973.17, SWARM-CONTEXT-GRAPH-R17 (c)) binds the RF sentence on the contractSource release and the live drift
+ * guard: the recorded release to the wb-2j3.12 carrier cases R2-1/R2-3, the guard's wiring to the wb-973.12 frozen-row
+ * cases R12-11/R12-12, and the live guard itself to the native-read SCG-R12 row. Its quote and binding are frozen as
+ * literals (rule 16), and the RF ANCHOR reads the live paragraph: every sentence of it is one RF row's quote or the one
+ * named unbound sentence, so a row removed from every literal of this file (CT5/CT6) is still red against the docs.
  *
  * ORDERING GUARD (wb-693.9, RF-TSX-AND-EMBEDDING-R11): row R4 binds the RF sentence naming the "SDK package + revision"
  * fields the adapter records (provenance.cli_version, provenance.sdk_versions.tsx_runtime/tsx_sdk) to the cases that
@@ -99,6 +105,12 @@ const unpinned = (id: string, reason: string): Half => ({ id, tier: "default-gat
 const BASIS_SENTENCE =
   "The gate.status reader echoes the producer's per-package derived-verdict basis (last_result_state.invalidation_basis.derived_from) as the package snapshot basis, distinct from the workspace basis of WB-025 (02-atomic-requirements.md), and quotes the producer's freshness word verbatim; it never recomputes freshness, never fabricates a basis when the descriptor is absent or malformed, and freshness never confers current authority (authoritative_current alone does).";
 
+/**
+ * wb-973.17 (SWARM-CONTEXT-GRAPH-R17 (c)): the RF paragraph's sentence on the contractSource release and the live drift
+ * guard. Row R5 quotes it whole; FROZEN_R5_QUOTE repeats it as a literal.
+ */
+const CONTRACT_SOURCE_SENTENCE = "The RF contractSource names the rf version of a recorded measurement receipt, and the rf-preview live tier guards drift against rf --version --json.";
+
 /** The six frozen docs/07 section paragraphs, as the markdown source says them. */
 const SECTION_MARKDOWN: Readonly<Record<string, string>> = {
   "Forge provider":
@@ -108,7 +120,7 @@ const SECTION_MARKDOWN: Readonly<Record<string, string>> = {
   "HyperUnix provider":
     'Use typed TS HX SDK/HXQ builder/results; preserve source basis, coverage classification, bounds, known-empty vs incomplete/unknown and evidence. Incomplete query cannot silently authorize "nothing to do" or produce false success. Graph query as observation enhancement is optional; HX is not mandatory UI event storage.',
   "ReactiveFiberCLI provider":
-    "Use actual public render/context APIs; present Python/CLI interop honestly if no production TypeScript SDK exists at selected revision. Do not declare a typed TS context-render client exists without code evidence. Return actual context text, producer/render reference, model/input/source basis, necessity/budget result and partial/refused status. For the shared \"SDK package + revision\" record, the RF adapter records the producer release that provenance.cli_version states as one rf-cli evidence reference, never as sourceVersion, and the TSX engine identity that provenance.sdk_versions.tsx_runtime/tsx_sdk state as one rf-engine evidence reference per entry. Fixture text is never reported as real generated context.",
+    `Use actual public render/context APIs; present Python/CLI interop honestly if no production TypeScript SDK exists at selected revision. Do not declare a typed TS context-render client exists without code evidence. Return actual context text, producer/render reference, model/input/source basis, necessity/budget result and partial/refused status. For the shared "SDK package + revision" record, the RF adapter records the producer release that provenance.cli_version states as one rf-cli evidence reference, never as sourceVersion, and the TSX engine identity that provenance.sdk_versions.tsx_runtime/tsx_sdk state as one rf-engine evidence reference per entry. ${CONTRACT_SOURCE_SENTENCE} Fixture text is never reported as real generated context.`,
   "Beads provider":
     "Beads retains readiness, formulas and logical task dependencies. Workbench may inspect supported scopes and surface linked work; it does not store an authoritative second readiness DAG. No assumed stable Beads SDK if only other integration contracts are available.",
   "Shared integration requirements":
@@ -126,6 +138,11 @@ const CAPABILITY_SUITE = "no native cancel: the typed capability-unavailable ref
 /** wb-693.9: the describe paths holding the R1/R4 cases row R4 binds (its pins bind the describe as well as the case). */
 const RELEASE_SUITE = "producer release from result.provenance.cli_version (wb-2j3.1 reader, wb-2j3.2 no-synthesis guard)";
 const ENGINE_SUITE = "engine identity from result.provenance.sdk_versions (wb-693.1 R1, wb-693.2 R2, wb-693.3 R3)";
+/** wb-973.17: the describe paths holding the carrier and frozen-row cases row R5 binds. */
+const CARRIER_SUITE = "rf contractSource single carrier (wb-2j3.12, R2)";
+const DRIFT_SHAPE_SUITE = "SCG-R12 frozen live row source shape (not a live-run claim)";
+/** The live SCG-R12 drift row of the rf-preview tier (wb-973.12). */
+const LIVE_DRIFT_TITLE = "SCG-R12 live drift guard: the installed rf version and the preview cli_version equal the release recorded in the contractSource carrier";
 
 /** Freezes the table and everything it holds, so no row, half or pin can be edited at runtime. */
 function freezeDeep<T>(value: T): T {
@@ -368,6 +385,25 @@ const TABLE: readonly Row[] = freezeDeep<readonly Row[]>([
     ],
   },
   {
+    // wb-973.17 (SWARM-CONTEXT-GRAPH-R17 (c)): the release half is the wb-2j3.12 carrier cases, the wiring half the
+    // wb-973.12 frozen-row cases; the live guard itself runs only in the rf-preview tier and is recorded, never judged.
+    row: "R5",
+    section: "ReactiveFiberCLI provider",
+    source: "docs",
+    quote: CONTRACT_SOURCE_SENTENCE,
+    halves: [
+      gate("recorded-release", [
+        pin("rf-contract-carrier", "R2-1: both registered descriptors expose the identical contractSource, and it is the exported carrier", [CARRIER_SUITE]),
+        pin("rf-contract-carrier", "R2-3: the carrier's release component string-equals the release the R8 receipt row of record stamped, over the verified schema", [CARRIER_SUITE]),
+      ]),
+      gate("drift-wiring", [
+        pin("rf-release-drift", "R12-11 the row and imports match the independent frozen AST at direct describe/it placement", [DRIFT_SHAPE_SUITE]),
+        pin("rf-release-drift", "R12-12 a missing workspace guard, renamed row, or commented string cannot satisfy the frozen AST", [DRIFT_SHAPE_SUITE]),
+      ]),
+      { id: "drift-native", tier: "native-read", pins: [pin("native-rf-preview", LIVE_DRIFT_TITLE)] },
+    ],
+  },
+  {
     row: "B1",
     section: "Beads provider",
     source: "docs",
@@ -430,7 +466,7 @@ const TABLE: readonly Row[] = freezeDeep<readonly Row[]>([
   },
 ]);
 
-const ROW_IDS: readonly string[] = ["F1", "F2", "F3", "F4", "U1", "U2", "U3", "U4", "U5", "U6", "U7", "U8", "H1", "H2", "R1", "R2", "R3", "R4", "B1", "B2", "S1", "S2"];
+const ROW_IDS: readonly string[] = ["F1", "F2", "F3", "F4", "U1", "U2", "U3", "U4", "U5", "U6", "U7", "U8", "H1", "H2", "R1", "R2", "R3", "R4", "R5", "B1", "B2", "S1", "S2"];
 /** Every half that has no landed case, as "row/half"; a seat that lands a case flips the half consciously and edits this list. */
 const UNPINNED_HALVES: readonly string[] = ["F3/whole", "U7/events", "U8/negative-verbs", "R3/whole", "S1/owner-basis", "S1/observed-evidence", "S1/trace-correlation-recorded"];
 
@@ -504,6 +540,8 @@ const FROZEN_JUDGED_SHAPE: readonly string[] = [
   "R2/observer:3",
   "R4/producer-release:2",
   "R4/tsx-engine-identity:2",
+  "R5/recorded-release:2",
+  "R5/drift-wiring:2",
   "B1/whole:2",
   "B2/whole:2",
   "S1/sdk-revision:1",
@@ -543,11 +581,29 @@ const identityOf = (row: Row): string[] => [
 
 const named = (lines: readonly string[]): string[] => lines.filter(line => line.startsWith("row ")).map(line => line.slice(0, line.indexOf(":")));
 
+/** wb-973.17 (rule 16): row R5's quote and binding as literals, never derived from TABLE, so a shortened quote, a dropped, swapped or re-homed pin or a relabelled tier reads red. */
+const FROZEN_R5_QUOTE = "The RF contractSource names the rf version of a recorded measurement receipt, and the rf-preview live tier guards drift against rf --version --json.";
+const FROZEN_R5_BINDING: readonly string[] = [
+  "recorded-release | test | test/workbench-rf-contract-carrier.test.ts | rf contractSource single carrier (wb-2j3.12, R2) | R2-1: both registered descriptors expose the identical contractSource, and it is the exported carrier",
+  "recorded-release | test | test/workbench-rf-contract-carrier.test.ts | rf contractSource single carrier (wb-2j3.12, R2) | R2-3: the carrier's release component string-equals the release the R8 receipt row of record stamped, over the verified schema",
+  "drift-wiring | test | test/workbench-rf-release-drift.test.ts | SCG-R12 frozen live row source shape (not a live-run claim) | R12-11 the row and imports match the independent frozen AST at direct describe/it placement",
+  "drift-wiring | test | test/workbench-rf-release-drift.test.ts | SCG-R12 frozen live row source shape (not a live-run claim) | R12-12 a missing workspace guard, renamed row, or commented string cannot satisfy the frozen AST",
+  "drift-native | native-read | test/workbench-native-rf-preview.test.ts |  | SCG-R12 live drift guard: the installed rf version and the preview cli_version equal the release recorded in the contractSource carrier",
+];
+/**
+ * wb-973.17 (rule 16 anchor): the one sentence of the live RF paragraph no row binds - a posture sentence (use the public
+ * APIs, present the interop honestly) that states no adapter rule a case can falsify; R3 binds the falsifiable sentence
+ * after it. Every other sentence of the live paragraph must be an RF row's quote.
+ */
+const RF_UNBOUND_SENTENCES: readonly string[] = ["Use actual public render/context APIs; present Python/CLI interop honestly if no production TypeScript SDK exists at selected revision."];
+/** A rendered paragraph's sentences: split after a full stop that a space and a capital letter follow. */
+const sentencesOf = (text: string): string[] => text.split(/(?<=\.) (?=[A-Z])/u);
+
 describe("wb-6hb.11 docs/workbench/07 provider-rules census (report mode)", () => {
-  it("AC1: the table holds the twenty-two frozen rows in order, deeply frozen, each quote verbatim in its section's source", () => {
+  it("AC1: the table holds the twenty-three frozen rows in order, deeply frozen, each quote verbatim in its section's source", () => {
     expect(isDeepFrozen(TABLE)).toBe(true);
     expect(TABLE.map(row => row.row)).toEqual(ROW_IDS);
-    expect(TABLE).toHaveLength(22);
+    expect(TABLE).toHaveLength(23);
     expect(JUDGED.map(({ row, half }) => `${row.row}/${half.id}:${half.pins.length}`)).toEqual(FROZEN_JUDGED_SHAPE);
     expect(docsFailures(readRepo(DOCS_FILE))).toEqual([]);
   });
@@ -588,6 +644,27 @@ describe("wb-6hb.11 docs/workbench/07 provider-rules census (report mode)", () =
     for (const family of ["F9", "F10", "F11", "F12", "F13", "F14"]) expect(families.has(family), family).toBe(true);
   });
 
+  it("AC1 (wb-973.17): row R5 quotes the contractSource sentence whole and binds the recorded release, the drift wiring and the live drift row by file, describe path, verbatim title and tier, frozen as literals", () => {
+    const row = TABLE.find(candidate => candidate.row === "R5");
+    expect(row).toBeDefined();
+    if (row === undefined) return;
+    expect(row.section).toBe("ReactiveFiberCLI provider");
+    expect(row.source).toBe("docs");
+    expect(row.quote).toBe(FROZEN_R5_QUOTE);
+    expect(row.halves.map(half => `${half.id}:${half.tier}:${half.reason ?? "pinned"}`)).toEqual(["recorded-release:default-gate:pinned", "drift-wiring:default-gate:pinned", "drift-native:native-read:pinned"]);
+    expect(row.halves.flatMap(half => half.pins.map(entry => [half.id, tierCommand(half.tier), entry.file, (entry.suite ?? []).join(" > "), entry.title].join(" | ")))).toEqual(FROZEN_R5_BINDING);
+  });
+
+  it("RF anchor (wb-973.17, rule 16): every sentence of the LIVE ReactiveFiberCLI paragraph is one RF row's quote or the one named unbound sentence, read from the document, never from SECTION_MARKDOWN", () => {
+    const section = docsSection(readRepo(DOCS_FILE), "ReactiveFiberCLI provider", 2, [DOCS_PARENT]);
+    expect(section.ok, section.why).toBe(true);
+    const sentences = sentencesOf(section.blocks.map(block => (block.kind === "paragraph" ? block.text : "")).join(" "));
+    const quotes = TABLE.filter(row => row.section === "ReactiveFiberCLI provider" && row.source === "docs").map(row => renderedOf(row.quote));
+    expect(sentences.filter(sentence => !quotes.includes(sentence) && !RF_UNBOUND_SENTENCES.includes(sentence))).toEqual([]);
+    for (const quote of quotes) expect(sentences.filter(sentence => sentence === quote), quote).toHaveLength(1);
+    for (const unbound of RF_UNBOUND_SENTENCES) expect(sentences.filter(sentence => sentence === unbound), unbound).toHaveLength(1);
+  });
+
   it("AC3: the unpinned halves are listed so none is ever counted as passed, each naming its reason", () => {
     const listed = TABLE.flatMap(row => row.halves.filter(half => half.reason !== undefined).map(half => `${row.row}/${half.id}`));
     expect(listed).toEqual(UNPINNED_HALVES);
@@ -617,17 +694,21 @@ describe("wb-6hb.11 docs/workbench/07 provider-rules census (report mode)", () =
   });
 
   it("AC4: the native-read case is recorded with its tier and judged by no report this leg reads: the default judge refuses it, the default report does not hold its file", () => {
-    expect(NATIVE.map(({ row, half }) => `${row.row}/${half.id}`)).toEqual(["R2/native-preview"]);
-    const native = NATIVE[0];
-    const entry = native?.half.pins[0];
-    expect(native !== undefined && entry !== undefined).toBe(true);
-    if (native === undefined || entry === undefined) return;
-    expect(entry.file).toBe(NATIVE_FILE);
-    expect(existsSync(join(ROOT, entry.file)), `${entry.file} is the native tier's file`).toBe(true);
-    const [asNative] = judge(REPORT, [casePin(native.half, entry)]);
-    expect(asNative?.code, "a native-read pin is never carried by the default report").toBe("tier-mismatch");
-    const [asDefault] = judge(REPORT, [{ file: entry.file, title: entry.title, tier: DEFAULT_GATE_TIER }]);
-    expect(asDefault?.code, "the native file is not in the default gate's report").toBe("not-collected");
+    expect(NATIVE.map(({ row, half }) => `${row.row}/${half.id}`)).toEqual(["R2/native-preview", "R5/drift-native"]);
+    let checked = 0;
+    for (const native of NATIVE) {
+      expect(native.half.pins, `${native.row.row}/${native.half.id}`).toHaveLength(1);
+      const entry = native.half.pins[0];
+      if (entry === undefined) continue;
+      expect(entry.file).toBe(NATIVE_FILE);
+      expect(existsSync(join(ROOT, entry.file)), `${entry.file} is the native tier's file`).toBe(true);
+      const [asNative] = judge(REPORT, [casePin(native.half, entry)]);
+      expect(asNative?.code, "a native-read pin is never carried by the default report").toBe("tier-mismatch");
+      const [asDefault] = judge(REPORT, [{ file: entry.file, title: entry.title, tier: DEFAULT_GATE_TIER }]);
+      expect(asDefault?.code, "the native file is not in the default gate's report").toBe("not-collected");
+      checked += 1;
+    }
+    expect(checked).toBe(2);
   });
 
   it("AC4: the leg judges the gate's own report and executes nothing: it imports judge, never judgePins, and loads no module at runtime", () => {

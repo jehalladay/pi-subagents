@@ -7,12 +7,14 @@ export const REACTIVE_FIBER_CLI_SCHEMA = "reactive-fiber.cli/v1";
 export const REACTIVEFIBER_RENDER_PREVIEW_CONTRACT = "reactivefiber.render.preview/v1";
 /**
  * The single rf contractSource carrier (program rfcli-performance-mathematical-optimization R2, wb-2j3.12): the
- * `rf@<release>` prefix states the producer release MEASURED by the R8 live receipt, never a hand-maintained literal.
- * Receipt of record: `forge run rf-preview` forge cmd_c8fa1da3d9c4 on 2026-10-17 against the installed rf
- * (RF_PREVIEW_RECEIPT cli_version "0.1.723"; docs/workbench/receipts/wb-2j3.7.md). Re-pin only from a newer stamped
- * receipt row; both registered reactivefiber.render.preview descriptors consume this constant by identifier.
+ * `rf@<release>` prefix states the producer release MEASURED by a stamped rf-preview live receipt, never a hand-maintained
+ * literal. Receipt of record: `forge run rf-preview` forge cmd_30b6975c69e8 on 2026-10-21 against the installed rf
+ * (RF_PREVIEW_RECEIPT cli_version "0.1.768"; docs/workbench/receipts/wb-973.17.md, the SCG-R17 re-measure after forge
+ * cmd_e88d650bad54 measured that installed rf drifting from the earlier rf@0.1.723 pin of receipts/wb-2j3.7.md,
+ * cmd_c8fa1da3d9c4; confirmed after the roster's captured promotion by forge cmd_78d08ba7c49c). Re-pin only from a newer
+ * stamped receipt row; both registered reactivefiber.render.preview descriptors consume this constant by identifier.
  */
-export const REACTIVE_FIBER_CONTRACT_SOURCE = "rf@0.1.723:reactive-fiber.cli/v1 context.render --no-commit";
+export const REACTIVE_FIBER_CONTRACT_SOURCE = "rf@0.1.768:reactive-fiber.cli/v1 context.render --no-commit";
 
 interface RfEnvelope {
   schema: string; ok: boolean; command: string; operation_id: string;
