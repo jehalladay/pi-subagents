@@ -55,6 +55,8 @@ export class CapabilityError extends Error {
 }
 
 const CAPABILITY_ID = /^[a-z][a-z0-9]*(?:[.-][a-z][a-z0-9]*)+$/;
+const EFFECT_CLASSES: readonly string[] = Object.freeze(["read", "write", "external", "unknown"]);
+const CAPABILITY_MODES: readonly string[] = Object.freeze(["invoke", "inspect", "observe"]);
 export const CAPABILITY_MAX_BYTES = 256 * 1024;
 export const CAPABILITY_MAX_DEPTH = 64;
 export const CAPABILITY_DEADLINE_MS = 30_000;
@@ -240,6 +242,18 @@ export function validatedCapabilityJson(value: unknown, path: string, maxDepth =
   }
 }
 
+/**
+ * The first descriptor field outside its declared type, or undefined. The catalog and inspect replies render these
+ * fields, so a value the type forbids is refused here, once, instead of reaching a reply builder (wb-1q8 gate F1).
+ */
+function descriptorFieldOutsideContract(descriptor: CapabilityDescriptor): string | undefined {
+  if (typeof descriptor.description !== "string") return "description";
+  if (!EFFECT_CLASSES.includes(descriptor.effectClass)) return "effectClass";
+  if (!Array.isArray(descriptor.supportedModes) || !descriptor.supportedModes.every(mode => CAPABILITY_MODES.includes(mode))) return "supportedModes";
+  if (descriptor.contractSource !== undefined && typeof descriptor.contractSource !== "string") return "contractSource";
+  return undefined;
+}
+
 /** Explicit grants are required for *both* discovery and invocation. */
 export class CapabilityRegistry {
   private readonly providers = new Map<string, CapabilityProvider>();
@@ -265,12 +279,15 @@ export class CapabilityRegistry {
 
   register(provider: CapabilityProvider): void {
     const { descriptor } = provider;
-    if (!CAPABILITY_ID.test(descriptor.id) || !/^\d+\.\d+\.\d+$/.test(descriptor.version)) {
+    // Strings first: RegExp.test coerces its argument, so a one-element array would pass as its only string (wb-1q8 F3).
+    if (typeof descriptor.id !== "string" || typeof descriptor.version !== "string" || !CAPABILITY_ID.test(descriptor.id) || !/^\d+\.\d+\.\d+$/.test(descriptor.version)) {
       throw new CapabilityError("validation", `Invalid capability id or version: ${descriptor.id}@${descriptor.version}.`);
     }
     if (this.providers.has(descriptor.id)) {
       throw new CapabilityError("validation", `Capability ${descriptor.id} is already registered (duplicate).`);
     }
+    const outside = descriptorFieldOutsideContract(descriptor);
+    if (outside !== undefined) throw new CapabilityError("validation", `Invalid ${outside} for capability ${descriptor.id}.`);
     if (!Array.isArray(descriptor.permissions) || descriptor.permissions.some(permission =>
       typeof permission !== "string" || permission.trim() === "" || /^(discover|inspect|observe|control|reconcile):/.test(permission))) {
       throw new CapabilityError("validation", `Invalid invocation permission requirements for capability ${descriptor.id}.`);
