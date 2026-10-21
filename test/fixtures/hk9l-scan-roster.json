@@ -237,49 +237,64 @@
       "id": "R-H5",
       "family": "read/write composition",
       "digest": "37e662375a3fe1399fc0dc95f9d9232aa058553112f7cabb7ff78afc75d4fd44",
-      "reading": "row quiet"
+      "reading": "row quiet",
+      "runtime": "invisible: no S-call, the bytes move by read and write"
     },
     {
       "id": "R-MODULE",
       "family": "other-module helper",
       "digest": "7b1094cf6f38f1bf063069022eec44a6e79829d95a623759b8654cd3f9541330",
-      "reading": "row quiet"
+      "reading": "row quiet",
+      "runtime": "observed and refused outside a budgeted row when the helper copies through S; invisible when it re-implements the copy without S"
     },
     {
       "id": "R-PROCESS",
       "family": "subprocess copy",
       "digest": "5ce5ee0561776868771e83048ddb13718df85f4b03315e96bdd274c8b6be2f08",
-      "reading": "row quiet"
+      "reading": "row quiet",
+      "runtime": "invisible: the copy runs in another process"
     },
     {
       "id": "R-HOOK",
       "family": "hook copy",
       "digest": "d4ea304260e90543ce46289eeb8b61d919cf47fd31098b933cea553bc3a98117",
-      "reading": "row quiet"
+      "reading": "row quiet",
+      "runtime": "observed and refused: an S-call in a hook runs with no row chain live"
     },
     {
       "id": "R-SCOPE",
       "family": "module-scope copy",
       "digest": "ba574260adf4ee02ad948307b8d00101806d0e3d2cf7158e82c0bf9ca7252885",
-      "reading": "row quiet"
+      "reading": "row quiet",
+      "runtime": "observed and refused: an S-call at module scope runs with no row chain live"
     },
     {
       "id": "R-PROXY",
       "family": "identity hashing proxy",
       "digest": "c694895e6b2fdad18a9c99bdc716ce2e4fde4f0dcd2264674c6af621dc9f3b39",
-      "reading": "row quiet"
+      "reading": "row quiet",
+      "runtime": "observed: src copies through S and is attributed to the calling row, refused outside a budgeted one"
     },
     {
       "id": "R-REQUIRE",
       "family": "createRequire requisition",
       "digest": "adfce552cca2b038904b4b85d00ac638d24a787351203098ff427b73170e6622",
-      "reading": "row quiet"
+      "reading": "row quiet",
+      "runtime": "invisible: createRequire returns the unmocked builtin"
     },
     {
       "id": "R-BUILTIN",
       "family": "getBuiltinModule requisition",
       "digest": "1cd588866aa92cffde0b4b5e798b870fb253ef1780f1689f22f9735c978669bd",
-      "reading": "row quiet"
+      "reading": "row quiet",
+      "runtime": "invisible: getBuiltinModule returns the unmocked builtin"
     }
+  ],
+  "packageCopySuite": "WB-014 immutable invocation identity",
+  "packageCopyRows": [
+    "pins actual package.json, package-lock.json and local vendor artifact bytes, not declared fiction",
+    "uses the shipped dependency lock only when npm has excluded package-lock.json",
+    "rejects lockfile changes, missing artifact and lockfile/manifest mismatch",
+    "wrap liveness: every judged copy surface emits from this row once"
   ]
 }
