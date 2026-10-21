@@ -62,6 +62,10 @@ const PINNED_WORK_METRICS_KEYS = [
 const ROSTER_RECEIPT = 'docs/workbench/receipts/wb-973.17.md';
 /** How the receipt spells a small count. */
 const COUNT_WORDS: readonly string[] = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
+/** Every key of the captured roster, listed in an append-only receipt entry of its own (receipts/wb-j032.md), read by U7. */
+const ROSTER_KEYS_RECEIPT = 'docs/workbench/receipts/wb-j032.md';
+/** The key lists that entry states, in its order: one line each, `- <label> keys (<count>): <key>, <key>, ... <key>.` */
+const ROSTER_KEY_LIST_LABELS: readonly string[] = ['Result', 'Provenance', 'Work', 'Work metrics'];
 
 const roster = readRfResultRoster();
 
@@ -148,8 +152,9 @@ describe('SCG-R11: full-shape offline RF result fixture', () => {
 
   // U6 (wb-973.20, gate F5): an anchor OUTSIDE the roster, the literal and the fixture. The roster's capture receipt of record
   // (rule 13 receipts route; a receipt is append-only, so its statements hold still) names the capture id and states the
-  // measured counts and the keys the re-pin added. A coordinated hollow or swap of one key across the JSON roster, the literal
-  // above and fullShapeRf keeps those three agreeing with each other, never with the receipt, so it is red here.
+  // measured counts and the keys the re-pin added. A coordinated hollow of one key across the JSON roster, the literal above
+  // and fullShapeRf changes a stated count, and a coordinated swap of a key the delta names drops that key, so either is red
+  // here; a count-preserving swap of any other key keeps every stated count and is not red here (U7 below holds every key).
   it('U6: the captured roster agrees with its receipt of record: the capture id, the four stated counts and every key the delta names', () => {
     const receipt = readFileSync(new URL(`../${ROSTER_RECEIPT}`, import.meta.url), 'utf8');
     expect([roster.source, roster.receipt]).toStrictEqual(['captured', 'cmd_30b6975c69e8']);
@@ -171,6 +176,34 @@ describe('SCG-R11: full-shape offline RF result fixture', () => {
     expect(addedResult.filter(key => !roster.resultKeys.includes(key))).toStrictEqual([]);
     expect(addedMetrics.filter(key => !roster.workMetricsKeys.includes(key))).toStrictEqual([]);
     expect(roster.workMetricsKeys.length - addedMetrics.length).toBe(10);
+  });
+
+  // U7 (wb-j032, the wb-973.20 gate's F1): U6 anchors the roster to its receipt only by the four stated counts and the delta-named
+  // keys, so a count-preserving swap of any other key made in step across the JSON roster, the literal above and the fullShape*
+  // builders kept the default tier green (gate G1 audience -> audience_kind, G2 state_read_count -> state_reads_count). This anchor
+  // lists EVERY key in an append-only receipt entry outside the three files, one plain-text list item per key list (no inline markup,
+  // so each item renders exactly its text after the '- ' marker). The listing is read whole, so a missing, repeated, renamed or extra
+  // list line is red, and each file is held to it: the roster and the literal key for key in roster order, the builders as key sets
+  // (result, work and work_metrics exactly; provenance as the three-key floor the roster states, since the builder's carries seven).
+  it('U7: every key of the JSON roster, the literal roster and the full-shape builders is a key its receipt of record lists', () => {
+    const lines = readFileSync(new URL(`../${ROSTER_KEYS_RECEIPT}`, import.meta.url), 'utf8').split('\n');
+    expect(lines.filter(line => line.startsWith('- Roster of record: ')))
+      .toStrictEqual([`- Roster of record: rf ${roster.rfVersion}, source ${roster.source}, capture receipt ${roster.receipt} (${ROSTER_RECEIPT}).`]);
+    const listing = lines.flatMap(line => {
+      const match = /^- ([A-Z][a-z]+(?: [a-z]+)*) keys \((\d+)\): ([a-z_]+(?:, [a-z_]+)*)\.$/.exec(line);
+      return match === null ? [] : [{ label: match[1] ?? '', stated: Number(match[2]), keys: (match[3] ?? '').split(', ') }];
+    });
+    expect(listing.map(list => list.label)).toStrictEqual(ROSTER_KEY_LIST_LABELS);
+    expect(listing.map(list => list.keys.length)).toStrictEqual(listing.map(list => list.stated));
+    const [result = [], provenance = [], work = [], workMetrics = []] = listing.map(list => list.keys);
+    const listed = { result, provenance, work, workMetrics };
+    expect({ result: roster.resultKeys, provenance: roster.provenanceKeys, work: roster.workKeys, workMetrics: roster.workMetricsKeys }).toStrictEqual(listed);
+    expect({ result: PINNED_RESULT_KEYS, provenance: PINNED_PROVENANCE_KEYS, work: PINNED_WORK_KEYS, workMetrics: PINNED_WORK_METRICS_KEYS }).toStrictEqual(listed);
+    const fixture = resultOf(fullShapeRf(ws));
+    const keySet = (keys: readonly string[]): string[] => [...keys].sort();
+    expect({ result: keySet(Object.keys(fixture)), work: keySet(Object.keys(asObject(fixture.work))), workMetrics: keySet(Object.keys(asObject(fixture.work_metrics))) })
+      .toStrictEqual({ result: keySet(result), work: keySet(work), workMetrics: keySet(workMetrics) });
+    expect(provenance.filter(key => !Object.hasOwn(asObject(fixture.provenance), key))).toStrictEqual([]);
   });
 
   // Acceptance 1 (census-grade): the fixture's result keys are a superset of the frozen roster, provenance carries the three
