@@ -40,6 +40,15 @@
  * literals (rule 16), and the RF ANCHOR reads the live paragraph: every sentence of it is one RF row's quote or the one
  * named unbound sentence, so a row removed from every literal of this file (CT5/CT6) is still red against the docs.
  *
+ * Rows R6-R9 (wb-973.16, SWARM-CONTEXT-GRAPH-R16 (a)-(d)) bind the RF sentences on the capability's two input arms and
+ * render flags (the wb-973.1/.3 SCG-R1/R3 cases of the envelope audit), the operator-set swarm RF workspace root under the
+ * unchanged reactivefiber:render grant with single-host scope (wb-973.4 S1/H1, wb-973.5's no-input-root case and its docs
+ * census), the two hosted-agent locators on both hosts (wb-973.6/.7 SCG-R6/R7 and the W19 env-scrub seam cases, plus the
+ * docs/13 Host-boundary section pin) and the frozen legacy argv (SCG-R3). Their quotes and bindings are frozen as literals
+ * (rule 16), and the RECEIPT ANCHOR repeats every binding outside this file - receipts/wb-973.16.md, read through the
+ * rendered view - so a pin, half or row removed from TABLE and from every literal here together still reds (CT5/CT6). A
+ * renamed or deleted pinned case reds naming the row and its sentence (M5, DEL); docs/19's read example restates the arms.
+ *
  * ORDERING GUARD (wb-693.9, RF-TSX-AND-EMBEDDING-R11): row R4 binds the RF sentence naming the "SDK package + revision"
  * fields the adapter records (provenance.cli_version, provenance.sdk_versions.tsx_runtime/tsx_sdk) to the cases that
  * assert them: the wb-693.1 R10 engine-identity cases and the wb-2j3.1 release cases, which absorbed requirement R4 under
@@ -50,6 +59,7 @@
  * Non-scope (no falsifiable adapter sentence, or covered by the docs/14 matrix): "MechanicalWorkflows is an ordinary
  * function library", "RCP provider", "Agent provider", "First realistic vertical journey".
  */
+import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { basename, dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -94,6 +104,7 @@ const NATIVE_FILE = "test/workbench-native-rf-preview.test.ts";
 const T = (name: string): string => `test/workbench-${name}.test.ts`;
 const pin = (name: string, title: string, suite?: readonly string[]): Pin => (suite === undefined ? { file: T(name), title } : { file: T(name), title, suite });
 const eachPin = (name: string, title: string, minCases: number): Pin => ({ file: T(name), title, each: minCases });
+const eachPinIn = (name: string, title: string, minCases: number, suite: readonly string[]): Pin => ({ file: T(name), title, suite, each: minCases });
 const gate = (id: string, pins: readonly Pin[]): Half => ({ id, tier: "default-gate", pins });
 const whole = (pins: readonly Pin[]): readonly Half[] => [gate("whole", pins)];
 const unpinned = (id: string, reason: string): Half => ({ id, tier: "default-gate", pins: [], reason });
@@ -111,6 +122,17 @@ const BASIS_SENTENCE =
  */
 const CONTRACT_SOURCE_SENTENCE = "The RF contractSource names the rf version of a recorded measurement receipt, and the rf-preview live tier guards drift against rf --version --json.";
 
+/**
+ * wb-973.16 (SWARM-CONTEXT-GRAPH-R16 (a)-(d)): the RF paragraph's four sentences on the capability's input arms, the swarm
+ * RF workspace root, the hosted-agent locators and the frozen legacy argv. Rows R6-R9 quote them whole; FROZEN_R16 repeats
+ * each as a literal (rule 16) and the receipt of record (receipts/wb-973.16.md) repeats every binding outside this file.
+ */
+const INPUT_ARMS_SENTENCE = "The RF capability accepts either {model, task} or {view, taskId} with an optional model, never both, and spawns only --no-commit --no-input --json renders.";
+const WORKSPACE_ROOT_SENTENCE =
+  "The swarm RF workspace root is an operator setting, workbench.reactivefiberWorkspaceRoot, under the unchanged reactivefiber:render grant, with single-host scope: multi-host use of a swarm workspace on a shared filesystem is unsupported and not safe.";
+const LOCATORS_SENTENCE = "RF_WORKSPACE and SWARM_RF_WORKSPACE are the allowlisted operational names a hosted agent learns the swarm workspace from, identical on the embedded and the detached host.";
+const LEGACY_ARGV_SENTENCE = "The legacy {model, task} argv is frozen byte for byte (SCG-R025).";
+
 /** The six frozen docs/07 section paragraphs, as the markdown source says them. */
 const SECTION_MARKDOWN: Readonly<Record<string, string>> = {
   "Forge provider":
@@ -120,7 +142,7 @@ const SECTION_MARKDOWN: Readonly<Record<string, string>> = {
   "HyperUnix provider":
     'Use typed TS HX SDK/HXQ builder/results; preserve source basis, coverage classification, bounds, known-empty vs incomplete/unknown and evidence. Incomplete query cannot silently authorize "nothing to do" or produce false success. Graph query as observation enhancement is optional; HX is not mandatory UI event storage.',
   "ReactiveFiberCLI provider":
-    `Use actual public render/context APIs; present Python/CLI interop honestly if no production TypeScript SDK exists at selected revision. Do not declare a typed TS context-render client exists without code evidence. Return actual context text, producer/render reference, model/input/source basis, necessity/budget result and partial/refused status. For the shared "SDK package + revision" record, the RF adapter records the producer release that provenance.cli_version states as one rf-cli evidence reference, never as sourceVersion, and the TSX engine identity that provenance.sdk_versions.tsx_runtime/tsx_sdk state as one rf-engine evidence reference per entry. ${CONTRACT_SOURCE_SENTENCE} Fixture text is never reported as real generated context.`,
+    `Use actual public render/context APIs; present Python/CLI interop honestly if no production TypeScript SDK exists at selected revision. Do not declare a typed TS context-render client exists without code evidence. Return actual context text, producer/render reference, model/input/source basis, necessity/budget result and partial/refused status. ${INPUT_ARMS_SENTENCE} ${WORKSPACE_ROOT_SENTENCE} ${LOCATORS_SENTENCE} ${LEGACY_ARGV_SENTENCE} For the shared "SDK package + revision" record, the RF adapter records the producer release that provenance.cli_version states as one rf-cli evidence reference, never as sourceVersion, and the TSX engine identity that provenance.sdk_versions.tsx_runtime/tsx_sdk state as one rf-engine evidence reference per entry. ${CONTRACT_SOURCE_SENTENCE} Fixture text is never reported as real generated context.`,
   "Beads provider":
     "Beads retains readiness, formulas and logical task dependencies. Workbench may inspect supported scopes and surface linked work; it does not store an authoritative second readiness DAG. No assumed stable Beads SDK if only other integration contracts are available.",
   "Shared integration requirements":
@@ -143,6 +165,18 @@ const CARRIER_SUITE = "rf contractSource single carrier (wb-2j3.12, R2)";
 const DRIFT_SHAPE_SUITE = "SCG-R12 frozen live row source shape (not a live-run claim)";
 /** The live SCG-R12 drift row of the rf-preview tier (wb-973.12). */
 const LIVE_DRIFT_TITLE = "SCG-R12 live drift guard: the installed rf version and the preview cli_version equal the release recorded in the contractSource carrier";
+/** wb-973.16: the describe paths holding the SCG-R1/R3 (wb-973.1/.3), R4 (wb-973.4), R5 (wb-973.5) and R6/R7 (wb-973.6/.7) cases rows R6-R9 bind. */
+const ARMS_SUITE = "SCG reactivefiber.render.preview input arms (wb-973.1 R1, wb-973.3 R3)";
+const ROOT_SETTING_SUITE = "wb-973.4 reactivefiberWorkspaceRoot setting (S)";
+const HOST_WIRING_SUITE = "wb-973.4 host wiring: the configured setting reaches the providers through the real extension (H)";
+const NO_INPUT_ROOT_SUITE = "SCG-R5 AC1 (wb-973.5): no capability input names the RF workspace root";
+const SHARED_FS_SUITE = "SCG-R5 AC4 (wb-973.5): docs/workbench never presents a shared-filesystem swarm workspace as safe";
+const SHARED_FS_RENDERED_SUITE = "SCG-R5 AC4 rendered view (wb-973.5 respin): docs/workbench as a reader sees it";
+const LOCATORS_SUITE = "SCG-R6/R7: the swarm rf workspace locators (wb-973.6, wb-973.7)";
+const ENV_HARNESS_SUITE = "W19 env-scrub census: harness sanity (plain, must pass)";
+const ENV_SEAMS_SUITE = "W19 env-scrub census: SCG-R6 rf workspace locators reach the SDK child equally at both seams (wb-973.6)";
+/** The docs/13 Host-boundary section pin of the shared-filesystem census: it pins the hosted-agent channel and root paragraphs whole. */
+const HOST_BOUNDARY_TITLE = 'SCG-R5: docs/13 section "Host boundary" is the unique heading of that name under the page title, renders exactly the pinned blocks and carries no HTML';
 
 /** Freezes the table and everything it holds, so no row, half or pin can be edited at runtime. */
 function freezeDeep<T>(value: T): T {
@@ -404,6 +438,72 @@ const TABLE: readonly Row[] = freezeDeep<readonly Row[]>([
     ],
   },
   {
+    // wb-973.16 (SWARM-CONTEXT-GRAPH-R16 (a)): the two input arms are wb-973.1's SCG-R1 cases, the render flags wb-973.3's
+    // SCG-R3 admitted-shape table; every pin binds the shared describe of the envelope audit.
+    row: "R6",
+    section: "ReactiveFiberCLI provider",
+    source: "docs",
+    quote: INPUT_ARMS_SENTENCE,
+    halves: [
+      gate("two-arms", [
+        pin("provider-envelope-audit", "SCG-R1: the descriptor advertises the two arms as one exclusive oneOf, the legacy arm unchanged", [ARMS_SUITE]),
+        pin("provider-envelope-audit", "SCG-R1: {view,taskId} spawns the served --view --task-id argv", [ARMS_SUITE]),
+        pin("provider-envelope-audit", "SCG-R1: {view,taskId,model} carries --model after --task-id", [ARMS_SUITE]),
+      ]),
+      gate("never-both", [eachPinIn("provider-envelope-audit", "SCG-R1: the mixed shape %s is refused at input validation and never spawns rf", 6, [ARMS_SUITE])]),
+      gate("render-flags-only", [eachPinIn("provider-envelope-audit", "SCG-R3: the admitted shape %s ends with --no-commit --no-input --json and adds no unserved selector", 3, [ARMS_SUITE])]),
+    ],
+  },
+  {
+    // wb-973.16 (R16 (b)): the operator setting is wb-973.4's S1/H1 and wb-973.5's no-input-names-the-root case, the
+    // unchanged grant wb-973.3's descriptor case, the single-host scope wb-973.5's docs census over docs/workbench.
+    row: "R7",
+    section: "ReactiveFiberCLI provider",
+    source: "docs",
+    quote: WORKSPACE_ROOT_SENTENCE,
+    halves: [
+      gate("operator-setting", [
+        pin("swarm-rf-workspace", "S1: accepts an absolute path and retains it beside the Claude executor selection", [ROOT_SETTING_SUITE]),
+        pin("swarm-rf-workspace", "H1: with C configured, a workflow node's RF render spawns rf with --workspace C, and the envelope naming C validates", [HOST_WIRING_SUITE]),
+        pin("rf-workspace-root", "SCG-R5: both input arms keep additionalProperties:false and declare no path-shaped property", [NO_INPUT_ROOT_SUITE]),
+      ]),
+      gate("unchanged-grant", [pin("provider-envelope-audit", "SCG-R3: both registered descriptors keep effectClass read, the render permission and invoke-only modes", [ARMS_SUITE])]),
+      gate("single-host-scope", [
+        pin("docs-shared-filesystem-census", "SCG-R5: docs/13 holds exactly one ADR-SCG-010 sentence, naming the RF workspace root with single-host, local-coordinated scope", [SHARED_FS_SUITE]),
+        pin("docs-shared-filesystem-census", "SCG-R5: every sentence naming NFS, EFS, a shared filesystem or multi-host use says unsupported or not safe, and claims no safety", [SHARED_FS_SUITE]),
+      ]),
+      gate("documented-root", [pin("docs-shared-filesystem-census", HOST_BOUNDARY_TITLE, [SHARED_FS_RENDERED_SUITE])]),
+    ],
+  },
+  {
+    // wb-973.16 (R16 (c)): the allowlist is wb-973.7's set-equality case and the env-scrub harness member row, both hosts
+    // the W19 env-scrub SCG-R6 seam cases, and the documented channel the docs/13 Host-boundary section pin.
+    row: "R8",
+    section: "ReactiveFiberCLI provider",
+    source: "docs",
+    quote: LOCATORS_SENTENCE,
+    halves: [
+      gate("allowlisted-names", [
+        pin("process-env", "SCG-R7: DETACHED_HOST_ENV_ALLOWLIST equals the 9df9a03 list plus exactly RF_WORKSPACE and SWARM_RF_WORKSPACE (set equality; any third addition is red)", [LOCATORS_SUITE]),
+        pin("env-scrub-census", "the allowlist of record names the two rf workspace locators and neither is credential-shaped (SCG-R6 MEMBERS, names only)", [ENV_HARNESS_SUITE]),
+      ]),
+      gate("both-hosts", [
+        pin("env-scrub-census", "local-detached.ts spawn carries RF_WORKSPACE and SWARM_RF_WORKSPACE with the parent's values and stays allowlist-only", [ENV_SEAMS_SUITE]),
+        pin("env-scrub-census", "claude-host.ts builds the SDK Options with no env override, so the SDK CLI child inherits process.env carrying both locators", [ENV_SEAMS_SUITE]),
+        pin("env-scrub-census", "both seams answer equally: the detached child is handed exactly what the embedded child inherits, for each locator", [ENV_SEAMS_SUITE]),
+      ]),
+      gate("documented-channel", [pin("docs-shared-filesystem-census", HOST_BOUNDARY_TITLE, [SHARED_FS_RENDERED_SUITE])]),
+    ],
+  },
+  {
+    // wb-973.16 (R16 (d)): the frozen legacy argv is wb-973.3's byte-identity case.
+    row: "R9",
+    section: "ReactiveFiberCLI provider",
+    source: "docs",
+    quote: LEGACY_ARGV_SENTENCE,
+    halves: whole([pin("provider-envelope-audit", "SCG-R3: the legacy argv is byte-identical to the measured 0.1.583 form", [ARMS_SUITE])]),
+  },
+  {
     row: "B1",
     section: "Beads provider",
     source: "docs",
@@ -466,7 +566,7 @@ const TABLE: readonly Row[] = freezeDeep<readonly Row[]>([
   },
 ]);
 
-const ROW_IDS: readonly string[] = ["F1", "F2", "F3", "F4", "U1", "U2", "U3", "U4", "U5", "U6", "U7", "U8", "H1", "H2", "R1", "R2", "R3", "R4", "R5", "B1", "B2", "S1", "S2"];
+const ROW_IDS: readonly string[] = ["F1", "F2", "F3", "F4", "U1", "U2", "U3", "U4", "U5", "U6", "U7", "U8", "H1", "H2", "R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "B1", "B2", "S1", "S2"];
 /** Every half that has no landed case, as "row/half"; a seat that lands a case flips the half consciously and edits this list. */
 const UNPINNED_HALVES: readonly string[] = ["F3/whole", "U7/events", "U8/negative-verbs", "R3/whole", "S1/owner-basis", "S1/observed-evidence", "S1/trace-correlation-recorded"];
 
@@ -542,6 +642,17 @@ const FROZEN_JUDGED_SHAPE: readonly string[] = [
   "R4/tsx-engine-identity:2",
   "R5/recorded-release:2",
   "R5/drift-wiring:2",
+  "R6/two-arms:3",
+  "R6/never-both:1",
+  "R6/render-flags-only:1",
+  "R7/operator-setting:3",
+  "R7/unchanged-grant:1",
+  "R7/single-host-scope:2",
+  "R7/documented-root:1",
+  "R8/allowlisted-names:2",
+  "R8/both-hosts:3",
+  "R8/documented-channel:1",
+  "R9/whole:1",
   "B1/whole:2",
   "B2/whole:2",
   "S1/sdk-revision:1",
@@ -600,10 +711,10 @@ const RF_UNBOUND_SENTENCES: readonly string[] = ["Use actual public render/conte
 const sentencesOf = (text: string): string[] => text.split(/(?<=\.) (?=[A-Z])/u);
 
 describe("wb-6hb.11 docs/workbench/07 provider-rules census (report mode)", () => {
-  it("AC1: the table holds the twenty-three frozen rows in order, deeply frozen, each quote verbatim in its section's source", () => {
+  it("AC1: the table holds the twenty-seven frozen rows in order, deeply frozen, each quote verbatim in its section's source", () => {
     expect(isDeepFrozen(TABLE)).toBe(true);
     expect(TABLE.map(row => row.row)).toEqual(ROW_IDS);
-    expect(TABLE).toHaveLength(23);
+    expect(TABLE).toHaveLength(27);
     expect(JUDGED.map(({ row, half }) => `${row.row}/${half.id}:${half.pins.length}`)).toEqual(FROZEN_JUDGED_SHAPE);
     expect(docsFailures(readRepo(DOCS_FILE))).toEqual([]);
   });
@@ -967,5 +1078,280 @@ describe("wb-693.9 ordering guard: the RF identity sentence is never a docs clai
       expect(lines[index]).toContain(`"${entry.title}"`);
     }
     expect(codes(judgeOver([observer], withoutCases))).toEqual(observer.pins.map(() => "ok"));
+  });
+});
+
+/** wb-973.16: a row's binding as one line per pin - half, tier command, file, describe path, title, then any table-row floor. */
+const bindingOf = (row: Row): string[] =>
+  row.halves.flatMap(half =>
+    half.pins.map(entry => `${[half.id, tierCommand(half.tier), entry.file, (entry.suite ?? []).join(" > "), entry.title].join(" | ")}${entry.each === undefined ? "" : ` | each >= ${entry.each}`}`),
+  );
+
+/** wb-973.16 (rule 16): rows R6-R9's quotes and bindings as literals, never derived from TABLE. */
+const FROZEN_R16: readonly { readonly row: string; readonly quote: string; readonly binding: readonly string[] }[] = [
+  {
+    row: "R6",
+    quote: "The RF capability accepts either {model, task} or {view, taskId} with an optional model, never both, and spawns only --no-commit --no-input --json renders.",
+    binding: [
+      "two-arms | test | test/workbench-provider-envelope-audit.test.ts | SCG reactivefiber.render.preview input arms (wb-973.1 R1, wb-973.3 R3) | SCG-R1: the descriptor advertises the two arms as one exclusive oneOf, the legacy arm unchanged",
+      "two-arms | test | test/workbench-provider-envelope-audit.test.ts | SCG reactivefiber.render.preview input arms (wb-973.1 R1, wb-973.3 R3) | SCG-R1: {view,taskId} spawns the served --view --task-id argv",
+      "two-arms | test | test/workbench-provider-envelope-audit.test.ts | SCG reactivefiber.render.preview input arms (wb-973.1 R1, wb-973.3 R3) | SCG-R1: {view,taskId,model} carries --model after --task-id",
+      "never-both | test | test/workbench-provider-envelope-audit.test.ts | SCG reactivefiber.render.preview input arms (wb-973.1 R1, wb-973.3 R3) | SCG-R1: the mixed shape %s is refused at input validation and never spawns rf | each >= 6",
+      "render-flags-only | test | test/workbench-provider-envelope-audit.test.ts | SCG reactivefiber.render.preview input arms (wb-973.1 R1, wb-973.3 R3) | SCG-R3: the admitted shape %s ends with --no-commit --no-input --json and adds no unserved selector | each >= 3",
+    ],
+  },
+  {
+    row: "R7",
+    quote:
+      "The swarm RF workspace root is an operator setting, workbench.reactivefiberWorkspaceRoot, under the unchanged reactivefiber:render grant, with single-host scope: multi-host use of a swarm workspace on a shared filesystem is unsupported and not safe.",
+    binding: [
+      "operator-setting | test | test/workbench-swarm-rf-workspace.test.ts | wb-973.4 reactivefiberWorkspaceRoot setting (S) | S1: accepts an absolute path and retains it beside the Claude executor selection",
+      "operator-setting | test | test/workbench-swarm-rf-workspace.test.ts | wb-973.4 host wiring: the configured setting reaches the providers through the real extension (H) | H1: with C configured, a workflow node's RF render spawns rf with --workspace C, and the envelope naming C validates",
+      "operator-setting | test | test/workbench-rf-workspace-root.test.ts | SCG-R5 AC1 (wb-973.5): no capability input names the RF workspace root | SCG-R5: both input arms keep additionalProperties:false and declare no path-shaped property",
+      "unchanged-grant | test | test/workbench-provider-envelope-audit.test.ts | SCG reactivefiber.render.preview input arms (wb-973.1 R1, wb-973.3 R3) | SCG-R3: both registered descriptors keep effectClass read, the render permission and invoke-only modes",
+      "single-host-scope | test | test/workbench-docs-shared-filesystem-census.test.ts | SCG-R5 AC4 (wb-973.5): docs/workbench never presents a shared-filesystem swarm workspace as safe | SCG-R5: docs/13 holds exactly one ADR-SCG-010 sentence, naming the RF workspace root with single-host, local-coordinated scope",
+      "single-host-scope | test | test/workbench-docs-shared-filesystem-census.test.ts | SCG-R5 AC4 (wb-973.5): docs/workbench never presents a shared-filesystem swarm workspace as safe | SCG-R5: every sentence naming NFS, EFS, a shared filesystem or multi-host use says unsupported or not safe, and claims no safety",
+      'documented-root | test | test/workbench-docs-shared-filesystem-census.test.ts | SCG-R5 AC4 rendered view (wb-973.5 respin): docs/workbench as a reader sees it | SCG-R5: docs/13 section "Host boundary" is the unique heading of that name under the page title, renders exactly the pinned blocks and carries no HTML',
+    ],
+  },
+  {
+    row: "R8",
+    quote: "RF_WORKSPACE and SWARM_RF_WORKSPACE are the allowlisted operational names a hosted agent learns the swarm workspace from, identical on the embedded and the detached host.",
+    binding: [
+      "allowlisted-names | test | test/workbench-process-env.test.ts | SCG-R6/R7: the swarm rf workspace locators (wb-973.6, wb-973.7) | SCG-R7: DETACHED_HOST_ENV_ALLOWLIST equals the 9df9a03 list plus exactly RF_WORKSPACE and SWARM_RF_WORKSPACE (set equality; any third addition is red)",
+      "allowlisted-names | test | test/workbench-env-scrub-census.test.ts | W19 env-scrub census: harness sanity (plain, must pass) | the allowlist of record names the two rf workspace locators and neither is credential-shaped (SCG-R6 MEMBERS, names only)",
+      "both-hosts | test | test/workbench-env-scrub-census.test.ts | W19 env-scrub census: SCG-R6 rf workspace locators reach the SDK child equally at both seams (wb-973.6) | local-detached.ts spawn carries RF_WORKSPACE and SWARM_RF_WORKSPACE with the parent's values and stays allowlist-only",
+      "both-hosts | test | test/workbench-env-scrub-census.test.ts | W19 env-scrub census: SCG-R6 rf workspace locators reach the SDK child equally at both seams (wb-973.6) | claude-host.ts builds the SDK Options with no env override, so the SDK CLI child inherits process.env carrying both locators",
+      "both-hosts | test | test/workbench-env-scrub-census.test.ts | W19 env-scrub census: SCG-R6 rf workspace locators reach the SDK child equally at both seams (wb-973.6) | both seams answer equally: the detached child is handed exactly what the embedded child inherits, for each locator",
+      'documented-channel | test | test/workbench-docs-shared-filesystem-census.test.ts | SCG-R5 AC4 rendered view (wb-973.5 respin): docs/workbench as a reader sees it | SCG-R5: docs/13 section "Host boundary" is the unique heading of that name under the page title, renders exactly the pinned blocks and carries no HTML',
+    ],
+  },
+  {
+    row: "R9",
+    quote: "The legacy {model, task} argv is frozen byte for byte (SCG-R025).",
+    binding: ["whole | test | test/workbench-provider-envelope-audit.test.ts | SCG reactivefiber.render.preview input arms (wb-973.1 R1, wb-973.3 R3) | SCG-R3: the legacy argv is byte-identical to the measured 0.1.583 form"],
+  },
+];
+const R16_ROWS: readonly string[] = ["R6", "R7", "R8", "R9"];
+
+/**
+ * wb-973.16 RECEIPT ANCHOR (rule 16 CT5/CT6, the 6ze.39 class): the receipt of record repeats every R6-R9 binding OUTSIDE
+ * this file - per row, its pin count and the SHA-256 of its binding lines (bindingOf, joined by newlines) - as one
+ * SCG_R16_BINDING JSON item of its dated entry, read through the rendered view (docsSection), so a pin, a half or a row
+ * removed, swapped or reordered in TABLE and in every literal here together still reds against the receipt. Digests, not
+ * the lines: the receipt is a docs/workbench page, which the shared-filesystem census judges sentence by sentence.
+ */
+const RECEIPT_FILE = "docs/workbench/receipts/wb-973.16.md";
+const RECEIPT_TITLE = "wb-973.16: swarm-context-graph R16: the RF input-arm, workspace-root, locator and frozen-legacy-argv sentences, bound by the docs/07 census";
+const RECEIPT_ENTRY = "2026-10-21 R16 sentences bound by the docs/07 census rows R6-R9; W10 claim row re-stated with the descriptor-contract receipt ids";
+const BINDING_MARK = "Binding of record: SCG_R16_BINDING ";
+
+interface RecordedRow {
+  readonly pins: number;
+  readonly sha256: string;
+}
+type ReceiptBinding = { readonly ok: true; readonly rows: Readonly<Record<string, RecordedRow>> } | { readonly ok: false; readonly why: string };
+
+const isRecordedRow = (value: unknown): value is RecordedRow =>
+  isRecord(value) && Object.keys(value).length === 2 && typeof value.pins === "number" && Number.isInteger(value.pins) && typeof value.sha256 === "string" && /^[0-9a-f]{64}$/.test(value.sha256);
+/** The digest the receipt records for a row: SHA-256 over its binding lines joined by newlines. */
+const bindingDigest = (lines: readonly string[]): string => createHash("sha256").update(lines.join("\n"), "utf8").digest("hex");
+
+/** The one SCG_R16_BINDING item of the receipt entry, parsed; any other shape is a named refusal. */
+function receiptBinding(markdown: string): ReceiptBinding {
+  const section = docsSection(markdown, RECEIPT_ENTRY, 2, [RECEIPT_TITLE]);
+  if (!section.ok) return { ok: false, why: `${RECEIPT_FILE}: ${section.why}` };
+  if (section.hasHtml) return { ok: false, why: `${RECEIPT_FILE}: the entry carries HTML, which can hide what its source says` };
+  const items = section.blocks.flatMap(block => (block.kind === "list" ? block.items.map(item => item.text) : [])).filter(text => text.startsWith(BINDING_MARK));
+  if (items.length !== 1) return { ok: false, why: `${RECEIPT_FILE}: the entry renders ${items.length} SCG_R16_BINDING items, not exactly one` };
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse((items[0] ?? "").slice(BINDING_MARK.length));
+  } catch (error) {
+    return { ok: false, why: `${RECEIPT_FILE}: the SCG_R16_BINDING item is not JSON (${error instanceof Error ? error.message : String(error)})` };
+  }
+  if (!isRecord(parsed) || !Object.values(parsed).every(isRecordedRow)) return { ok: false, why: `${RECEIPT_FILE}: the SCG_R16_BINDING item is not an object of {pins, sha256} rows` };
+  const rows: Record<string, RecordedRow> = {};
+  for (const [id, recorded] of Object.entries(parsed)) if (isRecordedRow(recorded)) rows[id] = recorded;
+  return { ok: true, rows };
+}
+
+/** Every disagreement between a table's R6-R9 rows and the receipt's binding of record, each naming the row and its sentence. */
+function receiptAnchorFindings(table: readonly Row[], binding: Readonly<Record<string, RecordedRow>>): string[] {
+  const findings: string[] = [];
+  const ids = Object.keys(binding);
+  if (JSON.stringify(ids) !== JSON.stringify(R16_ROWS)) findings.push(`the receipt binds rows ${JSON.stringify(ids)}, not ${JSON.stringify(R16_ROWS)}`);
+  for (const id of ids) {
+    const row = table.find(candidate => candidate.row === id);
+    if (row === undefined) {
+      findings.push(`row ${id}: the receipt binds it but the table holds no such row`);
+      continue;
+    }
+    const lines = bindingOf(row);
+    const digest = bindingDigest(lines);
+    const recorded = binding[id];
+    if (recorded === undefined || lines.length !== recorded.pins || digest !== recorded.sha256) {
+      findings.push(`row ${id} ("${row.quote}"): the table binds ${lines.length} pins (sha256 ${digest}), not the receipt's ${recorded?.pins ?? 0} (sha256 ${recorded?.sha256 ?? "none"})`);
+    }
+  }
+  return findings;
+}
+
+/** A pin's failure line that names the row's sentence as well as the row (wb-973.16 AC1: red naming the sentence). */
+const sentenceFailures = (row: Row, half: Half, verdicts: readonly PinVerdict[]): string[] =>
+  verdicts.filter(verdict => !verdict.ok).map(verdict => `row ${row.row}/${half.id} ("${row.quote}"): ${verdict.code}: ${verdict.why}`);
+
+/** A literal part of an it.each template, escaped for a regular expression. */
+const escapeRegExp = (part: string): string => part.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+/** An it.each template as the expanded titles it registers ("%s" reads as any non-empty text). */
+const templateMatcher = (title: string): RegExp => {
+  const pattern = title.split("%s").map(escapeRegExp).join(".+");
+  return new RegExp(`^${pattern}$`);
+};
+
+const EXAMPLES_FILE = "docs/workbench/19-worked-examples.md";
+const EXAMPLES_PARENT = "19 — Worked usage examples and expected outcomes";
+/** docs/19's measured read example, as a reader sees it (code spans render their text), states both arms as row R6 does. */
+const EXAMPLE_ARMS_SENTENCE =
+  "reactivefiber.render.preview accepts exactly one of two input arms under explicit reactivefiber:render: model and task, or view and taskId with an optional model, never both; its workspace must already be initialized.";
+
+describe("wb-973.16 rows R6-R9: the SCG-R16 RF sentences (a)-(d) bound to the SCG-R1/R3/R4/R5/R6/R7 cases", () => {
+  const scratch: string[] = [];
+  afterEach(() => {
+    removeScratch(...scratch.splice(0));
+  });
+  const r16 = (): readonly Row[] => TABLE.filter(row => R16_ROWS.includes(row.row));
+
+  it("AC1 (wb-973.16): rows R6-R9 quote the four sentences whole and bind every clause by file, describe path, verbatim title, tier and table-row floor, frozen as literals", () => {
+    expect(r16().map(row => row.row)).toEqual(R16_ROWS);
+    expect(r16().map(row => ({ row: row.row, quote: row.quote, binding: bindingOf(row) }))).toEqual(FROZEN_R16);
+    for (const row of r16()) {
+      expect(row.section, row.row).toBe("ReactiveFiberCLI provider");
+      expect(row.source, row.row).toBe("docs");
+      expect(row.halves.every(half => half.tier === "default-gate" && half.reason === undefined && half.pins.length > 0 && half.pins.every(entry => entry.suite !== undefined)), row.row).toBe(true);
+    }
+  });
+
+  it("R16 receipt anchor (rule 16 CT5/CT6): rows R6-R9 bind exactly the cases the receipt of record names, read from receipts/wb-973.16.md through the rendered view, never from TABLE", () => {
+    const binding = receiptBinding(readRepo(RECEIPT_FILE));
+    expect(binding.ok, binding.ok ? "" : binding.why).toBe(true);
+    if (!binding.ok) return;
+    expect(receiptAnchorFindings(TABLE, binding.rows)).toEqual([]);
+    expect(Object.values(binding.rows).map(recorded => recorded.pins)).toEqual([5, 7, 6, 1]);
+  });
+
+  it("R16 receipt anchor falsifiers: a pin, a half or a row removed from the table (and from every literal of this file with it) reds against the receipt, naming the row and its sentence", () => {
+    const binding = receiptBinding(readRepo(RECEIPT_FILE));
+    expect(binding.ok).toBe(true);
+    if (!binding.ok) return;
+    const dropPin = TABLE.map(row => (row.row === "R7" ? { ...row, halves: row.halves.map(half => (half.id === "operator-setting" ? { ...half, pins: half.pins.slice(1) } : half)) } : row));
+    const dropHalf = TABLE.map(row => (row.row === "R8" ? { ...row, halves: row.halves.filter(half => half.id !== "documented-channel") } : row));
+    const dropRow = TABLE.filter(row => row.row !== "R9");
+    const swapPin = TABLE.map(row =>
+      row.row === "R6" ? { ...row, halves: row.halves.map(half => (half.id === "two-arms" ? { ...half, pins: [pin("provider-envelope-audit", "SCG-R1: a view render envelope (view_id, effective_scopes, satisfied view_contract) round-trips verbatim through nativeReactiveFiberPreview", [ARMS_SUITE]), ...half.pins.slice(1)] } : half)) } : row,
+    );
+    const reordered = TABLE.map(row => (row.row === "R8" ? { ...row, halves: [...row.halves].reverse() } : row));
+    const cases: readonly [string, readonly Row[], string][] = [
+      ["a dropped pin", dropPin, `row R7 ("${WORKSPACE_ROOT_SENTENCE}"): the table binds 6 pins`],
+      ["a dropped half", dropHalf, `row R8 ("${LOCATORS_SENTENCE}"): the table binds 5 pins`],
+      ["a dropped row", dropRow, "row R9: the receipt binds it but the table holds no such row"],
+      ["a swapped pin", swapPin, `row R6 ("${INPUT_ARMS_SENTENCE}"): the table binds 5 pins`],
+      ["reordered halves", reordered, `row R8 ("${LOCATORS_SENTENCE}"): the table binds 6 pins`],
+    ];
+    expect(cases.map(([name]) => name)).toEqual(["a dropped pin", "a dropped half", "a dropped row", "a swapped pin", "reordered halves"]);
+    for (const [name, table, expected] of cases) expect(receiptAnchorFindings(table, binding.rows).some(line => line.startsWith(expected)), name).toBe(true);
+    // The receipt's own shape: mutants authored on the markdown SOURCE (the item renders the code span's text, so its source
+    // carries a backtick after "record: "), each checked to be a real edit before it is judged.
+    const source = readRepo(RECEIPT_FILE);
+    const item = /- Binding of record: `SCG_R16_BINDING [^\n]*/;
+    const shapes: readonly [string, string][] = [
+      ["the binding item relabelled", source.replace("- Binding of record: `SCG_R16_BINDING ", "- Binding: `SCG_R16_BINDING ")],
+      ["the binding item duplicated", source.replace(item, match => `${match}\n${match}`)],
+      ["the binding item hidden in a comment", source.replace(item, match => `<!-- ${match} -->`)],
+      ["a pin count made fractional", source.replace('"pins":5,', '"pins":5.5,')],
+    ];
+    expect(shapes.map(([name]) => name)).toEqual(["the binding item relabelled", "the binding item duplicated", "the binding item hidden in a comment", "a pin count made fractional"]);
+    for (const [name, text] of shapes) {
+      expect(text, name).not.toBe(source);
+      expect(receiptBinding(text).ok, name).toBe(false);
+    }
+    const altered = receiptBinding(source.replace('"sha256":"ecc9', '"sha256":"fcc9'));
+    expect(altered.ok).toBe(true);
+    if (altered.ok) expect(receiptAnchorFindings(TABLE, altered.rows).map(line => line.slice(0, line.indexOf(" (")))).toEqual(["row R6"]);
+  });
+
+  it("M5 (wb-973.16): every row R6-R9 pin renamed by one character is absent from the report and red, naming the row, its sentence, the half, the file and the title", () => {
+    const pins = r16().flatMap(row => row.halves.flatMap(half => half.pins.map(entry => ({ row, half, entry }))));
+    expect(pins).toHaveLength(19);
+    for (const { row, half, entry } of pins) {
+      const wrong = { ...entry, title: `${entry.title}.` };
+      const verdicts = judge(REPORT, [casePin(half, wrong)]);
+      expect(verdicts[0]?.code, wrong.title).toBe("absent");
+      const [line] = sentenceFailures(row, half, verdicts);
+      expect(line, wrong.title).toContain(`row ${row.row}/${half.id} ("${row.quote}")`);
+      expect(line, wrong.title).toContain(entry.file);
+      expect(line, wrong.title).toContain(wrong.title);
+    }
+  });
+
+  it("DEL (wb-973.16): with every R6-R9 pinned case deleted from a copy of the gate's own report, each pin is red naming its row and sentence, while the docs still state the four sentences and row R5's pins stay ok", () => {
+    const parsed: unknown = JSON.parse(readFileSync(REPORT, "utf8"));
+    if (!isReportJson(parsed)) throw new Error(`${DEFAULT_TIER_REPORT} does not have vitest's JSON reporter shape`);
+    const pins = r16().flatMap(row => row.halves.flatMap(half => half.pins.map(entry => ({ row, half, entry }))));
+    const deleted = (test: ReportCase): boolean =>
+      pins.some(({ entry }) => JSON.stringify(test.ancestorTitles) === JSON.stringify(entry.suite ?? []) && (entry.each === undefined ? test.title === entry.title : templateMatcher(entry.title).test(test.title)));
+    const kept = parsed.testResults.map(file => ({ ...file, assertionResults: file.assertionResults.filter(test => !deleted(test)) }));
+    const removed = parsed.testResults.reduce((sum, file) => sum + file.assertionResults.length, 0) - kept.reduce((sum, file) => sum + file.assertionResults.length, 0);
+    expect(removed, "the deletion reaches every pinned case and every table row of the two it.each pins").toBe(25);
+    const dir = makeScratch("census-973-16-");
+    scratch.push(dir);
+    mkdirSync(join(dir, ".forge"));
+    const path = join(dir, ".forge", "vitest-report.json");
+    writeFileSync(path, JSON.stringify({ ...parsed, testResults: kept }));
+    expect(docsFailures(readRepo(DOCS_FILE))).toEqual([]);
+    const lines = pins.flatMap(({ row, half, entry }) => sentenceFailures(row, half, judge(path, [casePin(half, entry)], { root: ROOT })));
+    expect(lines).toHaveLength(pins.length);
+    expect(lines.map(line => line.slice(0, line.indexOf(" ("))).filter((id, index, all) => all.indexOf(id) === index)).toEqual([
+      "row R6/two-arms",
+      "row R6/never-both",
+      "row R6/render-flags-only",
+      "row R7/operator-setting",
+      "row R7/unchanged-grant",
+      "row R7/single-host-scope",
+      "row R7/documented-root",
+      "row R8/allowlisted-names",
+      "row R8/both-hosts",
+      "row R8/documented-channel",
+      "row R9/whole",
+    ]);
+    for (const [index, { row, entry }] of pins.entries()) {
+      expect(lines[index]).toContain(`("${row.quote}")`);
+      expect(lines[index]).toContain(entry.file);
+    }
+    const control = TABLE.find(row => row.row === "R5")?.halves.filter(half => half.tier === "default-gate") ?? [];
+    expect(control.flatMap(half => judge(path, half.pins.map(entry => casePin(half, entry)), { root: ROOT }).map(verdict => verdict.code))).toEqual(["ok", "ok", "ok", "ok"]);
+  });
+
+  const DRIFT: readonly [string, string, string, string][] = [
+    ["K5", "R6", ", never both, and spawns only", " and spawns"],
+    ["K6", "R7", "is unsupported and not safe", "is supported"],
+    ["K7", "R8", "identical on the embedded and the detached host", "carried on the embedded host only"],
+    ["K8", "R9", "is frozen byte for byte", "may change between releases"],
+  ];
+  it("K5-K8 (wb-973.16) roster: one drift row per R6-R9 sentence, in row order", () => {
+    expect(DRIFT.map(([id, row]) => `${id}:${row}`)).toEqual(["K5:R6", "K6:R7", "K7:R8", "K8:R9"]);
+  });
+  it.each(DRIFT)("%s names row %s (and only it) when its RF sentence is weakened in the synthetic document", (_id, row, from, to) => {
+    const lines = docsFailures(synthetic((heading, body) => (heading === "ReactiveFiberCLI provider" ? body.replace(from, to) : body)));
+    expect(named(lines)).toEqual([`row ${row}`]);
+    expect(lines.some(line => line.includes("ReactiveFiberCLI provider is not exactly its frozen paragraph"))).toBe(true);
+  });
+
+  it("AC3 (wb-973.16): docs/19's measured read example states both input arms of reactivefiber.render.preview, never both, as rendered text", () => {
+    const section = docsSection(readRepo(EXAMPLES_FILE), "Measured experimental read example", 2, [EXAMPLES_PARENT]);
+    expect(section.ok, section.why).toBe(true);
+    const text = section.blocks.map(block => (block.kind === "paragraph" ? block.text : "")).join(" ");
+    expect(text).toContain(EXAMPLE_ARMS_SENTENCE);
+    expect(text).not.toContain("reactivefiber.render.preview accepts model and task under");
   });
 });
