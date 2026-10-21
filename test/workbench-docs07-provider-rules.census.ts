@@ -70,6 +70,8 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { basename, dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { afterEach, describe, expect, it } from "vitest";
+import { type CapabilityDescriptor, CapabilityRegistry } from "../src/workbench/capability-registry.js";
+import { registerNativeReactiveFiberRender, registerReactiveFiberRender } from "../src/workbench/providers/reactivefiber.js";
 import { type CasePin, DEFAULT_GATE_TIER, DEFAULT_TIER_REPORT, docsSection, judge, type PinVerdict, type RenderedBlock, sectionMatches, sourceStructure } from "./helpers/census.js";
 import { RF_LIVE_DRIFT_SHAPE_SUITE, RF_LIVE_DRIFT_TITLE } from "./helpers/rf-release-drift.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
@@ -1395,5 +1397,238 @@ describe("wb-973.16 rows R6-R9: the SCG-R16 RF sentences (a)-(d) bound to the SC
     const text = section.blocks.map(block => (block.kind === "paragraph" ? block.text : "")).join(" ");
     expect(text).toContain(EXAMPLE_ARMS_SENTENCE);
     expect(text).not.toContain("reactivefiber.render.preview accepts model and task under");
+  });
+});
+
+/**
+ * wb-1z3u (wb-973.16 gate F2, owner R662: PASS + one follow-up): the AC3 case above judges docs/19's measured read example
+ * by CONTAINMENT, so the gate's two LEG-2 falsifiers stayed 91/91 green - a contradicting sentence appended after the arms
+ * sentence (L2-D19-CONTRA) and a negating prefix (L2-D19-NEG) - and six more forms of their class did too at base a5c70e7
+ * (D19_FALSIFIERS). This leg judges the same claim by EQUALITY, as rows R6-R9 judge docs/07, and keeps AC3 as it landed:
+ * - SENTENCE: of the section's rendered paragraphs, split after every full stop that whitespace follows (docs/19's
+ *   sentences open on code spans, so sentencesOf's capital-letter split does not apply), exactly one sentence names the
+ *   capability, and it IS the arms sentence - never a sentence that merely contains it;
+ * - SLICE: the section carries no HTML, its last block is the RF paragraph and renders exactly the arms sentence between
+ *   its two frozen neighbours, and no other block names RF, so nothing qualifies the claim before, inside or after it;
+ * - ANCHOR: the arms sentence is composed from the source-of-truth registry, never from a literal of this file: both
+ *   registered reactivefiber.render.preview descriptors (src/workbench/providers/reactivefiber.ts), read back through
+ *   CapabilityRegistry.catalogSnapshot, state the capability id, its one permission and the exclusive oneOf of two closed
+ *   arms with each arm's required and optional fields, so an edit of the docs and of every literal here that changes an
+ *   arm, a field, the arm count, the grant or the exclusivity still reds against src (ARM_EDITS). The connective words and
+ *   the two neighbouring sentences carry no registry fact; they are frozen here and judged against the live docs.
+ */
+const EXAMPLES_SECTION = "Measured experimental read example";
+const RF_CAPABILITY = "reactivefiber.render.preview";
+/** The RF paragraph's sentences before and after the arms sentence, as a reader sees them (code spans render their text). */
+const EXAMPLE_LEAD_SENTENCE = "furnace.run.inspect accepts an existing runId under the authorized Pi workspace with explicit furnace:inspect.";
+const EXAMPLE_TAIL_SENTENCE = "It uses a noncommitted render and must not be advertised as a durable RF artifact.";
+/** A block names RF when its rendered text carries the provider's name or its abbreviation. */
+const NAMES_RF = /reactivefiber|\bRF\b/iu;
+
+/** What a reader sees of a block, whatever its kind (an html block renders nothing; hasHtml judges its source). */
+const blockText = (block: RenderedBlock): string => (block.kind === "list" ? block.items.map(item => item.text).join(" ") : block.text);
+/** Rendered prose as sentences: split after a full stop that whitespace follows, whatever character opens the next one. */
+const proseSentences = (text: string): string[] => text.split(/(?<=\.)\s+/u).filter(sentence => sentence !== "");
+/** The section's rendered paragraphs joined, as the AC3 case reads them. */
+const exampleProse = (markdown: string): string =>
+  docsSection(markdown, EXAMPLES_SECTION, 2, [EXAMPLES_PARENT])
+    .blocks.map(block => (block.kind === "paragraph" ? block.text : ""))
+    .join(" ");
+
+type ArmsReading = { readonly ok: true; readonly sentence: string } | { readonly ok: false; readonly why: string };
+interface RegisteredArm {
+  readonly required: readonly string[];
+  readonly optional: readonly string[];
+}
+const isFieldList = (value: unknown): value is readonly string[] => Array.isArray(value) && value.every((field: unknown) => typeof field === "string");
+
+/**
+ * The arms sentence a descriptor's registry facts state, in the docs' connective words: its id, its one permission and its
+ * inputSchema's oneOf arms in order, each as its required fields, then its optional ones. Only an exclusive oneOf of exactly
+ * two closed arms reads "exactly one of two ... never both"; any other shape is a finding, never a sentence.
+ */
+function armsSentenceOf(descriptor: CapabilityDescriptor): ArmsReading {
+  const oneOf = descriptor.inputSchema.oneOf;
+  if (!Array.isArray(oneOf)) return { ok: false, why: `${descriptor.id} publishes no exclusive oneOf of input arms` };
+  const arms: readonly unknown[] = oneOf;
+  if (arms.length !== 2) return { ok: false, why: `${descriptor.id} publishes ${arms.length} input arms; "never both" states exactly two` };
+  const read: RegisteredArm[] = [];
+  for (const arm of arms) {
+    const properties = isRecord(arm) ? arm.properties : undefined;
+    const required = isRecord(arm) ? arm.required : undefined;
+    if (!isRecord(arm) || !isRecord(properties) || !isFieldList(required) || arm.additionalProperties !== false) {
+      return { ok: false, why: `${descriptor.id} publishes an input arm that is not a closed object with required fields: ${JSON.stringify(arm)}` };
+    }
+    read.push({ required, optional: Object.keys(properties).filter(field => !required.includes(field)) });
+  }
+  const [permission, ...others] = descriptor.permissions;
+  if (permission === undefined || others.length > 0) return { ok: false, why: `${descriptor.id} requires ${descriptor.permissions.length} permissions; the sentence names exactly one grant` };
+  const armText = (arm: RegisteredArm): string => `${arm.required.join(" and ")}${arm.optional.length === 0 ? "" : ` with an optional ${arm.optional.join(" and ")}`}`;
+  return { ok: true, sentence: `${descriptor.id} accepts exactly one of two input arms under explicit ${permission}: ${read.map(armText).join(", or ")}, never both; its workspace must already be initialized.` };
+}
+
+/** Both registrations of the capability, read back through the registry's catalog: the injected-invoke one, then the native host's. */
+function registeredDescriptors(): CapabilityDescriptor[] {
+  const injected = new CapabilityRegistry();
+  registerReactiveFiberRender(injected, () => Promise.reject(new Error("the docs census never invokes the capability")), ROOT);
+  const native = new CapabilityRegistry();
+  registerNativeReactiveFiberRender(native, ROOT);
+  return [injected, native].flatMap(registry => registry.catalogSnapshot().map(row => row.descriptor));
+}
+
+/** The arms sentence of record: the one sentence both registrations compose; a disagreement or a refusal throws, naming both readings. */
+function registryArmsSentence(): string {
+  const readings = registeredDescriptors().map(armsSentenceOf);
+  const sentences = readings.flatMap(reading => (reading.ok ? [reading.sentence] : []));
+  const [first] = sentences;
+  if (readings.length !== 2 || sentences.length !== 2 || first === undefined || sentences[1] !== first) {
+    throw new Error(`the two registrations of ${RF_CAPABILITY} do not compose one arms sentence: ${JSON.stringify(readings)}`);
+  }
+  return first;
+}
+
+/** Every way docs/19's measured read example departs from the RF claim, one line each, naming the section, SENTENCE or SLICE. */
+function exampleFailures(markdown: string, armsSentence: string): string[] {
+  const where = `${EXAMPLES_FILE} § ${EXAMPLES_SECTION}`;
+  const section = docsSection(markdown, EXAMPLES_SECTION, 2, [EXAMPLES_PARENT]);
+  if (!section.ok) return [`${where}: the section is refused: ${section.why}`];
+  const out: string[] = [];
+  if (section.hasHtml) out.push(`${where}: SLICE: the section carries HTML (a comment or a tag), whose rendered text can hide what its source says`);
+  const prose = section.blocks.flatMap(block => (block.kind === "paragraph" ? [block.text] : [])).join(" ");
+  const naming = proseSentences(prose).filter(sentence => sentence.includes(RF_CAPABILITY));
+  if (naming.length !== 1) out.push(`${where}: SENTENCE: ${naming.length} sentences name ${RF_CAPABILITY}; the claim is exactly one: ${JSON.stringify(naming)}`);
+  else if (naming[0] !== armsSentence) out.push(`${where}: SENTENCE: the one sentence naming ${RF_CAPABILITY} is not the arms sentence: ${JSON.stringify(naming[0])}`);
+  const paragraph = `${EXAMPLE_LEAD_SENTENCE} ${armsSentence} ${EXAMPLE_TAIL_SENTENCE}`;
+  const last = section.blocks.at(-1);
+  if (last === undefined || last.kind !== "paragraph" || last.text !== paragraph) {
+    out.push(`${where}: SLICE: the last block is not exactly the RF paragraph; it renders ${JSON.stringify(last === undefined ? null : blockText(last))}`);
+  }
+  for (const [index, block] of section.blocks.slice(0, -1).entries()) {
+    if (NAMES_RF.test(blockText(block))) out.push(`${where}: SLICE: block ${index + 1} (${block.kind}) names RF outside the RF paragraph: ${JSON.stringify(blockText(block))}`);
+  }
+  return out;
+}
+/** The judgement kind of each failure line, in order. */
+const judgementKinds = (lines: readonly string[]): string[] => lines.map(line => /: (SENTENCE|SLICE): /u.exec(line)?.[1] ?? "SECTION");
+
+/**
+ * The gate's two LEG-2 survivors (its edit texts verbatim, gate-prep-3 of g10-gate-s7) and six more forms of their class:
+ * each an edit of the LIVE docs/19 source, then the judgement kinds it must draw. Every row read 91/91 green under the
+ * landed containment case at base a5c70e7 (measured by this cut's seat on throwaway copies, restored by sha256).
+ */
+const D19_FALSIFIERS: readonly [string, string, string, readonly string[]][] = [
+  [
+    "L2-D19-CONTRA",
+    "never both; its workspace must already be initialized. It uses a noncommitted render",
+    "never both; its workspace must already be initialized. It also accepts both arms in one call. It uses a noncommitted render",
+    ["SLICE"],
+  ],
+  ["L2-D19-NEG", "`reactivefiber.render.preview` accepts exactly one of two input arms", "It is false that `reactivefiber.render.preview` accepts exactly one of two input arms", ["SENTENCE", "SLICE"]],
+  ["D19-PRE", "`furnace:inspect`. `reactivefiber.render.preview` accepts", "`furnace:inspect`. Both arms may be combined in one call. `reactivefiber.render.preview` accepts", ["SLICE"]],
+  ["D19-TAIL", "must not be advertised as a durable RF artifact.", "must not be advertised as a durable RF artifact. It also accepts both arms in one call.", ["SLICE"]],
+  ["D19-PARA", "must not be advertised as a durable RF artifact.\n", "must not be advertised as a durable RF artifact.\n\nIn practice it also accepts both arms in one call.\n", ["SLICE", "SLICE"]],
+  ["D19-ELSEWHERE", "not a task-scoped semantic dependency analysis.", "not a task-scoped semantic dependency analysis. The RF render capability also accepts both arms in one call.", ["SLICE"]],
+  ["D19-HTML", "never both; its workspace", "never <!-- unless the caller sends both, then --> both; its workspace", ["SLICE"]],
+  ["D19-QUOTE", "`reactivefiber.render.preview` accepts exactly one", "Older notes claimed: `reactivefiber.render.preview` accepts exactly one", ["SENTENCE", "SLICE"]],
+];
+
+/** A copy of a descriptor whose inputSchema oneOf arms (read as JSON objects) pass through edit. */
+const withArms = (descriptor: CapabilityDescriptor, edit: (arms: Record<string, unknown>[]) => unknown[]): CapabilityDescriptor => {
+  const oneOf = descriptor.inputSchema.oneOf;
+  const arms: readonly unknown[] = Array.isArray(oneOf) ? oneOf : [];
+  if (arms.length === 0 || !arms.every(isRecord)) throw new Error(`${descriptor.id} publishes no oneOf arms to edit`);
+  return { ...descriptor, inputSchema: { ...descriptor.inputSchema, oneOf: edit(arms.map(arm => structuredClone(arm))) } };
+};
+/** An arm's properties without one field, its required list without it too. */
+const dropField = (arm: Record<string, unknown>, field: string): Record<string, unknown> => ({
+  ...arm,
+  properties: isRecord(arm.properties) ? Object.fromEntries(Object.entries(arm.properties).filter(([name]) => name !== field)) : arm.properties,
+  required: isFieldList(arm.required) ? arm.required.filter(name => name !== field) : arm.required,
+});
+
+/**
+ * Registry-side edits, each on a copy of the registered descriptor, never of src: a fact the sentence carries either moves
+ * the composed sentence ("moves", and the live docs then red against it) or makes the schema unsayable ("refused: <the
+ * reason the reading names>"). A composer that stopped reading the registry would leave a "moves" row composing the docs'
+ * sentence, and one that refused for another reason would name another cause; either reads red here.
+ */
+const ARM_EDITS: readonly [string, (descriptor: CapabilityDescriptor) => CapabilityDescriptor, string][] = [
+  ["the view arm's optional model dropped", descriptor => withArms(descriptor, arms => arms.map((arm, index) => (index === 1 ? dropField(arm, "model") : arm))), "moves"],
+  ["the legacy arm's task field dropped", descriptor => withArms(descriptor, arms => arms.map((arm, index) => (index === 0 ? dropField(arm, "task") : arm))), "moves"],
+  ["the arms in the other order", descriptor => withArms(descriptor, arms => [...arms].reverse()), "moves"],
+  ["another grant", descriptor => ({ ...descriptor, permissions: ["reactivefiber:read"] }), "moves"],
+  ["a second required grant", descriptor => ({ ...descriptor, permissions: [...descriptor.permissions, "reactivefiber:commit"] }), "refused: requires 2 permissions"],
+  ["the arms widened to anyOf", descriptor => ({ ...descriptor, inputSchema: { type: "object", anyOf: descriptor.inputSchema.oneOf } }), "refused: publishes no exclusive oneOf"],
+  ["a third arm", descriptor => withArms(descriptor, arms => [...arms, { type: "object", properties: { view: { type: "string" } }, required: ["view"], additionalProperties: false }]), "refused: publishes 3 input arms"],
+  ["an open view arm", descriptor => withArms(descriptor, arms => arms.map((arm, index) => (index === 1 ? { ...arm, additionalProperties: true } : arm))), "refused: not a closed object"],
+];
+
+describe("wb-1z3u docs/19 measured read example: the RF arms claim judged by sentence and slice equality, anchored to the registry (wb-973.16 gate F2)", () => {
+  it("ANCHOR: both registered reactivefiber.render.preview descriptors compose the one arms sentence from their oneOf arms and permission, and it is the sentence the AC3 case pins", () => {
+    const descriptors = registeredDescriptors();
+    expect(descriptors.map(descriptor => descriptor.id)).toEqual([RF_CAPABILITY, RF_CAPABILITY]);
+    expect(descriptors.map(armsSentenceOf)).toEqual([
+      { ok: true, sentence: EXAMPLE_ARMS_SENTENCE },
+      { ok: true, sentence: EXAMPLE_ARMS_SENTENCE },
+    ]);
+    expect(registryArmsSentence()).toBe(EXAMPLE_ARMS_SENTENCE);
+  });
+
+  it("SENTENCE + SLICE: the live section states the registry's arms sentence as one whole sentence, inside exactly its frozen RF paragraph as the section's last block, with no HTML and no other block naming RF", () => {
+    expect(exampleFailures(readRepo(EXAMPLES_FILE), registryArmsSentence())).toEqual([]);
+    expect(proseSentences(exampleProse(readRepo(EXAMPLES_FILE))).filter(sentence => sentence.includes(RF_CAPABILITY))).toEqual([EXAMPLE_ARMS_SENTENCE]);
+  });
+
+  it("roster: the gate's two survivors first, then the six class forms, each with its judgements; then the registry edits, each with its outcome", () => {
+    expect(D19_FALSIFIERS.map(([id, , , kinds]) => `${id}:${kinds.join("+")}`)).toEqual([
+      "L2-D19-CONTRA:SLICE",
+      "L2-D19-NEG:SENTENCE+SLICE",
+      "D19-PRE:SLICE",
+      "D19-TAIL:SLICE",
+      "D19-PARA:SLICE+SLICE",
+      "D19-ELSEWHERE:SLICE",
+      "D19-HTML:SLICE",
+      "D19-QUOTE:SENTENCE+SLICE",
+    ]);
+    expect(ARM_EDITS.map(([id, , outcome]) => `${id}:${outcome}`)).toEqual([
+      "the view arm's optional model dropped:moves",
+      "the legacy arm's task field dropped:moves",
+      "the arms in the other order:moves",
+      "another grant:moves",
+      "a second required grant:refused: requires 2 permissions",
+      "the arms widened to anyOf:refused: publishes no exclusive oneOf",
+      "a third arm:refused: publishes 3 input arms",
+      "an open view arm:refused: not a closed object",
+    ]);
+  });
+
+  it.each(D19_FALSIFIERS)("%s: a real edit of the live docs/19 that the containment case reads green, judged red by kind", (id, from, to, kinds) => {
+    const live = readRepo(EXAMPLES_FILE);
+    expect(live.split(from), `${id} edits text the live docs carry exactly once`).toHaveLength(2);
+    const mutant = live.replace(from, to);
+    expect(mutant, id).not.toBe(live);
+    // The F2 class: the landed AC3 reading (containment) still finds the arms sentence and no legacy-only wording.
+    expect(exampleProse(mutant), id).toContain(EXAMPLE_ARMS_SENTENCE);
+    expect(exampleProse(mutant), id).not.toContain("reactivefiber.render.preview accepts model and task under");
+    const lines = exampleFailures(mutant, registryArmsSentence());
+    expect(judgementKinds(lines), `${id}: ${lines.join(" | ")}`).toEqual(kinds);
+    for (const line of lines) expect(line, id).toContain(`${EXAMPLES_FILE} § ${EXAMPLES_SECTION}: `);
+  });
+
+  it.each(ARM_EDITS)("ANCHOR %s: the registry fact drives the sentence, so the edit moves it off the live docs or is refused", (id, edit, outcome) => {
+    const [descriptor] = registeredDescriptors();
+    expect(descriptor).toBeDefined();
+    if (descriptor === undefined) return;
+    const edited = edit(descriptor);
+    expect(edited, id).not.toEqual(descriptor);
+    const reading = armsSentenceOf(edited);
+    expect(reading.ok ? "moves" : "refused", id).toBe(outcome.split(":")[0]);
+    if (!reading.ok) {
+      expect(reading.why, id).toContain(`${RF_CAPABILITY} `);
+      expect(reading.why, id).toContain(outcome.slice("refused: ".length));
+      return;
+    }
+    expect(reading.sentence, id).not.toBe(EXAMPLE_ARMS_SENTENCE);
+    expect(judgementKinds(exampleFailures(readRepo(EXAMPLES_FILE), reading.sentence)), id).toEqual(["SENTENCE", "SLICE"]);
   });
 });
