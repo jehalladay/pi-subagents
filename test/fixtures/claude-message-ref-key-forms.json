@@ -1,0 +1,275 @@
+{
+ "comment": "wb-rh28 roster (owner ruling R661 (2)): the OUT-OF-FILE anchor of test/workbench-claude-message-ref.test.ts. keyForms are the wb-72c.2 KEY_FORMS (id, key, read) in table order; sites are the observer site keys; escapes are the strict-reading escape table (id, pin, form, sites, causes, and the digest of id, pin, form, sites, causes and every placement text) and residuals the named residual families with their pinned quiet reading (id, pin, family, sites, reading, and the digest of id, pin, family, sites, reading and every placement text), in table order. The census derives every generated row it registers from this file.",
+ "keyForms": [
+  {
+   "id": "quoted",
+   "key": "\"evidenceRefs\"",
+   "read": "[\"lastMessageId\"]"
+  },
+  {
+   "id": "computed literal",
+   "key": "[\"evidenceRefs\"]",
+   "read": "[\"lastMessageId\"]"
+  },
+  {
+   "id": "computed concatenation",
+   "key": "[\"evidence\" + \"Refs\"]",
+   "read": "[\"lastMessage\" + \"Id\"]"
+  },
+  {
+   "id": "computed asserted concatenation",
+   "key": "[(\"evidence\" + \"Refs\") as string]",
+   "read": "[(\"lastMessage\" + \"Id\") as string]"
+  }
+ ],
+ "sites": [
+  "S1",
+  "S2"
+ ],
+ "escapes": [
+  {
+   "id": "N1",
+   "pin": "P5",
+   "form": "a template-expression key after the ingest spread",
+   "sites": [
+    "S1",
+    "S2"
+   ],
+   "causes": [
+    "evidenceRefs key"
+   ],
+   "digest": "44dcc34c93002b1b"
+  },
+  {
+   "id": "N2",
+   "pin": "P5",
+   "form": "a variable key bound in the emitter, after the ingest spread",
+   "sites": [
+    "S1",
+    "S2"
+   ],
+   "causes": [
+    "evidenceRefs key",
+    "unresolved key"
+   ],
+   "digest": "8e4a7f45eba1a4fd"
+  },
+  {
+   "id": "N3",
+   "pin": "P5",
+   "form": "a nested spread carrying a quoted key, after the ingest spread",
+   "sites": [
+    "S1",
+    "S2"
+   ],
+   "causes": [
+    "evidenceRefs key"
+   ],
+   "digest": "163679ed4ffc5f18"
+  },
+  {
+   "id": "N3c",
+   "pin": "P5",
+   "form": "a nested spread carrying a computed-concatenation key, after the ingest spread",
+   "sites": [
+    "S1",
+    "S2"
+   ],
+   "causes": [
+    "evidenceRefs key"
+   ],
+   "digest": "fa4fe30c7aa7ca24"
+  },
+  {
+   "id": "N10",
+   "pin": "P5",
+   "form": "a pre-built override object with a quoted key, spread after the ingest spread",
+   "sites": [
+    "S1",
+    "S2"
+   ],
+   "causes": [
+    "evidenceRefs key",
+    "unresolved spread"
+   ],
+   "digest": "fe0de80d5985aa7e"
+  },
+  {
+   "id": "X1",
+   "pin": "P5",
+   "form": "a quoted __proto__ member naming a prototype bound at module scope",
+   "sites": [
+    "S1",
+    "S2"
+   ],
+   "causes": [
+    "prototype key"
+   ],
+   "digest": "cd1e5a034a156aa7"
+  },
+  {
+   "id": "X2",
+   "pin": "P5",
+   "form": "an Object.prototype evidenceRefs written in the emitter",
+   "sites": [
+    "S1",
+    "S2"
+   ],
+   "causes": [
+    "evidenceRefs key"
+   ],
+   "digest": "092368a00d6e612a"
+  },
+  {
+   "id": "X3",
+   "pin": "P5",
+   "form": "a nested spread whose computed key is bound at module scope",
+   "sites": [
+    "S1",
+    "S2"
+   ],
+   "causes": [
+    "unresolved key"
+   ],
+   "digest": "dd6fa9a66f39b152"
+  },
+  {
+   "id": "N5",
+   "pin": "P4",
+   "form": "a template-expression keyed pre-repair before the derive",
+   "sites": [
+    "S1",
+    "S2"
+   ],
+   "causes": [
+    "folded lastMessageId key"
+   ],
+   "digest": "ac5270a8f71482e9"
+  },
+  {
+   "id": "N6",
+   "pin": "P4",
+   "form": "a variable-keyed pre-repair whose key is bound in the callback",
+   "sites": [
+    "S1",
+    "S2"
+   ],
+   "causes": [
+    "folded lastMessageId key",
+    "unresolved key"
+   ],
+   "digest": "e59ad2b20c523a44"
+  },
+  {
+   "id": "N7",
+   "pin": "P4",
+   "form": "a Reflect.set/Reflect.get pre-repair with a concatenated key",
+   "sites": [
+    "S1",
+    "S2"
+   ],
+   "causes": [
+    "folded lastMessageId key"
+   ],
+   "digest": "46efb1402a6ab3a3"
+  },
+  {
+   "id": "X4",
+   "pin": "P4",
+   "form": "an element-keyed pre-repair whose key is bound at module scope",
+   "sites": [
+    "S1",
+    "S2"
+   ],
+   "causes": [
+    "unresolved key"
+   ],
+   "digest": "500cf27908ac1f01"
+  },
+  {
+   "id": "X5",
+   "pin": "P4",
+   "form": "a Reflect.set/Reflect.get pre-repair whose key is bound at module scope",
+   "sites": [
+    "S1",
+    "S2"
+   ],
+   "causes": [
+    "unresolved key"
+   ],
+   "digest": "48b46d44bbcbf18a"
+  },
+  {
+   "id": "X6",
+   "pin": "P4",
+   "form": "an Object.assign write through a computed member name bound at module scope",
+   "sites": [
+    "S1",
+    "S2"
+   ],
+   "causes": [
+    "unresolved key"
+   ],
+   "digest": "26312f7bf40375f1"
+  },
+  {
+   "id": "X7",
+   "pin": "P4",
+   "form": "an Object.defineProperty write whose key is bound at module scope",
+   "sites": [
+    "S1",
+    "S2"
+   ],
+   "causes": [
+    "unresolved key"
+   ],
+   "digest": "ad06de6b0c23dd99"
+  }
+ ],
+ "residuals": [
+  {
+   "id": "R-ENUM-P4",
+   "pin": "P4",
+   "family": "a whole-snapshot rewrite through a runtime key enumeration before the derive",
+   "sites": [
+    "S1",
+    "S2"
+   ],
+   "reading": "quiet",
+   "digest": "0284b1991f4337c0"
+  },
+  {
+   "id": "R-HELPER-P4",
+   "pin": "P4",
+   "family": "a keyed pre-repair performed by a helper declared outside the callback",
+   "sites": [
+    "S1",
+    "S2"
+   ],
+   "reading": "quiet",
+   "digest": "1ab78fe4fb37b512"
+  },
+  {
+   "id": "R-ARGS-P5",
+   "pin": "P5",
+   "family": "an in-place rewrite of the emitter's array argument through arguments",
+   "sites": [
+    "S1",
+    "S2"
+   ],
+   "reading": "quiet",
+   "digest": "03b79547b5d2e9d5"
+  },
+  {
+   "id": "R-OUTSIDE-P5",
+   "pin": "P5",
+   "family": "an evidenceRefs supplied by code declared outside the emitter, a module-scope Object.prototype write",
+   "sites": [
+    "S1",
+    "S2"
+   ],
+   "reading": "quiet",
+   "digest": "573943f641319a2a"
+  }
+ ]
+}

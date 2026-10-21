@@ -705,3 +705,556 @@ describe("wb-72c.2: outside pin anchor and quoted/computed P4/P5 keys", () => {
     ]);
   });
 });
+
+/**
+ * wb-rh28 (owner ruling R661 (2); the wb-72c.2 gate cmd_eceb2b7ff7d7 PREP F1-F4, routed as one follow-up). Three gaps of the census
+ * above: F1 KEY_FORMS had no anchor outside its own two literals (CT5/CT6 removing a form from both stayed green 59/59); F2/F3 eight
+ * keyed escapes passed every row on the real files (P5: N1 a template-expression key, N2 a variable key, N3 a nested spread with a
+ * quoted key, N3c a nested spread with a computed key, N10 the spread of a pre-built override; P4: N5 a template-expression key, N6
+ * a variable key, N7 Reflect.set/Reflect.get with a concatenated key); F4 the 16 generated F2/F3 rows were not registered (LV1 and
+ * LV2 dropped 2 and 8 of them and stayed green).
+ *
+ * ROSTER (out of file): test/fixtures/claude-message-ref-key-forms.json holds the key forms, the site keys, the escape table and the
+ * residual table, in order, each escape and residual with its digest. KEY_FORMS, SITES, ESCAPES and RESIDUALS must equal it, and
+ * REGISTRATION reads this file's own task tree: every generated row - the 72c.2 F2/F3 rows and every row below - is registered in
+ * run mode exactly as the roster derives it, and each row below records itself after its last assertion.
+ *
+ * STRICT READING. P4 and P5 above stay as landed; STRICT adds, on the parsed source, the keyed channels they miss. A key folds
+ * through string literals, template expressions whose spans fold, and '+' concatenations, nothing else. Strict P5: nothing in the
+ * emitter's body folds to evidenceRefs; each member of the ingest object literal beside the ingest spread has a key that resolves
+ * (an identifier or string name, or a computed name that folds) and is not __proto__ (a prototype supplies an evidenceRefs the
+ * payload lacks); each other spread there resolves through parentheses and conditionals to object literals held to the same rule;
+ * a key or a spread that does not resolve is refused. Strict P4: nothing in the callback folds to lastMessageId, and every key the
+ * callback names - an element access, a computed member name, the second argument of a Reflect call or of Object.defineProperty -
+ * folds; one that does not is refused. ESCAPES puts each form at both sites into an in-memory copy of the real source (nothing is
+ * written); each row checks that every other landed pin and the other strict reading still hold, and pins the causes the strict
+ * reading names: its true cause. N* are the gate's eight forms; X* are this cut's own, each refused by one rule alone (X1 a
+ * __proto__ member, X2 an Object.prototype write in the emitter, X3 a nested computed key bound at module scope; X4-X7 a key bound
+ * at module scope, through an element access, Reflect, a computed member name and Object.defineProperty).
+ *
+ * RESIDUALS (named families, each with a pinned quiet row at both sites): a rewrite the callback or the emitter performs without
+ * naming a key, or that code declared outside them performs, is outside a keyed reading - R-ENUM-P4 a whole-snapshot rewrite
+ * through a runtime key enumeration before the derive, R-HELPER-P4 a keyed pre-repair performed by a helper declared outside the
+ * callback, R-ARGS-P5 an in-place rewrite of the emitter's array argument through arguments, R-OUTSIDE-P5 an evidenceRefs supplied
+ * by code declared outside the emitter (a module-scope Object.prototype write). A quiet row reds when its family stops reading
+ * quiet (promote it to ESCAPES); the roster reds when one is dropped. This cut does not run the credentialed live tier.
+ */
+const ROSTER_FILE = "test/fixtures/claude-message-ref-key-forms.json";
+type StrictPin = "P4" | "P5";
+
+/** Where a form puts its text: each anchor must occur exactly once in the real file, so a form that stopped applying is red. */
+interface Placement {
+  /** Module-scope text before the file's first line: outside the callback and the emitter. */
+  readonly prelude?: string;
+  /** Statements at the head of the emitter's body, before its first statement. */
+  readonly emitter?: string;
+  /** Members right after the ingest spread, inside the ingest object literal. */
+  readonly afterSpread?: string;
+  /** Statements right before the derive line, inside the callback. */
+  readonly beforeDerive?: string;
+}
+
+interface Escape extends Placement {
+  readonly id: string;
+  readonly pin: StrictPin;
+  /** What the form does, as its rows name it. */
+  readonly form: string;
+  readonly sites: readonly string[];
+  /** The causes the strict reading names for it, sorted: its true cause. */
+  readonly causes: readonly string[];
+}
+
+interface Residual extends Placement {
+  readonly id: string;
+  readonly pin: StrictPin;
+  /** The family the quiet row stands for. */
+  readonly family: string;
+  readonly sites: readonly string[];
+  /** The frozen reading of its quiet row. */
+  readonly reading: string;
+}
+
+/** The override value every P5 form writes: an obviously fake ref, never a real session. */
+const OVERRIDE_REFS = '["claude-session:FAKE-FIXTURE"]';
+/** The snapshot as a keyed record, the cast a keyed pre-repair needs. */
+const AS_RECORD = "(snapshot as unknown as Record<string, string | undefined>)";
+/** The emitter's first statement at both sites: the anchor of the emitter's head. */
+const EMITTER_HEAD = "const refKey = JSON.stringify(source);";
+/** A key bound at module scope, outside the callback: a fold inside the callback never sees it. */
+const OUTER_KEY = 'const MESSAGE_KEY = "lastMessage" + "Id";';
+
+/** The keyed escapes: the gate's named forms (N*) and this cut's own (X*), one per rule that refuses it alone. */
+const ESCAPES: readonly Escape[] = [
+  {
+    id: "N1",
+    pin: "P5",
+    form: "a template-expression key after the ingest spread",
+    sites: ["S1", "S2"],
+    causes: ["evidenceRefs key"],
+    afterSpread: `[\`evidence\${"Refs"}\`]: ${OVERRIDE_REFS},`,
+  },
+  {
+    id: "N2",
+    pin: "P5",
+    form: "a variable key bound in the emitter, after the ingest spread",
+    sites: ["S1", "S2"],
+    causes: ["evidenceRefs key", "unresolved key"],
+    emitter: 'const key = "evidenceRefs" as const;',
+    afterSpread: "[key]: " + OVERRIDE_REFS + ",",
+  },
+  {
+    id: "N3",
+    pin: "P5",
+    form: "a nested spread carrying a quoted key, after the ingest spread",
+    sites: ["S1", "S2"],
+    causes: ["evidenceRefs key"],
+    afterSpread: '...{ "evidenceRefs": ' + OVERRIDE_REFS + " },",
+  },
+  {
+    id: "N3c",
+    pin: "P5",
+    form: "a nested spread carrying a computed-concatenation key, after the ingest spread",
+    sites: ["S1", "S2"],
+    causes: ["evidenceRefs key"],
+    afterSpread: '...{ ["evidence" + "Refs"]: ' + OVERRIDE_REFS + " },",
+  },
+  {
+    id: "N10",
+    pin: "P5",
+    form: "a pre-built override object with a quoted key, spread after the ingest spread",
+    sites: ["S1", "S2"],
+    causes: ["evidenceRefs key", "unresolved spread"],
+    emitter: 'const override = { "evidenceRefs": ' + OVERRIDE_REFS + " };",
+    afterSpread: "...override,",
+  },
+  {
+    id: "X1",
+    pin: "P5",
+    form: "a quoted __proto__ member naming a prototype bound at module scope",
+    sites: ["S1", "S2"],
+    causes: ["prototype key"],
+    prelude: `const PRESET = { evidenceRefs: ${OVERRIDE_REFS} };`,
+    afterSpread: '"__proto__": PRESET,',
+  },
+  {
+    id: "X2",
+    pin: "P5",
+    form: "an Object.prototype evidenceRefs written in the emitter",
+    sites: ["S1", "S2"],
+    causes: ["evidenceRefs key"],
+    emitter: `Object.defineProperty(Object.prototype, "evidenceRefs", { value: ${OVERRIDE_REFS}, configurable: true });`,
+  },
+  {
+    id: "X3",
+    pin: "P5",
+    form: "a nested spread whose computed key is bound at module scope",
+    sites: ["S1", "S2"],
+    causes: ["unresolved key"],
+    prelude: 'const OVERRIDE_KEY = ["evidence", "Refs"].join("");',
+    afterSpread: `...{ [OVERRIDE_KEY]: ${OVERRIDE_REFS} },`,
+  },
+  {
+    id: "N5",
+    pin: "P4",
+    form: "a template-expression keyed pre-repair before the derive",
+    sites: ["S1", "S2"],
+    causes: ["folded lastMessageId key"],
+    beforeDerive: `${AS_RECORD}[\`lastMessage\${"Id"}\`] = ${AS_RECORD}[\`lastMessage\${"Id"}\`]?.trim();`,
+  },
+  {
+    id: "N6",
+    pin: "P4",
+    form: "a variable-keyed pre-repair whose key is bound in the callback",
+    sites: ["S1", "S2"],
+    causes: ["folded lastMessageId key", "unresolved key"],
+    beforeDerive: 'const key = "lastMessage" + "Id";\n' + AS_RECORD + "[key] = " + AS_RECORD + "[key]?.trim();",
+  },
+  {
+    id: "N7",
+    pin: "P4",
+    form: "a Reflect.set/Reflect.get pre-repair with a concatenated key",
+    sites: ["S1", "S2"],
+    causes: ["folded lastMessageId key"],
+    beforeDerive: 'Reflect.set(snapshot, "lastMessage" + "Id", String(Reflect.get(snapshot, "lastMessage" + "Id") ?? "").trim() || undefined);',
+  },
+  {
+    id: "X4",
+    pin: "P4",
+    form: "an element-keyed pre-repair whose key is bound at module scope",
+    sites: ["S1", "S2"],
+    causes: ["unresolved key"],
+    prelude: OUTER_KEY,
+    beforeDerive: AS_RECORD + "[MESSAGE_KEY] = " + AS_RECORD + "[MESSAGE_KEY]?.trim();",
+  },
+  {
+    id: "X5",
+    pin: "P4",
+    form: "a Reflect.set/Reflect.get pre-repair whose key is bound at module scope",
+    sites: ["S1", "S2"],
+    causes: ["unresolved key"],
+    prelude: OUTER_KEY,
+    beforeDerive: 'Reflect.set(snapshot, MESSAGE_KEY, String(Reflect.get(snapshot, MESSAGE_KEY) ?? "").trim() || undefined);',
+  },
+  {
+    id: "X6",
+    pin: "P4",
+    form: "an Object.assign write through a computed member name bound at module scope",
+    sites: ["S1", "S2"],
+    causes: ["unresolved key"],
+    prelude: OUTER_KEY,
+    beforeDerive: "Object.assign(snapshot, { [MESSAGE_KEY]: undefined });",
+  },
+  {
+    id: "X7",
+    pin: "P4",
+    form: "an Object.defineProperty write whose key is bound at module scope",
+    sites: ["S1", "S2"],
+    causes: ["unresolved key"],
+    prelude: OUTER_KEY,
+    beforeDerive: "Object.defineProperty(snapshot, MESSAGE_KEY, { value: undefined });",
+  },
+];
+
+/** The named residual families: rewrites that name no key, so no keyed reading sees them. */
+const RESIDUALS: readonly Residual[] = [
+  {
+    id: "R-ENUM-P4",
+    pin: "P4",
+    family: "a whole-snapshot rewrite through a runtime key enumeration before the derive",
+    sites: ["S1", "S2"],
+    reading: "quiet",
+    beforeDerive: 'Object.assign(snapshot, Object.fromEntries(Object.entries(snapshot).map(([name, value]) => [name, typeof value === "string" ? value.trim() : value])));',
+  },
+  {
+    id: "R-HELPER-P4",
+    pin: "P4",
+    family: "a keyed pre-repair performed by a helper declared outside the callback",
+    sites: ["S1", "S2"],
+    reading: "quiet",
+    prelude: "function trimLastMessageId(target: { lastMessageId?: string }): void {\n  target.lastMessageId = target.lastMessageId?.trim();\n}",
+    beforeDerive: "trimLastMessageId(snapshot);",
+  },
+  {
+    id: "R-ARGS-P5",
+    pin: "P5",
+    family: "an in-place rewrite of the emitter's array argument through arguments",
+    sites: ["S1", "S2"],
+    reading: "quiet",
+    emitter: 'for (const value of arguments) if (Array.isArray(value)) value.splice(0, value.length, "claude-session:FAKE-FIXTURE");',
+  },
+  {
+    id: "R-OUTSIDE-P5",
+    pin: "P5",
+    family: "an evidenceRefs supplied by code declared outside the emitter, a module-scope Object.prototype write",
+    sites: ["S1", "S2"],
+    reading: "quiet",
+    prelude: `Object.defineProperty(Object.prototype, "evidenceRefs", { value: ${OVERRIDE_REFS}, configurable: true });`,
+  },
+];
+
+/** A key folded to its text: string literals, template expressions whose spans fold, and '+' concatenations; nothing else folds. */
+function folded(node: ts.Node): string | undefined {
+  if (ts.isStringLiteralLike(node)) return node.text;
+  if (ts.isTemplateExpression(node)) {
+    let text = node.head.text;
+    for (const span of node.templateSpans) {
+      const part = folded(span.expression);
+      if (part === undefined) return undefined;
+      text += part + span.literal.text;
+    }
+    return text;
+  }
+  if (ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.PlusToken) {
+    const left = folded(node.left);
+    const right = folded(node.right);
+    return left !== undefined && right !== undefined ? left + right : undefined;
+  }
+  return undefined;
+}
+
+const sortedUnique = (causes: readonly string[]): string[] => [...new Set(causes)].sort();
+
+/** A member's key: an identifier or string name as written, a computed name folded. */
+function memberKey(name: ts.PropertyName): string | undefined {
+  if (ts.isComputedPropertyName(name)) return folded(name.expression);
+  return ts.isIdentifier(name) || ts.isStringLiteral(name) ? name.text : undefined;
+}
+
+/** What one member beside the ingest spread can put into the payload's evidenceRefs without naming it. */
+function memberCauses(member: ts.ObjectLiteralElementLike): string[] {
+  if (ts.isSpreadAssignment(member)) return spreadCauses(member.expression);
+  const key = memberKey(member.name);
+  if (key === undefined) return ["unresolved key"];
+  return key === "__proto__" ? ["prototype key"] : [];
+}
+
+/** Another spread beside the ingest spread: through parentheses and conditionals to object literals; anything else does not resolve. */
+function spreadCauses(expression: ts.Expression): string[] {
+  if (ts.isParenthesizedExpression(expression)) return spreadCauses(expression.expression);
+  if (ts.isConditionalExpression(expression)) return [...spreadCauses(expression.whenTrue), ...spreadCauses(expression.whenFalse)];
+  return ts.isObjectLiteralExpression(expression) ? expression.properties.flatMap(memberCauses) : ["unresolved spread"];
+}
+
+/** The ingest spread, found as P5 finds it: the one spread of the emitter's body that holds a use of evidenceRefs. */
+function ingestSpread(body: ts.Block): ts.SpreadAssignment | undefined {
+  const uses = nodesOf(body, ts.isIdentifier).filter(identifier => identifier.text === "evidenceRefs");
+  const spreads = nodesOf(body, ts.isSpreadAssignment).filter(spread => uses.some(use => within(use, spread)));
+  return spreads.length === 1 ? spreads[0] : undefined;
+}
+
+/** Strict P5: what the emitter holds that could replace or supply evidenceRefs on its way into the payload. */
+function ingestCauses({ emitter }: Reading): string[] {
+  const body = emitter?.body;
+  const spread = body === undefined ? undefined : ingestSpread(body);
+  if (body === undefined || spread === undefined) return ["no ingest spread"];
+  const named = nodesOf(body, (node): node is ts.Node => folded(node) === "evidenceRefs").map(() => "evidenceRefs key");
+  return sortedUnique([...named, ...spread.parent.properties.filter(member => member !== spread).flatMap(memberCauses)]);
+}
+
+/** A Reflect call, or Object.defineProperty: the second argument names the property it reads or writes. */
+const keyedReflection = (call: ts.CallExpression): boolean =>
+  ts.isPropertyAccessExpression(call.expression) &&
+  ts.isIdentifier(call.expression.expression) &&
+  (call.expression.expression.text === "Reflect" || (call.expression.expression.text === "Object" && call.expression.name.text === "defineProperty"));
+
+/** The key a keyed access names: an element access's argument, a computed member name, or keyed reflection's second argument. */
+function accessKey(node: ts.Node): { readonly key: ts.Expression | undefined } | undefined {
+  if (ts.isElementAccessExpression(node)) return { key: node.argumentExpression };
+  if (ts.isComputedPropertyName(node)) return { key: node.expression };
+  if (ts.isCallExpression(node) && keyedReflection(node)) return { key: node.arguments.at(1) };
+  return undefined;
+}
+
+/** Strict P4: what the callback names that could read or rewrite lastMessageId through a key. */
+function composeCauses({ callback }: Reading): string[] {
+  if (callback === undefined) return ["no callback"];
+  const causes: string[] = [];
+  const visit = (node: ts.Node): void => {
+    if (folded(node) === "lastMessageId") causes.push("folded lastMessageId key");
+    const access = accessKey(node);
+    if (access !== undefined && (access.key === undefined || folded(access.key) === undefined)) causes.push("unresolved key");
+    ts.forEachChild(node, visit);
+  };
+  visit(callback);
+  return sortedUnique(causes);
+}
+
+const STRICT: Readonly<Record<StrictPin, (reading: Reading) => string[]>> = { P4: composeCauses, P5: ingestCauses };
+const OTHER_PIN: Readonly<Record<StrictPin, StrictPin>> = { P4: "P5", P5: "P4" };
+
+/** A site by its key: a form naming no site is an error, never a skipped row. */
+function siteNamed(key: string): Site {
+  const site = SITES.find(row => row.key === key);
+  if (site === undefined) throw new Error(`${key} names no site`);
+  return site;
+}
+
+/** The site's real text with a placement applied in memory, and how often each anchor it uses occurred. */
+function placed(site: Site, placement: Placement): { readonly text: string; readonly anchors: readonly { readonly name: string; readonly count: number }[] } {
+  const spread = `...(evidenceRefs?.length ? { evidenceRefs: ${site.ingest} } : {}),`;
+  const anchors: { name: string; count: number }[] = [];
+  let text = sourceOf(site.file);
+  const insert = (name: string, anchor: string, value: string | undefined, before: boolean): void => {
+    if (value === undefined) return;
+    anchors.push({ name, count: occurrences(text, anchor) });
+    text = text.split(anchor).join(before ? `${value}\n${anchor}` : `${anchor}\n${value}`);
+  };
+  insert("emitter head", EMITTER_HEAD, placement.emitter, true);
+  insert("ingest spread", spread, placement.afterSpread, false);
+  insert("derive line", DERIVE_LINE, placement.beforeDerive, true);
+  if (placement.prelude !== undefined) text = `${placement.prelude}\n${text}`;
+  return { text, anchors };
+}
+
+/** The digest the roster pins for a form: its id, pin, wording, sites, causes or reading, and every placement text. */
+const escapeDigest = (row: Escape): string =>
+  digest16([row.id, row.pin, row.form, row.sites.join(","), row.causes.join(","), row.prelude ?? "", row.emitter ?? "", row.afterSpread ?? "", row.beforeDerive ?? ""]);
+const residualDigest = (row: Residual): string =>
+  digest16([row.id, row.pin, row.family, row.sites.join(","), row.reading, row.prelude ?? "", row.emitter ?? "", row.afterSpread ?? "", row.beforeDerive ?? ""]);
+
+interface RosterKeyForm {
+  readonly id: string;
+  readonly key: string;
+  readonly read: string;
+}
+interface RosterEscape {
+  readonly id: string;
+  readonly pin: string;
+  readonly form: string;
+  readonly sites: readonly string[];
+  readonly causes: readonly string[];
+  readonly digest: string;
+}
+interface RosterResidual {
+  readonly id: string;
+  readonly pin: string;
+  readonly family: string;
+  readonly sites: readonly string[];
+  readonly reading: string;
+  readonly digest: string;
+}
+interface Roster {
+  readonly keyForms: readonly RosterKeyForm[];
+  readonly sites: readonly string[];
+  readonly escapes: readonly RosterEscape[];
+  readonly residuals: readonly RosterResidual[];
+}
+
+const isRecord = (value: unknown): value is Record<string, unknown> => typeof value === "object" && value !== null && !Array.isArray(value);
+/** A roster field that must be a string: anything else is a malformed roster, never an empty one. */
+function rosterText(row: Record<string, unknown>, field: string): string {
+  const value = row[field];
+  if (typeof value !== "string") throw new Error(`${ROSTER_FILE}: ${field} is not a string`);
+  return value;
+}
+function rosterTexts(row: Record<string, unknown>, field: string): string[] {
+  const value = row[field];
+  if (!Array.isArray(value) || !value.every((entry): entry is string => typeof entry === "string")) throw new Error(`${ROSTER_FILE}: ${field} is not a list of strings`);
+  return value;
+}
+function rosterRows(row: Record<string, unknown>, field: string): Record<string, unknown>[] {
+  const value = row[field];
+  if (!Array.isArray(value) || !value.every(isRecord)) throw new Error(`${ROSTER_FILE}: ${field} is not a list of objects`);
+  return value;
+}
+/** The out-of-file roster, read and shape-checked. */
+function loadRoster(): Roster {
+  const raw: unknown = JSON.parse(readRepo(ROSTER_FILE));
+  if (!isRecord(raw)) throw new Error(`${ROSTER_FILE} is not an object`);
+  return {
+    keyForms: rosterRows(raw, "keyForms").map(row => ({ id: rosterText(row, "id"), key: rosterText(row, "key"), read: rosterText(row, "read") })),
+    sites: rosterTexts(raw, "sites"),
+    escapes: rosterRows(raw, "escapes").map(row => ({
+      id: rosterText(row, "id"),
+      pin: rosterText(row, "pin"),
+      form: rosterText(row, "form"),
+      sites: rosterTexts(row, "sites"),
+      causes: rosterTexts(row, "causes"),
+      digest: rosterText(row, "digest"),
+    })),
+    residuals: rosterRows(raw, "residuals").map(row => ({
+      id: rosterText(row, "id"),
+      pin: rosterText(row, "pin"),
+      family: rosterText(row, "family"),
+      sites: rosterTexts(row, "sites"),
+      reading: rosterText(row, "reading"),
+      digest: rosterText(row, "digest"),
+    })),
+  };
+}
+
+/** The rows below that judged to their last assertion, this run. */
+const RH28_JUDGED: string[] = [];
+
+describe("wb-rh28: the key forms anchored out of file, the keyed P4/P5 escapes refused by the strict reading, every generated row registered", () => {
+  for (const site of SITES) {
+    for (const pin of ["P4", "P5"] as const) {
+      it(`wb-rh28 strict ${site.key} ${pin}: the real source holds ${pin} with no strict cause, and a reading with no observer site is refused`, () => {
+        const reading = readingOf(site.file);
+        expect(JUDGES[pin](site, reading), `${site.key}:${pin}`).toBe(true);
+        expect(STRICT[pin](reading), `${site.key}:${pin}: strict causes on the real source`).toEqual([]);
+        expect(STRICT[pin](readSite(site.file, "")), `${site.key}:${pin}: a reading with no observer site`).toEqual([pin === "P4" ? "no callback" : "no ingest spread"]);
+        RH28_JUDGED.push(`wb-rh28 strict ${site.key} ${pin}`);
+      });
+    }
+  }
+
+  for (const entry of ESCAPES) {
+    for (const key of entry.sites) {
+      it(`wb-rh28 escape ${entry.id} ${key}: ${entry.form} is refused by the strict ${entry.pin} reading for its true cause (${entry.causes.join(", ")})`, () => {
+        const site = siteNamed(key);
+        const { text, anchors } = placed(site, entry);
+        expect(anchors.filter(anchor => anchor.count !== 1).map(anchor => `${anchor.name}:${anchor.count}`), "each anchor applies exactly once").toEqual([]);
+        const reading = readSite(site.file, text);
+        expect(PINS.map(pin => pin.id).filter(pin => pin !== entry.pin && !JUDGES[pin](site, reading)), "every other landed pin still holds").toEqual([]);
+        expect(STRICT[OTHER_PIN[entry.pin]](reading), `the strict ${OTHER_PIN[entry.pin]} reading names no cause`).toEqual([]);
+        expect(STRICT[entry.pin](reading), `the strict ${entry.pin} causes`).toEqual(entry.causes);
+        RH28_JUDGED.push(`wb-rh28 escape ${entry.id} ${key}`);
+      });
+    }
+  }
+
+  for (const residual of RESIDUALS) {
+    for (const key of residual.sites) {
+      it(`wb-rh28 residual ${residual.id} ${key}: ${residual.family}: pinned quiet reading`, () => {
+        const site = siteNamed(key);
+        const { text, anchors } = placed(site, residual);
+        expect(anchors.filter(anchor => anchor.count !== 1).map(anchor => `${anchor.name}:${anchor.count}`), "each anchor applies exactly once").toEqual([]);
+        const reading = readSite(site.file, text);
+        const loud = [...PINS.map(pin => pin.id).filter(pin => !JUDGES[pin](site, reading)), ...STRICT.P4(reading), ...STRICT.P5(reading)];
+        expect(loud.length === 0 ? "quiet" : `loud: ${loud.join(", ")}`, `${residual.id} ${key}: no landed pin and no strict reading sees the family`).toBe(residual.reading);
+        RH28_JUDGED.push(`wb-rh28 residual ${residual.id} ${key}`);
+      });
+    }
+  }
+
+  it("wb-rh28 ROSTER (F1): KEY_FORMS, the sites, the escape table and the residual table equal the out-of-file roster, in order, each escape and residual by digest", () => {
+    const roster = loadRoster();
+    expect(KEY_FORMS.map(form => `${form.id}|${form.key}|${form.read}`), "the 72c.2 key forms").toEqual(roster.keyForms.map(form => `${form.id}|${form.key}|${form.read}`));
+    expect(SITES.map(site => site.key), "the site keys").toEqual(roster.sites);
+    expect(ESCAPES.map(row => `${row.id}|${row.pin}|${row.form}|${row.sites.join(",")}|${row.causes.join(",")}|${escapeDigest(row)}`), "the escape table").toEqual(
+      roster.escapes.map(row => `${row.id}|${row.pin}|${row.form}|${row.sites.join(",")}|${row.causes.join(",")}|${row.digest}`),
+    );
+    expect(RESIDUALS.map(row => `${row.id}|${row.pin}|${row.family}|${row.sites.join(",")}|${row.reading}|${residualDigest(row)}`), "the residual table").toEqual(
+      roster.residuals.map(row => `${row.id}|${row.pin}|${row.family}|${row.sites.join(",")}|${row.reading}|${row.digest}`),
+    );
+  });
+
+  it("wb-rh28 FROZEN SHAPE (standing rule 16): the escape and residual tables are their frozen literal, and every strict cause has an escape", () => {
+    expect(ESCAPES.map(row => `${row.id}:${row.pin}:${row.sites.join(",")}:${row.causes.join("|")}`)).toEqual([
+      "N1:P5:S1,S2:evidenceRefs key",
+      "N2:P5:S1,S2:evidenceRefs key|unresolved key",
+      "N3:P5:S1,S2:evidenceRefs key",
+      "N3c:P5:S1,S2:evidenceRefs key",
+      "N10:P5:S1,S2:evidenceRefs key|unresolved spread",
+      "X1:P5:S1,S2:prototype key",
+      "X2:P5:S1,S2:evidenceRefs key",
+      "X3:P5:S1,S2:unresolved key",
+      "N5:P4:S1,S2:folded lastMessageId key",
+      "N6:P4:S1,S2:folded lastMessageId key|unresolved key",
+      "N7:P4:S1,S2:folded lastMessageId key",
+      "X4:P4:S1,S2:unresolved key",
+      "X5:P4:S1,S2:unresolved key",
+      "X6:P4:S1,S2:unresolved key",
+      "X7:P4:S1,S2:unresolved key",
+    ]);
+    expect(RESIDUALS.map(row => `${row.id}:${row.pin}:${row.sites.join(",")}:${row.reading}`)).toEqual([
+      "R-ENUM-P4:P4:S1,S2:quiet",
+      "R-HELPER-P4:P4:S1,S2:quiet",
+      "R-ARGS-P5:P5:S1,S2:quiet",
+      "R-OUTSIDE-P5:P5:S1,S2:quiet",
+    ]);
+    expect(sortedUnique(ESCAPES.filter(row => row.pin === "P5").flatMap(row => row.causes)), "the strict P5 causes").toEqual(["evidenceRefs key", "prototype key", "unresolved key", "unresolved spread"]);
+    expect(sortedUnique(ESCAPES.filter(row => row.pin === "P4").flatMap(row => row.causes)), "the strict P4 causes").toEqual(["folded lastMessageId key", "unresolved key"]);
+  });
+
+  it("wb-rh28 REGISTRATION (F4): every generated row is registered in run mode exactly as the roster derives it, in order, and every row above judged to its last assertion", ({ task }) => {
+    const roster = loadRoster();
+    const registered: string[] = [];
+    const walk = (tasks: typeof task.file.tasks): void => {
+      for (const child of tasks) {
+        if (child.type === "test") registered.push(`${child.name}|${child.mode}`);
+        else if (child.type === "suite") walk(child.tasks);
+      }
+    };
+    walk(task.file.tasks);
+    const generated = roster.keyForms.flatMap(form =>
+      roster.sites.flatMap(site => [
+        `F3 ${site}: ${form.id} lastMessageId pre-repair is refused by P4|run`,
+        `F2 ${site}: ${form.id} evidenceRefs override after the ingest spread is refused by P5|run`,
+      ]),
+    );
+    expect(registered.filter(row => /^F[23] /.test(row)), "the 72c.2 generated F2/F3 rows").toEqual(generated);
+    const rows = [
+      ...roster.sites.flatMap(site => ["P4", "P5"].map(pin => `wb-rh28 strict ${site} ${pin}`)),
+      ...roster.escapes.flatMap(row => row.sites.map(site => `wb-rh28 escape ${row.id} ${site}`)),
+      ...roster.residuals.flatMap(row => row.sites.map(site => `wb-rh28 residual ${row.id} ${site}`)),
+    ];
+    const prefixed = registered.flatMap(row => {
+      const match = /^(wb-rh28 (?:strict|escape|residual) \S+ \S+): .*\|(\w+)$/.exec(row);
+      return match === null ? [] : [`${match[1]}|${match[2]}`];
+    });
+    expect(prefixed, "the strict, escape and residual rows").toEqual(rows.map(row => `${row}|run`));
+    expect(RH28_JUDGED, "each of them judged to its last assertion, this run").toEqual(rows);
+  });
+});
