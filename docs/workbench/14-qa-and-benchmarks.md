@@ -151,6 +151,33 @@ The two live-binary HX tests of the native-read tier (vitest.native.config.ts) w
 | `echo-angle-assertion-console` | `(<Console>console).log beside the stdout write` |
 | `echo-any-member-console` | `console.table, a member of any name, beside the stdout write` |
 
+## HX live-tier receipt falsifier probes
+
+Each row of the falsifier table above runs one synthetic probe in test/workbench-hx-live-tier-census.test.ts: the first five statements of the well-formed live case, then the probe statements this list gives for the row, verbatim and in order, one code span per statement. Each entry is fixture pass evidence only: the census case named for the row judges the probe source and runs it in a vm sandbox with stubbed identifiers, never the hx binary. The census reads this list and requires every falsifier row to open with those five statements and to run exactly the probe statements of its entry here, in both directions and in table order, each run of whitespace read as one space, so a probe statement swapped for another refused shape, together with every census literal edited to match, still reads red against this list.
+
+- `dead-write-if-false`: `if (false) {` `  process.stdout.write(hxLiveReceipt(result, verdict) + "\n");` `}`
+- `dead-write-after-return`: `return;` `process.stdout.write(hxLiveReceipt(result, verdict) + "\n");`
+- `dead-write-uninvoked-closure`: `const emit = () => {` `  process.stdout.write(hxLiveReceipt(result, verdict) + "\n");` `};`
+- `dead-write-after-block-return`: `{ return; }` `process.stdout.write(hxLiveReceipt(result, verdict) + "\n");`
+- `dead-write-after-late-block-return`: `{ hxLiveInvariant(result); return; }` `process.stdout.write(hxLiveReceipt(result, verdict) + "\n");`
+- `dead-write-after-early-block-return`: `{ return; hxLiveInvariant(result); }` `process.stdout.write(hxLiveReceipt(result, verdict) + "\n");`
+- `dead-write-nested-after-return`: `return;` `{` `  process.stdout.write(hxLiveReceipt(result, verdict) + "\n");` `}`
+- `dead-write-inner-after-return`: `{` `  return;` `  process.stdout.write(hxLiveReceipt(result, verdict) + "\n");` `}`
+- `dead-write-else`: `if (true) {` `} else {` `  process.stdout.write(hxLiveReceipt(result, verdict) + "\n");` `}`
+- `dead-write-loop`: `while (false) {` `  process.stdout.write(hxLiveReceipt(result, verdict) + "\n");` `}`
+- `dead-write-ternary`: `false ? process.stdout.write(hxLiveReceipt(result, verdict) + "\n") : undefined;`
+- `echo-element-access`: `process.stdout.write(hxLiveReceipt(result, verdict) + "\n");` `console['log'](hxLiveReceipt(result, verdict));`
+- `echo-globalThis-console`: `process.stdout.write(hxLiveReceipt(result, verdict) + "\n");` `globalThis.console.log(hxLiveReceipt(result, verdict));`
+- `echo-globalThis-element-console`: `process.stdout.write(hxLiveReceipt(result, verdict) + "\n");` `globalThis['console'].log(hxLiveReceipt(result, verdict));`
+- `echo-window-console`: `process.stdout.write(hxLiveReceipt(result, verdict) + "\n");` `window.console.log(hxLiveReceipt(result, verdict));`
+- `echo-global-console`: `process.stdout.write(hxLiveReceipt(result, verdict) + "\n");` `global.console.log(hxLiveReceipt(result, verdict));`
+- `echo-parenthesised-console`: `process.stdout.write(hxLiveReceipt(result, verdict) + "\n");` `(console).log(hxLiveReceipt(result, verdict));`
+- `echo-nonnull-console`: `process.stdout.write(hxLiveReceipt(result, verdict) + "\n");` `console!.log(hxLiveReceipt(result, verdict));`
+- `echo-as-console`: `process.stdout.write(hxLiveReceipt(result, verdict) + "\n");` `(console as Console).log(hxLiveReceipt(result, verdict));`
+- `echo-satisfies-console`: `process.stdout.write(hxLiveReceipt(result, verdict) + "\n");` `(console satisfies Console).log(hxLiveReceipt(result, verdict));`
+- `echo-angle-assertion-console`: `process.stdout.write(hxLiveReceipt(result, verdict) + "\n");` `(<Console>console).log(hxLiveReceipt(result, verdict));`
+- `echo-any-member-console`: `process.stdout.write(hxLiveReceipt(result, verdict) + "\n");` `console.table(hxLiveReceipt(result, verdict));`
+
 ## Acceptance journey evidence
 
 Evidence of record for the five docs/workbench/11 acceptance journeys, one row per evidence leg. Each row carries one label from "Truth labels and release gates", or not started for a journey with no evidence yet: a fixture pass row names one pinned case by file and verbatim title, a live SDK pass row names its receipt, and an open row names its tracking bead. test/workbench-acceptance-journeys.census.ts judges this table against its own evidence rows in both directions, so a leg dropped from either side reads red.

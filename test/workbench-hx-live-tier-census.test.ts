@@ -46,6 +46,13 @@
  * and a return or throw that always runs inside a prior compound statement other than a plain block - an if whose every branch terminates, a
  * try, switch or labelled statement, or a do-while body (S3). It deliberately fails closed for writes under if/try, invoked closures or void
  * expressions; it does not attempt general control-flow or binding analysis.
+ * wb-xhy1 (drd.1 gate PREP F1, the CT3x coordinated statement swap): the docs/14 falsifier table anchors every SURVIVORS row's name and refused
+ * shape, but the probe statements a row runs were anchored only by this census's own AC1 digest literal, so swapping a row's statement for another
+ * refused shape - echo-nonnull-console's console!.log echo for the element-access spelling, dead-write-loop's while (false) for if (false), or
+ * echo-window-console's window.console.log for globalThis.console.log - with its digest re-pinned stayed green, and the judge could then drop that
+ * refusal (the non-null unwrapping of isConsoleReference, say) with nothing red. Every row's probe statements, after the first five statements of
+ * the well-formed case that every row must open with, are therefore listed in the docs/14 section "HX live-tier receipt falsifier probes" too, and
+ * read from that section's own blocks, through the same binding as its rendered view (docsSection), on a surface outside this census.
  */
 import {createHash} from 'node:crypto';
 import {readdirSync, readFileSync} from 'node:fs';
@@ -76,6 +83,15 @@ const FALSIFIERS_INTRO = 'The two live-binary HX tests of the native-read tier (
   'fixture pass evidence only: the census case named for the row runs it over a synthetic probe, never the hx binary. The census reads this ' +
   'table and requires its own falsifier rows to equal these rows in both directions and in table order, so a falsifier dropped from the census, ' +
   'together with every census literal edited to match, still reads red against this table.';
+/** wb-xhy1 (drd.1 gate PREP F1, CT3x): the docs/14 section that lists every falsifier row's probe statements outside this census, and the section's
+ * one paragraph, verbatim (the adoption form refuses any other paragraph beside the list, as for the falsifier section). */
+const PROBES_HEADING = 'HX live-tier receipt falsifier probes';
+const PROBES_INTRO = 'Each row of the falsifier table above runs one synthetic probe in test/workbench-hx-live-tier-census.test.ts: the first five ' +
+  'statements of the well-formed live case, then the probe statements this list gives for the row, verbatim and in order, one code span per ' +
+  'statement. Each entry is fixture pass evidence only: the census case named for the row judges the probe source and runs it in a vm sandbox ' +
+  'with stubbed identifiers, never the hx binary. The census reads this list and requires every falsifier row to open with those five statements ' +
+  'and to run exactly the probe statements of its entry here, in both directions and in table order, each run of whitespace read as one space, ' +
+  'so a probe statement swapped for another refused shape, together with every census literal edited to match, still reads red against this list.';
 
 /** The three forms R2 acceptance 1 names, verbatim: native-ecosystem:10@9df9a03 carries the first and third, ecosystem-native:19
  * the first and second. Matched against the RAW source text, comments included, so even a commented-out pin is refused. */
@@ -714,6 +730,64 @@ function liveSource(options: {member?: string; option?: string; suiteMember?: st
   ].join('\n');
 }
 
+/** wb-xhy1: a falsifier row as the docs/14 probe list names it - the row id and every statement its probe runs. */
+interface ProbedFalsifier {
+  readonly id: string;
+  readonly statements: readonly string[];
+}
+/** The statements every falsifier probe opens with: the well-formed case without its receipt write. A dead-write row replaces that write with its
+ * dead shape and an echo row keeps it and adds its echo, so a row's probe tail - what its docs/14 entry lists - is every statement after these. */
+const PROBE_PREFIX: readonly string[] = WELL_FORMED.slice(0, -1);
+const probeTail = (row: ProbedFalsifier): readonly string[] => row.statements.slice(PROBE_PREFIX.length);
+/** One run of whitespace as one space, as the shared rendered view (docsSection) reads a block's text and its source. */
+const collapsed = (text: string): string => text.replace(/\s+/g, ' ').trim();
+/** A docs/14 probe entry's source: the row id in one code span, a colon, then one code span per probe statement, in order. */
+const probeEntry = (row: ProbedFalsifier): string => `${codeCell(row.id)}: ${probeTail(row).map(codeCell).join(' ')}`;
+/** The rendered blocks the probe section must be (the shared adoption form): its intro paragraph and one bullet list of the entries. */
+function probeBlocks(rows: readonly ProbedFalsifier[]): RenderedBlock[] {
+  return [
+    {kind: 'paragraph', text: PROBES_INTRO, markdown: PROBES_INTRO},
+    {kind: 'list', ordered: false, items: rows.map(row => ({text: collapsed(`${row.id}: ${probeTail(row).join(' ')}`), markdown: collapsed(probeEntry(row))}))},
+  ];
+}
+type RenderedList = Extract<RenderedBlock, {kind: 'list'}>;
+/** Every drift between docs/14 "HX live-tier receipt falsifier probes" and the falsifier rows (wb-xhy1), each naming the row: every row must open
+ * with PROBE_PREFIX; the section must render as exactly its intro and one list of the entries; and that list - the section's own blocks, from the
+ * binding its rendered view is judged in, never a whole-document read - must carry every row's entry source (one code span per statement) in both
+ * directions and in table order. A probe statement swapped in SURVIVORS for another refused shape, its AC1 digest re-pinned (the CT3x coordinated
+ * swap), still reads red here, against a surface outside this census. */
+function probeListFailures(markdown: string, rows: readonly ProbedFalsifier[]): string[] {
+  const where = `${DOCS_14} "${PROBES_HEADING}"`;
+  const out: string[] = [];
+  for (const row of rows) {
+    if (PROBE_PREFIX.some((statement, index) => row.statements[index] !== statement)) {
+      out.push(`falsifier ${row.id} does not open with the first ${PROBE_PREFIX.length} statements of the well-formed case, so ${where} cannot list its probe`);
+    }
+  }
+  const section = docsSection(markdown, PROBES_HEADING, 2, [DOCS_14_PARENT]);
+  if (!section.ok) return [...out, `${where}: the section is refused: ${section.why}`];
+  const exact = sectionMatches(section, probeBlocks(rows));
+  if (!exact.ok) out.push(`${where} is not exactly its intro paragraph and one list of the census's falsifier probes: ${exact.why}`);
+  const lists = section.blocks.filter((block): block is RenderedList => block.kind === 'list');
+  if (lists.length !== 1) return [...out, `${where}: the section must hold exactly one list, the probe list; it holds ${lists.length}`];
+  const listed = (lists[0]?.items ?? []).map(item => item.markdown);
+  const census = rows.map(row => collapsed(probeEntry(row)));
+  for (const [index, row] of rows.entries()) {
+    if (!listed.includes(census[index] ?? '')) out.push(`the probe of falsifier ${row.id} (${census[index] ?? ''}) is not listed in ${where}`);
+  }
+  for (const entry of listed) if (!census.includes(entry)) out.push(`${where} lists ${entry}, which no falsifier probe of the census runs`);
+  const sameSet = census.every(entry => listed.includes(entry)) && listed.every(entry => census.includes(entry));
+  if (sameSet && listed.join('\n') !== census.join('\n')) out.push(`${where} lists the census's falsifier probes out of table order or more than once`);
+  return out;
+}
+/** A synthetic docs/14 around the probe section, for the probe reader's own falsifiers (never the live text). */
+function syntheticProbes(rows: readonly ProbedFalsifier[], options: {heading?: string; before?: string; inside?: string; entry?: (row: ProbedFalsifier) => string} = {}): string {
+  const entry = options.entry ?? probeEntry;
+  return [`# ${DOCS_14_PARENT}`, '', `## ${FALSIFIERS_HEADING}`, '', 'Text.', '', ...(options.before === undefined ? [] : [options.before, '']),
+    `## ${options.heading ?? PROBES_HEADING}`, '', PROBES_INTRO, '', ...rows.map(row => `- ${entry(row)}`), '',
+    ...(options.inside === undefined ? [] : [options.inside, '']), '## Acceptance journey evidence', '', 'Text.', ''].join('\n');
+}
+
 /** Runs the case callbacks of a live-source probe in a vm sandbox and counts the receipt lines that really reach process.stdout.write and a
  * console member, directly or through window.console or global.console (wb-drd): the executed leg beside the structural stdout pin. The sandbox
  * stubs every free identifier the probe uses; hxLiveReceipt returns a fixed marker and both counters count only lines that carry it, so a count
@@ -1112,5 +1186,115 @@ describe('wb-tz2.2 census: the scanner itself is falsifiable', () => {
     const sections = tomlSections('[build]\ngate = ["lint", "test"]\n\n[build.commands.native-read]\ncommand = "x"\n');
     expect(gateSteps(sections)).toStrictEqual(['lint', 'test']);
     expect(sections.get('build.commands.native-read')).toMatch(/^command = "x"$/m);
+  });
+
+  // wb-xhy1 (drd.1 gate PREP F1, the CT3x coordinated statement swap): the docs/14 falsifier table anchors every row's name and refused shape, but a
+  // row's probe statements were anchored only by the AC1 digest literal above, so a statement swapped for another refused shape with its digest
+  // re-pinned stayed green 0 | 113. This anchor reads every row's probe from docs/14 "HX live-tier receipt falsifier probes", outside this census.
+  it('wb-xhy1 anchor: docs/14 "HX live-tier receipt falsifier probes" lists every falsifier row\'s probe statements, in table order, outside this census (a CT3x coordinated swap reds here)', () => {
+    expect(probeListFailures(readRepo(DOCS_14), SURVIVORS)).toStrictEqual([]);
+  });
+
+  it('wb-xhy1 reader control: a synthetic docs/14 that lists exactly the falsifier probes passes', () => {
+    expect(probeListFailures(syntheticProbes(SURVIVORS), SURVIVORS)).toStrictEqual([]);
+  });
+
+  const PROBES_WHERE = `${DOCS_14} "${PROBES_HEADING}"`;
+  /** The falsifier row with this id, for the probe reader's fixtures. */
+  const rowOf = (id: string): ProbedFalsifier => {
+    const row = SURVIVORS.find(item => item.id === id);
+    if (row === undefined) throw new Error(`no falsifier row ${id}`);
+    return row;
+  };
+  /** The CT3x form: the row's probe statements replaced by those of another row - a different refused shape - every other row unchanged. */
+  const swappedProbe = (id: string, shapeOf: string): ProbedFalsifier[] =>
+    SURVIVORS.map(row => (row.id === id ? {id: row.id, statements: rowOf(shapeOf).statements} : row));
+  /** The two lines a probe drift reds with: the probe the census runs is not listed, and the probe the docs list is not run. */
+  const driftLines = (id: string, runs: readonly string[], lists: readonly string[]): string[] => [
+    `the probe of falsifier ${id} (${collapsed(probeEntry({id, statements: runs}))}) is not listed in ${PROBES_WHERE}`,
+    `${PROBES_WHERE} lists ${collapsed(probeEntry({id, statements: lists}))}, which no falsifier probe of the census runs`,
+  ];
+
+  it('wb-xhy1 reader: the CT3x-nonnull swap the drd.1 gate named - echo-nonnull-console running the element-access echo - reds on both sides, naming the row', () => {
+    const lines = probeListFailures(syntheticProbes(SURVIVORS), swappedProbe('echo-nonnull-console', 'echo-element-access'));
+    for (const line of driftLines('echo-nonnull-console', rowOf('echo-element-access').statements, rowOf('echo-nonnull-console').statements)) expect(lines).toContain(line);
+  });
+
+  it('wb-xhy1 reader: the CT3x-loop swap the drd.1 gate named - dead-write-loop running the if (false) shape - reds on both sides, naming the row', () => {
+    const lines = probeListFailures(syntheticProbes(SURVIVORS), swappedProbe('dead-write-loop', 'dead-write-if-false'));
+    for (const line of driftLines('dead-write-loop', rowOf('dead-write-if-false').statements, rowOf('dead-write-loop').statements)) expect(lines).toContain(line);
+  });
+
+  it('wb-xhy1 reader: the CT3x-window swap the drd.1 gate named - echo-window-console running globalThis.console.log - reds on both sides, naming the row', () => {
+    const lines = probeListFailures(syntheticProbes(SURVIVORS), swappedProbe('echo-window-console', 'echo-globalThis-console'));
+    for (const line of driftLines('echo-window-console', rowOf('echo-globalThis-console').statements, rowOf('echo-window-console').statements)) expect(lines).toContain(line);
+  });
+
+  it('wb-xhy1 reader: a probe the docs list drops reds, naming the row', () => {
+    const dropped = rowOf('dead-write-after-block-return');
+    const lines = probeListFailures(syntheticProbes(SURVIVORS.filter(item => item.id !== dropped.id)), SURVIVORS);
+    expect(lines).toContain(`the probe of falsifier ${dropped.id} (${collapsed(probeEntry(dropped))}) is not listed in ${PROBES_WHERE}`);
+  });
+
+  it('wb-xhy1 reader: a docs probe entry the census does not run reds, naming the entry', () => {
+    const extra: ProbedFalsifier = {id: 'probe-extra', statements: [...PROBE_PREFIX, 'an extra statement;']};
+    const lines = probeListFailures(syntheticProbes([...SURVIVORS, extra]), SURVIVORS);
+    expect(lines).toContain(`${PROBES_WHERE} lists \`probe-extra\`: \`an extra statement;\`, which no falsifier probe of the census runs`);
+  });
+
+  it('wb-xhy1 reader: two swapped docs probe entries red as out of table order', () => {
+    const swapped = [rowOf('dead-write-after-return'), rowOf('dead-write-if-false'), ...SURVIVORS.slice(2)];
+    expect(swapped).toHaveLength(SURVIVORS.length);
+    expect(probeListFailures(syntheticProbes(swapped), SURVIVORS)).toContain(`${PROBES_WHERE} lists the census's falsifier probes out of table order or more than once`);
+  });
+
+  it('wb-xhy1 reader: a row that does not open with the well-formed prefix reds, naming the row, even where its probe tail still matches the docs entry', () => {
+    const drifted = SURVIVORS.map(row => (row.id === 'dead-write-loop' ? {id: row.id, statements: row.statements.map((statement, index) => (index === PROBE_PREFIX.length - 1 ? 'expect(result).toMatchObject({});' : statement))} : row));
+    expect(probeListFailures(syntheticProbes(SURVIVORS), drifted)).toStrictEqual([
+      `falsifier dead-write-loop does not open with the first ${PROBE_PREFIX.length} statements of the well-formed case, so ${PROBES_WHERE} cannot list its probe`,
+    ]);
+  });
+
+  it('wb-xhy1 reader: an entry statement written without its code span, or two statements in one span, reds naming the row - the source is judged, not only the rendered text', () => {
+    const loop = rowOf('dead-write-loop');
+    const tail = probeTail(loop);
+    const notListed = `the probe of falsifier ${loop.id} (${collapsed(probeEntry(loop))}) is not listed in ${PROBES_WHERE}`;
+    const bare = syntheticProbes(SURVIVORS, {entry: row => (row.id === loop.id ? `${codeCell(row.id)}: ${tail.slice(0, -1).map(codeCell).join(' ')} ${tail.at(-1) ?? ''}` : probeEntry(row))});
+    expect(probeListFailures(bare, SURVIVORS)).toContain(notListed);
+    const merged = syntheticProbes(SURVIVORS, {entry: row => (row.id === loop.id ? `${codeCell(row.id)}: ${codeCell(tail.join(' '))}` : probeEntry(row))});
+    expect(probeListFailures(merged, SURVIVORS)).toContain(notListed);
+  });
+
+  it('wb-xhy1 reader: a renamed, duplicated or re-homed probe heading refuses the section', () => {
+    const refused = (markdown: string): string => probeListFailures(markdown, SURVIVORS)[0] ?? '';
+    expect(refused(syntheticProbes(SURVIVORS, {heading: 'HX probe notes'}))).toContain('the section is refused');
+    expect(refused(syntheticProbes(SURVIVORS, {inside: `## ${PROBES_HEADING}`}))).toContain('occurs 2 times');
+    expect(refused(syntheticProbes(SURVIVORS, {before: '# Appendix'}))).toContain('the census binds it under');
+  });
+
+  it('wb-xhy1 reader: a paragraph added beside the probe list, or the list hidden in an HTML comment, is not the section the census adopts', () => {
+    const weakened = probeListFailures(syntheticProbes(SURVIVORS, {inside: 'A probe may change without a docs edit.'}), SURVIVORS);
+    expect(weakened.some(line => line.includes('is not exactly its intro paragraph and one list'))).toBe(true);
+    const first = `- ${probeEntry(rowOf('dead-write-if-false'))}`;
+    const hidden = syntheticProbes(SURVIVORS).replace(first, `<!--\n${first}`).replace('\n\n## Acceptance', '\n-->\n\n## Acceptance');
+    const lines = probeListFailures(hidden, SURVIVORS);
+    expect(lines.some(line => line.includes('is not exactly its intro paragraph and one list'))).toBe(true);
+    expect(lines).toContain(`${PROBES_WHERE}: the section must hold exactly one list, the probe list; it holds 0`);
+  });
+
+  it('wb-xhy1 same view: an exact copy of the probe list in another section never stands in for a drifted list in the probe section, and a drifted copy elsewhere never reds an exact one', () => {
+    const exactList = SURVIVORS.map(row => `- ${probeEntry(row)}`).join('\n');
+    const nonnull = rowOf('echo-nonnull-console');
+    const elementAccess = rowOf('echo-element-access');
+    const drifted = syntheticProbes(SURVIVORS, {entry: row => probeEntry(row.id === nonnull.id ? {id: row.id, statements: elementAccess.statements} : row)});
+    const copied = drifted.replace('## Acceptance journey evidence\n\nText.\n', `## Acceptance journey evidence\n\nText.\n\n${exactList}\n`);
+    expect(copied).not.toBe(drifted);
+    const lines = probeListFailures(copied, SURVIVORS);
+    for (const line of driftLines(nonnull.id, nonnull.statements, elementAccess.statements)) expect(lines).toContain(line);
+    const decoy = SURVIVORS.map(row => `- ${probeEntry(row.id === nonnull.id ? {id: row.id, statements: elementAccess.statements} : row)}`).join('\n');
+    const exact = syntheticProbes(SURVIVORS);
+    const decoyed = exact.replace('## Acceptance journey evidence\n\nText.\n', `## Acceptance journey evidence\n\nText.\n\n${decoy}\n`);
+    expect(decoyed).not.toBe(exact);
+    expect(probeListFailures(decoyed, SURVIVORS)).toStrictEqual([]);
   });
 });
