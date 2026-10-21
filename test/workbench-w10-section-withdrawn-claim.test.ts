@@ -249,6 +249,19 @@ const SHAPE_RESIDUALS: readonly { id: string; requirement: string; input: string
   { id: "GN12", requirement: "nested level-1 heading before W10 is shape-only", input: page().replace(`## ${HEADING}`, `> # Appendix\n\n## ${HEADING}`), expected: ["W10 has an intervening level-1 parent"] },
   { id: "GN13", requirement: "demoted matrix title is shape-only", input: page().replace(`# ${TITLE}`, `## ${TITLE}`), expected: ["W10 must belong to the matrix title"] },
 ];
+// Refusal #4 U1 (cut #5): every residual family the header names is a NAMED family plus a PINNED quiet row. Each input
+// carries that family's gate needle and the delivered judge reads it exactly quiet, so an over-refusal of the family reds
+// its row; S-SHAPE freezes each id, family, requirement, input and quiet reading (rule 16).
+interface Residual { readonly id: string; readonly family: string; readonly requirement: string; readonly input: string; readonly reading: Reading }
+const RESIDUALS: readonly Residual[] = [
+  { id: "ENUM0", family: "ASCII look-alikes", requirement: "an ASCII look-alike spelling in the second W10 row's Caveats cell reads quiet", input: appendCell(1, 3, "zero durab1e writes"), reading: { shape: [], claims: [] } },
+  { id: "ENUM1", family: "hyphenated paraphrases", requirement: "a hyphenated paraphrase in the second W10 row's Caveats cell reads quiet", input: appendCell(1, 3, "zero durable-writes"), reading: { shape: [], claims: [] } },
+  { id: "ENUM2", family: "new paraphrases", requirement: "a new paraphrase in the second W10 row's Caveats cell reads quiet", input: appendCell(1, 3, "No persistent writes occur."), reading: { shape: [], claims: [] } },
+  { id: "ENUM3", family: "struck-through text", requirement: "struck-through claim text in the second W10 row's Caveats cell reads quiet", input: appendCell(1, 3, "~~zero durable writes~~"), reading: { shape: [], claims: [] } },
+  { id: "ENUM4", family: "renamed relocated W10 keys", requirement: "a renamed W10 capability row in an outside table reads quiet", input: page(TABLE, "", "| Feature | Caveats |\n| --- | --- |\n| RF renamed adapter | zero durable writes |"), reading: { shape: [], claims: [] } },
+  { id: "ENUM5", family: "relocated inline HTML including br-split claim", requirement: "a br-split claim in a relocated adapter row outside W10 reads quiet", input: page(TABLE, "", `| Feature | Caveats |\n| --- | --- |\n| ${ADAPTER} | zero durable<br>writes |`), reading: { shape: [], claims: [] } },
+  { id: "ENUM6", family: "W10 heading text", requirement: "a claim suffixed to the W10 heading text itself reads quiet", input: page().replace(`## ${HEADING}`, `## ${HEADING} zero durable writes`), reading: { shape: [], claims: [] } },
+];
 const CONTROLS: readonly [string, string][] = [
   ["C0 plane-scoped baseline", page()],
   ["C1 complete comment is not a claim", page(TABLE, "<!-- zero durable writes -->")],
@@ -290,6 +303,9 @@ describe("wb-64x W10 section-level withdrawn-claim census (rendered-model)", () 
   for (const residual of SHAPE_RESIDUALS) it(`${residual.id} residual: ${residual.requirement}`, () => {
     expect(judgeSection(residual.input).claims).toEqual([]);
     expect(judgeSection(residual.input).shape).toEqual(residual.expected);
+  });
+  for (const residual of RESIDUALS) it(`${residual.id} residual (${residual.family}): ${residual.requirement}`, () => {
+    expect(judgeSection(residual.input)).toEqual(residual.reading);
   });
   it("BOUND unique top-level heading title ancestry and nonempty table fail closed", () => {
     for (const bound of BOUNDS) expect(judgeSection(bound.input).shape, `${bound.id}: ${bound.requirement}`).toEqual(bound.shape);
@@ -425,6 +441,25 @@ describe("wb-64x W10 section-level withdrawn-claim census (rendered-model)", () 
     expect(SHAPE_RESIDUALS.map(row => row.input)).toEqual([
       page().replace(`## ${HEADING}`, `> # Appendix\n\n## ${HEADING}`),
       page().replace(`# ${TITLE}`, `## ${TITLE}`),
+    ]);
+    // Refusal #4 U1 (cut #5): the seven header-named residual families, each frozen with its input and exact quiet reading.
+    expect(RESIDUALS.map(row => [row.id, row.family, row.requirement, JSON.stringify(row.reading)])).toEqual([
+      ["ENUM0", "ASCII look-alikes", "an ASCII look-alike spelling in the second W10 row's Caveats cell reads quiet", '{"shape":[],"claims":[]}'],
+      ["ENUM1", "hyphenated paraphrases", "a hyphenated paraphrase in the second W10 row's Caveats cell reads quiet", '{"shape":[],"claims":[]}'],
+      ["ENUM2", "new paraphrases", "a new paraphrase in the second W10 row's Caveats cell reads quiet", '{"shape":[],"claims":[]}'],
+      ["ENUM3", "struck-through text", "struck-through claim text in the second W10 row's Caveats cell reads quiet", '{"shape":[],"claims":[]}'],
+      ["ENUM4", "renamed relocated W10 keys", "a renamed W10 capability row in an outside table reads quiet", '{"shape":[],"claims":[]}'],
+      ["ENUM5", "relocated inline HTML including br-split claim", "a br-split claim in a relocated adapter row outside W10 reads quiet", '{"shape":[],"claims":[]}'],
+      ["ENUM6", "W10 heading text", "a claim suffixed to the W10 heading text itself reads quiet", '{"shape":[],"claims":[]}'],
+    ]);
+    expect(RESIDUALS.map(row => row.input)).toEqual([
+      appendCell(1, 3, "zero durab1e writes"),
+      appendCell(1, 3, "zero durable-writes"),
+      appendCell(1, 3, "No persistent writes occur."),
+      appendCell(1, 3, "~~zero durable writes~~"),
+      page(TABLE, "", "| Feature | Caveats |\n| --- | --- |\n| RF renamed adapter | zero durable writes |"),
+      page(TABLE, "", `| Feature | Caveats |\n| --- | --- |\n| ${ADAPTER} | zero durable<br>writes |`),
+      page().replace(`## ${HEADING}`, `## ${HEADING} zero durable writes`),
     ]);
     expect(HEADERS.map(header => `${header.column}:${header.label}:${header.location}`)).toEqual([
       "0:Feature:W10 table 1 header column 1", "1:Status:W10 table 1 header column 2",
