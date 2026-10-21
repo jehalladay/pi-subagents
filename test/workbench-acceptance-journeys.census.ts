@@ -63,8 +63,11 @@
  * HTML-free: docs/11 must render as exactly one five-item list, docs/14's truth-label section as exactly its two
  * paragraphs (the label paragraph and the Forge-interface paragraph), and docs/14's journey evidence section as exactly
  * its intro paragraph and one table of the census's legs, each under its unique level-2 heading of the level-1 parent,
- * bounded at the next level-1/2 heading or EOF. Drift falsifiers run over SYNTHETIC documents, never the live text, so
- * an unrelated docs edit cannot redden a falsifier row, and a neighbouring section stays free to change.
+ * bounded at the next level-1/2 heading or EOF. The evidence table's legs are judged cell by cell on the section's OWN
+ * table, read through the helper's sectionTables on the same binding as the rendered view (wb-h8f.15, the G7 same-view
+ * class: the rendered view joins a table's cells, so a re-split leg renders the same, and a whole-document grid let a
+ * copy of the table in another section stand in for it). Drift falsifiers run over SYNTHETIC documents, never the live
+ * text, so an unrelated docs edit cannot redden a falsifier row, and a neighbouring section stays free to change.
  *
  * Judging cost (F10; the wb-6hb.9 R546 form): each judge() call re-reads and re-validates the whole report, so the leg
  * judges every table pin in ONE memoized judge() call (verdictsOf, keyed by file, title and tier) that every AC2 row
@@ -84,7 +87,7 @@ import { fileURLToPath } from "node:url";
 import { marked, type Token, type Tokens } from "marked";
 import { describe, expect, it } from "vitest";
 import { RECEIPT_FILE } from "../qa/workbench/receipts-index.mjs";
-import { type CasePin, DEFAULT_GATE_TIER, DEFAULT_TIER_REPORT, docsSection, judge, type PinVerdict, type RenderedBlock, sectionMatches, sourceStructure } from "./helpers/census.js";
+import { type CasePin, DEFAULT_GATE_TIER, DEFAULT_TIER_REPORT, docsSection, judge, type PinVerdict, type RenderedBlock, sectionMatches, sectionTables, sourceStructure } from "./helpers/census.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const REPORT = join(ROOT, DEFAULT_TIER_REPORT);
@@ -601,7 +604,11 @@ const evidenceBlocks = (legs: readonly Leg[]): readonly RenderedBlock[] => [
 ];
 
 const isTable = (token: Token): token is Tokens.Table => token.type === "table";
-/** The cell grid of every table in the document under the evidence header; docs/14 must hold exactly one. */
+/**
+ * The cell grid of every table in the WHOLE document under the evidence header: the uniqueness rule (docs/14 must hold
+ * exactly one, E8). The legs themselves are judged on the section's own table (sectionTables, wb-h8f.15), never on this
+ * grid, which a copy of the table in another section can stand in for.
+ */
 function evidenceGrids(markdown: string): string[][][] {
   return marked
     .lexer(markdown)
@@ -629,7 +636,13 @@ function evidenceFailures(markdown: string, rows: readonly JourneyRow[]): string
   if (!exact.ok) out.push(`${where} is not exactly its intro paragraph and one table of the census's evidence legs: ${exact.why}`);
   const grids = evidenceGrids(markdown);
   if (grids.length !== 1) return [...out, `${DOCS_14}: the journey evidence table must occur exactly once; found ${grids.length}`];
-  const listed = (grids[0] ?? []).slice(1);
+  // wb-h8f.15 (G7): the legs are judged on the section's OWN table, read through the same binding as the rendered view
+  // above, never on the whole-document grid: a bolded header plus a re-split leg here, with the original table copied to
+  // another section, renders the same and leaves the copy as the only evidence-header table in the document.
+  const own = sectionTables(markdown, EVIDENCE_HEADING, 2, [DOCS_14_PARENT]).grids;
+  if (own.length !== 1) return [...out, `${where}: the section must hold exactly one table, the journey evidence table; it holds ${own.length}`];
+  const [header = [], ...listed] = own[0] ?? [];
+  if (header.join("|") !== EVIDENCE_HEADER.join("|")) out.push(`${where}: the section's own table has the header ${JSON.stringify(header)}; the census pins ${JSON.stringify(EVIDENCE_HEADER)}`);
   const key = (cells: readonly string[]): string => cells.join(" | ");
   const listedKeys = listed.map(key);
   const censusKeys = legs.map(leg => key(leg.cells));
@@ -1501,5 +1514,89 @@ describe("wb-h8f.12 the docs/14 journey evidence anchor: every drift names the l
     const moved = `# ${DOCS_14_PARENT}\n\n## ${EVIDENCE_HEADING}\n\n${EVIDENCE_INTRO}\n\n## Later\n\n${table}\n`;
     expect(evidenceFailures(moved, ROWS).some(line => line.includes("the section has 1 blocks; the census pins 2"))).toBe(true);
     expect(evidenceFailures(`${syntheticEvidence()}\n## Later\n\n${table}\n`, ROWS).some(line => line.includes("must occur exactly once; found 2"))).toBe(true);
+  });
+});
+
+describe("wb-h8f.15 the evidence table's cells are read from the section its rendered view is judged in (h8f.12 PREP F1, the G7 same-view class; synthetic documents)", () => {
+  const LEGS = legsOf(ROWS);
+  const CELLS: readonly (readonly string[])[] = LEGS.map(leg => leg.cells);
+  const BOLD_HEADER: readonly string[] = EVIDENCE_HEADER.map(cell => `**${cell}**`);
+  const HEADER_CAUSE = "the section's own table has the header";
+  const notCarried = "which the census table does not carry";
+  const notListed = "is not listed in";
+  const tableOf = (header: readonly string[], rows: readonly (readonly string[])[]): string => [header, header.map(() => "---"), ...rows].map(cells => `| ${cells.join(" | ")} |`).join("\n");
+  /** One leg re-split across its label/evidence cell boundary: the label's last word moves into the evidence cell, so the rendered (cell-joined) text is unchanged. */
+  const resplit = (cells: readonly string[]): string[] => {
+    const words = (cells[1] ?? "").split(" ");
+    return [cells[0] ?? "", words.slice(0, -1).join(" "), `${words[words.length - 1] ?? ""} ${cells[2] ?? ""}`];
+  };
+  const resplitTable = (at: number, header: readonly string[] = BOLD_HEADER): string => tableOf(header, CELLS.map((cells, index) => (index === at ? resplit(cells) : cells)));
+  /** docs/14 with the given table in the evidence section, and the ORIGINAL table copied into another section placed before or after it (or no copy). */
+  const g7Doc = (sectionTable: string, copy: "before" | "after" | "none"): string => {
+    const original = tableOf(EVIDENCE_HEADER, CELLS);
+    const before = copy === "before" ? `## Copied evidence\n\n${original}\n\n` : "";
+    const after = copy === "after" ? `\n## Copied evidence\n\n${original}\n` : "";
+    return `# ${DOCS_14_PARENT}\n\n## Matrix by subsystem\n\nRows.\n\n${before}## ${EVIDENCE_HEADING}\n\n${EVIDENCE_INTRO}\n\n${sectionTable}\n${after}`;
+  };
+  const named = (lines: readonly string[], cells: readonly string[], cause: string): boolean => lines.some(line => line.startsWith(describeLeg(cells)) && line.includes(cells[2] ?? "") && line.includes(cause));
+  const COPIES = ["before", "after"] as const;
+
+  it("G7 precondition: every mutant keeps the section's rendered view exact and leaves exactly one evidence-header table in the document - the copy - so a whole-document read judges the copy (the h8f.12 gate's 0/88 shape)", () => {
+    expect(LEGS.every(leg => (leg.cells[1] ?? "").includes(" ")), "every label has two words, so each leg re-splits without an empty cell").toBe(true);
+    for (const at of LEGS.keys()) {
+      for (const copy of COPIES) {
+        const doc = g7Doc(resplitTable(at), copy);
+        expect(sectionMatches(docsSection(doc, EVIDENCE_HEADING, 2, [DOCS_14_PARENT]), evidenceBlocks(LEGS)), `${copy} ${at}`).toEqual({ ok: true, why: "" });
+        expect(evidenceGrids(doc), `${copy} ${at}`).toEqual([[[...EVIDENCE_HEADER], ...CELLS.map(cells => [...cells])]]);
+      }
+    }
+  });
+
+  it("G7 (h8f.12 PREP F1): a bolded header plus one leg re-split in the section, with the original table copied to another section, reds naming the header and the re-split leg - every leg, the copy before or after", () => {
+    expect(LEGS.length).toBeGreaterThan(0);
+    for (const [at, leg] of LEGS.entries()) {
+      for (const copy of COPIES) {
+        const lines = evidenceFailures(g7Doc(resplitTable(at), copy), ROWS);
+        const label = `${copy} | ${leg.cells.join(" | ")}`;
+        expect(lines.some(line => line.startsWith(`${DOCS_14} § ${EVIDENCE_HEADING}: ${HEADER_CAUSE}`)), label).toBe(true);
+        expect(named(lines, leg.cells, notListed), label).toBe(true);
+        expect(named(lines, resplit(leg.cells), notCarried), label).toBe(true);
+      }
+    }
+  });
+
+  it("G7 bold-only: the section's table under a bolded header, its legs intact, with the original copied to another section, reds on the header alone", () => {
+    for (const copy of COPIES) {
+      const lines = evidenceFailures(g7Doc(tableOf(BOLD_HEADER, CELLS), copy), ROWS);
+      expect(lines, copy).toHaveLength(1);
+      expect(lines[0], copy).toContain(HEADER_CAUSE);
+      expect(lines[0], copy).toContain(JSON.stringify(BOLD_HEADER));
+    }
+  });
+
+  it("G7 re-split under a plain header with the copy elsewhere: the second evidence-header table reds the uniqueness rule (E8), the re-split never reads green", () => {
+    for (const [at] of LEGS.entries()) {
+      for (const copy of COPIES) {
+        const lines = evidenceFailures(g7Doc(resplitTable(at, EVIDENCE_HEADER), copy), ROWS);
+        expect(lines.some(line => line.includes("must occur exactly once; found 2")), `${copy} ${at}`).toBe(true);
+      }
+    }
+  });
+
+  it("G7b: the re-split alone - plain header, no copy - keeps redding naming the leg, and names no header", () => {
+    for (const [at, leg] of LEGS.entries()) {
+      const lines = evidenceFailures(g7Doc(resplitTable(at, EVIDENCE_HEADER), "none"), ROWS);
+      expect(named(lines, leg.cells, notListed), leg.cells.join(" | ")).toBe(true);
+      expect(named(lines, resplit(leg.cells), notCarried), leg.cells.join(" | ")).toBe(true);
+      expect(lines.some(line => line.includes(HEADER_CAUSE)), leg.cells.join(" | ")).toBe(false);
+    }
+  });
+
+  it("same view, other direction: the section's own table exact with a re-split copy under a bolded header in another section stays green - a neighbouring section is free to change", () => {
+    for (const copy of COPIES) {
+      const decoy = `## Copied evidence\n\n${resplitTable(0)}\n`;
+      const doc = copy === "before" ? g7Doc(tableOf(EVIDENCE_HEADER, CELLS), "none").replace(`## ${EVIDENCE_HEADING}`, `${decoy}\n## ${EVIDENCE_HEADING}`) : `${g7Doc(tableOf(EVIDENCE_HEADER, CELLS), "none")}\n${decoy}`;
+      expect(evidenceFailures(doc, ROWS), copy).toEqual([]);
+    }
   });
 });

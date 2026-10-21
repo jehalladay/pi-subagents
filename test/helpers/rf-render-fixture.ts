@@ -129,8 +129,12 @@ export function readRfResultRoster(): RfResultRoster {
  * order: `missing result.<key>` for a roster result key the result lacks, `missing result.provenance.<key>` for a roster
  * provenance key its provenance lacks (all three when provenance is absent), and `missing` / `unexpected`
  * `result.work.<key>` and `result.work_metrics.<key>` wherever those objects differ from the roster's exact key sets (every roster
- * key missing when the object is absent or not an object). `extraResultKeys` are the result keys beyond the roster, sorted: an
- * rf newer than the pin may add result keys and the provider admits them, so they are recorded, never a failure. */
+ * key missing when the object is absent or not an object); then, held to a CAPTURED roster, `unexpected result.<key>` for every
+ * result key beyond it, sorted. `extraResultKeys` are the result keys beyond the roster, sorted, recorded for every roster. A
+ * captured roster is exhaustive in both directions (owner ruling R649 (3), wb-973.20): a silent new key is the rf surface drift
+ * the pin exists to catch, and the legitimate path for one is the gated rf-pin-bump cut that re-captures the roster. A
+ * constructed roster (read off the emitter, before a capture promotes it) is a floor: the provider admits additive keys, so beyond
+ * it they are recorded, never a failure. */
 export interface RfRosterDiff {
   failures: string[];
   extraResultKeys: string[];
@@ -150,5 +154,6 @@ export function diffAgainstRoster(roster: RfResultRoster, result: Readonly<Recor
   exactKeys('result.work', result.work, roster.workKeys, failures);
   exactKeys('result.work_metrics', result.work_metrics, roster.workMetricsKeys, failures);
   const extraResultKeys = Object.keys(result).filter(key => !roster.resultKeys.includes(key)).sort();
+  if (roster.source === 'captured') for (const key of extraResultKeys) failures.push(`unexpected result.${key}`);
   return { failures, extraResultKeys };
 }

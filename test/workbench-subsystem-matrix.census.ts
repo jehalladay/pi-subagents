@@ -30,8 +30,12 @@
  * Docs: the section is judged through the helper's rendered view (docsSection / sectionMatches). Under its unique level-2
  * heading of the level-1 parent heading and bounded at the next level-1/2 heading or EOF, it must render as exactly its
  * one frozen table, HTML-free, and the table's cell grid (header, thirteen rows, three columns) must equal the census's
- * grid cell by cell, so a reworded cell names its row and cell. The spec's falsifier sentence of "## Truth labels and
- * release gates" is pinned as the exact first paragraph of that unique section (the landed wb-cax.27 shape), HTML refused,
+ * grid cell by cell, so a reworded cell names its row and cell. That grid is the section's OWN table, read through the
+ * helper's sectionTables on the same binding as the rendered view (wb-h8f.15, the G7 same-view class: the rendered view
+ * joins a table's cells, so a re-split row renders the same, and a whole-document grid let a copy of the table in another
+ * section stand in for it); the whole-document grid only enforces that the matrix table occurs once. The spec's
+ * falsifier sentence of "## Truth labels and release gates" is pinned as the exact first paragraph of that unique
+ * section (the landed wb-cax.27 shape), HTML refused,
  * so a modifier inside the sentence, an exemption sentence before or after it in its paragraph, or a reworded sentence
  * reads red. NAMED RESIDUAL TRUTH-SECTION-TAIL: a paragraph added after it elsewhere in that section is not judged here
  * (the section-bounded pin of that section is wb-6ze.38's) and carries a quiet row. The drift falsifiers run over a
@@ -63,7 +67,7 @@ import defaultConfig from "../vitest.config.js";
 import furnaceConfig from "../vitest.furnace.config.js";
 import nativeConfig from "../vitest.native.config.js";
 import rfConfig from "../vitest.rf.config.js";
-import { type CasePin, DEFAULT_GATE_TIER, DEFAULT_TIER_REPORT, docsSection, judge, type PinVerdict, type RenderedBlock, resolveTier, sectionMatches, sourceStructure } from "./helpers/census.js";
+import { type CasePin, DEFAULT_GATE_TIER, DEFAULT_TIER_REPORT, docsSection, judge, type PinVerdict, type RenderedBlock, resolveTier, sectionMatches, sectionTables, sourceStructure } from "./helpers/census.js";
 
 type Tier = "default-gate" | "furnace-observe" | "native-read" | "rf-preview";
 type Which = "positive" | "negative";
@@ -547,7 +551,11 @@ const TRUTH_PARAGRAPH = `Every test evidence artifact includes revision, tool ve
 const TRUTH_BLOCK: RenderedBlock = { kind: "paragraph", text: TRUTH_PARAGRAPH, markdown: TRUTH_PARAGRAPH };
 
 const isTable = (token: Token): token is Tokens.Table => token.type === "table";
-/** The cell grid of every table in the document whose header is the matrix header; the doc must hold exactly one. */
+/**
+ * The cell grid of every table in the WHOLE document whose header is the matrix header: the uniqueness rule (the doc must
+ * hold exactly one). The cells themselves are judged on the section's own table (sectionTables, wb-h8f.15), never on this
+ * grid, which a copy of the table in another section can stand in for.
+ */
 function matrixGrids(markdown: string): string[][][] {
   return marked
     .lexer(markdown)
@@ -574,7 +582,19 @@ function docsFailures(markdown: string): string[] {
     out.push(`${DOCS_FILE}: the matrix table must occur exactly once; found ${grids.length}`);
     return out;
   }
-  const grid = grids[0] ?? [];
+  // wb-h8f.15 (G7): the cells are judged on the section's OWN table, read through the same binding as the rendered view
+  // above, never on the whole-document grid: a bolded header plus a re-split row here, with the original table copied to
+  // another section, renders the same and leaves the copy as the only matrix-header table in the document. A refused
+  // section is already named above and has no table of its own to judge.
+  const tables = sectionTables(markdown, DOCS_HEADING, 2, [DOCS_PARENT]);
+  if (!tables.ok) return out;
+  if (tables.grids.length !== 1) {
+    out.push(`${DOCS_FILE} § ${DOCS_HEADING}: the section must hold exactly one table, the matrix; it holds ${tables.grids.length}`);
+    return out;
+  }
+  const grid = tables.grids[0] ?? [];
+  const header = grid[0] ?? [];
+  if (header.join("|") !== HEADER_CELLS.join("|")) out.push(`${DOCS_FILE} § ${DOCS_HEADING}: the section's own table has the header ${JSON.stringify(header)}; the census pins ${JSON.stringify(HEADER_CELLS)}`);
   if (grid.length !== GRID.length) out.push(`${DOCS_FILE} § ${DOCS_HEADING}: the table has ${grid.length - 1} rows; the census pins ${GRID.length - 1}`);
   for (const [index, row] of TABLE.entries()) {
     const cells = grid[index + 1];
@@ -1017,5 +1037,81 @@ describe("wb-cax.25 docs drift names the row and cell or the section (synthetic 
 
   it("an edit of any other section never reddens a row: the test-classes and fault-injection sections are free to change", () => {
     expect(docsFailures(synthetic().replace("Classes.", "Classes, changed.").replace("Locations.", "Different locations."))).toEqual([]);
+  });
+});
+
+describe("wb-h8f.15 the matrix table's cells are read from the section its rendered view is judged in (h8f.12 PREP F1 twin, the G7 same-view class; synthetic document)", () => {
+  const ROWS_CELLS: readonly (readonly string[])[] = GRID.slice(1);
+  const BOLD_HEADER: readonly string[] = HEADER_CELLS.map(cell => `**${cell}**`);
+  const HEADER_CAUSE = "the section's own table has the header";
+  const tableOf = (header: readonly string[], rows: readonly (readonly string[])[]): string => [header, header.map(() => "---"), ...rows].map(cells => `| ${cells.join(" | ")} |`).join("\n");
+  /** One row re-split across its subsystem/positive cell boundary: the positive cell's first word moves into the subsystem cell, so the rendered (cell-joined) text is unchanged. */
+  const resplit = (cells: readonly string[]): string[] => {
+    const words = (cells[1] ?? "").split(" ");
+    return [`${cells[0] ?? ""} ${words[0] ?? ""}`, words.slice(1).join(" "), cells[2] ?? ""];
+  };
+  const resplitTable = (at: number, header: readonly string[] = BOLD_HEADER): string => tableOf(header, ROWS_CELLS.map((cells, index) => (index === at ? resplit(cells) : cells)));
+  /** The synthetic document with the given table in the matrix section, and the ORIGINAL table copied into the test-classes section (before) or the fault-injection section (after), or no copy. */
+  const g7Doc = (table: string, copy: "before" | "after" | "none"): string => {
+    const doc = synthetic(() => table);
+    if (copy === "before") return doc.replace("\nClasses.\n", `\nClasses.\n\n${GRID_MARKDOWN}\n`);
+    if (copy === "after") return doc.replace("\nLocations.\n", `\nLocations.\n\n${GRID_MARKDOWN}\n`);
+    return doc;
+  };
+  const COPIES = ["before", "after"] as const;
+
+  it("G7 precondition: every twin mutant keeps the section's rendered view exact, the truth section intact, and exactly one matrix-header table in the document - the copy - so a whole-document read judges the copy (the h8f.12 gate's 79-unchanged shape)", () => {
+    expect(ROWS_CELLS).toHaveLength(13);
+    expect(ROWS_CELLS.every(cells => (cells[1] ?? "").includes(" ")), "every positive cell has two words, so each row re-splits without an empty cell").toBe(true);
+    for (const at of ROWS_CELLS.keys()) {
+      for (const copy of COPIES) {
+        const doc = g7Doc(resplitTable(at), copy);
+        expect(sectionMatches(docsSection(doc, DOCS_HEADING, 2, [DOCS_PARENT]), SECTION_BLOCKS), `${copy} ${at}`).toEqual({ ok: true, why: "" });
+        expect(matrixGrids(doc), `${copy} ${at}`).toEqual([GRID.map(cells => [...cells])]);
+        expect(truthFailures(doc), `${copy} ${at}`).toEqual([]);
+      }
+    }
+  });
+
+  it("G7 twin (h8f.12 PREP F1): a bolded header plus one row re-split in the section, with the original table copied to another section, reds naming the header and the re-split row and cell - every row, the copy before or after", () => {
+    for (const [at, row] of TABLE.entries()) {
+      for (const copy of COPIES) {
+        const lines = docsFailures(g7Doc(resplitTable(at), copy));
+        const label = `${copy} | ${row.subsystem}`;
+        expect(lines.some(line => line.startsWith(`${DOCS_FILE} § ${DOCS_HEADING}: ${HEADER_CAUSE}`)), label).toBe(true);
+        expect(named(lines), label).toEqual([`row ${row.subsystem}`, `row ${row.subsystem}/positive`]);
+      }
+    }
+  });
+
+  it("G7 bold-only: the section's table under a bolded header, its cells intact, with the original copied to another section, reds on the header alone", () => {
+    for (const copy of COPIES) {
+      const lines = docsFailures(g7Doc(tableOf(BOLD_HEADER, ROWS_CELLS), copy));
+      expect(lines, copy).toHaveLength(1);
+      expect(lines[0], copy).toContain(HEADER_CAUSE);
+      expect(lines[0], copy).toContain(JSON.stringify(BOLD_HEADER));
+    }
+  });
+
+  it("G7 re-split under a plain header with the copy elsewhere: the second matrix-header table reds the uniqueness rule, the re-split never reads green", () => {
+    for (const at of ROWS_CELLS.keys()) {
+      for (const copy of COPIES) {
+        expect(docsFailures(g7Doc(resplitTable(at, HEADER_CELLS), copy)).some(line => line.includes("the matrix table must occur exactly once; found 2")), `${copy} ${at}`).toBe(true);
+      }
+    }
+  });
+
+  it("G7b: the re-split alone - plain header, no copy - keeps redding naming the row and cell, and names no header", () => {
+    for (const [at, row] of TABLE.entries()) {
+      const lines = docsFailures(g7Doc(resplitTable(at, HEADER_CELLS), "none"));
+      expect(named(lines), row.subsystem).toEqual([`row ${row.subsystem}`, `row ${row.subsystem}/positive`]);
+      expect(lines.some(line => line.includes(HEADER_CAUSE)), row.subsystem).toBe(false);
+    }
+  });
+
+  it("same view, other direction: the section's own table exact with a re-split copy under a bolded header in another section stays green - a neighbouring section is free to change", () => {
+    const decoy = resplitTable(5);
+    expect(docsFailures(synthetic().replace("\nClasses.\n", `\nClasses.\n\n${decoy}\n`))).toEqual([]);
+    expect(docsFailures(synthetic().replace("\nLocations.\n", `\nLocations.\n\n${decoy}\n`))).toEqual([]);
   });
 });

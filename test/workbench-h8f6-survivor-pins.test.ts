@@ -24,13 +24,24 @@
  * they call, a named layout argument counting as an obligation of its own, and register()'s interpolation of
  * descriptorFieldOutsideContract), the R9 pins against the fields that function returns, and every anchor text and quote
  * against its file. A row removed from every literal here, or an R9 pin, still reds against src; the pin sets of the four
- * wiring rows are held by AC1 alone (a named residual). A later cut that adds a sanitizer call to the tagged wiring reds
- * here until it adds the row that pins it. Every control or invisible code point is built with String.fromCodePoint, and
- * every assignment value is obviously fake.
+ * wiring rows are held by this file's literals alone (AC1 and the reached total): the named residual L2-CP below. A later
+ * cut that adds a sanitizer call to the tagged wiring reds here until it adds the row that pins it. The walk follows one
+ * call level, so a sanitizer call in a same-block function the wiring reaches only through another reads quiet: the named
+ * residual S7 below. Every control or invisible code point is built with String.fromCodePoint, and every assignment value
+ * is obviously fake.
+ *
+ * wb-h8f.14 (the wb-h8f.11 gate's PREP F1, F2 and F7, one follow-up): every executor records its pin after its last
+ * assertion, and a census row reads that record once every pin case has run, so a pin body that returns after its
+ * liveness reading reds (F1: reached == registered == 12). Each residual this file names is a named family plus a pinned
+ * quiet row (rule 19's definition, which the owner's F7 ruling applies to every cut that claims a residual). A quiet row
+ * reds when its family's page stops reading quiet, or stops carrying the family's edit. Each family's members are judged
+ * against a reading outside this file's literals, so a residual removed from every literal here still reds: S7 against
+ * the walk's blind spots in src, L2-CP against the rows whose pin removal the outside readings cannot see.
  */
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { isDeepStrictEqual } from "node:util";
 import ts from "typescript";
 import { afterEach, describe, expect, it } from "vitest";
 import subagentsExtension from "../src/index.js";
@@ -61,6 +72,11 @@ const ZWSP = cp(0x200b);
  * extension once each, and tenant load has pushed a boot past vitest's 5 s default before.
  */
 const BOOTED_TIMEOUT_MS = 30_000;
+/**
+ * One timeout for the residual rows that parse src/index.ts (4800+ lines) more than once, a same-file const literal the
+ * retry census (wb-nl8.4) can read: each such row parses it up to five times, and tenant load slows every parse.
+ */
+const PARSE_TIMEOUT_MS = 60_000;
 
 type OutsideField = "description" | "effectClass" | "supportedModes" | "contractSource";
 interface ScriptPathPin {
@@ -314,15 +330,22 @@ const visibleStretches = (probe: string): string[] =>
     .map(part => part.trim())
     .filter(part => part !== "");
 
-async function catchSanitized({ scriptPath }: ScriptPathPin): Promise<void> {
+/**
+ * The pins whose executor ran past its last assertion, in run order (wb-h8f.14 F1). A liveness reading alone satisfies
+ * --expect.requireAssertions, so a pin body that returned right after it would pass; the census reads this record.
+ */
+const reachedPins: string[] = [];
+
+async function catchSanitized({ id, scriptPath }: ScriptPathPin): Promise<void> {
   // Liveness: the probe carries an unsafe unit, so a catch that skipped the helper would hand it to the model.
   expect(stripUnsafeText(scriptPath)).not.toBe(scriptPath);
   const text = await (await boot()).call("workflow_validate", { scriptPath });
   expect(stripUnsafeText(text)).toBe(text);
   for (const stretch of visibleStretches(scriptPath)) expect(text).toContain(stretch);
+  reachedPins.push(id);
 }
 
-async function catchLayout({ scriptPath }: ScriptPathPin): Promise<void> {
+async function catchLayout({ id, scriptPath }: ScriptPathPin): Promise<void> {
   const modelText = sanitizeWorkbenchText(scriptPath, WORKBENCH_TEXT_LIMIT, "text");
   const labelText = sanitizeWorkbenchText(scriptPath, WORKBENCH_TEXT_LIMIT, "label");
   // Liveness: the two layouts render the probe apart, and neither rendering contains the other.
@@ -330,9 +353,10 @@ async function catchLayout({ scriptPath }: ScriptPathPin): Promise<void> {
   const text = await (await boot()).call("workflow_validate", { scriptPath });
   expect(text).toContain(modelText);
   expect(text).not.toContain(labelText);
+  reachedPins.push(id);
 }
 
-async function validateSettled({ name, description }: MetaPin): Promise<void> {
+async function validateSettled({ id, name, description }: MetaPin): Promise<void> {
   const booted = await boot();
   const workflows = join(booted.dir, ".pi", "workflows");
   mkdirSync(workflows, { recursive: true });
@@ -347,9 +371,10 @@ async function validateSettled({ name, description }: MetaPin): Promise<void> {
   expect(reply.status).toBe("valid");
   expect(Object.keys(reply.meta ?? {}).sort()).toEqual(["description", "name"]);
   expect(sanitizeWorkbenchJsonText(JSON.parse(text))).toBe(text);
+  reachedPins.push(id);
 }
 
-async function catalogSettled({ filter }: FilterPin): Promise<void> {
+async function catalogSettled({ id, filter }: FilterPin): Promise<void> {
   // Liveness: the builder's own reply for this filter is not settled by the shared serializer.
   const built = buildWorkflowCatalogReply([], [], { filter });
   expect(sanitizeWorkbenchJsonText(built)).not.toBe(JSON.stringify(built));
@@ -358,6 +383,7 @@ async function catalogSettled({ filter }: FilterPin): Promise<void> {
   expect(reply.ok).toBe(true);
   expect(typeof reply.filter).toBe("string");
   expect(sanitizeWorkbenchJsonText(JSON.parse(text))).toBe(text);
+  reachedPins.push(id);
 }
 
 function provider(id: string): CapabilityProvider {
@@ -368,7 +394,7 @@ function provider(id: string): CapabilityProvider {
   };
 }
 
-function outsideFieldNamed({ field, junk }: FieldPin): void {
+function outsideFieldNamed({ id, field, junk }: FieldPin): void {
   // Liveness: the same fixture registers whole without the junk field, so the refusal is the field's alone.
   expect(() => new CapabilityRegistry().register(provider("fixture.h8f11"))).not.toThrow();
   const registry = new CapabilityRegistry();
@@ -383,6 +409,7 @@ function outsideFieldNamed({ field, junk }: FieldPin): void {
   expect(refusal).toBeInstanceOf(CapabilityError);
   expect(refusal instanceof CapabilityError ? [refusal.category, refusal.message] : []).toEqual(["validation", `Invalid ${field} for capability fixture.h8f11.`]);
   expect(registry.catalogSnapshot()).toEqual([]);
+  reachedPins.push(id);
 }
 
 /** Pin cases registered below, so the census can tell a dropped executor from a dropped row. */
@@ -460,4 +487,211 @@ describe("wb-h8f.11 survivor census: the frozen rows, judged against src", () =>
   it("every pin of every row is registered as its own case", () => {
     expect(registeredPins).toBe(SURVIVORS.reduce((total, row) => total + row.pins.length, 0));
   });
+
+  // vitest runs this file's cases one after another in the order they are registered, so every pin case has run here.
+  it("assertion-reached (wb-h8f.14 F1): every registered pin ran past its executor's last assertion - reached == registered == 12, in run order", () => {
+    expect(reachedPins).toEqual(SURVIVORS.flatMap(row => row.pins.map(pin => pin.id)));
+    expect(reachedPins.length).toBe(registeredPins);
+    expect(reachedPins.length).toBe(12);
+  });
+});
+
+// ---- wb-h8f.14: the residuals this file names, each a named family plus a pinned quiet row ----
+
+/** Which reading outside this file's literals judges a residual's members. */
+type ResidualKind = "one-level-walk" | "coordinated-pin-removal";
+interface Residual {
+  /** The wb-h8f.11 gate probe that measured the family. */
+  readonly id: string;
+  readonly kind: ResidualKind;
+  /** The family of edits this census reads quiet, named. */
+  readonly family: string;
+  /** What the family's quiet row pins. */
+  readonly requirement: string;
+  /** The family's members: functions src/index.ts declares (one-level-walk) or SURVIVORS rows (coordinated-pin-removal). */
+  readonly members: readonly string[];
+}
+
+const RESIDUALS: readonly Residual[] = [
+  {
+    id: "S7",
+    kind: "one-level-walk",
+    family: "a sanitizer call in a same-block function the tagged wiring reaches only through another same-block function",
+    requirement: "a sanitizeWorkbenchText call added at the head of each member's body leaves every obligation src derives unchanged",
+    members: ["workflowValidateToolReply"],
+  },
+  {
+    id: "L2-CP",
+    kind: "coordinated-pin-removal",
+    family: "a wiring row's pin removed together with its count in AC1 and the reached total",
+    requirement: "removing one member's last pin changes no reading anchored outside this file's literals, while the same removal on the R9 row changes its fields reading",
+    members: ["G14", "G15", "G16", "G20"],
+  },
+];
+
+/** The names every call under `node` calls by identifier. */
+const calledNames = (node: ts.Node): Set<string> =>
+  new Set(nodesOf(node).flatMap(call => (ts.isCallExpression(call) && ts.isIdentifier(call.expression) ? [call.expression.text] : [])));
+
+/**
+ * The walk's blind spots in src/index.ts text: every same-block function the tagged registerTool statements reach
+ * through same-block calls at any depth that wiringScopes() leaves out, in declaration order.
+ */
+function blindSpots(text: string): string[] {
+  const source = parse(INDEX, text);
+  const walked = new Set(wiringScopes(text).map(scope => scope.name));
+  const blind: string[] = [];
+  for (const block of nodesOf(source)) {
+    if (!ts.isBlock(block) && !ts.isSourceFile(block)) continue;
+    const siblings = new Map(block.statements.flatMap(statement => (ts.isFunctionDeclaration(statement) && statement.name ? [[statement.name.text, statement] as const] : [])));
+    const frontier: ts.Node[] = block.statements.filter(statement => registeredToolName(statement) !== undefined && leadingComments(source, statement).includes(TAG));
+    const reached = new Set<string>();
+    for (let node = frontier.pop(); node !== undefined; node = frontier.pop()) {
+      for (const name of calledNames(node)) {
+        const sibling = siblings.get(name);
+        if (sibling === undefined || reached.has(name)) continue;
+        reached.add(name);
+        frontier.push(sibling);
+      }
+    }
+    for (const name of siblings.keys()) if (reached.has(name) && !walked.has(name)) blind.push(name);
+  }
+  return blind;
+}
+
+/** The function `name` declares in src/index.ts text, or undefined. */
+const declarationOf = (text: string, name: string): ts.FunctionDeclaration | undefined =>
+  nodesOf(parse(INDEX, text)).find((node): node is ts.FunctionDeclaration => ts.isFunctionDeclaration(node) && node.name?.text === name);
+
+/** How many sanitizer calls the function `name` declares, or -1 when src/index.ts text declares no such function. */
+function sanitizerCallsIn(text: string, name: string): number {
+  const declaration = declarationOf(text, name);
+  if (declaration === undefined) return -1;
+  return nodesOf(declaration).filter(node => ts.isCallExpression(node) && ts.isIdentifier(node.expression) && SANITIZERS.has(node.expression.text)).length;
+}
+
+/** src/index.ts text with one sanitizer call added at the head of the body of the function `name` declares: S7's edit class. */
+function withSanitizerAtHead(text: string, name: string): string {
+  const body = declarationOf(text, name)?.body;
+  if (body === undefined) return text;
+  const at = body.getStart() + 1;
+  return `${text.slice(0, at)} sanitizeWorkbenchText("h8f14-probe", WORKBENCH_TEXT_LIMIT, "text");${text.slice(at)}`;
+}
+
+const obligationMemo = new Map<string, readonly string[]>();
+/** obligationsOf(), once per distinct file text: the residual rows read the same src texts many times. */
+function obligationsOnce(file: string, text: string): readonly string[] {
+  const key = `${file}${LF}${text}`;
+  const known = obligationMemo.get(key);
+  if (known !== undefined) return known;
+  const reading = obligationsOf(file, text);
+  obligationMemo.set(key, reading);
+  return reading;
+}
+
+/**
+ * The readings this file anchors outside its own literals, applied to a survivor table: the name of each reading the
+ * table fails, so a table that holds every one reads []. The census rows above apply the same readings to SURVIVORS;
+ * this lets a residual's quiet row apply them to a hollowed table.
+ */
+function outsideReadings(rows: readonly Survivor[]): string[] {
+  const derived = [...obligationsOnce(INDEX, read(INDEX)), ...obligationsOnce(REGISTRY, read(REGISTRY))].sort();
+  const fields = rows.flatMap(row => (row.kind === "outside-field-named" ? row.pins.map(pin => pin.field) : []));
+  const live = ({ obligation, site }: Survivor): boolean => {
+    const text = read(site.file);
+    return obligationsOnce(site.file, text).includes(obligation) && !obligationsOnce(site.file, text.split(site.text).join(site.mutation)).includes(obligation);
+  };
+  const readings: readonly (readonly [string, boolean])[] = [
+    ["obligations", isDeepStrictEqual(rows.map(row => row.obligation).sort(), derived)],
+    ["R9 fields", isDeepStrictEqual(fields, registryReading(read(REGISTRY)).fields)],
+    ["anchors", rows.every(({ site }) => read(site.file).split(site.text).length - 1 === 1)],
+    ["quotes", rows.every(({ requirement }) => flattened(read(requirement.file)).includes(requirement.quote))],
+    ["liveness", rows.every(live)],
+  ];
+  return readings.flatMap(([name, holds]) => (holds ? [] : [name]));
+}
+
+/** One row without its last pin, its kind kept. */
+function lastPinDropped(row: Survivor): Survivor {
+  switch (row.kind) {
+    case "catch-sanitized":
+    case "catch-layout":
+      return { ...row, pins: row.pins.slice(0, -1) };
+    case "validate-settled":
+      return { ...row, pins: row.pins.slice(0, -1) };
+    case "catalog-settled":
+      return { ...row, pins: row.pins.slice(0, -1) };
+    case "outside-field-named":
+      return { ...row, pins: row.pins.slice(0, -1) };
+  }
+}
+
+/** The table with one row's last pin removed: the page a coordinated pin removal leaves once every literal that counts pins agrees. */
+const withoutLastPin = (rows: readonly Survivor[], mutant: string): Survivor[] => rows.map(row => (row.mutant === mutant ? lastPinDropped(row) : row));
+
+/**
+ * The outside readings that removing one row's last pin changes, judged against the frozen table's own readings, so a
+ * src drift elsewhere (which moves both alike) never reads as the removal: [] when the removal is invisible to them.
+ */
+function changedByRemoval(mutant: string): string[] {
+  const frozen = outsideReadings(SURVIVORS);
+  const hollowed = outsideReadings(withoutLastPin(SURVIVORS, mutant));
+  return [...hollowed.filter(name => !frozen.includes(name)), ...frozen.filter(name => !hollowed.includes(name))];
+}
+
+function quietRow(residual: Residual): void {
+  switch (residual.kind) {
+    case "one-level-walk": {
+      const text = read(INDEX);
+      const before = obligationsOnce(INDEX, text);
+      for (const member of residual.members) {
+        const page = withSanitizerAtHead(text, member);
+        // Liveness: the page carries the family's edit, one more sanitizer call inside the member, so a walk that
+        // followed the member would derive an obligation from it.
+        expect(sanitizerCallsIn(page, member), member).toBe(sanitizerCallsIn(text, member) + 1);
+        expect(obligationsOf(INDEX, page), member).toEqual(before);
+      }
+      break;
+    }
+    case "coordinated-pin-removal":
+      // A member's removal changes no outside reading; the same removal on the R9 row (the analog) changes its fields reading.
+      for (const row of SURVIVORS) expect(changedByRemoval(row.mutant), row.mutant).toEqual(residual.members.includes(row.mutant) ? [] : ["R9 fields"]);
+      break;
+  }
+}
+
+describe("wb-h8f.14 named residuals: each a named family plus a pinned quiet row, its members judged outside this file's literals", () => {
+  it("S-SHAPE frozen residuals: each residual's id, kind, family, requirement and members, verbatim", () => {
+    expect(RESIDUALS.map(residual => [residual.id, residual.kind, residual.family, residual.requirement, residual.members.join(" ")])).toEqual([
+      [
+        "S7",
+        "one-level-walk",
+        "a sanitizer call in a same-block function the tagged wiring reaches only through another same-block function",
+        "a sanitizeWorkbenchText call added at the head of each member's body leaves every obligation src derives unchanged",
+        "workflowValidateToolReply",
+      ],
+      [
+        "L2-CP",
+        "coordinated-pin-removal",
+        "a wiring row's pin removed together with its count in AC1 and the reached total",
+        "removing one member's last pin changes no reading anchored outside this file's literals, while the same removal on the R9 row changes its fields reading",
+        "G14 G15 G16 G20",
+      ],
+    ]);
+  });
+
+  it("the outside readings hold for the frozen table, as the census rows above read it", () => {
+    expect(outsideReadings(SURVIVORS)).toEqual([]);
+  }, PARSE_TIMEOUT_MS);
+
+  for (const residual of RESIDUALS) it(`${residual.id} quiet row (${residual.family}): ${residual.requirement}`, () => quietRow(residual), PARSE_TIMEOUT_MS);
+
+  it("the one-level-walk members are exactly the walk's blind spots src derives", () => {
+    expect(RESIDUALS.filter(residual => residual.kind === "one-level-walk").flatMap(residual => residual.members)).toEqual(blindSpots(read(INDEX)));
+  }, PARSE_TIMEOUT_MS);
+
+  it("the coordinated-pin-removal members are exactly the rows whose last-pin removal changes no outside reading", () => {
+    const invisible = SURVIVORS.filter(row => changedByRemoval(row.mutant).length === 0).map(row => row.mutant);
+    expect(RESIDUALS.filter(residual => residual.kind === "coordinated-pin-removal").flatMap(residual => residual.members)).toEqual(invisible);
+  }, PARSE_TIMEOUT_MS);
 });
