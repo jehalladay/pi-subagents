@@ -38,11 +38,22 @@
  * U4). AC2 asserts that the pins it judged are its row's EXPECTED_PINS entries, and its each-liveness case pins one
  * run-mode AC2 case per judged row, each reaching its last assertion.
  *
- * Docs: both sections are judged whole through the helper's rendered view (docsSection / sectionMatches), HTML-free:
- * docs/11 must render as exactly one five-item list, docs/14 as exactly its two paragraphs (the label paragraph and
- * the Forge-interface paragraph), each under its unique level-2 heading of the level-1 parent, bounded at the next
- * level-1/2 heading or EOF. Drift falsifiers run over SYNTHETIC documents, never the live text, so an unrelated docs
- * edit cannot redden a falsifier row, and a neighbouring section stays free to change.
+ * External anchor (wb-h8f.12, the 6ze.39 class; rule 16: "CT5's expected kill runs through an anchor OUTSIDE the
+ * census's own literals - the docs/spec table, the src registry, or a count from the source of truth"). The literals
+ * above anchor the table only to itself: the wb-h8f.9 gate's coordinated all-literal hollow (the journey-4
+ * validate-reply pin dropped from ROWS and from every literal that carries it, REAL_PINS length 10 -> 9) survived
+ * 0 failed | 77 passed. AC5 therefore reads docs/14 "Acceptance journey evidence", which lists every evidence leg - one
+ * row per pinned case, per receipt and per open bead, each with its label - and requires its table to equal the
+ * table's legs one by one, in table order, so a leg dropped here and from every literal together reads red through a
+ * surface outside this file, and hollowing both takes a visible docs/14 edit. Disclosed: deleting the AC5 case itself
+ * is census-code hollowing (the 6ze.38 class), which no literal or anchor here catches.
+ *
+ * Docs: all three sections are judged whole through the helper's rendered view (docsSection / sectionMatches),
+ * HTML-free: docs/11 must render as exactly one five-item list, docs/14's truth-label section as exactly its two
+ * paragraphs (the label paragraph and the Forge-interface paragraph), and docs/14's journey evidence section as exactly
+ * its intro paragraph and one table of the census's legs, each under its unique level-2 heading of the level-1 parent,
+ * bounded at the next level-1/2 heading or EOF. Drift falsifiers run over SYNTHETIC documents, never the live text, so
+ * an unrelated docs edit cannot redden a falsifier row, and a neighbouring section stays free to change.
  *
  * Judging cost (F10; the wb-6hb.9 R546 form): each judge() call re-reads and re-validates the whole report, so the leg
  * judges every table pin in ONE memoized judge() call (verdictsOf, keyed by file, title and tier) that every AC2 row
@@ -59,6 +70,7 @@
 import { existsSync, readFileSync } from "node:fs";
 import { basename, dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { marked, type Token, type Tokens } from "marked";
 import { describe, expect, it } from "vitest";
 import { type CasePin, DEFAULT_GATE_TIER, DEFAULT_TIER_REPORT, docsSection, judge, type PinVerdict, type RenderedBlock, sectionMatches, sourceStructure } from "./helpers/census.js";
 
@@ -74,6 +86,8 @@ const DOCS_11_PARENT = `11 ${EM_DASH} Pi designer, operator tools and closed-loo
 const DOCS_14_PARENT = `14 ${EM_DASH} Test strategy, conformance suite, benchmark and adversarial controls`;
 const JOURNEYS_HEADING = "Acceptance journeys";
 const TRUTH_HEADING = "Truth labels and release gates";
+/** docs/14's journey evidence section (wb-h8f.12): the anchor outside this file's own literals. */
+const EVIDENCE_HEADING = "Acceptance journey evidence";
 /** A file the default config excludes: never in the default report. */
 const EXCLUDED_FILE = "test/workbench-native-rf-preview.test.ts";
 
@@ -129,6 +143,11 @@ const TRUTH_TEXT =
   'Every test evidence artifact includes revision, tool versions, commands, timestamp, host, native references and actual output. All docs and status tables must distinguish "code present", "fixture pass", "live SDK pass", "adversarial pass", "scale benchmark pass". Each major work package must have a falsifier: a negative test that would fail if a critical guarantee was quietly weakened.';
 /** The section's second paragraph, verbatim: docs/14's section is pinned whole (U2), so a weakening anywhere in it reads red. */
 const FORGE_TEXT = "Use Forge build/test/gates as primary interface; run local relevant Node tests through Forge-configured paths. Never introduce GitHub CI. Pin dependencies, lockfile and package exports.";
+/** The header row of docs/14's journey evidence table (wb-h8f.12). */
+const EVIDENCE_HEADER: readonly string[] = ["Journey", "Label", "Evidence"];
+/** The paragraph that opens docs/14's journey evidence section, verbatim: the section is pinned whole. */
+const EVIDENCE_INTRO =
+  'Evidence of record for the five docs/workbench/11 acceptance journeys, one row per evidence leg. Each row carries one label from "Truth labels and release gates", or not started for a journey with no evidence yet: a fixture pass row names one pinned case by file and verbatim title, a live SDK pass row names its receipt, and an open row names its tracking bead. test/workbench-acceptance-journeys.census.ts judges this table against its own evidence rows in both directions, so a leg dropped from either side reads red.';
 
 const OPERATOR_RECEIPT_FILE = "qa/workbench/receipts/wb-a2g.3-operator-receipt.json";
 /** The rendered text of the TRACEABILITY level-2 heading over the wb-h7r v2 operator receipt's section. */
@@ -427,6 +446,76 @@ function docs14Failures(markdown: string): string[] {
   return [];
 }
 
+/** One evidence leg as docs/14 lists it (wb-h8f.12): a case row gives one leg per pin, any other row one leg. */
+interface Leg {
+  readonly row: JourneyRow;
+  /** The docs/14 table cells: journey, label, evidence. */
+  readonly cells: readonly string[];
+}
+
+/** The docs/14 Evidence cell of a row that pins no case. */
+function legEvidence(ev: Exclude<Evidence, { readonly kind: "cases" }>): string {
+  if (ev.kind === "receipt") return `forge-run receipt ${ev.commandId}`;
+  if (ev.kind === "owner-receipt") return `owner receipt ${ev.file} at revision ${ev.revision}`;
+  if (ev.kind === "artifact") return `artifact ${ev.file}`;
+  return `open bead ${ev.bead}`;
+}
+
+/** Every evidence leg of a table, in table order: what docs/14's journey evidence table must list. */
+function legsOf(rows: readonly JourneyRow[]): Leg[] {
+  return rows.flatMap(r => {
+    const ev = r.evidence;
+    const leg = (evidence: string): Leg => ({ row: r, cells: [String(r.journey), r.label, evidence] });
+    return ev.kind === "cases" ? ev.pins.map(pin => leg(`${pin.file}: "${pin.title}"`)) : [leg(legEvidence(ev))];
+  });
+}
+
+/** The blocks docs/14's journey evidence section must render as: its intro paragraph, then one table of the legs. */
+const evidenceBlocks = (legs: readonly Leg[]): readonly RenderedBlock[] => [
+  { kind: "paragraph", text: EVIDENCE_INTRO, markdown: EVIDENCE_INTRO },
+  { kind: "other", type: "table", text: [EVIDENCE_HEADER, ...legs.map(leg => leg.cells)].map(cells => cells.join(" ")).join(" ") },
+];
+
+const isTable = (token: Token): token is Tokens.Table => token.type === "table";
+/** The cell grid of every table in the document under the evidence header; docs/14 must hold exactly one. */
+function evidenceGrids(markdown: string): string[][][] {
+  return marked
+    .lexer(markdown)
+    .filter(isTable)
+    .map(token => [token.header.map(cell => cell.text), ...token.rows.map(cells => cells.map(cell => cell.text))])
+    .filter(grid => grid[0]?.join("|") === EVIDENCE_HEADER.join("|"));
+}
+
+/** A leg's journey, its quoted sentence and its label, from its journey and label cells. */
+const describeLeg = (cells: readonly string[]): string => `journey ${cells[0] ?? "?"} ("${JOURNEY_QUOTES[Number(cells[0]) - 1] ?? "?"}") [${cells[1] ?? "?"}]`;
+
+/**
+ * Every drift between docs/14's journey evidence table and a census table (wb-h8f.12), each naming the leg: the section
+ * must render as exactly its intro and one table of the table's legs, and that table's rows must equal the legs one by
+ * one, in table order. A leg dropped from the census table - and so from every literal edited to match - therefore
+ * reads red against the docs table, through a surface outside this file (rule 16 CT5/CT6, the 6ze.39 class).
+ */
+function evidenceFailures(markdown: string, rows: readonly JourneyRow[]): string[] {
+  const where = `${DOCS_14} § ${EVIDENCE_HEADING}`;
+  const section = docsSection(markdown, EVIDENCE_HEADING, 2, [DOCS_14_PARENT]);
+  if (!section.ok) return [`${where}: the section is refused: ${section.why}`];
+  const legs = legsOf(rows);
+  const out: string[] = [];
+  const exact = sectionMatches(section, evidenceBlocks(legs));
+  if (!exact.ok) out.push(`${where} is not exactly its intro paragraph and one table of the census's evidence legs: ${exact.why}`);
+  const grids = evidenceGrids(markdown);
+  if (grids.length !== 1) return [...out, `${DOCS_14}: the journey evidence table must occur exactly once; found ${grids.length}`];
+  const listed = (grids[0] ?? []).slice(1);
+  const key = (cells: readonly string[]): string => cells.join(" | ");
+  const listedKeys = listed.map(key);
+  const censusKeys = legs.map(leg => key(leg.cells));
+  for (const leg of legs) if (!listedKeys.includes(key(leg.cells))) out.push(`${describeLeg(leg.cells)}: the census leg ${leg.cells[2] ?? ""} is not listed in ${where}`);
+  for (const cells of listed) if (!censusKeys.includes(key(cells))) out.push(`${describeLeg(cells)}: ${where} lists the leg ${cells[2] ?? ""}, which the census table does not carry`);
+  const sameSet = censusKeys.every(entry => listedKeys.includes(entry)) && listedKeys.every(entry => censusKeys.includes(entry));
+  if (sameSet && listedKeys.join("\n") !== censusKeys.join("\n")) out.push(`${where} lists the census's legs out of table order or more than once`);
+  return out;
+}
+
 const casePin = (entry: Pin): CasePin => ({ file: entry.file, title: entry.title, tier: DEFAULT_GATE_TIER });
 
 /**
@@ -533,6 +622,10 @@ const synthetic11 = (bullets: readonly string[] = JOURNEY_QUOTES, tail = ""): st
 /** The synthetic docs/14 under the real heading shape: the label paragraph, the real second paragraph, then an optional tail inside the section. */
 const synthetic14 = (truth: string = TRUTH_TEXT, tail = "", second: string = FORGE_TEXT): string =>
   `# ${DOCS_14_PARENT}\n\n## Matrix by subsystem\n\nRows.\n\n## ${TRUTH_HEADING}\n\n${truth}\n\n${second}\n${tail}`;
+
+/** The synthetic docs/14 the evidence falsifiers run over: a decoy table under another header, then the evidence section (intro, a table of the given rows, an optional tail inside the section). */
+const syntheticEvidence = (rows: readonly (readonly string[])[] = legsOf(ROWS).map(leg => leg.cells), tail = "", intro: string = EVIDENCE_INTRO): string =>
+  `# ${DOCS_14_PARENT}\n\n## Matrix by subsystem\n\n| Subsystem | Positive proof | Negative control |\n| --- | --- | --- |\n| A | b | c |\n\n## ${EVIDENCE_HEADING}\n\n${intro}\n\n${[EVIDENCE_HEADER, EVIDENCE_HEADER.map(() => "---"), ...rows].map(cells => `| ${cells.join(" | ")} |`).join("\n")}\n${tail}`;
 
 const synthTraceability = (...blocks: readonly string[]): string => `# ${TRACEABILITY_PARENT}\n\n${blocks.join("\n\n")}\n`;
 const readerOf = (files: Readonly<Record<string, string>>): Reader => ({
@@ -674,6 +767,10 @@ describe("wb-h8f.9 docs/workbench/11 acceptance-journeys census (report mode)", 
     expect(self.endsWith(SELF)).toBe(true);
     expect(self.endsWith(".test.ts")).toBe(false);
     expect(REPO_READER.read("vitest.census.config.ts")).toContain('include: ["test/**/*.census.ts"]');
+  });
+
+  it("AC5 (wb-h8f.12): docs/14 'Acceptance journey evidence' lists exactly the table's evidence legs in table order - one row per pinned case, receipt and open bead - the anchor outside this file's own literals (rule 16 CT5/CT6)", () => {
+    expect(evidenceFailures(REPO_READER.read(DOCS_14), ROWS)).toEqual([]);
   });
 });
 
@@ -992,5 +1089,94 @@ describe("wb-h8f.9 docs drift names the journey or the section (synthetic docume
 
   it("an edit of any other docs/11 section never reddens a journey: the neighbouring sections are free to change", () => {
     expect(docs11Failures(synthetic11().replace("Rows.", "Rows, changed.").replace("Text.", "Different text."))).toEqual([]);
+  });
+});
+
+describe("wb-h8f.12 the docs/14 journey evidence anchor: every drift names the leg (synthetic documents, rendered view)", () => {
+  const LEGS = legsOf(ROWS);
+  const cellsOf = (rows: readonly JourneyRow[]): string[][] => legsOf(rows).map(leg => [...leg.cells]);
+  /** The table with one pin dropped: what the wb-h8f.9 F2 coordinated hollow leaves ROWS as, every literal edited to match. */
+  const withoutPin = (dropped: Pin): readonly JourneyRow[] =>
+    ROWS.map(r => (r.evidence.kind === "cases" ? row(r.journey, r.label, fixture(...r.evidence.pins.filter(pin => pin !== dropped))) : r));
+  const named = (lines: readonly string[], cells: readonly string[], cause: string): boolean => lines.some(line => line.startsWith(describeLeg(cells)) && line.includes(cells[2] ?? "") && line.includes(cause));
+  const notCarried = "which the census table does not carry";
+  const notListed = "is not listed in";
+
+  it("baseline: the table's own legs audit clean, at EOF and bounded by a following level-2 heading, beside a table under another header", () => {
+    expect(LEGS).toHaveLength(REAL_PINS.length + ROWS.filter(r => r.evidence.kind !== "cases").length);
+    expect(evidenceFailures(syntheticEvidence(), ROWS)).toEqual([]);
+    expect(evidenceFailures(`${syntheticEvidence()}\n## Later\n\nText.\n`, ROWS)).toEqual([]);
+  });
+
+  it("E1 (the wb-h8f.9 F2 coordinated hollow): each pin dropped from the table, as every literal edited to match leaves it, reds against the unchanged docs table naming the journey, the file and the title", () => {
+    expect(REAL_PINS.length).toBeGreaterThan(0);
+    for (const { row: r, pin } of REAL_PINS) {
+      const lines = evidenceFailures(syntheticEvidence(), withoutPin(pin));
+      expect(named(lines, [String(r.journey), r.label, `${pin.file}: "${pin.title}"`], notCarried), `${pin.file} / ${pin.title}`).toBe(true);
+    }
+  });
+
+  it("E2: each row that pins no case - the receipt, the owner receipt, each open bead - dropped from the table reds naming its leg", () => {
+    const others = ROWS.filter(r => r.evidence.kind !== "cases");
+    expect(others.length).toBeGreaterThan(0);
+    for (const dropped of others) {
+      const [leg] = legsOf([dropped]);
+      expect(leg).toBeDefined();
+      expect(named(evidenceFailures(syntheticEvidence(), ROWS.filter(r => r !== dropped)), leg?.cells ?? [], notCarried), leg?.cells.join(" | ")).toBe(true);
+    }
+  });
+
+  it("E3: each leg dropped from the docs table alone reds naming the census leg", () => {
+    LEGS.forEach((leg, index) => {
+      const docs = syntheticEvidence(cellsOf(ROWS).filter((_cells, at) => at !== index));
+      expect(named(evidenceFailures(docs, ROWS), leg.cells, notListed), leg.cells.join(" | ")).toBe(true);
+    });
+  });
+
+  it("E4: a reworded docs cell - a shortened title, a relabelled leg, a renumbered journey - reds naming the census leg and the docs row", () => {
+    const [first] = LEGS;
+    expect(first).toBeDefined();
+    const cells = first?.cells ?? [];
+    const evidence = cells[2] ?? "";
+    for (const reworded of [[cells[0] ?? "", cells[1] ?? "", evidence.slice(0, -12)], [cells[0] ?? "", "adversarial pass", evidence], ["2", cells[1] ?? "", evidence]]) {
+      const lines = evidenceFailures(syntheticEvidence([reworded, ...cellsOf(ROWS).slice(1)]), ROWS);
+      expect(named(lines, cells, notListed), reworded.join(" | ")).toBe(true);
+      expect(named(lines, reworded, notCarried), reworded.join(" | ")).toBe(true);
+    }
+  });
+
+  it("E5: two docs rows swapped, or one listed twice, reds on table order", () => {
+    const [a, b, ...rest] = cellsOf(ROWS);
+    expect(a).toBeDefined();
+    expect(b).toBeDefined();
+    const order = "out of table order or more than once";
+    expect(evidenceFailures(syntheticEvidence([b ?? [], a ?? [], ...rest]), ROWS).some(line => line.includes(order))).toBe(true);
+    expect(evidenceFailures(syntheticEvidence([...cellsOf(ROWS), a ?? []]), ROWS).some(line => line.includes(order))).toBe(true);
+  });
+
+  it("E6: the section heading renamed away, duplicated or re-homed under a new level-1 heading is refused", () => {
+    const refusedLine = (lines: readonly string[]): string => lines[0] ?? "";
+    expect(refusedLine(evidenceFailures(syntheticEvidence().replace(`## ${EVIDENCE_HEADING}`, "## Journey notes"), ROWS))).toContain("the section is refused");
+    expect(refusedLine(evidenceFailures(`${syntheticEvidence()}\n## ${EVIDENCE_HEADING}\n\nAgain.\n`, ROWS))).toContain("occurs 2 times");
+    expect(refusedLine(evidenceFailures(syntheticEvidence().replace(`## ${EVIDENCE_HEADING}`, `# Appendix\n\n## ${EVIDENCE_HEADING}`), ROWS))).toContain("the section is refused");
+  });
+
+  it("E7: a weakening paragraph, an HTML comment or a ### subsection inside the section, or a reworded intro, reds on section exactness", () => {
+    const exactness = "is not exactly its intro paragraph and one table of the census's evidence legs";
+    for (const docs of [
+      syntheticEvidence(undefined, "\nThis table is advisory; a journey may ship without its legs.\n"),
+      syntheticEvidence(undefined, "\n<!-- The table is advisory. -->\n"),
+      syntheticEvidence(undefined, "\n### Exceptions\n\nA leg may be skipped.\n"),
+      syntheticEvidence(undefined, "", EVIDENCE_INTRO.replace("in both directions", "in one direction")),
+    ]) {
+      expect(evidenceFailures(docs, ROWS).some(line => line.includes(exactness))).toBe(true);
+    }
+  });
+
+  it("E8: the table moved out of its section, or a second table under the evidence header elsewhere, reds", () => {
+    const table = [EVIDENCE_HEADER, EVIDENCE_HEADER.map(() => "---"), ...cellsOf(ROWS)].map(cells => `| ${cells.join(" | ")} |`).join("\n");
+    const moved = `# ${DOCS_14_PARENT}\n\n## ${EVIDENCE_HEADING}\n\n${EVIDENCE_INTRO}\n\n## Later\n\n${table}\n`;
+    expect(evidenceFailures(moved, ROWS).some(line => line.includes("the section has 1 blocks; the census pins 2"))).toBe(true);
+    expect(evidenceFailures(`${syntheticEvidence()}\n## Later\n\n${table}\n`, ROWS).some(line => line.includes("must occur exactly once; found 2"))).toBe(true);
   });
 });

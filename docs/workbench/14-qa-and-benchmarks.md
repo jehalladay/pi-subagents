@@ -58,3 +58,24 @@ Every landed W21 bench is a CLI at `qa/workbench/*-bench.mjs` whose first line i
 Every test evidence artifact includes revision, tool versions, commands, timestamp, host, native references and actual output. All docs and status tables must distinguish "code present", "fixture pass", "live SDK pass", "adversarial pass", "scale benchmark pass". Each major work package must have a falsifier: a negative test that would fail if a critical guarantee was quietly weakened.
 
 Use Forge build/test/gates as primary interface; run local relevant Node tests through Forge-configured paths. Never introduce GitHub CI. Pin dependencies, lockfile and package exports.
+
+## Acceptance journey evidence
+
+Evidence of record for the five docs/workbench/11 acceptance journeys, one row per evidence leg. Each row carries one label from "Truth labels and release gates", or not started for a journey with no evidence yet: a fixture pass row names one pinned case by file and verbatim title, a live SDK pass row names its receipt, and an open row names its tracking bead. test/workbench-acceptance-journeys.census.ts judges this table against its own evidence rows in both directions, so a leg dropped from either side reads red.
+
+| Journey | Label | Evidence |
+| --- | --- | --- |
+| 1 | fixture pass | test/workbench-host-contract.test.ts: "L3: unchanged script uses Claude SDK query, not Pi AgentManager; session and usage are reported" |
+| 1 | live SDK pass | forge-run receipt cmd_2a275dcbd6c6 |
+| 1 | live SDK pass | owner receipt qa/workbench/receipts/wb-a2g.3-operator-receipt.json at revision e07474a |
+| 2 | not started | open bead wb-04s |
+| 3 | fixture pass | test/workbench-observation.test.ts: "disconnect invalidates known nodes; reconnect alone cannot restore current without snapshot" |
+| 3 | fixture pass | test/workbench-furnace-observer.test.ts: "reconnects only by fresh snapshot, marking a failed read stale instead of asserting last-known RUNNING" |
+| 3 | fixture pass | test/workbench-furnace-vc4-receipt.test.ts: "C2 falsifier: disconnect must make the reading and the nodes stale, keeping the last-known running label" |
+| 4 | fixture pass | test/workbench-patch-proposal.test.ts: "validates the candidate bytes exactly as the designer does and mirrors its status" |
+| 4 | fixture pass | test/workbench-validate-reply.test.ts: "never executes or writes the candidate source" |
+| 4 | fixture pass | test/workbench-designer.test.ts: "matched cohort yields measured deltas for every shared metric and states association, not causation" |
+| 4 | code present | open bead wb-h8f.2 |
+| 5 | fixture pass | test/workbench-control.test.ts: "rule 2: observer-only grants cannot control under any action spelling, and nothing is read before refusing" |
+| 5 | fixture pass | test/workbench-control.test.ts: "rule 3: only the frozen per-provider allowlist resolves an action (exact, case-sensitive, no prototype lookups)" |
+| 5 | fixture pass | test/workbench-native-details.test.ts: "preserves selected node on resize and closes without invoking any runtime controls" |
