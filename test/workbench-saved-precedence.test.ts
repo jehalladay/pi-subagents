@@ -62,14 +62,48 @@ const REWALK_ROWS = [
 ];
 const NON_LITERAL_TITLE = "<a row with a non-literal title>";
 /** Every it() row of this file in source order: the budget identifier it carries (if any) and whether its body walks layers (the wb-cvjm pin). */
-function sourceRows(): { title: string; budget: string | undefined; walks: boolean }[] {
-  const file = fileURLToPath(import.meta.url);
-  const source = ts.createSourceFile(file, readFileSync(file, "utf8"), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
-  const callsWalk = (node: ts.Node): boolean =>
-    (ts.isCallExpression(node) &&
-      ts.isIdentifier(node.expression) &&
-      (node.expression.text === "walkLayers" || node.expression.text === "checkExplicitSources")) ||
-    ts.forEachChild(node, child => (callsWalk(child) ? true : undefined)) === true;
+function sourceRows(text = readFileSync(fileURLToPath(import.meta.url), "utf8")): { title: string; budget: string | undefined; walks: boolean }[] {
+  const source = ts.createSourceFile("workbench-saved-precedence.test.ts", text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const walkers = new Set(["walkLayers", "checkExplicitSources"]);
+  const helpers = new Map<string, ts.FunctionDeclaration>();
+  const collectHelpers = (node: ts.Node): void => {
+    if (ts.isFunctionDeclaration(node) && node.name !== undefined) helpers.set(node.name.text, node);
+    ts.forEachChild(node, collectHelpers);
+  };
+  collectHelpers(source);
+  /** Follow local calls rather than matching only direct walker spellings in an it() body. */
+  const callsWalk = (body: ts.Node): boolean => {
+    const visited = new Set<string>();
+    const walk = (node: ts.Node, aliases: Set<string>): boolean => {
+      if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.initializer !== undefined) {
+        if (ts.isIdentifier(node.initializer) && (walkers.has(node.initializer.text) || aliases.has(node.initializer.text))) {
+          aliases.add(node.name.text);
+        }
+      }
+      if (ts.isCallExpression(node)) {
+        const target = ts.isIdentifier(node.expression)
+          ? node.expression.text
+          : ts.isPropertyAccessExpression(node.expression) &&
+              (node.expression.name.text === "call" || node.expression.name.text === "apply") &&
+              ts.isIdentifier(node.expression.expression)
+            ? node.expression.expression.text
+            : undefined;
+        if (target !== undefined) {
+          if (walkers.has(target) || aliases.has(target)) return true;
+          const helper = helpers.get(target);
+          if (helper?.body !== undefined && !visited.has(target)) {
+            visited.add(target);
+            if (walk(helper.body, new Set(aliases))) return true;
+          }
+        }
+      }
+      if (ts.isFunctionDeclaration(node) || ts.isFunctionExpression(node) || ts.isArrowFunction(node)) return false;
+      return ts.forEachChild(node, child => (walk(child, aliases) ? true : undefined)) === true;
+    };
+    return ts.isArrowFunction(body) || ts.isFunctionExpression(body)
+      ? walk(body.body, new Set())
+      : walk(body, new Set());
+  };
   const rows: { title: string; budget: string | undefined; walks: boolean }[] = [];
   const visit = (node: ts.Node): void => {
     if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "it") {
@@ -240,6 +274,33 @@ describe("saved-workflow precedence — cross-mode parity", () => {
   });
 });
 
+/** wb-hkq3: the gate's r5/r6/r7 survivors must classify as walks even through indirection. */
+describe("saved-workflow precedence — indirect-walker census falsifiers", () => {
+  const parsed = (extra: string) => {
+    const file = fileURLToPath(import.meta.url);
+    return sourceRows(`${readFileSync(file, "utf8")}\n${extra}`).at(-1);
+  };
+
+  it("r5: a row walking through a local helper is a layer-walk row", () => {
+    const row = parsed(`async function walkEverything(tag: string) {
+      await walkLayers(tag);
+      await checkExplicitSources(tag);
+    }
+    it("r5 synthetic", async () => { await walkEverything("r5"); });`);
+    expect(row).toEqual({ title: "r5 synthetic", budget: undefined, walks: true });
+  });
+
+  it("r6: a row invoking a walker through Function.prototype.call is a layer-walk row", () => {
+    const row = parsed('it("r6 synthetic", async () => { await walkLayers.call(undefined, "r6"); });');
+    expect(row).toEqual({ title: "r6 synthetic", budget: undefined, walks: true });
+  });
+
+  it("r7: a row walking through a local alias is a layer-walk row", () => {
+    const row = parsed('it("r7 synthetic", async () => { const walk = walkLayers; await walk("r7"); });');
+    expect(row).toEqual({ title: "r7 synthetic", budget: undefined, walks: true });
+  });
+});
+
 describe("saved-workflow precedence — wb-cvjm explicit row budgets", () => {
   it("wb-cvjm: every layer-walk row runs under an explicit file-local budget, none rides the 5000 ms default", ({ task }) => {
     // Runtime truth (the wb-gy0 leg): every case this file registers, with the timeout and retry the runner resolved for it.
@@ -260,6 +321,18 @@ describe("saved-workflow precedence — wb-cvjm explicit row budgets", () => {
     );
     expect(walkRuns, "the registered cases that run under WALK_ROW_BUDGET_MS, once per mode").toEqual(perMode(WALK_ROWS));
     expect(rewalkRuns, "the registered cases that run under REWALK_ROW_BUDGET_MS, once per mode").toEqual(perMode(REWALK_ROWS));
+    // Independent contract anchor: the repository-refactor spec preserves the saved-workflow precedence surface.
+    // These three runner registrations are the base's cases exercising that contract, not a count derived from WALK_ROWS.
+    const contract = readFileSync(fileURLToPath(new URL("../docs/workbench/16-repository-refactor.md", import.meta.url)), "utf8");
+    expect(contract).toContain("Preserve original config migration and saved-workflow file precedence.");
+    const contractCases = [
+      "resolves a colliding name .pi/workflows -> .agents/workflows -> user agent dir, one layer at a time",
+      "lets scriptPath and inline script both outrank a colliding name, scriptPath first",
+      "re-walks the full layer chain and the explicit-source rows after a second session_start, with tool surface and settings bytes unchanged",
+    ];
+    expect([...walkRuns, ...rewalkRuns].sort(), "every contract case stays budgeted in each mode").toEqual(
+      perMode(contractCases).sort(),
+    );
     // FROZEN SHAPE (rule 16), as this cut registers them: 3 modes x 2 walk rows and 3 modes x 1 re-walk row carry a budget.
     expect([walkRuns.length, rewalkRuns.length], "budgeted registrations [walk, re-walk]").toEqual([6, 3]);
     expect(
