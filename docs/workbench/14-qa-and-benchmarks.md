@@ -109,3 +109,49 @@ Evidence of record for the five docs/workbench/11 acceptance journeys, one row p
 | 5 | fixture pass | test/workbench-control.test.ts: "rule 2: observer-only grants cannot control under any action spelling, and nothing is read before refusing" |
 | 5 | fixture pass | test/workbench-control.test.ts: "rule 3: only the frozen per-provider allowlist resolves an action (exact, case-sensitive, no prototype lookups)" |
 | 5 | fixture pass | test/workbench-native-details.test.ts: "preserves selected node on resize and closes without invoking any runtime controls" |
+
+## HX graduation-vocabulary case roster
+
+The standing wb-tz2.10 census tests the following reader cases and refusal branches. This table is the outside-census case inventory for its frozen-shape assertion: dropping a case and adjusting every literal inside the census must still disagree with this independent docs row. This is fixture coverage, not a graduation-state claim or proof that the upstream HX inventory has shipped.
+
+| Case | Judged branch |
+| --- | --- |
+| R01 | the measured incomplete read, absence not licensed |
+| R02 | complete, absence not licensed |
+| R03 | complete with two rows, runtime-licensed |
+| R04 | complete-empty, runtime-licensed |
+| R05 | complete-empty, absence not licensed |
+| R06 | budget-exhausted |
+| R07 | cancelled |
+| R08 | view-invalidated |
+| R09 | provider-failed |
+| R10 | schema-failed |
+| R11 | internal-failed |
+| R12 | protocol-failed |
+| R13 | usage-error |
+| R14 | rows not retained |
+| R15 | a licence on an incomplete kind, not honoured |
+| R16 | coverage batch ids withheld from the evidence references |
+| R17 | coverage evidence references capped at 32 |
+| R18 | the invoking operation named: one grouping edge |
+| R19 | the injected read through registerHyperUnixFind, end to end |
+| R20 | a native execution id and evidence handles |
+| F01 | a host context that is not an object |
+| F02 | a host scope without a principal |
+| F03 | a read target with an empty kind |
+| F04 | an unzoned capture time |
+| F05 | an oversized invocation id |
+| F06 | an operation reference without a type |
+| F07 | another provider contract |
+| F08 | another representation |
+| F09 | an unregistered execution kind |
+| F10 | a licence that is not a boolean |
+| F11 | rows that are not an array |
+| F12 | a missing operation |
+| F13 | a short binary digest |
+| F14 | a missing runtime version |
+| F15 | a mutation-rejected outcome |
+| F16 | a mutation-partial outcome |
+| F17 | a complete-empty answer that carries rows |
+| F18 | a reading of another workspace |
+| F19 | an operation reference aliasing the query node itself |
