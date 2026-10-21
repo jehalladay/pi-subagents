@@ -9,9 +9,11 @@
  * suites stay the minimal cli_version-free pins. Provider rows run a scripted rf stand-in HERMETICALLY: an absolute node shebang
  * (process.execPath) and PATH restricted to the stand-in's own directory, so the provider can resolve no other rf and a stand-in
  * fault refuses as a launch failure, never as a render by a host rf; each refusal row pins its cause (category and message). The
- * live drift diff of a real capture against the same roster is the rf-preview tier's row (test/workbench-native-rf-preview.test.ts). */
+ * live drift diff of a real capture against the same roster is the rf-preview tier's row (test/workbench-native-rf-preview.test.ts).
+ * wb-973.20: the captured roster is exhaustive in both directions (owner ruling R649 (3)), so a result key beyond it fails the diff
+ * (R649 row), and U6 holds the roster to its capture receipt of record, an anchor outside the JSON, the literal and the fixture. */
 import { createHash } from 'node:crypto';
-import { chmodSync, writeFileSync } from 'node:fs';
+import { chmodSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { afterEach, describe, expect, it } from 'vitest';
 import { CapabilityError, type JsonValue } from '../src/workbench/capability-registry.js';
@@ -20,7 +22,7 @@ import { nativeReactiveFiberPreview } from '../src/workbench/providers/reactivef
 import { type ReactiveFiberTopologyContext, reactivefiberTopology } from '../src/workbench/reactivefiber-observer.js';
 import {
   diffAgainstRoster, fullShapeRf, fullShapeWork, fullShapeWorkMetrics, type Json, RF_FIXTURE_GRAPH_REVISION, RF_FIXTURE_OPERATION_ID,
-  RF_FIXTURE_RELEASE, RF_FIXTURE_TEXT, RF_FIXTURE_WORKSPACE_ID, readRfResultRoster,
+  RF_FIXTURE_RELEASE, RF_FIXTURE_TEXT, RF_FIXTURE_WORKSPACE_ID, type RfResultRoster, readRfResultRoster,
 } from './helpers/rf-render-fixture.js';
 import { installScratchLeakGuard, makeScratch, removeScratch } from './helpers/scratch.js';
 
@@ -55,6 +57,11 @@ const PINNED_WORK_METRICS_KEYS = [
   'state_read_count', 'state_write_count', 'journal_records_scanned', 'blob_bytes_written', 'history_rows_materialized',
   'reused_component_count', 'observation_executed_count', 'observation_reused_count', 'publish_conflict_count',
 ];
+
+/** The roster's capture receipt of record (receipts/wb-973.17.md: forge cmd_30b6975c69e8, the 0.1.768 re-pin), read by U6. */
+const ROSTER_RECEIPT = 'docs/workbench/receipts/wb-973.17.md';
+/** How the receipt spells a small count. */
+const COUNT_WORDS: readonly string[] = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
 
 const roster = readRfResultRoster();
 
@@ -139,6 +146,33 @@ describe('SCG-R11: full-shape offline RF result fixture', () => {
     expect(roster.workMetricsKeys).toStrictEqual(PINNED_WORK_METRICS_KEYS);
   });
 
+  // U6 (wb-973.20, gate F5): an anchor OUTSIDE the roster, the literal and the fixture. The roster's capture receipt of record
+  // (rule 13 receipts route; a receipt is append-only, so its statements hold still) names the capture id and states the
+  // measured counts and the keys the re-pin added. A coordinated hollow or swap of one key across the JSON roster, the literal
+  // above and fullShapeRf keeps those three agreeing with each other, never with the receipt, so it is red here.
+  it('U6: the captured roster agrees with its receipt of record: the capture id, the four stated counts and every key the delta names', () => {
+    const receipt = readFileSync(new URL(`../${ROSTER_RECEIPT}`, import.meta.url), 'utf8');
+    expect([roster.source, roster.receipt]).toStrictEqual(['captured', 'cmd_30b6975c69e8']);
+    expect(receipt).toContain(`(receipt of record ${roster.receipt})`);
+    expect(receipt).toContain(`is promoted to source ${roster.source} with receipt ${roster.receipt}.`);
+    const delta = receipt.split('\n').filter(line => line.startsWith(`- Delta read at the installed reactivefibercli ${roster.rfVersion} distribution: `));
+    expect(delta).toHaveLength(1);
+    const line = delta[0] ?? '';
+    const stated = (pattern: RegExp): string => pattern.exec(line)?.[1] ?? '<absent>';
+    expect([
+      stated(/so it joins the result roster \((\d+) keys\)/), stated(/; (\d+) keys\); result\.work is unchanged/),
+      stated(/result\.work is unchanged \((\d+) keys\)/), stated(/provenance carries the (\w+) roster keys/),
+    ]).toStrictEqual([
+      String(roster.resultKeys.length), String(roster.workMetricsKeys.length), String(roster.workKeys.length), COUNT_WORDS[roster.provenanceKeys.length],
+    ]);
+    const addedResult = [...line.matchAll(/result\.([a-z_]+) is assigned on every render/g)].map(match => match[1] ?? '');
+    const addedMetrics = stated(/to the ten legacy keys plus (.+?) \(/).split(/, | and /);
+    expect([addedResult.length, addedMetrics.length]).toStrictEqual([1, 4]);
+    expect(addedResult.filter(key => !roster.resultKeys.includes(key))).toStrictEqual([]);
+    expect(addedMetrics.filter(key => !roster.workMetricsKeys.includes(key))).toStrictEqual([]);
+    expect(roster.workMetricsKeys.length - addedMetrics.length).toBe(10);
+  });
+
   // Acceptance 1 (census-grade): the fixture's result keys are a superset of the frozen roster, provenance carries the three
   // named keys, work has exactly 6 keys and work_metrics exactly 14, beside the eight envelope keys.
   it('SCG-R11: the offline RF result fixture carries every key the pinned rf emits', () => {
@@ -178,15 +212,30 @@ describe('SCG-R11: full-shape offline RF result fixture', () => {
     expect(diffAgainstRoster(roster, { ...resultOf(fullShapeRf(ws)), work_metrics: without(fullShapeWorkMetrics(), key) }).failures)
       .toStrictEqual([`missing result.work_metrics.${key}`]);
   });
-  it('the census names a work or work_metrics key beyond the roster, and records an extra result key without failing on it', () => {
+  it('the census names a work or work_metrics key beyond the roster, and a constructed roster records an extra result key without failing on it', () => {
     const result = resultOf(fullShapeRf(ws));
     expect(diffAgainstRoster(roster, { ...result, work: { ...fullShapeWork(), seventh_count: 0 } }).failures).toStrictEqual(['unexpected result.work.seventh_count']);
     expect(diffAgainstRoster(roster, { ...result, work_metrics: { ...fullShapeWorkMetrics(), eleventh_count: 0 } }).failures)
       .toStrictEqual(['unexpected result.work_metrics.eleventh_count']);
     // A conditional key rides beside the roster: view_id is stated only by a --view render (render_service.py:1503-1508 at the
-    // 0.1.768 pin). retry_work (an extra key at 0.1.723) and necessity are roster members since their pins.
-    expect(diffAgainstRoster(roster, { ...result, view_id: 'view.demo' }))
+    // 0.1.768 pin). retry_work (an extra key at 0.1.723) and necessity are roster members since their pins. Beside a constructed
+    // roster (a floor read off the emitter, before a capture promotes it) the extra key is recorded, never failed; beside the
+    // captured roster it fails by name (owner ruling R649 (3), the R649 row below).
+    const constructed: RfResultRoster = { ...roster, source: 'constructed', receipt: null };
+    expect(diffAgainstRoster(constructed, { ...result, view_id: 'view.demo' }))
       .toStrictEqual({ failures: [], extraResultKeys: ['view_id'] });
+  });
+
+  // wb-973.20 (owner ruling R649 (3)): the captured pinned roster is exhaustive in BOTH directions. A result key beyond it is the
+  // rf surface drift the pin exists to catch, so the diff fails on it by name (and still records it); the legitimate path for a
+  // new key is the gated rf-pin-bump cut that re-captures the roster (the wb-973.17 route rule), never a silent pass.
+  it('R649: a result held to the captured pinned roster fails on every result key beyond it, naming each, and still records them', () => {
+    expect(roster.source).toBe('captured');
+    const result = resultOf(fullShapeRf(ws));
+    expect(diffAgainstRoster(roster, { ...result, view_id: 'view.demo' })).toStrictEqual({ failures: ['unexpected result.view_id'], extraResultKeys: ['view_id'] });
+    expect(diffAgainstRoster(roster, { ...result, zeta_count: 0, alpha_count: 0 }))
+      .toStrictEqual({ failures: ['unexpected result.alpha_count', 'unexpected result.zeta_count'], extraResultKeys: ['alpha_count', 'zeta_count'] });
+    expect(diffAgainstRoster(roster, { ...without(result, 'retry_work'), view_id: 'view.demo' }).failures).toStrictEqual(['missing result.retry_work', 'unexpected result.view_id']);
   });
 
   // Acceptance 2: nativeReactiveFiberPreview round-trips the full-shape fixture (extends the envelope-audit admission row).

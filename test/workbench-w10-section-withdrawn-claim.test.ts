@@ -15,6 +15,9 @@
  * The row-roster geometry is anchored to the live W10 document's rendered table, not only this census's own literals.
  * The current-doc row count is a cut-time literal (2); a later W10 table or row expansion must update this census.
  * The independently pinned W10 stamped-claim guard remains unchanged.
+ * The RESIDUALS roster is anchored outside this file as well (wb-64x.1, the CT6 / 6ze.39 class): docs/workbench/14
+ * "W10 withdrawn-claim census residuals" names each quiet row with its family, an exemplar its page carries exactly once
+ * and a clear form whose page reads the withdrawn claim where that table says; judged both ways, rows frozen as read.
  * F9's title is narrowed to column 1, while the independent HEADERS roster judges every column. A newly discovered
  * escape adds a named residual unless it contradicts one of these pinned claims (rule 19(c), enumerate-the-resolvable).
  * Withdrawn spellings: "zero durable writes" and "no durable write" (including its plural). Rendered inline emphasis,
@@ -31,7 +34,8 @@
  * location only. ASCII look-alikes, new paraphrases, struck-through text, renamed relocated keys, inline HTML in
  * relocated rows, W10 heading text and unrelated outside prose remain named residuals, not universal claims.
  * No provider/receipt claims are inferred here. The stamped
- * guard remains independent and unchanged. Synthetic falsifiers do not bind mutable live docs wording. Rule 16 freezes
+ * guard remains independent and unchanged. Synthetic falsifiers do not bind mutable live W10 docs wording (only the
+ * RESIDUALS exemplars are bound, to the docs/14 anchor above). Rule 16 freezes
  * each row's full requirement/name and each location/claim diagnosis, not only counts. No processes or scratch allocations.
  */
 import { readFileSync } from "node:fs";
@@ -270,6 +274,48 @@ const CONTROLS: readonly [string, string][] = [
   ["C4 phrase cannot be fabricated by joining adjacent cells", page(`${TABLE}\n| Another | partial | zero durable | writes |`)],
   ["C5 extra blank lines and tight pipes render the same table", page(TABLE.replaceAll(" | ", "|"), "\n")],
 ];
+// wb-64x.1 (64x cut-5 F6): the RESIDUALS roster's anchor OUTSIDE this file, read in this census's own rendered model.
+// A family removed, renamed or silenced in every literal here still disagrees with the docs/14 table, so it reds.
+const DOCS_14 = "docs/workbench/14-qa-and-benchmarks.md";
+const DOCS_14_TITLE = `14 ${String.fromCodePoint(0x2014)} Test strategy, conformance suite, benchmark and adversarial controls`;
+const ANCHOR_HEADING = "W10 withdrawn-claim census residuals";
+const ANCHOR_HEADER = ["Quiet row", "Residual family", "Exemplar", "Clear form", "Clear form reads"] as const;
+interface AnchorRow { readonly id: string; readonly family: string; readonly exemplar: string; readonly clear: string; readonly reads: string }
+/** A whole-cell code span is literal source text, so an exemplar is exactly what its page carries (`\n` = line break). */
+function codeCell(cell: Tokens.TableCell | undefined): string | undefined {
+  const only = cell?.tokens.length === 1 ? cell.tokens[0] : undefined;
+  return only?.type === "codespan" ? String(only.text) : undefined;
+}
+function residualAnchor(markdown: string): { readonly shape: readonly string[]; readonly rows: readonly AnchorRow[] } {
+  const tokens: TokensList = new Lexer({ gfm: true }).lex(markdown);
+  const shape: string[] = [];
+  const named: Tokens.Heading[] = [];
+  walk(tokens, token => { if (isHeading(token) && rendered(token.tokens) === ANCHOR_HEADING) named.push(token); });
+  const start = named.length === 1 && named[0]?.depth === 2 ? tokens.indexOf(named[0]) : -1;
+  if (start < 0) return { shape: ["docs/14 must have exactly one top-level level-2 residual anchor heading"], rows: [] };
+  const title = tokens.find(isHeading);
+  if (title === undefined || title.depth !== 1 || rendered(title.tokens) !== DOCS_14_TITLE || tokens.indexOf(title) >= start) shape.push("the residual anchor must belong to the docs/14 title");
+  walk(tokens.slice(0, start), token => { if (isHeading(token) && token.depth === 1 && token !== title) shape.push("the residual anchor has an intervening level-1 parent"); });
+  let end = tokens.length;
+  for (let index = start + 1; index < tokens.length; index++) {
+    const token = tokens[index];
+    if (token !== undefined && isHeading(token) && token.depth <= 2) { end = index; break; }
+  }
+  const blocks = tokens.slice(start + 1, end).filter(token => token.type !== "space");
+  walk(blocks, token => { if (token.type === "html") shape.push("the residual anchor contains raw HTML"); });
+  const table = blocks[1];
+  if (blocks.length !== 2 || blocks[0]?.type !== "paragraph" || table === undefined || !isTable(table)) return { shape: [...shape, "the residual anchor must be exactly its intro paragraph and one table"], rows: [] };
+  if (table.header.map(cellText).join(" | ") !== ANCHOR_HEADER.join(" | ")) shape.push("the residual anchor table header must be its committed header");
+  const rows: AnchorRow[] = [];
+  for (const [index, cells] of table.rows.entries()) {
+    const [id, family, , , reads] = cells;
+    const exemplar = codeCell(cells[2]);
+    const clear = codeCell(cells[3]);
+    if (cells.length !== ANCHOR_HEADER.length || id === undefined || family === undefined || reads === undefined || exemplar === undefined || clear === undefined) shape.push(`residual anchor row ${index + 1} must be five cells with a code-span exemplar and clear form`);
+    else rows.push({ id: cellText(id), family: cellText(family), exemplar, clear: clear.replaceAll("\\n", "\n"), reads: cellText(reads) });
+  }
+  return { shape, rows };
+}
 
 describe("wb-64x W10 section-level withdrawn-claim census (rendered-model)", () => {
   it("L1 every live W10 row cell and paragraph, and every relocated W10 capability row, has no withdrawn claim", () => {
@@ -326,6 +372,28 @@ describe("wb-64x W10 section-level withdrawn-claim census (rendered-model)", () 
     expect(rows.length).toBe(2);
     expect(new Set(CELLS.map(cell => cell.row)).size).toBe(rows.length);
     expect(CELLS.length).toBe(rows.length * 4);
+  });
+  it("external residual anchor (wb-64x.1): docs/14 names exactly the RESIDUALS roster; each quiet page carries its exemplar once and reads quiet, and its clear form reads where docs/14 says", () => {
+    const anchor = residualAnchor(readFileSync(join(process.cwd(), DOCS_14), "utf8"));
+    expect(anchor.shape).toEqual([]);
+    expect(anchor.rows.map(row => `${row.id}:${row.family}`)).toEqual(RESIDUALS.map(residual => `${residual.id}:${residual.family}`));
+    for (const row of anchor.rows) {
+      const input = RESIDUALS.find(residual => residual.id === row.id)?.input ?? "";
+      const at = row.reads.lastIndexOf(": ");
+      expect(input.split(row.exemplar).length - 1, `${row.id}: exemplar occurrences in the quiet page`).toBe(1);
+      expect(judgeSection(input), `${row.id}: the quiet page`).toEqual({ shape: [], claims: [] });
+      expect(judgeSection(input.replace(row.exemplar, () => row.clear)), `${row.id}: the clear form`).toEqual({ shape: [], claims: [{ location: row.reads.slice(0, at), claim: row.reads.slice(at + 2) }] });
+    }
+    // Rule 16: the anchor rows as read at the cut base, so a docs-side edit that the judge still accepts reds here too.
+    expect(anchor.rows.map(row => [row.id, row.family, row.exemplar, row.clear, row.reads].join(" | "))).toEqual([
+      "ENUM0 | ASCII look-alikes | zero durab1e writes | zero durable writes | W10 table 1 row 2 Caveats: zero durable writes",
+      "ENUM1 | hyphenated paraphrases | zero durable-writes | zero durable writes | W10 table 1 row 2 Caveats: zero durable writes",
+      "ENUM2 | new paraphrases | No persistent writes occur. | No durable writes occur. | W10 table 1 row 2 Caveats: no durable write",
+      "ENUM3 | struck-through text | ~~zero durable writes~~ | zero durable writes | W10 table 1 row 2 Caveats: zero durable writes",
+      "ENUM4 | renamed relocated W10 keys | RF renamed adapter | ReactiveFiber reader adapter | outside W10 table 1 row 1 Caveats: zero durable writes",
+      "ENUM5 | relocated inline HTML including br-split claim | zero durable<br>writes | zero durable writes | outside W10 table 1 row 1 Caveats: zero durable writes",
+      "ENUM6 | W10 heading text | ## W10: ReactiveFiber provider/interop zero durable writes | ## W10: ReactiveFiber provider/interop\n\nzero durable writes | W10 paragraph: zero durable writes",
+    ]);
   });
   it("S-SHAPE standing rule 16 freezes full requirements and each location/claim pin, not only row counts", () => {
     // U1: the actual CELL runner's acceptance-bearing roster, including Feature and Status.
