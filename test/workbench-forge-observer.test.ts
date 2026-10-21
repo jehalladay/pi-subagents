@@ -8,7 +8,8 @@ import type * as ForgeSdk from '@forge/sdk';
 import ts from 'typescript';
 import {afterAll, describe, expect, expectTypeOf, it, vi} from 'vitest';
 import {CapabilityError, CapabilityRegistry, type JsonValue} from '../src/workbench/capability-registry.js';
-import {type ForgeObservedRelation, forgeGateTopology} from '../src/workbench/forge-observer.js';
+import {type ControlDecision, decideControl} from '../src/workbench/control.js';
+import {type ForgeGateTopology, type ForgeObservedRelation, forgeGateTopology} from '../src/workbench/forge-observer.js';
 import {nativeEvidence} from '../src/workbench/native-evidence.js';
 import {type NativeRef, ObservationProjection} from '../src/workbench/observation.js';
 import {readForgeGateStatus, registerForgeGateStatus, registerNativeForgeGateStatus} from '../src/workbench/providers/forge.js';
@@ -305,6 +306,82 @@ describe('Forge gate.status reader adapter', () => {
     const before = structuredClone(value);
     forgeGateTopology(value, context);
     expect(value).toStrictEqual(before);
+  });
+
+  // wb-4ap.1 COLLECTIVE-ADAPTATION-R1, the F9 slot of this block: "When a gate.status package row carries
+  // last_result_state.invalidation_basis with kind === "invalidation-basis/v2" and a digest-shaped derived_from, the package
+  // NativeSnapshot produced by forgeGateTopology shall carry subjectBasis === derived_from verbatim." Every row is the measured
+  // SOURCE_WITH_STATE row (wb-4ap.11) or a mutation of it through test/helpers/forge-last-result-state.ts: MEASURED_ROW is the
+  // STALE row over basis(A, B). docs/workbench/07 § Forge provider: "Preserve actual source basis".
+  it('F9 (wb-4ap.1): the measured STALE row carries its derived_from digest B as the package subjectBasis, never its source_digest A', () => {
+    // R1 L4: "forgeGateTopology(withPackages(stale), context).snapshots[1].subjectBasis equals B (the derived_from digest, not
+    // source_digest A). RED on 9df9a03: undefined."
+    expect(A).not.toBe(B);
+    const result = forgeGateTopology(withPackages(MEASURED_ROW), context);
+    const [workspace, pkg] = result.snapshots;
+    expect(pkg.source).toStrictEqual(packageRef('code:pi-subagents'));
+    expect(pkg.subjectBasis).toBe(B);
+    expect(pkg.subjectBasis).not.toBe(A);
+    expect(Object.keys(workspace)).not.toContain('subjectBasis');
+    expect(result.diagnostics).toStrictEqual([]);
+  });
+
+  it('F9 (wb-4ap.1): each digest shape native-evidence accepts - sha256-prefixed, bare 64-hex and dirty-tree/v1 - round-trips verbatim as subjectBasis', () => {
+    // R1: "Verbatim carriage across the three accepted shapes (native-evidence.ts:87@9df9a03): a bare 64-hex derived_from and a
+    // dirty-tree/v1:<40hex>:sha256:<64hex> derived_from each round-trip as subjectBasis unchanged."
+    const bare = 'c'.repeat(64);
+    const dirty = `dirty-tree/v1:${'d'.repeat(40)}:sha256:${'e'.repeat(64)}`;
+    const carried = (derivedFrom: string): string | undefined =>
+      forgeGateTopology(withPackages(described({invalidation_basis: basis(A, derivedFrom)})), context).snapshots[1].subjectBasis;
+    expect(carried(B)).toBe(B);
+    expect(carried(bare)).toBe(bare);
+    expect(carried(dirty)).toBe(dirty);
+    // The three shapes side by side on three refs of one reading: each package keeps its own derived_from.
+    const result = forgeGateTopology(withPackages(
+      described({invalidation_basis: basis(A, B)}, {ref: 'code:sha256'}),
+      described({invalidation_basis: basis(A, bare)}, {ref: 'code:bare-hex'}),
+      described({invalidation_basis: basis(A, dirty)}, {ref: 'code:dirty-tree'}),
+    ), context);
+    expect(result.snapshots.map(snapshot => [snapshot.source.id, snapshot.subjectBasis])).toStrictEqual([
+      ['workspace', undefined], ['code:sha256', B], ['code:bare-hex', bare], ['code:dirty-tree', dirty],
+    ]);
+    expect(result.diagnostics).toStrictEqual([]);
+  });
+
+  // docs/workbench/09 § "Derived view indexes": "byParent, byDependency, bySourceBasis -> child lists and reverse lookup".
+  it('F9 (wb-4ap.1) L3: a projection refresh applies the basis-bearing package snapshot and a basis query on B returns that package node alone', () => {
+    // R1 L3: "ObservationProjection.refresh(snapshot) returns 'applied' for the basis-bearing snapshot and query({scope,
+    // basis: B, limit: 10}).nodes returns the package node (ObservationQuery.basis index, observation.ts:86@9df9a03)."
+    const result = forgeGateTopology(withPackages(MEASURED_ROW, {...DESCRIPTORLESS, ref: 'code:sibling'}), context);
+    const [workspace, pkg, sibling] = result.snapshots;
+    expect(pkg.subjectBasis).toBe(B);
+    const projection = new ObservationProjection();
+    expect(projection.refresh(pkg)).toBe('applied');
+    expect(projection.refresh(workspace)).toBe('applied');
+    expect(projection.refresh(sibling)).toBe('applied');
+    const byBasis = projection.query({scope, basis: B, limit: 10});
+    expect(byBasis.truncated).toBe(false);
+    expect(byBasis.nodes.map(node => node.nativeRef)).toStrictEqual([packageRef('code:pi-subagents')]);
+    expect(byBasis.nodes[0]).toMatchObject({subjectBasis: B, kind: 'forge.gate.status.package.snapshot'});
+    // The index keys on derived_from: the source digest the producer reads now finds no node.
+    expect(projection.query({scope, basis: A, limit: 10}).nodes).toStrictEqual([]);
+  });
+
+  it('F9 (wb-4ap.1) static pin: the forgeGateTopology doc comment states no interval or definitionDigest and that the published per-package basis is echoed, never that gate.status carries no basis', () => {
+    // R1: "The header comment at forge-observer.ts:71-73 no longer asserts gate.status carries no basis; it states no interval or
+    // definitionDigest exists and the per-package derived-verdict basis is echoed when published."
+    const text = workbenchSource('forge-observer.ts');
+    const source = ts.createSourceFile('forge-observer.ts', text, ts.ScriptTarget.Latest, true);
+    const declaration = source.statements.find((statement): statement is ts.FunctionDeclaration => ts.isFunctionDeclaration(statement) && statement.name?.text === 'forgeGateTopology');
+    expect(declaration).toBeDefined();
+    const ranges = declaration === undefined ? [] : ts.getLeadingCommentRanges(text, declaration.getFullStart()) ?? [];
+    expect(ranges).toHaveLength(1);
+    // The one doc comment attached to the declaration, its line breaks and leading asterisks folded into single spaces.
+    const doc = ranges.map(range => text.slice(range.pos, range.end)).join('').replace(/\s*\n\s*\*\s?/g, ' ');
+    expect(doc.startsWith('/**')).toBe(true);
+    expect(doc).toMatch(/no snapshot has an interval or definitionDigest/);
+    expect(doc).toMatch(/carries its derived_from as subjectBasis/);
+    expect(doc).not.toMatch(/\bno\b[^.;]*\bbasis\b/i);
   });
 });
 
@@ -635,6 +712,242 @@ describe('wb-4ap.6 COLLECTIVE-ADAPTATION-R6: the word is echoed from the produce
     expect('then' in first).toBe(false);
     expect(forgeGateTopology(value, context)).toStrictEqual(first);
     expect(value).toStrictEqual(before);
+  });
+});
+
+describe('wb-4ap.7 COLLECTIVE-ADAPTATION-R7: reading last_result_state adds no relation and changes no relation kind - one forge-observer grouping edge per package, whatever the descriptor says', () => {
+  // wb-4ap.7 STATEMENT: "Reading last_result_state shall add no relation and change no relation kind: forgeGateTopology shall
+  // state exactly one grouping edge per package with provenance.source === 'forge-observer' and never an ownership, dependency,
+  // causation or hypothesis edge, whatever the descriptor says (semantic_owner, authoritative_read_source and source_ref
+  // included)." RATIONALE: gate.status names no native lifecycle confirmation (forge-observer.ts:131-132@9df9a03) and the
+  // control core permits native actions only on a confirmed-ownership edge (control.ts:184-185@9df9a03), so an ownership
+  // edge minted from a descriptor would escalate observation into control authority. Default test gate, hermetic, no SDK
+  // process: every row mutates the measured B2 row.
+  const OWNER = 'forge:gate';
+  const READ_SOURCE = 'log:.forge/logs/commands.jsonl';
+  /** The F15 descriptor: the measured descriptor naming Forge's gate as its semantic owner and its command log as its read source. */
+  const owned = described({semantic_owner: OWNER, authoritative_read_source: READ_SOURCE});
+  /** The same two values on a malformed (withheld) descriptor. */
+  const withheldOwned = described({freshness: 'FRESH', semantic_owner: OWNER, authoritative_read_source: READ_SOURCE});
+  /** A second, descriptor-less package, so "exactly one grouping edge per package" is judged over more than one package. */
+  const SIBLING_REF = 'code:forge-sdk';
+  const SIBLING: Json = {...DESCRIPTORLESS, ref: SIBLING_REF};
+  /** The F5 edge (:198-199@9df9a03): workspace -> package, kind grouping, provenance forge-observer at the host's observedAt. */
+  const grouping = (ref: string): ForgeObservedRelation => ({scope, from: workspaceRef, to: packageRef(ref), kind: 'grouping',
+    provenance: {source: 'forge-observer', observedAt: context.observedAt}});
+  /** F5's relation-kind scan (:206@9df9a03). */
+  const RELATION_KINDS = /ownership|dependency|causation|hypothesis/;
+  /** The adapter's own reason evidence reference (F1), built from envelope.reason_code: OWNER is its prefix. */
+  const REASON_REF = 'forge:gate.status:FORGE_OK';
+  /** Whatever the descriptor says: each row states a relation in the descriptor's own words, as a mutation of the measured descriptor. */
+  const sayings: [string, Json][] = [
+    ['semantic_owner forge:gate and authoritative_read_source log:.forge/logs/commands.jsonl (the F15 literals)', owned],
+    ['a source_ref naming each relation kind', described({source_ref: ['ownership:forge:gate', 'dependency:code:forge-sdk', 'causation:cmd_9d1c4826a638', 'hypothesis:basis-stale']})],
+    ['a semantic_owner and an authoritative_read_source naming the sibling package', described({semantic_owner: SIBLING_REF, authoritative_read_source: SIBLING_REF})],
+    ['relation-shaped keys: an ownership kind, a dependency relation and a forge provenance with a native confirmation reference', described({kind: 'ownership', relation: 'dependency', provenance: {source: 'forge', nativeConfirmationRef: 'forge-operation:op-planted'}})],
+    ['a malformed (withheld) descriptor carrying the F15 literals', withheldOwned],
+  ];
+  /** AC3's pairs: a descriptor carrying the two planted values beside its twin without them, well formed and withheld (wb-4ap.18
+   * hoists the list out of the AC3 loop header so its shape can be pinned). */
+  const AC3_PAIRS: [string, Json, Json][] = [
+    ['well formed: the F15 descriptor beside the measured STALE row', owned, staleRow],
+    ['withheld: the malformed F15 descriptor beside the malformed FRESH descriptor', withheldOwned, described({freshness: 'FRESH'})],
+  ];
+  /** wb-4ap.18: what a row's descriptor plants beyond the measured one - each last_result_state field whose value differs from
+   * MEASURED_STATE, as key=JSON in key order; 'measured' when none differs, 'no descriptor' when the row carries none. */
+  function planted(row: Json): string {
+    const state = row.last_result_state;
+    if (state === null || typeof state !== 'object' || Array.isArray(state)) return 'no descriptor';
+    const keys = [...new Set([...Object.keys(MEASURED_STATE), ...Object.keys(state)])].sort();
+    const said = keys.filter(key => JSON.stringify(state[key]) !== JSON.stringify(MEASURED_STATE[key])).map(key => `${key}=${JSON.stringify(state[key])}`);
+    return said.length === 0 ? 'measured' : said.join(' ');
+  }
+  /** A projection fed only what forgeGateTopology states for [row, SIBLING]: its snapshots, then its relations. */
+  function observed(row: Json): ObservationProjection {
+    const result = forgeGateTopology(withPackages(row, SIBLING), context);
+    const projection = new ObservationProjection();
+    for (const snapshot of result.snapshots) expect(projection.refresh(snapshot)).toBe('applied');
+    for (const relation of result.relations) projection.relate(relation);
+    return projection;
+  }
+  /** A well-formed, exactly granted, operator-confirmed forge cancel by the scope's own principal: only ownership is left to decide it. */
+  const cancel = (target: NativeRef, projection: ObservationProjection): ControlDecision => decideControl({scope, principal: {id: scope.principal},
+    grants: ['control:forge.cancel'], target, action: 'cancel', params: {confirmed: true}, invocationId: 'inv-wb-4ap.7', requestedAt: '2026-10-15T07:00:02Z'},
+  {projection, now: () => '2026-10-15T07:00:03Z'});
+  /** control.ts:185@9df9a03: deny("no-confirmed-ownership", "authorization", "no confirmed lifecycle ownership"). */
+  const NO_OWNER: ControlDecision = {decision: 'denied', category: 'authorization', reason: 'no confirmed lifecycle ownership', policy: 'no-confirmed-ownership'};
+  const TARGETS = [workspaceRef, packageRef('code:pi-subagents'), packageRef(SIBLING_REF)];
+  /** wb-4ap.19: what the it.each consumer below observed - the [name, row] each case received, recorded after its last
+   * assertion in the order the cases ran - so the consumer liveness row judges count and identity over the loop's inputs.
+   * wb-4ap.20 adds the result each case judged (the very object its three assertions read), so the consumer subject row
+   * judges the result each case's assertions read, not only the row it received. */
+  const consumed: [string, Json, ForgeGateTopology][] = [];
+  /** wb-4ap.19: the fixed tail of the title the consumer registers for each saying (its %s is the saying's name). */
+  const CONSUMER_TAIL = ' - exactly one forge-observer grouping edge per package, the descriptor-less relations unchanged, no other relation kind';
+  /** wb-4ap.20: a row-derived observable of the topology one consumer case judged - the package node's status text, its
+   * subjectBasis (B is the measured derived_from), every relation as kind, ends and provenance source, and the diagnostic
+   * count - so a case whose subject projects differently from its own row disagrees with the frozen observable of that row. */
+  const judgedObservable = (result: ForgeGateTopology): string => {
+    const pkg = result.snapshots[1];
+    const subjectBasis = pkg.subjectBasis === undefined ? 'no subjectBasis' : pkg.subjectBasis === B ? 'subjectBasis B' : `subjectBasis ${pkg.subjectBasis}`;
+    const relations = result.relations.map(relation => `${relation.kind} ${relation.from.id}->${relation.to.id} by ${relation.provenance.source}`);
+    return `${pkg.node.statusText} | ${subjectBasis} | ${relations.join('; ')} | ${result.diagnostics.length} diagnostic(s)`;
+  };
+
+  it('F15 table liveness (wb-4ap.7): the descriptor table holds all five sayings', () => expect(sayings).toHaveLength(5));
+
+  // wb-4ap.18 (wb-4ap.7 test strength, PREP F1/F2 of gate cmd_0dd29fa73ef0): each inline table of this block pins its own shape as
+  // an AC1-style literal derived from the table at d3404d3, so a swapped saying (H4), an emptied TARGETS (H2) or a cut AC3 pair
+  // list (H3) reds instead of passing vacuously.
+  it('F15 table shape (wb-4ap.18): the five sayings are pinned by name and by what each plants beyond the measured descriptor', () => {
+    expect(sayings.map(([name, row]) => `${name} :: ${planted(row)}`)).toStrictEqual([
+      'semantic_owner forge:gate and authoritative_read_source log:.forge/logs/commands.jsonl (the F15 literals) :: authoritative_read_source="log:.forge/logs/commands.jsonl" semantic_owner="forge:gate"',
+      'a source_ref naming each relation kind :: source_ref=["ownership:forge:gate","dependency:code:forge-sdk","causation:cmd_9d1c4826a638","hypothesis:basis-stale"]',
+      'a semantic_owner and an authoritative_read_source naming the sibling package :: authoritative_read_source="code:forge-sdk" semantic_owner="code:forge-sdk"',
+      'relation-shaped keys: an ownership kind, a dependency relation and a forge provenance with a native confirmation reference :: kind="ownership" provenance={"source":"forge","nativeConfirmationRef":"forge-operation:op-planted"} relation="dependency"',
+      'a malformed (withheld) descriptor carrying the F15 literals :: authoritative_read_source="log:.forge/logs/commands.jsonl" freshness="FRESH" semantic_owner="forge:gate"',
+    ]);
+  });
+
+  it('AC3 pair liveness (wb-4ap.18): the AC3 table holds the well-formed and the withheld pair - each row is its twin plus the two planted values', () => {
+    expect(AC3_PAIRS.map(([label, row, twin]) => `${label} :: ${planted(row)} | ${planted(twin)}`)).toStrictEqual([
+      'well formed: the F15 descriptor beside the measured STALE row :: authoritative_read_source="log:.forge/logs/commands.jsonl" semantic_owner="forge:gate" | measured',
+      'withheld: the malformed F15 descriptor beside the malformed FRESH descriptor :: authoritative_read_source="log:.forge/logs/commands.jsonl" freshness="FRESH" semantic_owner="forge:gate" | freshness="FRESH"',
+    ]);
+  });
+
+  it('L3 target liveness (wb-4ap.18): the cancel targets are the workspace and both packages - three refs, pinned whole', () => {
+    expect(TARGETS).toHaveLength(3);
+    expect(TARGETS).toStrictEqual([
+      {provider: 'forge', type: 'gate-status', id: 'workspace', scope: '/tmp/forge-ws'},
+      {provider: 'forge', type: 'gate-status', id: 'code:pi-subagents', scope: '/tmp/forge-ws'},
+      {provider: 'forge', type: 'gate-status', id: 'code:forge-sdk', scope: '/tmp/forge-ws'},
+    ]);
+  });
+
+  it('F15 (wb-4ap.7): a descriptor carrying semantic_owner forge:gate and authoritative_read_source log:.forge/logs/commands.jsonl states only the single F5 grouping edge', () => {
+    const result = forgeGateTopology(withPackages(owned), context);
+    expect(result.relations).toStrictEqual([grouping('code:pi-subagents')]);
+    expect(JSON.stringify(result)).not.toMatch(RELATION_KINDS);
+    // The descriptor is read (its word and basis reach the package snapshot), and still states no relation.
+    expect(result.snapshots[1].subjectBasis).toBe(B);
+    expect(result.snapshots[1].node.statusText).toBe(`${F8_TEXT} · basis STALE`);
+  });
+
+  it.each(sayings)('wb-4ap.7: %s - exactly one forge-observer grouping edge per package, the descriptor-less relations unchanged, no other relation kind', (name, row) => {
+    expect.assertions(3);
+    const result = forgeGateTopology(withPackages(row, SIBLING), context);
+    expect(result.relations).toStrictEqual([grouping('code:pi-subagents'), grouping(SIBLING_REF)]);
+    expect(result.relations).toStrictEqual(forgeGateTopology(withPackages(DESCRIPTORLESS, SIBLING), context).relations);
+    expect(JSON.stringify(result)).not.toMatch(RELATION_KINDS);
+    // wb-4ap.19: recorded only after the last assertion, so a case that returns or throws before it is never counted as judged.
+    // wb-4ap.20: with the result the three assertions read, so the subject row judges that result against the case's own row.
+    consumed.push([name, row, result]);
+  });
+
+  // wb-4ap.19 (wb-4ap.18 PREP F1 of gate cmd_540c84bca52d): the table above is shape-pinned, but nothing pinned the loop that
+  // consumes it - J11 (it.each(sayings.slice(0, 1))) dropped four cases 0|89, and with them saying 3, the only row that kills
+  // the src mutant G7 (a grouping edge retargeted to the package its semantic_owner names). This row reads the file's own task
+  // tree for what the consumer registered and the record above for what it judged.
+  it('F15 consumer liveness (wb-4ap.19): the it.each registers one run-mode case per saying, in table order, and each case judged its own table row to its last assertion', ({task}) => {
+    const registered: string[] = [];
+    const walk = (tasks: typeof task.file.tasks): void => {
+      for (const child of tasks) {
+        if (child.type === 'test' && child.name.endsWith(CONSUMER_TAIL)) registered.push(`${child.name.slice(0, -CONSUMER_TAIL.length)}|${child.mode}`);
+        else if (child.type === 'suite') walk(child.tasks);
+      }
+    };
+    walk(task.file.tasks);
+    // The consumer's frozen shape at 606f5c9 (rule 16): one run-mode case per saying, titled by its name, in table order.
+    expect(registered, 'the cases the it.each consumer registers, by title and mode, in table order').toStrictEqual([
+      'wb-4ap.7: semantic_owner forge:gate and authoritative_read_source log:.forge/logs/commands.jsonl (the F15 literals)|run',
+      'wb-4ap.7: a source_ref naming each relation kind|run',
+      'wb-4ap.7: a semantic_owner and an authoritative_read_source naming the sibling package|run',
+      'wb-4ap.7: relation-shaped keys: an ownership kind, a dependency relation and a forge provenance with a native confirmation reference|run',
+      'wb-4ap.7: a malformed (withheld) descriptor carrying the F15 literals|run',
+    ]);
+    expect(consumed.map(([name]) => name), 'the sayings the consumer judged to its last assertion this run').toStrictEqual(sayings.map(([name]) => name));
+    expect(consumed.map(([, row]) => sayings.findIndex(([, own]) => own === row)), 'each judged case received its own table row object').toStrictEqual(sayings.map((_saying, index) => index));
+  });
+
+  // wb-4ap.20 (wb-4ap.19 PREP F1 of gate cmd_023706418b55): the liveness row above proves each case RECEIVED its own row and
+  // reached its last assertion, not that the subject it judged was computed from that row - K1 (the subject computed from
+  // DESCRIPTORLESS) and K1b (from saying 1's row) kept every row green 0|94, with and without G7, the src mutant only saying
+  // 3's own subject kills. This row judges the recorded result two ways: by a frozen row-derived observable per saying, and
+  // by deep equality with the projection recomputed here from the table row itself under whatever src runs. A substitute
+  // that projects exactly as the row does stays green only while the src keeps the two equal (saying 1 for saying 3 at
+  // ba59fed); a src change that splits them, as G7 does, reds this row.
+  it('F15 consumer subject (wb-4ap.20): the result each case judged equals the projection of its own table row beside the sibling - pinned by a frozen row-derived observable per saying and by the projection recomputed from that row', () => {
+    // The frozen observable of each saying's own row at ba59fed (rule 16), measured, in table order: the four well-formed
+    // descriptors read STALE with subjectBasis B and no diagnostic, the withheld one reads UNKNOWN with one diagnostic.
+    expect(consumed.map(([name, , result]) => `${name} :: ${judgedObservable(result)}`), 'what each case judged, by the frozen observable of its own row').toStrictEqual([
+      'semantic_owner forge:gate and authoritative_read_source log:.forge/logs/commands.jsonl (the F15 literals) :: success (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED) · basis STALE | subjectBasis B | grouping workspace->code:pi-subagents by forge-observer; grouping workspace->code:forge-sdk by forge-observer | 0 diagnostic(s)',
+      'a source_ref naming each relation kind :: success (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED) · basis STALE | subjectBasis B | grouping workspace->code:pi-subagents by forge-observer; grouping workspace->code:forge-sdk by forge-observer | 0 diagnostic(s)',
+      'a semantic_owner and an authoritative_read_source naming the sibling package :: success (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED) · basis STALE | subjectBasis B | grouping workspace->code:pi-subagents by forge-observer; grouping workspace->code:forge-sdk by forge-observer | 0 diagnostic(s)',
+      'relation-shaped keys: an ownership kind, a dependency relation and a forge provenance with a native confirmation reference :: success (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED) · basis STALE | subjectBasis B | grouping workspace->code:pi-subagents by forge-observer; grouping workspace->code:forge-sdk by forge-observer | 0 diagnostic(s)',
+      'a malformed (withheld) descriptor carrying the F15 literals :: success (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED) · basis UNKNOWN | no subjectBasis | grouping workspace->code:pi-subagents by forge-observer; grouping workspace->code:forge-sdk by forge-observer | 1 diagnostic(s)',
+    ]);
+    expect(consumed.map(([, , result]) => result), 'each case judged the projection of its own table row beside the sibling').toStrictEqual(sayings.map(([, row]) => forgeGateTopology(withPackages(row, SIBLING), context)));
+  });
+
+  it('wb-4ap.7: the semantic_owner and authoritative_read_source values never appear in JSON.stringify(result), well formed or withheld', () => {
+    const judged: string[] = [];
+    for (const [label, row, twin] of AC3_PAIRS) {
+      const result = forgeGateTopology(withPackages(row), context);
+      const serialized = JSON.stringify(result);
+      // OWNER is also the prefix of the adapter's own reason reference forge:gate.status:FORGE_OK (F1), built from
+      // envelope.reason_code and never from the descriptor; that one landed reference is set aside first, as wb-4ap.3 sets
+      // aside the reason code that holds CURRENT inside one word.
+      expect(result.snapshots[0].evidenceRefs).toStrictEqual([REASON_REF]);
+      expect(serialized.replaceAll(REASON_REF, '')).not.toContain(OWNER);
+      expect(serialized).not.toContain(READ_SOURCE);
+      // Neither value contributes anything: the row projects exactly as its twin without them.
+      expect(result).toStrictEqual(forgeGateTopology(withPackages(twin), context));
+      judged.push(label);
+    }
+    // wb-4ap.18: every pinned pair is judged - a loop cut to the well-formed pair reds here, a table cut reds AC3 pair liveness.
+    expect(judged).toStrictEqual(AC3_PAIRS.map(([label]) => label));
+  });
+
+  it('L3 (wb-4ap.7): decideControl over a projection fed only forge-observer snapshots and relations denies a forge cancel on every node with no-confirmed-ownership, exactly as on 9df9a03', () => {
+    // DESCRIPTORLESS is the 9df9a03 input shape (that adapter never read last_result_state); every saying decides as it does.
+    const rows: [string, Json][] = [['the descriptor-less 9df9a03 row', DESCRIPTORLESS], ...sayings];
+    for (const [name, row] of rows) {
+      const projection = observed(row);
+      expect(TARGETS.map(target => cancel(target, projection)), name).toStrictEqual(TARGETS.map(() => NO_OWNER));
+    }
+  });
+
+  it('L3 liveness (wb-4ap.7): one hand-stated, natively confirmed forge ownership edge on the same projection permits - the denial is the missing statement, not an unresolvable target', () => {
+    const projection = observed(owned);
+    projection.relate({scope, from: workspaceRef, to: packageRef('code:pi-subagents'), kind: 'ownership',
+      provenance: {source: 'forge', observedAt: context.observedAt, nativeConfirmationRef: 'forge-operation:op-hand-stated'}});
+    expect(cancel(workspaceRef, projection)).toMatchObject({decision: 'permitted', receipt: {phase: 'requested', ownershipConfirmationRef: 'forge-operation:op-hand-stated'}});
+    // The owned child holds no owner rights, and the sibling stays unowned.
+    expect(cancel(packageRef('code:pi-subagents'), projection)).toStrictEqual(NO_OWNER);
+    expect(cancel(packageRef(SIBLING_REF), projection)).toStrictEqual(NO_OWNER);
+  });
+
+  it('wb-4ap.7 static pin: forge-observer.ts spells no other relation kind, and its relations start empty and take exactly one push - the F5 statement built from scope, workspace, ref and observedAt', () => {
+    const source = ts.createSourceFile('forge-observer.ts', workbenchSource('forge-observer.ts'), ts.ScriptTarget.Latest, true);
+    const texts: string[] = [];
+    const accesses: ts.PropertyAccessExpression[] = [];
+    const declared: ts.VariableDeclaration[] = [];
+    const visit = (node: ts.Node): void => {
+      if (ts.isStringLiteralLike(node) || ts.isTemplateHead(node) || ts.isTemplateMiddle(node) || ts.isTemplateTail(node)) texts.push(node.text);
+      if (ts.isPropertyAccessExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === 'relations') accesses.push(node);
+      if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.name.text === 'relations') declared.push(node);
+      ts.forEachChild(node, visit);
+    };
+    visit(source);
+    // No string the module holds spells another relation kind, so the one kind it can state is the literal below.
+    expect(texts.length).toBeGreaterThan(0);
+    expect(texts.filter(text => RELATION_KINDS.test(text))).toStrictEqual([]);
+    expect(declared.map(declaration => declaration.initializer?.getText(source))).toStrictEqual(['[]']);
+    expect(accesses.map(access => access.name.text)).toStrictEqual(['push']);
+    const call = accesses[0].parent;
+    expect(ts.isCallExpression(call) ? call.arguments.map(argument => argument.getText(source)) : [])
+      .toStrictEqual(["{scope: {...scope}, from: {...workspace}, to: {...ref}, kind: 'grouping', provenance: {source: 'forge-observer', observedAt}}"]);
   });
 });
 

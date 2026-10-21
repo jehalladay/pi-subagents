@@ -56,9 +56,11 @@ import { buildOperationsTelemetry } from "../src/workbench/telemetry.js";
 import { buildTimelineLanes, type TimelineReader } from "../src/workbench/timeline.js";
 import { buildWorkflowCatalogReply, buildWorkflowInspectReply, type CapabilityCatalogEntry } from "../src/workbench/tool-replies.js";
 import { selectLinkedTopology } from "../src/workbench/topology-slice.js";
+import { buildWorkflowValidateReply } from "../src/workbench/validate-reply.js";
 import { reconcileGrant } from "../src/workflow/reconcile.js";
 import { detachedCatchDriver } from "./helpers/detached-peer.js";
 import { forgeGateCatchDriver } from "./helpers/forge-gate-catch.js";
+import { nativeLoadNotifyDriver } from "./helpers/native-load-notify.js";
 
 /**
  * wb-a3s.1 seam: @forge/sdk's ServerConnection.spawn() returns a connection whose initialize() rejects with the text the
@@ -693,6 +695,29 @@ function replyTexts(raw: string): string[] {
 }
 
 /**
+ * wb-h8f.6: the wired workflow_validate reply. src/index.ts folds the validate-reply.ts builder's record into
+ * workbench.tool-reply/v1 member by member, composing no string of its own, and serializes the envelope with
+ * sanitizeWorkbenchJsonText; this row drives the builder with the probe in every author-controlled member it renders (meta
+ * name and description, the sourceRef, a declared node capability id) and reads the record and that serialization. The
+ * probe is spelled into the source as escapes, so the designer's raw-control refusal never hides those members. The
+ * artifact digest hashes the probe's source bytes: an identity read from them, never a display of them (the site 9 reading).
+ */
+function validateTexts(raw: string): string[] {
+  const literal = `"${[...raw].map(unit => {
+    const code = unit.codePointAt(0) ?? 0;
+    return code >= 0x20 && code < 0x7f && unit !== '"' && unit !== "\\" ? unit : `\\u{${code.toString(16)}}`;
+  }).join("")}"`;
+  const script = `export const meta={name:${literal},description:${literal}};\nawait node(${literal}, {});\nreturn 1;`;
+  const sourceRef = `/corpus/validate/${raw}.js`;
+  const artifactDigest = `sha256:${createHash("sha256").update(script, "utf8").digest("hex")}`;
+  const source: WorkflowSource = { definition: { kind: "script", id: sourceRef, schemaVersion: WORKFLOW_SCRIPT_SCHEMA_VERSION, artifactDigest }, sourceRef, source: script };
+  const { reply } = buildWorkflowValidateReply({ request: { sourceRef, digest: artifactDigest }, source, grants: ["workbench:design"] });
+  if (reply.status === "refused") throw new Error(`wb-h8f.6: the validate builder refused a corpus probe (${reply.refusal.code})`);
+  const displayed = { ...reply, source: { ...reply.source, artifactDigest: "sha256:<the probe's source digest>" } };
+  return [...strings(displayed), ...strings(JSON.parse(sanitizeWorkbenchJsonText(displayed)))];
+}
+
+/**
  * DIRECT-CALLER row (wb-69g.5 respin U1, BOUNDARY 21:00Z F6 rule; cax.13 O1 precedent): site 12 is execute.ts itself, not the
  * sanitizeWorkbenchJsonText proxy above. buildWorkflowExecuteReply renders five display paths, and its policy echo goes through
  * sanitizeWorkbenchJson, which names no layout, so this row drives the real reply through every one with the probe as the only
@@ -758,6 +783,14 @@ const detachedCatchTexts = detachedCatchDriver();
 const forgeGateCatchTexts = forgeGateCatchDriver(raw => {
   forgeSeam.message = raw;
 });
+
+/**
+ * DIRECT-CALLER row (wb-72c, zo9 gate F-G2): the native-load notify path in src/index.ts registerWorkbenchTools hands the load
+ * error's message (a producer string) to the one helper (label layout, bounded at 300). Nothing is mocked (wb-72c respin U1):
+ * the driver hands the real extension factory a loader that rejects with the probe text (src/index.ts
+ * SubagentsExtensionInjection), and the real extension tells the interactive operator why through ctx.ui.notify.
+ */
+const nativeLoadNotifyTexts = nativeLoadNotifyDriver();
 
 /** wb-h8f.10: latency.ts displayText (selectLatencyDecomposition), the provider and the evidence-ref paths, joined to the corpus in the same commit as its routing through the one helper. */
 function latencyTexts(raw: string): string[] {
@@ -888,6 +921,7 @@ const SITES: readonly Site[] = [
   { site: "site 18 detached-observer.ts shown (projectDetachedReading)", texts: detachedTexts },
   { site: "src/index.ts workflow_detached launch/inspect catch (DIRECT-CALLER, the detached refusal text)", texts: detachedCatchTexts },
   { site: "src/index.ts forge_gate_run catch (DIRECT-CALLER, the forge connection error text)", texts: forgeGateCatchTexts },
+  { site: "src/index.ts native-load notify (DIRECT-CALLER, the load error text the operator is warned with)", texts: nativeLoadNotifyTexts },
   { site: "sites 19/20 workflow_inspect and workbench_catalog replies", texts: replyTexts },
   { site: "site 12 execute.ts buildWorkflowExecuteReply (DIRECT-CALLER: reason, policy value and key, native reference id and scope, definition id, invocation reference)", texts: executeTexts },
   { site: "site 22 observe-query.ts clean (observeInvocation)", texts: observeTexts },
@@ -896,6 +930,7 @@ const SITES: readonly Site[] = [
   { site: "wb-wyr claude-host.ts producer outcomes (createClaudeWorkflowHost.spawnAgent, five failure paths)", texts: claudeHostTexts },
   { site: "wb-71w reconcile-decision.ts mintEvidenceReceipt domainStatus (minted receipt, evidence reply, settled card row)", texts: receiptTexts },
   { site: "wb-71w reconcile.ts reconcileGrant refusal (DIRECT-CALLER: the producer its CapabilityError names)", texts: grantRefusalTexts },
+  { site: "wb-h8f.6 workflow_validate reply (validate-reply.ts buildWorkflowValidateReply and the wiring's outer serialization)", texts: validateTexts },
 ];
 
 describe("wb-952 one-helper corpus through every census site's public function", () => {
@@ -906,10 +941,26 @@ describe("wb-952 one-helper corpus through every census site's public function",
   }
 });
 
+describe("wb-h8f.6 workflow_validate row is not vacuous", () => {
+  it("a plain probe reaches the meta name and description, the declared capability id and the sourceRef, in the record and its serialization", () => {
+    const plain = "wb-h8f.6 obviously fake plain probe";
+    const texts = validateTexts(plain);
+    expect(texts.filter(text => text === plain)).toHaveLength(6);
+    expect(texts.filter(text => text === `/corpus/validate/${plain}.js`)).toHaveLength(2);
+  });
+});
+
 describe("wb-a3s.1 forge_gate_run catch row is not vacuous", () => {
   it("a plain connection refusal reaches the catch and comes back as the reply text", async () => {
     const plain = "wb-a3s.1 obviously fake forge connection refusal";
     expect(await forgeGateCatchTexts(plain)).toEqual([plain]);
+  });
+});
+
+describe("wb-72c native-load notify row is not vacuous", () => {
+  it("a plain load refusal reaches the notify path and comes back as the reason in the warning", async () => {
+    const plain = "wb-72c obviously fake optional install missing";
+    expect((await nativeLoadNotifyTexts(plain))[0]).toContain(`native modules failed to load (${plain})`);
   });
 });
 

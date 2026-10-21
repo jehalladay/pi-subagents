@@ -66,12 +66,12 @@ import { selectItem } from "./ui/select-item.js";
 import { renderWorkflowCard, renderWorkflowEntryCard } from "./ui/workflow-card.js";
 import { openWorkflowFromFleet, showWorkflowsMenu, type WorkflowMenuDeps } from "./ui/workflow-menu.js";
 import { getLifetimeCost, getLifetimeTotal, getSessionContextPercent, type LifetimeUsage, PendingUsagePool, toReportedUsage } from "./usage.js";
-import { type CapabilityDescriptor, CapabilityError, CapabilityRegistry } from "./workbench/capability-registry.js";
+import { type CapabilityDescriptor, CapabilityError, type CapabilityErrorCategory, CapabilityRegistry } from "./workbench/capability-registry.js";
 import { executeClaudeControl } from "./workbench/claude-control.js";
 import { createClaudeControlObserver, createClaudeControlRetention } from "./workbench/claude-control-observer.js";
 import type { ClaudeCallIdentity } from "./workbench/claude-host.js";
 import { type ControlExecutionSummary, type ControlExecutor, createWorkflowControlTool } from "./workbench/control-tool.js";
-import { type CompareRun, catalogWorkflows, compareWorkflowRuns, inspectWorkflowSource, validateWorkflowSource } from "./workbench/designer.js";
+import { type CompareRun, catalogWorkflows, compareWorkflowRuns, inspectWorkflowSource } from "./workbench/designer.js";
 import { executeDetachedControl } from "./workbench/detached-control.js";
 import { createWorkbenchEvidenceStore } from "./workbench/evidence-wiring.js";
 import { createWorkflowExecuteTool, type ExecuteLaunch } from "./workbench/execute-tool.js";
@@ -85,7 +85,16 @@ import { type NativeRef, ObservationProjection, type ObservationScope, type Pres
 import { OBSERVE_CURSOR_MAX_BYTES, OBSERVE_DEFAULT_MAX_BYTES, OBSERVE_MAX_LIMIT, OBSERVE_MAX_MAX_BYTES, OBSERVE_MIN_MAX_BYTES, observeInvocation } from "./workbench/observe-query.js";
 import { createWorkflowReconcileTool } from "./workbench/reconcile-tool.js";
 import { sanitizeWorkbenchJsonText, sanitizeWorkbenchText, stripUnsafeText, WORKBENCH_TEXT_LIMIT } from "./workbench/redaction.js";
-import { buildWorkflowInspectReply, INSPECT_VIEWS } from "./workbench/tool-replies.js";
+import { type ByteCapMarker, buildWorkflowCatalogReply, buildWorkflowInspectReply, INSPECT_VIEWS, TOOL_REPLY_CONTRACT_VERSION, TOOL_REPLY_DEFAULT_MAX_BYTES, TOOL_REPLY_MAX_LIMIT } from "./workbench/tool-replies.js";
+import {
+  type BuildWorkflowValidateReplyInput,
+  buildWorkflowValidateReply,
+  VALIDATE_REPLY_GRANT,
+  type ValidateCompletedReply,
+  type ValidateRefusalCode,
+  type WorkflowValidateReply,
+  type WorkflowValidateRequest,
+} from "./workbench/validate-reply.js";
 import { decideWorkflowCollision, FOREIGN_WORKFLOW_TOOL_NAMES } from "./workflow/collisions.js";
 import { WORKFLOW_ENTRY_TYPE, type WorkflowEntryData, workflowEntryData } from "./workflow/entry.js";
 import { createWorkflowHost } from "./workflow/host.js";
@@ -389,7 +398,31 @@ function workspaceCandidateBasis(cwd: string): { sourceBasis: string; state: "me
   } catch { return unavailable; }
 }
 
-export default function (pi: ExtensionAPI) {
+/**
+ * What a caller other than Pi may hand the extension factory (wb-72c). Pi's extension loader calls the factory with its API
+ * alone, so in a Pi session every field is absent and the factory behaves exactly as it always has. The injection exists for the
+ * native-load notify suites (test/helpers/native-load-notify.ts, which drives the DIRECT-CALLER SITES row of
+ * test/workbench-sanitizer-corpus.test.ts and test/workbench-native-load-notify.test.ts): they reach the real notify path with a
+ * load that fails with their own text and replace no module. It is not a second loader.
+ */
+export interface SubagentsExtensionInjection {
+  /** What registerWorkbenchTools awaits before the Workbench tools register; native-modules.ts loadWorkbenchNative when absent. */
+  readonly loadWorkbenchNative?: () => Promise<unknown>;
+}
+
+/**
+ * The evidence reference a Claude stream observation lists for its session's last message: the F1 identity-ref closure of
+ * runWorkflowTask (wb-72c). A reference is an identity, not display text, and docs/workbench/20 lists claude-message:<uuid> only
+ * when exact, so the id goes through the one helper as an identity check (the forge-evidence.ts operationIdOf shape): it is listed
+ * verbatim when the label layout at the 120 bound leaves it unchanged, and withheld otherwise, never repaired into a reference
+ * the session did not report. An absent or empty id lists nothing.
+ */
+export function claudeMessageEvidenceRef(lastMessageId: string | undefined): string | undefined {
+  if (!lastMessageId) return undefined;
+  return sanitizeWorkbenchText(lastMessageId, 120, "label") === lastMessageId ? `claude-message:${lastMessageId}` : undefined;
+}
+
+export default function (pi: ExtensionAPI, injected: SubagentsExtensionInjection = {}) {
   // Child AgentSessions load normal extensions. Re-entering this extension there
   // would create another manager and leak handlers. Nested orchestration is
   // injected as scoped custom tools by the existing manager instead.
@@ -2441,7 +2474,9 @@ Terse command-style prompts produce shallow, generic work.
       // Only reached behind the validated feature config, after the native
       // modules loaded (wb-cax.10); the registration order is the one the
       // identity capture has always digested.
-      workbenchNative().registerNativeProviders(registry, scope);
+      // wb-973.4: the swarm's RF workspace (validated setting) replaces the scope for the RF capability only; absent keeps the scope.
+      const reactivefiberWorkspaceRoot = loadSettings(cwd).workbench?.reactivefiberWorkspaceRoot;
+      workbenchNative().registerNativeProviders(registry, scope, reactivefiberWorkspaceRoot === undefined ? undefined : { reactivefiberWorkspaceRoot });
       registries.set(scope, registry);
     }
     return registry;
@@ -2594,25 +2629,30 @@ Terse command-style prompts produce shallow, generic work.
     // them. A load that fails leaves the standard upstream surface intact,
     // says why, and lets the next session start try again.
     try {
-      await loadWorkbenchNative();
+      await (injected.loadWorkbenchNative ?? loadWorkbenchNative)();
     } catch (error) {
       workbenchToolsRegistered = false;
-      const reason = stripUnsafeText(error instanceof Error ? error.message : String(error), " ").slice(0, 300);
+      // The load error's message is a producer string, so it is display text: the one helper's label layout redacts every
+      // reading of a gap before anything is stripped (wb-72c), where deleting unsafe units first left a split credential readable.
+      const reason = sanitizeWorkbenchText(error instanceof Error ? error.message : String(error), 300, "label");
       const message = `Workbench tools not registered: native modules failed to load (${reason}).`;
       if (ctx.hasUI) ctx.ui.notify(message, "warning");
       else console.warn(`[pi-subagents] ${message}`);
       return;
     }
+    // Metadata only (wb-h8f.6, owner R2 on the wb-h8f.4 gate): the wb-69g.2 catalog builder's tool-reply/v1 page applies
+    // the exact discover:<id> grant, and no provider invoke() or inspect() is ever called from here.
     pi.registerTool(defineTool({
       name: "workbench_catalog",
       label: "Workbench catalog",
-      description: "List host-registered native capabilities visible under independent discover grants.",
-      parameters: Type.Object({}),
-      execute: async (_id, _params, _signal, _onUpdate, ctx) => {
-        const descriptors = registryFor(ctx.cwd).discover({ grants: grants(ctx) });
-        return textResult(sanitizeWorkbenchJsonText({ capabilities: descriptors.map(({ id, version, description, effectClass, permissions, supportedModes, contractSource }) =>
-          ({ id, version, description, effectClass, permissions, supportedModes, contractSource })) }));
-      },
+      description: `List host-registered native capabilities visible under independent discover grants, as a bounded ${TOOL_REPLY_CONTRACT_VERSION} page: filter matches a capability id or description, limit sizes the page and nextCursor continues it. Discovery never implies invoke.`,
+      parameters: Type.Object({
+        filter: Type.Optional(Type.String()),
+        limit: Type.Optional(Type.Integer({ minimum: 1, maximum: TOOL_REPLY_MAX_LIMIT })),
+        cursor: Type.Optional(Type.String()),
+      }),
+      execute: async (_id, params, _signal, _onUpdate, ctx) =>
+        textResult(sanitizeWorkbenchJsonText(buildWorkflowCatalogReply(registryFor(ctx.cwd).catalogSnapshot(), grants(ctx), { filter: params.filter, limit: params.limit, cursor: params.cursor }))),
     }));
     // Metadata only: the reply builder applies the exact inspect:<id> grant and an advertised, implemented
     // inspect mode, and no provider invoke() or inspect() is ever called from here.
@@ -2627,23 +2667,97 @@ Terse command-style prompts produce shallow, generic work.
       execute: async (_id, params, _signal, _onUpdate, ctx) =>
         textResult(sanitizeWorkbenchJsonText(buildWorkflowInspectReply(registryFor(ctx.cwd).catalogSnapshot(), grants(ctx), params.target, params.view))),
     }));
+    /**
+     * workflow_validate shows the model one dialect (wb-h8f.6; the wb-69g.6 gate F2 wiring requirement, owner 14:55Z): the
+     * builder's workbench.validate-reply/v1 record is folded into workbench.tool-reply/v1 member by member, and its own
+     * contract string never reaches the model. A refusal takes tool-reply's error shape, with the builder's fixed typed
+     * reason as the message. A cut reply carries tool-reply's byte-cap marker naming the tool's cap. Every string is the
+     * builder's, already through its per-field sanitizers, and the folded envelope passes sanitizeWorkbenchJsonText again.
+     */
+    interface WorkflowValidateToolRefusal {
+      readonly contract: typeof TOOL_REPLY_CONTRACT_VERSION;
+      readonly tool: "workflow_validate";
+      readonly ok: false;
+      readonly invoked: false;
+      readonly executed: false;
+      readonly status: "refused";
+      readonly error: { readonly code: ValidateRefusalCode; readonly category: CapabilityErrorCategory; readonly message: string };
+    }
+    type WorkflowValidateToolCompleted = Omit<ValidateCompletedReply, "contractVersion" | "truncation"> & {
+      readonly contract: typeof TOOL_REPLY_CONTRACT_VERSION;
+      readonly tool: "workflow_validate";
+      readonly ok: true;
+      readonly invoked: false;
+      readonly truncated?: ByteCapMarker;
+    };
+
+    function workflowValidateToolReply(reply: WorkflowValidateReply, maxBytes: number): WorkflowValidateToolRefusal | WorkflowValidateToolCompleted {
+      if (reply.status === "refused") {
+        const { code, category, reason } = reply.refusal;
+        return { contract: TOOL_REPLY_CONTRACT_VERSION, tool: "workflow_validate", ok: false, invoked: false, executed: false, status: "refused", error: { code, category, message: reason } };
+      }
+      const { contractVersion: _builderContract, truncation, ...body } = reply;
+      return {
+        contract: TOOL_REPLY_CONTRACT_VERSION, tool: "workflow_validate", ok: true, invoked: false, ...body,
+        ...(truncation ? { truncated: { reason: "byte-cap", maxBytes } } : {}),
+      };
+    }
+
+    /**
+     * The tool's cap is tool-reply's default and holds for the folded text the model reads. The builder fits its own record
+     * to the budget it is given, and its 4096-byte throwing floor stays internal, so an envelope over the cap is rebuilt
+     * under a budget smaller by the measured overshoot.
+     */
+    function workflowValidateToolText(input: Omit<BuildWorkflowValidateReplyInput, "maxBytes">): string {
+      const cap = TOOL_REPLY_DEFAULT_MAX_BYTES;
+      let budget = cap;
+      for (;;) {
+        const text = sanitizeWorkbenchJsonText(workflowValidateToolReply(buildWorkflowValidateReply({ ...input, maxBytes: budget }).reply, cap));
+        const over = Buffer.byteLength(text) - cap;
+        if (over <= 0) return text;
+        budget -= over;
+      }
+    }
+
+    // wb-h8f.6: the wb-69g.6 builder over the host-resolved source, with the grant snapshot from grants(ctx) only; its
+    // reply reaches the model folded into workbench.tool-reply/v1 (workflowValidateToolText). The grant refusal and the
+    // outside-workspace denial keep today's bytes and run before any source read.
     pi.registerTool(defineTool({
       name: "workflow_validate",
       label: "Validate workflow source",
-      description: "Read and validate saved workflow syntax, literal metadata and possible calls without executing or editing source. Requires workbench:design.",
-      parameters: Type.Object({ name: Type.Optional(Type.String()), scriptPath: Type.Optional(Type.String()) }),
+      description: `Read and validate saved workflow syntax, literal metadata and possible calls without executing or editing source. Requires workbench:design. Name the source by name or scriptPath, or by the sourceRef a catalog lists; a digest (sha256:<64 lowercase hex>) beside sourceRef pins its exact bytes, and a source that does not match is refused, never validated. mode is "static" only: syntax is compiled, never executed. inputs and bindings are accepted and reported as uncertain. The reply is ${TOOL_REPLY_CONTRACT_VERSION}: errors, warnings and uncertain conditions in three arrays with offered and returned counts, and a byte-cap marker when the reply was cut.`,
+      parameters: Type.Object({
+        name: Type.Optional(Type.String()),
+        scriptPath: Type.Optional(Type.String()),
+        sourceRef: Type.Optional(Type.String()),
+        digest: Type.Optional(Type.String()),
+        mode: Type.Optional(Type.Literal("static")),
+        inputs: Type.Optional(Type.Unknown()),
+        bindings: Type.Optional(Type.Unknown()),
+      }),
       execute: async (_id, params, _signal, _onUpdate, ctx) => {
-        if (!grants(ctx).includes("workbench:design")) return textResult("Permission denied: workbench:design grant required.");
+        const rights = grants(ctx);
+        if (!rights.includes(VALIDATE_REPLY_GRANT)) return textResult("Permission denied: workbench:design grant required.");
         try {
-          if (params.scriptPath) {
+          // name or scriptPath locates the source as before; sourceRef alone locates it (docs/11), and beside a locator it
+          // is an identity the builder checks against the resolved source.
+          const locator = params.name || params.scriptPath ? { name: params.name, scriptPath: params.scriptPath } : { scriptPath: params.sourceRef };
+          if (locator.scriptPath) {
             const root = realpathSync(ctx.cwd);
-            const target = realpathSync(resolve(root, params.scriptPath));
+            const target = realpathSync(resolve(root, locator.scriptPath));
             if (target !== root && !target.startsWith(`${root}${sep}`)) return textResult("Source denied outside workspace.");
           }
-          const source = inspectWorkflowSource(params, ctx.cwd);
-          // Metadata, diagnostics and source paths are author-controlled: redacted and stripped before the model reads them.
-          return textResult(sanitizeWorkbenchJsonText(validateWorkflowSource(source, { registry: registryFor(ctx.cwd), grants: grants(ctx) })));
-        } catch (error) { return textResult(sanitizeWorkbenchText(error instanceof Error ? error.message : String(error))); }
+          const source = inspectWorkflowSource(locator, ctx.cwd);
+          // An identity the caller did not assert is the host-resolved one; the builder still re-hashes the bytes against it.
+          const request: WorkflowValidateRequest = {
+            sourceRef: params.sourceRef ?? source.sourceRef,
+            digest: params.digest ?? source.definition.artifactDigest,
+            ...(params.mode !== undefined ? { mode: params.mode } : {}),
+            ...(params.inputs !== undefined ? { inputs: params.inputs } : {}),
+            ...(params.bindings !== undefined ? { bindings: params.bindings } : {}),
+          };
+          return textResult(workflowValidateToolText({ request, source, grants: rights, registry: registryFor(ctx.cwd) }));
+        } catch (error) { return textResult(sanitizeWorkbenchText(error instanceof Error ? error.message : String(error), WORKBENCH_TEXT_LIMIT, "text")); }
       },
     }));
     pi.registerTool(defineTool({
@@ -2952,9 +3066,6 @@ Terse command-style prompts produce shallow, generic work.
       // reading of a gap before anything is stripped: a separator put in first splits the very credential it hides
       // (wb-zo9). The projection refuses an empty title, so text that sanitizes to nothing shows a fixed placeholder.
       const clamp = (value: string) => sanitizeWorkbenchText(value, 120, "label") || "unknown";
-      // An evidence reference is an identity, not display text: docs/workbench/20 lists claude-message:<uuid> only when
-      // exact, and neither the layout's deletions nor a placeholder may make one. It keeps the clamp it had (wb-zo9 F1).
-      const reference = (value: string) => stripUnsafeText(value, " ").slice(0, 120);
       // The Claude backend is the only native path of a run; the Pi backend
       // never touches the SDKs, so nothing native is loaded for it (wb-cax.10).
       const native = settings ? await loadWorkbenchNative() : undefined;
@@ -2962,6 +3073,8 @@ Terse command-style prompts produce shallow, generic work.
         nativeSnapshots.set(call.index, snapshot);
         const row = nativeRows.get(call.index);
         const live = !snapshot.terminal;
+        // An evidence reference is an identity, not display text: exact or withheld, never repaired (wb-72c, the F1 closure).
+        const messageRef = claudeMessageEvidenceRef(snapshot.lastMessageId);
         // Native session id is supplied by the SDK, never derived from a Pi
         // workflow agent id. Before init the node is explicitly local-only.
         emitObservation({ provider: snapshot.sessionId ? "claude-agent-sdk" : "pi-workflow",
@@ -2969,7 +3082,7 @@ Terse command-style prompts produce shallow, generic work.
           { title: clamp(call.label), type: "agent", statusText: snapshot.terminal ?? (live ? "observed-running" : "unknown"),
             statusTone: snapshot.terminal === "succeeded" ? "success" : snapshot.terminal === "failed" ? "failure"
               : snapshot.terminal ? "unknown" : "active" }, "claude.stream",
-          snapshot.lastMessageId ? [`claude-message:${reference(snapshot.lastMessageId)}`] : undefined,
+          messageRef ? [messageRef] : undefined,
           task.identityReceipt?.identity.subjectBasis);
         if (!row) return;
         const rowLive = row.state === "start" || row.state === "progress";

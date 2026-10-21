@@ -4,6 +4,9 @@
  * workflow through the registered tool, quoting the docs/workbench text it pins. No module is replaced:
  * the still-running node of B2 is an honest hang through a real seam (a blocking `furnace` executable
  * first on a test-scoped PATH, spawned by the real @furnace/sdk), and the F3 reader spy calls through.
+ * The O1 overshoot row (wb-vcr) wraps the builder export: its spy calls the real builder with a wider cap than the
+ * tool asked for, because the landed builder never answers over its cap and that is the one input that reaches the
+ * tool's whole-reply post-check.
  */
 import { chmodSync, existsSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { delimiter, join } from "node:path";
@@ -11,6 +14,7 @@ import type { ExtensionContext } from "@earendil-works/pi-coding-agent";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import subagentsExtension from "../src/index.js";
 import { ObservationProjection } from "../src/workbench/observation.js";
+import * as observeQuery from "../src/workbench/observe-query.js";
 import { OBSERVE_MAX_LIMIT, OBSERVE_MAX_MAX_BYTES, OBSERVE_MIN_MAX_BYTES, type ObserveReply } from "../src/workbench/observe-query.js";
 import { ctx, hermeticDir, makePi, textOf } from "./helpers/boot-extension.js";
 import { makeScratch, removeScratch } from "./helpers/scratch.js";
@@ -305,6 +309,60 @@ describe("workflow_observe adopts the workbench.observe/v1 reply builder (wb-752
     // Non-vacuous: the sweep starts in the omitted-envelope range and crosses into the full-envelope range.
     expect(fullFrom).toBeGreaterThan(needed);
     expect(fullFrom).toBeLessThan(needed + ENVELOPE_SWEEP_BYTES);
+  }, TIMEOUT);
+
+  it("O1 overshoot (wb-vcr, gate survivor MF): a builder reply over the cap the tool gave it never reaches the caller; the whole-reply post-check moves to the compact envelope for a second read, and refuses typed within maxBytes when every envelope overshoots", async () => {
+    // wb-19q member 23 (carried as wb-vcr): "one targeted case that drives the loop past its envelope and pins the overshoot handling".
+    // src/index.ts, the registered tool: "maxBytes bounds the WHOLE reply".
+    // The landed builder never answers over the cap the tool gives it (it measures `bytes` through the serializer the tool
+    // merges with, and its skeleton fits OBSERVE_MIN_MAX_BYTES), and the merge of two JSON objects with disjoint keys is
+    // one byte shorter than their two texts, so no real reply reaches the post-check's overshoot branch. The input that
+    // reaches it is a builder reply over its cap: the spy calls the real builder with a wider cap and returns that reply unchanged.
+    const booted = await boot();
+    const id = await runNodes(booted, 30);
+    const unbounded = await observeText(booted, { taskId: id, limit: OBSERVE_MAX_LIMIT, maxBytes: OBSERVE_MAX_MAX_BYTES });
+    const whole = JSON.parse(unbounded) as ObservedReply;
+    expect(whole.truncatedForBytes).toBe(false);
+    expect(whole.envelopeOmitted).toBeUndefined();
+    const wholeBytes = Buffer.byteLength(unbounded, "utf8");
+    // The full task envelope as the tool measures it: the whole text less the builder's own bytes, plus the byte the merge saves.
+    const envelope = wholeBytes - whole.bytes + 1;
+    // One byte under the whole text: the budget the tool leaves the builder after the full envelope is whole.bytes - 2.
+    const requested = wholeBytes - 1;
+    // Control: the real builder, told that budget, answers within maxBytes and the full envelope stays.
+    const control = await observeText(booted, { taskId: id, limit: OBSERVE_MAX_LIMIT, maxBytes: requested });
+    expect(Buffer.byteLength(control, "utf8")).toBeLessThanOrEqual(requested);
+    expect((JSON.parse(control) as ObservedReply).envelopeOmitted).toBeUndefined();
+
+    const builder = observeQuery.observeInvocation;
+    const overCapBytes: number[] = [];
+    const overCap: typeof builder = (reader, request) => {
+      const reply = builder(reader, { ...request, maxBytes: OBSERVE_MAX_MAX_BYTES });
+      overCapBytes.push(reply.bytes);
+      return reply;
+    };
+    const reads = vi.spyOn(observeQuery, "observeInvocation").mockImplementationOnce(overCap);
+    const fallback = await observeText(booted, { taskId: id, limit: OBSERVE_MAX_LIMIT, maxBytes: requested });
+    // The first read was asked for the budget after the full envelope and answered two bytes over it, so the whole reply
+    // it would make is one byte over maxBytes: the tool moves on to the compact envelope instead of answering it.
+    expect(reads.mock.calls[0][1].maxBytes).toBe(requested - envelope);
+    expect(overCapBytes).toEqual([whole.bytes]);
+    expect(Buffer.byteLength(fallback, "utf8")).toBeLessThanOrEqual(requested);
+    expect(fallback).toMatch(/^\{/);
+    expect(JSON.parse(fallback)).toMatchObject({ contract: "workbench.observe/v1", taskId: id, envelopeOmitted: ["identity", "inputDigest", "workspaceSourceState", "error"] });
+    // The second read is the real builder's, given the larger budget the compact envelope leaves.
+    expect(reads).toHaveBeenCalledTimes(2);
+    expect(reads.mock.calls[1][1].maxBytes).toBeGreaterThan(requested - envelope);
+
+    // Every envelope overshoots: one typed refusal naming the requested size, within it, and never an over-cap reply.
+    reads.mockClear();
+    reads.mockImplementation(overCap);
+    const tight = OBSERVE_MIN_MAX_BYTES + envelope;
+    const refused = await observeText(booted, { taskId: id, limit: OBSERVE_MAX_LIMIT, maxBytes: tight });
+    const named = `Invalid observe request: maxBytes ${tight} `;
+    expect(refused.slice(0, named.length)).toBe(named);
+    expect(Buffer.byteLength(refused, "utf8")).toBeLessThanOrEqual(tight);
+    expect(reads).toHaveBeenCalledTimes(2);
   }, TIMEOUT);
 
   it("F2 bound (gate 2026-10-16T14:44Z, folded by the owner ruling): a maxBytes outside OBSERVE_MIN_MAX_BYTES..OBSERVE_MAX_MAX_BYTES is refused typed before the task envelope is subtracted", async () => {

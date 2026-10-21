@@ -9,7 +9,7 @@ export interface NativeEvidence {
   nativeId?: string;
   domainStatus?: string;
   evidenceRefs?: string[];
-  /** Native immutable source/graph basis, never the workspace directory. */
+  /** Native immutable source/graph basis, never the workspace directory (RF: a stated sha256 bundle_revision_id, else the graph digest). */
   sourceBasis?: string;
   /**
    * The release the producer states about itself in this result (RF: result.provenance.cli_version), exactly as stated, and
@@ -27,6 +27,8 @@ function text(value: JsonValue | undefined): string | undefined {
 
 /** The observers' bounded-identity size, in UTF-8 bytes. */
 const MAX_RELEASE_BYTES = 256;
+/** The pinned rf schema's digest form ($defs/digest), the only shape an RF bundle_revision_id basis may take. */
+const SHA256_DIGEST = /^sha256:[0-9a-f]{64}$/;
 /**
  * A producer's self-reported release, or nothing (wb-2j3.1/wb-2j3.2). It is carried only as stated: a non-empty string of at
  * most 256 UTF-8 bytes that the shared label layout displays unchanged. Anything else (an unsafe unit, text the layout would
@@ -96,8 +98,12 @@ export function nativeEvidence(capabilityId: string, value: JsonValue): NativeEv
       if (source.schema !== REACTIVE_FIBER_CLI_SCHEMA || source.command !== "context.render") return {};
       metadata.provider = "reactivefiber";
       id = text(source.operation_id);
-      basis = text(record(record(source.result)?.provenance)?.graph_revision_id);
-      release = reportedRelease(record(record(source.result)?.provenance)?.cli_version);
+      const result = record(source.result);
+      // wb-973.8 (SCG-R8): a stated sha256 bundle_revision_id (the bundle the render pinned) is the preferred immutable basis;
+      // when it is absent or not that digest the graph digest stands, so no other value ever becomes a basis.
+      const bundle = text(result?.bundle_revision_id);
+      basis = bundle !== undefined && SHA256_DIGEST.test(bundle) ? bundle : text(record(result?.provenance)?.graph_revision_id);
+      release = reportedRelease(record(result?.provenance)?.cli_version);
       // `ok` describes CLI transport success; it is not a graph verification verdict.
       break;
     }

@@ -1,8 +1,10 @@
-/** wb-973.11 (SCG-R11): the offline RF result fixture carries every result key the pinned rf 0.1.716 emits on a --no-commit render,
- * so additive-key admission and the exact pins (eight envelope keys, six work keys, ten work_metrics keys) are proven in the
+/** wb-973.11 (SCG-R11): the offline RF result fixture carries every result key the pinned rf emits on a --no-commit render, so
+ * additive-key admission and the exact pins (eight envelope keys, six work keys, fourteen work_metrics keys) are proven in the
  * default gate against the real pinned shape. The roster lives in test/fixtures/rf-result-keys.json with its rf version, source
  * kind and capture receipt recorded beside it, and is itself pinned here to a literal roster authored independently from the
- * ReactiveFiberCLI emitter at 8a8b83e4d, so an emptied, shrunken or renamed roster cannot hold the census green. The fixture home
+ * ReactiveFiberCLI emitter (first read at 8a8b83e4d for the 0.1.716 pin; re-read for the 0.1.768 pin by wb-973.17 at the
+ * installed reactivefibercli 0.1.768 distribution, the delta being retry_work and the four ruling R-53 work_metrics
+ * counters), so an emptied, shrunken or renamed roster cannot hold the census green. The fixture home
  * is test/helpers/rf-render-fixture.ts (owner ruling R1 (b'), row 481): validRf()/result() in the envelope-audit and observer
  * suites stay the minimal cli_version-free pins. Provider rows run a scripted rf stand-in HERMETICALLY: an absolute node shebang
  * (process.execPath) and PATH restricted to the stand-in's own directory, so the provider can resolve no other rf and a stand-in
@@ -30,11 +32,13 @@ installScratchLeakGuard();
  * conditional: step L always runs, so every finished --no-commit render emits it (render_service.py:1527-1532 and its comment). */
 /** result: render_service.py:1494-1513 (output .. observations), :1533-1539 (attempts, superseded_transaction_ids,
  * fiber_transaction_refs), render.py:3569-3580 (the step-P ephemeral keys render_id, ephemeral, commit_seq, effects, plan) and
- * render_service.py:1527-1532 (necessity) and :1549 (session_id). */
+ * render_service.py:1527-1532 (necessity) and :1549 (session_id), all at 8a8b83e4d; retry_work at the installed 0.1.768
+ * distribution, reactive_fiber_cli/application/render_service.py:1524-1526 (PMO-13-a: assigned on every render, beside the
+ * superseded ids, before fiber_transaction_refs). */
 const PINNED_RESULT_KEYS = [
   'output', 'budget', 'diagnostics_summary', 'blocks', 'components', 'provenance', 'work_metrics', 'work',
   'engine_metrics', 'scope', 'audience', 'bundle_revision_id', 'observations', 'necessity', 'attempts',
-  'superseded_transaction_ids', 'fiber_transaction_refs',
+  'superseded_transaction_ids', 'retry_work', 'fiber_transaction_refs',
   'ephemeral', 'render_id', 'commit_seq', 'session_id', 'effects', 'plan',
 ];
 /** result.provenance, at least: context_show.py:313-339 (render_provenance emits seven keys; these three are the dossier's floor). */
@@ -43,10 +47,13 @@ const PINNED_PROVENANCE_KEYS = ['graph_revision_id', 'cli_version', 'sdk_version
 const PINNED_WORK_KEYS = [
   'source_capture_count', 'fiber_signal_count', 'component_render_count', 'lens_resolution_count', 'necessity_eval_count', 'storage_write_count',
 ];
-/** result.work_metrics: integrations/fiber.py:2474-2485 (WORK_METRICS_KEYS, the ten-key set rendering.py:2617 names). */
+/** result.work_metrics: integrations/fiber.py:2474-2485 at 8a8b83e4d (the ten legacy keys), widened once by ruling R-53: at the
+ * installed 0.1.768 distribution reactive_fiber_cli/integrations/fiber.py:2719-2751 (WORK_METRICS_KEYS = the ten
+ * LEGACY_WORK_METRICS_KEYS, never removed or renamed, then the four R53_WORK_METRICS_KEYS). */
 const PINNED_WORK_METRICS_KEYS = [
   'source_capture_count', 'fiber_signal_count', 'fiber_transaction_count', 'invalidated_component_count', 'rendered_component_count',
   'state_read_count', 'state_write_count', 'journal_records_scanned', 'blob_bytes_written', 'history_rows_materialized',
+  'reused_component_count', 'observation_executed_count', 'observation_reused_count', 'publish_conflict_count',
 ];
 
 const roster = readRfResultRoster();
@@ -122,9 +129,10 @@ const PROVIDER_REFUSAL_ROWS = [
 
 describe('SCG-R11: full-shape offline RF result fixture', () => {
   // U5 (independent oracle): the roster file equals the independently authored literal, key for key and in order, at the
-  // dossier's lengths (23 result / 3 provenance / 6 work / 10 work_metrics), so an emptied, shrunken or renamed roster is red here.
-  it('the frozen roster equals the independently authored literal roster: 23 result, 3 provenance, 6 work and 10 work_metrics keys', () => {
-    expect([PINNED_RESULT_KEYS.length, PINNED_PROVENANCE_KEYS.length, PINNED_WORK_KEYS.length, PINNED_WORK_METRICS_KEYS.length]).toStrictEqual([23, 3, 6, 10]);
+  // pinned lengths (24 result / 3 provenance / 6 work / 14 work_metrics at the 0.1.768 pin; 23 / 3 / 6 / 10 at the 0.1.716 pin),
+  // so an emptied, shrunken or renamed roster is red here.
+  it('the frozen roster equals the independently authored literal roster: 24 result, 3 provenance, 6 work and 14 work_metrics keys', () => {
+    expect([PINNED_RESULT_KEYS.length, PINNED_PROVENANCE_KEYS.length, PINNED_WORK_KEYS.length, PINNED_WORK_METRICS_KEYS.length]).toStrictEqual([24, 3, 6, 14]);
     expect(roster.resultKeys).toStrictEqual(PINNED_RESULT_KEYS);
     expect(roster.provenanceKeys).toStrictEqual(PINNED_PROVENANCE_KEYS);
     expect(roster.workKeys).toStrictEqual(PINNED_WORK_KEYS);
@@ -132,7 +140,7 @@ describe('SCG-R11: full-shape offline RF result fixture', () => {
   });
 
   // Acceptance 1 (census-grade): the fixture's result keys are a superset of the frozen roster, provenance carries the three
-  // named keys, work has exactly 6 keys and work_metrics exactly 10, beside the eight envelope keys.
+  // named keys, work has exactly 6 keys and work_metrics exactly 14, beside the eight envelope keys.
   it('SCG-R11: the offline RF result fixture carries every key the pinned rf emits', () => {
     const fixture = fullShapeRf(ws);
     const result = resultOf(fixture);
@@ -140,7 +148,7 @@ describe('SCG-R11: full-shape offline RF result fixture', () => {
     expect(roster.resultKeys.filter(key => !Object.keys(result).includes(key))).toStrictEqual([]);
     expect(['graph_revision_id', 'cli_version', 'sdk_versions'].filter(key => !Object.hasOwn(provenance, key))).toStrictEqual([]);
     expect(Object.keys(asObject(result.work))).toHaveLength(6);
-    expect(Object.keys(asObject(result.work_metrics))).toHaveLength(10);
+    expect(Object.keys(asObject(result.work_metrics))).toHaveLength(14);
     expect(diffAgainstRoster(roster, result)).toStrictEqual({ failures: [], extraResultKeys: [] });
     expect(Object.keys(fixture)).toHaveLength(8);
     expect(provenance.cli_version).toBe(roster.rfVersion);
@@ -148,7 +156,7 @@ describe('SCG-R11: full-shape offline RF result fixture', () => {
 
   // Acceptance 4: the mirrored rf version, the source kind and the receipt; 'captured' only with a cmd_ receipt, else null.
   it('records the mirrored rf version, source kind and capture receipt beside the roster', () => {
-    expect(roster.rfVersion).toBe('0.1.716');
+    expect(roster.rfVersion).toBe('0.1.768');
     expect(['captured', 'constructed']).toContain(roster.source);
     if (roster.source === 'captured') expect(roster.receipt).toMatch(/^cmd_[0-9a-f]{12}$/);
     else expect(roster.receipt).toBeNull();
@@ -175,9 +183,10 @@ describe('SCG-R11: full-shape offline RF result fixture', () => {
     expect(diffAgainstRoster(roster, { ...result, work: { ...fullShapeWork(), seventh_count: 0 } }).failures).toStrictEqual(['unexpected result.work.seventh_count']);
     expect(diffAgainstRoster(roster, { ...result, work_metrics: { ...fullShapeWorkMetrics(), eleventh_count: 0 } }).failures)
       .toStrictEqual(['unexpected result.work_metrics.eleventh_count']);
-    // The measured rf 0.1.723 shape: retry_work (after the pin) rides beside the roster; necessity is a roster member since the pin.
-    expect(diffAgainstRoster(roster, { ...result, retry_work: { superseded_attempts: [] } }))
-      .toStrictEqual({ failures: [], extraResultKeys: ['retry_work'] });
+    // A conditional key rides beside the roster: view_id is stated only by a --view render (render_service.py:1503-1508 at the
+    // 0.1.768 pin). retry_work (an extra key at 0.1.723) and necessity are roster members since their pins.
+    expect(diffAgainstRoster(roster, { ...result, view_id: 'view.demo' }))
+      .toStrictEqual({ failures: [], extraResultKeys: ['view_id'] });
   });
 
   // Acceptance 2: nativeReactiveFiberPreview round-trips the full-shape fixture (extends the envelope-audit admission row).
@@ -190,7 +199,10 @@ describe('SCG-R11: full-shape offline RF result fixture', () => {
 
   // Acceptance 2 (observer), at the landed R1 row's strength: the full-shape provider reading projects one clean snapshot,
   // toStrictEqual, with the stated release as the distinct rf-cli reference and never as sourceVersion (owner ruling G-A).
+  // wb-973.8 (SCG-R8): the fixture's result.bundle_revision_id rides as the rf-bundle reference and owns sourceVersion.
   it('R1 on the full shape: the observer projects the provider reading as one clean snapshot with the rf-cli release reference', async () => {
+    const bundle = resultOf(fullShapeRf(ws)).bundle_revision_id;
+    if (typeof bundle !== 'string') throw new Error('the full-shape fixture must state a string bundle_revision_id');
     standIn(fullShapeRf(ws));
     const topology = reactivefiberTopology((await nativeReactiveFiberPreview('model', 'task', ws)) as JsonValue, { ...context, invocationId: 'wf_rf_1' });
     expect(topology.snapshots).toHaveLength(1);
@@ -201,10 +213,11 @@ describe('SCG-R11: full-shape offline RF result fixture', () => {
       node: { title: `RF context preview ${RF_FIXTURE_OPERATION_ID}`, type: 'sdk-operation', statusTone: 'success',
         statusText: 'noncommitted preview (rf-cli) · 989760 of 1000000 context tokens available · necessity evals 0 · 0 errors, 0 warnings' },
       kind: 'reactivefiber.render.preview.snapshot',
-      evidenceRefs: [`rf-graph:${RF_FIXTURE_GRAPH_REVISION}`, `rf-workspace:${RF_FIXTURE_WORKSPACE_ID}`, `rf-cli:${RF_FIXTURE_RELEASE}`],
-      sourceRevision: RF_FIXTURE_GRAPH_REVISION, nativePayloadRef: `rf-output:sha256:${digestOf(RF_FIXTURE_TEXT)}`, trace: { invocationId: 'wf_rf_1' },
+      evidenceRefs: [`rf-graph:${RF_FIXTURE_GRAPH_REVISION}`, `rf-workspace:${RF_FIXTURE_WORKSPACE_ID}`, `rf-bundle:${bundle}`, `rf-cli:${RF_FIXTURE_RELEASE}`],
+      sourceVersion: bundle, sourceRevision: RF_FIXTURE_GRAPH_REVISION, nativePayloadRef: `rf-output:sha256:${digestOf(RF_FIXTURE_TEXT)}`,
+      trace: { invocationId: 'wf_rf_1' },
     });
-    expect(snapshot).not.toHaveProperty('sourceVersion');
+    expect(snapshot.sourceVersion).not.toBe(RF_FIXTURE_RELEASE);
     expect(topology.relations).toStrictEqual([]);
     expect(topology.diagnostics).toContain(`producer release from result.provenance.cli_version: rf@${RF_FIXTURE_RELEASE}`);
     expect(topology.diagnostics.join('\n')).toContain('noncommitted');
@@ -212,6 +225,7 @@ describe('SCG-R11: full-shape offline RF result fixture', () => {
     expect(projection.refresh(snapshot)).toBe('applied');
     expect(projection.query({ scope, limit: 10, evidence: `rf-cli:${RF_FIXTURE_RELEASE}` }).nodes.map(node => node.nativeRef.id)).toStrictEqual([RF_FIXTURE_OPERATION_ID]);
     expect(projection.query({ scope, limit: 10, version: RF_FIXTURE_RELEASE }).nodes).toStrictEqual([]);
+    expect(projection.query({ scope, limit: 10, version: bundle }).nodes.map(node => node.nativeRef.id)).toStrictEqual([RF_FIXTURE_OPERATION_ID]);
   });
 
   // Acceptance 3 (observer): the named refusal rows replayed on the full shape, each for its own cause.

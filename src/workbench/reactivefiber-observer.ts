@@ -5,11 +5,12 @@
  * clock, randomness, environment, file, process or SDK access and no projection mutation; the caller applies the frozen result with
  * ObservationProjection.refresh and relate. This module never invokes rf, so it can never issue a history-creating verb; it only
  * reads an envelope the host already holds. Only the full noncommitted-preview shape (ok, ephemeral, render_id null, transaction_id
- * null, zero storage writes, a sha256 graph basis) can read as a render; an error summary, an exhausted budget or an observation
- * row that observed no value, was replayed from an earlier render or was degraded is partial, an RF_ failure stays a failure and
- * anything malformed or contradictory is refused. The context text itself is never copied: it is referenced by its sha256 digest,
- * so no output, budget payload or diagnostic body reaches any surfaced string, and of an observation row only its status word and
- * the row counts ever do.
+ * null, zero storage writes, a sha256 graph basis) can read as a render; an error summary, an exhausted budget, an observation
+ * row that observed no value, was replayed from an earlier render or was degraded, or an unsatisfied --view contract is partial,
+ * an RF_ failure stays a failure and anything malformed or contradictory is refused. The context text itself is never copied: it is
+ * referenced by its sha256 digest, so no output, budget payload or diagnostic body reaches any surfaced string; of an observation
+ * row only its status word and the row counts ever do, and of a view contract only its failed-check count and, when it is
+ * satisfied, its view id.
  */
 import {createHash} from 'node:crypto';
 import {CapabilityError, type JsonValue} from './capability-registry.js';
@@ -33,6 +34,9 @@ export interface ReactiveFiberTopologyContext {
   observedAt: string;
   invocationId?: string;
   operationRef?: NativeRef;
+  /** wb-973.4 (SCG-R4): the RF workspace root the host authorized (the validated reactivefiberWorkspaceRoot setting). When present it,
+   * and only it, replaces scope.workspace as the root a reading may name; scope.workspace stays the Pi realpath. */
+  authorizedRfRoot?: string;
 }
 /** Deeply frozen: one preview snapshot, at most one grouping edge and at most 8 sanitized diagnostics. */
 export interface ReactiveFiberProjectionTopology {
@@ -81,10 +85,14 @@ const MAX_STATUS_WORDS = 4;
 const STATUS_WORD = /^[A-Za-z0-9_.-]{1,24}$/;
 /** Marks the not-observed status words the note does not list. */
 const UNLISTED = '…';
+/** A --view render's view id: the INIT-FS-A14 declared-id grammar and bound of result.view_id and result.view_contract.view_id
+ * (context.render.schema.json :1029-1033 and :1199-1203 at ReactiveFiberCLI 8a8b83e4d), so a named id is plain ASCII. */
+const VIEW_ID = /^[a-z][a-z0-9_-]*(?:\.[a-z][a-z0-9_-]*)*$/;
+const MAX_VIEW_ID = 128;
 
 type JsonRecord = {[key: string]: JsonValue};
 interface CheckedContext {
-  scope: ObservationScope; seam: ReactiveFiberSeam; capturedAt: string; observedAt: string; invocationId?: string; operationRef?: NativeRef;
+  scope: ObservationScope; seam: ReactiveFiberSeam; capturedAt: string; observedAt: string; invocationId?: string; operationRef?: NativeRef; authorizedRfRoot?: string;
 }
 interface Summary {errors: number; warnings: number}
 /** One demotion leg's verdict (wb-973.9): a leg that demotes holds the preview at partial and states its note; one that does not may
@@ -137,6 +145,17 @@ function engineSpawns(result: JsonRecord): number {
     throw refused('result.engine_metrics needs exactly the two non-negative integer counters tsx_worker_spawns and tsx_resource_rounds');
   }
   return Number(metrics.tsx_worker_spawns);
+}
+
+/** The bundle the render pinned (wb-973.8 SCG-R8), or nothing when the envelope states none. The pinned rf schema types a stated
+ * result.bundle_revision_id as sha256:<64 lowercase hex>, never null, and keeps an envelope without it valid, so a stated value
+ * of any other shape is refused, never dropped or rewritten. Owner ruling G-A: the bundle owns the snapshot's sourceVersion (the
+ * version cohort key) and rides as the rf-bundle reference; graph_revision_id stays sourceRevision and the rf-graph reference. */
+function bundleRevision(result: JsonRecord): string | undefined {
+  if (!Object.hasOwn(result, 'bundle_revision_id')) return undefined;
+  const bundle = result.bundle_revision_id;
+  if (typeof bundle !== 'string' || !GRAPH_DIGEST.test(bundle)) throw refused('result.bundle_revision_id must be sha256:<64 lowercase hex> when stated');
+  return bundle;
 }
 
 /** The observation-row demotion leg (wb-973.10 SCG-R10, wb-973.9 SCG-R9): what result.observations contributes, which can only
@@ -196,15 +215,47 @@ function frozen<T>(value: T): T {
   return value;
 }
 
+/** The view_contract demotion leg of a --view render (wb-973.2, SCG-R2), beside the observation leg: what result.view_contract
+ * contributes, which can only demote. Of the outcome (ViewContractOutcome.to_json at ReactiveFiberCLI 8a8b83e4d,
+ * domain/view_contract.py:236-249) it reads the satisfied and degraded flags, the length of the failures list and the view id,
+ * and nothing else, so no check row, expected or actual text, unavailable lens source, view revision or contract digest reaches a
+ * surfaced string; the object stays open to additive keys. The pinned contradictions are refused: satisfied holds exactly when
+ * failures is empty and degraded is its negation (view_contract.py:217-225, the flags-versus-counts fence of diagnostics_summary),
+ * the outcome names the view the render was scoped to (result.view_id, context.render.schema.json :1199-1203), and a --view render
+ * carries a null result.scope (render_service.py:1509 and :1515-1526; schema :1033). An unsatisfied outcome demotes the preview to
+ * partial with one note naming only the failed-check count; a satisfied one demotes nothing and carries a witness note naming the
+ * view id, which the caller states on a clean render alone. A render without result.view_contract, a --view render of an rf that
+ * predates the contract included, adds nothing. */
+function viewContractLeg(result: JsonRecord): Demotion {
+  const viewed = Object.hasOwn(result, 'view_id');
+  if (viewed && Object.hasOwn(result, 'scope') && result.scope !== null) throw refused('a --view render (result.view_id) must carry a null result.scope');
+  if (!Object.hasOwn(result, 'view_contract')) return {demotes: false};
+  const outcome = record(result.view_contract);
+  if (!outcome) throw refused('result.view_contract must be an object');
+  const {view_id: viewId, satisfied, degraded, failures} = outcome;
+  if (typeof satisfied !== 'boolean' || typeof degraded !== 'boolean' || !Array.isArray(failures)) {
+    throw refused('result.view_contract needs boolean satisfied and degraded flags and a failures array');
+  }
+  if (typeof viewId !== 'string' || viewId.length > MAX_VIEW_ID || !VIEW_ID.test(viewId)) {
+    throw refused(`result.view_contract.view_id must be a declared view id of at most ${MAX_VIEW_ID} characters`);
+  }
+  if (!viewed || result.view_id !== viewId) throw refused('result.view_contract must name the view the render was scoped to (result.view_id)');
+  if (degraded === satisfied) throw refused('result.view_contract degraded must be the negation of satisfied');
+  if (satisfied !== (failures.length === 0)) throw refused('result.view_contract satisfied contradicts its failures');
+  if (satisfied) return {demotes: false, witness: `view contract: satisfied (${viewId})`};
+  return {demotes: true, note: `view contract: ${failures.length} failed ${failures.length === 1 ? 'check' : 'checks'}: partial`};
+}
+
 /** The host context, copied field by field after validation; scope, invocation and operation identities must already be displayable. */
 function checkedContext(context: ReactiveFiberTopologyContext): CheckedContext {
   if (!isObject(context)) throw refused('the host context must be an object');
-  const {scope, seam, capturedAt, observedAt, invocationId, operationRef} = context;
+  const {scope, seam, capturedAt, observedAt, invocationId, operationRef, authorizedRfRoot} = context;
   if (!isObject(scope) || !identity(scope.workspace) || !identity(scope.principal)) {
     throw refused('the host scope needs a bounded, displayable workspace and principal');
   }
   if (seam !== 'rf-cli' && seam !== 'injected-fixture') throw refused('the host seam must be rf-cli or injected-fixture');
   if (!instant(capturedAt) || !instant(observedAt)) throw refused('capture and observation times must be zone-qualified ISO-8601 instants');
+  if (authorizedRfRoot !== undefined && !identity(authorizedRfRoot)) throw refused('the authorized RF root must be a bounded, displayable identity');
   if (invocationId !== undefined && !identity(invocationId)) throw refused('the invocation id must be a bounded, displayable identity');
   if (operationRef !== undefined && (!isObject(operationRef) || !identity(operationRef.provider) || !identity(operationRef.type) ||
     !identity(operationRef.id) || operationRef.scope !== undefined && !identity(operationRef.scope))) {
@@ -212,6 +263,7 @@ function checkedContext(context: ReactiveFiberTopologyContext): CheckedContext {
   }
   return {
     scope: {workspace: scope.workspace, principal: scope.principal}, seam, capturedAt, observedAt,
+    ...(authorizedRfRoot !== undefined ? {authorizedRfRoot} : {}),
     ...(invocationId !== undefined ? {invocationId} : {}),
     ...(operationRef !== undefined ? {operationRef: {provider: operationRef.provider, type: operationRef.type, id: operationRef.id,
       ...(operationRef.scope !== undefined ? {scope: operationRef.scope} : {})}} : {}),
@@ -252,6 +304,7 @@ interface ProjectionParts {
   statusText: string;
   evidenceRefs: readonly string[];
   notes: readonly string[];
+  sourceVersion?: string;
   sourceRevision?: string;
   nativePayloadRef?: string;
 }
@@ -273,6 +326,8 @@ function previewSnapshot(envelope: JsonRecord, diagnostics: readonly JsonRecord[
   const release = reportedRelease(provenance?.cli_version);
   // RF ruling A28 engine identity, read only from an object-shaped sdk_versions: references and one note, never coverage or tone.
   const engines = engineRefs(provenance?.sdk_versions);
+  // wb-973.8 (SCG-R8): the pinned bundle, read only when stated; it keys the version cohort beside the graph digest's revision.
+  const bundle = bundleRevision(result);
   const formula = record(record(result.budget)?.formula_terms);
   if (!formula || !FORMULA_KEYS.every(key => count(formula[key])) || typeof formula.available_context_tokens !== 'number' ||
     !Number.isSafeInteger(formula.available_context_tokens)) {
@@ -293,6 +348,9 @@ function previewSnapshot(envelope: JsonRecord, diagnostics: readonly JsonRecord[
   // wb-973.10 (SCG-R10) and wb-973.9 (SCG-R9): the observation-row demotion leg; a row can demote the preview, never upgrade it.
   const observations = observationRowsDemotion(result.observations);
 
+  // wb-973.2 (SCG-R2): the view_contract leg beside the observation leg; an unsatisfied contract can demote, never upgrade.
+  const contractLeg = viewContractLeg(result);
+
   const window = Number(formula.context_window);
   const available = formula.available_context_tokens;
   const overBudget = available < 0;
@@ -301,8 +359,11 @@ function previewSnapshot(envelope: JsonRecord, diagnostics: readonly JsonRecord[
   const live = host.seam === 'rf-cli';
   const budget = overBudget ? `over budget by ${-available} (context window ${window} tokens)` : `${available} of ${window} context tokens available`;
   const statusText = `${SEAM_LABEL[host.seam]} · ${budget} · necessity evals ${work.necessity_eval_count} · ${counts.errors} errors, ${counts.warnings} warnings`;
-  const clean = live && !flagged && !overBudget && !observations.demotes;
+  const clean = live && !flagged && !overBudget && !observations.demotes && !contractLeg.demotes;
   const notes = ['ephemeral noncommitted preview: render_id null, transaction_id null, 0 authoritative storage writes (envelope storage_write_count)', 'context text withheld: referenced by sha256 digest'];
+  // The contract leg states its note when it demotes and its witness on a clean render alone, so a partial render is unchanged.
+  if (contractLeg.demotes) notes.push(contractLeg.note);
+  else if (clean && contractLeg.witness !== undefined) notes.push(contractLeg.witness);
   if (!live) notes.push('fixture seam: not a real generated context');
   if (flagged) notes.push('render reported errors: partial, not a clean render');
   if (overBudget) notes.push('context exceeds the available budget: partial');
@@ -315,7 +376,9 @@ function previewSnapshot(envelope: JsonRecord, diagnostics: readonly JsonRecord[
   else if (spawns > 0) notes.push(SPAWN_NOTE);
   return {
     operationId: String(envelope.operation_id), coverage: clean ? 'complete' : 'partial', statusTone: clean ? 'success' : 'unknown', statusText,
-    evidenceRefs: [`rf-graph:${graph}`, `rf-workspace:${workspaceId}`, ...(release !== undefined ? [`rf-cli:${release}`] : []), ...engines, ...(spawns > 0 ? [`rf-engine-spawns:${spawns}`] : [])], notes, sourceRevision: graph,
+    evidenceRefs: [`rf-graph:${graph}`, `rf-workspace:${workspaceId}`, ...(bundle !== undefined ? [`rf-bundle:${bundle}`] : []),
+      ...(release !== undefined ? [`rf-cli:${release}`] : []), ...engines, ...(spawns > 0 ? [`rf-engine-spawns:${spawns}`] : [])], notes,
+    ...(bundle !== undefined ? {sourceVersion: bundle} : {}), sourceRevision: graph,
     nativePayloadRef: `rf-output:sha256:${createHash('sha256').update(output.text).digest('hex')}`,
   };
 }
@@ -328,7 +391,7 @@ export function reactivefiberTopology(reading: JsonValue, context: ReactiveFiber
   const value = record(reading);
   if (!value || value.contract !== CONTRACT) throw refused(`the reading must be the ${CONTRACT} provider output`);
   if (typeof value.workspaceRoot !== 'string' || value.workspaceRoot.length === 0) throw refused('workspaceRoot must be a non-empty string');
-  if (value.workspaceRoot !== host.scope.workspace) throw new CapabilityError('authorization', 'RF reading workspace differs from observer scope.');
+  if (value.workspaceRoot !== (host.authorizedRfRoot ?? host.scope.workspace)) throw new CapabilityError('authorization', 'RF reading workspace differs from observer scope.');
   const envelope = record(value.source);
   if (!envelope || !hasExactKeys(envelope, ENVELOPE_KEYS)) throw refused('source must be the strict eight-key rf envelope');
   if (envelope.schema !== SCHEMA || envelope.command !== COMMAND) throw refused(`source must be a ${SCHEMA} ${COMMAND} envelope`);
@@ -365,6 +428,7 @@ export function reactivefiberTopology(reading: JsonValue, context: ReactiveFiber
     source: ref, scope: {...host.scope}, capturedAt: host.capturedAt, observedAt: host.observedAt, coverage: parts.coverage,
     node: {title: shown(`RF context preview ${parts.operationId}`, 120), type: 'sdk-operation', statusText: shown(parts.statusText, 200), statusTone: parts.statusTone},
     kind: 'reactivefiber.render.preview.snapshot', evidenceRefs: [...parts.evidenceRefs],
+    ...(parts.sourceVersion !== undefined ? {sourceVersion: parts.sourceVersion} : {}),
     ...(parts.sourceRevision !== undefined ? {sourceRevision: parts.sourceRevision} : {}),
     ...(parts.nativePayloadRef !== undefined ? {nativePayloadRef: parts.nativePayloadRef} : {}),
     ...(host.invocationId !== undefined ? {trace: {invocationId: host.invocationId}} : {}),

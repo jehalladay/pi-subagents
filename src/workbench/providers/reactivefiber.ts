@@ -1,17 +1,20 @@
 /** ReactiveFiberCLI context render via installed CLI JSON contract (no TS SDK published). */
 import { spawn } from "node:child_process";
 import { CapabilityError, type CapabilityRegistry, type JsonValue } from "../capability-registry.js";
+import { RF_CHILD_ENV_ALLOWLIST, scrubbedEnvironment } from "../process-env.js";
 
 export const REACTIVE_FIBER_CLI_SCHEMA = "reactive-fiber.cli/v1";
 export const REACTIVEFIBER_RENDER_PREVIEW_CONTRACT = "reactivefiber.render.preview/v1";
 /**
  * The single rf contractSource carrier (program rfcli-performance-mathematical-optimization R2, wb-2j3.12): the
- * `rf@<release>` prefix states the producer release MEASURED by the R8 live receipt, never a hand-maintained literal.
- * Receipt of record: `forge run rf-preview` forge cmd_c8fa1da3d9c4 on 2026-10-17 against the installed rf
- * (RF_PREVIEW_RECEIPT cli_version "0.1.723"; docs/workbench/receipts/wb-2j3.7.md). Re-pin only from a newer stamped
- * receipt row; both registered reactivefiber.render.preview descriptors consume this constant by identifier.
+ * `rf@<release>` prefix states the producer release MEASURED by a stamped rf-preview live receipt, never a hand-maintained
+ * literal. Receipt of record: `forge run rf-preview` forge cmd_30b6975c69e8 on 2026-10-21 against the installed rf
+ * (RF_PREVIEW_RECEIPT cli_version "0.1.768"; docs/workbench/receipts/wb-973.17.md, the SCG-R17 re-measure after forge
+ * cmd_e88d650bad54 measured that installed rf drifting from the earlier rf@0.1.723 pin of receipts/wb-2j3.7.md,
+ * cmd_c8fa1da3d9c4; confirmed after the roster's captured promotion by forge cmd_78d08ba7c49c). Re-pin only from a newer
+ * stamped receipt row; both registered reactivefiber.render.preview descriptors consume this constant by identifier.
  */
-export const REACTIVE_FIBER_CONTRACT_SOURCE = "rf@0.1.723:reactive-fiber.cli/v1 context.render --no-commit";
+export const REACTIVE_FIBER_CONTRACT_SOURCE = "rf@0.1.768:reactive-fiber.cli/v1 context.render --no-commit";
 
 interface RfEnvelope {
   schema: string; ok: boolean; command: string; operation_id: string;
@@ -85,6 +88,10 @@ function isPreviewEnvelope(source: unknown, exit: number|null, workspaceRoot: st
         !["tsx_worker_spawns","tsx_resource_rounds"].every(key=>Object.hasOwn(metrics,key) && nonnegativeInteger(metrics[key]))) return false;
   }
   if (Object.hasOwn(result,"observations") && !isObservationRows(result.observations)) return false;
+  // wb-973.8 (SCG-R8): a stated result.bundle_revision_id is the pinned schema's digest, sha256:<64 lowercase hex>, never null;
+  // an rf that states none stays admitted.
+  if (Object.hasOwn(result,"bundle_revision_id") &&
+      (typeof result.bundle_revision_id!=="string" || !SHA256.test(result.bundle_revision_id))) return false;
   return true;
 }
 const LEGACY_INPUT={type:"object",properties:{model:{type:"string",minLength:1},task:{type:"string",minLength:1}},required:["model","task"],additionalProperties:false};
@@ -126,7 +133,10 @@ export async function nativeReactiveFiberPreview(model:string,task:string,worksp
 export async function nativeReactiveFiberRender(selector:ReactiveFiberRenderSelector,workspaceRoot:string,signal?:AbortSignal):Promise<JsonValue> {
   if(signal?.aborted) throw new CapabilityError("transport","RF preview cancelled before launch.");
   const argv=renderArgv(selector,workspaceRoot);
-  const child=spawn("rf",argv,{stdio:["ignore","pipe","pipe"]});
+  // wb-2j3.11: an allowlist-only environment (src/workbench/process-env.ts), built from process.env at each launch. No
+  // RF_* variable reaches the child, so a process-scoped selector such as RF_PERF_BASELINE can never pick the preview's
+  // perf seam, and the argv's --workspace is the only workspace the child is told.
+  const child=spawn("rf",argv,{stdio:["ignore","pipe","pipe"],env:scrubbedEnvironment(process.env,RF_CHILD_ENV_ALLOWLIST)});
   const MAX_BYTES=256*1024;
   const chunks:Buffer[]=[];
   let stdoutBytes=0;

@@ -18,8 +18,9 @@ export const RF_FIXTURE_OPERATION_ID = `rfo_${id}`;
 export const RF_FIXTURE_GRAPH_REVISION = digest('a');
 /** The fixture's result.output.text. */
 export const RF_FIXTURE_TEXT = 'context';
-/** The producer release the fixture states in result.provenance.cli_version: the pinned rf the roster mirrors. */
-export const RF_FIXTURE_RELEASE = '0.1.716';
+/** The producer release the fixture states in result.provenance.cli_version: the pinned rf the roster mirrors (re-pinned from
+ * 0.1.716 by wb-973.17). */
+export const RF_FIXTURE_RELEASE = '0.1.768';
 
 export function fullShapeWork(): JsonObject {
   return { source_capture_count: 0, fiber_signal_count: 0, component_render_count: 0, lens_resolution_count: 0, necessity_eval_count: 0, storage_write_count: 0 };
@@ -30,7 +31,13 @@ export function fullShapeWorkMetrics(): JsonObject {
     source_capture_count: 0, fiber_signal_count: 0, fiber_transaction_count: 0, invalidated_component_count: 0,
     rendered_component_count: 0, state_read_count: 0, state_write_count: 0, journal_records_scanned: 7,
     blob_bytes_written: 0, history_rows_materialized: 0,
+    reused_component_count: 0, observation_executed_count: 0, observation_reused_count: 0, publish_conflict_count: 0,
   };
+}
+
+/** result.retry_work at the pinned rf (PMO-13-a): no superseded attempt and one zero wasted_<key> per work_metrics key. */
+export function fullShapeRetryWork(): JsonObject {
+  return { superseded_attempts: [], ...Object.fromEntries(Object.keys(fullShapeWorkMetrics()).map(key => [`wasted_${key}`, 0])) };
 }
 
 export function fullShapeRf(workspaceRoot: string): JsonObject {
@@ -60,7 +67,7 @@ export function fullShapeRf(workspaceRoot: string): JsonObject {
       work_metrics: fullShapeWorkMetrics(), work: fullShapeWork(),
       engine_metrics: { tsx_worker_spawns: 0, tsx_resource_rounds: 0 },
       scope: null, audience: 'model', bundle_revision_id: digest('2'), observations: [], necessity: [], attempts: 1,
-      superseded_transaction_ids: [], fiber_transaction_refs: [],
+      superseded_transaction_ids: [], retry_work: fullShapeRetryWork(), fiber_transaction_refs: [],
       render_id: null, ephemeral: true, commit_seq: null, session_id: null, effects: [], plan: { operations: [], would_commit: false },
     },
     diagnostics: [],

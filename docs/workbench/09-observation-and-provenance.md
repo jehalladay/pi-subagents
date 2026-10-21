@@ -40,7 +40,7 @@ Every supported provider offers at least a read-current-snapshot function where 
 - Furnace: native Run status/event stream and possible descendant references.
 - Forge: native operation/verdict/artifact evidence, build revision and gate axes.
 - HX: query coverage/bounds/query basis, and optional graph traversal of linked native refs.
-- RF: render context provenance and context artifact references.
+- RF: render context provenance and context artifact references. An RF snapshot's definition basis is bundle_revision_id when the envelope carries it, with graph_revision_id remaining the topology identity only. Reused, replayed or non-observed observation rows demote an RF preview to partial, and the projection's freshness is the host's reading witness, never a currentness claim about the rows.
 - MechanicalWorkflows: invocation outcome, service spans if instrumented; arbitrary plain TypeScript calls are not magically discoverable.
 - Beads: supported work readiness and linkage, never reconstructed from heuristics alone.
 
