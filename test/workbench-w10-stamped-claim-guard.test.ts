@@ -45,11 +45,13 @@
  *   as CLAIM_KEY) carries PLANE_SCOPED_CLAUSE instead, as exact rendered text (required text is never folded, so a
  *   look-alike or an invisible inside the clause is refused). Neither reading consults W10_COMMITTED, so a later re-cut of
  *   the committed row cannot carry the claim back.
- * - EVIDENCE COMPOSITION (J7): the rendered Evidence cell, split into sentences at each ". ", is exactly its five committed
+ * - EVIDENCE COMPOSITION (J7): the rendered Evidence cell, split into sentences at each ". ", is exactly its six committed
  *   sentences in order: the lead (evidenceLead(): its carrier slot renders the R2 carrier, its receipt slot the stamped
  *   receipt, its retired release is the retirement-clause carve-out below), the Tests sentence, the legacy receipt clause
- *   and the bead sentence (each pinned whole), then the stamped sentence (judged by its slice). A sentence outside that
- *   list, anywhere in the cell, is refused, and so is a missing one.
+ *   and the bead sentence (each pinned whole), then the stamped sentence (judged by its slice), then the descriptor-contract
+ *   sentence (wb-973.16, pinned whole: the two input arms, the render flags, the frozen legacy argv, the operator-set root
+ *   and the two hosted-agent locators, each with the gate receipt id of the landing that delivered it; the legacy receipt
+ *   clause is never edited). A sentence outside that list, anywhere in the cell, is refused, and so is a missing one.
  * - STAMPED SENTENCE (bounded clause, 6hb.7: slice equality, never includes-anywhere): the rendered Evidence cell splits into
  *   sentences at each ". "; exactly one reads as beginning with STAMP_KEY, and it EQUALS stampSentence() with its slots
  *   filled from the receipt it names and from the carrier: receipts/<bead>.md exists; its newest rendered
@@ -157,18 +159,22 @@ const W10_COMMITTED = {
   heading: "W10: ReactiveFiber provider/interop",
   header: ["Feature", "Status", "Evidence", "Caveats"],
   firstCells: [
-    "node() RF noncommitted context preview capability (reactivefiber.render.preview/v1) with graph provenance; no authoritative or journal write, disposable cache-plane writes possible per the pinned producer trace",
+    "node() RF noncommitted context preview capability (reactivefiber.render.preview/v1; input {model, task} or {view, taskId, model?}, never both) with graph provenance; no authoritative or journal write, disposable cache-plane writes possible per the pinned producer trace",
     "ReactiveFiber reader adapter projecting NativeSnapshots from reactivefiber.render.preview/v1 envelopes into the observation projection",
   ],
   cells: [
-    ["Feature", "node() RF noncommitted context preview capability (reactivefiber.render.preview/v1) with graph provenance; no authoritative or journal write, disposable cache-plane writes possible per the pinned producer trace"],
+    ["Feature", "node() RF noncommitted context preview capability (reactivefiber.render.preview/v1; input {model, task} or {view, taskId, model?}, never both) with graph provenance; no authoritative or journal write, disposable cache-plane writes possible per the pinned producer trace"],
     ["Status", "landed-gated"],
     ["Caveats", "Bead wb-x32 open: 'Full interop contract remains open.' Preview deliberately yields null render/transaction IDs (no durable render); W10 acceptance is 'real render or honest blocker' - the landed slice is the noncommitted preview via the CLI envelope, not a committed render or production TS SDK interop."],
   ],
   tests: "Tests: test/workbench-native-rf-preview.test.ts, test/workbench-provider-envelope-audit.test.ts, test/workbench-ecosystem-native.test.ts, test/workbench-native-ecosystem.test.ts, test/workbench-provider-lifecycle.test.ts.",
   legacy: "TRACEABILITY 'Native ecosystem receipts': real RF noncommitted context cmd_994da817d4cd (initialized disposable workspace; output + graph provenance, no durable render ID); custody caps cmd_7e50a487da08 (malformed JSON, stdout/stderr caps, TERM/KILL cleanup); corrected envelope suite cmd_386a32a0323b (actual operation/workspace identity, zero noncommitted storage writes).",
   bead: "Bead wb-x32 (open).",
+  contract:
+    "Descriptor contract re-stated (wb-973.16, receipts/wb-973.16.md): the exclusive oneOf of the legacy {model, task} arm and the {view, taskId, model?} arm, rendering only --no-commit --no-input --json with the legacy argv frozen byte for byte (wb-973.1, wb-973.3; landing gate cmd_448b9c90d4bd), the operator-set swarm RF workspace root (wb-973.4, landing gate cmd_b1a13ceb80b6; wb-973.5, land-prep gate cmd_9af5362d3e08) and the RF_WORKSPACE and SWARM_RF_WORKSPACE hosted-agent locators (wb-973.6, wb-973.7; landing gate cmd_acbe436ec5c2).",
 } as const;
+/** The rendered beginning of the committed descriptor-contract sentence (wb-973.16), where its falsifiers author their edits. */
+const CONTRACT_MARKER = "Descriptor contract re-stated (wb-973.16, ";
 
 interface LeadSlots {
   carrier: string;
@@ -522,7 +528,7 @@ function claimCellFindings(row: ClaimRow): string[] {
   return findings;
 }
 
-/** Why the rendered Evidence cell is not its five committed sentences in order (the stamped one is judged by its slice). */
+/** Why the rendered Evidence cell is not its six committed sentences in order (the stamped one is judged by its slice). */
 function evidenceFindings(evidence: string, carrier: string): string[] {
   const committed: ReadonlyArray<readonly [string, (sentence: string) => boolean]> = [
     ["lead sentence", (sentence) => readLeadShape(sentence) !== undefined],
@@ -530,6 +536,7 @@ function evidenceFindings(evidence: string, carrier: string): string[] {
     ["legacy receipt clause", (sentence) => sentence === W10_COMMITTED.legacy],
     ["bead sentence", (sentence) => sentence === W10_COMMITTED.bead],
     ["stamped receipt sentence", (sentence) => readsAsPrefix(foldKey(sentence), STAMP_KEY)],
+    ["descriptor contract sentence", (sentence) => sentence === W10_COMMITTED.contract],
   ];
   const findings: string[] = [];
   const read = new Map<string, string>();
@@ -1715,11 +1722,12 @@ describe("W10 stamped-release claim guard (wb-2j3.5, R6), read as the page rende
     expect(readLeadShape(evidenceLead(slots))).toEqual(slots);
   });
 
-  it("L6: the live Evidence cell is its five committed sentences, its lead naming the R2 carrier and the stamped receipt (EVIDENCE COMPOSITION)", () => {
+  it("L6: the live Evidence cell is its six committed sentences, its lead naming the R2 carrier and the stamped receipt (EVIDENCE COMPOSITION)", () => {
     const evidence = w10View(page()).evidence ?? "";
     const sentences = evidence.split(/(?<=\.) /);
-    expect(sentences).toHaveLength(5);
+    expect(sentences).toHaveLength(6);
     expect(sentences.slice(1, 4)).toEqual([W10_COMMITTED.tests, W10_COMMITTED.legacy, W10_COMMITTED.bead]);
+    expect(sentences[5]).toBe(W10_COMMITTED.contract);
     const lead = readLeadShape(sentences[0] ?? "");
     expect(lead?.carrier).toBe(carrier);
     expect(lead?.receipt).toBe(stampedParts(page())?.slots.receipt);
@@ -1728,6 +1736,32 @@ describe("W10 stamped-release claim guard (wb-2j3.5, R6), read as the page rende
 
   it("L7 (wb-2j3.4 AC1): no live row that reads as the W10 claim row renders the withdrawn durable-writes claim, and its Feature cell carries the plane-scoped clause", () => {
     expect(withdrawnClaimView(page())).toEqual([]);
+  });
+
+  it("L8 (wb-973.16 AC2): the live claim row re-states the descriptor contract - both input arms in its Feature cell, the new gate receipt ids in its own committed sentence - and keeps the legacy receipt clause unedited", () => {
+    const view = w10View(page());
+    expect(view.findings).toEqual([]);
+    const sentences = (view.evidence ?? "").split(/(?<=\.) /);
+    expect(sentences.filter((sentence) => sentence === W10_COMMITTED.contract)).toHaveLength(1);
+    for (const id of ["cmd_448b9c90d4bd", "cmd_b1a13ceb80b6", "cmd_9af5362d3e08", "cmd_acbe436ec5c2"]) expect(W10_COMMITTED.contract.match(CMD_ID_ALL), id).toContain(id);
+    expect(W10_COMMITTED.contract.match(CMD_ID_ALL)?.some((id) => LEGACY_UNSTAMPED_IDS.includes(id))).toBe(false);
+    expect(sentences[2]).toBe(W10_COMMITTED.legacy);
+    expect(W10_COMMITTED.firstCells[0]).toContain("input {model, task} or {view, taskId, model?}, never both");
+    expect(readsAsPrefix(foldKey(W10_COMMITTED.firstCells[0]), CLAIM_KEY)).toBe(true);
+    expect(W10_COMMITTED.cells[0]).toEqual(["Feature", W10_COMMITTED.firstCells[0]]);
+    // Falsifiers: the re-statement dropped, reworded or relocated is refused under its own diagnosis.
+    const dropped = editClaim(page(), (site) => {
+      const { span } = sentenceOf(evidenceOf(site), CONTRACT_MARKER);
+      return [[span[0] - 1, span[1], ""]];
+    });
+    expect(judgeW10Claim(dropped, liveReceipt, carrier)).toContain("the rendered Evidence cell lacks its committed descriptor contract sentence");
+    const reworded = inEvidence(page(), "landing gate cmd_448b9c90d4bd", "live view-arm receipt cmd_448b9c90d4bd");
+    expect(judgeW10Claim(reworded, liveReceipt, carrier).join("\n")).toContain("the rendered Evidence cell holds a sentence outside its committed slice: \"Descriptor contract re-stated (wb-973.16, ");
+    const featureOnly = editClaim(page(), (site) => {
+      const [start, end] = spanOf(firstCell(site), "; input {model, task} or {view, taskId, model?}, never both");
+      return [[start, end, ""]];
+    });
+    expect(judgeW10Claim(featureOnly, liveReceipt, carrier).join("\n")).toContain("the W10 claim row's rendered Feature cell reads");
   });
 
   describe("falsifiers on the judge's own inputs (the fefe71f protections, kept)", () => {
