@@ -9,6 +9,14 @@
  * W10, rows whose Feature reads as either W10 capability key are also judged (X10 relocation). Neither membership nor
  * detection depends on the committed claim row's exact wording. Nonempty W10 table/row presence is required.
  *
+ * Pinned scope after refusal #3: U1 list-nested table and list raw HTML; U2 rendered relocated key; U3 soft break/tab;
+ * U4 width 2 and width 3; U5 uppercase-X/zero-padded references; U6 three complete-comment boundaries; F5 header
+ * relocation, F6 C0 folding and F7 post-removal space collapse. F8 remains the named GN12/GN13 shape-only residual.
+ * The row-roster geometry is anchored to the live W10 document's rendered table, not only this census's own literals.
+ * The current-doc row count is a cut-time literal (2); a later W10 table or row expansion must update this census.
+ * The independently pinned W10 stamped-claim guard remains unchanged.
+ * F9's title is narrowed to column 1, while the independent HEADERS roster judges every column. A newly discovered
+ * escape adds a named residual unless it contradicts one of these pinned claims (rule 19(c), enumerate-the-resolvable).
  * Withdrawn spellings: "zero durable writes" and "no durable write" (including its plural). Rendered inline emphasis,
  * escapes, code spans and link TEXT compose before detection; link destinations/titles, images, definitions and complete
  * comments are not claims. Numeric/common named references decode; unknown named references use the folded wildcard; NFKC/case/whitespace/format-control folding follows
@@ -18,7 +26,11 @@
  * Scope is the two published universal negatives, not a general natural-language entailment checker. Residuals: ASCII
  * look-alikes, hyphenated/new paraphrases, struck-through text (the landed reading's unasserted del set), renamed W10
  * capability rows outside W10, inline HTML in relocated rows (including a br-split claim), the W10 heading text itself,
- * and unrelated prose outside W10. No provider/receipt claims are inferred here. The stamped
+ * and unrelated prose outside W10. The gate's GN12/GN13 shape-only nesting/title-depth legs remain named residuals:
+ * each has an independently pinned quiet row below. GN14 was equivalent on the measured pages; GN15 changed diagnosis
+ * location only. ASCII look-alikes, new paraphrases, struck-through text, renamed relocated keys, inline HTML in
+ * relocated rows, W10 heading text and unrelated outside prose remain named residuals, not universal claims.
+ * No provider/receipt claims are inferred here. The stamped
  * guard remains independent and unchanged. Synthetic falsifiers do not bind mutable live docs wording. Rule 16 freezes
  * each row's full requirement/name and each location/claim diagnosis, not only counts. No processes or scratch allocations.
  */
@@ -180,6 +192,18 @@ const VARIANTS: readonly Variant[] = [
   { id: "P6", requirement: "a claim in the second list item is judged", input: page(TABLE, "- Clean first item.\n- Preview has zero durable writes."), pins: [{ location: "W10 list", claim: "zero durable writes" }] },
   { id: "P7", requirement: "a claim in the second blockquote paragraph is judged", input: page(TABLE, "> Clean first paragraph.\n>\n> Preview has zero durable writes."), pins: [{ location: "W10 blockquote", claim: "zero durable writes" }] },
   { id: "H2", requirement: "a header cell in a second W10 table is judged", input: page(TABLE, "| Feature | Caveats zero durable writes |\n| --- | --- |\n| Clean | Clean |"), pins: [{ location: "W10 table 1 header column 2", claim: "zero durable writes" }] },
+  // Refusal #3 U1-U5: gate-authored GN1/GN24/GN3/GN5/GN17/GN17b witnesses.
+  { id: "X13", requirement: "a relocated adapter table nested inside an outside list item is judged", input: page(TABLE, "", `- Relocated note:\n\n  | Feature | Caveats |\n  | --- | --- |\n  | ${ADAPTER} (copy) | No durable write occurs. |`), pins: [{ location: "outside W10 table 1 row 1 Caveats", claim: "no durable write" }] },
+  { id: "X14", requirement: "the rendered Feature key of a relocated row is judged", input: page(TABLE, "", `| Feature | Caveats |\n| --- | --- |\n| **ReactiveFiber** reader adapter projecting NativeSnapshots (copy) | No durable write occurs. |`), pins: [{ location: "outside W10 table 1 row 1 Caveats", claim: "no durable write" }] },
+  { id: "R8", requirement: "a soft line break supplies whitespace inside W10 prose", input: page(TABLE, "The preview has zero durable\nwrites."), pins: [{ location: "W10 paragraph", claim: "zero durable writes" }] },
+  { id: "R9", requirement: "a tab supplies whitespace inside W10 prose", input: page(TABLE, "The preview has zero\tdurable writes."), pins: [{ location: "W10 paragraph", claim: "zero durable writes" }] },
+  { id: "R10", requirement: "a two-character non-ASCII look-alike cannot hide a claim", input: appendCell(1, 3, `zero dur${String.fromCodePoint(0xe6)}le writes`), pins: [{ location: "W10 table 1 row 2 Caveats", claim: "zero durable writes" }] },
+  { id: "R11", requirement: "uppercase-X hexadecimal reference supplies whitespace", input: appendCell(1, 3, "zero&#X20;durable writes"), pins: [{ location: "W10 table 1 row 2 Caveats", claim: "zero durable writes" }] },
+  { id: "R12", requirement: "zero-padded decimal reference supplies whitespace", input: appendCell(1, 3, "zero&#0032;durable writes"), pins: [{ location: "W10 table 1 row 2 Caveats", claim: "zero durable writes" }] },
+  { id: "R13", requirement: "a three-character non-ASCII look-alike cannot hide a claim", input: appendCell(1, 3, `zero du${String.fromCodePoint(0xe6)}le writes`), pins: [{ location: "W10 table 1 row 2 Caveats", claim: "zero durable writes" }] },
+  { id: "X15", requirement: "a relocated adapter key in an outside table header is judged", input: page(TABLE, "", `| ${ADAPTER} (copy) | No durable write occurs. |\n| --- | --- |\n| Other | Clean. |`), pins: [{ location: "outside W10 table 1 header column 2", claim: "no durable write" }] },
+  { id: "R14", requirement: "a C0 control cannot split a withdrawn claim", input: appendCell(1, 3, `zero ${String.fromCodePoint(1)}durable writes`), pins: [{ location: "W10 table 1 row 2 Caveats", claim: "zero durable writes" }] },
+  { id: "R15", requirement: "spaces collapse after removing an invisible", input: appendCell(1, 3, `zero ${String.fromCodePoint(0x200b)} durable writes`), pins: [{ location: "W10 table 1 row 2 Caveats", claim: "zero durable writes" }] },
 ];
 interface Cell { readonly row: number; readonly column: number; readonly location: string }
 const CELLS: readonly Cell[] = [
@@ -214,6 +238,16 @@ const BOUNDS: readonly Bound[] = [
   { id: "B11", requirement: "top-level raw HTML block is refused", input: page(TABLE, "<div>The preview performs zero durable writes.</div>"), shape: ["W10 contains raw HTML, not a complete comment"] },
   { id: "B12", requirement: "a complete comment followed by visible text is not a complete comment", input: page(TABLE, "<!-- note --> The preview performs zero durable writes."), shape: ["W10 contains raw HTML, not a complete comment"] },
   { id: "B13", requirement: "W10 heading promoted to level 1", input: page().replace(`## ${HEADING}`, `# ${HEADING}`), shape: ["W10 must have exactly one top-level level-2 heading"] },
+  // Refusal #3 U1/U6: raw HTML in lists and malformed complete-comment shapes fail closed.
+  { id: "B14", requirement: "raw HTML in a W10 list item is refused", input: page(TABLE, "- <div>The preview performs zero durable writes.</div>"), shape: ["W10 contains raw HTML, not a complete comment"] },
+  { id: "B15", requirement: "two comment closes with intervening text are not one complete comment", input: page(TABLE, "<!-- a --> The preview performs zero durable writes. <!-- b -->"), shape: ["W10 contains raw HTML, not a complete comment"] },
+  { id: "B16", requirement: "an abrupt comment close followed by text is not one complete comment", input: page(TABLE, "<!--> The preview performs zero durable writes. -->"), shape: ["W10 contains raw HTML, not a complete comment"] },
+  { id: "B17", requirement: "a dash-bang close followed by text is not one complete comment", input: page(TABLE, "<!-- a --!> The preview performs zero durable writes. -->"), shape: ["W10 contains raw HTML, not a complete comment"] },
+];
+// GN12/GN13: named shape-only residuals with explicit quiet claim rows (not falsely claimed as killed).
+const SHAPE_RESIDUALS: readonly { id: string; requirement: string; input: string; expected: string[] }[] = [
+  { id: "GN12", requirement: "nested level-1 heading before W10 is shape-only", input: page().replace(`## ${HEADING}`, `> # Appendix\n\n## ${HEADING}`), expected: ["W10 has an intervening level-1 parent"] },
+  { id: "GN13", requirement: "demoted matrix title is shape-only", input: page().replace(`# ${TITLE}`, `## ${TITLE}`), expected: ["W10 must belong to the matrix title"] },
 ];
 const CONTROLS: readonly [string, string][] = [
   ["C0 plane-scoped baseline", page()],
@@ -244,7 +278,7 @@ describe("wb-64x W10 section-level withdrawn-claim census (rendered-model)", () 
       expect(reading.claims).toEqual([{ location, claim: "zero durable writes" }]);
     });
   }
-  it("HEADER every rendered W10 header cell is judged", () => {
+  it("HEADER the rendered W10 Feature header cell is judged", () => {
     expect(judgeSection(page(TABLE.replace("| Feature |", "| Feature zero durable writes |"))).claims).toEqual([{ location: "W10 table 1 header column 1", claim: "zero durable writes" }]);
   });
   for (const header of HEADERS) {
@@ -253,6 +287,10 @@ describe("wb-64x W10 section-level withdrawn-claim census (rendered-model)", () 
       expect(reading).toEqual({ shape: [], claims: [{ location: header.location, claim: "zero durable writes" }] });
     });
   }
+  for (const residual of SHAPE_RESIDUALS) it(`${residual.id} residual: ${residual.requirement}`, () => {
+    expect(judgeSection(residual.input).claims).toEqual([]);
+    expect(judgeSection(residual.input).shape).toEqual(residual.expected);
+  });
   it("BOUND unique top-level heading title ancestry and nonempty table fail closed", () => {
     for (const bound of BOUNDS) expect(judgeSection(bound.input).shape, `${bound.id}: ${bound.requirement}`).toEqual(bound.shape);
   });
@@ -261,6 +299,17 @@ describe("wb-64x W10 section-level withdrawn-claim census (rendered-model)", () 
   });
   it("EOF W10 section at EOF is still scanned", () => {
     expect(judgeSection(page(TABLE, "zero durable writes").split("\n## W11:")[0] ?? "").claims).toEqual([{ location: "W10 paragraph", claim: "zero durable writes" }]);
+  });
+  it("external W10 row anchor keeps CT5 from deleting a judged row and its matching literal together", () => {
+    const document = readFileSync(join(process.cwd(), "docs/workbench/feature-matrix.md"), "utf8");
+    const section = document.split("## W10: ReactiveFiber provider/interop\n")[1]?.split("\n## W11:")[0] ?? "";
+    const tables = new Lexer({ gfm: true }).lex(section).filter(isTable);
+    const rows = tables.flatMap(table => table.rows);
+    expect(tables.length).toBe(1);
+    expect(tables[0]?.header.length).toBe(4);
+    expect(rows.length).toBe(2);
+    expect(new Set(CELLS.map(cell => cell.row)).size).toBe(rows.length);
+    expect(CELLS.length).toBe(rows.length * 4);
   });
   it("S-SHAPE standing rule 16 freezes full requirements and each location/claim pin, not only row counts", () => {
     // U1: the actual CELL runner's acceptance-bearing roster, including Feature and Status.
@@ -283,6 +332,10 @@ describe("wb-64x W10 section-level withdrawn-claim census (rendered-model)", () 
       ["B11", "top-level raw HTML block is refused", "W10 contains raw HTML, not a complete comment"],
       ["B12", "a complete comment followed by visible text is not a complete comment", "W10 contains raw HTML, not a complete comment"],
       ["B13", "W10 heading promoted to level 1", "W10 must have exactly one top-level level-2 heading"],
+      ["B14", "raw HTML in a W10 list item is refused", "W10 contains raw HTML, not a complete comment"],
+      ["B15", "two comment closes with intervening text are not one complete comment", "W10 contains raw HTML, not a complete comment"],
+      ["B16", "an abrupt comment close followed by text is not one complete comment", "W10 contains raw HTML, not a complete comment"],
+      ["B17", "a dash-bang close followed by text is not one complete comment", "W10 contains raw HTML, not a complete comment"],
     ]);
     // CT6/CT6b: same-cause input substitutions must not hollow distinct boundary legs.
     expect(BOUNDS.map(bound => bound.input)).toEqual([
@@ -295,10 +348,14 @@ describe("wb-64x W10 section-level withdrawn-claim census (rendered-model)", () 
       page(TABLE, "<div>The preview performs zero durable writes.</div>"),
       page(TABLE, "<!-- note --> The preview performs zero durable writes."),
       page().replace(`## ${HEADING}`, `# ${HEADING}`),
+      page(TABLE, "- <div>The preview performs zero durable writes.</div>"),
+      page(TABLE, "<!-- a --> The preview performs zero durable writes. <!-- b -->"),
+      page(TABLE, "<!--> The preview performs zero durable writes. -->"),
+      page(TABLE, "<!-- a --!> The preview performs zero durable writes. -->"),
     ]);
     expect(CLAIMS).toEqual(["zero durable writes", "no durable write"]);
     expect(ROW_KEYS).toEqual(["node() rf noncommitted context preview capability", "reactivefiber reader adapter"]);
-    expect(VARIANTS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["X8:1", "X9:2", "X10:2", "P1:1", "P2:2", "P3:1", "T1:2", "T2:1", "T3:1", "R1:2", "R2:1", "R3:1", "R4:1", "R5:1", "X11:1", "X12:1", "R6:1", "R7:1", "P4:1", "P5:1", "P6:1", "P7:1", "H2:1"]);
+    expect(VARIANTS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["X8:1", "X9:2", "X10:2", "P1:1", "P2:2", "P3:1", "T1:2", "T2:1", "T3:1", "R1:2", "R2:1", "R3:1", "R4:1", "R5:1", "X11:1", "X12:1", "R6:1", "R7:1", "P4:1", "P5:1", "P6:1", "P7:1", "H2:1", "X13:1", "X14:1", "R8:1", "R9:1", "R10:1", "R11:1", "R12:1", "R13:1", "X15:1", "R14:1", "R15:1"]);
     expect(VARIANTS.map(row => [row.id, row.requirement, ...row.pins.map(pin => `${pin.location}:${pin.claim}`)])).toEqual([
       ["X8", "W10 paragraph after the table asserting the withdrawn claim", "W10 paragraph:zero durable writes"],
       ["X9", "second W10 row Caveats cell asserting the withdrawn claim", "W10 table 1 row 2 Caveats:zero durable writes", "W10 table 1 row 2 Caveats:no durable write"],
@@ -323,9 +380,20 @@ describe("wb-64x W10 section-level withdrawn-claim census (rendered-model)", () 
       ["P6", "a claim in the second list item is judged", "W10 list:zero durable writes"],
       ["P7", "a claim in the second blockquote paragraph is judged", "W10 blockquote:zero durable writes"],
       ["H2", "a header cell in a second W10 table is judged", "W10 table 1 header column 2:zero durable writes"],
+      ["X13", "a relocated adapter table nested inside an outside list item is judged", "outside W10 table 1 row 1 Caveats:no durable write"],
+      ["X14", "the rendered Feature key of a relocated row is judged", "outside W10 table 1 row 1 Caveats:no durable write"],
+      ["R8", "a soft line break supplies whitespace inside W10 prose", "W10 paragraph:zero durable writes"],
+      ["R9", "a tab supplies whitespace inside W10 prose", "W10 paragraph:zero durable writes"],
+      ["R10", "a two-character non-ASCII look-alike cannot hide a claim", "W10 table 1 row 2 Caveats:zero durable writes"],
+      ["R11", "uppercase-X hexadecimal reference supplies whitespace", "W10 table 1 row 2 Caveats:zero durable writes"],
+      ["R12", "zero-padded decimal reference supplies whitespace", "W10 table 1 row 2 Caveats:zero durable writes"],
+      ["R13", "a three-character non-ASCII look-alike cannot hide a claim", "W10 table 1 row 2 Caveats:zero durable writes"],
+      ["X15", "a relocated adapter key in an outside table header is judged", "outside W10 table 1 header column 2:no durable write"],
+      ["R14", "a C0 control cannot split a withdrawn claim", "W10 table 1 row 2 Caveats:zero durable writes"],
+      ["R15", "spaces collapse after removing an invisible", "W10 table 1 row 2 Caveats:zero durable writes"],
     ]);
     // Outbox 611 U1-U4: freeze every new leg's input as well as its exact diagnosis.
-    expect(VARIANTS.slice(14).map(row => row.input)).toEqual([
+    expect(VARIANTS.slice(14, 23).map(row => row.input)).toEqual([
       page().replace(`## ${HEADING}`, `## W09: Earlier section\n\n| Feature | Caveats |\n| --- | --- |\n| ${ADAPTER} | no durable write |\n\n## ${HEADING}`),
       page(TABLE, "", `> | Feature | Caveats |\n> | --- | --- |\n> | ${ADAPTER} | no durable write |`),
       appendCell(1, 3, "zero&nbsp;durable writes"),
@@ -335,6 +403,28 @@ describe("wb-64x W10 section-level withdrawn-claim census (rendered-model)", () 
       page(TABLE, "- Clean first item.\n- Preview has zero durable writes."),
       page(TABLE, "> Clean first paragraph.\n>\n> Preview has zero durable writes."),
       page(TABLE, "| Feature | Caveats zero durable writes |\n| --- | --- |\n| Clean | Clean |"),
+    ]);
+    // The new GN rows freeze their INPUTS as well as pin counts, diagnoses and requirements above.
+    expect(VARIANTS.slice(23).map(row => row.input)).toEqual([
+      page(TABLE, "", `- Relocated note:\n\n  | Feature | Caveats |\n  | --- | --- |\n  | ${ADAPTER} (copy) | No durable write occurs. |`),
+      page(TABLE, "", `| Feature | Caveats |\n| --- | --- |\n| **ReactiveFiber** reader adapter projecting NativeSnapshots (copy) | No durable write occurs. |`),
+      page(TABLE, "The preview has zero durable\nwrites."),
+      page(TABLE, "The preview has zero\tdurable writes."),
+      appendCell(1, 3, `zero dur${String.fromCodePoint(0xe6)}le writes`),
+      appendCell(1, 3, "zero&#X20;durable writes"),
+      appendCell(1, 3, "zero&#0032;durable writes"),
+      appendCell(1, 3, `zero du${String.fromCodePoint(0xe6)}le writes`),
+      page(TABLE, "", `| ${ADAPTER} (copy) | No durable write occurs. |\n| --- | --- |\n| Other | Clean. |`),
+      appendCell(1, 3, `zero ${String.fromCodePoint(1)}durable writes`),
+      appendCell(1, 3, `zero ${String.fromCodePoint(0x200b)} durable writes`),
+    ]);
+    expect(SHAPE_RESIDUALS.map(row => [row.id, row.requirement, ...row.expected])).toEqual([
+      ["GN12", "nested level-1 heading before W10 is shape-only", "W10 has an intervening level-1 parent"],
+      ["GN13", "demoted matrix title is shape-only", "W10 must belong to the matrix title"],
+    ]);
+    expect(SHAPE_RESIDUALS.map(row => row.input)).toEqual([
+      page().replace(`## ${HEADING}`, `> # Appendix\n\n## ${HEADING}`),
+      page().replace(`# ${TITLE}`, `## ${TITLE}`),
     ]);
     expect(HEADERS.map(header => `${header.column}:${header.label}:${header.location}`)).toEqual([
       "0:Feature:W10 table 1 header column 1", "1:Status:W10 table 1 header column 2",
