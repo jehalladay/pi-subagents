@@ -1,0 +1,113 @@
+{
+  "comment": "wb-4smh R674 F1-F3: external anchor for the named LEG-2 forms, full wording and placement digests; existing rh28 roster unchanged.",
+  "sites": [
+    "S1",
+    "S2"
+  ],
+  "rows": [
+    {
+      "id": "L2-A",
+      "pin": "P5",
+      "form": "Object.defineProperty writes Object.prototype through an unfolded join key inside the emitter",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "unresolved emitter key"
+      ],
+      "digest": "d29f8810799a7db6"
+    },
+    {
+      "id": "L2-B",
+      "pin": "P5",
+      "form": "Reflect.set writes Object.prototype through an unfolded join key inside the emitter",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "unresolved emitter key"
+      ],
+      "digest": "4b9978ae95569219"
+    },
+    {
+      "id": "L2-C",
+      "pin": "P4",
+      "form": "Object.assign rewrites snapshot from JSON.parse data before the derive",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "data-carried snapshot write"
+      ],
+      "digest": "82890805091d3561"
+    },
+    {
+      "id": "L2-D",
+      "pin": "P4",
+      "form": "Object.assign rewrites snapshot from Object.fromEntries data with a joined key before the derive",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "data-carried snapshot write"
+      ],
+      "digest": "a10f5b48234945af"
+    },
+    {
+      "id": "COND-TRUE",
+      "pin": "P5",
+      "form": "a conditional nested spread has an unresolved computed key in its true branch",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "unresolved key"
+      ],
+      "digest": "679695470c61bb2d"
+    },
+    {
+      "id": "COND-FALSE",
+      "pin": "P5",
+      "form": "a conditional nested spread has an unresolved computed key in its false branch",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "unresolved key"
+      ],
+      "digest": "b3fc85d261171437"
+    },
+    {
+      "id": "PAREN",
+      "pin": "P5",
+      "form": "a parenthesized nested object spread has an unresolved computed key",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "unresolved key"
+      ],
+      "digest": "56cec4e23d303ecf"
+    },
+    {
+      "id": "PAREN-COND",
+      "pin": "P5",
+      "form": "a multiply parenthesized conditional nested spread has an unresolved computed key",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "unresolved key"
+      ],
+      "digest": "2b9cb1331ff05c03"
+    }
+  ]
+}
