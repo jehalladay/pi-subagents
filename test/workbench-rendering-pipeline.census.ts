@@ -17,8 +17,9 @@
  * title and the cause, as far as the helper's resolvable-construct roster and its named residuals reach
  * (test/helpers/census.ts, receipts/wb-u62.md). This leg scans no test source for case calls itself and spawns no
  * process; its own code reads only docs/10 and the census-tier config, never forge.toml (the helper's tier vouch reads
- * forge.toml through its CLOSED forge-step read, by design: the test/helpers/census.ts header), and the last case pins
- * that (respin U4). Every title is located by the helper, from vitest's report, never from bare text.
+ * forge.toml through its CLOSED forge-step read, by design: the test/helpers/census.ts header), and the own-reads case
+ * (respin U4) of the file's closing describe pins that. Every title is located by the helper, from vitest's report,
+ * never from bare text.
  *
  * Tiers: a half's tier names the report that vouches for it. The default report vouches for the default gate's test
  * tier only, and judge() refuses a pin of any other tier (tier-mismatch, R2 = (i)). Bullet 1 therefore splits (the
@@ -49,13 +50,38 @@
  * as literals copied from the TABLE at the cut's base, the row ids, every row's half and pin counts, every pin's file and
  * title, and the judged set (every default-gate half AC2 judges, with its pin count); AC3 pins every unpinned half's
  * reason verbatim. EACH-LIVENESS: the AC2 call site must register exactly one case per frozen judged half, read from
- * vitest's own task tree, and every one must run to its last assertion, so narrowing the judged predicate, the it.each
- * table or an AC2 body reds the census by name.
+ * vitest's own task tree, and every one must run to its last assertion, so narrowing the judged predicate or the it.each
+ * table, or returning early from an AC2 body, reds the census by name; an AC2 body narrowed by deleting its verdict
+ * assertions, or by pushing its ran-token and returning, is red through the self-hollowing guard below (wb-6ze.42,
+ * gate F2).
  *
  * Judging budget (gate F1): judge() re-reads the whole report and re-parses every pinned file it touches on each call,
  * so one judging case takes seconds over a full default-tier report at high load. Every judging case carries the
  * explicit file-local budget JUDGE_BUDGET_MS (the landed wb-6hb.9 shape, respin R546), and a case pins that exactly the
  * JUDGING_CASES judging cases run under it and that it exceeds vitest's default 5000 ms.
+ *
+ * Self-hollowing guard (wb-6ze.42, gate F1 of cmd_4916a4957299; the landed wb-6ze.38 respin-F4 shape): the census tier
+ * runs without --expect.requireAssertions, so this file requires an assertion of every case itself (a file-level
+ * beforeEach(expect.hasAssertions), which records every case it ran before into the tally) and every case declares its
+ * exact assertion count (expect.assertions), so deleting an assertion from a case body, or returning early from one,
+ * reds that case by name. The AC2 cases record every pin they judged ok, and the AC3 frozen-reasons case every reason
+ * it compared, into a module-level tally (RAN); the file's LAST case pins that tally to the frozen literals
+ * (EXPECTED_PINS, FROZEN_JUDGED, EXPECTED_REASONS), so a hollowed AC2 body (its verdict assertions deleted, or a forged
+ * ran-token and a return) cannot hide a pinned case the report records skipped or absent, and a hollowed frozen-reasons
+ * case cannot hide a reason rewritten into a false-coverage sentence. A structure case walks the file's own case tree:
+ * every case set to run (a skipped or todo case anywhere reds), the case count frozen (FILE_CASES), the closing tally
+ * the last case; the closing tally in turn pins that the structure case walked the file, that the hook ran before every
+ * case (a deleted hook reds) and that every earlier case of the file passed (a case skipped at runtime reds). Residual
+ * (named): a multi-site edit (deleting a case's expect.assertions line together with assertions it counts, in a case
+ * that feeds no tally; emptying the hook's hasAssertions call together with an early return placed before a case's
+ * count line; or skipping or deleting both guard cases together) is a visible diff of this file that no census judges.
+ *
+ * Bullet 9 per clause (wb-6ze.42, gate F5): beside the surfaces half (catalog paging, the compact attention report and
+ * the two ANSI- and bidi-free surfaces), the filter half pins workflow_observe's kind and tone selectors, the catalog
+ * reply's case-insensitive filter and the observe builder's per-page tone and kind filter, and the limit half pins
+ * workflow_observe's cursor paging over a >limit workflow and the catalog reply's limit default, clamp and typed
+ * refusal. The census claims only that those cases are collected once, pass and assert; no case binds the four
+ * clauses together, so the joint claim stays unpinned.
  *
  * Disclosed limits (never claimed as covered): an assertion reached only through a helper the helper's body leg does
  * not follow; bullet 3 (the 80ms whole-dialog refresh), the visible-running-rows half of bullet 2, the Markdown
@@ -66,7 +92,7 @@
 import { readFileSync } from "node:fs";
 import { basename, dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
 import { type CasePin, DEFAULT_GATE_TIER, DEFAULT_TIER_REPORT, docsSection, judge, type PinVerdict, type RenderedBlock, sectionMatches, sourceStructure } from "./helpers/census.js";
 
 type Tier = "default-gate" | "bench-receipt";
@@ -114,6 +140,8 @@ const SECURITY_PI_TOOLS = "test/workbench-security-pi-tools.test.ts";
 const ATTENTION = "test/workbench-attention.test.ts";
 const GRAPH_VIEW = "test/workbench-graph-view.test.ts";
 const WIRING = "test/workbench-inspector-graph-wiring.test.ts";
+const PI_OBSERVE = "test/workbench-pi-observe.test.ts";
+const OBSERVE_QUERY = "test/workbench-observe-query.test.ts";
 
 const pin = (file: string, title: string): Pin => ({ file, title });
 const guard = (id: string, pins: readonly Pin[]): Half => ({ id, tier: "default-gate", pins });
@@ -187,7 +215,7 @@ const TABLE: readonly Row[] = freezeDeep<readonly Row[]>([
       guard("settled-run", [pin(INSPECTOR, "does not ask TUI for a redraw on every one-second tick of a settled observed run")]),
       unpinned(
         "visible-running-rows",
-        "No landed case asserts that the seconds-only clock tick runs only for visible running rows; the settled-run half above is the only seconds-clock tick case (every other tick title under test/ is a fixture or redraw-cadence tick), so the visible-running-rows half is recorded here and never counted as covered.",
+        "No landed case asserts that the seconds-only clock tick runs only for visible running rows; the settled-run half above is the only seconds-clock tick case (every other tick title under test/ is a fixture, bench-sampling or redraw-cadence tick, the check-mark glyph swap of test/workflow-render.test.ts, or a census falsifier that names a docs row), so the visible-running-rows half is recorded here and never counted as covered.",
       ),
     ],
   },
@@ -283,9 +311,18 @@ const TABLE: readonly Row[] = freezeDeep<readonly Row[]>([
         pin(PI_REPLIES, "sanitizes hostile descriptor text: ANSI, bidi and secrets never reach the model (F3)"),
         pin(SECURITY_PI_TOOLS, "workflow_observe must strip bidi overrides in native operation labels"),
       ]),
+      guard("filter", [
+        pin(PI_OBSERVE, "F2: kind and tone selectors return only matching nodes and window.scanned explains the page"),
+        pin(REPLIES, "filters case-insensitively over id and description"),
+        pin(OBSERVE_QUERY, "filters each scanned page by tone and kind without skipping or repeating viewport rows, also when bytes trim a filtered page"),
+      ]),
+      guard("limit", [
+        pin(PI_OBSERVE, "B1/F1: cursor paging over a >limit workflow round-trips and the union of pages equals the window; a foreign or malformed cursor is refused typed"),
+        pin(REPLIES, "limit defaults, clamps to the maximum, and rejects non-positive or non-integer values with a typed error"),
+      ]),
       unpinned(
         "single-case-bound",
-        "The paginate (catalog reply), compact (attention report) and ANSI-free halves are pinned on four separate surfaces above; no single case binds paginate, filter and limit together with compact JSON for the observation tools, so that joint claim is recorded unpinned and never counted as covered.",
+        "The paginate (catalog reply), filter (workflow_observe, catalog reply, observe builder), limit (workflow_observe, catalog reply), compact (attention report) and ANSI-free halves are pinned clause by clause on separate surfaces above; no single case binds paginate, filter and limit together with compact JSON for the observation tools, so that joint claim is recorded unpinned and never counted as covered.",
       ),
     ],
   },
@@ -316,7 +353,7 @@ const EXPECTED_SHAPE: readonly string[] = [
   "virtualized-rows:6:virtualized-rows=1,markdown-selected-slice=0",
   "graph-layout:7:topology-revision=2,supernodes-first=2,no-force-directed-in-render=4",
   "bound-memory:8:guard=2",
-  "observation-tools:9:surfaces=4,single-case-bound=0",
+  "observation-tools:9:surfaces=4,filter=3,limit=2,single-case-bound=0",
 ];
 /**
  * Rule 16 pin-level literal: the exact file::title of every pin in table order, so swapping a pin for an unrelated passing case
@@ -346,6 +383,11 @@ const EXPECTED_PINS: readonly string[] = [
   "test/workbench-attention.test.ts::examines one 100-node page of 1,000 and keeps the report compact",
   "test/workbench-pi-tool-replies.test.ts::sanitizes hostile descriptor text: ANSI, bidi and secrets never reach the model (F3)",
   "test/workbench-security-pi-tools.test.ts::workflow_observe must strip bidi overrides in native operation labels",
+  "test/workbench-pi-observe.test.ts::F2: kind and tone selectors return only matching nodes and window.scanned explains the page",
+  "test/workbench-tool-replies.test.ts::filters case-insensitively over id and description",
+  "test/workbench-observe-query.test.ts::filters each scanned page by tone and kind without skipping or repeating viewport rows, also when bytes trim a filtered page",
+  "test/workbench-pi-observe.test.ts::B1/F1: cursor paging over a >limit workflow round-trips and the union of pages equals the window; a foreign or malformed cursor is refused typed",
+  "test/workbench-tool-replies.test.ts::limit defaults, clamps to the maximum, and rejects non-positive or non-integer values with a typed error",
 ];
 const pinsOf = (rows: readonly Row[]): string[] => rows.flatMap(row => row.halves.flatMap(half => half.pins.map(entry => `${entry.file}::${entry.title}`)));
 const shapeOf = (rows: readonly Row[]): string[] => rows.map(row => `${row.row}:${row.bullet}:${row.halves.map(half => `${half.id}=${half.pins.length}`).join(",")}`);
@@ -373,6 +415,8 @@ const FROZEN_JUDGED: readonly string[] = [
   "graph-layout/no-force-directed-in-render:4",
   "bound-memory/guard:2",
   "observation-tools/surfaces:4",
+  "observation-tools/filter:3",
+  "observation-tools/limit:2",
 ];
 /**
  * Every unpinned half's reason verbatim, as "row/half: reason" in table order (gate F3): a reason rewritten into a
@@ -380,10 +424,10 @@ const FROZEN_JUDGED: readonly string[] = [
  */
 const EXPECTED_REASONS: readonly string[] = [
   "burst-coalescing/receipt: the reducer-selector-bench receipt is produced only by the [build.commands.reducer-selector-bench] run outside gate = [...]; no report this leg reads vouches for it, and this leg never runs a bench or reads a receipt file, so the receipt half is recorded here with its tier and is never counted as covered",
-  "clock-tick/visible-running-rows: No landed case asserts that the seconds-only clock tick runs only for visible running rows; the settled-run half above is the only seconds-clock tick case (every other tick title under test/ is a fixture or redraw-cadence tick), so the visible-running-rows half is recorded here and never counted as covered.",
+  "clock-tick/visible-running-rows: No landed case asserts that the seconds-only clock tick runs only for visible running rows; the settled-run half above is the only seconds-clock tick case (every other tick title under test/ is a fixture, bench-sampling or redraw-cadence tick, the check-mark glyph swap of test/workflow-render.test.ts, or a census falsifier that names a docs row), so the visible-running-rows half is recorded here and never counted as covered.",
   "no-80ms-refresh/whole-dialog-refresh: No workbench falsifier exists for the 80ms whole-dialog refresh under large-workload mode: test/perf/widget.bench.ts is an upstream AgentWidget bench, not a workbench case, and test/workflow-dialog.test.ts holds no large-workload refresh case, so this bullet is recorded unpinned and never counted as covered.",
   "virtualized-rows/markdown-selected-slice: No workbench case binds expensive Markdown syntax parsing to the selected transcript slice; test/conversation-viewer.test.ts is the upstream viewer, not the workbench inspector, so this half is recorded unpinned and never counted as covered.",
-  "observation-tools/single-case-bound: The paginate (catalog reply), compact (attention report) and ANSI-free halves are pinned on four separate surfaces above; no single case binds paginate, filter and limit together with compact JSON for the observation tools, so that joint claim is recorded unpinned and never counted as covered.",
+  "observation-tools/single-case-bound: The paginate (catalog reply), filter (workflow_observe, catalog reply, observe builder), limit (workflow_observe, catalog reply), compact (attention report) and ANSI-free halves are pinned clause by clause on separate surfaces above; no single case binds paginate, filter and limit together with compact JSON for the observation tools, so that joint claim is recorded unpinned and never counted as covered.",
 ];
 const reasonsOf = (rows: readonly Row[]): string[] => rows.flatMap(row => row.halves.flatMap(half => (half.reason === undefined ? [] : [`${row.row}/${half.id}: ${half.reason}`])));
 
@@ -423,19 +467,40 @@ const AC2_RAN: string[] = [];
  */
 const JUDGE_BUDGET_MS = 35_000;
 const JUDGING: { readonly timeout: number } = { timeout: JUDGE_BUDGET_MS };
-/** The cases that carry JUDGING: AC2 per judged half (10), the AC4 tier-mismatch case and the M1, M3, M4 and M5 liveness falsifiers. */
-const JUDGING_CASES = 15;
+/** The cases that carry JUDGING: AC2 per judged half (12), the AC4 tier-mismatch case and the M1, M3, M4 and M5 liveness falsifiers. */
+const JUDGING_CASES = 17;
+/** Rule 16 for the file itself (wb-6ze.42, gate F1): its case count, every it.each row included; deleting or adding a case reds the structure case. */
+const FILE_CASES = 52;
+/** The structure case's title (gate F1); the closing tally pins that it walked the file. */
+const STRUCTURE_TITLE = "F1 (wb-6ze.42): every case of this file is set to run, the case count is frozen at FILE_CASES and the closing tally is the file's last case";
+/** The closing tally case's title; the structure case pins it as the file's last case. */
+const TALLY_TITLE = "F1 (wb-6ze.42) closing tally: the AC2 cases judged every frozen pin ok, the AC3 reasons case compared every frozen reason, the structure case walked the file, the hasAssertions hook ran before every case and every earlier case passed";
+/** What this run's guarded cases did, recorded by the cases themselves (gate F1); the closing tally pins every list. */
+interface Tally {
+  /** Every pin an AC2 case judged ok, as file::title, in run order. */
+  readonly judged: string[];
+  /** Every reason the AC3 frozen-reasons case compared, as row/half: reason, once the case reached its end. */
+  readonly reasons: string[];
+  /** The structure case, once it walked the file's case tree to its end. */
+  readonly structure: string[];
+  /** Every case the file-level hasAssertions hook ran before, in run order. */
+  readonly hooked: string[];
+}
+/** The gate-F1 tally of this run, filled by the AC2, AC3 frozen-reasons and structure cases and pinned by the file's last case. */
+const RAN: Tally = { judged: [], reasons: [], structure: [], hooked: [] };
 
 /** One node of vitest's task tree, as far as this leg reads it. */
 interface TaskNode {
   readonly type: string;
   readonly name: string;
+  readonly mode?: string;
   readonly timeout?: number;
+  readonly result?: { readonly state?: string };
   readonly tasks?: readonly TaskNode[];
 }
-/** Every test case vitest registered in this file, in registration order, with its timeout, read from the runner's own task tree. */
-function registeredTests(tasks: readonly TaskNode[]): { readonly name: string; readonly timeout: number | undefined }[] {
-  return tasks.flatMap(child => (child.type === "test" ? [{ name: child.name, timeout: child.timeout }] : child.type === "suite" ? registeredTests(child.tasks ?? []) : []));
+/** Every test case vitest registered in this file, in registration order, with its run mode, its timeout and (once it finished) its result state, read from the runner's own task tree. */
+function registeredTests(tasks: readonly TaskNode[]): { readonly name: string; readonly mode: string | undefined; readonly timeout: number | undefined; readonly state: string | undefined }[] {
+  return tasks.flatMap(child => (child.type === "test" ? [{ name: child.name, mode: child.mode, timeout: child.timeout, state: child.result?.state }] : child.type === "suite" ? registeredTests(child.tasks ?? []) : []));
 }
 
 /** One line per pin that is not ok, naming the row and the half; the helper's why names the file, title, tier and cause. */
@@ -469,8 +534,15 @@ const synthetic = (edit: (blocks: readonly string[]) => readonly string[] = bloc
 const editBlock = (index: number, from: string, to: string) => (blocks: readonly string[]): readonly string[] => blocks.map((block, at) => (at === index ? block.replace(from, to) : block));
 const named = (lines: readonly string[]): string[] => lines.filter(line => line.startsWith("row ")).map(line => line.slice(0, line.indexOf(": ")));
 
+// Gate F1 (wb-6ze.42): the census tier runs without --expect.requireAssertions; every case of this file must assert at least once.
+beforeEach(({ task }) => {
+  expect.hasAssertions();
+  RAN.hooked.push(task.name);
+});
+
 describe("wb-6ze.39 docs/workbench/10 rendering-pipeline census (report mode)", () => {
   it("AC1: the table holds the nine frozen rows in order, deeply frozen, each bullet rendered in its section", () => {
+    expect.assertions(6);
     expect(isDeepFrozen(TABLE)).toBe(true);
     expect(ROW_IDS).toEqual(EXPECTED_ROW_IDS);
     expect(TABLE).toHaveLength(9);
@@ -480,17 +552,20 @@ describe("wb-6ze.39 docs/workbench/10 rendering-pipeline census (report mode)", 
   });
 
   it("AC1: rule 16 frozen shape: every row's half and pin counts equal the literal (a deleted pin, a dropped half or a swapped row reds the census)", () => {
+    expect.assertions(3);
     expect(shapeOf(TABLE)).toEqual(EXPECTED_SHAPE);
     expect(pinsOf(TABLE)).toEqual(EXPECTED_PINS);
-    expect(EXPECTED_PINS).toHaveLength(23);
+    expect(EXPECTED_PINS).toHaveLength(28);
   });
 
   it("AC1: rule 16 judged-row set: the default-gate halves AC2 judges equal the frozen literal (a narrowed predicate, a dropped row or a dropped half reds the census; respin U1)", () => {
+    expect.assertions(2);
     expect(JUDGED.map(judgedKey)).toEqual(FROZEN_JUDGED);
-    expect(FROZEN_JUDGED).toHaveLength(10);
+    expect(FROZEN_JUDGED).toHaveLength(12);
   });
 
   it("AC1: the live section renders exactly its two frozen blocks (the pipeline diagram and the nine-item list), HTML-free", () => {
+    expect.assertions(3);
     const section = docsSection(readRepo(DOCS_FILE), DOCS_HEADING, 2, [DOCS_PARENT]);
     expect(sectionMatches(section, SECTION_BLOCKS)).toEqual({ ok: true, why: "" });
     expect(section.blocks).toHaveLength(2);
@@ -498,6 +573,7 @@ describe("wb-6ze.39 docs/workbench/10 rendering-pipeline census (report mode)", 
   });
 
   it("AC1: every pinned half carries pins, every unpinned half carries a reason and no pins, and a half's tier is one of the two", () => {
+    expect.assertions(48);
     for (const row of TABLE) {
       expect(row.halves.length, `row ${row.row}: a row holds at least one half`).toBeGreaterThan(0);
       for (const half of row.halves) {
@@ -512,6 +588,7 @@ describe("wb-6ze.39 docs/workbench/10 rendering-pipeline census (report mode)", 
   });
 
   it("AC3: the unpinned halves are listed so none is ever counted as passed; the bench receipt names its command and bullet 3 is wholly unpinned", () => {
+    expect.assertions(6);
     const listed = TABLE.flatMap(row => row.halves.filter(half => half.reason !== undefined).map(half => `${row.row}/${half.id}`));
     expect(listed).toEqual(UNPINNED_HALVES);
     for (const { row, half } of BENCH_RECEIPTS) {
@@ -525,17 +602,21 @@ describe("wb-6ze.39 docs/workbench/10 rendering-pipeline census (report mode)", 
   });
 
   it("AC3: every unpinned half's reason is frozen verbatim, so a reason rewritten into a false-coverage sentence reds the census (gate F3)", () => {
+    expect.assertions(2);
     expect(reasonsOf(TABLE)).toEqual(EXPECTED_REASONS);
     expect(EXPECTED_REASONS.map(entry => entry.slice(0, entry.indexOf(": ")))).toEqual(UNPINNED_HALVES);
+    RAN.reasons.push(...reasonsOf(TABLE));
   });
 
   it("AC3: the supernodes-first half is pinned now that wb-6ze.32 and wb-6ze.34 have landed, and is not in the unpinned list", () => {
+    expect.assertions(2);
     expect(UNPINNED_HALVES.some(entry => entry.startsWith("graph-layout/supernodes-first"))).toBe(false);
     const half = TABLE.find(row => row.row === "graph-layout")?.halves.find(entry => entry.id === "supernodes-first");
     expect(half?.pins.map(entry => entry.file)).toEqual([GRAPH_VIEW, GRAPH_VIEW]);
   });
 
   it("AC3 (U2): the no-force-directed-in-render half is pinned on the wb-6ze.32 F3 falsifier (graph-view A5) and the wb-6ze.37 render-path case, and is not in the unpinned list", () => {
+    expect.assertions(4);
     expect(UNPINNED_HALVES).not.toContain("graph-layout/no-force-directed-in-render");
     const half = TABLE.find(row => row.row === "graph-layout")?.halves.find(entry => entry.id === "no-force-directed-in-render");
     expect(half?.reason).toBeUndefined();
@@ -544,6 +625,7 @@ describe("wb-6ze.39 docs/workbench/10 rendering-pipeline census (report mode)", 
   });
 
   it.each(JUDGED)(AC2_TITLE, JUDGING, ({ row, half }) => {
+    expect.assertions(3);
     const verdicts = judge(
       REPORT,
       half.pins.map(entry => casePin(half, entry)),
@@ -551,16 +633,19 @@ describe("wb-6ze.39 docs/workbench/10 rendering-pipeline census (report mode)", 
     expect(verdicts).toHaveLength(half.pins.length);
     expect(failures(row, half, verdicts)).toEqual([]);
     expect(verdicts.map(verdict => verdict.code)).toEqual(half.pins.map(() => "ok"));
+    RAN.judged.push(...verdicts.filter(verdict => verdict.ok).map(verdict => `${verdict.pin.file}::${verdict.pin.title}`));
     AC2_RAN.push(judgedKey({ row, half }));
   });
 
   it("AC2 each-liveness: the call site registers exactly one AC2 case per frozen judged half, and every one ran to its last assertion (respin U1, gate F2)", ({ task }) => {
+    expect.assertions(2);
     const names = registeredTests(task.file.tasks).map(entry => entry.name);
     expect(names.filter(name => name.startsWith("AC2 row "))).toEqual(FROZEN_JUDGED.map(ac2Name));
     expect(AC2_RAN).toEqual(FROZEN_JUDGED);
   });
 
   it("AC4: a bench-receipt label is carried by no report this leg reads: the default report refuses a guard pin relabelled as its receipt", JUDGING, () => {
+    expect.assertions(5);
     expect(BENCH_RECEIPTS.length).toBeGreaterThan(0);
     const burst = BENCH_RECEIPTS[0];
     const cadence = TABLE[0]?.halves[0]?.pins[1];
@@ -573,6 +658,7 @@ describe("wb-6ze.39 docs/workbench/10 rendering-pipeline census (report mode)", 
   });
 
   it("AC4: the leg judges the gate's own report and executes nothing: it imports judge, never judgePins, and loads no module at runtime", () => {
+    expect.assertions(6);
     const own = sourceStructure(ROOT, SELF);
     expect(own.ok, own.why).toBe(true);
     const helper = own.imports.filter(entry => entry.module === "./helpers/census.js").flatMap(entry => entry.names);
@@ -585,6 +671,7 @@ describe("wb-6ze.39 docs/workbench/10 rendering-pipeline census (report mode)", 
   });
 
   it("AC4: the leg is a census-tier file, outside the default include whose report it judges", () => {
+    expect.assertions(3);
     const self = fileURLToPath(import.meta.url);
     expect(self.endsWith(SELF)).toBe(true);
     expect(self.endsWith(".test.ts")).toBe(false);
@@ -592,9 +679,19 @@ describe("wb-6ze.39 docs/workbench/10 rendering-pipeline census (report mode)", 
   });
 
   it("F1: exactly the judging cases carry the file-local budget, and it is above vitest's default 5000 ms (gate F1)", ({ task }) => {
+    expect.assertions(2);
     const timeouts = registeredTests(task.file.tasks).map(entry => entry.timeout);
     expect(JUDGE_BUDGET_MS, "the judging budget is above vitest's default test timeout").toBeGreaterThan(5_000);
     expect(timeouts.filter(timeout => timeout === JUDGE_BUDGET_MS), "the cases that run under JUDGE_BUDGET_MS").toHaveLength(JUDGING_CASES);
+  });
+
+  it(STRUCTURE_TITLE, ({ task }) => {
+    expect.assertions(3);
+    const cases = registeredTests(task.file.tasks);
+    expect(cases.filter(entry => entry.mode !== "run").map(entry => entry.name), "cases of this file not set to run").toEqual([]);
+    expect(cases, "the file's case count").toHaveLength(FILE_CASES);
+    expect(cases[cases.length - 1]?.name, "the file's last case").toBe(TALLY_TITLE);
+    RAN.structure.push("walked");
   });
 });
 
@@ -607,6 +704,7 @@ describe("wb-6ze.39 liveness: the adopted judge is not accept-all (the real repo
   };
 
   it("M1: a pinned title altered by one character is absent from the report and red, naming the row, the file and the title", JUDGING, () => {
+    expect.assertions(4);
     const { row, half, entry } = firstJudged("bound-memory");
     const wrong = { ...entry, title: entry.title.replace("retains", "retainS") };
     const verdicts = judge(REPORT, [casePin(half, wrong)]);
@@ -618,34 +716,45 @@ describe("wb-6ze.39 liveness: the adopted judge is not accept-all (the real repo
   });
 
   it("M2: a row removed from the table fails the row-set pin (the frozen ids no longer match)", () => {
+    expect.assertions(1);
     expect(TABLE.filter(row => row.row !== "graph-layout").map(row => row.row)).not.toEqual(EXPECTED_ROW_IDS);
   });
 
   it("M3: a pin with no title is red (the judge finds no such case)", JUDGING, () => {
+    expect.assertions(1);
     const { half } = firstJudged("burst-coalescing");
     const [verdict] = judge(REPORT, [casePin(half, { file: INSPECTOR, title: "" })]);
     expect(verdict?.ok).toBe(false);
   });
 
   it("M4: a file the default config excludes is never in the default report: a pin there is red, not collected", JUDGING, () => {
+    expect.assertions(1);
     const [verdict] = judge(REPORT, [{ file: NATIVE_FILE, title: "any title", tier: DEFAULT_GATE_TIER }]);
     expect(verdict?.code).toBe("not-collected");
   });
 
   it("M5: a pin that names the right title in the wrong file is red, never borrowed from a neighbour", JUDGING, () => {
+    expect.assertions(1);
     const { half, entry } = firstJudged("bound-memory");
     const [verdict] = judge(REPORT, [casePin(half, { file: LOADER, title: entry.title })]);
     expect(verdict?.ok).toBe(false);
   });
 
-  it("M6: a pinned title that two rows share is judged once per row, so removing it from one row still leaves the other row's pin live", () => {
+  it("M6: no pinned case is shared by two rows: every file + title pin appears once in the table, the inspector Enter title belongs to tty-free-reducers alone, and the two rows that pin the reducer-selector-bench file each pin a different title", () => {
+    expect.assertions(4);
     const owners = TABLE.filter(row => row.halves.some(half => half.pins.some(entry => entry.file === INSPECTOR && entry.title.startsWith("Enter on the initially highlighted row"))));
     expect(owners.map(row => row.row)).toEqual(["tty-free-reducers"]);
     const shared = TABLE.filter(row => row.halves.some(half => half.pins.some(entry => entry.file === SELECTOR)));
     expect(shared.map(row => row.row)).toEqual(["burst-coalescing", "no-allhistory-collapse"]);
+    expect(shared.map(row => row.halves.flatMap(half => half.pins.filter(entry => entry.file === SELECTOR).map(entry => entry.title)))).toEqual([
+      ["keeps the redraw cadence at or below 4 Hz from fixture time, never the wall clock"],
+      ["accounts reducer calls and bounded reads, and records no full fold per redraw"],
+    ]);
+    expect(new Set(pinsOf(TABLE)).size, "no file + title pin appears twice in the table").toBe(pinsOf(TABLE).length);
   });
 
   it("M7: a narrowed judged predicate leaves every TABLE literal equal and is red by the frozen judged literal alone", () => {
+    expect.assertions(4);
     const narrowed = TABLE.flatMap(row => row.halves.filter(half => half.tier === "default-gate" && half.pins.length > 1).map(half => ({ row, half }))).map(judgedKey);
     expect(shapeOf(TABLE)).toEqual(EXPECTED_SHAPE);
     expect(pinsOf(TABLE)).toEqual(EXPECTED_PINS);
@@ -656,42 +765,51 @@ describe("wb-6ze.39 liveness: the adopted judge is not accept-all (the real repo
 
 describe("wb-6ze.39 docs drift names the row or the section (synthetic document, rendered view)", () => {
   it("accepts the section exactly as written, at EOF and bounded by a following level-2 heading", () => {
+    expect.assertions(2);
     expect(docsFailures(synthetic())).toEqual([]);
     expect(docsFailures(`# ${DOCS_PARENT}\n\n## ${DOCS_HEADING}\n\n${SECTION_MARKDOWN.join("\n\n")}\n`)).toEqual([]);
   });
 
   it("K1 names the 80ms row (and only it) when its bullet is dropped from the list", () => {
+    expect.assertions(2);
     const lines = docsFailures(synthetic(editBlock(1, "\n- No 80ms whole-dialog refresh under large-workload mode.", "")));
     expect(named(lines)).toEqual(["row no-80ms-refresh"]);
     expect(lines.some(line => line.includes("is not exactly its frozen blocks"))).toBe(true);
   });
 
   it("K2 names the burst row (and only it) when the redraw cap is loosened", () => {
+    expect.assertions(1);
     expect(named(docsFailures(synthetic(editBlock(1, "<=4 ordinary updates/s", "<=40 ordinary updates/s"))))).toEqual(["row burst-coalescing"]);
   });
 
   it("K3 names the no-allhistory row (and only it) when the incremental clause is dropped", () => {
+    expect.assertions(1);
     expect(named(docsFailures(synthetic(editBlock(1, "; maintain by-node last projection and ancestor aggregates incrementally", ""))))).toEqual(["row no-allhistory-collapse"]);
   });
 
   it("K4 names the clock-tick row (and only it) when the visible-running-rows qualifier is weakened", () => {
+    expect.assertions(1);
     expect(named(docsFailures(synthetic(editBlock(1, "<=1Hz and only for visible running rows", "<=1Hz"))))).toEqual(["row clock-tick"]);
   });
 
   it("K5 names the observation-tools row (and only it) when the never-ANSI clause is removed", () => {
+    expect.assertions(1);
     expect(named(docsFailures(synthetic(editBlock(1, " and return compact JSON, never rendered ANSI", ""))))).toEqual(["row observation-tools"]);
   });
 
   it("K6 names the graph-layout row (and only it) when the supernodes sentence is removed", () => {
+    expect.assertions(1);
     expect(named(docsFailures(synthetic(editBlock(1, " For large graphs show aggregate supernodes first.", ""))))).toEqual(["row graph-layout"]);
   });
 
   it("D1 names the observation-tools row (and only it) when a weakening qualifier is appended to the last bullet", () => {
+    expect.assertions(1);
     const lines = docsFailures(synthetic(editBlock(1, "never rendered ANSI.", "never rendered ANSI. Unless the host says otherwise.")));
     expect(named(lines)).toEqual(["row observation-tools"]);
   });
 
   it("D2 goes red on the section when a tenth unclassified bullet is added to the list", () => {
+    expect.assertions(3);
     const lines = docsFailures(synthetic(editBlock(1, "never rendered ANSI.", "never rendered ANSI.\n- a new unclassified bullet")));
     expect(named(lines)).toEqual([]);
     expect(lines).toHaveLength(1);
@@ -699,29 +817,34 @@ describe("wb-6ze.39 docs drift names the row or the section (synthetic document,
   });
 
   it("D3 goes red when the section heading is renamed away", () => {
+    expect.assertions(2);
     const lines = docsFailures(synthetic().replace(`## ${DOCS_HEADING}`, "## Rendering notes"));
     expect(lines).toHaveLength(1);
     expect(lines[0]).toContain(`${DOCS_HEADING}: the section is refused`);
   });
 
   it("D4 (FOLD-1) goes red when a weakening ### subsection is appended inside the section", () => {
+    expect.assertions(2);
     const lines = docsFailures(synthetic(blocks => blocks, "\n### Exceptions\n\nA host may skip these.\n"));
     expect(lines.length).toBeGreaterThan(0);
     expect(lines.every(line => line.includes("is not exactly its frozen blocks"))).toBe(true);
   });
 
   it("D5 names the tty-free row when its bullet is hidden in an HTML comment, and the section refuses the HTML", () => {
+    expect.assertions(2);
     const lines = docsFailures(synthetic(editBlock(1, "- Pure layout and keyboard reducers are unit-tested without a TTY.", "- <!-- Pure layout and keyboard reducers are unit-tested without a TTY. -->")));
     expect(named(lines)).toEqual(["row tty-free-reducers"]);
     expect(lines.some(line => line.includes("carries HTML"))).toBe(true);
   });
 
   it("D6 goes red when a level-1 heading inserted above re-homes the section", () => {
+    expect.assertions(1);
     const lines = docsFailures(synthetic().replace(`## ${DOCS_HEADING}`, `# Appendix\n\n## ${DOCS_HEADING}`));
     expect(lines.some(line => line.includes(`${DOCS_HEADING}: the section is refused`))).toBe(true);
   });
 
   it("D7 goes red on the section, naming no row, when two bullets swap places", () => {
+    expect.assertions(3);
     const lines = docsFailures(
       synthetic(editBlock(1, `- ${BULLETS[0]}\n- ${BULLETS[1]}`, `- ${BULLETS[1]}\n- ${BULLETS[0]}`)),
     );
@@ -731,6 +854,7 @@ describe("wb-6ze.39 docs drift names the row or the section (synthetic document,
   });
 
   it("D8 goes red on the section, naming no row, when the pipeline diagram is reworded", () => {
+    expect.assertions(3);
     const lines = docsFailures(synthetic(editBlock(0, "terminal line diff", "terminal full repaint")));
     expect(named(lines)).toEqual([]);
     expect(lines).toHaveLength(1);
@@ -738,13 +862,26 @@ describe("wb-6ze.39 docs drift names the row or the section (synthetic document,
   });
 
   it("an edit of any other section never reddens a row: the navigation and cancelling sections are free to change", () => {
+    expect.assertions(1);
     expect(docsFailures(synthetic().replace("Rows.", "Rows, changed.").replace("Text.", "Different text."))).toEqual([]);
   });
 });
 
 describe("wb-6ze.39 own reads (respin U4): runs last, after every case that reads", () => {
   it("AC4: the leg's own code reads only docs/10 and the census-tier config, never forge.toml (the helper's tier vouch reads forge.toml through its CLOSED forge-step read, by design)", () => {
+    expect.assertions(2);
     expect(READS.filter(path => !LEG_READS.includes(path))).toEqual([]);
     expect([...new Set(READS)].sort()).toEqual([...LEG_READS].sort());
+  });
+
+  it(TALLY_TITLE, ({ task }) => {
+    expect.assertions(6);
+    expect(RAN.judged, "AC2: every pin judged ok, in table order").toEqual([...EXPECTED_PINS]);
+    expect(AC2_RAN, "AC2: every judged half whose case reached its last assertion, in table order").toEqual([...FROZEN_JUDGED]);
+    expect(RAN.reasons, "AC3: every frozen reason the frozen-reasons case compared").toEqual([...EXPECTED_REASONS]);
+    expect(RAN.structure, "the structure case walked the file to its end").toEqual(["walked"]);
+    expect(RAN.hooked, "the file-level hasAssertions hook ran before every case, in registration order").toEqual(registeredTests(task.file.tasks).map(entry => entry.name));
+    const earlier = registeredTests(task.file.tasks).filter(entry => entry.name !== TALLY_TITLE);
+    expect(earlier.filter(entry => entry.state !== "pass").map(entry => `${entry.name}: ${entry.state ?? "no result"}`), "the earlier cases of this file that did not pass").toEqual([]);
   });
 });
