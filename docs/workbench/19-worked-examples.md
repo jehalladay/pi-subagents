@@ -94,4 +94,4 @@ return {coverage: found.source.coverage_summary, runtime: found.runtime};
 
 The native result can be incomplete even when files are returned. `licenses_absence: false` does not establish that a missing file or symbol is absent. This query is a filesystem read, not a task-scoped semantic dependency analysis.
 
-`furnace.run.inspect` accepts an existing `runId` under the authorized Pi workspace with explicit `furnace:inspect`. `reactivefiber.render.preview` accepts `model` and `task` under explicit `reactivefiber:render`; its workspace must already be initialized. It uses a noncommitted render and must not be advertised as a durable RF artifact.
+`furnace.run.inspect` accepts an existing `runId` under the authorized Pi workspace with explicit `furnace:inspect`. `reactivefiber.render.preview` accepts exactly one of two input arms under explicit `reactivefiber:render`: `model` and `task`, or `view` and `taskId` with an optional `model`, never both; its workspace must already be initialized. It uses a noncommitted render and must not be advertised as a durable RF artifact.
