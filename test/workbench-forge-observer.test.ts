@@ -777,6 +777,11 @@ describe('wb-4ap.7 COLLECTIVE-ADAPTATION-R7: reading last_result_state adds no r
   /** control.ts:185@9df9a03: deny("no-confirmed-ownership", "authorization", "no confirmed lifecycle ownership"). */
   const NO_OWNER: ControlDecision = {decision: 'denied', category: 'authorization', reason: 'no confirmed lifecycle ownership', policy: 'no-confirmed-ownership'};
   const TARGETS = [workspaceRef, packageRef('code:pi-subagents'), packageRef(SIBLING_REF)];
+  /** wb-4ap.19: what the it.each consumer below observed - the [name, row] each case received, recorded after its last
+   * assertion in the order the cases ran - so the consumer liveness row judges count and identity over the loop's inputs. */
+  const consumed: [string, Json][] = [];
+  /** wb-4ap.19: the fixed tail of the title the consumer registers for each saying (its %s is the saying's name). */
+  const CONSUMER_TAIL = ' - exactly one forge-observer grouping edge per package, the descriptor-less relations unchanged, no other relation kind';
 
   it('F15 table liveness (wb-4ap.7): the descriptor table holds all five sayings', () => expect(sayings).toHaveLength(5));
 
@@ -818,11 +823,39 @@ describe('wb-4ap.7 COLLECTIVE-ADAPTATION-R7: reading last_result_state adds no r
     expect(result.snapshots[1].node.statusText).toBe(`${F8_TEXT} · basis STALE`);
   });
 
-  it.each(sayings)('wb-4ap.7: %s - exactly one forge-observer grouping edge per package, the descriptor-less relations unchanged, no other relation kind', (_name, row) => {
+  it.each(sayings)('wb-4ap.7: %s - exactly one forge-observer grouping edge per package, the descriptor-less relations unchanged, no other relation kind', (name, row) => {
+    expect.assertions(3);
     const result = forgeGateTopology(withPackages(row, SIBLING), context);
     expect(result.relations).toStrictEqual([grouping('code:pi-subagents'), grouping(SIBLING_REF)]);
     expect(result.relations).toStrictEqual(forgeGateTopology(withPackages(DESCRIPTORLESS, SIBLING), context).relations);
     expect(JSON.stringify(result)).not.toMatch(RELATION_KINDS);
+    // wb-4ap.19: recorded only after the last assertion, so a case that returns or throws before it is never counted as judged.
+    consumed.push([name, row]);
+  });
+
+  // wb-4ap.19 (wb-4ap.18 PREP F1 of gate cmd_540c84bca52d): the table above is shape-pinned, but nothing pinned the loop that
+  // consumes it - J11 (it.each(sayings.slice(0, 1))) dropped four cases 0|89, and with them saying 3, the only row that kills
+  // the src mutant G7 (a grouping edge retargeted to the package its semantic_owner names). This row reads the file's own task
+  // tree for what the consumer registered and the record above for what it judged.
+  it('F15 consumer liveness (wb-4ap.19): the it.each registers one run-mode case per saying, in table order, and each case judged its own table row to its last assertion', ({task}) => {
+    const registered: string[] = [];
+    const walk = (tasks: typeof task.file.tasks): void => {
+      for (const child of tasks) {
+        if (child.type === 'test' && child.name.endsWith(CONSUMER_TAIL)) registered.push(`${child.name.slice(0, -CONSUMER_TAIL.length)}|${child.mode}`);
+        else if (child.type === 'suite') walk(child.tasks);
+      }
+    };
+    walk(task.file.tasks);
+    // The consumer's frozen shape at 606f5c9 (rule 16): one run-mode case per saying, titled by its name, in table order.
+    expect(registered, 'the cases the it.each consumer registers, by title and mode, in table order').toStrictEqual([
+      'wb-4ap.7: semantic_owner forge:gate and authoritative_read_source log:.forge/logs/commands.jsonl (the F15 literals)|run',
+      'wb-4ap.7: a source_ref naming each relation kind|run',
+      'wb-4ap.7: a semantic_owner and an authoritative_read_source naming the sibling package|run',
+      'wb-4ap.7: relation-shaped keys: an ownership kind, a dependency relation and a forge provenance with a native confirmation reference|run',
+      'wb-4ap.7: a malformed (withheld) descriptor carrying the F15 literals|run',
+    ]);
+    expect(consumed.map(([name]) => name), 'the sayings the consumer judged to its last assertion this run').toStrictEqual(sayings.map(([name]) => name));
+    expect(consumed.map(([, row]) => sayings.findIndex(([, own]) => own === row)), 'each judged case received its own table row object').toStrictEqual(sayings.map((_saying, index) => index));
   });
 
   it('wb-4ap.7: the semantic_owner and authoritative_read_source values never appear in JSON.stringify(result), well formed or withheld', () => {
