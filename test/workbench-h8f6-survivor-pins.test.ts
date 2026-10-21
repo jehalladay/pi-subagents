@@ -37,6 +37,15 @@
  * reds when its family's page stops reading quiet, or stops carrying the family's edit. Each family's members are judged
  * against a reading outside this file's literals, so a residual removed from every literal here still reds: S7 against
  * the walk's blind spots in src, L2-CP against the rows whose pin removal the outside readings cannot see.
+ *
+ * wb-vgke (the wb-h8f.14 gate's PREP F1, owner R666 (2), one follow-up): each residual quiet row leaves two records, read
+ * through vitest's expect state, never the test context - the name vitest registered it under, when its body starts,
+ * and one reached record per member, written after the member's last assertion. The last describe judges both records,
+ * and the RESIDUALS rows themselves, against the out-of-file roster test/fixtures/h8f6-survivor-pins-residual-roster.json
+ * (each residual's id, kind, family, requirement and members, and the suite and title its quiet row is registered under).
+ * So a quiet row dropped from the loop, renamed, or hollowed after its liveness reading reds there (the gate's
+ * l2-disp-res-cp, l2-disp-res-s7 and l2-hb-s7q forms), and a residual removed from every literal of this file reds
+ * against the roster as well as against src.
  */
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -639,7 +648,19 @@ function changedByRemoval(mutant: string): string[] {
   return [...hollowed.filter(name => !frozen.includes(name)), ...frozen.filter(name => !hollowed.includes(name))];
 }
 
+/**
+ * The records the residual quiet rows leave (wb-vgke, R666 F1), judged against the out-of-file roster by the last describe:
+ * quietStarted holds the name each quiet row ran under, written when its body starts; quietReached holds one entry per
+ * member, written after the member's last assertion, so a quiet row that returns or skips after its liveness reading
+ * leaves its member unreached.
+ */
+const quietStarted: string[] = [];
+const quietReached: string[] = [];
+/** The running case's registered name (its describe chain and title), read through the expect state, never the test context. */
+const runningCase = (): string => expect.getState().currentTestName ?? "<no running case>";
+
 function quietRow(residual: Residual): void {
+  quietStarted.push(runningCase());
   switch (residual.kind) {
     case "one-level-walk": {
       const text = read(INDEX);
@@ -650,12 +671,14 @@ function quietRow(residual: Residual): void {
         // followed the member would derive an obligation from it.
         expect(sanitizerCallsIn(page, member), member).toBe(sanitizerCallsIn(text, member) + 1);
         expect(obligationsOf(INDEX, page), member).toEqual(before);
+        quietReached.push(`${runningCase()} | one-level-walk | ${member}`);
       }
       break;
     }
     case "coordinated-pin-removal":
       // A member's removal changes no outside reading; the same removal on the R9 row (the analog) changes its fields reading.
       for (const row of SURVIVORS) expect(changedByRemoval(row.mutant), row.mutant).toEqual(residual.members.includes(row.mutant) ? [] : ["R9 fields"]);
+      for (const member of residual.members) quietReached.push(`${runningCase()} | coordinated-pin-removal | ${member}`);
       break;
   }
 }
@@ -694,4 +717,37 @@ describe("wb-h8f.14 named residuals: each a named family plus a pinned quiet row
     const invisible = SURVIVORS.filter(row => changedByRemoval(row.mutant).length === 0).map(row => row.mutant);
     expect(RESIDUALS.filter(residual => residual.kind === "coordinated-pin-removal").flatMap(residual => residual.members)).toEqual(invisible);
   }, PARSE_TIMEOUT_MS);
+});
+
+// ---- wb-vgke: the residual quiet rows' registration and reached records, judged against an out-of-file roster ----
+
+/** The out-of-file roster of the named residual quiet rows (R666 F1): one row per residual, in RESIDUALS order. */
+const ROSTER = "test/fixtures/h8f6-survivor-pins-residual-roster.json";
+interface RosterRow extends Residual {
+  /** The describe vitest registers the residual's quiet row under. */
+  readonly suite: string;
+  /** The title vitest registers the residual's quiet row under. */
+  readonly test: string;
+}
+const rosterRows = (): readonly RosterRow[] => (JSON.parse(read(ROSTER)) as { readonly residuals: readonly RosterRow[] }).residuals;
+/** One residual's identity, for an in-file RESIDUALS row and a roster row alike. */
+const residualLine = ({ id, kind, family, requirement, members }: Residual): string => [id, kind, family, requirement, members.join(" ")].join(" | ");
+
+// vitest runs this file's cases one after another in the order they are registered, so every quiet row has run here.
+describe("wb-vgke residual quiet-row records: each quiet row registered and reached, judged against the out-of-file roster", () => {
+  it("R-ROSTER: the in-file RESIDUALS rows equal the out-of-file roster's rows exactly, in order, both ways", () => {
+    expect(RESIDUALS.map(residualLine)).toEqual(rosterRows().map(residualLine));
+  });
+
+  it("R-SHAPE frozen roster (rule 16): the roster's residuals by id and member count, as read at the cut base", () => {
+    expect(rosterRows().map(row => `${row.id}:${row.members.length}`)).toEqual(["S7:1", "L2-CP:4"]);
+  });
+
+  it("R-REGISTERED (wb-vgke (a)): every roster residual's quiet row ran under the suite and title the roster registers for it, once each, in roster order", () => {
+    expect(quietStarted).toEqual(rosterRows().map(row => `${row.suite} > ${row.test}`));
+  });
+
+  it("R-REACHED (wb-vgke (b)): every roster member's quiet-row judgement ran past its last assertion, under its residual's registered name and kind, in run order", () => {
+    expect(quietReached).toEqual(rosterRows().flatMap(row => row.members.map(member => `${row.suite} > ${row.test} | ${row.kind} | ${member}`)));
+  });
 });
