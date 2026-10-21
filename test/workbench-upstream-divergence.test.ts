@@ -1,22 +1,40 @@
 import { execFileSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import { mkdirSync, readFileSync, realpathSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { marked, type Token, type Tokens } from 'marked';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
-import { docsSection } from './helpers/census.js';
+import { docsSection, sectionMatches } from './helpers/census.js';
 import { nonRepoScratch } from './helpers/non-repo-scratch.js';
 import { installScratchLeakGuard, makeScratch, removeScratch } from './helpers/scratch.js';
 
 // docs/workbench/16 "Upstream maintainability": "Record fork divergence in this documentation."
 // The baseline fork sha has a single carrier: the docs/workbench/TRACEABILITY.md "Baseline:" line.
-// The record is read from the RENDERED docs, the view a reader sees. docsSection (test/helpers/census.ts, wb-u62) admits
-// the section: its heading renders exactly once, under the docs/16 title, bounded by the next level-1/2 heading, and no
-// HTML block or code fence inside hides a heading line. The rows are the cells of that section's top-level table tokens in
-// the same marked token stream, so a row inside an HTML comment or a code block is not recorded, and HTML anywhere in the
-// section is refused. An absent or refused section is an EMPTY record: every measured path is named. "unknown:" is
-// reserved for states that cannot be measured at all (no baseline line, git unavailable, not a checkout, unreachable
-// baseline). A recorded-at cell is a commit id (7 to 40 lowercase hex digits), never a ref name or a revision expression.
+// PINNED ENUMERATION (R606, rule 19(c)): this census pins only these modes:
+// P1 HEAD-only divergence set equality: missing, stale, misrecorded and workbench-excluded paths (repo row; fixture
+// unrecorded, stale-misrecorded, later-edit and the non-vacuous exclusion test). It does not read uncommitted edits.
+// P2 rendered docs/16 record: unique heading and parent, level-1/2 section bound, same-view table extraction,
+// HTML/fence refusal, header, malformed/duplicate rows (fixtures no-section, html-comment*, duplicate-heading,
+// hidden-heading-before, level-1/2-split, shallower-copy-before, rehomed-heading, fenced-row, header-renamed,
+// two-tables; G01/G02 are killed on the paired D22/D23 pages).
+// P3 commit-id dating: 7-40 lowercase hex, reachable immutable commit, ancestor and already-diverged path
+// (fixtures undated, six-hex-dated, dated-at-baseline/before-divergence, not-ancestor and moving-ref rows).
+// P4 fail-closed environment and scratch: no git, no checkout, unreachable baseline, TMPDIR-inside-repo and
+// missing Baseline line all fail explicitly, with test/helpers/non-repo-scratch.ts and scratch.ts owning fixtures.
+// P5 frozen falsifier shape: each fixture's id, tier, every expected problem and normalized input digest are
+// literal-pinned (30 rows). G04-G12, H01-H04 and H05-H08 form the measured mutant battery.
+// NAMED RESIDUALS (quiet readings, not pass claims):
+// R1 a table nested in a blockquote/list is not a top-level record (the D28 page reads unrecorded).
+// R2 a once-unambiguous short commit id may become ambiguous with new history (unreachable: fail-closed).
+// R3 a struck-through path renders as text and is still recorded (fixture residual-struck-path and D25).
+// R4 note-cell prose is non-empty but its +N/-M counts are not verified by the census.
+// R5 deletions, renames and type changes of upstream paths are excluded by --diff-filter=M.
+// R6 missing cwd and git unavailable can share the unknown: category (both refuse; cause may be coarse).
+// R7 uncommitted working-tree edits are not read: the measurement is baseline..HEAD
+// (fixture residual-head-only; gate pin-flip P4 demonstrates the working-tree-only reversion reads quiet).
+// Newly discovered escapes add a residual row, unless they contradict a pinned claim; no blanket claim about
+// all Markdown shapes, all git revisions or all upstream changes is made by this local enumeration.
 
 installScratchLeakGuard();
 
@@ -124,13 +142,24 @@ function sectionTokens(doc: string): readonly Token[] {
   return out;
 }
 
+/** Verify the second extraction reads the exact blocks the shared docsSection admitted. A changed start or heading
+ * bound cannot smuggle a table from another section into the record (G01/G02). */
+function sameView(section: ReturnType<typeof docsSection>, tokens: readonly Token[]): boolean {
+  if (tokens.some(token => isHeading(token) && token.depth <= 2)) return false;
+  const source = `# ${DOC_TITLE}\n\n${SECTION}\n\n${tokens.map(token => token.raw).join('')}\n`;
+  const extracted = docsSection(source, HEADING, 2, [DOC_TITLE]);
+  return extracted.ok && sectionMatches(section, extracted.blocks).ok;
+}
+
 /** The record as the rendered docs show it, plus every problem with its shape. A refused section reads as an empty record. */
 function readRecord(doc: string): RecordRead {
   const section = docsSection(doc, HEADING, 2, [DOC_TITLE]);
   if (!section.ok) return { rows: [], problems: [`missing section: docs/workbench/16 has no readable "${SECTION}" section (${section.why}); add it, then ${REMEDY}`] };
   const problems: string[] = [];
   if (section.hasHtml) problems.push(`html in section: "${SECTION}" carries HTML (a comment or a tag), which can hide rows from the rendered view; remove it`);
-  const tables = sectionTokens(doc).filter(isTable);
+  const tokens = sectionTokens(doc);
+  if (!section.hasHtml && !sameView(section, tokens)) return { rows: [], problems: [...problems, `mismatched section view: the table extraction does not match the rendered blocks admitted by docsSection for ${SECTION}`] };
+  const tables = tokens.filter(isTable);
   if (tables.length > 1) problems.push(`malformed table: "${SECTION}" renders ${tables.length} tables; the record is exactly one`);
   const rows: RecordRow[] = [];
   for (const table of tables) {
@@ -308,11 +337,14 @@ const CASES: readonly Case[] = [
   { id: 'hidden-heading-before', fixture: 'later', doc: fx => page(`<!--\n${record(exactLater(fx))}\n-->\n\n${record([])}`), expected: () => [unrecorded('src/a.ts'), unrecorded('src/b.ts')] },
   // D4: a level-1 heading between the prose and the table ends the section, so the table below it is not the record.
   { id: 'level-1-split', fixture: 'later', doc: fx => page(`${SECTION}\n\nThe measured record.\n\n# Interlude\n\n${[HEADER_LINES, ...exactLater(fx)].join('\n')}`), expected: () => [unrecorded('src/a.ts'), unrecorded('src/b.ts')] },
+  { id: 'level-2-split', fixture: 'later', doc: fx => page(`${SECTION}\n\nThe measured record.\n\n## Interlude\n\n${[HEADER_LINES, ...exactLater(fx)].join('\n')}`), expected: () => [unrecorded('src/a.ts'), unrecorded('src/b.ts')] },
+  { id: 'shallower-copy-before', fixture: 'later', doc: fx => page(`### ${HEADING}\n\n${[HEADER_LINES, ...exactLater(fx)].join('\n')}\n\n${record([])}`), expected: () => [unrecorded('src/a.ts'), unrecorded('src/b.ts')] },
   // D4b: a level-1 heading above the record re-homes it out from under the docs/16 title.
   { id: 'rehomed-heading', fixture: 'later', doc: fx => page(`# Interlude\n\n${record(exactLater(fx))}`), expected: () => [missing(`the heading "${HEADING}" sits under the parent heading path ["Interlude"]; the census binds it under ["${DOC_TITLE}"]`), unrecorded('src/a.ts'), unrecorded('src/b.ts')] },
   // D5: a row moved into a fenced code block renders as code, not as a table row.
   { id: 'fenced-row', fixture: 'later', doc: fx => page(record([row('src/a.ts', fx.div)], `\n\n\`\`\`\n${row('src/b.ts', fx.head)}\n\`\`\``)), expected: () => [unrecorded('src/b.ts')] },
   // D6/D6b/D6c: a moving ref is always an ancestor of HEAD that already differs, so it dates nothing.
+  { id: 'six-hex-dated', fixture: 'plain', doc: () => table('abcdef', ['src/a.ts']), expected: () => [notAnId('src/a.ts', 'abcdef')] },
   { id: 'head-dated', fixture: 'plain', doc: () => table('HEAD', ['src/a.ts']), expected: () => [notAnId('src/a.ts', 'HEAD')] },
   { id: 'all-head-dated', fixture: 'later', doc: () => table('HEAD', ['src/a.ts', 'src/b.ts']), expected: () => [notAnId('src/a.ts', 'HEAD'), notAnId('src/b.ts', 'HEAD')] },
   { id: 'branch-dated', fixture: 'later', doc: fx => page(record([row('src/a.ts', fx.div), row('src/b.ts', 'main')])), expected: () => [notAnId('src/b.ts', 'main')] },
@@ -320,35 +352,44 @@ const CASES: readonly Case[] = [
   { id: 'hex-ref-dated', fixture: 'later', doc: fx => page(record([row('src/a.ts', fx.div), row('src/b.ts', HEX_REF)])), expected: fx => [`undated row: src/b.ts recorded-at "${HEX_REF}" resolves to commit ${fx.head}, so it names a ref, not a commit id`] },
   { id: 'header-renamed', fixture: 'plain', doc: fx => page(`${SECTION}\n\nThe measured record.\n\n| path | recorded | note |\n| --- | --- | --- |\n${row('src/a.ts', fx.div)}`), expected: () => [`malformed table: the header renders | path | recorded | note |; the record's header is | ${HEADER} |`] },
   { id: 'two-tables', fixture: 'later', doc: fx => page(record([row('src/a.ts', fx.div)], `\n\nA second table.\n\n${HEADER_LINES}\n${row('src/b.ts', fx.head)}`)), expected: () => [`malformed table: "${SECTION}" renders 2 tables; the record is exactly one`] },
+  // Named quiet residual R3: a rendered strikethrough path is still read as text in this census.
+  { id: 'residual-struck-path', fixture: 'plain', doc: fx => page(record([`| ~~\`src/a.ts\`~~ | ${fx.div} | fixture |`])), expected: () => [] },
+  // Named quiet residual R7: an uncommitted working-tree edit cannot affect the HEAD-only census.
+  { id: 'residual-head-only', fixture: 'plain', doc: fx => table(fx.div, ['src/a.ts']), expected: () => [] },
 ];
 
 /** The frozen shape of CASES at this cut: id | fixture | every expected problem, fixture shas named <base> <div> <side> <head>. */
 const FROZEN_SHAPE: readonly string[] = [
-  'exact | plain | no problem',
-  'exact-later | later | no problem',
-  'unrecorded | plain | unrecorded divergence: src/a.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence',
-  'no-section | plain | missing section: docs/workbench/16 has no readable "## Measured fork divergence" section (the rendered view has no level-2 heading "Measured fork divergence"); add it, then record it in docs/workbench/16 section Measured fork divergence / unrecorded divergence: src/a.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence',
-  'stale-misrecorded | plain | stale row: src/b.ts no longer differs from the baseline; remove it from ## Measured fork divergence / misrecorded row: src/ghost.ts never existed at the baseline',
-  'later-edit | later | unrecorded divergence: src/b.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence',
-  'undated | plain | undated row: src/a.ts recorded-at "deadbeef" is not a reachable commit',
-  'malformed | plain | malformed row: | src/a.ts | <div> | (empty) | (every row needs a path, a recorded-at commit id and a note) / unrecorded divergence: src/a.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence',
-  'duplicate | plain | duplicate row: src/a.ts is recorded more than once',
-  'dated-at-baseline | plain | mis-dated row: src/a.ts recorded-at "<base>" predates the divergence (the path did not differ from the baseline there)',
-  'dated-before-divergence | later | mis-dated row: src/b.ts recorded-at "<div>" predates the divergence (the path did not differ from the baseline there)',
-  'not-ancestor | later | mis-dated row: src/b.ts recorded-at "<side>" is not an ancestor of HEAD',
-  'html-comment-row | later | html in section: "## Measured fork divergence" carries HTML (a comment or a tag), which can hide rows from the rendered view; remove it / unrecorded divergence: src/b.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence',
-  'html-comment-all-rows | later | html in section: "## Measured fork divergence" carries HTML (a comment or a tag), which can hide rows from the rendered view; remove it / unrecorded divergence: src/a.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence / unrecorded divergence: src/b.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence',
-  'duplicate-heading | later | missing section: docs/workbench/16 has no readable "## Measured fork divergence" section (the heading "Measured fork divergence" occurs 2 times in the rendered view; a pinned section needs it exactly once); add it, then record it in docs/workbench/16 section Measured fork divergence / unrecorded divergence: src/a.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence / unrecorded divergence: src/b.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence',
-  'hidden-heading-before | later | unrecorded divergence: src/a.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence / unrecorded divergence: src/b.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence',
-  'level-1-split | later | unrecorded divergence: src/a.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence / unrecorded divergence: src/b.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence',
-  'rehomed-heading | later | missing section: docs/workbench/16 has no readable "## Measured fork divergence" section (the heading "Measured fork divergence" sits under the parent heading path ["Interlude"]; the census binds it under ["16 — Fork implementation refactor map and upstream compatibility"]); add it, then record it in docs/workbench/16 section Measured fork divergence / unrecorded divergence: src/a.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence / unrecorded divergence: src/b.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence',
-  'fenced-row | later | unrecorded divergence: src/b.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence',
-  'head-dated | plain | undated row: src/a.ts recorded-at "HEAD" is not a commit id (7 to 40 lowercase hex digits); a ref name or a revision expression moves with the branch',
-  'all-head-dated | later | undated row: src/a.ts recorded-at "HEAD" is not a commit id (7 to 40 lowercase hex digits); a ref name or a revision expression moves with the branch / undated row: src/b.ts recorded-at "HEAD" is not a commit id (7 to 40 lowercase hex digits); a ref name or a revision expression moves with the branch',
-  'branch-dated | later | undated row: src/b.ts recorded-at "main" is not a commit id (7 to 40 lowercase hex digits); a ref name or a revision expression moves with the branch',
-  'hex-ref-dated | later | undated row: src/b.ts recorded-at "0000000" resolves to commit <head>, so it names a ref, not a commit id',
-  'header-renamed | plain | malformed table: the header renders | path | recorded | note |; the record\'s header is | path | recorded at | note |',
-  'two-tables | later | malformed table: "## Measured fork divergence" renders 2 tables; the record is exactly one',
+  "exact | plain | no problem | input=c8d4ce444b2e74fd7a989efb2ae51271f884e0fdd13b202cb9154a49925ea284",
+  "exact-later | later | no problem | input=798eb2d7e7df09da26e3e3699696f8fcef9ef9fd329587398bd9a98f393c6676",
+  "unrecorded | plain | unrecorded divergence: src/a.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence | input=38db8c50144642b9cf071ce7bb7e41da985130831c2e2966eb2647f27c4df646",
+  "no-section | plain | missing section: docs/workbench/16 has no readable \"## Measured fork divergence\" section (the rendered view has no level-2 heading \"Measured fork divergence\"); add it, then record it in docs/workbench/16 section Measured fork divergence / unrecorded divergence: src/a.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence | input=d347dd2911d4f58dd6df05d4a9111fa435ad9067db5ac8d79cbb05eb3f7f84b4",
+  "stale-misrecorded | plain | stale row: src/b.ts no longer differs from the baseline; remove it from ## Measured fork divergence / misrecorded row: src/ghost.ts never existed at the baseline | input=1d3852c599fa67c757711a23f2988b501c20850c1a07b5a46b6f531ff7eb6c90",
+  "later-edit | later | unrecorded divergence: src/b.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence | input=c8d4ce444b2e74fd7a989efb2ae51271f884e0fdd13b202cb9154a49925ea284",
+  "undated | plain | undated row: src/a.ts recorded-at \"deadbeef\" is not a reachable commit | input=eef7804d9e59759bde7a6412e3263d69f75d12db423faf249fd6460892348b5e",
+  "malformed | plain | malformed row: | src/a.ts | <div> | (empty) | (every row needs a path, a recorded-at commit id and a note) / unrecorded divergence: src/a.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence | input=33c7cef7feacbc001034eb1da09ecec8079ddccdab38230afa9acafd25fabb34",
+  "duplicate | plain | duplicate row: src/a.ts is recorded more than once | input=c49f5d16770413e9a109e70f24111c4294d45237795d06599cc995fb1b6b5505",
+  "dated-at-baseline | plain | mis-dated row: src/a.ts recorded-at \"<base>\" predates the divergence (the path did not differ from the baseline there) | input=93fe6656c333b00b2d7b4ea676c286056371eb4d2f2e013a891aeecfe8837df2",
+  "dated-before-divergence | later | mis-dated row: src/b.ts recorded-at \"<div>\" predates the divergence (the path did not differ from the baseline there) | input=bbf195d85245d5843812375509f5a88d02603b98eca556d6c841b5e49bb44b88",
+  "not-ancestor | later | mis-dated row: src/b.ts recorded-at \"<side>\" is not an ancestor of HEAD | input=fb62b4e8cf4ddd184bc47ba0d7cffdf120c63fa39b60b5740f09d402283d43cd",
+  "html-comment-row | later | html in section: \"## Measured fork divergence\" carries HTML (a comment or a tag), which can hide rows from the rendered view; remove it / unrecorded divergence: src/b.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence | input=ed47a232b2328b511f3d6d8b54a63bf63057e73fcd5a386048401ab4eaf6bc3e",
+  "html-comment-all-rows | later | html in section: \"## Measured fork divergence\" carries HTML (a comment or a tag), which can hide rows from the rendered view; remove it / unrecorded divergence: src/a.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence / unrecorded divergence: src/b.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence | input=0db5685beb28f79d39917d652f312043d5852ef5ae6be97b62aab6b345c9b524",
+  "duplicate-heading | later | missing section: docs/workbench/16 has no readable \"## Measured fork divergence\" section (the heading \"Measured fork divergence\" occurs 2 times in the rendered view; a pinned section needs it exactly once); add it, then record it in docs/workbench/16 section Measured fork divergence / unrecorded divergence: src/a.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence / unrecorded divergence: src/b.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence | input=f77c25dd2ef4f27bee64393fe303f9c108d6320c67db44d07242e8f6279b85df",
+  "hidden-heading-before | later | unrecorded divergence: src/a.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence / unrecorded divergence: src/b.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence | input=031718d8f47f10de52489dfb3e502b3ffc94c90666ea4eb720801b1ba28460bd",
+  "level-1-split | later | unrecorded divergence: src/a.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence / unrecorded divergence: src/b.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence | input=2007527119aebe5b12d51f64ba77e3be859cedcd2d4c79461246c9c0efce08c6",
+  "level-2-split | later | unrecorded divergence: src/a.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence / unrecorded divergence: src/b.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence | input=71061876aca7f63b9a73dae7830dd847215d6d9df99dbb93ebff1aa0be547793",
+  "shallower-copy-before | later | unrecorded divergence: src/a.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence / unrecorded divergence: src/b.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence | input=9020fbe797a9aa58d569e7f545d264275d737d7ae7f88bf0977a004ecdadec20",
+  "rehomed-heading | later | missing section: docs/workbench/16 has no readable \"## Measured fork divergence\" section (the heading \"Measured fork divergence\" sits under the parent heading path [\"Interlude\"]; the census binds it under [\"16 — Fork implementation refactor map and upstream compatibility\"]); add it, then record it in docs/workbench/16 section Measured fork divergence / unrecorded divergence: src/a.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence / unrecorded divergence: src/b.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence | input=b3846de976b88982a310e2aa40f26365f82e69c75bcda7a5454c96c2dcd6a48d",
+  "fenced-row | later | unrecorded divergence: src/b.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence | input=1f40f44181cc9a4ce87fae045949704ec3db64328a7b6bb47d6c55fcd05e88ee",
+  "six-hex-dated | plain | undated row: src/a.ts recorded-at \"abcdef\" is not a commit id (7 to 40 lowercase hex digits); a ref name or a revision expression moves with the branch | input=944b1fa7c575178fd0f618dd519375b00bf68d1fb483f3380b7deb1eafaf0498",
+  "head-dated | plain | undated row: src/a.ts recorded-at \"HEAD\" is not a commit id (7 to 40 lowercase hex digits); a ref name or a revision expression moves with the branch | input=7329bc1f89ccb1350f0fa98b9d2f850d35c402eca667345c1b958e7fffdb34c4",
+  "all-head-dated | later | undated row: src/a.ts recorded-at \"HEAD\" is not a commit id (7 to 40 lowercase hex digits); a ref name or a revision expression moves with the branch / undated row: src/b.ts recorded-at \"HEAD\" is not a commit id (7 to 40 lowercase hex digits); a ref name or a revision expression moves with the branch | input=56804a67b127e8f5da1c987b9e3ad788e73d786347579182039f12ea134a68e2",
+  "branch-dated | later | undated row: src/b.ts recorded-at \"main\" is not a commit id (7 to 40 lowercase hex digits); a ref name or a revision expression moves with the branch | input=fd2cc51bad332f1efdfe2593c90749d67fcb8f3baa6d618d3b0436355211f883",
+  "hex-ref-dated | later | undated row: src/b.ts recorded-at \"0000000\" resolves to commit <head>, so it names a ref, not a commit id | input=4a1c8d9965e6f9e6b8fb44d976553a131be36c781024eea0a7f54f132f6b44f5",
+  "header-renamed | plain | malformed table: the header renders | path | recorded | note |; the record's header is | path | recorded at | note | | input=b8e9085bfe0e981d6ac8032aae261871c7674d08c264d903d69176a935045e95",
+  "two-tables | later | malformed table: \"## Measured fork divergence\" renders 2 tables; the record is exactly one | input=0950be5eda769300ab57fb4c763511b60866202378abaf0dba2b550242833585",
+  "residual-struck-path | plain | no problem | input=23e42fc23db95bc672e35652635971ff99ea1106e8f83eae2b092f1c3cededaa",
+  "residual-head-only | plain | no problem | input=c8d4ce444b2e74fd7a989efb2ae51271f884e0fdd13b202cb9154a49925ea284",
 ];
 
 describe('upstream fork divergence record (docs/workbench/16 Upstream maintainability)', () => {
@@ -365,6 +406,17 @@ describe('upstream fork divergence record (docs/workbench/16 Upstream maintainab
   afterAll(() => {
     for (const fx of built.values()) removeScratch(fx.cwd);
   });
+
+  it('paired D22/D23 rendered pages refuse a table relocated past the level-2 bound or under a shallower copy', () => {
+    const fx = fixtureOf('later');
+    const cases = [
+      page(`${SECTION}\n\nThe measured record.\n\n## Interlude\n\n${[HEADER_LINES, ...exactLater(fx)].join('\n')}`),
+      page(`### ${HEADING}\n\n${[HEADER_LINES, ...exactLater(fx)].join('\n')}\n\n${record([])}`),
+    ];
+    for (const doc of cases) {
+      expect(checkDivergence(fx.cwd, fx.base, doc)).toEqual([unrecorded('src/a.ts'), unrecorded('src/b.ts')]);
+    }
+  }, GIT_ROW_MS);
 
   it('the repository record equals the measured divergence from the TRACEABILITY baseline', () => {
     const baseline = parseBaseline(readFileSync(join(repoRoot, 'docs/workbench/TRACEABILITY.md'), 'utf8'));
@@ -384,7 +436,9 @@ describe('upstream fork divergence record (docs/workbench/16 Upstream maintainab
       const fx = fixtureOf(entry.fixture);
       const names: readonly (readonly [string, string])[] = [[fx.base, '<base>'], [fx.div, '<div>'], [fx.side, '<side>'], [fx.head, '<head>']];
       const normalize = (text: string): string => names.reduce((out, [sha, name]) => out.split(sha).join(name), text);
-      return `${entry.id} | ${entry.fixture} | ${entry.expected(fx).map(normalize).join(' / ') || 'no problem'}`;
+      const input = normalize(entry.doc(fx));
+      const digest = createHash('sha256').update(input).digest('hex');
+      return `${entry.id} | ${entry.fixture} | ${entry.expected(fx).map(normalize).join(' / ') || 'no problem'} | input=${digest}`;
     });
     expect(shape).toEqual(FROZEN_SHAPE);
   });
