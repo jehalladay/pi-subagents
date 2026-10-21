@@ -1258,3 +1258,174 @@ describe("wb-rh28: the key forms anchored out of file, the keyed P4/P5 escapes r
     expect(RH28_JUDGED, "each of them judged to its last assertion, this run").toEqual(rows);
   });
 });
+
+/**
+ * wb-4smh, R674/R661 F1-F3: pin the rh28 gate's unfolded emitter keys (L2-A/B), data-carried callback
+ * writes (L2-C/D), and conditional/parenthesized spread refusals (FLW-COND/PAREN). These are source readings,
+ * never executions of a prototype write or of the credentialed live tier. The landed readings above are unchanged.
+ * The extended reading refuses an unresolved reflected key in the emitter and a bulk write into snapshot whose
+ * source is not an object literal. It does not claim arbitrary dataflow/alias resolution. Each named form has a
+ * true-cause row at both observer sites; an external roster binds its full phrase, placements, causes and sites.
+ */
+const FOURSMH_ROSTER = "test/fixtures/claude-message-ref-4smh.json";
+const FOURSMH_ROWS: readonly Escape[] = [
+  {
+    id: "L2-A", pin: "P5", form: "Object.defineProperty writes Object.prototype through an unfolded join key inside the emitter",
+    sites: ["S1", "S2"], causes: ["unresolved emitter key"],
+    emitter: `Object.defineProperty(Object.prototype, ["evidence", "Refs"].join(""), { value: ${OVERRIDE_REFS}, configurable: true });`,
+  },
+  {
+    id: "L2-B", pin: "P5", form: "Reflect.set writes Object.prototype through an unfolded join key inside the emitter",
+    sites: ["S1", "S2"], causes: ["unresolved emitter key"],
+    emitter: `Reflect.set(Object.prototype, ["evidence", "Refs"].join(""), ${OVERRIDE_REFS});`,
+  },
+  {
+    id: "L2-C", pin: "P4", form: "Object.assign rewrites snapshot from JSON.parse data before the derive",
+    sites: ["S1", "S2"], causes: ["data-carried snapshot write"],
+    beforeDerive: `Object.assign(snapshot, JSON.parse('{"lastMessageId":"FAKE-FIXTURE-ID"}'));`,
+  },
+  {
+    id: "L2-D", pin: "P4", form: "Object.assign rewrites snapshot from Object.fromEntries data with a joined key before the derive",
+    sites: ["S1", "S2"], causes: ["data-carried snapshot write"],
+    beforeDerive: 'Object.assign(snapshot, Object.fromEntries([[["lastMessage", "Id"].join(""), "FAKE-FIXTURE-ID"]]));',
+  },
+  {
+    id: "COND-TRUE", pin: "P5", form: "a conditional nested spread has an unresolved computed key in its true branch",
+    sites: ["S1", "S2"], causes: ["unresolved key"],
+    afterSpread: `...(kind ? { [kind]: ${OVERRIDE_REFS} } : {}),`,
+  },
+  {
+    id: "COND-FALSE", pin: "P5", form: "a conditional nested spread has an unresolved computed key in its false branch",
+    sites: ["S1", "S2"], causes: ["unresolved key"],
+    afterSpread: `...(kind ? {} : { [kind]: ${OVERRIDE_REFS} }),`,
+  },
+  {
+    id: "PAREN", pin: "P5", form: "a parenthesized nested object spread has an unresolved computed key",
+    sites: ["S1", "S2"], causes: ["unresolved key"],
+    afterSpread: `...({ [kind]: ${OVERRIDE_REFS} }),`,
+  },
+  {
+    id: "PAREN-COND", pin: "P5", form: "a multiply parenthesized conditional nested spread has an unresolved computed key",
+    sites: ["S1", "S2"], causes: ["unresolved key"],
+    afterSpread: `...((kind ? { [kind]: ${OVERRIDE_REFS} } : {})),`,
+  },
+];
+
+/** F1: reflected property operations in the emitter must name a folded key, even outside the ingest literal. */
+function fourSmhIngest(reading: Reading): string[] {
+  const body = reading.emitter?.body;
+  const causes = ingestCauses(reading);
+  if (body === undefined) return causes;
+  const unresolved = nodesOf(body, ts.isCallExpression).filter(keyedReflection).some(call => {
+    const key = call.arguments.at(1);
+    return key === undefined || folded(key) === undefined;
+  });
+  return sortedUnique([...causes, ...(unresolved ? ["unresolved emitter key"] : [])]);
+}
+
+/** F2: a bulk write into snapshot can carry lastMessageId as data without a keyed-access node. */
+function fourSmhCompose(reading: Reading): string[] {
+  const callback = reading.callback;
+  const causes = composeCauses(reading);
+  if (callback === undefined) return causes;
+  const dataWrite = nodesOf(callback, ts.isCallExpression).some(call => {
+    if (!ts.isPropertyAccessExpression(call.expression) || !ts.isIdentifier(call.expression.expression) ||
+      call.expression.expression.text !== "Object" || call.expression.name.text !== "assign") return false;
+    const target = call.arguments[0];
+    return target !== undefined && ts.isIdentifier(target) && target.text === "snapshot" &&
+      call.arguments.slice(1).some(source => !ts.isObjectLiteralExpression(source));
+  });
+  return sortedUnique([...causes, ...(dataWrite ? ["data-carried snapshot write"] : [])]);
+}
+
+const FOURSMH_STRICT: Readonly<Record<StrictPin, (reading: Reading) => string[]>> = { P4: fourSmhCompose, P5: fourSmhIngest };
+const FOURSMH_REACHED: string[] = [];
+
+interface FourSmhRoster {
+  readonly rows: readonly RosterEscape[];
+  readonly sites: readonly string[];
+}
+function fourSmhRoster(): FourSmhRoster {
+  const raw: unknown = JSON.parse(readRepo(FOURSMH_ROSTER));
+  if (!isRecord(raw)) throw new Error(`${FOURSMH_ROSTER}: not an object`);
+  return {
+    sites: rosterTexts(raw, "sites"),
+    rows: rosterRows(raw, "rows").map(row => ({
+      id: rosterText(row, "id"), pin: rosterText(row, "pin"), form: rosterText(row, "form"),
+      sites: rosterTexts(row, "sites"), causes: rosterTexts(row, "causes"), digest: rosterText(row, "digest"),
+    })),
+  };
+}
+
+describe("wb-4smh R674 F1-F3: unfolded keys, data-carried writes and nested spread refusals", () => {
+  for (const row of FOURSMH_ROWS) {
+    for (const key of row.sites) {
+      it(`wb-4smh ${row.id} ${key}: ${row.form}`, () => {
+        const site = siteNamed(key);
+        const { text, anchors } = placed(site, row);
+        expect(anchors.every(anchor => anchor.count === 1), "each placement applies exactly once").toBe(true);
+        const reading = readSite(site.file, text);
+        expect(PINS.filter(pin => pin.id !== row.pin && !JUDGES[pin.id](site, reading)).map(pin => pin.id), "other landed pins hold").toEqual([]);
+        expect(FOURSMH_STRICT[OTHER_PIN[row.pin]](reading), "the other strict reading holds").toEqual([]);
+        expect(FOURSMH_STRICT[row.pin](reading), "named true cause").toEqual(row.causes);
+        FOURSMH_REACHED.push(`wb-4smh ${row.id} ${key}`);
+      });
+    }
+  }
+
+  for (const site of SITES) {
+    it(`wb-4smh control ${site.key}: the real source and benign literal writes retain a quiet extended reading`, () => {
+      expect(FOURSMH_STRICT.P4(readingOf(site.file))).toEqual([]);
+      expect(FOURSMH_STRICT.P5(readingOf(site.file))).toEqual([]);
+      const benign = placed(site, {
+        emitter: 'Reflect.set(emitNumbers, "benign", 1);',
+        beforeDerive: 'Object.assign(snapshot, { benign: "FAKE-FIXTURE" });',
+        afterSpread: '...(kind ? { benign: "FAKE-FIXTURE" } : {}), ...({ other: true }),',
+      });
+      expect(benign.anchors.every(anchor => anchor.count === 1)).toBe(true);
+      const reading = readSite(site.file, benign.text);
+      expect(FOURSMH_STRICT.P4(reading)).toEqual([]);
+      expect(FOURSMH_STRICT.P5(reading)).toEqual([]);
+      expect(FOURSMH_STRICT.P4(readSite(site.file, ""))).toEqual(["no callback"]);
+      expect(FOURSMH_STRICT.P5(readSite(site.file, ""))).toEqual(["no ingest spread"]);
+    });
+  }
+
+  it("wb-4smh FROZEN SHAPE: every named requirement, both site pins and the true-cause roster stay", () => {
+    expect(FOURSMH_ROWS.map(row => `${row.id}:${row.pin}:${row.sites.join(",")}:${row.causes.join("|")}`)).toEqual([
+      "L2-A:P5:S1,S2:unresolved emitter key",
+      "L2-B:P5:S1,S2:unresolved emitter key",
+      "L2-C:P4:S1,S2:data-carried snapshot write",
+      "L2-D:P4:S1,S2:data-carried snapshot write",
+      "COND-TRUE:P5:S1,S2:unresolved key",
+      "COND-FALSE:P5:S1,S2:unresolved key",
+      "PAREN:P5:S1,S2:unresolved key",
+      "PAREN-COND:P5:S1,S2:unresolved key",
+    ]);
+  });
+
+  it("wb-4smh ROSTER: full requirements, causes and placement digests equal the external source of truth", () => {
+    const roster = fourSmhRoster();
+    expect(SITES.map(site => site.key)).toEqual(roster.sites);
+    expect(FOURSMH_ROWS.map(row => `${row.id}|${row.pin}|${row.form}|${row.sites.join(",")}|${row.causes.join(",")}|${escapeDigest(row)}`)).toEqual(
+      roster.rows.map(row => `${row.id}|${row.pin}|${row.form}|${row.sites.join(",")}|${row.causes.join(",")}|${row.digest}`),
+    );
+  });
+
+  it("wb-4smh REGISTRATION: every externally required row is registered in run mode and reached its last assertion", ({ task }) => {
+    const registered: string[] = [];
+    const walk = (tasks: typeof task.file.tasks): void => {
+      for (const child of tasks) {
+        if (child.type === "test") registered.push(`${child.name}|${child.mode}`);
+        else if (child.type === "suite") walk(child.tasks);
+      }
+    };
+    walk(task.file.tasks);
+    const roster = fourSmhRoster();
+    const names = roster.rows.flatMap(row => row.sites.map(site => `wb-4smh ${row.id} ${site}`));
+    expect(registered.filter(row => /^wb-4smh (?:L2-|COND-|PAREN)/.test(row))).toEqual(
+      roster.rows.flatMap(row => row.sites.map(site => `wb-4smh ${row.id} ${site}: ${row.form}|run`)),
+    );
+    expect(FOURSMH_REACHED).toEqual(names);
+  });
+});
