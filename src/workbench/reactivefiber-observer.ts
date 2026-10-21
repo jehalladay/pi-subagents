@@ -34,6 +34,9 @@ export interface ReactiveFiberTopologyContext {
   observedAt: string;
   invocationId?: string;
   operationRef?: NativeRef;
+  /** wb-973.4 (SCG-R4): the RF workspace root the host authorized (the validated reactivefiberWorkspaceRoot setting). When present it,
+   * and only it, replaces scope.workspace as the root a reading may name; scope.workspace stays the Pi realpath. */
+  authorizedRfRoot?: string;
 }
 /** Deeply frozen: one preview snapshot, at most one grouping edge and at most 8 sanitized diagnostics. */
 export interface ReactiveFiberProjectionTopology {
@@ -89,7 +92,7 @@ const MAX_VIEW_ID = 128;
 
 type JsonRecord = {[key: string]: JsonValue};
 interface CheckedContext {
-  scope: ObservationScope; seam: ReactiveFiberSeam; capturedAt: string; observedAt: string; invocationId?: string; operationRef?: NativeRef;
+  scope: ObservationScope; seam: ReactiveFiberSeam; capturedAt: string; observedAt: string; invocationId?: string; operationRef?: NativeRef; authorizedRfRoot?: string;
 }
 interface Summary {errors: number; warnings: number}
 /** One demotion leg's verdict (wb-973.9): a leg that demotes holds the preview at partial and states its note; one that does not may
@@ -246,12 +249,13 @@ function viewContractLeg(result: JsonRecord): Demotion {
 /** The host context, copied field by field after validation; scope, invocation and operation identities must already be displayable. */
 function checkedContext(context: ReactiveFiberTopologyContext): CheckedContext {
   if (!isObject(context)) throw refused('the host context must be an object');
-  const {scope, seam, capturedAt, observedAt, invocationId, operationRef} = context;
+  const {scope, seam, capturedAt, observedAt, invocationId, operationRef, authorizedRfRoot} = context;
   if (!isObject(scope) || !identity(scope.workspace) || !identity(scope.principal)) {
     throw refused('the host scope needs a bounded, displayable workspace and principal');
   }
   if (seam !== 'rf-cli' && seam !== 'injected-fixture') throw refused('the host seam must be rf-cli or injected-fixture');
   if (!instant(capturedAt) || !instant(observedAt)) throw refused('capture and observation times must be zone-qualified ISO-8601 instants');
+  if (authorizedRfRoot !== undefined && !identity(authorizedRfRoot)) throw refused('the authorized RF root must be a bounded, displayable identity');
   if (invocationId !== undefined && !identity(invocationId)) throw refused('the invocation id must be a bounded, displayable identity');
   if (operationRef !== undefined && (!isObject(operationRef) || !identity(operationRef.provider) || !identity(operationRef.type) ||
     !identity(operationRef.id) || operationRef.scope !== undefined && !identity(operationRef.scope))) {
@@ -259,6 +263,7 @@ function checkedContext(context: ReactiveFiberTopologyContext): CheckedContext {
   }
   return {
     scope: {workspace: scope.workspace, principal: scope.principal}, seam, capturedAt, observedAt,
+    ...(authorizedRfRoot !== undefined ? {authorizedRfRoot} : {}),
     ...(invocationId !== undefined ? {invocationId} : {}),
     ...(operationRef !== undefined ? {operationRef: {provider: operationRef.provider, type: operationRef.type, id: operationRef.id,
       ...(operationRef.scope !== undefined ? {scope: operationRef.scope} : {})}} : {}),
@@ -386,7 +391,7 @@ export function reactivefiberTopology(reading: JsonValue, context: ReactiveFiber
   const value = record(reading);
   if (!value || value.contract !== CONTRACT) throw refused(`the reading must be the ${CONTRACT} provider output`);
   if (typeof value.workspaceRoot !== 'string' || value.workspaceRoot.length === 0) throw refused('workspaceRoot must be a non-empty string');
-  if (value.workspaceRoot !== host.scope.workspace) throw new CapabilityError('authorization', 'RF reading workspace differs from observer scope.');
+  if (value.workspaceRoot !== (host.authorizedRfRoot ?? host.scope.workspace)) throw new CapabilityError('authorization', 'RF reading workspace differs from observer scope.');
   const envelope = record(value.source);
   if (!envelope || !hasExactKeys(envelope, ENVELOPE_KEYS)) throw refused('source must be the strict eight-key rf envelope');
   if (envelope.schema !== SCHEMA || envelope.command !== COMMAND) throw refused(`source must be a ${SCHEMA} ${COMMAND} envelope`);

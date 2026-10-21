@@ -2465,7 +2465,9 @@ Terse command-style prompts produce shallow, generic work.
       // Only reached behind the validated feature config, after the native
       // modules loaded (wb-cax.10); the registration order is the one the
       // identity capture has always digested.
-      workbenchNative().registerNativeProviders(registry, scope);
+      // wb-973.4: the swarm's RF workspace (validated setting) replaces the scope for the RF capability only; absent keeps the scope.
+      const reactivefiberWorkspaceRoot = loadSettings(cwd).workbench?.reactivefiberWorkspaceRoot;
+      workbenchNative().registerNativeProviders(registry, scope, reactivefiberWorkspaceRoot === undefined ? undefined : { reactivefiberWorkspaceRoot });
       registries.set(scope, registry);
     }
     return registry;
