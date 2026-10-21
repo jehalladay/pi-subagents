@@ -45,6 +45,13 @@
  *   pinned to the observation layer's hot-cursor case because no adapter-side cursor case exists at base 1a36ece. No
  *   text-level focused-case check lives here: allowOnly is false in the tier configs. Mutants of the helper itself
  *   belong to wb-u62.
+ * - RA6 b-e (wb-973.17, SWARM-CONTEXT-GRAPH-R17 (a) and (b)): the RF bullet states the snapshot's definition basis (the
+ *   bundle when the envelope carries it, the graph digest staying the topology identity) and the observation-row demotion
+ *   with the projection-owned freshness. Halves b and c bind the wb-973.8 SCG-R8 cases, d and e the wb-973.9 SCG-R9 cases,
+ *   each under its describe path; d's it.each pin carries its table-row floor. FROZEN SHAPE (standing rule 16): the whole
+ *   table's row/half/pin-count shape and RA6's identity (clauses and bindings) are literals, never derived from ROWS, and
+ *   the RA6 ANCHOR reads the live document: every sentence of the RF bullet is covered clause by clause by RA6's halves,
+ *   so a half removed from every literal of this file (CT5/CT6) is still red against the docs.
  */
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -58,6 +65,8 @@ interface Pin {
   readonly title: string;
   /** The exact enclosing describe path, outermost first, where the row binds a describe as well as its case. */
   readonly suite?: readonly string[];
+  /** An it.each template pin (wb-973.17): the number of table rows its call site must register (CasePin.each.minCases). */
+  readonly each?: number;
 }
 
 interface PinnedHalf {
@@ -142,6 +151,32 @@ const GRAPH_AC2: Pin = {
   title: "AC2 a declared edge to a never-observed endpoint is a declared dependency marked unobserved endpoint, never unknown-dynamic",
   suite: [GRAPH_VIEW_SUITE],
 };
+
+/** wb-973.17: the describe paths of the wb-973.8 SCG-R8 and wb-973.9 SCG-R9 cases RA6 b-e bind (outermost first). */
+const BUNDLE_SUITE = ["bundle revision from result.bundle_revision_id (wb-973.8 SCG-R8)"];
+const FRESHNESS_SUITE = ["observation rows from result.observations (wb-973.10 SCG-R10)", "observation freshness, replay and degradation (wb-973.9 SCG-R9)"];
+const inSuite = (file: string, title: string, suite: readonly string[]): Pin => ({ file, title, suite });
+const R8_EVIDENCE_KEY = inSuite(REACTIVEFIBER_OBSERVER, "SCG-R8: bundle_revision_id rides as rf-bundle evidence and the version cohort key", BUNDLE_SUITE);
+const R8_COHORT_SPLIT = inSuite(REACTIVEFIBER_OBSERVER, "SCG-R8: equal graph digests with distinct bundle ids split the version cohort, and equal bundle ids share it", BUNDLE_SUITE);
+const R8_WITHOUT_BUNDLE = inSuite(
+  REACTIVEFIBER_OBSERVER,
+  "SCG-R8: an envelope without bundle_revision_id states no rf-bundle reference and no sourceVersion, and its cohort stays the graph digest",
+  BUNDLE_SUITE,
+);
+const R8_SOURCE_REVISION = inSuite(
+  REACTIVEFIBER_OBSERVER,
+  "SCG-R8: nativeEvidence of the same reading prefers the bundle as sourceBasis while the snapshot keeps the graph digest as sourceRevision",
+  BUNDLE_SUITE,
+);
+/** The SCG-R9 NOT_FRESH it.each template: (a) reused/replayed, (b) denied/degraded, (c) an unknown word, (d) a degraded null. */
+const R9_NOT_FRESH: Pin = {
+  file: REACTIVEFIBER_OBSERVER,
+  title: "SCG-R9: %s on an otherwise clean rf-cli envelope projects partial and non-success with one note naming it",
+  suite: FRESHNESS_SUITE,
+  each: 4,
+};
+const R9_PROVIDER_PARTIAL = inSuite(REACTIVEFIBER_OBSERVER, "SCG-R9 provider: the full-shape envelope with fresh and not-fresh rows passes unchanged and projects partial end to end", FRESHNESS_SUITE);
+const R9_REFRESH = inSuite(REACTIVEFIBER_OBSERVER, "SCG-R9: after ObservationProjection.refresh every not-fresh row leaves the node partial, and freshness stays projection-owned", FRESHNESS_SUITE);
 
 /**
  * The trunk sha this cut merges, at which every unpinned-half claim in the table was verified: the bead store's title,
@@ -241,7 +276,15 @@ const ROWS: readonly Row[] = freezeDeep<readonly Row[]>([
   {
     id: "RA6",
     section: READERS,
-    halves: [pinned("a", "render context provenance and context artifact references", "payload reference", [RF_R1, pin(REACTIVEFIBER_OBSERVER, "R6: output text, diagnostics and budget payloads never appear in any surfaced string")])],
+    halves: [
+      pinned("a", "render context provenance and context artifact references", "payload reference", [RF_R1, pin(REACTIVEFIBER_OBSERVER, "R6: output text, diagnostics and budget payloads never appear in any surfaced string")]),
+      // wb-973.17 (SCG-R17 (a)): the bundle is the definition basis when stated; the graph digest stays the topology identity.
+      pinned("b", "An RF snapshot's definition basis is bundle_revision_id when the envelope carries it", "bundle", [R8_EVIDENCE_KEY, R8_COHORT_SPLIT, R8_WITHOUT_BUNDLE]),
+      pinned("c", "with graph_revision_id remaining the topology identity only", "sourceRevision", [R8_SOURCE_REVISION]),
+      // wb-973.17 (SCG-R17 (b)): not-fresh rows demote to partial; freshness stays the projection's own reading.
+      pinned("d", "Reused, replayed or non-observed observation rows demote an RF preview to partial", "partial", [R9_NOT_FRESH, R9_PROVIDER_PARTIAL]),
+      pinned("e", "the projection's freshness is the host's reading witness, never a currentness claim about the rows", "freshness", [R9_REFRESH]),
+    ],
   },
   {
     id: "RA7",
@@ -356,7 +399,78 @@ const ROWS: readonly Row[] = freezeDeep<readonly Row[]>([
 
 const EXPECTED_ROW_IDS: readonly string[] = ["RA1", "RA2", "RA3", "RA4", "RA5", "RA6", "RA7", "RA8", "RA9", "RA10", "RA11", "RL1", "RL2", "RL3", "RL4", "RL5"];
 const EXPECTED_UNPINNED: readonly string[] = ["RA2/b", "RA4/b", "RA5/b", "RA7/a", "RA7/b"];
-const DISTINCT_PINS = 36;
+const DISTINCT_PINS = 43;
+
+/**
+ * wb-973.17 (standing rule 16): the table's shape frozen as a literal, never derived from ROWS - every half as
+ * "row/half:pins" in table order, unpinned halves at 0 - so deleting a half or a pin, or a whole row, cannot pass.
+ */
+const FROZEN_HALF_SHAPE: readonly string[] = [
+  "RA1/a:7",
+  "RA2/a:2",
+  "RA2/b:0",
+  "RA3/a:2",
+  "RA3/b:1",
+  "RA4/a:2",
+  "RA4/b:0",
+  "RA5/a:2",
+  "RA5/b:0",
+  "RA6/a:2",
+  "RA6/b:3",
+  "RA6/c:1",
+  "RA6/d:2",
+  "RA6/e:1",
+  "RA7/a:0",
+  "RA7/b:0",
+  "RA8/a:2",
+  "RA8/b:1",
+  "RA9/a:3",
+  "RA9/b:1",
+  "RA10/a:2",
+  "RA11/a:4",
+  "RL1/a:1",
+  "RL1/b:1",
+  "RL1/c:3",
+  "RL1/d:2",
+  "RL1/e:2",
+  "RL2/a:3",
+  "RL3/a:2",
+  "RL4/a:2",
+  "RL5/a:1",
+  "RL5/b:1",
+];
+
+/**
+ * wb-973.17 (standing rule 16): row RA6's identity frozen as a literal, never derived from ROWS - each half's clause, then
+ * each pin as "half | file | describe path | title" (an it.each pin adds its table-row floor) - so a shortened clause, a
+ * dropped pin or a pin swapped for an unrelated passing case cannot pass.
+ */
+const FROZEN_RA6: readonly string[] = [
+  "a | clause | render context provenance and context artifact references",
+  "a | test/workbench-reactivefiber-observer.test.ts |  | R1: a clean noncommitted preview projects one snapshot keyed by operation_id with the graph digest as sourceRevision and a payload reference",
+  "a | test/workbench-reactivefiber-observer.test.ts |  | R6: output text, diagnostics and budget payloads never appear in any surfaced string",
+  "b | clause | An RF snapshot's definition basis is bundle_revision_id when the envelope carries it",
+  "b | test/workbench-reactivefiber-observer.test.ts | bundle revision from result.bundle_revision_id (wb-973.8 SCG-R8) | SCG-R8: bundle_revision_id rides as rf-bundle evidence and the version cohort key",
+  "b | test/workbench-reactivefiber-observer.test.ts | bundle revision from result.bundle_revision_id (wb-973.8 SCG-R8) | SCG-R8: equal graph digests with distinct bundle ids split the version cohort, and equal bundle ids share it",
+  "b | test/workbench-reactivefiber-observer.test.ts | bundle revision from result.bundle_revision_id (wb-973.8 SCG-R8) | SCG-R8: an envelope without bundle_revision_id states no rf-bundle reference and no sourceVersion, and its cohort stays the graph digest",
+  "c | clause | with graph_revision_id remaining the topology identity only",
+  "c | test/workbench-reactivefiber-observer.test.ts | bundle revision from result.bundle_revision_id (wb-973.8 SCG-R8) | SCG-R8: nativeEvidence of the same reading prefers the bundle as sourceBasis while the snapshot keeps the graph digest as sourceRevision",
+  "d | clause | Reused, replayed or non-observed observation rows demote an RF preview to partial",
+  "d | test/workbench-reactivefiber-observer.test.ts | observation rows from result.observations (wb-973.10 SCG-R10) > observation freshness, replay and degradation (wb-973.9 SCG-R9) | SCG-R9: %s on an otherwise clean rf-cli envelope projects partial and non-success with one note naming it | each >= 4",
+  "d | test/workbench-reactivefiber-observer.test.ts | observation rows from result.observations (wb-973.10 SCG-R10) > observation freshness, replay and degradation (wb-973.9 SCG-R9) | SCG-R9 provider: the full-shape envelope with fresh and not-fresh rows passes unchanged and projects partial end to end",
+  "e | clause | the projection's freshness is the host's reading witness, never a currentness claim about the rows",
+  "e | test/workbench-reactivefiber-observer.test.ts | observation rows from result.observations (wb-973.10 SCG-R10) > observation freshness, replay and degradation (wb-973.9 SCG-R9) | SCG-R9: after ObservationProjection.refresh every not-fresh row leaves the node partial, and freshness stays projection-owned",
+];
+/** A row's identity in FROZEN_RA6's form: each half's clause, then one line per pin. */
+const identityOf = (row: Row): string[] =>
+  row.halves.flatMap(half => [
+    `${half.id} | clause | ${half.clause}`,
+    ...half.pins.map(entry => `${half.id} | ${entry.file} | ${(entry.suite ?? []).join(" > ")} | ${entry.title}${entry.each === undefined ? "" : ` | each >= ${entry.each}`}`),
+  ]);
+/** The RF bullet's label in the live document; the RA6 anchor reads the sentences after it. */
+const RF_BULLET_LABEL = "RF: ";
+/** What may remain of an RF bullet sentence once its halves' clauses are removed: punctuation and one joining "and". */
+const CONNECTIVES = /^[\s,.;]*(?:and)?[\s,.;]*$/u;
 
 /** Who holds an unpinned half's pin flip, as the bead store read at CLAIM_BASE. */
 interface SlotRouting {
@@ -391,7 +505,13 @@ const UNPINNED_HALVES = ROWS.flatMap(row => row.halves.filter(isUnpinned).map(ha
 const ALL_PINS: readonly Pin[] = PINNED_HALVES.flatMap(({ half }) => half.pins);
 
 const pinKey = (entry: Pin): string => `${entry.file}\u0000${(entry.suite ?? []).join("\u0001")}\u0000${entry.title}`;
-const casePin = (entry: Pin, tier: string = DEFAULT_GATE_TIER): CasePin => ({ file: entry.file, title: entry.title, tier, ...(entry.suite === undefined ? {} : { suite: entry.suite }) });
+const casePin = (entry: Pin, tier: string = DEFAULT_GATE_TIER): CasePin => ({
+  file: entry.file,
+  title: entry.title,
+  tier,
+  ...(entry.suite === undefined ? {} : { suite: entry.suite }),
+  ...(entry.each === undefined ? {} : { each: { minCases: entry.each } }),
+});
 
 /** One line per pin that is not ok, naming the row and half; the helper's why names the file, title, tier and cause. */
 function failures(label: string, verdicts: readonly PinVerdict[]): string[] {
@@ -409,7 +529,7 @@ const READERS_BULLETS: readonly string[] = [
   "Furnace: native Run status/event stream and possible descendant references.",
   "Forge: native operation/verdict/artifact evidence, build revision and gate axes.",
   "HX: query coverage/bounds/query basis, and optional graph traversal of linked native refs.",
-  "RF: render context provenance and context artifact references.",
+  "RF: render context provenance and context artifact references. An RF snapshot's definition basis is bundle_revision_id when the envelope carries it, with graph_revision_id remaining the topology identity only. Reused, replayed or non-observed observation rows demote an RF preview to partial, and the projection's freshness is the host's reading witness, never a currentness claim about the rows.",
   "MechanicalWorkflows: invocation outcome, service spans if instrumented; arbitrary plain TypeScript calls are not magically discoverable.",
   "Beads: supported work readiness and linkage, never reconstructed from heuristics alone.",
 ];
@@ -536,6 +656,7 @@ describe("wb-752.15 docs/workbench/09 § Reader adapters and § Relationships ce
     expect(ROWS.map(row => row.id)).toEqual(EXPECTED_ROW_IDS);
     expect(UNPINNED_HALVES.map(({ row, half }) => halfKey(row, half))).toEqual(EXPECTED_UNPINNED);
     expect(new Set(ALL_PINS.map(pinKey)).size).toBe(DISTINCT_PINS);
+    expect(ROWS.flatMap(row => row.halves.map(half => `${row.id}/${half.id}:${half.pins.length}`))).toEqual(FROZEN_HALF_SHAPE);
     for (const row of ROWS) {
       expect(row.halves.length, `row ${row.id} has halves`).toBeGreaterThan(0);
       for (const half of row.halves) {
@@ -568,12 +689,36 @@ describe("wb-752.15 docs/workbench/09 § Reader adapters and § Relationships ce
     const verdicts = judge(REPORT, half.pins.map(entry => casePin(entry)));
     expect(verdicts).toHaveLength(half.pins.length);
     expect(failures(`row ${key}`, verdicts)).toEqual([]);
-    expect(verdicts.map(verdict => verdict.cases)).toEqual(half.pins.map(() => 1));
+    expect(verdicts.map(verdict => verdict.cases)).toEqual(half.pins.map(entry => entry.each ?? 1));
   });
 
   it("AC3 (pin-flip): no unpinned half is named by a registered case of the gate's own report", () => {
     expect(registeredNames(loadReport(REPORT)).length).toBeGreaterThan(0);
     expect(flipFindings(loadReport(REPORT))).toEqual([]);
+  });
+
+  it("AC1 (wb-973.17): row RA6 binds the RF bullet's definition-basis and demotion clauses to the SCG-R8/SCG-R9 cases by file, describe path and verbatim title, frozen as a literal", () => {
+    const ra6 = ROWS.find(row => row.id === "RA6");
+    expect(ra6).toBeDefined();
+    if (ra6 === undefined) return;
+    expect(identityOf(ra6)).toEqual(FROZEN_RA6);
+    expect(ra6.halves.every(isPinned)).toBe(true);
+  });
+
+  it("RA6 anchor (wb-973.17, rule 16): every sentence of the LIVE docs/09 RF bullet is covered clause by clause by RA6's halves, read from the document, never from this file's literals", () => {
+    const found = docsSection(readRepo(DOCS_FILE), READERS, 2, [DOCS_PARENT]);
+    expect(found.ok, found.why).toBe(true);
+    const items = found.blocks.flatMap(block => (block.kind === "list" ? block.items.map(item => item.text) : []));
+    const rf = items.filter(item => item.startsWith(RF_BULLET_LABEL));
+    expect(rf).toHaveLength(1);
+    const clauses = (ROWS.find(row => row.id === "RA6")?.halves ?? []).map(half => half.clause);
+    const sentences = (rf[0] ?? "").slice(RF_BULLET_LABEL.length).split(/(?<=\.) /u);
+    expect(sentences).toHaveLength(3);
+    for (const sentence of sentences) {
+      const rest = clauses.reduce((left, clause) => left.replace(clause, ""), sentence);
+      expect(rest, `the RF bullet sentence ${JSON.stringify(sentence)} states text no RA6 half binds`).toMatch(CONNECTIVES);
+    }
+    for (const clause of clauses) expect(sentences.filter(sentence => sentence.includes(clause)), `RA6 clause ${JSON.stringify(clause)}`).toHaveLength(1);
   });
 
   it("RL3: the half is pinned to wb-6ze.34's named graph-view cases under its named describe, not left unpinned", () => {
