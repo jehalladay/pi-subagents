@@ -57,6 +57,12 @@
  * so a row citing either would read refused - fail-closed by design. No product display path is added. Test
  * diagnostics do not enter the registered tool/UI surface.
  *
+ * wb-59l1 / R679: section citations now bind by source file AND top-level token index within the selected
+ * section, never by equal text in other entries. The plural Withdrawals is admitted to the convention; the
+ * opening-marker predicate recognizes leading default-ignorable units without deleting or rewriting citation text.
+ * Equal-date cross-file and earlier same-file withdrawals, because-only reasons, the TRACEABILITY HTML void and
+ * cross-file same-position copies each have direct boundary pins. No live evidence document is edited.
+ *
  * Frozen literals (rule 16), each written out in full: EXPECTED_SHAPE (journey:label:kind:pins), EXPECTED_PINS (the ten
  * pin pairs), EXPECTED_EVIDENCE (every row's evidence identity, U3) and EXPECTED_JUDGED_ROWS (the rows AC2 judges,
  * U4). AC2 asserts that the pins it judged are its row's EXPECTED_PINS entries, and its each-liveness case pins one
@@ -369,6 +375,8 @@ interface Citation {
   readonly file: string;
   readonly text: string;
   readonly entry: number;
+  /** Index of the top-level token containing this block, shared with section bounds; text equality is not identity. */
+  readonly tokenIndex: number;
   readonly date: string;
   /** The entry's rendered level-2 heading ("" before the first): a withdrawal entry may carry its keyword there (R668 F2). */
   readonly heading: string;
@@ -414,13 +422,13 @@ function sourceCitations(file: string, text: string): Citation[] {
   let entry = 0;
   let date = "";
   let heading = "";
-  return tokens.flatMap(token => {
+  return tokens.flatMap((token, tokenIndex) => {
     if (token.type === "heading" && token.depth === 2) {
       entry += 1;
       heading = visible(token.tokens ?? []);
       date = /^(\d{4}-\d{2}-\d{2})(?: |$)/.exec(heading)?.[1] ?? "";
     }
-    return citationBlocks([token]).map(text => ({ file, text, entry, date, heading, rawHtml }));
+    return citationBlocks([token]).map(text => ({ file, text, entry, tokenIndex, date, heading, rawHtml }));
   });
 }
 /** R658: withdrawal fields may be separate blocks of one receipt entry, and its keyword the entry's heading (R668 F2). */
@@ -434,8 +442,9 @@ function withdrawalEntries(citations: readonly Citation[]): readonly Citation[] 
   return [...entries.values()];
 }
 /** The pinned withdrawal convention (R658 (2); R668 F2: the noun Withdrawal and the heading count; F3: "Reason:" with or without a space). */
-const WITHDRAWAL_KEYWORD = /\b(?:SUPERSEDED|withdrawn|withdrawal)\b/i;
-const WITHDRAWAL_MARKER = /^(?:SUPERSEDED|withdrawn|withdrawal)\b/i;
+const WITHDRAWAL_KEYWORD = /\b(?:SUPERSEDED|withdrawn|withdrawals?)\b/i;
+/** Recognize invisible leading units, never delete or rewrite citation text (F4); this is a predicate, not a display path. */
+const WITHDRAWAL_MARKER = /^[\s\p{Default_Ignorable_Code_Point}]*(?:SUPERSEDED|withdrawn|withdrawals?)\b/iu;
 const WITHDRAWAL_REASON = /\b(?:reason|because)\b(?::\s*|\s+)\S/i;
 /** A receipt entry in the withdrawal form - keyword, nonempty reason, a path in the evidence corpus - whatever it quotes (R668 F1). */
 function isWithdrawalEntry(entry: Citation): boolean {
@@ -500,11 +509,11 @@ function citedSectionProblem(reader: Reader, heading: string, file: string, revi
   const tokens = marked.lexer(match.source.text);
   const start = tokens.findIndex(token => token.type === "heading" && token.depth === 2 && visible(token.tokens ?? []) === level2);
   const end = tokens.findIndex((token, index) => index > start && token.type === "heading" && token.depth <= 2);
-  const texts = citationBlocks(tokens.slice(start + 1, end === -1 ? undefined : end));
+  const limit = end === -1 ? tokens.length : end;
   const citations = sources.flatMap(source => sourceCitations(source.file, source.text));
   const entries = withdrawalEntries(citations);
   const reads = citations
-    .filter(claim => claim.file === match.source.file && texts.includes(claim.text) && claim.text.includes(file) && (revision === undefined || citesRevision(claim.text, revision)))
+    .filter(claim => claim.file === match.source.file && claim.tokenIndex > start && claim.tokenIndex < limit && claim.text.includes(file) && (revision === undefined || citesRevision(claim.text, revision)))
     .map(claim => ({ claim, why: deadBecause(claim, entries) }));
   if (reads.some(({ why }) => why === undefined)) return undefined;
   const voided = reads.find(({ why }) => why === "raw HTML")?.claim;
@@ -1791,5 +1800,133 @@ describe("wb-h8f.15 the evidence table's cells are read from the section its ren
       const doc = copy === "before" ? g7Doc(tableOf(EVIDENCE_HEADER, CELLS), "none").replace(`## ${EVIDENCE_HEADING}`, `${decoy}\n## ${EVIDENCE_HEADING}`) : `${g7Doc(tableOf(EVIDENCE_HEADER, CELLS), "none")}\n${decoy}`;
       expect(evidenceFailures(doc, ROWS), copy).toEqual([]);
     }
+  });
+});
+
+
+/**
+ * wb-59l1 / R679 class-closing follow-up. Spec pins: "bind section claims BY POSITION";
+ * "L2-01/L2-01b/X2 pinned red-first"; "the GM4 file clause pinned"; F2-F4 ride.
+ * These are synthetic evidence inputs, never edits of the append-only live receipts or TRACEABILITY.
+ * All landed rows and frozen evidence literals above remain intact. No product display path added.
+ */
+describe("wb-59l1 R679 position-bound citations and withdrawal boundaries", () => {
+  const FILE = "qa/r.json";
+  const ORIGINAL = `${RECEIPTS_DIR}/wb-operator.md`;
+  const CORRECTION = `${RECEIPTS_DIR}/wb-correction.md`;
+  const OTHER = `${RECEIPTS_DIR}/wb-other.md`;
+  const HEADING = "2026-10-20 Owner receipt";
+  const CLAIM = "Re-run of record at revision `abc1234`, committed at `qa/r.json`.";
+  const OWNER = ownerReceipt({
+    file: FILE, contract: "c/v2", revision: "abc1234", landingGate: "cmd_cccccccccccc", heading: HEADING,
+    citation: "committed path qa/r.json, revision abc1234, landing gate cmd_cccccccccccc; there is NO forge-run cmd_ for the receipt itself: it is an OWNER RECEIPT under contract c/v2; requested model-a, served model-b",
+  });
+  const JSON_RECEIPT = JSON.stringify({ contract: "c/v2", revision: "abc1234", realised: true, pass: true, preflight: { requestedModel: "model-a", nativeModels: ["model-b"] } });
+  const doc = (entries: string): string => `# wb-operator: receipt\n\n${entries}\n`;
+  const withdraw = `Withdrawn: original file ${ORIGINAL}; claim: ${CLAIM} Reason: the reading was not live.`;
+  const audit = (files: Readonly<Record<string, string>>, kind: "owner" | "artifact" = "owner"): readonly string[] =>
+    auditRows([row(kind === "owner" ? 1 : 2, kind === "owner" ? "live SDK pass" : "code present", kind === "owner" ? OWNER : artifact(FILE, HEADING))], JOURNEY_QUOTES,
+      readerOf({ [TRACEABILITY]: synthTraceability("Nothing."), [FILE]: JSON_RECEIPT, ...files }));
+  const refused = (out: readonly string[]): boolean => out.some(line => line.includes("in no live paragraph") || line.includes("is not cited"));
+
+  // L2-01 owner list, L2-01b artifact list, X2 paragraph, plus nested quote/list compositions: one position rule.
+  it.each((["owner", "artifact"] as const).flatMap(kind => [
+    { kind, form: kind === "owner" ? "L2-01 list" : "L2-01b list", body: `- ${CLAIM}` },
+    { kind, form: "X2 paragraph", body: CLAIM },
+    { kind, form: "nested quote", body: `> ${CLAIM}` },
+    { kind, form: "nested list", body: `- Container\n  - ${CLAIM}` },
+    { kind, form: "list quote", body: `- Container\n\n  > ${CLAIM}` },
+  ]))("F1 $kind $form: later same-file copies outside the section never revive its withdrawn claim", ({ kind, body }) => {
+    const files = { [ORIGINAL]: doc(`## ${HEADING}\n\n${body}\n\n## 2026-10-21 withdrawal\n\n${withdraw}\n\n## 2026-10-22 notes\n\n${CLAIM}`) };
+    expect(refused(audit(files, kind)), `${kind}: ${body}`).toBe(true);
+  });
+
+  it("F1 position boundaries: copies before the section, after a level-1 boundary, or inside a nested heading do not stand in for the section", () => {
+    for (const entries of [
+      `${CLAIM}\n\n## ${HEADING}\n\nNothing.`,
+      `## ${HEADING}\n\nNothing.\n\n# Another parent\n\n${CLAIM}`,
+      `${CLAIM}\n\n> ## ${HEADING}\n>\n> Nothing.`,
+    ]) expect(refused(audit({ [ORIGINAL]: doc(entries) })), entries).toBe(true);
+  });
+
+  // GM4: identical entry/token positions in ANOTHER source still never belong to the selected source's section.
+  it("F1 GM4 file clause: another receipt's same-text citation at the same token position cannot revive a withdrawn section", () => {
+    const original = doc(`## ${HEADING}\n\n${CLAIM}`);
+    const other = doc(`## 2026-10-20 Other receipt\n\n${CLAIM}`);
+    expect(sourceCitations(ORIGINAL, original).map(c => [c.entry, c.tokenIndex])).toEqual(sourceCitations(OTHER, other).map(c => [c.entry, c.tokenIndex]));
+    for (const kind of ["owner", "artifact"] as const) {
+      const out = audit({ [ORIGINAL]: original, [CORRECTION]: doc(`## 2026-10-21 withdrawal\n\n${withdraw}`), [OTHER]: other }, kind);
+      expect(refused(out), kind).toBe(true);
+    }
+  });
+
+  it("F1 controls: only the section's own live paragraph, list or nested quote admits owner and artifact evidence", () => {
+    for (const kind of ["owner", "artifact"] as const) {
+      for (const body of [CLAIM, `- ${CLAIM}`, `> ${CLAIM}`, `- Container\n  - ${CLAIM}`]) {
+        expect(audit({ [ORIGINAL]: doc(`## ${HEADING}\n\n${body}\n\n## 2026-10-21 notes\n\nUnrelated.`) }, kind), `${kind}: ${body}`).toEqual([]);
+      }
+    }
+  });
+
+  it("F1 controls: a live matching block within the selected section is not lost when a distinct block there is marker-led", () => {
+    for (const kind of ["owner", "artifact"] as const) {
+      expect(audit({ [ORIGINAL]: doc(`## ${HEADING}\n\nSUPERSEDED: ${CLAIM}\n\n${CLAIM}`) }, kind), kind).toEqual([]);
+    }
+  });
+
+  const ID = "cmd_7cea2921543b";
+  const RUN = `Run of record: forge ${ID} (status success, exit 0).`;
+  const RUN_FILE = `${RECEIPTS_DIR}/wb-8kv.md`;
+  const runAudit = (files: Readonly<Record<string, string>>): readonly string[] => auditRows([row(3, "live SDK pass", receipt(ID))], JOURNEY_QUOTES, readerOf(files));
+  const runDoc = (body: string): string => `# wb-8kv: receipt\n\n${body}\n`;
+  const baseRun = { [TRACEABILITY]: synthTraceability("Nothing."), [RUN_FILE]: runDoc(`## 2026-10-20 record\n\n${RUN}`) };
+  const correction = (date: string, reason = "Reason: the reading was not live."): string => runDoc(`## ${date} correction\n\nWithdrawn: original file ${RUN_FILE}; claim: ${RUN} ${reason}`);
+
+  it("F2 GM1: an equal-date cross-file withdrawal is not strictly later and withdraws nothing", () => {
+    expect(runAudit({ ...baseRun, [CORRECTION]: correction("2026-10-20") })).toEqual([]);
+    expect(runAudit({ ...baseRun, [CORRECTION]: correction("2026-10-21") })[0]).toContain("SUPERSEDED");
+  });
+
+  it("F2 GM2: an earlier same-file withdrawal cannot withdraw a later claim, even if its date is greater", () => {
+    const prior = `## 2026-10-22 correction\n\nWithdrawn: original file ${RUN_FILE}; claim: ${RUN} Reason: the reading was not live.`;
+    expect(runAudit({ [TRACEABILITY]: synthTraceability("Nothing."), [RUN_FILE]: runDoc(`${prior}\n\n## 2026-10-20 record\n\n${RUN}`) })).toEqual([]);
+    expect(runAudit({ [TRACEABILITY]: synthTraceability("Nothing."), [RUN_FILE]: runDoc(`## 2026-10-20 record\n\n${RUN}\n\n${prior}`) })[0]).toContain("SUPERSEDED");
+  });
+
+  it("F2 GM19: because alone supplies the reason and withdraws the named original claim", () => {
+    expect(runAudit({ ...baseRun, [CORRECTION]: correction("2026-10-21", "It is withdrawn because the run was a fixture.") })[0]).toContain("SUPERSEDED");
+    expect(runAudit({ ...baseRun, [CORRECTION]: correction("2026-10-21", "because") })).toEqual([]);
+  });
+
+  it("F2 GM16: TRACEABILITY raw HTML voids inline-hidden and otherwise-visible citations, including owner and artifact sections", () => {
+    for (const trace of [synthTraceability(`Run: <span hidden>${ID}</span>`), synthTraceability(RUN, "<details>notes</details>")]) {
+      expect(runAudit({ [TRACEABILITY]: trace })[0], trace).toContain("holds raw HTML");
+    }
+    for (const kind of ["owner", "artifact"] as const) {
+      expect(audit({ [TRACEABILITY]: synthTraceability(`## ${HEADING}`, CLAIM, "<details>notes</details>") }, kind).some(line => line.includes("holds raw HTML")), kind).toBe(true);
+    }
+    expect(runAudit({ [TRACEABILITY]: synthTraceability(RUN, "<!-- complete comment -->") })).toEqual([]);
+  });
+
+  it("F3 L2-05: Withdrawals plural is a pinned marker, not a prose-only residual, with and without an original claim", () => {
+    for (const original of [{}, baseRun]) {
+      const files = { [TRACEABILITY]: synthTraceability("Nothing."), ...original, [CORRECTION]: runDoc(`## 2026-10-21 correction\n\nWithdrawals: original file ${RUN_FILE}; claim: ${RUN} Reason: the reading was not live.`) };
+      expect(runAudit(files)[0]).toContain("SUPERSEDED");
+    }
+    expect(runAudit({ [TRACEABILITY]: synthTraceability(`The earlier withdrawals were reviewed; ${RUN}`) })).toEqual([]);
+  });
+
+  it.each([0x200b, 0x200c, 0x200d, 0x2060, 0x00ad, 0xfeff])("F4 invisible prefix U+%s: every named withdrawal marker refuses its quotation", cp => {
+    for (const marker of ["SUPERSEDED", "Withdrawn", "Withdrawal", "Withdrawals"]) {
+      const body = `${String.fromCodePoint(cp)}${marker}: ${RUN}`;
+      expect(runAudit({ [TRACEABILITY]: synthTraceability("Nothing."), [RUN_FILE]: runDoc(`## 2026-10-20 receipt\n\n${body}`) })[0], `${cp.toString(16)} ${marker}`).toContain("SUPERSEDED");
+    }
+  });
+
+  it("F4 controls: invisible-prefixed live text is not deleted or rewritten and an interior keyword is not an opening marker", () => {
+    const prefix = String.fromCodePoint(0x200b, 0x200c);
+    const body = `${prefix}The earlier run was SUPERSEDED; ${RUN}`;
+    expect(sourceCitations(TRACEABILITY, synthTraceability(body))[0]?.text).toBe(body);
+    expect(runAudit({ [TRACEABILITY]: synthTraceability(body) })).toEqual([]);
   });
 });
