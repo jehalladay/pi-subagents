@@ -161,3 +161,18 @@ The RF workspace root Pi renders against is bound by the host: it registers the 
 ## Key validations
 
 Contract hashes and source digests must be pinned in execution receipt; typed payload validated at boundary; no arbitrary code from descriptor field; compare controlled vs observed state; unrecognized SDK message version => diagnostic rather than silent success. All date/timestamp strings have timezone and are not used as total global event order.
+
+## SCG-R5 census evidence roster
+
+This independently maintained table commits to the exact membership and order of eight judged sets. It is not a generated index: changing a judged set requires an explicit documentation revision.
+
+| Judged set | Count | SHA-256 |
+| --- | --- | --- |
+| DOC_ROWS | 11 | 73f8bbece2c0bff200904c0ab56f2fe3d10379f27226c90d3b20bdd63270103c |
+| PAGE_ROWS | 36 | f284381ebd71abd453930460f910704359d3c16e4b089b623a6580bc672a1a80 |
+| ACCEPTED_ROWS | 7 | 94b03cbf374a0447dbb0eda7833225ec930aa2b4033c81ddb2f39282ad953668 |
+| LIVENESS_ROWS | 5 | e1765914d159e6654ba3260697dcb7c6857c3742558efce2a3e7920d902987c0 |
+| GREP_SCOPE_ROWS | 6 | 4b62d486ca68b61980f78eefb30405285be1755b883547d0278731402a8e9cb5 |
+| REFUSED | 18 | d1212ac7b1d4505e8e46bf15d2d5e1c8a63371c01a8fcfee055bb007e68056ca |
+| NO_MATCH | 8 | c52e70633e8596e9da9d989bbac81034406d8dab9a1e58830ee7d23cb98869fd |
+| FAMILIES | 4 | 34ca0f705c5e59ac40cb2f4f83255bba57352e18057c412da947b308019eeb45 |
