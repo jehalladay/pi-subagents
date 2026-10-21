@@ -4,7 +4,7 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterAll, afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 /**
  * The RUNTIME EMIT JUDGE (wb-hk9l, R656): the primary copy pin. Every node:fs copy call made while a row executes is
@@ -463,7 +463,8 @@ function fixture() {
 afterEach(() => { for (const dir of dirs.splice(0)) rmSync(dir, { recursive: true, force: true }); });
 
 describe("WB-014 immutable invocation identity", () => {
-  beforeEach(({ task }) => { emitState.currentRow = task.name; });
+  // Attribution is context-free (expect.getState), so the landed report-mode census readers see unchanged report rows (v2 U1).
+  beforeEach(() => { emitState.currentRow = (expect.getState().currentTestName ?? "<module scope>").split(" > ").pop() ?? "<module scope>"; });
   it("canonicalizes JSON recursively and hashes SHA256 with domain separation", () => {
     expect(canonicalJson({ z: [{ b: 2, a: 1 }], a: true })).toBe('{"a":true,"z":[{"a":1,"b":2}]}');
     expect(identityDigest("configuration", { b: 2, a: 1 })).toBe(identityDigest("configuration", { a: 1, b: 2 }));
@@ -727,11 +728,16 @@ describe("WB-014 immutable invocation identity", () => {
       SCAN_RESIDUALS.map(row => `wb-hk9l residual ${row.id}: pinned quiet reading`));
   });
 
-  it("wb-hk9l emit census: the rows observed really copying are exactly the budgeted PACKAGE_COPY_ROWS", () => {
+  const judgeObservedCopyRows = (): void => {
     const copying = [...new Set(emitState.observed.filter(entry => entry.row !== "<module scope>").map(entry => entry.row))].sort();
     expect(copying, "runtime-observed copy rows: any row that really copies must be in PACKAGE_COPY_ROWS and carry the budget, whatever its source spelling")
       .toEqual([...PACKAGE_COPY_ROWS].sort());
+  };
+  it("wb-hk9l emit census: the rows observed really copying are exactly the budgeted PACKAGE_COPY_ROWS", () => {
+    judgeObservedCopyRows();
   });
+  // Last-judge guard: rows registered after the emit row (insertion at the describe's end) are still judged (v2 F6).
+  afterAll(judgeObservedCopyRows);
 
   it("wb-hk9l residual shape: each named family's quiet page and reading is frozen", () => {
     expect(SCAN_RESIDUALS.map(row => `${row.id}|${row.family}|${row.reading}|${createHash("sha256").update(row.source).digest("hex")}`)).toEqual([
