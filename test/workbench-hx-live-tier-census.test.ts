@@ -35,6 +35,10 @@
  * frozen ids and digest literals and its claim line together stayed green (the CT6 coordinated hollow). The SURVIVORS rows - name and why, in
  * table order - are therefore anchored to the docs/workbench/14-qa-and-benchmarks.md table "HX live-tier receipt falsifiers" as well, a surface
  * outside this census that a coordinated edit of its own literals cannot reach.
+ * wb-vf94 (h8f.15 F2, the G7 same-view class): that table's rows are read from the falsifier section's OWN table (the helper's sectionTables, on the
+ * rendered view's binding), never from a whole-document grid, which only enforces that the falsifier table occurs once: the rendered view joins a
+ * table's cells, so a bolded header plus a re-split row there, with the original table copied to another section, rendered the same and left the
+ * copy as the only falsifier-header table, and the whole-document read judged the copy green.
  * NAMED RESIDUALS (R584 GE2-GE9, wording widened at cut 3, plus seat-named S1-S3): a constant-true conditional return (GE2), a receipt hidden in a
  * dead argument branch (GE3) or uninvoked argument closure (GE4), shadowed process (GE5), and console echo via an alias (GE6), .call, .apply,
  * .bind or Reflect.apply (GE7), a comma-indirect call or reference (GE8) or a destructured member (GE9) remain outside this structural judge, as
@@ -51,7 +55,7 @@ import {runInNewContext} from 'node:vm';
 import {marked, type Tokens} from 'marked';
 import ts from 'typescript';
 import {describe, expect, it} from 'vitest';
-import {docsSection, type RenderedBlock, sectionMatches} from './helpers/census.js';
+import {docsSection, type RenderedBlock, sectionMatches, sectionTables} from './helpers/census.js';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 /** This census's own source path: the claims anchor reads the judge's documented claims from it (a throwaway copy reads itself). */
@@ -456,7 +460,9 @@ interface NamedFalsifier {
 }
 /** A docs/14 falsifier cell: the value inside one code span, so a shape such as (<Console>console).log renders as text, never as HTML. */
 const codeCell = (value: string): string => `\`${value}\``;
-/** Every table in the document under the falsifier header, as raw cell source (header row first); docs/14 must hold exactly one. */
+/** Every table in the WHOLE document under the falsifier header, as raw cell source (header row first): the uniqueness rule only (docs/14 must hold
+ * exactly one). The rows themselves are judged on the falsifier section's own table (sectionTables, wb-vf94), never on this grid, which a copy of the
+ * table in another section can stand in for. */
 function falsifierGrids(markdown: string): string[][][] {
   return marked
     .lexer(markdown)
@@ -474,7 +480,8 @@ function falsifierBlocks(rows: readonly NamedFalsifier[]): RenderedBlock[] {
 /** Every drift between docs/14 "HX live-tier receipt falsifiers" and a falsifier table (wb-drd.1), each naming the row: the section must render
  * as exactly its intro and one table of the rows, and that table's rows must equal the rows one by one - name and why, each in one code span - in
  * table order. A row dropped from SURVIVORS, and so from every literal of this census edited to match, still reads red against a surface outside
- * this file (rule 16 CT5/CT6, the 6ze.39 self-anchoring class). */
+ * this file (rule 16 CT5/CT6, the 6ze.39 self-anchoring class). The rows are read from the section's OWN table, through the same binding as the
+ * rendered view (wb-vf94, h8f.15 F2: the G7 same-view class), so a copy of the table elsewhere never stands in for a re-split one here. */
 function falsifierTableFailures(markdown: string, rows: readonly NamedFalsifier[]): string[] {
   const where = `${DOCS_14} "${FALSIFIERS_HEADING}"`;
   const section = docsSection(markdown, FALSIFIERS_HEADING, 2, [DOCS_14_PARENT]);
@@ -484,8 +491,15 @@ function falsifierTableFailures(markdown: string, rows: readonly NamedFalsifier[
   if (!exact.ok) out.push(`${where} is not exactly its intro paragraph and one table of the census's falsifier rows: ${exact.why}`);
   const grids = falsifierGrids(markdown);
   if (grids.length !== 1) return [...out, `${DOCS_14}: the falsifier table must occur exactly once; found ${grids.length}`];
+  // wb-vf94 (h8f.15 F2, the G7 same-view class): the rows are judged on the section's OWN table, read through the same binding as the rendered view
+  // above, never on the whole-document grid: a bolded header plus a re-split row here, with the original table copied to another section, renders
+  // the same and leaves the copy as the only falsifier-header table in the document.
+  const own = sectionTables(markdown, FALSIFIERS_HEADING, 2, [DOCS_14_PARENT]).grids;
+  if (own.length !== 1) return [...out, `${where}: the section must hold exactly one table, the falsifier table; it holds ${own.length}`];
+  const [header = [], ...rowCells] = own[0] ?? [];
+  if (header.join('|') !== FALSIFIERS_HEADER.join('|')) out.push(`${where}: the section's own table has the header ${JSON.stringify(header)}; the census pins ${JSON.stringify(FALSIFIERS_HEADER)}`);
   const key = (cells: readonly string[]): string => cells.join(' | ');
-  const listed = (grids[0] ?? []).slice(1).map(key);
+  const listed = rowCells.map(key);
   const census = rows.map(row => key([codeCell(row.id), codeCell(row.why)]));
   for (const [index, row] of rows.entries()) {
     if (!listed.includes(census[index] ?? '')) out.push(`falsifier ${row.id} (${row.why}) is not listed in ${where}`);
@@ -932,6 +946,79 @@ describe('wb-tz2.2 census: the scanner itself is falsifiable', () => {
     const lines = falsifierTableFailures(hidden, SURVIVORS);
     expect(lines.some(line => line.includes('is not exactly its intro paragraph and one table'))).toBe(true);
     expect(lines).toContain(`${DOCS_14}: the falsifier table must occur exactly once; found 0`);
+  });
+
+  // wb-vf94 (h8f.15 F2, the G7 same-view class): the rendered view joins a table's cells, so a row re-split across its cell boundary renders the
+  // same, and a whole-document grid let a copy of the table in another section stand in for the section's own table. These rows judge the reader
+  // on such documents: the falsifier rows must be read from the section the rendered view is judged in (sectionTables).
+  const G7_BOLD_HEADER: readonly string[] = FALSIFIERS_HEADER.map(cell => `**${cell}**`);
+  const G7_HEADER_CAUSE = "the section's own table has the header";
+  /** A falsifier row re-split across its id/why cell boundary: the why's first word moves into the id cell, so the cell-joined rendered text is unchanged. */
+  const g7Resplit = (row: NamedFalsifier): string[] => {
+    const [first = '', ...rest] = row.why.split(' ');
+    return [`${codeCell(row.id)} ${codeCell(first)}`, codeCell(rest.join(' '))];
+  };
+  const g7Table = (header: readonly string[], at: number): string =>
+    [header, header.map(() => '---'), ...SURVIVORS.map((row, index) => (index === at ? g7Resplit(row) : [codeCell(row.id), codeCell(row.why)]))].map(cells => `| ${cells.join(' | ')} |`).join('\n');
+  const G7_ORIGINAL = g7Table(FALSIFIERS_HEADER, -1);
+  /** The synthetic docs/14 with the given table in the falsifier section, and the ORIGINAL table copied into the section before it or the one after it, or no copy. */
+  const g7Doc = (table: string, copy: 'before' | 'after' | 'none'): string => {
+    const doc = syntheticFalsifiers(SURVIVORS);
+    if (doc.split(G7_ORIGINAL).length !== 2) throw new Error('the synthetic falsifier section does not hold the original table exactly once');
+    const placed = doc.replace(G7_ORIGINAL, table);
+    if (copy === 'before') return placed.replace('## Truth labels and release gates\n\nText.\n', `## Truth labels and release gates\n\nText.\n\n${G7_ORIGINAL}\n`);
+    if (copy === 'after') return placed.replace('## Acceptance journey evidence\n\nText.\n', `## Acceptance journey evidence\n\nText.\n\n${G7_ORIGINAL}\n`);
+    return placed;
+  };
+  const G7_COPIES = ['before', 'after'] as const;
+  const G7_WHERE = `${DOCS_14} "${FALSIFIERS_HEADING}"`;
+
+  it('wb-vf94 G7 precondition: every re-split mutant keeps the falsifier section rendered exactly and leaves exactly one falsifier-header table in the document - the copy - so a whole-document read judges the copy', () => {
+    expect(SURVIVORS.every(row => row.why.includes(' ')), 'every refused shape has two words, so each row re-splits without an empty cell').toBe(true);
+    for (const at of SURVIVORS.keys()) {
+      for (const copy of G7_COPIES) {
+        const doc = g7Doc(g7Table(G7_BOLD_HEADER, at), copy);
+        expect(sectionMatches(docsSection(doc, FALSIFIERS_HEADING, 2, [DOCS_14_PARENT]), falsifierBlocks(SURVIVORS)), `${copy} ${at}`).toStrictEqual({ok: true, why: ''});
+        expect(falsifierGrids(doc), `${copy} ${at}`).toStrictEqual([[[...FALSIFIERS_HEADER], ...SURVIVORS.map(row => [codeCell(row.id), codeCell(row.why)])]]);
+      }
+    }
+  });
+
+  it('wb-vf94 G7 (h8f.15 F2): a bolded header plus one row re-split in the falsifier section, with the original table copied to another section, reds naming the header and the re-split row - every row, the copy before or after', () => {
+    for (const [at, row] of SURVIVORS.entries()) {
+      for (const copy of G7_COPIES) {
+        const lines = falsifierTableFailures(g7Doc(g7Table(G7_BOLD_HEADER, at), copy), SURVIVORS);
+        const label = `${copy} | ${row.id}`;
+        expect(lines.some(line => line.startsWith(`${G7_WHERE}: ${G7_HEADER_CAUSE}`)), label).toBe(true);
+        expect(lines, label).toContain(`falsifier ${row.id} (${row.why}) is not listed in ${G7_WHERE}`);
+      }
+    }
+  });
+
+  it('wb-vf94 G7 bold-only: the falsifier section table under a bolded header, its cells intact, with the original copied to another section, reds on the header alone', () => {
+    for (const copy of G7_COPIES) {
+      const lines = falsifierTableFailures(g7Doc(g7Table(G7_BOLD_HEADER, -1), copy), SURVIVORS);
+      expect(lines, copy).toHaveLength(1);
+      expect(lines[0], copy).toContain(G7_HEADER_CAUSE);
+      expect(lines[0], copy).toContain(JSON.stringify(G7_BOLD_HEADER));
+    }
+  });
+
+  it('wb-vf94 G7 re-split under the plain header: with the copy elsewhere the second falsifier-header table reds the uniqueness rule, and alone it reds naming the row and no header', () => {
+    for (const [at, row] of SURVIVORS.entries()) {
+      for (const copy of G7_COPIES) {
+        expect(falsifierTableFailures(g7Doc(g7Table(FALSIFIERS_HEADER, at), copy), SURVIVORS), `${copy} | ${row.id}`).toContain(`${DOCS_14}: the falsifier table must occur exactly once; found 2`);
+      }
+      const alone = falsifierTableFailures(g7Doc(g7Table(FALSIFIERS_HEADER, at), 'none'), SURVIVORS);
+      expect(alone, row.id).toContain(`falsifier ${row.id} (${row.why}) is not listed in ${G7_WHERE}`);
+      expect(alone.some(line => line.includes(G7_HEADER_CAUSE)), row.id).toBe(false);
+    }
+  });
+
+  it('wb-vf94 same view, other direction: the falsifier section table exact, with a re-split copy under a bolded header in another section, stays green - a neighbouring section is free to change', () => {
+    const decoy = g7Table(G7_BOLD_HEADER, 5);
+    expect(falsifierTableFailures(syntheticFalsifiers(SURVIVORS).replace('## Truth labels and release gates\n\nText.\n', `## Truth labels and release gates\n\nText.\n\n${decoy}\n`), SURVIVORS)).toStrictEqual([]);
+    expect(falsifierTableFailures(syntheticFalsifiers(SURVIVORS).replace('## Acceptance journey evidence\n\nText.\n', `## Acceptance journey evidence\n\nText.\n\n${decoy}\n`), SURVIVORS)).toStrictEqual([]);
   });
 
   it('wb-drd control: the well-formed case executes exactly one stdout receipt line, echoes none, and passes the stdout pin', async () => {

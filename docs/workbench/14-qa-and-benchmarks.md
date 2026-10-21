@@ -30,6 +30,69 @@ E. UI/performance: width/Unicode/ANSI safety, virtual scrolling, large update bu
 | UI | 80x24/120x40/very narrow layouts | overflowing escape/wide glyph no corruption |
 | Designer | reproducible before/after with native references | changed model/basis flagged as confound |
 
+## Matrix by subsystem evidence
+
+Evidence of record for the thirteen "Matrix by subsystem" rows, one row per pinned case: each row names the subsystem, the half of its cell the case answers, the tier whose own report vouches for the case, and the case by file and verbatim title, with its bound describe path or its it.each minimum where one is bound. test/workbench-subsystem-matrix.census.ts judges the default-gate rows in the report of the default gate and checks the rows of the other tiers at tier level only; no row of this table is read as a live, native or scale pass, and a half no landed case binds is listed as unpinned with its open beads and is never counted as passed. The census judges this table against its own pins in both directions and in table order, so a pin dropped from the census, together with every census literal edited to match, still reads red against this table.
+
+| Subsystem | Half | Tier | Pinned case |
+| --- | --- | --- | --- |
+| Claude SDK host | positive | default-gate | test/workbench-host-contract.test.ts: "L3: parallel schema agents return object values from native SDK structured_output" |
+| Claude SDK host | positive | default-gate | test/workbench-claude-adverse-faults.test.ts: "control: a conforming structured_output succeeds and the text is its JSON" |
+| Claude SDK host | negative | default-gate | test/workbench-host-contract.test.ts: "L3: unchanged script uses Claude SDK query, not Pi AgentManager; session and usage are reported" |
+| Claude SDK host | negative | default-gate | test/workbench-claude-cancel-faults.test.ts: "F8 a killed run aborts exactly its in-flight agents, spawns nothing after, and leaves a concurrent run on the same host untouched" |
+| Legacy scripts | positive | default-gate | test/workflow-claude-code-compat.test.ts: "runs the canonical review-changes example" |
+| Legacy scripts | positive | default-gate | test/workflow-examples.test.ts: "ships at least the examples the guide links" |
+| Legacy scripts | negative | default-gate | test/workflow-runtime.test.ts: "names a misspelt option rather than ignoring it" |
+| node() | positive | default-gate | test/workbench-forge-observer.test.ts: "projects what readForgeGateStatus returns, carrying the native operation as a forge-operation evidence reference" |
+| node() | negative | default-gate | test/workbench-node-contract.test.ts: "L4: unknown capability and duplicate descriptor fail explicitly" |
+| node() | negative | default-gate | test/workbench-node-contract.test.ts: "L4: unauthorized invocation denied at host even with known capability id" |
+| node() | negative | default-gate | test/workbench-node-limits.test.ts: "refuses oversized input before native provider is called" |
+| node() | negative | default-gate | test/workbench-control-degradation.test.ts: "a registry control-gated invocation refuses with a typed authorization error once the grant expires and never starts the provider" |
+| MechanicalWorkflows | positive | none | unpinned: open beads wb-04s, wb-w12 |
+| MechanicalWorkflows | negative | none | unpinned: open beads wb-04s, wb-w12 |
+| Furnace | positive-observer | default-gate | test/workbench-furnace-observer.test.ts: "reads native Run, Attempt and bounded log reference without promoting output or owning the Run" |
+| Furnace | positive-external | furnace-observe | test/workbench-external-furnace.test.ts: "attaches to the existing Run, retains native identities, and leaves both stores byte-identical" |
+| Furnace | negative-close | default-gate | test/workbench-furnace-control.test.ts: "closing the observer of a shared client performs zero control calls, and only a permitted decision then reaches one verb" |
+| Furnace | negative-start | default-gate | test/workbench-furnace-hosted.test.ts: "treats a timed-out or unreadable start as uncertain, closes the host, and refuses a blind second start" |
+| Forge | positive | default-gate | test/workbench-forge-observer.test.ts: "F2: a current failed gate stays failed despite transport success, and current success is success" |
+| Forge | negative | default-gate | test/workbench-forge-contract.test.ts: "preserves last_result as historical, not verified candidate" |
+| Forge | negative | default-gate | test/workbench-forge-evidence.test.ts: "C2: authoritative_current=false stays historical and indeterminate, never current verification" |
+| HX | positive | default-gate | test/workbench-hyperunix-observer.test.ts: "H2: only a runtime-licensed complete-empty answer is known-empty, complete coverage and a success" |
+| HX | positive | default-gate | test/workbench-hyperunix-observer.test.ts: "keeps a provider-failed result failed and reads a runtime-licensed complete-empty result as the one known-empty success" |
+| HX | negative | default-gate | test/workbench-hyperunix-observer.test.ts: "H2: a 0-row incomplete answer that does not license absence stays partial and never reads as known-empty" |
+| HX | negative-native | native-read | test/workbench-ecosystem-native.test.ts: "HX partial coverage remains incomplete and does not license absence" |
+| HX | negative-native | native-read | test/workbench-native-ecosystem.test.ts: "HX typed query retains incomplete coverage and binary identity" |
+| RF | positive-observer | default-gate | test/workbench-reactivefiber-observer.test.ts: "R1: a clean noncommitted preview projects one snapshot keyed by operation_id with the graph digest as sourceRevision and a payload reference" |
+| RF | positive-preview | rf-preview | test/workbench-native-rf-preview.test.ts: "returns noncommitted text and graph provenance with no durable render ID" |
+| RF | negative | default-gate | test/workbench-reactivefiber-observer.test.ts: "R2: an injected-fixture seam is labelled as such and is never reported as a live, complete or successful render" |
+| Journal | positive | default-gate | test/workflow-journal.test.ts: "replays an identical run without spawning anything" |
+| Journal | positive | default-gate | test/workflow-journal.test.ts: "stops replaying after a changed call even when a later one still matches" |
+| Journal | negative | default-gate | test/workbench-local-detached-effects.test.ts: "neither re-runs nor replays a journaled write: the resume surfaces an uncertain effect naming its producer" |
+| Journal | negative | default-gate | test/workflow-effect-replay.test.ts: "journals a non-read node as the effect it was, without a replayable payload" |
+| Journal | negative | default-gate | test/workflow-effect-replay.test.ts: "never re-runs a journaled write because the basis changed" |
+| Observation | positive | default-gate | test/workbench-observation.test.ts: "deduplicates IDs, rejects old sequence updates, and treats a cursor gap as stale until snapshot" |
+| Observation | positive | default-gate | test/workbench-observation.test.ts: "uses provider-qualified native keys, preserves native failure and does not infer ownership" |
+| Observation | negative | default-gate | test/workbench-observation.test.ts: "disconnect invalidates known nodes; reconnect alone cannot restore current without snapshot" |
+| Observation | negative | default-gate | test/workbench-detached-observer.test.ts: "reports a host-lost reading as unknown and stale, never as a replayed terminal verdict" |
+| Security | positive | default-gate | test/workbench-claude-role-tools.test.ts: "adds only curated role MCP tools to actual SDK options without provider auto-grants" |
+| Security | positive | default-gate | test/workbench-registry-auth.test.ts: "inspect is independently granted and preserves native unknown fields" |
+| Security | negative | default-gate | test/workbench-registry-auth.test.ts: "closes the script-side raw RPC vehicle while host authorization stays typed" |
+| Security | negative | default-gate | test/workbench-registry-auth.test.ts: "copies caller grants before asynchronous dispatch and never escalates another caller" |
+| Security | negative | default-gate | test/workflow-meta.test.ts: "cannot reach host globals from the meta fragment" |
+| UI | positive-80x24 | default-gate | test/workbench-inspector.test.ts: "always reserves a visible Escape hint after 1000 rows at 80x24 and 32x18" |
+| UI | positive-80x24 | default-gate | test/workbench-terminal-geometry.test.ts: "inspector truncation is explicit: a page larger than the viewport names its remainder" in "release checklist item 8: deterministic terminal geometry > 80 x 24" |
+| UI | positive-120x40 | default-gate | test/workbench-terminal-geometry.test.ts: "inspector truncation is explicit: a page larger than the viewport names its remainder" in "release checklist item 8: deterministic terminal geometry > 120 x 40" |
+| UI | negative | default-gate | test/workbench-evidence-loader.test.ts: "strips terminal escapes, bidi and zero-width characters from preview lines" |
+| UI | negative | default-gate | test/workbench-control-degradation.test.ts: "adversarial ANSI, bidi and control characters in provider, action, target and invocation never reach a denial reason" |
+| UI | negative | default-gate | test/workflow-dialog.test.ts: "counts wide characters rather than code points" |
+| UI | negative | default-gate | test/workbench-timeline.test.ts: "keeps a credential glued to an escape redacted, never splits a surrogate pair and falls back to the reference for invisible text" |
+| UI | negative | default-gate | test/workbench-inspector.test.ts: "caps viewport, terminal width and unsafe text, ASCII=%s", it.each, at least 2 rows |
+| Designer | positive | default-gate | test/workbench-designer.test.ts: "source changes are explicit independent variables, not config confounds" |
+| Designer | positive | default-gate | test/workbench-identity.test.ts: "separates definition, deployment, logical request, subject basis and native reference" |
+| Designer | negative | default-gate | test/workbench-designer.test.ts: "names a mismatched subject basis (principal + workspace source) as a confound" |
+| Designer | negative | default-gate | test/workbench-designer.test.ts: "an unmeasured workspace source state is a named confound even when subject basis digests coincide" |
+| Designer | negative | default-gate | test/workbench-pi-designer.test.ts: "names an unmeasured workspace source state as a cohort confound through the real tool, never a matched basis" |
+
 ## Fault-injection locations
 
 - Before provider call; after provider side effect but before host result; after result before journal append; before event persist; after reconnect but before snapshot.
