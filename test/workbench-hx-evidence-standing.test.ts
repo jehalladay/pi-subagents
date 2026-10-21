@@ -14,10 +14,13 @@
  *
  * Every HX reference here comes from ONE provider output: the value the registered hyperunix.find capability returns (the
  * real registration, src/workbench/providers/hyperunix.ts, over an injected reader) for an SDK result that supplies proof
- * handles (support ids and derivation handles) and a runtime-sourced, digest-shaped query digest. HX_SOURCES projects it
- * through each src path that turns it into HX references:
+ * handles (support ids and derivation handles) and a runtime-sourced, digest-shaped query digest. hxSources() drives it
+ * through the two src paths that turn it into HX references, and through one host shape replicated here:
  *   native-evidence     nativeEvidence + nativeRefOf (src/workbench/native-evidence.ts, the stored proof handles; :60-63@9df9a03)
- *   host-native-node    the native.node ingestion in src/index.ts (provider = the capability id prefix, type "operation")
+ *   host-native-node    the src/index.ts native.node ingestion shape (provider = the capability id prefix, type "operation",
+ *                       refs sliced to 32: the onProgress workflow_node branch, :3163 at base 94ee0e0), REPLICATED in
+ *                       hxSources(), not driven: this file imports no src/index.ts, so a change to that shape in src/index.ts
+ *                       cannot red R0, S1 or S2 for this source
  *   hyperunix-observer  hyperunixTopology (src/workbench/hyperunix-observer.ts: the hx-binary and hx-coverage references)
  *
  * R0 the roster is frozen (rule 16): each source, its native ref shape and its exact references, so an HX projection that
@@ -39,7 +42,10 @@
  *
  * NAMED RESIDUAL UNWIRED-MODULE: a module outside the read set (S3's three loader-contract modules and S4's
  * native-evidence.ts) that defines an HX reader but is imported by none of them is not read here; it loads nothing until a
- * loader-contract module wires it, and that wiring reds S1 and S3.
+ * loader-contract module wires it. That wiring reds S1 and S2 whenever the wired reader accepts an HX reference they request
+ * (the store routes by provider, then canLoad, so the reference no longer resolves to the typed no-loader entry). S3 reds it
+ * too only when the wiring names HX vocabulary in a loader-contract module's code: a neutral module specifier and binding
+ * (the wb-tz2.6 gate's SM1 probe, ./proof-loader.js imported as proofLoader) leave S3 green.
  *
  * Display paths added: none (test-only). No scratch directory is allocated: WS is a string, never created or read.
  */
