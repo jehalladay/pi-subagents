@@ -26,6 +26,7 @@ import { fileURLToPath } from "node:url";
 import ts from "typescript";
 import { describe, expect, it } from "vitest";
 import { claudeMessageEvidenceRef } from "../src/index.js";
+import { docsSection } from "./helpers/census.js";
 
 const cp = (code: number): string => String.fromCodePoint(code);
 const NUL = cp(0x00);
@@ -200,7 +201,10 @@ describe("wb-p2ef F4: the live tier's observer mirror derives the claude-message
  * and pins the pins it reds, its true cause. LIVENESS keeps that battery honest: every pin of every site is red under some drift,
  * every drift reds some pin, every pin has a drift that reds it alone (so a pin dropped everywhere leaves a dead drift), every drift
  * is the only one to red some site's pin, judged on the real source (so a drift dropped everywhere leaves a pin unred), and
- * NAMED_DRIFTS, the gate's own count, holds the named three.
+ * NAMED_DRIFTS, the gate's own count, holds the named three. wb-72c.2 anchors the PINS dimension to the published
+ * docs/20 pin section outside this file (F1); the named quoted/constant-computed P4/P5 forms are pinned below (F2/F3).
+ * No arbitrary variable-key/alias resolution is claimed by constantKey; it resolves literals and their concatenations
+ * through parentheses and TypeScript assertions only. This cut does not run the credentialed live tier.
  */
 type PinId = "P1" | "P2" | "P3" | "P4" | "P5";
 
@@ -338,6 +342,20 @@ function readSite(path: string, text: string): Reading {
   };
 }
 
+
+/** A bounded constant member name; unresolved keys stay outside the claimed constant-key forms. */
+function constantKey(node: ts.Node): string | undefined {
+  if (ts.isStringLiteralLike(node)) return node.text;
+  if (ts.isParenthesizedExpression(node) || ts.isAsExpression(node) || ts.isTypeAssertionExpression(node) || ts.isNonNullExpression(node)) return constantKey(node.expression);
+  if (ts.isComputedPropertyName(node)) return constantKey(node.expression);
+  if (ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.PlusToken) {
+    const left = constantKey(node.left);
+    const right = constantKey(node.right);
+    return left !== undefined && right !== undefined ? left + right : undefined;
+  }
+  return undefined;
+}
+
 /** Each pin, judged on one site's reading: true when it holds. */
 const JUDGES: Readonly<Record<PinId, (site: Site, reading: Reading) => boolean>> = {
   P1: (_site, { file, callback }) => {
@@ -379,7 +397,10 @@ const JUDGES: Readonly<Record<PinId, (site: Site, reading: Reading) => boolean>>
   P4: (_site, { callback }) => {
     if (callback === undefined) return false;
     const derive = bindingsOf(callback, "messageRef").find(ts.isVariableDeclaration)?.initializer;
-    const reads = nodesOf(callback, (node): node is ts.Identifier | ts.StringLiteralLike => (ts.isIdentifier(node) || ts.isStringLiteralLike(node)) && node.text === "lastMessageId");
+    const reads = nodesOf(callback, (node): node is ts.Identifier | ts.StringLiteralLike | ts.ElementAccessExpression =>
+      (ts.isIdentifier(node) && node.text === "lastMessageId") ||
+      (ts.isStringLiteralLike(node) && node.text === "lastMessageId" && !ts.isElementAccessExpression(node.parent)) ||
+      (ts.isElementAccessExpression(node) && constantKey(node.argumentExpression) === "lastMessageId"));
     const texts = nodesOf(callback, (node): node is ts.StringLiteral | ts.TemplateLiteralToken => ts.isStringLiteral(node) || ts.isTemplateLiteralToken(node));
     return derive !== undefined && reads.length === 1 && within(reads[0], derive) && !texts.some(text => text.text.includes("claude-message"));
   },
@@ -397,7 +418,11 @@ const JUDGES: Readonly<Record<PinId, (site: Site, reading: Reading) => boolean>>
       calleeName(ingest) === "ingest" &&
       uses.every(use => within(use, spread)) &&
       bindingsOf(emitter, "evidenceRefs").length === 1 &&
-      printed(spread, file) === `...(evidenceRefs?.length ? { evidenceRefs: ${site.ingest} } : {})`
+      printed(spread, file) === `...(evidenceRefs?.length ? { evidenceRefs: ${site.ingest} } : {})` &&
+      ts.isObjectLiteralExpression(spread.parent) &&
+      // Explicit keys beside the spread can replace its result without mentioning the parameter at all.
+      !spread.parent.properties.some(property => property.name !== undefined &&
+        (ts.isIdentifier(property.name) ? property.name.text : constantKey(property.name)) === "evidenceRefs")
     );
   },
 };
@@ -620,6 +645,63 @@ describe("wb-72c.1: the F4 composition guard judges the emitted shape of every o
       "M-REBIND-SRC",
       "M-LET-LIVE",
       "M-INGEST-LIVE",
+    ]);
+  });
+});
+
+/** wb-72c.2 F1: the pin roster lives in the published contract, outside this census's literals. */
+const PIN_DOC = "docs/workbench/20-evidence-loader-contract.md";
+const PIN_HEADING = "Claude message observer pins";
+
+/** F2/F3: these exact quoted/constant-computed member shapes are pinned, not a claim of arbitrary alias resolution. */
+const KEY_FORMS = [
+  { id: "quoted", key: '"evidenceRefs"', read: '["lastMessageId"]' },
+  { id: "computed literal", key: '["evidenceRefs"]', read: '["lastMessageId"]' },
+  { id: "computed concatenation", key: '["evidence" + "Refs"]', read: '["lastMessage" + "Id"]' },
+  { id: "computed asserted concatenation", key: '[("evidence" + "Refs") as string]', read: '[("lastMessage" + "Id") as string]' },
+] as const;
+
+describe("wb-72c.2: outside pin anchor and quoted/computed P4/P5 keys", () => {
+  it("F1: docs/20 anchors every requirement, site pin list, judge key and registered site:pin pair outside the test file", () => {
+    const section = docsSection(readRepo(PIN_DOC), PIN_HEADING, 2, ["20 — EvidenceLoader contract (workbench.evidence-loader/v1)"]);
+    expect(section.ok, section.why).toBe(true);
+    expect(section.hasHtml, "the pin anchor is rendered, never hidden in HTML").toBe(false);
+    expect(section.blocks.map(block => block.kind)).toEqual(["list"]);
+    const block = section.blocks[0];
+    const documented = block?.kind === "list" && !block.ordered ? block.items.map(item => item.text) : [];
+    expect(PINS.map(pin => `${pin.id}: ${pin.requirement}`), "published requirements, full phrases in order").toEqual(documented);
+    const ids = documented.map(line => line.split(":")[0]);
+    expect(Object.keys(JUDGES), "every published pin has its judge").toEqual(ids);
+    for (const site of SITES) {
+      expect(site.pins, `${site.key}: published pin roster`).toEqual(ids);
+      expect(JUDGED.filter(row => row.startsWith(`${site.key}:`)), `${site.key}: registered published pins`).toEqual(ids.map(id => `${site.key}:${id}`));
+    }
+  });
+
+  for (const form of KEY_FORMS) {
+    for (const site of SITES) {
+      it(`F3 ${site.key}: ${form.id} lastMessageId pre-repair is refused by P4`, () => {
+        const original = sourceOf(site.file);
+        expect(occurrences(original, DERIVE_LINE), "the pre-repair edit applies once").toBe(1);
+        const repair = `(snapshot as unknown as Record<string, string | undefined>)${form.read} = (snapshot as unknown as Record<string, string | undefined>)${form.read}?.trim();`;
+        const reading = readSite(site.file, original.replace(DERIVE_LINE, `${repair}\n${DERIVE_LINE}`));
+        expect(JUDGES.P4(site, reading), "P4 must see the keyed write before the live derive").toBe(false);
+      });
+      it(`F2 ${site.key}: ${form.id} evidenceRefs override after the ingest spread is refused by P5`, () => {
+        const original = sourceOf(site.file);
+        const spread = `...(evidenceRefs?.length ? { evidenceRefs: ${site.ingest} } : {}),`;
+        expect(occurrences(original, spread), "the override edit applies once").toBe(1);
+        const reading = readSite(site.file, original.replace(spread, `${spread}\n${form.key}: ["claude-session:FAKE-FIXTURE"],`));
+        expect(JUDGES.P5(site, reading), "P5 must see the last-key-wins override").toBe(false);
+      });
+    }
+  }
+  it("key-form shape: the four named forms keep their exact keys and reads", () => {
+    expect(KEY_FORMS.map(row => [row.id, row.key, row.read])).toEqual([
+      ["quoted", '"evidenceRefs"', '["lastMessageId"]'],
+      ["computed literal", '["evidenceRefs"]', '["lastMessageId"]'],
+      ["computed concatenation", '["evidence" + "Refs"]', '["lastMessage" + "Id"]'],
+      ["computed asserted concatenation", '[("evidence" + "Refs") as string]', '[("lastMessage" + "Id") as string]'],
     ]);
   });
 });
