@@ -4,7 +4,27 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+
+/**
+ * The RUNTIME EMIT JUDGE (wb-hk9l, R656): the primary copy pin. Every node:fs copy call made while a row executes is
+ * observed and attributed to that row, so ANY source spelling that really copies package.json joins the observed set
+ * and the emit-census row below reds unless the row is in PACKAGE_COPY_ROWS with the explicit budget. Source-text
+ * classification (scanRows) remains a secondary liveness layer; its blind spots are the named residual families in
+ * test/fixtures/hk9l-scan-roster.json (subprocess copy, module-scope and hook attribution, read/write composition,
+ * the hashing proxy), each with an id-asserted pinned quiet row.
+ */
+const emitState = vi.hoisted(() => ({ observed: [] as { row: string; call: string }[], currentRow: "<module scope>" }));
+vi.mock("node:fs", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("node:fs")>();
+  const wrap = <K extends "cp" | "cpSync" | "copyFile" | "copyFileSync">(name: K): (typeof actual)[K] =>
+    ((...args: never[]) => {
+      emitState.observed.push({ row: emitState.currentRow, call: name });
+      return (actual[name] as (...callArgs: never[]) => unknown)(...args);
+    }) as (typeof actual)[K];
+  return { ...actual, cp: wrap("cp"), cpSync: wrap("cpSync"), copyFile: wrap("copyFile"), copyFileSync: wrap("copyFileSync") };
+});
+
 import { canonicalJson, captureInvocationIdentity, IdentityConflictError, identityDigest, verifyInvocationIdentity } from "../src/workbench/identity.js";
 
 const packageRoot = resolve(import.meta.dirname, "..");
@@ -52,79 +72,21 @@ type TestApi = { readonly each: boolean; readonly table: ts.Expression | undefin
  * It reads it / test with their TEST_FLAGS chains, the TEST_CONDITIONS calls, and the TEST_TABLES calls over an array-literal
  * table whose title expands by %s alone. A row it cannot read gets a title the runner never registers and a registration it
  * does not recognise is missing from its list, so either way the runner cross-check reds instead of passing the row unread.
- * ENUMERATION (R631 cut #5, owner-authored completion): registrations are classified through direct COPY_CALLS names,
- * namespace members, literal/const/as-asserted/angle-asserted/non-null-asserted/chained/concatenated element keys,
- * identifier/quoted imports, identifier/quoted/computed object binding, array binding over a literal including binding
- * defaults, plain/nullish/logical (??=, ||=, &&=)/property (dot and bracket)/object- and array-destructuring assignments,
- * functions/arrows, object properties, class methods/fields/static fields/getters, private class fields and methods,
- * multi-pass helper chains, and literal-key Reflect.get reached as Reflect.get, globalThis.Reflect.get or an element-access
- * spelling of either. The claim is exactly the SCAN_WITNESSES pinned set - every documented form has a witness and every
- * witness a ROUTE line - and no general alias-resolution claim is made.
+ * ENUMERATION (R656 owner completion): the PRIMARY pin is the runtime emit judge above - a row that really copies is
+ * pinned by OBSERVATION, whatever its source spelling, so no enumeration of spellings is claimed or needed for the
+ * budget invariant. The static scan below is a SECONDARY liveness layer; it classifies exactly the witness forms pinned
+ * in test/fixtures/hk9l-scan-roster.json (every witness has a roster row with its frozen source digest, and the
+ * scanner's dispatch vocabulary equals the roster's dispatch list - some witness forms deliberately share a dispatch
+ * route). The scan makes no general alias-resolution claim; a form it reads quiet is still caught by the emit judge
+ * when it really copies.
  * NAMED RESIDUALS (quiet rows below): H5 read+write copy; another module's helper; subprocess copy; hook copy; module-scope
  * copy; captureInvocationIdentity hashing proxy. These lie outside registration copy-call classification. Every family
- * has its own frozen input and exact quiet reading, not a prose-only pass claim, and the residual table itself is
- * anchored outside the census literals in SCAN-DOC-RESIDUALS (id, family and full source digest, in order). A newly
- * discovered form adds a residual unless it contradicts a pinned form. The 320 s synchronous IO-stall remains an
- * instrument residual: no budget cures it.
- * SCAN-DOC-ROUTES (R631 source-of-truth route list; not a witness/reading/digest census literal):
- * ROUTE direct call | 9b30411f5e41cca5
- * ROUTE async call | 33247f8eef2e3873
- * ROUTE file call | 610cc9a31b640dc7
- * ROUTE async file call | 8d9fc75d995c09ef
- * ROUTE namespace member | a97e8481dd263fb3
- * ROUTE element read | fa05617005f18541
- * ROUTE function helper | d6bc747d9aa0e310
- * ROUTE arrow helper | 60338d19207e4c15
- * ROUTE alias | 673ec6d8ec8c8ea4
- * ROUTE import alias | 8580af04d21eb509
- * ROUTE destructured alias | 32ce34abf1911ffa
- * ROUTE assigned alias | 6773d2f3c4b279cf
- * ROUTE const keyed element | 0003751cc734799a
- * ROUTE class method | 3a9204d0f1c28ba3
- * ROUTE property helper | 81f9bb1104466df1
- * ROUTE two hops | ce4aaeb87fd883ba
- * ROUTE table function | 3da62b69c2800986
- * ROUTE N1 asserted const key | 490d34a6868bca6f
- * ROUTE N1b chained const key | ecfc34d3f7530302
- * ROUTE N2 quoted destructuring | abc435b2f1085826
- * ROUTE N2b computed destructuring | feae605b36fad60c
- * ROUTE N3 array destructuring | 270bc85e85ee5706
- * ROUTE N4 nullish assignment | 4943f856dbafa30f
- * ROUTE N4b logical assignment | bd67898fb17e5538
- * ROUTE N5 destructuring assignment | e0d8150b0ea4b945
- * ROUTE N6 class arrow field | 18c4b398707a13d6
- * ROUTE N6b static field | 1a0fe4aab3037172
- * ROUTE N7 class getter | c0bd5b6e9b412271
- * ROUTE N8 property assignment | ea5740c4c28069b5
- * ROUTE N9 concatenated key | 56d1013197de9a18
- * ROUTE N10 reflected key | a06d2a8925c2f91f
- * ROUTE N11 quoted import | 3ba1f0cd6bb81c39
- * ROUTE E1 and-and assignment | 8c914952b3edbc0f
- * ROUTE E2 array destructuring assignment | 1ca03e2d398ac89c
- * ROUTE E3 quoted destructuring assignment | 5f01658355299e70
- * ROUTE E4 bracket property assignment | 37fc86c6184c58a3
- * ROUTE E4b bracket-bound dot call | b28e740d02278132
- * ROUTE E5 private class field | 2b9204cfbed62493
- * ROUTE E5b private class method | 09c01655348e6aa3
- * ROUTE E6 angle-asserted key | f3ed76035439ae9b
- * ROUTE E6b non-null asserted key | e4e6cc0208002f46
- * ROUTE E59 array-binding default | 47fc42b74091e1b5
- * ROUTE E48a globalThis reflected key | caef42afee068a02
- * ROUTE E48b element reflected key | f880802b1c6ec862
- * ROUTE quiet row | 9a24a5a072b631cf
- * ROUTE quiet helper | d29637fa06af1f5f
- * ROUTE quiet near names | f774c75996266b14
- * ROUTE unexpandable table | d21d9b647115b998
- * ROUTE non-literal title | a10cd2f4c27a93d3
- * END-SCAN-DOC-ROUTES
- * SCAN-DOC-RESIDUALS (R631 outside anchor for the residual census: id | family | full source digest, in table order):
- * RESIDUAL R-H5 | read/write composition | 37e662375a3fe1399fc0dc95f9d9232aa058553112f7cabb7ff78afc75d4fd44
- * RESIDUAL R-MODULE | other-module helper | 7b1094cf6f38f1bf063069022eec44a6e79829d95a623759b8654cd3f9541330
- * RESIDUAL R-PROCESS | subprocess copy | 5ce5ee0561776868771e83048ddb13718df85f4b03315e96bdd274c8b6be2f08
- * RESIDUAL R-HOOK | hook copy | d4ea304260e90543ce46289eeb8b61d919cf47fd31098b933cea553bc3a98117
- * RESIDUAL R-SCOPE | module-scope copy | ba574260adf4ee02ad948307b8d00101806d0e3d2cf7158e82c0bf9ca7252885
- * RESIDUAL R-PROXY | identity hashing proxy | c694895e6b2fdad18a9c99bdc716ce2e4fde4f0dcd2264674c6af621dc9f3b39
- * END-SCAN-DOC-RESIDUALS
+ * has its own frozen input and exact quiet reading, not a prose-only pass claim, and the residual table is anchored
+ * OUT OF FILE in test/fixtures/hk9l-scan-roster.json (id, family and full source digest, in table order; the census
+ * anchor row enforces order, count and per-row registration exactly). These families bound the STATIC layer only - a
+ * real copy through any of them inside a row is still observed by the emit judge. The 320 s synchronous IO-stall
+ * remains an instrument residual: no budget cures it.
+ * The route/digest roster and the residual roster live in test/fixtures/hk9l-scan-roster.json (R656 out-of-file anchor).
  */
 function scanRows(text: string, visited?: Set<string>): { title: string; copies: boolean }[] {
   const source = ts.createSourceFile("scanned.ts", text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
@@ -501,6 +463,7 @@ function fixture() {
 afterEach(() => { for (const dir of dirs.splice(0)) rmSync(dir, { recursive: true, force: true }); });
 
 describe("WB-014 immutable invocation identity", () => {
+  beforeEach(({ task }) => { emitState.currentRow = task.name; });
   it("canonicalizes JSON recursively and hashes SHA256 with domain separation", () => {
     expect(canonicalJson({ z: [{ b: 2, a: 1 }], a: true })).toBe('{"a":true,"z":[{"a":1,"b":2}]}');
     expect(identityDigest("configuration", { b: 2, a: 1 })).toBe(identityDigest("configuration", { a: 1, b: 2 }));
@@ -688,12 +651,13 @@ describe("WB-014 immutable invocation identity", () => {
     expect([...visited].sort(), "every branch in the scanner's actual dispatch is reached by a witness").toEqual(scanDispatch());
     expect(SCAN_WITNESSES.length, "the frozen reading count").toBe(SCAN_READINGS.length);
     expect(readings, "the scan's reading of each witness").toEqual(SCAN_READINGS);
-    // R631 U3 equality: no documented form without a pin and no pin without a documented form. R631 explicitly
-    // permits the scan doc's route list as U2's outside anchor; this list lives outside the three census literals.
-    const scanDoc = readFileSync(fileURLToPath(import.meta.url), "utf8").split(" * SCAN-DOC-ROUTES ")[1]?.split(" * END-SCAN-DOC-ROUTES")[0] ?? "";
-    const documented = [...scanDoc.matchAll(/^ \* ROUTE (.+) \| ([0-9a-f]{16})$/gm)].map(match => `${match[1]} | ${match[2]}`);
+    // R656: the roster fixture is the OUT-OF-FILE anchor - no pin without a roster row and no roster row without a pin.
+    const roster = JSON.parse(readFileSync(new URL("./fixtures/hk9l-scan-roster.json", import.meta.url), "utf8")) as {
+      routes: { route: string; digest: string }[]; dispatch: string[]; residuals: { id: string; family: string; digest: string; reading: string }[];
+    };
     expect(SCAN_WITNESSES.map(([name, source]) => `${name} | ${createHash("sha256").update(source).digest("hex").slice(0, 16)}`),
-      "the scan doc's route list and the pinned set agree exactly, including the multi-pass witness source").toEqual(documented);
+      "the roster's route list and the pinned witness set agree exactly").toEqual(roster.routes.map(row => `${row.route} | ${row.digest}`));
+    expect([...new Set(scanDispatch())].sort(), "the scanner's live dispatch vocabulary equals the roster's dispatch list").toEqual(roster.dispatch);
   });
   it("wb-hk9l shipped-lock route: the source's packaged-lock fallback has a judged consumer row, independently of PACKAGE_COPY_ROWS", ({ task }) => {
     const implementation = readFileSync(join(packageRoot, "src/workbench/identity.ts"), "utf8");
@@ -713,36 +677,43 @@ describe("WB-014 immutable invocation identity", () => {
 
   it("wb-hk9l residual R-H5: pinned quiet reading", () => {
     const residual = SCAN_RESIDUALS[0];
+    expect(residual.id, "this quiet row judges its own family, never another index").toBe("R-H5");
     expect(scanRows(residual.source).map(row => `${row.title} ${row.copies ? "copies" : "quiet"}`).join("; ")).toBe(residual.reading);
   });
   it("wb-hk9l residual R-MODULE: pinned quiet reading", () => {
     const residual = SCAN_RESIDUALS[1];
+    expect(residual.id, "this quiet row judges its own family, never another index").toBe("R-MODULE");
     expect(scanRows(residual.source).map(row => `${row.title} ${row.copies ? "copies" : "quiet"}`).join("; ")).toBe(residual.reading);
   });
   it("wb-hk9l residual R-PROCESS: pinned quiet reading", () => {
     const residual = SCAN_RESIDUALS[2];
+    expect(residual.id, "this quiet row judges its own family, never another index").toBe("R-PROCESS");
     expect(scanRows(residual.source).map(row => `${row.title} ${row.copies ? "copies" : "quiet"}`).join("; ")).toBe(residual.reading);
   });
   it("wb-hk9l residual R-HOOK: pinned quiet reading", () => {
     const residual = SCAN_RESIDUALS[3];
+    expect(residual.id, "this quiet row judges its own family, never another index").toBe("R-HOOK");
     expect(scanRows(residual.source).map(row => `${row.title} ${row.copies ? "copies" : "quiet"}`).join("; ")).toBe(residual.reading);
   });
   it("wb-hk9l residual R-SCOPE: pinned quiet reading", () => {
     const residual = SCAN_RESIDUALS[4];
+    expect(residual.id, "this quiet row judges its own family, never another index").toBe("R-SCOPE");
     expect(scanRows(residual.source).map(row => `${row.title} ${row.copies ? "copies" : "quiet"}`).join("; ")).toBe(residual.reading);
   });
   it("wb-hk9l residual R-PROXY: pinned quiet reading", () => {
     const residual = SCAN_RESIDUALS[5];
+    expect(residual.id, "this quiet row judges its own family, never another index").toBe("R-PROXY");
     expect(scanRows(residual.source).map(row => `${row.title} ${row.copies ? "copies" : "quiet"}`).join("; ")).toBe(residual.reading);
   });
 
 
-  it("wb-hk9l residual census anchor: the scan doc's residual list and the registered residual rows match SCAN_RESIDUALS exactly, in order", ({ task }) => {
-    const scanDoc = readFileSync(fileURLToPath(import.meta.url), "utf8").split(" * SCAN-DOC-RESIDUALS ")[1]?.split(" * END-SCAN-DOC-RESIDUALS")[0] ?? "";
-    const documented = [...scanDoc.matchAll(/^ \* RESIDUAL (\S+) \| (.+) \| ([0-9a-f]{64})$/gm)].map(match => `${match[1]}|${match[2]}|${match[3]}`);
-    expect(SCAN_RESIDUALS.map(row => `${row.id}|${row.family}|${createHash("sha256").update(row.source).digest("hex")}`),
-      "the residual table is anchored outside its own census literals").toEqual(documented);
-    expect(documented, "the anchored residual count").toHaveLength(6);
+  it("wb-hk9l residual census anchor: the roster fixture's residual list and the registered residual rows match SCAN_RESIDUALS exactly, in order", ({ task }) => {
+    const roster = JSON.parse(readFileSync(new URL("./fixtures/hk9l-scan-roster.json", import.meta.url), "utf8")) as {
+      residuals: { id: string; family: string; digest: string; reading: string }[];
+    };
+    expect(SCAN_RESIDUALS.map(row => `${row.id}|${row.family}|${createHash("sha256").update(row.source).digest("hex")}|${row.reading}`),
+      "the residual table is anchored out of file, in order").toEqual(roster.residuals.map(row => `${row.id}|${row.family}|${row.digest}|${row.reading}`));
+    expect(roster.residuals, "the anchored residual count").toHaveLength(6);
     const registered: string[] = [];
     const walk = (tasks: typeof task.file.tasks): void => {
       for (const child of tasks) {
@@ -751,9 +722,15 @@ describe("WB-014 immutable invocation identity", () => {
       }
     };
     walk(task.file.tasks);
-    for (const row of SCAN_RESIDUALS) {
-      expect(registered, `residual ${row.id} keeps its judged registration`).toContain(`wb-hk9l residual ${row.id}: pinned quiet reading`);
-    }
+    const residualRows = registered.filter(name => /^wb-hk9l residual R-\S+: pinned quiet reading$/.test(name));
+    expect(residualRows, "the registered residual rows, exactly and in table order, nothing extra").toEqual(
+      SCAN_RESIDUALS.map(row => `wb-hk9l residual ${row.id}: pinned quiet reading`));
+  });
+
+  it("wb-hk9l emit census: the rows observed really copying are exactly the budgeted PACKAGE_COPY_ROWS", () => {
+    const copying = [...new Set(emitState.observed.filter(entry => entry.row !== "<module scope>").map(entry => entry.row))].sort();
+    expect(copying, "runtime-observed copy rows: any row that really copies must be in PACKAGE_COPY_ROWS and carry the budget, whatever its source spelling")
+      .toEqual([...PACKAGE_COPY_ROWS].sort());
   });
 
   it("wb-hk9l residual shape: each named family's quiet page and reading is frozen", () => {
