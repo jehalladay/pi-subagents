@@ -58,3 +58,68 @@ Every landed W21 bench is a CLI at `qa/workbench/*-bench.mjs` whose first line i
 Every test evidence artifact includes revision, tool versions, commands, timestamp, host, native references and actual output. All docs and status tables must distinguish "code present", "fixture pass", "live SDK pass", "adversarial pass", "scale benchmark pass". Each major work package must have a falsifier: a negative test that would fail if a critical guarantee was quietly weakened.
 
 Use Forge build/test/gates as primary interface; run local relevant Node tests through Forge-configured paths. Never introduce GitHub CI. Pin dependencies, lockfile and package exports.
+
+## HX live-tier receipt falsifiers
+
+The two live-binary HX tests of the native-read tier (vitest.native.config.ts) write their receipt line with process.stdout.write, because the vitest agent reporter drops the console output of passing tests. test/workbench-hx-live-tier-census.test.ts judges that write in the test sources and refuses every receipt shape below; each row names one falsifier row of the census and the refused shape, verbatim, and is fixture pass evidence only: the census case named for the row runs it over a synthetic probe, never the hx binary. The census reads this table and requires its own falsifier rows to equal these rows in both directions and in table order, so a falsifier dropped from the census, together with every census literal edited to match, still reads red against this table.
+
+| Falsifier row | Refused receipt shape |
+| --- | --- |
+| `dead-write-if-false` | `a write inside if (false)` |
+| `dead-write-after-return` | `a write unreached after return` |
+| `dead-write-uninvoked-closure` | `a write inside an uninvoked closure` |
+| `dead-write-after-block-return` | `a write unreached after an unconditional return in a prior plain block` |
+| `dead-write-after-late-block-return` | `a write unreached after a prior plain block whose return follows another statement` |
+| `dead-write-after-early-block-return` | `a write unreached after a prior plain block whose return precedes another statement` |
+| `dead-write-nested-after-return` | `a write in a nested plain block unreached after an outer return` |
+| `dead-write-inner-after-return` | `a write in a nested plain block unreached after a return inside that block` |
+| `dead-write-else` | `a write in the untaken else branch of an if` |
+| `dead-write-loop` | `a write inside a loop body that never runs` |
+| `dead-write-ternary` | `a write in the untaken arm of a ternary` |
+| `echo-element-access` | `console['log'] beside the stdout write` |
+| `echo-globalThis-console` | `globalThis.console.log beside the stdout write` |
+| `echo-globalThis-element-console` | `globalThis['console'].log beside the stdout write` |
+| `echo-window-console` | `window.console.log beside the stdout write` |
+| `echo-global-console` | `global.console.log beside the stdout write` |
+| `echo-parenthesised-console` | `(console).log beside the stdout write` |
+| `echo-nonnull-console` | `console!.log beside the stdout write` |
+| `echo-as-console` | `(console as Console).log beside the stdout write` |
+| `echo-satisfies-console` | `(console satisfies Console).log beside the stdout write` |
+| `echo-angle-assertion-console` | `(<Console>console).log beside the stdout write` |
+| `echo-any-member-console` | `console.table, a member of any name, beside the stdout write` |
+
+## Acceptance journey evidence
+
+Evidence of record for the five docs/workbench/11 acceptance journeys, one row per evidence leg. Each row carries one label from "Truth labels and release gates", or not started for a journey with no evidence yet: a fixture pass row names one pinned case by file and verbatim title, a live SDK pass row names its receipt, and an open row names its tracking bead. test/workbench-acceptance-journeys.census.ts judges this table against its own evidence rows in both directions, so a leg dropped from either side reads red.
+
+| Journey | Label | Evidence |
+| --- | --- | --- |
+| 1 | fixture pass | test/workbench-host-contract.test.ts: "L3: unchanged script uses Claude SDK query, not Pi AgentManager; session and usage are reported" |
+| 1 | live SDK pass | forge-run receipt cmd_2a275dcbd6c6 |
+| 1 | live SDK pass | owner receipt qa/workbench/receipts/wb-a2g.3-operator-receipt.json at revision e07474a |
+| 2 | not started | open bead wb-04s |
+| 3 | fixture pass | test/workbench-observation.test.ts: "disconnect invalidates known nodes; reconnect alone cannot restore current without snapshot" |
+| 3 | fixture pass | test/workbench-furnace-observer.test.ts: "reconnects only by fresh snapshot, marking a failed read stale instead of asserting last-known RUNNING" |
+| 3 | fixture pass | test/workbench-furnace-vc4-receipt.test.ts: "C2 falsifier: disconnect must make the reading and the nodes stale, keeping the last-known running label" |
+| 3 | live SDK pass | forge-run receipt cmd_7cea2921543b |
+| 4 | fixture pass | test/workbench-patch-proposal.test.ts: "validates the candidate bytes exactly as the designer does and mirrors its status" |
+| 4 | fixture pass | test/workbench-validate-reply.test.ts: "never executes or writes the candidate source" |
+| 4 | fixture pass | test/workbench-designer.test.ts: "matched cohort yields measured deltas for every shared metric and states association, not causation" |
+| 4 | code present | open bead wb-h8f.2 |
+| 5 | fixture pass | test/workbench-control.test.ts: "rule 2: observer-only grants cannot control under any action spelling, and nothing is read before refusing" |
+| 5 | fixture pass | test/workbench-control.test.ts: "rule 3: only the frozen per-provider allowlist resolves an action (exact, case-sensitive, no prototype lookups)" |
+| 5 | fixture pass | test/workbench-native-details.test.ts: "preserves selected node on resize and closes without invoking any runtime controls" |
+
+## W10 withdrawn-claim census residuals
+
+Named residuals of test/workbench-w10-section-withdrawn-claim.test.ts, the section-level census over the feature-matrix W10 rows for the two withdrawn spellings: one row per residual family the census names and does not claim to catch. Each row names the census quiet row for that family, an exemplar its page carries exactly once and that reads quiet, and a clear form that undoes the family: with the exemplar replaced by the clear form, the page must read the withdrawn claim at the location given. The census judges this table against its quiet rows in both directions, so a family dropped, renamed or silenced on either side reads red. In a clear form, `\n` stands for a line break.
+
+| Quiet row | Residual family | Exemplar | Clear form | Clear form reads |
+| --- | --- | --- | --- | --- |
+| ENUM0 | ASCII look-alikes | `zero durab1e writes` | `zero durable writes` | W10 table 1 row 2 Caveats: zero durable writes |
+| ENUM1 | hyphenated paraphrases | `zero durable-writes` | `zero durable writes` | W10 table 1 row 2 Caveats: zero durable writes |
+| ENUM2 | new paraphrases | `No persistent writes occur.` | `No durable writes occur.` | W10 table 1 row 2 Caveats: no durable write |
+| ENUM3 | struck-through text | `~~zero durable writes~~` | `zero durable writes` | W10 table 1 row 2 Caveats: zero durable writes |
+| ENUM4 | renamed relocated W10 keys | `RF renamed adapter` | `ReactiveFiber reader adapter` | outside W10 table 1 row 1 Caveats: zero durable writes |
+| ENUM5 | relocated inline HTML including br-split claim | `zero durable<br>writes` | `zero durable writes` | outside W10 table 1 row 1 Caveats: zero durable writes |
+| ENUM6 | W10 heading text | `## W10: ReactiveFiber provider/interop zero durable writes` | `## W10: ReactiveFiber provider/interop\n\nzero durable writes` | W10 paragraph: zero durable writes |

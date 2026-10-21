@@ -1,7 +1,9 @@
 /**
  * RFCLI-PERFORMANCE-MATHEMATICAL-OPTIMIZATION R2 (wb-2j3.12): the rf contractSource is one exported carrier constant whose
- * `rf@<release>` prefix states the producer release MEASURED by the R8 live receipt (wb-2j3.7, forge cmd_c8fa1da3d9c4), never a
- * hand-maintained literal. Rows: both registered reactivefiber.render.preview descriptors consume the carrier by identifier
+ * `rf@<release>` prefix states the producer release MEASURED by a stamped rf-preview live receipt, never a hand-maintained
+ * literal. The receipt of record was the R8 live receipt (wb-2j3.7, forge cmd_c8fa1da3d9c4, rf 0.1.723) until the
+ * wb-973.17 re-measure (SWARM-CONTEXT-GRAPH-R17, the owner's rf-pin route rule: host ahead of the pin and flagged by the
+ * SCG-R12 drift guard, so the pin moves through that bead's own cut): the receipt file is now receipts/wb-973.17.md. Rows: both registered reactivefiber.render.preview descriptors consume the carrier by identifier
  * (runtime and source), the carrier's release component string-equals the cli_version the receipt row of record recorded and
  * its provenance comment names that receipt id, and no other `rf@<digits>` string literal survives anywhere in src/ (the
  * wb-8l6 string-aware arm: comments never count, string tokens always do). Dependency-light: reads source text and the receipt
@@ -21,7 +23,8 @@ import {
 
 const ROOT = process.cwd();
 const PROVIDER = "src/workbench/providers/reactivefiber.ts";
-const RECEIPT = "docs/workbench/receipts/wb-2j3.7.md";
+/** The receipt file of record: the wb-973.17 re-measure (receipts/wb-2j3.7.md keeps the 0.1.723 history, append-only). */
+const RECEIPT = "docs/workbench/receipts/wb-973.17.md";
 const CARRIER_NAME = "REACTIVE_FIBER_CONTRACT_SOURCE";
 const CAPABILITY = "reactivefiber.render.preview";
 /** discover() lists a descriptor only under its exact discover grant (capability-registry.ts discover). */

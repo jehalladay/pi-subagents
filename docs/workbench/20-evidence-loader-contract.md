@@ -45,3 +45,11 @@ Mirrors the lazy transcript pattern: the inspector details view renders per-ref 
 8. Zero-width characters are stripped in the loader's own preview pass; the acceptance wording is width-boundedness.
 9. Store-level default budgets with per-request overrides.
 10. Until the parent wires `load-evidence`, Enter renders the inert not-loaded hint.
+
+## Claude message observer pins
+
+- P1: derive: messageRef is the callback's one binding of that name, a const of exactly claudeMessageEvidenceRef(snapshot.lastMessageId)
+- P2: emit: the callback's one emitObservation call hands exactly messageRef ? [messageRef] : undefined to the emitter's evidenceRefs and reads messageRef nowhere else (the ref alone, or nothing)
+- P3: closure: the file binds claudeMessageEvidenceRef once, as the site's own binding, so no local declaration shadows the one closure
+- P4: compose: the callback reads lastMessageId only inside that derive and carries no claude-message text of its own
+- P5: ingest: the emitter never rebinds evidenceRefs and ingests it as the site's frozen value, so no ref is rewritten on its way in

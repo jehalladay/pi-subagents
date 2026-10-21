@@ -1,13 +1,12 @@
 {
-  "rfVersion": "0.1.716",
-  "source": "constructed",
-  "receipt": null,
-  "basis": "key roster from the SCG-R11 dossier, every key read at ReactiveFiberCLI 8a8b83e4d: result keys render_service.py:1494-1513 (the payload literal), :1527-1532 (necessity: step L always runs, so every finished --no-commit render emits it), :1533-1539 (attempts, superseded_transaction_ids, fiber_transaction_refs) and :1549 (session_id), and render.py:3569-3580 (the step-P ephemeral keys); work rendering.py:2606-2613; work_metrics integrations/fiber.py:2474-2485 (the ten-key set rendering.py:2617 names); provenance context_show.py:313-339 (at least the three keys). Not a capture by the gated rf-preview tier against the installed pinned rf 0.1.716, so no cmd_ receipt: promote to captured only with one, recorded in docs/workbench/receipts/wb-973.11.md with one INDEX.md line.",
+  "rfVersion": "0.1.768",
+  "source": "captured",
+  "receipt": "cmd_30b6975c69e8",
+  "basis": "key roster re-pinned by wb-973.17 to the installed rf 0.1.768 (the owner's rf-pin route rule: host ahead of the 0.1.716 pin and flagged by the SCG-R12 drift guard, so the pin moves through that bead's own cut). Read off the emitter: the 23 keys of the 0.1.716 roster as first read at ReactiveFiberCLI 8a8b83e4d (render_service.py:1494-1513, :1527-1532, :1533-1539, :1549; render.py:3569-3580; work rendering.py:2606-2613; work_metrics integrations/fiber.py:2474-2485; provenance context_show.py:313-339), plus the delta at the installed reactivefibercli 0.1.768 distribution: result.retry_work, assigned on every render (reactive_fiber_cli/application/render_service.py:1524-1526, PMO-13-a), and the four ruling R-53 work_metrics counters after the ten legacy keys (reactive_fiber_cli/integrations/fiber.py:2719-2751). Captured by the gated rf-preview tier against the installed pinned rf 0.1.768: forge cmd_30b6975c69e8 (RF_RESULT_KEY_DIFF pinned, 0 failures, no extra result key), recorded in docs/workbench/receipts/wb-973.17.md.",
   "resultKeys": [
     "output", "budget", "diagnostics_summary", "blocks", "components", "provenance", "work_metrics", "work",
-    "engine_metrics", "scope", "audience", "bundle_revision_id", "observations", "necessity", "attempts",
-    "superseded_transaction_ids", "fiber_transaction_refs",
-    "ephemeral", "render_id", "commit_seq", "session_id", "effects", "plan"
+    "engine_metrics", "scope", "audience", "bundle_revision_id", "observations", "necessity", "attempts", "superseded_transaction_ids",
+    "retry_work", "fiber_transaction_refs", "ephemeral", "render_id", "commit_seq", "session_id", "effects", "plan"
   ],
   "provenanceKeys": ["graph_revision_id", "cli_version", "sdk_versions"],
   "workKeys": [
@@ -17,6 +16,7 @@
   "workMetricsKeys": [
     "source_capture_count", "fiber_signal_count", "fiber_transaction_count", "invalidated_component_count",
     "rendered_component_count", "state_read_count", "state_write_count", "journal_records_scanned",
-    "blob_bytes_written", "history_rows_materialized"
+    "blob_bytes_written", "history_rows_materialized", "reused_component_count", "observation_executed_count",
+    "observation_reused_count", "publish_conflict_count"
   ]
 }

@@ -14,7 +14,7 @@ import { installScratchLeakGuard, makeScratch, removeScratch } from './helpers/s
 // PINNED ENUMERATION (R606, rule 19(c)): this census pins only these modes:
 // P1 HEAD-only divergence set equality: missing, stale, misrecorded and workbench-excluded paths (repo row; fixture
 // unrecorded, stale-misrecorded, later-edit and the non-vacuous exclusion test). It does not read uncommitted edits.
-// P2 rendered docs/16 record: unique heading and parent, level-1/2 section bound, same-view table extraction,
+// P2 rendered docs/16 record: unique heading and parent, top-level level-1/2 section bound, same-view table extraction,
 // HTML/fence refusal, header, malformed/duplicate rows (fixtures no-section, html-comment*, duplicate-heading,
 // hidden-heading-before, level-1/2-split, shallower-copy-before, rehomed-heading, fenced-row, header-renamed,
 // two-tables; G01/G02 are killed on the paired D22/D23 pages).
@@ -23,16 +23,21 @@ import { installScratchLeakGuard, makeScratch, removeScratch } from './helpers/s
 // P4 fail-closed environment and scratch: no git, no checkout, unreachable baseline, TMPDIR-inside-repo and
 // missing Baseline line all fail explicitly, with test/helpers/non-repo-scratch.ts and scratch.ts owning fixtures.
 // P5 frozen falsifier shape: each fixture's id, tier, every expected problem and normalized input digest are
-// literal-pinned (30 rows). G04-G12, H01-H04 and H05-H08 form the measured mutant battery.
+// literal-pinned (35 rows). G04-G12, H01-H04 and H05-H08 form the measured mutant battery.
 // NAMED RESIDUALS (quiet readings, not pass claims):
 // R1 a table nested in a blockquote/list is not a top-level record (the D28 page reads unrecorded).
 // R2 a once-unambiguous short commit id may become ambiguous with new history (unreachable: fail-closed).
 // R3 a struck-through path renders as text and is still recorded (fixture residual-struck-path and D25).
 // R4 note-cell prose is non-empty but its +N/-M counts are not verified by the census.
-// R5 deletions, renames and type changes of upstream paths are excluded by --diff-filter=M.
+// R5 deletions, renames and type changes of upstream paths are excluded by --diff-filter=M (fixture residual-drt-paths
+// on the drt fixture, whose divergence deletes, renames and type-changes in-scope baseline paths; the paired
+// over-refusal mutant G14 that also counts D/R/T reds it, and the drt non-vacuity test pins the three statuses).
 // R6 missing cwd and git unavailable can share the unknown: category (both refuse; cause may be coarse).
 // R7 uncommitted working-tree edits are not read: the measurement is baseline..HEAD
 // (fixture residual-head-only; gate pin-flip P4 demonstrates the working-tree-only reversion reads quiet).
+// R8 a level-1/2 heading nested in a list item or blockquote does not bound the record section: only a top-level
+// heading does (the shared docsSection bound), so the table after it is still the record (gate pages D32/D38; fixtures
+// residual-list-nested-h2, residual-quote-nested-h2, residual-list-nested-h1 and residual-quote-nested-h1).
 // Newly discovered escapes add a residual row, unless they contradict a pinned claim; no blanket claim about
 // all Markdown shapes, all git revisions or all upstream changes is made by this local enumeration.
 
@@ -48,7 +53,7 @@ const HEADER = 'path | recorded at | note';
 const COMMIT_ID = /^[0-9a-f]{7,40}$/;
 /** Every row below spawns git, and a loaded gate host has measured single rows past 60 s: no row runs on vitest's 5 s default. */
 const GIT_ROW_MS = 120_000;
-/** The two fixture repositories are built once per file and shared read-only by every row. */
+/** The three fixture repositories are built once per file and shared read-only by every row. */
 const FIXTURE_HOOK_MS = 180_000;
 
 interface RecordRow { readonly path: string; readonly recordedAt: string }
@@ -239,7 +244,7 @@ function checkDivergence(cwd: string, baseline: string | undefined, doc: string,
 // ---- the fixture repositories ----
 
 interface Fixture { readonly cwd: string; readonly base: string; readonly div: string; readonly side: string; readonly head: string }
-type FixtureKind = 'plain' | 'later';
+type FixtureKind = 'plain' | 'later' | 'drt';
 
 /** A ref whose NAME is commit-id shaped; every fixture points it at HEAD, whose id does not start with it. */
 const HEX_REF = '0000000';
@@ -247,8 +252,9 @@ const HEX_REF = '0000000';
 /** fast-import's data command: the byte count, then the bytes. */
 const data = (text: string): string => `data ${Buffer.byteLength(text)}\n${text}`;
 
-/** One fast-import commit with a fixed committer and date, so the history is identical on every run; files are written inline. */
-function commitCommand(ref: string, mark: number, message: string, files: Readonly<Record<string, string>>, from?: number): string {
+/** One fast-import commit with a fixed committer and date, so the history is identical on every run; files are written inline,
+ * then any raw file commands (a deletion, a rename, a symlink) apply in order. */
+function commitCommand(ref: string, mark: number, message: string, files: Readonly<Record<string, string>>, from?: number, changes: readonly string[] = []): string {
   return [
     `commit ${ref}`,
     `mark :${mark}`,
@@ -256,23 +262,32 @@ function commitCommand(ref: string, mark: number, message: string, files: Readon
     data(message),
     ...(from === undefined ? [] : [`from :${from}`]),
     ...Object.entries(files).map(([path, text]) => `M 100644 inline ${path}\n${data(text)}`),
+    ...changes,
     '',
   ].join('\n');
 }
 
+/** The drt fixture's extra baseline paths, each in scope: its divergence deletes, renames or type-changes every one (R5). */
+const DRT_BASELINE: Readonly<Record<string, string>> = { 'src/gone.ts': 'g1\n', 'src/moved.ts': 'm1\n', 'src/link.ts': 'l1\n' };
+/** The drt divergence's raw file commands: a deletion (D), an exact rename (R100) and a file-to-symlink type change (T). */
+const DRT_CHANGES: readonly string[] = ['D src/gone.ts', 'R src/moved.ts src/renamed.ts', `M 120000 inline src/link.ts\n${data('a.ts')}`];
+
 /**
  * The divergence fixture in three git spawns (init, fast-import, rev-parse): a baseline that HOLDS a src/workbench and a
  * test/workbench-* file, a divergence commit that MODIFIES them and src/a.ts and adds new files, a side commit off the
- * baseline (never an ancestor of HEAD) and, for laterEdit, a later edit of src/b.ts on top. The work tree stays empty: the
- * census reads commits only.
+ * baseline (never an ancestor of HEAD) and, for later, a later edit of src/b.ts on top; drt adds DRT_BASELINE to the
+ * baseline and DRT_CHANGES to the divergence, so three in-scope upstream paths are deleted, renamed or type-changed
+ * rather than modified. The work tree stays empty: the census reads commits only.
  */
-function fixture(laterEdit: boolean): Fixture {
+function fixture(kind: FixtureKind): Fixture {
+  const laterEdit = kind === 'later';
+  const drt = kind === 'drt';
   const cwd = makeScratch('wb-divergence-');
   try {
     git(cwd, ['init', '-q', '-b', 'main', '--object-format=sha1']);
     const stream = [
-      commitCommand('refs/heads/main', 1, 'baseline', { 'src/a.ts': 'a1\n', 'src/b.ts': 'b1\n', 'test/a.test.ts': 't1\n', 'src/workbench/old.ts': 'w1\n', 'test/workbench-old.test.ts': 'w1\n' }),
-      commitCommand('refs/heads/main', 2, 'divergence', { 'src/a.ts': 'a2\n', 'src/workbench/old.ts': 'w2\n', 'test/workbench-old.test.ts': 'w2\n', 'src/workbench/new.ts': 'n\n', 'test/workbench-new.test.ts': 'n\n', 'src/added.ts': 'x\n' }),
+      commitCommand('refs/heads/main', 1, 'baseline', { 'src/a.ts': 'a1\n', 'src/b.ts': 'b1\n', 'test/a.test.ts': 't1\n', 'src/workbench/old.ts': 'w1\n', 'test/workbench-old.test.ts': 'w1\n', ...(drt ? DRT_BASELINE : {}) }),
+      commitCommand('refs/heads/main', 2, 'divergence', { 'src/a.ts': 'a2\n', 'src/workbench/old.ts': 'w2\n', 'test/workbench-old.test.ts': 'w2\n', 'src/workbench/new.ts': 'n\n', 'test/workbench-new.test.ts': 'n\n', 'src/added.ts': 'x\n' }, undefined, drt ? DRT_CHANGES : []),
       commitCommand('refs/heads/side', 3, 'side edit (not an ancestor of HEAD)', { 'src/b.ts': 'bside\n' }, 1),
       ...(laterEdit ? [commitCommand('refs/heads/main', 4, 'later edit', { 'src/b.ts': 'b2\n' })] : []),
       `reset refs/heads/${HEX_REF}`,
@@ -299,6 +314,8 @@ const page = (body: string): string => `# ${DOC_TITLE}\n\n## Upstream maintainab
 const table = (recordedAt: string, paths: readonly string[]): string => page(record(paths.map(path => row(path, recordedAt))));
 /** The exact record of the later fixture: src/a.ts diverged at div, src/b.ts at the later edit (HEAD). */
 const exactLater = (fx: Fixture): readonly string[] => [row('src/a.ts', fx.div), row('src/b.ts', fx.head)];
+/** R8: the level-2-split page with its Interlude heading nested in a list item ('-') or a blockquote ('>') at level 1 or 2. */
+const nestedSplit = (fx: Fixture, container: '-' | '>', depth: 1 | 2): string => page(`${SECTION}\n\nThe measured record.\n\n${container} ${'#'.repeat(depth)} Interlude\n\n${[HEADER_LINES, ...exactLater(fx)].join('\n')}`);
 
 const unrecorded = (path: string): string => `unrecorded divergence: ${path} differs from the baseline; ${REMEDY}`;
 const missing = (why: string): string => `missing section: docs/workbench/16 has no readable "${SECTION}" section (${why}); add it, then ${REMEDY}`;
@@ -356,6 +373,15 @@ const CASES: readonly Case[] = [
   { id: 'residual-struck-path', fixture: 'plain', doc: fx => page(record([`| ~~\`src/a.ts\`~~ | ${fx.div} | fixture |`])), expected: () => [] },
   // Named quiet residual R7: an uncommitted working-tree edit cannot affect the HEAD-only census.
   { id: 'residual-head-only', fixture: 'plain', doc: fx => table(fx.div, ['src/a.ts']), expected: () => [] },
+  // Named quiet residual R5: a deleted, a renamed and a type-changed upstream path are not modifications, so the record
+  // naming only src/a.ts is exact; a census that also counted D/R/T (paired over-refusal mutant G14) reds this row.
+  { id: 'residual-drt-paths', fixture: 'drt', doc: fx => table(fx.div, ['src/a.ts']), expected: () => [] },
+  // Named quiet residual R8: a level-1/2 heading nested in a list item or blockquote renders inside the section and does
+  // not bound it (only a top-level heading does), so the table after it is still the record (gate pages D32/D38).
+  { id: 'residual-list-nested-h2', fixture: 'later', doc: fx => nestedSplit(fx, '-', 2), expected: () => [] },
+  { id: 'residual-quote-nested-h2', fixture: 'later', doc: fx => nestedSplit(fx, '>', 2), expected: () => [] },
+  { id: 'residual-list-nested-h1', fixture: 'later', doc: fx => nestedSplit(fx, '-', 1), expected: () => [] },
+  { id: 'residual-quote-nested-h1', fixture: 'later', doc: fx => nestedSplit(fx, '>', 1), expected: () => [] },
 ];
 
 /** The frozen shape of CASES at this cut: id | fixture | every expected problem, fixture shas named <base> <div> <side> <head>. */
@@ -390,6 +416,11 @@ const FROZEN_SHAPE: readonly string[] = [
   "two-tables | later | malformed table: \"## Measured fork divergence\" renders 2 tables; the record is exactly one | input=0950be5eda769300ab57fb4c763511b60866202378abaf0dba2b550242833585",
   "residual-struck-path | plain | no problem | input=23e42fc23db95bc672e35652635971ff99ea1106e8f83eae2b092f1c3cededaa",
   "residual-head-only | plain | no problem | input=c8d4ce444b2e74fd7a989efb2ae51271f884e0fdd13b202cb9154a49925ea284",
+  "residual-drt-paths | drt | no problem | input=c8d4ce444b2e74fd7a989efb2ae51271f884e0fdd13b202cb9154a49925ea284",
+  "residual-list-nested-h2 | later | no problem | input=bbff0e50dda6c547b156379fb892e8d7dd481c1f72b8a6dbfe49da0549b62b8c",
+  "residual-quote-nested-h2 | later | no problem | input=e59ef66bc3fff9ac488faadd75a1af7a3d5402478fc9a13c09c4606411ec5fef",
+  "residual-list-nested-h1 | later | no problem | input=fa37ca6ab24937f1085d4ef32fb7923b150122bee5f5976d56358726b53bb63c",
+  "residual-quote-nested-h1 | later | no problem | input=77e4be3811eb666e12f435e4d6b797dfdcedf20b22c1983ddae37ff43c0df8d9",
 ];
 
 describe('upstream fork divergence record (docs/workbench/16 Upstream maintainability)', () => {
@@ -400,8 +431,9 @@ describe('upstream fork divergence record (docs/workbench/16 Upstream maintainab
     return fx;
   };
   beforeAll(() => {
-    built.set('plain', fixture(false));
-    built.set('later', fixture(true));
+    built.set('plain', fixture('plain'));
+    built.set('later', fixture('later'));
+    built.set('drt', fixture('drt'));
   }, FIXTURE_HOOK_MS);
   afterAll(() => {
     for (const fx of built.values()) removeScratch(fx.cwd);
@@ -448,6 +480,19 @@ describe('upstream fork divergence record (docs/workbench/16 Upstream maintainab
     const unfiltered = lines(git(fx.cwd, ['diff', '--name-only', '--diff-filter=M', fx.base, 'HEAD']));
     expect(unfiltered).toEqual(expect.arrayContaining(['src/workbench/old.ts', 'test/workbench-old.test.ts', 'src/a.ts']));
     expect(checkDivergence(fx.cwd, fx.base, table(fx.div, ['src/a.ts']))).toEqual([]);
+  }, GIT_ROW_MS);
+
+  it('the drt fixture is not vacuous: its divergence deletes, renames and type-changes in-scope baseline paths (R5)', () => {
+    const fx = fixtureOf('drt');
+    expect(lines(git(fx.cwd, ['diff', '--name-status', '--find-renames', fx.base, 'HEAD', '--', ...SCOPE]))).toEqual([
+      'M\tsrc/a.ts',
+      'A\tsrc/added.ts',
+      'D\tsrc/gone.ts',
+      'T\tsrc/link.ts',
+      'R100\tsrc/moved.ts\tsrc/renamed.ts',
+    ]);
+    // The census's own measurement sees only the modification, so the D/R/T paths reach no row (the R5 reading).
+    expect(lines(git(fx.cwd, ['diff', '--name-only', '--diff-filter=M', fx.base, 'HEAD', '--', ...SCOPE]))).toEqual(['src/a.ts']);
   }, GIT_ROW_MS);
 
   it('a git that is not on PATH fails with an unknown: reason, never a pass', () => {
