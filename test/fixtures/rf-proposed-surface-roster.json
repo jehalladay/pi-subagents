@@ -1,0 +1,97 @@
+{
+  "bead": "wb-a9l2.7",
+  "pin": "6a251bf73af5",
+  "basis": "The out-of-file roster of test/workbench-rf-proposed-surface-census.test.ts (standing rule 16): every judged row's id, label and pins, every pin's witness and the pinned constants, so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. Witnesses were measured by the cutting seat on trunk 0b2a80f; the gated source kind is never spelled here (labels carry <GATED_KIND>).",
+  "constants": {
+    "pinnedRoster": ["reactivefiber.render.preview"],
+    "rosterSite": "src/workflow/reconcile.ts:67",
+    "versionCommands": ["rf --json --version", "rf --version --json"],
+    "admittedPins": ["740c1a817", "6a251bf73af5"],
+    "gating": "RFCLI-H2-05 via rfc-lr9nu.1/.2/.3",
+    "filingRows": ["wb-a9l2.1", "wb-a9l2.2", "wb-a9l2.3", "wb-a9l2.4", "wb-a9l2.5", "wb-a9l2.6", "wb-a9l2.7", "wb-a9l2.8"],
+    "foreignPinRows": ["wb-4nut.2@978f6515c302", "wb-4nut.9@978f6515c302"],
+    "families": ["P1", "P2", "P3"],
+    "markers": ["proposed", "illustrative", "unshipped", "not shipped", "not installed", "uninstalled", "unavailable", "not available", "not served", "gated"],
+    "fedId": "reactivefiber.federation.read"
+  },
+  "rows": [
+    {
+      "id": "A",
+      "label": "(a) a guard asserts Pi's rf capability roster is reactivefiber.render.preview only (src/workflow/reconcile.ts:67) and Pi docs name no federation or <GATED_KIND> command as available",
+      "pins": [
+        {"id": "A1", "witness": {"site": "src/workflow/reconcile.ts:67", "reactivefiber": ["reactivefiber.render.preview"]}},
+        {"id": "A2", "witness": {"native": [{"id": "reactivefiber.render.preview", "effectClass": "read"}], "injected": [{"id": "reactivefiber.render.preview", "effectClass": "read"}]}},
+        {"id": "A3", "witness": {"legacy": [["--workspace", "<root>", "context", "render", "--model", "m", "--task", "t", "--no-commit", "--no-input", "--json"]], "view": [["--workspace", "<root>", "context", "render", "--view", "v", "--task-id", "t", "--model", "m", "--no-commit", "--no-input", "--json"]]}},
+        {"id": "A4", "witness": {"srcFloorMet": true, "renderArgvSeen": true, "hits": [], "controls": {"argvFlag": 1, "literalFamily": 1, "template": 1, "gatedLiteral": 1, "argvFederation": 1}}},
+        {"id": "A5", "witness": {"descriptorFloorMet": true, "families": ["P1", "P2", "P3"], "hits": []}},
+        {"id": "A6", "witness": {"floorMet": true, "anchorRead": true, "markers": 10, "findings": []}}
+      ]
+    },
+    {
+      "id": "B",
+      "label": "(b) a future federation leaf registration requires an `rf --json --version` capabilities receipt naming the served leaf",
+      "pins": [
+        {"id": "B1", "witness": {"receiptsFloorMet": true, "beyondRoster": [], "findings": []}},
+        {"id": "B2", "witness": {"digest": "4f53cda18c2baa0c", "outcome": ["reactivefiber.federation.read: receipt-absent"]}},
+        {"id": "B3", "witness": {"digest": "9c8acfdf538fcc2d", "outcome": ["reactivefiber.federation.read: receipt-no-version-command"]}},
+        {"id": "B4", "witness": {"digest": "8d2789843681e73c", "outcome": ["reactivefiber.federation.read: receipt-no-served-leaf"]}},
+        {"id": "B5", "witness": {"digest": "784efef9428ee479", "outcome": ["reactivefiber.federation.read: receipt-leaf-not-served"]}},
+        {"id": "B6", "witness": {"digest": "39b5e59e4b9b9162", "outcome": []}}
+      ]
+    },
+    {
+      "id": "C",
+      "label": "(c) Pi docs or bead notes citing harness2-federated-peer statements carry the 740c1a817 pin (BEADS:3) or the 6a251bf73af5 read sha, never an unpinned claim",
+      "pins": [
+        {"id": "C1", "witness": {"floorMet": true, "anchorRead": true, "admittedPins": ["740c1a817", "6a251bf73af5"], "findings": []}},
+        {"id": "C2", "witness": {"rowsFloorMet": true, "unreadable": [], "filingRowsCiting": ["wb-a9l2.1", "wb-a9l2.2", "wb-a9l2.3", "wb-a9l2.4", "wb-a9l2.5", "wb-a9l2.6", "wb-a9l2.7", "wb-a9l2.8"], "unpinned": [], "foreignPinPairs": ["wb-4nut.2@978f6515c302", "wb-4nut.9@978f6515c302"]}}
+      ]
+    },
+    {
+      "id": "F",
+      "label": "the owner filing row of wb-a9l2.7 in the tracked bead export carries every pinned constant, names exactly the clauses rows A-C cover and states each of their labels as its clause",
+      "pins": [
+        {"id": "F1", "witness": {"clauses": ["a", "b", "c"], "labelsEqual": ["A", "B", "C"], "constantsQuoted": ["reactivefiber.render.preview", "src/workflow/reconcile.ts:67", "rf --json --version", "740c1a817", "6a251bf73af5", "RFCLI-H2-05 via rfc-lr9nu.1/.2/.3"]}}
+      ]
+    },
+    {
+      "id": "M",
+      "label": "the citation matcher rows C1-C2 read, the export reader C2 reads and the mention matcher row A6 reads judge their pinned inputs in order",
+      "pins": [
+        {"id": "MC1", "witness": {"digest": "db9d0afeabe60c92", "outcome": ["admitted"]}},
+        {"id": "MC2", "witness": {"digest": "c2d1793a2c85f4a8", "outcome": ["admitted"]}},
+        {"id": "MC3", "witness": {"digest": "4d01715dc4fd5fb0", "outcome": ["admitted"]}},
+        {"id": "MC4", "witness": {"digest": "0920e249c6045b56", "outcome": ["foreign-pin"]}},
+        {"id": "MC5", "witness": {"digest": "69c1e4ec4e20dc6f", "outcome": ["foreign-pin"]}},
+        {"id": "MC6", "witness": {"digest": "af3b4dd0bca99d14", "outcome": ["admitted"]}},
+        {"id": "MC7", "witness": {"digest": "dedc6c35beba9276", "outcome": ["unpinned"]}},
+        {"id": "MC8", "witness": {"digest": "77b4851bbbd5f6d3", "outcome": ["unpinned"]}},
+        {"id": "MC9", "witness": {"digest": "4c1d3bfdca0b0333", "outcome": ["admitted"]}},
+        {"id": "MC10", "witness": {"digest": "bf838bfa691a015d", "outcome": ["admitted", "unpinned"]}},
+        {"id": "MA1", "witness": {"digest": "15a3b8e6f0f34f59", "outcome": ["P2:available"]}},
+        {"id": "MA2", "witness": {"digest": "1bda2d39919906dd", "outcome": ["P1:available"]}},
+        {"id": "MA3", "witness": {"digest": "ae49ad95ef590331", "outcome": ["P3:available", "P3:available"]}},
+        {"id": "MA4", "witness": {"digest": "6604a9c982eb57fd", "outcome": ["P2:marked"]}},
+        {"id": "MA5", "witness": {"digest": "127c7a0b5fb44897", "outcome": ["P1:marked", "P2:marked"]}},
+        {"id": "MA6", "witness": {"digest": "d9c837017a16d935", "outcome": ["P2:available"]}},
+        {"id": "MA7", "witness": {"digest": "9e611da8a1959397", "outcome": ["P2:available"]}},
+        {"id": "MA8", "witness": {"digest": "15b30e210da3d575", "outcome": ["P2:available"]}},
+        {"id": "ME1", "witness": {"digest": "33a337d9e23d5240", "outcome": ["wb-x.1 README.md:37", "wb-x.2@978f6515c302", "line 3 unreadable"]}}
+      ]
+    },
+    {
+      "id": "R",
+      "label": "the named residuals R1-R8 stay pinned quiet",
+      "pins": [
+        {"id": "R1", "witness": {"digest": "0abeed0df31597b7", "outcome": []}},
+        {"id": "R2", "witness": {"digest": "6796034384a9cec1", "outcome": []}},
+        {"id": "R3", "witness": {"digest": "92e7eaf50f8d9678", "outcome": []}},
+        {"id": "R4", "witness": {"digest": "d74fc8ef61cf380b", "outcome": ["P2:marked"]}},
+        {"id": "R5", "witness": {"digest": "ac7740b1b75d9c8e", "outcome": []}},
+        {"id": "R6", "witness": {"digest": "7a01493c0d9bfb3a", "outcome": []}},
+        {"id": "R7", "witness": {"digest": "3ed4b234e29be9a3", "outcome": []}},
+        {"id": "R8", "witness": {"digest": "9d431c467fe0691b", "outcome": ["admitted", "admitted"]}}
+      ]
+    }
+  ]
+}
