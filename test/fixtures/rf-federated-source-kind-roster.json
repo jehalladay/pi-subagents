@@ -1,0 +1,65 @@
+{
+  "bead": "wb-a9l2.2",
+  "pin": "6a251bf73af5",
+  "basis": "The out-of-file roster of test/workbench-rf-federated-source-kind-census.test.ts (standing rule 16): every judged row's id, label and pins, every pin's witness and the three producer vocabularies, so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. <GATED_KIND> stands for the gated federated source kind, never spelled in the scanned roots. Vocabularies read at ReactiveFiberCLI 6a251bf73af5: sourceKinds from source_kinds() (src/reactive_fiber_cli/definitions/graph_schema.py:609, asserted at tests/unit/test_graph_schema.py:870); graphLeaves one per src/reactive_fiber_cli/schemas/cli/graph.<leaf>.schema.json; gatingArtifacts from harness2-federated-peer-2026-10-20/BEADS-2026-10-21.md:14 (rfc-lr9nu.2, H2-05b) and federated-workspaces-2026-10-18/BEADS-2026-10-21.md:30 (rfc-0txnl.19, FW-08b).",
+  "sourceKinds": ["task", "git", "literal", "file", "lens_key"],
+  "graphLeaves": [
+    "candidate.authorize", "candidate.create", "connect", "diff", "disconnect", "explain", "history", "impact",
+    "patch", "preflight", "publish", "rollback", "set-optic", "show", "test", "validate"
+  ],
+  "gatingArtifacts": ["rfc-lr9nu.2", "rfc-0txnl.19"],
+  "rows": [
+    {
+      "id": "A",
+      "label": "(a) a hermetic guard asserts 0 <GATED_KIND> occurrences as a served or known source kind in Pi src/test/docs/qa while the pinned source_kinds() excludes it",
+      "pins": [
+        {"id": "A1", "witness": {"root": "src", "floor": 100, "anchorFile": "workflow/reconcile.ts", "anchorToken": "RECONCILE_EVIDENCE_READS", "floorMet": true, "anchorRead": true, "hits": []}},
+        {"id": "A2", "witness": {"root": "test", "floor": 400, "anchorFile": "helpers/rf-render-fixture.ts", "anchorToken": "RF_FIXTURE_RELEASE", "floorMet": true, "anchorRead": true, "hits": []}},
+        {"id": "A3", "witness": {"root": "docs", "floor": 50, "anchorFile": "workbench/13-contracts-and-config.md", "anchorToken": "reactivefiber.render.preview", "floorMet": true, "anchorRead": true, "hits": []}},
+        {"id": "A4", "witness": {"root": "qa", "floor": 50, "anchorFile": "workbench/receipts-index.mjs", "anchorToken": "docs/workbench/receipts", "floorMet": true, "anchorRead": true, "hits": []}},
+        {"id": "A5", "witness": {"sourceKinds": ["task", "git", "literal", "file", "lens_key"], "gatedExcluded": true}},
+        {"id": "A6", "witness": {"rfIds": ["reactivefiber.render.preview"], "descriptorFloorMet": true, "hits": []}}
+      ]
+    },
+    {
+      "id": "B",
+      "label": "(b) a fixture shadow-render envelope with one <GATED_KIND> row is echoed (kind and receipt fields verbatim) with no value the envelope lacks",
+      "pins": [
+        {"id": "B1", "witness": {"contract": "reactivefiber.render.preview/v1", "readingKeys": ["contract", "source", "workspaceRoot"], "rowKind": "<GATED_KIND>", "receiptFields": ["digest", "receipt_id", "stored_at"], "producerFields": ["resource", "revision", "workspace_id"], "spawns": 1}},
+        {"id": "B2", "witness": {"snapshots": 1, "stringsRead": true, "surfaced": []}},
+        {"id": "B3", "witness": {"category": "transport", "message": "RF preview returned an unrecognized native envelope.", "spawns": 1, "verb": ["context", "render"]}},
+        {"id": "B4", "witness": {"category": "validation", "message": "ReactiveFiber topology refused: source must be a reactive-fiber.cli/v1 context.render envelope."}}
+      ]
+    },
+    {
+      "id": "C",
+      "label": "(c) Pi's rf roster stays reactivefiber.render.preview only (reconcile.ts:67, renderArgv :111-115, no rf graph verb); a new rf graph leaf names the gating artifacts in its registering receipt",
+      "pins": [
+        {"id": "C1", "witness": {"reactivefiber": ["reactivefiber.render.preview"]}},
+        {"id": "C2", "witness": {"native": ["reactivefiber.render.preview"], "injected": ["reactivefiber.render.preview"]}},
+        {"id": "C3", "witness": {"argv": ["--workspace", "<root>", "context", "render", "--model", "m", "--task", "t", "--no-commit", "--no-input", "--json"]}},
+        {"id": "C4", "witness": {"argv": ["--workspace", "<root>", "context", "render", "--view", "v", "--task-id", "t", "--model", "m", "--no-commit", "--no-input", "--json"]}},
+        {"id": "C5", "witness": {"srcFloorMet": true, "renderArgvSeen": true, "verbArgv": [], "verbLiterals": [], "descriptorVerbs": [], "controls": {"argv": 1, "spaced": 1, "dotted": 1, "template": 1, "composedArgv": 0}}},
+        {"id": "C6", "witness": {"real": [], "noReceipt": ["reactivefiber.graph.test"], "oneArtifact": ["reactivefiber.graph.test"], "bothArtifacts": []}}
+      ]
+    },
+    {
+      "id": "M",
+      "label": "row A's matcher catches every separator and case spelling of <GATED_KIND>, and its named residuals stay pinned quiet",
+      "pins": [
+        {"id": "M1", "witness": {"digest": "19db1b7d6cbaadf8", "hit": true}},
+        {"id": "M2", "witness": {"digest": "720e4f628a983440", "hit": true}},
+        {"id": "M3", "witness": {"digest": "98735d670614ecff", "hit": true}},
+        {"id": "M4", "witness": {"digest": "ced9e35baa813479", "hit": true}},
+        {"id": "M5", "witness": {"digest": "8289d2d2aea4bd99", "hit": true}},
+        {"id": "M6", "witness": {"digest": "08080d423b9f61de", "hit": true}},
+        {"id": "M7", "witness": {"digest": "4ff13e9ed3a58baf", "hit": true}},
+        {"id": "M8", "witness": {"digest": "88843c66c36f201c", "hit": true}},
+        {"id": "M9", "witness": {"digest": "c77f62b4f7df3a61", "hit": true}},
+        {"id": "Q1", "witness": {"digest": "108541e32bac8e9d", "hit": false}},
+        {"id": "Q2", "witness": {"digest": "7db3523db2c677d9", "hit": false}},
+        {"id": "Q3", "witness": {"digest": "da6b63d12378df93", "hit": false}}
+      ]
+    }
+  ]
+}
