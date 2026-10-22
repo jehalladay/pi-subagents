@@ -19,8 +19,8 @@ export const RF_FIXTURE_GRAPH_REVISION = digest('a');
 /** The fixture's result.output.text. */
 export const RF_FIXTURE_TEXT = 'context';
 /** The producer release the fixture states in result.provenance.cli_version: the pinned rf the roster mirrors (re-pinned from
- * 0.1.716 by wb-973.17). */
-export const RF_FIXTURE_RELEASE = '0.1.768';
+ * 0.1.716 by wb-973.17, then from 0.1.768 by wb-c7ku). */
+export const RF_FIXTURE_RELEASE = '0.1.784';
 
 export function fullShapeWork(): JsonObject {
   return { source_capture_count: 0, fiber_signal_count: 0, component_render_count: 0, lens_resolution_count: 0, necessity_eval_count: 0, storage_write_count: 0 };
@@ -63,6 +63,8 @@ export function fullShapeRf(workspaceRoot: string): JsonObject {
           reactive_inference: { distribution_version: '0.2.55', contract_fingerprint: digest('1') },
           fiber_optics_wire_format: '2',
         },
+        // rf 0.1.784 (DOLT-A29 AC3): the eighth provenance key, the committing backend beside its engine version (null on jsonl).
+        storage: { backend: 'jsonl', engine_version: null },
       },
       work_metrics: fullShapeWorkMetrics(), work: fullShapeWork(),
       engine_metrics: { tsx_worker_spawns: 0, tsx_resource_rounds: 0 },
