@@ -1,0 +1,634 @@
+{
+  "bead": "wb-o4h0.6",
+  "pin": "6a251bf73af5",
+  "basis": "The out-of-file roster of test/workbench-rf-sensitivity-echo-census.test.ts (standing rule 16): every judged row's id, label, parts and pins, every pin's witness and the vocabularies, so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. excerpts vendors seven producer excerpts verbatim from ReactiveFiberCLI 6a251bf73af57c3a703caf6892dfe3015e06a481 (read-only git show; the census holds each to its sha256), and levels, rowClasses, linkSchema and linkFields are derived from them: levels from src/reactive_fiber_cli/domain/trust.py:553-554, rowClasses from the result.observations sensitivity property of src/reactive_fiber_cli/schemas/cli/context.render.schema.json:1529-1536, linkSchema and linkFields from federated-workspaces-2026-10-18/03-protocol-and-storage.md:10. gatingArtifacts are the bead's (FW-08 rfc-0txnl.17, FW-04 rfc-0txnl.10, FW-04b-2 rfc-0txnl.20). Rows A-D carry the bead's four acceptance clauses verbatim (the census holds them to the tracked bead export).",
+  "excerpts": {
+    "docs/programs/federated-workspaces-2026-10-18/05-authority-consistency.md:25": "No alternate implementation may downgrade B sensitive/secret outputs by relabeling them internal or public. Read scopes and redaction follow strictest applicable owner and consumer policies. No secrets in committed link aliases.",
+    "docs/programs/federated-workspaces-2026-10-18/03-protocol-and-storage.md:10": "- reactive-fiber.federation-link/v1: A local aliases, {alias,locator,expected_workspace_id,expected_backend_instance_id?,pin_policy,capability_ref?}. Transport credentials/capability secrets are never committed as ordinary shared manifest content.",
+    "docs/programs/federated-workspaces-2026-10-18/03-protocol-and-storage.md:54": "I06 B's secret/sensitivity classification cannot be lowered by A's import declaration.",
+    "docs/programs/federated-workspaces-2026-10-18/01-requirements-decisions.md:27": "N04 B controls export and execution, A admits consumption; metadata cannot downgrade sensitivity.",
+    "src/reactive_fiber_cli/domain/trust.py:553": "SensitivityLevel = Literal[\"public\", \"internal\", \"sensitive\", \"secret\"]",
+    "src/reactive_fiber_cli/domain/trust.py:554": "\"\"\"PORT-GIT-A48: the closed ``sensitivity`` vocabulary, ordered from least to most sensitive.\"\"\"",
+    "src/reactive_fiber_cli/schemas/cli/context.render.schema.json:1529-1536": "              \"sensitivity\": {\n                \"type\": \"string\",\n                \"enum\": [\n                  \"public\",\n                  \"internal\",\n                  \"secret\"\n                ],\n                \"description\": \"TRUST-SEC-A33: the redaction class of the captured output -- secret when the command key or a dependency it read is a declared sensitive key, internal otherwise (D-SENS default).\""
+  },
+  "levels": [
+    "public",
+    "internal",
+    "sensitive",
+    "secret"
+  ],
+  "rowClasses": [
+    "public",
+    "internal",
+    "secret"
+  ],
+  "linkSchema": "reactive-fiber.federation-link/v1",
+  "linkFields": [
+    "alias",
+    "locator",
+    "expected_workspace_id",
+    "expected_backend_instance_id?",
+    "pin_policy",
+    "capability_ref?"
+  ],
+  "gatingArtifacts": [
+    "rfc-0txnl.17",
+    "rfc-0txnl.10",
+    "rfc-0txnl.20"
+  ],
+  "rows": [
+    {
+      "id": "A",
+      "label": "(a) a 'secret' fixture renders the producer token; overwriting with 'internal'/'public' fails; census: no Pi code assigns to an imported record's sensitivity field",
+      "parts": [
+        {
+          "claim": "a 'secret' fixture renders the producer token",
+          "pins": [
+            "A1",
+            "A2",
+            "A3"
+          ]
+        },
+        {
+          "claim": "overwriting with 'internal'/'public' fails",
+          "pins": [
+            "A4",
+            "A5"
+          ]
+        },
+        {
+          "claim": "census: no Pi code assigns to an imported record's sensitivity field",
+          "pins": [
+            "A6"
+          ]
+        }
+      ],
+      "pins": [
+        {
+          "id": "A1",
+          "witness": {
+            "levels": [
+              "public",
+              "internal",
+              "sensitive",
+              "secret"
+            ],
+            "rowClasses": [
+              "public",
+              "internal",
+              "secret"
+            ],
+            "ascending": true,
+            "subsetInOrder": true
+          }
+        },
+        {
+          "id": "A2",
+          "witness": {
+            "readingKeys": [
+              "contract",
+              "source",
+              "workspaceRoot"
+            ],
+            "labels": [
+              "source.result.observations[0].sensitivity=secret",
+              "source.result.observations[1].sensitivity=internal",
+              "source.result.observations[2].sensitivity=public"
+            ],
+            "spawns": 1
+          }
+        },
+        {
+          "id": "A3",
+          "witness": {
+            "structured": [
+              "secret",
+              "internal",
+              "public"
+            ],
+            "text": [
+              "secret",
+              "internal",
+              "public"
+            ],
+            "relabels": {
+              "structured": [],
+              "text": []
+            }
+          }
+        },
+        {
+          "id": "A4",
+          "witness": {
+            "real": [],
+            "overwrites": {
+              "secret->internal": [
+                "lowered secret->internal at source.result.observations[0].sensitivity"
+              ],
+              "secret->public": [
+                "lowered secret->public at source.result.observations[0].sensitivity"
+              ],
+              "internal->public": [
+                "lowered internal->public at source.result.observations[1].sensitivity"
+              ],
+              "public->secret": [
+                "raised public->secret at source.result.observations[2].sensitivity"
+              ],
+              "secret->restricted": [
+                "relabelled secret->restricted at source.result.observations[0].sensitivity"
+              ],
+              "dropped": [
+                "dropped secret at source.result.observations[0].sensitivity"
+              ]
+            }
+          }
+        },
+        {
+          "id": "A5",
+          "witness": {
+            "snapshots": 1,
+            "stringsRead": true,
+            "classWords": [],
+            "rowFieldsShown": []
+          }
+        },
+        {
+          "id": "A6",
+          "witness": {
+            "srcFloorMet": true,
+            "anchorRead": true,
+            "hits": [],
+            "controls": {
+              "read": 0,
+              "compare": 0,
+              "typeField": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "(b) differing owner/consumer policies: the surfaced redaction is the strictest",
+      "parts": [
+        {
+          "claim": "differing owner/consumer policies: the surfaced redaction is the strictest",
+          "pins": [
+            "B1",
+            "B2",
+            "B3",
+            "B4"
+          ]
+        }
+      ],
+      "pins": [
+        {
+          "id": "B1",
+          "witness": {
+            "order": [
+              "public",
+              "internal",
+              "sensitive",
+              "secret"
+            ],
+            "joins": {
+              "public": [
+                "public",
+                "internal",
+                "sensitive",
+                "secret"
+              ],
+              "internal": [
+                "internal",
+                "internal",
+                "sensitive",
+                "secret"
+              ],
+              "sensitive": [
+                "sensitive",
+                "sensitive",
+                "sensitive",
+                "secret"
+              ],
+              "secret": [
+                "secret",
+                "secret",
+                "secret",
+                "secret"
+              ]
+            },
+            "neverBelow": true,
+            "refused": [
+              "refused: lowers internal to public",
+              "refused: lowers sensitive to public",
+              "refused: lowers sensitive to internal",
+              "refused: lowers secret to public",
+              "refused: lowers secret to internal",
+              "refused: lowers secret to sensitive"
+            ],
+            "unknown": "refused: unknown level restricted"
+          }
+        },
+        {
+          "id": "B2",
+          "witness": {
+            "markers": 2,
+            "structuredKept": 2,
+            "textKept": 2
+          }
+        },
+        {
+          "id": "B3",
+          "witness": {
+            "surfaced": "{\"capture_id\":\"fixture.block.one\",\"redacted\":true,\"redacted_without_digest\":true} {\"digest\":\"sha256:4444444444444444444444444444444444444444444444444444444444444444\",\"redacted\":true,\"size_bytes\":42} lens fixture.lens2: password=[REDACTED] plain context line",
+            "consumerRedactions": 1,
+            "fakeValueShown": false,
+            "ownerMarkersKept": 2,
+            "labelsVerbatim": true
+          }
+        },
+        {
+          "id": "B4",
+          "witness": {
+            "payloadRef": "rf-output:sha256:26a287255ec8bf2a8b9e746a9cd80437bf18e14f5ff8c7de227759a78d501d8e",
+            "payloadRefIsOwnerBytes": true,
+            "ownerTextShown": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "(c) a Pi-authored link manifest passes a secret-scan; capability_ref stays an out-of-band reference, never inline secret bytes",
+      "parts": [
+        {
+          "claim": "a Pi-authored link manifest passes a secret-scan",
+          "pins": [
+            "C1",
+            "C2"
+          ]
+        },
+        {
+          "claim": "capability_ref stays an out-of-band reference, never inline secret bytes",
+          "pins": [
+            "C3"
+          ]
+        }
+      ],
+      "pins": [
+        {
+          "id": "C1",
+          "witness": {
+            "trees": [
+              {
+                "root": "src",
+                "floorMet": true,
+                "anchorRead": true,
+                "hits": []
+              },
+              {
+                "root": "qa",
+                "floorMet": true,
+                "anchorRead": true,
+                "hits": []
+              }
+            ],
+            "dataFloorMet": true,
+            "dataAnchorRead": true,
+            "manifests": []
+          }
+        },
+        {
+          "id": "C2",
+          "witness": {
+            "clean": [],
+            "assignmentInLocator": [
+              "hygiene-rewrites:locator"
+            ],
+            "secretNamedField": [
+              "unknown-field:password",
+              "hygiene-rewrites:password"
+            ],
+            "credentialShapedRef": [
+              "capability-ref-not-reference",
+              "hygiene-rewrites:capability_ref"
+            ],
+            "unknownField": [
+              "unknown-field:token_hint"
+            ],
+            "missingField": [
+              "missing-field:pin_policy"
+            ]
+          }
+        },
+        {
+          "id": "C3",
+          "witness": {
+            "reference": [],
+            "absent": [],
+            "inlineObject": [
+              "capability-ref-inline"
+            ],
+            "inlineBytes": [
+              "capability-ref-inline"
+            ],
+            "spaced": [
+              "capability-ref-not-reference"
+            ],
+            "credentialShaped": [
+              "capability-ref-not-reference",
+              "hygiene-rewrites:capability_ref"
+            ],
+            "opaqueShaped": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "D",
+      "label": "(d) schema id exactly reactive-fiber.federation-link/v1; alias renames leave no secret/identity material committed",
+      "parts": [
+        {
+          "claim": "schema id exactly reactive-fiber.federation-link/v1",
+          "pins": [
+            "D1"
+          ]
+        },
+        {
+          "claim": "alias renames leave no secret/identity material committed",
+          "pins": [
+            "D2",
+            "D3"
+          ]
+        }
+      ],
+      "pins": [
+        {
+          "id": "D1",
+          "witness": {
+            "schema": "reactive-fiber.federation-link/v1",
+            "fromExcerpt": true,
+            "fromAcceptance": true,
+            "near": {
+              "reactive-fiber.federation-link/v2": [
+                "schema-not-exact"
+              ],
+              "reactive-fiber.federation-links/v1": [
+                "schema-not-exact"
+              ],
+              "REACTIVE-FIBER.FEDERATION-LINK/V1": [
+                "schema-not-exact"
+              ],
+              "reactive-fiber.federation-link/v1 ": [
+                "schema-not-exact"
+              ],
+              "rf:reactive-fiber.federation-link/v1": [
+                "schema-not-exact"
+              ],
+              "reactive-fiber.federation-export/v1": [
+                "schema-not-exact"
+              ]
+            },
+            "missing": [
+              "schema-not-exact"
+            ]
+          }
+        },
+        {
+          "id": "D2",
+          "witness": {
+            "clean": [],
+            "alsoMovesLocator": [
+              "changed-field:locator"
+            ],
+            "aliasIsWorkspaceId": [
+              "alias-carries-identity"
+            ],
+            "aliasIsLocator": [
+              "alias-carries-identity"
+            ],
+            "aliasWithAssignment": [
+              "hygiene-rewrites:alias"
+            ],
+            "aliasEmpty": [
+              "alias-not-a-name"
+            ]
+          }
+        },
+        {
+          "id": "D3",
+          "witness": {
+            "srcFloorMet": true,
+            "verbArgv": [],
+            "verbLiterals": [],
+            "rfIds": [
+              "reactivefiber.render.preview"
+            ],
+            "descriptorHits": [],
+            "controls": {
+              "argv": 1,
+              "spaced": 1,
+              "template": 1,
+              "composedArgv": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "MA",
+      "label": "row A6's write matcher catches every sensitivity-field write shape, and its named residuals stay pinned quiet",
+      "parts": [],
+      "pins": [
+        {
+          "id": "MA1",
+          "witness": {
+            "digest": "0515808b98556fb0",
+            "hits": 1
+          }
+        },
+        {
+          "id": "MA2",
+          "witness": {
+            "digest": "8b20fb73ab596121",
+            "hits": 1
+          }
+        },
+        {
+          "id": "MA3",
+          "witness": {
+            "digest": "5e7b172e34c06cb4",
+            "hits": 1
+          }
+        },
+        {
+          "id": "MA4",
+          "witness": {
+            "digest": "7451161671f5c9ff",
+            "hits": 1
+          }
+        },
+        {
+          "id": "MA5",
+          "witness": {
+            "digest": "51f8aea373a7fef3",
+            "hits": 1
+          }
+        },
+        {
+          "id": "MA6",
+          "witness": {
+            "digest": "182bb70ca686d05a",
+            "hits": 1
+          }
+        },
+        {
+          "id": "MA7",
+          "witness": {
+            "digest": "a98522d29cba8ac1",
+            "hits": 1
+          }
+        },
+        {
+          "id": "MA8",
+          "witness": {
+            "digest": "115c5d95e5678ee1",
+            "hits": 1
+          }
+        },
+        {
+          "id": "MA9",
+          "witness": {
+            "digest": "e218b361b608d0b2",
+            "hits": 1
+          }
+        },
+        {
+          "id": "MA10",
+          "witness": {
+            "digest": "b1bbd4782836f987",
+            "hits": 1
+          }
+        },
+        {
+          "id": "MA11",
+          "witness": {
+            "digest": "dcb85cb2f1b4417e",
+            "hits": 1
+          }
+        },
+        {
+          "id": "MA12",
+          "witness": {
+            "digest": "8fc0323fcc9ea8e1",
+            "hits": 1
+          }
+        },
+        {
+          "id": "QA1",
+          "witness": {
+            "digest": "e218cc3d626e5479",
+            "hits": 0
+          }
+        },
+        {
+          "id": "QA2",
+          "witness": {
+            "digest": "7ca4772b50337215",
+            "hits": 0
+          }
+        },
+        {
+          "id": "QA3",
+          "witness": {
+            "digest": "a34f635080928116",
+            "hits": 0
+          }
+        },
+        {
+          "id": "QS1",
+          "witness": {
+            "scanned": [
+              "src/workbench/x.ts"
+            ],
+            "notScanned": [
+              "qa/workbench/tool.mjs",
+              "docs/workbench/x.md",
+              "src/workbench/x.js"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "MC",
+      "label": "row C1's link-family matcher catches every separator and case spelling of the link record, and its named residuals stay pinned quiet",
+      "parts": [],
+      "pins": [
+        {
+          "id": "MC1",
+          "witness": {
+            "digest": "6210b9046be17fbe",
+            "hit": true
+          }
+        },
+        {
+          "id": "MC2",
+          "witness": {
+            "digest": "d4f02d58a6314c78",
+            "hit": true
+          }
+        },
+        {
+          "id": "MC3",
+          "witness": {
+            "digest": "d6dbf8df12c5f3c8",
+            "hit": true
+          }
+        },
+        {
+          "id": "MC4",
+          "witness": {
+            "digest": "6dcb982e54ce2cd0",
+            "hit": true
+          }
+        },
+        {
+          "id": "MC5",
+          "witness": {
+            "digest": "29cf92fb90374595",
+            "hit": true
+          }
+        },
+        {
+          "id": "MC6",
+          "witness": {
+            "digest": "43b43c5d4204257b",
+            "hit": true
+          }
+        },
+        {
+          "id": "MC7",
+          "witness": {
+            "digest": "3bf967c6c4cd5321",
+            "hit": true
+          }
+        },
+        {
+          "id": "QC1",
+          "witness": {
+            "digest": "fea99f7af2239f8e",
+            "hit": false
+          }
+        },
+        {
+          "id": "QC2",
+          "witness": {
+            "digest": "e8e9348c733e67c5",
+            "hit": false
+          }
+        }
+      ]
+    }
+  ]
+}
