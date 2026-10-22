@@ -31,15 +31,19 @@ import { installScratchLeakGuard, makeScratch, removeScratch } from './helpers/s
 // registers (vitest's task tree, not the loops' literals) and the drt measurement, in order and both ways, so a row or a
 // status removed from every literal of this file still reds (CT5/CT6, HD5, EL1/EL2). Not claimed: an edit of this file
 // and the roster together, an edit of the wb-zq7i cases themselves, or a registered row skipped by a marker.
-// P6a run modes (wb-2wf8, R682 F1): the roster case's walk also reads every registered test's run mode, fails flag and
-// result state. Each roster row's fixture test must read 'run | ran' (run mode, not inverted, ended passed or failed:
-// the shared census helper's ran reading); every other test of this file must be in run mode and not inverted, and must
-// have run when it is registered before the roster case. So a test kept from running by a skip, skipIf or runIf
-// modifier, an options-object skip or todo, a skipping suite or a todo registration, a test inverted by the fails
-// modifier, and a test registered before the roster case and skipped at runtime through its test context each red the
-// roster case: for those forms P6's last non-claim is withdrawn. A failed or timed-out test stays its own red (no
-// cascade into the roster case); a name filter that runs the roster case without the others reds it. Not claimed: a
-// runtime skip in a test registered after the roster case, or a skip of the roster case itself (it is the judge).
+// P6a run modes (wb-2wf8, R682 F1; judge identity wb-u9og, R688 F1): the roster case's walk also reads every
+// registered test's run mode, fails flag and result state. Each roster row's fixture test must read 'run | ran' (run
+// mode, not inverted, ended passed or failed: the shared census helper's ran reading); the roster case finds itself in
+// the walk by task identity (the walked task that is its own context task), never by title, so every other registered
+// test of this file, one registered under the roster case's exact title (an alias or a decoy) included, must be in run
+// mode and not inverted, and must have run when it is registered before the roster case. So a test kept from running
+// by a skip, skipIf or runIf modifier, an options-object skip or todo, a skipping suite or a todo registration, a test
+// inverted by the fails modifier, and a test registered before the roster case and skipped at runtime through its test
+// context each red the roster case: for those forms P6's last non-claim is withdrawn. Titles are pinned unique: a test
+// registered under a title another registered test of this file already has (an alias or a decoy, in any mode) reds
+// the roster case too. A failed or timed-out test stays its own red (no cascade into the roster case); a name filter
+// that runs the roster case without the others reds it. Not claimed: a runtime skip in a test registered after the
+// roster case under a title of its own, or a skip of the roster case itself (it is the judge).
 // P7 shared-bound visibility (cax.28 F3): on every roster R8 page the shared docsSection's own section admits the nested
 // container and the record table, so a helper that bounded at a nested heading (R8C) reds here, not only in sameView.
 // NAMED RESIDUALS (quiet readings, not pass claims):
@@ -627,11 +631,12 @@ describe('upstream fork divergence record (docs/workbench/16 Upstream maintainab
     const rows = [...CASES.map(entry => judgedRow('CASES', entry, fixtureOf(entry.fixture))), ...SETEXT_CASES.map(entry => judgedRow('SETEXT_CASES', entry, fixtureOf(entry.fixture)))];
     expect(rows, 'the in-file judged rows, read now, equal the roster rows exactly and in order').toEqual(roster.rows);
     const registered: string[] = [];
-    // P6a (wb-2wf8): the same walk keeps every registered test's run mode, fails flag and result state, in order.
-    const walked: { readonly name: string; readonly mode: string; readonly fails: boolean; readonly state: string | undefined }[] = [];
+    // P6a (wb-2wf8): the same walk keeps every registered test's run mode, fails flag and result state, in order, and
+    // (wb-u9og) marks the walked task that is this case's own context task: the judge finds itself by identity, not title.
+    const walked: { readonly name: string; readonly mode: string; readonly fails: boolean; readonly state: string | undefined; readonly self: boolean }[] = [];
     const walk = (tasks: typeof task.file.tasks): void => {
       for (const child of tasks) {
-        if (child.type === 'test') walked.push({ name: child.name, mode: child.mode, fails: child.fails === true, state: child.result?.state });
+        if (child.type === 'test') walked.push({ name: child.name, mode: child.mode, fails: child.fails === true, state: child.result?.state, self: child === task });
         if (child.type === 'test') registered.push(child.name);
         else if (child.type === 'suite') walk(child.tasks);
       }
@@ -641,9 +646,11 @@ describe('upstream fork divergence record (docs/workbench/16 Upstream maintainab
     const ran = (state: string | undefined): boolean => state === 'pass' || state === 'fail';
     const read = (entry: (typeof walked)[number]): string => `${entry.name} | ${entry.mode}${entry.fails ? '+fails' : ''} | ${ran(entry.state) ? 'ran' : (entry.state ?? 'no result')}`;
     expect(walked.filter(entry => entry.name.startsWith('fixture ')).map(read), 'P6a: every roster row\'s fixture test ran before this case, in run mode and not inverted').toEqual(roster.rows.map(row => `${row.test} | run | ran`));
-    const here = walked.findIndex(entry => entry.name === task.name);
-    expect(here, 'P6a: this case is in the walk, after the tests it judges').toBeGreaterThan(0);
+    const here = walked.findIndex(entry => entry.self);
+    expect(here, 'P6a: this case is in the walk by task identity, after the tests it judges').toBeGreaterThan(0);
     expect(walked.filter((entry, index) => index !== here && (entry.mode !== 'run' || entry.fails || (index < here && !ran(entry.state)))).map(read), 'P6a: the other tests of this file that are skipped, todo or inverted, or did not run before this case').toEqual([]);
+    const titles = walked.map(entry => entry.name);
+    expect(titles.filter((name, index) => titles.indexOf(name) !== index), 'P6a: titles registered twice in this file (an alias or decoy of this case or of another test)').toEqual([]);
     const named = Object.values(roster.residuals).flat();
     expect(rows.filter(row => row.id.startsWith('residual-')).map(row => row.id).sort(), 'every residual row is named by exactly one roster family').toEqual([...named].sort());
     for (const id of named) expect(rows.find(row => row.id === id)?.problems, `${id} is a quiet row`).toEqual([]);
