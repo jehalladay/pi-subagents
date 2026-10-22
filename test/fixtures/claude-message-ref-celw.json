@@ -1,0 +1,178 @@
+{
+  "comment": "wb-celw R685 F1-F4: external anchor for every named form, site, full wording, true cause and placement digest; landed rosters unchanged.",
+  "sites": [
+    "S1",
+    "S2"
+  ],
+  "rows": [
+    {
+      "id": "S-ELEM-P5",
+      "pin": "P5",
+      "form": "computed Object.prototype assignment",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "8792642c665a6bea"
+    },
+    {
+      "id": "S-ELEMCALL-P5",
+      "pin": "P5",
+      "form": "element-access Object.defineProperty prototype write",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "9de22c4ae7144c15"
+    },
+    {
+      "id": "S-DEFPROPS-P5",
+      "pin": "P5",
+      "form": "Object.defineProperties prototype write with data-carried key",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "66dcd517ef5dd213"
+    },
+    {
+      "id": "S-ASSIGN-PROTO-P5",
+      "pin": "P5",
+      "form": "Object.assign prototype write from parsed data",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "6c03640257c7097d"
+    },
+    {
+      "id": "S-ALIAS-P5",
+      "pin": "P5",
+      "form": "locally visible alias of Object.defineProperty writing prototype",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "fb471675a5901320"
+    },
+    {
+      "id": "S-PAREN-TARGET-P4",
+      "pin": "P4",
+      "form": "parenthesized snapshot target and non-literal assign source",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "data-carried snapshot write"
+      ],
+      "digest": "88bc1a7a51aed506"
+    },
+    {
+      "id": "S-DEFPROPS-P4",
+      "pin": "P4",
+      "form": "Object.defineProperties bulk snapshot write from parsed descriptors",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "data-carried snapshot write"
+      ],
+      "digest": "ca7b1fb98ccef4b6"
+    },
+    {
+      "id": "S-AS-TARGET-P4",
+      "pin": "P4",
+      "form": "asserted snapshot target and non-literal assign source",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "data-carried snapshot write"
+      ],
+      "digest": "dfb1128a6674c4a5"
+    },
+    {
+      "id": "S-ELEMCALL-ASSIGN-P4",
+      "pin": "P4",
+      "form": "element-access Object.assign and non-literal source",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "data-carried snapshot write"
+      ],
+      "digest": "72efab25886477ba"
+    },
+    {
+      "id": "S-SPREAD-ARG-P4",
+      "pin": "P4",
+      "form": "spread arguments carrying snapshot and non-literal source",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "data-carried snapshot write"
+      ],
+      "digest": "ada1bf4421a035b9"
+    },
+    {
+      "id": "S-ALIAS-ASSIGN-P4",
+      "pin": "P4",
+      "form": "locally visible alias of Object.assign writing snapshot",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "data-carried snapshot write"
+      ],
+      "digest": "481cb6e56b9d6217"
+    },
+    {
+      "id": "S-SPREAD-LIT-P4",
+      "pin": "P4",
+      "form": "literal spread of parsed data is a non-literal bulk source",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "data-carried snapshot write"
+      ],
+      "digest": "9d5f9fe633fb2843"
+    },
+    {
+      "id": "R-ENUM-P4-PROMOTED",
+      "pin": "P4",
+      "form": "runtime enumeration of snapshot keys is a non-literal bulk source",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "data-carried snapshot write"
+      ],
+      "digest": "6d94cbc833b6f966"
+    }
+  ]
+}
