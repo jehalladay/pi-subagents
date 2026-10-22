@@ -245,7 +245,7 @@
       "family": "other-module helper",
       "digest": "7b1094cf6f38f1bf063069022eec44a6e79829d95a623759b8654cd3f9541330",
       "reading": "row quiet",
-      "runtime": "observed as a violation when the helper copies through S outside a copy window; invisible when it re-implements the copy without S"
+      "runtime": "observed as a violation when the helper copies through S outside a copy window (in-process judges + sidecar); invisible when it re-implements the copy without S"
     },
     {
       "id": "R-PROCESS",
@@ -259,14 +259,14 @@
       "family": "hook copy",
       "digest": "d4ea304260e90543ce46289eeb8b61d919cf47fd31098b933cea553bc3a98117",
       "reading": "row quiet",
-      "runtime": "observed as a violation: an S-call in a hook runs with no copy window open, so the row at that boundary reds"
+      "runtime": "observed as a violation: an S-call in a hook of any kind runs with no copy window open and cannot open one, so the row at that boundary, the file end or the census tier reds"
     },
     {
       "id": "R-SCOPE",
       "family": "module-scope copy",
       "digest": "ba574260adf4ee02ad948307b8d00101806d0e3d2cf7158e82c0bf9ca7252885",
       "reading": "row quiet",
-      "runtime": "observed as a violation: an S-call at module scope runs with no copy window open, so the first row reds"
+      "runtime": "observed as a violation: an S-call at module scope runs with no copy window open, so the first row reds and the sidecar records it"
     },
     {
       "id": "R-PROXY",
