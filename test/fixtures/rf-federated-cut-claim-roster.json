@@ -1,0 +1,64 @@
+{
+  "bead": "wb-a9l2.5",
+  "producerPin": "ReactiveFiberCLI 6a251bf73af5 (read-only git show by the cutting seat)",
+  "sources": ["harness2-federated-peer-2026-10-20/README.md:25 (the duty), :36 (RFCLI-H2-04), :45 (cursor gap requires owner resync)", "src/reactive_fiber_cli/domain/federation_boundary.py:9-10 (cursor and revision never equated), :61-67 (OwnerStreamCursor), :85-87 (OwnerBoundary), :173-192 (record_notification, max() at :191)", "certified-federated-reactive-refinement-2026-10-18/BEADS-2026-10-21.md:21 (rfc-bak67.4 FW-CFRR-02c acceptance: notify 1 then 3 gaps, notify 1, 2, 3 does not)", "federated-workspaces-2026-10-18/BEADS-2026-10-21.md:53 (rfc-0txnl.12 FW-13: gap/epoch -> RESYNC_REQUIRED)"],
+  "notificationWords": ["resync", "watermark", "notified position", "record notification", "delivered fence"],
+  "cursorWords": ["resource revision", "stream cursor"],
+  "producerAcceptance": {"gapped": [1, 3], "contiguous": [1, 2, 3]},
+  "fixture": {"gapped": [{"epoch": "epoch-fixture-a", "stream_id": "peer.notes.stream", "position": 1}, {"epoch": "epoch-fixture-a", "stream_id": "peer.notes.stream", "position": 3}], "contiguous": [{"epoch": "epoch-fixture-a", "stream_id": "peer.notes.stream", "position": 1}, {"epoch": "epoch-fixture-a", "stream_id": "peer.notes.stream", "position": 2}, {"epoch": "epoch-fixture-a", "stream_id": "peer.notes.stream", "position": 3}], "accepted": {"resource_revision": "rev-0007", "cursor": {"epoch": "epoch-fixture-a", "stream_id": "peer.notes.stream", "position": 1}, "publication_state": "VALUE", "value": "peer notes accepted at the fence"}},
+  "rows": [
+    {
+      "id": "A",
+      "label": "(a) a guard pins 0 Pi strings asserting <CLAIM-A> or <CLAIM-B> for rf federation data",
+      "pins": [
+        {"id": "A1", "witness": {"root": "src", "floor": 100, "anchorFile": "src/workflow/reconcile.ts", "anchorToken": "RECONCILE_EVIDENCE_READS", "floorMet": true, "anchorRead": true, "hits": []}},
+        {"id": "A2", "witness": {"root": "test", "floor": 400, "anchorFile": "test/helpers/rf-render-fixture.ts", "anchorToken": "RF_FIXTURE_RELEASE", "floorMet": true, "anchorRead": true, "hits": []}},
+        {"id": "A3", "witness": {"root": "docs", "floor": 50, "anchorFile": "docs/workbench/13-contracts-and-config.md", "anchorToken": "reactivefiber.render.preview", "floorMet": true, "anchorRead": true, "hits": []}},
+        {"id": "A4", "witness": {"root": "qa", "floor": 50, "anchorFile": "qa/workbench/receipts-index.mjs", "anchorToken": "docs/workbench/receipts", "floorMet": true, "anchorRead": true, "hits": []}},
+        {"id": "A5", "witness": {"root": "front matter (root *.md, examples/)", "floor": 10, "anchorFile": "README.md", "anchorToken": "@tintinweb/pi-subagents", "floorMet": true, "anchorRead": true, "hits": []}},
+        {"id": "A6", "witness": {"rfIds": ["reactivefiber.render.preview"], "descriptorFloorMet": true, "hits": []}}
+      ]
+    },
+    {
+      "id": "B",
+      "label": "(b) a fixture notification stream with a position gap at the same epoch renders resync-required in Pi's (future) reader, never <CLAIM-B> or a fresh value",
+      "pins": [
+        {"id": "B1", "witness": {"gapped": {"sameEpoch": true, "sameStream": true, "deliveredFence": 1, "notifiedPosition": 3, "gap": true, "verdict": "resync-required"}, "contiguous": {"sameEpoch": true, "sameStream": true, "deliveredFence": 3, "notifiedPosition": 3, "gap": false, "verdict": "contiguous"}, "producerWatermark": {"gapped": 3, "contiguous": 3}, "acceptedAtFence": true}},
+        {"id": "B2", "witness": {"contract": "reactivefiber.render.preview/v1", "readingKeys": ["contract", "source", "workspaceRoot"], "notificationKeys": ["epoch", "position", "stream_id"], "positions": [1, 3], "spawns": 1}},
+        {"id": "B3", "witness": {"snapshots": 1, "equalsWithout": true, "stringsRead": true, "surfaced": []}},
+        {"id": "B4", "witness": {"srcFloorMet": true, "sites": [], "bound": [], "stale": [], "synthetic": {"compliant": [], "watermark": ["no resync-required word for a same-epoch gap", "spells <CLAIM-B>"], "freshValue": ["carries the accepted value while resync is required"]}, "controls": {"snake": true, "camel": true, "bareWord": false}}}
+      ]
+    },
+    {
+      "id": "C",
+      "label": "(c) no Pi projection equates a stream cursor position with a resource revision (two fields, echoed separately)",
+      "pins": [
+        {"id": "C1", "witness": {"boundaryKeys": ["cursor", "publication_state", "resource_revision", "value"], "revision": "rev-0007", "cursor": {"epoch": "epoch-fixture-a", "stream_id": "peer.notes.stream", "position": 1}, "spawns": 1}},
+        {"id": "C2", "witness": {"sourceRevisionIsGraph": true, "sourceVersionIsBundle": true, "takesRevision": false, "takesPosition": false, "equalsWithout": true}},
+        {"id": "C3", "witness": {"srcFloorMet": true, "sites": [], "bound": [], "stale": [], "synthetic": {"separate": [], "revisionFromPosition": ["the resource revision is not echoed verbatim"], "positionFromRevision": ["the cursor position is not echoed verbatim"]}, "controls": {"snake": true, "camel": true, "bareWords": false}}}
+      ]
+    },
+    {
+      "id": "M",
+      "label": "row A's matchers catch every separator and case spelling of the guarded phrases, and their named residuals stay pinned quiet",
+      "pins": [
+        {"id": "M1", "witness": {"digest": "5461de21c206ea17", "hit": true}},
+        {"id": "M2", "witness": {"digest": "1092513668eb0298", "hit": true}},
+        {"id": "M3", "witness": {"digest": "efd171dc774d2026", "hit": true}},
+        {"id": "M4", "witness": {"digest": "f0955e8692735f73", "hit": true}},
+        {"id": "M5", "witness": {"digest": "a062481890bcd63c", "hit": true}},
+        {"id": "M6", "witness": {"digest": "73e002a1ded67dd0", "hit": true}},
+        {"id": "M7", "witness": {"digest": "c71a27487c6680d4", "hit": true}},
+        {"id": "M8", "witness": {"digest": "924ef7801fcea283", "hit": true}},
+        {"id": "M9", "witness": {"digest": "4c7623c6df928d77", "hit": true}},
+        {"id": "M10", "witness": {"digest": "32afaa9d3cfb23b1", "hit": true}},
+        {"id": "M11", "witness": {"digest": "42e626a6e2845d17", "hit": true}},
+        {"id": "Q1", "witness": {"digest": "005b55a29e25a419", "hit": false}},
+        {"id": "Q2", "witness": {"digest": "9306aba0ea4bc81b", "hit": false}},
+        {"id": "Q3", "witness": {"digest": "6fca2047dc1ccf29", "hit": false}},
+        {"id": "Q4", "witness": {"digest": "da450ae58de64015", "hit": false}},
+        {"id": "Q5", "witness": {"spells": true, "outside": true}}
+      ]
+    }
+  ]
+}
