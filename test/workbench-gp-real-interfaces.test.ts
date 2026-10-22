@@ -17,36 +17,76 @@
  * and machine execution kept separate), :496 (extend GraphPolicyCLI rather than duplicating its internals).
  * The bead's acceptance legs map one row each: (a) GP-1, (b) GP-2, (c) GP-3, (d) GP-4.
  *
- * Today (base 0b2a80f) Pi carries no gp code. R0 pins the measured gp roster of the live tree empty and GP_SEAMS (this
- * census's register of gp client and admission modules) empty, and judges the live tree clean. A gp landing registers each
- * seam module in GP_SEAMS, and updates the docs/03 ownership row, in the same commit; the GP-1..GP-4 checks judge it from
- * then on. Until then most checks hold vacuously on the live tree, so the F rows prove every pin live on a synthetic tree:
- * a compliant integration (a client that launches gp and maps the unknown-command refusal, a decision module that
- * proposes through the existing lifecycle module, an admission seam, the telemetry writer) judges clean, and each
- * single-clause mutation of it is named by exactly the expected pin(s).
+ * Today Pi carries no gp code. R0 pins the measured gp roster of the live tree empty and GP_SEAMS (this census's register
+ * of gp client and admission modules) empty, and judges the live tree clean. A gp landing registers each seam module in
+ * GP_SEAMS, and updates the docs/03 ownership row, in the same commit; the GP-1..GP-4 checks judge it from then on. Until
+ * then most checks hold vacuously on the live tree, so the F rows prove every pin live on a synthetic tree: a compliant
+ * integration (a client that launches gp and maps the unknown-command refusal, a decision module that proposes through
+ * the existing lifecycle module, an admission seam, the telemetry writer) judges clean, and each single-clause mutation
+ * of it is named by exactly the expected pin(s).
  *
  * Producer facts measured 2026-10-22 against the installed gp 0.1.0: the npm package is graph-policy-cli (bin gp, no
  * exports map); an unknown command answers with the graphpolicy.cli.v1 envelope error.code GP_CLI_UNKNOWN_COMMAND; the
  * command surface lists train beside eval, sample and rpc --stdio.
  *
- * Code tokens only: every module is read from its TypeScript AST, never from its comments. The blind spots of a token
- * census are NAMED RESIDUALS (RESIDUALS below, listed in the docs section), each pinned by a quiet row.
+ * WHAT THE CENSUS CLAIMS (respin #1, gate refusal #1 U6). Code tokens only: every module is read from its TypeScript AST,
+ * never from its comments. The census claims exactly the detector members DETECTORS enumerates - one DT row each, which
+ * runs its probe module and pins the exact census signature the member must produce - and the manifest rosters the M rows
+ * pin member by member; a code shape outside that enumeration is not claimed. Its measured blind spots are NAMED
+ * RESIDUALS (RESIDUALS below, listed in the docs section), each a named family with a pinned quiet row; the list records
+ * the escapes measured on these bytes and is not claimed complete.
+ *
+ * THE DOCS ANCHOR (U1-U4). The D rows read docs/03 only through the landed helper test/helpers/census.ts: docsSection
+ * binds the rendered "GraphPolicyCLI boundary" section (its level-2 heading exactly once in the rendered view, under the
+ * page title as its whole parent heading path, up to the next level-1/2 heading), sectionMatches pins its WHOLE rendered
+ * block list - the definitions paragraph, the four rule bullets built from ROWS and the residual line built from
+ * RESIDUALS - and refuses any HTML in it, and the ownership row is read from the "Ownership boundaries" section's own
+ * table through sectionTables (the same binding), never from a whole-page line filter.
+ *
+ * EACH-LIVENESS (U5, standing rule 16). REGISTERED freezes, literally and outside every derivation, the case keys each
+ * it.each table registers; the closing tally reads vitest's own task tree, so a table thinned or emptied at its it.each
+ * call goes red, and every registered case records that it reached its last assertion.
+ *
+ * THE OUT-OF-FILE ROSTER (the CT5/CT6 kill outside this file's literals, the wb-1xvp.4 roster pattern):
+ * test/fixtures/gp-real-interfaces-roster.json lists every rule row, pin, clause and falsifier (with its expected findings),
+ * every residual, every detector member with the SHA-256 of its probe, and every registered case title in order; the S
+ * roster row holds the tables to it and the closing tally holds vitest's registrations to it, so removing a member from
+ * every literal of this file still reds through the roster (docs/03 is the second outside anchor, for rules and residuals).
+ *
  * Display paths added: none. No scratch directory is allocated: the synthetic trees live in memory.
  */
+import { createHash } from "node:crypto";
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { builtinModules } from "node:module";
 import { dirname, join, posix, relative, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
 import { describe, expect, it } from "vitest";
+import { docsSection, type RenderedBlock, sectionMatches, sectionTables } from "./helpers/census.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const DOCS_03 = "docs/workbench/03-architecture-and-ownership.md";
 const CENSUS_FILE = "test/workbench-gp-real-interfaces.test.ts";
-const BOUNDARY_HEADING = "## GraphPolicyCLI boundary";
-/** The docs/03 "Ownership boundaries" row naming GraphPolicyCLI, pinned whole: a gp landing updates it with GP_SEAMS. */
-const OWNERSHIP_ROW =
-  "| Graph-function representations, numerical evaluation, learned scores, embeddings, predictions, policy distributions and their receipts | GraphPolicyCLI | nothing today (no gp seam is registered); a future seam reaches gp only through its CLI, SDK or `gp rpc --stdio`, under the GraphPolicyCLI boundary below |";
+/** docs/03's level-1 title: the whole parent heading path of both pinned sections, so a level-1 heading above re-homes them. */
+const PAGE_TITLE = "03 — High-level architecture, module ownership and dataflow";
+const BOUNDARY_HEADING = "GraphPolicyCLI boundary";
+const OWNERSHIP_HEADING = "Ownership boundaries";
+/** The ownership table's header row, cell for cell as sectionTables reads it. */
+const OWNERSHIP_HEADER: readonly string[] = ["Concern", "Authoritative owner", "Workbench may do"];
+/** The docs/03 "Ownership boundaries" row naming GraphPolicyCLI, cell for cell (cell source): a gp landing updates it with GP_SEAMS. */
+const OWNERSHIP_CELLS: readonly string[] = [
+  "Graph-function representations, numerical evaluation, learned scores, embeddings, predictions, policy distributions and their receipts",
+  "GraphPolicyCLI",
+  "nothing today (no gp seam is registered); a future seam reaches gp only through its CLI, SDK or `gp rpc --stdio`, under the GraphPolicyCLI boundary below",
+];
+/** A table cell naming GraphPolicyCLI or gp: exactly one ownership row may carry one, the pinned row. */
+const NAMES_GP = /GraphPolicyCLI|graph[-_ ]?policy|\bgp\b/i;
+/** The boundary section's definitions paragraph, verbatim (it carries the bead, its source line and this census's path). */
+const BOUNDARY_INTRO =
+  "Pi carries no GraphPolicyCLI (gp) integration today. Program obligation RF-GRAPH-POLICY-MACHINE-CONTROL-R1 (bead wb-1xvp.2; ReactiveFiberCLI docs/programs/graph-policy-machine-control-2026-10-21/README.md:79@6a251bf73af5) binds any future gp seam to the four rules below, and test/workbench-gp-real-interfaces.test.ts judges every src module and package.json by them, one check per semicolon-separated clause. A gp client is a src module the census registers as one (none today); a gp-adjacent module is a gp client or a module that imports one; a decision path is a gp client and its src import closure; an execution seam is a module that itself calls process.kill, stops a Furnace Run or Attempt, writes through bd, starts a Claude agent session or launches a workflow host. A cancel, retry or reassign proposal therefore reaches the existing lifecycle functions, which stay outside every gp seam, and a missing gp verb is added to GraphPolicyCLI itself, never re-implemented here. The census reads code tokens, never comments, and claims only the detector shapes it pins with a live probe each; its measured blind spots are the named residuals below, a list it does not claim complete.";
+const CITATIONS: readonly string[] = ["wb-1xvp.2", "RF-GRAPH-POLICY-MACHINE-CONTROL-R1", "README.md:79@6a251bf73af5", CENSUS_FILE];
+/** The out-of-file roster: this census's tables and registrations as frozen data (see the header). */
+const ROSTER = "test/fixtures/gp-real-interfaces-roster.json";
 
 /** The one GraphPolicyCLI package (measured: the installed gp 0.1.0 is npm graph-policy-cli, bin gp). */
 const GP_PACKAGE = "graph-policy-cli";
@@ -60,20 +100,25 @@ interface GpSeam {
   readonly role: SeamRole;
 }
 
-/** The gp seams this census admits, by role. EMPTY at base 0b2a80f (frozen in R0): Pi carries no gp integration. */
+/** The gp seams this census admits, by role. EMPTY at this cut (frozen in R0): Pi carries no gp integration. */
 const GP_SEAMS: readonly GpSeam[] = [];
 
 const SOURCE_EXTENSIONS = new Set([".ts", ".mts", ".cts", ".tsx", ".js", ".mjs", ".cjs"]);
 const SKIPPED_DIRS = new Set(["node_modules", "dist", ".git"]);
-/** child_process launchers and same-named members (ServerConnection.spawn, cp.execFile, ...). */
+/** child_process launchers, by name or member (ServerConnection.spawn, cp.execFile) and through the bindings a module gives them. */
 const LAUNCHERS = new Set(["spawn", "spawnSync", "execFile", "execFileSync", "exec", "execSync", "fork"]);
-/** Launchers that take one shell command string: its first word is the binary, the rest its argv. */
+/** Launchers that take one shell command line: it is split into its simple commands (shellCommands). */
 const SHELL_LAUNCHERS = new Set(["exec", "execSync"]);
+/** Shells whose -c script is itself a command line the census splits (sh -c 'bd close wb-x'). */
+const SHELLS = new Set(["sh", "bash", "zsh", "dash", "ksh"]);
 /** Binaries an argv array may name first when it is handed to an injected launch seam. */
-const ARGV_BINARIES = new Set(["gp", "bd", "furnace", "kill", "pkill", "killall"]);
+const ARGV_BINARIES = new Set(["gp", "bd", "furnace", "kill", "pkill", "killall", ...SHELLS]);
 const KILL_BINARIES = new Set(["kill", "pkill", "killall"]);
 /** bd verbs that only read; any other bd launch is a write, a launch whose verb is not a literal included. */
 const BD_READ_VERBS = new Set(["show", "list", "ready", "blocked", "search", "stats", "status", "count", "info", "where", "version", "help", "graph", "doctor"]);
+/** The modules whose bindings name the process object (a default or namespace import, import-equals, require). */
+const PROCESS_MODULES = new Set(["process", "node:process"]);
+const CHILD_PROCESS_MODULES = new Set(["child_process", "node:child_process"]);
 const AGENT_SDK = "@anthropic-ai/claude-agent-sdk";
 /** The Agent SDK functions that start or attach a Claude agent session (measured from its exported declarations). */
 const AGENT_SESSION_FUNCTIONS = new Set(["query", "createCodeSession", "attachBridgeSession", "forkSession"]);
@@ -90,22 +135,33 @@ const GP_WORDS = /graph[-_]?data[-_]?ir|graphpolicy\.[a-z0-9_-]+\.v\d+|GP_(?:CLI
 const UNKNOWN_COMMAND = "GP_CLI_UNKNOWN_COMMAND";
 /** The gp training verb as a word inside a string token: "train", "train --program p", a template ending in " train". */
 const TRAIN_WORD = /(?:^|[^A-Za-z0-9_])train(?:[^A-Za-z0-9_]|$)/;
-/** Deny roster of JS training and model frameworks; named residual TRAINING-FRAMEWORK-ROSTER covers the rest. */
+/** Deny roster of JS training and model frameworks (one M-row probe per member); named residual TRAINING-FRAMEWORK-ROSTER covers the rest. */
 const TRAINING_FRAMEWORKS =
   /(?:^|[/@-])(?:tensorflow|tfjs|onnxruntime|torch|pytorch|brain\.js|synaptic|ml5|keras|xgboost|lightgbm|catboost|scikit|sklearn|transformers|mlc-ai)(?:$|[/-])/i;
-const RUNTIME_SECTIONS = ["dependencies", "optionalDependencies", "peerDependencies", "bundledDependencies", "bundleDependencies"] as const;
-const ALL_SECTIONS = [...RUNTIME_SECTIONS, "devDependencies"] as const;
+/** Every dependency section of the manifest: each is read for training frameworks and GraphPolicyCLI forks alike. */
+const ALL_SECTIONS = ["dependencies", "devDependencies", "optionalDependencies", "peerDependencies", "bundledDependencies", "bundleDependencies"] as const;
 const BUILTINS: ReadonlySet<string> = new Set(builtinModules);
+/** A shell variable assignment word (NAME=value) that prefixes the command it runs before. */
+const ASSIGNMENT = /^[A-Za-z_][A-Za-z0-9_]*=/;
+/** A shell's -c flag, alone or in a cluster (-c, -lc, -ec): the next argument is the script the shell runs. */
+const SHELL_C = /^-[A-Za-z]*c[A-Za-z]*$/;
+/** Characters that end a simple command outside quotes: ; & | and newline (so && and || too). */
+const COMMAND_ENDS = new Set([";", "&", "|", "\n"]);
+/** How deep a shell's -c script is followed into a further shell's -c script. */
+const SCRIPT_DEPTH = 4;
 
 interface Hit {
   readonly line: number;
   readonly text: string;
 }
 
-interface Launch {
-  readonly line: number;
+interface Command {
   readonly binary: string;
   readonly argv: readonly string[];
+}
+
+interface Launch extends Command {
+  readonly line: number;
 }
 
 /** One module's code tokens, read from its AST. */
@@ -115,7 +171,7 @@ interface ModuleCensus {
   readonly specifiers: readonly string[];
   /** The specifiers the module loads at run time: type-only declarations and import types excluded. */
   readonly runtimeImports: readonly string[];
-  /** Launcher calls whose binary is a literal (or a same-file string constant, or process.execPath), and binary-first argv arrays. */
+  /** Every command a launcher call or a binary-first argv array runs, a shell line split into its simple commands, a shell's -c script followed. */
   readonly launches: readonly Launch[];
   /** String tokens naming the gp binary (module specifiers excluded). */
   readonly gpBinary: readonly Hit[];
@@ -145,49 +201,171 @@ function scriptKind(file: string): ts.ScriptKind {
   return ts.ScriptKind.TS;
 }
 
-const isProcess = (node: ts.Expression): boolean =>
-  (ts.isIdentifier(node) && node.text === "process") || (ts.isPropertyAccessExpression(node) && node.name.text === "process");
-
 const calleeName = (node: ts.Expression): string | undefined =>
   ts.isIdentifier(node) ? node.text : ts.isPropertyAccessExpression(node) ? node.name.text : undefined;
+
+const literalText = (node: ts.Node | undefined): string | undefined => (node !== undefined && ts.isStringLiteralLike(node) ? node.text : undefined);
+
+/** A destructuring element's or import's property name, when it is written as a plain name or a string. */
+const nameOf = (node: ts.PropertyName | ts.BindingName): string | undefined => (ts.isIdentifier(node) || ts.isStringLiteral(node) ? node.text : undefined);
+
+/** The value an expression wrapper leaves unchanged: parentheses, as / satisfies / angle-bracket assertions and !. */
+function unwrap(node: ts.Expression): ts.Expression {
+  let current = node;
+  while (ts.isParenthesizedExpression(current) || ts.isAsExpression(current) || ts.isSatisfiesExpression(current) || ts.isNonNullExpression(current) || ts.isTypeAssertionExpression(current)) {
+    current = current.expression;
+  }
+  return current;
+}
+
+/**
+ * A shell command line as the simple commands a shell runs: split at unquoted ; & | and newlines, single and double
+ * quotes removed, then per command the leading NAME=value assignments and an env prefix (with its own assignments)
+ * skipped. Nothing else a shell does is read (expansions, redirections, other wrappers: residual WRAPPED-COMMAND).
+ */
+function shellCommands(line: string): Command[] {
+  const commands: string[][] = [[]];
+  let word: string | undefined;
+  let quote: string | undefined;
+  const endWord = (): void => {
+    if (word !== undefined) commands[commands.length - 1]?.push(word);
+    word = undefined;
+  };
+  for (const char of line) {
+    if (quote !== undefined) {
+      if (char === quote) quote = undefined;
+      else word = `${word ?? ""}${char}`;
+    } else if (char === "'" || char === '"') {
+      quote = char;
+      word ??= "";
+    } else if (COMMAND_ENDS.has(char)) {
+      endWord();
+      commands.push([]);
+    } else if (/\s/.test(char)) {
+      endWord();
+    } else {
+      word = `${word ?? ""}${char}`;
+    }
+  }
+  endWord();
+  return commands.flatMap(words => {
+    let rest = words;
+    const skipAssignments = (): void => {
+      while (rest[0] !== undefined && ASSIGNMENT.test(rest[0])) rest = rest.slice(1);
+    };
+    skipAssignments();
+    if (rest[0] === "env") {
+      rest = rest.slice(1);
+      skipAssignments();
+    }
+    const [binary, ...argv] = rest;
+    return binary === undefined ? [] : [{ binary, argv }];
+  });
+}
+
+/** A command and, when it is a shell running a -c script, the simple commands of that script, to SCRIPT_DEPTH. */
+function withScripts(command: Command, depth = 0): Command[] {
+  if (depth >= SCRIPT_DEPTH || !SHELLS.has(basenameOf(command.binary))) return [command];
+  const flag = command.argv.findIndex(arg => SHELL_C.test(arg));
+  const script = flag < 0 ? undefined : command.argv[flag + 1];
+  return script === undefined ? [command] : [command, ...shellCommands(script).flatMap(inner => withScripts(inner, depth + 1))];
+}
 
 /** Reads one module's code tokens from its AST, never its comments. */
 function moduleCensus(file: string, text: string): ModuleCensus {
   const sf = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, scriptKind(file));
   const line = (node: ts.Node): number => sf.getLineAndCharacterOfPosition(node.getStart(sf)).line + 1;
   const hit = (node: ts.Node, token: string): Hit => ({ line: line(node), text: token });
+  // The names this module gives the values the detectors follow: same-file string constants, the process object (a
+  // default, namespace or import-equals binding of the process module, a require of it, a variable initialized to one),
+  // the Furnace stop owners and Run or Attempt handles (a variable initialized to one, a destructured owner), the
+  // child_process launchers (a renamed import, a variable or destructured member) and the Agent SDK namespace. Collected
+  // to a fixpoint before any detector reads them; a value reached any other way is not followed (ALIASED-EFFECT).
   const constants = new Map<string, string>();
+  const processNames = new Set(["process"]);
+  const stopOwnerNames = new Set<string>();
+  const handleNames = new Set<string>();
+  const launcherNames = new Map<string, string>();
   const sdkNamespaces = new Set<string>();
-  const agentSession: Hit[] = [];
-  // Pass 1: same-file string constants, and the run-time query binding of the Claude Agent SDK (an aliased or re-bound
-  // query is still the agent-session seam, so the import itself is the marker).
-  const collect = (node: ts.Node): void => {
-    if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.initializer !== undefined && ts.isStringLiteralLike(node.initializer)) {
-      constants.set(node.name.text, node.initializer.text);
-    }
-    if (ts.isImportDeclaration(node) && ts.isStringLiteral(node.moduleSpecifier) && node.moduleSpecifier.text === AGENT_SDK) {
-      const clause = node.importClause;
-      const bindings = clause !== undefined && clause.phaseModifier !== ts.SyntaxKind.TypeKeyword ? clause.namedBindings : undefined;
-      if (bindings !== undefined && ts.isNamedImports(bindings)) {
-        for (const element of bindings.elements) {
-          if (!element.isTypeOnly && AGENT_SESSION_FUNCTIONS.has((element.propertyName ?? element.name).text)) agentSession.push(hit(element, element.getText(sf)));
+  const isProcessValue = (node: ts.Expression): boolean => {
+    const value = unwrap(node);
+    if (ts.isIdentifier(value)) return processNames.has(value.text);
+    if (ts.isPropertyAccessExpression(value)) return value.name.text === "process";
+    if (ts.isElementAccessExpression(value)) return literalText(value.argumentExpression) === "process";
+    return ts.isCallExpression(value) && ts.isIdentifier(value.expression) && value.expression.text === "require" && PROCESS_MODULES.has(literalText(value.arguments[0]) ?? "");
+  };
+  const isStopOwner = (node: ts.Expression): boolean => {
+    const value = unwrap(node);
+    if (ts.isIdentifier(value)) return stopOwnerNames.has(value.text);
+    if (ts.isPropertyAccessExpression(value)) return FURNACE_STOP_OWNERS.has(value.name.text);
+    return ts.isElementAccessExpression(value) && FURNACE_STOP_OWNERS.has(literalText(value.argumentExpression) ?? "");
+  };
+  const isHandle = (node: ts.Expression): boolean => {
+    const value = unwrap(node);
+    return ts.isIdentifier(value) && (FURNACE_HANDLE.test(value.text) || handleNames.has(value.text));
+  };
+  const launcherOf = (node: ts.Expression): string | undefined => {
+    const value = unwrap(node);
+    if (ts.isIdentifier(value)) return launcherNames.get(value.text) ?? (LAUNCHERS.has(value.text) ? value.text : undefined);
+    return ts.isPropertyAccessExpression(value) && LAUNCHERS.has(value.name.text) ? value.name.text : undefined;
+  };
+  const collectNames = (node: ts.Node): void => {
+    if (ts.isVariableDeclaration(node) && node.initializer !== undefined) {
+      const init = node.initializer;
+      if (ts.isIdentifier(node.name)) {
+        const name = node.name.text;
+        if (ts.isStringLiteralLike(init)) constants.set(name, init.text);
+        if (isProcessValue(init)) processNames.add(name);
+        if (isStopOwner(init)) stopOwnerNames.add(name);
+        if (isHandle(init)) handleNames.add(name);
+        const launcher = launcherOf(init);
+        if (launcher !== undefined) launcherNames.set(name, launcher);
+      } else if (ts.isObjectBindingPattern(node.name)) {
+        for (const element of node.name.elements) {
+          const property = nameOf(element.propertyName ?? element.name);
+          if (property === undefined || !ts.isIdentifier(element.name)) continue;
+          if (FURNACE_STOP_OWNERS.has(property)) stopOwnerNames.add(element.name.text);
+          if (LAUNCHERS.has(property)) launcherNames.set(element.name.text, property);
         }
       }
-      if (bindings !== undefined && ts.isNamespaceImport(bindings)) sdkNamespaces.add(bindings.name.text);
     }
-    ts.forEachChild(node, collect);
+    if (ts.isImportDeclaration(node) && ts.isStringLiteral(node.moduleSpecifier) && node.importClause !== undefined && node.importClause.phaseModifier !== ts.SyntaxKind.TypeKeyword) {
+      const from = node.moduleSpecifier.text;
+      const clause = node.importClause;
+      const bindings = clause.namedBindings;
+      const namespace = bindings !== undefined && ts.isNamespaceImport(bindings) ? bindings.name.text : undefined;
+      if (PROCESS_MODULES.has(from) && clause.name !== undefined) processNames.add(clause.name.text);
+      if (PROCESS_MODULES.has(from) && namespace !== undefined) processNames.add(namespace);
+      if (from === AGENT_SDK && namespace !== undefined) sdkNamespaces.add(namespace);
+      if (CHILD_PROCESS_MODULES.has(from) && bindings !== undefined && ts.isNamedImports(bindings)) {
+        for (const element of bindings.elements) {
+          const imported = (element.propertyName ?? element.name).text;
+          if (!element.isTypeOnly && LAUNCHERS.has(imported)) launcherNames.set(element.name.text, imported);
+        }
+      }
+    }
+    if (ts.isImportEqualsDeclaration(node) && !node.isTypeOnly && ts.isExternalModuleReference(node.moduleReference) && PROCESS_MODULES.has(literalText(node.moduleReference.expression) ?? "")) {
+      processNames.add(node.name.text);
+    }
+    ts.forEachChild(node, collectNames);
   };
-  collect(sf);
+  const known = (): number => constants.size + processNames.size + stopOwnerNames.size + handleNames.size + launcherNames.size + sdkNamespaces.size;
+  for (let before = -1; before !== known(); ) {
+    before = known();
+    collectNames(sf);
+  }
   const literalValue = (node: ts.Node | undefined): string | undefined => {
     if (node === undefined) return undefined;
     if (ts.isStringLiteralLike(node)) return node.text;
     if (ts.isIdentifier(node)) return constants.get(node.text);
-    if (ts.isPropertyAccessExpression(node) && node.name.text === "execPath" && isProcess(node.expression)) return "<process.execPath>";
+    if (ts.isPropertyAccessExpression(node) && node.name.text === "execPath" && isProcessValue(node.expression)) return "<process.execPath>";
     return undefined;
   };
-  const literalsOf = (elements: readonly ts.Expression[]): string[] =>
+  /** A command-line value: a literal, or the static head of a template (`bd close ${id}` still names bd and close). */
+  const commandText = (node: ts.Node | undefined): string | undefined => literalValue(node) ?? (node !== undefined && ts.isTemplateExpression(node) ? node.head.text : undefined);
+  const argvOf = (elements: readonly ts.Expression[]): string[] =>
     elements.flatMap(element => {
-      const value = literalValue(element);
+      const value = commandText(element);
       return value === undefined ? [] : [value];
     });
   const specifiers: string[] = [];
@@ -199,9 +377,13 @@ function moduleCensus(file: string, text: string): ModuleCensus {
   const trainTokens: Hit[] = [];
   const processKill: Hit[] = [];
   const furnaceStop: Hit[] = [];
+  const agentSession: Hit[] = [];
   const hostLaunch: Hit[] = [];
   const dynamicLoads: Hit[] = [];
   let namesUnknownCommand = false;
+  const record = (node: ts.Node, commands: readonly Command[]): void => {
+    for (const command of commands.flatMap(entry => withScripts(entry))) launches.push({ line: line(node), binary: command.binary, argv: command.argv });
+  };
   /** Module specifier literals: judged by the specifier checks, never as binary, vocabulary or train tokens. */
   const specifierNodes = new Set<ts.Node>();
   const addSpecifier = (node: ts.StringLiteralLike, runtime: boolean): void => {
@@ -210,7 +392,21 @@ function moduleCensus(file: string, text: string): ModuleCensus {
     if (runtime) runtimeImports.push(node.text);
   };
   const visit = (node: ts.Node): void => {
-    if (ts.isImportDeclaration(node) && ts.isStringLiteral(node.moduleSpecifier)) addSpecifier(node.moduleSpecifier, node.importClause?.phaseModifier !== ts.SyntaxKind.TypeKeyword);
+    if (ts.isImportDeclaration(node) && ts.isStringLiteral(node.moduleSpecifier)) {
+      const from = node.moduleSpecifier.text;
+      const clause = node.importClause;
+      addSpecifier(node.moduleSpecifier, clause?.phaseModifier !== ts.SyntaxKind.TypeKeyword);
+      const bindings = clause !== undefined && clause.phaseModifier !== ts.SyntaxKind.TypeKeyword ? clause.namedBindings : undefined;
+      if (bindings !== undefined && ts.isNamedImports(bindings)) {
+        for (const element of bindings.elements) {
+          const imported = (element.propertyName ?? element.name).text;
+          if (element.isTypeOnly) continue;
+          // The run-time binding of an Agent SDK session function is the agent-session seam, under any local name.
+          if (from === AGENT_SDK && AGENT_SESSION_FUNCTIONS.has(imported)) agentSession.push(hit(element, element.getText(sf)));
+          if (PROCESS_MODULES.has(from) && imported === "kill") processKill.push(hit(element, `import ${element.getText(sf)} from ${from}`));
+        }
+      }
+    }
     if (ts.isExportDeclaration(node) && node.moduleSpecifier !== undefined && ts.isStringLiteral(node.moduleSpecifier)) addSpecifier(node.moduleSpecifier, !node.isTypeOnly);
     if (ts.isImportEqualsDeclaration(node) && ts.isExternalModuleReference(node.moduleReference) && ts.isStringLiteral(node.moduleReference.expression)) {
       addSpecifier(node.moduleReference.expression, !node.isTypeOnly);
@@ -222,41 +418,37 @@ function moduleCensus(file: string, text: string): ModuleCensus {
       const loads = callee.kind === ts.SyntaxKind.ImportKeyword || (ts.isIdentifier(callee) && callee.text === "require");
       if (loads && first !== undefined && ts.isStringLiteralLike(first)) addSpecifier(first, true);
       else if (loads) dynamicLoads.push(hit(node, node.getText(sf)));
-      const name = calleeName(callee);
-      const shell = name !== undefined && SHELL_LAUNCHERS.has(name);
-      // A shell command assembled in a template keeps its static head: `bd close ${id}` still names bd and close.
-      const command = shell && first !== undefined && ts.isTemplateExpression(first) ? first.head.text : literalValue(first);
-      const binary = name !== undefined && LAUNCHERS.has(name) ? command : undefined;
-      if (binary !== undefined && shell) {
-        const [command = "", ...words] = binary.trim().split(/\s+/);
-        launches.push({ line: line(node), binary: command, argv: words });
-      } else if (binary !== undefined) {
-        const argv = node.arguments[1];
-        launches.push({ line: line(node), binary, argv: argv !== undefined && ts.isArrayLiteralExpression(argv) ? literalsOf(argv.elements) : [] });
-      }
-      if (ts.isPropertyAccessExpression(callee) && callee.name.text === "stop") {
-        const receiver = callee.expression;
-        if ((ts.isPropertyAccessExpression(receiver) && FURNACE_STOP_OWNERS.has(receiver.name.text)) || (ts.isIdentifier(receiver) && FURNACE_HANDLE.test(receiver.text))) {
-          furnaceStop.push(hit(node, callee.getText(sf)));
-        }
+      const launcher = launcherOf(callee);
+      if (launcher !== undefined && SHELL_LAUNCHERS.has(launcher)) {
+        const command = commandText(first);
+        if (command !== undefined) record(node, shellCommands(command));
+      } else if (launcher !== undefined) {
+        const binary = literalValue(first);
+        const argvNode = node.arguments[1];
+        const argv = argvNode !== undefined && ts.isArrayLiteralExpression(argvNode) ? argvOf(argvNode.elements) : [];
+        // A binary with whitespace is a command line a shell runs (shell: true): split like one.
+        if (binary !== undefined) record(node, /\s/.test(binary) ? shellCommands([binary, ...argv].join(" ")) : [{ binary, argv }]);
       }
     }
     if (ts.isPropertyAccessExpression(node) && AGENT_SESSION_FUNCTIONS.has(node.name.text) && ts.isIdentifier(node.expression) && sdkNamespaces.has(node.expression.text)) {
       agentSession.push(hit(node, node.getText(sf)));
     }
-    if (ts.isVariableDeclaration(node) && ts.isObjectBindingPattern(node.name) && node.initializer !== undefined && isProcess(node.initializer)) {
+    if (ts.isVariableDeclaration(node) && ts.isObjectBindingPattern(node.name) && node.initializer !== undefined) {
+      const init = node.initializer;
       for (const element of node.name.elements) {
-        const bound = element.propertyName ?? element.name;
-        if (ts.isIdentifier(bound) && bound.text === "kill") processKill.push(hit(element, `${node.initializer.getText(sf)}.kill`));
+        const property = nameOf(element.propertyName ?? element.name);
+        if (property === "kill" && isProcessValue(init)) processKill.push(hit(element, `${init.getText(sf)}.kill`));
+        if (property === "stop" && (isStopOwner(init) || isHandle(init))) furnaceStop.push(hit(element, `${init.getText(sf)}.stop`));
       }
     }
     if (ts.isArrayLiteralExpression(node)) {
       const head = literalValue(node.elements[0]);
-      if (head !== undefined && ARGV_BINARIES.has(basenameOf(head))) launches.push({ line: line(node), binary: head, argv: literalsOf(node.elements.slice(1)) });
+      if (head !== undefined && ARGV_BINARIES.has(basenameOf(head))) record(node, [{ binary: head, argv: argvOf(node.elements.slice(1)) }]);
     }
-    if (ts.isPropertyAccessExpression(node) && node.name.text === "kill" && isProcess(node.expression)) processKill.push(hit(node, node.getText(sf)));
-    if (ts.isElementAccessExpression(node) && ts.isStringLiteralLike(node.argumentExpression) && node.argumentExpression.text === "kill" && isProcess(node.expression)) {
-      processKill.push(hit(node, node.getText(sf)));
+    if (ts.isPropertyAccessExpression(node) || ts.isElementAccessExpression(node)) {
+      const member = ts.isPropertyAccessExpression(node) ? node.name.text : literalText(node.argumentExpression);
+      if (member === "kill" && isProcessValue(node.expression)) processKill.push(hit(node, node.getText(sf)));
+      if (member === "stop" && (isStopOwner(node.expression) || isHandle(node.expression))) furnaceStop.push(hit(node, node.getText(sf)));
     }
     if (ts.isNewExpression(node) && calleeName(node.expression) === "Worker") hostLaunch.push(hit(node, node.expression.getText(sf)));
     const literal = ts.isStringLiteralLike(node) || ts.isTemplateHead(node) || ts.isTemplateMiddle(node) || ts.isTemplateTail(node) ? node.text : undefined;
@@ -289,6 +481,25 @@ function moduleCensus(file: string, text: string): ModuleCensus {
     .map(launch => ({ line: launch.line, text: `bd ${launch.argv.join(" ")}` }));
   return { file, specifiers, runtimeImports, launches, gpBinary, gpLaunches, dynamicLoads, gpVocabulary, gpFamily, trainTokens, namesUnknownCommand, processKill, furnaceStop, bdWrite, agentSession, hostLaunch };
 }
+
+/** A module census as one comparable list: every specifier, every launch and every detector hit, field by field in a fixed order (the DT rows pin it). */
+const signatureOf = (entry: ModuleCensus): string[] => [
+  ...entry.specifiers.map(specifier => `specifier ${specifier}`),
+  ...entry.runtimeImports.map(specifier => `runtime-import ${specifier}`),
+  ...entry.launches.map(launch => `launch ${[launch.binary, ...launch.argv].join(" ")}`),
+  ...entry.gpBinary.map(found => `gp-binary ${found.text}`),
+  ...entry.gpLaunches.map(found => `gp-launch ${found.text}`),
+  ...entry.dynamicLoads.map(found => `dynamic-load ${found.text}`),
+  ...entry.gpVocabulary.map(found => `gp-vocabulary ${found.text}`),
+  ...entry.gpFamily.map(found => `gp-family ${found.text}`),
+  ...entry.trainTokens.map(found => `train ${found.text}`),
+  ...(entry.namesUnknownCommand ? ["names-unknown-command"] : []),
+  ...entry.processKill.map(found => `process-kill ${found.text}`),
+  ...entry.furnaceStop.map(found => `furnace-stop ${found.text}`),
+  ...entry.bdWrite.map(found => `bd-write ${found.text}`),
+  ...entry.agentSession.map(found => `agent-session ${found.text}`),
+  ...entry.hostLaunch.map(found => `host-launch ${found.text}`),
+];
 
 type Manifest = Readonly<Record<string, unknown>>;
 
@@ -467,7 +678,7 @@ interface Falsifier {
 
 interface Pin {
   readonly id: string;
-  /** The clause, verbatim as the docs/03 boundary bullet states it. */
+  /** The clause, verbatim as the docs/03 boundary bullet states it (markdown: code spans in backticks). */
   readonly clause: string;
   readonly check: Check;
   readonly falsifiers: readonly Falsifier[];
@@ -484,6 +695,9 @@ const modulesOf = (ctx: JudgeContext, files: readonly string[]): ModuleCensus[] 
     const entry = ctx.census.get(file);
     return entry === undefined ? [] : [entry];
   });
+
+/** The findings an execution seam that imports the client earns, beside its own effect pin. */
+const DECISION_SEAM = "GP-1/a4 src/workbench/gp-decision.ts execution-imports-gp-client";
 
 const ROWS: readonly Row[] = [
   {
@@ -578,7 +792,7 @@ const ROWS: readonly Row[] = [
             name: "the decision module launches a workflow host",
             apply: fixture =>
               editModule(fixture, DECISION, text => `import { Worker } from "node:worker_threads";\n${text}\nexport const host = new Worker("./host.js");`),
-            expected: ["GP-1/a4 src/workbench/gp-decision.ts execution-imports-gp-client"],
+            expected: [DECISION_SEAM],
           },
         ],
       },
@@ -648,16 +862,13 @@ const ROWS: readonly Row[] = [
       {
         id: "c2",
         clause: "the dependency manifest declares no training framework and no GraphPolicyCLI package other than graph-policy-cli",
-        check: ctx => {
-          const findings: Finding[] = [];
-          for (const section of RUNTIME_SECTIONS) {
-            for (const name of namesIn(ctx.manifest, section)) if (TRAINING_FRAMEWORKS.test(name)) findings.push({ file: MANIFEST, code: `training-framework-${name}` });
-          }
-          for (const section of ALL_SECTIONS) {
-            for (const name of namesIn(ctx.manifest, section)) if (GP_FAMILY.test(name) && name !== GP_PACKAGE) findings.push({ file: MANIFEST, code: `gp-package-${name}` });
-          }
-          return findings;
-        },
+        check: ctx =>
+          ALL_SECTIONS.flatMap(section =>
+            namesIn(ctx.manifest, section).flatMap(name => [
+              ...(TRAINING_FRAMEWORKS.test(name) ? [{ file: MANIFEST, code: `training-framework-${name}` }] : []),
+              ...(GP_FAMILY.test(name) && name !== GP_PACKAGE ? [{ file: MANIFEST, code: `gp-package-${name}` }] : []),
+            ]),
+          ),
         falsifiers: [
           {
             name: "the manifest declares a training framework",
@@ -685,12 +896,22 @@ const ROWS: readonly Row[] = [
           {
             name: "the decision module kills a worker",
             apply: fixture => editModule(fixture, DECISION, text => `${text}\nexport function stopWorker(pid: number): void {\n  process.kill(pid, "SIGTERM");\n}`),
-            expected: ["GP-1/a4 src/workbench/gp-decision.ts execution-imports-gp-client", "GP-4/d1 src/workbench/gp-decision.ts process-kill"],
+            expected: [DECISION_SEAM, "GP-4/d1 src/workbench/gp-decision.ts process-kill"],
           },
           {
             name: "the decision module destructures kill from process",
             apply: fixture => editModule(fixture, DECISION, text => `${text}\nconst { kill } = process;\nexport const stopWorker = (pid: number): boolean => kill(pid);`),
-            expected: ["GP-1/a4 src/workbench/gp-decision.ts execution-imports-gp-client", "GP-4/d1 src/workbench/gp-decision.ts process-kill"],
+            expected: [DECISION_SEAM, "GP-4/d1 src/workbench/gp-decision.ts process-kill"],
+          },
+          {
+            name: "the decision module imports kill from node:process",
+            apply: fixture => editModule(fixture, DECISION, text => `import { kill } from "node:process";\n${text}\nexport const stopWorker = (pid: number): boolean => kill(pid);`),
+            expected: [DECISION_SEAM, "GP-4/d1 src/workbench/gp-decision.ts process-kill"],
+          },
+          {
+            name: "the decision module kills through a default import of node:process",
+            apply: fixture => editModule(fixture, DECISION, text => `import proc from "node:process";\n${text}\nexport const stopWorker = (pid: number): boolean => proc.kill(pid);`),
+            expected: [DECISION_SEAM, "GP-4/d1 src/workbench/gp-decision.ts process-kill"],
           },
         ],
       },
@@ -703,19 +924,31 @@ const ROWS: readonly Row[] = [
             name: "the decision module closes a bead",
             apply: fixture =>
               editModule(fixture, DECISION, text => `import { execFileSync } from "node:child_process";\n${text}\nexport const closeBead = (id: string): Buffer => execFileSync("bd", ["close", id]);`),
-            expected: ["GP-1/a4 src/workbench/gp-decision.ts execution-imports-gp-client", "GP-4/d2 src/workbench/gp-decision.ts bd-write"],
+            expected: [DECISION_SEAM, "GP-4/d2 src/workbench/gp-decision.ts bd-write"],
           },
           {
             name: "the decision module closes a bead through a templated shell command",
             apply: fixture =>
               editModule(fixture, DECISION, text => `import { execSync } from "node:child_process";\n${text}\nexport const closeBead = (id: string): Buffer => execSync(\`bd close \${id}\`);`),
-            expected: ["GP-1/a4 src/workbench/gp-decision.ts execution-imports-gp-client", "GP-4/d2 src/workbench/gp-decision.ts bd-write"],
+            expected: [DECISION_SEAM, "GP-4/d2 src/workbench/gp-decision.ts bd-write"],
           },
           {
             name: "the decision module closes a bead through a shell command",
             apply: fixture =>
               editModule(fixture, DECISION, text => `import { execSync } from "node:child_process";\n${text}\nexport const closeBead = (): Buffer => execSync("bd close wb-example --reason done");`),
-            expected: ["GP-1/a4 src/workbench/gp-decision.ts execution-imports-gp-client", "GP-4/d2 src/workbench/gp-decision.ts bd-write"],
+            expected: [DECISION_SEAM, "GP-4/d2 src/workbench/gp-decision.ts bd-write"],
+          },
+          {
+            name: "the decision module closes a bead behind an environment assignment",
+            apply: fixture =>
+              editModule(fixture, DECISION, text => `import { execSync } from "node:child_process";\n${text}\nexport const closeBead = (): Buffer => execSync("BEADS_ACTOR=machine bd close wb-example");`),
+            expected: [DECISION_SEAM, "GP-4/d2 src/workbench/gp-decision.ts bd-write"],
+          },
+          {
+            name: "the decision module closes a bead through sh -c",
+            apply: fixture =>
+              editModule(fixture, DECISION, text => `import { spawnSync } from "node:child_process";\n${text}\nexport const closeBead = () => spawnSync("sh", ["-c", "bd close wb-example"]);`),
+            expected: [DECISION_SEAM, "GP-4/d2 src/workbench/gp-decision.ts bd-write"],
           },
         ],
       },
@@ -732,13 +965,33 @@ const ROWS: readonly Row[] = [
                 DECISION,
                 text => `declare const furnace: { readonly attempts: { stop(id: string): Promise<void> } };\n${text}\nexport const stopAttempt = (id: string): Promise<void> => furnace.attempts.stop(id);`,
               ),
-            expected: ["GP-1/a4 src/workbench/gp-decision.ts execution-imports-gp-client", "GP-4/d3 src/workbench/gp-decision.ts furnace-stop"],
+            expected: [DECISION_SEAM, "GP-4/d3 src/workbench/gp-decision.ts furnace-stop"],
           },
           {
             name: "the decision module stops a Run through its handle",
             apply: fixture =>
               editModule(fixture, DECISION, text => `declare const activeRun: { stop(): Promise<void> };\n${text}\nexport const stopRun = (): Promise<void> => activeRun.stop();`),
-            expected: ["GP-1/a4 src/workbench/gp-decision.ts execution-imports-gp-client", "GP-4/d3 src/workbench/gp-decision.ts furnace-stop"],
+            expected: [DECISION_SEAM, "GP-4/d3 src/workbench/gp-decision.ts furnace-stop"],
+          },
+          {
+            name: "the decision module stops a Run by element access",
+            apply: fixture =>
+              editModule(
+                fixture,
+                DECISION,
+                text => `declare const furnace: { readonly runs: { stop(id: string): Promise<void> } };\n${text}\nexport const stopRun = (id: string): Promise<void> => furnace.runs["stop"](id);`,
+              ),
+            expected: [DECISION_SEAM, "GP-4/d3 src/workbench/gp-decision.ts furnace-stop"],
+          },
+          {
+            name: "the decision module stops a Run through a bound stop owner",
+            apply: fixture =>
+              editModule(
+                fixture,
+                DECISION,
+                text => `declare const furnace: { readonly runs: { stop(id: string): Promise<void> } };\n${text}\nconst lane = furnace.runs;\nexport const stopRun = (id: string): Promise<void> => lane.stop(id);`,
+              ),
+            expected: [DECISION_SEAM, "GP-4/d3 src/workbench/gp-decision.ts furnace-stop"],
           },
         ],
       },
@@ -747,10 +1000,10 @@ const ROWS: readonly Row[] = [
 ];
 
 /** Every finding, as "<row>/<pin> <file> <code>": rows and pins in table order, each pin's findings sorted. */
-function judge(tree: SourceTree, seams: readonly GpSeam[]): string[] {
-  const ctx = contextOf(tree, seams);
+function judgeContext(ctx: JudgeContext): string[] {
   return ROWS.flatMap(row => row.pins.flatMap(pin => pin.check(ctx).map(finding => `${row.id}/${pin.id} ${finding.file} ${finding.code}`).sort()));
 }
+const judge = (tree: SourceTree, seams: readonly GpSeam[]): string[] => judgeContext(contextOf(tree, seams));
 
 /** A blind spot of the token census: a NAMED family whose representative source the census reports quiet (pinned). */
 interface Residual {
@@ -785,18 +1038,599 @@ const RESIDUALS: readonly Residual[] = [
   },
   {
     id: "ALIASED-EFFECT",
-    family: "a kill reached through an alias of process",
-    apply: fixture => editModule(fixture, DECISION, text => `${text}\nconst host = process;\nexport function stopWorker(pid: number): void {\n  host.kill(pid);\n}`),
+    family: "a kill, a Furnace stop or a launcher reached through a value the census does not follow: a parameter, an assignment after the declaration, an object property or a return value",
+    apply: fixture =>
+      editModule(fixture, DECISION, text =>
+        [
+          'import { spawnSync } from "node:child_process";',
+          "declare const furnace: { readonly runs: { stop(id: string): Promise<void> } };",
+          text,
+          "function killVia(target: { kill(pid: number): boolean }, pid: number): boolean {",
+          "  return target.kill(pid);",
+          "}",
+          "function stopVia(lanes: { stop(id: string): Promise<void> }, id: string): Promise<void> {",
+          "  return lanes.stop(id);",
+          "}",
+          "function launchVia(launch: typeof spawnSync, id: string): unknown {",
+          '  return launch("bd", ["close", id]);',
+          "}",
+          "export const stopWorker = (pid: number): boolean => killVia(process, pid);",
+          "export const stopRun = (id: string): Promise<void> => stopVia(furnace.runs, id);",
+          "export const closeBead = (id: string): unknown => launchVia(spawnSync, id);",
+        ].join("\n"),
+      ),
   },
   {
     id: "TRAINING-FRAMEWORK-ROSTER",
     family: "a training framework outside the census deny roster that no decision path imports",
     apply: fixture => withDependency(fixture, "dependencies", "example-ml-trainer", "1.0.0"),
   },
+  {
+    id: "WRAPPED-COMMAND",
+    family: "a launch wrapped by a program the census does not unwrap, such as timeout, sudo, nice or xargs",
+    apply: fixture =>
+      editModule(fixture, DECISION, text => `import { execSync } from "node:child_process";\n${text}\nexport const closeBead = (): Buffer => execSync("timeout 5 bd close wb-example");`),
+  },
+  {
+    id: "FOREIGN-LAUNCHER",
+    family: "a launch through a package launcher outside the child_process roster, such as execa",
+    apply: fixture => editModule(fixture, DECISION, text => `import { execa } from "execa";\n${text}\nexport const closeBead = (id: string): unknown => execa("bd", ["close", id]);`),
+  },
 ];
 
-let liveMemo: { readonly tree: SourceTree; readonly census: readonly ModuleCensus[] } | undefined;
-function live(): { readonly tree: SourceTree; readonly census: readonly ModuleCensus[] } {
+/** One claimed detector member (or a family of them), its probe module and the exact census signature the probe must produce. */
+interface DetectorProbe {
+  readonly key: string;
+  readonly member: string;
+  readonly source: readonly string[];
+  readonly signature: readonly string[];
+}
+
+/** The bd verbs the probes launch, written out here rather than read from BD_READ_VERBS, so a verb dropped from the read set, or a write verb added to it, reds. */
+const BD_READ_PROBES: readonly string[] = ["show", "list", "ready", "blocked", "search", "stats", "status", "count", "info", "where", "version", "help", "graph", "doctor"];
+const BD_WRITE_VERBS: readonly string[] = ["close", "update", "create", "delete", "reopen", "dep", "comment", "label", "edit"];
+
+/** WHAT THE CENSUS CLAIMS: every detector member, one probe each (a shape outside this table is not claimed). */
+const DETECTORS: readonly DetectorProbe[] = [
+  {
+    key: "specifiers",
+    member: "every module specifier - side-effect, type-only and value imports, export-from, import-equals, import types, literal import() and require() - and which of them load at run time",
+    source: [
+      'import "./side-effect.js";',
+      'import type { A } from "./types.js";',
+      'export { b } from "./b.js";',
+      'export type { C } from "./c.js";',
+      'import eq = require("./eq.js");',
+      'type T = typeof import("./t.js");',
+      'export const lazy = import("./lazy.js");',
+      'export const required = require("./required.js");',
+    ],
+    signature: [
+      "specifier ./side-effect.js",
+      "specifier ./types.js",
+      "specifier ./b.js",
+      "specifier ./c.js",
+      "specifier ./eq.js",
+      "specifier ./t.js",
+      "specifier ./lazy.js",
+      "specifier ./required.js",
+      "runtime-import ./side-effect.js",
+      "runtime-import ./b.js",
+      "runtime-import ./eq.js",
+      "runtime-import ./lazy.js",
+      "runtime-import ./required.js",
+    ],
+  },
+  {
+    key: "launchers",
+    member: "every child_process launcher by name: spawn, spawnSync, execFile, execFileSync, exec, execSync, fork",
+    source: [
+      'spawn("kill", ["-TERM", "1"]);',
+      'spawnSync("bd", ["close", "wb-a"]);',
+      'execFile("furnace", ["run", "stop", "frn-run-a"]);',
+      'execFileSync("gp", ["eval", "--json"]);',
+      'exec("pkill -f worker");',
+      'execSync("killall node");',
+      'fork("./worker.js", ["--id", "1"]);',
+    ],
+    signature: [
+      "launch kill -TERM 1",
+      "launch bd close wb-a",
+      "launch furnace run stop frn-run-a",
+      "launch gp eval --json",
+      "launch pkill -f worker",
+      "launch killall node",
+      "launch ./worker.js --id 1",
+      "gp-binary gp",
+      "gp-launch gp eval --json",
+      "process-kill kill",
+      "process-kill pkill",
+      "process-kill killall",
+      "furnace-stop furnace run stop frn-run-a",
+      "bd-write bd close wb-a",
+    ],
+  },
+  {
+    key: "launcher-bindings",
+    member: "a launcher through a renamed import, a member bound to a variable, a destructured member and a namespace member",
+    source: [
+      'import * as cp from "node:child_process";',
+      'import { spawnSync as run } from "node:child_process";',
+      "const sync = cp.execFileSync;",
+      "const { execSync: shell } = cp;",
+      'run("bd", ["update", "wb-a"]);',
+      'sync("bd", ["delete", "wb-b"]);',
+      'shell("bd reopen wb-c");',
+      'cp.spawn("bd", ["label", "wb-d"]);',
+    ],
+    signature: [
+      "specifier node:child_process",
+      "specifier node:child_process",
+      "runtime-import node:child_process",
+      "runtime-import node:child_process",
+      "launch bd update wb-a",
+      "launch bd delete wb-b",
+      "launch bd reopen wb-c",
+      "launch bd label wb-d",
+      "bd-write bd update wb-a",
+      "bd-write bd delete wb-b",
+      "bd-write bd reopen wb-c",
+      "bd-write bd label wb-d",
+    ],
+  },
+  {
+    key: "binary-resolution",
+    member: "a launched binary named by a same-file string constant, and execPath read on process or on a binding of it",
+    source: ['import proc from "node:process";', 'const BD = "bd";', 'spawnSync(BD, ["comment", "wb-a"]);', 'spawn(process.execPath, ["host.js"]);', 'spawn(proc.execPath, ["host2.js"]);'],
+    signature: [
+      "specifier node:process",
+      "runtime-import node:process",
+      "launch bd comment wb-a",
+      "launch <process.execPath> host.js",
+      "launch <process.execPath> host2.js",
+      "bd-write bd comment wb-a",
+      "host-launch <process.execPath>",
+      "host-launch <process.execPath>",
+    ],
+  },
+  {
+    key: "argv-arrays",
+    member: "an argv array naming a roster binary first (gp, bd, furnace, kill, pkill, killall, sh, bash, zsh, dash, ksh), a shell's -c script followed",
+    source: [
+      "export const argvs = [",
+      '  ["gp", "eval"],',
+      '  ["bd", "close", "wb-a"],',
+      '  ["furnace", "attempt", "stop", "frn-atm-a"],',
+      '  ["kill", "1"],',
+      '  ["pkill", "w"],',
+      '  ["killall", "w"],',
+      '  ["sh", "-c", "bd close wb-b"],',
+      '  ["bash", "-c", "bd close wb-c"],',
+      '  ["zsh", "-c", "bd close wb-d"],',
+      '  ["dash", "-c", "bd close wb-e"],',
+      '  ["ksh", "-c", "bd close wb-f"],',
+      "];",
+    ],
+    signature: [
+      "launch gp eval",
+      "launch bd close wb-a",
+      "launch furnace attempt stop frn-atm-a",
+      "launch kill 1",
+      "launch pkill w",
+      "launch killall w",
+      "launch sh -c bd close wb-b",
+      "launch bd close wb-b",
+      "launch bash -c bd close wb-c",
+      "launch bd close wb-c",
+      "launch zsh -c bd close wb-d",
+      "launch bd close wb-d",
+      "launch dash -c bd close wb-e",
+      "launch bd close wb-e",
+      "launch ksh -c bd close wb-f",
+      "launch bd close wb-f",
+      "gp-binary gp",
+      "gp-launch gp eval",
+      "process-kill kill",
+      "process-kill pkill",
+      "process-kill killall",
+      "furnace-stop furnace attempt stop frn-atm-a",
+      "bd-write bd close wb-a",
+      "bd-write bd close wb-b",
+      "bd-write bd close wb-c",
+      "bd-write bd close wb-d",
+      "bd-write bd close wb-e",
+      "bd-write bd close wb-f",
+    ],
+  },
+  {
+    key: "shell-lines",
+    member: "a shell command line split into simple commands: NAME=value assignments and an env prefix skipped, ; & | and newlines split, quotes removed",
+    source: [
+      'execSync("BEADS_ACTOR=machine NO_COLOR=1 bd close wb-a");',
+      'execSync("env BEADS_ACTOR=machine bd update wb-b");',
+      'execSync("cd /tmp && bd create wb-c; bd delete wb-d | cat\\nbd edit wb-e &");',
+      "execSync(\"sh -c 'bd reopen wb-f'\");",
+      "execSync('bash -c \"bd label wb-g\"');",
+    ],
+    signature: [
+      "launch bd close wb-a",
+      "launch bd update wb-b",
+      "launch cd /tmp",
+      "launch bd create wb-c",
+      "launch bd delete wb-d",
+      "launch cat",
+      "launch bd edit wb-e",
+      "launch sh -c bd reopen wb-f",
+      "launch bd reopen wb-f",
+      "launch bash -c bd label wb-g",
+      "launch bd label wb-g",
+      "bd-write bd close wb-a",
+      "bd-write bd update wb-b",
+      "bd-write bd create wb-c",
+      "bd-write bd delete wb-d",
+      "bd-write bd edit wb-e",
+      "bd-write bd reopen wb-f",
+      "bd-write bd label wb-g",
+    ],
+  },
+  {
+    key: "shell-c-scripts",
+    member: "a shell's -c script in a launcher's argv, a -c flag cluster, a templated script's static head and a script nested in a script",
+    source: ["declare const id: string;", 'spawnSync("sh", ["-c", "bd close wb-a"]);', `spawnSync("bash", ["-lc", \`bd update --id=\${id}\`]);`, `spawnSync("sh", ["-c", "bash -c 'bd close wb-n'"]);`],
+    signature: [
+      "launch sh -c bd close wb-a",
+      "launch bd close wb-a",
+      "launch bash -lc bd update --id=",
+      "launch bd update --id=",
+      "launch sh -c bash -c 'bd close wb-n'",
+      "launch bash -c bd close wb-n",
+      "launch bd close wb-n",
+      "bd-write bd close wb-a",
+      "bd-write bd update --id=",
+      "bd-write bd close wb-n",
+    ],
+  },
+  {
+    key: "shell-heads",
+    member: "a templated shell line's static head, and a launcher's whitespace-bearing command (shell: true)",
+    source: ["declare const id: string;", `execSync(\`bd close \${id}\`);`, 'spawn("bd delete wb-a", { shell: true });'],
+    signature: ["launch bd close", "launch bd delete wb-a", "bd-write bd close", "bd-write bd delete wb-a"],
+  },
+  {
+    key: "kill-accesses",
+    member: "process.kill read on process, globalThis.process, globalThis['process'], by element access and through a type assertion",
+    source: ["process.kill(1);", "globalThis.process.kill(2);", 'process["kill"](3);', 'globalThis["process"].kill(4);', "(process as NodeJS.Process).kill(5);"],
+    signature: [
+      "process-kill process.kill",
+      "process-kill globalThis.process.kill",
+      'process-kill process["kill"]',
+      'process-kill globalThis["process"].kill',
+      "process-kill (process as NodeJS.Process).kill",
+    ],
+  },
+  {
+    key: "kill-bindings",
+    member: "kill named by an import from the process module (renamed included) or destructured from process or a require of it",
+    source: ['import { kill } from "node:process";', 'import { kill as end } from "process";', "const { kill: stopProcess } = process;", 'const { kill: viaRequire } = require("node:process");'],
+    signature: [
+      "specifier node:process",
+      "specifier process",
+      "specifier node:process",
+      "runtime-import node:process",
+      "runtime-import process",
+      "runtime-import node:process",
+      "process-kill import kill from node:process",
+      "process-kill import kill as end from process",
+      "process-kill process.kill",
+      'process-kill require("node:process").kill',
+    ],
+  },
+  {
+    key: "process-bindings",
+    member: "kill on a binding of the process object: a default, namespace or import-equals import, a require, a variable alias (chains followed to a fixpoint, in any order)",
+    source: [
+      'import procA from "node:process";',
+      'import * as procB from "process";',
+      'import procC = require("node:process");',
+      'const procD = require("process");',
+      "const procE = process;",
+      "const procF = procE;",
+      "procA.kill(1);",
+      "procB.kill(2);",
+      "procC.kill(3);",
+      "procD.kill(4);",
+      "procF.kill(5);",
+      'require("node:process").kill(6);',
+      "const procG = procH;",
+      "const procH = process;",
+      "procG.kill(7);",
+    ],
+    signature: [
+      "specifier node:process",
+      "specifier process",
+      "specifier node:process",
+      "specifier process",
+      "specifier node:process",
+      "runtime-import node:process",
+      "runtime-import process",
+      "runtime-import node:process",
+      "runtime-import process",
+      "runtime-import node:process",
+      "process-kill procA.kill",
+      "process-kill procB.kill",
+      "process-kill procC.kill",
+      "process-kill procD.kill",
+      "process-kill procF.kill",
+      'process-kill require("node:process").kill',
+      "process-kill procG.kill",
+    ],
+  },
+  {
+    key: "stop-owners",
+    member: "stop on every Furnace stop owner: runs, attempts, supervision, host",
+    source: [
+      "declare const client: { runs: { stop(): void }; attempts: { stop(): void }; supervision: { stop(): void }; host: { stop(): void } };",
+      "client.runs.stop();",
+      "client.attempts.stop();",
+      "client.supervision.stop();",
+      "client.host.stop();",
+    ],
+    signature: ["furnace-stop client.runs.stop", "furnace-stop client.attempts.stop", "furnace-stop client.supervision.stop", "furnace-stop client.host.stop"],
+  },
+  {
+    key: "stop-forms",
+    member: "stop by element access, on an owner by element access, through an owner bound to a variable or destructured, and stop destructured from an owner",
+    source: [
+      "declare const furnace: { runs: { stop(id: string): void }; attempts: { stop(id: string): void } };",
+      'furnace.runs["stop"]("r1");',
+      'furnace["attempts"].stop("a1");',
+      "const lane = furnace.runs;",
+      'lane.stop("r2");',
+      "const { attempts } = furnace;",
+      'attempts.stop("a2");',
+      "const { stop } = furnace.runs;",
+      'stop("r3");',
+    ],
+    signature: [
+      'furnace-stop furnace.runs["stop"]',
+      'furnace-stop furnace["attempts"].stop',
+      "furnace-stop lane.stop",
+      "furnace-stop attempts.stop",
+      "furnace-stop furnace.runs.stop",
+    ],
+  },
+  {
+    key: "stop-handles",
+    member: "stop on a Run or Attempt handle by name (run, runX, attempt, attemptX, xRun, xAttempt) or bound to a variable",
+    source: [
+      "declare const run: { stop(): void }, runHandle: { stop(): void }, attempt: { stop(): void }, attemptRef: { stop(): void }, activeRun: { stop(): void }, currentAttempt: { stop(): void };",
+      "run.stop();",
+      "runHandle.stop();",
+      "attempt.stop();",
+      "attemptRef.stop();",
+      "activeRun.stop();",
+      "currentAttempt.stop();",
+      "const held = activeRun;",
+      "held.stop();",
+    ],
+    signature: [
+      "furnace-stop run.stop",
+      "furnace-stop runHandle.stop",
+      "furnace-stop attempt.stop",
+      "furnace-stop attemptRef.stop",
+      "furnace-stop activeRun.stop",
+      "furnace-stop currentAttempt.stop",
+      "furnace-stop held.stop",
+    ],
+  },
+  {
+    key: "bd-read-verbs",
+    member: "every bd read verb reads: show, list, ready, blocked, search, stats, status, count, info, where, version, help, graph, doctor",
+    source: BD_READ_PROBES.map(verb => `spawnSync("bd", ["${verb}"]);`),
+    signature: BD_READ_PROBES.map(verb => `launch bd ${verb}`),
+  },
+  {
+    key: "bd-write-verbs",
+    member: "a bd launch writes when its verb is not a read verb, or is not a literal",
+    source: [...BD_WRITE_VERBS.map(verb => `spawnSync("bd", ["${verb}"]);`), "declare const verb: string;", 'spawnSync("bd", [verb, "--json"]);'],
+    signature: [...BD_WRITE_VERBS.map(verb => `launch bd ${verb}`), "launch bd --json", ...BD_WRITE_VERBS.map(verb => `bd-write bd ${verb}`), "bd-write bd --json"],
+  },
+  {
+    key: "agent-session",
+    member: "every Agent SDK session function by named and renamed import, and a session function read on a namespace import",
+    source: [
+      'import { query, createCodeSession, attachBridgeSession, forkSession } from "@anthropic-ai/claude-agent-sdk";',
+      'import { query as sdkQuery } from "@anthropic-ai/claude-agent-sdk";',
+      'import * as sdk from "@anthropic-ai/claude-agent-sdk";',
+      'sdk.query({ prompt: "x" });',
+      'sdk.forkSession("s");',
+    ],
+    signature: [
+      "specifier @anthropic-ai/claude-agent-sdk",
+      "specifier @anthropic-ai/claude-agent-sdk",
+      "specifier @anthropic-ai/claude-agent-sdk",
+      "runtime-import @anthropic-ai/claude-agent-sdk",
+      "runtime-import @anthropic-ai/claude-agent-sdk",
+      "runtime-import @anthropic-ai/claude-agent-sdk",
+      "agent-session query",
+      "agent-session createCodeSession",
+      "agent-session attachBridgeSession",
+      "agent-session forkSession",
+      "agent-session query as sdkQuery",
+      "agent-session sdk.query",
+      "agent-session sdk.forkSession",
+    ],
+  },
+  {
+    key: "worker",
+    member: "a workflow host launched as a Worker, bare or as a namespace member",
+    source: ['new Worker("./host.js");', 'new threads.Worker("./host2.js");'],
+    signature: ["host-launch Worker", "host-launch threads.Worker"],
+  },
+  {
+    key: "gp-binary",
+    member: "the gp binary as a string token: bare gp, an absolute path, gp.exe and gp.cmd",
+    source: ['export const bare = "gp";', 'export const absolute = "/usr/local/bin/gp";', 'export const windows = "tools/gp.exe";', 'export const shim = "gp.cmd";'],
+    signature: ["gp-binary gp", "gp-binary /usr/local/bin/gp", "gp-binary tools/gp.exe", "gp-binary gp.cmd"],
+  },
+  {
+    key: "gp-package-launch",
+    member: "gp launched through the GraphPolicyCLI package: npx graph-policy-cli and node with the package's entry",
+    source: ['spawnSync("npx", ["graph-policy-cli", "eval"]);', 'spawn(process.execPath, ["node_modules/graph-policy-cli/dist/main.js"]);'],
+    signature: [
+      "launch npx graph-policy-cli eval",
+      "launch <process.execPath> node_modules/graph-policy-cli/dist/main.js",
+      "gp-launch npx graph-policy-cli eval",
+      "gp-launch <process.execPath> node_modules/graph-policy-cli/dist/main.js",
+      "gp-family graph-policy-cli",
+      "gp-family node_modules/graph-policy-cli/dist/main.js",
+      "host-launch <process.execPath>",
+    ],
+  },
+  {
+    key: "gp-vocabulary",
+    member: "gp wire vocabulary in code tokens: GraphDataIR, a graphpolicy.<surface>.v<n> schema id, GP_RPC_ and GP_CLI_ codes",
+    source: ["export interface GraphDataIR {}", 'export const schema = "graphpolicy.rpc.v1";', 'export const timeout = "GP_RPC_TIMEOUT";', 'export const badArgs = "GP_CLI_BAD_ARGS";'],
+    signature: ["gp-vocabulary GraphDataIR", "gp-vocabulary graphpolicy.rpc.v1", "gp-vocabulary GP_RPC_TIMEOUT", "gp-vocabulary GP_CLI_BAD_ARGS", "gp-family graphpolicy.rpc.v1"],
+  },
+  {
+    key: "unknown-command",
+    member: "the GP_CLI_UNKNOWN_COMMAND refusal code named",
+    source: ['export const code = "GP_CLI_UNKNOWN_COMMAND";'],
+    signature: ["gp-vocabulary GP_CLI_UNKNOWN_COMMAND", "names-unknown-command"],
+  },
+  {
+    key: "train-word",
+    member: "the train word in a string token, alone or inside a command line",
+    source: ['spawn("gp", ["train"]);', 'export const line = "gp train --program p";'],
+    signature: ["launch gp train", "gp-binary gp", "gp-launch gp train", "train train", "train gp train --program p"],
+  },
+  {
+    key: "dynamic-load",
+    member: "import() and require() of a computed specifier",
+    source: ["declare const name: string;", "export const loaded = import(name);", "export const required = require(name);"],
+    signature: ["dynamic-load import(name)", "dynamic-load require(name)"],
+  },
+  {
+    key: "gp-family",
+    member: "a GraphPolicyCLI family name in a module specifier and in an identifier",
+    source: ['import { client } from "@acme/graph_policy";', "export const graphPolicyClient = client;"],
+    signature: ["specifier @acme/graph_policy", "runtime-import @acme/graph_policy", "gp-family @acme/graph_policy", "gp-family graphPolicyClient"],
+  },
+];
+
+/** One probe name per member of the TRAINING_FRAMEWORKS deny roster, in roster order, and names one character off it. */
+const TRAINING_PROBES: readonly string[] = [
+  "tensorflow",
+  "tfjs",
+  "onnxruntime-node",
+  "torch",
+  "pytorch",
+  "brain.js",
+  "synaptic",
+  "ml5",
+  "keras",
+  "xgboost",
+  "lightgbm",
+  "catboost",
+  "scikit-learn",
+  "sklearn",
+  "@xenova/transformers",
+  "@mlc-ai/web-llm",
+];
+const TRAINING_NEAR_MISSES: readonly string[] = ["torchlight", "synaptics", "kerasx"];
+
+const F_TITLE = "F: %s is named by exactly the expected pin(s)";
+const Q_TITLE = "Q: named residual %s stays quiet (the pinned blind spot of a token census)";
+const DT_TITLE = "DT: detector %s is live on its probe (the exact census signature)";
+const titleOf = (template: string, key: string): string => template.replace("%s", key);
+const TALLY_TITLE =
+  "L: each-liveness (rule 16, U5) - every case of this file is set to run, the case count is frozen, each case is registered as the out-of-file roster lists it, each it.each registers exactly its frozen keys, every registered case reached its last assertion, and this tally is the file's last case";
+
+/**
+ * EACH-LIVENESS (U5): the case keys each it.each table registers, frozen literally at this cut - never derived from ROWS,
+ * RESIDUALS or DETECTORS - so a table thinned or emptied at its it.each call, or a row dropped from its table, reds the tally.
+ */
+const REGISTERED = {
+  F: [
+    "GP-1/a1 an unregistered module launches gp",
+    "GP-1/a1 an unregistered module runs the GraphPolicyCLI package through npx",
+    "GP-1/a1 a registered client reaches gp through no real interface",
+    "GP-1/a2 the client's gp argv carries train",
+    "GP-1/a3 the admission seam imports the telemetry writer",
+    "GP-1/a3 the admission seam imports a training framework",
+    "GP-1/a4 the decision module launches a workflow host",
+    "GP-2/b1 an unregistered module scores a GraphDataIR document",
+    "GP-2/b2 the client drops its unknown-command mapping",
+    "GP-3/c1 the client imports an unrelated package",
+    "GP-3/c1 the client loads a package by a computed name",
+    "GP-3/c2 the manifest declares a training framework",
+    "GP-3/c2 the manifest declares a GraphPolicyCLI fork",
+    "GP-4/d1 the decision module kills a worker",
+    "GP-4/d1 the decision module destructures kill from process",
+    "GP-4/d1 the decision module imports kill from node:process",
+    "GP-4/d1 the decision module kills through a default import of node:process",
+    "GP-4/d2 the decision module closes a bead",
+    "GP-4/d2 the decision module closes a bead through a templated shell command",
+    "GP-4/d2 the decision module closes a bead through a shell command",
+    "GP-4/d2 the decision module closes a bead behind an environment assignment",
+    "GP-4/d2 the decision module closes a bead through sh -c",
+    "GP-4/d3 the decision module stops an Attempt itself",
+    "GP-4/d3 the decision module stops a Run through its handle",
+    "GP-4/d3 the decision module stops a Run by element access",
+    "GP-4/d3 the decision module stops a Run through a bound stop owner",
+  ],
+  Q: ["UNNAMED-NUMERICS", "LOCAL-SUBSTITUTE", "COMPUTED-BINARY", "DYNAMIC-ARGV", "ALIASED-EFFECT", "TRAINING-FRAMEWORK-ROSTER", "WRAPPED-COMMAND", "FOREIGN-LAUNCHER"],
+  DT: [
+    "specifiers",
+    "launchers",
+    "launcher-bindings",
+    "binary-resolution",
+    "argv-arrays",
+    "shell-lines",
+    "shell-c-scripts",
+    "shell-heads",
+    "kill-accesses",
+    "kill-bindings",
+    "process-bindings",
+    "stop-owners",
+    "stop-forms",
+    "stop-handles",
+    "bd-read-verbs",
+    "bd-write-verbs",
+    "agent-session",
+    "worker",
+    "gp-binary",
+    "gp-package-launch",
+    "gp-vocabulary",
+    "unknown-command",
+    "train-word",
+    "dynamic-load",
+    "gp-family",
+  ],
+} as const satisfies Readonly<Record<"F" | "Q" | "DT", readonly string[]>>;
+/** Every case this file registers: 14 fixed cases, the three it.each tables and the closing tally. */
+const FILE_CASES = 74;
+/** What this run's it.each cases did, recorded by each case at its last line; the closing tally pins every list. */
+const RAN: Record<"F" | "Q" | "DT", string[]> = { F: [], Q: [], DT: [] };
+
+/** One node of vitest's task tree, as far as the tally reads it. */
+interface TaskNode {
+  readonly type: string;
+  readonly name: string;
+  readonly mode?: string;
+  readonly tasks?: readonly TaskNode[];
+}
+/** Every test case vitest registered in this file, in registration order, with its run mode, read from the runner's own task tree. */
+function registeredTests(tasks: readonly TaskNode[]): { readonly name: string; readonly mode: string | undefined }[] {
+  return tasks.flatMap(child => (child.type === "test" ? [{ name: child.name, mode: child.mode }] : child.type === "suite" ? registeredTests(child.tasks ?? []) : []));
+}
+
+/** The live-tree rows parse every src module (115+ TypeScript ASTs) once per run: a budget above vitest's 5 s default at gate load (gate F4). */
+const LIVE_BUDGET_MS = 60_000;
+let liveMemo: { readonly tree: SourceTree; readonly ctx: JudgeContext } | undefined;
+/** The live tree and its judge context, built once per run and shared by every R0 row. */
+function live(): { readonly tree: SourceTree; readonly ctx: JudgeContext } {
   if (liveMemo !== undefined) return liveMemo;
   const files: string[] = [];
   const walk = (dir: string): void => {
@@ -811,111 +1645,153 @@ function live(): { readonly tree: SourceTree; readonly census: readonly ModuleCe
   walk(join(ROOT, "src"));
   const modules = new Map(files.map(full => [relative(ROOT, full).split(sep).join("/"), readFileSync(full, "utf8")] as const));
   const tree: SourceTree = { modules, manifest: JSON.parse(readFileSync(join(ROOT, MANIFEST), "utf8")) as Manifest };
-  liveMemo = { tree, census: [...modules].map(([file, text]) => moduleCensus(file, text)) };
+  liveMemo = { tree, ctx: contextOf(tree, GP_SEAMS) };
   return liveMemo;
 }
 
 const readRepo = (path: string): string => readFileSync(join(ROOT, path), "utf8");
 
-/** The docs/03 boundary section's body: the lines after its heading, up to the next level-2 heading. */
-function boundarySection(page: string): string | undefined {
-  const lines = page.split("\n");
-  const start = lines.indexOf(BOUNDARY_HEADING);
-  if (start < 0) return undefined;
-  const rest = lines.slice(start + 1);
-  const end = rest.findIndex(line => line.startsWith("## "));
-  return (end < 0 ? rest : rest.slice(0, end)).join("\n");
-}
-
-const BULLET = /^- \*\*(GP-\d+) ([^:*]+):\*\* (.+)\.$/;
-function docsRows(section: string): Array<{ id: string; label: string; clauses: string[] }> {
-  return section.split("\n").flatMap(line => {
-    const match = BULLET.exec(line);
-    return match === null ? [] : [{ id: match[1] ?? "", label: match[2] ?? "", clauses: (match[3] ?? "").split("; ") }];
-  });
-}
-
+/** A rule bullet's markdown, as docs/03 writes it: the bold id and label, then its clauses joined by semicolons. */
+const ruleMarkdown = (row: Row): string => `**${row.id} ${row.label}:** ${row.pins.map(pin => pin.clause).join("; ")}.`;
+/** What a reader sees of a rule bullet: the bold markers and the code-span backticks render no text. */
+const renderedRule = (row: Row): string => ruleMarkdown(row).replace(/\*\*|`/g, "");
+const residualLine = (): string => `Named residuals, each pinned by a quiet row that the census keeps silent: ${RESIDUALS.map(residual => `${residual.id} (${residual.family})`).join("; ")}.`;
+/** docs/03 section "GraphPolicyCLI boundary", block by block as a reader sees it (sectionMatches pins the whole list). */
+const boundaryBlocks = (): RenderedBlock[] => [
+  { kind: "paragraph", text: BOUNDARY_INTRO, markdown: BOUNDARY_INTRO },
+  { kind: "list", ordered: false, items: ROWS.map(row => ({ text: renderedRule(row), markdown: ruleMarkdown(row) })) },
+  { kind: "paragraph", text: residualLine(), markdown: residualLine() },
+];
+const boundarySection = (): ReturnType<typeof docsSection> => docsSection(readRepo(DOCS_03), BOUNDARY_HEADING, 2, [PAGE_TITLE]);
 const RESIDUAL_ENTRY = /([A-Z][A-Z-]*[A-Z]) \(([^)]+)\)/g;
-function docsResiduals(section: string): Array<{ id: string; family: string }> {
-  const entry = section.split("\n").find(line => line.startsWith("Named residuals"));
-  return entry === undefined ? [] : [...entry.matchAll(RESIDUAL_ENTRY)].map(match => ({ id: match[1] ?? "", family: match[2] ?? "" }));
+
+/** The census tables as the roster lists them: rows with pins, clauses and falsifier expectations, residuals, detector probes by SHA-256. */
+interface Roster {
+  readonly census: string;
+  readonly bead: string;
+  readonly rows: readonly unknown[];
+  readonly residuals: readonly unknown[];
+  readonly detectors: readonly unknown[];
+  readonly registered: readonly string[];
 }
+const readRoster = (): Roster => JSON.parse(readRepo(ROSTER)) as Roster;
+const sha256 = (value: unknown): string => createHash("sha256").update(JSON.stringify(value)).digest("hex");
+const rosterRows = (): unknown[] =>
+  ROWS.map(row => ({ id: row.id, label: row.label, pins: row.pins.map(pin => ({ id: pin.id, clause: pin.clause, falsifiers: pin.falsifiers.map(falsifier => ({ name: falsifier.name, expected: falsifier.expected })) })) }));
+const rosterResiduals = (): unknown[] => RESIDUALS.map(residual => ({ id: residual.id, family: residual.family }));
+const rosterDetectors = (): unknown[] => DETECTORS.map(probe => ({ key: probe.key, member: probe.member, probe: sha256({ source: probe.source, signature: probe.signature }) }));
 
 const FALSIFIER_CASES = ROWS.flatMap(row => row.pins.flatMap(pin => pin.falsifiers.map(falsifier => [`${row.id}/${pin.id} ${falsifier.name}`, `${row.id}/${pin.id}`, falsifier] as const)));
+const RESIDUAL_CASES = RESIDUALS.map(residual => [residual.id, residual] as const);
+const DETECTOR_CASES = DETECTORS.map(probe => [probe.key, probe] as const);
 
 describe("wb-1xvp.2: Pi reaches GraphPolicyCLI only through its real interfaces (RF-GRAPH-POLICY-MACHINE-CONTROL-R1)", () => {
-  it("R0: the census reads every src module (an independent recursive listing agrees)", () => {
-    const { tree } = live();
-    const listed = readdirSync(join(ROOT, "src"), { recursive: true, withFileTypes: true })
-      .filter(entry => entry.isFile() && SOURCE_EXTENSIONS.has(posix.extname(entry.name)))
-      .map(entry => relative(ROOT, join(entry.parentPath, entry.name)).split(sep).join("/"))
-      .sort();
-    expect([...tree.modules.keys()].sort()).toEqual(listed);
-    expect(listed.length).toBeGreaterThan(100);
-  });
+  it(
+    "R0: the census reads every src module (an independent recursive listing agrees)",
+    () => {
+      const { tree } = live();
+      const listed = readdirSync(join(ROOT, "src"), { recursive: true, withFileTypes: true })
+        .filter(entry => entry.isFile() && SOURCE_EXTENSIONS.has(posix.extname(entry.name)))
+        .map(entry => relative(ROOT, join(entry.parentPath, entry.name)).split(sep).join("/"))
+        .sort();
+      expect([...tree.modules.keys()].sort()).toEqual(listed);
+      expect(listed.length).toBeGreaterThan(100);
+    },
+    LIVE_BUDGET_MS,
+  );
 
-  it("R0: the live gp roster is empty - no gp binary, GraphPolicyCLI name or specifier, gp vocabulary or unknown-command name in any src module, none in package.json, no gp seam registered (frozen)", () => {
-    const { tree, census } = live();
-    const roster = census.flatMap(entry => [
-      ...entry.gpBinary.map(found => `${entry.file}:${found.line} binary ${found.text}`),
-      ...entry.specifiers.filter(specifier => GP_FAMILY.test(specifier)).map(specifier => `${entry.file} specifier ${specifier}`),
-      ...entry.gpVocabulary.map(found => `${entry.file}:${found.line} vocabulary ${found.text}`),
-      ...entry.gpFamily.map(found => `${entry.file}:${found.line} family ${found.text}`),
-      ...(entry.namesUnknownCommand ? [`${entry.file} names ${UNKNOWN_COMMAND}`] : []),
-    ]);
-    expect(roster).toEqual([]);
-    expect(ALL_SECTIONS.flatMap(section => namesIn(tree.manifest, section).filter(name => GP_FAMILY.test(name) || TRAINING_FRAMEWORKS.test(name)))).toEqual([]);
-    expect(GP_SEAMS).toEqual([]);
-  });
+  it(
+    "R0: the live gp roster is empty - no gp binary, GraphPolicyCLI name or specifier, gp vocabulary or unknown-command name in any src module, none in package.json, no gp seam registered (frozen)",
+    () => {
+      const { tree, ctx } = live();
+      const roster = [...ctx.census.values()].flatMap(entry => [
+        ...entry.gpBinary.map(found => `${entry.file}:${found.line} binary ${found.text}`),
+        ...entry.specifiers.filter(specifier => GP_FAMILY.test(specifier)).map(specifier => `${entry.file} specifier ${specifier}`),
+        ...entry.gpVocabulary.map(found => `${entry.file}:${found.line} vocabulary ${found.text}`),
+        ...entry.gpFamily.map(found => `${entry.file}:${found.line} family ${found.text}`),
+        ...(entry.namesUnknownCommand ? [`${entry.file} names ${UNKNOWN_COMMAND}`] : []),
+      ]);
+      expect(roster).toEqual([]);
+      expect(ALL_SECTIONS.flatMap(section => namesIn(tree.manifest, section).filter(name => GP_FAMILY.test(name) || TRAINING_FRAMEWORKS.test(name)))).toEqual([]);
+      expect(GP_SEAMS).toEqual([]);
+    },
+    LIVE_BUDGET_MS,
+  );
 
-  it("R0: the live tree judges clean under every pin", () => {
-    expect(judge(live().tree, GP_SEAMS)).toEqual([]);
-  });
+  it(
+    "R0: the live tree judges clean under every pin",
+    () => {
+      expect(judgeContext(live().ctx)).toEqual([]);
+    },
+    LIVE_BUDGET_MS,
+  );
 
-  it("R0: the census is not blind on the live tree - it sees the known launch, kill, stop, agent-session and host-launch sites and the real manifest", () => {
-    const { tree, census } = live();
-    const launches = census.flatMap(entry => entry.launches.map(launch => `${entry.file} ${launch.binary}`));
-    expect(launches).toEqual(
-      expect.arrayContaining(["src/index.ts git", "src/workbench/providers/forge.ts forge", "src/workbench/providers/reactivefiber.ts rf", "src/workbench/hosts/local-detached.ts <process.execPath>"]),
-    );
-    const ctx = contextOf(tree, GP_SEAMS);
-    expect(ctx.executionSeams).toEqual(
-      expect.arrayContaining(["src/schedule-store.ts", "src/workbench/furnace-control.ts", "src/workbench/claude-host.ts", "src/workflow/runtime.ts", "src/workbench/hosts/local-detached.ts"]),
-    );
-    expect(ctx.decisionPath).toEqual([]);
-    expect(ctx.adjacent).toEqual([]);
-    const writer = readRepo(TELEMETRY_WRITERS[0] ?? "");
-    expect(writer).toContain("export interface TelemetrySink");
-    expect(writer).toContain("export function emitOperationsTelemetry(");
-    expect(namesIn(tree.manifest, "dependencies")).toEqual(expect.arrayContaining(["@furnace/sdk", "@hyperunix/sdk"]));
-  });
+  it(
+    "R0: the census is not blind on the live tree - it sees the known launch, kill, stop, agent-session and host-launch sites and the real manifest",
+    () => {
+      const { tree, ctx } = live();
+      const launches = [...ctx.census.values()].flatMap(entry => entry.launches.map(launch => `${entry.file} ${launch.binary}`));
+      expect(launches).toEqual(
+        expect.arrayContaining(["src/index.ts git", "src/workbench/providers/forge.ts forge", "src/workbench/providers/reactivefiber.ts rf", "src/workbench/hosts/local-detached.ts <process.execPath>"]),
+      );
+      expect(ctx.executionSeams).toEqual(
+        expect.arrayContaining(["src/schedule-store.ts", "src/workbench/furnace-control.ts", "src/workbench/claude-host.ts", "src/workflow/runtime.ts", "src/workbench/hosts/local-detached.ts"]),
+      );
+      expect(ctx.decisionPath).toEqual([]);
+      expect(ctx.adjacent).toEqual([]);
+      const writer = readRepo(TELEMETRY_WRITERS[0] ?? "");
+      expect(writer).toContain("export interface TelemetrySink");
+      expect(writer).toContain("export function emitOperationsTelemetry(");
+      expect(namesIn(tree.manifest, "dependencies")).toEqual(expect.arrayContaining(["@furnace/sdk", "@hyperunix/sdk"]));
+    },
+    LIVE_BUDGET_MS,
+  );
 
-  it("S: the rule table keeps its frozen shape - rows, pins and falsifier counts (rule 16)", () => {
+  it("S: the census tables keep their frozen shape - rule rows, pins and falsifier counts, residual ids, detector keys, and every pin has a falsifier (rule 16)", () => {
     expect(ROWS.map(row => `${row.id}:${row.pins.map(pin => `${pin.id}x${pin.falsifiers.length}`).join(",")}`)).toEqual([
       "GP-1:a1x3,a2x1,a3x2,a4x1",
       "GP-2:b1x1,b2x1",
       "GP-3:c1x2,c2x2",
-      "GP-4:d1x2,d2x3,d3x2",
+      "GP-4:d1x4,d2x5,d3x4",
     ]);
-    expect(RESIDUALS.map(residual => residual.id)).toEqual(["UNNAMED-NUMERICS", "LOCAL-SUBSTITUTE", "COMPUTED-BINARY", "DYNAMIC-ARGV", "ALIASED-EFFECT", "TRAINING-FRAMEWORK-ROSTER"]);
+    expect(RESIDUALS.map(residual => residual.id)).toEqual(REGISTERED.Q);
+    expect(DETECTORS.map(probe => probe.key)).toEqual(REGISTERED.DT);
+    expect(ROWS.flatMap(row => row.pins.filter(pin => pin.falsifiers.length === 0).map(pin => `${row.id}/${pin.id}`)), "pins no falsifier proves live").toEqual([]);
   });
 
-  it("D: docs/03 states the four rules clause for clause as the table judges them (the anchor outside this census)", () => {
-    const section = boundarySection(readRepo(DOCS_03));
-    expect(section, `${DOCS_03} has no "${BOUNDARY_HEADING}" section`).toBeDefined();
-    expect(docsRows(section ?? "")).toEqual(ROWS.map(row => ({ id: row.id, label: row.label, clauses: row.pins.map(pin => pin.clause) })));
+  it("S: the census tables equal the out-of-file roster - every rule row, pin, clause and falsifier expectation, every residual, every detector member and the SHA-256 of its probe", () => {
+    const roster = readRoster();
+    expect([roster.census, roster.bead]).toEqual([CENSUS_FILE, "wb-1xvp.2"]);
+    expect(rosterRows(), "rule rows").toEqual(roster.rows);
+    expect(rosterResiduals(), "residuals").toEqual(roster.residuals);
+    expect(rosterDetectors(), "detector members").toEqual(roster.detectors);
   });
 
-  it("D: docs/03 names every residual this census pins quiet, family for family", () => {
-    const section = boundarySection(readRepo(DOCS_03)) ?? "";
-    expect(docsResiduals(section)).toEqual(RESIDUALS.map(residual => ({ id: residual.id, family: residual.family })));
+  it("D: docs/03 renders the GraphPolicyCLI boundary section exactly as the census pins it - its level-2 heading once, under the page title, HTML-free, block for block: the definitions, the four rules clause for clause, the residual line (the anchor outside this census)", () => {
+    const section = boundarySection();
+    expect(section.why).toBe("");
+    expect(sectionMatches(section, boundaryBlocks())).toEqual({ ok: true, why: "" });
   });
 
-  it("D: the docs/03 ownership table names GraphPolicyCLI with no gp seam registered, and the section cites the bead, its source line and this census", () => {
+  it("D: docs/03 names every residual this census pins quiet, family for family, in the rendered section", () => {
+    const section = boundarySection();
+    expect(section.why).toBe("");
+    const lines = section.blocks.flatMap(block => (block.kind === "paragraph" && block.text.startsWith("Named residuals") ? [block.text] : []));
+    expect(lines).toHaveLength(1);
+    expect([...(lines[0] ?? "").matchAll(RESIDUAL_ENTRY)].map(match => ({ id: match[1], family: match[2] }))).toEqual(RESIDUALS.map(residual => ({ id: residual.id, family: residual.family })));
+  });
+
+  it("D: the docs/03 ownership table names GraphPolicyCLI in exactly the pinned row, read from that section's own table, and the boundary section's definitions cite the bead, its source line and this census", () => {
     const page = readRepo(DOCS_03);
-    expect(page.split("\n").filter(line => line.includes("| GraphPolicyCLI |"))).toEqual([OWNERSHIP_ROW]);
-    const section = boundarySection(page) ?? "";
-    for (const citation of ["wb-1xvp.2", "RF-GRAPH-POLICY-MACHINE-CONTROL-R1", "README.md:79@6a251bf73af5", CENSUS_FILE]) expect(section, citation).toContain(citation);
+    const tables = sectionTables(page, OWNERSHIP_HEADING, 2, [PAGE_TITLE]);
+    expect(tables.why).toBe("");
+    const gpRows = tables.grids.flatMap(grid => grid.slice(1).flatMap(row => (row.some(cell => NAMES_GP.test(cell)) ? [{ header: grid[0], row }] : [])));
+    expect(gpRows).toEqual([{ header: OWNERSHIP_HEADER, row: OWNERSHIP_CELLS }]);
+    const section = boundarySection();
+    expect(section.why).toBe("");
+    const [intro] = section.blocks;
+    const text = intro?.kind === "paragraph" ? intro.text : "";
+    for (const citation of CITATIONS) expect(text, citation).toContain(citation);
   });
 
   it("F: a compliant gp integration judges clean - the rules admit a real-interface seam rather than banning gp", () => {
@@ -928,22 +1804,31 @@ describe("wb-1xvp.2: Pi reaches GraphPolicyCLI only through its real interfaces 
     expect(ctx.census.get(CLIENT)?.namesUnknownCommand).toBe(true);
   });
 
-  it("F: comments are not code - every detector reads the same census with gp, train and effect words added in comments", () => {
-    const words = "// gp GraphDataIR graph-policy-cli GP_CLI_UNKNOWN_COMMAND train process.kill bd close runs.stop new Worker";
+  it("F: comments are not code - every detector reads the same census with gp, train, shell and effect words added in comments", () => {
+    const words = "// gp GraphDataIR graph-policy-cli GP_CLI_UNKNOWN_COMMAND train process.kill bd close runs.stop new Worker execSync('sh -c bd close') node:process";
     for (const [file, text] of Object.entries(CLEAN.modules)) expect(moduleCensus(file, `${text}\n${words}\n/* ${words} */`), file).toEqual(moduleCensus(file, text));
   });
 
-  it("F: the detectors are precise - near-miss tokens report nothing", () => {
+  it("F: the detectors are precise - near-miss tokens report nothing, module specifiers included", () => {
     const nearMiss = [
       'import type { query } from "@anthropic-ai/claude-agent-sdk";',
       'import { spawn } from "node:child_process";',
+      'import { argv } from "node:process";',
+      'import "./train.js";',
+      'import "gp";',
+      'import "./graph-data-ir.js";',
       'const model = { id: "gpt-4", kind: "general-purpose", note: "constraint training" };',
       "const gp = model.id;",
       "declare const child: { kill(signal: string): void };",
       "declare const scheduler: { stop(): void };",
       "declare const runner: { stop(): void };",
-      'export function tidy(): void { child.kill("SIGTERM"); scheduler.stop(); runner.stop(); spawn("git", ["status"]); }',
-      "export const parts = [gp];",
+      "const lane = scheduler;",
+      'export function tidy(): void { child.kill("SIGTERM"); scheduler.stop(); runner.stop(); lane.stop(); scheduler["stop"](); spawn("git", ["status"]); }',
+      "export const parts = [gp, argv];",
+      "declare const execSync: (command: string) => void;",
+      'execSync("echo bd close wb-example");',
+      'execSync("git status && git diff");',
+      'spawn("sh", ["-c"]);',
     ].join("\n");
     const found = moduleCensus("src/near-miss.ts", nearMiss);
     expect([found.gpBinary, found.gpLaunches, found.dynamicLoads, found.gpVocabulary, found.trainTokens, found.processKill, found.furnaceStop, found.bdWrite, found.agentSession, found.hostLaunch]).toEqual([
@@ -959,19 +1844,76 @@ describe("wb-1xvp.2: Pi reaches GraphPolicyCLI only through its real interfaces 
       [],
     ]);
     expect(found.namesUnknownCommand).toBe(false);
-    expect(found.runtimeImports).toEqual(["node:child_process"]);
-    expect(found.launches.map(launch => launch.binary)).toEqual(["git"]);
+    expect(found.runtimeImports).toEqual(["node:child_process", "node:process", "./train.js", "gp", "./graph-data-ir.js"]);
+    expect(found.launches.map(launch => launch.binary)).toEqual(["git", "echo", "git", "git", "sh"]);
   });
 
-  it.each(FALSIFIER_CASES)("F: %s is named by exactly the expected pin(s)", (_name, pinKey, falsifier) => {
+  it("M: the manifest check reads every dependency section, for training frameworks and GraphPolicyCLI forks alike", () => {
+    const manifest: Manifest = {
+      dependencies: { [GP_PACKAGE]: "0.1.0", tensorflow: "1.0.0", "graphpolicy-dependency": "1.0.0" },
+      devDependencies: { tfjs: "1.0.0", "graphpolicy-dev": "1.0.0" },
+      optionalDependencies: { torch: "1.0.0", "graphpolicy-optional": "1.0.0" },
+      peerDependencies: { keras: "1.0.0", "graphpolicy-peer": "1.0.0" },
+      bundledDependencies: ["xgboost", "graphpolicy-bundled"],
+      bundleDependencies: ["catboost", "graphpolicy-bundle"],
+    };
+    expect(judge(treeOf({ ...CLEAN, manifest }), CLEAN.seams)).toEqual([
+      "GP-3/c2 package.json gp-package-graphpolicy-bundle",
+      "GP-3/c2 package.json gp-package-graphpolicy-bundled",
+      "GP-3/c2 package.json gp-package-graphpolicy-dependency",
+      "GP-3/c2 package.json gp-package-graphpolicy-dev",
+      "GP-3/c2 package.json gp-package-graphpolicy-optional",
+      "GP-3/c2 package.json gp-package-graphpolicy-peer",
+      "GP-3/c2 package.json training-framework-catboost",
+      "GP-3/c2 package.json training-framework-keras",
+      "GP-3/c2 package.json training-framework-tensorflow",
+      "GP-3/c2 package.json training-framework-tfjs",
+      "GP-3/c2 package.json training-framework-torch",
+      "GP-3/c2 package.json training-framework-xgboost",
+    ]);
+  });
+
+  it("M: the training deny roster refuses one probe name per member and no near miss", () => {
+    const dependencies = Object.fromEntries([...TRAINING_PROBES, ...TRAINING_NEAR_MISSES].map(name => [name, "1.0.0"]));
+    expect(judge(treeOf({ ...CLEAN, manifest: { dependencies } }), CLEAN.seams)).toEqual(TRAINING_PROBES.map(name => `GP-3/c2 package.json training-framework-${name}`).sort());
+  });
+
+  it.each(FALSIFIER_CASES)(F_TITLE, (key, pinKey, falsifier) => {
     const mutated = falsifier.apply(CLEAN);
     expect(falsifier.expected.some(expected => expected.startsWith(`${pinKey} `)), "the expectation names its own pin").toBe(true);
     expect(judge(treeOf(mutated), mutated.seams)).toEqual(falsifier.expected);
+    RAN.F.push(key);
   });
 
-  it.each(RESIDUALS.map(residual => [residual.id, residual] as const))("Q: named residual %s stays quiet (the pinned blind spot of a token census)", (_id, residual) => {
+  it.each(RESIDUAL_CASES)(Q_TITLE, (key, residual) => {
     const mutated = residual.apply(CLEAN);
     expect(mutated).not.toEqual(CLEAN);
     expect(judge(treeOf(mutated), mutated.seams)).toEqual([]);
+    RAN.Q.push(key);
+  });
+
+  it.each(DETECTOR_CASES)(DT_TITLE, (key, probe) => {
+    expect(signatureOf(moduleCensus("src/workbench/probe.ts", probe.source.join("\n")))).toEqual(probe.signature);
+    RAN.DT.push(key);
+  });
+
+  it(TALLY_TITLE, ({ task }) => {
+    const cases = registeredTests(task.file.tasks);
+    const names = cases.map(entry => entry.name);
+    expect(cases.filter(entry => entry.mode !== "run").map(entry => entry.name), "cases of this file not set to run").toEqual([]);
+    expect(cases, "the file's case count").toHaveLength(FILE_CASES);
+    expect(names, "every registered case, in registration order, as the out-of-file roster lists it").toEqual(readRoster().registered);
+    expect(names[names.length - 1], "the file's last case").toBe(TALLY_TITLE);
+    const registered = (template: string, keys: readonly string[]): void => {
+      const [prefix = "", suffix = ""] = template.split("%s");
+      expect(
+        names.filter(name => name.startsWith(prefix) && name.endsWith(suffix)),
+        prefix,
+      ).toEqual(keys.map(key => titleOf(template, key)));
+    };
+    registered(F_TITLE, REGISTERED.F);
+    registered(Q_TITLE, REGISTERED.Q);
+    registered(DT_TITLE, REGISTERED.DT);
+    expect(RAN, "the it.each cases that reached their last assertion this run, in registration order").toEqual({ F: [...REGISTERED.F], Q: [...REGISTERED.Q], DT: [...REGISTERED.DT] });
   });
 });
