@@ -1437,10 +1437,19 @@ describe("wb-4smh R674 F1-F3: unfolded keys, data-carried writes and nested spre
  * wb-celw cut #3 (R685 F1-F4, rule-19 frozen enumerate-the-resolvable form).
  * PINNED REFUSALS, and no broader claim: every G-*, S-*, U1-*, U2-* and
  * R-ENUM-P4-PROMOTED form in CELW_ROWS, at S1 and S2, with its exact placement
- * and cause digest in CELW_ROSTER. These forms cover direct/element/parenthesized
- * prototype write positions, keyed and bulk built-in calls, visible const
- * targets, owners and argument arrays, parsed prototype slot data, and nested
- * destructuring targets; P4 covers the listed non-literal snapshot bulk sources.
+ * and cause digest in CELW_ROSTER. Each row pins its own spelling, not the
+ * category its form belongs to (wb-561n F2): the landing-242 gate's LEG 2 read
+ * 34 more families of those categories quiet here (22 P5, 12 P4), among them the
+ * P4 spread-of-const asymmetry (celwP4 unwraps a spread argument with celwTarget,
+ * celwP5 with celwResolve), destructured, bound, globalThis-owned and spread-fed
+ * callees, comma and conditional targets, object-rest and for-in/for-of write
+ * positions, runtime-reached prototypes, and the alias bound below. The wb-561n
+ * section at the end of this file pins 27 of them refused and names 7 residuals.
+ * NAMED BOUND (wb-561n F3): celwResolve follows a binding only when it is the one
+ * VariableDeclaration of its name inside the callback or emitter body, a const,
+ * declared before the use; it never follows an external binding (module scope)
+ * or a mutable (let or var) alias. The bound's five LEG-2 families (let and
+ * module-scope aliases) are named residuals with pinned quiet rows in W561N_QUIET.
  * NAMED QUIET RESIDUALS: R-HELPER-P4 (effect inside an outside helper),
  * R-ARGS-P5 (arguments rewrite) and R-OUTSIDE-P5 (module-scope prototype write)
  * are CELW_QUIET rows at both sites with external roster anchors. Other unseen
@@ -1551,7 +1560,7 @@ const CELW_ROWS: readonly Escape[] = [
   { id: "U2-OWNER-ALIAS", pin: "P4", form: "U2(b) visible const Object owner writes parsed data into snapshot", sites: ["S1", "S2"], causes: ["data-carried snapshot write"],
     beforeDerive: 'const Builtin = Object; Builtin.assign(snapshot, JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\'));' },
 ];
-/** The currently unpinned external-effect families, each with an in-census quiet row. */
+/** The cut-3 named external-effect families, each with an in-census quiet row (wb-561n re-reads them and names seven more). */
 const CELW_QUIET: readonly Residual[] = [RESIDUALS[1], RESIDUALS[2], RESIDUALS[3]];
 
 /** Unwrap only syntax that preserves the expression's target, not arbitrary dataflow. */
@@ -1907,5 +1916,675 @@ describe("wb-celw R685: enumerated emitter and snapshot-write refusals with pinn
     );
     expect(FOURSMH_CONTROLS_REACHED).toEqual(rosterTexts(raw, "sites").map(site => `wb-4smh control ${site}`));
     expect(CELW_REACHED).toEqual([...rows, ...quiet, ...controls]);
+  });
+});
+
+/**
+ * wb-561n, the wb-celw landing-242 follow-up (owner ruling R694 on gate cmd_0c6ffdd7ddb5, findings F1-F3; F4 is not taken).
+ * ACCOUNTING (F1): the landing-242 gate's LEG 2 measured 34 families that CELW_STRICT reads quiet at S1 and S2 while every
+ * landed pin holds (22 P5, 10 P4 class, 2 P4 exploratory). W561N_LEG2 is that list in the gate's order, W561N_ROSTER
+ * carries it again outside this file, and the accounting row proves each family is exactly one of a pinned refusal or a
+ * named residual with a pinned quiet row. Every refusal and residual placement is the gate's own LEG-2 text, byte for
+ * byte; the twins are this cut's.
+ * PINNED REFUSALS, and no broader claim: exactly the 28 W561N_ROWS forms at S1 and S2 (27 LEG-2 families, plus
+ * L3-P4-ALIAS-DYNAMIC, the gate's F7 twin, which CELW_STRICT refused only through 'unresolved key'), each with its exact
+ * placement, cause and digest in W561N_ROSTER. W561N_STRICT is CELW_STRICT plus one more reading of the same two causes,
+ * prototype write and data-carried snapshot write. Its rules are listed so each row's cause can be checked; they are not a
+ * category claim, and a rule is claimed only through the rows that exercise it. w561nValues reads what an expression may
+ * evaluate to through the celwTarget wrappers, a comma sequence's last operand, both branches of a conditional, a binding
+ * inside the NAMED BOUND below (an identifier, or an object-binding element with its default), property access, element
+ * access with a folded or const-folded key, and the target Object.assign returns. An Object owner is Object,
+ * globalThis.Object or <any>.constructor, and a Reflect owner is Reflect or globalThis.Reflect. A prototype is
+ * <Object owner>.prototype, <any>.__proto__ or getPrototypeOf(<any>), which is Object.prototype for every plain object.
+ * A writer is reached directly, bound (.bind), through .call, .apply or Reflect.apply, with the spread of a const array
+ * expanded in place. The P5 write positions are an assignment pattern (object rest included), a for-in or for-of
+ * target, an update, a delete, a built-in writer's target or Object-slot source, and __defineGetter__/__defineSetter__
+ * on a prototype; P4 reads the same bulk writes into snapshot as CELW_STRICT.
+ * NAMED BOUND (F3): w561nValues follows a binding only when it is the one binding of its name inside the callback or
+ * emitter body, a const, declared before the use. It never follows an external binding (module scope, or anywhere outside
+ * that body) or a mutable (let or var) alias.
+ * NAMED QUIET RESIDUALS (W561N_QUIET, both sites, anchored in W561N_ROSTER): the bound's five LEG-2 families
+ * (R-L3-P5-LET-ALIAS, R-L3-P5-MODULE-ALIAS, R-L3-P5-MODULE-OWNER, R-L3-P4-LET-ALIAS, R-L3-P4-MODULE-ALIAS); the two
+ * exploratory P4 families, neither of which writes an own property of the snapshot (R-L3-P4-SETPROTO, an inherited read
+ * through a replaced prototype; R-L3-P4-REASSIGN, the snapshot parameter rebound); and the cut-3 residuals R-HELPER-P4,
+ * R-ARGS-P5 and R-OUTSIDE-P5, re-read under this reading.
+ * PAIRED TWINS (W561N_TWINS, both sites): one benign twin per new rule reads quiet, so the reading refuses no unrelated
+ * target and no read. Other unseen modes are not asserted absent. All placements are parsed, never executed.
+ */
+const W561N_ROSTER = "test/fixtures/claude-message-ref-561n.json";
+/** The landing-242 gate's LEG-2 escape families, in its order: 22 P5, then 10 P4 class, then 2 P4 exploratory. */
+const W561N_LEG2: readonly string[] = [
+  "L3-P5-OBJ-REST",
+  "L3-P5-FOR-OF",
+  "L3-P5-FOR-IN",
+  "L3-P5-DESTRUCT-TARGET",
+  "L3-P5-DESTRUCT-METHOD",
+  "L3-P5-BIND",
+  "L3-P5-BIND-ALIAS",
+  "L3-P5-GLOBAL-OWNER",
+  "L3-P5-GLOBAL-PROTO",
+  "L3-P5-GETPROTO",
+  "L3-P5-DUNDER",
+  "L3-P5-CONSTRUCTOR",
+  "L3-P5-DEFINE-GETTER",
+  "L3-P5-LET-ALIAS",
+  "L3-P5-MODULE-ALIAS",
+  "L3-P5-MODULE-OWNER",
+  "L3-P5-FROMENTRIES-SLOT",
+  "L3-P5-ALIAS-DYNAMIC",
+  "L3-P5-COMPUTED-SLOT-ALIAS",
+  "L3-P5-CALL-SPREAD",
+  "L3-P5-SEQUENCE-TARGET",
+  "L3-P5-CONDITIONAL-TARGET",
+  "L3-P4-SPREAD-CONST",
+  "L3-P4-DESTRUCT-METHOD",
+  "L3-P4-LET-ALIAS",
+  "L3-P4-BIND",
+  "L3-P4-GLOBAL-OWNER",
+  "L3-P4-NESTED-TARGET",
+  "L3-P4-COMMA-TARGET",
+  "L3-P4-CONDITIONAL-TARGET",
+  "L3-P4-MODULE-ALIAS",
+  "L3-P4-CALL-SPREAD",
+  "L3-P4-SETPROTO",
+  "L3-P4-REASSIGN",
+];
+const W561N_ROWS: readonly Escape[] = [
+  { id: "L3-P5-OBJ-REST", pin: "P5", form: "an object-rest destructuring target writes a prototype member", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: "({ ...Object.prototype.benign } = { benign: 1 });" },
+  { id: "L3-P5-FOR-OF", pin: "P5", form: "a for-of iteration target writes a prototype member", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: "for (Object.prototype.benign of [1]) break;" },
+  { id: "L3-P5-FOR-IN", pin: "P5", form: "a for-in iteration target writes a prototype member", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: "for (Object.prototype.benign in { benign: 1 }) break;" },
+  { id: "L3-P5-DESTRUCT-TARGET", pin: "P5", form: "a destructured const alias of Object.prototype receives a parsed bulk write", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: 'const { prototype: prototypeTarget } = Object; Object.assign(prototypeTarget, JSON.parse(\'{"benign":1}\'));' },
+  { id: "L3-P5-DESTRUCT-METHOD", pin: "P5", form: "a destructured const alias of Object.assign bulk-writes the prototype", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: 'const { assign } = Object; assign(Object.prototype, JSON.parse(\'{"benign":1}\'));' },
+  { id: "L3-P5-BIND", pin: "P5", form: "a bound Object.assign bulk-writes the prototype", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: 'Object.assign.bind(Object)(Object.prototype, JSON.parse(\'{"benign":1}\'));' },
+  { id: "L3-P5-BIND-ALIAS", pin: "P5", form: "a const alias of a bound Object.assign bulk-writes the prototype", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: 'const assignBound = Object.assign.bind(Object); assignBound(Object.prototype, JSON.parse(\'{"benign":1}\'));' },
+  { id: "L3-P5-GLOBAL-OWNER", pin: "P5", form: "Object.assign owned through globalThis bulk-writes the prototype", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: 'globalThis.Object.assign(Object.prototype, JSON.parse(\'{"benign":1}\'));' },
+  { id: "L3-P5-GLOBAL-PROTO", pin: "P5", form: "a member of the prototype spelled through globalThis is assigned", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: "globalThis.Object.prototype.benign = 1;" },
+  { id: "L3-P5-GETPROTO", pin: "P5", form: "a member of the prototype reached through getPrototypeOf is assigned", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: "Object.getPrototypeOf({}).benign = 1;" },
+  { id: "L3-P5-DUNDER", pin: "P5", form: "a member of the prototype reached through __proto__ is assigned", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: "({}).__proto__.benign = 1;" },
+  { id: "L3-P5-CONSTRUCTOR", pin: "P5", form: "a member of the prototype reached through constructor.prototype is assigned", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: "({}).constructor.prototype.benign = 1;" },
+  { id: "L3-P5-DEFINE-GETTER", pin: "P5", form: "the legacy __defineGetter__ accessor API defines a prototype member", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: 'Object.prototype.__defineGetter__("benign", () => 1);' },
+  { id: "L3-P5-FROMENTRIES-SLOT", pin: "P5", form: "Object.fromEntries pairs carry the Object prototype slot into Object.assign", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: 'Object.assign(Object, Object.fromEntries([["prototype", { benign: 1 }]]));' },
+  { id: "L3-P5-ALIAS-DYNAMIC", pin: "P5", form: "a const Object owner alias with an unfolded writer name targets the prototype", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: 'const Builtin = Object; Builtin[["as", "sign"].join("")](Object.prototype, JSON.parse(\'{"benign":1}\'));' },
+  { id: "L3-P5-COMPUTED-SLOT-ALIAS", pin: "P5", form: "a const-folded computed key carries the Object prototype slot into Object.assign", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: 'const slotKey = "prototype"; Object.assign(Object, { [slotKey]: { benign: 1 } });' },
+  { id: "L3-P5-CALL-SPREAD", pin: "P5", form: "Object.assign.call fed by the spread of a const argument array writes the prototype", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: 'const localArgs = [Object, Object.prototype, JSON.parse(\'{"benign":1}\')] as const; Object.assign.call(...localArgs);' },
+  { id: "L3-P5-SEQUENCE-TARGET", pin: "P5", form: "a comma-expression target evaluates to the prototype", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: 'Object.assign((0, Object.prototype), JSON.parse(\'{"benign":1}\'));' },
+  { id: "L3-P5-CONDITIONAL-TARGET", pin: "P5", form: "a conditional target has the prototype as one branch", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: 'Object.assign(emitNumbers.size >= 0 ? Object.prototype : {}, JSON.parse(\'{"benign":1}\'));' },
+  { id: "L3-P4-SPREAD-CONST", pin: "P4", form: "the spread of a const argument array carries snapshot and parsed data into Object.assign", sites: ["S1", "S2"], causes: ["data-carried snapshot write"],
+    beforeDerive: 'const localArgs = [snapshot, JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\')]; Object.assign(...localArgs);' },
+  { id: "L3-P4-DESTRUCT-METHOD", pin: "P4", form: "a destructured const alias of Object.assign writes parsed data into snapshot", sites: ["S1", "S2"], causes: ["data-carried snapshot write"],
+    beforeDerive: 'const { assign } = Object; assign(snapshot, JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\'));' },
+  { id: "L3-P4-BIND", pin: "P4", form: "a bound Object.assign writes parsed data into snapshot", sites: ["S1", "S2"], causes: ["data-carried snapshot write"],
+    beforeDerive: 'Object.assign.bind(Object)(snapshot, JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\'));' },
+  { id: "L3-P4-GLOBAL-OWNER", pin: "P4", form: "Object.assign owned through globalThis writes parsed data into snapshot", sites: ["S1", "S2"], causes: ["data-carried snapshot write"],
+    beforeDerive: 'globalThis.Object.assign(snapshot, JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\'));' },
+  { id: "L3-P4-NESTED-TARGET", pin: "P4", form: "the target is the snapshot an inner Object.assign returns", sites: ["S1", "S2"], causes: ["data-carried snapshot write"],
+    beforeDerive: 'Object.assign(Object.assign(snapshot, {}), JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\'));' },
+  { id: "L3-P4-COMMA-TARGET", pin: "P4", form: "a comma-expression target evaluates to snapshot", sites: ["S1", "S2"], causes: ["data-carried snapshot write"],
+    beforeDerive: 'Object.assign((0, snapshot), JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\'));' },
+  { id: "L3-P4-CONDITIONAL-TARGET", pin: "P4", form: "a conditional target has snapshot as a branch", sites: ["S1", "S2"], causes: ["data-carried snapshot write"],
+    beforeDerive: 'Object.assign(live ? snapshot : snapshot, JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\'));' },
+  { id: "L3-P4-CALL-SPREAD", pin: "P4", form: "Object.assign.call fed by the spread of a const argument array writes parsed data into snapshot", sites: ["S1", "S2"], causes: ["data-carried snapshot write"],
+    beforeDerive: 'const localArgs = [Object, snapshot, JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\')] as const; Object.assign.call(...localArgs);' },
+  { id: "L3-P4-ALIAS-DYNAMIC", pin: "P4", form: "the gate's F7 twin: a const Object owner alias with an unfolded writer name writes parsed data into snapshot", sites: ["S1", "S2"], causes: ["data-carried snapshot write", "unresolved key"],
+    beforeDerive: 'const Builtin = Object; Builtin[["as", "sign"].join("")](snapshot, JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\'));' },
+];
+/** The seven LEG-2 families named here: the alias bound's five, then the two exploratory P4 families. */
+const W561N_RESIDUALS: readonly Residual[] = [
+  { id: "R-L3-P5-LET-ALIAS", pin: "P5", family: "the alias bound (F3): a let alias of Object.prototype, a mutable alias the reading never follows", sites: ["S1", "S2"], reading: "quiet",
+    emitter: 'let prototypeTarget = Object.prototype; Object.assign(prototypeTarget, JSON.parse(\'{"benign":1}\'));' },
+  { id: "R-L3-P5-MODULE-ALIAS", pin: "P5", family: "the alias bound (F3): a module-scope alias of Object.prototype, an external binding the reading never follows", sites: ["S1", "S2"], reading: "quiet",
+    prelude: "const GP4_PROTOTYPE = Object.prototype;", emitter: 'Object.assign(GP4_PROTOTYPE, JSON.parse(\'{"benign":1}\'));' },
+  { id: "R-L3-P5-MODULE-OWNER", pin: "P5", family: "the alias bound (F3): a module-scope alias of the Object owner, an external binding the reading never follows", sites: ["S1", "S2"], reading: "quiet",
+    prelude: "const GP4_OBJECT = Object;", emitter: 'GP4_OBJECT.assign(Object.prototype, JSON.parse(\'{"benign":1}\'));' },
+  { id: "R-L3-P4-LET-ALIAS", pin: "P4", family: "the alias bound (F3): a let alias of snapshot, a mutable alias the reading never follows", sites: ["S1", "S2"], reading: "quiet",
+    beforeDerive: 'let snapshotTarget = snapshot; Object.assign(snapshotTarget, JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\'));' },
+  { id: "R-L3-P4-MODULE-ALIAS", pin: "P4", family: "the alias bound (F3): a module-scope alias of Object.assign, an external binding the reading never follows", sites: ["S1", "S2"], reading: "quiet",
+    prelude: "const GP4_MERGE = Object.assign;", beforeDerive: 'GP4_MERGE(snapshot, JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\'));' },
+  { id: "R-L3-P4-SETPROTO", pin: "P4", family: "exploratory, no own-property write: the snapshot's prototype replaced by parsed data, an inherited read", sites: ["S1", "S2"], reading: "quiet",
+    beforeDerive: 'Object.setPrototypeOf(snapshot, JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\'));' },
+  { id: "R-L3-P4-REASSIGN", pin: "P4", family: "exploratory, no own-property write: the snapshot parameter rebound to a fresh object carrying parsed data", sites: ["S1", "S2"], reading: "quiet",
+    beforeDerive: 'snapshot = { ...snapshot, ...JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\') };' },
+];
+/** Every residual this reading names: the seven above, then the three cut-3 families re-read. */
+const W561N_QUIET: readonly Residual[] = [...W561N_RESIDUALS, ...CELW_QUIET];
+
+/** A benign twin of one rule: the same syntax on an unrelated target, or a read, which every reading keeps quiet. */
+interface Twin extends Placement {
+  readonly id: string;
+  readonly pin: StrictPin;
+  /** What the twin does. */
+  readonly form: string;
+  readonly sites: readonly string[];
+  /** The frozen reading of its row. */
+  readonly reading: string;
+}
+const W561N_TWINS: readonly Twin[] = [
+  { id: "T-P5-OBJ-REST", pin: "P5", form: "an object-rest destructuring target writes an unrelated member", sites: ["S1", "S2"], reading: "quiet",
+    emitter: "({ ...emitNumbers.benign } = { benign: 1 });" },
+  { id: "T-P5-FOR-OF", pin: "P5", form: "a for-of iteration target writes an unrelated member", sites: ["S1", "S2"], reading: "quiet",
+    emitter: "for (emitNumbers.benign of [1]) break;" },
+  { id: "T-P5-FOR-IN", pin: "P5", form: "a for-in iteration target writes an unrelated member", sites: ["S1", "S2"], reading: "quiet",
+    emitter: "for (emitNumbers.benign in { benign: 1 }) break;" },
+  { id: "T-P5-DESTRUCT-TARGET", pin: "P5", form: "a destructured const alias of Object.prototype is only read", sites: ["S1", "S2"], reading: "quiet",
+    emitter: "const { prototype: prototypeTarget } = Object; Object.keys(prototypeTarget);" },
+  { id: "T-P5-DESTRUCT-METHOD", pin: "P5", form: "a destructured const alias of a non-writing Object method reads the prototype", sites: ["S1", "S2"], reading: "quiet",
+    emitter: "const { keys } = Object; keys(Object.prototype);" },
+  { id: "T-P5-BIND", pin: "P5", form: "a bound Object.assign writes an unrelated target", sites: ["S1", "S2"], reading: "quiet",
+    emitter: 'Object.assign.bind(Object)(emitNumbers, JSON.parse(\'{"benign":1}\'));' },
+  { id: "T-P5-GLOBAL-OWNER", pin: "P5", form: "Object.assign owned through globalThis writes an unrelated target", sites: ["S1", "S2"], reading: "quiet",
+    emitter: 'globalThis.Object.assign(emitNumbers, JSON.parse(\'{"benign":1}\'));' },
+  { id: "T-P5-GLOBAL-PROTO", pin: "P5", form: "the prototype spelled through globalThis is only read", sites: ["S1", "S2"], reading: "quiet",
+    emitter: "Object.keys(globalThis.Object.prototype);" },
+  { id: "T-P5-GETPROTO", pin: "P5", form: "the prototype reached through getPrototypeOf is only read", sites: ["S1", "S2"], reading: "quiet",
+    emitter: 'Object.getPrototypeOf({}).hasOwnProperty("benign");' },
+  { id: "T-P5-DUNDER", pin: "P5", form: "the prototype reached through __proto__ is only read", sites: ["S1", "S2"], reading: "quiet",
+    emitter: "Object.keys(({}).__proto__);" },
+  { id: "T-P5-CONSTRUCTOR", pin: "P5", form: "the prototype reached through constructor.prototype is only read", sites: ["S1", "S2"], reading: "quiet",
+    emitter: '({}).constructor.prototype.hasOwnProperty("benign");' },
+  { id: "T-P5-LEGACY-READ", pin: "P5", form: "the legacy __lookupGetter__ accessor API only reads a prototype member", sites: ["S1", "S2"], reading: "quiet",
+    emitter: 'Object.prototype.__lookupGetter__("benign");' },
+  { id: "T-P5-FROMENTRIES-SLOT", pin: "P5", form: "Object.fromEntries pairs without the prototype slot are assigned into Object", sites: ["S1", "S2"], reading: "quiet",
+    emitter: 'Object.assign(Object, Object.fromEntries([["benign", { benign: 1 }]]));' },
+  { id: "T-P5-ALIAS-DYNAMIC", pin: "P5", form: "a const Object owner alias with an unfolded writer name targets an unrelated object", sites: ["S1", "S2"], reading: "quiet",
+    emitter: 'const Builtin = Object; Builtin[["as", "sign"].join("")](emitNumbers, JSON.parse(\'{"benign":1}\'));' },
+  { id: "T-P5-COMPUTED-SLOT-ALIAS", pin: "P5", form: "a const-folded computed key that is not the prototype slot is assigned into Object", sites: ["S1", "S2"], reading: "quiet",
+    emitter: 'const slotKey = "benign"; Object.assign(Object, { [slotKey]: { benign: 1 } });' },
+  { id: "T-P5-CALL-SPREAD", pin: "P5", form: "Object.assign.call fed by the spread of a const argument array writes an unrelated target", sites: ["S1", "S2"], reading: "quiet",
+    emitter: 'const localArgs = [Object, emitNumbers, JSON.parse(\'{"benign":1}\')] as const; Object.assign.call(...localArgs);' },
+  { id: "T-P5-SEQUENCE-TARGET", pin: "P5", form: "a comma-expression target evaluates to an unrelated object", sites: ["S1", "S2"], reading: "quiet",
+    emitter: 'Object.assign((Object.prototype, emitNumbers), JSON.parse(\'{"benign":1}\'));' },
+  { id: "T-P5-CONDITIONAL-TARGET", pin: "P5", form: "a conditional target has no prototype branch", sites: ["S1", "S2"], reading: "quiet",
+    emitter: 'Object.assign(emitNumbers.size >= 0 ? emitNumbers : {}, JSON.parse(\'{"benign":1}\'));' },
+  { id: "T-P4-SPREAD-CONST", pin: "P4", form: "the spread of a const argument array carries snapshot and a literal-only source", sites: ["S1", "S2"], reading: "quiet",
+    beforeDerive: 'const localArgs = [snapshot, { benign: "FAKE-FIXTURE" }]; Object.assign(...localArgs);' },
+  { id: "T-P4-DESTRUCT-METHOD", pin: "P4", form: "a destructured const alias of Object.assign copies snapshot and parsed data into a fresh target", sites: ["S1", "S2"], reading: "quiet",
+    beforeDerive: 'const { assign } = Object; assign({}, snapshot, JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\'));' },
+  { id: "T-P4-BIND", pin: "P4", form: "a bound Object.assign writes a literal-only source into snapshot", sites: ["S1", "S2"], reading: "quiet",
+    beforeDerive: 'Object.assign.bind(Object)(snapshot, { benign: "FAKE-FIXTURE" });' },
+  { id: "T-P4-GLOBAL-OWNER", pin: "P4", form: "Object.assign owned through globalThis copies snapshot and parsed data into a fresh target", sites: ["S1", "S2"], reading: "quiet",
+    beforeDerive: 'globalThis.Object.assign({}, snapshot, JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\'));' },
+  { id: "T-P4-NESTED-TARGET", pin: "P4", form: "the target is the fresh copy an inner Object.assign returns", sites: ["S1", "S2"], reading: "quiet",
+    beforeDerive: 'Object.assign(Object.assign({}, snapshot), JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\'));' },
+  { id: "T-P4-COMMA-TARGET", pin: "P4", form: "a comma-expression target evaluates to a fresh object", sites: ["S1", "S2"], reading: "quiet",
+    beforeDerive: 'Object.assign((snapshot, {}), JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\'));' },
+  { id: "T-P4-CONDITIONAL-TARGET", pin: "P4", form: "a conditional target has no snapshot branch", sites: ["S1", "S2"], reading: "quiet",
+    beforeDerive: 'Object.assign(live ? {} : {}, JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\'));' },
+  { id: "T-P4-CALL-SPREAD", pin: "P4", form: "Object.assign.call fed by the spread of a const argument array writes a fresh target", sites: ["S1", "S2"], reading: "quiet",
+    beforeDerive: "const localArgs = [Object, {}, snapshot] as const; Object.assign.call(...localArgs);" },
+];
+const twinDigest = (row: Twin): string =>
+  digest16([row.id, row.pin, row.form, row.sites.join(","), row.reading, row.prelude ?? "", row.emitter ?? "", row.afterSpread ?? "", row.beforeDerive ?? ""]);
+
+/** What an expression may evaluate to, as w561nValues reads it: a node as written, or a named member of an owner's values. */
+type W561nValue = { readonly kind: "node"; readonly node: ts.Expression } | { readonly kind: "member"; readonly owner: readonly W561nValue[]; readonly name: string };
+const w561nNode = (node: ts.Expression): W561nValue => ({ kind: "node", node });
+const w561nIdentifier = (value: W561nValue, name: string): boolean => value.kind === "node" && ts.isIdentifier(value.node) && value.node.text === name;
+
+/** A const declaration exactly: never let, var or using. */
+const w561nConst = (declaration: ts.VariableDeclaration): boolean =>
+  ts.isVariableDeclarationList(declaration.parent) && (declaration.parent.flags & ts.NodeFlags.BlockScoped) === ts.NodeFlags.Const;
+
+/** The declaration an object-binding element sits in, through nested object patterns only. */
+function w561nDeclarationOf(element: ts.BindingElement): ts.VariableDeclaration | undefined {
+  const pattern = element.parent;
+  if (!ts.isObjectBindingPattern(pattern)) return undefined;
+  const holder = pattern.parent;
+  if (ts.isVariableDeclaration(holder)) return holder;
+  return ts.isBindingElement(holder) ? w561nDeclarationOf(holder) : undefined;
+}
+
+/** The NAMED BOUND: the one binding of a name inside the body, a const, declared before the use. Nothing else is followed. */
+function w561nBinding(name: string, body: ts.Block, at: ts.Node): ts.VariableDeclaration | ts.BindingElement | undefined {
+  const all = bindingsOf(body, name);
+  const only = all.length === 1 ? all[0] : undefined;
+  if (only === undefined || only.pos >= at.pos) return undefined;
+  if (ts.isVariableDeclaration(only)) return w561nConst(only) ? only : undefined;
+  if (!ts.isBindingElement(only) || only.dotDotDotToken !== undefined) return undefined;
+  const declaration = w561nDeclarationOf(only);
+  return declaration !== undefined && w561nConst(declaration) ? only : undefined;
+}
+
+/** A property name's key: as written, or a computed key folded through the bound. */
+function w561nKey(name: ts.PropertyName, body: ts.Block, at: ts.Node, seen: ReadonlySet<string>): string | undefined {
+  return ts.isComputedPropertyName(name) ? w561nFold(name.expression, body, at, seen) : memberKey(name);
+}
+
+/** A key folded as written, or through the one constant value the bound resolves it to. */
+function w561nFold(node: ts.Expression | undefined, body: ts.Block, at: ts.Node, seen: ReadonlySet<string>): string | undefined {
+  const target = celwTarget(node);
+  if (target === undefined) return undefined;
+  const direct = folded(target);
+  if (direct !== undefined) return direct;
+  const values = w561nValues(target, body, at, seen);
+  const only = values.length === 1 ? values[0] : undefined;
+  return only !== undefined && only.kind === "node" && only.node !== target ? folded(only.node) : undefined;
+}
+
+/** An object-binding element's values: the member its key names on what its pattern destructures, or its default. */
+function w561nElementValues(element: ts.BindingElement, body: ts.Block, at: ts.Node, seen: ReadonlySet<string>): W561nValue[] {
+  const holder = element.parent.parent;
+  const key = element.propertyName === undefined ? (ts.isIdentifier(element.name) ? element.name.text : undefined) : w561nKey(element.propertyName, body, at, seen);
+  const owner = ts.isVariableDeclaration(holder) ? w561nValues(holder.initializer, body, at, seen) : ts.isBindingElement(holder) ? w561nElementValues(holder, body, at, seen) : [];
+  const member: W561nValue[] = key === undefined || owner.length === 0 ? [] : [{ kind: "member", owner, name: key }];
+  return [...member, ...w561nValues(element.initializer, body, at, seen)];
+}
+
+/** What an expression may evaluate to, by the header's rules only. */
+function w561nValues(node: ts.Expression | undefined, body: ts.Block, at: ts.Node, seen: ReadonlySet<string> = new Set()): W561nValue[] {
+  const target = celwTarget(node);
+  if (target === undefined) return [];
+  if (ts.isBinaryExpression(target) && target.operatorToken.kind === ts.SyntaxKind.CommaToken) return w561nValues(target.right, body, at, seen);
+  if (ts.isConditionalExpression(target)) return [...w561nValues(target.whenTrue, body, at, seen), ...w561nValues(target.whenFalse, body, at, seen)];
+  if (ts.isIdentifier(target)) {
+    const binding = seen.has(target.text) ? undefined : w561nBinding(target.text, body, at);
+    const next = new Set([...seen, target.text]);
+    const values = binding === undefined ? [] : ts.isVariableDeclaration(binding) ? w561nValues(binding.initializer, body, at, next) : w561nElementValues(binding, body, at, next);
+    return values.length > 0 ? values : [w561nNode(target)];
+  }
+  if (ts.isPropertyAccessExpression(target)) return [{ kind: "member", owner: w561nValues(target.expression, body, at, seen), name: target.name.text }];
+  if (ts.isElementAccessExpression(target)) {
+    const name = w561nFold(target.argumentExpression, body, at, seen);
+    return name === undefined ? [w561nNode(target)] : [{ kind: "member", owner: w561nValues(target.expression, body, at, seen), name }];
+  }
+  if (ts.isCallExpression(target)) {
+    // Object.assign returns its target.
+    const invocation = w561nInvocation(target, body, seen);
+    if (invocation.method === "Object.assign" && invocation.args.length > 0) return w561nValues(invocation.args[0], body, target, seen);
+  }
+  return [w561nNode(target)];
+}
+
+/** An Object or Reflect owner: the identifier, the same name on globalThis, and for Object any receiver's constructor. */
+function w561nOwner(value: W561nValue, name: "Object" | "Reflect"): boolean {
+  if (value.kind === "node") return w561nIdentifier(value, name);
+  if (value.name === name) return value.owner.some(owner => w561nIdentifier(owner, "globalThis"));
+  return name === "Object" && value.name === "constructor";
+}
+
+/** A prototype: an Object owner's prototype, any receiver's __proto__, or what getPrototypeOf returns. */
+function w561nPrototype(value: W561nValue, body: ts.Block, seen: ReadonlySet<string>): boolean {
+  if (value.kind === "member") return value.name === "__proto__" || (value.name === "prototype" && value.owner.some(owner => w561nOwner(owner, "Object")));
+  if (!ts.isCallExpression(value.node)) return false;
+  const { method } = w561nInvocation(value.node, body, seen);
+  return method === "Object.getPrototypeOf" || method === "Reflect.getPrototypeOf";
+}
+
+/** The one array literal an expression evaluates to, when the rules resolve exactly one. */
+function w561nArrayLiteral(node: ts.Expression | undefined, body: ts.Block, at: ts.Node, seen: ReadonlySet<string>): ts.ArrayLiteralExpression | undefined {
+  const values = w561nValues(node, body, at, seen);
+  const only = values.length === 1 ? values[0] : undefined;
+  return only !== undefined && only.kind === "node" && ts.isArrayLiteralExpression(only.node) ? only.node : undefined;
+}
+
+/** Arguments with each spread of a const array expanded in place, each array once. */
+function w561nSpread(args: readonly ts.Expression[], body: ts.Block, at: ts.Node, seen: ReadonlySet<string>, expanded: ReadonlySet<ts.Node> = new Set()): ts.Expression[] {
+  return args.flatMap(arg => {
+    if (!ts.isSpreadElement(arg)) return [arg];
+    const array = w561nArrayLiteral(arg.expression, body, at, seen);
+    return array === undefined || expanded.has(array) ? [arg] : w561nSpread(array.elements, body, at, seen, new Set([...expanded, array]));
+  });
+}
+
+/** What an apply-style argument list carries, or nothing when it is not one array literal. */
+function w561nListed(node: ts.Expression | undefined, body: ts.Block, at: ts.Node, seen: ReadonlySet<string>): ts.Expression[] {
+  const array = w561nArrayLiteral(node, body, at, seen);
+  return array === undefined ? [] : w561nSpread(array.elements, body, at, seen, new Set([array]));
+}
+
+interface W561nMethod {
+  /** The built-in method reached, as Owner.name, when the rules resolve one. */
+  readonly method: string | undefined;
+  /** Arguments a .bind put first. */
+  readonly bound: readonly ts.Expression[];
+}
+/** The method a callee's values name: a member of an Object or Reflect owner, or such a method bound. */
+function w561nMethodOf(values: readonly W561nValue[], body: ts.Block, seen: ReadonlySet<string>): W561nMethod {
+  for (const value of values) {
+    if (value.kind === "member") {
+      for (const owner of ["Object", "Reflect"] as const) {
+        if (value.owner.some(candidate => w561nOwner(candidate, owner))) return { method: `${owner}.${value.name}`, bound: [] };
+      }
+    } else if (ts.isCallExpression(value.node)) {
+      const bind = value.node;
+      for (const callee of w561nValues(bind.expression, body, bind, seen)) {
+        if (callee.kind !== "member" || callee.name !== "bind") continue;
+        const inner = w561nMethodOf(callee.owner, body, seen);
+        if (inner.method !== undefined) return { method: inner.method, bound: [...inner.bound, ...w561nSpread(bind.arguments.slice(1), body, bind, seen)] };
+      }
+    }
+  }
+  return { method: undefined, bound: [] };
+}
+
+interface W561nCall extends W561nMethod {
+  /** The callee is an element access on an Object owner whose key does not fold. */
+  readonly unknownObjectMember: boolean;
+  /** The arguments the method receives, after .bind, .call, .apply or Reflect.apply and spread expansion. */
+  readonly args: readonly ts.Expression[];
+}
+/** One call read through the rules: the method it reaches and the arguments that method receives. */
+function w561nInvocation(call: ts.CallExpression, body: ts.Block, seen: ReadonlySet<string> = new Set()): W561nCall {
+  const args = w561nSpread(call.arguments, body, call, seen);
+  const callee = w561nValues(call.expression, body, call, seen);
+  const direct = w561nMethodOf(callee, body, seen);
+  if (direct.method === "Reflect.apply") {
+    const applied = w561nMethodOf(w561nValues(args[0], body, call, seen), body, seen);
+    return { ...applied, unknownObjectMember: false, args: [...applied.bound, ...w561nListed(args[2], body, call, seen)] };
+  }
+  if (direct.method !== undefined) return { ...direct, unknownObjectMember: false, args: [...direct.bound, ...args] };
+  for (const value of callee) {
+    if (value.kind !== "member" || (value.name !== "call" && value.name !== "apply")) continue;
+    const inner = w561nMethodOf(value.owner, body, seen);
+    if (inner.method === undefined) continue;
+    const rest = value.name === "call" ? args.slice(1) : w561nListed(args[1], body, call, seen);
+    return { ...inner, unknownObjectMember: false, args: [...inner.bound, ...rest] };
+  }
+  const unknownObjectMember = callee.some(value => value.kind === "node" && ts.isElementAccessExpression(value.node) &&
+    w561nValues(value.node.expression, body, call, seen).some(owner => w561nOwner(owner, "Object")));
+  return { method: undefined, bound: [], unknownObjectMember, args };
+}
+
+const W561N_PROTOTYPE_WRITERS: readonly string[] = ["Object.assign", "Object.defineProperty", "Object.defineProperties", "Reflect.set",
+  "Reflect.defineProperty", "Reflect.deleteProperty", "Object.setPrototypeOf", "Reflect.setPrototypeOf"];
+const W561N_SLOT_WRITERS: readonly string[] = ["Object.defineProperty", "Reflect.set", "Reflect.defineProperty", "Reflect.deleteProperty"];
+const W561N_ACCESSOR_WRITERS: readonly string[] = ["__defineGetter__", "__defineSetter__"];
+
+/** A write target that writes a prototype member or a prototype itself; an identifier target only rebinds its name. */
+function w561nPattern(node: ts.Expression, body: ts.Block, at: ts.Node): boolean {
+  const target = celwTarget(node);
+  if (target === undefined) return false;
+  if (ts.isPropertyAccessExpression(target) || ts.isElementAccessExpression(target)) {
+    const values = w561nValues(target, body, at);
+    const owners = values.flatMap(value =>
+      value.kind === "member" ? value.owner : ts.isElementAccessExpression(value.node) ? w561nValues(value.node.expression, body, at) : []);
+    return [...values, ...owners].some(value => w561nPrototype(value, body, new Set()));
+  }
+  if (ts.isObjectLiteralExpression(target)) return target.properties.some(property =>
+    (ts.isPropertyAssignment(property) && w561nPattern(property.initializer, body, at)) ||
+    (ts.isSpreadAssignment(property) && w561nPattern(property.expression, body, at)));
+  if (ts.isArrayLiteralExpression(target)) return target.elements.some(element => w561nPattern(ts.isSpreadElement(element) ? element.expression : element, body, at));
+  return ts.isBinaryExpression(target) && target.operatorToken.kind === ts.SyntaxKind.EqualsToken && w561nPattern(target.left, body, at);
+}
+
+/** A source carrying Object's prototype slot: celwPrototypeSource's forms, a const-folded literal key, or Object.fromEntries pairs. */
+function w561nSlotSource(node: ts.Expression, body: ts.Block, at: ts.Node): boolean {
+  if (celwPrototypeSource(node)) return true;
+  return w561nValues(node, body, at).some(value => {
+    if (value.kind !== "node") return false;
+    const source = value.node;
+    if (ts.isObjectLiteralExpression(source)) {
+      return source.properties.some(property => property.name !== undefined && w561nKey(property.name, body, at, new Set()) === "prototype");
+    }
+    if (!ts.isCallExpression(source) || w561nInvocation(source, body).method !== "Object.fromEntries") return false;
+    return w561nListed(source.arguments[0], body, at, new Set()).some(entry => {
+      const pair = w561nArrayLiteral(entry, body, at, new Set());
+      return pair !== undefined && w561nFold(pair.elements[0], body, at, new Set()) === "prototype";
+    });
+  });
+}
+
+/** The P5 write positions, read through the rules. */
+function w561nPrototypeWrite(node: ts.Node, body: ts.Block): boolean {
+  if (ts.isBinaryExpression(node)) {
+    return node.operatorToken.kind >= ts.SyntaxKind.FirstAssignment && node.operatorToken.kind <= ts.SyntaxKind.LastAssignment && w561nPattern(node.left, body, node);
+  }
+  if (ts.isForInStatement(node) || ts.isForOfStatement(node)) return !ts.isVariableDeclarationList(node.initializer) && w561nPattern(node.initializer, body, node);
+  if (ts.isPrefixUnaryExpression(node) || ts.isPostfixUnaryExpression(node)) {
+    return (node.operator === ts.SyntaxKind.PlusPlusToken || node.operator === ts.SyntaxKind.MinusMinusToken) && w561nPattern(node.operand, body, node);
+  }
+  if (ts.isDeleteExpression(node)) return w561nPattern(node.expression, body, node);
+  if (!ts.isCallExpression(node)) return false;
+  const { method, unknownObjectMember, args } = w561nInvocation(node, body);
+  const target: ts.Expression | undefined = args[0];
+  const values = target === undefined ? [] : w561nValues(target, body, node);
+  const objectTarget = values.some(value => w561nOwner(value, "Object"));
+  if (objectTarget && W561N_SLOT_WRITERS.includes(method ?? "") && w561nFold(args[1], body, node, new Set()) === "prototype") return true;
+  if (objectTarget && (method === "Object.assign" || method === "Object.defineProperties") && args.slice(1).some(source => w561nSlotSource(source, body, node))) return true;
+  if (values.some(value => w561nPrototype(value, body, new Set())) && (W561N_PROTOTYPE_WRITERS.includes(method ?? "") || unknownObjectMember)) return true;
+  return w561nValues(node.expression, body, node).some(value =>
+    value.kind === "member" && W561N_ACCESSOR_WRITERS.includes(value.name) && value.owner.some(owner => w561nPrototype(owner, body, new Set())));
+}
+
+/** The P4 bulk writes into snapshot, read through the rules: CELW_STRICT's writers and sources, any spelling the rules reach. */
+function w561nSnapshotWrite(call: ts.CallExpression, body: ts.Block): boolean {
+  const { method, unknownObjectMember, args } = w561nInvocation(call, body);
+  const target: ts.Expression | undefined = args[0];
+  if (target === undefined || !w561nValues(target, body, call).some(value => w561nIdentifier(value, "snapshot"))) return false;
+  const dataSource = args.slice(1).some(source => !celwLiteralOnly(source));
+  if (method === "Object.assign") return dataSource;
+  if (method === "Object.defineProperties") return args.length < 2 || dataSource;
+  return method === undefined && unknownObjectMember && dataSource;
+}
+
+/** Strict P5 of this cut: CELW_STRICT's P5, plus a prototype write the rules read. */
+function w561nP5(reading: Reading): string[] {
+  const causes = celwP5(reading);
+  const body = reading.emitter?.body;
+  if (body === undefined) return causes;
+  const writes = nodesOf(body, (node): node is ts.Node => w561nPrototypeWrite(node, body));
+  return sortedUnique([...causes, ...(writes.length > 0 ? ["prototype write"] : [])]);
+}
+
+/** Strict P4 of this cut: CELW_STRICT's P4, plus a data-carried snapshot write the rules read. */
+function w561nP4(reading: Reading): string[] {
+  const causes = celwP4(reading);
+  const callback = reading.callback;
+  if (callback === undefined || !ts.isBlock(callback.body)) return causes;
+  const body = callback.body;
+  const writes = nodesOf(body, ts.isCallExpression).some(call => w561nSnapshotWrite(call, body));
+  return sortedUnique([...causes, ...(writes ? ["data-carried snapshot write"] : [])]);
+}
+const W561N_STRICT: Readonly<Record<StrictPin, (reading: Reading) => string[]>> = { P4: w561nP4, P5: w561nP5 };
+
+const W561N_REACHED: string[] = [];
+const W561N_CONTROL = "the real source and the cut-3 benign writes read quiet under the extended reading";
+
+/** The out-of-file roster, shape-checked. */
+function w561nRoster(): Record<string, unknown> {
+  const raw: unknown = JSON.parse(readRepo(W561N_ROSTER));
+  if (!isRecord(raw)) throw new Error(`${W561N_ROSTER}: not an object`);
+  return raw;
+}
+
+describe("wb-561n R694 F1-F3: each landing-242 LEG-2 escape pinned refused, or named with a pinned quiet row", () => {
+  for (const row of W561N_ROWS) {
+    for (const key of row.sites) {
+      it(`wb-561n ${row.id} ${key}: ${row.form}`, () => {
+        const site = siteNamed(key);
+        const { text, anchors } = placed(site, row);
+        expect(anchors.every(anchor => anchor.count === 1), "every insertion anchor applies once").toBe(true);
+        const reading = readSite(site.file, text);
+        expect(PINS.filter(pin => pin.id !== row.pin && !JUDGES[pin.id](site, reading)).map(pin => pin.id), "other landed pins hold").toEqual([]);
+        expect(W561N_STRICT[OTHER_PIN[row.pin]](reading), "the other strict reading stays quiet").toEqual([]);
+        expect(W561N_STRICT[row.pin](reading), "the extended reading names the true cause").toEqual(row.causes);
+        W561N_REACHED.push(`wb-561n ${row.id} ${key}`);
+      });
+    }
+  }
+  for (const residual of W561N_QUIET) {
+    for (const key of residual.sites) {
+      it(`wb-561n quiet ${residual.id} ${key}: ${residual.family}`, () => {
+        const site = siteNamed(key);
+        const { text, anchors } = placed(site, residual);
+        expect(anchors.every(anchor => anchor.count === 1), "every insertion anchor applies once").toBe(true);
+        const reading = readSite(site.file, text);
+        expect(PINS.filter(pin => !JUDGES[pin.id](site, reading)).map(pin => pin.id), "landed pins stay quiet").toEqual([]);
+        expect(W561N_STRICT.P4(reading), "no snapshot write is read").toEqual([]);
+        expect(W561N_STRICT.P5(reading), "no prototype write is read").toEqual([]);
+        W561N_REACHED.push(`wb-561n quiet ${residual.id} ${key}`);
+      });
+    }
+  }
+  for (const twin of W561N_TWINS) {
+    for (const key of twin.sites) {
+      it(`wb-561n twin ${twin.id} ${key}: ${twin.form}`, () => {
+        const site = siteNamed(key);
+        const { text, anchors } = placed(site, twin);
+        expect(anchors.every(anchor => anchor.count === 1), "every insertion anchor applies once").toBe(true);
+        const reading = readSite(site.file, text);
+        expect(PINS.filter(pin => !JUDGES[pin.id](site, reading)).map(pin => pin.id), "landed pins stay quiet").toEqual([]);
+        expect(W561N_STRICT.P4(reading), "no snapshot write is read").toEqual([]);
+        expect(W561N_STRICT.P5(reading), "no prototype write is read").toEqual([]);
+        W561N_REACHED.push(`wb-561n twin ${twin.id} ${key}`);
+      });
+    }
+  }
+  for (const site of SITES) {
+    it(`wb-561n control ${site.key}: ${W561N_CONTROL}`, () => {
+      expect(W561N_STRICT.P4(readingOf(site.file))).toEqual([]);
+      expect(W561N_STRICT.P5(readingOf(site.file))).toEqual([]);
+      const benign = placed(site, {
+        emitter: 'Reflect.set(emitNumbers, "benign", 1); Object.assign(emitNumbers, { benign: 1 });',
+        beforeDerive: 'Object.assign(snapshot, { benign: "FAKE-FIXTURE" }); Object.assign({}, JSON.parse("{}"));',
+      });
+      expect(benign.anchors.every(anchor => anchor.count === 1)).toBe(true);
+      expect(W561N_STRICT.P4(readSite(site.file, benign.text))).toEqual([]);
+      expect(W561N_STRICT.P5(readSite(site.file, benign.text))).toEqual([]);
+      expect(W561N_STRICT.P4(readSite(site.file, ""))).toEqual(["no callback"]);
+      expect(W561N_STRICT.P5(readSite(site.file, ""))).toEqual(["no ingest spread"]);
+      W561N_REACHED.push(`wb-561n control ${site.key}`);
+    });
+  }
+  it("wb-561n ACCOUNTING (F1): each of the 34 LEG-2 escape families is exactly one pinned refusal or one named residual, on its own pin, and only the F7 twin is added", () => {
+    const raw = w561nRoster();
+    expect(W561N_LEG2.length, "the gate's measured family count").toBe(raw.requiredLeg2);
+    expect(W561N_LEG2, "the gate's list, out of file").toEqual(rosterTexts(raw, "leg2Escapes"));
+    const refused = W561N_ROWS.map(row => row.id).filter(id => W561N_LEG2.includes(id));
+    const named = W561N_QUIET.map(row => row.id).filter(id => id.startsWith("R-L3-")).map(id => id.slice("R-".length));
+    expect([...refused, ...named].sort(), "each family once, refused or named").toEqual([...W561N_LEG2].sort());
+    expect(W561N_ROWS.map(row => row.id).filter(id => !W561N_LEG2.includes(id)), "the only addition is the F7 twin").toEqual(["L3-P4-ALIAS-DYNAMIC"]);
+    expect([...W561N_ROWS, ...W561N_RESIDUALS].filter(row => !row.id.replace(/^R-/, "").startsWith(`L3-${row.pin}-`)).map(row => row.id), "each row on its family's pin").toEqual([]);
+    expect([refused.length, named.length], "27 refused, 7 named").toEqual([27, 7]);
+  });
+  it("wb-561n FROZEN SHAPE (standing rule 16): the refusal, residual and twin tables keep their frozen ids, pins, sites and causes or readings", () => {
+    expect(W561N_ROWS.map(row => `${row.id}:${row.pin}:${row.sites.length}:${row.causes.join("|")}`)).toEqual([
+      "L3-P5-OBJ-REST:P5:2:prototype write",
+      "L3-P5-FOR-OF:P5:2:prototype write",
+      "L3-P5-FOR-IN:P5:2:prototype write",
+      "L3-P5-DESTRUCT-TARGET:P5:2:prototype write",
+      "L3-P5-DESTRUCT-METHOD:P5:2:prototype write",
+      "L3-P5-BIND:P5:2:prototype write",
+      "L3-P5-BIND-ALIAS:P5:2:prototype write",
+      "L3-P5-GLOBAL-OWNER:P5:2:prototype write",
+      "L3-P5-GLOBAL-PROTO:P5:2:prototype write",
+      "L3-P5-GETPROTO:P5:2:prototype write",
+      "L3-P5-DUNDER:P5:2:prototype write",
+      "L3-P5-CONSTRUCTOR:P5:2:prototype write",
+      "L3-P5-DEFINE-GETTER:P5:2:prototype write",
+      "L3-P5-FROMENTRIES-SLOT:P5:2:prototype write",
+      "L3-P5-ALIAS-DYNAMIC:P5:2:prototype write",
+      "L3-P5-COMPUTED-SLOT-ALIAS:P5:2:prototype write",
+      "L3-P5-CALL-SPREAD:P5:2:prototype write",
+      "L3-P5-SEQUENCE-TARGET:P5:2:prototype write",
+      "L3-P5-CONDITIONAL-TARGET:P5:2:prototype write",
+      "L3-P4-SPREAD-CONST:P4:2:data-carried snapshot write",
+      "L3-P4-DESTRUCT-METHOD:P4:2:data-carried snapshot write",
+      "L3-P4-BIND:P4:2:data-carried snapshot write",
+      "L3-P4-GLOBAL-OWNER:P4:2:data-carried snapshot write",
+      "L3-P4-NESTED-TARGET:P4:2:data-carried snapshot write",
+      "L3-P4-COMMA-TARGET:P4:2:data-carried snapshot write",
+      "L3-P4-CONDITIONAL-TARGET:P4:2:data-carried snapshot write",
+      "L3-P4-CALL-SPREAD:P4:2:data-carried snapshot write",
+      "L3-P4-ALIAS-DYNAMIC:P4:2:data-carried snapshot write|unresolved key",
+    ]);
+    expect(W561N_QUIET.map(row => `${row.id}:${row.pin}:${row.sites.join(",")}:${row.reading}`)).toEqual([
+      "R-L3-P5-LET-ALIAS:P5:S1,S2:quiet",
+      "R-L3-P5-MODULE-ALIAS:P5:S1,S2:quiet",
+      "R-L3-P5-MODULE-OWNER:P5:S1,S2:quiet",
+      "R-L3-P4-LET-ALIAS:P4:S1,S2:quiet",
+      "R-L3-P4-MODULE-ALIAS:P4:S1,S2:quiet",
+      "R-L3-P4-SETPROTO:P4:S1,S2:quiet",
+      "R-L3-P4-REASSIGN:P4:S1,S2:quiet",
+      "R-HELPER-P4:P4:S1,S2:quiet",
+      "R-ARGS-P5:P5:S1,S2:quiet",
+      "R-OUTSIDE-P5:P5:S1,S2:quiet",
+    ]);
+    expect(W561N_TWINS.map(row => `${row.id}:${row.pin}:${row.sites.join(",")}:${row.reading}`)).toEqual([
+      "T-P5-OBJ-REST:P5:S1,S2:quiet",
+      "T-P5-FOR-OF:P5:S1,S2:quiet",
+      "T-P5-FOR-IN:P5:S1,S2:quiet",
+      "T-P5-DESTRUCT-TARGET:P5:S1,S2:quiet",
+      "T-P5-DESTRUCT-METHOD:P5:S1,S2:quiet",
+      "T-P5-BIND:P5:S1,S2:quiet",
+      "T-P5-GLOBAL-OWNER:P5:S1,S2:quiet",
+      "T-P5-GLOBAL-PROTO:P5:S1,S2:quiet",
+      "T-P5-GETPROTO:P5:S1,S2:quiet",
+      "T-P5-DUNDER:P5:S1,S2:quiet",
+      "T-P5-CONSTRUCTOR:P5:S1,S2:quiet",
+      "T-P5-LEGACY-READ:P5:S1,S2:quiet",
+      "T-P5-FROMENTRIES-SLOT:P5:S1,S2:quiet",
+      "T-P5-ALIAS-DYNAMIC:P5:S1,S2:quiet",
+      "T-P5-COMPUTED-SLOT-ALIAS:P5:S1,S2:quiet",
+      "T-P5-CALL-SPREAD:P5:S1,S2:quiet",
+      "T-P5-SEQUENCE-TARGET:P5:S1,S2:quiet",
+      "T-P5-CONDITIONAL-TARGET:P5:S1,S2:quiet",
+      "T-P4-SPREAD-CONST:P4:S1,S2:quiet",
+      "T-P4-DESTRUCT-METHOD:P4:S1,S2:quiet",
+      "T-P4-BIND:P4:S1,S2:quiet",
+      "T-P4-GLOBAL-OWNER:P4:S1,S2:quiet",
+      "T-P4-NESTED-TARGET:P4:S1,S2:quiet",
+      "T-P4-COMMA-TARGET:P4:S1,S2:quiet",
+      "T-P4-CONDITIONAL-TARGET:P4:S1,S2:quiet",
+      "T-P4-CALL-SPREAD:P4:S1,S2:quiet",
+    ]);
+  });
+  it("wb-561n ROSTER: the sites and every refusal, residual and twin by full phrase, cause or reading and placement digest equal the out-of-file roster, in order", () => {
+    const raw = w561nRoster();
+    expect(W561N_ROWS.length, "external required refusal count").toBe(raw.requiredRows);
+    expect(W561N_QUIET.length, "external required quiet count").toBe(raw.requiredQuietRows);
+    expect(W561N_TWINS.length, "external required twin count").toBe(raw.requiredTwinRows);
+    expect(SITES.map(site => site.key)).toEqual(rosterTexts(raw, "sites"));
+    expect(W561N_ROWS.map(row => `${row.id}|${row.pin}|${row.form}|${row.sites.join(",")}|${row.causes.join(",")}|${escapeDigest(row)}`)).toEqual(
+      rosterRows(raw, "rows").map(row =>
+        `${rosterText(row, "id")}|${rosterText(row, "pin")}|${rosterText(row, "form")}|${rosterTexts(row, "sites").join(",")}|${rosterTexts(row, "causes").join(",")}|${rosterText(row, "digest")}`),
+    );
+    expect(W561N_QUIET.map(row => `${row.id}|${row.pin}|${row.family}|${row.sites.join(",")}|${row.reading}|${residualDigest(row)}`)).toEqual(
+      rosterRows(raw, "residuals").map(row =>
+        `${rosterText(row, "id")}|${rosterText(row, "pin")}|${rosterText(row, "family")}|${rosterTexts(row, "sites").join(",")}|${rosterText(row, "reading")}|${rosterText(row, "digest")}`),
+    );
+    expect(W561N_TWINS.map(row => `${row.id}|${row.pin}|${row.form}|${row.sites.join(",")}|${row.reading}|${twinDigest(row)}`)).toEqual(
+      rosterRows(raw, "twins").map(row =>
+        `${rosterText(row, "id")}|${rosterText(row, "pin")}|${rosterText(row, "form")}|${rosterTexts(row, "sites").join(",")}|${rosterText(row, "reading")}|${rosterText(row, "digest")}`),
+    );
+  });
+  it("wb-561n REGISTRATION: every roster row and both control rows are registered in run mode and ran through their last assertion", ({ task }) => {
+    const raw = w561nRoster();
+    const registered: string[] = [];
+    const walk = (tasks: typeof task.file.tasks): void => {
+      for (const child of tasks) {
+        if (child.type === "test") registered.push(`${child.name}|${child.mode}`);
+        else if (child.type === "suite") walk(child.tasks);
+      }
+    };
+    walk(task.file.tasks);
+    const named = (rows: Record<string, unknown>[], prefix: string, label: string): { readonly name: string; readonly label: string }[] =>
+      rows.flatMap(row => rosterTexts(row, "sites").map(site => ({ name: `wb-561n ${prefix}${rosterText(row, "id")} ${site}`, label: rosterText(row, label) })));
+    const expected = [
+      ...named(rosterRows(raw, "rows"), "", "form"),
+      ...named(rosterRows(raw, "residuals"), "quiet ", "family"),
+      ...named(rosterRows(raw, "twins"), "twin ", "form"),
+      ...rosterTexts(raw, "sites").map(site => ({ name: `wb-561n control ${site}`, label: W561N_CONTROL })),
+    ];
+    expect(registered.filter(row => /^wb-561n (?:L3-|quiet |twin |control )/.test(row))).toEqual(expected.map(row => `${row.name}: ${row.label}|run`));
+    expect(W561N_REACHED).toEqual(expected.map(row => row.name));
   });
 });
