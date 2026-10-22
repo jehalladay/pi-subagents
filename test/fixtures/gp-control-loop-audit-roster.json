@@ -1,0 +1,783 @@
+{
+  "comment": "wb-1xvp.3 (RF-GRAPH-POLICY-MACHINE-CONTROL-R2; the hk9l/5jha roster pattern, as wb-1xvp.4 uses it): the OUT-OF-FILE anchor of test/workbench-gp-control-loop-audit.test.ts. rows: every judged row of test/helpers/gp-control-loop-audit-cases.ts in table order (CALL_SITES, NOT_CALL_SITES, RESIDUALS, ANNOTATED, UNANNOTATED, FALSIFIERS, STAGES) - table, positional id, label and the SHA-256 of each pin as written (each input and each expectation). residuals: the named residual families, each a pinned quiet row. tests: every test the suite registers, in order. Written from the rows and the registered tests as measured at the cut; the suite judges its tables, its residual families and its registered tests (vitest task tree, run modes) against this file at test time, in order and both ways.",
+  "rows": [
+    {
+      "table": "CALL_SITES",
+      "id": "CALL_SITES-01",
+      "label": "an import of the graph-policy-cli package",
+      "pins": [
+        "abcb09f8dc88b677ebe5d21c69567ad247ce2cd90cad644983bcabcb402cac00",
+        "81b3472ed73c61b9cbf8de83c775c332d5ffe65d14495bd14d516ed0f099730a"
+      ]
+    },
+    {
+      "table": "CALL_SITES",
+      "id": "CALL_SITES-02",
+      "label": "a re-export from a package subpath",
+      "pins": [
+        "693c3428962d40ccf144f0df590ee0480352d311d4f85f20837a8d502c869eb1",
+        "bd66d3a7cb139a817e645c3bc276d721287a0ef3428bc54789d3e33fc2b70894"
+      ]
+    },
+    {
+      "table": "CALL_SITES",
+      "id": "CALL_SITES-03",
+      "label": "a type-only import from a scoped graphpolicy package",
+      "pins": [
+        "ffea43147dabb76b43b6ec1c10d3585bd07140fa94432e2e9abc1560720e9f5c",
+        "2258f3342dfe3e946e12de2d0bfcd850fd2aa45ae820aa242dc8e43dc94edc53"
+      ]
+    },
+    {
+      "table": "CALL_SITES",
+      "id": "CALL_SITES-04",
+      "label": "a spawn of the bare gp binary",
+      "pins": [
+        "189142251e8d15f2c777bbc7840a4d0b82ba0b177d60062485ea1ac02d122a1b",
+        "223e8284a569aa9b39f461dd279e487dfe1c911c22f7ad1cf34d125c384b2a62"
+      ]
+    },
+    {
+      "table": "CALL_SITES",
+      "id": "CALL_SITES-05",
+      "label": "an absolute path to the gp binary",
+      "pins": [
+        "c0838b74ff288590cefc47ecbeee23a3a3acaeec90e2bf576618c9f1bf85cddd",
+        "f22dfc7d76744b57bf082a21d1390ed429c9deb65beaf83eaf77f016569dc427"
+      ]
+    },
+    {
+      "table": "CALL_SITES",
+      "id": "CALL_SITES-06",
+      "label": "a constant holding the binary name",
+      "pins": [
+        "677e998264dccdcbcc8a1829df4b8c534d7d359946b40df3f77c38635a0ebb55",
+        "223e8284a569aa9b39f461dd279e487dfe1c911c22f7ad1cf34d125c384b2a62"
+      ]
+    },
+    {
+      "table": "CALL_SITES",
+      "id": "CALL_SITES-07",
+      "label": "a shell command line starting with gp",
+      "pins": [
+        "8f621e9a3680ad70e6443dd419ea0cf24b117d8d14c569ca54aef5d65117a258",
+        "96b4248bb8f9b09526c39ac9ea425e8194cee0bdd6178a70d027945120bee6e0"
+      ]
+    },
+    {
+      "table": "CALL_SITES",
+      "id": "CALL_SITES-08",
+      "label": "gp run mid-way through a shell command string",
+      "pins": [
+        "28808567b08ad7552a514910a0ed70a83a9ccb2bbf53e0a3da153a7347f0ff12",
+        "cb6ee420d5bf1d2817b4c3c74080deaa4a1ed22e12902a684dd40ef8e55bc538"
+      ]
+    },
+    {
+      "table": "CALL_SITES",
+      "id": "CALL_SITES-09",
+      "label": "a template whose tail is a gp path",
+      "pins": [
+        "9fec26c8a96aeaa8c88be977107d3f8b7df2c1e6edd47e1887f5b12e5ca2310b",
+        "0487af2a85cc283ca11e3e363f89e77cee126706686de7d0c35f5ac5dac05f42"
+      ]
+    },
+    {
+      "table": "CALL_SITES",
+      "id": "CALL_SITES-10",
+      "label": "a Windows gp.exe path",
+      "pins": [
+        "d08597c604d0af83cb4f029982433d6ca6584abc2d3669f10b16d63e01efd47d",
+        "52489253fe90e6344447af1a169b35ccdbb7e5036e18ed5b13321cf940c3a865"
+      ]
+    },
+    {
+      "table": "CALL_SITES",
+      "id": "CALL_SITES-11",
+      "label": "the graphpolicy rpc protocol id",
+      "pins": [
+        "413f60fbb22b28d02c46ec6fe53d02d83084ec341cf531a595a1130ec6ba3422",
+        "8474946e037affe63e929365fca089d6db0f5048f9d3efd479871cee287a2341"
+      ]
+    },
+    {
+      "table": "CALL_SITES",
+      "id": "CALL_SITES-12",
+      "label": "a GP_CLI_ refusal code",
+      "pins": [
+        "c2f4a38ca75bd290cc9282c8b7503610c95390f62274bac7e6e19fe2da1bc475",
+        "c52ae224716ea04c7c821b28dd30a466e0dfac9d1968164825ffb8345de436bc"
+      ]
+    },
+    {
+      "table": "CALL_SITES",
+      "id": "CALL_SITES-13",
+      "label": "a GP_E_ registry code (gp inspect errors)",
+      "pins": [
+        "fc173bbea11f1dc1e07457f6d5134cc9bd23a83bbbe99448ce57379acfe55d04",
+        "ee5c7f292de02508950152f2330f38f5ab2bc28690c7f64d160f203048698111"
+      ]
+    },
+    {
+      "table": "CALL_SITES",
+      "id": "CALL_SITES-14",
+      "label": "the gp rpc reply schema (gp rpc --stdio)",
+      "pins": [
+        "de295f45c733d74ede997d9b3cf8e925d0ea3ba21740932ab5d976e95cbc7de9",
+        "b278e283a7efaaa90a50b37697adcbbc981ec118f48b5b790b103c40be00caf4"
+      ]
+    },
+    {
+      "table": "CALL_SITES",
+      "id": "CALL_SITES-15",
+      "label": "a graph_policy spelling",
+      "pins": [
+        "b56a03e9fc80f6ce78c29f9b01f564a1b907dcc3f00ee2cd4775ca21eb022f59",
+        "19710d3ee806c539feaf76f2b653479a572f27232e0c19bc790bd96cfb4ff631"
+      ]
+    },
+    {
+      "table": "CALL_SITES",
+      "id": "CALL_SITES-16",
+      "label": "an import of a package named gp",
+      "pins": [
+        "3fa9990b332067d7e800a305826d1bd6fc178537ec86ce3fd1387afde13af9bf",
+        "7d871d023d9a3f41468857d6f60f78a3bccce91b30c28dd9e763dd00cde61d9d"
+      ]
+    },
+    {
+      "table": "CALL_SITES",
+      "id": "CALL_SITES-17",
+      "label": "a package name passed to an ordinary call",
+      "pins": [
+        "5cb730de5c053448b62ccb532b3d5fab40a19179464cc98da09e9c33166d1371",
+        "f069b0e406ef7b72426725a96d3319bf0520cdaca72066644f87a99adc4be4cc"
+      ]
+    },
+    {
+      "table": "CALL_SITES",
+      "id": "CALL_SITES-18",
+      "label": "two sites on two lines, in order",
+      "pins": [
+        "e70516f5ec26e4c4b2d9619b25fd8d9040ae3bfc509f7ea10ff5b9637bd7cbd2",
+        "916036c3feff16ae8da4d6ef1951f7ecbbdd4da7d52491919c58e52617442964",
+        "30d2fab036504b9543f58825514d1f32f4f2a1b0de4b4b4865d8f261ab450108"
+      ]
+    },
+    {
+      "table": "NOT_CALL_SITES",
+      "id": "NOT_CALL_SITES-01",
+      "label": "a line comment",
+      "pins": [
+        "71008aecb3511dae474960065043ab6020574ede7632c50fa479e001d8f17ccb"
+      ]
+    },
+    {
+      "table": "NOT_CALL_SITES",
+      "id": "NOT_CALL_SITES-02",
+      "label": "a block comment",
+      "pins": [
+        "976c999d246bcaac514376f9ba7aa53d4193d4c01caad6d729f15ae3642e36d8"
+      ]
+    },
+    {
+      "table": "NOT_CALL_SITES",
+      "id": "NOT_CALL_SITES-03",
+      "label": "an identifier named gp",
+      "pins": [
+        "0d5aa8c99d28f3d5d5f7de41a188dfeb6052a8950d3467c4cf02cec98bb4a1e3"
+      ]
+    },
+    {
+      "table": "NOT_CALL_SITES",
+      "id": "NOT_CALL_SITES-04",
+      "label": "words that only contain gp",
+      "pins": [
+        "972617d4e3899d020835348f5d358c049eb2b81a403143fdb0604b52c79615f1"
+      ]
+    },
+    {
+      "table": "NOT_CALL_SITES",
+      "id": "NOT_CALL_SITES-05",
+      "label": "another tool's binary",
+      "pins": [
+        "c9283226481554e832c9f607be6d2c9f6ea088278c08ce890221070314489d58"
+      ]
+    },
+    {
+      "table": "NOT_CALL_SITES",
+      "id": "NOT_CALL_SITES-06",
+      "label": "a flag that only contains gp",
+      "pins": [
+        "e1762637a525d86475af22d7dbf88e4348b77f41ed2fe21ffe9c26ef43c87e8d"
+      ]
+    },
+    {
+      "table": "NOT_CALL_SITES",
+      "id": "NOT_CALL_SITES-07",
+      "label": "a regular expression",
+      "pins": [
+        "02137530c55d0b06561fd46661f81bbfe57d5e0277518e926166de853e5c5d5f"
+      ]
+    },
+    {
+      "table": "NOT_CALL_SITES",
+      "id": "NOT_CALL_SITES-08",
+      "label": "a class named after GraphPolicyCLI",
+      "pins": [
+        "abea7f71c6e21114cc88c48fac3724c523e7b12817016b6f9c4a23fa9f42f3ef"
+      ]
+    },
+    {
+      "table": "RESIDUALS",
+      "id": "RESIDUALS-01",
+      "label": "RES-1 a binary named by configuration or environment",
+      "pins": [
+        "51361f5af25e1299f29b0f5804d67150df764d67d8c396db8300b193c3a930ab"
+      ]
+    },
+    {
+      "table": "RESIDUALS",
+      "id": "RESIDUALS-02",
+      "label": "RES-2 a binary name built by concatenation",
+      "pins": [
+        "67d8db23d91cbf114cd79efdef4fc454fe4fac68ad0f294b7553dcd239a1adc3"
+      ]
+    },
+    {
+      "table": "RESIDUALS",
+      "id": "RESIDUALS-03",
+      "label": "RES-3 the caller of a local gp wrapper",
+      "pins": [
+        "576a5a44259416b4e49143b11ac30b2b73c145ea980a508b233b2e1e9ff19e92"
+      ]
+    },
+    {
+      "table": "ANNOTATED",
+      "id": "ANNOTATED-01",
+      "label": "a comment on the line above",
+      "pins": [
+        "ae6575748cbcad5315b1018555c2f64e5ccdb3686527f8cbff833b07a45cef7e",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "ANNOTATED",
+      "id": "ANNOTATED-02",
+      "label": "a trailing comment on the same line",
+      "pins": [
+        "4c4225dfebf4a2149ba6a6f2bd10957bcc7e3c7812563b368b27ab0074f99b87",
+        "5e766fe16dbc4377a96140edf78e083e0454611845b4020ce41641f04d7fe9f6"
+      ]
+    },
+    {
+      "table": "ANNOTATED",
+      "id": "ANNOTATED-03",
+      "label": "a comment above a multi-line statement",
+      "pins": [
+        "a329dd0caa815552a6c3f5fb632f0768af424097041c36a2da1e264aebb597f2",
+        "e27a83571003e9bd31a1202412e678d77ac6ebb94af2bcd9c1b12840cbce062e"
+      ]
+    },
+    {
+      "table": "ANNOTATED",
+      "id": "ANNOTATED-04",
+      "label": "a block comment naming two ids",
+      "pins": [
+        "74f2deb356bd37c53fd70357e65fa5e88227eacd0cd6c8afec708d6aea26a5a9",
+        "7f7c1ed636d3593bfb729428988865a5d0189d4c1c51677b02fcb0cb0976c963"
+      ]
+    },
+    {
+      "table": "ANNOTATED",
+      "id": "ANNOTATED-05",
+      "label": "a comment on an object property",
+      "pins": [
+        "bcc62613e1548c2d0909cb255f73b3d4a58bdde5c35747b6642e99e4f60f8e05",
+        "0d71172cc23d6cbc819a353a8f9c63a598fd6d32bb2fd37bd4b1bb7bf1472f30"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-01",
+      "label": "no comment at all",
+      "pins": [
+        "9405c067aa74e36e11976233247637a1082189bec1ce1ec5592a2e92a26df8e4"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-02",
+      "label": "a marker inside a string on the line above",
+      "pins": [
+        "43f954a14c19f324becc57b9ebc659a2258f14d31360a4f71015b26761d54bdd"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-03",
+      "label": "a marker trailing the previous statement",
+      "pins": [
+        "8a4d4afd579d535309792719d54adc8b854dab7a681f83be4bcbeaf00d4703b4"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-04",
+      "label": "a marker after the literal's own line",
+      "pins": [
+        "257f602609244fb010daef2876f750eead972c95d9ac9f894b79e5ee11b50cb2"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-05",
+      "label": "a marker on another object property",
+      "pins": [
+        "f8555780f477f08f6cf9fa98a3d0e7426335624548e2b06f53dbbf900b688db3"
+      ]
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-01",
+      "label": "(a) a call site with no audit document",
+      "pins": [
+        "2be06c97c01e15be91a856f865fa9e49a7805cf2b65171713003af436b4792d1",
+        "8090fec5382262e34b8c7e48a96259c7d82541775fd8d975137860b5ecae0ebf"
+      ]
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-02",
+      "label": "(a) a call site naming no decision point",
+      "pins": [
+        "91b6f4d289353a264a93aadbfdb754b672f6ab66b13eca755ac3e832a1c19b0d",
+        "554baf5640f7915f1bf102cc17bbaf4558211e39a6223e5c148e10c71586ede1"
+      ]
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-03",
+      "label": "(a) a call site citing an id the audit lacks",
+      "pins": [
+        "df4937da0dcef545430e732ca605b89b3fd9c5e94142d1950bd99262a6693d9a",
+        "3734f210977d177c6e9ee1a93e56ec379272970fd793f9d7e9e39d9ac9323150",
+        "beced220608212bbe1fd7beb72965084f9bd79d644ce08f11a62ff7b2c067078"
+      ]
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-04",
+      "label": "(a) a stage outside 1-11",
+      "pins": [
+        "79aa7b0899d3ec3aa3af4f32355ae08f68c80b052fb5e908f50d35761342119f",
+        "581b534fa01bd0b00e8af74fd92115e1f52f89f6453e33563111c0f1e7544f46",
+        "debbf746cc49958ff974fa452de6ae18b34cdd02fa8b93e4ffc074317ae2d500"
+      ]
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-05",
+      "label": "(a) an empty authority field",
+      "pins": [
+        "360e40752e9f420f4a8f4996d8545790e82683b28794687cacfc5a1ca475bb31",
+        "b0ff3f90b2d1aa89e1ff8f91d84b689ae9664f5272edf75e3ada1c0588b416df",
+        "10f7daf0507f2f1961cc5bc580b6dd458e3b6cfc214c453693e709060c94bc39"
+      ]
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-06",
+      "label": "(a) an empty current fixed rule",
+      "pins": [
+        "dd9b8f687b4802c82089b6c0630e5a109c1f90ec8143f2a43611d38b92970a43",
+        "1993caef20c46498215e2fc948e7604a521d585af1a98960b693ef9649142b23",
+        "73accd446941166f2ea54ac13c36672221e2a30f5d612fa05f875fce25e472ca"
+      ]
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-07",
+      "label": "(a) a duplicate decision-point id",
+      "pins": [
+        "c3298369058ef5f380a8ea56a118c73f654e0625194ebb210fa1a50ffdcc1c0c",
+        "19404ef5b2566c85e9b711aefb9dd147c2e877c0c022a800f0e2b41525fdb051"
+      ]
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-08",
+      "label": "(a) a malformed decision-point id",
+      "pins": [
+        "f1ff87314f6352fe62abcbf4bff439b395876ecc1a340a8ac13a812a2b17af2b",
+        "e51ef3e6b7517aaa0e026f3e32dd1bdeccd8b0e96dc26f9811eebe7fa93a7e35",
+        "6dfd0fc1eb79842e57040100ee5f983382ddbd470eea3f4587bd0db55214d43b"
+      ]
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-09",
+      "label": "(a) a decision-point row with a missing cell",
+      "pins": [
+        "92ce6edb3af8cba0c5e25f585e8c25578d28fdb55c116d5240bca40eca4edd06",
+        "d09c3b4c4f18d8f09777be64fb97e7e796a6263d2974b58d7ecb28811a578320",
+        "e5bc59c1163033922796d2e9ad7b0e7684b0d5e156c745028152f6f071c19d7d"
+      ]
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-10",
+      "label": "the Inventory section missing",
+      "pins": [
+        "9ef634ef6a6200cfc9507943478ab05bd7f96da35ca16dc8e634665d371ab542",
+        "589652d5978e45463834df0d99dde2e4fc4f1a8eac852584a95d1e33de4e5cb3"
+      ]
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-11",
+      "label": "the Decision points section missing",
+      "pins": [
+        "e9bdc581ed5b3b6301691a16e140c0346693a71c274cf80c9ffda4139bfdb7ea",
+        "1af19e71aa110c50f78291dd18a883f9071f4bcd5ddff750411b07ed8ee2b06b",
+        "e5bc59c1163033922796d2e9ad7b0e7684b0d5e156c745028152f6f071c19d7d"
+      ]
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-12",
+      "label": "a Dependencies table with a renamed column",
+      "pins": [
+        "467b7b4a87cde5be3971433ed6b40f14d27180a06e84f9b2317692c758815a9b",
+        "b318fb966222e4b0dd390732deddeb0ab68caa9a03e4892ea9f80b254747eaac"
+      ]
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-13",
+      "label": "a second Configuration heading",
+      "pins": [
+        "355e36028f51bb73ecf0034f373ed7b98ebd8f79010080154dbc236a97b02ee5",
+        "6f2c7d544bbde664747f5ed18f84d3c94440dc0eef8ee90765a2e0d4f6c9a592"
+      ]
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-14",
+      "label": "a second table under Fallback",
+      "pins": [
+        "11d68f9903a1217fb9f4cb7e089b4ec397631a14ccf142d1d4a5a013d39d6a3d",
+        "c8e6c0d9cf9017955e8bcd8d36220e5cee28fc4c524aa894ba022c0c9ae15520"
+      ]
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-15",
+      "label": "an Inventory table inside a fenced block",
+      "pins": [
+        "e419f8e40c3f43316e6ee32a4a38b9700eb08d592a2148e101b7c5cbc1e73795",
+        "7a0af8893b21f1f0e96f8c512a5bc5293da5eb1248049c04a3bd9abb3d75d5b6"
+      ]
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-16",
+      "label": "(b) an entrypoint naming an export the module lacks",
+      "pins": [
+        "23009698aa203920403844788c1bacb822c9eaeb84a500c707897a6dac7c7aad",
+        "ad427bea304d0f729678acbdf0ab08459adfae6a1a63c4765ffa02d883b8d6cc"
+      ]
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-17",
+      "label": "(b) an entrypoint naming a module-private function",
+      "pins": [
+        "0bb75b46bf571283c8128759d5b09c4f900bd0a8dd3bd370fa60b28dfa7c6e7a",
+        "bda4b2848a5c974ccfc61ceaff9f9ab66c456972a6b4fdf9031b6181b1a19b18"
+      ]
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-18",
+      "label": "(b) an entrypoint in a module that does not exist",
+      "pins": [
+        "047a80e5acff68323675c71f62d33ebf5bdca1bca1b81263b923eb83155717f1",
+        "9561f401ff0cbc0dc676abfae7c39251c556d5b0a6698d5225e0e4da33be5fcb"
+      ]
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-19",
+      "label": "(b) no gp row among the dependencies",
+      "pins": [
+        "ceec7e7528b02e189bf505c0334bda429109811a0ead30a72868db4416343ae3",
+        "199ba2ea8ba6b628f83f356d1270b8c57a876f0d5fcd65b348295560f60bb637"
+      ]
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-20",
+      "label": "(b) a gp version that is not the measured string verbatim",
+      "pins": [
+        "23485747c7d71fba3fb512e3a04b238e09cd609b8c78ae08098c334628bb7ea4",
+        "4ce1f1cc8426d9e89bbd12db93ab976d5da3f365bafd91f7a684db6c2f73275c"
+      ]
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-21",
+      "label": "(b) a settings key the audit does not document",
+      "pins": [
+        "c3cf224f6e5e55cc3af68ba2783205f3f06042f2d776551719f6fa9f25c7b07c",
+        "65f5fdb397a013a7fbc7a86cb1cba3b04331e2bc0bcb3d0ce719846c14f21f04"
+      ]
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-22",
+      "label": "(b) a documented key the settings schema lacks",
+      "pins": [
+        "2c1f1d67692900e198b0991c5deb51da7eea220636a5e694c0244bb93deeb9c8",
+        "a072b79836d492480c8d86ea06dffa8ea56496f92210ae3d62182674a298143f"
+      ]
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-23",
+      "label": "(c) no fallback row for the call site",
+      "pins": [
+        "da459193e0a45926d7d6f2587c9739699c90e6f479ace859e43d879ae54e6f7c",
+        "e8c9af0b2f52d721271a901f34ba2297e96a73ec0695b91c61ff05d81f73423b"
+      ]
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-24",
+      "label": "(c) a fallback row that names no function",
+      "pins": [
+        "c308b6c4f16b68be290c8aeb61b8120cb020e3716c03ca926e9bc7b89c1222b2",
+        "e8c9af0b2f52d721271a901f34ba2297e96a73ec0695b91c61ff05d81f73423b"
+      ]
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-25",
+      "label": "(c) a fallback row keyed to another call site",
+      "pins": [
+        "6ed59069a86070388799b80b6542bb78f94cee23a949dc8f55abd195e50ce3ad",
+        "e8c9af0b2f52d721271a901f34ba2297e96a73ec0695b91c61ff05d81f73423b"
+      ]
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-26",
+      "label": "(c) an inventory status outside implemented/proposed",
+      "pins": [
+        "40307ed8bec249d1a0d8198c3e75ac64a410d23ba2b7648d8a91a58604c9c964",
+        "3294348819e4945a681a88609d32dd81c1914b4f5dc424899d911a3f6466c465"
+      ]
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-27",
+      "label": "(c) an empty inventory",
+      "pins": [
+        "3d8b9c9e53e77d7270678b4493215b6b2b4c3ce65c7a82ee9ebbcb2ed71428e5",
+        "319fc7ed01024b0873c676571386f2abb74757bd61155f8648aa0dae1e2084bc"
+      ]
+    },
+    {
+      "table": "STAGES",
+      "id": "STAGES-01",
+      "label": "README.md:89 stage 1",
+      "pins": [
+        "81b2b41a458e04a56debc05d220db51dd960ee1435ba09386a01a930b210bf41"
+      ]
+    },
+    {
+      "table": "STAGES",
+      "id": "STAGES-02",
+      "label": "README.md:90 stage 2",
+      "pins": [
+        "81718253d26f0578b8a03136c9dc40823a290fb27de75d89560f5d73c7d08f14"
+      ]
+    },
+    {
+      "table": "STAGES",
+      "id": "STAGES-03",
+      "label": "README.md:91 stage 3",
+      "pins": [
+        "aad961a6ecd5d000ce92ed0c5fe00255dd1fa898e26a33a8a29b2480b74a530b"
+      ]
+    },
+    {
+      "table": "STAGES",
+      "id": "STAGES-04",
+      "label": "README.md:92 stage 4",
+      "pins": [
+        "cf2ee4b843abb9da0a605aea3196de1543e8bac741fd6bb1baed832c8007001d"
+      ]
+    },
+    {
+      "table": "STAGES",
+      "id": "STAGES-05",
+      "label": "README.md:93 stage 5",
+      "pins": [
+        "079a77d36e49d39d95d9b395482b1a84254ddb008d13f3f684027c990b8ef595"
+      ]
+    },
+    {
+      "table": "STAGES",
+      "id": "STAGES-06",
+      "label": "README.md:94 stage 6",
+      "pins": [
+        "db95915eabbfc513f1566b9e7d42afe090901300ebaf8f5afaf4df305e908d5d"
+      ]
+    },
+    {
+      "table": "STAGES",
+      "id": "STAGES-07",
+      "label": "README.md:95 stage 7",
+      "pins": [
+        "912d13f5531ab3d3a43cd3e46604e17ebb12dbfa3922a8bee2e9828810a5478f"
+      ]
+    },
+    {
+      "table": "STAGES",
+      "id": "STAGES-08",
+      "label": "README.md:96 stage 8",
+      "pins": [
+        "be183ec30caea9e18620a3e64636afb4249aba26799bd037ebb1c57fc2956045"
+      ]
+    },
+    {
+      "table": "STAGES",
+      "id": "STAGES-09",
+      "label": "README.md:97 stage 9",
+      "pins": [
+        "e70d49f71736ce65d4550a355096942135e77be425f0c0622ea7c4d1e314b1b0"
+      ]
+    },
+    {
+      "table": "STAGES",
+      "id": "STAGES-10",
+      "label": "README.md:98 stage 10",
+      "pins": [
+        "16f99ce17e6730d6c6b3e4edafddb5546b9b897fb467abcf3efdf404ee2722eb"
+      ]
+    },
+    {
+      "table": "STAGES",
+      "id": "STAGES-11",
+      "label": "README.md:99 stage 11",
+      "pins": [
+        "5ba750feecc8f60aad0e4dca1296137740390776b5d662cf3733466efcf0e461"
+      ]
+    }
+  ],
+  "residuals": [
+    "RES-1 a binary named by configuration or environment",
+    "RES-2 a binary name built by concatenation",
+    "RES-3 the caller of a local gp wrapper"
+  ],
+  "tests": [
+    "src/ carries no gp call site: the census over every src module is empty",
+    "the census is not blind: the real rf spawn site, read as a gp spawn, is found at its own line and names no decision point",
+    "the census reads string text only: the src modules that spell the word gp outside any string (today the general-purpose agent in src/agent-types.ts) hold no call site",
+    "docs/workbench/control-loop-audit.md does not exist yet: the machine audit and its documentation are unshipped",
+    "the live judge reads no finding, and with no audit document it never measures gp",
+    "an import of the graph-policy-cli package is a call site",
+    "a re-export from a package subpath is a call site",
+    "a type-only import from a scoped graphpolicy package is a call site",
+    "a spawn of the bare gp binary is a call site",
+    "an absolute path to the gp binary is a call site",
+    "a constant holding the binary name is a call site",
+    "a shell command line starting with gp is a call site",
+    "gp run mid-way through a shell command string is a call site",
+    "a template whose tail is a gp path is a call site",
+    "a Windows gp.exe path is a call site",
+    "the graphpolicy rpc protocol id is a call site",
+    "a GP_CLI_ refusal code is a call site",
+    "a GP_E_ registry code (gp inspect errors) is a call site",
+    "the gp rpc reply schema (gp rpc --stdio) is a call site",
+    "a graph_policy spelling is a call site",
+    "an import of a package named gp is a call site",
+    "a package name passed to an ordinary call is a call site",
+    "two sites on two lines, in order is a call site",
+    "a line comment is not a call site",
+    "a block comment is not a call site",
+    "an identifier named gp is not a call site",
+    "words that only contain gp is not a call site",
+    "another tool's binary is not a call site",
+    "a flag that only contains gp is not a call site",
+    "a regular expression is not a call site",
+    "a class named after GraphPolicyCLI is not a call site",
+    "residual RES-1 a binary named by configuration or environment stays quiet (named, not detected)",
+    "residual RES-2 a binary name built by concatenation stays quiet (named, not detected)",
+    "residual RES-3 the caller of a local gp wrapper stays quiet (named, not detected)",
+    "orders sites by file, then line, keys each by its path, and reads .tsx modules as TSX (JSX text with an apostrophe is no string)",
+    "a comment on the line above names it",
+    "a trailing comment on the same line names it",
+    "a comment above a multi-line statement names it",
+    "a block comment naming two ids names it",
+    "a comment on an object property names it",
+    "no comment at all does not name one",
+    "a marker inside a string on the line above does not name one",
+    "a marker trailing the previous statement does not name one",
+    "a marker after the literal's own line does not name one",
+    "a marker on another object property does not name one",
+    "control: an audit covering all eleven stages, with an annotated call site, an exported entrypoint, the measured gp version, the schema's keys, a fallback and a two-status inventory, reads no finding",
+    "an audit beside a tree with no call site is still judged: the control reads clean, and a defect in it is a finding before any wiring",
+    "with no audit document and no call site there is nothing to read: no finding, and neither gp nor the settings schema is read",
+    "(a) a call site with no audit document",
+    "(a) a call site naming no decision point",
+    "(a) a call site citing an id the audit lacks",
+    "(a) a stage outside 1-11",
+    "(a) an empty authority field",
+    "(a) an empty current fixed rule",
+    "(a) a duplicate decision-point id",
+    "(a) a malformed decision-point id",
+    "(a) a decision-point row with a missing cell",
+    "the Inventory section missing",
+    "the Decision points section missing",
+    "a Dependencies table with a renamed column",
+    "a second Configuration heading",
+    "a second table under Fallback",
+    "an Inventory table inside a fenced block",
+    "(b) an entrypoint naming an export the module lacks",
+    "(b) an entrypoint naming a module-private function",
+    "(b) an entrypoint in a module that does not exist",
+    "(b) no gp row among the dependencies",
+    "(b) a gp version that is not the measured string verbatim",
+    "(b) a settings key the audit does not document",
+    "(b) a documented key the settings schema lacks",
+    "(c) no fallback row for the call site",
+    "(c) a fallback row that names no function",
+    "(c) a fallback row keyed to another call site",
+    "(c) an inventory status outside implemented/proposed",
+    "(c) an empty inventory",
+    "the falsifiers cover every finding class the judge declares, and every finding they read is of a declared class",
+    "README.md:89 stage 1 (Observation of ready, blocked, active, deferred, and completed beads.) uncovered is a finding",
+    "README.md:90 stage 2 (Discovery of candidate work.) uncovered is a finding",
+    "README.md:91 stage 3 (Assignment or claiming of tasks.) uncovered is a finding",
+    "README.md:92 stage 4 (Worker and model selection.) uncovered is a finding",
+    "README.md:93 stage 5 (Creation and execution of ClaudeAgentsSDK workflows.) uncovered is a finding",
+    "README.md:94 stage 6 (Concurrent worker scheduling and resource allocation.) uncovered is a finding",
+    "README.md:95 stage 7 (Progress observation and result collection.) uncovered is a finding",
+    "README.md:96 stage 8 (Verification, review, and correction.) uncovered is a finding",
+    "README.md:97 stage 9 (Integration, landing, and task completion.) uncovered is a finding",
+    "README.md:98 stage 10 (Failure recovery, retries, and relaunch.) uncovered is a finding",
+    "README.md:99 stage 11 (Machine shutdown or continuation.) uncovered is a finding",
+    "the helper's stage list is the README's eleven stages, verbatim and in order",
+    "names the sections, their columns, the five decision-point fields and the two inventory statuses by value",
+    "each-liveness: every it.each table holds its pinned rows under distinct names, so none can empty or thin unseen",
+    "rule 16: every judged table is frozen at its measured row and pin shape (table/id:pin count)",
+    "exportedNames reads src/settings.ts's own export surface: loadSettings is an export, the module-private sanitize is not",
+    "exportedNames covers export lists, renames and default, and does not follow export-star",
+    "settingsKeys reads the SubagentsSettings interface tree of src/settings.ts as dotted keys",
+    "settingsKeys expands a property typed by a local interface, follows extends, and keeps any other type as one leaf",
+    "firstLine echoes the producer's version line verbatim, trimmed of its newline",
+    "roster: the judged rows, the residual families and every registered test equal the roster, in order and both ways"
+  ]
+}
