@@ -1,0 +1,412 @@
+{
+  "provenance": "wb-a9l2.4 census roster (test/workbench-rf-replay-refusal-echo-census.test.ts). envelopes.blob and envelopes.reconstruction are MEASURED: the stdout of `rf context replay RENDER --json` (exit 8) from the installed rf 0.1.832 on 2026-10-22, in a scratch workspace after a committed render lost its evidence (blob: a literal source's capture blob deleted; reconstruction: a git source's recorded commit gone from the repository); only the scratch workspace root was rewritten to /fixture/rf-workspace. envelopes.retention is CONSTRUCTED from the producer's application/replay.py retention_removed builder (message, hint and metadata as it writes them; segment names as the scratch workspace's journal names its files), because rf storage compact --apply removes nothing in that build. rows freeze the judged set: each pin's witness is what its case measures.",
+  "rfVersion": "0.1.832",
+  "replayExit": 8,
+  "codes": [
+    "RF_REPLAY_SOURCE_SNAPSHOT_MISSING",
+    "RF_REPLAY_RECONSTRUCTION_UNAVAILABLE"
+  ],
+  "fields": [
+    "source_id",
+    "snapshot_id",
+    "render_id",
+    "reason",
+    "segments"
+  ],
+  "gatingArtifacts": [
+    "rfc-0txnl.25",
+    "rfc-bak67.12"
+  ],
+  "envelopes": {
+    "blob": {
+      "schema": "reactive-fiber.cli/v1",
+      "ok": false,
+      "command": "context.replay",
+      "operation_id": "rfo_rxpudy5cuqizxyktrbxawwk3ji",
+      "workspace": {
+        "id": "rfw_t7dcyljy27327knroylyym7m2q",
+        "root": "/fixture/rf-workspace"
+      },
+      "transaction_id": null,
+      "result": null,
+      "diagnostics": [
+        {
+          "code": "RF_REPLAY_SOURCE_SNAPSHOT_MISSING",
+          "severity": "error",
+          "message": "the captured value of source fixture_notes (snapshot rfn_6dhw44rrhsbvhcp7ctntj7lcwa) is not retained as replay evidence",
+          "hint": "The captured value of a source this render read is not retained as evidence (SRC-STATE-A8 keeps the digest, not the value), so the render cannot be reproduced; replay never re-reads the live source in its place. Render again to produce fresh evidence.",
+          "source": "host",
+          "metadata": {
+            "source_id": "fixture_notes",
+            "snapshot_id": "rfn_6dhw44rrhsbvhcp7ctntj7lcwa"
+          }
+        }
+      ]
+    },
+    "reconstruction": {
+      "schema": "reactive-fiber.cli/v1",
+      "ok": false,
+      "command": "context.replay",
+      "operation_id": "rfo_pn6uke42sot6mastxfn73z22te",
+      "workspace": {
+        "id": "rfw_zhtio2v6nzyt23zokxspslkgoe",
+        "root": "/fixture/rf-workspace"
+      },
+      "transaction_id": null,
+      "result": null,
+      "diagnostics": [
+        {
+          "code": "RF_REPLAY_RECONSTRUCTION_UNAVAILABLE",
+          "severity": "error",
+          "message": "source git was captured as revision_reconstructable and its value could not be rebuilt: source 'git' (git) cannot be reconstructed: revision_unverifiable: revision '9f046a68bbfeaf43d41061c806a5635be9dcd887': git rev-parse --verify -q 9f046a68bbfeaf43d41061c806a5635be9dcd887^{commit} answered 1: the repository enclosing /fixture/rf-workspace knows no such commit",
+          "hint": "This source was captured as revision_reconstructable and its recorded value could not be rebuilt under the recorded revision (the repository no longer knows the revision, the provider is captured-value-only or unknown to this host, the live trust policy's grant was withheld, or the rebuild hashes differently), so the render cannot be reproduced; replay never substitutes a live read or the working tree. Restore the repository history or render again to produce fresh evidence.",
+          "source": "host",
+          "metadata": {
+            "source_id": "git"
+          }
+        }
+      ]
+    },
+    "retention": {
+      "schema": "reactive-fiber.cli/v1",
+      "ok": false,
+      "command": "context.replay",
+      "operation_id": "rfo_otnlvb4lesqn5v7id6pt7sy7ju",
+      "workspace": {
+        "id": "rfw_3b74dsvijqspws7bwpt3jcgnny",
+        "root": "/fixture/rf-workspace"
+      },
+      "transaction_id": null,
+      "result": null,
+      "diagnostics": [
+        {
+          "code": "RF_REPLAY_SOURCE_SNAPSHOT_MISSING",
+          "severity": "error",
+          "message": "render rfr_an7iir3c6sdwnravrsa4a2yepy was marked not_replayable by retention (RETENTION_REMOVED): its replay inputs lived only in the removed journal segments 0000000000000001.jsonl, 0000000000000002.jsonl",
+          "hint": "Compaction removed the journal segments this render's replay inputs lived in (JL-A14), so the render is marked not_replayable with retention reason RETENTION_REMOVED and cannot be reproduced; replay never substitutes live values for removed evidence. Render again to produce fresh evidence.",
+          "source": "host",
+          "metadata": {
+            "render_id": "rfr_an7iir3c6sdwnravrsa4a2yepy",
+            "reason": "RETENTION_REMOVED",
+            "segments": [
+              "0000000000000001.jsonl",
+              "0000000000000002.jsonl"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "rows": [
+    {
+      "id": "A",
+      "label": "(trigger, absent today) Pi drives and reads no rf replay: no src module or native descriptor spells an rf replay verb, the rf roster stays reactivefiber.render.preview only, and both readers refuse a context.replay envelope",
+      "pins": [
+        {
+          "id": "A1",
+          "witness": {
+            "srcFloorMet": true,
+            "renderArgvSeen": true,
+            "argv": [],
+            "literals": [],
+            "descriptorHits": [],
+            "composedArgv": 0,
+            "controls": {
+              "argv": 1,
+              "spaced": 1,
+              "dotted": 1,
+              "template": 1,
+              "composedArgv": 0
+            }
+          }
+        },
+        {
+          "id": "A2",
+          "witness": {
+            "native": [
+              "reactivefiber.render.preview"
+            ],
+            "injected": [
+              "reactivefiber.render.preview"
+            ],
+            "reconcile": [
+              "reactivefiber.render.preview"
+            ]
+          }
+        },
+        {
+          "id": "A3",
+          "witness": {
+            "category": "transport",
+            "message": "RF preview returned an unrecognized native envelope.",
+            "reading": false,
+            "spawns": 1,
+            "verb": [
+              "context",
+              "render"
+            ],
+            "fetches": 0
+          }
+        },
+        {
+          "id": "A4",
+          "witness": {
+            "category": "validation",
+            "message": "ReactiveFiber topology refused: source must be a reactive-fiber.cli/v1 context.render envelope."
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "(a) a fixture exit-8 RF_REPLAY_SOURCE_SNAPSHOT_MISSING envelope surfaces the code and its five fields verbatim while a counting fake producer/network port stays at 0 calls",
+      "pins": [
+        {
+          "id": "B1",
+          "witness": {
+            "codes": [
+              "RF_REPLAY_SOURCE_SNAPSHOT_MISSING",
+              "RF_REPLAY_SOURCE_SNAPSHOT_MISSING"
+            ],
+            "commands": [
+              "context.replay",
+              "context.replay"
+            ],
+            "failures": true,
+            "exit": 8,
+            "shapes": [
+              [
+                "source_id",
+                "snapshot_id"
+              ],
+              [
+                "render_id",
+                "reason",
+                "segments"
+              ]
+            ],
+            "fields": [
+              "source_id",
+              "snapshot_id",
+              "render_id",
+              "reason",
+              "segments"
+            ]
+          }
+        },
+        {
+          "id": "B2",
+          "witness": {
+            "code": "RF_REPLAY_SOURCE_SNAPSHOT_MISSING",
+            "metadata": {
+              "source_id": "fixture_notes",
+              "snapshot_id": "rfn_6dhw44rrhsbvhcp7ctntj7lcwa"
+            },
+            "readingKeys": [
+              "contract",
+              "source",
+              "workspaceRoot"
+            ],
+            "calls": 1,
+            "fetches": 0
+          }
+        },
+        {
+          "id": "B3",
+          "witness": {
+            "code": "RF_REPLAY_SOURCE_SNAPSHOT_MISSING",
+            "metadata": {
+              "render_id": "rfr_an7iir3c6sdwnravrsa4a2yepy",
+              "reason": "RETENTION_REMOVED",
+              "segments": [
+                "0000000000000001.jsonl",
+                "0000000000000002.jsonl"
+              ]
+            },
+            "readingKeys": [
+              "contract",
+              "source",
+              "workspaceRoot"
+            ],
+            "calls": 1,
+            "fetches": 0
+          }
+        },
+        {
+          "id": "B4",
+          "witness": {
+            "category": "unavailable",
+            "message": "RF render refused: RF_REPLAY_SOURCE_SNAPSHOT_MISSING",
+            "valuesNamed": [],
+            "spawns": 1,
+            "verb": [
+              "context",
+              "render"
+            ],
+            "fetches": 0
+          }
+        },
+        {
+          "id": "B5",
+          "witness": {
+            "statusText": "fixture seam (not a real render) · refused · RF_REPLAY_SOURCE_SNAPSHOT_MISSING",
+            "diagnostics": [
+              "render refused with RF_REPLAY_SOURCE_SNAPSHOT_MISSING",
+              "diagnostic message, hint and metadata withheld",
+              "no native interval supplied"
+            ],
+            "surfaced": []
+          }
+        },
+        {
+          "id": "B6",
+          "witness": {
+            "closureFloorMet": true,
+            "anchorsRead": true,
+            "unresolved": [],
+            "network": [],
+            "globals": [],
+            "launches": [
+              "rf"
+            ],
+            "controls": {
+              "http": {
+                "network": 1,
+                "globals": 0,
+                "launches": []
+              },
+              "undici": {
+                "network": 1,
+                "globals": 0,
+                "launches": []
+              },
+              "fetch": {
+                "network": 0,
+                "globals": 1,
+                "launches": []
+              },
+              "globalFetch": {
+                "network": 0,
+                "globals": 1,
+                "launches": []
+              },
+              "socket": {
+                "network": 0,
+                "globals": 1,
+                "launches": []
+              },
+              "curl": {
+                "network": 0,
+                "globals": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "composed": {
+                "network": 0,
+                "globals": 0,
+                "launches": [
+                  "<composed>"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "(b) Pi never rewrites one code into the other: RF_REPLAY_SOURCE_SNAPSHOT_MISSING and RF_REPLAY_RECONSTRUCTION_UNAVAILABLE each surface as themselves and no src or qa file spells either",
+      "pins": [
+        {
+          "id": "C1",
+          "witness": {
+            "messages": {
+              "blob": "RF render refused: RF_REPLAY_SOURCE_SNAPSHOT_MISSING",
+              "retention": "RF render refused: RF_REPLAY_SOURCE_SNAPSHOT_MISSING",
+              "reconstruction": "RF render refused: RF_REPLAY_RECONSTRUCTION_UNAVAILABLE"
+            },
+            "spawns": [
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "C2",
+          "witness": {
+            "code": "RF_REPLAY_RECONSTRUCTION_UNAVAILABLE",
+            "metadata": {
+              "source_id": "git"
+            },
+            "readingKeys": [
+              "contract",
+              "source",
+              "workspaceRoot"
+            ],
+            "calls": 1,
+            "fetches": 0
+          }
+        },
+        {
+          "id": "C3",
+          "witness": {
+            "blob": "fixture seam (not a real render) · refused · RF_REPLAY_SOURCE_SNAPSHOT_MISSING",
+            "retention": "fixture seam (not a real render) · refused · RF_REPLAY_SOURCE_SNAPSHOT_MISSING",
+            "reconstruction": "fixture seam (not a real render) · refused · RF_REPLAY_RECONSTRUCTION_UNAVAILABLE"
+          }
+        },
+        {
+          "id": "C4",
+          "witness": {
+            "roots": [
+              {
+                "root": "src",
+                "floor": 100,
+                "floorMet": true,
+                "anchorRead": true,
+                "hits": []
+              },
+              {
+                "root": "qa",
+                "floor": 50,
+                "floorMet": true,
+                "anchorRead": true,
+                "hits": []
+              }
+            ],
+            "codes": [
+              "RF_REPLAY_SOURCE_SNAPSHOT_MISSING",
+              "RF_REPLAY_RECONSTRUCTION_UNAVAILABLE"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "D",
+      "label": "(c) the missing-blob replay yields the refusal, never a fresh live value: one spawn, no reading, and a failure projection that carries no value",
+      "pins": [
+        {
+          "id": "D1",
+          "witness": {
+            "category": "unavailable",
+            "reading": false,
+            "spawns": 1,
+            "fetches": 0
+          }
+        },
+        {
+          "id": "D2",
+          "witness": {
+            "snapshots": 1,
+            "coverage": "unknown",
+            "statusTone": "failure",
+            "carriesValue": false
+          }
+        }
+      ]
+    }
+  ]
+}
