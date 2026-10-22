@@ -4,17 +4,23 @@
  * kind and capture receipt recorded beside it, and is itself pinned here to a literal roster authored independently from the
  * ReactiveFiberCLI emitter (first read at 8a8b83e4d for the 0.1.716 pin; re-read for the 0.1.768 pin by wb-973.17 at the
  * installed reactivefibercli 0.1.768 distribution, the delta being retry_work and the four ruling R-53 work_metrics
- * counters), so an emptied, shrunken or renamed roster cannot hold the census green. The fixture home
+ * counters; re-read unchanged for the 0.1.784 pin by wb-c7ku at the installed 0.1.784 distribution), so an emptied, shrunken
+ * or renamed roster cannot hold the census green. The fixture home
  * is test/helpers/rf-render-fixture.ts (owner ruling R1 (b'), row 481): validRf()/result() in the envelope-audit and observer
  * suites stay the minimal cli_version-free pins. Provider rows run a scripted rf stand-in HERMETICALLY: an absolute node shebang
  * (process.execPath) and PATH restricted to the stand-in's own directory, so the provider can resolve no other rf and a stand-in
  * fault refuses as a launch failure, never as a render by a host rf; each refusal row pins its cause (category and message). The
  * live drift diff of a real capture against the same roster is the rf-preview tier's row (test/workbench-native-rf-preview.test.ts).
  * wb-973.20: the captured roster is exhaustive in both directions (owner ruling R649 (3)), so a result key beyond it fails the diff
- * (R649 row), and U6 holds the roster to its capture receipt of record, an anchor outside the JSON, the literal and the fixture. */
+ * (R649 row), and U6 holds the roster to its capture receipt of record, an anchor outside the JSON, the literal and the fixture.
+ * wb-91yt: U9 holds every provenance key the builder carries, by name and in emission order, to the emitted listings of
+ * receipts/wb-91yt.md (read off each release's own emitter), and U6-U9 bind every raw line of their receipts: a receipt holding
+ * an HTML comment opener, raw HTML marked 18 lexes or a link reference definition is refused, never stripped (U10 pins nine such
+ * forms), so none of those forms can hide a line these rows bind and an insertion cannot retract one. */
 import { createHash } from 'node:crypto';
 import { chmodSync, readFileSync, writeFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { basename, join } from 'node:path';
+import { Lexer, walkTokens } from 'marked';
 import { afterEach, describe, expect, it } from 'vitest';
 import { CapabilityError, type JsonValue } from '../src/workbench/capability-registry.js';
 import { ObservationProjection, type ObservationScope } from '../src/workbench/observation.js';
@@ -34,24 +40,26 @@ installScratchLeakGuard();
  * conditional: step L always runs, so every finished --no-commit render emits it (render_service.py:1527-1532 and its comment). */
 /** result: render_service.py:1494-1513 (output .. observations), :1533-1539 (attempts, superseded_transaction_ids,
  * fiber_transaction_refs), render.py:3569-3580 (the step-P ephemeral keys render_id, ephemeral, commit_seq, effects, plan) and
- * render_service.py:1527-1532 (necessity) and :1549 (session_id), all at 8a8b83e4d; retry_work at the installed 0.1.768
- * distribution, reactive_fiber_cli/application/render_service.py:1524-1526 (PMO-13-a: assigned on every render, beside the
- * superseded ids, before fiber_transaction_refs). */
+ * render_service.py:1527-1532 (necessity) and :1549 (session_id), all at 8a8b83e4d; retry_work at the installed 0.1.784
+ * distribution, reactive_fiber_cli/application/render_service.py:1539-1541 (:1524-1526 at 0.1.768; PMO-13-a: assigned on
+ * every render, beside the superseded ids, before fiber_transaction_refs). */
 const PINNED_RESULT_KEYS = [
   'output', 'budget', 'diagnostics_summary', 'blocks', 'components', 'provenance', 'work_metrics', 'work',
   'engine_metrics', 'scope', 'audience', 'bundle_revision_id', 'observations', 'necessity', 'attempts',
   'superseded_transaction_ids', 'retry_work', 'fiber_transaction_refs',
   'ephemeral', 'render_id', 'commit_seq', 'session_id', 'effects', 'plan',
 ];
-/** result.provenance, at least: context_show.py:313-339 (render_provenance emits seven keys; these three are the dossier's floor). */
+/** result.provenance, at least: context_show.py:313-339 at 8a8b83e4d, where render_provenance emitted seven keys (these three are
+ * the dossier's floor). At the installed 0.1.784 distribution it emits eight (context_show.py:451-463, the dict literal it
+ * returns: the seven PROVENANCE_KEYS record fields, then the storage block), seven at 0.1.768; U9 holds the builder to all eight by name. */
 const PINNED_PROVENANCE_KEYS = ['graph_revision_id', 'cli_version', 'sdk_versions'];
 /** result.work: rendering.py:2606-2613 (WORK_KEYS, emission order). */
 const PINNED_WORK_KEYS = [
   'source_capture_count', 'fiber_signal_count', 'component_render_count', 'lens_resolution_count', 'necessity_eval_count', 'storage_write_count',
 ];
 /** result.work_metrics: integrations/fiber.py:2474-2485 at 8a8b83e4d (the ten legacy keys), widened once by ruling R-53: at the
- * installed 0.1.768 distribution reactive_fiber_cli/integrations/fiber.py:2719-2751 (WORK_METRICS_KEYS = the ten
- * LEGACY_WORK_METRICS_KEYS, never removed or renamed, then the four R53_WORK_METRICS_KEYS). */
+ * installed 0.1.768 and 0.1.784 distributions reactive_fiber_cli/integrations/fiber.py:2719-2751, the same lines in both
+ * (WORK_METRICS_KEYS = the ten LEGACY_WORK_METRICS_KEYS, never removed or renamed, then the four R53_WORK_METRICS_KEYS). */
 const PINNED_WORK_METRICS_KEYS = [
   'source_capture_count', 'fiber_signal_count', 'fiber_transaction_count', 'invalidated_component_count', 'rendered_component_count',
   'state_read_count', 'state_write_count', 'journal_records_scanned', 'blob_bytes_written', 'history_rows_materialized',
@@ -67,6 +75,34 @@ const COUNT_WORDS: readonly string[] = ['zero', 'one', 'two', 'three', 'four', '
 const ROSTER_KEYS_RECEIPT = 'docs/workbench/receipts/wb-c7ku.md';
 /** The key lists that entry states, in its order: one line each, `- <label> keys (<count>): <key>, <key>, ... <key>.` */
 const ROSTER_KEY_LIST_LABELS: readonly string[] = ['Result', 'Provenance', 'Work', 'Work metrics'];
+/** The emitted provenance listings (wb-91yt, the wb-c7ku gate's F2 under ruling R691): every result.provenance key the pinned rf
+ * and the pin before it emit, in emission order, and the pinned rf's storage block keys, each read off that release's own
+ * emitter (never from the builder, the roster or the receipt of record) into an append-only receipt entry, read by U9. */
+const PROVENANCE_LISTING_RECEIPT = 'docs/workbench/receipts/wb-91yt.md';
+/** The listing lines that entry states, one per release: `- Emitted provenance keys at rf <release> (<count>): <key>, ... <key>.` */
+const EMITTED_PROVENANCE_LIST = /^- Emitted provenance keys at rf (\d+\.\d+\.\d+) \((\d+)\): ([a-z_]+(?:, [a-z_]+)*)\.$/;
+/** And the pinned release's storage block keys: `- Storage block keys at rf <release> (<count>): <key>, <key>.` */
+const STORAGE_BLOCK_LIST = /^- Storage block keys at rf (\d+\.\d+\.\d+) \((\d+)\): ([a-z_]+(?:, [a-z_]+)*)\.$/;
+/** How the receipt of record spells a key's position. */
+const ORDINAL_WORDS: readonly string[] = ['first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth'];
+/* U10 (wb-91yt cut #2, the cut #1 gate's F1 and F2): the forms receiptText refuses, one row each: the form, the receipt U6-U9 bind
+ * that it is derived from, the prefix of the one line it edits (a line U6-U9 bind and require exactly once), the edit (that line
+ * -> the lines that replace it), the edit's shape as git diff --numstat reads it (lines added/removed) and the cause and line
+ * receiptText refuses it for. Seven of the nine only add lines, so the rule-15 numstat deletion check cannot see them; the first
+ * is the cut #1 gate's G21 shape. */
+const RECEIPT_HIDING_FORMS = [
+  ['comment-around-line', ROSTER_KEYS_RECEIPT, '- Result keys (24): ', (line: string): string[] => ['<!--', line, '-->', line.replace(', audience, ', ', audience_kind, ')], '+3/-0', 'an HTML comment opener at line 14'],
+  ['comment-inline', PROVENANCE_LISTING_RECEIPT, '- Emitted provenance keys at rf 0.1.784 (8): ', (line: string): string[] => [line.replace(/: ([a-z_]+, )/, ': <!--$1-->')], '+1/-1', 'an HTML comment opener at line 5'],
+  ['comment-empty', ROSTER_KEYS_RECEIPT, '- Work metrics keys (14): ', (line: string): string[] => [line, '', '<!-->', '<!--->', '<!---->'], '+4/-0', 'an HTML comment opener at line 19'],
+  ['comment-unclosed', ROSTER_KEYS_RECEIPT, '- Roster of record: ', (line: string): string[] => ['<!-- an opener without its close', line], '+1/-0', 'an HTML comment opener at line 13'],
+  ['comment-html5-closer', ROSTER_RECEIPT, '- Delta read at the installed reactivefibercli ', (line: string): string[] => ['<!--', line, '--!>', line], '+3/-0', 'an HTML comment opener at line 12'],
+  ['html-hidden-div', PROVENANCE_LISTING_RECEIPT, '- Emitted provenance keys at rf 0.1.784 (8): ', (line: string): string[] => ['<div hidden>', line, '</div>', ''], '+3/-0', 'raw HTML at line 5'],
+  ['html-style-block', ROSTER_RECEIPT, '- Delta read at the installed reactivefibercli ', (line: string): string[] => ['<style>', line, '</style>'], '+2/-0', 'raw HTML at line 12'],
+  ['html-inline-tag', ROSTER_KEYS_RECEIPT, '- Provenance keys (3): ', (line: string): string[] => [line.replace(/ ([a-z_]+)\.$/, ' <span hidden>$1</span>.')], '+1/-1', 'raw HTML at line 15'],
+  ['link-definition', PROVENANCE_LISTING_RECEIPT, '- Storage block keys at rf 0.1.784 (2): ', (line: string): string[] => ['', "[hidden]: /u '", line, "'"], '+3/-0', 'a link reference definition at line 8'],
+] as const;
+/** The receipt line that lists those forms, in table order: `- Hiding forms the receipt reader refuses (<count>): <form>, ... <form>.` */
+const HIDING_FORM_LIST = /^- Hiding forms the receipt reader refuses \((\d+)\): ([a-z0-9-]+(?:, [a-z0-9-]+)*)\.$/;
 
 const roster = readRfResultRoster();
 
@@ -79,6 +115,47 @@ const resultOf = (envelope: Obj): Obj => asObject(envelope.result);
 const without = (value: Obj, key: string): Obj => Object.fromEntries(Object.entries(value).filter(([name]) => name !== key));
 const withResult = (envelope: Obj, over: Obj): Obj => ({ ...envelope, result: { ...resultOf(envelope), ...over } });
 const digestOf = (text: string): string => createHash('sha256').update(text).digest('hex');
+
+/** A receipt's committed bytes. */
+const committedReceipt = (path: string): string => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
+/** Every form in `text` that could hide a line from its page, as the cause and the line the first of its kind starts on (empty
+ * when none): an HTML comment opener anywhere (complete or not, block or inline, the empty forms and a closer CommonMark does not
+ * accept included), raw HTML marked 18 lexes (gfm: block or inline, nested in a list or quote included; a code span is text) and
+ * a link reference definition (its title can run over the lines below it). */
+function receiptHidingCauses(text: string): string[] {
+  const lineOf = (index: number): number => text.slice(0, index).split('\n').length;
+  const html: string[] = [];
+  const definitions: string[] = [];
+  walkTokens(new Lexer({ gfm: true }).lex(text), token => {
+    if (token.type === 'html' && !token.raw.trimStart().startsWith('<!--')) html.push(token.raw);
+    else if (token.type === 'def') definitions.push(token.raw);
+  });
+  const opener = text.indexOf('<!--');
+  return [
+    ...(opener < 0 ? [] : [`an HTML comment opener at line ${lineOf(opener)}`]),
+    ...html.slice(0, 1).map(raw => `raw HTML at line ${lineOf(text.indexOf(raw))}`),
+    ...definitions.slice(0, 1).map(raw => `a link reference definition at line ${lineOf(text.indexOf(raw))}`),
+  ];
+}
+/** A receipt U6-U9 bind, as committed (wb-91yt cut #2, the cut #1 gate's F1 and F2): every raw line binds and nothing is
+ * stripped, so a receipt holding a hiding form is refused, never read. Cut #1 stripped complete comments before the line
+ * filters, so an insertion-only edit could wrap a landed line and restate it altered with no numstat deletion, and a hidden div
+ * kept a line the rows bound off the page. Refusing those forms keeps U6's premise true: an insertion cannot retract a bound line
+ * (every raw line binds, and a restated copy reds the rows' exact counts), and an in-place edit removes a line, which the rule-15
+ * numstat deletion check sees once the receipt has landed. */
+function receiptText(path: string, text = committedReceipt(path)): string {
+  const causes = receiptHidingCauses(text);
+  if (causes.length > 0) throw new Error(`${path} cannot be bound: it holds ${causes.join(' and ')}`);
+  return text;
+}
+const receiptLines = (path: string): string[] => receiptText(path).split('\n');
+/** The release, stated count and keys of every `pattern` list line among `lines`, in file order. */
+function keyLists(lines: readonly string[], pattern: RegExp): { release: string; stated: number; keys: string[] }[] {
+  return lines.flatMap(line => {
+    const match = pattern.exec(line);
+    return match === null ? [] : [{ release: match[1] ?? '', stated: Number(match[2]), keys: (match[3] ?? '').split(', ') }];
+  });
+}
 
 /** The diff a fixture whose result drops `key` must produce: that key, plus every roster key of a subtree it takes with it. */
 function droppedFailures(key: string): string[] {
@@ -141,7 +218,8 @@ const PROVIDER_REFUSAL_ROWS = [
 
 describe('SCG-R11: full-shape offline RF result fixture', () => {
   // U5 (independent oracle): the roster file equals the independently authored literal, key for key and in order, at the
-  // pinned lengths (24 result / 3 provenance / 6 work / 14 work_metrics at the 0.1.768 pin; 23 / 3 / 6 / 10 at the 0.1.716 pin),
+  // pinned lengths (24 result / 3 provenance / 6 work / 14 work_metrics at the 0.1.784 pin, unchanged from the 0.1.768 pin;
+  // 23 / 3 / 6 / 10 at the 0.1.716 pin),
   // so an emptied, shrunken or renamed roster is red here.
   it('the frozen roster equals the independently authored literal roster: 24 result, 3 provenance, 6 work and 14 work_metrics keys', () => {
     expect([PINNED_RESULT_KEYS.length, PINNED_PROVENANCE_KEYS.length, PINNED_WORK_KEYS.length, PINNED_WORK_METRICS_KEYS.length]).toStrictEqual([24, 3, 6, 14]);
@@ -158,7 +236,7 @@ describe('SCG-R11: full-shape offline RF result fixture', () => {
   // and fullShapeRf changes a stated count, and a coordinated swap of a key the delta names drops that key, so either is red
   // here; a count-preserving swap of any other key keeps every stated count and is not red here (U7 below holds every key).
   it('U6: the captured roster agrees with its receipt of record: the capture id, the four stated counts and every key the delta names', () => {
-    const receipt = readFileSync(new URL(`../${ROSTER_RECEIPT}`, import.meta.url), 'utf8');
+    const receipt = receiptText(ROSTER_RECEIPT);
     expect([roster.source, roster.receipt]).toStrictEqual(['captured', 'cmd_ab79e0c5d689']);
     expect(receipt).toContain(`(receipt of record ${roster.receipt})`);
     expect(receipt).toContain(`is promoted to source ${roster.source} with receipt ${roster.receipt}.`);
@@ -189,7 +267,7 @@ describe('SCG-R11: full-shape offline RF result fixture', () => {
   // (result, work and work_metrics exactly; provenance as the three-key floor the roster states, since the builder's carries eight at
   // the 0.1.784 pin). The title states that reach (wb-c7ku, the wb-j032 delivery gate's F1 under ruling R681 (2)).
   it('U7: the JSON roster and the literal roster equal the key lists of their receipt of record key for key in order; the full-shape builders carry exactly its result, work and work_metrics key sets and at least its provenance keys', () => {
-    const lines = readFileSync(new URL(`../${ROSTER_KEYS_RECEIPT}`, import.meta.url), 'utf8').split('\n');
+    const lines = receiptLines(ROSTER_KEYS_RECEIPT);
     expect(lines.filter(line => line.startsWith('- Roster of record: ')))
       .toStrictEqual([`- Roster of record: rf ${roster.rfVersion}, source ${roster.source}, capture receipt ${roster.receipt} (${ROSTER_RECEIPT}).`]);
     const listing = lines.flatMap(line => {
@@ -213,15 +291,88 @@ describe('SCG-R11: full-shape offline RF result fixture', () => {
   // floor. The full-shape builder carries it, so the provider round-trip and observer rows below admit it in the default gate;
   // this row holds the builder's provenance key count and that key to the delta line of the receipt of record, an anchor outside
   // the builder, so dropping the block or any other provenance key is red here. A count-preserving rename of an unlisted
-  // provenance key stays outside this row and U7 (the provenance floor U7's title states).
+  // provenance key stays outside this row and U7 (the provenance floor U7's title states); U9 below holds every key by name.
   it('U8: the full-shape builder carries the provenance key count its receipt of record states, including the key that receipt names as new', () => {
-    const receipt = readFileSync(new URL(`../${ROSTER_RECEIPT}`, import.meta.url), 'utf8');
+    const receipt = receiptText(ROSTER_RECEIPT);
     const delta = receipt.split('\n').filter(line => line.startsWith(`- Delta read at the installed reactivefibercli ${roster.rfVersion} distribution: `));
     expect(delta).toHaveLength(1);
     const stated = /provenance carries the \w+ roster keys among its (\w+), the \w+ new since the [0-9.]+ pin: ([a-z_]+),/.exec(delta[0] ?? '');
     const provenance = asObject(resultOf(fullShapeRf(ws)).provenance);
     expect([stated?.[1], Object.hasOwn(provenance, stated?.[2] ?? '<absent>')]).toStrictEqual([COUNT_WORDS[Object.keys(provenance).length], true]);
     expect(roster.provenanceKeys).not.toContain(stated?.[2]);
+  });
+
+  // U9 (wb-91yt, the wb-c7ku gate's F2 under ruling R691: the two residuals U8 left prose-only). U8 holds the builder's provenance
+  // key count and the one key the delta line names, so a count-preserving rename of any other provenance key in the builder
+  // (L2-B3: created_at -> created_utc) and a delta line naming another builder key as the new one (L2-R2: created_at for storage)
+  // kept the default tier green. This anchor names every key outside the builder, the roster and the receipt of record:
+  // receipts/wb-91yt.md lists the provenance keys each release emits, read off that release's own emitter, one plain-text list
+  // item per release, and the pinned release's storage block keys. The builder is held to the pinned release's listing key for
+  // key in emission order, the roster's keys to their places in it, and the delta line's count, ordinal, previous pin, new key and
+  // storage block keys to the listings, so either residual is red here. FROZEN SHAPE (rule 16): 8 keys at the pin, 7 at the
+  // previous pin, and 2 storage block keys, in that line order; the entry's own Source line states how many lists it carries, an
+  // anchor outside this file, so deleting one list from this row and from the literal together is still red.
+  it('U9: the full-shape builder carries exactly the provenance keys, in emission order, and the storage block keys its emitted listing states for the pinned rf, and the delta line of the receipt of record names the one key that listing adds over the previous pin', () => {
+    const entry = receiptLines(PROVENANCE_LISTING_RECEIPT);
+    const lists = [...keyLists(entry, EMITTED_PROVENANCE_LIST), ...keyLists(entry, STORAGE_BLOCK_LIST)];
+    expect(entry.filter(line => line.startsWith('- Source of the ')).map(line => /^- Source of the (\w+) lists: /.exec(line)?.[1])).toStrictEqual([COUNT_WORDS[lists.length]]);
+    const delta = receiptLines(ROSTER_RECEIPT).filter(line => line.startsWith(`- Delta read at the installed reactivefibercli ${roster.rfVersion} distribution: `));
+    expect(delta).toHaveLength(1);
+    const named = /provenance carries the \w+ roster keys among its (\w+), the (\w+) new since the ([0-9.]+) pin: ([a-z_]+), the [^{]* block \{([a-z_]+(?:, [a-z_]+)*)\}/.exec(delta[0] ?? '');
+    expect(lists.map(list => list.release)).toStrictEqual([roster.rfVersion, named?.[3], roster.rfVersion]);
+    expect(lists.map(list => list.keys.length)).toStrictEqual(lists.map(list => list.stated));
+    expect(lists.map(list => list.keys.length)).toStrictEqual([8, 7, 2]);
+    const [pinned = [], previous = [], storage = []] = lists.map(list => list.keys);
+    const provenance = asObject(resultOf(fullShapeRf(ws)).provenance);
+    expect(Object.keys(provenance)).toStrictEqual(pinned);
+    expect(Object.keys(asObject(provenance.storage))).toStrictEqual(storage);
+    expect(pinned.filter(key => roster.provenanceKeys.includes(key))).toStrictEqual(roster.provenanceKeys);
+    expect(pinned.filter(key => previous.includes(key))).toStrictEqual(previous);
+    const added = pinned.filter(key => !previous.includes(key));
+    expect(added).toStrictEqual([named?.[4]]);
+    expect([named?.[1], named?.[2], named?.[5]?.split(', ')]).toStrictEqual([COUNT_WORDS[pinned.length], ORDINAL_WORDS[pinned.indexOf(added[0] ?? '<absent>')], storage]);
+  });
+
+  // U10 (wb-91yt cut #2, the cut #1 gate's F1 and F2): U6-U9 bind every raw line of their receipts, so receiptText refuses, rather
+  // than strips, the forms that can hide a bound line from the page: an HTML comment opener, raw HTML marked 18 lexes and a link
+  // reference definition. Cut #1 stripped complete comments first, so an insertion-only edit could wrap a landed line and
+  // restate it altered (G21: audience -> audience_kind past landed U7, numstat deletions 0).
+  // Each form is derived in memory from a committed receipt (nothing on disk is touched) and held to its edit shape and to the
+  // cause and line it is refused for. FROZEN SHAPE (rule 16): nine forms, in the order receipts/wb-91yt.md lists them, an anchor
+  // outside this file, so dropping a row and its literal element together is still red.
+  it('U10: the hiding-form table holds nine forms at their pinned edit shapes and causes, in the order its receipt lists them', () => {
+    expect(RECEIPT_HIDING_FORMS.map(([form, path, , , shape, cause]) => `${form} ${basename(path)} ${shape} ${cause}`)).toStrictEqual([
+      'comment-around-line wb-c7ku.md +3/-0 an HTML comment opener at line 14',
+      'comment-inline wb-91yt.md +1/-1 an HTML comment opener at line 5',
+      'comment-empty wb-c7ku.md +4/-0 an HTML comment opener at line 19',
+      'comment-unclosed wb-c7ku.md +1/-0 an HTML comment opener at line 13',
+      'comment-html5-closer wb-c7ku.md +3/-0 an HTML comment opener at line 12',
+      'html-hidden-div wb-91yt.md +3/-0 raw HTML at line 5',
+      'html-style-block wb-c7ku.md +2/-0 raw HTML at line 12',
+      'html-inline-tag wb-c7ku.md +1/-1 raw HTML at line 15',
+      'link-definition wb-91yt.md +3/-0 a link reference definition at line 8',
+    ]);
+    const listed = receiptLines(PROVENANCE_LISTING_RECEIPT).flatMap(line => {
+      const match = HIDING_FORM_LIST.exec(line);
+      return match === null ? [] : [{ stated: Number(match[1]), forms: (match[2] ?? '').split(', ') }];
+    });
+    expect(listed).toStrictEqual([{ stated: RECEIPT_HIDING_FORMS.length, forms: RECEIPT_HIDING_FORMS.map(([form]) => form) }]);
+  });
+  it.each(RECEIPT_HIDING_FORMS)('U10: receiptText refuses the %s form of a committed receipt, for its cause at its line', (_form, path, prefix, edit, shape, cause) => {
+    const lines = committedReceipt(path).split('\n');
+    const at = lines.flatMap((line, index) => (line.startsWith(prefix) ? [index] : []));
+    expect(at).toHaveLength(1);
+    const index = at[0] ?? -1;
+    const target = lines[index] ?? '';
+    const edited = edit(target);
+    expect(edited.includes(target) ? `+${edited.length - 1}/-0` : `+${edited.length}/-1`).toBe(shape);
+    const variant = [...lines.slice(0, index), ...edited, ...lines.slice(index + 1)].join('\n');
+    expect(thrownBy(() => receiptText(path, variant))).toMatchObject({ message: `${path} cannot be bound: it holds ${cause}` });
+  });
+  it('U10: receiptText returns each committed receipt byte for byte, and reads angle brackets in a code span as text', () => {
+    for (const path of [ROSTER_RECEIPT, PROVENANCE_LISTING_RECEIPT]) expect(receiptText(path)).toBe(committedReceipt(path));
+    const coded = `${committedReceipt(PROVENANCE_LISTING_RECEIPT)}- A code span such as \`<div hidden>\` renders as text.\n`;
+    expect(receiptText(PROVENANCE_LISTING_RECEIPT, coded)).toBe(coded);
   });
 
   // Acceptance 1 (census-grade): the fixture's result keys are a superset of the frozen roster, provenance carries the three
@@ -268,8 +419,8 @@ describe('SCG-R11: full-shape offline RF result fixture', () => {
     expect(diffAgainstRoster(roster, { ...result, work: { ...fullShapeWork(), seventh_count: 0 } }).failures).toStrictEqual(['unexpected result.work.seventh_count']);
     expect(diffAgainstRoster(roster, { ...result, work_metrics: { ...fullShapeWorkMetrics(), eleventh_count: 0 } }).failures)
       .toStrictEqual(['unexpected result.work_metrics.eleventh_count']);
-    // A conditional key rides beside the roster: view_id is stated only by a --view render (render_service.py:1503-1508 at the
-    // 0.1.768 pin). retry_work (an extra key at 0.1.723) and necessity are roster members since their pins. Beside a constructed
+    // A conditional key rides beside the roster: view_id is stated only by a --view render (render_service.py:1518-1523 at the
+    // 0.1.784 pin, :1503-1508 at 0.1.768). retry_work (an extra key at 0.1.723) and necessity are roster members since their pins. Beside a constructed
     // roster (a floor read off the emitter, before a capture promotes it) the extra key is recorded, never failed; beside the
     // captured roster it fails by name (owner ruling R649 (3), the R649 row below).
     const constructed: RfResultRoster = { ...roster, source: 'constructed', receipt: null };
