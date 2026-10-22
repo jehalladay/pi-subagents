@@ -63,6 +63,10 @@
  * Equal-date cross-file and earlier same-file withdrawals, because-only reasons, the TRACEABILITY HTML void and
  * cross-file same-position copies each have direct boundary pins. No live evidence document is edited.
  *
+ * wb-cimo / R686: that predicate is pinned past the six single-unit rows, for multi-unit prefixes (U+200B U+200C,
+ * U+2060 three times, a ten-unit mix) and for default-ignorables outside those six (U+2061, U+180E, U+034F, U+FE0F,
+ * U+E0020), each row paired with a live, byte-identical control; every F4 title names its code points in hexadecimal.
+ *
  * Frozen literals (rule 16), each written out in full: EXPECTED_SHAPE (journey:label:kind:pins), EXPECTED_PINS (the ten
  * pin pairs), EXPECTED_EVIDENCE (every row's evidence identity, U3) and EXPECTED_JUDGED_ROWS (the rows AC2 judges,
  * U4). AC2 asserts that the pins it judged are its row's EXPECTED_PINS entries, and its each-liveness case pins one
@@ -1916,7 +1920,10 @@ describe("wb-59l1 R679 position-bound citations and withdrawal boundaries", () =
     expect(runAudit({ [TRACEABILITY]: synthTraceability(`The earlier withdrawals were reviewed; ${RUN}`) })).toEqual([]);
   });
 
-  it.each([0x200b, 0x200c, 0x200d, 0x2060, 0x00ad, 0xfeff])("F4 invisible prefix U+%s: every named withdrawal marker refuses its quotation", cp => {
+  /** wb-cimo / R686 F2 (rides, the R681 U7 precedent): an F4 title names each code point in hexadecimal after "U+". */
+  const unitHex = (cp: number): string => cp.toString(16).toUpperCase().padStart(4, "0");
+
+  it.each([0x200b, 0x200c, 0x200d, 0x2060, 0x00ad, 0xfeff].map(cp => [unitHex(cp), cp] as const))("F4 invisible prefix U+%s: every named withdrawal marker refuses its quotation", (_hex, cp) => {
     for (const marker of ["SUPERSEDED", "Withdrawn", "Withdrawal", "Withdrawals"]) {
       const body = `${String.fromCodePoint(cp)}${marker}: ${RUN}`;
       expect(runAudit({ [TRACEABILITY]: synthTraceability("Nothing."), [RUN_FILE]: runDoc(`## 2026-10-20 receipt\n\n${body}`) })[0], `${cp.toString(16)} ${marker}`).toContain("SUPERSEDED");
@@ -1928,5 +1935,92 @@ describe("wb-59l1 R679 position-bound citations and withdrawal boundaries", () =
     const body = `${prefix}The earlier run was SUPERSEDED; ${RUN}`;
     expect(sourceCitations(TRACEABILITY, synthTraceability(body))[0]?.text).toBe(body);
     expect(runAudit({ [TRACEABILITY]: synthTraceability(body) })).toEqual([]);
+  });
+
+  /**
+   * wb-cimo / R686 F1, the wb-59l1 delivery gate's F1 (LOW, R660 hypothetical-survivor side): the header clause
+   * "recognizes leading default-ignorable units" was pinned only by the six single-unit rows above, so a one-unit
+   * marker (L2G-01, the class quantified "?") and a class cut to those six (L2G-02) both survived 162/162. Each row
+   * below pins a prefix those rows leave open, MULTI_UNIT (two or more units) or OUTSIDE_SIX (a default-ignorable the
+   * six do not name), for every named marker, and pairs it with its control: the same prefix before an interior
+   * keyword stays live and renders byte-identical (the predicate recognizes, never deletes). F4 class reads membership
+   * from the regex engine's Unicode Default_Ignorable_Code_Point property, an anchor outside this file's lists; the
+   * ten-unit mix leaves out U+FEFF, which the renderer collapses as whitespace, so that control stays byte-identical.
+   * F4 REGISTERED pins every F4 title in table order (F2: hexadecimal after "U+") and reads the covered six back from
+   * the landed rows' titles. Synthetic evidence inputs; no landed assertion removed; no product display path added.
+   * Disclosed limit: a coordinated edit of one table here and of F4_REGISTERED is census-code hollowing (6ze.38 class).
+   */
+  const COVERED_SIX: readonly number[] = [0x200b, 0x200c, 0x200d, 0x2060, 0x00ad, 0xfeff];
+  const MULTI_UNIT: readonly (readonly number[])[] = [
+    [0x200b, 0x200c],
+    [0x2060, 0x2060, 0x2060],
+    [0x200b, 0x200c, 0x200d, 0x2060, 0x00ad, 0x2061, 0x180e, 0x034f, 0xfe0f, 0xe0020],
+  ];
+  const OUTSIDE_SIX: readonly number[] = [0x2061, 0x180e, 0x034f, 0xfe0f, 0xe0020];
+  const unitsOf = (cps: readonly number[]): string => cps.map(cp => `U+${unitHex(cp)}`).join(" ");
+  const receiptText = (body: string): string => runDoc(`## 2026-10-20 receipt\n\n${body}`);
+  const receiptFiles = (body: string): Readonly<Record<string, string>> => ({ [TRACEABILITY]: synthTraceability("Nothing."), [RUN_FILE]: receiptText(body) });
+  const prefixPinned = (label: string, cps: readonly number[]): void => {
+    const prefix = String.fromCodePoint(...cps);
+    for (const marker of ["SUPERSEDED", "Withdrawn", "Withdrawal", "Withdrawals"]) {
+      const out = runAudit(receiptFiles(`${prefix}${marker}: ${RUN}`));
+      expect(out, `${label} ${marker}`).toHaveLength(1);
+      expect(out[0], `${label} ${marker}`).toContain("survives only inside a SUPERSEDED");
+    }
+    const live = `${prefix}The earlier run was SUPERSEDED; ${RUN}`;
+    expect(sourceCitations(RUN_FILE, receiptText(live)).map(citation => citation.text), `${label} control`).toEqual([live]);
+    expect(runAudit(receiptFiles(live)), `${label} control`).toEqual([]);
+  };
+
+  it.each(MULTI_UNIT.map(cps => [unitsOf(cps), cps] as const))("F4 multi-unit prefix %s: every named withdrawal marker refuses its quotation, and the prefix before an interior keyword stays live and byte-identical", (label, cps) => {
+    prefixPinned(label, cps);
+  });
+
+  it.each(OUTSIDE_SIX.map(cp => [unitsOf([cp]), [cp]] as const))("F4 outside-the-six prefix %s: every named withdrawal marker refuses its quotation, and the prefix before an interior keyword stays live and byte-identical", (label, cps) => {
+    prefixPinned(label, cps);
+  });
+
+  it("F4 class: every new prefix unit is a Unicode default-ignorable code point and no whitespace, each multi-unit prefix has two or more units, and no outside-the-six member is a covered one", () => {
+    const ignorable = /^\p{Default_Ignorable_Code_Point}$/u;
+    for (const cp of [...MULTI_UNIT.flat(), ...OUTSIDE_SIX]) {
+      expect(ignorable.test(String.fromCodePoint(cp)), unitHex(cp)).toBe(true);
+      expect(/^\s$/u.test(String.fromCodePoint(cp)), unitHex(cp)).toBe(false);
+    }
+    expect(MULTI_UNIT.map(cps => cps.length >= 2)).toEqual(MULTI_UNIT.map(() => true));
+    expect(OUTSIDE_SIX.filter(cp => COVERED_SIX.includes(cp))).toEqual([]);
+  });
+
+  const F4_REGISTERED: readonly string[] = [
+    "F4 invisible prefix U+200B: every named withdrawal marker refuses its quotation",
+    "F4 invisible prefix U+200C: every named withdrawal marker refuses its quotation",
+    "F4 invisible prefix U+200D: every named withdrawal marker refuses its quotation",
+    "F4 invisible prefix U+2060: every named withdrawal marker refuses its quotation",
+    "F4 invisible prefix U+00AD: every named withdrawal marker refuses its quotation",
+    "F4 invisible prefix U+FEFF: every named withdrawal marker refuses its quotation",
+    "F4 controls: invisible-prefixed live text is not deleted or rewritten and an interior keyword is not an opening marker",
+    "F4 multi-unit prefix U+200B U+200C: every named withdrawal marker refuses its quotation, and the prefix before an interior keyword stays live and byte-identical",
+    "F4 multi-unit prefix U+2060 U+2060 U+2060: every named withdrawal marker refuses its quotation, and the prefix before an interior keyword stays live and byte-identical",
+    "F4 multi-unit prefix U+200B U+200C U+200D U+2060 U+00AD U+2061 U+180E U+034F U+FE0F U+E0020: every named withdrawal marker refuses its quotation, and the prefix before an interior keyword stays live and byte-identical",
+    "F4 outside-the-six prefix U+2061: every named withdrawal marker refuses its quotation, and the prefix before an interior keyword stays live and byte-identical",
+    "F4 outside-the-six prefix U+180E: every named withdrawal marker refuses its quotation, and the prefix before an interior keyword stays live and byte-identical",
+    "F4 outside-the-six prefix U+034F: every named withdrawal marker refuses its quotation, and the prefix before an interior keyword stays live and byte-identical",
+    "F4 outside-the-six prefix U+FE0F: every named withdrawal marker refuses its quotation, and the prefix before an interior keyword stays live and byte-identical",
+    "F4 outside-the-six prefix U+E0020: every named withdrawal marker refuses its quotation, and the prefix before an interior keyword stays live and byte-identical",
+    "F4 class: every new prefix unit is a Unicode default-ignorable code point and no whitespace, each multi-unit prefix has two or more units, and no outside-the-six member is a covered one",
+    "F4 REGISTERED: every F4 case is registered once in table order under hexadecimal code points, and the covered six read back from their titles",
+  ];
+
+  it("F4 REGISTERED: every F4 case is registered once in table order under hexadecimal code points, and the covered six read back from their titles", ({ task }) => {
+    const registered: string[] = [];
+    const walk = (tasks: typeof task.file.tasks): void => {
+      for (const child of tasks) {
+        if (child.type === "test" && child.name.startsWith("F4 ")) registered.push(child.name);
+        else if (child.type === "suite") walk(child.tasks);
+      }
+    };
+    walk(task.file.tasks);
+    expect(registered).toEqual(F4_REGISTERED);
+    const stem = "F4 invisible prefix U+";
+    expect(registered.filter(name => name.startsWith(stem)).map(name => Number.parseInt(name.slice(stem.length), 16)), "the covered six, read back from their titles").toEqual(COVERED_SIX);
   });
 });
