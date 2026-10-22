@@ -69,6 +69,7 @@ import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { basename, dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import ts from "typescript";
 import { afterEach, describe, expect, it } from "vitest";
 import { type CapabilityDescriptor, CapabilityRegistry } from "../src/workbench/capability-registry.js";
 import { registerNativeReactiveFiberRender, registerReactiveFiberRender } from "../src/workbench/providers/reactivefiber.js";
@@ -1259,6 +1260,20 @@ const EXAMPLES_PARENT = "19 — Worked usage examples and expected outcomes";
 const EXAMPLE_ARMS_SENTENCE =
   "reactivefiber.render.preview accepts exactly one of two input arms under explicit reactivefiber:render: model and task, or view and taskId with an optional model, never both; its workspace must already be initialized.";
 
+/**
+ * wb-omxf R695 (d): the G1 timing sightings of the R6-R9 block's two report-judging rows - register candidates 46 (M5,
+ * "Test timed out in 5000ms" at 5440 ms in gate cmd_89065b4fb248) and 48 (DEL, 6974 ms in gate cmd_5f0be6550a44), each
+ * green on its serial leg - route to the R687 explicit-budget cure shape, not to the register. M5 and DEL run on this
+ * file-local budget: the describe that wraps them passes it as its timeout option, so their landed lines stay
+ * byte-identical, and the BUDGET row of the wb-omxf block reads the registered timeout back from the runner's own task
+ * tree (exactly those two rows, each registered once). Exceeding it is vitest's timeout red at the budget's value, never
+ * at the bare 5000 ms default. Sized by the R546 recipe: 5 x the costliest wall of record (R16_WORST_WALL_MS, DEL in
+ * gate) = 34870 ms, rounded up to a whole 5 s. Seat walls over that gate's own full default-tier report, re-rooted
+ * (2026-10-22, three sequential runs, load1 241-272): M5 1979-2211 ms, DEL 2738-3074 ms.
+ */
+const R16_WORST_WALL_MS = 6_974;
+const R16_REPORT_BUDGET_MS = 35_000;
+
 describe("wb-973.16 rows R6-R9: the SCG-R16 RF sentences (a)-(d) bound to the SCG-R1/R3/R4/R5/R6/R7 cases", () => {
   const scratch: string[] = [];
   afterEach(() => {
@@ -1324,6 +1339,8 @@ describe("wb-973.16 rows R6-R9: the SCG-R16 RF sentences (a)-(d) bound to the SC
     if (altered.ok) expect(receiptAnchorFindings(TABLE, altered.rows).map(line => line.slice(0, line.indexOf(" (")))).toEqual(["row R6"]);
   });
 
+  // wb-omxf R695 (d): M5 and DEL receive R16_REPORT_BUDGET_MS through this describe's timeout option; their lines are unchanged.
+  describe("report-judging rows on the file-local R16_REPORT_BUDGET_MS (wb-omxf R695 (d), R687 shape)", { timeout: R16_REPORT_BUDGET_MS }, () => {
   it("M5 (wb-973.16): every row R6-R9 pin renamed by one character is absent from the report and red, naming the row, its sentence, the half, the file and the title", () => {
     const pins = r16().flatMap(row => row.halves.flatMap(half => half.pins.map(entry => ({ row, half, entry }))));
     expect(pins).toHaveLength(19);
@@ -1374,6 +1391,7 @@ describe("wb-973.16 rows R6-R9: the SCG-R16 RF sentences (a)-(d) bound to the SC
     }
     const control = TABLE.find(row => row.row === "R5")?.halves.filter(half => half.tier === "default-gate") ?? [];
     expect(control.flatMap(half => judge(path, half.pins.map(entry => casePin(half, entry)), { root: ROOT }).map(verdict => verdict.code))).toEqual(["ok", "ok", "ok", "ok"]);
+  });
   });
 
   const DRIFT: readonly [string, string, string, string][] = [
@@ -1630,5 +1648,544 @@ describe("wb-1z3u docs/19 measured read example: the RF arms claim judged by sen
     }
     expect(reading.sentence, id).not.toBe(EXAMPLE_ARMS_SENTENCE);
     expect(judgementKinds(exampleFailures(readRepo(EXAMPLES_FILE), reading.sentence)), id).toEqual(["SENTENCE", "SLICE"]);
+  });
+});
+
+/**
+ * wb-omxf / R677 (class-closing) + R695 Q2 (cut #2): the AC3 containment check binds the FULL section-bounded slice of
+ * docs/19's measured read example by EQUALITY against an external anchor, red-first vs the frozen-last-block and
+ * NAMES_RF-regex bypass shapes. No landed line is changed (the R6-R9 budget above wraps M5 and DEL insert-only).
+ * R695 (a): the fixture is the frozen EXPECTATION and docs/workbench/19-worked-examples.md is the SUBJECT. Every text the
+ * full-slice judge reads is a Sourced value: the repo path it was read from and the SHA-256 of exactly those bytes. The
+ * expectation's provenance is pinned (EXPECTATION: the fixture path and the digest of its committed bytes); the subject's
+ * is the docs path and the digest of its bytes on disk, asserted distinct from the expectation's and never pinned (the
+ * page may change outside this section).
+ * R695 (b): fullExampleFailures(subject, expectation, armsSentence) reads no file. It asserts both provenances (PROVENANCE
+ * lines, one per failed check), derives the anchor blocks from the expectation it is GIVEN and equals the subject's
+ * section to them (FULL-SLICE), and vouches the expectation's RF sentence against both registered descriptors
+ * (REGISTRY). Every equality row (LIVE, the drift forms, ANCHOR-SIDE, ON-DISK, BOUNDARY, REGISTRY, F2, FROZEN SHAPE)
+ * passes the expectation in; the table rows read it through expectedTables, which refuses any other provenance.
+ * R695 (c), the kill matrix: an expectation read from the docs path (the call-site L2-J-ANCHOR-LIVE class) reds
+ * PROVENANCE on LIVE, on every ON-DISK row and on P-ANCHOR-LIVE-DOCS; anchor blocks derived inside the judge from the live
+ * docs (the gate's one-line L2-J-ANCHOR-LIVE) red every ANCHOR-SIDE row, which judges the live page against an
+ * expectation drifted in memory; blocks derived from the subject red every drift form; ON-DISK writes docs/19 carrying
+ * each R677 F1 survivor into a scratch repo root and judges the LIVE reading there, its same-delay and same-edit controls
+ * quiet. LIVE also equals the subject's section to the expectation's on its own, outside the judge, so a judge-internal
+ * re-point plus an F1 survivor on disk still reds LIVE itself. Each provenance check is the only one some falsifier row
+ * trips (the P-* rows; ANCHOR-SIDE for the pinned digest).
+ * Scope: this one section (a following level-2 section is outside it, pinned quiet), never a whole-page claim; a
+ * coordinated rewrite of the docs, the fixture and the EXPECTATION literal together is the NAMED RESIDUAL
+ * R-COORDINATED-LITERAL-AND-ANCHOR (cut #3, R696 (3), its quiet row below), never a claim.
+ * F2 toolchain coupling (disclosed): the fixture's ARM_EDITS digests hash vitest's TRANSFORMED function text, so a
+ * transform-target or transformer change reds the F2 row until the fixture's arms are regenerated.
+ */
+const OMXF_ANCHOR_FILE = "test/fixtures/docs19-full-section-omxf.json";
+/** Where a judged text came from: the repo path read and the SHA-256 (hex) of exactly the bytes read (R695 (a)). */
+interface Provenance {
+  readonly path: string;
+  readonly sha256: string;
+}
+/** A judged text with the provenance of its bytes: built by readWithProvenance (a read) or asRead (a page at a read's path). */
+interface Sourced {
+  readonly provenance: Provenance;
+  readonly text: string;
+}
+/**
+ * The frozen EXPECTATION's provenance, pinned as source-level string literals (R696 (1), read back by the LITERAL PIN row from
+ * this file's AST): the fixture path and the SHA-256 of its committed bytes (sha256sum), written out and never computed here.
+ */
+const EXPECTATION: Provenance = { path: "test/fixtures/docs19-full-section-omxf.json", sha256: "25c4fe9de69aaa2cc4c65529a179f153244b50d947edfc3527ec0d8b3048c25e" };
+const sha256Hex = (bytes: string | Buffer): string => createHash("sha256").update(bytes).digest("hex");
+/** A file under a repo root with the digest of exactly its bytes: the one read every full-slice row judges. */
+function readWithProvenance(root: string, path: string): Sourced {
+  const bytes = readFileSync(join(root, path));
+  return { provenance: { path, sha256: sha256Hex(bytes) }, text: bytes.toString("utf8") };
+}
+/** A hypothetical page at a read's path (an edit or an append of it): the given text and the digest of its bytes. */
+const asRead = (source: Sourced, text: string): Sourced => ({ provenance: { path: source.provenance.path, sha256: sha256Hex(text) }, text });
+/** One edit of a read, applied once, its replacement taken literally. */
+const editedFrom = (source: Sourced, from: string, to: string): Sourced => asRead(source, source.text.replace(from, () => to));
+
+interface OmxfAnchor {
+  readonly sectionMarkdown: string;
+  readonly d19: readonly (readonly [string, string, string, readonly string[]])[];
+  readonly arms: readonly { readonly id: string; readonly outcome: string; readonly editSha256: string }[];
+  readonly forms: readonly (readonly [string, string, string])[];
+  readonly onDiskSurvivors: readonly string[];
+  readonly provenanceFalsifiers: readonly (readonly [string, readonly string[]])[];
+  readonly reportBudgetRows: readonly string[];
+  readonly literalRows: readonly OmxfLiteralRow[];
+  readonly residuals: readonly OmxfResidual[];
+}
+type AnchorReading = { readonly ok: true; readonly anchor: OmxfAnchor } | { readonly ok: false; readonly why: string };
+/** The expectation's anchor by SHAPE alone; its provenance is judged by expectationFailures, never here. */
+function anchorShape(text: string): AnchorReading {
+  let raw: unknown;
+  try {
+    raw = JSON.parse(text);
+  } catch (error) {
+    return { ok: false, why: `not JSON: ${error instanceof Error ? error.message : String(error)}` };
+  }
+  if (!isRecord(raw) || typeof raw.sectionMarkdown !== "string" || ![raw.d19, raw.arms, raw.forms, raw.onDiskSurvivors, raw.provenanceFalsifiers, raw.reportBudgetRows, raw.literalRows, raw.residuals].every(Array.isArray)) {
+    return { ok: false, why: "missing the section, falsifier, arm, form, survivor, provenance-falsifier, budget-row, literal-row or residual anchor" };
+  }
+  return { ok: true, anchor: raw as unknown as OmxfAnchor };
+}
+
+const OMXF_WHERE = `${EXAMPLES_FILE} § ${EXAMPLES_SECTION}`;
+/** R695 (a), the expectation's side: the pinned fixture path, the pinned digest, and its text the bytes its digest names. */
+function expectationFailures(expectation: Sourced): string[] {
+  const out: string[] = [];
+  if (expectation.provenance.path !== EXPECTATION.path) out.push(`${OMXF_WHERE}: PROVENANCE: expectation-path: the expectation was read from ${expectation.provenance.path}, not the frozen fixture ${EXPECTATION.path}`);
+  if (expectation.provenance.sha256 !== EXPECTATION.sha256) out.push(`${OMXF_WHERE}: PROVENANCE: expectation-digest: the expectation's bytes digest to ${expectation.provenance.sha256}, not the pinned fixture digest ${EXPECTATION.sha256}`);
+  if (sha256Hex(expectation.text) !== expectation.provenance.sha256) out.push(`${OMXF_WHERE}: PROVENANCE: expectation-bytes: the expectation's text is not the bytes its provenance names`);
+  return out;
+}
+/** R695 (a), both sides: the expectation's checks, the subject read from docs/19 as the bytes its digest names, two distinct reads. */
+function provenanceFailures(subject: Sourced, expectation: Sourced): string[] {
+  const out = expectationFailures(expectation);
+  if (subject.provenance.path !== EXAMPLES_FILE) out.push(`${OMXF_WHERE}: PROVENANCE: subject-path: the subject was read from ${subject.provenance.path}, not ${EXAMPLES_FILE}`);
+  if (sha256Hex(subject.text) !== subject.provenance.sha256) out.push(`${OMXF_WHERE}: PROVENANCE: subject-bytes: the subject's text is not the bytes its provenance names`);
+  if (subject.provenance.path === expectation.provenance.path || subject.provenance.sha256 === expectation.provenance.sha256) {
+    out.push(`${OMXF_WHERE}: PROVENANCE: distinct: the subject and the expectation share a path or a digest; the expectation must be a read distinct from the subject`);
+  }
+  return out;
+}
+
+/**
+ * R695 (b): equal the subject's WHOLE bounded block list to the expectation it is given, after asserting both
+ * provenances, and vouch the expectation's RF sentence from the registry. It reads no file.
+ */
+function fullExampleFailures(subject: Sourced, expectation: Sourced, armsSentence: string): string[] {
+  const failures = provenanceFailures(subject, expectation);
+  const reading = anchorShape(expectation.text);
+  if (!reading.ok) return [...failures, `${OMXF_WHERE}: PROVENANCE: expectation-shape: the expectation is not the fixture's section anchor: ${reading.why}`];
+  const anchor = docsSection(`# ${EXAMPLES_PARENT}\n\n${reading.anchor.sectionMarkdown}`, EXAMPLES_SECTION, 2, [EXAMPLES_PARENT]);
+  if (!anchor.ok) return [...failures, `${OMXF_WHERE}: PROVENANCE: expectation-shape: the expectation's section is refused: ${anchor.why}`];
+  const rfParagraph = anchor.blocks.at(-1);
+  const sentence = rfParagraph?.kind === "paragraph" ? proseSentences(rfParagraph.text).filter(text => text.includes(RF_CAPABILITY)) : [];
+  if (sentence.length !== 1 || sentence[0] !== armsSentence) failures.push(`${OMXF_WHERE}: REGISTRY: the expectation's RF sentence is not the registry's arms sentence: ${JSON.stringify(sentence)}`);
+  const exact = sectionMatches(docsSection(subject.text, EXAMPLES_SECTION, 2, [EXAMPLES_PARENT]), anchor.blocks);
+  if (!exact.ok) failures.push(`${OMXF_WHERE}: FULL-SLICE: ${exact.why}`);
+  return failures;
+}
+/** The kind of each full-slice line, in order; a PROVENANCE line carries the check it failed. */
+const fullKinds = (lines: readonly string[]): string[] =>
+  lines.map(line => {
+    const kind = /: (PROVENANCE|REGISTRY|FULL-SLICE): /u.exec(line)?.[1] ?? "UNTYPED";
+    return kind === "PROVENANCE" ? `PROVENANCE ${/: PROVENANCE: ([a-z-]+): /u.exec(line)?.[1] ?? "untyped"}` : kind;
+  });
+
+interface OmxfPair {
+  readonly subject: Sourced;
+  readonly expectation: Sourced;
+}
+/** The SUBJECT (docs/19) and the EXPECTATION (the fixture) read under one repo root, each with its own provenance. */
+const readPair = (root: string): OmxfPair => ({ subject: readWithProvenance(root, EXAMPLES_FILE), expectation: readWithProvenance(root, OMXF_ANCHOR_FILE) });
+/** The LIVE reading under a repo root: the pair it read, and the judge's findings over it. */
+function liveReading(root: string): OmxfPair & { readonly findings: string[] } {
+  const pair = readPair(root);
+  return { ...pair, findings: fullExampleFailures(pair.subject, pair.expectation, registryArmsSentence()) };
+}
+/** The expectation's tables, for the table rows: refused unless its provenance is the pinned fixture's (R695 (b)). */
+function expectedTables(expectation: Sourced): OmxfAnchor {
+  const failures = expectationFailures(expectation);
+  const reading = anchorShape(expectation.text);
+  if (failures.length > 0 || !reading.ok) throw new Error(`${OMXF_ANCHOR_FILE}: the table rows refuse this expectation: ${[...failures, reading.ok ? "" : reading.why].filter(line => line !== "").join(" | ")}`);
+  return reading.anchor;
+}
+/** An expectation drifted in memory: the fixture's section edited once, re-serialized, carrying the digest of its new bytes. */
+function driftedExpectation(expectation: Sourced, from: string, to: string): Sourced {
+  const reading = anchorShape(expectation.text);
+  if (!reading.ok) throw new Error(`${OMXF_ANCHOR_FILE}: ${reading.why}`);
+  if (reading.anchor.sectionMarkdown.split(from).length !== 2) throw new Error(`${JSON.stringify(from)} does not occur once in the expectation's section`);
+  return asRead(expectation, `${JSON.stringify({ ...reading.anchor, sectionMarkdown: reading.anchor.sectionMarkdown.replace(from, () => to) }, null, 2)}\n`);
+}
+/** The text a drift form adds: its replacement without the text it keeps, or the whole replacement when it rewrites. */
+const addedText = (from: string, to: string): string => (to.includes(from) ? to.replace(from, () => "") : to);
+
+const OMXF_FORMS: readonly (readonly [string, string, string])[] = [
+  ["G-D19-PARA-BEFORE-UNNAMED", "`furnace.run.inspect` accepts an existing `runId`", "The render preview below also accepts both input arms in one call.\n\n`furnace.run.inspect` accepts an existing `runId`"],
+  ["G-D19-ELSEWHERE-SPACED", "not a task-scoped semantic dependency analysis.", "not a task-scoped semantic dependency analysis. The Reactive Fiber render preview also accepts both input arms in one call."],
+  ["G-D19-ELSEWHERE-HYPHEN", "not a task-scoped semantic dependency analysis.", "not a task-scoped semantic dependency analysis. The Reactive-Fiber render preview also accepts both input arms in one call."],
+  ["G-D19-QUOTEBLOCK-BEFORE", "`furnace.run.inspect` accepts an existing `runId`", "> Both input arms of the render preview below may be combined in one call.\n\n`furnace.run.inspect` accepts an existing `runId`"],
+  ["G-D19-STRIKE-VIEW-ARM", "or `view` and `taskId` with an optional `model`, never both", "or ~~`view` and `taskId` with an optional `model`~~, never both"],
+  ["G-D19-STRIKE", "never both; its workspace", "~~never both~~; its workspace"],
+  ["X-UNNAMED-CODE", 'return {coverage: found.source.coverage_summary, runtime: found.runtime};\n', 'return {coverage: found.source.coverage_summary, runtime: found.runtime};\n// Both input arms may be combined\n'],
+  ["X-UNNAMED-LIST", "`furnace.run.inspect` accepts an existing `runId`", "- Both input arms may be combined.\n\n`furnace.run.inspect` accepts an existing `runId`"],
+  ["X-UNNAMED-H3", "`furnace.run.inspect` accepts an existing `runId`", "### Override\n\nBoth input arms may be combined.\n\n`furnace.run.inspect` accepts an existing `runId`"],
+  ["X-PRIOR-PARAGRAPH-REWORD", "This query is a filesystem read, not a task-scoped semantic dependency analysis.", "This query is a semantic dependency analysis."],
+];
+/** R695 (c): the original R677 F1 survivors (the gate's six LEG-2 forms), each written ON DISK into a scratch repo root's docs/19. */
+const OMXF_ON_DISK_IDS: readonly string[] = ["G-D19-PARA-BEFORE-UNNAMED", "G-D19-ELSEWHERE-SPACED", "G-D19-ELSEWHERE-HYPHEN", "G-D19-QUOTEBLOCK-BEFORE", "G-D19-STRIKE-VIEW-ARM", "G-D19-STRIKE"];
+const OMXF_ON_DISK: readonly (readonly [string, string, string])[] = OMXF_ON_DISK_IDS.map(id => {
+  const form = OMXF_FORMS.find(([formId]) => formId === id);
+  if (form === undefined) throw new Error(`the on-disk survivor ${id} is not a drift form`);
+  return form;
+});
+/**
+ * R695 (a)/(b) falsifiers: each builds, from the LIVE pair, the pair the judge is handed, then the kinds it must draw.
+ * Each PROVENANCE check is the only one at least one row trips (the pinned digest's is ANCHOR-SIDE's), so a judge that
+ * stopped asserting any one of them, or compared a re-pointed anchor, reads red here.
+ */
+const OMXF_PROVENANCE: readonly (readonly [string, (pair: OmxfPair) => OmxfPair, readonly string[]])[] = [
+  ["P-ANCHOR-LIVE-DOCS", ({ subject }) => ({ subject, expectation: readWithProvenance(ROOT, EXAMPLES_FILE) }), ["PROVENANCE expectation-path", "PROVENANCE expectation-digest", "PROVENANCE distinct", "PROVENANCE expectation-shape"]],
+  ["P-ANCHOR-IS-SUBJECT", ({ subject }) => ({ subject, expectation: subject }), ["PROVENANCE expectation-path", "PROVENANCE expectation-digest", "PROVENANCE distinct", "PROVENANCE expectation-shape"]],
+  ["P-ANCHOR-OTHER-PATH", ({ subject, expectation }) => ({ subject, expectation: { provenance: { path: "test/fixtures/docs19-full-section-omxf.copy.json", sha256: expectation.provenance.sha256 }, text: expectation.text } }), ["PROVENANCE expectation-path"]],
+  ["P-ANCHOR-LYING-DIGEST", ({ subject, expectation }) => ({ subject, expectation: { provenance: expectation.provenance, text: driftedExpectation(expectation, OMXF_FORMS[0][1], OMXF_FORMS[0][2]).text } }), ["PROVENANCE expectation-bytes", "FULL-SLICE"]],
+  ["P-ANCHOR-RESERIALIZED", ({ subject, expectation }) => ({ subject, expectation: { provenance: expectation.provenance, text: JSON.stringify(JSON.parse(expectation.text)) } }), ["PROVENANCE expectation-bytes"]],
+  ["P-SUBJECT-IS-FIXTURE", ({ expectation }) => ({ subject: expectation, expectation }), ["PROVENANCE subject-path", "PROVENANCE distinct", "FULL-SLICE"]],
+  ["P-SUBJECT-LYING-DIGEST", ({ subject, expectation }) => ({ subject: { provenance: subject.provenance, text: editedFrom(subject, OMXF_FORMS[0][1], OMXF_FORMS[0][2]).text }, expectation }), ["PROVENANCE subject-bytes", "FULL-SLICE"]],
+  ["P-SUBJECT-OTHER-PATH", ({ subject, expectation }) => ({ subject: { provenance: { path: "docs/workbench/19-worked-examples.copy.md", sha256: subject.provenance.sha256 }, text: subject.text }, expectation }), ["PROVENANCE subject-path"]],
+  ["P-SUBJECT-FIXTURE-BYTES", ({ subject, expectation }) => ({ subject: { provenance: { path: subject.provenance.path, sha256: expectation.provenance.sha256 }, text: expectation.text }, expectation }), ["PROVENANCE distinct", "FULL-SLICE"]],
+];
+/** R695 (d): the two report-judging rows of the R6-R9 block that carry R16_REPORT_BUDGET_MS, by title head. */
+const R16_BUDGETED: readonly string[] = ["M5 (wb-973.16)", "DEL (wb-973.16)"];
+const titleHeadOf = (title: string): string => title.slice(0, title.indexOf(":"));
+const OMXF_JUDGED: string[] = [];
+
+/**
+ * wb-omxf cut #3 (R696, the terminal enumerate-the-resolvable form), claiming exactly this pinned set and no more:
+ * (1) EXPECTATION.sha256 is a source-level STRING LITERAL pin. The LITERAL rows read this file's own TypeScript AST (the
+ * hk9l literal-shape discipline). Row PIN reads the committed source: EXPECTATION is declared once, a module-scope const
+ * whose initializer is an object literal of exactly the property assignments path and sha256, each a plain string literal -
+ * never a call, template or identifier - the sha256 64 lowercase hex, and the runtime EXPECTATION is exactly those
+ * literals. The falsifier rows splice into this file's source, in memory and never run, the kinds R696 names: the gate's
+ * L2G-01 computed digest verbatim (a call), a template with and without a substitution, an identifier, and cut #2's
+ * identifier path; the pin refuses each. No line of this file computes the EXPECTATION pin: every digest taken here is of
+ * bytes read, compared against a literal.
+ * (2) PROVENANCE expectation-digest stays as delivered at cut #2: a fixture byte edit under the kept literal reds every
+ * full-slice row.
+ * NAMED RESIDUAL (R696 (3)), the one self-anchoring channel above the literal pin: R-COORDINATED-LITERAL-AND-ANCHOR, a
+ * coordinated edit of the literal AND its anchor - docs/19 and the fixture carrying the same in-section edit, the literal
+ * moved to the new fixture bytes. Its id-asserted quiet row reads the family's page quiet and reds when the page stops
+ * carrying any part of the edit; its runtime reading, stated in the row: the whole census reads green under it. No other
+ * escape is claimed absent. The LITERAL rows (PIN included) and the residual's id, family, form, reading and runtime are
+ * anchored out of file in the fixture.
+ */
+interface ExpectationLiteral {
+  /** What the AST read, one line per refusal; none is the quiet reading. */
+  readonly findings: readonly string[];
+  /** The two literals' texts, when every check passed. */
+  readonly pin: Provenance | undefined;
+}
+/** The kind R696 names for an initializer: a plain string literal, a call, a template or an identifier; anything else by its syntax. */
+const initializerKind = (node: ts.Node): string => {
+  if (ts.isStringLiteral(node)) return "a string literal";
+  if (ts.isCallExpression(node)) return "a call";
+  if (ts.isTemplateExpression(node) || ts.isNoSubstitutionTemplateLiteral(node) || ts.isTaggedTemplateExpression(node)) return "a template";
+  if (ts.isIdentifier(node)) return "an identifier";
+  return `other syntax (${ts.SyntaxKind[node.kind]})`;
+};
+/** Every declaration named EXPECTATION in a source, in source order. */
+function expectationDeclarations(file: ts.SourceFile): ts.VariableDeclaration[] {
+  const found: ts.VariableDeclaration[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.name.text === "EXPECTATION") found.push(node);
+    ts.forEachChild(node, visit);
+  };
+  visit(file);
+  return found;
+}
+/** R696 (1): EXPECTATION's literal shape in a source text of this file, read by the TypeScript AST, never by running it. */
+function expectationLiteral(source: string): ExpectationLiteral {
+  const file = ts.createSourceFile(SELF, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const declarations = expectationDeclarations(file);
+  if (declarations.length !== 1) return { findings: [`EXPECTATION is declared ${declarations.length} times, not once`], pin: undefined };
+  const [declaration] = declarations;
+  const findings: string[] = [];
+  const list = declaration.parent;
+  if (!ts.isVariableDeclarationList(list) || (list.flags & ts.NodeFlags.Const) === 0 || !ts.isVariableStatement(list.parent) || list.parent.parent !== file) {
+    findings.push("EXPECTATION is not a module-scope const");
+  }
+  const initializer = declaration.initializer;
+  if (initializer === undefined || !ts.isObjectLiteralExpression(initializer)) {
+    return { findings: [...findings, `EXPECTATION's initializer is ${initializer === undefined ? "missing" : initializerKind(initializer)}, not an object literal`], pin: undefined };
+  }
+  const texts = new Map<string, string>();
+  const members: string[] = [];
+  for (const member of initializer.properties) {
+    if (!ts.isPropertyAssignment(member) || !ts.isIdentifier(member.name)) {
+      members.push(`<${ts.SyntaxKind[member.kind]}>`);
+      continue;
+    }
+    members.push(member.name.text);
+    if (ts.isStringLiteral(member.initializer)) texts.set(member.name.text, member.initializer.text);
+    else findings.push(`EXPECTATION.${member.name.text} is ${initializerKind(member.initializer)}, not a string literal`);
+  }
+  if (members.join(" ") !== "path sha256") findings.push(`EXPECTATION's members are ${members.join(" ")}, not exactly the property assignments path sha256`);
+  const path = texts.get("path");
+  const sha256 = texts.get("sha256");
+  if (sha256 !== undefined && !/^[0-9a-f]{64}$/u.test(sha256)) findings.push("EXPECTATION.sha256 is not 64 lowercase hex");
+  return { findings, pin: findings.length === 0 && path !== undefined && sha256 !== undefined ? { path, sha256 } : undefined };
+}
+/** A source text of this file with one EXPECTATION property's initializer replaced once, located by the AST (a page, never run). */
+function withExpectationProperty(source: string, property: string, replacement: string): string {
+  const file = ts.createSourceFile(SELF, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const [declaration] = expectationDeclarations(file);
+  const initializer = declaration?.initializer;
+  const member = initializer !== undefined && ts.isObjectLiteralExpression(initializer) ? initializer.properties.find(entry => ts.isPropertyAssignment(entry) && ts.isIdentifier(entry.name) && entry.name.text === property) : undefined;
+  if (member === undefined || !ts.isPropertyAssignment(member)) throw new Error(`${SELF}: EXPECTATION has no ${property} property assignment to replace`);
+  return `${source.slice(0, member.initializer.getStart(file))}${replacement}${source.slice(member.initializer.getEnd())}`;
+}
+
+/** One EXPECTATION property's initializer replaced by a source text. */
+interface LiteralEdit {
+  readonly property: string;
+  readonly replacement: string;
+}
+/** A LITERAL row: [id, the edit of this file's source it reads (null: the committed source), the findings the pin must draw]. */
+type OmxfLiteralRow = readonly [string, LiteralEdit | null, readonly string[]];
+/**
+ * R696 (1): row PIN reads the committed source, quiet; each falsifier replaces one EXPECTATION property's initializer, parsed
+ * and never run. L2G-01 is the gate's own replacement, verbatim; the others are the kinds R696 names (a template with and
+ * without a substitution, an identifier) and cut #2's identifier path.
+ */
+const OMXF_LITERAL: readonly OmxfLiteralRow[] = [
+  ["PIN", null, []],
+  ["L2G-01", { property: "sha256", replacement: 'createHash("sha256").update(readFileSync(join(ROOT, OMXF_ANCHOR_FILE))).digest("hex")' }, ["EXPECTATION.sha256 is a call, not a string literal"]],
+  ["L-SHA-TEMPLATE", { property: "sha256", replacement: `\`\${createHash("sha256").update(readFileSync(join(ROOT, OMXF_ANCHOR_FILE))).digest("hex")}\`` }, ["EXPECTATION.sha256 is a template, not a string literal"]],
+  ["L-SHA-PLAIN-TEMPLATE", { property: "sha256", replacement: "`0000000000000000000000000000000000000000000000000000000000000000`" }, ["EXPECTATION.sha256 is a template, not a string literal"]],
+  ["L-SHA-IDENTIFIER", { property: "sha256", replacement: "OMXF_FIXTURE_SHA256" }, ["EXPECTATION.sha256 is an identifier, not a string literal"]],
+  ["L-PATH-IDENTIFIER", { property: "path", replacement: "OMXF_ANCHOR_FILE" }, ["EXPECTATION.path is an identifier, not a string literal"]],
+];
+
+/** R696 (3): a named residual, its family's page and its quiet and runtime readings, anchored out of file in the fixture. */
+interface OmxfResidual {
+  readonly id: string;
+  readonly family: string;
+  /** The drift form the page applies alike to docs/19 and to the fixture's section. */
+  readonly form: string;
+  /** What this file reads on the family's page. */
+  readonly reading: string;
+  /** What the whole census reads, run under the family's edit. */
+  readonly runtime: string;
+}
+const OMXF_RESIDUALS: readonly OmxfResidual[] = [
+  {
+    id: "R-COORDINATED-LITERAL-AND-ANCHOR",
+    family: "a coordinated edit of the EXPECTATION sha256 literal AND its anchor: docs/19 and the fixture carry the same in-section edit and the literal moves to the new fixture bytes",
+    form: "G-D19-PARA-BEFORE-UNNAMED",
+    reading: "quiet: the literal-shape pin reads a moved 64-hex string literal exactly as it reads the pinned one, and the delivered judge's only finding on the page's docs/19 and fixture is PROVENANCE expectation-digest, the literal the edit moves",
+    runtime: "quiet: with docs/19, the fixture and the EXPECTATION sha256 literal edited together, the whole census reads green (LIVE, every PROVENANCE check, FULL-SLICE and the LITERAL rows); no reading in this file tells a reviewed coordinated edit from drift, so the edit is the review: its diff moves the literal",
+  },
+];
+
+describe("wb-omxf R677 + R695 full docs19 section equality (explicit expectation with asserted provenance, no NAMES_RF selection)", () => {
+  const omxfScratch: string[] = [];
+  afterEach(() => {
+    removeScratch(...omxfScratch.splice(0));
+  });
+  /** A scratch repo root holding docs/19 (through edit) and the fixture's committed bytes, for the LIVE reading on disk. */
+  const scratchRepo = (edit: (docs: string) => string): string => {
+    const root = makeScratch("census-omxf-");
+    omxfScratch.push(root);
+    mkdirSync(join(root, dirname(EXAMPLES_FILE)), { recursive: true });
+    mkdirSync(join(root, dirname(OMXF_ANCHOR_FILE)), { recursive: true });
+    writeFileSync(join(root, EXAMPLES_FILE), edit(readRepo(EXAMPLES_FILE)));
+    writeFileSync(join(root, OMXF_ANCHOR_FILE), readFileSync(join(ROOT, OMXF_ANCHOR_FILE)));
+    return root;
+  };
+
+  it("LIVE (R695 (a)): docs/19 is the SUBJECT read from its real path, the fixture the EXPECTATION read from its pinned path and digest; the two provenances are distinct and the full section equals the expectation", () => {
+    const { subject, expectation, findings } = liveReading(ROOT);
+    expect(subject.provenance).toEqual({ path: "docs/workbench/19-worked-examples.md", sha256: createHash("sha256").update(readFileSync(join(ROOT, EXAMPLES_FILE))).digest("hex") });
+    expect(expectation.provenance).toEqual(EXPECTATION);
+    expect(EXPECTATION).toEqual({ path: "test/fixtures/docs19-full-section-omxf.json", sha256: createHash("sha256").update(readFileSync(join(ROOT, OMXF_ANCHOR_FILE))).digest("hex") });
+    expect(subject.provenance.path).not.toBe(expectation.provenance.path);
+    expect(subject.provenance.sha256).not.toBe(expectation.provenance.sha256);
+    expect(findings).toEqual([]);
+    // The row's own channel, outside the judge: the subject's rendered section equals the blocks of the expectation's section,
+    // so drift on disk reds LIVE itself even under a judge whose anchor was re-pointed (L2-J-ANCHOR-LIVE + an F1 survivor on disk).
+    const expected = expectedTables(expectation).sectionMarkdown;
+    expect(expected).toContain("`reactivefiber.render.preview` accepts exactly one of two input arms");
+    const anchor = docsSection(`# ${EXAMPLES_PARENT}\n\n${expected}`, EXAMPLES_SECTION, 2, [EXAMPLES_PARENT]);
+    expect(anchor.ok, anchor.why).toBe(true);
+    expect(sectionMatches(docsSection(subject.text, EXAMPLES_SECTION, 2, [EXAMPLES_PARENT]), anchor.blocks)).toEqual({ ok: true, why: "" });
+    OMXF_JUDGED.push("LIVE");
+  });
+
+  it.each(OMXF_FORMS)("%s: a full-section drift of the SUBJECT is refused by the full-slice judge itself, against the explicit expectation", (id, from, to) => {
+    const { subject, expectation } = readPair(ROOT);
+    expect(subject.text.split(from), `${id} applies once`).toHaveLength(2);
+    const drifted = editedFrom(subject, from, to);
+    expect(drifted.text).not.toBe(subject.text);
+    const findings = fullExampleFailures(drifted, expectation, registryArmsSentence());
+    expect(fullKinds(findings), `${id}: the full-slice judge must refuse, not another falsifier's missing anchor: ${findings.join(" | ")}`).toEqual(["FULL-SLICE"]);
+    OMXF_JUDGED.push(id);
+  });
+
+  it.each(OMXF_FORMS)("ANCHOR-SIDE %s: the live page against an expectation drifted in memory is refused FULL-SLICE, the judge comparing the expectation it is given (never the live page), and PROVENANCE for the unpinned digest", (id, from, to) => {
+    const { subject, expectation } = readPair(ROOT);
+    const drifted = driftedExpectation(expectation, from, to);
+    expect(drifted.text).not.toBe(expectation.text);
+    const findings = fullExampleFailures(subject, drifted, registryArmsSentence());
+    expect(fullKinds(findings), `${id}: ${findings.join(" | ")}`).toEqual(["PROVENANCE expectation-digest", "FULL-SLICE"]);
+    OMXF_JUDGED.push(`ANCHOR-SIDE ${id}`);
+  });
+
+  it.each(OMXF_PROVENANCE)("%s: the judge refuses a re-pointed or misattributed read by its provenance before or beside any block comparison", (id, build, kinds) => {
+    const live = readPair(ROOT);
+    const { subject, expectation } = build(live);
+    expect(subject === live.subject && expectation === live.expectation, `${id} changes the pair`).toBe(false);
+    const findings = fullExampleFailures(subject, expectation, registryArmsSentence());
+    expect(fullKinds(findings), `${id}: ${findings.join(" | ")}`).toEqual(kinds);
+    OMXF_JUDGED.push(id);
+  });
+
+  it.each(OMXF_ON_DISK)("ON-DISK %s: docs/19 carrying the R677 F1 survivor on disk (a scratch repo root) reds the LIVE reading itself, FULL-SLICE", (id, from, to) => {
+    const root = scratchRepo(docs => {
+      expect(docs.split(from), `${id} applies once`).toHaveLength(2);
+      return docs.replace(from, () => to);
+    });
+    const { subject, expectation, findings } = liveReading(root);
+    expect(subject.provenance.path).toBe(EXAMPLES_FILE);
+    expect(subject.provenance.sha256, id).not.toBe(readPair(ROOT).subject.provenance.sha256);
+    expect(expectation.provenance).toEqual(EXPECTATION);
+    expect(fullKinds(findings), `${id}: ${findings.join(" | ")}`).toEqual(["FULL-SLICE"]);
+    OMXF_JUDGED.push(`ON-DISK ${id}`);
+  });
+
+  it("ON-DISK controls: the same scratch procedure with docs/19's own bytes reads quiet (same delay), and each survivor's added text in a following level-2 section reads quiet (same edit, outside the claim)", () => {
+    const same = liveReading(scratchRepo(docs => docs));
+    expect(same.subject.provenance).toEqual(readPair(ROOT).subject.provenance);
+    expect(same.findings).toEqual([]);
+    for (const [id, from, to] of OMXF_ON_DISK) {
+      const outside = liveReading(scratchRepo(docs => `${docs}\n## Errata\n\n${addedText(from, to)}\n`));
+      expect(outside.subject.text, id).toContain(addedText(from, to));
+      expect(outside.findings, id).toEqual([]);
+    }
+    OMXF_JUDGED.push("ON-DISK CONTROLS");
+  });
+
+  it("F2 external anchor: both landed falsifier tables equal their out-of-file rows, including edit texts and function digests (the digests bind vitest's transformed function text: the F2 toolchain coupling)", () => {
+    const { subject, expectation } = readPair(ROOT);
+    expect(() => expectedTables(subject), "the table rows refuse the docs page as their expectation").toThrow(/expectation-path/u);
+    expect(() => expectedTables(driftedExpectation(expectation, OMXF_FORMS[0][1], OMXF_FORMS[0][2])), "and an expectation whose bytes are not the pinned fixture's").toThrow(/expectation-digest/u);
+    const tables = expectedTables(expectation);
+    expect(D19_FALSIFIERS).toEqual(tables.d19);
+    expect(ARM_EDITS.map(([id, edit, outcome]) => ({ id, outcome, editSha256: createHash("sha256").update(edit.toString()).digest("hex") }))).toEqual(tables.arms);
+    OMXF_JUDGED.push("F2");
+  });
+
+  it("F3: duplicate naming sentences are refused by the landed SENTENCE count judge (independent of SLICE)", () => {
+    const live = readRepo(EXAMPLES_FILE);
+    const mutant = live.replace("must not be advertised as a durable RF artifact.", `must not be advertised as a durable RF artifact. ${EXAMPLE_ARMS_SENTENCE}`);
+    expect(mutant).not.toBe(live);
+    expect(judgementKinds(exampleFailures(mutant, registryArmsSentence()))).toContain("SENTENCE");
+    OMXF_JUDGED.push("F3");
+  });
+
+  it("BOUNDARY quiet row: a contradictory following level-2 section is outside this section's full-slice claim", () => {
+    const { subject, expectation } = readPair(ROOT);
+    const appended = asRead(subject, `${subject.text}\n## Errata\n\nBoth input arms may be combined in one call.\n`);
+    expect(appended.text).not.toBe(subject.text);
+    expect(fullExampleFailures(appended, expectation, registryArmsSentence())).toEqual([]);
+    OMXF_JUDGED.push("BOUNDARY");
+  });
+
+  it("REGISTRY: every descriptor edit moves the expectation's vouched RF sentence (REGISTRY) or is refused (both registrations)", () => {
+    const { subject, expectation } = readPair(ROOT);
+    for (const descriptor of registeredDescriptors()) {
+      for (const [id, edit] of ARM_EDITS) {
+        const reading = armsSentenceOf(edit(descriptor));
+        if (reading.ok) expect(fullKinds(fullExampleFailures(subject, expectation, reading.sentence)), id).toEqual(["REGISTRY"]);
+        else expect(reading.why, id).not.toBe("");
+      }
+    }
+    OMXF_JUDGED.push("REGISTRY");
+  });
+
+  it("BUDGET (R695 (d), the R687 explicit-budget shape): exactly M5 and DEL run on R16_REPORT_BUDGET_MS, read back from the runner's own registered tasks, each title once; the budget is a whole 5 s above vitest's default and 5 x the worst wall of record", ({ task }) => {
+    const registered: { readonly name: string; readonly timeout: number }[] = [];
+    const walk = (tasks: typeof task.file.tasks): void => {
+      for (const child of tasks) {
+        if (child.type === "test") registered.push({ name: child.name, timeout: child.timeout });
+        else if (child.type === "suite") walk(child.tasks);
+      }
+    };
+    walk(task.file.tasks);
+    const budgeted = registered.filter(entry => entry.timeout === R16_REPORT_BUDGET_MS).map(entry => titleHeadOf(entry.name));
+    expect(budgeted, "the cases that run under R16_REPORT_BUDGET_MS, by title head").toEqual(R16_BUDGETED);
+    expect(budgeted, "the budgeted rows of record, out of file").toEqual(expectedTables(readPair(ROOT).expectation).reportBudgetRows);
+    for (const head of R16_BUDGETED) expect(registered.filter(entry => titleHeadOf(entry.name) === head), `${head} is registered once`).toHaveLength(1);
+    expect(R16_REPORT_BUDGET_MS, "above vitest's default test timeout").toBeGreaterThan(5_000);
+    expect(R16_REPORT_BUDGET_MS, "5 x the worst wall of record").toBeGreaterThanOrEqual(5 * R16_WORST_WALL_MS);
+    expect(R16_REPORT_BUDGET_MS % 5_000, "a whole 5 s").toBe(0);
+    OMXF_JUDGED.push("BUDGET");
+  });
+
+  it.each(OMXF_LITERAL)("LITERAL %s (R696 (1)): this file's own AST reads EXPECTATION's literal shape - PIN, the committed source: declared once, a module-scope const object literal whose path and sha256 are plain string literals (never a call, template or identifier) and the runtime EXPECTATION; a falsifier, one property replaced in memory (parsed, never run): refused", (id, edit, findings) => {
+    const own = readRepo(SELF);
+    const page = edit === null ? own : withExpectationProperty(own, edit.property, edit.replacement);
+    expect(page === own, `${id}: only PIN reads the committed source unedited`).toBe(edit === null);
+    const reading = expectationLiteral(page);
+    expect(reading.findings, `${id}: ${reading.findings.join(" | ")}`).toEqual(findings);
+    expect(reading.pin, `${id}: PIN's literals are the runtime EXPECTATION; a refused page leaves no pin`).toEqual(edit === null ? EXPECTATION : undefined);
+    OMXF_JUDGED.push(`LITERAL ${id}`);
+  });
+
+  it("RESIDUAL R-COORDINATED-LITERAL-AND-ANCHOR quiet row (R696 (3), the named residual above the literal pin): docs/19, the fixture and the EXPECTATION literal edited together read quiet here, and the row reds when its page stops carrying any part of that edit", () => {
+    const residual = OMXF_RESIDUALS[0];
+    expect(residual.id, "this quiet row judges its own family, never another index").toBe("R-COORDINATED-LITERAL-AND-ANCHOR");
+    const form = OMXF_FORMS.find(([id]) => id === residual.form);
+    if (form === undefined) throw new Error(`${residual.id}: ${residual.form} is not a drift form`);
+    const [, from, to] = form;
+    const { subject, expectation } = readPair(ROOT);
+    const own = readRepo(SELF);
+    // A stand-in for the moved literal: a 64-hex string literal other than the pinned one. A coordinated edit writes the new
+    // fixture's digest there; the shape pin reads no value, so the stand-in is read exactly as that digest would be.
+    const moved = "0".repeat(64);
+    const page = { subject: editedFrom(subject, from, to), expectation: driftedExpectation(expectation, from, to), source: withExpectationProperty(own, "sha256", JSON.stringify(moved)) };
+    // Liveness: the page carries the family's whole edit - docs/19 and the fixture drifted alike, the literal moved.
+    expect(page.subject.provenance.sha256, "docs/19 carries the edit").not.toBe(subject.provenance.sha256);
+    expect(page.expectation.provenance.sha256, "the fixture carries the edit").not.toBe(EXPECTATION.sha256);
+    expect(moved, "the page moves the literal").not.toBe(EXPECTATION.sha256);
+    // The quiet reading: the shape pin reads the moved literal as it reads the pinned one, and the delivered judge's only
+    // finding on the page's docs/19 and fixture is the literal the page moves.
+    expect(expectationLiteral(page.source)).toEqual({ findings: [], pin: { path: EXPECTATION.path, sha256: moved } });
+    expect(fullKinds(fullExampleFailures(page.subject, page.expectation, registryArmsSentence()))).toEqual(["PROVENANCE expectation-digest"]);
+    OMXF_JUDGED.push(`RESIDUAL ${residual.id}`);
+  });
+
+  it("FROZEN SHAPE: every judged member reaches its last assertion, each table's shape is frozen here and equal to its out-of-file anchor", () => {
+    expect(OMXF_FORMS.map(([id]) => `${id}:1`)).toEqual([
+      "G-D19-PARA-BEFORE-UNNAMED:1", "G-D19-ELSEWHERE-SPACED:1", "G-D19-ELSEWHERE-HYPHEN:1", "G-D19-QUOTEBLOCK-BEFORE:1", "G-D19-STRIKE-VIEW-ARM:1", "G-D19-STRIKE:1", "X-UNNAMED-CODE:1", "X-UNNAMED-LIST:1", "X-UNNAMED-H3:1", "X-PRIOR-PARAGRAPH-REWORD:1",
+    ]);
+    expect(OMXF_ON_DISK.map(([id]) => `${id}:1`)).toEqual([
+      "G-D19-PARA-BEFORE-UNNAMED:1", "G-D19-ELSEWHERE-SPACED:1", "G-D19-ELSEWHERE-HYPHEN:1", "G-D19-QUOTEBLOCK-BEFORE:1", "G-D19-STRIKE-VIEW-ARM:1", "G-D19-STRIKE:1",
+    ]);
+    expect(OMXF_PROVENANCE.map(([id, , kinds]) => `${id}:${kinds.length}`)).toEqual([
+      "P-ANCHOR-LIVE-DOCS:4", "P-ANCHOR-IS-SUBJECT:4", "P-ANCHOR-OTHER-PATH:1", "P-ANCHOR-LYING-DIGEST:2", "P-ANCHOR-RESERIALIZED:1", "P-SUBJECT-IS-FIXTURE:3", "P-SUBJECT-LYING-DIGEST:2", "P-SUBJECT-OTHER-PATH:1", "P-SUBJECT-FIXTURE-BYTES:2",
+    ]);
+    expect(R16_BUDGETED.map(head => `${head}:1`)).toEqual(["M5 (wb-973.16):1", "DEL (wb-973.16):1"]);
+    expect(OMXF_LITERAL.map(([id, edit, findings]) => `${id}:${edit?.property ?? "-"}:${findings.length}`)).toEqual([
+      "PIN:-:0", "L2G-01:sha256:1", "L-SHA-TEMPLATE:sha256:1", "L-SHA-PLAIN-TEMPLATE:sha256:1", "L-SHA-IDENTIFIER:sha256:1", "L-PATH-IDENTIFIER:path:1",
+    ]);
+    expect(OMXF_RESIDUALS.map(residual => `${residual.id}:${residual.form}`)).toEqual(["R-COORDINATED-LITERAL-AND-ANCHOR:G-D19-PARA-BEFORE-UNNAMED"]);
+    expect(OMXF_JUDGED).toEqual([
+      "LIVE",
+      ...OMXF_FORMS.map(([id]) => id),
+      ...OMXF_FORMS.map(([id]) => `ANCHOR-SIDE ${id}`),
+      ...OMXF_PROVENANCE.map(([id]) => id),
+      ...OMXF_ON_DISK.map(([id]) => `ON-DISK ${id}`),
+      "ON-DISK CONTROLS",
+      "F2",
+      "F3",
+      "BOUNDARY",
+      "REGISTRY",
+      "BUDGET",
+      ...OMXF_LITERAL.map(([id]) => `LITERAL ${id}`),
+      ...OMXF_RESIDUALS.map(({ id }) => `RESIDUAL ${id}`),
+    ]);
+    const tables = expectedTables(readPair(ROOT).expectation);
+    expect(OMXF_FORMS).toEqual(tables.forms);
+    expect(OMXF_ON_DISK_IDS).toEqual(tables.onDiskSurvivors);
+    expect(OMXF_PROVENANCE.map(([id, , kinds]) => [id, kinds])).toEqual(tables.provenanceFalsifiers);
+    expect(R16_BUDGETED).toEqual(tables.reportBudgetRows);
+    expect(OMXF_LITERAL).toEqual(tables.literalRows);
+    expect(OMXF_RESIDUALS).toEqual(tables.residuals);
+    expect(tables.d19).toHaveLength(8);
+    expect(tables.arms).toHaveLength(8);
   });
 });
