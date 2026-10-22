@@ -25,8 +25,9 @@ import { afterAll, afterEach, beforeEach, describe, expect, it, vi } from "vites
  * process AND appended to the sidecar .forge/hk9l-copy-violations.jsonl (created empty when this file loads) through the
  * unmocked builtin fs (process.getBuiltinModule); it is judged red at every row boundary by this file's hooks, at file end
  * by a judge registered as the file's only afterAll, and - outside the runner's hook order altogether - by the census tier
- * (test/workbench-hk9l-copy-window.census.ts reads the sidecar after the test step, its pins anchored in the roster, its own
- * shape pinned from this file), so a copy made after the last in-file callback still reds the gate. The budget row also pins
+ * (test/workbench-hk9l-copy-window.census.ts reads the sidecar after the test step, its pins anchored in the roster, its exact
+ * bytes sha256-digest-pinned and its shape pinned from this file, so neutering the leg reds this file first), so a copy made
+ * after the last in-file callback still reds the gate. The budget row also pins
  * the single afterAll registration, the un-aliased single vitest import, the reverse after-hook order and that no row is
  * concurrent. The wrap-liveness row proves every surface member of S carries the judge's mark and is one judged function
  * across its spellings; the budget list and its suite are anchored OUT OF FILE in test/fixtures/hk9l-scan-roster.json. The
@@ -1077,12 +1078,15 @@ describe(PACKAGE_COPY_SUITE, () => {
     };
     findBudgetRow(source, undefined);
     expect(budgetRows, "the budget row is registered exactly once inside PACKAGE_COPY_SUITE (line)").toHaveLength(1);
-    // v9 (U2): the census leg's SHAPE is pinned from here against the roster: it registers exactly the roster's censusRows, its
-    // pins come from the roster (not a count), its sidecar row reads THIS run's sidecar file and asserts it empty, and it judges
-    // through judge(REPORT, PINS) - so deleting, renaming or neutering a census row reds this pinned row in the test tier.
+    // v11 (refusal #14 U1): the census leg is pinned from here FIRST by its exact bytes - the sha256 digest literal below - so
+    // deleting, renaming or NEUTERING any census row (a one-token lines.slice(0, 0), a shadowed accept-all judge, a re-pointed
+    // sidecar), with or without a matching roster edit, reds this pinned row in the test tier before the leg even runs. The
+    // structural pins that follow (roster-anchored row set, sidecar/judge substrings, the judge(REPORT, PINS) AST call) stay as
+    // readable diagnostics; the digest is the binding pin.
     const roster = JSON.parse(readFileSync(new URL("./fixtures/hk9l-scan-roster.json", import.meta.url), "utf8")) as { emitRowTitle: string; censusRows: string[]; censusSidecarRow: string; censusJudgeRow: string };
     expect(roster.emitRowTitle, "this row's title is the roster's emitRowTitle (the census leg pins it by that name)").toBe("wb-hk9l emit census: the rows observed really copying are exactly the budgeted PACKAGE_COPY_ROWS");
     const censusText = readFileSync(resolve(dirname(fileURLToPath(import.meta.url)), "workbench-hk9l-copy-window.census.ts"), "utf8");
+    expect(createHash("sha256").update(censusText).digest("hex"), "the census leg's exact bytes, digest-pinned (sha256): any census edit reds here first").toBe("924d9e8f3b7f4b7d24927546ef004c6d324c570726a42daa33c907c0a474ccb9");
     const census = ts.createSourceFile("census.ts", censusText, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
     const censusRows: { title: string; text: string }[] = [];
     const collectCensus = (node: ts.Node): void => {

@@ -8,6 +8,8 @@
  * in-file callback (an around-all teardown, a cleanup returned by a hook). This leg closes that gap from OUTSIDE the
  * runner's hook order: it runs in the census tier after the test step and reds on any sidecar line, naming it.
  *
+ * This file's exact bytes are digest-pinned (sha256) by the identity emit row, so any edit here - a one-token neuter, a
+ * shadowed judge, a deleted, renamed or re-pointed row - reds that pinned row in the test tier before these rows even run.
  * Pinned by title in the test tier through judge(REPORT, PINS): the budgeted PACKAGE_COPY_ROWS rows and the emit census row
  * of test/workbench-identity.test.ts (collected once, passed and asserting in the gate's own report), the budgeted rows also
  * read as plain report records - every title read from test/fixtures/hk9l-scan-roster.json (the
