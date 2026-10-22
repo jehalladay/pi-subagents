@@ -2588,3 +2588,785 @@ describe("wb-561n R694 F1-F3: each landing-242 LEG-2 escape pinned refused, or n
     expect(W561N_REACHED).toEqual(expected.map(row => row.name));
   });
 });
+
+/**
+ * wb-e3eh, the wb-561n landing-246 follow-up (ruling R697's duty on gate cmd_2d8fd0925489, PREP F1). Probe source:
+ * gp1-probes.json, sha256 7630a0938c4e7ce987fe688f36775a0e0f4bfd99a22e896e9b622572f657e118, in the gate-prep-1 g10-gate-s17
+ * PREP archive, named again by E3EH_ROSTER's probeSource.
+ * ACCOUNTING (F1): that gate's LEG 2 read 33 exploratory forms past W561N_STRICT at S1 and S2 while every landed pin held:
+ * 32 spellings read quiet (16 P5, 16 P4) and GP4X-ARRAY-ELEMENT was refused only through 'unresolved key'. E3EH_F1 is that
+ * list in the gate's probe order, E3EH_ROSTER carries it again outside this file, and the accounting row proves each form is
+ * exactly one of a pinned refusal or a named residual with a pinned quiet row. Every refusal and residual placement is the
+ * gate's own probe text, byte for byte; the twins are this cut's.
+ * PINNED REFUSALS, and no broader claim: exactly the 27 E3EH_ROWS forms at S1 and S2, each with its exact placement, cause
+ * and digest in E3EH_ROSTER, and each row also pins that W561N_STRICT reads it without its class cause (the F1 measurement).
+ * E3EH_STRICT is W561N_STRICT plus one more reading of the same two causes, prototype write and data-carried snapshot write.
+ * Its rules are listed so each row's cause can be checked; they are not a category claim, and a rule is claimed only through
+ * the rows that exercise it. e3ehValues reads what w561nValues reads, and also: both operands of &&, || and ??; an
+ * assignment expression's right operand; a numeric-literal element of an array literal; the value of an object literal's
+ * property assignment, by its key; an array-binding element, and a const for-of variable over an array literal, inside the
+ * NAMED BOUND; Object(x) as x; and the target Object.defineProperty returns. global is a global-object owner beside
+ * globalThis. A writer is also reached through <any>.call.call (its first argument invoked on the rest); the spread of
+ * Array.of(...) expands like the spread of a const array; __defineGetter__ and __defineSetter__ also write through .call
+ * or .apply on a prototype receiver; and Object.fromEntries over Object.entries of an object literal carries that literal's
+ * prototype key as an Object-slot source.
+ * NAMED BOUND (wb-561n F3, unchanged): a binding is followed only when it is the one binding of its name inside the callback
+ * or emitter body, a const declaration, declared before the use; never a parameter, an external binding, or a let or var
+ * alias. A call's value is followed only for Object.assign, Object.defineProperty and Object(x).
+ * NAMED QUIET RESIDUALS (E3EH_QUIET, both sites, anchored in E3EH_ROSTER): the six F1 forms outside those rules -
+ * R-GP5X-PARAM-ALIAS, R-GP4X-PARAM-ALIAS and R-GP4X-FOREACH-PARAM (a parameter, which the bound never follows),
+ * R-GP5X-HELPER-RETURN and R-GP4X-HELPER-RETURN (a helper's return value, which the reading never follows) and
+ * R-GP4X-REFLECT-SETPROTO (no own-property write, the Reflect twin of R-L3-P4-SETPROTO); the bound's six probe spellings (a
+ * var alias, a shadowed name and a const declared after its use, at P5 and at P4); and every wb-561n quiet row, re-read.
+ * PAIRED TWINS (E3EH_TWIN_ROWS, both sites): one benign twin per refusal keeps its pin quiet - the P4 array element keeps
+ * only the landed 'unresolved key' that every unfolded key in the callback carries - and every wb-561n twin re-reads quiet.
+ * Other unseen modes are not asserted absent. All placements are parsed, never executed.
+ */
+const E3EH_ROSTER = "test/fixtures/claude-message-ref-e3eh.json";
+/** The wb-561n gate's PREP F1 forms, in its probe order: 16 P5, then 17 P4. */
+const E3EH_F1: readonly string[] = [
+  "GP5X-LOGICAL-AND",
+  "GP5X-LOGICAL-OR",
+  "GP5X-NULLISH",
+  "GP5X-ARRAY-DESTRUCT",
+  "GP5X-PARAM-ALIAS",
+  "GP5X-FOROF-VARIABLE",
+  "GP5X-OBJECT-PROPERTY",
+  "GP5X-ARRAY-ELEMENT",
+  "GP5X-ASSIGN-EXPR",
+  "GP5X-OBJECT-WRAP",
+  "GP5X-HELPER-RETURN",
+  "GP5X-GLOBAL-ALIAS",
+  "GP5X-DEFINE-GETTER-CALL",
+  "GP5X-ENTRIES-SLOT",
+  "GP5X-ARRAY-OF-SPREAD",
+  "GP5X-CALL-CALL",
+  "GP4X-LOGICAL-AND",
+  "GP4X-LOGICAL-OR",
+  "GP4X-NULLISH",
+  "GP4X-ARRAY-DESTRUCT",
+  "GP4X-OBJECT-PROPERTY",
+  "GP4X-PARAM-ALIAS",
+  "GP4X-FOREACH-PARAM",
+  "GP4X-FOROF-VARIABLE",
+  "GP4X-DEFINEPROPERTY-RETURN",
+  "GP4X-OBJECT-WRAP",
+  "GP4X-ARRAY-ELEMENT",
+  "GP4X-ASSIGN-EXPR",
+  "GP4X-ARRAY-OF-SPREAD",
+  "GP4X-HELPER-RETURN",
+  "GP4X-GLOBAL-ALIAS",
+  "GP4X-CALL-CALL",
+  "GP4X-REFLECT-SETPROTO",
+];
+/** The gate's NAMED BOUND probe spellings, in its probe order. */
+const E3EH_BOUND: readonly string[] = [
+  "GP5B-VAR-ALIAS",
+  "GP5B-SHADOWED",
+  "GP5B-AFTER-USE",
+  "GP4B-VAR-ALIAS",
+  "GP4B-SHADOWED",
+  "GP4B-AFTER-USE",
+];
+const E3EH_ROWS: readonly Escape[] = [
+  { id: "GP5X-LOGICAL-AND", pin: "P5", form: "a logical-and target has the prototype as its right operand", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: 'Object.assign(emitNumbers.size >= 0 && Object.prototype, JSON.parse(\'{"benign":1}\'));' },
+  { id: "GP5X-LOGICAL-OR", pin: "P5", form: "a logical-or target has the prototype as its left operand", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: 'Object.assign(Object.prototype || {}, JSON.parse(\'{"benign":1}\'));' },
+  { id: "GP5X-NULLISH", pin: "P5", form: "a nullish-coalescing target has the prototype as its left operand", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: 'Object.assign(Object.prototype ?? {}, JSON.parse(\'{"benign":1}\'));' },
+  { id: "GP5X-ARRAY-DESTRUCT", pin: "P5", form: "an array-binding const alias of Object.prototype receives a parsed bulk write", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: 'const [prototypeTarget] = [Object.prototype]; Object.assign(prototypeTarget, JSON.parse(\'{"benign":1}\'));' },
+  { id: "GP5X-FOROF-VARIABLE", pin: "P5", form: "a const for-of variable over an array literal holding the prototype receives a parsed bulk write", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: 'for (const prototypeTarget of [Object.prototype]) Object.assign(prototypeTarget, JSON.parse(\'{"benign":1}\'));' },
+  { id: "GP5X-OBJECT-PROPERTY", pin: "P5", form: "a property of a const object literal holding the prototype receives a parsed bulk write", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: 'const holder = { target: Object.prototype }; Object.assign(holder.target, JSON.parse(\'{"benign":1}\'));' },
+  { id: "GP5X-ARRAY-ELEMENT", pin: "P5", form: "a numeric-literal element of an array literal holding the prototype receives a parsed bulk write", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: 'Object.assign([Object.prototype][0], JSON.parse(\'{"benign":1}\'));' },
+  { id: "GP5X-ASSIGN-EXPR", pin: "P5", form: "an assignment-expression target evaluates to the prototype", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: 'let prototypeTarget: object; Object.assign((prototypeTarget = Object.prototype), JSON.parse(\'{"benign":1}\'));' },
+  { id: "GP5X-OBJECT-WRAP", pin: "P5", form: "the prototype passed through Object(...) receives a parsed bulk write", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: 'Object.assign(Object(Object.prototype), JSON.parse(\'{"benign":1}\'));' },
+  { id: "GP5X-GLOBAL-ALIAS", pin: "P5", form: "a member of the prototype spelled through global is assigned", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: "global.Object.prototype.benign = 1;" },
+  { id: "GP5X-DEFINE-GETTER-CALL", pin: "P5", form: "the legacy __defineGetter__ accessor API, reached through .call, defines a prototype member", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: 'Object.prototype.__defineGetter__.call(Object.prototype, "benign", () => 1);' },
+  { id: "GP5X-ENTRIES-SLOT", pin: "P5", form: "Object.fromEntries over Object.entries of a literal carries the Object prototype slot into Object.assign", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: "Object.assign(Object, Object.fromEntries(Object.entries({ prototype: { benign: 1 } })));" },
+  { id: "GP5X-ARRAY-OF-SPREAD", pin: "P5", form: "the spread of Array.of(...) carries the prototype and parsed data into Object.assign", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: 'Object.assign(...Array.of<object>(Object.prototype, JSON.parse(\'{"benign":1}\')));' },
+  { id: "GP5X-CALL-CALL", pin: "P5", form: "Object.assign reached through Function.prototype.call.call bulk-writes the prototype", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: 'Function.prototype.call.call(Object.assign, Object, Object.prototype, JSON.parse(\'{"benign":1}\'));' },
+  { id: "GP4X-LOGICAL-AND", pin: "P4", form: "a logical-and target has snapshot as its right operand", sites: ["S1", "S2"], causes: ["data-carried snapshot write"],
+    beforeDerive: 'Object.assign(live && snapshot, JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\'));' },
+  { id: "GP4X-LOGICAL-OR", pin: "P4", form: "a logical-or target has snapshot as its left operand", sites: ["S1", "S2"], causes: ["data-carried snapshot write"],
+    beforeDerive: 'Object.assign(snapshot || {}, JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\'));' },
+  { id: "GP4X-NULLISH", pin: "P4", form: "a nullish-coalescing target has snapshot as its left operand", sites: ["S1", "S2"], causes: ["data-carried snapshot write"],
+    beforeDerive: 'Object.assign(snapshot ?? {}, JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\'));' },
+  { id: "GP4X-ARRAY-DESTRUCT", pin: "P4", form: "an array-binding const alias of snapshot receives parsed data", sites: ["S1", "S2"], causes: ["data-carried snapshot write"],
+    beforeDerive: 'const [snapshotTarget] = [snapshot]; Object.assign(snapshotTarget, JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\'));' },
+  { id: "GP4X-OBJECT-PROPERTY", pin: "P4", form: "a property of a const object literal holding snapshot receives parsed data", sites: ["S1", "S2"], causes: ["data-carried snapshot write"],
+    beforeDerive: 'const holder = { target: snapshot }; Object.assign(holder.target, JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\'));' },
+  { id: "GP4X-FOROF-VARIABLE", pin: "P4", form: "a const for-of variable over an array literal holding snapshot receives parsed data", sites: ["S1", "S2"], causes: ["data-carried snapshot write"],
+    beforeDerive: 'for (const snapshotTarget of [snapshot]) Object.assign(snapshotTarget, JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\'));' },
+  { id: "GP4X-DEFINEPROPERTY-RETURN", pin: "P4", form: "the target is the snapshot Object.defineProperty returns", sites: ["S1", "S2"], causes: ["data-carried snapshot write"],
+    beforeDerive: 'Object.assign(Object.defineProperty(snapshot, "benign", { value: 1 }), JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\'));' },
+  { id: "GP4X-OBJECT-WRAP", pin: "P4", form: "snapshot passed through Object(...) receives parsed data", sites: ["S1", "S2"], causes: ["data-carried snapshot write"],
+    beforeDerive: 'Object.assign(Object(snapshot), JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\'));' },
+  { id: "GP4X-ARRAY-ELEMENT", pin: "P4", form: "a numeric-literal element of an array literal holding snapshot receives parsed data, its key still unresolved", sites: ["S1", "S2"], causes: ["data-carried snapshot write", "unresolved key"],
+    beforeDerive: 'Object.assign([snapshot][0], JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\'));' },
+  { id: "GP4X-ASSIGN-EXPR", pin: "P4", form: "an assignment-expression target evaluates to snapshot", sites: ["S1", "S2"], causes: ["data-carried snapshot write"],
+    beforeDerive: 'let snapshotTarget: typeof snapshot; Object.assign((snapshotTarget = snapshot), JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\'));' },
+  { id: "GP4X-ARRAY-OF-SPREAD", pin: "P4", form: "the spread of Array.of(...) carries snapshot and parsed data into Object.assign", sites: ["S1", "S2"], causes: ["data-carried snapshot write"],
+    beforeDerive: 'Object.assign(...Array.of<object>(snapshot, JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\')));' },
+  { id: "GP4X-GLOBAL-ALIAS", pin: "P4", form: "Object.assign owned through global writes parsed data into snapshot", sites: ["S1", "S2"], causes: ["data-carried snapshot write"],
+    beforeDerive: 'global.Object.assign(snapshot, JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\'));' },
+  { id: "GP4X-CALL-CALL", pin: "P4", form: "Object.assign reached through Function.prototype.call.call writes parsed data into snapshot", sites: ["S1", "S2"], causes: ["data-carried snapshot write"],
+    beforeDerive: 'Function.prototype.call.call(Object.assign, Object, snapshot, JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\'));' },
+];
+/** The six F1 forms named here, then the bound's six probe spellings. */
+const E3EH_RESIDUALS: readonly Residual[] = [
+  { id: "R-GP5X-PARAM-ALIAS", pin: "P5", family: "a parameter binding: an immediately invoked arrow's parameter bound to Object.prototype, which the bound never follows", sites: ["S1", "S2"], reading: "quiet",
+    emitter: '((prototypeTarget: object) => Object.assign(prototypeTarget, JSON.parse(\'{"benign":1}\')))(Object.prototype);' },
+  { id: "R-GP5X-HELPER-RETURN", pin: "P5", family: "a helper's return: the prototype returned by an arrow declared in the emitter, a call value the reading never follows", sites: ["S1", "S2"], reading: "quiet",
+    emitter: 'const protoOf = (): object => Object.prototype; Object.assign(protoOf(), JSON.parse(\'{"benign":1}\'));' },
+  { id: "R-GP4X-PARAM-ALIAS", pin: "P4", family: "a parameter binding: an immediately invoked arrow's parameter bound to snapshot, which the bound never follows", sites: ["S1", "S2"], reading: "quiet",
+    beforeDerive: '((snapshotTarget: typeof snapshot) => Object.assign(snapshotTarget, JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\')))(snapshot);' },
+  { id: "R-GP4X-FOREACH-PARAM", pin: "P4", family: "a parameter binding: a forEach callback's parameter over a list holding snapshot, which the bound never follows", sites: ["S1", "S2"], reading: "quiet",
+    beforeDerive: '[snapshot].forEach(snapshotTarget => Object.assign(snapshotTarget, JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\')));' },
+  { id: "R-GP4X-HELPER-RETURN", pin: "P4", family: "a helper's return: snapshot returned by an arrow declared in the callback, a call value the reading never follows", sites: ["S1", "S2"], reading: "quiet",
+    beforeDerive: 'const targetOf = (): typeof snapshot => snapshot; Object.assign(targetOf(), JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\'));' },
+  { id: "R-GP4X-REFLECT-SETPROTO", pin: "P4", family: "no own-property write: the snapshot's prototype replaced by parsed data through Reflect.setPrototypeOf, an inherited read (the Reflect twin of R-L3-P4-SETPROTO)", sites: ["S1", "S2"], reading: "quiet",
+    beforeDerive: 'Reflect.setPrototypeOf(snapshot, JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\'));' },
+  { id: "R-GP5B-VAR-ALIAS", pin: "P5", family: "the named bound: a var alias of Object.prototype, a mutable alias the reading never follows", sites: ["S1", "S2"], reading: "quiet",
+    emitter: 'var prototypeTarget = Object.prototype; Object.assign(prototypeTarget, JSON.parse(\'{"benign":1}\'));' },
+  { id: "R-GP5B-SHADOWED", pin: "P5", family: "the named bound: an alias of Object.prototype shadowed by a second binding of its name, so the reading follows neither", sites: ["S1", "S2"], reading: "quiet",
+    emitter: 'const prototypeTarget = Object.prototype; { const prototypeTarget = 0; void prototypeTarget; } Object.assign(prototypeTarget, JSON.parse(\'{"benign":1}\'));' },
+  { id: "R-GP5B-AFTER-USE", pin: "P5", family: "the named bound: a const alias of Object.prototype declared after its use, which the reading never follows", sites: ["S1", "S2"], reading: "quiet",
+    emitter: 'const run = (): void => { Object.assign(laterTarget, JSON.parse(\'{"benign":1}\')); }; const laterTarget = Object.prototype; run();' },
+  { id: "R-GP4B-VAR-ALIAS", pin: "P4", family: "the named bound: a var alias of snapshot, a mutable alias the reading never follows", sites: ["S1", "S2"], reading: "quiet",
+    beforeDerive: 'var snapshotTarget = snapshot; Object.assign(snapshotTarget, JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\'));' },
+  { id: "R-GP4B-SHADOWED", pin: "P4", family: "the named bound: an alias of snapshot shadowed by a second binding of its name, so the reading follows neither", sites: ["S1", "S2"], reading: "quiet",
+    beforeDerive: 'const snapshotTarget = snapshot; { const snapshotTarget = {}; void snapshotTarget; } Object.assign(snapshotTarget, JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\'));' },
+  { id: "R-GP4B-AFTER-USE", pin: "P4", family: "the named bound: a const alias of snapshot declared after its use, which the reading never follows", sites: ["S1", "S2"], reading: "quiet",
+    beforeDerive: 'const run = (): void => { Object.assign(laterTarget, JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\')); }; const laterTarget = snapshot; run();' },
+];
+/** One benign twin per refusal, in the refusal order; its reading is quiet, or the one landed cause its pin always carries. */
+const E3EH_TWINS: readonly Twin[] = [
+  { id: "T-GP5X-LOGICAL-AND", pin: "P5", form: "a logical-and target has no prototype operand", sites: ["S1", "S2"], reading: "quiet",
+    emitter: 'Object.assign(emitNumbers.size >= 0 && emitNumbers, JSON.parse(\'{"benign":1}\'));' },
+  { id: "T-GP5X-LOGICAL-OR", pin: "P5", form: "a logical-or target has no prototype operand", sites: ["S1", "S2"], reading: "quiet",
+    emitter: 'Object.assign(emitNumbers || {}, JSON.parse(\'{"benign":1}\'));' },
+  { id: "T-GP5X-NULLISH", pin: "P5", form: "a nullish-coalescing target has no prototype operand", sites: ["S1", "S2"], reading: "quiet",
+    emitter: 'Object.assign(emitNumbers ?? {}, JSON.parse(\'{"benign":1}\'));' },
+  { id: "T-GP5X-ARRAY-DESTRUCT", pin: "P5", form: "an array-binding const alias takes the unrelated first element, not the prototype after it", sites: ["S1", "S2"], reading: "quiet",
+    emitter: 'const [prototypeTarget] = [emitNumbers, Object.prototype]; Object.assign(prototypeTarget, JSON.parse(\'{"benign":1}\'));' },
+  { id: "T-GP5X-FOROF-VARIABLE", pin: "P5", form: "a const for-of variable over an array literal holding only an unrelated object", sites: ["S1", "S2"], reading: "quiet",
+    emitter: 'for (const prototypeTarget of [emitNumbers]) Object.assign(prototypeTarget, JSON.parse(\'{"benign":1}\'));' },
+  { id: "T-GP5X-OBJECT-PROPERTY", pin: "P5", form: "a property of a const object literal names the unrelated member, not the prototype beside it", sites: ["S1", "S2"], reading: "quiet",
+    emitter: 'const holder = { target: emitNumbers, other: Object.prototype }; Object.assign(holder.target, JSON.parse(\'{"benign":1}\'));' },
+  { id: "T-GP5X-ARRAY-ELEMENT", pin: "P5", form: "a numeric-literal element names the unrelated first element, not the prototype after it", sites: ["S1", "S2"], reading: "quiet",
+    emitter: 'Object.assign([emitNumbers, Object.prototype][0], JSON.parse(\'{"benign":1}\'));' },
+  { id: "T-GP5X-ASSIGN-EXPR", pin: "P5", form: "an assignment-expression target evaluates to an unrelated object", sites: ["S1", "S2"], reading: "quiet",
+    emitter: 'let prototypeTarget: object; Object.assign((prototypeTarget = emitNumbers), JSON.parse(\'{"benign":1}\'));' },
+  { id: "T-GP5X-OBJECT-WRAP", pin: "P5", form: "an unrelated object passed through Object(...) receives a parsed bulk write", sites: ["S1", "S2"], reading: "quiet",
+    emitter: 'Object.assign(Object(emitNumbers), JSON.parse(\'{"benign":1}\'));' },
+  { id: "T-GP5X-GLOBAL-ALIAS", pin: "P5", form: "the prototype spelled through global is only read", sites: ["S1", "S2"], reading: "quiet",
+    emitter: "Object.keys(global.Object.prototype);" },
+  { id: "T-GP5X-DEFINE-GETTER-CALL", pin: "P5", form: "__defineGetter__ reached through .call defines a member of an unrelated receiver", sites: ["S1", "S2"], reading: "quiet",
+    emitter: 'Object.prototype.__defineGetter__.call(emitNumbers, "benign", () => 1);' },
+  { id: "T-GP5X-ENTRIES-SLOT", pin: "P5", form: "Object.fromEntries over Object.entries of a literal without the prototype slot is assigned into Object", sites: ["S1", "S2"], reading: "quiet",
+    emitter: "Object.assign(Object, Object.fromEntries(Object.entries({ benign: { benign: 1 } })));" },
+  { id: "T-GP5X-ARRAY-OF-SPREAD", pin: "P5", form: "the spread of Array.of(...) carries an unrelated target and parsed data into Object.assign", sites: ["S1", "S2"], reading: "quiet",
+    emitter: 'Object.assign(...Array.of<object>(emitNumbers, JSON.parse(\'{"benign":1}\')));' },
+  { id: "T-GP5X-CALL-CALL", pin: "P5", form: "Object.assign reached through Function.prototype.call.call writes an unrelated target", sites: ["S1", "S2"], reading: "quiet",
+    emitter: 'Function.prototype.call.call(Object.assign, Object, emitNumbers, JSON.parse(\'{"benign":1}\'));' },
+  { id: "T-GP4X-LOGICAL-AND", pin: "P4", form: "a logical-and target has no snapshot operand", sites: ["S1", "S2"], reading: "quiet",
+    beforeDerive: 'Object.assign(live && {}, JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\'));' },
+  { id: "T-GP4X-LOGICAL-OR", pin: "P4", form: "a logical-or target has no snapshot operand", sites: ["S1", "S2"], reading: "quiet",
+    beforeDerive: 'Object.assign(live || {}, JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\'));' },
+  { id: "T-GP4X-NULLISH", pin: "P4", form: "a nullish-coalescing target has no snapshot operand", sites: ["S1", "S2"], reading: "quiet",
+    beforeDerive: 'Object.assign(live ?? {}, JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\'));' },
+  { id: "T-GP4X-ARRAY-DESTRUCT", pin: "P4", form: "an array-binding const alias takes the fresh first element, not snapshot after it", sites: ["S1", "S2"], reading: "quiet",
+    beforeDerive: 'const [snapshotTarget] = [{}, snapshot]; Object.assign(snapshotTarget, JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\'));' },
+  { id: "T-GP4X-OBJECT-PROPERTY", pin: "P4", form: "a property of a const object literal names the fresh member, not snapshot beside it", sites: ["S1", "S2"], reading: "quiet",
+    beforeDerive: 'const holder = { target: {}, other: snapshot }; Object.assign(holder.target, JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\'));' },
+  { id: "T-GP4X-FOROF-VARIABLE", pin: "P4", form: "a const for-of variable over an array literal holding only a fresh object", sites: ["S1", "S2"], reading: "quiet",
+    beforeDerive: 'for (const snapshotTarget of [{}]) Object.assign(snapshotTarget, JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\'));' },
+  { id: "T-GP4X-DEFINEPROPERTY-RETURN", pin: "P4", form: "the target is the fresh object Object.defineProperty returns", sites: ["S1", "S2"], reading: "quiet",
+    beforeDerive: 'Object.assign(Object.defineProperty({}, "benign", { value: 1 }), JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\'));' },
+  { id: "T-GP4X-OBJECT-WRAP", pin: "P4", form: "a fresh object passed through Object(...) receives parsed data", sites: ["S1", "S2"], reading: "quiet",
+    beforeDerive: 'Object.assign(Object({}), JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\'));' },
+  { id: "T-GP4X-ARRAY-ELEMENT", pin: "P4", form: "a numeric-literal element names the fresh first element, not snapshot after it, so only its unresolved key reads", sites: ["S1", "S2"], reading: "unresolved key",
+    beforeDerive: 'Object.assign([{}, snapshot][0], JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\'));' },
+  { id: "T-GP4X-ASSIGN-EXPR", pin: "P4", form: "an assignment-expression target evaluates to a fresh object", sites: ["S1", "S2"], reading: "quiet",
+    beforeDerive: 'let snapshotTarget: object; Object.assign((snapshotTarget = {}), JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\'));' },
+  { id: "T-GP4X-ARRAY-OF-SPREAD", pin: "P4", form: "the spread of Array.of(...) carries a fresh target, snapshot and parsed data into Object.assign", sites: ["S1", "S2"], reading: "quiet",
+    beforeDerive: 'Object.assign(...Array.of<object>({}, snapshot, JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\')));' },
+  { id: "T-GP4X-GLOBAL-ALIAS", pin: "P4", form: "Object.assign owned through global copies snapshot and parsed data into a fresh target", sites: ["S1", "S2"], reading: "quiet",
+    beforeDerive: 'global.Object.assign({}, snapshot, JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\'));' },
+  { id: "T-GP4X-CALL-CALL", pin: "P4", form: "Object.assign reached through Function.prototype.call.call writes a fresh target", sites: ["S1", "S2"], reading: "quiet",
+    beforeDerive: 'Function.prototype.call.call(Object.assign, Object, {}, snapshot, JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\'));' },
+];
+/** Every quiet row this reading names: the twelve above, then every wb-561n quiet row re-read. */
+const E3EH_QUIET: readonly Residual[] = [...E3EH_RESIDUALS, ...W561N_QUIET];
+/** Every twin this reading keeps to its frozen reading: the 27 above, then every wb-561n twin re-read. */
+const E3EH_TWIN_ROWS: readonly Twin[] = [...E3EH_TWINS, ...W561N_TWINS];
+/** The class cause each pin's extended reading adds. */
+const E3EH_CAUSE: Readonly<Record<StrictPin, string>> = { P4: "data-carried snapshot write", P5: "prototype write" };
+/** A twin's frozen reading as causes: quiet is none. */
+const twinCauses = (reading: string): string[] => (reading === "quiet" ? [] : [reading]);
+
+/** The global-object owners: an Object or Reflect owner may be spelled as a member of either. */
+const E3EH_GLOBALS: readonly string[] = ["globalThis", "global"];
+
+/** The declaration a binding element sits in, through nested object and array patterns. */
+function e3ehDeclarationOf(element: ts.BindingElement): ts.VariableDeclaration | undefined {
+  const holder = element.parent.parent;
+  if (ts.isVariableDeclaration(holder)) return holder;
+  return ts.isBindingElement(holder) ? e3ehDeclarationOf(holder) : undefined;
+}
+
+/** The NAMED BOUND, unchanged: the one binding of a name inside the body, a const declaration, declared before the use. */
+function e3ehBinding(name: string, body: ts.Block, at: ts.Node): ts.VariableDeclaration | ts.BindingElement | undefined {
+  const all = bindingsOf(body, name);
+  const only = all.length === 1 ? all[0] : undefined;
+  if (only === undefined || only.pos >= at.pos) return undefined;
+  if (ts.isVariableDeclaration(only)) return w561nConst(only) ? only : undefined;
+  if (!ts.isBindingElement(only) || only.dotDotDotToken !== undefined) return undefined;
+  const declaration = e3ehDeclarationOf(only);
+  return declaration !== undefined && w561nConst(declaration) ? only : undefined;
+}
+
+/** A property name's key: as written, or a computed key folded through the bound. */
+function e3ehKey(name: ts.PropertyName, body: ts.Block, at: ts.Node, seen: ReadonlySet<string>): string | undefined {
+  return ts.isComputedPropertyName(name) ? e3ehFold(name.expression, body, at, seen) : memberKey(name);
+}
+
+/** A key folded as written, or through the one constant value the bound resolves it to. */
+function e3ehFold(node: ts.Expression | undefined, body: ts.Block, at: ts.Node, seen: ReadonlySet<string>): string | undefined {
+  const target = celwTarget(node);
+  if (target === undefined) return undefined;
+  const direct = folded(target);
+  if (direct !== undefined) return direct;
+  const values = e3ehValues(target, body, at, seen);
+  const only = values.length === 1 ? values[0] : undefined;
+  return only !== undefined && only.kind === "node" && only.node !== target ? folded(only.node) : undefined;
+}
+
+/** The values a declaration gives its name: its initializer, or for a const for-of variable each element of an array literal. */
+function e3ehDeclared(declaration: ts.VariableDeclaration, body: ts.Block, at: ts.Node, seen: ReadonlySet<string>): W561nValue[] {
+  if (declaration.initializer !== undefined) return e3ehValues(declaration.initializer, body, at, seen);
+  const loop = declaration.parent.parent;
+  if (!ts.isForOfStatement(loop) || loop.initializer !== declaration.parent) return [];
+  const array = e3ehArrayLiteral(loop.expression, body, at, seen);
+  return array === undefined ? [] : e3ehSpread(array.elements, body, at, seen, new Set([array])).flatMap(element => e3ehValues(element, body, at, seen));
+}
+
+/** The values at one index of an array literal value, when no unexpanded spread comes first. */
+function e3ehIndexed(value: W561nValue, index: number, body: ts.Block, at: ts.Node, seen: ReadonlySet<string>): W561nValue[] {
+  if (value.kind !== "node" || !ts.isArrayLiteralExpression(value.node)) return [];
+  const elements = e3ehSpread(value.node.elements, body, at, seen, new Set([value.node]));
+  if (elements.slice(0, index + 1).some(ts.isSpreadElement)) return [];
+  const element = elements[index];
+  return element === undefined || ts.isOmittedExpression(element) ? [] : e3ehValues(element, body, at, seen);
+}
+
+/** The values of a property assignment named `name` in an object literal an owner evaluates to. */
+function e3ehProperty(owner: readonly W561nValue[], name: string, body: ts.Block, at: ts.Node, seen: ReadonlySet<string>): W561nValue[] {
+  return owner.flatMap(value => value.kind === "node" && ts.isObjectLiteralExpression(value.node)
+    ? value.node.properties.filter(ts.isPropertyAssignment).filter(property => e3ehKey(property.name, body, at, seen) === name)
+      .flatMap(property => e3ehValues(property.initializer, body, at, seen))
+    : []);
+}
+
+/** A binding element's values: the indexed element or the named member of what its pattern destructures, or its default. */
+function e3ehElementValues(element: ts.BindingElement, body: ts.Block, at: ts.Node, seen: ReadonlySet<string>): W561nValue[] {
+  const pattern = element.parent;
+  const holder = pattern.parent;
+  const owner = ts.isVariableDeclaration(holder) ? e3ehDeclared(holder, body, at, seen) : ts.isBindingElement(holder) ? e3ehElementValues(holder, body, at, seen) : [];
+  const defaults = e3ehValues(element.initializer, body, at, seen);
+  if (ts.isArrayBindingPattern(pattern)) {
+    const index = pattern.elements.indexOf(element);
+    return [...owner.flatMap(value => e3ehIndexed(value, index, body, at, seen)), ...defaults];
+  }
+  const key = element.propertyName === undefined ? (ts.isIdentifier(element.name) ? element.name.text : undefined) : e3ehKey(element.propertyName, body, at, seen);
+  const member: W561nValue[] = key === undefined || owner.length === 0 ? [] : [{ kind: "member", owner, name: key }, ...e3ehProperty(owner, key, body, at, seen)];
+  return [...member, ...defaults];
+}
+
+/** What an expression may evaluate to, by w561nValues' rules and the header's added ones only. */
+function e3ehValues(node: ts.Expression | undefined, body: ts.Block, at: ts.Node, seen: ReadonlySet<string> = new Set()): W561nValue[] {
+  const target = celwTarget(node);
+  if (target === undefined) return [];
+  if (ts.isBinaryExpression(target)) {
+    const operator = target.operatorToken.kind;
+    if (operator === ts.SyntaxKind.CommaToken || operator === ts.SyntaxKind.EqualsToken) return e3ehValues(target.right, body, at, seen);
+    if (operator === ts.SyntaxKind.AmpersandAmpersandToken || operator === ts.SyntaxKind.BarBarToken || operator === ts.SyntaxKind.QuestionQuestionToken) {
+      return [...e3ehValues(target.left, body, at, seen), ...e3ehValues(target.right, body, at, seen)];
+    }
+  }
+  if (ts.isConditionalExpression(target)) return [...e3ehValues(target.whenTrue, body, at, seen), ...e3ehValues(target.whenFalse, body, at, seen)];
+  if (ts.isIdentifier(target)) {
+    const binding = seen.has(target.text) ? undefined : e3ehBinding(target.text, body, at);
+    const next = new Set([...seen, target.text]);
+    const values = binding === undefined ? [] : ts.isVariableDeclaration(binding) ? e3ehDeclared(binding, body, at, next) : e3ehElementValues(binding, body, at, next);
+    return values.length > 0 ? values : [w561nNode(target)];
+  }
+  if (ts.isPropertyAccessExpression(target)) {
+    const owner = e3ehValues(target.expression, body, at, seen);
+    return [{ kind: "member", owner, name: target.name.text }, ...e3ehProperty(owner, target.name.text, body, at, seen)];
+  }
+  if (ts.isElementAccessExpression(target)) {
+    const index = celwTarget(target.argumentExpression);
+    if (index !== undefined && ts.isNumericLiteral(index)) {
+      const element = e3ehValues(target.expression, body, at, seen).flatMap(value => e3ehIndexed(value, Number(index.text), body, at, seen));
+      if (element.length > 0) return element;
+    }
+    const name = e3ehFold(target.argumentExpression, body, at, seen);
+    if (name === undefined) return [w561nNode(target)];
+    const owner = e3ehValues(target.expression, body, at, seen);
+    return [{ kind: "member", owner, name }, ...e3ehProperty(owner, name, body, at, seen)];
+  }
+  if (ts.isCallExpression(target)) {
+    // Object.assign and Object.defineProperty return their target; Object(x) returns x itself when x is an object.
+    const invocation = e3ehInvocation(target, body, seen);
+    if ((invocation.method === "Object.assign" || invocation.method === "Object.defineProperty") && invocation.args.length > 0) {
+      return e3ehValues(invocation.args[0], body, target, seen);
+    }
+    if (invocation.args.length > 0 && e3ehValues(target.expression, body, target, seen).some(value => e3ehOwner(value, "Object"))) {
+      return e3ehValues(invocation.args[0], body, target, seen);
+    }
+  }
+  return [w561nNode(target)];
+}
+
+/** An Object or Reflect owner: the identifier, the same name on a global-object owner, and for Object any receiver's constructor. */
+function e3ehOwner(value: W561nValue, name: "Object" | "Reflect"): boolean {
+  if (value.kind === "node") return w561nIdentifier(value, name);
+  if (value.name === name) return value.owner.some(owner => E3EH_GLOBALS.some(global => w561nIdentifier(owner, global)));
+  return name === "Object" && value.name === "constructor";
+}
+
+/** A prototype: an Object owner's prototype, any receiver's __proto__, or what getPrototypeOf returns. */
+function e3ehPrototype(value: W561nValue, body: ts.Block, seen: ReadonlySet<string>): boolean {
+  if (value.kind === "member") return value.name === "__proto__" || (value.name === "prototype" && value.owner.some(owner => e3ehOwner(owner, "Object")));
+  if (!ts.isCallExpression(value.node)) return false;
+  const { method } = e3ehInvocation(value.node, body, seen);
+  return method === "Object.getPrototypeOf" || method === "Reflect.getPrototypeOf";
+}
+
+/** The one array literal an expression evaluates to, when the rules resolve exactly one. */
+function e3ehArrayLiteral(node: ts.Expression | undefined, body: ts.Block, at: ts.Node, seen: ReadonlySet<string>): ts.ArrayLiteralExpression | undefined {
+  const values = e3ehValues(node, body, at, seen);
+  const only = values.length === 1 ? values[0] : undefined;
+  return only !== undefined && only.kind === "node" && ts.isArrayLiteralExpression(only.node) ? only.node : undefined;
+}
+
+/** The one Array.of(...) call an expression evaluates to, when the rules resolve exactly one. */
+function e3ehArrayOf(node: ts.Expression, body: ts.Block, at: ts.Node, seen: ReadonlySet<string>): ts.CallExpression | undefined {
+  const values = e3ehValues(node, body, at, seen);
+  const only = values.length === 1 ? values[0] : undefined;
+  if (only === undefined || only.kind !== "node" || !ts.isCallExpression(only.node)) return undefined;
+  const call = only.node;
+  return e3ehValues(call.expression, body, call, seen).some(value =>
+    value.kind === "member" && value.name === "of" && value.owner.some(owner => w561nIdentifier(owner, "Array"))) ? call : undefined;
+}
+
+/** Arguments with each spread of a const array, or of Array.of(...), expanded in place, each once. */
+function e3ehSpread(args: readonly ts.Expression[], body: ts.Block, at: ts.Node, seen: ReadonlySet<string>, expanded: ReadonlySet<ts.Node> = new Set()): ts.Expression[] {
+  return args.flatMap(arg => {
+    if (!ts.isSpreadElement(arg)) return [arg];
+    const array = e3ehArrayLiteral(arg.expression, body, at, seen);
+    if (array !== undefined) return expanded.has(array) ? [arg] : e3ehSpread(array.elements, body, at, seen, new Set([...expanded, array]));
+    const listed = e3ehArrayOf(arg.expression, body, at, seen);
+    return listed === undefined || expanded.has(listed) ? [arg] : e3ehSpread(listed.arguments, body, at, seen, new Set([...expanded, listed]));
+  });
+}
+
+/** What an apply-style argument list carries, or nothing when it is not one array literal. */
+function e3ehListed(node: ts.Expression | undefined, body: ts.Block, at: ts.Node, seen: ReadonlySet<string>): ts.Expression[] {
+  const array = e3ehArrayLiteral(node, body, at, seen);
+  return array === undefined ? [] : e3ehSpread(array.elements, body, at, seen, new Set([array]));
+}
+
+/** The method a callee's values name: a member of an Object or Reflect owner, or such a method bound. */
+function e3ehMethodOf(values: readonly W561nValue[], body: ts.Block, seen: ReadonlySet<string>): W561nMethod {
+  for (const value of values) {
+    if (value.kind === "member") {
+      for (const owner of ["Object", "Reflect"] as const) {
+        if (value.owner.some(candidate => e3ehOwner(candidate, owner))) return { method: `${owner}.${value.name}`, bound: [] };
+      }
+    } else if (ts.isCallExpression(value.node)) {
+      const bind = value.node;
+      for (const callee of e3ehValues(bind.expression, body, bind, seen)) {
+        if (callee.kind !== "member" || callee.name !== "bind") continue;
+        const inner = e3ehMethodOf(callee.owner, body, seen);
+        if (inner.method !== undefined) return { method: inner.method, bound: [...inner.bound, ...e3ehSpread(bind.arguments.slice(1), body, bind, seen)] };
+      }
+    }
+  }
+  return { method: undefined, bound: [] };
+}
+
+/** One call read through the rules: the method it reaches and the arguments that method receives. */
+function e3ehInvocation(call: ts.CallExpression, body: ts.Block, seen: ReadonlySet<string> = new Set()): W561nCall {
+  const args = e3ehSpread(call.arguments, body, call, seen);
+  const callee = e3ehValues(call.expression, body, call, seen);
+  const direct = e3ehMethodOf(callee, body, seen);
+  if (direct.method === "Reflect.apply") {
+    const applied = e3ehMethodOf(e3ehValues(args[0], body, call, seen), body, seen);
+    return { ...applied, unknownObjectMember: false, args: [...applied.bound, ...e3ehListed(args[2], body, call, seen)] };
+  }
+  if (direct.method !== undefined) return { ...direct, unknownObjectMember: false, args: [...direct.bound, ...args] };
+  for (const value of callee) {
+    if (value.kind !== "member" || (value.name !== "call" && value.name !== "apply")) continue;
+    if (value.name === "call" && value.owner.some(owner => owner.kind === "member" && owner.name === "call")) {
+      // <any>.call.call(writer, thisArg, ...rest) invokes the writer on the rest.
+      const invoked = e3ehMethodOf(e3ehValues(args[0], body, call, seen), body, seen);
+      if (invoked.method !== undefined) return { ...invoked, unknownObjectMember: false, args: [...invoked.bound, ...args.slice(2)] };
+    }
+    const inner = e3ehMethodOf(value.owner, body, seen);
+    if (inner.method === undefined) continue;
+    const rest = value.name === "call" ? args.slice(1) : e3ehListed(args[1], body, call, seen);
+    return { ...inner, unknownObjectMember: false, args: [...inner.bound, ...rest] };
+  }
+  const unknownObjectMember = callee.some(value => value.kind === "node" && ts.isElementAccessExpression(value.node) &&
+    e3ehValues(value.node.expression, body, call, seen).some(owner => e3ehOwner(owner, "Object")));
+  return { method: undefined, bound: [], unknownObjectMember, args };
+}
+
+/** A write target that writes a prototype member or a prototype itself, read as a reference; an identifier only rebinds. */
+function e3ehPattern(node: ts.Expression, body: ts.Block, at: ts.Node): boolean {
+  const target = celwTarget(node);
+  if (target === undefined) return false;
+  if (ts.isPropertyAccessExpression(target) || ts.isElementAccessExpression(target)) {
+    const owner = e3ehValues(target.expression, body, at);
+    const name = ts.isPropertyAccessExpression(target) ? target.name.text : e3ehFold(target.argumentExpression, body, at, new Set());
+    const reference: W561nValue[] = name === undefined ? [] : [{ kind: "member", owner, name }];
+    return [...reference, ...owner].some(value => e3ehPrototype(value, body, new Set()));
+  }
+  if (ts.isObjectLiteralExpression(target)) return target.properties.some(property =>
+    (ts.isPropertyAssignment(property) && e3ehPattern(property.initializer, body, at)) ||
+    (ts.isSpreadAssignment(property) && e3ehPattern(property.expression, body, at)));
+  if (ts.isArrayLiteralExpression(target)) return target.elements.some(element => e3ehPattern(ts.isSpreadElement(element) ? element.expression : element, body, at));
+  return ts.isBinaryExpression(target) && target.operatorToken.kind === ts.SyntaxKind.EqualsToken && e3ehPattern(target.left, body, at);
+}
+
+/** An object literal with a property keyed prototype. */
+const e3ehSlotLiteral = (source: ts.ObjectLiteralExpression, body: ts.Block, at: ts.Node): boolean =>
+  source.properties.some(property => property.name !== undefined && e3ehKey(property.name, body, at, new Set()) === "prototype");
+
+/** A source carrying Object's prototype slot: w561nSlotSource's forms, and Object.fromEntries over Object.entries of one. */
+function e3ehSlotSource(node: ts.Expression, body: ts.Block, at: ts.Node): boolean {
+  if (celwPrototypeSource(node)) return true;
+  return e3ehValues(node, body, at).some(value => {
+    if (value.kind !== "node") return false;
+    const source = value.node;
+    if (ts.isObjectLiteralExpression(source)) return e3ehSlotLiteral(source, body, at);
+    if (!ts.isCallExpression(source)) return false;
+    const fromEntries = e3ehInvocation(source, body);
+    if (fromEntries.method !== "Object.fromEntries") return false;
+    const pairs = e3ehListed(fromEntries.args[0], body, at, new Set()).some(entry => {
+      const pair = e3ehArrayLiteral(entry, body, at, new Set());
+      return pair !== undefined && e3ehFold(pair.elements[0], body, at, new Set()) === "prototype";
+    });
+    return pairs || e3ehValues(fromEntries.args[0], body, at).some(entries => {
+      if (entries.kind !== "node" || !ts.isCallExpression(entries.node)) return false;
+      const listed = e3ehInvocation(entries.node, body);
+      return listed.method === "Object.entries" && e3ehValues(listed.args[0], body, at).some(literal =>
+        literal.kind === "node" && ts.isObjectLiteralExpression(literal.node) && e3ehSlotLiteral(literal.node, body, at));
+    });
+  });
+}
+
+/** The P5 write positions, read through the rules. */
+function e3ehPrototypeWrite(node: ts.Node, body: ts.Block): boolean {
+  if (ts.isBinaryExpression(node)) {
+    return node.operatorToken.kind >= ts.SyntaxKind.FirstAssignment && node.operatorToken.kind <= ts.SyntaxKind.LastAssignment && e3ehPattern(node.left, body, node);
+  }
+  if (ts.isForInStatement(node) || ts.isForOfStatement(node)) return !ts.isVariableDeclarationList(node.initializer) && e3ehPattern(node.initializer, body, node);
+  if (ts.isPrefixUnaryExpression(node) || ts.isPostfixUnaryExpression(node)) {
+    return (node.operator === ts.SyntaxKind.PlusPlusToken || node.operator === ts.SyntaxKind.MinusMinusToken) && e3ehPattern(node.operand, body, node);
+  }
+  if (ts.isDeleteExpression(node)) return e3ehPattern(node.expression, body, node);
+  if (!ts.isCallExpression(node)) return false;
+  const { method, unknownObjectMember, args } = e3ehInvocation(node, body);
+  const target: ts.Expression | undefined = args[0];
+  const values = target === undefined ? [] : e3ehValues(target, body, node);
+  const objectTarget = values.some(value => e3ehOwner(value, "Object"));
+  if (objectTarget && W561N_SLOT_WRITERS.includes(method ?? "") && e3ehFold(args[1], body, node, new Set()) === "prototype") return true;
+  if (objectTarget && (method === "Object.assign" || method === "Object.defineProperties") && args.slice(1).some(source => e3ehSlotSource(source, body, node))) return true;
+  if (values.some(value => e3ehPrototype(value, body, new Set())) && (W561N_PROTOTYPE_WRITERS.includes(method ?? "") || unknownObjectMember)) return true;
+  return e3ehValues(node.expression, body, node).some(value => value.kind === "member" && (
+    (W561N_ACCESSOR_WRITERS.includes(value.name) && value.owner.some(owner => e3ehPrototype(owner, body, new Set()))) ||
+    // The accessor writer reached through .call or .apply writes onto the receiver it is handed.
+    ((value.name === "call" || value.name === "apply") && value.owner.some(owner => owner.kind === "member" && W561N_ACCESSOR_WRITERS.includes(owner.name)) &&
+      e3ehValues(node.arguments[0], body, node).some(receiver => e3ehPrototype(receiver, body, new Set())))));
+}
+
+/** The P4 bulk writes into snapshot, read through the rules: CELW_STRICT's writers and sources, any spelling the rules reach. */
+function e3ehSnapshotWrite(call: ts.CallExpression, body: ts.Block): boolean {
+  const { method, unknownObjectMember, args } = e3ehInvocation(call, body);
+  const target: ts.Expression | undefined = args[0];
+  if (target === undefined || !e3ehValues(target, body, call).some(value => w561nIdentifier(value, "snapshot"))) return false;
+  const dataSource = args.slice(1).some(source => !celwLiteralOnly(source));
+  if (method === "Object.assign") return dataSource;
+  if (method === "Object.defineProperties") return args.length < 2 || dataSource;
+  return method === undefined && unknownObjectMember && dataSource;
+}
+
+/** Strict P5 of this cut: W561N_STRICT's P5, plus a prototype write the e3eh rules read. */
+function e3ehP5(reading: Reading): string[] {
+  const causes = w561nP5(reading);
+  const body = reading.emitter?.body;
+  if (body === undefined) return causes;
+  const writes = nodesOf(body, (node): node is ts.Node => e3ehPrototypeWrite(node, body));
+  return sortedUnique([...causes, ...(writes.length > 0 ? ["prototype write"] : [])]);
+}
+
+/** Strict P4 of this cut: W561N_STRICT's P4, plus a data-carried snapshot write the e3eh rules read. */
+function e3ehP4(reading: Reading): string[] {
+  const causes = w561nP4(reading);
+  const callback = reading.callback;
+  if (callback === undefined || !ts.isBlock(callback.body)) return causes;
+  const body = callback.body;
+  const writes = nodesOf(body, ts.isCallExpression).some(call => e3ehSnapshotWrite(call, body));
+  return sortedUnique([...causes, ...(writes ? ["data-carried snapshot write"] : [])]);
+}
+const E3EH_STRICT: Readonly<Record<StrictPin, (reading: Reading) => string[]>> = { P4: e3ehP4, P5: e3ehP5 };
+
+const E3EH_REACHED: string[] = [];
+const E3EH_CONTROL = "the real source and the benign writes read quiet under the e3eh reading";
+
+/** The out-of-file roster, shape-checked. */
+function e3ehRoster(): Record<string, unknown> {
+  const raw: unknown = JSON.parse(readRepo(E3EH_ROSTER));
+  if (!isRecord(raw)) throw new Error(`${E3EH_ROSTER}: not an object`);
+  return raw;
+}
+
+describe("wb-e3eh R697 PREP F1: each wb-561n F1 form pinned refused, or named with a pinned quiet row", () => {
+  for (const row of E3EH_ROWS) {
+    for (const key of row.sites) {
+      it(`wb-e3eh ${row.id} ${key}: ${row.form}`, () => {
+        const site = siteNamed(key);
+        const { text, anchors } = placed(site, row);
+        expect(anchors.every(anchor => anchor.count === 1), "every insertion anchor applies once").toBe(true);
+        const reading = readSite(site.file, text);
+        expect(PINS.filter(pin => pin.id !== row.pin && !JUDGES[pin.id](site, reading)).map(pin => pin.id), "other landed pins hold").toEqual([]);
+        expect(E3EH_STRICT[OTHER_PIN[row.pin]](reading), "the other strict reading stays quiet").toEqual([]);
+        expect(W561N_STRICT[row.pin](reading), "the wb-561n reading misses its class cause, as the gate measured").toEqual(row.causes.filter(cause => cause !== E3EH_CAUSE[row.pin]));
+        expect(E3EH_STRICT[row.pin](reading), "the extended reading names the true cause").toEqual(row.causes);
+        E3EH_REACHED.push(`wb-e3eh ${row.id} ${key}`);
+      });
+    }
+  }
+  for (const residual of E3EH_QUIET) {
+    for (const key of residual.sites) {
+      it(`wb-e3eh quiet ${residual.id} ${key}: ${residual.family}`, () => {
+        const site = siteNamed(key);
+        const { text, anchors } = placed(site, residual);
+        expect(anchors.every(anchor => anchor.count === 1), "every insertion anchor applies once").toBe(true);
+        const reading = readSite(site.file, text);
+        expect(PINS.filter(pin => !JUDGES[pin.id](site, reading)).map(pin => pin.id), "landed pins stay quiet").toEqual([]);
+        expect(E3EH_STRICT.P4(reading), "no snapshot write is read").toEqual([]);
+        expect(E3EH_STRICT.P5(reading), "no prototype write is read").toEqual([]);
+        E3EH_REACHED.push(`wb-e3eh quiet ${residual.id} ${key}`);
+      });
+    }
+  }
+  for (const twin of E3EH_TWIN_ROWS) {
+    for (const key of twin.sites) {
+      it(`wb-e3eh twin ${twin.id} ${key}: ${twin.form}`, () => {
+        const site = siteNamed(key);
+        const { text, anchors } = placed(site, twin);
+        expect(anchors.every(anchor => anchor.count === 1), "every insertion anchor applies once").toBe(true);
+        const reading = readSite(site.file, text);
+        expect(PINS.filter(pin => !JUDGES[pin.id](site, reading)).map(pin => pin.id), "landed pins stay quiet").toEqual([]);
+        expect(E3EH_STRICT[OTHER_PIN[twin.pin]](reading), "the other strict reading stays quiet").toEqual([]);
+        expect(E3EH_STRICT[twin.pin](reading), "its own pin reads only its frozen reading").toEqual(twinCauses(twin.reading));
+        E3EH_REACHED.push(`wb-e3eh twin ${twin.id} ${key}`);
+      });
+    }
+  }
+  for (const site of SITES) {
+    it(`wb-e3eh control ${site.key}: ${E3EH_CONTROL}`, () => {
+      expect(E3EH_STRICT.P4(readingOf(site.file))).toEqual([]);
+      expect(E3EH_STRICT.P5(readingOf(site.file))).toEqual([]);
+      const benign = placed(site, {
+        emitter: 'Reflect.set(emitNumbers, "benign", 1); Object.assign(emitNumbers, { benign: 1 });',
+        beforeDerive: 'Object.assign(snapshot, { benign: "FAKE-FIXTURE" }); Object.assign({}, JSON.parse("{}"));',
+      });
+      expect(benign.anchors.every(anchor => anchor.count === 1)).toBe(true);
+      expect(E3EH_STRICT.P4(readSite(site.file, benign.text))).toEqual([]);
+      expect(E3EH_STRICT.P5(readSite(site.file, benign.text))).toEqual([]);
+      expect(E3EH_STRICT.P4(readSite(site.file, ""))).toEqual(["no callback"]);
+      expect(E3EH_STRICT.P5(readSite(site.file, ""))).toEqual(["no ingest spread"]);
+      E3EH_REACHED.push(`wb-e3eh control ${site.key}`);
+    });
+  }
+  it("wb-e3eh ACCOUNTING (F1): each of the 33 F1 forms is exactly one pinned refusal or one named residual, on its own pin, and the bound's six spellings are named", () => {
+    const raw = e3ehRoster();
+    expect(E3EH_F1.length, "the gate's measured form count").toBe(raw.requiredF1);
+    expect(E3EH_F1, "the gate's list, out of file").toEqual(rosterTexts(raw, "f1Escapes"));
+    expect(E3EH_BOUND, "the bound's spellings, out of file").toEqual(rosterTexts(raw, "boundSpellings"));
+    const refused = E3EH_ROWS.map(row => row.id);
+    const named = E3EH_RESIDUALS.map(row => row.id.slice("R-".length));
+    expect([...refused, ...named.filter(id => E3EH_F1.includes(id))].sort(), "each F1 form once, refused or named").toEqual([...E3EH_F1].sort());
+    expect(named.filter(id => !E3EH_F1.includes(id)), "every other named row is one of the bound's spellings, in order").toEqual(E3EH_BOUND);
+    expect([...E3EH_ROWS, ...E3EH_RESIDUALS].filter(row => !row.id.replace(/^R-/, "").startsWith(`GP${row.pin.slice(1)}`)).map(row => row.id), "each row on its form's pin").toEqual([]);
+    expect(E3EH_TWINS.map(twin => twin.id), "one twin per refusal, in order").toEqual(refused.map(id => `T-${id}`));
+    expect([refused.length, named.length - E3EH_BOUND.length, E3EH_BOUND.length], "27 refused, 6 named, 6 bound").toEqual([27, 6, 6]);
+  });
+  it("wb-e3eh FROZEN SHAPE (standing rule 16): the refusal, quiet and twin tables keep their frozen ids, pins, sites and causes or readings", () => {
+    expect(E3EH_ROWS.map(row => `${row.id}:${row.pin}:${row.sites.length}:${row.causes.join("|")}`)).toEqual([
+      "GP5X-LOGICAL-AND:P5:2:prototype write",
+      "GP5X-LOGICAL-OR:P5:2:prototype write",
+      "GP5X-NULLISH:P5:2:prototype write",
+      "GP5X-ARRAY-DESTRUCT:P5:2:prototype write",
+      "GP5X-FOROF-VARIABLE:P5:2:prototype write",
+      "GP5X-OBJECT-PROPERTY:P5:2:prototype write",
+      "GP5X-ARRAY-ELEMENT:P5:2:prototype write",
+      "GP5X-ASSIGN-EXPR:P5:2:prototype write",
+      "GP5X-OBJECT-WRAP:P5:2:prototype write",
+      "GP5X-GLOBAL-ALIAS:P5:2:prototype write",
+      "GP5X-DEFINE-GETTER-CALL:P5:2:prototype write",
+      "GP5X-ENTRIES-SLOT:P5:2:prototype write",
+      "GP5X-ARRAY-OF-SPREAD:P5:2:prototype write",
+      "GP5X-CALL-CALL:P5:2:prototype write",
+      "GP4X-LOGICAL-AND:P4:2:data-carried snapshot write",
+      "GP4X-LOGICAL-OR:P4:2:data-carried snapshot write",
+      "GP4X-NULLISH:P4:2:data-carried snapshot write",
+      "GP4X-ARRAY-DESTRUCT:P4:2:data-carried snapshot write",
+      "GP4X-OBJECT-PROPERTY:P4:2:data-carried snapshot write",
+      "GP4X-FOROF-VARIABLE:P4:2:data-carried snapshot write",
+      "GP4X-DEFINEPROPERTY-RETURN:P4:2:data-carried snapshot write",
+      "GP4X-OBJECT-WRAP:P4:2:data-carried snapshot write",
+      "GP4X-ARRAY-ELEMENT:P4:2:data-carried snapshot write|unresolved key",
+      "GP4X-ASSIGN-EXPR:P4:2:data-carried snapshot write",
+      "GP4X-ARRAY-OF-SPREAD:P4:2:data-carried snapshot write",
+      "GP4X-GLOBAL-ALIAS:P4:2:data-carried snapshot write",
+      "GP4X-CALL-CALL:P4:2:data-carried snapshot write",
+    ]);
+    expect(E3EH_QUIET.map(row => `${row.id}:${row.pin}:${row.sites.join(",")}:${row.reading}`)).toEqual([
+      "R-GP5X-PARAM-ALIAS:P5:S1,S2:quiet",
+      "R-GP5X-HELPER-RETURN:P5:S1,S2:quiet",
+      "R-GP4X-PARAM-ALIAS:P4:S1,S2:quiet",
+      "R-GP4X-FOREACH-PARAM:P4:S1,S2:quiet",
+      "R-GP4X-HELPER-RETURN:P4:S1,S2:quiet",
+      "R-GP4X-REFLECT-SETPROTO:P4:S1,S2:quiet",
+      "R-GP5B-VAR-ALIAS:P5:S1,S2:quiet",
+      "R-GP5B-SHADOWED:P5:S1,S2:quiet",
+      "R-GP5B-AFTER-USE:P5:S1,S2:quiet",
+      "R-GP4B-VAR-ALIAS:P4:S1,S2:quiet",
+      "R-GP4B-SHADOWED:P4:S1,S2:quiet",
+      "R-GP4B-AFTER-USE:P4:S1,S2:quiet",
+      "R-L3-P5-LET-ALIAS:P5:S1,S2:quiet",
+      "R-L3-P5-MODULE-ALIAS:P5:S1,S2:quiet",
+      "R-L3-P5-MODULE-OWNER:P5:S1,S2:quiet",
+      "R-L3-P4-LET-ALIAS:P4:S1,S2:quiet",
+      "R-L3-P4-MODULE-ALIAS:P4:S1,S2:quiet",
+      "R-L3-P4-SETPROTO:P4:S1,S2:quiet",
+      "R-L3-P4-REASSIGN:P4:S1,S2:quiet",
+      "R-HELPER-P4:P4:S1,S2:quiet",
+      "R-ARGS-P5:P5:S1,S2:quiet",
+      "R-OUTSIDE-P5:P5:S1,S2:quiet",
+    ]);
+    expect(E3EH_TWIN_ROWS.map(row => `${row.id}:${row.pin}:${row.sites.join(",")}:${row.reading}`)).toEqual([
+      "T-GP5X-LOGICAL-AND:P5:S1,S2:quiet",
+      "T-GP5X-LOGICAL-OR:P5:S1,S2:quiet",
+      "T-GP5X-NULLISH:P5:S1,S2:quiet",
+      "T-GP5X-ARRAY-DESTRUCT:P5:S1,S2:quiet",
+      "T-GP5X-FOROF-VARIABLE:P5:S1,S2:quiet",
+      "T-GP5X-OBJECT-PROPERTY:P5:S1,S2:quiet",
+      "T-GP5X-ARRAY-ELEMENT:P5:S1,S2:quiet",
+      "T-GP5X-ASSIGN-EXPR:P5:S1,S2:quiet",
+      "T-GP5X-OBJECT-WRAP:P5:S1,S2:quiet",
+      "T-GP5X-GLOBAL-ALIAS:P5:S1,S2:quiet",
+      "T-GP5X-DEFINE-GETTER-CALL:P5:S1,S2:quiet",
+      "T-GP5X-ENTRIES-SLOT:P5:S1,S2:quiet",
+      "T-GP5X-ARRAY-OF-SPREAD:P5:S1,S2:quiet",
+      "T-GP5X-CALL-CALL:P5:S1,S2:quiet",
+      "T-GP4X-LOGICAL-AND:P4:S1,S2:quiet",
+      "T-GP4X-LOGICAL-OR:P4:S1,S2:quiet",
+      "T-GP4X-NULLISH:P4:S1,S2:quiet",
+      "T-GP4X-ARRAY-DESTRUCT:P4:S1,S2:quiet",
+      "T-GP4X-OBJECT-PROPERTY:P4:S1,S2:quiet",
+      "T-GP4X-FOROF-VARIABLE:P4:S1,S2:quiet",
+      "T-GP4X-DEFINEPROPERTY-RETURN:P4:S1,S2:quiet",
+      "T-GP4X-OBJECT-WRAP:P4:S1,S2:quiet",
+      "T-GP4X-ARRAY-ELEMENT:P4:S1,S2:unresolved key",
+      "T-GP4X-ASSIGN-EXPR:P4:S1,S2:quiet",
+      "T-GP4X-ARRAY-OF-SPREAD:P4:S1,S2:quiet",
+      "T-GP4X-GLOBAL-ALIAS:P4:S1,S2:quiet",
+      "T-GP4X-CALL-CALL:P4:S1,S2:quiet",
+      "T-P5-OBJ-REST:P5:S1,S2:quiet",
+      "T-P5-FOR-OF:P5:S1,S2:quiet",
+      "T-P5-FOR-IN:P5:S1,S2:quiet",
+      "T-P5-DESTRUCT-TARGET:P5:S1,S2:quiet",
+      "T-P5-DESTRUCT-METHOD:P5:S1,S2:quiet",
+      "T-P5-BIND:P5:S1,S2:quiet",
+      "T-P5-GLOBAL-OWNER:P5:S1,S2:quiet",
+      "T-P5-GLOBAL-PROTO:P5:S1,S2:quiet",
+      "T-P5-GETPROTO:P5:S1,S2:quiet",
+      "T-P5-DUNDER:P5:S1,S2:quiet",
+      "T-P5-CONSTRUCTOR:P5:S1,S2:quiet",
+      "T-P5-LEGACY-READ:P5:S1,S2:quiet",
+      "T-P5-FROMENTRIES-SLOT:P5:S1,S2:quiet",
+      "T-P5-ALIAS-DYNAMIC:P5:S1,S2:quiet",
+      "T-P5-COMPUTED-SLOT-ALIAS:P5:S1,S2:quiet",
+      "T-P5-CALL-SPREAD:P5:S1,S2:quiet",
+      "T-P5-SEQUENCE-TARGET:P5:S1,S2:quiet",
+      "T-P5-CONDITIONAL-TARGET:P5:S1,S2:quiet",
+      "T-P4-SPREAD-CONST:P4:S1,S2:quiet",
+      "T-P4-DESTRUCT-METHOD:P4:S1,S2:quiet",
+      "T-P4-BIND:P4:S1,S2:quiet",
+      "T-P4-GLOBAL-OWNER:P4:S1,S2:quiet",
+      "T-P4-NESTED-TARGET:P4:S1,S2:quiet",
+      "T-P4-COMMA-TARGET:P4:S1,S2:quiet",
+      "T-P4-CONDITIONAL-TARGET:P4:S1,S2:quiet",
+      "T-P4-CALL-SPREAD:P4:S1,S2:quiet",
+    ]);
+  });
+  it("wb-e3eh ROSTER: the sites and every refusal, quiet row and twin by full phrase, cause or reading and placement digest equal the out-of-file roster, in order", () => {
+    const raw = e3ehRoster();
+    expect(E3EH_ROWS.length, "external required refusal count").toBe(raw.requiredRows);
+    expect(E3EH_QUIET.length, "external required quiet count").toBe(raw.requiredQuietRows);
+    expect(E3EH_TWIN_ROWS.length, "external required twin count").toBe(raw.requiredTwinRows);
+    expect(SITES.map(site => site.key)).toEqual(rosterTexts(raw, "sites"));
+    expect(E3EH_ROWS.map(row => `${row.id}|${row.pin}|${row.form}|${row.sites.join(",")}|${row.causes.join(",")}|${escapeDigest(row)}`)).toEqual(
+      rosterRows(raw, "rows").map(row =>
+        `${rosterText(row, "id")}|${rosterText(row, "pin")}|${rosterText(row, "form")}|${rosterTexts(row, "sites").join(",")}|${rosterTexts(row, "causes").join(",")}|${rosterText(row, "digest")}`),
+    );
+    expect(E3EH_QUIET.map(row => `${row.id}|${row.pin}|${row.family}|${row.sites.join(",")}|${row.reading}|${residualDigest(row)}`)).toEqual(
+      rosterRows(raw, "residuals").map(row =>
+        `${rosterText(row, "id")}|${rosterText(row, "pin")}|${rosterText(row, "family")}|${rosterTexts(row, "sites").join(",")}|${rosterText(row, "reading")}|${rosterText(row, "digest")}`),
+    );
+    expect(E3EH_TWIN_ROWS.map(row => `${row.id}|${row.pin}|${row.form}|${row.sites.join(",")}|${row.reading}|${twinDigest(row)}`)).toEqual(
+      rosterRows(raw, "twins").map(row =>
+        `${rosterText(row, "id")}|${rosterText(row, "pin")}|${rosterText(row, "form")}|${rosterTexts(row, "sites").join(",")}|${rosterText(row, "reading")}|${rosterText(row, "digest")}`),
+    );
+  });
+  it("wb-e3eh REGISTRATION: every roster row and both control rows are registered in run mode and ran through their last assertion", ({ task }) => {
+    const raw = e3ehRoster();
+    const registered: string[] = [];
+    const walk = (tasks: typeof task.file.tasks): void => {
+      for (const child of tasks) {
+        if (child.type === "test") registered.push(`${child.name}|${child.mode}`);
+        else if (child.type === "suite") walk(child.tasks);
+      }
+    };
+    walk(task.file.tasks);
+    const named = (rows: Record<string, unknown>[], prefix: string, label: string): { readonly name: string; readonly label: string }[] =>
+      rows.flatMap(row => rosterTexts(row, "sites").map(site => ({ name: `wb-e3eh ${prefix}${rosterText(row, "id")} ${site}`, label: rosterText(row, label) })));
+    const expected = [
+      ...named(rosterRows(raw, "rows"), "", "form"),
+      ...named(rosterRows(raw, "residuals"), "quiet ", "family"),
+      ...named(rosterRows(raw, "twins"), "twin ", "form"),
+      ...rosterTexts(raw, "sites").map(site => ({ name: `wb-e3eh control ${site}`, label: E3EH_CONTROL })),
+    ];
+    expect(registered.filter(row => /^wb-e3eh (?:GP|quiet |twin |control )/.test(row))).toEqual(expected.map(row => `${row.name}: ${row.label}|run`));
+    expect(E3EH_REACHED).toEqual(expected.map(row => row.name));
+  });
+});
