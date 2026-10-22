@@ -14,11 +14,13 @@
  * wb-973.20: the captured roster is exhaustive in both directions (owner ruling R649 (3)), so a result key beyond it fails the diff
  * (R649 row), and U6 holds the roster to its capture receipt of record, an anchor outside the JSON, the literal and the fixture.
  * wb-91yt: U9 holds every provenance key the builder carries, by name and in emission order, to the emitted listings of
- * receipts/wb-91yt.md (read off each release's own emitter), and U6-U9 read their receipts as a reader sees them, every
- * complete HTML comment removed before any line filter. */
+ * receipts/wb-91yt.md (read off each release's own emitter), and U6-U9 bind every raw line of their receipts: a receipt holding
+ * an HTML comment opener, raw HTML marked 18 lexes or a link reference definition is refused, never stripped (U10 pins nine such
+ * forms), so none of those forms can hide a line these rows bind and an insertion cannot retract one. */
 import { createHash } from 'node:crypto';
 import { chmodSync, readFileSync, writeFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { basename, join } from 'node:path';
+import { Lexer, walkTokens } from 'marked';
 import { afterEach, describe, expect, it } from 'vitest';
 import { CapabilityError, type JsonValue } from '../src/workbench/capability-registry.js';
 import { ObservationProjection, type ObservationScope } from '../src/workbench/observation.js';
@@ -48,8 +50,8 @@ const PINNED_RESULT_KEYS = [
   'ephemeral', 'render_id', 'commit_seq', 'session_id', 'effects', 'plan',
 ];
 /** result.provenance, at least: context_show.py:313-339 at 8a8b83e4d, where render_provenance emitted seven keys (these three are
- * the dossier's floor). At the installed 0.1.784 distribution it emits eight (context_show.py:451-462: the seven
- * PROVENANCE_KEYS record fields, then the storage block), seven at 0.1.768; U9 holds the builder to all eight by name. */
+ * the dossier's floor). At the installed 0.1.784 distribution it emits eight (context_show.py:451-463, the dict literal it
+ * returns: the seven PROVENANCE_KEYS record fields, then the storage block), seven at 0.1.768; U9 holds the builder to all eight by name. */
 const PINNED_PROVENANCE_KEYS = ['graph_revision_id', 'cli_version', 'sdk_versions'];
 /** result.work: rendering.py:2606-2613 (WORK_KEYS, emission order). */
 const PINNED_WORK_KEYS = [
@@ -83,6 +85,24 @@ const EMITTED_PROVENANCE_LIST = /^- Emitted provenance keys at rf (\d+\.\d+\.\d+
 const STORAGE_BLOCK_LIST = /^- Storage block keys at rf (\d+\.\d+\.\d+) \((\d+)\): ([a-z_]+(?:, [a-z_]+)*)\.$/;
 /** How the receipt of record spells a key's position. */
 const ORDINAL_WORDS: readonly string[] = ['first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth'];
+/* U10 (wb-91yt cut #2, the cut #1 gate's F1 and F2): the forms receiptText refuses, one row each: the form, the receipt U6-U9 bind
+ * that it is derived from, the prefix of the one line it edits (a line U6-U9 bind and require exactly once), the edit (that line
+ * -> the lines that replace it), the edit's shape as git diff --numstat reads it (lines added/removed) and the cause and line
+ * receiptText refuses it for. Seven of the nine only add lines, so the rule-15 numstat deletion check cannot see them; the first
+ * is the cut #1 gate's G21 shape. */
+const RECEIPT_HIDING_FORMS = [
+  ['comment-around-line', ROSTER_KEYS_RECEIPT, '- Result keys (24): ', (line: string): string[] => ['<!--', line, '-->', line.replace(', audience, ', ', audience_kind, ')], '+3/-0', 'an HTML comment opener at line 14'],
+  ['comment-inline', PROVENANCE_LISTING_RECEIPT, '- Emitted provenance keys at rf 0.1.784 (8): ', (line: string): string[] => [line.replace(/: ([a-z_]+, )/, ': <!--$1-->')], '+1/-1', 'an HTML comment opener at line 5'],
+  ['comment-empty', ROSTER_KEYS_RECEIPT, '- Work metrics keys (14): ', (line: string): string[] => [line, '', '<!-->', '<!--->', '<!---->'], '+4/-0', 'an HTML comment opener at line 19'],
+  ['comment-unclosed', ROSTER_KEYS_RECEIPT, '- Roster of record: ', (line: string): string[] => ['<!-- an opener without its close', line], '+1/-0', 'an HTML comment opener at line 13'],
+  ['comment-html5-closer', ROSTER_RECEIPT, '- Delta read at the installed reactivefibercli ', (line: string): string[] => ['<!--', line, '--!>', line], '+3/-0', 'an HTML comment opener at line 12'],
+  ['html-hidden-div', PROVENANCE_LISTING_RECEIPT, '- Emitted provenance keys at rf 0.1.784 (8): ', (line: string): string[] => ['<div hidden>', line, '</div>', ''], '+3/-0', 'raw HTML at line 5'],
+  ['html-style-block', ROSTER_RECEIPT, '- Delta read at the installed reactivefibercli ', (line: string): string[] => ['<style>', line, '</style>'], '+2/-0', 'raw HTML at line 12'],
+  ['html-inline-tag', ROSTER_KEYS_RECEIPT, '- Provenance keys (3): ', (line: string): string[] => [line.replace(/ ([a-z_]+)\.$/, ' <span hidden>$1</span>.')], '+1/-1', 'raw HTML at line 15'],
+  ['link-definition', PROVENANCE_LISTING_RECEIPT, '- Storage block keys at rf 0.1.784 (2): ', (line: string): string[] => ['', "[hidden]: /u '", line, "'"], '+3/-0', 'a link reference definition at line 8'],
+] as const;
+/** The receipt line that lists those forms, in table order: `- Hiding forms the receipt reader refuses (<count>): <form>, ... <form>.` */
+const HIDING_FORM_LIST = /^- Hiding forms the receipt reader refuses \((\d+)\): ([a-z0-9-]+(?:, [a-z0-9-]+)*)\.$/;
 
 const roster = readRfResultRoster();
 
@@ -96,14 +116,36 @@ const without = (value: Obj, key: string): Obj => Object.fromEntries(Object.entr
 const withResult = (envelope: Obj, over: Obj): Obj => ({ ...envelope, result: { ...resultOf(envelope), ...over } });
 const digestOf = (text: string): string => createHash('sha256').update(text).digest('hex');
 
-/** A complete HTML comment as CommonMark defines one: `<!-->`, `<!--->`, or `<!--` through the first `-->`. */
-const COMPLETE_COMMENT = /<!--(?:-?>|[\s\S]*?-->)/g;
-/** A receipt as a reader sees it (wb-91yt, the wb-c7ku gate's F3): every complete HTML comment is removed before any line filter
- * reads the file, so a claim wrapped in a comment is absent rather than binding, and an opener left without its close, which
- * would hide the rest of the page from a reader, is refused. */
-function receiptText(path: string): string {
-  const text = readFileSync(new URL(`../${path}`, import.meta.url), 'utf8').replace(COMPLETE_COMMENT, '');
-  if (text.includes('<!--')) throw new Error(`${path} holds an HTML comment opener without its close`);
+/** A receipt's committed bytes. */
+const committedReceipt = (path: string): string => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
+/** Every form in `text` that could hide a line from its page, as the cause and the line the first of its kind starts on (empty
+ * when none): an HTML comment opener anywhere (complete or not, block or inline, the empty forms and a closer CommonMark does not
+ * accept included), raw HTML marked 18 lexes (gfm: block or inline, nested in a list or quote included; a code span is text) and
+ * a link reference definition (its title can run over the lines below it). */
+function receiptHidingCauses(text: string): string[] {
+  const lineOf = (index: number): number => text.slice(0, index).split('\n').length;
+  const html: string[] = [];
+  const definitions: string[] = [];
+  walkTokens(new Lexer({ gfm: true }).lex(text), token => {
+    if (token.type === 'html' && !token.raw.trimStart().startsWith('<!--')) html.push(token.raw);
+    else if (token.type === 'def') definitions.push(token.raw);
+  });
+  const opener = text.indexOf('<!--');
+  return [
+    ...(opener < 0 ? [] : [`an HTML comment opener at line ${lineOf(opener)}`]),
+    ...html.slice(0, 1).map(raw => `raw HTML at line ${lineOf(text.indexOf(raw))}`),
+    ...definitions.slice(0, 1).map(raw => `a link reference definition at line ${lineOf(text.indexOf(raw))}`),
+  ];
+}
+/** A receipt U6-U9 bind, as committed (wb-91yt cut #2, the cut #1 gate's F1 and F2): every raw line binds and nothing is
+ * stripped, so a receipt holding a hiding form is refused, never read. Cut #1 stripped complete comments before the line
+ * filters, so an insertion-only edit could wrap a landed line and restate it altered with no numstat deletion, and a hidden div
+ * kept a line the rows bound off the page. Refusing those forms keeps U6's premise true: an insertion cannot retract a bound line
+ * (every raw line binds, and a restated copy reds the rows' exact counts), and an in-place edit removes a line, which the rule-15
+ * numstat deletion check sees once the receipt has landed. */
+function receiptText(path: string, text = committedReceipt(path)): string {
+  const causes = receiptHidingCauses(text);
+  if (causes.length > 0) throw new Error(`${path} cannot be bound: it holds ${causes.join(' and ')}`);
   return text;
 }
 const receiptLines = (path: string): string[] => receiptText(path).split('\n');
@@ -289,6 +331,48 @@ describe('SCG-R11: full-shape offline RF result fixture', () => {
     const added = pinned.filter(key => !previous.includes(key));
     expect(added).toStrictEqual([named?.[4]]);
     expect([named?.[1], named?.[2], named?.[5]?.split(', ')]).toStrictEqual([COUNT_WORDS[pinned.length], ORDINAL_WORDS[pinned.indexOf(added[0] ?? '<absent>')], storage]);
+  });
+
+  // U10 (wb-91yt cut #2, the cut #1 gate's F1 and F2): U6-U9 bind every raw line of their receipts, so receiptText refuses, rather
+  // than strips, the forms that can hide a bound line from the page: an HTML comment opener, raw HTML marked 18 lexes and a link
+  // reference definition. Cut #1 stripped complete comments first, so an insertion-only edit could wrap a landed line and
+  // restate it altered (G21: audience -> audience_kind past landed U7, numstat deletions 0).
+  // Each form is derived in memory from a committed receipt (nothing on disk is touched) and held to its edit shape and to the
+  // cause and line it is refused for. FROZEN SHAPE (rule 16): nine forms, in the order receipts/wb-91yt.md lists them, an anchor
+  // outside this file, so dropping a row and its literal element together is still red.
+  it('U10: the hiding-form table holds nine forms at their pinned edit shapes and causes, in the order its receipt lists them', () => {
+    expect(RECEIPT_HIDING_FORMS.map(([form, path, , , shape, cause]) => `${form} ${basename(path)} ${shape} ${cause}`)).toStrictEqual([
+      'comment-around-line wb-c7ku.md +3/-0 an HTML comment opener at line 14',
+      'comment-inline wb-91yt.md +1/-1 an HTML comment opener at line 5',
+      'comment-empty wb-c7ku.md +4/-0 an HTML comment opener at line 19',
+      'comment-unclosed wb-c7ku.md +1/-0 an HTML comment opener at line 13',
+      'comment-html5-closer wb-c7ku.md +3/-0 an HTML comment opener at line 12',
+      'html-hidden-div wb-91yt.md +3/-0 raw HTML at line 5',
+      'html-style-block wb-c7ku.md +2/-0 raw HTML at line 12',
+      'html-inline-tag wb-c7ku.md +1/-1 raw HTML at line 15',
+      'link-definition wb-91yt.md +3/-0 a link reference definition at line 8',
+    ]);
+    const listed = receiptLines(PROVENANCE_LISTING_RECEIPT).flatMap(line => {
+      const match = HIDING_FORM_LIST.exec(line);
+      return match === null ? [] : [{ stated: Number(match[1]), forms: (match[2] ?? '').split(', ') }];
+    });
+    expect(listed).toStrictEqual([{ stated: RECEIPT_HIDING_FORMS.length, forms: RECEIPT_HIDING_FORMS.map(([form]) => form) }]);
+  });
+  it.each(RECEIPT_HIDING_FORMS)('U10: receiptText refuses the %s form of a committed receipt, for its cause at its line', (_form, path, prefix, edit, shape, cause) => {
+    const lines = committedReceipt(path).split('\n');
+    const at = lines.flatMap((line, index) => (line.startsWith(prefix) ? [index] : []));
+    expect(at).toHaveLength(1);
+    const index = at[0] ?? -1;
+    const target = lines[index] ?? '';
+    const edited = edit(target);
+    expect(edited.includes(target) ? `+${edited.length - 1}/-0` : `+${edited.length}/-1`).toBe(shape);
+    const variant = [...lines.slice(0, index), ...edited, ...lines.slice(index + 1)].join('\n');
+    expect(thrownBy(() => receiptText(path, variant))).toMatchObject({ message: `${path} cannot be bound: it holds ${cause}` });
+  });
+  it('U10: receiptText returns each committed receipt byte for byte, and reads angle brackets in a code span as text', () => {
+    for (const path of [ROSTER_RECEIPT, PROVENANCE_LISTING_RECEIPT]) expect(receiptText(path)).toBe(committedReceipt(path));
+    const coded = `${committedReceipt(PROVENANCE_LISTING_RECEIPT)}- A code span such as \`<div hidden>\` renders as text.\n`;
+    expect(receiptText(PROVENANCE_LISTING_RECEIPT, coded)).toBe(coded);
   });
 
   // Acceptance 1 (census-grade): the fixture's result keys are a superset of the frozen roster, provenance carries the three
