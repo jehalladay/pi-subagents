@@ -6,6 +6,384 @@
   ],
   "rows": [
     {
+      "id": "G-P5-ELEMENT-PROTOTYPE",
+      "pin": "P5",
+      "form": "element-access Object prototype receives an unfolded keyed assignment",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "c001b8ba3a48bbbb"
+    },
+    {
+      "id": "G-P5-DELETE",
+      "pin": "P5",
+      "form": "delete writes an unrelated Object.prototype key",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "8ee3418631dd3dea"
+    },
+    {
+      "id": "G-P5-DELETE-ELEMENT",
+      "pin": "P5",
+      "form": "delete writes a computed key on a parenthesized element-access prototype",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "ad6bb0cedc023657"
+    },
+    {
+      "id": "G-P5-UNARY",
+      "pin": "P5",
+      "form": "postfix increment writes Object.prototype without an assignment node",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "e4f81343534d4e3d"
+    },
+    {
+      "id": "G-P5-PREFIX",
+      "pin": "P5",
+      "form": "prefix decrement writes a member of a parenthesized element-access prototype",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "872a05048b4cfe8e"
+    },
+    {
+      "id": "G-P5-PAREN-CALLEE",
+      "pin": "P5",
+      "form": "parenthesized built-in owner bulk-writes into Object.prototype",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "9269c3b387faddbe"
+    },
+    {
+      "id": "G-P5-PAREN-PROTOTYPE",
+      "pin": "P5",
+      "form": "Reflect writes through a parenthesized element-access prototype target",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "5854a0178d509930"
+    },
+    {
+      "id": "G-P4-PAREN-CALLEE",
+      "pin": "P4",
+      "form": "parenthesized built-in owner bulk-writes parsed data into snapshot",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "data-carried snapshot write"
+      ],
+      "digest": "7513aed0a9900c7b"
+    },
+    {
+      "id": "G-P4-ELEMENT-OWNER",
+      "pin": "P4",
+      "form": "parenthesized element owner and target bulk-write parsed descriptors",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "data-carried snapshot write"
+      ],
+      "digest": "599f11dbe1c43a86"
+    },
+    {
+      "id": "G-P4-SPREAD-PAREN",
+      "pin": "P4",
+      "form": "parenthesized built-in owner consumes a spread of snapshot and parsed data",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "data-carried snapshot write"
+      ],
+      "digest": "d5f2e1f20807fbc7"
+    },
+    {
+      "id": "G-P5-TARGET-ALIAS",
+      "pin": "P5",
+      "form": "locally visible prototype alias receives a key-independent write",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "8d38092cc4556f27"
+    },
+    {
+      "id": "G-P5-CALL-CALLEE",
+      "pin": "P5",
+      "form": "Object.assign.call writes through a prototype argument",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "66819f7c0436a91d"
+    },
+    {
+      "id": "G-P5-REFLECT-APPLY",
+      "pin": "P5",
+      "form": "Reflect.apply invokes a built-in writer on the prototype",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "5ab6acecc3fc7697"
+    },
+    {
+      "id": "G-P4-TARGET-ALIAS",
+      "pin": "P4",
+      "form": "locally visible snapshot alias receives a parsed bulk source",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "data-carried snapshot write"
+      ],
+      "digest": "18db7d8d512186f4"
+    },
+    {
+      "id": "G-P4-CALL-CALLEE",
+      "pin": "P4",
+      "form": "Object.assign.call writes parsed data to snapshot",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "data-carried snapshot write"
+      ],
+      "digest": "4cbf65e83cff2ba1"
+    },
+    {
+      "id": "G-P4-REFLECT-APPLY",
+      "pin": "P4",
+      "form": "Reflect.apply invokes built-in bulk writer with parsed snapshot data",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "data-carried snapshot write"
+      ],
+      "digest": "e7ef530983ca3f70"
+    },
+    {
+      "id": "G-P5-ASSIGN-DIRECT",
+      "pin": "P5",
+      "form": "the prototype slot itself receives a new value",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "0022c9435f5adf0e"
+    },
+    {
+      "id": "G-P5-SET-PROTOTYPE",
+      "pin": "P5",
+      "form": "setPrototypeOf changes the prototype object itself",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "4e2aaf62ad477ce0"
+    },
+    {
+      "id": "G-P5-DYNAMIC-CALLEE",
+      "pin": "P5",
+      "form": "unfolded built-in writer name must not silently bypass a prototype target",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "295934ca1d8bac22"
+    },
+    {
+      "id": "G-P4-DYNAMIC-CALLEE",
+      "pin": "P4",
+      "form": "unfolded built-in writer name must not silently bypass a snapshot target",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "data-carried snapshot write",
+        "unresolved key"
+      ],
+      "digest": "a1314870817f7858"
+    },
+    {
+      "id": "G-P4-APPLY-CALLEE",
+      "pin": "P4",
+      "form": "Object.assign.apply writes parsed data through an array argument",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "data-carried snapshot write"
+      ],
+      "digest": "159b496cb4906f29"
+    },
+    {
+      "id": "G-P5-DELETE-SLOT",
+      "pin": "P5",
+      "form": "delete writes the Object prototype slot itself",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "998d7ebf28bc714b"
+    },
+    {
+      "id": "G-P5-INCREMENT-SLOT",
+      "pin": "P5",
+      "form": "update writes the Object prototype slot itself",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "76565fda6ad2a566"
+    },
+    {
+      "id": "G-P5-DEFINE-SLOT",
+      "pin": "P5",
+      "form": "defineProperty writes the Object prototype slot",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "debfa5ccb2035608"
+    },
+    {
+      "id": "G-P5-REFLECT-SLOT",
+      "pin": "P5",
+      "form": "Reflect.set writes the Object prototype slot",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "4def44b3e6a59e1a"
+    },
+    {
+      "id": "G-P4-CALL-ELEMENT",
+      "pin": "P4",
+      "form": "computed built-in writer through call consumes parsed snapshot data",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "data-carried snapshot write"
+      ],
+      "digest": "239cf5c45f3a9d79"
+    },
+    {
+      "id": "G-P5-DEFPROPS-SLOT",
+      "pin": "P5",
+      "form": "defineProperties writes the Object prototype slot through descriptors",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "66d893e348360ea9"
+    },
+    {
+      "id": "G-P5-ASSIGN-SLOT",
+      "pin": "P5",
+      "form": "assign writes the Object prototype slot through a source literal",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "6e3856eebf4607bc"
+    },
+    {
+      "id": "G-P5-DEFPROPS-COMPUTED",
+      "pin": "P5",
+      "form": "defineProperties writes a computed prototype descriptor",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "c18cd6024c04467d"
+    },
+    {
       "id": "S-ELEM-P5",
       "pin": "P5",
       "form": "computed Object.prototype assignment",

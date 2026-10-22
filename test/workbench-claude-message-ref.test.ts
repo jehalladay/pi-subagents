@@ -1015,7 +1015,8 @@ function ingestCauses({ emitter }: Reading): string[] {
 const keyedReflection = (call: ts.CallExpression): boolean =>
   ts.isPropertyAccessExpression(call.expression) &&
   ts.isIdentifier(call.expression.expression) &&
-  (call.expression.expression.text === "Reflect" || (call.expression.expression.text === "Object" && call.expression.name.text === "defineProperty"));
+  ((call.expression.expression.text === "Reflect" && ["get", "set", "has", "deleteProperty", "defineProperty", "getOwnPropertyDescriptor"].includes(call.expression.name.text)) ||
+    (call.expression.expression.text === "Object" && call.expression.name.text === "defineProperty"));
 
 /** The key a keyed access names: an element access's argument, a computed member name, or keyed reflection's second argument. */
 function accessKey(node: ts.Node): { readonly key: ts.Expression | undefined } | undefined {
@@ -1442,6 +1443,65 @@ describe("wb-4smh R674 F1-F3: unfolded keys, data-carried writes and nested spre
  */
 const CELW_ROSTER = "test/fixtures/claude-message-ref-celw.json";
 const CELW_ROWS: readonly Escape[] = [
+  // Respinned R685 U1/U2: independent syntactic variants at both observer sites, never executed.
+  { id: "G-P5-ELEMENT-PROTOTYPE", pin: "P5", form: "element-access Object prototype receives an unfolded keyed assignment", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: 'Object["prototype"][["evidence", "Refs"].join("")] = ["claude-session:FAKE-FIXTURE"];' },
+  { id: "G-P5-DELETE", pin: "P5", form: "delete writes an unrelated Object.prototype key", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: 'delete Object.prototype.benign;' },
+  { id: "G-P5-DELETE-ELEMENT", pin: "P5", form: "delete writes a computed key on a parenthesized element-access prototype", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: 'delete (Object)["prototype"][["ben", "ign"].join("")];' },
+  { id: "G-P5-UNARY", pin: "P5", form: "postfix increment writes Object.prototype without an assignment node", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: 'Object.prototype.benign++;' },
+  { id: "G-P5-PREFIX", pin: "P5", form: "prefix decrement writes a member of a parenthesized element-access prototype", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: '--(Object["prototype"]).benign;' },
+  { id: "G-P5-PAREN-CALLEE", pin: "P5", form: "parenthesized built-in owner bulk-writes into Object.prototype", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: '(Object).assign(Object.prototype, JSON.parse(\'{"evidenceRefs":["claude-session:FAKE-FIXTURE"]}\'));' },
+  { id: "G-P5-PAREN-PROTOTYPE", pin: "P5", form: "Reflect writes through a parenthesized element-access prototype target", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: 'Reflect.set((Object)["prototype"], "benign", 1);' },
+  { id: "G-P4-PAREN-CALLEE", pin: "P4", form: "parenthesized built-in owner bulk-writes parsed data into snapshot", sites: ["S1", "S2"], causes: ["data-carried snapshot write"],
+    beforeDerive: '(Object).assign(snapshot, JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\'));' },
+  { id: "G-P4-ELEMENT-OWNER", pin: "P4", form: "parenthesized element owner and target bulk-write parsed descriptors", sites: ["S1", "S2"], causes: ["data-carried snapshot write"],
+    beforeDerive: '(Object)["defineProperties"]((snapshot), JSON.parse(\'{"lastMessageId":{"value":"FAKE-FIXTURE-ID"}}\'));' },
+  { id: "G-P4-SPREAD-PAREN", pin: "P4", form: "parenthesized built-in owner consumes a spread of snapshot and parsed data", sites: ["S1", "S2"], causes: ["data-carried snapshot write"],
+    beforeDerive: '(Object).assign(...[snapshot, JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\')]);' },
+  { id: "G-P5-TARGET-ALIAS", pin: "P5", form: "locally visible prototype alias receives a key-independent write", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: 'const prototypeTarget = Object.prototype; Object.assign(prototypeTarget, JSON.parse(\'{"benign":1}\'));' },
+  { id: "G-P5-CALL-CALLEE", pin: "P5", form: "Object.assign.call writes through a prototype argument", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: 'Object.assign.call(Object, Object.prototype, JSON.parse(\'{"benign":1}\'));' },
+  { id: "G-P5-REFLECT-APPLY", pin: "P5", form: "Reflect.apply invokes a built-in writer on the prototype", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: 'Reflect.apply(Object.assign, Object, [Object.prototype, JSON.parse(\'{"benign":1}\')]);' },
+  { id: "G-P4-TARGET-ALIAS", pin: "P4", form: "locally visible snapshot alias receives a parsed bulk source", sites: ["S1", "S2"], causes: ["data-carried snapshot write"],
+    beforeDerive: 'const snapshotTarget = snapshot; Object.assign(snapshotTarget, JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\'));' },
+  { id: "G-P4-CALL-CALLEE", pin: "P4", form: "Object.assign.call writes parsed data to snapshot", sites: ["S1", "S2"], causes: ["data-carried snapshot write"],
+    beforeDerive: 'Object.assign.call(Object, snapshot, JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\'));' },
+  { id: "G-P4-REFLECT-APPLY", pin: "P4", form: "Reflect.apply invokes built-in bulk writer with parsed snapshot data", sites: ["S1", "S2"], causes: ["data-carried snapshot write"],
+    beforeDerive: 'Reflect.apply(Object.assign, Object, [snapshot, JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\')]);' },
+  { id: "G-P5-ASSIGN-DIRECT", pin: "P5", form: "the prototype slot itself receives a new value", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: 'Object.prototype = { benign: 1 };' },
+  { id: "G-P5-SET-PROTOTYPE", pin: "P5", form: "setPrototypeOf changes the prototype object itself", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: 'Object.setPrototypeOf(Object.prototype, { benign: 1 });' },
+  { id: "G-P5-DYNAMIC-CALLEE", pin: "P5", form: "unfolded built-in writer name must not silently bypass a prototype target", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: 'Object[["as", "sign"].join("")](Object.prototype, JSON.parse(\'{"benign":1}\'));' },
+  { id: "G-P4-DYNAMIC-CALLEE", pin: "P4", form: "unfolded built-in writer name must not silently bypass a snapshot target", sites: ["S1", "S2"], causes: ["data-carried snapshot write", "unresolved key"],
+    beforeDerive: 'Object[["as", "sign"].join("")](snapshot, JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\'));' },
+  { id: "G-P4-APPLY-CALLEE", pin: "P4", form: "Object.assign.apply writes parsed data through an array argument", sites: ["S1", "S2"], causes: ["data-carried snapshot write"],
+    beforeDerive: 'Object.assign.apply(Object, [snapshot, JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\')]);' },
+  { id: "G-P5-DELETE-SLOT", pin: "P5", form: "delete writes the Object prototype slot itself", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: 'delete Object["prototype"];' },
+  { id: "G-P5-INCREMENT-SLOT", pin: "P5", form: "update writes the Object prototype slot itself", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: 'Object.prototype++;' },
+  { id: "G-P5-DEFINE-SLOT", pin: "P5", form: "defineProperty writes the Object prototype slot", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: 'Object.defineProperty(Object, "prototype", { value: { benign: 1 } });' },
+  { id: "G-P5-REFLECT-SLOT", pin: "P5", form: "Reflect.set writes the Object prototype slot", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: 'Reflect.set(Object, "prototype", { benign: 1 });' },
+  { id: "G-P4-CALL-ELEMENT", pin: "P4", form: "computed built-in writer through call consumes parsed snapshot data", sites: ["S1", "S2"], causes: ["data-carried snapshot write"],
+    beforeDerive: 'Object["assign"].call(Object, snapshot, JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\'));' },
+  { id: "G-P5-DEFPROPS-SLOT", pin: "P5", form: "defineProperties writes the Object prototype slot through descriptors", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: 'Object.defineProperties(Object, { prototype: { value: { benign: 1 } } });' },
+  { id: "G-P5-ASSIGN-SLOT", pin: "P5", form: "assign writes the Object prototype slot through a source literal", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: 'Object.assign(Object, { prototype: { benign: 1 } });' },
+  { id: "G-P5-DEFPROPS-COMPUTED", pin: "P5", form: "defineProperties writes a computed prototype descriptor", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: 'Object.defineProperties(Object, { ["proto" + "type"]: { value: { benign: 1 } } });' },
   { id: "S-ELEM-P5", pin: "P5", form: "computed Object.prototype assignment", sites: ["S1", "S2"], causes: ["prototype write"],
     emitter: `(Object.prototype as unknown as Record<string, unknown>)[["evidence", "Refs"].join("")] = ${OVERRIDE_REFS};` },
   { id: "S-ELEMCALL-P5", pin: "P5", form: "element-access Object.defineProperty prototype write", sites: ["S1", "S2"], causes: ["prototype write"],
@@ -1478,49 +1538,125 @@ function celwTarget(node: ts.Expression | undefined): ts.Expression | undefined 
   return node;
 }
 
-/** A locally visible const alias to a built-in method; never assume external bindings. */
-function celwMethod(call: ts.CallExpression, body: ts.Block): string | undefined {
-  const direct = celwTarget(call.expression);
-  if (direct === undefined) return undefined;
-  const method = (node: ts.Expression): string | undefined => {
-    if (ts.isPropertyAccessExpression(node) && ts.isIdentifier(node.expression)) return `${node.expression.text}.${node.name.text}`;
-    if (ts.isElementAccessExpression(node) && ts.isIdentifier(node.expression) && node.argumentExpression !== undefined) {
-      const name = folded(node.argumentExpression);
-      return name === undefined ? undefined : `${node.expression.text}.${name}`;
-    }
-    return undefined;
-  };
-  const named = method(direct);
-  if (named !== undefined) return named;
-  if (!ts.isIdentifier(direct)) return undefined;
-  const visible = bindingsOf(body, direct.text).filter(ts.isVariableDeclaration);
+/** Resolve only a visible, unique const initializer, never an external binding or a mutable alias. */
+function celwBinding(node: ts.Expression, body: ts.Block, at: ts.Node): ts.Expression | undefined {
+  if (!ts.isIdentifier(node)) return undefined;
+  const visible = bindingsOf(body, node.text).filter(ts.isVariableDeclaration);
   const binding = visible.length === 1 ? visible[0] : undefined;
   return binding !== undefined && ts.isVariableDeclarationList(binding.parent) &&
-    (binding.parent.flags & ts.NodeFlags.Const) !== 0 && binding.pos < call.pos && binding.initializer !== undefined
-    ? method(celwTarget(binding.initializer) ?? binding.initializer) : undefined;
+    (binding.parent.flags & ts.NodeFlags.Const) !== 0 && binding.pos < at.pos ? binding.initializer : undefined;
+}
+
+/** A locally visible const alias to the target; cycle-limited to the callback/emitter's own bindings. */
+function celwResolve(node: ts.Expression | undefined, body: ts.Block, at: ts.Node, seen: ReadonlySet<string> = new Set()): ts.Expression | undefined {
+  const target = celwTarget(node);
+  if (target === undefined || !ts.isIdentifier(target) || seen.has(target.text)) return target;
+  const binding = celwBinding(target, body, at);
+  return binding === undefined ? target : celwResolve(binding, body, at, new Set([...seen, target.text]));
+}
+
+/** A syntax-preserving property access; the owner can itself be parenthesized. */
+function celwMember(node: ts.Expression): { readonly owner: ts.Expression; readonly name: string } | undefined {
+  const target = celwTarget(node);
+  if (target !== undefined && ts.isPropertyAccessExpression(target)) return { owner: celwTarget(target.expression) ?? target.expression, name: target.name.text };
+  if (target !== undefined && ts.isElementAccessExpression(target) && target.argumentExpression !== undefined) {
+    const name = folded(target.argumentExpression);
+    return name === undefined ? undefined : { owner: celwTarget(target.expression) ?? target.expression, name };
+  }
+  return undefined;
+}
+
+/** A locally visible const alias to a built-in method; never assume external bindings. */
+function celwMethodExpression(node: ts.Expression, body: ts.Block, at: ts.Node): string | undefined {
+  const resolved = celwResolve(node, body, at);
+  const member = resolved === undefined ? undefined : celwMember(resolved);
+  return member !== undefined && ts.isIdentifier(member.owner) ? `${member.owner.text}.${member.name}` : undefined;
+}
+
+/** An unresolved computed writer on the built-in owner is not a safe omission. */
+function celwUnknownObjectMember(node: ts.Expression): boolean {
+  const target = celwTarget(node);
+  if (target === undefined || !ts.isElementAccessExpression(target)) return false;
+  const owner = celwTarget(target.expression);
+  return owner !== undefined && ts.isIdentifier(owner) && owner.text === "Object" &&
+    (target.argumentExpression === undefined || folded(target.argumentExpression) === undefined);
+}
+
+interface CelwInvocation {
+  readonly method: string | undefined;
+  readonly args: readonly ts.Expression[];
+}
+/** Direct, .call and .apply invocations of a visible built-in writer share one argument reading. */
+function celwInvocation(call: ts.CallExpression, body: ts.Block): CelwInvocation {
+  const direct = celwMethodExpression(call.expression, body, call);
+  if (direct !== undefined && direct !== "Reflect.apply") return { method: direct, args: call.arguments };
+  const wrapper = celwMember(call.expression);
+  if (wrapper !== undefined && (wrapper.name === "call" || wrapper.name === "apply")) {
+    const method = celwMethodExpression(wrapper.owner, body, call);
+    if (method !== undefined) {
+      if (wrapper.name === "call") return { method, args: call.arguments.slice(1) };
+      const array = celwTarget(call.arguments[1]);
+      return { method, args: array !== undefined && ts.isArrayLiteralExpression(array) ? array.elements : [] };
+    }
+  }
+  if (celwMethodExpression(call.expression, body, call) === "Reflect.apply") {
+    const method = call.arguments[0] === undefined ? undefined : celwMethodExpression(call.arguments[0], body, call);
+    const array = celwTarget(call.arguments[2]);
+    return { method, args: array !== undefined && ts.isArrayLiteralExpression(array) ? array.elements : [] };
+  }
+  return { method: undefined, args: call.arguments };
 }
 
 /** Does this expression name the built-in prototype in this reading? */
-function celwPrototype(node: ts.Expression | undefined): boolean {
-  const target = celwTarget(node);
-  return target !== undefined && ts.isPropertyAccessExpression(target) &&
-    ts.isIdentifier(target.expression) && target.expression.text === "Object" && target.name.text === "prototype";
+function celwPrototype(node: ts.Expression | undefined, body: ts.Block, at: ts.Node): boolean {
+  const target = celwResolve(node, body, at);
+  const member = target === undefined ? undefined : celwMember(target);
+  return member !== undefined && ts.isIdentifier(member.owner) && member.owner.text === "Object" && member.name === "prototype";
 }
 
 /** Recognize a key-independent write, not a read, on Object.prototype. */
+function celwPrototypeMember(node: ts.Expression, body: ts.Block, at: ts.Node): boolean {
+  const target = celwTarget(node);
+  return (target !== undefined && (ts.isElementAccessExpression(target) || ts.isPropertyAccessExpression(target))) &&
+    celwPrototype(target.expression, body, at);
+}
+
+/** A source object can overwrite Object.prototype by a literal or computed prototype member. */
+function celwPrototypeSource(node: ts.Expression): boolean {
+  const source = celwTarget(node);
+  return source !== undefined && ts.isObjectLiteralExpression(source) && source.properties.some(property =>
+    property.name !== undefined && memberKey(property.name) === "prototype");
+}
+
+/** Detect the write POSITION, independent of the property key's spelling. */
 function celwPrototypeWrite(node: ts.Node, body: ts.Block): boolean {
   if (ts.isBinaryExpression(node)) {
-    const target = celwTarget(node.left);
-    if ((ts.isElementAccessExpression(target ?? node.left) || ts.isPropertyAccessExpression(target ?? node.left)) &&
-      celwPrototype((target as ts.ElementAccessExpression | ts.PropertyAccessExpression).expression)) {
-      return node.operatorToken.kind >= ts.SyntaxKind.FirstAssignment && node.operatorToken.kind <= ts.SyntaxKind.LastAssignment;
-    }
+    return node.operatorToken.kind >= ts.SyntaxKind.FirstAssignment && node.operatorToken.kind <= ts.SyntaxKind.LastAssignment &&
+      (celwPrototypeMember(node.left, body, node) || celwPrototype(node.left, body, node));
   }
+  if (ts.isPrefixUnaryExpression(node) || ts.isPostfixUnaryExpression(node)) {
+    return (node.operator === ts.SyntaxKind.PlusPlusToken || node.operator === ts.SyntaxKind.MinusMinusToken) &&
+      (celwPrototypeMember(node.operand, body, node) || celwPrototype(node.operand, body, node));
+  }
+  if (ts.isDeleteExpression(node)) return celwPrototypeMember(node.expression, body, node) || celwPrototype(node.expression, body, node);
   if (ts.isCallExpression(node)) {
-    const method = celwMethod(node, body);
-    return celwPrototype(node.arguments[0]) && (
+    const { method, args } = celwInvocation(node, body);
+    // A property API can write *onto* the prototype or write the prototype
+    // slot on Object. Neither case depends on the key's literal spelling.
+    const target = args[0];
+    const resolved = celwResolve(target, body, node);
+    const keyedSlot = resolved !== undefined && ts.isIdentifier(resolved) && resolved.text === "Object" &&
+      args[1] !== undefined && folded(args[1]) === "prototype";
+    if (keyedSlot && (method === "Object.defineProperty" || method === "Reflect.set" ||
+      method === "Reflect.defineProperty" || method === "Reflect.deleteProperty")) return true;
+    const objectTarget = resolved !== undefined && ts.isIdentifier(resolved) && resolved.text === "Object";
+    if (objectTarget && (method === "Object.assign" || method === "Object.defineProperties") &&
+      args.slice(1).some(celwPrototypeSource)) return true;
+    return celwPrototype(target, body, node) && (
       method === "Object.assign" || method === "Object.defineProperty" || method === "Object.defineProperties" ||
-      method === "Reflect.set" || method === "Reflect.defineProperty" || method === "Reflect.deleteProperty");
+      method === "Reflect.set" || method === "Reflect.defineProperty" || method === "Reflect.deleteProperty" ||
+      method === "Object.setPrototypeOf" || method === "Reflect.setPrototypeOf" ||
+      (method === undefined && celwUnknownObjectMember(node.expression)));
   }
   return false;
 }
@@ -1548,18 +1684,18 @@ function celwP4(reading: Reading): string[] {
   if (callback === undefined || !ts.isBlock(callback.body)) return causes;
   const body = callback.body;
   const writes = nodesOf(body, ts.isCallExpression).some(call => {
-    const method = celwMethod(call, body);
-    const args = call.arguments;
+    const { method, args } = celwInvocation(call, body);
     // Spread calls can carry the target and source inside one array argument.
     const first = args[0];
     const spread = first !== undefined && ts.isSpreadElement(first) ? celwTarget(first.expression) : undefined;
     const argumentsList = spread !== undefined && ts.isArrayLiteralExpression(spread) ? spread.elements : args;
     const target = argumentsList[0];
-    const unwrapped = target !== undefined && ts.isExpression(target) ? celwTarget(target) : undefined;
+    const unwrapped = target !== undefined && ts.isExpression(target) ? celwResolve(target, body, call) : undefined;
     if (unwrapped === undefined || !ts.isIdentifier(unwrapped) || unwrapped.text !== "snapshot") return false;
-    if (method === "Object.assign") return argumentsList.slice(1).some(source => ts.isExpression(source) && !celwLiteralOnly(source));
-    if (method === "Object.defineProperties") return argumentsList.length < 2 ||
-      argumentsList.slice(1).some(source => ts.isExpression(source) && !celwLiteralOnly(source));
+    const dataSource = argumentsList.slice(1).some(source => ts.isExpression(source) && !celwLiteralOnly(source));
+    if (method === "Object.assign") return dataSource;
+    if (method === "Object.defineProperties") return argumentsList.length < 2 || dataSource;
+    if (method === undefined && celwUnknownObjectMember(call.expression)) return dataSource;
     return false;
   });
   return sortedUnique([...causes, ...(writes ? ["data-carried snapshot write"] : [])]);
@@ -1598,6 +1734,35 @@ describe("wb-celw R685: class-closing emitter and snapshot-write refusals", () =
   }
   it("wb-celw FROZEN SHAPE: every judged requirement has its full site count and cause pinned at cut time", () => {
     expect(CELW_ROWS.map(row => `${row.id}:${row.pin}:${row.sites.length}:${row.causes.join("|")}`)).toEqual([
+      "G-P5-ELEMENT-PROTOTYPE:P5:2:prototype write",
+      "G-P5-DELETE:P5:2:prototype write",
+      "G-P5-DELETE-ELEMENT:P5:2:prototype write",
+      "G-P5-UNARY:P5:2:prototype write",
+      "G-P5-PREFIX:P5:2:prototype write",
+      "G-P5-PAREN-CALLEE:P5:2:prototype write",
+      "G-P5-PAREN-PROTOTYPE:P5:2:prototype write",
+      "G-P4-PAREN-CALLEE:P4:2:data-carried snapshot write",
+      "G-P4-ELEMENT-OWNER:P4:2:data-carried snapshot write",
+      "G-P4-SPREAD-PAREN:P4:2:data-carried snapshot write",
+      "G-P5-TARGET-ALIAS:P5:2:prototype write",
+      "G-P5-CALL-CALLEE:P5:2:prototype write",
+      "G-P5-REFLECT-APPLY:P5:2:prototype write",
+      "G-P4-TARGET-ALIAS:P4:2:data-carried snapshot write",
+      "G-P4-CALL-CALLEE:P4:2:data-carried snapshot write",
+      "G-P4-REFLECT-APPLY:P4:2:data-carried snapshot write",
+      "G-P5-ASSIGN-DIRECT:P5:2:prototype write",
+      "G-P5-SET-PROTOTYPE:P5:2:prototype write",
+      "G-P5-DYNAMIC-CALLEE:P5:2:prototype write",
+      "G-P4-DYNAMIC-CALLEE:P4:2:data-carried snapshot write|unresolved key",
+      "G-P4-APPLY-CALLEE:P4:2:data-carried snapshot write",
+      "G-P5-DELETE-SLOT:P5:2:prototype write",
+      "G-P5-INCREMENT-SLOT:P5:2:prototype write",
+      "G-P5-DEFINE-SLOT:P5:2:prototype write",
+      "G-P5-REFLECT-SLOT:P5:2:prototype write",
+      "G-P4-CALL-ELEMENT:P4:2:data-carried snapshot write",
+      "G-P5-DEFPROPS-SLOT:P5:2:prototype write",
+      "G-P5-ASSIGN-SLOT:P5:2:prototype write",
+      "G-P5-DEFPROPS-COMPUTED:P5:2:prototype write",
       "S-ELEM-P5:P5:2:prototype write",
       "S-ELEMCALL-P5:P5:2:prototype write",
       "S-DEFPROPS-P5:P5:2:prototype write",
@@ -1648,7 +1813,7 @@ describe("wb-celw R685: class-closing emitter and snapshot-write refusals", () =
       }
     };
     walk(task.file.tasks);
-    expect(registered.filter(row => /^wb-celw (?:S-|R-ENUM|control)/.test(row))).toEqual([
+    expect(registered.filter(row => /^wb-celw (?:G-|S-|R-ENUM|control)/.test(row))).toEqual([
       ...rosterRows(raw, "rows").flatMap(row => rosterTexts(row, "sites").map(site => `wb-celw ${rosterText(row, "id")} ${site}: ${rosterText(row, "form")}|run`)),
       ...controls.map(row => `${row}: literal snapshot writes and unrelated targets stay quiet|run`),
     ]);
