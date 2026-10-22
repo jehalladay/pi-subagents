@@ -1,0 +1,485 @@
+{
+  "comment": "wb-1xvp.4 (RF-GRAPH-POLICY-MACHINE-CONTROL-R3; the hk9l/5jha roster pattern): the OUT-OF-FILE anchor of test/workbench-gp-fallback-census.test.ts. rows: every judged row of test/helpers/gp-fallback-census.ts in census order (TOUCHPOINTS, CLEAN, RESIDUALS, FAMILIES, UNUSABLE, MUTANTS, PAIRING_CASES) - table, id, label, the SHA-256 of each pin as written (a source; a fake seam with its reason and code; a mutant's shape, edits and expected rules; a pairing case's pairings, files and expected rules) and the registered test. tests: every test the census file registers, in order. residuals: the named residual families and their pinned quiet rows. Written from the rows as measured at the cut; the census judges its tables, its registered tests (vitest task tree, run modes) and its residual families against this file at test time, in order and both ways.",
+  "rows": [
+    {
+      "table": "TOUCHPOINTS",
+      "id": "CLI",
+      "label": "the gp binary named as a command: a literal that is gp or gp.exe, ends a path in it, or carries it as a shell word",
+      "pins": [
+        "e45a3a4113eb78dc789300e59040230f2f8b414206d433aa155075f306e4be5a",
+        "fba0ae88243d94744d9b5e2fa690f9a49bd70fa8d91262ac9d339321a3d26958",
+        "aa35b0c52b2b1d769de79de98d8ba062c87670d0d11c2c04e06a96d3593e03d3",
+        "e5be2ef08e6bba134f4d7435db5a33c314be7738a3df9aca38cdefcc09d91873",
+        "477a5b07e95f6fa08bbc0cafdb9903a13b7e466c5eb211746546776c6b2b5fd6",
+        "d6cb5a1bf2e9d280e930bf6fe79f09d098ebd024184192e602300d11514c4a2e",
+        "7f1f7ad1963ecce3248ec6053bdc5c10670fea2ab053ce1c209cbdd18204ec60"
+      ],
+      "test": "TOUCHPOINTS CLI"
+    },
+    {
+      "table": "TOUCHPOINTS",
+      "id": "SDK",
+      "label": "a GraphPolicyCLI module specifier: an import, export, import-equals, import type, import() or require() of it",
+      "pins": [
+        "abcb09f8dc88b677ebe5d21c69567ad247ce2cd90cad644983bcabcb402cac00",
+        "20ae195d91a45992a2788146dd7c83121a69ababad6ab10cd1809fa1f33ff8de",
+        "639a10bef2562c83086932509d17ea85d256b9930e4e0667afcdef8c03b281c3",
+        "508c8301616131061496f0e2958a902ea781fd2474bf67be323980923342e79e",
+        "98a957f63ac40256c6f7af38a5d6f56f7455b43bfb0c11efaf785c2657f3ab9b",
+        "9b841e7be2c022bab2b9f2ca087386d43b495cc56e4e1f2ad086c9743efcb1f4",
+        "e3723a4533b972240f3bfc1faac18d90015d338f08607db174fe5450be9978f2"
+      ],
+      "test": "TOUCHPOINTS SDK"
+    },
+    {
+      "table": "TOUCHPOINTS",
+      "id": "WIRE",
+      "label": "the gp wire vocabulary in a literal: a graphpolicy schema id, a gp.rpc or gp.cli schema, or a GP_CLI_, GP_RPC_ or GP_E_ code",
+      "pins": [
+        "d3055d7d40f0c429d93279a1da2affb81e5195dcb2afe591d5e4498779097680",
+        "32549e42e6ecd91cd1a8f61025e9dcbf6e1329278eed037265989844f12614fb",
+        "f2d31d565816c108f0490b1e73d4226c650be93ec3272760c68bcf42c2aaeeee",
+        "e7ec82a062cc5570ff3309e6e3a1f2bb349146914542d4d9cac01be26a836e10",
+        "c79d77e7cdafb0e12f3078dcccb5b999f2017aa82eab85e9b5a4525c86326014",
+        "01350d84d3a213a86bb5a283cc1e34c8baaf930515c22009fa564d8160a41edb",
+        "40857bb0237d48e269713793af7049ec010c4af607a40e7e46c418b71ba7cf16"
+      ],
+      "test": "TOUCHPOINTS WIRE"
+    },
+    {
+      "table": "CLEAN",
+      "id": "C-NATIVE-CLI",
+      "label": "a native CLI Pi already runs, or a word that only starts with gp",
+      "pins": [
+        "8bdcbdb39a1dc86c166477082d2c9d8453b825948db0821f4ed84a5f57130e6f",
+        "0ce91e437a010fe74fba04a747a70d3c6433f0bbee8233974273497d6ba2030c",
+        "2ead9e4bbd7c3402d928b981d122b28dafb12141fd32155c64bfc051ad6520ba",
+        "e12ff901bfbdac2f3fd98ea01fa4998bafcb87c50e171db0606423d4f623d7be",
+        "1443a49ef56f63988d88d338ff6c147ab3201a3512451cdd83b44a87c6780c86"
+      ],
+      "test": "CLEAN C-NATIVE-CLI"
+    },
+    {
+      "table": "CLEAN",
+      "id": "C-NEAR-NAMES",
+      "label": "a module or literal that names a graph or a policy, but not GraphPolicyCLI",
+      "pins": [
+        "58bd0df5b8ff4b7e240a2808f6e89422f57fa4f89e320d2fc96be5f6949cac33",
+        "8a5158de372602e4505c91a5940bd5c679358dcd18c982455a81e8cda67c6601",
+        "2a67871d9c15fac1fcf66a5dd06729fb90dc9db2e44c3f6692f0e15a04ff16fe",
+        "553e2c738b4a1972c1ffa83c7852b86ac10b5de6fb97647b586a5949d71e36f9",
+        "0f5dcd74fc5e0a2bcb691d6cf85ba5a44ce116352b4e4b3cda3167771d4cb670"
+      ],
+      "test": "CLEAN C-NEAR-NAMES"
+    },
+    {
+      "table": "CLEAN",
+      "id": "C-COMMENT",
+      "label": "a comment that names gp or GraphPolicyCLI is not code",
+      "pins": [
+        "fce50fc872659d12b170b7cf29247e17a54a325a4606a5deb0f49aea0fd2a505",
+        "645adc705cd41da10d176d4cecbdab3fa9c2223a0342331c5cee462134da4d95"
+      ],
+      "test": "CLEAN C-COMMENT"
+    },
+    {
+      "table": "RESIDUALS",
+      "id": "R-COMPUTED",
+      "label": "a binary or module name computed at runtime, so no literal spells it",
+      "pins": [
+        "541040b1c51bddbc85deb6ec162961f3cb8dd3a0427fc8032eb3a0b5a6742f2a",
+        "37e82c47681fc69627f0e20a489ecf4c899e910c493a0d1dae5a13610e276ee7"
+      ],
+      "test": "RESIDUALS R-COMPUTED"
+    },
+    {
+      "table": "RESIDUALS",
+      "id": "R-ENVIRONMENT",
+      "label": "a binary named only by the environment or a setting",
+      "pins": [
+        "02378901648096bc7bd5b5fde922d46de1f66af95cea48f24c220d9c44475da7",
+        "c24e8724d49b17522a76ea444c363935f25c9523eb61e02372f50e9ce5815f81"
+      ],
+      "test": "RESIDUALS R-ENVIRONMENT"
+    },
+    {
+      "table": "RESIDUALS",
+      "id": "R-TRANSITIVE",
+      "label": "a module that reaches GraphPolicyCLI only through another src module, which is the site and carries the pairing",
+      "pins": [
+        "d686b85360d1410a2cb388ef4f2f3cf2ba60d161f5b58defbed63817fbe98de5"
+      ],
+      "test": "RESIDUALS R-TRANSITIVE"
+    },
+    {
+      "table": "FAMILIES",
+      "id": "existing-machine-rule",
+      "label": "the named deterministic fallback existing-machine-rule",
+      "pins": [],
+      "test": "FAMILIES existing-machine-rule"
+    },
+    {
+      "table": "FAMILIES",
+      "id": "ready-first",
+      "label": "the named deterministic fallback ready-first",
+      "pins": [],
+      "test": "FAMILIES ready-first"
+    },
+    {
+      "table": "FAMILIES",
+      "id": "priority-first",
+      "label": "the named deterministic fallback priority-first",
+      "pins": [],
+      "test": "FAMILIES priority-first"
+    },
+    {
+      "table": "FAMILIES",
+      "id": "critical-path-aware",
+      "label": "the named deterministic fallback critical-path-aware",
+      "pins": [],
+      "test": "FAMILIES critical-path-aware"
+    },
+    {
+      "table": "FAMILIES",
+      "id": "cost-aware",
+      "label": "the named deterministic fallback cost-aware",
+      "pins": [],
+      "test": "FAMILIES cost-aware"
+    },
+    {
+      "table": "UNUSABLE",
+      "id": "U-ABSENT",
+      "label": "gp is absent: the seam cannot start the binary",
+      "pins": [
+        "affe836ab922c7687a23d2ae99f15841ca6b33af57f8e19d13d1310297e6f8a5"
+      ],
+      "test": "UNUSABLE U-ABSENT"
+    },
+    {
+      "table": "UNUSABLE",
+      "id": "U-CLI-REFUSAL",
+      "label": "gp exits 2 with a graphpolicy.cli.v1 error envelope carrying a GP_CLI_ code",
+      "pins": [
+        "c81a20162534265628c61bd616d291a13240ce4355016434fd9c61cbdc46c89c"
+      ],
+      "test": "UNUSABLE U-CLI-REFUSAL"
+    },
+    {
+      "table": "UNUSABLE",
+      "id": "U-RPC-REFUSAL",
+      "label": "gp answers ok:false with a gp.rpc.reply/v1 error carrying a GP_RPC_ code",
+      "pins": [
+        "3078eda9c06a402eb11d879871bc10aea2fd69ca1582d953e5b68622c4298727"
+      ],
+      "test": "UNUSABLE U-RPC-REFUSAL"
+    },
+    {
+      "table": "UNUSABLE",
+      "id": "U-STALE-BASIS",
+      "label": "gp answers on a basis digest that is not the host's current basis",
+      "pins": [
+        "b3cd7b63d7797bbbfa0316a58150bacebf0014f2c0bb806b95e545b6d22730ba"
+      ],
+      "test": "UNUSABLE U-STALE-BASIS"
+    },
+    {
+      "table": "UNUSABLE",
+      "id": "U-OVER-BUDGET",
+      "label": "gp exceeds its runtime budget before it answers in full",
+      "pins": [
+        "04a9ca3555d2409e0a5a7898eda67de7d14218c25e481591eb84614c738ec38c"
+      ],
+      "test": "UNUSABLE U-OVER-BUDGET"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-SOURCE-GP",
+      "label": "the fallback is recorded as a gp decision",
+      "pins": [
+        "b1236194ee9bf92040f0a53d04796249944958b8cdb85b238165cb744e0a0f16"
+      ],
+      "test": "MUTANTS M-SOURCE-GP"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-SOURCE-MISSING",
+      "label": "no decision_source is recorded",
+      "pins": [
+        "ef08c1785c48b56fd61669ab2ea16258cff9a53da74860bad506d006a0a01004"
+      ],
+      "test": "MUTANTS M-SOURCE-MISSING"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-ACTION-POLICY",
+      "label": "the action is taken from the stale gp output, not from the fallback",
+      "pins": [
+        "d06ed532d484293f1113cedcdeae98101cd86e2a6694f1faee531d8ea21b1baf"
+      ],
+      "test": "MUTANTS M-ACTION-POLICY"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-FALLBACK-NAME",
+      "label": "the record names another fallback",
+      "pins": [
+        "377f238078dc1ba3ad14898ae963bbe1b084879eacd3789b56da4960ed4bea72"
+      ],
+      "test": "MUTANTS M-FALLBACK-NAME"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-REASON",
+      "label": "an over-budget answer is recorded as an absent binary",
+      "pins": [
+        "b198849e919a2a1adb0fd9fbe987ab37509085b6f3fbb83d2186d518e5404f61"
+      ],
+      "test": "MUTANTS M-REASON"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-CODE-RECASED",
+      "label": "the producer's refusal code is re-cased",
+      "pins": [
+        "feca10667006dbcd40de3b8030303e175588e731743fae91eb3e00075ebb166e"
+      ],
+      "test": "MUTANTS M-CODE-RECASED"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-CODE-RELABELLED",
+      "label": "the producer's refusal code is relabelled",
+      "pins": [
+        "554425bb7456c252c4f2312101415c2d05a3c02ff99850cfdc439b039567fe8b"
+      ],
+      "test": "MUTANTS M-CODE-RELABELLED"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-CODE-MISSING",
+      "label": "the producer's refusal code is dropped",
+      "pins": [
+        "5caa99a18b0cc22211b6a3c5679d2da0f0747f95a49866092c46763da1a0d157"
+      ],
+      "test": "MUTANTS M-CODE-MISSING"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-CODE-FABRICATED",
+      "label": "a refusal code is invented for an absent binary",
+      "pins": [
+        "a7c565a3027f2351614dbeee1263c83522d994664ccccec49c75e1d9f8928c10"
+      ],
+      "test": "MUTANTS M-CODE-FABRICATED"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-SCORE-ZERO",
+      "label": "a zero score is written on a refusal",
+      "pins": [
+        "d383e040ec80544b1d2bc590fbae85b877f74722fc186ae4889005c5de1110f4"
+      ],
+      "test": "MUTANTS M-SCORE-ZERO"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-SCORE-NESTED",
+      "label": "an empty score list is written under a detail key",
+      "pins": [
+        "cab7948b760192e7d0369923535b3cf0bacea29b0257373fd8f6c666f97f0eb3"
+      ],
+      "test": "MUTANTS M-SCORE-NESTED"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-PROBABILITY",
+      "label": "a zero probability is written on a refusal",
+      "pins": [
+        "581ddbe79ec63606c36dcac5b8e70800edaa5ca63eb05caa945ee2ba16a8a676"
+      ],
+      "test": "MUTANTS M-PROBABILITY"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-LOGPROB-NESTED",
+      "label": "a log-probability is written under a detail key",
+      "pins": [
+        "90c77a9b233dbdccbf5d5402420369abb76ca38f80ad6ccb94bb7fc6efb29496"
+      ],
+      "test": "MUTANTS M-LOGPROB-NESTED"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-PARTIAL-OUTPUT",
+      "label": "the partial gp output rides along under an unnamed key",
+      "pins": [
+        "99ce99076ab238579a108465d4347f6cd5290d6cfe88038d1231ac998481f04a"
+      ],
+      "test": "MUTANTS M-PARTIAL-OUTPUT"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-PARTIAL-KEY",
+      "label": "the stale gp candidate is recorded as a key",
+      "pins": [
+        "ba54e8b745e7509624fe3b883091132a47364e8d6be5015685b07a2711812211"
+      ],
+      "test": "MUTANTS M-PARTIAL-KEY"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-NOT-A-RECORD",
+      "label": "the drive returns no record object",
+      "pins": [
+        "60a54b3e277a0a14a0f8d5cb2e7c9b2d7bd11118f92991051f265a6701fb6514"
+      ],
+      "test": "MUTANTS M-NOT-A-RECORD"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-DRIVE-THROWS",
+      "label": "the drive throws instead of falling back",
+      "pins": [
+        "270948f01691cb1c666e2e8219f8d9192e68a938e5fdc6aeb9dca55518a20b57"
+      ],
+      "test": "MUTANTS M-DRIVE-THROWS"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "R-UNNAMED-NUMBER",
+      "label": "a number the fake seam did not produce, under a key that names neither a score nor a probability",
+      "pins": [
+        "e7560fef9be3e2904726b450744340d5932e6f420bae128b766a7b790e04487b"
+      ],
+      "test": "MUTANTS R-UNNAMED-NUMBER"
+    },
+    {
+      "table": "PAIRING_CASES",
+      "id": "P-PAIRED",
+      "label": "a site paired with a named fallback it exports",
+      "pins": [
+        "f2562fa0b39b7d99da4ebee0c59e0824cf6b10009ac1d27288d0ad61ee84aa27"
+      ],
+      "test": "PAIRING_CASES P-PAIRED"
+    },
+    {
+      "table": "PAIRING_CASES",
+      "id": "P-REEXPORTED",
+      "label": "a site paired with a named fallback it re-exports from another module",
+      "pins": [
+        "2943d0a01f88062c39bba741c77d43d8a88d19bbef4993c1468315cc258ba2f1"
+      ],
+      "test": "PAIRING_CASES P-REEXPORTED"
+    },
+    {
+      "table": "PAIRING_CASES",
+      "id": "P-UNPAIRED",
+      "label": "a site with no pairing",
+      "pins": [
+        "64af1983fb5595982f6fdd34a6d249d1ac47848cc7c15c879f412105331af9a1"
+      ],
+      "test": "PAIRING_CASES P-UNPAIRED"
+    },
+    {
+      "table": "PAIRING_CASES",
+      "id": "P-STALE",
+      "label": "a pairing whose file reaches no GraphPolicyCLI touchpoint",
+      "pins": [
+        "9e66d4c236d9de282bb4c7b29c0ecba3ba397737d87c57bfa9fa1ee01bcd7197"
+      ],
+      "test": "PAIRING_CASES P-STALE"
+    },
+    {
+      "table": "PAIRING_CASES",
+      "id": "P-DUPLICATE",
+      "label": "one site paired twice",
+      "pins": [
+        "5a7e5378a6229828af868288aa0652b67f450ba2d8cfe581cb0fa7b2643a518f"
+      ],
+      "test": "PAIRING_CASES P-DUPLICATE"
+    },
+    {
+      "table": "PAIRING_CASES",
+      "id": "P-FAMILY",
+      "label": "a pairing with a family outside the named fallbacks",
+      "pins": [
+        "a0cb9eab58a8f35630b55d66ff731abf827a524109ff2c41e67c2e4614d8092e"
+      ],
+      "test": "PAIRING_CASES P-FAMILY"
+    },
+    {
+      "table": "PAIRING_CASES",
+      "id": "P-UNEXPORTED",
+      "label": "a pairing whose fallback the site declares but does not export",
+      "pins": [
+        "73eb6b0670aae8cd478e775548bae71e52be48111c1721c6e4510c09340e42c5"
+      ],
+      "test": "PAIRING_CASES P-UNEXPORTED"
+    }
+  ],
+  "tests": [
+    "TOUCHPOINTS CLI",
+    "TOUCHPOINTS SDK",
+    "TOUCHPOINTS WIRE",
+    "CLEAN C-NATIVE-CLI",
+    "CLEAN C-NEAR-NAMES",
+    "CLEAN C-COMMENT",
+    "RESIDUALS R-COMPUTED",
+    "RESIDUALS R-ENVIRONMENT",
+    "RESIDUALS R-TRANSITIVE",
+    "FAMILIES existing-machine-rule",
+    "FAMILIES ready-first",
+    "FAMILIES priority-first",
+    "FAMILIES critical-path-aware",
+    "FAMILIES cost-aware",
+    "UNUSABLE U-ABSENT",
+    "UNUSABLE U-CLI-REFUSAL",
+    "UNUSABLE U-RPC-REFUSAL",
+    "UNUSABLE U-STALE-BASIS",
+    "UNUSABLE U-OVER-BUDGET",
+    "MUTANTS M-SOURCE-GP",
+    "MUTANTS M-SOURCE-MISSING",
+    "MUTANTS M-ACTION-POLICY",
+    "MUTANTS M-FALLBACK-NAME",
+    "MUTANTS M-REASON",
+    "MUTANTS M-CODE-RECASED",
+    "MUTANTS M-CODE-RELABELLED",
+    "MUTANTS M-CODE-MISSING",
+    "MUTANTS M-CODE-FABRICATED",
+    "MUTANTS M-SCORE-ZERO",
+    "MUTANTS M-SCORE-NESTED",
+    "MUTANTS M-PROBABILITY",
+    "MUTANTS M-LOGPROB-NESTED",
+    "MUTANTS M-PARTIAL-OUTPUT",
+    "MUTANTS M-PARTIAL-KEY",
+    "MUTANTS M-NOT-A-RECORD",
+    "MUTANTS M-DRIVE-THROWS",
+    "MUTANTS R-UNNAMED-NUMBER",
+    "PAIRING_CASES P-PAIRED",
+    "PAIRING_CASES P-REEXPORTED",
+    "PAIRING_CASES P-UNPAIRED",
+    "PAIRING_CASES P-STALE",
+    "PAIRING_CASES P-DUPLICATE",
+    "PAIRING_CASES P-FAMILY",
+    "PAIRING_CASES P-UNEXPORTED",
+    "live: the scan walks every regular file under src/ and reads the native CLI commands its call sites pass",
+    "live (c): no src file carries a GraphPolicyCLI touchpoint today, and GP_CALL_SITES pairs exactly the touched files",
+    "live (a)+(b): every GP_CALL_SITES entry records a conforming fallback on every unusable fake seam",
+    "rule 16: every judged table and the live subjects are frozen at their measured shape",
+    "roster: the judged rows, the registered tests and the residual families equal test/fixtures/gp-fallback-roster.json, in order and both ways"
+  ],
+  "residuals": {
+    "R-COMPUTED": [
+      "RESIDUALS R-COMPUTED"
+    ],
+    "R-ENVIRONMENT": [
+      "RESIDUALS R-ENVIRONMENT"
+    ],
+    "R-TRANSITIVE": [
+      "RESIDUALS R-TRANSITIVE"
+    ],
+    "R-UNNAMED-NUMBER": [
+      "MUTANTS R-UNNAMED-NUMBER"
+    ]
+  }
+}
