@@ -1694,7 +1694,7 @@ interface Sourced {
  * The frozen EXPECTATION's provenance, pinned as source-level string literals (R696 (1), read back by the LITERAL PIN row from
  * this file's AST): the fixture path and the SHA-256 of its committed bytes (sha256sum), written out and never computed here.
  */
-const EXPECTATION: Provenance = { path: "test/fixtures/docs19-full-section-omxf.json", sha256: "25c4fe9de69aaa2cc4c65529a179f153244b50d947edfc3527ec0d8b3048c25e" };
+const EXPECTATION: Provenance = { path: "test/fixtures/docs19-full-section-omxf.json", sha256: "6f0d6217045be897e9121b5489a3be53164b24cef062c2cb1bbb42b30a824cf2" };
 const sha256Hex = (bytes: string | Buffer): string => createHash("sha256").update(bytes).digest("hex");
 /** A file under a repo root with the digest of exactly its bytes: the one read every full-slice row judges. */
 function readWithProvenance(root: string, path: string): Sourced {
@@ -2187,5 +2187,431 @@ describe("wb-omxf R677 + R695 full docs19 section equality (explicit expectation
     expect(OMXF_RESIDUALS).toEqual(tables.residuals);
     expect(tables.d19).toHaveLength(8);
     expect(tables.arms).toHaveLength(8);
+  });
+});
+
+/**
+ * wb-lybr (R699 Q3, the landing-247 follow-up of the g10-gate-s20 PREP finding F1, L2G-43 READER-REPOINT): every read of
+ * EXPECTATION resolves to the literal identifier. The LITERAL rows above pin EXPECTATION's declaration; these rows pin its
+ * READS, by this file's own AST and the TypeScript checker over this one source (a program of the source alone: no lib,
+ * no module resolution, nothing emitted, never run). A read is an identifier named EXPECTATION that is not a declaration
+ * or member name. Claiming exactly this pinned set and no more:
+ * (1) RESOLVES: every read binds to the one module-scope declaration of EXPECTATION - never to a parameter, a nested
+ * declaration, a binding element or any other shadow (line "shadowed").
+ * (2) NO ALIAS: no read is carried into another binding before a reader consumes it - a variable, parameter, binding element
+ * or property initializer, an assignment, a return or an arrow function's result (line "carried"), so no alias and no
+ * computed provenance stands between the literal and its readers.
+ * (3) ROSTER: the reads are exactly READ_ROSTER, each keyed by its site (the enclosing function, test row or suite by title
+ * head, or module-scope declaration) and its reader (the if condition it is compared in, the template it is interpolated
+ * into, or the statement that consumes it; template literals elided, whitespace collapsed). A reader re-pointed to a
+ * stand-in reads "missing" and a read added anywhere reads "unexpected". The roster is anchored out of file (the fixture's
+ * readRoster, read behind the fixture's pinned provenance); the ANCHOR row judges the committed source against it.
+ * Each falsifier row edits this file's source in memory by AST position (parsed and bound, never run) and must draw exactly
+ * its lines. L2G-43 is the gate's READER-REPOINT: its declared line verbatim, its four re-points located by roster key.
+ * NAMED RESIDUAL R-COORDINATED-READER-ROSTER (its pinned quiet row below): a reader re-pointed to a stand-in that never
+ * names EXPECTATION, edited together with the roster, its frozen shape, the fixture's readRoster and the EXPECTATION sha256
+ * literal. No other escape is claimed absent.
+ */
+/** One AST-located edit of this file's source, applied in memory to a page that is parsed and bound, never run. */
+type ReadsEdit =
+  | { readonly op: "declare"; readonly after: string; readonly text: string }
+  | { readonly op: "parameter"; readonly fn: string; readonly text: string }
+  | { readonly op: "prepend"; readonly site: string; readonly text: string }
+  | { readonly op: "repoint"; readonly read: string; readonly to: string };
+/** A roster row: [site, every reader of EXPECTATION at that site, in source order]. */
+type ReadRosterRow = readonly [string, readonly string[]];
+/** A READS row: [id, the edits of this file's source it reads (null: the committed source), the lines the pin must draw]. */
+type ReadsRow = readonly [string, readonly ReadsEdit[] | null, readonly string[]];
+/** A read of EXPECTATION, located: the access it starts, its site and reader, the binding it is carried into, its declaration. */
+interface LocatedRead {
+  readonly access: ts.Expression;
+  readonly site: string;
+  readonly reader: string;
+  readonly carried: string | undefined;
+  readonly declaration: ts.Declaration | undefined;
+}
+/** What the reads pin found over a source against a roster: one line per refusal, and the reads grouped by site. */
+interface ReadsReading {
+  readonly lines: readonly string[];
+  readonly bySite: readonly ReadRosterRow[];
+}
+const readKey = (site: string, reader: string): string => `${site} | ${reader}`;
+
+/** This source alone as a TypeScript program (no lib, no module resolution, nothing emitted): its checker binds the names. */
+function boundSource(source: string): { readonly file: ts.SourceFile; readonly checker: ts.TypeChecker } {
+  const parsed = ts.createSourceFile(SELF, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const host: ts.CompilerHost = {
+    getSourceFile: name => (name === SELF ? parsed : undefined),
+    getDefaultLibFileName: () => "lib.d.ts",
+    writeFile: () => undefined,
+    getCurrentDirectory: () => "",
+    getCanonicalFileName: name => name,
+    useCaseSensitiveFileNames: () => true,
+    getNewLine: () => "\n",
+    fileExists: name => name === SELF,
+    readFile: name => (name === SELF ? source : undefined),
+  };
+  const program = ts.createProgram({ rootNames: [SELF], options: { noLib: true, noResolve: true, types: [], noEmit: true }, host });
+  const file = program.getSourceFile(SELF);
+  if (file !== parsed) throw new Error(`${SELF}: the program did not bind the source it was given`);
+  return { file, checker: program.getTypeChecker() };
+}
+
+const READ_REGISTRARS: ReadonlySet<string> = new Set(["it", "test", "describe"]);
+const readTitleHead = (title: string): string => (title.includes(":") ? title.slice(0, title.indexOf(":")) : title);
+/** The site a function stands for when it is the callback of it(...), test(...) or describe(...), directly or through .each. */
+function registrationSite(node: ts.Node): string | undefined {
+  if (!ts.isArrowFunction(node) && !ts.isFunctionExpression(node)) return undefined;
+  const call = node.parent;
+  if (!ts.isCallExpression(call) || call.arguments.indexOf(node) < 1) return undefined;
+  const callee = call.expression;
+  const base = ts.isCallExpression(callee) && ts.isPropertyAccessExpression(callee.expression) && callee.expression.name.text === "each" ? callee.expression.expression : callee;
+  const [title] = call.arguments;
+  if (!ts.isIdentifier(base) || !READ_REGISTRARS.has(base.text) || !(ts.isStringLiteral(title) || ts.isNoSubstitutionTemplateLiteral(title))) return undefined;
+  return `${base.text === "describe" ? "describe" : "it"} ${readTitleHead(title.text)}`;
+}
+const isModuleScope = (declaration: ts.VariableDeclaration): boolean =>
+  ts.isVariableDeclarationList(declaration.parent) && ts.isVariableStatement(declaration.parent.parent) && ts.isSourceFile(declaration.parent.parent.parent);
+const declarationKeyword = (declaration: ts.VariableDeclaration): string => {
+  const flags = declaration.parent.flags;
+  if ((flags & ts.NodeFlags.Const) !== 0) return "const";
+  return (flags & ts.NodeFlags.Let) !== 0 ? "let" : "var";
+};
+/** Where a node sits: its enclosing function, test row or suite (by title head), or module-scope declaration; else the module. */
+function readSiteOf(node: ts.Node): string {
+  for (let at: ts.Node = node; !ts.isSourceFile(at); at = at.parent) {
+    if (ts.isFunctionDeclaration(at) && at.name !== undefined) return `function ${at.name.text}`;
+    const registered = registrationSite(at);
+    if (registered !== undefined) return registered;
+    if (ts.isVariableDeclaration(at) && isModuleScope(at)) return `${declarationKeyword(at)} ${at.name.getText()}`;
+  }
+  return "module";
+}
+/** A node's source text with template literals elided and whitespace collapsed: the stable key of a reader. */
+function readerTextOf(node: ts.Node, file: ts.SourceFile): string {
+  const elided: (readonly [number, number])[] = [];
+  const visit = (child: ts.Node): void => {
+    if (ts.isTemplateExpression(child) || ts.isNoSubstitutionTemplateLiteral(child)) elided.push([child.getStart(file), child.getEnd()]);
+    else ts.forEachChild(child, visit);
+  };
+  ts.forEachChild(node, visit);
+  let text = "";
+  let at = node.getStart(file);
+  for (const [from, to] of elided) {
+    text += `${file.text.slice(at, from)}\`...\``;
+    at = to;
+  }
+  return `${text}${file.text.slice(at, node.getEnd())}`.replace(/\s+/gu, " ");
+}
+/** The access a read starts: the identifier, or the member chain rooted at it (EXPECTATION.sha256). */
+function accessOf(identifier: ts.Identifier): ts.Expression {
+  let access: ts.Expression = identifier;
+  while ((ts.isPropertyAccessExpression(access.parent) || ts.isElementAccessExpression(access.parent)) && access.parent.expression === access) access = access.parent;
+  return access;
+}
+type Binding = ts.VariableDeclaration | ts.ParameterDeclaration | ts.BindingElement | ts.PropertyDeclaration;
+const bindingKindOf = (binding: Binding): string => {
+  if (ts.isVariableDeclaration(binding)) return declarationKeyword(binding);
+  if (ts.isParameter(binding)) return "parameter";
+  return ts.isBindingElement(binding) ? "binding element" : "property";
+};
+/** The reader that consumes an access, or the binding (or result) it is carried into before any reader consumes it. */
+function readerOf(access: ts.Expression, file: ts.SourceFile): { readonly reader: string; readonly carried: string | undefined } {
+  let node: ts.Node = access;
+  while (!ts.isSourceFile(node.parent)) {
+    const parent = node.parent;
+    if (ts.isTemplateSpan(parent)) return { reader: `template ${readerTextOf(access, file)}`, carried: undefined };
+    if ((ts.isIfStatement(parent) && parent.expression === node) || ts.isExpressionStatement(parent)) return { reader: readerTextOf(node, file), carried: undefined };
+    if ((ts.isVariableDeclaration(parent) || ts.isParameter(parent) || ts.isBindingElement(parent) || ts.isPropertyDeclaration(parent)) && parent.initializer === node) {
+      return { reader: readerTextOf(parent, file), carried: `the ${bindingKindOf(parent)} ${parent.name.getText(file)}` };
+    }
+    if (ts.isBinaryExpression(parent) && parent.operatorToken.kind === ts.SyntaxKind.EqualsToken) return { reader: readerTextOf(parent, file), carried: "an assignment" };
+    if (ts.isReturnStatement(parent)) return { reader: readerTextOf(parent, file), carried: "a return" };
+    if (ts.isArrowFunction(parent) && parent.body === node) return { reader: readerTextOf(parent, file), carried: "an arrow function's result" };
+    if (ts.isStatement(parent)) return { reader: readerTextOf(ts.isStatement(node) ? node : parent, file), carried: undefined };
+    node = parent;
+  }
+  return { reader: readerTextOf(node, file), carried: undefined };
+}
+/** A read of EXPECTATION at an identifier, or undefined when the identifier is a member name or a declaration's own name. */
+function locatedRead(identifier: ts.Identifier, file: ts.SourceFile, checker: ts.TypeChecker): LocatedRead | undefined {
+  const parent = identifier.parent;
+  if ((ts.isPropertyAccessExpression(parent) && parent.name === identifier) || (ts.isQualifiedName(parent) && parent.right === identifier) || (ts.isBindingElement(parent) && parent.propertyName === identifier)) return undefined;
+  const shorthand = ts.isShorthandPropertyAssignment(parent);
+  const symbol = shorthand ? checker.getShorthandAssignmentValueSymbol(parent) : checker.getSymbolAtLocation(identifier);
+  if (!shorthand && symbol?.declarations?.some(declaration => ts.getNameOfDeclaration(declaration) === identifier)) return undefined;
+  const access = accessOf(identifier);
+  return { access, site: readSiteOf(identifier), ...readerOf(access, file), declaration: symbol?.valueDeclaration ?? symbol?.declarations?.[0] };
+}
+/** Every read of EXPECTATION in a bound source, in source order. */
+function locateReads(file: ts.SourceFile, checker: ts.TypeChecker): LocatedRead[] {
+  const reads: LocatedRead[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isIdentifier(node) && node.text === "EXPECTATION") {
+      const read = locatedRead(node, file, checker);
+      if (read !== undefined) reads.push(read);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(file);
+  return reads;
+}
+const declarationKindOf = (declaration: ts.Declaration): string => {
+  if (ts.isParameter(declaration)) return "a parameter";
+  if (ts.isVariableDeclaration(declaration)) return `a ${declarationKeyword(declaration)} declaration`;
+  return ts.isBindingElement(declaration) ? "a binding element" : `a ${ts.SyntaxKind[declaration.kind]}`;
+};
+function readsBySite(reads: readonly LocatedRead[]): ReadRosterRow[] {
+  const rows: (readonly [string, string[]])[] = [];
+  for (const read of reads) {
+    const row = rows.find(([site]) => site === read.site);
+    if (row === undefined) rows.push([read.site, [read.reader]]);
+    else row[1].push(read.reader);
+  }
+  return rows;
+}
+/** wb-lybr (1)-(3): the reads of EXPECTATION in a source of this file, judged against a roster (parsed and bound, never run). */
+function expectationReads(source: string, roster: readonly ReadRosterRow[]): ReadsReading {
+  const { file, checker } = boundSource(source);
+  const modules = expectationDeclarations(file).filter(isModuleScope);
+  const literal = modules.length === 1 ? modules[0] : undefined;
+  const reads = locateReads(file, checker);
+  const lines: string[] = [];
+  for (const read of reads) {
+    const key = readKey(read.site, read.reader);
+    if (literal === undefined || read.declaration !== literal) {
+      lines.push(`shadowed: ${key} -> resolves to ${read.declaration === undefined ? "no declaration" : `${declarationKindOf(read.declaration)} in ${readSiteOf(read.declaration)}`}`);
+    }
+    if (read.carried !== undefined) lines.push(`carried: ${key} -> into ${read.carried}`);
+  }
+  const remaining = roster.flatMap(([site, readers]) => readers.map(reader => readKey(site, reader)));
+  const unexpected: string[] = [];
+  for (const read of reads) {
+    const at = remaining.indexOf(readKey(read.site, read.reader));
+    if (at < 0) unexpected.push(readKey(read.site, read.reader));
+    else remaining.splice(at, 1);
+  }
+  return { lines: [...lines, ...remaining.map(key => `missing: ${key}`), ...unexpected.map(key => `unexpected: ${key}`)], bySite: readsBySite(reads) };
+}
+/** The first registered test or suite callback body whose site is the given one. */
+function registrationBody(file: ts.SourceFile, site: string): ts.Block | undefined {
+  const visit = (node: ts.Node): ts.Block | undefined => {
+    if ((ts.isArrowFunction(node) || ts.isFunctionExpression(node)) && ts.isBlock(node.body) && registrationSite(node) === site) return node.body;
+    return ts.forEachChild(node, visit);
+  };
+  return visit(file);
+}
+/** A source text of this file with one AST-located edit applied (a page, never run); an edit whose anchor is absent throws. */
+function withReadsEdit(source: string, edit: ReadsEdit): string {
+  const splice = (at: number, end: number, text: string): string => `${source.slice(0, at)}${text}${source.slice(end)}`;
+  if (edit.op === "repoint") {
+    const { file, checker } = boundSource(source);
+    const read = locateReads(file, checker).find(entry => readKey(entry.site, entry.reader) === edit.read);
+    if (read === undefined) throw new Error(`${SELF}: no read of EXPECTATION is keyed ${edit.read}`);
+    return splice(read.access.getStart(file), read.access.getEnd(), edit.to);
+  }
+  const file = ts.createSourceFile(SELF, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  if (edit.op === "declare") {
+    const statement = file.statements.find(entry => ts.isVariableStatement(entry) && entry.declarationList.declarations.some(declaration => ts.isIdentifier(declaration.name) && declaration.name.text === edit.after));
+    if (statement === undefined) throw new Error(`${SELF}: no module-scope declaration of ${edit.after}`);
+    return splice(statement.getEnd(), statement.getEnd(), `\n${edit.text}`);
+  }
+  if (edit.op === "parameter") {
+    const declared = file.statements.find((entry): entry is ts.FunctionDeclaration => ts.isFunctionDeclaration(entry) && entry.name?.text === edit.fn);
+    const last = declared?.parameters.at(-1);
+    if (last === undefined) throw new Error(`${SELF}: no function ${edit.fn} with a parameter`);
+    return splice(last.getEnd(), last.getEnd(), `, ${edit.text}`);
+  }
+  const body = registrationBody(file, edit.site);
+  if (body === undefined) throw new Error(`${SELF}: no registered callback at ${edit.site}`);
+  const open = body.getStart(file) + 1;
+  return splice(open, open, `\n    ${edit.text}`);
+}
+
+const READ_SITE_FAILURES = "function expectationFailures";
+const READ_SITE_LIVE = "it LIVE (R695 (a))";
+const READ_SITE_ON_DISK = "it ON-DISK %s";
+const READ_SITE_LITERAL = "it LITERAL %s (R696 (1))";
+const READ_SITE_RESIDUAL = "it RESIDUAL R-COORDINATED-LITERAL-AND-ANCHOR quiet row (R696 (3), the named residual above the literal pin)";
+const READ_DIGEST_CHECK = "expectation.provenance.sha256 !== EXPECTATION.sha256";
+const READ_PROVENANCE_EQUAL = "expect(expectation.provenance).toEqual(EXPECTATION)";
+const READ_LIVE_PIN = 'expect(EXPECTATION).toEqual({ path: "test/fixtures/docs19-full-section-omxf.json", sha256: createHash("sha256").update(readFileSync(join(ROOT, OMXF_ANCHOR_FILE))).digest("hex") })';
+/** The frozen roster: every read of EXPECTATION in this file by site, each by its reader, in source order (anchored out of file). */
+const READ_ROSTER: readonly ReadRosterRow[] = [
+  [READ_SITE_FAILURES, ["expectation.provenance.path !== EXPECTATION.path", "template EXPECTATION.path", READ_DIGEST_CHECK, "template EXPECTATION.sha256"]],
+  [READ_SITE_LIVE, [READ_PROVENANCE_EQUAL, READ_LIVE_PIN]],
+  [READ_SITE_ON_DISK, [READ_PROVENANCE_EQUAL]],
+  [READ_SITE_LITERAL, ["expect(reading.pin, `...`).toEqual(edit === null ? EXPECTATION : undefined)"]],
+  [READ_SITE_RESIDUAL, ['expect(page.expectation.provenance.sha256, "the fixture carries the edit").not.toBe(EXPECTATION.sha256)', 'expect(moved, "the page moves the literal").not.toBe(EXPECTATION.sha256)', "expect(expectationLiteral(page.source)).toEqual({ findings: [], pin: { path: EXPECTATION.path, sha256: moved } })"]],
+];
+/** The four reads L2G-43 re-points: the expectation-digest check, LIVE's two comparisons and ON-DISK's. */
+const L2G43_REPOINTED: readonly string[] = [readKey(READ_SITE_FAILURES, READ_DIGEST_CHECK), readKey(READ_SITE_LIVE, READ_PROVENANCE_EQUAL), readKey(READ_SITE_LIVE, READ_LIVE_PIN), readKey(READ_SITE_ON_DISK, READ_PROVENANCE_EQUAL)];
+const repointedTo = (target: string): ReadsEdit[] => L2G43_REPOINTED.map(read => ({ op: "repoint", read, to: read === L2G43_REPOINTED[0] ? `${target}.sha256` : target }));
+const L2G43_BINDING = "EXPECTATION_RT: Provenance = { path: EXPECTATION.path, sha256: sha256Hex(readFileSync(join(ROOT, EXPECTATION.path))) }";
+const STANDIN_TEXT = "const PINNED_PROVENANCE: Provenance = { path: OMXF_ANCHOR_FILE, sha256: sha256Hex(readFileSync(join(ROOT, OMXF_ANCHOR_FILE))) };";
+const SHADOW_INITIALIZER = "{ path: OMXF_ANCHOR_FILE, sha256: sha256Hex(readFileSync(join(ROOT, OMXF_ANCHOR_FILE))) }";
+/**
+ * wb-lybr: row ROSTER reads the committed source, quiet; each falsifier edits it in memory by AST position and must draw
+ * exactly its lines. L2G-43 is the gate's READER-REPOINT (the declared line verbatim); L2G-47 and SHADOW-NESTED are the
+ * gate's shadow forms (a computed parameter default, a nested computed declaration in LIVE); the ALIAS rows carry the
+ * literal through a const, a destructuring, a spread with a computed sha256 and an arrow function's result; STANDIN is a
+ * computed stand-in that never names EXPECTATION (the residual's page); HOLLOW-COMPARATOR keeps the literal read and adds
+ * a computed alternative to its comparison.
+ */
+const LYBR_READS: readonly ReadsRow[] = [
+  ["ROSTER", null, []],
+  [
+    "L2G-43",
+    [{ op: "declare", after: "sha256Hex", text: "const EXPECTATION_RT: Provenance = { path: EXPECTATION.path, sha256: sha256Hex(readFileSync(join(ROOT, EXPECTATION.path))) };" }, ...repointedTo("EXPECTATION_RT")],
+    [
+      `carried: ${readKey("const EXPECTATION_RT", L2G43_BINDING)} -> into the const EXPECTATION_RT`,
+      `carried: ${readKey("const EXPECTATION_RT", L2G43_BINDING)} -> into the const EXPECTATION_RT`,
+      ...L2G43_REPOINTED.map(read => `missing: ${read}`),
+      `unexpected: ${readKey("const EXPECTATION_RT", L2G43_BINDING)}`,
+      `unexpected: ${readKey("const EXPECTATION_RT", L2G43_BINDING)}`,
+    ],
+  ],
+  [
+    "L2G-47",
+    [{ op: "parameter", fn: "expectationFailures", text: `EXPECTATION: Provenance = ${SHADOW_INITIALIZER}` }],
+    READ_ROSTER[0][1].map(reader => `shadowed: ${readKey(READ_SITE_FAILURES, reader)} -> resolves to a parameter in ${READ_SITE_FAILURES}`),
+  ],
+  ["SHADOW-NESTED", [{ op: "prepend", site: READ_SITE_LIVE, text: `const EXPECTATION = ${SHADOW_INITIALIZER};` }], READ_ROSTER[1][1].map(reader => `shadowed: ${readKey(READ_SITE_LIVE, reader)} -> resolves to a const declaration in ${READ_SITE_LIVE}`)],
+  [
+    "ALIAS-CONST",
+    [{ op: "declare", after: "sha256Hex", text: "const PINNED_EXPECTATION: Provenance = EXPECTATION;" }, { op: "repoint", read: readKey(READ_SITE_ON_DISK, READ_PROVENANCE_EQUAL), to: "PINNED_EXPECTATION" }],
+    [
+      `carried: ${readKey("const PINNED_EXPECTATION", "PINNED_EXPECTATION: Provenance = EXPECTATION")} -> into the const PINNED_EXPECTATION`,
+      `missing: ${readKey(READ_SITE_ON_DISK, READ_PROVENANCE_EQUAL)}`,
+      `unexpected: ${readKey("const PINNED_EXPECTATION", "PINNED_EXPECTATION: Provenance = EXPECTATION")}`,
+    ],
+  ],
+  [
+    "ALIAS-DESTRUCTURE",
+    [{ op: "declare", after: "sha256Hex", text: "const { sha256: PINNED_SHA256 } = EXPECTATION;" }, { op: "repoint", read: readKey(READ_SITE_FAILURES, READ_DIGEST_CHECK), to: "PINNED_SHA256" }],
+    [
+      `carried: ${readKey("const { sha256: PINNED_SHA256 }", "{ sha256: PINNED_SHA256 } = EXPECTATION")} -> into the const { sha256: PINNED_SHA256 }`,
+      `missing: ${readKey(READ_SITE_FAILURES, READ_DIGEST_CHECK)}`,
+      `unexpected: ${readKey("const { sha256: PINNED_SHA256 }", "{ sha256: PINNED_SHA256 } = EXPECTATION")}`,
+    ],
+  ],
+  [
+    "ALIAS-SPREAD",
+    [{ op: "declare", after: "sha256Hex", text: "const PINNED_SPREAD: Provenance = { ...EXPECTATION, sha256: sha256Hex(readFileSync(join(ROOT, OMXF_ANCHOR_FILE))) };" }, { op: "repoint", read: readKey(READ_SITE_FAILURES, READ_DIGEST_CHECK), to: "PINNED_SPREAD.sha256" }],
+    [
+      `carried: ${readKey("const PINNED_SPREAD", "PINNED_SPREAD: Provenance = { ...EXPECTATION, sha256: sha256Hex(readFileSync(join(ROOT, OMXF_ANCHOR_FILE))) }")} -> into the const PINNED_SPREAD`,
+      `missing: ${readKey(READ_SITE_FAILURES, READ_DIGEST_CHECK)}`,
+      `unexpected: ${readKey("const PINNED_SPREAD", "PINNED_SPREAD: Provenance = { ...EXPECTATION, sha256: sha256Hex(readFileSync(join(ROOT, OMXF_ANCHOR_FILE))) }")}`,
+    ],
+  ],
+  [
+    "ALIAS-ARROW",
+    [{ op: "declare", after: "sha256Hex", text: "const pinnedExpectation = (): Provenance => EXPECTATION;" }, { op: "repoint", read: readKey(READ_SITE_LIVE, READ_PROVENANCE_EQUAL), to: "pinnedExpectation()" }],
+    [
+      `carried: ${readKey("const pinnedExpectation", "(): Provenance => EXPECTATION")} -> into an arrow function's result`,
+      `missing: ${readKey(READ_SITE_LIVE, READ_PROVENANCE_EQUAL)}`,
+      `unexpected: ${readKey("const pinnedExpectation", "(): Provenance => EXPECTATION")}`,
+    ],
+  ],
+  ["STANDIN", [{ op: "declare", after: "sha256Hex", text: STANDIN_TEXT }, ...repointedTo("PINNED_PROVENANCE")], L2G43_REPOINTED.map(read => `missing: ${read}`)],
+  [
+    "HOLLOW-COMPARATOR",
+    [{ op: "repoint", read: readKey(READ_SITE_FAILURES, READ_DIGEST_CHECK), to: "EXPECTATION.sha256 && expectation.provenance.sha256 !== sha256Hex(readFileSync(join(ROOT, OMXF_ANCHOR_FILE)))" }],
+    [`missing: ${readKey(READ_SITE_FAILURES, READ_DIGEST_CHECK)}`, `unexpected: ${readKey(READ_SITE_FAILURES, `${READ_DIGEST_CHECK} && expectation.provenance.sha256 !== sha256Hex(readFileSync(join(ROOT, OMXF_ANCHOR_FILE)))`)}`],
+  ],
+];
+/** A named residual of the reads pin: its family, the READS row whose edits its page applies, and its quiet and runtime readings. */
+interface ReadsResidual {
+  readonly id: string;
+  readonly family: string;
+  readonly form: string;
+  readonly reading: string;
+  readonly runtime: string;
+}
+const LYBR_RESIDUALS: readonly ReadsResidual[] = [
+  {
+    id: "R-COORDINATED-READER-ROSTER",
+    family:
+      "a coordinated edit of a reader and the reads roster with its anchor: a read of EXPECTATION re-pointed to a stand-in that never names EXPECTATION, the roster, its frozen shape and the fixture's readRoster dropping that read (any READS row keyed on it rewritten alike) and the EXPECTATION sha256 literal moved to the new fixture bytes",
+    form: "STANDIN",
+    reading: "quiet: the reads pin draws no line over the page's source against the page's roster (every read left resolves to the literal, none is carried, the roster names exactly the reads left), and the literal-shape pin reads the moved literal as it reads the pinned one",
+    runtime:
+      "quiet: with a reader re-pointed, the roster, its frozen shape and the fixture's readRoster edited alike and the EXPECTATION sha256 literal moved, the whole census reads green (ANCHOR, ROSTER, every READS row, LIVE, every PROVENANCE check and the LITERAL rows); no reading in this file tells a reviewed re-point from a hollowing one, so the edit is the review: its diff drops the read from the fixture's readRoster and moves the literal",
+  },
+];
+interface ReadsAnchor {
+  readonly readRoster: readonly ReadRosterRow[];
+  readonly readerRows: readonly ReadsRow[];
+  readonly readerResiduals: readonly ReadsResidual[];
+}
+/** The reads tables out of file: the fixture's own, read behind its pinned provenance (expectedTables refuses any other read). */
+function readsAnchor(expectation: Sourced): ReadsAnchor {
+  const tables: unknown = expectedTables(expectation);
+  if (!isRecord(tables) || ![tables.readRoster, tables.readerRows, tables.readerResiduals].every(Array.isArray)) throw new Error(`${OMXF_ANCHOR_FILE}: missing the reads roster, reads row or reads residual anchor`);
+  return tables as unknown as ReadsAnchor;
+}
+const LYBR_JUDGED: string[] = [];
+
+describe("wb-lybr every read of EXPECTATION resolves to the literal identifier (this file's own AST and checker; L2G-43 READER-REPOINT red-first)", () => {
+  it("ANCHOR (wb-lybr): the committed source's reads of EXPECTATION, by site, are exactly the roster and its out-of-file anchor (the fixture's readRoster, read behind its pinned provenance), and the reads pin draws no line against that anchor", () => {
+    const tables = readsAnchor(readPair(ROOT).expectation);
+    const reading = expectationReads(readRepo(SELF), tables.readRoster);
+    expect(reading.lines, reading.lines.join(" | ")).toEqual([]);
+    expect(reading.bySite).toEqual(tables.readRoster);
+    expect(reading.bySite).toEqual(READ_ROSTER);
+    LYBR_JUDGED.push("ANCHOR");
+  });
+
+  it.each(LYBR_READS)("READS %s (wb-lybr): this file's own AST and checker judge every read of EXPECTATION - ROSTER, the committed source: each resolves to the module-scope literal, none is carried into a binding, and the reads are the roster; a falsifier, its edits applied in memory by AST position (parsed and bound, never run): exactly its lines", (id, edits, lines) => {
+    const own = readRepo(SELF);
+    const page = edits === null ? own : edits.reduce((source, edit) => withReadsEdit(source, edit), own);
+    expect(page === own, `${id}: only ROSTER reads the committed source unedited`).toBe(edits === null);
+    const reading = expectationReads(page, READ_ROSTER);
+    expect(reading.lines, `${id}: ${reading.lines.join(" | ")}`).toEqual(lines);
+    LYBR_JUDGED.push(`READS ${id}`);
+  });
+
+  it("RESIDUAL R-COORDINATED-READER-ROSTER quiet row (wb-lybr, the named residual above the reads roster): readers re-pointed to a stand-in, the roster dropping them and the EXPECTATION literal moved read quiet here, and the row reds when its page stops carrying any part of that edit", () => {
+    const residual = LYBR_RESIDUALS[0];
+    expect(residual.id, "this quiet row judges its own family, never another index").toBe("R-COORDINATED-READER-ROSTER");
+    const standIn = LYBR_READS.find(([id]) => id === residual.form)?.[1];
+    if (standIn === undefined || standIn === null) throw new Error(`${residual.id}: ${residual.form} is not a READS falsifier`);
+    const own = readRepo(SELF);
+    const repointed = standIn.flatMap(edit => (edit.op === "repoint" ? [edit.read] : []));
+    const roster = READ_ROSTER.map(([site, readers]): ReadRosterRow => [site, readers.filter(reader => !repointed.includes(readKey(site, reader)))]).filter(([, readers]) => readers.length > 0);
+    const pinned = expectationLiteral(own).pin;
+    const literal = "f".repeat(64);
+    const source = withExpectationProperty(
+      standIn.reduce((page, edit) => withReadsEdit(page, edit), own),
+      "sha256",
+      JSON.stringify(literal),
+    );
+    // Liveness: the page carries the family's whole edit - the readers re-pointed, the roster dropping them, the literal moved.
+    expect(repointed.length, "the page re-points readers").toBeGreaterThan(0);
+    expect(
+      expectationReads(source, READ_ROSTER).lines,
+      "the page's source no longer holds the re-pointed reads",
+    ).toEqual(repointed.map(read => `missing: ${read}`));
+    expect(roster.flatMap(([, readers]) => readers), "the page's roster drops exactly those reads").toHaveLength(READ_ROSTER.flatMap(([, readers]) => readers).length - repointed.length);
+    expect(literal, "the page moves the literal").not.toBe(pinned?.sha256);
+    // The quiet reading: no line against the page's roster, and the moved literal read as the pinned one is.
+    expect(expectationReads(source, roster).lines).toEqual([]);
+    expect(expectationLiteral(source)).toEqual({ findings: [], pin: { path: pinned?.path, sha256: literal } });
+    LYBR_JUDGED.push(`RESIDUAL ${residual.id}`);
+  });
+
+  it("READS FROZEN SHAPE (wb-lybr): every judged member reaches its last assertion; the roster, the READS table and the residual roster are frozen here and equal to their out-of-file anchors", () => {
+    expect(READ_ROSTER.map(([site, readers]) => `${site}:${readers.length}`)).toEqual([
+      "function expectationFailures:4", "it LIVE (R695 (a)):2", "it ON-DISK %s:1", "it LITERAL %s (R696 (1)):1", "it RESIDUAL R-COORDINATED-LITERAL-AND-ANCHOR quiet row (R696 (3), the named residual above the literal pin):3",
+    ]);
+    expect(LYBR_READS.map(([id, edits, lines]) => `${id}:${edits?.length ?? "-"}:${lines.length}`)).toEqual([
+      "ROSTER:-:0", "L2G-43:5:8", "L2G-47:1:4", "SHADOW-NESTED:1:2", "ALIAS-CONST:2:3", "ALIAS-DESTRUCTURE:2:3", "ALIAS-SPREAD:2:3", "ALIAS-ARROW:2:3", "STANDIN:5:4", "HOLLOW-COMPARATOR:1:2",
+    ]);
+    expect(LYBR_RESIDUALS.map(residual => `${residual.id}:${residual.form}`)).toEqual(["R-COORDINATED-READER-ROSTER:STANDIN"]);
+    expect(LYBR_JUDGED).toEqual(["ANCHOR", ...LYBR_READS.map(([id]) => `READS ${id}`), ...LYBR_RESIDUALS.map(({ id }) => `RESIDUAL ${id}`)]);
+    const tables = readsAnchor(readPair(ROOT).expectation);
+    expect(READ_ROSTER).toEqual(tables.readRoster);
+    expect(LYBR_READS).toEqual(tables.readerRows);
+    expect(LYBR_RESIDUALS).toEqual(tables.readerResiduals);
   });
 });

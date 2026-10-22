@@ -1,5 +1,5 @@
 {
-  "source": "wb-omxf R677 claim-base d75b68d10a1a3a183d6fb7a55088f38f86c018a2; full docs19 section and wb-1z3u falsifier tables; R695 Q2 cut #2: the R677 F1 survivors judged on disk, the provenance falsifiers with the kinds the judge draws, and the R695 (d) budgeted report rows; R696 cut #3: the literal-shape rows (PIN, the committed source, and the falsifiers: EXPECTATION property, replacement, findings) and the named residual R-COORDINATED-LITERAL-AND-ANCHOR (id, family, form, reading, runtime)",
+  "source": "wb-omxf R677 claim-base d75b68d10a1a3a183d6fb7a55088f38f86c018a2; full docs19 section and wb-1z3u falsifier tables; R695 Q2 cut #2: the R677 F1 survivors judged on disk, the provenance falsifiers with the kinds the judge draws, and the R695 (d) budgeted report rows; R696 cut #3: the literal-shape rows (PIN, the committed source, and the falsifiers: EXPECTATION property, replacement, findings) and the named residual R-COORDINATED-LITERAL-AND-ANCHOR (id, family, form, reading, runtime); wb-lybr (R699 Q3, the landing-247 F1 follow-up): the reads of EXPECTATION - the roster (site, readers in source order), the READS rows (id, AST-located edits of the census source, the lines the reads pin must draw) and the named residual R-COORDINATED-READER-ROSTER (id, family, form, reading, runtime)",
   "sectionMarkdown": "## Measured experimental read example\n\nUnlike the proposed `hyperunix.query` example above, the registered operation is currently `hyperunix.find`. In `.pi/subagents.json`, explicitly select the Claude workflow backend and grant only `hyperunix:read`.\n\n```javascript\nexport const meta = {name: \"inspect-source\", description: \"Read native coverage\"};\nconst found = await node(\"hyperunix.find\", {kind: \"hx.fs/regular-file\", root: \"src\"});\nreturn {coverage: found.source.coverage_summary, runtime: found.runtime};\n```\n\nThe native result can be incomplete even when files are returned. `licenses_absence: false` does not establish that a missing file or symbol is absent. This query is a filesystem read, not a task-scoped semantic dependency analysis.\n\n`furnace.run.inspect` accepts an existing `runId` under the authorized Pi workspace with explicit `furnace:inspect`. `reactivefiber.render.preview` accepts exactly one of two input arms under explicit `reactivefiber:render`: `model` and `task`, or `view` and `taskId` with an optional `model`, never both; its workspace must already be initialized. It uses a noncommitted render and must not be advertised as a durable RF artifact.\n",
   "d19": [
     [
@@ -307,6 +307,260 @@
       "form": "G-D19-PARA-BEFORE-UNNAMED",
       "reading": "quiet: the literal-shape pin reads a moved 64-hex string literal exactly as it reads the pinned one, and the delivered judge's only finding on the page's docs/19 and fixture is PROVENANCE expectation-digest, the literal the edit moves",
       "runtime": "quiet: with docs/19, the fixture and the EXPECTATION sha256 literal edited together, the whole census reads green (LIVE, every PROVENANCE check, FULL-SLICE and the LITERAL rows); no reading in this file tells a reviewed coordinated edit from drift, so the edit is the review: its diff moves the literal"
+    }
+  ],
+  "readRoster": [
+    [
+      "function expectationFailures",
+      [
+        "expectation.provenance.path !== EXPECTATION.path",
+        "template EXPECTATION.path",
+        "expectation.provenance.sha256 !== EXPECTATION.sha256",
+        "template EXPECTATION.sha256"
+      ]
+    ],
+    [
+      "it LIVE (R695 (a))",
+      [
+        "expect(expectation.provenance).toEqual(EXPECTATION)",
+        "expect(EXPECTATION).toEqual({ path: \"test/fixtures/docs19-full-section-omxf.json\", sha256: createHash(\"sha256\").update(readFileSync(join(ROOT, OMXF_ANCHOR_FILE))).digest(\"hex\") })"
+      ]
+    ],
+    [
+      "it ON-DISK %s",
+      [
+        "expect(expectation.provenance).toEqual(EXPECTATION)"
+      ]
+    ],
+    [
+      "it LITERAL %s (R696 (1))",
+      [
+        "expect(reading.pin, `...`).toEqual(edit === null ? EXPECTATION : undefined)"
+      ]
+    ],
+    [
+      "it RESIDUAL R-COORDINATED-LITERAL-AND-ANCHOR quiet row (R696 (3), the named residual above the literal pin)",
+      [
+        "expect(page.expectation.provenance.sha256, \"the fixture carries the edit\").not.toBe(EXPECTATION.sha256)",
+        "expect(moved, \"the page moves the literal\").not.toBe(EXPECTATION.sha256)",
+        "expect(expectationLiteral(page.source)).toEqual({ findings: [], pin: { path: EXPECTATION.path, sha256: moved } })"
+      ]
+    ]
+  ],
+  "readerRows": [
+    [
+      "ROSTER",
+      null,
+      []
+    ],
+    [
+      "L2G-43",
+      [
+        {
+          "op": "declare",
+          "after": "sha256Hex",
+          "text": "const EXPECTATION_RT: Provenance = { path: EXPECTATION.path, sha256: sha256Hex(readFileSync(join(ROOT, EXPECTATION.path))) };"
+        },
+        {
+          "op": "repoint",
+          "read": "function expectationFailures | expectation.provenance.sha256 !== EXPECTATION.sha256",
+          "to": "EXPECTATION_RT.sha256"
+        },
+        {
+          "op": "repoint",
+          "read": "it LIVE (R695 (a)) | expect(expectation.provenance).toEqual(EXPECTATION)",
+          "to": "EXPECTATION_RT"
+        },
+        {
+          "op": "repoint",
+          "read": "it LIVE (R695 (a)) | expect(EXPECTATION).toEqual({ path: \"test/fixtures/docs19-full-section-omxf.json\", sha256: createHash(\"sha256\").update(readFileSync(join(ROOT, OMXF_ANCHOR_FILE))).digest(\"hex\") })",
+          "to": "EXPECTATION_RT"
+        },
+        {
+          "op": "repoint",
+          "read": "it ON-DISK %s | expect(expectation.provenance).toEqual(EXPECTATION)",
+          "to": "EXPECTATION_RT"
+        }
+      ],
+      [
+        "carried: const EXPECTATION_RT | EXPECTATION_RT: Provenance = { path: EXPECTATION.path, sha256: sha256Hex(readFileSync(join(ROOT, EXPECTATION.path))) } -> into the const EXPECTATION_RT",
+        "carried: const EXPECTATION_RT | EXPECTATION_RT: Provenance = { path: EXPECTATION.path, sha256: sha256Hex(readFileSync(join(ROOT, EXPECTATION.path))) } -> into the const EXPECTATION_RT",
+        "missing: function expectationFailures | expectation.provenance.sha256 !== EXPECTATION.sha256",
+        "missing: it LIVE (R695 (a)) | expect(expectation.provenance).toEqual(EXPECTATION)",
+        "missing: it LIVE (R695 (a)) | expect(EXPECTATION).toEqual({ path: \"test/fixtures/docs19-full-section-omxf.json\", sha256: createHash(\"sha256\").update(readFileSync(join(ROOT, OMXF_ANCHOR_FILE))).digest(\"hex\") })",
+        "missing: it ON-DISK %s | expect(expectation.provenance).toEqual(EXPECTATION)",
+        "unexpected: const EXPECTATION_RT | EXPECTATION_RT: Provenance = { path: EXPECTATION.path, sha256: sha256Hex(readFileSync(join(ROOT, EXPECTATION.path))) }",
+        "unexpected: const EXPECTATION_RT | EXPECTATION_RT: Provenance = { path: EXPECTATION.path, sha256: sha256Hex(readFileSync(join(ROOT, EXPECTATION.path))) }"
+      ]
+    ],
+    [
+      "L2G-47",
+      [
+        {
+          "op": "parameter",
+          "fn": "expectationFailures",
+          "text": "EXPECTATION: Provenance = { path: OMXF_ANCHOR_FILE, sha256: sha256Hex(readFileSync(join(ROOT, OMXF_ANCHOR_FILE))) }"
+        }
+      ],
+      [
+        "shadowed: function expectationFailures | expectation.provenance.path !== EXPECTATION.path -> resolves to a parameter in function expectationFailures",
+        "shadowed: function expectationFailures | template EXPECTATION.path -> resolves to a parameter in function expectationFailures",
+        "shadowed: function expectationFailures | expectation.provenance.sha256 !== EXPECTATION.sha256 -> resolves to a parameter in function expectationFailures",
+        "shadowed: function expectationFailures | template EXPECTATION.sha256 -> resolves to a parameter in function expectationFailures"
+      ]
+    ],
+    [
+      "SHADOW-NESTED",
+      [
+        {
+          "op": "prepend",
+          "site": "it LIVE (R695 (a))",
+          "text": "const EXPECTATION = { path: OMXF_ANCHOR_FILE, sha256: sha256Hex(readFileSync(join(ROOT, OMXF_ANCHOR_FILE))) };"
+        }
+      ],
+      [
+        "shadowed: it LIVE (R695 (a)) | expect(expectation.provenance).toEqual(EXPECTATION) -> resolves to a const declaration in it LIVE (R695 (a))",
+        "shadowed: it LIVE (R695 (a)) | expect(EXPECTATION).toEqual({ path: \"test/fixtures/docs19-full-section-omxf.json\", sha256: createHash(\"sha256\").update(readFileSync(join(ROOT, OMXF_ANCHOR_FILE))).digest(\"hex\") }) -> resolves to a const declaration in it LIVE (R695 (a))"
+      ]
+    ],
+    [
+      "ALIAS-CONST",
+      [
+        {
+          "op": "declare",
+          "after": "sha256Hex",
+          "text": "const PINNED_EXPECTATION: Provenance = EXPECTATION;"
+        },
+        {
+          "op": "repoint",
+          "read": "it ON-DISK %s | expect(expectation.provenance).toEqual(EXPECTATION)",
+          "to": "PINNED_EXPECTATION"
+        }
+      ],
+      [
+        "carried: const PINNED_EXPECTATION | PINNED_EXPECTATION: Provenance = EXPECTATION -> into the const PINNED_EXPECTATION",
+        "missing: it ON-DISK %s | expect(expectation.provenance).toEqual(EXPECTATION)",
+        "unexpected: const PINNED_EXPECTATION | PINNED_EXPECTATION: Provenance = EXPECTATION"
+      ]
+    ],
+    [
+      "ALIAS-DESTRUCTURE",
+      [
+        {
+          "op": "declare",
+          "after": "sha256Hex",
+          "text": "const { sha256: PINNED_SHA256 } = EXPECTATION;"
+        },
+        {
+          "op": "repoint",
+          "read": "function expectationFailures | expectation.provenance.sha256 !== EXPECTATION.sha256",
+          "to": "PINNED_SHA256"
+        }
+      ],
+      [
+        "carried: const { sha256: PINNED_SHA256 } | { sha256: PINNED_SHA256 } = EXPECTATION -> into the const { sha256: PINNED_SHA256 }",
+        "missing: function expectationFailures | expectation.provenance.sha256 !== EXPECTATION.sha256",
+        "unexpected: const { sha256: PINNED_SHA256 } | { sha256: PINNED_SHA256 } = EXPECTATION"
+      ]
+    ],
+    [
+      "ALIAS-SPREAD",
+      [
+        {
+          "op": "declare",
+          "after": "sha256Hex",
+          "text": "const PINNED_SPREAD: Provenance = { ...EXPECTATION, sha256: sha256Hex(readFileSync(join(ROOT, OMXF_ANCHOR_FILE))) };"
+        },
+        {
+          "op": "repoint",
+          "read": "function expectationFailures | expectation.provenance.sha256 !== EXPECTATION.sha256",
+          "to": "PINNED_SPREAD.sha256"
+        }
+      ],
+      [
+        "carried: const PINNED_SPREAD | PINNED_SPREAD: Provenance = { ...EXPECTATION, sha256: sha256Hex(readFileSync(join(ROOT, OMXF_ANCHOR_FILE))) } -> into the const PINNED_SPREAD",
+        "missing: function expectationFailures | expectation.provenance.sha256 !== EXPECTATION.sha256",
+        "unexpected: const PINNED_SPREAD | PINNED_SPREAD: Provenance = { ...EXPECTATION, sha256: sha256Hex(readFileSync(join(ROOT, OMXF_ANCHOR_FILE))) }"
+      ]
+    ],
+    [
+      "ALIAS-ARROW",
+      [
+        {
+          "op": "declare",
+          "after": "sha256Hex",
+          "text": "const pinnedExpectation = (): Provenance => EXPECTATION;"
+        },
+        {
+          "op": "repoint",
+          "read": "it LIVE (R695 (a)) | expect(expectation.provenance).toEqual(EXPECTATION)",
+          "to": "pinnedExpectation()"
+        }
+      ],
+      [
+        "carried: const pinnedExpectation | (): Provenance => EXPECTATION -> into an arrow function's result",
+        "missing: it LIVE (R695 (a)) | expect(expectation.provenance).toEqual(EXPECTATION)",
+        "unexpected: const pinnedExpectation | (): Provenance => EXPECTATION"
+      ]
+    ],
+    [
+      "STANDIN",
+      [
+        {
+          "op": "declare",
+          "after": "sha256Hex",
+          "text": "const PINNED_PROVENANCE: Provenance = { path: OMXF_ANCHOR_FILE, sha256: sha256Hex(readFileSync(join(ROOT, OMXF_ANCHOR_FILE))) };"
+        },
+        {
+          "op": "repoint",
+          "read": "function expectationFailures | expectation.provenance.sha256 !== EXPECTATION.sha256",
+          "to": "PINNED_PROVENANCE.sha256"
+        },
+        {
+          "op": "repoint",
+          "read": "it LIVE (R695 (a)) | expect(expectation.provenance).toEqual(EXPECTATION)",
+          "to": "PINNED_PROVENANCE"
+        },
+        {
+          "op": "repoint",
+          "read": "it LIVE (R695 (a)) | expect(EXPECTATION).toEqual({ path: \"test/fixtures/docs19-full-section-omxf.json\", sha256: createHash(\"sha256\").update(readFileSync(join(ROOT, OMXF_ANCHOR_FILE))).digest(\"hex\") })",
+          "to": "PINNED_PROVENANCE"
+        },
+        {
+          "op": "repoint",
+          "read": "it ON-DISK %s | expect(expectation.provenance).toEqual(EXPECTATION)",
+          "to": "PINNED_PROVENANCE"
+        }
+      ],
+      [
+        "missing: function expectationFailures | expectation.provenance.sha256 !== EXPECTATION.sha256",
+        "missing: it LIVE (R695 (a)) | expect(expectation.provenance).toEqual(EXPECTATION)",
+        "missing: it LIVE (R695 (a)) | expect(EXPECTATION).toEqual({ path: \"test/fixtures/docs19-full-section-omxf.json\", sha256: createHash(\"sha256\").update(readFileSync(join(ROOT, OMXF_ANCHOR_FILE))).digest(\"hex\") })",
+        "missing: it ON-DISK %s | expect(expectation.provenance).toEqual(EXPECTATION)"
+      ]
+    ],
+    [
+      "HOLLOW-COMPARATOR",
+      [
+        {
+          "op": "repoint",
+          "read": "function expectationFailures | expectation.provenance.sha256 !== EXPECTATION.sha256",
+          "to": "EXPECTATION.sha256 && expectation.provenance.sha256 !== sha256Hex(readFileSync(join(ROOT, OMXF_ANCHOR_FILE)))"
+        }
+      ],
+      [
+        "missing: function expectationFailures | expectation.provenance.sha256 !== EXPECTATION.sha256",
+        "unexpected: function expectationFailures | expectation.provenance.sha256 !== EXPECTATION.sha256 && expectation.provenance.sha256 !== sha256Hex(readFileSync(join(ROOT, OMXF_ANCHOR_FILE)))"
+      ]
+    ]
+  ],
+  "readerResiduals": [
+    {
+      "id": "R-COORDINATED-READER-ROSTER",
+      "family": "a coordinated edit of a reader and the reads roster with its anchor: a read of EXPECTATION re-pointed to a stand-in that never names EXPECTATION, the roster, its frozen shape and the fixture's readRoster dropping that read (any READS row keyed on it rewritten alike) and the EXPECTATION sha256 literal moved to the new fixture bytes",
+      "form": "STANDIN",
+      "reading": "quiet: the reads pin draws no line over the page's source against the page's roster (every read left resolves to the literal, none is carried, the roster names exactly the reads left), and the literal-shape pin reads the moved literal as it reads the pinned one",
+      "runtime": "quiet: with a reader re-pointed, the roster, its frozen shape and the fixture's readRoster edited alike and the EXPECTATION sha256 literal moved, the whole census reads green (ANCHOR, ROSTER, every READS row, LIVE, every PROVENANCE check and the LITERAL rows); no reading in this file tells a reviewed re-point from a hollowing one, so the edit is the review: its diff drops the read from the fixture's readRoster and moves the literal"
     }
   ]
 }
