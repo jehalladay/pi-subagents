@@ -1,0 +1,1238 @@
+{
+  "comment": "wb-e3eh roster (ruling R697's duty on the wb-561n gate cmd_2d8fd0925489, PREP F1): the OUT-OF-FILE anchor of the wb-e3eh section of test/workbench-claude-message-ref.test.ts. probeSource names the gate's archived probe file; f1Escapes is the gate's F1 list of 33 forms in its probe order (32 read quiet, GP4X-ARRAY-ELEMENT refused only through 'unresolved key'); boundSpellings are its six NAMED BOUND probe spellings; rows are the pinned refusals (id, pin, form, sites, causes, and the digest of id, pin, form, sites, causes and every placement text); residuals are the named quiet rows (id, pin, family, sites, reading, digest): the six F1 forms named here, the bound's six spellings, then every wb-561n quiet row re-read; twins are the benign paired twins (id, pin, form, sites, reading, digest), this cut's 27 then every wb-561n twin re-read. Refusal and residual placements are the gate's probe texts verbatim; no class-wide closure claim.",
+  "probeSource": "gp1-probes.json sha256 7630a0938c4e7ce987fe688f36775a0e0f4bfd99a22e896e9b622572f657e118 (gate-prep-1 g10-gate-s17 PREP archive scripts/)",
+  "sites": [
+    "S1",
+    "S2"
+  ],
+  "f1Escapes": [
+    "GP5X-LOGICAL-AND",
+    "GP5X-LOGICAL-OR",
+    "GP5X-NULLISH",
+    "GP5X-ARRAY-DESTRUCT",
+    "GP5X-PARAM-ALIAS",
+    "GP5X-FOROF-VARIABLE",
+    "GP5X-OBJECT-PROPERTY",
+    "GP5X-ARRAY-ELEMENT",
+    "GP5X-ASSIGN-EXPR",
+    "GP5X-OBJECT-WRAP",
+    "GP5X-HELPER-RETURN",
+    "GP5X-GLOBAL-ALIAS",
+    "GP5X-DEFINE-GETTER-CALL",
+    "GP5X-ENTRIES-SLOT",
+    "GP5X-ARRAY-OF-SPREAD",
+    "GP5X-CALL-CALL",
+    "GP4X-LOGICAL-AND",
+    "GP4X-LOGICAL-OR",
+    "GP4X-NULLISH",
+    "GP4X-ARRAY-DESTRUCT",
+    "GP4X-OBJECT-PROPERTY",
+    "GP4X-PARAM-ALIAS",
+    "GP4X-FOREACH-PARAM",
+    "GP4X-FOROF-VARIABLE",
+    "GP4X-DEFINEPROPERTY-RETURN",
+    "GP4X-OBJECT-WRAP",
+    "GP4X-ARRAY-ELEMENT",
+    "GP4X-ASSIGN-EXPR",
+    "GP4X-ARRAY-OF-SPREAD",
+    "GP4X-HELPER-RETURN",
+    "GP4X-GLOBAL-ALIAS",
+    "GP4X-CALL-CALL",
+    "GP4X-REFLECT-SETPROTO"
+  ],
+  "requiredF1": 33,
+  "boundSpellings": [
+    "GP5B-VAR-ALIAS",
+    "GP5B-SHADOWED",
+    "GP5B-AFTER-USE",
+    "GP4B-VAR-ALIAS",
+    "GP4B-SHADOWED",
+    "GP4B-AFTER-USE"
+  ],
+  "rows": [
+    {
+      "id": "GP5X-LOGICAL-AND",
+      "pin": "P5",
+      "form": "a logical-and target has the prototype as its right operand",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "de4bd5bd86fec21e"
+    },
+    {
+      "id": "GP5X-LOGICAL-OR",
+      "pin": "P5",
+      "form": "a logical-or target has the prototype as its left operand",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "da67787fd155a785"
+    },
+    {
+      "id": "GP5X-NULLISH",
+      "pin": "P5",
+      "form": "a nullish-coalescing target has the prototype as its left operand",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "fe83b045bdcb3797"
+    },
+    {
+      "id": "GP5X-ARRAY-DESTRUCT",
+      "pin": "P5",
+      "form": "an array-binding const alias of Object.prototype receives a parsed bulk write",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "25a7153a81c689b3"
+    },
+    {
+      "id": "GP5X-FOROF-VARIABLE",
+      "pin": "P5",
+      "form": "a const for-of variable over an array literal holding the prototype receives a parsed bulk write",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "2a3c725cb1368e80"
+    },
+    {
+      "id": "GP5X-OBJECT-PROPERTY",
+      "pin": "P5",
+      "form": "a property of a const object literal holding the prototype receives a parsed bulk write",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "cd46f218bfebdd7a"
+    },
+    {
+      "id": "GP5X-ARRAY-ELEMENT",
+      "pin": "P5",
+      "form": "a numeric-literal element of an array literal holding the prototype receives a parsed bulk write",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "f67f2e9bd44caf5e"
+    },
+    {
+      "id": "GP5X-ASSIGN-EXPR",
+      "pin": "P5",
+      "form": "an assignment-expression target evaluates to the prototype",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "0eed49393a31890e"
+    },
+    {
+      "id": "GP5X-OBJECT-WRAP",
+      "pin": "P5",
+      "form": "the prototype passed through Object(...) receives a parsed bulk write",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "27a1ab699b32e5d7"
+    },
+    {
+      "id": "GP5X-GLOBAL-ALIAS",
+      "pin": "P5",
+      "form": "a member of the prototype spelled through global is assigned",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "3554581167d3ddbb"
+    },
+    {
+      "id": "GP5X-DEFINE-GETTER-CALL",
+      "pin": "P5",
+      "form": "the legacy __defineGetter__ accessor API, reached through .call, defines a prototype member",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "20d098f5499c02ac"
+    },
+    {
+      "id": "GP5X-ENTRIES-SLOT",
+      "pin": "P5",
+      "form": "Object.fromEntries over Object.entries of a literal carries the Object prototype slot into Object.assign",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "7dfaf1dea0799048"
+    },
+    {
+      "id": "GP5X-ARRAY-OF-SPREAD",
+      "pin": "P5",
+      "form": "the spread of Array.of(...) carries the prototype and parsed data into Object.assign",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "6a1235bc17a0e784"
+    },
+    {
+      "id": "GP5X-CALL-CALL",
+      "pin": "P5",
+      "form": "Object.assign reached through Function.prototype.call.call bulk-writes the prototype",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "1c0cd30e237017e1"
+    },
+    {
+      "id": "GP4X-LOGICAL-AND",
+      "pin": "P4",
+      "form": "a logical-and target has snapshot as its right operand",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "data-carried snapshot write"
+      ],
+      "digest": "5439def8907b8d88"
+    },
+    {
+      "id": "GP4X-LOGICAL-OR",
+      "pin": "P4",
+      "form": "a logical-or target has snapshot as its left operand",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "data-carried snapshot write"
+      ],
+      "digest": "b96117878dfa544d"
+    },
+    {
+      "id": "GP4X-NULLISH",
+      "pin": "P4",
+      "form": "a nullish-coalescing target has snapshot as its left operand",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "data-carried snapshot write"
+      ],
+      "digest": "81c3170ca788637d"
+    },
+    {
+      "id": "GP4X-ARRAY-DESTRUCT",
+      "pin": "P4",
+      "form": "an array-binding const alias of snapshot receives parsed data",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "data-carried snapshot write"
+      ],
+      "digest": "b7beb7f48bf4f787"
+    },
+    {
+      "id": "GP4X-OBJECT-PROPERTY",
+      "pin": "P4",
+      "form": "a property of a const object literal holding snapshot receives parsed data",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "data-carried snapshot write"
+      ],
+      "digest": "4e0e7cdd140c3c6c"
+    },
+    {
+      "id": "GP4X-FOROF-VARIABLE",
+      "pin": "P4",
+      "form": "a const for-of variable over an array literal holding snapshot receives parsed data",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "data-carried snapshot write"
+      ],
+      "digest": "d6e19e211a599edc"
+    },
+    {
+      "id": "GP4X-DEFINEPROPERTY-RETURN",
+      "pin": "P4",
+      "form": "the target is the snapshot Object.defineProperty returns",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "data-carried snapshot write"
+      ],
+      "digest": "f672346f63ee25de"
+    },
+    {
+      "id": "GP4X-OBJECT-WRAP",
+      "pin": "P4",
+      "form": "snapshot passed through Object(...) receives parsed data",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "data-carried snapshot write"
+      ],
+      "digest": "9fb384149fe16c72"
+    },
+    {
+      "id": "GP4X-ARRAY-ELEMENT",
+      "pin": "P4",
+      "form": "a numeric-literal element of an array literal holding snapshot receives parsed data, its key still unresolved",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "data-carried snapshot write",
+        "unresolved key"
+      ],
+      "digest": "65329ce0389a2426"
+    },
+    {
+      "id": "GP4X-ASSIGN-EXPR",
+      "pin": "P4",
+      "form": "an assignment-expression target evaluates to snapshot",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "data-carried snapshot write"
+      ],
+      "digest": "fe42878042492636"
+    },
+    {
+      "id": "GP4X-ARRAY-OF-SPREAD",
+      "pin": "P4",
+      "form": "the spread of Array.of(...) carries snapshot and parsed data into Object.assign",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "data-carried snapshot write"
+      ],
+      "digest": "82575a320799379e"
+    },
+    {
+      "id": "GP4X-GLOBAL-ALIAS",
+      "pin": "P4",
+      "form": "Object.assign owned through global writes parsed data into snapshot",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "data-carried snapshot write"
+      ],
+      "digest": "7e856ec6bec45297"
+    },
+    {
+      "id": "GP4X-CALL-CALL",
+      "pin": "P4",
+      "form": "Object.assign reached through Function.prototype.call.call writes parsed data into snapshot",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "data-carried snapshot write"
+      ],
+      "digest": "e53f2e2579e2cb07"
+    }
+  ],
+  "requiredRows": 27,
+  "residuals": [
+    {
+      "id": "R-GP5X-PARAM-ALIAS",
+      "pin": "P5",
+      "family": "a parameter binding: an immediately invoked arrow's parameter bound to Object.prototype, which the bound never follows",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "aea7392a45cd4f3f"
+    },
+    {
+      "id": "R-GP5X-HELPER-RETURN",
+      "pin": "P5",
+      "family": "a helper's return: the prototype returned by an arrow declared in the emitter, a call value the reading never follows",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "645cabcbbd7281fc"
+    },
+    {
+      "id": "R-GP4X-PARAM-ALIAS",
+      "pin": "P4",
+      "family": "a parameter binding: an immediately invoked arrow's parameter bound to snapshot, which the bound never follows",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "b1d4ee743477b525"
+    },
+    {
+      "id": "R-GP4X-FOREACH-PARAM",
+      "pin": "P4",
+      "family": "a parameter binding: a forEach callback's parameter over a list holding snapshot, which the bound never follows",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "1aa6014661b12b20"
+    },
+    {
+      "id": "R-GP4X-HELPER-RETURN",
+      "pin": "P4",
+      "family": "a helper's return: snapshot returned by an arrow declared in the callback, a call value the reading never follows",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "f28299ecfb5589f1"
+    },
+    {
+      "id": "R-GP4X-REFLECT-SETPROTO",
+      "pin": "P4",
+      "family": "no own-property write: the snapshot's prototype replaced by parsed data through Reflect.setPrototypeOf, an inherited read (the Reflect twin of R-L3-P4-SETPROTO)",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "4cbb3712b5f5a1ed"
+    },
+    {
+      "id": "R-GP5B-VAR-ALIAS",
+      "pin": "P5",
+      "family": "the named bound: a var alias of Object.prototype, a mutable alias the reading never follows",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "c75a72d13d87cff4"
+    },
+    {
+      "id": "R-GP5B-SHADOWED",
+      "pin": "P5",
+      "family": "the named bound: an alias of Object.prototype shadowed by a second binding of its name, so the reading follows neither",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "6650d008c36b15ae"
+    },
+    {
+      "id": "R-GP5B-AFTER-USE",
+      "pin": "P5",
+      "family": "the named bound: a const alias of Object.prototype declared after its use, which the reading never follows",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "30fb4673f40d1646"
+    },
+    {
+      "id": "R-GP4B-VAR-ALIAS",
+      "pin": "P4",
+      "family": "the named bound: a var alias of snapshot, a mutable alias the reading never follows",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "3a33f5c445753da1"
+    },
+    {
+      "id": "R-GP4B-SHADOWED",
+      "pin": "P4",
+      "family": "the named bound: an alias of snapshot shadowed by a second binding of its name, so the reading follows neither",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "0353e13a94922570"
+    },
+    {
+      "id": "R-GP4B-AFTER-USE",
+      "pin": "P4",
+      "family": "the named bound: a const alias of snapshot declared after its use, which the reading never follows",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "7d20f99df7477af8"
+    },
+    {
+      "id": "R-L3-P5-LET-ALIAS",
+      "pin": "P5",
+      "family": "the alias bound (F3): a let alias of Object.prototype, a mutable alias the reading never follows",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "21f1fe61497cb0c2"
+    },
+    {
+      "id": "R-L3-P5-MODULE-ALIAS",
+      "pin": "P5",
+      "family": "the alias bound (F3): a module-scope alias of Object.prototype, an external binding the reading never follows",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "07aeeff19e75f30b"
+    },
+    {
+      "id": "R-L3-P5-MODULE-OWNER",
+      "pin": "P5",
+      "family": "the alias bound (F3): a module-scope alias of the Object owner, an external binding the reading never follows",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "c72f1e89b1ff20bd"
+    },
+    {
+      "id": "R-L3-P4-LET-ALIAS",
+      "pin": "P4",
+      "family": "the alias bound (F3): a let alias of snapshot, a mutable alias the reading never follows",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "409395e7849998fe"
+    },
+    {
+      "id": "R-L3-P4-MODULE-ALIAS",
+      "pin": "P4",
+      "family": "the alias bound (F3): a module-scope alias of Object.assign, an external binding the reading never follows",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "25d1d9aef6b72cbe"
+    },
+    {
+      "id": "R-L3-P4-SETPROTO",
+      "pin": "P4",
+      "family": "exploratory, no own-property write: the snapshot's prototype replaced by parsed data, an inherited read",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "b8fd6a8b8273c9c8"
+    },
+    {
+      "id": "R-L3-P4-REASSIGN",
+      "pin": "P4",
+      "family": "exploratory, no own-property write: the snapshot parameter rebound to a fresh object carrying parsed data",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "2a0970afe1e35cc4"
+    },
+    {
+      "id": "R-HELPER-P4",
+      "pin": "P4",
+      "family": "a keyed pre-repair performed by a helper declared outside the callback",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "1ab78fe4fb37b512"
+    },
+    {
+      "id": "R-ARGS-P5",
+      "pin": "P5",
+      "family": "an in-place rewrite of the emitter's array argument through arguments",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "03b79547b5d2e9d5"
+    },
+    {
+      "id": "R-OUTSIDE-P5",
+      "pin": "P5",
+      "family": "an evidenceRefs supplied by code declared outside the emitter, a module-scope Object.prototype write",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "573943f641319a2a"
+    }
+  ],
+  "requiredQuietRows": 22,
+  "twins": [
+    {
+      "id": "T-GP5X-LOGICAL-AND",
+      "pin": "P5",
+      "form": "a logical-and target has no prototype operand",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "1e2fad5d6fc22f89"
+    },
+    {
+      "id": "T-GP5X-LOGICAL-OR",
+      "pin": "P5",
+      "form": "a logical-or target has no prototype operand",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "7a1e0d3029f6e8c3"
+    },
+    {
+      "id": "T-GP5X-NULLISH",
+      "pin": "P5",
+      "form": "a nullish-coalescing target has no prototype operand",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "3d640c4c91783cdf"
+    },
+    {
+      "id": "T-GP5X-ARRAY-DESTRUCT",
+      "pin": "P5",
+      "form": "an array-binding const alias takes the unrelated first element, not the prototype after it",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "55d081cf97024f4e"
+    },
+    {
+      "id": "T-GP5X-FOROF-VARIABLE",
+      "pin": "P5",
+      "form": "a const for-of variable over an array literal holding only an unrelated object",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "c4d9badd7fd5fa54"
+    },
+    {
+      "id": "T-GP5X-OBJECT-PROPERTY",
+      "pin": "P5",
+      "form": "a property of a const object literal names the unrelated member, not the prototype beside it",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "638bf8d996eece57"
+    },
+    {
+      "id": "T-GP5X-ARRAY-ELEMENT",
+      "pin": "P5",
+      "form": "a numeric-literal element names the unrelated first element, not the prototype after it",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "f78761b665b80035"
+    },
+    {
+      "id": "T-GP5X-ASSIGN-EXPR",
+      "pin": "P5",
+      "form": "an assignment-expression target evaluates to an unrelated object",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "cb35c004a688a58e"
+    },
+    {
+      "id": "T-GP5X-OBJECT-WRAP",
+      "pin": "P5",
+      "form": "an unrelated object passed through Object(...) receives a parsed bulk write",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "a7b7d9636b2de54b"
+    },
+    {
+      "id": "T-GP5X-GLOBAL-ALIAS",
+      "pin": "P5",
+      "form": "the prototype spelled through global is only read",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "c6918238cdc2c428"
+    },
+    {
+      "id": "T-GP5X-DEFINE-GETTER-CALL",
+      "pin": "P5",
+      "form": "__defineGetter__ reached through .call defines a member of an unrelated receiver",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "1800c4445647b4bd"
+    },
+    {
+      "id": "T-GP5X-ENTRIES-SLOT",
+      "pin": "P5",
+      "form": "Object.fromEntries over Object.entries of a literal without the prototype slot is assigned into Object",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "f98814875853f99b"
+    },
+    {
+      "id": "T-GP5X-ARRAY-OF-SPREAD",
+      "pin": "P5",
+      "form": "the spread of Array.of(...) carries an unrelated target and parsed data into Object.assign",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "030f404000fcb6b0"
+    },
+    {
+      "id": "T-GP5X-CALL-CALL",
+      "pin": "P5",
+      "form": "Object.assign reached through Function.prototype.call.call writes an unrelated target",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "5ac61e3c258dfc76"
+    },
+    {
+      "id": "T-GP4X-LOGICAL-AND",
+      "pin": "P4",
+      "form": "a logical-and target has no snapshot operand",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "77d0fbb065f0376d"
+    },
+    {
+      "id": "T-GP4X-LOGICAL-OR",
+      "pin": "P4",
+      "form": "a logical-or target has no snapshot operand",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "e01c8b6717dc3c06"
+    },
+    {
+      "id": "T-GP4X-NULLISH",
+      "pin": "P4",
+      "form": "a nullish-coalescing target has no snapshot operand",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "63ad25f56fc0b87d"
+    },
+    {
+      "id": "T-GP4X-ARRAY-DESTRUCT",
+      "pin": "P4",
+      "form": "an array-binding const alias takes the fresh first element, not snapshot after it",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "d0fdbd246febe72e"
+    },
+    {
+      "id": "T-GP4X-OBJECT-PROPERTY",
+      "pin": "P4",
+      "form": "a property of a const object literal names the fresh member, not snapshot beside it",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "20cdb5a4d061cc12"
+    },
+    {
+      "id": "T-GP4X-FOROF-VARIABLE",
+      "pin": "P4",
+      "form": "a const for-of variable over an array literal holding only a fresh object",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "687bfcbe45b742e4"
+    },
+    {
+      "id": "T-GP4X-DEFINEPROPERTY-RETURN",
+      "pin": "P4",
+      "form": "the target is the fresh object Object.defineProperty returns",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "ac432b3b09542705"
+    },
+    {
+      "id": "T-GP4X-OBJECT-WRAP",
+      "pin": "P4",
+      "form": "a fresh object passed through Object(...) receives parsed data",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "bcb650194003d50d"
+    },
+    {
+      "id": "T-GP4X-ARRAY-ELEMENT",
+      "pin": "P4",
+      "form": "a numeric-literal element names the fresh first element, not snapshot after it, so only its unresolved key reads",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "unresolved key",
+      "digest": "8b298dd952312fb9"
+    },
+    {
+      "id": "T-GP4X-ASSIGN-EXPR",
+      "pin": "P4",
+      "form": "an assignment-expression target evaluates to a fresh object",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "b02bfc841b087632"
+    },
+    {
+      "id": "T-GP4X-ARRAY-OF-SPREAD",
+      "pin": "P4",
+      "form": "the spread of Array.of(...) carries a fresh target, snapshot and parsed data into Object.assign",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "09a9079a9ac34ef7"
+    },
+    {
+      "id": "T-GP4X-GLOBAL-ALIAS",
+      "pin": "P4",
+      "form": "Object.assign owned through global copies snapshot and parsed data into a fresh target",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "c1a169291e604051"
+    },
+    {
+      "id": "T-GP4X-CALL-CALL",
+      "pin": "P4",
+      "form": "Object.assign reached through Function.prototype.call.call writes a fresh target",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "65e702ecbcf07225"
+    },
+    {
+      "id": "T-P5-OBJ-REST",
+      "pin": "P5",
+      "form": "an object-rest destructuring target writes an unrelated member",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "ae76f08f3b69d0cb"
+    },
+    {
+      "id": "T-P5-FOR-OF",
+      "pin": "P5",
+      "form": "a for-of iteration target writes an unrelated member",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "e8acc8d61c07808c"
+    },
+    {
+      "id": "T-P5-FOR-IN",
+      "pin": "P5",
+      "form": "a for-in iteration target writes an unrelated member",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "2a6a5021a537300a"
+    },
+    {
+      "id": "T-P5-DESTRUCT-TARGET",
+      "pin": "P5",
+      "form": "a destructured const alias of Object.prototype is only read",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "c438373970b5ae1c"
+    },
+    {
+      "id": "T-P5-DESTRUCT-METHOD",
+      "pin": "P5",
+      "form": "a destructured const alias of a non-writing Object method reads the prototype",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "d8df20a9efc7ff96"
+    },
+    {
+      "id": "T-P5-BIND",
+      "pin": "P5",
+      "form": "a bound Object.assign writes an unrelated target",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "7a8cd7ae77b1ca82"
+    },
+    {
+      "id": "T-P5-GLOBAL-OWNER",
+      "pin": "P5",
+      "form": "Object.assign owned through globalThis writes an unrelated target",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "ade0a3ab7533ed7e"
+    },
+    {
+      "id": "T-P5-GLOBAL-PROTO",
+      "pin": "P5",
+      "form": "the prototype spelled through globalThis is only read",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "d14362fc9404de2b"
+    },
+    {
+      "id": "T-P5-GETPROTO",
+      "pin": "P5",
+      "form": "the prototype reached through getPrototypeOf is only read",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "9710023ca69b9c37"
+    },
+    {
+      "id": "T-P5-DUNDER",
+      "pin": "P5",
+      "form": "the prototype reached through __proto__ is only read",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "d7aea086f3b5294c"
+    },
+    {
+      "id": "T-P5-CONSTRUCTOR",
+      "pin": "P5",
+      "form": "the prototype reached through constructor.prototype is only read",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "3ad0947b338b3745"
+    },
+    {
+      "id": "T-P5-LEGACY-READ",
+      "pin": "P5",
+      "form": "the legacy __lookupGetter__ accessor API only reads a prototype member",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "9f86b940ee8d1171"
+    },
+    {
+      "id": "T-P5-FROMENTRIES-SLOT",
+      "pin": "P5",
+      "form": "Object.fromEntries pairs without the prototype slot are assigned into Object",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "48236ee326960558"
+    },
+    {
+      "id": "T-P5-ALIAS-DYNAMIC",
+      "pin": "P5",
+      "form": "a const Object owner alias with an unfolded writer name targets an unrelated object",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "44ea8cb26454f22a"
+    },
+    {
+      "id": "T-P5-COMPUTED-SLOT-ALIAS",
+      "pin": "P5",
+      "form": "a const-folded computed key that is not the prototype slot is assigned into Object",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "c2b7a47b32a7de61"
+    },
+    {
+      "id": "T-P5-CALL-SPREAD",
+      "pin": "P5",
+      "form": "Object.assign.call fed by the spread of a const argument array writes an unrelated target",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "803aff6f95375360"
+    },
+    {
+      "id": "T-P5-SEQUENCE-TARGET",
+      "pin": "P5",
+      "form": "a comma-expression target evaluates to an unrelated object",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "79dbb60473737eae"
+    },
+    {
+      "id": "T-P5-CONDITIONAL-TARGET",
+      "pin": "P5",
+      "form": "a conditional target has no prototype branch",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "9e37089d7102fad4"
+    },
+    {
+      "id": "T-P4-SPREAD-CONST",
+      "pin": "P4",
+      "form": "the spread of a const argument array carries snapshot and a literal-only source",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "8bfceb94e5548b05"
+    },
+    {
+      "id": "T-P4-DESTRUCT-METHOD",
+      "pin": "P4",
+      "form": "a destructured const alias of Object.assign copies snapshot and parsed data into a fresh target",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "b3142f9ee4634838"
+    },
+    {
+      "id": "T-P4-BIND",
+      "pin": "P4",
+      "form": "a bound Object.assign writes a literal-only source into snapshot",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "1480fca61918defd"
+    },
+    {
+      "id": "T-P4-GLOBAL-OWNER",
+      "pin": "P4",
+      "form": "Object.assign owned through globalThis copies snapshot and parsed data into a fresh target",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "f53e74be97fc9ddc"
+    },
+    {
+      "id": "T-P4-NESTED-TARGET",
+      "pin": "P4",
+      "form": "the target is the fresh copy an inner Object.assign returns",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "622da338f4b72536"
+    },
+    {
+      "id": "T-P4-COMMA-TARGET",
+      "pin": "P4",
+      "form": "a comma-expression target evaluates to a fresh object",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "f1f530b9244a6bc8"
+    },
+    {
+      "id": "T-P4-CONDITIONAL-TARGET",
+      "pin": "P4",
+      "form": "a conditional target has no snapshot branch",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "3875c97365afc332"
+    },
+    {
+      "id": "T-P4-CALL-SPREAD",
+      "pin": "P4",
+      "form": "Object.assign.call fed by the spread of a const argument array writes a fresh target",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "5b9bf070fea59496"
+    }
+  ],
+  "requiredTwinRows": 53
+}
