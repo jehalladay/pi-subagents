@@ -1,0 +1,595 @@
+{
+  "comment": "wb-a9l2.1 (the hk9l/5jha/zq7i roster pattern): the OUT-OF-FILE anchor for test/workbench-rf-federation-parity-premise.test.ts. rows: every judged row of ROWS in census order (FALSIFIERS 47, CONTROLS 12, RESIDUALS 10) - table, id, the registered test name, every finding the row reads and the sha256 of its input (files, bead lines, fixture state and receipts as JSON), written from the rows as measured at the cut. residuals: the header's named residual families, one pinned quiet row each. The census judges its in-file rows and its registered tests (vitest's task tree) against this file at test time, in order and both ways.",
+  "rows": [
+    {
+      "table": "FALSIFIERS",
+      "id": "F01",
+      "test": "falsifier F01 docs paragraph, the README:7 sentence",
+      "findings": [
+        "docs/workbench/x.md:1 rf-normally: unechoed-claim"
+      ],
+      "input": "8605713417e36db1cf4f98c7c907196d1b3cd1f87e1ea3b118b1f5819c5756ad"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F02",
+      "test": "falsifier F02 src string literal",
+      "findings": [
+        "src/x.ts:1 mode-parity: unechoed-claim"
+      ],
+      "input": "403c351e868783f4170896b5c799ba78995af607ff39790863d3356cd5302f77"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F03",
+      "test": "falsifier F03 test comment, the NEG-05 sentence",
+      "findings": [
+        "test/x.test.ts:1 neg-05: unechoed-claim"
+      ],
+      "input": "3f78352c1cecd9090fa17734f465daf5faab8eb1b21132481e3b0f036c6469fe"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F04",
+      "test": "falsifier F04 qa script output",
+      "findings": [
+        "qa/x.mjs:1 rf-normally: unechoed-claim"
+      ],
+      "input": "0f57945598a8e698a6785bce97869addeb5e63b9ed32063d07c6ac7f856ec140"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F05",
+      "test": "falsifier F05 case and spacing",
+      "findings": [
+        "docs/x.md:1 mode-parity: unechoed-claim"
+      ],
+      "input": "cf786200f48cdda9f0005761c77164262aaf7557b5f9d2c4bb7e99aae8a0a974"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F06",
+      "test": "falsifier F06 line break inside one block",
+      "findings": [
+        "docs/x.md:3 rf-normally: unechoed-claim"
+      ],
+      "input": "e3c504bb78d70bccf089b379769c421ea0c550d8a124bcde460cfbd4e75ff0ef"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F07",
+      "test": "falsifier F07 look-alike letter",
+      "findings": [
+        "docs/x.md:1 mode-parity: unechoed-claim"
+      ],
+      "input": "9d7966162693a07c2d089c2e559cf0ec4892bc1624f4c2cf10605d80e6e59394"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F08",
+      "test": "falsifier F08 inserted invisible",
+      "findings": [
+        "docs/x.md:1 mode-parity: unechoed-claim"
+      ],
+      "input": "066bab37bde95a06b6c495e11ac385eac9e6f91a561d1807e80de1ee5c170746"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F09",
+      "test": "falsifier F09 fullwidth compatibility forms",
+      "findings": [
+        "docs/x.md:1 rf-normally: unechoed-claim"
+      ],
+      "input": "7ec7094ad0bdca2af741dad0cbe498c46dc4cb34d7d362d19113bb58504e469f"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F10",
+      "test": "falsifier F10 string concatenation",
+      "findings": [
+        "src/y.ts:1 mode-parity: unechoed-claim"
+      ],
+      "input": "c3e950e2e615f1a8fcd769cf56d7865364c2ce2b7527acdd94f63af13c4ca5ea"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F11",
+      "test": "falsifier F11 html comment",
+      "findings": [
+        "docs/x.md:1 rf-normally: unechoed-claim"
+      ],
+      "input": "63e21ce54d9258d572a8c5c5e4e6af7aba225b85213f320e19d6092a55061821"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F12",
+      "test": "falsifier F12 a negation is still a mention",
+      "findings": [
+        "docs/x.md:1 mode-parity: unechoed-claim"
+      ],
+      "input": "ea81464e4afed0a8b85df7eb40489b8f10c886883f75adbd71bf264eb7cb5931"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F13",
+      "test": "falsifier F13 verdict without the pin",
+      "findings": [
+        "docs/x.md:1 mode-parity: unechoed-claim"
+      ],
+      "input": "a9280aade12ea3ae6719b6885d927ac2095f519d6bf3101b62d151fe40320119"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F14",
+      "test": "falsifier F14 pin without the verdict",
+      "findings": [
+        "docs/x.md:1 mode-parity: unechoed-claim"
+      ],
+      "input": "eb8dbc2d5e7c1cc894e8c6197a3e6fd0479d26fe07630d95ac1266bc57904796"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F15",
+      "test": "falsifier F15 echo with a minted grade",
+      "findings": [
+        "docs/x.md:1 mode-parity: unechoed-claim"
+      ],
+      "input": "bcd4ac4391a95d111dde610f1fa86cb8b30b96e17230b986887927d3f0b89ed1"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F16",
+      "test": "falsifier F16 a complete receipt while the fixture is absent",
+      "findings": [
+        "docs/x.md:1 mode-parity: unechoed-claim"
+      ],
+      "input": "2315c8a935e66649b784b539b6451768f7f29b3d1fd66bf239ac7049e2fa7877"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F17",
+      "test": "falsifier F17 two refused blocks in one file",
+      "findings": [
+        "docs/x.md:1 mode-parity: unechoed-claim",
+        "docs/x.md:5 rf-normally: unechoed-claim"
+      ],
+      "input": "efbb370076e882cf0b73b7b81f2c1a1c3f9daa48905cbea77af456c3b8fb5b98"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F18",
+      "test": "falsifier F18 claim id alone",
+      "findings": [
+        "docs/x.md:1 claim-id: echo-no-undetermined+echo-no-pin+unechoed-claim"
+      ],
+      "input": "13cc5eed8c6d4512de5e23235301848b9c8dab7c4ded7a395286653793d4f7e8"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F19",
+      "test": "falsifier F19 claim id and verdict, no pin",
+      "findings": [
+        "docs/x.md:1 claim-id: echo-no-pin+unechoed-claim"
+      ],
+      "input": "b2180a1f3dc7a6f0dff344b6dd5fcdce35cb2cb41733a297ce00c714462573f4"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F20",
+      "test": "falsifier F20 claim id and pin, no verdict",
+      "findings": [
+        "docs/x.md:1 claim-id: echo-no-undetermined+unechoed-claim"
+      ],
+      "input": "43ce2b7de1d4cf819a04760f9bc7eb7544ac789339fcd3142c88c6bd5fce0e27"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F21",
+      "test": "falsifier F21 claim id with a minted grade",
+      "findings": [
+        "docs/x.md:1 claim-id: echo-minted-status+unechoed-claim"
+      ],
+      "input": "ef87252689858c0b70c47ce275c1c8bf763284116abcbb9e8fbe2c126f752c78"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F22",
+      "test": "falsifier F22 a look-alike verdict is never folded",
+      "findings": [
+        "docs/x.md:1 claim-id: echo-no-undetermined+unechoed-claim"
+      ],
+      "input": "9bf824e2fe0270e994ddbffa7b54815c56ffa26eb8e6c73ace14e9b56ba6d096"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F23",
+      "test": "falsifier F23 docs table row with a Pi grade",
+      "findings": [
+        "docs/x.md:1 claim-id: echo-no-undetermined+echo-no-pin+echo-minted-status+unechoed-claim"
+      ],
+      "input": "5ab9bb948b6a83b95d90d9ab7f9b3c33508a677a7e4ea17f949c33c79b556bfe"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F24",
+      "test": "falsifier F24 present, no receipt cited",
+      "findings": [
+        "docs/x.md:1 mode-parity: receipt-not-cited"
+      ],
+      "input": "a0217c065cfe777174a080ee674e7289c1745469a9c947cc7dfd477ce88dff53"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F25",
+      "test": "falsifier F25 present, the receipt is not in the listing",
+      "findings": [
+        "docs/x.md:1 mode-parity: receipt-absent"
+      ],
+      "input": "b4ccd63d36d952210a96f40e83340d0c751b73661de9f853f05e6922dc482631"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F26",
+      "test": "falsifier F26 present, the receipt names no rf sha",
+      "findings": [
+        "docs/x.md:1 mode-parity: receipt-no-rf-sha"
+      ],
+      "input": "aca15edcabedaab16e6ecfc27b2ca97be12b246fb73f7d90725d709740323547"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F27",
+      "test": "falsifier F27 present, the rf sha is too short",
+      "findings": [
+        "docs/x.md:1 mode-parity: receipt-no-rf-sha"
+      ],
+      "input": "f58028ba918693d8073c1f7d24847448adca1bcfab5a19546facb18858f5849c"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F28",
+      "test": "falsifier F28 present, no command",
+      "findings": [
+        "docs/x.md:1 mode-parity: receipt-no-command+receipt-no-exit-0"
+      ],
+      "input": "5ad425bf3295c5dfbed4897a438876fe6a6ac10c2ad0f0ef86ea9cccf3f76af0"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F29",
+      "test": "falsifier F29 present, a narrowed command",
+      "findings": [
+        "docs/x.md:1 mode-parity: receipt-no-command+receipt-no-exit-0"
+      ],
+      "input": "0d6f701f0a4f622ced6e0c6a331e6019b2852c588a83fb6160e9eef7b5aedef8"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F30",
+      "test": "falsifier F30 present, a nonzero exit",
+      "findings": [
+        "docs/x.md:1 mode-parity: receipt-no-exit-0"
+      ],
+      "input": "09446c4b1b09ad9f52a5c732109272c254fd084e4e0bf0bc9db46bdfb52c7cf7"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F31",
+      "test": "falsifier F31 present, a complete receipt does not excuse the claim id",
+      "findings": [
+        "docs/x.md:1 claim-id: echo-no-undetermined+echo-no-pin"
+      ],
+      "input": "15af21ad5c3b54977c24d0a846becea7600121b059fe208a6150d90a6c00c8b5"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F32",
+      "test": "falsifier F32 bead row with the verdict, no pin",
+      "findings": [
+        "wb-zz.1 claim-id: echo-no-pin"
+      ],
+      "input": "2df52283a082b9bbd14b1759586a544ef9911c8bf817766133d598ec90edbdff"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F33",
+      "test": "falsifier F33 bead row with neither token",
+      "findings": [
+        "wb-zz.2 claim-id: echo-no-undetermined+echo-no-pin"
+      ],
+      "input": "ababdc1bcafdeb01711ecc8d747e86a59d367ca7515ea4aa682afcd680f10d69"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F34",
+      "test": "falsifier F34 bead row, look-alike claim id",
+      "findings": [
+        "wb-zz.3 claim-id: echo-no-undetermined+echo-no-pin"
+      ],
+      "input": "e48867a0e7bc734bd0defcb8c95197f8c02b99618f2ecefabe3b2bf37e156c2b"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F35",
+      "test": "falsifier F35 bead row, a nested string",
+      "findings": [
+        "wb-zz.4 claim-id: echo-no-undetermined"
+      ],
+      "input": "082836cdad498ab97b5a93fcc5804ca3587286445043b79407ddbca91ce16fd5"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F36",
+      "test": "falsifier F36 an echo on another line of the block",
+      "findings": [
+        "docs/x.md:3 mode-parity: unechoed-claim"
+      ],
+      "input": "2c425554c5d841ac7856167f19e1a9ffa0cb402176dc2c6a1c4967f7c9d8d525"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F37",
+      "test": "falsifier F37 an echo in another table row",
+      "findings": [
+        "docs/x.md:3 mode-parity: unechoed-claim"
+      ],
+      "input": "364334d9dacf05c02913c4a70c8dc7452f91c11186d7c3eedb313c3d26c9b87d"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F38",
+      "test": "falsifier F38 the echo tokens on the next line",
+      "findings": [
+        "docs/x.md:1 claim-id: echo-no-undetermined+echo-no-pin+unechoed-claim"
+      ],
+      "input": "156988e3a98d5036ad1482071f6301cc4f0f3ebad91a82627a0046edca6c485d"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F39",
+      "test": "falsifier F39 a lower-case verdict",
+      "findings": [
+        "docs/x.md:1 claim-id: echo-no-undetermined+unechoed-claim"
+      ],
+      "input": "6dacac1a1e083fabca06ac791f3f75c3b035b50ad1c38cd9b4ac1648cf290e8d"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F40",
+      "test": "falsifier F40 the verdict inside a longer word",
+      "findings": [
+        "docs/x.md:1 mode-parity: unechoed-claim"
+      ],
+      "input": "43513c483b72e98921a299fa5910fa04e9a29ad2539fbfa7fe6b074d445d1c64"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F41",
+      "test": "falsifier F41 the pin inside a longer token",
+      "findings": [
+        "docs/x.md:1 mode-parity: unechoed-claim"
+      ],
+      "input": "ba717beb6a39eb4e48fcf80ddc9943c4b1a2246d06b02460f64b614edea3e8ce"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F42",
+      "test": "falsifier F42 a mention deep in a large file",
+      "findings": [
+        "docs/x.md:60002 mode-parity: unechoed-claim"
+      ],
+      "input": "7c9bddcfa0746403c147f879a47d9643bd70453c1edf09d661c2fe6f3541b0b6"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F43",
+      "test": "falsifier F43 a second mention of one family in a block",
+      "findings": [
+        "docs/x.md:2 mode-parity: unechoed-claim"
+      ],
+      "input": "e20b78c9af8ce44f0802e5dca3f20535f15d03a272a6799595cf166300396f7f"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F44",
+      "test": "falsifier F44 an unreadable export line",
+      "findings": [
+        "line 2 unreadable"
+      ],
+      "input": "def4ab4fd4451956573436b42685b0b279ea1f377135d7c88172acbb5523fe48"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F45",
+      "test": "falsifier F45 an html character reference",
+      "findings": [
+        "docs/x.md:1 mode-parity: unechoed-claim"
+      ],
+      "input": "a3b69aa62bbc9cba75b03b7947d53da39a00c998b1dff5658036b21191369336"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F46",
+      "test": "falsifier F46 a JS escape inside a string",
+      "findings": [
+        "src/w.ts:1 mode-parity: unechoed-claim"
+      ],
+      "input": "4141a35169e8958ede4705352f63ffec452a46bd78d4cf26232123d81a429e8c"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F47",
+      "test": "falsifier F47 emphasis inside a word",
+      "findings": [
+        "docs/x.md:1 mode-parity: unechoed-claim"
+      ],
+      "input": "e54af4d7ef0523c48b0499437918ffb5c2d516975d2ab89e5736a74913153f53"
+    },
+    {
+      "table": "CONTROLS",
+      "id": "N01",
+      "test": "control N01 the echo form",
+      "findings": [],
+      "input": "6c96b072c3a5175a7b71f09db913692fc7ae25ae024f20619486fb0ae3acf43f"
+    },
+    {
+      "table": "CONTROLS",
+      "id": "N02",
+      "test": "control N02 an echo on the lines a mention spans",
+      "findings": [],
+      "input": "1e8fd29ac2d01edcbbc367c985583e6bac69505be253b75dece306d4bc69201d"
+    },
+    {
+      "table": "CONTROLS",
+      "id": "N03",
+      "test": "control N03 an echo with a longer pin",
+      "findings": [],
+      "input": "3a545c1bf02dd9559230695f3f80f02f4e2b7553093cab04a06f53c4ba88c3c9"
+    },
+    {
+      "table": "CONTROLS",
+      "id": "N04",
+      "test": "control N04 unrelated parity",
+      "findings": [],
+      "input": "4ab18508663011c95ddf2f570f6dea965203c8e6b43e28c2fd56b7a7e7ab8e95"
+    },
+    {
+      "table": "CONTROLS",
+      "id": "N05",
+      "test": "control N05 a disabled mode without parity",
+      "findings": [],
+      "input": "98294570c87e8b3d3756414870fd88f47891d440b99ea2f4ce3f05848a95e515"
+    },
+    {
+      "table": "CONTROLS",
+      "id": "N06",
+      "test": "control N06 another word order",
+      "findings": [],
+      "input": "02ba78e760f8bcf474eb4c87aafd47ff2408e1867a9f3b450ae838a661a8b7ab"
+    },
+    {
+      "table": "CONTROLS",
+      "id": "N07",
+      "test": "control N07 another claim id",
+      "findings": [],
+      "input": "3c6e2d1df8223b1bd7c4c994d4e5599a03653a6398fbd4e3fe942b589b420905"
+    },
+    {
+      "table": "CONTROLS",
+      "id": "N08",
+      "test": "control N08 present, a complete receipt",
+      "findings": [],
+      "input": "9bcbbb7aeb4a4723e86b451e1a62ef3b3c337c8d12b68ce6533e4fdbdf182240"
+    },
+    {
+      "table": "CONTROLS",
+      "id": "N09",
+      "test": "control N09 the one exempt path",
+      "findings": [],
+      "input": "e4b726bdd2cc715c97b734327d820a17ed5dd57bff53e188e46909ca8ee34bfb"
+    },
+    {
+      "table": "CONTROLS",
+      "id": "N10",
+      "test": "control N10 bead row with both tokens",
+      "findings": [],
+      "input": "a496060b04ce87309e3739839193a4940ab51548e62ca88ef933985b8e3900c5"
+    },
+    {
+      "table": "CONTROLS",
+      "id": "N11",
+      "test": "control N11 a run of wildcards is no word",
+      "findings": [],
+      "input": "9823b841a8614165a6f4fe097e68b206b850589a8321056e35d02d0883544cd9"
+    },
+    {
+      "table": "CONTROLS",
+      "id": "N12",
+      "test": "control N12 a decoded reference outside a phrase",
+      "findings": [],
+      "input": "528c75a0865ca90030be198aaa88932538707b0f12f1917a03aca538e521363d"
+    },
+    {
+      "table": "RESIDUALS",
+      "id": "R1",
+      "test": "residual R1 a paraphrase",
+      "findings": [],
+      "input": "1e0d90ec8a3969143f78d31eee67daf469911a9eea11065cf93bf60287fc3a17"
+    },
+    {
+      "table": "RESIDUALS",
+      "id": "R2",
+      "test": "residual R2 assembled at runtime",
+      "findings": [],
+      "input": "e7707859986c1a4b73fd654eaf08adeef6f832d84dfab589867ab64a0ae7f736"
+    },
+    {
+      "table": "RESIDUALS",
+      "id": "R3",
+      "test": "residual R3 an ASCII look-alike",
+      "findings": [],
+      "input": "cf696a352c9bcfa8c8aab376cdb57b4c0927c0fa7dd7c92fd28e50fb217f7ec0"
+    },
+    {
+      "table": "RESIDUALS",
+      "id": "R4",
+      "test": "residual R4 bead row without the claim id",
+      "findings": [],
+      "input": "1dfda94b2289003f79c10c891066fa42348d1b9b27803103b8303227501a4786"
+    },
+    {
+      "table": "RESIDUALS",
+      "id": "R5",
+      "test": "residual R5 bead-row granularity",
+      "findings": [],
+      "input": "e0cfe2ab563735f548a6609c30538f3c23e6a78aefb164de3bd392107b9577e8"
+    },
+    {
+      "table": "RESIDUALS",
+      "id": "R6",
+      "test": "residual R6 outside the four trees",
+      "findings": [],
+      "input": "c1b665aaf69b6ac55183c115f5ad4eeaed3a362d85d2cd6170cc66b0859c20e2"
+    },
+    {
+      "table": "RESIDUALS",
+      "id": "R7",
+      "test": "residual R7 status prose beside an echo",
+      "findings": [],
+      "input": "788a8bd72e56e09b0539604584e0ec28cf856d0a81cc580caa9fedf1201fea6f"
+    },
+    {
+      "table": "RESIDUALS",
+      "id": "R8",
+      "test": "residual R8 split across a blank line",
+      "findings": [],
+      "input": "920a96a7da677fb5739ad4d7ca9de2435980e2b0af5afd6ca54c677edf762177"
+    },
+    {
+      "table": "RESIDUALS",
+      "id": "R9",
+      "test": "residual R9 echo tokens on the same line",
+      "findings": [],
+      "input": "486147cd279a1764f17d892f5fb7b42b22359302563fbb4bba6a93c11171c8a2"
+    },
+    {
+      "table": "RESIDUALS",
+      "id": "R10",
+      "test": "residual R10 a named reference outside the decoded set",
+      "findings": [],
+      "input": "3ff23a66538007faeca5e6cf26912dd4cc49c236b688dcba2b63072f50cbe99a"
+    }
+  ],
+  "residuals": {
+    "R1": "paraphrase outside the four families",
+    "R2": "phrase assembled at runtime",
+    "R3": "ASCII look-alikes and multi-letter alterations",
+    "R4": "bead row without the claim id",
+    "R5": "bead-row granularity",
+    "R6": "files outside the four trees",
+    "R7": "status prose beside an echo",
+    "R8": "phrase split across a blank line",
+    "R9": "same-line echo tokens",
+    "R10": "named references outside the decoded set"
+  }
+}
