@@ -18,7 +18,7 @@
  */
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
-import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { afterAll, beforeAll, describe, expect, it, TestRunner } from "vitest";
 import { CapabilityError, CapabilityRegistry, type InvocationContext, type JsonValue } from "../src/workbench/capability-registry.js";
 import { createCuratedTools } from "../src/workbench/claude-capability-tools.js";
 import { createClaudeWorkflowHost } from "../src/workbench/claude-host.js";
@@ -639,5 +639,25 @@ describe("R673 (wb-csne): the suite hook runs under its file-local budget, and a
         throw own;
       }),
     ).rejects.toBe(own);
+  });
+});
+
+/**
+ * R687 (wb-9rto, the wb-csne F1 class): the R673 rows above pin the budget and backstop CONSTANTS; the row below binds the
+ * ARGUMENT the suite hook was actually registered with. vitest 4.1.10's beforeAll(fn, timeout = hookTimeout) wraps the hook
+ * in a withTimeout timer of that timeout and stamps the same value on the hook it stores, under this key;
+ * TestRunner.getSuiteHooks reads the stored hooks back, so the stamp is the runner's own record of the registered argument.
+ * An omitted argument reads vitest's default hookTimeout (10000 ms) there, and so does an undefined one or a wrapper that
+ * drops it; a swapped, shadowed or other-valued literal argument reads its own value. Each is a red below, where the gate's
+ * omission probe of the registration left 105/105 green (wb-csne gate cmd_d14ebd6c549f, F1). A literal equal to the
+ * backstop registers the same timeout, so it reads green here until the budget moves.
+ */
+const REGISTERED_HOOK_TIMEOUT = Symbol.for("VITEST_CLEANUP_TIMEOUT");
+
+describe("R687 (wb-9rto): the suite hook is registered with its backstop, read from vitest's own record of the registration", () => {
+  it("vitest holds one file-scope beforeAll, registered with PARITY_SUITE_HOOK_BACKSTOP_MS (2 x the budget), never its default hookTimeout", ({ task }) => {
+    const registered = TestRunner.getSuiteHooks(task.file).beforeAll.map((hook): unknown => Reflect.get(hook, REGISTERED_HOOK_TIMEOUT));
+    expect(registered, "the timeout vitest registered for each file-scope beforeAll of this file").toEqual([PARITY_SUITE_HOOK_BACKSTOP_MS]);
+    expect(PARITY_SUITE_HOOK_BACKSTOP_MS, "the backstop of record is 2 x the budget").toBe(2 * PARITY_SUITE_HOOK_BUDGET_MS);
   });
 });
