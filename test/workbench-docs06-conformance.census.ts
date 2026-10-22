@@ -51,7 +51,7 @@ import { readFileSync } from "node:fs";
 import { basename, dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
-import { afterAll, describe, expect, it, type RunnerTestSuite, TestRunner } from "vitest";
+import { afterAll, describe, expect, it, type RunnerTask, type RunnerTestFile, type RunnerTestSuite, TestRunner } from "vitest";
 import { type CasePin, DEFAULT_GATE_TIER, DEFAULT_TIER_REPORT, docsSection, judge, type PinVerdict, type RenderedBlock, sectionMatches, sourceStructure } from "./helpers/census.js";
 
 type Tier = "default-gate" | "live-tier";
@@ -756,8 +756,12 @@ describe("R673 (wb-csne): the AC2 call-site hook runs under its file-local budge
  * reads every hook registration of the file through the TypeScript binder (the census helper's single-file program: no
  * lib, no module resolution): its registrar, the describe titles around it, the hook its callback guards (the first
  * argument of its withinHookBudget call) and its timeout argument with the file-scope const that argument binds. It reads
- * hook registrations only, never case calls. A registrar reached any way but a direct call of vitest's own named import
- * (aliased, a member, a value, another module) is a finding, never a reading. An omitted, swapped, shadowed, literal or
+ * hook registrations only, never case calls. A registrar NAMED any way but a direct call of vitest's own named import - an
+ * alias, a dot member, a string-keyed member or destructuring key (vitest["afterAll"], const { "afterAll": a } = vitest:
+ * R692, wb-ouo3, the wb-9rto F3 cure), a value, another module - is a finding, never a reading. A registrar reached any
+ * other way (a computed key such as vitest["after" + "All"], a member fetched by Reflect.get) names no registrar the roster
+ * reads, so the roster cannot see it; the R692 held-hook census below reds the hook it registers, since vitest then holds
+ * a hook the roster does not name. An omitted, swapped, shadowed, literal or
  * undefined argument is a red below, where the gate's omission probe of the registration left 48/48 green (wb-csne gate
  * cmd_d14ebd6c549f, F1).
  */
@@ -777,11 +781,21 @@ interface HookRegistration {
   readonly timeout: string;
   /** The file-scope const the timeout argument binds through the binder; undefined for none, a literal, or an inner or non-const binding. */
   readonly binds: string | undefined;
+  /** Where the registration call starts, as line:column (1-based): the site vitest's registration stack names (R692). */
+  readonly site: string;
+}
+/** A file's hook roster (R687) and, from R692 (wb-ouo3), its describe calls and every direct call of withinHookBudget. */
+interface HookRoster {
+  readonly registrations: readonly HookRegistration[];
+  readonly findings: readonly string[];
+  /** Every describe call, as its chain of titles, outermost first, in source order. */
+  readonly describes: readonly string[];
+  /** Every direct call of withinHookBudget as "<first argument> | <the hook registration or case whose callback makes it>". */
+  readonly guards: readonly string[];
 }
 
-function hookRoster(file: string): { readonly registrations: readonly HookRegistration[]; readonly findings: readonly string[] } {
+function hookRoster(file: string, text: string = readFileSync(join(ROOT, file), "utf8")): HookRoster {
   const path = join(ROOT, file);
-  const text = readFileSync(path, "utf8");
   const sf = ts.createSourceFile(path, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
   const host: ts.CompilerHost = {
     getSourceFile: name => (name === path ? sf : undefined),
@@ -821,6 +835,46 @@ function hookRoster(file: string): { readonly registrations: readonly HookRegist
     if (callback !== undefined) find(callback);
     return guarded.join(", ") || "nothing";
   };
+  // R692 (wb-ouo3): the registration site, the describe chain of any node, and the hook registration or case a call runs in.
+  const site = (node: ts.Node): string => {
+    const { line, character } = sf.getLineAndCharacterOfPosition(node.getStart(sf));
+    return `${line + 1}:${character + 1}`;
+  };
+  const titleOf = (call: ts.CallExpression): string => {
+    const title = call.arguments[0];
+    return title !== undefined && ts.isStringLiteralLike(title) ? title.text : `(a non-literal title at ${at(call)})`;
+  };
+  const isDescribe = (node: ts.Node): node is ts.CallExpression => ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "describe";
+  const chainOf = (node: ts.Node): string => {
+    const titles: string[] = [];
+    for (let up = node.parent; up !== undefined; up = up.parent) if (isDescribe(up)) titles.unshift(titleOf(up));
+    return titles.join(" > ") || "(file scope)";
+  };
+  const ownChain = (call: ts.CallExpression): string => (chainOf(call) === "(file scope)" ? titleOf(call) : `${chainOf(call)} > ${titleOf(call)}`);
+  const rootOf = (callee: ts.Expression): ts.Expression => (ts.isCallExpression(callee) || ts.isPropertyAccessExpression(callee) ? rootOf(callee.expression) : callee);
+  /** What a call registers through vitest's own named import: a hook (its registrar), "a case" or "a describe callback"; undefined for anything else. */
+  const kindOf = (call: ts.CallExpression): string | undefined => {
+    const callee = call.expression;
+    if (ts.isIdentifier(callee) && HOOK_REGISTRARS.includes(callee.text)) return viaVitest(callee) ? callee.text : undefined;
+    if (isDescribe(call)) return "a describe callback";
+    const root = rootOf(callee);
+    return ts.isIdentifier(root) && (root.text === "it" || root.text === "test") && viaVitest(root) ? "a case" : undefined;
+  };
+  /** The hook registration or case whose callback runs a call, and whether the call is that callback's own code. */
+  const runsIn = (call: ts.CallExpression): string => {
+    let innermost: ts.Node | undefined;
+    let child: ts.Node = call;
+    for (let node = call.parent; node !== undefined; child = node, node = node.parent) {
+      if (ts.isCallExpression(node) && node.arguments.some(argument => argument === child)) {
+        const kind = kindOf(node);
+        if (kind !== undefined) return `${kind} @ ${kind === "a describe callback" ? ownChain(node) : chainOf(node)}${innermost === child ? "" : ", in a nested function"}`;
+      }
+      if (innermost === undefined && ts.isFunctionLike(node)) innermost = node;
+    }
+    return innermost === undefined ? "module code" : `a function outside every hook and case (${site(innermost)})`;
+  };
+  const describes: string[] = [];
+  const guards: string[] = [];
   const registrations: HookRegistration[] = [];
   const findings: string[] = [];
   const visit = (node: ts.Node, chain: readonly string[]): void => {
@@ -828,19 +882,33 @@ function hookRoster(file: string): { readonly registrations: readonly HookRegist
     if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "describe") {
       const title = node.arguments[0];
       inner = [...chain, title !== undefined && ts.isStringLiteralLike(title) ? title.text : `(a non-literal title at ${at(node)})`];
+      describes.push(inner.join(" > "));
     } else if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && HOOK_REGISTRARS.includes(node.expression.text)) {
       if (!viaVitest(node.expression)) findings.push(`${at(node)}: ${node.expression.text} is not called through vitest's own named import`);
       const timeout = node.arguments[1];
-      registrations.push({ registrar: node.expression.text, chain: chain.join(" > ") || "(file scope)", guards: guardsOf(node.arguments[0]), timeout: timeout?.getText(sf) ?? "(none)", binds: fileScopeConst(timeout) });
+      registrations.push({ registrar: node.expression.text, chain: chain.join(" > ") || "(file scope)", guards: guardsOf(node.arguments[0]), timeout: timeout?.getText(sf) ?? "(none)", binds: fileScopeConst(timeout), site: site(node) });
     } else if (ts.isIdentifier(node) && HOOK_REGISTRARS.includes(node.text)) {
       const called = ts.isCallExpression(node.parent) && node.parent.expression === node;
       const imported = ts.isImportSpecifier(node.parent) && node.parent.propertyName === undefined;
       if (!called && !imported) findings.push(`${at(node)}: ${node.text} is named in a ${ts.SyntaxKind[node.parent.kind]}, never called as a hook registration`);
+    } else if (ts.isStringLiteralLike(node) && HOOK_REGISTRARS.includes(node.text)) {
+      // R692 (wb-ouo3, the wb-9rto F3 cure): a registrar named by a string key - vitest["afterAll"] or const { "afterAll": a } = vitest.
+      const keyed = (ts.isElementAccessExpression(node.parent) && node.parent.argumentExpression === node) || (ts.isBindingElement(node.parent) && node.parent.propertyName === node);
+      if (keyed) findings.push(`${at(node)}: ${node.text} is named by a string key in a ${ts.SyntaxKind[node.parent.kind]}, never called as a hook registration`);
+    }
+    if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "withinHookBudget") {
+      const bound = declaration(node.expression);
+      if (bound === undefined || !ts.isFunctionDeclaration(bound) || bound.parent !== sf) findings.push(`${at(node)}: withinHookBudget is called, but binds no file-scope function declaration`);
+      guards.push(`${node.arguments[0]?.getText(sf) ?? "(no argument)"} | ${runsIn(node)}`);
+    } else if (ts.isIdentifier(node) && node.text === "withinHookBudget") {
+      const called = ts.isCallExpression(node.parent) && node.parent.expression === node;
+      const declared = ts.isFunctionDeclaration(node.parent) && node.parent.name === node;
+      if (!called && !declared) findings.push(`${at(node)}: withinHookBudget is named in a ${ts.SyntaxKind[node.parent.kind]}, never called directly`);
     }
     ts.forEachChild(node, child => visit(child, inner));
   };
   visit(sf, []);
-  return { registrations, findings };
+  return { registrations, findings, describes, guards };
 }
 
 const rosterLine = (registration: HookRegistration): string =>
@@ -879,5 +947,192 @@ describe("R687 (wb-9rto): the AC2 call-site hook is registered with its backstop
       stamped(censusHooks),
       "the registered timeout vitest stamps on each hook it holds on the census describe: none on its one afterAll, whose timeout lives only in its timer's closure, so the AST above is the evidence for it",
     ).toEqual([undefined]);
+  });
+});
+
+/**
+ * R692 (wb-ouo3, the wb-9rto F2/F3 class): the R687 runner row above reads vitest's record of file scope and of the census
+ * describe only, and the roster reads Identifier callees only. The gate's L2-D2 decoy (a namespace import; the AC2
+ * registration replaced by a decoy afterAll whose dead branch textually guards CALL_SITE_HOOK and keeps the backstop; the
+ * real guarded body registered through vitestNs["afterAll"] in a NEW describe with one carrier case and no timeout) left
+ * all three R687 rows and every other row green, 52/52. The rows below close it from four sides:
+ * - the walk reads TestRunner.getSuiteHooks for EVERY suite of this file, never file scope and the census describe alone,
+ *   and the suites it reaches must be exactly the describe calls the roster reads;
+ * - the held-hook census binds every hook vitest holds, in any suite, to a registration the roster names in that suite:
+ *   an afterAll / afterEach as vitest keeps it (no stamp and no site), a beforeAll / beforeEach / aroundAll / aroundEach by
+ *   its stamped timeout (the value of the HOOK_TIMEOUT_CONSTS const its registration binds; an omitted timeout, a literal
+ *   or an unlisted const reads red, fail-closed) and its registration site (vitest's source-mapped registration stack
+ *   against the roster's line:column). A hook registered any way the roster cannot read is a hook vitest holds that the
+ *   roster does not name: a red;
+ * - the guard census lists every direct call of withinHookBudget in this file with the hook registration or case whose
+ *   callback makes it, so a dead-branch decoy beside a relocated or hidden body is two guards of CALL_SITE_HOOK, and
+ *   withinHookBudget named any other way (an alias, a member, an argument, a shadowing binding) is a finding;
+ * - the work binding places every read of AC2_RAN (anything but the AC2 cases' push) in the body the CALL_SITE_HOOK guard
+ *   runs, so a guarded no-op body beside the check moved into a case is a red.
+ */
+/** The file-scope consts a hook registration of this file may pass as its timeout, by name, with the value vitest would stamp. */
+const HOOK_TIMEOUT_CONSTS: Readonly<Record<string, number>> = { CALL_SITE_HOOK_BACKSTOP_MS };
+/** The keys vitest 4.1.10 stamps a beforeAll's / beforeEach's and an aroundAll's / aroundEach's registration stack and timeout under. */
+const REGISTRATION_STACK = Symbol.for("VITEST_CLEANUP_STACK_TRACE");
+const AROUND_TIMEOUT = Symbol.for("VITEST_AROUND_TIMEOUT");
+const AROUND_STACK = Symbol.for("VITEST_AROUND_STACK_TRACE");
+const SELF_PATH = fileURLToPath(import.meta.url);
+const KEEPS_NEITHER = "no stamp and no registration site (vitest keeps neither on it)";
+const R673_SUITE = "R673 (wb-csne): the AC2 call-site hook runs under its file-local budget, and an overrun is a real red naming it";
+
+/** What vitest keeps a held hook's timeout and registration stack under, by registrar; an afterAll / afterEach keeps neither. */
+const stampKeys = (registrar: string): { readonly timeout: symbol; readonly stack: symbol } | undefined =>
+  registrar.startsWith("before") ? { timeout: REGISTERED_HOOK_TIMEOUT, stack: REGISTRATION_STACK } : registrar.startsWith("around") ? { timeout: AROUND_TIMEOUT, stack: AROUND_STACK } : undefined;
+
+/** Every suite of a file: the file first, then each describe depth-first in collection order, as its chain of titles. */
+function suitesOf(file: RunnerTestFile): { readonly chain: string; readonly suite: RunnerTestFile | RunnerTestSuite }[] {
+  const out: { chain: string; suite: RunnerTestFile | RunnerTestSuite }[] = [{ chain: "(file scope)", suite: file }];
+  const walk = (tasks: readonly RunnerTask[], titles: readonly string[]): void => {
+    for (const child of tasks) {
+      if (child.type !== "suite") continue;
+      out.push({ chain: [...titles, child.name].join(" > "), suite: child });
+      walk(child.tasks, [...titles, child.name]);
+    }
+  };
+  walk(file.tasks, []);
+  return out;
+}
+
+/** The line of a registration stack vitest stamped, resolved to this file's line:column; undefined when none names this file. */
+const stackSite = (stamped: unknown): string | undefined => {
+  const frame = (stamped instanceof Error ? (stamped.stack ?? "") : "").split("\n").find(line => line.includes(`${SELF_PATH}:`));
+  const position = frame?.match(/:(\d+):(\d+)\)?$/);
+  return position === undefined || position === null ? undefined : `${position[1]}:${position[2]}`;
+};
+/** One hook vitest holds, as the census reads it: suite | registrar | what vitest keeps on it. */
+const heldLine = (chain: string, registrar: string, hook: object): string => {
+  const keys = stampKeys(registrar);
+  if (keys === undefined) return `${chain} | ${registrar} | ${KEEPS_NEITHER}`;
+  return `${chain} | ${registrar} | stamped ${String(Reflect.get(hook, keys.timeout))} | registered at ${stackSite(Reflect.get(hook, keys.stack)) ?? "(no site in this file)"}`;
+};
+/** The line vitest must hold for one registration the roster reads, in the same shape. */
+const rosterHeldLine = (registration: HookRegistration): string => {
+  if (stampKeys(registration.registrar) === undefined) return `${registration.chain} | ${registration.registrar} | ${KEEPS_NEITHER}`;
+  const value = registration.binds === undefined ? undefined : HOOK_TIMEOUT_CONSTS[registration.binds];
+  return `${registration.chain} | ${registration.registrar} | stamped ${value ?? `(timeout ${registration.timeout}: no listed file-scope const)`} | registered at ${registration.site}`;
+};
+const byText = (a: string, b: string): number => a.localeCompare(b);
+
+/**
+ * The work a guard runs: every reference to the named state in a source - but its declaration and the member writes the
+ * AC2 cases make - with the withinHookBudget body that holds it ("outside every guard's body" for none). The AC2 call-site
+ * hook exists to bind AC2_RAN to FROZEN_JUDGED_SHAPE after every AC2 case ran (fail-closed on a narrowed it.each table and
+ * on a name-filtered run), so a guarded no-op body beside the check moved into a case, where a name filter can drop it,
+ * keeps the hook, its registration and its guard call standing, and reads red here.
+ */
+function guardedWork(file: string, text: string, names: readonly string[], writes: readonly string[]): readonly string[] {
+  const sf = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const bodyOf = (node: ts.Node): string => {
+    let child: ts.Node = node;
+    for (let up = node.parent; up !== undefined; child = up, up = up.parent) {
+      if (ts.isCallExpression(up) && ts.isIdentifier(up.expression) && up.expression.text === "withinHookBudget" && up.arguments[3] === child) return `in the body the ${up.arguments[0]?.getText(sf) ?? "(no argument)"} guard runs`;
+    }
+    return "outside every guard's body";
+  };
+  const out: string[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isIdentifier(node) && names.includes(node.text)) {
+      const parent = node.parent;
+      const member = ts.isPropertyAccessExpression(parent) && parent.expression === node ? parent.name.text : undefined;
+      const declared = ts.isVariableDeclaration(parent) && parent.name === node;
+      if (!declared && (member === undefined || !writes.includes(member))) out.push(`${member === undefined ? `${node.text} in a ${ts.SyntaxKind[parent.kind]}` : `${node.text}.${member}`} | ${bodyOf(node)}`);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(sf);
+  return out;
+}
+
+describe("R692 (wb-ouo3): the held-hook census - every suite walked through vitest's record, bound to the roster, and every guard call placed", () => {
+  it("the walk reaches every suite of this file: the suites vitest collected are exactly the describe calls the roster reads", ({ task }) => {
+    const roster = hookRoster(SELF);
+    expect(
+      suitesOf(task.file).map(entry => entry.chain),
+      "the suites the walk reaches, file scope first",
+    ).toEqual(["(file scope)", ...roster.describes]);
+    expect(roster.describes.length, "the describe calls of this file").toBeGreaterThanOrEqual(6);
+  });
+
+  it("the held-hook census: every hook vitest holds in any suite of this file is a registration the roster names in that suite, as vitest keeps it", ({ task }) => {
+    const roster = hookRoster(SELF);
+    const census: string[] = [];
+    let walked = 0;
+    for (const { chain, suite } of suitesOf(task.file)) {
+      walked += 1;
+      for (const [registrar, listeners] of Object.entries(TestRunner.getSuiteHooks(suite))) for (const hook of listeners) census.push(heldLine(chain, registrar, hook));
+    }
+    expect(walked, "the census read vitest's record of every suite the roster reads, never two of them alone").toBe(roster.describes.length + 1);
+    expect([...census].sort(byText), "every hook vitest holds, against every registration the roster reads").toEqual(roster.registrations.map(rosterHeldLine).sort(byText));
+    expect(census, "the held-hook census of record").toEqual([`wb-6hb.6 docs/workbench/06 conformance census (report mode) | afterAll | ${KEEPS_NEITHER}`]);
+  });
+
+  it("the guard census: every direct call of withinHookBudget in this file, with the registration or case whose callback makes it, is the literal list", () => {
+    const roster = hookRoster(SELF);
+    expect(roster.findings, "a hook registrar or withinHookBudget reached any way but a direct call of its own binding").toEqual([]);
+    expect(roster.guards, "first argument | the hook registration or case that runs the call").toEqual([
+      "CALL_SITE_HOOK | afterAll @ wb-6hb.6 docs/workbench/06 conformance census (report mode)",
+      `"probe late" | a case @ ${R673_SUITE}, in a nested function`,
+      `"probe hung" | a case @ ${R673_SUITE}, in a nested function`,
+      `"probe quick" | a case @ ${R673_SUITE}`,
+      `"probe broken" | a case @ ${R673_SUITE}`,
+    ]);
+  });
+
+  it("the work the guard runs: the AC2 call-site check (every read of AC2_RAN) sits in the body the CALL_SITE_HOOK guard runs, and the reader is no constant", () => {
+    expect(guardedWork(SELF, readRepo(SELF), ["AC2_RAN"], ["push"]), "every reference to AC2_RAN but its declaration and the AC2 cases' push, with the guard body that holds it").toEqual([
+      "AC2_RAN in a SpreadElement | in the body the CALL_SITE_HOOK guard runs",
+    ]);
+    const hollow = [
+      'afterAll(() => withinHookBudget(CALL_SITE_HOOK, "B", 1, () => undefined), BACKSTOP);',
+      "if (AC2_RAN.length < 0) undefined;",
+      'it("checks", () => expect([...AC2_RAN]).toEqual(SHAPE));',
+      'it("guarded", () => withinHookBudget(OTHER, "B", 1, () => AC2_RAN.sort()));',
+    ].join("\n");
+    expect(guardedWork("hollow.ts", hollow, ["AC2_RAN"], ["push"])).toEqual([
+      "AC2_RAN.length | outside every guard's body",
+      "AC2_RAN in a SpreadElement | outside every guard's body",
+      "AC2_RAN.sort | in the body the OTHER guard runs",
+    ]);
+  });
+
+  it("the roster is no constant: a string-keyed registrar is a finding (F3), a computed key is left to the held-hook census, and an L2-D2-shaped source reads two guards", () => {
+    const read = hookRoster(
+      SELF,
+      [
+        'import * as vitestNs from "vitest";',
+        'import { afterAll, describe, it } from "vitest";',
+        'describe("census", () => {',
+        "  afterAll(() => {",
+        '    if (AC2_RAN.length < 0) return withinHookBudget(CALL_SITE_HOOK, "B", 1, () => undefined);',
+        "  }, CALL_SITE_HOOK_BACKSTOP_MS);",
+        "});",
+        'describe("carrier", () => {',
+        '  vitestNs["afterAll"](() => withinHookBudget(CALL_SITE_HOOK, "B", 1, () => undefined));',
+        "  vitestNs[`afterEach`](() => undefined);",
+        '  const { "beforeAll": early } = vitestNs;',
+        '  vitestNs["after" + "All"](() => undefined);',
+        '  it("carries", () => undefined);',
+        "});",
+        "const run = withinHookBudget;",
+        "function withinHookBudget(): void {}",
+      ].join("\n"),
+    );
+    expect(read.findings, "each string key naming a registrar, and the alias; the computed key names none (the census's to catch)").toEqual([
+      `${SELF}:9: afterAll is named by a string key in a ElementAccessExpression, never called as a hook registration`,
+      `${SELF}:10: afterEach is named by a string key in a ElementAccessExpression, never called as a hook registration`,
+      `${SELF}:11: beforeAll is named by a string key in a BindingElement, never called as a hook registration`,
+      `${SELF}:15: withinHookBudget is named in a VariableDeclaration, never called directly`,
+    ]);
+    expect(read.registrations.map(rosterLine), "the roster reads the decoy only").toEqual(["afterAll @ census | guards CALL_SITE_HOOK | timeout CALL_SITE_HOOK_BACKSTOP_MS"]);
+    expect(read.describes).toEqual(["census", "carrier"]);
+    expect(read.guards, "the dead-branch decoy and the hidden body: two guards of CALL_SITE_HOOK").toEqual([
+      "CALL_SITE_HOOK | afterAll @ census",
+      "CALL_SITE_HOOK | a describe callback @ carrier, in a nested function",
+    ]);
   });
 });
