@@ -1,0 +1,814 @@
+{
+  "comment": "wb-561n roster (owner ruling R694 on the wb-celw landing-242 gate, F1-F3): the OUT-OF-FILE anchor of the wb-561n section of test/workbench-claude-message-ref.test.ts. leg2Escapes is the gate's F1 list of 34 LEG-2 escape families in its order; rows are the pinned refusals (id, pin, form, sites, causes, and the digest of id, pin, form, sites, causes and every placement text); residuals are the named quiet residual families (id, pin, family, sites, reading, digest), the seven named here then the three cut-3 families re-read; twins are the benign paired twins (id, pin, form, sites, reading, digest). Placements are the gate's LEG-2 texts verbatim; no class-wide closure claim.",
+  "sites": [
+    "S1",
+    "S2"
+  ],
+  "leg2Escapes": [
+    "L3-P5-OBJ-REST",
+    "L3-P5-FOR-OF",
+    "L3-P5-FOR-IN",
+    "L3-P5-DESTRUCT-TARGET",
+    "L3-P5-DESTRUCT-METHOD",
+    "L3-P5-BIND",
+    "L3-P5-BIND-ALIAS",
+    "L3-P5-GLOBAL-OWNER",
+    "L3-P5-GLOBAL-PROTO",
+    "L3-P5-GETPROTO",
+    "L3-P5-DUNDER",
+    "L3-P5-CONSTRUCTOR",
+    "L3-P5-DEFINE-GETTER",
+    "L3-P5-LET-ALIAS",
+    "L3-P5-MODULE-ALIAS",
+    "L3-P5-MODULE-OWNER",
+    "L3-P5-FROMENTRIES-SLOT",
+    "L3-P5-ALIAS-DYNAMIC",
+    "L3-P5-COMPUTED-SLOT-ALIAS",
+    "L3-P5-CALL-SPREAD",
+    "L3-P5-SEQUENCE-TARGET",
+    "L3-P5-CONDITIONAL-TARGET",
+    "L3-P4-SPREAD-CONST",
+    "L3-P4-DESTRUCT-METHOD",
+    "L3-P4-LET-ALIAS",
+    "L3-P4-BIND",
+    "L3-P4-GLOBAL-OWNER",
+    "L3-P4-NESTED-TARGET",
+    "L3-P4-COMMA-TARGET",
+    "L3-P4-CONDITIONAL-TARGET",
+    "L3-P4-MODULE-ALIAS",
+    "L3-P4-CALL-SPREAD",
+    "L3-P4-SETPROTO",
+    "L3-P4-REASSIGN"
+  ],
+  "rows": [
+    {
+      "id": "L3-P5-OBJ-REST",
+      "pin": "P5",
+      "form": "an object-rest destructuring target writes a prototype member",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "36853d22cc7c3fe5"
+    },
+    {
+      "id": "L3-P5-FOR-OF",
+      "pin": "P5",
+      "form": "a for-of iteration target writes a prototype member",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "bd04c7ccef0acedf"
+    },
+    {
+      "id": "L3-P5-FOR-IN",
+      "pin": "P5",
+      "form": "a for-in iteration target writes a prototype member",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "698a9dc7131673ea"
+    },
+    {
+      "id": "L3-P5-DESTRUCT-TARGET",
+      "pin": "P5",
+      "form": "a destructured const alias of Object.prototype receives a parsed bulk write",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "bb3b79d6b135726a"
+    },
+    {
+      "id": "L3-P5-DESTRUCT-METHOD",
+      "pin": "P5",
+      "form": "a destructured const alias of Object.assign bulk-writes the prototype",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "435ca778cfef9e12"
+    },
+    {
+      "id": "L3-P5-BIND",
+      "pin": "P5",
+      "form": "a bound Object.assign bulk-writes the prototype",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "95cc32ff71cba0f7"
+    },
+    {
+      "id": "L3-P5-BIND-ALIAS",
+      "pin": "P5",
+      "form": "a const alias of a bound Object.assign bulk-writes the prototype",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "fb4e97e97c729d62"
+    },
+    {
+      "id": "L3-P5-GLOBAL-OWNER",
+      "pin": "P5",
+      "form": "Object.assign owned through globalThis bulk-writes the prototype",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "7088e019c1d39090"
+    },
+    {
+      "id": "L3-P5-GLOBAL-PROTO",
+      "pin": "P5",
+      "form": "a member of the prototype spelled through globalThis is assigned",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "9ab92b69b5854a62"
+    },
+    {
+      "id": "L3-P5-GETPROTO",
+      "pin": "P5",
+      "form": "a member of the prototype reached through getPrototypeOf is assigned",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "88beb6fb0989b6f2"
+    },
+    {
+      "id": "L3-P5-DUNDER",
+      "pin": "P5",
+      "form": "a member of the prototype reached through __proto__ is assigned",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "c5a7a7f0eb51662c"
+    },
+    {
+      "id": "L3-P5-CONSTRUCTOR",
+      "pin": "P5",
+      "form": "a member of the prototype reached through constructor.prototype is assigned",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "77fba01fc801b33e"
+    },
+    {
+      "id": "L3-P5-DEFINE-GETTER",
+      "pin": "P5",
+      "form": "the legacy __defineGetter__ accessor API defines a prototype member",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "ac022bd94603fea6"
+    },
+    {
+      "id": "L3-P5-FROMENTRIES-SLOT",
+      "pin": "P5",
+      "form": "Object.fromEntries pairs carry the Object prototype slot into Object.assign",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "aff56ca39785c5d2"
+    },
+    {
+      "id": "L3-P5-ALIAS-DYNAMIC",
+      "pin": "P5",
+      "form": "a const Object owner alias with an unfolded writer name targets the prototype",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "f172352f00e9f53a"
+    },
+    {
+      "id": "L3-P5-COMPUTED-SLOT-ALIAS",
+      "pin": "P5",
+      "form": "a const-folded computed key carries the Object prototype slot into Object.assign",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "e9520272e12cc16d"
+    },
+    {
+      "id": "L3-P5-CALL-SPREAD",
+      "pin": "P5",
+      "form": "Object.assign.call fed by the spread of a const argument array writes the prototype",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "6ab5d5610f9439db"
+    },
+    {
+      "id": "L3-P5-SEQUENCE-TARGET",
+      "pin": "P5",
+      "form": "a comma-expression target evaluates to the prototype",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "d349a84635d601cd"
+    },
+    {
+      "id": "L3-P5-CONDITIONAL-TARGET",
+      "pin": "P5",
+      "form": "a conditional target has the prototype as one branch",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "250db7919be82115"
+    },
+    {
+      "id": "L3-P4-SPREAD-CONST",
+      "pin": "P4",
+      "form": "the spread of a const argument array carries snapshot and parsed data into Object.assign",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "data-carried snapshot write"
+      ],
+      "digest": "756a89cff4c1d105"
+    },
+    {
+      "id": "L3-P4-DESTRUCT-METHOD",
+      "pin": "P4",
+      "form": "a destructured const alias of Object.assign writes parsed data into snapshot",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "data-carried snapshot write"
+      ],
+      "digest": "3fe7bd1a4fd35e20"
+    },
+    {
+      "id": "L3-P4-BIND",
+      "pin": "P4",
+      "form": "a bound Object.assign writes parsed data into snapshot",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "data-carried snapshot write"
+      ],
+      "digest": "c3b01bbd09080627"
+    },
+    {
+      "id": "L3-P4-GLOBAL-OWNER",
+      "pin": "P4",
+      "form": "Object.assign owned through globalThis writes parsed data into snapshot",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "data-carried snapshot write"
+      ],
+      "digest": "6a0b0b532fe4c982"
+    },
+    {
+      "id": "L3-P4-NESTED-TARGET",
+      "pin": "P4",
+      "form": "the target is the snapshot an inner Object.assign returns",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "data-carried snapshot write"
+      ],
+      "digest": "a1e60714eb3ffb82"
+    },
+    {
+      "id": "L3-P4-COMMA-TARGET",
+      "pin": "P4",
+      "form": "a comma-expression target evaluates to snapshot",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "data-carried snapshot write"
+      ],
+      "digest": "17c61acb130c2e5e"
+    },
+    {
+      "id": "L3-P4-CONDITIONAL-TARGET",
+      "pin": "P4",
+      "form": "a conditional target has snapshot as a branch",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "data-carried snapshot write"
+      ],
+      "digest": "1113feb826818b8e"
+    },
+    {
+      "id": "L3-P4-CALL-SPREAD",
+      "pin": "P4",
+      "form": "Object.assign.call fed by the spread of a const argument array writes parsed data into snapshot",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "data-carried snapshot write"
+      ],
+      "digest": "d7ac8ac2893339ba"
+    },
+    {
+      "id": "L3-P4-ALIAS-DYNAMIC",
+      "pin": "P4",
+      "form": "the gate's F7 twin: a const Object owner alias with an unfolded writer name writes parsed data into snapshot",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "data-carried snapshot write",
+        "unresolved key"
+      ],
+      "digest": "ad77f96fa9b03ff6"
+    }
+  ],
+  "residuals": [
+    {
+      "id": "R-L3-P5-LET-ALIAS",
+      "pin": "P5",
+      "family": "the alias bound (F3): a let alias of Object.prototype, a mutable alias the reading never follows",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "21f1fe61497cb0c2"
+    },
+    {
+      "id": "R-L3-P5-MODULE-ALIAS",
+      "pin": "P5",
+      "family": "the alias bound (F3): a module-scope alias of Object.prototype, an external binding the reading never follows",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "07aeeff19e75f30b"
+    },
+    {
+      "id": "R-L3-P5-MODULE-OWNER",
+      "pin": "P5",
+      "family": "the alias bound (F3): a module-scope alias of the Object owner, an external binding the reading never follows",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "c72f1e89b1ff20bd"
+    },
+    {
+      "id": "R-L3-P4-LET-ALIAS",
+      "pin": "P4",
+      "family": "the alias bound (F3): a let alias of snapshot, a mutable alias the reading never follows",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "409395e7849998fe"
+    },
+    {
+      "id": "R-L3-P4-MODULE-ALIAS",
+      "pin": "P4",
+      "family": "the alias bound (F3): a module-scope alias of Object.assign, an external binding the reading never follows",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "25d1d9aef6b72cbe"
+    },
+    {
+      "id": "R-L3-P4-SETPROTO",
+      "pin": "P4",
+      "family": "exploratory, no own-property write: the snapshot's prototype replaced by parsed data, an inherited read",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "b8fd6a8b8273c9c8"
+    },
+    {
+      "id": "R-L3-P4-REASSIGN",
+      "pin": "P4",
+      "family": "exploratory, no own-property write: the snapshot parameter rebound to a fresh object carrying parsed data",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "2a0970afe1e35cc4"
+    },
+    {
+      "id": "R-HELPER-P4",
+      "pin": "P4",
+      "family": "a keyed pre-repair performed by a helper declared outside the callback",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "1ab78fe4fb37b512"
+    },
+    {
+      "id": "R-ARGS-P5",
+      "pin": "P5",
+      "family": "an in-place rewrite of the emitter's array argument through arguments",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "03b79547b5d2e9d5"
+    },
+    {
+      "id": "R-OUTSIDE-P5",
+      "pin": "P5",
+      "family": "an evidenceRefs supplied by code declared outside the emitter, a module-scope Object.prototype write",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "573943f641319a2a"
+    }
+  ],
+  "twins": [
+    {
+      "id": "T-P5-OBJ-REST",
+      "pin": "P5",
+      "form": "an object-rest destructuring target writes an unrelated member",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "ae76f08f3b69d0cb"
+    },
+    {
+      "id": "T-P5-FOR-OF",
+      "pin": "P5",
+      "form": "a for-of iteration target writes an unrelated member",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "e8acc8d61c07808c"
+    },
+    {
+      "id": "T-P5-FOR-IN",
+      "pin": "P5",
+      "form": "a for-in iteration target writes an unrelated member",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "2a6a5021a537300a"
+    },
+    {
+      "id": "T-P5-DESTRUCT-TARGET",
+      "pin": "P5",
+      "form": "a destructured const alias of Object.prototype is only read",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "c438373970b5ae1c"
+    },
+    {
+      "id": "T-P5-DESTRUCT-METHOD",
+      "pin": "P5",
+      "form": "a destructured const alias of a non-writing Object method reads the prototype",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "d8df20a9efc7ff96"
+    },
+    {
+      "id": "T-P5-BIND",
+      "pin": "P5",
+      "form": "a bound Object.assign writes an unrelated target",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "7a8cd7ae77b1ca82"
+    },
+    {
+      "id": "T-P5-GLOBAL-OWNER",
+      "pin": "P5",
+      "form": "Object.assign owned through globalThis writes an unrelated target",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "ade0a3ab7533ed7e"
+    },
+    {
+      "id": "T-P5-GLOBAL-PROTO",
+      "pin": "P5",
+      "form": "the prototype spelled through globalThis is only read",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "d14362fc9404de2b"
+    },
+    {
+      "id": "T-P5-GETPROTO",
+      "pin": "P5",
+      "form": "the prototype reached through getPrototypeOf is only read",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "9710023ca69b9c37"
+    },
+    {
+      "id": "T-P5-DUNDER",
+      "pin": "P5",
+      "form": "the prototype reached through __proto__ is only read",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "d7aea086f3b5294c"
+    },
+    {
+      "id": "T-P5-CONSTRUCTOR",
+      "pin": "P5",
+      "form": "the prototype reached through constructor.prototype is only read",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "3ad0947b338b3745"
+    },
+    {
+      "id": "T-P5-LEGACY-READ",
+      "pin": "P5",
+      "form": "the legacy __lookupGetter__ accessor API only reads a prototype member",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "9f86b940ee8d1171"
+    },
+    {
+      "id": "T-P5-FROMENTRIES-SLOT",
+      "pin": "P5",
+      "form": "Object.fromEntries pairs without the prototype slot are assigned into Object",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "48236ee326960558"
+    },
+    {
+      "id": "T-P5-ALIAS-DYNAMIC",
+      "pin": "P5",
+      "form": "a const Object owner alias with an unfolded writer name targets an unrelated object",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "44ea8cb26454f22a"
+    },
+    {
+      "id": "T-P5-COMPUTED-SLOT-ALIAS",
+      "pin": "P5",
+      "form": "a const-folded computed key that is not the prototype slot is assigned into Object",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "c2b7a47b32a7de61"
+    },
+    {
+      "id": "T-P5-CALL-SPREAD",
+      "pin": "P5",
+      "form": "Object.assign.call fed by the spread of a const argument array writes an unrelated target",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "803aff6f95375360"
+    },
+    {
+      "id": "T-P5-SEQUENCE-TARGET",
+      "pin": "P5",
+      "form": "a comma-expression target evaluates to an unrelated object",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "79dbb60473737eae"
+    },
+    {
+      "id": "T-P5-CONDITIONAL-TARGET",
+      "pin": "P5",
+      "form": "a conditional target has no prototype branch",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "9e37089d7102fad4"
+    },
+    {
+      "id": "T-P4-SPREAD-CONST",
+      "pin": "P4",
+      "form": "the spread of a const argument array carries snapshot and a literal-only source",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "8bfceb94e5548b05"
+    },
+    {
+      "id": "T-P4-DESTRUCT-METHOD",
+      "pin": "P4",
+      "form": "a destructured const alias of Object.assign copies snapshot and parsed data into a fresh target",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "b3142f9ee4634838"
+    },
+    {
+      "id": "T-P4-BIND",
+      "pin": "P4",
+      "form": "a bound Object.assign writes a literal-only source into snapshot",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "1480fca61918defd"
+    },
+    {
+      "id": "T-P4-GLOBAL-OWNER",
+      "pin": "P4",
+      "form": "Object.assign owned through globalThis copies snapshot and parsed data into a fresh target",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "f53e74be97fc9ddc"
+    },
+    {
+      "id": "T-P4-NESTED-TARGET",
+      "pin": "P4",
+      "form": "the target is the fresh copy an inner Object.assign returns",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "622da338f4b72536"
+    },
+    {
+      "id": "T-P4-COMMA-TARGET",
+      "pin": "P4",
+      "form": "a comma-expression target evaluates to a fresh object",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "f1f530b9244a6bc8"
+    },
+    {
+      "id": "T-P4-CONDITIONAL-TARGET",
+      "pin": "P4",
+      "form": "a conditional target has no snapshot branch",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "3875c97365afc332"
+    },
+    {
+      "id": "T-P4-CALL-SPREAD",
+      "pin": "P4",
+      "form": "Object.assign.call fed by the spread of a const argument array writes a fresh target",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "5b9bf070fea59496"
+    }
+  ],
+  "requiredLeg2": 34,
+  "requiredRows": 28,
+  "requiredQuietRows": 10,
+  "requiredTwinRows": 26
+}
