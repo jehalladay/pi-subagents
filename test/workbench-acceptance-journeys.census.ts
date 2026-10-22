@@ -67,6 +67,13 @@
  * U+2060 three times, a ten-unit mix) and for default-ignorables outside those six (U+2061, U+180E, U+034F, U+FE0F,
  * U+E0020), each row paired with a live, byte-identical control; every F4 title names its code points in hexadecimal.
  *
+ * wb-w3qp / R693 (the wb-cimo gate's PREP F1, class-closing): the predicate is pinned to the property itself, never to
+ * a member list. The census walks the regex engine's whole Default_Ignorable_Code_Point property over U+0000..U+10FFFF
+ * (the walk's range shape frozen in one literal); every walked unit, alone and all together as one prefix, opens a
+ * refused quotation before every named marker beside a live control, and over the same code space one leading unit
+ * opens a marker exactly when it is default-ignorable or whitespace (F3 rides). Each single-unit F4 row binds its
+ * title's code point to the unit it tests (F2 rides).
+ *
  * Frozen literals (rule 16), each written out in full: EXPECTED_SHAPE (journey:label:kind:pins), EXPECTED_PINS (the ten
  * pin pairs), EXPECTED_EVIDENCE (every row's evidence identity, U3) and EXPECTED_JUDGED_ROWS (the rows AC2 judges,
  * U4). AC2 asserts that the pins it judged are its row's EXPECTED_PINS entries, and its each-liveness case pins one
@@ -1924,6 +1931,7 @@ describe("wb-59l1 R679 position-bound citations and withdrawal boundaries", () =
   const unitHex = (cp: number): string => cp.toString(16).toUpperCase().padStart(4, "0");
 
   it.each([0x200b, 0x200c, 0x200d, 0x2060, 0x00ad, 0xfeff].map(cp => [unitHex(cp), cp] as const))("F4 invisible prefix U+%s: every named withdrawal marker refuses its quotation", (_hex, cp) => {
+    expect(_hex, "wb-w3qp F2: the title's code point is the unit this row tests").toBe(unitHex(cp));
     for (const marker of ["SUPERSEDED", "Withdrawn", "Withdrawal", "Withdrawals"]) {
       const body = `${String.fromCodePoint(cp)}${marker}: ${RUN}`;
       expect(runAudit({ [TRACEABILITY]: synthTraceability("Nothing."), [RUN_FILE]: runDoc(`## 2026-10-20 receipt\n\n${body}`) })[0], `${cp.toString(16)} ${marker}`).toContain("SUPERSEDED");
@@ -1990,6 +1998,101 @@ describe("wb-59l1 R679 position-bound citations and withdrawal boundaries", () =
     expect(OUTSIDE_SIX.filter(cp => COVERED_SIX.includes(cp))).toEqual([]);
   });
 
+  /**
+   * wb-w3qp / R693, the wb-cimo gate's PREP F1 (LOW, class-closing; property parent wb-h8f): every row above names its
+   * units, so a predicate whose class enumerates exactly those eleven (G2-09) survived 0|172. The rows below pin the
+   * property itself. PROPERTY_UNITS is the regex engine's own Default_Ignorable_Code_Point set, walked over the whole
+   * code space U+0000..U+10FFFF and never read from a list in this file; PROPERTY_RANGES freezes that walk's shape
+   * (rule 16), so a walk cut to the BMP, swapped to another property or sliced reds, and it is never the walk's source.
+   * Every walked unit, alone, opens a refused quotation before every named marker through the census's own renderer
+   * and liveness reading (sourceCitations, deadBecause), and the same unit before an interior keyword stays live and
+   * byte-identical; every walked unit that is not whitespace, together as one prefix, does the same through the audit,
+   * so a repetition of the class bounded below that prefix's length reds too. F3 (rides): over the same code space one
+   * leading unit opens a marker exactly when it is walked or whitespace, so a class widened past the property (G2-19:
+   * U+2800) reds, and a U+2800-led block stays live for every named marker through the audit. F2 (rides): each
+   * single-unit row above binds its title's code point to the unit it tests (G2-17). U+FEFF is the one walked unit that
+   * is also whitespace: the renderer trims it, so its control is compared trimmed and the one-prefix row leaves it out,
+   * while its landed single-unit row still pins it. Synthetic evidence inputs; no landed assertion removed; no product
+   * display path added. Disclosed limits: an edit inside one of these rows' own bodies, a coordinated edit of the walk
+   * and PROPERTY_RANGES together, or of a row here and F4_REGISTERED together, is census-code hollowing (6ze.38 class),
+   * which no literal or anchor here catches; a repetition of the class bounded at 4173 units or more outlasts the
+   * one-prefix row (no finite prefix closes that family); the boundary walk reads the SUPERSEDED marker only, and
+   * U+2800 alone carries every named marker through the audit; PROPERTY_RANGES is the property as this runtime's regex
+   * engine knows it (4174 units under Node v24.20.0, Unicode 17.0), so a Unicode revision that moves the property reds
+   * the set row by design, never silently.
+   */
+  const ignorableUnit = /^\p{Default_Ignorable_Code_Point}$/u;
+  const whitespaceUnit = /^\s$/u;
+  const NAMED_MARKERS: readonly string[] = ["SUPERSEDED", "Withdrawn", "Withdrawal", "Withdrawals"];
+  const walkProperty = (): readonly number[] => {
+    const units: number[] = [];
+    for (let cp = 0; cp <= 0x10ffff; cp += 1) if (ignorableUnit.test(String.fromCodePoint(cp))) units.push(cp);
+    return units;
+  };
+  const PROPERTY_UNITS = walkProperty();
+  const rangesOf = (units: readonly number[]): string[] => {
+    const runs: [number, number][] = [];
+    for (const cp of units) {
+      const last = runs.at(-1);
+      if (last !== undefined && last[1] === cp - 1) last[1] = cp;
+      else runs.push([cp, cp]);
+    }
+    return runs.map(([first, final]) => (first === final ? unitHex(first) : `${unitHex(first)}-${unitHex(final)}`));
+  };
+  const PROPERTY_RANGES: readonly string[] = [
+    "00AD", "034F", "061C", "115F-1160", "17B4-17B5", "180B-180F", "200B-200F", "202A-202E", "2060-206F", "3164",
+    "FE00-FE0F", "FEFF", "FFA0", "FFF0-FFF8", "1BCA0-1BCA3", "1D173-1D17A", "E0000-E0FFF",
+  ];
+  const isWhitespace = (cp: number): boolean => whitespaceUnit.test(String.fromCodePoint(cp));
+  /** The count and at most the first eight units in hexadecimal, so a failing walk names its first escapes without flooding the report. */
+  const tally = (units: readonly number[]): { readonly count: number; readonly first: readonly string[] } => ({ count: units.length, first: units.slice(0, 8).map(unitHex) });
+
+  it("F4 property set: the walk reads the regex engine's whole Default_Ignorable_Code_Point property over U+0000..U+10FFFF, and its shape is the frozen 17 ranges of 4174 units, U+FEFF the one whitespace unit", () => {
+    expect(rangesOf(PROPERTY_UNITS)).toEqual(PROPERTY_RANGES);
+    expect(PROPERTY_UNITS).toHaveLength(4174);
+    expect(PROPERTY_UNITS.filter(isWhitespace).map(unitHex)).toEqual(["FEFF"]);
+  });
+
+  it("F4 property walk: every walked unit alone opens a refused quotation before every named withdrawal marker, and the same unit before an interior keyword stays live and byte-identical (U+FEFF trimmed as whitespace)", () => {
+    const readings = PROPERTY_UNITS.map(cp => {
+      const unit = String.fromCodePoint(cp);
+      const quotations = sourceCitations(RUN_FILE, receiptText(NAMED_MARKERS.map(marker => `${unit}${marker}: ${RUN}`).join("\n\n")));
+      const quoted = withdrawalEntries(quotations);
+      const live = `${unit}The earlier run was SUPERSEDED; ${RUN}`;
+      const controls = sourceCitations(RUN_FILE, receiptText(live));
+      const rendered = whitespaceUnit.test(unit) ? live.slice(unit.length) : live;
+      return {
+        cp,
+        refused: quotations.length === NAMED_MARKERS.length && quotations.every(citation => deadBecause(citation, quoted) === "withdrawn"),
+        kept: controls.length === 1 && controls.every(citation => citation.text === rendered && deadBecause(citation, withdrawalEntries(controls)) === undefined),
+      };
+    });
+    expect(readings, "one reading per walked unit").toHaveLength(4174);
+    expect(tally(readings.filter(reading => !reading.refused).map(reading => reading.cp)), "walked units whose marker-led quotation stays live").toEqual({ count: 0, first: [] });
+    expect(tally(readings.filter(reading => !reading.kept).map(reading => reading.cp)), "walked units whose interior-keyword control is dead or rewritten").toEqual({ count: 0, first: [] });
+  });
+
+  it("F4 property prefix: every walked unit that is not whitespace, together as one prefix, opens a refused quotation before every named withdrawal marker, and before an interior keyword stays live and byte-identical", () => {
+    const units = PROPERTY_UNITS.filter(cp => !isWhitespace(cp));
+    expect(units).toHaveLength(4173);
+    prefixPinned("the walked property as one prefix", units);
+  });
+
+  it("F4 property boundary (F3 rides): over U+0000..U+10FFFF one leading unit opens a withdrawal marker exactly when it is walked or whitespace, and a U+2800-led block stays live for every named marker", () => {
+    const walked = new Set(PROPERTY_UNITS);
+    const misread: number[] = [];
+    let read = 0;
+    for (let cp = 0; cp <= 0x10ffff; cp += 1) {
+      const unit = String.fromCodePoint(cp);
+      if (WITHDRAWAL_MARKER.test(`${unit}SUPERSEDED: ${RUN}`) !== (walked.has(cp) || whitespaceUnit.test(unit))) misread.push(cp);
+      read += 1;
+    }
+    expect(read, "every code point is read").toBe(0x110000);
+    expect(tally(misread), "code points whose opening-marker reading differs from the walked property or whitespace").toEqual({ count: 0, first: [] });
+    expect(walked.has(0x2800) || isWhitespace(0x2800)).toBe(false);
+    for (const marker of NAMED_MARKERS) expect(runAudit(receiptFiles(`${String.fromCodePoint(0x2800)}${marker}: ${RUN}`)), `2800 ${marker}`).toEqual([]);
+  });
+
   const F4_REGISTERED: readonly string[] = [
     "F4 invisible prefix U+200B: every named withdrawal marker refuses its quotation",
     "F4 invisible prefix U+200C: every named withdrawal marker refuses its quotation",
@@ -2007,6 +2110,10 @@ describe("wb-59l1 R679 position-bound citations and withdrawal boundaries", () =
     "F4 outside-the-six prefix U+FE0F: every named withdrawal marker refuses its quotation, and the prefix before an interior keyword stays live and byte-identical",
     "F4 outside-the-six prefix U+E0020: every named withdrawal marker refuses its quotation, and the prefix before an interior keyword stays live and byte-identical",
     "F4 class: every new prefix unit is a Unicode default-ignorable code point and no whitespace, each multi-unit prefix has two or more units, and no outside-the-six member is a covered one",
+    "F4 property set: the walk reads the regex engine's whole Default_Ignorable_Code_Point property over U+0000..U+10FFFF, and its shape is the frozen 17 ranges of 4174 units, U+FEFF the one whitespace unit",
+    "F4 property walk: every walked unit alone opens a refused quotation before every named withdrawal marker, and the same unit before an interior keyword stays live and byte-identical (U+FEFF trimmed as whitespace)",
+    "F4 property prefix: every walked unit that is not whitespace, together as one prefix, opens a refused quotation before every named withdrawal marker, and before an interior keyword stays live and byte-identical",
+    "F4 property boundary (F3 rides): over U+0000..U+10FFFF one leading unit opens a withdrawal marker exactly when it is walked or whitespace, and a U+2800-led block stays live for every named marker",
     "F4 REGISTERED: every F4 case is registered once in table order under hexadecimal code points, and the covered six read back from their titles",
   ];
 
