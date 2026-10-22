@@ -16,15 +16,32 @@
  * - module: an import/export/require/import() specifier naming graphpolicy (graph-policy, graph_policy, graph.policy,
  *   graph policy; graph-policy-cli is the npm package GraphPolicyCLI ships, graphpolicy its Python mirror) or a package
  *   named gp;
- * - binary: the gp executable as a word (gp, gp.exe or gp.cmd, at the start of the text or after whitespace or a path
- *   separator, and ending the text or followed by whitespace): a bare name, a path, or a command line that runs gp;
+ * - binary: the gp executable as a word, in any letter case: gp, gp.exe, gp.cmd or gp.ps1 (the shims npm installs on
+ *   Windows). Before it stands the start of the text, whitespace, a path separator (/ or \), a shell separator or quote
+ *   (; & | ( ` " ') or the = of an assignment; after it, the end of the text, whitespace, a backslash, or a shell
+ *   separator, redirection or quote (; & | ) < > ` " '). So a bare name, a path, or a command line that runs gp
+ *   anywhere in it: after a separator with or without a space, in a subshell, a $(...) or backtick substitution, quoted;
  * - named: any other text naming graphpolicy, or gp's measured wire vocabulary (gp 0.1.0: the graphpolicy.cli.v1 and
  *   graphpolicy.rpc.v1 protocol ids, the gp.rpc.reply/v1 and gp.rpc.error/v1 reply schemas, and the GP_CLI_, GP_RPC_
  *   and GP_E_ code families).
  * A call site names its audited decision point with a `gp-decision-point: <id>[, <id>...]` comment attached to the
- * statement, class member or object property that holds it: above it, or on its lines up to the literal's own line.
+ * statement, class member or object property that holds it: above it, inside it up to the literal's own line, or
+ * trailing its end on that line. A comment inside a nested block, class body or object literal of that statement
+ * annotates that block's own members, and one that trails a later statement on the same line annotates that statement.
+ *
+ * The audit document is read in its RENDERED view, through the landed census binding (test/helpers/census.ts
+ * docsSection and sectionTables: one binding over marked's lexer). Each `## <name>` section must render exactly once,
+ * under the level-1 title AUDIT_TITLE, and runs to the next level-1 or level-2 heading or the end. A section is
+ * malformed when it carries HTML (a comment or a tag, in a table cell too), or when it does not render exactly one
+ * top-level table: a table inside a code fence (nested or mismatched fences included), an indented code block or an
+ * HTML comment renders none. A cell is read as it renders (the landed rule: inline markup renders its text, HTML none),
+ * and a field is empty when what it renders holds no letter, number, punctuation or symbol other than a blank-rendering
+ * filler (BLANK_FILLERS), each character reference read as the character it names (a named one the landed rule does
+ * not decode as none).
  */
+import { Lexer, type Token } from "marked";
 import ts from "typescript";
+import { docsSection, sectionTables } from "./census.js";
 
 /** README.md:89-99@6a251bf73af5, verbatim: the eleven lifecycle stages the audit's decision points range over. */
 export const LIFECYCLE_STAGES: readonly string[] = [
@@ -43,6 +60,12 @@ export const LIFECYCLE_STAGES: readonly string[] = [
 
 /** Where Pi's control-loop audit lives. The program text mandates the audit, not its home; this guard names one. */
 export const AUDIT_DOC = "docs/workbench/control-loop-audit.md";
+
+/** The audit document's level-1 title: the parent heading path every section is bound under. */
+export const AUDIT_TITLE = "Pi control-loop audit";
+
+/** Letters and symbols that render blank (the Hangul fillers and the blank Braille pattern): a field of only these is empty. */
+export const BLANK_FILLERS: readonly number[] = [0x115f, 0x1160, 0x3164, 0xffa0, 0x2800];
 
 /** README.md:103 plus :101's fixed rule: the five fields every audited decision point records. */
 export const DECISION_POINT_FIELDS: readonly string[] = ["policy", "inputs", "authority", "outcomes", "current fixed rule"];
@@ -107,7 +130,7 @@ export interface AuditInputs {
 const GRAPH_POLICY_NAME = /graph[-_. ]?policy/i;
 const GP_PACKAGE = /^gp(?:$|\/)/;
 const GP_WIRE = /\bgp\.(?:rpc|cli)\b|\bGP_(?:CLI|RPC|E)_[A-Z0-9_]/;
-const GP_BINARY = /(?:^|[\s\\/])gp(?:\.(?:exe|cmd))?(?:\s|$)/;
+const GP_BINARY = /(?:^|[\s\\/;&|(`"'=])gp(?:\.(?:exe|cmd|ps1))?(?=$|[\s\\;&|)<>`"'])/i;
 const MARKER = /gp-decision-point:\s*([A-Za-z0-9][\w.-]*(?:\s*,\s*[A-Za-z0-9][\w.-]*)*)/g;
 const DECISION_POINT_ID = /^[A-Za-z0-9][A-Za-z0-9._-]*$/;
 const FUNCTION_NAME = /^[A-Za-z_$][\w$]*$/;
@@ -179,12 +202,25 @@ function anchorOf(node: ts.Node): ts.Node {
   return current;
 }
 
+/** The spans of the blocks, class bodies and object literals nested in `anchor`: a comment inside one annotates its members. */
+function nestedMemberSpans(source: ts.SourceFile, anchor: ts.Node): (readonly [number, number])[] {
+  const spans: (readonly [number, number])[] = [];
+  const visit = (node: ts.Node): void => {
+    if (holdsMembers(node)) spans.push([node.getStart(source), node.end]);
+    ts.forEachChild(node, visit);
+  };
+  ts.forEachChild(anchor, visit);
+  return spans;
+}
+
 function decisionPointsOf(source: ts.SourceFile, comments: readonly ts.CommentRange[], node: ts.Node): string[] {
   const anchor = anchorOf(node);
   const lineOf = (pos: number): number => source.getLineAndCharacterOfPosition(pos).line;
   const literalLine = lineOf(node.getStart(source));
   const anchorLine = lineOf(anchor.getStart(source));
   const previousLine = lineOf(anchor.pos);
+  const nested = nestedMemberSpans(source, anchor);
+  const trailing = new Set((ts.getTrailingCommentRanges(source.text, anchor.end) ?? []).map((range) => range.pos));
   const ids: string[] = [];
   for (const range of comments) {
     const line = lineOf(range.pos);
@@ -192,6 +228,10 @@ function decisionPointsOf(source: ts.SourceFile, comments: readonly ts.CommentRa
     // A comment trailing the code of the previous statement's last line belongs to that statement.
     const before = source.text.slice(source.getPositionOfLineAndCharacter(line, 0), range.pos);
     if (line === previousLine && previousLine < anchorLine && before.trim() !== "") continue;
+    // A comment inside a nested block, class body or object literal belongs to that block's own members.
+    if (nested.some(([start, end]) => range.pos >= start && range.end <= end)) continue;
+    // Past the anchor's end, only the anchor's own trailing comment counts: one after a later statement belongs to it.
+    if (range.pos >= anchor.end && !trailing.has(range.pos)) continue;
     for (const match of source.text.slice(range.pos, range.end).matchAll(MARKER)) {
       ids.push(...(match[1] ?? "").split(",").map((id) => id.trim()));
     }
@@ -299,70 +339,76 @@ export function firstLine(stdout: string): string {
 
 type Section = { readonly kind: "missing" } | { readonly kind: "malformed"; readonly reason: string } | { readonly kind: "ok"; readonly rows: readonly (readonly string[])[] };
 
-function cellsOf(line: string): string[] {
-  let inner = line.trim();
-  if (inner.startsWith("|")) inner = inner.slice(1);
-  if (inner.endsWith("|") && !inner.endsWith("\\|")) inner = inner.slice(0, -1);
-  return inner.split(/(?<!\\)\|/).map((cell) => {
-    const trimmed = cell.trim().replace(/\\\|/g, "|");
-    return /^`[^`]*`$/.test(trimmed) ? trimmed.slice(1, -1) : trimmed;
-  });
+const textOf = (token: Token): string => {
+  const value: unknown = (token as { text?: unknown }).text;
+  return typeof value === "string" ? value : "";
+};
+const childrenOf = (token: Token): readonly Token[] => {
+  const value: unknown = (token as { tokens?: unknown }).tokens;
+  return Array.isArray(value) ? (value as Token[]) : [];
+};
+const ENTITIES: Readonly<Record<string, string>> = { "&amp;": "&", "&lt;": "<", "&gt;": ">", "&quot;": '"', "&#39;": "'", "&#x27;": "'", "&nbsp;": " " };
+const decode = (text: string): string => text.replace(/&(?:amp|lt|gt|quot|nbsp|#39|#x27);/g, (entity) => ENTITIES[entity] ?? entity);
+
+/** What a reader sees of inline tokens: the landed census rendering rule (test/helpers/census.ts inlineText), verbatim. */
+function inlineText(tokens: readonly Token[]): string {
+  let out = "";
+  for (const token of tokens) {
+    if (token.type === "html") continue;
+    if (token.type === "br") out += "\n";
+    else if (token.type === "codespan" || token.type === "escape") out += decode(textOf(token));
+    else if (childrenOf(token).length > 0) out += inlineText(childrenOf(token));
+    else out += decode(textOf(token));
+  }
+  return out;
 }
 
-/** The audit's known sections, each read as the one pipe table under its `## <name>` heading (fenced blocks are skipped). */
+/** A table cell, given as its source (sectionTables' grid), read as it renders: its inline text, whitespace collapsed. */
+const rendered = (cell: string): string => inlineText(Lexer.lexInline(cell)).replace(/\s+/g, " ").trim();
+
+const REFERENCE = /&(?:#[xX]([0-9a-fA-F]{1,6})|#(\d{1,7})|[A-Za-z][A-Za-z0-9]*);/g;
+const VISIBLE = /[\p{L}\p{N}\p{P}\p{S}]/u;
+
+/**
+ * True when a rendered field shows nothing: no letter, number, punctuation or symbol other than a BLANK_FILLERS
+ * character, once each character reference left undecoded is read as the character it names (a named one as none).
+ */
+function blank(field: string): boolean {
+  const read = field.replace(REFERENCE, (_reference: string, hex: string | undefined, decimal: string | undefined) => {
+    const point = hex !== undefined ? Number.parseInt(hex, 16) : decimal !== undefined ? Number(decimal) : 0;
+    return point > 0 && point <= 0x10ffff && (point < 0xd800 || point > 0xdfff) ? String.fromCodePoint(point) : "";
+  });
+  return ![...read].some((character) => VISIBLE.test(character) && !BLANK_FILLERS.includes(character.codePointAt(0) ?? 0));
+}
+
+/** docsSection's refusal when the rendered view has no such heading (a missing section), and when it has more than one. */
+const NO_HEADING = /^the rendered view has no level-2 heading /;
+const DUPLICATE_HEADING = /^the heading ".*" occurs \d+ times in the rendered view/;
+
+/**
+ * One known section in the rendered view, through the landed census binding (docsSection and sectionTables share one
+ * binding): the heading renders exactly once at level 2 under AUDIT_TITLE, the section runs to the next level-1 or
+ * level-2 heading, carries no HTML, and renders exactly one top-level table whose header is `columns`.
+ */
+function readSection(doc: string, name: string, columns: readonly string[]): Section {
+  const parents = [AUDIT_TITLE];
+  const section = docsSection(doc, name, 2, parents);
+  if (!section.ok) {
+    if (NO_HEADING.test(section.why)) return { kind: "missing" };
+    return { kind: "malformed", reason: DUPLICATE_HEADING.test(section.why) ? "duplicate heading" : section.why };
+  }
+  if (section.hasHtml) return { kind: "malformed", reason: "carries HTML, a comment or a tag, which can hide its source from the rendered view" };
+  const { grids } = sectionTables(doc, name, 2, parents);
+  if (grids.length === 0) return { kind: "malformed", reason: "no table" };
+  if (grids.length > 1) return { kind: "malformed", reason: "more than one table" };
+  const [header = [], ...rows] = (grids[0] ?? []).map((cells) => cells.map(rendered));
+  if (header.map((cell) => cell.toLowerCase()).join(" | ") !== columns.join(" | ")) return { kind: "malformed", reason: `columns: ${header.join(" | ")}` };
+  return { kind: "ok", rows };
+}
+
+/** The audit's known sections, each read as the one table its rendered `## <name>` section shows. */
 function readSections(doc: string): Map<string, Section> {
-  const known = new Map(SECTION_COLUMNS);
-  const tables = new Map<string, string[][]>();
-  const flags = new Map<string, string>();
-  let current: string | undefined;
-  let state: "before" | "in" | "after" = "before";
-  let fenced = false;
-  for (const line of doc.split("\n")) {
-    if (/^\s*(?:```|~~~)/.test(line)) {
-      fenced = !fenced;
-      continue;
-    }
-    if (fenced) continue;
-    const heading = /^## +(.+?)\s*$/.exec(line);
-    if (heading !== null) {
-      const name = heading[1] ?? "";
-      current = known.has(name) ? name : undefined;
-      state = "before";
-      if (current !== undefined) {
-        if (tables.has(current)) flags.set(current, flags.get(current) ?? "duplicate heading");
-        else tables.set(current, []);
-      }
-      continue;
-    }
-    if (current === undefined || flags.has(current)) continue;
-    const isRow = line.trimStart().startsWith("|");
-    if (isRow && state === "after") flags.set(current, "more than one table");
-    else if (isRow) {
-      state = "in";
-      tables.get(current)?.push(cellsOf(line));
-    } else if (state === "in") state = "after";
-  }
-  const sections = new Map<string, Section>();
-  for (const [name, columns] of SECTION_COLUMNS) {
-    const lines = tables.get(name);
-    const flag = flags.get(name);
-    if (lines === undefined) sections.set(name, { kind: "missing" });
-    else if (flag !== undefined) sections.set(name, { kind: "malformed", reason: flag });
-    else {
-      const [header, separator, ...rows] = lines;
-      if (header === undefined) sections.set(name, { kind: "malformed", reason: "no table" });
-      else if (header.map((cell) => cell.toLowerCase()).join(" | ") !== columns.join(" | ")) {
-        sections.set(name, { kind: "malformed", reason: `columns: ${header.join(" | ")}` });
-      } else if (separator === undefined || !separator.every((cell) => /^:?-{3,}:?$/.test(cell))) {
-        sections.set(name, { kind: "malformed", reason: "no separator row" });
-      } else {
-        const short = rows.findIndex((row) => row.length !== columns.length);
-        if (short >= 0) sections.set(name, { kind: "malformed", reason: `row ${short + 1} has ${rows[short]?.length} cells, expected ${columns.length}` });
-        else sections.set(name, { kind: "ok", rows });
-      }
-    }
-  }
-  return sections;
+  return new Map(SECTION_COLUMNS.map(([name, columns]) => [name, readSection(doc, name, columns)]));
 }
 
 /**
@@ -396,7 +442,7 @@ export function auditFindings(inputs: AuditInputs): string[] {
       const stageNumber = /^[1-9]\d*$/.test(stage) ? Number(stage) : Number.NaN;
       if (!(stageNumber >= 1 && stageNumber <= LIFECYCLE_STAGES.length)) reasons.push(`stage "${stage}" is not 1-${LIFECYCLE_STAGES.length}`);
       DECISION_POINT_FIELDS.forEach((field, offset) => {
-        if ((fields[offset] ?? "") === "") reasons.push(`empty ${field}`);
+        if (blank(fields[offset] ?? "")) reasons.push(`empty ${field}`);
       });
       if (reasons.length > 0) findings.push(`decision-point-invalid: ${id === "" ? `row ${index + 1}` : id} (${reasons.join(", ")})`);
       else {

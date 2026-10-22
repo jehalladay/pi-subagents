@@ -165,6 +165,141 @@
       ]
     },
     {
+      "table": "CALL_SITES",
+      "id": "CALL_SITES-19",
+      "label": "gp in a subshell (gate D01)",
+      "pins": [
+        "f634b426c09b5f7d08434c6c302ed07e94ac93650290252753afb00a3a399ee3",
+        "ee9ae1cc7340723a5672b3826467b227772276843c3934015a276716549af6b6"
+      ]
+    },
+    {
+      "table": "CALL_SITES",
+      "id": "CALL_SITES-20",
+      "label": "gp in a $(...) substitution (gate D02)",
+      "pins": [
+        "3596c3c7e6e73be6c125c697c3fba5ef0b740035b247ede90f599b5900887052",
+        "2ff4a6216ac2bcfdb949ae4be6751e57c80ac27ce4db575f338d555c97a249f4"
+      ]
+    },
+    {
+      "table": "CALL_SITES",
+      "id": "CALL_SITES-21",
+      "label": "gp right after a semicolon (gate D03)",
+      "pins": [
+        "4d5fc358bb06342a248d29a900c724d88c2feb029d4ac17dcac0add097606921",
+        "9be3cc0447fe128c5adeaad406a086afb1b9d23460b9bf3c446cce2b01110a54"
+      ]
+    },
+    {
+      "table": "CALL_SITES",
+      "id": "CALL_SITES-22",
+      "label": "gp right after && (gate D04)",
+      "pins": [
+        "6b785d6654b9b0c4633fe363b5ba35060e8e4b7d7e48ee716ab3d48a2ac0e036",
+        "ac3fc175bed0325d64a78715087db347444ed30a2f4ab25604c0c4354e18bb5c"
+      ]
+    },
+    {
+      "table": "CALL_SITES",
+      "id": "CALL_SITES-23",
+      "label": "gp right after a pipe (gate D05)",
+      "pins": [
+        "d262401074ce8279e1b47f4bdc87e10e254f9534d0c090a7846cbdca34135d67",
+        "e9c2b2f7b5beb585d94d174c6f0457fe947cb1df8847dfd443292bfc611ce190"
+      ]
+    },
+    {
+      "table": "CALL_SITES",
+      "id": "CALL_SITES-24",
+      "label": "gp double-quoted inside a command line (gate D09)",
+      "pins": [
+        "4b63b825ec014dca7ddc9c7a78032d6348cd1ee3606910c2a202697e1332abd0",
+        "6408968b447892eb2712bc90df0f02fe5b087b717ee5c8a719af0069c8968453"
+      ]
+    },
+    {
+      "table": "CALL_SITES",
+      "id": "CALL_SITES-25",
+      "label": "gp in a backtick substitution (gate D10)",
+      "pins": [
+        "d40589c71dbb76d9e593a10a83b1a7a9206fbe2d4082726c3e10253987fe7895",
+        "d7903d283087846577bd731a2b82a451dc23c4934b8705e1a7de31493d1d6b01"
+      ]
+    },
+    {
+      "table": "CALL_SITES",
+      "id": "CALL_SITES-26",
+      "label": "gp single-quoted inside a command line",
+      "pins": [
+        "3bab0341100090c32fecfcc16b932ea7342cea71e3102bc3ba1a1610b9179083",
+        "34858dc5024504380312343ab9b19567886f3b3f8c2e0c9a379137cc69f7b50f"
+      ]
+    },
+    {
+      "table": "CALL_SITES",
+      "id": "CALL_SITES-27",
+      "label": "gp as the value of an assignment",
+      "pins": [
+        "606636250fb1e34d963a5713125dfa99cf0825af4e8aacfb77eebc57d586ff18",
+        "884669924dd0cd161f1569f2e61ede74059d5942797096824a94d2d1c36b5958"
+      ]
+    },
+    {
+      "table": "CALL_SITES",
+      "id": "CALL_SITES-28",
+      "label": "gp ended by a shell separator, redirection, backslash or quote with no space",
+      "pins": [
+        "11fb5da5ac4b49a986f25146fd0da3da655f3effb36a6a2974bb99fdfc5a8363",
+        "075469134eeba9ceb5dc04c9035e35401bec57c1cd2dcd8985a893bfcbb31d97",
+        "1101482e95bb0d61e058216fa69a378320b83280a484adf8a4834bb001507cee",
+        "f3453e6ed65671ce27bd7ee40ca6f1dad04902d60557f1e263aaba06a58fc75c",
+        "fbd27ece46ccc2e773128c727d4b00bddf3e8b44e0425196a98db2f89ea4ef5e",
+        "c0fec3b891fad7321b6b139035b2d39aada074bc9bf0c7b881fe4e870fa31a14",
+        "b254324996b60134d79dab146ae02aeabbb37f0b8bcecc12eddb9e18b96a3028",
+        "3f26cfdaee05706c317dec71c5545eed01d91904bc5cd4dffe92d04f2e2358d0",
+        "ac8c61fa02848034cf04ce08ae9714e2df3a011106162f04b2a739fdd006ccec"
+      ]
+    },
+    {
+      "table": "CALL_SITES",
+      "id": "CALL_SITES-29",
+      "label": "the npm PowerShell shim gp.ps1 (gate D11)",
+      "pins": [
+        "7f6013df29d8942e554db664dae7eaacd215a314ff1fb2cd660849812104b04d",
+        "05558d3fefb1354f36372ab22bfd6c7fc71f75f59db9c057dcb655dd691e0155"
+      ]
+    },
+    {
+      "table": "CALL_SITES",
+      "id": "CALL_SITES-30",
+      "label": "a Windows path in upper case (gate D12)",
+      "pins": [
+        "93f52251dd76c4d9a8103027c1a553d8f253ae018ff7a8247d3c5ee62d8fa352",
+        "3ad3a2e41fed726f48fcef4b5fe683158dbad56afbe0e17f0ec7e69679d03fb2"
+      ]
+    },
+    {
+      "table": "CALL_SITES",
+      "id": "CALL_SITES-31",
+      "label": "the bare name and a shim in another letter case",
+      "pins": [
+        "40d16c89d8d559d581412fad5f8f3fc7c7370887bb644b278349fc50bb436498",
+        "c8657085f2553d5f9a062e66cd67c27b27a7793e9572620a2d9c9790cb7d6211",
+        "284cf0b9e99f64a3979a0a654da561354afd9a3b5f67a23822f4d773f58e4f6f"
+      ]
+    },
+    {
+      "table": "CALL_SITES",
+      "id": "CALL_SITES-32",
+      "label": "a require() and a dynamic import() of the package",
+      "pins": [
+        "0f6d1b6bcbfb64ab6769eae873b449ebef69d0396b56777bdb7684cbea0db692",
+        "81b3472ed73c61b9cbf8de83c775c332d5ffe65d14495bd14d516ed0f099730a",
+        "217c1f941dc5c0dd3e03d96addecc39a1ff040df187a9901e9f89a03fe38d20a"
+      ]
+    },
+    {
       "table": "NOT_CALL_SITES",
       "id": "NOT_CALL_SITES-01",
       "label": "a line comment",
@@ -229,6 +364,14 @@
       ]
     },
     {
+      "table": "NOT_CALL_SITES",
+      "id": "NOT_CALL_SITES-09",
+      "label": "gp after a character that starts no command word, or before one that ends none",
+      "pins": [
+        "b9315c774bf7dae07bfc3a87927390020705bb1b41878b105f6461307000c981"
+      ]
+    },
+    {
       "table": "RESIDUALS",
       "id": "RESIDUALS-01",
       "label": "RES-1 a binary named by configuration or environment",
@@ -250,6 +393,14 @@
       "label": "RES-3 the caller of a local gp wrapper",
       "pins": [
         "576a5a44259416b4e49143b11ac30b2b73c145ea980a508b233b2e1e9ff19e92"
+      ]
+    },
+    {
+      "table": "RESIDUALS",
+      "id": "RESIDUALS-04",
+      "label": "RES-4 a gp name the shell assembles from quoted or escaped parts",
+      "pins": [
+        "39fa04c30c7782b406f56315d7eeb47a6dd42f6f3f490caeb89f84c8f3df5efd"
       ]
     },
     {
@@ -298,6 +449,24 @@
       ]
     },
     {
+      "table": "ANNOTATED",
+      "id": "ANNOTATED-06",
+      "label": "a comment inside the statement, before the literal",
+      "pins": [
+        "cff411c37e38b3035f2ab76f18b5bdb99a6d75639c8893118313b442ef5f6ac2",
+        "3dfd1086820426278724a7b67aeb393ac40ebbd01de37e6d9b0c9b786c44c94d"
+      ]
+    },
+    {
+      "table": "ANNOTATED",
+      "id": "ANNOTATED-07",
+      "label": "a comment above a statement nested in a block",
+      "pins": [
+        "52e184923778ee58721887b748ccc687df0fbf1810b66555a1b814baf6dc48e0",
+        "df931abbe2f0198f641bd2a03f2a88de869a1711790d1c87fb65190d26a48058"
+      ]
+    },
+    {
       "table": "UNANNOTATED",
       "id": "UNANNOTATED-01",
       "label": "no comment at all",
@@ -338,6 +507,30 @@
       ]
     },
     {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-06",
+      "label": "a marker inside a nested block, annotating another call (gate A01)",
+      "pins": [
+        "de09ad28b0a87a779f5282b5b422a1d3f1a844746670c5d7a5d2a81c6352590b"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-07",
+      "label": "a marker trailing a later statement on the literal's line (gate A02)",
+      "pins": [
+        "ce69c1319e1d05ebcebf24d67b7fa005a06793b72f08203a10a04516b22ce1f9"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-08",
+      "label": "a marker on the enclosing function (gate A03)",
+      "pins": [
+        "d817f2af3f63cc2f94ffc3f20f4863dda7d49beda786a9516e2cb6b73de429be"
+      ]
+    },
+    {
       "table": "FALSIFIERS",
       "id": "FALSIFIERS-01",
       "label": "(a) a call site with no audit document",
@@ -370,7 +563,7 @@
       "id": "FALSIFIERS-04",
       "label": "(a) a stage outside 1-11",
       "pins": [
-        "79aa7b0899d3ec3aa3af4f32355ae08f68c80b052fb5e908f50d35761342119f",
+        "299341c06d6a8effe4e5733efc552f2cc183c2bf7fb15b64591908bd5298ec86",
         "581b534fa01bd0b00e8af74fd92115e1f52f89f6453e33563111c0f1e7544f46",
         "debbf746cc49958ff974fa452de6ae18b34cdd02fa8b93e4ffc074317ae2d500"
       ]
@@ -380,7 +573,7 @@
       "id": "FALSIFIERS-05",
       "label": "(a) an empty authority field",
       "pins": [
-        "360e40752e9f420f4a8f4996d8545790e82683b28794687cacfc5a1ca475bb31",
+        "3cf11569998e8d7d1792ab0544674fe9dc5984c9b5ec4a16d0f908ec731010e5",
         "b0ff3f90b2d1aa89e1ff8f91d84b689ae9664f5272edf75e3ada1c0588b416df",
         "10f7daf0507f2f1961cc5bc580b6dd458e3b6cfc214c453693e709060c94bc39"
       ]
@@ -390,7 +583,7 @@
       "id": "FALSIFIERS-06",
       "label": "(a) an empty current fixed rule",
       "pins": [
-        "dd9b8f687b4802c82089b6c0630e5a109c1f90ec8143f2a43611d38b92970a43",
+        "cecaa23f3778811bffef1d4d0ca1c901ea93f6e71be896f789044705d23d40c9",
         "1993caef20c46498215e2fc948e7604a521d585af1a98960b693ef9649142b23",
         "73accd446941166f2ea54ac13c36672221e2a30f5d612fa05f875fce25e472ca"
       ]
@@ -400,7 +593,7 @@
       "id": "FALSIFIERS-07",
       "label": "(a) a duplicate decision-point id",
       "pins": [
-        "c3298369058ef5f380a8ea56a118c73f654e0625194ebb210fa1a50ffdcc1c0c",
+        "313d84b33cd0696c52d3720468f30f4eb21b32c83f4b7a90c512fbb019989bf9",
         "19404ef5b2566c85e9b711aefb9dd147c2e877c0c022a800f0e2b41525fdb051"
       ]
     },
@@ -409,7 +602,7 @@
       "id": "FALSIFIERS-08",
       "label": "(a) a malformed decision-point id",
       "pins": [
-        "f1ff87314f6352fe62abcbf4bff439b395876ecc1a340a8ac13a812a2b17af2b",
+        "52e3cd8357866e6b8d4c5779c862b97961f194a1463ad938ec3476034fb92ca5",
         "e51ef3e6b7517aaa0e026f3e32dd1bdeccd8b0e96dc26f9811eebe7fa93a7e35",
         "6dfd0fc1eb79842e57040100ee5f983382ddbd470eea3f4587bd0db55214d43b"
       ]
@@ -419,9 +612,9 @@
       "id": "FALSIFIERS-09",
       "label": "(a) a decision-point row with a missing cell",
       "pins": [
-        "92ce6edb3af8cba0c5e25f585e8c25578d28fdb55c116d5240bca40eca4edd06",
-        "d09c3b4c4f18d8f09777be64fb97e7e796a6263d2974b58d7ecb28811a578320",
-        "e5bc59c1163033922796d2e9ad7b0e7684b0d5e156c745028152f6f071c19d7d"
+        "0248d1c94ed521dc35f135c47cf33f1161d92714d13007b3260acd6325daf961",
+        "8e0fc6cfbdbdc4f872c00bb31e340cab55f7356c81657583aa662a9185df8a9a",
+        "debbf746cc49958ff974fa452de6ae18b34cdd02fa8b93e4ffc074317ae2d500"
       ]
     },
     {
@@ -429,7 +622,7 @@
       "id": "FALSIFIERS-10",
       "label": "the Inventory section missing",
       "pins": [
-        "9ef634ef6a6200cfc9507943478ab05bd7f96da35ca16dc8e634665d371ab542",
+        "f5c14d0ed7a22daefdefc671909a874afb1a645002de1272c9be0479a5d03146",
         "589652d5978e45463834df0d99dde2e4fc4f1a8eac852584a95d1e33de4e5cb3"
       ]
     },
@@ -438,7 +631,7 @@
       "id": "FALSIFIERS-11",
       "label": "the Decision points section missing",
       "pins": [
-        "e9bdc581ed5b3b6301691a16e140c0346693a71c274cf80c9ffda4139bfdb7ea",
+        "b81ce2f4c237cce09667a00ea3a14295599f68ecda5bf0c51dcb75a8f11e11fc",
         "1af19e71aa110c50f78291dd18a883f9071f4bcd5ddff750411b07ed8ee2b06b",
         "e5bc59c1163033922796d2e9ad7b0e7684b0d5e156c745028152f6f071c19d7d"
       ]
@@ -448,7 +641,7 @@
       "id": "FALSIFIERS-12",
       "label": "a Dependencies table with a renamed column",
       "pins": [
-        "467b7b4a87cde5be3971433ed6b40f14d27180a06e84f9b2317692c758815a9b",
+        "1afd3806f68caafa66a0b67a392faacdca5feb443b7d8a780288c07ddc1da99f",
         "b318fb966222e4b0dd390732deddeb0ab68caa9a03e4892ea9f80b254747eaac"
       ]
     },
@@ -457,7 +650,7 @@
       "id": "FALSIFIERS-13",
       "label": "a second Configuration heading",
       "pins": [
-        "355e36028f51bb73ecf0034f373ed7b98ebd8f79010080154dbc236a97b02ee5",
+        "d52efc76fa049cecfcc52d25da5146d2fbfc3aff9ad9e9901cb6bb0c5b718a82",
         "6f2c7d544bbde664747f5ed18f84d3c94440dc0eef8ee90765a2e0d4f6c9a592"
       ]
     },
@@ -466,7 +659,7 @@
       "id": "FALSIFIERS-14",
       "label": "a second table under Fallback",
       "pins": [
-        "11d68f9903a1217fb9f4cb7e089b4ec397631a14ccf142d1d4a5a013d39d6a3d",
+        "9448b696a705428713f1a54281c07e90c37450ac5b521b20c6626be425f4b26d",
         "c8e6c0d9cf9017955e8bcd8d36220e5cee28fc4c524aa894ba022c0c9ae15520"
       ]
     },
@@ -475,7 +668,7 @@
       "id": "FALSIFIERS-15",
       "label": "an Inventory table inside a fenced block",
       "pins": [
-        "e419f8e40c3f43316e6ee32a4a38b9700eb08d592a2148e101b7c5cbc1e73795",
+        "3218c2ed9f341d0c57ef099d95b59a7d4454cc59f3568f70390ab00ab1e38f6a",
         "7a0af8893b21f1f0e96f8c512a5bc5293da5eb1248049c04a3bd9abb3d75d5b6"
       ]
     },
@@ -484,7 +677,7 @@
       "id": "FALSIFIERS-16",
       "label": "(b) an entrypoint naming an export the module lacks",
       "pins": [
-        "23009698aa203920403844788c1bacb822c9eaeb84a500c707897a6dac7c7aad",
+        "1690793c9a539028361c2f034bb7a31b0e49ee2cbc48f50b63169162426152a9",
         "ad427bea304d0f729678acbdf0ab08459adfae6a1a63c4765ffa02d883b8d6cc"
       ]
     },
@@ -493,7 +686,7 @@
       "id": "FALSIFIERS-17",
       "label": "(b) an entrypoint naming a module-private function",
       "pins": [
-        "0bb75b46bf571283c8128759d5b09c4f900bd0a8dd3bd370fa60b28dfa7c6e7a",
+        "b61f6ed7331dfb2acbf2eb1f420df104bc3c1ab47e96ba9d422be9aa92e97ea4",
         "bda4b2848a5c974ccfc61ceaff9f9ab66c456972a6b4fdf9031b6181b1a19b18"
       ]
     },
@@ -502,7 +695,7 @@
       "id": "FALSIFIERS-18",
       "label": "(b) an entrypoint in a module that does not exist",
       "pins": [
-        "047a80e5acff68323675c71f62d33ebf5bdca1bca1b81263b923eb83155717f1",
+        "e819ad763b6ec5098247751ad7f23ae5effe077c320c2f08cc939d21d6b41e0d",
         "9561f401ff0cbc0dc676abfae7c39251c556d5b0a6698d5225e0e4da33be5fcb"
       ]
     },
@@ -511,7 +704,7 @@
       "id": "FALSIFIERS-19",
       "label": "(b) no gp row among the dependencies",
       "pins": [
-        "ceec7e7528b02e189bf505c0334bda429109811a0ead30a72868db4416343ae3",
+        "cd24d97ad4d2112933306b36a2640b1808f5dbfbeca8051f6a2f4f78327cbf68",
         "199ba2ea8ba6b628f83f356d1270b8c57a876f0d5fcd65b348295560f60bb637"
       ]
     },
@@ -520,7 +713,7 @@
       "id": "FALSIFIERS-20",
       "label": "(b) a gp version that is not the measured string verbatim",
       "pins": [
-        "23485747c7d71fba3fb512e3a04b238e09cd609b8c78ae08098c334628bb7ea4",
+        "936e47aed5f1108a1aad15da024b0ed71bdd8ccaf43890f03d9abebbd9173afe",
         "4ce1f1cc8426d9e89bbd12db93ab976d5da3f365bafd91f7a684db6c2f73275c"
       ]
     },
@@ -538,7 +731,7 @@
       "id": "FALSIFIERS-22",
       "label": "(b) a documented key the settings schema lacks",
       "pins": [
-        "2c1f1d67692900e198b0991c5deb51da7eea220636a5e694c0244bb93deeb9c8",
+        "cfa114700c567d4826698fe992efc687983b0ee15fc84a4c5748ebda0b1274ad",
         "a072b79836d492480c8d86ea06dffa8ea56496f92210ae3d62182674a298143f"
       ]
     },
@@ -547,7 +740,7 @@
       "id": "FALSIFIERS-23",
       "label": "(c) no fallback row for the call site",
       "pins": [
-        "da459193e0a45926d7d6f2587c9739699c90e6f479ace859e43d879ae54e6f7c",
+        "e8c93e0965028dca1d671a34dad777643aaa6017f5dbed8bf9a3d5eafbf8e378",
         "e8c9af0b2f52d721271a901f34ba2297e96a73ec0695b91c61ff05d81f73423b"
       ]
     },
@@ -556,7 +749,7 @@
       "id": "FALSIFIERS-24",
       "label": "(c) a fallback row that names no function",
       "pins": [
-        "c308b6c4f16b68be290c8aeb61b8120cb020e3716c03ca926e9bc7b89c1222b2",
+        "f81b2cb3d6a8a9d186cacd7ace337d0699584aa1bb8a20e248d578cd76de5f3e",
         "e8c9af0b2f52d721271a901f34ba2297e96a73ec0695b91c61ff05d81f73423b"
       ]
     },
@@ -565,7 +758,7 @@
       "id": "FALSIFIERS-25",
       "label": "(c) a fallback row keyed to another call site",
       "pins": [
-        "6ed59069a86070388799b80b6542bb78f94cee23a949dc8f55abd195e50ce3ad",
+        "8a57784b5e9b1db8527040686cfe25c233509be5653aaa9f11c7cd00e85131e9",
         "e8c9af0b2f52d721271a901f34ba2297e96a73ec0695b91c61ff05d81f73423b"
       ]
     },
@@ -574,7 +767,7 @@
       "id": "FALSIFIERS-26",
       "label": "(c) an inventory status outside implemented/proposed",
       "pins": [
-        "40307ed8bec249d1a0d8198c3e75ac64a410d23ba2b7648d8a91a58604c9c964",
+        "3d99d986b19148bb59ef756e290d45dbc5dc4a3aa6c651a48adf3ae2f5c5a31e",
         "3294348819e4945a681a88609d32dd81c1914b4f5dc424899d911a3f6466c465"
       ]
     },
@@ -583,8 +776,176 @@
       "id": "FALSIFIERS-27",
       "label": "(c) an empty inventory",
       "pins": [
-        "3d8b9c9e53e77d7270678b4493215b6b2b4c3ce65c7a82ee9ebbcb2ed71428e5",
+        "cfbab858ca13bb65af90289e8ca0663f53679454934786507ca4b006a1abb747",
         "319fc7ed01024b0873c676571386f2abb74757bd61155f8648aa0dae1e2084bc"
+      ]
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-28",
+      "label": "rendered view: the Inventory table inside an HTML comment (gate J01)",
+      "pins": [
+        "439c023c99779de1d899837212dc6eea03076f52fac2c5d12bc9f639bc2fefd7",
+        "cfcada98ed0539df9af57a5843ac782c417f28156eff0e11f3d9240ba2713a59"
+      ]
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-29",
+      "label": "rendered view: the Fallback table inside an HTML comment (gate J02)",
+      "pins": [
+        "ba986048ee05815ad2389fc8173fe4f36872c6383c6889d186ef100de1ab7acf",
+        "861eab05a31c641f9db2880c72c22207fc7f5af785d528e2a0935e999fdec120"
+      ]
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-30",
+      "label": "rendered view: the Decision points table inside an HTML comment (gate J03)",
+      "pins": [
+        "dd186f6d57a796fdb781217865089fe4f64ad998be530122ed23806ee5f10ed4",
+        "4e1e45eb1cae1d71b32582f42cf61a267d87b3c95bed57fcdd47b61b7164b51b",
+        "e5bc59c1163033922796d2e9ad7b0e7684b0d5e156c745028152f6f071c19d7d"
+      ]
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-31",
+      "label": "rendered view: the whole Fallback section inside an HTML comment (gate J04)",
+      "pins": [
+        "38cfc446b3b871df56d8e6b642ab8c429ad64a83e664315fb71a6f26427e767a",
+        "023765628ebffcee71a711956c93bffd2fe1629df648daf9b5a1881bac604430",
+        "34316ee90b1b21cfa0607e382988f635a78eca201b04f31f02d094974d1a8c44"
+      ]
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-32",
+      "label": "section bound: the Fallback table under a level-1 heading after ## Fallback (gate J05)",
+      "pins": [
+        "6ef02861bb853f266e7790357b89628b5f355a52d3276e5211e7a0b4d068b16c",
+        "949223260e4f280fdcb74cf1e30d86771e239096a04907ddd8355eac4bc7c54b",
+        "8a840f47c18b497f6e478d777b2361ff10bdccc2ca39b4141a0adc3220c6350e"
+      ]
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-33",
+      "label": "rendered view: the Fallback table as an indented code block (gate J06)",
+      "pins": [
+        "50cf5dbe649e7d503a18a0062c9a37a9af6b879139cf2ba9ab7d3f3180f85228",
+        "949223260e4f280fdcb74cf1e30d86771e239096a04907ddd8355eac4bc7c54b"
+      ]
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-34",
+      "label": "rendered view: the Fallback table in a four-backtick fence holding ``` lines (gate J07)",
+      "pins": [
+        "b564c3db4193303845276b72bdc1d1aab348a26444c3d1ad8dd8814e338f86da",
+        "949223260e4f280fdcb74cf1e30d86771e239096a04907ddd8355eac4bc7c54b"
+      ]
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-35",
+      "label": "rendered view: the Fallback table between ~~~ lines in a ``` fence (gate J08)",
+      "pins": [
+        "1c911a017337dc5e37f9076eea2b247064b5f62a771d687865142e4641c62a42",
+        "949223260e4f280fdcb74cf1e30d86771e239096a04907ddd8355eac4bc7c54b"
+      ]
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-36",
+      "label": "rendered view: an authority cell holding only an HTML comment (gate J09)",
+      "pins": [
+        "a647e823180ff7875f399ad97f87efc043c47590ae5c378ba9f15e6da2c2fecb",
+        "4e1e45eb1cae1d71b32582f42cf61a267d87b3c95bed57fcdd47b61b7164b51b",
+        "e5bc59c1163033922796d2e9ad7b0e7684b0d5e156c745028152f6f071c19d7d"
+      ]
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-37",
+      "label": "same view: a Configuration heading hidden in an HTML comment after the last section (gate J10)",
+      "pins": [
+        "1e0ae66344faee65f2cf82d886b6508772bd4613ea9d7e3a113e003aa688f3fa",
+        "0fcfaf28bc7b55c678afc72d8c50089d8b8b5e6bf02de0829e71b1d2fe6ac65a"
+      ]
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-38",
+      "label": "rendered view: an authority field holding only a zero-width space reference",
+      "pins": [
+        "79689bb770b47038d424fb2508e559dbb7a9e173087ee87bbedb5f19bce92a81",
+        "b0ff3f90b2d1aa89e1ff8f91d84b689ae9664f5272edf75e3ada1c0588b416df",
+        "10f7daf0507f2f1961cc5bc580b6dd458e3b6cfc214c453693e709060c94bc39"
+      ]
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-39",
+      "label": "rendered view: an outcomes field holding only a named reference the landed rule leaves undecoded",
+      "pins": [
+        "cab4eaad36667daf65d2c76a2fe0c2948c95ac549d69038cd5cd7d84212b5f1b",
+        "3542b6aa069d2916f28aea1f7ea002a9b6caf6a4d939776c649af0f315db45da",
+        "b85e298a574ec5bcf6a266ae9e04bd7b001b169d5213d97e676ef905fed65aaa"
+      ]
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-40",
+      "label": "rendered view: a policy field holding only an empty link and a blank code span",
+      "pins": [
+        "4917abb8c5a2cde2a3df0e89a02fcc6e1edc513d2458c87968fa1166d2f2016d",
+        "c2204a5a403d49130286b4a89c3aa2d49109e2e35bf39a0888528ad227a51d4f",
+        "164eda5450ab76281299313680748daeb413ac8f2d6fb00522d722c79166397a"
+      ]
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-41",
+      "label": "rendered view: an inputs field holding only a Hangul filler",
+      "pins": [
+        "c37f625ccc272826460b4f9407ce5d633b775c2fa5f60b154cd280a7595f0ce5",
+        "49f28c03eab7ae3b84890238541f398478fb6cabb6b40805b40da99139e520b6",
+        "fb4452b8e98d01301bba9bc375018dea87f6ddf074fc57a46ebbd265273df939"
+      ]
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-42",
+      "label": "rendered view: a field written as a visible character reference is filled",
+      "pins": [
+        "bc3805908947d671f1df53a6bb28efc2be5a84796a61b77edaffe077afd4b85e"
+      ]
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-43",
+      "label": "rendered view: an authority field holding only an out-of-range reference reads empty",
+      "pins": [
+        "85ea00fc0211d60098563489cf511583616c4e4713d25d44f247f9349f0f37cf",
+        "c756d35f95d420698dfc4764e48eab23b89d0869243a09bea27a1a9df8b2066f",
+        "6dfd0fc1eb79842e57040100ee5f983382ddbd470eea3f4587bd0db55214d43b"
+      ]
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-44",
+      "label": "rendered view: a header written with inline markup and capitals is read as it renders",
+      "pins": [
+        "a71f8e2f52f5d865b5e12bbbbbc0a3b274d9459876bed9895c5988c34c8fd11c"
+      ]
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-45",
+      "label": "rendered view: a field holding only punctuation or only a symbol renders, so it is filled",
+      "pins": [
+        "b8731ef026368acd736eaed9134ef6fa13dc2640ebd3a33d86e16bb7c8303e5e"
       ]
     },
     {
@@ -679,7 +1040,8 @@
   "residuals": [
     "RES-1 a binary named by configuration or environment",
     "RES-2 a binary name built by concatenation",
-    "RES-3 the caller of a local gp wrapper"
+    "RES-3 the caller of a local gp wrapper",
+    "RES-4 a gp name the shell assembles from quoted or escaped parts"
   ],
   "tests": [
     "src/ carries no gp call site: the census over every src module is empty",
@@ -705,6 +1067,20 @@
     "an import of a package named gp is a call site",
     "a package name passed to an ordinary call is a call site",
     "two sites on two lines, in order is a call site",
+    "gp in a subshell (gate D01) is a call site",
+    "gp in a $(...) substitution (gate D02) is a call site",
+    "gp right after a semicolon (gate D03) is a call site",
+    "gp right after && (gate D04) is a call site",
+    "gp right after a pipe (gate D05) is a call site",
+    "gp double-quoted inside a command line (gate D09) is a call site",
+    "gp in a backtick substitution (gate D10) is a call site",
+    "gp single-quoted inside a command line is a call site",
+    "gp as the value of an assignment is a call site",
+    "gp ended by a shell separator, redirection, backslash or quote with no space is a call site",
+    "the npm PowerShell shim gp.ps1 (gate D11) is a call site",
+    "a Windows path in upper case (gate D12) is a call site",
+    "the bare name and a shim in another letter case is a call site",
+    "a require() and a dynamic import() of the package is a call site",
     "a line comment is not a call site",
     "a block comment is not a call site",
     "an identifier named gp is not a call site",
@@ -713,20 +1089,27 @@
     "a flag that only contains gp is not a call site",
     "a regular expression is not a call site",
     "a class named after GraphPolicyCLI is not a call site",
+    "gp after a character that starts no command word, or before one that ends none is not a call site",
     "residual RES-1 a binary named by configuration or environment stays quiet (named, not detected)",
     "residual RES-2 a binary name built by concatenation stays quiet (named, not detected)",
     "residual RES-3 the caller of a local gp wrapper stays quiet (named, not detected)",
+    "residual RES-4 a gp name the shell assembles from quoted or escaped parts stays quiet (named, not detected)",
     "orders sites by file, then line, keys each by its path, and reads .tsx modules as TSX (JSX text with an apostrophe is no string)",
     "a comment on the line above names it",
     "a trailing comment on the same line names it",
     "a comment above a multi-line statement names it",
     "a block comment naming two ids names it",
     "a comment on an object property names it",
+    "a comment inside the statement, before the literal names it",
+    "a comment above a statement nested in a block names it",
     "no comment at all does not name one",
     "a marker inside a string on the line above does not name one",
     "a marker trailing the previous statement does not name one",
     "a marker after the literal's own line does not name one",
     "a marker on another object property does not name one",
+    "a marker inside a nested block, annotating another call (gate A01) does not name one",
+    "a marker trailing a later statement on the literal's line (gate A02) does not name one",
+    "a marker on the enclosing function (gate A03) does not name one",
     "control: an audit covering all eleven stages, with an annotated call site, an exported entrypoint, the measured gp version, the schema's keys, a fallback and a two-status inventory, reads no finding",
     "an audit beside a tree with no call site is still judged: the control reads clean, and a defect in it is a finding before any wiring",
     "with no audit document and no call site there is nothing to read: no finding, and neither gp nor the settings schema is read",
@@ -757,6 +1140,24 @@
     "(c) a fallback row keyed to another call site",
     "(c) an inventory status outside implemented/proposed",
     "(c) an empty inventory",
+    "rendered view: the Inventory table inside an HTML comment (gate J01)",
+    "rendered view: the Fallback table inside an HTML comment (gate J02)",
+    "rendered view: the Decision points table inside an HTML comment (gate J03)",
+    "rendered view: the whole Fallback section inside an HTML comment (gate J04)",
+    "section bound: the Fallback table under a level-1 heading after ## Fallback (gate J05)",
+    "rendered view: the Fallback table as an indented code block (gate J06)",
+    "rendered view: the Fallback table in a four-backtick fence holding ``` lines (gate J07)",
+    "rendered view: the Fallback table between ~~~ lines in a ``` fence (gate J08)",
+    "rendered view: an authority cell holding only an HTML comment (gate J09)",
+    "same view: a Configuration heading hidden in an HTML comment after the last section (gate J10)",
+    "rendered view: an authority field holding only a zero-width space reference",
+    "rendered view: an outcomes field holding only a named reference the landed rule leaves undecoded",
+    "rendered view: a policy field holding only an empty link and a blank code span",
+    "rendered view: an inputs field holding only a Hangul filler",
+    "rendered view: a field written as a visible character reference is filled",
+    "rendered view: an authority field holding only an out-of-range reference reads empty",
+    "rendered view: a header written with inline markup and capitals is read as it renders",
+    "rendered view: a field holding only punctuation or only a symbol renders, so it is filled",
     "the falsifiers cover every finding class the judge declares, and every finding they read is of a declared class",
     "README.md:89 stage 1 (Observation of ready, blocked, active, deferred, and completed beads.) uncovered is a finding",
     "README.md:90 stage 2 (Discovery of candidate work.) uncovered is a finding",
@@ -770,7 +1171,7 @@
     "README.md:98 stage 10 (Failure recovery, retries, and relaunch.) uncovered is a finding",
     "README.md:99 stage 11 (Machine shutdown or continuation.) uncovered is a finding",
     "the helper's stage list is the README's eleven stages, verbatim and in order",
-    "names the sections, their columns, the five decision-point fields and the two inventory statuses by value",
+    "names the title, the sections, their columns, the five decision-point fields, the two inventory statuses and the blank fillers by value",
     "each-liveness: every it.each table holds its pinned rows under distinct names, so none can empty or thin unseen",
     "rule 16: every judged table is frozen at its measured row and pin shape (table/id:pin count)",
     "exportedNames reads src/settings.ts's own export surface: loadSettings is an export, the module-private sanitize is not",

@@ -28,3 +28,32 @@
 - Green: 97 of 97.
 - Mutants, each applied to the judge in place and restored byte-identical (sha256 checked): 31 of 31 killed, with 1 to 42 failures each. They cover every detector shape, the comment attachment rules, every finding class, the export and settings readers, and the lazy gp measurement.
 - The day a cut ships the audit, the two absence rows flip by design: the document exists, and gp is measured.
+
+## 2026-10-22 respin #1 receipt: the audit judged in its rendered view and gp read anywhere in a command line (machine seat ws-03, base b83ae19)
+
+- Cures gate refusal #1 of cut #1 (ebb3670e, 2026-10-22T20:51:31Z), items U1 and U2, and closes its findings F3 and F6. Where this entry and the one above differ, this entry holds: the section reading ("fenced blocks are skipped") and the binary boundary are replaced as stated here. Surface: test only, the same four files and this receipt. No src file, provider string, title, label or reply text is touched.
+- U1, rendered-text docs truth and the section bound. The judge reads the audit in its rendered view through the landed census binding: `docsSection` and `sectionTables` of `test/helpers/census.ts`, one binding over marked's lexer.
+  - Each `## <name>` section must render exactly once at level 2, under the level-1 title `Pi control-loop audit` (AUDIT_TITLE, now part of the contract). A section runs to the next level-1 or level-2 heading.
+  - A section is malformed when it carries HTML (a comment or a tag, in a table cell too), or when it does not render exactly one top-level table.
+  - A cell is read as it renders, by the landed rule.
+  - A field is empty when its rendered text shows no letter, number, punctuation or symbol, apart from the blank fillers U+115F, U+1160, U+3164, U+FFA0 and U+2800. A character reference counts as the character it names; a named reference that the landed rule does not decode counts as none.
+- The gate's J01-J10 are falsifier rows, each reading its rendered finding. Against cut #1's judge, J01-J09 read clean, and J10 read a duplicate Configuration heading that the rendered view does not have.
+- Six more falsifier rows pin the rendered-empty field class beside J09 and the rendered header: a zero-width space reference, a named reference the landed rule leaves undecoded, an empty link with a blank code span, a Hangul filler, an out-of-range reference, and a header written with inline markup and capitals. Two clean rows cover the other side: a visible character reference, and fields holding only punctuation or only a symbol.
+- Two existing rows now read the rendered view:
+  - FALSIFIERS-09 (a short row): the table renders an empty last field, so the row reads decision-point-invalid (empty current fixed rule) and stage 5 uncovered. It used to read a source-level cell count.
+  - FALSIFIERS-14 (a second table): the second table now carries its delimiter row, because a lone pipe line renders as a paragraph, not a table.
+- U2, gp anywhere in a command line. The binary shape reads gp, gp.exe, gp.cmd or gp.ps1, in any letter case.
+  - Before it may stand: the start of the text, whitespace, a path separator (/ or \\), one of `` ; & | ( ` " ' `` or =. After it may stand: the end of the text, whitespace, a backslash, or one of `` ; & | ) < > ` " ' ``.
+  - The gate's D01-D05, D09 and D10 are call-site rows. So are a single-quoted gp, an assigned gp, the trailing set without a space, and a require()/import() pair.
+  - A quiet row pins the other side: $gp, >gp, ~gp, {gp}, x:gp, gp: and gp,.
+  - The gate's own detector probe (D01-D28, unmodified) reads 9 escapes at the base and 0 at the cut.
+- F3, closed: gp.ps1 (D11), GP.EXE (D12), GP and Gp.Cmd are call-site rows.
+- F6, closed for A01 and A02. A comment inside a nested block, class body or object literal now annotates that block's own members. A comment trailing a later statement on the literal's line annotates that statement.
+  - A03, a marker on the enclosing function, stays unannotated by the stated rule and is now a pinned row.
+  - Two credited rows guard the other side: a comment inside the statement before the literal, and a comment above a statement nested in a block.
+- Residuals: RES-4 is added, a gp name the shell assembles from quoted or escaped parts (`"g""p"`), as a pinned quiet row. RES-1 to RES-3 are unchanged.
+- Disclosed, not cured: F4 (LOW). The roster is a literal written in the same cut, so a coordinated hollow that also edits it survives for rows with no source-of-truth anchor. Measured as CT6-full: NOT_CALL_SITES-08 removed from the cases, the frozen-shape literal, the each-liveness size and the roster reads red=0.
+- Frozen shape (standing rule 16): 116 judged rows in seven tables. The roster carries all 116, the four residual families and all 136 registered test titles.
+- Red: the suite against cut #1's judge, plus the two new exported constants and no logic, reads 32 failed | 104 passed (136). By item: U1 17, U2 10, F3 3, F6 2. Green: 136 of 136.
+- Mutants: 59 of 59 killed, with 1 to 58 failures each. Each was applied to the judge in place and restored byte-identical (sha256 checked). They cover every detector boundary set, the letter case, the shims, the attachment rules, the rendered-view binding, the HTML and one-table rules, cell rendering, the empty-field rule, and every finding class.
+- CT battery (v2), each member applied to the census in place and restored: CT1 red=3; CT1b red=3; CT2 red=1; CT3 red=1; CT4 red=3; CT5 red=2; CT6 red=1. CT5 and CT6 die through the roster.
