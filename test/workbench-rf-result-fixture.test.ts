@@ -58,12 +58,13 @@ const PINNED_WORK_METRICS_KEYS = [
   'reused_component_count', 'observation_executed_count', 'observation_reused_count', 'publish_conflict_count',
 ];
 
-/** The roster's capture receipt of record (receipts/wb-973.17.md: forge cmd_30b6975c69e8, the 0.1.768 re-pin), read by U6. */
-const ROSTER_RECEIPT = 'docs/workbench/receipts/wb-973.17.md';
+/** The roster's capture receipt of record (receipts/wb-c7ku.md, the 0.1.784 re-pin; receipts/wb-973.17.md keeps the 0.1.768 capture), read by U6. */
+const ROSTER_RECEIPT = 'docs/workbench/receipts/wb-c7ku.md';
 /** How the receipt spells a small count. */
 const COUNT_WORDS: readonly string[] = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
-/** Every key of the captured roster, listed in an append-only receipt entry of its own (receipts/wb-j032.md), read by U7. */
-const ROSTER_KEYS_RECEIPT = 'docs/workbench/receipts/wb-j032.md';
+/** Every key of the captured roster, listed in an append-only receipt entry (receipts/wb-c7ku.md since the 0.1.784 re-capture;
+ * receipts/wb-j032.md keeps the 0.1.768 listing), read by U7. */
+const ROSTER_KEYS_RECEIPT = 'docs/workbench/receipts/wb-c7ku.md';
 /** The key lists that entry states, in its order: one line each, `- <label> keys (<count>): <key>, <key>, ... <key>.` */
 const ROSTER_KEY_LIST_LABELS: readonly string[] = ['Result', 'Provenance', 'Work', 'Work metrics'];
 
@@ -152,12 +153,13 @@ describe('SCG-R11: full-shape offline RF result fixture', () => {
 
   // U6 (wb-973.20, gate F5): an anchor OUTSIDE the roster, the literal and the fixture. The roster's capture receipt of record
   // (rule 13 receipts route; a receipt is append-only, so its statements hold still) names the capture id and states the
-  // measured counts and the keys the re-pin added. A coordinated hollow of one key across the JSON roster, the literal above
+  // measured counts and the keys the roster gained over its 0.1.716 first read (the 0.1.768 delta, re-read unchanged at the 0.1.784
+  // pin, receipts/wb-c7ku.md). A coordinated hollow of one key across the JSON roster, the literal above
   // and fullShapeRf changes a stated count, and a coordinated swap of a key the delta names drops that key, so either is red
   // here; a count-preserving swap of any other key keeps every stated count and is not red here (U7 below holds every key).
   it('U6: the captured roster agrees with its receipt of record: the capture id, the four stated counts and every key the delta names', () => {
     const receipt = readFileSync(new URL(`../${ROSTER_RECEIPT}`, import.meta.url), 'utf8');
-    expect([roster.source, roster.receipt]).toStrictEqual(['captured', 'cmd_30b6975c69e8']);
+    expect([roster.source, roster.receipt]).toStrictEqual(['captured', 'cmd_ab79e0c5d689']);
     expect(receipt).toContain(`(receipt of record ${roster.receipt})`);
     expect(receipt).toContain(`is promoted to source ${roster.source} with receipt ${roster.receipt}.`);
     const delta = receipt.split('\n').filter(line => line.startsWith(`- Delta read at the installed reactivefibercli ${roster.rfVersion} distribution: `));
@@ -184,8 +186,9 @@ describe('SCG-R11: full-shape offline RF result fixture', () => {
   // lists EVERY key in an append-only receipt entry outside the three files, one plain-text list item per key list (no inline markup,
   // so each item renders exactly its text after the '- ' marker). The listing is read whole, so a missing, repeated, renamed or extra
   // list line is red, and each file is held to it: the roster and the literal key for key in roster order, the builders as key sets
-  // (result, work and work_metrics exactly; provenance as the three-key floor the roster states, since the builder's carries seven).
-  it('U7: every key of the JSON roster, the literal roster and the full-shape builders is a key its receipt of record lists', () => {
+  // (result, work and work_metrics exactly; provenance as the three-key floor the roster states, since the builder's carries eight at
+  // the 0.1.784 pin). The title states that reach (wb-c7ku, the wb-j032 delivery gate's F1 under ruling R681 (2)).
+  it('U7: the JSON roster and the literal roster equal the key lists of their receipt of record key for key in order; the full-shape builders carry exactly its result, work and work_metrics key sets and at least its provenance keys', () => {
     const lines = readFileSync(new URL(`../${ROSTER_KEYS_RECEIPT}`, import.meta.url), 'utf8').split('\n');
     expect(lines.filter(line => line.startsWith('- Roster of record: ')))
       .toStrictEqual([`- Roster of record: rf ${roster.rfVersion}, source ${roster.source}, capture receipt ${roster.receipt} (${ROSTER_RECEIPT}).`]);
@@ -206,6 +209,21 @@ describe('SCG-R11: full-shape offline RF result fixture', () => {
     expect(provenance.filter(key => !Object.hasOwn(asObject(fixture.provenance), key))).toStrictEqual([]);
   });
 
+  // U8 (wb-c7ku, the 0.1.784 pin): rf 0.1.784 emits an eighth provenance key, the storage block, beyond the roster's three-key
+  // floor. The full-shape builder carries it, so the provider round-trip and observer rows below admit it in the default gate;
+  // this row holds the builder's provenance key count and that key to the delta line of the receipt of record, an anchor outside
+  // the builder, so dropping the block or any other provenance key is red here. A count-preserving rename of an unlisted
+  // provenance key stays outside this row and U7 (the provenance floor U7's title states).
+  it('U8: the full-shape builder carries the provenance key count its receipt of record states, including the key that receipt names as new', () => {
+    const receipt = readFileSync(new URL(`../${ROSTER_RECEIPT}`, import.meta.url), 'utf8');
+    const delta = receipt.split('\n').filter(line => line.startsWith(`- Delta read at the installed reactivefibercli ${roster.rfVersion} distribution: `));
+    expect(delta).toHaveLength(1);
+    const stated = /provenance carries the \w+ roster keys among its (\w+), the \w+ new since the [0-9.]+ pin: ([a-z_]+),/.exec(delta[0] ?? '');
+    const provenance = asObject(resultOf(fullShapeRf(ws)).provenance);
+    expect([stated?.[1], Object.hasOwn(provenance, stated?.[2] ?? '<absent>')]).toStrictEqual([COUNT_WORDS[Object.keys(provenance).length], true]);
+    expect(roster.provenanceKeys).not.toContain(stated?.[2]);
+  });
+
   // Acceptance 1 (census-grade): the fixture's result keys are a superset of the frozen roster, provenance carries the three
   // named keys, work has exactly 6 keys and work_metrics exactly 14, beside the eight envelope keys.
   it('SCG-R11: the offline RF result fixture carries every key the pinned rf emits', () => {
@@ -223,7 +241,7 @@ describe('SCG-R11: full-shape offline RF result fixture', () => {
 
   // Acceptance 4: the mirrored rf version, the source kind and the receipt; 'captured' only with a cmd_ receipt, else null.
   it('records the mirrored rf version, source kind and capture receipt beside the roster', () => {
-    expect(roster.rfVersion).toBe('0.1.768');
+    expect(roster.rfVersion).toBe('0.1.784');
     expect(['captured', 'constructed']).toContain(roster.source);
     if (roster.source === 'captured') expect(roster.receipt).toMatch(/^cmd_[0-9a-f]{12}$/);
     else expect(roster.receipt).toBeNull();

@@ -1,7 +1,7 @@
 /**
  * SCG-R12 (wb-973.12), live-tier half. R12-1 pins the carrier's recorded release (CARRIER_RECORDED, re-pinned by
- * wb-973.17); the pure comparison rows R12-2..R12-10 pin typed drift failures against a sample recorded release
- * (RECORDED, the carrier's release before that re-pin), never the carrier; the carrier-to-receipt equality lives in
+ * wb-973.17, then by wb-c7ku); the pure comparison rows R12-2..R12-10 pin typed drift failures against a sample recorded release
+ * (RECORDED, the carrier's release before the wb-973.17 re-pin), never the carrier; the carrier-to-receipt equality lives in
  * workbench-rf-contract-carrier.test.ts.
  * R12-11/R12-12 now parse TypeScript, never grep titles or parking words. They freeze the LIVE ROW's complete AST
  * (rule 16), its imports, and its direct describe/it placement. Comments and strings cannot register it. A changed
@@ -15,7 +15,8 @@
  * RF_LIVE_DRIFT_SHAPE_SUITE; wb-973.20), the anchors the docs07 census binds row R5 to; FROZEN_ROW keeps the title as its own
  * literal, so the helper's value is held to the native row. Carrier re-pin (wb-973.17): installed 0.1.768 vs recorded 0.1.723 was the live drift finding
  * the re-measure in receipts/wb-973.17.md cleared by re-pinning the carrier to 0.1.768; a later host move is a new live
- * finding, never a known-green claim. Spawns nothing and writes no fixture; launch the actual tier with forge run rf-preview.
+ * finding, never a known-green claim. The next one (wb-c7ku): installed 0.1.784 vs recorded 0.1.768, cleared by the
+ * re-measure in receipts/wb-c7ku.md re-pinning the carrier to 0.1.784. Spawns nothing and writes no fixture; launch the actual tier with forge run rf-preview.
  */
 import { readFileSync } from 'node:fs';
 import ts from 'typescript';
@@ -26,8 +27,8 @@ import { judgeRfReleaseDrift, parseInstalledRfVersion, RF_LIVE_DRIFT_SHAPE_SUITE
 const PREVIEW_TEST = readFileSync(new URL('./workbench-native-rf-preview.test.ts', import.meta.url), 'utf8');
 /** A sample recorded release for the pure comparison rows: the carrier's release before the wb-973.17 re-pin. */
 const RECORDED = '0.1.723';
-/** The carrier's recorded release since the wb-973.17 re-measure (receipts/wb-973.17.md, rf-preview at installed 0.1.768). */
-const CARRIER_RECORDED = '0.1.768';
+/** The carrier's recorded release since the wb-c7ku re-measure (receipts/wb-c7ku.md, rf-preview at installed 0.1.784). */
+const CARRIER_RECORDED = '0.1.784';
 
 describe('SCG-R12 recorded release', () => {
   it('R12-1 the recorded release is the carrier release component, read from the carrier by identifier', () => {
