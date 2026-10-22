@@ -1434,12 +1434,19 @@ describe("wb-4smh R674 F1-F3: unfolded keys, data-carried writes and nested spre
 });
 
 /**
- * wb-celw (R685 F1-F4): the third-generation class closes on writes, not on
- * a finite list of key spellings. Object.prototype writes in the emitter and
- * non-literal bulk writes into snapshot in the callback are refused even when
- * the property key cannot be folded. The old R-ENUM-P4 quiet row describes the
- * landed keyed reader; the promoted row below judges the extended reader.
- * Every placement is parsed, never executed (including prototype writes).
+ * wb-celw cut #3 (R685 F1-F4, rule-19 frozen enumerate-the-resolvable form).
+ * PINNED REFUSALS, and no broader claim: every G-*, S-*, U1-*, U2-* and
+ * R-ENUM-P4-PROMOTED form in CELW_ROWS, at S1 and S2, with its exact placement
+ * and cause digest in CELW_ROSTER. These forms cover direct/element/parenthesized
+ * prototype write positions, keyed and bulk built-in calls, visible const
+ * targets, owners and argument arrays, parsed prototype slot data, and nested
+ * destructuring targets; P4 covers the listed non-literal snapshot bulk sources.
+ * NAMED QUIET RESIDUALS: R-HELPER-P4 (effect inside an outside helper),
+ * R-ARGS-P5 (arguments rewrite) and R-OUTSIDE-P5 (module-scope prototype write)
+ * are CELW_QUIET rows at both sites with external roster anchors. Other unseen
+ * modes are not asserted absent. The landed R-ENUM-P4 quiet row describes only
+ * the earlier keyed reading; this cut pins its promoted refusal separately.
+ * All placements are parsed, never executed (including prototype writes).
  */
 const CELW_ROSTER = "test/fixtures/claude-message-ref-celw.json";
 const CELW_ROWS: readonly Escape[] = [
@@ -1528,7 +1535,24 @@ const CELW_ROWS: readonly Escape[] = [
     beforeDerive: 'Object.assign(snapshot, { ...JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\') });' },
   { id: "R-ENUM-P4-PROMOTED", pin: "P4", form: "runtime enumeration of snapshot keys is a non-literal bulk source", sites: ["S1", "S2"], causes: ["data-carried snapshot write"],
     beforeDerive: RESIDUALS[0].beforeDerive },
+  // Refusal #2 U1(a-e)/U2(a-b), at each site. They are visible syntax, not external effects.
+  { id: "U1-SPREAD-PROTO", pin: "P5", form: "U1(a) spread argument array writes Object.prototype", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: 'Object.assign(...[Object.prototype, JSON.parse(\'{"benign":1}\')]);' },
+  { id: "U1-CONST-APPLY", pin: "P5", form: "U1(b) visible const array carries prototype through Object.assign.apply", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: 'const localArgs = [Object.prototype, JSON.parse(\'{"benign":1}\')]; Object.assign.apply(Object, localArgs);' },
+  { id: "U1-OWNER-ALIAS", pin: "P5", form: "U1(c) visible const Object owner bulk-writes prototype", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: 'const Builtin = Object; Builtin.assign(Object.prototype, JSON.parse(\'{"benign":1}\'));' },
+  { id: "U1-PARSED-SLOT", pin: "P5", form: "U1(d) parsed source can write Object prototype slot", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: 'Object.assign(Object, JSON.parse(\'{"prototype":{"benign":1}}\'));' },
+  { id: "U1-DESTRUCTURE", pin: "P5", form: "U1(e) destructuring target writes a prototype member", sites: ["S1", "S2"], causes: ["prototype write"],
+    emitter: '({ benign: Object.prototype.benign } = { benign: 1 });' },
+  { id: "U2-CONST-APPLY", pin: "P4", form: "U2(a) visible const array carries snapshot and parsed data through apply", sites: ["S1", "S2"], causes: ["data-carried snapshot write"],
+    beforeDerive: 'const localArgs = [snapshot, JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\')]; Object.assign.apply(Object, localArgs);' },
+  { id: "U2-OWNER-ALIAS", pin: "P4", form: "U2(b) visible const Object owner writes parsed data into snapshot", sites: ["S1", "S2"], causes: ["data-carried snapshot write"],
+    beforeDerive: 'const Builtin = Object; Builtin.assign(snapshot, JSON.parse(\'{"lastMessageId":"FAKE-FIXTURE-ID"}\'));' },
 ];
+/** The currently unpinned external-effect families, each with an in-census quiet row. */
+const CELW_QUIET: readonly Residual[] = [RESIDUALS[1], RESIDUALS[2], RESIDUALS[3]];
 
 /** Unwrap only syntax that preserves the expression's target, not arbitrary dataflow. */
 function celwTarget(node: ts.Expression | undefined): ts.Expression | undefined {
@@ -1570,7 +1594,8 @@ function celwMember(node: ts.Expression): { readonly owner: ts.Expression; reado
 function celwMethodExpression(node: ts.Expression, body: ts.Block, at: ts.Node): string | undefined {
   const resolved = celwResolve(node, body, at);
   const member = resolved === undefined ? undefined : celwMember(resolved);
-  return member !== undefined && ts.isIdentifier(member.owner) ? `${member.owner.text}.${member.name}` : undefined;
+  const owner = member === undefined ? undefined : celwResolve(member.owner, body, at);
+  return owner !== undefined && ts.isIdentifier(owner) ? `${owner.text}.${member?.name}` : undefined;
 }
 
 /** An unresolved computed writer on the built-in owner is not a safe omission. */
@@ -1595,13 +1620,13 @@ function celwInvocation(call: ts.CallExpression, body: ts.Block): CelwInvocation
     const method = celwMethodExpression(wrapper.owner, body, call);
     if (method !== undefined) {
       if (wrapper.name === "call") return { method, args: call.arguments.slice(1) };
-      const array = celwTarget(call.arguments[1]);
+      const array = celwResolve(call.arguments[1], body, call);
       return { method, args: array !== undefined && ts.isArrayLiteralExpression(array) ? array.elements : [] };
     }
   }
   if (celwMethodExpression(call.expression, body, call) === "Reflect.apply") {
     const method = call.arguments[0] === undefined ? undefined : celwMethodExpression(call.arguments[0], body, call);
-    const array = celwTarget(call.arguments[2]);
+    const array = celwResolve(call.arguments[2], body, call);
     return { method, args: array !== undefined && ts.isArrayLiteralExpression(array) ? array.elements : [] };
   }
   return { method: undefined, args: call.arguments };
@@ -1621,18 +1646,41 @@ function celwPrototypeMember(node: ts.Expression, body: ts.Block, at: ts.Node): 
     celwPrototype(target.expression, body, at);
 }
 
-/** A source object can overwrite Object.prototype by a literal or computed prototype member. */
+/** A source that visibly writes Object's prototype slot, including parsed constant data. */
 function celwPrototypeSource(node: ts.Expression): boolean {
   const source = celwTarget(node);
-  return source !== undefined && ts.isObjectLiteralExpression(source) && source.properties.some(property =>
+  if (source !== undefined && ts.isObjectLiteralExpression(source)) return source.properties.some(property =>
     property.name !== undefined && memberKey(property.name) === "prototype");
+  if (source === undefined || !ts.isCallExpression(source) || celwMember(source.expression)?.name !== "parse") return false;
+  const owner = celwMember(source.expression)?.owner;
+  const input = source.arguments[0];
+  if (owner === undefined || !ts.isIdentifier(owner) || owner.text !== "JSON" || input === undefined || !ts.isStringLiteral(input)) return false;
+  try {
+    const parsed: unknown = JSON.parse(input.text);
+    return isRecord(parsed) && Object.hasOwn(parsed, "prototype");
+  } catch {
+    return false;
+  }
+}
+
+/** A destructuring assignment target can write nested prototype members. */
+function celwPrototypePattern(node: ts.Expression, body: ts.Block, at: ts.Node): boolean {
+  const target = celwTarget(node);
+  if (target === undefined) return false;
+  if (celwPrototypeMember(target, body, at) || celwPrototype(target, body, at)) return true;
+  if (ts.isObjectLiteralExpression(target)) return target.properties.some(property =>
+    ts.isPropertyAssignment(property) && celwPrototypePattern(property.initializer, body, at));
+  if (ts.isArrayLiteralExpression(target)) return target.elements.some(element =>
+    ts.isExpression(element) && celwPrototypePattern(element, body, at));
+  if (ts.isBinaryExpression(target) && target.operatorToken.kind === ts.SyntaxKind.EqualsToken) return celwPrototypePattern(target.left, body, at);
+  return ts.isSpreadElement(target) && celwPrototypePattern(target.expression, body, at);
 }
 
 /** Detect the write POSITION, independent of the property key's spelling. */
 function celwPrototypeWrite(node: ts.Node, body: ts.Block): boolean {
   if (ts.isBinaryExpression(node)) {
     return node.operatorToken.kind >= ts.SyntaxKind.FirstAssignment && node.operatorToken.kind <= ts.SyntaxKind.LastAssignment &&
-      (celwPrototypeMember(node.left, body, node) || celwPrototype(node.left, body, node));
+      celwPrototypePattern(node.left, body, node);
   }
   if (ts.isPrefixUnaryExpression(node) || ts.isPostfixUnaryExpression(node)) {
     return (node.operator === ts.SyntaxKind.PlusPlusToken || node.operator === ts.SyntaxKind.MinusMinusToken) &&
@@ -1643,15 +1691,18 @@ function celwPrototypeWrite(node: ts.Node, body: ts.Block): boolean {
     const { method, args } = celwInvocation(node, body);
     // A property API can write *onto* the prototype or write the prototype
     // slot on Object. Neither case depends on the key's literal spelling.
-    const target = args[0];
+    const first = args[0];
+    const spread = first !== undefined && ts.isSpreadElement(first) ? celwResolve(first.expression, body, node) : undefined;
+    const argumentsList = spread !== undefined && ts.isArrayLiteralExpression(spread) ? spread.elements : args;
+    const target = argumentsList[0];
     const resolved = celwResolve(target, body, node);
     const keyedSlot = resolved !== undefined && ts.isIdentifier(resolved) && resolved.text === "Object" &&
-      args[1] !== undefined && folded(args[1]) === "prototype";
+      argumentsList[1] !== undefined && folded(argumentsList[1]) === "prototype";
     if (keyedSlot && (method === "Object.defineProperty" || method === "Reflect.set" ||
       method === "Reflect.defineProperty" || method === "Reflect.deleteProperty")) return true;
     const objectTarget = resolved !== undefined && ts.isIdentifier(resolved) && resolved.text === "Object";
     if (objectTarget && (method === "Object.assign" || method === "Object.defineProperties") &&
-      args.slice(1).some(celwPrototypeSource)) return true;
+      argumentsList.slice(1).some(celwPrototypeSource)) return true;
     return celwPrototype(target, body, node) && (
       method === "Object.assign" || method === "Object.defineProperty" || method === "Object.defineProperties" ||
       method === "Reflect.set" || method === "Reflect.defineProperty" || method === "Reflect.deleteProperty" ||
@@ -1661,7 +1712,7 @@ function celwPrototypeWrite(node: ts.Node, body: ts.Block): boolean {
   return false;
 }
 
-/** Class-level P5: no prototype write, regardless of key or locally visible callee spelling. */
+/** P5 classifier for the named placement forms in CELW_ROWS. */
 function celwP5(reading: Reading): string[] {
   const body = reading.emitter?.body;
   const causes = fourSmhIngest(reading);
@@ -1677,7 +1728,7 @@ function celwLiteralOnly(node: ts.Expression): boolean {
     source.properties.every(property => !ts.isSpreadAssignment(property) || celwLiteralOnly(property.expression));
 }
 
-/** Class-level P4: any recognized bulk write of non-literal data into snapshot. */
+/** P4 classifier for the named non-literal bulk-write forms in CELW_ROWS. */
 function celwP4(reading: Reading): string[] {
   const callback = reading.callback;
   const causes = composeCauses(reading);
@@ -1703,7 +1754,7 @@ function celwP4(reading: Reading): string[] {
 const CELW_STRICT: Readonly<Record<StrictPin, (reading: Reading) => string[]>> = { P4: celwP4, P5: celwP5 };
 const CELW_REACHED: string[] = [];
 
-describe("wb-celw R685: class-closing emitter and snapshot-write refusals", () => {
+describe("wb-celw R685: enumerated emitter and snapshot-write refusals with pinned quiet residuals", () => {
   for (const row of CELW_ROWS) {
     for (const key of row.sites) {
       it(`wb-celw ${row.id} ${key}: ${row.form}`, () => {
@@ -1713,8 +1764,22 @@ describe("wb-celw R685: class-closing emitter and snapshot-write refusals", () =
         const reading = readSite(site.file, text);
         expect(PINS.filter(pin => pin.id !== row.pin && !JUDGES[pin.id](site, reading)).map(pin => pin.id), "other landed pins hold").toEqual([]);
         expect(CELW_STRICT[OTHER_PIN[row.pin]](reading), "the other strict reading stays quiet").toEqual([]);
-        expect(CELW_STRICT[row.pin](reading), "the class-closing reading names the true cause").toEqual(row.causes);
+        expect(CELW_STRICT[row.pin](reading), "the enumerated reading names the true cause").toEqual(row.causes);
         CELW_REACHED.push(`wb-celw ${row.id} ${key}`);
+      });
+    }
+  }
+  for (const residual of CELW_QUIET) {
+    for (const key of residual.sites) {
+      it(`wb-celw quiet ${residual.id} ${key}: ${residual.family}`, () => {
+        const site = siteNamed(key);
+        const { text, anchors } = placed(site, residual);
+        expect(anchors.every(anchor => anchor.count === 1), "every insertion anchor applies once").toBe(true);
+        const reading = readSite(site.file, text);
+        expect(PINS.filter(pin => !JUDGES[pin.id](site, reading)).map(pin => pin.id), "landed pins stay quiet").toEqual([]);
+        expect(CELW_STRICT.P4(reading), "no snapshot write is seen").toEqual([]);
+        expect(CELW_STRICT.P5(reading), "no prototype write is seen").toEqual([]);
+        CELW_REACHED.push(`wb-celw quiet ${residual.id} ${key}`);
       });
     }
   }
@@ -1776,6 +1841,18 @@ describe("wb-celw R685: class-closing emitter and snapshot-write refusals", () =
       "S-ALIAS-ASSIGN-P4:P4:2:data-carried snapshot write",
       "S-SPREAD-LIT-P4:P4:2:data-carried snapshot write",
       "R-ENUM-P4-PROMOTED:P4:2:data-carried snapshot write",
+      "U1-SPREAD-PROTO:P5:2:prototype write",
+      "U1-CONST-APPLY:P5:2:prototype write",
+      "U1-OWNER-ALIAS:P5:2:prototype write",
+      "U1-PARSED-SLOT:P5:2:prototype write",
+      "U1-DESTRUCTURE:P5:2:prototype write",
+      "U2-CONST-APPLY:P4:2:data-carried snapshot write",
+      "U2-OWNER-ALIAS:P4:2:data-carried snapshot write",
+    ]);
+    expect(CELW_QUIET.map(row => `${row.id}:${row.pin}:${row.sites.join(",")}:${row.reading}`)).toEqual([
+      "R-HELPER-P4:P4:S1,S2:quiet",
+      "R-ARGS-P5:P5:S1,S2:quiet",
+      "R-OUTSIDE-P5:P5:S1,S2:quiet",
     ]);
   });
   it("wb-celw boundary: a data-only literal is quiet, but a literal whose spread carries non-literal data is refused", () => {
@@ -1791,6 +1868,8 @@ describe("wb-celw R685: class-closing emitter and snapshot-write refusals", () =
   it("wb-celw external roster: each full phrase, source placement, sites and cause are anchored outside the census", () => {
     const raw: unknown = JSON.parse(readRepo(CELW_ROSTER));
     if (!isRecord(raw)) throw new Error(`${CELW_ROSTER}: not an object`);
+    expect(CELW_ROWS.length, "external required refusal count").toBe(raw.requiredRows);
+    expect(CELW_QUIET.length, "external required quiet count").toBe(raw.requiredQuietRows);
     const rows = rosterRows(raw, "rows").map(row => ({
       id: rosterText(row, "id"), pin: rosterText(row, "pin"), form: rosterText(row, "form"),
       sites: rosterTexts(row, "sites"), causes: rosterTexts(row, "causes"), digest: rosterText(row, "digest"),
@@ -1799,11 +1878,16 @@ describe("wb-celw R685: class-closing emitter and snapshot-write refusals", () =
     expect(CELW_ROWS.map(row => `${row.id}|${row.pin}|${row.form}|${row.sites.join(",")}|${row.causes.join(",")}|${escapeDigest(row)}`)).toEqual(
       rows.map(row => `${row.id}|${row.pin}|${row.form}|${row.sites.join(",")}|${row.causes.join(",")}|${row.digest}`),
     );
+    const quiet = rosterRows(raw, "residuals");
+    expect(CELW_QUIET.map(row => `${row.id}|${row.pin}|${row.family}|${row.sites.join(",")}|${row.reading}|${residualDigest(row)}`)).toEqual(
+      quiet.map(row => `${rosterText(row, "id")}|${rosterText(row, "pin")}|${rosterText(row, "family")}|${rosterTexts(row, "sites").join(",")}|${rosterText(row, "reading")}|${rosterText(row, "digest")}`),
+    );
   });
   it("wb-celw registration: every externally anchored row and both control rows ran through their last assertion", ({ task }) => {
     const raw: unknown = JSON.parse(readRepo(CELW_ROSTER));
     if (!isRecord(raw)) throw new Error(`${CELW_ROSTER}: not an object`);
     const rows = rosterRows(raw, "rows").flatMap(row => rosterTexts(row, "sites").map(site => `wb-celw ${rosterText(row, "id")} ${site}`));
+    const quiet = rosterRows(raw, "residuals").flatMap(row => rosterTexts(row, "sites").map(site => `wb-celw quiet ${rosterText(row, "id")} ${site}`));
     const controls = rosterTexts(raw, "sites").map(site => `wb-celw control ${site}`);
     const registered: string[] = [];
     const walk = (tasks: typeof task.file.tasks): void => {
@@ -1813,14 +1897,15 @@ describe("wb-celw R685: class-closing emitter and snapshot-write refusals", () =
       }
     };
     walk(task.file.tasks);
-    expect(registered.filter(row => /^wb-celw (?:G-|S-|R-ENUM|control)/.test(row))).toEqual([
+    expect(registered.filter(row => /^wb-celw (?:G-|S-|R-ENUM|U[12]-|quiet|control)/.test(row))).toEqual([
       ...rosterRows(raw, "rows").flatMap(row => rosterTexts(row, "sites").map(site => `wb-celw ${rosterText(row, "id")} ${site}: ${rosterText(row, "form")}|run`)),
+      ...rosterRows(raw, "residuals").flatMap(row => rosterTexts(row, "sites").map(site => `wb-celw quiet ${rosterText(row, "id")} ${site}: ${rosterText(row, "family")}|run`)),
       ...controls.map(row => `${row}: literal snapshot writes and unrelated targets stay quiet|run`),
     ]);
     expect(registered.filter(row => /^wb-4smh control /.test(row))).toEqual(
       controls.map((_row, index) => `wb-4smh control ${rosterTexts(raw, "sites")[index]}: the real source and benign literal writes retain a quiet extended reading|run`),
     );
     expect(FOURSMH_CONTROLS_REACHED).toEqual(rosterTexts(raw, "sites").map(site => `wb-4smh control ${site}`));
-    expect(CELW_REACHED).toEqual([...rows, ...controls]);
+    expect(CELW_REACHED).toEqual([...rows, ...quiet, ...controls]);
   });
 });

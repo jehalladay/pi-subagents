@@ -1,5 +1,5 @@
 {
-  "comment": "wb-celw R685 F1-F4: external anchor for every named form, site, full wording, true cause and placement digest; landed rosters unchanged.",
+  "comment": "wb-celw cut #3 R685: enumerated pinned refusal forms and named quiet residual families at S1/S2, with external wording and placement digests; no class-wide closure claim; prior landed rosters unchanged.",
   "sites": [
     "S1",
     "S2"
@@ -551,6 +551,134 @@
         "data-carried snapshot write"
       ],
       "digest": "6d94cbc833b6f966"
+    },
+    {
+      "id": "U1-SPREAD-PROTO",
+      "pin": "P5",
+      "form": "U1(a) spread argument array writes Object.prototype",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "815436c4bc0dd058"
+    },
+    {
+      "id": "U1-CONST-APPLY",
+      "pin": "P5",
+      "form": "U1(b) visible const array carries prototype through Object.assign.apply",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "fb7a24b2b65ca675"
+    },
+    {
+      "id": "U1-OWNER-ALIAS",
+      "pin": "P5",
+      "form": "U1(c) visible const Object owner bulk-writes prototype",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "718441033c74b3b5"
+    },
+    {
+      "id": "U1-PARSED-SLOT",
+      "pin": "P5",
+      "form": "U1(d) parsed source can write Object prototype slot",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "8cfe1b780cb260dc"
+    },
+    {
+      "id": "U1-DESTRUCTURE",
+      "pin": "P5",
+      "form": "U1(e) destructuring target writes a prototype member",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "prototype write"
+      ],
+      "digest": "3db6a03844b5e8f0"
+    },
+    {
+      "id": "U2-CONST-APPLY",
+      "pin": "P4",
+      "form": "U2(a) visible const array carries snapshot and parsed data through apply",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "data-carried snapshot write"
+      ],
+      "digest": "f895a36c604ec0f1"
+    },
+    {
+      "id": "U2-OWNER-ALIAS",
+      "pin": "P4",
+      "form": "U2(b) visible const Object owner writes parsed data into snapshot",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "causes": [
+        "data-carried snapshot write"
+      ],
+      "digest": "79cd111063bd0cdf"
     }
-  ]
+  ],
+  "residuals": [
+    {
+      "id": "R-HELPER-P4",
+      "pin": "P4",
+      "family": "a keyed pre-repair performed by a helper declared outside the callback",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "1ab78fe4fb37b512"
+    },
+    {
+      "id": "R-ARGS-P5",
+      "pin": "P5",
+      "family": "an in-place rewrite of the emitter's array argument through arguments",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "03b79547b5d2e9d5"
+    },
+    {
+      "id": "R-OUTSIDE-P5",
+      "pin": "P5",
+      "family": "an evidenceRefs supplied by code declared outside the emitter, a module-scope Object.prototype write",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "573943f641319a2a"
+    }
+  ],
+  "requiredRows": 49,
+  "requiredQuietRows": 3
 }
