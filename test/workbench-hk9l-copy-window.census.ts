@@ -8,9 +8,9 @@
  * in-file callback (an around-all teardown, a cleanup returned by a hook). This leg closes that gap from OUTSIDE the
  * runner's hook order: it runs in the census tier after the test step and reds on any sidecar line, naming it.
  *
- * Pinned by title in the test tier: the emit census row of test/workbench-identity.test.ts through judge(REPORT, PINS)
- * (collected once, passed and asserting in the gate's own report), and the budgeted PACKAGE_COPY_ROWS rows as plain report
- * records (collected once under the budgeted suite, passed) - every title read from test/fixtures/hk9l-scan-roster.json (the
+ * Pinned by title in the test tier through judge(REPORT, PINS): the budgeted PACKAGE_COPY_ROWS rows and the emit census row
+ * of test/workbench-identity.test.ts (collected once, passed and asserting in the gate's own report), the budgeted rows also
+ * read as plain report records - every title read from test/fixtures/hk9l-scan-roster.json (the
  * anchor the identity file also pins itself to; never a count or a local list), so the sidecar read below is a read of THIS
  * gate's identity run. The identity file in turn pins THIS file's shape (its
  * row titles, its sidecar row, its judge call) from the same roster. NOT pinned: anything the identity file does not claim.
@@ -32,13 +32,12 @@ const SUITE = roster.packageCopySuite;
 const pin = (title: string): CasePin => ({ file: IDENTITY_FILE, title, suite: [SUITE], tier: DEFAULT_GATE_TIER });
 
 /**
- * The judge()-pinned rows, by the roster's exact titles (never a count or a local list): the emit census row, the in-process
- * judge that passes only when every budgeted row ran under its own window, every admitted row is a budgeted row and no S-call
- * ran outside a window. The budgeted rows themselves cannot be judge()-pinned: their test functions are produced by the
- * identity file's budgeted(title, body) factory (so nothing else can hold one), and report mode resolves only literal case
- * functions; the row below reads their collection and pass state straight from the report instead.
+ * The judge()-pinned rows, by the roster's exact titles (never a count or a local list): the budgeted rows (literal test
+ * functions whose first statement opens the synchronous copy window) and the emit census row, the in-process judge that
+ * passes only when every budgeted row ran under its own window, every admitted row is a budgeted row and no S-call ran
+ * outside a window. The row below additionally reads the budgeted rows' collection and pass state straight from the report.
  */
-const PINS: readonly CasePin[] = [roster.emitRowTitle].map(pin);
+const PINS: readonly CasePin[] = [...roster.packageCopyRows, roster.emitRowTitle].map(pin);
 /** The budgeted rows, read from the report as plain records (collected once, passed) - a presence read, not a census-grade judge. */
 const BUDGETED_TITLES: readonly string[] = roster.packageCopyRows;
 type ReportCase = { readonly fullName?: string; readonly ancestorTitles?: readonly string[]; readonly title?: string; readonly status?: string };
@@ -49,8 +48,8 @@ type ReportFile = { readonly name?: string; readonly assertionResults?: readonly
 
 describe("wb-hk9l copy window (v8): the identity file's judged rows ran, and its violation sidecar is empty", () => {
   it("each-liveness: the roster names the emit census row and the budgeted rows this leg reads", () => {
-    expect(PINS).toHaveLength(1);
-    expect(PINS[0]?.title).toBe(roster.emitRowTitle);
+    expect(PINS).toHaveLength(roster.packageCopyRows.length + 1);
+    expect(PINS[PINS.length - 1]?.title).toBe(roster.emitRowTitle);
     expect(BUDGETED_TITLES.length, "the roster carries the budgeted rows the identity file anchors to").toBeGreaterThan(0);
     expect(new Set(PINS.map(entry => `${entry.file}\u0000${entry.title}`)).size).toBe(PINS.length);
   });

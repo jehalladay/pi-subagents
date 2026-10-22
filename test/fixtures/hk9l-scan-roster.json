@@ -259,7 +259,7 @@
       "family": "hook copy",
       "digest": "d4ea304260e90543ce46289eeb8b61d919cf47fd31098b933cea553bc3a98117",
       "reading": "row quiet",
-      "runtime": "observed as a violation: an S-call in a hook of any kind runs with no copy window open and no opener it can call (the only opener is the budgeted row's own test function, budgeted(title, body)), so the row at that boundary, the file end or the census tier reds"
+      "runtime": "observed as a violation: an S-call in a hook of any kind (before/after/around each/all, cleanups) runs with no copy window open and cannot interleave with one (every window is synchronous), so the row at that boundary, the file end or the census tier reds"
     },
     {
       "id": "R-SCOPE",

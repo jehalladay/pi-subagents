@@ -4,39 +4,38 @@ import { tmpdir } from "node:os";
 import { basename, dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
-import { afterAll, afterEach, beforeEach, describe, expect, it, type TestContext, vi } from "vitest";
+import { afterAll, afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 /**
- * The RUNTIME EMIT JUDGE (wb-hk9l, R656/R670, v9): the primary copy pin over the JUDGED SURFACE SET S, stated exactly:
+ * The RUNTIME EMIT JUDGE (wb-hk9l, R656/R670, v10): the primary copy pin over the JUDGED SURFACE SET S, stated exactly:
  * cp, cpSync, copyFile and copyFileSync on node:fs (named and default exports), the fs.promises member (named and via
  * the default export), and the node:fs/promises module (cp, copyFile; named and default exports). The wraps OBSERVE and
  * CALL THROUGH, always: they record every S-call made anywhere in this file's module graph with its attribution and
- * whether a COPY WINDOW admitted it, and never change the call's outcome (no mock decides an assertion). Admission is the
- * RUNNER'S OWN INVOCATION OF A BUDGETED ROW'S TEST FUNCTION: every PACKAGE_COPY_ROWS row's test function is budgeted(title, body), the
- * file's only opener, handed straight to it(title, PACKAGE_COPY_ROW, ...): it opens the window on entry and closes it when the row body ends
- * (sync or async) - so the window exists exactly while the runner executes that row's body, nothing else. The wrapper
- * refuses a title outside the roster-anchored budget list, a second registration, a run under a chain this file's own
- * beforeEach did not record for it (a same-titled row in another suite), a second window for one row and an overlapping
- * window. Nothing else in this file can open a window - no exported opener exists - so hooks of every kind
- * (before/after each/all, around each/all, nested, late-registered, onTestFinished, cleanups returned by hooks), closures a
- * row body hands to a hook, module scope, rows after the suite, other suites and leaf-title collisions run with the window
- * closed and their S-calls are VIOLATIONS. Every violation is recorded in process AND appended to the sidecar
- * .forge/hk9l-copy-violations.jsonl (created empty when this file loads) through the unmocked builtin fs
- * (process.getBuiltinModule); it is judged red at every row boundary by this file's hooks, at file end by a judge
- * registered as the file's only afterAll, and - outside the runner's hook order altogether - by the census tier
- * (test/workbench-hk9l-copy-window.census.ts reads the sidecar after the test step, its pins anchored in the roster and its
- * own shape pinned from this file), so a copy made after the last in-file callback still reds the gate. The budget row
- * pins the single afterAll registration, the un-aliased single vitest import, that every budgeted title is registered once,
- * inside the suite, as it(title, PACKAGE_COPY_ROW, budgeted(title, body)) with one literal and that budgeted() is called
- * nowhere else, the reverse after-hook order and that no row is concurrent. The wrap-liveness row proves every surface member of S carries the judge's mark and is one judged
- * function across its spellings; the budget list and its suite are anchored OUT OF FILE in
- * test/fixtures/hk9l-scan-roster.json. The budgeted rows copy the package files TEST-SIDE (cpSync in their bodies); src's
- * captureInvocationIdentity hashes by read and makes no S-call. Stated bounds: a file-alone run has no census step (its
- * in-file judges alone decide); code in this file that rewrites the judge's own state or re-wires vitest's it is outside
- * the claim. The residual risk is a copy that BYPASSES S, runtime-invisible by design: read/write composition, subprocess
- * copy, createRequire and getBuiltinModule requisition, and an other-module helper that re-implements the copy without S;
- * the static scan layer and the roster's residual families hold those, each with an id-asserted pinned quiet row and its
- * runtime reading stated per family.
+ * whether a COPY WINDOW admitted it, and never change the call's outcome (no mock decides an assertion). Admission is a
+ * SYNCHRONOUS WINDOW OPENED BY THE BUDGETED ROW'S OWN FIRST ACT: every PACKAGE_COPY_ROWS row is a direct
+ * it(title, PACKAGE_COPY_ROW, <literal function>) whose first statement is budgeted(title, body); budgeted opens the window,
+ * runs body synchronously and closes it when body returns - a body returning a thenable is refused - so nothing (no hook of
+ * any kind incl. around each/all and cleanups, no timer, microtask, other row or closure) can run while a window is open:
+ * JavaScript executes nothing else during a synchronous call. The promise-returning surfaces are CALLED inside the window
+ * (the judge observes at the call) and settle after it closes. budgeted refuses a title outside the roster-anchored budget
+ * list, a run under a chain this file's own beforeEach did not record for it (a same-titled row in another suite, a hook),
+ * a second window for the row and an overlap; the budget row pins (AST) that the only budgeted(...) calls in the file are
+ * the first statements of the matching rows' literal test functions (no hook, helper, closure or later statement holds one),
+ * each roster title once, no bare it/test wearing a budgeted title. Every S-call outside a window is a VIOLATION recorded in
+ * process AND appended to the sidecar .forge/hk9l-copy-violations.jsonl (created empty when this file loads) through the
+ * unmocked builtin fs (process.getBuiltinModule); it is judged red at every row boundary by this file's hooks, at file end
+ * by a judge registered as the file's only afterAll, and - outside the runner's hook order altogether - by the census tier
+ * (test/workbench-hk9l-copy-window.census.ts reads the sidecar after the test step, its pins anchored in the roster, its own
+ * shape pinned from this file), so a copy made after the last in-file callback still reds the gate. The budget row also pins
+ * the single afterAll registration, the un-aliased single vitest import, the reverse after-hook order and that no row is
+ * concurrent. The wrap-liveness row proves every surface member of S carries the judge's mark and is one judged function
+ * across its spellings; the budget list and its suite are anchored OUT OF FILE in test/fixtures/hk9l-scan-roster.json. The
+ * budgeted rows copy the package files TEST-SIDE (cpSync in their bodies); src's captureInvocationIdentity hashes by read
+ * and makes no S-call. Stated bounds: a file-alone run has no census step (its in-file judges alone decide); code in this
+ * file that rewrites the judge's own state or re-wires vitest's it is outside the claim. The residual risk is a copy that
+ * BYPASSES S, runtime-invisible by design: read/write composition, subprocess copy, createRequire and getBuiltinModule
+ * requisition, and an other-module helper that re-implements the copy without S; the static scan layer and the roster's
+ * residual families hold those, each with an id-asserted pinned quiet row and its runtime reading stated per family.
  */
 const emitState = vi.hoisted(() => {
   // The unmocked builtins (process.getBuiltinModule bypasses vi.mock, exactly as the R-REQUIRE residual states): the
@@ -54,12 +53,10 @@ const emitState = vi.hoisted(() => {
     sidecar,
     /** Chains that already opened their one copy window. */
     opened: new Set<string>(),
-    /** Chains budgeted() has produced a test function for (each title once). */
-    registered: new Set<string>(),
     /** The FULL title chain (suite > row) of the row running now, for attribution only; null between rows. */
     currentChain: null as string | null,
     currentRow: "<module scope>",
-    /** The copy window: the full chain of the budgeted row whose test function the runner is executing (opened by the budgeted(title, body) test function); null otherwise. */
+    /** The copy window: the full chain of the budgeted row whose test function the runner is executing (opened by budgeted(title, body) inside that row's own literal test function, synchronous by construction); null otherwise. */
     window: null as string | null,
     /** The full chains that may hold a window: PACKAGE_COPY_SUITE > each PACKAGE_COPY_ROWS title, filled once below. */
     allowedChains: new Set<string>(),
@@ -151,33 +148,33 @@ for (const row of PACKAGE_COPY_ROWS) emitState.allowedChains.add(`${PACKAGE_COPY
 /** The vitest registration APIs a case can be declared with (the static layers share the set). */
 const TEST_APIS: ReadonlySet<string> = new Set(["it", "test"]);
 /**
- * The only admission path (v9): a budgeted row's TEST FUNCTION is produced by this factory and handed straight to
- * it(title, PACKAGE_COPY_ROW, budgeted(title, body)), so the copy window is that function's own execution of the row body -
- * exactly the runner's invocation of the row, nothing else. The factory refuses a title outside the roster-anchored
- * PACKAGE_COPY_ROWS and a second registration of a title; the function it returns refuses to run under a chain this file's
- * beforeEach did not record for it (a same-titled row in another suite, or a hook calling it), a second window for the row
- * and an overlapping window; it closes when the body ends (sync or async). No other opener exists in this file: hooks of
- * every kind, closures a body hands to a hook, module scope, later rows and other suites run with the window closed, so
- * their S-calls are violations.
+ * The only admission path (v10): a budgeted row's LITERAL test function (registered directly, so report-mode censuses can
+ * resolve it) calls budgeted(title, body) as its first statement, and the copy window is budgeted's own SYNCHRONOUS execution
+ * of body - it opens on entry and closes when body returns, with no await inside: a body that returns a thenable is refused,
+ * so no hook (before/after/around each/all, cleanups), timer, microtask or other row can interleave with an open window
+ * (single-threaded JS runs nothing else during a synchronous call). The promise-returning copy surfaces are CALLED inside
+ * the window (the observation happens at the call) and settle after it closes. budgeted refuses a title outside the
+ * roster-anchored PACKAGE_COPY_ROWS, a run under a chain this file's beforeEach did not record for it (a same-titled row in
+ * another suite, or a hook calling it), a second window for the row and an overlap. The budget row pins (AST) that the only
+ * budgeted(...) calls in this file are the first statements of the matching rows' literal test functions, so nothing else
+ * - no hook, closure or helper - can open a window: their S-calls are violations.
  */
-const budgeted = (title: string, body: (context: TestContext) => void | Promise<void>): ((context: TestContext) => Promise<void> | undefined) => {
+const budgeted = <T>(title: string, body: () => T): T => {
   if (!PACKAGE_COPY_ROWS.includes(title)) throw new Error(`wb-hk9l: "${title}" is not a budgeted row (test/fixtures/hk9l-scan-roster.json packageCopyRows)`);
   const chain = `${PACKAGE_COPY_SUITE} > ${title}`;
-  if (emitState.registered.has(chain)) throw new Error(`wb-hk9l: ${chain} registered twice`);
-  emitState.registered.add(chain);
-  return (context) => {
-    if (emitState.currentChain !== chain) throw new Error(`wb-hk9l: ${chain} ran under chain ${emitState.currentChain ?? "none"}: the file's beforeEach did not record this row`);
-    if (emitState.opened.has(chain)) throw new Error(`wb-hk9l: ${chain} already opened its one copy window`);
-    if (emitState.window !== null) throw new Error(`wb-hk9l: a copy window is already open (${emitState.window})`);
-    emitState.opened.add(chain);
-    emitState.window = chain;
-    const close = (): void => { emitState.window = null; };
-    let result: void | Promise<void>;
-    try { result = body(context); } catch (error) { close(); throw error; }
-    if (result instanceof Promise) return result.finally(close);
-    close();
-    return undefined;
-  };
+  if (emitState.currentChain !== chain) throw new Error(`wb-hk9l: ${chain} asked for its window under chain ${emitState.currentChain ?? "none"}: the file's beforeEach did not record this row`);
+  if (emitState.opened.has(chain)) throw new Error(`wb-hk9l: ${chain} already opened its one copy window`);
+  if (emitState.window !== null) throw new Error(`wb-hk9l: a copy window is already open (${emitState.window})`);
+  emitState.opened.add(chain);
+  emitState.window = chain;
+  let result: T;
+  try {
+    result = body();
+  } finally {
+    emitState.window = null;
+  }
+  if (result !== null && typeof result === "object" && "then" in (result as object)) throw new Error(`wb-hk9l: ${chain} returned a thenable from its copy window: the window is synchronous by construction, await outside it`);
+  return result;
 };
 /** The node:fs calls that copy a file or a tree, read by name wherever named: imported, as a namespace member or as an element read. */
 const COPY_CALLS: ReadonlySet<string> = new Set(["cp", "cpSync", "copyFile", "copyFileSync"]);
@@ -194,12 +191,13 @@ type TestApi = { readonly each: boolean; readonly table: ts.Expression | undefin
  * It reads it / test with their TEST_FLAGS chains, the TEST_CONDITIONS calls, and the TEST_TABLES calls over an array-literal
  * table whose title expands by %s alone. A row it cannot read gets a title the runner never registers and a registration it
  * does not recognise is missing from its list, so either way the runner cross-check reds instead of passing the row unread.
- * ENUMERATION (R656/R670 owner completion, v9): the PRIMARY pin is the runtime emit judge above over EXACTLY the judged
+ * ENUMERATION (R656/R670 owner completion, v10): the PRIMARY pin is the runtime emit judge above over EXACTLY the judged
  * surface set S - cp, cpSync, copyFile and copyFileSync on node:fs (named and default exports), the fs.promises member
  * (named and via the default export), and the node:fs/promises module (cp, copyFile; named and default exports). Every
  * S-call from any call site in this file's module graph is OBSERVED and called through; it is ADMITTED only inside the
- * copy window the budgeted row's own test function opens (budgeted(title, body): the function the runner invokes for that
- * row opens the window on entry and closes it when the body ends, once per row; no other opener exists), and every
+ * synchronous copy window the budgeted row's own first statement opens (budgeted(title, body) inside the row's literal test
+ * function: opens on entry, runs body with no await, closes on return, once per row; no other opener exists and nothing
+ * can interleave with an open window), and every
  * other S-call is a VIOLATION judged red at the row boundaries, at file end, and by the census tier through the
  * .forge/hk9l-copy-violations.jsonl sidecar. The wraps never decide an outcome. A copy that
  * BYPASSES S is NOT runtime-observed, and no wider claim is made. The static scan below is a SECONDARY liveness layer; it
@@ -568,7 +566,7 @@ const SCAN_RESIDUALS: readonly ScanResidual[] = [
   {"id": "R-H5", "family": "read/write composition", "source": "it(\"row\", () => { writeFileSync(to, readFileSync(from)); });", "reading": "row quiet", "runtime": "invisible: no S-call, the bytes move by read and write"},
   {"id": "R-MODULE", "family": "other-module helper", "source": "import { copyPackage } from \"./other.js\";\nit(\"row\", () => { copyPackage(a, b); });", "reading": "row quiet", "runtime": "observed as a violation when the helper copies through S outside a copy window (in-process judges + sidecar); invisible when it re-implements the copy without S"},
   {"id": "R-PROCESS", "family": "subprocess copy", "source": "it(\"row\", () => { execFileSync(\"cp\", [a, b]); });", "reading": "row quiet", "runtime": "invisible: the copy runs in another process"},
-  {"id": "R-HOOK", "family": "hook copy", "source": "beforeEach(() => { cpSync(a, b); });\nit(\"row\", () => { expect(true).toBe(true); });", "reading": "row quiet", "runtime": "observed as a violation: an S-call in a hook of any kind runs with no copy window open and no opener it can call (the only opener is the budgeted row's own test function, budgeted(title, body)), so the row at that boundary, the file end or the census tier reds"},
+  {"id": "R-HOOK", "family": "hook copy", "source": "beforeEach(() => { cpSync(a, b); });\nit(\"row\", () => { expect(true).toBe(true); });", "reading": "row quiet", "runtime": "observed as a violation: an S-call in a hook of any kind (before/after/around each/all, cleanups) runs with no copy window open and cannot interleave with one (every window is synchronous), so the row at that boundary, the file end or the census tier reds"},
   {"id": "R-SCOPE", "family": "module-scope copy", "source": "cpSync(a, b);\nit(\"row\", () => { expect(true).toBe(true); });", "reading": "row quiet", "runtime": "observed as a violation: an S-call at module scope runs with no copy window open, so the first row reds and the sidecar records it"},
   {"id": "R-PROXY", "family": "identity hashing proxy", "source": "it(\"row\", () => { captureInvocationIdentity(request); });", "reading": "row quiet", "runtime": "invisible: captureInvocationIdentity hashes by read and makes no S-call (the budgeted rows copy test-side)"},
   {"id": "R-REQUIRE", "family": "createRequire requisition", "source": "const requireFs = createRequire(import.meta.url);\nit(\"row\", () => { requireFs(\"node:fs\")[String(\"cpSync\")](a, b); });", "reading": "row quiet", "runtime": "invisible: createRequire returns the unmocked builtin"},
@@ -596,7 +594,7 @@ function fixture() {
   return { workspace, scriptPath, request };
 }
 afterEach(() => { for (const dir of dirs.splice(0)) rmSync(dir, { recursive: true, force: true }); });
-// File-level judging (v9): these hooks fire for every row in the file whatever its suite and are the only source of the
+// File-level judging (v10): these hooks fire for every row in the file whatever its suite and are the only source of the
 // row chain the window keys on. The window must be closed at every row boundary, a budgeted row must have opened it, and
 // an S-call outside an open window - from a hook of any kind, module scope, a late row or another suite - is a VIOLATION
 // that reds the row at whose boundary it is seen (and is written to the sidecar for the census tier).
@@ -620,7 +618,7 @@ afterEach(() => {
   emitState.currentRow = "<between rows>";
 });
 /**
- * File-end judge (v9): hooks that run after the last row boundary still cannot copy unseen in this process. Under vitest's
+ * File-end judge (v10): hooks that run after the last row boundary still cannot copy unseen in this process. Under vitest's
  * default hook ordering (sequence.hooks "stack": after-hooks run in REVERSE registration order) the FIRST registered
  * afterAll runs LAST, so this judge is registered before any other afterAll in the file; the budget row pins both facts -
  * it is the file's only afterAll registration (static, with the vitest import un-aliased), and after-hooks really run in
@@ -693,7 +691,8 @@ describe(PACKAGE_COPY_SUITE, () => {
     expect(() => verifyInvocationIdentity(pin, changed)).toThrow();
   });
 
-  it("pins actual package.json, package-lock.json and local vendor artifact bytes, not declared fiction", PACKAGE_COPY_ROW, budgeted("pins actual package.json, package-lock.json and local vendor artifact bytes, not declared fiction", () => {
+  it("pins actual package.json, package-lock.json and local vendor artifact bytes, not declared fiction", PACKAGE_COPY_ROW, () => {
+    budgeted("pins actual package.json, package-lock.json and local vendor artifact bytes, not declared fiction", () => {
     const f = fixture();
     const root = join(f.workspace, "package");
     mkdirSync(root);
@@ -719,7 +718,8 @@ describe(PACKAGE_COPY_SUITE, () => {
     writeFileSync(join(root, "host.js"), "trusted host implementation");
     writeFileSync(join(root, "vendor/forge-sdk-0.1.0.tgz"), "tampered artifact");
     expect(() => verifyInvocationIdentity(pin, request)).toThrow();
-  }));
+    });
+  });
 
   it("pins hoisted runtime artifacts outside the extension package root", () => {
     const f = fixture();
@@ -740,7 +740,8 @@ describe(PACKAGE_COPY_SUITE, () => {
     expect(() => captureInvocationIdentity(f.request)).toThrow(IdentityConflictError);
   });
 
-  it("uses the shipped dependency lock only when npm has excluded package-lock.json", PACKAGE_COPY_ROW, budgeted("uses the shipped dependency lock only when npm has excluded package-lock.json", () => {
+  it("uses the shipped dependency lock only when npm has excluded package-lock.json", PACKAGE_COPY_ROW, () => {
+    budgeted("uses the shipped dependency lock only when npm has excluded package-lock.json", () => {
     const f = fixture();
     const root = join(f.workspace, "installed-package");
     mkdirSync(root);
@@ -762,9 +763,11 @@ describe(PACKAGE_COPY_SUITE, () => {
     expect(() => verifyInvocationIdentity(pin, request)).toThrow(IdentityConflictError);
     rmSync(join(root, "vendor/dependency-lock.json"));
     expect(() => captureInvocationIdentity(request)).toThrow(IdentityConflictError);
-  }));
+    });
+  });
 
-  it("rejects lockfile changes, missing artifact and lockfile/manifest mismatch", PACKAGE_COPY_ROW, budgeted("rejects lockfile changes, missing artifact and lockfile/manifest mismatch", () => {
+  it("rejects lockfile changes, missing artifact and lockfile/manifest mismatch", PACKAGE_COPY_ROW, () => {
+    budgeted("rejects lockfile changes, missing artifact and lockfile/manifest mismatch", () => {
     const f = fixture();
     const root = join(f.workspace, "package");
     mkdirSync(root);
@@ -785,7 +788,8 @@ describe(PACKAGE_COPY_SUITE, () => {
     manifest.dependencies.nanoid = "0.0.1";
     writeFileSync(join(root, "package.json"), JSON.stringify(manifest));
     expect(() => captureInvocationIdentity(request)).toThrow();
-  }));
+    });
+  });
 
   it("refuses absent/invalid caller, ABI and descriptor instead of producing a digest from partial input", () => {
     const f = fixture();
@@ -834,35 +838,50 @@ describe(PACKAGE_COPY_SUITE, () => {
     };
     findDynamicVitest(self);
     expect(dynamicVitest, "no dynamic import() or require() of vitest (lines)").toEqual([]);
-    // v9: every budgeted title is registered by a direct it(title, PACKAGE_COPY_ROW, budgeted(title, body)) inside this suite, each once,
-    // with the SAME literal in both places; budgeted(...) appears nowhere else (so no code can hold the test function), and no bare it/test
-    // wears a budgeted title - the window is the row's own test function and nothing else can obtain one.
-    const factoryRows: string[] = [];
+    // v10: every budgeted title is registered once, inside this suite, as it(title, PACKAGE_COPY_ROW, <literal function>) whose FIRST
+    // statement is budgeted(<same title literal>, <literal function>) - the only budgeted(...) calls in the file (a call anywhere else,
+    // in a hook, a helper, a nested closure or a later statement, is a stray) - so the window is the row's own first act and nothing
+    // else can open one. The literal test function is what report-mode censuses resolve.
+    const shapedRows: string[] = [];
     const bareBudgeted: string[] = [];
-    const strayFactoryCalls: number[] = [];
-    const findRegistrations = (node: ts.Node, suite: string | undefined, asTestFunction: boolean): void => {
+    const allowedFactoryCalls = new Set<ts.Node>();
+    const isFn = (node: ts.Node | undefined): node is ts.ArrowFunction | ts.FunctionExpression => node !== undefined && (ts.isArrowFunction(node) || ts.isFunctionExpression(node));
+    const firstFactoryCall = (fn: ts.ArrowFunction | ts.FunctionExpression, title: string): ts.CallExpression | undefined => {
+      if (!ts.isBlock(fn.body)) return undefined;
+      const [first] = fn.body.statements;
+      let call: ts.Expression | undefined;
+      if (first !== undefined && ts.isExpressionStatement(first)) call = first.expression;
+      else if (first !== undefined && ts.isVariableStatement(first) && first.declarationList.declarations.length === 1) call = first.declarationList.declarations[0]?.initializer;
+      if (call === undefined || !ts.isCallExpression(call) || !ts.isIdentifier(call.expression) || call.expression.text !== "budgeted") return undefined;
+      const [titleArg, bodyArg] = call.arguments;
+      return titleArg !== undefined && ts.isStringLiteralLike(titleArg) && titleArg.text === title && call.arguments.length === 2 && isFn(bodyArg) ? call : undefined;
+    };
+    const findRegistrations = (node: ts.Node, suite: string | undefined): void => {
       let inner = suite;
       if (ts.isCallExpression(node) && ts.isIdentifier(node.expression)) {
         const [first] = node.arguments;
         const last = node.arguments[node.arguments.length - 1];
         const line = self.getLineAndCharacterOfPosition(node.getStart(self)).line + 1;
         if (node.expression.text === "describe" && first !== undefined && ts.isIdentifier(first) && first.text === "PACKAGE_COPY_SUITE") inner = PACKAGE_COPY_SUITE;
-        if (node.expression.text === "budgeted" && !asTestFunction) strayFactoryCalls.push(line);
         if ((node.expression.text === "it" || node.expression.text === "test") && first !== undefined && ts.isStringLiteralLike(first) && PACKAGE_COPY_ROWS.includes(first.text)) {
-          const viaFactory = last !== undefined && ts.isCallExpression(last) && ts.isIdentifier(last.expression) && last.expression.text === "budgeted" && last.arguments[0] !== undefined && ts.isStringLiteralLike(last.arguments[0]) && last.arguments[0].text === first.text;
           const budgetArg = node.arguments.length === 3 && ts.isIdentifier(node.arguments[1]) && node.arguments[1].text === "PACKAGE_COPY_ROW";
-          if (viaFactory && budgetArg && inner === PACKAGE_COPY_SUITE) factoryRows.push(first.text);
+          const call = isFn(last) ? firstFactoryCall(last, first.text) : undefined;
+          if (call !== undefined && budgetArg && inner === PACKAGE_COPY_SUITE) { shapedRows.push(first.text); allowedFactoryCalls.add(call); }
           else bareBudgeted.push(`${first.text} @ line ${line}`);
-          if (last !== undefined) { ts.forEachChild(node, child => findRegistrations(child, inner, child === last)); return; }
         }
       }
-      ts.forEachChild(node, child => findRegistrations(child, inner, false));
+      ts.forEachChild(node, child => findRegistrations(child, inner));
     };
-    findRegistrations(self, undefined, false);
-    expect(factoryRows, "each roster row is registered once, inside PACKAGE_COPY_SUITE, as it(title, PACKAGE_COPY_ROW, budgeted(title, body)) with one literal").toEqual(PACKAGE_COPY_ROWS);
+    findRegistrations(self, undefined);
+    const strayFactoryCalls: number[] = [];
+    const findStrays = (node: ts.Node): void => {
+      if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "budgeted" && !allowedFactoryCalls.has(node)) strayFactoryCalls.push(self.getLineAndCharacterOfPosition(node.getStart(self)).line + 1);
+      ts.forEachChild(node, findStrays);
+    };
+    findStrays(self);
+    expect(shapedRows, "each roster row is registered once, inside PACKAGE_COPY_SUITE, as it(title, PACKAGE_COPY_ROW, fn) whose first statement is budgeted(title, body)").toEqual(PACKAGE_COPY_ROWS);
     expect(bareBudgeted, "no budgeted title is registered any other way").toEqual([]);
-    expect(strayFactoryCalls, "budgeted(...) is called only as a budgeted row's test-function argument (lines)").toEqual([]);
-    expect([...emitState.registered].sort(), "the chains budgeted() registered are exactly the anchored chains").toEqual([...emitState.allowedChains].sort());
+    expect(strayFactoryCalls, "budgeted(...) is called nowhere but as a budgeted row's first statement (lines)").toEqual([]);
     expect(emitState.sidecar.endsWith(join(".forge", "hk9l-copy-violations.jsonl")), "the violation sidecar lives under .forge for the census tier").toBe(true);
     expect(HOOK_ORDER.slice(0, 2), "after-hooks run in reverse registration order (vitest sequence.hooks stack), so the first-registered afterAll runs last").toEqual(["second-registered", "first-registered"]);
     const scanned = scanRows(text);
@@ -973,10 +992,27 @@ describe(PACKAGE_COPY_SUITE, () => {
       SCAN_RESIDUALS.map(row => `wb-hk9l residual ${row.id}: pinned quiet reading`));
   });
 
-  it("wrap liveness: every judged copy surface emits from this row once", PACKAGE_COPY_ROW, budgeted("wrap liveness: every judged copy surface emits from this row once", async () => {
-    const scratch = fixture().workspace;
-    const src = join(scratch, "a.json");
-    writeFileSync(src, "{}\n");
+  it("wrap liveness: every judged copy surface emits from this row once", PACKAGE_COPY_ROW, async () => {
+    // v10: every S-call is MADE inside the synchronous window (the judge observes at the call); the promise-returning
+    // surfaces settle after the window closes, where nothing can interleave with it.
+    const pending = budgeted("wrap liveness: every judged copy surface emits from this row once", () => {
+
+      const scratch = fixture().workspace;
+      const src = join(scratch, "a.json");
+      writeFileSync(src, "{}\n");
+      cpSync(src, join(scratch, "b1.json"));
+      copyFileSync(src, join(scratch, "b2.json"));
+      const settling: Promise<void>[] = [
+        new Promise<void>((done, fail) => { cp(src, join(scratch, "b3.json"), error => (error ? fail(error) : done())); }),
+        new Promise<void>((done, fail) => { copyFile(src, join(scratch, "b4.json"), error => (error ? fail(error) : done())); }),
+        cpPromise(src, join(scratch, "b5.json")),
+        copyFilePromise(src, join(scratch, "b6.json")),
+      ];
+      fsDefault.cpSync(src, join(scratch, "b7.json"));
+      settling.push(fsDefault.promises.copyFile(src, join(scratch, "b8.json")), fspDefault.cp(src, join(scratch, "b9.json")));
+      return settling;
+    });
+    await Promise.all(pending);
     // v6 U2: every surface member of S carries the judge's mark, and each default spelling IS the named judged function.
     const markOf = (fn: unknown): unknown => (fn as Record<symbol, unknown>)[emitState.mark];
     expect([cp, cpSync, copyFile, copyFileSync].map(markOf), "node:fs named exports are judged").toEqual(["cp", "cpSync", "copyFile", "copyFileSync"]);
@@ -987,20 +1023,11 @@ describe(PACKAGE_COPY_SUITE, () => {
     expect([fsPromisesMember.cp, fsPromisesMember.copyFile, fsDefault.promises.cp, fsDefault.promises.copyFile].map(markOf), "the fs.promises member is judged, named and via the default export").toEqual(["promises.cp", "promises.copyFile", "promises.cp", "promises.copyFile"]);
     expect([cpPromise, copyFilePromise, fspDefault.cp, fspDefault.copyFile].map(markOf), "node:fs/promises named and default exports are judged").toEqual(["promises.cp", "promises.copyFile", "promises.cp", "promises.copyFile"]);
     expect(fspDefault.cp, "node:fs/promises default and named are one judged function").toBe(cpPromise);
-    cpSync(src, join(scratch, "b1.json"));
-    copyFileSync(src, join(scratch, "b2.json"));
-    await new Promise<void>((done, fail) => { cp(src, join(scratch, "b3.json"), error => (error ? fail(error) : done())); });
-    await new Promise<void>((done, fail) => { copyFile(src, join(scratch, "b4.json"), error => (error ? fail(error) : done())); });
-    await cpPromise(src, join(scratch, "b5.json"));
-    await copyFilePromise(src, join(scratch, "b6.json"));
-    fsDefault.cpSync(src, join(scratch, "b7.json"));
-    await fsDefault.promises.copyFile(src, join(scratch, "b8.json"));
-    await fspDefault.cp(src, join(scratch, "b9.json"));
     const mine = emitState.observed.filter(entry => entry.row === "wrap liveness: every judged copy surface emits from this row once");
     expect([...new Set(mine.map(entry => entry.call))].sort(), "every wrapped surface really routes through the judge: a dropped wrap reds here, deterministically").toEqual(
       ["copyFile", "copyFileSync", "cp", "cpSync", "promises.copyFile", "promises.cp"].sort());
     expect(mine.every(entry => entry.admitted), "this row's copies ran inside its own copy window").toBe(true);
-  }));
+  });
   it("wb-hk9l registered leaf titles are unique, so no row can wear a budgeted title it does not own", ({ task }) => {
     const titles: string[] = [];
     const chains: string[] = [];
@@ -1069,7 +1096,7 @@ describe(PACKAGE_COPY_SUITE, () => {
     expect(censusRows.map(row => row.title), "the census leg registers exactly the roster's censusRows, in order").toEqual(roster.censusRows);
     const sidecarRow = censusRows.find(row => row.title === roster.censusSidecarRow);
     expect(sidecarRow?.text.includes("existsSync(SIDECAR)") === true && sidecarRow.text.includes("readFileSync(SIDECAR") && sidecarRow.text.includes(".toEqual([])"), "the census sidecar row exists, reads SIDECAR and asserts it empty").toBe(true);
-    expect([censusText.includes(`"${basename(emitState.sidecar)}"`), censusText.includes("hk9l-scan-roster.json"), censusText.includes("roster.packageCopyRows"), censusText.includes("roster.emitRowTitle")], "the census leg names this run's sidecar file and builds its pins from the roster").toEqual([true, true, true, true]);
+    expect([censusText.includes(`"${basename(emitState.sidecar)}"`), censusText.includes("hk9l-scan-roster.json"), censusText.includes("const PINS: readonly CasePin[] = [...roster.packageCopyRows, roster.emitRowTitle].map(pin);")], "the census leg names this run's sidecar file and builds its judge() pins from the roster: every budgeted row and this emit row, exactly that composition line").toEqual([true, true, true]);
     // The judging row must CALL judge(REPORT, PINS) (an AST call, not a mention in prose) and compare every verdict: an accept-all stand-in reds here.
     const judgeRow = censusRows.find(row => row.title === roster.censusJudgeRow);
     const judgeCalls: string[] = [];
@@ -1096,7 +1123,7 @@ describe(PACKAGE_COPY_SUITE, () => {
       "R-H5|read/write composition|row quiet|invisible: no S-call, the bytes move by read and write|37e662375a3fe1399fc0dc95f9d9232aa058553112f7cabb7ff78afc75d4fd44",
       "R-MODULE|other-module helper|row quiet|observed as a violation when the helper copies through S outside a copy window (in-process judges + sidecar); invisible when it re-implements the copy without S|7b1094cf6f38f1bf063069022eec44a6e79829d95a623759b8654cd3f9541330",
       "R-PROCESS|subprocess copy|row quiet|invisible: the copy runs in another process|5ce5ee0561776868771e83048ddb13718df85f4b03315e96bdd274c8b6be2f08",
-      "R-HOOK|hook copy|row quiet|observed as a violation: an S-call in a hook of any kind runs with no copy window open and no opener it can call (the only opener is the budgeted row's own test function, budgeted(title, body)), so the row at that boundary, the file end or the census tier reds|d4ea304260e90543ce46289eeb8b61d919cf47fd31098b933cea553bc3a98117",
+      "R-HOOK|hook copy|row quiet|observed as a violation: an S-call in a hook of any kind (before/after/around each/all, cleanups) runs with no copy window open and cannot interleave with one (every window is synchronous), so the row at that boundary, the file end or the census tier reds|d4ea304260e90543ce46289eeb8b61d919cf47fd31098b933cea553bc3a98117",
       "R-SCOPE|module-scope copy|row quiet|observed as a violation: an S-call at module scope runs with no copy window open, so the first row reds and the sidecar records it|ba574260adf4ee02ad948307b8d00101806d0e3d2cf7158e82c0bf9ca7252885",
       "R-PROXY|identity hashing proxy|row quiet|invisible: captureInvocationIdentity hashes by read and makes no S-call (the budgeted rows copy test-side)|c694895e6b2fdad18a9c99bdc716ce2e4fde4f0dcd2264674c6af621dc9f3b39",
       "R-REQUIRE|createRequire requisition|row quiet|invisible: createRequire returns the unmocked builtin|adfce552cca2b038904b4b85d00ac638d24a787351203098ff427b73170e6622",
