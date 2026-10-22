@@ -1,0 +1,473 @@
+{
+  "bead": "wb-tnz5.1",
+  "pin": "6a251bf73af5",
+  "basis": "The out-of-file roster of test/workbench-rf-federation-effect-authority-census.test.ts (standing rule 16): every judged row's id, label and pins, every pin's witness and the four vocabularies, so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. Producer facts read at ReactiveFiberCLI 6a251bf73af5 (read-only git show): docs/programs/certified-federated-reactive-refinement-2026-10-18/README.md:34 (B permission, idempotency key and effect receipt; a read export grants neither evaluate nor effects), BEADS-2026-10-21.md:37 (rfc-bak67.6, FW-CFRR-08a: no docs/adr/ADR-RFC-*-federation-effects.md at the pin), federated-workspaces-2026-10-18/04-cli-api.md:18 (the planned rf workspace invoke), 03-protocol-and-storage.md:53,55 (I05, I07) and 09-froe20-26-certified-live-admission.md:19. Pi facts measured at base 52bdd9e (src identical to a7896f8, where they were first read). Matcher digests are the first 16 hex of sha256 over the UTF-8 spelling; the Q1 and Q2 spellings carry U+200B and U+0435 and are never written raw here.",
+  "readAdmission": [
+    "discover:reactivefiber.render.preview",
+    "discover:reactivefiber.workspace.invoke",
+    "inspect:reactivefiber.render.preview",
+    "inspect:reactivefiber.workspace.invoke",
+    "observe:reactivefiber.render.preview",
+    "observe:reactivefiber.workspace.invoke",
+    "reactivefiber:render",
+    "invoke:reactivefiber.render.preview"
+  ],
+  "readGrantPrefixes": [
+    "discover",
+    "inspect",
+    "observe"
+  ],
+  "gatingArtifacts": [
+    "FW-CFRR-08",
+    "rfc-bak67.6"
+  ],
+  "admissionTerms": [
+    "idempotency key",
+    "effect receipt"
+  ],
+  "rows": [
+    {
+      "id": "A",
+      "label": "(a) no Pi path issues a B evaluate/effect on read-admission evidence alone; the attempt is refused inside Pi",
+      "pins": [
+        {
+          "id": "A1",
+          "witness": {
+            "refused": {
+              "category": "authorization",
+              "message": "Permission denied for capability reactivefiber.workspace.invoke (invoke)."
+            },
+            "refusedCalls": 0,
+            "admitted": {
+              "calls": 1,
+              "output": {
+                "accepted": true
+              }
+            }
+          }
+        },
+        {
+          "id": "A2",
+          "witness": {
+            "refused": {
+              "category": "authorization",
+              "message": "Permission denied for capability reactivefiber.workspace.invoke (invoke)."
+            },
+            "refusedCalls": 0,
+            "admittedCalls": 1
+          }
+        },
+        {
+          "id": "A3",
+          "witness": {
+            "refusals": [
+              {
+                "prefix": "discover",
+                "category": "validation",
+                "message": "Invalid invocation permission requirements for capability reactivefiber.workspace.invoke.",
+                "registered": 0
+              },
+              {
+                "prefix": "inspect",
+                "category": "validation",
+                "message": "Invalid invocation permission requirements for capability reactivefiber.workspace.invoke.",
+                "registered": 0
+              },
+              {
+                "prefix": "observe",
+                "category": "validation",
+                "message": "Invalid invocation permission requirements for capability reactivefiber.workspace.invoke.",
+                "registered": 0
+              }
+            ]
+          }
+        },
+        {
+          "id": "A4",
+          "witness": {
+            "readingCarriesGrants": true,
+            "status": "failed",
+            "capabilityError": {
+              "name": "CapabilityError",
+              "category": "authorization",
+              "message": "Permission denied for capability reactivefiber.workspace.invoke (invoke)."
+            },
+            "calls": {
+              "read": 1,
+              "effect": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "(b) a future Pi federation-effect capability registers a non-read effectClass, a stable idempotency key and the producer's effect receipt (wb-jwc.5 posture)",
+      "pins": [
+        {
+          "id": "B1",
+          "witness": {
+            "native": [
+              "forge.gate.status",
+              "furnace.run.inspect",
+              "hyperunix.find",
+              "reactivefiber.render.preview"
+            ],
+            "injected": [
+              "forge.gate.status",
+              "furnace.run.inspect",
+              "hyperunix.find",
+              "reactivefiber.render.preview"
+            ],
+            "family": []
+          }
+        },
+        {
+          "id": "B2",
+          "witness": {
+            "receiptsRead": true,
+            "real": [],
+            "synthetic": {
+              "complete": [],
+              "readClass": [
+                "reactivefiber.workspace.invoke: declares effectClass read"
+              ],
+              "noPermission": [
+                "reactivefiber.workspace.invoke: declares no permission of its own"
+              ],
+              "sharedPermission": [
+                "reactivefiber.workspace.invoke: shares the read permission reactivefiber:render"
+              ],
+              "noReceipt": [
+                "reactivefiber.workspace.invoke: no registering receipt names it with FW-CFRR-08 and rfc-bak67.6, an idempotency key and an effect receipt"
+              ],
+              "oneArtifact": [
+                "reactivefiber.workspace.invoke: no registering receipt names it with FW-CFRR-08 and rfc-bak67.6, an idempotency key and an effect receipt"
+              ],
+              "noTerms": [
+                "reactivefiber.workspace.invoke: no registering receipt names it with FW-CFRR-08 and rfc-bak67.6, an idempotency key and an effect receipt"
+              ]
+            }
+          }
+        },
+        {
+          "id": "B3",
+          "witness": {
+            "effect": {
+              "category": "uncertain-effect",
+              "message": "Capability reactivefiber.workspace.invoke has an uncertain external effect: stand-in producer stream closed after dispatch. Reconcile with the producer before retrying.",
+              "calls": 1
+            },
+            "read": {
+              "category": "transport",
+              "message": "Capability reactivefiber.workspace.invoke failed: stand-in producer stream closed after dispatch",
+              "calls": 1
+            }
+          }
+        },
+        {
+          "id": "B4",
+          "witness": {
+            "srcFloorMet": true,
+            "membersRead": true,
+            "receiptHits": [],
+            "keyHits": [],
+            "keyOrReceiptMembers": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "(c) until the ADR and endpoints ship, a hermetic guard pins no federation effect class in Pi's registry (0 federation hits in Pi src)",
+      "pins": [
+        {
+          "id": "C1",
+          "witness": {
+            "root": "src",
+            "floor": 100,
+            "anchorFile": "workbench/capability-registry.ts",
+            "anchorToken": "effectClassOf",
+            "floorMet": true,
+            "anchorRead": true,
+            "hits": []
+          }
+        },
+        {
+          "id": "C2",
+          "witness": {
+            "descriptorsRead": 8,
+            "hits": []
+          }
+        },
+        {
+          "id": "C3",
+          "witness": {
+            "native": [
+              "forge.gate.status:read",
+              "furnace.run.inspect:read",
+              "hyperunix.find:read",
+              "reactivefiber.render.preview:read"
+            ],
+            "injected": [
+              "forge.gate.status:read",
+              "furnace.run.inspect:read",
+              "hyperunix.find:read",
+              "reactivefiber.render.preview:read"
+            ],
+            "literals": [
+              "src/workbench/providers/forge.ts:forge.gate.status:read",
+              "src/workbench/providers/forge.ts:forge.gate.status:read",
+              "src/workbench/providers/furnace.ts:furnace.run.inspect:read",
+              "src/workbench/providers/furnace.ts:furnace.run.inspect:read",
+              "src/workbench/providers/hyperunix.ts:hyperunix.find:read",
+              "src/workbench/providers/hyperunix.ts:hyperunix.find:read",
+              "src/workbench/providers/reactivefiber.ts:reactivefiber.render.preview:read",
+              "src/workbench/providers/reactivefiber.ts:reactivefiber.render.preview:read"
+            ],
+            "providerEffectClassProperties": 8
+          }
+        }
+      ]
+    },
+    {
+      "id": "D",
+      "label": "R10 call-site pins: no rf workspace invoke under a read capability, no remote evaluation launched from render or invalidation paths (I07), and replay never silently re-invokes remote effects (09-froe20-26:19)",
+      "pins": [
+        {
+          "id": "D1",
+          "witness": {
+            "srcFloorMet": true,
+            "renderArgvSeen": true,
+            "verbArgv": [],
+            "verbLiterals": [],
+            "descriptorVerbs": [],
+            "controls": {
+              "argv": 1,
+              "spaced": 1,
+              "dotted": 1,
+              "template": 1,
+              "composedArgv": 0
+            }
+          }
+        },
+        {
+          "id": "D2",
+          "witness": {
+            "sites": [
+              "src/workbench/providers/reactivefiber.ts:nativeReactiveFiberRender:spawn"
+            ],
+            "preview": {
+              "effectClass": "read",
+              "permissions": [
+                "reactivefiber:render"
+              ]
+            },
+            "argv": [
+              [
+                "--workspace",
+                "<root>",
+                "context",
+                "render",
+                "--model",
+                "m",
+                "--task",
+                "t",
+                "--no-commit",
+                "--no-input",
+                "--json"
+              ],
+              [
+                "--workspace",
+                "<root>",
+                "context",
+                "render",
+                "--view",
+                "v",
+                "--task-id",
+                "t",
+                "--model",
+                "m",
+                "--no-commit",
+                "--no-input",
+                "--json"
+              ]
+            ]
+          }
+        },
+        {
+          "id": "D3",
+          "witness": {
+            "invalidation": {
+              "modules": [
+                "src/workbench/capability-registry.ts",
+                "src/workbench/graph-view.ts",
+                "src/workbench/observation.ts",
+                "src/workbench/redaction.ts"
+              ],
+              "externals": [
+                "typebox/value"
+              ],
+              "launchImports": [],
+              "networkCalls": [],
+              "launchCalls": []
+            },
+            "observer": {
+              "modules": [
+                "src/workbench/capability-registry.ts",
+                "src/workbench/native-evidence.ts",
+                "src/workbench/observation.ts",
+                "src/workbench/process-env.ts",
+                "src/workbench/providers/reactivefiber.ts",
+                "src/workbench/reactivefiber-observer.ts",
+                "src/workbench/redaction.ts"
+              ],
+              "viaProvider": [
+                {
+                  "module": "src/workbench/reactivefiber-observer.ts",
+                  "bindings": [
+                    "REACTIVEFIBER_RENDER_PREVIEW_CONTRACT",
+                    "REACTIVE_FIBER_CLI_SCHEMA"
+                  ]
+                },
+                {
+                  "module": "src/workbench/native-evidence.ts",
+                  "bindings": [
+                    "REACTIVE_FIBER_CLI_SCHEMA"
+                  ]
+                }
+              ],
+              "constantsOnly": true,
+              "launchImports": [],
+              "networkCalls": [],
+              "launchCalls": []
+            },
+            "controls": {
+              "childProcess": 1,
+              "dynamicImport": 1,
+              "fetchCall": 1,
+              "socket": 1,
+              "regexpExec": 0
+            }
+          }
+        },
+        {
+          "id": "D4",
+          "witness": {
+            "recorded": {
+              "status": "completed",
+              "effectCalls": 1,
+              "nodeRows": [
+                {
+                  "effectClass": "external",
+                  "dispatched": true
+                },
+                {
+                  "effectClass": "external",
+                  "dispatched": false
+                }
+              ]
+            },
+            "resumed": {
+              "status": "failed",
+              "category": "uncertain-effect",
+              "namesProducer": true,
+              "namesWayOut": true,
+              "effectCalls": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "M",
+      "label": "the FEDERATION matcher rows C1 and C2 read catches every case and affix spelling of the stem, and its named residuals stay pinned quiet",
+      "pins": [
+        {
+          "id": "M1",
+          "witness": {
+            "digest": "8ce333c5811acbdc",
+            "hit": true
+          }
+        },
+        {
+          "id": "M2",
+          "witness": {
+            "digest": "f8c6e8016cfb9bea",
+            "hit": true
+          }
+        },
+        {
+          "id": "M3",
+          "witness": {
+            "digest": "5d80ae7527c02c46",
+            "hit": true
+          }
+        },
+        {
+          "id": "M4",
+          "witness": {
+            "digest": "40db39aef3fc7291",
+            "hit": true
+          }
+        },
+        {
+          "id": "M5",
+          "witness": {
+            "digest": "a46475ec2fb5e4e9",
+            "hit": true
+          }
+        },
+        {
+          "id": "M6",
+          "witness": {
+            "digest": "5dc644ac6d4a3ff8",
+            "hit": true
+          }
+        },
+        {
+          "id": "M7",
+          "witness": {
+            "digest": "2159fb9c3857aa20",
+            "hit": true
+          }
+        },
+        {
+          "id": "M8",
+          "witness": {
+            "digest": "586fe9fd8ba96a93",
+            "hit": true
+          }
+        },
+        {
+          "id": "Q1",
+          "witness": {
+            "digest": "4ee4c6b68da6b568",
+            "hit": false
+          }
+        },
+        {
+          "id": "Q2",
+          "witness": {
+            "digest": "9740fedb8e9f7d2a",
+            "hit": false
+          }
+        },
+        {
+          "id": "Q3",
+          "witness": {
+            "digest": "3456a686e42488c0",
+            "hit": false
+          }
+        },
+        {
+          "id": "Q4",
+          "witness": {
+            "digest": "10c8a3d894e9b0b2",
+            "hit": false
+          }
+        }
+      ]
+    }
+  ]
+}
