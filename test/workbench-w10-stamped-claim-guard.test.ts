@@ -57,7 +57,16 @@
  *   filled from the receipt it names and from the carrier: receipts/<bead>.md exists; its newest rendered
  *   RF_PREVIEW_RECEIPT {json} line (document order; receipts are append-only) carries a non-empty string cli_version equal to
  *   the carrier release; the cmd_* id is one the receipt entry carrying that line also renders (entries run between
- *   top-level level-1/2 headings), never a legacy unstamped id; every release slot reads that stamped release.
+ *   top-level level-1/2 headings), never a legacy unstamped id, and it is that entry's run of record (RUN OF RECORD);
+ *   every release slot reads that stamped release.
+ * - RUN OF RECORD (wb-j4lx, owner R691 F4: the wb-c7ku gate's L2-W3, L2-W4 and L2-W5 swapped the stamped id for another id
+ *   the entry renders and read 0/796): the entry carrying the newest stamp line names its run of record, and the stamped
+ *   sentence's cmd slot is that id. The entry's opening heading renders exactly one "(receipt of record cmd_<12 hex>)"
+ *   clause, read exactly (a look-alike, a case change or an invisible inside it makes it no clause), and with that clause
+ *   taken out the heading no longer reads as naming a receipt of record under the FOLDED KEY; at least one rendered line
+ *   of the entry reads as beginning "Run of record:" under the FOLDED KEY, and the first cmd_* id each such line renders
+ *   is the clause's id. The receipt is the only witness this guard reads (it reads no forge run record), so the binding
+ *   is the receipt's own declaration, stated twice and cross-checked.
  * - HISTORY: the three 0.1.583-era unstamped ids stay as whole tokens in the rendered Evidence cell (receipts are added,
  *   history is never rewritten). STALE LITERAL: outside "the earlier rf@<x> literal is retired", every rf@<release> the
  *   rendered row shows is the carrier release.
@@ -74,6 +83,12 @@
  * 9df9a03, W2 the descriptor's spelling, W3 a look-alike, W4 a header-row claim row, W5 a look-alike inside the required
  * clause, W6 an ASCII control character inside the claim). Every look-alike and invisible is built with
  * String.fromCodePoint; none is typed raw.
+ * The RECORD rows (RR1-RR5, wb-j4lx) are one per record site of the live stamped receipt's newest stamp entry: each other
+ * cmd_* id it renders (a decoy: its stamped pin is the L2-W3/L2-W4/L2-W5 shape), its heading clause and its Run of record
+ * line. recordEdit() writes each pin's edit by site and op (receipt edits keep fail-closed raw anchors), and each pin is
+ * refused with each named diagnosis in order and no other finding, or accepted (neutral by design, or a named residual).
+ * RR0 anchors the rows outside the census, to the receipt itself: they are exactly its record sites, so a re-pin to a
+ * receipt with other site counts re-states RECORD_ROWS in the same change. C1 re-authors every pin on every N base.
  * MUTANT AUTHORING (C1): every page and rendered-index edit is located through the lexer (the top-level token raws tile the page; a
  * table's raw lines are its header, delimiter and rows; each rendered character of a cell or heading maps back to the
  * source span it renders from) and authored at those positions, never located by a raw-text regex, so a rendering-neutral
@@ -87,13 +102,17 @@
  * FROZEN SHAPE (standing rule 16, owner order 2026-10-18T18:14:19Z): one row pins WITHDRAWN_CLAIMS, PLANE_SCOPED_CLAUSE,
  * every W and X row with its diagnoses, and the XN control names as literals derived from the tables at this cut, so
  * dropping a diagnosis, shortening a claim or a diagnosis, or swapping one for an unrelated diagnosis the variant also
- * draws turns it red.
+ * draws turns it red. RECORD-SHAPE pins every RECORD row's site, label and pins (op, reading and diagnoses) the same way.
  * RESIDUALS (named, not closed): ASCII look-alikes (I for l, 0 for O) in a heading or a first cell are not folded; a
  * tolerated bare cell tag outside W10 is assumed inert; styling applied from outside the page; prose outside the W10
  * section (another section may still describe the capability); the receipt beyond its newest stamp entry and the rendered index
  * beyond its one link; a withdrawn claim outside the claim rows' cells is not named by WITHDRAWN CLAIM (the section-level
  * class, wb-64x): in another W10 row's cell (gate X9) it is silent, in a W10 paragraph (gate X8) SECTION CONTENT refuses it
  * under its own diagnosis.
+ * RUN OF RECORD residuals, each pinned by an accepted residual pin: the receipt rewritten in every record slot together
+ * with the row's cmd slot moves the run of record with it (each decoy row's rewritten pin; landed receipt lines are
+ * append-only under owner ruling R539, whose numstat check at the gate, never this guard, refuses that edit); a later
+ * "Run of record:" declaration on a line whose first cmd_* id is the record is prose to this guard (RR5 trailing).
  * Spawns nothing; writes nothing; reads two docs files and the receipts directory and imports the carrier.
  */
 import { existsSync, readFileSync } from "node:fs";
@@ -119,6 +138,12 @@ const RELEASE_TOKEN_ALL = /rf@([0-9]+(?:\.[0-9]+)*)/g;
 const RETIREMENT_CLAUSE_ALL = /the earlier rf@[0-9]+(?:\.[0-9]+)* literal is retired/g;
 const CMD_ID_ALL = /cmd_[0-9a-f]{12}/g;
 const STAMP_MARK = "RF_PREVIEW_RECEIPT {";
+/** RUN OF RECORD (wb-j4lx): the clause an entry heading names its run of record in, read exactly (a look-alike or invisible inside it is no clause). */
+const RECORD_CLAUSE_ALL = /\(receipt of record (cmd_[0-9a-f]{12})\)/g;
+/** The folded key a heading reads as naming a receipt of record under; outside its one exact clause it is refused. */
+const RECORD_KEY = "receipt of record";
+/** The folded key a rendered line of the entry reads as beginning with when it states the entry's run of record. */
+const RUN_KEY = "run of record:";
 /** The withdrawn universal negative (R5 AC1, wb-2j3.4) in both spellings it was published in: the row's and the descriptor's. */
 const WITHDRAWN_CLAIMS = ["zero durable writes", "no durable write"] as const;
 /** The plane-scoped clause the claim row's rendered Feature cell carries in place of the withdrawn claim (wb-2j3.4 STATEMENT). */
@@ -641,6 +666,25 @@ function stampRelease(json: string | undefined): string | undefined {
 interface ReceiptStamp {
   release?: string;
   entryIds: ReadonlySet<string>;
+  /** The ids the exact run-of-record clauses of the entry's opening level-1/2 heading name, in order (RUN OF RECORD). */
+  records: readonly string[];
+  /** Whether that heading, its exact clauses taken out, still reads as naming a receipt of record under the FOLDED KEY. */
+  strayRecord: boolean;
+  /** The first cmd_* id (undefined when none) of each rendered line of the entry that reads as beginning "Run of record:". */
+  runLines: ReadonlyArray<string | undefined>;
+}
+
+/** RUN OF RECORD: what an entry's opening heading and its "Run of record:" lines name as the entry's run of record. */
+function recordReading(entry: readonly Token[], text: string): Pick<ReceiptStamp, "records" | "strayRecord" | "runLines"> {
+  const opening = entry[0];
+  const heading = opening !== undefined && isHeading(opening) && opening.depth <= 2 ? rendered(opening.tokens, "") : "";
+  const records = [...heading.matchAll(RECORD_CLAUSE_ALL)].map((match) => match[1] ?? "");
+  const strayRecord = readsAsContaining(foldKey(heading.replace(RECORD_CLAUSE_ALL, " ")), RECORD_KEY);
+  const runLines = text
+    .split("\n")
+    .filter((line) => readsAsPrefix(foldKey(line), RUN_KEY))
+    .map((line) => line.match(CMD_ID_ALL)?.[0]);
+  return { records, strayRecord, runLines };
 }
 
 /** A receipt file's newest rendered RF_PREVIEW_RECEIPT line and the cmd ids its entry renders, or why it cannot be read. */
@@ -657,13 +701,30 @@ function receiptView(markdown: string, label: string): { findings: string[]; new
     const text = rendered(entry, "\n");
     const objects: Array<string | undefined> = [];
     for (let cursor = text.indexOf(STAMP_MARK); cursor >= 0; cursor = text.indexOf(STAMP_MARK, cursor + STAMP_MARK.length)) objects.push(balancedObject(text, cursor + STAMP_MARK.length - 1));
-    if (objects.length > 0) newest = { release: stampRelease(objects.at(-1)), entryIds: new Set(text.match(CMD_ID_ALL) ?? []) };
+    if (objects.length > 0) newest = { release: stampRelease(objects.at(-1)), entryIds: new Set(text.match(CMD_ID_ALL) ?? []), ...recordReading(entry, text) };
   }
   return { findings, newest };
 }
 
 function hasToken(text: string, token: string): boolean {
   return new RegExp(`(?<![0-9A-Za-z_])${token}(?![0-9A-Za-z_])`).test(text);
+}
+
+/** RUN OF RECORD (wb-j4lx, owner R691 F4): why the stamped cmd slot does not bind to the run of record of the entry carrying the newest stamp line. */
+function recordFindings(receipt: string, cmd: string, newest: ReceiptStamp): string[] {
+  const entry = `receipts/${receipt}.md: the entry carrying the newest stamp line`;
+  const [record] = newest.records;
+  if (newest.records.length !== 1 || record === undefined) {
+    return [`${entry} names ${newest.records.length} runs of record in its heading; exactly one "(receipt of record cmd_*)" clause binds the stamped run`];
+  }
+  if (newest.strayRecord) return [`${entry} has a heading that reads as naming a receipt of record outside its one "(receipt of record ${record})" clause`];
+  const findings: string[] = [];
+  if (newest.runLines.length === 0) findings.push(`${entry} renders no "Run of record:" line confirming its run of record ${record}`);
+  for (const first of newest.runLines) {
+    if (first !== record) findings.push(`${entry} names its run of record ${record} in its heading but ${first ?? "no cmd_* id"} first in a "Run of record:" line`);
+  }
+  if (cmd !== record) findings.push(`the stamped sentence names ${cmd}, which is not ${record}, the run of record of the receipt entry carrying the newest stamp line`);
+  return findings;
 }
 
 /** Every reason the rendered W10 claim fails the stamped-release rule; empty means it holds. Pure over its three inputs. */
@@ -712,6 +773,7 @@ function judgeW10Claim(page: string, readReceipt: ReadReceipt, carrier: string):
   if (release !== carried) findings.push(`receipts/${receipt}.md stamped release ${release} differs from the carrier release ${carried ?? "(none)"}`);
   if (LEGACY_UNSTAMPED_IDS.includes(cmd)) findings.push(`the stamped sentence names ${cmd}, a legacy unstamped receipt (legacy unstamped ids do not count)`);
   else if (!stamp.newest.entryIds.has(cmd)) findings.push(`the stamped sentence names ${cmd}, which the receipt entry carrying the newest stamp line does not render`);
+  findings.push(...recordFindings(receipt, cmd, stamp.newest));
   if (sentence !== stampSentence({ ...shape.slots, release })) {
     findings.push(`the stamped sentence does not equal its slice with the stamped release ${release} (releases read ${shape.releases.join(", ")})`);
   }
@@ -1177,6 +1239,181 @@ const F7_STAMPS = ['"cli_version":0.1', '"cli_version":""', "RF_PREVIEW_RECEIPT 
 
 function breakStamp(receipt: string, replacement: string): string {
   return replacement.startsWith("RF_PREVIEW_RECEIPT") ? receipt.replace(STAMP_MARK, replacement) : receipt.replace(`"cli_version":"${CARRIER_RELEASE}"`, replacement);
+}
+
+type RawSpan = readonly [start: number, end: number];
+
+/** RUN OF RECORD authoring (wb-j4lx): the record sites of a receipt's newest stamp entry, read from its raw text (fail closed). */
+interface RecordSites {
+  /** The id the entry heading's one raw "(receipt of record <id>)" clause names. */
+  record: string;
+  /** The entry's other raw cmd_* ids in first-occurrence order: never the record, never a legacy unstamped id. */
+  decoys: readonly string[];
+  /** The raw clause in the entry heading, and the id inside it. */
+  clause: RawSpan;
+  clauseId: RawSpan;
+  /** Each raw "- Run of record:" line of the entry (its newline excluded) and the first raw cmd_* id on it. */
+  lines: ReadonlyArray<{ line: RawSpan; first: RawSpan }>;
+}
+
+/** The raw sites the RECORD pins re-author: entries start at ATX level-1/2 heading lines; the newest is the last one holding a stamp. */
+function recordSites(receipt: string): RecordSites {
+  const starts = [...receipt.matchAll(/^#{1,2} [^\n]*/gm)].map((match) => match.index ?? 0);
+  let entry: RawSpan | undefined;
+  for (const [position, start] of starts.entries()) {
+    const end = starts[position + 1] ?? receipt.length;
+    if (receipt.slice(start, end).includes(STAMP_MARK)) entry = [start, end];
+  }
+  if (entry === undefined) throw new Error("mutant authoring: no receipt entry holds an RF_PREVIEW_RECEIPT line");
+  const [start, end] = entry;
+  const body = receipt.slice(start, end);
+  const headingEnd = body.indexOf("\n");
+  const clauses = [...body.slice(0, headingEnd < 0 ? body.length : headingEnd).matchAll(/\(receipt of record (cmd_[0-9a-f]{12})\)/g)];
+  const clause = clauses[0];
+  const record = clause?.[1];
+  if (clauses.length !== 1 || clause === undefined || record === undefined) throw new Error("mutant authoring: the newest stamp entry's heading holds no one (receipt of record <id>) clause");
+  const clauseStart = start + (clause.index ?? 0);
+  const idStart = clauseStart + clause[0].indexOf(record);
+  const decoys: string[] = [];
+  for (const match of body.matchAll(/cmd_[0-9a-f]{12}/g)) {
+    if (match[0] !== record && !LEGACY_UNSTAMPED_IDS.includes(match[0]) && !decoys.includes(match[0])) decoys.push(match[0]);
+  }
+  const lines: Array<{ line: RawSpan; first: RawSpan }> = [];
+  for (const match of body.matchAll(/^- Run of record:[^\n]*/gm)) {
+    const lineStart = start + (match.index ?? 0);
+    const first = /cmd_[0-9a-f]{12}/.exec(match[0]);
+    if (first === null) throw new Error("mutant authoring: a Run of record line names no cmd_* id");
+    lines.push({ line: [lineStart, lineStart + match[0].length], first: [lineStart + first.index, lineStart + first.index + first[0].length] });
+  }
+  if (decoys.length === 0 || lines.length === 0) throw new Error("mutant authoring: the newest stamp entry renders no other cmd_* id or holds no Run of record line");
+  return { record, decoys, clause: [clauseStart, clauseStart + clause[0].length], clauseId: [idStart, idStart + record.length], lines };
+}
+
+/** The record sites of the live stamped receipt (authoring reads the committed receipt; the judge never reads a file). */
+function liveRecordSites(): RecordSites {
+  const text = liveReceipt(liveStamp().receipt);
+  if (text === undefined) throw new Error("mutant authoring: the live stamped receipt does not exist");
+  return recordSites(text);
+}
+
+interface RecordEdit {
+  page?: (source: string) => string;
+  receipt?: (receipt: string) => string;
+}
+
+/** The one place each RECORD pin's edit is written: the page's stamped cmd slot and the receipt's record sites, by row site and op. */
+function recordEdit(row: RecordRow, op: RecordOp): RecordEdit {
+  const decoyOf = (sites: RecordSites): string => {
+    const decoy = sites.decoys[row.slot === "decoy" ? row.index : 0];
+    if (decoy === undefined) throw new Error(`mutant authoring: the newest stamp entry renders no decoy ${row.slot === "decoy" ? row.index + 1 : 1}`);
+    return decoy;
+  };
+  const lineOf = (sites: RecordSites): { line: RawSpan; first: RawSpan } => {
+    const line = sites.lines[row.slot === "line" ? row.index : 0];
+    if (line === undefined) throw new Error(`mutant authoring: the newest stamp entry holds no Run of record line ${row.index + 1}`);
+    return line;
+  };
+  const onReceipt =
+    (edit: (sites: RecordSites, text: string) => readonly Edit[]) =>
+    (text: string): string =>
+      applyEdits(text, edit(recordSites(text), text));
+  const stamped = (source: string): string => inEvidence(source, liveStamp().cmd, decoyOf(liveRecordSites()));
+  switch (`${row.slot}/${op}`) {
+    case "decoy/stamped":
+      return { page: stamped };
+    case "decoy/rewritten":
+      return { page: stamped, receipt: onReceipt((sites) => [[sites.clauseId[0], sites.clauseId[1], decoyOf(sites)], ...sites.lines.map(({ first }): Edit => [first[0], first[1], decoyOf(sites)])]) };
+    case "heading/removed":
+      return {
+        receipt: onReceipt((sites, text) => {
+          if (text[sites.clause[0] - 1] !== " ") throw new Error("mutant authoring: no space before the heading clause");
+          return [[sites.clause[0] - 1, sites.clause[1], ""]];
+        }),
+      };
+    case "heading/commented":
+      return { receipt: onReceipt((sites, text) => [[sites.clause[0], sites.clause[1], commented(text.slice(sites.clause[0], sites.clause[1]))]]) };
+    case "heading/lookalike":
+      return {
+        receipt: onReceipt((sites, text) => {
+          const o = sites.clause[0] + "(receipt ".length;
+          if (text[o] !== "o") throw new Error("mutant authoring: the heading clause does not read (receipt of");
+          return [[o, o + 1, at(0x43e)]];
+        }),
+      };
+    case "heading/cased":
+      return {
+        receipt: onReceipt((sites, text) => {
+          const r = sites.clause[0] + 1;
+          if (text[r] !== "r") throw new Error("mutant authoring: the heading clause does not open (receipt");
+          return [[r, r + 1, "R"]];
+        }),
+      };
+    case "heading/invisible":
+      return {
+        receipt: onReceipt((sites, text) => {
+          const gap = sites.clause[0] + "(receipt of ".length;
+          if (text.slice(gap - 4, gap) !== " of ") throw new Error("mutant authoring: the heading clause does not read (receipt of record");
+          return [[gap, gap, at(0x200b)]];
+        }),
+      };
+    case "heading/moved":
+      return {
+        receipt: onReceipt((sites, text) => {
+          if (text[sites.clause[0] - 1] !== " ") throw new Error("mutant authoring: no space before the heading clause");
+          const { line } = lineOf(sites);
+          return [[sites.clause[0] - 1, sites.clause[1], ""], [line[1], line[1], ` ${text.slice(sites.clause[0], sites.clause[1])}`]];
+        }),
+      };
+    case "heading/doubled":
+      return { receipt: onReceipt((sites) => [[sites.clause[1], sites.clause[1], ` (receipt of record ${decoyOf(sites)})`]]) };
+    case "heading/folded":
+      return { receipt: onReceipt((sites) => [[sites.clause[1], sites.clause[1], ` (receipt ${at(0x43e)}f record ${decoyOf(sites)})`]]) };
+    case "heading/swapped":
+      return { receipt: onReceipt((sites) => [[sites.clauseId[0], sites.clauseId[1], decoyOf(sites)]]) };
+    case "heading/coded":
+      return { receipt: onReceipt((sites) => [[sites.clauseId[0], sites.clauseId[0], "`"], [sites.clauseId[1], sites.clauseId[1], "`"]]) };
+    case "heading/later":
+      return { receipt: (text) => `${text.replace(/\n+$/, "")}\n\n## 2099-01-01 a later entry with no stamp line (receipt of record ${decoyOf(recordSites(text))})\n\n- A later note.\n` };
+    case "line/removed":
+      return {
+        receipt: onReceipt((sites, text) => {
+          const { line } = lineOf(sites);
+          if (text[line[1]] !== "\n") throw new Error("mutant authoring: the Run of record line does not end in a newline");
+          return [[line[0], line[1] + 1, ""]];
+        }),
+      };
+    case "line/swapped":
+      return { receipt: onReceipt((sites) => [[lineOf(sites).first[0], lineOf(sites).first[1], decoyOf(sites)]]) };
+    case "line/lookalike":
+      return { receipt: onReceipt((sites) => [[lineOf(sites).line[1], lineOf(sites).line[1], `\n- Run ${at(0x43e)}f record: forge ${decoyOf(sites)}.`]]) };
+    case "line/coded":
+      return {
+        receipt: onReceipt((sites) => {
+          const { first } = lineOf(sites);
+          return [[first[0], first[0], "`"], [first[1], first[1], "`"]];
+        }),
+      };
+    case "line/trailing":
+      return { receipt: onReceipt((sites) => [[lineOf(sites).line[1], lineOf(sites).line[1], ` Run of record: forge ${decoyOf(sites)}.`]]) };
+    default:
+      throw new Error(`mutant authoring: no RECORD edit for ${row.slot}/${op}`);
+  }
+}
+
+/** A RECORD pin judged on `source`: refused with each named diagnosis, in order, and no other finding; or accepted. */
+function expectRecordPin(source: string, row: RecordRow, pin: RecordPin, label: string): void {
+  const edit = recordEdit(row, pin.op);
+  const named = stampedParts(source)?.slots.receipt ?? "";
+  const variant = edit.page === undefined ? source : edit.page(source);
+  const reader = edit.receipt === undefined ? liveReceipt : readerWith(edit.receipt);
+  expect(variant !== source || reader(named) !== liveReceipt(named), `${label} edits neither the page nor the receipt`).toBe(true);
+  const findings = judgeW10Claim(variant, reader, REACTIVE_FIBER_CONTRACT_SOURCE);
+  if (pin.reading === "refused") {
+    expect(findings, label).toHaveLength(pin.causes.length);
+    for (const [index, cause] of pin.causes.entries()) expect(findings[index], label).toContain(cause);
+  } else {
+    expect(findings, label).toEqual([]);
+  }
 }
 
 /** The 9df9a03 row without its capability token: an unstamped duplicate claim row (G5-G7). */
@@ -1648,6 +1885,88 @@ const XN_CONTROLS: readonly Control[] = [
   ["XN2 an extra blank line between the W10 heading and its table", (source) => afterW10Heading(source, "")],
 ];
 
+/** The ops a RECORD pin re-authors its site with (recordEdit() writes each one). */
+type RecordOp = "stamped" | "rewritten" | "removed" | "commented" | "lookalike" | "cased" | "invisible" | "moved" | "doubled" | "folded" | "swapped" | "coded" | "later" | "trailing";
+/** A RECORD pin: refused with each named diagnosis in order (and no other finding), or accepted: neutral by design (a rendering-neutral edit, or one the binding does not read) or a named residual. */
+type RecordPin = { op: RecordOp; reading: "refused"; causes: readonly [string, ...string[]] } | { op: RecordOp; reading: "neutral" | "residual" };
+/** One record site of the live stamped receipt's newest stamp entry: an other cmd_* id it renders (decoy), its heading clause, or a Run of record line. */
+interface RecordRow {
+  id: string;
+  slot: "decoy" | "heading" | "line";
+  index: number;
+  label: string;
+  pins: readonly RecordPin[];
+}
+
+/** RUN OF RECORD rows (wb-j4lx, owner R691 F4), one per record site of the live stamped receipt's newest stamp entry (RR0 anchors them to it). */
+const RECORD_ROWS: readonly RecordRow[] = [
+  {
+    id: "RR1",
+    slot: "decoy",
+    index: 0,
+    label: "the first other cmd_* id the entry renders",
+    pins: [
+      { op: "stamped", reading: "refused", causes: ["the run of record of the receipt entry carrying the newest stamp line"] },
+      { op: "rewritten", reading: "residual" },
+    ],
+  },
+  {
+    id: "RR2",
+    slot: "decoy",
+    index: 1,
+    label: "the second other cmd_* id the entry renders",
+    pins: [
+      { op: "stamped", reading: "refused", causes: ["the run of record of the receipt entry carrying the newest stamp line"] },
+      { op: "rewritten", reading: "residual" },
+    ],
+  },
+  {
+    id: "RR3",
+    slot: "decoy",
+    index: 2,
+    label: "the third other cmd_* id the entry renders",
+    pins: [
+      { op: "stamped", reading: "refused", causes: ["the run of record of the receipt entry carrying the newest stamp line"] },
+      { op: "rewritten", reading: "residual" },
+    ],
+  },
+  {
+    id: "RR4",
+    slot: "heading",
+    index: 0,
+    label: "the entry heading's one (receipt of record cmd_*) clause",
+    pins: [
+      { op: "removed", reading: "refused", causes: ["names 0 runs of record in its heading"] },
+      { op: "commented", reading: "refused", causes: ["names 0 runs of record in its heading"] },
+      { op: "lookalike", reading: "refused", causes: ["names 0 runs of record in its heading"] },
+      { op: "cased", reading: "refused", causes: ["names 0 runs of record in its heading"] },
+      { op: "invisible", reading: "refused", causes: ["names 0 runs of record in its heading"] },
+      { op: "moved", reading: "refused", causes: ["names 0 runs of record in its heading"] },
+      { op: "doubled", reading: "refused", causes: ["names 2 runs of record in its heading"] },
+      { op: "folded", reading: "refused", causes: ["reads as naming a receipt of record outside its one"] },
+      { op: "swapped", reading: "refused", causes: ['first in a "Run of record:" line', "the run of record of the receipt entry carrying the newest stamp line"] },
+      { op: "coded", reading: "neutral" },
+      { op: "later", reading: "neutral" },
+    ],
+  },
+  {
+    id: "RR5",
+    slot: "line",
+    index: 0,
+    label: "the entry's Run of record line",
+    pins: [
+      { op: "removed", reading: "refused", causes: ['renders no "Run of record:" line'] },
+      { op: "swapped", reading: "refused", causes: ['first in a "Run of record:" line'] },
+      { op: "lookalike", reading: "refused", causes: ['first in a "Run of record:" line'] },
+      { op: "coded", reading: "neutral" },
+      { op: "trailing", reading: "residual" },
+    ],
+  },
+];
+
+/** A RECORD pin as the frozen-shape literal reads it. */
+const pinShape = (pin: RecordPin): string => (pin.reading === "refused" ? `${pin.op} refused: ${pin.causes.join(" | ")}` : `${pin.op} ${pin.reading}`);
+
 /** The F rows' page edits (the F tests below author through the same helpers), each with its diagnosis, for C1. */
 const F_PAGE: readonly (readonly [string, (source: string) => string, readonly string[], ((receipt: string) => string)?])[] = [
   ["F1", (source) => editRow(source, () => [ROW_AT_9DF9A03]), ["the rendered Evidence cell carries no stamped receipt sentence", "names rf@0.1.583 outside the retirement clause"]],
@@ -1667,7 +1986,7 @@ const F_RECEIPT: readonly ReceiptVariant[] = [
   ["F8", (receipt) => `${receipt}\nRF_PREVIEW_RECEIPT {"cli_version":"0.1.583"}\n`, ["differs from the carrier release"]],
 ];
 
-/** Every page variant in this file with its diagnosis (C1 re-authors each on every N base). */
+/** Every page variant in this file with its diagnosis (C1 re-authors each on every N base); the RECORD pins carry their own C1 rows. */
 const PAGE_VARIANTS: readonly (readonly [string, (source: string) => string, readonly string[], ((receipt: string) => string)?])[] = [
   ...F_PAGE,
   ...GK_PAGE.map(([name, mutate, cause]) => [name, mutate, [cause]] as const),
@@ -1676,7 +1995,7 @@ const PAGE_VARIANTS: readonly (readonly [string, (source: string) => string, rea
   ...W_PAGE,
 ];
 
-/** Every receipt variant in this file with its diagnosis. */
+/** Every receipt variant in this file with its diagnosis; the RECORD pins carry their own C1 rows. */
 const RECEIPT_VARIANTS: readonly ReceiptVariant[] = [
   ...F_RECEIPT,
   ...GK_RECEIPT.map(([name, mutate, cause]) => [name, mutate, [cause]] as const),
@@ -1687,7 +2006,7 @@ const RECEIPT_VARIANTS: readonly ReceiptVariant[] = [
 /** Every INDEX variant in this file. */
 const INDEX_VARIANTS: readonly IndexVariant[] = [["H16", commentIndexLine], ...J_INDEX];
 
-/** Every page control in this file. */
+/** Every page control in this file; the RECORD pins' accepted readings carry their own C1 rows. */
 const CONTROLS: readonly Control[] = [...R_CONTROLS, ...C_CONTROLS, ...XN_CONTROLS];
 
 describe("W10 stamped-release claim guard (wb-2j3.5, R6), read as the page renders", () => {
@@ -2084,6 +2403,82 @@ describe("W10 stamped-release claim guard (wb-2j3.5, R6), read as the page rende
         ["X7 the withdrawn claim split by a zero-width space in a new Evidence sentence", 'a row that reads as the W10 claim row renders the withdrawn claim "zero durable writes" in its Evidence cell', "the rendered Evidence cell holds a sentence outside its committed slice"],
       ]);
       expect(XN_CONTROLS.map(([name]) => name)).toEqual(["XN1 trailing spaces after the claim row's last pipe", "XN2 an extra blank line between the W10 heading and its table"]);
+    });
+  });
+
+  describe("RUN OF RECORD (wb-j4lx, owner R691 F4): the stamped cmd slot binds to the run of record its receipt entry names, never to any id the entry renders", () => {
+    it("L9: the live stamped id is the run of record of the receipt entry carrying the newest stamp line: its heading's one exact clause and the first id of its Run of record line", () => {
+      const parts = stampedParts(page());
+      expect(parts).toBeDefined();
+      const newest = receiptView(liveReceipt(parts?.slots.receipt ?? "") ?? "", "the live stamped receipt").newest;
+      expect(newest?.records).toEqual([parts?.slots.cmd]);
+      expect(newest?.strayRecord).toBe(false);
+      expect(newest?.runLines).toEqual([parts?.slots.cmd]);
+    });
+
+    it("RR0 (outside anchor): the RECORD rows are exactly the record sites of the live stamped receipt's newest stamp entry, whose record is the live stamped id", () => {
+      const sites = liveRecordSites();
+      expect(sites.record).toBe(liveStamp().cmd);
+      expect(RECORD_ROWS.map((row) => `${row.slot}:${row.index}`)).toEqual([...sites.decoys.map((_, index) => `decoy:${index}`), "heading:0", ...sites.lines.map((_, index) => `line:${index}`)]);
+    });
+
+    for (const row of RECORD_ROWS) {
+      for (const pin of row.pins) {
+        it(`${row.id} ${pin.op} (${row.label}): ${pin.reading === "refused" ? "refused with each named diagnosis and no other finding" : `accepted (${pin.reading})`}`, () => {
+          expectRecordPin(page(), row, pin, `${row.id} ${pin.op}`);
+        });
+      }
+    }
+
+    for (const [name, neutral] of N_PAGE) {
+      const id = name.split(" ")[0] ?? name;
+      it(`C1 on the ${id} base: every RECORD pin is re-authored and read as on the committed page`, () => {
+        const base = neutral(page());
+        expect(base).not.toBe(page());
+        let ran = 0;
+        for (const row of RECORD_ROWS) {
+          for (const pin of row.pins) {
+            expectRecordPin(base, row, pin, `${id} + ${row.id} ${pin.op}`);
+            ran++;
+          }
+        }
+        expect(ran).toBe(22);
+      });
+    }
+
+    it("RECORD-SHAPE (standing rule 16 frozen shape): every RECORD row's site, label, pins, readings and diagnoses are their frozen literal", () => {
+      expect(RECORD_ROWS.map((row) => `${row.id}:${row.pins.length}`)).toEqual(["RR1:2", "RR2:2", "RR3:2", "RR4:11", "RR5:5"]);
+      expect(RECORD_ROWS.map((row) => [row.id, `${row.slot}:${row.index}`, row.label, ...row.pins.map(pinShape)])).toEqual([
+        ["RR1", "decoy:0", "the first other cmd_* id the entry renders", "stamped refused: the run of record of the receipt entry carrying the newest stamp line", "rewritten residual"],
+        ["RR2", "decoy:1", "the second other cmd_* id the entry renders", "stamped refused: the run of record of the receipt entry carrying the newest stamp line", "rewritten residual"],
+        ["RR3", "decoy:2", "the third other cmd_* id the entry renders", "stamped refused: the run of record of the receipt entry carrying the newest stamp line", "rewritten residual"],
+        [
+          "RR4",
+          "heading:0",
+          "the entry heading's one (receipt of record cmd_*) clause",
+          "removed refused: names 0 runs of record in its heading",
+          "commented refused: names 0 runs of record in its heading",
+          "lookalike refused: names 0 runs of record in its heading",
+          "cased refused: names 0 runs of record in its heading",
+          "invisible refused: names 0 runs of record in its heading",
+          "moved refused: names 0 runs of record in its heading",
+          "doubled refused: names 2 runs of record in its heading",
+          "folded refused: reads as naming a receipt of record outside its one",
+          'swapped refused: first in a "Run of record:" line | the run of record of the receipt entry carrying the newest stamp line',
+          "coded neutral",
+          "later neutral",
+        ],
+        [
+          "RR5",
+          "line:0",
+          "the entry's Run of record line",
+          'removed refused: renders no "Run of record:" line',
+          'swapped refused: first in a "Run of record:" line',
+          'lookalike refused: first in a "Run of record:" line',
+          "coded neutral",
+          "trailing residual",
+        ],
+      ]);
     });
   });
 
