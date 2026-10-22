@@ -1,5 +1,5 @@
 {
-  "source": "wb-omxf R677 claim-base d75b68d10a1a3a183d6fb7a55088f38f86c018a2; full docs19 section and wb-1z3u falsifier tables",
+  "source": "wb-omxf R677 claim-base d75b68d10a1a3a183d6fb7a55088f38f86c018a2; full docs19 section and wb-1z3u falsifier tables; R695 Q2 cut #2: the R677 F1 survivors judged on disk, the provenance falsifiers with the kinds the judge draws, and the R695 (d) budgeted report rows",
   "sectionMarkdown": "## Measured experimental read example\n\nUnlike the proposed `hyperunix.query` example above, the registered operation is currently `hyperunix.find`. In `.pi/subagents.json`, explicitly select the Claude workflow backend and grant only `hyperunix:read`.\n\n```javascript\nexport const meta = {name: \"inspect-source\", description: \"Read native coverage\"};\nconst found = await node(\"hyperunix.find\", {kind: \"hx.fs/regular-file\", root: \"src\"});\nreturn {coverage: found.source.coverage_summary, runtime: found.runtime};\n```\n\nThe native result can be incomplete even when files are returned. `licenses_absence: false` does not establish that a missing file or symbol is absent. This query is a filesystem read, not a task-scoped semantic dependency analysis.\n\n`furnace.run.inspect` accepts an existing `runId` under the authorized Pi workspace with explicit `furnace:inspect`. `reactivefiber.render.preview` accepts exactly one of two input arms under explicit `reactivefiber:render`: `model` and `task`, or `view` and `taskId` with an optional `model`, never both; its workspace must already be initialized. It uses a noncommitted render and must not be advertised as a durable RF artifact.\n",
   "d19": [
     [
@@ -163,5 +163,84 @@
       "This query is a filesystem read, not a task-scoped semantic dependency analysis.",
       "This query is a semantic dependency analysis."
     ]
+  ],
+  "onDiskSurvivors": [
+    "G-D19-PARA-BEFORE-UNNAMED",
+    "G-D19-ELSEWHERE-SPACED",
+    "G-D19-ELSEWHERE-HYPHEN",
+    "G-D19-QUOTEBLOCK-BEFORE",
+    "G-D19-STRIKE-VIEW-ARM",
+    "G-D19-STRIKE"
+  ],
+  "provenanceFalsifiers": [
+    [
+      "P-ANCHOR-LIVE-DOCS",
+      [
+        "PROVENANCE expectation-path",
+        "PROVENANCE expectation-digest",
+        "PROVENANCE distinct",
+        "PROVENANCE expectation-shape"
+      ]
+    ],
+    [
+      "P-ANCHOR-IS-SUBJECT",
+      [
+        "PROVENANCE expectation-path",
+        "PROVENANCE expectation-digest",
+        "PROVENANCE distinct",
+        "PROVENANCE expectation-shape"
+      ]
+    ],
+    [
+      "P-ANCHOR-OTHER-PATH",
+      [
+        "PROVENANCE expectation-path"
+      ]
+    ],
+    [
+      "P-ANCHOR-LYING-DIGEST",
+      [
+        "PROVENANCE expectation-bytes",
+        "FULL-SLICE"
+      ]
+    ],
+    [
+      "P-ANCHOR-RESERIALIZED",
+      [
+        "PROVENANCE expectation-bytes"
+      ]
+    ],
+    [
+      "P-SUBJECT-IS-FIXTURE",
+      [
+        "PROVENANCE subject-path",
+        "PROVENANCE distinct",
+        "FULL-SLICE"
+      ]
+    ],
+    [
+      "P-SUBJECT-LYING-DIGEST",
+      [
+        "PROVENANCE subject-bytes",
+        "FULL-SLICE"
+      ]
+    ],
+    [
+      "P-SUBJECT-OTHER-PATH",
+      [
+        "PROVENANCE subject-path"
+      ]
+    ],
+    [
+      "P-SUBJECT-FIXTURE-BYTES",
+      [
+        "PROVENANCE distinct",
+        "FULL-SLICE"
+      ]
+    ]
+  ],
+  "reportBudgetRows": [
+    "M5 (wb-973.16)",
+    "DEL (wb-973.16)"
   ]
 }
