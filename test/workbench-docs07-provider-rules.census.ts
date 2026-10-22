@@ -69,6 +69,7 @@ import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { basename, dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import ts from "typescript";
 import { afterEach, describe, expect, it } from "vitest";
 import { type CapabilityDescriptor, CapabilityRegistry } from "../src/workbench/capability-registry.js";
 import { registerNativeReactiveFiberRender, registerReactiveFiberRender } from "../src/workbench/providers/reactivefiber.js";
@@ -1673,7 +1674,8 @@ describe("wb-1z3u docs/19 measured read example: the RF arms claim judged by sen
  * re-point plus an F1 survivor on disk still reds LIVE itself. Each provenance check is the only one some falsifier row
  * trips (the P-* rows; ANCHOR-SIDE for the pinned digest).
  * Scope: this one section (a following level-2 section is outside it, pinned quiet), never a whole-page claim; a
- * coordinated rewrite of the docs, the fixture and EXPECTATION together is a reviewed edit of this file, not a claim.
+ * coordinated rewrite of the docs, the fixture and the EXPECTATION literal together is the NAMED RESIDUAL
+ * R-COORDINATED-LITERAL-AND-ANCHOR (cut #3, R696 (3), its quiet row below), never a claim.
  * F2 toolchain coupling (disclosed): the fixture's ARM_EDITS digests hash vitest's TRANSFORMED function text, so a
  * transform-target or transformer change reds the F2 row until the fixture's arms are regenerated.
  */
@@ -1688,8 +1690,11 @@ interface Sourced {
   readonly provenance: Provenance;
   readonly text: string;
 }
-/** The frozen EXPECTATION's provenance, pinned: the fixture path and the SHA-256 of its committed bytes (sha256sum). */
-const EXPECTATION: Provenance = { path: OMXF_ANCHOR_FILE, sha256: "9d74287e0408b0d92cd67b3cbe8f11183a8e224f64945ab4a7c05c50f2abda45" };
+/**
+ * The frozen EXPECTATION's provenance, pinned as source-level string literals (R696 (1), read back by the LITERAL PIN row from
+ * this file's AST): the fixture path and the SHA-256 of its committed bytes (sha256sum), written out and never computed here.
+ */
+const EXPECTATION: Provenance = { path: "test/fixtures/docs19-full-section-omxf.json", sha256: "25c4fe9de69aaa2cc4c65529a179f153244b50d947edfc3527ec0d8b3048c25e" };
 const sha256Hex = (bytes: string | Buffer): string => createHash("sha256").update(bytes).digest("hex");
 /** A file under a repo root with the digest of exactly its bytes: the one read every full-slice row judges. */
 function readWithProvenance(root: string, path: string): Sourced {
@@ -1709,6 +1714,8 @@ interface OmxfAnchor {
   readonly onDiskSurvivors: readonly string[];
   readonly provenanceFalsifiers: readonly (readonly [string, readonly string[]])[];
   readonly reportBudgetRows: readonly string[];
+  readonly literalRows: readonly OmxfLiteralRow[];
+  readonly residuals: readonly OmxfResidual[];
 }
 type AnchorReading = { readonly ok: true; readonly anchor: OmxfAnchor } | { readonly ok: false; readonly why: string };
 /** The expectation's anchor by SHAPE alone; its provenance is judged by expectationFailures, never here. */
@@ -1719,8 +1726,8 @@ function anchorShape(text: string): AnchorReading {
   } catch (error) {
     return { ok: false, why: `not JSON: ${error instanceof Error ? error.message : String(error)}` };
   }
-  if (!isRecord(raw) || typeof raw.sectionMarkdown !== "string" || ![raw.d19, raw.arms, raw.forms, raw.onDiskSurvivors, raw.provenanceFalsifiers, raw.reportBudgetRows].every(Array.isArray)) {
-    return { ok: false, why: "missing the section, falsifier, arm, form, survivor, provenance-falsifier or budget-row anchor" };
+  if (!isRecord(raw) || typeof raw.sectionMarkdown !== "string" || ![raw.d19, raw.arms, raw.forms, raw.onDiskSurvivors, raw.provenanceFalsifiers, raw.reportBudgetRows, raw.literalRows, raw.residuals].every(Array.isArray)) {
+    return { ok: false, why: "missing the section, falsifier, arm, form, survivor, provenance-falsifier, budget-row, literal-row or residual anchor" };
   }
   return { ok: true, anchor: raw as unknown as OmxfAnchor };
 }
@@ -1836,6 +1843,133 @@ const OMXF_PROVENANCE: readonly (readonly [string, (pair: OmxfPair) => OmxfPair,
 const R16_BUDGETED: readonly string[] = ["M5 (wb-973.16)", "DEL (wb-973.16)"];
 const titleHeadOf = (title: string): string => title.slice(0, title.indexOf(":"));
 const OMXF_JUDGED: string[] = [];
+
+/**
+ * wb-omxf cut #3 (R696, the terminal enumerate-the-resolvable form), claiming exactly this pinned set and no more:
+ * (1) EXPECTATION.sha256 is a source-level STRING LITERAL pin. The LITERAL rows read this file's own TypeScript AST (the
+ * hk9l literal-shape discipline). Row PIN reads the committed source: EXPECTATION is declared once, a module-scope const
+ * whose initializer is an object literal of exactly the property assignments path and sha256, each a plain string literal -
+ * never a call, template or identifier - the sha256 64 lowercase hex, and the runtime EXPECTATION is exactly those
+ * literals. The falsifier rows splice into this file's source, in memory and never run, the kinds R696 names: the gate's
+ * L2G-01 computed digest verbatim (a call), a template with and without a substitution, an identifier, and cut #2's
+ * identifier path; the pin refuses each. No line of this file computes the EXPECTATION pin: every digest taken here is of
+ * bytes read, compared against a literal.
+ * (2) PROVENANCE expectation-digest stays as delivered at cut #2: a fixture byte edit under the kept literal reds every
+ * full-slice row.
+ * NAMED RESIDUAL (R696 (3)), the one self-anchoring channel above the literal pin: R-COORDINATED-LITERAL-AND-ANCHOR, a
+ * coordinated edit of the literal AND its anchor - docs/19 and the fixture carrying the same in-section edit, the literal
+ * moved to the new fixture bytes. Its id-asserted quiet row reads the family's page quiet and reds when the page stops
+ * carrying any part of the edit; its runtime reading, stated in the row: the whole census reads green under it. No other
+ * escape is claimed absent. The LITERAL rows (PIN included) and the residual's id, family, form, reading and runtime are
+ * anchored out of file in the fixture.
+ */
+interface ExpectationLiteral {
+  /** What the AST read, one line per refusal; none is the quiet reading. */
+  readonly findings: readonly string[];
+  /** The two literals' texts, when every check passed. */
+  readonly pin: Provenance | undefined;
+}
+/** The kind R696 names for an initializer: a plain string literal, a call, a template or an identifier; anything else by its syntax. */
+const initializerKind = (node: ts.Node): string => {
+  if (ts.isStringLiteral(node)) return "a string literal";
+  if (ts.isCallExpression(node)) return "a call";
+  if (ts.isTemplateExpression(node) || ts.isNoSubstitutionTemplateLiteral(node) || ts.isTaggedTemplateExpression(node)) return "a template";
+  if (ts.isIdentifier(node)) return "an identifier";
+  return `other syntax (${ts.SyntaxKind[node.kind]})`;
+};
+/** Every declaration named EXPECTATION in a source, in source order. */
+function expectationDeclarations(file: ts.SourceFile): ts.VariableDeclaration[] {
+  const found: ts.VariableDeclaration[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.name.text === "EXPECTATION") found.push(node);
+    ts.forEachChild(node, visit);
+  };
+  visit(file);
+  return found;
+}
+/** R696 (1): EXPECTATION's literal shape in a source text of this file, read by the TypeScript AST, never by running it. */
+function expectationLiteral(source: string): ExpectationLiteral {
+  const file = ts.createSourceFile(SELF, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const declarations = expectationDeclarations(file);
+  if (declarations.length !== 1) return { findings: [`EXPECTATION is declared ${declarations.length} times, not once`], pin: undefined };
+  const [declaration] = declarations;
+  const findings: string[] = [];
+  const list = declaration.parent;
+  if (!ts.isVariableDeclarationList(list) || (list.flags & ts.NodeFlags.Const) === 0 || !ts.isVariableStatement(list.parent) || list.parent.parent !== file) {
+    findings.push("EXPECTATION is not a module-scope const");
+  }
+  const initializer = declaration.initializer;
+  if (initializer === undefined || !ts.isObjectLiteralExpression(initializer)) {
+    return { findings: [...findings, `EXPECTATION's initializer is ${initializer === undefined ? "missing" : initializerKind(initializer)}, not an object literal`], pin: undefined };
+  }
+  const texts = new Map<string, string>();
+  const members: string[] = [];
+  for (const member of initializer.properties) {
+    if (!ts.isPropertyAssignment(member) || !ts.isIdentifier(member.name)) {
+      members.push(`<${ts.SyntaxKind[member.kind]}>`);
+      continue;
+    }
+    members.push(member.name.text);
+    if (ts.isStringLiteral(member.initializer)) texts.set(member.name.text, member.initializer.text);
+    else findings.push(`EXPECTATION.${member.name.text} is ${initializerKind(member.initializer)}, not a string literal`);
+  }
+  if (members.join(" ") !== "path sha256") findings.push(`EXPECTATION's members are ${members.join(" ")}, not exactly the property assignments path sha256`);
+  const path = texts.get("path");
+  const sha256 = texts.get("sha256");
+  if (sha256 !== undefined && !/^[0-9a-f]{64}$/u.test(sha256)) findings.push("EXPECTATION.sha256 is not 64 lowercase hex");
+  return { findings, pin: findings.length === 0 && path !== undefined && sha256 !== undefined ? { path, sha256 } : undefined };
+}
+/** A source text of this file with one EXPECTATION property's initializer replaced once, located by the AST (a page, never run). */
+function withExpectationProperty(source: string, property: string, replacement: string): string {
+  const file = ts.createSourceFile(SELF, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const [declaration] = expectationDeclarations(file);
+  const initializer = declaration?.initializer;
+  const member = initializer !== undefined && ts.isObjectLiteralExpression(initializer) ? initializer.properties.find(entry => ts.isPropertyAssignment(entry) && ts.isIdentifier(entry.name) && entry.name.text === property) : undefined;
+  if (member === undefined || !ts.isPropertyAssignment(member)) throw new Error(`${SELF}: EXPECTATION has no ${property} property assignment to replace`);
+  return `${source.slice(0, member.initializer.getStart(file))}${replacement}${source.slice(member.initializer.getEnd())}`;
+}
+
+/** One EXPECTATION property's initializer replaced by a source text. */
+interface LiteralEdit {
+  readonly property: string;
+  readonly replacement: string;
+}
+/** A LITERAL row: [id, the edit of this file's source it reads (null: the committed source), the findings the pin must draw]. */
+type OmxfLiteralRow = readonly [string, LiteralEdit | null, readonly string[]];
+/**
+ * R696 (1): row PIN reads the committed source, quiet; each falsifier replaces one EXPECTATION property's initializer, parsed
+ * and never run. L2G-01 is the gate's own replacement, verbatim; the others are the kinds R696 names (a template with and
+ * without a substitution, an identifier) and cut #2's identifier path.
+ */
+const OMXF_LITERAL: readonly OmxfLiteralRow[] = [
+  ["PIN", null, []],
+  ["L2G-01", { property: "sha256", replacement: 'createHash("sha256").update(readFileSync(join(ROOT, OMXF_ANCHOR_FILE))).digest("hex")' }, ["EXPECTATION.sha256 is a call, not a string literal"]],
+  ["L-SHA-TEMPLATE", { property: "sha256", replacement: `\`\${createHash("sha256").update(readFileSync(join(ROOT, OMXF_ANCHOR_FILE))).digest("hex")}\`` }, ["EXPECTATION.sha256 is a template, not a string literal"]],
+  ["L-SHA-PLAIN-TEMPLATE", { property: "sha256", replacement: "`0000000000000000000000000000000000000000000000000000000000000000`" }, ["EXPECTATION.sha256 is a template, not a string literal"]],
+  ["L-SHA-IDENTIFIER", { property: "sha256", replacement: "OMXF_FIXTURE_SHA256" }, ["EXPECTATION.sha256 is an identifier, not a string literal"]],
+  ["L-PATH-IDENTIFIER", { property: "path", replacement: "OMXF_ANCHOR_FILE" }, ["EXPECTATION.path is an identifier, not a string literal"]],
+];
+
+/** R696 (3): a named residual, its family's page and its quiet and runtime readings, anchored out of file in the fixture. */
+interface OmxfResidual {
+  readonly id: string;
+  readonly family: string;
+  /** The drift form the page applies alike to docs/19 and to the fixture's section. */
+  readonly form: string;
+  /** What this file reads on the family's page. */
+  readonly reading: string;
+  /** What the whole census reads, run under the family's edit. */
+  readonly runtime: string;
+}
+const OMXF_RESIDUALS: readonly OmxfResidual[] = [
+  {
+    id: "R-COORDINATED-LITERAL-AND-ANCHOR",
+    family: "a coordinated edit of the EXPECTATION sha256 literal AND its anchor: docs/19 and the fixture carry the same in-section edit and the literal moves to the new fixture bytes",
+    form: "G-D19-PARA-BEFORE-UNNAMED",
+    reading: "quiet: the literal-shape pin reads a moved 64-hex string literal exactly as it reads the pinned one, and the delivered judge's only finding on the page's docs/19 and fixture is PROVENANCE expectation-digest, the literal the edit moves",
+    runtime: "quiet: with docs/19, the fixture and the EXPECTATION sha256 literal edited together, the whole census reads green (LIVE, every PROVENANCE check, FULL-SLICE and the LITERAL rows); no reading in this file tells a reviewed coordinated edit from drift, so the edit is the review: its diff moves the literal",
+  },
+];
 
 describe("wb-omxf R677 + R695 full docs19 section equality (explicit expectation with asserted provenance, no NAMES_RF selection)", () => {
   const omxfScratch: string[] = [];
@@ -1981,6 +2115,39 @@ describe("wb-omxf R677 + R695 full docs19 section equality (explicit expectation
     OMXF_JUDGED.push("BUDGET");
   });
 
+  it.each(OMXF_LITERAL)("LITERAL %s (R696 (1)): this file's own AST reads EXPECTATION's literal shape - PIN, the committed source: declared once, a module-scope const object literal whose path and sha256 are plain string literals (never a call, template or identifier) and the runtime EXPECTATION; a falsifier, one property replaced in memory (parsed, never run): refused", (id, edit, findings) => {
+    const own = readRepo(SELF);
+    const page = edit === null ? own : withExpectationProperty(own, edit.property, edit.replacement);
+    expect(page === own, `${id}: only PIN reads the committed source unedited`).toBe(edit === null);
+    const reading = expectationLiteral(page);
+    expect(reading.findings, `${id}: ${reading.findings.join(" | ")}`).toEqual(findings);
+    expect(reading.pin, `${id}: PIN's literals are the runtime EXPECTATION; a refused page leaves no pin`).toEqual(edit === null ? EXPECTATION : undefined);
+    OMXF_JUDGED.push(`LITERAL ${id}`);
+  });
+
+  it("RESIDUAL R-COORDINATED-LITERAL-AND-ANCHOR quiet row (R696 (3), the named residual above the literal pin): docs/19, the fixture and the EXPECTATION literal edited together read quiet here, and the row reds when its page stops carrying any part of that edit", () => {
+    const residual = OMXF_RESIDUALS[0];
+    expect(residual.id, "this quiet row judges its own family, never another index").toBe("R-COORDINATED-LITERAL-AND-ANCHOR");
+    const form = OMXF_FORMS.find(([id]) => id === residual.form);
+    if (form === undefined) throw new Error(`${residual.id}: ${residual.form} is not a drift form`);
+    const [, from, to] = form;
+    const { subject, expectation } = readPair(ROOT);
+    const own = readRepo(SELF);
+    // A stand-in for the moved literal: a 64-hex string literal other than the pinned one. A coordinated edit writes the new
+    // fixture's digest there; the shape pin reads no value, so the stand-in is read exactly as that digest would be.
+    const moved = "0".repeat(64);
+    const page = { subject: editedFrom(subject, from, to), expectation: driftedExpectation(expectation, from, to), source: withExpectationProperty(own, "sha256", JSON.stringify(moved)) };
+    // Liveness: the page carries the family's whole edit - docs/19 and the fixture drifted alike, the literal moved.
+    expect(page.subject.provenance.sha256, "docs/19 carries the edit").not.toBe(subject.provenance.sha256);
+    expect(page.expectation.provenance.sha256, "the fixture carries the edit").not.toBe(EXPECTATION.sha256);
+    expect(moved, "the page moves the literal").not.toBe(EXPECTATION.sha256);
+    // The quiet reading: the shape pin reads the moved literal as it reads the pinned one, and the delivered judge's only
+    // finding on the page's docs/19 and fixture is the literal the page moves.
+    expect(expectationLiteral(page.source)).toEqual({ findings: [], pin: { path: EXPECTATION.path, sha256: moved } });
+    expect(fullKinds(fullExampleFailures(page.subject, page.expectation, registryArmsSentence()))).toEqual(["PROVENANCE expectation-digest"]);
+    OMXF_JUDGED.push(`RESIDUAL ${residual.id}`);
+  });
+
   it("FROZEN SHAPE: every judged member reaches its last assertion, each table's shape is frozen here and equal to its out-of-file anchor", () => {
     expect(OMXF_FORMS.map(([id]) => `${id}:1`)).toEqual([
       "G-D19-PARA-BEFORE-UNNAMED:1", "G-D19-ELSEWHERE-SPACED:1", "G-D19-ELSEWHERE-HYPHEN:1", "G-D19-QUOTEBLOCK-BEFORE:1", "G-D19-STRIKE-VIEW-ARM:1", "G-D19-STRIKE:1", "X-UNNAMED-CODE:1", "X-UNNAMED-LIST:1", "X-UNNAMED-H3:1", "X-PRIOR-PARAGRAPH-REWORD:1",
@@ -1992,6 +2159,10 @@ describe("wb-omxf R677 + R695 full docs19 section equality (explicit expectation
       "P-ANCHOR-LIVE-DOCS:4", "P-ANCHOR-IS-SUBJECT:4", "P-ANCHOR-OTHER-PATH:1", "P-ANCHOR-LYING-DIGEST:2", "P-ANCHOR-RESERIALIZED:1", "P-SUBJECT-IS-FIXTURE:3", "P-SUBJECT-LYING-DIGEST:2", "P-SUBJECT-OTHER-PATH:1", "P-SUBJECT-FIXTURE-BYTES:2",
     ]);
     expect(R16_BUDGETED.map(head => `${head}:1`)).toEqual(["M5 (wb-973.16):1", "DEL (wb-973.16):1"]);
+    expect(OMXF_LITERAL.map(([id, edit, findings]) => `${id}:${edit?.property ?? "-"}:${findings.length}`)).toEqual([
+      "PIN:-:0", "L2G-01:sha256:1", "L-SHA-TEMPLATE:sha256:1", "L-SHA-PLAIN-TEMPLATE:sha256:1", "L-SHA-IDENTIFIER:sha256:1", "L-PATH-IDENTIFIER:path:1",
+    ]);
+    expect(OMXF_RESIDUALS.map(residual => `${residual.id}:${residual.form}`)).toEqual(["R-COORDINATED-LITERAL-AND-ANCHOR:G-D19-PARA-BEFORE-UNNAMED"]);
     expect(OMXF_JUDGED).toEqual([
       "LIVE",
       ...OMXF_FORMS.map(([id]) => id),
@@ -2004,12 +2175,16 @@ describe("wb-omxf R677 + R695 full docs19 section equality (explicit expectation
       "BOUNDARY",
       "REGISTRY",
       "BUDGET",
+      ...OMXF_LITERAL.map(([id]) => `LITERAL ${id}`),
+      ...OMXF_RESIDUALS.map(({ id }) => `RESIDUAL ${id}`),
     ]);
     const tables = expectedTables(readPair(ROOT).expectation);
     expect(OMXF_FORMS).toEqual(tables.forms);
     expect(OMXF_ON_DISK_IDS).toEqual(tables.onDiskSurvivors);
     expect(OMXF_PROVENANCE.map(([id, , kinds]) => [id, kinds])).toEqual(tables.provenanceFalsifiers);
     expect(R16_BUDGETED).toEqual(tables.reportBudgetRows);
+    expect(OMXF_LITERAL).toEqual(tables.literalRows);
+    expect(OMXF_RESIDUALS).toEqual(tables.residuals);
     expect(tables.d19).toHaveLength(8);
     expect(tables.arms).toHaveLength(8);
   });

@@ -1,5 +1,5 @@
 {
-  "source": "wb-omxf R677 claim-base d75b68d10a1a3a183d6fb7a55088f38f86c018a2; full docs19 section and wb-1z3u falsifier tables; R695 Q2 cut #2: the R677 F1 survivors judged on disk, the provenance falsifiers with the kinds the judge draws, and the R695 (d) budgeted report rows",
+  "source": "wb-omxf R677 claim-base d75b68d10a1a3a183d6fb7a55088f38f86c018a2; full docs19 section and wb-1z3u falsifier tables; R695 Q2 cut #2: the R677 F1 survivors judged on disk, the provenance falsifiers with the kinds the judge draws, and the R695 (d) budgeted report rows; R696 cut #3: the literal-shape rows (PIN, the committed source, and the falsifiers: EXPECTATION property, replacement, findings) and the named residual R-COORDINATED-LITERAL-AND-ANCHOR (id, family, form, reading, runtime)",
   "sectionMarkdown": "## Measured experimental read example\n\nUnlike the proposed `hyperunix.query` example above, the registered operation is currently `hyperunix.find`. In `.pi/subagents.json`, explicitly select the Claude workflow backend and grant only `hyperunix:read`.\n\n```javascript\nexport const meta = {name: \"inspect-source\", description: \"Read native coverage\"};\nconst found = await node(\"hyperunix.find\", {kind: \"hx.fs/regular-file\", root: \"src\"});\nreturn {coverage: found.source.coverage_summary, runtime: found.runtime};\n```\n\nThe native result can be incomplete even when files are returned. `licenses_absence: false` does not establish that a missing file or symbol is absent. This query is a filesystem read, not a task-scoped semantic dependency analysis.\n\n`furnace.run.inspect` accepts an existing `runId` under the authorized Pi workspace with explicit `furnace:inspect`. `reactivefiber.render.preview` accepts exactly one of two input arms under explicit `reactivefiber:render`: `model` and `task`, or `view` and `taskId` with an optional `model`, never both; its workspace must already be initialized. It uses a noncommitted render and must not be advertised as a durable RF artifact.\n",
   "d19": [
     [
@@ -242,5 +242,71 @@
   "reportBudgetRows": [
     "M5 (wb-973.16)",
     "DEL (wb-973.16)"
+  ],
+  "literalRows": [
+    [
+      "PIN",
+      null,
+      []
+    ],
+    [
+      "L2G-01",
+      {
+        "property": "sha256",
+        "replacement": "createHash(\"sha256\").update(readFileSync(join(ROOT, OMXF_ANCHOR_FILE))).digest(\"hex\")"
+      },
+      [
+        "EXPECTATION.sha256 is a call, not a string literal"
+      ]
+    ],
+    [
+      "L-SHA-TEMPLATE",
+      {
+        "property": "sha256",
+        "replacement": "`${createHash(\"sha256\").update(readFileSync(join(ROOT, OMXF_ANCHOR_FILE))).digest(\"hex\")}`"
+      },
+      [
+        "EXPECTATION.sha256 is a template, not a string literal"
+      ]
+    ],
+    [
+      "L-SHA-PLAIN-TEMPLATE",
+      {
+        "property": "sha256",
+        "replacement": "`0000000000000000000000000000000000000000000000000000000000000000`"
+      },
+      [
+        "EXPECTATION.sha256 is a template, not a string literal"
+      ]
+    ],
+    [
+      "L-SHA-IDENTIFIER",
+      {
+        "property": "sha256",
+        "replacement": "OMXF_FIXTURE_SHA256"
+      },
+      [
+        "EXPECTATION.sha256 is an identifier, not a string literal"
+      ]
+    ],
+    [
+      "L-PATH-IDENTIFIER",
+      {
+        "property": "path",
+        "replacement": "OMXF_ANCHOR_FILE"
+      },
+      [
+        "EXPECTATION.path is an identifier, not a string literal"
+      ]
+    ]
+  ],
+  "residuals": [
+    {
+      "id": "R-COORDINATED-LITERAL-AND-ANCHOR",
+      "family": "a coordinated edit of the EXPECTATION sha256 literal AND its anchor: docs/19 and the fixture carry the same in-section edit and the literal moves to the new fixture bytes",
+      "form": "G-D19-PARA-BEFORE-UNNAMED",
+      "reading": "quiet: the literal-shape pin reads a moved 64-hex string literal exactly as it reads the pinned one, and the delivered judge's only finding on the page's docs/19 and fixture is PROVENANCE expectation-digest, the literal the edit moves",
+      "runtime": "quiet: with docs/19, the fixture and the EXPECTATION sha256 literal edited together, the whole census reads green (LIVE, every PROVENANCE check, FULL-SLICE and the LITERAL rows); no reading in this file tells a reviewed coordinated edit from drift, so the edit is the review: its diff moves the literal"
+    }
   ]
 }
