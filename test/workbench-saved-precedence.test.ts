@@ -97,7 +97,10 @@ function sourceRows(text = readFileSync(fileURLToPath(import.meta.url), "utf8"))
           }
         }
       }
-      if (ts.isFunctionDeclaration(node) || ts.isFunctionExpression(node) || ts.isArrowFunction(node)) return false;
+      // No stop at nested functions (wb-hkq3.1): a closure or local function in the body (a Promise.all map callback, an
+      // immediately invoked arrow or function expression, a declaration handed on as a callback) can run as part of the
+      // row, so its walker calls count, as they did under the landed wb-cvjm pin. A function that is only defined reads as
+      // a walk too: the safe direction for a budget census, where a false green lets a walking row ride the 5000 ms default.
       return ts.forEachChild(node, child => (walk(child, aliases) ? true : undefined)) === true;
     };
     return ts.isArrowFunction(body) || ts.isFunctionExpression(body)
@@ -298,6 +301,31 @@ describe("saved-workflow precedence — indirect-walker census falsifiers", () =
   it("r7: a row walking through a local alias is a layer-walk row", () => {
     const row = parsed('it("r7 synthetic", async () => { const walk = walkLayers; await walk("r7"); });');
     expect(row).toEqual({ title: "r7 synthetic", budget: undefined, walks: true });
+  });
+
+  // wb-hkq3.1: walker calls inside nested functions the row body runs - the gate's X1 (a Promise.all map closure) and X2
+  // (an immediately invoked async arrow), X2's function-expression form and X1's row-local declaration form. The landed
+  // wb-cvjm pin read each as a walk; the wb-hkq3 walk stopped at every nested function boundary and let them through.
+  it("x1: a row walking inside a Promise.all map closure is a layer-walk row", () => {
+    const row = parsed('it("x1 synthetic", async () => { await Promise.all(["gp1x1a", "gp1x1b"].map(async tag => walkLayers(tag))); });');
+    expect(row).toEqual({ title: "x1 synthetic", budget: undefined, walks: true });
+  });
+
+  it("x2: a row walking inside an immediately invoked async arrow is a layer-walk row", () => {
+    const row = parsed('it("x2 synthetic", async () => { await (async () => { await walkLayers("gp1x2"); })(); });');
+    expect(row).toEqual({ title: "x2 synthetic", budget: undefined, walks: true });
+  });
+
+  it("x2b: a row walking inside an immediately invoked function expression is a layer-walk row", () => {
+    const row = parsed('it("x2b synthetic", async () => { await (async function () { await walkLayers("gp1x2b"); })(); });');
+    expect(row).toEqual({ title: "x2b synthetic", budget: undefined, walks: true });
+  });
+
+  it("x1d: a row walking inside a row-local function declaration it hands to Promise.all is a layer-walk row", () => {
+    const row = parsed(
+      'it("x1d synthetic", async () => { async function walkOne(tag: string) { await walkLayers(tag); } await Promise.all(["gp1x1da", "gp1x1db"].map(walkOne)); });',
+    );
+    expect(row).toEqual({ title: "x1d synthetic", budget: undefined, walks: true });
   });
 });
 

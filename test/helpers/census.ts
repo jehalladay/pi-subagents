@@ -5393,6 +5393,36 @@ function parentPath(tokens: readonly Token[], index: number): string[] {
 
 const refused = (why: string): DocsSection => ({ ok: false, why, blocks: [], hasHtml: false });
 
+/** A bound section: its top-level tokens, or why the binding is refused. ONE binding serves docsSection and sectionTables. */
+type BoundSection = { readonly ok: true; readonly tokens: readonly Token[] } | { readonly ok: false; readonly why: string };
+
+/** The binding docsSection documents, on the lexed token stream: the section's top-level tokens, or the refusal. */
+function boundSection(markdown: string, heading: string, depth: number, parents: readonly string[]): BoundSection {
+  const tokens = marked.lexer(markdown);
+  const refuse = (why: string): BoundSection => ({ ok: false, why });
+  const matches = (token: Tokens.Heading): boolean => token.depth === depth && clean(inlineText(childrenOf(token))) === heading;
+  // Uniqueness counts every RENDERED heading, a heading nested in a list item or blockquote included (752.15 M13).
+  const rendered = headingsIn(tokens).filter(matches).length;
+  if (rendered === 0) return refuse(`the rendered view has no level-${depth} heading "${heading}"`);
+  if (rendered > 1) return refuse(`the heading "${heading}" occurs ${rendered} times in the rendered view; a pinned section needs it exactly once`);
+  const starts = tokens.flatMap((token, index) => (isHeading(token) && matches(token) ? [index] : []));
+  if (starts.length === 0) return refuse(`the heading "${heading}" renders only nested inside a list item or blockquote, so no section is bounded under it`);
+  const start = starts[0] ?? 0;
+  const path = parentPath(tokens, start);
+  if (path.length !== parents.length || path.some((text, index) => text !== parents[index])) {
+    return refuse(`the heading "${heading}" sits under the parent heading path ${JSON.stringify(path)}; the census binds it under ${JSON.stringify(parents)}`);
+  }
+  const bound = Math.max(2, depth);
+  const section: Token[] = [];
+  for (const token of tokens.slice(start + 1)) {
+    if (isHeading(token) && token.depth <= bound) break;
+    section.push(token);
+  }
+  const spanning = spanningBlock(section);
+  if (spanning !== undefined) return refuse(`${spanning.kind} inside the section spans the heading line ${JSON.stringify(spanning.line)}, hiding a heading boundary from the rendered view`);
+  return { ok: true, tokens: section };
+}
+
 /**
  * The rendered section under a heading. The heading must occur exactly once in the rendered view (a copy hidden
  * in a comment or a code fence is not a heading) under exactly the parent heading path the census binds (D9: a
@@ -5402,29 +5432,34 @@ const refused = (why: string): DocsSection => ({ ok: false, why, blocks: [], has
  * view (D10, the same-view straddle) and reddens the section, as the hidden heading's own section is absent.
  */
 export function docsSection(markdown: string, heading: string, depth: number, parents: readonly string[]): DocsSection {
-  const tokens = marked.lexer(markdown);
-  const matches = (token: Tokens.Heading): boolean => token.depth === depth && clean(inlineText(childrenOf(token))) === heading;
-  // Uniqueness counts every RENDERED heading, a heading nested in a list item or blockquote included (752.15 M13).
-  const rendered = headingsIn(tokens).filter(matches).length;
-  if (rendered === 0) return refused(`the rendered view has no level-${depth} heading "${heading}"`);
-  if (rendered > 1) return refused(`the heading "${heading}" occurs ${rendered} times in the rendered view; a pinned section needs it exactly once`);
-  const starts = tokens.flatMap((token, index) => (isHeading(token) && matches(token) ? [index] : []));
-  if (starts.length === 0) return refused(`the heading "${heading}" renders only nested inside a list item or blockquote, so no section is bounded under it`);
-  const start = starts[0] ?? 0;
-  const path = parentPath(tokens, start);
-  if (path.length !== parents.length || path.some((text, index) => text !== parents[index])) {
-    return refused(`the heading "${heading}" sits under the parent heading path ${JSON.stringify(path)}; the census binds it under ${JSON.stringify(parents)}`);
-  }
-  const bound = Math.max(2, depth);
-  const section: Token[] = [];
-  for (const token of tokens.slice(start + 1)) {
-    if (isHeading(token) && token.depth <= bound) break;
-    section.push(token);
-  }
-  const spanning = spanningBlock(section);
-  if (spanning !== undefined) return refused(`${spanning.kind} inside the section spans the heading line ${JSON.stringify(spanning.line)}, hiding a heading boundary from the rendered view`);
-  const blocks = section.map(toBlock).filter((block): block is RenderedBlock => block !== undefined);
-  return { ok: true, why: "", blocks, hasHtml: containsHtml(section) };
+  const bound = boundSection(markdown, heading, depth, parents);
+  if (!bound.ok) return refused(bound.why);
+  const blocks = bound.tokens.map(toBlock).filter((block): block is RenderedBlock => block !== undefined);
+  return { ok: true, why: "", blocks, hasHtml: containsHtml(bound.tokens) };
+}
+
+/** The tables of a pinned section (sectionTables). */
+export interface SectionTables {
+  readonly ok: boolean;
+  readonly why: string;
+  /**
+   * Every top-level table of the bound section, in document order, as its cell grid (header row first). A cell is
+   * marked's cell text - the cell's SOURCE, inline markup kept - so a bolded header cell reads "**Subsystem**".
+   */
+  readonly grids: readonly (readonly (readonly string[])[])[];
+}
+
+/**
+ * The tables of the SAME section docsSection renders (wb-h8f.15, the G7 same-view class): one binding (boundSection),
+ * one token slice, so a census that judges a table's cells reads them from the section its rendered view is judged in -
+ * never from a whole-document scan, where a copy of the table in another section stands in for a re-split original
+ * whose rendered (cell-joined) text is unchanged. A refused binding refuses here with docsSection's why and no grids.
+ */
+export function sectionTables(markdown: string, heading: string, depth: number, parents: readonly string[]): SectionTables {
+  const bound = boundSection(markdown, heading, depth, parents);
+  if (!bound.ok) return { ok: false, why: bound.why, grids: [] };
+  const grids = bound.tokens.filter(isTable).map(table => [table.header, ...table.rows].map(cells => cells.map(cell => cell.text)));
+  return { ok: true, why: "", grids };
 }
 
 /** Key-order-independent JSON of a rendered block, so a census may write its pinned blocks by hand. */

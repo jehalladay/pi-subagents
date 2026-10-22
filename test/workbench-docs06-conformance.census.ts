@@ -50,7 +50,8 @@
 import { readFileSync } from "node:fs";
 import { basename, dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { afterAll, describe, expect, it } from "vitest";
+import ts from "typescript";
+import { afterAll, describe, expect, it, type RunnerTestSuite, TestRunner } from "vitest";
 import { type CasePin, DEFAULT_GATE_TIER, DEFAULT_TIER_REPORT, docsSection, judge, type PinVerdict, type RenderedBlock, sectionMatches, sourceStructure } from "./helpers/census.js";
 
 type Tier = "default-gate" | "live-tier";
@@ -304,6 +305,58 @@ const JUDGING: { readonly timeout: number } = { timeout: JUDGE_BUDGET_MS };
 /** The cases that carry JUDGING: AC2 per judged half (5), the AC4 live not-collected case, the U5 live leg, and M1, M4, M5 and M7. */
 const JUDGING_CASES = 11;
 
+/**
+ * R673 (wb-csne): the explicit budget of the AC2 call-site hook (the afterAll that binds AC2_RAN to FROZEN_JUDGED_SHAPE),
+ * file-local so no other census file's budget moves (the wb-hk9l PACKAGE_COPY_ROW_BUDGET_MS pattern): the hook never rides
+ * vitest's default 10000 ms hookTimeout. The land-prep try-1 red the judge keyed to this describe (hook@wb-6hb.6 at :430,
+ * landings 224, 226 and 229) was never this hook running long: it is AC2 bullet 1/guard's AssertionError carrying the
+ * parity file's collection error "Hook timed out in 10000ms" from the default report (cmd_9204c30d7a56, census
+ * diagnostic), the cascade the parity file's own budget (PARITY_SUITE_HOOK_BUDGET_MS) removes at its source. The budget is
+ * the owner floor of 20000 ms, more than 2 x the hook's worst measured wall (WORST_MEASURED_CALL_SITE_HOOK_WALL_MS).
+ * Exceeding it is a real red: withinHookBudget fails the hook with an AssertionError naming this constant.
+ */
+const CALL_SITE_HOOK_BUDGET_MS = 20_000;
+/**
+ * The worst measured wall of the AC2 call-site hook (a synchronous sort and comparison, timed by withinHookBudget): 13 ms,
+ * from wb-csne runs of this file on the 13-pinned-file default report on 2026-10-21 at load1 325-358 (6 sequential runs
+ * 1-13 ms, 8-way 1-3 ms).
+ */
+const WORST_MEASURED_CALL_SITE_HOOK_WALL_MS = 13;
+/** vitest's own timer for the hook: a backstop past the budget, so the budget's named AssertionError always fires first. */
+const CALL_SITE_HOOK_BACKSTOP_MS = 2 * CALL_SITE_HOOK_BUDGET_MS;
+const CALL_SITE_HOOK = "the docs06 census AC2 call-site hook";
+
+interface HookReading {
+  readonly hook: string;
+  readonly budgetMs: number;
+  readonly wallMs: number;
+  readonly outcome: "settled" | "overrun";
+}
+/** One reading per guarded hook run, appended by withinHookBudget before it judges the run: the evidence a hook ran under its budget. */
+const HOOK_READINGS: HookReading[] = [];
+
+/**
+ * Runs a hook body under its file-local budget (R673). The body races a timer of budgetMs; an overrun - a body that
+ * finishes late, or one still running when the timer fires - fails the hook with an AssertionError naming the budget and
+ * its value. A body's own error propagates unchanged.
+ */
+async function withinHookBudget(hook: string, budget: string, budgetMs: number, body: () => void | Promise<void>): Promise<void> {
+  const started = performance.now();
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const overrun = new Promise<"overrun">(resolve => {
+    timer = setTimeout(() => resolve("overrun"), budgetMs);
+  });
+  try {
+    const outcome = await Promise.race([Promise.resolve().then(body).then(() => "settled" as const), overrun]);
+    const wallMs = Math.round(performance.now() - started);
+    HOOK_READINGS.push({ hook, budgetMs, wallMs, outcome });
+    const still = outcome === "overrun" ? " and was still running" : "";
+    expect(outcome === "settled" && wallMs <= budgetMs, `${hook} ran ${wallMs} ms${still}, past its file-local budget ${budget} = ${budgetMs} ms (R673)`).toBe(true);
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
 /** The rendered text a bullet is looked up in: the list items of the section. */
 const bulletRenders = (row: Row, blocks: readonly RenderedBlock[]): boolean => blocks.some(block => block.kind === "list" && block.items.some(item => item.text === row.quote));
 
@@ -417,8 +470,11 @@ describe("wb-6hb.6 docs/workbench/06 conformance census (report mode)", () => {
   });
 
   afterAll(() => {
+    // R673 (wb-csne): the landed body runs inside withinHookBudget; its lines are kept byte-identical (no edits to landed lines), one level shallower than the callback they now sit in.
+    return withinHookBudget(CALL_SITE_HOOK, "CALL_SITE_HOOK_BUDGET_MS", CALL_SITE_HOOK_BUDGET_MS, () => {
     expect([...AC2_RAN].sort((a, b) => a.localeCompare(b)), "every frozen judged half ran its AC2 case exactly once").toEqual([...FROZEN_JUDGED_SHAPE].sort((a, b) => a.localeCompare(b)));
   });
+  }, CALL_SITE_HOOK_BACKSTOP_MS);
 
   it.each(JUDGED)("AC2 bullet $row.bullet/$half.id: every pinned case is collected once, passed and asserting in the default gate's own report", JUDGING, ({ row, half }) => {
     AC2_RAN.push(judgedKey({ row, half }));
@@ -639,5 +695,189 @@ describe("wb-6hb.6 docs drift names the bullet or the section (synthetic documen
 
   it("an edit of any other section never reddens a bullet: the discovery and policy-surface sections are free to change", () => {
     expect(docsFailures(synthetic().replace("Rows.", "Rows, changed.").replace("Text.", "Different text."))).toEqual([]);
+  });
+});
+
+describe("R673 (wb-csne): the AC2 call-site hook runs under its file-local budget, and an overrun is a real red naming it", () => {
+  it("the AC2 call-site hook ran once under CALL_SITE_HOOK_BUDGET_MS, settled inside the budget, never on vitest's default hookTimeout", () => {
+    const hook = HOOK_READINGS.filter(reading => reading.hook === CALL_SITE_HOOK);
+    expect(hook.map(reading => `${reading.hook}|${reading.budgetMs}|${reading.outcome}`), "the guarded call-site hook's readings").toEqual([`${CALL_SITE_HOOK}|${CALL_SITE_HOOK_BUDGET_MS}|settled`]);
+    expect(hook[0]?.wallMs, "the call-site hook's wall").toBeLessThanOrEqual(CALL_SITE_HOOK_BUDGET_MS);
+  });
+
+  it("the budget clears the owner floor and twice the worst measured wall, and vitest's own timer is a backstop past it", () => {
+    expect(CALL_SITE_HOOK_BUDGET_MS, "the owner floor").toBeGreaterThanOrEqual(20_000);
+    expect(WORST_MEASURED_CALL_SITE_HOOK_WALL_MS, "the worst measured wall: 13 ms (wb-csne)").toBeGreaterThanOrEqual(13);
+    expect(CALL_SITE_HOOK_BUDGET_MS, "more than 2 x the worst measured wall").toBeGreaterThan(2 * WORST_MEASURED_CALL_SITE_HOOK_WALL_MS);
+    expect(CALL_SITE_HOOK_BACKSTOP_MS, "vitest's backstop sits past the budget").toBeGreaterThan(CALL_SITE_HOOK_BUDGET_MS);
+  });
+
+  it("an overrun is an AssertionError naming the budget, whether the body finishes late or is still running; a body inside its budget passes", async () => {
+    const late = () =>
+      withinHookBudget("probe late", "PROBE_BUDGET_MS", 20, () => {
+        const until = performance.now() + 60;
+        while (performance.now() < until) {
+          /* busy wait: a body that finishes past its budget */
+        }
+      });
+    const hung = () => withinHookBudget("probe hung", "PROBE_BUDGET_MS", 20, () => new Promise<void>(() => undefined));
+    for (const [probe, name, still] of [
+      [late, "probe late", ""],
+      [hung, "probe hung", " and was still running"],
+    ] as const) {
+      const caught: unknown = await probe().then(
+        () => undefined,
+        (error: unknown) => error,
+      );
+      expect(caught, `${name}: an overrun fails the hook`).toBeInstanceOf(Error);
+      expect((caught as Error).name, `${name}: a real red, never a timing marker`).toBe("AssertionError");
+      expect((caught as Error).message, `${name}: the red names the budget`).toMatch(new RegExp(`^${name} ran \\d+ ms${still}, past its file-local budget PROBE_BUDGET_MS = 20 ms \\(R673\\)`));
+      expect((caught as Error).message, `${name}: never a hook timeout`).not.toContain("timed out");
+    }
+    await expect(withinHookBudget("probe quick", "PROBE_BUDGET_MS", 5_000, () => undefined)).resolves.toBeUndefined();
+  });
+
+  it("a hook body's own error propagates unchanged through the guard", async () => {
+    const own = new TypeError("the body's own failure");
+    await expect(
+      withinHookBudget("probe broken", "PROBE_BUDGET_MS", 5_000, () => {
+        throw own;
+      }),
+    ).rejects.toBe(own);
+  });
+});
+
+/**
+ * R687 (wb-9rto, the wb-csne F1 class): the R673 rows above pin the budget and backstop CONSTANTS; the rows below bind the
+ * ARGUMENT the AC2 call-site hook is registered with. vitest 4.1.10 keeps an afterAll's timeout only in the closure of the
+ * withTimeout timer it wraps the hook in (it stamps a registered timeout on the beforeAll and beforeEach hooks it stores,
+ * never on an afterAll: the runner row below pins that this file's afterAll carries none, and the capability-surface-parity
+ * R687 row reads the stamp a beforeAll carries), so this file's own AST is the evidence. hookRoster
+ * reads every hook registration of the file through the TypeScript binder (the census helper's single-file program: no
+ * lib, no module resolution): its registrar, the describe titles around it, the hook its callback guards (the first
+ * argument of its withinHookBudget call) and its timeout argument with the file-scope const that argument binds. It reads
+ * hook registrations only, never case calls. A registrar reached any way but a direct call of vitest's own named import
+ * (aliased, a member, a value, another module) is a finding, never a reading. An omitted, swapped, shadowed, literal or
+ * undefined argument is a red below, where the gate's omission probe of the registration left 48/48 green (wb-csne gate
+ * cmd_d14ebd6c549f, F1).
+ */
+const HOOK_REGISTRARS: readonly string[] = ["beforeAll", "afterAll", "beforeEach", "afterEach", "aroundAll", "aroundEach"];
+/** The key vitest stamps a registered timeout under, on the beforeAll and beforeEach hooks it stores; an afterAll carries none. */
+const REGISTERED_HOOK_TIMEOUT = Symbol.for("VITEST_CLEANUP_TIMEOUT");
+/** A binding's own name (a shorthand property's key is its identifier), so no expectation spells a const it binds by hand. */
+const nameOf = (binding: Readonly<Record<string, unknown>>): string => Object.keys(binding).join(", ");
+
+interface HookRegistration {
+  readonly registrar: string;
+  /** The titles of the describe calls around the registration, outermost first; "(file scope)" for none. */
+  readonly chain: string;
+  /** The first argument of each withinHookBudget call in the hook's callback, as written; "nothing" when it calls none. */
+  readonly guards: string;
+  /** The timeout argument as written; "(none)" when the registration passes none and vitest applies its default hookTimeout. */
+  readonly timeout: string;
+  /** The file-scope const the timeout argument binds through the binder; undefined for none, a literal, or an inner or non-const binding. */
+  readonly binds: string | undefined;
+}
+
+function hookRoster(file: string): { readonly registrations: readonly HookRegistration[]; readonly findings: readonly string[] } {
+  const path = join(ROOT, file);
+  const text = readFileSync(path, "utf8");
+  const sf = ts.createSourceFile(path, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const host: ts.CompilerHost = {
+    getSourceFile: name => (name === path ? sf : undefined),
+    getDefaultLibFileName: () => "lib.d.ts",
+    writeFile: () => undefined,
+    getCurrentDirectory: () => ROOT,
+    getCanonicalFileName: name => name,
+    useCaseSensitiveFileNames: () => true,
+    getNewLine: () => "\n",
+    fileExists: name => name === path,
+    readFile: name => (name === path ? text : undefined),
+  };
+  const checker = ts.createProgram({ rootNames: [path], options: { noLib: true, noResolve: true, types: [], target: ts.ScriptTarget.Latest, module: ts.ModuleKind.ESNext }, host }).getTypeChecker();
+  const at = (node: ts.Node): string => `${file}:${sf.getLineAndCharacterOfPosition(node.getStart(sf)).line + 1}`;
+  const declaration = (id: ts.Identifier): ts.Declaration | undefined => {
+    const declarations = checker.getSymbolAtLocation(id)?.declarations ?? [];
+    return declarations.length === 1 ? declarations[0] : undefined;
+  };
+  const viaVitest = (id: ts.Identifier): boolean => {
+    const bound = declaration(id);
+    if (bound === undefined || !ts.isImportSpecifier(bound) || bound.propertyName !== undefined) return false;
+    const statement = bound.parent.parent.parent;
+    return ts.isImportDeclaration(statement) && ts.isStringLiteral(statement.moduleSpecifier) && statement.moduleSpecifier.text === "vitest";
+  };
+  const fileScopeConst = (argument: ts.Expression | undefined): string | undefined => {
+    if (argument === undefined || !ts.isIdentifier(argument)) return undefined;
+    const bound = declaration(argument);
+    if (bound === undefined || !ts.isVariableDeclaration(bound) || !ts.isVariableDeclarationList(bound.parent) || (bound.parent.flags & ts.NodeFlags.Const) === 0) return undefined;
+    return ts.isVariableStatement(bound.parent.parent) && bound.parent.parent.parent === sf ? argument.text : undefined;
+  };
+  const guardsOf = (callback: ts.Node | undefined): string => {
+    const guarded: string[] = [];
+    const find = (node: ts.Node): void => {
+      if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "withinHookBudget") guarded.push(node.arguments[0]?.getText(sf) ?? "(no argument)");
+      ts.forEachChild(node, find);
+    };
+    if (callback !== undefined) find(callback);
+    return guarded.join(", ") || "nothing";
+  };
+  const registrations: HookRegistration[] = [];
+  const findings: string[] = [];
+  const visit = (node: ts.Node, chain: readonly string[]): void => {
+    let inner = chain;
+    if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "describe") {
+      const title = node.arguments[0];
+      inner = [...chain, title !== undefined && ts.isStringLiteralLike(title) ? title.text : `(a non-literal title at ${at(node)})`];
+    } else if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && HOOK_REGISTRARS.includes(node.expression.text)) {
+      if (!viaVitest(node.expression)) findings.push(`${at(node)}: ${node.expression.text} is not called through vitest's own named import`);
+      const timeout = node.arguments[1];
+      registrations.push({ registrar: node.expression.text, chain: chain.join(" > ") || "(file scope)", guards: guardsOf(node.arguments[0]), timeout: timeout?.getText(sf) ?? "(none)", binds: fileScopeConst(timeout) });
+    } else if (ts.isIdentifier(node) && HOOK_REGISTRARS.includes(node.text)) {
+      const called = ts.isCallExpression(node.parent) && node.parent.expression === node;
+      const imported = ts.isImportSpecifier(node.parent) && node.parent.propertyName === undefined;
+      if (!called && !imported) findings.push(`${at(node)}: ${node.text} is named in a ${ts.SyntaxKind[node.parent.kind]}, never called as a hook registration`);
+    }
+    ts.forEachChild(node, child => visit(child, inner));
+  };
+  visit(sf, []);
+  return { registrations, findings };
+}
+
+const rosterLine = (registration: HookRegistration): string =>
+  `${registration.registrar} @ ${registration.chain} | guards ${registration.guards} | timeout ${registration.timeout}${registration.binds === undefined ? "" : " (a file-scope const)"}`;
+
+describe("R687 (wb-9rto): the AC2 call-site hook is registered with its backstop, read from this file's AST and the runner's record", () => {
+  it("the roster: every hook registration of this file, read through the binder, is the literal list, and no hook is registered any other way", () => {
+    const roster = hookRoster(SELF);
+    expect(roster.findings, "a hook registrar reached any way but a direct call of vitest's own named import").toEqual([]);
+    expect(roster.registrations.map(rosterLine), "every hook registration: registrar, describe chain, guarded hook and timeout argument").toEqual([
+      "afterAll @ wb-6hb.6 docs/workbench/06 conformance census (report mode) | guards CALL_SITE_HOOK | timeout CALL_SITE_HOOK_BACKSTOP_MS (a file-scope const)",
+    ]);
+  });
+
+  it("the binding: the one registration guarding CALL_SITE_HOOK passes the file-scope CALL_SITE_HOOK_BACKSTOP_MS, 2 x the budget, as its timeout", () => {
+    const guarding = hookRoster(SELF).registrations.filter(registration => registration.guards === nameOf({ CALL_SITE_HOOK }));
+    expect(
+      guarding.map(registration => registration.binds),
+      "the file-scope const each registration guarding the call-site hook binds as its timeout: an omitted, literal, shadowed or undefined argument binds none, a swapped one another const",
+    ).toEqual([nameOf({ CALL_SITE_HOOK_BACKSTOP_MS })]);
+    expect(CALL_SITE_HOOK_BACKSTOP_MS, "the backstop of record is 2 x the budget").toBe(2 * CALL_SITE_HOOK_BUDGET_MS);
+  });
+
+  it("the runner: vitest holds exactly the hooks the roster names, one afterAll on the census describe and none at file scope, and stamps no timeout on it", ({ task }) => {
+    const roster = hookRoster(SELF).registrations;
+    const chain = roster.find(registration => registration.guards === nameOf({ CALL_SITE_HOOK }))?.chain;
+    const census = task.file.tasks.find((child): child is RunnerTestSuite => child.type === "suite" && child.name === chain);
+    const held = (hooks: ReturnType<typeof TestRunner.getSuiteHooks>): string[] => Object.entries(hooks).flatMap(([registrar, listeners]) => Array.from(listeners, () => registrar));
+    const stamped = (hooks: ReturnType<typeof TestRunner.getSuiteHooks>): unknown[] => Object.values(hooks).flatMap(listeners => Array.from(listeners, (hook: object): unknown => Reflect.get(hook, REGISTERED_HOOK_TIMEOUT)));
+    expect(census, "the describe the roster places the call-site hook in is a suite of this file").toBeDefined();
+    const fileHooks = TestRunner.getSuiteHooks(task.file);
+    const censusHooks = TestRunner.getSuiteHooks(census ?? task.file);
+    expect(held(fileHooks), "the hooks vitest holds at file scope, as the roster names them").toEqual(roster.filter(registration => registration.chain === "(file scope)").map(registration => registration.registrar));
+    expect(held(censusHooks), "the hooks vitest holds on the census describe, as the roster names them").toEqual(roster.filter(registration => registration.chain === chain).map(registration => registration.registrar));
+    expect(
+      stamped(censusHooks),
+      "the registered timeout vitest stamps on each hook it holds on the census describe: none on its one afterAll, whose timeout lives only in its timer's closure, so the AST above is the evidence for it",
+    ).toEqual([undefined]);
   });
 });

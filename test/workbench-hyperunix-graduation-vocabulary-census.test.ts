@@ -76,7 +76,7 @@ import { resultFromJson } from "@hyperunix/sdk";
 import ts from "typescript";
 import { describe, expect, it } from "vitest";
 import { CapabilityError, type CapabilityProvider, CapabilityRegistry, type JsonValue } from "../src/workbench/capability-registry.js";
-import { type HyperUnixTopologyContext, hyperunixTopology } from "../src/workbench/hyperunix-observer.js";
+import { HYPERUNIX_EXECUTION_KINDS, type HyperUnixTopologyContext, hyperunixTopology } from "../src/workbench/hyperunix-observer.js";
 import { nativeEvidence, nativeRefOf } from "../src/workbench/native-evidence.js";
 import { loadWorkbenchNative } from "../src/workbench/native-modules.js";
 import { type HyperUnixReader, nativeHyperUnixFind, registerHyperUnixFind } from "../src/workbench/providers/hyperunix.js";
@@ -704,6 +704,24 @@ describe("HyperUnix graduation-vocabulary census (wb-tz2.10 R10, standing leg)",
     expect(plantedSpellings("SOURCE_IMPLEMENTED")).toHaveLength(36);
     expect(plantedSpellings("blocked")).toHaveLength(12);
     expect(FOLDS).toHaveLength(3);
+  });
+
+  it("EXTERNAL ANCHOR: docs/14's HX case roster and the observer's SDK-kind registry bound every judged member", async () => {
+    // Unlike the FROZEN SHAPE literals above, neither source is inside this census. A coordinated
+    // deletion of a case plus every local literal must still leave a missing docs row.
+    const docs = readFileSync(join(ROOT, "docs/workbench/14-qa-and-benchmarks.md"), "utf8");
+    const section = docs.split(/^## HX graduation-vocabulary case roster\s*$/m);
+    expect(section).toHaveLength(2);
+    const rows = section[1]?.split(/^## /m)[0]?.split("\n")
+      .map(line => /^\| (R\d\d|F\d\d) \| ([^|]+) \|$/.exec(line))
+      .filter((match): match is RegExpExecArray => match !== null)
+      .map(match => `${match[1]}:${match[2]?.trim()}`);
+    expect(rows).toEqual([...READINGS, ...REFUSALS].map(([name]) => `${name.slice(0, 3)}:${name.slice(4)}`));
+    // The runtime's closed kind set is a second, code-owned source for the execution-kind cases.
+    const readKinds = await Promise.all(READINGS.map(async ([, read]) => asRecord(asRecord(await read()).source).execution_status));
+    const refusalKinds = REFUSALS.map(([, value]) => asRecord(asRecord(value).source).execution_status);
+    const represented = [...readKinds, ...refusalKinds].map(status => asRecord(status).kind).filter((kind): kind is string => typeof kind === "string");
+    expect(HYPERUNIX_EXECUTION_KINDS.filter(kind => !represented.includes(kind))).toEqual([]);
   });
 
   it("FROZEN SHAPE (standing rule 16): each reading's branch selector, read from its own input, is its frozen literal", async () => {

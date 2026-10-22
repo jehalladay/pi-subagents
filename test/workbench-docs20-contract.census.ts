@@ -24,6 +24,34 @@
  *
  * Record honesty (this file supersedes the 10029f7 / dbbf8ae cuts, whose bare-text scanner and executing collect-only child
  * run are gone): a half-sentence with no case is listed as UNPINNED with its reason below and is never counted as passed.
+ *
+ * wb-tz2.6 extension (HX-ORIGINAL-GOALS-CLOSURE-R6, standing leg; this extends the 6ze.40 binding and adds no second docs/20
+ * reading): the HX producer has no Producer mapping row, so it is an "anything else" producer. The anything-else row and the
+ * no-loader rule's fallback and ref-stays-listed halves also pin the HX guards of test/workbench-hx-evidence-standing.test.ts:
+ * S1 (the host store resolves every HX ref to the typed no-loader entry with no read) and S2 (the details view keeps every HX
+ * ref listed as the visible no-loader unknown) on the fallback, S2 on ref-stays-listed, and S3 (the loader contract holds only
+ * the three producer loaders and names no HX producer) and S4 (native-evidence.ts carries the HX proof handles as references
+ * only) on the anything-else row, so the docs/20:24 fallback is vouched for HX refs in the default gate's own report. The
+ * GC-D05 "On landing" loader-conformance leg of wb-tz2.6 is not bound here: no HX loader exists to pin.
+ *
+ * FROZEN SHAPE (owner standing order 2026-10-18T18:14:19Z, rule 16; added by the wb-tz2.6 cut): the table pins its own half,
+ * clause and pin shape as literals (HALF_SHAPE, CLAUSE_LITERALS, PIN_LITERALS), derived from the table as this cut leaves it,
+ * so deleting a pin of any half, shortening a clause or swapping a pin for an unrelated passing case reds the census; the
+ * hollowing falsifiers CT1/CT1b/CT2/CT3 below prove each.
+ *
+ * JUDGED-ROW SET (wb-tz2.6 respin, gate refusal U1 and finding F1; rule 16): PINNED, the halves the AC2 it.each judges, is
+ * frozen as the literal PINNED_SHAPE (row/half:pinCount, in table order) and must equal the non-empty halves of HALF_SHAPE;
+ * every AC2 case asserts that its half holds a pin; and the AC2 each-liveness case reads this file's own task tree, so the
+ * it.each must register one run-mode AC2 case per frozen judged half, in order, and each must reach its last assertion.
+ * Dropping a pinned half from PINNED (the gate's mutant K1), swapping one for the unpinned ref-sanitized half (K2) or slicing
+ * the it.each argument (K3) therefore reds the census.
+ *
+ * DOC-ANCHORED PARTITION (rule 16 CT5/CT6: the kill runs through an anchor outside this file's literals): each row's halves
+ * partition its docs/20 text. A producer row holds one half whose clause is its Producer cell; a rule sentence is exactly its
+ * halves' clauses in table order, the first at its start, each later one after a CLAUSE_JOINS join, and only the closing "."
+ * after the last. The row texts are the cells and sentences the AC1 docs check pins to the doc, so a half deleted from the
+ * table and from every literal here leaves doc text that no half covers, and reds through docs/20 itself. The partition
+ * reaches halves, not pins: docs/20 names no test case, so which cases a half pins is anchored by this file's literals only.
  */
 import { readFileSync } from "node:fs";
 import { basename, dirname, join } from "node:path";
@@ -71,6 +99,7 @@ const FURNACE = "test/workbench-furnace-evidence.test.ts";
 const FORGE = "test/workbench-forge-evidence.test.ts";
 const CLAUDE = "test/workbench-claude-evidence.test.ts";
 const INSPECTOR = "test/workbench-inspector.test.ts";
+const HX_STANDING = "test/workbench-hx-evidence-standing.test.ts";
 
 const pin = (file: string, title: string, each?: number): Pin => (each === undefined ? { file, title } : { file, title, each });
 
@@ -114,9 +143,20 @@ const RULE_SENTENCES: readonly string[] = [
 const RULES_TEXT = RULE_SENTENCES.join(" ");
 const RULES_BLOCKS: readonly RenderedBlock[] = [{ kind: "paragraph", text: RULES_TEXT, markdown: RULES_TEXT }];
 
+/** wb-tz2.6 S1: every HX ref, from each HX source, resolves through the host store to the typed no-loader entry with no read. */
+const HX_STORE_PIN = pin(HX_STANDING, "S1: the host store resolves every HX reference from each HX source to the typed unavailable no-loader entry and issues no read");
+/** wb-tz2.6 S2: the details view keeps every HX ref listed and renders it as the visible no-loader unknown, never loaded. */
+const HX_DETAILS_PIN = pin(HX_STANDING, "S2: the details view keeps every HX reference listed as the visible unavailable: no-loader unknown, never a loaded label");
+const HX_NO_LOADER_PINS: readonly Pin[] = [HX_STORE_PIN, HX_DETAILS_PIN];
+/** wb-tz2.6: no HX loader or reader exists for the anything-else row to be bypassed by (loader contract and native-evidence.ts). */
+const HX_NO_READER_PINS: readonly Pin[] = [
+  pin(HX_STANDING, "S3: the loader contract modules hold exactly the three docs/20 producer loaders and name no HX producer, reference or module"),
+  pin(HX_STANDING, "S4: native-evidence.ts carries HX proof handles as references only: no loader, reader or HX import, and no basis claim"),
+];
 const NO_LOADER_PINS: readonly Pin[] = [
   pin(LOADER, "routes by nativeRef.provider first, then canLoad; anything else is a visible no-loader"),
   pin(WIRING, "renders a forge operation ref as the visible no-loader unknown when the host supplies no registry"),
+  ...HX_NO_LOADER_PINS,
 ];
 
 /** Freezes the table and everything it holds, so no row, half or pin can be edited at runtime. */
@@ -179,14 +219,18 @@ const ROWS: readonly Row[] = freezeDeep<readonly Row[]>([
       },
     ],
   },
-  { id: "producer:anything-else", kind: "producer", texts: PRODUCER_ROWS[3] ?? [], halves: [{ id: "whole", clause: "anything else", pins: NO_LOADER_PINS }] },
+  { id: "producer:anything-else", kind: "producer", texts: PRODUCER_ROWS[3] ?? [], halves: [{ id: "whole", clause: "anything else", pins: [...NO_LOADER_PINS, ...HX_NO_READER_PINS] }] },
   {
     id: "rule:no-loader",
     kind: "rule",
     texts: [RULE_SENTENCES[0] ?? ""],
     halves: [
       { id: "no-loader-fallback", clause: "Unknown producer or ref kind: no-loader", pins: NO_LOADER_PINS },
-      { id: "ref-stays-listed", clause: "ref stays listed", pins: [pin(INSPECTOR, "A4 every state renders as a visible label at %j ascii=%s, and preview text only for loaded", 4)] },
+      {
+        id: "ref-stays-listed",
+        clause: "ref stays listed",
+        pins: [pin(INSPECTOR, "A4 every state renders as a visible label at %j ascii=%s, and preview text only for loaded", 4), HX_DETAILS_PIN],
+      },
       {
         id: "ref-sanitized",
         clause: "sanitized",
@@ -276,6 +320,142 @@ const ROWS: readonly Row[] = freezeDeep<readonly Row[]>([
 
 const PINNED: readonly PinnedHalf[] = ROWS.flatMap(row => row.halves.filter(half => half.pins.length > 0).map(half => ({ row, half })));
 const UNPINNED: readonly PinnedHalf[] = ROWS.flatMap(row => row.halves.filter(half => half.pins.length === 0).map(half => ({ row, half })));
+
+/** FROZEN SHAPE units (rule 16): per half "row/half:pinCount" and "row/half|clause"; per pin "row/half|file|title[|each>=n]". */
+const halfShape = (rows: readonly Row[]): string[] => rows.flatMap(row => row.halves.map(half => `${row.id}/${half.id}:${half.pins.length}`));
+const clauseLiterals = (rows: readonly Row[]): string[] => rows.flatMap(row => row.halves.map(half => `${row.id}/${half.id}|${half.clause}`));
+const pinLiterals = (rows: readonly Row[]): string[] =>
+  rows.flatMap(row => row.halves.flatMap(half => half.pins.map(each => `${row.id}/${half.id}|${basename(each.file, ".test.ts")}|${each.title}${each.each === undefined ? "" : `|each>=${each.each}`}`)));
+
+/** FROZEN SHAPE (rule 16): every half as row/half:pinCount, in table order, as the wb-tz2.6 cut leaves the table. */
+const HALF_SHAPE: readonly string[] = [
+  "producer:claude-agent-sdk-session/whole:4",
+  "producer:furnace-run/whole:3",
+  "producer:forge-operation/whole:3",
+  "producer:anything-else/whole:6",
+  "rule:no-loader/no-loader-fallback:4",
+  "rule:no-loader/ref-stays-listed:2",
+  "rule:no-loader/ref-sanitized:0",
+  "rule:unauthorized/whole:5",
+  "rule:stale-and-transport-plus-stale/stale-label:4",
+  "rule:stale-and-transport-plus-stale/transport-plus-stale:1",
+  "rule:loaded-never-upgrades-freshness/projection-freshness:0",
+  "rule:loaded-never-upgrades-freshness/status-text-and-tone:1",
+  "rule:transport-never-verification/whole:4",
+];
+/** FROZEN SHAPE: every half's clause (its requirement label), so shortening or rewording one reds the census. */
+const CLAUSE_LITERALS: readonly string[] = [
+  "producer:claude-agent-sdk-session/whole|claude-agent-sdk session",
+  "producer:furnace-run/whole|furnace run",
+  "producer:forge-operation/whole|forge operation",
+  "producer:anything-else/whole|anything else",
+  "rule:no-loader/no-loader-fallback|Unknown producer or ref kind: no-loader",
+  "rule:no-loader/ref-stays-listed|ref stays listed",
+  "rule:no-loader/ref-sanitized|sanitized",
+  "rule:unauthorized/whole|Scope mismatch or missing/revoked exact grant: unauthorized",
+  "rule:stale-and-transport-plus-stale/stale-label|Stale or disconnected owning nodes label loaded evidence stale",
+  "rule:stale-and-transport-plus-stale/transport-plus-stale|a failed read against a disconnected source is transport plus stale",
+  "rule:loaded-never-upgrades-freshness/projection-freshness|A loaded entry never upgrades projection freshness",
+  "rule:loaded-never-upgrades-freshness/status-text-and-tone|never changes node status text or tone",
+  "rule:transport-never-verification/whole|Transport success never implies verification",
+];
+/** FROZEN SHAPE: every pin's identity (half, file, title, it.each floor), so swapping a pin for an unrelated passing case reds it. */
+const PIN_LITERALS: readonly string[] = [
+  "producer:claude-agent-sdk-session/whole|workbench-evidence-loader|claude: with the grant it selects the row by uuid through the module (role prefix, bounded rows, the 40-row window); a revoked grant refuses on the next load",
+  "producer:claude-agent-sdk-session/whole|workbench-evidence-loader|claude: a uuid outside the bounded window is transport, never a fabricated row",
+  "producer:claude-agent-sdk-session/whole|workbench-claude-evidence|loads exactly the row whose uuid the ref names, from one bounded read keyed by the owning session id",
+  "producer:claude-agent-sdk-session/whole|workbench-evidence-wiring|loads a claude transcript row under the live grant and refuses after revocation",
+  "producer:furnace-run/whole|workbench-furnace-evidence|loads a complete stderr read of a listed Attempt as furnace.attempt.log evidence with the producer receipt",
+  "producer:furnace-run/whole|workbench-evidence-loader|furnace: lossy, incomplete or paged reads are loaded with truncated true",
+  "producer:furnace-run/whole|workbench-evidence-loader|furnace: an attempt belonging to another run is unauthorized, without its text",
+  "producer:forge-operation/whole|workbench-forge-evidence|C1: a valid ref re-reads exactly once through the injected seam and loads EvidenceContent-shaped data",
+  "producer:forge-operation/whole|workbench-forge-evidence|C2: a failed gate loads as its own failed status, never verified",
+  "producer:forge-operation/whole|workbench-evidence-loader|forge: only validated forge-operation refs resolve; a partial read is truncated",
+  "producer:anything-else/whole|workbench-evidence-loader|routes by nativeRef.provider first, then canLoad; anything else is a visible no-loader",
+  "producer:anything-else/whole|workbench-evidence-wiring|renders a forge operation ref as the visible no-loader unknown when the host supplies no registry",
+  "producer:anything-else/whole|workbench-hx-evidence-standing|S1: the host store resolves every HX reference from each HX source to the typed unavailable no-loader entry and issues no read",
+  "producer:anything-else/whole|workbench-hx-evidence-standing|S2: the details view keeps every HX reference listed as the visible unavailable: no-loader unknown, never a loaded label",
+  "producer:anything-else/whole|workbench-hx-evidence-standing|S3: the loader contract modules hold exactly the three docs/20 producer loaders and name no HX producer, reference or module",
+  "producer:anything-else/whole|workbench-hx-evidence-standing|S4: native-evidence.ts carries HX proof handles as references only: no loader, reader or HX import, and no basis claim",
+  "rule:no-loader/no-loader-fallback|workbench-evidence-loader|routes by nativeRef.provider first, then canLoad; anything else is a visible no-loader",
+  "rule:no-loader/no-loader-fallback|workbench-evidence-wiring|renders a forge operation ref as the visible no-loader unknown when the host supplies no registry",
+  "rule:no-loader/no-loader-fallback|workbench-hx-evidence-standing|S1: the host store resolves every HX reference from each HX source to the typed unavailable no-loader entry and issues no read",
+  "rule:no-loader/no-loader-fallback|workbench-hx-evidence-standing|S2: the details view keeps every HX reference listed as the visible unavailable: no-loader unknown, never a loaded label",
+  "rule:no-loader/ref-stays-listed|workbench-inspector|A4 every state renders as a visible label at %j ascii=%s, and preview text only for loaded|each>=4",
+  "rule:no-loader/ref-stays-listed|workbench-hx-evidence-standing|S2: the details view keeps every HX reference listed as the visible unavailable: no-loader unknown, never a loaded label",
+  "rule:unauthorized/whole|workbench-evidence-loader|refuses a cross-scope ref as unauthorized without invoking any loader",
+  "rule:unauthorized/whole|workbench-evidence-loader|builds a loader for each supplied reader; without its exact grant every load refuses unauthorized and reads nothing",
+  "rule:unauthorized/whole|workbench-forge-evidence|C3: only the exact forge:inspect grant loads; everything else is an authorization denial with a spy-proven untouched seam",
+  "rule:unauthorized/whole|workbench-forge-evidence|C3: the live grant set is re-read on every load, so mid-view revocation refuses",
+  "rule:unauthorized/whole|workbench-claude-evidence|re-reads the live grant set: a revocation during the read refuses unauthorized and returns no preview",
+  "rule:stale-and-transport-plus-stale/stale-label|workbench-inspector|A14 a stale or disconnected owner labels loaded evidence stale and a failed read as transport plus stale",
+  "rule:stale-and-transport-plus-stale/stale-label|workbench-forge-evidence|C2: a stale or disconnected owner labels loaded evidence stale; a current owner labels it current",
+  "rule:stale-and-transport-plus-stale/stale-label|workbench-evidence-wiring|labels a forge read stale when the owning node is stale and truncated when the reader bounded it",
+  "rule:stale-and-transport-plus-stale/stale-label|workbench-claude-evidence|labels loaded evidence stale when the owning node is stale or unknown, and current only when it is current",
+  "rule:stale-and-transport-plus-stale/transport-plus-stale|workbench-forge-evidence|C2: a failed read against a disconnected owner is transport plus stale",
+  "rule:loaded-never-upgrades-freshness/status-text-and-tone|workbench-inspector|A6 a loaded entry never changes status text, tone glyph or the confirmed/definition lines",
+  "rule:transport-never-verification/whole|workbench-furnace-evidence|%s states no verdict, status, tone or outcome, and freshness only as current|each>=2",
+  "rule:transport-never-verification/whole|workbench-forge-evidence|C2: a failed gate loads as its own failed status, never verified",
+  "rule:transport-never-verification/whole|workbench-forge-evidence|C2: a partial COULD_NOT_JUDGE verdict loads as its own partial status, never verified",
+  "rule:transport-never-verification/whole|workbench-claude-evidence|a failed agent message stays that message's own content and exposes no status, tone or verification field",
+];
+/** FROZEN SHAPE (rule 16, wb-tz2.6 respin U1): the halves the AC2 it.each judges, as row/half:pinCount, in table order. */
+const PINNED_SHAPE: readonly string[] = [
+  "producer:claude-agent-sdk-session/whole:4",
+  "producer:furnace-run/whole:3",
+  "producer:forge-operation/whole:3",
+  "producer:anything-else/whole:6",
+  "rule:no-loader/no-loader-fallback:4",
+  "rule:no-loader/ref-stays-listed:2",
+  "rule:unauthorized/whole:5",
+  "rule:stale-and-transport-plus-stale/stale-label:4",
+  "rule:stale-and-transport-plus-stale/transport-plus-stale:1",
+  "rule:loaded-never-upgrades-freshness/status-text-and-tone:1",
+  "rule:transport-never-verification/whole:4",
+];
+const pinnedShape = (pinned: readonly PinnedHalf[]): string[] => pinned.map(({ row, half }) => `${row.id}/${half.id}:${half.pins.length}`);
+
+/** What every AC2 case claims; the it.each title is "AC2 <row id> / <half id>: " followed by it. */
+const AC2_CLAIM = "every pinned case is collected once, passed and asserting in the default gate's own report";
+/** The AC2 title vitest renders for a frozen judged half "row/half:pinCount" ($row.id and $half.id render as quoted strings). */
+const ac2Title = (key: string): string => `AC2 '${key.slice(0, key.indexOf("/"))}' / '${key.slice(key.indexOf("/") + 1, key.lastIndexOf(":"))}': ${AC2_CLAIM}`;
+/** The judged halves whose AC2 case reached its last assertion in this run (read by the AC2 each-liveness case). */
+const COMPLETED_AC2 = new Set<string>();
+
+/** The joins docs/20 writes between two halves' clauses inside one rule sentence. */
+const CLAUSE_JOINS: readonly string[] = [", ", "; ", " and ", " "];
+
+/**
+ * Every place a row's halves fail to partition its docs/20 text (rule 16 CT5/CT6 outside anchor): a producer row holds exactly
+ * one half, whose clause is its Producer cell; a rule sentence is its halves' clauses in table order, the first at its start,
+ * each later one after a CLAUSE_JOINS join, and nothing but the closing "." after the last.
+ */
+function partitionFailures(rows: readonly Row[]): string[] {
+  const out: string[] = [];
+  for (const row of rows) {
+    if (row.kind === "producer") {
+      const clauses = row.halves.map(half => half.clause);
+      if (clauses.length !== 1 || clauses[0] !== row.texts[0]) out.push(`${row.id}: the clauses ${JSON.stringify(clauses)} are not exactly its Producer cell "${row.texts[0] ?? ""}"`);
+      continue;
+    }
+    let rest = row.texts.join(" ");
+    let covered = true;
+    for (const [index, half] of row.halves.entries()) {
+      const at = half.clause === "" ? -1 : rest.indexOf(half.clause);
+      if (at < 0) {
+        out.push(`${row.id} / ${half.id}: the clause "${half.clause}" is not a verbatim part of the sentence after the previous half`);
+        covered = false;
+        break;
+      }
+      const gap = rest.slice(0, at);
+      if (index === 0 ? gap !== "" : !CLAUSE_JOINS.includes(gap)) out.push(`${row.id} / ${half.id}: "${gap}" before its clause is doc text no half covers`);
+      rest = rest.slice(at + half.clause.length);
+    }
+    if (covered && rest !== ".") out.push(`${row.id}: "${rest}" after the last half's clause is doc text no half covers`);
+  }
+  return out;
+}
+
 const readRepo = (path: string): string => readFileSync(join(ROOT, path), "utf8");
 
 /** The default report is the default gate's test step: every pin is judged under that tier, an it.each pin with its table floor. */
@@ -332,18 +512,63 @@ describe("wb-6ze.40 docs/workbench/20 evidence-loader contract census (report mo
     }
   });
 
+  it("AC1 frozen shape (rule 16): every half's pin count, every clause and every pin identity are the literal lists", () => {
+    expect(halfShape(ROWS)).toEqual(HALF_SHAPE);
+    expect(clauseLiterals(ROWS)).toEqual(CLAUSE_LITERALS);
+    expect(pinLiterals(ROWS)).toEqual(PIN_LITERALS);
+    expect(PIN_LITERALS).toHaveLength(37);
+  });
+
+  it("AC1 frozen judged-row set (rule 16, wb-tz2.6 respin U1): the halves the AC2 it.each judges are the literal PINNED_SHAPE, the non-empty halves of HALF_SHAPE", () => {
+    expect(pinnedShape(PINNED)).toEqual(PINNED_SHAPE);
+    expect(PINNED_SHAPE).toEqual(HALF_SHAPE.filter(key => !key.endsWith(":0")));
+    expect(PINNED_SHAPE).toHaveLength(11);
+  });
+
+  it("AC1 doc-anchored partition (rule 16 CT5/CT6 outside anchor, wb-tz2.6 respin): every row's halves partition its docs/20 Producer cell or rule sentence", () => {
+    expect(partitionFailures(ROWS)).toEqual([]);
+  });
+
+  it("AC1 (wb-tz2.6): the HX guards bind the anything-else row and the no-loader halves, and no other half", () => {
+    const hx = ROWS.flatMap(row => row.halves.flatMap(half => half.pins.filter(each => each.file === HX_STANDING).map(each => `${row.id}/${half.id}|${each.title.slice(0, each.title.indexOf(":"))}`)));
+    expect(hx).toEqual([
+      "producer:anything-else/whole|S1",
+      "producer:anything-else/whole|S2",
+      "producer:anything-else/whole|S3",
+      "producer:anything-else/whole|S4",
+      "rule:no-loader/no-loader-fallback|S1",
+      "rule:no-loader/no-loader-fallback|S2",
+      "rule:no-loader/ref-stays-listed|S2",
+    ]);
+  });
+
   it("AC3: the unpinned halves are listed so none is ever counted as passed, each naming its reason", () => {
     expect(UNPINNED.map(({ row, half }) => `${row.id} / ${half.id}`)).toEqual(["rule:no-loader / ref-sanitized", "rule:loaded-never-upgrades-freshness / projection-freshness"]);
     for (const { half } of UNPINNED) expect(half.reason).toContain("Unpinned");
   });
 
-  it.each(PINNED)("AC2 $row.id / $half.id: every pinned case is collected once, passed and asserting in the default gate's own report", ({ row, half }) => {
+  it.each(PINNED)(`AC2 $row.id / $half.id: ${AC2_CLAIM}`, ({ row, half }) => {
+    expect(half.pins.length, `${row.id} / ${half.id}: a judged half holds a pin`).toBeGreaterThan(0);
     const verdicts = judge(
       REPORT,
       half.pins.map(each => casePin(each)),
     );
     expect(verdicts).toHaveLength(half.pins.length);
     expect(failures(row, half, verdicts)).toEqual([]);
+    COMPLETED_AC2.add(`${row.id}/${half.id}:${half.pins.length}`);
+  });
+
+  it("AC2 each-liveness (rule 16, wb-tz2.6 respin F1): the it.each registers one run-mode AC2 case per frozen judged half, in order, and every one reached its last assertion", ({ task }) => {
+    const registered: string[] = [];
+    const walk = (tasks: typeof task.file.tasks): void => {
+      for (const child of tasks) {
+        if (child.type === "test" && child.name.startsWith("AC2 ") && child.name.endsWith(`: ${AC2_CLAIM}`)) registered.push(`${child.name}|${child.mode}`);
+        else if (child.type === "suite") walk(child.tasks);
+      }
+    };
+    walk(task.file.tasks);
+    expect(registered).toEqual(PINNED_SHAPE.map(key => `${ac2Title(key)}|run`));
+    expect([...COMPLETED_AC2], "the AC2 cases that reached their last assertion this run").toEqual(PINNED_SHAPE);
   });
 
   it("AC4: the leg judges the gate's own report and executes nothing: it imports judge, never judgePins, and loads no module at runtime", () => {
@@ -413,6 +638,88 @@ describe("wb-6ze.40 liveness: the adopted judge is not accept-all (the real repo
     const target = firstPin(halfOf("producer:furnace-run", "whole"));
     const [verdict] = judge(REPORT, [casePin(target, "native-read")]);
     expect(verdict?.code).toBe("tier-mismatch");
+  });
+});
+
+describe("wb-tz2.6 frozen-shape hollowing falsifiers (rule 16: each hollowing of the table reds a shape literal)", () => {
+  /** A copy of the table with one half edited; the frozen table itself is never touched. */
+  const hollowed = (rowId: string, halfId: string, edit: (half: Half) => Half): readonly Row[] =>
+    ROWS.map(row => (row.id === rowId ? { ...row, halves: row.halves.map(half => (half.id === halfId ? edit(half) : half)) } : row));
+  const dropPin = (index: number) => (half: Half): Half => ({ ...half, pins: half.pins.filter((_pin, at) => at !== index) });
+  /** Which literal list a table no longer matches. */
+  const reds = (rows: readonly Row[]): string[] =>
+    [
+      ["HALF_SHAPE", JSON.stringify(halfShape(rows)) !== JSON.stringify(HALF_SHAPE)],
+      ["CLAUSE_LITERALS", JSON.stringify(clauseLiterals(rows)) !== JSON.stringify(CLAUSE_LITERALS)],
+      ["PIN_LITERALS", JSON.stringify(pinLiterals(rows)) !== JSON.stringify(PIN_LITERALS)],
+    ]
+      .filter(([, red]) => red)
+      .map(([name]) => String(name));
+
+  it("the untouched table matches every literal (the falsifiers below start from a green table)", () => {
+    expect(reds(ROWS)).toEqual([]);
+  });
+
+  it("CT1: deleting one pin of a multi-pin half (an HX guard on the anything-else row) reds the shape", () => {
+    expect(reds(hollowed("producer:anything-else", "whole", dropPin(4)))).toEqual(["HALF_SHAPE", "PIN_LITERALS"]);
+  });
+
+  it("CT1b: deleting a pin of a second row (rule:unauthorized) reds the shape", () => {
+    expect(reds(hollowed("rule:unauthorized", "whole", dropPin(2)))).toEqual(["HALF_SHAPE", "PIN_LITERALS"]);
+  });
+
+  it("CT2: shortening a requirement clause (the no-loader fallback) reds the clause literals", () => {
+    expect(reds(hollowed("rule:no-loader", "no-loader-fallback", half => ({ ...half, clause: "Unknown producer: no-loader" })))).toEqual(["CLAUSE_LITERALS"]);
+  });
+
+  it("CT3: swapping a pin for an unrelated passing case (the HX store guard for a loader contract case) reds the pin literals", () => {
+    const unrelated = pin(LOADER, "names the contract and never loads on construction or get");
+    const swapped = hollowed("producer:anything-else", "whole", half => ({ ...half, pins: half.pins.map(each => (each === HX_STORE_PIN ? unrelated : each)) }));
+    expect(reds(swapped)).toEqual(["PIN_LITERALS"]);
+    expect(judge(REPORT, [casePin(unrelated)]).map(verdict => verdict.code)).toEqual(["ok"]);
+  });
+});
+
+describe("wb-tz2.6 respin: the doc-anchored partition is not accept-all (rule 16 CT5/CT6 kill through docs/20)", () => {
+  /** A copy of the table without one half, or with one clause replaced; the frozen table itself is never touched. */
+  const withoutHalf = (rowId: string, halfId: string): readonly Row[] => ROWS.map(row => (row.id === rowId ? { ...row, halves: row.halves.filter(half => half.id !== halfId) } : row));
+  const withClause = (rowId: string, halfId: string, clause: string): readonly Row[] =>
+    ROWS.map(row => (row.id === rowId ? { ...row, halves: row.halves.map(half => (half.id === halfId ? { ...half, clause } : half)) } : row));
+  const pinnedOf = (rows: readonly Row[]): PinnedHalf[] => rows.flatMap(row => row.halves.filter(half => half.pins.length > 0).map(half => ({ row, half })));
+
+  it("P1 (CT6 shape): a judged half removed from the table and from every literal here leaves its doc text uncovered, and only the partition reds", () => {
+    const member = "rule:stale-and-transport-plus-stale/transport-plus-stale";
+    const hollow = withoutHalf("rule:stale-and-transport-plus-stale", "transport-plus-stale");
+    // The coordinated hollow: every in-file literal, rewritten without the member, matches the hollowed table.
+    expect(halfShape(hollow)).toEqual(HALF_SHAPE.filter(entry => !entry.startsWith(`${member}:`)));
+    expect(clauseLiterals(hollow)).toEqual(CLAUSE_LITERALS.filter(entry => !entry.startsWith(`${member}|`)));
+    expect(pinLiterals(hollow)).toEqual(PIN_LITERALS.filter(entry => !entry.startsWith(`${member}|`)));
+    expect(pinnedShape(pinnedOf(hollow))).toEqual(PINNED_SHAPE.filter(entry => !entry.startsWith(`${member}:`)));
+    expect(partitionFailures(hollow)).toEqual(['rule:stale-and-transport-plus-stale: "; a failed read against a disconnected source is transport plus stale." after the last half\'s clause is doc text no half covers']);
+  });
+
+  it("P2: removing an unpinned half (the projection-freshness clause) leaves the start of its sentence uncovered", () => {
+    expect(partitionFailures(withoutHalf("rule:loaded-never-upgrades-freshness", "projection-freshness"))).toEqual([
+      'rule:loaded-never-upgrades-freshness / status-text-and-tone: "A loaded entry never upgrades projection freshness and " before its clause is doc text no half covers',
+    ]);
+  });
+
+  it("P3 (CT2 shape): a shortened rule clause or Producer clause leaves doc text uncovered, naming the row", () => {
+    expect(partitionFailures(withClause("rule:transport-never-verification", "whole", "Transport success never implies"))).toEqual([
+      'rule:transport-never-verification: " verification." after the last half\'s clause is doc text no half covers',
+    ]);
+    expect(partitionFailures(withClause("producer:furnace-run", "whole", "furnace"))).toEqual(['producer:furnace-run: the clauses ["furnace"] are not exactly its Producer cell "furnace run"']);
+  });
+
+  it("P4: a clause that is not verbatim in its sentence, or halves out of sentence order, are refused, naming the half", () => {
+    expect(partitionFailures(withClause("rule:unauthorized", "whole", "Scope mismatch or a missing grant: unauthorized"))).toEqual([
+      'rule:unauthorized / whole: the clause "Scope mismatch or a missing grant: unauthorized" is not a verbatim part of the sentence after the previous half',
+    ]);
+    const reversed = ROWS.map(row => (row.id === "rule:stale-and-transport-plus-stale" ? { ...row, halves: [...row.halves].reverse() } : row));
+    expect(partitionFailures(reversed)).toEqual([
+      'rule:stale-and-transport-plus-stale / transport-plus-stale: "Stale or disconnected owning nodes label loaded evidence stale; " before its clause is doc text no half covers',
+      'rule:stale-and-transport-plus-stale / stale-label: the clause "Stale or disconnected owning nodes label loaded evidence stale" is not a verbatim part of the sentence after the previous half',
+    ]);
   });
 });
 

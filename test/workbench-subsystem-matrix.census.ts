@@ -30,8 +30,12 @@
  * Docs: the section is judged through the helper's rendered view (docsSection / sectionMatches). Under its unique level-2
  * heading of the level-1 parent heading and bounded at the next level-1/2 heading or EOF, it must render as exactly its
  * one frozen table, HTML-free, and the table's cell grid (header, thirteen rows, three columns) must equal the census's
- * grid cell by cell, so a reworded cell names its row and cell. The spec's falsifier sentence of "## Truth labels and
- * release gates" is pinned as the exact first paragraph of that unique section (the landed wb-cax.27 shape), HTML refused,
+ * grid cell by cell, so a reworded cell names its row and cell. That grid is the section's OWN table, read through the
+ * helper's sectionTables on the same binding as the rendered view (wb-h8f.15, the G7 same-view class: the rendered view
+ * joins a table's cells, so a re-split row renders the same, and a whole-document grid let a copy of the table in another
+ * section stand in for it); the whole-document grid only enforces that the matrix table occurs once. The spec's
+ * falsifier sentence of "## Truth labels and release gates" is pinned as the exact first paragraph of that unique
+ * section (the landed wb-cax.27 shape), HTML refused,
  * so a modifier inside the sentence, an exemption sentence before or after it in its paragraph, or a reworded sentence
  * reads red. NAMED RESIDUAL TRUTH-SECTION-TAIL: a paragraph added after it elsewhere in that section is not judged here
  * (the section-bounded pin of that section is wb-6ze.38's) and carries a quiet row. The drift falsifiers run over a
@@ -48,6 +52,16 @@
  * that its case ran, and an afterAll asserts those sets equal FROZEN_JUDGED_SHAPE and EXPECTED_LIVE, so a narrowed it.each
  * table reads red (so does a name-filtered run of this file, fail-closed).
  *
+ * Outside anchor (wb-vf94, h8f.15 F1 / owner R667 (2), the 6ze.39 self-anchoring class; rule 16: "CT5's expected kill runs through an anchor
+ * OUTSIDE the census's own literals - the docs/spec table, the src registry, or a count from the source of truth"). The frozen literals above
+ * anchor the pin set only to itself, and the docs/14 matrix table anchors rows and cells, never pins: the h8f.15 gate's PIN-level coordinated
+ * hollow (the Journal positive pin 2 dropped from TABLE, FROZEN_PINS, EXPECTED_SHAPE and FROZEN_JUDGED_SHAPE, with PIN_COUNT, the counts row and
+ * M9 edited to match) survived 0 failed | 85 passed. AC5 therefore reads docs/14 "Matrix by subsystem evidence", which lists every pin - its
+ * subsystem, half and tier, and the case by file and verbatim title with its bound describe path or it.each minimum - and every unpinned half with
+ * the open beads its reason names, and requires the section's own table (sectionTables, the G7-safe binding) to list the census's legs one by one,
+ * in table order, so a pin dropped here and from every literal together reads red through a surface outside this file, and hollowing both takes a
+ * visible docs/14 edit. Disclosed: deleting the AC5 case itself is census-code hollowing (the 6ze.38 class), which no literal or anchor here catches.
+ *
  * Disclosed limits (never claimed as covered): an assertion reached only through a helper the helper's body leg does not
  * follow; a title's presence is NOT a live, native or scale pass; the MechanicalWorkflows row (both cells) has no landed
  * case and is recorded unpinned; the Furnace "ambiguous start no duplicate" half binds the landed W18-C hosted start case
@@ -63,7 +77,7 @@ import defaultConfig from "../vitest.config.js";
 import furnaceConfig from "../vitest.furnace.config.js";
 import nativeConfig from "../vitest.native.config.js";
 import rfConfig from "../vitest.rf.config.js";
-import { type CasePin, DEFAULT_GATE_TIER, DEFAULT_TIER_REPORT, docsSection, judge, type PinVerdict, type RenderedBlock, resolveTier, sectionMatches, sourceStructure } from "./helpers/census.js";
+import { type CasePin, DEFAULT_GATE_TIER, DEFAULT_TIER_REPORT, docsSection, judge, type PinVerdict, type RenderedBlock, resolveTier, sectionMatches, sectionTables, sourceStructure } from "./helpers/census.js";
 
 type Tier = "default-gate" | "furnace-observe" | "native-read" | "rf-preview";
 type Which = "positive" | "negative";
@@ -103,6 +117,13 @@ const DOCS_HEADING = "Matrix by subsystem";
 const TRUTH_HEADING = "Truth labels and release gates";
 const FALSIFIER_SENTENCE = "Each major work package must have a falsifier: a negative test that would fail if a critical guarantee was quietly weakened.";
 const HEADER_CELLS: readonly string[] = ["Subsystem", "Positive proof", "Negative control"];
+/** docs/14's matrix evidence section (wb-vf94, h8f.15 F1): the anchor of the census's pin set outside this file's own literals. */
+const PINS_HEADING = "Matrix by subsystem evidence";
+/** The header row of docs/14's matrix evidence table (wb-vf94). */
+const PINS_HEADER: readonly string[] = ["Subsystem", "Half", "Tier", "Pinned case"];
+/** The paragraph that opens docs/14's matrix evidence section, verbatim: the section is pinned whole, so a weakening sentence beside the table reads red. */
+const PINS_INTRO =
+  'Evidence of record for the thirteen "Matrix by subsystem" rows, one row per pinned case: each row names the subsystem, the half of its cell the case answers, the tier whose own report vouches for the case, and the case by file and verbatim title, with its bound describe path or its it.each minimum where one is bound. test/workbench-subsystem-matrix.census.ts judges the default-gate rows in the report of the default gate and checks the rows of the other tiers at tier level only; no row of this table is read as a live, native or scale pass, and a half no landed case binds is listed as unpinned with its open beads and is never counted as passed. The census judges this table against its own pins in both directions and in table order, so a pin dropped from the census, together with every census literal edited to match, still reads red against this table.';
 
 const pin = (file: string, title: string, extra: Pick<Pin, "suite" | "each"> = {}): Pin => ({ file: `test/${file}`, title, ...extra });
 const gate = (id: string, which: Which, claim: string, pins: readonly Pin[]): Half => ({ id, which, claim, tier: "default-gate", pins });
@@ -547,7 +568,11 @@ const TRUTH_PARAGRAPH = `Every test evidence artifact includes revision, tool ve
 const TRUTH_BLOCK: RenderedBlock = { kind: "paragraph", text: TRUTH_PARAGRAPH, markdown: TRUTH_PARAGRAPH };
 
 const isTable = (token: Token): token is Tokens.Table => token.type === "table";
-/** The cell grid of every table in the document whose header is the matrix header; the doc must hold exactly one. */
+/**
+ * The cell grid of every table in the WHOLE document whose header is the matrix header: the uniqueness rule (the doc must
+ * hold exactly one). The cells themselves are judged on the section's own table (sectionTables, wb-h8f.15), never on this
+ * grid, which a copy of the table in another section can stand in for.
+ */
 function matrixGrids(markdown: string): string[][][] {
   return marked
     .lexer(markdown)
@@ -574,7 +599,19 @@ function docsFailures(markdown: string): string[] {
     out.push(`${DOCS_FILE}: the matrix table must occur exactly once; found ${grids.length}`);
     return out;
   }
-  const grid = grids[0] ?? [];
+  // wb-h8f.15 (G7): the cells are judged on the section's OWN table, read through the same binding as the rendered view
+  // above, never on the whole-document grid: a bolded header plus a re-split row here, with the original table copied to
+  // another section, renders the same and leaves the copy as the only matrix-header table in the document. A refused
+  // section is already named above and has no table of its own to judge.
+  const tables = sectionTables(markdown, DOCS_HEADING, 2, [DOCS_PARENT]);
+  if (!tables.ok) return out;
+  if (tables.grids.length !== 1) {
+    out.push(`${DOCS_FILE} § ${DOCS_HEADING}: the section must hold exactly one table, the matrix; it holds ${tables.grids.length}`);
+    return out;
+  }
+  const grid = tables.grids[0] ?? [];
+  const header = grid[0] ?? [];
+  if (header.join("|") !== HEADER_CELLS.join("|")) out.push(`${DOCS_FILE} § ${DOCS_HEADING}: the section's own table has the header ${JSON.stringify(header)}; the census pins ${JSON.stringify(HEADER_CELLS)}`);
   if (grid.length !== GRID.length) out.push(`${DOCS_FILE} § ${DOCS_HEADING}: the table has ${grid.length - 1} rows; the census pins ${GRID.length - 1}`);
   for (const [index, row] of TABLE.entries()) {
     const cells = grid[index + 1];
@@ -603,6 +640,73 @@ function truthFailures(markdown: string): string[] {
   if (section.hasHtml) return [`${DOCS_FILE} § ${TRUTH_HEADING}: the section carries HTML`];
   const exact = sectionMatches({ ...section, blocks: section.blocks.slice(0, 1) }, [TRUTH_BLOCK]);
   return exact.ok ? [] : [`${DOCS_FILE} § ${TRUTH_HEADING}: the falsifier paragraph is not exact: ${exact.why}`];
+}
+
+/** One row of docs/14's matrix evidence table (wb-vf94): a pinned half gives one row per pin, an unpinned half one row. */
+interface PinLeg {
+  /** How a drift names the row: "pin subsystem/half/position" or "unpinned half subsystem/half". */
+  readonly label: string;
+  /** The docs/14 table cells: subsystem, half, tier, pinned case. */
+  readonly cells: readonly string[];
+}
+/** A pin's docs/14 cell: the case by file and verbatim title, then its bound describe path or its it.each minimum where the row binds one. */
+const caseCell = (entry: Pin): string =>
+  `${entry.file}: "${entry.title}"${entry.suite === undefined ? "" : ` in "${entry.suite.join(" > ")}"`}${entry.each === undefined ? "" : `, it.each, at least ${entry.each.minCases} rows`}`;
+/** The open beads an unpinned half's reason names, in order of first mention. */
+const openBeads = (half: Half): string[] => [...new Set((half.reason ?? "").match(/\bwb-[a-z0-9]+(?:\.\d+)*/g) ?? [])];
+/** Every row docs/14's matrix evidence table must list, in table order: one per pin, and one per unpinned half naming its open beads. */
+function pinLegs(rows: readonly Row[]): PinLeg[] {
+  return rows.flatMap(row =>
+    row.halves.flatMap(half =>
+      half.pins.length === 0
+        ? [{ label: `unpinned half ${halfName(row, half)}`, cells: [row.subsystem, half.id, "none", `unpinned: open beads ${openBeads(half).join(", ")}`] }]
+        : half.pins.map((entry, index) => ({ label: `pin ${halfName(row, half)}/${index + 1}`, cells: [row.subsystem, half.id, half.tier, caseCell(entry)] })),
+    ),
+  );
+}
+/** The blocks docs/14's matrix evidence section must render as: its intro paragraph, then one table of the legs. */
+const pinBlocks = (legs: readonly PinLeg[]): readonly RenderedBlock[] => [
+  { kind: "paragraph", text: PINS_INTRO, markdown: PINS_INTRO },
+  { kind: "other", type: "table", text: [PINS_HEADER, ...legs.map(leg => leg.cells)].map(cells => cells.join(" ")).join(" ") },
+];
+/** The cell grid of every table in the WHOLE document under the evidence header: the uniqueness rule only (docs/14 must hold exactly one). */
+function pinGrids(markdown: string): string[][][] {
+  return marked
+    .lexer(markdown)
+    .filter(isTable)
+    .map(token => [token.header.map(cell => cell.text), ...token.rows.map(cells => cells.map(cell => cell.text))])
+    .filter(grid => grid[0]?.join("|") === PINS_HEADER.join("|"));
+}
+
+/**
+ * Every drift between docs/14's matrix evidence table and a census table (wb-vf94, h8f.15 F1, owner R667 (2)), each naming the pin: the section
+ * must render as exactly its intro and one table of the table's legs, and that table - read through sectionTables on the rendered view's own
+ * binding (the G7 same-view class, wb-h8f.15), never through a whole-document grid - must list the legs one by one, in table order. A pin dropped
+ * from the census table, and so from every literal edited to match (the PIN-level coordinated hollow), therefore reads red against a surface
+ * outside this file (rule 16 CT5/CT6, the 6ze.39 self-anchoring class).
+ */
+function pinAnchorFailures(markdown: string, rows: readonly Row[]): string[] {
+  const where = `${DOCS_FILE} § ${PINS_HEADING}`;
+  const section = docsSection(markdown, PINS_HEADING, 2, [DOCS_PARENT]);
+  if (!section.ok) return [`${where}: the section is refused: ${section.why}`];
+  const legs = pinLegs(rows);
+  const out: string[] = [];
+  const exact = sectionMatches(section, pinBlocks(legs));
+  if (!exact.ok) out.push(`${where} is not exactly its intro paragraph and one table of the census's pins: ${exact.why}`);
+  const grids = pinGrids(markdown);
+  if (grids.length !== 1) return [...out, `${DOCS_FILE}: the matrix evidence table must occur exactly once; found ${grids.length}`];
+  const own = sectionTables(markdown, PINS_HEADING, 2, [DOCS_PARENT]).grids;
+  if (own.length !== 1) return [...out, `${where}: the section must hold exactly one table, the matrix evidence table; it holds ${own.length}`];
+  const [header = [], ...listed] = own[0] ?? [];
+  if (header.join("|") !== PINS_HEADER.join("|")) out.push(`${where}: the section's own table has the header ${JSON.stringify(header)}; the census pins ${JSON.stringify(PINS_HEADER)}`);
+  const key = (cells: readonly string[]): string => cells.join(" | ");
+  const listedKeys = listed.map(key);
+  const censusKeys = legs.map(leg => key(leg.cells));
+  for (const leg of legs) if (!listedKeys.includes(key(leg.cells))) out.push(`${leg.label}: ${key(leg.cells)} is not listed in ${where}`);
+  for (const cells of listed) if (!censusKeys.includes(key(cells))) out.push(`${where} lists ${key(cells)}, which the census table does not carry`);
+  const sameSet = censusKeys.every(entry => listedKeys.includes(entry)) && listedKeys.every(entry => censusKeys.includes(entry));
+  if (sameSet && listedKeys.join("\n") !== censusKeys.join("\n")) out.push(`${where} lists the census's pins out of table order or more than once`);
+  return out;
 }
 
 /** The synthetic document the drift falsifiers run over: the frozen grid under the real heading shape, never the live text. */
@@ -699,6 +803,10 @@ describe("wb-cax.25 docs/workbench/14 matrix-by-subsystem census (report mode)",
     const ui = TABLE.find(row => row.subsystem === "UI");
     expect(ui?.halves.find(half => half.id === "negative")?.pins.map(entry => entry.file)).toContain("test/workflow-dialog.test.ts");
     expect(ui?.halves.find(half => half.id === "positive-120x40")?.pins.map(entry => entry.suite)).toEqual([[GEOMETRY_SUITE, "120 x 40"]]);
+  });
+
+  it("AC5 (wb-vf94): docs/14 'Matrix by subsystem evidence' lists exactly the table's pins in table order - one row per pinned case, with its tier, bound describe path and it.each minimum, and one row per unpinned half - the anchor outside this file's own literals (rule 16 CT5/CT6)", () => {
+    expect(pinAnchorFailures(readRepo(DOCS_FILE), TABLE)).toEqual([]);
   });
 
   afterAll(() => {
@@ -1017,5 +1125,277 @@ describe("wb-cax.25 docs drift names the row and cell or the section (synthetic 
 
   it("an edit of any other section never reddens a row: the test-classes and fault-injection sections are free to change", () => {
     expect(docsFailures(synthetic().replace("Classes.", "Classes, changed.").replace("Locations.", "Different locations."))).toEqual([]);
+  });
+});
+
+describe("wb-h8f.15 the matrix table's cells are read from the section its rendered view is judged in (h8f.12 PREP F1 twin, the G7 same-view class; synthetic document)", () => {
+  const ROWS_CELLS: readonly (readonly string[])[] = GRID.slice(1);
+  const BOLD_HEADER: readonly string[] = HEADER_CELLS.map(cell => `**${cell}**`);
+  const HEADER_CAUSE = "the section's own table has the header";
+  const tableOf = (header: readonly string[], rows: readonly (readonly string[])[]): string => [header, header.map(() => "---"), ...rows].map(cells => `| ${cells.join(" | ")} |`).join("\n");
+  /** One row re-split across its subsystem/positive cell boundary: the positive cell's first word moves into the subsystem cell, so the rendered (cell-joined) text is unchanged. */
+  const resplit = (cells: readonly string[]): string[] => {
+    const words = (cells[1] ?? "").split(" ");
+    return [`${cells[0] ?? ""} ${words[0] ?? ""}`, words.slice(1).join(" "), cells[2] ?? ""];
+  };
+  const resplitTable = (at: number, header: readonly string[] = BOLD_HEADER): string => tableOf(header, ROWS_CELLS.map((cells, index) => (index === at ? resplit(cells) : cells)));
+  /** The synthetic document with the given table in the matrix section, and the ORIGINAL table copied into the test-classes section (before) or the fault-injection section (after), or no copy. */
+  const g7Doc = (table: string, copy: "before" | "after" | "none"): string => {
+    const doc = synthetic(() => table);
+    if (copy === "before") return doc.replace("\nClasses.\n", `\nClasses.\n\n${GRID_MARKDOWN}\n`);
+    if (copy === "after") return doc.replace("\nLocations.\n", `\nLocations.\n\n${GRID_MARKDOWN}\n`);
+    return doc;
+  };
+  const COPIES = ["before", "after"] as const;
+
+  it("G7 precondition: every twin mutant keeps the section's rendered view exact, the truth section intact, and exactly one matrix-header table in the document - the copy - so a whole-document read judges the copy (the h8f.12 gate's 79-unchanged shape)", () => {
+    expect(ROWS_CELLS).toHaveLength(13);
+    expect(ROWS_CELLS.every(cells => (cells[1] ?? "").includes(" ")), "every positive cell has two words, so each row re-splits without an empty cell").toBe(true);
+    for (const at of ROWS_CELLS.keys()) {
+      for (const copy of COPIES) {
+        const doc = g7Doc(resplitTable(at), copy);
+        expect(sectionMatches(docsSection(doc, DOCS_HEADING, 2, [DOCS_PARENT]), SECTION_BLOCKS), `${copy} ${at}`).toEqual({ ok: true, why: "" });
+        expect(matrixGrids(doc), `${copy} ${at}`).toEqual([GRID.map(cells => [...cells])]);
+        expect(truthFailures(doc), `${copy} ${at}`).toEqual([]);
+      }
+    }
+  });
+
+  it("G7 twin (h8f.12 PREP F1): a bolded header plus one row re-split in the section, with the original table copied to another section, reds naming the header and the re-split row and cell - every row, the copy before or after", () => {
+    for (const [at, row] of TABLE.entries()) {
+      for (const copy of COPIES) {
+        const lines = docsFailures(g7Doc(resplitTable(at), copy));
+        const label = `${copy} | ${row.subsystem}`;
+        expect(lines.some(line => line.startsWith(`${DOCS_FILE} § ${DOCS_HEADING}: ${HEADER_CAUSE}`)), label).toBe(true);
+        expect(named(lines), label).toEqual([`row ${row.subsystem}`, `row ${row.subsystem}/positive`]);
+      }
+    }
+  });
+
+  it("G7 bold-only: the section's table under a bolded header, its cells intact, with the original copied to another section, reds on the header alone", () => {
+    for (const copy of COPIES) {
+      const lines = docsFailures(g7Doc(tableOf(BOLD_HEADER, ROWS_CELLS), copy));
+      expect(lines, copy).toHaveLength(1);
+      expect(lines[0], copy).toContain(HEADER_CAUSE);
+      expect(lines[0], copy).toContain(JSON.stringify(BOLD_HEADER));
+    }
+  });
+
+  it("G7 re-split under a plain header with the copy elsewhere: the second matrix-header table reds the uniqueness rule, the re-split never reads green", () => {
+    for (const at of ROWS_CELLS.keys()) {
+      for (const copy of COPIES) {
+        expect(docsFailures(g7Doc(resplitTable(at, HEADER_CELLS), copy)).some(line => line.includes("the matrix table must occur exactly once; found 2")), `${copy} ${at}`).toBe(true);
+      }
+    }
+  });
+
+  it("G7b: the re-split alone - plain header, no copy - keeps redding naming the row and cell, and names no header", () => {
+    for (const [at, row] of TABLE.entries()) {
+      const lines = docsFailures(g7Doc(resplitTable(at, HEADER_CELLS), "none"));
+      expect(named(lines), row.subsystem).toEqual([`row ${row.subsystem}`, `row ${row.subsystem}/positive`]);
+      expect(lines.some(line => line.includes(HEADER_CAUSE)), row.subsystem).toBe(false);
+    }
+  });
+
+  it("same view, other direction: the section's own table exact with a re-split copy under a bolded header in another section stays green - a neighbouring section is free to change", () => {
+    const decoy = resplitTable(5);
+    expect(docsFailures(synthetic().replace("\nClasses.\n", `\nClasses.\n\n${decoy}\n`))).toEqual([]);
+    expect(docsFailures(synthetic().replace("\nLocations.\n", `\nLocations.\n\n${decoy}\n`))).toEqual([]);
+  });
+});
+
+describe("wb-vf94 the docs/14 matrix evidence anchor: the pin set is judged outside the census's own literals, and every drift names the pin (h8f.15 F1, owner R667 (2); synthetic documents, rendered view)", () => {
+  const WHERE = `${DOCS_FILE} § ${PINS_HEADING}`;
+  const LEGS = pinLegs(TABLE);
+  const key = (cells: readonly string[]): string => cells.join(" | ");
+  const BOLD_PINS_HEADER: readonly string[] = PINS_HEADER.map(cell => `**${cell}**`);
+  const HEADER_CAUSE = "the section's own table has the header";
+  const tableOf = (header: readonly string[], rows: readonly (readonly string[])[]): string => [header, header.map(() => "---"), ...rows].map(cells => `| ${cells.join(" | ")} |`).join("\n");
+  const ORIGINAL = tableOf(PINS_HEADER, LEGS.map(leg => leg.cells));
+  const ORIGINAL_GRID: string[][] = [PINS_HEADER, ...LEGS.map(leg => leg.cells)].map(cells => [...cells]);
+  /**
+   * A synthetic docs/14 whose evidence section holds the given table, under the real heading shape and with the matrix section exactly its frozen
+   * grid; options rename the heading, add a block before the heading or inside the section, or copy the ORIGINAL table into the section before the
+   * matrix (test classes) or after the evidence section (fault-injection locations).
+   */
+  const pinsDoc = (table: string = ORIGINAL, options: { readonly heading?: string; readonly before?: string; readonly inside?: string; readonly copy?: "before" | "after" } = {}): string =>
+    [
+      `# ${DOCS_PARENT}`,
+      "",
+      "## Test classes",
+      "",
+      "Classes.",
+      "",
+      ...(options.copy === "before" ? [ORIGINAL, ""] : []),
+      `## ${DOCS_HEADING}`,
+      "",
+      GRID_MARKDOWN,
+      "",
+      ...(options.before === undefined ? [] : [options.before, ""]),
+      `## ${options.heading ?? PINS_HEADING}`,
+      "",
+      PINS_INTRO,
+      "",
+      table,
+      "",
+      ...(options.inside === undefined ? [] : [options.inside, ""]),
+      "## Fault-injection locations",
+      "",
+      "Locations.",
+      "",
+      ...(options.copy === "after" ? [ORIGINAL, ""] : []),
+    ].join("\n");
+  /** A copy of the table with one half edited: the census side of a drift. */
+  const editHalf = (target: { readonly row: Row; readonly half: Half }, edit: (half: Half) => Half): Row[] =>
+    TABLE.map(row => (row === target.row ? { ...row, halves: row.halves.map(half => (half === target.half ? edit(half) : half)) } : row));
+  /** The first half the given predicate selects, found from the table - never a hard-coded member, so a coordinated hollow of any one member leaves these rows standing. */
+  const firstHalf = (what: string, predicate: (half: Half) => boolean): { readonly row: Row; readonly half: Half } => {
+    for (const row of TABLE) for (const half of row.halves) if (predicate(half)) return { row, half };
+    throw new Error(`no half is ${what}`);
+  };
+  const MULTI = (): { readonly row: Row; readonly half: Half } => firstHalf("a default-gate half with two or more pins", half => half.tier === "default-gate" && half.pins.length > 1);
+  /** One leg re-split across its tier/pinned-case cell boundary: the case cell's first word moves into the tier cell, so the cell-joined rendered text is unchanged. */
+  const resplit = (cells: readonly string[]): string[] => {
+    const [first = "", ...rest] = (cells[3] ?? "").split(" ");
+    return [cells[0] ?? "", cells[1] ?? "", `${cells[2] ?? ""} ${first}`, rest.join(" ")];
+  };
+  const resplitTable = (at: number, header: readonly string[] = BOLD_PINS_HEADER): string => tableOf(header, LEGS.map((leg, index) => (index === at ? resplit(leg.cells) : leg.cells)));
+  const COPIES = ["before", "after"] as const;
+  /** The legs of each matrix row with their table positions: the G7 rows run once per row (each case a bounded loop, never one loop over every leg). */
+  const LEGS_BY_ROW = TABLE.map(row => ({ subsystem: row.subsystem, legs: [...LEGS.entries()].filter(([, leg]) => leg.cells[0] === row.subsystem) }));
+
+  it("control: one leg per pin and one per unpinned half (54 + 2, the unpinned halves in table order), and a synthetic docs/14 that lists exactly the legs passes", () => {
+    expect(LEGS).toHaveLength(PIN_COUNT + EXPECTED_UNPINNED.length);
+    expect(LEGS.filter(leg => leg.label.startsWith("unpinned half ")).map(leg => leg.label)).toEqual(EXPECTED_UNPINNED.map(name => `unpinned half ${name}`));
+    expect(pinAnchorFailures(pinsDoc(), TABLE)).toEqual([]);
+  });
+
+  it("PH1 (R667 F1, the PIN-level coordinated hollow): the last pin of a multi-pin half dropped from the table - and so from every census literal edited to match - reds against the docs table, naming the pin it still lists", () => {
+    const target = MULTI();
+    const dropped = LEGS.find(leg => leg.label === `pin ${halfName(target.row, target.half)}/${target.half.pins.length}`);
+    expect(dropped, "the dropped pin is one leg of the docs table").toBeDefined();
+    const lines = pinAnchorFailures(pinsDoc(), editHalf(target, half => ({ ...half, pins: half.pins.slice(0, -1) })));
+    expect(lines).toContain(`${WHERE} lists ${key(dropped?.cells ?? [])}, which the census table does not carry`);
+    expect(lines.some(line => line.startsWith(`${WHERE} is not exactly its intro paragraph and one table of the census's pins`))).toBe(true);
+  });
+
+  it("PH2: a pin the docs table drops reds, naming the pin", () => {
+    const dropped = LEGS.at(-1);
+    expect(dropped).toBeDefined();
+    const lines = pinAnchorFailures(pinsDoc(tableOf(PINS_HEADER, LEGS.filter(leg => leg !== dropped).map(leg => leg.cells))), TABLE);
+    expect(lines).toContain(`${dropped?.label}: ${key(dropped?.cells ?? [])} is not listed in ${WHERE}`);
+  });
+
+  it("PH3: a docs row the census does not carry reds, naming the row", () => {
+    const extra = [LEGS[0]?.cells[0] ?? "", "positive", "default-gate", 'test/workflow-journal.test.ts: "an extra case the census never pinned"'];
+    const lines = pinAnchorFailures(pinsDoc(tableOf(PINS_HEADER, [...LEGS.map(leg => leg.cells), extra])), TABLE);
+    expect(lines).toContain(`${WHERE} lists ${key(extra)}, which the census table does not carry`);
+  });
+
+  it("PH4: two swapped docs rows, and a duplicated docs row, red as out of table order or more than once", () => {
+    const cells = LEGS.map(leg => leg.cells);
+    const [first, second, ...rest] = cells;
+    expect(first !== undefined && second !== undefined).toBe(true);
+    if (first === undefined || second === undefined) return;
+    const order = `${WHERE} lists the census's pins out of table order or more than once`;
+    expect(pinAnchorFailures(pinsDoc(tableOf(PINS_HEADER, [second, first, ...rest])), TABLE)).toContain(order);
+    expect(pinAnchorFailures(pinsDoc(tableOf(PINS_HEADER, [...cells, first])), TABLE)).toContain(order);
+  });
+
+  it("PH5: a title reworded in the docs reds on both sides, so the verbatim title is anchored and not only the file", () => {
+    const target = LEGS.find(leg => leg.label.startsWith("pin "));
+    expect(target).toBeDefined();
+    if (target === undefined) return;
+    const reworded = [...target.cells.slice(0, 3), `${target.cells[3] ?? ""} (reworded)`];
+    const lines = pinAnchorFailures(pinsDoc(tableOf(PINS_HEADER, LEGS.map(leg => (leg === target ? reworded : leg.cells)))), TABLE);
+    expect(lines).toContain(`${target.label}: ${key(target.cells)} is not listed in ${WHERE}`);
+    expect(lines).toContain(`${WHERE} lists ${key(reworded)}, which the census table does not carry`);
+  });
+
+  it("PH6: census-side drifts red against the docs table from outside: a pin swapped for another case (CT3), a lowered it.each minimum, a re-bound suite, a relabelled tier, and an unpinned half given a pin", () => {
+    const eachHalf = firstHalf("holding an it.each pin", half => half.pins.some(entry => entry.each !== undefined));
+    const suiteHalf = firstHalf("holding a suite-bound pin", half => half.pins.some(entry => entry.suite !== undefined));
+    const liveHalf = firstHalf("of a non-default tier", half => half.tier !== "default-gate");
+    const openHalf = firstHalf("unpinned", half => half.pins.length === 0);
+    const drifts: readonly (readonly [string, Row[]])[] = [
+      ["CT3 swap", editHalf(MULTI(), half => ({ ...half, pins: half.pins.map((entry, index) => (index === 1 ? { ...entry, title: `${entry.title} (swapped)` } : entry)) }))],
+      ["lowered each minimum", editHalf(eachHalf, half => ({ ...half, pins: half.pins.map(entry => (entry.each === undefined ? entry : { ...entry, each: { minCases: entry.each.minCases - 1 } })) }))],
+      ["re-bound suite", editHalf(suiteHalf, half => ({ ...half, pins: half.pins.map(entry => (entry.suite === undefined ? entry : { ...entry, suite: [...entry.suite.slice(0, -1), "200 x 50"] })) }))],
+      ["relabelled tier", editHalf(liveHalf, half => ({ ...half, tier: half.tier === "native-read" ? "rf-preview" : "native-read" }))],
+      ["unpinned half given a pin", editHalf(openHalf, ({ reason: _reason, ...half }) => ({ ...half, pins: [pin("workflow-examples.test.ts", "ships at least the examples the guide links")] }))],
+    ];
+    for (const [name, rows] of drifts) {
+      const lines = pinAnchorFailures(pinsDoc(), rows);
+      expect(lines.some(line => line.endsWith(` is not listed in ${WHERE}`)), `${name}: the census-side leg is not in the docs table`).toBe(true);
+      expect(lines.some(line => line.endsWith(", which the census table does not carry")), `${name}: the docs row the census no longer carries`).toBe(true);
+    }
+  });
+
+  it("PH7: a renamed, duplicated or re-homed section heading refuses the section", () => {
+    const refused = (markdown: string): string => pinAnchorFailures(markdown, TABLE)[0] ?? "";
+    expect(refused(pinsDoc(ORIGINAL, { heading: `${PINS_HEADING} (draft)` }))).toContain("the section is refused");
+    expect(refused(pinsDoc(ORIGINAL, { inside: `## ${PINS_HEADING}` }))).toContain("occurs 2 times");
+    expect(refused(pinsDoc(ORIGINAL, { before: "# Appendix" }))).toContain("the census binds it under");
+  });
+
+  it("PH8: a paragraph added beside the table, or the table hidden in an HTML comment, is not the section the census adopts", () => {
+    const weakened = pinAnchorFailures(pinsDoc(ORIGINAL, { inside: "A pin may be dropped from the census without a docs edit." }), TABLE);
+    expect(weakened.some(line => line.includes("is not exactly its intro paragraph and one table"))).toBe(true);
+    const hidden = pinAnchorFailures(pinsDoc(`<!--\n${ORIGINAL}\n-->`), TABLE);
+    expect(hidden.some(line => line.includes("is not exactly its intro paragraph and one table"))).toBe(true);
+    expect(hidden).toContain(`${DOCS_FILE}: the matrix evidence table must occur exactly once; found 0`);
+  });
+
+  it("G7 rows: the per-row cases below cover every leg exactly once, and every pinned-case cell has two words, so each leg re-splits without an empty cell", () => {
+    expect(LEGS_BY_ROW.flatMap(({ legs }) => legs.map(([at]) => at))).toEqual([...LEGS.keys()]);
+    expect(LEGS.every(leg => (leg.cells[3] ?? "").includes(" "))).toBe(true);
+  });
+
+  it.each(LEGS_BY_ROW)("G7 precondition, row $subsystem: every re-split mutant keeps the evidence section's rendered view exact and leaves exactly one evidence-header table in the document - the copy - so a whole-document read would judge the copy", ({ legs }) => {
+    expect(legs.length).toBeGreaterThan(0);
+    for (const [at] of legs) {
+      for (const copy of COPIES) {
+        const doc = pinsDoc(resplitTable(at), { copy });
+        expect(sectionMatches(docsSection(doc, PINS_HEADING, 2, [DOCS_PARENT]), pinBlocks(LEGS)), `${copy} ${at}`).toEqual({ ok: true, why: "" });
+        expect(pinGrids(doc), `${copy} ${at}`).toEqual([ORIGINAL_GRID]);
+      }
+    }
+  });
+
+  it.each(LEGS_BY_ROW)("G7 (the wb-h8f.15 same-view class, built in), row $subsystem: a bolded header plus one leg re-split in the section, with the original table copied to another section, reds naming the header and the re-split pin - every leg of the row, the copy before or after", ({ legs }) => {
+    expect(legs.length).toBeGreaterThan(0);
+    for (const [at, leg] of legs) {
+      for (const copy of COPIES) {
+        const lines = pinAnchorFailures(pinsDoc(resplitTable(at), { copy }), TABLE);
+        const label = `${copy} | ${leg.label}`;
+        expect(lines.some(line => line.startsWith(`${WHERE}: ${HEADER_CAUSE}`)), label).toBe(true);
+        expect(lines, label).toContain(`${leg.label}: ${key(leg.cells)} is not listed in ${WHERE}`);
+      }
+    }
+  });
+
+  it("G7 bold-only: the section's table under a bolded header, its cells intact, with the original copied to another section, reds on the header alone", () => {
+    for (const copy of COPIES) {
+      const lines = pinAnchorFailures(pinsDoc(tableOf(BOLD_PINS_HEADER, LEGS.map(leg => leg.cells)), { copy }), TABLE);
+      expect(lines, copy).toHaveLength(1);
+      expect(lines[0], copy).toContain(HEADER_CAUSE);
+      expect(lines[0], copy).toContain(JSON.stringify(BOLD_PINS_HEADER));
+    }
+  });
+
+  it.each(LEGS_BY_ROW)("G7 re-split under the plain header, row $subsystem: with the copy elsewhere the second evidence-header table reds the uniqueness rule, and alone it reds naming the pin and no header", ({ legs }) => {
+    expect(legs.length).toBeGreaterThan(0);
+    for (const [at, leg] of legs) {
+      expect(pinAnchorFailures(pinsDoc(resplitTable(at, PINS_HEADER), { copy: "after" }), TABLE), leg.label).toContain(`${DOCS_FILE}: the matrix evidence table must occur exactly once; found 2`);
+      const alone = pinAnchorFailures(pinsDoc(resplitTable(at, PINS_HEADER)), TABLE);
+      expect(alone, leg.label).toContain(`${leg.label}: ${key(leg.cells)} is not listed in ${WHERE}`);
+      expect(alone.some(line => line.includes(HEADER_CAUSE)), leg.label).toBe(false);
+    }
+  });
+
+  it("same view, other direction: the section's own table exact, with a re-split copy under a bolded header in another section, stays green - a neighbouring section is free to change", () => {
+    const decoy = resplitTable(5);
+    expect(pinAnchorFailures(pinsDoc().replace("\nClasses.\n", `\nClasses.\n\n${decoy}\n`), TABLE)).toEqual([]);
+    expect(pinAnchorFailures(pinsDoc().replace("\nLocations.\n", `\nLocations.\n\n${decoy}\n`), TABLE)).toEqual([]);
   });
 });

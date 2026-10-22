@@ -1,0 +1,417 @@
+{
+  "comment": "wb-zq7i (cax.28 F1-F4 cure, the hk9l/5jha roster pattern): the OUT-OF-FILE anchor for test/workbench-upstream-divergence.test.ts. rows: every judged row of CASES (35) and SETEXT_CASES (4) in census order - table, id, fixture, the registered test name, every expected problem and the sha256 of the input page, both normalized with the fixture shas named <base> <div> <side> <head> (FROZEN_SHAPE's form), written from the rows as measured at the cut. residuals: the header's named residual families that have pinned quiet rows (R3, R5, R7, R8 with its four ATX and four setext members). drt: the drt fixture's measured name-status set (--find-renames) and its --diff-filter=M set. The census judges its in-file tables, its registered tests and the drt measurement against this file at test time, in order and both ways.",
+  "rows": [
+    {
+      "table": "CASES",
+      "id": "exact",
+      "fixture": "plain",
+      "test": "fixture exact",
+      "problems": [],
+      "input": "c8d4ce444b2e74fd7a989efb2ae51271f884e0fdd13b202cb9154a49925ea284"
+    },
+    {
+      "table": "CASES",
+      "id": "exact-later",
+      "fixture": "later",
+      "test": "fixture exact-later",
+      "problems": [],
+      "input": "798eb2d7e7df09da26e3e3699696f8fcef9ef9fd329587398bd9a98f393c6676"
+    },
+    {
+      "table": "CASES",
+      "id": "unrecorded",
+      "fixture": "plain",
+      "test": "fixture unrecorded",
+      "problems": [
+        "unrecorded divergence: src/a.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence"
+      ],
+      "input": "38db8c50144642b9cf071ce7bb7e41da985130831c2e2966eb2647f27c4df646"
+    },
+    {
+      "table": "CASES",
+      "id": "no-section",
+      "fixture": "plain",
+      "test": "fixture no-section",
+      "problems": [
+        "missing section: docs/workbench/16 has no readable \"## Measured fork divergence\" section (the rendered view has no level-2 heading \"Measured fork divergence\"); add it, then record it in docs/workbench/16 section Measured fork divergence",
+        "unrecorded divergence: src/a.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence"
+      ],
+      "input": "d347dd2911d4f58dd6df05d4a9111fa435ad9067db5ac8d79cbb05eb3f7f84b4"
+    },
+    {
+      "table": "CASES",
+      "id": "stale-misrecorded",
+      "fixture": "plain",
+      "test": "fixture stale-misrecorded",
+      "problems": [
+        "stale row: src/b.ts no longer differs from the baseline; remove it from ## Measured fork divergence",
+        "misrecorded row: src/ghost.ts never existed at the baseline"
+      ],
+      "input": "1d3852c599fa67c757711a23f2988b501c20850c1a07b5a46b6f531ff7eb6c90"
+    },
+    {
+      "table": "CASES",
+      "id": "later-edit",
+      "fixture": "later",
+      "test": "fixture later-edit",
+      "problems": [
+        "unrecorded divergence: src/b.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence"
+      ],
+      "input": "c8d4ce444b2e74fd7a989efb2ae51271f884e0fdd13b202cb9154a49925ea284"
+    },
+    {
+      "table": "CASES",
+      "id": "undated",
+      "fixture": "plain",
+      "test": "fixture undated",
+      "problems": [
+        "undated row: src/a.ts recorded-at \"deadbeef\" is not a reachable commit"
+      ],
+      "input": "eef7804d9e59759bde7a6412e3263d69f75d12db423faf249fd6460892348b5e"
+    },
+    {
+      "table": "CASES",
+      "id": "malformed",
+      "fixture": "plain",
+      "test": "fixture malformed",
+      "problems": [
+        "malformed row: | src/a.ts | <div> | (empty) | (every row needs a path, a recorded-at commit id and a note)",
+        "unrecorded divergence: src/a.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence"
+      ],
+      "input": "33c7cef7feacbc001034eb1da09ecec8079ddccdab38230afa9acafd25fabb34"
+    },
+    {
+      "table": "CASES",
+      "id": "duplicate",
+      "fixture": "plain",
+      "test": "fixture duplicate",
+      "problems": [
+        "duplicate row: src/a.ts is recorded more than once"
+      ],
+      "input": "c49f5d16770413e9a109e70f24111c4294d45237795d06599cc995fb1b6b5505"
+    },
+    {
+      "table": "CASES",
+      "id": "dated-at-baseline",
+      "fixture": "plain",
+      "test": "fixture dated-at-baseline",
+      "problems": [
+        "mis-dated row: src/a.ts recorded-at \"<base>\" predates the divergence (the path did not differ from the baseline there)"
+      ],
+      "input": "93fe6656c333b00b2d7b4ea676c286056371eb4d2f2e013a891aeecfe8837df2"
+    },
+    {
+      "table": "CASES",
+      "id": "dated-before-divergence",
+      "fixture": "later",
+      "test": "fixture dated-before-divergence",
+      "problems": [
+        "mis-dated row: src/b.ts recorded-at \"<div>\" predates the divergence (the path did not differ from the baseline there)"
+      ],
+      "input": "bbf195d85245d5843812375509f5a88d02603b98eca556d6c841b5e49bb44b88"
+    },
+    {
+      "table": "CASES",
+      "id": "not-ancestor",
+      "fixture": "later",
+      "test": "fixture not-ancestor",
+      "problems": [
+        "mis-dated row: src/b.ts recorded-at \"<side>\" is not an ancestor of HEAD"
+      ],
+      "input": "fb62b4e8cf4ddd184bc47ba0d7cffdf120c63fa39b60b5740f09d402283d43cd"
+    },
+    {
+      "table": "CASES",
+      "id": "html-comment-row",
+      "fixture": "later",
+      "test": "fixture html-comment-row",
+      "problems": [
+        "html in section: \"## Measured fork divergence\" carries HTML (a comment or a tag), which can hide rows from the rendered view; remove it",
+        "unrecorded divergence: src/b.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence"
+      ],
+      "input": "ed47a232b2328b511f3d6d8b54a63bf63057e73fcd5a386048401ab4eaf6bc3e"
+    },
+    {
+      "table": "CASES",
+      "id": "html-comment-all-rows",
+      "fixture": "later",
+      "test": "fixture html-comment-all-rows",
+      "problems": [
+        "html in section: \"## Measured fork divergence\" carries HTML (a comment or a tag), which can hide rows from the rendered view; remove it",
+        "unrecorded divergence: src/a.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence",
+        "unrecorded divergence: src/b.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence"
+      ],
+      "input": "0db5685beb28f79d39917d652f312043d5852ef5ae6be97b62aab6b345c9b524"
+    },
+    {
+      "table": "CASES",
+      "id": "duplicate-heading",
+      "fixture": "later",
+      "test": "fixture duplicate-heading",
+      "problems": [
+        "missing section: docs/workbench/16 has no readable \"## Measured fork divergence\" section (the heading \"Measured fork divergence\" occurs 2 times in the rendered view; a pinned section needs it exactly once); add it, then record it in docs/workbench/16 section Measured fork divergence",
+        "unrecorded divergence: src/a.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence",
+        "unrecorded divergence: src/b.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence"
+      ],
+      "input": "f77c25dd2ef4f27bee64393fe303f9c108d6320c67db44d07242e8f6279b85df"
+    },
+    {
+      "table": "CASES",
+      "id": "hidden-heading-before",
+      "fixture": "later",
+      "test": "fixture hidden-heading-before",
+      "problems": [
+        "unrecorded divergence: src/a.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence",
+        "unrecorded divergence: src/b.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence"
+      ],
+      "input": "031718d8f47f10de52489dfb3e502b3ffc94c90666ea4eb720801b1ba28460bd"
+    },
+    {
+      "table": "CASES",
+      "id": "level-1-split",
+      "fixture": "later",
+      "test": "fixture level-1-split",
+      "problems": [
+        "unrecorded divergence: src/a.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence",
+        "unrecorded divergence: src/b.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence"
+      ],
+      "input": "2007527119aebe5b12d51f64ba77e3be859cedcd2d4c79461246c9c0efce08c6"
+    },
+    {
+      "table": "CASES",
+      "id": "level-2-split",
+      "fixture": "later",
+      "test": "fixture level-2-split",
+      "problems": [
+        "unrecorded divergence: src/a.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence",
+        "unrecorded divergence: src/b.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence"
+      ],
+      "input": "71061876aca7f63b9a73dae7830dd847215d6d9df99dbb93ebff1aa0be547793"
+    },
+    {
+      "table": "CASES",
+      "id": "shallower-copy-before",
+      "fixture": "later",
+      "test": "fixture shallower-copy-before",
+      "problems": [
+        "unrecorded divergence: src/a.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence",
+        "unrecorded divergence: src/b.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence"
+      ],
+      "input": "9020fbe797a9aa58d569e7f545d264275d737d7ae7f88bf0977a004ecdadec20"
+    },
+    {
+      "table": "CASES",
+      "id": "rehomed-heading",
+      "fixture": "later",
+      "test": "fixture rehomed-heading",
+      "problems": [
+        "missing section: docs/workbench/16 has no readable \"## Measured fork divergence\" section (the heading \"Measured fork divergence\" sits under the parent heading path [\"Interlude\"]; the census binds it under [\"16 — Fork implementation refactor map and upstream compatibility\"]); add it, then record it in docs/workbench/16 section Measured fork divergence",
+        "unrecorded divergence: src/a.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence",
+        "unrecorded divergence: src/b.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence"
+      ],
+      "input": "b3846de976b88982a310e2aa40f26365f82e69c75bcda7a5454c96c2dcd6a48d"
+    },
+    {
+      "table": "CASES",
+      "id": "fenced-row",
+      "fixture": "later",
+      "test": "fixture fenced-row",
+      "problems": [
+        "unrecorded divergence: src/b.ts differs from the baseline; record it in docs/workbench/16 section Measured fork divergence"
+      ],
+      "input": "1f40f44181cc9a4ce87fae045949704ec3db64328a7b6bb47d6c55fcd05e88ee"
+    },
+    {
+      "table": "CASES",
+      "id": "six-hex-dated",
+      "fixture": "plain",
+      "test": "fixture six-hex-dated",
+      "problems": [
+        "undated row: src/a.ts recorded-at \"abcdef\" is not a commit id (7 to 40 lowercase hex digits); a ref name or a revision expression moves with the branch"
+      ],
+      "input": "944b1fa7c575178fd0f618dd519375b00bf68d1fb483f3380b7deb1eafaf0498"
+    },
+    {
+      "table": "CASES",
+      "id": "head-dated",
+      "fixture": "plain",
+      "test": "fixture head-dated",
+      "problems": [
+        "undated row: src/a.ts recorded-at \"HEAD\" is not a commit id (7 to 40 lowercase hex digits); a ref name or a revision expression moves with the branch"
+      ],
+      "input": "7329bc1f89ccb1350f0fa98b9d2f850d35c402eca667345c1b958e7fffdb34c4"
+    },
+    {
+      "table": "CASES",
+      "id": "all-head-dated",
+      "fixture": "later",
+      "test": "fixture all-head-dated",
+      "problems": [
+        "undated row: src/a.ts recorded-at \"HEAD\" is not a commit id (7 to 40 lowercase hex digits); a ref name or a revision expression moves with the branch",
+        "undated row: src/b.ts recorded-at \"HEAD\" is not a commit id (7 to 40 lowercase hex digits); a ref name or a revision expression moves with the branch"
+      ],
+      "input": "56804a67b127e8f5da1c987b9e3ad788e73d786347579182039f12ea134a68e2"
+    },
+    {
+      "table": "CASES",
+      "id": "branch-dated",
+      "fixture": "later",
+      "test": "fixture branch-dated",
+      "problems": [
+        "undated row: src/b.ts recorded-at \"main\" is not a commit id (7 to 40 lowercase hex digits); a ref name or a revision expression moves with the branch"
+      ],
+      "input": "fd2cc51bad332f1efdfe2593c90749d67fcb8f3baa6d618d3b0436355211f883"
+    },
+    {
+      "table": "CASES",
+      "id": "hex-ref-dated",
+      "fixture": "later",
+      "test": "fixture hex-ref-dated",
+      "problems": [
+        "undated row: src/b.ts recorded-at \"0000000\" resolves to commit <head>, so it names a ref, not a commit id"
+      ],
+      "input": "4a1c8d9965e6f9e6b8fb44d976553a131be36c781024eea0a7f54f132f6b44f5"
+    },
+    {
+      "table": "CASES",
+      "id": "header-renamed",
+      "fixture": "plain",
+      "test": "fixture header-renamed",
+      "problems": [
+        "malformed table: the header renders | path | recorded | note |; the record's header is | path | recorded at | note |"
+      ],
+      "input": "b8e9085bfe0e981d6ac8032aae261871c7674d08c264d903d69176a935045e95"
+    },
+    {
+      "table": "CASES",
+      "id": "two-tables",
+      "fixture": "later",
+      "test": "fixture two-tables",
+      "problems": [
+        "malformed table: \"## Measured fork divergence\" renders 2 tables; the record is exactly one"
+      ],
+      "input": "0950be5eda769300ab57fb4c763511b60866202378abaf0dba2b550242833585"
+    },
+    {
+      "table": "CASES",
+      "id": "residual-struck-path",
+      "fixture": "plain",
+      "test": "fixture residual-struck-path",
+      "problems": [],
+      "input": "23e42fc23db95bc672e35652635971ff99ea1106e8f83eae2b092f1c3cededaa"
+    },
+    {
+      "table": "CASES",
+      "id": "residual-head-only",
+      "fixture": "plain",
+      "test": "fixture residual-head-only",
+      "problems": [],
+      "input": "c8d4ce444b2e74fd7a989efb2ae51271f884e0fdd13b202cb9154a49925ea284"
+    },
+    {
+      "table": "CASES",
+      "id": "residual-drt-paths",
+      "fixture": "drt",
+      "test": "fixture residual-drt-paths",
+      "problems": [],
+      "input": "c8d4ce444b2e74fd7a989efb2ae51271f884e0fdd13b202cb9154a49925ea284"
+    },
+    {
+      "table": "CASES",
+      "id": "residual-list-nested-h2",
+      "fixture": "later",
+      "test": "fixture residual-list-nested-h2",
+      "problems": [],
+      "input": "bbff0e50dda6c547b156379fb892e8d7dd481c1f72b8a6dbfe49da0549b62b8c"
+    },
+    {
+      "table": "CASES",
+      "id": "residual-quote-nested-h2",
+      "fixture": "later",
+      "test": "fixture residual-quote-nested-h2",
+      "problems": [],
+      "input": "e59ef66bc3fff9ac488faadd75a1af7a3d5402478fc9a13c09c4606411ec5fef"
+    },
+    {
+      "table": "CASES",
+      "id": "residual-list-nested-h1",
+      "fixture": "later",
+      "test": "fixture residual-list-nested-h1",
+      "problems": [],
+      "input": "fa37ca6ab24937f1085d4ef32fb7923b150122bee5f5976d56358726b53bb63c"
+    },
+    {
+      "table": "CASES",
+      "id": "residual-quote-nested-h1",
+      "fixture": "later",
+      "test": "fixture residual-quote-nested-h1",
+      "problems": [],
+      "input": "77e4be3811eb666e12f435e4d6b797dfdcedf20b22c1983ddae37ff43c0df8d9"
+    },
+    {
+      "table": "SETEXT_CASES",
+      "id": "residual-list-setext-h2",
+      "fixture": "later",
+      "test": "fixture residual-list-setext-h2",
+      "problems": [],
+      "input": "b2dc1a1c5cc21d110dd4b4628bad0f00b23ca057fb80b18807d603653a02317b"
+    },
+    {
+      "table": "SETEXT_CASES",
+      "id": "residual-quote-setext-h2",
+      "fixture": "later",
+      "test": "fixture residual-quote-setext-h2",
+      "problems": [],
+      "input": "2b34c26122525f5a868ef67a10d9e594c9ac2bf00dba1c72be1705f9914d687f"
+    },
+    {
+      "table": "SETEXT_CASES",
+      "id": "residual-list-setext-h1",
+      "fixture": "later",
+      "test": "fixture residual-list-setext-h1",
+      "problems": [],
+      "input": "bff4a80b93a941e28cd905a330ca8b5365d53edea13b4d6bf246f919f9525ab0"
+    },
+    {
+      "table": "SETEXT_CASES",
+      "id": "residual-quote-setext-h1",
+      "fixture": "later",
+      "test": "fixture residual-quote-setext-h1",
+      "problems": [],
+      "input": "04cef285d07fa8c76a45a7c7c5fe0fce469740f1397a5588c81592c78c7d2c8f"
+    }
+  ],
+  "residuals": {
+    "R3": [
+      "residual-struck-path"
+    ],
+    "R5": [
+      "residual-drt-paths"
+    ],
+    "R7": [
+      "residual-head-only"
+    ],
+    "R8": [
+      "residual-list-nested-h2",
+      "residual-quote-nested-h2",
+      "residual-list-nested-h1",
+      "residual-quote-nested-h1",
+      "residual-list-setext-h2",
+      "residual-quote-setext-h2",
+      "residual-list-setext-h1",
+      "residual-quote-setext-h1"
+    ]
+  },
+  "drt": {
+    "nameStatus": [
+      "M\tsrc/a.ts",
+      "A\tsrc/added.ts",
+      "D\tsrc/gone.ts",
+      "T\tsrc/link.ts",
+      "R100\tsrc/moved.ts\tsrc/renamed.ts"
+    ],
+    "modified": [
+      "src/a.ts"
+    ]
+  }
+}

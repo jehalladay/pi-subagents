@@ -18,6 +18,12 @@
  * The RESIDUALS roster is anchored outside this file as well (wb-64x.1, the CT6 / 6ze.39 class): docs/workbench/14
  * "W10 withdrawn-claim census residuals" names each quiet row with its family, an exemplar its page carries exactly once
  * and a clear form whose page reads the withdrawn claim where that table says; judged both ways, rows frozen as read.
+ * wb-5jha (R660 F1, the hk9l roster pattern): the named residual quiet rows docs/14 does not carry - the C3 control
+ * (unrelated prose outside W10) and the GN12/GN13 shape-only nesting/title-depth legs - are anchored OUT OF FILE in
+ * test/fixtures/w10-withdrawn-claim-roster.json: id, family, registered test name, the full sha256 of the quiet page
+ * and its frozen reading, in census order. The roster case judges those rows at test time and requires the fixture,
+ * the in-file rows and the registered tests to agree exactly, both ways, so a row dropped, renamed or silenced in every
+ * literal of this file still reds. Not claimed: an edit of this file and the fixture together, or of the roster case.
  * F9's title is narrowed to column 1, while the independent HEADERS roster judges every column. A newly discovered
  * escape adds a named residual unless it contradicts one of these pinned claims (rule 19(c), enumerate-the-resolvable).
  * Withdrawn spellings: "zero durable writes" and "no durable write" (including its plural). Rendered inline emphasis,
@@ -38,6 +44,7 @@
  * RESIDUALS exemplars are bound, to the docs/14 anchor above). Rule 16 freezes
  * each row's full requirement/name and each location/claim diagnosis, not only counts. No processes or scratch allocations.
  */
+import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { Lexer, type Token, type Tokens, type TokensList } from "marked";
@@ -317,6 +324,17 @@ function residualAnchor(markdown: string): { readonly shape: readonly string[]; 
   return { shape, rows };
 }
 
+// wb-5jha (R660 F1): the out-of-file roster for the named residual quiet rows docs/14 does not carry. The in-file side
+// is derived from the tables the runners register (CONTROLS row C3 and every SHAPE_RESIDUALS row), judged at test time.
+const ROSTER = "test/fixtures/w10-withdrawn-claim-roster.json";
+const ROSTER_FAMILIES: Readonly<Record<string, string>> = { C3: "unrelated prose outside W10", GN12: "shape-only nesting", GN13: "shape-only title-depth" };
+interface RosterRow { readonly id: string; readonly family: string; readonly test: string; readonly digest: string; readonly reading: Reading }
+function rosterRows(): readonly (RosterRow & { readonly declared: Reading })[] {
+  const quiet = CONTROLS.filter(([name]) => name.startsWith("C3 ")).map(([name, input]) => ({ id: "C3", test: name, input, declared: { shape: [], claims: [] } }));
+  const shapes = SHAPE_RESIDUALS.map(row => ({ id: row.id, test: `${row.id} residual: ${row.requirement}`, input: row.input, declared: { shape: row.expected, claims: [] } }));
+  return [...quiet, ...shapes].map(row => ({ id: row.id, family: ROSTER_FAMILIES[row.id] ?? "", test: row.test, digest: createHash("sha256").update(row.input).digest("hex"), reading: judgeSection(row.input), declared: row.declared }));
+}
+
 describe("wb-64x W10 section-level withdrawn-claim census (rendered-model)", () => {
   it("L1 every live W10 row cell and paragraph, and every relocated W10 capability row, has no withdrawn claim", () => {
     expect(judgeSection(readFileSync(join(process.cwd(), "docs/workbench/feature-matrix.md"), "utf8"))).toEqual({ shape: [], claims: [] });
@@ -534,5 +552,27 @@ describe("wb-64x W10 section-level withdrawn-claim census (rendered-model)", () 
       "2:Evidence:W10 table 1 header column 3", "3:Caveats:W10 table 1 header column 4",
     ]);
     expect(CONTROLS.map(([name]) => name)).toEqual(["C0 plane-scoped baseline", "C1 complete comment is not a claim", "C2 link destination title and image are not asserted claims", "C3 unrelated W11 prose is outside the named scope", "C4 phrase cannot be fabricated by joining adjacent cells", "C5 extra blank lines and tight pipes render the same table"]);
+  });
+  it("wb-5jha out-of-file residual roster: the C3 and GN12/GN13 quiet rows equal the fixture by id, family, registered test, page digest and reading, in order and both ways", ({ task }) => {
+    const roster = JSON.parse(readFileSync(join(process.cwd(), ROSTER), "utf8")) as { readonly residuals: readonly RosterRow[] };
+    const rows = rosterRows();
+    const line = (row: RosterRow): string => [row.id, row.family, row.test, row.digest, JSON.stringify(row.reading)].join(" | ");
+    expect(rows.map(line), "the in-file quiet rows, judged now, equal the fixture exactly and in order").toEqual(roster.residuals.map(line));
+    for (const row of rows) expect(row.reading, `${row.id}: the reading its own runner asserts`).toEqual(row.declared);
+    const registered: string[] = [];
+    const walk = (tasks: typeof task.file.tasks): void => {
+      for (const child of tasks) {
+        if (child.type === "test") registered.push(child.name);
+        else if (child.type === "suite") walk(child.tasks);
+      }
+    };
+    walk(task.file.tasks);
+    expect(registered.filter(name => roster.residuals.some(row => name.startsWith(`${row.id} `))), "the registered quiet rows, exactly and in fixture order, nothing extra").toEqual(roster.residuals.map(row => row.test));
+    // Rule 16: the roster rows as read at the cut base; CT5/CT6 kills run through the fixture, outside this file.
+    expect(rows.map(row => `${row.id} | ${row.family} | ${row.test}`)).toEqual([
+      "C3 | unrelated prose outside W10 | C3 unrelated W11 prose is outside the named scope",
+      "GN12 | shape-only nesting | GN12 residual: nested level-1 heading before W10 is shape-only",
+      "GN13 | shape-only title-depth | GN13 residual: demoted matrix title is shape-only",
+    ]);
   });
 });

@@ -26,12 +26,42 @@
  * - owner-receipt "live SDK pass" - an OWNER RECEIPT with no forge-run cmd_ of its own (owner ruling
  *                 2026-10-16T01:16Z: the wb-h7r v2 operator receipt COUNTS as journey 1's live SDK pass evidence).
  *                 Admitted only when the committed file exists, itself carries the row's contract and revision and
- *                 records a realised pass; the TRACEABILITY section under the row's heading (exactly once, rendered
- *                 view) cites the file at that revision in a paragraph that is not SUPERSEDED; and the row carries the
+ *                 records a realised pass; the section under the row's heading (exactly once across both evidence routes, rendered
+ *                 view) cites the file at that revision in a live paragraph, list item or nested quote; and the row carries the
  *                 owner-worded citation - the committed path, the revision, the landing gate, the owner-receipt
  *                 statement and the alias-vs-native fact as the receipt's own preflight records it.
  * - artifact      "code present" - a committed file cited by a section in either evidence route (no row today).
  * - open          "code present" | "not started" - a tracking bead id; never a pass label.
+ *
+ * wb-qys1 / R658 / R668: citation text is rendered from marked tokens, never raw markdown. Inline code/emphasis/link
+ * text counts; comments, fenced examples, images (their alt text included), definitions and link destinations do not.
+ * A source (TRACEABILITY or a receipt file) that holds any raw HTML token other than a complete comment carries no
+ * live evidence at all, since an element, attribute or style can hide text the token view still reads (R668 F4: the
+ * docs/15 and W10 raw-HTML rule, applied here as a void rather than a page refusal because the append-only route
+ * already holds two placeholder tags, wb-5zz.md and wb-973.18.md, that no row cites); its withdrawal entries still
+ * withdraw, so a void never revives a claim. Nested lists and quotes are traversed while separate blocks remain
+ * separate claims. Owner/artifact heading uniqueness is corpus-wide and missing/duplicate section attribution remains
+ * visible. Filename membership reuses receipts-index.mjs RECEIPT_FILE.
+ * A receipt entry is a WITHDRAWAL ENTRY when its heading or body carries a withdrawal keyword - SUPERSEDED, withdrawn
+ * or the noun Withdrawal, in any case (R668 F2) - and a nonempty reason ("Reason:", with or without a space after
+ * the colon, or "because"; R668 F3), and names a path in the evidence corpus (TRACEABILITY or docs/workbench/receipts/);
+ * its fields may occupy separate blocks of that entry. A withdrawal entry withdraws a claim when it is later (same-file
+ * entry order, or a strictly later cross-file entry date), names the claim's file and quotes the claim's exact
+ * rendered text. A withdrawal quotation is not new live evidence: no block of a withdrawal entry, and no block that
+ * opens with SUPERSEDED, withdrawn or Withdrawal, is live, whether or not the original it names exists or matches
+ * (R668 F1: P2/P2b). A keyword inside a block's text with no reason and no evidence path withdraws nothing and keeps
+ * the block live. This is a pinned receipt convention, not an arbitrary natural-language retraction classifier.
+ * Undated cross-file entries, new withdrawal paraphrases and struck-through text (which renders and so counts) are
+ * outside the judged convention; receipts-shape separately requires dated entries. The live corpus holds withdrawal-form
+ * entries no row cites (wb-h8f.6.md and wb-hqa.md first entries: keyword, reason and an evidence path in their prose),
+ * so a row citing either would read refused - fail-closed by design. No product display path is added. Test
+ * diagnostics do not enter the registered tool/UI surface.
+ *
+ * wb-59l1 / R679: section citations now bind by source file AND top-level token index within the selected
+ * section, never by equal text in other entries. The plural Withdrawals is admitted to the convention; the
+ * opening-marker predicate recognizes leading default-ignorable units without deleting or rewriting citation text.
+ * Equal-date cross-file and earlier same-file withdrawals, because-only reasons, the TRACEABILITY HTML void and
+ * cross-file same-position copies each have direct boundary pins. No live evidence document is edited.
  *
  * Frozen literals (rule 16), each written out in full: EXPECTED_SHAPE (journey:label:kind:pins), EXPECTED_PINS (the ten
  * pin pairs), EXPECTED_EVIDENCE (every row's evidence identity, U3) and EXPECTED_JUDGED_ROWS (the rows AC2 judges,
@@ -52,8 +82,11 @@
  * HTML-free: docs/11 must render as exactly one five-item list, docs/14's truth-label section as exactly its two
  * paragraphs (the label paragraph and the Forge-interface paragraph), and docs/14's journey evidence section as exactly
  * its intro paragraph and one table of the census's legs, each under its unique level-2 heading of the level-1 parent,
- * bounded at the next level-1/2 heading or EOF. Drift falsifiers run over SYNTHETIC documents, never the live text, so
- * an unrelated docs edit cannot redden a falsifier row, and a neighbouring section stays free to change.
+ * bounded at the next level-1/2 heading or EOF. The evidence table's legs are judged cell by cell on the section's OWN
+ * table, read through the helper's sectionTables on the same binding as the rendered view (wb-h8f.15, the G7 same-view
+ * class: the rendered view joins a table's cells, so a re-split leg renders the same, and a whole-document grid let a
+ * copy of the table in another section stand in for it). Drift falsifiers run over SYNTHETIC documents, never the live
+ * text, so an unrelated docs edit cannot redden a falsifier row, and a neighbouring section stays free to change.
  *
  * Judging cost (F10; the wb-6hb.9 R546 form): each judge() call re-reads and re-validates the whole report, so the leg
  * judges every table pin in ONE memoized judge() call (verdictsOf, keyed by file, title and tier) that every AC2 row
@@ -72,7 +105,8 @@ import { basename, dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { marked, type Token, type Tokens } from "marked";
 import { describe, expect, it } from "vitest";
-import { type CasePin, DEFAULT_GATE_TIER, DEFAULT_TIER_REPORT, docsSection, judge, type PinVerdict, type RenderedBlock, sectionMatches, sourceStructure } from "./helpers/census.js";
+import { RECEIPT_FILE } from "../qa/workbench/receipts-index.mjs";
+import { type CasePin, DEFAULT_GATE_TIER, DEFAULT_TIER_REPORT, docsSection, judge, type PinVerdict, type RenderedBlock, sectionMatches, sectionTables, sourceStructure } from "./helpers/census.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const REPORT = join(ROOT, DEFAULT_TIER_REPORT);
@@ -305,7 +339,7 @@ interface Reader {
 const REPO_READER: Reader = {
   exists: relative => existsSync(join(ROOT, relative)),
   read: relative => readFileSync(join(ROOT, relative), "utf8"),
-  list: directory => readdirSync(join(ROOT, directory)).filter(name => /^wb-[a-z0-9]+(?:\.[0-9]+)*\.md$/.test(name)).sort(),
+  list: directory => readdirSync(join(ROOT, directory)).filter(name => RECEIPT_FILE.test(name)).sort(),
 };
 
 const COMMAND_ID = /^cmd_[0-9a-f]{12}$/;
@@ -323,33 +357,168 @@ const describeRow = (r: JourneyRow, quotes: readonly string[]): string => `journ
 
 /** The historical file and the per-bead rule-13 receipts route form one evidence corpus. */
 function evidenceSources(reader: Reader): readonly { readonly file: string; readonly text: string }[] {
-  return [TRACEABILITY, ...reader.list(RECEIPTS_DIR).map(name => `${RECEIPTS_DIR}/${name}`)].map(file => ({ file, text: reader.read(file) }));
+  return [TRACEABILITY, ...reader.list(RECEIPTS_DIR).filter(name => RECEIPT_FILE.test(name)).map(name => `${RECEIPTS_DIR}/${name}`)].map(file => ({ file, text: reader.read(file) }));
 }
 
-/** A receipt id must sit in a live paragraph of either evidence route, not a withdrawn or hidden claim. */
-function receiptProblem(reader: Reader, commandId: string): string | undefined {
-  const mentions = evidenceSources(reader).flatMap(({ text }) =>
-    marked.lexer(text).flatMap(token => {
-      if (token.type === "paragraph") return [token.text];
-      if (token.type === "list") return token.items.filter((item: Tokens.ListItem) => !item.text.trim().startsWith("<!--")).map((item: Tokens.ListItem) => item.text);
-      return [];
-    }).filter(block => new RegExp(`\\b${commandId}\\b`).test(block)),
-  );
-  if (mentions.length === 0) return `receipt ${commandId} is not recorded in TRACEABILITY or ${RECEIPTS_DIR}`;
-  if (mentions.every(block => /^\s*SUPERSEDED\b/.test(block))) return `receipt ${commandId} survives only inside a SUPERSEDED TRACEABILITY or receipts paragraph`;
-  return undefined;
+/** Visible citation text: comments, fenced code, images, definitions and link destinations carry no evidence. */
+function citationText(tokens: readonly Token[]): string {
+  return tokens.map(token => {
+    if (["html", "code", "image", "def", "space", "hr"].includes(token.type)) return "";
+    if (token.type === "br") return " ";
+    if (token.type === "list") return token.items.map((item: Tokens.ListItem) => citationText(item.tokens)).join(" ");
+    if ("tokens" in token && Array.isArray(token.tokens)) return citationText(token.tokens);
+    return "text" in token && typeof token.text === "string" ? token.text : "";
+  }).join("");
 }
-
-/** The heading and paragraph must occur together in one route; historical headings are level 2 under TRACEABILITY. */
-function citedSection(reader: Reader, heading: string, file: string, revision?: string): boolean {
-  for (const source of evidenceSources(reader)) {
-    const root = marked.lexer(source.text).find(token => token.type === "heading" && token.depth === 1);
-    if (root === undefined || root.type !== "heading") continue;
-    const level2 = heading.replace(/^## /, "");
-    const section = docsSection(source.text, level2, 2, [root.text]);
-    if (section.ok && section.blocks.some(block => block.kind === "paragraph" && !/^SUPERSEDED\b/.test(block.text) && block.text.includes(file) && (revision === undefined || citesRevision(block.text, revision)))) return true;
+const visible = (tokens: readonly Token[]): string => citationText(tokens).replace(/\s+/g, " ").trim();
+interface Citation {
+  readonly file: string;
+  readonly text: string;
+  readonly entry: number;
+  /** Index of the top-level token containing this block, shared with section bounds; text equality is not identity. */
+  readonly tokenIndex: number;
+  readonly date: string;
+  /** The entry's rendered level-2 heading ("" before the first): a withdrawal entry may carry its keyword there (R668 F2). */
+  readonly heading: string;
+  /** The first raw HTML token of the citation's source that is not a complete comment, or "" (R668 F4: then no live evidence). */
+  readonly rawHtml: string;
+}
+/** Separate visible blocks stay separate: nested lists/quotes are traversed, fenced examples never become claims. */
+function citationBlocks(tokens: readonly Token[]): string[] {
+  return tokens.flatMap(token => {
+    if (token.type === "list") return token.items.flatMap((item: Tokens.ListItem) => citationBlocks(item.tokens));
+    if (token.type === "blockquote") return citationBlocks(token.tokens ?? []);
+    return token.type === "paragraph" || token.type === "text" ? [visible([token])].filter(Boolean) : [];
+  });
+}
+/** One complete HTML comment, as a browser ends it (the W10 withdrawn-claim census's completeComment). */
+function completeComment(raw: string): boolean {
+  const text = raw.trim();
+  if (text === "<!-->" || text === "<!--->") return true;
+  if (!text.startsWith("<!--") || !text.endsWith("-->") || text.length < 7) return false;
+  const body = text.slice(4, -3);
+  return !body.startsWith(">") && !body.startsWith("->") && !body.includes("-->") && !body.includes("--!>");
+}
+/** The first html token at any depth (table cells included) that is not one complete comment, or "": an element, attribute or style can hide text the token view still reads. */
+function rawHtmlOf(tokens: readonly Token[]): string {
+  for (const token of tokens) {
+    if (token.type === "html" && !completeComment(token.raw)) return token.raw.trim();
+    const children: readonly Token[] =
+      token.type === "list"
+        ? token.items.flatMap((item: Tokens.ListItem) => item.tokens)
+        : token.type === "table"
+          ? [...token.header, ...token.rows.flat()].flatMap((cell: Tokens.TableCell) => cell.tokens)
+          : "tokens" in token && Array.isArray(token.tokens)
+            ? token.tokens
+            : [];
+    const nested = rawHtmlOf(children);
+    if (nested !== "") return nested;
   }
-  return false;
+  return "";
+}
+function sourceCitations(file: string, text: string): Citation[] {
+  const tokens = marked.lexer(text);
+  const rawHtml = rawHtmlOf(tokens);
+  let entry = 0;
+  let date = "";
+  let heading = "";
+  return tokens.flatMap((token, tokenIndex) => {
+    if (token.type === "heading" && token.depth === 2) {
+      entry += 1;
+      heading = visible(token.tokens ?? []);
+      date = /^(\d{4}-\d{2}-\d{2})(?: |$)/.exec(heading)?.[1] ?? "";
+    }
+    return citationBlocks([token]).map(text => ({ file, text, entry, tokenIndex, date, heading, rawHtml }));
+  });
+}
+/** R658: withdrawal fields may be separate blocks of one receipt entry, and its keyword the entry's heading (R668 F2). */
+function withdrawalEntries(citations: readonly Citation[]): readonly Citation[] {
+  const entries = new Map<string, Citation>();
+  for (const citation of citations) {
+    const key = JSON.stringify([citation.file, citation.entry]);
+    const previous = entries.get(key);
+    entries.set(key, { ...citation, text: `${previous === undefined ? citation.heading : previous.text} ${citation.text}` });
+  }
+  return [...entries.values()];
+}
+/** The pinned withdrawal convention (R658 (2); R668 F2: the noun Withdrawal and the heading count; F3: "Reason:" with or without a space). */
+const WITHDRAWAL_KEYWORD = /\b(?:SUPERSEDED|withdrawn|withdrawals?)\b/i;
+/** Recognize invisible leading units, never delete or rewrite citation text (F4); this is a predicate, not a display path. */
+const WITHDRAWAL_MARKER = /^[\s\p{Default_Ignorable_Code_Point}]*(?:SUPERSEDED|withdrawn|withdrawals?)\b/iu;
+const WITHDRAWAL_REASON = /\b(?:reason|because)\b(?::\s*|\s+)\S/i;
+/** A receipt entry in the withdrawal form - keyword, nonempty reason, a path in the evidence corpus - whatever it quotes (R668 F1). */
+function isWithdrawalEntry(entry: Citation): boolean {
+  return RECEIPT_FILE.test(basename(entry.file)) && WITHDRAWAL_KEYWORD.test(entry.text) && WITHDRAWAL_REASON.test(entry.text) &&
+    (entry.text.includes(TRACEABILITY) || entry.text.includes(`${RECEIPTS_DIR}/`));
+}
+/** A later withdrawal entry withdraws a claim by naming the claim's file and quoting its exact rendered text. */
+function withdraws(correction: Citation, claim: Citation): boolean {
+  return isWithdrawalEntry(correction) &&
+    (correction.file === claim.file ? correction.entry > claim.entry : correction.date !== "" && (claim.date === "" || correction.date > claim.date)) &&
+    correction.text.includes(claim.file) && correction.text.includes(claim.text);
+}
+/**
+ * Why a citation is not live evidence, or undefined when it is. "withdrawn": a withdrawal quotation - a block opening
+ * with a marker, or any block of a withdrawal entry whether or not the original it names exists or matches (R668 F1:
+ * P2/P2b) - or a claim a later withdrawal entry withdraws. "raw HTML": its source holds raw HTML (R668 F4). Withdrawals
+ * are read from every source, voided ones included, so a void never revives a claim.
+ */
+function deadBecause(claim: Citation, entries: readonly Citation[]): "withdrawn" | "raw HTML" | undefined {
+  if (WITHDRAWAL_MARKER.test(claim.text) || entries.some(entry => (entry.file === claim.file && entry.entry === claim.entry && isWithdrawalEntry(entry)) || withdraws(entry, claim))) return "withdrawn";
+  return claim.rawHtml === "" ? undefined : "raw HTML";
+}
+/** A command id must be a whole visible token in a live citation: never a withdrawal quotation, a withdrawn claim or a source holding raw HTML. */
+function receiptProblem(reader: Reader, commandId: string): string | undefined {
+  const citations = evidenceSources(reader).flatMap(source => sourceCitations(source.file, source.text));
+  const mentions = citations.filter(block => new RegExp(`\\b${commandId}\\b`).test(block.text));
+  if (mentions.length === 0) return `receipt ${commandId} is not recorded in TRACEABILITY or ${RECEIPTS_DIR}`;
+  const entries = withdrawalEntries(citations);
+  const reads = mentions.map(block => ({ block, why: deadBecause(block, entries) }));
+  if (reads.some(({ why }) => why === undefined)) return undefined;
+  const voided = reads.find(({ why }) => why === "raw HTML")?.block;
+  if (voided !== undefined) return `receipt ${commandId} has no live citation: ${voided.file} holds raw HTML that is not a complete comment (${JSON.stringify(voided.rawHtml.slice(0, 40))}), so its mention carries no live evidence`;
+  return `receipt ${commandId} survives only inside a SUPERSEDED TRACEABILITY or receipts paragraph`;
+}
+
+/** One heading across the whole corpus, with specific missing/duplicate attribution preserved. */
+function citedSectionProblem(reader: Reader, heading: string, file: string, revision?: string): string | undefined {
+  const level2 = heading.replace(/^## /, "");
+  const sources = evidenceSources(reader);
+  const matches: Array<{ readonly source: { readonly file: string; readonly text: string }; readonly root: string }> = [];
+  let count = 0;
+  const countHeadings = (tokens: readonly Token[]): void => {
+    for (const token of tokens) {
+      if (token.type === "heading" && token.depth === 2 && visible(token.tokens ?? []) === level2) count += 1;
+      if (token.type === "list") for (const item of token.items) countHeadings(item.tokens);
+      else if ("tokens" in token && Array.isArray(token.tokens)) countHeadings(token.tokens);
+    }
+  };
+  for (const source of sources) {
+    const tokens = marked.lexer(source.text);
+    const before = count;
+    countHeadings(tokens);
+    const root = tokens.find(token => token.type === "heading" && token.depth === 1);
+    if (count > before && root?.type === "heading") matches.push({ source, root: visible(root.tokens ?? []) });
+  }
+  if (count !== 1) return `TRACEABILITY or receipts section "${level2}" is refused: ${count === 0 ? "the rendered view has no level-2 heading" : `the heading occurs ${count} times in the rendered evidence corpus`}`;
+  const match = matches[0];
+  if (match === undefined) return `TRACEABILITY or receipts section "${level2}" is refused: lost its level-1 parent`;
+  const section = docsSection(match.source.text, level2, 2, [match.root]);
+  if (!section.ok) return `TRACEABILITY or receipts section "${level2}" is refused: ${section.why}`;
+  // Use the same token-view section bounds, keeping nested block citations separate.
+  const tokens = marked.lexer(match.source.text);
+  const start = tokens.findIndex(token => token.type === "heading" && token.depth === 2 && visible(token.tokens ?? []) === level2);
+  const end = tokens.findIndex((token, index) => index > start && token.type === "heading" && token.depth <= 2);
+  const limit = end === -1 ? tokens.length : end;
+  const citations = sources.flatMap(source => sourceCitations(source.file, source.text));
+  const entries = withdrawalEntries(citations);
+  const reads = citations
+    .filter(claim => claim.file === match.source.file && claim.tokenIndex > start && claim.tokenIndex < limit && claim.text.includes(file) && (revision === undefined || citesRevision(claim.text, revision)))
+    .map(claim => ({ claim, why: deadBecause(claim, entries) }));
+  if (reads.some(({ why }) => why === undefined)) return undefined;
+  const voided = reads.find(({ why }) => why === "raw HTML")?.claim;
+  if (voided !== undefined) return `TRACEABILITY or receipts section "${level2}" is refused: ${voided.file} holds raw HTML that is not a complete comment (${JSON.stringify(voided.rawHtml.slice(0, 40))}), so it carries no live evidence`;
+  return `TRACEABILITY or receipts section "${heading}" cites ${file}${revision === undefined ? "" : ` at revision ${revision}`} in no live paragraph`;
 }
 
 const isRecord = (value: unknown): value is Readonly<Record<string, unknown>> => value !== null && typeof value === "object" && !Array.isArray(value);
@@ -395,8 +564,12 @@ function ownerReceiptProblems(ev: OwnerReceipt, reader: Reader): string[] {
       else parts.push(fact);
     }
   }
-  if (!citedSection(reader, ev.heading, ev.file, ev.revision)) {
-    out.push(`TRACEABILITY or receipts section "${ev.heading}" cites ${ev.file} at revision ${ev.revision} in no live paragraph`);
+  const citationProblem = citedSectionProblem(reader, ev.heading, ev.file, ev.revision);
+  if (citationProblem !== undefined) {
+    out.push(citationProblem);
+    // Retain the earlier generic diagnostic alongside the more specific refusal attribution.
+    const generic = `TRACEABILITY or receipts section "${ev.heading}" cites ${ev.file} at revision ${ev.revision} in no live paragraph`;
+    if (citationProblem !== generic) out.push(generic);
   }
   const missing = parts.filter(part => !ev.citation.includes(part));
   if (missing.length > 0) out.push(`the row does not carry the owner-worded citation (missing ${missing.map(part => JSON.stringify(part)).join(", ")})`);
@@ -423,7 +596,11 @@ function auditRows(rows: readonly JourneyRow[], quotes: readonly string[], reade
       for (const problem of ownerReceiptProblems(ev, reader)) failures.push(`${who}: ${problem}`);
     } else if (ev.kind === "artifact") {
       if (!reader.exists(ev.file)) failures.push(`${who}: artifact ${ev.file} is missing`);
-      if (!citedSection(reader, ev.heading, ev.file)) failures.push(`${who}: artifact ${ev.file} is not cited under section "${ev.heading}" in TRACEABILITY or receipts`);
+      const problem = citedSectionProblem(reader, ev.heading, ev.file);
+      if (problem !== undefined) {
+        failures.push(`${who}: artifact ${ev.file} is not cited under section "${ev.heading}" in TRACEABILITY or receipts`);
+        failures.push(`${who}: ${problem}`);
+      }
     } else if (!BEAD_ID.test(ev.bead)) {
       failures.push(`${who}: open row names no tracking bead (${ev.bead})`);
     }
@@ -502,7 +679,11 @@ const evidenceBlocks = (legs: readonly Leg[]): readonly RenderedBlock[] => [
 ];
 
 const isTable = (token: Token): token is Tokens.Table => token.type === "table";
-/** The cell grid of every table in the document under the evidence header; docs/14 must hold exactly one. */
+/**
+ * The cell grid of every table in the WHOLE document under the evidence header: the uniqueness rule (docs/14 must hold
+ * exactly one, E8). The legs themselves are judged on the section's own table (sectionTables, wb-h8f.15), never on this
+ * grid, which a copy of the table in another section can stand in for.
+ */
 function evidenceGrids(markdown: string): string[][][] {
   return marked
     .lexer(markdown)
@@ -530,7 +711,13 @@ function evidenceFailures(markdown: string, rows: readonly JourneyRow[]): string
   if (!exact.ok) out.push(`${where} is not exactly its intro paragraph and one table of the census's evidence legs: ${exact.why}`);
   const grids = evidenceGrids(markdown);
   if (grids.length !== 1) return [...out, `${DOCS_14}: the journey evidence table must occur exactly once; found ${grids.length}`];
-  const listed = (grids[0] ?? []).slice(1);
+  // wb-h8f.15 (G7): the legs are judged on the section's OWN table, read through the same binding as the rendered view
+  // above, never on the whole-document grid: a bolded header plus a re-split leg here, with the original table copied to
+  // another section, renders the same and leaves the copy as the only evidence-header table in the document.
+  const own = sectionTables(markdown, EVIDENCE_HEADING, 2, [DOCS_14_PARENT]).grids;
+  if (own.length !== 1) return [...out, `${where}: the section must hold exactly one table, the journey evidence table; it holds ${own.length}`];
+  const [header = [], ...listed] = own[0] ?? [];
+  if (header.join("|") !== EVIDENCE_HEADER.join("|")) out.push(`${where}: the section's own table has the header ${JSON.stringify(header)}; the census pins ${JSON.stringify(EVIDENCE_HEADER)}`);
   const key = (cells: readonly string[]): string => cells.join(" | ");
   const listedKeys = listed.map(key);
   const censusKeys = legs.map(leg => key(leg.cells));
@@ -773,6 +960,15 @@ describe("wb-h8f.9 docs/workbench/11 acceptance-journeys census (report mode)", 
     const openRows = ROWS.filter(r => r.evidence.kind === "open");
     expect(openRows.map(r => (r.evidence.kind === "open" ? r.evidence.bead : ""))).toEqual(["wb-04s", "wb-h8f.2"]);
     for (const r of openRows) expect(["code present", "not started"]).toContain(r.label);
+  });
+
+  it("QYS1 MB2: the live receipt listing preserves every dotted filename and shares the renderer's filter", () => {
+    const names = REPO_READER.list(RECEIPTS_DIR);
+    expect(names).toEqual(readdirSync(join(ROOT, RECEIPTS_DIR)).filter(name => RECEIPT_FILE.test(name)).sort());
+    expect(names).toContain("wb-zsv.8.md");
+    const own = sourceStructure(ROOT, SELF);
+    expect(own.ok, own.why).toBe(true);
+    expect(own.imports.filter(entry => entry.module === "../qa/workbench/receipts-index.mjs").flatMap(entry => entry.names)).toContain("RECEIPT_FILE");
   });
 
   it("AC4: the leg judges the gate's own report and executes nothing: it imports judge, never judgePins, and loads no module at runtime", () => {
@@ -1030,6 +1226,288 @@ describe("wb-h8f.9 receipt, artifact, label and coverage falsifiers (synthetic T
     expect(ownerAudit(ownerFiles(), goodOwner(citation, "cmd_short")).some(line => line.includes("landing gate cmd_short is not a command id"))).toBe(true);
   });
 
+
+  it("QYS1 S1 artifact cited in a receipt LIST ITEM under its heading is admitted (header: cited by a section in either evidence route)", () => {
+    const files = { [TRACEABILITY]: synthTraceability("Historical row."), "qa/x.json": "{}", "docs/workbench/receipts/wb-operator.md": "# wb-operator: operator receipt\n\n## 2026-10-20 Section\n\n- See qa/x.json.\n" };
+    expect(auditRows([row(2, "code present", artifact("qa/x.json", "## 2026-10-20 Section"))], JOURNEY_QUOTES, readerOf(files))).toEqual([]);
+  });
+
+  it("QYS1 S2 owner receipt cited in a receipt LIST ITEM under its heading is admitted", () => {
+    const files = ownerFiles({ [TRACEABILITY]: synthTraceability("No owner receipt here."), "docs/workbench/receipts/wb-operator.md": `# wb-operator: operator receipt\n\n## 2026-10-20 Owner receipt\n\n- ${LIVE_CITE}\n` });
+    const ev = ownerReceipt({ file: OWNER_FILE, contract: "c/v2", revision: "abc1234", landingGate: "cmd_cccccccccccc", heading: "2026-10-20 Owner receipt", citation: OWNER_CITATION });
+    expect(ownerAudit(files, ev)).toEqual([]);
+  });
+
+  it("QYS1 S3 a command id only inside an INLINE HTML comment of a receipt paragraph earns no pass", () => {
+    const files = { [TRACEABILITY]: synthTraceability("No live run."), "docs/workbench/receipts/wb-8kv.md": "# wb-8kv: VC-4 live receipt\n\n## 2026-10-20 receipt\n\nRun of record <!-- cmd_7cea2921543b --> here.\n" };
+    expect(auditRows([row(3, "live SDK pass", receipt("cmd_7cea2921543b"))], JOURNEY_QUOTES, readerOf(files))[0] ?? "").toContain("is not recorded");
+  });
+
+  it("QYS1 S4 a command id only inside an inline HTML comment of a receipt LIST ITEM (not at its start) earns no pass", () => {
+    const files = { [TRACEABILITY]: synthTraceability("No live run."), "docs/workbench/receipts/wb-8kv.md": "# wb-8kv: VC-4 live receipt\n\n## 2026-10-20 receipt\n\n- Run of record: forge <!-- cmd_7cea2921543b --> (status success).\n" };
+    expect(auditRows([row(3, "live SDK pass", receipt("cmd_7cea2921543b"))], JOURNEY_QUOTES, readerOf(files))[0] ?? "").toContain("is not recorded");
+  });
+
+  it("QYS1 S5 a command id only inside a code fence NESTED in a receipt list item earns no pass", () => {
+    const files = { [TRACEABILITY]: synthTraceability("No live run."), "docs/workbench/receipts/wb-8kv.md": "# wb-8kv: VC-4 live receipt\n\n## 2026-10-20 receipt\n\n- Run of record:\n\n  ```\n  forge cmd_7cea2921543b\n  ```\n" };
+    expect(auditRows([row(3, "live SDK pass", receipt("cmd_7cea2921543b"))], JOURNEY_QUOTES, readerOf(files))[0] ?? "").toContain("is not recorded");
+  });
+
+  it("QYS1 S6 a command id only inside an HTML comment block NESTED in a receipt list item earns no pass", () => {
+    const files = { [TRACEABILITY]: synthTraceability("No live run."), "docs/workbench/receipts/wb-8kv.md": "# wb-8kv: VC-4 live receipt\n\n## 2026-10-20 receipt\n\n- Run of record:\n\n  <!-- forge cmd_7cea2921543b -->\n" };
+    expect(auditRows([row(3, "live SDK pass", receipt("cmd_7cea2921543b"))], JOURNEY_QUOTES, readerOf(files))[0] ?? "").toContain("is not recorded");
+  });
+
+  it("QYS1 S7 a command id only as a link destination (the rendered text omits it) earns no pass", () => {
+    const files = { [TRACEABILITY]: synthTraceability("No live run."), "docs/workbench/receipts/wb-8kv.md": "# wb-8kv: VC-4 live receipt\n\n## 2026-10-20 receipt\n\n- Run of record: [forge run](https://example.invalid/cmd_7cea2921543b) (status success).\n" };
+    expect(auditRows([row(3, "live SDK pass", receipt("cmd_7cea2921543b"))], JOURNEY_QUOTES, readerOf(files))[0] ?? "").toContain("is not recorded");
+  });
+
+  // R658 (2): withdrawal names the original file, its claim verbatim and a reason in a later entry.
+  it("QYS1 S8 append-only withdrawal names the original file and exact claim with a reason", () => {
+    const claim = "Run of record: forge cmd_7cea2921543b (status success, exit 0).";
+    const files = { [TRACEABILITY]: synthTraceability("No live run."), "docs/workbench/receipts/wb-8kv.md": `# wb-8kv: VC-4 live receipt
+
+## 2026-10-20 receipt
+
+- ${claim}
+
+## 2026-10-21 correction
+
+SUPERSEDED: original file docs/workbench/receipts/wb-8kv.md; claim: ${claim} Reason: it was not a live pass.
+` };
+    expect(auditRows([row(3, "live SDK pass", receipt("cmd_7cea2921543b"))], JOURNEY_QUOTES, readerOf(files))[0] ?? "").toContain("SUPERSEDED");
+  });
+
+  it("QYS1 S9 a duplicated TRACEABILITY owner-receipt heading is named as a duplicate ('occurs 2 times'), beside the landed generic no-live-paragraph line it keeps (attribution)", () => {
+    const twice = ownerAudit(ownerFiles({ [TRACEABILITY]: `${ownerTrace(LIVE_CITE)}\n## Owner receipt\n\nAgain.\n` }));
+    expect(twice.some(line => line.includes("occurs 2 times"))).toBe(true);
+    expect(twice.some(line => line.includes("in no live paragraph"))).toBe(true);
+  });
+
+  it("QYS1 S10 an owner-receipt heading present in two evidence sources is refused as not exactly once (header: exactly once)", () => {
+    const files = ownerFiles({ "docs/workbench/receipts/wb-dup.md": "# wb-dup: duplicate heading\n\n## Owner receipt\n\nNothing cited here.\n" });
+    expect(ownerAudit(files).length).toBeGreaterThan(0);
+    expect(ownerAudit(files).some(line => line.includes("occurs 2 times"))).toBe(true);
+  });
+
+  it("QYS1 S11 a longer token that merely starts with the command id does not count (word boundary)", () => {
+    const files = { [TRACEABILITY]: synthTraceability("No live run."), "docs/workbench/receipts/wb-8kv.md": "# wb-8kv: VC-4 live receipt\n\n## 2026-10-20 receipt\n\n- Run of record: forge cmd_7cea2921543bff (status success).\n" };
+    expect(auditRows([row(3, "live SDK pass", receipt("cmd_7cea2921543b"))], JOURNEY_QUOTES, readerOf(files))[0] ?? "").toContain("is not recorded");
+  });
+
+  it("QYS1 C1 control: the same receipt text with the id visible in a list item IS admitted", () => {
+    const files = { [TRACEABILITY]: synthTraceability("No live run."), "docs/workbench/receipts/wb-8kv.md": "# wb-8kv: VC-4 live receipt\n\n## 2026-10-20 receipt\n\n- Run of record: forge cmd_7cea2921543b (status success).\n" };
+    expect(auditRows([row(3, "live SDK pass", receipt("cmd_7cea2921543b"))], JOURNEY_QUOTES, readerOf(files))).toEqual([]);
+  });
+
+  it("QYS1 C2 control: an artifact cited in a receipt PARAGRAPH under its heading is admitted", () => {
+    const files = { [TRACEABILITY]: synthTraceability("Historical row."), "qa/x.json": "{}", "docs/workbench/receipts/wb-operator.md": "# wb-operator: operator receipt\n\n## 2026-10-20 Section\n\nSee qa/x.json.\n" };
+    expect(auditRows([row(2, "code present", artifact("qa/x.json", "## 2026-10-20 Section"))], JOURNEY_QUOTES, readerOf(files))).toEqual([]);
+  });
+
+
+  it("QYS1 F4 lost heading is attributed to the missing rendered section", () => {
+    const lost = ownerAudit(ownerFiles({ [TRACEABILITY]: synthTraceability("## Earlier", LIVE_CITE) }));
+    expect(lost.some(line => line.includes('section "Owner receipt" is refused') && line.includes("no level-2 heading"))).toBe(true);
+  });
+
+  it("QYS1 F2 nested list and blockquote citations resolve for owner receipts and artifacts", () => {
+    for (const body of [`- Container\n  - ${LIVE_CITE}`, `> ${LIVE_CITE}`, `- Container\n\n  > ${LIVE_CITE}`]) {
+      const files = ownerFiles({ [TRACEABILITY]: synthTraceability("No owner receipt here."), "docs/workbench/receipts/wb-operator.md": `# wb-operator: operator receipt\n\n## 2026-10-20 Owner receipt\n\n${body}\n` });
+      const ev = ownerReceipt({ file: OWNER_FILE, contract: "c/v2", revision: "abc1234", landingGate: "cmd_cccccccccccc", heading: "2026-10-20 Owner receipt", citation: OWNER_CITATION });
+      expect(ownerAudit(files, ev), body).toEqual([]);
+      expect(auditRows([row(2, "code present", artifact(OWNER_FILE, "2026-10-20 Owner receipt"))], JOURNEY_QUOTES, readerOf(files)), body).toEqual([]);
+    }
+  });
+
+  it("QYS1 F6 dotted receipt filenames are read and non-receipt names never earn a pass", () => {
+    const body = "# wb-x: receipt\n\n## 2026-10-20 record\n\nforge cmd_aaaaaaaaaaaa\n";
+    for (const name of ["wb-x.1.md", "wb-x.1.2.md"]) {
+      const files = { [TRACEABILITY]: synthTraceability("Nothing."), [`${RECEIPTS_DIR}/${name}`]: body };
+      expect(auditRows([row(1, "live SDK pass", receipt("cmd_aaaaaaaaaaaa"))], JOURNEY_QUOTES, readerOf(files)), name).toEqual([]);
+    }
+    for (const name of ["INDEX.md", "other.md", "wb-x.md.bak", "wb-x.a.md", "wb-X.md"]) {
+      const files = { [TRACEABILITY]: synthTraceability("Nothing."), [`${RECEIPTS_DIR}/${name}`]: body };
+      expect(auditRows([row(1, "live SDK pass", receipt("cmd_aaaaaaaaaaaa"))], JOURNEY_QUOTES, readerOf(files))[0], name).toContain("is not recorded");
+    }
+  });
+
+  it("QYS1 R658 a later correction file withdraws only its named original claim, never an unrelated remeasurement", () => {
+    const original = `${RECEIPTS_DIR}/wb-8kv.md`;
+    const claim = "Run of record: forge cmd_7cea2921543b (status success, exit 0).";
+    const base = { [TRACEABILITY]: synthTraceability("Nothing."), [original]: `# wb-8kv: receipt\n\n## 2026-10-20 record\n\n${claim}\n` };
+    const correction = (body: string, date = "2026-10-21"): string => `# wb-correction: correction\n\n## ${date} withdrawal\n\n${body}\n`;
+    const withdrawnClaim = `Withdrawn: original file ${original}; claim: ${claim} Reason: the reading was not live.`;
+    const rows = [row(3, "live SDK pass", receipt("cmd_7cea2921543b"))];
+    expect(auditRows(rows, JOURNEY_QUOTES, readerOf({ ...base, [`${RECEIPTS_DIR}/wb-correction.md`]: correction(withdrawnClaim) }))[0]).toContain("SUPERSEDED");
+    for (const body of [withdrawnClaim.replace(original, `${RECEIPTS_DIR}/wb-other.md`), withdrawnClaim.replace(claim, "Another claim cmd_7cea2921543b."), withdrawnClaim.replace("Reason: the reading was not live.", ""), `<!-- ${withdrawnClaim} -->`, `\`\`\`\n${withdrawnClaim}\n\`\`\``]) {
+      expect(auditRows(rows, JOURNEY_QUOTES, readerOf({ ...base, [`${RECEIPTS_DIR}/wb-correction.md`]: correction(body) })), body).toEqual([]);
+    }
+    expect(auditRows(rows, JOURNEY_QUOTES, readerOf({ ...base, [`${RECEIPTS_DIR}/wb-correction.md`]: correction(withdrawnClaim, "2026-10-19") }))).toEqual([]);
+    const refreshed = { ...base, [`${RECEIPTS_DIR}/wb-correction.md`]: correction(withdrawnClaim), [`${RECEIPTS_DIR}/wb-fresh.md`]: correction("New measurement: forge cmd_7cea2921543b is a live pass.") };
+    expect(auditRows(rows, JOURNEY_QUOTES, readerOf(refreshed))).toEqual([]);
+  });
+
+  it("QYS1 R658 a withdrawal section may name the file, verbatim claim and reason in separate visible list items", () => {
+    const original = `${RECEIPTS_DIR}/wb-8kv.md`;
+    const claim = "Run of record: forge cmd_7cea2921543b (status success, exit 0).";
+    const files = { [TRACEABILITY]: synthTraceability("Nothing."), [original]: `# wb-8kv: receipt\n\n## 2026-10-20 record\n\n${claim}\n\n## 2026-10-21 withdrawal\n\n- SUPERSEDED: original file ${original}\n- Claim: ${claim}\n- Reason: the reading was not live.\n` };
+    expect(auditRows([row(3, "live SDK pass", receipt("cmd_7cea2921543b"))], JOURNEY_QUOTES, readerOf(files))[0]).toContain("SUPERSEDED");
+  });
+
+  it("QYS1 R658 owner-receipt and artifact citations are withdrawn by the same later-entry definition", () => {
+    const original = `${RECEIPTS_DIR}/wb-operator.md`;
+    const files = ownerFiles({ [TRACEABILITY]: synthTraceability("Nothing."), [original]: `# wb-operator: receipt\n\n## 2026-10-20 Owner receipt\n\n- ${LIVE_CITE}\n\n## 2026-10-21 withdrawal\n\nWithdrawn: original file ${original}; claim: ${LIVE_CITE} Reason: the reading was not live.\n` });
+    const ev = ownerReceipt({ file: OWNER_FILE, contract: "c/v2", revision: "abc1234", landingGate: "cmd_cccccccccccc", heading: "2026-10-20 Owner receipt", citation: OWNER_CITATION });
+    expect(ownerAudit(files, ev).some(line => line.includes("in no live paragraph"))).toBe(true);
+    expect(auditRows([row(2, "code present", artifact(OWNER_FILE, "2026-10-20 Owner receipt"))], JOURNEY_QUOTES, readerOf(files)).some(line => line.includes("is not cited"))).toBe(true);
+  });
+
+  it("QYS1 heading uniqueness ignores hidden copies and counts nested rendered duplicates", () => {
+    for (const hidden of ["<!-- ## Owner receipt -->", "```\n## Owner receipt\n```"]) {
+      expect(ownerAudit(ownerFiles({ [`${RECEIPTS_DIR}/wb-copy.md`]: `# wb-copy: hidden copy\n\n## 2026-10-20 entry\n\n${hidden}\n` })), hidden).toEqual([]);
+    }
+    for (const nested of ["> ## Owner receipt", "- Container\n\n  ## Owner receipt"]) {
+      expect(ownerAudit(ownerFiles({ [`${RECEIPTS_DIR}/wb-copy.md`]: `# wb-copy: nested copy\n\n## 2026-10-20 entry\n\n${nested}\n` })).some(line => line.includes("occurs 2 times")), nested).toBe(true);
+    }
+  });
+
+  it("QYS1 MH a longer prefix or suffix token never earns a receipt pass; visible markdown does", () => {
+    for (const id of ["cmd_7cea2921543bff", "xcmd_7cea2921543b", "cmd_7cea2921543b_extra"]) {
+      const files = { [TRACEABILITY]: synthTraceability(`forge ${id}`) };
+      expect(auditRows([row(3, "live SDK pass", receipt("cmd_7cea2921543b"))], JOURNEY_QUOTES, readerOf(files))[0], id).toContain("is not recorded");
+    }
+    for (const text of ["forge `cmd_7cea2921543b`", "forge **cmd_7cea2921543b**", "forge [cmd_7cea2921543b](https://example.invalid/run)", "forge cmd_7cea<!-- hidden -->2921543b"]) {
+      expect(auditRows([row(3, "live SDK pass", receipt("cmd_7cea2921543b"))], JOURNEY_QUOTES, readerOf({ [TRACEABILITY]: synthTraceability(text) })), text).toEqual([]);
+    }
+  });
+
+  // R668 (wb-qys1 respin 1): the gate-prep-10 LEG-2 survivors F1-F5 bind into this re-cut. Each form below is the gate's
+  // own probe (P2, P2b, P3, MW7, P12, P4, P15), killed red-first; each control pins the boundary its cure must keep.
+  const R668_ID = "cmd_7cea2921543b";
+  const R668_ORIGINAL = `${RECEIPTS_DIR}/wb-8kv.md`;
+  const R668_CORRECTION = `${RECEIPTS_DIR}/wb-correction.md`;
+  const R668_CLAIM = `Run of record: forge ${R668_ID} (status success, exit 0).`;
+  const R668_REASON = "Reason: the reading was not live.";
+  const R668_DEAD = "survives only inside a SUPERSEDED";
+  const R668_VOID = "holds raw HTML";
+  const r668Audit = (files: Readonly<Record<string, string>>): readonly string[] => auditRows([row(3, "live SDK pass", receipt(R668_ID))], JOURNEY_QUOTES, readerOf(files));
+  const r668Original = (): Readonly<Record<string, string>> => ({ [TRACEABILITY]: synthTraceability("Nothing."), [R668_ORIGINAL]: `# wb-8kv: receipt\n\n## 2026-10-20 record\n\n${R668_CLAIM}\n` });
+  const r668Correction = (body: string, heading = "2026-10-21 withdrawal"): string => `# wb-correction: correction\n\n## ${heading}\n\n${body}\n`;
+  const r668Receipt = (body: string): string => `# wb-8kv: receipt\n\n## 2026-10-20 receipt\n\n${body}\n`;
+
+  it("QYS1 R668 F1 P2: a lone withdrawal entry whose named original is absent earns no live SDK pass (header: a withdrawal quotation is not new live evidence)", () => {
+    const out = r668Audit({ [TRACEABILITY]: synthTraceability("Nothing."), [R668_CORRECTION]: r668Correction(`Withdrawn: original file ${R668_ORIGINAL}; claim: ${R668_CLAIM} ${R668_REASON}`) });
+    expect(out).toHaveLength(1);
+    expect(out[0]).toContain(R668_DEAD);
+  });
+
+  it("QYS1 R668 F1 P2b: a withdrawal quoting an already-SUPERSEDED TRACEABILITY claim without its prefix does not resurrect it", () => {
+    const superseded = `forge ${R668_ID} was the run of record.`;
+    const out = r668Audit({ [TRACEABILITY]: synthTraceability(`SUPERSEDED: ${superseded}`), [R668_CORRECTION]: r668Correction(`Withdrawn: original file ${TRACEABILITY}; claim: ${superseded} ${R668_REASON}`) });
+    expect(out).toHaveLength(1);
+    expect(out[0]).toContain(R668_DEAD);
+  });
+
+  it("QYS1 R668 F1 a withdrawal entry's own form voids its quotation: keyword in the heading only, no block opening with a marker, the named original absent", () => {
+    const out = r668Audit({ [TRACEABILITY]: synthTraceability("Nothing."), [R668_CORRECTION]: r668Correction(`Original file ${R668_ORIGINAL}; claim: ${R668_CLAIM} ${R668_REASON}`, "2026-10-21 withdrawal of a claim") });
+    expect(out).toHaveLength(1);
+    expect(out[0]).toContain(R668_DEAD);
+  });
+
+  it("QYS1 R668 F1 a block opening with SUPERSEDED, withdrawn or Withdrawal (any case) is never live evidence, even in an entry that gives no reason", () => {
+    for (const marker of ["Withdrawn:", "Withdrawal:", "withdrawn -", "Superseded:"]) {
+      const out = r668Audit({ [TRACEABILITY]: synthTraceability("Nothing."), [R668_CORRECTION]: `# wb-correction: correction\n\n## 2026-10-21 note\n\n${marker} ${R668_CLAIM}\n` });
+      expect(out, marker).toHaveLength(1);
+      expect(out[0], marker).toContain(R668_DEAD);
+    }
+  });
+
+  it("QYS1 R668 F1 control: a keyword inside a live block that gives no reason keeps the block live (the marker must open the block)", () => {
+    const files = { [TRACEABILITY]: synthTraceability("Nothing."), [R668_ORIGINAL]: r668Receipt(`Run of record: forge ${R668_ID} (status success; the earlier run was withdrawn).`) };
+    expect(r668Audit(files)).toEqual([]);
+  });
+
+  it("QYS1 R668 F1 control: a receipt entry with a keyword and a reason but no evidence-corpus path is no withdrawal entry and keeps its citations live (the wb-3hc.md first-entry shape)", () => {
+    const files = { [TRACEABILITY]: synthTraceability("Nothing."), [R668_ORIGINAL]: r668Receipt(`- Re-measured after the superseded receipt because the fixture runner changed: forge ${R668_ID} exit 0.`) };
+    expect(r668Audit(files)).toEqual([]);
+  });
+
+  it("QYS1 R668 F1 control: TRACEABILITY prose is never a withdrawal entry - a keyword, a reason and a receipts path inside a live paragraph keep it live", () => {
+    const files = { [TRACEABILITY]: synthTraceability(`The earlier wording is superseded because ${R668_ORIGINAL} re-measured it; run of record forge ${R668_ID} (status success).`) };
+    expect(r668Audit(files)).toEqual([]);
+  });
+
+  it("QYS1 R668 F2 P3: the noun Withdrawal belongs to the convention - in the body under a plain heading, in the body under a withdrawal heading, or in the heading alone over a keyword-free body", () => {
+    const cases: ReadonlyArray<readonly [string, string]> = [
+      ["2026-10-21 correction", `Withdrawal: original file ${R668_ORIGINAL}; claim: ${R668_CLAIM} ${R668_REASON}`],
+      ["2026-10-21 withdrawal of a claim", `Withdrawal: original file ${R668_ORIGINAL}; claim: ${R668_CLAIM} ${R668_REASON}`],
+      ["2026-10-21 withdrawal of a claim", `Original file ${R668_ORIGINAL}; claim: ${R668_CLAIM} ${R668_REASON}`],
+    ];
+    for (const [heading, body] of cases) {
+      const out = r668Audit({ ...r668Original(), [R668_CORRECTION]: r668Correction(body, heading) });
+      expect(out, `${heading} | ${body}`).toHaveLength(1);
+      expect(out[0], `${heading} | ${body}`).toContain(R668_DEAD);
+    }
+  });
+
+  it("QYS1 R668 F2 MW7: naming the original file and quoting its claim with a reason withdraws nothing without a withdrawal keyword in the entry's heading or body", () => {
+    const out = r668Audit({ ...r668Original(), [R668_CORRECTION]: r668Correction(`Original file ${R668_ORIGINAL}; claim: ${R668_CLAIM} Reason: the reading still holds.`, "2026-10-21 re-check") });
+    expect(out).toEqual([]);
+  });
+
+  it("QYS1 R668 F3 P12: 'Reason:' with no space after the colon still names a reason; an empty 'Reason:' names none", () => {
+    const withReason = (reason: string): readonly string[] => r668Audit({ ...r668Original(), [R668_CORRECTION]: r668Correction(`Withdrawn: original file ${R668_ORIGINAL}; claim: ${R668_CLAIM} ${reason}`) });
+    const terse = withReason("Reason:the reading was not live.");
+    expect(terse).toHaveLength(1);
+    expect(terse[0]).toContain(R668_DEAD);
+    expect(withReason("Reason:")).toEqual([]);
+  });
+
+  it("QYS1 R668 F4 P4: a command id visible only where raw HTML can hide it earns no pass - a hidden attribute, a display:none style, a block element around the paragraph, any element at all", () => {
+    const forms = [
+      `- Run of record: forge <span hidden>${R668_ID}</span> (status success).`,
+      `- Run of record: forge <span style="display:none">${R668_ID}</span> (status success).`,
+      `<div hidden>\n\nRun of record: forge ${R668_ID} (status success).\n\n</div>`,
+      `- Run of record: forge <kbd>${R668_ID}</kbd> (status success).`,
+      `| Run | Note |\n| --- | --- |\n| of record | <style>p { display: none }</style> |\n\nRun of record: forge ${R668_ID} (status success).`,
+    ];
+    for (const form of forms) {
+      const out = r668Audit({ [TRACEABILITY]: synthTraceability("No live run."), [R668_ORIGINAL]: r668Receipt(form) });
+      expect(out, form).toHaveLength(1);
+      expect(out[0], form).toContain(R668_VOID);
+      expect(out[0], form).toContain(R668_ORIGINAL);
+    }
+  });
+
+  it("QYS1 R668 F4 control: complete HTML comments do not void their source (the visible id keeps its pass); a comment that never closes does", () => {
+    const visibleId = `- Run of record: forge ${R668_ID} (status success).`;
+    expect(r668Audit({ [TRACEABILITY]: synthTraceability("No live run."), [R668_ORIGINAL]: r668Receipt(`<!-- reviewer note -->\n\n${visibleId} <!-- inline note -->`) })).toEqual([]);
+    const unclosed = r668Audit({ [TRACEABILITY]: synthTraceability("No live run."), [R668_ORIGINAL]: r668Receipt(`${visibleId}\n\n<!-- a note that never closes`) });
+    expect(unclosed).toHaveLength(1);
+    expect(unclosed[0]).toContain(R668_VOID);
+  });
+
+  it("QYS1 R668 F4 a void never revives a claim: a withdrawal entry in a source that holds raw HTML still withdraws", () => {
+    const out = r668Audit({ ...r668Original(), [R668_CORRECTION]: r668Correction(`Withdrawn: original file ${R668_ORIGINAL}; claim: ${R668_CLAIM} ${R668_REASON}<br>`) });
+    expect(out).toHaveLength(1);
+    expect(out[0]).toContain(R668_DEAD);
+  });
+
+  it("QYS1 R668 F4 an owner-receipt or artifact citation in a source that holds raw HTML is refused naming the raw HTML", () => {
+    const files = ownerFiles({ [TRACEABILITY]: synthTraceability("No owner receipt here."), "docs/workbench/receipts/wb-operator.md": `# wb-operator: operator receipt\n\n## 2026-10-20 Owner receipt\n\n- Cited: <span hidden>${LIVE_CITE}</span>\n` });
+    const ev = ownerReceipt({ file: OWNER_FILE, contract: "c/v2", revision: "abc1234", landingGate: "cmd_cccccccccccc", heading: "2026-10-20 Owner receipt", citation: OWNER_CITATION });
+    expect(ownerAudit(files, ev).some(line => line.includes(R668_VOID))).toBe(true);
+    expect(auditRows([row(2, "code present", artifact(OWNER_FILE, "2026-10-20 Owner receipt"))], JOURNEY_QUOTES, readerOf(files)).some(line => line.includes(R668_VOID))).toBe(true);
+  });
+
+  it("QYS1 R668 F5 P15: a command id only as image alt text earns no pass (header: images, their alt text included, do not count)", () => {
+    const out = r668Audit({ [TRACEABILITY]: synthTraceability("No live run."), [R668_ORIGINAL]: r668Receipt(`- Run of record: ![${R668_ID}](run.png) (status success).`) });
+    expect(out).toHaveLength(1);
+    expect(out[0]).toContain("is not recorded");
+  });
+
   it("owner-receipt label mutant: an owner receipt labelled 'code present' fails the label check", () => {
     expect(ownerAudit(ownerFiles(), goodOwner(), "code present").some(line => line.includes("does not match its owner-receipt evidence"))).toBe(true);
   });
@@ -1238,5 +1716,217 @@ describe("wb-h8f.12 the docs/14 journey evidence anchor: every drift names the l
     const moved = `# ${DOCS_14_PARENT}\n\n## ${EVIDENCE_HEADING}\n\n${EVIDENCE_INTRO}\n\n## Later\n\n${table}\n`;
     expect(evidenceFailures(moved, ROWS).some(line => line.includes("the section has 1 blocks; the census pins 2"))).toBe(true);
     expect(evidenceFailures(`${syntheticEvidence()}\n## Later\n\n${table}\n`, ROWS).some(line => line.includes("must occur exactly once; found 2"))).toBe(true);
+  });
+});
+
+describe("wb-h8f.15 the evidence table's cells are read from the section its rendered view is judged in (h8f.12 PREP F1, the G7 same-view class; synthetic documents)", () => {
+  const LEGS = legsOf(ROWS);
+  const CELLS: readonly (readonly string[])[] = LEGS.map(leg => leg.cells);
+  const BOLD_HEADER: readonly string[] = EVIDENCE_HEADER.map(cell => `**${cell}**`);
+  const HEADER_CAUSE = "the section's own table has the header";
+  const notCarried = "which the census table does not carry";
+  const notListed = "is not listed in";
+  const tableOf = (header: readonly string[], rows: readonly (readonly string[])[]): string => [header, header.map(() => "---"), ...rows].map(cells => `| ${cells.join(" | ")} |`).join("\n");
+  /** One leg re-split across its label/evidence cell boundary: the label's last word moves into the evidence cell, so the rendered (cell-joined) text is unchanged. */
+  const resplit = (cells: readonly string[]): string[] => {
+    const words = (cells[1] ?? "").split(" ");
+    return [cells[0] ?? "", words.slice(0, -1).join(" "), `${words[words.length - 1] ?? ""} ${cells[2] ?? ""}`];
+  };
+  const resplitTable = (at: number, header: readonly string[] = BOLD_HEADER): string => tableOf(header, CELLS.map((cells, index) => (index === at ? resplit(cells) : cells)));
+  /** docs/14 with the given table in the evidence section, and the ORIGINAL table copied into another section placed before or after it (or no copy). */
+  const g7Doc = (sectionTable: string, copy: "before" | "after" | "none"): string => {
+    const original = tableOf(EVIDENCE_HEADER, CELLS);
+    const before = copy === "before" ? `## Copied evidence\n\n${original}\n\n` : "";
+    const after = copy === "after" ? `\n## Copied evidence\n\n${original}\n` : "";
+    return `# ${DOCS_14_PARENT}\n\n## Matrix by subsystem\n\nRows.\n\n${before}## ${EVIDENCE_HEADING}\n\n${EVIDENCE_INTRO}\n\n${sectionTable}\n${after}`;
+  };
+  const named = (lines: readonly string[], cells: readonly string[], cause: string): boolean => lines.some(line => line.startsWith(describeLeg(cells)) && line.includes(cells[2] ?? "") && line.includes(cause));
+  const COPIES = ["before", "after"] as const;
+
+  it("G7 precondition: every mutant keeps the section's rendered view exact and leaves exactly one evidence-header table in the document - the copy - so a whole-document read judges the copy (the h8f.12 gate's 0/88 shape)", () => {
+    expect(LEGS.every(leg => (leg.cells[1] ?? "").includes(" ")), "every label has two words, so each leg re-splits without an empty cell").toBe(true);
+    for (const at of LEGS.keys()) {
+      for (const copy of COPIES) {
+        const doc = g7Doc(resplitTable(at), copy);
+        expect(sectionMatches(docsSection(doc, EVIDENCE_HEADING, 2, [DOCS_14_PARENT]), evidenceBlocks(LEGS)), `${copy} ${at}`).toEqual({ ok: true, why: "" });
+        expect(evidenceGrids(doc), `${copy} ${at}`).toEqual([[[...EVIDENCE_HEADER], ...CELLS.map(cells => [...cells])]]);
+      }
+    }
+  });
+
+  it("G7 (h8f.12 PREP F1): a bolded header plus one leg re-split in the section, with the original table copied to another section, reds naming the header and the re-split leg - every leg, the copy before or after", () => {
+    expect(LEGS.length).toBeGreaterThan(0);
+    for (const [at, leg] of LEGS.entries()) {
+      for (const copy of COPIES) {
+        const lines = evidenceFailures(g7Doc(resplitTable(at), copy), ROWS);
+        const label = `${copy} | ${leg.cells.join(" | ")}`;
+        expect(lines.some(line => line.startsWith(`${DOCS_14} § ${EVIDENCE_HEADING}: ${HEADER_CAUSE}`)), label).toBe(true);
+        expect(named(lines, leg.cells, notListed), label).toBe(true);
+        expect(named(lines, resplit(leg.cells), notCarried), label).toBe(true);
+      }
+    }
+  });
+
+  it("G7 bold-only: the section's table under a bolded header, its legs intact, with the original copied to another section, reds on the header alone", () => {
+    for (const copy of COPIES) {
+      const lines = evidenceFailures(g7Doc(tableOf(BOLD_HEADER, CELLS), copy), ROWS);
+      expect(lines, copy).toHaveLength(1);
+      expect(lines[0], copy).toContain(HEADER_CAUSE);
+      expect(lines[0], copy).toContain(JSON.stringify(BOLD_HEADER));
+    }
+  });
+
+  it("G7 re-split under a plain header with the copy elsewhere: the second evidence-header table reds the uniqueness rule (E8), the re-split never reads green", () => {
+    for (const [at] of LEGS.entries()) {
+      for (const copy of COPIES) {
+        const lines = evidenceFailures(g7Doc(resplitTable(at, EVIDENCE_HEADER), copy), ROWS);
+        expect(lines.some(line => line.includes("must occur exactly once; found 2")), `${copy} ${at}`).toBe(true);
+      }
+    }
+  });
+
+  it("G7b: the re-split alone - plain header, no copy - keeps redding naming the leg, and names no header", () => {
+    for (const [at, leg] of LEGS.entries()) {
+      const lines = evidenceFailures(g7Doc(resplitTable(at, EVIDENCE_HEADER), "none"), ROWS);
+      expect(named(lines, leg.cells, notListed), leg.cells.join(" | ")).toBe(true);
+      expect(named(lines, resplit(leg.cells), notCarried), leg.cells.join(" | ")).toBe(true);
+      expect(lines.some(line => line.includes(HEADER_CAUSE)), leg.cells.join(" | ")).toBe(false);
+    }
+  });
+
+  it("same view, other direction: the section's own table exact with a re-split copy under a bolded header in another section stays green - a neighbouring section is free to change", () => {
+    for (const copy of COPIES) {
+      const decoy = `## Copied evidence\n\n${resplitTable(0)}\n`;
+      const doc = copy === "before" ? g7Doc(tableOf(EVIDENCE_HEADER, CELLS), "none").replace(`## ${EVIDENCE_HEADING}`, `${decoy}\n## ${EVIDENCE_HEADING}`) : `${g7Doc(tableOf(EVIDENCE_HEADER, CELLS), "none")}\n${decoy}`;
+      expect(evidenceFailures(doc, ROWS), copy).toEqual([]);
+    }
+  });
+});
+
+
+/**
+ * wb-59l1 / R679 class-closing follow-up. Spec pins: "bind section claims BY POSITION";
+ * "L2-01/L2-01b/X2 pinned red-first"; "the GM4 file clause pinned"; F2-F4 ride.
+ * These are synthetic evidence inputs, never edits of the append-only live receipts or TRACEABILITY.
+ * All landed rows and frozen evidence literals above remain intact. No product display path added.
+ */
+describe("wb-59l1 R679 position-bound citations and withdrawal boundaries", () => {
+  const FILE = "qa/r.json";
+  const ORIGINAL = `${RECEIPTS_DIR}/wb-operator.md`;
+  const CORRECTION = `${RECEIPTS_DIR}/wb-correction.md`;
+  const OTHER = `${RECEIPTS_DIR}/wb-other.md`;
+  const HEADING = "2026-10-20 Owner receipt";
+  const CLAIM = "Re-run of record at revision `abc1234`, committed at `qa/r.json`.";
+  const OWNER = ownerReceipt({
+    file: FILE, contract: "c/v2", revision: "abc1234", landingGate: "cmd_cccccccccccc", heading: HEADING,
+    citation: "committed path qa/r.json, revision abc1234, landing gate cmd_cccccccccccc; there is NO forge-run cmd_ for the receipt itself: it is an OWNER RECEIPT under contract c/v2; requested model-a, served model-b",
+  });
+  const JSON_RECEIPT = JSON.stringify({ contract: "c/v2", revision: "abc1234", realised: true, pass: true, preflight: { requestedModel: "model-a", nativeModels: ["model-b"] } });
+  const doc = (entries: string): string => `# wb-operator: receipt\n\n${entries}\n`;
+  const withdraw = `Withdrawn: original file ${ORIGINAL}; claim: ${CLAIM} Reason: the reading was not live.`;
+  const audit = (files: Readonly<Record<string, string>>, kind: "owner" | "artifact" = "owner"): readonly string[] =>
+    auditRows([row(kind === "owner" ? 1 : 2, kind === "owner" ? "live SDK pass" : "code present", kind === "owner" ? OWNER : artifact(FILE, HEADING))], JOURNEY_QUOTES,
+      readerOf({ [TRACEABILITY]: synthTraceability("Nothing."), [FILE]: JSON_RECEIPT, ...files }));
+  const refused = (out: readonly string[]): boolean => out.some(line => line.includes("in no live paragraph") || line.includes("is not cited"));
+
+  // L2-01 owner list, L2-01b artifact list, X2 paragraph, plus nested quote/list compositions: one position rule.
+  it.each((["owner", "artifact"] as const).flatMap(kind => [
+    { kind, form: kind === "owner" ? "L2-01 list" : "L2-01b list", body: `- ${CLAIM}` },
+    { kind, form: "X2 paragraph", body: CLAIM },
+    { kind, form: "nested quote", body: `> ${CLAIM}` },
+    { kind, form: "nested list", body: `- Container\n  - ${CLAIM}` },
+    { kind, form: "list quote", body: `- Container\n\n  > ${CLAIM}` },
+  ]))("F1 $kind $form: later same-file copies outside the section never revive its withdrawn claim", ({ kind, body }) => {
+    const files = { [ORIGINAL]: doc(`## ${HEADING}\n\n${body}\n\n## 2026-10-21 withdrawal\n\n${withdraw}\n\n## 2026-10-22 notes\n\n${CLAIM}`) };
+    expect(refused(audit(files, kind)), `${kind}: ${body}`).toBe(true);
+  });
+
+  it("F1 position boundaries: copies before the section, after a level-1 boundary, or inside a nested heading do not stand in for the section", () => {
+    for (const entries of [
+      `${CLAIM}\n\n## ${HEADING}\n\nNothing.`,
+      `## ${HEADING}\n\nNothing.\n\n# Another parent\n\n${CLAIM}`,
+      `${CLAIM}\n\n> ## ${HEADING}\n>\n> Nothing.`,
+    ]) expect(refused(audit({ [ORIGINAL]: doc(entries) })), entries).toBe(true);
+  });
+
+  // GM4: identical entry/token positions in ANOTHER source still never belong to the selected source's section.
+  it("F1 GM4 file clause: another receipt's same-text citation at the same token position cannot revive a withdrawn section", () => {
+    const original = doc(`## ${HEADING}\n\n${CLAIM}`);
+    const other = doc(`## 2026-10-20 Other receipt\n\n${CLAIM}`);
+    expect(sourceCitations(ORIGINAL, original).map(c => [c.entry, c.tokenIndex])).toEqual(sourceCitations(OTHER, other).map(c => [c.entry, c.tokenIndex]));
+    for (const kind of ["owner", "artifact"] as const) {
+      const out = audit({ [ORIGINAL]: original, [CORRECTION]: doc(`## 2026-10-21 withdrawal\n\n${withdraw}`), [OTHER]: other }, kind);
+      expect(refused(out), kind).toBe(true);
+    }
+  });
+
+  it("F1 controls: only the section's own live paragraph, list or nested quote admits owner and artifact evidence", () => {
+    for (const kind of ["owner", "artifact"] as const) {
+      for (const body of [CLAIM, `- ${CLAIM}`, `> ${CLAIM}`, `- Container\n  - ${CLAIM}`]) {
+        expect(audit({ [ORIGINAL]: doc(`## ${HEADING}\n\n${body}\n\n## 2026-10-21 notes\n\nUnrelated.`) }, kind), `${kind}: ${body}`).toEqual([]);
+      }
+    }
+  });
+
+  it("F1 controls: a live matching block within the selected section is not lost when a distinct block there is marker-led", () => {
+    for (const kind of ["owner", "artifact"] as const) {
+      expect(audit({ [ORIGINAL]: doc(`## ${HEADING}\n\nSUPERSEDED: ${CLAIM}\n\n${CLAIM}`) }, kind), kind).toEqual([]);
+    }
+  });
+
+  const ID = "cmd_7cea2921543b";
+  const RUN = `Run of record: forge ${ID} (status success, exit 0).`;
+  const RUN_FILE = `${RECEIPTS_DIR}/wb-8kv.md`;
+  const runAudit = (files: Readonly<Record<string, string>>): readonly string[] => auditRows([row(3, "live SDK pass", receipt(ID))], JOURNEY_QUOTES, readerOf(files));
+  const runDoc = (body: string): string => `# wb-8kv: receipt\n\n${body}\n`;
+  const baseRun = { [TRACEABILITY]: synthTraceability("Nothing."), [RUN_FILE]: runDoc(`## 2026-10-20 record\n\n${RUN}`) };
+  const correction = (date: string, reason = "Reason: the reading was not live."): string => runDoc(`## ${date} correction\n\nWithdrawn: original file ${RUN_FILE}; claim: ${RUN} ${reason}`);
+
+  it("F2 GM1: an equal-date cross-file withdrawal is not strictly later and withdraws nothing", () => {
+    expect(runAudit({ ...baseRun, [CORRECTION]: correction("2026-10-20") })).toEqual([]);
+    expect(runAudit({ ...baseRun, [CORRECTION]: correction("2026-10-21") })[0]).toContain("SUPERSEDED");
+  });
+
+  it("F2 GM2: an earlier same-file withdrawal cannot withdraw a later claim, even if its date is greater", () => {
+    const prior = `## 2026-10-22 correction\n\nWithdrawn: original file ${RUN_FILE}; claim: ${RUN} Reason: the reading was not live.`;
+    expect(runAudit({ [TRACEABILITY]: synthTraceability("Nothing."), [RUN_FILE]: runDoc(`${prior}\n\n## 2026-10-20 record\n\n${RUN}`) })).toEqual([]);
+    expect(runAudit({ [TRACEABILITY]: synthTraceability("Nothing."), [RUN_FILE]: runDoc(`## 2026-10-20 record\n\n${RUN}\n\n${prior}`) })[0]).toContain("SUPERSEDED");
+  });
+
+  it("F2 GM19: because alone supplies the reason and withdraws the named original claim", () => {
+    expect(runAudit({ ...baseRun, [CORRECTION]: correction("2026-10-21", "It is withdrawn because the run was a fixture.") })[0]).toContain("SUPERSEDED");
+    expect(runAudit({ ...baseRun, [CORRECTION]: correction("2026-10-21", "because") })).toEqual([]);
+  });
+
+  it("F2 GM16: TRACEABILITY raw HTML voids inline-hidden and otherwise-visible citations, including owner and artifact sections", () => {
+    for (const trace of [synthTraceability(`Run: <span hidden>${ID}</span>`), synthTraceability(RUN, "<details>notes</details>")]) {
+      expect(runAudit({ [TRACEABILITY]: trace })[0], trace).toContain("holds raw HTML");
+    }
+    for (const kind of ["owner", "artifact"] as const) {
+      expect(audit({ [TRACEABILITY]: synthTraceability(`## ${HEADING}`, CLAIM, "<details>notes</details>") }, kind).some(line => line.includes("holds raw HTML")), kind).toBe(true);
+    }
+    expect(runAudit({ [TRACEABILITY]: synthTraceability(RUN, "<!-- complete comment -->") })).toEqual([]);
+  });
+
+  it("F3 L2-05: Withdrawals plural is a pinned marker, not a prose-only residual, with and without an original claim", () => {
+    for (const original of [{}, baseRun]) {
+      const files = { [TRACEABILITY]: synthTraceability("Nothing."), ...original, [CORRECTION]: runDoc(`## 2026-10-21 correction\n\nWithdrawals: original file ${RUN_FILE}; claim: ${RUN} Reason: the reading was not live.`) };
+      expect(runAudit(files)[0]).toContain("SUPERSEDED");
+    }
+    expect(runAudit({ [TRACEABILITY]: synthTraceability(`The earlier withdrawals were reviewed; ${RUN}`) })).toEqual([]);
+  });
+
+  it.each([0x200b, 0x200c, 0x200d, 0x2060, 0x00ad, 0xfeff])("F4 invisible prefix U+%s: every named withdrawal marker refuses its quotation", cp => {
+    for (const marker of ["SUPERSEDED", "Withdrawn", "Withdrawal", "Withdrawals"]) {
+      const body = `${String.fromCodePoint(cp)}${marker}: ${RUN}`;
+      expect(runAudit({ [TRACEABILITY]: synthTraceability("Nothing."), [RUN_FILE]: runDoc(`## 2026-10-20 receipt\n\n${body}`) })[0], `${cp.toString(16)} ${marker}`).toContain("SUPERSEDED");
+    }
+  });
+
+  it("F4 controls: invisible-prefixed live text is not deleted or rewritten and an interior keyword is not an opening marker", () => {
+    const prefix = String.fromCodePoint(0x200b, 0x200c);
+    const body = `${prefix}The earlier run was SUPERSEDED; ${RUN}`;
+    expect(sourceCitations(TRACEABILITY, synthTraceability(body))[0]?.text).toBe(body);
+    expect(runAudit({ [TRACEABILITY]: synthTraceability(body) })).toEqual([]);
   });
 });

@@ -18,7 +18,7 @@
  */
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
-import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { afterAll, beforeAll, describe, expect, it, TestRunner } from "vitest";
 import { CapabilityError, CapabilityRegistry, type InvocationContext, type JsonValue } from "../src/workbench/capability-registry.js";
 import { createCuratedTools } from "../src/workbench/claude-capability-tools.js";
 import { createClaudeWorkflowHost } from "../src/workbench/claude-host.js";
@@ -241,7 +241,65 @@ const oracles = new Map<string, Outcome>();
 const outcomes = new Map<string, Outcome>();
 const key = (row: Row, surface: SurfaceName) => `${row.name}::${surface}`;
 
+/**
+ * R673 (wb-csne): the explicit budget of this file's suite hook, file-local so no other suite's budget moves (the wb-hk9l
+ * PACKAGE_COPY_ROW_BUDGET_MS pattern). The hook drives every matrix cell before the first row runs - the oracle and each surface
+ * for all 18 rows, through two workflow VMs and an in-memory MCP pair per tool cell - so its wall is set by host
+ * contention, not by parity logic. Inside vitest's default 10000 ms hookTimeout it timed out at three land-prep try-1 runs
+ * (landings 224, 226 and 229: cmd_3998447f30df, cmd_a2eadbb3348c, cmd_9204c30d7a56), each time skipping all 101 rows and
+ * cascading into the docs06 census, whose AC2 bullet 1/guard half pins two rows of this file. The budget is above the
+ * owner floor of 20000 ms and more than 2 x the worst wall of record (WORST_MEASURED_HOOK_WALL_MS). Exceeding it is a real
+ * red: withinHookBudget fails the hook with an AssertionError naming this constant, never vitest's bare hook timeout.
+ */
+const PARITY_SUITE_HOOK_BUDGET_MS = 60_000;
+/**
+ * The worst wall of record of the suite hook, a lower bound: 11813 ms, the landing 224 try-1 file wall at the 10000 ms
+ * kill (cmd_3998447f30df; landings 226 and 229 read 10008 and 10260 ms, and the delivery-gate sightings behind register
+ * entry 21, wb-4ap.19 cmd_023706418b55 and wb-drd cmd_b771fcf71b20, read 10170 ms and a red at :244), so the hook itself
+ * ran at least 10000 ms there.
+ * Uncensored walls measured 2026-10-21 for wb-csne under a 600000 ms ceiling at load1 158-270: 2126-2807 ms file-alone
+ * over 6 sequential runs, 2799-4186 ms 8-way, 4719-6302 ms 16-way and 4060-6532 ms 32-way; timed by withinHookBudget at
+ * load1 323-347: 2313-2927 ms over 4 sequential runs and 2872-3958 ms 16-way.
+ */
+const WORST_MEASURED_HOOK_WALL_MS = 11_813;
+/** vitest's own timer for the suite hook: a backstop past the budget, so the budget's named AssertionError always fires first. */
+const PARITY_SUITE_HOOK_BACKSTOP_MS = 2 * PARITY_SUITE_HOOK_BUDGET_MS;
+const PARITY_SUITE_HOOK = "the capability-surface-parity suite hook";
+
+interface HookReading {
+  readonly hook: string;
+  readonly budgetMs: number;
+  readonly wallMs: number;
+  readonly outcome: "settled" | "overrun";
+}
+/** One reading per guarded hook run, appended by withinHookBudget before it judges the run: the evidence a hook ran under its budget. */
+const HOOK_READINGS: HookReading[] = [];
+
+/**
+ * Runs a hook body under its file-local budget (R673). The body races a timer of budgetMs; an overrun - a body that
+ * finishes late, or one still running when the timer fires - fails the hook with an AssertionError naming the budget and
+ * its value. A body's own error propagates unchanged.
+ */
+async function withinHookBudget(hook: string, budget: string, budgetMs: number, body: () => void | Promise<void>): Promise<void> {
+  const started = performance.now();
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const overrun = new Promise<"overrun">(resolve => {
+    timer = setTimeout(() => resolve("overrun"), budgetMs);
+  });
+  try {
+    const outcome = await Promise.race([Promise.resolve().then(body).then(() => "settled" as const), overrun]);
+    const wallMs = Math.round(performance.now() - started);
+    HOOK_READINGS.push({ hook, budgetMs, wallMs, outcome });
+    const still = outcome === "overrun" ? " and was still running" : "";
+    expect(outcome === "settled" && wallMs <= budgetMs, `${hook} ran ${wallMs} ms${still}, past its file-local budget ${budget} = ${budgetMs} ms (R673)`).toBe(true);
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
 beforeAll(async () => {
+  // R673 (wb-csne): the landed body runs inside withinHookBudget; its lines are kept byte-identical (no edits to landed lines), one level shallower than the callback they now sit in.
+  await withinHookBudget(PARITY_SUITE_HOOK, "PARITY_SUITE_HOOK_BUDGET_MS", PARITY_SUITE_HOOK_BUDGET_MS, async () => {
   for (const row of ROWS) {
     oracles.set(row.name, await oracle(row));
     for (const surface of SURFACES) {
@@ -250,6 +308,7 @@ beforeAll(async () => {
     }
   }
 });
+}, PARITY_SUITE_HOOK_BACKSTOP_MS);
 afterAll(async () => {
   for (const close of closers.splice(0)) await close();
 });
@@ -531,5 +590,74 @@ describe("P4: discoverability stays independent of invocation", () => {
     expect(out.permitted).toBe(false);
     expect(out.category).toBe("authorization");
     expect(out.recorded).toHaveLength(0);
+  });
+});
+
+describe("R673 (wb-csne): the suite hook runs under its file-local budget, and an overrun is a real red naming it", () => {
+  it("the suite hook ran once under PARITY_SUITE_HOOK_BUDGET_MS, settled inside the budget, never on vitest's default hookTimeout", () => {
+    const suite = HOOK_READINGS.filter(reading => reading.hook === PARITY_SUITE_HOOK);
+    expect(suite.map(reading => `${reading.hook}|${reading.budgetMs}|${reading.outcome}`), "the guarded suite hook's readings").toEqual([`${PARITY_SUITE_HOOK}|${PARITY_SUITE_HOOK_BUDGET_MS}|settled`]);
+    expect(suite[0]?.wallMs, "the suite hook's wall").toBeLessThanOrEqual(PARITY_SUITE_HOOK_BUDGET_MS);
+  });
+
+  it("the budget clears the owner floor and twice the worst wall of record, and vitest's own timer is a backstop past it", () => {
+    expect(PARITY_SUITE_HOOK_BUDGET_MS, "the owner floor").toBeGreaterThanOrEqual(20_000);
+    expect(WORST_MEASURED_HOOK_WALL_MS, "the worst wall of record: 11813 ms (landing 224 try-1, cmd_3998447f30df)").toBeGreaterThanOrEqual(11_813);
+    expect(PARITY_SUITE_HOOK_BUDGET_MS, "more than 2 x the worst wall of record").toBeGreaterThan(2 * WORST_MEASURED_HOOK_WALL_MS);
+    expect(PARITY_SUITE_HOOK_BACKSTOP_MS, "vitest's backstop sits past the budget").toBeGreaterThan(PARITY_SUITE_HOOK_BUDGET_MS);
+  });
+
+  it("an overrun is an AssertionError naming the budget, whether the body finishes late or is still running; a body inside its budget passes", async () => {
+    const late = () =>
+      withinHookBudget("probe late", "PROBE_BUDGET_MS", 20, () => {
+        const until = performance.now() + 60;
+        while (performance.now() < until) {
+          /* busy wait: a body that finishes past its budget */
+        }
+      });
+    const hung = () => withinHookBudget("probe hung", "PROBE_BUDGET_MS", 20, () => new Promise<void>(() => undefined));
+    for (const [probe, name, still] of [
+      [late, "probe late", ""],
+      [hung, "probe hung", " and was still running"],
+    ] as const) {
+      const caught: unknown = await probe().then(
+        () => undefined,
+        (error: unknown) => error,
+      );
+      expect(caught, `${name}: an overrun fails the hook`).toBeInstanceOf(Error);
+      expect((caught as Error).name, `${name}: a real red, never a timing marker`).toBe("AssertionError");
+      expect((caught as Error).message, `${name}: the red names the budget`).toMatch(new RegExp(`^${name} ran \\d+ ms${still}, past its file-local budget PROBE_BUDGET_MS = 20 ms \\(R673\\)`));
+      expect((caught as Error).message, `${name}: never a hook timeout`).not.toContain("timed out");
+    }
+    await expect(withinHookBudget("probe quick", "PROBE_BUDGET_MS", 5_000, () => undefined)).resolves.toBeUndefined();
+  });
+
+  it("a hook body's own error propagates unchanged through the guard", async () => {
+    const own = new TypeError("the body's own failure");
+    await expect(
+      withinHookBudget("probe broken", "PROBE_BUDGET_MS", 5_000, () => {
+        throw own;
+      }),
+    ).rejects.toBe(own);
+  });
+});
+
+/**
+ * R687 (wb-9rto, the wb-csne F1 class): the R673 rows above pin the budget and backstop CONSTANTS; the row below binds the
+ * ARGUMENT the suite hook was actually registered with. vitest 4.1.10's beforeAll(fn, timeout = hookTimeout) wraps the hook
+ * in a withTimeout timer of that timeout and stamps the same value on the hook it stores, under this key;
+ * TestRunner.getSuiteHooks reads the stored hooks back, so the stamp is the runner's own record of the registered argument.
+ * An omitted argument reads vitest's default hookTimeout (10000 ms) there, and so does an undefined one or a wrapper that
+ * drops it; a swapped, shadowed or other-valued literal argument reads its own value. Each is a red below, where the gate's
+ * omission probe of the registration left 105/105 green (wb-csne gate cmd_d14ebd6c549f, F1). A literal equal to the
+ * backstop registers the same timeout, so it reads green here until the budget moves.
+ */
+const REGISTERED_HOOK_TIMEOUT = Symbol.for("VITEST_CLEANUP_TIMEOUT");
+
+describe("R687 (wb-9rto): the suite hook is registered with its backstop, read from vitest's own record of the registration", () => {
+  it("vitest holds one file-scope beforeAll, registered with PARITY_SUITE_HOOK_BACKSTOP_MS (2 x the budget), never its default hookTimeout", ({ task }) => {
+    const registered = TestRunner.getSuiteHooks(task.file).beforeAll.map((hook): unknown => Reflect.get(hook, REGISTERED_HOOK_TIMEOUT));
+    expect(registered, "the timeout vitest registered for each file-scope beforeAll of this file").toEqual([PARITY_SUITE_HOOK_BACKSTOP_MS]);
+    expect(PARITY_SUITE_HOOK_BACKSTOP_MS, "the backstop of record is 2 x the budget").toBe(2 * PARITY_SUITE_HOOK_BUDGET_MS);
   });
 });

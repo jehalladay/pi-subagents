@@ -24,6 +24,24 @@ import { installScratchLeakGuard, makeScratch, removeScratch } from './helpers/s
 // missing Baseline line all fail explicitly, with test/helpers/non-repo-scratch.ts and scratch.ts owning fixtures.
 // P5 frozen falsifier shape: each fixture's id, tier, every expected problem and normalized input digest are
 // literal-pinned (35 rows). G04-G12, H01-H04 and H05-H08 form the measured mutant battery.
+// P6 out-of-file anchor (wb-zq7i, cax.28 F1/F2, the 5jha roster pattern): test/fixtures/upstream-divergence-roster.json
+// holds every judged row of CASES and SETEXT_CASES (table, id, fixture, registered test name, every normalized expected
+// problem, normalized input digest), the residual families that have pinned quiet rows (R3, R5, R7, R8) and the drt
+// fixture's name-status and modified sets. The roster judges the in-file tables as read now, the tests this file
+// registers (vitest's task tree, not the loops' literals) and the drt measurement, in order and both ways, so a row or a
+// status removed from every literal of this file still reds (CT5/CT6, HD5, EL1/EL2). Not claimed: an edit of this file
+// and the roster together, an edit of the wb-zq7i cases themselves, or a registered row skipped by a marker.
+// P6a run modes (wb-2wf8, R682 F1): the roster case's walk also reads every registered test's run mode, fails flag and
+// result state. Each roster row's fixture test must read 'run | ran' (run mode, not inverted, ended passed or failed:
+// the shared census helper's ran reading); every other test of this file must be in run mode and not inverted, and must
+// have run when it is registered before the roster case. So a test kept from running by a skip, skipIf or runIf
+// modifier, an options-object skip or todo, a skipping suite or a todo registration, a test inverted by the fails
+// modifier, and a test registered before the roster case and skipped at runtime through its test context each red the
+// roster case: for those forms P6's last non-claim is withdrawn. A failed or timed-out test stays its own red (no
+// cascade into the roster case); a name filter that runs the roster case without the others reds it. Not claimed: a
+// runtime skip in a test registered after the roster case, or a skip of the roster case itself (it is the judge).
+// P7 shared-bound visibility (cax.28 F3): on every roster R8 page the shared docsSection's own section admits the nested
+// container and the record table, so a helper that bounded at a nested heading (R8C) reds here, not only in sameView.
 // NAMED RESIDUALS (quiet readings, not pass claims):
 // R1 a table nested in a blockquote/list is not a top-level record (the D28 page reads unrecorded).
 // R2 a once-unambiguous short commit id may become ambiguous with new history (unreachable: fail-closed).
@@ -38,6 +56,10 @@ import { installScratchLeakGuard, makeScratch, removeScratch } from './helpers/s
 // R8 a level-1/2 heading nested in a list item or blockquote does not bound the record section: only a top-level
 // heading does (the shared docsSection bound), so the table after it is still the record (gate pages D32/D38; fixtures
 // residual-list-nested-h2, residual-quote-nested-h2, residual-list-nested-h1 and residual-quote-nested-h1).
+// R8 setext members (wb-zq7i, cax.28 F4): a setext heading ('Interlude' over '---' or '===') nested in a list item or a
+// blockquote reads the same; SETEXT_CASES pins residual-list-setext-h2, residual-quote-setext-h2, residual-list-setext-h1
+// and residual-quote-setext-h1 as quiet rows (gate mutant S1bare, a census bounding at a nested setext heading, reds
+// them), frozen in SETEXT_FROZEN_SHAPE (4 rows), so the registered fixture rows number 35 + 4.
 // Newly discovered escapes add a residual row, unless they contradict a pinned claim; no blanket claim about
 // all Markdown shapes, all git revisions or all upstream changes is made by this local enumeration.
 
@@ -423,6 +445,60 @@ const FROZEN_SHAPE: readonly string[] = [
   "residual-quote-nested-h1 | later | no problem | input=77e4be3811eb666e12f435e4d6b797dfdcedf20b22c1983ddae37ff43c0df8d9",
 ];
 
+// ---- wb-zq7i (cax.28 F1-F4): the setext R8 members and the out-of-file roster ----
+
+/** R8 setext members: the level-2-split page with its Interlude heading written setext ('---' is level 2, '===' level 1). */
+const setextSplit = (fx: Fixture, container: '-' | '>', depth: 1 | 2): string => {
+  const underline = depth === 1 ? '===' : '---';
+  const nested = container === '-' ? `- Interlude\n  ${underline}` : `> Interlude\n> ${underline}`;
+  return page(`${SECTION}\n\nThe measured record.\n\n${nested}\n\n${[HEADER_LINES, ...exactLater(fx)].join('\n')}`);
+};
+
+// Named quiet residual R8, setext members: a setext level-1/2 heading nested in a list item or blockquote does not bound
+// the section either, so the table after it is still the record; a census bounding at one (gate mutant S1bare) reds them.
+const SETEXT_CASES: readonly Case[] = [
+  { id: 'residual-list-setext-h2', fixture: 'later', doc: fx => setextSplit(fx, '-', 2), expected: () => [] },
+  { id: 'residual-quote-setext-h2', fixture: 'later', doc: fx => setextSplit(fx, '>', 2), expected: () => [] },
+  { id: 'residual-list-setext-h1', fixture: 'later', doc: fx => setextSplit(fx, '-', 1), expected: () => [] },
+  { id: 'residual-quote-setext-h1', fixture: 'later', doc: fx => setextSplit(fx, '>', 1), expected: () => [] },
+];
+
+/** Rule 16: the frozen shape of SETEXT_CASES at this cut, in FROZEN_SHAPE's form. */
+const SETEXT_FROZEN_SHAPE: readonly string[] = [
+  "residual-list-setext-h2 | later | no problem | input=b2dc1a1c5cc21d110dd4b4628bad0f00b23ca057fb80b18807d603653a02317b",
+  "residual-quote-setext-h2 | later | no problem | input=2b34c26122525f5a868ef67a10d9e594c9ac2bf00dba1c72be1705f9914d687f",
+  "residual-list-setext-h1 | later | no problem | input=bff4a80b93a941e28cd905a330ca8b5365d53edea13b4d6bf246f919f9525ab0",
+  "residual-quote-setext-h1 | later | no problem | input=04cef285d07fa8c76a45a7c7c5fe0fce469740f1397a5588c81592c78c7d2c8f",
+];
+
+/** A judged row as read now, in FROZEN_SHAPE's terms: fixture shas named <base> <div> <side> <head>. */
+interface JudgedRow {
+  readonly table: string;
+  readonly id: string;
+  readonly fixture: string;
+  readonly test: string;
+  readonly problems: readonly string[];
+  readonly input: string;
+}
+
+function judgedRow(table: string, entry: Case, fx: Fixture): JudgedRow {
+  const names: readonly (readonly [string, string])[] = [[fx.base, '<base>'], [fx.div, '<div>'], [fx.side, '<side>'], [fx.head, '<head>']];
+  const normalize = (text: string): string => names.reduce((out, [sha, name]) => out.split(sha).join(name), text);
+  const input = createHash('sha256').update(normalize(entry.doc(fx))).digest('hex');
+  return { table, id: entry.id, fixture: entry.fixture, test: `fixture ${entry.id}`, problems: entry.expected(fx).map(normalize), input };
+}
+
+const shapeLine = (row: JudgedRow): string => `${row.id} | ${row.fixture} | ${row.problems.join(' / ') || 'no problem'} | input=${row.input}`;
+
+/** P6: the out-of-file anchor, written once from the rows as measured at the cut and judged both ways at test time. */
+const ROSTER = 'test/fixtures/upstream-divergence-roster.json';
+interface Roster {
+  readonly rows: readonly JudgedRow[];
+  readonly residuals: Readonly<Record<string, readonly string[]>>;
+  readonly drt: { readonly nameStatus: readonly string[]; readonly modified: readonly string[] };
+}
+const readRoster = (): Roster => JSON.parse(readFileSync(join(repoRoot, ROSTER), 'utf8')) as Roster;
+
 describe('upstream fork divergence record (docs/workbench/16 Upstream maintainability)', () => {
   const built = new Map<FixtureKind, Fixture>();
   const fixtureOf = (kind: FixtureKind): Fixture => {
@@ -533,6 +609,75 @@ describe('upstream fork divergence record (docs/workbench/16 Upstream maintainab
   it('parses the baseline from the single TRACEABILITY carrier', () => {
     expect(parseBaseline('Baseline: fork `38034a043e63a65ec5a81544c7a81d0e6b76ebe3` at x')).toBe('38034a043e63a65ec5a81544c7a81d0e6b76ebe3');
     expect(parseBaseline('Baseline: fork `short`')).toBeUndefined();
+  });
+
+  for (const entry of SETEXT_CASES) {
+    it(`fixture ${entry.id}`, () => {
+      const fx = fixtureOf(entry.fixture);
+      expect(checkDivergence(fx.cwd, fx.base, entry.doc(fx))).toEqual(entry.expected(fx));
+    }, GIT_ROW_MS);
+  }
+
+  it('the setext R8 table is frozen at its measured shape (rule 16, the FROZEN_SHAPE form)', () => {
+    expect(SETEXT_CASES.map(entry => shapeLine(judgedRow('SETEXT_CASES', entry, fixtureOf(entry.fixture))))).toEqual(SETEXT_FROZEN_SHAPE);
+  });
+
+  it('wb-zq7i out-of-file roster: the judged rows, the registered fixture tests and the residual families equal the fixture, in order and both ways', ({ task }) => {
+    const roster = readRoster();
+    const rows = [...CASES.map(entry => judgedRow('CASES', entry, fixtureOf(entry.fixture))), ...SETEXT_CASES.map(entry => judgedRow('SETEXT_CASES', entry, fixtureOf(entry.fixture)))];
+    expect(rows, 'the in-file judged rows, read now, equal the roster rows exactly and in order').toEqual(roster.rows);
+    const registered: string[] = [];
+    // P6a (wb-2wf8): the same walk keeps every registered test's run mode, fails flag and result state, in order.
+    const walked: { readonly name: string; readonly mode: string; readonly fails: boolean; readonly state: string | undefined }[] = [];
+    const walk = (tasks: typeof task.file.tasks): void => {
+      for (const child of tasks) {
+        if (child.type === 'test') walked.push({ name: child.name, mode: child.mode, fails: child.fails === true, state: child.result?.state });
+        if (child.type === 'test') registered.push(child.name);
+        else if (child.type === 'suite') walk(child.tasks);
+      }
+    };
+    walk(task.file.tasks);
+    expect(registered.filter(name => name.startsWith('fixture ')), 'the registered fixture tests (vitest task tree), exactly and in roster order').toEqual(roster.rows.map(row => row.test));
+    const ran = (state: string | undefined): boolean => state === 'pass' || state === 'fail';
+    const read = (entry: (typeof walked)[number]): string => `${entry.name} | ${entry.mode}${entry.fails ? '+fails' : ''} | ${ran(entry.state) ? 'ran' : (entry.state ?? 'no result')}`;
+    expect(walked.filter(entry => entry.name.startsWith('fixture ')).map(read), 'P6a: every roster row\'s fixture test ran before this case, in run mode and not inverted').toEqual(roster.rows.map(row => `${row.test} | run | ran`));
+    const here = walked.findIndex(entry => entry.name === task.name);
+    expect(here, 'P6a: this case is in the walk, after the tests it judges').toBeGreaterThan(0);
+    expect(walked.filter((entry, index) => index !== here && (entry.mode !== 'run' || entry.fails || (index < here && !ran(entry.state)))).map(read), 'P6a: the other tests of this file that are skipped, todo or inverted, or did not run before this case').toEqual([]);
+    const named = Object.values(roster.residuals).flat();
+    expect(rows.filter(row => row.id.startsWith('residual-')).map(row => row.id).sort(), 'every residual row is named by exactly one roster family').toEqual([...named].sort());
+    for (const id of named) expect(rows.find(row => row.id === id)?.problems, `${id} is a quiet row`).toEqual([]);
+    // Rule 16: the roster's residual families as read at the cut base.
+    expect(Object.entries(roster.residuals).map(([family, ids]) => `${family}:${ids.length}`)).toEqual(['R3:1', 'R5:1', 'R7:1', 'R8:8']);
+  });
+
+  it('wb-zq7i out-of-file roster: the drt fixture measures exactly the roster name-status and modified sets (R5, HD5)', () => {
+    const fx = fixtureOf('drt');
+    const roster = readRoster();
+    expect(lines(git(fx.cwd, ['diff', '--name-status', '--find-renames', fx.base, 'HEAD', '--', ...SCOPE])), 'the drt divergence as measured, against the roster').toEqual(roster.drt.nameStatus);
+    expect(lines(git(fx.cwd, ['diff', '--name-only', '--diff-filter=M', fx.base, 'HEAD', '--', ...SCOPE])), 'the census measurement on drt, against the roster').toEqual(roster.drt.modified);
+  }, GIT_ROW_MS);
+
+  it('the R8 bound is the shared helper\'s: on every roster R8 page docsSection admits the nested container and the record table (R8C)', () => {
+    const roster = readRoster();
+    const judged = [...CASES, ...SETEXT_CASES];
+    const r8 = roster.residuals.R8 ?? [];
+    const checked: string[] = [];
+    for (const id of r8) {
+      const entry = judged.find(candidate => candidate.id === id);
+      expect(entry?.id, `roster R8 row ${id} is an in-file judged row`).toBe(id);
+      if (entry === undefined) continue;
+      const fx = fixtureOf(entry.fixture);
+      const doc = entry.doc(fx);
+      const section = docsSection(doc, HEADING, 2, [DOC_TITLE]);
+      expect(section.ok, `${id}: ${section.why}`).toBe(true);
+      const kinds = section.blocks.map(block => (block.kind === 'other' ? block.type : block.kind));
+      expect(kinds, `${id}: the helper's own section runs past the nested heading to the record table`).toEqual(['paragraph', id.includes('-list-') ? 'list' : 'blockquote', 'table']);
+      expect(readRecord(doc).rows.map(row => row.recordedAt), `${id}: the census reads both rows of that table`).toEqual([fx.div, fx.head]);
+      checked.push(id);
+    }
+    expect(checked, 'every roster R8 row was judged here').toEqual(r8);
+    expect(r8).toHaveLength(8);
   });
 });
 
