@@ -259,7 +259,7 @@
       "family": "hook copy",
       "digest": "d4ea304260e90543ce46289eeb8b61d919cf47fd31098b933cea553bc3a98117",
       "reading": "row quiet",
-      "runtime": "observed as a violation: an S-call in a hook of any kind runs with no copy window open and cannot open one, so the row at that boundary, the file end or the census tier reds"
+      "runtime": "observed as a violation: an S-call in a hook of any kind runs with no copy window open and no opener it can call (the only opener is the budgeted row's own test function, budgeted(title, body)), so the row at that boundary, the file end or the census tier reds"
     },
     {
       "id": "R-SCOPE",
@@ -296,5 +296,15 @@
     "uses the shipped dependency lock only when npm has excluded package-lock.json",
     "rejects lockfile changes, missing artifact and lockfile/manifest mismatch",
     "wrap liveness: every judged copy surface emits from this row once"
-  ]
+  ],
+  "emitRowTitle": "wb-hk9l emit census: the rows observed really copying are exactly the budgeted PACKAGE_COPY_ROWS",
+  "censusRows": [
+    "each-liveness: the roster names the emit census row and the budgeted rows this leg reads",
+    "every pinned identity row was collected once, passed in the test tier's report, and asserts",
+    "every budgeted row of the roster was collected once and passed in the test tier's report, under the budgeted suite",
+    "the violation sidecar exists (the identity run armed it through the real fs when it loaded) and is empty: no copy call ran outside a copy window, whatever callback made it",
+    "liveness: a title the report cannot hold is red, naming it (an accept-all judge cannot pass here)"
+  ],
+  "censusSidecarRow": "the violation sidecar exists (the identity run armed it through the real fs when it loaded) and is empty: no copy call ran outside a copy window, whatever callback made it",
+  "censusJudgeRow": "every pinned identity row was collected once, passed in the test tier's report, and asserts"
 }
