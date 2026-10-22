@@ -50,7 +50,8 @@
 import { readFileSync } from "node:fs";
 import { basename, dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { afterAll, describe, expect, it } from "vitest";
+import ts from "typescript";
+import { afterAll, describe, expect, it, type RunnerTestSuite, TestRunner } from "vitest";
 import { type CasePin, DEFAULT_GATE_TIER, DEFAULT_TIER_REPORT, docsSection, judge, type PinVerdict, type RenderedBlock, sectionMatches, sourceStructure } from "./helpers/census.js";
 
 type Tier = "default-gate" | "live-tier";
@@ -743,5 +744,140 @@ describe("R673 (wb-csne): the AC2 call-site hook runs under its file-local budge
         throw own;
       }),
     ).rejects.toBe(own);
+  });
+});
+
+/**
+ * R687 (wb-9rto, the wb-csne F1 class): the R673 rows above pin the budget and backstop CONSTANTS; the rows below bind the
+ * ARGUMENT the AC2 call-site hook is registered with. vitest 4.1.10 keeps an afterAll's timeout only in the closure of the
+ * withTimeout timer it wraps the hook in (it stamps a registered timeout on the beforeAll and beforeEach hooks it stores,
+ * never on an afterAll: the runner row below pins that this file's afterAll carries none, and the capability-surface-parity
+ * R687 row reads the stamp a beforeAll carries), so this file's own AST is the evidence. hookRoster
+ * reads every hook registration of the file through the TypeScript binder (the census helper's single-file program: no
+ * lib, no module resolution): its registrar, the describe titles around it, the hook its callback guards (the first
+ * argument of its withinHookBudget call) and its timeout argument with the file-scope const that argument binds. It reads
+ * hook registrations only, never case calls. A registrar reached any way but a direct call of vitest's own named import
+ * (aliased, a member, a value, another module) is a finding, never a reading. An omitted, swapped, shadowed, literal or
+ * undefined argument is a red below, where the gate's omission probe of the registration left 48/48 green (wb-csne gate
+ * cmd_d14ebd6c549f, F1).
+ */
+const HOOK_REGISTRARS: readonly string[] = ["beforeAll", "afterAll", "beforeEach", "afterEach", "aroundAll", "aroundEach"];
+/** The key vitest stamps a registered timeout under, on the beforeAll and beforeEach hooks it stores; an afterAll carries none. */
+const REGISTERED_HOOK_TIMEOUT = Symbol.for("VITEST_CLEANUP_TIMEOUT");
+/** A binding's own name (a shorthand property's key is its identifier), so no expectation spells a const it binds by hand. */
+const nameOf = (binding: Readonly<Record<string, unknown>>): string => Object.keys(binding).join(", ");
+
+interface HookRegistration {
+  readonly registrar: string;
+  /** The titles of the describe calls around the registration, outermost first; "(file scope)" for none. */
+  readonly chain: string;
+  /** The first argument of each withinHookBudget call in the hook's callback, as written; "nothing" when it calls none. */
+  readonly guards: string;
+  /** The timeout argument as written; "(none)" when the registration passes none and vitest applies its default hookTimeout. */
+  readonly timeout: string;
+  /** The file-scope const the timeout argument binds through the binder; undefined for none, a literal, or an inner or non-const binding. */
+  readonly binds: string | undefined;
+}
+
+function hookRoster(file: string): { readonly registrations: readonly HookRegistration[]; readonly findings: readonly string[] } {
+  const path = join(ROOT, file);
+  const text = readFileSync(path, "utf8");
+  const sf = ts.createSourceFile(path, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const host: ts.CompilerHost = {
+    getSourceFile: name => (name === path ? sf : undefined),
+    getDefaultLibFileName: () => "lib.d.ts",
+    writeFile: () => undefined,
+    getCurrentDirectory: () => ROOT,
+    getCanonicalFileName: name => name,
+    useCaseSensitiveFileNames: () => true,
+    getNewLine: () => "\n",
+    fileExists: name => name === path,
+    readFile: name => (name === path ? text : undefined),
+  };
+  const checker = ts.createProgram({ rootNames: [path], options: { noLib: true, noResolve: true, types: [], target: ts.ScriptTarget.Latest, module: ts.ModuleKind.ESNext }, host }).getTypeChecker();
+  const at = (node: ts.Node): string => `${file}:${sf.getLineAndCharacterOfPosition(node.getStart(sf)).line + 1}`;
+  const declaration = (id: ts.Identifier): ts.Declaration | undefined => {
+    const declarations = checker.getSymbolAtLocation(id)?.declarations ?? [];
+    return declarations.length === 1 ? declarations[0] : undefined;
+  };
+  const viaVitest = (id: ts.Identifier): boolean => {
+    const bound = declaration(id);
+    if (bound === undefined || !ts.isImportSpecifier(bound) || bound.propertyName !== undefined) return false;
+    const statement = bound.parent.parent.parent;
+    return ts.isImportDeclaration(statement) && ts.isStringLiteral(statement.moduleSpecifier) && statement.moduleSpecifier.text === "vitest";
+  };
+  const fileScopeConst = (argument: ts.Expression | undefined): string | undefined => {
+    if (argument === undefined || !ts.isIdentifier(argument)) return undefined;
+    const bound = declaration(argument);
+    if (bound === undefined || !ts.isVariableDeclaration(bound) || !ts.isVariableDeclarationList(bound.parent) || (bound.parent.flags & ts.NodeFlags.Const) === 0) return undefined;
+    return ts.isVariableStatement(bound.parent.parent) && bound.parent.parent.parent === sf ? argument.text : undefined;
+  };
+  const guardsOf = (callback: ts.Node | undefined): string => {
+    const guarded: string[] = [];
+    const find = (node: ts.Node): void => {
+      if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "withinHookBudget") guarded.push(node.arguments[0]?.getText(sf) ?? "(no argument)");
+      ts.forEachChild(node, find);
+    };
+    if (callback !== undefined) find(callback);
+    return guarded.join(", ") || "nothing";
+  };
+  const registrations: HookRegistration[] = [];
+  const findings: string[] = [];
+  const visit = (node: ts.Node, chain: readonly string[]): void => {
+    let inner = chain;
+    if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "describe") {
+      const title = node.arguments[0];
+      inner = [...chain, title !== undefined && ts.isStringLiteralLike(title) ? title.text : `(a non-literal title at ${at(node)})`];
+    } else if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && HOOK_REGISTRARS.includes(node.expression.text)) {
+      if (!viaVitest(node.expression)) findings.push(`${at(node)}: ${node.expression.text} is not called through vitest's own named import`);
+      const timeout = node.arguments[1];
+      registrations.push({ registrar: node.expression.text, chain: chain.join(" > ") || "(file scope)", guards: guardsOf(node.arguments[0]), timeout: timeout?.getText(sf) ?? "(none)", binds: fileScopeConst(timeout) });
+    } else if (ts.isIdentifier(node) && HOOK_REGISTRARS.includes(node.text)) {
+      const called = ts.isCallExpression(node.parent) && node.parent.expression === node;
+      const imported = ts.isImportSpecifier(node.parent) && node.parent.propertyName === undefined;
+      if (!called && !imported) findings.push(`${at(node)}: ${node.text} is named in a ${ts.SyntaxKind[node.parent.kind]}, never called as a hook registration`);
+    }
+    ts.forEachChild(node, child => visit(child, inner));
+  };
+  visit(sf, []);
+  return { registrations, findings };
+}
+
+const rosterLine = (registration: HookRegistration): string =>
+  `${registration.registrar} @ ${registration.chain} | guards ${registration.guards} | timeout ${registration.timeout}${registration.binds === undefined ? "" : " (a file-scope const)"}`;
+
+describe("R687 (wb-9rto): the AC2 call-site hook is registered with its backstop, read from this file's AST and the runner's record", () => {
+  it("the roster: every hook registration of this file, read through the binder, is the literal list, and no hook is registered any other way", () => {
+    const roster = hookRoster(SELF);
+    expect(roster.findings, "a hook registrar reached any way but a direct call of vitest's own named import").toEqual([]);
+    expect(roster.registrations.map(rosterLine), "every hook registration: registrar, describe chain, guarded hook and timeout argument").toEqual([
+      "afterAll @ wb-6hb.6 docs/workbench/06 conformance census (report mode) | guards CALL_SITE_HOOK | timeout CALL_SITE_HOOK_BACKSTOP_MS (a file-scope const)",
+    ]);
+  });
+
+  it("the binding: the one registration guarding CALL_SITE_HOOK passes the file-scope CALL_SITE_HOOK_BACKSTOP_MS, 2 x the budget, as its timeout", () => {
+    const guarding = hookRoster(SELF).registrations.filter(registration => registration.guards === nameOf({ CALL_SITE_HOOK }));
+    expect(
+      guarding.map(registration => registration.binds),
+      "the file-scope const each registration guarding the call-site hook binds as its timeout: an omitted, literal, shadowed or undefined argument binds none, a swapped one another const",
+    ).toEqual([nameOf({ CALL_SITE_HOOK_BACKSTOP_MS })]);
+    expect(CALL_SITE_HOOK_BACKSTOP_MS, "the backstop of record is 2 x the budget").toBe(2 * CALL_SITE_HOOK_BUDGET_MS);
+  });
+
+  it("the runner: vitest holds exactly the hooks the roster names, one afterAll on the census describe and none at file scope, and stamps no timeout on it", ({ task }) => {
+    const roster = hookRoster(SELF).registrations;
+    const chain = roster.find(registration => registration.guards === nameOf({ CALL_SITE_HOOK }))?.chain;
+    const census = task.file.tasks.find((child): child is RunnerTestSuite => child.type === "suite" && child.name === chain);
+    const held = (hooks: ReturnType<typeof TestRunner.getSuiteHooks>): string[] => Object.entries(hooks).flatMap(([registrar, listeners]) => Array.from(listeners, () => registrar));
+    const stamped = (hooks: ReturnType<typeof TestRunner.getSuiteHooks>): unknown[] => Object.values(hooks).flatMap(listeners => Array.from(listeners, (hook: object): unknown => Reflect.get(hook, REGISTERED_HOOK_TIMEOUT)));
+    expect(census, "the describe the roster places the call-site hook in is a suite of this file").toBeDefined();
+    const fileHooks = TestRunner.getSuiteHooks(task.file);
+    const censusHooks = TestRunner.getSuiteHooks(census ?? task.file);
+    expect(held(fileHooks), "the hooks vitest holds at file scope, as the roster names them").toEqual(roster.filter(registration => registration.chain === "(file scope)").map(registration => registration.registrar));
+    expect(held(censusHooks), "the hooks vitest holds on the census describe, as the roster names them").toEqual(roster.filter(registration => registration.chain === chain).map(registration => registration.registrar));
+    expect(
+      stamped(censusHooks),
+      "the registered timeout vitest stamps on each hook it holds on the census describe: none on its one afterAll, whose timeout lives only in its timer's closure, so the AST above is the evidence for it",
+    ).toEqual([undefined]);
   });
 });
