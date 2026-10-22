@@ -1,0 +1,472 @@
+{
+  "bead": "wb-a9l2.6",
+  "pin": "6a251bf73af5",
+  "basis": "The out-of-file roster of test/workbench-rf-evaluator-artifact-context-census.test.ts (standing rule 16): every judged row's id, label and pins, every pin's witness, the receipt vocabulary and the producer fixture facts, so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. Producer facts read at ReactiveFiberCLI 6a251bf73af5 (read-only git show): checkIds is the graph.test.schema.json $defs.check_id enum in schema order; receiptFields are the command and the receipt keys only a receipt reader would name; artifactPhrases are the program's own names for its evaluator artifacts (harness2-federated-peer-2026-10-20/README.md:34, :37, :51); receiptSha256 is the sha256 of JSON.stringify of the result object of schemas/fixtures/graph.test/valid/ok_shadow.json as parsed; the two invalid fixtures are each one field away from it (checks[0].status failed; valid false). carriers are constructed additive context.render result keys, named by no shipped rf schema.",
+  "checkIds": [
+    "graph_schema",
+    "compilability",
+    "component_revisions",
+    "lens_declarations",
+    "optic_registry",
+    "trust_gate",
+    "view_contracts",
+    "redaction_gate",
+    "budget_gate",
+    "shadow_render"
+  ],
+  "receiptFields": [
+    "graph.test",
+    "published_head_unchanged",
+    "effects_authorized",
+    "validation_digest",
+    "subprocesses_spawned",
+    "observations_reused",
+    "output_digest",
+    "overlay_revision",
+    "overlay_digest",
+    "base_bundle_revision"
+  ],
+  "artifactPhrases": [
+    "shadow test",
+    "federation receipt",
+    "conformance verdict",
+    "evaluator artifact"
+  ],
+  "carriers": [
+    "shadow_test_receipt",
+    "acceptance_receipts",
+    "conformance_outcome"
+  ],
+  "receiptSha256": "ea187b384bd4e4831a209f9de65d1500f7bd482fca5eaedf9014c355cddfc8f5",
+  "producerFixtures": [
+    {
+      "path": "src/reactive_fiber_cli/schemas/cli/graph.test.schema.json",
+      "blob": "8e95edd2c02e1d80f1a7c27b284aa580151b2ba1"
+    },
+    {
+      "path": "schemas/fixtures/graph.test/valid/ok_shadow.json",
+      "blob": "7442508d4fcc4c606f68ce203ae5e8c8264e3803"
+    },
+    {
+      "path": "schemas/fixtures/graph.test/invalid/check_status_failed.json",
+      "blob": "8e3f87855e636818a08cf3ccec4215365e1d34da"
+    },
+    {
+      "path": "schemas/fixtures/graph.test/invalid/valid_false_on_success.json",
+      "blob": "5939c3c636fbee0dc1514459821b55c4eaf06332"
+    }
+  ],
+  "rows": [
+    {
+      "id": "A",
+      "label": "(a) Pi's agent-context composers carry an rf evaluator artifact only inside the producer-labelled reading (contract reactivefiber.render.preview/v1 over a reactive-fiber.cli/v1 source), never as a Pi-authored string",
+      "pins": [
+        {
+          "id": "A1",
+          "witness": {
+            "srcFloorMet": true,
+            "sites": [
+              "src/workbench/claude-capability-tools.ts:computed",
+              "src/workbench/claude-host.ts:computed",
+              "src/workbench/evidence-wiring.ts:forge.gate.status",
+              "src/workbench/hosts/local-detached.ts:computed",
+              "src/workbench/reconcile-tool.ts:computed"
+            ],
+            "classes": {
+              "agent": [
+                "src/workbench/claude-capability-tools.ts",
+                "src/workbench/reconcile-tool.ts"
+              ],
+              "script": [
+                "src/workbench/claude-host.ts",
+                "src/workbench/hosts/local-detached.ts"
+              ],
+              "fixed": [
+                "src/workbench/evidence-wiring.ts"
+              ]
+            },
+            "observerCallers": [],
+            "observerDefined": true
+          }
+        },
+        {
+          "id": "A2",
+          "witness": {
+            "frame": {
+              "isError": false,
+              "kind": "returned",
+              "value": {
+                "contract": "<contract>",
+                "workspaceRoot": "<root>",
+                "source": "<rf-envelope>"
+              }
+            },
+            "contract": "reactivefiber.render.preview/v1",
+            "sourceSchema": "reactive-fiber.cli/v1",
+            "verbatim": [
+              true,
+              true,
+              true
+            ],
+            "frameLeaks": [],
+            "controlCaught": true,
+            "spawns": 3
+          }
+        },
+        {
+          "id": "A3",
+          "witness": {
+            "producer": "reactivefiber",
+            "capabilityId": "reactivefiber.render.preview",
+            "nativeRefProvider": "reactivefiber",
+            "outcome": "returned",
+            "domainStatus": false,
+            "receiptKeys": [
+              "receiptId",
+              "taskId",
+              "position",
+              "producer",
+              "capabilityId",
+              "inputDigest",
+              "resultDigest",
+              "requestedAt",
+              "observedAt",
+              "outcome",
+              "nativeRef",
+              "evidenceRefs",
+              "sourceBasis",
+              "binding"
+            ],
+            "replyKeys": [
+              "contract",
+              "phase",
+              "receipt",
+              "guidance",
+              "snapshot"
+            ],
+            "verbatim": [
+              true,
+              true,
+              true
+            ],
+            "frameLeaks": []
+          }
+        },
+        {
+          "id": "A4",
+          "witness": {
+            "statuses": [
+              "completed",
+              "completed",
+              "completed",
+              "completed"
+            ],
+            "verbatim": [
+              true,
+              true,
+              true,
+              true
+            ],
+            "valueKeys": [
+              "contract",
+              "workspaceRoot",
+              "source"
+            ]
+          }
+        },
+        {
+          "id": "A5",
+          "witness": {
+            "invariant": 3,
+            "surfaced": [],
+            "tone": "success",
+            "coverage": "complete",
+            "stringsRead": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "(b) the producer's shadow-test receipt (ok_shadow.json at the pin) reaches the agent with its grade words verbatim as rf data, and Pi adds no pass/fail label of its own",
+      "pins": [
+        {
+          "id": "B1",
+          "witness": {
+            "resultKeys": [
+              "overlay",
+              "valid",
+              "checks",
+              "shadow",
+              "comparisons",
+              "published_head_unchanged",
+              "effects_authorized",
+              "validation_digest"
+            ],
+            "checkIds": [
+              "budget_gate",
+              "compilability",
+              "component_revisions",
+              "graph_schema",
+              "lens_declarations",
+              "optic_registry",
+              "redaction_gate",
+              "shadow_render",
+              "trust_gate",
+              "view_contracts"
+            ],
+            "statuses": [
+              "passed",
+              "skipped"
+            ],
+            "valid": true,
+            "invariants": {
+              "published_head_unchanged": true,
+              "effects_authorized": false
+            },
+            "regrades": {
+              "check-failed": [
+                "checks[0]: budget_gate:skipped -> budget_gate:failed"
+              ],
+              "valid-false": [
+                "valid: true -> false"
+              ]
+            }
+          }
+        },
+        {
+          "id": "B2",
+          "witness": {
+            "printed": {
+              "grades": [
+                "budget_gate:skipped",
+                "compilability:passed",
+                "component_revisions:passed",
+                "graph_schema:passed",
+                "lens_declarations:passed",
+                "optic_registry:passed",
+                "redaction_gate:passed",
+                "shadow_render:passed",
+                "trust_gate:passed",
+                "view_contracts:passed"
+              ],
+              "valid": true,
+              "sameInAllThree": true
+            },
+            "check-failed": {
+              "grades": [
+                "budget_gate:failed",
+                "compilability:passed",
+                "component_revisions:passed",
+                "graph_schema:passed",
+                "lens_declarations:passed",
+                "optic_registry:passed",
+                "redaction_gate:passed",
+                "shadow_render:passed",
+                "trust_gate:passed",
+                "view_contracts:passed"
+              ],
+              "valid": true,
+              "sameInAllThree": true
+            },
+            "valid-false": {
+              "grades": [
+                "budget_gate:skipped",
+                "compilability:passed",
+                "component_revisions:passed",
+                "graph_schema:passed",
+                "lens_declarations:passed",
+                "optic_registry:passed",
+                "redaction_gate:passed",
+                "shadow_render:passed",
+                "trust_gate:passed",
+                "view_contracts:passed"
+              ],
+              "valid": false,
+              "sameInAllThree": true
+            }
+          }
+        },
+        {
+          "id": "B3",
+          "witness": {
+            "curatedFrames": 1,
+            "reconcileFrames": 1,
+            "isError": [
+              false,
+              false,
+              false,
+              false
+            ],
+            "lexiconHits": [],
+            "controlCaught": true,
+            "guidanceFixed": [
+              true,
+              true,
+              true,
+              true
+            ]
+          }
+        },
+        {
+          "id": "B4",
+          "witness": {
+            "curated": {
+              "kind": "rejected",
+              "category": "transport",
+              "diagnostic": "RF preview returned an unrecognized native envelope."
+            },
+            "isError": true,
+            "reconcileOutcome": "transport",
+            "reconcileSnapshot": false,
+            "surfaced": [],
+            "spawns": 2,
+            "controlDiagnostic": "RF preview returned an unrecognized or contradictory envelope."
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "(c) until an rf evaluator surface ships (RFCLI-H2-00..05, none at the pin), Pi pins its absence: no rf evidence loader, no rf evaluator capability and no src spelling of the receipt vocabulary",
+      "pins": [
+        {
+          "id": "C1",
+          "witness": {
+            "loaderRows": [
+              "claude-agent-sdk",
+              "furnace",
+              "forge"
+            ],
+            "rfRefKinds": [
+              "rf-graph",
+              "rf-workspace",
+              "rf-bundle",
+              "rf-cli",
+              "rf-output"
+            ],
+            "rfEntries": [
+              "no-loader"
+            ],
+            "forgeControl": "unauthorized"
+          }
+        },
+        {
+          "id": "C2",
+          "witness": {
+            "rfIds": [
+              "reactivefiber.render.preview"
+            ],
+            "rfModes": [
+              "invoke"
+            ],
+            "descriptorFloorMet": true,
+            "hits": []
+          }
+        },
+        {
+          "id": "C3",
+          "witness": {
+            "root": "src",
+            "floor": 100,
+            "anchorFile": "workbench/providers/reactivefiber.ts",
+            "anchorToken": "REACTIVEFIBER_RENDER_PREVIEW_CONTRACT",
+            "floorMet": true,
+            "anchorRead": true,
+            "hits": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "M",
+      "label": "row C3's matcher catches every separator and case spelling of the receipt vocabulary, and its named residuals stay pinned quiet",
+      "pins": [
+        {
+          "id": "M1",
+          "witness": {
+            "digest": "d2e534724cad3a59",
+            "hit": true
+          }
+        },
+        {
+          "id": "M2",
+          "witness": {
+            "digest": "ac3c20c431a25bb2",
+            "hit": true
+          }
+        },
+        {
+          "id": "M3",
+          "witness": {
+            "digest": "7f14338ff552b25a",
+            "hit": true
+          }
+        },
+        {
+          "id": "M4",
+          "witness": {
+            "digest": "3c738ba6be305b52",
+            "hit": true
+          }
+        },
+        {
+          "id": "M5",
+          "witness": {
+            "digest": "995c53d9f6813797",
+            "hit": true
+          }
+        },
+        {
+          "id": "M6",
+          "witness": {
+            "digest": "39f51746f93ba3e4",
+            "hit": true
+          }
+        },
+        {
+          "id": "M7",
+          "witness": {
+            "digest": "766e4a2b584dacb9",
+            "hit": true
+          }
+        },
+        {
+          "id": "M8",
+          "witness": {
+            "digest": "5b964b3ef633dac3",
+            "hit": true
+          }
+        },
+        {
+          "id": "M9",
+          "witness": {
+            "digest": "4bdb2333ab149404",
+            "hit": true
+          }
+        },
+        {
+          "id": "Q1",
+          "witness": {
+            "digest": "4256a644fd172a08",
+            "hit": false
+          }
+        },
+        {
+          "id": "Q2",
+          "witness": {
+            "digest": "7b00396206fcbf7b",
+            "hit": false
+          }
+        },
+        {
+          "id": "Q3",
+          "witness": {
+            "digest": "f56279bb0ffe680c",
+            "hit": false
+          }
+        }
+      ]
+    }
+  ]
+}
