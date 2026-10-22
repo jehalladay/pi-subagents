@@ -46,6 +46,18 @@
  * So a quiet row dropped from the loop, renamed, or hollowed after its liveness reading reds there (the gate's
  * l2-disp-res-cp, l2-disp-res-s7 and l2-hb-s7q forms), and a residual removed from every literal of this file reds
  * against the roster as well as against src.
+ *
+ * wb-pqlv (the wb-vgke gate's PREP F1, owner R683 on the R677 class-closing acceptance, one follow-up): each member's
+ * reached record is written inside its quiet row's judgement loop, by that member's own judgement: judged() runs the
+ * judgement and writes the record only when it returned having made exactly the assertions it declares (at least one),
+ * counted through vitest's expect state. So a judgement loop narrowed to skip a member (the gate's
+ * g2-cp-member-skip-g20, g2-cp-member-skip-g14 and g2-cp-only-analog forms), and a guard or early return that narrows
+ * one member's judgement, leave that member unreached, and R-REACHED reds against the roster; R-BOUND pins judged()
+ * itself. Design bound (the same gate's F2, stated rather than killed): a reached record proves a member's declared
+ * assertions ran, never what they judged, so a judgement swapped for a tautology, a swallowed failure or another
+ * member's reading, its declared count kept, stays green in this file. Each family's membership stays judged against
+ * src by the blind-spot and last-pin-removal rows; the R9 analog's reading leaves no record (the roster lists members
+ * only), and the last-pin-removal row reds if R9's removal stops changing an outside reading.
  */
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -651,13 +663,26 @@ function changedByRemoval(mutant: string): string[] {
 /**
  * The records the residual quiet rows leave (wb-vgke, R666 F1), judged against the out-of-file roster by the last describe:
  * quietStarted holds the name each quiet row ran under, written when its body starts; quietReached holds one entry per
- * member, written after the member's last assertion, so a quiet row that returns or skips after its liveness reading
- * leaves its member unreached.
+ * judged member, written by judged() inside the judgement loop once that member's own judgement has run to its end
+ * (wb-pqlv, R683 F1), so a quiet row that returns, skips a member, or narrows a member's judgement after its liveness
+ * reading leaves that member unreached.
  */
 const quietStarted: string[] = [];
 const quietReached: string[] = [];
 /** The running case's registered name (its describe chain and title), read through the expect state, never the test context. */
 const runningCase = (): string => expect.getState().currentTestName ?? "<no running case>";
+
+/**
+ * One member's judgement and its reached record, as one unit (wb-pqlv): `judge` runs, and `record` joins `records` only
+ * when `judge` returned having made exactly `assertions` assertions, at least one, counted through vitest's expect state.
+ * A member the loop skips never reaches this call, and a member whose judgement a guard narrows or an early return cuts
+ * short makes fewer assertions than it declares: neither leaves a record.
+ */
+function judged(records: string[], record: string, assertions: number, judge: () => void): void {
+  const before = expect.getState().assertionCalls;
+  judge();
+  if (assertions > 0 && expect.getState().assertionCalls - before === assertions) records.push(record);
+}
 
 function quietRow(residual: Residual): void {
   quietStarted.push(runningCase());
@@ -666,19 +691,23 @@ function quietRow(residual: Residual): void {
       const text = read(INDEX);
       const before = obligationsOnce(INDEX, text);
       for (const member of residual.members) {
-        const page = withSanitizerAtHead(text, member);
-        // Liveness: the page carries the family's edit, one more sanitizer call inside the member, so a walk that
-        // followed the member would derive an obligation from it.
-        expect(sanitizerCallsIn(page, member), member).toBe(sanitizerCallsIn(text, member) + 1);
-        expect(obligationsOf(INDEX, page), member).toEqual(before);
-        quietReached.push(`${runningCase()} | one-level-walk | ${member}`);
+        judged(quietReached, `${runningCase()} | one-level-walk | ${member}`, 2, () => {
+          const page = withSanitizerAtHead(text, member);
+          // Liveness: the page carries the family's edit, one more sanitizer call inside the member, so a walk that
+          // followed the member would derive an obligation from it.
+          expect(sanitizerCallsIn(page, member), member).toBe(sanitizerCallsIn(text, member) + 1);
+          expect(obligationsOf(INDEX, page), member).toEqual(before);
+        });
       }
       break;
     }
     case "coordinated-pin-removal":
-      // A member's removal changes no outside reading; the same removal on the R9 row (the analog) changes its fields reading.
-      for (const row of SURVIVORS) expect(changedByRemoval(row.mutant), row.mutant).toEqual(residual.members.includes(row.mutant) ? [] : ["R9 fields"]);
-      for (const member of residual.members) quietReached.push(`${runningCase()} | coordinated-pin-removal | ${member}`);
+      // A member's removal changes no outside reading, judged and recorded once per member inside this loop; the same
+      // removal on the R9 row (the analog) changes its fields reading.
+      for (const row of SURVIVORS) {
+        if (residual.members.includes(row.mutant)) judged(quietReached, `${runningCase()} | coordinated-pin-removal | ${row.mutant}`, 1, () => expect(changedByRemoval(row.mutant), row.mutant).toEqual([]));
+        else expect(changedByRemoval(row.mutant), row.mutant).toEqual(["R9 fields"]);
+      }
       break;
   }
 }
@@ -749,5 +778,26 @@ describe("wb-vgke residual quiet-row records: each quiet row registered and reac
 
   it("R-REACHED (wb-vgke (b)): every roster member's quiet-row judgement ran past its last assertion, under its residual's registered name and kind, in run order", () => {
     expect(quietReached).toEqual(rosterRows().flatMap(row => row.members.map(member => `${row.suite} > ${row.test} | ${row.kind} | ${member}`)));
+  });
+
+  it("R-BOUND (wb-pqlv): judged() writes a record only when its judgement returned having made exactly the assertions it declares, at least one", () => {
+    const records: string[] = [];
+    // A probe judgement making `made` assertions: its subject is the count judged() reads, not the values it asserts.
+    const making = (made: number) => (): void => {
+      for (let n = 0; n < made; n += 1) expect(n).toBeLessThan(made);
+    };
+    judged(records, "0 of 0", 0, making(0));
+    judged(records, "0 of 1", 1, making(0));
+    judged(records, "1 of 2", 2, making(1));
+    judged(records, "2 of 1", 1, making(2));
+    expect(() =>
+      judged(records, "thrown after 1 of 1", 1, () => {
+        making(1)();
+        throw new Error("wb-pqlv probe");
+      }),
+    ).toThrow("wb-pqlv probe");
+    judged(records, "1 of 1", 1, making(1));
+    judged(records, "2 of 2", 2, making(2));
+    expect(records).toEqual(["1 of 1", "2 of 2"]);
   });
 });
