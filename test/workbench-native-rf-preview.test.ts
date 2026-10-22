@@ -4,6 +4,7 @@ import {describe,expect,it} from 'vitest';
 import {nativeReactiveFiberPreview} from '../src/workbench/providers/reactivefiber.js';
 import {judgeRfReleaseDrift,parseInstalledRfVersion,recordedRfRelease} from './helpers/rf-release-drift.js';
 import {diffAgainstRoster,readRfResultRoster} from './helpers/rf-render-fixture.js';
+import {judgeFamilyLeaves} from './helpers/rf-workspace-family.js';
 
 const RF_ABSENT_NOTE='engine_metrics absent: pre-TSX rf';
 const STAMP=/^[0-9A-Za-z.+_-]{1,64}$/;
@@ -82,6 +83,20 @@ describe('RF native context producer',()=>{
     // Recording line (straight to the process stdout, as RF_PREVIEW_RECEIPT above): recorded, installed, preview, failure count.
     process.stdout.write(`\nRF_RELEASE_DRIFT ${JSON.stringify({recorded:recordedRfRelease(),installed:stamp(installed),preview:stamp(provenance.cli_version),failures:verdict.failures.length})}\n`);
     expect(verdict.failures).toStrictEqual([]);
+  },60_000);
+});
+// wb-o4h0.3 (RF-FEDERATED-WORKSPACES-R4 acceptance (a)): "guard: rf --json --version result.leaves[] (path/served rows, not
+// capabilities.leaves) serves no workspace.* leaf, flipping to re-triage when one appears". The installed rf's registry is judged by
+// judgeFamilyLeaves (test/helpers/rf-workspace-family.ts): a served workspace leaf (re-triage wb-o4h0.3) or a registry that cannot be
+// read FAILS the tier, never skips. `rf --json --version` reads no workspace, so this row needs no WORKBENCH_RF_FIXTURE. The default
+// gate holds the same reader to a captured registry (test/workbench-rf-workspace-family-census.test.ts), which never flips by itself.
+describe('RF workspace family registry guard (wb-o4h0.3)',()=>{
+  it('o4h0-R4 live guard: the installed rf --json --version result.leaves serves no workspace leaf; a served one fails this row for re-triage',()=>{
+    const run=spawnSync('rf',['--json','--version'],{encoding:'utf8',timeout:10_000});
+    const verdict=judgeFamilyLeaves(run.error||run.status!==0?'':run.stdout);
+    // Recording line (straight to the process stdout, as RF_PREVIEW_RECEIPT above): verdict, row count, served and planned family paths.
+    process.stdout.write(`\nRF_WORKSPACE_FAMILY ${JSON.stringify({verdict:verdict.verdict,leaves:verdict.leaves,served:verdict.served.map(stamp),planned:verdict.planned.map(stamp)})}\n`);
+    expect(verdict.verdict).toBe('absent');
   },60_000);
 });
 /** A JSON object, never an array or null. */
