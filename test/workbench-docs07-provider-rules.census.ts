@@ -1632,3 +1632,118 @@ describe("wb-1z3u docs/19 measured read example: the RF arms claim judged by sen
     expect(judgementKinds(exampleFailures(readRepo(EXAMPLES_FILE), reading.sentence)), id).toEqual(["SENTENCE", "SLICE"]);
   });
 });
+
+/**
+ * wb-omxf / R677: "the AC3 containment check binds the FULL section-bounded slice by EQUALITY against an external
+ * anchor ... red-first vs the frozen-last-block and NAMES_RF-regex bypass shapes". No landed lines are changed.
+ * The four blocks, their markdown as well as rendered text, are anchored in the claim-base fixture outside this census.
+ * The RF sentence additionally reads both registered descriptors. Equal sections cannot admit ANY extra block or
+ * rewording, even one naming neither RF nor reactivefiber; paragraph markdown keeps withdrawn/struck arms observable.
+ * The fixture also anchors the two LANDED falsifier tables (including edit text/function digest), closing their F2 hollows.
+ * Scope is this one section; a following level-2 section is outside it (pinned quiet control), not a whole-page claim.
+ */
+const OMXF_ANCHOR_FILE = "test/fixtures/docs19-full-section-omxf.json";
+interface OmxfAnchor {
+  readonly forms: readonly (readonly [string, string, string])[];
+  readonly sectionMarkdown: string;
+  readonly d19: readonly (readonly [string, string, string, readonly string[]])[];
+  readonly arms: readonly { readonly id: string; readonly outcome: string; readonly editSha256: string }[];
+}
+function omxfAnchor(): OmxfAnchor {
+  const raw: unknown = JSON.parse(readRepo(OMXF_ANCHOR_FILE));
+  if (!isRecord(raw) || typeof raw.sectionMarkdown !== "string" || !Array.isArray(raw.d19) || !Array.isArray(raw.arms)) throw new Error(`${OMXF_ANCHOR_FILE}: missing section/table anchor`);
+  return raw as unknown as OmxfAnchor;
+}
+
+/** Equal the WHOLE bounded block list to the external anchor, and separately vouch its RF facts from the registry. */
+function fullExampleFailures(markdown: string, armsSentence: string): string[] {
+  const where = `${EXAMPLES_FILE} § ${EXAMPLES_SECTION}: FULL-SLICE`;
+  const anchor = docsSection(`# ${EXAMPLES_PARENT}\n\n${omxfAnchor().sectionMarkdown}`, EXAMPLES_SECTION, 2, [EXAMPLES_PARENT]);
+  if (!anchor.ok) throw new Error(`${OMXF_ANCHOR_FILE}: ${anchor.why}`);
+  const rfParagraph = anchor.blocks.at(-1);
+  if (rfParagraph?.kind !== "paragraph") throw new Error(`${OMXF_ANCHOR_FILE}: no RF paragraph`);
+  const sentence = proseSentences(rfParagraph.text).filter(text => text.includes(RF_CAPABILITY));
+  const failures: string[] = [];
+  if (sentence.length !== 1 || sentence[0] !== armsSentence) failures.push(`${where}: ANCHOR registry facts differ from the externally anchored RF sentence`);
+  const exact = sectionMatches(docsSection(markdown, EXAMPLES_SECTION, 2, [EXAMPLES_PARENT]), anchor.blocks);
+  if (!exact.ok) failures.push(`${where}: ${exact.why}`);
+  return failures;
+}
+
+const OMXF_FORMS: readonly (readonly [string, string, string])[] = [
+  ["G-D19-PARA-BEFORE-UNNAMED", "`furnace.run.inspect` accepts an existing `runId`", "The render preview below also accepts both input arms in one call.\n\n`furnace.run.inspect` accepts an existing `runId`"],
+  ["G-D19-ELSEWHERE-SPACED", "not a task-scoped semantic dependency analysis.", "not a task-scoped semantic dependency analysis. The Reactive Fiber render preview also accepts both input arms in one call."],
+  ["G-D19-ELSEWHERE-HYPHEN", "not a task-scoped semantic dependency analysis.", "not a task-scoped semantic dependency analysis. The Reactive-Fiber render preview also accepts both input arms in one call."],
+  ["G-D19-QUOTEBLOCK-BEFORE", "`furnace.run.inspect` accepts an existing `runId`", "> Both input arms of the render preview below may be combined in one call.\n\n`furnace.run.inspect` accepts an existing `runId`"],
+  ["G-D19-STRIKE-VIEW-ARM", "or `view` and `taskId` with an optional `model`, never both", "or ~~`view` and `taskId` with an optional `model`~~, never both"],
+  ["G-D19-STRIKE", "never both; its workspace", "~~never both~~; its workspace"],
+  ["X-UNNAMED-CODE", 'return {coverage: found.source.coverage_summary, runtime: found.runtime};\n', 'return {coverage: found.source.coverage_summary, runtime: found.runtime};\n// Both input arms may be combined\n'],
+  ["X-UNNAMED-LIST", "`furnace.run.inspect` accepts an existing `runId`", "- Both input arms may be combined.\n\n`furnace.run.inspect` accepts an existing `runId`"],
+  ["X-UNNAMED-H3", "`furnace.run.inspect` accepts an existing `runId`", "### Override\n\nBoth input arms may be combined.\n\n`furnace.run.inspect` accepts an existing `runId`"],
+  ["X-PRIOR-PARAGRAPH-REWORD", "This query is a filesystem read, not a task-scoped semantic dependency analysis.", "This query is a semantic dependency analysis."],
+];
+const OMXF_JUDGED: string[] = [];
+
+describe("wb-omxf R677 full docs19 section equality (external anchor, no NAMES_RF selection)", () => {
+  it("LIVE: the full section equals its external claim-base anchor and the registry's RF arms sentence", () => {
+    expect(fullExampleFailures(readRepo(EXAMPLES_FILE), registryArmsSentence())).toEqual([]);
+    expect(omxfAnchor().sectionMarkdown).toContain(EXAMPLE_ARMS_SENTENCE.replace("reactivefiber.render.preview", "`reactivefiber.render.preview`").split(" accepts")[0]);
+    OMXF_JUDGED.push("LIVE");
+  });
+
+  it.each(OMXF_FORMS)("%s: a full-section drift is refused by the full-slice equality judge itself", (id, from, to) => {
+    const live = readRepo(EXAMPLES_FILE);
+    expect(live.split(from), `${id} applies once`).toHaveLength(2);
+    const mutant = live.replace(from, to);
+    expect(mutant).not.toBe(live);
+    const findings = fullExampleFailures(mutant, registryArmsSentence());
+    expect(findings.length, `${id}: the full-slice judge must refuse, not another falsifier's missing anchor`).toBeGreaterThan(0);
+    expect(findings.every(line => line.includes("FULL-SLICE")), findings.join(" | ")).toBe(true);
+    OMXF_JUDGED.push(id);
+  });
+
+  it("F2 external anchor: both landed falsifier tables equal their out-of-file rows, including edit texts and function digests", () => {
+    const anchor = omxfAnchor();
+    expect(D19_FALSIFIERS).toEqual(anchor.d19);
+    expect(ARM_EDITS.map(([id, edit, outcome]) => ({ id, outcome, editSha256: createHash("sha256").update(edit.toString()).digest("hex") }))).toEqual(anchor.arms);
+    OMXF_JUDGED.push("F2");
+  });
+
+  it("F3: duplicate naming sentences are refused by the landed SENTENCE count judge (independent of SLICE)", () => {
+    const live = readRepo(EXAMPLES_FILE);
+    const mutant = live.replace("must not be advertised as a durable RF artifact.", `must not be advertised as a durable RF artifact. ${EXAMPLE_ARMS_SENTENCE}`);
+    expect(mutant).not.toBe(live);
+    expect(judgementKinds(exampleFailures(mutant, registryArmsSentence()))).toContain("SENTENCE");
+    OMXF_JUDGED.push("F3");
+  });
+
+  it("BOUNDARY quiet row: a contradictory following level-2 section is outside this section's full-slice claim", () => {
+    const live = readRepo(EXAMPLES_FILE);
+    const mutant = `${live}\n## Errata\n\nBoth input arms may be combined in one call.\n`;
+    expect(mutant).not.toBe(live);
+    expect(fullExampleFailures(mutant, registryArmsSentence())).toEqual([]);
+    OMXF_JUDGED.push("BOUNDARY");
+  });
+
+  it("REGISTRY: every descriptor edit moves the full-slice anchor or is refused (both registrations)", () => {
+    for (const descriptor of registeredDescriptors()) {
+      for (const [id, edit] of ARM_EDITS) {
+        const reading = armsSentenceOf(edit(descriptor));
+        if (reading.ok) expect(fullExampleFailures(readRepo(EXAMPLES_FILE), reading.sentence), id).not.toEqual([]);
+        else expect(reading.why, id).not.toBe("");
+      }
+    }
+    OMXF_JUDGED.push("REGISTRY");
+  });
+
+  it("FROZEN SHAPE: every judged member reaches its last assertion (rows anchored outside the census)", () => {
+    expect(OMXF_FORMS.map(([id]) => `${id}:1`)).toEqual([
+      "G-D19-PARA-BEFORE-UNNAMED:1", "G-D19-ELSEWHERE-SPACED:1", "G-D19-ELSEWHERE-HYPHEN:1", "G-D19-QUOTEBLOCK-BEFORE:1", "G-D19-STRIKE-VIEW-ARM:1", "G-D19-STRIKE:1", "X-UNNAMED-CODE:1", "X-UNNAMED-LIST:1", "X-UNNAMED-H3:1", "X-PRIOR-PARAGRAPH-REWORD:1",
+    ]);
+    expect(OMXF_JUDGED).toEqual(["LIVE", ...OMXF_FORMS.map(([id]) => id), "F2", "F3", "BOUNDARY", "REGISTRY"]);
+    const anchor = omxfAnchor();
+    expect(OMXF_FORMS).toEqual(anchor.forms);
+    expect(anchor.d19).toHaveLength(8);
+    expect(anchor.arms).toHaveLength(8);
+  });
+});

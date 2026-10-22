@@ -1,0 +1,167 @@
+{
+  "source": "wb-omxf R677 claim-base d75b68d10a1a3a183d6fb7a55088f38f86c018a2; full docs19 section and wb-1z3u falsifier tables",
+  "sectionMarkdown": "## Measured experimental read example\n\nUnlike the proposed `hyperunix.query` example above, the registered operation is currently `hyperunix.find`. In `.pi/subagents.json`, explicitly select the Claude workflow backend and grant only `hyperunix:read`.\n\n```javascript\nexport const meta = {name: \"inspect-source\", description: \"Read native coverage\"};\nconst found = await node(\"hyperunix.find\", {kind: \"hx.fs/regular-file\", root: \"src\"});\nreturn {coverage: found.source.coverage_summary, runtime: found.runtime};\n```\n\nThe native result can be incomplete even when files are returned. `licenses_absence: false` does not establish that a missing file or symbol is absent. This query is a filesystem read, not a task-scoped semantic dependency analysis.\n\n`furnace.run.inspect` accepts an existing `runId` under the authorized Pi workspace with explicit `furnace:inspect`. `reactivefiber.render.preview` accepts exactly one of two input arms under explicit `reactivefiber:render`: `model` and `task`, or `view` and `taskId` with an optional `model`, never both; its workspace must already be initialized. It uses a noncommitted render and must not be advertised as a durable RF artifact.\n",
+  "d19": [
+    [
+      "L2-D19-CONTRA",
+      "never both; its workspace must already be initialized. It uses a noncommitted render",
+      "never both; its workspace must already be initialized. It also accepts both arms in one call. It uses a noncommitted render",
+      [
+        "SLICE"
+      ]
+    ],
+    [
+      "L2-D19-NEG",
+      "`reactivefiber.render.preview` accepts exactly one of two input arms",
+      "It is false that `reactivefiber.render.preview` accepts exactly one of two input arms",
+      [
+        "SENTENCE",
+        "SLICE"
+      ]
+    ],
+    [
+      "D19-PRE",
+      "`furnace:inspect`. `reactivefiber.render.preview` accepts",
+      "`furnace:inspect`. Both arms may be combined in one call. `reactivefiber.render.preview` accepts",
+      [
+        "SLICE"
+      ]
+    ],
+    [
+      "D19-TAIL",
+      "must not be advertised as a durable RF artifact.",
+      "must not be advertised as a durable RF artifact. It also accepts both arms in one call.",
+      [
+        "SLICE"
+      ]
+    ],
+    [
+      "D19-PARA",
+      "must not be advertised as a durable RF artifact.\n",
+      "must not be advertised as a durable RF artifact.\n\nIn practice it also accepts both arms in one call.\n",
+      [
+        "SLICE",
+        "SLICE"
+      ]
+    ],
+    [
+      "D19-ELSEWHERE",
+      "not a task-scoped semantic dependency analysis.",
+      "not a task-scoped semantic dependency analysis. The RF render capability also accepts both arms in one call.",
+      [
+        "SLICE"
+      ]
+    ],
+    [
+      "D19-HTML",
+      "never both; its workspace",
+      "never <!-- unless the caller sends both, then --> both; its workspace",
+      [
+        "SLICE"
+      ]
+    ],
+    [
+      "D19-QUOTE",
+      "`reactivefiber.render.preview` accepts exactly one",
+      "Older notes claimed: `reactivefiber.render.preview` accepts exactly one",
+      [
+        "SENTENCE",
+        "SLICE"
+      ]
+    ]
+  ],
+  "arms": [
+    {
+      "id": "the view arm's optional model dropped",
+      "outcome": "moves",
+      "editSha256": "a9c2dbe575269ac2971bc15281fc02e3f39db9ad7e6d741f4ebdce8b7490e94f"
+    },
+    {
+      "id": "the legacy arm's task field dropped",
+      "outcome": "moves",
+      "editSha256": "3fe7f1e982dfe7b38e3f084ea27e6ce7f6eff06f93620a17d577ea986343086b"
+    },
+    {
+      "id": "the arms in the other order",
+      "outcome": "moves",
+      "editSha256": "109c971fc9a36feb10329ff3f429f7811db4ff5d01093ce68605448290132c8a"
+    },
+    {
+      "id": "another grant",
+      "outcome": "moves",
+      "editSha256": "a035b2cf4d5b966fa18b38ce6252a9fd2980028ddea1027cf801889b5cbf2404"
+    },
+    {
+      "id": "a second required grant",
+      "outcome": "refused: requires 2 permissions",
+      "editSha256": "debc6fd7fdf491473a930b7d49976ef8d3bf57a918b67a1a87d3b9f4c014cf3a"
+    },
+    {
+      "id": "the arms widened to anyOf",
+      "outcome": "refused: publishes no exclusive oneOf",
+      "editSha256": "3eeffda82fd1fcb97763d27446a0cddbeaeaecc819bf771191666b67cc350994"
+    },
+    {
+      "id": "a third arm",
+      "outcome": "refused: publishes 3 input arms",
+      "editSha256": "4de9d90546a9bb524c3a44461a70e672451446885554cae434e12f24e6721a90"
+    },
+    {
+      "id": "an open view arm",
+      "outcome": "refused: not a closed object",
+      "editSha256": "e52de5450e108e998ae934d8c04eadcf3f25beda8088d7fe25011e7d298b7440"
+    }
+  ],
+  "forms": [
+    [
+      "G-D19-PARA-BEFORE-UNNAMED",
+      "`furnace.run.inspect` accepts an existing `runId`",
+      "The render preview below also accepts both input arms in one call.\n\n`furnace.run.inspect` accepts an existing `runId`"
+    ],
+    [
+      "G-D19-ELSEWHERE-SPACED",
+      "not a task-scoped semantic dependency analysis.",
+      "not a task-scoped semantic dependency analysis. The Reactive Fiber render preview also accepts both input arms in one call."
+    ],
+    [
+      "G-D19-ELSEWHERE-HYPHEN",
+      "not a task-scoped semantic dependency analysis.",
+      "not a task-scoped semantic dependency analysis. The Reactive-Fiber render preview also accepts both input arms in one call."
+    ],
+    [
+      "G-D19-QUOTEBLOCK-BEFORE",
+      "`furnace.run.inspect` accepts an existing `runId`",
+      "> Both input arms of the render preview below may be combined in one call.\n\n`furnace.run.inspect` accepts an existing `runId`"
+    ],
+    [
+      "G-D19-STRIKE-VIEW-ARM",
+      "or `view` and `taskId` with an optional `model`, never both",
+      "or ~~`view` and `taskId` with an optional `model`~~, never both"
+    ],
+    [
+      "G-D19-STRIKE",
+      "never both; its workspace",
+      "~~never both~~; its workspace"
+    ],
+    [
+      "X-UNNAMED-CODE",
+      "return {coverage: found.source.coverage_summary, runtime: found.runtime};\n",
+      "return {coverage: found.source.coverage_summary, runtime: found.runtime};\n// Both input arms may be combined\n"
+    ],
+    [
+      "X-UNNAMED-LIST",
+      "`furnace.run.inspect` accepts an existing `runId`",
+      "- Both input arms may be combined.\n\n`furnace.run.inspect` accepts an existing `runId`"
+    ],
+    [
+      "X-UNNAMED-H3",
+      "`furnace.run.inspect` accepts an existing `runId`",
+      "### Override\n\nBoth input arms may be combined.\n\n`furnace.run.inspect` accepts an existing `runId`"
+    ],
+    [
+      "X-PRIOR-PARAGRAPH-REWORD",
+      "This query is a filesystem read, not a task-scoped semantic dependency analysis.",
+      "This query is a semantic dependency analysis."
+    ]
+  ]
+}
