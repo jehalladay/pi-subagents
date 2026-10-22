@@ -1,0 +1,540 @@
+{
+  "bead": "wb-o4h0.2",
+  "source": "ReactiveFiberCLI 6a251bf73af57c3a703caf6892dfe3015e06a481 (read-only git show by the cutting seat)",
+  "excerpts": [
+    {
+      "at": "docs/programs/federated-workspaces-2026-10-18/03-protocol-and-storage.md:5",
+      "line": "ResourceRef = {schema,workspace_id,backend_instance_id,resource_kind,resource_id,definition_digest}. ObservationRef adds source_revision, source_epoch, value_digest and optional provenance_digest. No implementation equates an alias or path with a global resource ID. Same W with different I represents a different runtime authority, as ADR-RFC-039 demands. Source revisions are opaque per owner/stream; do not order revisions from unrelated B instances."
+    },
+    {
+      "at": "docs/programs/federated-workspaces-2026-10-18/03-protocol-and-storage.md:50",
+      "line": "I02 No source revision counter compared across unrelated origin domains."
+    },
+    {
+      "at": "docs/programs/federated-workspaces-2026-10-18/01-requirements-decisions.md:37",
+      "line": "D03 Stable identities include (workspace_id, backend_instance_id) plus resource kind/id and immutable definition digest. Friendly aliases are local, mutable names."
+    }
+  ],
+  "identityFields": [
+    "workspace_id",
+    "backend_instance_id",
+    "resource_kind",
+    "resource_id",
+    "definition_digest"
+  ],
+  "gatingArtifacts": [
+    "rfc-0txnl.2",
+    "rfc-0txnl.10"
+  ],
+  "records": {
+    "sameWorkspace": [
+      {
+        "alias": "peer",
+        "locator": "/srv/rf/peer",
+        "resource": {
+          "workspace_id": "rfw_peeraaaaaaaaaaaaaaaaaaaaaa",
+          "backend_instance_id": "rfi_onebbbbbbbbbbbbbbbbbbbbbbb",
+          "resource_kind": "component",
+          "resource_id": "context.summary",
+          "definition_digest": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+        },
+        "observation": {
+          "source_epoch": "1",
+          "source_revision": "7"
+        }
+      },
+      {
+        "alias": "peer",
+        "locator": "/srv/rf/peer",
+        "resource": {
+          "workspace_id": "rfw_peeraaaaaaaaaaaaaaaaaaaaaa",
+          "backend_instance_id": "rfi_twoccccccccccccccccccccccc",
+          "resource_kind": "component",
+          "resource_id": "context.summary",
+          "definition_digest": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+        },
+        "observation": {
+          "source_epoch": "1",
+          "source_revision": "7"
+        }
+      }
+    ],
+    "aliasRename": [
+      {
+        "alias": "alpha",
+        "locator": "/srv/rf/alpha",
+        "resource": {
+          "workspace_id": "rfw_alphaeeeeeeeeeeeeeeeeeeeee",
+          "backend_instance_id": "rfi_alphafffffffffffffffffffff",
+          "resource_kind": "view",
+          "resource_id": "summary.daily",
+          "definition_digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+        },
+        "observation": {
+          "source_epoch": "1",
+          "source_revision": "4"
+        }
+      },
+      {
+        "alias": "beta",
+        "locator": "/srv/rf/alpha",
+        "resource": {
+          "workspace_id": "rfw_alphaeeeeeeeeeeeeeeeeeeeee",
+          "backend_instance_id": "rfi_alphafffffffffffffffffffff",
+          "resource_kind": "view",
+          "resource_id": "summary.daily",
+          "definition_digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+        },
+        "observation": {
+          "source_epoch": "1",
+          "source_revision": "4"
+        }
+      },
+      {
+        "alias": "beta",
+        "locator": "/mnt/rf/alpha",
+        "resource": {
+          "workspace_id": "rfw_alphaeeeeeeeeeeeeeeeeeeeee",
+          "backend_instance_id": "rfi_alphafffffffffffffffffffff",
+          "resource_kind": "view",
+          "resource_id": "summary.daily",
+          "definition_digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+        },
+        "observation": {
+          "source_epoch": "1",
+          "source_revision": "4"
+        }
+      }
+    ],
+    "epochs": [
+      {
+        "alias": "peer",
+        "locator": "/srv/rf/peer",
+        "resource": {
+          "workspace_id": "rfw_peeraaaaaaaaaaaaaaaaaaaaaa",
+          "backend_instance_id": "rfi_onebbbbbbbbbbbbbbbbbbbbbbb",
+          "resource_kind": "component",
+          "resource_id": "context.history",
+          "definition_digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+        },
+        "observation": {
+          "source_epoch": "1",
+          "source_revision": "9"
+        }
+      },
+      {
+        "alias": "peer",
+        "locator": "/srv/rf/peer",
+        "resource": {
+          "workspace_id": "rfw_peeraaaaaaaaaaaaaaaaaaaaaa",
+          "backend_instance_id": "rfi_onebbbbbbbbbbbbbbbbbbbbbbb",
+          "resource_kind": "component",
+          "resource_id": "context.history",
+          "definition_digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+        },
+        "observation": {
+          "source_epoch": "2",
+          "source_revision": "1"
+        }
+      }
+    ]
+  },
+  "rows": [
+    {
+      "id": "A",
+      "label": "(a) Pi identity/cache keys for imported records use (W,I,kind,id,digest); an alias rename leaves identity-keyed state untouched; no code path keys a resource by locator path",
+      "pins": [
+        {
+          "id": "A1",
+          "witness": {
+            "excerpts": 3,
+            "resourceRef": [
+              "schema",
+              "workspace_id",
+              "backend_instance_id",
+              "resource_kind",
+              "resource_id",
+              "definition_digest"
+            ],
+            "identityFields": [
+              "workspace_id",
+              "backend_instance_id",
+              "resource_kind",
+              "resource_id",
+              "definition_digest"
+            ],
+            "stream": [
+              "source_revision",
+              "source_epoch"
+            ],
+            "d03Phrases": 4
+          }
+        },
+        {
+          "id": "A2",
+          "witness": {
+            "moved": [
+              "workspace_id",
+              "backend_instance_id",
+              "resource_kind",
+              "resource_id",
+              "definition_digest"
+            ],
+            "aliasMoves": false,
+            "locatorMoves": false
+          }
+        },
+        {
+          "id": "A3",
+          "witness": {
+            "outcomes": [
+              "applied",
+              "applied",
+              "applied"
+            ],
+            "nodes": 1,
+            "stateUnchanged": true,
+            "aliasKeyedNodes": 2,
+            "locatorKeyedNodes": 2
+          }
+        },
+        {
+          "id": "A4",
+          "witness": {
+            "sameKeys": true,
+            "leaked": [],
+            "outcomes": [
+              "applied",
+              "applied"
+            ],
+            "nodes": 1,
+            "evidenceTags": [
+              "rf-graph",
+              "rf-workspace",
+              "rf-bundle",
+              "rf-cli"
+            ]
+          }
+        },
+        {
+          "id": "A5",
+          "witness": {
+            "floorMet": true,
+            "scopedFloorMet": true,
+            "anchorRead": true,
+            "hits": [],
+            "templateFloorMet": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "(b) same-W-different-I fixtures never collide in any Pi index nor share a revision ordering",
+      "pins": [
+        {
+          "id": "B1",
+          "witness": {
+            "records": 2,
+            "differing": [
+              "backend_instance_id"
+            ],
+            "sharedAlias": true,
+            "sharedLocator": true,
+            "sharedRawRevision": true
+          }
+        },
+        {
+          "id": "B2",
+          "witness": {
+            "identity": 2,
+            "others": {
+              "workspaceOnly": 1,
+              "withoutInstance": 1,
+              "alias": 1,
+              "locator": 1
+            }
+          }
+        },
+        {
+          "id": "B3",
+          "witness": {
+            "outcomes": [
+              "applied",
+              "applied"
+            ],
+            "nodes": 2,
+            "perRef": [
+              [
+                true
+              ],
+              [
+                true
+              ]
+            ],
+            "perVersion": [
+              1,
+              1
+            ],
+            "perEvidence": [
+              1,
+              1
+            ],
+            "rawCounterBucket": 2,
+            "workspaceEvidenceBucket": 2
+          }
+        },
+        {
+          "id": "B4",
+          "witness": {
+            "captureOrder": [
+              "applied",
+              "applied"
+            ],
+            "sequenceOrder": [
+              "applied",
+              "applied"
+            ],
+            "workspaceKeyedCapture": [
+              "applied",
+              "out-of-order"
+            ],
+            "workspaceKeyedSequence": [
+              "applied",
+              "out-of-order"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "(c) property test: comparators over observations from distinct (W,I) or epochs return typed non-comparable or refuse; no sort/merge key concatenates revision counters across origins",
+      "pins": [
+        {
+          "id": "C1",
+          "witness": {
+            "cases": 600,
+            "classes": {
+              "distinct-origin": 507,
+              "distinct-epoch": 51,
+              "same-stream": 42
+            },
+            "reference": 0,
+            "rawCounter": 558,
+            "epochBlind": 51
+          }
+        },
+        {
+          "id": "C2",
+          "witness": {
+            "reference": 0,
+            "concatenated": 9,
+            "plantedReference": 0,
+            "plantedConcatenated": 1,
+            "plantedSeparated": 1
+          }
+        },
+        {
+          "id": "C3",
+          "witness": {
+            "outcomes": [
+              "applied",
+              "applied"
+            ],
+            "version": "[\"rfw_peeraaaaaaaaaaaaaaaaaaaaaa\",\"rfi_onebbbbbbbbbbbbbbbbbbbbbbb\",\"2\",\"1\"]",
+            "counterAsSequence": [
+              "applied",
+              "out-of-order"
+            ],
+            "comparison": {
+              "comparable": false,
+              "reason": "distinct-epoch"
+            }
+          }
+        },
+        {
+          "id": "C4",
+          "witness": {
+            "outcomes": [
+              "applied",
+              "applied"
+            ],
+            "nodes": 2,
+            "tupleKeys": true
+          }
+        },
+        {
+          "id": "C5",
+          "witness": {
+            "floorMet": true,
+            "scopedFloorMet": true,
+            "anchorRead": true,
+            "hits": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "MA",
+      "label": "row A5's locator matcher catches every locator-named rf ref interpolation, key-like property, Map key and rf-tag join, and its named residuals stay pinned quiet",
+      "pins": [
+        {
+          "id": "MA1",
+          "witness": {
+            "digest": "3faff3226bcda899",
+            "hit": true
+          }
+        },
+        {
+          "id": "MA2",
+          "witness": {
+            "digest": "dfc91585e1f6532e",
+            "hit": true
+          }
+        },
+        {
+          "id": "MA3",
+          "witness": {
+            "digest": "1e01a7e3d3feb599",
+            "hit": true
+          }
+        },
+        {
+          "id": "MA4",
+          "witness": {
+            "digest": "e99ca28fb2bc50d0",
+            "hit": true
+          }
+        },
+        {
+          "id": "MA5",
+          "witness": {
+            "digest": "f3f390dd4b491756",
+            "hit": true
+          }
+        },
+        {
+          "id": "MA6",
+          "witness": {
+            "digest": "af3441c00364dcdd",
+            "hit": true
+          }
+        },
+        {
+          "id": "MA7",
+          "witness": {
+            "digest": "b87066e4bbb50a86",
+            "hit": true
+          }
+        },
+        {
+          "id": "MA8",
+          "witness": {
+            "digest": "948cfe5651b638c1",
+            "hit": true
+          }
+        },
+        {
+          "id": "QA1",
+          "witness": {
+            "digest": "a0fa707738d3d88b",
+            "hit": false
+          }
+        },
+        {
+          "id": "QA2",
+          "witness": {
+            "digest": "da7b492779a68d17",
+            "hit": false
+          }
+        },
+        {
+          "id": "QS1",
+          "witness": {
+            "scannedOutside": false,
+            "matcherWouldHit": true,
+            "scannedNamed": true,
+            "scannedRfToken": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "MC",
+      "label": "row C5's revision-join matcher catches every revision-named interpolation pair and plus-join, and its named residuals stay pinned quiet",
+      "pins": [
+        {
+          "id": "MC1",
+          "witness": {
+            "digest": "80bc7345224bd534",
+            "hit": true
+          }
+        },
+        {
+          "id": "MC2",
+          "witness": {
+            "digest": "4f9af276c30709e6",
+            "hit": true
+          }
+        },
+        {
+          "id": "MC3",
+          "witness": {
+            "digest": "710adc9714a1bc98",
+            "hit": true
+          }
+        },
+        {
+          "id": "MC4",
+          "witness": {
+            "digest": "9fbaba948c438e89",
+            "hit": true
+          }
+        },
+        {
+          "id": "MC5",
+          "witness": {
+            "digest": "e7f1649d4de0ac8b",
+            "hit": true
+          }
+        },
+        {
+          "id": "MC6",
+          "witness": {
+            "digest": "76a1bef60bae2307",
+            "hit": true
+          }
+        },
+        {
+          "id": "QC1",
+          "witness": {
+            "digest": "13c392fe96ea5a84",
+            "hit": false
+          }
+        },
+        {
+          "id": "QC2",
+          "witness": {
+            "digest": "402fe715696b73e1",
+            "hit": false
+          }
+        },
+        {
+          "id": "QC3",
+          "witness": {
+            "digest": "08424709328c416e",
+            "hit": false
+          }
+        },
+        {
+          "id": "QC4",
+          "witness": {
+            "digest": "274d01803776eef8",
+            "hit": false
+          }
+        }
+      ]
+    }
+  ]
+}
