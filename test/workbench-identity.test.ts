@@ -4,42 +4,53 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterAll, afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 /**
- * The RUNTIME EMIT JUDGE (wb-hk9l, R656/R670, v6): the primary copy pin over the JUDGED SURFACE SET S, stated exactly:
+ * The RUNTIME EMIT JUDGE (wb-hk9l, R656/R670, v7): the primary copy pin over the JUDGED SURFACE SET S, stated exactly:
  * cp, cpSync, copyFile and copyFileSync on node:fs (named and default exports), the fs.promises member (named and via
- * the default export), and the node:fs/promises module (cp, copyFile; named and default exports). Every S-call made
- * anywhere in this file's module graph - a row body, src code a row calls, a hook, module scope, a helper in another
- * module - is judged AT CALL TIME: it is refused (thrown where it happens) unless it runs inside a budgeted
- * PACKAGE_COPY_ROWS row, attributed by the row's FULL title chain (suite > row) that file-level hooks set for every
- * row in the file and clear between rows. So a row registered after the judge, a second describe, a hook, module scope
- * or a leaf-title collision in another suite never inherits a budget, and nothing is filtered after the fact; the
- * emit census row then reds a budgeted row that never copied. The wrap-liveness row proves that every surface
- * member of S carries the judge's mark and is one judged function across its named and default spellings, and the
- * budget list and its suite are anchored OUT OF FILE in test/fixtures/hk9l-scan-roster.json. The stated residual
- * risk is a copy that BYPASSES S, runtime-invisible by design: read/write composition, subprocess copy, createRequire
- * and getBuiltinModule requisition, and an other-module helper that re-implements the copy without S. The static scan
- * layer and the roster's residual families hold those, each with an id-asserted pinned quiet row and its runtime
- * reading stated per family (observed-and-refused through S, or invisible); the quiet rows are static-scan readings.
+ * the default export), and the node:fs/promises module (cp, copyFile; named and default exports). The wraps OBSERVE and
+ * CALL THROUGH, always: they record every S-call made anywhere in this file's module graph - a row body, a helper it
+ * calls, a hook, module scope, another module - with its attribution and whether a COPY WINDOW admitted it, and they
+ * never change the call's outcome (no mock decides an assertion). Admission is the budgeted row's OWN BODY: each
+ * PACKAGE_COPY_ROWS row runs its body inside withCopyBudget, which opens the window only when the running row's FULL
+ * title chain (suite > row) is an anchored chain and closes it when the body ends; hooks (before/after, each/all, nested
+ * or late-registered), module scope, rows registered after the suite, other suites and leaf-title collisions never hold
+ * a window, so their S-calls are VIOLATIONS. Violations are judged red at every row boundary by file-level hooks (the
+ * row at whose boundary a violation is first seen reds, the window must be closed at every boundary) and once more at
+ * file end by a judge registered as the file's only afterAll, so under vitest's reverse after-hook order it runs last
+ * (both facts pinned by the budget row); the emit census row reds a budgeted row that never copied. The wrap-liveness row proves that every surface
+ * member of S carries the judge's mark and is one judged function across its named and default spellings, and the budget
+ * list and its suite are anchored OUT OF FILE in test/fixtures/hk9l-scan-roster.json. The budgeted rows copy the package
+ * files TEST-SIDE (cpSync in their bodies); src's captureInvocationIdentity hashes by read and makes no S-call. The stated
+ * residual risk is a copy that BYPASSES S, runtime-invisible by design: read/write composition, subprocess copy,
+ * createRequire and getBuiltinModule requisition, and an other-module helper that re-implements the copy without S. The
+ * static scan layer and the roster's residual families hold those, each with an id-asserted pinned quiet row and its
+ * runtime reading stated per family (observed-as-violation through S, or invisible); the quiet rows are static-scan readings.
  */
 const emitState = vi.hoisted(() => {
   const state = {
-    observed: [] as { row: string; chain: string; call: string }[],
-    /** The FULL title chain (suite > row) of the row running now; null between rows, in hooks and at module scope. */
+    observed: [] as { row: string; chain: string; call: string; admitted: boolean }[],
+    /** The FULL title chain (suite > row) of the row running now, for attribution only; null between rows. */
     currentChain: null as string | null,
     currentRow: "<module scope>",
-    /** The full chains allowed to copy: PACKAGE_COPY_SUITE > each PACKAGE_COPY_ROWS title, filled once below. */
+    /** The copy window: the full chain of the budgeted row whose BODY is executing, opened by withCopyBudget; null otherwise. */
+    window: null as string | null,
+    /** The full chains that may hold a window: PACKAGE_COPY_SUITE > each PACKAGE_COPY_ROWS title, filled once below. */
     allowedChains: new Set<string>(),
     /** The mark every judged surface member carries, read by the wrap-liveness row. */
     mark: Symbol("wb-hk9l judged copy surface"),
-    /** Call-time judge: an S-call outside a budgeted row's own execution is refused where it happens, never filtered later. */
-    judge(call: string): void {
-      const chain = state.currentChain;
-      if (chain === null || !state.allowedChains.has(chain)) {
-        throw new Error(`wb-hk9l: copy surface ${call} called outside a budgeted package-copy row (${chain ?? "no row running"})`);
-      }
-      state.observed.push({ row: chain.split(" > ").pop() ?? chain, chain, call });
+    /** How many observed entries the row-boundary judges have already read. */
+    judged: 0,
+    /** Observe only: record the S-call with its attribution and admission, then the wrap calls through. Never decides an outcome. */
+    observe(call: string): void {
+      const window = state.window;
+      const chain = window ?? state.currentChain ?? "<module scope>";
+      state.observed.push({ row: chain.split(" > ").pop() ?? chain, chain, call, admitted: window !== null && state.allowedChains.has(window) });
+    },
+    /** S-calls made outside an open copy window, as "call @ chain" labels; from the given index onward. */
+    violations(from = 0): string[] {
+      return state.observed.slice(from).filter(entry => !entry.admitted).map(entry => `${entry.call} @ ${entry.chain}`);
     },
   };
   return state;
@@ -49,12 +60,12 @@ vi.mock("node:fs", async (importOriginal) => {
   const marked = <F>(fn: F, label: string): F => Object.defineProperty(fn, emitState.mark, { value: label, enumerable: false });
   const wrap = <K extends "cp" | "cpSync" | "copyFile" | "copyFileSync">(name: K): (typeof actual)[K] =>
     marked(((...args: never[]) => {
-      emitState.judge(name);
+      emitState.observe(name);
       return (actual[name] as (...callArgs: never[]) => unknown)(...args);
     }) as (typeof actual)[K], name);
   const wrapPromise = <K extends "cp" | "copyFile">(name: K): (typeof actual.promises)[K] =>
     marked(((...args: never[]) => {
-      emitState.judge(`promises.${name}`);
+      emitState.observe(`promises.${name}`);
       return (actual.promises[name] as (...callArgs: never[]) => unknown)(...args);
     }) as (typeof actual.promises)[K], `promises.${name}`);
   const promises = { ...actual.promises, cp: wrapPromise("cp"), copyFile: wrapPromise("copyFile") };
@@ -66,7 +77,7 @@ vi.mock("node:fs/promises", async (importOriginal) => {
   const marked = <F>(fn: F, label: string): F => Object.defineProperty(fn, emitState.mark, { value: label, enumerable: false });
   const wrapPromise = <K extends "cp" | "copyFile">(name: K): (typeof actual)[K] =>
     marked(((...args: never[]) => {
-      emitState.judge(`promises.${name}`);
+      emitState.observe(`promises.${name}`);
       return (actual[name] as (...callArgs: never[]) => unknown)(...args);
     }) as (typeof actual)[K], `promises.${name}`);
   const wrapped = { ...actual, cp: wrapPromise("cp"), copyFile: wrapPromise("copyFile") };
@@ -110,6 +121,23 @@ const PACKAGE_COPY_ROWS = [
 /** The suite that owns every budgeted row: attribution is by FULL chain, so a same-leaf row in another suite is refused (v6 U1). */
 const PACKAGE_COPY_SUITE = "WB-014 immutable invocation identity";
 for (const row of PACKAGE_COPY_ROWS) emitState.allowedChains.add(`${PACKAGE_COPY_SUITE} > ${row}`);
+/**
+ * The only admission path (v7 U1): a budgeted row runs its body inside this window. It opens only when the RUNNING row's
+ * full chain is an anchored chain (another suite's same-leaf row cannot open it), refuses nesting, and closes when the body
+ * ends (sync or async), so hooks, module scope, later rows and other suites never copy under an open window.
+ */
+const withCopyBudget = <T>(body: () => T): T => {
+  const chain = expect.getState().currentTestName ?? "<module scope>";
+  if (!emitState.allowedChains.has(chain)) throw new Error(`wb-hk9l: withCopyBudget outside an anchored budgeted chain (${chain})`);
+  if (emitState.window !== null) throw new Error(`wb-hk9l: a copy window is already open (${emitState.window})`);
+  emitState.window = chain;
+  const close = (): void => { emitState.window = null; };
+  let result: T;
+  try { result = body(); } catch (error) { close(); throw error; }
+  if (result instanceof Promise) return (result as Promise<unknown>).finally(close) as T;
+  close();
+  return result;
+};
 /** The node:fs calls that copy a file or a tree, read by name wherever named: imported, as a namespace member or as an element read. */
 const COPY_CALLS: ReadonlySet<string> = new Set(["cp", "cpSync", "copyFile", "copyFileSync"]);
 /** vitest's test API as this file may name it, the flags that keep a chain the test API, and its condition and table methods. */
@@ -126,26 +154,26 @@ type TestApi = { readonly each: boolean; readonly table: ts.Expression | undefin
  * It reads it / test with their TEST_FLAGS chains, the TEST_CONDITIONS calls, and the TEST_TABLES calls over an array-literal
  * table whose title expands by %s alone. A row it cannot read gets a title the runner never registers and a registration it
  * does not recognise is missing from its list, so either way the runner cross-check reds instead of passing the row unread.
- * ENUMERATION (R656/R670 owner completion, v6): the PRIMARY pin is the runtime emit judge above, and it judges EXACTLY
- * the judged surface set S - cp, cpSync, copyFile and copyFileSync on node:fs (named and default exports), the
- * fs.promises member (named and via the default export), and the node:fs/promises module (cp, copyFile; named and
- * default exports) - at CALL TIME, from any call site in this file's module graph: a row body, src called by a row, a
- * hook, module scope or a helper in another module. An S-call inside a budgeted row (full chain) is observed and
- * attributed; any other S-call is refused where it happens. A copy that BYPASSES S is NOT runtime-observed, and no
- * wider claim is made. The static scan below is a SECONDARY liveness layer; it classifies exactly the witness forms
- * pinned in test/fixtures/hk9l-scan-roster.json (every witness has a roster row with its frozen source digest, and
- * the scanner's dispatch vocabulary equals the roster's dispatch list - some witness forms deliberately share a
- * dispatch route). The scan makes no general alias-resolution claim.
+ * ENUMERATION (R656/R670 owner completion, v7): the PRIMARY pin is the runtime emit judge above over EXACTLY the judged
+ * surface set S - cp, cpSync, copyFile and copyFileSync on node:fs (named and default exports), the fs.promises member
+ * (named and via the default export), and the node:fs/promises module (cp, copyFile; named and default exports). Every
+ * S-call from any call site in this file's module graph is OBSERVED and called through; it is ADMITTED only inside the
+ * copy window a budgeted row's own body opens (withCopyBudget, keyed on the running row's full chain), and every other
+ * S-call is a VIOLATION judged red at the row boundaries and at file end. The wraps never decide an outcome. A copy that
+ * BYPASSES S is NOT runtime-observed, and no wider claim is made. The static scan below is a SECONDARY liveness layer; it
+ * classifies exactly the witness forms pinned in test/fixtures/hk9l-scan-roster.json (every witness has a roster row with
+ * its frozen source digest, and the scanner's dispatch vocabulary equals the roster's dispatch list - some witness forms
+ * deliberately share a dispatch route). The scan makes no general alias-resolution claim.
  * NAMED RESIDUALS (quiet rows below; every quiet reading is the STATIC SCAN's reading of a frozen source): H5 read+write
- * copy; another module's helper; subprocess copy; hook copy; module-scope copy; captureInvocationIdentity hashing
- * proxy; createRequire requisition; getBuiltinModule requisition. Each family states its RUNTIME reading beside the
- * static one, and the two differ by design: a hook copy, a module-scope copy, src's own copies behind the hashing proxy
- * and an other-module helper that copies THROUGH S are quiet to the scan but observed - and, outside a budgeted row,
- * refused - by the runtime judge; read/write composition, subprocess copy, createRequire and getBuiltinModule
- * requisition (both return the unmocked builtin) and an other-module helper that re-implements the copy without S are
- * quiet to BOTH layers. Those last families are the stated residual risk of scoping to S, accepted and documented
- * here, not a coverage claim. Every family has its own frozen input, exact quiet reading and runtime reading, and the
- * residual table is anchored OUT OF FILE in test/fixtures/hk9l-scan-roster.json (id, family, full source digest,
+ * copy; another module's helper; subprocess copy; hook copy; module-scope copy; captureInvocationIdentity hashing proxy;
+ * createRequire requisition; getBuiltinModule requisition. Each family states its RUNTIME reading beside the static one:
+ * a hook copy, a module-scope copy and an other-module helper that copies THROUGH S are quiet to the scan but observed as
+ * violations by the runtime judge; the hashing proxy makes no S-call at all (src hashes by read; the budgeted rows copy
+ * test-side), so a row that only hashes is never a copy; read/write composition, subprocess copy, createRequire and
+ * getBuiltinModule requisition (both return the unmocked builtin) and an other-module helper that re-implements the copy
+ * without S are quiet to BOTH layers. Those last families are the stated residual risk of scoping to S, accepted and
+ * documented here, not a coverage claim. Every family has its own frozen input, exact quiet reading and runtime reading,
+ * and the residual table is anchored OUT OF FILE in test/fixtures/hk9l-scan-roster.json (id, family, full source digest,
  * static reading and runtime reading, in table order; the census anchor row enforces order, count and per-row
  * registration exactly). The 320 s synchronous IO-stall remains an instrument residual: no budget cures it.
  * The route/digest roster, the budget list and the residual roster live in test/fixtures/hk9l-scan-roster.json (R656
@@ -496,11 +524,11 @@ const SCAN_READINGS: readonly string[] = [
 interface ScanResidual { readonly id: string; readonly family: string; readonly source: string; readonly reading: string; readonly runtime: string }
 const SCAN_RESIDUALS: readonly ScanResidual[] = [
   {"id": "R-H5", "family": "read/write composition", "source": "it(\"row\", () => { writeFileSync(to, readFileSync(from)); });", "reading": "row quiet", "runtime": "invisible: no S-call, the bytes move by read and write"},
-  {"id": "R-MODULE", "family": "other-module helper", "source": "import { copyPackage } from \"./other.js\";\nit(\"row\", () => { copyPackage(a, b); });", "reading": "row quiet", "runtime": "observed and refused outside a budgeted row when the helper copies through S; invisible when it re-implements the copy without S"},
+  {"id": "R-MODULE", "family": "other-module helper", "source": "import { copyPackage } from \"./other.js\";\nit(\"row\", () => { copyPackage(a, b); });", "reading": "row quiet", "runtime": "observed as a violation when the helper copies through S outside a copy window; invisible when it re-implements the copy without S"},
   {"id": "R-PROCESS", "family": "subprocess copy", "source": "it(\"row\", () => { execFileSync(\"cp\", [a, b]); });", "reading": "row quiet", "runtime": "invisible: the copy runs in another process"},
-  {"id": "R-HOOK", "family": "hook copy", "source": "beforeEach(() => { cpSync(a, b); });\nit(\"row\", () => { expect(true).toBe(true); });", "reading": "row quiet", "runtime": "observed and refused: an S-call in a hook runs with no row chain live"},
-  {"id": "R-SCOPE", "family": "module-scope copy", "source": "cpSync(a, b);\nit(\"row\", () => { expect(true).toBe(true); });", "reading": "row quiet", "runtime": "observed and refused: an S-call at module scope runs with no row chain live"},
-  {"id": "R-PROXY", "family": "identity hashing proxy", "source": "it(\"row\", () => { captureInvocationIdentity(request); });", "reading": "row quiet", "runtime": "observed: src copies through S and is attributed to the calling row, refused outside a budgeted one"},
+  {"id": "R-HOOK", "family": "hook copy", "source": "beforeEach(() => { cpSync(a, b); });\nit(\"row\", () => { expect(true).toBe(true); });", "reading": "row quiet", "runtime": "observed as a violation: an S-call in a hook runs with no copy window open, so the row at that boundary reds"},
+  {"id": "R-SCOPE", "family": "module-scope copy", "source": "cpSync(a, b);\nit(\"row\", () => { expect(true).toBe(true); });", "reading": "row quiet", "runtime": "observed as a violation: an S-call at module scope runs with no copy window open, so the first row reds"},
+  {"id": "R-PROXY", "family": "identity hashing proxy", "source": "it(\"row\", () => { captureInvocationIdentity(request); });", "reading": "row quiet", "runtime": "invisible: captureInvocationIdentity hashes by read and makes no S-call (the budgeted rows copy test-side)"},
   {"id": "R-REQUIRE", "family": "createRequire requisition", "source": "const requireFs = createRequire(import.meta.url);\nit(\"row\", () => { requireFs(\"node:fs\")[String(\"cpSync\")](a, b); });", "reading": "row quiet", "runtime": "invisible: createRequire returns the unmocked builtin"},
   {"id": "R-BUILTIN", "family": "getBuiltinModule requisition", "source": "it(\"row\", () => { process.getBuiltinModule(\"node:fs\")[String(\"cpSync\")](a, b); });", "reading": "row quiet", "runtime": "invisible: getBuiltinModule returns the unmocked builtin"},
 ];
@@ -526,17 +554,41 @@ function fixture() {
   return { workspace, scriptPath, request };
 }
 afterEach(() => { for (const dir of dirs.splice(0)) rmSync(dir, { recursive: true, force: true }); });
-// File-level attribution (v6 U1): these hooks fire for every row in the file whatever its suite, so no row inherits a stale
-// label from an earlier describe; between rows no chain is live, so an S-call from a hook or module scope is refused.
+// File-level judging (v7 U1): these hooks fire for every row in the file whatever its suite. The copy window must be closed
+// at every row boundary, and an S-call outside an open window - from a hook (before/after, each/all, nested or registered
+// after these), module scope, a late row or another suite - is a VIOLATION that reds the row at whose boundary it is seen.
 beforeEach(() => {
   const chain = expect.getState().currentTestName ?? null;
   emitState.currentChain = chain;
   emitState.currentRow = chain?.split(" > ").pop() ?? "<module scope>";
+  expect(emitState.window, "no copy window is open when a row starts").toBeNull();
+  const seen = emitState.violations(emitState.judged);
+  emitState.judged = emitState.observed.length;
+  expect(seen, "no S-call ran outside a copy window since the last row boundary").toEqual([]);
 });
 afterEach(() => {
+  expect(emitState.window, "the row's copy window closed with its body").toBeNull();
+  const seen = emitState.violations(emitState.judged);
+  emitState.judged = emitState.observed.length;
+  expect(seen, "no S-call ran outside a copy window during this row or its hooks").toEqual([]);
   emitState.currentChain = null;
   emitState.currentRow = "<between rows>";
 });
+/**
+ * File-end judge (v7): hooks that run after the last row boundary still cannot copy unseen. Under vitest's default hook
+ * ordering (sequence.hooks "stack": after-hooks run in REVERSE registration order) the FIRST registered afterAll runs LAST,
+ * so this judge is registered before any other afterAll in the file; the budget row pins both facts - it is the file's only
+ * afterAll registration (static), and after-hooks really run in reverse order (HOOK_ORDER, empirical).
+ */
+const judgeFileEnd = (): void => {
+  expect(emitState.window, "no copy window survives the file").toBeNull();
+  expect(emitState.violations(), "no S-call ran outside a copy window anywhere in this file").toEqual([]);
+};
+afterAll(judgeFileEnd);
+/** Empirical pin of the after-hook ordering the file-end judge relies on: the later-registered afterEach runs first. */
+const HOOK_ORDER: string[] = [];
+afterEach(() => { HOOK_ORDER.push("first-registered"); });
+afterEach(() => { HOOK_ORDER.push("second-registered"); });
 
 describe(PACKAGE_COPY_SUITE, () => {
   it("canonicalizes JSON recursively and hashes SHA256 with domain separation", () => {
@@ -594,7 +646,7 @@ describe(PACKAGE_COPY_SUITE, () => {
     expect(() => verifyInvocationIdentity(pin, changed)).toThrow();
   });
 
-  it("pins actual package.json, package-lock.json and local vendor artifact bytes, not declared fiction", PACKAGE_COPY_ROW, () => {
+  it("pins actual package.json, package-lock.json and local vendor artifact bytes, not declared fiction", PACKAGE_COPY_ROW, () => withCopyBudget(() => {
     const f = fixture();
     const root = join(f.workspace, "package");
     mkdirSync(root);
@@ -620,7 +672,7 @@ describe(PACKAGE_COPY_SUITE, () => {
     writeFileSync(join(root, "host.js"), "trusted host implementation");
     writeFileSync(join(root, "vendor/forge-sdk-0.1.0.tgz"), "tampered artifact");
     expect(() => verifyInvocationIdentity(pin, request)).toThrow();
-  });
+  }));
 
   it("pins hoisted runtime artifacts outside the extension package root", () => {
     const f = fixture();
@@ -641,7 +693,7 @@ describe(PACKAGE_COPY_SUITE, () => {
     expect(() => captureInvocationIdentity(f.request)).toThrow(IdentityConflictError);
   });
 
-  it("uses the shipped dependency lock only when npm has excluded package-lock.json", PACKAGE_COPY_ROW, () => {
+  it("uses the shipped dependency lock only when npm has excluded package-lock.json", PACKAGE_COPY_ROW, () => withCopyBudget(() => {
     const f = fixture();
     const root = join(f.workspace, "installed-package");
     mkdirSync(root);
@@ -663,9 +715,9 @@ describe(PACKAGE_COPY_SUITE, () => {
     expect(() => verifyInvocationIdentity(pin, request)).toThrow(IdentityConflictError);
     rmSync(join(root, "vendor/dependency-lock.json"));
     expect(() => captureInvocationIdentity(request)).toThrow(IdentityConflictError);
-  });
+  }));
 
-  it("rejects lockfile changes, missing artifact and lockfile/manifest mismatch", PACKAGE_COPY_ROW, () => {
+  it("rejects lockfile changes, missing artifact and lockfile/manifest mismatch", PACKAGE_COPY_ROW, () => withCopyBudget(() => {
     const f = fixture();
     const root = join(f.workspace, "package");
     mkdirSync(root);
@@ -686,7 +738,7 @@ describe(PACKAGE_COPY_SUITE, () => {
     manifest.dependencies.nanoid = "0.0.1";
     writeFileSync(join(root, "package.json"), JSON.stringify(manifest));
     expect(() => captureInvocationIdentity(request)).toThrow();
-  });
+  }));
 
   it("refuses absent/invalid caller, ABI and descriptor instead of producing a digest from partial input", () => {
     const f = fixture();
@@ -701,15 +753,23 @@ describe(PACKAGE_COPY_SUITE, () => {
   });
 
   it("wb-hk9l: every package-copy row runs under the explicit file-local budget, none rides the 5000 ms default", ({ task }) => {
-    const registered: { title: string; timeout: number }[] = [];
+    const registered: { title: string; timeout: number; concurrent: boolean }[] = [];
     const walk = (tasks: typeof task.file.tasks): void => {
       for (const child of tasks) {
-        if (child.type === "test") registered.push({ title: child.name, timeout: child.timeout });
+        if (child.type === "test") registered.push({ title: child.name, timeout: child.timeout, concurrent: child.concurrent === true });
         else if (child.type === "suite") walk(child.tasks);
       }
     };
     walk(task.file.tasks);
-    const scanned = scanRows(readFileSync(fileURLToPath(import.meta.url), "utf8"));
+    expect(registered.filter(row => row.concurrent).map(row => row.title), "no row is concurrent: the copy window is one row's at a time").toEqual([]);
+    const text = readFileSync(fileURLToPath(import.meta.url), "utf8");
+    // v7: the file-end judge is the file's ONLY afterAll registration, so no afterAll can be registered before it (and run after it).
+    // The needle is assembled so this row's own source never matches it.
+    const registration = ["after", "All("].join("");
+    expect(text.split(registration).length - 1, "exactly one afterAll registration in this file: the file-end judge").toBe(1);
+    expect(text.indexOf(`${registration}judgeFileEnd)`), "that one registration is the file-end judge").toBeGreaterThan(0);
+    expect(HOOK_ORDER.slice(0, 2), "after-hooks run in reverse registration order (vitest sequence.hooks stack), so the first-registered afterAll runs last").toEqual(["second-registered", "first-registered"]);
+    const scanned = scanRows(text);
     expect(scanned.map(row => row.title), "the source scan classifies every registered row").toEqual(registered.map(row => row.title));
     expect(registered.filter(row => row.timeout === PACKAGE_COPY_ROW_BUDGET_MS).map(row => row.title), "the rows the runner runs under PACKAGE_COPY_ROW_BUDGET_MS").toEqual(PACKAGE_COPY_ROWS);
     expect(scanned.filter(row => row.copies).map(row => row.title), "the rows whose registration reaches a copy").toEqual(PACKAGE_COPY_ROWS);
@@ -817,7 +877,7 @@ describe(PACKAGE_COPY_SUITE, () => {
       SCAN_RESIDUALS.map(row => `wb-hk9l residual ${row.id}: pinned quiet reading`));
   });
 
-  it("wrap liveness: every judged copy surface emits from this row once", async () => {
+  it("wrap liveness: every judged copy surface emits from this row once", () => withCopyBudget(async () => {
     const scratch = fixture().workspace;
     const src = join(scratch, "a.json");
     writeFileSync(src, "{}\n");
@@ -840,10 +900,11 @@ describe(PACKAGE_COPY_SUITE, () => {
     fsDefault.cpSync(src, join(scratch, "b7.json"));
     await fsDefault.promises.copyFile(src, join(scratch, "b8.json"));
     await fspDefault.cp(src, join(scratch, "b9.json"));
-    const calls = [...new Set(emitState.observed.filter(entry => entry.row === "wrap liveness: every judged copy surface emits from this row once").map(entry => entry.call))].sort();
-    expect(calls, "every wrapped surface really routes through the judge: a dropped wrap reds here, deterministically").toEqual(
+    const mine = emitState.observed.filter(entry => entry.row === "wrap liveness: every judged copy surface emits from this row once");
+    expect([...new Set(mine.map(entry => entry.call))].sort(), "every wrapped surface really routes through the judge: a dropped wrap reds here, deterministically").toEqual(
       ["copyFile", "copyFileSync", "cp", "cpSync", "promises.copyFile", "promises.cp"].sort());
-  }, PACKAGE_COPY_ROW_BUDGET_MS);
+    expect(mine.every(entry => entry.admitted), "this row's copies ran inside its own copy window").toBe(true);
+  }), PACKAGE_COPY_ROW_BUDGET_MS);
   it("wb-hk9l registered leaf titles are unique, so no row can wear a budgeted title it does not own", ({ task }) => {
     const titles: string[] = [];
     const chains: string[] = [];
@@ -869,12 +930,13 @@ describe(PACKAGE_COPY_SUITE, () => {
       if (PACKAGE_COPY_ROWS.includes(leaf)) expect(chain, "every budgeted leaf sits under the anchored suite").toBe(`${PACKAGE_COPY_SUITE} > ${leaf}`);
     }
   });
-  /** The budget judge: every budgeted row really copied and nothing else was ever attributed a copy (an unbudgeted S-call is refused at call time, before it could be attributed). */
+  /** The budget judge: no S-call ever ran outside a copy window, every budgeted row really copied inside its own window, and nothing else was ever admitted. */
   const judgeObservedCopyRows = (): void => {
-    const copying = [...new Set(emitState.observed.map(entry => entry.row))].sort();
-    expect(copying, "runtime-observed copy rows over the judged surface set: every observed label must be a budgeted PACKAGE_COPY_ROWS member - a module-scope, outside-describe or unknown label is red, never filtered")
+    expect(emitState.violations(), "every S-call in this file ran inside an open copy window").toEqual([]);
+    const admitted = emitState.observed.filter(entry => entry.admitted);
+    expect([...new Set(admitted.map(entry => entry.row))].sort(), "runtime-observed copy rows over the judged surface set: exactly the budgeted PACKAGE_COPY_ROWS, each having copied inside its own window")
       .toEqual([...PACKAGE_COPY_ROWS].sort());
-    expect([...new Set(emitState.observed.map(entry => entry.chain))].sort(), "every observed chain is an admitted chain").toEqual([...emitState.allowedChains].sort());
+    expect([...new Set(admitted.map(entry => entry.chain))].sort(), "every admitted chain is an anchored chain").toEqual([...emitState.allowedChains].sort());
   };
   it("wb-hk9l emit census: the rows observed really copying are exactly the budgeted PACKAGE_COPY_ROWS", () => {
     judgeObservedCopyRows();
@@ -883,15 +945,14 @@ describe(PACKAGE_COPY_SUITE, () => {
   it("wb-hk9l residual shape: each named family's quiet page and reading is frozen", () => {
     expect(SCAN_RESIDUALS.map(row => `${row.id}|${row.family}|${row.reading}|${row.runtime}|${createHash("sha256").update(row.source).digest("hex")}`)).toEqual([
       "R-H5|read/write composition|row quiet|invisible: no S-call, the bytes move by read and write|37e662375a3fe1399fc0dc95f9d9232aa058553112f7cabb7ff78afc75d4fd44",
-      "R-MODULE|other-module helper|row quiet|observed and refused outside a budgeted row when the helper copies through S; invisible when it re-implements the copy without S|7b1094cf6f38f1bf063069022eec44a6e79829d95a623759b8654cd3f9541330",
+      "R-MODULE|other-module helper|row quiet|observed as a violation when the helper copies through S outside a copy window; invisible when it re-implements the copy without S|7b1094cf6f38f1bf063069022eec44a6e79829d95a623759b8654cd3f9541330",
       "R-PROCESS|subprocess copy|row quiet|invisible: the copy runs in another process|5ce5ee0561776868771e83048ddb13718df85f4b03315e96bdd274c8b6be2f08",
-      "R-HOOK|hook copy|row quiet|observed and refused: an S-call in a hook runs with no row chain live|d4ea304260e90543ce46289eeb8b61d919cf47fd31098b933cea553bc3a98117",
-      "R-SCOPE|module-scope copy|row quiet|observed and refused: an S-call at module scope runs with no row chain live|ba574260adf4ee02ad948307b8d00101806d0e3d2cf7158e82c0bf9ca7252885",
-      "R-PROXY|identity hashing proxy|row quiet|observed: src copies through S and is attributed to the calling row, refused outside a budgeted one|c694895e6b2fdad18a9c99bdc716ce2e4fde4f0dcd2264674c6af621dc9f3b39",
+      "R-HOOK|hook copy|row quiet|observed as a violation: an S-call in a hook runs with no copy window open, so the row at that boundary reds|d4ea304260e90543ce46289eeb8b61d919cf47fd31098b933cea553bc3a98117",
+      "R-SCOPE|module-scope copy|row quiet|observed as a violation: an S-call at module scope runs with no copy window open, so the first row reds|ba574260adf4ee02ad948307b8d00101806d0e3d2cf7158e82c0bf9ca7252885",
+      "R-PROXY|identity hashing proxy|row quiet|invisible: captureInvocationIdentity hashes by read and makes no S-call (the budgeted rows copy test-side)|c694895e6b2fdad18a9c99bdc716ce2e4fde4f0dcd2264674c6af621dc9f3b39",
       "R-REQUIRE|createRequire requisition|row quiet|invisible: createRequire returns the unmocked builtin|adfce552cca2b038904b4b85d00ac638d24a787351203098ff427b73170e6622",
       "R-BUILTIN|getBuiltinModule requisition|row quiet|invisible: getBuiltinModule returns the unmocked builtin|1cd588866aa92cffde0b4b5e798b870fb253ef1780f1689f22f9735c978669bd",
     ]);
   });
 
 });
-
