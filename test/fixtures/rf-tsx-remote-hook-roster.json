@@ -1,0 +1,346 @@
+{
+  "provenance": "wb-o4h0.4 census roster (test/workbench-rf-tsx-remote-hook-census.test.ts). quote and citation are the owner filing's (bead row wb-o4h0.4, ReactiveFiberCLI docs/programs/federated-workspaces-2026-10-18/04-cli-api.md:91@6a251bf73af5, re-read at the pin with git show, 2026-10-22). producer is MEASURED read-only on 2026-10-22: rfVersion is `rf --json --version` result.version of the installed rf; importMap is its packaged reactive_fiber_cli/integrations/tsx/import-map.json verbatim; distribution is its runtime-lock.json distribution (name, version, source) plus the files field of package.json at that source; shippedHooks are the use* names src/index.ts exports at ReactiveFiberTSXSDK 5da03a7d49f42a9be7612d34f73d7d9ef950c52c, in file order; admittedResourceKinds and refusedResourceKinds are $defs.resource_kind and $defs.refused_resource_kind of the packaged schemas/tsx/worker-protocol.v1.schema.json; each hookSites list is `git grep -n -i -E 'use[_.-]*remote[_.-]*resources?' <sha>` at that repository's pin (path:line); in the sdkPin page name, <W>-<R> stands for its two words (workspace, then resource) joined by a hyphen, elided because wb-a9l2.2's landed whole-tree census (test/workbench-rf-federated-source-kind-census.test.ts) forbids any test file to spell them joined. Every witness is the expected outcome of its pin's case at this cut.",
+  "bead": "wb-o4h0.4",
+  "quote": "They are sugar for typed imported resources, not a second hidden fetch/cache engine. The component's read-set and render report must include the imported dependency and resolved revision; no network activity during pure component render.",
+  "citation": "docs/programs/federated-workspaces-2026-10-18/04-cli-api.md:91@6a251bf73af5",
+  "hook": "useRemoteResource",
+  "sdk": "@reactive-fiber/tsx",
+  "scan": {
+    "hookFamily": "use[_.-]*remote[_.-]*resources?/i",
+    "sdkFamily": "@reactive-fiber\\/tsx(?![\\w-])/i",
+    "claimFamily": "federat|use[_.-]*remote[_.-]*resources?|network|read[\\s_-]*set|resolved[\\s_-]*revision|imported[\\s_-]*dependenc/i",
+    "tsxName": "[\\w-]\\.(?:tsx|jsx)$/i",
+    "manifest": "(?:^|\\/)(?:package(?:-lock)?\\.json|npm-shrinkwrap\\.json|deno\\.jsonc?|import[-_]map\\.json|[tj]sconfig[^/]*\\.json)$/i",
+    "moduleExtensions": [
+      ".ts",
+      ".mts",
+      ".cts",
+      ".tsx",
+      ".js",
+      ".mjs",
+      ".cjs",
+      ".jsx"
+    ],
+    "tsxExtensions": [
+      ".tsx",
+      ".jsx"
+    ],
+    "skippedRoots": [
+      ".git",
+      ".beads",
+      "node_modules",
+      "dist",
+      "build",
+      "coverage",
+      ".forge"
+    ],
+    "exempt": [
+      "test/workbench-rf-tsx-remote-hook-census.test.ts",
+      "test/fixtures/rf-tsx-remote-hook-roster.json"
+    ],
+    "floors": {
+      "files": 700,
+      "modules": {
+        "src": 100,
+        "test": 380,
+        "qa": 55
+      },
+      "manifests": 4
+    },
+    "walkAnchors": [
+      "README.md:pi-subagents",
+      "src/workbench/providers/reactivefiber.ts:RF render refused",
+      "qa/workbench/receipts-index.mjs:docs/workbench/receipts",
+      "examples/workflows/compose.js:export",
+      "media/screenshot.png:PNG"
+    ],
+    "oracle": "test/workbench-unsafe-display-oracle.test.ts",
+    "tierCommand": "rf-preview-tsx"
+  },
+  "residuals": [
+    "R-COMPOSED",
+    "R-ENCODED",
+    "R-LOOKALIKE",
+    "R-PROSE",
+    "R-OUTSIDE"
+  ],
+  "producer": {
+    "rfVersion": "0.1.832",
+    "importMap": {
+      "@reactive-fiber/tsx": "npm:@reactive-fiber/tsx@0.1.649",
+      "@reactive-fiber/tsx/jsx-dev-runtime": "npm:@reactive-fiber/tsx@0.1.649/jsx-dev-runtime",
+      "@reactive-fiber/tsx/jsx-runtime": "npm:@reactive-fiber/tsx@0.1.649/jsx-runtime",
+      "@reactive-fiber/tsx/embedding": "npm:@reactive-fiber/tsx@0.1.649/embedding"
+    },
+    "distribution": {
+      "name": "@reactive-fiber/tsx",
+      "version": "0.1.649",
+      "source": "ReactiveFiberTSXSDK 5da03a7d49f42a9be7612d34f73d7d9ef950c52c",
+      "files": [
+        "dist",
+        "docs/security/redaction-defaults.json",
+        "LICENSE",
+        "README.md"
+      ]
+    },
+    "shippedHooks": [
+      "useCommit",
+      "useContext",
+      "useEffect",
+      "useMemo",
+      "useRef",
+      "useState",
+      "useFiberInput",
+      "useFiberValue",
+      "useInference",
+      "useLens",
+      "useModelCapability",
+      "useProvider"
+    ],
+    "admittedResourceKinds": [
+      "lens",
+      "provider"
+    ],
+    "refusedResourceKinds": [
+      "fiber.input",
+      "fiber.node",
+      "inference"
+    ],
+    "programPin": {
+      "repo": "ReactiveFiberCLI",
+      "sha": "6a251bf73af57c3a703caf6892dfe3015e06a481",
+      "hookSites": [
+        "docs/plans/core-convergence-2026-10-10/29-program-triage-2026-10-21.md:138",
+        "docs/plans/core-convergence-2026-10-10/29-program-triage-2026-10-21.md:140",
+        "docs/programs/federated-workspaces-2026-10-18/04-cli-api.md:87",
+        "docs/programs/federated-workspaces-2026-10-18/04-cli-api.md:88"
+      ]
+    },
+    "sdkPin": {
+      "repo": "ReactiveFiberTSXSDK",
+      "sha": "5da03a7d49f42a9be7612d34f73d7d9ef950c52c",
+      "hookSites": [
+        "docs/programs/federated-<W>-<R>-hooks-2026-10-18.md:15",
+        "docs/programs/federated-<W>-<R>-hooks-2026-10-18.md:16"
+      ]
+    }
+  },
+  "rows": [
+    {
+      "id": "A",
+      "label": "(trigger, absent today) If Pi ever authors TSX components over federated imports: no TSX or JSX module exists in the walked tree, no module or manifest names the TSX SDK, and every TSX module text Pi plants (the unsafe-display oracle's among them) sits in a module B judges",
+      "pins": [
+        {
+          "id": "A1",
+          "witness": {
+            "pin": "A1",
+            "filesFloorMet": true,
+            "anchorsWalked": true,
+            "tsxModules": [],
+            "jsxModules": [],
+            "controls": {
+              "tsxModules": [
+                "fixtures/View.JSX",
+                "fixtures/component.tsx",
+                "nested/dist/deep/component.tsx"
+              ],
+              "jsxInJs": true,
+              "jsxFragmentInMjs": true,
+              "jsxInTsx": true,
+              "typeAssertionInTs": false,
+              "comparisonInJs": false
+            }
+          }
+        },
+        {
+          "id": "A2",
+          "witness": {
+            "pin": "A2",
+            "modulesFloorMet": true,
+            "specifierAnchor": true,
+            "manifestsFloorMet": true,
+            "sdkImports": [],
+            "manifestHits": [],
+            "controls": {
+              "staticImport": true,
+              "subpath": true,
+              "typeOnly": true,
+              "exportFrom": true,
+              "dynamicImport": true,
+              "require": true,
+              "requireResolve": true,
+              "importEquals": true,
+              "importType": true,
+              "npmSpecifier": true,
+              "urlSpecifier": true,
+              "jsrSpecifier": true,
+              "aliasedRequire": true,
+              "createdRequire": true,
+              "newUrl": true,
+              "foldedSpecifier": true,
+              "escapedSpecifier": true,
+              "jsxPragma": true,
+              "otherPackage": false,
+              "composedSpecifier": false,
+              "mentionOnly": false,
+              "manifestDependency": true,
+              "manifestAlias": true,
+              "manifestPaths": [
+                "package.json",
+                "examples/app/package-lock.json",
+                "npm-shrinkwrap.json",
+                "deno.jsonc",
+                "import_map.json",
+                "tsconfig.base.json",
+                "jsconfig.json"
+              ]
+            }
+          }
+        },
+        {
+          "id": "A3",
+          "witness": {
+            "pin": "A3",
+            "oracleSite": true,
+            "namesFloorMet": true,
+            "controls": {
+              "plantedNames": 1
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "(a) census: no Pi-authored TSX fixture imports useRemoteResource while the contract is unshipped: no module spells the hook in an identifier, a literal or a folded literal, no walked file spells it in any decoded form or path, and each exemption is load-bearing",
+      "pins": [
+        {
+          "id": "B1",
+          "witness": {
+            "pin": "B1",
+            "identifierAnchor": true,
+            "spellings": [],
+            "controls": {
+              "namedImport": true,
+              "aliasImport": true,
+              "namespaceMember": true,
+              "elementAccess": true,
+              "escapedIdentifier": true,
+              "escapedString": true,
+              "template": true,
+              "folded": true,
+              "foldedTemplate": true,
+              "plantedTsxText": true,
+              "requireDestructure": true,
+              "dynamicMember": true,
+              "jsxAttribute": true,
+              "subpathSpecifier": true,
+              "snakeCase": true,
+              "plural": true,
+              "composedVariable": false,
+              "composedJoin": false,
+              "rot13": false,
+              "lookalike": false,
+              "invisible": false,
+              "comment": false,
+              "nearMiss": false
+            }
+          }
+        },
+        {
+          "id": "B2",
+          "witness": {
+            "pin": "B2",
+            "filesFloorMet": true,
+            "bytes": [],
+            "symlinks": [],
+            "unreadable": [],
+            "walkedPlants": 12,
+            "controls": {
+              "fixtures/remote/component.tsx": true,
+              "fixtures/workspace.json": true,
+              "fixtures/comment.ts": true,
+              "notes/reference.md": true,
+              "notes/url.txt": true,
+              "fixtures/le.txt": true,
+              "fixtures/be.txt": true,
+              "fixtures/use-remote-resource/index.ts": true,
+              "test/fixtures/build/hook.ts": true,
+              "fixtures/link.txt": true,
+              "notes/rot13.txt": false,
+              "notes/lookalike.txt": false,
+              "notes/near.txt": false,
+              "dist/component.tsx": false,
+              "node_modules/pkg/index.js": false,
+              ".beads/issues.jsonl": false,
+              ".forge/report.json": false,
+              "build/hook.ts": false,
+              "coverage/hook.ts": false
+            }
+          }
+        },
+        {
+          "id": "B3",
+          "witness": {
+            "pin": "B3",
+            "exempt": [
+              "test/workbench-rf-tsx-remote-hook-census.test.ts",
+              "test/fixtures/rf-tsx-remote-hook-roster.json"
+            ],
+            "exemptWalked": true,
+            "selfModuleHits": true,
+            "selfByteHits": true,
+            "rosterByteHits": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "(b) when shipped, a render test in Pi's rf-tsx tier proves zero network activity during pure component render of a federated import; (c) the render report carries the imported dependency and resolved revision fields, asserted on producer output: both gated - the measured contract is unshipped and the rf-tsx tier claims neither proof",
+      "pins": [
+        {
+          "id": "C1",
+          "witness": {
+            "pin": "C1",
+            "contractShipped": false,
+            "docsOnly": true,
+            "sitesShipped": [],
+            "shippedFamily": [],
+            "shippedHooks": 12,
+            "remoteKinds": [],
+            "sdkMapped": true,
+            "beadSaysUnshipped": true
+          }
+        },
+        {
+          "id": "C2",
+          "witness": {
+            "pin": "C2",
+            "tierFiles": [
+              "test/workbench-native-rf-tsx-preview.test.ts"
+            ],
+            "command": true,
+            "titles": [
+              "success row: an ephemeral TSX-era preview with a worker spawn and engine identity",
+              "runtime-absent row: with no deno on PATH the capability refuses as typed unavailable RF_COMPONENT_RUNTIME_ABSENT"
+            ],
+            "claims": []
+          }
+        }
+      ]
+    }
+  ],
+  "tests": [
+    "the judged set: the frozen shape, the out-of-file roster and the bead row agree",
+    "A1",
+    "A2",
+    "A3",
+    "B1",
+    "B2",
+    "B3",
+    "C1",
+    "C2",
+    "records: every registered test ran once in run mode in roster order, every pin reached its end, and no title spells the hook"
+  ]
+}
