@@ -1,0 +1,914 @@
+{
+  "bead": "wb-hs2j.6",
+  "pin": "6a251bf73af5",
+  "basis": "The out-of-file roster of test/workbench-rf-publish-emulation-census.test.ts (standing rule 16): every judged row's id, label and pins, every pin's witness, the residual names and the vocabularies, so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. Producer facts read at ReactiveFiberCLI 6a251bf73af5 (read-only git show): docs/programs/reactive-context-assembly-2026-10-18/02-swarm-usage-and-command-grammar.md:56, README.md:60-61, BEADS-2026-10-21.md:60 (rfc-9n4dr), src/reactive_fiber_cli/cli/gates.py:286-297 and :346-371, domain/workspace/locator.py:33 and layout.py:57-95. Host facts: test/fixtures/rf-publish-gate-refusals.json (the installed rf 0.1.832, captured 2026-10-23T03:33:22Z). Pi facts measured at base 2a26385 (landing 272). Matcher witnesses carry the first 16 hex of sha256 over each case's UTF-8 text, never the text.",
+  "publicationLeaves": [
+    "graph.publish",
+    "graph.rollback"
+  ],
+  "gateIds": [
+    "SCG-A3"
+  ],
+  "plannedSlice": 17,
+  "writeCalls": [
+    "appendFile",
+    "appendFileSync",
+    "copyFile",
+    "copyFileSync",
+    "cp",
+    "cpSync",
+    "createWriteStream",
+    "link",
+    "linkSync",
+    "mkdir",
+    "mkdirSync",
+    "open",
+    "openSync",
+    "rename",
+    "renameSync",
+    "rm",
+    "rmSync",
+    "rmdir",
+    "rmdirSync",
+    "symlink",
+    "symlinkSync",
+    "truncate",
+    "truncateSync",
+    "unlink",
+    "unlinkSync",
+    "writeFile",
+    "writeFileSync"
+  ],
+  "servedWords": [
+    "available",
+    "established",
+    "live",
+    "released",
+    "runnable",
+    "served",
+    "serves",
+    "serving",
+    "shipped",
+    "ships",
+    "supported",
+    "supports",
+    "works"
+  ],
+  "notServedMarkers": [
+    "absent",
+    "aren't",
+    "can't",
+    "cannot",
+    "doesn't",
+    "don't",
+    "false",
+    "forbidden",
+    "gated",
+    "isn't",
+    "never",
+    "no",
+    "not",
+    "pending",
+    "planned",
+    "prohibited",
+    "proposed",
+    "refusal",
+    "refused",
+    "refuses",
+    "refusing",
+    "unavailable",
+    "unserved",
+    "unshipped",
+    "unsupported",
+    "won't"
+  ],
+  "residuals": {
+    "Q1": "R-COMPOSED",
+    "Q2": "R-INPUT-PATH",
+    "Q3": "R-SPLIT-LINE",
+    "Q4": "R-ANY-MARKER",
+    "Q5": "R-OUTSIDE-VOCABULARY",
+    "Q6": "R-MODULE-FIXTURE",
+    "Q7": "R-GATES-UNCARRIED"
+  },
+  "rows": [
+    {
+      "id": "A",
+      "label": "(a) no Pi code path writes rf workspace TOML or store files to effect a graph/assembly publication (a grep of Pi rf paths finds no TOML/store write under a publish name)",
+      "pins": [
+        {
+          "id": "A1",
+          "witness": {
+            "floorSeen": [
+              "src/index.ts:unlinkSync",
+              "src/output-file.ts:appendFileSync",
+              "src/schedule-store.ts:renameSync",
+              "src/settings.ts:writeFileSync",
+              "src/workbench/hosts/local-detached.ts:openSync",
+              "src/workflow/journal.ts:appendFileSync"
+            ],
+            "rfTargets": []
+          }
+        },
+        {
+          "id": "A2",
+          "witness": {
+            "walkComplete": true,
+            "atFloor": true,
+            "anchor": true,
+            "hits": []
+          }
+        },
+        {
+          "id": "A3",
+          "witness": {
+            "rfPaths": [
+              "src/index.ts",
+              "src/settings.ts",
+              "src/workbench/hosts/local-detached.ts",
+              "src/workbench/latency.ts",
+              "src/workbench/native-evidence.ts",
+              "src/workbench/native-modules.ts",
+              "src/workbench/process-env.ts",
+              "src/workbench/providers/reactivefiber.ts",
+              "src/workbench/reactivefiber-observer.ts",
+              "src/workflow/reconcile.ts"
+            ],
+            "floorSeen": [
+              "src/workbench/native-modules.ts",
+              "src/workbench/process-env.ts",
+              "src/workbench/providers/reactivefiber.ts",
+              "src/workbench/reactivefiber-observer.ts",
+              "src/workflow/reconcile.ts"
+            ],
+            "publishNamed": []
+          }
+        },
+        {
+          "id": "A4",
+          "witness": {
+            "native": [
+              "reactivefiber.render.preview:read"
+            ],
+            "injected": [
+              "reactivefiber.render.preview:read"
+            ],
+            "descriptorsRead": true,
+            "publishNamed": [],
+            "storePaths": [],
+            "tools": [
+              "capability_discover",
+              "capability_contract",
+              "capability_invoke"
+            ],
+            "toolsNamed": []
+          }
+        },
+        {
+          "id": "A5",
+          "witness": {
+            "entries": [
+              ".reactive-fiber/config.toml",
+              ".reactive-fiber/graphs/context.toml",
+              ".reactive-fiber/lenses/workspace.toml",
+              ".reactive-fiber/manifest.json",
+              ".reactive-fiber/store/journal-000001.jsonl"
+            ],
+            "unchanged": true,
+            "contracts": [
+              "reactivefiber.render.preview/v1",
+              "reactivefiber.render.preview/v1"
+            ],
+            "spawns": [
+              [
+                "--workspace",
+                "<root>",
+                "context",
+                "render",
+                "--model",
+                "model-fixture",
+                "--task",
+                "task-fixture",
+                "--no-commit",
+                "--no-input",
+                "--json"
+              ],
+              [
+                "--workspace",
+                "<root>",
+                "context",
+                "render",
+                "--view",
+                "swarm.worker",
+                "--task-id",
+                "bead-fixture-000",
+                "--no-commit",
+                "--no-input",
+                "--json"
+              ]
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "(b) a Pi request against a gated publish leaf surfaces the typed gate refusal (exit 2 RF_USAGE_NOT_IMPLEMENTED / metadata.gates) verbatim, never a simulated success",
+      "pins": [
+        {
+          "id": "B1",
+          "witness": {
+            "rfVersion": "0.1.832",
+            "sameBuildAsRegistry": true,
+            "cwdEntriesAfter": 0,
+            "gated": [
+              {
+                "leaf": "graph.publish",
+                "exit": 2,
+                "stderrBytes": 0,
+                "ok": false,
+                "command": "graph.publish",
+                "result": null,
+                "workspace": null,
+                "code": "RF_USAGE_NOT_IMPLEMENTED",
+                "severity": "error",
+                "message": "graph publish is not available in this build",
+                "metadata": {
+                  "surface": "graph publish",
+                  "gates": [
+                    "SCG-A3"
+                  ],
+                  "planned_slice": 17
+                }
+              },
+              {
+                "leaf": "graph.rollback",
+                "exit": 2,
+                "stderrBytes": 0,
+                "ok": false,
+                "command": "graph.rollback",
+                "result": null,
+                "workspace": null,
+                "code": "RF_USAGE_NOT_IMPLEMENTED",
+                "severity": "error",
+                "message": "graph rollback is not available in this build",
+                "metadata": {
+                  "surface": "graph rollback",
+                  "gates": [
+                    "SCG-A3"
+                  ],
+                  "planned_slice": 17
+                }
+              }
+            ],
+            "unregistered": {
+              "exit": 2,
+              "ok": false,
+              "command": null,
+              "code": "RF_USAGE_UNKNOWN_COMMAND",
+              "groupListed": false
+            },
+            "registry": [
+              {
+                "path": "graph.publish",
+                "served": false,
+                "plannedSlice": 17,
+                "availability": "refusing_slice"
+              },
+              {
+                "path": "graph.rollback",
+                "served": false,
+                "plannedSlice": 17,
+                "availability": "refusing_slice"
+              }
+            ]
+          }
+        },
+        {
+          "id": "B2",
+          "witness": {
+            "argvRuns": [],
+            "literals": [],
+            "launches": [
+              "src/workbench/providers/reactivefiber.ts:nativeReactiveFiberRender:spawn"
+            ],
+            "renderArgv": 1
+          }
+        },
+        {
+          "id": "B3",
+          "witness": [
+            {
+              "leaf": "graph.publish",
+              "refused": {
+                "category": "transport",
+                "message": "RF preview returned an unrecognized native envelope."
+              },
+              "spawns": [
+                [
+                  "--workspace",
+                  "<root>",
+                  "context",
+                  "render",
+                  "--model",
+                  "model-fixture",
+                  "--task",
+                  "task-fixture",
+                  "--no-commit",
+                  "--no-input",
+                  "--json"
+                ]
+              ]
+            },
+            {
+              "leaf": "graph.rollback",
+              "refused": {
+                "category": "transport",
+                "message": "RF preview returned an unrecognized native envelope."
+              },
+              "spawns": [
+                [
+                  "--workspace",
+                  "<root>",
+                  "context",
+                  "render",
+                  "--model",
+                  "model-fixture",
+                  "--task",
+                  "task-fixture",
+                  "--no-commit",
+                  "--no-input",
+                  "--json"
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "B4",
+          "witness": [
+            {
+              "leaf": "graph.publish",
+              "refused": {
+                "category": "unavailable",
+                "message": "RF render refused: RF_USAGE_NOT_IMPLEMENTED"
+              },
+              "spawns": [
+                [
+                  "--workspace",
+                  "<root>",
+                  "context",
+                  "render",
+                  "--view",
+                  "swarm.worker",
+                  "--task-id",
+                  "bead-fixture-000",
+                  "--no-commit",
+                  "--no-input",
+                  "--json"
+                ]
+              ]
+            },
+            {
+              "leaf": "graph.rollback",
+              "refused": {
+                "category": "unavailable",
+                "message": "RF render refused: RF_USAGE_NOT_IMPLEMENTED"
+              },
+              "spawns": [
+                [
+                  "--workspace",
+                  "<root>",
+                  "context",
+                  "render",
+                  "--view",
+                  "swarm.worker",
+                  "--task-id",
+                  "bead-fixture-000",
+                  "--no-commit",
+                  "--no-input",
+                  "--json"
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "B5",
+          "witness": [
+            {
+              "isError": true,
+              "payload": {
+                "kind": "rejected",
+                "category": "transport",
+                "diagnostic": "RF preview returned an unrecognized native envelope."
+              },
+              "spawns": [
+                [
+                  "--workspace",
+                  "<root>",
+                  "context",
+                  "render",
+                  "--model",
+                  "model-fixture",
+                  "--task",
+                  "task-fixture",
+                  "--no-commit",
+                  "--no-input",
+                  "--json"
+                ]
+              ]
+            },
+            {
+              "isError": true,
+              "payload": {
+                "kind": "rejected",
+                "category": "unavailable",
+                "diagnostic": "RF render refused: RF_USAGE_NOT_IMPLEMENTED"
+              },
+              "spawns": [
+                [
+                  "--workspace",
+                  "<root>",
+                  "context",
+                  "render",
+                  "--model",
+                  "model-fixture",
+                  "--task",
+                  "task-fixture",
+                  "--no-commit",
+                  "--no-input",
+                  "--json"
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "B6",
+          "witness": [
+            {
+              "name": "returned",
+              "findings": [
+                "simulated-success"
+              ]
+            },
+            {
+              "name": "code-only",
+              "findings": [
+                "gates-dropped",
+                "slice-dropped",
+                "surface-dropped"
+              ]
+            },
+            {
+              "name": "verbatim",
+              "findings": []
+            },
+            {
+              "name": "no-code",
+              "findings": [
+                "code-dropped",
+                "gates-dropped",
+                "slice-dropped",
+                "surface-dropped"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "(c) no Pi doc or fixture presents publish as served",
+      "pins": [
+        {
+          "id": "C1",
+          "witness": {
+            "walkComplete": true,
+            "rootMarkdown": [
+              "AGENTS.md",
+              "CHANGELOG.md",
+              "CONTRIBUTING.md",
+              "README.md",
+              "SECURITY.md"
+            ],
+            "floor": [
+              {
+                "at": "docs/workbench/receipts/wb-a9l2.8.md:9",
+                "verdict": "negated"
+              },
+              {
+                "at": "docs/workbench/receipts/wb-a9l2.8.md:16",
+                "verdict": "negated"
+              },
+              {
+                "at": "docs/workbench/receipts/wb-a9l2.8.md:34",
+                "verdict": "named"
+              },
+              {
+                "at": "docs/workbench/receipts/wb-a9l2.8.md:36",
+                "verdict": "named"
+              },
+              {
+                "at": "docs/workbench/receipts/wb-a9l2.8.md:47",
+                "verdict": "negated"
+              }
+            ],
+            "served": []
+          }
+        },
+        {
+          "id": "C2",
+          "witness": {
+            "walkComplete": true,
+            "floor": [
+              "test/fixtures/rf-publish-gate-refusals.json:$.refusals[0].stdout:graph.publish",
+              "test/fixtures/rf-publish-gate-refusals.json:$.refusals[0].stdout.diagnostics[0].metadata:graph publish",
+              "test/fixtures/rf-publish-gate-refusals.json:$.refusals[1].stdout:graph.rollback",
+              "test/fixtures/rf-publish-gate-refusals.json:$.refusals[1].stdout.diagnostics[0].metadata:graph rollback",
+              "test/fixtures/rf-version-leaves.json:$.envelope.result.leaves[41]:graph.publish",
+              "test/fixtures/rf-version-leaves.json:$.envelope.result.leaves[43]:graph.rollback"
+            ],
+            "unparsed": [],
+            "served": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "M",
+      "label": "the matchers rows A, B and C read catch every spelling family they name and leave the near misses clean",
+      "pins": [
+        {
+          "id": "M1",
+          "witness": {
+            "leaf": [
+              [
+                "606a47018570a6c3",
+                true
+              ],
+              [
+                "b06f204f48ba1015",
+                true
+              ],
+              [
+                "205344d09f70af8e",
+                true
+              ],
+              [
+                "8c289cd5bf1015a8",
+                true
+              ],
+              [
+                "15c0768d952c2085",
+                true
+              ],
+              [
+                "bc25173c866ef91a",
+                true
+              ],
+              [
+                "4f666431a38d35ae",
+                true
+              ],
+              [
+                "78b0bf1c5b5e103e",
+                true
+              ],
+              [
+                "290bcb6d01b9f937",
+                true
+              ],
+              [
+                "e87b22f9e2e87499",
+                true
+              ],
+              [
+                "849b0c97bdefb7f3",
+                true
+              ],
+              [
+                "38f4b4d47bac9732",
+                false
+              ],
+              [
+                "44a90985ec51a483",
+                false
+              ],
+              [
+                "8ed27ec41bebaadf",
+                false
+              ],
+              [
+                "66ffb9e9fa79d755",
+                false
+              ],
+              [
+                "a5d47a4311d759db",
+                false
+              ],
+              [
+                "bb56ace9eb079595",
+                false
+              ],
+              [
+                "42064321d2841d3b",
+                false
+              ]
+            ],
+            "runs": [
+              [
+                "606a47018570a6c3",
+                true
+              ],
+              [
+                "714f10408940538a",
+                true
+              ],
+              [
+                "1eaaf20170ad2da2",
+                true
+              ],
+              [
+                "62fd27782c161039",
+                true
+              ],
+              [
+                "b0947ff944433582",
+                false
+              ],
+              [
+                "8ed27ec41bebaadf",
+                false
+              ],
+              [
+                "b6cf81c9fc878c19",
+                false
+              ]
+            ]
+          }
+        },
+        {
+          "id": "M2",
+          "witness": [
+            [
+              "c818b464ebf697b3",
+              "served"
+            ],
+            [
+              "0745edcaaa6b9323",
+              "served"
+            ],
+            [
+              "89e18648ca5baa13",
+              "served"
+            ],
+            [
+              "f1d7cbc9bf44bd73",
+              "served"
+            ],
+            [
+              "ae4bdda624b34df0",
+              "served"
+            ],
+            [
+              "eb96f6a94c2c63dc",
+              "negated"
+            ],
+            [
+              "0e6c75ae18f482a6",
+              "negated"
+            ],
+            [
+              "731c03b0aedd193e",
+              "negated"
+            ],
+            [
+              "30147c6fc10779b2",
+              "negated"
+            ],
+            [
+              "952ce0da770ffd33",
+              "named"
+            ],
+            [
+              "04b9fd3fc28ec2a5",
+              "named"
+            ],
+            [
+              "ebcd97db99a3c20f",
+              "none"
+            ],
+            [
+              "484ae77080d6ab92",
+              "none"
+            ],
+            [
+              "78f654ff191d6f25",
+              "none"
+            ]
+          ]
+        },
+        {
+          "id": "M3",
+          "witness": [
+            [
+              "a872c487deba5dbd",
+              true
+            ],
+            [
+              "cb33f589cb8983d9",
+              true
+            ],
+            [
+              "ac6d9278db9d6bf1",
+              true
+            ],
+            [
+              "450c9bca4fa04ecf",
+              true
+            ],
+            [
+              "9f8662dbc06029ad",
+              true
+            ],
+            [
+              "2521401efc571c93",
+              true
+            ],
+            [
+              "46d5c57c9f5bf871",
+              true
+            ],
+            [
+              "651ba5d4821e8789",
+              false
+            ],
+            [
+              "b95ae3dd965f66d0",
+              false
+            ],
+            [
+              "ff7ce5117a0a416f",
+              false
+            ],
+            [
+              "72fee0ab11371344",
+              false
+            ],
+            [
+              "f0b97207841962ff",
+              false
+            ]
+          ]
+        },
+        {
+          "id": "M4",
+          "witness": [
+            [
+              "3a9344e96480df09",
+              1,
+              1
+            ],
+            [
+              "d46b8c49e2b1319e",
+              1,
+              1
+            ],
+            [
+              "8710397821d47b39",
+              1,
+              1
+            ],
+            [
+              "c0a46e6a8f19e12a",
+              1,
+              1
+            ],
+            [
+              "faf1e6496bf5431d",
+              1,
+              1
+            ],
+            [
+              "25881816974aec2d",
+              1,
+              1
+            ],
+            [
+              "93622449f6e4ddeb",
+              0,
+              0
+            ],
+            [
+              "d14a7e75b0ad08d4",
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "id": "M5",
+          "witness": [
+            [
+              "9be0fde4560150de",
+              1,
+              0
+            ],
+            [
+              "a9c1116a1b80a681",
+              1,
+              0
+            ],
+            [
+              "7acc3f22ebdf040a",
+              1,
+              0
+            ],
+            [
+              "fde5768a45ab5b0b",
+              1,
+              0
+            ],
+            [
+              "d607139c05f89ada",
+              1,
+              0
+            ],
+            [
+              "8f75a42fc7fed20e",
+              0,
+              1
+            ],
+            [
+              "12bf3f48ed9c829e",
+              0,
+              1
+            ],
+            [
+              "3f5bee6acf17cdfe",
+              0,
+              0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "R",
+      "label": "the named residuals, each a pinned quiet row that reds when its escape stops being quiet",
+      "pins": [
+        {
+          "id": "Q1",
+          "witness": {
+            "composedPath": 0,
+            "boundWriter": 0,
+            "composedLeaf": 0
+          }
+        },
+        {
+          "id": "Q2",
+          "witness": {
+            "sites": 1,
+            "rfTargets": 0,
+            "literal": false
+          }
+        },
+        {
+          "id": "Q3",
+          "witness": [
+            "named",
+            "none"
+          ]
+        },
+        {
+          "id": "Q4",
+          "witness": "negated"
+        },
+        {
+          "id": "Q5",
+          "witness": [
+            "none",
+            "named"
+          ]
+        },
+        {
+          "id": "Q6",
+          "witness": {
+            "served": 0,
+            "unserved": 0
+          }
+        },
+        {
+          "id": "Q7",
+          "witness": [
+            "gates-dropped",
+            "slice-dropped",
+            "surface-dropped"
+          ]
+        }
+      ]
+    }
+  ]
+}
