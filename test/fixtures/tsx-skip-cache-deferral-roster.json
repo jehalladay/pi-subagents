@@ -1,0 +1,631 @@
+{
+ "bead": "wb-csbt.1",
+ "quote": "**Do not mark them already needed**; these files define cost evidence required to re-open and potential designs only.",
+ "citation": "docs/programs/resource-efficiency-frontier-2026-10-17/README.md:8@76bbbffd9d4a",
+ "scan": {
+  "skip": "\\b(?:components?|subtrees?)(?:[\\s_/-]+[a-z]+)?[\\s_/-]+skip(?:s|ped|ping)?\\b|\\bskip(?:s|ped|ping)?(?:[\\s_/-]+[a-z]+){0,2}[\\s_/-]+(?:components?|subtrees?)\\b",
+  "cache": "\\b(?:assembly|seriali[sz]ation|serialized[\\s_-]+output|assembled[\\s_-]+output)(?:[\\s_]*(?:\\/|\\bor\\b|\\band\\b)[\\s_]*(?:assembly|seriali[sz]ation))?[\\s_/-]+cach(?:e|es|ed|ing)\\b|\\bcach(?:e|es|ed|ing)(?:[\\s_-]+(?:of|the|an?))*[\\s_-]+(?:assembl(?:y|ies|ed)|seriali[sz](?:ation|ations|ed))\\b",
+  "anchor": "\\bTSX\\b|\\brftsx\\w*|\\bReactiveFiber\\w*|reactive-fiber\\/|\\bADR-0032\\b|\\bRFCLI\\b|\\brf\\b",
+  "markers": [
+   "no",
+   "not",
+   "never",
+   "nor",
+   "neither",
+   "none",
+   "cannot",
+   "without",
+   "defer",
+   "defers",
+   "deferred",
+   "deferral",
+   "deferrals",
+   "deferring",
+   "gated",
+   "unshipped",
+   "absent",
+   "proposed",
+   "potential"
+  ],
+  "contraction": "n[\\u2019']t\\b",
+  "marks": [
+   "needed:need(?:s|ed|ing)?",
+   "required:requir(?:e|es|ed|ing|ement|ements)",
+   "adopted:adopt(?:s|ed|ing|ion)?"
+  ],
+  "program": "resource[\\s_-]*efficiency[\\s_-]*frontier",
+  "attachedBefore": "(?:[\\w/-]|\\/[\\w.-]*)$",
+  "attachedAfter": "^(?:[\\w/-]|[\\w.-]*\\/)",
+  "status": "design, not implementation or measured improvement",
+  "never": "\\bimplemented\\b|\\bmeasured[\\s_-]+improvements?\\b",
+  "adr": "\\bADR-0032\\b",
+  "deferral": "\\bdefer(?:s|red|ral|rals|ring)?\\b|\\bgated\\b",
+  "gateClause": "ADR-0032 update via packet TSX-PF-03",
+  "relatedTypes": [
+   "related",
+   "relates-to"
+  ],
+  "blocksType": "blocks",
+  "markdown": "\\.md$",
+  "lineData": "\\.jsonl?$",
+  "tableRow": "^\\s*\\|",
+  "listItem": "^\\s*(?:[-+*]|\\d+[.)])\\s",
+  "sentenceEnd": "[.!?;]\\s+",
+  "judgedFields": [
+   "title",
+   "description",
+   "design",
+   "acceptance_criteria"
+  ],
+  "mentionFields": [
+   "title",
+   "description",
+   "design",
+   "acceptance_criteria",
+   "notes",
+   "comments"
+  ],
+  "skippedRoots": [
+   ".git",
+   ".beads",
+   "node_modules",
+   "dist",
+   "build",
+   "coverage",
+   ".forge"
+  ],
+  "exempt": [
+   "test/workbench-tsx-skip-cache-deferral-census.test.ts",
+   "test/fixtures/tsx-skip-cache-deferral-roster.json",
+   "test/workbench-rf-fiber-node-reuse-echo-census.test.ts"
+  ],
+  "floors": {
+   "files": 750,
+   "roots": {
+    "": 20,
+    "docs": 60,
+    "src": 100,
+    "test": 440,
+    "qa": 55,
+    "examples": 5,
+    "new-feedback": 10
+   },
+   "anchored": 150,
+   "rows": 650
+  },
+  "walkAnchors": [
+   "README.md:pi-subagents",
+   "AGENTS.md:# Development Rules",
+   "docs/workbench/07-native-integrations.md:Do not declare a typed TS context-render client exists without code evidence",
+   "src/workbench/providers/reactivefiber.ts:RF render refused",
+   "qa/workbench/receipts-index.mjs:docs/workbench/receipts",
+   "examples/agent-tool-description.md:Available agent types",
+   "new-feedback/README.md:pi-subagents operational feedback",
+   "vendor/README.md:Native SDK artifacts",
+   ".agents/skills/beads/SKILL.md:name: beads"
+  ],
+  "postureAnchors": [
+   "wb-csbt.1.title:1 S,K",
+   "wb-csbt.2.title:1 S"
+  ],
+  "citedRowAnchors": [
+   "wb-csbt",
+   "wb-csbt.1",
+   "wb-csbt.2",
+   "wb-csbt.3",
+   "wb-csbt.4"
+  ]
+ },
+ "known": {
+  "C1": [
+   "wb-csbt.2 no-deferral-wording",
+   "wb-km7q.6 no-deferral-wording"
+  ],
+  "C2": [
+   "wb-csbt.2 no-related-edge",
+   "wb-km7q.6 no-related-edge"
+  ]
+ },
+ "residuals": [
+  "R-MARKER-ANYWHERE",
+  "R-PARAPHRASE",
+  "R-SPLIT",
+  "R-COMPOSED",
+  "R-LOOKALIKE",
+  "R-ENCODED",
+  "R-UNANCHORED",
+  "R-OUTSIDE",
+  "R-NOTES",
+  "R-UNNAMED-SUMMARY",
+  "R-CITATION",
+  "R-ROW-STATUS",
+  "R-WORDING-ANYWHERE"
+ ],
+ "quiet": {
+  "R-MARKER-ANYWHERE": [
+   "A1:markerAnywhere",
+   "A1:listItemInCode",
+   "A1:codeLinesRunTogether",
+   "A2:markerAnywhereTitle"
+  ],
+  "R-PARAPHRASE": [
+   "A1:paraphraseMemo",
+   "A1:paraphraseBailout",
+   "A1:paraphraseReuse"
+  ],
+  "R-SPLIT": [
+   "A1:splitPronoun"
+  ],
+  "R-COMPOSED": [
+   "A1:composed"
+  ],
+  "R-LOOKALIKE": [
+   "A1:lookalike",
+   "A1:joiner"
+  ],
+  "R-ENCODED": [
+   "A1:encoded"
+  ],
+  "R-UNANCHORED": [
+   "A1:unanchored",
+   "A1:plant:src/journal.ts",
+   "A2:unanchoredRow",
+   "C1:unanchoredRow"
+  ],
+  "R-OUTSIDE": [
+   "A1:plant:node_modules/pkg/notes.md",
+   "A1:plant:dist/notes.md",
+   "A1:plant:build/notes.md",
+   "A1:plant:coverage/notes.md",
+   "A1:plant:.forge/notes.md",
+   "A1:plant:.git/notes.md",
+   "A1:plant:.beads/notes.md",
+   "A1:plant:media/blob.bin"
+  ],
+  "R-NOTES": [
+   "A2:notesClaim",
+   "A2:commentClaim"
+  ],
+  "R-UNNAMED-SUMMARY": [
+   "B1:unnamedSummary",
+   "B1:epicTagOnly"
+  ],
+  "R-CITATION": [
+   "B1:citationOnly",
+   "B1:tagOnly",
+   "B1:datedSlug",
+   "B1:prefixedName",
+   "B2:citationImplemented",
+   "B2:tagImplemented"
+  ],
+  "R-ROW-STATUS": [
+   "B1:rowWithoutStatus"
+  ],
+  "R-WORDING-ANYWHERE": [
+   "C1:wordingAnywhere"
+  ]
+ },
+ "producer": {
+  "repo": "ReactiveFiberTSXSDK",
+  "sha": "76bbbffd9d4a419f972d6fefc8b7f9dc524df8df",
+  "version": "0.1.668",
+  "blobs": {
+   "docs/programs/resource-efficiency-frontier-2026-10-17/README.md": "841e6d04bd9a00579d898eba249c35602809a089",
+   "docs/programs/resource-efficiency-frontier-2026-10-17/01-COST-MODEL-AND-INSTRUMENTATION.md": "fc91bbebc73e9ba113ebe37049ded0496584aa6c",
+   "docs/programs/resource-efficiency-frontier-2026-10-17/03-PROFILES-DECISIONS-AND-WORK-PACKAGES.md": "318f163718315f46cd649f98e90d302ea7a68a5e",
+   "docs/programs/resource-efficiency-frontier-2026-10-17/BEADS-2026-10-21.md": "ce1bd3522cf58b89000a7eb42f05db2aaf3b0c2b",
+   "docs/adr/0032-component-skip-and-assembly-cache-deferred.md": "e4aa31390a41f8ccf127714b2f98cde899ea15a4"
+  },
+  "status": {
+   "path": "docs/programs/resource-efficiency-frontier-2026-10-17/README.md",
+   "line": 2,
+   "text": "Status: design, not implementation or measured improvement."
+  },
+  "quote": {
+   "path": "docs/programs/resource-efficiency-frontier-2026-10-17/README.md",
+   "line": 8,
+   "text": "**Do not mark them already needed**; these files define cost evidence required to re-open and potential designs only."
+  },
+  "reopen": {
+   "path": "docs/programs/resource-efficiency-frontier-2026-10-17/03-PROFILES-DECISIONS-AND-WORK-PACKAGES.md",
+   "line": 4,
+   "text": "Reopening requires (a) a concrete workload with material measurable redundant work, (b) differential semantic proof and (c) an owner-reviewed ADR update."
+  },
+  "flag": {
+   "path": "docs/programs/resource-efficiency-frontier-2026-10-17/01-COST-MODEL-AND-INSTRUMENTATION.md",
+   "line": 22,
+   "text": "No universal optimization flag until workloads demonstrate a reproducible win over the measured ADR-0032 deferral threshold."
+  },
+  "packet": {
+   "id": "TSX-PF-03",
+   "heading": {
+    "path": "docs/programs/resource-efficiency-frontier-2026-10-17/BEADS-2026-10-21.md",
+    "line": 70,
+    "text": "## Gated work packages (1; not created, per R-08)"
+   },
+   "rule": {
+    "path": "docs/programs/resource-efficiency-frontier-2026-10-17/BEADS-2026-10-21.md",
+    "line": 72,
+    "text": "A gated packet is created under the epic, with `related` edges only, when its gate bead records the verdict ADOPT (`--append-notes`); DEFER or REJECT archives the packet in the compile ledger."
+   },
+   "row": {
+    "path": "docs/programs/resource-efficiency-frontier-2026-10-17/BEADS-2026-10-21.md",
+    "line": 76,
+    "text": "| TSX-PF-03 | [PERF-F] ADR-0032 addendum rules skip and cache deferrals ADOPT, DEFER or REJECT on the PERF-F receipts | decision | P3 | 120 | RULING-R-04-PERF-F (rftsx-bge18); TSX-PF-00c1 (rftsx-qjxf1); TSX-PF-01a (rftsx-j83yd); TSX-PF-02a (rftsx-it5ry) | R-04 |"
+   }
+  },
+  "adr": {
+   "path": "docs/adr/0032-component-skip-and-assembly-cache-deferred.md",
+   "status": {
+    "path": "docs/adr/0032-component-skip-and-assembly-cache-deferred.md",
+    "line": 13,
+    "text": "Accepted-provisional (DEC-48)"
+   },
+   "verdicts": {
+    "RFTSX-PERF-009": {
+     "path": "docs/adr/0032-component-skip-and-assembly-cache-deferred.md",
+     "line": 148,
+     "text": "  below the 12 threshold. **DEFER.** The serializer is linear in delivered blocks (200 base blocks plus one per turn,"
+    },
+    "RFTSX-PERF-008b": {
+     "path": "docs/adr/0032-component-skip-and-assembly-cache-deferred.md",
+     "line": 153,
+     "text": "  TS assembly path derives no selection attributes in this scenario), which reads as not owed. **DEFER.**"
+    }
+   }
+  }
+ },
+ "rows": [
+  {
+   "id": "A",
+   "label": "(statement) No Pi surface or Pi-filed bead shall mark component-subtree skipping or assembly/serialization caches as already needed; (a) grep of Pi docs and wb bead titles/descriptions for component-skip or assembly-cache wording marked needed/required/adopted for the TSX SDK = 0 hits (0 today at Pi d75b68d; store ADR-0032 hits only wb-km7q.6): every sentence of an anchored walked file, and of an anchored row's title, description, design or acceptance_criteria, that names the skip or the cache family carries a posture marker",
+   "pins": [
+    {
+     "id": "A1",
+     "witness": {
+      "pin": "A1",
+      "anchor": "Pi docs",
+      "filesFloorMet": true,
+      "rootsFloorMet": true,
+      "anchorsWalked": true,
+      "anchoredFloorMet": true,
+      "exemptionsLoadBearing": true,
+      "findings": [],
+      "symlinks": [],
+      "unreadable": [],
+      "controls": {
+       "needed": "S: asserted-needed",
+       "required": "K: asserted-required",
+       "adopted": "K: asserted-adopted",
+       "unmarked": "S: unmarked",
+       "bothFamilies": "S,K: asserted-needed",
+       "codeComment": "K: asserted-required",
+       "stringLiteral": "S: unmarked",
+       "jsonValue": "K: asserted-adopted",
+       "jsonLines": "K: asserted-adopted",
+       "jsonlRow": "K: asserted-adopted",
+       "twoSentences": "S: asserted-adopted",
+       "semicolon": "K: asserted-required",
+       "tableRow": "S: asserted-needed",
+       "listItem": "K: asserted-required",
+       "listItemInCode": false,
+       "codeLinesRunTogether": false,
+       "wrappedLine": "S: asserted-needed",
+       "blankLine": "S: asserted-required",
+       "anchorElsewhere": "K: asserted-required",
+       "markers": {
+        "no": false,
+        "not": false,
+        "never": false,
+        "nor": false,
+        "neither": false,
+        "none": false,
+        "cannot": false,
+        "without": false,
+        "defer": false,
+        "defers": false,
+        "deferred": false,
+        "deferral": false,
+        "deferrals": false,
+        "deferring": false,
+        "gated": false,
+        "unshipped": false,
+        "absent": false,
+        "proposed": false,
+        "potential": false,
+        "n't": false
+       },
+       "marks": {
+        "need": "S: asserted-needed",
+        "needs": "S: asserted-needed",
+        "needed": "S: asserted-needed",
+        "needing": "S: asserted-needed",
+        "require": "S: asserted-required",
+        "requires": "S: asserted-required",
+        "required": "S: asserted-required",
+        "requiring": "S: asserted-required",
+        "requirement": "S: asserted-required",
+        "requirements": "S: asserted-required",
+        "adopt": "S: asserted-adopted",
+        "adopts": "S: asserted-adopted",
+        "adopted": "S: asserted-adopted",
+        "adopting": "S: asserted-adopted",
+        "adoption": "S: asserted-adopted"
+       },
+       "spellings": {
+        "S01": "S",
+        "S02": "S",
+        "S03": "S",
+        "S04": "S",
+        "S05": "S",
+        "S06": "S",
+        "S07": "S",
+        "S08": "S",
+        "S09": "S",
+        "S10": "S",
+        "S11": "S",
+        "S12": "S",
+        "K01": "K",
+        "K02": "K",
+        "K03": "K",
+        "K04": "K",
+        "K05": "K",
+        "K06": "K",
+        "K07": "K",
+        "K08": "K",
+        "K09": "K",
+        "K10": "K",
+        "K11": "K",
+        "K12": "K",
+        "K13": "K"
+       },
+       "nearMiss": false,
+       "unanchored": false,
+       "markerAnywhere": false,
+       "paraphraseMemo": false,
+       "paraphraseBailout": false,
+       "paraphraseReuse": false,
+       "splitPronoun": false,
+       "composed": false,
+       "lookalike": false,
+       "joiner": false,
+       "encoded": false
+      },
+      "plants": {
+       "README.md": true,
+       "docs/notes.md": true,
+       "src/claim.ts": true,
+       "src/journal.ts": false,
+       "qa/claim.mjs": true,
+       "test/fixtures/deep/claim.json": true,
+       "examples/claim.md": true,
+       "new-feedback/claim.md": true,
+       "vendor/README.md": true,
+       ".agents/skills/s/SKILL.md": true,
+       "nested/node_modules/claim.md": true,
+       "link.md": true,
+       "node_modules/pkg/notes.md": false,
+       "dist/notes.md": false,
+       "build/notes.md": false,
+       "coverage/notes.md": false,
+       ".forge/notes.md": false,
+       ".git/notes.md": false,
+       ".beads/notes.md": false,
+       "media/blob.bin": false
+      }
+     }
+    },
+    {
+     "id": "A2",
+     "witness": {
+      "pin": "A2",
+      "anchor": "wb bead titles/descriptions",
+      "rowsFloorMet": true,
+      "unparsed": [],
+      "findings": [],
+      "postureRead": [
+       "wb-csbt.1.title:1 S,K",
+       "wb-csbt.2.title:1 S"
+      ],
+      "controls": {
+       "titleClaim": "title:1 S: asserted-adopted",
+       "descriptionClaim": "description:1 K: asserted-required",
+       "designClaim": "design:1 K: asserted-needed",
+       "acceptanceClaim": "acceptance_criteria:1 S: unmarked",
+       "secondSentence": "description:2 S: asserted-required",
+       "anchorInNotes": "title:1 K: asserted-required",
+       "markedTitle": false,
+       "negatedTitle": false,
+       "notesClaim": false,
+       "commentClaim": false,
+       "unanchoredRow": false,
+       "markerAnywhereTitle": false,
+       "unparsedLines": [
+        3,
+        4
+       ],
+       "parsedRows": [
+        "wb-x"
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "label": "(b) any Pi summary of this program carries \"design, not implementation or measured improvement\" (README.md:2) and never \"implemented\"/\"measured improvement\": a walked block naming the program outside a document locator carries the status phrase, and with it blanked neither it nor a judged field of a row naming the program carries a never word",
+   "pins": [
+    {
+     "id": "B1",
+     "witness": {
+      "pin": "B1",
+      "anchor": "carries \"design, not implementation or measured improvement\" (README.md:2)",
+      "findings": [],
+      "controls": {
+       "statusCarried": false,
+       "statusAbsent": "status-absent",
+       "statusWrapped": false,
+       "statusCased": false,
+       "titleCased": "status-absent",
+       "underscored": "status-absent",
+       "otherBlock": "status-absent",
+       "listItemSummary": "status-absent",
+       "unnamedSummary": false,
+       "epicTagOnly": false,
+       "citationOnly": false,
+       "tagOnly": false,
+       "datedSlug": false,
+       "prefixedName": false,
+       "rowWithoutStatus": false
+      }
+     }
+    },
+    {
+     "id": "B2",
+     "witness": {
+      "pin": "B2",
+      "anchor": "never \"implemented\"/\"measured improvement\"",
+      "treeNever": [],
+      "rowNever": [],
+      "citedRead": [
+       "wb-csbt",
+       "wb-csbt.1",
+       "wb-csbt.2",
+       "wb-csbt.3",
+       "wb-csbt.4"
+      ],
+      "controls": {
+       "implementedWord": "says-implemented",
+       "measuredImprovement": "says-measured-improvement",
+       "pluralImprovements": "says-measured-improvement",
+       "statusOnly": false,
+       "implementationNoun": false,
+       "unimplemented": false,
+       "rowImplemented": "says-implemented",
+       "rowStatusOnly": false,
+       "citationImplemented": false,
+       "tagImplemented": false
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "label": "(c) a Pi-filed bead mentioning TSX component skip or serialization cache carries the ADR-0032 deferred/gated wording and a related (never blocks) edge to the gate: the gate is the one row whose title names the gating artifact, every other anchored row naming a family holds an ADR-0032 sentence with a deferral word and a related edge to it, no row blocks on it, and the measured exceptions are exactly KNOWN",
+   "pins": [
+    {
+     "id": "C1",
+     "witness": {
+      "pin": "C1",
+      "anchor": "the ADR-0032 deferred/gated wording",
+      "gates": [
+       "wb-csbt.1"
+      ],
+      "gateWording": true,
+      "findings": [
+       "wb-csbt.2 no-deferral-wording",
+       "wb-km7q.6 no-deferral-wording"
+      ],
+      "controls": {
+       "withWording": false,
+       "gatedWording": false,
+       "deferralNoun": false,
+       "noWording": "no-deferral-wording",
+       "wordingSplit": "no-deferral-wording",
+       "wordingInComment": false,
+       "noAdr": "no-deferral-wording",
+       "mentionInNotesOnly": "no-deferral-wording",
+       "gateExcluded": false,
+       "unanchoredRow": false,
+       "wordingAnywhere": false,
+       "gates": {
+        "none": 0,
+        "two": 2
+       }
+      }
+     }
+    },
+    {
+     "id": "C2",
+     "witness": {
+      "pin": "C2",
+      "anchor": "a related (never blocks) edge to the gate",
+      "findings": [
+       "wb-csbt.2 no-related-edge",
+       "wb-km7q.6 no-related-edge"
+      ],
+      "blocking": [],
+      "controls": {
+       "relatedEdge": false,
+       "relatesTo": false,
+       "noEdge": "no-related-edge",
+       "edgeToOther": "no-related-edge",
+       "parentChild": "no-related-edge",
+       "discoveredFrom": "no-related-edge",
+       "blocksEdge": "blocks-edge",
+       "gateBlocks": "blocks-edge",
+       "blocksToGate": [
+        "wb-y"
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "D",
+   "label": "(gate) Pi echoes ADR-0032's deferred status until the producer records the re-open conditions (gated: ADR-0032 update via packet TSX-PF-03, not created per R-08 - a concrete workload, differential semantic proof and an owner-reviewed ADR update): the producer facts at the pin read the gate closed - every verdict DEFER, TSX-PF-03 among the packets not created - and tie to the filing",
+   "pins": [
+    {
+     "id": "D1",
+     "witness": {
+      "pin": "D1",
+      "anchor": "ADR-0032 update via packet TSX-PF-03, not created per R-08",
+      "gate": {
+       "open": false,
+       "packetCreated": false,
+       "verdicts": {
+        "RFTSX-PERF-009": "DEFER",
+        "RFTSX-PERF-008b": "DEFER"
+       }
+      },
+      "packet": "TSX-PF-03",
+      "ties": {
+       "packetNamed": true,
+       "conditionsRecorded": true,
+       "quoteMeasured": true,
+       "reopenMeasured": true,
+       "statusMeasured": true,
+       "flagMeasured": true,
+       "adrStatusNamed": true,
+       "citationPinned": true
+      },
+      "controls": {
+       "measured": false,
+       "verdictAdopt": true,
+       "verdictReject": false,
+       "verdictUnread": true,
+       "noVerdicts": true,
+       "packetCreated": true,
+       "packetRowGone": true,
+       "statusConfirmed": false
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "tests": [
+  "the judged set: the frozen shape, the out-of-file roster and the owner filing agree",
+  "A1",
+  "A2",
+  "B1",
+  "B2",
+  "C1",
+  "C2",
+  "D1",
+  "records: every registered test ran once in run mode in roster order, every pin reached its end, and no title names a family"
+ ]
+}
