@@ -1,0 +1,533 @@
+{
+  "provenance": "wb-if7q.3 census roster (test/workbench-tsx-paint-commit-census.test.ts). quote, citation and merged are the owner filing's (bead row wb-if7q.3; ReactiveFiberTSXSDK docs/programs/native-interfaces-and-portable-tsx-2026-10-21/01-runtime-contracts.md:11 and :13 at 76bbbffd9d4a, re-read at the pin with git show, 2026-10-23). producer is MEASURED read-only on 2026-10-23: programPin is ReactiveFiberTSXSDK at the program pin (version, exports keys and files of its package.json; sites[name] is `git grep -n -E <name>` at the pin as path:line; srcPythonFiles lists the files, none at either revision, that `git grep -l -E 'InterfaceHost|InterfaceEvaluation|SurfaceCapabilities' <sha> -- src python` names); mapped is the version installed rf maps: rfVersion is `rf --json --version` result.version, importMap is the imports of its packaged reactive_fiber_cli/integrations/tsx/import-map.json verbatim, distribution is its runtime-lock.json distribution (name, version, source), and exports, srcPythonFiles and sites are read at that source the same way. Every witness is the expected outcome of its pin's case at this cut, and no witness is typed by hand",
+  "bead": "wb-if7q.3",
+  "quote": "`InterfaceHost`: mount/update/remove known descriptors; measure and lay out targets; accept staged commit batches; control focus/input; schedule priority-based updates; dispose resources. A host must not call a component during a paint callback or run provider inference as an incidental render effect.",
+  "citation": "docs/programs/native-interfaces-and-portable-tsx-2026-10-21/01-runtime-contracts.md:11@76bbbffd9d4a",
+  "merged": {
+    "quote": "Host commit is atomic for one accepted evaluation generation.",
+    "citation": "01-runtime-contracts.md:13@76bbbffd9d4a"
+  },
+  "family": [
+    "InterfaceHost",
+    "InterfaceEvaluation"
+  ],
+  "sdk": "@reactive-fiber/tsx",
+  "scan": {
+    "entryFamily": "@reactive-fiber\\/tsx(?:@[^/\\s\"'`]*)?\\/(?:host|ui)(?![\\w-])/i",
+    "entryKeys": [
+      "./host",
+      "./ui"
+    ],
+    "gateStep": "TSX-IF-04",
+    "purityClaim": "paint(?:[\\s/_-]*frame)?[\\s_-]*callbacks?|frame[\\s_-]*callbacks?|component[\\s_-]*invocations?|mounted[\\s_-]*fixture[\\s_-]*trees?|incidental[\\s_-]*render[\\s_-]*effects?/i",
+    "atomicityClaim": "evaluation[\\s_-]*generations?|staged[\\s_-]*(?:commit|mutation)s?|pre-?evaluation|accepted[\\s_-]*evaluation|mid-?evaluation/i",
+    "registrars": [
+      "it",
+      "test",
+      "describe",
+      "suite",
+      "bench"
+    ],
+    "viVerbs": [
+      "mock",
+      "doMock",
+      "unmock",
+      "doUnmock",
+      "importActual",
+      "importMock"
+    ],
+    "constructedLoaders": [
+      "URL",
+      "Worker",
+      "SharedWorker"
+    ],
+    "pragma": "@jsxImportSource",
+    "moduleExtensions": [
+      ".ts",
+      ".mts",
+      ".cts",
+      ".tsx",
+      ".js",
+      ".mjs",
+      ".cjs",
+      ".jsx"
+    ],
+    "jsExtensions": [
+      ".js",
+      ".mjs",
+      ".cjs",
+      ".jsx"
+    ],
+    "manifest": "(?:^|\\/)(?:package(?:-lock)?\\.json|npm-shrinkwrap\\.json|deno\\.jsonc?|import[-_]map\\.json|[tj]sconfig[^/]*\\.json)$/i",
+    "skippedRoots": [
+      ".git",
+      ".beads",
+      "node_modules",
+      "dist",
+      "build",
+      "coverage",
+      ".forge"
+    ],
+    "exempt": [],
+    "floors": {
+      "files": 750,
+      "modules": {
+        "src": 100,
+        "test": 400,
+        "qa": 55
+      },
+      "jsModules": 60,
+      "manifests": 4,
+      "titles": 8000
+    },
+    "walkAnchors": [
+      "README.md:pi-subagents",
+      "src/workbench/providers/reactivefiber.ts:RF render refused",
+      "qa/workbench/receipts-index.mjs:docs/workbench/receipts",
+      "examples/workflows/compose.js:export",
+      "media/screenshot.png:PNG"
+    ],
+    "nameAnchors": [
+      "src/workbench/providers/reactivefiber.ts:imported:spawn",
+      "src/ui/conversation-viewer.ts:heritage:Component",
+      "src/agent-runner.ts:member:modelRegistry",
+      "qa/workbench/cap-saturation.mjs:jsdoc:CapProjection"
+    ],
+    "loadAnchors": [
+      "src/workbench/providers/reactivefiber.ts:node:child_process",
+      "src/index.ts:./ui/conversation-viewer.js",
+      "test/agent-mention-wiring.test.ts:../src/agent-runner.js"
+    ],
+    "titleAnchor": "test/workbench-native-rf-tsx-preview.test.ts:success row: an ephemeral TSX-era preview with a worker spawn and engine identity"
+  },
+  "residuals": [
+    "R-NEEDLE",
+    "R-COMMENT",
+    "R-AFFIXED",
+    "R-CASED",
+    "R-LOOKALIKE",
+    "R-COMPOSED",
+    "R-REFLECTIVE",
+    "R-ALIASED-LOADER",
+    "R-ROOT",
+    "R-HOST-PACKAGE",
+    "R-NONMODULE",
+    "R-OUTSIDE",
+    "R-OWN-HOST",
+    "R-COMPUTED-TITLE"
+  ],
+  "quiet": {
+    "R-NEEDLE": [
+      "A1:needle",
+      "A1:regexNeedle",
+      "A1:literalType",
+      "A1:callArgument",
+      "A2:specifierNeedle",
+      "A2:matcherArgument",
+      "A2:bundlerAlias"
+    ],
+    "R-COMMENT": [
+      "A1:lineComment",
+      "A1:jsdocInTs",
+      "A2:commentMention",
+      "A2:jsdocImportTypeInTs"
+    ],
+    "R-AFFIXED": [
+      "A1:affixed"
+    ],
+    "R-CASED": [
+      "A1:cased"
+    ],
+    "R-LOOKALIKE": [
+      "A1:lookalike",
+      "A1:joiner"
+    ],
+    "R-COMPOSED": [
+      "A1:composedVariable",
+      "A1:composedJoin",
+      "A2:composedSpecifier"
+    ],
+    "R-REFLECTIVE": [
+      "A1:reflective"
+    ],
+    "R-ALIASED-LOADER": [
+      "A2:aliasedLoader",
+      "A2:destructuredLoader",
+      "A2:parameterLoader"
+    ],
+    "R-ROOT": [
+      "A2:rootEntry",
+      "A2:otherSubpath",
+      "A2:manifestRoot",
+      "A2:plant:app/import_map.json"
+    ],
+    "R-HOST-PACKAGE": [
+      "A2:hostPackage"
+    ],
+    "R-NONMODULE": [
+      "A1:plant:docs/host.md",
+      "A1:plant:fixtures/host.json",
+      "A2:plant:docs/host.md",
+      "A2:plant:bin/run-host"
+    ],
+    "R-OUTSIDE": [
+      "A1:plant:node_modules/pkg/host.ts",
+      "A1:plant:dist/host.ts",
+      "A1:plant:build/host.ts",
+      "A1:plant:coverage/host.ts",
+      "A1:plant:.forge/host.ts",
+      "A1:plant:.beads/host.ts",
+      "A2:plant:node_modules/pkg/index.js",
+      "A2:plant:dist/host.mjs"
+    ],
+    "R-OWN-HOST": [
+      "B1:ownFrame",
+      "B1:ownPaint",
+      "B1:ownWidget",
+      "B2:ownAtomicWrite",
+      "B2:ownGeneration"
+    ],
+    "R-COMPUTED-TITLE": [
+      "B1:computedTitle",
+      "B1:aliasedRegistrar",
+      "B1:subtestRegistrar"
+    ]
+  },
+  "producer": {
+    "programPin": {
+      "repo": "ReactiveFiberTSXSDK",
+      "sha": "76bbbffd9d4a419f972d6fefc8b7f9dc524df8df",
+      "version": "0.1.668",
+      "exports": [
+        ".",
+        "./jsx-runtime",
+        "./jsx-dev-runtime",
+        "./testing",
+        "./embedding",
+        "./package.json"
+      ],
+      "files": [
+        "dist",
+        "docs/security/redaction-defaults.json",
+        "LICENSE",
+        "README.md"
+      ],
+      "srcPythonFiles": [],
+      "sites": {
+        "InterfaceHost": [
+          "docs/programs/native-interfaces-and-portable-tsx-2026-10-21/01-runtime-contracts.md:11",
+          "docs/programs/native-interfaces-and-portable-tsx-2026-10-21/02-implementation.md:13"
+        ],
+        "InterfaceEvaluation": [
+          "docs/programs/native-interfaces-and-portable-tsx-2026-10-21/01-runtime-contracts.md:13"
+        ]
+      }
+    },
+    "mapped": {
+      "rfVersion": "0.1.832",
+      "importMap": {
+        "@reactive-fiber/tsx": "npm:@reactive-fiber/tsx@0.1.649",
+        "@reactive-fiber/tsx/jsx-dev-runtime": "npm:@reactive-fiber/tsx@0.1.649/jsx-dev-runtime",
+        "@reactive-fiber/tsx/jsx-runtime": "npm:@reactive-fiber/tsx@0.1.649/jsx-runtime",
+        "@reactive-fiber/tsx/embedding": "npm:@reactive-fiber/tsx@0.1.649/embedding"
+      },
+      "distribution": {
+        "name": "@reactive-fiber/tsx",
+        "version": "0.1.649",
+        "source": "ReactiveFiberTSXSDK 5da03a7d49f42a9be7612d34f73d7d9ef950c52c"
+      },
+      "exports": [
+        ".",
+        "./jsx-runtime",
+        "./jsx-dev-runtime",
+        "./testing",
+        "./embedding",
+        "./package.json"
+      ],
+      "srcPythonFiles": [],
+      "sites": {
+        "InterfaceHost": [],
+        "InterfaceEvaluation": []
+      }
+    }
+  },
+  "rows": [
+    {
+      "id": "A",
+      "label": "(trigger, absent today) If Pi ever implements or embeds a TSX InterfaceHost/InterfaceEvaluation: (a) absence pin: no Pi module implements or imports InterfaceHost or InterfaceEvaluation at the pinned version - no walked module names either type where the TypeScript compiler reads a name, and none loads a host or ui entry of the TSX SDK",
+      "pins": [
+        {
+          "id": "A1",
+          "witness": {
+            "pin": "A1",
+            "anchor": "git grep InterfaceHost|InterfaceEvaluation|SurfaceCapabilities in src/ python/ at 76bbbffd9d4a: 0 files",
+            "filesFloorMet": true,
+            "anchorsWalked": true,
+            "modulesFloorMet": true,
+            "jsModulesFloorMet": true,
+            "namesRead": true,
+            "noExemption": true,
+            "needlesCarried": true,
+            "references": [],
+            "symlinks": [],
+            "unreadable": [],
+            "controls": {
+              "namedImport": true,
+              "aliasImport": true,
+              "typeOnlyImport": true,
+              "exportFrom": true,
+              "quotedImportName": true,
+              "implementsClause": true,
+              "qualifiedImplements": true,
+              "extendsClause": true,
+              "declaredInterface": true,
+              "declaredClass": true,
+              "typeAlias": true,
+              "annotation": true,
+              "satisfiesClause": true,
+              "asCast": true,
+              "typeArgument": true,
+              "typeQuery": true,
+              "importTypeQualifier": true,
+              "construction": true,
+              "destructuredImport": true,
+              "requireDestructure": true,
+              "shorthand": true,
+              "elementAccess": true,
+              "foldedElementAccess": true,
+              "templateElementAccess": true,
+              "computedBinding": true,
+              "quotedMember": true,
+              "indexedAccessType": true,
+              "typeArgumentKey": true,
+              "jsxTag": true,
+              "escapedIdentifier": true,
+              "jsdocTypeInJs": true,
+              "jsdocImplementsInJs": true,
+              "jsdocLinkInJs": true,
+              "needle": false,
+              "regexNeedle": false,
+              "literalType": false,
+              "callArgument": false,
+              "lineComment": false,
+              "jsdocInTs": false,
+              "affixed": false,
+              "cased": false,
+              "lookalike": false,
+              "joiner": false,
+              "composedVariable": false,
+              "composedJoin": false,
+              "reflective": false,
+              "nearMiss": false
+            },
+            "plants": {
+              "src/host.ts": true,
+              "test/fixtures/deep/host.mts": true,
+              "examples/app/host.cjs": true,
+              "qa/host.mjs": true,
+              "nested/dist/host.ts": true,
+              "link.ts": true,
+              "docs/host.md": false,
+              "fixtures/host.json": false,
+              "node_modules/pkg/host.ts": false,
+              "dist/host.ts": false,
+              "build/host.ts": false,
+              "coverage/host.ts": false,
+              ".forge/host.ts": false,
+              ".beads/host.ts": false
+            }
+          }
+        },
+        {
+          "id": "A2",
+          "witness": {
+            "pin": "A2",
+            "anchor": "no ./host or ./ui export",
+            "loadsRead": true,
+            "manifestsFloorMet": true,
+            "hostLoads": [],
+            "manifestHits": [],
+            "controls": {
+              "staticImport": true,
+              "uiEntry": true,
+              "namespaceImport": true,
+              "typeOnly": true,
+              "exportStar": true,
+              "sideEffectImport": true,
+              "deepSubpath": true,
+              "npmSpecifier": true,
+              "jsrSpecifier": true,
+              "urlSpecifier": true,
+              "escapedSpecifier": true,
+              "percentSpecifier": true,
+              "foldedSpecifier": true,
+              "dynamicImport": true,
+              "importEquals": true,
+              "importType": true,
+              "ambientModule": true,
+              "require": true,
+              "requireResolve": true,
+              "moduleRequire": true,
+              "globalRequire": true,
+              "importMetaResolve": true,
+              "createdRequire": true,
+              "createdResolve": true,
+              "boundRequire": true,
+              "requireAlias": true,
+              "callForm": true,
+              "applyForm": true,
+              "reflectApply": true,
+              "viVerb": true,
+              "viImportActual": true,
+              "newUrl": true,
+              "worker": true,
+              "tripleSlashTypes": true,
+              "tripleSlashPath": true,
+              "jsxPragma": true,
+              "jsdocImportTypeInJs": true,
+              "manifestEntry": true,
+              "manifestMapped": true,
+              "rootEntry": false,
+              "otherSubpath": false,
+              "otherPackage": false,
+              "specifierNeedle": false,
+              "matcherArgument": false,
+              "bundlerAlias": false,
+              "commentMention": false,
+              "jsdocImportTypeInTs": false,
+              "composedSpecifier": false,
+              "aliasedLoader": false,
+              "destructuredLoader": false,
+              "parameterLoader": false,
+              "hostPackage": false,
+              "manifestRoot": false
+            },
+            "plants": {
+              "src/host.ts": true,
+              "app/package.json": true,
+              "app/import_map.json": false,
+              "docs/host.md": false,
+              "node_modules/pkg/index.js": false,
+              "dist/host.mjs": false,
+              "bin/run-host": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "(b) armed, purity: N paint/frame callbacks over a mounted fixture tree produce zero component invocations and zero provider/model calls (wb-021.5/wb-km7q.7 falsifier); (c) armed, atomicity: abort/suspend/fail injected mid-evaluation yields zero host effects and a byte-identical pre-evaluation state snapshot; a fault between two staged mutations of generation g+1 leaves g intact: both gated on TSX-IF-04 - the measured producer has neither type outside docs and no host or ui entry, and no Pi test title claims either leg",
+      "pins": [
+        {
+          "id": "B1",
+          "witness": {
+            "pin": "B1",
+            "anchor": "(b) armed, purity",
+            "symbol": "InterfaceHost",
+            "gateOpen": false,
+            "docsOnly": true,
+            "pinSites": [
+              "docs/programs/native-interfaces-and-portable-tsx-2026-10-21/01-runtime-contracts.md:11",
+              "docs/programs/native-interfaces-and-portable-tsx-2026-10-21/02-implementation.md:13"
+            ],
+            "sitesInPackage": [],
+            "entryExported": false,
+            "entryMapped": false,
+            "srcPython": [],
+            "mappedSites": [],
+            "mappedVersion": true,
+            "beadSaysAbsent": true,
+            "titlesFloorMet": true,
+            "titleAnchorRead": true,
+            "claims": [],
+            "controls": {
+              "measured": false,
+              "docsSiteAdded": false,
+              "srcSite": true,
+              "publishedSite": true,
+              "hostExport": true,
+              "uiExport": true,
+              "mappedEntry": true,
+              "srcPythonFile": true,
+              "mappedSite": true,
+              "titles": [
+                "t1",
+                "t2",
+                "t3",
+                "t4 %s",
+                "t5",
+                "t6",
+                "t7",
+                "t8",
+                "t9",
+                "t10",
+                "t11",
+                "t12",
+                "t13",
+                "t14",
+                "t15"
+              ],
+              "computedTitle": false,
+              "aliasedRegistrar": false,
+              "subtestRegistrar": false,
+              "purityClause": true,
+              "frameCallback": true,
+              "componentInvocation": true,
+              "ownFrame": false,
+              "ownPaint": false,
+              "ownWidget": false
+            }
+          }
+        },
+        {
+          "id": "B2",
+          "witness": {
+            "pin": "B2",
+            "anchor": "(c) armed, atomicity",
+            "symbol": "InterfaceEvaluation",
+            "gateOpen": false,
+            "docsOnly": true,
+            "pinSites": [
+              "docs/programs/native-interfaces-and-portable-tsx-2026-10-21/01-runtime-contracts.md:13"
+            ],
+            "sitesInPackage": [],
+            "entryExported": false,
+            "entryMapped": false,
+            "srcPython": [],
+            "mappedSites": [],
+            "mappedVersion": true,
+            "beadSaysAbsent": true,
+            "titlesFloorMet": true,
+            "titleAnchorRead": true,
+            "claims": [],
+            "controls": {
+              "measured": false,
+              "docsSiteAdded": false,
+              "srcSite": true,
+              "publishedSite": true,
+              "hostExport": true,
+              "uiExport": true,
+              "mappedEntry": true,
+              "srcPythonFile": true,
+              "mappedSite": true,
+              "atomicityClause": true,
+              "stagedMutation": true,
+              "evaluationGeneration": true,
+              "ownAtomicWrite": false,
+              "ownGeneration": false
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "tests": [
+    "the judged set: the frozen shape, the out-of-file roster and the bead row agree",
+    "A1",
+    "A2",
+    "B1",
+    "B2",
+    "records: every registered test ran once in run mode in roster order, every pin reached its end, and no title names an armed vocabulary"
+  ]
+}
