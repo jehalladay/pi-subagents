@@ -1,0 +1,645 @@
+{
+ "bead": "wb-tnz5.5",
+ "statement": "[RF-CERTIFIED-FEDERATED-REACTIVE-REFINEMENT-R6] If Pi ever drives or relays rf renders and publications over federated receipts (gated FW-CFRR-04b, rfc-bak67.11 and rfc-bak67.14: not shipped at the pin), it shall treat RF_FEDERATION_PIN_CHANGED as an exit-4-class refusal after which no publication is recorded, echo the producer's pin witness (r1) and pinnedReceiptIdentity verbatim, and never re-tag output computed at an older pinned receipt as a newer one (F(old) as F(new)) nor label it fresh.",
+ "programPin": "ReactiveFiberCLI docs/programs/certified-federated-reactive-refinement-2026-10-18/BEADS-2026-10-21.md:46@6a251bf73af5",
+ "contractPins": [
+  "02-concrete-contract-and-verification-gates.md:18@6a251bf73af5 FederatedPublication=(pinnedReceiptIdentity,outputStatus,outputDigestOrValue,publishTransaction,visibleEvidence)",
+  "02-concrete-contract-and-verification-gates.md:20@6a251bf73af5 it must never retag F(old) as F(new)",
+  "02-concrete-contract-and-verification-gates.md:29@6a251bf73af5 on completion publish with *that* receipt identity",
+  "02-concrete-contract-and-verification-gates.md:37@6a251bf73af5 the publication must name r1 or visibly abort"
+ ],
+ "rfVersion": "0.1.832",
+ "code": "RF_FEDERATION_PIN_CHANGED",
+ "codeShippedAtInstalledRf": false,
+ "pinExit": 4,
+ "gatingArtifacts": [
+  "FW-CFRR-04b",
+  "rfc-bak67.11",
+  "rfc-bak67.14"
+ ],
+ "conflictKeys": [
+  "record_type",
+  "record_id",
+  "expected_revision",
+  "current_revision",
+  "refresh_command"
+ ],
+ "publicationFields": [
+  "pinnedReceiptIdentity",
+  "outputStatus",
+  "outputDigestOrValue",
+  "publishTransaction",
+  "visibleEvidence"
+ ],
+ "analogue": {
+  "code": "RF_DEFINITION_CHANGED_DURING_RENDER",
+  "exit": 4,
+  "family": "TXN",
+  "hintRequired": true,
+  "metadataKeys": [
+   "record_type",
+   "record_id",
+   "expected_revision",
+   "current_revision",
+   "refresh_command"
+  ],
+  "refreshCommand": "rf status --json",
+  "source": "host",
+  "registry": "reactive_fiber_cli/domain/diagnostics.py:2283 (installed rf 0.1.832, read-only)",
+  "builder": "reactive_fiber_cli/application/render.py:1539 _changed_diagnostic (installed rf 0.1.832, read-only)"
+ },
+ "construction": "CONSTRUCTED, never measured: no rf emits RF_FEDERATION_PIN_CHANGED (0 files spell it at the installed rf 0.1.832). pinChanged follows the analogue row's shape (the LXDXDOC-A5 five, its message and hint form, source host) with the pin witness r1 as expected_revision and the newer accepted receipt r2 as current_revision; publication spells the five FederatedPublication fields as 02-concrete:18 states them; receipts, ids and texts are made up.",
+ "receipts": {
+  "pinned": "sha256:1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f",
+  "accepted": "sha256:2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e"
+ },
+ "pinChanged": {
+  "schema": "reactive-fiber.cli/v1",
+  "ok": false,
+  "command": "context.render",
+  "operation_id": "rfo_pinchangedrefusalfixture0a",
+  "workspace": {
+   "id": "rfw_aaaaaaaaaaaaaaaaaaaaaa",
+   "root": "/fixture/rf-workspace"
+  },
+  "transaction_id": null,
+  "result": null,
+  "diagnostics": [
+   {
+    "code": "RF_FEDERATION_PIN_CHANGED",
+    "severity": "error",
+    "message": "federation_receipt 'peer-b:orders' changed during the render: pinned sha256:1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f, now sha256:2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e",
+    "hint": "Nothing was committed. Re-run `rf context render`: the next render pins the receipt accepted at its start, or keep the pinned output only where policy admits an earlier accepted pin.",
+    "source": "host",
+    "metadata": {
+     "record_type": "federation_receipt",
+     "record_id": "peer-b:orders",
+     "expected_revision": "sha256:1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f",
+     "current_revision": "sha256:2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e",
+     "refresh_command": "rf status --json"
+    }
+   }
+  ]
+ },
+ "publication": {
+  "pinnedReceiptIdentity": "sha256:1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f",
+  "outputStatus": "value",
+  "outputDigestOrValue": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "publishTransaction": "rft_pinnedpublicationfixture0a",
+  "visibleEvidence": [
+   "sha256:1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f"
+  ]
+ },
+ "rows": [
+  {
+   "id": "A",
+   "label": "(trigger, absent today) Pi drives and relays no rf publication: src's one rf render argv and one rf launch are the noncommitted preview, both input arms spawn --no-commit, the rf roster stays the read preview alone, and no src or qa file spells the pin-change vocabulary",
+   "pins": [
+    {
+     "id": "A1",
+     "witness": {
+      "srcFloorMet": true,
+      "renderSites": [
+       "src/workbench/providers/reactivefiber.ts"
+      ],
+      "uncommitted": [],
+      "uncommittedLiterals": [],
+      "commitFlags": [],
+      "rfLaunches": [
+       "src/workbench/providers/reactivefiber.ts"
+      ],
+      "composedArgv": 0,
+      "controls": {
+       "uncommittedArgv": {
+        "render": 1,
+        "uncommitted": 1,
+        "flags": 0,
+        "composed": 0
+       },
+       "noCommitArgv": {
+        "render": 1,
+        "uncommitted": 0,
+        "flags": 0,
+        "composed": 0
+       },
+       "spacedLiteral": {
+        "render": 0,
+        "uncommitted": 1,
+        "flags": 0,
+        "composed": 0
+       },
+       "idempotencyFlag": {
+        "render": 1,
+        "uncommitted": 0,
+        "flags": 1,
+        "composed": 0
+       },
+       "composedArgv": {
+        "render": 0,
+        "uncommitted": 0,
+        "flags": 0,
+        "composed": 1
+       }
+      }
+     }
+    },
+    {
+     "id": "A2",
+     "witness": {
+      "legacy": {
+       "spawns": 1,
+       "tail": [
+        "context",
+        "render",
+        "--model",
+        "m",
+        "--task",
+        "t",
+        "--no-commit",
+        "--no-input",
+        "--json"
+       ],
+       "renderId": null,
+       "ephemeral": true
+      },
+      "view": {
+       "spawns": 1,
+       "tail": [
+        "context",
+        "render",
+        "--view",
+        "orders.view",
+        "--task-id",
+        "t1",
+        "--no-commit",
+        "--no-input",
+        "--json"
+       ],
+       "renderId": null,
+       "ephemeral": true
+      }
+     }
+    },
+    {
+     "id": "A3",
+     "witness": {
+      "native": [
+       {
+        "id": "reactivefiber.render.preview",
+        "effectClass": "read",
+        "permissions": [
+         "reactivefiber:render"
+        ],
+        "modes": [
+         "invoke"
+        ],
+        "carrier": true,
+        "noCommitSource": true
+       }
+      ],
+      "injected": [
+       {
+        "id": "reactivefiber.render.preview",
+        "effectClass": "read",
+        "permissions": [
+         "reactivefiber:render"
+        ],
+        "modes": [
+         "invoke"
+        ],
+        "carrier": true,
+        "noCommitSource": true
+       }
+      ],
+      "reconcile": [
+       "reactivefiber.render.preview"
+      ]
+     }
+    },
+    {
+     "id": "A4",
+     "witness": {
+      "roots": [
+       {
+        "root": "src",
+        "floor": 100,
+        "floorMet": true,
+        "anchorRead": true,
+        "hits": []
+       },
+       {
+        "root": "qa",
+        "floor": 50,
+        "floorMet": true,
+        "anchorRead": true,
+        "hits": []
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "label": "(a) an exit-4 RF_FEDERATION_PIN_CHANGED refusal is a non-success refusal carrying the code verbatim, no Pi surface records a publication for it, and Pi never blind-retries it: one spawn, and a non-read committing stand-in surfaces uncertain-effect whose resume reconciles",
+   "pins": [
+    {
+     "id": "B1",
+     "witness": {
+      "command": "context.render",
+      "ok": false,
+      "result": null,
+      "transaction": null,
+      "diagnostics": 1,
+      "code": "RF_FEDERATION_PIN_CHANGED",
+      "severity": "error",
+      "source": "host",
+      "metadataKeys": [
+       "record_type",
+       "record_id",
+       "expected_revision",
+       "current_revision",
+       "refresh_command"
+      ],
+      "witnessIsPin": true,
+      "newerIsCurrent": true,
+      "distinct": true,
+      "exit": 4,
+      "analogue": {
+       "code": "RF_DEFINITION_CHANGED_DURING_RENDER",
+       "exit": 4,
+       "family": "TXN",
+       "hintRequired": true
+      },
+      "rfVersion": "0.1.832",
+      "shipped": false
+     }
+    },
+    {
+     "id": "B2",
+     "witness": {
+      "category": "unavailable",
+      "message": "RF render refused: RF_FEDERATION_PIN_CHANGED",
+      "reading": false,
+      "spawns": 1,
+      "tail": [
+       "context",
+       "render",
+       "--model",
+       "m",
+       "--task",
+       "t",
+       "--no-commit",
+       "--no-input",
+       "--json"
+      ]
+     }
+    },
+    {
+     "id": "B3",
+     "witness": {
+      "exit0": {
+       "category": "transport",
+       "message": "RF preview returned an unrecognized or contradictory failure envelope."
+      },
+      "exit4": {
+       "category": "unavailable",
+       "message": "RF render refused: RF_FEDERATION_PIN_CHANGED"
+      },
+      "exit7": {
+       "category": "unavailable",
+       "message": "RF render refused: RF_FEDERATION_PIN_CHANGED"
+      },
+      "exitNamed": false
+     }
+    },
+    {
+     "id": "B4",
+     "witness": {
+      "category": "unavailable",
+      "reading": false,
+      "spawns": 1
+     }
+    },
+    {
+     "id": "B5",
+     "witness": {
+      "snapshots": 1,
+      "coverage": "unknown",
+      "statusTone": "failure",
+      "statusText": "refused \u00b7 RF_FEDERATION_PIN_CHANGED",
+      "evidenceRefs": [
+       "rf-workspace:rfw_aaaaaaaaaaaaaaaaaaaaaa"
+      ],
+      "carriesValue": false,
+      "diagnostics": [
+       "render refused with RF_FEDERATION_PIN_CHANGED",
+       "diagnostic message, hint and metadata withheld",
+       "no native interval supplied"
+      ]
+     }
+    },
+    {
+     "id": "B6",
+     "witness": {
+      "readingKeys": [
+       "contract",
+       "source",
+       "workspaceRoot"
+      ],
+      "byteIdentical": true,
+      "code": "RF_FEDERATION_PIN_CHANGED",
+      "ok": false,
+      "calls": 1
+     }
+    },
+    {
+     "id": "B7",
+     "witness": {
+      "category": "uncertain-effect",
+      "message": "Capability reactivefiber.render.commit has an uncertain external effect: RF render refused: RF_FEDERATION_PIN_CHANGED. Reconcile with the producer before retrying.",
+      "carriesCode": true,
+      "reconciles": true,
+      "spawns": 1
+     }
+    },
+    {
+     "id": "B8",
+     "witness": {
+      "recorded": {
+       "status": "failed",
+       "category": "uncertain-effect",
+       "carriesCode": true,
+       "nodeRows": [
+        {
+         "dispatched": true,
+         "effectClass": "write",
+         "ok": false,
+         "recordsValue": false
+        },
+        {
+         "dispatched": false,
+         "effectClass": "write",
+         "ok": false,
+         "recordsValue": false
+        }
+       ],
+       "spawns": 1
+      },
+      "resumed": {
+       "status": "failed",
+       "category": "uncertain-effect",
+       "namesProducer": true,
+       "namesReconcile": true,
+       "spawns": 0,
+       "replayedNodeCount": 0
+      }
+     }
+    },
+    {
+     "id": "B9",
+     "witness": {
+      "recorded": {
+       "status": "failed",
+       "capabilityError": {
+        "name": "CapabilityError",
+        "category": "unavailable",
+        "message": "RF render refused: RF_FEDERATION_PIN_CHANGED"
+       },
+       "nodeRows": [
+        {
+         "dispatched": false,
+         "effectClass": "read",
+         "ok": false,
+         "recordsValue": false
+        }
+       ],
+       "spawns": 1
+      },
+      "resumed": {
+       "status": "failed",
+       "category": "unavailable",
+       "spawns": 1,
+       "replayedNodeCount": 0
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "label": "(b) Pi echoes the pin witness (r1) verbatim and never the newer receipt identity: the relayed reading carries r1 at expected_revision byte for byte, and the typed refusal and the projection name neither receipt",
+   "pins": [
+    {
+     "id": "C1",
+     "witness": {
+      "expectedRevision": "sha256:1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f",
+      "currentRevision": "sha256:2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e",
+      "witnessIsPin": true,
+      "swapped": false,
+      "metadataVerbatim": true,
+      "messageVerbatim": true
+     }
+    },
+    {
+     "id": "C2",
+     "witness": {
+      "message": "RF render refused: RF_FEDERATION_PIN_CHANGED",
+      "namesPinned": false,
+      "namesAccepted": false,
+      "namesRecord": false,
+      "namesMessage": false
+     }
+    },
+    {
+     "id": "C3",
+     "witness": {
+      "projectionRead": true,
+      "namesPinned": false,
+      "namesAccepted": false,
+      "namesRecord": false,
+      "namesMessage": false
+     }
+    }
+   ]
+  },
+  {
+   "id": "D",
+   "label": "(c) a publication pinned at r1 arriving after r2's acceptance is never relayed as r2 or labelled fresh: a committed publication aborts at both readers, the relay probe keeps pinnedReceiptIdentity byte for byte, and no reader surface carries a freshness word",
+   "pins": [
+    {
+     "id": "D1",
+     "witness": {
+      "category": "transport",
+      "message": "RF preview returned an unrecognized or contradictory envelope.",
+      "reading": false,
+      "spawns": 1,
+      "namesPinned": false,
+      "namesAccepted": false
+     }
+    },
+    {
+     "id": "D2",
+     "witness": {
+      "category": "validation",
+      "message": "ReactiveFiber topology refused: source.transaction_id must be null: a noncommitted read opens no transaction."
+     }
+    },
+    {
+     "id": "D3",
+     "witness": {
+      "native": {
+       "byteIdentical": true,
+       "pinnedReceiptIdentity": "sha256:1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f",
+       "fields": [
+        "pinnedReceiptIdentity",
+        "outputStatus",
+        "outputDigestOrValue",
+        "publishTransaction",
+        "visibleEvidence"
+       ],
+       "namesAccepted": false,
+       "readingKeys": [
+        "contract",
+        "source",
+        "workspaceRoot"
+       ],
+       "spawns": 1
+      },
+      "injected": {
+       "byteIdentical": true,
+       "pinnedReceiptIdentity": "sha256:1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f",
+       "fields": [
+        "pinnedReceiptIdentity",
+        "outputStatus",
+        "outputDigestOrValue",
+        "publishTransaction",
+        "visibleEvidence"
+       ],
+       "namesAccepted": false,
+       "readingKeys": [
+        "contract",
+        "source",
+        "workspaceRoot"
+       ],
+       "calls": 1
+      }
+     }
+    },
+    {
+     "id": "D4",
+     "witness": {
+      "surfaces": [
+       "probeProjection",
+       "refusalProjection",
+       "nativeRefusal",
+       "committedAbort",
+       "adapterAbort",
+       "nativeReadingParts",
+       "injectedReadingParts"
+      ],
+      "everySurfaceRead": true,
+      "labelled": [],
+      "probe": {
+       "coverage": "complete",
+       "statusTone": "success",
+       "namesPinned": false,
+       "namesAccepted": false
+      },
+      "controls": {
+       "fresh": true,
+       "current": true,
+       "latest": true,
+       "upToDate": true,
+       "newest": true,
+       "quiet": false
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "M",
+   "label": "the pin-change vocabulary matcher A4 reads: the spellings it catches (M1-M8) and the pinned quiet rows of its named residuals (Q1 R-INTERRUPTED, Q2 R-HOMOGLYPH, Q3 R-COMPOSED)",
+   "pins": [
+    {
+     "id": "M1",
+     "witness": {
+      "form": "RF_FEDERATION_PIN_CHANGED",
+      "hit": true
+     }
+    },
+    {
+     "id": "M2",
+     "witness": {
+      "form": "rf_federation_pin_changed",
+      "hit": true
+     }
+    },
+    {
+     "id": "M3",
+     "witness": {
+      "form": "pinnedReceiptIdentity",
+      "hit": true
+     }
+    },
+    {
+     "id": "M4",
+     "witness": {
+      "form": "pinned_receipt_identity",
+      "hit": true
+     }
+    },
+    {
+     "id": "M5",
+     "witness": {
+      "form": "the pinned receipt identities",
+      "hit": true
+     }
+    },
+    {
+     "id": "M6",
+     "witness": {
+      "form": "FederatedPublication",
+      "hit": true
+     }
+    },
+    {
+     "id": "M7",
+     "witness": {
+      "form": "federated_publication",
+      "hit": true
+     }
+    },
+    {
+     "id": "M8",
+     "witness": {
+      "form": "a federation publication",
+      "hit": true
+     }
+    },
+    {
+     "id": "Q1",
+     "witness": {
+      "form": "RF_FEDERATION<U+200B>_PIN_CHANGED",
+      "hit": false
+     }
+    },
+    {
+     "id": "Q2",
+     "witness": {
+      "form": "pinn<U+0435>dReceiptIdentity",
+      "hit": false
+     }
+    },
+    {
+     "id": "Q3",
+     "witness": {
+      "form": "const code = \"RF_FEDERATION_\" + \"PIN_CHANGED\";",
+      "hit": false
+     }
+    }
+   ]
+  }
+ ]
+}

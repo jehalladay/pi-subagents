@@ -1,0 +1,502 @@
+{
+  "census": "test/workbench-gp-real-interfaces.test.ts",
+  "bead": "wb-1xvp.2",
+  "rows": [
+    {
+      "id": "GP-1",
+      "label": "real interfaces",
+      "pins": [
+        {
+          "id": "a1",
+          "clause": "every gp call site reaches gp through the gp binary, the GraphPolicyCLI package or `gp rpc --stdio`",
+          "falsifiers": [
+            {
+              "name": "an unregistered module launches gp",
+              "expected": [
+                "GP-1/a1 src/workbench/gp-shortcut.ts gp-call-site-outside-client"
+              ]
+            },
+            {
+              "name": "an unregistered module runs the GraphPolicyCLI package through npx",
+              "expected": [
+                "GP-1/a1 src/workbench/gp-npx.ts gp-call-site-outside-client"
+              ]
+            },
+            {
+              "name": "a registered client reaches gp through no real interface",
+              "expected": [
+                "GP-1/a1 src/workbench/providers/graphpolicy.ts client-reaches-gp-through-no-real-interface"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "a2",
+          "clause": "no decision-path argv carries `train`",
+          "falsifiers": [
+            {
+              "name": "the client's gp argv carries train",
+              "expected": [
+                "GP-1/a2 src/workbench/providers/graphpolicy.ts train-on-decision-path"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "a3",
+          "clause": "an admission seam imports no training or telemetry writer",
+          "falsifiers": [
+            {
+              "name": "the admission seam imports the telemetry writer",
+              "expected": [
+                "GP-1/a3 src/workbench/gp-admission.ts admission-imports-telemetry-writer"
+              ]
+            },
+            {
+              "name": "the admission seam imports a training framework",
+              "expected": [
+                "GP-1/a3 src/workbench/gp-admission.ts admission-imports-training-writer"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "a4",
+          "clause": "no execution seam imports a gp client",
+          "falsifiers": [
+            {
+              "name": "the decision module launches a workflow host",
+              "expected": [
+                "GP-1/a4 src/workbench/gp-decision.ts execution-imports-gp-client"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "GP-2",
+      "label": "no local numerics",
+      "pins": [
+        {
+          "id": "b1",
+          "clause": "no module outside a gp client names GraphDataIR or GraphPolicyCLI wire vocabulary",
+          "falsifiers": [
+            {
+              "name": "an unregistered module scores a GraphDataIR document",
+              "expected": [
+                "GP-2/b1 src/workbench/gp-score.ts gp-vocabulary-outside-client"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "b2",
+          "clause": "a gp client maps the GP_CLI_UNKNOWN_COMMAND refusal to a typed refusal, never a local substitute",
+          "falsifiers": [
+            {
+              "name": "the client drops its unknown-command mapping",
+              "expected": [
+                "GP-2/b2 src/workbench/providers/graphpolicy.ts unknown-command-unmapped"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "GP-3",
+      "label": "no unrelated dependency",
+      "pins": [
+        {
+          "id": "c1",
+          "clause": "a decision path imports no package beyond the GraphPolicyCLI package and Node built-ins",
+          "falsifiers": [
+            {
+              "name": "the client imports an unrelated package",
+              "expected": [
+                "GP-3/c1 src/workbench/providers/graphpolicy.ts imports-nanoid"
+              ]
+            },
+            {
+              "name": "the client loads a package by a computed name",
+              "expected": [
+                "GP-3/c1 src/workbench/providers/graphpolicy.ts dynamic-load-on-decision-path"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "c2",
+          "clause": "the dependency manifest declares no training framework and no GraphPolicyCLI package other than graph-policy-cli",
+          "falsifiers": [
+            {
+              "name": "the manifest declares a training framework",
+              "expected": [
+                "GP-3/c2 package.json training-framework-@tensorflow/tfjs-node"
+              ]
+            },
+            {
+              "name": "the manifest declares a GraphPolicyCLI fork",
+              "expected": [
+                "GP-3/c2 package.json gp-package-graphpolicy-fork"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "GP-4",
+      "label": "lifecycle only",
+      "pins": [
+        {
+          "id": "d1",
+          "clause": "a gp-adjacent module calls no process.kill",
+          "falsifiers": [
+            {
+              "name": "the decision module kills a worker",
+              "expected": [
+                "GP-1/a4 src/workbench/gp-decision.ts execution-imports-gp-client",
+                "GP-4/d1 src/workbench/gp-decision.ts process-kill"
+              ]
+            },
+            {
+              "name": "the decision module destructures kill from process",
+              "expected": [
+                "GP-1/a4 src/workbench/gp-decision.ts execution-imports-gp-client",
+                "GP-4/d1 src/workbench/gp-decision.ts process-kill"
+              ]
+            },
+            {
+              "name": "the decision module imports kill from node:process",
+              "expected": [
+                "GP-1/a4 src/workbench/gp-decision.ts execution-imports-gp-client",
+                "GP-4/d1 src/workbench/gp-decision.ts process-kill"
+              ]
+            },
+            {
+              "name": "the decision module kills through a default import of node:process",
+              "expected": [
+                "GP-1/a4 src/workbench/gp-decision.ts execution-imports-gp-client",
+                "GP-4/d1 src/workbench/gp-decision.ts process-kill"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "d2",
+          "clause": "a gp-adjacent module writes nothing through bd",
+          "falsifiers": [
+            {
+              "name": "the decision module closes a bead",
+              "expected": [
+                "GP-1/a4 src/workbench/gp-decision.ts execution-imports-gp-client",
+                "GP-4/d2 src/workbench/gp-decision.ts bd-write"
+              ]
+            },
+            {
+              "name": "the decision module closes a bead through a templated shell command",
+              "expected": [
+                "GP-1/a4 src/workbench/gp-decision.ts execution-imports-gp-client",
+                "GP-4/d2 src/workbench/gp-decision.ts bd-write"
+              ]
+            },
+            {
+              "name": "the decision module closes a bead through a shell command",
+              "expected": [
+                "GP-1/a4 src/workbench/gp-decision.ts execution-imports-gp-client",
+                "GP-4/d2 src/workbench/gp-decision.ts bd-write"
+              ]
+            },
+            {
+              "name": "the decision module closes a bead behind an environment assignment",
+              "expected": [
+                "GP-1/a4 src/workbench/gp-decision.ts execution-imports-gp-client",
+                "GP-4/d2 src/workbench/gp-decision.ts bd-write"
+              ]
+            },
+            {
+              "name": "the decision module closes a bead through sh -c",
+              "expected": [
+                "GP-1/a4 src/workbench/gp-decision.ts execution-imports-gp-client",
+                "GP-4/d2 src/workbench/gp-decision.ts bd-write"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "d3",
+          "clause": "a gp-adjacent module stops no Furnace Run or Attempt",
+          "falsifiers": [
+            {
+              "name": "the decision module stops an Attempt itself",
+              "expected": [
+                "GP-1/a4 src/workbench/gp-decision.ts execution-imports-gp-client",
+                "GP-4/d3 src/workbench/gp-decision.ts furnace-stop"
+              ]
+            },
+            {
+              "name": "the decision module stops a Run through its handle",
+              "expected": [
+                "GP-1/a4 src/workbench/gp-decision.ts execution-imports-gp-client",
+                "GP-4/d3 src/workbench/gp-decision.ts furnace-stop"
+              ]
+            },
+            {
+              "name": "the decision module stops a Run by element access",
+              "expected": [
+                "GP-1/a4 src/workbench/gp-decision.ts execution-imports-gp-client",
+                "GP-4/d3 src/workbench/gp-decision.ts furnace-stop"
+              ]
+            },
+            {
+              "name": "the decision module stops a Run through a bound stop owner",
+              "expected": [
+                "GP-1/a4 src/workbench/gp-decision.ts execution-imports-gp-client",
+                "GP-4/d3 src/workbench/gp-decision.ts furnace-stop"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "residuals": [
+    {
+      "id": "UNNAMED-NUMERICS",
+      "family": "a module that scores graph data without naming gp vocabulary"
+    },
+    {
+      "id": "LOCAL-SUBSTITUTE",
+      "family": "a client that names the refusal and then computes locally"
+    },
+    {
+      "id": "COMPUTED-BINARY",
+      "family": "a gp binary name assembled at run time"
+    },
+    {
+      "id": "DYNAMIC-ARGV",
+      "family": "a train verb assembled at run time"
+    },
+    {
+      "id": "ALIASED-EFFECT",
+      "family": "a kill, a Furnace stop or a launcher reached through a value the census does not follow: a parameter, an assignment after the declaration, an object property or a return value"
+    },
+    {
+      "id": "TRAINING-FRAMEWORK-ROSTER",
+      "family": "a training framework outside the census deny roster that no decision path imports"
+    },
+    {
+      "id": "WRAPPED-COMMAND",
+      "family": "a launch wrapped by a program the census does not unwrap, such as timeout, sudo, nice or xargs"
+    },
+    {
+      "id": "FOREIGN-LAUNCHER",
+      "family": "a launch through a package launcher outside the child_process roster, such as execa"
+    }
+  ],
+  "detectors": [
+    {
+      "key": "specifiers",
+      "member": "every module specifier - side-effect, type-only and value imports, export-from, import-equals, import types, literal import() and require() - and which of them load at run time",
+      "probe": "00c9940e934324936477c4fa665e39e6678814c8a3e680d2e166b868a4d102a9"
+    },
+    {
+      "key": "launchers",
+      "member": "every child_process launcher by name: spawn, spawnSync, execFile, execFileSync, exec, execSync, fork",
+      "probe": "02497a67e4ccfbe8fa1cb814ea1a37472760674259ce0a94fa4e8a989a90a384"
+    },
+    {
+      "key": "launcher-bindings",
+      "member": "a launcher through a renamed import, a member bound to a variable, a destructured member and a namespace member",
+      "probe": "600c2b976d6af053f0166388a2651c59cc91e27be384898489554965ce06874b"
+    },
+    {
+      "key": "binary-resolution",
+      "member": "a launched binary named by a same-file string constant, and execPath read on process or on a binding of it",
+      "probe": "c1922bab8c9bbb76d9d5bbf89880409e04840f4cc1701bbdaabdc504e240dcff"
+    },
+    {
+      "key": "argv-arrays",
+      "member": "an argv array naming a roster binary first (gp, bd, furnace, kill, pkill, killall, sh, bash, zsh, dash, ksh), a shell's -c script followed",
+      "probe": "1c56139d66283773204a2664d41eeaccff6a58441b5bfde11b9e1f881730d08a"
+    },
+    {
+      "key": "shell-lines",
+      "member": "a shell command line split into simple commands: NAME=value assignments and an env prefix skipped, ; & | and newlines split, quotes removed",
+      "probe": "a65b89ad8038a58750b513a3e6cc40420502810ca76e1c89b793bf261a0d04a6"
+    },
+    {
+      "key": "shell-c-scripts",
+      "member": "a shell's -c script in a launcher's argv, a -c flag cluster, a templated script's static head and a script nested in a script",
+      "probe": "364782578a47a04b6608aa5961a27b51ccc8ef2b515809bcd8bd9e21d6733f32"
+    },
+    {
+      "key": "shell-heads",
+      "member": "a templated shell line's static head, and a launcher's whitespace-bearing command (shell: true)",
+      "probe": "b70907aa9e02e1a6712ddd7bb5b0c57743e1f9396caf3a0f843a31ee409e82a9"
+    },
+    {
+      "key": "kill-accesses",
+      "member": "process.kill read on process, globalThis.process, globalThis['process'], by element access and through a type assertion",
+      "probe": "2a48cd603cd4b88d0bdc69d0d0163952f1b582efe04eb29c0e2ce1e7cf70ec50"
+    },
+    {
+      "key": "kill-bindings",
+      "member": "kill named by an import from the process module (renamed included) or destructured from process or a require of it",
+      "probe": "9f499a4b28389fbc4df9f2376dcf58300c962d03d32088ac3745c27764ee0fd0"
+    },
+    {
+      "key": "process-bindings",
+      "member": "kill on a binding of the process object: a default, namespace or import-equals import, a require, a variable alias (chains followed to a fixpoint, in any order)",
+      "probe": "ff76efc2e62f54e2d5f99eeae2600fa3753a5eb2edaf7d474ff0a7cb3f3d4b95"
+    },
+    {
+      "key": "stop-owners",
+      "member": "stop on every Furnace stop owner: runs, attempts, supervision, host",
+      "probe": "f03e453b890ba87713850ffb99de3bcf10873a9cf1692d400d19534747be2fe6"
+    },
+    {
+      "key": "stop-forms",
+      "member": "stop by element access, on an owner by element access, through an owner bound to a variable or destructured, and stop destructured from an owner",
+      "probe": "93dd7b982821f67bd3a9ccbc2438fdaaab28b34fb2f72a954f64d161563ed3db"
+    },
+    {
+      "key": "stop-handles",
+      "member": "stop on a Run or Attempt handle by name (run, runX, attempt, attemptX, xRun, xAttempt) or bound to a variable",
+      "probe": "9f29de5f13793a16c13050f48817b470db2789e490744e1c81d92ff67ca14bf6"
+    },
+    {
+      "key": "bd-read-verbs",
+      "member": "every bd read verb reads: show, list, ready, blocked, search, stats, status, count, info, where, version, help, graph, doctor",
+      "probe": "9243acf0016f5bd720021fad0772f1d7052c2443c3cf47a97ac7bdba129ce8b5"
+    },
+    {
+      "key": "bd-write-verbs",
+      "member": "a bd launch writes when its verb is not a read verb, or is not a literal",
+      "probe": "f69a06d50e55e69acbf2b625f2289e8f226c885eb1cb972b6bc436ad3ad67d9a"
+    },
+    {
+      "key": "agent-session",
+      "member": "every Agent SDK session function by named and renamed import, and a session function read on a namespace import",
+      "probe": "4cc56f17a9e3539f4e2e89bc8977d12c9d0cfd86daa5445749449bab4386cb0f"
+    },
+    {
+      "key": "worker",
+      "member": "a workflow host launched as a Worker, bare or as a namespace member",
+      "probe": "7b26525b4d7fae02420ab4b1da19ec72bef26cfc49c0811676c643b2231da2e3"
+    },
+    {
+      "key": "gp-binary",
+      "member": "the gp binary as a string token: bare gp, an absolute path, gp.exe and gp.cmd",
+      "probe": "3a76fa9e2052c4efb73cc3aa1fda13e351e8444ac2a8b327a4c6c37104e139b1"
+    },
+    {
+      "key": "gp-package-launch",
+      "member": "gp launched through the GraphPolicyCLI package: npx graph-policy-cli and node with the package's entry",
+      "probe": "ba313f07389bfe0440efc1f9fa965f0dcc0dd27989fdbf13b1b84a1954aef72a"
+    },
+    {
+      "key": "gp-vocabulary",
+      "member": "gp wire vocabulary in code tokens: GraphDataIR, a graphpolicy.<surface>.v<n> schema id, GP_RPC_ and GP_CLI_ codes",
+      "probe": "72b5a80c6fb1260c26870f26e8fe27263141536044dcf86ca98eb4e0b24a074c"
+    },
+    {
+      "key": "unknown-command",
+      "member": "the GP_CLI_UNKNOWN_COMMAND refusal code named",
+      "probe": "baabeff4555cc70117ba4ed86f5ac9edeed312a1773f84655185d376955753ff"
+    },
+    {
+      "key": "train-word",
+      "member": "the train word in a string token, alone or inside a command line",
+      "probe": "5302e6dfe4a04c7a173adc5a9563b76d75454d9d52513e207adedfb571ee8f44"
+    },
+    {
+      "key": "dynamic-load",
+      "member": "import() and require() of a computed specifier",
+      "probe": "c86e512c828c8372c8e99ec9ed739af065f9a26e30f8f757b5e38adbc0c2435b"
+    },
+    {
+      "key": "gp-family",
+      "member": "a GraphPolicyCLI family name in a module specifier and in an identifier",
+      "probe": "fbfc0899f384442b96d36df00dbdc50f114f2be0cf9c2106ec704574d6e4b103"
+    }
+  ],
+  "registered": [
+    "R0: the census reads every src module (an independent recursive listing agrees)",
+    "R0: the live gp roster is empty - no gp binary, GraphPolicyCLI name or specifier, gp vocabulary or unknown-command name in any src module, none in package.json, no gp seam registered (frozen)",
+    "R0: the live tree judges clean under every pin",
+    "R0: the census is not blind on the live tree - it sees the known launch, kill, stop, agent-session and host-launch sites and the real manifest",
+    "S: the census tables keep their frozen shape - rule rows, pins and falsifier counts, residual ids, detector keys, and every pin has a falsifier (rule 16)",
+    "S: the census tables equal the out-of-file roster - every rule row, pin, clause and falsifier expectation, every residual, every detector member and the SHA-256 of its probe",
+    "D: docs/03 renders the GraphPolicyCLI boundary section exactly as the census pins it - its level-2 heading once, under the page title, HTML-free, block for block: the definitions, the four rules clause for clause, the residual line (the anchor outside this census)",
+    "D: docs/03 names every residual this census pins quiet, family for family, in the rendered section",
+    "D: the docs/03 ownership table names GraphPolicyCLI in exactly the pinned row, read from that section's own table, and the boundary section's definitions cite the bead, its source line and this census",
+    "F: a compliant gp integration judges clean - the rules admit a real-interface seam rather than banning gp",
+    "F: comments are not code - every detector reads the same census with gp, train, shell and effect words added in comments",
+    "F: the detectors are precise - near-miss tokens report nothing, module specifiers included",
+    "M: the manifest check reads every dependency section, for training frameworks and GraphPolicyCLI forks alike",
+    "M: the training deny roster refuses one probe name per member and no near miss",
+    "F: GP-1/a1 an unregistered module launches gp is named by exactly the expected pin(s)",
+    "F: GP-1/a1 an unregistered module runs the GraphPolicyCLI package through npx is named by exactly the expected pin(s)",
+    "F: GP-1/a1 a registered client reaches gp through no real interface is named by exactly the expected pin(s)",
+    "F: GP-1/a2 the client's gp argv carries train is named by exactly the expected pin(s)",
+    "F: GP-1/a3 the admission seam imports the telemetry writer is named by exactly the expected pin(s)",
+    "F: GP-1/a3 the admission seam imports a training framework is named by exactly the expected pin(s)",
+    "F: GP-1/a4 the decision module launches a workflow host is named by exactly the expected pin(s)",
+    "F: GP-2/b1 an unregistered module scores a GraphDataIR document is named by exactly the expected pin(s)",
+    "F: GP-2/b2 the client drops its unknown-command mapping is named by exactly the expected pin(s)",
+    "F: GP-3/c1 the client imports an unrelated package is named by exactly the expected pin(s)",
+    "F: GP-3/c1 the client loads a package by a computed name is named by exactly the expected pin(s)",
+    "F: GP-3/c2 the manifest declares a training framework is named by exactly the expected pin(s)",
+    "F: GP-3/c2 the manifest declares a GraphPolicyCLI fork is named by exactly the expected pin(s)",
+    "F: GP-4/d1 the decision module kills a worker is named by exactly the expected pin(s)",
+    "F: GP-4/d1 the decision module destructures kill from process is named by exactly the expected pin(s)",
+    "F: GP-4/d1 the decision module imports kill from node:process is named by exactly the expected pin(s)",
+    "F: GP-4/d1 the decision module kills through a default import of node:process is named by exactly the expected pin(s)",
+    "F: GP-4/d2 the decision module closes a bead is named by exactly the expected pin(s)",
+    "F: GP-4/d2 the decision module closes a bead through a templated shell command is named by exactly the expected pin(s)",
+    "F: GP-4/d2 the decision module closes a bead through a shell command is named by exactly the expected pin(s)",
+    "F: GP-4/d2 the decision module closes a bead behind an environment assignment is named by exactly the expected pin(s)",
+    "F: GP-4/d2 the decision module closes a bead through sh -c is named by exactly the expected pin(s)",
+    "F: GP-4/d3 the decision module stops an Attempt itself is named by exactly the expected pin(s)",
+    "F: GP-4/d3 the decision module stops a Run through its handle is named by exactly the expected pin(s)",
+    "F: GP-4/d3 the decision module stops a Run by element access is named by exactly the expected pin(s)",
+    "F: GP-4/d3 the decision module stops a Run through a bound stop owner is named by exactly the expected pin(s)",
+    "Q: named residual UNNAMED-NUMERICS stays quiet (the pinned blind spot of a token census)",
+    "Q: named residual LOCAL-SUBSTITUTE stays quiet (the pinned blind spot of a token census)",
+    "Q: named residual COMPUTED-BINARY stays quiet (the pinned blind spot of a token census)",
+    "Q: named residual DYNAMIC-ARGV stays quiet (the pinned blind spot of a token census)",
+    "Q: named residual ALIASED-EFFECT stays quiet (the pinned blind spot of a token census)",
+    "Q: named residual TRAINING-FRAMEWORK-ROSTER stays quiet (the pinned blind spot of a token census)",
+    "Q: named residual WRAPPED-COMMAND stays quiet (the pinned blind spot of a token census)",
+    "Q: named residual FOREIGN-LAUNCHER stays quiet (the pinned blind spot of a token census)",
+    "DT: detector specifiers is live on its probe (the exact census signature)",
+    "DT: detector launchers is live on its probe (the exact census signature)",
+    "DT: detector launcher-bindings is live on its probe (the exact census signature)",
+    "DT: detector binary-resolution is live on its probe (the exact census signature)",
+    "DT: detector argv-arrays is live on its probe (the exact census signature)",
+    "DT: detector shell-lines is live on its probe (the exact census signature)",
+    "DT: detector shell-c-scripts is live on its probe (the exact census signature)",
+    "DT: detector shell-heads is live on its probe (the exact census signature)",
+    "DT: detector kill-accesses is live on its probe (the exact census signature)",
+    "DT: detector kill-bindings is live on its probe (the exact census signature)",
+    "DT: detector process-bindings is live on its probe (the exact census signature)",
+    "DT: detector stop-owners is live on its probe (the exact census signature)",
+    "DT: detector stop-forms is live on its probe (the exact census signature)",
+    "DT: detector stop-handles is live on its probe (the exact census signature)",
+    "DT: detector bd-read-verbs is live on its probe (the exact census signature)",
+    "DT: detector bd-write-verbs is live on its probe (the exact census signature)",
+    "DT: detector agent-session is live on its probe (the exact census signature)",
+    "DT: detector worker is live on its probe (the exact census signature)",
+    "DT: detector gp-binary is live on its probe (the exact census signature)",
+    "DT: detector gp-package-launch is live on its probe (the exact census signature)",
+    "DT: detector gp-vocabulary is live on its probe (the exact census signature)",
+    "DT: detector unknown-command is live on its probe (the exact census signature)",
+    "DT: detector train-word is live on its probe (the exact census signature)",
+    "DT: detector dynamic-load is live on its probe (the exact census signature)",
+    "DT: detector gp-family is live on its probe (the exact census signature)",
+    "L: each-liveness (rule 16, U5) - every case of this file is set to run, the case count is frozen, each case is registered as the out-of-file roster lists it, each it.each registers exactly its frozen keys, every registered case reached its last assertion, and this tally is the file's last case"
+  ]
+}

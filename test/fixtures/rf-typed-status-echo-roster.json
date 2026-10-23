@@ -1,0 +1,715 @@
+{
+  "bead": "wb-o4h0.7",
+  "rfVersion": "0.1.832",
+  "measuredAt": "2026-10-22, read-only from the installed rf package (reactive_fiber_cli)",
+  "producer": {
+    "publicStates": "domain/federation_boundary.py:29",
+    "boundaryRules": "domain/federation_boundary.py:103-113",
+    "verdicts": "domain/query_view.py:112",
+    "availabilities": "domain/query_view.py:118",
+    "witnessFields": "domain/query_view.py:181",
+    "observationStatuses": "domain/observation.py:80-96",
+    "valueStatuses": "domain/observation.py:100",
+    "statusCodes": "integrations/lens_observations.py:155",
+    "degradedStatuses": "schemas/cli/context.render.schema.json:1511",
+    "noValueStatuses": "schemas/cli/context.render.schema.json:1462",
+    "queryViewRef": "schemas/workspace/query-view-ref.schema.json ($id reactive-fiber.query-view-ref/v1)",
+    "revocationSpellings": "0 .py files match revok|revocation"
+  },
+  "vocabularies": {
+    "observationStatuses": [
+      "observed",
+      "missing",
+      "null",
+      "suppressed",
+      "invalid",
+      "timeout",
+      "nonzero",
+      "truncated",
+      "denied"
+    ],
+    "valueStatuses": [
+      "observed",
+      "null"
+    ],
+    "degradedStatuses": [
+      "missing",
+      "invalid",
+      "timeout",
+      "nonzero",
+      "truncated",
+      "denied"
+    ],
+    "noValueStatuses": [
+      "missing",
+      "timeout",
+      "denied"
+    ],
+    "statusCodes": {
+      "observed": null,
+      "missing": "RF_OBSERVATION_MISSING",
+      "null": "RF_OBSERVATION_NULL",
+      "suppressed": "RF_OBSERVATION_SUPPRESSED",
+      "invalid": "RF_OBSERVATION_INVALID",
+      "timeout": "RF_OBSERVATION_TIMEOUT",
+      "nonzero": "RF_OBSERVATION_NONZERO",
+      "truncated": "RF_OBSERVATION_TRUNCATED",
+      "denied": "RF_OBSERVATION_DENIED"
+    },
+    "publicStates": [
+      "ABSENT",
+      "VALUE",
+      "PENDING",
+      "SUPPRESSED",
+      "FAILED"
+    ],
+    "verdicts": [
+      "TRUE",
+      "FALSE",
+      "UNKNOWN"
+    ],
+    "availabilities": [
+      "READY",
+      "PENDING",
+      "UNAVAILABLE"
+    ],
+    "witnessFields": [
+      "witness_digest",
+      "manifest_digest"
+    ]
+  },
+  "federationMatchers": [
+    "\\bpublication[\\s_-]?state\\b",
+    "\\bpublic[\\s_-]?state\\b",
+    "\\bwitness[\\s_-]?digest\\b",
+    "\\bcompleteness[\\s_-]?reason\\b",
+    "\\bmatched[\\s_-]?count\\b",
+    "\\bspec[\\s_-]?digest\\b",
+    "\\bresource[\\s_-]?revision\\b",
+    "\\bevidence[\\s_-]?digest\\b",
+    "\\bprovenance[\\s_-]?digest\\b",
+    "\\bquery[\\s_-]?views?\\b",
+    "\\bfederat"
+  ],
+  "absenceAllowlist": [
+    "0 authoritative storage writes (envelope storage_write_count)",
+    "0 reused",
+    "0 errors",
+    "0 warnings",
+    "necessity evals 0",
+    "no native interval supplied"
+  ],
+  "residuals": {
+    "R-UNLISTED": "Q1",
+    "R-TONE-CLASS": "Q2",
+    "R-NULL-AS-VALUE": "Q3",
+    "R-ADDITIVE-UNREAD": "Q4",
+    "R-COMPOSED-FIELD": "A1"
+  },
+  "rows": [
+    {
+      "id": "A",
+      "label": "(trigger, absent today) Pi reads no rf federation status record: no src module spells a federation boundary or query-view field, the rf roster stays reactivefiber.render.preview alone, and both readers refuse a federation record as an envelope",
+      "pins": [
+        {
+          "id": "A1",
+          "witness": {
+            "floorMet": true,
+            "anchorRead": true,
+            "hits": [],
+            "controls": {
+              "snake": 1,
+              "camel": 1,
+              "quoted": 1,
+              "destructured": 1,
+              "prose": 2,
+              "composed": 0
+            }
+          }
+        },
+        {
+          "id": "A2",
+          "witness": {
+            "native": [
+              "reactivefiber.render.preview"
+            ],
+            "injected": [
+              "reactivefiber.render.preview"
+            ],
+            "reconcile": [
+              "reactivefiber.render.preview"
+            ],
+            "controls": {
+              "prefix": true,
+              "permission": true,
+              "contract": true,
+              "foreign": false
+            }
+          }
+        },
+        {
+          "id": "A3",
+          "witness": {
+            "queryView": {
+              "category": "transport",
+              "message": "RF preview returned an unrecognized native envelope.",
+              "reading": false,
+              "spawns": 1,
+              "verb": [
+                "context",
+                "render"
+              ]
+            },
+            "boundary": {
+              "category": "transport",
+              "message": "RF preview returned an unrecognized native envelope.",
+              "reading": false,
+              "spawns": 1,
+              "verb": [
+                "context",
+                "render"
+              ]
+            }
+          }
+        },
+        {
+          "id": "A4",
+          "witness": {
+            "queryView": {
+              "category": "validation",
+              "message": "ReactiveFiber topology refused: source must be the strict eight-key rf envelope."
+            },
+            "boundary": {
+              "category": "validation",
+              "message": "ReactiveFiber topology refused: source must be the strict eight-key rf envelope."
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "(a) suppressed, failed, pending, unknown and value-with-null-payload fixtures render distinctly: every shipped row status keeps its own word in the registered, native and shared-sanitizer readings and its own projection, and PENDING, UNKNOWN and a reused (stale) row stay distinct tokens",
+      "pins": [
+        {
+          "id": "B1",
+          "witness": {
+            "rfVersion": "0.1.832",
+            "statuses": [
+              "observed",
+              "missing",
+              "null",
+              "suppressed",
+              "invalid",
+              "timeout",
+              "nonzero",
+              "truncated",
+              "denied"
+            ],
+            "rules": {
+              "keysHeld": true,
+              "valuesCarryDigest": true,
+              "missingCarriesNone": true,
+              "valuesNeverDegraded": true,
+              "codesPerTable": true
+            },
+            "fields": [
+              "observed|null|false|value",
+              "missing|RF_OBSERVATION_MISSING|true|no-value",
+              "null|RF_OBSERVATION_NULL|false|value",
+              "suppressed|RF_OBSERVATION_SUPPRESSED|false|value",
+              "invalid|RF_OBSERVATION_INVALID|true|value",
+              "timeout|RF_OBSERVATION_TIMEOUT|true|no-value",
+              "nonzero|RF_OBSERVATION_NONZERO|true|value",
+              "truncated|RF_OBSERVATION_TRUNCATED|true|value",
+              "denied|RF_OBSERVATION_DENIED|true|no-value"
+            ]
+          }
+        },
+        {
+          "id": "B2",
+          "witness": {
+            "readingKeys": [
+              "contract",
+              "source",
+              "workspaceRoot"
+            ],
+            "calls": 1,
+            "verbatim": true,
+            "fields": [
+              "observed|null|false|value",
+              "missing|RF_OBSERVATION_MISSING|true|no-value",
+              "null|RF_OBSERVATION_NULL|false|value",
+              "suppressed|RF_OBSERVATION_SUPPRESSED|false|value",
+              "invalid|RF_OBSERVATION_INVALID|true|value",
+              "timeout|RF_OBSERVATION_TIMEOUT|true|no-value",
+              "nonzero|RF_OBSERVATION_NONZERO|true|value",
+              "truncated|RF_OBSERVATION_TRUNCATED|true|value",
+              "denied|RF_OBSERVATION_DENIED|true|no-value"
+            ]
+          }
+        },
+        {
+          "id": "B3",
+          "witness": {
+            "spawns": 1,
+            "verb": [
+              "context",
+              "render"
+            ],
+            "verbatim": true,
+            "fields": [
+              "observed|null|false|value",
+              "missing|RF_OBSERVATION_MISSING|true|no-value",
+              "null|RF_OBSERVATION_NULL|false|value",
+              "suppressed|RF_OBSERVATION_SUPPRESSED|false|value",
+              "invalid|RF_OBSERVATION_INVALID|true|value",
+              "timeout|RF_OBSERVATION_TIMEOUT|true|no-value",
+              "nonzero|RF_OBSERVATION_NONZERO|true|value",
+              "truncated|RF_OBSERVATION_TRUNCATED|true|value",
+              "denied|RF_OBSERVATION_DENIED|true|no-value"
+            ]
+          }
+        },
+        {
+          "id": "B4",
+          "witness": {
+            "identical": true,
+            "fields": [
+              "observed|null|false|value",
+              "missing|RF_OBSERVATION_MISSING|true|no-value",
+              "null|RF_OBSERVATION_NULL|false|value",
+              "suppressed|RF_OBSERVATION_SUPPRESSED|false|value",
+              "invalid|RF_OBSERVATION_INVALID|true|value",
+              "timeout|RF_OBSERVATION_TIMEOUT|true|no-value",
+              "nonzero|RF_OBSERVATION_NONZERO|true|value",
+              "truncated|RF_OBSERVATION_TRUNCATED|true|value",
+              "denied|RF_OBSERVATION_DENIED|true|no-value",
+              "PENDING|null|false|value",
+              "UNKNOWN|null|false|value",
+              "SUPPRESSED|null|false|value",
+              "FAILED|null|false|value"
+            ]
+          }
+        },
+        {
+          "id": "B5",
+          "witness": {
+            "observed": {
+              "coverage": "complete",
+              "tone": "success",
+              "notes": [
+                "observations: 1 row, 0 reused"
+              ]
+            },
+            "missing": {
+              "coverage": "partial",
+              "tone": "unknown",
+              "notes": [
+                "observations: 1 row, 1 not observed (missing): partial"
+              ]
+            },
+            "null": {
+              "coverage": "complete",
+              "tone": "success",
+              "notes": [
+                "observations: 1 row, 0 reused"
+              ]
+            },
+            "suppressed": {
+              "coverage": "partial",
+              "tone": "unknown",
+              "notes": [
+                "observations: 1 row, 1 not observed (suppressed): partial"
+              ]
+            },
+            "invalid": {
+              "coverage": "partial",
+              "tone": "unknown",
+              "notes": [
+                "observations: 1 row, 1 not observed (invalid): partial"
+              ]
+            },
+            "timeout": {
+              "coverage": "partial",
+              "tone": "unknown",
+              "notes": [
+                "observations: 1 row, 1 not observed (timeout): partial"
+              ]
+            },
+            "nonzero": {
+              "coverage": "partial",
+              "tone": "unknown",
+              "notes": [
+                "observations: 1 row, 1 not observed (nonzero): partial"
+              ]
+            },
+            "truncated": {
+              "coverage": "partial",
+              "tone": "unknown",
+              "notes": [
+                "observations: 1 row, 1 not observed (truncated): partial"
+              ]
+            },
+            "denied": {
+              "coverage": "partial",
+              "tone": "unknown",
+              "notes": [
+                "observations: 1 row, 1 not observed (denied): partial"
+              ]
+            }
+          }
+        },
+        {
+          "id": "B6",
+          "witness": {
+            "together": {
+              "coverage": "partial",
+              "tone": "unknown",
+              "notes": [
+                "observations: 4 rows, 4 not observed (PENDING, UNKNOWN, SUPPRESSED, FAILED): partial"
+              ]
+            },
+            "alone": {
+              "PENDING": [
+                "observations: 1 row, 1 not observed (PENDING): partial"
+              ],
+              "UNKNOWN": [
+                "observations: 1 row, 1 not observed (UNKNOWN): partial"
+              ],
+              "SUPPRESSED": [
+                "observations: 1 row, 1 not observed (SUPPRESSED): partial"
+              ],
+              "FAILED": [
+                "observations: 1 row, 1 not observed (FAILED): partial"
+              ]
+            },
+            "stale": [
+              "observations: 1 row, 1 reused: partial"
+            ],
+            "readingStatuses": [
+              "PENDING",
+              "UNKNOWN",
+              "SUPPRESSED",
+              "FAILED"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "(b) no typed failure, denial or revocation coalesces to empty or null: every not-observed row is counted and demotes, value rows never absorb one, an rf refusal stays a typed refusal naming its code, and an unshipped or emptied word is echoed and counted, never dropped",
+      "pins": [
+        {
+          "id": "C1",
+          "witness": {
+            "statuses": [
+              "missing",
+              "suppressed",
+              "invalid",
+              "timeout",
+              "nonzero",
+              "truncated",
+              "denied"
+            ],
+            "shape": {
+              "coverage": "partial",
+              "tone": "unknown",
+              "notes": [
+                "observations: 7 rows, 7 not observed (missing, suppressed, invalid, timeout, …): partial"
+              ]
+            }
+          }
+        },
+        {
+          "id": "C2",
+          "witness": {
+            "notes": {
+              "missing": "observations: 3 rows, 1 not observed (missing): partial",
+              "suppressed": "observations: 3 rows, 1 not observed (suppressed): partial",
+              "invalid": "observations: 3 rows, 1 not observed (invalid): partial",
+              "timeout": "observations: 3 rows, 1 not observed (timeout): partial",
+              "nonzero": "observations: 3 rows, 1 not observed (nonzero): partial",
+              "truncated": "observations: 3 rows, 1 not observed (truncated): partial",
+              "denied": "observations: 3 rows, 1 not observed (denied): partial"
+            },
+            "unflagged": [
+              "missing",
+              "suppressed",
+              "invalid",
+              "timeout",
+              "nonzero",
+              "truncated",
+              "denied"
+            ],
+            "values": {
+              "coverage": "complete",
+              "tone": "success",
+              "notes": [
+                "observations: 2 rows, 0 reused"
+              ]
+            }
+          }
+        },
+        {
+          "id": "C3",
+          "witness": {
+            "native": {
+              "category": "unavailable",
+              "message": "RF render refused: RF_OBSERVATION_DENIED",
+              "reading": false,
+              "spawns": 1
+            },
+            "projection": {
+              "coverage": "unknown",
+              "tone": "failure",
+              "statusText": "refused · RF_OBSERVATION_DENIED",
+              "evidenceRefs": [
+                "rf-workspace:rfw_aaaaaaaaaaaaaaaaaaaaaa"
+              ],
+              "carriesValue": false
+            }
+          }
+        },
+        {
+          "id": "C4",
+          "witness": {
+            "revoked": {
+              "coverage": "partial",
+              "tone": "unknown",
+              "notes": [
+                "observations: 1 row, 1 not observed (revoked): partial"
+              ]
+            },
+            "emptied": {
+              "coverage": "partial",
+              "tone": "unknown",
+              "notes": [
+                "observations: 1 row, 1 not observed (…): partial"
+              ]
+            },
+            "readingStatuses": [
+              "revoked",
+              ""
+            ],
+            "spawns": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "D",
+      "label": "(c) and (d) zero rows without a coverage witness never render an absence claim: an empty or absent observation list adds no note, a constructed query view's UNKNOWN, witnessed FALSE and PENDING ride every reading verbatim, and no surfaced string asserts absence beyond the producer-backed counts",
+      "pins": [
+        {
+          "id": "D1",
+          "witness": {
+            "notes": [],
+            "identical": true,
+            "shape": {
+              "coverage": "complete",
+              "tone": "success",
+              "notes": []
+            },
+            "residue": [],
+            "readingRows": 0
+          }
+        },
+        {
+          "id": "D2",
+          "witness": {
+            "injected": [
+              "READY|UNKNOWN|0|no-witness",
+              "READY|FALSE|0|witness",
+              "PENDING|null|null|no-witness"
+            ],
+            "native": [
+              "READY|UNKNOWN|0|no-witness",
+              "READY|FALSE|0|witness",
+              "PENDING|null|null|no-witness"
+            ],
+            "sanitized": [
+              "READY|UNKNOWN|0|no-witness",
+              "READY|FALSE|0|witness",
+              "PENDING|null|null|no-witness"
+            ]
+          }
+        },
+        {
+          "id": "D3",
+          "witness": {
+            "strings": true,
+            "phrases": [
+              "0 authoritative storage writes (envelope storage_write_count)",
+              "0 errors",
+              "0 reused",
+              "0 warnings",
+              "necessity evals 0",
+              "no native interval supplied"
+            ],
+            "residue": [],
+            "controls": {
+              "none": true,
+              "zeroRows": true,
+              "noRows": true,
+              "nothing": true,
+              "empty": true,
+              "absent": true
+            }
+          }
+        },
+        {
+          "id": "D4",
+          "witness": {
+            "hits": [
+              "src/ui/workflow-inspector.ts: No source observations for this invocation; no graph or timeline is inferred.",
+              "src/workbench/observation.ts: Observation <expr> is empty, unsafe or exceeds payload limit."
+            ],
+            "keyedOnPage": true,
+            "thrown": true,
+            "snapshots": [
+              "alone:observed:1",
+              "alone:missing:1",
+              "alone:null:1",
+              "alone:suppressed:1",
+              "alone:invalid:1",
+              "alone:timeout:1",
+              "alone:nonzero:1",
+              "alone:truncated:1",
+              "alone:denied:1",
+              "all-statuses:1",
+              "federation-words:1",
+              "alone:PENDING:1",
+              "alone:UNKNOWN:1",
+              "alone:SUPPRESSED:1",
+              "alone:FAILED:1",
+              "not-observed:1",
+              "beside-values:missing:1",
+              "beside-values:suppressed:1",
+              "beside-values:invalid:1",
+              "beside-values:timeout:1",
+              "beside-values:nonzero:1",
+              "beside-values:truncated:1",
+              "beside-values:denied:1",
+              "values:1",
+              "reused:1",
+              "revoked:1",
+              "emptied:1",
+              "empty-list:1",
+              "absent-list:1",
+              "query-views:1",
+              "boundary-record:1",
+              "refusal:1"
+            ],
+            "controls": {
+              "noObservations": true,
+              "none": true,
+              "empty": true,
+              "comment": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "Q",
+      "label": "residuals, each a pinned quiet row: R-UNLISTED (a fifth distinct word is unnamed), R-TONE-CLASS (demoting words share the node's partial class), R-NULL-AS-VALUE (a null value projects as a value) and R-ADDITIVE-UNREAD (a federation record on an additive key projects nothing)",
+      "pins": [
+        {
+          "id": "Q1",
+          "witness": {
+            "notes": [
+              "observations: 5 rows, 5 not observed (missing, suppressed, invalid, timeout, …): partial"
+            ],
+            "readings": {
+              "first": [
+                "missing",
+                "suppressed",
+                "invalid",
+                "timeout",
+                "denied"
+              ],
+              "second": [
+                "missing",
+                "suppressed",
+                "invalid",
+                "timeout",
+                "truncated"
+              ]
+            }
+          }
+        },
+        {
+          "id": "Q2",
+          "witness": {
+            "PENDING/UNKNOWN": {
+              "coverage": "partial",
+              "tone": "unknown",
+              "statusText": "noncommitted preview (rf-cli) · 989760 of 1000000 context tokens available · necessity evals 0 · 0 errors, 0 warnings",
+              "notes": [
+                "observations: 1 row, 1 not observed (PENDING): partial",
+                "observations: 1 row, 1 not observed (UNKNOWN): partial"
+              ]
+            },
+            "suppressed/denied": {
+              "coverage": "partial",
+              "tone": "unknown",
+              "statusText": "noncommitted preview (rf-cli) · 989760 of 1000000 context tokens available · necessity evals 0 · 0 errors, 0 warnings",
+              "notes": [
+                "observations: 1 row, 1 not observed (suppressed): partial",
+                "observations: 1 row, 1 not observed (denied): partial"
+              ]
+            }
+          }
+        },
+        {
+          "id": "Q3",
+          "witness": {
+            "identical": true,
+            "shape": {
+              "coverage": "complete",
+              "tone": "success",
+              "notes": [
+                "observations: 1 row, 0 reused"
+              ]
+            }
+          }
+        },
+        {
+          "id": "Q4",
+          "witness": {
+            "views": true,
+            "boundary": true
+          }
+        }
+      ]
+    }
+  ],
+  "tests": [
+    "the judged set: the frozen shape, the out-of-file roster and the cases agree",
+    "A1",
+    "A2",
+    "A3",
+    "A4",
+    "B1",
+    "B2",
+    "B3",
+    "B4",
+    "B5",
+    "B6",
+    "C1",
+    "C2",
+    "C3",
+    "C4",
+    "D1",
+    "D2",
+    "D3",
+    "D4",
+    "Q1",
+    "Q2",
+    "Q3",
+    "Q4",
+    "roster: every registered test, its run mode and every pin's reached record equal the roster, in order"
+  ]
+}
