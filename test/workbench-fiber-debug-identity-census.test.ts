@@ -52,20 +52,23 @@
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; the whole judged set - every row's id, label and
  * pins, every pin's witness, the constants, the vocabularies and the residual families and every registered test title - is held to
  * the out-of-file roster, whose producer facts anchor the constants outside this file, and the labels of rows A to C are held to the
- * bead's own acceptance text in the tracker export (.beads/issues.jsonl). The last case reads the vitest task tree (every registered
- * test, in roster order, in run mode, ran before it) and the set of pins that reached their witness. Not claimed: an edit of this
- * file and the roster together - the bead text anchors only the labels of rows A to C.
+ * bead's own acceptance text in its owner filing, the first paragraph of its notes in the tracker export (.beads/issues.jsonl). No
+ * case reads the whole notes: the lane appends a note after every cut and every gate and a ledger hop exports each one, so every
+ * reading of the export goes through the owner filing, which the append-only notes keep byte-stable (Q6 holds its own reading to an
+ * appended note). The last case reads the vitest task tree (every registered test, in roster order, in run mode, ran before it) and
+ * the set of pins that reached their witness. Not claimed: an edit of this file and the roster together - the bead text anchors
+ * only the labels of rows A to C.
  * RESIDUALS (named, each with its pinned quiet row): R-VOCABULARY a mapping reader reading only generic keys spells no vocabulary
  * token (Q1); R-PARAPHRASE a doc claim worded outside one family (no visual word, or no Fiber word) is not a coupled unit (Q2);
  * R-COMPOSED a token assembled from three or more parts at runtime is invisible to A3 (two-part joins are read: Q3); R-INTERRUPTED a
  * homoglyph letter, or two invisible splits, hides a token from A3 and C1 (Q4); R-UNIT a claim whose visual and Fiber words sit in
  * two block units (a heading and its paragraph, two list items) is not judged by C1 (Q5); R-SCOPE test/ and the tracker export lie
- * outside every scanned root, and both spell the vocabulary (Q6); R-STATED-EDGE relate() asks a witness only of ownership, so a
- * producer-stated dependency, causation or grouping edge from a debug ref to a FiberOptics ref is admitted on its source alone and
- * read authoritative - not an identity edge (no identity class exists), and no Pi producer states one (B3) (Q7); R-FOREIGN-READER
- * graph-view validates no kind, so a reader other than the session projection serving the claim row would draw an edge of class
- * identity; src hands graph-view, the slice and the agent's read only the session projection, whose one writer refuses the kind
- * (B1) (Q8).
+ * outside every scanned root, and both spell the vocabulary (Q6, reading the export through the owner filing alone); R-STATED-EDGE
+ * relate() asks a witness only of ownership, so a producer-stated dependency, causation or grouping edge from a debug ref to a
+ * FiberOptics ref is admitted on its source alone and read authoritative - not an identity edge (no identity class exists), and no
+ * Pi producer states one (B3) (Q7); R-FOREIGN-READER graph-view validates no kind, so a reader other than the session projection
+ * serving the claim row would draw an edge of class identity; src hands graph-view, the slice and the agent's read only the session
+ * projection, whose one writer refuses the kind (B1) (Q8).
  * SCOPE: C1's judge reads no negation or tense: a unit stating the prohibition reds too (OVER-READ, disclosed: no Pi doc couples the
  * families today, and a page that must will re-measure this census). The producer facts are measured at the pin; Pi vendors no
  * producer file, so a producer change is seen only when the roster is re-measured. The FiberOptics, React DevTools and screenshot
@@ -570,7 +573,7 @@ function srcFiles(): string[] {
   return filesBelow(join(REPO, "src")).filter(file => file.endsWith(".ts"));
 }
 
-/** The bead's own notes in the tracker export, the acceptance text rows A to C quote. */
+/** The bead's own notes in the tracker export; every case reads them through ownerFiling, never whole. */
 function beadNotes(): string {
   for (const line of textOf(join(REPO, ".beads", "issues.jsonl")).split("\n")) {
     if (!line.includes(`"id":"${BEAD}"`)) continue;
@@ -578,6 +581,14 @@ function beadNotes(): string {
     if (isObject(row) && row.id === BEAD && typeof row.notes === "string") return row.notes;
   }
   return "";
+}
+/** The bead's owner filing, the first paragraph of its notes and the acceptance text rows A to C quote. The lane appends every
+ * later note (the collect step's delivery note, the gate's notes) after it behind bd's newline separator and never rewrites it, so
+ * the append-only notes keep it byte-stable, while a reading of the whole notes changes at the first ledger hop that exports an
+ * appended note (the cut #1 refusal, U1). */
+function ownerFiling(notes: string): string {
+  const end = notes.indexOf("\n\n");
+  return (end < 0 ? notes : notes.slice(0, end)).trimEnd();
 }
 /** A row label's quoted acceptance text: the label without its leading clause tag. */
 function quoteOf(label: string): string {
@@ -827,11 +838,18 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   },
   Q6: async () => {
     const census = textOf(fileURLToPath(import.meta.url));
+    const notes = beadNotes();
+    const filingSpells = vocabularyIn(ownerFiling(notes));
+    // The lane appends to these notes after every cut and every gate (bd's newline separator) and a ledger hop exports them: the
+    // reading after an appended note, here one spelling every vocabulary token, behind either separator, is the reading before it.
+    const afterAppend = ["\n", "\n\n"].map(separator => vocabularyIn(ownerFiling(`${notes}${separator}${VOCABULARY.join(" ")}\n`)));
+    expect(afterAppend, "an appended note leaves the reading unchanged").toEqual([filingSpells, filingSpells]);
     return json({
       scanned: [...SCAN_ROOTS.map(scan => scan.root), "markdown outside test/"],
       skipped: [...DOC_SKIP].sort(),
       testSpells: vocabularyIn(census).length > 0,
-      beadsSpell: vocabularyIn(beadNotes()),
+      filingSpells,
+      afterAppend,
     });
   },
   Q7: async () => {
@@ -877,7 +895,9 @@ describe("wb-4nut.1 Fiber debug identity census (TSX-HARNESS2-REACTIVE-EVOLUTION
     for (const members of Object.values(RESIDUALS)) for (const member of members) expect(ROWS.flatMap(row => row.pins), `${member} is a judged pin`).toContain(member);
     const notes = beadNotes();
     expect(notes.length, `${BEAD}'s notes were read from the tracker export`).toBeGreaterThan(0);
-    for (const row of ROWS.filter(entry => entry.id !== "Q")) expect(notes, `row ${row.id} quotes the bead's acceptance`).toContain(quoteOf(row.label));
+    const filing = ownerFiling(notes);
+    expect(filing.startsWith("Owner filing ("), "the notes' first paragraph is the owner filing").toBe(true);
+    for (const row of ROWS.filter(entry => entry.id !== "Q")) expect(filing, `row ${row.id} quotes the owner filing's acceptance`).toContain(quoteOf(row.label));
   });
 
   for (const row of ROWS) {

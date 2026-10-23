@@ -1,5 +1,5 @@
 {
- "provenance": "wb-4nut.1 census roster, cut by ws-02 (run g10-work-s44) on trunk 9357bf4267252eb91b043dafeb28bf0157838eee, then trunk 7718651667d0fe6ea03a4d761cd0812bc18dc232 (landing 286) merged into the branch by fast-forward. Producer facts: read-only git show at the pins named below; pin witnesses: measured by test/workbench-fiber-debug-identity-census.test.ts on 9357bf4 plus the cut and re-read unchanged on 7718651 plus the cut, each reviewed against the bead's acceptance before it was written here.",
+ "provenance": "wb-4nut.1 census roster, cut by ws-02 (run g10-work-s44) on trunk 9357bf4267252eb91b043dafeb28bf0157838eee, then trunk 7718651667d0fe6ea03a4d761cd0812bc18dc232 (landing 286) merged into the branch by fast-forward. Producer facts: read-only git show at the pins named below; pin witnesses: measured by test/workbench-fiber-debug-identity-census.test.ts on 9357bf4 plus the cut and re-read unchanged on 7718651 plus the cut, each reviewed against the bead's acceptance before it was written here. Respin #1 (refusal #1, U1), re-cut by ws-03 (run g10-work-s58): trunk feebb63b9113d4b4b2046bcbe81b2679e7e0fdf7 (landing 301) merged into the branch; Q6 reads the tracker export through the bead's owner filing (the first paragraph of its notes, byte-stable under the append-only notes) instead of the whole notes, its witness key beadsSpell became filingSpells with the same nine tokens and afterAppend pins the same reading after an appended note that spells every vocabulary token, measured on feebb63 plus the cut, on the base export row of 7718651 and under appended notes.",
  "bead": "wb-4nut.1",
  "programPin": "76bbbffd9d4a419f972d6fefc8b7f9dc524df8df",
  "producer": {
@@ -782,7 +782,7 @@
        "test"
       ],
       "testSpells": true,
-      "beadsSpell": [
+      "filingSpells": [
        "debuggingid",
        "debugid",
        "fiberidentity",
@@ -792,6 +792,30 @@
        "reactfiber",
        "screenshot",
        "uielement"
+      ],
+      "afterAppend": [
+       [
+        "debuggingid",
+        "debugid",
+        "fiberidentity",
+        "fibermapping",
+        "fiberoptics",
+        "publicref",
+        "reactfiber",
+        "screenshot",
+        "uielement"
+       ],
+       [
+        "debuggingid",
+        "debugid",
+        "fiberidentity",
+        "fibermapping",
+        "fiberoptics",
+        "publicref",
+        "reactfiber",
+        "screenshot",
+        "uielement"
+       ]
       ]
      }
     },
