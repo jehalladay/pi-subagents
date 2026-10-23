@@ -1,0 +1,696 @@
+{
+  "bead": "wb-hs2j.2",
+  "provenance": "wb-hs2j.2 census roster (test/workbench-rf-context-read-structure-census.test.ts). statement, quote, citation, mergedQuote, mergedCitation and shipped are the owner filing's (bead row wb-hs2j.2 in .beads/issues.jsonl: its Full statement line, its Source line and the Merged clause of that line, and the Shipped sentence of its Gating artifacts line), re-read at ReactiveFiberCLI 6a251bf73af5 with git show on 2026-10-23 (02-swarm-usage-and-command-grammar.md:38 and :40; BEADS-2026-10-21.md:15-16). producer is MEASURED read-only on 2026-10-23: rfVersion and rfCommit are `rf --json --version` result.version and result.provenance.commit_id of the installed rf (2618c211be0d, a descendant of the program pin by git merge-base --is-ancestor); contextLeaves are its result.leaves paths under context. (all served); options are the bracketed flags of the usage line of `rf context show|diff|explain --help`, in usage order; the key lists are the packaged schemas/cli/context.render.schema.json $defs.result properties (with its blocks and components item properties), context.show.schema.json $defs.block properties and context.diff.schema.json $defs.result properties, sorted, each schema file's sha256 in schemaDigests; gatingBeads are the rfc-s24ro.3 and rfc-s24ro.4 rows of BEADS-2026-10-21.md at the pin (id, path:line, title cell). The scan lists blockFields, genericBlockFields, diffKeys and genericDiffKeys are derived from those key lists by the census (a field or key the render result does not carry, split into snake_case and one-word names). Every witness is the expected outcome of its pin's case at this cut.",
+  "statement": "[RF-REACTIVE-CONTEXT-ASSEMBLY-R2] No Pi consumer shall fabricate structure over rf context read envelopes: a component's block is read from attributed block records, never sentinel text regexed out of a full context-show envelope (adopt context show --block KEY when rfc-s24ro.3 ships; open, unshipped), and absent context diff keys are reported missing, never synthesized or rendered as constant fallbacks (adopt context diff --detail compact when rfc-s24ro.4 ships; open, unshipped) - pin docs/programs/reactive-context-assembly-2026-10-18/02-swarm-usage-and-command-grammar.md:38@6a251bf73af5",
+  "quote": "The consumer used text sentinel extraction rather than block attribution; this was its own workaround, with prospective spoof/format risk. Proposed computation: a **materialized component output query** `(render ID, component ID, occurrence key, audience)` whose return includes only the authorized attributed blocks and digest, not a speculative free-text grep.",
+  "citation": "docs/programs/reactive-context-assembly-2026-10-18/02-swarm-usage-and-command-grammar.md:38@6a251bf73af5",
+  "mergedQuote": "guessed five absent top-level keys and rendered a constant fallback",
+  "mergedCitation": "02-swarm-usage-and-command-grammar.md:40@6a251bf73af5",
+  "shipped": "Shipped: no; the full show/diff envelopes with attributed block records are shipped (02:38).",
+  "producer": {
+    "rfVersion": "0.1.832",
+    "rfCommit": "2618c211be0dbbb74ba10e965e2d3d1f0fb5903e",
+    "programPin": {
+      "repo": "ReactiveFiberCLI",
+      "sha": "6a251bf73af57c3a703caf6892dfe3015e06a481"
+    },
+    "contextLeaves": [
+      "context.render",
+      "context.show",
+      "context.explain",
+      "context.plan",
+      "context.diff",
+      "context.history",
+      "context.replay"
+    ],
+    "options": {
+      "context.show": [
+        "-h",
+        "--redact",
+        "--detail",
+        "--json",
+        "--format",
+        "--workspace",
+        "--actor",
+        "--no-input",
+        "--yes",
+        "--debug",
+        "--color",
+        "-v"
+      ],
+      "context.diff": [
+        "-h",
+        "--redact",
+        "--json",
+        "--workspace",
+        "--actor",
+        "--no-input",
+        "--yes",
+        "--debug",
+        "--color",
+        "-v"
+      ],
+      "context.explain": [
+        "-h",
+        "--block",
+        "--redact",
+        "--json",
+        "--workspace",
+        "--actor",
+        "--no-input",
+        "--yes",
+        "--debug",
+        "--color",
+        "-v"
+      ]
+    },
+    "gatingBeads": [
+      {
+        "id": "rfc-s24ro.3",
+        "site": "docs/programs/reactive-context-assembly-2026-10-18/BEADS-2026-10-21.md:15",
+        "title": "[RCA] context show --block KEY returns one block's content, digest, status and producer revision only"
+      },
+      {
+        "id": "rfc-s24ro.4",
+        "site": "docs/programs/reactive-context-assembly-2026-10-18/BEADS-2026-10-21.md:16",
+        "title": "[RCA] context diff --detail compact returns a bounded summary reconciling with the full diff counts"
+      }
+    ],
+    "renderResultKeys": [
+      "attempts",
+      "audience",
+      "blocks",
+      "budget",
+      "bundle_revision_id",
+      "commit_seq",
+      "components",
+      "counters",
+      "diagnostics_summary",
+      "effective_scopes",
+      "effects",
+      "engine_metrics",
+      "ephemeral",
+      "fiber_transaction_refs",
+      "judge_context",
+      "judge_context_layers",
+      "necessity",
+      "observations",
+      "output",
+      "plan",
+      "provenance",
+      "render_id",
+      "retry_work",
+      "scope",
+      "session_id",
+      "superseded_transaction_ids",
+      "view_contract",
+      "view_id",
+      "work",
+      "work_metrics"
+    ],
+    "renderBlockItemFields": [
+      "candidate_key",
+      "component_id",
+      "final_index",
+      "token_cost",
+      "token_cost_kind"
+    ],
+    "renderComponentItemFields": [
+      "component_id",
+      "component_instance_id",
+      "component_revision_id",
+      "source_unavailable",
+      "status"
+    ],
+    "showBlockFields": [
+      "budget_outcome",
+      "budget_reason",
+      "candidate_key",
+      "component_id",
+      "component_instance_id",
+      "content",
+      "content_blob_digest",
+      "content_digest",
+      "content_retained",
+      "estimator_id",
+      "exclusion_stage",
+      "final_index",
+      "kind",
+      "metadata",
+      "necessity_outcome",
+      "necessity_reason",
+      "notes",
+      "original_block_key",
+      "producer_component_id",
+      "producer_revision_id",
+      "production_index",
+      "provenance",
+      "render_id",
+      "token_cost",
+      "token_cost_kind",
+      "visibility",
+      "visibility_outcome",
+      "visibility_reason"
+    ],
+    "diffResultKeys": [
+      "aggregate",
+      "attribution",
+      "blocks",
+      "bundle_revision",
+      "dimensions",
+      "graph_revision",
+      "lens_snapshots",
+      "observations",
+      "render_a",
+      "render_b",
+      "request",
+      "sides",
+      "summary",
+      "token_totals"
+    ],
+    "schemaDigests": {
+      "context.render": "06ac92079d3912f63e20abf9dea73b29a4b62d099772103eb04860ed122404c2",
+      "context.show": "c256b4ec0e37a630532d649cb2f4370a6605c5b8ab3377c512b2aa84c0897962",
+      "context.diff": "6632860f0024eba2c27d4c682ee63b1aeb98fcf34bb9f02712f457c8958fc80f"
+    }
+  },
+  "scan": {
+    "walkRoots": [
+      "src",
+      "qa",
+      "examples"
+    ],
+    "moduleExtensions": [
+      ".ts",
+      ".mts",
+      ".cts",
+      ".tsx",
+      ".js",
+      ".mjs",
+      ".cjs",
+      ".jsx"
+    ],
+    "floors": {
+      "src": 100,
+      "qa": 55,
+      "examples": 5
+    },
+    "renderCommand": "context.render",
+    "launchers": [
+      "spawn",
+      "spawnSync",
+      "execFile",
+      "execFileSync",
+      "exec",
+      "execSync",
+      "fork"
+    ],
+    "rfBinary": "rf",
+    "textRead": "output.text",
+    "containers": [
+      "blocks",
+      "components"
+    ],
+    "selectorWords": "render|component|block|occurrence|instance|audience|candidate/i",
+    "claimFamily": "\\bcontext(?:\\.|\\s+)(?:show|diff)\\b|--block\\b|--detail\\b|scoped[\\s_-]*digest|compact[\\s_-]*counts?/i",
+    "verbFamily": "\\bcontext(?:\\.|\\s+)(?:show|explain|plan|diff|history|replay)\\b/i",
+    "tierConfigs": [
+      "vitest.rf.config.ts",
+      "vitest.rf-tsx.config.ts"
+    ],
+    "tierCommands": [
+      "rf-preview",
+      "rf-preview-tsx"
+    ],
+    "capture": "test/fixtures/rf-version-leaves.json",
+    "markerTokens": [
+      "<!--",
+      "demo.notes",
+      "notes::summary",
+      "dashboard tick",
+      "[[component",
+      "demo.aside",
+      "aside body",
+      "demo.other"
+    ],
+    "otherVerbs": [
+      "show",
+      "explain",
+      "plan",
+      "diff",
+      "history",
+      "replay"
+    ],
+    "blockFields": [
+      "budget_outcome",
+      "budget_reason",
+      "candidate_key",
+      "component_id",
+      "component_instance_id",
+      "component_revision_id",
+      "content_blob_digest",
+      "content_digest",
+      "content_retained",
+      "estimator_id",
+      "exclusion_stage",
+      "final_index",
+      "necessity_outcome",
+      "necessity_reason",
+      "original_block_key",
+      "producer_component_id",
+      "producer_revision_id",
+      "production_index",
+      "source_unavailable",
+      "token_cost",
+      "token_cost_kind",
+      "visibility_outcome",
+      "visibility_reason"
+    ],
+    "genericBlockFields": [
+      "content",
+      "kind",
+      "metadata",
+      "notes",
+      "status",
+      "visibility"
+    ],
+    "diffKeys": [
+      "bundle_revision",
+      "graph_revision",
+      "lens_snapshots",
+      "render_a",
+      "render_b",
+      "token_totals"
+    ],
+    "genericDiffKeys": [
+      "aggregate",
+      "attribution",
+      "dimensions",
+      "request",
+      "sides",
+      "summary"
+    ]
+  },
+  "residuals": [
+    "R-COMPOSED",
+    "R-ALIAS",
+    "R-GENERIC-KEY",
+    "R-RENAMED",
+    "R-COMMENT",
+    "R-OUTSIDE"
+  ],
+  "rows": [
+    {
+      "id": "A",
+      "label": "(trigger, absent today) Pi issues no context show/diff verb today: the one rf launch in src, qa and examples is the provider's render argv, no module spells another context leaf, and every Pi rf reader admits only context.render envelopes and registers only the render preview",
+      "pins": [
+        {
+          "id": "A1",
+          "witness": {
+            "pin": "A1",
+            "modulesFloorMet": true,
+            "launches": [
+              "src/workbench/providers/reactivefiber.ts spawn"
+            ],
+            "followers": [
+              "render"
+            ],
+            "verbLiterals": [],
+            "otherVerbs": [
+              "show",
+              "explain",
+              "plan",
+              "diff",
+              "history",
+              "replay"
+            ],
+            "controls": {
+              "showArgv": [
+                "show"
+              ],
+              "diffArgv": [
+                "diff"
+              ],
+              "explainBlockArgv": [
+                "explain"
+              ],
+              "shellLaunch": 1,
+              "templateShellLaunch": 1,
+              "launchArgvWithoutFlag": [
+                "show"
+              ],
+              "argvApart": [],
+              "shellLaunchLiteral": true,
+              "commandCheck": true,
+              "renderArgv": [
+                "render"
+              ],
+              "classList": [],
+              "composedVerb": [],
+              "composedBinary": 0,
+              "prose": false,
+              "comment": 0
+            }
+          }
+        },
+        {
+          "id": "A2",
+          "witness": {
+            "pin": "A2",
+            "readers": [
+              "src/workbench/native-evidence.ts",
+              "src/workbench/providers/reactivefiber.ts",
+              "src/workbench/reactivefiber-observer.ts"
+            ],
+            "refusals": {
+              "show": "validation",
+              "explain": "validation",
+              "plan": "validation",
+              "diff": "validation",
+              "history": "validation",
+              "replay": "validation"
+            },
+            "evidence": {
+              "show": 0,
+              "explain": 0,
+              "plan": 0,
+              "diff": 0,
+              "history": 0,
+              "replay": 0
+            },
+            "renderAdmitted": true,
+            "renderEvidence": "reactivefiber",
+            "ids": [
+              "reactivefiber.render.preview",
+              "reactivefiber.render.preview"
+            ],
+            "effectClasses": [
+              "read",
+              "read"
+            ],
+            "contractRendersOnly": true,
+            "arms": [
+              [
+                [
+                  "model",
+                  "task"
+                ],
+                [
+                  "view",
+                  "taskId",
+                  "model"
+                ]
+              ],
+              [
+                [
+                  "model",
+                  "task"
+                ],
+                [
+                  "view",
+                  "taskId",
+                  "model"
+                ]
+              ]
+            ],
+            "selectorKeys": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "(a) no Pi code path greps sentinels out of context show text to attribute a block: every read of rf document text is a type check or a sha256 digest, and the projection of a sentinel-marked document carries no marker and moves only its digest",
+      "pins": [
+        {
+          "id": "B1",
+          "witness": {
+            "pin": "B1",
+            "readers": [
+              "src/workbench/native-evidence.ts",
+              "src/workbench/providers/reactivefiber.ts",
+              "src/workbench/reactivefiber-observer.ts"
+            ],
+            "reads": [
+              "src/workbench/providers/reactivefiber.ts output.text typeof",
+              "src/workbench/reactivefiber-observer.ts output.text typeof",
+              "src/workbench/reactivefiber-observer.ts output.text digest"
+            ],
+            "outputReads": [
+              "src/workbench/providers/reactivefiber.ts typeof",
+              "src/workbench/reactivefiber-observer.ts typeof",
+              "src/workbench/reactivefiber-observer.ts digest"
+            ],
+            "findings": [],
+            "controls": {
+              "matchMarkers": 1,
+              "splitMarkers": 1,
+              "regexExec": 1,
+              "alias": 1,
+              "destructure": 1,
+              "elementAccess": 1,
+              "passThrough": 1,
+              "updateWithoutHash": 1,
+              "readerOtherText": 1,
+              "typeofCheck": 0,
+              "digest": 0,
+              "parenthesizedDigest": 0,
+              "outputOutsideReaders": 1,
+              "messageOutsideReaders": 0,
+              "aliasOutsideReaders": 0,
+              "computedKey": 0
+            }
+          }
+        },
+        {
+          "id": "B2",
+          "witness": {
+            "pin": "B2",
+            "snapshots": 1,
+            "relations": 0,
+            "surfacedTokens": [],
+            "digestOnly": true,
+            "delta": [
+              "nativePayloadRef"
+            ],
+            "evidenceEqual": true,
+            "evidenceTokens": [],
+            "evidenceProvider": "reactivefiber"
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "(b) a Pi block read resolves (render_id, component_id, occurrence key) against structured block records, unknown component distinct from suppressed block: absent today - no module spells an rf block or component record field, the rf readers read neither record container, and populated records change no projection",
+      "pins": [
+        {
+          "id": "C1",
+          "witness": {
+            "pin": "C1",
+            "fields": [
+              "budget_outcome",
+              "budget_reason",
+              "candidate_key",
+              "component_id",
+              "component_instance_id",
+              "component_revision_id",
+              "content_blob_digest",
+              "content_digest",
+              "content_retained",
+              "estimator_id",
+              "exclusion_stage",
+              "final_index",
+              "necessity_outcome",
+              "necessity_reason",
+              "original_block_key",
+              "producer_component_id",
+              "producer_revision_id",
+              "production_index",
+              "source_unavailable",
+              "token_cost",
+              "token_cost_kind",
+              "visibility_outcome",
+              "visibility_reason"
+            ],
+            "hits": [],
+            "anchored": true,
+            "controls": {
+              "propertyAccess": 1,
+              "elementAccess": 1,
+              "destructure": 1,
+              "objectKey": 1,
+              "pathLiteral": 1,
+              "folded": 1,
+              "template": 1,
+              "camelCase": 0,
+              "composedField": 0,
+              "comment": 0,
+              "genericField": 0,
+              "longerName": 0,
+              "outsideRoots": [
+                false,
+                false,
+                true,
+                true
+              ]
+            }
+          }
+        },
+        {
+          "id": "C2",
+          "witness": {
+            "pin": "C2",
+            "containers": [
+              "blocks",
+              "components"
+            ],
+            "containerReads": [],
+            "projectionEqual": true,
+            "evidenceEqual": true,
+            "controls": {
+              "findBlock": 1,
+              "elementAccess": 1,
+              "destructure": 1,
+              "containerOutsideReaders": 0,
+              "constructionInReader": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "D",
+      "label": "(c) a Pi diff consumer renders only envelope-present keys, absent keys read not-provided, never defaults: absent today - no module spells an rf diff result key, the rf readers read no one-word diff key, and a diff envelope missing keys is refused with nothing rendered",
+      "pins": [
+        {
+          "id": "D1",
+          "witness": {
+            "pin": "D1",
+            "keys": [
+              "bundle_revision",
+              "graph_revision",
+              "lens_snapshots",
+              "render_a",
+              "render_b",
+              "token_totals"
+            ],
+            "hits": [],
+            "controls": {
+              "propertyAccess": 1,
+              "elementAccess": 1,
+              "destructure": 1,
+              "pathLiteral": 1,
+              "renderKey": 0,
+              "genericKey": 0,
+              "comment": 0
+            }
+          }
+        },
+        {
+          "id": "D2",
+          "witness": {
+            "pin": "D2",
+            "genericKeys": [
+              "aggregate",
+              "attribution",
+              "dimensions",
+              "request",
+              "sides",
+              "summary"
+            ],
+            "genericReads": [],
+            "absent": [
+              "aggregate",
+              "attribution",
+              "bundle_revision",
+              "dimensions",
+              "graph_revision",
+              "lens_snapshots",
+              "observations",
+              "request",
+              "sides",
+              "token_totals"
+            ],
+            "refused": true,
+            "evidenceKeys": 0,
+            "controls": {
+              "summaryRead": 1,
+              "elementAccess": 1,
+              "destructure": 1,
+              "genericOutsideReaders": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "E",
+      "label": "(d) once --block / --detail compact ship, scoped digest = full envelope's, compact counts reconcile with the full diff: gated - the measured rf serves neither selector and Pi's rf tiers claim no reconciliation",
+      "pins": [
+        {
+          "id": "E1",
+          "witness": {
+            "pin": "E1",
+            "contractShipped": false,
+            "showBlockServed": false,
+            "diffDetailServed": false,
+            "explainBlockServed": true,
+            "showDetailServed": true,
+            "beadSaysUnshipped": true,
+            "gatingNamed": true,
+            "gatingLine": true,
+            "gatingTitles": [
+              true,
+              true
+            ],
+            "capturedServed": {
+              "context.show": true,
+              "context.diff": true
+            },
+            "pinIsCitationSha": true
+          }
+        },
+        {
+          "id": "E2",
+          "witness": {
+            "pin": "E2",
+            "tierFiles": [
+              "test/workbench-native-rf-preview.test.ts",
+              "test/workbench-native-rf-tsx-preview.test.ts"
+            ],
+            "commands": [
+              true,
+              true
+            ],
+            "claims": [],
+            "controls": {
+              "showLeaf": true,
+              "diffLeaf": true,
+              "blockFlag": true,
+              "detailFlag": true,
+              "scopedDigest": true,
+              "compactCounts": true,
+              "renderLeaf": false,
+              "explainLeaf": false
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "tests": [
+    "the judged set: the frozen shape, the out-of-file roster and the bead row agree",
+    "A1",
+    "A2",
+    "B1",
+    "B2",
+    "C1",
+    "C2",
+    "D1",
+    "D2",
+    "E1",
+    "E2",
+    "records: every registered test ran once in run mode in roster order and every pin reached its end"
+  ]
+}
