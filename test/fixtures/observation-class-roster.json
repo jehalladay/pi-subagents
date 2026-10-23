@@ -1,0 +1,481 @@
+{
+  "bead": "wb-kku9.1",
+  "rows": [
+    {
+      "id": "A",
+      "label": "(a) vitest: a 'succeeded' Claude SDK fixture whose transcript says 'fixed' or 'PASS' yields claude.* snapshots with coverage partial|unknown, no forge/furnace/beads/git-provider snapshot, edge or ref, and leaves failed-forge and bd-open fixtures unchanged",
+      "pins": [
+        {
+          "id": "A1",
+          "title": "A1: a succeeded Claude SDK run whose transcript says fixed and PASS settles ok and projects only claude.* snapshots, each with partial or unknown coverage",
+          "witness": {
+            "ok": true,
+            "terminal": "succeeded",
+            "freshness": "current",
+            "claimsInStepText": [
+              "fixed",
+              "PASS"
+            ],
+            "samples": 6,
+            "kinds": [
+              "claude.call",
+              "claude.session",
+              "claude.tool-use"
+            ],
+            "coverages": [
+              "partial"
+            ]
+          }
+        },
+        {
+          "id": "A2",
+          "title": "A2: that projection names no forge, furnace, beads or git provider in any snapshot, edge or evidence reference, and no transcript claim reaches it",
+          "witness": {
+            "snapshotProviders": [
+              "claude-agent-sdk",
+              "pi-workflow"
+            ],
+            "edgeProviders": [
+              "claude-agent-sdk",
+              "pi-workflow"
+            ],
+            "edgeKinds": [
+              "causation",
+              "grouping",
+              "ownership"
+            ],
+            "refPrefixes": [
+              "claude-message"
+            ],
+            "claimsInProjection": [],
+            "commandsInProjection": []
+          }
+        },
+        {
+          "id": "A3",
+          "title": "A3: applying that projection beside a failed Forge gate and an open bd item leaves both nodes and their edges exactly as they were",
+          "witness": {
+            "applied": [
+              "applied"
+            ],
+            "unchanged": [
+              true,
+              true,
+              true
+            ],
+            "authorityNodes": [
+              "forge:gate-status:workspace = success · FORGE_OK · current gate failed | failure",
+              "forge:gate-status:code:pi-subagents = failure (current) | failure",
+              "beads:work:wb-observation-1 = open | waiting"
+            ]
+          }
+        },
+        {
+          "id": "A4",
+          "title": "A4: the transcript message the session lists reads as a claude-message preview with no status, verdict or authority field, whatever the message claims",
+          "witness": {
+            "ref": "claude-message:00000000-0000-4000-8000-000000000005",
+            "keys": [
+              "bytes",
+              "capturedAt",
+              "contract",
+              "freshness",
+              "kind",
+              "nativeRef",
+              "preview",
+              "provider",
+              "role",
+              "truncated"
+            ],
+            "kind": "claude-message",
+            "provider": "claude-agent-sdk",
+            "refType": "message",
+            "role": "assistant",
+            "preview": [
+              "All fixed. The gate is PASS and the bead is closed."
+            ],
+            "truncated": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "(b) hyperunixTopology over a hyperunix.find/v1 fixture carries no beads/forge/furnace/git kind, ref or edge; evidence-loader/-wiring keep 0 rank/tier/authority tokens",
+      "pins": [
+        {
+          "id": "B1",
+          "title": "B1: hyperunixTopology over hyperunix.find/v1 readings of every read kind, whose rows name tracker, gate, run and repository paths, carries no beads, forge, furnace or git kind, reference or edge",
+          "witness": {
+            "readings": 23,
+            "projected": 46,
+            "kinds": [
+              "hyperunix.query.snapshot"
+            ],
+            "providers": [
+              "hyperunix"
+            ],
+            "refPrefixes": [
+              "hx-binary",
+              "hx-coverage"
+            ],
+            "edges": [
+              "grouping: pi-workflow -> hyperunix"
+            ]
+          }
+        },
+        {
+          "id": "B2",
+          "title": "B2: evidence-loader.ts and evidence-wiring.ts hold no rank, tier or authority token",
+          "witness": {
+            "src/workbench/evidence-loader.ts": {
+              "rank": 0,
+              "tier": 0,
+              "authority": 0
+            },
+            "src/workbench/evidence-wiring.ts": {
+              "rank": 0,
+              "tier": 0,
+              "authority": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "(c) census: no src module derives Beads status, Forge verdict, Furnace state or Git basis from a Claude result, transcript or hx answer or calls bd close/update from them; collect.sh keeps 0 'bd close'",
+      "pins": [
+        {
+          "id": "C1",
+          "title": "C1: the module graph: the observation class, the authority modules and the five holders are the measured rosters and no edge joins the first two outside the holders",
+          "witness": {
+            "modules": 115,
+            "observation": [
+              "src/workbench/claude-capability-tools.ts",
+              "src/workbench/claude-control-observer.ts",
+              "src/workbench/claude-control.ts",
+              "src/workbench/claude-evidence.ts",
+              "src/workbench/claude-host.ts",
+              "src/workbench/claude-topology.ts",
+              "src/workbench/claude-transcript.ts",
+              "src/workbench/hyperunix-observer.ts",
+              "src/workbench/providers/hyperunix.ts"
+            ],
+            "authority": [
+              "src/env.ts",
+              "src/index.ts",
+              "src/workbench/beads-observer.ts",
+              "src/workbench/evidence-producers.ts",
+              "src/workbench/evidence-wiring.ts",
+              "src/workbench/forge-control.ts",
+              "src/workbench/forge-evidence.ts",
+              "src/workbench/forge-observer.ts",
+              "src/workbench/forge-operation-observer.ts",
+              "src/workbench/furnace-control.ts",
+              "src/workbench/furnace-evidence.ts",
+              "src/workbench/furnace-observer.ts",
+              "src/workbench/hosts/furnace-hosted.ts",
+              "src/workbench/native-modules.ts",
+              "src/workbench/providers/forge.ts",
+              "src/workbench/providers/furnace.ts",
+              "src/worktree.ts"
+            ],
+            "holders": [
+              "src/index.ts",
+              "src/workbench/evidence-producers.ts",
+              "src/workbench/evidence-wiring.ts",
+              "src/workbench/hosts/local-detached.ts",
+              "src/workbench/native-modules.ts"
+            ],
+            "violations": []
+          }
+        },
+        {
+          "id": "C2",
+          "title": "C2: the only src scopes that read an observation-class binding beside an authority binding or construct are the five pinned composition scopes",
+          "witness": [
+            {
+              "file": "src/index.ts",
+              "scope": "function:default",
+              "observation": [
+                "ClaudeCallIdentity",
+                "createClaudeControlRetention"
+              ],
+              "authority": [
+                "ForgeOperationObserver",
+                "createWorkbenchEvidenceStore",
+                "isWorktreeIsolationEnabled",
+                "setWorktreeIsolationEnabled"
+              ]
+            },
+            {
+              "file": "src/index.ts",
+              "scope": "function:runWorkflowTask",
+              "observation": [
+                "createClaudeControlObserver"
+              ],
+              "authority": [
+                "loadWorkbenchNative"
+              ]
+            },
+            {
+              "file": "src/workbench/evidence-wiring.ts",
+              "scope": "interface:WorkbenchEvidenceDeps",
+              "observation": [
+                "ClaudeTranscriptRow"
+              ],
+              "authority": [
+                "FurnaceObserverClient"
+              ]
+            },
+            {
+              "file": "src/workbench/hosts/local-detached.ts",
+              "scope": "function:registryFor",
+              "observation": [
+                "registerNativeHyperUnixFind"
+              ],
+              "authority": [
+                "registerNativeForgeGateStatus",
+                "registerNativeFurnaceRunInspect"
+              ]
+            },
+            {
+              "file": "src/workbench/native-modules.ts",
+              "scope": "interface:WorkbenchNativeModules",
+              "observation": [
+                "createClaudeObserver",
+                "createClaudeWorkflowHost",
+                "readClaudeTranscript"
+              ],
+              "authority": [
+                "Furnace",
+                "openForgeOperationConnection"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "C3",
+          "title": "C3: no src module execs the tracker or spells a tracker close or update, and the tracker seam has show alone",
+          "witness": {
+            "trackerExecs": [],
+            "trackerWriteSpellings": [],
+            "gitExecModules": [
+              "src/env.ts",
+              "src/index.ts",
+              "src/worktree.ts"
+            ],
+            "trackerSeamMembers": [
+              "show"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "D",
+      "label": "(d) docs/07 § Agent provider and § HyperUnix provider each gain one census-bound sentence",
+      "pins": [
+        {
+          "id": "D1",
+          "title": "D1: docs/07 § Agent provider renders the observation-class sentence exactly once",
+          "witness": {
+            "heading": "Agent provider",
+            "blocks": 1,
+            "hasHtml": false,
+            "occurrences": 1
+          }
+        },
+        {
+          "id": "D2",
+          "title": "D2: docs/07 § HyperUnix provider renders the HX answer sentence exactly once",
+          "witness": {
+            "heading": "HyperUnix provider",
+            "blocks": 1,
+            "hasHtml": false,
+            "occurrences": 1
+          }
+        },
+        {
+          "id": "D3",
+          "title": "D3: the docs07 provider-rules census quotes both sentences and binds this file",
+          "witness": {
+            "agentSentence": 1,
+            "hxSentence": 1,
+            "bindsThisFile": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "F",
+      "label": "the owner filing row of wb-kku9.1 in the tracked bead export carries every pinned constant and names exactly the clauses rows A-D cover, each label equal to its clause",
+      "pins": [
+        {
+          "id": "F1",
+          "title": "F1: the export row carries the pinned constants and its acceptance clauses are rows A-D",
+          "witness": {
+            "clauses": [
+              "a",
+              "b",
+              "c",
+              "d"
+            ],
+            "labelsEqual": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "constantsQuoted": 7
+          }
+        }
+      ]
+    },
+    {
+      "id": "M",
+      "label": "the judge is live: one added derivation shape per pin reads as its named violation",
+      "pins": [
+        {
+          "id": "M1",
+          "title": "M1: an observation-class module building a forge provider literal",
+          "witness": {
+            "violation": "observation-builds-authority src/workbench/claude-verdict.ts provider:forge",
+            "hit": true
+          }
+        },
+        {
+          "id": "M2",
+          "title": "M2: an authority module type-importing the Claude transcript module",
+          "witness": {
+            "violation": "authority-imports-observation src/workbench/beads-observer.ts -> src/workbench/claude-transcript.ts",
+            "hit": true
+          }
+        },
+        {
+          "id": "M3",
+          "title": "M3: an authority module loading the HX adapter by dynamic import",
+          "witness": {
+            "violation": "authority-imports-observation src/workbench/forge-observer.ts -> src/workbench/hyperunix-observer.ts",
+            "hit": true
+          }
+        },
+        {
+          "id": "M4",
+          "title": "M4: a holder scope building a beads ref beside a Claude binding",
+          "witness": {
+            "violation": "mixed-scope src/index.ts function:settledWork [ClaudeCallIdentity] [provider:beads]",
+            "hit": true
+          }
+        },
+        {
+          "id": "M5",
+          "title": "M5: a tracker close exec call",
+          "witness": {
+            "violation": "tracker-exec src/workbench/attention.ts",
+            "hit": true
+          }
+        },
+        {
+          "id": "M6",
+          "title": "M6: a tracker update spelled in a string",
+          "witness": {
+            "violation": "tracker-write-spelling src/workbench/timeline.ts",
+            "hit": true
+          }
+        },
+        {
+          "id": "M7",
+          "title": "M7: an authority module re-exporting a Claude evidence type",
+          "witness": {
+            "violation": "authority-imports-observation src/workbench/forge-evidence.ts -> src/workbench/claude-evidence.ts",
+            "hit": true
+          }
+        },
+        {
+          "id": "M8",
+          "title": "M8: a new module importing the Claude host and the Forge observer",
+          "witness": {
+            "violation": "unpinned-holder src/workbench/agent-gate.ts",
+            "hit": true
+          }
+        },
+        {
+          "id": "M9",
+          "title": "M9: an observation-class module type-importing the Forge observer",
+          "witness": {
+            "violation": "observation-imports-authority src/workbench/claude-topology.ts -> src/workbench/forge-observer.ts",
+            "hit": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "R",
+      "label": "the named residuals R1-R7 stay pinned quiet",
+      "pins": [
+        {
+          "id": "R1",
+          "title": "R1 R-HOST-OPERATION: the HX adapter echoes the operation the host names as its display grouping, and no src module calls either topology adapter",
+          "witness": {
+            "echoed": [
+              {
+                "kind": "grouping",
+                "from": "forge",
+                "nativeConfirmation": false
+              }
+            ],
+            "srcCallers": []
+          }
+        },
+        {
+          "id": "R2",
+          "title": "R2 R-CROSS-SCOPE: a value carried between two scopes is not traced",
+          "witness": {
+            "violations": []
+          }
+        },
+        {
+          "id": "R3",
+          "title": "R3 R-COMPOSED: a provider or command that is not a string literal at its construct is not read",
+          "witness": {
+            "violations": []
+          }
+        },
+        {
+          "id": "R4",
+          "title": "R4 R-OUT-OF-REPO: no file named collect.sh is part of this repository",
+          "witness": {
+            "collectSh": []
+          }
+        },
+        {
+          "id": "R5",
+          "title": "R5 R-EXECUTOR-OUTCOME: the Furnace host is an authority module that imports no observation-class module",
+          "witness": {
+            "authority": true,
+            "observationEdges": []
+          }
+        },
+        {
+          "id": "R6",
+          "title": "R6 R-NAMING: a module reading HX values under another name, importing no observation-class module, is not in the class",
+          "witness": {
+            "violations": []
+          }
+        },
+        {
+          "id": "R7",
+          "title": "R7 R-TEST-TREE: only src is walked, while the test tree builds authority refs on purpose",
+          "witness": {
+            "walked": [
+              "src"
+            ],
+            "testBuildsAuthority": true
+          }
+        }
+      ]
+    }
+  ]
+}
