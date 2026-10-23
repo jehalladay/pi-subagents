@@ -1,0 +1,1064 @@
+{
+  "provenance": "wb-pfxo.5 census roster (test/workbench-rf-replay-outcome-echo-census.test.ts). envelopes.measured is MEASURED: the stdout of `rf context replay RENDER --json` (exit 0) from the installed rf 0.1.832 on 2026-10-23 over a render committed in a scratch workspace (`rf init`, then `rf context render --model m --task t --context-window 200000 --max-output 64000`), only the scratch workspace root rewritten to /fixture/rf-workspace. envelopes.deniedEffects, envelopes.variance, envelopes.mismatch and envelopes.trustDenied are the producer's own valid fixtures at ReactiveFiberCLI 6a251bf73af5 (read-only git show of schemas/fixtures/context.replay/valid/ok_reproduced.json, ok_reproduced_with_declared_variance.json, failure_mismatch_exit_11.json and failure_trust_denied_exit_5.json), byte-for-byte in content. fragments.incomplete is CONSTRUCTED from those fixtures' values (render_id and versions of ok_reproduced; the revision, component and policy digest of failure_trust_denied_exit_5) under the fragment schema's TRUST-SEC-A52 rule, with trust reason codes from the producer's domain/trust.py TRUST_REASON_CODES (deny_unapproved, no_matching_rule); no producer fixture carries a replay status. Every envelope validates against the installed context.replay.schema.json and the fragment against schemas/cli/context/replay-result.json (ajv 2020-12, 0 errors; both schemas byte-identical between the installed 0.1.832 and the pin); the fragment without its trust_denied reason is refused, and the envelope schema refuses the fragment as the result of an ok envelope and of a failure envelope. outcomes, statuses: the fragment enums at replay-result.json :30-33 and :121-122. rows: the judged set, each pin's witness measured by its own case.",
+  "rfVersion": "0.1.832",
+  "pin": "6a251bf73af5",
+  "outcomes": [
+    "reproduced",
+    "reproduced_with_declared_variance",
+    "deterministic_mismatch",
+    "not_replayable"
+  ],
+  "statuses": [
+    "incomplete",
+    "partial"
+  ],
+  "echoKeys": [
+    "outcome",
+    "status",
+    "effects_denied",
+    "final_document_digest"
+  ],
+  "codes": {
+    "mismatch": "RF_REPLAY_MISMATCH",
+    "trustDenied": "RF_REPLAY_TRUST_DENIED",
+    "effectDenied": "RF_REPLAY_EFFECT_DENIED"
+  },
+  "exits": {
+    "mismatch": 11,
+    "trustDenied": 5
+  },
+  "vocabulary": [
+    "replayability",
+    "version_deltas",
+    "effect_policy",
+    "trust_decisions",
+    "live_recomputed",
+    "effects_denied",
+    "trust_outcomes",
+    "verdicts_equal",
+    "evidence_record_id",
+    "final_document_digest",
+    "reproduced_with_declared_variance",
+    "deterministic_mismatch",
+    "not_replayable",
+    "recorded_digest",
+    "replayed_digest",
+    "RF_REPLAY_MISMATCH",
+    "RF_REPLAY_TRUST_DENIED",
+    "RF_REPLAY_EFFECT_DENIED"
+  ],
+  "claimWords": {
+    "effect": [
+      "effect",
+      "effects"
+    ],
+    "redo": [
+      "reproduced",
+      "re-executed",
+      "reexecuted"
+    ],
+    "external": [
+      "external",
+      "external-world"
+    ],
+    "equal": [
+      "equal",
+      "equality",
+      "identical"
+    ],
+    "reexecution": [
+      "re-execution",
+      "reexecution"
+    ],
+    "afterEffect": [
+      "were",
+      "are",
+      "was",
+      "is",
+      "been",
+      "all",
+      "also"
+    ],
+    "beforeEffect": [
+      "the",
+      "all",
+      "its",
+      "their",
+      "every"
+    ],
+    "linking": [
+      "of",
+      "to",
+      "the",
+      "as",
+      "a"
+    ]
+  },
+  "residuals": {
+    "R-WITHHELD": [
+      "Q1"
+    ],
+    "R-COVERAGE-WORD": [
+      "Q2"
+    ],
+    "R-VOCABULARY": [
+      "Q3"
+    ],
+    "R-PARAPHRASE": [
+      "Q4"
+    ],
+    "R-INTERRUPTED": [
+      "Q5"
+    ],
+    "R-SCOPE": [
+      "Q6"
+    ],
+    "R-COMPOSED": [
+      "Q7"
+    ],
+    "R-UNIT": [
+      "Q8"
+    ],
+    "R-JOINED": [
+      "Q9"
+    ]
+  },
+  "envelopes": {
+    "measured": {
+      "schema": "reactive-fiber.cli/v1",
+      "ok": true,
+      "command": "context.replay",
+      "operation_id": "rfo_h7cqzvla2o3xchbgwoncg4hsiq",
+      "workspace": {
+        "id": "rfw_bacbyika6mmcjh43uv3p66blzq",
+        "root": "/fixture/rf-workspace"
+      },
+      "transaction_id": null,
+      "result": {
+        "render_id": "rfr_3ftyx5zs6ccfxym5dmfyzjomni",
+        "outcome": "reproduced",
+        "replayability": {
+          "classification": "replayable_exact",
+          "reasons": []
+        },
+        "diff": null,
+        "versions": {
+          "graph_revision_id": "sha256:93bb4d13e8db85b51e3989faa9420639127432a13c50ff9f0c6f07f06036ef0f",
+          "necessity_policy_revision_id": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "cli_version": "0.1.832"
+        },
+        "version_deltas": {},
+        "effect_policy": "deny",
+        "trust_decisions": [],
+        "substituted": [],
+        "live_recomputed": [],
+        "effects_denied": [],
+        "diagnostics": [],
+        "verdicts_equal": true,
+        "final_document_digest": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "diagnostics": []
+    },
+    "deniedEffects": {
+      "schema": "reactive-fiber.cli/v1",
+      "ok": true,
+      "command": "context.replay",
+      "operation_id": "rfo_abcdefghijklmnopqrstuvwxyz",
+      "workspace": {
+        "id": "rfw_cccccccccccccccccccccccccc",
+        "root": "/abs/project"
+      },
+      "transaction_id": null,
+      "result": {
+        "render_id": "rfr_0123456789abcdefghijklmn",
+        "outcome": "reproduced",
+        "replayability": {
+          "classification": "replayable_exact",
+          "reasons": []
+        },
+        "diff": null,
+        "versions": {
+          "graph_revision_id": "sha256:7777777777777777777777777777777777777777777777777777777777777777",
+          "necessity_policy_revision_id": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "reactive_fiber_cli": {
+            "recorded": "0.1.0",
+            "replaying": "0.1.0",
+            "delta": null
+          }
+        },
+        "version_deltas": {},
+        "effect_policy": "deny",
+        "trust_decisions": [
+          {
+            "revision_id": "rev_cccccccccccccccccccccc",
+            "decision": "allowed",
+            "policy_digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          }
+        ],
+        "substituted": [
+          "git:src/main.py"
+        ],
+        "live_recomputed": [
+          "clock"
+        ],
+        "effects_denied": [
+          "effect-a",
+          "effect-b"
+        ],
+        "diagnostics": []
+      },
+      "diagnostics": []
+    },
+    "variance": {
+      "schema": "reactive-fiber.cli/v1",
+      "ok": true,
+      "command": "context.replay",
+      "operation_id": "rfo_abcdefghijklmnopqrstuvwxyz",
+      "workspace": {
+        "id": "rfw_cccccccccccccccccccccccccc",
+        "root": "/abs/project"
+      },
+      "transaction_id": null,
+      "result": {
+        "render_id": "rfr_0123456789abcdefghijklmn",
+        "outcome": "reproduced_with_declared_variance",
+        "replayability": {
+          "classification": "replayable_with_declared_variance",
+          "reasons": [
+            "source_live_only_uncaptured"
+          ]
+        },
+        "diff": null,
+        "versions": {
+          "graph_revision_id": "sha256:7777777777777777777777777777777777777777777777777777777777777777",
+          "necessity_policy_revision_id": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "reactive_fiber_cli": {
+            "recorded": "0.1.0",
+            "replaying": "0.1.0",
+            "delta": null
+          }
+        },
+        "version_deltas": {},
+        "effect_policy": "deny",
+        "trust_decisions": [
+          {
+            "revision_id": "rev_cccccccccccccccccccccc",
+            "decision": "allowed",
+            "policy_digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          }
+        ],
+        "substituted": [
+          "git:src/main.py"
+        ],
+        "live_recomputed": [
+          "clock"
+        ],
+        "effects_denied": [
+          "effect-a",
+          "effect-b"
+        ],
+        "diagnostics": []
+      },
+      "diagnostics": [
+        {
+          "code": "RF_REPLAY_EFFECT_DENIED",
+          "severity": "warning",
+          "message": "effect effect-a was refused under --effects deny",
+          "hint": "A denied effect is a declared variance, never a failure (REPLAY-A17).",
+          "source": "host",
+          "metadata": {
+            "effect_id": "effect-a"
+          }
+        }
+      ]
+    },
+    "mismatch": {
+      "schema": "reactive-fiber.cli/v1",
+      "ok": false,
+      "command": "context.replay",
+      "operation_id": "rfo_abcdefghijklmnopqrstuvwxyz",
+      "workspace": {
+        "id": "rfw_cccccccccccccccccccccccccc",
+        "root": "/abs/project"
+      },
+      "transaction_id": null,
+      "result": null,
+      "diagnostics": [
+        {
+          "code": "RF_REPLAY_MISMATCH",
+          "severity": "error",
+          "message": "the replayed context digest differs from the recorded one",
+          "hint": "Run rf context explain RENDER --json for the block-level diff.",
+          "source": "host",
+          "metadata": {
+            "recorded_digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+            "replayed_digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+            "outcome": "deterministic_mismatch",
+            "diff": {
+              "added": [
+                "blk-new"
+              ],
+              "removed": [
+                "blk-old"
+              ],
+              "changed": [
+                {
+                  "block_id": "blk-1",
+                  "field": "content"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "trustDenied": {
+      "schema": "reactive-fiber.cli/v1",
+      "ok": false,
+      "command": "context.replay",
+      "operation_id": "rfo_abcdefghijklmnopqrstuvwxyz",
+      "workspace": {
+        "id": "rfw_cccccccccccccccccccccccccc",
+        "root": "/abs/project"
+      },
+      "transaction_id": null,
+      "result": null,
+      "diagnostics": [
+        {
+          "code": "RF_REPLAY_TRUST_DENIED",
+          "severity": "error",
+          "message": "policy.toml [trust] denies the historical revision of python.summary",
+          "hint": "Allow the revision in policy.toml [trust] or replay a render it did not execute (REPLAY-A20).",
+          "source": "host",
+          "metadata": {
+            "component_id": "python.summary",
+            "revision_id": "rev_cccccccccccccccccccccc",
+            "policy_digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          }
+        }
+      ]
+    }
+  },
+  "fragments": {
+    "incomplete": {
+      "render_id": "rfr_0123456789abcdefghijklmn",
+      "outcome": "not_replayable",
+      "replayability": {
+        "classification": "not_replayable",
+        "reasons": [
+          "trust_denied"
+        ]
+      },
+      "diff": null,
+      "versions": {
+        "graph_revision_id": "sha256:7777777777777777777777777777777777777777777777777777777777777777",
+        "necessity_policy_revision_id": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "reactive_fiber_cli": {
+          "recorded": "0.1.0",
+          "replaying": "0.1.0",
+          "delta": null
+        }
+      },
+      "version_deltas": {},
+      "effect_policy": "deny",
+      "trust_decisions": [
+        {
+          "revision_id": "rev_cccccccccccccccccccccc",
+          "decision": "denied",
+          "policy_digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        }
+      ],
+      "substituted": [],
+      "live_recomputed": [],
+      "effects_denied": [],
+      "diagnostics": [],
+      "status": "incomplete",
+      "trust_outcomes": [
+        {
+          "component_id": "python.summary",
+          "revision_id": "rev_cccccccccccccccccccccc",
+          "outcome": "denied",
+          "reason_codes": [
+            "deny_unapproved",
+            "no_matching_rule"
+          ],
+          "policy_revision": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        }
+      ]
+    }
+  },
+  "tests": [
+    "the judged set: the frozen shape, the out-of-file roster and the cases agree",
+    "A1",
+    "A2",
+    "A3",
+    "B1",
+    "B2",
+    "B3",
+    "B4",
+    "C1",
+    "C2",
+    "C3",
+    "C4",
+    "D1",
+    "D2",
+    "E1",
+    "E2",
+    "E3",
+    "E4",
+    "Q1",
+    "Q2",
+    "Q3",
+    "Q4",
+    "Q5",
+    "Q6",
+    "Q7",
+    "Q8",
+    "Q9",
+    "the registered tests and the reached pins equal the roster, in order and both ways"
+  ],
+  "rows": [
+    {
+      "id": "A",
+      "label": "(trigger, absent today) Pi reads no rf replay result: no src module or native descriptor spells the replay-result vocabulary unbound, and the native reader and the reader adapter refuse every replay envelope and the incomplete fragment",
+      "pins": [
+        {
+          "id": "A1",
+          "witness": {
+            "srcFloorMet": true,
+            "anchorRead": true,
+            "descriptorsRead": true,
+            "spelling": [],
+            "descriptorHits": [],
+            "bound": [],
+            "unbound": [],
+            "stale": [],
+            "controls": {
+              "snake": [
+                "effectsdenied"
+              ],
+              "camel": [
+                "finaldocumentdigest"
+              ],
+              "constant": [
+                "rfreplaymismatch"
+              ],
+              "kebab": [
+                "deterministicmismatch"
+              ],
+              "element": [
+                "verdictsequal"
+              ],
+              "embedded": [
+                "effectsdenied"
+              ],
+              "unrelated": []
+            }
+          }
+        },
+        {
+          "id": "A2",
+          "witness": {
+            "measured": {
+              "category": "transport",
+              "message": "RF preview returned an unrecognized native envelope.",
+              "reading": false,
+              "spawns": 1,
+              "verb": [
+                "context",
+                "render"
+              ],
+              "fetches": 0
+            },
+            "deniedEffects": {
+              "category": "transport",
+              "message": "RF preview returned an unrecognized native envelope.",
+              "reading": false,
+              "spawns": 1,
+              "verb": [
+                "context",
+                "render"
+              ],
+              "fetches": 0
+            },
+            "variance": {
+              "category": "transport",
+              "message": "RF preview returned an unrecognized native envelope.",
+              "reading": false,
+              "spawns": 1,
+              "verb": [
+                "context",
+                "render"
+              ],
+              "fetches": 0
+            },
+            "mismatch": {
+              "category": "transport",
+              "message": "RF preview returned an unrecognized native envelope.",
+              "reading": false,
+              "spawns": 1,
+              "verb": [
+                "context",
+                "render"
+              ],
+              "fetches": 0
+            },
+            "trustDenied": {
+              "category": "transport",
+              "message": "RF preview returned an unrecognized native envelope.",
+              "reading": false,
+              "spawns": 1,
+              "verb": [
+                "context",
+                "render"
+              ],
+              "fetches": 0
+            }
+          }
+        },
+        {
+          "id": "A3",
+          "witness": {
+            "measured": {
+              "category": "validation",
+              "message": "ReactiveFiber topology refused: source must be a reactive-fiber.cli/v1 context.render envelope."
+            },
+            "deniedEffects": {
+              "category": "validation",
+              "message": "ReactiveFiber topology refused: source must be a reactive-fiber.cli/v1 context.render envelope."
+            },
+            "variance": {
+              "category": "validation",
+              "message": "ReactiveFiber topology refused: source must be a reactive-fiber.cli/v1 context.render envelope."
+            },
+            "mismatch": {
+              "category": "validation",
+              "message": "ReactiveFiber topology refused: source must be a reactive-fiber.cli/v1 context.render envelope."
+            },
+            "trustDenied": {
+              "category": "validation",
+              "message": "ReactiveFiber topology refused: source must be a reactive-fiber.cli/v1 context.render envelope."
+            },
+            "incomplete": {
+              "category": "validation",
+              "message": "ReactiveFiber topology refused: source must be the strict eight-key rf envelope."
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "(a) a fixture replay result with outcome reproduced and non-empty effects_denied: no <CLAIM-E> claim, the denied count named",
+      "pins": [
+        {
+          "id": "B1",
+          "witness": {
+            "deniedEffects": {
+              "outcome": "reproduced",
+              "effectsDenied": [
+                "effect-a",
+                "effect-b"
+              ],
+              "count": 2,
+              "effectPolicy": "deny",
+              "digestStated": false
+            },
+            "measured": {
+              "outcome": "reproduced",
+              "count": 0,
+              "digestStated": true
+            },
+            "variance": {
+              "outcome": "reproduced_with_declared_variance",
+              "count": 2,
+              "warning": "RF_REPLAY_EFFECT_DENIED",
+              "severity": "warning"
+            }
+          }
+        },
+        {
+          "id": "B2",
+          "witness": {
+            "measured": {
+              "echoed": [
+                "outcome",
+                "effects_denied",
+                "final_document_digest"
+              ],
+              "outcome": "reproduced",
+              "effectsDenied": [],
+              "finalDocumentDigest": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+              "calls": 1,
+              "fetches": 0
+            },
+            "deniedEffects": {
+              "echoed": [
+                "outcome",
+                "effects_denied"
+              ],
+              "outcome": "reproduced",
+              "effectsDenied": [
+                "effect-a",
+                "effect-b"
+              ],
+              "finalDocumentDigest": null,
+              "calls": 1,
+              "fetches": 0
+            },
+            "variance": {
+              "echoed": [
+                "outcome",
+                "effects_denied"
+              ],
+              "outcome": "reproduced_with_declared_variance",
+              "effectsDenied": [
+                "effect-a",
+                "effect-b"
+              ],
+              "finalDocumentDigest": null,
+              "calls": 1,
+              "fetches": 0
+            }
+          }
+        },
+        {
+          "id": "B3",
+          "witness": {
+            "roots": [
+              {
+                "root": "src",
+                "floor": 100,
+                "floorMet": true,
+                "anchorRead": true,
+                "hits": []
+              },
+              {
+                "root": "docs",
+                "floor": 50,
+                "floorMet": true,
+                "anchorRead": true,
+                "hits": []
+              },
+              {
+                "root": "qa",
+                "floor": 50,
+                "floorMet": true,
+                "anchorRead": true,
+                "hits": []
+              },
+              {
+                "root": "front matter (root *.md, examples/)",
+                "floor": 10,
+                "floorMet": true,
+                "anchorRead": true,
+                "hits": []
+              }
+            ],
+            "spellings": {
+              "effectThenRedo": [
+                "CLAIM-E effect, then redo"
+              ],
+              "effectWereRedo": [
+                "CLAIM-E effect, then redo"
+              ],
+              "redoThenEffect": [
+                "CLAIM-E redo, then effect"
+              ],
+              "equalThenExternal": [
+                "CLAIM-E equal, then external effect"
+              ],
+              "externalThenEqual": [
+                "CLAIM-E external effect, then equal"
+              ],
+              "reexecutionThenEqual": [
+                "CLAIM-R reexecution, then equal"
+              ],
+              "equalThenReexecution": [
+                "CLAIM-R equal, then reexecution"
+              ],
+              "snakeJoined": [
+                "CLAIM-E effect, then redo"
+              ],
+              "echoQuiet": [],
+              "workflowQuiet": []
+            }
+          }
+        },
+        {
+          "id": "B4",
+          "witness": {
+            "bound": {},
+            "synthetic": {
+              "good": [],
+              "claim": [
+                "claim"
+              ],
+              "count": [
+                "count"
+              ],
+              "ids": [
+                "ids"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "(b) a fixture outcome deterministic_mismatch (exit 11): never a success tone, the non-empty diff surfaced, not summarized as equal",
+      "pins": [
+        {
+          "id": "C1",
+          "witness": {
+            "code": "RF_REPLAY_MISMATCH",
+            "severity": "error",
+            "exit": 11,
+            "result": null,
+            "metadataKeys": [
+              "recorded_digest",
+              "replayed_digest",
+              "outcome",
+              "diff"
+            ],
+            "outcome": "deterministic_mismatch",
+            "members": [
+              "blk-new",
+              "blk-old",
+              "blk-1"
+            ],
+            "digestsDiffer": true
+          }
+        },
+        {
+          "id": "C2",
+          "witness": {
+            "code": "RF_REPLAY_MISMATCH",
+            "outcome": "deterministic_mismatch",
+            "diff": {
+              "added": [
+                "blk-new"
+              ],
+              "removed": [
+                "blk-old"
+              ],
+              "changed": [
+                {
+                  "block_id": "blk-1",
+                  "field": "content"
+                }
+              ]
+            },
+            "calls": 1,
+            "fetches": 0
+          }
+        },
+        {
+          "id": "C3",
+          "witness": {
+            "wire": {
+              "category": "transport",
+              "message": "RF preview returned an unrecognized native envelope.",
+              "reading": false,
+              "spawns": 1,
+              "verb": [
+                "context",
+                "render"
+              ],
+              "fetches": 0
+            },
+            "renderForm": {
+              "category": "unavailable",
+              "message": "RF render refused: RF_REPLAY_MISMATCH",
+              "reading": false,
+              "spawns": 1,
+              "verb": [
+                "context",
+                "render"
+              ],
+              "fetches": 0
+            },
+            "statusTone": "failure",
+            "coverage": "unknown",
+            "statusText": "fixture seam (not a real render) · refused · RF_REPLAY_MISMATCH"
+          }
+        },
+        {
+          "id": "C4",
+          "witness": {
+            "bound": {},
+            "synthetic": {
+              "good": [],
+              "tone": [
+                "tone"
+              ],
+              "diff": [
+                "diff"
+              ],
+              "outcome": [
+                "outcome"
+              ],
+              "equal": [
+                "equal"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "D",
+      "label": "(c) any Pi digest-equality statement names final_document_digest verbatim and says canonical committed bytes, never re-execution or external effects",
+      "pins": [
+        {
+          "id": "D1",
+          "witness": {
+            "roots": [
+              {
+                "root": "src",
+                "floorMet": true,
+                "anchorRead": true,
+                "statements": 0,
+                "violations": []
+              },
+              {
+                "root": "docs",
+                "floorMet": true,
+                "anchorRead": true,
+                "statements": 0,
+                "violations": []
+              },
+              {
+                "root": "qa",
+                "floorMet": true,
+                "anchorRead": true,
+                "statements": 0,
+                "violations": []
+              },
+              {
+                "root": "front matter (root *.md, examples/)",
+                "floorMet": true,
+                "anchorRead": true,
+                "statements": 0,
+                "violations": []
+              }
+            ],
+            "controls": {
+              "compliant": [],
+              "noName": [
+                "name"
+              ],
+              "noBytes": [
+                "bytes"
+              ],
+              "reexecution": [
+                "claim"
+              ],
+              "effects": [
+                "claim"
+              ],
+              "notStatement": null
+            }
+          }
+        },
+        {
+          "id": "D2",
+          "witness": {
+            "bound": {},
+            "digest": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "synthetic": {
+              "good": [],
+              "name": [
+                "name"
+              ],
+              "value": [
+                "value"
+              ],
+              "bytes": [
+                "bytes"
+              ],
+              "reexecution": [
+                "claim"
+              ],
+              "effects": [
+                "claim"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "E",
+      "label": "(d) a fixture status incomplete: coverage partial, never success",
+      "pins": [
+        {
+          "id": "E1",
+          "witness": {
+            "fragment": {
+              "deniedOutcome": true,
+              "status": "incomplete",
+              "outcome": "not_replayable",
+              "trustDeniedReason": true,
+              "deniedDecision": true
+            },
+            "wire": {
+              "code": "RF_REPLAY_TRUST_DENIED",
+              "exit": 5,
+              "result": null,
+              "metadataKeys": [
+                "component_id",
+                "revision_id",
+                "policy_digest"
+              ]
+            }
+          }
+        },
+        {
+          "id": "E2",
+          "witness": {
+            "code": "RF_REPLAY_TRUST_DENIED",
+            "metadata": {
+              "component_id": "python.summary",
+              "revision_id": "rev_cccccccccccccccccccccc",
+              "policy_digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+            },
+            "calls": 1,
+            "fetches": 0
+          }
+        },
+        {
+          "id": "E3",
+          "witness": {
+            "wire": {
+              "category": "transport",
+              "message": "RF preview returned an unrecognized native envelope.",
+              "reading": false,
+              "spawns": 1,
+              "verb": [
+                "context",
+                "render"
+              ],
+              "fetches": 0
+            },
+            "renderForm": {
+              "category": "unavailable",
+              "message": "RF render refused: RF_REPLAY_TRUST_DENIED",
+              "reading": false,
+              "spawns": 1,
+              "verb": [
+                "context",
+                "render"
+              ],
+              "fetches": 0
+            },
+            "statusTone": "failure",
+            "coverage": "unknown",
+            "statusText": "fixture seam (not a real render) · refused · RF_REPLAY_TRUST_DENIED"
+          }
+        },
+        {
+          "id": "E4",
+          "witness": {
+            "bound": {},
+            "synthetic": {
+              "good": [],
+              "complete": [
+                "coverage"
+              ],
+              "success": [
+                "tone"
+              ],
+              "status": [
+                "status"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "Q",
+      "label": "the residuals: each named family pinned by its quiet row",
+      "pins": [
+        {
+          "id": "Q1",
+          "witness": {
+            "withheld": 5,
+            "codeNamed": true,
+            "surfaced": [],
+            "nativeSurfaced": []
+          }
+        },
+        {
+          "id": "Q2",
+          "witness": {
+            "coverage": "unknown",
+            "statusTone": "failure"
+          }
+        },
+        {
+          "id": "Q3",
+          "witness": {
+            "generic": [],
+            "composed": []
+          }
+        },
+        {
+          "id": "Q4",
+          "witness": {
+            "reworded": [],
+            "digestReworded": false
+          }
+        },
+        {
+          "id": "Q5",
+          "witness": {
+            "zeroWidth": [],
+            "homoglyph": [],
+            "plainCaught": true
+          }
+        },
+        {
+          "id": "Q6",
+          "witness": {
+            "beadsSpells": true,
+            "rootsRead": [
+              "src",
+              "docs",
+              "qa",
+              "front matter (root *.md, examples/)"
+            ],
+            "unread": [
+              "test",
+              ".beads"
+            ]
+          }
+        },
+        {
+          "id": "Q7",
+          "witness": {
+            "fileHits": [],
+            "rosterHits": [],
+            "composedCaught": true
+          }
+        },
+        {
+          "id": "Q8",
+          "witness": {
+            "outside": false,
+            "inside": true
+          }
+        },
+        {
+          "id": "Q9",
+          "witness": {
+            "camel": [],
+            "separated": true
+          }
+        }
+      ]
+    }
+  ]
+}

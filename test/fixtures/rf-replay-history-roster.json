@@ -1,0 +1,488 @@
+{
+  "provenance": "wb-tnz5.4 census roster (test/workbench-rf-replay-history-census.test.ts). envelopes.replay and envelopes.refusal are MEASURED by the cutting seat (ws-02, g10-work-s36) on 2026-10-22 against the installed rf 0.1.832, in one scratch git repository holding an rf jsonl workspace whose graph feeds a git source (kind git, git.read granted by one [[trust.rule]]) to a declarative component: replay is the stdout of `rf context replay RENDER --json` (exit 0) right after `rf context render` committed RENDER, and refusal the stdout of the same command (exit 8) once the render's recorded commit had been made unreachable and pruned (orphan branch, old branch deleted, reflog expired, gc --prune=now). Only the scratch root was rewritten to /fixture/rf-workspace (both workspaces and the refusal message). The producer row: domain/diagnostics.py:3316-3318 of the installed package registers RF_REPLAY_RECONSTRUCTION_UNAVAILABLE at _EXIT_NOT_REPLAYABLE (:1797, 8) with metadata_keys (source_id). rows freeze the judged set: each pin's witness is what its case measures; tests freeze every registered test title in order.",
+  "rfVersion": "0.1.832",
+  "replayExit": 8,
+  "code": "RF_REPLAY_RECONSTRUCTION_UNAVAILABLE",
+  "metadataKeys": [
+    "source_id"
+  ],
+  "gatingArtifacts": [
+    "rfc-bak67.12"
+  ],
+  "envelopes": {
+    "refusal": {
+      "schema": "reactive-fiber.cli/v1",
+      "ok": false,
+      "command": "context.replay",
+      "operation_id": "rfo_ybb4gsik4roivyyoipm5man7xa",
+      "workspace": {
+        "id": "rfw_eniufnefqqp3sghmaaghcg2n44",
+        "root": "/fixture/rf-workspace"
+      },
+      "transaction_id": null,
+      "result": null,
+      "diagnostics": [
+        {
+          "code": "RF_REPLAY_RECONSTRUCTION_UNAVAILABLE",
+          "severity": "error",
+          "message": "source git was captured as revision_reconstructable and its value could not be rebuilt: source 'git' (git) cannot be reconstructed: revision_unverifiable: revision '64493929308a668ae694d57e8ffeb6ae1f5914fe': git rev-parse --verify -q 64493929308a668ae694d57e8ffeb6ae1f5914fe^{commit} answered 1: the repository enclosing /fixture/rf-workspace knows no such commit",
+          "hint": "This source was captured as revision_reconstructable and its recorded value could not be rebuilt under the recorded revision (the repository no longer knows the revision, the provider is captured-value-only or unknown to this host, the live trust policy's grant was withheld, or the rebuild hashes differently), so the render cannot be reproduced; replay never substitutes a live read or the working tree. Restore the repository history or render again to produce fresh evidence.",
+          "source": "host",
+          "metadata": {
+            "source_id": "git"
+          }
+        }
+      ]
+    },
+    "replay": {
+      "schema": "reactive-fiber.cli/v1",
+      "ok": true,
+      "command": "context.replay",
+      "operation_id": "rfo_5jsjkgqr3lxzyu52ookn4c4xlu",
+      "workspace": {
+        "id": "rfw_eniufnefqqp3sghmaaghcg2n44",
+        "root": "/fixture/rf-workspace"
+      },
+      "transaction_id": null,
+      "result": {
+        "render_id": "rfr_qnfgcp6d7dized6mn5rxqwr7fi",
+        "outcome": "reproduced",
+        "replayability": {
+          "classification": "replayable_exact",
+          "reasons": []
+        },
+        "diff": null,
+        "versions": {
+          "graph_revision_id": "sha256:f3264093cf70037b293b97cb1a290df9a15583ba8977cabfebde60f023ce373f",
+          "necessity_policy_revision_id": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "cli_version": "0.1.832"
+        },
+        "version_deltas": {},
+        "effect_policy": "deny",
+        "trust_decisions": [],
+        "substituted": [
+          "git",
+          "task"
+        ],
+        "live_recomputed": [],
+        "effects_denied": [],
+        "diagnostics": [],
+        "verdicts_equal": true,
+        "final_document_digest": "sha256:dcfe76cdd26a06469368a1e3d67518f45a71652ed4e81bd72be35e565f179e3a"
+      },
+      "diagnostics": []
+    }
+  },
+  "rows": [
+    {
+      "id": "A",
+      "label": "(c) a hermetic guard pins that no Pi argv names rf context replay today: every served input arm spawns one context render argv, src holds one rf launch site, and no src literal spells an rf replay verb",
+      "pins": [
+        {
+          "id": "A1",
+          "witness": {
+            "served": [
+              "reactivefiber.render.preview"
+            ],
+            "arms": [
+              [
+                "model",
+                "task"
+              ],
+              [
+                "view",
+                "taskId"
+              ]
+            ],
+            "runs": [
+              {
+                "input": [
+                  "model",
+                  "task"
+                ],
+                "spawns": 1,
+                "verb": [
+                  "context",
+                  "render"
+                ],
+                "noCommit": true,
+                "replayWords": 0
+              },
+              {
+                "input": [
+                  "view",
+                  "taskId"
+                ],
+                "spawns": 1,
+                "verb": [
+                  "context",
+                  "render"
+                ],
+                "noCommit": true,
+                "replayWords": 0
+              },
+              {
+                "input": [
+                  "view",
+                  "taskId",
+                  "model"
+                ],
+                "spawns": 1,
+                "verb": [
+                  "context",
+                  "render"
+                ],
+                "noCommit": true,
+                "replayWords": 0
+              }
+            ],
+            "fetches": 0
+          }
+        },
+        {
+          "id": "A2",
+          "witness": {
+            "srcFloorMet": true,
+            "sites": [
+              "src/workbench/providers/reactivefiber.ts: spawn"
+            ],
+            "controls": {
+              "bare": 1,
+              "aliased": 1,
+              "namespace": 1,
+              "method": 1,
+              "template": 1,
+              "path": 1,
+              "constProgram": 1,
+              "composed": 0
+            }
+          }
+        },
+        {
+          "id": "A3",
+          "witness": {
+            "srcFloorMet": true,
+            "launchModules": [
+              "src/workbench/providers/reactivefiber.ts"
+            ],
+            "renderArgvSeen": true,
+            "argv": [],
+            "literals": [],
+            "words": [],
+            "controls": {
+              "argv": 1,
+              "pushed": 1,
+              "spaced": 1,
+              "dotted": 1,
+              "template": 1,
+              "constVerb": 2,
+              "concat": 1,
+              "constArgv": 1,
+              "flagBetween": 1,
+              "composed": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "(a) on RF_REPLAY_RECONSTRUCTION_UNAVAILABLE (exit 8) Pi reports replay unavailable, the producer's metadata.source_id rides the registered reading verbatim (withheld from the typed refusal and the projection: R-WITHHELD), and no fallback owner read is presented as the replay output",
+      "pins": [
+        {
+          "id": "B1",
+          "witness": {
+            "command": "context.replay",
+            "ok": false,
+            "result": null,
+            "diagnostics": 1,
+            "code": "RF_REPLAY_RECONSTRUCTION_UNAVAILABLE",
+            "severity": "error",
+            "metadataKeys": [
+              "source_id"
+            ],
+            "sourceId": "git",
+            "exit": 8
+          }
+        },
+        {
+          "id": "B2",
+          "witness": {
+            "category": "unavailable",
+            "message": "RF render refused: RF_REPLAY_RECONSTRUCTION_UNAVAILABLE",
+            "named": [],
+            "reading": false,
+            "spawns": 1,
+            "verb": [
+              "context",
+              "render"
+            ],
+            "fetches": 0
+          }
+        },
+        {
+          "id": "B3",
+          "witness": {
+            "code": "RF_REPLAY_RECONSTRUCTION_UNAVAILABLE",
+            "metadata": {
+              "source_id": "git"
+            },
+            "readingKeys": [
+              "contract",
+              "source",
+              "workspaceRoot"
+            ],
+            "calls": 1,
+            "fetches": 0
+          }
+        },
+        {
+          "id": "B4",
+          "witness": {
+            "snapshots": 1,
+            "statusText": "refused · RF_REPLAY_RECONSTRUCTION_UNAVAILABLE",
+            "statusTone": "failure",
+            "coverage": "unknown",
+            "operationId": "rfo_ybb4gsik4roivyyoipm5man7xa",
+            "evidenceRefs": [
+              "rf-workspace:rfw_eniufnefqqp3sghmaaghcg2n44"
+            ],
+            "carriesValue": false,
+            "sentinelInvariant": true,
+            "surfaced": []
+          }
+        },
+        {
+          "id": "B5",
+          "witness": {
+            "category": "unavailable",
+            "reading": false,
+            "spawns": 1,
+            "fetches": 0
+          }
+        },
+        {
+          "id": "B6",
+          "witness": {
+            "closureFloorMet": true,
+            "anchorsRead": true,
+            "unresolved": [],
+            "names": [],
+            "modules": [],
+            "launches": [
+              "rf"
+            ],
+            "controls": {
+              "httpImport": {
+                "names": 0,
+                "modules": 1,
+                "launches": []
+              },
+              "dynamicImport": {
+                "names": 0,
+                "modules": 1,
+                "launches": []
+              },
+              "fetchCall": {
+                "names": 1,
+                "modules": 0,
+                "launches": []
+              },
+              "fetchAlias": {
+                "names": 1,
+                "modules": 0,
+                "launches": []
+              },
+              "fetchElement": {
+                "names": 1,
+                "modules": 0,
+                "launches": []
+              },
+              "socket": {
+                "names": 1,
+                "modules": 0,
+                "launches": []
+              },
+              "aliasedLauncher": {
+                "names": 0,
+                "modules": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "namespaceLauncher": {
+                "names": 0,
+                "modules": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "requiredLauncher": {
+                "names": 0,
+                "modules": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "composedLauncher": {
+                "names": 0,
+                "modules": 0,
+                "launches": [
+                  "<composed>"
+                ]
+              },
+              "constLauncher": {
+                "names": 0,
+                "modules": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "importEquals": {
+                "names": 0,
+                "modules": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "dynamicLauncher": {
+                "names": 0,
+                "modules": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "composed": {
+                "names": 0,
+                "modules": 0,
+                "launches": []
+              },
+              "unlisted": {
+                "names": 0,
+                "modules": 0,
+                "launches": []
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "(b) Pi presents no rf replay output as a fresh owner read: both readers refuse it, the registered reading carries it and its identities byte for byte, and the rf reader adapter mints no fresh/current label (the projection's connection-derived node freshness is R-NODE-FRESHNESS; labelling replay output historical and naming its receipt wait for rfc-bak67.12)",
+      "pins": [
+        {
+          "id": "C1",
+          "witness": {
+            "category": "transport",
+            "message": "RF preview returned an unrecognized native envelope.",
+            "reading": false,
+            "spawns": 1,
+            "verb": [
+              "context",
+              "render"
+            ],
+            "fetches": 0
+          }
+        },
+        {
+          "id": "C2",
+          "witness": {
+            "category": "validation",
+            "message": "ReactiveFiber topology refused: source must be a reactive-fiber.cli/v1 context.render envelope."
+          }
+        },
+        {
+          "id": "C3",
+          "witness": {
+            "command": "context.replay",
+            "renderId": "rfr_qnfgcp6d7dized6mn5rxqwr7fi",
+            "outcome": "reproduced",
+            "classification": "replayable_exact",
+            "substituted": [
+              "git",
+              "task"
+            ],
+            "liveRecomputed": [],
+            "workspace": {
+              "id": "rfw_eniufnefqqp3sghmaaghcg2n44",
+              "root": "/fixture/rf-workspace"
+            },
+            "readingKeys": [
+              "contract",
+              "source",
+              "workspaceRoot"
+            ],
+            "calls": 1,
+            "fetches": 0
+          }
+        },
+        {
+          "id": "C4",
+          "witness": {
+            "replayed": {
+              "coverage": "partial",
+              "statusTone": "unknown",
+              "reusedNotes": [
+                "observations: 1 row, 1 reused: partial"
+              ]
+            },
+            "clean": {
+              "coverage": "complete",
+              "statusTone": "success"
+            },
+            "labelled": []
+          }
+        },
+        {
+          "id": "C5",
+          "witness": {
+            "anchorsRead": true,
+            "hits": [],
+            "controls": {
+              "literal": 1,
+              "template": 1,
+              "hyphenated": 1,
+              "cased": 1,
+              "composed": 0
+            }
+          }
+        },
+        {
+          "id": "C6",
+          "witness": {
+            "replayed": {
+              "freshness": "current",
+              "completeness": "partial",
+              "connection": "unknown"
+            },
+            "clean": {
+              "freshness": "current",
+              "completeness": "complete",
+              "connection": "unknown"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "tests": [
+    "the judged set: the frozen shape, the out-of-file roster and the cases agree",
+    "A1",
+    "A2",
+    "A3",
+    "B1",
+    "B2",
+    "B3",
+    "B4",
+    "B5",
+    "B6",
+    "C1",
+    "C2",
+    "C3",
+    "C4",
+    "C5",
+    "C6",
+    "registration: every judged pin registered once, ran in run mode, was not inverted and reached its witness"
+  ]
+}

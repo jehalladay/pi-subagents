@@ -1,0 +1,600 @@
+{
+  "bead": "wb-tnz5.3",
+  "pin": "6a251bf73af5",
+  "installedRf": "0.1.832",
+  "basis": "The out-of-file roster of test/workbench-rf-federation-refusal-codes-census.test.ts (standing rule 16): every judged row's id, label and pins, every pin's witness and the five vocabularies, so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. Producer facts read at ReactiveFiberCLI 6a251bf73af5 (read-only git show): docs/programs/certified-federated-reactive-refinement-2026-10-18/BEADS-2026-10-21.md:22 (rfc-bak67.8, FW-CFRR-02b: refusals are RF_FEDERATION_* codes) and :46 (RF_FEDERATION_PIN_CHANGED, exit 4 class, rfc-bak67.14), README.md:32, 02-concrete-contract-and-verification-gates.md:26, 04-typed-acceptance-slice-and-protected-storage-plan.md:13; federated-workspaces-2026-10-18/04-cli-api.md:104 (the eleven RF_FED_* codes) and :8-18 (the planned rf workspace verbs), BEADS-2026-10-21.md:13 (rfc-0txnl.1, FW-04a), 10-ccca-optimal-snapshot-acquisition-contract.md:15-19 (the outcome words; :17 NO_ADMISSIBLE_VERSION is never relabelled a mathematical inconsistency). Installed rf 0.1.832 (rf --json --version, 2026-10-22; read-only import of reactive_fiber_cli.domain.diagnostics): REGISTRY holds 304 codes, none starting RF_FED; RF_COMPONENT_INSTANCE_UNFED is the one registered code containing FED. Pi facts measured at base e8850da. Every refusal envelope, admission envelope and outcome-bearing metadata is CONSTRUCTED (no rf emits a federation code today). Matcher digests are the first 16 hex of sha256 over the UTF-8 spelling; the Q3 and Q4 spellings carry U+200B and U+0415 and are never written raw here.",
+  "families": [
+    {
+      "stem": "RF_FED_",
+      "source": "federated-workspaces-2026-10-18/04-cli-api.md:104",
+      "gate": "rfc-0txnl.1 (FW-04a)",
+      "codes": [
+        "RF_FED_LINK_NOT_FOUND",
+        "RF_FED_INSTANCE_MISMATCH",
+        "RF_FED_EXPORT_NOT_FOUND",
+        "RF_FED_OPERATION_DENIED",
+        "RF_FED_RESOURCE_UNAVAILABLE",
+        "RF_FED_STALE",
+        "RF_FED_SCHEMA_INCOMPATIBLE",
+        "RF_FED_REVISION_CONFLICT",
+        "RF_FED_CURSOR_GAP",
+        "RF_FED_CYCLE_UNSUPPORTED",
+        "RF_FED_SNAPSHOT_INVALID"
+      ]
+    },
+    {
+      "stem": "RF_FEDERATION_",
+      "source": "certified-federated-reactive-refinement-2026-10-18/BEADS-2026-10-21.md:22,46",
+      "gate": "rfc-bak67.8 (FW-CFRR-02b)",
+      "codes": [
+        "RF_FEDERATION_PIN_CHANGED"
+      ]
+    }
+  ],
+  "unproposed": [
+    "RF_FED_CODE_NOT_PROPOSED",
+    "RF_FEDERATION_CODE_NOT_PROPOSED"
+  ],
+  "gatingArtifacts": [
+    "rfc-bak67.8",
+    "FW-CFRR-02b",
+    "rfc-0txnl.1",
+    "FW-04a"
+  ],
+  "workspaceVerbs": [
+    "link",
+    "links",
+    "inspect",
+    "exports",
+    "read",
+    "subscribe",
+    "unlink",
+    "invoke"
+  ],
+  "outcomeWords": [
+    "ADMITTED",
+    "INFEASIBLE_CAUSAL_BOUNDS",
+    "NO_ADMISSIBLE_VERSION",
+    "INCOMPLETE_CAUSAL_EVIDENCE",
+    "EPOCH_OR_IDENTITY_CHANGE",
+    "PERMISSION_DENIED",
+    "VERSION_PRUNED",
+    "SOURCE_UNAVAILABLE",
+    "GRAPH_FENCE_CONFLICT",
+    "RETRYABLE_RACE"
+  ],
+  "rows": [
+    {
+      "id": "A",
+      "label": "(a) a fixture envelope carrying a federation-family refusal surfaces the code verbatim with a non-success tone on every Pi reader surface; an unknown family code stays unknown, never mapped to success or another code",
+      "pins": [
+        {
+          "id": "A1",
+          "witness": {
+            "families": [
+              {
+                "stem": "RF_FED_",
+                "codes": 11
+              },
+              {
+                "stem": "RF_FEDERATION_",
+                "codes": 1
+              }
+            ],
+            "unproposed": [
+              "RF_FED_CODE_NOT_PROPOSED",
+              "RF_FEDERATION_CODE_NOT_PROPOSED"
+            ],
+            "envelopes": 14,
+            "everyFailure": true,
+            "messageSpellsCode": false,
+            "unproposedOutside": true,
+            "exit": 4
+          }
+        },
+        {
+          "id": "A2",
+          "witness": {
+            "messages": [
+              "RF render refused: RF_FED_LINK_NOT_FOUND",
+              "RF render refused: RF_FED_INSTANCE_MISMATCH",
+              "RF render refused: RF_FED_EXPORT_NOT_FOUND",
+              "RF render refused: RF_FED_OPERATION_DENIED",
+              "RF render refused: RF_FED_RESOURCE_UNAVAILABLE",
+              "RF render refused: RF_FED_STALE",
+              "RF render refused: RF_FED_SCHEMA_INCOMPATIBLE",
+              "RF render refused: RF_FED_REVISION_CONFLICT",
+              "RF render refused: RF_FED_CURSOR_GAP",
+              "RF render refused: RF_FED_CYCLE_UNSUPPORTED",
+              "RF render refused: RF_FED_SNAPSHOT_INVALID",
+              "RF render refused: RF_FEDERATION_PIN_CHANGED"
+            ],
+            "categories": [
+              "unavailable"
+            ],
+            "readings": 0,
+            "spawns": 12,
+            "verbs": [
+              "context render"
+            ]
+          }
+        },
+        {
+          "id": "A3",
+          "witness": [
+            {
+              "code": "RF_FED_LINK_NOT_FOUND",
+              "ok": false
+            },
+            {
+              "code": "RF_FED_INSTANCE_MISMATCH",
+              "ok": false
+            },
+            {
+              "code": "RF_FED_EXPORT_NOT_FOUND",
+              "ok": false
+            },
+            {
+              "code": "RF_FED_OPERATION_DENIED",
+              "ok": false
+            },
+            {
+              "code": "RF_FED_RESOURCE_UNAVAILABLE",
+              "ok": false
+            },
+            {
+              "code": "RF_FED_STALE",
+              "ok": false
+            },
+            {
+              "code": "RF_FED_SCHEMA_INCOMPATIBLE",
+              "ok": false
+            },
+            {
+              "code": "RF_FED_REVISION_CONFLICT",
+              "ok": false
+            },
+            {
+              "code": "RF_FED_CURSOR_GAP",
+              "ok": false
+            },
+            {
+              "code": "RF_FED_CYCLE_UNSUPPORTED",
+              "ok": false
+            },
+            {
+              "code": "RF_FED_SNAPSHOT_INVALID",
+              "ok": false
+            },
+            {
+              "code": "RF_FEDERATION_PIN_CHANGED",
+              "ok": false
+            }
+          ]
+        },
+        {
+          "id": "A4",
+          "witness": {
+            "statusTexts": [
+              "refused · RF_FED_LINK_NOT_FOUND",
+              "refused · RF_FED_INSTANCE_MISMATCH",
+              "refused · RF_FED_EXPORT_NOT_FOUND",
+              "refused · RF_FED_OPERATION_DENIED",
+              "refused · RF_FED_RESOURCE_UNAVAILABLE",
+              "refused · RF_FED_STALE",
+              "refused · RF_FED_SCHEMA_INCOMPATIBLE",
+              "refused · RF_FED_REVISION_CONFLICT",
+              "refused · RF_FED_CURSOR_GAP",
+              "refused · RF_FED_CYCLE_UNSUPPORTED",
+              "refused · RF_FED_SNAPSHOT_INVALID",
+              "refused · RF_FEDERATION_PIN_CHANGED"
+            ],
+            "tone": "failure",
+            "coverage": "unknown",
+            "notes": [
+              "render refused with <code>",
+              "diagnostic message, hint and metadata withheld",
+              "no native interval supplied"
+            ]
+          }
+        },
+        {
+          "id": "A5",
+          "witness": {
+            "surfaced": {
+              "RF_FED_CODE_NOT_PROPOSED": {
+                "native": "RF render refused: RF_FED_CODE_NOT_PROPOSED",
+                "adapter": "refused · RF_FED_CODE_NOT_PROPOSED",
+                "tone": "failure",
+                "tokens": {
+                  "native": [
+                    "RF_FED_CODE_NOT_PROPOSED"
+                  ],
+                  "reading": [
+                    "RF_FED_CODE_NOT_PROPOSED"
+                  ],
+                  "adapter": [
+                    "RF_FED_CODE_NOT_PROPOSED"
+                  ]
+                }
+              },
+              "RF_FEDERATION_CODE_NOT_PROPOSED": {
+                "native": "RF render refused: RF_FEDERATION_CODE_NOT_PROPOSED",
+                "adapter": "refused · RF_FEDERATION_CODE_NOT_PROPOSED",
+                "tone": "failure",
+                "tokens": {
+                  "native": [
+                    "RF_FEDERATION_CODE_NOT_PROPOSED"
+                  ],
+                  "reading": [
+                    "RF_FEDERATION_CODE_NOT_PROPOSED"
+                  ],
+                  "adapter": [
+                    "RF_FEDERATION_CODE_NOT_PROPOSED"
+                  ]
+                }
+              }
+            },
+            "spawns": 2
+          }
+        },
+        {
+          "id": "A6",
+          "witness": {
+            "flagged": {
+              "tone": "unknown",
+              "coverage": "partial",
+              "codes": [
+                "RF_FEDERATION_PIN_CHANGED"
+              ]
+            },
+            "clean": {
+              "tone": "success",
+              "coverage": "complete",
+              "codes": []
+            },
+            "warning": {
+              "tone": "success",
+              "coverage": "complete",
+              "codes": [
+                "RF_FEDERATION_PIN_CHANGED"
+              ]
+            },
+            "flaggedNote": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "(b) no federation-family literal is emitted by Pi without a producer envelope behind it: no src or qa file and no registered descriptor spells the family, and every code a Pi refusal names is its envelope's primary code",
+      "pins": [
+        {
+          "id": "B1",
+          "witness": [
+            {
+              "root": "src",
+              "floor": 100,
+              "floorMet": true,
+              "anchorFile": "workbench/providers/reactivefiber.ts",
+              "anchorRead": true,
+              "hits": []
+            },
+            {
+              "root": "qa",
+              "floor": 50,
+              "floorMet": true,
+              "anchorFile": "workbench/receipts-index.mjs",
+              "anchorRead": true,
+              "hits": []
+            }
+          ]
+        },
+        {
+          "id": "B2",
+          "witness": {
+            "descriptorsRead": 5,
+            "hits": []
+          }
+        },
+        {
+          "id": "B3",
+          "witness": {
+            "shapes": {
+              "family-refusal": {
+                "category": "unavailable",
+                "tokens": [
+                  "RF_FEDERATION_PIN_CHANGED"
+                ]
+              },
+              "family-behind-primary": {
+                "category": "unavailable",
+                "tokens": [
+                  "RF_RENDER_FAILED"
+                ]
+              },
+              "no-diagnostics": {
+                "category": "transport",
+                "tokens": []
+              },
+              "warning-primary": {
+                "category": "transport",
+                "tokens": []
+              },
+              "exit-zero": {
+                "category": "transport",
+                "tokens": []
+              },
+              "malformed-stdout": {
+                "category": "transport",
+                "tokens": []
+              },
+              "result-on-failure": {
+                "category": "transport",
+                "tokens": []
+              }
+            },
+            "spawns": 7
+          }
+        },
+        {
+          "id": "B4",
+          "witness": {
+            "family-refusal": {
+              "tone": "failure",
+              "tokens": [
+                "RF_FEDERATION_PIN_CHANGED"
+              ]
+            },
+            "family-behind-primary": {
+              "tone": "failure",
+              "tokens": [
+                "RF_RENDER_FAILED"
+              ]
+            },
+            "no-diagnostics": {
+              "refused": "validation",
+              "tokens": []
+            },
+            "warning-primary": {
+              "refused": "validation",
+              "tokens": []
+            },
+            "result-on-failure": {
+              "refused": "validation",
+              "tokens": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "(c) until rfc-bak67.8 closes and the codes enter rf's diagnostics registry, Pi surfaces no federation admission result: no rf workspace verb in src, the rf roster stays the preview, and both readers refuse an admission envelope",
+      "pins": [
+        {
+          "id": "C1",
+          "witness": {
+            "srcFloorMet": true,
+            "renderArgvSeen": true,
+            "argv": [],
+            "literals": [],
+            "descriptorHits": [],
+            "composedArgv": [
+              "src/workbench/observation.ts"
+            ],
+            "controls": {
+              "argv": {
+                "hits": 1,
+                "composedArgv": 0
+              },
+              "spaced": {
+                "hits": 1,
+                "composedArgv": 0
+              },
+              "dotted": {
+                "hits": 1,
+                "composedArgv": 0
+              },
+              "template": {
+                "hits": 1,
+                "composedArgv": 0
+              },
+              "composedArgv": {
+                "hits": 0,
+                "composedArgv": 1
+              }
+            }
+          }
+        },
+        {
+          "id": "C2",
+          "witness": {
+            "native": [
+              "reactivefiber.render.preview"
+            ],
+            "injected": [
+              "reactivefiber.render.preview"
+            ],
+            "reconcile": [
+              "reactivefiber.render.preview"
+            ]
+          }
+        },
+        {
+          "id": "C3",
+          "witness": {
+            "admission-refused": {
+              "category": "transport",
+              "message": "RF preview returned an unrecognized native envelope.",
+              "tokens": []
+            },
+            "non-render-success": {
+              "category": "transport",
+              "message": "RF preview returned an unrecognized native envelope.",
+              "tokens": []
+            },
+            "spawns": 2,
+            "verbs": [
+              "context render"
+            ]
+          }
+        },
+        {
+          "id": "C4",
+          "witness": {
+            "admission-refused": {
+              "category": "validation",
+              "message": "ReactiveFiber topology refused: source must be a reactive-fiber.cli/v1 context.render envelope.",
+              "tokens": []
+            },
+            "non-render-success": {
+              "category": "validation",
+              "message": "ReactiveFiber topology refused: source must be a reactive-fiber.cli/v1 context.render envelope.",
+              "tokens": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "D",
+      "label": "(FW-R6 CCCA clause) NO_ADMISSIBLE_VERSION is never relabelled a mathematical inconsistency: no Pi file spells an outcome word or an inconsistency word, and the readers echo the outcome only verbatim",
+      "pins": [
+        {
+          "id": "D1",
+          "witness": {
+            "roots": [
+              {
+                "root": "src",
+                "floor": 100,
+                "floorMet": true,
+                "anchorFile": "workbench/providers/reactivefiber.ts",
+                "anchorRead": true,
+                "hits": [
+                  "src/workbench/designer.ts"
+                ]
+              },
+              {
+                "root": "qa",
+                "floor": 50,
+                "floorMet": true,
+                "anchorFile": "workbench/receipts-index.mjs",
+                "anchorRead": true,
+                "hits": [
+                  "qa/workbench/timeline-grouped-core.mjs"
+                ]
+              }
+            ],
+            "anchored": [
+              "qa/workbench/timeline-grouped-core.mjs",
+              "src/workbench/designer.ts"
+            ]
+          }
+        },
+        {
+          "id": "D2",
+          "witness": {
+            "NO_ADMISSIBLE_VERSION": {
+              "carried": "NO_ADMISSIBLE_VERSION",
+              "native": "RF render refused: RF_FED_RESOURCE_UNAVAILABLE",
+              "adapter": "refused · RF_FED_RESOURCE_UNAVAILABLE",
+              "named": [],
+              "inconsistency": false
+            },
+            "INFEASIBLE_CAUSAL_BOUNDS": {
+              "carried": "INFEASIBLE_CAUSAL_BOUNDS",
+              "native": "RF render refused: RF_FED_RESOURCE_UNAVAILABLE",
+              "adapter": "refused · RF_FED_RESOURCE_UNAVAILABLE",
+              "named": [],
+              "inconsistency": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "M",
+      "label": "the FAMILY matcher rows B1 and B2 read catches every spelling of both stems, stays quiet on the registered non-family FED code, and its named residuals stay pinned quiet",
+      "pins": [
+        {
+          "id": "M1",
+          "witness": {
+            "digest": "12b16175b67851d6",
+            "hit": true
+          }
+        },
+        {
+          "id": "M2",
+          "witness": {
+            "digest": "31a31bb4757ca2aa",
+            "hit": true
+          }
+        },
+        {
+          "id": "M3",
+          "witness": {
+            "digest": "cc144e9c2de71147",
+            "hit": true
+          }
+        },
+        {
+          "id": "M4",
+          "witness": {
+            "digest": "ae3ae59cf3835750",
+            "hit": true
+          }
+        },
+        {
+          "id": "M5",
+          "witness": {
+            "digest": "cf19a47f598454f5",
+            "hit": true
+          }
+        },
+        {
+          "id": "M6",
+          "witness": {
+            "digest": "1842528541bf1dd6",
+            "hit": true
+          }
+        },
+        {
+          "id": "M7",
+          "witness": {
+            "digest": "9b89d8a2e3c4628a",
+            "hit": true
+          }
+        },
+        {
+          "id": "Q1",
+          "witness": {
+            "digest": "9592db648ee60690",
+            "hit": false
+          }
+        },
+        {
+          "id": "Q2",
+          "witness": {
+            "digest": "dd6e3b6b964e05fb",
+            "hit": false
+          }
+        },
+        {
+          "id": "Q3",
+          "witness": {
+            "digest": "b1c36eafcfd30ce3",
+            "hit": false
+          }
+        },
+        {
+          "id": "Q4",
+          "witness": {
+            "digest": "e1a0c7e45ef1db0c",
+            "hit": false
+          }
+        }
+      ]
+    }
+  ]
+}
