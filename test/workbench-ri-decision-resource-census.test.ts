@@ -66,10 +66,23 @@
  *    tags) or naming it in an evidence ref under a Pi tag, beside the adoption simulation (a ref under the producer's tag reads
  *    ref-count alone, never re-tag); C3 synthesizing a generative result in the reading's source, as a reading key or in the
  *    projection, and row A's matcher on a module typing that result; C4 the checker's quiet controls.
- * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal, and the whole judged set - every row's id, label
- * and pins, every pin's witness, the identifiers and their digests, the generative keys, the roots, the placements, the resource
- * and the registered tests - is held to the out-of-file roster test/fixtures/ri-decision-resource-roster.json; the last case walks
- * this file's vitest task tree against the roster.
+ * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal, and the whole judged set - every row's id, label,
+ * until-then reading and pins, every pin's witness and covered phrases, the identifiers and their digests, the generative keys, the
+ * roots, the placements, the resource, the registered tests and each pin's assertion count - is held to the out-of-file roster
+ * test/fixtures/ri-decision-resource-roster.json; the last case walks this file's vitest task tree against the roster.
+ * OUTSIDE ANCHOR (respin #1, the gate's F2): the bead's own row in the tracked export (.beads/issues.jsonl at the tree under test).
+ * Its first `Acceptance:` line splits into exactly the clauses (a)-(c), and each clause, its four names written as their
+ * placeholders, equals its row label; the four names it spells hash to the IDENTIFIERS digests; each pin's covered phrases (COVERS)
+ * are verbatim spans of its row's clause, together they cover every word of the clause (articles and conjunctions aside), and each
+ * pin covers a word no sibling covers; row B's until-then reading quotes the title's gating parenthetical verbatim. So a row, a pin
+ * or a name removed from every literal of this file and its roster together still reds. Only first matches are read (the first
+ * `Acceptance:` line, the title's gating parenthetical), so a note appended later never moves the reading, and a quiet control pins
+ * that. Not claimed: a pin removed everywhere while its own words are handed to a sibling's phrases (the anchor reads coverage, not
+ * which pin owns a word).
+ * WALK ANCHOR (the gate's F3): each root's walk equals what git would commit below it (tracked or untracked, never ignored), so a
+ * walk that skips a directory reds even while every file floor holds.
+ * RECORD (the gate's F4): each pin's case records its vitest assertion count after its witness compares equal, and the last case
+ * holds the counts to the roster, so a case that hands back a copy of its roster witness without measuring reds.
  * THE GATE-OPENING SIGNAL: when RI ships its typed decision envelope and resource tag (RI-DEC-06/07) and rf surfaces it, a
  * re-measured preview carries the producer's own placement, which replaces the constructed ones, and the adoption Pi then owes
  * (exactly one evidence ref under the producer's tag verbatim) reds B3: the projection moves by that one ref and the checker reads
@@ -87,8 +100,9 @@
  *
  * Display paths added: none. Test-only: the stand-in rf lives in makeScratch scratch; src is only read.
  */
+import { execFileSync, spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { chmodSync, type Dirent, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { chmodSync, type Dirent, existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import { afterAll, afterEach, describe, expect, it } from "vitest";
@@ -114,6 +128,9 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = join(HERE, "..");
 const SELF_PATH = fileURLToPath(import.meta.url);
 const ROSTER_PATH = join(HERE, "fixtures", "ri-decision-resource-roster.json");
+const BEAD = "wb-tz4r.1";
+/** The tracked bead export the outside anchor reads (the bead's own row: its title and its first acceptance line). */
+const BEAD_EXPORT = ".beads/issues.jsonl";
 /** The root the roster envelope names: the measured scratch root, rewritten. */
 const FIXTURE_ROOT = "/fixture/rf-workspace";
 const PREVIEW_ID = "reactivefiber.render.preview";
@@ -214,6 +231,8 @@ const PLACEMENTS: readonly Placement[] = [
 interface Row {
   readonly id: string;
   readonly label: string;
+  /** The until-then reading a row title carries beside its acceptance label (row B: the one-ref half is gated). */
+  readonly until?: string;
   readonly pins: readonly string[];
 }
 /** The judged rows; their shape is pinned below and held to the roster. */
@@ -226,6 +245,7 @@ const ROWS: readonly Row[] = [
   {
     id: "B",
     label: "(b) adoption: a decision-tagged resource in a preview envelope projects exactly one evidence ref labelled with the producer's tag verbatim and populates no output/text or generative field; tag absent = byte-identical projection",
+    until: "until then, 0 evidence refs name the resource and each projection stays byte-identical, as B1-B3 pin; the one-ref half waits on the title's (gated: RI typed decision envelope + its Reactive Fiber resource tag, RI-DEC-06/07, unshipped at 485f3615db1e)",
     pins: ["B1", "B2", "B3", "B4"],
   },
   {
@@ -234,14 +254,36 @@ const ROWS: readonly Row[] = [
     pins: ["C1", "C2", "C3", "C4"],
   },
 ];
+/** Each pin's covered phrases: verbatim spans of its row's acceptance clause (the names as placeholders). The outside anchor holds
+ * that together they cover every word of the clause and that each pin covers a word no sibling covers; C4 owns "fails", since a
+ * mutant's failure reads as one only beside the quiet twins C4 pins. */
+const COVERS: Readonly<Record<string, readonly string[]>> = {
+  A1: ["src", "census = 0", "0 now"],
+  A2: ["test/qa", "census = 0", "0 now"],
+  A3: ["docs/workbench", "census = 0", "0 now"],
+  A4: ["sdk_versions.reactive_inference version echoes excluded"],
+  A5: ["<IR>|<DE>|<NDB>|<GDF> identifiers"],
+  B1: ["tag absent = byte-identical projection"],
+  B2: ["a decision-tagged resource", "populates no output/text or generative field"],
+  B3: ["projects exactly one evidence ref labelled with the producer's tag verbatim"],
+  B4: ["in a preview envelope"],
+  C1: ["folding the resource into output/text"],
+  C2: ["re-tagging it"],
+  C3: ["synthesizing a generative result from a decision envelope"],
+  C4: ["fails"],
+};
+/** The words a clause's coverage never needs: articles and conjunctions. */
+const STOP: readonly string[] = ["a", "an", "the", "and", "or"];
 
 interface RosterPin {
   readonly id: string;
+  readonly covers: readonly string[];
   readonly witness: JsonValue;
 }
 interface RosterRow {
   readonly id: string;
   readonly label: string;
+  readonly until: string | null;
   readonly pins: readonly RosterPin[];
 }
 interface RosterIdentifier {
@@ -265,6 +307,8 @@ interface Roster {
   readonly envelope: JsonObject;
   readonly rows: readonly RosterRow[];
   readonly tests: readonly string[];
+  /** `${pin}:${assertion count}` for every pin, in row order. */
+  readonly reached: readonly string[];
 }
 
 function isObject(value: unknown): value is { [key: string]: unknown } {
@@ -333,14 +377,14 @@ function readRoster(): Roster {
     throw new Error("roster must be an object with rows, identifiers, placements and a resource");
   }
   const rows = raw.rows.map((row: unknown, index: number): RosterRow => {
-    if (!isObject(row) || typeof row.id !== "string" || typeof row.label !== "string" || !Array.isArray(row.pins)) {
-      throw new Error(`roster rows[${index}] needs an id, a label and a pins list`);
+    if (!isObject(row) || typeof row.id !== "string" || typeof row.label !== "string" || !Array.isArray(row.pins) || !(row.until === null || typeof row.until === "string")) {
+      throw new Error(`roster rows[${index}] needs an id, a label, an until reading (a string or null) and a pins list`);
     }
     const pins = row.pins.map((pin: unknown, at: number): RosterPin => {
       if (!isObject(pin) || typeof pin.id !== "string" || !Object.hasOwn(pin, "witness")) throw new Error(`roster rows[${index}].pins[${at}] needs an id and a witness`);
-      return { id: pin.id, witness: json(pin.witness) };
+      return { id: pin.id, covers: strings(pin.covers, `rows[${index}].pins[${at}].covers`), witness: json(pin.witness) };
     });
-    return { id: row.id, label: row.label, pins };
+    return { id: row.id, label: row.label, until: row.until, pins };
   });
   const identifiers = raw.identifiers.map((entry: unknown, index: number): RosterIdentifier => {
     if (!isObject(entry) || typeof entry.placeholder !== "string" || typeof entry.canonical !== "string" || typeof entry.sha256 !== "string") {
@@ -361,6 +405,7 @@ function readRoster(): Roster {
     generativeKeys: strings(raw.generativeKeys, "generativeKeys"), scanRoots: strings(raw.scanRoots, "scanRoots"), placements,
     resource: objectOf(json(raw.resource), "roster resource"), exit: raw.exit, envelope: envelopeOf(raw.envelope, "fixture"), rows,
     tests: strings(raw.tests, "tests"),
+    reached: strings(raw.reached, "reached"),
   };
 }
 
@@ -409,22 +454,47 @@ function filesBelow(directory: string): string[] {
   }
   return files;
 }
+/** What git would commit below a root: tracked or untracked, never ignored (the walk's outside anchor). */
+function gitListed(root: string): string[] {
+  const out = execFileSync("git", ["ls-files", "-z", "--cached", "--others", "--exclude-standard", "--", root], { cwd: REPO, encoding: "utf8", maxBuffer: 1 << 26 });
+  return [...new Set(out.split("\0").filter(path => path !== "" && existsSync(join(REPO, path))))].sort();
+}
+/** The walked paths git ignores (a tracked path is never reported). */
+function gitIgnored(paths: readonly string[]): Set<string> {
+  const result = spawnSync("git", ["check-ignore", "--stdin", "-z"], { cwd: REPO, input: paths.join("\0"), encoding: "utf8", maxBuffer: 1 << 26 });
+  if (result.status !== 0 && result.status !== 1) throw new Error(`git check-ignore failed: ${result.stderr}`);
+  return new Set(result.stdout.split("\0").filter(path => path !== ""));
+}
+/** A walk against git's list (a type alias, so a witness carrying it stays a JSON value). */
+type WalkAgreement = {
+  /** Walked, not ignored, yet not listed by git. */
+  readonly walkOnly: string[];
+  /** Listed by git, yet never walked (a skipped directory lands here). */
+  readonly gitOnly: string[];
+};
 interface RootScan {
   readonly files: readonly string[];
   readonly texts: ReadonlyMap<string, string>;
   readonly sites: readonly string[];
+  readonly walk: WalkAgreement;
 }
 const scans = new Map<string, RootScan>();
-/** One root read once: every file's text (strictly: an unreadable file fails the case) and every site. */
+/** One root read once: every file's text (strictly: an unreadable file fails the case), every site and the walk's agreement with git. */
 function scanOf(root: string): RootScan {
   const cached = scans.get(root);
   if (cached !== undefined) return cached;
   const files = filesBelow(join(REPO, root)).map(file => relative(REPO, file));
+  const ignored = gitIgnored(files);
+  const kept = new Set(files.filter(file => !ignored.has(file)));
+  const listed = gitListed(root);
+  const known = new Set(listed);
+  const walk = { walkOnly: [...kept].filter(file => !known.has(file)).sort(), gitOnly: listed.filter(file => !kept.has(file)) };
   const texts = new Map(files.map(file => [file, readFileSync(join(REPO, file), "utf8")]));
-  const scan = { files, texts, sites: files.flatMap(file => sitesOf(file, texts.get(file) ?? "")) };
+  const scan = { files, texts, sites: files.flatMap(file => sitesOf(file, texts.get(file) ?? "")), walk };
   scans.set(root, scan);
   return scan;
 }
+const AGREED: WalkAgreement = { walkOnly: [], gitOnly: [] };
 
 const oldPath = process.env.PATH;
 const scratches: string[] = [];
@@ -595,7 +665,7 @@ function rfIds(descriptors: readonly CapabilityDescriptor[]): string[] {
       descriptor.permissions.some(permission => permission.startsWith("reactivefiber:")) || (descriptor.contractSource ?? "").includes(RF_SCHEMA))
     .map(descriptor => descriptor.id);
 }
-/** A TSX host or SDK seam spelled in a descriptor or a dependency name. */
+/** No TSX host or SDK seam may be spelled in a descriptor or a dependency name (B4 pins the absence). */
 const TSX_SEAM = /\btsx\b|reactive[-_]?fiber[-_]?tsx/i;
 const SDK_SEAM = /^@reactive-fiber\/|reactive[-_]?inference|reactive[-_]?fiber[-_]?tsx/i;
 
@@ -640,6 +710,79 @@ function siteCount(text: string): number {
   return sitesOf("control", text).length;
 }
 
+/** The tracked bead export's row for `id` (every line must parse; a malformed export is refused, never skipped). */
+function exportRow(id: string): { [key: string]: unknown } {
+  const rows = readFileSync(join(REPO, BEAD_EXPORT), "utf8")
+    .split("\n")
+    .filter(line => line.trim() !== "")
+    .map((line, index): unknown => {
+      try {
+        return JSON.parse(line);
+      } catch {
+        throw new Error(`${BEAD_EXPORT} line ${index + 1} does not parse`);
+      }
+    });
+  const row = rows.find(entry => isObject(entry) && entry.id === id);
+  if (!isObject(row)) throw new Error(`${id} is missing from ${BEAD_EXPORT}`);
+  return row;
+}
+/** A clause's words: cut at white space, slashes, bars, commas, semicolons and parentheses; articles and conjunctions dropped. */
+function wordsOf(text: string): string[] {
+  return text.split(/[\s/|,;()]+/).filter(word => word !== "" && !STOP.includes(word));
+}
+interface Coverage {
+  /** Covered phrases that are not verbatim spans of the clause. */
+  readonly outside: string[];
+  /** Clause words no pin of the row covers. */
+  readonly uncovered: string[];
+  /** Pins of the row that cover no word of their own. */
+  readonly withoutOwnWord: string[];
+}
+/** One clause's coverage by the pins of the row whose label carries its letter (no such row: every word is uncovered). */
+function coverageOf(clause: string, rows: readonly Row[], covers: Readonly<Record<string, readonly string[]>>): Coverage {
+  const body = clause.replace(/^\([a-z]\) [a-z]+: /, "");
+  const pins = rows.find(row => row.label.startsWith(clause.slice(0, 4)))?.pins ?? [];
+  const wordsBy = new Map(pins.map(pin => [pin, new Set((covers[pin] ?? []).flatMap(wordsOf))]));
+  const covered = new Set([...wordsBy.values()].flatMap(words => [...words]));
+  const outside = pins.flatMap(pin => (covers[pin] ?? []).filter(phrase => !body.includes(phrase)));
+  const uncovered = [...new Set(wordsOf(body).filter(word => !covered.has(word)))];
+  const withoutOwnWord = pins.filter(pin => {
+    const others = new Set(pins.filter(other => other !== pin).flatMap(other => [...(wordsBy.get(other) ?? [])]));
+    return [...(wordsBy.get(pin) ?? [])].every(word => others.has(word));
+  });
+  return { outside, uncovered, withoutOwnWord };
+}
+interface AnchorReading {
+  readonly clauses: string[];
+  readonly nameDigests: string[];
+  readonly labels: string[];
+  readonly coverage: { [letter: string]: Coverage };
+  readonly gate: string | null;
+  readonly pinned: string[];
+}
+/** The outside anchor's reading of the export row's title and notes; first matches only, so an appended note never moves it. */
+function anchorOf(title: string, notes: string, rows: readonly Row[] = ROWS, covers: Readonly<Record<string, readonly string[]>> = COVERS): AnchorReading {
+  const acceptance = /^Acceptance: (.*)$/m.exec(notes)?.[1] ?? "";
+  const texts = acceptance === "" ? [] : acceptance.split(/;\s+(?=\([a-z]\) )/).map(clause => clause.replace(/\.$/, ""));
+  const first = texts[0] ?? "";
+  const named = first.indexOf("census = 0 ");
+  const names = named < 0 ? [] : first.slice(named + "census = 0 ".length).split(" ")[0]?.split("|") ?? [];
+  // A name is written as its placeholder only when an IDENTIFIERS entry composes exactly that spelling.
+  const placeholderOf = (name: string): string => IDENTIFIERS.find(identifier => spelled(identifier.words, identifier.canonical) === name)?.placeholder ?? name;
+  const labels = texts.map(clause => names.reduce((text, name) => text.split(name).join(placeholderOf(name)), clause));
+  return {
+    clauses: labels.map(label => /^\(([a-z])\) /.exec(label)?.[1] ?? ""),
+    nameDigests: names.map(sha256),
+    labels,
+    coverage: Object.fromEntries(labels.map(label => [label.charAt(1), coverageOf(label, rows, covers)])),
+    gate: /\((gated: [^)]*)\)/.exec(title)?.[1] ?? null,
+    pinned: [RI_PIN].filter(pin => title.includes(pin) && notes.includes(pin)),
+  };
+}
+
+/** `${pin}:${assertion count}`, pushed by each pin's case after its witness compares equal; the last case holds it to the roster. */
+const REACHED: string[] = [];
+
 /** Each pin's case: it asserts its own outcome and returns the witness the roster holds for it. */
 const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   A1: async () => {
@@ -651,10 +794,11 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       return [word, [...scan.texts.values()].some(text => whole.test(text))];
     }));
     expect(floor, `src files ${scan.files.length}`).toBe(true);
+    expect(scan.walk, "the src walk against what git would commit below src").toStrictEqual(AGREED);
     expect(allTs, "a src file that is not a .ts module").toBe(true);
     expect(Object.values(anchors)).toEqual(PART_WORDS.map(() => true));
     expect(scan.sites, "a src site of one of the twelve spellings").toEqual([]);
-    return { files: { floor, allTs }, anchors, sites: [...scan.sites] };
+    return { files: { floor, allTs }, walk: scan.walk, anchors, sites: [...scan.sites] };
   },
   A2: async () => {
     const test = scanOf("test");
@@ -667,19 +811,22 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const files = { test: test.files.length >= 450, qa: qa.files.length >= 55 };
     const ownFiles = { census: own(SELF_PATH), roster: own(ROSTER_PATH) };
     const sites = [...test.sites, ...qa.sites];
+    const walks = { test: test.walk, qa: qa.walk };
     expect(files, `test files ${test.files.length}, qa files ${qa.files.length}`).toStrictEqual({ test: true, qa: true });
+    expect(walks, "the test and qa walks against what git would commit below them").toStrictEqual({ test: AGREED, qa: AGREED });
     expect(ownFiles).toStrictEqual({ census: { walked: true, sites: 0, placeholders: 4 }, roster: { walked: true, sites: 0, placeholders: 4 } });
     expect(sites, "a test or qa site of one of the twelve spellings").toEqual([]);
-    return { files, own: ownFiles, sites };
+    return { files, walks, own: ownFiles, sites };
   },
   A3: async () => {
     const scan = scanOf("docs/workbench");
     const floor = scan.files.length >= 60;
     const allMarkdown = scan.files.every(file => file.endsWith(".md"));
     expect(floor, `docs/workbench files ${scan.files.length}`).toBe(true);
+    expect(scan.walk, "the docs/workbench walk against what git would commit below it").toStrictEqual(AGREED);
     expect(allMarkdown).toBe(true);
     expect(scan.sites, "a docs/workbench site of one of the twelve spellings").toEqual([]);
-    return { files: { floor, allMarkdown }, sites: [...scan.sites] };
+    return { files: { floor, allMarkdown }, walk: scan.walk, sites: [...scan.sites] };
   },
   A4: async () => {
     const walked = SCAN_ROOTS.flatMap(root => [...scanOf(root).texts.entries()]);
@@ -896,12 +1043,13 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
 describe("wb-tz4r.1 RI decision resource census (RI-UNIFIED-DECISION-INFERENCE-R1, gated on RI-DEC-06/07, until-then leg)", () => {
   it("the judged set: the frozen shape, the out-of-file roster and the cases agree", () => {
     expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:5", "B:4", "C:4"]);
-    expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
-      ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
+    expect(ROWS.map(({ id, label, until, pins }) => ({ id, label, until: until ?? null, pins: pins.map(pin => ({ id: pin, covers: [...(COVERS[pin] ?? [])] })) }))).toStrictEqual(
+      ROSTER.rows.map(({ id, label, until, pins }) => ({ id, label, until, pins: pins.map(pin => ({ id: pin.id, covers: [...pin.covers] })) })),
     );
     expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
+    expect(Object.keys(COVERS).sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
     expect({
-      bead: "wb-tz4r.1", rfVersion: RF_VERSION, riPin: RI_PIN, riProbe: RI_PROBE, tsxPin: TSX_PIN,
+      bead: BEAD, rfVersion: RF_VERSION, riPin: RI_PIN, riProbe: RI_PROBE, tsxPin: TSX_PIN,
       identifiers: IDENTIFIERS.map(({ placeholder, words, canonical: convention }) => ({ placeholder, words: [...words], canonical: convention })),
       generativeKeys: [...GENERATIVE_KEYS], scanRoots: [...SCAN_ROOTS], placements: PLACEMENTS.map(({ id, path }) => ({ id, path: [...path] })), resource: RESOURCE,
     }).toStrictEqual({
@@ -923,14 +1071,42 @@ describe("wb-tz4r.1 RI decision resource census (RI-UNIFIED-DECISION-INFERENCE-R
     expect(PLACEMENTS.map(placement => typeof at(ENVELOPE, placement.path.slice(0, -1)))).toEqual(PLACEMENTS.map(() => "object"));
   });
 
+  it("the outside anchor: the bead's export row holds the clauses, the four names, every pin's words and the until-then gate", () => {
+    const row = exportRow(BEAD);
+    const title = typeof row.title === "string" ? row.title : "";
+    const notes = typeof row.notes === "string" ? row.notes : "";
+    const reading = anchorOf(title, notes);
+    const quiet: Coverage = { outside: [], uncovered: [], withoutOwnWord: [] };
+    expect(reading.clauses, "the export's acceptance clauses against the judged rows").toEqual(ROWS.map(entry => entry.label.charAt(1)));
+    expect(reading.labels, "each clause, its names as placeholders, equals its row label").toEqual(ROWS.map(entry => entry.label));
+    expect(reading.nameDigests, "the names the export spells against the composed spellings").toEqual(IDENTIFIERS.map(identifier => sha256(spelled(identifier.words, identifier.canonical))));
+    expect(reading.nameDigests, "the names the export spells against the roster digests").toEqual(ROSTER.identifiers.map(entry => entry.sha256));
+    expect(reading.coverage, "every clause word covered by its row's pins, each pin with a word of its own").toStrictEqual(Object.fromEntries(ROWS.map(entry => [entry.label.charAt(1), quiet])));
+    expect(reading.gate, "the title's gating parenthetical").not.toBeNull();
+    expect(ROWS.filter(entry => entry.until !== undefined).map(entry => [entry.id, entry.until?.includes(`(${reading.gate ?? ""})`) === true])).toEqual([["B", true]]);
+    expect(reading.pinned, "the RI pin in the title and the notes").toEqual([RI_PIN]);
+    // Quiet and flagged controls: an appended note that quotes another acceptance line leaves the reading unchanged; a word no
+    // phrase covers and a pin dropped from its row each show in the coverage.
+    const appended = anchorOf(title, `${notes}\nAcceptance: (a) a later quote; (b) another\n(gated: elsewhere)\n`);
+    const rowC = reading.labels[2] ?? "";
+    const extraWord = coverageOf(`${rowC} quantum`, ROWS, COVERS);
+    const droppedPin = coverageOf(rowC, ROWS.map(entry => (entry.id === "C" ? { ...entry, pins: entry.pins.filter(pin => pin !== "C4") } : entry)), COVERS);
+    expect({ appended: canonical(json(appended)) === canonical(json(reading)), extraWord, droppedPin }).toStrictEqual({
+      appended: true,
+      extraWord: { outside: [], uncovered: ["quantum"], withoutOwnWord: [] },
+      droppedPin: { outside: [], uncovered: ["fails"], withoutOwnWord: [] },
+    });
+  });
+
   for (const row of ROWS) {
-    describe(`${row.id} ${row.label}`, () => {
+    describe(`${row.id} ${row.label}${row.until === undefined ? "" : ` - ${row.until}`}`, () => {
       for (const pin of row.pins) {
         it(pin, { timeout: 120_000 }, async () => {
           const impl = IMPL[pin];
           expect(impl, `no case for ${pin}`).toBeTypeOf("function");
           const witness = impl === undefined ? null : await impl();
           expect(witness, `witness ${pin}: ${JSON.stringify(witness)}`).toStrictEqual(rosterWitness(pin));
+          REACHED.push(`${pin}:${expect.getState().assertionCalls}`);
         });
       }
     });
@@ -953,5 +1129,6 @@ describe("wb-tz4r.1 RI decision resource census (RI-UNIFIED-DECISION-INFERENCE-R
     const ran = (state: string | undefined): boolean => state === "pass" || state === "fail";
     const read = (entry: (typeof walked)[number]): string => `${entry.name} | ${entry.mode}${entry.fails ? "+fails" : ""} | ${ran(entry.state) ? "ran" : (entry.state ?? "no result")}`;
     expect(walked.filter((entry, index) => index !== here && (entry.mode !== "run" || entry.fails || !ran(entry.state))).map(read), "every other test is in run mode, not inverted, and ran before this case").toEqual([]);
+    expect(REACHED, "every pin reached its end, in row order, with its pinned assertion count").toEqual([...ROSTER.reached]);
   });
 });

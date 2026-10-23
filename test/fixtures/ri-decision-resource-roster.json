@@ -450,13 +450,23 @@
     {
       "id": "A",
       "label": "(a) today: src/test/qa/docs/workbench census = 0 <IR>|<DE>|<NDB>|<GDF> identifiers (0 now; sdk_versions.reactive_inference version echoes excluded)",
+      "until": null,
       "pins": [
         {
           "id": "A1",
+          "covers": [
+            "src",
+            "census = 0",
+            "0 now"
+          ],
           "witness": {
             "files": {
               "floor": true,
               "allTs": true
+            },
+            "walk": {
+              "walkOnly": [],
+              "gitOnly": []
             },
             "anchors": {
               "decision": true,
@@ -470,10 +480,25 @@
         },
         {
           "id": "A2",
+          "covers": [
+            "test/qa",
+            "census = 0",
+            "0 now"
+          ],
           "witness": {
             "files": {
               "test": true,
               "qa": true
+            },
+            "walks": {
+              "test": {
+                "walkOnly": [],
+                "gitOnly": []
+              },
+              "qa": {
+                "walkOnly": [],
+                "gitOnly": []
+              }
             },
             "own": {
               "census": {
@@ -492,16 +517,28 @@
         },
         {
           "id": "A3",
+          "covers": [
+            "docs/workbench",
+            "census = 0",
+            "0 now"
+          ],
           "witness": {
             "files": {
               "floor": true,
               "allMarkdown": true
+            },
+            "walk": {
+              "walkOnly": [],
+              "gitOnly": []
             },
             "sites": []
           }
         },
         {
           "id": "A4",
+          "covers": [
+            "sdk_versions.reactive_inference version echoes excluded"
+          ],
           "witness": {
             "echoFloor": true,
             "rosterWalked": true,
@@ -512,6 +549,9 @@
         },
         {
           "id": "A5",
+          "covers": [
+            "<IR>|<DE>|<NDB>|<GDF> identifiers"
+          ],
           "witness": {
             "flagged": {
               "generativeType": 1,
@@ -553,9 +593,13 @@
     {
       "id": "B",
       "label": "(b) adoption: a decision-tagged resource in a preview envelope projects exactly one evidence ref labelled with the producer's tag verbatim and populates no output/text or generative field; tag absent = byte-identical projection",
+      "until": "until then, 0 evidence refs name the resource and each projection stays byte-identical, as B1-B3 pin; the one-ref half waits on the title's (gated: RI typed decision envelope + its Reactive Fiber resource tag, RI-DEC-06/07, unshipped at 485f3615db1e)",
       "pins": [
         {
           "id": "B1",
+          "covers": [
+            "tag absent = byte-identical projection"
+          ],
           "witness": {
             "native": {
               "spawns": 1,
@@ -608,6 +652,10 @@
         },
         {
           "id": "B2",
+          "covers": [
+            "a decision-tagged resource",
+            "populates no output/text or generative field"
+          ],
           "witness": {
             "top": {
               "diff": [
@@ -685,6 +733,9 @@
         },
         {
           "id": "B3",
+          "covers": [
+            "projects exactly one evidence ref labelled with the producer's tag verbatim"
+          ],
           "witness": {
             "top": {
               "rf-cli": {
@@ -732,6 +783,9 @@
         },
         {
           "id": "B4",
+          "covers": [
+            "in a preview envelope"
+          ],
           "witness": {
             "catalogRead": true,
             "native": [
@@ -754,9 +808,13 @@
     {
       "id": "C",
       "label": "(c) mutant: folding the resource into output/text, re-tagging it, or synthesizing a generative result from a decision envelope fails",
+      "until": null,
       "pins": [
         {
           "id": "C1",
+          "covers": [
+            "folding the resource into output/text"
+          ],
           "witness": {
             "top": {
               "foldText": [
@@ -789,6 +847,9 @@
         },
         {
           "id": "C2",
+          "covers": [
+            "re-tagging it"
+          ],
           "witness": {
             "resource": {
               "inference": [
@@ -812,6 +873,9 @@
         },
         {
           "id": "C3",
+          "covers": [
+            "synthesizing a generative result from a decision envelope"
+          ],
           "witness": {
             "inResult": [
               "generative"
@@ -828,6 +892,9 @@
         },
         {
           "id": "C4",
+          "covers": [
+            "fails"
+          ],
           "witness": {
             "copy": [],
             "keyOrder": [],
@@ -841,6 +908,7 @@
   ],
   "tests": [
     "the judged set: the frozen shape, the out-of-file roster and the cases agree",
+    "the outside anchor: the bead's export row holds the clauses, the four names, every pin's words and the until-then gate",
     "A1",
     "A2",
     "A3",
@@ -855,5 +923,20 @@
     "C3",
     "C4",
     "registration: every case of this file is registered once, in roster order, in run mode, and ran before this one"
+  ],
+  "reached": [
+    "A1:7",
+    "A2:6",
+    "A3:6",
+    "A4:7",
+    "A5:5",
+    "B1:16",
+    "B2:29",
+    "B3:8",
+    "B4:7",
+    "C1:8",
+    "C2:5",
+    "C3:4",
+    "C4:3"
   ]
 }
