@@ -1,0 +1,793 @@
+{
+  "bead": "wb-pfxo.8",
+  "producer": "ReactiveFiberCLI",
+  "pin": "6a251bf73af57c3a703caf6892dfe3015e06a481",
+  "installed": {"rfVersion": "0.1.832", "rfCommit": "2618c211be0dbbb74ba10e965e2d3d1f0fb5903e"},
+  "basis": "The out-of-file roster of test/workbench-rf-orphan-server-reclaim-census.test.ts (standing rule 16). <ENGINE> is the storage engine's name, which the census never spells. constants mirror the census's pinned constants. rows holds every judged row's id, label and pins, each pin with the witness its case measures. excerpts are ReactiveFiberCLI lines at the pin, verbatim (regenerate with: git -C <ReactiveFiberCLI> show 6a251bf73af5:<path> | sed -n '<lines>p'; the census pins each block's sha256). schemaRequired and grammar are the required key lists, patterns and enums of schemas/cli/storage.local-servers.schema.json (blob 56a82232bbb1155b96111e15aa4173c45988eaa7) and schemas/cli/plan.json (blob f1e3b406056fa225c1ed72cbadaf12efae0420fa), identical at the pin and in the installed rf 0.1.832. runs: ledgerUntrusted is MEASURED (the installed rf, read form, see its basis); the other four are CONSTRUCTED from the producer lines each basis names, with fake identities (server ids of one repeated hex digit, pids 41001-41004, ports 43001-43004, roots under /fixture) and no rf build behind them.",
+  "constants": {
+    "argv": ["rf", "storage", "local-servers", "--orphaned", "--stop", "--json"],
+    "window": 5,
+    "excerptSha256": {
+      "registry": "32848b1336f59a5cbb3bcd4667d0bcd9569dbd37863cbbf3f599a6599f8985a0",
+      "flags": "7963ffd17e2dffa70e016f976972ff62792aa36550bd76c7b49c4dad3d3977f5",
+      "parser": "28cc0dfa9fe55c970fca0d6f65b0f2ca8497fd22ad52786d47f5c459c5fcaa8d",
+      "confirmFlags": "4983972fa3f6e2b5f1a3f870457a37ca14f2e2e302025cd48fc1bcf93f7475c2",
+      "confirmation": "f490bd0509e4087d22767bab694bddb5ea99117f3476bda0545e717b63898cb9",
+      "jsonMode": "427a35886b22780d84ea4b58991bfe944073dd6d8faaec663cfa7371f537b6fb",
+      "gate": "dd36d1149bd08bdc7fddc62b59b1f0acdd4d1ac311abcecfde27b7ce5de557d2"
+    },
+    "scriptRoots": [
+      {"pin": "A1", "root": "src", "floor": 100, "anchorFile": "workflow/reconcile.ts", "anchorToken": "RECONCILE_EVIDENCE_READS"},
+      {"pin": "A2", "root": "qa", "floor": 50, "anchorFile": "workbench/local-detached-faults.mjs", "anchorToken": "process.kill("},
+      {"pin": "A3", "root": "test", "floor": 400, "anchorFile": "helpers/rf-render-fixture.ts", "anchorToken": "RF_FIXTURE_RELEASE"},
+      {"pin": "A4", "root": "examples", "floor": 5, "anchorFile": "workflows/compose.js", "anchorToken": "count-child"},
+      {"pin": "A5", "root": ".github", "floor": 2, "anchorFile": "workflows/ci.yml", "anchorToken": "runs-on"},
+      {"pin": "A6", "root": ".beads/hooks", "floor": 5, "anchorFile": "pre-commit", "anchorToken": "BEADS INTEGRATION"},
+      {"pin": "A7", "root": ".codex", "floor": 2, "anchorFile": "hooks.json", "anchorToken": "bd codex-hook"},
+      {"pin": "A8", "root": ".", "floor": 15, "anchorFile": "package.json", "anchorToken": "\"scripts\""}
+    ],
+    "srcScan": {"pin": "T", "root": "src", "floor": 100, "anchorFile": "workflow/reconcile.ts", "anchorToken": "RECONCILE_EVIDENCE_READS"},
+    "gatedScans": [
+      {"pin": "G1", "root": "src", "floor": 100, "anchorFile": "workflow/reconcile.ts", "anchorToken": "RECONCILE_EVIDENCE_READS"},
+      {"pin": "G1", "root": "qa", "floor": 50, "anchorFile": "workbench/local-detached-faults.mjs", "anchorToken": "process.kill("},
+      {"pin": "G1", "root": "docs", "floor": 50, "anchorFile": "workbench/13-contracts-and-config.md", "anchorToken": "reactivefiber.render.preview"}
+    ],
+    "scriptExtensions": [".json", ".toml", ".ts", ".mjs", ".js", ".yml", ".yaml", ".sh"],
+    "instructionRoots": ["docs", ".agents", ".pi", "new-feedback"]
+  },
+  "rows": [
+    {
+      "id": "T",
+      "label": "(trigger, absent today) Pi reclaims no rf-owned server: no src file spells the reclaim leaf or the engine's name, no served native descriptor spells either, and the rf read roster stays reactivefiber.render.preview",
+      "pins": [
+        {
+          "id": "T1",
+          "witness": {
+            "root": "src",
+            "floorMet": true,
+            "anchorRead": true,
+            "hits": []
+          }
+        },
+        {
+          "id": "T2",
+          "witness": {
+            "root": "src",
+            "floorMet": true,
+            "anchorRead": true,
+            "hits": []
+          }
+        },
+        {
+          "id": "T3",
+          "witness": {
+            "descriptorFloorMet": true,
+            "leafHits": [],
+            "targetHits": [],
+            "rfServed": ["reactivefiber.render.preview"],
+            "rfRoster": ["reactivefiber.render.preview"]
+          }
+        }
+      ]
+    },
+    {
+      "id": "A",
+      "label": "(a) census over Pi lane/cleanup scripts: zero pkill/kill-by-pattern over '<ENGINE> sql-server' or '.reactive-fiber/<ENGINE>'",
+      "pins": [
+        {
+          "id": "A1",
+          "witness": {
+            "root": "src",
+            "floor": 100,
+            "floorMet": true,
+            "anchorRead": true,
+            "hits": []
+          }
+        },
+        {
+          "id": "A2",
+          "witness": {
+            "root": "qa",
+            "floor": 50,
+            "floorMet": true,
+            "anchorRead": true,
+            "hits": []
+          }
+        },
+        {
+          "id": "A3",
+          "witness": {
+            "root": "test",
+            "floor": 400,
+            "floorMet": true,
+            "anchorRead": true,
+            "hits": []
+          }
+        },
+        {
+          "id": "A4",
+          "witness": {
+            "root": "examples",
+            "floor": 5,
+            "floorMet": true,
+            "anchorRead": true,
+            "hits": []
+          }
+        },
+        {
+          "id": "A5",
+          "witness": {
+            "root": ".github",
+            "floor": 2,
+            "floorMet": true,
+            "anchorRead": true,
+            "hits": []
+          }
+        },
+        {
+          "id": "A6",
+          "witness": {
+            "root": ".beads/hooks",
+            "floor": 5,
+            "floorMet": true,
+            "anchorRead": true,
+            "hits": []
+          }
+        },
+        {
+          "id": "A7",
+          "witness": {
+            "root": ".codex",
+            "floor": 2,
+            "floorMet": true,
+            "anchorRead": true,
+            "hits": []
+          }
+        },
+        {
+          "id": "A8",
+          "witness": {
+            "root": ".",
+            "floor": 15,
+            "floorMet": true,
+            "anchorRead": true,
+            "hits": []
+          }
+        },
+        {
+          "id": "A9",
+          "witness": {
+            "referenced": [".", "qa", "src", "test"],
+            "uncovered": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "(b) any Pi reclaim path spawns ['rf','storage','local-servers','--orphaned','--stop','--json'] and surfaces the envelope's result rows verbatim",
+      "pins": [
+        {
+          "id": "B1",
+          "witness": {
+            "leaf": ["storage", "local-servers"],
+            "destructive": true,
+            "trigger": "--stop",
+            "json": "--json",
+            "modeGroup": ["--dry-run", "--stop"],
+            "selectors": ["--orphaned", "--idle", "--all", "--root", "--server-id"],
+            "defaultSelector": "--orphaned",
+            "selectorsInArgv": ["--orphaned"],
+            "argvAgrees": true
+          }
+        },
+        {
+          "id": "B2",
+          "witness": {
+            "rfVersion": "0.1.832",
+            "leafPath": "storage.local-servers",
+            "leaf": {
+              "path": "storage.local-servers",
+              "served": true,
+              "planned_slice": null,
+              "reachable": true,
+              "store_required": false,
+              "availability": "served_reachable",
+              "attach_required": false
+            }
+          }
+        },
+        {
+          "id": "B3",
+          "witness": {
+            "code": "RF_CONFIRMATION_REQUIRED",
+            "exit": 2,
+            "gateRaises": true,
+            "ruleStated": true,
+            "jsonSpelling": true,
+            "filingArgv": {"requiresConfirmation": true, "confirmed": false, "nonInteractive": true, "refusedAtGate": true},
+            "withYes": {"requiresConfirmation": true, "confirmed": true, "nonInteractive": true, "refusedAtGate": false},
+            "preview": {"requiresConfirmation": false, "confirmed": false, "nonInteractive": true, "refusedAtGate": false}
+          }
+        },
+        {
+          "id": "B4",
+          "witness": {
+            "outcome": "applied",
+            "rows": 2,
+            "reportVerbatim": true,
+            "rowsVerbatim": true,
+            "broken": []
+          }
+        },
+        {
+          "id": "B5",
+          "witness": {
+            "dropRow": ["b:rows", "c:count"],
+            "reorderRows": ["b:rows"],
+            "relabelStatus": ["b:rows"],
+            "addField": ["b:rows"],
+            "rewriteReport": ["b:report"],
+            "argvAll": ["b:argv"]
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "(c) fixture ledger with a deleted-workspace server and a live sibling: the sibling's pid never enters the stop set, the surfaced count is the envelope's",
+      "pins": [
+        {
+          "id": "C1",
+          "witness": {
+            "provenance": {"stopSibling": "CONSTRUCTED", "emptyNoProc": "CONSTRUCTED", "unprovenNoProc": "CONSTRUCTED", "ledgerUntrusted": "MEASURED", "stopIncomplete": "CONSTRUCTED"},
+            "problems": {
+              "stopSibling": [],
+              "emptyNoProc": [],
+              "unprovenNoProc": [],
+              "ledgerUntrusted": [],
+              "stopIncomplete": []
+            },
+            "servers": [
+              {"role": "<orphan>", "class": "orphaned", "selected": true, "cwdDeleted": true},
+              {"role": "<sibling>", "class": "active", "selected": false, "cwdDeleted": false}
+            ],
+            "stale": 1,
+            "plan": ["stop_server", "prune_entry"]
+          }
+        },
+        {
+          "id": "C2",
+          "witness": {
+            "stopPids": ["<orphan>"],
+            "siblingStopped": false,
+            "count": 2,
+            "envelopeRows": 2,
+            "broken": []
+          }
+        },
+        {
+          "id": "C3",
+          "witness": {
+            "hostPattern": ["c:stop-set", "c:sibling"],
+            "stopsOnly": ["c:count"]
+          }
+        }
+      ]
+    },
+    {
+      "id": "D",
+      "label": "(d) without /proc the path surfaces the producer's empty report and claims nothing reclaimed; exit 6 is the ledger refusal, never success",
+      "pins": [
+        {
+          "id": "D1",
+          "witness": {
+            "proof": "unavailable",
+            "outcome": "nothing",
+            "count": 0,
+            "stopPids": [],
+            "broken": []
+          }
+        },
+        {
+          "id": "D2",
+          "witness": {
+            "proof": "unavailable",
+            "outcome": "nothing",
+            "count": 0,
+            "unproven": ["proc_unavailable"],
+            "warnings": ["warning"],
+            "unprovenRideTheReport": true,
+            "broken": []
+          }
+        },
+        {
+          "id": "D3",
+          "witness": {
+            "ledgerUntrusted": {
+              "exit": 6,
+              "provenance": "MEASURED",
+              "outcome": "refused",
+              "codeVerbatim": true,
+              "stopIncomplete": false,
+              "rows": 0,
+              "broken": []
+            },
+            "stopIncomplete": {
+              "exit": 6,
+              "provenance": "CONSTRUCTED",
+              "outcome": "refused",
+              "codeVerbatim": true,
+              "stopIncomplete": true,
+              "rows": 2,
+              "broken": []
+            },
+            "ledgerCode": "RF_STORAGE_UNAVAILABLE"
+          }
+        },
+        {
+          "id": "D4",
+          "witness": {
+            "successOnRefusal": ["d:refusal"],
+            "dropCode": ["d:code"],
+            "claimOnEmpty": ["d:nothing"],
+            "countUnproven": ["c:count"]
+          }
+        }
+      ]
+    },
+    {
+      "id": "G",
+      "label": "the classification proof stays unshipped in every Pi claim: no src, qa or docs file names the gated journey, its bead or its requirement id",
+      "pins": [
+        {
+          "id": "G1",
+          "witness": {
+            "src": {
+              "root": "src",
+              "floorMet": true,
+              "anchorRead": true,
+              "hits": []
+            },
+            "qa": {
+              "root": "qa",
+              "floorMet": true,
+              "anchorRead": true,
+              "hits": []
+            },
+            "docs": {
+              "root": "docs",
+              "floorMet": true,
+              "anchorRead": true,
+              "hits": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "F",
+      "label": "the owner filing row of wb-pfxo.8 in the tracked bead export carries every pinned constant, names exactly the clauses rows A-D cover, states each of their labels as its clause and quotes only targets row M controls",
+      "pins": [
+        {
+          "id": "F1",
+          "witness": {
+            "clauses": ["a", "b", "c", "d"],
+            "labelsEqual": ["A", "B", "C", "D"],
+            "constantsQuoted": 11,
+            "targetsControlled": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": "M",
+      "label": "the kill-window and leaf matchers rows A and T read judge their pinned spellings as hits",
+      "pins": [
+        {
+          "id": "MA1",
+          "witness": {"family": "window", "digest": "ca5e826ade5378d4", "hit": true}
+        },
+        {
+          "id": "MA2",
+          "witness": {"family": "window", "digest": "28c7024026ea816c", "hit": true}
+        },
+        {
+          "id": "MA3",
+          "witness": {"family": "window", "digest": "effb75ba68ca35bc", "hit": true}
+        },
+        {
+          "id": "MA4",
+          "witness": {"family": "window", "digest": "ddcec859985f5985", "hit": true}
+        },
+        {
+          "id": "MA5",
+          "witness": {"family": "window", "digest": "7c20d2ce6c044207", "hit": true}
+        },
+        {
+          "id": "MA6",
+          "witness": {"family": "window", "digest": "d7283e219402e81f", "hit": true}
+        },
+        {
+          "id": "MA7",
+          "witness": {"family": "window", "digest": "f43367ec1b67d9d1", "hit": true}
+        },
+        {
+          "id": "MA8",
+          "witness": {"family": "window", "digest": "1c482b5a21adbb43", "hit": true}
+        },
+        {
+          "id": "MA9",
+          "witness": {"family": "window", "digest": "e629497e3ec95ada", "hit": true}
+        },
+        {
+          "id": "MA10",
+          "witness": {"family": "window", "digest": "70a0e6c5c0b5f846", "hit": true}
+        },
+        {
+          "id": "MA11",
+          "witness": {"family": "window", "digest": "fdd873838c885669", "hit": true}
+        },
+        {
+          "id": "MA12",
+          "witness": {"family": "window", "digest": "75193997c5da8998", "hit": true}
+        },
+        {
+          "id": "MA13",
+          "witness": {"family": "window", "digest": "32a60032eb75d675", "hit": true}
+        },
+        {
+          "id": "ML1",
+          "witness": {"family": "leaf", "digest": "878e741bd8f97c79", "hit": true}
+        },
+        {
+          "id": "ML2",
+          "witness": {"family": "leaf", "digest": "390eeaf66fb29293", "hit": true}
+        },
+        {
+          "id": "ML3",
+          "witness": {"family": "leaf", "digest": "9fb15446676249c9", "hit": true}
+        },
+        {
+          "id": "ML4",
+          "witness": {"family": "leaf", "digest": "a0552333cbef0e0f", "hit": true}
+        },
+        {
+          "id": "ML5",
+          "witness": {"family": "leaf", "digest": "8c433a254493b71b", "hit": true}
+        }
+      ]
+    },
+    {
+      "id": "R",
+      "label": "the named residuals R1-R10 stay pinned quiet",
+      "pins": [
+        {
+          "id": "R1",
+          "witness": {"family": "window", "digest": "f90c8af4ca8dac02", "hit": false}
+        },
+        {
+          "id": "R2",
+          "witness": {"family": "window", "digest": "fce1aedd77c987ef", "hit": false}
+        },
+        {
+          "id": "R3",
+          "witness": {"family": "window", "digest": "e555934ae20ec8da", "hit": false}
+        },
+        {
+          "id": "R4",
+          "witness": {"family": "window", "digest": "bb1d5f6c35f30eb7", "hit": false}
+        },
+        {
+          "id": "R5",
+          "witness": {"family": "window", "digest": "0fb66dfaf77de4c6", "hit": false}
+        },
+        {
+          "id": "R6",
+          "witness": {"family": "window", "digest": "a1458ccda541675b", "hit": false}
+        },
+        {
+          "id": "R7",
+          "witness": {"family": "window", "digest": "84cc5ef5a0a96cce", "hit": false}
+        },
+        {
+          "id": "R8",
+          "witness": {
+            "instructionRoots": ["docs", ".agents", ".pi", "new-feedback"],
+            "walkedUnderInstruction": 0,
+            "runbookLineWouldHit": true
+          }
+        },
+        {
+          "id": "R9",
+          "witness": {"family": "leaf", "digest": "5927ac43d81efb66", "hit": false}
+        },
+        {
+          "id": "R10",
+          "witness": {
+            "stopPids": ["<orphan>"],
+            "broken": []
+          }
+        }
+      ]
+    }
+  ],
+  "excerpts": {
+    "registry": {
+      "path": "src/reactive_fiber_cli/cli/registry.py",
+      "lines": "1156-1169",
+      "text": ["        CommandDescriptor(", "            name=\"storage.local-servers\",", "            mutates=True,", "            destructive=True,", "            destructive_trigger=STOP_FLAG,", "            json_flag=JSON_FLAG,", "            dry_run_flag=DRY_RUN_FLAG,", "            non_interactive=True,", "            exit_categories=_categories((EXIT_STORAGE,)),", "            workspace_policy=\"not_required\",", "            exclusive_groups=((DRY_RUN_FLAG, STOP_FLAG), (\"--orphaned\", \"--idle\", \"--all\", \"--root\", \"--server-id\")),", "            planned_slice=None,", "            attach_required=False,", "        ),"]
+    },
+    "flags": {
+      "path": "src/reactive_fiber_cli/cli/registry.py",
+      "lines": "187,191,195",
+      "text": ["JSON_FLAG: Final = \"--json\"", "DRY_RUN_FLAG: Final = \"--dry-run\"", "STOP_FLAG: Final = \"--stop\""]
+    },
+    "parser": {
+      "path": "src/reactive_fiber_cli/cli/parser.py",
+      "lines": "2390-2393",
+      "text": ["    \"storage.local-servers\": (", "        _flag(", "            \"--orphaned\", \"select the servers whose workspace was deleted, and the stale ledger entries (the default)\"", "        ),"]
+    },
+    "confirmFlags": {
+      "path": "src/reactive_fiber_cli/cli/interaction.py",
+      "lines": "82-85",
+      "text": ["CONFIRMATION_CODE: Final = DiagnosticCode.RF_CONFIRMATION_REQUIRED.value", "\"\"\"The only confirmation code (ADR-RFC-021 D1); registered with exit 2, ``hint_required`` True.\"\"\"", "CONFIRM_FLAG: Final = \"--yes\"", "NO_INPUT_FLAG: Final = \"--no-input\""]
+    },
+    "confirmation": {
+      "path": "src/reactive_fiber_cli/cli/interaction.py",
+      "lines": "121-132",
+      "text": ["def requires_confirmation(desc: CommandDescriptor, argv: Sequence[str]) -> bool:", "    \"\"\"ADR-RFC-021 D2 verbatim: destructive, trigger present (or none), preview flag absent. Pure; reads no plan.\"\"\"", "    return (", "        desc.destructive", "        and (desc.destructive_trigger is None or desc.destructive_trigger in argv)", "        and not (desc.dry_run_flag is not None and desc.dry_run_flag in argv)", "    )", "", "", "def is_non_interactive(argv: Sequence[str], *, stdin_isatty: bool) -> bool:", "    \"\"\"LXDXDOC-A8: a JSON spelling or ``--no-input`` anywhere in argv, or a stdin that is not a TTY.\"\"\"", "    return not stdin_isatty or NO_INPUT_FLAG in argv or json_mode_requested(list(argv))"]
+    },
+    "jsonMode": {
+      "path": "src/reactive_fiber_cli/cli/parser.py",
+      "lines": "3865-3867",
+      "text": ["def json_mode_requested(argv: list[str]) -> bool:", "    \"\"\"JSON-DIAG-A27 / LXDXDOC-A8 pre-scan: ``--json``, ``--json-metadata``, ``--format json`` or ``--format=json``", "    anywhere in argv switches the CLI to JSON output, decided before any parsing.\"\"\""]
+    },
+    "gate": {
+      "path": "src/reactive_fiber_cli/cli/main.py",
+      "lines": "1392-1395",
+      "text": ["    confirmed = bool(getattr(namespace, YES_DEST, False))", "    pending = interaction.requires_confirmation(descriptor, argv) and not confirmed", "    if pending and interaction.is_non_interactive(argv, stdin_isatty=interaction.stdin_isatty(stdin)):", "        raise interaction.ConfirmationRequiredError(descriptor)"]
+    }
+  },
+  "schemaRequired": {
+    "envelope": ["schema", "ok", "command", "operation_id", "workspace", "transaction_id", "result", "diagnostics"],
+    "diagnostic": ["code", "severity", "message", "hint", "source", "metadata"],
+    "result": ["ledger", "selection", "idle_after_s", "proof", "servers", "unproven", "stale", "totals", "plan"],
+    "ledger": ["path", "source", "entries", "invalid_entries"],
+    "selection": ["selector", "root", "server_id"],
+    "totals": ["servers", "orphaned", "unrecorded", "idle", "active", "unproven", "stale", "rss_bytes", "orphaned_rss_bytes"],
+    "plan": ["operations", "would_commit"],
+    "operation": ["kind", "target", "reversible", "detail"],
+    "server": ["server_id", "provenance", "pid", "port", "workspace_root", "class", "reason", "proven", "selected", "rss_bytes", "started_at", "age_s", "last_used_at", "idle_s", "connections", "listener_owned", "cwd_deleted", "rf_version"],
+    "unproven": ["pid", "server_id", "reason", "workspace_root", "port"],
+    "stale": ["server_id", "pid", "reason", "workspace_root", "selected"],
+    "applied": ["kind", "target", "status", "reason"],
+    "stopIncompleteMetadata": ["pid", "port", "applied"]
+  },
+  "grammar": {
+    "operationId": "^rfo_[0-9a-z]{22,32}$",
+    "serverId": "^[0-9a-f]{32}$",
+    "target": "^(server:[0-9a-f]{32}|pid:[1-9][0-9]*)$",
+    "timestamp": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\\.[0-9]{6}Z$",
+    "proof": ["linux-proc-pidfd", "linux-proc", "unavailable"],
+    "class": ["orphaned", "unrecorded", "idle", "active"],
+    "status": ["completed", "failed", "skipped"]
+  },
+  "runs": {
+    "stopSibling": {
+      "provenance": "CONSTRUCTED",
+      "exit": 0,
+      "basis": "--orphaned --stop --yes over a ledger of three entries: a server whose workspace was deleted (orphaned, selected), a live sibling (active, not selected) and one stale entry (gone, pruned); application/local_servers.py:258-278 (server rows), :291-325 (stale rows, operations), :328-329 (applied rows), :423-449 (the result, applied under --stop)",
+      "envelope": {
+        "schema": "reactive-fiber.cli/v1",
+        "ok": true,
+        "command": "storage.local-servers",
+        "operation_id": "rfo_fixturestopsibling0000",
+        "workspace": null,
+        "transaction_id": null,
+        "result": {
+          "ledger": {"path": "/fixture/rf-ledger", "source": "env", "entries": 3, "invalid_entries": 0},
+          "selection": {"selector": "orphaned", "root": null, "server_id": null},
+          "idle_after_s": 3600,
+          "proof": "linux-proc-pidfd",
+          "servers": [
+            {
+              "server_id": "11111111111111111111111111111111",
+              "provenance": "launched",
+              "pid": 41001,
+              "port": 43001,
+              "workspace_root": "/fixture/gone",
+              "class": "orphaned",
+              "reason": "workspace_deleted",
+              "proven": true,
+              "selected": true,
+              "rss_bytes": 104857600,
+              "started_at": "2026-10-22T20:00:00.000000Z",
+              "age_s": 7200,
+              "last_used_at": "2026-10-22T21:00:00.000000Z",
+              "idle_s": 3600,
+              "connections": 0,
+              "listener_owned": true,
+              "cwd_deleted": true,
+              "rf_version": "0.1.832"
+            },
+            {
+              "server_id": "22222222222222222222222222222222",
+              "provenance": "launched",
+              "pid": 41002,
+              "port": 43002,
+              "workspace_root": "/fixture/live",
+              "class": "active",
+              "reason": "active",
+              "proven": true,
+              "selected": false,
+              "rss_bytes": 94371840,
+              "started_at": "2026-10-22T21:30:00.000000Z",
+              "age_s": 1800,
+              "last_used_at": "2026-10-22T21:59:00.000000Z",
+              "idle_s": 60,
+              "connections": 1,
+              "listener_owned": true,
+              "cwd_deleted": false,
+              "rf_version": "0.1.832"
+            }
+          ],
+          "unproven": [],
+          "stale": [
+            {"server_id": "33333333333333333333333333333333", "pid": 41003, "reason": "gone", "workspace_root": "/fixture/earlier", "selected": true}
+          ],
+          "totals": {"servers": 2, "orphaned": 1, "unrecorded": 0, "idle": 0, "active": 1, "unproven": 0, "stale": 1, "rss_bytes": 199229440, "orphaned_rss_bytes": 104857600},
+          "plan": {
+            "operations": [
+              {
+                "kind": "stop_server",
+                "target": "server:11111111111111111111111111111111",
+                "reversible": false,
+                "detail": {"pid": 41001, "port": 43001, "class": "orphaned", "reason": "workspace_deleted", "provenance": "launched", "workspace_root": "/fixture/gone"}
+              },
+              {
+                "kind": "prune_entry",
+                "target": "server:33333333333333333333333333333333",
+                "reversible": false,
+                "detail": {"pid": 41003, "reason": "gone", "workspace_root": "/fixture/earlier"}
+              }
+            ],
+            "would_commit": false
+          },
+          "applied": [
+            {"kind": "stop_server", "target": "server:11111111111111111111111111111111", "status": "completed", "reason": "stopped"},
+            {"kind": "prune_entry", "target": "server:33333333333333333333333333333333", "status": "completed", "reason": "pruned"}
+          ]
+        },
+        "diagnostics": []
+      }
+    },
+    "emptyNoProc": {
+      "provenance": "CONSTRUCTED",
+      "exit": 0,
+      "basis": "--orphaned --stop --yes on a host without /proc and an empty ledger: persistence/<ENGINE>/server_ledger.py:1363-1370 (no host identity: no servers, no stale entries, proof unavailable), application/local_servers.py:444 (nothing selected, nothing applied)",
+      "envelope": {
+        "schema": "reactive-fiber.cli/v1",
+        "ok": true,
+        "command": "storage.local-servers",
+        "operation_id": "rfo_fixtureemptynoproc00000",
+        "workspace": null,
+        "transaction_id": null,
+        "result": {
+          "ledger": {"path": "/fixture/rf-ledger", "source": "env", "entries": 0, "invalid_entries": 0},
+          "selection": {"selector": "orphaned", "root": null, "server_id": null},
+          "idle_after_s": 3600,
+          "proof": "unavailable",
+          "servers": [],
+          "unproven": [],
+          "stale": [],
+          "totals": {"servers": 0, "orphaned": 0, "unrecorded": 0, "idle": 0, "active": 0, "unproven": 0, "stale": 0, "rss_bytes": 0, "orphaned_rss_bytes": 0},
+          "plan": {
+            "operations": [],
+            "would_commit": false
+          },
+          "applied": []
+        },
+        "diagnostics": []
+      }
+    },
+    "unprovenNoProc": {
+      "provenance": "CONSTRUCTED",
+      "exit": 0,
+      "basis": "as emptyNoProc with one ledger entry: server_ledger.py:1364-1369 reports it unproven with the host's reason proc_unavailable; application/local_servers.py:351-361 its warning, :445-446 never targeted under --orphaned",
+      "envelope": {
+        "schema": "reactive-fiber.cli/v1",
+        "ok": true,
+        "command": "storage.local-servers",
+        "operation_id": "rfo_fixtureunprovennoproc00",
+        "workspace": null,
+        "transaction_id": null,
+        "result": {
+          "ledger": {"path": "/fixture/rf-ledger", "source": "env", "entries": 1, "invalid_entries": 0},
+          "selection": {"selector": "orphaned", "root": null, "server_id": null},
+          "idle_after_s": 3600,
+          "proof": "unavailable",
+          "servers": [],
+          "unproven": [
+            {"pid": 41004, "server_id": "44444444444444444444444444444444", "reason": "proc_unavailable", "workspace_root": "/fixture/gone", "port": 43004}
+          ],
+          "stale": [],
+          "totals": {"servers": 0, "orphaned": 0, "unrecorded": 0, "idle": 0, "active": 0, "unproven": 1, "stale": 0, "rss_bytes": 0, "orphaned_rss_bytes": 0},
+          "plan": {
+            "operations": [],
+            "would_commit": false
+          },
+          "applied": []
+        },
+        "diagnostics": [
+          {
+            "code": "RF_DOLT_SERVER_UNPROVEN",
+            "severity": "warning",
+            "message": "pid 41004 (workspace /fixture/gone) is shaped like an rf-owned dolt server but is not proven: proc_unavailable",
+            "hint": "Nothing was signalled: this process is shaped like an rf-owned dolt server but a proof step refused it (metadata.reason names the step), so rf never stops it; if it is yours, stop it by hand",
+            "source": "host",
+            "metadata": {"pid": 41004, "reason": "proc_unavailable"}
+          }
+        ]
+      }
+    },
+    "ledgerUntrusted": {
+      "provenance": "MEASURED",
+      "exit": 6,
+      "capturedUtc": "2026-10-23T01:49:10Z",
+      "rfVersion": "0.1.832",
+      "argv": ["rf", "storage", "local-servers", "--orphaned", "--json"],
+      "basis": "the installed rf's stdout and exit for the read form against a scratch ledger directory of mode 0755 (server_ledger.py:625-633 trust check), ambient RF_* dropped, outside every repository; only the scratch ledger path is rewritten (to /fixture/rf-ledger)",
+      "envelope": {
+        "schema": "reactive-fiber.cli/v1",
+        "ok": false,
+        "command": "storage.local-servers",
+        "operation_id": "rfo_lakt2h2eeb32j4rw5rdebru3gu",
+        "workspace": null,
+        "transaction_id": null,
+        "result": null,
+        "diagnostics": [
+          {
+            "code": "RF_STORAGE_UNAVAILABLE",
+            "severity": "error",
+            "message": "server_ledger_untrusted (the ledger directory /fixture/rf-ledger has mode 0o755, open to group or other; no entry was acted on)",
+            "hint": "The machine-local server ledger the message names is another user's, open to group or other, or a symbolic link, so no entry of it was acted on and nothing was signalled: make the directory 0700 and its entries 0600 under this user (rf creates them so), or point RF_DOLT_SERVER_LEDGER at a directory this user owns; `rf storage local-servers --json` lists the servers once it is trusted.",
+            "source": "host",
+            "metadata": {"reason": "server_ledger_untrusted"}
+          }
+        ]
+      }
+    },
+    "stopIncomplete": {
+      "provenance": "CONSTRUCTED",
+      "exit": 6,
+      "basis": "--orphaned --stop --yes whose orphan stop fails (still_alive) after the stale prune completes: application/local_servers.py:367-403 (result null, the applied rows at metadata.applied beside the first unstopped pid and port)",
+      "envelope": {
+        "schema": "reactive-fiber.cli/v1",
+        "ok": false,
+        "command": "storage.local-servers",
+        "operation_id": "rfo_fixturestopincomplete00",
+        "workspace": null,
+        "transaction_id": null,
+        "result": null,
+        "diagnostics": [
+          {
+            "code": "RF_DOLT_SERVER_STOP_INCOMPLETE",
+            "severity": "error",
+            "message": "the stop is incomplete: stop_server server:11111111111111111111111111111111 failed (still_alive): the server was not stopped",
+            "hint": "A selected server is still running or was not stopped (metadata.applied names each row and why); `rf storage local-servers --all --json` shows what is left, and re-running the same --stop --yes retries -- a server rf cannot prove is never signalled, so stop that one by hand",
+            "source": "host",
+            "metadata": {
+              "pid": 41001,
+              "port": 43001,
+              "applied": [
+                {"kind": "stop_server", "target": "server:11111111111111111111111111111111", "status": "failed", "reason": "still_alive"},
+                {"kind": "prune_entry", "target": "server:33333333333333333333333333333333", "status": "completed", "reason": "pruned"}
+              ]
+            }
+          }
+        ]
+      }
+    }
+  }
+}

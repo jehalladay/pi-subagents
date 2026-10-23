@@ -1,0 +1,1312 @@
+{
+ "bead": "wb-pfxo.7",
+ "pin": "6a251bf73af5",
+ "rfVersion": "0.1.832",
+ "window": 5,
+ "vocabulary": {
+  "edge": [
+   "edge",
+   "edges",
+   "fiber",
+   "fibers"
+  ],
+  "claim": [
+   "held",
+   "hold",
+   "holds",
+   "holding",
+   "already",
+   "duplicate",
+   "duplicates",
+   "duplicated",
+   "duplicating",
+   "duplication",
+   "replace",
+   "replaced",
+   "replaces",
+   "replacing",
+   "replacement",
+   "multiplicity",
+   "multiple",
+   "twice",
+   "thrice",
+   "repeated",
+   "repeats",
+   "remounted",
+   "mounted"
+  ],
+  "fields": [
+   "overlay_revision",
+   "overlay_digest",
+   "overlay_id",
+   "base_bundle_revision",
+   "impact_preliminaries",
+   "patch_digest",
+   "operation_digest",
+   "add_fiber",
+   "remove_fiber",
+   "duplicate_edge",
+   "RF_GRAPH_OVERLAY_PATCH_INVALID",
+   "RF_GRAPH_OVERLAY_DANGLING"
+  ]
+ },
+ "fixtures": [
+  "connectFirst",
+  "connectHeld",
+  "patchDuplicate",
+  "connectRefused",
+  "disconnectHeld",
+  "disconnectAgain",
+  "disconnectOnce"
+ ],
+ "constructed": [
+  "connectRefused"
+ ],
+ "exits": {
+  "connectFirst": 0,
+  "connectHeld": 0,
+  "patchDuplicate": 2,
+  "connectRefused": 2,
+  "disconnectHeld": 0,
+  "disconnectAgain": 2,
+  "disconnectOnce": 0
+ },
+ "envelopes": {
+  "connectFirst": {
+   "schema": "reactive-fiber.cli/v1",
+   "ok": true,
+   "command": "graph.connect",
+   "operation_id": "rfo_ngubsu2tn3zrddzro23nfmtarq",
+   "workspace": {
+    "id": "rfw_ybtwzpbcse77dq2h47w2wt3w3i",
+    "root": "/fixture/rf-workspace"
+   },
+   "transaction_id": "rft_jpqg4eqxhfl7dwxmtjrw5sfwee",
+   "result": {
+    "overlay": {
+     "schema": "swarm-context.graph-overlay/v1",
+     "overlay_id": "rfg_zy2s2ezbkvrb5pswkpaglxos7i",
+     "owner_actor": "agent:pi-census",
+     "base_bundle_revision": "sha256:8bcd33be9d8d3cfe8c90f1198f6d9f79ec205f70eb2a3444c3234938e2bf94a4",
+     "scope": "private",
+     "scope_key": null,
+     "operations": [
+      "sha256:db81db271fcd62a704a2026a76b04378e428522d8d320ee3ee6f20350a24c692"
+     ],
+     "overlay_revision": 2,
+     "overlay_digest": "sha256:1bdd5913a8993ed264a88bdc2d068af976869462054be09ca396a10c7997ed8b",
+     "status": "edited",
+     "created_at": "2026-10-23T01:35:33.318787Z",
+     "updated_at": "2026-10-23T01:35:35.589297Z"
+    },
+    "applied": {
+     "patch_digest": "sha256:478ff673f2dcd4696403028bb40af05921a7dfa77dcb81cadeb23ce690678933",
+     "operations": [
+      {
+       "op": "add_fiber",
+       "target": "fiber:source:task.value->component:patch.notes",
+       "operation_digest": "sha256:db81db271fcd62a704a2026a76b04378e428522d8d320ee3ee6f20350a24c692"
+      }
+     ]
+    },
+    "impact_preliminaries": {
+     "seeds": [
+      {
+       "kind": "fiber",
+       "id": "fiber:source:task.value->component:patch.notes",
+       "change": "added"
+      }
+     ],
+     "effective_scope": "private"
+    }
+   },
+   "diagnostics": []
+  },
+  "connectHeld": {
+   "schema": "reactive-fiber.cli/v1",
+   "ok": true,
+   "command": "graph.connect",
+   "operation_id": "rfo_cgszj7jhba7jmb4afusoklb4aq",
+   "workspace": {
+    "id": "rfw_ybtwzpbcse77dq2h47w2wt3w3i",
+    "root": "/fixture/rf-workspace"
+   },
+   "transaction_id": "rft_do5gtcw2hasw4mpkbd7jtd5dle",
+   "result": {
+    "overlay": {
+     "schema": "swarm-context.graph-overlay/v1",
+     "overlay_id": "rfg_zy2s2ezbkvrb5pswkpaglxos7i",
+     "owner_actor": "agent:pi-census",
+     "base_bundle_revision": "sha256:8bcd33be9d8d3cfe8c90f1198f6d9f79ec205f70eb2a3444c3234938e2bf94a4",
+     "scope": "private",
+     "scope_key": null,
+     "operations": [
+      "sha256:db81db271fcd62a704a2026a76b04378e428522d8d320ee3ee6f20350a24c692",
+      "sha256:db81db271fcd62a704a2026a76b04378e428522d8d320ee3ee6f20350a24c692"
+     ],
+     "overlay_revision": 3,
+     "overlay_digest": "sha256:cb2d03436a8906f0bcf2d8c888f46dc67e3bf56181a775528435e994014a188b",
+     "status": "edited",
+     "created_at": "2026-10-23T01:35:33.318787Z",
+     "updated_at": "2026-10-23T01:35:37.681299Z"
+    },
+    "applied": {
+     "patch_digest": "sha256:478ff673f2dcd4696403028bb40af05921a7dfa77dcb81cadeb23ce690678933",
+     "operations": [
+      {
+       "op": "add_fiber",
+       "target": "fiber:source:task.value->component:patch.notes",
+       "operation_digest": "sha256:db81db271fcd62a704a2026a76b04378e428522d8d320ee3ee6f20350a24c692"
+      }
+     ]
+    },
+    "impact_preliminaries": {
+     "seeds": [
+      {
+       "kind": "fiber",
+       "id": "fiber:source:task.value->component:patch.notes",
+       "change": "replaced"
+      }
+     ],
+     "effective_scope": "private"
+    }
+   },
+   "diagnostics": []
+  },
+  "patchDuplicate": {
+   "schema": "reactive-fiber.cli/v1",
+   "ok": false,
+   "command": "graph.patch",
+   "operation_id": "rfo_e3dodccfl7zn62qus6ka7a5bq4",
+   "workspace": {
+    "id": "rfw_ybtwzpbcse77dq2h47w2wt3w3i",
+    "root": "/fixture/rf-workspace"
+   },
+   "transaction_id": null,
+   "result": null,
+   "diagnostics": [
+    {
+     "code": "RF_GRAPH_OVERLAY_PATCH_INVALID",
+     "severity": "error",
+     "message": "patch operations[1].fiber repeats the edge 'fiber:source:task.value->component:patch.notes' that operations[0] adds: two rows with one (from, to) pair are one edge mounted twice (GRAPH-A19); rewire with remove_fiber then add_fiber",
+     "hint": "Fix the patch document against swarm-context.patch/v1: a JSON object with exactly the keys schema (\"swarm-context.patch/v1\"), base_bundle_revision (the candidate's base_bundle_revision digest), scope ({kind: private|task|shared}; task_id required beside kind task and refused elsewhere) and operations (one or more typed operations); the packaged schema is reactive_fiber_cli/schemas/definitions/patch.schema.json, installed at /fixture/rf-install/site-packages/reactive_fiber_cli/schemas/definitions/patch.schema.json, and `rf graph patch --help` prints one minimal document; metadata.operation names the operation index, metadata.field the offending key and metadata.reason the rule; nothing was read from or written to the overlay.",
+     "source": null,
+     "metadata": {
+      "overlay": "rfg_ntpfj6zczu2ru35fqomystzmwq",
+      "operation": 1,
+      "field": "operations[1].fiber",
+      "reason": "duplicate_edge"
+     }
+    }
+   ]
+  },
+  "connectRefused": {
+   "schema": "reactive-fiber.cli/v1",
+   "ok": false,
+   "command": "graph.connect",
+   "operation_id": "rfo_e3dodccfl7zn62qus6ka7a5bq4",
+   "workspace": {
+    "id": "rfw_ybtwzpbcse77dq2h47w2wt3w3i",
+    "root": "/fixture/rf-workspace"
+   },
+   "transaction_id": null,
+   "result": null,
+   "diagnostics": [
+    {
+     "code": "RF_GRAPH_OVERLAY_PATCH_INVALID",
+     "severity": "error",
+     "message": "patch operations[1].fiber repeats the edge 'fiber:source:task.value->component:patch.notes' that operations[0] adds: two rows with one (from, to) pair are one edge mounted twice (GRAPH-A19); rewire with remove_fiber then add_fiber",
+     "hint": "Fix the patch document against swarm-context.patch/v1: a JSON object with exactly the keys schema (\"swarm-context.patch/v1\"), base_bundle_revision (the candidate's base_bundle_revision digest), scope ({kind: private|task|shared}; task_id required beside kind task and refused elsewhere) and operations (one or more typed operations); the packaged schema is reactive_fiber_cli/schemas/definitions/patch.schema.json, installed at /fixture/rf-install/site-packages/reactive_fiber_cli/schemas/definitions/patch.schema.json, and `rf graph patch --help` prints one minimal document; metadata.operation names the operation index, metadata.field the offending key and metadata.reason the rule; nothing was read from or written to the overlay.",
+     "source": null,
+     "metadata": {
+      "overlay": "rfg_ntpfj6zczu2ru35fqomystzmwq",
+      "operation": 1,
+      "field": "operations[1].fiber",
+      "reason": "duplicate_edge"
+     }
+    }
+   ]
+  },
+  "disconnectHeld": {
+   "schema": "reactive-fiber.cli/v1",
+   "ok": true,
+   "command": "graph.disconnect",
+   "operation_id": "rfo_nvjulym5g2jzoiuugiytfvogci",
+   "workspace": {
+    "id": "rfw_ybtwzpbcse77dq2h47w2wt3w3i",
+    "root": "/fixture/rf-workspace"
+   },
+   "transaction_id": "rft_vbnswv4tvyzxrswnkbqjhsrkzu",
+   "result": {
+    "overlay": {
+     "schema": "swarm-context.graph-overlay/v1",
+     "overlay_id": "rfg_zy2s2ezbkvrb5pswkpaglxos7i",
+     "owner_actor": "agent:pi-census",
+     "base_bundle_revision": "sha256:8bcd33be9d8d3cfe8c90f1198f6d9f79ec205f70eb2a3444c3234938e2bf94a4",
+     "scope": "private",
+     "scope_key": null,
+     "operations": [
+      "sha256:db81db271fcd62a704a2026a76b04378e428522d8d320ee3ee6f20350a24c692",
+      "sha256:db81db271fcd62a704a2026a76b04378e428522d8d320ee3ee6f20350a24c692",
+      "sha256:4529923b1beb6ecd184c1c93b57608174b6e4fb4fb6a883b8d30b10f1fa9e1a7"
+     ],
+     "overlay_revision": 4,
+     "overlay_digest": "sha256:36a1076674aabfe4cc56eaa2eb3cc82955562c5ebc2bb18a168817aaf5d11235",
+     "status": "edited",
+     "created_at": "2026-10-23T01:35:33.318787Z",
+     "updated_at": "2026-10-23T01:35:39.556892Z"
+    },
+    "applied": {
+     "patch_digest": "sha256:726154374916d24c1ccaa01548dd7d5676c043acc91b19e22d269e57e90d9e04",
+     "operations": [
+      {
+       "op": "remove_fiber",
+       "target": "fiber:source:task.value->component:patch.notes",
+       "operation_digest": "sha256:4529923b1beb6ecd184c1c93b57608174b6e4fb4fb6a883b8d30b10f1fa9e1a7"
+      }
+     ]
+    },
+    "impact_preliminaries": {
+     "seeds": [
+      {
+       "kind": "fiber",
+       "id": "fiber:source:task.value->component:patch.notes",
+       "change": "removed"
+      }
+     ],
+     "effective_scope": "private"
+    }
+   },
+   "diagnostics": []
+  },
+  "disconnectAgain": {
+   "schema": "reactive-fiber.cli/v1",
+   "ok": false,
+   "command": "graph.disconnect",
+   "operation_id": "rfo_qlbl7ouk4kil2jmdop5tqvvb4a",
+   "workspace": {
+    "id": "rfw_ybtwzpbcse77dq2h47w2wt3w3i",
+    "root": "/fixture/rf-workspace"
+   },
+   "transaction_id": null,
+   "result": null,
+   "diagnostics": [
+    {
+     "code": "RF_GRAPH_OVERLAY_DANGLING",
+     "severity": "error",
+     "message": "overlay 'rfg_zy2s2ezbkvrb5pswkpaglxos7i' after operation 0 names 'fiber:source:task.value->component:patch.notes', which the materialized definitions do not declare",
+     "hint": "Declare the referenced source output, component instance, component or optic revision in the pinned base or earlier in this overlay, or drop the operation that references or removes it; nothing was composed.",
+     "source": "host",
+     "metadata": {
+      "overlay": "rfg_zy2s2ezbkvrb5pswkpaglxos7i",
+      "operation": 0,
+      "reference": "fiber:source:task.value->component:patch.notes"
+     }
+    }
+   ]
+  },
+  "disconnectOnce": {
+   "schema": "reactive-fiber.cli/v1",
+   "ok": true,
+   "command": "graph.disconnect",
+   "operation_id": "rfo_2i5224imi2ohzhoeotqrabnvjm",
+   "workspace": {
+    "id": "rfw_ybtwzpbcse77dq2h47w2wt3w3i",
+    "root": "/fixture/rf-workspace"
+   },
+   "transaction_id": "rft_iygerfq2amiknmlyrow3c6nwmu",
+   "result": {
+    "overlay": {
+     "schema": "swarm-context.graph-overlay/v1",
+     "overlay_id": "rfg_owrsbih7dyzewsjq4skwl7nccm",
+     "owner_actor": "agent:pi-census",
+     "base_bundle_revision": "sha256:8bcd33be9d8d3cfe8c90f1198f6d9f79ec205f70eb2a3444c3234938e2bf94a4",
+     "scope": "private",
+     "scope_key": null,
+     "operations": [
+      "sha256:db81db271fcd62a704a2026a76b04378e428522d8d320ee3ee6f20350a24c692",
+      "sha256:4529923b1beb6ecd184c1c93b57608174b6e4fb4fb6a883b8d30b10f1fa9e1a7"
+     ],
+     "overlay_revision": 3,
+     "overlay_digest": "sha256:383445e4f89dc26fb74494b0635808e2104de11242ea8adbccb27321f207af1e",
+     "status": "edited",
+     "created_at": "2026-10-23T01:35:43.631964Z",
+     "updated_at": "2026-10-23T01:35:47.803858Z"
+    },
+    "applied": {
+     "patch_digest": "sha256:726154374916d24c1ccaa01548dd7d5676c043acc91b19e22d269e57e90d9e04",
+     "operations": [
+      {
+       "op": "remove_fiber",
+       "target": "fiber:source:task.value->component:patch.notes",
+       "operation_digest": "sha256:4529923b1beb6ecd184c1c93b57608174b6e4fb4fb6a883b8d30b10f1fa9e1a7"
+      }
+     ]
+    },
+    "impact_preliminaries": {
+     "seeds": [
+      {
+       "kind": "fiber",
+       "id": "fiber:source:task.value->component:patch.notes",
+       "change": "removed"
+      }
+     ],
+     "effective_scope": "private"
+    }
+   },
+   "diagnostics": []
+  }
+ },
+ "rows": [
+  {
+   "id": "T",
+   "label": "(trigger, absent today) Pi issues no rf graph connect or disconnect: no src argv or literal spells either verb or a candidate flag, no src module or native descriptor spells the edit envelopes' vocabulary or an edge-edit label, the rf roster stays reactivefiber.render.preview alone and every input form spawns a context render with --no-commit",
+   "pins": [
+    {
+     "id": "T1",
+     "witness": {
+      "floors": {
+       "modules": true,
+       "literals": true,
+       "identifiers": true
+      },
+      "renderArgvSeen": true,
+      "unparsed": [],
+      "argv": [],
+      "verbs": [],
+      "flags": [],
+      "composedArgv": 0,
+      "controls": {
+       "argvConnect": {
+        "hits": 2,
+        "composedArgv": 0
+       },
+       "argvDisconnect": {
+        "hits": 1,
+        "composedArgv": 0
+       },
+       "dotted": {
+        "hits": 1,
+        "composedArgv": 0
+       },
+       "spaced": {
+        "hits": 1,
+        "composedArgv": 0
+       },
+       "kebab": {
+        "hits": 1,
+        "composedArgv": 0
+       },
+       "snake": {
+        "hits": 1,
+        "composedArgv": 0
+       },
+       "joined": {
+        "hits": 1,
+        "composedArgv": 0
+       },
+       "camelIdentifier": {
+        "hits": 1,
+        "composedArgv": 0
+       },
+       "upper": {
+        "hits": 1,
+        "composedArgv": 0
+       },
+       "template": {
+        "hits": 1,
+        "composedArgv": 0
+       },
+       "candidateFlag": {
+        "hits": 1,
+        "composedArgv": 0
+       },
+       "expectFlag": {
+        "hits": 1,
+        "composedArgv": 0
+       },
+       "composedVerb": {
+        "hits": 0,
+        "composedArgv": 1
+       },
+       "negativeTransport": {
+        "hits": 0,
+        "composedArgv": 0
+       },
+       "negativeRender": {
+        "hits": 0,
+        "composedArgv": 0
+       },
+       "negativeWords": {
+        "hits": 0,
+        "composedArgv": 0
+       },
+       "residualCallComposed": {
+        "hits": 0,
+        "composedArgv": 0
+       },
+       "residualAliased": {
+        "hits": 0,
+        "composedArgv": 0
+       },
+       "residualConcat": {
+        "hits": 0,
+        "composedArgv": 0
+       }
+      }
+     }
+    },
+    {
+     "id": "T2",
+     "witness": {
+      "anchorRead": true,
+      "descriptorFloor": true,
+      "fields": [],
+      "labels": [],
+      "descriptorHits": [],
+      "controls": {
+       "fieldLiteral": {
+        "fields": 1,
+        "labels": 0
+       },
+       "fieldIdentifier": {
+        "fields": 1,
+        "labels": 0
+       },
+       "code": {
+        "fields": 1,
+        "labels": 0
+       },
+       "reason": {
+        "fields": 1,
+        "labels": 1
+       },
+       "op": {
+        "fields": 1,
+        "labels": 0
+       },
+       "labelHeld": {
+        "fields": 0,
+        "labels": 1
+       },
+       "labelReplaced": {
+        "fields": 0,
+        "labels": 1
+       },
+       "labelDuplicate": {
+        "fields": 0,
+        "labels": 1
+       },
+       "labelTwice": {
+        "fields": 0,
+        "labels": 1
+       },
+       "labelCamel": {
+        "fields": 0,
+        "labels": 1
+       },
+       "labelJoined": {
+        "fields": 0,
+        "labels": 1
+       },
+       "labelUpper": {
+        "fields": 0,
+        "labels": 1
+       },
+       "negativeTopology": {
+        "fields": 0,
+        "labels": 0
+       },
+       "negativeRegistry": {
+        "fields": 0,
+        "labels": 0
+       },
+       "residualVocabulary": {
+        "fields": 0,
+        "labels": 0
+       },
+       "residualFar": {
+        "fields": 0,
+        "labels": 0
+       },
+       "residualComposed": {
+        "fields": 0,
+        "labels": 0
+       },
+       "residualCount": {
+        "fields": 0,
+        "labels": 0
+       },
+       "residualNumber": {
+        "fields": 0,
+        "labels": 0
+       }
+      }
+     }
+    },
+    {
+     "id": "T3",
+     "witness": {
+      "native": [
+       "reactivefiber.render.preview"
+      ],
+      "injected": [
+       "reactivefiber.render.preview"
+      ],
+      "reconcile": [
+       "reactivefiber.render.preview"
+      ],
+      "effectClasses": [
+       "read",
+       "read"
+      ],
+      "carriers": [
+       true,
+       true
+      ],
+      "carrierVerb": true,
+      "carrierEdgeVerb": false
+     }
+    },
+    {
+     "id": "T4",
+     "witness": {
+      "forms": [
+       [
+        "model",
+        "task"
+       ],
+       [
+        "model",
+        "taskId",
+        "view"
+       ],
+       [
+        "taskId",
+        "view"
+       ]
+      ],
+      "arms": [
+       {
+        "arm": "legacy",
+        "spawns": 1,
+        "verb": [
+         "context",
+         "render"
+        ],
+        "tail": [
+         "--no-commit",
+         "--no-input",
+         "--json"
+        ],
+        "edgeArgv": []
+       },
+       {
+        "arm": "view",
+        "spawns": 1,
+        "verb": [
+         "context",
+         "render"
+        ],
+        "tail": [
+         "--no-commit",
+         "--no-input",
+         "--json"
+        ],
+        "edgeArgv": []
+       },
+       {
+        "arm": "view-model",
+        "spawns": 1,
+        "verb": [
+         "context",
+         "render"
+        ],
+        "tail": [
+         "--no-commit",
+         "--no-input",
+         "--json"
+        ],
+        "edgeArgv": []
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "A",
+   "label": "(a) post-M1c fixture (exit 2, diagnostics[0].code RF_GRAPH_OVERLAY_PATCH_INVALID reason duplicate_edge): 'edge already held', one rf argv, no alias retry, last-read overlay_revision kept",
+   "pins": [
+    {
+     "id": "A1",
+     "witness": {
+      "facts": {
+       "patchDuplicate": {
+        "command": "graph.patch",
+        "ok": false,
+        "exit": 2,
+        "result": null,
+        "transaction": null,
+        "code": "RF_GRAPH_OVERLAY_PATCH_INVALID",
+        "severity": "error",
+        "reason": "duplicate_edge",
+        "revisionKeys": 0
+       },
+       "connectRefused": {
+        "command": "graph.connect",
+        "ok": false,
+        "exit": 2,
+        "result": null,
+        "transaction": null,
+        "code": "RF_GRAPH_OVERLAY_PATCH_INVALID",
+        "severity": "error",
+        "reason": "duplicate_edge",
+        "revisionKeys": 0
+       }
+      },
+      "constructed": [
+       "connectRefused"
+      ],
+      "constructedDiff": [
+       "command"
+      ],
+      "lastRead": 2,
+      "pinEraAnswer": 3,
+      "unshippedAtInstalled": true,
+      "gating": "rfc-vg54d.1"
+     }
+    },
+    {
+     "id": "A2",
+     "witness": {
+      "patchDuplicate": {
+       "category": "transport",
+       "message": "RF preview returned an unrecognized native envelope.",
+       "reading": false,
+       "spawns": 1,
+       "verb": [
+        "context",
+        "render"
+       ],
+       "edgeArgv": [],
+       "label": null
+      },
+      "connectRefused": {
+       "category": "transport",
+       "message": "RF preview returned an unrecognized native envelope.",
+       "reading": false,
+       "spawns": 1,
+       "verb": [
+        "context",
+        "render"
+       ],
+       "edgeArgv": [],
+       "label": null
+      }
+     }
+    },
+    {
+     "id": "A3",
+     "witness": {
+      "variantDiff": [
+       "command"
+      ],
+      "category": "unavailable",
+      "message": "RF render refused: RF_GRAPH_OVERLAY_PATCH_INVALID",
+      "reading": false,
+      "spawns": 1,
+      "verb": [
+       "context",
+       "render"
+      ],
+      "edgeArgv": [],
+      "reasonShown": false,
+      "label": null
+     }
+    },
+    {
+     "id": "A4",
+     "witness": {
+      "patchDuplicate": {
+       "verbatim": true,
+       "calls": 1,
+       "readingKeys": [
+        "contract",
+        "source",
+        "workspaceRoot"
+       ],
+       "piStrings": [
+        "reactivefiber.render.preview/v1",
+        "/fixture/rf-workspace"
+       ],
+       "piNumbers": [],
+       "piForbidden": {
+        "duplicate": 0,
+        "refused": 0,
+        "replaced": 0
+       },
+       "code": "RF_GRAPH_OVERLAY_PATCH_INVALID",
+       "reason": "duplicate_edge",
+       "revisionKeys": 0
+      },
+      "connectRefused": {
+       "verbatim": true,
+       "calls": 1,
+       "readingKeys": [
+        "contract",
+        "source",
+        "workspaceRoot"
+       ],
+       "piStrings": [
+        "reactivefiber.render.preview/v1",
+        "/fixture/rf-workspace"
+       ],
+       "piNumbers": [],
+       "piForbidden": {
+        "duplicate": 0,
+        "refused": 0,
+        "replaced": 0
+       },
+       "code": "RF_GRAPH_OVERLAY_PATCH_INVALID",
+       "reason": "duplicate_edge",
+       "revisionKeys": 0
+      }
+     }
+    },
+    {
+     "id": "A5",
+     "witness": {
+      "refusals": {
+       "patchDuplicate": {
+        "category": "validation",
+        "message": "ReactiveFiber topology refused: source must be a reactive-fiber.cli/v1 context.render envelope.",
+        "label": null,
+        "forbidden": {
+         "duplicate": 0,
+         "refused": 1,
+         "replaced": 0
+        }
+       },
+       "connectRefused": {
+        "category": "validation",
+        "message": "ReactiveFiber topology refused: source must be a reactive-fiber.cli/v1 context.render envelope.",
+        "label": null,
+        "forbidden": {
+         "duplicate": 0,
+         "refused": 1,
+         "replaced": 0
+        }
+       }
+      },
+      "variant": {
+       "tone": "failure",
+       "statusText": "fixture seam (not a real render) \u00b7 refused \u00b7 RF_GRAPH_OVERLAY_PATCH_INVALID",
+       "notes": [
+        "render refused with RF_GRAPH_OVERLAY_PATCH_INVALID",
+        "diagnostic message, hint and metadata withheld",
+        "no native interval supplied"
+       ],
+       "codeShown": true,
+       "reasonShown": false,
+       "labels": [],
+       "revisionKeys": 0
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "label": "(b) pin-era fixture (ok:true, operations[0].op add_fiber, advanced overlay_revision): surfaced verbatim, no 'duplicate', 'refused' or 'replaced' unless in the envelope",
+   "pins": [
+    {
+     "id": "B1",
+     "witness": {
+      "facts": {
+       "connectFirst": {
+        "command": "graph.connect",
+        "ok": true,
+        "exit": 0,
+        "applied": [
+         "add_fiber:fiber:source:task.value->component:patch.notes"
+        ],
+        "revision": 2,
+        "journal": 1,
+        "seeds": [
+         "added"
+        ],
+        "forbidden": {
+         "duplicate": 0,
+         "refused": 0,
+         "replaced": 0
+        }
+       },
+       "connectHeld": {
+        "command": "graph.connect",
+        "ok": true,
+        "exit": 0,
+        "applied": [
+         "add_fiber:fiber:source:task.value->component:patch.notes"
+        ],
+        "revision": 3,
+        "journal": 2,
+        "seeds": [
+         "replaced"
+        ],
+        "forbidden": {
+         "duplicate": 0,
+         "refused": 0,
+         "replaced": 1
+        }
+       }
+      },
+      "sameApplied": true
+     }
+    },
+    {
+     "id": "B2",
+     "witness": {
+      "connectFirst": {
+       "verbatim": true,
+       "calls": 1,
+       "readingKeys": [
+        "contract",
+        "source",
+        "workspaceRoot"
+       ],
+       "piStrings": [
+        "reactivefiber.render.preview/v1",
+        "/fixture/rf-workspace"
+       ],
+       "piNumbers": [],
+       "piForbidden": {
+        "duplicate": 0,
+        "refused": 0,
+        "replaced": 0
+       },
+       "forbidden": {
+        "duplicate": 0,
+        "refused": 0,
+        "replaced": 0
+       },
+       "envelopeForbidden": {
+        "duplicate": 0,
+        "refused": 0,
+        "replaced": 0
+       }
+      },
+      "connectHeld": {
+       "verbatim": true,
+       "calls": 1,
+       "readingKeys": [
+        "contract",
+        "source",
+        "workspaceRoot"
+       ],
+       "piStrings": [
+        "reactivefiber.render.preview/v1",
+        "/fixture/rf-workspace"
+       ],
+       "piNumbers": [],
+       "piForbidden": {
+        "duplicate": 0,
+        "refused": 0,
+        "replaced": 0
+       },
+       "forbidden": {
+        "duplicate": 0,
+        "refused": 0,
+        "replaced": 1
+       },
+       "envelopeForbidden": {
+        "duplicate": 0,
+        "refused": 0,
+        "replaced": 1
+       }
+      }
+     }
+    },
+    {
+     "id": "B3",
+     "witness": {
+      "connectFirst": {
+       "isError": false,
+       "kind": "returned",
+       "verbatim": true,
+       "piStrings": [
+        "returned",
+        "reactivefiber.render.preview/v1",
+        "/fixture/rf-workspace"
+       ],
+       "forbidden": {
+        "duplicate": 0,
+        "refused": 0,
+        "replaced": 0
+       }
+      },
+      "connectHeld": {
+       "isError": false,
+       "kind": "returned",
+       "verbatim": true,
+       "piStrings": [
+        "returned",
+        "reactivefiber.render.preview/v1",
+        "/fixture/rf-workspace"
+       ],
+       "forbidden": {
+        "duplicate": 0,
+        "refused": 0,
+        "replaced": 1
+       }
+      }
+     }
+    },
+    {
+     "id": "B4",
+     "witness": {
+      "connectFirst": {
+       "category": "transport",
+       "message": "RF preview returned an unrecognized native envelope.",
+       "reading": false,
+       "spawns": 1,
+       "verb": [
+        "context",
+        "render"
+       ],
+       "edgeArgv": [],
+       "forbidden": {
+        "duplicate": 0,
+        "refused": 0,
+        "replaced": 0
+       }
+      },
+      "connectHeld": {
+       "category": "transport",
+       "message": "RF preview returned an unrecognized native envelope.",
+       "reading": false,
+       "spawns": 1,
+       "verb": [
+        "context",
+        "render"
+       ],
+       "edgeArgv": [],
+       "forbidden": {
+        "duplicate": 0,
+        "refused": 0,
+        "replaced": 0
+       }
+      }
+     }
+    },
+    {
+     "id": "B5",
+     "witness": {
+      "refusals": {
+       "connectFirst": {
+        "category": "validation",
+        "message": "ReactiveFiber topology refused: source must be a reactive-fiber.cli/v1 context.render envelope.",
+        "label": null,
+        "forbidden": {
+         "duplicate": 0,
+         "refused": 1,
+         "replaced": 0
+        }
+       },
+       "connectHeld": {
+        "category": "validation",
+        "message": "ReactiveFiber topology refused: source must be a reactive-fiber.cli/v1 context.render envelope.",
+        "label": null,
+        "forbidden": {
+         "duplicate": 0,
+         "refused": 1,
+         "replaced": 0
+        }
+       }
+      },
+      "envelopeIndependent": true,
+      "constantForbidden": {
+       "duplicate": 0,
+       "refused": 1,
+       "replaced": 0
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "label": "(c) disconnect fixtures (both eras): exactly result.applied.operations[] surfaced, no multiplicity claim from inference",
+   "pins": [
+    {
+     "id": "C1",
+     "witness": {
+      "facts": {
+       "disconnectHeld": {
+        "command": "graph.disconnect",
+        "ok": true,
+        "exit": 0,
+        "applied": [
+         "remove_fiber:fiber:source:task.value->component:patch.notes"
+        ],
+        "revision": 4,
+        "journal": 3,
+        "seeds": [
+         "removed"
+        ]
+       },
+       "disconnectAgain": {
+        "command": "graph.disconnect",
+        "ok": false,
+        "exit": 2,
+        "result": null,
+        "code": "RF_GRAPH_OVERLAY_DANGLING",
+        "reference": "fiber:source:task.value->component:patch.notes"
+       },
+       "disconnectOnce": {
+        "command": "graph.disconnect",
+        "ok": true,
+        "exit": 0,
+        "applied": [
+         "remove_fiber:fiber:source:task.value->component:patch.notes"
+        ],
+        "revision": 3,
+        "journal": 2,
+        "seeds": [
+         "removed"
+        ]
+       }
+      },
+      "sameApplied": true,
+      "journalBefore": 2,
+      "journalBeforeDistinct": 1
+     }
+    },
+    {
+     "id": "C2",
+     "witness": {
+      "disconnectHeld": {
+       "verbatim": true,
+       "calls": 1,
+       "readingKeys": [
+        "contract",
+        "source",
+        "workspaceRoot"
+       ],
+       "piStrings": [
+        "reactivefiber.render.preview/v1",
+        "/fixture/rf-workspace"
+       ],
+       "piNumbers": [],
+       "piForbidden": {
+        "duplicate": 0,
+        "refused": 0,
+        "replaced": 0
+       },
+       "applied": [
+        "remove_fiber:fiber:source:task.value->component:patch.notes"
+       ],
+       "tool": {
+        "isError": false,
+        "kind": "returned",
+        "verbatim": true,
+        "piStrings": [
+         "returned",
+         "reactivefiber.render.preview/v1",
+         "/fixture/rf-workspace"
+        ],
+        "forbidden": {
+         "duplicate": 0,
+         "refused": 0,
+         "replaced": 0
+        }
+       }
+      },
+      "disconnectAgain": {
+       "verbatim": true,
+       "calls": 1,
+       "readingKeys": [
+        "contract",
+        "source",
+        "workspaceRoot"
+       ],
+       "piStrings": [
+        "reactivefiber.render.preview/v1",
+        "/fixture/rf-workspace"
+       ],
+       "piNumbers": [],
+       "piForbidden": {
+        "duplicate": 0,
+        "refused": 0,
+        "replaced": 0
+       },
+       "applied": null,
+       "tool": {
+        "isError": false,
+        "kind": "returned",
+        "verbatim": true,
+        "piStrings": [
+         "returned",
+         "reactivefiber.render.preview/v1",
+         "/fixture/rf-workspace"
+        ],
+        "forbidden": {
+         "duplicate": 0,
+         "refused": 0,
+         "replaced": 0
+        }
+       }
+      },
+      "disconnectOnce": {
+       "verbatim": true,
+       "calls": 1,
+       "readingKeys": [
+        "contract",
+        "source",
+        "workspaceRoot"
+       ],
+       "piStrings": [
+        "reactivefiber.render.preview/v1",
+        "/fixture/rf-workspace"
+       ],
+       "piNumbers": [],
+       "piForbidden": {
+        "duplicate": 0,
+        "refused": 0,
+        "replaced": 0
+       },
+       "applied": [
+        "remove_fiber:fiber:source:task.value->component:patch.notes"
+       ],
+       "tool": {
+        "isError": false,
+        "kind": "returned",
+        "verbatim": true,
+        "piStrings": [
+         "returned",
+         "reactivefiber.render.preview/v1",
+         "/fixture/rf-workspace"
+        ],
+        "forbidden": {
+         "duplicate": 0,
+         "refused": 0,
+         "replaced": 0
+        }
+       }
+      }
+     }
+    },
+    {
+     "id": "C3",
+     "witness": {
+      "disconnectHeld": {
+       "native": {
+        "category": "transport",
+        "message": "RF preview returned an unrecognized native envelope.",
+        "reading": false,
+        "spawns": 1,
+        "verb": [
+         "context",
+         "render"
+        ],
+        "edgeArgv": [],
+        "forbidden": {
+         "duplicate": 0,
+         "refused": 0,
+         "replaced": 0
+        }
+       },
+       "adapter": {
+        "category": "validation",
+        "message": "ReactiveFiber topology refused: source must be a reactive-fiber.cli/v1 context.render envelope.",
+        "label": null,
+        "forbidden": {
+         "duplicate": 0,
+         "refused": 1,
+         "replaced": 0
+        }
+       }
+      },
+      "disconnectAgain": {
+       "native": {
+        "category": "transport",
+        "message": "RF preview returned an unrecognized native envelope.",
+        "reading": false,
+        "spawns": 1,
+        "verb": [
+         "context",
+         "render"
+        ],
+        "edgeArgv": [],
+        "forbidden": {
+         "duplicate": 0,
+         "refused": 0,
+         "replaced": 0
+        }
+       },
+       "adapter": {
+        "category": "validation",
+        "message": "ReactiveFiber topology refused: source must be a reactive-fiber.cli/v1 context.render envelope.",
+        "label": null,
+        "forbidden": {
+         "duplicate": 0,
+         "refused": 1,
+         "replaced": 0
+        }
+       }
+      },
+      "disconnectOnce": {
+       "native": {
+        "category": "transport",
+        "message": "RF preview returned an unrecognized native envelope.",
+        "reading": false,
+        "spawns": 1,
+        "verb": [
+         "context",
+         "render"
+        ],
+        "edgeArgv": [],
+        "forbidden": {
+         "duplicate": 0,
+         "refused": 0,
+         "replaced": 0
+        }
+       },
+       "adapter": {
+        "category": "validation",
+        "message": "ReactiveFiber topology refused: source must be a reactive-fiber.cli/v1 context.render envelope.",
+        "label": null,
+        "forbidden": {
+         "duplicate": 0,
+         "refused": 1,
+         "replaced": 0
+        }
+       }
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "tests": [
+  "the judged set: the frozen shape, the out-of-file roster, the owner's acceptance clauses and the cases agree",
+  "T1",
+  "T2",
+  "T3",
+  "T4",
+  "A1",
+  "A2",
+  "A3",
+  "A4",
+  "A5",
+  "B1",
+  "B2",
+  "B3",
+  "B4",
+  "B5",
+  "C1",
+  "C2",
+  "C3",
+  "registration: every case of this file is registered once, in roster order, in run mode, and ran before this one"
+ ]
+}

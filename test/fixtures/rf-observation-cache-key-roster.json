@@ -682,6 +682,14 @@
        ]
       },
       {
+       "id": "full:result.blocks",
+       "changed": [
+        "snapshot.coverage",
+        "snapshot.node",
+        "diagnostics"
+       ]
+      },
+      {
        "id": "full:result.provenance.graph_revision_id",
        "changed": [
         "snapshot.evidenceRefs",
@@ -719,6 +727,14 @@
       },
       {
        "id": "full:result.observations",
+       "changed": [
+        "snapshot.coverage",
+        "snapshot.node",
+        "diagnostics"
+       ]
+      },
+      {
+       "id": "full:result.necessity",
        "changed": [
         "snapshot.coverage",
         "snapshot.node",
@@ -941,11 +957,6 @@
         "factors": true
        },
        {
-        "id": "full:result.blocks",
-        "why": "J-STRUCTURE",
-        "factors": true
-       },
-       {
         "id": "full:result.components",
         "why": "J-STRUCTURE",
         "factors": true
@@ -1038,11 +1049,6 @@
        {
         "id": "full:result.audience",
         "why": "J-REQUEST-ECHO",
-        "factors": true
-       },
-       {
-        "id": "full:result.necessity",
-        "why": "J-STRUCTURE",
         "factors": true
        },
        {
@@ -1161,7 +1167,7 @@
       "J-PROVENANCE-AUX": 9,
       "J-REQUEST-ECHO": 3,
       "J-ROW-AUX": 1,
-      "J-STRUCTURE": 7,
+      "J-STRUCTURE": 5,
       "J-VIEW-AUX": 1,
       "J-WORK-COUNTERS": 8
      }
@@ -1233,7 +1239,7 @@
   "full:result.diagnostics_summary.warnings:projected",
   "full:result.diagnostics_summary.has_errors:fenced",
   "full:result.diagnostics_summary.has_warnings:fenced",
-  "full:result.blocks:omitted:J-STRUCTURE",
+  "full:result.blocks:projected",
   "full:result.components:omitted:J-STRUCTURE",
   "full:result.provenance.created_at:omitted:J-PROVENANCE-AUX",
   "full:result.provenance.graph_revision_id:projected",
@@ -1260,7 +1266,7 @@
   "full:result.audience:omitted:J-REQUEST-ECHO",
   "full:result.bundle_revision_id:projected",
   "full:result.observations:projected",
-  "full:result.necessity:omitted:J-STRUCTURE",
+  "full:result.necessity:projected",
   "full:result.attempts:omitted:J-WORK-COUNTERS",
   "full:result.superseded_transaction_ids:omitted:J-STRUCTURE",
   "full:result.retry_work:omitted:J-WORK-COUNTERS",
@@ -1305,7 +1311,7 @@
  "justifications": {
   "J-PAYLOAD-RESTATED": "rf's restatements of the context text (size, digest, path): Pi references the text by its own sha256 (nativePayloadRef) and no downstream Pi operation reads rf's restatement",
   "J-BUDGET-AUX": "budget terms other than context_window and available_context_tokens: validated or unread; the status line states only available of window and over-budget coverage, and no cache, query or view reads the rest",
-  "J-STRUCTURE": "render structure inside the withheld context (blocks, components, necessity, effects, plan, transaction lists): Pi never surfaces the context body and the payload digest stands for it",
+  "J-STRUCTURE": "render structure inside the withheld context (components, effects, plan, transaction lists): Pi never surfaces the context body and the payload digest stands for it",
   "J-WORK-COUNTERS": "execution counters other than necessity_eval_count and tsx_worker_spawns: validated where fenced, read by no cache, query or view",
   "J-PROVENANCE-AUX": "auxiliary provenance (creation time, schema versions, storage, sibling SDK entries, wire format): ordering uses the host capture and observation instants, the version cohort the bundle or graph digest, the engine identity only the TSX entries",
   "J-POLICY-REVISION": "the necessity policy revision is no Pi version cohort: the cohort is the bundle digest, else the graph digest (owner ruling G-A, wb-973.8), and equal-payload renders under two policies stay distinct cache entries by their operation ids",

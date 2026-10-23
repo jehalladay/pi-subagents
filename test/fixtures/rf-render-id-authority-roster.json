@@ -1,0 +1,972 @@
+{
+ "bead": "wb-hs2j.4",
+ "citation": "docs/programs/reactive-context-assembly-2026-10-18/02-swarm-usage-and-command-grammar.md:46@6a251bf73af5",
+ "quote": "A transfer does NOT by itself confer federation authority, access to private sources or cross-version exact replay.",
+ "merged": {
+  "id": "rca-receipt-dereference-validates-issuer-scope",
+  "citation": "README.md:64@6a251bf73af5",
+  "quote": "Validate issuer identity and scope on dereference."
+ },
+ "producer": {
+  "programPin": "6a251bf73af57c3a703caf6892dfe3015e06a481",
+  "basis": "Program text read with read-only git show at the pin in a ReactiveFiberCLI clone (02-swarm-usage-and-command-grammar.md :46 :48; README.md :63 :64; BEADS-2026-10-21.md :18 :66). Installed rf measured 2026-10-23 by the cutting seat: `rf --json --version` (result.version 0.1.832, result.leaves 79 paths), `rf context show --help` (--detail {compact,full}) and `rf operation show --help` (\"Read the durable receipt of an invocation from the journal by its rfo_ operation id: committed with the render_id and transaction_id it produced\"); the dereference leaves are the served leaves whose help names a RENDER, RENDER_A/RENDER_B or OPERATION_ID positional, plus context.history, which lists recorded renders.",
+  "installedVersion": "0.1.832",
+  "leaves": [
+   "init",
+   "status",
+   "doctor",
+   "config.get",
+   "config.set",
+   "config.unset",
+   "config.list",
+   "config.explain",
+   "component.create",
+   "component.add",
+   "component.edit",
+   "component.validate",
+   "component.test",
+   "component.list",
+   "component.show",
+   "component.activate",
+   "component.deactivate",
+   "component.history",
+   "component.state.show",
+   "component.state.reset",
+   "optic.create",
+   "optic.validate",
+   "optic.test",
+   "optic.show",
+   "optic.history",
+   "optic.usages",
+   "optic.register",
+   "optic.list",
+   "graph.show",
+   "graph.validate",
+   "graph.preflight",
+   "graph.explain",
+   "graph.diff",
+   "graph.candidate.create",
+   "graph.candidate.authorize",
+   "graph.patch",
+   "graph.connect",
+   "graph.disconnect",
+   "graph.set-optic",
+   "graph.impact",
+   "graph.test",
+   "graph.publish",
+   "graph.history",
+   "graph.rollback",
+   "view.list",
+   "view.show",
+   "view.validate",
+   "state.get",
+   "state.set",
+   "state.unset",
+   "state.list",
+   "state.history",
+   "session.open",
+   "session.show",
+   "session.list",
+   "session.close",
+   "context.render",
+   "context.show",
+   "context.explain",
+   "context.plan",
+   "context.diff",
+   "context.history",
+   "context.replay",
+   "inference.run",
+   "operation.show",
+   "storage.status",
+   "storage.rebuild-indexes",
+   "storage.export",
+   "storage.import",
+   "storage.migrate",
+   "storage.compact",
+   "storage.cleanup",
+   "storage.local-servers",
+   "dolt",
+   "schema.show",
+   "schema.check",
+   "schema.migrate",
+   "completion",
+   "install-skill"
+  ],
+  "dereferenceLeaves": [
+   "context.show",
+   "context.replay",
+   "context.diff",
+   "context.explain",
+   "context.plan",
+   "context.history",
+   "operation.show"
+  ],
+  "contextShowDetail": [
+   "compact",
+   "full"
+  ],
+  "nearestLeaves": [
+   {
+    "id": "rfc-s24ro.6",
+    "at": "BEADS-2026-10-21.md:18",
+    "surface": "rf context show ID --detail receipt",
+    "leaf": "context.show",
+    "servedAtInstalled": false
+   },
+   {
+    "id": "rfc-mq7k6.15",
+    "at": "BEADS-2026-10-21.md:66",
+    "surface": "rf operation show OPERATION_ID (the invocation receipt read leaf)",
+    "leaf": "operation.show",
+    "servedAtInstalled": true
+   }
+  ]
+ },
+ "constants": {
+  "previewId": "reactivefiber.render.preview",
+  "permission": "reactivefiber:render",
+  "renderId": "rfr_rrrrrrrrrrrrrrrrrrrrrrrrrr",
+  "renderIdInputs": [
+   {
+    "render_id": "rfr_rrrrrrrrrrrrrrrrrrrrrrrrrr"
+   },
+   {
+    "renderId": "rfr_rrrrrrrrrrrrrrrrrrrrrrrrrr"
+   },
+   {
+    "model": "m",
+    "task": "t",
+    "render_id": "rfr_rrrrrrrrrrrrrrrrrrrrrrrrrr"
+   },
+   {
+    "view": "v",
+    "taskId": "t",
+    "render_id": "rfr_rrrrrrrrrrrrrrrrrrrrrrrrrr"
+   },
+   {
+    "receipt": {
+     "render_id": "rfr_rrrrrrrrrrrrrrrrrrrrrrrrrr",
+     "workspace_id": "rfw_aaaaaaaaaaaaaaaaaaaaaa"
+    }
+   },
+   {
+    "model": "m",
+    "task": "t",
+    "receipt": {
+     "render_id": "rfr_rrrrrrrrrrrrrrrrrrrrrrrrrr"
+    }
+   }
+  ],
+  "textArms": [
+   {
+    "model": "m",
+    "task": "rfr_rrrrrrrrrrrrrrrrrrrrrrrrrr"
+   },
+   {
+    "model": "rfr_rrrrrrrrrrrrrrrrrrrrrrrrrr",
+    "task": "t"
+   },
+   {
+    "view": "rfr_rrrrrrrrrrrrrrrrrrrrrrrrrr",
+    "taskId": "t"
+   },
+   {
+    "view": "v",
+    "taskId": "rfr_rrrrrrrrrrrrrrrrrrrrrrrrrr"
+   },
+   {
+    "view": "v",
+    "taskId": "t",
+    "model": "rfr_rrrrrrrrrrrrrrrrrrrrrrrrrr"
+   }
+  ],
+  "textFlags": [
+   "--model",
+   "--task",
+   "--view",
+   "--task-id"
+  ],
+  "claims": {
+   "receipt": {
+    "render_id": "rfr_rrrrrrrrrrrrrrrrrrrrrrrrrr",
+    "issuer": {
+     "workspace_id": "rfw_aaaaaaaaaaaaaaaaaaaaaa",
+     "build": "0.1.832",
+     "backend_instance": "census-backend"
+    },
+    "observer_scope": "census-observer-scope",
+    "replay": "document_exact",
+    "federation_authority": "census-granted",
+    "private_sources": [
+     "census-private-source"
+    ]
+   },
+   "replay_capability": "replayable_exact"
+  },
+  "claimTokens": [
+   "rfr_rrrrrrrrrrrrrrrrrrrrrrrrrr",
+   "document_exact",
+   "replayable_exact",
+   "census-granted",
+   "census-private-source",
+   "census-observer-scope",
+   "federation"
+  ],
+  "dereferenceVerbs": {
+   "context": [
+    "show",
+    "replay",
+    "diff",
+    "explain",
+    "plan",
+    "history",
+    "receipt"
+   ],
+   "operation": [
+    "show"
+   ],
+   "--detail": [
+    "receipt"
+   ]
+  },
+  "dereferenceText": "\\b(?:context[\\s._-]+(?:show|replay|diff|explain|plan|history|receipt)|operation[\\s._-]+show)\\b|--detail[\\s=]+receipt\\b/i",
+  "receiptText": "(?:context|render)[\\s._-]*receipts?/i",
+  "renderIdLiteral": "\\brfr_[0-9a-z]{4,}/i",
+  "renderIdName": "^render_?id$/i",
+  "renderIdDeclaration": "render_?ids?(?![a-z])/i",
+  "launchNames": [
+   "spawn",
+   "spawnSync",
+   "exec",
+   "execSync",
+   "execFile",
+   "execFileSync",
+   "fork"
+  ],
+  "moduleExtensions": [
+   ".ts",
+   ".mts",
+   ".cts",
+   ".tsx",
+   ".js",
+   ".mjs",
+   ".cjs",
+   ".jsx"
+  ],
+  "srcFloor": 100,
+  "srcAnchor": [
+   "workbench/providers/reactivefiber.ts",
+   "RF render refused"
+  ],
+  "clauseSplit": "; (?=\\([a-z]\\) )/",
+  "partSplit": ", | and (?=no )/"
+ },
+ "residuals": [
+  "R-COMPOSED-ARGV",
+  "R-INDIRECT-LAUNCH",
+  "R-INTERRUPTED",
+  "R-UNNAMED",
+  "R-STORE-READ",
+  "R-COMPOSED-KEY",
+  "R-STATED-DIGEST"
+ ],
+ "rows": [
+  {
+   "id": "A",
+   "label": "(a) a Pi consumer holding only a render ID projects no source content and no replay promise beyond what a scoped authorized read returns: no Pi input arm takes a render ID or a receipt, a committed or transferred render reading is refused before projection, the projection withholds the context text and adopts no producer replay, receipt or authority claim, and replayed rows only demote",
+   "pins": [
+    {
+     "id": "A1",
+     "part": "a Pi consumer holding only a render ID projects no source content",
+     "witness": {
+      "pin": "A1",
+      "inputs": [
+       {
+        "keys": [
+         "render_id"
+        ],
+        "injected": {
+         "category": "validation",
+         "message": "Invalid input schema for capability reactivefiber.render.preview.",
+         "calls": 0
+        },
+        "native": {
+         "category": "validation",
+         "message": "Invalid input schema for capability reactivefiber.render.preview.",
+         "spawns": 0
+        }
+       },
+       {
+        "keys": [
+         "renderId"
+        ],
+        "injected": {
+         "category": "validation",
+         "message": "Invalid input schema for capability reactivefiber.render.preview.",
+         "calls": 0
+        },
+        "native": {
+         "category": "validation",
+         "message": "Invalid input schema for capability reactivefiber.render.preview.",
+         "spawns": 0
+        }
+       },
+       {
+        "keys": [
+         "model",
+         "task",
+         "render_id"
+        ],
+        "injected": {
+         "category": "validation",
+         "message": "Invalid input schema for capability reactivefiber.render.preview.",
+         "calls": 0
+        },
+        "native": {
+         "category": "validation",
+         "message": "Invalid input schema for capability reactivefiber.render.preview.",
+         "spawns": 0
+        }
+       },
+       {
+        "keys": [
+         "view",
+         "taskId",
+         "render_id"
+        ],
+        "injected": {
+         "category": "validation",
+         "message": "Invalid input schema for capability reactivefiber.render.preview.",
+         "calls": 0
+        },
+        "native": {
+         "category": "validation",
+         "message": "Invalid input schema for capability reactivefiber.render.preview.",
+         "spawns": 0
+        }
+       },
+       {
+        "keys": [
+         "receipt"
+        ],
+        "injected": {
+         "category": "validation",
+         "message": "Invalid input schema for capability reactivefiber.render.preview.",
+         "calls": 0
+        },
+        "native": {
+         "category": "validation",
+         "message": "Invalid input schema for capability reactivefiber.render.preview.",
+         "spawns": 0
+        }
+       },
+       {
+        "keys": [
+         "model",
+         "task",
+         "receipt"
+        ],
+        "injected": {
+         "category": "validation",
+         "message": "Invalid input schema for capability reactivefiber.render.preview.",
+         "calls": 0
+        },
+        "native": {
+         "category": "validation",
+         "message": "Invalid input schema for capability reactivefiber.render.preview.",
+         "spawns": 0
+        }
+       }
+      ],
+      "textArms": [
+       {
+        "input": [
+         "model",
+         "task"
+        ],
+        "spawns": 1,
+        "verb": [
+         "context",
+         "render"
+        ],
+        "noCommit": true,
+        "flags": [
+         "--task"
+        ],
+        "readingRenderId": null
+       },
+       {
+        "input": [
+         "model",
+         "task"
+        ],
+        "spawns": 1,
+        "verb": [
+         "context",
+         "render"
+        ],
+        "noCommit": true,
+        "flags": [
+         "--model"
+        ],
+        "readingRenderId": null
+       },
+       {
+        "input": [
+         "view",
+         "taskId"
+        ],
+        "spawns": 1,
+        "verb": [
+         "context",
+         "render"
+        ],
+        "noCommit": true,
+        "flags": [
+         "--view"
+        ],
+        "readingRenderId": null
+       },
+       {
+        "input": [
+         "view",
+         "taskId"
+        ],
+        "spawns": 1,
+        "verb": [
+         "context",
+         "render"
+        ],
+        "noCommit": true,
+        "flags": [
+         "--task-id"
+        ],
+        "readingRenderId": null
+       },
+       {
+        "input": [
+         "view",
+         "taskId",
+         "model"
+        ],
+        "spawns": 1,
+        "verb": [
+         "context",
+         "render"
+        ],
+        "noCommit": true,
+        "flags": [
+         "--model"
+        ],
+        "readingRenderId": null
+       }
+      ],
+      "committed": [
+       {
+        "variant": "render_id",
+        "provider": {
+         "category": "transport",
+         "message": "RF preview returned an unrecognized or contradictory envelope.",
+         "spawns": 1
+        },
+        "observer": {
+         "category": "validation",
+         "message": "ReactiveFiber topology refused: result.render_id must be null: a committed render is not a preview."
+        }
+       },
+       {
+        "variant": "commit_seq",
+        "provider": {
+         "category": "transport",
+         "message": "RF preview returned an unrecognized or contradictory envelope.",
+         "spawns": 1
+        },
+        "observer": {
+         "category": "validation",
+         "message": "ReactiveFiber topology refused: result.commit_seq must be absent or null."
+        }
+       },
+       {
+        "variant": "transaction_id",
+        "provider": {
+         "category": "transport",
+         "message": "RF preview returned an unrecognized or contradictory envelope.",
+         "spawns": 1
+        },
+        "observer": {
+         "category": "validation",
+         "message": "ReactiveFiber topology refused: source.transaction_id must be null: a noncommitted read opens no transaction."
+        }
+       }
+      ],
+      "projection": {
+       "sentinelProjected": false,
+       "payloadRef": "rf-output:sha256:a3eee6abafaec9f8914c3d6768925eb990479ffb5cf08c6742a4036781bd1f56",
+       "evidence": [
+        "rf-graph",
+        "rf-workspace",
+        "rf-bundle",
+        "rf-cli"
+       ]
+      },
+      "renderIdUse": {
+       "nullChecks": [
+        "src/workbench/providers/reactivefiber.ts",
+        "src/workbench/reactivefiber-observer.ts"
+       ],
+       "reads": [],
+       "bindings": [],
+       "controls": {
+        "read": 1,
+        "elementRead": 1,
+        "destructured": 1,
+        "camelRead": 1,
+        "binding": 1,
+        "nullCheck": 1,
+        "composedKey": 0
+       }
+      }
+     }
+    },
+    {
+     "id": "A2",
+     "part": "no replay promise beyond what a scoped authorized read returns",
+     "witness": {
+      "pin": "A2",
+      "claims": {
+       "equalToBare": true,
+       "surfaced": [],
+       "claimKeys": [
+        "receipt",
+        "replay_capability"
+       ]
+      },
+      "replayed": {
+       "coverage": "partial",
+       "tone": "unknown",
+       "notes": [
+        "observations: 2 rows, 2 reused: partial"
+       ]
+      },
+      "fresh": {
+       "coverage": "complete",
+       "tone": "success"
+      },
+      "clock": {
+       "capturedAt": "2026-10-23T03:00:00Z",
+       "observedAt": "2026-10-23T03:00:01Z",
+       "producerCreatedAt": "2026-10-17T15:47:30.870680Z",
+       "producerTimeSurfaced": false
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "label": "(b) Pi read-admission gates run on every dereference, an unauthorized-projection refusal is surfaced, never bypassed: the registry re-checks grants on every call before input validation and the rf descriptor serves no inspect (ref-dereference) mode, the reader refuses another workspace's reading as a typed authorization error before it reads the envelope, and no reading content or reading-stated root passes that gate",
+   "pins": [
+    {
+     "id": "B1",
+     "part": "Pi read-admission gates run on every dereference",
+     "witness": {
+      "pin": "B1",
+      "sequence": [
+       "ok",
+       "authorization",
+       "ok",
+       "authorization",
+       "ok",
+       "authorization"
+      ],
+      "providerCalls": 3,
+      "ordering": {
+       "ungranted": {
+        "category": "authorization",
+        "message": "Permission denied for capability reactivefiber.render.preview (invoke)."
+       },
+       "granted": {
+        "category": "validation",
+        "message": "Invalid input schema for capability reactivefiber.render.preview."
+       },
+       "calls": 0
+      },
+      "inspect": [
+       {
+        "registration": "injected",
+        "modes": [
+         "invoke"
+        ],
+        "withoutGrant": {
+         "category": "authorization",
+         "message": "Permission denied for capability reactivefiber.render.preview (inspect)."
+        },
+        "withGrant": {
+         "category": "unavailable",
+         "message": "Capability reactivefiber.render.preview does not support inspect."
+        },
+        "spawns": 0
+       },
+       {
+        "registration": "native",
+        "modes": [
+         "invoke"
+        ],
+        "withoutGrant": {
+         "category": "authorization",
+         "message": "Permission denied for capability reactivefiber.render.preview (inspect)."
+        },
+        "withGrant": {
+         "category": "unavailable",
+         "message": "Capability reactivefiber.render.preview does not support inspect."
+        },
+        "spawns": 0
+       }
+      ]
+     }
+    },
+    {
+     "id": "B2",
+     "part": "an unauthorized-projection refusal is surfaced",
+     "witness": {
+      "pin": "B2",
+      "refused": {
+       "category": "authorization",
+       "message": "RF reading workspace differs from observer scope."
+      },
+      "runs": [
+       {
+        "name": "ungranted",
+        "status": "failed",
+        "capabilityError": {
+         "category": "authorization",
+         "message": "Permission denied for capability reactivefiber.render.preview (invoke)."
+        },
+        "calls": 0
+       },
+       {
+        "name": "granted",
+        "status": "completed",
+        "capabilityError": null,
+        "calls": 1
+       },
+       {
+        "name": "renderIdInput",
+        "status": "failed",
+        "capabilityError": {
+         "category": "validation",
+         "message": "Invalid input schema for capability reactivefiber.render.preview."
+        },
+        "calls": 0
+       }
+      ],
+      "records": {
+       "applied": "applied",
+       "sameScope": {
+        "byScope": 1,
+        "byRef": 1
+       },
+       "otherPrincipal": {
+        "byScope": 0,
+        "byRef": 0
+       },
+       "otherWorkspace": {
+        "byScope": 0,
+        "byRef": 0
+       }
+      }
+     }
+    },
+    {
+     "id": "B3",
+     "part": "never bypassed",
+     "witness": {
+      "pin": "B3",
+      "gate": [
+       {
+        "name": "preview",
+        "category": "authorization",
+        "message": "RF reading workspace differs from observer scope."
+       },
+       {
+        "name": "committedRenderId",
+        "category": "authorization",
+        "message": "RF reading workspace differs from observer scope."
+       },
+       {
+        "name": "receiptClaimsObserverRoot",
+        "category": "authorization",
+        "message": "RF reading workspace differs from observer scope."
+       },
+       {
+        "name": "malformedSource",
+        "category": "authorization",
+        "message": "RF reading workspace differs from observer scope."
+       },
+       {
+        "name": "innerRootIsObserverRoot",
+        "category": "authorization",
+        "message": "RF reading workspace differs from observer scope."
+       }
+      ],
+      "authorizedRoot": {
+       "swarmWithoutAuthorizedRoot": "authorization",
+       "swarmWithAuthorizedRoot": "complete",
+       "observerRootWithAuthorizedRoot": "authorization",
+       "swarmClaimingObserverRoot": "authorization"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "label": "(c) a receipt dereference checks issuer/workspace/build and declared observer scope before any projection, digest mismatch refuses: absent today and gated - Pi's one rf launch is the --no-commit preview, no src module or registered descriptor spells an rf dereference verb or a context receipt, the installed rf serves no context receipt (C3 is proposed), and Pi adopts no producer-stated digest while malformed revision digests are refused",
+   "pins": [
+    {
+     "id": "C1",
+     "part": "a receipt dereference checks issuer/workspace/build and declared observer scope before any projection",
+     "witness": {
+      "pin": "C1",
+      "src": {
+       "floorMet": true,
+       "anchored": true,
+       "rfLaunches": [
+        "src/workbench/providers/reactivefiber.ts:nativeReactiveFiberRender:spawn"
+       ],
+       "renderArgvSeen": true,
+       "dereferences": [],
+       "receipts": [],
+       "renderIdLiterals": []
+      },
+      "positive": {
+       "files": 3,
+       "rfLaunches": [
+        "launch.mjs:<module>:spawn"
+       ],
+       "dereferences": [
+        "a/b/c/d/e/deep.ts",
+        "launch.mjs",
+        "notes.json"
+       ],
+       "receipts": [
+        "notes.json"
+       ],
+       "renderIdLiterals": [
+        "notes.json"
+       ]
+      },
+      "emptyTreeMeetsFloor": false,
+      "controls": {
+       "argv": 1,
+       "dotted": 1,
+       "spaced": 1,
+       "detail": 1,
+       "template": 1,
+       "receiptIdentifier": 1,
+       "renderReceiptText": 1,
+       "renderIdLiteral": 1,
+       "composedArgv": 0,
+       "indirectLaunch": 0,
+       "interrupted": 0,
+       "unnamed": 0,
+       "storeRead": 0
+      },
+      "descriptors": [
+       "forge.gate.status",
+       "furnace.run.inspect",
+       "hyperunix.find",
+       "reactivefiber.render.preview",
+       "reactivefiber.render.preview"
+      ],
+      "descriptorHits": [],
+      "served": [
+       [
+        [
+         "--workspace",
+         "<root>",
+         "context",
+         "render",
+         "--model",
+         "m",
+         "--task",
+         "t",
+         "--no-commit",
+         "--no-input",
+         "--json"
+        ]
+       ],
+       [
+        [
+         "--workspace",
+         "<root>",
+         "context",
+         "render",
+         "--view",
+         "v",
+         "--task-id",
+         "t",
+         "--model",
+         "m",
+         "--no-commit",
+         "--no-input",
+         "--json"
+        ]
+       ]
+      ],
+      "producer": {
+       "installedVersion": "0.1.832",
+       "leaves": 79,
+       "dereferenceLeaves": [
+        "context.show",
+        "context.replay",
+        "context.diff",
+        "context.explain",
+        "context.plan",
+        "context.history",
+        "operation.show"
+       ],
+       "uncaught": [],
+       "receiptLeaves": [],
+       "contextShowDetail": [
+        "compact",
+        "full"
+       ],
+       "nearest": [
+        {
+         "id": "rfc-s24ro.6",
+         "leaf": "context.show",
+         "listed": true,
+         "servedAtInstalled": false
+        },
+        {
+         "id": "rfc-mq7k6.15",
+         "leaf": "operation.show",
+         "listed": true,
+         "servedAtInstalled": true
+        }
+       ]
+      }
+     }
+    },
+    {
+     "id": "C2",
+     "part": "digest mismatch refuses",
+     "witness": {
+      "pin": "C2",
+      "statedDigestIgnored": {
+       "admitted": true,
+       "payloadRef": "rf-output:sha256:a3eee6abafaec9f8914c3d6768925eb990479ffb5cf08c6742a4036781bd1f56",
+       "statedSurfaced": false,
+       "equalToAgreeing": true
+      },
+      "malformed": [
+       {
+        "name": "graphUppercase",
+        "provider": {
+         "category": "transport",
+         "message": "RF preview returned an unrecognized or contradictory envelope.",
+         "spawns": 1
+        },
+        "observer": {
+         "category": "validation",
+         "message": "ReactiveFiber topology refused: result.provenance.graph_revision_id must be sha256:<64 lowercase hex>."
+        }
+       },
+       {
+        "name": "graphShort",
+        "provider": {
+         "category": "transport",
+         "message": "RF preview returned an unrecognized or contradictory envelope.",
+         "spawns": 1
+        },
+        "observer": {
+         "category": "validation",
+         "message": "ReactiveFiber topology refused: result.provenance.graph_revision_id must be sha256:<64 lowercase hex>."
+        }
+       },
+       {
+        "name": "bundleShort",
+        "provider": {
+         "category": "transport",
+         "message": "RF preview returned an unrecognized or contradictory envelope.",
+         "spawns": 1
+        },
+        "observer": {
+         "category": "validation",
+         "message": "ReactiveFiber topology refused: result.bundle_revision_id must be sha256:<64 lowercase hex> when stated."
+        }
+       },
+       {
+        "name": "bundleNull",
+        "provider": {
+         "category": "transport",
+         "message": "RF preview returned an unrecognized or contradictory envelope.",
+         "spawns": 1
+        },
+        "observer": {
+         "category": "validation",
+         "message": "ReactiveFiber topology refused: result.bundle_revision_id must be sha256:<64 lowercase hex> when stated."
+        }
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "D",
+   "label": "(d) repeated exports of one render/scope map to one canonical logical receipt in Pi's records: absent today - Pi keeps no receipt record; its one rf record, the observation node, is keyed by scope and operation id, so repeated projections of one reading are byte-identical and refresh one node, while another operation or scope is its own node",
+   "pins": [
+    {
+     "id": "D1",
+     "part": "repeated exports of one render/scope map to one canonical logical receipt in Pi's records",
+     "witness": {
+      "pin": "D1",
+      "identical": true,
+      "applied": [
+       "applied",
+       "applied",
+       "applied"
+      ],
+      "nodes": 1,
+      "ref": {
+       "provider": "reactivefiber",
+       "type": "context-preview",
+       "id": "rfo_aaaaaaaaaaaaaaaaaaaaaa",
+       "scope": "<root>"
+      },
+      "afterSecondOperation": 2,
+      "perScope": {
+       "census": 2,
+       "other": 1
+      },
+      "named": {
+       "renderId": false,
+       "receipt": false,
+       "contextText": false
+      },
+      "evidence": [
+       "rf-graph",
+       "rf-workspace",
+       "rf-bundle",
+       "rf-cli"
+      ]
+     }
+    }
+   ]
+  }
+ ],
+ "tests": [
+  "the judged set: the frozen shape, the out-of-file roster, the bead export and the cases agree",
+  "A1 a Pi consumer holding only a render ID projects no source content",
+  "A2 no replay promise beyond what a scoped authorized read returns",
+  "B1 Pi read-admission gates run on every dereference",
+  "B2 an unauthorized-projection refusal is surfaced",
+  "B3 never bypassed",
+  "C1 a receipt dereference checks issuer/workspace/build and declared observer scope before any projection",
+  "C2 digest mismatch refuses",
+  "D1 repeated exports of one render/scope map to one canonical logical receipt in Pi's records",
+  "records: every registered test ran once in run mode in roster order, and every pin reached its end"
+ ]
+}

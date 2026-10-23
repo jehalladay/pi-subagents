@@ -17,7 +17,7 @@ import {
   type ReactiveFiberTopologyContext, reactivefiberTopology,
 } from '../src/workbench/reactivefiber-observer.js';
 import {sanitizeWorkbenchText} from '../src/workbench/redaction.js';
-import {fullShapeRf} from './helpers/rf-render-fixture.js';
+import {fullShapeRf, rfFixtureBlock, rfFixtureDecision} from './helpers/rf-render-fixture.js';
 import {installScratchLeakGuard, makeScratch, removeScratch} from './helpers/scratch.js';
 
 type Json = {[key: string]: JsonValue};
@@ -40,7 +40,7 @@ const formula = (over: Json = {}): Json => ({context_window: 8192, output_reserv
 function result(over: Json = {}): Json {
   return {ephemeral: true, render_id: null, output: {text: TEXT}, provenance: {graph_revision_id: GRAPH},
     budget: {formula_terms: formula()}, diagnostics_summary: {errors: 0, warnings: 1, has_errors: false, has_warnings: true},
-    work: work(), ...over};
+    work: work(), blocks: [rfFixtureBlock()], necessity: [rfFixtureDecision()], ...over};
 }
 const rfDiagnostic = (over: Json = {}): Json => ({code: 'RF_RENDER_FAILED', severity: 'error', message: 'failed SECRET-DIAGNOSTIC', hint: 'hint SECRET-HINT',
   source: null, metadata: {secret: 'SECRET-METADATA'}, ...over});

@@ -1,0 +1,228 @@
+{
+ "bead": "wb-hs2j.1",
+ "rows": [
+  {
+   "id": "A",
+   "clause": "a",
+   "label": "(a) a render whose necessity decisions withhold a candidate (explain host_necessity > 0) projects coverage partial and a non-success tone, and exit 0 alone is never complete",
+   "pins": [
+    {
+     "id": "A1",
+     "witness": {
+      "coverage": "partial",
+      "tone": "unknown",
+      "inclusion": [
+       "inclusion: 1 block included, 6 of 7 judged candidates withheld at host_necessity: partial"
+      ]
+     }
+    },
+    {
+     "id": "A2",
+     "witness": {
+      "coverage": "partial",
+      "tone": "unknown",
+      "inclusion": [
+       "inclusion: 3 blocks included, 1 of 4 judged candidates withheld at host_necessity: partial"
+      ]
+     }
+    },
+    {
+     "id": "A3",
+     "witness": {
+      "neither": {
+       "coverage": "partial",
+       "tone": "unknown",
+       "inclusion": [
+        "inclusion not diagnosed: result.blocks and result.necessity absent: partial"
+       ]
+      },
+      "noBlocks": {
+       "coverage": "partial",
+       "tone": "unknown",
+       "inclusion": [
+        "inclusion not diagnosed: result.blocks absent: partial"
+       ]
+      },
+      "noNecessity": {
+       "coverage": "partial",
+       "tone": "unknown",
+       "inclusion": [
+        "inclusion not diagnosed: result.necessity absent: partial"
+       ]
+      }
+     }
+    },
+    {
+     "id": "A4",
+     "witness": {
+      "withheld": {
+       "completeness": "partial",
+       "tone": "unknown"
+      },
+      "undiagnosed": {
+       "completeness": "partial",
+       "tone": "unknown"
+      },
+      "clean": {
+       "completeness": "complete",
+       "tone": "success"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "clause": "b",
+   "label": "(b) a render with exit 0 and zero included blocks is never surfaced as a complete document",
+   "pins": [
+    {
+     "id": "B1",
+     "witness": {
+      "coverage": "partial",
+      "tone": "unknown",
+      "inclusion": [
+       "inclusion: 0 blocks included, 0 of 0 judged candidates withheld at host_necessity: partial"
+      ]
+     }
+    },
+    {
+     "id": "B2",
+     "witness": {
+      "coverage": "partial",
+      "tone": "unknown",
+      "inclusion": [
+       "inclusion: 0 blocks included, 0 of 2 judged candidates withheld at host_necessity: partial"
+      ]
+     }
+    },
+    {
+     "id": "B3",
+     "witness": {
+      "coverage": "partial",
+      "tone": "unknown",
+      "inclusion": [
+       "inclusion: 0 blocks included, 0 of 1 judged candidate withheld at host_necessity: partial"
+      ],
+      "witnesses": []
+     }
+    },
+    {
+     "id": "B4",
+     "witness": {
+      "clean": {
+       "coverage": "complete",
+       "tone": "success",
+       "inclusion": []
+      },
+      "emptied": {
+       "coverage": "partial",
+       "tone": "unknown",
+       "inclusion": [
+        "inclusion: 0 blocks included, 0 of 1 judged candidate withheld at host_necessity: partial"
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "clause": "c",
+   "label": "(c) gated on rfc-s24ro.2: no summary.counts_by_stage exists to carry or reconcile yet, and a stated summary never upgrades a render",
+   "pins": [
+    {
+     "id": "C1",
+     "witness": {
+      "rosterSummary": false,
+      "inclusionKeysInRoster": true,
+      "srcReaders": []
+     }
+    },
+    {
+     "id": "C2",
+     "witness": {
+      "zeroBlocks": {
+       "coverage": "partial",
+       "tone": "unknown",
+       "inclusion": [
+        "inclusion: 0 blocks included, 0 of 1 judged candidate withheld at host_necessity: partial"
+       ]
+      },
+      "withheld": {
+       "coverage": "partial",
+       "tone": "unknown",
+       "inclusion": [
+        "inclusion: 1 block included, 6 of 7 judged candidates withheld at host_necessity: partial"
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "D",
+   "clause": "discipline",
+   "label": "the inclusion leg surfaces only counts, refuses a stated list of another shape and keeps its note inside the diagnostics bound",
+   "pins": [
+    {
+     "id": "D1",
+     "witness": {
+      "surfaced": false,
+      "coverage": "partial",
+      "tone": "unknown",
+      "inclusion": [
+       "inclusion: 1 block included, 1 of 2 judged candidates withheld at host_necessity: partial"
+      ]
+     }
+    },
+    {
+     "id": "D2",
+     "witness": {
+      "blocksObject": "validation: ReactiveFiber topology refused: result.blocks must be an array of block objects.",
+      "blocksText": "validation: ReactiveFiber topology refused: result.blocks must be an array of block objects.",
+      "blocksNonObjectRow": "validation: ReactiveFiber topology refused: result.blocks must be an array of block objects.",
+      "necessityObject": "validation: ReactiveFiber topology refused: result.necessity must be an array of decision records, each with a boolean include.",
+      "necessityTextInclude": "validation: ReactiveFiber topology refused: result.necessity must be an array of decision records, each with a boolean include.",
+      "necessityRowWithoutInclude": "validation: ReactiveFiber topology refused: result.necessity must be an array of decision records, each with a boolean include."
+     }
+    },
+    {
+     "id": "D3",
+     "witness": {
+      "count": 8,
+      "index": 3,
+      "coverage": "partial",
+      "tone": "unknown",
+      "inclusion": [
+       "inclusion: 0 blocks included, 6 of 7 judged candidates withheld at host_necessity: partial"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "Q",
+   "clause": "residual",
+   "label": "the named residuals R-STAGES and R-BYPASS stay pinned quiet",
+   "pins": [
+    {
+     "id": "Q1",
+     "witness": {
+      "coverage": "complete",
+      "tone": "success",
+      "inclusion": []
+     }
+    },
+    {
+     "id": "Q2",
+     "witness": {
+      "coverage": "complete",
+      "tone": "success",
+      "inclusion": []
+     }
+    }
+   ]
+  }
+ ]
+}

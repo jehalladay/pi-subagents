@@ -1,0 +1,1961 @@
+{
+  "bead": "wb-if7q.1",
+  "constants": {
+    "bead": "wb-if7q.1",
+    "pin": "76bbbffd9d4a",
+    "filingRead": "d75b68d10a1a",
+    "tsxVersion": "0.1.668",
+    "exempt": [
+      "test/workbench-tsx-unshipped-surface-census.test.ts",
+      "test/fixtures/tsx-unshipped-surface-roster.json"
+    ],
+    "scanRoots": [
+      {
+        "root": "docs",
+        "floor": 60,
+        "anchor": "docs/workbench/07-native-integrations.md",
+        "token": "Do not declare a typed TS context-render client exists without code evidence"
+      },
+      {
+        "root": "src",
+        "floor": 100,
+        "anchor": "src/workbench/providers/reactivefiber.ts",
+        "token": "RF render refused"
+      },
+      {
+        "root": ".agents",
+        "floor": 1,
+        "anchor": ".agents/skills/beads/SKILL.md",
+        "token": "name: beads"
+      },
+      {
+        "root": "qa",
+        "floor": 55,
+        "anchor": "qa/workbench/receipts-index.mjs",
+        "token": "docs/workbench/receipts"
+      },
+      {
+        "root": "test",
+        "floor": 440,
+        "anchor": "test/workbench-native-rf-tsx-preview.test.ts",
+        "token": "RF-TSX-RECEIPT"
+      },
+      {
+        "root": "examples",
+        "floor": 5,
+        "anchor": "examples/agent-tool-description.md",
+        "token": "Available agent types"
+      }
+    ],
+    "pagesFloor": 4,
+    "families": [
+      {
+        "id": "N1",
+        "context": false,
+        "source": "\\bbrowser[\\s_-]*safe[\\s_-]*TSX\\b|\\bTSX[\\s_-]+(?:hosts?|UIs?)\\b|\\bUI[\\s_-]+(?:runtimes?|descriptors?)\\b|\\bInterface(?:Host|Evaluation)s?\\b|\\bSurfaceCapabilities\\b",
+        "spellings": [
+          "browser-safe TSX",
+          "TSX host",
+          "TSX UI",
+          "UI runtime",
+          "UI descriptors",
+          "InterfaceHost",
+          "InterfaceEvaluation",
+          "SurfaceCapabilities"
+        ]
+      },
+      {
+        "id": "N2",
+        "context": false,
+        "source": "\\bReactive[\\s_-]*(?:Web|TUI)[\\s_-]*Interface[\\s_-]*SDKs?\\b|\\bReactive[\\s_-]*Fiber[\\s_-]*DOM[\\s_-]*SDKs?\\b",
+        "spellings": [
+          "ReactiveWebInterfaceSDK",
+          "ReactiveTUIInterfaceSDK",
+          "ReactiveFiberDOMSDK",
+          "Reactive Web Interface SDK",
+          "reactive_tui_interface_sdk"
+        ]
+      },
+      {
+        "id": "N3",
+        "context": false,
+        "source": "\\bTSX[\\s_-]*IF[\\s_-]*\\d+\\b",
+        "spellings": [
+          "TSX-IF-07",
+          "tsx_if_4"
+        ]
+      },
+      {
+        "id": "N4",
+        "context": false,
+        "source": "\\binterop(?:erability)?[\\s_-]+(?:records?|APIs?)\\b|\\bdeclared[\\s_-]+(?:data[\\s_-]+)?outputs?\\b",
+        "spellings": [
+          "interop record",
+          "INTEROP API",
+          "interoperability records",
+          "declared data outputs",
+          "declared output"
+        ]
+      },
+      {
+        "id": "N5",
+        "context": false,
+        "source": "\\bgraph\\/v2\\b|\\bvalue[\\s_-]+edges?\\b",
+        "spellings": [
+          "graph/v2",
+          "value edge",
+          "value-edges"
+        ]
+      },
+      {
+        "id": "N6",
+        "context": false,
+        "source": "\\bhosts\\.rfcli\\b",
+        "spellings": [
+          "hosts.rfcli"
+        ]
+      },
+      {
+        "id": "N7",
+        "context": true,
+        "source": "\\b(?:typed|data|value)[\\s_-]*(?:outputs?|publications?)\\b|\\binterop\\w*",
+        "spellings": [
+          "typed-output",
+          "data outputs",
+          "data publication",
+          "value publications",
+          "interop"
+        ]
+      },
+      {
+        "id": "N8",
+        "context": true,
+        "source": "\\bdogfood\\w*|\\bVC[\\s_-]*D\\b",
+        "spellings": [
+          "dogfood",
+          "dogfooding",
+          "VC-D"
+        ]
+      },
+      {
+        "id": "N9",
+        "context": true,
+        "source": "\\bparity\\b|\\bequivalen(?:ce|t)\\b",
+        "spellings": [
+          "parity",
+          "equivalence",
+          "equivalent"
+        ]
+      },
+      {
+        "id": "N10",
+        "context": true,
+        "source": "\\bsamples?\\b",
+        "spellings": [
+          "samples",
+          "sample"
+        ]
+      }
+    ],
+    "anchor": "\\bTSX\\b|\\brftsx\\w*|\\bReactiveFiberTSX\\w*|reactive-fiber\\/tsx/i",
+    "markers": [
+      "not",
+      "no",
+      "never",
+      "nor",
+      "none",
+      "neither",
+      "without",
+      "cannot",
+      "unshipped",
+      "unproven",
+      "unimplemented",
+      "unavailable",
+      "unreleased",
+      "absent",
+      "gated",
+      "propose",
+      "proposes",
+      "proposed",
+      "proposal",
+      "planned",
+      "illustrative",
+      "future",
+      "until",
+      "unless",
+      "if"
+    ],
+    "claims": [
+      {
+        "id": "shipped",
+        "source": "ship(?:s|ped|ping)?",
+        "inflections": [
+          "ship",
+          "ships",
+          "shipped",
+          "shipping"
+        ]
+      },
+      {
+        "id": "runnable",
+        "source": "runnable",
+        "inflections": [
+          "runnable"
+        ]
+      },
+      {
+        "id": "landed",
+        "source": "land(?:s|ed|ing)?",
+        "inflections": [
+          "land",
+          "lands",
+          "landed",
+          "landing"
+        ]
+      },
+      {
+        "id": "proven",
+        "source": "prov(?:e|es|ed|en|ing)|proofs?",
+        "inflections": [
+          "prove",
+          "proves",
+          "proved",
+          "proven",
+          "proving",
+          "proof",
+          "proofs"
+        ]
+      },
+      {
+        "id": "support",
+        "source": "support(?:s|ed|ing)?",
+        "inflections": [
+          "support",
+          "supports",
+          "supported",
+          "supporting"
+        ]
+      }
+    ],
+    "gatedExports": [
+      "./core",
+      "./ui",
+      "./host",
+      "./node",
+      "./resources"
+    ],
+    "symbols": [
+      "InterfaceHost",
+      "SurfaceCapabilities",
+      "InterfaceEvaluation",
+      "ReactiveWebInterfaceSDK",
+      "ReactiveTUIInterfaceSDK",
+      "ReactiveFiberDOMSDK"
+    ],
+    "tsxIoFiles": [
+      "tests/audit/interop-pin.test.ts",
+      "tests/audit/interop-field-census.test.ts",
+      "tests/audit/test_interop_typed_output_census.py",
+      "tests/replay/version-drift.test.ts",
+      "tests/unit/embedding/worker-failure.test.ts",
+      "scripts/perf/interop-worker-bench.mjs"
+    ],
+    "adrSlug": "tsx-declared-data-output",
+    "moduleExtensions": [
+      ".ts",
+      ".tsx",
+      ".mts",
+      ".cts",
+      ".js",
+      ".jsx",
+      ".mjs",
+      ".cjs"
+    ],
+    "rosterSite": "src/workflow/reconcile.ts:67",
+    "rfSdk": "@reactive-fiber\\/|^reactive[-_.]?fiber(?:[-_.]?tsx)?(?:\\/|$)|fiber[-_.]?optics|reactive[-_.]?(?:web|tui)[-_.]?interface|reactive[-_.]?components|^rftsx/i",
+    "tier": "test/workbench-native-rf-tsx-preview.test.ts",
+    "tierNames": [
+      "RF-TSX-RECEIPT",
+      "rf-preview-tsx",
+      "wb-693.7"
+    ],
+    "receiptClaimFamilies": [
+      "N5",
+      "N7",
+      "N9"
+    ],
+    "manifestFields": [
+      "dependencies",
+      "devDependencies",
+      "peerDependencies",
+      "optionalDependencies"
+    ],
+    "stop": [
+      "the",
+      "of",
+      "as",
+      "row",
+      "names",
+      "run",
+      "journey",
+      "rfcli's",
+      "tsx"
+    ]
+  },
+  "producer": {
+    "repository": "ReactiveFiberTSXSDK",
+    "pin": "76bbbffd9d4a419f972d6fefc8b7f9dc524df8df",
+    "measured": "read-only git show, ls-tree and grep -w on the local checkout by the cutting seat (ws-03, g10-work-s42), 2026-10-23",
+    "name": "@reactive-fiber/tsx",
+    "version": "0.1.668",
+    "packageBlob": "a3cef7aa8938",
+    "exports": [
+      ".",
+      "./jsx-runtime",
+      "./jsx-dev-runtime",
+      "./testing",
+      "./embedding",
+      "./package.json"
+    ],
+    "plannedEntries": {
+      "site": "docs/programs/native-interfaces-and-portable-tsx-2026-10-21/02-implementation.md:4",
+      "entries": [
+        "/core",
+        "/ui",
+        "/host",
+        "/node",
+        "/resources"
+      ]
+    },
+    "symbolFiles": {
+      "src": 159,
+      "python": 54,
+      "hits": 0
+    },
+    "sites": [
+      {
+        "path": "docs/programs/native-interfaces-and-portable-tsx-2026-10-21/README.md",
+        "line": 3,
+        "text": "Status: accepted architectural charter and implementation plan. **Not yet a shipped browser-safe TSX host or UI descriptor runtime.**"
+      },
+      {
+        "path": "docs/programs/native-interfaces-and-portable-tsx-2026-10-21/README.md",
+        "line": 6,
+        "text": "Reactive Fiber itself is the UI framework. `ReactiveWebInterfaceSDK` and `ReactiveTUIInterfaceSDK` are independent host implementations **depending on this package**, not aliases for it. Neither React.js nor ReactiveFiberCLI is a rendering intermediary. React compatibility is outside this program."
+      },
+      {
+        "path": "docs/programs/native-interfaces-and-portable-tsx-2026-10-21/README.md",
+        "line": 32,
+        "text": "For interface-specific implementation see the new `ReactiveWebInterfaceSDK` and `ReactiveTUIInterfaceSDK` packages. This document supersedes provisional naming in older plans that suggested `ReactiveFiberDOMSDK` or a required React UI, without rewriting unrelated existing context contracts."
+      },
+      {
+        "path": "docs/programs/native-interfaces-and-portable-tsx-2026-10-21/01-runtime-contracts.md",
+        "line": 9,
+        "text": "`SurfaceCapabilities`: target ID/version, text/layout capabilities, graphic protocols (terminal) or DOM/Canvas/WebGPU (browser), event semantics and resource access."
+      },
+      {
+        "path": "docs/programs/native-interfaces-and-portable-tsx-2026-10-21/01-runtime-contracts.md",
+        "line": 11,
+        "text": "`InterfaceHost`: mount/update/remove known descriptors; measure and lay out targets; accept staged commit batches; control focus/input; schedule priority-based updates; dispose resources. A host must not call a component during a paint callback or run provider inference as an incidental render effect."
+      },
+      {
+        "path": "docs/programs/native-interfaces-and-portable-tsx-2026-10-21/01-runtime-contracts.md",
+        "line": 13,
+        "text": "`InterfaceEvaluation`: immutable resolved element identities, declared resource reads, staged state changes, pending/failure status and effect declarations. Host commit is atomic for one accepted evaluation generation. Aborted/suspended/failed evaluation does not run UI side effects."
+      },
+      {
+        "path": "docs/programs/native-interfaces-and-portable-tsx-2026-10-21/02-implementation.md",
+        "line": 4,
+        "text": "Prove browser-facing entries do not import `node:async_hooks`, child processes, Node crypto/FS or managed-host modules. Preserve existing package root for compatibility; design explicit `/core`, `/ui`, `/host`, `/node`, `/resources` entry boundaries with verified export goldens. Before adding exports, reconcile existing type audit and package golden tests."
+      },
+      {
+        "path": "docs/programs/native-interfaces-and-portable-tsx-2026-10-21/02-implementation.md",
+        "line": 13,
+        "text": "Add typed `InterfaceHost` target interface, staged evaluation/commit, mount/update/unmount, resource subscriptions, event/focus dispatch, cleanup, cancellable host effects and priority scheduling. Reuse current reconciliation and frozen resource snapshot semantics. Context output unchanged."
+      },
+      {
+        "path": "docs/programs/native-interfaces-and-portable-tsx-2026-10-21/02-implementation.md",
+        "line": 22,
+        "text": "Native web and native TUI applications, shared semantic component, controlled input, streamed Markdown/JSON, typed decision output, local actions, shared Python-host resources, no extra model calls on rerender. Perform real browser and terminal checks rather than fake-only tests."
+      },
+      {
+        "path": "docs/programs/native-interfaces-and-portable-tsx-2026-10-21/02-implementation.md",
+        "line": 32,
+        "text": "No GitHub CI and no PR. Use Forge and installed consumer validations, on existing main branch. Do not claim samples runnable until demonstrated."
+      }
+    ],
+    "srcIndexHead": "/**\n * Primary public entrypoint of `@reactive-fiber/tsx` (RFTSX-PKG-005, RFTSX-DX-028).\n *\n * Everything a consumer may import from `@reactive-fiber/tsx` is re-exported from this module; the\n * sorted export list is frozen in `tests/golden/exports/index.json`. This file is a barrel of per-module\n * barrels (B-14): later items edit only their own barrel (json, diagnostics, jsx, element, component,\n * resources) and add the re-export line here. Root names follow INTERFACES §15.1; testing-only surfaces\n * (`CORRECTABLE_CODES`, `ASYNC_MISUSE_HINT`, `UPSTREAM_SEVERITY_MAP`, ...) belong to `./testing`\n * (INTERFACES §16.1) and are deliberately absent from this list.\n */\nexport {\n  describeVersions,\n  PACKAGE_NAME,\n  PROTOCOL_VERSION,\n  VERSION,\n  type HostMode,\n  type VersionSnapshot,\n",
+    "pythonInitHead": "\"\"\"reactive_fiber_tsx_host: the Python host of the ReactiveFiberTSX bridge.\n\nImport-light and old-syntax-safe on purpose (RFTSX-PKG-013): ``python -m reactive_fiber_tsx_host``\nexecutes this module BEFORE ``__main__``, so nothing here may need Python 3.12 or a sibling SDK,\nor the version guard could never print its diagnostic. The runtime surface (host, adapters) lives\nin submodules that callers import explicitly.\n\"\"\"\n\nfrom __future__ import annotations\n\nfrom reactive_fiber_tsx_host.version import PROTOCOL_VERSION\nfrom reactive_fiber_tsx_host.version import VERSION as __version__\n",
+    "tsxIo": [
+      {
+        "wp": "TSX-IO-00",
+        "bead": "rftsx-v37s3",
+        "path": "tests/audit/interop-pin.test.ts"
+      },
+      {
+        "wp": "TSX-IO-01",
+        "bead": "rftsx-d46cz",
+        "path": "tests/audit/interop-field-census.test.ts"
+      },
+      {
+        "wp": "TSX-IO-03a",
+        "bead": "rftsx-2w3pj",
+        "path": "tests/audit/test_interop_typed_output_census.py"
+      },
+      {
+        "wp": "TSX-IO-04",
+        "bead": "rftsx-3ajfy",
+        "path": "tests/replay/version-drift.test.ts"
+      },
+      {
+        "wp": "TSX-IO-05",
+        "bead": "rftsx-ilhva",
+        "path": "tests/unit/embedding/worker-failure.test.ts"
+      },
+      {
+        "wp": "TSX-IO-06",
+        "bead": "rftsx-bsztb",
+        "path": "scripts/perf/interop-worker-bench.mjs"
+      }
+    ],
+    "adr": [
+      "0001-build-gate-shape.md",
+      "0002-adr-process-and-divergence-registry.md",
+      "0003-fiber-entry-serializer.md",
+      "0004-pending-fallback-carrier.md",
+      "0005-root-suspension-status.md",
+      "0006-replay-ownership.md",
+      "0007-storage-key-encoding.md",
+      "0008-unkeyed-index-and-slot-holders.md",
+      "0009-duplicate-key-occurrence.md",
+      "0010-key-in-props-and-createelement.md",
+      "0011-derived-type-id.md",
+      "0012-redaction-policy.md",
+      "0013-carrier-marker-interop.md",
+      "0014-assembly-edge-vocabulary-and-cache-inviolable.md",
+      "0015-control-metadata-fail-closed.md",
+      "0016-pinned-overflow-ledger.md",
+      "0017-necessity-modes.md",
+      "0018-element-and-carrier-fail-closed.md",
+      "0019-element-shape-and-text-children.md",
+      "0020-canonical-json-rcj1.md",
+      "0021-inference-resource-identity-and-scope.md",
+      "0022-inference-execution-model.md",
+      "0023-protocol-method-catalogue-and-handshake.md",
+      "0024-rpc-fault-layering-and-host-lifecycle-codes.md",
+      "0025-hook-state-envelope-and-domain.md",
+      "0026-tree-scoped-context.md",
+      "0027-resource-fallback-semantics.md",
+      "0028-error-boundary-recovered-code.md",
+      "0029-suspense-element-and-timeout.md",
+      "0030-reconciliation-vocabulary-and-report.md",
+      "0031-component-metadata-and-determinism.md",
+      "0032-component-skip-and-assembly-cache-deferred.md",
+      "0033-mode-guards-and-capture.md",
+      "0034-element-diff-and-metadata-carrier.md",
+      "0035-platform-scope.md",
+      "0036-package-identity-and-entrypoints.md",
+      "0037-gate-concurrency-and-shell-step-budget.md",
+      "0038-key-domain-and-number-text.md",
+      "0039-dev-source-slot.md",
+      "0040-fragment-identity-and-keyed-fragments.md",
+      "0041-jsx-factory-failure-branches.md",
+      "0042-transaction-source-and-renderer-id.md",
+      "0044-effects-and-commits-contract.md",
+      "0045-hook-store-scope-and-root-identity.md",
+      "0046-setter-semantics-and-dispatcher-closed.md",
+      "0047-memo-dependency-equality.md",
+      "0048-observability-identity-and-report-shape.md",
+      "0049-finite-default-deadlines-and-clock.md",
+      "0050-output-policy-containers-and-assembly-output.md",
+      "0051-tsx-pre-carrier-assembly.md",
+      "0052-lens-change-seam-and-environment-factory.md",
+      "0053-remote-render-result-validation.md",
+      "0054-platform-scope-and-managed-host-lifecycle.md",
+      "0055-external-host-mode-and-interpreter-discovery.md",
+      "0057-managed-host-environment-policy.md",
+      "0058-diagnostic-code-catalogue.md",
+      "0059-shell-runner-contract.md",
+      "0060-autosquash-markers-never-reach-history.md",
+      "0061-ref-grammar-seams.md",
+      "0062-python-stress-tests-live-in-tests-stress.md",
+      "0063-sudo-and-doas-are-forbidden-in-gate-scope.md",
+      "0064-deferred-interpreter-assignments-are-scanned.md",
+      "0065-alias-table-dispositions-for-ownerless-spellings-and-gate-identifiers.md",
+      "0066-j4-standalone-child-keeps-the-whole-python-suite.md",
+      "0067-python-host-manifest-is-an-exact-traceability-path.md",
+      "0068-trailer-traceability-gate-judges-every-commit-alone.md",
+      "0069-no-ai-or-vendor-credit-reaches-history.md",
+      "0070-wake-outcome-policy.md",
+      "0071-introducing-a-protocol-constant-is-reported-not-judged.md",
+      "0072-shell-gate-budget-is-sized-additively-at-operating-concurrency.md",
+      "0073-battery-item-keys-and-the-parent-until-landed-rule.md",
+      "0074-inference-api-surface.md",
+      "0075-hook-parity-divergences.md",
+      "0076-j4-standalone-child-runs-as-a-dedicated-gate-step.md",
+      "0077-host-fiber-graph-entrypoint.md",
+      "0078-embedded-evaluation-surface.md",
+      "0079-deno-embedding-compatibility.md",
+      "0080-host-mode-raw-evaluation-beside-pre-carrier-assembly.md",
+      "0081-colony-context-composition.md",
+      "0082-incremental-performance-program-positions.md",
+      "README.md"
+    ],
+    "neighbors": [
+      "tests/unit/embedding/embedding-exports.test.ts",
+      "tests/unit/embedding/handshake-component.test.ts",
+      "tests/unit/embedding/identity.test.ts",
+      "tests/unit/embedding/worker-actor-isolation.test.ts",
+      "tests/unit/embedding/worker-adapter-effects.test.ts",
+      "tests/unit/embedding/worker-console.test.ts",
+      "tests/unit/embedding/worker-harness.ts",
+      "tests/unit/embedding/worker-limits.test.ts",
+      "tests/unit/embedding/worker-serve.test.ts",
+      "scripts/perf/forge-throughput-baseline.mjs",
+      "scripts/perf/host-memory-sidecar.py",
+      "scripts/perf/perf-campaign.mjs",
+      "tests/differential/run_differential.sh",
+      "tests/differential/manifest.json",
+      "tests/differential/check_corpus.py"
+    ]
+  },
+  "rows": [
+    {
+      "id": "A",
+      "label": "(a) a census over Pi docs/src/skills/qa/test (0 hits at d75b68d10a1a) finds no sentence asserting any shipped, runnable, landed or proven; a mutant claiming TSX typed-output support or parity fails",
+      "pins": [
+        {
+          "id": "A1",
+          "witness": {
+            "roots": [
+              {
+                "root": "docs",
+                "floorMet": true,
+                "anchorRead": true
+              },
+              {
+                "root": "src",
+                "floorMet": true,
+                "anchorRead": true
+              },
+              {
+                "root": ".agents",
+                "floorMet": true,
+                "anchorRead": true
+              },
+              {
+                "root": "qa",
+                "floorMet": true,
+                "anchorRead": true
+              },
+              {
+                "root": "test",
+                "floorMet": true,
+                "anchorRead": true
+              },
+              {
+                "root": "examples",
+                "floorMet": true,
+                "anchorRead": true
+              }
+            ],
+            "pages": {
+              "floorMet": true,
+              "anchorRead": true
+            },
+            "symlinks": [],
+            "unreadable": []
+          }
+        },
+        {
+          "id": "A2",
+          "witness": {
+            "findings": []
+          }
+        },
+        {
+          "id": "A3",
+          "witness": {
+            "exemptions": [
+              {
+                "file": "test/workbench-tsx-unshipped-surface-census.test.ts",
+                "walked": true,
+                "judgedFindings": true
+              },
+              {
+                "file": "test/fixtures/tsx-unshipped-surface-roster.json",
+                "walked": true,
+                "judgedFindings": true
+              }
+            ]
+          }
+        },
+        {
+          "id": "A4",
+          "witness": {
+            "planted": [
+              "docs/plant.md:1 N7: asserted-support",
+              "src/plant.ts:1 N9: unmarked",
+              ".agents/skills/plant/SKILL.md:1 N2: asserted-shipped",
+              "qa/plant.mjs:1 N6: asserted-landed",
+              "test/plant.test.ts:1 N7+N8: asserted-proven",
+              "examples/plant.md:1 N3+N10: asserted-runnable",
+              "PLANT.md:1 N1: unmarked"
+            ],
+            "quiet": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "(b) a guard over the pinned TSX repo (exports, src/python grep, TSX-IO files, ADR name) reports ABSENT and flips only on a real symbol, export or file",
+      "pins": [
+        {
+          "id": "B1",
+          "witness": {
+            "reading": {
+              "verdict": "ABSENT",
+              "exports": [],
+              "symbols": [],
+              "files": [],
+              "adr": []
+            },
+            "replica": {
+              "srcModules": 1,
+              "pythonFiles": 1,
+              "adrEntries": 81,
+              "exports": [
+                ".",
+                "./jsx-runtime",
+                "./jsx-dev-runtime",
+                "./testing",
+                "./embedding",
+                "./package.json"
+              ],
+              "docsSites": 10
+            }
+          }
+        },
+        {
+          "id": "B2",
+          "witness": {
+            "flips": [
+              {
+                "key": "./core",
+                "reading": {
+                  "verdict": "PRESENT",
+                  "exports": [
+                    "./core"
+                  ],
+                  "symbols": [],
+                  "files": [],
+                  "adr": []
+                }
+              },
+              {
+                "key": "./ui",
+                "reading": {
+                  "verdict": "PRESENT",
+                  "exports": [
+                    "./ui"
+                  ],
+                  "symbols": [],
+                  "files": [],
+                  "adr": []
+                }
+              },
+              {
+                "key": "./host",
+                "reading": {
+                  "verdict": "PRESENT",
+                  "exports": [
+                    "./host"
+                  ],
+                  "symbols": [],
+                  "files": [],
+                  "adr": []
+                }
+              },
+              {
+                "key": "./node",
+                "reading": {
+                  "verdict": "PRESENT",
+                  "exports": [
+                    "./node"
+                  ],
+                  "symbols": [],
+                  "files": [],
+                  "adr": []
+                }
+              },
+              {
+                "key": "./resources",
+                "reading": {
+                  "verdict": "PRESENT",
+                  "exports": [
+                    "./resources"
+                  ],
+                  "symbols": [],
+                  "files": [],
+                  "adr": []
+                }
+              },
+              {
+                "key": "./ui/button",
+                "reading": {
+                  "verdict": "PRESENT",
+                  "exports": [
+                    "./ui/button"
+                  ],
+                  "symbols": [],
+                  "files": [],
+                  "adr": []
+                }
+              },
+              {
+                "key": "./host/web",
+                "reading": {
+                  "verdict": "PRESENT",
+                  "exports": [
+                    "./host/web"
+                  ],
+                  "symbols": [],
+                  "files": [],
+                  "adr": []
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "B3",
+          "witness": {
+            "flips": [
+              {
+                "path": "src/host/interface-host.ts",
+                "reading": {
+                  "verdict": "PRESENT",
+                  "exports": [],
+                  "symbols": [
+                    "src/host/interface-host.ts: InterfaceHost"
+                  ],
+                  "files": [],
+                  "adr": []
+                }
+              },
+              {
+                "path": "src/host/surface.ts",
+                "reading": {
+                  "verdict": "PRESENT",
+                  "exports": [],
+                  "symbols": [
+                    "src/host/surface.ts: SurfaceCapabilities"
+                  ],
+                  "files": [],
+                  "adr": []
+                }
+              },
+              {
+                "path": "src/host/evaluation.mts",
+                "reading": {
+                  "verdict": "PRESENT",
+                  "exports": [],
+                  "symbols": [
+                    "src/host/evaluation.mts: InterfaceEvaluation"
+                  ],
+                  "files": [],
+                  "adr": []
+                }
+              },
+              {
+                "path": "src/web/index.tsx",
+                "reading": {
+                  "verdict": "PRESENT",
+                  "exports": [],
+                  "symbols": [
+                    "src/web/index.tsx: ReactiveWebInterfaceSDK"
+                  ],
+                  "files": [],
+                  "adr": []
+                }
+              },
+              {
+                "path": "src/tui/index.js",
+                "reading": {
+                  "verdict": "PRESENT",
+                  "exports": [],
+                  "symbols": [
+                    "src/tui/index.js: ReactiveTUIInterfaceSDK"
+                  ],
+                  "files": [],
+                  "adr": []
+                }
+              },
+              {
+                "path": "src/dom/index.ts",
+                "reading": {
+                  "verdict": "PRESENT",
+                  "exports": [],
+                  "symbols": [
+                    "src/dom/index.ts: ReactiveFiberDOMSDK"
+                  ],
+                  "files": [],
+                  "adr": []
+                }
+              },
+              {
+                "path": "python/src/reactive_fiber_tsx_host/interface_host.py",
+                "reading": {
+                  "verdict": "PRESENT",
+                  "exports": [],
+                  "symbols": [
+                    "python/src/reactive_fiber_tsx_host/interface_host.py: InterfaceHost"
+                  ],
+                  "files": [],
+                  "adr": []
+                }
+              },
+              {
+                "path": "python/src/reactive_fiber_tsx_host/surface.py",
+                "reading": {
+                  "verdict": "PRESENT",
+                  "exports": [],
+                  "symbols": [
+                    "python/src/reactive_fiber_tsx_host/surface.py: SurfaceCapabilities"
+                  ],
+                  "files": [],
+                  "adr": []
+                }
+              },
+              {
+                "path": "python/src/reactive_fiber_tsx_host/evaluation.py",
+                "reading": {
+                  "verdict": "PRESENT",
+                  "exports": [],
+                  "symbols": [
+                    "python/src/reactive_fiber_tsx_host/evaluation.py: InterfaceEvaluation"
+                  ],
+                  "files": [],
+                  "adr": []
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "B4",
+          "witness": {
+            "flips": [
+              {
+                "path": "tests/audit/interop-pin.test.ts",
+                "reading": {
+                  "verdict": "PRESENT",
+                  "exports": [],
+                  "symbols": [],
+                  "files": [
+                    "tests/audit/interop-pin.test.ts"
+                  ],
+                  "adr": []
+                }
+              },
+              {
+                "path": "tests/audit/interop-field-census.test.ts",
+                "reading": {
+                  "verdict": "PRESENT",
+                  "exports": [],
+                  "symbols": [],
+                  "files": [
+                    "tests/audit/interop-field-census.test.ts"
+                  ],
+                  "adr": []
+                }
+              },
+              {
+                "path": "tests/audit/test_interop_typed_output_census.py",
+                "reading": {
+                  "verdict": "PRESENT",
+                  "exports": [],
+                  "symbols": [],
+                  "files": [
+                    "tests/audit/test_interop_typed_output_census.py"
+                  ],
+                  "adr": []
+                }
+              },
+              {
+                "path": "tests/replay/version-drift.test.ts",
+                "reading": {
+                  "verdict": "PRESENT",
+                  "exports": [],
+                  "symbols": [],
+                  "files": [
+                    "tests/replay/version-drift.test.ts"
+                  ],
+                  "adr": []
+                }
+              },
+              {
+                "path": "tests/unit/embedding/worker-failure.test.ts",
+                "reading": {
+                  "verdict": "PRESENT",
+                  "exports": [],
+                  "symbols": [],
+                  "files": [
+                    "tests/unit/embedding/worker-failure.test.ts"
+                  ],
+                  "adr": []
+                }
+              },
+              {
+                "path": "scripts/perf/interop-worker-bench.mjs",
+                "reading": {
+                  "verdict": "PRESENT",
+                  "exports": [],
+                  "symbols": [],
+                  "files": [
+                    "scripts/perf/interop-worker-bench.mjs"
+                  ],
+                  "adr": []
+                }
+              },
+              {
+                "path": "docs/adr/0083-tsx-declared-data-output.md",
+                "reading": {
+                  "verdict": "PRESENT",
+                  "exports": [],
+                  "symbols": [],
+                  "files": [],
+                  "adr": [
+                    "docs/adr/0083-tsx-declared-data-output.md"
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "B5",
+          "witness": {
+            "readings": [
+              {
+                "name": "src comment",
+                "reading": {
+                  "verdict": "ABSENT",
+                  "exports": [],
+                  "symbols": [],
+                  "files": [],
+                  "adr": []
+                }
+              },
+              {
+                "name": "src string",
+                "reading": {
+                  "verdict": "ABSENT",
+                  "exports": [],
+                  "symbols": [],
+                  "files": [],
+                  "adr": []
+                }
+              },
+              {
+                "name": "look-alike names",
+                "reading": {
+                  "verdict": "ABSENT",
+                  "exports": [],
+                  "symbols": [],
+                  "files": [],
+                  "adr": []
+                }
+              },
+              {
+                "name": "python comment and docstring",
+                "reading": {
+                  "verdict": "ABSENT",
+                  "exports": [],
+                  "symbols": [],
+                  "files": [],
+                  "adr": []
+                }
+              },
+              {
+                "name": "docs declaration",
+                "reading": {
+                  "verdict": "ABSENT",
+                  "exports": [],
+                  "symbols": [],
+                  "files": [],
+                  "adr": []
+                }
+              },
+              {
+                "name": "near export keys",
+                "reading": {
+                  "verdict": "ABSENT",
+                  "exports": [],
+                  "symbols": [],
+                  "files": [],
+                  "adr": []
+                }
+              },
+              {
+                "name": "TSX-IO path as a directory",
+                "reading": {
+                  "verdict": "ABSENT",
+                  "exports": [],
+                  "symbols": [],
+                  "files": [],
+                  "adr": []
+                }
+              },
+              {
+                "name": "near ADR names",
+                "reading": {
+                  "verdict": "ABSENT",
+                  "exports": [],
+                  "symbols": [],
+                  "files": [],
+                  "adr": []
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "(c) Pi's RF surface stays the rf CLI envelope (wb-2wiv.1, wb-pyel.1); kind=tsx receipt rows (wb-693.7) carry no TSX data-output or parity claim",
+      "pins": [
+        {
+          "id": "C1",
+          "witness": {
+            "site": "src/workflow/reconcile.ts:67",
+            "reactivefiber": [
+              "reactivefiber.render.preview"
+            ],
+            "native": [
+              {
+                "id": "reactivefiber.render.preview",
+                "effectClass": "read"
+              }
+            ],
+            "injected": [
+              {
+                "id": "reactivefiber.render.preview",
+                "effectClass": "read"
+              }
+            ]
+          }
+        },
+        {
+          "id": "C2",
+          "witness": {
+            "legacy": [
+              [
+                "--workspace",
+                "<root>",
+                "context",
+                "render",
+                "--model",
+                "m",
+                "--task",
+                "t",
+                "--no-commit",
+                "--no-input",
+                "--json"
+              ]
+            ],
+            "view": [
+              [
+                "--workspace",
+                "<root>",
+                "context",
+                "render",
+                "--view",
+                "v",
+                "--task-id",
+                "t",
+                "--model",
+                "m",
+                "--no-commit",
+                "--no-input",
+                "--json"
+              ]
+            ]
+          }
+        },
+        {
+          "id": "C3",
+          "witness": {
+            "modulesFloorMet": true,
+            "specifierAnchor": true,
+            "dependencyAnchor": true,
+            "sdkLoads": [],
+            "sdkDependencies": [],
+            "controls": {
+              "importDeclaration": 1,
+              "subpath": 1,
+              "dynamicImport": 1,
+              "requireCall": 1,
+              "fiberOptics": 1,
+              "interfaceSdk": 1,
+              "dependencyName": 2
+            }
+          }
+        },
+        {
+          "id": "C4",
+          "witness": {
+            "include": [
+              "test/workbench-native-rf-tsx-preview.test.ts"
+            ],
+            "titles": [
+              "success row: an ephemeral TSX-era preview with a worker spawn and engine identity",
+              "runtime-absent row: with no deno on PATH the capability refuses as typed unavailable RF_COMPONENT_RUNTIME_ABSENT"
+            ],
+            "tierClaims": [],
+            "receiptsFloorMet": true,
+            "naming": [],
+            "receiptClaims": [],
+            "controls": {
+              "title": 1,
+              "label": 2,
+              "field": 1,
+              "receipt": 1
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "F",
+      "label": "the owner filing row of wb-if7q.1 in the tracked bead export names exactly the clauses rows A-C cover, states each of their labels as its clause, and carries every proposal, claim word and producer constant the census reads",
+      "pins": [
+        {
+          "id": "F1",
+          "witness": {
+            "clauses": [
+              "a",
+              "b",
+              "c"
+            ],
+            "labelsEqual": [
+              "A",
+              "B",
+              "C"
+            ],
+            "items": [
+              "the browser-safe TSX host/UI runtime",
+              "ReactiveWebInterfaceSDK/ReactiveTUIInterfaceSDK",
+              "ReactiveFiberDOMSDK",
+              "runnable TSX-IF-07 samples",
+              "the INTEROP API names",
+              "INTEROP record",
+              "declared data outputs",
+              "graph/v2 value edge",
+              "hosts.rfcli row",
+              "RFCLI's dogfood run",
+              "VC-D journey",
+              "TSX data publication",
+              "parity"
+            ],
+            "uncovered": [],
+            "claimsRead": [
+              {
+                "word": "shipped",
+                "diagnosis": "x.ts:1 N2: asserted-shipped"
+              },
+              {
+                "word": "runnable",
+                "diagnosis": "x.ts:1 N2: asserted-runnable"
+              },
+              {
+                "word": "proven",
+                "diagnosis": "x.ts:1 N2: asserted-proven"
+              },
+              {
+                "word": "landed",
+                "diagnosis": "x.ts:1 N2: asserted-landed"
+              },
+              {
+                "word": "support",
+                "diagnosis": "x.ts:1 N2: asserted-support"
+              }
+            ],
+            "symbolsHeld": [
+              "InterfaceHost",
+              "SurfaceCapabilities",
+              "InterfaceEvaluation",
+              "ReactiveWebInterfaceSDK",
+              "ReactiveTUIInterfaceSDK"
+            ],
+            "exportsHeld": [
+              "./host",
+              "./ui"
+            ],
+            "sixFiles": true,
+            "adrSlug": true,
+            "version": true,
+            "pins": [
+              "76bbbffd9d4a",
+              "d75b68d10a1a"
+            ],
+            "controls": {
+              "unknown": [
+                "quantum",
+                "widget"
+              ],
+              "stopAndClaim": [],
+              "covered": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "M",
+      "label": "the sentence cutter, the family, marker and claim matchers, the finding format and the guard's declaration readers judge their pinned inputs in order",
+      "pins": [
+        {
+          "id": "MS1",
+          "witness": {
+            "kind": "cut",
+            "outcome": [
+              "One names a.",
+              "Two names b!",
+              "Three?",
+              "Four;",
+              "five"
+            ]
+          }
+        },
+        {
+          "id": "MS2",
+          "witness": {
+            "kind": "cut",
+            "outcome": [
+              "para one",
+              "para two",
+              "| a | b |",
+              "| c | d |"
+            ]
+          }
+        },
+        {
+          "id": "MS3",
+          "witness": {
+            "kind": "cutMarkdown",
+            "outcome": [
+              "- one",
+              "- two",
+              "+ three",
+              "* four",
+              "1. five",
+              "2) six"
+            ]
+          }
+        },
+        {
+          "id": "MS4",
+          "witness": {
+            "kind": "cut",
+            "outcome": [
+              "The host\n * wraps here\n * and graph/v2, 0.1.668, README.md:3 and e.g.x stay whole\n- in code a dash item joins"
+            ]
+          }
+        },
+        {
+          "id": "MN1",
+          "witness": {
+            "family": "N1",
+            "readings": [
+              {
+                "spelling": "browser-safe TSX",
+                "bare": [
+                  "N1"
+                ],
+                "anchored": [
+                  "N1"
+                ]
+              },
+              {
+                "spelling": "TSX host",
+                "bare": [
+                  "N1"
+                ],
+                "anchored": [
+                  "N1"
+                ]
+              },
+              {
+                "spelling": "TSX UI",
+                "bare": [
+                  "N1"
+                ],
+                "anchored": [
+                  "N1"
+                ]
+              },
+              {
+                "spelling": "UI runtime",
+                "bare": [
+                  "N1"
+                ],
+                "anchored": [
+                  "N1"
+                ]
+              },
+              {
+                "spelling": "UI descriptors",
+                "bare": [
+                  "N1"
+                ],
+                "anchored": [
+                  "N1"
+                ]
+              },
+              {
+                "spelling": "InterfaceHost",
+                "bare": [
+                  "N1"
+                ],
+                "anchored": [
+                  "N1"
+                ]
+              },
+              {
+                "spelling": "InterfaceEvaluation",
+                "bare": [
+                  "N1"
+                ],
+                "anchored": [
+                  "N1"
+                ]
+              },
+              {
+                "spelling": "SurfaceCapabilities",
+                "bare": [
+                  "N1"
+                ],
+                "anchored": [
+                  "N1"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "MN2",
+          "witness": {
+            "family": "N2",
+            "readings": [
+              {
+                "spelling": "ReactiveWebInterfaceSDK",
+                "bare": [
+                  "N2"
+                ],
+                "anchored": [
+                  "N2"
+                ]
+              },
+              {
+                "spelling": "ReactiveTUIInterfaceSDK",
+                "bare": [
+                  "N2"
+                ],
+                "anchored": [
+                  "N2"
+                ]
+              },
+              {
+                "spelling": "ReactiveFiberDOMSDK",
+                "bare": [
+                  "N2"
+                ],
+                "anchored": [
+                  "N2"
+                ]
+              },
+              {
+                "spelling": "Reactive Web Interface SDK",
+                "bare": [
+                  "N2"
+                ],
+                "anchored": [
+                  "N2"
+                ]
+              },
+              {
+                "spelling": "reactive_tui_interface_sdk",
+                "bare": [
+                  "N2"
+                ],
+                "anchored": [
+                  "N2"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "MN3",
+          "witness": {
+            "family": "N3",
+            "readings": [
+              {
+                "spelling": "TSX-IF-07",
+                "bare": [
+                  "N3"
+                ],
+                "anchored": [
+                  "N3"
+                ]
+              },
+              {
+                "spelling": "tsx_if_4",
+                "bare": [
+                  "N3"
+                ],
+                "anchored": [
+                  "N3"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "MN4",
+          "witness": {
+            "family": "N4",
+            "readings": [
+              {
+                "spelling": "interop record",
+                "bare": [
+                  "N4"
+                ],
+                "anchored": [
+                  "N4",
+                  "N7"
+                ]
+              },
+              {
+                "spelling": "INTEROP API",
+                "bare": [
+                  "N4"
+                ],
+                "anchored": [
+                  "N4",
+                  "N7"
+                ]
+              },
+              {
+                "spelling": "interoperability records",
+                "bare": [
+                  "N4"
+                ],
+                "anchored": [
+                  "N4",
+                  "N7"
+                ]
+              },
+              {
+                "spelling": "declared data outputs",
+                "bare": [
+                  "N4"
+                ],
+                "anchored": [
+                  "N4",
+                  "N7"
+                ]
+              },
+              {
+                "spelling": "declared output",
+                "bare": [
+                  "N4"
+                ],
+                "anchored": [
+                  "N4"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "MN5",
+          "witness": {
+            "family": "N5",
+            "readings": [
+              {
+                "spelling": "graph/v2",
+                "bare": [
+                  "N5"
+                ],
+                "anchored": [
+                  "N5"
+                ]
+              },
+              {
+                "spelling": "value edge",
+                "bare": [
+                  "N5"
+                ],
+                "anchored": [
+                  "N5"
+                ]
+              },
+              {
+                "spelling": "value-edges",
+                "bare": [
+                  "N5"
+                ],
+                "anchored": [
+                  "N5"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "MN6",
+          "witness": {
+            "family": "N6",
+            "readings": [
+              {
+                "spelling": "hosts.rfcli",
+                "bare": [
+                  "N6"
+                ],
+                "anchored": [
+                  "N6"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "MN7",
+          "witness": {
+            "family": "N7",
+            "readings": [
+              {
+                "spelling": "typed-output",
+                "bare": [],
+                "anchored": [
+                  "N7"
+                ]
+              },
+              {
+                "spelling": "data outputs",
+                "bare": [],
+                "anchored": [
+                  "N7"
+                ]
+              },
+              {
+                "spelling": "data publication",
+                "bare": [],
+                "anchored": [
+                  "N7"
+                ]
+              },
+              {
+                "spelling": "value publications",
+                "bare": [],
+                "anchored": [
+                  "N7"
+                ]
+              },
+              {
+                "spelling": "interop",
+                "bare": [],
+                "anchored": [
+                  "N7"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "MN8",
+          "witness": {
+            "family": "N8",
+            "readings": [
+              {
+                "spelling": "dogfood",
+                "bare": [],
+                "anchored": [
+                  "N8"
+                ]
+              },
+              {
+                "spelling": "dogfooding",
+                "bare": [],
+                "anchored": [
+                  "N8"
+                ]
+              },
+              {
+                "spelling": "VC-D",
+                "bare": [],
+                "anchored": [
+                  "N8"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "MN9",
+          "witness": {
+            "family": "N9",
+            "readings": [
+              {
+                "spelling": "parity",
+                "bare": [],
+                "anchored": [
+                  "N9"
+                ]
+              },
+              {
+                "spelling": "equivalence",
+                "bare": [],
+                "anchored": [
+                  "N9"
+                ]
+              },
+              {
+                "spelling": "equivalent",
+                "bare": [],
+                "anchored": [
+                  "N9"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "MN10",
+          "witness": {
+            "family": "N10",
+            "readings": [
+              {
+                "spelling": "samples",
+                "bare": [],
+                "anchored": [
+                  "N10"
+                ]
+              },
+              {
+                "spelling": "sample",
+                "bare": [],
+                "anchored": [
+                  "N10"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "MK",
+          "witness": {
+            "control": [
+              "x.ts:1 N2: unmarked"
+            ],
+            "admitted": [
+              "not",
+              "no",
+              "never",
+              "nor",
+              "none",
+              "neither",
+              "without",
+              "cannot",
+              "unshipped",
+              "unproven",
+              "unimplemented",
+              "unavailable",
+              "unreleased",
+              "absent",
+              "gated",
+              "propose",
+              "proposes",
+              "proposed",
+              "proposal",
+              "planned",
+              "illustrative",
+              "future",
+              "until",
+              "unless",
+              "if"
+            ],
+            "contractions": [
+              0,
+              0,
+              0
+            ],
+            "wholeWord": [
+              "x.ts:1 N2: unmarked"
+            ]
+          }
+        },
+        {
+          "id": "MW",
+          "witness": {
+            "readings": [
+              {
+                "word": "ship",
+                "finding": "x.ts:1 N2: asserted-shipped"
+              },
+              {
+                "word": "ships",
+                "finding": "x.ts:1 N2: asserted-shipped"
+              },
+              {
+                "word": "shipped",
+                "finding": "x.ts:1 N2: asserted-shipped"
+              },
+              {
+                "word": "shipping",
+                "finding": "x.ts:1 N2: asserted-shipped"
+              },
+              {
+                "word": "runnable",
+                "finding": "x.ts:1 N2: asserted-runnable"
+              },
+              {
+                "word": "land",
+                "finding": "x.ts:1 N2: asserted-landed"
+              },
+              {
+                "word": "lands",
+                "finding": "x.ts:1 N2: asserted-landed"
+              },
+              {
+                "word": "landed",
+                "finding": "x.ts:1 N2: asserted-landed"
+              },
+              {
+                "word": "landing",
+                "finding": "x.ts:1 N2: asserted-landed"
+              },
+              {
+                "word": "prove",
+                "finding": "x.ts:1 N2: asserted-proven"
+              },
+              {
+                "word": "proves",
+                "finding": "x.ts:1 N2: asserted-proven"
+              },
+              {
+                "word": "proved",
+                "finding": "x.ts:1 N2: asserted-proven"
+              },
+              {
+                "word": "proven",
+                "finding": "x.ts:1 N2: asserted-proven"
+              },
+              {
+                "word": "proving",
+                "finding": "x.ts:1 N2: asserted-proven"
+              },
+              {
+                "word": "proof",
+                "finding": "x.ts:1 N2: asserted-proven"
+              },
+              {
+                "word": "proofs",
+                "finding": "x.ts:1 N2: asserted-proven"
+              },
+              {
+                "word": "support",
+                "finding": "x.ts:1 N2: asserted-support"
+              },
+              {
+                "word": "supports",
+                "finding": "x.ts:1 N2: asserted-support"
+              },
+              {
+                "word": "supported",
+                "finding": "x.ts:1 N2: asserted-support"
+              },
+              {
+                "word": "supporting",
+                "finding": "x.ts:1 N2: asserted-support"
+              }
+            ],
+            "order": [
+              "x.ts:1 N2: asserted-shipped"
+            ],
+            "partial": [
+              "x.ts:1 N2: unmarked"
+            ]
+          }
+        },
+        {
+          "id": "MF",
+          "witness": {
+            "markdown": [
+              "docs/x.md:2 N6: unmarked",
+              "docs/x.md:5 N2: asserted-shipped",
+              "docs/x.md:6 N9: unmarked"
+            ],
+            "code": [
+              "src/x.ts:2 N6: unmarked",
+              "src/x.ts:5 N2+N9: asserted-shipped"
+            ]
+          }
+        },
+        {
+          "id": "MG",
+          "witness": {
+            "tsNames": [
+              "InterfaceHost",
+              "SurfaceCapabilities",
+              "InterfaceEvaluation",
+              "ReactiveWebInterfaceSDK",
+              "ReactiveTUIInterfaceSDK",
+              "ReactiveFiberDOMSDK",
+              "SurfaceCapabilities",
+              "InterfaceEvaluation"
+            ],
+            "pyNames": [
+              "InterfaceHost",
+              "SurfaceCapabilities",
+              "InterfaceEvaluation",
+              "ReactiveWebInterfaceSDK",
+              "ReactiveTUIInterfaceSDK"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "R",
+      "label": "the named residuals R1-R14 stay pinned quiet",
+      "pins": [
+        {
+          "id": "R1",
+          "witness": {
+            "kind": "markdown",
+            "outcome": []
+          }
+        },
+        {
+          "id": "R2",
+          "witness": {
+            "kind": "file",
+            "outcome": []
+          }
+        },
+        {
+          "id": "R3",
+          "witness": {
+            "kind": "file",
+            "outcome": []
+          }
+        },
+        {
+          "id": "R4",
+          "witness": {
+            "kind": "file",
+            "outcome": []
+          }
+        },
+        {
+          "id": "R5",
+          "witness": {
+            "kind": "file",
+            "outcome": []
+          }
+        },
+        {
+          "id": "R6",
+          "witness": {
+            "kind": "file",
+            "outcome": []
+          }
+        },
+        {
+          "id": "R7",
+          "witness": {
+            "kind": "file",
+            "outcome": []
+          }
+        },
+        {
+          "id": "R8",
+          "witness": {
+            "kind": "file",
+            "outcome": []
+          }
+        },
+        {
+          "id": "R9",
+          "witness": {
+            "findings": []
+          }
+        },
+        {
+          "id": "R10",
+          "witness": {
+            "reading": {
+              "verdict": "ABSENT",
+              "exports": [],
+              "symbols": [],
+              "files": [],
+              "adr": []
+            }
+          }
+        },
+        {
+          "id": "R11",
+          "witness": {
+            "reading": {
+              "verdict": "ABSENT",
+              "exports": [],
+              "symbols": [],
+              "files": [],
+              "adr": []
+            }
+          }
+        },
+        {
+          "id": "R12",
+          "witness": {
+            "reading": {
+              "verdict": "ABSENT",
+              "exports": [],
+              "symbols": [],
+              "files": [],
+              "adr": []
+            }
+          }
+        },
+        {
+          "id": "R13",
+          "witness": {
+            "reading": {
+              "verdict": "ABSENT",
+              "exports": [],
+              "symbols": [],
+              "files": [],
+              "adr": []
+            }
+          }
+        },
+        {
+          "id": "R14",
+          "witness": {
+            "kind": "specifiers",
+            "outcome": []
+          }
+        }
+      ]
+    }
+  ],
+  "titles": [
+    "success row: an ephemeral TSX-era preview with a worker spawn and engine identity",
+    "runtime-absent row: with no deno on PATH the capability refuses as typed unavailable RF_COMPONENT_RUNTIME_ABSENT"
+  ]
+}

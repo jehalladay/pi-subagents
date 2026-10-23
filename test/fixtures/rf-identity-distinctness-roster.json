@@ -1,0 +1,724 @@
+{
+  "provenance": "wb-hs2j.7 census roster (test/workbench-rf-identity-distinctness-census.test.ts). statement, quote, citation, mergedQuote, mergedCitation, identities, shippedReads and posture are the owner filing's (bead row wb-hs2j.7 in .beads/issues.jsonl: its Full statement line, its Source line and the Merged clause of that line, the parenthesized identity list of the statement, the Shipped sentence of its Gating artifact line and the two facts of its Not P0 line), re-read at ReactiveFiberCLI 6a251bf73af5 with git show on 2026-10-23 (02-swarm-usage-and-command-grammar.md:86, README.md:73, 03-host-conformance-performance-and-acceptance.md:78). producer is MEASURED read-only on 2026-10-23: rfVersion and rfCommit are `rf --json --version` result.version and result.provenance.commit_id of the installed rf (2618c211be0d, a descendant of the program pin by git merge-base --is-ancestor); prefixKinds is domain/ids.py PREFIX_KINDS; grammar holds the packaged schemas/cli/context.render.schema.json patterns ($defs render_id, operation_id, transaction_id, workspace.properties.id and digest; result.session_id; $defs component_id; result.effects items component_instance_id) and domain/ids.py CANDIDATE_KEY_RE (Python named groups, compiled by the census as JavaScript ones); recordFields are the sorted item properties of result.blocks, components, effects and necessity; digests are the sha256 of both files, each byte-identical at the program pin and in the installed rf. The C-08 records the census plants are CONSTRUCTED from recordFields and the grammar, never captured. Every witness is the expected outcome of its pin's case at this cut.",
+  "bead": "wb-hs2j.7",
+  "statement": "[RF-REACTIVE-CONTEXT-ASSEMBLY-R8] Pi shall carry rf's typed identity vocabulary distinctly (component_id, component_instance_id, occurrence_id, graph_revision_id, render_id, transaction_id, session_id, workspace_id), with inter-agent handoffs carrying an explicit render_id copied from an rf envelope, and no Pi surface shall collapse one identity into another or reconstruct a render identity from model output text (no gate: the identities are shipped envelope vocabulary) - pin docs/programs/reactive-context-assembly-2026-10-18/02-swarm-usage-and-command-grammar.md:86@6a251bf73af5",
+  "quote": "Repeatedly visible IDs are first-class typed objects: `component_id`, `component_instance_id`, `occurrence_id`, `graph_revision_id`, `render_id`, `transaction_id`, `session_id`, `workspace_id`. Do not collapse these.",
+  "citation": "docs/programs/reactive-context-assembly-2026-10-18/02-swarm-usage-and-command-grammar.md:86@6a251bf73af5",
+  "mergedQuote": "For handoff, require explicit render ID rather than reconstructing it from model text.",
+  "mergedCitation": "README.md:73@6a251bf73af5",
+  "identities": [
+    "component_id",
+    "component_instance_id",
+    "occurrence_id",
+    "graph_revision_id",
+    "render_id",
+    "transaction_id",
+    "session_id",
+    "workspace_id"
+  ],
+  "shippedReads": [
+    "render_id",
+    "transaction_id",
+    "bundle_revision_id"
+  ],
+  "posture": [
+    "today's preview envelopes carry render_id null / transaction_id null",
+    "Pi mints no handoff render ids"
+  ],
+  "producer": {
+    "rfVersion": "0.1.832",
+    "rfCommit": "2618c211be0dbbb74ba10e965e2d3d1f0fb5903e",
+    "programPin": {
+      "repo": "ReactiveFiberCLI",
+      "sha": "6a251bf73af57c3a703caf6892dfe3015e06a481"
+    },
+    "prefixKinds": {
+      "rfw": "workspace",
+      "rft": "logical transaction",
+      "rfo": "CLI/application operation",
+      "rfr": "render",
+      "rfs": "session",
+      "rfe": "audit/journal event",
+      "rfn": "source snapshot",
+      "rfi": "backend instance",
+      "rfv": "replay evidence",
+      "rfl": "lens observation",
+      "rfg": "graph overlay"
+    },
+    "grammar": {
+      "render_id": "^rfr_[0-9a-z]{22,32}$",
+      "operation_id": "^rfo_[0-9a-z]{22,32}$",
+      "transaction_id": "^rft_[0-9a-z]{22,32}$",
+      "workspace.id": "^rfw_[0-9a-z]{22,32}$",
+      "session_id": "^(?:rfs_[0-9a-z]{22,32}|(?!rf[a-z]_)[A-Za-z0-9][A-Za-z0-9._-]{0,127})$",
+      "component_id": "^[a-z][a-z0-9_-]*(\\.[a-z][a-z0-9_-]*)*$",
+      "component_instance_id": "^[a-z][a-z0-9_-]*(\\.[a-z][a-z0-9_-]*)*:[a-z][a-z0-9_-]{0,127}$",
+      "candidate_key": "^(?P<component_instance_id>[a-z][a-z0-9_-]*(?:\\.[a-z][a-z0-9_-]*)*:[a-z][a-z0-9_-]{0,127})::(?P<block_key>[A-Za-z0-9_.-]{1,128})(?:::(?P<occurrence>[1-9][0-9]*))?$",
+      "digest": "^sha256:[0-9a-f]{64}$"
+    },
+    "recordFields": {
+      "blocks": [
+        "candidate_key",
+        "component_id",
+        "final_index",
+        "token_cost",
+        "token_cost_kind"
+      ],
+      "components": [
+        "component_id",
+        "component_instance_id",
+        "component_revision_id",
+        "source_unavailable",
+        "status"
+      ],
+      "effects": [
+        "component_instance_id",
+        "dispatch_count",
+        "effect_id",
+        "effect_type",
+        "fiber_status",
+        "idempotency_key",
+        "reason_codes",
+        "render_id",
+        "result_digest",
+        "status"
+      ],
+      "necessity": [
+        "candidate_key",
+        "estimated_tokens",
+        "failure_mode",
+        "fallback_used",
+        "include",
+        "judge_id",
+        "judge_kind",
+        "metadata",
+        "necessity_class",
+        "necessity_class_raw",
+        "policy_revision_id",
+        "reason"
+      ]
+    },
+    "occurrenceQuote": "One nested child rendered twice produces two distinct occurrence identities with separately priced required blocks.",
+    "occurrenceCitation": "docs/programs/reactive-context-assembly-2026-10-18/03-host-conformance-performance-and-acceptance.md:78@6a251bf73af5",
+    "digests": {
+      "src/reactive_fiber_cli/domain/ids.py": "sha256:28b01e9b7b2098d46ed69cd12ff18b83b5df0609b269f7031a0f3d6c1c9683cd",
+      "src/reactive_fiber_cli/schemas/cli/context.render.schema.json": "sha256:06ac92079d3912f63e20abf9dea73b29a4b62d099772103eb04860ed122404c2"
+    }
+  },
+  "scan": {
+    "walkRoots": [
+      "src",
+      "qa",
+      "examples"
+    ],
+    "moduleExtensions": [
+      ".ts",
+      ".mts",
+      ".cts",
+      ".tsx",
+      ".js",
+      ".mjs",
+      ".cjs",
+      ".jsx"
+    ],
+    "floors": {
+      "src": 100,
+      "qa": 55,
+      "examples": 5
+    },
+    "renderCommand": "context.render",
+    "capability": "reactivefiber.render.preview",
+    "familyOf": {
+      "component_id": "b",
+      "component_instance_id": "b",
+      "occurrence_id": "b",
+      "graph_revision_id": "a",
+      "render_id": "a",
+      "transaction_id": "a",
+      "session_id": "namesake",
+      "workspace_id": "a"
+    },
+    "carried": [
+      "operation_id",
+      "bundle_revision_id"
+    ],
+    "producerNamesakes": [
+      "operation_id"
+    ],
+    "nullOnly": [
+      "render_id",
+      "transaction_id"
+    ],
+    "workspaceIdRead": "workspace.id",
+    "refPrefix": "^rf-[a-z-]+:/",
+    "identityWords": "render|transaction|session|component|occurrence|candidate/i",
+    "renderPattern": "render|rfr/i",
+    "familyGrammar": "rf[a-z]_",
+    "renderPrefix": "rfr_",
+    "renderMembers": [
+      "render_id",
+      "renderId",
+      "renderID",
+      "render_ref",
+      "renderRef"
+    ],
+    "claudeAnchor": "src/workbench/claude-host.ts",
+    "runtime": "src/workflow/runtime.ts",
+    "aFamily": [
+      "bundle_revision_id",
+      "graph_revision_id",
+      "render_id",
+      "transaction_id",
+      "workspace_id"
+    ],
+    "bFamily": [
+      "candidate_key",
+      "component_id",
+      "component_instance_id",
+      "component_revision_id",
+      "occurrence_id"
+    ],
+    "namesakes": [
+      "operation_id",
+      "session_id"
+    ],
+    "readerTable": [
+      "bundle_revision_id",
+      "candidate_key",
+      "component_id",
+      "component_instance_id",
+      "component_revision_id",
+      "graph_revision_id",
+      "occurrence_id",
+      "operation_id",
+      "render_id",
+      "session_id",
+      "transaction_id",
+      "workspace_id"
+    ],
+    "camelForms": [
+      "bundleRevisionId",
+      "candidateKey",
+      "componentId",
+      "componentInstanceId",
+      "componentRevisionId",
+      "graphRevisionId",
+      "occurrenceId",
+      "renderId",
+      "transactionId"
+    ],
+    "prefixes": [
+      "rfe_",
+      "rfg_",
+      "rfi_",
+      "rfl_",
+      "rfn_",
+      "rfo_",
+      "rfr_",
+      "rfs_",
+      "rft_",
+      "rfv_",
+      "rfw_"
+    ]
+  },
+  "residuals": [
+    "R-COMPOSED",
+    "R-COMMENT",
+    "R-ALIAS",
+    "R-GENERIC-WORD",
+    "R-NAMESAKE",
+    "R-RENAMED",
+    "R-OUTSIDE"
+  ],
+  "rows": [
+    {
+      "id": "A",
+      "label": "(a) Pi's rf data model types each id separately - a graph_revision_id is never used where a render_id or bundle identity is required: each rf identity Pi's three readers read lands in its own typed slot (the operation id the preview, rf-workspace:, rf-graph: and sourceRevision, rf-bundle: and sourceVersion), the graph digest fills no bundle slot, and today's preview envelopes carry render_id null / transaction_id null, so no slot is render- or transaction-typed and neither id is ever stood in for",
+      "pins": [
+        {
+          "id": "A1",
+          "witness": {
+            "pin": "A1",
+            "modulesFloorMet": true,
+            "readers": [
+              "src/workbench/native-evidence.ts",
+              "src/workbench/providers/reactivefiber.ts",
+              "src/workbench/reactivefiber-observer.ts"
+            ],
+            "table": {
+              "src/workbench/native-evidence.ts": [
+                "bundle_revision_id",
+                "graph_revision_id",
+                "operation_id"
+              ],
+              "src/workbench/providers/reactivefiber.ts": [
+                "bundle_revision_id",
+                "graph_revision_id",
+                "operation_id",
+                "render_id",
+                "transaction_id",
+                "workspace.id"
+              ],
+              "src/workbench/reactivefiber-observer.ts": [
+                "bundle_revision_id",
+                "graph_revision_id",
+                "operation_id",
+                "render_id",
+                "transaction_id",
+                "workspace.id"
+              ]
+            },
+            "nullOnly": {
+              "src/workbench/native-evidence.ts": {
+                "render_id": "0/0",
+                "transaction_id": "0/0"
+              },
+              "src/workbench/providers/reactivefiber.ts": {
+                "render_id": "1/1",
+                "transaction_id": "1/1"
+              },
+              "src/workbench/reactivefiber-observer.ts": {
+                "render_id": "1/1",
+                "transaction_id": "1/1"
+              }
+            },
+            "nullTyped": {
+              "src/workbench/native-evidence.ts": [],
+              "src/workbench/providers/reactivefiber.ts": [
+                "transaction_id"
+              ],
+              "src/workbench/reactivefiber-observer.ts": []
+            },
+            "prefixes": {
+              "src/workbench/reactivefiber-observer.ts": [
+                "rf-bundle:",
+                "rf-cli:",
+                "rf-engine-spawns:",
+                "rf-engine:",
+                "rf-graph:",
+                "rf-output:",
+                "rf-workspace:"
+              ]
+            },
+            "typedPrefixes": [],
+            "outside": [],
+            "shippedSpelled": true,
+            "controls": {
+              "propertyRead": "0/1",
+              "nullCompare": "1/1",
+              "parenthesizedNullCompare": "1/1",
+              "elementAccess": "0/1",
+              "destructure": "0/1",
+              "sessionRead": [
+                "session_id"
+              ],
+              "workspaceIdRead": [
+                "workspace.id"
+              ],
+              "keyList": [
+                "operation_id",
+                "transaction_id"
+              ],
+              "outsideReaders": 1,
+              "outsideMessage": 1,
+              "composedName": 0,
+              "comment": 0,
+              "camelNamesake": 0,
+              "renderPrefix": [
+                "rf-render:"
+              ]
+            }
+          }
+        },
+        {
+          "id": "A2",
+          "witness": {
+            "pin": "A2",
+            "withBundle": {
+              "topology": {
+                "OPERATION": [
+                  "snapshots.0.node.title",
+                  "snapshots.0.source.id"
+                ],
+                "WORKSPACE": [
+                  "snapshots.0.evidenceRefs.1"
+                ],
+                "GRAPH": [
+                  "snapshots.0.evidenceRefs.0",
+                  "snapshots.0.sourceRevision"
+                ],
+                "BUNDLE": [
+                  "snapshots.0.evidenceRefs.2",
+                  "snapshots.0.sourceVersion"
+                ],
+                "ROOT": [
+                  "snapshots.0.scope.workspace",
+                  "snapshots.0.source.scope"
+                ]
+              },
+              "evidence": {
+                "OPERATION": [
+                  "nativeId"
+                ],
+                "WORKSPACE": [],
+                "GRAPH": [],
+                "BUNDLE": [
+                  "sourceBasis"
+                ],
+                "ROOT": []
+              }
+            },
+            "withoutBundle": {
+              "topology": {
+                "OPERATION": [
+                  "snapshots.0.node.title",
+                  "snapshots.0.source.id"
+                ],
+                "WORKSPACE": [
+                  "snapshots.0.evidenceRefs.1"
+                ],
+                "GRAPH": [
+                  "snapshots.0.evidenceRefs.0",
+                  "snapshots.0.sourceRevision"
+                ],
+                "BUNDLE": [],
+                "ROOT": [
+                  "snapshots.0.scope.workspace",
+                  "snapshots.0.source.scope"
+                ]
+              },
+              "evidence": {
+                "OPERATION": [
+                  "nativeId"
+                ],
+                "WORKSPACE": [],
+                "GRAPH": [
+                  "sourceBasis"
+                ],
+                "BUNDLE": [],
+                "ROOT": []
+              }
+            },
+            "cohort": {
+              "stated": "BUNDLE",
+              "absent": "GRAPH",
+              "absentBundleRefs": 0
+            },
+            "graphInBundleSlot": [],
+            "statedNode": {
+              "applied": "applied",
+              "nodes": 1
+            }
+          }
+        },
+        {
+          "id": "A3",
+          "witness": {
+            "pin": "A3",
+            "adapter": {
+              "committed": "validation: ReactiveFiber topology refused: result.ephemeral must be true.",
+              "renderStated": "validation: ReactiveFiber topology refused: result.render_id must be null: a committed render is not a preview.",
+              "transactionStated": "validation: ReactiveFiber topology refused: source.transaction_id must be null: a noncommitted read opens no transaction.",
+              "control": "admitted"
+            },
+            "provider": {
+              "committed": "transport: RF preview returned an unrecognized or contradictory envelope.",
+              "renderStated": "transport: RF preview returned an unrecognized or contradictory envelope.",
+              "transactionStated": "transport: RF preview returned an unrecognized or contradictory envelope.",
+              "control": "admitted verbatim"
+            },
+            "typedKeys": [],
+            "typedRefs": [],
+            "naming": {
+              "render_id": [
+                "diagnostics.0"
+              ],
+              "transaction_id": [
+                "diagnostics.0"
+              ],
+              "evidence": []
+            },
+            "grammars": {
+              "render": true,
+              "transaction": true
+            }
+          }
+        },
+        {
+          "id": "A4",
+          "witness": {
+            "pin": "A4",
+            "sessionInReaders": [],
+            "claudeAnchor": true,
+            "session": {
+              "grammar": true,
+              "topologyEqual": true,
+              "evidenceEqual": true,
+              "surfaced": []
+            },
+            "workspaces": {
+              "PI_ROOT": [
+                "snapshots.0.scope.workspace",
+                "snapshots.0.source.scope"
+              ],
+              "RF_ROOT": [],
+              "WORKSPACE": [
+                "snapshots.0.evidenceRefs.1"
+              ]
+            },
+            "operations": {
+              "forge": {
+                "provider": "forge",
+                "type": "operation",
+                "id": "OPERATION"
+              },
+              "reactivefiber": {
+                "provider": "reactivefiber",
+                "type": "operation",
+                "id": "OPERATION"
+              },
+              "sameId": true,
+              "distinct": true
+            },
+            "controls": {
+              "readerSession": 1,
+              "sessionOutsideReaders": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "(b) occurrence identity is never conflated with component_id or definition revision in Pi diffs or projections (03-host:78): absent today - no module spells an rf component, instance, definition revision, candidate key or occurrence field, Pi issues no diff, and a preview carrying the C-08 shape (one nested child rendered twice) projects neither occurrence, the component nor its revision",
+      "pins": [
+        {
+          "id": "B1",
+          "witness": {
+            "pin": "B1",
+            "bFamily": [
+              "candidate_key",
+              "component_id",
+              "component_instance_id",
+              "component_revision_id",
+              "occurrence_id"
+            ],
+            "anchored": true,
+            "hits": [],
+            "occurrenceInReaders": [],
+            "controls": {
+              "propertyAccess": 1,
+              "elementAccess": 1,
+              "destructure": 1,
+              "objectKey": 1,
+              "pathLiteral": 1,
+              "folded": 1,
+              "template": 1,
+              "camelCase": 1,
+              "composedField": 0,
+              "renamedField": 0,
+              "comment": 0,
+              "readerOccurrence": 1,
+              "occurrenceOutsideReaders": 0,
+              "outsideRoots": 0
+            }
+          }
+        },
+        {
+          "id": "B2",
+          "witness": {
+            "pin": "B2",
+            "grammars": {
+              "firstIsBare": "bare",
+              "secondOrdinal": "2",
+              "instance": true,
+              "revision": true
+            },
+            "slotsEqual": true,
+            "evidenceEqual": true,
+            "surfaced": {
+              "FIRST_OCCURRENCE": [],
+              "SECOND_OCCURRENCE": [],
+              "CHILD": [],
+              "INSTANCE": [],
+              "REVISION": [],
+              "IDEMPOTENCY": [],
+              "OCCURRENCE_ORDINAL": []
+            },
+            "node": {
+              "applied": "applied",
+              "nodes": 1,
+              "id": "OPERATION",
+              "sourceVersion": "BUNDLE"
+            },
+            "diff": {
+              "adapter": "validation",
+              "evidenceKeys": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "(c) Pi handoff records carry a render_id copied from an rf envelope with provenance to the producing invocation: absent today - Pi mints no handoff render ids, admits no reading that carries one and declares no render-id member; what a reading does carry, its rf operation id, is copied from the envelope byte for byte with the host invocation and the invoking operation as provenance",
+      "pins": [
+        {
+          "id": "C1",
+          "witness": {
+            "pin": "C1",
+            "renderSpellings": {
+              "src/workbench/providers/reactivefiber.ts": {
+                "identifiers": 1,
+                "literals": 0
+              },
+              "src/workbench/reactivefiber-observer.ts": {
+                "identifiers": 1,
+                "literals": 2
+              }
+            },
+            "renderMembers": [],
+            "runtimeBuildsFromEvidence": true,
+            "committedEvidence": {
+              "equalToPreview": true,
+              "nativeId": "OPERATION",
+              "renderSurfaced": [],
+              "keys": [
+                "nativeId",
+                "producerRelease",
+                "provider",
+                "sourceBasis"
+              ]
+            },
+            "controls": {
+              "interfaceMember": 1,
+              "camelMember": 1,
+              "shorthandMember": 1,
+              "classField": 1,
+              "renamedMember": 0
+            }
+          }
+        },
+        {
+          "id": "C2",
+          "witness": {
+            "pin": "C2",
+            "ids": [
+              {
+                "envelope": "OPERATION",
+                "snapshot": "OPERATION",
+                "evidence": "OPERATION"
+              },
+              {
+                "envelope": "SECOND_OPERATION",
+                "snapshot": "SECOND_OPERATION",
+                "evidence": "SECOND_OPERATION"
+              }
+            ],
+            "trace": {
+              "stated": {
+                "invocationId": "inv-fixture-1"
+              },
+              "bareHasTrace": false,
+              "bareRelations": 0
+            },
+            "relations": [
+              {
+                "from": {
+                  "provider": "workflow",
+                  "type": "node-call",
+                  "id": "call-fixture-1",
+                  "scope": "/fixture/rf-workspace"
+                },
+                "to": {
+                  "provider": "reactivefiber",
+                  "type": "context-preview",
+                  "id": "OPERATION",
+                  "scope": "/fixture/rf-workspace"
+                },
+                "kind": "grouping",
+                "source": "reactivefiber"
+              }
+            ],
+            "proseDelta": [
+              "nativePayloadRef"
+            ],
+            "proseEvidenceEqual": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "D",
+      "label": "(d) no Pi code parses model-generated prose to recover a render id for authoritative use: no module spells the rf render-id prefix, the rf id family grammar or a render-naming pattern, rf document text is read only to type-check and digest it, and render-id-shaped prose in a document reaches no projected or evidence field",
+      "pins": [
+        {
+          "id": "D1",
+          "witness": {
+            "pin": "D1",
+            "findings": [],
+            "prefixes": {
+              "src/workbench/providers/reactivefiber.ts": [
+                "rfo_",
+                "rfw_"
+              ],
+              "src/workbench/reactivefiber-observer.ts": [
+                "rfo_",
+                "rfw_"
+              ]
+            },
+            "outputReads": [
+              "src/workbench/providers/reactivefiber.ts typeof",
+              "src/workbench/reactivefiber-observer.ts typeof",
+              "src/workbench/reactivefiber-observer.ts digest"
+            ],
+            "textFinds": [],
+            "controls": {
+              "regexLiteral": 2,
+              "regExpCall": 3,
+              "prefixTest": 1,
+              "familyGrammar": 1,
+              "renderPattern": 1,
+              "renderPatternCall": 1,
+              "composedPrefix": 0,
+              "comment": 0,
+              "validation": [
+                "rfo_"
+              ],
+              "textMatch": 1,
+              "textDigest": 0,
+              "aliasOutsideReaders": 0
+            }
+          }
+        },
+        {
+          "id": "D2",
+          "witness": {
+            "pin": "D2",
+            "grammarMatch": true,
+            "delta": [
+              "nativePayloadRef"
+            ],
+            "surfaced": [],
+            "digestOnly": true,
+            "evidenceEqual": true
+          }
+        }
+      ]
+    }
+  ],
+  "tests": [
+    "the judged set: the frozen shape, the out-of-file roster and the bead row agree",
+    "A1",
+    "A2",
+    "A3",
+    "A4",
+    "B1",
+    "B2",
+    "C1",
+    "C2",
+    "D1",
+    "D2",
+    "records: every registered test ran once in run mode in roster order and every pin reached its end"
+  ]
+}

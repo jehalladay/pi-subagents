@@ -39,7 +39,10 @@
  *    outcome of every row; C5 the justification roster. "Downstream" is every Pi operation over the reading's projections: the
  *    observer topology, nativeEvidence, nativeRefOf, the observation cache and the graph view; a downstream operation that reads
  *    an omitted field changes its output under the row's variation and reds C4. The full-reading planes (the journal text, the
- *    receipt digest, the tool reply) carry every field verbatim, so no omission arises there.
+ *    receipt digest, the tool reply) carry every field verbatim, so no omission arises there. wb-hs2j.1 (RCA-R1) moved
+ *    result.blocks and result.necessity from omitted (J-STRUCTURE) to projected: the reader adapter's inclusion leg reads the
+ *    block count and the withheld-decision count, and their PAIRED variations are an emptied block list and one added withheld
+ *    decision.
  *  D, acceptance (d), gated: no ObserverContract carrier exists in src or in the captured rf result roster, so there is no
  *    declared projection to echo yet; D1 reds when either appears, and the armed half is due then.
  *  Q, the residuals' pinned quiet rows.
@@ -72,7 +75,7 @@ import {
   reactivefiberTopology,
 } from "../src/workbench/reactivefiber-observer.js";
 import { mintEvidenceReceipt } from "../src/workbench/reconcile-decision.js";
-import { fullShapeRf, type Json, readRfResultRoster } from "./helpers/rf-render-fixture.js";
+import { fullShapeRf, type Json, readRfResultRoster, rfFixtureDecision } from "./helpers/rf-render-fixture.js";
 
 type JsonObject = { [key: string]: Json };
 
@@ -247,7 +250,7 @@ const FIELD_ROWS: readonly (readonly [BaseId, string, Disposition, string?])[] =
   ["full", "result.diagnostics_summary.warnings", "projected"],
   ["full", "result.diagnostics_summary.has_errors", "fenced"],
   ["full", "result.diagnostics_summary.has_warnings", "fenced"],
-  ["full", "result.blocks", "omitted", "J-STRUCTURE"],
+  ["full", "result.blocks", "projected"],
   ["full", "result.components", "omitted", "J-STRUCTURE"],
   ["full", "result.provenance.created_at", "omitted", "J-PROVENANCE-AUX"],
   ["full", "result.provenance.graph_revision_id", "projected"],
@@ -274,7 +277,7 @@ const FIELD_ROWS: readonly (readonly [BaseId, string, Disposition, string?])[] =
   ["full", "result.audience", "omitted", "J-REQUEST-ECHO"],
   ["full", "result.bundle_revision_id", "projected"],
   ["full", "result.observations", "projected"],
-  ["full", "result.necessity", "omitted", "J-STRUCTURE"],
+  ["full", "result.necessity", "projected"],
   ["full", "result.attempts", "omitted", "J-WORK-COUNTERS"],
   ["full", "result.superseded_transaction_ids", "omitted", "J-STRUCTURE"],
   ["full", "result.retry_work", "omitted", "J-WORK-COUNTERS"],
@@ -319,7 +322,8 @@ const FIELD_ROWS: readonly (readonly [BaseId, string, Disposition, string?])[] =
 const FIELDS: readonly Field[] = FIELD_ROWS.map(([base, path, disposition, why]) => ({
   id: `${base}:${path}`, base, path, disposition, ...(why !== undefined ? { why } : {}),
 }));
-/** FIELDS' frozen shape at base 0b2a80f (standing rule 16): every row's base, path and disposition, as a literal. */
+/** FIELDS' frozen shape at base 0b2a80f (standing rule 16): every row's base, path and disposition, as a literal; wb-hs2j.1 moved the
+ * result.blocks and result.necessity rows from omitted to projected. */
 const FROZEN_FIELDS: readonly string[] = [
   "full:schema:fenced",
   "full:ok:fenced",
@@ -346,7 +350,7 @@ const FROZEN_FIELDS: readonly string[] = [
   "full:result.diagnostics_summary.warnings:projected",
   "full:result.diagnostics_summary.has_errors:fenced",
   "full:result.diagnostics_summary.has_warnings:fenced",
-  "full:result.blocks:omitted",
+  "full:result.blocks:projected",
   "full:result.components:omitted",
   "full:result.provenance.created_at:omitted",
   "full:result.provenance.graph_revision_id:projected",
@@ -373,7 +377,7 @@ const FROZEN_FIELDS: readonly string[] = [
   "full:result.audience:omitted",
   "full:result.bundle_revision_id:projected",
   "full:result.observations:projected",
-  "full:result.necessity:omitted",
+  "full:result.necessity:projected",
   "full:result.attempts:omitted",
   "full:result.superseded_transaction_ids:omitted",
   "full:result.retry_work:omitted",
@@ -420,6 +424,11 @@ const FROZEN_FIELDS: readonly string[] = [
 const PAIRED: Readonly<Record<string, (source: JsonObject) => JsonObject>> = {
   "full:diagnostics": source => ({ ...source, diagnostics: [diagnosticRow("RF_RENDER_FLAGGED", "error")] }),
   "full:result.observations": source => withResult(source, { observations: [{ status: "unresolved", freshness: "captured_at_render", replayed: false }] }),
+  // wb-hs2j.1 (RCA-R1): the inclusion leg reads the block count and the withheld count, so an emptied block list and one added
+  // withheld decision are the admitted variations; varied()'s appended marker row is refused as a decision record.
+  "full:result.blocks": source => withResult(source, { blocks: [] }),
+  "full:result.necessity": source =>
+    changed(source, "result.necessity", rows => [...(Array.isArray(rows) ? rows : []), rfFixtureDecision(false, "fixture.component:main::withheld")]),
   "full:result.diagnostics_summary.errors": source => withResult(source, { diagnostics_summary: { errors: 1, warnings: 0, has_errors: true, has_warnings: false } }),
   "full:result.diagnostics_summary.warnings": source => withResult(source, { diagnostics_summary: { errors: 0, warnings: 1, has_errors: false, has_warnings: true } }),
   "observed:result.observations[].freshness": source => changed(source, "result.observations[]", row => ({ ...objectOf(row, "row"), freshness: "reused", replayed: true })),
@@ -437,7 +446,7 @@ function variedSource(field: Field): JsonObject {
 const JUSTIFICATIONS: Readonly<Record<string, string>> = {
   "J-PAYLOAD-RESTATED": "rf's restatements of the context text (size, digest, path): Pi references the text by its own sha256 (nativePayloadRef) and no downstream Pi operation reads rf's restatement",
   "J-BUDGET-AUX": "budget terms other than context_window and available_context_tokens: validated or unread; the status line states only available of window and over-budget coverage, and no cache, query or view reads the rest",
-  "J-STRUCTURE": "render structure inside the withheld context (blocks, components, necessity, effects, plan, transaction lists): Pi never surfaces the context body and the payload digest stands for it",
+  "J-STRUCTURE": "render structure inside the withheld context (components, effects, plan, transaction lists): Pi never surfaces the context body and the payload digest stands for it",
   "J-WORK-COUNTERS": "execution counters other than necessity_eval_count and tsx_worker_spawns: validated where fenced, read by no cache, query or view",
   "J-PROVENANCE-AUX": "auxiliary provenance (creation time, schema versions, storage, sibling SDK entries, wire format): ordering uses the host capture and observation instants, the version cohort the bundle or graph digest, the engine identity only the TSX entries",
   "J-POLICY-REVISION": "the necessity policy revision is no Pi version cohort: the cohort is the bundle digest, else the graph digest (owner ruling G-A, wb-973.8), and equal-payload renders under two policies stay distinct cache entries by their operation ids",

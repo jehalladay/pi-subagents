@@ -1,0 +1,416 @@
+{
+  "bead": "wb-hs2j.9",
+  "statement": "RF-REACTIVE-CONTEXT-ASSEMBLY-R10: no Pi surface relaying rf-captured context overwrites or re-labels a field whose source authority is external (Forge verdict, Beads task state)",
+  "pin": "6a251bf73af57c3a703caf6892dfe3015e06a481",
+  "source": {
+    "repo": "ReactiveFiberCLI",
+    "path": "docs/programs/reactive-context-assembly-2026-10-18/04-target-architecture-and-composition-contract.md",
+    "lines": [
+      43,
+      45,
+      78
+    ]
+  },
+  "excerpt": [
+    "## 3. Proposed typed assembly descriptor",
+    "A future schema, not currently advertised as a supported file:",
+    "The normalized descriptor must keep module-specific opaque provenance alongside typed fields. It must never overwrite a field whose source authority is external (e.g., Forge verdict, Beads task state). A source result is a capture of an external authority, not ownership transfer."
+  ],
+  "gatingArtifact": "the versioned assembly descriptor of 04-target section 3 (:43-45, a future schema), unshipped",
+  "measured": {
+    "measuredUtc": "2026-10-23",
+    "rf": {
+      "release": "0.1.832",
+      "facts": [
+        "integrations/lens_source.py:6-7: no Beads-specific source kind; a typed command_template lens invokes bd ... --json",
+        "integrations/lens_source.py:33-34: the resolved value is the row's captured value VERBATIM ({stdout, stderr, returncode} for a command lens)",
+        "integrations/lens_observations.py:265-266: an observation row carries identity and status, digests and timing, never argv, output or a value",
+        "schemas/cli/context.render.schema.json: result.output.text is the one text property (the final document bytes decoded as UTF-8 text); $defs.result declares no additionalProperties"
+      ]
+    },
+    "forge": {
+      "release": "0.2.1 (rev 572a7d1e6283)",
+      "verdicts": [
+        "PASS",
+        "POLICY_SATISFIED",
+        "FAIL",
+        "COULD_NOT_JUDGE"
+      ],
+      "verdictsAt": "forge/traceability/models.py:96-99 (promoted into the result-envelope/v1 block only from this closed set, application/finalize.py:1147-1150)",
+      "dispositions": [
+        "SUCCEEDED",
+        "NO_OP",
+        "PARTIAL",
+        "REJECTED",
+        "BLOCKED",
+        "FAILED",
+        "COULD_NOT_JUDGE"
+      ],
+      "dispositionsAt": "forge/contracts/semantics.py:57-75",
+      "treeIdentityKeysAt": "build/tree_identity.py:142-143",
+      "jsonShape": "--json prints one compact line with sorted keys (measured on a result-envelope/v1 lint envelope)"
+    },
+    "bd": {
+      "release": "1.1.0-rc.1 (6a8620f34)",
+      "statusesAt": "bd statuses --json built_in_statuses",
+      "statuses": [
+        {
+          "name": "open",
+          "category": "active",
+          "description": "Available to work (default)"
+        },
+        {
+          "name": "in_progress",
+          "category": "wip",
+          "description": "Actively being worked on"
+        },
+        {
+          "name": "blocked",
+          "category": "wip",
+          "description": "Blocked by a dependency"
+        },
+        {
+          "name": "deferred",
+          "category": "frozen",
+          "description": "Deliberately put on ice for later"
+        },
+        {
+          "name": "closed",
+          "category": "done",
+          "description": "Completed"
+        },
+        {
+          "name": "pinned",
+          "category": "frozen",
+          "description": "Persistent, stays open indefinitely"
+        },
+        {
+          "name": "hooked",
+          "category": "wip",
+          "description": "Attached to an agent's hook"
+        }
+      ],
+      "jsonShape": "bd show <id> --json prints a two-space-indented array whose keys run id, title, ..., status, priority, issue_type"
+    }
+  },
+  "synonyms": [
+    "active",
+    "wip",
+    "frozen",
+    "done",
+    "Available to work (default)",
+    "Actively being worked on",
+    "Blocked by a dependency",
+    "Deliberately put on ice for later",
+    "Completed",
+    "Persistent, stays open indefinitely",
+    "Attached to an agent's hook",
+    "SUCCEEDED",
+    "NO_OP",
+    "PARTIAL",
+    "REJECTED",
+    "FAILED",
+    "passed",
+    "passing",
+    "failing",
+    "failure",
+    "green",
+    "red",
+    "success",
+    "resolved",
+    "finished",
+    "working",
+    "stalled"
+  ],
+  "rows": [
+    {
+      "id": "A",
+      "label": "(a) a Pi projection of rf-captured Forge/Beads data preserves the producer's verdict and status bytes: the injected and native readings, the shared display and the hosted Claude relay change no captured field, and no `.text` read of the rendered document in src does more than type-check or digest it",
+      "pins": [
+        {
+          "id": "A1",
+          "witness": {
+            "calls": 1,
+            "verbatim": true,
+            "spans": [
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "A2",
+          "witness": {
+            "spawns": 1,
+            "noCommit": true,
+            "verbatim": true
+          }
+        },
+        {
+          "id": "A3",
+          "witness": {
+            "floorMet": true,
+            "anchorRead": true,
+            "reads": [
+              "workbench/providers/reactivefiber.ts:typeof",
+              "workbench/reactivefiber-observer.ts:digest",
+              "workbench/reactivefiber-observer.ts:typeof"
+            ]
+          }
+        },
+        {
+          "id": "A4",
+          "witness": {
+            "hostedIsDisplay": true,
+            "spans": 13,
+            "displaySpans": [
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "hostedSpans": [
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "(b) round-tripping an rf capture through Pi surfaces leaves the external-authority fields byte-identical: both records parse back unchanged from every leg, typed fields on an additive key included, a second hop and a second display pass change nothing, and the payload digest tracks the exact bytes",
+      "pins": [
+        {
+          "id": "B1",
+          "witness": {
+            "legs": [
+              "injected",
+              "native",
+              "display",
+              "hosted"
+            ],
+            "forgeFields": 8,
+            "bdFields": 5,
+            "unchanged": true
+          }
+        },
+        {
+          "id": "B2",
+          "witness": {
+            "legs": [
+              "injected",
+              "native",
+              "display",
+              "hosted"
+            ],
+            "records": 2,
+            "verbatim": true
+          }
+        },
+        {
+          "id": "B3",
+          "witness": {
+            "secondHopVerbatim": true,
+            "projectionSame": true,
+            "displayIdempotent": true
+          }
+        },
+        {
+          "id": "B4",
+          "witness": {
+            "producerDigest": true,
+            "oneWordChanges": true,
+            "digest": "977b1cb0e974605c"
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "(c) a fixture capture carrying a Forge verdict and a bd status word projects both verbatim with native source provenance and no Pi-minted synonym: the measured vocabularies, every cell of their matrix, rf-native references and evidence, and no reader adopting the capture",
+      "pins": [
+        {
+          "id": "C1",
+          "witness": {
+            "verdicts": 4,
+            "statuses": 7,
+            "cells": 28,
+            "singleWordCells": 28,
+            "measuredAlternates": 16
+          }
+        },
+        {
+          "id": "C2",
+          "witness": {
+            "injectedCells": 28,
+            "displayCells": 28,
+            "nativeCells": 7,
+            "hostedCells": 7,
+            "spawns": 7,
+            "covered": {
+              "verdicts": 4,
+              "statuses": 7
+            }
+          }
+        },
+        {
+          "id": "C3",
+          "witness": {
+            "cells": 28,
+            "source": {
+              "provider": "reactivefiber",
+              "type": "context-preview"
+            },
+            "evidenceRefKinds": [
+              "rf-graph",
+              "rf-workspace",
+              "rf-bundle",
+              "rf-cli"
+            ],
+            "evidenceKeys": [
+              "provider",
+              "nativeId",
+              "sourceBasis",
+              "producerRelease"
+            ],
+            "statesDomainStatus": false
+          }
+        },
+        {
+          "id": "C4",
+          "witness": {
+            "cells": 28,
+            "distinctProjections": 1,
+            "distinctPayloadRefs": 28,
+            "capturedHits": [],
+            "synonymHits": []
+          }
+        },
+        {
+          "id": "C5",
+          "witness": {
+            "forgeReader": {
+              "category": "validation",
+              "message": "Forge gate topology refused: the reading must be the forge.gate.status/v1 provider output."
+            },
+            "evidenceKeys": {
+              "forge.gate.status": [],
+              "hyperunix.find": [],
+              "furnace.run.inspect": [],
+              "beads.work.readiness": [],
+              "reactivefiber.render.preview": [
+                "provider",
+                "nativeId",
+                "sourceBasis",
+                "producerRelease"
+              ]
+            },
+            "provider": "reactivefiber"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Q",
+      "label": "the named residuals stay pinned quiet: display line-break fold, display text bound, free-text strip, additive key unread, computed document access, synonym vocabulary",
+      "pins": [
+        {
+          "id": "Q1",
+          "witness": {
+            "documentChanged": true,
+            "forgeRecordKept": true,
+            "bdRecordKept": false,
+            "hostedSame": true,
+            "spansKept": true,
+            "bdParsesSame": true
+          }
+        },
+        {
+          "id": "Q2",
+          "witness": {
+            "pastBound": true,
+            "displayMarksCut": true,
+            "displayForgeSpans": 0,
+            "readingForgeSpans": 8,
+            "digestCoversAll": true
+          }
+        },
+        {
+          "id": "Q3",
+          "witness": {
+            "readingKeepsUnit": true,
+            "displayTitle": [
+              {
+                "id": "fx-0001",
+                "title": "fixturetask",
+                "status": "in_progress",
+                "priority": 2,
+                "issue_type": "task"
+              }
+            ],
+            "closedSpansKept": true
+          }
+        },
+        {
+          "id": "Q4",
+          "witness": {
+            "projectionSame": true,
+            "payloadRefSame": true
+          }
+        },
+        {
+          "id": "Q5",
+          "witness": {
+            "counted": [
+              "typeof",
+              "digest",
+              "other:PropertyAccessExpression"
+            ],
+            "unseen": []
+          }
+        },
+        {
+          "id": "Q6",
+          "witness": {
+            "outside": [],
+            "inside": [
+              "passed"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

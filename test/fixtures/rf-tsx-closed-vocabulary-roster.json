@@ -1,0 +1,790 @@
+{
+ "provenance": "wb-if7q.2 census roster (test/workbench-rf-tsx-closed-vocabulary-census.test.ts). quote and citation are the owner filing's (bead row wb-if7q.2 of the tracked export .beads/issues.jsonl). producer is MEASURED read-only on 2026-10-23: programPin and runtimePin are ReactiveFiberTSXSDK commits read with git show (runtimePin is the distribution source the installed rf 0.1.832 names in its packaged integrations/tsx/runtime-lock.json, package @reactive-fiber/tsx 0.1.649); contextVocabulary is the eight intrinsic type ids at vocabularySites, identical at both pins; descriptorProfile counts the src files of each pin matching its family by git grep -l -i -E (0 at both), lists each pin's package.json exports keys and the docs pages naming the family at the program pin; rf is the installed rf (`rf --json --version` result.version) and its packaged diagnostics registry row for the host code a worker invalid_output failure maps to (integrations/tsx.py WORKER_FAILURE_CODES), with the worker's SDK code and message (integrations/tsx/worker_entry.ts), and tsxCodes the 12 RF_TSX_ DiagnosticCode members of domain/diagnostics.py (the census's unregistered code is none of them; it appears in no file of the package). The refusal envelope the census builds from rf is CONSTRUCTED from these facts (no Deno engine is provisioned for a TSX render here). Every witness is the expected outcome of its pin's case at this cut.",
+ "bead": "wb-if7q.2",
+ "quote": "Reactive Fiber itself is the UI framework. `ReactiveWebInterfaceSDK` and `ReactiveTUIInterfaceSDK` are independent host implementations **depending on this package**, not aliases for it. Neither React.js nor ReactiveFiberCLI is a rendering intermediary. React compatibility is outside this program.",
+ "citation": "docs/programs/native-interfaces-and-portable-tsx-2026-10-21/README.md:6@76bbbffd9d4a",
+ "producer": {
+  "programPin": {
+   "sha": "76bbbffd9d4a419f972d6fefc8b7f9dc524df8df",
+   "packageVersion": "0.1.668"
+  },
+  "runtimePin": {
+   "sha": "5da03a7d49f42a9be7612d34f73d7d9ef950c52c",
+   "packageVersion": "0.1.649"
+  },
+  "contextVocabulary": [
+   "rftsx.group",
+   "rftsx.block",
+   "rftsx.context",
+   "rftsx.diagnostic",
+   "rftsx.layout",
+   "rftsx.budget",
+   "rftsx.model-budget",
+   "rftsx.text"
+  ],
+  "vocabularySites": [
+   "src/outputs/output-nodes.ts:149-155",
+   "src/jsx/normalize-children.ts:33",
+   "src/outputs/output-nodes.ts:343-352"
+  ],
+  "descriptorProfile": {
+   "family": "InterfaceHost|InterfaceEvaluation|SurfaceCapabilities|descriptor[ _-]?profile|ui[ _-]?descriptor|registerDescriptor|DescriptorRegistry",
+   "programPinSrcHits": 0,
+   "runtimePinSrcHits": 0,
+   "exports": [
+    ".",
+    "./embedding",
+    "./jsx-dev-runtime",
+    "./jsx-runtime",
+    "./package.json",
+    "./testing"
+   ],
+   "uiExports": [],
+   "programPinDocs": [
+    "docs/programs/native-interfaces-and-portable-tsx-2026-10-21/01-runtime-contracts.md",
+    "docs/programs/native-interfaces-and-portable-tsx-2026-10-21/02-implementation.md",
+    "docs/programs/native-interfaces-and-portable-tsx-2026-10-21/README.md"
+   ],
+   "gate": "TSX-IF-03 (docs/programs/native-interfaces-and-portable-tsx-2026-10-21/02-implementation.md:9-10): absent at both pins"
+  },
+  "rf": {
+   "version": "0.1.832",
+   "hostCode": "RF_TSX_OUTPUT_INVALID",
+   "sdkCode": "RFTSX_OUTPUT_UNSUPPORTED_NODE",
+   "sdkMessage": "unsupported SDK context node",
+   "exit": 7,
+   "metadataKeys": [
+    "component_id",
+    "component_instance_id",
+    "definition_path",
+    "path",
+    "reason",
+    "sdk_code",
+    "sdk_message"
+   ],
+   "sites": [
+    "reactive_fiber_cli/domain/diagnostics.py:3905",
+    "reactive_fiber_cli/domain/diagnostics.py:1863-1866",
+    "reactive_fiber_cli/integrations/tsx.py:1290-1301",
+    "reactive_fiber_cli/integrations/tsx/worker_entry.ts:536-541",
+    "reactive_fiber_cli/domain/diagnostics.py:1259-1270 (the 12 RF_TSX_ DiagnosticCode members; DESCRIPTOR_UNREGISTERED in no file of the package)"
+   ],
+   "tsxCodes": [
+    "RF_TSX_BUNDLE_IMPORT_UNRETAINED",
+    "RF_TSX_EVALUATOR_UNAVAILABLE",
+    "RF_TSX_IMPORT_NOT_IN_BUNDLE",
+    "RF_TSX_OUTPUT_INVALID",
+    "RF_TSX_POLICY_CONTAINER_UNSUPPORTED",
+    "RF_TSX_PROTOCOL_ERROR",
+    "RF_TSX_RESOURCE_DENIED",
+    "RF_TSX_RESOURCE_LIMIT",
+    "RF_TSX_RUNTIME_INCOMPATIBLE",
+    "RF_TSX_SNAPSHOT_STALE",
+    "RF_TSX_WORKER_CRASHED",
+    "RF_TSX_WORKER_TIMEOUT"
+   ]
+  }
+ },
+ "scan": {
+  "envelopeKeys": [
+   "schema",
+   "ok",
+   "command",
+   "operation_id",
+   "workspace",
+   "transaction_id",
+   "result",
+   "diagnostics"
+  ],
+  "cliSchema": "reactive-fiber.cli/v1",
+  "renderCommand": "context.render",
+  "previewId": "reactivefiber.render.preview",
+  "selector": {
+   "model": "model",
+   "task": "task"
+  },
+  "contextVocabulary": [
+   "rftsx.group",
+   "rftsx.block",
+   "rftsx.context",
+   "rftsx.diagnostic",
+   "rftsx.layout",
+   "rftsx.budget",
+   "rftsx.model-budget",
+   "rftsx.text"
+  ],
+  "outsideKinds": [
+   "button",
+   "content-stream",
+   "html",
+   "rftsx.button"
+  ],
+  "insideKind": "rftsx.block",
+  "readerWords": [
+   "ui",
+   "tui",
+   "html",
+   "dom",
+   "canvas",
+   "webgpu",
+   "mount",
+   "mounted",
+   "unmount",
+   "paint",
+   "painting",
+   "button",
+   "panel"
+  ],
+  "uiPhrases": [
+   "ui descriptor",
+   "descriptor (?:profile|registr)",
+   "interface (?:host|evaluation)",
+   "surface capabilit",
+   "host output",
+   "mounted control",
+   "reactive (?:web|tui) interface",
+   "reactive fiber dom"
+  ],
+  "htmlTag": "<\\/?[a-z][a-z0-9-]*(?:[\\s/>]|$)/i",
+  "marker": "zq7-planted",
+  "htmlBody": "<div class=\"panel\"><button type=\"button\">Approve zq7-planted</button></div>",
+  "hostCode": "RF_TSX_OUTPUT_INVALID",
+  "sdkCode": "RFTSX_OUTPUT_UNSUPPORTED_NODE",
+  "unregisteredCode": "RF_TSX_DESCRIPTOR_UNREGISTERED",
+  "newerSchema": "reactive-fiber.cli/v2",
+  "uiSchema": "reactive-fiber.ui/v1",
+  "ninthKeys": [
+   "ui",
+   "descriptors",
+   "html",
+   "host_output",
+   "mount"
+  ],
+  "proposedEntry": "^\\.\\/(?:core|ui|host|node|resources)(?:\\/|$)/",
+  "srcFloor": 100,
+  "closure": [
+   "src/workbench/native-evidence.ts",
+   "src/workbench/providers/reactivefiber.ts",
+   "src/workbench/reactivefiber-observer.ts"
+  ],
+  "outsideReader": "export function readOutput(raw: string): unknown {\n  const value = JSON.parse(raw);\n  return value.result.output.html;\n}\n",
+  "minimalFixture": {
+   "file": "test/workbench-provider-envelope-audit.test.ts",
+   "name": "validRf"
+  }
+ },
+ "residuals": [
+  {
+   "id": "R-PRODUCER-VOCABULARY",
+   "quietRow": "A2: the in-vocabulary kind rftsx.block projects exactly as the outside kinds do (both readers content-blind to block rows)"
+  },
+  {
+   "id": "R-ADDITIVE",
+   "quietRow": "B2: an additive host_output result key rides the reading verbatim and projects as its control"
+  },
+  {
+   "id": "R-UNFLAGGED",
+   "quietRow": "B3: the quiet mutants Q1-text-type-relaxed and Q2-failure-schema-disjunct trip no check"
+  },
+  {
+   "id": "R-OUTSIDE-CLOSURE",
+   "quietRow": "B3: a planted reader of result.output.html that names neither the envelope's schema nor its command is not in the closure and spells no descriptor-profile phrase"
+  }
+ ],
+ "rows": [
+  {
+   "id": "A",
+   "label": "(a) Pi's validRf/fullShapeRf fixtures stay unchanged: a block kind outside rftsx.*, a UI-descriptor block or an HTML body is refused/degraded as today: each fixture keeps its envelope and output shape and carries no UI content, a planted kind or descriptor in a block row never changes either reader's outcome (R-PRODUCER-VOCABULARY), an HTML body is held as context text by digest only, and the same content in place of the text, or rf's own closed-vocabulary refusal, is refused by both readers",
+   "pins": [
+    {
+     "id": "A1",
+     "quote": "Pi's validRf/fullShapeRf fixtures stay unchanged",
+     "witness": {
+      "pin": "A1",
+      "validRf": {
+       "envelopeKeys": [
+        "schema",
+        "ok",
+        "command",
+        "operation_id",
+        "workspace",
+        "transaction_id",
+        "result",
+        "diagnostics"
+       ],
+       "outputKeys": [
+        "text"
+       ],
+       "uiFindings": [],
+       "provider": "admitted/verbatim/spawns 1",
+       "adapter": "projected"
+      },
+      "fullShapeRf": {
+       "envelopeKeys": [
+        "schema",
+        "ok",
+        "command",
+        "operation_id",
+        "workspace",
+        "transaction_id",
+        "result",
+        "diagnostics"
+       ],
+       "outputKeys": [
+        "text",
+        "size_bytes",
+        "digest",
+        "path"
+       ],
+       "uiFindings": [],
+       "provider": "admitted/verbatim/spawns 1",
+       "adapter": "projected"
+      }
+     }
+    },
+    {
+     "id": "A2",
+     "quote": "a block kind outside rftsx.*",
+     "witness": {
+      "pin": "A2",
+      "outsideKindsInVocabulary": [],
+      "insideKindInVocabulary": true,
+      "degraded": {
+       "validRf": {
+        "button": "admitted/verbatim/same/surfaced 0/spawns 1",
+        "content-stream": "admitted/verbatim/same/surfaced 0/spawns 1",
+        "html": "admitted/verbatim/same/surfaced 0/spawns 1",
+        "rftsx.button": "admitted/verbatim/same/surfaced 0/spawns 1",
+        "rftsx.block": "admitted/verbatim/same/surfaced 0/spawns 1"
+       },
+       "fullShapeRf": {
+        "button": "admitted/verbatim/same/surfaced 0/spawns 1",
+        "content-stream": "admitted/verbatim/same/surfaced 0/spawns 1",
+        "html": "admitted/verbatim/same/surfaced 0/spawns 1",
+        "rftsx.button": "admitted/verbatim/same/surfaced 0/spawns 1",
+        "rftsx.block": "admitted/verbatim/same/surfaced 0/spawns 1"
+       }
+      },
+      "closedVocabularyRefusal": {
+       "provider": "unavailable: RF render refused: RF_TSX_OUTPUT_INVALID (errors 1, spawns 1)",
+       "adapter": "projected unknown/failure: refused · RF_TSX_OUTPUT_INVALID"
+      }
+     }
+    },
+    {
+     "id": "A3",
+     "quote": "a UI-descriptor block",
+     "witness": {
+      "pin": "A3",
+      "validRf": {
+       "blockRow": "admitted/verbatim/same/surfaced 0/spawns 1",
+       "serializedAsText": "admitted/verbatim/same-but-payload/surfaced 0/spawns 1",
+       "treeAsText": {
+        "provider": "transport: RF preview returned an unrecognized or contradictory envelope. (errors 1, spawns 1)",
+        "adapter": "validation: ReactiveFiber topology refused: result.output.text must be a string."
+       }
+      },
+      "fullShapeRf": {
+       "blockRow": "admitted/verbatim/same/surfaced 0/spawns 1",
+       "serializedAsText": "admitted/verbatim/same-but-payload/surfaced 0/spawns 1",
+       "treeAsText": {
+        "provider": "transport: RF preview returned an unrecognized or contradictory envelope. (errors 1, spawns 1)",
+        "adapter": "validation: ReactiveFiber topology refused: result.output.text must be a string."
+       }
+      }
+     }
+    },
+    {
+     "id": "A4",
+     "quote": "an HTML body is refused/degraded as today",
+     "witness": {
+      "pin": "A4",
+      "htmlBodyDigest": "sha256:7cec0bfd248703934803dcd7592484861b8b89f8f314d3e9c23170542bcac0b8",
+      "fixtures": {
+       "validRf": {
+        "body": "admitted/verbatim/same-but-payload/surfaced 0/spawns 1",
+        "payloadRef": "rf-output:sha256:7cec0bfd248703934803dcd7592484861b8b89f8f314d3e9c23170542bcac0b8",
+        "htmlField": {
+         "provider": "transport: RF preview returned an unrecognized or contradictory envelope. (errors 1, spawns 1)",
+         "adapter": "validation: ReactiveFiber topology refused: result.output.text must be a string."
+        }
+       },
+       "fullShapeRf": {
+        "body": "admitted/verbatim/same-but-payload/surfaced 0/spawns 1",
+        "payloadRef": "rf-output:sha256:7cec0bfd248703934803dcd7592484861b8b89f8f314d3e9c23170542bcac0b8",
+        "htmlField": {
+         "provider": "transport: RF preview returned an unrecognized or contradictory envelope. (errors 1, spawns 1)",
+         "adapter": "validation: ReactiveFiber topology refused: result.output.text must be a string."
+        }
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "label": "(b) src/workbench/providers/reactivefiber.ts accepts no UI-descriptor or host-output envelope (a mutant adding one fails the census); roster (wb-973.11) and eight-key strictness (wb-2j3.9) unchanged: every UI-descriptor and host-output shape is refused by both readers (an additive result key rides opaque: R-ADDITIVE), the reader closure's admission facts are frozen and spell no UI word, each provider mutant adding an acceptance is flagged (weakenings that add nothing: R-UNFLAGGED), and the result-key roster and the eight-key refusals hold",
+   "pins": [
+    {
+     "id": "B1",
+     "quote": "src/workbench/providers/reactivefiber.ts accepts no UI-descriptor",
+     "witness": {
+      "pin": "B1",
+      "validRf": {
+       "ui-schema": {
+        "provider": "transport: RF preview returned an unrecognized native envelope. (errors 1, spawns 1)",
+        "adapter": "validation: ReactiveFiber topology refused: source must be a reactive-fiber.cli/v1 context.render envelope."
+       },
+       "ui-schema-failure": {
+        "provider": "transport: RF preview returned an unrecognized native envelope. (errors 1, spawns 1)",
+        "adapter": "validation: ReactiveFiber topology refused: source must be a reactive-fiber.cli/v1 context.render envelope."
+       },
+       "ui-command": {
+        "provider": "transport: RF preview returned an unrecognized native envelope. (errors 1, spawns 1)",
+        "adapter": "validation: ReactiveFiber topology refused: source must be a reactive-fiber.cli/v1 context.render envelope."
+       },
+       "descriptor-command": {
+        "provider": "transport: RF preview returned an unrecognized native envelope. (errors 1, spawns 1)",
+        "adapter": "validation: ReactiveFiber topology refused: source must be a reactive-fiber.cli/v1 context.render envelope."
+       },
+       "descriptor-list": {
+        "provider": "transport: RF preview returned an unrecognized or contradictory envelope. (errors 1, spawns 1)",
+        "adapter": "validation: ReactiveFiber topology refused: result.output.text must be a string."
+       }
+      },
+      "fullShapeRf": {
+       "ui-schema": {
+        "provider": "transport: RF preview returned an unrecognized native envelope. (errors 1, spawns 1)",
+        "adapter": "validation: ReactiveFiber topology refused: source must be a reactive-fiber.cli/v1 context.render envelope."
+       },
+       "ui-schema-failure": {
+        "provider": "transport: RF preview returned an unrecognized native envelope. (errors 1, spawns 1)",
+        "adapter": "validation: ReactiveFiber topology refused: source must be a reactive-fiber.cli/v1 context.render envelope."
+       },
+       "ui-command": {
+        "provider": "transport: RF preview returned an unrecognized native envelope. (errors 1, spawns 1)",
+        "adapter": "validation: ReactiveFiber topology refused: source must be a reactive-fiber.cli/v1 context.render envelope."
+       },
+       "descriptor-command": {
+        "provider": "transport: RF preview returned an unrecognized native envelope. (errors 1, spawns 1)",
+        "adapter": "validation: ReactiveFiber topology refused: source must be a reactive-fiber.cli/v1 context.render envelope."
+       },
+       "descriptor-list": {
+        "provider": "transport: RF preview returned an unrecognized or contradictory envelope. (errors 1, spawns 1)",
+        "adapter": "validation: ReactiveFiber topology refused: result.output.text must be a string."
+       }
+      }
+     }
+    },
+    {
+     "id": "B2",
+     "quote": "host-output envelope",
+     "witness": {
+      "pin": "B2",
+      "validRf": {
+       "dom-commit": {
+        "provider": "transport: RF preview returned an unrecognized or contradictory envelope. (errors 1, spawns 1)",
+        "adapter": "validation: ReactiveFiber topology refused: result.output.text must be a string."
+       },
+       "tui-cells": {
+        "provider": "transport: RF preview returned an unrecognized or contradictory envelope. (errors 1, spawns 1)",
+        "adapter": "validation: ReactiveFiber topology refused: result.output.text must be a string."
+       },
+       "mounted-control": {
+        "provider": "transport: RF preview returned an unrecognized or contradictory envelope. (errors 1, spawns 1)",
+        "adapter": "validation: ReactiveFiber topology refused: result.output.text must be a string."
+       },
+       "additive-host-output-key": "admitted/verbatim/same/surfaced 0/spawns 1"
+      },
+      "fullShapeRf": {
+       "dom-commit": {
+        "provider": "transport: RF preview returned an unrecognized or contradictory envelope. (errors 1, spawns 1)",
+        "adapter": "validation: ReactiveFiber topology refused: result.output.text must be a string."
+       },
+       "tui-cells": {
+        "provider": "transport: RF preview returned an unrecognized or contradictory envelope. (errors 1, spawns 1)",
+        "adapter": "validation: ReactiveFiber topology refused: result.output.text must be a string."
+       },
+       "mounted-control": {
+        "provider": "transport: RF preview returned an unrecognized or contradictory envelope. (errors 1, spawns 1)",
+        "adapter": "validation: ReactiveFiber topology refused: result.output.text must be a string."
+       },
+       "additive-host-output-key": "admitted/verbatim/same/surfaced 0/spawns 1"
+      }
+     }
+    },
+    {
+     "id": "B3",
+     "quote": "(a mutant adding one fails the census)",
+     "witness": {
+      "pin": "B3",
+      "modules": [
+       "src/workbench/native-evidence.ts",
+       "src/workbench/providers/reactivefiber.ts",
+       "src/workbench/reactivefiber-observer.ts"
+      ],
+      "facts": {
+       "src/workbench/native-evidence.ts": {
+        "comparisons": [
+         "command=context.render",
+         "schema=reactive-fiber.cli/v1"
+        ],
+        "outputReads": [],
+        "keyLiterals": [],
+        "registrations": [],
+        "uiWords": []
+       },
+       "src/workbench/providers/reactivefiber.ts": {
+        "comparisons": [
+         "command=context.render",
+         "schema=reactive-fiber.cli/v1"
+        ],
+        "outputReads": [
+         "text"
+        ],
+        "keyLiterals": [
+         [
+          "schema",
+          "ok",
+          "command",
+          "operation_id",
+          "workspace",
+          "transaction_id",
+          "result",
+          "diagnostics"
+         ]
+        ],
+        "registrations": [
+         "reactivefiber.render.preview",
+         "reactivefiber.render.preview"
+        ],
+        "uiWords": []
+       },
+       "src/workbench/reactivefiber-observer.ts": {
+        "comparisons": [
+         "command=context.render",
+         "schema=reactive-fiber.cli/v1"
+        ],
+        "outputReads": [
+         "text"
+        ],
+        "keyLiterals": [
+         [
+          "schema",
+          "ok",
+          "command",
+          "operation_id",
+          "workspace",
+          "transaction_id",
+          "result",
+          "diagnostics"
+         ]
+        ],
+        "registrations": [],
+        "uiWords": []
+       }
+      },
+      "mutants": {
+       "M1-ui-schema": [
+        "comparisons",
+        "ui-words"
+       ],
+       "M2-interface-command": [
+        "comparisons"
+       ],
+       "M3-output-nodes": [
+        "output-reads"
+       ],
+       "M4-output-html": [
+        "output-reads",
+        "ui-words"
+       ],
+       "M5-ninth-key": [
+        "key-literals"
+       ],
+       "M6-registration": [
+        "registrations"
+       ],
+       "M7-profile-reader": [
+        "ui-words"
+       ],
+       "M8-output-destructure": [
+        "output-reads"
+       ],
+       "Q1-text-type-relaxed": [],
+       "Q2-failure-schema-disjunct": []
+      },
+      "outsideReader": {
+       "inClosure": false,
+       "phraseHits": 0,
+       "outputReads": [
+        "html"
+       ]
+      }
+     }
+    },
+    {
+     "id": "B4",
+     "quote": "roster (wb-973.11)",
+     "witness": {
+      "pin": "B4",
+      "rfVersion": "0.1.784",
+      "source": "captured",
+      "receipt": "cmd_ab79e0c5d689",
+      "resultKeys": [
+       "output",
+       "budget",
+       "diagnostics_summary",
+       "blocks",
+       "components",
+       "provenance",
+       "work_metrics",
+       "work",
+       "engine_metrics",
+       "scope",
+       "audience",
+       "bundle_revision_id",
+       "observations",
+       "necessity",
+       "attempts",
+       "superseded_transaction_ids",
+       "retry_work",
+       "fiber_transaction_refs",
+       "ephemeral",
+       "render_id",
+       "commit_seq",
+       "session_id",
+       "effects",
+       "plan"
+      ],
+      "provenanceKeys": [
+       "graph_revision_id",
+       "cli_version",
+       "sdk_versions"
+      ],
+      "workKeys": [
+       "source_capture_count",
+       "fiber_signal_count",
+       "component_render_count",
+       "lens_resolution_count",
+       "necessity_eval_count",
+       "storage_write_count"
+      ],
+      "workMetricsKeys": [
+       "source_capture_count",
+       "fiber_signal_count",
+       "fiber_transaction_count",
+       "invalidated_component_count",
+       "rendered_component_count",
+       "state_read_count",
+       "state_write_count",
+       "journal_records_scanned",
+       "blob_bytes_written",
+       "history_rows_materialized",
+       "reused_component_count",
+       "observation_executed_count",
+       "observation_reused_count",
+       "publish_conflict_count"
+      ],
+      "uiKeys": [],
+      "documentKeys": [
+       "output",
+       "blocks",
+       "components"
+      ],
+      "fullShapeDiff": {
+       "failures": [],
+       "extraResultKeys": []
+      }
+     }
+    },
+    {
+     "id": "B5",
+     "quote": "eight-key strictness (wb-2j3.9) unchanged",
+     "witness": {
+      "pin": "B5",
+      "validRf": {
+       "cases": [
+        "ninth ui",
+        "ninth descriptors",
+        "ninth html",
+        "ninth host_output",
+        "ninth mount",
+        "missing schema",
+        "missing ok",
+        "missing command",
+        "missing operation_id",
+        "missing workspace",
+        "missing transaction_id",
+        "missing result",
+        "missing diagnostics",
+        "renamed transaction_id->ui"
+       ],
+       "admitted": [],
+       "provider": [
+        "transport: RF preview returned an unrecognized native envelope."
+       ],
+       "adapter": [
+        "validation: ReactiveFiber topology refused: source must be the strict eight-key rf envelope."
+       ],
+       "spawns": 14
+      },
+      "fullShapeRf": {
+       "cases": [
+        "ninth ui",
+        "ninth descriptors",
+        "ninth html",
+        "ninth host_output",
+        "ninth mount",
+        "missing schema",
+        "missing ok",
+        "missing command",
+        "missing operation_id",
+        "missing workspace",
+        "missing transaction_id",
+        "missing result",
+        "missing diagnostics",
+        "renamed transaction_id->ui"
+       ],
+       "admitted": [],
+       "provider": [
+        "transport: RF preview returned an unrecognized native envelope."
+       ],
+       "adapter": [
+        "validation: ReactiveFiber topology refused: source must be the strict eight-key rf envelope."
+       ],
+       "spawns": 14
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "label": "(c) armed on TSX-IF-03: an unregistered descriptor ID or newer version yields one typed diagnostic, no generic block; unknown stays unknown (wb-973.10): the gate is closed and no src module names the descriptor profile, an unregistered refusal code, a newer envelope version and an SDK-coded primary each arrive as exactly one typed refusal carrying no value, and an unknown observation status stays not observed",
+   "pins": [
+    {
+     "id": "C1",
+     "quote": "armed on TSX-IF-03",
+     "witness": {
+      "pin": "C1",
+      "gate": {
+       "closed": true,
+       "proposedEntries": [],
+       "exportsMeasured": 6
+      },
+      "srcFloorMet": true,
+      "phraseHits": [],
+      "admitted": true,
+      "argv": [
+       [
+        "--workspace",
+        "<root>",
+        "context",
+        "render",
+        "--model",
+        "model",
+        "--task",
+        "task",
+        "--no-commit",
+        "--no-input",
+        "--json"
+       ]
+      ],
+      "argvWords": []
+     }
+    },
+    {
+     "id": "C2",
+     "quote": "an unregistered descriptor ID or newer version yields one typed diagnostic",
+     "witness": {
+      "pin": "C2",
+      "unregistered-code": {
+       "provider": "unavailable: RF render refused: RF_TSX_DESCRIPTOR_UNREGISTERED (errors 1, spawns 1)",
+       "adapter": "projected unknown/failure: refused · RF_TSX_DESCRIPTOR_UNREGISTERED"
+      },
+      "newer-envelope-version": {
+       "provider": "transport: RF preview returned an unrecognized native envelope. (errors 1, spawns 1)",
+       "adapter": "validation: ReactiveFiber topology refused: source must be a reactive-fiber.cli/v1 context.render envelope."
+      },
+      "newer-version-failure": {
+       "provider": "transport: RF preview returned an unrecognized native envelope. (errors 1, spawns 1)",
+       "adapter": "validation: ReactiveFiber topology refused: source must be a reactive-fiber.cli/v1 context.render envelope."
+      },
+      "sdk-coded-primary": {
+       "provider": "transport: RF preview returned an unrecognized or contradictory failure envelope. (errors 1, spawns 1)",
+       "adapter": "validation: ReactiveFiber topology refused: a failed envelope needs a primary RF_ error diagnostic."
+      }
+     }
+    },
+    {
+     "id": "C3",
+     "quote": "no generic block",
+     "witness": {
+      "pin": "C3",
+      "cases": {
+       "closed-vocabulary": {
+        "reading": false,
+        "snapshots": 1,
+        "valueCarried": false,
+        "evidenceRefs": [
+         "rf-workspace"
+        ],
+        "sentinelInvariant": true,
+        "surfaced": []
+       },
+       "unregistered-code": {
+        "reading": false,
+        "snapshots": 1,
+        "valueCarried": false,
+        "evidenceRefs": [
+         "rf-workspace"
+        ],
+        "sentinelInvariant": true,
+        "surfaced": []
+       }
+      },
+      "sdkWithheld": true
+     }
+    },
+    {
+     "id": "C4",
+     "quote": "unknown stays unknown (wb-973.10)",
+     "witness": {
+      "pin": "C4",
+      "unknown": {
+       "provider": "admitted/verbatim",
+       "coverage": "partial",
+       "tone": "unknown",
+       "note": "observations: 2 rows, 2 not observed (unregistered, …): partial"
+      },
+      "known": {
+       "provider": "admitted/verbatim",
+       "coverage": "complete",
+       "tone": "success",
+       "note": "observations: 1 row, 0 reused"
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "tests": [
+  "the judged set: the frozen shape, the out-of-file roster, the outside anchor and the cases agree",
+  "A1",
+  "A2",
+  "A3",
+  "A4",
+  "B1",
+  "B2",
+  "B3",
+  "B4",
+  "B5",
+  "C1",
+  "C2",
+  "C3",
+  "C4",
+  "records: every registered test ran once in run mode in roster order, and every pin reached its witness"
+ ]
+}
