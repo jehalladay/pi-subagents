@@ -1,0 +1,891 @@
+{
+ "bead": "wb-tnz5.2",
+ "source": "ReactiveFiberCLI 6a251bf73af57c3a703caf6892dfe3015e06a481, read-only git show by the cutting seat; each excerpt is one producer line verbatim",
+ "excerpts": [
+  {
+   "at": "docs/programs/certified-federated-reactive-refinement-2026-10-18/03-source-to-model-proof-gates-and-versioned-cursors.md:7",
+   "line": "Never identify: (1) source owner's resource revision, (2) owner stream event cursor, (3) A's acceptance transaction/commit id, (4) Fiber value publication sequence, (5) RFCLI QueryStore SnapshotCursor keyed by (source_id,value_digest), or (6) render transaction id. They have different owners and often different order domains. A true SourceBoundary contains B owner-qualified WId/IId/epoch, resource ref, resource version, committed observation metadata and *a stream cursor at the same B snapshot fence*. A separate A AcceptedReceipt binds the exact SourceBoundary and A unit-of-work commit."
+  },
+  {
+   "at": "docs/programs/certified-federated-reactive-refinement-2026-10-18/03-source-to-model-proof-gates-and-versioned-cursors.md:9",
+   "line": "An owner may append event 10 to stream for unrelated resource Y while exported X stays revision 2. The naive sourceRevision=eventCursor assertion is false. Comparison of stream cursors is valid only within one declared owner instance/epoch/stream, or under a separately verified cross-epoch resync mapping."
+  },
+  {
+   "at": "docs/programs/certified-federated-reactive-refinement-2026-10-18/03-source-to-model-proof-gates-and-versioned-cursors.md:16",
+   "line": "- Keep max source notification cursor h separate from accepted boundary cursor c, per owner stream epoch, and set sourceDirty=(h>c) after accepting an older in-flight snapshot. All other dirty reasons remain independent. On crash reconcile h from retained replay or an authenticated resync fence."
+  },
+  {
+   "at": "docs/programs/certified-federated-reactive-refinement-2026-10-18/03-source-to-model-proof-gates-and-versioned-cursors.md:17",
+   "line": "- QueryStore SnapshotCursor is not the federation event cursor and must not share a schema with it."
+  },
+  {
+   "at": "docs/programs/certified-federated-reactive-refinement-2026-10-18/03-source-to-model-proof-gates-and-versioned-cursors.md:33",
+   "line": "(a) owner stream cursor advances on unrelated source events, resource revision remains fixed; (b) notification for c=8 arrives while A accepts c=6; outstanding change remains dirty; (c) storage crash at every journal step; (d) A accepts an old authentic snapshot, never claims B latest; (e) lost final event forces unknown without replay/fence; (f) peer instance/epoch mismatch and revocation; (g) pin changes during graph render; (h) observer sees status/provenance changes despite equal payload; (i) tokenized source identity and typed permission preserving replay; (j) finite LTS simulation rejects an unmatched visible error and rejects τ mislabeled when observer-visible state changes."
+  },
+  {
+   "at": "docs/programs/certified-federated-reactive-refinement-2026-10-18/README.md:22",
+   "line": "ResourceKey = (owner WId, backend IId, resource kind/name, definition revision, output port, type/schema digest, export contract revision)."
+  },
+  {
+   "at": "docs/programs/certified-federated-reactive-refinement-2026-10-18/README.md:25",
+   "line": "Do not reuse a render transaction id as the source revision; do not use an alias as owner identity; no implicit 'latest' guarantee."
+  },
+  {
+   "at": "docs/programs/certified-federated-reactive-refinement-2026-10-18/README.md:28",
+   "line": "1. Resolve explicit alias through B public API; compare expected WId/IId and export contract; check B authorizes this particular read and A independently authorizes admission."
+  },
+  {
+   "at": "docs/programs/certified-federated-reactive-refinement-2026-10-18/02-concrete-contract-and-verification-gates.md:20",
+   "line": "The fields \\`sourceResourceRevision\\`, \\`sourceStreamFence\\`, \\`acceptedStreamCursor\\`, \\`consumerAcceptanceCommit\\` and \\`publishTransaction\\` MUST be separately typed. In particular, an unrelated journal event advances stream cursor without changing resource revision. A source epoch change makes old/new cursors incomparable. A render can publish an earlier accepted pin after a later accept provided the earlier pin is visible and policy permits it; it must never retag F(old) as F(new)."
+  },
+  {
+   "at": "src/reactive_fiber_cli/domain/federation_boundary.py:39",
+   "line": "    workspace_id: str"
+  },
+  {
+   "at": "src/reactive_fiber_cli/domain/federation_boundary.py:40",
+   "line": "    backend_instance_id: str"
+  },
+  {
+   "at": "src/reactive_fiber_cli/domain/federation_boundary.py:62",
+   "line": "class OwnerStreamCursor:"
+  },
+  {
+   "at": "src/reactive_fiber_cli/domain/federation_boundary.py:65",
+   "line": "    epoch: str"
+  },
+  {
+   "at": "src/reactive_fiber_cli/domain/federation_boundary.py:66",
+   "line": "    stream_id: str"
+  },
+  {
+   "at": "src/reactive_fiber_cli/domain/federation_boundary.py:67",
+   "line": "    position: int"
+  },
+  {
+   "at": "src/reactive_fiber_cli/domain/federation_boundary.py:86",
+   "line": "    resource_revision: str"
+  },
+  {
+   "at": "src/reactive_fiber_cli/domain/federation_boundary.py:123",
+   "line": "class AcceptedBoundary:"
+  },
+  {
+   "at": "src/reactive_fiber_cli/domain/federation_boundary.py:131",
+   "line": "    consumer_transaction_id: str"
+  },
+  {
+   "at": "src/reactive_fiber_cli/domain/federation_boundary.py:148",
+   "line": "    notified_position: int = 0"
+  },
+  {
+   "at": "src/reactive_fiber_cli/domain/federation_boundary.py:170",
+   "line": "        return self.notified_position > position"
+  },
+  {
+   "at": "src/reactive_fiber_cli/domain/federation_boundary.py:182",
+   "line": "        msg = \"notification requires authenticated epoch resync\""
+  },
+  {
+   "at": "src/reactive_fiber_cli/domain/federation_boundary.py:214",
+   "line": "        msg = \"cross-epoch acceptance requires explicit resync\""
+  },
+  {
+   "at": "src/reactive_fiber_cli/domain/query_view.py:534",
+   "line": "class SnapshotCursor:"
+  },
+  {
+   "at": "src/reactive_fiber_cli/domain/query_view.py:539",
+   "line": "    source_id: str"
+  },
+  {
+   "at": "src/reactive_fiber_cli/domain/query_view.py:540",
+   "line": "    value_digest: str"
+  }
+ ],
+ "constants": {
+  "identifiers": [
+   "resource-revision",
+   "stream-cursor",
+   "acceptance-commit",
+   "publication-sequence",
+   "snapshot-cursor",
+   "render-transaction"
+  ],
+  "identifierPhrases": [
+   "source owner's resource revision",
+   "owner stream event cursor",
+   "A's acceptance transaction/commit id",
+   "Fiber value publication sequence",
+   "RFCLI QueryStore SnapshotCursor keyed by (source_id,value_digest)",
+   "render transaction id"
+  ],
+  "inputs": [
+   "resource_revision",
+   "cursor",
+   "consumer_transaction_id",
+   "publication_sequence",
+   "snapshot_cursor",
+   "render_transaction_id"
+  ],
+  "streamCursorFields": [
+   "epoch",
+   "stream_id",
+   "position"
+  ],
+  "snapshotCursorFields": [
+   "source_id",
+   "value_digest"
+  ],
+  "ownerFields": [
+   "workspace_id",
+   "backend_instance_id"
+  ],
+  "federationWords": [
+   [
+    "federat"
+   ],
+   [
+    "watermark"
+   ],
+   [
+    "notified",
+    "position"
+   ],
+   [
+    "accepted",
+    "boundar"
+   ]
+  ],
+  "mintWords": [
+   "latest",
+   "current"
+  ],
+  "floors": {
+   "src": 33,
+   "src/ui": 9,
+   "src/workbench": 47,
+   "src/workbench/hosts": 1,
+   "src/workbench/providers": 2,
+   "src/workflow": 12
+  },
+  "anchor": {
+   "file": "src/workbench/observation.ts",
+   "token": "freshness:state === \"disconnected\" ? \"stale\" : \"current\""
+  },
+  "acceptance": [
+   {
+    "letter": "a",
+    "parts": [
+     "the six identifiers stay distinct typed fields, none assigned from another",
+     "an unrelated journal event advances the stream cursor, resource revision unchanged"
+    ]
+   },
+   {
+    "letter": "b",
+    "parts": [
+     "no cross-epoch/feed cursor comparison without a producer resync mapping",
+     "owner identity never an alias"
+    ]
+   },
+   {
+    "letter": "c",
+    "parts": [
+     "accepted-at-c below watermark h never renders owner-latest/current",
+     "a grep guard pins no minted 'latest'/'current' (0 federation hits in Pi src)"
+    ]
+   }
+  ],
+  "residuals": [
+   {
+    "pin": "R1",
+    "name": "R-VOCABULARY"
+   },
+   {
+    "pin": "R2",
+    "name": "R-COMPOSED"
+   },
+   {
+    "pin": "R3",
+    "name": "R-PARAPHRASE"
+   },
+   {
+    "pin": "R4",
+    "name": "R-INTERRUPTED"
+   },
+   {
+    "pin": "R5",
+    "name": "R-OUTSIDE-SRC"
+   },
+   {
+    "pin": "R6",
+    "name": "R-INDIRECT"
+   }
+  ],
+  "naiveImports": [
+   "revision-from-event-cursor",
+   "revision-from-render-transaction",
+   "snapshot-cursor-from-stream-cursor",
+   "acceptance-commit-from-render-transaction"
+  ],
+  "naiveRenders": [
+   "accepted-as-current",
+   "accepted-as-owner-latest"
+  ]
+ },
+ "records": {
+  "base": {
+   "alias": "peer",
+   "owner": {
+    "workspace_id": "rfw_peeraaaaaaaaaaaaaaaaaaaaaa",
+    "backend_instance_id": "rfi_onebbbbbbbbbbbbbbbbbbbbbbb"
+   },
+   "resource_name": "summary",
+   "resource_revision": "2",
+   "cursor": {
+    "epoch": "1",
+    "stream_id": "owner-events",
+    "position": 6
+   },
+   "consumer_transaction_id": "rft_acceptcccccccccccccccccccc",
+   "publication_sequence": 4,
+   "snapshot_cursor": {
+    "source_id": "summary",
+    "value_digest": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+   },
+   "render_transaction_id": "rft_renderdddddddddddddddddddd"
+  },
+  "otherOwner": {
+   "workspace_id": "rfw_alphaeeeeeeeeeeeeeeeeeeeee",
+   "backend_instance_id": "rfi_twoffffffffffffffffffffff"
+  },
+  "states": [
+   {
+    "accepted_position": 6,
+    "notified_position": 8,
+    "source_dirty": true
+   },
+   {
+    "accepted_position": 8,
+    "notified_position": 8,
+    "source_dirty": false
+   }
+  ]
+ },
+ "rows": [
+  {
+   "id": "A",
+   "label": "(a) the six identifiers stay distinct typed fields, none assigned from another; an unrelated journal event advances the stream cursor, resource revision unchanged",
+   "pins": [
+    {
+     "id": "A1",
+     "witness": {
+      "excerpts": 25,
+      "phrases": [
+       "source owner's resource revision",
+       "owner stream event cursor",
+       "A's acceptance transaction/commit id",
+       "Fiber value publication sequence",
+       "RFCLI QueryStore SnapshotCursor keyed by (source_id,value_digest)",
+       "render transaction id"
+      ],
+      "fields": {
+       "stream": [
+        "epoch",
+        "stream_id",
+        "position"
+       ],
+       "snapshot": [
+        "source_id",
+        "value_digest"
+       ],
+       "owner": [
+        "workspace_id",
+        "backend_instance_id"
+       ],
+       "inputs": [
+        "resource_revision",
+        "consumer_transaction_id"
+       ],
+       "classes": [
+        "OwnerStreamCursor",
+        "AcceptedBoundary",
+        "SnapshotCursor"
+       ]
+      },
+      "rules": {
+       "noSharedSchema": true,
+       "separatelyTyped": true
+      },
+      "kinds": [
+       "resource-revision",
+       "stream-cursor",
+       "acceptance-commit",
+       "publication-sequence",
+       "snapshot-cursor",
+       "render-transaction"
+      ],
+      "schema": {
+       "stream": [
+        "owner",
+        "epoch",
+        "stream_id",
+        "position"
+       ],
+       "snapshot": [
+        "source_id",
+        "value_digest"
+       ],
+       "shared": []
+      },
+      "matrix": [
+       [
+        "resource-revision"
+       ],
+       [
+        "stream-cursor"
+       ],
+       [
+        "acceptance-commit"
+       ],
+       [
+        "publication-sequence"
+       ],
+       [
+        "snapshot-cursor"
+       ],
+       [
+        "render-transaction"
+       ]
+      ],
+      "naive": {
+       "revision-from-event-cursor": [
+        [],
+        [
+         "resource-revision",
+         "stream-cursor"
+        ],
+        [
+         "acceptance-commit"
+        ],
+        [
+         "publication-sequence"
+        ],
+        [
+         "snapshot-cursor"
+        ],
+        [
+         "render-transaction"
+        ]
+       ],
+       "revision-from-render-transaction": [
+        [],
+        [
+         "stream-cursor"
+        ],
+        [
+         "acceptance-commit"
+        ],
+        [
+         "publication-sequence"
+        ],
+        [
+         "snapshot-cursor"
+        ],
+        [
+         "resource-revision",
+         "render-transaction"
+        ]
+       ],
+       "snapshot-cursor-from-stream-cursor": [
+        [
+         "resource-revision"
+        ],
+        [
+         "stream-cursor",
+         "snapshot-cursor"
+        ],
+        [
+         "acceptance-commit"
+        ],
+        [
+         "publication-sequence"
+        ],
+        [],
+        [
+         "render-transaction"
+        ]
+       ],
+       "acceptance-commit-from-render-transaction": [
+        [
+         "resource-revision"
+        ],
+        [
+         "stream-cursor"
+        ],
+        [],
+        [
+         "publication-sequence"
+        ],
+        [
+         "snapshot-cursor"
+        ],
+        [
+         "acceptance-commit",
+         "render-transaction"
+        ]
+       ]
+      },
+      "sharedNaive": [
+       "snapshot-cursor-from-stream-cursor"
+      ],
+      "rfReader": {
+       "committed": {
+        "snapshots": 0,
+        "refusal": "validation",
+        "namesTransaction": true,
+        "revisionIsGraph": false
+       },
+       "preview": {
+        "snapshots": 1,
+        "refusal": null,
+        "namesTransaction": false,
+        "revisionIsGraph": true
+       }
+      }
+     }
+    },
+    {
+     "id": "A2",
+     "witness": {
+      "phrases": {
+       "unrelatedEvent": true,
+       "naiveFalse": true,
+       "gateA": true,
+       "concrete": true
+      },
+      "pure": {
+       "cursorMoved": true,
+       "revisionMoved": false,
+       "naiveRevisionMoved": true
+      },
+      "reference": {
+       "outcomes": [
+        "applied",
+        "applied",
+        "applied"
+       ],
+       "versionKept": true,
+       "cursorAdvanced": true,
+       "versionHits": [
+        1,
+        1
+       ],
+       "nodes": 2
+      },
+      "naive": {
+       "outcomes": [
+        "applied",
+        "applied",
+        "applied"
+       ],
+       "versions": [
+        "6",
+        "10"
+       ],
+       "versionHits": [
+        1,
+        0
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "label": "(b) no cross-epoch/feed cursor comparison without a producer resync mapping; owner identity never an alias",
+   "pins": [
+    {
+     "id": "B1",
+     "witness": {
+      "phrases": {
+       "withinOneStream": true,
+       "epochIncomparable": true,
+       "refusals": [
+        "notification requires authenticated epoch resync",
+        "cross-epoch acceptance requires explicit resync"
+       ]
+      },
+      "property": {
+       "cases": 600,
+       "classes": {
+        "distinct-owner": 286,
+        "distinct-stream": 164,
+        "distinct-epoch": 78,
+        "same-stream": 72
+       },
+       "reference": 0,
+       "rawPosition": 528,
+       "epochBlind": 78,
+       "streamBlind": 164
+      },
+      "mapped": [
+       {
+        "comparable": true,
+        "order": "before"
+       },
+       {
+        "comparable": false,
+        "reason": "unmapped"
+       },
+       {
+        "comparable": false,
+        "reason": "distinct-epoch"
+       },
+       {
+        "comparable": false,
+        "reason": "distinct-epoch"
+       },
+       {
+        "comparable": false,
+        "reason": "distinct-epoch"
+       },
+       {
+        "comparable": false,
+        "reason": "distinct-epoch"
+       }
+      ],
+      "projected": {
+       "epoch": {
+        "outcomes": [
+         "applied",
+         "applied"
+        ],
+        "freshness": "stale"
+       },
+       "feed": {
+        "outcomes": [
+         "applied",
+         "applied"
+        ],
+        "freshness": "stale"
+       },
+       "contiguous": {
+        "outcomes": [
+         "applied",
+         "applied"
+        ],
+        "freshness": "unknown"
+       },
+       "naiveEpoch": {
+        "outcomes": [
+         "applied",
+         "out-of-order"
+        ],
+        "freshness": "unknown"
+       },
+       "naiveFeed": {
+        "outcomes": [
+         "applied",
+         "out-of-order"
+        ],
+        "freshness": "unknown"
+       }
+      }
+     }
+    },
+    {
+     "id": "B2",
+     "witness": {
+      "phrases": {
+       "ownerKey": true,
+       "noAlias": true,
+       "resolveAlias": true,
+       "ownerFields": [
+        "workspace_id",
+        "backend_instance_id"
+       ]
+      },
+      "pure": {
+       "ownerApart": true,
+       "ownerSurvivesRename": true,
+       "aliasMerges": true,
+       "aliasMovesOnRename": true
+      },
+      "reference": {
+       "outcomes": [
+        "applied",
+        "applied",
+        "applied"
+       ],
+       "beforeRename": [
+        [
+         "first"
+        ],
+        [
+         "repointed"
+        ]
+       ],
+       "afterRename": [
+        [
+         "first"
+        ],
+        [
+         "first"
+        ]
+       ],
+       "nodes": 2
+      },
+      "aliasKeyed": {
+       "outcomes": [
+        "applied",
+        "applied",
+        "applied"
+       ],
+       "beforeRename": [
+        [
+         "first",
+         "repointed"
+        ],
+        [
+         "first",
+         "repointed"
+        ]
+       ],
+       "afterRename": [
+        [
+         "repointed"
+        ],
+        [
+         "first"
+        ]
+       ],
+       "nodes": 2
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "label": "(c) accepted-at-c below watermark h never renders owner-latest/current; a grep guard pins no minted 'latest'/'current' (0 federation hits in Pi src)",
+   "pins": [
+    {
+     "id": "C1",
+     "witness": {
+      "phrases": {
+       "watermarkApart": true,
+       "dirtyRule": true,
+       "gateB": true,
+       "gateD": true,
+       "noImplicit": true,
+       "watermarkField": "notified_position",
+       "producerRule": "return self.notified_position > position"
+      },
+      "property": {
+       "cases": 600,
+       "dirtyStates": 275,
+       "referenceMints": 0,
+       "echoFailures": 0,
+       "naive": {
+        "accepted-as-current": 275,
+        "accepted-as-owner-latest": 275
+       }
+      },
+      "hazard": {
+       "outcome": "applied",
+       "nodes": 1,
+       "freshness": "current",
+       "statusText": "rf accepted cursor 6; notified 8; source dirty",
+       "summary": "all returned nodes current",
+       "mints": [
+        "current"
+       ]
+      },
+      "reference": [
+       {
+        "outcome": "applied",
+        "nodes": 1,
+        "freshness": "unknown",
+        "statusText": "rf accepted cursor 6; notified 8; source dirty",
+        "summary": "0 stale / 1 unknown",
+        "mints": []
+       },
+       {
+        "outcome": "applied",
+        "nodes": 1,
+        "freshness": "unknown",
+        "statusText": "rf accepted cursor 8; notified 8; source not dirty",
+        "summary": "0 stale / 1 unknown",
+        "mints": []
+       }
+      ]
+     }
+    },
+    {
+     "id": "C2",
+     "witness": {
+      "directories": [
+       "src:true",
+       "src/ui:true",
+       "src/workbench:true",
+       "src/workbench/hosts:true",
+       "src/workbench/providers:true",
+       "src/workflow:true"
+      ],
+      "anchorRead": true,
+      "anchorMinted": true,
+      "real": {
+       "scoped": [],
+       "hits": []
+      },
+      "planted": {
+       "scoped": [
+        "src/workbench/federation-import.ts",
+        "src/workbench/peer-watermark.ts"
+       ],
+       "hits": [
+        "src/workbench/federation-import.ts: latest",
+        "src/workbench/peer-watermark.ts: current"
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "M",
+   "label": "row C2's scope and mint matchers catch each vocabulary member, one pin per member",
+   "pins": [
+    {
+     "id": "MS1",
+     "witness": {
+      "member": "federat",
+      "spellings": 4,
+      "digest": "363dd64f6d488439"
+     }
+    },
+    {
+     "id": "MS2",
+     "witness": {
+      "member": "watermark",
+      "spellings": 4,
+      "digest": "a30b426db9533990"
+     }
+    },
+    {
+     "id": "MS3",
+     "witness": {
+      "member": "notified position",
+      "spellings": 4,
+      "digest": "2c6de6f4c9d977b1"
+     }
+    },
+    {
+     "id": "MS4",
+     "witness": {
+      "member": "accepted boundar",
+      "spellings": 4,
+      "digest": "7832dcb959e22a29"
+     }
+    },
+    {
+     "id": "MM1",
+     "witness": {
+      "word": "latest",
+      "hits": 4,
+      "misses": 2,
+      "digest": "9b6e982c605f7f42"
+     }
+    },
+    {
+     "id": "MM2",
+     "witness": {
+      "word": "current",
+      "hits": 4,
+      "misses": 3,
+      "digest": "9b956e73fb5ec0f9"
+     }
+    }
+   ]
+  },
+  {
+   "id": "R",
+   "label": "each named residual of row C2's guard stays a pinned quiet row",
+   "pins": [
+    {
+     "id": "R1",
+     "witness": {
+      "name": "R-VOCABULARY",
+      "scan": {
+       "scoped": [],
+       "hits": []
+      },
+      "mints": [
+       "current"
+      ]
+     }
+    },
+    {
+     "id": "R2",
+     "witness": {
+      "name": "R-COMPOSED",
+      "scan": {
+       "scoped": [
+        "src/workbench/federation-tone.ts"
+       ],
+       "hits": []
+      }
+     }
+    },
+    {
+     "id": "R3",
+     "witness": {
+      "name": "R-PARAPHRASE",
+      "scan": {
+       "scoped": [
+        "src/workbench/federation-label.ts"
+       ],
+       "hits": []
+      }
+     }
+    },
+    {
+     "id": "R4",
+     "witness": {
+      "name": "R-INTERRUPTED",
+      "scan": {
+       "scoped": [
+        "src/workbench/federation-label.ts"
+       ],
+       "hits": []
+      }
+     }
+    },
+    {
+     "id": "R5",
+     "witness": {
+      "name": "R-OUTSIDE-SRC",
+      "scan": {
+       "scoped": [],
+       "hits": []
+      }
+     }
+    },
+    {
+     "id": "R6",
+     "witness": {
+      "name": "R-INDIRECT",
+      "scan": {
+       "scoped": [
+        "src/workbench/federation-import.ts"
+       ],
+       "hits": []
+      }
+     }
+    }
+   ]
+  }
+ ]
+}
