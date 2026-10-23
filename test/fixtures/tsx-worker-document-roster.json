@@ -1,0 +1,677 @@
+{
+ "provenance": "wb-fb2z.3 census roster (test/workbench-tsx-worker-document-census.test.ts). quote and citation are the owner filing's (bead row wb-fb2z.3 of the tracked export .beads/issues.jsonl). producer is MEASURED read-only on 2026-10-23: the two ReactiveFiberTSXSDK pins by git show, ls-tree and grep on the local checkout; rfVersion by rf --json --version; runtimeLock from the installed rf's integrations/tsx/runtime-lock.json; rfBoundsMs from its application/config.py:1189-1191; rfWorkerEnds from its runtime/tsx_worker.py (each end's raising site). existingPins and childCrashShape are the case titles measured at trunk f69ce85 under the named describes. Every witness is the value its pin's case returns.",
+ "bead": "wb-fb2z.3",
+ "quote": "- TSX worker crash/timeout and malformed publication: typed failure, no mistaken success block or silent reuse.",
+ "citation": "docs/programs/component-assembly-2026-10-18/RFCLI-INTEROP.md:29@76bbbffd9d4a",
+ "scan": {
+  "schemaTag": "rftsx.host-evaluation-result",
+  "docFamily": "\\b(?:host evaluation (?:results?|requests?|attempts?|documents?|modes?|limits?)|evaluate (?:for host|host requests?)|serve embedded workers?)\\b/",
+  "embedding": "@reactive-fiber/tsx/embedding",
+  "embeddingFamily": "@reactive-fiber\\/tsx(?:@[\\w.+-]+)?\\/embedding(?![\\w-])/i",
+  "engineFamily": "^(?:\\S*\\/)?deno(?:\\.exe)?(?:\\s|$)/i",
+  "claimFamily": "success[\\s_-]*blocks?|stale[\\s_-]*success|prior[\\s_-]*success|host[\\s_-]*evaluation|typed[\\s_-]*failed[\\s_-]*documents?/i",
+  "moduleExtensions": [
+   ".ts",
+   ".mts",
+   ".cts",
+   ".tsx",
+   ".js",
+   ".mjs",
+   ".cjs",
+   ".jsx"
+  ],
+  "jsonExtensions": [
+   ".json"
+  ],
+  "skippedRoots": [
+   ".git",
+   ".beads",
+   "node_modules",
+   "dist",
+   "build",
+   "coverage",
+   ".forge"
+  ],
+  "exempt": [
+   "test/workbench-tsx-worker-document-census.test.ts",
+   "test/fixtures/tsx-worker-document-roster.json"
+  ],
+  "floors": {
+   "files": 700,
+   "modules": {
+    "src": 100,
+    "test": 380,
+    "qa": 55
+   },
+   "json": 40,
+   "testModules": 330,
+   "titles": 8000
+  },
+  "walkAnchors": [
+   "README.md:pi-subagents",
+   "src/workbench/reactivefiber-observer.ts:ENGINE_METRIC_KEYS",
+   "test/fixtures/rf-result-keys.json:engine_metrics",
+   "package.json:@tintinweb/pi-subagents",
+   "media/screenshot.png:PNG"
+  ],
+  "nearestReaders": [
+   "src/workbench/reactivefiber-observer.ts:identifier:ENGINE_METRIC_KEYS",
+   "src/workbench/providers/reactivefiber.ts:specifier:node:child_process",
+   "src/workflow/runtime.ts:specifier:node:worker_threads",
+   "test/workbench-child-crash-faults.test.ts:identifier:runWorkflow",
+   "test/workbench-native-rf-tsx-preview.test.ts:identifier:nativeReactiveFiberPreview"
+  ]
+ },
+ "producer": {
+  "rfVersion": "0.1.832",
+  "runtimeLock": {
+   "name": "@reactive-fiber/tsx",
+   "version": "0.1.649",
+   "source": "ReactiveFiberTSXSDK 5da03a7d49f42a9be7612d34f73d7d9ef950c52c",
+   "engine": "deno 2.9.7"
+  },
+  "rfBoundsMs": {
+   "attempt": 30000,
+   "round": 10000,
+   "cpu": 30000
+  },
+  "rfWorkerEnds": [
+   {
+    "end": "EOF",
+    "code": "RF_TSX_PROTOCOL_ERROR",
+    "site": "runtime/tsx_worker.py:1338"
+   },
+   {
+    "end": "crash",
+    "code": "RF_TSX_WORKER_CRASHED",
+    "site": "runtime/tsx_worker.py:1346"
+   },
+   {
+    "end": "timeout",
+    "code": "RF_TSX_WORKER_TIMEOUT",
+    "site": "runtime/tsx_worker.py:1217"
+   },
+   {
+    "end": "malformed result frame",
+    "code": "RF_TSX_PROTOCOL_ERROR",
+    "site": "runtime/tsx_worker.py:1290"
+   }
+  ],
+  "pins": [
+   {
+    "label": "program",
+    "repo": "ReactiveFiberTSXSDK",
+    "sha": "76bbbffd9d4a419f972d6fefc8b7f9dc524df8df",
+    "version": "0.1.668",
+    "packageJsonBlob": "a3cef7aa8938e343bc5d516dadf232d39ee5b729",
+    "workerFailureSuite": false,
+    "workerHarness": true,
+    "timeoutReply": true,
+    "statusWords": [
+     "success",
+     "pending",
+     "recovered",
+     "failed"
+    ],
+    "documentSites": [
+     "python/src/reactive_fiber_tsx_host/_host_evaluation_fields_generated.py",
+     "src/bridge/schemas.ts",
+     "src/embedding/timeout-result.ts",
+     "src/runtime/host-evaluation-result.ts"
+    ],
+    "gatingRow": "docs/programs/component-assembly-2026-10-18/BEADS-2026-10-21.md:30"
+   },
+   {
+    "label": "distribution",
+    "repo": "ReactiveFiberTSXSDK",
+    "sha": "5da03a7d49f42a9be7612d34f73d7d9ef950c52c",
+    "version": "0.1.649",
+    "packageJsonBlob": "05e6156f75bda44f5ead6a8f24e72ae34377fe5e",
+    "workerFailureSuite": false,
+    "workerHarness": true,
+    "timeoutReply": true,
+    "statusWords": [
+     "success",
+     "pending",
+     "recovered",
+     "failed"
+    ],
+    "documentSites": [
+     "src/bridge/schemas.ts",
+     "src/embedding/timeout-result.ts",
+     "src/runtime/host-evaluation-result.ts"
+    ],
+    "gatingRow": null
+   }
+  ]
+ },
+ "existingPins": {
+  "view_contract on a --view render (wb-973.2 SCG-R2)": [
+   "SCG-R2: an unsatisfied view_contract projects partial and never success",
+   "SCG-R2: only coverage and tone move off the clean projection, and the one added note names the failed-check count alone",
+   "SCG-R2: the failed-check count table registers all 4 counts",
+   "SCG-R2: every failed-check count is registered at the it.each call and runs",
+   "SCG-R2: the leak-walk table registers both verdicts",
+   "SCG-R2: every leak-walk verdict is registered at the it.each call and runs",
+   "SCG-R2: a satisfied, non-degraded contract without failures leaves the clean R1 projection plus one note naming the view id",
+   "SCG-R2: a 128-character view id, the declared bound, is named whole",
+   "SCG-R2: the contradiction table registers all 8 rows",
+   "SCG-R2: every contradiction row is registered at the it.each call and runs",
+   "SCG-R2: the malformed-outcome table registers all 16 rows",
+   "SCG-R2: every malformed-outcome row is registered at the it.each call and runs",
+   "SCG-R2: a legacy render keeps its non-null scope, a --view render with scope null projects, and view_id without an outcome adds nothing",
+   "SCG-R2: the one-directional table registers all 4 partial renders",
+   "SCG-R2: every one-directional partial render is registered at the it.each call and runs",
+   "SCG-R2: beside observation rows the two demotion legs compose and neither upgrades the other",
+   "SCG-R2: beside the wb-973.9 reused, replayed and degraded rows both legs demote, and a satisfied contract adds nothing",
+   "SCG-R2: a clean --view render with all-fresh rows states the contract witness and then the observations witness",
+   "SCG-R2: the count note survives the 8-note bound on a render carrying every other note",
+   "SCG-R2: an unsatisfied render applies to the projection partial with tone unknown, a satisfied one complete and successful",
+   "SCG-R2: the projection of a --view render is pure: deterministic, deeply frozen and leaving its input untouched"
+  ],
+  "observation rows from result.observations (wb-973.10 SCG-R10)": [
+   "SCG-R10 (a): the leak-walk table registers all 4 statuses",
+   "SCG-R10 (a): every leak-walk status is registered at the it.each call and runs",
+   "SCG-R10 (b): the one-directional table registers all 4 partial renders",
+   "SCG-R10 (b): every one-directional partial render is registered at the it.each call and runs",
+   "SCG-R10 (b): observed values and an empty list never demote a clean render: byte-identical to the row-free projection",
+   "SCG-R10 (b): a clean render whose rows are all observed values applies to the projection complete and successful",
+   "SCG-R10 (c): an unknown status word reads as not observed: partial and never success, and never a refusal",
+   "SCG-R10 (c): the not-observed table registers all 10 words",
+   "SCG-R10 (c): every not-observed word is registered at the it.each call and runs",
+   "SCG-R10 (c): the refusal table registers all 14 shapes",
+   "SCG-R10 (c): every refusal shape is registered at the it.each call and runs",
+   "SCG-R10 (d): 10 000 rows with 10 000 distinct status words project one note listing 4 words plus \u2026, inside every bound",
+   "SCG-R10 (d): a repeated word is listed once, exactly four distinct words carry no \u2026, a fifth adds it, and observed values take no slot",
+   "SCG-R10 (d): a 24-character status word is listed whole, and four of them with the \u2026 stay inside the 200-byte bound",
+   "SCG-R10 (d): the unlisted-word table registers all 13 shapes",
+   "SCG-R10 (d): every unlisted-word shape is registered at the it.each call and runs",
+   "SCG-R10 (e): the observations note follows every partial-render note and precedes the release note; on the rf-cli seam no note is cut",
+   "SCG-R10 (e): with the fixture-seam note as well the diagnostics stay at MAX_DIAGNOSTICS and the observations note is kept",
+   "SCG-R10 (e): beside the wb-693.4 spawn note on the rf-cli seam no note is cut and the observations note precedes the release and spawn notes",
+   "SCG-R10 (e): with the fixture-seam note and the spawn note the diagnostics stay at MAX_DIAGNOSTICS, the observations note is kept and only the interval note is cut",
+   "SCG-R10 (e): beside both an engine identity and spawns on the rf-cli seam one foreign-runtime note is stated, the observations note is kept and no note is cut"
+  ]
+ },
+ "childCrashShape": {
+  "injected worker death (mocked node:worker_threads, NOT a real crash and NOT a sandbox property; the real-child proof rides wb-ksz slice 3)": [
+   "K1 'exit' alone settles only its run as the typed exited-before-completing failure",
+   "K2 'error' then 'exit' settles once, with the error's own message",
+   "K3 a non-Error 'error' payload is stringified into the same typed failure"
+  ]
+ },
+ "residuals": [
+  "R-COMPOSED",
+  "R-RENAMED",
+  "R-MANIFEST",
+  "R-LOOKALIKE",
+  "R-ENCODED",
+  "R-PROSE",
+  "R-OUTSIDE",
+  "R-PASSTHROUGH",
+  "R-DEADLINE"
+ ],
+ "rows": [
+  {
+   "id": "A",
+   "label": "(trigger, absent today) If Pi ever surfaces TSX host-evaluation documents: no judged module or JSON file names a host-evaluation document or the producer's worker-host functions, no module loads the producer's embedding entry or names the worker engine as a command, the nearest TSX worker readers Pi has are reached and quiet, and each exemption is load-bearing",
+   "pins": [
+    {
+     "id": "A1",
+     "witness": {
+      "pin": "A1",
+      "floors": {
+       "files": true,
+       "src": true,
+       "test": true,
+       "qa": true,
+       "json": true
+      },
+      "anchorsWalked": true,
+      "modules": [],
+      "jsonFiles": [],
+      "controls": {
+       "schemaTag": true,
+       "typeName": true,
+       "parseFunction": true,
+       "constantCase": true,
+       "requestKey": true,
+       "attemptLiteral": true,
+       "documentNoun": true,
+       "evaluateForHost": true,
+       "evaluateHostRequest": true,
+       "serveWorker": true,
+       "folded": true,
+       "escaped": true,
+       "regex": true,
+       "jsonKey": true,
+       "jsonValue": true,
+       "jsonUnparsed": true,
+       "comment": false,
+       "proseLiteral": false,
+       "jsonProse": false,
+       "bareHostEvaluation": false,
+       "interfaceEvaluation": false,
+       "piEmbeddedWorker": false,
+       "hostEvaluate": false,
+       "composed": false,
+       "joined": false,
+       "lookalike": false,
+       "invisible": false,
+       "rot13": false
+      },
+      "walkControls": {
+       "src/reader.ts": true,
+       "test/fixtures/worker.json": true,
+       "nested/node_modules/pkg/index.js": true,
+       "notes/plan.md": false,
+       "node_modules/pkg/index.js": false,
+       "dist/index.js": false,
+       ".beads/issues.jsonl": false,
+       ".forge/report.json": false,
+       "build/reader.ts": false,
+       "coverage/reader.ts": false,
+       "src/link.ts": true
+      }
+     }
+    },
+    {
+     "id": "A2",
+     "witness": {
+      "pin": "A2",
+      "specifierAnchor": true,
+      "commandAnchor": true,
+      "embeddingLoads": [],
+      "engineCommands": [],
+      "controls": {
+       "importDeclaration": true,
+       "typeOnly": true,
+       "exportFrom": true,
+       "dynamicImport": true,
+       "require": true,
+       "importEquals": true,
+       "importType": true,
+       "npmSpecifier": true,
+       "urlSpecifier": true,
+       "foldedSpecifier": true,
+       "rootIndex": false,
+       "testingEntry": false,
+       "mentionOnly": false,
+       "composedSpecifier": false,
+       "renamedPackage": false,
+       "importMap": false,
+       "spawnEngine": true,
+       "engineByPath": true,
+       "shellCommand": true,
+       "manifestName": false,
+       "rfCommand": false,
+       "composedCommand": false
+      }
+     }
+    },
+    {
+     "id": "A3",
+     "witness": {
+      "pin": "A3",
+      "readers": [
+       {
+        "path": "src/workbench/reactivefiber-observer.ts",
+        "token": "ENGINE_METRIC_KEYS",
+        "reached": true,
+        "judged": true,
+        "quiet": true
+       },
+       {
+        "path": "src/workbench/providers/reactivefiber.ts",
+        "token": "node:child_process",
+        "reached": true,
+        "judged": true,
+        "quiet": true
+       },
+       {
+        "path": "src/workflow/runtime.ts",
+        "token": "node:worker_threads",
+        "reached": true,
+        "judged": true,
+        "quiet": true
+       },
+       {
+        "path": "test/workbench-child-crash-faults.test.ts",
+        "token": "runWorkflow",
+        "reached": true,
+        "judged": true,
+        "quiet": true
+       },
+       {
+        "path": "test/workbench-native-rf-tsx-preview.test.ts",
+        "token": "nativeReactiveFiberPreview",
+        "reached": true,
+        "judged": true,
+        "quiet": true
+       }
+      ]
+     }
+    },
+    {
+     "id": "A4",
+     "witness": {
+      "pin": "A4",
+      "exempt": [
+       "test/workbench-tsx-worker-document-census.test.ts",
+       "test/fixtures/tsx-worker-document-roster.json"
+      ],
+      "exemptWalked": true,
+      "selfDocuments": true,
+      "rosterDocuments": true,
+      "selfLoads": false
+     }
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "label": "(a) Pi's rf reader: an envelope with has_errors / degraded / failed status never renders a success tone (existing wb-973.2 and wb-973.10 pins unchanged): the clean render is the positive control, worker evidence included, and each status word demotes it on its own",
+   "pins": [
+    {
+     "id": "B1",
+     "witness": {
+      "pin": "B1",
+      "clean": {
+       "coverage": "complete",
+       "tone": "success"
+      },
+      "tsxSpawned": {
+       "coverage": "complete",
+       "tone": "success",
+       "named": true
+      },
+      "tsxEngine": {
+       "coverage": "complete",
+       "tone": "success",
+       "named": true
+      },
+      "fixtureSeam": {
+       "coverage": "partial",
+       "tone": "unknown"
+      },
+      "passthrough": {
+       "coverage": "complete",
+       "tone": "success",
+       "named": false
+      }
+     }
+    },
+    {
+     "id": "B2",
+     "witness": {
+      "pin": "B2",
+      "word": "has_errors",
+      "variants": {
+       "summaryFlag": {
+        "coverage": "partial",
+        "tone": "unknown",
+        "named": true
+       },
+       "flagBesideWorker": {
+        "coverage": "partial",
+        "tone": "unknown",
+        "named": true
+       },
+       "countedErrorRow": {
+        "coverage": "partial",
+        "tone": "unknown",
+        "named": true
+       }
+      }
+     }
+    },
+    {
+     "id": "B3",
+     "witness": {
+      "pin": "B3",
+      "word": "degraded",
+      "variants": {
+       "degradedRow": {
+        "coverage": "partial",
+        "tone": "unknown",
+        "named": true
+       },
+       "degradedContract": {
+        "coverage": "partial",
+        "tone": "unknown",
+        "named": true
+       }
+      }
+     }
+    },
+    {
+     "id": "B4",
+     "witness": {
+      "pin": "B4",
+      "word": "failed",
+      "variants": {
+       "refusal": {
+        "coverage": "unknown",
+        "tone": "failure",
+        "named": true
+       },
+       "failedRow": {
+        "coverage": "partial",
+        "tone": "unknown",
+        "named": true
+       }
+      }
+     }
+    },
+    {
+     "id": "B5",
+     "witness": {
+      "pin": "B5",
+      "file": "test/workbench-reactivefiber-observer.test.ts",
+      "describes": [
+       {
+        "describe": "view_contract on a --view render (wb-973.2 SCG-R2)",
+        "registered": 1,
+        "measured": 21,
+        "missing": []
+       },
+       {
+        "describe": "observation rows from result.observations (wb-973.10 SCG-R10)",
+        "registered": 1,
+        "measured": 21,
+        "missing": []
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "label": "(c) timeout/EOF fixtures map to typed unavailable/failed, never to transport or success (wb-ksz.6 child-crash shape): at the rf seam, the one path a TSX worker's end reaches Pi today, every worker end the statement names is the typed unavailable refusal and a failure projection, the recovered render stays partial, and rf types a timeout before Pi's deadline",
+   "pins": [
+    {
+     "id": "C1",
+     "witness": {
+      "pin": "C1",
+      "ends": [
+       {
+        "end": "EOF",
+        "code": "RF_TSX_PROTOCOL_ERROR",
+        "kind": "refusal",
+        "category": "unavailable",
+        "message": "RF render refused: RF_TSX_PROTOCOL_ERROR",
+        "spawns": 1
+       },
+       {
+        "end": "crash",
+        "code": "RF_TSX_WORKER_CRASHED",
+        "kind": "refusal",
+        "category": "unavailable",
+        "message": "RF render refused: RF_TSX_WORKER_CRASHED",
+        "spawns": 1
+       },
+       {
+        "end": "timeout",
+        "code": "RF_TSX_WORKER_TIMEOUT",
+        "kind": "refusal",
+        "category": "unavailable",
+        "message": "RF render refused: RF_TSX_WORKER_TIMEOUT",
+        "spawns": 1
+       },
+       {
+        "end": "malformed result frame",
+        "code": "RF_TSX_PROTOCOL_ERROR",
+        "kind": "refusal",
+        "category": "unavailable",
+        "message": "RF render refused: RF_TSX_PROTOCOL_ERROR",
+        "spawns": 1
+       }
+      ],
+      "contradictionAtExit0": {
+       "kind": "refusal",
+       "category": "transport",
+       "message": "RF preview returned an unrecognized or contradictory failure envelope.",
+       "spawns": 1
+      }
+     }
+    },
+    {
+     "id": "C2",
+     "witness": {
+      "pin": "C2",
+      "ends": [
+       {
+        "end": "EOF",
+        "coverage": "unknown",
+        "tone": "failure",
+        "named": true
+       },
+       {
+        "end": "crash",
+        "coverage": "unknown",
+        "tone": "failure",
+        "named": true
+       },
+       {
+        "end": "timeout",
+        "coverage": "unknown",
+        "tone": "failure",
+        "named": true
+       },
+       {
+        "end": "malformed result frame",
+        "coverage": "unknown",
+        "tone": "failure",
+        "named": true
+       }
+      ]
+     }
+    },
+    {
+     "id": "C3",
+     "witness": {
+      "pin": "C3",
+      "outcome": {
+       "kind": "reading",
+       "spawns": 1
+      },
+      "unchanged": true,
+      "recovered": {
+       "coverage": "partial",
+       "tone": "unknown",
+       "named": true,
+       "spawnNote": true
+      }
+     }
+    },
+    {
+     "id": "C4",
+     "witness": {
+      "pin": "C4",
+      "file": "test/workbench-child-crash-faults.test.ts",
+      "describes": [
+       {
+        "describe": "injected worker death (mocked node:worker_threads, NOT a real crash and NOT a sandbox property; the real-child proof rides wb-ksz slice 3)",
+        "registered": 1,
+        "measured": 3,
+        "missing": []
+       }
+      ]
+     }
+    },
+    {
+     "id": "C5",
+     "witness": {
+      "pin": "C5",
+      "deadlineMs": 60000,
+      "deadlineCategory": "transport",
+      "bounds": {
+       "attempt": 30000,
+       "round": 10000,
+       "cpu": 30000
+      },
+      "boundsUnderDeadline": true
+     }
+    }
+   ]
+  },
+  {
+   "id": "D",
+   "label": "(b) armed on landing: a fixture typed failed rftsx.host-evaluation-result document echoes status failed, renders zero success blocks and reuses no prior success for the same key: gated - the measured typed failed worker document is unshipped at both producer pins and no Pi test claims the proof",
+   "pins": [
+    {
+     "id": "D1",
+     "witness": {
+      "pin": "D1",
+      "artifactShipped": false,
+      "beadSaysUnshipped": true,
+      "sitesMatchBead": true,
+      "gatingRow": true,
+      "distributionLocked": true,
+      "harnessEverywhere": true,
+      "statusClosed": true
+     }
+    },
+    {
+     "id": "D2",
+     "witness": {
+      "pin": "D2",
+      "floorsMet": true,
+      "claims": [],
+      "controls": {
+       "successBlocks": true,
+       "staleSuccess": true,
+       "priorSuccess": true,
+       "documentKind": true,
+       "typedFailedDocument": true,
+       "eachTitle": true,
+       "unrelated": false,
+       "labelOnly": false
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "tests": [
+  "the judged set: the frozen shape, the out-of-file roster and the bead row agree",
+  "A1",
+  "A2",
+  "A3",
+  "A4",
+  "B1",
+  "B2",
+  "B3",
+  "B4",
+  "B5",
+  "C1",
+  "C2",
+  "C3",
+  "C4",
+  "C5",
+  "D1",
+  "D2",
+  "records: every registered test ran once in run mode in roster order, every pin reached its end, and no title spells a judged family"
+ ]
+}
