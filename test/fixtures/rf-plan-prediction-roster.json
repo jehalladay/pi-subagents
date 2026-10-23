@@ -1,0 +1,1436 @@
+{
+  "provenance": "wb-pfxo.6 census roster (test/workbench-rf-plan-prediction-census.test.ts). envelopes.plan, envelopes.committed and envelopes.preview are MEASURED on 2026-10-23 from the installed rf 0.1.832 (rf --json --version result.provenance.commit_id 2618c211be0dbbb74ba10e965e2d3d1f0fb5903e) in one private scratch workspace (jsonl backend), by the E1 recipe of new-feedback/2026-10-18-CORROBORATION-context-plan-answered-refresh-required-in-3-of-3-source-fed-pure-true-renders-that-reused-in-2-of-2-reruns-and-non-reusable-in-3-of-3-source-free-renders-so-no-graph-reaches-reuse-at-0-1-768.md (ReactiveFiberCLI 6a251bf73af5): rf init; rf component create pc1 --kind declarative; the manifest edited pure = false to pure = true; rf component add; rf component activate pc1; three committing rf context render --model claude-opus-5 --task 'probe plan reuse' calls, each followed by rf context plan RENDER --json; then one rf context render ... --no-commit. committed is render 2, the plan is rf context plan of render 2, and preview is the noncommitted render measured after that plan. Only the scratch workspace root was rewritten to /fixture/rf-workspace (one occurrence per envelope, workspace.root).",
+  "rfVersion": "0.1.832",
+  "rfCommit": "2618c211be0dbbb74ba10e965e2d3d1f0fb5903e",
+  "programPin": "6a251bf73af57c3a703caf6892dfe3015e06a481",
+  "citations": [
+    "docs/programs/compositional-assembly-2026-10-18/README.md:79@6a251bf73af5",
+    "docs/programs/compositional-assembly-2026-10-18/README.md:15@6a251bf73af5",
+    "src/reactive_fiber_cli/schemas/cli/context.plan.schema.json:491-497@6a251bf73af5",
+    "src/reactive_fiber_cli/schemas/cli/context.plan.schema.json:681-688@6a251bf73af5"
+  ],
+  "decisions": [
+    "reuse",
+    "invalidated",
+    "non_reusable",
+    "refresh_required"
+  ],
+  "summaryKeys": [
+    "rows",
+    "reuse",
+    "invalidated",
+    "non_reusable",
+    "refresh_required",
+    "evidence_complete"
+  ],
+  "measurement": {
+    "workspace": "rfw_imzmsa5dnhdtwnstyjf7i6t4yu",
+    "renders": [
+      {
+        "render": "rfr_h2bdcgudzo6dq5d3xb2vsr7toq",
+        "operation": "rfo_fqrut6bluk2iy6ksinbf266uuy",
+        "rendered": 1,
+        "reused": 0,
+        "plan": "rfo_u3sqq6q66bh7staqj64zvgyr3e",
+        "planDecision": "refresh_required"
+      },
+      {
+        "render": "rfr_c3izwlu74cvous37ikkk7d7nf4",
+        "operation": "rfo_zsidgcedwvzb5ybkbgvv5hj4ya",
+        "rendered": 0,
+        "reused": 1,
+        "plan": "rfo_ihajfe2pq7blqojovsxmnmal4e",
+        "planDecision": "refresh_required"
+      },
+      {
+        "render": "rfr_bswa23kyr6lo76sqqbu4sfw6uq",
+        "operation": "rfo_jnk4v2b65tps7xxn3kuoo5ykcu",
+        "rendered": 0,
+        "reused": 1,
+        "plan": "rfo_xeomqnzgbmyzhollxum2zkkoju",
+        "planDecision": "refresh_required"
+      },
+      {
+        "render": null,
+        "operation": "rfo_4ywh644ddanvc4ztdfvjzzwede",
+        "rendered": 0,
+        "reused": 1,
+        "plan": null,
+        "planDecision": null
+      }
+    ]
+  },
+  "docsPlanSentences": [],
+  "envelopes": {
+    "plan": {
+      "schema": "reactive-fiber.cli/v1",
+      "ok": true,
+      "command": "context.plan",
+      "operation_id": "rfo_ihajfe2pq7blqojovsxmnmal4e",
+      "workspace": {
+        "id": "rfw_imzmsa5dnhdtwnstyjf7i6t4yu",
+        "root": "/fixture/rf-workspace"
+      },
+      "transaction_id": null,
+      "result": {
+        "render_id": "rfr_c3izwlu74cvous37ikkk7d7nf4",
+        "base": {
+          "render_id": "rfr_c3izwlu74cvous37ikkk7d7nf4",
+          "session_id": "rfs_svalrqdvsndeva3dqscmbvjphy",
+          "agent_id": null,
+          "audience": "model",
+          "graph_revision_id": "sha256:1e66cb38c904d0579ea2f25a7a6a2aa4bb1bba11fa9614a900b4a2e32aa22ac9",
+          "component_instances": [
+            "pc1:pc1"
+          ]
+        },
+        "current": {
+          "graph_revision_id": "sha256:1e66cb38c904d0579ea2f25a7a6a2aa4bb1bba11fa9614a900b4a2e32aa22ac9",
+          "graph_path": "graphs/context.toml",
+          "graph_changed": false,
+          "reuse_enabled": true,
+          "observed_instances": [
+            "pc1:pc1"
+          ],
+          "unobserved": []
+        },
+        "plan": {
+          "proof_version": 1,
+          "reuse_enabled": true,
+          "rows": [
+            {
+              "component_instance_id": "pc1:pc1",
+              "decision": "refresh_required",
+              "completeness": "complete",
+              "causes": [
+                {
+                  "kind": "refresh_required",
+                  "key": {
+                    "kind": "source",
+                    "id": "task"
+                  },
+                  "prior": "sha256:4a8f72c098f2653f8530e42cbfd55016f8a6fd0c33968c48c4f58750adbaaca7",
+                  "current": null
+                }
+              ],
+              "checked": [
+                {
+                  "key": {
+                    "kind": "audience",
+                    "id": "audience"
+                  },
+                  "prior": "model",
+                  "current": "model"
+                },
+                {
+                  "key": {
+                    "kind": "graph",
+                    "id": "graph_revision_id"
+                  },
+                  "prior": "sha256:1e66cb38c904d0579ea2f25a7a6a2aa4bb1bba11fa9614a900b4a2e32aa22ac9",
+                  "current": "sha256:1e66cb38c904d0579ea2f25a7a6a2aa4bb1bba11fa9614a900b4a2e32aa22ac9"
+                },
+                {
+                  "key": {
+                    "kind": "props",
+                    "id": "props_digest"
+                  },
+                  "prior": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+                  "current": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+                },
+                {
+                  "key": {
+                    "kind": "state",
+                    "id": "input_state_digest"
+                  },
+                  "prior": null,
+                  "current": null
+                }
+              ]
+            }
+          ]
+        },
+        "summary": {
+          "rows": 1,
+          "reuse": 0,
+          "invalidated": 0,
+          "non_reusable": 0,
+          "refresh_required": 1,
+          "evidence_complete": true
+        }
+      },
+      "diagnostics": []
+    },
+    "committed": {
+      "schema": "reactive-fiber.cli/v1",
+      "ok": true,
+      "command": "context.render",
+      "operation_id": "rfo_zsidgcedwvzb5ybkbgvv5hj4ya",
+      "workspace": {
+        "id": "rfw_imzmsa5dnhdtwnstyjf7i6t4yu",
+        "root": "/fixture/rf-workspace"
+      },
+      "transaction_id": "rft_smfqj4txhax7p75b5u5b2tzr4e",
+      "result": {
+        "output": {
+          "text": "pc1 has no content yet.\n",
+          "size_bytes": 24,
+          "digest": "sha256:7be8a71d8e785a5cf42ea27e642a042afa193889b03adf7c69c7cea59fef707c",
+          "path": null
+        },
+        "budget": {
+          "schema": "reactive-fiber.budget/v1",
+          "requested_model_id": "claude-opus-5",
+          "resolved_model_id": null,
+          "formula_terms": {
+            "context_window": 1000000,
+            "max_output_tokens": 128000,
+            "output_reserve": 8192,
+            "occupied_tokens": 0,
+            "overhead": 0,
+            "safety_margin": 2048,
+            "available_context_tokens": 989760
+          },
+          "capability_snapshot": {
+            "model_id": "claude-opus-5",
+            "context_window": 1000000,
+            "max_output_tokens": 128000,
+            "supports_thinking": true,
+            "supports_reasoning": true,
+            "supports_streaming": true,
+            "supports_vision": true,
+            "thinking_budget": null,
+            "cache_prefix": null,
+            "reasoning": {
+              "reasoning_control": "adaptive_effort",
+              "budget_tokens_status": "rejected",
+              "effort_levels": [],
+              "interleaved": true,
+              "display_default": "omitted",
+              "always_on": false,
+              "always_on_verified": true,
+              "verified": false,
+              "source": "hq-4j88mn: reasoning CONTROL CLASS live-confirmed (the bare {'thinking':{'type':'adaptive'}} shape this profile emits returns HTTP 200 on us.anthropic.claude-opus-5), but the finer cells were NOT swept for opus-5 \u2014 verified=False per honesty rule D until a live sweep covers them"
+            },
+            "can_count_tokens": false,
+            "verified": true,
+            "source": null,
+            "known_policy_gates": [],
+            "decision": {
+              "supports_forced_tool": true,
+              "supports_structured_output": false,
+              "supports_span_output": true,
+              "supports_forced_tool_with_thinking": false,
+              "probability_support": "none",
+              "modalities": [
+                "image",
+                "text"
+              ],
+              "media_budget": {
+                "max_blocks": 20,
+                "max_bytes_per_block": 3750000
+              },
+              "verified": false,
+              "source": "RI-I0-a seed read from the Bedrock Converse API reference, not a live probe: toolChoice tool/any forces a tool call (forced tool True); Converse carries no JSON-schema response format (structured output False, fail closed); a span rides the forced tool, its offset fidelity unmeasured (span True); Anthropic rejects a forced tool_choice while thinking is on (forced tool with thinking False); no logprobs on the Converse plane (probability none); image quota 20 blocks of 3.75 MB each, published and not re-measured in this clone. verified=False per honesty rule D"
+            }
+          },
+          "capability_verified": true,
+          "capability_source": null,
+          "token_count_method": "estimated",
+          "estimator_id": "rf.utf8-bytes-div4.v1",
+          "counts": {
+            "candidate": 1,
+            "admitted_before_budget": 1,
+            "final_included": 1,
+            "withheld_necessity": 0,
+            "withheld_truncated": 0
+          },
+          "reconciliation_attempts": [],
+          "observability": {
+            "token_cost_unknown": 0,
+            "token_estimator_failed": 0,
+            "reconciliation_attempts": 0
+          },
+          "included_tokens": 6,
+          "truncated_tokens": 0,
+          "truncated_count": 0,
+          "overflow_pinned_count": 0,
+          "hidden_count": 0,
+          "audience_excluded_count": 0,
+          "unknown_cost_count": 0,
+          "token_accounting": {
+            "kind": "estimated",
+            "estimator_id": "rf.utf8-bytes-div4.v1",
+            "included_tokens": 6
+          },
+          "truncated_keys": []
+        },
+        "diagnostics_summary": {
+          "errors": 0,
+          "warnings": 0,
+          "has_errors": false,
+          "has_warnings": false
+        },
+        "blocks": [
+          {
+            "final_index": 0,
+            "candidate_key": "pc1:pc1::placeholder",
+            "component_id": "pc1",
+            "token_cost": {
+              "kind": "estimated",
+              "tokens": 6
+            },
+            "token_cost_kind": "estimated"
+          }
+        ],
+        "components": [
+          {
+            "component_instance_id": "pc1:pc1",
+            "component_id": "pc1",
+            "component_revision_id": "sha256:0666d37165cd77a600fcbdde5b0beb12400e1afcc342cf6413eca3d44aad6a23",
+            "status": "ok",
+            "source_unavailable": []
+          }
+        ],
+        "provenance": {
+          "created_at": "2026-10-23T01:08:43.011990Z",
+          "graph_revision_id": "sha256:1e66cb38c904d0579ea2f25a7a6a2aa4bb1bba11fa9614a900b4a2e32aa22ac9",
+          "necessity_policy_revision_id": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "workspace_schema_version": "reactive-fiber.workspace/v1",
+          "cli_version": "0.1.832",
+          "storage_backend": "jsonl",
+          "sdk_versions": {
+            "fiber_optics": {
+              "distribution_version": "0.1.0.20261014202847",
+              "contract_fingerprint": "sha256:b5cf6605d95cb4cd71bc93508cf0e17e347a1abd092e247220a5dd4fcb5fdd42"
+            },
+            "reactive_lenses": {
+              "distribution_version": "0.1.1.20261018.6",
+              "contract_fingerprint": "sha256:0931bf8cfdc86b26edf9bdd4a3813dec4b6c894b3434f6039924df07234b8ea8"
+            },
+            "reactive_components": {
+              "distribution_version": "0.1.1.20261018121500",
+              "contract_fingerprint": "sha256:d12211ca722f4e778c1009989745bdc7e4e2297a308cf5601ed2c7e0ffbe7d37"
+            },
+            "reactive_inference": {
+              "distribution_version": "0.2.60.20261018120223",
+              "contract_fingerprint": "sha256:b075fe443fe70a87b10a0fa429cdc298a5af9b9bc5b1dc8d8b62a9f04454380b"
+            },
+            "fiber_optics_wire_format": "2"
+          },
+          "storage": {
+            "backend": "jsonl",
+            "engine_version": null
+          }
+        },
+        "work_metrics": {
+          "source_capture_count": 1,
+          "fiber_signal_count": 2,
+          "fiber_transaction_count": 1,
+          "invalidated_component_count": 1,
+          "rendered_component_count": 0,
+          "state_read_count": 0,
+          "state_write_count": 0,
+          "journal_records_scanned": 91,
+          "blob_bytes_written": 249,
+          "history_rows_materialized": 0,
+          "reused_component_count": 1,
+          "observation_executed_count": 0,
+          "observation_reused_count": 0,
+          "publish_conflict_count": 0
+        },
+        "work": {
+          "source_capture_count": 1,
+          "fiber_signal_count": 2,
+          "component_render_count": 0,
+          "lens_resolution_count": 0,
+          "necessity_eval_count": 1,
+          "storage_write_count": 1
+        },
+        "engine_metrics": {
+          "tsx_worker_spawns": 0,
+          "tsx_resource_rounds": 0
+        },
+        "scope": null,
+        "audience": "model",
+        "bundle_revision_id": "sha256:cc5d3baf246afa8061c469d04977002f60eb86afc7866920a6941f96ff7b1c5d",
+        "observations": [],
+        "necessity": [
+          {
+            "render_id": "rfr_c3izwlu74cvous37ikkk7d7nf4",
+            "candidate_key": "pc1:pc1::placeholder",
+            "necessity_class": "always",
+            "include": true,
+            "reason": "always_floor",
+            "estimated_tokens": 6,
+            "metadata": {
+              "evidence_keys": [
+                "necessity_class"
+              ],
+              "explicit_request": false
+            },
+            "policy_revision_id": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+            "judge_id": "rf.necessity.default-host.v1",
+            "judge_kind": "host_default",
+            "necessity_class_raw": "always",
+            "fallback_used": false,
+            "failure_mode": "fail"
+          }
+        ],
+        "judge_context": {
+          "task_digest": "sha256:9495e0461a5c84279d9e3facce72e9f6d256c37d6a2b49700f62f77676d33b28",
+          "task_tags": [],
+          "agent_id": null,
+          "agent_role": null,
+          "session_id": "rfs_svalrqdvsndeva3dqscmbvjphy",
+          "explicit_requests": [],
+          "workspace_facts": {
+            "session.active": true
+          }
+        },
+        "judge_context_layers": {
+          "task.tags": "defaults",
+          "agent.role": "defaults"
+        },
+        "attempts": 1,
+        "superseded_transaction_ids": [],
+        "retry_work": {
+          "superseded_attempts": [],
+          "wasted_source_capture_count": 0,
+          "wasted_fiber_signal_count": 0,
+          "wasted_fiber_transaction_count": 0,
+          "wasted_invalidated_component_count": 0,
+          "wasted_rendered_component_count": 0,
+          "wasted_state_read_count": 0,
+          "wasted_state_write_count": 0,
+          "wasted_journal_records_scanned": 0,
+          "wasted_blob_bytes_written": 0,
+          "wasted_history_rows_materialized": 0,
+          "wasted_reused_component_count": 0,
+          "wasted_observation_executed_count": 0,
+          "wasted_observation_reused_count": 0,
+          "wasted_publish_conflict_count": 0
+        },
+        "fiber_transaction_refs": [
+          "rfr_c3izwlu74cvous37ikkk7d7nf4/tx_1"
+        ],
+        "render_id": "rfr_c3izwlu74cvous37ikkk7d7nf4",
+        "ephemeral": false,
+        "commit_seq": 43,
+        "session_id": "rfs_svalrqdvsndeva3dqscmbvjphy",
+        "effects": []
+      },
+      "diagnostics": []
+    },
+    "preview": {
+      "schema": "reactive-fiber.cli/v1",
+      "ok": true,
+      "command": "context.render",
+      "operation_id": "rfo_4ywh644ddanvc4ztdfvjzzwede",
+      "workspace": {
+        "id": "rfw_imzmsa5dnhdtwnstyjf7i6t4yu",
+        "root": "/fixture/rf-workspace"
+      },
+      "transaction_id": null,
+      "result": {
+        "output": {
+          "text": "pc1 has no content yet.\n",
+          "size_bytes": 24,
+          "digest": "sha256:7be8a71d8e785a5cf42ea27e642a042afa193889b03adf7c69c7cea59fef707c",
+          "path": null
+        },
+        "budget": {
+          "schema": "reactive-fiber.budget/v1",
+          "requested_model_id": "claude-opus-5",
+          "resolved_model_id": null,
+          "formula_terms": {
+            "context_window": 1000000,
+            "max_output_tokens": 128000,
+            "output_reserve": 8192,
+            "occupied_tokens": 0,
+            "overhead": 0,
+            "safety_margin": 2048,
+            "available_context_tokens": 989760
+          },
+          "capability_snapshot": {
+            "model_id": "claude-opus-5",
+            "context_window": 1000000,
+            "max_output_tokens": 128000,
+            "supports_thinking": true,
+            "supports_reasoning": true,
+            "supports_streaming": true,
+            "supports_vision": true,
+            "thinking_budget": null,
+            "cache_prefix": null,
+            "reasoning": {
+              "reasoning_control": "adaptive_effort",
+              "budget_tokens_status": "rejected",
+              "effort_levels": [],
+              "interleaved": true,
+              "display_default": "omitted",
+              "always_on": false,
+              "always_on_verified": true,
+              "verified": false,
+              "source": "hq-4j88mn: reasoning CONTROL CLASS live-confirmed (the bare {'thinking':{'type':'adaptive'}} shape this profile emits returns HTTP 200 on us.anthropic.claude-opus-5), but the finer cells were NOT swept for opus-5 \u2014 verified=False per honesty rule D until a live sweep covers them"
+            },
+            "can_count_tokens": false,
+            "verified": true,
+            "source": null,
+            "known_policy_gates": [],
+            "decision": {
+              "supports_forced_tool": true,
+              "supports_structured_output": false,
+              "supports_span_output": true,
+              "supports_forced_tool_with_thinking": false,
+              "probability_support": "none",
+              "modalities": [
+                "image",
+                "text"
+              ],
+              "media_budget": {
+                "max_blocks": 20,
+                "max_bytes_per_block": 3750000
+              },
+              "verified": false,
+              "source": "RI-I0-a seed read from the Bedrock Converse API reference, not a live probe: toolChoice tool/any forces a tool call (forced tool True); Converse carries no JSON-schema response format (structured output False, fail closed); a span rides the forced tool, its offset fidelity unmeasured (span True); Anthropic rejects a forced tool_choice while thinking is on (forced tool with thinking False); no logprobs on the Converse plane (probability none); image quota 20 blocks of 3.75 MB each, published and not re-measured in this clone. verified=False per honesty rule D"
+            }
+          },
+          "capability_verified": true,
+          "capability_source": null,
+          "token_count_method": "estimated",
+          "estimator_id": "rf.utf8-bytes-div4.v1",
+          "counts": {
+            "candidate": 1,
+            "admitted_before_budget": 1,
+            "final_included": 1,
+            "withheld_necessity": 0,
+            "withheld_truncated": 0
+          },
+          "reconciliation_attempts": [],
+          "observability": {
+            "token_cost_unknown": 0,
+            "token_estimator_failed": 0,
+            "reconciliation_attempts": 0
+          },
+          "included_tokens": 6,
+          "truncated_tokens": 0,
+          "truncated_count": 0,
+          "overflow_pinned_count": 0,
+          "hidden_count": 0,
+          "audience_excluded_count": 0,
+          "unknown_cost_count": 0,
+          "token_accounting": {
+            "kind": "estimated",
+            "estimator_id": "rf.utf8-bytes-div4.v1",
+            "included_tokens": 6
+          },
+          "truncated_keys": []
+        },
+        "diagnostics_summary": {
+          "errors": 0,
+          "warnings": 0,
+          "has_errors": false,
+          "has_warnings": false
+        },
+        "blocks": [
+          {
+            "final_index": 0,
+            "candidate_key": "pc1:pc1::placeholder",
+            "component_id": "pc1",
+            "token_cost": {
+              "kind": "estimated",
+              "tokens": 6
+            },
+            "token_cost_kind": "estimated"
+          }
+        ],
+        "components": [
+          {
+            "component_instance_id": "pc1:pc1",
+            "component_id": "pc1",
+            "component_revision_id": "sha256:0666d37165cd77a600fcbdde5b0beb12400e1afcc342cf6413eca3d44aad6a23",
+            "status": "ok",
+            "source_unavailable": []
+          }
+        ],
+        "provenance": {
+          "created_at": "2026-10-23T01:11:03.071460Z",
+          "graph_revision_id": "sha256:1e66cb38c904d0579ea2f25a7a6a2aa4bb1bba11fa9614a900b4a2e32aa22ac9",
+          "necessity_policy_revision_id": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "workspace_schema_version": "reactive-fiber.workspace/v1",
+          "cli_version": "0.1.832",
+          "storage_backend": "jsonl",
+          "sdk_versions": {
+            "fiber_optics": {
+              "distribution_version": "0.1.0.20261014202847",
+              "contract_fingerprint": "sha256:b5cf6605d95cb4cd71bc93508cf0e17e347a1abd092e247220a5dd4fcb5fdd42"
+            },
+            "reactive_lenses": {
+              "distribution_version": "0.1.1.20261018.6",
+              "contract_fingerprint": "sha256:0931bf8cfdc86b26edf9bdd4a3813dec4b6c894b3434f6039924df07234b8ea8"
+            },
+            "reactive_components": {
+              "distribution_version": "0.1.1.20261018121500",
+              "contract_fingerprint": "sha256:d12211ca722f4e778c1009989745bdc7e4e2297a308cf5601ed2c7e0ffbe7d37"
+            },
+            "reactive_inference": {
+              "distribution_version": "0.2.60.20261018120223",
+              "contract_fingerprint": "sha256:b075fe443fe70a87b10a0fa429cdc298a5af9b9bc5b1dc8d8b62a9f04454380b"
+            },
+            "fiber_optics_wire_format": "2"
+          },
+          "storage": {
+            "backend": "jsonl",
+            "engine_version": null
+          }
+        },
+        "work_metrics": {
+          "source_capture_count": 1,
+          "fiber_signal_count": 2,
+          "fiber_transaction_count": 1,
+          "invalidated_component_count": 1,
+          "rendered_component_count": 0,
+          "state_read_count": 0,
+          "state_write_count": 0,
+          "journal_records_scanned": 58,
+          "blob_bytes_written": 0,
+          "history_rows_materialized": 0,
+          "reused_component_count": 1,
+          "observation_executed_count": 0,
+          "observation_reused_count": 0,
+          "publish_conflict_count": 0
+        },
+        "work": {
+          "source_capture_count": 1,
+          "fiber_signal_count": 2,
+          "component_render_count": 0,
+          "lens_resolution_count": 0,
+          "necessity_eval_count": 1,
+          "storage_write_count": 0
+        },
+        "engine_metrics": {
+          "tsx_worker_spawns": 0,
+          "tsx_resource_rounds": 0
+        },
+        "scope": null,
+        "audience": "model",
+        "bundle_revision_id": "sha256:cc5d3baf246afa8061c469d04977002f60eb86afc7866920a6941f96ff7b1c5d",
+        "observations": [],
+        "necessity": [
+          {
+            "render_id": "rfr_gipnlsotapv2jtyzytmmag2jxy",
+            "candidate_key": "pc1:pc1::placeholder",
+            "necessity_class": "always",
+            "include": true,
+            "reason": "always_floor",
+            "estimated_tokens": 6,
+            "metadata": {
+              "evidence_keys": [
+                "necessity_class"
+              ],
+              "explicit_request": false
+            },
+            "policy_revision_id": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+            "judge_id": "rf.necessity.default-host.v1",
+            "judge_kind": "host_default",
+            "necessity_class_raw": "always",
+            "fallback_used": false,
+            "failure_mode": "fail"
+          }
+        ],
+        "judge_context": {
+          "task_digest": "sha256:9495e0461a5c84279d9e3facce72e9f6d256c37d6a2b49700f62f77676d33b28",
+          "task_tags": [],
+          "agent_id": null,
+          "agent_role": null,
+          "session_id": "rfs_7yblaprez4qiucbr5yuskdmzau",
+          "explicit_requests": [],
+          "workspace_facts": {
+            "session.active": true
+          }
+        },
+        "judge_context_layers": {
+          "task.tags": "defaults",
+          "agent.role": "defaults"
+        },
+        "attempts": 1,
+        "superseded_transaction_ids": [],
+        "retry_work": {
+          "superseded_attempts": [],
+          "wasted_source_capture_count": 0,
+          "wasted_fiber_signal_count": 0,
+          "wasted_fiber_transaction_count": 0,
+          "wasted_invalidated_component_count": 0,
+          "wasted_rendered_component_count": 0,
+          "wasted_state_read_count": 0,
+          "wasted_state_write_count": 0,
+          "wasted_journal_records_scanned": 0,
+          "wasted_blob_bytes_written": 0,
+          "wasted_history_rows_materialized": 0,
+          "wasted_reused_component_count": 0,
+          "wasted_observation_executed_count": 0,
+          "wasted_observation_reused_count": 0,
+          "wasted_publish_conflict_count": 0
+        },
+        "fiber_transaction_refs": [
+          "rfr_gipnlsotapv2jtyzytmmag2jxy/tx_1"
+        ],
+        "render_id": null,
+        "ephemeral": true,
+        "commit_seq": null,
+        "effects": [],
+        "plan": {
+          "operations": [],
+          "would_commit": false
+        },
+        "session_id": null
+      },
+      "diagnostics": []
+    }
+  },
+  "rows": [
+    {
+      "id": "A",
+      "label": "(trigger, absent today) Pi reads no rf context plan: no src module or native descriptor spells an rf plan verb, the rf roster stays reactivefiber.render.preview only, and both readers refuse the measured context.plan envelope",
+      "pins": [
+        {
+          "id": "A1",
+          "witness": {
+            "srcFloorMet": true,
+            "renderArgvSeen": true,
+            "argv": [],
+            "literals": [],
+            "descriptorHits": []
+          }
+        },
+        {
+          "id": "A2",
+          "witness": {
+            "native": {
+              "byId": [
+                "reactivefiber.render.preview"
+              ],
+              "byPermission": [
+                "reactivefiber.render.preview"
+              ],
+              "byContract": [
+                "reactivefiber.render.preview"
+              ]
+            },
+            "injected": {
+              "byId": [
+                "reactivefiber.render.preview"
+              ],
+              "byPermission": [
+                "reactivefiber.render.preview"
+              ],
+              "byContract": [
+                "reactivefiber.render.preview"
+              ]
+            },
+            "reconcile": [
+              "reactivefiber.render.preview"
+            ],
+            "contractSourceVerb": "context.render --no-commit"
+          }
+        },
+        {
+          "id": "A3",
+          "witness": {
+            "category": "transport",
+            "message": "RF preview returned an unrecognized native envelope.",
+            "reading": false,
+            "spawns": 1,
+            "verb": [
+              "context",
+              "render"
+            ],
+            "noCommit": true
+          }
+        },
+        {
+          "id": "A4",
+          "witness": {
+            "category": "validation",
+            "message": "ReactiveFiber topology refused: source must be a reactive-fiber.cli/v1 context.render envelope."
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "(a) the measured context.plan envelope whose row decision is refresh_required: no Pi string claims the render refreshed, reused or recomputed that instance",
+      "pins": [
+        {
+          "id": "B1",
+          "witness": {
+            "command": "context.plan",
+            "transaction": null,
+            "instance": "pc1:pc1",
+            "decision": "refresh_required",
+            "cause": {
+              "kind": "refresh_required",
+              "key": {
+                "kind": "source",
+                "id": "task"
+              },
+              "current": null
+            },
+            "summary": {
+              "rows": 1,
+              "reuse": 0,
+              "invalidated": 0,
+              "non_reusable": 0,
+              "refresh_required": 1,
+              "evidence_complete": true
+            },
+            "planOf": "rfr_c3izwlu74cvous37ikkk7d7nf4"
+          }
+        },
+        {
+          "id": "B2",
+          "witness": {
+            "surfaced": {
+              "nativeRefusal": "RF preview returned an unrecognized native envelope.",
+              "adapterRefusal": "ReactiveFiber topology refused: source must be a reactive-fiber.cli/v1 context.render envelope.",
+              "readingContract": "reactivefiber.render.preview/v1",
+              "readingWorkspaceRoot": "/fixture/rf-workspace"
+            },
+            "claims": [],
+            "decisions": [],
+            "instance": []
+          }
+        },
+        {
+          "id": "B3",
+          "witness": {
+            "readingKeys": [
+              "contract",
+              "source",
+              "workspaceRoot"
+            ],
+            "contract": "reactivefiber.render.preview/v1",
+            "command": "context.plan",
+            "verbatim": true,
+            "calls": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "(b) the measured committed render reporting component reuse: no 'predicted' / 'plan' wording about that reuse and no back-filled plan decision",
+      "pins": [
+        {
+          "id": "C1",
+          "witness": {
+            "committed": {
+              "reused": 1,
+              "rendered": 0,
+              "componentRenders": 0,
+              "instances": [
+                "pc1:pc1"
+              ]
+            },
+            "preview": {
+              "reused": 1,
+              "rendered": 0,
+              "componentRenders": 0,
+              "instances": [
+                "pc1:pc1"
+              ]
+            },
+            "previewAdmitted": true,
+            "admittedVerbatim": true
+          }
+        },
+        {
+          "id": "C2",
+          "witness": {
+            "refusal": {
+              "category": "transport",
+              "message": "RF preview returned an unrecognized or contradictory envelope."
+            },
+            "flippedAdmitted": true,
+            "kept": {
+              "transaction_id": "RF preview returned an unrecognized or contradictory envelope.",
+              "result.render_id": "RF preview returned an unrecognized or contradictory envelope.",
+              "result.ephemeral": "RF preview returned an unrecognized or contradictory envelope.",
+              "result.commit_seq": "RF preview returned an unrecognized or contradictory envelope.",
+              "result.work.storage_write_count": "RF preview returned an unrecognized or contradictory envelope."
+            },
+            "planSpelled": false
+          }
+        },
+        {
+          "id": "C3",
+          "witness": {
+            "refusal": {
+              "category": "validation",
+              "message": "ReactiveFiber topology refused: source.transaction_id must be null: a noncommitted read opens no transaction."
+            },
+            "flippedProjects": true,
+            "planSpelled": false
+          }
+        },
+        {
+          "id": "C4",
+          "witness": {
+            "statusText": "fixture seam (not a real render) \u00b7 989760 of 1000000 context tokens available \u00b7 necessity evals 1 \u00b7 0 errors, 0 warnings",
+            "coverage": "partial",
+            "notes": [
+              "ephemeral noncommitted preview: render_id null, transaction_id null, 0 authoritative storage writes (envelope storage_write_count)",
+              "context text withheld: referenced by sha256 digest",
+              "fixture seam: not a real generated context",
+              "producer release from result.provenance.cli_version: rf@0.1.832",
+              "no native interval supplied"
+            ],
+            "evidenceRefs": [
+              "rf-graph",
+              "rf-workspace",
+              "rf-bundle",
+              "rf-cli"
+            ],
+            "planned": [],
+            "claims": []
+          }
+        },
+        {
+          "id": "C5",
+          "witness": {
+            "note": "observations: 1 row, 1 reused: partial",
+            "planSpelled": false,
+            "decisionsAsFreshness": {
+              "reuse": "ReactiveFiber topology refused: every result.observations row must state freshness captured_at_render or reused.",
+              "invalidated": "ReactiveFiber topology refused: every result.observations row must state freshness captured_at_render or reused.",
+              "non_reusable": "ReactiveFiber topology refused: every result.observations row must state freshness captured_at_render or reused.",
+              "refresh_required": "ReactiveFiber topology refused: every result.observations row must state freshness captured_at_render or reused."
+            }
+          }
+        },
+        {
+          "id": "C6",
+          "witness": {
+            "modules": [
+              "src/workbench/providers/reactivefiber.ts",
+              "src/workbench/reactivefiber-observer.ts"
+            ],
+            "floorMet": true,
+            "reusedLiteral": true,
+            "hits": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "D",
+      "label": "(c) docs census: no sentence in docs/workbench equates a plan decision with an executed render's reuse",
+      "pins": [
+        {
+          "id": "D1",
+          "witness": {
+            "floorMet": true,
+            "sentenceFloorMet": true,
+            "anchorRead": true,
+            "executedSentences": true,
+            "hits": []
+          }
+        },
+        {
+          "id": "D2",
+          "witness": {
+            "floorMet": true,
+            "allowed": [],
+            "hits": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "E",
+      "label": "(d) any Pi string carrying a plan decision contains the producer enum word byte-for-byte",
+      "pins": [
+        {
+          "id": "E1",
+          "witness": {
+            "summaryDecisions": [
+              "reuse",
+              "invalidated",
+              "non_reusable",
+              "refresh_required"
+            ],
+            "values": [
+              "refresh_required"
+            ],
+            "places": [
+              "$.result.plan.rows[0].decision=refresh_required",
+              "$.result.plan.rows[0].causes[0].kind=refresh_required",
+              "$.result.summary.{reuse}",
+              "$.result.summary.{invalidated}",
+              "$.result.summary.{non_reusable}",
+              "$.result.summary.{refresh_required}"
+            ]
+          }
+        },
+        {
+          "id": "E2",
+          "witness": {
+            "roots": [
+              {
+                "root": "src",
+                "floorMet": true,
+                "anchorRead": true,
+                "respelled": []
+              },
+              {
+                "root": "qa",
+                "floorMet": true,
+                "anchorRead": true,
+                "respelled": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "E3",
+          "witness": {
+            "distinctive": [
+              "non_reusable",
+              "refresh_required"
+            ],
+            "roots": [
+              {
+                "root": "src",
+                "producer": []
+              },
+              {
+                "root": "qa",
+                "producer": []
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "M",
+      "label": "the matchers rows A to E read: M1-M6 the spellings each must catch and pass, Q1-Q6 the pinned quiet rows of the named residuals",
+      "pins": [
+        {
+          "id": "M1",
+          "witness": [
+            {
+              "text": "the render reused pc1:pc1",
+              "hit": true
+            },
+            {
+              "text": "the instance was re-used",
+              "hit": true
+            },
+            {
+              "text": "rf recomputed the component",
+              "hit": true
+            },
+            {
+              "text": "the block was refreshed",
+              "hit": true
+            },
+            {
+              "text": "the component was re-rendered",
+              "hit": true
+            },
+            {
+              "text": "the output was served from the cache",
+              "hit": true
+            },
+            {
+              "text": "a cache hit",
+              "hit": true
+            },
+            {
+              "text": "RF preview returned an unrecognized native envelope.",
+              "hit": false
+            },
+            {
+              "text": "ReactiveFiber topology refused: source must be a reactive-fiber.cli/v1 context.render envelope.",
+              "hit": false
+            },
+            {
+              "text": "refresh_required",
+              "hit": false
+            }
+          ]
+        },
+        {
+          "id": "M2",
+          "witness": [
+            {
+              "text": "the plan",
+              "hit": true
+            },
+            {
+              "text": "rf predicted the reuse",
+              "hit": true
+            },
+            {
+              "text": "a reuse prediction",
+              "hit": true
+            },
+            {
+              "text": "the forecast",
+              "hit": true
+            },
+            {
+              "text": "the planner",
+              "hit": true
+            },
+            {
+              "text": "rf context.plan",
+              "hit": true
+            },
+            {
+              "text": "decision reuse",
+              "hit": true
+            },
+            {
+              "text": "Refresh-Required",
+              "hit": true
+            },
+            {
+              "text": "observations: 1 row, 1 reused: partial",
+              "hit": false
+            },
+            {
+              "text": "explain the render",
+              "hit": false
+            },
+            {
+              "text": "invalidated_component_count",
+              "hit": false
+            }
+          ]
+        },
+        {
+          "id": "M3",
+          "witness": {
+            "verdicts": [
+              {
+                "text": "refresh required",
+                "respelled": true
+              },
+              {
+                "text": "refresh-required",
+                "respelled": true
+              },
+              {
+                "text": "Refresh_Required",
+                "respelled": true
+              },
+              {
+                "text": "REFRESH_REQUIRED",
+                "respelled": true
+              },
+              {
+                "text": "refreshRequired",
+                "respelled": true
+              },
+              {
+                "text": "non-reusable",
+                "respelled": true
+              },
+              {
+                "text": "non reusable",
+                "respelled": true
+              },
+              {
+                "text": "nonreusable",
+                "respelled": true
+              },
+              {
+                "text": "NON_REUSABLE",
+                "respelled": true
+              },
+              {
+                "text": "nonReusable",
+                "respelled": true
+              }
+            ],
+            "producer": [
+              {
+                "text": "non_reusable",
+                "producer": true,
+                "respelled": 0
+              },
+              {
+                "text": "refresh_required",
+                "producer": true,
+                "respelled": 0
+              }
+            ],
+            "cooked": [
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "M4",
+          "witness": [
+            {
+              "text": "Pi runs rf context plan.",
+              "hit": true
+            },
+            {
+              "text": "The context.plan envelope.",
+              "hit": true
+            },
+            {
+              "text": "The Context-Plan leaf.",
+              "hit": true
+            },
+            {
+              "text": "The plan row for pc1.",
+              "hit": true
+            },
+            {
+              "text": "The plan's decisions.",
+              "hit": true
+            },
+            {
+              "text": "The planner answered.",
+              "hit": true
+            },
+            {
+              "text": "rf predicted the reuse.",
+              "hit": true
+            },
+            {
+              "text": "A reuse forecast.",
+              "hit": true
+            },
+            {
+              "text": "The row is refresh_required.",
+              "hit": true
+            },
+            {
+              "text": "The row is non-reusable.",
+              "hit": true
+            },
+            {
+              "text": "The row is refresh\\_required.",
+              "hit": true
+            },
+            {
+              "text": "The row is refresh<!-- x -->_required.",
+              "hit": true
+            },
+            {
+              "text": "The row is refresh&#95;required.",
+              "hit": true
+            },
+            {
+              "text": "The row is refresh\u200b_required.",
+              "hit": true
+            },
+            {
+              "text": "The implementation plan lists the beads.",
+              "hit": false
+            },
+            {
+              "text": "It contradicts its M2.3 prediction.",
+              "hit": false
+            },
+            {
+              "text": "Disposable cache-plane writes may occur.",
+              "hit": false
+            }
+          ]
+        },
+        {
+          "id": "M5",
+          "witness": [
+            {
+              "text": "It states reused_component_count.",
+              "hit": true
+            },
+            {
+              "text": "It states observation_reused_count.",
+              "hit": true
+            },
+            {
+              "text": "The executor reused the component.",
+              "hit": true
+            },
+            {
+              "text": "The render then reused pc1.",
+              "hit": true
+            },
+            {
+              "text": "A row whose freshness is reused.",
+              "hit": true
+            },
+            {
+              "text": "rf reused the component output.",
+              "hit": true
+            },
+            {
+              "text": "The executor recomputed it.",
+              "hit": true
+            },
+            {
+              "text": "A cache hit.",
+              "hit": true
+            },
+            {
+              "text": "Served from the cache.",
+              "hit": true
+            },
+            {
+              "text": "A resume reuses the transcript.",
+              "hit": false
+            },
+            {
+              "text": "Disposable cache-plane writes may occur.",
+              "hit": false
+            }
+          ]
+        },
+        {
+          "id": "M6",
+          "witness": [
+            {
+              "text": "The plan's refresh_required row is what the render reused.",
+              "hit": true
+            },
+            {
+              "text": "rf context plan reports the reused_component_count.",
+              "hit": true
+            },
+            {
+              "text": "A non-reusable row means the executor recomputed the component.",
+              "hit": true
+            },
+            {
+              "text": "The context.plan reuse decision is the render's reuse.",
+              "hit": true
+            },
+            {
+              "text": "The plan row said refresh_required.",
+              "hit": false
+            },
+            {
+              "text": "The executor reused the component.",
+              "hit": false
+            }
+          ]
+        },
+        {
+          "id": "Q1",
+          "witness": {
+            "planTerm": false,
+            "family": 0
+          }
+        },
+        {
+          "id": "Q2",
+          "witness": {
+            "d1": false,
+            "d2": false
+          }
+        },
+        {
+          "id": "Q3",
+          "witness": {
+            "sentences": 2,
+            "d1": false,
+            "d2": true
+          }
+        },
+        {
+          "id": "Q4",
+          "witness": {
+            "argv": {
+              "argv": 1,
+              "literals": 0,
+              "composed": 0
+            },
+            "spaced": {
+              "argv": 0,
+              "literals": 1,
+              "composed": 0
+            },
+            "dotted": {
+              "argv": 0,
+              "literals": 1,
+              "composed": 0
+            },
+            "template": {
+              "argv": 0,
+              "literals": 1,
+              "composed": 0
+            },
+            "composed": {
+              "argv": 0,
+              "literals": 0,
+              "composed": 1
+            }
+          }
+        },
+        {
+          "id": "Q5",
+          "witness": {
+            "srcSpells": true,
+            "readersSpell": false,
+            "read": 0
+          }
+        },
+        {
+          "id": "Q6",
+          "witness": {
+            "rosterSpells": true,
+            "scanned": [
+              "src",
+              "qa",
+              "docs/workbench"
+            ],
+            "outside": true
+          }
+        }
+      ]
+    }
+  ],
+  "tests": [
+    "the judged set: the frozen shape, the out-of-file roster and the cases agree",
+    "A1",
+    "A2",
+    "A3",
+    "A4",
+    "B1",
+    "B2",
+    "B3",
+    "C1",
+    "C2",
+    "C3",
+    "C4",
+    "C5",
+    "C6",
+    "D1",
+    "D2",
+    "E1",
+    "E2",
+    "E3",
+    "M1",
+    "M2",
+    "M3",
+    "M4",
+    "M5",
+    "M6",
+    "Q1",
+    "Q2",
+    "Q3",
+    "Q4",
+    "Q5",
+    "Q6",
+    "registration: every test of this file is registered once, in roster order, in run mode, not inverted, and ran"
+  ]
+}
