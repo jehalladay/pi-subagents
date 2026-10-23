@@ -1,0 +1,1701 @@
+{
+ "bead": "wb-tz4r.2",
+ "quote": "Abstain != False; partial/incomplete/refused/invalid/unsupported/stale are not silently coerced to a choice.",
+ "citation": "docs/programs/unified-decision-inference-2026-10-21/01-contracts.md:7@485f3615db1e",
+ "trigger": "If Pi ever consumes a native decision envelope",
+ "engine": {
+  "parts": [
+   "decision",
+   "engine"
+  ],
+  "joiner": "_"
+ },
+ "words": {
+  "listed": [
+   "abstain",
+   "partial",
+   "incomplete",
+   "refused",
+   "invalid",
+   "unsupported",
+   "stale"
+  ],
+  "decided": "decided",
+  "unknown": [
+   "abstained",
+   "not_a_decision",
+   "malformed",
+   "Abstain",
+   "awaiting operator review"
+  ],
+  "provisional": [
+   "partial",
+   "incomplete",
+   "stale"
+  ],
+  "probes": [
+   "probe-word-k7",
+   "probe-word-m3"
+  ]
+ },
+ "fixtures": {
+  "provenance": "CONSTRUCTED: no ReactiveInference build emits a native decision result envelope at 485f3615db1e or 075ac589d64d; each envelope is the shipped request contract's shape (snapshot_digest, batch_mode, questions with closed candidates; a Boolean question is the output family's, unshipped) plus a results list carrying the filing's state words; the decided control word is the legacy DecisionKind's first member",
+  "listed": {
+   "abstain": {
+    "snapshot_digest": "3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f",
+    "batch_mode": "single",
+    "questions": [
+     {
+      "id": "q.route",
+      "question": "Which route serves the request?",
+      "candidates": [
+       "cand-route-north-7c1",
+       "cand-route-south-4e9",
+       "cand-route-west-2b8"
+      ]
+     }
+    ],
+    "results": [
+     {
+      "question_id": "q.route",
+      "state": "abstain"
+     }
+    ]
+   },
+   "partial": {
+    "snapshot_digest": "3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f",
+    "batch_mode": "single",
+    "questions": [
+     {
+      "id": "q.route",
+      "question": "Which route serves the request?",
+      "candidates": [
+       "cand-route-north-7c1",
+       "cand-route-south-4e9",
+       "cand-route-west-2b8"
+      ]
+     }
+    ],
+    "results": [
+     {
+      "question_id": "q.route",
+      "state": "partial",
+      "choice": "cand-route-south-4e9"
+     }
+    ]
+   },
+   "incomplete": {
+    "snapshot_digest": "3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f",
+    "batch_mode": "single",
+    "questions": [
+     {
+      "id": "q.route",
+      "question": "Which route serves the request?",
+      "candidates": [
+       "cand-route-north-7c1",
+       "cand-route-south-4e9",
+       "cand-route-west-2b8"
+      ]
+     }
+    ],
+    "results": [
+     {
+      "question_id": "q.route",
+      "state": "incomplete",
+      "choice": "cand-route-south-4e9"
+     }
+    ]
+   },
+   "refused": {
+    "snapshot_digest": "3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f",
+    "batch_mode": "single",
+    "questions": [
+     {
+      "id": "q.route",
+      "question": "Which route serves the request?",
+      "candidates": [
+       "cand-route-north-7c1",
+       "cand-route-south-4e9",
+       "cand-route-west-2b8"
+      ]
+     }
+    ],
+    "results": [
+     {
+      "question_id": "q.route",
+      "state": "refused"
+     }
+    ]
+   },
+   "invalid": {
+    "snapshot_digest": "3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f",
+    "batch_mode": "single",
+    "questions": [
+     {
+      "id": "q.route",
+      "question": "Which route serves the request?",
+      "candidates": [
+       "cand-route-north-7c1",
+       "cand-route-south-4e9",
+       "cand-route-west-2b8"
+      ]
+     }
+    ],
+    "results": [
+     {
+      "question_id": "q.route",
+      "state": "invalid"
+     }
+    ]
+   },
+   "unsupported": {
+    "snapshot_digest": "3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f",
+    "batch_mode": "single",
+    "questions": [
+     {
+      "id": "q.route",
+      "question": "Which route serves the request?",
+      "candidates": [
+       "cand-route-north-7c1",
+       "cand-route-south-4e9",
+       "cand-route-west-2b8"
+      ]
+     }
+    ],
+    "results": [
+     {
+      "question_id": "q.route",
+      "state": "unsupported"
+     }
+    ]
+   },
+   "stale": {
+    "snapshot_digest": "3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f",
+    "batch_mode": "single",
+    "questions": [
+     {
+      "id": "q.route",
+      "question": "Which route serves the request?",
+      "candidates": [
+       "cand-route-north-7c1",
+       "cand-route-south-4e9",
+       "cand-route-west-2b8"
+      ]
+     }
+    ],
+    "results": [
+     {
+      "question_id": "q.route",
+      "state": "stale",
+      "choice": "cand-route-south-4e9"
+     }
+    ]
+   }
+  },
+  "booleanAbstain": {
+   "snapshot_digest": "3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f",
+   "batch_mode": "single",
+   "questions": [
+    {
+     "id": "q.gate",
+     "question": "Is the deploy gate open?",
+     "output": "boolean"
+    }
+   ],
+   "results": [
+    {
+     "question_id": "q.gate",
+     "state": "abstain"
+    }
+   ]
+  },
+  "unknownTemplate": {
+   "snapshot_digest": "3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f",
+   "batch_mode": "single",
+   "questions": [
+    {
+     "id": "q.route",
+     "question": "Which route serves the request?",
+     "candidates": [
+      "cand-route-north-7c1",
+      "cand-route-south-4e9",
+      "cand-route-west-2b8"
+     ]
+    }
+   ],
+   "results": []
+  },
+  "tally": {
+   "snapshot_digest": "3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f",
+   "batch_mode": "independent",
+   "questions": [
+    {
+     "id": "q.t1",
+     "question": "Which lane takes the build?",
+     "candidates": [
+      "cand-t1-amber-11",
+      "cand-t1-cobalt-12"
+     ]
+    },
+    {
+     "id": "q.t2",
+     "question": "Which cache serves the read?",
+     "candidates": [
+      "cand-t2-amber-21",
+      "cand-t2-cobalt-22"
+     ]
+    },
+    {
+     "id": "q.t3",
+     "question": "Which reviewer takes the change?",
+     "candidates": [
+      "cand-t3-amber-31",
+      "cand-t3-cobalt-32"
+     ]
+    },
+    {
+     "id": "q.t4",
+     "question": "Which shard holds the key?",
+     "candidates": [
+      "cand-t4-amber-41",
+      "cand-t4-cobalt-42"
+     ]
+    },
+    {
+     "id": "q.t5",
+     "question": "Which window runs the job?",
+     "candidates": [
+      "cand-t5-amber-51",
+      "cand-t5-cobalt-52"
+     ]
+    },
+    {
+     "id": "q.t6",
+     "question": "Which region answers?",
+     "candidates": [
+      "cand-t6-amber-61",
+      "cand-t6-cobalt-62"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "question_id": "q.t1",
+     "state": "abstained"
+    },
+    {
+     "question_id": "q.t2",
+     "state": "not_a_decision"
+    },
+    {
+     "question_id": "q.t3",
+     "state": "malformed"
+    },
+    {
+     "question_id": "q.t4",
+     "state": "Abstain"
+    },
+    {
+     "question_id": "q.t5",
+     "state": "awaiting operator review"
+    },
+    {
+     "question_id": "q.t6",
+     "state": "decided",
+     "choice": "cand-t6-cobalt-62"
+    }
+   ]
+  }
+ },
+ "scan": {
+  "engineFamily": "decision[_.-]?engine/i",
+  "stateFamily": "abst(?:ain|ention)|decision[_.-]?(?:kind|state|status)|not[_.-]?a[_.-]?decision/i",
+  "listable": "^[A-Za-z0-9_.-]{1,24}$/",
+  "unlisted": 8230,
+  "successWords": [
+   "success",
+   "succeeded",
+   "ok",
+   "pass",
+   "passed",
+   "complete",
+   "completed"
+  ],
+  "scanRoots": [
+   "src",
+   "test",
+   "qa",
+   "examples"
+  ],
+  "byteRoots": [
+   "src"
+  ],
+  "moduleExtensions": [
+   ".ts",
+   ".mts",
+   ".cts",
+   ".tsx",
+   ".js",
+   ".mjs",
+   ".cjs",
+   ".jsx"
+  ],
+  "dataExtensions": [
+   ".json",
+   ".jsonl"
+  ],
+  "wholeToken": "^\\S+$/",
+  "exempt": [
+   "test/workbench-ri-decision-state-echo-census.test.ts",
+   "test/fixtures/ri-decision-state-echo-roster.json"
+  ],
+  "floors": {
+   "src": 105,
+   "test": 480,
+   "qa": 60,
+   "examples": 6
+  },
+  "walkAnchors": [
+   "src/workbench/forge-observer.ts:last_result_state",
+   "test/helpers/rf-render-fixture.ts:reactive_inference",
+   "qa/workbench/forge-gate-status-probe.mjs:lastResultState",
+   "examples/workflows/compose.js:export"
+  ],
+  "patternBead": "wb-973.10",
+  "patternSentence": "an unknown status word is treated as non-observed, never as success",
+  "mutants": {
+   "relabelUpper": true,
+   "relabelPiWord": true,
+   "relabelLegacyTense": true,
+   "relabelMark": true,
+   "abstainAsFalse": true,
+   "abstainDecidedFalse": true,
+   "firstAtSlot": true,
+   "firstDecided": true,
+   "lastAtSlot": true,
+   "indexAtSlot": true,
+   "defaultNote": true,
+   "provisionalPassThrough": true,
+   "sideIndex": true,
+   "sideParaphrase": true,
+   "sideBoolean": true,
+   "unknownSuccess": true,
+   "unknownFirst": true,
+   "unknownDropped": true,
+   "unknownNormalized": true,
+   "unknownRaw": true,
+   "synonym": true,
+   "successInProse": true,
+   "totalOnly": true
+  }
+ },
+ "producer": {
+  "repo": "ReactiveInferenceSDK",
+  "pin": {
+   "sha": "485f3615db1e8703d6ce1093713fe595e46f42a0",
+   "committed": "2026-10-21T02:38:38-07:00"
+  },
+  "head": {
+   "ref": "origin/master",
+   "sha": "075ac589d64d2718db8ec178ce7602705b64e9d4",
+   "committed": "2026-10-23T02:36:04-07:00",
+   "containsPin": true
+  },
+  "blobs": {
+   "docs/programs/unified-decision-inference-2026-10-21/01-contracts.md": {
+    "pin": "a89810065d9120d1abdd3e80a02a20ae20580285",
+    "head": "a89810065d9120d1abdd3e80a02a20ae20580285"
+   },
+   "docs/programs/unified-decision-inference-2026-10-21/02-implementation.md": {
+    "pin": "05c09af36db8f9151cf45de182f7d0f3ca3a0387",
+    "head": "05c09af36db8f9151cf45de182f7d0f3ca3a0387"
+   },
+   "docs/programs/unified-decision-inference-2026-10-21/03-conformance.md": {
+    "pin": "2ed40f651d8a3c988a89e8ed53173259f54d9bc4",
+    "head": "2ed40f651d8a3c988a89e8ed53173259f54d9bc4"
+   },
+   "src/reactive_inference/decision.py": {
+    "pin": "f9e40c8cbb666e52d53b6f3efd61d8cabbaab4c0",
+    "head": "4c16eba4a1a83568c61bb1c9ada266ce1fc9fdb0"
+   },
+   "src/reactive_inference/<ENGINE>/__init__.py": {
+    "pin": "c639bc14f4489ca8c51ff0f7408c2c4f70e89d18",
+    "head": "a37954633b2b526240b27f3cbe889f79b6029358"
+   },
+   "src/reactive_inference/<ENGINE>/contracts.py": {
+    "pin": "26f762bbe3f91d5111674ba022b5827442437e81",
+    "head": "bce216e75d7bf5f83d2052f7f98ff331fe3f4713"
+   },
+   "src/reactive_inference/<ENGINE>/preflight.py": {
+    "pin": "8e779342ee25112c776763023278b58128c78d35",
+    "head": "63e23693d8c4cc5054359c96b7c1ad7e7e096237"
+   }
+  },
+  "lines": {
+   "01-contracts.md:7": "Named ordered immutable observations (JSON/media descriptors), named decision questions, recursively typed output contracts, and explicit execution policy. Output family: Boolean, choice, ranking, pointer, extractive/generated spans and recursively structured compositions. Abstain != False; partial/incomplete/refused/invalid/unsupported/stale are not silently coerced to a choice.",
+   "01-contracts.md:11": "The pure compiler validates identifiers, bounded state, digests, RFC 6901 pointer candidates, cardinality, candidate IDs, schema, modality, output bounds, score requirements, distinct axes for thinking, generated spans, extractive spans and read-only observations. Route only after hard capability eligibility and context budgeting. Unknown hard capability = reject. No unrequested summarization or weakening.",
+   "02-implementation.md:15": "RI-DEC-07: strict result validator, abstention, atomic/partial batch semantics, retry/cancellation, transient errors and snapshot freshness.",
+   "03-conformance.md:14": "Booleans/abstention, rankings/ties/top_k, exact pointer revision/digest checks, Unicode byte/character extractive span offsets, recursively nested structured values, malformed provider tool output, lack of stream-tool semantics, native/generative parity for eligible finalizers, timeout and cancellation, failed atomic joint retry, partial independent result policy, full/partial/missing score provenance, multimodal and context budgets, prompt/template injection scope for declared read-only observations."
+  },
+  "engineExports": {
+   "pin": [
+    "ChoiceQuestion",
+    "DecisionBatchMode",
+    "DecisionChoiceRequest",
+    "ChoiceBackendCapabilities",
+    "ChoiceExecutionPlan",
+    "ChoiceExecutionGroup",
+    "plan_choices"
+   ],
+   "head": [
+    "ChoiceBackendCapabilities",
+    "ChoiceExecutionGroup",
+    "ChoiceExecutionPlan",
+    "ChoiceQuestion",
+    "DecisionBatchMode",
+    "DecisionChoiceRequest",
+    "plan_choices"
+   ]
+  },
+  "engineClasses": {
+   "pin": [
+    "DecisionBatchMode",
+    "ChoiceQuestion",
+    "DecisionChoiceRequest",
+    "ChoiceBackendCapabilities",
+    "ChoiceExecutionGroup",
+    "ChoiceExecutionPlan"
+   ],
+   "head": [
+    "DecisionBatchMode",
+    "ChoiceQuestion",
+    "DecisionChoiceRequest",
+    "ChoiceBackendCapabilities",
+    "ChoiceExecutionGroup",
+    "ChoiceExecutionPlan"
+   ]
+  },
+  "resultStateTypes": {
+   "pin": [],
+   "head": []
+  },
+  "legacyKind": {
+   "path": "src/reactive_inference/decision.py",
+   "line": 125,
+   "name": "DecisionKind",
+   "doc": "What a decision turn came back as (RIC-06): the closed set a consumer branches on.",
+   "values": [
+    "decided",
+    "abstained",
+    "not_a_decision",
+    "malformed",
+    "refused",
+    "partial",
+    "unsupported",
+    "transport_fault"
+   ]
+  }
+ },
+ "residuals": [
+  "R-COMPOSED",
+  "R-PROSE",
+  "R-ENCODED",
+  "R-LOOKALIKE",
+  "R-COMMENT",
+  "R-PROSE-LITERAL",
+  "R-OTHER-DATA",
+  "R-BARE-WORD",
+  "R-OUTSIDE",
+  "R-SIDE-PATH",
+  "R-SUCCESS-SYNONYM",
+  "R-COUNT-COINCIDENCE"
+ ],
+ "rows": [
+  {
+   "id": "A",
+   "label": "(a) adoption fixture per state word {abstain, partial, incomplete, refused, invalid, unsupported, stale}: projection carries the word verbatim and no chosen candidate id: one CONSTRUCTED envelope per word under the shipped request contract's rules, the reference projection quiet under the judge with each decided control carrying its candidate, and every relabeled word refused",
+   "pins": [
+    {
+     "id": "A1",
+     "witness": {
+      "pin": "A1",
+      "braces": [
+       "abstain",
+       "partial",
+       "incomplete",
+       "refused",
+       "invalid",
+       "unsupported",
+       "stale"
+      ],
+      "shapes": {
+       "abstain": {
+        "results": 1,
+        "stateIsWord": true,
+        "choice": null
+       },
+       "partial": {
+        "results": 1,
+        "stateIsWord": true,
+        "choice": "cand-route-south-4e9"
+       },
+       "incomplete": {
+        "results": 1,
+        "stateIsWord": true,
+        "choice": "cand-route-south-4e9"
+       },
+       "refused": {
+        "results": 1,
+        "stateIsWord": true,
+        "choice": null
+       },
+       "invalid": {
+        "results": 1,
+        "stateIsWord": true,
+        "choice": null
+       },
+       "unsupported": {
+        "results": 1,
+        "stateIsWord": true,
+        "choice": null
+       },
+       "stale": {
+        "results": 1,
+        "stateIsWord": true,
+        "choice": "cand-route-south-4e9"
+       }
+      },
+      "invalid": [],
+      "provenance": "CONSTRUCTED: no ReactiveInference build emits a native decision result envelope at 485f3615db1e or 075ac589d64d; each envelope is the shipped request contract's shape (snapshot_digest, batch_mode, questions with closed candidates; a Boolean question is the output family's, unshipped) plus a results list carrying the filing's state words; the decided control word is the legacy DecisionKind's first member",
+      "booleanAbstain": {
+       "output": "boolean",
+       "state": "abstain",
+       "choice": null
+      },
+      "tally": {
+       "results": 6,
+       "open": [
+        "abstained",
+        "not_a_decision",
+        "malformed",
+        "Abstain",
+        "awaiting operator review"
+       ],
+       "decided": 1
+      }
+     }
+    },
+    {
+     "id": "A2",
+     "witness": {
+      "pin": "A2",
+      "readings": {
+       "abstain": {
+        "results": [
+         {
+          "question": "q.route",
+          "state": "abstain",
+          "choice": null
+         }
+        ],
+        "tone": "partial",
+        "notes": [
+         "1 result, 1 not decided"
+        ]
+       },
+       "partial": {
+        "results": [
+         {
+          "question": "q.route",
+          "state": "partial",
+          "choice": null
+         }
+        ],
+        "tone": "partial",
+        "notes": [
+         "1 result, 1 not decided"
+        ]
+       },
+       "incomplete": {
+        "results": [
+         {
+          "question": "q.route",
+          "state": "incomplete",
+          "choice": null
+         }
+        ],
+        "tone": "partial",
+        "notes": [
+         "1 result, 1 not decided"
+        ]
+       },
+       "refused": {
+        "results": [
+         {
+          "question": "q.route",
+          "state": "refused",
+          "choice": null
+         }
+        ],
+        "tone": "partial",
+        "notes": [
+         "1 result, 1 not decided"
+        ]
+       },
+       "invalid": {
+        "results": [
+         {
+          "question": "q.route",
+          "state": "invalid",
+          "choice": null
+         }
+        ],
+        "tone": "partial",
+        "notes": [
+         "1 result, 1 not decided"
+        ]
+       },
+       "unsupported": {
+        "results": [
+         {
+          "question": "q.route",
+          "state": "unsupported",
+          "choice": null
+         }
+        ],
+        "tone": "partial",
+        "notes": [
+         "1 result, 1 not decided"
+        ]
+       },
+       "stale": {
+        "results": [
+         {
+          "question": "q.route",
+          "state": "stale",
+          "choice": null
+         }
+        ],
+        "tone": "partial",
+        "notes": [
+         "1 result, 1 not decided"
+        ]
+       },
+       "booleanAbstain": {
+        "results": [
+         {
+          "question": "q.gate",
+          "state": "abstain",
+          "choice": null
+         }
+        ],
+        "tone": "partial",
+        "notes": [
+         "1 result, 1 not decided"
+        ]
+       }
+      },
+      "findings": {
+       "abstain": [],
+       "partial": [],
+       "incomplete": [],
+       "refused": [],
+       "invalid": [],
+       "unsupported": [],
+       "stale": [],
+       "booleanAbstain": []
+      },
+      "slots": {
+       "abstain": {
+        "q.route": [
+         "results.0.choice"
+        ]
+       },
+       "partial": {
+        "q.route": [
+         "results.0.choice"
+        ]
+       },
+       "incomplete": {
+        "q.route": [
+         "results.0.choice"
+        ]
+       },
+       "refused": {
+        "q.route": [
+         "results.0.choice"
+        ]
+       },
+       "invalid": {
+        "q.route": [
+         "results.0.choice"
+        ]
+       },
+       "unsupported": {
+        "q.route": [
+         "results.0.choice"
+        ]
+       },
+       "stale": {
+        "q.route": [
+         "results.0.choice"
+        ]
+       },
+       "booleanAbstain": {
+        "q.gate": [
+         "results.0.choice"
+        ]
+       }
+      },
+      "echoes": {
+       "abstain": {
+        "q.route": [
+         "results.0.state"
+        ]
+       },
+       "partial": {
+        "q.route": [
+         "results.0.state"
+        ]
+       },
+       "incomplete": {
+        "q.route": [
+         "results.0.state"
+        ]
+       },
+       "refused": {
+        "q.route": [
+         "results.0.state"
+        ]
+       },
+       "invalid": {
+        "q.route": [
+         "results.0.state"
+        ]
+       },
+       "unsupported": {
+        "q.route": [
+         "results.0.state"
+        ]
+       },
+       "stale": {
+        "q.route": [
+         "results.0.state"
+        ]
+       },
+       "booleanAbstain": {
+        "q.gate": [
+         "results.0.state"
+        ]
+       }
+      },
+      "decidedControls": {
+       "abstain": {
+        "results": [
+         {
+          "question": "q.route",
+          "state": "decided",
+          "choice": "cand-route-south-4e9"
+         }
+        ],
+        "tone": "success",
+        "notes": [
+         "1 result, all decided"
+        ]
+       },
+       "partial": {
+        "results": [
+         {
+          "question": "q.route",
+          "state": "decided",
+          "choice": "cand-route-south-4e9"
+         }
+        ],
+        "tone": "success",
+        "notes": [
+         "1 result, all decided"
+        ]
+       },
+       "incomplete": {
+        "results": [
+         {
+          "question": "q.route",
+          "state": "decided",
+          "choice": "cand-route-south-4e9"
+         }
+        ],
+        "tone": "success",
+        "notes": [
+         "1 result, all decided"
+        ]
+       },
+       "refused": {
+        "results": [
+         {
+          "question": "q.route",
+          "state": "decided",
+          "choice": "cand-route-south-4e9"
+         }
+        ],
+        "tone": "success",
+        "notes": [
+         "1 result, all decided"
+        ]
+       },
+       "invalid": {
+        "results": [
+         {
+          "question": "q.route",
+          "state": "decided",
+          "choice": "cand-route-south-4e9"
+         }
+        ],
+        "tone": "success",
+        "notes": [
+         "1 result, all decided"
+        ]
+       },
+       "unsupported": {
+        "results": [
+         {
+          "question": "q.route",
+          "state": "decided",
+          "choice": "cand-route-south-4e9"
+         }
+        ],
+        "tone": "success",
+        "notes": [
+         "1 result, all decided"
+        ]
+       },
+       "stale": {
+        "results": [
+         {
+          "question": "q.route",
+          "state": "decided",
+          "choice": "cand-route-south-4e9"
+         }
+        ],
+        "tone": "success",
+        "notes": [
+         "1 result, all decided"
+        ]
+       },
+       "booleanAbstain": {
+        "results": [
+         {
+          "question": "q.gate",
+          "state": "decided",
+          "choice": false
+         }
+        ],
+        "tone": "success",
+        "notes": [
+         "1 result, all decided"
+        ]
+       }
+      }
+     }
+    },
+    {
+     "id": "A3",
+     "witness": {
+      "pin": "A3",
+      "findings": {
+       "relabelUpper": {
+        "abstain": [
+         "verbatim:q.route"
+        ],
+        "partial": [
+         "verbatim:q.route"
+        ],
+        "incomplete": [
+         "verbatim:q.route"
+        ],
+        "refused": [
+         "verbatim:q.route"
+        ],
+        "invalid": [
+         "verbatim:q.route"
+        ],
+        "unsupported": [
+         "verbatim:q.route"
+        ],
+        "stale": [
+         "verbatim:q.route"
+        ]
+       },
+       "relabelPiWord": {
+        "abstain": [
+         "verbatim:q.route"
+        ],
+        "partial": [
+         "verbatim:q.route"
+        ],
+        "incomplete": [
+         "verbatim:q.route"
+        ],
+        "refused": [
+         "verbatim:q.route"
+        ],
+        "invalid": [
+         "verbatim:q.route"
+        ],
+        "unsupported": [
+         "verbatim:q.route"
+        ],
+        "stale": [
+         "verbatim:q.route"
+        ]
+       },
+       "relabelLegacyTense": {
+        "abstain": [
+         "verbatim:q.route"
+        ],
+        "partial": [],
+        "incomplete": [],
+        "refused": [],
+        "invalid": [],
+        "unsupported": [],
+        "stale": []
+       },
+       "relabelMark": {
+        "abstain": [
+         "verbatim:q.route"
+        ],
+        "partial": [
+         "verbatim:q.route"
+        ],
+        "incomplete": [
+         "verbatim:q.route"
+        ],
+        "refused": [
+         "verbatim:q.route"
+        ],
+        "invalid": [
+         "verbatim:q.route"
+        ],
+        "unsupported": [
+         "verbatim:q.route"
+        ],
+        "stale": [
+         "verbatim:q.route"
+        ]
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "label": "(b) mutant: mapping abstain to False, or any listed state to a default/first candidate, fails: abstain read as False on a Boolean and a choice question, the first candidate for every listed word, and the last candidate, the index, a default note and the provisional candidate passed through all refused",
+   "pins": [
+    {
+     "id": "B1",
+     "witness": {
+      "pin": "B1",
+      "findings": {
+       "abstainAsFalse": {
+        "booleanAbstain": [
+         "slot:q.gate"
+        ],
+        "abstain": [
+         "slot:q.route"
+        ]
+       },
+       "abstainDecidedFalse": {
+        "booleanAbstain": [
+         "slot:q.gate",
+         "success",
+         "verbatim:q.gate"
+        ],
+        "abstain": [
+         "verbatim:q.route"
+        ]
+       }
+      },
+      "decidedFalse": {
+       "results": [
+        {
+         "question": "q.gate",
+         "state": "decided",
+         "choice": false
+        }
+       ],
+       "tone": "success",
+       "notes": [
+        "1 result, all decided"
+       ]
+      },
+      "abstainReading": {
+       "results": [
+        {
+         "question": "q.gate",
+         "state": "abstain",
+         "choice": null
+        }
+       ],
+       "tone": "partial",
+       "notes": [
+        "1 result, 1 not decided"
+       ]
+      }
+     }
+    },
+    {
+     "id": "B2",
+     "witness": {
+      "pin": "B2",
+      "findings": {
+       "firstAtSlot": {
+        "abstain": [
+         "candidate:q.route",
+         "slot:q.route"
+        ],
+        "partial": [
+         "candidate:q.route",
+         "slot:q.route"
+        ],
+        "incomplete": [
+         "candidate:q.route",
+         "slot:q.route"
+        ],
+        "refused": [
+         "candidate:q.route",
+         "slot:q.route"
+        ],
+        "invalid": [
+         "candidate:q.route",
+         "slot:q.route"
+        ],
+        "unsupported": [
+         "candidate:q.route",
+         "slot:q.route"
+        ],
+        "stale": [
+         "candidate:q.route",
+         "slot:q.route"
+        ]
+       },
+       "firstDecided": {
+        "abstain": [
+         "candidate:q.route",
+         "slot:q.route",
+         "success",
+         "verbatim:q.route"
+        ],
+        "partial": [
+         "candidate:q.route",
+         "slot:q.route",
+         "success",
+         "verbatim:q.route"
+        ],
+        "incomplete": [
+         "candidate:q.route",
+         "slot:q.route",
+         "success",
+         "verbatim:q.route"
+        ],
+        "refused": [
+         "candidate:q.route",
+         "slot:q.route",
+         "success",
+         "verbatim:q.route"
+        ],
+        "invalid": [
+         "candidate:q.route",
+         "slot:q.route",
+         "success",
+         "verbatim:q.route"
+        ],
+        "unsupported": [
+         "candidate:q.route",
+         "slot:q.route",
+         "success",
+         "verbatim:q.route"
+        ],
+        "stale": [
+         "candidate:q.route",
+         "slot:q.route",
+         "success",
+         "verbatim:q.route"
+        ]
+       }
+      }
+     }
+    },
+    {
+     "id": "B3",
+     "witness": {
+      "pin": "B3",
+      "findings": {
+       "lastAtSlot": {
+        "abstain": [
+         "candidate:q.route",
+         "slot:q.route"
+        ],
+        "partial": [
+         "candidate:q.route",
+         "slot:q.route"
+        ],
+        "incomplete": [
+         "candidate:q.route",
+         "slot:q.route"
+        ],
+        "refused": [
+         "candidate:q.route",
+         "slot:q.route"
+        ],
+        "invalid": [
+         "candidate:q.route",
+         "slot:q.route"
+        ],
+        "unsupported": [
+         "candidate:q.route",
+         "slot:q.route"
+        ],
+        "stale": [
+         "candidate:q.route",
+         "slot:q.route"
+        ]
+       },
+       "indexAtSlot": {
+        "abstain": [
+         "slot:q.route"
+        ],
+        "partial": [
+         "slot:q.route"
+        ],
+        "incomplete": [
+         "slot:q.route"
+        ],
+        "refused": [
+         "slot:q.route"
+        ],
+        "invalid": [
+         "slot:q.route"
+        ],
+        "unsupported": [
+         "slot:q.route"
+        ],
+        "stale": [
+         "slot:q.route"
+        ]
+       },
+       "defaultNote": {
+        "abstain": [
+         "candidate:q.route"
+        ],
+        "partial": [
+         "candidate:q.route"
+        ],
+        "incomplete": [
+         "candidate:q.route"
+        ],
+        "refused": [
+         "candidate:q.route"
+        ],
+        "invalid": [
+         "candidate:q.route"
+        ],
+        "unsupported": [
+         "candidate:q.route"
+        ],
+        "stale": [
+         "candidate:q.route"
+        ]
+       },
+       "provisionalPassThrough": {
+        "abstain": [],
+        "partial": [
+         "candidate:q.route",
+         "slot:q.route"
+        ],
+        "incomplete": [
+         "candidate:q.route",
+         "slot:q.route"
+        ],
+        "refused": [],
+        "invalid": [],
+        "unsupported": [],
+        "stale": [
+         "candidate:q.route",
+         "slot:q.route"
+        ]
+       }
+      },
+      "residual": {
+       "sideIndex": {
+        "abstain": [],
+        "partial": [],
+        "incomplete": [],
+        "refused": [],
+        "invalid": [],
+        "unsupported": [],
+        "stale": []
+       },
+       "sideParaphrase": {
+        "abstain": [],
+        "partial": [],
+        "incomplete": [],
+        "refused": [],
+        "invalid": [],
+        "unsupported": [],
+        "stale": []
+       },
+       "sideBoolean": []
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "label": "(c) an unknown state word projects as non-choice (counted, verbatim), never as a selection or success (wb-973.10 pattern): the reference quiet over each unknown word and a mixed tally, unknown words read as success, selected, dropped, normalized or echoed raw all refused, and the landed wb-973.10 observer reading quiet under the same rules",
+   "pins": [
+    {
+     "id": "C1",
+     "witness": {
+      "pin": "C1",
+      "readings": {
+       "abstained": {
+        "results": [
+         {
+          "question": "q.route",
+          "state": "abstained",
+          "choice": null
+         }
+        ],
+        "tone": "partial",
+        "notes": [
+         "1 result, 1 not decided"
+        ]
+       },
+       "not_a_decision": {
+        "results": [
+         {
+          "question": "q.route",
+          "state": "not_a_decision",
+          "choice": null
+         }
+        ],
+        "tone": "partial",
+        "notes": [
+         "1 result, 1 not decided"
+        ]
+       },
+       "malformed": {
+        "results": [
+         {
+          "question": "q.route",
+          "state": "malformed",
+          "choice": null
+         }
+        ],
+        "tone": "partial",
+        "notes": [
+         "1 result, 1 not decided"
+        ]
+       },
+       "Abstain": {
+        "results": [
+         {
+          "question": "q.route",
+          "state": "Abstain",
+          "choice": null
+         }
+        ],
+        "tone": "partial",
+        "notes": [
+         "1 result, 1 not decided"
+        ]
+       },
+       "awaiting operator review": {
+        "results": [
+         {
+          "question": "q.route",
+          "state": "…",
+          "choice": null
+         }
+        ],
+        "tone": "partial",
+        "notes": [
+         "1 result, 1 not decided"
+        ]
+       },
+       "tally": {
+        "results": [
+         {
+          "question": "q.t1",
+          "state": "abstained",
+          "choice": null
+         },
+         {
+          "question": "q.t2",
+          "state": "not_a_decision",
+          "choice": null
+         },
+         {
+          "question": "q.t3",
+          "state": "malformed",
+          "choice": null
+         },
+         {
+          "question": "q.t4",
+          "state": "Abstain",
+          "choice": null
+         },
+         {
+          "question": "q.t5",
+          "state": "…",
+          "choice": null
+         },
+         {
+          "question": "q.t6",
+          "state": "decided",
+          "choice": "cand-t6-cobalt-62"
+         }
+        ],
+        "tone": "partial",
+        "notes": [
+         "6 results, 5 not decided"
+        ]
+       }
+      },
+      "findings": {
+       "abstained": [],
+       "not_a_decision": [],
+       "malformed": [],
+       "Abstain": [],
+       "awaiting operator review": [],
+       "tally": []
+      },
+      "open": 5
+     }
+    },
+    {
+     "id": "C2",
+     "witness": {
+      "pin": "C2",
+      "findings": {
+       "unknownSuccess": {
+        "abstained": [
+         "success"
+        ],
+        "not_a_decision": [
+         "success"
+        ],
+        "malformed": [
+         "success"
+        ],
+        "Abstain": [
+         "success"
+        ],
+        "awaiting operator review": [
+         "success"
+        ],
+        "tally": [
+         "success"
+        ]
+       },
+       "unknownFirst": {
+        "abstained": [
+         "candidate:q.route",
+         "slot:q.route"
+        ],
+        "not_a_decision": [
+         "candidate:q.route",
+         "slot:q.route"
+        ],
+        "malformed": [
+         "candidate:q.route",
+         "slot:q.route"
+        ],
+        "Abstain": [
+         "candidate:q.route",
+         "slot:q.route"
+        ],
+        "awaiting operator review": [
+         "candidate:q.route",
+         "slot:q.route"
+        ],
+        "tally": [
+         "candidate:q.t1",
+         "candidate:q.t2",
+         "candidate:q.t3",
+         "candidate:q.t4",
+         "candidate:q.t5",
+         "slot:q.t1",
+         "slot:q.t2",
+         "slot:q.t3",
+         "slot:q.t4",
+         "slot:q.t5"
+        ]
+       },
+       "unknownDropped": {
+        "abstained": [
+         "counted",
+         "success",
+         "verbatim:q.route"
+        ],
+        "not_a_decision": [
+         "counted",
+         "success",
+         "verbatim:q.route"
+        ],
+        "malformed": [
+         "counted",
+         "success",
+         "verbatim:q.route"
+        ],
+        "Abstain": [
+         "counted",
+         "success",
+         "verbatim:q.route"
+        ],
+        "awaiting operator review": [
+         "counted",
+         "success"
+        ],
+        "tally": [
+         "counted",
+         "slot:q.t1",
+         "slot:q.t2",
+         "slot:q.t3",
+         "slot:q.t4",
+         "slot:q.t5",
+         "success",
+         "verbatim:q.t1",
+         "verbatim:q.t2",
+         "verbatim:q.t3",
+         "verbatim:q.t4"
+        ]
+       },
+       "unknownNormalized": {
+        "abstained": [],
+        "not_a_decision": [],
+        "malformed": [],
+        "Abstain": [
+         "verbatim:q.route"
+        ],
+        "awaiting operator review": [],
+        "tally": [
+         "verbatim:q.t4"
+        ]
+       },
+       "unknownRaw": {
+        "abstained": [],
+        "not_a_decision": [],
+        "malformed": [],
+        "Abstain": [],
+        "awaiting operator review": [
+         "raw:q.route"
+        ],
+        "tally": [
+         "raw:q.t5"
+        ]
+       }
+      },
+      "residual": {
+       "synonym": {
+        "abstained": [],
+        "not_a_decision": [],
+        "malformed": [],
+        "Abstain": [],
+        "awaiting operator review": [],
+        "tally": []
+       },
+       "successInProse": {
+        "abstained": [],
+        "not_a_decision": [],
+        "malformed": [],
+        "Abstain": [],
+        "awaiting operator review": [],
+        "tally": []
+       },
+       "totalOnly": {
+        "abstained": [],
+        "not_a_decision": [],
+        "malformed": [],
+        "Abstain": [],
+        "awaiting operator review": [],
+        "tally": [
+         "counted"
+        ]
+       }
+      }
+     }
+    },
+    {
+     "id": "C3",
+     "witness": {
+      "pin": "C3",
+      "words": [
+       "abstained",
+       "not_a_decision",
+       "malformed",
+       "Abstain"
+      ],
+      "coverage": "partial",
+      "tone": "unknown",
+      "findings": [],
+      "flipped": [
+       "success"
+      ],
+      "pattern": true
+     }
+    }
+   ]
+  },
+  {
+   "id": "D",
+   "label": "(trigger, absent today) If Pi ever consumes a native decision envelope: (d) today: <ENGINE>/result-state identifiers in Pi src/test = 0, measured over src, test, qa and examples with load-bearing exemptions, and the gating envelope measured unshipped at both ReactiveInference commits",
+   "pins": [
+    {
+     "id": "D1",
+     "witness": {
+      "pin": "D1",
+      "filesFloorMet": true,
+      "anchorsWalked": true,
+      "readmeNamed": 48,
+      "readmeMissing": [],
+      "engine": [],
+      "state": [],
+      "controls": {
+       "engineSpecifier": true,
+       "engineSpawnArgument": true,
+       "engineCamel": true,
+       "enginePascal": true,
+       "engineDotted": true,
+       "engineFolded": true,
+       "enginePath": true,
+       "stateLiteral": true,
+       "stateIdentifier": true,
+       "stateKind": true,
+       "stateQualified": true,
+       "stateNotADecision": true,
+       "stateEscaped": true,
+       "stateFolded": true,
+       "stateRegex": true,
+       "srcComment": true,
+       "srcUtf16": true,
+       "srcProse": true,
+       "resultTag": false,
+       "forgeResultState": false,
+       "bareWords": false,
+       "controlDecision": false,
+       "prose": false,
+       "composedJoin": false,
+       "composedState": false,
+       "rot13": false,
+       "lookalike": false,
+       "invisible": false
+      }
+     }
+    },
+    {
+     "id": "D2",
+     "witness": {
+      "pin": "D2",
+      "floorsMet": true,
+      "hits": {
+       "test": {
+        "engine": [],
+        "state": []
+       },
+       "qa": {
+        "engine": [],
+        "state": []
+       },
+       "examples": {
+        "engine": [],
+        "state": []
+       }
+      },
+      "controls": {
+       "dataState": true,
+       "dataEngine": true,
+       "dataEscaped": true,
+       "dataKey": true,
+       "dataLines": true,
+       "dataPath": true,
+       "proseValue": false,
+       "brokenJson": false,
+       "utf16Json": false,
+       "textFile": false,
+       "moduleLiteral": true,
+       "moduleIdentifier": true,
+       "proseLiteral": false,
+       "resultTag": false,
+       "testComment": false,
+       "qaModule": true,
+       "examplesModule": true,
+       "docsOutside": false,
+       "beadsOutside": false,
+       "symlink": true,
+       "walkedPlants": 18
+      }
+     }
+    },
+    {
+     "id": "D3",
+     "witness": {
+      "pin": "D3",
+      "exempt": [
+       "test/workbench-ri-decision-state-echo-census.test.ts",
+       "test/fixtures/ri-decision-state-echo-roster.json"
+      ],
+      "walked": true,
+      "selfState": true,
+      "rosterState": true,
+      "selfEngine": false,
+      "rosterEngine": false,
+      "exemptStateHits": true
+     }
+    },
+    {
+     "id": "D4",
+     "witness": {
+      "pin": "D4",
+      "beadSaysUnshipped": true,
+      "quoteAtLine": true,
+      "contractShipped": false,
+      "resultStateTypes": [],
+      "namingExports": [],
+      "exports": {
+       "pin": 7,
+       "head": 7
+      },
+      "sameExportSet": true,
+      "legacyKinds": 8,
+      "listedOutsideLegacy": [
+       "abstain",
+       "incomplete",
+       "invalid",
+       "stale"
+      ],
+      "headContainsPin": true
+     }
+    }
+   ]
+  }
+ ],
+ "tests": [
+  "the judged set: the frozen shape, the out-of-file roster and the bead row agree",
+  "A1",
+  "A2",
+  "A3",
+  "B1",
+  "B2",
+  "B3",
+  "C1",
+  "C2",
+  "C3",
+  "D1",
+  "D2",
+  "D3",
+  "D4",
+  "records: every registered test ran once in run mode in roster order, every pin reached its end, and no title spells the engine family"
+ ]
+}
