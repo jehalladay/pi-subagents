@@ -1,0 +1,596 @@
+{
+ "bead": "wb-4wmu.1",
+ "producer": {
+  "hx": {
+   "repository": "HyperUnix-CLI",
+   "sha": "0091719d02887910fa0c2fb6693a32723e243600",
+   "path": "docs/programs/trainingworks-2026-10-18/README.md",
+   "blob": "9c9d7278c398",
+   "line": 3,
+   "statusLine": "**Status: proposed integration and research design, no new HX code implemented.**"
+  },
+  "forge": {
+   "repository": "Forge",
+   "sha": "3ce4733861339a8a2a81b9d85ed8a661cac97b62",
+   "path": "docs/programs/trainingworks-2026-10-18/README.md",
+   "blob": "ce738595eed8",
+   "line": 3,
+   "statusLine": "**Status:** 2026-10-18 proposed additive source adapter, not implemented.",
+   "closingLine": 21,
+   "closing": "No native code change or gate run is claimed; no GitHub CI. Forge remains the first build and research artifact interface."
+  },
+  "furnace": {
+   "repository": "Furnace",
+   "sha": "d39a93dddf383f53d63459b248e2231ea7626890",
+   "path": "docs/programs/trainingworks-2026-10-18/README.md",
+   "blob": "9d8829442eb6",
+   "line": 3,
+   "statusLine": "**Status 2026-10-18: integration design only; no simulator or policy hooks implemented by this commit.**",
+   "closingLine": 26,
+   "closing": "Use Forge for QA. Never claim a fixture run equals live Furnace/Beads success or that a learned policy gained native mutation authority."
+  },
+  "mw": {
+   "repository": "MechanicalWorkflows",
+   "sha": "5ce2a07f891f5b165125d26739ec79720c295dd1",
+   "path": "docs/programs/trainingworks-2026-10-18/README.md",
+   "blob": "7c303f78c801",
+   "line": 3,
+   "statusLine": "**Status 2026-10-18: additive adapter design; no new implementation asserted.**"
+  },
+  "beads": {
+   "repository": "beads",
+   "sha": "105a90b5ed393a070c3331fd00af9c1955554c35",
+   "path": "docs/programs/trainingworks-2026-10-18/README.md",
+   "blob": "88c5ad1aafd5",
+   "line": 3,
+   "statusLine": "**Status: 2026-10-18 additive design documentation; no code, test or task-store mutation.**",
+   "closingLine": 24,
+   "closing": "No implicit Forge PASS, no GitHub CI and no claim of shipped adapter code."
+  },
+  "rfcli": {
+   "repository": "ReactiveFiberCLI",
+   "sha": "6a251bf73af57c3a703caf6892dfe3015e06a481",
+   "path": "docs/programs/trainingworks-2026-10-18/README.md",
+   "blob": "a7eb5958ec1b",
+   "line": 3,
+   "statusLine": "**2026-10-18: design and integration handoff, not a shipped TrainingWorks adapter or new host capability.**"
+  },
+  "hx-gp": {
+   "repository": "HyperUnix-CLI",
+   "sha": "0091719d02887910fa0c2fb6693a32723e243600",
+   "path": "docs/programs/graph-policy-optimization-2026-10-18/README.md",
+   "blob": "ecb16aa218ad",
+   "line": 3,
+   "statusLine": "**Date: 2026-10-18; design only.**",
+   "closingLine": 26,
+   "closing": "Do not publish new HX requirements solely through this additive note. No code or speedup is asserted."
+  }
+ },
+ "constants": {
+  "citationPattern": "TrainingWorks|graph-policy-optimization|GraphPolicy",
+  "window": 400,
+  "citationScope": "docs/workbench",
+  "sentenceScope": "docs",
+  "ledger": "docs/workbench/TRACEABILITY.md",
+  "matrix": "docs/workbench/feature-matrix.md",
+  "claimWords": [
+   "shipped",
+   "gate-pass",
+   "live-sdk"
+  ],
+  "matrixLegend": [
+   "landed-gated",
+   "partial",
+   "in-progress",
+   "planned",
+   "not-started"
+  ],
+  "matrixClaims": [
+   "landed-gated",
+   "partial"
+  ],
+  "namesakeFiles": [
+   "docs/workbench/03-architecture-and-ownership.md",
+   "docs/workbench/receipts/wb-1xvp.3.md",
+   "docs/workbench/receipts/wb-1xvp.5.md"
+  ],
+  "familyMarks": {
+   "trainingworks": "trainingworks",
+   "hx-gp": "graph-policy-optimization|HyperUnix\\s*(?:x|×)\\s*GraphPolicy|\\bHX[- ]GP\\b"
+  },
+  "otherProgram": "RF-GRAPH-POLICY-MACHINE-CONTROL|graph-policy-machine-control",
+  "deposits": [
+   {
+    "id": "hx",
+    "repo": "HX",
+    "sha": "0091719d0288",
+    "family": "trainingworks",
+    "program": "trainingworks-2026-10-18",
+    "line": 3,
+    "phrase": "no new HX code implemented"
+   },
+   {
+    "id": "forge",
+    "repo": "Forge",
+    "sha": "3ce473386133",
+    "family": "trainingworks",
+    "program": "trainingworks-2026-10-18",
+    "line": 3,
+    "phrase": "proposed additive source adapter, not implemented"
+   },
+   {
+    "id": "furnace",
+    "repo": "Furnace",
+    "sha": "d39a93dddf38",
+    "family": "trainingworks",
+    "program": "trainingworks-2026-10-18",
+    "line": 3,
+    "phrase": "no simulator or policy hooks implemented by this commit"
+   },
+   {
+    "id": "mw",
+    "repo": "MW",
+    "sha": "5ce2a07f891f",
+    "family": "trainingworks",
+    "program": "trainingworks-2026-10-18",
+    "line": 3,
+    "phrase": "no new implementation asserted"
+   },
+   {
+    "id": "beads",
+    "repo": "beads",
+    "sha": "105a90b5ed39",
+    "family": "trainingworks",
+    "program": "trainingworks-2026-10-18",
+    "line": 3,
+    "phrase": "no code, test or task-store mutation"
+   },
+   {
+    "id": "rfcli",
+    "repo": "RFCLI",
+    "sha": "6a251bf73af5",
+    "family": "trainingworks",
+    "program": "trainingworks-2026-10-18",
+    "line": 3,
+    "phrase": "not a shipped TrainingWorks adapter or new host capability"
+   },
+   {
+    "id": "hx-gp",
+    "repo": "HX GP",
+    "sha": "0091719d0288",
+    "family": "hx-gp",
+    "program": "graph-policy-optimization-2026-10-18",
+    "line": 3,
+    "phrase": "design only"
+   }
+  ],
+  "subject": [
+   "trainingworks",
+   "graph-policy-optimization",
+   "GraphPolicy|GraphDataIR|\\bgp\\b",
+   "\\bhx\\b|HyperUnix"
+  ],
+  "speed": "\\b(?:faster|speed-?ups?|speeds? up|quicker|accelerat\\w*)\\b",
+  "receipt": "\\bcmd_[0-9a-f]{12}\\b",
+  "fixtureTier": "fixture|fake|hermetic",
+  "sentence": [
+   "\\blive\\b",
+   "\\b(?:furnace|beads)\\b",
+   "\\b(?:success\\w*|succeed\\w*|pass(?:es|ed)?)\\b",
+   "\\b(?:equals?|equal to|equivalent(?: to)?|(?:the )?same as|counts? as|stands? (?:in )?for|proves?|establish(?:es)?|amounts? to|means|substitutes? for|replaces?|is as good as|is|are|was|were)\\b",
+   "\\b(?:never|not|no|cannot|can't|isn't|aren't|doesn't|don't|won't|nor|neither|without|distinguish\\w*)\\b",
+   "^\\s*(?:not|never|no|distinct|different|separate|unlike|apart)\\b",
+   "[,;:(—]",
+   "(?<=[.!?])\\s+|\\n\\s*\\n|\\n(?=\\s*(?:[-*+]|\\d+\\.|#+)\\s)|\\|"
+  ],
+  "residuals": {
+   "R-ATTRIBUTED-FILE": [
+    "Q1"
+   ],
+   "R-UNPINNED": [
+    "Q2"
+   ],
+   "R-SCOPE": [
+    "Q3"
+   ],
+   "R-UNLABELLED": [
+    "Q4"
+   ],
+   "R-ABSENT": [
+    "Q5"
+   ],
+   "R-PARAPHRASE": [
+    "Q6"
+   ],
+   "R-SUBJECT-NAME": [
+    "Q7"
+   ],
+   "R-STATUS-WORD": [
+    "Q8"
+   ]
+  }
+ },
+ "tests": [
+  "the judged set: the frozen shape, the out-of-file roster and the cases agree",
+  "the outside anchors: the bead's own row binds the row labels, the pattern, the window, the scopes, the claim and fixture words and the deposits; the matrix legend binds its claim statuses",
+  "A1",
+  "A2",
+  "B1",
+  "B2",
+  "C1",
+  "C2",
+  "Q1",
+  "Q2",
+  "Q3",
+  "Q4",
+  "Q5",
+  "Q6",
+  "Q7",
+  "Q8",
+  "the registered tests and the reached pins equal the roster, in order and both ways"
+ ],
+ "rows": [
+  {
+   "id": "A",
+   "label": "(a) every /TrainingWorks|graph-policy-optimization|GraphPolicy/ match in docs/workbench sits within 400 chars of its deposit's verbatim status phrase",
+   "pins": [
+    {
+     "id": "A1",
+     "witness": {
+      "walkIsTracked": true,
+      "floor": 69,
+      "findings": [],
+      "namesakeFilesMeasured": [
+       "docs/workbench/03-architecture-and-ownership.md",
+       "docs/workbench/receipts/wb-1xvp.3.md",
+       "docs/workbench/receipts/wb-1xvp.5.md"
+      ]
+     }
+    },
+    {
+     "id": "A2",
+     "witness": {
+      "controls": [
+       {
+        "id": "unpinned-no-phrase",
+        "findings": [
+         "trainingworks:hx+forge+furnace+mw+beads+rfcli"
+        ]
+       },
+       {
+        "id": "forge-pinned-beside-beads-phrase",
+        "findings": [
+         "trainingworks:forge"
+        ]
+       },
+       {
+        "id": "phrase-401-away",
+        "findings": [
+         "trainingworks:hx+forge+furnace+mw+beads+rfcli"
+        ]
+       },
+       {
+        "id": "hx-gp-directory-no-phrase",
+        "findings": [
+         "hx-gp:hx-gp"
+        ]
+       },
+       {
+        "id": "hx-gp-title-no-phrase",
+        "findings": [
+         "hx-gp:hx-gp"
+        ]
+       },
+       {
+        "id": "hx-pinned-beside-hx-gp-phrase",
+        "findings": [
+         "trainingworks:hx"
+        ]
+       },
+       {
+        "id": "unattributed-namesake",
+        "findings": [
+         "unattributed:hx+forge+furnace+mw+beads+rfcli+hx-gp"
+        ]
+       },
+       {
+        "id": "unpinned-phrase-after",
+        "findings": []
+       },
+       {
+        "id": "furnace-pinned-phrase-before",
+        "findings": []
+       },
+       {
+        "id": "phrase-400-away",
+        "findings": []
+       },
+       {
+        "id": "hx-gp-with-phrase",
+        "findings": []
+       },
+       {
+        "id": "attributed-namesake",
+        "findings": []
+       },
+       {
+        "id": "phrase-wrapped",
+        "findings": []
+       },
+       {
+        "id": "unattributed-beside-phrase",
+        "findings": []
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "label": "(b) no ledger or matrix row names a TrainingWorks adapter, export, policy or GP-planned hx 'shipped', 'gate-pass' or 'live-sdk', or an hx speedup without a cmd_ receipt",
+   "pins": [
+    {
+     "id": "B1",
+     "witness": {
+      "ledgerRows": 71,
+      "wbRows": 50,
+      "ledgerClaimRows": [
+       "17:live-sdk",
+       "27:gate-pass"
+      ],
+      "matrixStatusesAreLegend": true,
+      "findings": []
+     }
+    },
+    {
+     "id": "B2",
+     "witness": {
+      "controls": [
+       {
+        "id": "ledger-shipped",
+        "findings": 1
+       },
+       {
+        "id": "ledger-gate-pass",
+        "findings": 1
+       },
+       {
+        "id": "ledger-live-sdk",
+        "findings": 1
+       },
+       {
+        "id": "matrix-landed-gated",
+        "findings": 1
+       },
+       {
+        "id": "matrix-partial",
+        "findings": 1
+       },
+       {
+        "id": "matrix-claim-word-in-text",
+        "findings": 1
+       },
+       {
+        "id": "matrix-hx-gp-program",
+        "findings": 1
+       },
+       {
+        "id": "hx-speedup-no-receipt",
+        "findings": 1
+       },
+       {
+        "id": "subject-planned",
+        "findings": 0
+       },
+       {
+        "id": "hx-speedup-with-receipt",
+        "findings": 0
+       },
+       {
+        "id": "gp-without-hx",
+        "findings": 0
+       },
+       {
+        "id": "hx-without-speed-or-gp",
+        "findings": 0
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "label": "(c) validateLedger refuses a 'shipped'/'gate-pass'/'live-sdk' row backed only by a hermetic or fixture receipt (new guard), and no docs or TRACEABILITY sentence equates a fixture run with live Furnace/Beads success",
+   "pins": [
+    {
+     "id": "C1",
+     "witness": {
+      "controls": [
+       {
+        "id": "live-sdk-on-a-fixture",
+        "rules": [
+         "receipt-tier"
+        ],
+        "detail": "live-sdk row rests only on fixture-tier receipts: Pi route fixture"
+       },
+       {
+        "id": "gate-pass-on-a-hermetic-cmd",
+        "rules": [
+         "receipt-tier"
+        ],
+        "detail": "gate-pass row rests only on fixture-tier receipts: hermetic forge run cmd_65b034a22fb5"
+       },
+       {
+        "id": "shipped-on-fakes",
+        "rules": [
+         "receipt-tier"
+        ],
+        "detail": "shipped row rests only on fixture-tier receipts: fake-producer journey; recorded fixture envelope"
+       },
+       {
+        "id": "live-sdk-on-a-labelled-cmd-elsewhere",
+        "rules": [
+         "receipt-tier"
+        ],
+        "detail": "live-sdk row rests only on fixture-tier receipts: hermetic smoke cmd_65b034a22fb5"
+       },
+       {
+        "id": "live-sdk-mixed",
+        "rules": [],
+        "detail": ""
+       },
+       {
+        "id": "fixture-status",
+        "rules": [],
+        "detail": ""
+       },
+       {
+        "id": "experimental-status",
+        "rules": [],
+        "detail": ""
+       }
+      ],
+      "liveClaimRows": [
+       "WB-009:live-sdk",
+       "WB-019:gate-pass"
+      ],
+      "liveReceipts": {
+       "WB-009": [
+        "Real SDK events",
+        "session UUIDs"
+       ],
+       "WB-019": []
+      },
+      "liveIntegrity": 0
+     }
+    },
+    {
+     "id": "C2",
+     "witness": {
+      "walkIsTracked": true,
+      "findings": [],
+      "controls": [
+       {
+        "id": "equals",
+        "findings": 1
+       },
+       {
+        "id": "counts-as",
+        "findings": 1
+       },
+       {
+        "id": "proves",
+        "findings": 1
+       },
+       {
+        "id": "copula",
+        "findings": 1
+       },
+       {
+        "id": "reversed",
+        "findings": 1
+       },
+       {
+        "id": "negation-elsewhere",
+        "findings": 1
+       },
+       {
+        "id": "furnace-own-rule",
+        "findings": 0
+       },
+       {
+        "id": "is-not",
+        "findings": 0
+       },
+       {
+        "id": "does-not-equal",
+        "findings": 0
+       },
+       {
+        "id": "is-distinct",
+        "findings": 0
+       },
+       {
+        "id": "no-predicate",
+        "findings": 0
+       },
+       {
+        "id": "table-cells",
+        "findings": 0
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "Q",
+   "label": "the residuals: each named family pinned by its quiet row",
+   "pins": [
+    {
+     "id": "Q1",
+     "witness": {
+      "attributed": 1,
+      "findings": 0
+     }
+    },
+    {
+     "id": "Q2",
+     "witness": {
+      "citations": 1,
+      "findings": 0
+     }
+    },
+    {
+     "id": "Q3",
+     "witness": {
+      "outsideTheWalk": [
+       "README.md",
+       "CHANGELOG.md",
+       "docs/rpc.md",
+       "docs/workflows.md"
+      ]
+     }
+    },
+    {
+     "id": "Q4",
+     "witness": {
+      "bare": [],
+      "unlabelled": []
+     }
+    },
+    {
+     "id": "Q5",
+     "witness": {
+      "row": "WB-019",
+      "receipts": [],
+      "tier": 0,
+      "synthetic": []
+     }
+    },
+    {
+     "id": "Q6",
+     "witness": {
+      "findings": 0
+     }
+    },
+    {
+     "id": "Q7",
+     "witness": {
+      "rows": 2,
+      "findings": 0
+     }
+    },
+    {
+     "id": "Q8",
+     "witness": {
+      "status": "landed",
+      "findings": 0
+     }
+    }
+   ]
+  }
+ ]
+}
