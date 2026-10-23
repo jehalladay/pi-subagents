@@ -1,0 +1,294 @@
+{
+ "bead": "wb-z3ft.2",
+ "producer": "HyperUnix-CLI",
+ "pin": "0091719d02887910fa0c2fb6693a32723e243600",
+ "citation": "02-precedence-and-effect-admission.md:36@0091719d0288",
+ "excerpts": [
+  {
+   "site": "docs/programs/certified-structural-optimization-2026-10-18/02-precedence-and-effect-admission.md:36",
+   "textBase64": "RG8gKipub3QqKiBzZXJpYWxpemUgYSByYXcgTGVhbiBwcm9vZiBpbnRvIEhYUyBhcyB0aG91Z2ggaXQgd2VyZSBhbiBlbnZpcm9ubWVudGFsIGV2aWRlbmNlIGNlcnRpZmljYXRlLiBMb2dpY2FsL2Nvc3QgY2VydGlmaWNhdGVzIGFuZCBlbnZpcm9ubWVudGFsIGF1dGhvcml0eSBhcmUgZGlmZmVyZW50IG9iamVjdHMsIHdpdGggZGlmZmVyZW50IHByb3ZlbmFuY2UgYW5kIHRydXN0IGJvdW5kYXJpZXMu",
+   "sha256": "8bc3656519657fd3de6360cace999a41c191acee7e2d30ccd9a6772a5b14ccee"
+  },
+  {
+   "site": "docs/programs/certified-structural-optimization-2026-10-18/README.md:3",
+   "textBase64": "KioyMDI2LTEwLTE4LiBERVNJR04gT05MWS4gTm8gcnVudGltZSBsYXcgYWRtaXR0ZWQsIG5hdGl2ZSBMZWFuIGVsYWJvcmF0aW9uLCBvciBiZW5jaG1hcmsgcmVzdWx0IGNsYWltZWQuKio=",
+   "sha256": "cf89230862cf684d39c517c33e670ed29300000d897a1e0f818df04b93245f26"
+  },
+  {
+   "site": "docs/programs/certified-structural-optimization-2026-10-18/README.md:26-38",
+   "textBase64": "ewogICJsYXdfaWQiOiAiaHgub3B0aW0uc3Bva2UuZXhjaGFuZ2UudjEiLAogICJzb3VyY2VfZGlnZXN0IjogInNoYTI1NjouLi4iLAogICJ0YXJnZXRfZGlnZXN0IjogInNoYTI1NjouLi4iLAogICJwcmVzZXJ2ZXMiOiBbIm1lbWJlcnNoaXAiLCAia25vd2xlZGdlIiwgImJpbmRpbmdzIl0sCiAgInJlcXVpcmVzIjogWyJzdGFibGUtZmFub3V0IiwgInBvc2l0aXZlLWZhbm91dCIsICJub25uZWdhdGl2ZS1jaGFyZ2UiLCAic2VwYXJhYmxlLWNoYWluIl0sCiAgInByb3ZpZGVyX2F1dGhvcml0eV9yZWZzIjogW10sCiAgImNvdmVyYWdlX3JlZnMiOiBbXSwKICAic3VwcG9ydF9nZW5lcmF0aW9uX3JlZnMiOiBbXSwKICAiY2VydGlmaWNhdGVfcmVmcyI6IFsiVEktMjMiXSwKICAiaW52YWxpZGF0aW9uX2tleXMiOiBbXSwKICAiZmFsbGJhY2siOiAib3JpZ2luYWwtcGxhbiIKfQ==",
+   "sha256": "2356ffdce992463272d0a56f775bd9359444a3cd1e26843376def380c22be8ea"
+  },
+  {
+   "site": "docs/programs/certified-structural-optimization-2026-10-18/README.md:41",
+   "textBase64": "VGhlIGRpZ2VzdCwgcmVmZXJlbmNlLCBhbmQgcHJvZmlsZSBzY2hlbWFzIG11c3QgYmUgYWRhcHRlZCB0byBjdXJyZW50IEhYSVIgc2VyaWFsaXphdGlvbiBhZnRlciBzb3VyY2UgaW5zcGVjdGlvbjsgdGhpcyBleGFtcGxlIGlzICoqbm90KiogYSB2ZXJpZmllZCB3aXJlIHByb3RvY29sLg==",
+   "sha256": "8fccf7fc8e86e966da2d4b4d43ca7ac8dfae29a3786f6aa68ffb7e0128f04ec1"
+  },
+  {
+   "site": "docs/programs/certified-structural-optimization-2026-10-18/01-mathematical-contracts-and-architecture-crosswalk.md:10",
+   "textBase64": "fCBgc3JjL2h4X3BsYW5uZXIvbGF3X2FkbWlzc2lvbi5tbGlgIHwgYGFkbWl0YCwgYHJlY2hlY2tgLCBgd2l0bmVzc2AsIGByZWFzb25gLCB3aXRoIGNlcnRpZmljYXRlIHRhcmdldC9zY29wZS9tb2RlLCBhZG1pc3NpYmxlIGV2aWRlbmNlIGNsYXNzZXMsIHRva2VuIHZhbGlkaXR5LCBjb250ZXh0IGRpZ2VzdCBhbmQgcmVnaXN0cnkgYWRvcHRpb24gc3RhdHVzIHwgUmV0YWluIHRoaXMgZ3VhcmRlZCBwcmVjb25kaXRpb24gYXV0aG9yaXR5LiBFeHRlbmQgaXRzICphZG1pc3Npb24gc3VyZmFjZSosIG5vdCBpbnZlbnQgYW4gdW5yZWxhdGVkIG9wdGltaXplci4gQSBjb3N0IGNlcnRpZmljYXRlIGFsb25lIG5ldmVyIGNyZWF0ZXMgY292ZXJhZ2Ugb3IgZXZpZGVuY2UuIHw=",
+   "sha256": "c9f510c4016be977156263545ec32f853b23a2317fa6ddc42fc6fab95dc39dc1"
+  },
+  {
+   "site": "docs/programs/certified-structural-optimization-2026-10-18/01-mathematical-contracts-and-architecture-crosswalk.md:34",
+   "textBase64": "IyMgUHJvcG9zZWQgaW50ZXJuYWwgY2VydGlmaWNhdGUgb2JqZWN0IChub3QgeWV0IGEgd2lyZS9BUEkgY29udHJhY3Qp",
+   "sha256": "227875fd05b4cc20c6c09345ca5350f845f3ba23a4617bc3292bb2f91ff0f7c3"
+  },
+  {
+   "site": "docs/programs/certified-structural-optimization-2026-10-18/01-mathematical-contracts-and-architecture-crosswalk.md:37-49",
+   "textBase64": "Q29zdENlcnRpZmljYXRlVjEgewogIHNvdXJjZV9wbGFuX2RpZ2VzdCA6IEh4X3BsYW5fZGlnZXN0LAogIGNhbmRpZGF0ZV9wbGFuX2RpZ2VzdCA6IEh4X3BsYW5fZGlnZXN0LAogIGxhd19yZWdpc3RyYXRpb24gOiB2ZXJzaW9uZWRfaWQsCiAgb2NjdXJyZW5jZV9vcmRlciA6IG9jY3VycmVuY2VfaWQgbGlzdCwKICByYXRpb25hbF9wYXJhbWV0ZXJzIDogKG9jY3VycmVuY2VfaWQgKiBub25uZWdhdGl2ZV9mYW5vdXQgKiBub25uZWdhdGl2ZV9jaGFyZ2UpIGxpc3QsCiAgY29zdF9tb2RlbCA6ICJzZXBhcmFibGUtcGVyLW91dHB1dC1yb3ctdjEiLAogIHBhaXJfY2hlY2sgOiAiY29tcGxldGUtZXhhY3QtcGFpci1tYXRyaXgtdjEiLAogIGNvbnN1bWVyX29ic2VydmF0aW9uX3Byb2ZpbGUgOiBwcm9maWxlX2lkLAogIHNlbWFudGljX3dpdG5lc3NlcyA6IGV4aXN0aW5nX2xhd19hZG1pc3Npb25fd2l0bmVzc2VzLAogIHByb3ZpZGVyX2NvbnRleHRfZ2VuZXJhdGlvbiA6IGRlcGVuZGVuY3lfcmVmcywKICB2ZXJpZmljYXRpb25fcmVzdWx0IDogY2hlY2tlZCB8IHdpdGhoZWxkKHJlYXNvbikKfQ==",
+   "sha256": "b28aba23e72fbcd203cee8dae25fef2ba1e882157020ab5aa12d6b49d35c0716"
+  }
+ ],
+ "rows": [
+  {
+   "id": "A",
+   "label": "(a) today: a test asserts hyperunix-observer.ts reads coverage items for batch_id only (:207) and every evidenceRefs entry matches /^hx-(binary:sha256:[0-9a-f]{64}|coverage:.+)$/ (:229-235); src/+test/ grep for law\u005fid|certificate\u005frefs|Cost\u0043ertificate = 0",
+   "pins": [
+    {
+     "id": "A1",
+     "quote": "today: a test asserts hyperunix-observer.ts reads coverage items for batch_id only (:207)",
+     "witness": {
+      "claim": "98247ca73349",
+      "members": [
+       "batch_id",
+       "body",
+       "cause",
+       "mode",
+       "provider",
+       "scope",
+       "stream",
+       "target"
+      ],
+      "varied": 7,
+      "identical": true,
+      "live": true,
+      "read": {
+       "statements": 1,
+       "callbacks": 1,
+       "reads": [
+        "batch_id"
+       ],
+       "escapes": 0
+      },
+      "controls": {
+       "secondMember": true,
+       "secondStatement": true,
+       "elementAccess": true,
+       "destructuring": true,
+       "escapingParameter": true,
+       "otherConsumer": true
+      },
+      "quiet": {
+       "computedKey": false
+      }
+     }
+    },
+    {
+     "id": "A2",
+     "quote": "and every evidenceRefs entry matches /^hx-(binary:sha256:[0-9a-f]{64}|coverage:.+)$/ (:229-235)",
+     "witness": {
+      "claim": "1f4c61bd8fd5",
+      "heads": [
+       "hx-binary:sha256:",
+       "hx-coverage:"
+      ],
+      "headControls": {
+       "extraHead": true,
+       "unresolved": true
+      },
+      "kinds": 13,
+      "refused": [
+       "mutation-partial",
+       "mutation-rejected"
+      ],
+      "strays": [],
+      "entriesFloor": true
+     }
+    },
+    {
+     "id": "A3",
+     "quote": "src/+test/ grep for law\u005fid|certificate\u005frefs|Cost\u0043ertificate = 0",
+     "witness": {
+      "claim": "f26a1acfb48e",
+      "alternatives": 3,
+      "perAlternative": [
+       true,
+       true,
+       true
+      ],
+      "floors": {
+       "src": true,
+       "test": true,
+       "censusModules": true,
+       "censusFixtures": true
+      },
+      "srcHits": [],
+      "outside": [],
+      "own": [
+       {
+        "walked": true,
+        "hits": 0
+       },
+       {
+        "walked": true,
+        "hits": 0
+       }
+      ],
+      "command": {
+       "ran": true,
+       "product": [],
+       "outside": []
+      },
+      "planted": {
+       "src/plant-product.ts": "product",
+       "test/workbench-plant-census.test.ts": "holder",
+       "test/plant.census.ts": "holder",
+       "test/fixtures/plant-roster.json": "holder",
+       "test/fixtures/plant-dossier.md": "holder",
+       "test/fixtures/orphan-fixture.json": "outside",
+       "test/helpers/plant-helper.ts": "outside",
+       "test/plant-plain.test.ts": "outside",
+       "test/quiet-spelling.test.ts": "quiet",
+       "test/quiet-composed.test.ts": "quiet",
+       "qa/quiet-scope.mjs": "unwalked"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "label": "(b) today: law\u005fid and certificate\u005frefs ['TI-23'] as unknown fields reach no output field, projection strictEqual (H5 observer.test.ts:453; H6 :500)",
+   "pins": [
+    {
+     "id": "B1",
+     "quote": "today: law\u005fid and certificate\u005frefs ['TI-23'] as unknown fields reach no output field",
+     "witness": {
+      "claim": "44f2087ee7fc",
+      "payloads": [
+       "law record",
+       "loaded law record",
+       "cost certificate"
+      ],
+      "direct": 14,
+      "provided": 9,
+      "leaks": [],
+      "decoderKeeps": [
+       "certificate body",
+       "cost",
+       "diagnostic details",
+       "extensions",
+       "result coverage"
+      ],
+      "decoderDrops": [
+       "certificate fields",
+       "status fields",
+       "summary fields",
+       "top-level fields"
+      ],
+      "controlLive": true
+     }
+    },
+    {
+     "id": "B2",
+     "quote": "projection strictEqual (H5 observer.test.ts:453; H6 :500)",
+     "witness": {
+      "claim": "0823dda4e877",
+      "direct": 42,
+      "provided": 27,
+      "strictEqual": true,
+      "controlMoves": true
+     }
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "label": "(c) on landing: that fixture projects law\u005fid/certificate\u005frefs as its own typed facet, coverage/absence/statusTone/evidenceRefs unchanged (hx-binary and hx-coverage only), and a certificate with rows [] and licenses_absence:false never projects 'known-empty' or coverage 'complete'",
+   "pins": [
+    {
+     "id": "C1",
+     "quote": "on landing: that fixture projects law\u005fid/certificate\u005frefs as its own typed facet",
+     "witness": {
+      "claim": "68794a2d7d76",
+      "gate": "closed",
+      "armed": "pending",
+      "declarationHits": [],
+      "coverageMembers": [
+       "batchId",
+       "body",
+       "cause",
+       "mode",
+       "provider",
+       "scope",
+       "stream",
+       "target"
+      ],
+      "facetKeys": [],
+      "upstream": {
+       "designOnly": true,
+       "verifiedWireProtocol": false,
+       "apiContract": false
+      }
+     }
+    },
+    {
+     "id": "C2",
+     "quote": "coverage/absence/statusTone/evidenceRefs unchanged (hx-binary and hx-coverage only)",
+     "witness": {
+      "claim": "a5c79f3a262b",
+      "kinds": 11,
+      "licences": 2,
+      "carried": 924,
+      "unchanged": true,
+      "refKinds": [
+       "hx-binary",
+       "hx-coverage"
+      ]
+     }
+    },
+    {
+     "id": "C3",
+     "quote": "and a certificate with rows [] and licenses_absence:false never projects 'known-empty' or coverage 'complete'",
+     "witness": {
+      "claim": "5bbc83e45230",
+      "kinds": 11,
+      "companions": 3,
+      "checked": 1386,
+      "knownEmpty": 0,
+      "complete": 0,
+      "success": 0,
+      "control": {
+       "coverage": "complete",
+       "statusText": "known-empty (runtime-licensed) · rows 0",
+       "statusTone": "success"
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "residuals": [
+  {
+   "id": "R-COMPUTED-KEY",
+   "quietPin": "A1"
+  },
+  {
+   "id": "R-SPELLING",
+   "quietPin": "A3"
+  },
+  {
+   "id": "R-COMPOSED",
+   "quietPin": "A3"
+  },
+  {
+   "id": "R-SCOPE",
+   "quietPin": "A3"
+  },
+  {
+   "id": "R-HOLDER",
+   "quietPin": "A3"
+  }
+ ]
+}
