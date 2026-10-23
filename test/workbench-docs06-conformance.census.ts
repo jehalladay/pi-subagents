@@ -791,6 +791,17 @@ interface HookRegistration {
   /** Where the registration call starts, as line:column (1-based): the site vitest's registration stack names (R692). */
   readonly site: string;
 }
+/** R692 second respin (wb-ouo3 refusal #2 U1): one hook registration whose callback guards a hook, as the binder reads it. */
+interface CallSite {
+  /** The first argument of the registration callback's withinHookBudget call, as written. */
+  readonly guards: string;
+  /** The registration callback's parameter count and the kinds of its own statements: "<n> parameters | <kind>, <kind>". */
+  readonly shape: string;
+  /** Every name the registration reads, in source order, as "<name> -> <the declaration the checker binds it to>"; a name the guarded body declares itself (its comparators' parameters) is the body's own and is not listed. */
+  readonly names: readonly string[];
+  /** Every binding the registration declares outside its guarded body, as "<name> in a <construct> at <line:column>". */
+  readonly declares: readonly string[];
+}
 /** A file's hook roster (R687) and, from R692 (wb-ouo3), its describe calls and every direct call of withinHookBudget. */
 interface HookRoster {
   readonly registrations: readonly HookRegistration[];
@@ -803,9 +814,17 @@ interface HookRoster {
   readonly references: readonly string[];
   /** R692 respin (wb-ouo3 U3): every withinHookBudget call as "<first argument> | <its guarded body's own statements, as written, joined by ' ;; '>". */
   readonly guardBodies: readonly string[];
+  /** R692 second respin (wb-ouo3 refusal #2 U1): every hook registration whose callback guards a hook, with what each name it reads binds to and what it declares. */
+  readonly callSites: readonly CallSite[];
+  /** R692 second respin (wb-ouo3 refusal #2 U1/U3): every statement naming a watched binding (a reference or a declaration), as "<name> | <the statement as written, whitespace collapsed> | <where it runs, a case by its title>", in source order. */
+  readonly statements: readonly string[];
+  /** R692 second respin (wb-ouo3 refusal #2 U1): every use of a must-be-called name but a direct call that resolves to its named import from "vitest" and that import itself, as "<use> | <where it runs>". */
+  readonly uncalled: readonly string[];
+  /** R692 second respin (wb-ouo3 refusal #2 U1): every each-table case (it.each / test.each through vitest's own import), as 'the case "<title>" | each over <its table as written> -> <what the checker binds a lone identifier table to>'. */
+  readonly tables: readonly string[];
 }
 
-function hookRoster(file: string, text: string = readFileSync(join(ROOT, file), "utf8"), watched: readonly string[] = []): HookRoster {
+function hookRoster(file: string, text: string = readFileSync(join(ROOT, file), "utf8"), watched: readonly string[] = [], calledOnly: readonly string[] = []): HookRoster {
   const path = join(ROOT, file);
   const sf = ts.createSourceFile(path, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
   const host: ts.CompilerHost = {
@@ -871,14 +890,14 @@ function hookRoster(file: string, text: string = readFileSync(join(ROOT, file), 
     const root = rootOf(callee);
     return ts.isIdentifier(root) && (root.text === "it" || root.text === "test") && viaVitest(root) ? "a case" : undefined;
   };
-  /** The hook registration or case whose callback runs a call (or any node), and whether it is that callback's own code. */
-  const runsIn = (call: ts.Node): string => {
+  /** The hook registration or case whose callback runs a call (or any node), and whether it is that callback's own code; titled names a case by its title. */
+  const runsIn = (call: ts.Node, titled = false): string => {
     let innermost: ts.Node | undefined;
     let child: ts.Node = call;
     for (let node = call.parent; node !== undefined; child = node, node = node.parent) {
       if (ts.isCallExpression(node) && node.arguments.some(argument => argument === child)) {
         const kind = kindOf(node);
-        if (kind !== undefined) return `${kind} @ ${kind === "a describe callback" ? ownChain(node) : chainOf(node)}${innermost === child ? "" : ", in a nested function"}`;
+        if (kind !== undefined) return `${titled && kind === "a case" ? `the case "${titleOf(node)}"` : kind} @ ${kind === "a describe callback" ? ownChain(node) : chainOf(node)}${innermost === child ? "" : ", in a nested function"}`;
       }
       if (innermost === undefined && ts.isFunctionLike(node)) innermost = node;
     }
@@ -959,13 +978,13 @@ function hookRoster(file: string, text: string = readFileSync(join(ROOT, file), 
     return true;
   };
   /** Where a node runs: withinHookBudget's own body, the body a guard runs, or the registration, case, describe callback or module code that holds it. */
-  const placeOf = (node: ts.Node): string => {
+  const placeOf = (node: ts.Node, titled = false): string => {
     let child: ts.Node = node;
     for (let up = node.parent; up !== undefined; child = up, up = up.parent) {
       if (ts.isFunctionDeclaration(up) && up.name?.text === "withinHookBudget" && up.parent === sf) return "withinHookBudget's own body";
       if (ts.isCallExpression(up) && ts.isIdentifier(up.expression) && up.expression.text === "withinHookBudget" && up.arguments[3] === child) return `the body the ${up.arguments[0]?.getText(sf) ?? "(no argument)"} guard runs`;
     }
-    return runsIn(node);
+    return runsIn(node, titled);
   };
   const statementsOf = (body: ts.Node | undefined): string => {
     if (!isInline(body)) return "(no inline body)";
@@ -979,6 +998,76 @@ function hookRoster(file: string, text: string = readFileSync(join(ROOT, file), 
     const ofRecord = (ts.isVariableDeclaration(parent) && ts.isVariableDeclarationList(parent.parent) && ts.isVariableStatement(parent.parent.parent) && parent.parent.parent.parent === sf) || (ts.isFunctionDeclaration(parent) && parent.parent === sf);
     return ofRecord ? undefined : ts.SyntaxKind[parent.kind];
   };
+  // R692 second respin (wb-ouo3 refusal #2 U1): the U3 pin reads the guarded body's text, not what its names bind, so a
+  // binding that shadows a name the body reads - in the registration callback or anywhere between it and file scope -
+  // leaves the pinned text standing and makes the check vacuous (D-EXPECT-SHADOW, D-AC2RAN-SHADOW: 61/61 green at cut #2).
+  // The checker binds each name to its one declaration; the declarations of record are a file-scope const, a file-scope
+  // function and a named import from "vitest", and anything else is named by its construct and site.
+  /** A syntax kind's own name: the enum's marker aliases (FirstStatement for VariableStatement, and the like) never name it. */
+  const kindName = (kind: ts.SyntaxKind): string => Object.entries(ts.SyntaxKind).find(([name, value]) => value === kind && !/^(First|Last)/.test(name))?.[0] ?? String(kind);
+  /** What the checker binds a name to: a declaration of record, or the construct and site of any other binding. */
+  const resolution = (id: ts.Identifier): string => {
+    const declarations = checker.getSymbolAtLocation(id)?.declarations ?? [];
+    const [bound] = declarations;
+    if (declarations.length !== 1 || bound === undefined) return declarations.length === 0 ? "no declaration in this file" : `${declarations.length} declarations`;
+    if (ts.isImportSpecifier(bound)) {
+      const statement = bound.parent.parent.parent;
+      const from = ts.isImportDeclaration(statement) && ts.isStringLiteral(statement.moduleSpecifier) ? statement.moduleSpecifier.text : "(no module)";
+      return `${bound.propertyName === undefined ? "a named" : "an aliased"} import from "${from}"`;
+    }
+    if (ts.isVariableDeclaration(bound) && ts.isVariableDeclarationList(bound.parent) && (bound.parent.flags & ts.NodeFlags.BlockScoped) === ts.NodeFlags.Const && ts.isVariableStatement(bound.parent.parent) && bound.parent.parent.parent === sf) return "a file-scope const";
+    if (ts.isFunctionDeclaration(bound) && bound.parent === sf) return "a file-scope function";
+    return `a ${kindName(bound.kind)} at ${site(bound)}`;
+  };
+  const within = (node: ts.Node, outer: ts.Node): boolean => node.pos >= outer.pos && node.end <= outer.end;
+  /** The name a declaration binds when it is an identifier: a variable, a parameter, a destructured element, a function or a class. */
+  const declaredName = (node: ts.Node): ts.Identifier | undefined => {
+    const name = ts.isVariableDeclaration(node) || ts.isParameter(node) || ts.isBindingElement(node) || ts.isFunctionDeclaration(node) || ts.isFunctionExpression(node) || ts.isClassDeclaration(node) || ts.isClassExpression(node) ? node.name : undefined;
+    return name !== undefined && ts.isIdentifier(name) ? name : undefined;
+  };
+  const callSites: CallSite[] = [];
+  /** Reads one registration whose callback guards a hook: its callback's shape, every name it reads, every binding it declares. */
+  const readCallSite = (registration: ts.CallExpression): void => {
+    const callback = registration.arguments[0];
+    const [guard] = guardCallsIn(callback);
+    if (guard === undefined || !isInline(callback)) return;
+    const body = guard.arguments[3];
+    const ownToBody = (node: ts.Node): boolean => body !== undefined && within(node, body);
+    const names: string[] = [];
+    const declares: string[] = [];
+    const walk = (node: ts.Node): void => {
+      const declared = declaredName(node);
+      if (declared !== undefined && !ownToBody(node)) declares.push(`${declared.text} in a ${kindName(node.kind)} at ${site(node)}`);
+      if (ts.isIdentifier(node) && isReference(node)) {
+        const [bound] = checker.getSymbolAtLocation(node)?.declarations ?? [];
+        if (bound === undefined || !ownToBody(bound)) names.push(`${node.text} -> ${resolution(node)}`);
+      }
+      ts.forEachChild(node, walk);
+    };
+    walk(registration);
+    const own = ts.isBlock(callback.body) ? callback.body.statements.map(statement => kindName(statement.kind)).join(", ") || "(none)" : `(a concise body) ${kindName(callback.body.kind)}`;
+    callSites.push({ guards: guard.arguments[0]?.getText(sf) ?? "(no argument)", shape: `${callback.parameters.length} parameters | ${own}`, names, declares });
+  };
+  /** The statement a node sits in, as written with its whitespace collapsed: the nearest node of a statement list. */
+  const statementOf = (node: ts.Node): string => {
+    let up: ts.Node = node;
+    while (up.parent !== undefined && !(ts.isSourceFile(up.parent) || ts.isBlock(up.parent) || ts.isModuleBlock(up.parent) || ts.isCaseClause(up.parent) || ts.isDefaultClause(up.parent))) up = up.parent;
+    return up.getText(sf).replace(/\s+/g, " ");
+  };
+  /** A use of a must-be-called name other than a direct call that resolves to its named import from "vitest" (and that import itself); undefined for those. */
+  const useOf = (id: ts.Identifier): string | undefined => {
+    const parent = id.parent;
+    if (ts.isImportSpecifier(parent)) return parent.name === id && parent.propertyName === undefined && viaVitest(id) ? undefined : `${id.text} in an import specifier (${resolution(parent.name)})`;
+    if (declaredName(parent) === id) return `${id.text} declared in a ${kindName(parent.kind)}`;
+    if (!isReference(id)) return undefined;
+    const bound = resolution(id);
+    if (bound !== 'a named import from "vitest"') return `${id.text} -> ${bound}`;
+    if (ts.isCallExpression(parent) && parent.expression === id) return undefined;
+    return ts.isPropertyAccessExpression(parent) && parent.expression === id ? `${id.text}.${parent.name.text}` : `${id.text} in a ${kindName(parent.kind)}`;
+  };
+  const statements: string[] = [];
+  const uncalled: string[] = [];
+  const tables: string[] = [];
   const references: string[] = [];
   const guardBodies: string[] = [];
   const describes: string[] = [];
@@ -997,6 +1086,7 @@ function hookRoster(file: string, text: string = readFileSync(join(ROOT, file), 
       if (!viaVitest(node.expression)) findings.push(`${at(node)}: ${node.expression.text} is not called through vitest's own named import`);
       const timeout = node.arguments[1];
       registrations.push({ registrar: node.expression.text, chain: chain.join(" > ") || "(file scope)", guards: guardsOf(node.arguments[0]), timeout: timeout?.getText(sf) ?? "(none)", binds: fileScopeConst(timeout), site: site(node) });
+      readCallSite(node);
       if (viaVitest(node.expression)) {
         const why = whyNotRun(node);
         if (why !== undefined) findings.push(`${at(node)}: ${node.expression.text} does not run whenever its suite is collected: ${why}`);
@@ -1029,11 +1119,21 @@ function hookRoster(file: string, text: string = readFileSync(join(ROOT, file), 
       const member = ts.isPropertyAccessExpression(node.parent) && node.parent.expression === node ? node.parent.name.text : undefined;
       if (shadow !== undefined) references.push(`${node.text} declared in a ${shadow} | ${placeOf(node)}`);
       else if (isReference(node)) references.push(`${member === undefined ? `${node.text} in a ${ts.SyntaxKind[node.parent.kind]}` : `${node.text}.${member}`} | ${placeOf(node)}`);
+      if (isReference(node) || declaredName(node.parent) === node) statements.push(`${node.text} | ${statementOf(node)} | ${placeOf(node, true)}`);
+    }
+    if (ts.isIdentifier(node) && calledOnly.includes(node.text)) {
+      const use = useOf(node);
+      if (use !== undefined) uncalled.push(`${use} | ${placeOf(node)}`);
+    }
+    if (ts.isCallExpression(node) && ts.isCallExpression(node.expression) && ts.isPropertyAccessExpression(node.expression.expression) && node.expression.expression.name.text === "each" && kindOf(node) === "a case") {
+      const each = node.expression.arguments;
+      const [table] = each;
+      tables.push(`the case "${titleOf(node)}" | each over ${each.map(argument => argument.getText(sf)).join(", ")}${each.length === 1 && table !== undefined && ts.isIdentifier(table) ? ` -> ${resolution(table)}` : ""}`);
     }
     ts.forEachChild(node, child => visit(child, inner));
   };
   visit(sf, []);
-  return { registrations, findings, describes, guards, references, guardBodies };
+  return { registrations, findings, describes, guards, references, guardBodies, callSites, statements, uncalled, tables };
 }
 
 const rosterLine = (registration: HookRegistration): string =>
@@ -1096,8 +1196,12 @@ describe("R687 (wb-9rto): the AC2 call-site hook is registered with its backstop
  * - the guard census lists every direct call of withinHookBudget in this file with the hook registration or case whose
  *   callback makes it, so a dead-branch decoy beside a relocated or hidden body is two guards of CALL_SITE_HOOK, and
  *   withinHookBudget named any other way (an alias, a member, an argument, a shadowing binding) is a finding;
- * - the work binding places every read of AC2_RAN (anything but the AC2 cases' push) in the body the CALL_SITE_HOOK guard
- *   runs, so a guarded no-op body beside the check moved into a case is a red.
+ * - the work binding places every reference to AC2_RAN but a variable declaration of the name and a push, wherever either
+ *   sits, in the body the CALL_SITE_HOOK guard runs, so a guarded no-op body beside the check moved into a case is a red.
+ *   Cut #2 said "every read of AC2_RAN (anything but the AC2 cases' push)": the reader exempts every push and every
+ *   variable declaration of the name, and the gate's D-PLANT-PUSH (a push from module code beside an it.each narrowed
+ *   to four halves) read 60/60 green (wb-ouo3 refusal #2, U2 (d)); the call-site state row of the second respin binds
+ *   each.
  * The respin (wb-ouo3 refusal #1: U1 class-closing, U2 claims, U3 the check's own leg) adds five rows. The CLASS: every
  * hook vitest holds, in any suite, binds to a registration that RUNS, and every reading the R673 rows count is written
  * inside withinHookBudget:
@@ -1115,13 +1219,52 @@ describe("R687 (wb-9rto): the AC2 call-site hook is registered with its backstop
  *   and declared nowhere else (no shadow), so no spelling a source reading sees registers a hook through the runner's API
  *   or replaces one in vitest's record at run time (code built from strings is the residual below);
  * - the call-site check is the check (U3): the guarded body is the landed assertion followed by a completion record, pinned
- *   statement by statement, and the record is read, so an early return before the assertion or a vacuous expectation reads
- *   red (the pin is this file's own source: an edit of the check together with its pin is a visible two-edit change);
+ *   statement by statement, and the record is read, so an early return before the assertion or a vacuous expectation
+ *   written in the body reads red (the pin is this file's own source: an edit of the check together with its pin is a
+ *   visible two-edit change). The pin reads the body's text, not what its names bind: cut #2 claimed that a vacuous
+ *   expectation reads red, and the gate's D-EXPECT-SHADOW (a function named expect declared in the registration callback)
+ *   and D-AC2RAN-SHADOW (a const named AC2_RAN there) each read 61/61 green, the name filter -t 'AC2 bullet 1' exiting 0
+ *   (wb-ouo3 refusal #2, U1 and U2 (a)); the second respin's rows below bind what the body's names resolve to;
  * - named residual, with its pinned quiet row: run-time code built from strings and the globals that reach a module loader
  *   or vitest's worker state (eval, the Function constructor, a constructor member, globalThis, process, require,
- *   __vitest_worker__) are beyond any reading of source syntax; this file names none of them, and the quiet row reds the
- *   moment one is written as an identifier, a member name or a string key. A name built from parts at run time (a computed
- *   key) is read as nothing: the disclosed edge of the quiet row, not claimed.
+ *   __vitest_worker__ and, from the second respin, global - Node's alias of globalThis, through which vitest's matcher
+ *   state and its custom equality testers are reachable too) are beyond any reading of source syntax; this file names
+ *   none of them, and the quiet row reds the moment one is written as an identifier, a member name or a string key. A
+ *   name built from parts at run time (a computed key) is read as nothing: the disclosed edge of the quiet row, not
+ *   claimed.
+ * The second respin (wb-ouo3 refusal #2: U1 the call-site check's names, U2 claims, U3 the push exemption) adds five rows
+ * and a collection-time leg.
+ * The CLASS (rule 19 (d), bound on refusal #2): the call-site check is non-vacuous only when every name its guarded body
+ * reads (expect, AC2_RAN, FROZEN_JUDGED_SHAPE, AC2_CHECKED, CALL_SITE_HOOK) resolves to its declaration of record and
+ * every write to AC2_RAN is the AC2 case's push in the census describe:
+ * - the names of record: the checker binds every name the call-site registration reads - its registrar, the guard, the
+ *   budget and backstop consts, and every name the guarded body reads but its own comparators' parameters - to a
+ *   file-scope const, the file-scope withinHookBudget or a named import from "vitest"; the registration declares nothing
+ *   outside its guarded body, and its callback takes no parameter and holds one statement, the return of its guard call.
+ *   A shadow in any binding form, anywhere between the body and file scope, rebinds a name the body reads and reads red;
+ * - the call-site state: every statement of this file naming AC2_RAN, AC2_CHECKED or FROZEN_JUDGED_SHAPE, as written and
+ *   with where it runs (a case by its title), is the literal list - the three declarations of record, the AC1 and M10
+ *   reads of the frozen shape, the guarded body's statements, the U3 row's read and the one write of AC2_RAN, the AC2
+ *   case's push - so a write or declaration of AC2_RAN anywhere else (module code, another case, the hook's callback, an
+ *   alias, an edited or a second push in the AC2 case) and a mutation of the frozen shape where it runs each read red;
+ *   and the AC2 cases' each-table is JUDGED, the file-scope const the AC1 rows bind to the frozen judged subset, so a
+ *   narrowed table, or a forged entry that pushes a key for a half whose pins it does not judge, reads red here too;
+ * - expect is only called: every use of vitest's expect in this file is a direct call that resolves to its named import,
+ *   so expect.extend, expect.addEqualityTesters, an alias, an aliased import or a shadowing declaration reads red;
+ * - named residual, with its pinned quiet row: the code the guarded body calls without naming a binding - the matcher
+ *   behind toEqual, the array's sort and spread, localeCompare - can be tampered with, beyond expect's own members (bound
+ *   above) and the global object (the run-time escape residual, which names global from this respin on), only through a
+ *   prototype; this file spells no prototype route (prototype, __proto__, getPrototypeOf, setPrototypeOf,
+ *   defineProperty, defineProperties) as an identifier, a member name or any string, and the quiet row reds the moment
+ *   one is written. A route built from parts at run time is read as nothing: the disclosed edge of the quiet row, not
+ *   claimed;
+ * - the fail-closed leg (at the end of this file): a name filter skips every row, so collection re-reads the call-site
+ *   binding at module scope, where no binding can shadow the reader, with no matcher, against the literals the rows pin,
+ *   and throws on any difference - every run of this file, -t 'AC2 bullet 1' included, then exits 1 (the delivered bytes'
+ *   filtered run exits 1 on the hook's own check, as landed); the fifth row pins the leg and shows it is no constant;
+ * - out of the class, not claimed: the call-site check binds that every frozen judged half ran its AC2 case once; what an
+ *   AC2 case asserts after its push is that case's own body (the census helper's three legs judge the pinned cases it
+ *   reads), not the call-site check's.
  */
 /** The file-scope consts a hook registration of this file may pass as its timeout, by name, with the value vitest would stamp. */
 const HOOK_TIMEOUT_CONSTS: Readonly<Record<string, number>> = { CALL_SITE_HOOK_BACKSTOP_MS };
@@ -1172,11 +1315,13 @@ const rosterHeldLine = (registration: HookRegistration): string => {
 const byText = (a: string, b: string): number => a.localeCompare(b);
 
 /**
- * The work a guard runs: every reference to the named state in a source - but its declaration and the member writes the
- * AC2 cases make - with the withinHookBudget body that holds it ("outside every guard's body" for none). The AC2 call-site
- * hook exists to bind AC2_RAN to FROZEN_JUDGED_SHAPE after every AC2 case ran (fail-closed on a narrowed it.each table and
- * on a name-filtered run), so a guarded no-op body beside the check moved into a case, where a name filter can drop it,
- * keeps the hook, its registration and its guard call standing, and reads red here.
+ * The work a guard runs: every reference to the named state in a source - but any variable declaration of the name and any
+ * member access named in writes, wherever either sits - with the withinHookBudget body that holds it ("outside every
+ * guard's body" for none). The AC2 call-site hook exists to bind AC2_RAN to FROZEN_JUDGED_SHAPE after every AC2 case ran
+ * (fail-closed on a narrowed it.each table and on a name-filtered run), so a guarded no-op body beside the check moved into
+ * a case, where a name filter can drop it, keeps the hook, its registration and its guard call standing, and reads red
+ * here. Cut #2 said "but its declaration and the member writes the AC2 cases make": the reader skips every variable
+ * declaration of the name and every push wherever it sits (wb-ouo3 refusal #2, U2 (c)); the call-site state row binds them.
  */
 function guardedWork(file: string, text: string, names: readonly string[], writes: readonly string[]): readonly string[] {
   const sf = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
@@ -1236,7 +1381,7 @@ function vitestImports(file: string, text: string): readonly string[] {
  * what a string evaluates to. This file names none of them; namedAnywhere lists every identifier, member name or
  * string-literal element key that spells one, so the quiet row below reds the moment one is written.
  */
-const RUNTIME_ESCAPES: readonly string[] = ["eval", "Function", "constructor", "globalThis", "process", "require", "__vitest_worker__", "getBuiltinModule", "createRequire"];
+const RUNTIME_ESCAPES: readonly string[] = ["eval", "Function", "constructor", "globalThis", "global", "process", "require", "__vitest_worker__", "getBuiltinModule", "createRequire"];
 function namedAnywhere(file: string, text: string, names: readonly string[]): readonly string[] {
   const sf = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
   const out: string[] = [];
@@ -1251,8 +1396,68 @@ function namedAnywhere(file: string, text: string, names: readonly string[]): re
   visit(sf);
   return out;
 }
+/**
+ * R692 second respin (wb-ouo3 refusal #2, the named residual of its class): the code the call-site check calls without
+ * naming a binding - the matcher behind toEqual, the array's sort and spread, localeCompare - can be tampered with, beyond
+ * expect's own members and the global object, only through a prototype. PROTOTYPE_ROUTE names the routes as a pattern,
+ * never as strings, so the list spells none of them;
+ * spelledAnywhere lists every identifier, member name and string of any kind that spells one.
+ */
+const PROTOTYPE_ROUTE = /^(prototype|__proto__|getPrototypeOf|setPrototypeOf|defineProperty|defineProperties)$/;
+function spelledAnywhere(file: string, text: string, pattern: RegExp): readonly string[] {
+  const sf = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const out: string[] = [];
+  const visit = (node: ts.Node): void => {
+    if ((ts.isIdentifier(node) || ts.isStringLiteralLike(node)) && pattern.test(node.text)) {
+      const { line, character } = sf.getLineAndCharacterOfPosition(node.getStart(sf));
+      out.push(`${node.text} at ${line + 1}:${character + 1}${ts.isIdentifier(node) ? "" : " (a string)"}`);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(sf);
+  return out;
+}
 const R687_SUITE = "R687 (wb-9rto): the AC2 call-site hook is registered with its backstop, read from this file's AST and the runner's record";
 const R692_SUITE = "R692 (wb-ouo3): the held-hook census - every suite walked through vitest's record, bound to the roster, and every guard call placed";
+/**
+ * The call-site binding of record (R692 second respin, wb-ouo3 refusal #2): the rows below pin each reading against these
+ * literals, and the collection leg at the end of this file re-reads them at module scope, where a name filter cannot skip
+ * it.
+ */
+/** Every name the AC2 call-site registration reads, in source order, with what the checker binds it to (refusal #2 U1). */
+const CALL_SITE_NAMES_OF_RECORD: readonly string[] = [
+  'afterAll -> a named import from "vitest"',
+  "withinHookBudget -> a file-scope function",
+  "CALL_SITE_HOOK -> a file-scope const",
+  "CALL_SITE_HOOK_BUDGET_MS -> a file-scope const",
+  'expect -> a named import from "vitest"',
+  "AC2_RAN -> a file-scope const",
+  "FROZEN_JUDGED_SHAPE -> a file-scope const",
+  "AC2_CHECKED -> a file-scope const",
+  "CALL_SITE_HOOK -> a file-scope const",
+  "CALL_SITE_HOOK_BACKSTOP_MS -> a file-scope const",
+];
+/** Every statement of this file naming AC2_RAN, AC2_CHECKED or FROZEN_JUDGED_SHAPE, as written, with where it runs (refusal #2 U1, U3). */
+const CALL_SITE_STATE_OF_RECORD: readonly string[] = [
+  'FROZEN_JUDGED_SHAPE | const FROZEN_JUDGED_SHAPE: readonly string[] = ["1/guard:6", "2/guard:4", "3/guard:2", "4/guard:4", "5/digest-mismatch:3"]; | module code',
+  "AC2_RAN | const AC2_RAN: string[] = []; | module code",
+  "AC2_CHECKED | const AC2_CHECKED: string[] = []; | module code",
+  'FROZEN_JUDGED_SHAPE | expect(judgedShape(JUDGED), "the judged subset: the AC2 it.each table").toEqual(FROZEN_JUDGED_SHAPE); | the case "AC1 frozen shape (rule 16): the judged subset is the literal list, so a narrowed judged predicate reds it" @ wb-6hb.6 docs/workbench/06 conformance census (report mode)',
+  'AC2_RAN | expect([...AC2_RAN].sort((a, b) => a.localeCompare(b)), "every frozen judged half ran its AC2 case exactly once").toEqual([...FROZEN_JUDGED_SHAPE].sort((a, b) => a.localeCompare(b))); | the body the CALL_SITE_HOOK guard runs',
+  'FROZEN_JUDGED_SHAPE | expect([...AC2_RAN].sort((a, b) => a.localeCompare(b)), "every frozen judged half ran its AC2 case exactly once").toEqual([...FROZEN_JUDGED_SHAPE].sort((a, b) => a.localeCompare(b))); | the body the CALL_SITE_HOOK guard runs',
+  "AC2_CHECKED | AC2_CHECKED.push(CALL_SITE_HOOK); | the body the CALL_SITE_HOOK guard runs",
+  `AC2_RAN | AC2_RAN.push(judgedKey({ row, half })); | the case "AC2 bullet $row.bullet/$half.id: every pinned case is collected once, passed and asserting in the default gate's own report" @ wb-6hb.6 docs/workbench/06 conformance census (report mode)`,
+  'FROZEN_JUDGED_SHAPE | expect(judgedShape(narrowed)).not.toEqual(FROZEN_JUDGED_SHAPE); | the case "M10: a judged predicate narrowed to the larger halves leaves the table and its count shape untouched and is red by the frozen judged subset (CT7)" @ wb-6hb.6 liveness: the adopted judge is not accept-all (the real report, no fabricated verdict)',
+  `AC2_CHECKED | expect(AC2_CHECKED, "the call-site hook's completion record: its assertion statement returned and the record followed, once").toEqual([CALL_SITE_HOOK]); | the case "the call-site check is the check (U3): its guarded body is the landed assertion and then its completion record, and the record says that statement returned, once (what its names bind: the second respin's rows)" @ ${R692_SUITE}`,
+];
+/** The AC2 cases' each-table (refusal #2 U1). */
+const CALL_SITE_TABLES_OF_RECORD: readonly string[] = [
+  `the case "AC2 bullet $row.bullet/$half.id: every pinned case is collected once, passed and asserting in the default gate's own report" | each over JUDGED -> a file-scope const`,
+];
+/** Beside them the leg re-reads, restated from the rows that pin them: the hook roster (R687), the vitest import and the runner reads (the runtime-handle row). */
+const CALL_SITE_REGISTRATIONS_OF_RECORD: readonly string[] = ["afterAll @ wb-6hb.6 docs/workbench/06 conformance census (report mode) | guards CALL_SITE_HOOK | timeout CALL_SITE_HOOK_BACKSTOP_MS (a file-scope const)"];
+const VITEST_IMPORTS_OF_RECORD: readonly string[] = ["vitest | afterAll, describe, expect, it, type RunnerTask, type RunnerTestFile, type RunnerTestSuite, TestRunner"];
+const RUNNER_READS_OF_RECORD: readonly string[] = [`TestRunner.getSuiteHooks | a case @ ${R687_SUITE}`, `TestRunner.getSuiteHooks | a case @ ${R687_SUITE}`, `TestRunner.getSuiteHooks | a case @ ${R692_SUITE}`];
 
 describe("R692 (wb-ouo3): the held-hook census - every suite walked through vitest's record, bound to the roster, and every guard call placed", () => {
   it("the walk reaches every suite of this file: the suites vitest collected are exactly the describe calls the roster reads", ({ task }) => {
@@ -1461,8 +1666,8 @@ describe("R692 (wb-ouo3): the held-hook census - every suite walked through vite
     ]);
   });
 
-  it("the call-site check is the check (U3): its guarded body is the landed assertion and then its completion record, and the record says the assertion was reached, once", () => {
-    expect(AC2_CHECKED, "the call-site hook's completion record: its assertion ran, passed and was followed by the record, once").toEqual([CALL_SITE_HOOK]);
+  it("the call-site check is the check (U3): its guarded body is the landed assertion and then its completion record, and the record says that statement returned, once (what its names bind: the second respin's rows)", () => {
+    expect(AC2_CHECKED, "the call-site hook's completion record: its assertion statement returned and the record followed, once").toEqual([CALL_SITE_HOOK]);
     const roster = hookRoster(SELF, readRepo(SELF), ["AC2_CHECKED"]);
     expect(
       roster.guardBodies.filter(body => body.startsWith(`${nameOf({ CALL_SITE_HOOK })} | `)),
@@ -1474,8 +1679,8 @@ describe("R692 (wb-ouo3): the held-hook census - every suite walked through vite
   });
 
   it("named residual, pinned quiet: this file names no run-time code from strings and no global that reaches a module loader or vitest's worker state, and the reader sees each spelling as written", () => {
-    expect(namedAnywhere(SELF, readRepo(SELF), RUNTIME_ESCAPES), "eval, Function, a constructor member, globalThis, process, require, vitest's worker global or a module loader, named anywhere in this file").toEqual([]);
-    const escapes = ["const f = (() => 0).constructor;", "const g = globalThis.process;", 'require("vitest/suite");', 'const w = Reflect.get(globalThis, "__vitest_worker__");', 'const m = g["getBuiltinModule"];'].join("\n");
+    expect(namedAnywhere(SELF, readRepo(SELF), RUNTIME_ESCAPES), "eval, Function, a constructor member, globalThis or global, process, require, vitest's worker global or a module loader, named anywhere in this file").toEqual([]);
+    const escapes = ["const f = (() => 0).constructor;", "const g = globalThis.process;", 'require("vitest/suite");', 'const w = Reflect.get(globalThis, "__vitest_worker__");', 'const m = g["getBuiltinModule"];', 'const t = global[Symbol.for("$$jest-matchers-object")];'].join("\n");
     expect(namedAnywhere("escapes.ts", escapes, RUNTIME_ESCAPES), "a member name, a global, a loader call and a string key, each read as it stands").toEqual([
       "constructor at 1:21",
       "globalThis at 2:11",
@@ -1483,6 +1688,245 @@ describe("R692 (wb-ouo3): the held-hook census - every suite walked through vite
       "require at 3:1",
       "globalThis at 4:23",
       "getBuiltinModule at 5:13 (a string key)",
+      "global at 6:11",
+    ]);
+  });
+
+  it("the names of record (refusal #2 U1): every name the call-site registration reads resolves to a file-scope const, the file-scope withinHookBudget or a named vitest import, and the registration declares nothing a shadow could be", () => {
+    const sites = hookRoster(SELF).callSites;
+    expect(
+      sites.map(entry => entry.guards),
+      "every registration whose callback guards a hook",
+    ).toEqual([nameOf({ CALL_SITE_HOOK })]);
+    expect(
+      sites.map(entry => entry.shape),
+      "the call-site callback: no parameter and one statement of its own, the return of its guard call",
+    ).toEqual(["0 parameters | ReturnStatement"]);
+    expect(
+      sites.flatMap(entry => entry.declares),
+      "every binding the registration declares outside its guarded body",
+    ).toEqual([]);
+    expect(
+      sites.flatMap(entry => entry.names),
+      "every name the registration reads, in source order, with the declaration the checker binds it to",
+    ).toEqual(CALL_SITE_NAMES_OF_RECORD);
+    const shadowed = hookRoster(
+      "shadowed.ts",
+      [
+        'import { afterAll, describe, expect } from "vitest";',
+        "const STATE: string[] = [];",
+        "const SHAPE: readonly string[] = [];",
+        'const LABEL = "label";',
+        'describe("d", () => {',
+        "  const SHAPE: readonly string[] = [...STATE];",
+        "  afterAll((_suite: unknown, STATE: readonly string[] = []) => {",
+        '    const { LABEL } = { LABEL: "forged" };',
+        "    function expect(): void {}",
+        '    return withinHookBudget(HOOK, "B", 1, () => {',
+        "      expect([...STATE].sort((a, b) => a.localeCompare(b)), LABEL).toEqual(SHAPE);",
+        "    });",
+        "  }, BACKSTOP);",
+        "});",
+        "function withinHookBudget(): void {}",
+      ].join("\n"),
+    ).callSites;
+    expect(
+      shadowed.map(entry => entry.shape),
+      "a callback with two parameters and two statements before the return of its guard call",
+    ).toEqual(["2 parameters | VariableStatement, FunctionDeclaration, ReturnStatement"]);
+    expect(
+      shadowed.flatMap(entry => entry.declares),
+      "a parameter, a destructured binding and a function the callback declares, each named where it stands",
+    ).toEqual(["_suite in a Parameter at 7:13", "STATE in a Parameter at 7:30", "LABEL in a BindingElement at 8:13", "expect in a FunctionDeclaration at 9:5"]);
+    expect(
+      shadowed.flatMap(entry => entry.names),
+      "each name the guarded body reads bound to the shadow nearest it - a function, a parameter, a destructured binding, a describe-level const - and the comparator's own parameters never listed",
+    ).toEqual([
+      'afterAll -> a named import from "vitest"',
+      "withinHookBudget -> a file-scope function",
+      "HOOK -> no declaration in this file",
+      "expect -> a FunctionDeclaration at 9:5",
+      "STATE -> a Parameter at 7:30",
+      "LABEL -> a BindingElement at 8:13",
+      "SHAPE -> a VariableDeclaration at 6:9",
+      "BACKSTOP -> no declaration in this file",
+    ]);
+  });
+
+  it("the call-site state (refusal #2 U1, U3): every statement naming AC2_RAN, AC2_CHECKED or FROZEN_JUDGED_SHAPE is the literal list, so the one write of AC2_RAN is the AC2 case's push, its cases run over JUDGED, and the frozen shape is never written", () => {
+    expect(
+      hookRoster(SELF, readRepo(SELF), ["AC2_RAN", "AC2_CHECKED", "FROZEN_JUDGED_SHAPE"]).statements,
+      "<name> | the statement as written | where it runs, for every statement of this file naming the call-site state",
+    ).toEqual(CALL_SITE_STATE_OF_RECORD);
+    const planted = hookRoster(
+      "planted.ts",
+      [
+        'import { afterAll, describe, it } from "vitest";',
+        'const STATE: string[] = ["planted"];',
+        "const SHAPE: readonly string[] = [];",
+        'STATE.push("module");',
+        "const alias = STATE;",
+        'describe("d", () => {',
+        '  afterAll(() => withinHookBudget(HOOK, "B", 1, () => check([...STATE], SHAPE)));',
+        '  it("records", () => {',
+        "    STATE.push(KEY);",
+        "    if (KEY) STATE.push(OTHER);",
+        "  });",
+        '  it("later", () => {',
+        "    (SHAPE as string[]).pop();",
+        "  });",
+        "});",
+      ].join("\n"),
+      ["STATE", "SHAPE"],
+    ).statements;
+    expect(planted, "an initialized declaration, a push from module code, an alias, a second push in the recording case and a mutation in a later case each read as they stand").toEqual([
+      'STATE | const STATE: string[] = ["planted"]; | module code',
+      "SHAPE | const SHAPE: readonly string[] = []; | module code",
+      'STATE | STATE.push("module"); | module code',
+      "STATE | const alias = STATE; | module code",
+      'STATE | afterAll(() => withinHookBudget(HOOK, "B", 1, () => check([...STATE], SHAPE))); | the body the HOOK guard runs',
+      'SHAPE | afterAll(() => withinHookBudget(HOOK, "B", 1, () => check([...STATE], SHAPE))); | the body the HOOK guard runs',
+      'STATE | STATE.push(KEY); | the case "records" @ d',
+      'STATE | if (KEY) STATE.push(OTHER); | the case "records" @ d',
+      'SHAPE | (SHAPE as string[]).pop(); | the case "later" @ d',
+    ]);
+    expect(hookRoster(SELF).tables, "every each-table case of this file: the AC2 cases run over JUDGED, the file-scope const the AC1 rows bind to the frozen judged subset").toEqual(CALL_SITE_TABLES_OF_RECORD);
+    const tables = hookRoster(
+      "tables.ts",
+      ['import { it, test } from "vitest";', 'it.each(JUDGED.slice(0, 4))("narrowed", () => undefined);', 'it.each([...JUDGED, FORGED])("forged", () => undefined);', 'test.each(ROWS)("rows", () => undefined);', "const ROWS: readonly string[] = [];"].join("\n"),
+    ).tables;
+    expect(tables, "a narrowed table, a forged one and a table bound to its declaration, each read as it stands").toEqual([
+      'the case "narrowed" | each over JUDGED.slice(0, 4)',
+      'the case "forged" | each over [...JUDGED, FORGED]',
+      'the case "rows" | each over ROWS -> a file-scope const',
+    ]);
+  });
+
+  it("expect is only called (refusal #2 U1): every use of vitest's expect in this file is a direct call that resolves to its named import, and the reader sees each other use as written", () => {
+    expect(hookRoster(SELF, readRepo(SELF), [], ["expect"]).uncalled, "every use of expect but a direct call of its named import from vitest").toEqual([]);
+    const tampered = hookRoster(
+      "tampered.ts",
+      [
+        'import { expect, it } from "vitest";',
+        'import { expect as check } from "vitest";',
+        "expect.extend({});",
+        "expect.addEqualityTesters([]);",
+        "const alias = expect;",
+        "register(expect);",
+        'it("c", () => {',
+        "  function expect(): void {}",
+        "  expect();",
+        "});",
+        "expect(1).toBe(check);",
+      ].join("\n"),
+      [],
+      ["expect"],
+    ).uncalled;
+    expect(tampered, "an aliased import, a member, an alias, an argument and a shadowing declaration with the call it captures each read as they stand; the direct call of the named import reads none").toEqual([
+      'expect in an import specifier (an aliased import from "vitest") | module code',
+      "expect.extend | module code",
+      "expect.addEqualityTesters | module code",
+      "expect in a VariableDeclaration | module code",
+      "expect in a CallExpression | module code",
+      "expect declared in a FunctionDeclaration | a case @ (file scope), in a nested function",
+      "expect -> a FunctionDeclaration at 8:3 | a case @ (file scope)",
+    ]);
+  });
+
+  it("named residual, pinned quiet (refusal #2): this file spells no prototype route, so the matcher, the sort and spread and localeCompare the call-site check calls are the runtime's own, and the reader sees each spelling as written", () => {
+    expect(spelledAnywhere(SELF, readRepo(SELF), PROTOTYPE_ROUTE), "prototype, __proto__, getPrototypeOf, setPrototypeOf, defineProperty or defineProperties, spelled anywhere in this file").toEqual([]);
+    const routes = [
+      "Object.getPrototypeOf(expect(0)).toEqual = () => undefined;",
+      "Array.prototype.sort = sorted;",
+      "[].__proto__.push = pushed;",
+      "Reflect.setPrototypeOf(AC2_RAN, null);",
+      'Object.defineProperty(String.prototype, "localeCompare", { value: compare });',
+      'const p = Reflect.get(Array, "prototype");',
+      "const q = Array[`defineProperties`];",
+    ].join("\n");
+    expect(spelledAnywhere("routes.ts", routes, PROTOTYPE_ROUTE), "a member name, a string argument and a template key, each read as it stands").toEqual([
+      "getPrototypeOf at 1:8",
+      "prototype at 2:7",
+      "__proto__ at 3:4",
+      "setPrototypeOf at 4:9",
+      "defineProperty at 5:8",
+      "prototype at 5:30",
+      "prototype at 6:30 (a string)",
+      "defineProperties at 7:17 (a string)",
+    ]);
+  });
+
+  it("the fail-closed leg (refusal #2): collection re-reads the call-site binding at module scope with no matcher and refuses on any difference, so a name-filtered run fails closed; the leg is no constant", () => {
+    expect(CALL_SITE_BINDING_BROKEN, "the call-site binding of record holds at collection").toEqual([]);
+    expect(
+      hookRoster(SELF, readRepo(SELF), ["CALL_SITE_BINDING_BROKEN"]).statements.map(line => line.slice(0, line.indexOf(" | ", line.indexOf(" | ") + 3)).split("`")[0]),
+      "every statement naming the leg's reading, each up to its first template literal, in source order: this row's read, then the reading at module scope and the refusal that names it twice",
+    ).toEqual([
+      'CALL_SITE_BINDING_BROKEN | expect(CALL_SITE_BINDING_BROKEN, "the call-site binding of record holds at collection").toEqual([]);',
+      "CALL_SITE_BINDING_BROKEN | const CALL_SITE_BINDING_BROKEN = callSiteBindingBroken();",
+      "CALL_SITE_BINDING_BROKEN | if (CALL_SITE_BINDING_BROKEN.length > 0) throw new Error(",
+      "CALL_SITE_BINDING_BROKEN | if (CALL_SITE_BINDING_BROKEN.length > 0) throw new Error(",
+    ]);
+    const text = readRepo(SELF);
+    const hook = "    // R673 (wb-csne): the landed body runs inside withinHookBudget;";
+    const declaration = "const AC2_CHECKED: string[] = [];";
+    const sources = [
+      text.replace(hook, `    const AC2_RAN: readonly string[] = [...FROZEN_JUDGED_SHAPE];\n${hook}`),
+      text.replace(declaration, `${declaration}\nAC2_RAN.push("5/digest-mismatch:3");`),
+      text.replace(declaration, `${declaration}\nexpect.extend({});`),
+      text.replace(declaration, `${declaration}\nconst { length } = FROZEN_JUDGED_SHAPE;`),
+    ];
+    expect(
+      sources.map(source => callSiteBindingBroken(source).map(line => line.slice(0, line.indexOf(":")))),
+      "a shadow in the hook's callback, a planted push, a matcher extended and a read of the frozen shape outside the rows, each named by the readings it breaks",
+    ).toEqual([
+      ["the call-site registrations", "the call-site declarations", "the call-site names", "the call-site state"],
+      ["the call-site state"],
+      ["the uses of expect"],
+      ["the call-site state"],
     ]);
   });
 });
+
+/**
+ * R692 second respin (wb-ouo3 refusal #2, the fail-closed leg). The landed header binds a name-filtered run of this file
+ * to fail closed, and refusal #2's RESPIN ORDER binds -t 'AC2 bullet 1' to exit 1 on the delivered bytes and under every
+ * member of its class. A name filter runs the AC2 case it selects and the call-site hook and skips every row above, so a
+ * binding that makes the hook's check vacuous passes a filtered run unseen (D-AC2RAN-SHADOW, D-EXPECT-SHADOW and
+ * S-EXPECT-DESTRUCT exited 0 under the filter at cut #2), and a tamper of the matcher hollows the rows' own toEqual as
+ * well (T-EXTEND and T-PROTO read every row green at cut #2, and over this respin's rows before the leg). This file's
+ * collection therefore re-reads the call-site binding at
+ * module scope - where no binding can shadow the reader - with no matcher, against the literals the rows above pin: on
+ * any difference collection throws, so every run of this file, a name-filtered one included, exits 1, the error naming
+ * each reading that differs. Read here: the roster's findings and registrations, the call-site registration's shape,
+ * declarations and names, every statement naming the call-site state but the frozen shape's own declaration (that
+ * literal is the AC1 rows' and the rule 16 battery's, which a full run judges), the AC2 each-table, every use of expect,
+ * the vitest import, the runner reads, and the spellings of the two named residuals. The comparisons index the arrays
+ * directly; the readers run on the runtime's own builtins, so a tamper of those builtins (written with a route the
+ * residual names) that also hollows the reading naming it is the residual's disclosed edge, not claimed.
+ */
+function callSiteBindingBroken(text: string = readRepo(SELF)): readonly string[] {
+  const broken: string[] = [];
+  const differs = (reading: string, read: readonly string[], record: readonly string[]): void => {
+    let same = read.length === record.length;
+    for (let index = 0; same && index < read.length; index += 1) same = read[index] === record[index];
+    if (!same) broken.push(`${reading}: read [${read.join(" ;; ")}]`);
+  };
+  const ownDeclaration = (line: string): boolean => line.startsWith("FROZEN_JUDGED_SHAPE | const FROZEN_JUDGED_SHAPE: ") && line.endsWith(" | module code");
+  const roster = hookRoster(SELF, text, ["AC2_RAN", "AC2_CHECKED", "FROZEN_JUDGED_SHAPE"], ["expect"]);
+  differs("the roster's findings", roster.findings, []);
+  differs("the hook registrations", roster.registrations.map(rosterLine), CALL_SITE_REGISTRATIONS_OF_RECORD);
+  differs("the call-site registrations", roster.callSites.map(entry => `${entry.guards} | ${entry.shape}`), ["CALL_SITE_HOOK | 0 parameters | ReturnStatement"]);
+  differs("the call-site declarations", roster.callSites.flatMap(entry => entry.declares), []);
+  differs("the call-site names", roster.callSites.flatMap(entry => entry.names), CALL_SITE_NAMES_OF_RECORD);
+  differs("the call-site state", roster.statements.filter(line => !ownDeclaration(line)), CALL_SITE_STATE_OF_RECORD.filter(line => !ownDeclaration(line)));
+  differs("the each-tables", roster.tables, CALL_SITE_TABLES_OF_RECORD);
+  differs("the uses of expect", roster.uncalled, []);
+  differs("the vitest imports", vitestImports(SELF, text), VITEST_IMPORTS_OF_RECORD);
+  differs("the runner reads", hookRoster(SELF, text, ["TestRunner"]).references, RUNNER_READS_OF_RECORD);
+  differs("the run-time escapes spelled", namedAnywhere(SELF, text, RUNTIME_ESCAPES), []);
+  differs("the prototype routes spelled", spelledAnywhere(SELF, text, PROTOTYPE_ROUTE), []);
+  return broken;
+}
+const CALL_SITE_BINDING_BROKEN = callSiteBindingBroken();
+if (CALL_SITE_BINDING_BROKEN.length > 0) throw new Error(`R692 second respin (wb-ouo3 refusal #2): the AC2 call-site binding differs from its record, so this file refuses collection and every run of it, a name-filtered one included, exits 1: ${CALL_SITE_BINDING_BROKEN.join(" | ")}`);

@@ -705,7 +705,9 @@ describe("R687 (wb-9rto): the suite hook is registered with its backstop, read f
  * - named residual, with its pinned quiet row: run-time code built from strings and the globals that reach a module loader
  *   or vitest's worker state are beyond any reading of source syntax; this file names none of them, and the quiet row reds
  *   the moment one is written as an identifier, a member name or a string key (a name built from parts at run time - a
- *   computed key - is read as nothing: the disclosed edge of the quiet row, not claimed).
+ *   computed key - is read as nothing: the disclosed edge of the quiet row, not claimed). The second respin (wb-ouo3
+ *   refusal #2) adds global to the list: Node's alias of globalThis, through which vitest's worker and matcher state are
+ *   reachable too.
  */
 const SELF = fileURLToPath(import.meta.url);
 const HOOK_REGISTRARS: readonly string[] = ["beforeAll", "afterAll", "beforeEach", "afterEach", "aroundAll", "aroundEach"];
@@ -1045,7 +1047,7 @@ function vitestImports(file: string, text: string): readonly string[] {
  * what a string evaluates to. This file names none of them; namedAnywhere lists every identifier, member name or
  * string-literal element key that spells one, so the quiet row below reds the moment one is written.
  */
-const RUNTIME_ESCAPES: readonly string[] = ["eval", "Function", "constructor", "globalThis", "process", "require", "__vitest_worker__", "getBuiltinModule", "createRequire"];
+const RUNTIME_ESCAPES: readonly string[] = ["eval", "Function", "constructor", "globalThis", "global", "process", "require", "__vitest_worker__", "getBuiltinModule", "createRequire"];
 function namedAnywhere(file: string, text: string, names: readonly string[]): readonly string[] {
   const sf = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
   const out: string[] = [];
@@ -1315,8 +1317,8 @@ describe("R692 (wb-ouo3): the held-hook census - every suite walked through vite
   });
 
   it("named residual, pinned quiet: this file names no run-time code from strings and no global that reaches a module loader or vitest's worker state, and the reader sees each spelling as written", () => {
-    expect(namedAnywhere(SELF, readFileSync(SELF, "utf8"), RUNTIME_ESCAPES), "eval, Function, a constructor member, globalThis, process, require, vitest's worker global or a module loader, named anywhere in this file").toEqual([]);
-    const escapes = ["const f = (() => 0).constructor;", "const g = globalThis.process;", 'require("vitest/suite");', 'const w = Reflect.get(globalThis, "__vitest_worker__");', 'const m = g["getBuiltinModule"];'].join("\n");
+    expect(namedAnywhere(SELF, readFileSync(SELF, "utf8"), RUNTIME_ESCAPES), "eval, Function, a constructor member, globalThis or global, process, require, vitest's worker global or a module loader, named anywhere in this file").toEqual([]);
+    const escapes = ["const f = (() => 0).constructor;", "const g = globalThis.process;", 'require("vitest/suite");', 'const w = Reflect.get(globalThis, "__vitest_worker__");', 'const m = g["getBuiltinModule"];', 'const t = global[Symbol.for("$$jest-matchers-object")];'].join("\n");
     expect(namedAnywhere("escapes.ts", escapes, RUNTIME_ESCAPES), "a member name, a global, a loader call and a string key, each read as it stands").toEqual([
       "constructor at 1:21",
       "globalThis at 2:11",
@@ -1324,6 +1326,7 @@ describe("R692 (wb-ouo3): the held-hook census - every suite walked through vite
       "require at 3:1",
       "globalThis at 4:23",
       "getBuiltinModule at 5:13 (a string key)",
+      "global at 6:11",
     ]);
   });
 });
