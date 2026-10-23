@@ -1,0 +1,393 @@
+{
+  "comment": "wb-tz4r.5 (RI-UNIFIED-DECISION-INFERENCE-R5): the judged set of test/workbench-ri-observation-authority-census.test.ts. The three spellings of acceptance (a)'s grep are written as placeholders and composed at runtime from their words; each sha256 is the digest of the alternative's own text in the bead (the third one's dot as the plain dot), so the words cannot drift. Producer facts (read-only git show, 2026-10-23): ReactiveInferenceSDK 485f3615db1e 01-contracts.md:20 (the observation-authority sentence), 02-implementation.md:9/:21/:23 (RI-DEC-04, RI-DEC-10, initial restricted seed only), 03-conformance.md:14, the typed decision package's preflight.py:1-3 and contracts.py:55-56 (observations and typed effect policies are later slices; the package name is a sibling census's guarded spelling and is not written here); re-probed at RI origin/master 075ac589d64d: the same sentence at contracts.py:63, no observation-port or tool type, gate closed. ReactiveAgentsSDK: no checkout on the cutting host, not probed. Installed rf 0.1.836 (commit b3494ab13397): 79 leaves, the inference group's one leaf served_reachable, store_required and attach_required, its help sending a recorded render to a model and offering tool schemas from a file; no decision leaf. Pi at c6369e0: the bead's raw grep reads 3, each a leaf-path string in a captured rf leaf catalog (the knownCatalogs), 0 at the filing (trunk 1443ffb and f331270). Witnesses are what each pin's case returns on the cut's tree.",
+  "bead": "wb-tz4r.5",
+  "riPin": "485f3615db1e",
+  "riProbe": "075ac589d64d",
+  "rfVersion": "0.1.836",
+  "rfCommit": "b3494ab13397",
+  "spellings": [
+    {
+      "placeholder": "<RF-INF>",
+      "words": [
+        "rf",
+        "inference"
+      ],
+      "separator": "space",
+      "sha256": "c15acb0b281cea6cdee7d5fb4c3a0495463efe7053dfe489707f9b8932906494"
+    },
+    {
+      "placeholder": "<INF-RUN>",
+      "words": [
+        "inference",
+        "run"
+      ],
+      "separator": "space",
+      "sha256": "38fa084240e2430d345667154d69b41d67bb751203e3127ac01eb27b236711a8"
+    },
+    {
+      "placeholder": "<INF.RUN>",
+      "words": [
+        "inference",
+        "run"
+      ],
+      "separator": "any",
+      "sha256": "5d6d3bf373ba98ea488549230ead15d878e1c9689b255f856d0e21968db510bd"
+    }
+  ],
+  "scanRoots": [
+    "src",
+    "test",
+    "qa",
+    "docs/workbench"
+  ],
+  "knownCatalogs": [
+    "test/fixtures/rf-render-id-authority-roster.json",
+    "test/fixtures/rf-session-lifecycle-roster.json",
+    "test/fixtures/rf-version-leaves.json"
+  ],
+  "enumeratedFlags": [
+    "--json",
+    "--model",
+    "--no-commit",
+    "--no-input",
+    "--task",
+    "--task-id",
+    "--view",
+    "--workspace"
+  ],
+  "orchestration": [
+    {
+      "module": "src/agent-manager.ts",
+      "declares": "AgentManager"
+    },
+    {
+      "module": "src/agent-runner.ts",
+      "declares": "runAgent"
+    }
+  ],
+  "rows": [
+    {
+      "id": "A",
+      "label": "(a) today: no Pi path passes tool handles, an orchestrator or observation sources into any inference call reachable from rf ('<RF-INF>|<INF-RUN>|<INF.RUN>' over src/test/qa/docs/workbench = 0 at this read)",
+      "pins": [
+        {
+          "id": "A1",
+          "witness": {
+            "files": {
+              "floor": true,
+              "allTs": true
+            },
+            "groupWord": true,
+            "sites": []
+          }
+        },
+        {
+          "id": "A2",
+          "witness": {
+            "files": {
+              "qa": true,
+              "docs": true,
+              "docsMarkdown": true
+            },
+            "sites": {
+              "qa": [],
+              "docs": []
+            }
+          }
+        },
+        {
+          "id": "A3",
+          "witness": {
+            "floors": {
+              "files": true,
+              "catalogs": true,
+              "known": true
+            },
+            "own": {
+              "census": {
+                "walked": true,
+                "sites": 0,
+                "placeholders": 3
+              },
+              "roster": {
+                "walked": true,
+                "sites": 0,
+                "placeholders": 3
+              }
+            },
+            "outside": []
+          }
+        },
+        {
+          "id": "A4",
+          "witness": {
+            "launches": {
+              "modules": [
+                "src/workbench/providers/reactivefiber.ts"
+              ],
+              "readersAgree": true
+            },
+            "closure": {
+              "loadsAgree": true,
+              "rootsDeclared": true,
+              "reachesRegistry": true
+            },
+            "arms": {
+              "legacy": {
+                "outcome": "ok",
+                "spawns": 1,
+                "group": [
+                  "context",
+                  "render"
+                ],
+                "noCommit": true,
+                "violations": []
+              },
+              "view": {
+                "outcome": "ok",
+                "spawns": 1,
+                "group": [
+                  "context",
+                  "render"
+                ],
+                "noCommit": true,
+                "violations": []
+              }
+            }
+          }
+        },
+        {
+          "id": "A5",
+          "witness": {
+            "catalogRead": true,
+            "rf": {
+              "native": [
+                "reactivefiber.render.preview"
+              ],
+              "injected": [
+                "reactivefiber.render.preview"
+              ]
+            },
+            "descriptorSites": [],
+            "groupIds": [],
+            "reconcile": [
+              "reactivefiber.render.preview"
+            ]
+          }
+        },
+        {
+          "id": "A6",
+          "witness": {
+            "flagged": {
+              "shellString": 2,
+              "leafLiteral": 1,
+              "docsSentence": 1,
+              "spacedProse": 1,
+              "underscore": 1,
+              "hyphen": 1,
+              "slash": 1,
+              "colon": 1
+            },
+            "quiet": {
+              "runnerProse": 0,
+              "possessive": 0,
+              "plurals": 0,
+              "wordsAlone": 0,
+              "commaApart": 0,
+              "prefixed": 0
+            },
+            "residuals": {
+              "R-OTHER-CASE": 0,
+              "R-SEPARATOR-RUN": 0,
+              "R-COMPOSED": 0,
+              "R-INTERRUPTED": 0,
+              "R-ARGV-SPLIT": 0,
+              "R-VARIABLE-BINARY": {
+                "helper": 0,
+                "own": 0,
+                "loop": false
+              },
+              "R-CALLER-LOOP": {
+                "helper": 1,
+                "own": 1,
+                "loop": false
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "(b) adoption: every observation source and effect reaching the decision inference is enumerated in a Pi-owned authorization record before the call, an unlisted source is refused with a typed reason",
+      "pins": [
+        {
+          "id": "B1",
+          "witness": {
+            "record": {
+              "effectClass": "read",
+              "permissions": [
+                "reactivefiber:render"
+              ],
+              "modes": [
+                "invoke"
+              ],
+              "carrier": true,
+              "arms": [
+                {
+                  "keys": [
+                    "model",
+                    "task"
+                  ],
+                  "required": [
+                    "model",
+                    "task"
+                  ],
+                  "closed": true
+                },
+                {
+                  "keys": [
+                    "model",
+                    "taskId",
+                    "view"
+                  ],
+                  "required": [
+                    "taskId",
+                    "view"
+                  ],
+                  "closed": true
+                }
+              ]
+            },
+            "flags": [
+              "--json",
+              "--model",
+              "--no-commit",
+              "--no-input",
+              "--task",
+              "--task-id",
+              "--view",
+              "--workspace"
+            ]
+          }
+        },
+        {
+          "id": "B2",
+          "witness": {
+            "unregistered": {
+              "outcome": "unavailable",
+              "spawns": 0
+            },
+            "ungranted": {
+              "outcome": "authorization",
+              "spawns": 0
+            },
+            "toolsKey": {
+              "outcome": "validation",
+              "spawns": 0
+            },
+            "sourcesKey": {
+              "outcome": "validation",
+              "spawns": 0
+            },
+            "agentKey": {
+              "outcome": "validation",
+              "spawns": 0
+            },
+            "listed": {
+              "outcome": "ok",
+              "spawns": 1
+            }
+          }
+        },
+        {
+          "id": "B3",
+          "witness": {
+            "outcome": "ok",
+            "spawns": 1,
+            "outside": [],
+            "rfNames": [],
+            "planted": [],
+            "pathKept": true,
+            "workspaceArgv": true,
+            "stdin": "null-device",
+            "calibrated": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "(c) mutant: wiring an unrestricted tool or an agent loop into the observation port fails",
+      "pins": [
+        {
+          "id": "C1",
+          "witness": {
+            "toolsFlag": [
+              "tools"
+            ],
+            "reachableCall": [
+              "group:inference",
+              "commit",
+              "tools",
+              "flag:--render"
+            ],
+            "toolsVariable": [
+              "env"
+            ],
+            "pipedStdin": [
+              "stdin"
+            ]
+          }
+        },
+        {
+          "id": "C2",
+          "witness": {
+            "respawn": [
+              "respawn"
+            ],
+            "loopedLaunch": [
+              "loop"
+            ],
+            "runnerImport": [
+              "orchestrator"
+            ],
+            "managerDynamic": [
+              "orchestrator"
+            ],
+            "secondLauncher": [
+              "launches"
+            ]
+          }
+        },
+        {
+          "id": "C3",
+          "witness": {
+            "legacy": [],
+            "view": [],
+            "optionOrder": [],
+            "fewerNames": [],
+            "unrelatedLoop": [],
+            "typeOnlyImport": []
+          }
+        }
+      ]
+    }
+  ],
+  "tests": [
+    "the judged set: the frozen shape, the out-of-file roster and the cases agree",
+    "A1",
+    "A2",
+    "A3",
+    "A4",
+    "A5",
+    "A6",
+    "B1",
+    "B2",
+    "B3",
+    "C1",
+    "C2",
+    "C3",
+    "registration: every case of this file is registered once, in roster order, in run mode, and ran before this one"
+  ]
+}
