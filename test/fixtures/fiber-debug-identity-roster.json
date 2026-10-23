@@ -1,0 +1,839 @@
+{
+ "provenance": "wb-4nut.1 census roster, cut by ws-02 (run g10-work-s44) on trunk 9357bf4267252eb91b043dafeb28bf0157838eee, then trunk 7718651667d0fe6ea03a4d761cd0812bc18dc232 (landing 286) merged into the branch by fast-forward. Producer facts: read-only git show at the pins named below; pin witnesses: measured by test/workbench-fiber-debug-identity-census.test.ts on 9357bf4 plus the cut and re-read unchanged on 7718651 plus the cut, each reviewed against the bead's acceptance before it was written here.",
+ "bead": "wb-4nut.1",
+ "programPin": "76bbbffd9d4a419f972d6fefc8b7f9dc524df8df",
+ "producer": {
+  "statement": {
+   "repository": "ReactiveFiberTSXSDK",
+   "pin": "76bbbffd9d4a419f972d6fefc8b7f9dc524df8df",
+   "files": {
+    "docs/programs/harness2-reactive-evolution-2026-10-20/README.md": "32fff555591b99dfc806518b694c1faf50e83fb3",
+    "docs/programs/harness2-reactive-evolution-2026-10-20/DEVELOPER.md": "900035f294e32a63a89d88b98556197af4d60fd6",
+    "docs/programs/harness2-reactive-evolution-2026-10-20/BEADS-2026-10-21.md": "80427fdf9c89958cce77f66cc3dfa481327400f7"
+   },
+   "quotes": [
+    "A UI/React Fiber debugging ID is not FiberOptics identity. Any mapping into a FiberOptics component/port must be explicit, revisioned and traceable.",
+    "Screenshot/React debug ID without explicit witness cannot be upgraded to direct Fiber mapping."
+   ],
+   "lines": {
+    "README.md:26": "4. A UI/React Fiber debugging ID is not FiberOptics identity. Any mapping into a FiberOptics component/port must be explicit, revisioned and traceable.",
+    "README.md:47": "4. Screenshot/React debug ID without explicit witness cannot be upgraded to direct Fiber mapping.",
+    "DEVELOPER.md:50": "- `H2-NEG-04`: Screenshot/React debug ID without explicit witness cannot be upgraded to direct Fiber mapping."
+   }
+  },
+  "witness": {
+   "workPackage": "TSX-H2-03",
+   "row": {
+    "README.md:36": "| TSX-H2-03 | Emit optional UI element→Fiber public ref witness, renderer revision and source-cut binding | installed consumer + independent negative test + source SHA + cost receipt |",
+    "BEADS-2026-10-21.md:48": "| TSX-H2-03 | [H2] Opt-in UI witness: explicit, revisioned Fiber public ref with renderer revision and source cut | feature | P3 | 180 | TSX-H2-ADR (rftsx-rupqh) | R-08 |"
+   },
+   "gate": "TSX-H2-ADR (rftsx-rupqh) records ADOPT; gated packets are not created until then (BEADS-2026-10-21.md:40-42)",
+   "shipped": false,
+   "pinGrep": {
+    "paths": [
+     "src",
+     "python"
+    ],
+    "rows": {
+     "debugId": 0,
+     "screenshot": 0,
+     "uiElement": 0,
+     "publicRef": 0,
+     "mappingToken": 0
+    }
+   }
+  },
+  "fiberOpticsRefs": {
+   "repository": "FiberOpticsSDK",
+   "pin": "e803f66c5fb9e3650e263aa96dcaeac36af761e1",
+   "file": "src/fiber_optics/refs.py",
+   "blob": "43b164661998bf7a68ac7d0e2efcf8aa66580e0e",
+   "refKinds": [
+    "bundle",
+    "node",
+    "port",
+    "fiber",
+    "signal",
+    "transaction",
+    "renderer",
+    "provider",
+    "cycle"
+   ],
+   "nodeSeparator": "nodes",
+   "portDirections": [
+    "inputs",
+    "outputs"
+   ],
+   "nodeIdForm": "<bundle path>.nodes.<name> (NodeRef.to_id)",
+   "portIdForm": "<bundle path>.<inputs|outputs>.<name> (PortRef.to_id)"
+  }
+ },
+ "constants": {
+  "fiberNode": {
+   "provider": "fiber-optics",
+   "type": "node",
+   "id": "app.checkout.nodes.Button"
+  },
+  "fiberPort": {
+   "provider": "fiber-optics",
+   "type": "port",
+   "id": "app.checkout.outputs.clicked"
+  },
+  "debugRef": {
+   "provider": "react-devtools",
+   "type": "fiber",
+   "id": "42"
+  },
+  "screenshotRef": {
+   "provider": "visual-debug",
+   "type": "screenshot",
+   "id": "checkout-button.png"
+  },
+  "relationKinds": [
+   "dependency",
+   "causation",
+   "ownership",
+   "grouping",
+   "hypothesis"
+  ],
+  "identityClaims": [
+   "identity",
+   "same-as",
+   "sameAs",
+   "maps-to",
+   "fiber-identity",
+   "alias",
+   "equivalent",
+   "mapping"
+  ],
+  "vocabulary": [
+   "debugid",
+   "debuggingid",
+   "reactfiber",
+   "reactinternalinstance",
+   "debugsource",
+   "debugowner",
+   "devtools",
+   "screenshot",
+   "screencapture",
+   "screengrab",
+   "fiberoptics",
+   "fiberref",
+   "fiberidentity",
+   "fibermapping",
+   "uielement",
+   "publicref",
+   "mappingtoken"
+  ],
+  "visual": [
+   "screenshot",
+   "screencapture",
+   "screengrab",
+   "debugid",
+   "debuggingid",
+   "reactfiber",
+   "reactinternalinstance",
+   "debugsource",
+   "debugowner",
+   "devtools",
+   "uielement",
+   "domelement"
+  ],
+  "docRoots": [
+   "(root)",
+   ".agents",
+   ".beads",
+   ".pi",
+   "docs",
+   "examples",
+   "new-feedback",
+   "vendor"
+  ],
+  "docFiles": [
+   "AGENTS.md",
+   "CHANGELOG.md",
+   "CONTRIBUTING.md",
+   "README.md",
+   "SECURITY.md",
+   ".agents/skills/beads/SKILL.md",
+   ".beads/README.md",
+   ".pi/agents/auditor.md",
+   "examples/agent-tool-description.md",
+   "vendor/README.md"
+  ],
+  "residuals": {
+   "R-VOCABULARY": [
+    "Q1"
+   ],
+   "R-PARAPHRASE": [
+    "Q2"
+   ],
+   "R-COMPOSED": [
+    "Q3"
+   ],
+   "R-INTERRUPTED": [
+    "Q4"
+   ],
+   "R-UNIT": [
+    "Q5"
+   ],
+   "R-SCOPE": [
+    "Q6"
+   ],
+   "R-STATED-EDGE": [
+    "Q7"
+   ],
+   "R-FOREIGN-READER": [
+    "Q8"
+   ]
+  }
+ },
+ "tests": [
+  "the judged set: the frozen shape, the out-of-file roster, the bead's acceptance text and the cases agree",
+  "A1",
+  "A2",
+  "A3",
+  "B1",
+  "B2",
+  "B3",
+  "B4",
+  "B5",
+  "C1",
+  "C2",
+  "Q1",
+  "Q2",
+  "Q3",
+  "Q4",
+  "Q5",
+  "Q6",
+  "Q7",
+  "Q8",
+  "the registered tests and the reached pins equal the roster, in order and both ways"
+ ],
+ "rows": [
+  {
+   "id": "A",
+   "label": "(a) fixture: evidence carrying a React debug id and no witness yields a Pi relation of at most 'possibly-related', never a Fiber identity edge",
+   "pins": [
+    {
+     "id": "A1",
+     "witness": {
+      "admitted": [
+       "applied",
+       "applied",
+       "applied",
+       "applied",
+       "applied",
+       "applied",
+       "applied",
+       "applied",
+       "applied"
+      ],
+      "nodes": 9,
+      "equalIdDistinct": true,
+      "edges": {
+       "fiberNode": {
+        "from": 0,
+        "to": 0
+       },
+       "fiberPort": {
+        "from": 0,
+        "to": 0
+       },
+       "debugId": {
+        "from": 0,
+        "to": 0
+       },
+       "screenshot": {
+        "from": 0,
+        "to": 0
+       },
+       "equalId": {
+        "from": 0,
+        "to": 0
+       }
+      },
+      "projectionEdges": [
+       "causation claude-agent-sdk/session -> claude-agent-sdk/tool-use",
+       "causation claude-agent-sdk/session -> claude-agent-sdk/tool-use",
+       "grouping claude-agent-sdk/session -> claude-agent-sdk/tool-use",
+       "grouping claude-agent-sdk/session -> claude-agent-sdk/tool-use",
+       "ownership pi-workflow/agent-call -> claude-agent-sdk/session"
+      ],
+      "slices": {
+       "fiberNode": {
+        "edges": 0,
+        "references": 0,
+        "trace": "incomplete-trace:no-observed-relations"
+       },
+       "fiberPort": {
+        "edges": 0,
+        "references": 0,
+        "trace": "incomplete-trace:no-observed-relations"
+       }
+      },
+      "observe": {
+       "counted": {
+        "dependency": 0,
+        "causation": 2,
+        "ownership": 1,
+        "grouping": 2,
+        "hypothesis": 0
+       },
+       "partial": false,
+       "perNode": {
+        "fiber-optics/node": 0,
+        "fiber-optics/port": 0,
+        "react-devtools/fiber": 0,
+        "visual-debug/screenshot": 0,
+        "pi-workflow/agent-call": 1,
+        "claude-agent-sdk/session": 4,
+        "claude-agent-sdk/tool-use": 0
+       }
+      },
+      "debugEvidence": [
+       "react-debug-id:42",
+       "screenshot:checkout-button.png",
+       "fiber-optics:app.checkout.nodes.Button"
+      ]
+     }
+    },
+    {
+     "id": "A2",
+     "witness": {
+      "accepted": [
+       "dependency",
+       "causation",
+       "ownership",
+       "grouping",
+       "hypothesis"
+      ],
+      "classes": [
+       "declared-dependency",
+       "observed-causal",
+       "lifecycle-ownership",
+       "grouping",
+       "inferred-hypothesis"
+      ],
+      "read": [
+       {
+        "kind": "dependency",
+        "relation": "declared-dependency",
+        "authoritative": true
+       },
+       {
+        "kind": "causation",
+        "relation": "observed-causal",
+        "authoritative": true
+       },
+       {
+        "kind": "ownership",
+        "relation": "lifecycle-ownership",
+        "authoritative": true
+       },
+       {
+        "kind": "grouping",
+        "relation": "grouping",
+        "authoritative": true
+       },
+       {
+        "kind": "hypothesis",
+        "relation": "inferred-hypothesis",
+        "authoritative": false
+       }
+      ],
+      "observeKinds": [
+       "dependency",
+       "causation",
+       "ownership",
+       "grouping",
+       "hypothesis"
+      ],
+      "identityNames": [],
+      "ceiling": {
+       "stated": [
+        {
+         "from": "react-devtools/fiber",
+         "relation": "inferred-hypothesis",
+         "authoritative": false
+        }
+       ],
+       "trace": "incomplete-trace:hypothesis-only"
+      },
+      "observedDebug": 1,
+      "observedHypothesis": 1
+     }
+    },
+    {
+     "id": "A3",
+     "witness": {
+      "roots": [
+       {
+        "root": "src",
+        "floor": true,
+        "anchor": true
+       },
+       {
+        "root": "qa",
+        "floor": true,
+        "anchor": true
+       }
+      ],
+      "spelled": [],
+      "bound": [],
+      "controls": {
+       "flagged": [
+        [
+         "debugid"
+        ],
+        [
+         "reactfiber"
+        ],
+        [
+         "fiberoptics"
+        ],
+        [
+         "screenshot"
+        ],
+        [
+         "devtools"
+        ],
+        [
+         "publicref",
+         "uielement"
+        ],
+        [
+         "mappingtoken"
+        ],
+        [
+         "fiberidentity"
+        ],
+        [
+         "debugsource"
+        ],
+        [
+         "debuggingid"
+        ],
+        [
+         "screencapture"
+        ],
+        [
+         "fiberref"
+        ]
+       ],
+       "quiet": [
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "label": "(b) a witness-less mapping claim in a Pi projection or hosted-agent report is refused",
+   "pins": [
+    {
+     "id": "B1",
+     "witness": {
+      "claimed": {
+       "identity": "Unknown relationship kind.",
+       "same-as": "Unknown relationship kind.",
+       "sameAs": "Unknown relationship kind.",
+       "maps-to": "Unknown relationship kind.",
+       "fiber-identity": "Unknown relationship kind.",
+       "alias": "Unknown relationship kind.",
+       "equivalent": "Unknown relationship kind.",
+       "mapping": "Unknown relationship kind."
+      },
+      "ownership": {
+       "unconfirmed": "Ownership requires explicit native owner confirmation reference.",
+       "agentConfirmed": "Ownership requires explicit native owner confirmation reference."
+      },
+      "unchanged": true,
+      "edges": {
+       "fiberNode": {
+        "from": 0,
+        "to": 0
+       },
+       "fiberPort": {
+        "from": 0,
+        "to": 0
+       }
+      }
+     }
+    },
+    {
+     "id": "B2",
+     "witness": {
+      "slice": {
+       "edges": 0,
+       "references": 2,
+       "trace": "observed:"
+      },
+      "references": [
+       {
+        "direction": "upstream",
+        "reason": "unknown-relation-kind",
+        "ref": "react-devtools/fiber",
+        "edgeCount": 1
+       },
+       {
+        "direction": "upstream",
+        "reason": "unknown-relation-kind",
+        "ref": "react-devtools/fiber",
+        "edgeCount": 1
+       }
+      ],
+      "observe": {
+       "counted": {
+        "dependency": 0,
+        "causation": 0,
+        "ownership": 0,
+        "grouping": 0,
+        "hypothesis": 0
+       },
+       "partial": true,
+       "perNode": {
+        "fiber-optics/node": 0,
+        "react-devtools/fiber": 0
+       }
+      }
+     }
+    },
+    {
+     "id": "B3",
+     "witness": {
+      "relations": [
+       "causation claude-agent-sdk/session -> claude-agent-sdk/tool-use",
+       "causation claude-agent-sdk/session -> claude-agent-sdk/tool-use",
+       "grouping claude-agent-sdk/session -> claude-agent-sdk/tool-use",
+       "grouping claude-agent-sdk/session -> claude-agent-sdk/tool-use",
+       "ownership pi-workflow/agent-call -> claude-agent-sdk/session"
+      ],
+      "refs": [
+       "claude-agent-sdk/session",
+       "claude-agent-sdk/tool-use",
+       "claude-agent-sdk/tool-use",
+       "pi-workflow/agent-call"
+      ],
+      "titles": [
+       "visual debug: React debug id 42 is fiber-optics app.checkout.nodes.Button",
+       "visual debug: React debug id 42 is fiber-optics app.checkout.nodes.Button · session",
+       "browser_take_screenshot",
+       "react_devtools_inspect 42 maps to app.checkout.nodes.Button"
+      ],
+      "reportRead": false,
+      "writeSites": {
+       "src/workbench/claude-control-observer.ts": {
+        "calls": 1,
+        "kinds": [
+         "ownership"
+        ]
+       },
+       "src/workbench/detached-observer.ts": {
+        "calls": 1,
+        "kinds": [
+         "ownership"
+        ]
+       },
+       "src/workbench/forge-operation-observer.ts": {
+        "calls": 1,
+        "kinds": [
+         "ownership"
+        ]
+       }
+      },
+      "indexRelates": 0
+     }
+    },
+    {
+     "id": "B4",
+     "witness": {
+      "claims": [
+       "debugId",
+       "screenshot",
+       "idEquality",
+       "agentReport",
+       "noRevision",
+       "noCut",
+       "noRef",
+       "otherTarget",
+       "witnessed",
+       "witnessedPort"
+      ],
+      "honest": [],
+      "readings": [
+       "possibly-related",
+       "possibly-related",
+       "possibly-related",
+       "possibly-related",
+       "possibly-related",
+       "possibly-related",
+       "possibly-related",
+       "possibly-related",
+       "identity",
+       "identity"
+      ],
+      "mutants": {
+       "upgradeOnDebugId": [
+        "debugId: identity without a complete witness"
+       ],
+       "upgradeOnScreenshot": [
+        "screenshot: identity without a complete witness"
+       ],
+       "upgradeOnAgentReport": [
+        "agentReport: identity without a complete witness"
+       ],
+       "upgradeOnIdEquality": [
+        "idEquality: identity without a complete witness"
+       ],
+       "acceptPartialWitness": [
+        "noRevision: identity without a complete witness",
+        "noCut: identity without a complete witness",
+        "otherTarget: identity without a complete witness"
+       ],
+       "synthesizeRevision": [
+        "noRevision: identity without a complete witness"
+       ],
+       "dropWitness": [
+        "witnessed: witness not carried verbatim",
+        "witnessedPort: witness not carried verbatim"
+       ],
+       "rewriteCut": [
+        "witnessed: witness not carried verbatim",
+        "witnessedPort: witness not carried verbatim"
+       ],
+       "ignoreTarget": [
+        "otherTarget: identity without a complete witness"
+       ]
+      }
+     }
+    },
+    {
+     "id": "B5",
+     "witness": {
+      "bound": {},
+      "synthetic": {
+       "synthetic/honest": 0,
+       "synthetic/upgradeOnDebugId": 1
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "label": "(c) docs census: no Pi doc describes screenshot/debug-id to Fiber mapping as available",
+   "pins": [
+    {
+     "id": "C1",
+     "witness": {
+      "floors": {
+       "files": true,
+       "units": true,
+       "visual": true,
+       "fiber": true
+      },
+      "roots": {
+       "(root)": true,
+       ".agents": true,
+       ".beads": true,
+       ".pi": true,
+       "docs": true,
+       "examples": true,
+       "new-feedback": true,
+       "vendor": true
+      },
+      "named": {
+       "AGENTS.md": true,
+       "CHANGELOG.md": true,
+       "CONTRIBUTING.md": true,
+       "README.md": true,
+       "SECURITY.md": true,
+       ".agents/skills/beads/SKILL.md": true,
+       ".beads/README.md": true,
+       ".pi/agents/auditor.md": true,
+       "examples/agent-tool-description.md": true,
+       "vendor/README.md": true
+      },
+      "anchors": {
+       "AGENTS.md": true,
+       "README.md": true,
+       "CHANGELOG.md": true,
+       "docs/workbench/19-worked-examples.md": true,
+       "docs/workbench/receipts/wb-2j3.7.md": true
+      },
+      "claims": []
+     }
+    },
+    {
+     "id": "C2",
+     "witness": {
+      "flagged": [
+       1,
+       1,
+       1,
+       1,
+       1,
+       1
+      ],
+      "quiet": [
+       0,
+       0,
+       0,
+       0,
+       0
+      ],
+      "families": [
+       {
+        "visual": true,
+        "fiber": false
+       },
+       {
+        "visual": false,
+        "fiber": false
+       },
+       {
+        "visual": false,
+        "fiber": true
+       },
+       {
+        "visual": true,
+        "fiber": false
+       },
+       {
+        "visual": true,
+        "fiber": false
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "Q",
+   "label": "residuals: each named family with its pinned quiet row",
+   "pins": [
+    {
+     "id": "Q1",
+     "witness": {
+      "words": []
+     }
+    },
+    {
+     "id": "Q2",
+     "witness": {
+      "fiberOnly": 0,
+      "visualOnly": 0
+     }
+    },
+    {
+     "id": "Q3",
+     "witness": {
+      "threeParts": [],
+      "twoParts": [
+       "debugid",
+       "fiberoptics"
+      ]
+     }
+    },
+    {
+     "id": "Q4",
+     "witness": {
+      "lookalike": [],
+      "doubleSplit": [],
+      "singleSplit": [
+       "fiberoptics"
+      ],
+      "docsUnits": 0
+     }
+    },
+    {
+     "id": "Q5",
+     "witness": {
+      "heading": 0,
+      "items": 0,
+      "paragraph": 1
+     }
+    },
+    {
+     "id": "Q6",
+     "witness": {
+      "scanned": [
+       "src",
+       "qa",
+       "markdown outside test/"
+      ],
+      "skipped": [
+       ".forge",
+       ".git",
+       "coverage",
+       "dist",
+       "node_modules",
+       "test"
+      ],
+      "testSpells": true,
+      "beadsSpell": [
+       "debuggingid",
+       "debugid",
+       "fiberidentity",
+       "fibermapping",
+       "fiberoptics",
+       "publicref",
+       "reactfiber",
+       "screenshot",
+       "uielement"
+      ]
+     }
+    },
+    {
+     "id": "Q7",
+     "witness": {
+      "admitted": 3,
+      "read": [
+       {
+        "relation": "declared-dependency",
+        "authoritative": true
+       },
+       {
+        "relation": "observed-causal",
+        "authoritative": true
+       },
+       {
+        "relation": "grouping",
+        "authoritative": true
+       }
+      ]
+     }
+    },
+    {
+     "id": "Q8",
+     "witness": {
+      "edges": [
+       {
+        "class": "identity",
+        "crossProvider": true,
+        "confirmed": false
+       }
+      ],
+      "complete": true,
+      "wiring": [
+       "src/index.ts: observeInvocation reads the session projection",
+       "src/ui/workflow-menu.ts: createGraphViewBuilder reads the session projection",
+       "src/ui/workflow-menu.ts: selectLinkedTopology reads the session projection"
+      ]
+     }
+    }
+   ]
+  }
+ ]
+}
