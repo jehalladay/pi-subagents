@@ -34,6 +34,7 @@ The workbench interprets scripts locally and orchestrates *calls* but does not i
 | Build selection, cache, workspaces, verification | Forge | invoke SDK and display native basis/evidence |
 | Hypergraph query completeness, coverage and bounds | HyperUnix | issue queries and interpret native result algebra |
 | Context rendering, necessity and provenance | ReactiveFiberCLI | invoke supported API and retain render evidence |
+| Graph-function representations, numerical evaluation, learned scores, embeddings, predictions, policy distributions and their receipts | GraphPolicyCLI | nothing today (no gp seam is registered); a future seam reaches gp only through its CLI, SDK or `gp rpc --stdio`, under the GraphPolicyCLI boundary below |
 | Cross-runtime continuation | RCP + implementing runtime | optional adapter only when available |
 | User-facing navigation and derived observations | Workbench | index, correlate, profile, render, propose |
 | Workflow script source revision | Git/Forge artifact | reference and edit under explicit policy |
@@ -67,3 +68,14 @@ Embedded: Pi process owns interpreter, Claude SDK clients, SDK dependencies; Pi 
 - Source analysis must not execute untrusted workflow JavaScript to discover metadata.
 - An observation is a read, not a claim to cancel/control; explicit auth scope required for mutations.
 - Execute only pinned code/dependencies for reproducible experiments; propagate workspace basis through results and links.
+
+## GraphPolicyCLI boundary
+
+Pi carries no GraphPolicyCLI (gp) integration today. Program obligation RF-GRAPH-POLICY-MACHINE-CONTROL-R1 (bead wb-1xvp.2; ReactiveFiberCLI docs/programs/graph-policy-machine-control-2026-10-21/README.md:79@6a251bf73af5) binds any future gp seam to the four rules below, and test/workbench-gp-real-interfaces.test.ts judges every src module and package.json by them, one check per semicolon-separated clause. A gp client is a src module the census registers as one (none today); a gp-adjacent module is a gp client or a module that imports one; a decision path is a gp client and its src import closure; an execution seam is a module that itself calls process.kill, stops a Furnace Run or Attempt, writes through bd, starts a Claude agent session or launches a workflow host. A cancel, retry or reassign proposal therefore reaches the existing lifecycle functions, which stay outside every gp seam, and a missing gp verb is added to GraphPolicyCLI itself, never re-implemented here. The census reads code tokens, never comments, and claims only the detector shapes it pins with a live probe each; its measured blind spots are the named residuals below, a list it does not claim complete.
+
+- **GP-1 real interfaces:** every gp call site reaches gp through the gp binary, the GraphPolicyCLI package or `gp rpc --stdio`; no decision-path argv carries `train`; an admission seam imports no training or telemetry writer; no execution seam imports a gp client.
+- **GP-2 no local numerics:** no module outside a gp client names GraphDataIR or GraphPolicyCLI wire vocabulary; a gp client maps the GP_CLI_UNKNOWN_COMMAND refusal to a typed refusal, never a local substitute.
+- **GP-3 no unrelated dependency:** a decision path imports no package beyond the GraphPolicyCLI package and Node built-ins; the dependency manifest declares no training framework and no GraphPolicyCLI package other than graph-policy-cli.
+- **GP-4 lifecycle only:** a gp-adjacent module calls no process.kill; a gp-adjacent module writes nothing through bd; a gp-adjacent module stops no Furnace Run or Attempt.
+
+Named residuals, each pinned by a quiet row that the census keeps silent: UNNAMED-NUMERICS (a module that scores graph data without naming gp vocabulary); LOCAL-SUBSTITUTE (a client that names the refusal and then computes locally); COMPUTED-BINARY (a gp binary name assembled at run time); DYNAMIC-ARGV (a train verb assembled at run time); ALIASED-EFFECT (a kill, a Furnace stop or a launcher reached through a value the census does not follow: a parameter, an assignment after the declaration, an object property or a return value); TRAINING-FRAMEWORK-ROSTER (a training framework outside the census deny roster that no decision path imports); WRAPPED-COMMAND (a launch wrapped by a program the census does not unwrap, such as timeout, sudo, nice or xargs); FOREIGN-LAUNCHER (a launch through a package launcher outside the child_process roster, such as execa).
