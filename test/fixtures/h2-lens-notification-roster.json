@@ -1,0 +1,738 @@
+{
+  "bead": "wb-4nut.8",
+  "quote": "A notification arrives before snapshot data; reader must not mark result READY.",
+  "citation": "docs/programs/harness2-reactive-evolution-2026-10-20/README.md:44@bfe1f4ac7fa0",
+  "scan": {
+    "battery": [
+      "STALE",
+      "UNAVAILABLE",
+      "WITHHELD",
+      "RESYNC_REQUIRED"
+    ],
+    "controlWord": "zz-control",
+    "pinnedFreshness": [
+      "captured_at_render",
+      "reused"
+    ],
+    "guardedOutcomes": [
+      "current",
+      "success"
+    ],
+    "newFreshness": [
+      "STALE",
+      "UNAVAILABLE",
+      "WITHHELD",
+      "RESYNC_REQUIRED",
+      "current",
+      "success",
+      "fresh",
+      "Reused",
+      "CAPTURED_AT_RENDER",
+      ""
+    ],
+    "vocabulary": [
+      {
+        "id": "snapshot-observation",
+        "pattern": "snapshot[_-]?observation/i"
+      },
+      {
+        "id": "import-binding",
+        "pattern": "import[_-]?binding/i"
+      },
+      {
+        "id": "push-route",
+        "pattern": "notify_?push_?updated/i"
+      },
+      {
+        "id": "resync-state",
+        "pattern": "resync[\\s_.-]*required/i"
+      },
+      {
+        "id": "sdk-load",
+        "pattern": "vibranium-reactive-lenses|reactive[-_]lenses\\/|(?:\\bimport|\\bfrom|-m)[\"'\\s,]+reactive_lenses\\b/"
+      }
+    ],
+    "judgedRoots": [
+      "src",
+      "qa",
+      "examples"
+    ],
+    "floors": {
+      "src": 100,
+      "qa": 55,
+      "examples": 5
+    },
+    "anchors": {
+      "src": {
+        "file": "src/workbench/reactivefiber-observer.ts",
+        "token": "observationRowsDemotion"
+      },
+      "qa": {
+        "file": "qa/workbench/smoke.sh",
+        "token": "node qa/workbench/smoke.mjs"
+      },
+      "examples": {
+        "file": "examples/agent-tool-description.md",
+        "token": "{{typeList}}"
+      }
+    },
+    "freshnessRefusal": "validation: ReactiveFiber topology refused: every result.observations row must state freshness captured_at_render or reused."
+  },
+  "producer": {
+    "repo": "ReactiveLensesSDK",
+    "pin": "bfe1f4ac7fa097ef3883d97cda6ab70052849f55",
+    "tip": {
+      "ref": "origin/master",
+      "sha": "49c05483e1d0a931f9325229aa632baa3531c327",
+      "commitsPastPin": 15
+    },
+    "readme": {
+      "path": "docs/programs/harness2-reactive-evolution-2026-10-20/README.md",
+      "blob": "314b1e9f38705e1bee3940f1e6b0b4e6baed8cc3",
+      "lines": [
+        {
+          "line": 25,
+          "text": "2. Notification only marks dirty; a refreshed *accepted* owner snapshot enters a Fiber transaction atomically. If owner cannot be reached, distinguish STALE/UNAVAILABLE/WITHHELD according to declared consumption policy."
+        },
+        {
+          "line": 34,
+          "text": "| RL-H2-01 | define source-qualified SnapshotObservation and ImportBinding adapters using the common Fiber port descriptor | source SHA, independently executed positive/negative fixture, receipt + measured overhead |"
+        },
+        {
+          "line": 44,
+          "text": "1. A notification arrives before snapshot data; reader must not mark result READY."
+        },
+        {
+          "line": 51,
+          "text": "See [DEVELOPER.md](DEVELOPER.md) for step-by-step workflow and required fixture/report artifacts. The first useful installed journey is: Create an in-memory public-port reader returning revision 7, emit two duplicate notifications and then a source-epoch restart. Verify exactly one accepted source transition before restart, RESYNC_REQUIRED after restart, and complete offline pinned replay using serialized accepted observations."
+        }
+      ],
+      "line35Sha256": "f34b9e738c66bad74e9149f53d0dcc437f09845b732c1bea1def36b05f1135df"
+    },
+    "pushRoute": {
+      "file": "src/reactive_lenses/bridge.py",
+      "line": 523,
+      "name": "notify_push_updated"
+    },
+    "gatingNames": [
+      "SnapshotObservation",
+      "ImportBinding",
+      "resync-required"
+    ],
+    "srcFilesAtPin": {
+      "SnapshotObservation": [],
+      "ImportBinding": [],
+      "resync-required": []
+    },
+    "srcFilesAtTip": {
+      "SnapshotObservation": [],
+      "ImportBinding": [],
+      "resync-required": []
+    }
+  },
+  "residuals": [
+    "R-COMPOSED",
+    "R-ENCODED",
+    "R-GENERIC",
+    "R-OUTSIDE",
+    "R-ORDERED",
+    "R-REFRESH"
+  ],
+  "rows": [
+    {
+      "id": "A",
+      "label": "(trigger, absent today) If Pi ever reads Lenses notification events or owner-unreachable states: no product file spells an RL-H2-01 adapter name, the resync-required state, RL's push-notification route or a Lenses SDK load, Pi's one rf channel spawns only the noncommitted render and reads one document per spawn, and the gating artifact is measured absent at the pin and the measured tip",
+      "pins": [
+        {
+          "id": "A1",
+          "witness": {
+            "pin": "A1",
+            "floorsMet": {
+              "src": true,
+              "qa": true,
+              "examples": true
+            },
+            "anchorsRead": {
+              "src": true,
+              "qa": true,
+              "examples": true
+            },
+            "findings": [],
+            "symlinks": [],
+            "controls": {
+              "pascalAdapter": [
+                "snapshot-observation"
+              ],
+              "camelAdapter": [
+                "snapshot-observation"
+              ],
+              "upperAdapter": [
+                "snapshot-observation"
+              ],
+              "snakeAdapter": [
+                "import-binding"
+              ],
+              "pascalBinding": [
+                "import-binding"
+              ],
+              "camelBinding": [
+                "import-binding"
+              ],
+              "pushRoute": [
+                "push-route"
+              ],
+              "camelRoute": [
+                "push-route"
+              ],
+              "stateUpper": [
+                "resync-state"
+              ],
+              "stateKebab": [
+                "resync-state"
+              ],
+              "stateSpaced": [
+                "resync-state"
+              ],
+              "stateCamel": [
+                "resync-state"
+              ],
+              "distribution": [
+                "sdk-load"
+              ],
+              "scopedPackage": [
+                "sdk-load"
+              ],
+              "vendoredPath": [
+                "sdk-load"
+              ],
+              "siblingCheckout": [
+                "sdk-load"
+              ],
+              "pythonModule": [
+                "sdk-load"
+              ],
+              "pythonFrom": [
+                "sdk-load"
+              ],
+              "propertyPath": [],
+              "prose": [],
+              "composed": [],
+              "escaped": [],
+              "genericWords": [],
+              "provenanceKey": [],
+              "plantedSrc": [
+                "snapshot-observation"
+              ],
+              "plantedQa": [
+                "sdk-load"
+              ],
+              "plantedExamples": [
+                "resync-state"
+              ],
+              "testRoot": [],
+              "docsRoot": [],
+              "quietSrc": []
+            }
+          }
+        },
+        {
+          "id": "A2",
+          "witness": {
+            "pin": "A2",
+            "descriptors": [
+              {
+                "id": "reactivefiber.render.preview",
+                "effectClass": "read",
+                "supportedModes": [
+                  "invoke"
+                ],
+                "permissions": [
+                  "reactivefiber:render"
+                ]
+              }
+            ],
+            "legacy": "projected",
+            "view": "projected",
+            "stream": "transport: RF preview returned malformed JSON.",
+            "spawns": {
+              "legacy": [
+                [
+                  "--workspace",
+                  "<workspace>",
+                  "context",
+                  "render",
+                  "--model",
+                  "m",
+                  "--task",
+                  "t",
+                  "--no-commit",
+                  "--no-input",
+                  "--json"
+                ]
+              ],
+              "view": [
+                [
+                  "--workspace",
+                  "<workspace>",
+                  "context",
+                  "render",
+                  "--view",
+                  "lens.view",
+                  "--task-id",
+                  "task-1",
+                  "--no-commit",
+                  "--no-input",
+                  "--json"
+                ]
+              ],
+              "stream": [
+                [
+                  "--workspace",
+                  "<workspace>",
+                  "context",
+                  "render",
+                  "--model",
+                  "m",
+                  "--task",
+                  "t",
+                  "--no-commit",
+                  "--no-input",
+                  "--json"
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "id": "A3",
+          "witness": {
+            "pin": "A3",
+            "producerPin": "bfe1f4ac7fa097ef3883d97cda6ab70052849f55",
+            "tip": {
+              "ref": "origin/master",
+              "sha": "49c05483e1d0a931f9325229aa632baa3531c327",
+              "commitsPastPin": 15
+            },
+            "readmeBlob": "314b1e9f38705e1bee3940f1e6b0b4e6baed8cc3",
+            "pushRoute": {
+              "file": "src/reactive_lenses/bridge.py",
+              "line": 523,
+              "name": "notify_push_updated"
+            },
+            "gatingSays": {
+              "adapters": true,
+              "states": true,
+              "unshipped": true,
+              "namesSpelled": true
+            },
+            "searched": {
+              "atPin": [
+                "SnapshotObservation",
+                "ImportBinding",
+                "resync-required"
+              ],
+              "atTip": [
+                "SnapshotObservation",
+                "ImportBinding",
+                "resync-required"
+              ]
+            },
+            "absentAtPin": [],
+            "absentAtTip": [],
+            "vocabularyCovers": [
+              {
+                "name": "SnapshotObservation",
+                "terms": [
+                  "snapshot-observation"
+                ]
+              },
+              {
+                "name": "ImportBinding",
+                "terms": [
+                  "import-binding"
+                ]
+              },
+              {
+                "name": "resync-required",
+                "terms": [
+                  "resync-state"
+                ]
+              }
+            ],
+            "line34NamesAdapters": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "(a) notification then no snapshot data keeps the Pi projection dirty/pending, never READY; READY appears only after the transaction commit receipt: measured on ObservationProjection, where every Pi reader lands - a node seen only through notification events never reads current or complete, a data-less notification re-marks a refreshed node stale, and only a refresh with a captured snapshot (the accepted-snapshot analog) makes it current, in the node and in its parent's aggregate",
+      "pins": [
+        {
+          "id": "B1",
+          "witness": {
+            "pin": "B1",
+            "firstBare": {
+              "step": "notification, no snapshot data",
+              "result": "applied",
+              "freshness": "unknown",
+              "completeness": "unknown",
+              "statusText": "UNKNOWN"
+            },
+            "firstReady": {
+              "step": "notification stating READY",
+              "result": "applied",
+              "freshness": "unknown",
+              "completeness": "unknown",
+              "statusText": "READY"
+            },
+            "journey": [
+              {
+                "step": "accepted snapshot",
+                "result": "applied",
+                "freshness": "current",
+                "completeness": "complete",
+                "statusText": "accepted owner snapshot"
+              },
+              {
+                "step": "notification after the snapshot",
+                "result": "applied",
+                "freshness": "stale",
+                "completeness": "complete",
+                "statusText": "accepted owner snapshot"
+              },
+              {
+                "step": "notification stating READY after it",
+                "result": "applied",
+                "freshness": "stale",
+                "completeness": "complete",
+                "statusText": "accepted owner snapshot"
+              },
+              {
+                "step": "accepted snapshot again",
+                "result": "applied",
+                "freshness": "current",
+                "completeness": "complete",
+                "statusText": "accepted owner snapshot"
+              }
+            ],
+            "controls": {
+              "orderedSequence": {
+                "step": "positioned event",
+                "result": "applied",
+                "freshness": "current",
+                "completeness": "complete",
+                "statusText": "READY"
+              },
+              "orderedCursor": {
+                "step": "chained event",
+                "result": "applied",
+                "freshness": "current",
+                "completeness": "complete",
+                "statusText": "READY"
+              },
+              "refreshTrusted": {
+                "step": "snapshot built from a notification",
+                "result": "applied",
+                "freshness": "current",
+                "completeness": "complete",
+                "statusText": "READY"
+              }
+            }
+          }
+        },
+        {
+          "id": "B2",
+          "witness": {
+            "pin": "B2",
+            "steps": [
+              {
+                "step": "child unobserved",
+                "counted": 1,
+                "stale": 1,
+                "success": 0
+              },
+              {
+                "step": "notification stating READY",
+                "counted": 1,
+                "stale": 1,
+                "success": 1
+              },
+              {
+                "step": "accepted snapshot",
+                "counted": 1,
+                "stale": 0,
+                "success": 1
+              },
+              {
+                "step": "notification after the snapshot",
+                "counted": 1,
+                "stale": 1,
+                "success": 1
+              },
+              {
+                "step": "accepted snapshot again",
+                "counted": 1,
+                "stale": 0,
+                "success": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "(b) two duplicate notifications produce at most one accepted transition (L51): the projection applies a re-delivered event id as duplicate and a re-delivered stream position as out-of-order, with no revision step and the node unchanged, and the duplicate-notification journey reaches current exactly once",
+      "pins": [
+        {
+          "id": "C1",
+          "witness": {
+            "pin": "C1",
+            "unsequenced": {
+              "results": [
+                "applied",
+                "duplicate"
+              ],
+              "revisionStep": 0,
+              "unchanged": true
+            },
+            "sequenced": {
+              "results": [
+                "applied",
+                "duplicate",
+                "out-of-order"
+              ],
+              "revisionStep": 0,
+              "unchanged": true
+            }
+          }
+        },
+        {
+          "id": "C2",
+          "witness": {
+            "pin": "C2",
+            "duplicateIds": {
+              "results": [
+                "applied",
+                "applied",
+                "duplicate",
+                "applied"
+              ],
+              "transitions": {
+                "toCurrent": 1,
+                "valueChanges": 1
+              }
+            },
+            "distinctIds": {
+              "results": [
+                "applied",
+                "applied",
+                "applied",
+                "applied"
+              ],
+              "transitions": {
+                "toCurrent": 1,
+                "valueChanges": 1
+              }
+            },
+            "withoutSnapshot": {
+              "results": [
+                "applied",
+                "applied",
+                "duplicate"
+              ],
+              "transitions": {
+                "toCurrent": 0,
+                "valueChanges": 0
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "D",
+      "label": "(c) battery over STALE/UNAVAILABLE/WITHHELD/RESYNC_REQUIRED: each word appears verbatim in its own row and never in another's (wb-4ap.2 shape): on the rf render path's status-word reader each word reads as a not-observed status listed verbatim in its own projection's note, partial and never success, equal to a control word's projection with the word swapped, and the four in one render are listed distinct, never collapsed",
+      "pins": [
+        {
+          "id": "D1",
+          "witness": {
+            "pin": "D1",
+            "words": [
+              {
+                "word": "STALE",
+                "coverage": "partial",
+                "tone": "unknown",
+                "note": "observations: 1 row, 1 not observed (STALE): partial",
+                "battery": [
+                  "STALE"
+                ],
+                "swappedEqual": true
+              },
+              {
+                "word": "UNAVAILABLE",
+                "coverage": "partial",
+                "tone": "unknown",
+                "note": "observations: 1 row, 1 not observed (UNAVAILABLE): partial",
+                "battery": [
+                  "UNAVAILABLE"
+                ],
+                "swappedEqual": true
+              },
+              {
+                "word": "WITHHELD",
+                "coverage": "partial",
+                "tone": "unknown",
+                "note": "observations: 1 row, 1 not observed (WITHHELD): partial",
+                "battery": [
+                  "WITHHELD"
+                ],
+                "swappedEqual": true
+              },
+              {
+                "word": "RESYNC_REQUIRED",
+                "coverage": "partial",
+                "tone": "unknown",
+                "note": "observations: 1 row, 1 not observed (RESYNC_REQUIRED): partial",
+                "battery": [
+                  "RESYNC_REQUIRED"
+                ],
+                "swappedEqual": true
+              }
+            ],
+            "control": {
+              "coverage": "partial",
+              "tone": "unknown",
+              "note": "observations: 1 row, 1 not observed (zz-control): partial",
+              "battery": []
+            },
+            "clean": {
+              "coverage": "complete",
+              "tone": "success",
+              "note": "observations: 1 row, 0 reused",
+              "battery": []
+            }
+          }
+        },
+        {
+          "id": "D2",
+          "witness": {
+            "pin": "D2",
+            "together": {
+              "coverage": "partial",
+              "tone": "unknown",
+              "note": "observations: 4 rows, 4 not observed (STALE, UNAVAILABLE, WITHHELD, RESYNC_REQUIRED): partial",
+              "battery": [
+                "STALE",
+                "UNAVAILABLE",
+                "WITHHELD",
+                "RESYNC_REQUIRED"
+              ]
+            },
+            "reversed": {
+              "coverage": "partial",
+              "tone": "unknown",
+              "note": "observations: 4 rows, 4 not observed (RESYNC_REQUIRED, WITHHELD, UNAVAILABLE, STALE): partial",
+              "battery": [
+                "STALE",
+                "UNAVAILABLE",
+                "WITHHELD",
+                "RESYNC_REQUIRED"
+              ]
+            },
+            "repeated": {
+              "coverage": "partial",
+              "tone": "unknown",
+              "note": "observations: 8 rows, 8 not observed (STALE, UNAVAILABLE, WITHHELD, RESYNC_REQUIRED): partial",
+              "battery": [
+                "STALE",
+                "UNAVAILABLE",
+                "WITHHELD",
+                "RESYNC_REQUIRED"
+              ]
+            },
+            "bounded": {
+              "coverage": "partial",
+              "tone": "unknown",
+              "note": "observations: 5 rows, 5 not observed (STALE, UNAVAILABLE, WITHHELD, RESYNC_REQUIRED, \u2026): partial",
+              "battery": [
+                "STALE",
+                "UNAVAILABLE",
+                "WITHHELD",
+                "RESYNC_REQUIRED"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "E",
+      "label": "(d) a new freshness word on an rf envelope yields a typed refusal or verbatim carry, never 'current'/'success': the rf reader adapter refuses every row freshness outside the pinned pair with one typed CapabilityError, the native seam carries the word verbatim inside the stand-in rf's envelope and mints no string, and a non-string freshness is refused at the seam",
+      "pins": [
+        {
+          "id": "E1",
+          "witness": {
+            "pin": "E1",
+            "refusals": {
+              "STALE": "validation: ReactiveFiber topology refused: every result.observations row must state freshness captured_at_render or reused.",
+              "UNAVAILABLE": "validation: ReactiveFiber topology refused: every result.observations row must state freshness captured_at_render or reused.",
+              "WITHHELD": "validation: ReactiveFiber topology refused: every result.observations row must state freshness captured_at_render or reused.",
+              "RESYNC_REQUIRED": "validation: ReactiveFiber topology refused: every result.observations row must state freshness captured_at_render or reused.",
+              "current": "validation: ReactiveFiber topology refused: every result.observations row must state freshness captured_at_render or reused.",
+              "success": "validation: ReactiveFiber topology refused: every result.observations row must state freshness captured_at_render or reused.",
+              "fresh": "validation: ReactiveFiber topology refused: every result.observations row must state freshness captured_at_render or reused.",
+              "Reused": "validation: ReactiveFiber topology refused: every result.observations row must state freshness captured_at_render or reused.",
+              "CAPTURED_AT_RENDER": "validation: ReactiveFiber topology refused: every result.observations row must state freshness captured_at_render or reused.",
+              "": "validation: ReactiveFiber topology refused: every result.observations row must state freshness captured_at_render or reused."
+            },
+            "pair": {
+              "captured_at_render": {
+                "coverage": "complete",
+                "tone": "success",
+                "note": "observations: 1 row, 0 reused",
+                "battery": []
+              },
+              "reused": {
+                "coverage": "partial",
+                "tone": "unknown",
+                "note": "observations: 1 row, 1 reused: partial",
+                "battery": []
+              }
+            }
+          }
+        },
+        {
+          "id": "E2",
+          "witness": {
+            "pin": "E2",
+            "carried": true,
+            "minted": [],
+            "freshness": [
+              "RESYNC_REQUIRED",
+              "current"
+            ],
+            "observer": "validation: ReactiveFiber topology refused: every result.observations row must state freshness captured_at_render or reused.",
+            "nonString": "transport: RF preview returned an unrecognized or contradictory envelope."
+          }
+        }
+      ]
+    }
+  ],
+  "tests": [
+    "the judged set: the frozen shape, the out-of-file roster and the bead row agree",
+    "A1",
+    "A2",
+    "A3",
+    "B1",
+    "B2",
+    "C1",
+    "C2",
+    "D1",
+    "D2",
+    "E1",
+    "E2",
+    "records: every registered test ran once in run mode in roster order and every pin reached its end"
+  ]
+}
