@@ -1,0 +1,141 @@
+{
+  "comment": "wb-hs2j.6 (RF-REACTIVE-CONTEXT-ASSEMBLY-R7 acceptance (b)): the installed rf's answers to the two gated publication leaves and to the proposed assembly verb, captured on the cut's host by the cutting seat and replayed (the parsed stdout re-serialized as JSON) by the stand-in rf of test/workbench-rf-publish-emulation-census.test.ts. Each run used an empty scratch directory as its cwd, and the directory was still empty after all three (rf runs the gate check before any filesystem read: cli/gates.py at ReactiveFiberCLI 6a251bf73af5). The graph publish and graph rollback argv are the probe_argv of their GatedSurface rows (gates.py:286-297, gate SCG-A3); the assembly argv names the C2 verb of reactive-context-assembly-2026-10-18/README.md:60, which rf does not register. exit is the process exit status; stdout is the captured JSON verbatim, parsed (the per-run operation_id is rf's own).",
+  "source": "captured",
+  "rfVersion": "0.1.832",
+  "rfCommit": "2618c211be0dbbb74ba10e965e2d3d1f0fb5903e",
+  "cwdEntriesAfter": 0,
+  "refusals": [
+    {
+      "argv": [
+        "--json",
+        "graph",
+        "publish",
+        "--candidate",
+        "c",
+        "--expect-head",
+        "1"
+      ],
+      "exit": 2,
+      "capturedUtc": "2026-10-23T03:33:22Z",
+      "stderrBytes": 0,
+      "stdout": {
+        "schema": "reactive-fiber.cli/v1",
+        "ok": false,
+        "command": "graph.publish",
+        "operation_id": "rfo_7fzvj3ecyekd2virypf7h6jfwu",
+        "workspace": null,
+        "transaction_id": null,
+        "result": null,
+        "diagnostics": [
+          {
+            "code": "RF_USAGE_NOT_IMPLEMENTED",
+            "severity": "error",
+            "message": "graph publish is not available in this build",
+            "hint": "Gated by SCG-A3, planned for slice 17; see docs/diagnostics.md#rf_usage_not_implemented",
+            "source": "host",
+            "metadata": {
+              "surface": "graph publish",
+              "gates": [
+                "SCG-A3"
+              ],
+              "planned_slice": 17
+            }
+          }
+        ]
+      }
+    },
+    {
+      "argv": [
+        "--json",
+        "graph",
+        "rollback",
+        "--to",
+        "b",
+        "--expect-head",
+        "1"
+      ],
+      "exit": 2,
+      "capturedUtc": "2026-10-23T03:33:22Z",
+      "stderrBytes": 0,
+      "stdout": {
+        "schema": "reactive-fiber.cli/v1",
+        "ok": false,
+        "command": "graph.rollback",
+        "operation_id": "rfo_lnqy34zfifzfr336bfecjn22d4",
+        "workspace": null,
+        "transaction_id": null,
+        "result": null,
+        "diagnostics": [
+          {
+            "code": "RF_USAGE_NOT_IMPLEMENTED",
+            "severity": "error",
+            "message": "graph rollback is not available in this build",
+            "hint": "Gated by SCG-A3, planned for slice 17; see docs/diagnostics.md#rf_usage_not_implemented",
+            "source": "host",
+            "metadata": {
+              "surface": "graph rollback",
+              "gates": [
+                "SCG-A3"
+              ],
+              "planned_slice": 17
+            }
+          }
+        ]
+      }
+    },
+    {
+      "argv": [
+        "--json",
+        "assembly",
+        "publish",
+        "--candidate",
+        "c"
+      ],
+      "exit": 2,
+      "capturedUtc": "2026-10-23T03:33:22Z",
+      "stderrBytes": 0,
+      "stdout": {
+        "schema": "reactive-fiber.cli/v1",
+        "ok": false,
+        "command": null,
+        "operation_id": "rfo_jh7ztmgywexfvilpjrhmllytjq",
+        "workspace": null,
+        "transaction_id": null,
+        "result": null,
+        "diagnostics": [
+          {
+            "code": "RF_USAGE_UNKNOWN_COMMAND",
+            "severity": "error",
+            "message": "unknown command 'assembly'",
+            "hint": "Run `rf --help` for the command list.",
+            "source": "host",
+            "metadata": {
+              "command": "assembly",
+              "choices": [
+                "init",
+                "status",
+                "doctor",
+                "config",
+                "component",
+                "optic",
+                "graph",
+                "view",
+                "state",
+                "session",
+                "context",
+                "inference",
+                "operation",
+                "storage",
+                "dolt",
+                "schema",
+                "completion",
+                "install-skill"
+              ],
+              "suggestions": []
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
