@@ -1,0 +1,1258 @@
+{
+ "constants": {
+  "bead": "wb-pfxo.9",
+  "previewId": "reactivefiber.render.preview",
+  "showLeaf": "context.show",
+  "showId": "reactivefiber.context.show",
+  "selector": "--instance",
+  "instanceKey": "component_instance_id",
+  "admitted": [
+   "RENDER",
+   "--json",
+   "--redact",
+   "--detail LEVEL"
+  ],
+  "levels": [
+   "compact",
+   "full"
+  ],
+  "gating": "rfc-vg54d.2",
+  "milestone": "CASM-M3a",
+  "parserSite": "parser.py:2220",
+  "selectorSites": "component.state.show/reset",
+  "sourceLocator": "BEADS-2026-10-21.md:21@6a251bf73af5",
+  "requested": "demo.notes:notes",
+  "sibling": "demo.aside:aside",
+  "floors": {
+   "src": 100,
+   "native": 4,
+   "export": 500
+  }
+ },
+ "measured": {
+  "rf": {
+   "build": "0.1.832",
+   "commit": "2618c211be0d"
+  },
+  "usage": "usage: rf context show [-h] [--redact] [--detail {compact,full}] [--json] [--format {text,json}] [--workspace PATH] [--actor ID] [--no-input] [--yes] [--debug] [--color {auto,always,never}] [-v] RENDER",
+  "probe": {
+   "argv": [
+    "context",
+    "show",
+    "<render>",
+    "--instance",
+    "demo.notes:notes",
+    "--json"
+   ],
+   "exit": 2,
+   "envelope": {
+    "schema": "reactive-fiber.cli/v1",
+    "ok": false,
+    "command": "context.show",
+    "operation_id": "rfo_wu4qz7kcdl2fluq4q42okjmuda",
+    "workspace": null,
+    "transaction_id": null,
+    "result": null,
+    "diagnostics": [
+     {
+      "code": "RF_USAGE_UNKNOWN_OPTION",
+      "severity": "error",
+      "message": "unrecognized arguments: --instance demo.notes:notes",
+      "hint": "Run `rf context show --help` for its usage.",
+      "source": "host",
+      "metadata": {
+       "options": [
+        "--instance"
+       ],
+       "positionals": [
+        "demo.notes:notes"
+       ],
+       "surface": "context show"
+      }
+     }
+    ]
+   }
+  },
+  "show": {
+   "argv": [
+    "context",
+    "show",
+    "<render>",
+    "--json"
+   ],
+   "exit": 0,
+   "envelope": {
+    "schema": "reactive-fiber.cli/v1",
+    "ok": true,
+    "command": "context.show",
+    "operation_id": "rfo_u66ltni4semushdus2jzdmzcq4",
+    "workspace": {
+     "id": "rfw_5c2jno7epkalk33bntt6jecug4",
+     "root": "/fixture/rf-workspace"
+    },
+    "transaction_id": null,
+    "result": {
+     "render_id": "rfr_gmxxop5ab4qrsqfavtrd2pqibq",
+     "commit_seq": 58,
+     "transaction_id": "rft_2knm56pja6zhxkwebvanxveilm",
+     "operation_id": "rfo_ubznbmitw2md5l2yzhdkuwbajq",
+     "attempts": 1,
+     "superseded_transaction_ids": [],
+     "session_id": "rfs_chtm72fo4mt373j35qek63jizi",
+     "actor": "user:fixture",
+     "agent_id": null,
+     "workspace_id": "rfw_5c2jno7epkalk33bntt6jecug4",
+     "created_at": "2026-10-23T01:53:10.292639Z",
+     "status": "success",
+     "storage_backend": "jsonl",
+     "audience": "model",
+     "replayability": "replayable_exact",
+     "replayability_reasons": [],
+     "replayability_overlay": null,
+     "evidence": {
+      "reachable": 10,
+      "present": 10,
+      "missing": [],
+      "mismatched": [],
+      "unresolved": []
+     },
+     "detail": "compact",
+     "output": {
+      "text": "demo.aside has no content yet.\ndemo.notes has no content yet.\n",
+      "text_retained": true,
+      "size_bytes": 62,
+      "empty": false,
+      "digest": "sha256:a376c3e49ee0b38f044d5c0a035357d06afbf4347ccfb8d683cf75272d33ec17",
+      "text_blob_digest": "sha256:57b28574cbe1c610bc7bd5e9166529c535533d7989a8b959eada85c3d46fe3b7"
+     },
+     "budget": {
+      "audience_excluded_count": 0,
+      "capability_snapshot": {
+       "cache_prefix": null,
+       "can_count_tokens": false,
+       "context_window": 200000,
+       "decision": null,
+       "known_policy_gates": [],
+       "max_output_tokens": 16000,
+       "model_id": "m",
+       "reasoning": null,
+       "source": "user_override",
+       "supports_reasoning": false,
+       "supports_streaming": false,
+       "supports_thinking": false,
+       "supports_vision": false,
+       "thinking_budget": null,
+       "verified": false
+      },
+      "capability_source": "user_override",
+      "capability_verified": false,
+      "counts": {
+       "admitted_before_budget": 2,
+       "candidate": 2,
+       "final_included": 2,
+       "withheld_necessity": 0,
+       "withheld_truncated": 0
+      },
+      "estimator_id": "rf.utf8-bytes-div4.v1",
+      "formula_terms": {
+       "available_context_tokens": 189760,
+       "context_window": 200000,
+       "max_output_tokens": 16000,
+       "occupied_tokens": 0,
+       "output_reserve": 8192,
+       "overhead": 0,
+       "safety_margin": 2048
+      },
+      "hidden_count": 0,
+      "included_tokens": 16,
+      "observability": {
+       "reconciliation_attempts": 0,
+       "token_cost_unknown": 0,
+       "token_estimator_failed": 0
+      },
+      "overflow_pinned_count": 0,
+      "reconciliation_attempts": [],
+      "requested_model_id": "m",
+      "resolved_model_id": null,
+      "schema": "reactive-fiber.budget/v1",
+      "token_count_method": "estimated",
+      "truncated_count": 0,
+      "truncated_tokens": 0,
+      "unknown_cost_count": 0
+     },
+     "token_accounting": {
+      "kind": "estimated",
+      "estimator_id": "rf.utf8-bytes-div4.v1",
+      "included_tokens": 16
+     },
+     "diagnostics_summary": {
+      "errors": 0,
+      "warnings": 1,
+      "has_errors": false,
+      "has_warnings": true
+     },
+     "diagnostics": [
+      {
+       "code": "RF_MODEL_CAPABILITY_UNVERIFIED",
+       "severity": "warning",
+       "message": {
+        "digest": "sha256:21950ad1da5b4dcb4f26e2b5bf74bc99eac12ffe0d0acdea121e84fe05eab0c0",
+        "redacted": true,
+        "size_bytes": 123
+       },
+       "hint": "Use a model id reactive_inference has verified to clear this warning; under --strict this render is refused unless --allow-unverified-capability is passed.",
+       "source": "host",
+       "metadata": {
+        "allow_unverified": false,
+        "capability_source": "user_override",
+        "requested_model_id": "m",
+        "strict": false
+       }
+      }
+     ],
+     "diagnostics_retained": true,
+     "blocks": [
+      {
+       "schema": "reactive-fiber.candidate-block/v1",
+       "render_id": "rfr_gmxxop5ab4qrsqfavtrd2pqibq",
+       "candidate_key": "demo.aside:aside::placeholder",
+       "original_block_key": "placeholder",
+       "producer_component_id": "demo.aside",
+       "producer_revision_id": "sha256:ee25118d79cf9210487a4101cb55a40cd1b765e79b6fd3f7bd497935852f8669",
+       "component_instance_id": "demo.aside:aside",
+       "content_digest": "sha256:d2be9c7810f1f60a1f12808a0aa3bae5ebae964590d4eec89c49a3c04575fd89",
+       "content_blob_digest": "sha256:d2be9c7810f1f60a1f12808a0aa3bae5ebae964590d4eec89c49a3c04575fd89",
+       "kind": "text",
+       "visibility": "model-visible",
+       "metadata": {
+        "necessity_class": "always",
+        "rf.candidate_key": "demo.aside:aside::placeholder",
+        "rf.component_instance_id": "demo.aside:aside",
+        "rf.producer_component_id": "demo.aside",
+        "rf.producer_revision_id": "sha256:ee25118d79cf9210487a4101cb55a40cd1b765e79b6fd3f7bd497935852f8669",
+        "rf.production_index": [
+         0,
+         0
+        ]
+       },
+       "provenance": {
+        "dependency_refs": [],
+        "rf.necessity_class_source": "stamp",
+        "rf.necessity_stamp_raw": "always",
+        "rf.stamp_source": "block",
+        "source_refs": [
+         "rfn_zuviuorgi3a2i7ge4pwkxkny5a"
+        ]
+       },
+       "notes": [],
+       "production_index": 0,
+       "visibility_outcome": "eligible",
+       "visibility_reason": null,
+       "necessity_outcome": "include",
+       "necessity_reason": "always_floor",
+       "budget_outcome": "kept",
+       "budget_reason": null,
+       "exclusion_stage": null,
+       "final_index": 0,
+       "token_cost": 8,
+       "token_cost_kind": "estimated",
+       "estimator_id": "rf.utf8-bytes-div4.v1",
+       "component_id": "demo.aside",
+       "content": "demo.aside has no content yet.",
+       "content_retained": true
+      },
+      {
+       "schema": "reactive-fiber.candidate-block/v1",
+       "render_id": "rfr_gmxxop5ab4qrsqfavtrd2pqibq",
+       "candidate_key": "demo.notes:notes::placeholder",
+       "original_block_key": "placeholder",
+       "producer_component_id": "demo.notes",
+       "producer_revision_id": "sha256:4cf248ae1ceea9c65e65b8376537dee20514aefede82b63100689a9393845e95",
+       "component_instance_id": "demo.notes:notes",
+       "content_digest": "sha256:423cf2b3fc20e04ae14bd49d6d7d5ef4e119d89c65b6088e8557350788e5c6e0",
+       "content_blob_digest": "sha256:423cf2b3fc20e04ae14bd49d6d7d5ef4e119d89c65b6088e8557350788e5c6e0",
+       "kind": "text",
+       "visibility": "model-visible",
+       "metadata": {
+        "necessity_class": "always",
+        "rf.candidate_key": "demo.notes:notes::placeholder",
+        "rf.component_instance_id": "demo.notes:notes",
+        "rf.producer_component_id": "demo.notes",
+        "rf.producer_revision_id": "sha256:4cf248ae1ceea9c65e65b8376537dee20514aefede82b63100689a9393845e95",
+        "rf.production_index": [
+         1,
+         0
+        ]
+       },
+       "provenance": {
+        "dependency_refs": [],
+        "rf.necessity_class_source": "stamp",
+        "rf.necessity_stamp_raw": "always",
+        "rf.stamp_source": "block",
+        "source_refs": [
+         "rfn_zuviuorgi3a2i7ge4pwkxkny5a"
+        ]
+       },
+       "notes": [],
+       "production_index": 1,
+       "visibility_outcome": "eligible",
+       "visibility_reason": null,
+       "necessity_outcome": "include",
+       "necessity_reason": "always_floor",
+       "budget_outcome": "kept",
+       "budget_reason": null,
+       "exclusion_stage": null,
+       "final_index": 1,
+       "token_cost": 8,
+       "token_cost_kind": "estimated",
+       "estimator_id": "rf.utf8-bytes-div4.v1",
+       "component_id": "demo.notes",
+       "content": "demo.notes has no content yet.",
+       "content_retained": true
+      }
+     ],
+     "components": [
+      {
+       "component_instance_id": "demo.aside:aside",
+       "component_id": "demo.aside",
+       "component_revision_id": "sha256:ee25118d79cf9210487a4101cb55a40cd1b765e79b6fd3f7bd497935852f8669",
+       "kind": "declarative",
+       "status": "ok",
+       "fiber_transaction_ref": "rfr_gmxxop5ab4qrsqfavtrd2pqibq/tx_1",
+       "dependencies": [],
+       "lens_keys": [],
+       "effect_ids": [],
+       "blocks": [
+        "demo.aside:aside::placeholder"
+       ]
+      },
+      {
+       "component_instance_id": "demo.notes:notes",
+       "component_id": "demo.notes",
+       "component_revision_id": "sha256:4cf248ae1ceea9c65e65b8376537dee20514aefede82b63100689a9393845e95",
+       "kind": "declarative",
+       "status": "ok",
+       "fiber_transaction_ref": "rfr_gmxxop5ab4qrsqfavtrd2pqibq/tx_1",
+       "dependencies": [],
+       "lens_keys": [],
+       "effect_ids": [],
+       "blocks": [
+        "demo.notes:notes::placeholder"
+       ]
+      }
+     ],
+     "fiber_transaction_refs": [
+      "rfr_gmxxop5ab4qrsqfavtrd2pqibq/tx_1"
+     ],
+     "observations": [],
+     "judge_context": {
+      "task_digest": "sha256:e3b98a4da31a127d4bde6e43033f66ba274cab0eb7eb1c70ec41402bf6273dd8",
+      "task_tags": [],
+      "agent_id": null,
+      "agent_role": null,
+      "session_id": "rfs_chtm72fo4mt373j35qek63jizi",
+      "explicit_requests": [],
+      "workspace_facts": {
+       "session.active": true
+      }
+     },
+     "judge_context_layers": {
+      "task.tags": "defaults",
+      "agent.role": "defaults"
+     },
+     "record": {
+      "schema": "reactive-fiber.render/v1",
+      "render_id": "rfr_gmxxop5ab4qrsqfavtrd2pqibq",
+      "transaction_id": "rft_2knm56pja6zhxkwebvanxveilm",
+      "operation_id": "rfo_ubznbmitw2md5l2yzhdkuwbajq",
+      "attempt_no": 1,
+      "workspace_id": "rfw_5c2jno7epkalk33bntt6jecug4",
+      "session_id": "rfs_chtm72fo4mt373j35qek63jizi",
+      "agent_id": null,
+      "task_digest": "sha256:e3b98a4da31a127d4bde6e43033f66ba274cab0eb7eb1c70ec41402bf6273dd8",
+      "task_blob_digest": "sha256:e3b98a4da31a127d4bde6e43033f66ba274cab0eb7eb1c70ec41402bf6273dd8",
+      "requested_model_id": "m",
+      "resolved_model_id": null,
+      "audience": "model",
+      "graph_revision_id": "sha256:00f1c3618a5d2c9c6ce6c560fe271a3a516053673ba1782f47fdfa258c658ed6",
+      "necessity_policy_revision_id": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "trust_policy_revision_id": "sha256:695a5ad96a81f686754bd1883926e5eb8326f44b5b693c51d4037734005d2fb4",
+      "workspace_schema_version": "reactive-fiber.workspace/v1",
+      "cli_version": "0.1.832",
+      "sdk_versions": {
+       "fiber_optics": {
+        "contract_fingerprint": "sha256:b5cf6605d95cb4cd71bc93508cf0e17e347a1abd092e247220a5dd4fcb5fdd42",
+        "distribution_version": "0.1.0.20261014202847"
+       },
+       "fiber_optics_wire_format": "2",
+       "reactive_components": {
+        "contract_fingerprint": "sha256:d12211ca722f4e778c1009989745bdc7e4e2297a308cf5601ed2c7e0ffbe7d37",
+        "distribution_version": "0.1.1.20261018121500"
+       },
+       "reactive_inference": {
+        "contract_fingerprint": "sha256:b075fe443fe70a87b10a0fa429cdc298a5af9b9bc5b1dc8d8b62a9f04454380b",
+        "distribution_version": "0.2.60.20261018120223"
+       },
+       "reactive_lenses": {
+        "contract_fingerprint": "sha256:0931bf8cfdc86b26edf9bdd4a3813dec4b6c894b3434f6039924df07234b8ea8",
+        "distribution_version": "0.1.1.20261018.6"
+       }
+      },
+      "budget": {
+       "audience_excluded_count": 0,
+       "capability_snapshot": {
+        "cache_prefix": null,
+        "can_count_tokens": false,
+        "context_window": 200000,
+        "decision": null,
+        "known_policy_gates": [],
+        "max_output_tokens": 16000,
+        "model_id": "m",
+        "reasoning": null,
+        "source": "user_override",
+        "supports_reasoning": false,
+        "supports_streaming": false,
+        "supports_thinking": false,
+        "supports_vision": false,
+        "thinking_budget": null,
+        "verified": false
+       },
+       "capability_source": "user_override",
+       "capability_verified": false,
+       "counts": {
+        "admitted_before_budget": 2,
+        "candidate": 2,
+        "final_included": 2,
+        "withheld_necessity": 0,
+        "withheld_truncated": 0
+       },
+       "estimator_id": "rf.utf8-bytes-div4.v1",
+       "formula_terms": {
+        "available_context_tokens": 189760,
+        "context_window": 200000,
+        "max_output_tokens": 16000,
+        "occupied_tokens": 0,
+        "output_reserve": 8192,
+        "overhead": 0,
+        "safety_margin": 2048
+       },
+       "hidden_count": 0,
+       "included_tokens": 16,
+       "observability": {
+        "reconciliation_attempts": 0,
+        "token_cost_unknown": 0,
+        "token_estimator_failed": 0
+       },
+       "overflow_pinned_count": 0,
+       "reconciliation_attempts": [],
+       "requested_model_id": "m",
+       "resolved_model_id": null,
+       "schema": "reactive-fiber.budget/v1",
+       "token_count_method": "estimated",
+       "truncated_count": 0,
+       "truncated_tokens": 0,
+       "unknown_cost_count": 0
+      },
+      "fiber_transaction_refs": [
+       "rfr_gmxxop5ab4qrsqfavtrd2pqibq/tx_1"
+      ],
+      "final_document_digest": "sha256:a376c3e49ee0b38f044d5c0a035357d06afbf4347ccfb8d683cf75272d33ec17",
+      "final_text_blob_digest": "sha256:57b28574cbe1c610bc7bd5e9166529c535533d7989a8b959eada85c3d46fe3b7",
+      "judge_context_digest": "sha256:bebc7e4e9ddd0354c4bc1fe8253ad0d388056f9d2686fe1819faf68c897510d6",
+      "order_semantics": false,
+      "currentness": {
+       "config_digests": {
+        "config.local.toml": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "config.toml": "sha256:874edcdceeafe822a647bfb47c7bfa5093d4efaea23a8e020528ebee765c4482"
+       },
+       "definition_digests": {
+        "components/manifests/demo.aside.toml": "sha256:57fc291218d172428496a082ea72645f4c4e07db2f03775746bf088e6fbca6e3",
+        "components/manifests/demo.notes.toml": "sha256:053ce47153c0258e9006550c4549914c599bb0e6198503813d3a2d6d3f554d2c",
+        "graphs/context.toml": "sha256:0c12215e4b1c682b7425b04489aa9fa5dd7d3deb8fde7a5c4aa90b9d3500ea97",
+        "policy.toml": "sha256:8dab894e421c454e7574079f0b108ab23f6571f397f58b43b5c2ffcc50d84fde"
+       },
+       "revision_set": [
+        {
+         "entity_id": "rfs_chtm72fo4mt373j35qek63jizi",
+         "entity_type": "session",
+         "revision": 0
+        },
+        {
+         "entity_id": "rfw_5c2jno7epkalk33bntt6jecug4",
+         "entity_type": "workspace",
+         "revision": 1
+        },
+        {
+         "entity_id": "demo.aside",
+         "entity_type": "activation",
+         "revision": 1
+        },
+        {
+         "entity_id": "demo.notes",
+         "entity_type": "activation",
+         "revision": 1
+        }
+       ]
+      },
+      "status": "success",
+      "replayability": "replayable_exact",
+      "created_at": "2026-10-23T01:53:10.292639Z",
+      "commit_seq": 58,
+      "storage_backend": "jsonl",
+      "session_overrides_digest": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "origin_commit_seq": 58,
+      "superseded_transaction_ids": []
+     }
+    },
+    "diagnostics": []
+   }
+  },
+  "unknown": {
+   "argv": [
+    "context",
+    "show",
+    "rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "--json"
+   ],
+   "exit": 3,
+   "envelope": {
+    "schema": "reactive-fiber.cli/v1",
+    "ok": false,
+    "command": "context.show",
+    "operation_id": "rfo_x25ypoep7tlqm33fwf7gqtnob4",
+    "workspace": {
+     "id": "rfw_5c2jno7epkalk33bntt6jecug4",
+     "root": "/fixture/rf-workspace"
+    },
+    "transaction_id": null,
+    "result": null,
+    "diagnostics": [
+     {
+      "code": "RF_STORAGE_NOT_FOUND",
+      "severity": "error",
+      "message": "render (rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa)",
+      "hint": "Check the render id; `rf context history --json` lists the renders the workspace holds, newest first.",
+      "source": "host",
+      "metadata": {
+       "reason": "render"
+      }
+     }
+    ]
+   }
+  },
+  "renderRefusal": {
+   "argv": [
+    "--workspace",
+    "/fixture/rf-empty",
+    "context",
+    "render",
+    "--model",
+    "m",
+    "--task",
+    "t",
+    "--no-commit",
+    "--no-input",
+    "--json"
+   ],
+   "exit": 3,
+   "envelope": {
+    "schema": "reactive-fiber.cli/v1",
+    "ok": false,
+    "command": "context.render",
+    "operation_id": "rfo_mjh7spjb3ij3zfbft7qyhxha4a",
+    "workspace": null,
+    "transaction_id": null,
+    "result": null,
+    "diagnostics": [
+     {
+      "code": "RF_WORKSPACE_INVALID",
+      "severity": "error",
+      "message": "workspace path /fixture/rf-empty has no .reactive-fiber/manifest.json",
+      "hint": "Point --workspace / RF_WORKSPACE at a directory holding .reactive-fiber/manifest.json, or unset it to discover from the current directory.",
+      "source": "host",
+      "metadata": {
+       "path": "/fixture/rf-empty"
+      }
+     }
+    ]
+   }
+  },
+  "committedRender": {
+   "argv": [
+    "context",
+    "render",
+    "--model",
+    "m",
+    "--task",
+    "t",
+    "--context-window",
+    "200000",
+    "--max-output",
+    "16000",
+    "--no-input",
+    "--json"
+   ],
+   "exit": 0,
+   "fields": {
+    "render_id": "rfr_gmxxop5ab4qrsqfavtrd2pqibq",
+    "ephemeral": false,
+    "commit_seq": 58
+   }
+  }
+ },
+ "rows": [
+  {
+   "id": "T",
+   "label": "the trigger has not fired: Pi's one rf reader spawns noncommitted context render only, refuses a committed render and a context.show reply, and no src module or descriptor names a context show reader",
+   "pins": [
+    {
+     "id": "T1",
+     "witness": {
+      "legacy": [
+       [
+        "--workspace",
+        "<root>",
+        "context",
+        "render",
+        "--model",
+        "m",
+        "--task",
+        "t",
+        "--no-commit",
+        "--no-input",
+        "--json"
+       ]
+      ],
+      "view": [
+       [
+        "--workspace",
+        "<root>",
+        "context",
+        "render",
+        "--view",
+        "v",
+        "--task-id",
+        "t",
+        "--model",
+        "m",
+        "--no-commit",
+        "--no-input",
+        "--json"
+       ]
+      ]
+     }
+    },
+    {
+     "id": "T2",
+     "witness": {
+      "fields": {
+       "render_id": "rfr_gmxxop5ab4qrsqfavtrd2pqibq",
+       "ephemeral": false,
+       "commit_seq": 58
+      },
+      "control": {
+       "refusal": {
+        "category": "none",
+        "message": "resolved"
+       },
+       "spawns": 1
+      },
+      "committed": {
+       "refusal": {
+        "category": "transport",
+        "message": "RF preview returned an unrecognized or contradictory envelope."
+       },
+       "spawns": 1
+      }
+     }
+    },
+    {
+     "id": "T3",
+     "witness": {
+      "command": "context.show",
+      "exit": 0,
+      "refusal": {
+       "category": "transport",
+       "message": "RF preview returned an unrecognized native envelope."
+      },
+      "spawns": 1
+     }
+    },
+    {
+     "id": "T4",
+     "witness": {
+      "srcFloorMet": true,
+      "renderArgvSeen": true,
+      "showArgv": [],
+      "showLiterals": []
+     }
+    },
+    {
+     "id": "T5",
+     "witness": {
+      "nativeFloorMet": true,
+      "native": [
+       "reactivefiber.render.preview"
+      ],
+      "injected": [
+       "reactivefiber.render.preview"
+      ],
+      "hits": []
+     }
+    }
+   ]
+  },
+  {
+   "id": "A",
+   "label": "(a) capability pin: the context.show argv builder admits only {RENDER, --json, --redact, --detail LEVEL} until a served-leaf probe shows --instance; an earlier --instance request is refused typed 'unavailable', zero rf spawns",
+   "pins": [
+    {
+     "id": "A1",
+     "witness": {
+      "build": "0.1.832",
+      "leaf": true,
+      "positionals": [
+       "RENDER"
+      ],
+      "flags": [
+       "-h",
+       "--redact",
+       "--detail",
+       "--json",
+       "--format",
+       "--workspace",
+       "--actor",
+       "--no-input",
+       "--yes",
+       "--debug",
+       "--color",
+       "-v"
+      ],
+      "detailLevels": [
+       "compact",
+       "full"
+      ],
+      "admittedServed": [
+       "RENDER",
+       "--json",
+       "--redact",
+       "--detail"
+      ],
+      "instanceInUsage": false
+     }
+    },
+    {
+     "id": "A2",
+     "witness": {
+      "argv": [
+       "context",
+       "show",
+       "<render>",
+       "--instance",
+       "demo.notes:notes",
+       "--json"
+      ],
+      "exit": 2,
+      "reading": {
+       "served": false,
+       "reason": "refused:RF_USAGE_UNKNOWN_OPTION"
+      },
+      "named": {
+       "options": [
+        "--instance"
+       ],
+       "surface": "context show"
+      }
+     }
+    },
+    {
+     "id": "A3",
+     "witness": {
+      "srcFloorMet": true,
+      "renderArgvSeen": true,
+      "served": false,
+      "showArgvFindings": [],
+      "selectorLiterals": []
+     }
+    },
+    {
+     "id": "A4",
+     "witness": {
+      "refused": {
+       "native": {
+        "show": {
+         "category": "unavailable",
+         "message": "Unknown or unavailable capability: reactivefiber.context.show."
+        },
+        "view": {
+         "category": "validation",
+         "message": "Invalid input schema for capability reactivefiber.render.preview."
+        },
+        "legacy": {
+         "category": "validation",
+         "message": "Invalid input schema for capability reactivefiber.render.preview."
+        }
+       },
+       "injected": {
+        "show": {
+         "category": "unavailable",
+         "message": "Unknown or unavailable capability: reactivefiber.context.show."
+        },
+        "view": {
+         "category": "validation",
+         "message": "Invalid input schema for capability reactivefiber.render.preview."
+        },
+        "legacy": {
+         "category": "validation",
+         "message": "Invalid input schema for capability reactivefiber.render.preview."
+        }
+       }
+      },
+      "spawnsAfterRequests": 0,
+      "injectedCalls": 0,
+      "control": {
+       "category": "none",
+       "message": "resolved"
+      },
+      "spawnsAfterControl": 1
+     }
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "label": "(b) on landing: a fixture with selection.matched == 1 surfaces only that instance's block rows (every component_instance_id equals the requested id), never the whole envelope",
+   "pins": [
+    {
+     "id": "B1",
+     "witness": {
+      "exit": 0,
+      "selectionPaths": [],
+      "blockInstances": [
+       "demo.aside:aside",
+       "demo.notes:notes"
+      ],
+      "outcome": {
+       "kind": "unavailable",
+       "reason": "selector-unserved",
+       "rows": 0,
+       "ids": []
+      }
+     }
+    },
+    {
+     "id": "B2",
+     "witness": {
+      "srcFloorMet": true,
+      "renderArgvSeen": true,
+      "instanceReads": []
+     }
+    },
+    {
+     "id": "B3",
+     "witness": {
+      "narrowed": {
+       "kind": "projected",
+       "reason": "matched-1",
+       "rows": 1,
+       "ids": [
+        "demo.notes:notes"
+       ]
+      },
+      "whole": {
+       "kind": "refused",
+       "reason": "foreign-row:demo.aside:aside",
+       "rows": 0,
+       "ids": []
+      },
+      "rowsDigest": "16239898e0e6c3ec"
+     }
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "label": "(c) unknown-id fixture (exit 3): typed not-found, never a re-read of the full envelope",
+   "pins": [
+    {
+     "id": "C1",
+     "witness": {
+      "exit": 3,
+      "outcome": {
+       "kind": "not-found",
+       "reason": "RF_STORAGE_NOT_FOUND",
+       "rows": 0,
+       "ids": []
+      },
+      "reason": "render"
+     }
+    },
+    {
+     "id": "C2",
+     "witness": {
+      "exit": 3,
+      "refusal": {
+       "category": "unavailable",
+       "message": "RF render refused: RF_WORKSPACE_INVALID"
+      },
+      "spawns": 1
+     }
+    },
+    {
+     "id": "C3",
+     "witness": {
+      "exit": 3,
+      "refusal": {
+       "category": "transport",
+       "message": "RF preview returned an unrecognized native envelope."
+      },
+      "spawns": 1
+     }
+    }
+   ]
+  },
+  {
+   "id": "F",
+   "label": "the owner filing row of wb-pfxo.9 in the tracked bead export carries every pinned constant, names exactly the clauses rows A-C cover and states each of their labels as its clause",
+   "pins": [
+    {
+     "id": "F1",
+     "witness": {
+      "clauses": [
+       "a",
+       "b",
+       "c"
+      ],
+      "labelsEqual": [
+       "A",
+       "B",
+       "C"
+      ],
+      "constantsQuoted": [
+       "context.show",
+       "--instance",
+       "component_instance_id",
+       "{RENDER, --json, --redact, --detail LEVEL}",
+       "rfc-vg54d.2",
+       "CASM-M3a",
+       "parser.py:2220",
+       "component.state.show/reset",
+       "BEADS-2026-10-21.md:21@6a251bf73af5",
+       "exit 3"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "M",
+   "label": "the probe rule, the argv rule, the projection rule and the src scanner judge their pinned inputs in order",
+   "pins": [
+    {
+     "id": "MP1",
+     "witness": {
+      "digest": "bddca7cd8e0cc537",
+      "outcome": {
+       "served": true,
+       "reason": "served"
+      }
+     }
+    },
+    {
+     "id": "MP2",
+     "witness": {
+      "digest": "2f247adfba3af373",
+      "outcome": {
+       "served": false,
+       "reason": "no-selection"
+      }
+     }
+    },
+    {
+     "id": "MP3",
+     "witness": {
+      "digest": "1a5f455c2b65f8b8",
+      "outcome": {
+       "served": false,
+       "reason": "wrong-command"
+      }
+     }
+    },
+    {
+     "id": "MA1",
+     "witness": {
+      "digest": "3657a27a3d39eb8f",
+      "outcome": []
+     }
+    },
+    {
+     "id": "MA2",
+     "witness": {
+      "digest": "e1ecc2c8a381dc41",
+      "outcome": []
+     }
+    },
+    {
+     "id": "MA3",
+     "witness": {
+      "digest": "55ceef1ab4975b7e",
+      "outcome": [
+       "instance-unserved"
+      ]
+     }
+    },
+    {
+     "id": "MA4",
+     "witness": {
+      "digest": "7f8d331fd3427327",
+      "outcome": []
+     }
+    },
+    {
+     "id": "MA5",
+     "witness": {
+      "digest": "71513a2cbc49ff7d",
+      "outcome": [
+       "outside-admitted:--format",
+       "render-count:2"
+      ]
+     }
+    },
+    {
+     "id": "MA6",
+     "witness": {
+      "digest": "9cab3548070e31b8",
+      "outcome": [
+       "render-count:0"
+      ]
+     }
+    },
+    {
+     "id": "MA7",
+     "witness": {
+      "digest": "38b9b92ab82c47ec",
+      "outcome": [
+       "level:verbose"
+      ]
+     }
+    },
+    {
+     "id": "MJ1",
+     "witness": {
+      "digest": "b989376615c39675",
+      "outcome": {
+       "kind": "refused",
+       "reason": "matched-0",
+       "rows": 0,
+       "ids": []
+      }
+     }
+    },
+    {
+     "id": "MJ2",
+     "witness": {
+      "digest": "b219be5da8e5136e",
+      "outcome": {
+       "kind": "refused",
+       "reason": "matched-2",
+       "rows": 0,
+       "ids": []
+      }
+     }
+    },
+    {
+     "id": "MJ3",
+     "witness": {
+      "digest": "7af512a758228a0e",
+      "outcome": {
+       "kind": "refused",
+       "reason": "exit-2:RF_USAGE_UNKNOWN_OPTION",
+       "rows": 0,
+       "ids": []
+      }
+     }
+    },
+    {
+     "id": "MJ4",
+     "witness": {
+      "digest": "1f9c00993338f6fd",
+      "outcome": {
+       "kind": "refused",
+       "reason": "wrong-command",
+       "rows": 0,
+       "ids": []
+      }
+     }
+    },
+    {
+     "id": "MS1",
+     "witness": {
+      "digest": "bb826e282a9cc31f",
+      "outcome": {
+       "showArgv": [
+        []
+       ],
+       "renderArgv": 0,
+       "showLiterals": 0,
+       "selectorLiterals": 0,
+       "instanceReads": 0
+      }
+     }
+    },
+    {
+     "id": "MS2",
+     "witness": {
+      "digest": "5518554d03031091",
+      "outcome": {
+       "showArgv": [],
+       "renderArgv": 0,
+       "showLiterals": 1,
+       "selectorLiterals": 0,
+       "instanceReads": 0
+      }
+     }
+    },
+    {
+     "id": "MS3",
+     "witness": {
+      "digest": "a841ab7b29dbc563",
+      "outcome": {
+       "showArgv": [],
+       "renderArgv": 0,
+       "showLiterals": 1,
+       "selectorLiterals": 0,
+       "instanceReads": 0
+      }
+     }
+    },
+    {
+     "id": "MS4",
+     "witness": {
+      "digest": "9138001c9a320acc",
+      "outcome": {
+       "showArgv": [],
+       "renderArgv": 0,
+       "showLiterals": 0,
+       "selectorLiterals": 1,
+       "instanceReads": 0
+      }
+     }
+    },
+    {
+     "id": "MS5",
+     "witness": {
+      "digest": "d6e3d9bd3ae349dc",
+      "outcome": {
+       "showArgv": [],
+       "renderArgv": 0,
+       "showLiterals": 0,
+       "selectorLiterals": 0,
+       "instanceReads": 2
+      }
+     }
+    },
+    {
+     "id": "MS6",
+     "witness": {
+      "digest": "4378415636a89076",
+      "outcome": {
+       "showArgv": [],
+       "renderArgv": 1,
+       "showLiterals": 0,
+       "selectorLiterals": 0,
+       "instanceReads": 0
+      }
+     }
+    },
+    {
+     "id": "MS7",
+     "witness": {
+      "digest": "8573b172197a8f5c",
+      "outcome": {
+       "showArgv": [
+        [
+         "instance-unserved"
+        ]
+       ],
+       "renderArgv": 0,
+       "showLiterals": 0,
+       "selectorLiterals": 1,
+       "instanceReads": 0
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "R",
+   "label": "the named residuals R1-R6 stay pinned quiet",
+   "pins": [
+    {
+     "id": "R1",
+     "witness": {
+      "digest": "d22a75992723a222",
+      "outcome": {
+       "showArgv": [],
+       "renderArgv": 0,
+       "showLiterals": 0,
+       "selectorLiterals": 0,
+       "instanceReads": 0
+      }
+     }
+    },
+    {
+     "id": "R2",
+     "witness": {
+      "digest": "e76fc94902b53409",
+      "outcome": {
+       "showArgv": [],
+       "renderArgv": 0,
+       "showLiterals": 0,
+       "selectorLiterals": 0,
+       "instanceReads": 0
+      }
+     }
+    },
+    {
+     "id": "R3",
+     "witness": {
+      "digest": "8091007bcf9aa8a8",
+      "outcome": {
+       "served": true,
+       "reason": "served"
+      }
+     }
+    },
+    {
+     "id": "R4",
+     "witness": {
+      "digest": "043ae0dd7a5a517e",
+      "outcome": {
+       "kind": "refused",
+       "reason": "exit-3:RF_INSTANCE_UNKNOWN",
+       "rows": 0,
+       "ids": []
+      }
+     }
+    },
+    {
+     "id": "R5",
+     "witness": {
+      "refusal": {
+       "category": "unavailable",
+       "message": "RF render refused: RF_STORAGE_NOT_FOUND"
+      },
+      "spawns": 1
+     }
+    },
+    {
+     "id": "R6",
+     "witness": {
+      "digest": "aaee96ee7d3b858d",
+      "outcome": []
+     }
+    }
+   ]
+  }
+ ]
+}
