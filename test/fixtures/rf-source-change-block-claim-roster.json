@@ -1,0 +1,4259 @@
+{
+ "bead": "wb-pfxo.2",
+ "rfVersion": "0.1.832",
+ "window": 5,
+ "vocabulary": {
+  "block": [
+   "block",
+   "blocks"
+  ],
+  "source": [
+   "source",
+   "sources"
+  ],
+  "change": [
+   "change",
+   "changes",
+   "changed",
+   "changing",
+   "stale",
+   "staled",
+   "staleness",
+   "invalidate",
+   "invalidates",
+   "invalidated",
+   "invalidating",
+   "invalidation",
+   "dirty",
+   "dirtied",
+   "outdated",
+   "obsolete",
+   "expired",
+   "superseded",
+   "affected",
+   "impacted",
+   "modify",
+   "modifies",
+   "modified",
+   "modifying",
+   "modification",
+   "update",
+   "updates",
+   "updated",
+   "updating",
+   "rewrite",
+   "rewrites",
+   "rewrote",
+   "rewritten",
+   "alter",
+   "alters",
+   "altered",
+   "differ",
+   "differs",
+   "differed",
+   "different",
+   "move",
+   "moves",
+   "moved",
+   "edit",
+   "edits",
+   "edited",
+   "editing",
+   "mutate",
+   "mutates",
+   "mutated",
+   "mutating",
+   "mutation",
+   "mutations",
+   "refresh",
+   "refreshed",
+   "refreshes",
+   "rerender",
+   "rerendered",
+   "rerenders",
+   "revise",
+   "revised",
+   "revises",
+   "revising",
+   "regenerate",
+   "regenerated",
+   "regenerates",
+   "recompute",
+   "recomputed",
+   "recomputes",
+   "replace",
+   "replaced",
+   "replaces"
+  ]
+ },
+ "fixtures": [
+  "previewBefore",
+  "previewAfter",
+  "explainSource",
+  "planSource",
+  "impactRefusal",
+  "diffSourceOnly",
+  "diffContent"
+ ],
+ "exits": {
+  "previewBefore": 0,
+  "previewAfter": 0,
+  "explainSource": 0,
+  "planSource": 0,
+  "impactRefusal": 2,
+  "diffSourceOnly": 0,
+  "diffContent": 0
+ },
+ "envelopes": {
+  "previewBefore": {
+   "schema": "reactive-fiber.cli/v1",
+   "ok": true,
+   "command": "context.render",
+   "operation_id": "rfo_t23zipnhurx35e75pej5phq4ei",
+   "workspace": {
+    "id": "rfw_puogsrtvtq23l6tf4j56bx3uhm",
+    "root": "/fixture/rf-workspace"
+   },
+   "transaction_id": null,
+   "result": {
+    "output": {
+     "text": "a fixed banner line\nnotes: alpha notes\n\n",
+     "size_bytes": 40,
+     "digest": "sha256:edde716c3e4bd9b2ae64c504db182e00654653b03639dea986e66f1781497c0f",
+     "path": null
+    },
+    "budget": {
+     "schema": "reactive-fiber.budget/v1",
+     "requested_model_id": "claude-opus-5",
+     "resolved_model_id": null,
+     "formula_terms": {
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "output_reserve": 8192,
+      "occupied_tokens": 0,
+      "overhead": 0,
+      "safety_margin": 2048,
+      "available_context_tokens": 989760
+     },
+     "capability_snapshot": {
+      "model_id": "claude-opus-5",
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "supports_thinking": true,
+      "supports_reasoning": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "thinking_budget": null,
+      "cache_prefix": null,
+      "reasoning": {
+       "reasoning_control": "adaptive_effort",
+       "budget_tokens_status": "rejected",
+       "effort_levels": [],
+       "interleaved": true,
+       "display_default": "omitted",
+       "always_on": false,
+       "always_on_verified": true,
+       "verified": false,
+       "source": "hq-4j88mn: reasoning CONTROL CLASS live-confirmed (the bare {'thinking':{'type':'adaptive'}} shape this profile emits returns HTTP 200 on us.anthropic.claude-opus-5), but the finer cells were NOT swept for opus-5 \u2014 verified=False per honesty rule D until a live sweep covers them"
+      },
+      "can_count_tokens": false,
+      "verified": true,
+      "source": null,
+      "known_policy_gates": [],
+      "decision": {
+       "supports_forced_tool": true,
+       "supports_structured_output": false,
+       "supports_span_output": true,
+       "supports_forced_tool_with_thinking": false,
+       "probability_support": "none",
+       "modalities": [
+        "image",
+        "text"
+       ],
+       "media_budget": {
+        "max_blocks": 20,
+        "max_bytes_per_block": 3750000
+       },
+       "verified": false,
+       "source": "RI-I0-a seed read from the Bedrock Converse API reference, not a live probe: toolChoice tool/any forces a tool call (forced tool True); Converse carries no JSON-schema response format (structured output False, fail closed); a span rides the forced tool, its offset fidelity unmeasured (span True); Anthropic rejects a forced tool_choice while thinking is on (forced tool with thinking False); no logprobs on the Converse plane (probability none); image quota 20 blocks of 3.75 MB each, published and not re-measured in this clone. verified=False per honesty rule D"
+      }
+     },
+     "capability_verified": true,
+     "capability_source": null,
+     "token_count_method": "estimated",
+     "estimator_id": "rf.utf8-bytes-div4.v1",
+     "counts": {
+      "candidate": 2,
+      "admitted_before_budget": 2,
+      "final_included": 2,
+      "withheld_necessity": 0,
+      "withheld_truncated": 0
+     },
+     "reconciliation_attempts": [],
+     "observability": {
+      "token_cost_unknown": 0,
+      "token_estimator_failed": 0,
+      "reconciliation_attempts": 0
+     },
+     "included_tokens": 10,
+     "truncated_tokens": 0,
+     "truncated_count": 0,
+     "overflow_pinned_count": 0,
+     "hidden_count": 0,
+     "audience_excluded_count": 0,
+     "unknown_cost_count": 0,
+     "token_accounting": {
+      "kind": "estimated",
+      "estimator_id": "rf.utf8-bytes-div4.v1",
+      "included_tokens": 10
+     },
+     "truncated_keys": []
+    },
+    "diagnostics_summary": {
+     "errors": 0,
+     "warnings": 0,
+     "has_errors": false,
+     "has_warnings": false
+    },
+    "blocks": [
+     {
+      "final_index": 0,
+      "candidate_key": "demo.banner:banner::fixed",
+      "component_id": "demo.banner",
+      "token_cost": {
+       "kind": "estimated",
+       "tokens": 5
+      },
+      "token_cost_kind": "estimated"
+     },
+     {
+      "final_index": 1,
+      "candidate_key": "demo.banner:banner::notes",
+      "component_id": "demo.banner",
+      "token_cost": {
+       "kind": "estimated",
+       "tokens": 5
+      },
+      "token_cost_kind": "estimated"
+     }
+    ],
+    "components": [
+     {
+      "component_instance_id": "demo.banner:banner",
+      "component_id": "demo.banner",
+      "component_revision_id": "sha256:e160e60d82c0c22c48230fb5c968d33a65f6f362742583ef05c926de23cf296c",
+      "status": "ok",
+      "source_unavailable": []
+     }
+    ],
+    "provenance": {
+     "created_at": "2026-10-23T00:44:06.784313Z",
+     "graph_revision_id": "sha256:0c603452f2f0aa424ba0e6dbf1b130c70b1f7cf5b9d77f0d20ba46295ff6ea05",
+     "necessity_policy_revision_id": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+     "workspace_schema_version": "reactive-fiber.workspace/v1",
+     "cli_version": "0.1.832",
+     "storage_backend": "jsonl",
+     "sdk_versions": {
+      "fiber_optics": {
+       "distribution_version": "0.1.0.20261014202847",
+       "contract_fingerprint": "sha256:b5cf6605d95cb4cd71bc93508cf0e17e347a1abd092e247220a5dd4fcb5fdd42"
+      },
+      "reactive_lenses": {
+       "distribution_version": "0.1.1.20261018.6",
+       "contract_fingerprint": "sha256:0931bf8cfdc86b26edf9bdd4a3813dec4b6c894b3434f6039924df07234b8ea8"
+      },
+      "reactive_components": {
+       "distribution_version": "0.1.1.20261018121500",
+       "contract_fingerprint": "sha256:d12211ca722f4e778c1009989745bdc7e4e2297a308cf5601ed2c7e0ffbe7d37"
+      },
+      "reactive_inference": {
+       "distribution_version": "0.2.60.20261018120223",
+       "contract_fingerprint": "sha256:b075fe443fe70a87b10a0fa429cdc298a5af9b9bc5b1dc8d8b62a9f04454380b"
+      },
+      "fiber_optics_wire_format": "2"
+     },
+     "storage": {
+      "backend": "jsonl",
+      "engine_version": null
+     }
+    },
+    "work_metrics": {
+     "source_capture_count": 3,
+     "fiber_signal_count": 8,
+     "fiber_transaction_count": 4,
+     "invalidated_component_count": 1,
+     "rendered_component_count": 1,
+     "state_read_count": 0,
+     "state_write_count": 0,
+     "journal_records_scanned": 40,
+     "blob_bytes_written": 0,
+     "history_rows_materialized": 0,
+     "reused_component_count": 0,
+     "observation_executed_count": 0,
+     "observation_reused_count": 0,
+     "publish_conflict_count": 0
+    },
+    "work": {
+     "source_capture_count": 3,
+     "fiber_signal_count": 8,
+     "component_render_count": 1,
+     "lens_resolution_count": 0,
+     "necessity_eval_count": 2,
+     "storage_write_count": 0
+    },
+    "engine_metrics": {
+     "tsx_worker_spawns": 0,
+     "tsx_resource_rounds": 0
+    },
+    "scope": null,
+    "audience": "model",
+    "bundle_revision_id": "sha256:0ae617bde39aca1f5936bd5c1af1b242b6eab2d45409661267c1d0f6bd5c1ab9",
+    "observations": [],
+    "necessity": [
+     {
+      "render_id": "rfr_tsu2hycdxum23xy6a6ljsqptiy",
+      "candidate_key": "demo.banner:banner::fixed",
+      "necessity_class": "always",
+      "include": true,
+      "reason": "always_floor",
+      "estimated_tokens": 5,
+      "metadata": {
+       "evidence_keys": [
+        "necessity_class"
+       ],
+       "explicit_request": false
+      },
+      "policy_revision_id": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "judge_id": "rf.necessity.default-host.v1",
+      "judge_kind": "host_default",
+      "necessity_class_raw": "always",
+      "fallback_used": false,
+      "failure_mode": "fail"
+     },
+     {
+      "render_id": "rfr_tsu2hycdxum23xy6a6ljsqptiy",
+      "candidate_key": "demo.banner:banner::notes",
+      "necessity_class": "always",
+      "include": true,
+      "reason": "always_floor",
+      "estimated_tokens": 5,
+      "metadata": {
+       "evidence_keys": [
+        "necessity_class"
+       ],
+       "explicit_request": false
+      },
+      "policy_revision_id": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "judge_id": "rf.necessity.default-host.v1",
+      "judge_kind": "host_default",
+      "necessity_class_raw": "always",
+      "fallback_used": false,
+      "failure_mode": "fail"
+     }
+    ],
+    "judge_context": {
+     "task_digest": "sha256:2f55e55c64270f6a580eea11540a481d1b7c2234bfa757edcb251d92d3a8f6fb",
+     "task_tags": [],
+     "agent_id": null,
+     "agent_role": null,
+     "session_id": "rfs_owhntcwy7fxrwn4r7aaxk4pjju",
+     "explicit_requests": [],
+     "workspace_facts": {
+      "session.active": true
+     }
+    },
+    "judge_context_layers": {
+     "task.tags": "defaults",
+     "agent.role": "defaults"
+    },
+    "attempts": 1,
+    "superseded_transaction_ids": [],
+    "retry_work": {
+     "superseded_attempts": [],
+     "wasted_source_capture_count": 0,
+     "wasted_fiber_signal_count": 0,
+     "wasted_fiber_transaction_count": 0,
+     "wasted_invalidated_component_count": 0,
+     "wasted_rendered_component_count": 0,
+     "wasted_state_read_count": 0,
+     "wasted_state_write_count": 0,
+     "wasted_journal_records_scanned": 0,
+     "wasted_blob_bytes_written": 0,
+     "wasted_history_rows_materialized": 0,
+     "wasted_reused_component_count": 0,
+     "wasted_observation_executed_count": 0,
+     "wasted_observation_reused_count": 0,
+     "wasted_publish_conflict_count": 0
+    },
+    "fiber_transaction_refs": [
+     "rfr_tsu2hycdxum23xy6a6ljsqptiy/tx_1",
+     "rfr_tsu2hycdxum23xy6a6ljsqptiy/tx_2",
+     "rfr_tsu2hycdxum23xy6a6ljsqptiy/tx_3",
+     "rfr_tsu2hycdxum23xy6a6ljsqptiy/tx_4"
+    ],
+    "render_id": null,
+    "ephemeral": true,
+    "commit_seq": null,
+    "effects": [],
+    "plan": {
+     "operations": [],
+     "would_commit": false
+    },
+    "session_id": null
+   },
+   "diagnostics": []
+  },
+  "previewAfter": {
+   "schema": "reactive-fiber.cli/v1",
+   "ok": true,
+   "command": "context.render",
+   "operation_id": "rfo_bzxg7b7mur7qbqzjydowffjjau",
+   "workspace": {
+    "id": "rfw_puogsrtvtq23l6tf4j56bx3uhm",
+    "root": "/fixture/rf-workspace"
+   },
+   "transaction_id": null,
+   "result": {
+    "output": {
+     "text": "a fixed banner line\nnotes: beta notes\n\n",
+     "size_bytes": 39,
+     "digest": "sha256:d6cb84618b18af1f2b60970d1d0c5b2d672b340159c70daa7eebcb4b01986c88",
+     "path": null
+    },
+    "budget": {
+     "schema": "reactive-fiber.budget/v1",
+     "requested_model_id": "claude-opus-5",
+     "resolved_model_id": null,
+     "formula_terms": {
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "output_reserve": 8192,
+      "occupied_tokens": 0,
+      "overhead": 0,
+      "safety_margin": 2048,
+      "available_context_tokens": 989760
+     },
+     "capability_snapshot": {
+      "model_id": "claude-opus-5",
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "supports_thinking": true,
+      "supports_reasoning": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "thinking_budget": null,
+      "cache_prefix": null,
+      "reasoning": {
+       "reasoning_control": "adaptive_effort",
+       "budget_tokens_status": "rejected",
+       "effort_levels": [],
+       "interleaved": true,
+       "display_default": "omitted",
+       "always_on": false,
+       "always_on_verified": true,
+       "verified": false,
+       "source": "hq-4j88mn: reasoning CONTROL CLASS live-confirmed (the bare {'thinking':{'type':'adaptive'}} shape this profile emits returns HTTP 200 on us.anthropic.claude-opus-5), but the finer cells were NOT swept for opus-5 \u2014 verified=False per honesty rule D until a live sweep covers them"
+      },
+      "can_count_tokens": false,
+      "verified": true,
+      "source": null,
+      "known_policy_gates": [],
+      "decision": {
+       "supports_forced_tool": true,
+       "supports_structured_output": false,
+       "supports_span_output": true,
+       "supports_forced_tool_with_thinking": false,
+       "probability_support": "none",
+       "modalities": [
+        "image",
+        "text"
+       ],
+       "media_budget": {
+        "max_blocks": 20,
+        "max_bytes_per_block": 3750000
+       },
+       "verified": false,
+       "source": "RI-I0-a seed read from the Bedrock Converse API reference, not a live probe: toolChoice tool/any forces a tool call (forced tool True); Converse carries no JSON-schema response format (structured output False, fail closed); a span rides the forced tool, its offset fidelity unmeasured (span True); Anthropic rejects a forced tool_choice while thinking is on (forced tool with thinking False); no logprobs on the Converse plane (probability none); image quota 20 blocks of 3.75 MB each, published and not re-measured in this clone. verified=False per honesty rule D"
+      }
+     },
+     "capability_verified": true,
+     "capability_source": null,
+     "token_count_method": "estimated",
+     "estimator_id": "rf.utf8-bytes-div4.v1",
+     "counts": {
+      "candidate": 2,
+      "admitted_before_budget": 2,
+      "final_included": 2,
+      "withheld_necessity": 0,
+      "withheld_truncated": 0
+     },
+     "reconciliation_attempts": [],
+     "observability": {
+      "token_cost_unknown": 0,
+      "token_estimator_failed": 0,
+      "reconciliation_attempts": 0
+     },
+     "included_tokens": 10,
+     "truncated_tokens": 0,
+     "truncated_count": 0,
+     "overflow_pinned_count": 0,
+     "hidden_count": 0,
+     "audience_excluded_count": 0,
+     "unknown_cost_count": 0,
+     "token_accounting": {
+      "kind": "estimated",
+      "estimator_id": "rf.utf8-bytes-div4.v1",
+      "included_tokens": 10
+     },
+     "truncated_keys": []
+    },
+    "diagnostics_summary": {
+     "errors": 0,
+     "warnings": 0,
+     "has_errors": false,
+     "has_warnings": false
+    },
+    "blocks": [
+     {
+      "final_index": 0,
+      "candidate_key": "demo.banner:banner::fixed",
+      "component_id": "demo.banner",
+      "token_cost": {
+       "kind": "estimated",
+       "tokens": 5
+      },
+      "token_cost_kind": "estimated"
+     },
+     {
+      "final_index": 1,
+      "candidate_key": "demo.banner:banner::notes",
+      "component_id": "demo.banner",
+      "token_cost": {
+       "kind": "estimated",
+       "tokens": 5
+      },
+      "token_cost_kind": "estimated"
+     }
+    ],
+    "components": [
+     {
+      "component_instance_id": "demo.banner:banner",
+      "component_id": "demo.banner",
+      "component_revision_id": "sha256:e160e60d82c0c22c48230fb5c968d33a65f6f362742583ef05c926de23cf296c",
+      "status": "ok",
+      "source_unavailable": []
+     }
+    ],
+    "provenance": {
+     "created_at": "2026-10-23T00:44:17.276133Z",
+     "graph_revision_id": "sha256:0c603452f2f0aa424ba0e6dbf1b130c70b1f7cf5b9d77f0d20ba46295ff6ea05",
+     "necessity_policy_revision_id": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+     "workspace_schema_version": "reactive-fiber.workspace/v1",
+     "cli_version": "0.1.832",
+     "storage_backend": "jsonl",
+     "sdk_versions": {
+      "fiber_optics": {
+       "distribution_version": "0.1.0.20261014202847",
+       "contract_fingerprint": "sha256:b5cf6605d95cb4cd71bc93508cf0e17e347a1abd092e247220a5dd4fcb5fdd42"
+      },
+      "reactive_lenses": {
+       "distribution_version": "0.1.1.20261018.6",
+       "contract_fingerprint": "sha256:0931bf8cfdc86b26edf9bdd4a3813dec4b6c894b3434f6039924df07234b8ea8"
+      },
+      "reactive_components": {
+       "distribution_version": "0.1.1.20261018121500",
+       "contract_fingerprint": "sha256:d12211ca722f4e778c1009989745bdc7e4e2297a308cf5601ed2c7e0ffbe7d37"
+      },
+      "reactive_inference": {
+       "distribution_version": "0.2.60.20261018120223",
+       "contract_fingerprint": "sha256:b075fe443fe70a87b10a0fa429cdc298a5af9b9bc5b1dc8d8b62a9f04454380b"
+      },
+      "fiber_optics_wire_format": "2"
+     },
+     "storage": {
+      "backend": "jsonl",
+      "engine_version": null
+     }
+    },
+    "work_metrics": {
+     "source_capture_count": 3,
+     "fiber_signal_count": 8,
+     "fiber_transaction_count": 4,
+     "invalidated_component_count": 1,
+     "rendered_component_count": 1,
+     "state_read_count": 0,
+     "state_write_count": 0,
+     "journal_records_scanned": 33,
+     "blob_bytes_written": 0,
+     "history_rows_materialized": 0,
+     "reused_component_count": 0,
+     "observation_executed_count": 0,
+     "observation_reused_count": 0,
+     "publish_conflict_count": 0
+    },
+    "work": {
+     "source_capture_count": 3,
+     "fiber_signal_count": 8,
+     "component_render_count": 1,
+     "lens_resolution_count": 0,
+     "necessity_eval_count": 2,
+     "storage_write_count": 0
+    },
+    "engine_metrics": {
+     "tsx_worker_spawns": 0,
+     "tsx_resource_rounds": 0
+    },
+    "scope": null,
+    "audience": "model",
+    "bundle_revision_id": "sha256:0ae617bde39aca1f5936bd5c1af1b242b6eab2d45409661267c1d0f6bd5c1ab9",
+    "observations": [],
+    "necessity": [
+     {
+      "render_id": "rfr_nttgrwkpvne6jfnctymbhubpuu",
+      "candidate_key": "demo.banner:banner::fixed",
+      "necessity_class": "always",
+      "include": true,
+      "reason": "always_floor",
+      "estimated_tokens": 5,
+      "metadata": {
+       "evidence_keys": [
+        "necessity_class"
+       ],
+       "explicit_request": false
+      },
+      "policy_revision_id": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "judge_id": "rf.necessity.default-host.v1",
+      "judge_kind": "host_default",
+      "necessity_class_raw": "always",
+      "fallback_used": false,
+      "failure_mode": "fail"
+     },
+     {
+      "render_id": "rfr_nttgrwkpvne6jfnctymbhubpuu",
+      "candidate_key": "demo.banner:banner::notes",
+      "necessity_class": "always",
+      "include": true,
+      "reason": "always_floor",
+      "estimated_tokens": 5,
+      "metadata": {
+       "evidence_keys": [
+        "necessity_class"
+       ],
+       "explicit_request": false
+      },
+      "policy_revision_id": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "judge_id": "rf.necessity.default-host.v1",
+      "judge_kind": "host_default",
+      "necessity_class_raw": "always",
+      "fallback_used": false,
+      "failure_mode": "fail"
+     }
+    ],
+    "judge_context": {
+     "task_digest": "sha256:2f55e55c64270f6a580eea11540a481d1b7c2234bfa757edcb251d92d3a8f6fb",
+     "task_tags": [],
+     "agent_id": null,
+     "agent_role": null,
+     "session_id": "rfs_ghrthm2czwfvhfkoc4gvhtz44a",
+     "explicit_requests": [],
+     "workspace_facts": {
+      "session.active": true
+     }
+    },
+    "judge_context_layers": {
+     "task.tags": "defaults",
+     "agent.role": "defaults"
+    },
+    "attempts": 1,
+    "superseded_transaction_ids": [],
+    "retry_work": {
+     "superseded_attempts": [],
+     "wasted_source_capture_count": 0,
+     "wasted_fiber_signal_count": 0,
+     "wasted_fiber_transaction_count": 0,
+     "wasted_invalidated_component_count": 0,
+     "wasted_rendered_component_count": 0,
+     "wasted_state_read_count": 0,
+     "wasted_state_write_count": 0,
+     "wasted_journal_records_scanned": 0,
+     "wasted_blob_bytes_written": 0,
+     "wasted_history_rows_materialized": 0,
+     "wasted_reused_component_count": 0,
+     "wasted_observation_executed_count": 0,
+     "wasted_observation_reused_count": 0,
+     "wasted_publish_conflict_count": 0
+    },
+    "fiber_transaction_refs": [
+     "rfr_nttgrwkpvne6jfnctymbhubpuu/tx_1",
+     "rfr_nttgrwkpvne6jfnctymbhubpuu/tx_2",
+     "rfr_nttgrwkpvne6jfnctymbhubpuu/tx_3",
+     "rfr_nttgrwkpvne6jfnctymbhubpuu/tx_4"
+    ],
+    "render_id": null,
+    "ephemeral": true,
+    "commit_seq": null,
+    "effects": [],
+    "plan": {
+     "operations": [],
+     "would_commit": false
+    },
+    "session_id": null
+   },
+   "diagnostics": []
+  },
+  "explainSource": {
+   "schema": "reactive-fiber.cli/v1",
+   "ok": true,
+   "command": "context.explain",
+   "operation_id": "rfo_mvhuyosyx2xg5bfv6nj7ci255a",
+   "workspace": {
+    "id": "rfw_puogsrtvtq23l6tf4j56bx3uhm",
+    "root": "/fixture/rf-workspace"
+   },
+   "transaction_id": null,
+   "result": {
+    "render_id": "rfr_c34eb2d7fdd2ytb3hihd4vy5v4",
+    "summary": {
+     "counts_by_stage": {
+      "included": 2,
+      "host_visibility": 0,
+      "host_necessity": 0,
+      "sdk_assembly": 0
+     },
+     "block_count": 2,
+     "included_blocks": 2,
+     "final_document_digest": "sha256:4dfebf8b4de5c893f09a2b65f7a5dfded966ec6d5890d70f0e3678cada86c3ae",
+     "components_by_status": {
+      "ok": 1,
+      "failed": 0,
+      "recovered": 0,
+      "suppressed": 0,
+      "source_unavailable": 0,
+      "trust_denied": 0,
+      "serialization_failed": 0
+     },
+     "not_rendered_components": 0,
+     "absent_components": 0,
+     "evidence_complete": true
+    },
+    "budget": {
+     "audience_excluded_count": 0,
+     "capability_snapshot": {
+      "cache_prefix": null,
+      "can_count_tokens": false,
+      "context_window": 1000000,
+      "decision": {
+       "media_budget": {
+        "max_blocks": 20,
+        "max_bytes_per_block": 3750000
+       },
+       "modalities": [
+        "image",
+        "text"
+       ],
+       "probability_support": "none",
+       "source": "RI-I0-a seed read from the Bedrock Converse API reference, not a live probe: toolChoice tool/any forces a tool call (forced tool True); Converse carries no JSON-schema response format (structured output False, fail closed); a span rides the forced tool, its offset fidelity unmeasured (span True); Anthropic rejects a forced tool_choice while thinking is on (forced tool with thinking False); no logprobs on the Converse plane (probability none); image quota 20 blocks of 3.75 MB each, published and not re-measured in this clone. verified=False per honesty rule D",
+       "supports_forced_tool": true,
+       "supports_forced_tool_with_thinking": false,
+       "supports_span_output": true,
+       "supports_structured_output": false,
+       "verified": false
+      },
+      "known_policy_gates": [],
+      "max_output_tokens": 128000,
+      "model_id": "claude-opus-5",
+      "reasoning": {
+       "always_on": false,
+       "always_on_verified": true,
+       "budget_tokens_status": "rejected",
+       "display_default": "omitted",
+       "effort_levels": [],
+       "interleaved": true,
+       "reasoning_control": "adaptive_effort",
+       "source": "hq-4j88mn: reasoning CONTROL CLASS live-confirmed (the bare {'thinking':{'type':'adaptive'}} shape this profile emits returns HTTP 200 on us.anthropic.claude-opus-5), but the finer cells were NOT swept for opus-5 \u2014 verified=False per honesty rule D until a live sweep covers them",
+       "verified": false
+      },
+      "source": null,
+      "supports_reasoning": true,
+      "supports_streaming": true,
+      "supports_thinking": true,
+      "supports_vision": true,
+      "thinking_budget": null,
+      "verified": true
+     },
+     "capability_source": null,
+     "capability_verified": true,
+     "counts": {
+      "admitted_before_budget": 2,
+      "candidate": 2,
+      "final_included": 2,
+      "withheld_necessity": 0,
+      "withheld_truncated": 0
+     },
+     "estimator_id": "rf.utf8-bytes-div4.v1",
+     "formula_terms": {
+      "available_context_tokens": 989760,
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "occupied_tokens": 0,
+      "output_reserve": 8192,
+      "overhead": 0,
+      "safety_margin": 2048
+     },
+     "hidden_count": 0,
+     "included_tokens": 10,
+     "observability": {
+      "reconciliation_attempts": 0,
+      "token_cost_unknown": 0,
+      "token_estimator_failed": 0
+     },
+     "overflow_pinned_count": 0,
+     "reconciliation_attempts": [],
+     "requested_model_id": "claude-opus-5",
+     "resolved_model_id": null,
+     "schema": "reactive-fiber.budget/v1",
+     "token_count_method": "estimated",
+     "truncated_count": 0,
+     "truncated_tokens": 0,
+     "unknown_cost_count": 0
+    },
+    "blocks": [
+     {
+      "candidate_key": "demo.banner:banner::fixed",
+      "original_block_key": "fixed",
+      "component_instance_id": "demo.banner:banner",
+      "producer_component_id": "demo.banner",
+      "producer_revision_id": "sha256:e160e60d82c0c22c48230fb5c968d33a65f6f362742583ef05c926de23cf296c",
+      "production_index": 0,
+      "final_index": 0,
+      "stage": "included",
+      "decision_stage": "included",
+      "decisive_reason": "always_floor",
+      "visibility_outcome": "eligible",
+      "visibility_reason": null,
+      "necessity_outcome": "include",
+      "necessity_reason": "always_floor",
+      "budget_outcome": "kept",
+      "budget_reason": null,
+      "exclusion_stage": null,
+      "token_cost": 5,
+      "token_cost_kind": "estimated",
+      "content_digest": "sha256:e4aab890e8245d5dc4eaa13962915958cb2fe898ee4b9a502b87862e4f16cce9",
+      "content_blob_digest": "sha256:e4aab890e8245d5dc4eaa13962915958cb2fe898ee4b9a502b87862e4f16cce9",
+      "metadata": {
+       "necessity_class": "always",
+       "rf.candidate_key": "demo.banner:banner::fixed",
+       "rf.component_instance_id": "demo.banner:banner",
+       "rf.producer_component_id": "demo.banner",
+       "rf.producer_revision_id": "sha256:e160e60d82c0c22c48230fb5c968d33a65f6f362742583ef05c926de23cf296c",
+       "rf.production_index": [
+        0,
+        0
+       ]
+      },
+      "provenance": {
+       "dependency_refs": [],
+       "rf.necessity_class_source": "stamp",
+       "rf.necessity_stamp_raw": "always",
+       "rf.stamp_source": "block",
+       "source_refs": [
+        "rfn_imxg6jjtuk6sxysinkdrj2veem",
+        "rfn_abvu6fsxyz4wzhmjpt433326gy",
+        "rfn_jmi5p54pc5cjucgftp4w7glqqm"
+       ]
+      },
+      "dependencies": [],
+      "lens_keys": [],
+      "source_refs": [
+       "rfn_imxg6jjtuk6sxysinkdrj2veem",
+       "rfn_abvu6fsxyz4wzhmjpt433326gy",
+       "rfn_jmi5p54pc5cjucgftp4w7glqqm"
+      ],
+      "producer_value_ref": null,
+      "component_revision": null,
+      "value_digest": null,
+      "observation_id": null,
+      "notes": [],
+      "necessity": {
+       "available": true,
+       "necessity_class": "always",
+       "include": true,
+       "reason": "always_floor",
+       "policy_revision_id": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+       "judge_id": "rf.necessity.default-host.v1",
+       "judge_kind": "host_default"
+      },
+      "fiber": {
+       "transaction_refs": [
+        "rfr_c34eb2d7fdd2ytb3hihd4vy5v4/tx_1",
+        "rfr_c34eb2d7fdd2ytb3hihd4vy5v4/tx_2",
+        "rfr_c34eb2d7fdd2ytb3hihd4vy5v4/tx_3",
+        "rfr_c34eb2d7fdd2ytb3hihd4vy5v4/tx_4"
+       ],
+       "suppressions": []
+      }
+     },
+     {
+      "candidate_key": "demo.banner:banner::notes",
+      "original_block_key": "notes",
+      "component_instance_id": "demo.banner:banner",
+      "producer_component_id": "demo.banner",
+      "producer_revision_id": "sha256:e160e60d82c0c22c48230fb5c968d33a65f6f362742583ef05c926de23cf296c",
+      "production_index": 1,
+      "final_index": 1,
+      "stage": "included",
+      "decision_stage": "included",
+      "decisive_reason": "always_floor",
+      "visibility_outcome": "eligible",
+      "visibility_reason": null,
+      "necessity_outcome": "include",
+      "necessity_reason": "always_floor",
+      "budget_outcome": "kept",
+      "budget_reason": null,
+      "exclusion_stage": null,
+      "token_cost": 5,
+      "token_cost_kind": "estimated",
+      "content_digest": "sha256:665127a62b12f494fc8a27f7bfdf4215b8fa8bb872f3a50ea934e34064689517",
+      "content_blob_digest": "sha256:665127a62b12f494fc8a27f7bfdf4215b8fa8bb872f3a50ea934e34064689517",
+      "metadata": {
+       "necessity_class": "always",
+       "rf.candidate_key": "demo.banner:banner::notes",
+       "rf.component_instance_id": "demo.banner:banner",
+       "rf.producer_component_id": "demo.banner",
+       "rf.producer_revision_id": "sha256:e160e60d82c0c22c48230fb5c968d33a65f6f362742583ef05c926de23cf296c",
+       "rf.production_index": [
+        0,
+        1
+       ]
+      },
+      "provenance": {
+       "dependency_refs": [],
+       "rf.necessity_class_source": "stamp",
+       "rf.necessity_stamp_raw": "always",
+       "rf.stamp_source": "block",
+       "source_refs": [
+        "rfn_imxg6jjtuk6sxysinkdrj2veem",
+        "rfn_abvu6fsxyz4wzhmjpt433326gy",
+        "rfn_jmi5p54pc5cjucgftp4w7glqqm"
+       ]
+      },
+      "dependencies": [],
+      "lens_keys": [],
+      "source_refs": [
+       "rfn_imxg6jjtuk6sxysinkdrj2veem",
+       "rfn_abvu6fsxyz4wzhmjpt433326gy",
+       "rfn_jmi5p54pc5cjucgftp4w7glqqm"
+      ],
+      "producer_value_ref": null,
+      "component_revision": null,
+      "value_digest": null,
+      "observation_id": null,
+      "notes": [],
+      "necessity": {
+       "available": true,
+       "necessity_class": "always",
+       "include": true,
+       "reason": "always_floor",
+       "policy_revision_id": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+       "judge_id": "rf.necessity.default-host.v1",
+       "judge_kind": "host_default"
+      },
+      "fiber": {
+       "transaction_refs": [
+        "rfr_c34eb2d7fdd2ytb3hihd4vy5v4/tx_1",
+        "rfr_c34eb2d7fdd2ytb3hihd4vy5v4/tx_2",
+        "rfr_c34eb2d7fdd2ytb3hihd4vy5v4/tx_3",
+        "rfr_c34eb2d7fdd2ytb3hihd4vy5v4/tx_4"
+       ],
+       "suppressions": []
+      }
+     }
+    ],
+    "block": null,
+    "components": {
+     "ok": [
+      {
+       "component_instance_id": "demo.banner:banner",
+       "component_id": "demo.banner",
+       "component_revision_id": "sha256:e160e60d82c0c22c48230fb5c968d33a65f6f362742583ef05c926de23cf296c",
+       "status": "ok",
+       "metadata": {
+        "id": "demo.banner",
+        "kind": "declarative",
+        "revision": "sha256:e160e60d82c0c22c48230fb5c968d33a65f6f362742583ef05c926de23cf296c",
+        "default_visibility": "model-visible",
+        "default_necessity": "task_conditional",
+        "capabilities": null,
+        "tags": []
+       },
+       "rerender_cause": {
+        "changed": [
+         {
+          "id": "aside",
+          "kind": "source"
+         }
+        ],
+        "kind": "inputs_changed"
+       },
+       "input_digests": {
+        "audience": "model",
+        "component_id": "demo.banner",
+        "component_instance_id": "demo.banner:banner",
+        "component_revision_id": "sha256:e160e60d82c0c22c48230fb5c968d33a65f6f362742583ef05c926de23cf296c",
+        "contract": {
+         "host_render_contract_id": "sha256:0632dc38b8373fbe3a033051a0128c3c44f509821f3e08e60fe4e18a23cf44c6",
+         "sdk_contract": {
+          "distribution": "reactive_components",
+          "version": "0.1.1.20261018121500"
+         }
+        },
+        "graph_revision_id": "sha256:0c603452f2f0aa424ba0e6dbf1b130c70b1f7cf5b9d77f0d20ba46295ff6ea05",
+        "input_state_digest": null,
+        "props_digest": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "reads": [],
+        "sources": [
+         [
+          "aside",
+          "sha256:a549e6196daa85830830ad1b35f40dfdc6c71100b83bd85ea2d0c7ceea06b7f9"
+         ],
+         [
+          "notes",
+          "sha256:a219510bbdcdfbbcb6e94bcf569c3cc848765c514e60e975fe0d395fe66a5fe2"
+         ],
+         [
+          "task",
+          "sha256:46faa3fd7d3c942ad385d4eb6789b6efaec3ea1f399393342629fb7094bb256b"
+         ]
+        ]
+       },
+       "blocks": [
+        "demo.banner:banner::fixed",
+        "demo.banner:banner::notes"
+       ],
+       "diagnostics": [],
+       "missing_source_ref": null,
+       "policy_ref": null,
+       "boundary_caught": false,
+       "trust_decision": null
+      }
+     ],
+     "failed": [],
+     "recovered": [],
+     "suppressed": [],
+     "source_unavailable": [],
+     "trust_denied": [],
+     "serialization_failed": []
+    },
+    "graph": {
+     "graph_revision_id": "sha256:0c603452f2f0aa424ba0e6dbf1b130c70b1f7cf5b9d77f0d20ba46295ff6ea05",
+     "available": true,
+     "declared_components": [
+      "demo.banner:banner"
+     ],
+     "not_rendered": [],
+     "not_rendered_reasons": []
+    },
+    "sources": [
+     {
+      "snapshot_id": "rfn_imxg6jjtuk6sxysinkdrj2veem",
+      "role": "authoritative"
+     },
+     {
+      "snapshot_id": "rfn_abvu6fsxyz4wzhmjpt433326gy",
+      "role": "authoritative"
+     },
+     {
+      "snapshot_id": "rfn_jmi5p54pc5cjucgftp4w7glqqm",
+      "role": "authoritative"
+     }
+    ],
+    "absences": [],
+    "fiber": {
+     "available": true,
+     "evidence": "summary",
+     "transactions": [
+      {
+       "transaction_ref": "rfr_c34eb2d7fdd2ytb3hihd4vy5v4/tx_1",
+       "explanation": {
+        "contract_fingerprint": "sha256:b5cf6605d95cb4cd71bc93508cf0e17e347a1abd092e247220a5dd4fcb5fdd42",
+        "data": {
+         "coordination": null,
+         "cycle_entries": [],
+         "dirty_nodes": [
+          "ctx.nodes.banner"
+         ],
+         "emitted_signals": [
+          "signal_1"
+         ],
+         "errors": [],
+         "event_count": 6,
+         "invalidated_nodes": [
+          "ctx.nodes.banner"
+         ],
+         "ref": "tx_1",
+         "rendered_nodes": [],
+         "signal_count": 2,
+         "status": "completed",
+         "value_publications": []
+        },
+        "schema": "reactive-fiber.sdk-payload/v1",
+        "sdk": "FiberOpticsSDK",
+        "sdk_version": "0.1.0.20261014202847"
+       }
+      },
+      {
+       "transaction_ref": "rfr_c34eb2d7fdd2ytb3hihd4vy5v4/tx_2",
+       "explanation": {
+        "contract_fingerprint": "sha256:b5cf6605d95cb4cd71bc93508cf0e17e347a1abd092e247220a5dd4fcb5fdd42",
+        "data": {
+         "coordination": null,
+         "cycle_entries": [],
+         "dirty_nodes": [
+          "ctx.nodes.banner"
+         ],
+         "emitted_signals": [
+          "signal_3"
+         ],
+         "errors": [],
+         "event_count": 6,
+         "invalidated_nodes": [
+          "ctx.nodes.banner"
+         ],
+         "ref": "tx_2",
+         "rendered_nodes": [],
+         "signal_count": 2,
+         "status": "completed",
+         "value_publications": []
+        },
+        "schema": "reactive-fiber.sdk-payload/v1",
+        "sdk": "FiberOpticsSDK",
+        "sdk_version": "0.1.0.20261014202847"
+       }
+      },
+      {
+       "transaction_ref": "rfr_c34eb2d7fdd2ytb3hihd4vy5v4/tx_3",
+       "explanation": {
+        "contract_fingerprint": "sha256:b5cf6605d95cb4cd71bc93508cf0e17e347a1abd092e247220a5dd4fcb5fdd42",
+        "data": {
+         "coordination": null,
+         "cycle_entries": [],
+         "dirty_nodes": [
+          "ctx.nodes.banner"
+         ],
+         "emitted_signals": [
+          "signal_5"
+         ],
+         "errors": [],
+         "event_count": 6,
+         "invalidated_nodes": [
+          "ctx.nodes.banner"
+         ],
+         "ref": "tx_3",
+         "rendered_nodes": [],
+         "signal_count": 2,
+         "status": "completed",
+         "value_publications": []
+        },
+        "schema": "reactive-fiber.sdk-payload/v1",
+        "sdk": "FiberOpticsSDK",
+        "sdk_version": "0.1.0.20261014202847"
+       }
+      },
+      {
+       "transaction_ref": "rfr_c34eb2d7fdd2ytb3hihd4vy5v4/tx_4",
+       "explanation": {
+        "contract_fingerprint": "sha256:b5cf6605d95cb4cd71bc93508cf0e17e347a1abd092e247220a5dd4fcb5fdd42",
+        "data": {
+         "coordination": null,
+         "cycle_entries": [],
+         "dirty_nodes": [
+          "ctx.nodes.banner"
+         ],
+         "emitted_signals": [
+          "signal_7"
+         ],
+         "errors": [],
+         "event_count": 8,
+         "invalidated_nodes": [
+          "ctx.nodes.banner"
+         ],
+         "ref": "tx_4",
+         "rendered_nodes": [
+          "ctx.nodes.banner"
+         ],
+         "signal_count": 2,
+         "status": "completed",
+         "value_publications": []
+        },
+        "schema": "reactive-fiber.sdk-payload/v1",
+        "sdk": "FiberOpticsSDK",
+        "sdk_version": "0.1.0.20261014202847"
+       }
+      }
+     ],
+     "suppressions": [],
+     "inspection": {
+      "schema": "reactive-fiber.fiber-inspection/v1",
+      "render_id": "rfr_c34eb2d7fdd2ytb3hihd4vy5v4",
+      "retention_level": "summary",
+      "transactions": [
+       {
+        "transaction_ref": "rfr_c34eb2d7fdd2ytb3hihd4vy5v4/tx_1",
+        "explanation": {
+         "contract_fingerprint": "sha256:b5cf6605d95cb4cd71bc93508cf0e17e347a1abd092e247220a5dd4fcb5fdd42",
+         "data": {
+          "coordination": null,
+          "cycle_entries": [],
+          "dirty_nodes": [
+           "ctx.nodes.banner"
+          ],
+          "emitted_signals": [
+           "signal_1"
+          ],
+          "errors": [],
+          "event_count": 6,
+          "invalidated_nodes": [
+           "ctx.nodes.banner"
+          ],
+          "ref": "tx_1",
+          "rendered_nodes": [],
+          "signal_count": 2,
+          "status": "completed",
+          "value_publications": []
+         },
+         "schema": "reactive-fiber.sdk-payload/v1",
+         "sdk": "FiberOpticsSDK",
+         "sdk_version": "0.1.0.20261014202847"
+        }
+       },
+       {
+        "transaction_ref": "rfr_c34eb2d7fdd2ytb3hihd4vy5v4/tx_2",
+        "explanation": {
+         "contract_fingerprint": "sha256:b5cf6605d95cb4cd71bc93508cf0e17e347a1abd092e247220a5dd4fcb5fdd42",
+         "data": {
+          "coordination": null,
+          "cycle_entries": [],
+          "dirty_nodes": [
+           "ctx.nodes.banner"
+          ],
+          "emitted_signals": [
+           "signal_3"
+          ],
+          "errors": [],
+          "event_count": 6,
+          "invalidated_nodes": [
+           "ctx.nodes.banner"
+          ],
+          "ref": "tx_2",
+          "rendered_nodes": [],
+          "signal_count": 2,
+          "status": "completed",
+          "value_publications": []
+         },
+         "schema": "reactive-fiber.sdk-payload/v1",
+         "sdk": "FiberOpticsSDK",
+         "sdk_version": "0.1.0.20261014202847"
+        }
+       },
+       {
+        "transaction_ref": "rfr_c34eb2d7fdd2ytb3hihd4vy5v4/tx_3",
+        "explanation": {
+         "contract_fingerprint": "sha256:b5cf6605d95cb4cd71bc93508cf0e17e347a1abd092e247220a5dd4fcb5fdd42",
+         "data": {
+          "coordination": null,
+          "cycle_entries": [],
+          "dirty_nodes": [
+           "ctx.nodes.banner"
+          ],
+          "emitted_signals": [
+           "signal_5"
+          ],
+          "errors": [],
+          "event_count": 6,
+          "invalidated_nodes": [
+           "ctx.nodes.banner"
+          ],
+          "ref": "tx_3",
+          "rendered_nodes": [],
+          "signal_count": 2,
+          "status": "completed",
+          "value_publications": []
+         },
+         "schema": "reactive-fiber.sdk-payload/v1",
+         "sdk": "FiberOpticsSDK",
+         "sdk_version": "0.1.0.20261014202847"
+        }
+       },
+       {
+        "transaction_ref": "rfr_c34eb2d7fdd2ytb3hihd4vy5v4/tx_4",
+        "explanation": {
+         "contract_fingerprint": "sha256:b5cf6605d95cb4cd71bc93508cf0e17e347a1abd092e247220a5dd4fcb5fdd42",
+         "data": {
+          "coordination": null,
+          "cycle_entries": [],
+          "dirty_nodes": [
+           "ctx.nodes.banner"
+          ],
+          "emitted_signals": [
+           "signal_7"
+          ],
+          "errors": [],
+          "event_count": 8,
+          "invalidated_nodes": [
+           "ctx.nodes.banner"
+          ],
+          "ref": "tx_4",
+          "rendered_nodes": [
+           "ctx.nodes.banner"
+          ],
+          "signal_count": 2,
+          "status": "completed",
+          "value_publications": []
+         },
+         "schema": "reactive-fiber.sdk-payload/v1",
+         "sdk": "FiberOpticsSDK",
+         "sdk_version": "0.1.0.20261014202847"
+        }
+       }
+      ],
+      "suppression_count": 0,
+      "error_count": 0,
+      "cycle_entry_count": 0,
+      "trace_blob_digest": null
+     }
+    },
+    "effect_outcomes": [],
+    "effect_executions": [],
+    "observations": [],
+    "judge_context": {
+     "task_digest": "sha256:2f55e55c64270f6a580eea11540a481d1b7c2234bfa757edcb251d92d3a8f6fb",
+     "task_tags": [],
+     "agent_id": null,
+     "agent_role": null,
+     "session_id": "rfs_zjhbikhn2ftiyohri6ijvxw4iq",
+     "explicit_requests": [],
+     "workspace_facts": {
+      "session.active": true
+     }
+    },
+    "provenance": {
+     "created_at": "2026-10-23T00:44:12.053161Z",
+     "graph_revision_id": "sha256:0c603452f2f0aa424ba0e6dbf1b130c70b1f7cf5b9d77f0d20ba46295ff6ea05",
+     "necessity_policy_revision_id": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+     "workspace_schema_version": "reactive-fiber.workspace/v1",
+     "cli_version": "0.1.832",
+     "storage_backend": "jsonl",
+     "sdk_versions": {
+      "fiber_optics": {
+       "contract_fingerprint": "sha256:b5cf6605d95cb4cd71bc93508cf0e17e347a1abd092e247220a5dd4fcb5fdd42",
+       "distribution_version": "0.1.0.20261014202847"
+      },
+      "fiber_optics_wire_format": "2",
+      "reactive_components": {
+       "contract_fingerprint": "sha256:d12211ca722f4e778c1009989745bdc7e4e2297a308cf5601ed2c7e0ffbe7d37",
+       "distribution_version": "0.1.1.20261018121500"
+      },
+      "reactive_inference": {
+       "contract_fingerprint": "sha256:b075fe443fe70a87b10a0fa429cdc298a5af9b9bc5b1dc8d8b62a9f04454380b",
+       "distribution_version": "0.2.60.20261018120223"
+      },
+      "reactive_lenses": {
+       "contract_fingerprint": "sha256:0931bf8cfdc86b26edf9bdd4a3813dec4b6c894b3434f6039924df07234b8ea8",
+       "distribution_version": "0.1.1.20261018.6"
+      }
+     },
+     "storage": {
+      "backend": "jsonl",
+      "engine_version": null
+     }
+    },
+    "lineage": [
+     {
+      "component_instance_id": "demo.banner:banner",
+      "predecessor_render_id": "rfr_pst7ramn3jwyipk65ndm75rt7q",
+      "predecessor_status": "ok",
+      "predecessor_component_revision_id": "sha256:e160e60d82c0c22c48230fb5c968d33a65f6f362742583ef05c926de23cf296c",
+      "predecessor_report_digest": "sha256:8b2dc965e28e4dcdf46b7a7ad89739f8511e66ac58437f1b8ec1dea408d73b5c",
+      "retention": "held"
+     }
+    ]
+   },
+   "diagnostics": []
+  },
+  "planSource": {
+   "schema": "reactive-fiber.cli/v1",
+   "ok": true,
+   "command": "context.plan",
+   "operation_id": "rfo_dkdmxbqmxhszrhy6phrd2glfni",
+   "workspace": {
+    "id": "rfw_puogsrtvtq23l6tf4j56bx3uhm",
+    "root": "/fixture/rf-workspace"
+   },
+   "transaction_id": null,
+   "result": {
+    "render_id": "rfr_pst7ramn3jwyipk65ndm75rt7q",
+    "base": {
+     "render_id": "rfr_pst7ramn3jwyipk65ndm75rt7q",
+     "session_id": "rfs_zjhbikhn2ftiyohri6ijvxw4iq",
+     "agent_id": null,
+     "audience": "model",
+     "graph_revision_id": "sha256:0c603452f2f0aa424ba0e6dbf1b130c70b1f7cf5b9d77f0d20ba46295ff6ea05",
+     "component_instances": [
+      "demo.banner:banner"
+     ]
+    },
+    "current": {
+     "graph_revision_id": "sha256:0c603452f2f0aa424ba0e6dbf1b130c70b1f7cf5b9d77f0d20ba46295ff6ea05",
+     "graph_path": "graphs/context.toml",
+     "graph_changed": false,
+     "reuse_enabled": true,
+     "observed_instances": [
+      "demo.banner:banner"
+     ],
+     "unobserved": []
+    },
+    "plan": {
+     "proof_version": 1,
+     "reuse_enabled": true,
+     "rows": [
+      {
+       "component_instance_id": "demo.banner:banner",
+       "decision": "refresh_required",
+       "completeness": "complete",
+       "causes": [
+        {
+         "kind": "refresh_required",
+         "key": {
+          "kind": "source",
+          "id": "aside"
+         },
+         "prior": "sha256:82d90344d9b340a49cb507e43430b46b46013ad1bf4348872cba3d779c0af114",
+         "current": null
+        },
+        {
+         "kind": "refresh_required",
+         "key": {
+          "kind": "source",
+          "id": "notes"
+         },
+         "prior": "sha256:a219510bbdcdfbbcb6e94bcf569c3cc848765c514e60e975fe0d395fe66a5fe2",
+         "current": null
+        },
+        {
+         "kind": "refresh_required",
+         "key": {
+          "kind": "source",
+          "id": "task"
+         },
+         "prior": "sha256:46faa3fd7d3c942ad385d4eb6789b6efaec3ea1f399393342629fb7094bb256b",
+         "current": null
+        }
+       ],
+       "checked": [
+        {
+         "key": {
+          "kind": "audience",
+          "id": "audience"
+         },
+         "prior": "model",
+         "current": "model"
+        },
+        {
+         "key": {
+          "kind": "graph",
+          "id": "graph_revision_id"
+         },
+         "prior": "sha256:0c603452f2f0aa424ba0e6dbf1b130c70b1f7cf5b9d77f0d20ba46295ff6ea05",
+         "current": "sha256:0c603452f2f0aa424ba0e6dbf1b130c70b1f7cf5b9d77f0d20ba46295ff6ea05"
+        },
+        {
+         "key": {
+          "kind": "props",
+          "id": "props_digest"
+         },
+         "prior": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+         "current": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+        },
+        {
+         "key": {
+          "kind": "state",
+          "id": "input_state_digest"
+         },
+         "prior": null,
+         "current": null
+        }
+       ]
+      }
+     ]
+    },
+    "summary": {
+     "rows": 1,
+     "reuse": 0,
+     "invalidated": 0,
+     "non_reusable": 0,
+     "refresh_required": 1,
+     "evidence_complete": true
+    }
+   },
+   "diagnostics": []
+  },
+  "impactRefusal": {
+   "schema": "reactive-fiber.cli/v1",
+   "ok": false,
+   "command": "graph.impact",
+   "operation_id": "rfo_txcijdqf23ebh7ujhapmz5nbha",
+   "workspace": null,
+   "transaction_id": null,
+   "result": null,
+   "diagnostics": [
+    {
+     "code": "RF_USAGE_NOT_IMPLEMENTED",
+     "severity": "error",
+     "message": "graph impact is not available in this build",
+     "hint": "Planned for slice 17; nothing else is validated for an unserved leaf (not its arguments, the workspace path or the actor); see docs/diagnostics.md#rf_usage_not_implemented",
+     "source": "host",
+     "metadata": {
+      "surface": "graph impact",
+      "planned_slice": 17
+     }
+    }
+   ]
+  },
+  "diffSourceOnly": {
+   "schema": "reactive-fiber.cli/v1",
+   "ok": true,
+   "command": "context.diff",
+   "operation_id": "rfo_udh6ys63g5lro2yk5luwwrokiu",
+   "workspace": {
+    "id": "rfw_puogsrtvtq23l6tf4j56bx3uhm",
+    "root": "/fixture/rf-workspace"
+   },
+   "transaction_id": null,
+   "result": {
+    "render_a": "rfr_pst7ramn3jwyipk65ndm75rt7q",
+    "render_b": "rfr_c34eb2d7fdd2ytb3hihd4vy5v4",
+    "sides": {
+     "before": {
+      "render_id": "rfr_pst7ramn3jwyipk65ndm75rt7q",
+      "created_at": "2026-10-23T00:44:08.691778Z",
+      "commit_seq": 26,
+      "session_id": "rfs_zjhbikhn2ftiyohri6ijvxw4iq"
+     },
+     "after": {
+      "render_id": "rfr_c34eb2d7fdd2ytb3hihd4vy5v4",
+      "created_at": "2026-10-23T00:44:12.053161Z",
+      "commit_seq": 54,
+      "session_id": "rfs_zjhbikhn2ftiyohri6ijvxw4iq"
+     }
+    },
+    "request": {
+     "task_digest": {
+      "before": "sha256:2f55e55c64270f6a580eea11540a481d1b7c2234bfa757edcb251d92d3a8f6fb",
+      "after": "sha256:2f55e55c64270f6a580eea11540a481d1b7c2234bfa757edcb251d92d3a8f6fb",
+      "changed": false
+     },
+     "requested_model_id": {
+      "before": "claude-opus-5",
+      "after": "claude-opus-5",
+      "changed": false
+     },
+     "resolved_model_id": {
+      "before": null,
+      "after": null,
+      "changed": false
+     },
+     "audience": {
+      "before": "model",
+      "after": "model",
+      "changed": false
+     },
+     "explicit_requests": {
+      "before": [],
+      "after": [],
+      "changed": false
+     }
+    },
+    "lens_snapshots": {
+     "before": {
+      "agent.role": {
+       "judge-context": "sha256:74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+      },
+      "context.max_budget_reconciliations": {
+       "judge-context": "sha256:4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce"
+      },
+      "context.output_reserve": {
+       "judge-context": "sha256:864a936a35324151e1c79c44a2e903ff2497f52fa892282d340585f493c637f0"
+      },
+      "context.reconciliation_timeout_ms": {
+       "judge-context": "sha256:40510175845988f13f6162ed8526f0b09f73384467fa855e1e79b44a56562a58"
+      },
+      "context.safety_margin": {
+       "judge-context": "sha256:bfa0ec8bdf2946547879d50a68687ea32e2fa628db187357415858b633d194d9"
+      },
+      "task.tags": {
+       "judge-context": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      }
+     },
+     "after": {
+      "agent.role": {
+       "judge-context": "sha256:74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+      },
+      "context.max_budget_reconciliations": {
+       "judge-context": "sha256:4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce"
+      },
+      "context.output_reserve": {
+       "judge-context": "sha256:864a936a35324151e1c79c44a2e903ff2497f52fa892282d340585f493c637f0"
+      },
+      "context.reconciliation_timeout_ms": {
+       "judge-context": "sha256:40510175845988f13f6162ed8526f0b09f73384467fa855e1e79b44a56562a58"
+      },
+      "context.safety_margin": {
+       "judge-context": "sha256:bfa0ec8bdf2946547879d50a68687ea32e2fa628db187357415858b633d194d9"
+      },
+      "task.tags": {
+       "judge-context": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      }
+     },
+     "changed": false,
+     "layer_changed": false,
+     "resolution_changed": false,
+     "rows": []
+    },
+    "blocks": [
+     {
+      "candidate_key": "demo.banner:banner::fixed",
+      "class": "unchanged",
+      "source_changed": true,
+      "changed_source_snapshots": [
+       "rfn_5qiie2oldp45a6gygq2klbmuqq",
+       "rfn_imxg6jjtuk6sxysinkdrj2veem"
+      ],
+      "before": {
+       "content_digest": "sha256:e4aab890e8245d5dc4eaa13962915958cb2fe898ee4b9a502b87862e4f16cce9",
+       "necessity_class": "always",
+       "producer_revision_id": "sha256:e160e60d82c0c22c48230fb5c968d33a65f6f362742583ef05c926de23cf296c",
+       "kind": "text",
+       "visibility": "model-visible",
+       "visibility_outcome": "eligible",
+       "visibility_reason": null,
+       "necessity_outcome": "include",
+       "necessity_reason": "always_floor",
+       "budget_outcome": "kept",
+       "budget_reason": null,
+       "exclusion_stage": null,
+       "production_index": 0,
+       "final_index": 0,
+       "token_cost": 5,
+       "token_cost_kind": "estimated"
+      },
+      "after": {
+       "content_digest": "sha256:e4aab890e8245d5dc4eaa13962915958cb2fe898ee4b9a502b87862e4f16cce9",
+       "necessity_class": "always",
+       "producer_revision_id": "sha256:e160e60d82c0c22c48230fb5c968d33a65f6f362742583ef05c926de23cf296c",
+       "kind": "text",
+       "visibility": "model-visible",
+       "visibility_outcome": "eligible",
+       "visibility_reason": null,
+       "necessity_outcome": "include",
+       "necessity_reason": "always_floor",
+       "budget_outcome": "kept",
+       "budget_reason": null,
+       "exclusion_stage": null,
+       "production_index": 0,
+       "final_index": 0,
+       "token_cost": 5,
+       "token_cost_kind": "estimated"
+      },
+      "token_delta": {
+       "before": 5,
+       "after": 5,
+       "delta": 0,
+       "kind": "estimated"
+      }
+     },
+     {
+      "candidate_key": "demo.banner:banner::notes",
+      "class": "unchanged",
+      "source_changed": true,
+      "changed_source_snapshots": [
+       "rfn_5qiie2oldp45a6gygq2klbmuqq",
+       "rfn_imxg6jjtuk6sxysinkdrj2veem"
+      ],
+      "before": {
+       "content_digest": "sha256:665127a62b12f494fc8a27f7bfdf4215b8fa8bb872f3a50ea934e34064689517",
+       "necessity_class": "always",
+       "producer_revision_id": "sha256:e160e60d82c0c22c48230fb5c968d33a65f6f362742583ef05c926de23cf296c",
+       "kind": "text",
+       "visibility": "model-visible",
+       "visibility_outcome": "eligible",
+       "visibility_reason": null,
+       "necessity_outcome": "include",
+       "necessity_reason": "always_floor",
+       "budget_outcome": "kept",
+       "budget_reason": null,
+       "exclusion_stage": null,
+       "production_index": 1,
+       "final_index": 1,
+       "token_cost": 5,
+       "token_cost_kind": "estimated"
+      },
+      "after": {
+       "content_digest": "sha256:665127a62b12f494fc8a27f7bfdf4215b8fa8bb872f3a50ea934e34064689517",
+       "necessity_class": "always",
+       "producer_revision_id": "sha256:e160e60d82c0c22c48230fb5c968d33a65f6f362742583ef05c926de23cf296c",
+       "kind": "text",
+       "visibility": "model-visible",
+       "visibility_outcome": "eligible",
+       "visibility_reason": null,
+       "necessity_outcome": "include",
+       "necessity_reason": "always_floor",
+       "budget_outcome": "kept",
+       "budget_reason": null,
+       "exclusion_stage": null,
+       "production_index": 1,
+       "final_index": 1,
+       "token_cost": 5,
+       "token_cost_kind": "estimated"
+      },
+      "token_delta": {
+       "before": 5,
+       "after": 5,
+       "delta": 0,
+       "kind": "estimated"
+      }
+     }
+    ],
+    "aggregate": {
+     "graph_revision": {
+      "before": "sha256:0c603452f2f0aa424ba0e6dbf1b130c70b1f7cf5b9d77f0d20ba46295ff6ea05",
+      "after": "sha256:0c603452f2f0aa424ba0e6dbf1b130c70b1f7cf5b9d77f0d20ba46295ff6ea05",
+      "changed": false
+     },
+     "policy_revision": {
+      "before": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "after": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "changed": false
+     },
+     "model_budget_envelope": {
+      "before": {
+       "requested_model_id": "claude-opus-5",
+       "resolved_model_id": null,
+       "formula_terms": {
+        "available_context_tokens": 989760,
+        "context_window": 1000000,
+        "max_output_tokens": 128000,
+        "occupied_tokens": 0,
+        "output_reserve": 8192,
+        "overhead": 0,
+        "safety_margin": 2048
+       },
+       "capability_snapshot": {
+        "cache_prefix": null,
+        "can_count_tokens": false,
+        "context_window": 1000000,
+        "decision": {
+         "media_budget": {
+          "max_blocks": 20,
+          "max_bytes_per_block": 3750000
+         },
+         "modalities": [
+          "image",
+          "text"
+         ],
+         "probability_support": "none",
+         "source": "RI-I0-a seed read from the Bedrock Converse API reference, not a live probe: toolChoice tool/any forces a tool call (forced tool True); Converse carries no JSON-schema response format (structured output False, fail closed); a span rides the forced tool, its offset fidelity unmeasured (span True); Anthropic rejects a forced tool_choice while thinking is on (forced tool with thinking False); no logprobs on the Converse plane (probability none); image quota 20 blocks of 3.75 MB each, published and not re-measured in this clone. verified=False per honesty rule D",
+         "supports_forced_tool": true,
+         "supports_forced_tool_with_thinking": false,
+         "supports_span_output": true,
+         "supports_structured_output": false,
+         "verified": false
+        },
+        "known_policy_gates": [],
+        "max_output_tokens": 128000,
+        "model_id": "claude-opus-5",
+        "reasoning": {
+         "always_on": false,
+         "always_on_verified": true,
+         "budget_tokens_status": "rejected",
+         "display_default": "omitted",
+         "effort_levels": [],
+         "interleaved": true,
+         "reasoning_control": "adaptive_effort",
+         "source": "hq-4j88mn: reasoning CONTROL CLASS live-confirmed (the bare {'thinking':{'type':'adaptive'}} shape this profile emits returns HTTP 200 on us.anthropic.claude-opus-5), but the finer cells were NOT swept for opus-5 \u2014 verified=False per honesty rule D until a live sweep covers them",
+         "verified": false
+        },
+        "source": null,
+        "supports_reasoning": true,
+        "supports_streaming": true,
+        "supports_thinking": true,
+        "supports_vision": true,
+        "thinking_budget": null,
+        "verified": true
+       },
+       "capability_verified": true,
+       "capability_source": null
+      },
+      "after": {
+       "requested_model_id": "claude-opus-5",
+       "resolved_model_id": null,
+       "formula_terms": {
+        "available_context_tokens": 989760,
+        "context_window": 1000000,
+        "max_output_tokens": 128000,
+        "occupied_tokens": 0,
+        "output_reserve": 8192,
+        "overhead": 0,
+        "safety_margin": 2048
+       },
+       "capability_snapshot": {
+        "cache_prefix": null,
+        "can_count_tokens": false,
+        "context_window": 1000000,
+        "decision": {
+         "media_budget": {
+          "max_blocks": 20,
+          "max_bytes_per_block": 3750000
+         },
+         "modalities": [
+          "image",
+          "text"
+         ],
+         "probability_support": "none",
+         "source": "RI-I0-a seed read from the Bedrock Converse API reference, not a live probe: toolChoice tool/any forces a tool call (forced tool True); Converse carries no JSON-schema response format (structured output False, fail closed); a span rides the forced tool, its offset fidelity unmeasured (span True); Anthropic rejects a forced tool_choice while thinking is on (forced tool with thinking False); no logprobs on the Converse plane (probability none); image quota 20 blocks of 3.75 MB each, published and not re-measured in this clone. verified=False per honesty rule D",
+         "supports_forced_tool": true,
+         "supports_forced_tool_with_thinking": false,
+         "supports_span_output": true,
+         "supports_structured_output": false,
+         "verified": false
+        },
+        "known_policy_gates": [],
+        "max_output_tokens": 128000,
+        "model_id": "claude-opus-5",
+        "reasoning": {
+         "always_on": false,
+         "always_on_verified": true,
+         "budget_tokens_status": "rejected",
+         "display_default": "omitted",
+         "effort_levels": [],
+         "interleaved": true,
+         "reasoning_control": "adaptive_effort",
+         "source": "hq-4j88mn: reasoning CONTROL CLASS live-confirmed (the bare {'thinking':{'type':'adaptive'}} shape this profile emits returns HTTP 200 on us.anthropic.claude-opus-5), but the finer cells were NOT swept for opus-5 \u2014 verified=False per honesty rule D until a live sweep covers them",
+         "verified": false
+        },
+        "source": null,
+        "supports_reasoning": true,
+        "supports_streaming": true,
+        "supports_thinking": true,
+        "supports_vision": true,
+        "thinking_budget": null,
+        "verified": true
+       },
+       "capability_verified": true,
+       "capability_source": null
+      },
+      "changed": false
+     },
+     "source_snapshot_digests": {
+      "before": {
+       "aside": "sha256:82d90344d9b340a49cb507e43430b46b46013ad1bf4348872cba3d779c0af114",
+       "notes": "sha256:a219510bbdcdfbbcb6e94bcf569c3cc848765c514e60e975fe0d395fe66a5fe2",
+       "task": "sha256:46faa3fd7d3c942ad385d4eb6789b6efaec3ea1f399393342629fb7094bb256b"
+      },
+      "after": {
+       "aside": "sha256:a549e6196daa85830830ad1b35f40dfdc6c71100b83bd85ea2d0c7ceea06b7f9",
+       "notes": "sha256:a219510bbdcdfbbcb6e94bcf569c3cc848765c514e60e975fe0d395fe66a5fe2",
+       "task": "sha256:46faa3fd7d3c942ad385d4eb6789b6efaec3ea1f399393342629fb7094bb256b"
+      },
+      "changed": true
+     },
+     "component_state_digests": {
+      "before": {},
+      "after": {},
+      "changed": false
+     },
+     "final_document_digest": {
+      "before": "sha256:edde716c3e4bd9b2ae64c504db182e00654653b03639dea986e66f1781497c0f",
+      "after": "sha256:4dfebf8b4de5c893f09a2b65f7a5dfded966ec6d5890d70f0e3678cada86c3ae",
+      "changed": true
+     },
+     "token_totals": {
+      "before": 10,
+      "after": 10,
+      "changed": false
+     },
+     "order_semantics": {
+      "before": false,
+      "after": false,
+      "changed": false
+     }
+    },
+    "graph_revision": {
+     "from": "sha256:0c603452f2f0aa424ba0e6dbf1b130c70b1f7cf5b9d77f0d20ba46295ff6ea05",
+     "to": "sha256:0c603452f2f0aa424ba0e6dbf1b130c70b1f7cf5b9d77f0d20ba46295ff6ea05",
+     "changed": false,
+     "structural": {
+      "changed": false,
+      "sources": {
+       "before": [
+        "task",
+        "notes",
+        "aside"
+       ],
+       "after": [
+        "task",
+        "notes",
+        "aside"
+       ],
+       "added": [],
+       "removed": [],
+       "changed": false
+      },
+      "components": {
+       "before": [
+        "demo.banner:banner"
+       ],
+       "after": [
+        "demo.banner:banner"
+       ],
+       "added": [],
+       "removed": [],
+       "changed": false
+      },
+      "fibers": {
+       "before": [
+        "fiber:source:task.value->component:banner.task",
+        "fiber:source:notes.text->component:banner.notes",
+        "fiber:source:aside.text->component:banner.aside"
+       ],
+       "after": [
+        "fiber:source:task.value->component:banner.task",
+        "fiber:source:notes.text->component:banner.notes",
+        "fiber:source:aside.text->component:banner.aside"
+       ],
+       "added": [],
+       "removed": [],
+       "changed": false
+      }
+     }
+    },
+    "token_totals": {
+     "before": 10,
+     "after": 10,
+     "delta": 0,
+     "kind": "estimated"
+    },
+    "summary": {
+     "blocks": 2,
+     "counts_by_class": {
+      "added": 0,
+      "removed": 0,
+      "redacted_indeterminate": 0,
+      "content_changed": 0,
+      "visibility_changed": 0,
+      "necessity_class_changed": 0,
+      "necessity_verdict_changed": 0,
+      "budget_outcome_changed": 0,
+      "producer_revision_changed": 0,
+      "position_changed": 0,
+      "metadata_changed": 0,
+      "unchanged": 2
+     }
+    },
+    "dimensions": [
+     {
+      "name": "request_model",
+      "before": {
+       "task_digest": "sha256:2f55e55c64270f6a580eea11540a481d1b7c2234bfa757edcb251d92d3a8f6fb",
+       "requested_model_id": "claude-opus-5",
+       "resolved_model_id": null,
+       "audience": "model",
+       "explicit_requests": []
+      },
+      "after": {
+       "task_digest": "sha256:2f55e55c64270f6a580eea11540a481d1b7c2234bfa757edcb251d92d3a8f6fb",
+       "requested_model_id": "claude-opus-5",
+       "resolved_model_id": null,
+       "audience": "model",
+       "explicit_requests": []
+      },
+      "changed": false
+     },
+     {
+      "name": "sources",
+      "before": {
+       "snapshots": [
+        [
+         "rfn_5qiie2oldp45a6gygq2klbmuqq",
+         "sha256:82d90344d9b340a49cb507e43430b46b46013ad1bf4348872cba3d779c0af114"
+        ],
+        [
+         "rfn_abvu6fsxyz4wzhmjpt433326gy",
+         "sha256:a219510bbdcdfbbcb6e94bcf569c3cc848765c514e60e975fe0d395fe66a5fe2"
+        ],
+        [
+         "rfn_jmi5p54pc5cjucgftp4w7glqqm",
+         "sha256:46faa3fd7d3c942ad385d4eb6789b6efaec3ea1f399393342629fb7094bb256b"
+        ]
+       ],
+       "snapshots_detail": [
+        {
+         "snapshot_id": "rfn_5qiie2oldp45a6gygq2klbmuqq",
+         "source_id": "aside",
+         "source_kind": "file",
+         "observed_revision": "mtime_ns:1792716238284176224",
+         "replay_mode": "captured",
+         "provenance": "authoritative",
+         "sensitivity": "public",
+         "value_digest": "sha256:82d90344d9b340a49cb507e43430b46b46013ad1bf4348872cba3d779c0af114"
+        },
+        {
+         "snapshot_id": "rfn_abvu6fsxyz4wzhmjpt433326gy",
+         "source_id": "notes",
+         "source_kind": "file",
+         "observed_revision": "mtime_ns:1792716238284176224",
+         "replay_mode": "captured",
+         "provenance": "authoritative",
+         "sensitivity": "public",
+         "value_digest": "sha256:a219510bbdcdfbbcb6e94bcf569c3cc848765c514e60e975fe0d395fe66a5fe2"
+        },
+        {
+         "snapshot_id": "rfn_jmi5p54pc5cjucgftp4w7glqqm",
+         "source_id": "task",
+         "source_kind": "task",
+         "observed_revision": "sha256:46faa3fd7d3c942ad385d4eb6789b6efaec3ea1f399393342629fb7094bb256b",
+         "replay_mode": "captured",
+         "provenance": "authoritative",
+         "sensitivity": "internal",
+         "value_digest": "sha256:46faa3fd7d3c942ad385d4eb6789b6efaec3ea1f399393342629fb7094bb256b"
+        }
+       ],
+       "links": [
+        [
+         "rfn_5qiie2oldp45a6gygq2klbmuqq",
+         "authoritative"
+        ],
+        [
+         "rfn_abvu6fsxyz4wzhmjpt433326gy",
+         "authoritative"
+        ],
+        [
+         "rfn_jmi5p54pc5cjucgftp4w7glqqm",
+         "authoritative"
+        ]
+       ],
+       "by_source": {
+        "aside": {
+         "snapshot_id": "rfn_5qiie2oldp45a6gygq2klbmuqq",
+         "value_digest": "sha256:82d90344d9b340a49cb507e43430b46b46013ad1bf4348872cba3d779c0af114"
+        },
+        "notes": {
+         "snapshot_id": "rfn_abvu6fsxyz4wzhmjpt433326gy",
+         "value_digest": "sha256:a219510bbdcdfbbcb6e94bcf569c3cc848765c514e60e975fe0d395fe66a5fe2"
+        },
+        "task": {
+         "snapshot_id": "rfn_jmi5p54pc5cjucgftp4w7glqqm",
+         "value_digest": "sha256:46faa3fd7d3c942ad385d4eb6789b6efaec3ea1f399393342629fb7094bb256b"
+        }
+       }
+      },
+      "after": {
+       "snapshots": [
+        [
+         "rfn_abvu6fsxyz4wzhmjpt433326gy",
+         "sha256:a219510bbdcdfbbcb6e94bcf569c3cc848765c514e60e975fe0d395fe66a5fe2"
+        ],
+        [
+         "rfn_imxg6jjtuk6sxysinkdrj2veem",
+         "sha256:a549e6196daa85830830ad1b35f40dfdc6c71100b83bd85ea2d0c7ceea06b7f9"
+        ],
+        [
+         "rfn_jmi5p54pc5cjucgftp4w7glqqm",
+         "sha256:46faa3fd7d3c942ad385d4eb6789b6efaec3ea1f399393342629fb7094bb256b"
+        ]
+       ],
+       "snapshots_detail": [
+        {
+         "snapshot_id": "rfn_abvu6fsxyz4wzhmjpt433326gy",
+         "source_id": "notes",
+         "source_kind": "file",
+         "observed_revision": "mtime_ns:1792716238284176224",
+         "replay_mode": "captured",
+         "provenance": "authoritative",
+         "sensitivity": "public",
+         "value_digest": "sha256:a219510bbdcdfbbcb6e94bcf569c3cc848765c514e60e975fe0d395fe66a5fe2"
+        },
+        {
+         "snapshot_id": "rfn_imxg6jjtuk6sxysinkdrj2veem",
+         "source_id": "aside",
+         "source_kind": "file",
+         "observed_revision": "mtime_ns:1792716249154139559",
+         "replay_mode": "captured",
+         "provenance": "authoritative",
+         "sensitivity": "public",
+         "value_digest": "sha256:a549e6196daa85830830ad1b35f40dfdc6c71100b83bd85ea2d0c7ceea06b7f9"
+        },
+        {
+         "snapshot_id": "rfn_jmi5p54pc5cjucgftp4w7glqqm",
+         "source_id": "task",
+         "source_kind": "task",
+         "observed_revision": "sha256:46faa3fd7d3c942ad385d4eb6789b6efaec3ea1f399393342629fb7094bb256b",
+         "replay_mode": "captured",
+         "provenance": "authoritative",
+         "sensitivity": "internal",
+         "value_digest": "sha256:46faa3fd7d3c942ad385d4eb6789b6efaec3ea1f399393342629fb7094bb256b"
+        }
+       ],
+       "links": [
+        [
+         "rfn_abvu6fsxyz4wzhmjpt433326gy",
+         "authoritative"
+        ],
+        [
+         "rfn_imxg6jjtuk6sxysinkdrj2veem",
+         "authoritative"
+        ],
+        [
+         "rfn_jmi5p54pc5cjucgftp4w7glqqm",
+         "authoritative"
+        ]
+       ],
+       "by_source": {
+        "aside": {
+         "snapshot_id": "rfn_imxg6jjtuk6sxysinkdrj2veem",
+         "value_digest": "sha256:a549e6196daa85830830ad1b35f40dfdc6c71100b83bd85ea2d0c7ceea06b7f9"
+        },
+        "notes": {
+         "snapshot_id": "rfn_abvu6fsxyz4wzhmjpt433326gy",
+         "value_digest": "sha256:a219510bbdcdfbbcb6e94bcf569c3cc848765c514e60e975fe0d395fe66a5fe2"
+        },
+        "task": {
+         "snapshot_id": "rfn_jmi5p54pc5cjucgftp4w7glqqm",
+         "value_digest": "sha256:46faa3fd7d3c942ad385d4eb6789b6efaec3ea1f399393342629fb7094bb256b"
+        }
+       }
+      },
+      "changed": true
+     },
+     {
+      "name": "config_lens",
+      "before": [
+       [
+        "judge-context",
+        "agent.role",
+        "defaults",
+        "eager",
+        "sha256:74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "captured"
+       ],
+       [
+        "judge-context",
+        "context.max_budget_reconciliations",
+        "defaults",
+        "eager",
+        "sha256:4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce",
+        "captured"
+       ],
+       [
+        "judge-context",
+        "context.output_reserve",
+        "defaults",
+        "eager",
+        "sha256:864a936a35324151e1c79c44a2e903ff2497f52fa892282d340585f493c637f0",
+        "captured"
+       ],
+       [
+        "judge-context",
+        "context.reconciliation_timeout_ms",
+        "defaults",
+        "eager",
+        "sha256:40510175845988f13f6162ed8526f0b09f73384467fa855e1e79b44a56562a58",
+        "captured"
+       ],
+       [
+        "judge-context",
+        "context.safety_margin",
+        "defaults",
+        "eager",
+        "sha256:bfa0ec8bdf2946547879d50a68687ea32e2fa628db187357415858b633d194d9",
+        "captured"
+       ],
+       [
+        "judge-context",
+        "task.tags",
+        "defaults",
+        "eager",
+        "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "captured"
+       ]
+      ],
+      "after": [
+       [
+        "judge-context",
+        "agent.role",
+        "defaults",
+        "eager",
+        "sha256:74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "captured"
+       ],
+       [
+        "judge-context",
+        "context.max_budget_reconciliations",
+        "defaults",
+        "eager",
+        "sha256:4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce",
+        "captured"
+       ],
+       [
+        "judge-context",
+        "context.output_reserve",
+        "defaults",
+        "eager",
+        "sha256:864a936a35324151e1c79c44a2e903ff2497f52fa892282d340585f493c637f0",
+        "captured"
+       ],
+       [
+        "judge-context",
+        "context.reconciliation_timeout_ms",
+        "defaults",
+        "eager",
+        "sha256:40510175845988f13f6162ed8526f0b09f73384467fa855e1e79b44a56562a58",
+        "captured"
+       ],
+       [
+        "judge-context",
+        "context.safety_margin",
+        "defaults",
+        "eager",
+        "sha256:bfa0ec8bdf2946547879d50a68687ea32e2fa628db187357415858b633d194d9",
+        "captured"
+       ],
+       [
+        "judge-context",
+        "task.tags",
+        "defaults",
+        "eager",
+        "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "captured"
+       ]
+      ],
+      "changed": false,
+      "rows": []
+     },
+     {
+      "name": "component_revision_state",
+      "before": [
+       {
+        "component_instance_id": "demo.banner:banner",
+        "component_id": "demo.banner",
+        "component_revision_id": "sha256:e160e60d82c0c22c48230fb5c968d33a65f6f362742583ef05c926de23cf296c",
+        "status": "ok",
+        "rerender_cause_kind": "initial",
+        "input_state_digest": null,
+        "output_state_digest": null
+       }
+      ],
+      "after": [
+       {
+        "component_instance_id": "demo.banner:banner",
+        "component_id": "demo.banner",
+        "component_revision_id": "sha256:e160e60d82c0c22c48230fb5c968d33a65f6f362742583ef05c926de23cf296c",
+        "status": "ok",
+        "rerender_cause_kind": "inputs_changed",
+        "input_state_digest": null,
+        "output_state_digest": null
+       }
+      ],
+      "changed": true
+     },
+     {
+      "name": "graph",
+      "before": "sha256:0c603452f2f0aa424ba0e6dbf1b130c70b1f7cf5b9d77f0d20ba46295ff6ea05",
+      "after": "sha256:0c603452f2f0aa424ba0e6dbf1b130c70b1f7cf5b9d77f0d20ba46295ff6ea05",
+      "changed": false
+     },
+     {
+      "name": "candidates",
+      "before": [
+       "demo.banner:banner::fixed",
+       "demo.banner:banner::notes"
+      ],
+      "after": [
+       "demo.banner:banner::fixed",
+       "demo.banner:banner::notes"
+      ],
+      "changed": false
+     },
+     {
+      "name": "visibility",
+      "before": [
+       [
+        "demo.banner:banner::fixed",
+        "eligible"
+       ],
+       [
+        "demo.banner:banner::notes",
+        "eligible"
+       ]
+      ],
+      "after": [
+       [
+        "demo.banner:banner::fixed",
+        "eligible"
+       ],
+       [
+        "demo.banner:banner::notes",
+        "eligible"
+       ]
+      ],
+      "changed": false
+     },
+     {
+      "name": "necessity",
+      "before": {
+       "policy_revision_id": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+       "verdicts": [
+        [
+         "demo.banner:banner::fixed",
+         "always",
+         true,
+         "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+        ],
+        [
+         "demo.banner:banner::notes",
+         "always",
+         true,
+         "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+        ]
+       ],
+       "blocks": [
+        [
+         "demo.banner:banner::fixed",
+         "include"
+        ],
+        [
+         "demo.banner:banner::notes",
+         "include"
+        ]
+       ]
+      },
+      "after": {
+       "policy_revision_id": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+       "verdicts": [
+        [
+         "demo.banner:banner::fixed",
+         "always",
+         true,
+         "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+        ],
+        [
+         "demo.banner:banner::notes",
+         "always",
+         true,
+         "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+        ]
+       ],
+       "blocks": [
+        [
+         "demo.banner:banner::fixed",
+         "include"
+        ],
+        [
+         "demo.banner:banner::notes",
+         "include"
+        ]
+       ]
+      },
+      "changed": false
+     },
+     {
+      "name": "budget",
+      "before": {
+       "render_budget": {
+        "audience_excluded_count": 0,
+        "capability_snapshot": {
+         "cache_prefix": null,
+         "can_count_tokens": false,
+         "context_window": 1000000,
+         "decision": {
+          "media_budget": {
+           "max_blocks": 20,
+           "max_bytes_per_block": 3750000
+          },
+          "modalities": [
+           "image",
+           "text"
+          ],
+          "probability_support": "none",
+          "source": "RI-I0-a seed read from the Bedrock Converse API reference, not a live probe: toolChoice tool/any forces a tool call (forced tool True); Converse carries no JSON-schema response format (structured output False, fail closed); a span rides the forced tool, its offset fidelity unmeasured (span True); Anthropic rejects a forced tool_choice while thinking is on (forced tool with thinking False); no logprobs on the Converse plane (probability none); image quota 20 blocks of 3.75 MB each, published and not re-measured in this clone. verified=False per honesty rule D",
+          "supports_forced_tool": true,
+          "supports_forced_tool_with_thinking": false,
+          "supports_span_output": true,
+          "supports_structured_output": false,
+          "verified": false
+         },
+         "known_policy_gates": [],
+         "max_output_tokens": 128000,
+         "model_id": "claude-opus-5",
+         "reasoning": {
+          "always_on": false,
+          "always_on_verified": true,
+          "budget_tokens_status": "rejected",
+          "display_default": "omitted",
+          "effort_levels": [],
+          "interleaved": true,
+          "reasoning_control": "adaptive_effort",
+          "source": "hq-4j88mn: reasoning CONTROL CLASS live-confirmed (the bare {'thinking':{'type':'adaptive'}} shape this profile emits returns HTTP 200 on us.anthropic.claude-opus-5), but the finer cells were NOT swept for opus-5 \u2014 verified=False per honesty rule D until a live sweep covers them",
+          "verified": false
+         },
+         "source": null,
+         "supports_reasoning": true,
+         "supports_streaming": true,
+         "supports_thinking": true,
+         "supports_vision": true,
+         "thinking_budget": null,
+         "verified": true
+        },
+        "capability_source": null,
+        "capability_verified": true,
+        "counts": {
+         "admitted_before_budget": 2,
+         "candidate": 2,
+         "final_included": 2,
+         "withheld_necessity": 0,
+         "withheld_truncated": 0
+        },
+        "estimator_id": "rf.utf8-bytes-div4.v1",
+        "formula_terms": {
+         "available_context_tokens": 989760,
+         "context_window": 1000000,
+         "max_output_tokens": 128000,
+         "occupied_tokens": 0,
+         "output_reserve": 8192,
+         "overhead": 0,
+         "safety_margin": 2048
+        },
+        "hidden_count": 0,
+        "included_tokens": 10,
+        "observability": {
+         "reconciliation_attempts": 0,
+         "token_cost_unknown": 0,
+         "token_estimator_failed": 0
+        },
+        "overflow_pinned_count": 0,
+        "reconciliation_attempts": [],
+        "requested_model_id": "claude-opus-5",
+        "resolved_model_id": null,
+        "schema": "reactive-fiber.budget/v1",
+        "token_count_method": "estimated",
+        "truncated_count": 0,
+        "truncated_tokens": 0,
+        "unknown_cost_count": 0
+       },
+       "blocks": [
+        [
+         "demo.banner:banner::fixed",
+         "kept"
+        ],
+        [
+         "demo.banner:banner::notes",
+         "kept"
+        ]
+       ]
+      },
+      "after": {
+       "render_budget": {
+        "audience_excluded_count": 0,
+        "capability_snapshot": {
+         "cache_prefix": null,
+         "can_count_tokens": false,
+         "context_window": 1000000,
+         "decision": {
+          "media_budget": {
+           "max_blocks": 20,
+           "max_bytes_per_block": 3750000
+          },
+          "modalities": [
+           "image",
+           "text"
+          ],
+          "probability_support": "none",
+          "source": "RI-I0-a seed read from the Bedrock Converse API reference, not a live probe: toolChoice tool/any forces a tool call (forced tool True); Converse carries no JSON-schema response format (structured output False, fail closed); a span rides the forced tool, its offset fidelity unmeasured (span True); Anthropic rejects a forced tool_choice while thinking is on (forced tool with thinking False); no logprobs on the Converse plane (probability none); image quota 20 blocks of 3.75 MB each, published and not re-measured in this clone. verified=False per honesty rule D",
+          "supports_forced_tool": true,
+          "supports_forced_tool_with_thinking": false,
+          "supports_span_output": true,
+          "supports_structured_output": false,
+          "verified": false
+         },
+         "known_policy_gates": [],
+         "max_output_tokens": 128000,
+         "model_id": "claude-opus-5",
+         "reasoning": {
+          "always_on": false,
+          "always_on_verified": true,
+          "budget_tokens_status": "rejected",
+          "display_default": "omitted",
+          "effort_levels": [],
+          "interleaved": true,
+          "reasoning_control": "adaptive_effort",
+          "source": "hq-4j88mn: reasoning CONTROL CLASS live-confirmed (the bare {'thinking':{'type':'adaptive'}} shape this profile emits returns HTTP 200 on us.anthropic.claude-opus-5), but the finer cells were NOT swept for opus-5 \u2014 verified=False per honesty rule D until a live sweep covers them",
+          "verified": false
+         },
+         "source": null,
+         "supports_reasoning": true,
+         "supports_streaming": true,
+         "supports_thinking": true,
+         "supports_vision": true,
+         "thinking_budget": null,
+         "verified": true
+        },
+        "capability_source": null,
+        "capability_verified": true,
+        "counts": {
+         "admitted_before_budget": 2,
+         "candidate": 2,
+         "final_included": 2,
+         "withheld_necessity": 0,
+         "withheld_truncated": 0
+        },
+        "estimator_id": "rf.utf8-bytes-div4.v1",
+        "formula_terms": {
+         "available_context_tokens": 989760,
+         "context_window": 1000000,
+         "max_output_tokens": 128000,
+         "occupied_tokens": 0,
+         "output_reserve": 8192,
+         "overhead": 0,
+         "safety_margin": 2048
+        },
+        "hidden_count": 0,
+        "included_tokens": 10,
+        "observability": {
+         "reconciliation_attempts": 0,
+         "token_cost_unknown": 0,
+         "token_estimator_failed": 0
+        },
+        "overflow_pinned_count": 0,
+        "reconciliation_attempts": [],
+        "requested_model_id": "claude-opus-5",
+        "resolved_model_id": null,
+        "schema": "reactive-fiber.budget/v1",
+        "token_count_method": "estimated",
+        "truncated_count": 0,
+        "truncated_tokens": 0,
+        "unknown_cost_count": 0
+       },
+       "blocks": [
+        [
+         "demo.banner:banner::fixed",
+         "kept"
+        ],
+        [
+         "demo.banner:banner::notes",
+         "kept"
+        ]
+       ]
+      },
+      "changed": false
+     },
+     {
+      "name": "assembly",
+      "before": {
+       "order": [
+        [
+         0,
+         "demo.banner:banner::fixed",
+         "sha256:e4aab890e8245d5dc4eaa13962915958cb2fe898ee4b9a502b87862e4f16cce9"
+        ],
+        [
+         1,
+         "demo.banner:banner::notes",
+         "sha256:665127a62b12f494fc8a27f7bfdf4215b8fa8bb872f3a50ea934e34064689517"
+        ]
+       ],
+       "final_document_digest": "sha256:edde716c3e4bd9b2ae64c504db182e00654653b03639dea986e66f1781497c0f"
+      },
+      "after": {
+       "order": [
+        [
+         0,
+         "demo.banner:banner::fixed",
+         "sha256:e4aab890e8245d5dc4eaa13962915958cb2fe898ee4b9a502b87862e4f16cce9"
+        ],
+        [
+         1,
+         "demo.banner:banner::notes",
+         "sha256:665127a62b12f494fc8a27f7bfdf4215b8fa8bb872f3a50ea934e34064689517"
+        ]
+       ],
+       "final_document_digest": "sha256:4dfebf8b4de5c893f09a2b65f7a5dfded966ec6d5890d70f0e3678cada86c3ae"
+      },
+      "changed": true
+     },
+     {
+      "name": "final_document",
+      "before": "sha256:edde716c3e4bd9b2ae64c504db182e00654653b03639dea986e66f1781497c0f",
+      "after": "sha256:4dfebf8b4de5c893f09a2b65f7a5dfded966ec6d5890d70f0e3678cada86c3ae",
+      "changed": true
+     }
+    ],
+    "attribution": {
+     "changed_dimensions": [
+      "sources",
+      "component_revision_state",
+      "assembly",
+      "final_document"
+     ],
+     "final_document_changed": true,
+     "changed_block_count": 0,
+     "source_layer_changed": true,
+     "source_changed_without_output_change": false,
+     "output_changed_without_block_change": true,
+     "request_only_change": false
+    }
+   },
+   "diagnostics": []
+  },
+  "diffContent": {
+   "schema": "reactive-fiber.cli/v1",
+   "ok": true,
+   "command": "context.diff",
+   "operation_id": "rfo_77jwbsu3bvtnralm6xz7snvbv4",
+   "workspace": {
+    "id": "rfw_puogsrtvtq23l6tf4j56bx3uhm",
+    "root": "/fixture/rf-workspace"
+   },
+   "transaction_id": null,
+   "result": {
+    "render_a": "rfr_c34eb2d7fdd2ytb3hihd4vy5v4",
+    "render_b": "rfr_dr6pjmr3fkj2e4nkt2rxdgsc7i",
+    "sides": {
+     "before": {
+      "render_id": "rfr_c34eb2d7fdd2ytb3hihd4vy5v4",
+      "created_at": "2026-10-23T00:44:12.053161Z",
+      "commit_seq": 54,
+      "session_id": "rfs_zjhbikhn2ftiyohri6ijvxw4iq"
+     },
+     "after": {
+      "render_id": "rfr_dr6pjmr3fkj2e4nkt2rxdgsc7i",
+      "created_at": "2026-10-23T00:44:19.278279Z",
+      "commit_seq": 75,
+      "session_id": "rfs_zjhbikhn2ftiyohri6ijvxw4iq"
+     }
+    },
+    "request": {
+     "task_digest": {
+      "before": "sha256:2f55e55c64270f6a580eea11540a481d1b7c2234bfa757edcb251d92d3a8f6fb",
+      "after": "sha256:2f55e55c64270f6a580eea11540a481d1b7c2234bfa757edcb251d92d3a8f6fb",
+      "changed": false
+     },
+     "requested_model_id": {
+      "before": "claude-opus-5",
+      "after": "claude-opus-5",
+      "changed": false
+     },
+     "resolved_model_id": {
+      "before": null,
+      "after": null,
+      "changed": false
+     },
+     "audience": {
+      "before": "model",
+      "after": "model",
+      "changed": false
+     },
+     "explicit_requests": {
+      "before": [],
+      "after": [],
+      "changed": false
+     }
+    },
+    "lens_snapshots": {
+     "before": {
+      "agent.role": {
+       "judge-context": "sha256:74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+      },
+      "context.max_budget_reconciliations": {
+       "judge-context": "sha256:4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce"
+      },
+      "context.output_reserve": {
+       "judge-context": "sha256:864a936a35324151e1c79c44a2e903ff2497f52fa892282d340585f493c637f0"
+      },
+      "context.reconciliation_timeout_ms": {
+       "judge-context": "sha256:40510175845988f13f6162ed8526f0b09f73384467fa855e1e79b44a56562a58"
+      },
+      "context.safety_margin": {
+       "judge-context": "sha256:bfa0ec8bdf2946547879d50a68687ea32e2fa628db187357415858b633d194d9"
+      },
+      "task.tags": {
+       "judge-context": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      }
+     },
+     "after": {
+      "agent.role": {
+       "judge-context": "sha256:74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+      },
+      "context.max_budget_reconciliations": {
+       "judge-context": "sha256:4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce"
+      },
+      "context.output_reserve": {
+       "judge-context": "sha256:864a936a35324151e1c79c44a2e903ff2497f52fa892282d340585f493c637f0"
+      },
+      "context.reconciliation_timeout_ms": {
+       "judge-context": "sha256:40510175845988f13f6162ed8526f0b09f73384467fa855e1e79b44a56562a58"
+      },
+      "context.safety_margin": {
+       "judge-context": "sha256:bfa0ec8bdf2946547879d50a68687ea32e2fa628db187357415858b633d194d9"
+      },
+      "task.tags": {
+       "judge-context": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      }
+     },
+     "changed": false,
+     "layer_changed": false,
+     "resolution_changed": false,
+     "rows": []
+    },
+    "blocks": [
+     {
+      "candidate_key": "demo.banner:banner::fixed",
+      "class": "unchanged",
+      "source_changed": true,
+      "changed_source_snapshots": [
+       "rfn_4calvkawssuhwiglcx4f7zf4cu",
+       "rfn_abvu6fsxyz4wzhmjpt433326gy"
+      ],
+      "before": {
+       "content_digest": "sha256:e4aab890e8245d5dc4eaa13962915958cb2fe898ee4b9a502b87862e4f16cce9",
+       "necessity_class": "always",
+       "producer_revision_id": "sha256:e160e60d82c0c22c48230fb5c968d33a65f6f362742583ef05c926de23cf296c",
+       "kind": "text",
+       "visibility": "model-visible",
+       "visibility_outcome": "eligible",
+       "visibility_reason": null,
+       "necessity_outcome": "include",
+       "necessity_reason": "always_floor",
+       "budget_outcome": "kept",
+       "budget_reason": null,
+       "exclusion_stage": null,
+       "production_index": 0,
+       "final_index": 0,
+       "token_cost": 5,
+       "token_cost_kind": "estimated"
+      },
+      "after": {
+       "content_digest": "sha256:e4aab890e8245d5dc4eaa13962915958cb2fe898ee4b9a502b87862e4f16cce9",
+       "necessity_class": "always",
+       "producer_revision_id": "sha256:e160e60d82c0c22c48230fb5c968d33a65f6f362742583ef05c926de23cf296c",
+       "kind": "text",
+       "visibility": "model-visible",
+       "visibility_outcome": "eligible",
+       "visibility_reason": null,
+       "necessity_outcome": "include",
+       "necessity_reason": "always_floor",
+       "budget_outcome": "kept",
+       "budget_reason": null,
+       "exclusion_stage": null,
+       "production_index": 0,
+       "final_index": 0,
+       "token_cost": 5,
+       "token_cost_kind": "estimated"
+      },
+      "token_delta": {
+       "before": 5,
+       "after": 5,
+       "delta": 0,
+       "kind": "estimated"
+      }
+     },
+     {
+      "candidate_key": "demo.banner:banner::notes",
+      "class": "content_changed",
+      "source_changed": true,
+      "changed_source_snapshots": [
+       "rfn_4calvkawssuhwiglcx4f7zf4cu",
+       "rfn_abvu6fsxyz4wzhmjpt433326gy"
+      ],
+      "before": {
+       "content_digest": "sha256:665127a62b12f494fc8a27f7bfdf4215b8fa8bb872f3a50ea934e34064689517",
+       "necessity_class": "always",
+       "producer_revision_id": "sha256:e160e60d82c0c22c48230fb5c968d33a65f6f362742583ef05c926de23cf296c",
+       "kind": "text",
+       "visibility": "model-visible",
+       "visibility_outcome": "eligible",
+       "visibility_reason": null,
+       "necessity_outcome": "include",
+       "necessity_reason": "always_floor",
+       "budget_outcome": "kept",
+       "budget_reason": null,
+       "exclusion_stage": null,
+       "production_index": 1,
+       "final_index": 1,
+       "token_cost": 5,
+       "token_cost_kind": "estimated"
+      },
+      "after": {
+       "content_digest": "sha256:3a99cb96a89dda570b4fc1291ce206991b4f1a3d9cb5960312aca32c4276aafc",
+       "necessity_class": "always",
+       "producer_revision_id": "sha256:e160e60d82c0c22c48230fb5c968d33a65f6f362742583ef05c926de23cf296c",
+       "kind": "text",
+       "visibility": "model-visible",
+       "visibility_outcome": "eligible",
+       "visibility_reason": null,
+       "necessity_outcome": "include",
+       "necessity_reason": "always_floor",
+       "budget_outcome": "kept",
+       "budget_reason": null,
+       "exclusion_stage": null,
+       "production_index": 1,
+       "final_index": 1,
+       "token_cost": 5,
+       "token_cost_kind": "estimated"
+      },
+      "token_delta": {
+       "before": 5,
+       "after": 5,
+       "delta": 0,
+       "kind": "estimated"
+      }
+     }
+    ],
+    "aggregate": {
+     "graph_revision": {
+      "before": "sha256:0c603452f2f0aa424ba0e6dbf1b130c70b1f7cf5b9d77f0d20ba46295ff6ea05",
+      "after": "sha256:0c603452f2f0aa424ba0e6dbf1b130c70b1f7cf5b9d77f0d20ba46295ff6ea05",
+      "changed": false
+     },
+     "policy_revision": {
+      "before": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "after": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "changed": false
+     },
+     "model_budget_envelope": {
+      "before": {
+       "requested_model_id": "claude-opus-5",
+       "resolved_model_id": null,
+       "formula_terms": {
+        "available_context_tokens": 989760,
+        "context_window": 1000000,
+        "max_output_tokens": 128000,
+        "occupied_tokens": 0,
+        "output_reserve": 8192,
+        "overhead": 0,
+        "safety_margin": 2048
+       },
+       "capability_snapshot": {
+        "cache_prefix": null,
+        "can_count_tokens": false,
+        "context_window": 1000000,
+        "decision": {
+         "media_budget": {
+          "max_blocks": 20,
+          "max_bytes_per_block": 3750000
+         },
+         "modalities": [
+          "image",
+          "text"
+         ],
+         "probability_support": "none",
+         "source": "RI-I0-a seed read from the Bedrock Converse API reference, not a live probe: toolChoice tool/any forces a tool call (forced tool True); Converse carries no JSON-schema response format (structured output False, fail closed); a span rides the forced tool, its offset fidelity unmeasured (span True); Anthropic rejects a forced tool_choice while thinking is on (forced tool with thinking False); no logprobs on the Converse plane (probability none); image quota 20 blocks of 3.75 MB each, published and not re-measured in this clone. verified=False per honesty rule D",
+         "supports_forced_tool": true,
+         "supports_forced_tool_with_thinking": false,
+         "supports_span_output": true,
+         "supports_structured_output": false,
+         "verified": false
+        },
+        "known_policy_gates": [],
+        "max_output_tokens": 128000,
+        "model_id": "claude-opus-5",
+        "reasoning": {
+         "always_on": false,
+         "always_on_verified": true,
+         "budget_tokens_status": "rejected",
+         "display_default": "omitted",
+         "effort_levels": [],
+         "interleaved": true,
+         "reasoning_control": "adaptive_effort",
+         "source": "hq-4j88mn: reasoning CONTROL CLASS live-confirmed (the bare {'thinking':{'type':'adaptive'}} shape this profile emits returns HTTP 200 on us.anthropic.claude-opus-5), but the finer cells were NOT swept for opus-5 \u2014 verified=False per honesty rule D until a live sweep covers them",
+         "verified": false
+        },
+        "source": null,
+        "supports_reasoning": true,
+        "supports_streaming": true,
+        "supports_thinking": true,
+        "supports_vision": true,
+        "thinking_budget": null,
+        "verified": true
+       },
+       "capability_verified": true,
+       "capability_source": null
+      },
+      "after": {
+       "requested_model_id": "claude-opus-5",
+       "resolved_model_id": null,
+       "formula_terms": {
+        "available_context_tokens": 989760,
+        "context_window": 1000000,
+        "max_output_tokens": 128000,
+        "occupied_tokens": 0,
+        "output_reserve": 8192,
+        "overhead": 0,
+        "safety_margin": 2048
+       },
+       "capability_snapshot": {
+        "cache_prefix": null,
+        "can_count_tokens": false,
+        "context_window": 1000000,
+        "decision": {
+         "media_budget": {
+          "max_blocks": 20,
+          "max_bytes_per_block": 3750000
+         },
+         "modalities": [
+          "image",
+          "text"
+         ],
+         "probability_support": "none",
+         "source": "RI-I0-a seed read from the Bedrock Converse API reference, not a live probe: toolChoice tool/any forces a tool call (forced tool True); Converse carries no JSON-schema response format (structured output False, fail closed); a span rides the forced tool, its offset fidelity unmeasured (span True); Anthropic rejects a forced tool_choice while thinking is on (forced tool with thinking False); no logprobs on the Converse plane (probability none); image quota 20 blocks of 3.75 MB each, published and not re-measured in this clone. verified=False per honesty rule D",
+         "supports_forced_tool": true,
+         "supports_forced_tool_with_thinking": false,
+         "supports_span_output": true,
+         "supports_structured_output": false,
+         "verified": false
+        },
+        "known_policy_gates": [],
+        "max_output_tokens": 128000,
+        "model_id": "claude-opus-5",
+        "reasoning": {
+         "always_on": false,
+         "always_on_verified": true,
+         "budget_tokens_status": "rejected",
+         "display_default": "omitted",
+         "effort_levels": [],
+         "interleaved": true,
+         "reasoning_control": "adaptive_effort",
+         "source": "hq-4j88mn: reasoning CONTROL CLASS live-confirmed (the bare {'thinking':{'type':'adaptive'}} shape this profile emits returns HTTP 200 on us.anthropic.claude-opus-5), but the finer cells were NOT swept for opus-5 \u2014 verified=False per honesty rule D until a live sweep covers them",
+         "verified": false
+        },
+        "source": null,
+        "supports_reasoning": true,
+        "supports_streaming": true,
+        "supports_thinking": true,
+        "supports_vision": true,
+        "thinking_budget": null,
+        "verified": true
+       },
+       "capability_verified": true,
+       "capability_source": null
+      },
+      "changed": false
+     },
+     "source_snapshot_digests": {
+      "before": {
+       "aside": "sha256:a549e6196daa85830830ad1b35f40dfdc6c71100b83bd85ea2d0c7ceea06b7f9",
+       "notes": "sha256:a219510bbdcdfbbcb6e94bcf569c3cc848765c514e60e975fe0d395fe66a5fe2",
+       "task": "sha256:46faa3fd7d3c942ad385d4eb6789b6efaec3ea1f399393342629fb7094bb256b"
+      },
+      "after": {
+       "aside": "sha256:a549e6196daa85830830ad1b35f40dfdc6c71100b83bd85ea2d0c7ceea06b7f9",
+       "notes": "sha256:fba1226c7b4ae857f8e9c5d76c05a22a212b9e0dce86663548b365e467840f1c",
+       "task": "sha256:46faa3fd7d3c942ad385d4eb6789b6efaec3ea1f399393342629fb7094bb256b"
+      },
+      "changed": true
+     },
+     "component_state_digests": {
+      "before": {},
+      "after": {},
+      "changed": false
+     },
+     "final_document_digest": {
+      "before": "sha256:4dfebf8b4de5c893f09a2b65f7a5dfded966ec6d5890d70f0e3678cada86c3ae",
+      "after": "sha256:d6cb84618b18af1f2b60970d1d0c5b2d672b340159c70daa7eebcb4b01986c88",
+      "changed": true
+     },
+     "token_totals": {
+      "before": 10,
+      "after": 10,
+      "changed": false
+     },
+     "order_semantics": {
+      "before": false,
+      "after": false,
+      "changed": false
+     }
+    },
+    "graph_revision": {
+     "from": "sha256:0c603452f2f0aa424ba0e6dbf1b130c70b1f7cf5b9d77f0d20ba46295ff6ea05",
+     "to": "sha256:0c603452f2f0aa424ba0e6dbf1b130c70b1f7cf5b9d77f0d20ba46295ff6ea05",
+     "changed": false,
+     "structural": {
+      "changed": false,
+      "sources": {
+       "before": [
+        "task",
+        "notes",
+        "aside"
+       ],
+       "after": [
+        "task",
+        "notes",
+        "aside"
+       ],
+       "added": [],
+       "removed": [],
+       "changed": false
+      },
+      "components": {
+       "before": [
+        "demo.banner:banner"
+       ],
+       "after": [
+        "demo.banner:banner"
+       ],
+       "added": [],
+       "removed": [],
+       "changed": false
+      },
+      "fibers": {
+       "before": [
+        "fiber:source:task.value->component:banner.task",
+        "fiber:source:notes.text->component:banner.notes",
+        "fiber:source:aside.text->component:banner.aside"
+       ],
+       "after": [
+        "fiber:source:task.value->component:banner.task",
+        "fiber:source:notes.text->component:banner.notes",
+        "fiber:source:aside.text->component:banner.aside"
+       ],
+       "added": [],
+       "removed": [],
+       "changed": false
+      }
+     }
+    },
+    "token_totals": {
+     "before": 10,
+     "after": 10,
+     "delta": 0,
+     "kind": "estimated"
+    },
+    "summary": {
+     "blocks": 2,
+     "counts_by_class": {
+      "added": 0,
+      "removed": 0,
+      "redacted_indeterminate": 0,
+      "content_changed": 1,
+      "visibility_changed": 0,
+      "necessity_class_changed": 0,
+      "necessity_verdict_changed": 0,
+      "budget_outcome_changed": 0,
+      "producer_revision_changed": 0,
+      "position_changed": 0,
+      "metadata_changed": 0,
+      "unchanged": 1
+     }
+    },
+    "dimensions": [
+     {
+      "name": "request_model",
+      "before": {
+       "task_digest": "sha256:2f55e55c64270f6a580eea11540a481d1b7c2234bfa757edcb251d92d3a8f6fb",
+       "requested_model_id": "claude-opus-5",
+       "resolved_model_id": null,
+       "audience": "model",
+       "explicit_requests": []
+      },
+      "after": {
+       "task_digest": "sha256:2f55e55c64270f6a580eea11540a481d1b7c2234bfa757edcb251d92d3a8f6fb",
+       "requested_model_id": "claude-opus-5",
+       "resolved_model_id": null,
+       "audience": "model",
+       "explicit_requests": []
+      },
+      "changed": false
+     },
+     {
+      "name": "sources",
+      "before": {
+       "snapshots": [
+        [
+         "rfn_abvu6fsxyz4wzhmjpt433326gy",
+         "sha256:a219510bbdcdfbbcb6e94bcf569c3cc848765c514e60e975fe0d395fe66a5fe2"
+        ],
+        [
+         "rfn_imxg6jjtuk6sxysinkdrj2veem",
+         "sha256:a549e6196daa85830830ad1b35f40dfdc6c71100b83bd85ea2d0c7ceea06b7f9"
+        ],
+        [
+         "rfn_jmi5p54pc5cjucgftp4w7glqqm",
+         "sha256:46faa3fd7d3c942ad385d4eb6789b6efaec3ea1f399393342629fb7094bb256b"
+        ]
+       ],
+       "snapshots_detail": [
+        {
+         "snapshot_id": "rfn_abvu6fsxyz4wzhmjpt433326gy",
+         "source_id": "notes",
+         "source_kind": "file",
+         "observed_revision": "mtime_ns:1792716238284176224",
+         "replay_mode": "captured",
+         "provenance": "authoritative",
+         "sensitivity": "public",
+         "value_digest": "sha256:a219510bbdcdfbbcb6e94bcf569c3cc848765c514e60e975fe0d395fe66a5fe2"
+        },
+        {
+         "snapshot_id": "rfn_imxg6jjtuk6sxysinkdrj2veem",
+         "source_id": "aside",
+         "source_kind": "file",
+         "observed_revision": "mtime_ns:1792716249154139559",
+         "replay_mode": "captured",
+         "provenance": "authoritative",
+         "sensitivity": "public",
+         "value_digest": "sha256:a549e6196daa85830830ad1b35f40dfdc6c71100b83bd85ea2d0c7ceea06b7f9"
+        },
+        {
+         "snapshot_id": "rfn_jmi5p54pc5cjucgftp4w7glqqm",
+         "source_id": "task",
+         "source_kind": "task",
+         "observed_revision": "sha256:46faa3fd7d3c942ad385d4eb6789b6efaec3ea1f399393342629fb7094bb256b",
+         "replay_mode": "captured",
+         "provenance": "authoritative",
+         "sensitivity": "internal",
+         "value_digest": "sha256:46faa3fd7d3c942ad385d4eb6789b6efaec3ea1f399393342629fb7094bb256b"
+        }
+       ],
+       "links": [
+        [
+         "rfn_abvu6fsxyz4wzhmjpt433326gy",
+         "authoritative"
+        ],
+        [
+         "rfn_imxg6jjtuk6sxysinkdrj2veem",
+         "authoritative"
+        ],
+        [
+         "rfn_jmi5p54pc5cjucgftp4w7glqqm",
+         "authoritative"
+        ]
+       ],
+       "by_source": {
+        "aside": {
+         "snapshot_id": "rfn_imxg6jjtuk6sxysinkdrj2veem",
+         "value_digest": "sha256:a549e6196daa85830830ad1b35f40dfdc6c71100b83bd85ea2d0c7ceea06b7f9"
+        },
+        "notes": {
+         "snapshot_id": "rfn_abvu6fsxyz4wzhmjpt433326gy",
+         "value_digest": "sha256:a219510bbdcdfbbcb6e94bcf569c3cc848765c514e60e975fe0d395fe66a5fe2"
+        },
+        "task": {
+         "snapshot_id": "rfn_jmi5p54pc5cjucgftp4w7glqqm",
+         "value_digest": "sha256:46faa3fd7d3c942ad385d4eb6789b6efaec3ea1f399393342629fb7094bb256b"
+        }
+       }
+      },
+      "after": {
+       "snapshots": [
+        [
+         "rfn_4calvkawssuhwiglcx4f7zf4cu",
+         "sha256:fba1226c7b4ae857f8e9c5d76c05a22a212b9e0dce86663548b365e467840f1c"
+        ],
+        [
+         "rfn_imxg6jjtuk6sxysinkdrj2veem",
+         "sha256:a549e6196daa85830830ad1b35f40dfdc6c71100b83bd85ea2d0c7ceea06b7f9"
+        ],
+        [
+         "rfn_jmi5p54pc5cjucgftp4w7glqqm",
+         "sha256:46faa3fd7d3c942ad385d4eb6789b6efaec3ea1f399393342629fb7094bb256b"
+        ]
+       ],
+       "snapshots_detail": [
+        {
+         "snapshot_id": "rfn_4calvkawssuhwiglcx4f7zf4cu",
+         "source_id": "notes",
+         "source_kind": "file",
+         "observed_revision": "mtime_ns:1792716254524121444",
+         "replay_mode": "captured",
+         "provenance": "authoritative",
+         "sensitivity": "public",
+         "value_digest": "sha256:fba1226c7b4ae857f8e9c5d76c05a22a212b9e0dce86663548b365e467840f1c"
+        },
+        {
+         "snapshot_id": "rfn_imxg6jjtuk6sxysinkdrj2veem",
+         "source_id": "aside",
+         "source_kind": "file",
+         "observed_revision": "mtime_ns:1792716249154139559",
+         "replay_mode": "captured",
+         "provenance": "authoritative",
+         "sensitivity": "public",
+         "value_digest": "sha256:a549e6196daa85830830ad1b35f40dfdc6c71100b83bd85ea2d0c7ceea06b7f9"
+        },
+        {
+         "snapshot_id": "rfn_jmi5p54pc5cjucgftp4w7glqqm",
+         "source_id": "task",
+         "source_kind": "task",
+         "observed_revision": "sha256:46faa3fd7d3c942ad385d4eb6789b6efaec3ea1f399393342629fb7094bb256b",
+         "replay_mode": "captured",
+         "provenance": "authoritative",
+         "sensitivity": "internal",
+         "value_digest": "sha256:46faa3fd7d3c942ad385d4eb6789b6efaec3ea1f399393342629fb7094bb256b"
+        }
+       ],
+       "links": [
+        [
+         "rfn_4calvkawssuhwiglcx4f7zf4cu",
+         "authoritative"
+        ],
+        [
+         "rfn_imxg6jjtuk6sxysinkdrj2veem",
+         "authoritative"
+        ],
+        [
+         "rfn_jmi5p54pc5cjucgftp4w7glqqm",
+         "authoritative"
+        ]
+       ],
+       "by_source": {
+        "aside": {
+         "snapshot_id": "rfn_imxg6jjtuk6sxysinkdrj2veem",
+         "value_digest": "sha256:a549e6196daa85830830ad1b35f40dfdc6c71100b83bd85ea2d0c7ceea06b7f9"
+        },
+        "notes": {
+         "snapshot_id": "rfn_4calvkawssuhwiglcx4f7zf4cu",
+         "value_digest": "sha256:fba1226c7b4ae857f8e9c5d76c05a22a212b9e0dce86663548b365e467840f1c"
+        },
+        "task": {
+         "snapshot_id": "rfn_jmi5p54pc5cjucgftp4w7glqqm",
+         "value_digest": "sha256:46faa3fd7d3c942ad385d4eb6789b6efaec3ea1f399393342629fb7094bb256b"
+        }
+       }
+      },
+      "changed": true
+     },
+     {
+      "name": "config_lens",
+      "before": [
+       [
+        "judge-context",
+        "agent.role",
+        "defaults",
+        "eager",
+        "sha256:74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "captured"
+       ],
+       [
+        "judge-context",
+        "context.max_budget_reconciliations",
+        "defaults",
+        "eager",
+        "sha256:4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce",
+        "captured"
+       ],
+       [
+        "judge-context",
+        "context.output_reserve",
+        "defaults",
+        "eager",
+        "sha256:864a936a35324151e1c79c44a2e903ff2497f52fa892282d340585f493c637f0",
+        "captured"
+       ],
+       [
+        "judge-context",
+        "context.reconciliation_timeout_ms",
+        "defaults",
+        "eager",
+        "sha256:40510175845988f13f6162ed8526f0b09f73384467fa855e1e79b44a56562a58",
+        "captured"
+       ],
+       [
+        "judge-context",
+        "context.safety_margin",
+        "defaults",
+        "eager",
+        "sha256:bfa0ec8bdf2946547879d50a68687ea32e2fa628db187357415858b633d194d9",
+        "captured"
+       ],
+       [
+        "judge-context",
+        "task.tags",
+        "defaults",
+        "eager",
+        "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "captured"
+       ]
+      ],
+      "after": [
+       [
+        "judge-context",
+        "agent.role",
+        "defaults",
+        "eager",
+        "sha256:74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "captured"
+       ],
+       [
+        "judge-context",
+        "context.max_budget_reconciliations",
+        "defaults",
+        "eager",
+        "sha256:4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce",
+        "captured"
+       ],
+       [
+        "judge-context",
+        "context.output_reserve",
+        "defaults",
+        "eager",
+        "sha256:864a936a35324151e1c79c44a2e903ff2497f52fa892282d340585f493c637f0",
+        "captured"
+       ],
+       [
+        "judge-context",
+        "context.reconciliation_timeout_ms",
+        "defaults",
+        "eager",
+        "sha256:40510175845988f13f6162ed8526f0b09f73384467fa855e1e79b44a56562a58",
+        "captured"
+       ],
+       [
+        "judge-context",
+        "context.safety_margin",
+        "defaults",
+        "eager",
+        "sha256:bfa0ec8bdf2946547879d50a68687ea32e2fa628db187357415858b633d194d9",
+        "captured"
+       ],
+       [
+        "judge-context",
+        "task.tags",
+        "defaults",
+        "eager",
+        "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "captured"
+       ]
+      ],
+      "changed": false,
+      "rows": []
+     },
+     {
+      "name": "component_revision_state",
+      "before": [
+       {
+        "component_instance_id": "demo.banner:banner",
+        "component_id": "demo.banner",
+        "component_revision_id": "sha256:e160e60d82c0c22c48230fb5c968d33a65f6f362742583ef05c926de23cf296c",
+        "status": "ok",
+        "rerender_cause_kind": "inputs_changed",
+        "input_state_digest": null,
+        "output_state_digest": null
+       }
+      ],
+      "after": [
+       {
+        "component_instance_id": "demo.banner:banner",
+        "component_id": "demo.banner",
+        "component_revision_id": "sha256:e160e60d82c0c22c48230fb5c968d33a65f6f362742583ef05c926de23cf296c",
+        "status": "ok",
+        "rerender_cause_kind": "inputs_changed",
+        "input_state_digest": null,
+        "output_state_digest": null
+       }
+      ],
+      "changed": false
+     },
+     {
+      "name": "graph",
+      "before": "sha256:0c603452f2f0aa424ba0e6dbf1b130c70b1f7cf5b9d77f0d20ba46295ff6ea05",
+      "after": "sha256:0c603452f2f0aa424ba0e6dbf1b130c70b1f7cf5b9d77f0d20ba46295ff6ea05",
+      "changed": false
+     },
+     {
+      "name": "candidates",
+      "before": [
+       "demo.banner:banner::fixed",
+       "demo.banner:banner::notes"
+      ],
+      "after": [
+       "demo.banner:banner::fixed",
+       "demo.banner:banner::notes"
+      ],
+      "changed": false
+     },
+     {
+      "name": "visibility",
+      "before": [
+       [
+        "demo.banner:banner::fixed",
+        "eligible"
+       ],
+       [
+        "demo.banner:banner::notes",
+        "eligible"
+       ]
+      ],
+      "after": [
+       [
+        "demo.banner:banner::fixed",
+        "eligible"
+       ],
+       [
+        "demo.banner:banner::notes",
+        "eligible"
+       ]
+      ],
+      "changed": false
+     },
+     {
+      "name": "necessity",
+      "before": {
+       "policy_revision_id": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+       "verdicts": [
+        [
+         "demo.banner:banner::fixed",
+         "always",
+         true,
+         "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+        ],
+        [
+         "demo.banner:banner::notes",
+         "always",
+         true,
+         "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+        ]
+       ],
+       "blocks": [
+        [
+         "demo.banner:banner::fixed",
+         "include"
+        ],
+        [
+         "demo.banner:banner::notes",
+         "include"
+        ]
+       ]
+      },
+      "after": {
+       "policy_revision_id": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+       "verdicts": [
+        [
+         "demo.banner:banner::fixed",
+         "always",
+         true,
+         "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+        ],
+        [
+         "demo.banner:banner::notes",
+         "always",
+         true,
+         "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+        ]
+       ],
+       "blocks": [
+        [
+         "demo.banner:banner::fixed",
+         "include"
+        ],
+        [
+         "demo.banner:banner::notes",
+         "include"
+        ]
+       ]
+      },
+      "changed": false
+     },
+     {
+      "name": "budget",
+      "before": {
+       "render_budget": {
+        "audience_excluded_count": 0,
+        "capability_snapshot": {
+         "cache_prefix": null,
+         "can_count_tokens": false,
+         "context_window": 1000000,
+         "decision": {
+          "media_budget": {
+           "max_blocks": 20,
+           "max_bytes_per_block": 3750000
+          },
+          "modalities": [
+           "image",
+           "text"
+          ],
+          "probability_support": "none",
+          "source": "RI-I0-a seed read from the Bedrock Converse API reference, not a live probe: toolChoice tool/any forces a tool call (forced tool True); Converse carries no JSON-schema response format (structured output False, fail closed); a span rides the forced tool, its offset fidelity unmeasured (span True); Anthropic rejects a forced tool_choice while thinking is on (forced tool with thinking False); no logprobs on the Converse plane (probability none); image quota 20 blocks of 3.75 MB each, published and not re-measured in this clone. verified=False per honesty rule D",
+          "supports_forced_tool": true,
+          "supports_forced_tool_with_thinking": false,
+          "supports_span_output": true,
+          "supports_structured_output": false,
+          "verified": false
+         },
+         "known_policy_gates": [],
+         "max_output_tokens": 128000,
+         "model_id": "claude-opus-5",
+         "reasoning": {
+          "always_on": false,
+          "always_on_verified": true,
+          "budget_tokens_status": "rejected",
+          "display_default": "omitted",
+          "effort_levels": [],
+          "interleaved": true,
+          "reasoning_control": "adaptive_effort",
+          "source": "hq-4j88mn: reasoning CONTROL CLASS live-confirmed (the bare {'thinking':{'type':'adaptive'}} shape this profile emits returns HTTP 200 on us.anthropic.claude-opus-5), but the finer cells were NOT swept for opus-5 \u2014 verified=False per honesty rule D until a live sweep covers them",
+          "verified": false
+         },
+         "source": null,
+         "supports_reasoning": true,
+         "supports_streaming": true,
+         "supports_thinking": true,
+         "supports_vision": true,
+         "thinking_budget": null,
+         "verified": true
+        },
+        "capability_source": null,
+        "capability_verified": true,
+        "counts": {
+         "admitted_before_budget": 2,
+         "candidate": 2,
+         "final_included": 2,
+         "withheld_necessity": 0,
+         "withheld_truncated": 0
+        },
+        "estimator_id": "rf.utf8-bytes-div4.v1",
+        "formula_terms": {
+         "available_context_tokens": 989760,
+         "context_window": 1000000,
+         "max_output_tokens": 128000,
+         "occupied_tokens": 0,
+         "output_reserve": 8192,
+         "overhead": 0,
+         "safety_margin": 2048
+        },
+        "hidden_count": 0,
+        "included_tokens": 10,
+        "observability": {
+         "reconciliation_attempts": 0,
+         "token_cost_unknown": 0,
+         "token_estimator_failed": 0
+        },
+        "overflow_pinned_count": 0,
+        "reconciliation_attempts": [],
+        "requested_model_id": "claude-opus-5",
+        "resolved_model_id": null,
+        "schema": "reactive-fiber.budget/v1",
+        "token_count_method": "estimated",
+        "truncated_count": 0,
+        "truncated_tokens": 0,
+        "unknown_cost_count": 0
+       },
+       "blocks": [
+        [
+         "demo.banner:banner::fixed",
+         "kept"
+        ],
+        [
+         "demo.banner:banner::notes",
+         "kept"
+        ]
+       ]
+      },
+      "after": {
+       "render_budget": {
+        "audience_excluded_count": 0,
+        "capability_snapshot": {
+         "cache_prefix": null,
+         "can_count_tokens": false,
+         "context_window": 1000000,
+         "decision": {
+          "media_budget": {
+           "max_blocks": 20,
+           "max_bytes_per_block": 3750000
+          },
+          "modalities": [
+           "image",
+           "text"
+          ],
+          "probability_support": "none",
+          "source": "RI-I0-a seed read from the Bedrock Converse API reference, not a live probe: toolChoice tool/any forces a tool call (forced tool True); Converse carries no JSON-schema response format (structured output False, fail closed); a span rides the forced tool, its offset fidelity unmeasured (span True); Anthropic rejects a forced tool_choice while thinking is on (forced tool with thinking False); no logprobs on the Converse plane (probability none); image quota 20 blocks of 3.75 MB each, published and not re-measured in this clone. verified=False per honesty rule D",
+          "supports_forced_tool": true,
+          "supports_forced_tool_with_thinking": false,
+          "supports_span_output": true,
+          "supports_structured_output": false,
+          "verified": false
+         },
+         "known_policy_gates": [],
+         "max_output_tokens": 128000,
+         "model_id": "claude-opus-5",
+         "reasoning": {
+          "always_on": false,
+          "always_on_verified": true,
+          "budget_tokens_status": "rejected",
+          "display_default": "omitted",
+          "effort_levels": [],
+          "interleaved": true,
+          "reasoning_control": "adaptive_effort",
+          "source": "hq-4j88mn: reasoning CONTROL CLASS live-confirmed (the bare {'thinking':{'type':'adaptive'}} shape this profile emits returns HTTP 200 on us.anthropic.claude-opus-5), but the finer cells were NOT swept for opus-5 \u2014 verified=False per honesty rule D until a live sweep covers them",
+          "verified": false
+         },
+         "source": null,
+         "supports_reasoning": true,
+         "supports_streaming": true,
+         "supports_thinking": true,
+         "supports_vision": true,
+         "thinking_budget": null,
+         "verified": true
+        },
+        "capability_source": null,
+        "capability_verified": true,
+        "counts": {
+         "admitted_before_budget": 2,
+         "candidate": 2,
+         "final_included": 2,
+         "withheld_necessity": 0,
+         "withheld_truncated": 0
+        },
+        "estimator_id": "rf.utf8-bytes-div4.v1",
+        "formula_terms": {
+         "available_context_tokens": 989760,
+         "context_window": 1000000,
+         "max_output_tokens": 128000,
+         "occupied_tokens": 0,
+         "output_reserve": 8192,
+         "overhead": 0,
+         "safety_margin": 2048
+        },
+        "hidden_count": 0,
+        "included_tokens": 10,
+        "observability": {
+         "reconciliation_attempts": 0,
+         "token_cost_unknown": 0,
+         "token_estimator_failed": 0
+        },
+        "overflow_pinned_count": 0,
+        "reconciliation_attempts": [],
+        "requested_model_id": "claude-opus-5",
+        "resolved_model_id": null,
+        "schema": "reactive-fiber.budget/v1",
+        "token_count_method": "estimated",
+        "truncated_count": 0,
+        "truncated_tokens": 0,
+        "unknown_cost_count": 0
+       },
+       "blocks": [
+        [
+         "demo.banner:banner::fixed",
+         "kept"
+        ],
+        [
+         "demo.banner:banner::notes",
+         "kept"
+        ]
+       ]
+      },
+      "changed": false
+     },
+     {
+      "name": "assembly",
+      "before": {
+       "order": [
+        [
+         0,
+         "demo.banner:banner::fixed",
+         "sha256:e4aab890e8245d5dc4eaa13962915958cb2fe898ee4b9a502b87862e4f16cce9"
+        ],
+        [
+         1,
+         "demo.banner:banner::notes",
+         "sha256:665127a62b12f494fc8a27f7bfdf4215b8fa8bb872f3a50ea934e34064689517"
+        ]
+       ],
+       "final_document_digest": "sha256:4dfebf8b4de5c893f09a2b65f7a5dfded966ec6d5890d70f0e3678cada86c3ae"
+      },
+      "after": {
+       "order": [
+        [
+         0,
+         "demo.banner:banner::fixed",
+         "sha256:e4aab890e8245d5dc4eaa13962915958cb2fe898ee4b9a502b87862e4f16cce9"
+        ],
+        [
+         1,
+         "demo.banner:banner::notes",
+         "sha256:3a99cb96a89dda570b4fc1291ce206991b4f1a3d9cb5960312aca32c4276aafc"
+        ]
+       ],
+       "final_document_digest": "sha256:d6cb84618b18af1f2b60970d1d0c5b2d672b340159c70daa7eebcb4b01986c88"
+      },
+      "changed": true
+     },
+     {
+      "name": "final_document",
+      "before": "sha256:4dfebf8b4de5c893f09a2b65f7a5dfded966ec6d5890d70f0e3678cada86c3ae",
+      "after": "sha256:d6cb84618b18af1f2b60970d1d0c5b2d672b340159c70daa7eebcb4b01986c88",
+      "changed": true
+     }
+    ],
+    "attribution": {
+     "changed_dimensions": [
+      "sources",
+      "assembly",
+      "final_document"
+     ],
+     "final_document_changed": true,
+     "changed_block_count": 1,
+     "source_layer_changed": true,
+     "source_changed_without_output_change": false,
+     "output_changed_without_block_change": false,
+     "request_only_change": false
+    }
+   },
+   "diagnostics": []
+  }
+ },
+ "rows": [
+  {
+   "id": "A",
+   "label": "(posture, absent today) no Pi rf surface can label a block changed or stale: no src literal or identifier pairs a block word with a change word, no src module reads an rf diff, plan, explain or impact envelope, and the rf roster stays reactivefiber.render.preview alone",
+   "pins": [
+    {
+     "id": "A1",
+     "witness": {
+      "floors": {
+       "modules": true,
+       "literals": true,
+       "identifiers": true
+      },
+      "anchorRead": true,
+      "unparsed": [],
+      "hits": [],
+      "controls": {
+       "literal": 1,
+       "reversed": 1,
+       "stale": 1,
+       "template": 1,
+       "camelIdentifier": 1,
+       "snake": 1,
+       "kebab": 1,
+       "rerendered": 1,
+       "joined": 1,
+       "upper": 1,
+       "negativeBlocked": 0,
+       "negativeUnchanged": 0,
+       "residualComposed": 0,
+       "residualFar": 0,
+       "residualVocabulary": 0
+      }
+     }
+    },
+    {
+     "id": "A2",
+     "witness": {
+      "renderArgvSeen": true,
+      "argv": [],
+      "literals": [],
+      "fields": [],
+      "descriptorHits": [],
+      "composedArgv": 0,
+      "controls": {
+       "argvDiff": {
+        "hits": 1,
+        "composedArgv": 0
+       },
+       "argvImpact": {
+        "hits": 1,
+        "composedArgv": 0
+       },
+       "spacedPlan": {
+        "hits": 1,
+        "composedArgv": 0
+       },
+       "dottedExplain": {
+        "hits": 1,
+        "composedArgv": 0
+       },
+       "fieldLiteral": {
+        "hits": 1,
+        "composedArgv": 0
+       },
+       "fieldIdentifier": {
+        "hits": 1,
+        "composedArgv": 0
+       },
+       "residualComposed": {
+        "hits": 0,
+        "composedArgv": 1
+       },
+       "residualAliased": {
+        "hits": 0,
+        "composedArgv": 0
+       }
+      }
+     }
+    },
+    {
+     "id": "A3",
+     "witness": {
+      "native": [
+       "reactivefiber.render.preview"
+      ],
+      "injected": [
+       "reactivefiber.render.preview"
+      ],
+      "reconcile": [
+       "reactivefiber.render.preview"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "label": "(a) a source-change receipt / impact set with no diff envelope yields no 'changed block' or 'stale block' claim in any Pi surface",
+   "pins": [
+    {
+     "id": "B1",
+     "witness": {
+      "commands": [
+       "context.explain",
+       "context.plan",
+       "graph.impact"
+      ],
+      "diffRows": [
+       0,
+       0,
+       0
+      ],
+      "receiptRender": "rfr_c34eb2d7fdd2ytb3hihd4vy5v4",
+      "causes": [
+       {
+        "status": "ok",
+        "instance": "demo.banner:banner",
+        "rerenderCause": {
+         "changed": [
+          {
+           "id": "aside",
+           "kind": "source"
+          }
+         ],
+         "kind": "inputs_changed"
+        }
+       }
+      ],
+      "planRender": "rfr_pst7ramn3jwyipk65ndm75rt7q",
+      "planRows": [
+       {
+        "instance": "demo.banner:banner",
+        "decision": "refresh_required",
+        "causes": [
+         "refresh_required:source:aside",
+         "refresh_required:source:notes",
+         "refresh_required:source:task"
+        ]
+       }
+      ],
+      "planSummary": {
+       "rows": 1,
+       "reuse": 0,
+       "invalidated": 0,
+       "non_reusable": 0,
+       "refresh_required": 1,
+       "evidence_complete": true
+      },
+      "impact": {
+       "code": "RF_USAGE_NOT_IMPLEMENTED",
+       "plannedSlice": 17,
+       "exit": 2
+      },
+      "pairedDiff": {
+       "renderA": "rfr_pst7ramn3jwyipk65ndm75rt7q",
+       "renderB": "rfr_c34eb2d7fdd2ytb3hihd4vy5v4",
+       "changedBlockCount": 0
+      }
+     }
+    },
+    {
+     "id": "B2",
+     "witness": {
+      "explainSource": {
+       "category": "transport",
+       "message": "RF preview returned an unrecognized native envelope.",
+       "reading": false,
+       "spawns": 1,
+       "verb": [
+        "context",
+        "render"
+       ],
+       "claim": null
+      },
+      "planSource": {
+       "category": "transport",
+       "message": "RF preview returned an unrecognized native envelope.",
+       "reading": false,
+       "spawns": 1,
+       "verb": [
+        "context",
+        "render"
+       ],
+       "claim": null
+      },
+      "impactRefusal": {
+       "category": "transport",
+       "message": "RF preview returned an unrecognized native envelope.",
+       "reading": false,
+       "spawns": 1,
+       "verb": [
+        "context",
+        "render"
+       ],
+       "claim": null
+      }
+     }
+    },
+    {
+     "id": "B3",
+     "witness": {
+      "explainSource": {
+       "verbatim": true,
+       "calls": 1,
+       "readingKeys": [
+        "contract",
+        "source",
+        "workspaceRoot"
+       ],
+       "piStrings": [
+        "reactivefiber.render.preview/v1",
+        "/fixture/rf-workspace"
+       ],
+       "piClaims": []
+      },
+      "planSource": {
+       "verbatim": true,
+       "calls": 1,
+       "readingKeys": [
+        "contract",
+        "source",
+        "workspaceRoot"
+       ],
+       "piStrings": [
+        "reactivefiber.render.preview/v1",
+        "/fixture/rf-workspace"
+       ],
+       "piClaims": []
+      },
+      "impactRefusal": {
+       "verbatim": true,
+       "calls": 1,
+       "readingKeys": [
+        "contract",
+        "source",
+        "workspaceRoot"
+       ],
+       "piStrings": [
+        "reactivefiber.render.preview/v1",
+        "/fixture/rf-workspace"
+       ],
+       "piClaims": []
+      }
+     }
+    },
+    {
+     "id": "B4",
+     "witness": {
+      "explainSource": {
+       "category": "validation",
+       "message": "ReactiveFiber topology refused: source must be a reactive-fiber.cli/v1 context.render envelope.",
+       "claim": null
+      },
+      "planSource": {
+       "category": "validation",
+       "message": "ReactiveFiber topology refused: source must be a reactive-fiber.cli/v1 context.render envelope.",
+       "claim": null
+      },
+      "impactRefusal": {
+       "category": "validation",
+       "message": "ReactiveFiber topology refused: source must be a reactive-fiber.cli/v1 context.render envelope.",
+       "claim": null
+      }
+     }
+    },
+    {
+     "id": "B5",
+     "witness": {
+      "previews": [
+       {
+        "name": "previewBefore",
+        "verb": [
+         "context",
+         "render"
+        ],
+        "coverage": "complete",
+        "tone": "success",
+        "statusText": "noncommitted preview (rf-cli) \u00b7 989760 of 1000000 context tokens available \u00b7 necessity evals 2 \u00b7 0 errors, 0 warnings",
+        "claims": [],
+        "changeWords": []
+       },
+       {
+        "name": "previewAfter",
+        "verb": [
+         "context",
+         "render"
+        ],
+        "coverage": "complete",
+        "tone": "success",
+        "statusText": "noncommitted preview (rf-cli) \u00b7 989760 of 1000000 context tokens available \u00b7 necessity evals 2 \u00b7 0 errors, 0 warnings",
+        "claims": [],
+        "changeWords": []
+       }
+      ],
+      "freshness": [
+       "current",
+       "current"
+      ],
+      "payloadRefsDiffer": true
+     }
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "label": "(b) a context.diff envelope is surfaced with exactly the producer's changed/unchanged block rows and counts",
+   "pins": [
+    {
+     "id": "C1",
+     "witness": {
+      "diffSourceOnly": {
+       "command": "context.diff",
+       "rows": [
+        "demo.banner:banner::fixed:unchanged:source_changed=true",
+        "demo.banner:banner::notes:unchanged:source_changed=true"
+       ],
+       "counts": {
+        "added": 0,
+        "removed": 0,
+        "redacted_indeterminate": 0,
+        "content_changed": 0,
+        "visibility_changed": 0,
+        "necessity_class_changed": 0,
+        "necessity_verdict_changed": 0,
+        "budget_outcome_changed": 0,
+        "producer_revision_changed": 0,
+        "position_changed": 0,
+        "metadata_changed": 0,
+        "unchanged": 2
+       },
+       "blocks": 2,
+       "changedBlockCount": 0,
+       "sourceLayerChanged": true,
+       "tallyAgrees": true,
+       "changedAgrees": true,
+       "digestsAgree": true
+      },
+      "diffContent": {
+       "command": "context.diff",
+       "rows": [
+        "demo.banner:banner::fixed:unchanged:source_changed=true",
+        "demo.banner:banner::notes:content_changed:source_changed=true"
+       ],
+       "counts": {
+        "added": 0,
+        "removed": 0,
+        "redacted_indeterminate": 0,
+        "content_changed": 1,
+        "visibility_changed": 0,
+        "necessity_class_changed": 0,
+        "necessity_verdict_changed": 0,
+        "budget_outcome_changed": 0,
+        "producer_revision_changed": 0,
+        "position_changed": 0,
+        "metadata_changed": 0,
+        "unchanged": 1
+       },
+       "blocks": 2,
+       "changedBlockCount": 1,
+       "sourceLayerChanged": true,
+       "tallyAgrees": true,
+       "changedAgrees": true,
+       "digestsAgree": true
+      }
+     }
+    },
+    {
+     "id": "C2",
+     "witness": {
+      "verbatim": true,
+      "calls": 1,
+      "readingKeys": [
+       "contract",
+       "source",
+       "workspaceRoot"
+      ],
+      "piStrings": [
+       "reactivefiber.render.preview/v1",
+       "/fixture/rf-workspace"
+      ],
+      "piClaims": [],
+      "rows": [
+       "demo.banner:banner::fixed:unchanged:source_changed=true",
+       "demo.banner:banner::notes:unchanged:source_changed=true"
+      ],
+      "counts": {
+       "added": 0,
+       "removed": 0,
+       "redacted_indeterminate": 0,
+       "content_changed": 0,
+       "visibility_changed": 0,
+       "necessity_class_changed": 0,
+       "necessity_verdict_changed": 0,
+       "budget_outcome_changed": 0,
+       "producer_revision_changed": 0,
+       "position_changed": 0,
+       "metadata_changed": 0,
+       "unchanged": 2
+      },
+      "changedBlockCount": 0
+     }
+    },
+    {
+     "id": "C3",
+     "witness": {
+      "verbatim": true,
+      "calls": 1,
+      "readingKeys": [
+       "contract",
+       "source",
+       "workspaceRoot"
+      ],
+      "piStrings": [
+       "reactivefiber.render.preview/v1",
+       "/fixture/rf-workspace"
+      ],
+      "piClaims": [],
+      "rows": [
+       "demo.banner:banner::fixed:unchanged:source_changed=true",
+       "demo.banner:banner::notes:content_changed:source_changed=true"
+      ],
+      "counts": {
+       "added": 0,
+       "removed": 0,
+       "redacted_indeterminate": 0,
+       "content_changed": 1,
+       "visibility_changed": 0,
+       "necessity_class_changed": 0,
+       "necessity_verdict_changed": 0,
+       "budget_outcome_changed": 0,
+       "producer_revision_changed": 0,
+       "position_changed": 0,
+       "metadata_changed": 0,
+       "unchanged": 1
+      },
+      "changedBlockCount": 1
+     }
+    },
+    {
+     "id": "C4",
+     "witness": {
+      "diffSourceOnly": {
+       "native": {
+        "category": "transport",
+        "message": "RF preview returned an unrecognized native envelope.",
+        "reading": false,
+        "spawns": 1,
+        "verb": [
+         "context",
+         "render"
+        ],
+        "claim": null
+       },
+       "adapter": {
+        "category": "validation",
+        "message": "ReactiveFiber topology refused: source must be a reactive-fiber.cli/v1 context.render envelope.",
+        "claim": null
+       }
+      },
+      "diffContent": {
+       "native": {
+        "category": "transport",
+        "message": "RF preview returned an unrecognized native envelope.",
+        "reading": false,
+        "spawns": 1,
+        "verb": [
+         "context",
+         "render"
+        ],
+        "claim": null
+       },
+       "adapter": {
+        "category": "validation",
+        "message": "ReactiveFiber topology refused: source must be a reactive-fiber.cli/v1 context.render envelope.",
+        "claim": null
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "D",
+   "label": "(c) docs census: no sentence in docs/workbench states that a changed source implies a changed block",
+   "pins": [
+    {
+     "id": "D1",
+     "witness": {
+      "floors": {
+       "files": true,
+       "units": true
+      },
+      "anchorRead": true,
+      "hits": []
+     }
+    },
+    {
+     "id": "D2",
+     "witness": {
+      "flagged": {
+       "implies": 1,
+       "whenStale": 1,
+       "marks": 1,
+       "invalidates": 1,
+       "plural": 1,
+       "rerendered": 1,
+       "camel": 1,
+       "snake": 1,
+       "joined": 1,
+       "emphasis": 1,
+       "comment": 1,
+       "references": 1
+      },
+      "quiet": {
+       "receiptSources": 0,
+       "unchanged": 0,
+       "diffReads": 0
+      },
+      "residuals": {
+       "R-ACROSS": 0,
+       "R-FAR": 0,
+       "R-VOCABULARY": 0,
+       "R-ENCODED": 0
+      },
+      "denial": 1
+     }
+    }
+   ]
+  }
+ ],
+ "tests": [
+  "the judged set: the frozen shape, the out-of-file roster and the cases agree",
+  "A1",
+  "A2",
+  "A3",
+  "B1",
+  "B2",
+  "B3",
+  "B4",
+  "B5",
+  "C1",
+  "C2",
+  "C3",
+  "C4",
+  "D1",
+  "D2",
+  "registration: every case of this file is registered once, in roster order, in run mode, and ran before this one"
+ ]
+}
