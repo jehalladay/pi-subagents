@@ -118,7 +118,6 @@
  },
  "known": {
   "C1": [
-   "wb-csbt.2 no-deferral-wording",
    "wb-km7q.6 no-deferral-wording"
   ],
   "C2": [
@@ -525,7 +524,6 @@
       ],
       "gateWording": true,
       "findings": [
-       "wb-csbt.2 no-deferral-wording",
        "wb-km7q.6 no-deferral-wording"
       ],
       "controls": {

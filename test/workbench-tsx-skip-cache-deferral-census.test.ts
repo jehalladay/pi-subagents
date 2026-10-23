@@ -27,7 +27,7 @@
  *   and a file holding a NUL byte is binary and not read. It reads the working tree, so an untracked plant is read; a symlink
  *   is refused, never followed; a failed read is a finding (a file or directory gone between its listing and its read is
  *   skipped). EXEMPT files are walked, never judged: this file and its roster (they carry every family as needles) and the
- *   wb-csbt.2 census, queued before this cut (it carries the skip family as needles; its roster is judged); A1 reads each
+ *   wb-csbt.2 census, landed at landing 303 (it carries the skip family as needles; its roster is judged); A1 reads each
  *   present exemption load-bearing (judged, each yields findings), this file and its roster always present.
  * - FAMILIES (case-insensitive): S, the skip word (skip and its inflections) beside component or subtree, in either word order
  *   with at most one word between the noun and the skip word, or two between the skip word and the noun (component-subtree
@@ -61,11 +61,12 @@
  * - (gate) D1 reads the roster's producer facts: each measured Verdict line's bold verdict word, the packet heading and row. The
  *   gate is OPEN once a verdict reads anything but DEFER or REJECT (ADOPT, or no verdict word at all) or TSX-PF-03 leaves the
  *   not-created packets (its heading drops "not created" or its row is gone); a confirmed ADR status keeps it closed.
- * KNOWN FINDINGS (measured at base 6653728; reported, never admitted): C1 and C2 each read exactly wb-csbt.2 and wb-km7q.6, two
- * owner filings that name the skip family and ADR-0032 with no deferral word in one sentence and hold only their parent-child
- * edge. KNOWN pins both sets exactly, so a further finding, or a known row whose reading changes, reds; whether the two rows
- * gain the wording and the edge, or whether (c) binds only beads filed after the filing, is the owner's ruling, not this
- * census's.
+ * KNOWN FINDINGS (measured on the export of trunk 4435e2e, landing 304; reported, never admitted): C1 reads exactly wb-km7q.6
+ * and C2 reads exactly wb-csbt.2 and wb-km7q.6, two owner filings that name the skip family and ADR-0032 and hold only their
+ * parent-child edge. wb-km7q.6 carries no sentence naming ADR-0032 beside a deferral word; wb-csbt.2 left C1 at ledger hop
+ * edccd80 (landing 287), where its delivery note gained a sentence naming ADR-0032 beside a deferral word (R-WORDING-ANYWHERE).
+ * KNOWN pins both sets exactly, so a further finding, or a known row whose reading changes, reds; whether the two rows gain
+ * the wording and the edge, or whether (c) binds only beads filed after the filing, is the owner's ruling, not this census's.
  *
  * JUDGED ROWS (ROWS; one test per pin, titled by the pin id under its row's label with the families replaced):
  *  A, the statement and acceptance (a). A1 the walk (floors, anchors, no symlink, nothing unreadable, each exemption
@@ -104,9 +105,16 @@
  * SCOPE: the families, markers, anchor, fields and the gate's identity are this cut's reading of the filing (the Pi store holds
  * no bead for the unshipped packet, so the gate is the row naming it); the producer facts are measured at the pin and not
  * re-read here (the census is hermetic), so a producer change is seen only when a cut re-measures the roster. A later census
- * that needs these terms as needles adds its own file to EXEMPT in its cut, beside an A1-style load-bearing reading; a bead
- * filed later whose row names a family and the TSX side carries the ADR-0032 wording and a related edge to the gate, or C1
- * and C2 red at the ledger hop that exports it.
+ * that needs these terms as needles adds its own file to EXEMPT in its cut, beside an A1-style load-bearing reading. C reads
+ * every text field of every anchored row, notes and comments included, and KNOWN pins its exceptions exactly, so the store's
+ * evolution moves the reading in either direction at the ledger hop that exports a change: a note or comment added later to
+ * an anchored row can admit a known row (an ADR-0032 sentence with a deferral word takes it out of C1, as wb-csbt.2's
+ * delivery note did at hop edccd80) or add a finding (a note naming a family on an anchored row, or a family and the TSX
+ * side on any row, makes that row a mention row: C1 reads it unless the row carries the wording, C2 until it holds a related
+ * edge to the gate); a bead filed later whose row names a family and the TSX side carries the ADR-0032 wording and a related
+ * edge to the gate, or C1 and C2 red at the ledger hop that exports it. Either way that hop re-measures KNOWN in the same
+ * change. The gate row's own notes add no reading: C and A2 do not judge them, the gate's wording check only gains from them,
+ * and the outside anchor and D1 read the filing's first acceptance line and quote, which stay first.
  *
  * Display paths added: none. Test-only: it spawns nothing; the controls plant files in makeScratch scratch only, and src,
  * docs, qa and the bead export are only read.
@@ -127,8 +135,8 @@ const SELF = "test/workbench-tsx-skip-cache-deferral-census.test.ts";
 const ROSTER_FILE = "test/fixtures/tsx-skip-cache-deferral-roster.json";
 const BEAD_EXPORT = ".beads/issues.jsonl";
 const BEAD = "wb-csbt.1";
-/** The wb-csbt.2 census (queued before this cut): it carries the skip family as needles. Its roster is judged (it yields no
- * finding, so exempting it would bear no load). */
+/** The wb-csbt.2 census (landing 303): it carries the skip family as needles. Its roster is judged (it yields no finding, so
+ * exempting it would bear no load). */
 const SIBLING_EXEMPT: readonly string[] = ["test/workbench-rf-fiber-node-reuse-echo-census.test.ts"];
 /** Walked, never judged (A1 reads each present exemption load-bearing; this file and its roster are always present). */
 const EXEMPT: readonly string[] = [SELF, ROSTER_FILE, ...SIBLING_EXEMPT];
@@ -187,8 +195,8 @@ const BLOCKS_TYPE = "blocks";
 const JUDGED_FIELDS: readonly string[] = ["title", "description", "design", "acceptance_criteria"];
 const MENTION_FIELDS: readonly string[] = [...JUDGED_FIELDS, "notes", "comments"];
 const SKIPPED_ROOTS: readonly string[] = [".git", ".beads", "node_modules", "dist", "build", "coverage", ".forge"];
-/** Each floor sits below the count measured at base 6653728 (831 walked files: the root 28, docs 71, src 115, test 515, qa 67,
- * examples 7, new-feedback 14; 177 anchored judged files; 703 export rows). */
+/** Each floor sits below the count measured on trunk 4435e2e with this cut merged (877 walked files: the root 27, docs 71, src
+ * 115, test 562, qa 67, examples 7, new-feedback 14; 221 anchored judged files; 723 export rows). */
 const FLOORS = { files: 750, roots: { "": 20, docs: 60, src: 100, test: 440, qa: 55, examples: 5, "new-feedback": 10 }, anchored: 150, rows: 650 };
 /** Files the walk must reach, each with a token its bytes carry: root pages, a docs page, a src module, a qa script, an
  * example, the feedback inbox, the vendor page and an installed skill. */
@@ -207,9 +215,9 @@ const WALK_ANCHORS: readonly (readonly [string, string])[] = [
 const POSTURE_ANCHORS: readonly string[] = ["wb-csbt.1.title:1 S,K", "wb-csbt.2.title:1 S"];
 /** The rows whose judged fields cite the program at base (the epic and its four children, by tag and path). */
 const CITED_ROW_ANCHORS: readonly string[] = ["wb-csbt", "wb-csbt.1", "wb-csbt.2", "wb-csbt.3", "wb-csbt.4"];
-/** KNOWN FINDINGS (header): exact, measured at base 6653728. */
+/** KNOWN FINDINGS (header): exact, measured on the export of trunk 4435e2e. */
 const KNOWN: Readonly<Record<string, readonly string[]>> = {
-  C1: ["wb-csbt.2 no-deferral-wording", "wb-km7q.6 no-deferral-wording"],
+  C1: ["wb-km7q.6 no-deferral-wording"],
   C2: ["wb-csbt.2 no-related-edge", "wb-km7q.6 no-related-edge"],
 };
 const RESIDUAL_FAMILIES: readonly string[] = [
