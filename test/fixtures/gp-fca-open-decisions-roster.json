@@ -1,0 +1,2142 @@
+{
+  "bead": "wb-gxd7.2",
+  "constants": {
+    "bead": "wb-gxd7.2",
+    "pin": "0107c72992f3",
+    "filingRead": "d75b68d1",
+    "exempt": [
+      "test/workbench-gp-fca-open-decisions-census.test.ts",
+      "test/fixtures/gp-fca-open-decisions-roster.json"
+    ],
+    "traceFile": "docs/workbench/TRACEABILITY.md",
+    "scanRoots": [
+      {
+        "root": "docs",
+        "anchor": "docs/workbench/03-architecture-and-ownership.md",
+        "token": "Pi carries no GraphPolicyCLI (gp) integration today"
+      },
+      {
+        "root": "src",
+        "anchor": "src/workbench/redaction.ts",
+        "token": "export function sanitizeWorkbenchText"
+      },
+      {
+        "root": ".agents",
+        "anchor": ".agents/skills/beads/SKILL.md",
+        "token": "name: beads"
+      },
+      {
+        "root": "qa",
+        "anchor": "qa/workbench/receipts-index.mjs",
+        "token": "docs/workbench/receipts"
+      },
+      {
+        "root": "test",
+        "anchor": "test/helpers/gp-fallback-census.ts",
+        "token": "graphpolicy.cli.v1"
+      },
+      {
+        "root": "examples",
+        "anchor": "examples/agent-tool-description.md",
+        "token": "Available agent types"
+      }
+    ],
+    "pageAnchor": {
+      "file": "README.md",
+      "token": "pi-subagents"
+    },
+    "moduleExtensions": [
+      ".ts",
+      ".tsx",
+      ".mts",
+      ".cts",
+      ".js",
+      ".jsx",
+      ".mjs",
+      ".cjs"
+    ],
+    "decisionWords": [
+      "IDENT",
+      "STORE",
+      "EVAL",
+      "CANON",
+      "NAMES"
+    ],
+    "rootCauseWords": [
+      "EVAL",
+      "STORE",
+      "IDENT",
+      "ERROR",
+      "SKILL",
+      "NAMES",
+      "FIXTURE",
+      "PERF",
+      "PRESERVE"
+    ],
+    "families": [
+      {
+        "id": "N1",
+        "context": false,
+        "source": "(?<![A-Za-z0-9-])GP[\\s_-]*FCA(?![A-Za-z])|(?<![A-Za-z0-9-])feedback[\\s_-]*contract[\\s_-]*audit(?![A-Za-z])",
+        "flags": "i",
+        "spellings": [
+          "GP-FCA-2026-10-21",
+          "GP-FCA",
+          "gp fca",
+          "GP_FCA_2026_10_21",
+          "feedback-contract-audit-2026-10-21",
+          "feedback contract audit"
+        ],
+        "nearMisses": [
+          "[GPC-FEEDBACK-CONTRACT-AUDIT-R2]",
+          "wb-gp-fca-x",
+          "GPFCAX",
+          "feedback and contract audit"
+        ]
+      },
+      {
+        "id": "N2",
+        "context": false,
+        "source": "(?<![\\w-])D-(?:IDENT|STORE|EVAL|CANON|NAMES)(?:-\\d+)?(?![\\w-])",
+        "flags": "",
+        "spellings": [
+          "D-IDENT-1",
+          "D-STORE-2",
+          "D-EVAL-3",
+          "D-CANON-1",
+          "D-NAMES-1",
+          "D-EVAL"
+        ],
+        "nearMisses": [
+          "D_STORE_1",
+          "D IDENT 2",
+          "x-D-STORE-2",
+          "D-STORE-2x",
+          "D-STOREX",
+          "GC-D03"
+        ]
+      },
+      {
+        "id": "N3",
+        "context": false,
+        "source": "(?<![\\w-])FCA-\\d+(?![\\w-])",
+        "flags": "",
+        "spellings": [
+          "FCA-1",
+          "FCA-7"
+        ],
+        "nearMisses": [
+          "FCA_3",
+          "FCA 6",
+          "FCA2",
+          "GP-FCA-2026",
+          "FCA-2x"
+        ]
+      },
+      {
+        "id": "N4",
+        "context": false,
+        "source": "(?<![\\w-])RC-(?:EVAL|STORE|IDENT|ERROR|SKILL|NAMES|FIXTURE|PERF|PRESERVE)(?![\\w-])",
+        "flags": "",
+        "spellings": [
+          "RC-IDENT",
+          "RC-STORE",
+          "RC-PRESERVE"
+        ],
+        "nearMisses": [
+          "RC_FAMILY",
+          "RC_PIN",
+          "RC DEVELOPER",
+          "RC-DEVELOPER",
+          "RC-IDENTITY",
+          "RC_EVAL",
+          "rc-ident-"
+        ]
+      },
+      {
+        "id": "N5",
+        "context": true,
+        "source": "(?<![\\w-])F\\d{2}(?![\\w-])",
+        "flags": "",
+        "spellings": [
+          "F01",
+          "F07",
+          "F13"
+        ],
+        "nearMisses": [
+          "F7",
+          "F123",
+          "xF07",
+          "F07x"
+        ]
+      }
+    ],
+    "anchor": "graph[\\s_.-]?policy|\\bgp\\b/i",
+    "statusLiteral": "Proposed audit obligations and candidate resolutions, NOT accepted GraphPolicyCLI semantics",
+    "sha": "(?<![0-9A-Za-z])(?=[0-9a-f]*[0-9])(?=[0-9a-f]*[a-f])[0-9a-f]{7,40}(?![0-9A-Za-z])",
+    "schemaId": "^(?:graphpolicy\\.[a-z0-9][a-z0-9_.-]*\\.v\\d+|gp\\.(?:rpc|cli)\\.[a-z0-9_.-]+\\/v\\d+)$",
+    "namespace": "^graphpolicy\\.(?:[a-z0-9_-]+\\.)*c(\\d+)(?::[0-9a-f]*)?$",
+    "members": [
+      {
+        "id": "K1",
+        "decision": "D-CANON-1",
+        "reading": "words",
+        "runs": [
+          [
+            "identity",
+            "unavailable"
+          ]
+        ],
+        "namespace": false,
+        "source": "02-contract-audit.md:96"
+      },
+      {
+        "id": "K2",
+        "decision": "D-IDENT-1",
+        "reading": "words",
+        "runs": [
+          [
+            "descriptor"
+          ],
+          [
+            "hash",
+            "algorithm"
+          ],
+          [
+            "canonical",
+            "profile"
+          ]
+        ],
+        "namespace": true,
+        "source": "02-contract-audit.md:30"
+      },
+      {
+        "id": "K3",
+        "decision": "D-IDENT-2",
+        "reading": "words",
+        "runs": [
+          [
+            "byte",
+            "snapshot"
+          ],
+          [
+            "host",
+            "serializer"
+          ]
+        ],
+        "namespace": false,
+        "source": "02-contract-audit.md:32"
+      },
+      {
+        "id": "K4",
+        "decision": "D-IDENT-3",
+        "reading": "words",
+        "runs": [
+          [
+            "theta",
+            "words"
+          ],
+          [
+            "logical",
+            "checkpoint"
+          ]
+        ],
+        "namespace": false,
+        "source": "02-contract-audit.md:42"
+      },
+      {
+        "id": "K5",
+        "decision": "D-STORE-1",
+        "reading": "words",
+        "runs": [
+          [
+            "binding",
+            "record"
+          ],
+          [
+            "artifact",
+            "address"
+          ]
+        ],
+        "namespace": false,
+        "source": "02-contract-audit.md:52"
+      },
+      {
+        "id": "K6",
+        "decision": "D-STORE-2",
+        "reading": "state",
+        "runs": [
+          [
+            "missing"
+          ],
+          [
+            "admissible",
+            "unbacked"
+          ],
+          [
+            "verified"
+          ],
+          [
+            "eligible"
+          ],
+          [
+            "quarantined"
+          ]
+        ],
+        "namespace": false,
+        "source": "02-contract-audit.md:59-63"
+      },
+      {
+        "id": "K7",
+        "decision": "D-EVAL-1",
+        "reading": "words",
+        "runs": [
+          [
+            "lightweight"
+          ],
+          [
+            "decision",
+            "grade"
+          ]
+        ],
+        "namespace": false,
+        "source": "02-contract-audit.md:82"
+      }
+    ],
+    "decisions": [
+      "D-IDENT-1",
+      "D-IDENT-2",
+      "D-IDENT-3",
+      "D-STORE-1",
+      "D-STORE-2",
+      "D-EVAL-1",
+      "D-EVAL-2",
+      "D-EVAL-3",
+      "D-CANON-1",
+      "D-NAMES-1"
+    ],
+    "untokened": [
+      "D-EVAL-2",
+      "D-EVAL-3",
+      "D-NAMES-1"
+    ],
+    "observed": [
+      {
+        "id": "O1",
+        "required": [
+          "checkpoint",
+          "state",
+          "bytes_present"
+        ],
+        "optional": [
+          "quarantine_record"
+        ],
+        "codePrefix": null,
+        "states": [
+          "quarantined",
+          "available",
+          "missing"
+        ],
+        "source": "ts/src/cli/inspect-checkpoint-store.ts:41-46"
+      },
+      {
+        "id": "O2",
+        "required": [
+          "code",
+          "record",
+          "state"
+        ],
+        "optional": [],
+        "codePrefix": "GP_TRAIN_",
+        "states": null,
+        "source": "ts/src/training/credit-basis.ts:288"
+      }
+    ],
+    "allowlist": [],
+    "rulingKinds": [
+      "GP-REQ-\\d{3}",
+      "GPR-\\d{4}",
+      "ADR-GP-\\d{3}"
+    ]
+  },
+  "producer": {
+    "repository": "GraphPolicyCLI",
+    "pin": "0107c72992f35cf6832a37615a25c7df45747ebc",
+    "program": "docs/programs/feedback-contract-audit-2026-10-21",
+    "sites": [
+      {
+        "id": "status",
+        "path": "docs/programs/feedback-contract-audit-2026-10-21/02-contract-audit.md",
+        "lines": "3",
+        "text": "**Status:** Proposed audit obligations and candidate resolutions, NOT accepted GraphPolicyCLI semantics. Pin/compare the current implementation against [the authoritative design](../../program/README.md), adopted ADRs, and the requirement map before selecting an alternative. Source paths are discovery aids, not proof that the same lines exist at every later revision."
+      },
+      {
+        "id": "programId",
+        "path": "docs/programs/feedback-contract-audit-2026-10-21/README.md",
+        "lines": "3",
+        "text": "**Program:** GP-FCA-2026-10-21  "
+      },
+      {
+        "id": "labelsNotRulings",
+        "path": "docs/programs/feedback-contract-audit-2026-10-21/01-finding-inventory.md",
+        "lines": "52",
+        "text": "4. For confirmed-open product changes, take an explicit ruling and a stable GPR/GP-REQ trace using existing `requirements/` formats. IDs in this document (`F*`, `RC-*`, `FCA-*`) are local audit tracking labels, **not allocated GPR IDs**."
+      },
+      {
+        "id": "K1",
+        "path": "docs/programs/feedback-contract-audit-2026-10-21/02-contract-audit.md",
+        "lines": "96",
+        "text": "**Decision D-CANON-1 (open):** is a structurally valid but non-canonicalizable snapshot `valid` with explicit `identity_unavailable`, or invalid for every action that requires graph identity? Both are reasonable only if the observable contract says which. Refusal must preserve error code/path in stdout JSON and never fabricate an identity."
+      },
+      {
+        "id": "K2",
+        "path": "docs/programs/feedback-contract-audit-2026-10-21/02-contract-audit.md",
+        "lines": "30",
+        "text": "**Decision D-IDENT-1 (open):** publish a versioned identity descriptor whose typed fields include domain, hash algorithm, canonical profile, payload/view, and value. Alternatives: (a) additive fields/metadata that leave existing digest strings unchanged; (b) a versioned new namespace plus migration. Do not change the meaning of `graphpolicy.snapshot.c1:` in place or silently rewrite old journal records."
+      },
+      {
+        "id": "K3",
+        "path": "docs/programs/feedback-contract-audit-2026-10-21/02-contract-audit.md",
+        "lines": "32",
+        "text": "**Decision D-IDENT-2 (open):** define an explicit host serializer or byte-snapshot contract for CLI-vs-RPC comparable receipts. An object passed to RPC is not the bytes of a pretty-printed CLI file; equality of keys without equality of preimages is insufficient. Round-trip test compact and pretty JSON separately."
+      },
+      {
+        "id": "K4",
+        "path": "docs/programs/feedback-contract-audit-2026-10-21/02-contract-audit.md",
+        "lines": "42",
+        "text": "**Decision D-IDENT-3 (open):** choose whether evaluator receipts should expose the program-bound logical checkpoint identity, a distinct explicitly named theta-words identity, or both. Every consumer must know what the field binds. Re-pinning a golden vector requires a versioned migration if the preimage/meaning changes."
+      },
+      {
+        "id": "K5",
+        "path": "docs/programs/feedback-contract-audit-2026-10-21/02-contract-audit.md",
+        "lines": "52",
+        "text": "**Decision D-STORE-1 (open):** specify a total resolution relation from `(program identity, parameter words, logical checkpoint identity)` to a stored artifact address and its canonical bytes. Prefer a single store API or explicit immutable binding record. Only equate the logical digest and CAS blob hash if a proven canonical preimage theorem and tests show actual equality; do not assume equality from similar names."
+      },
+      {
+        "id": "K6",
+        "path": "docs/programs/feedback-contract-audit-2026-10-21/02-contract-audit.md",
+        "lines": "59-63",
+        "text": "| `--store` requested, checkpoint absent | Explicit `missing` or a documented admissible-unbacked state; no integrity-pass claim |\n| Stored blob present, logical binding absent/wrong | Typed refusal or a typed unresolved state; never pretend validation succeeded |\n| Stored bytes valid, logical and CAS mappings verified | `verified`/eligible |\n| Stored bytes malformed/tampered | Integrity rejection, quarantined record; later usage refuses |\n| Quarantine journal records stale or missing | Typed journal/provenance state; no silent reset of a quarantine |"
+      },
+      {
+        "id": "K7",
+        "path": "docs/programs/feedback-contract-audit-2026-10-21/02-contract-audit.md",
+        "lines": "82",
+        "text": "**Decision D-EVAL-1 (open):** either implement a single shared pure evaluate-documents core with adapters for CLI/RPC, or formally define two named protocol profiles (lightweight scoring and decision-grade). The latter MUST make capability differences explicit in negotiation, SDK, skill and receipts. Both paths must reject unsupported candidates consistently in meaning and must not export a score-only reply as a sampled-decision receipt."
+      },
+      {
+        "id": "O1",
+        "path": "ts/src/cli/inspect-checkpoint-store.ts",
+        "lines": "41-46",
+        "text": "  const result: JsonObject = {\n    checkpoint,\n    state: view.state,\n    bytes_present: view.bytesPresent,\n    ...(view.quarantineRecord === undefined ? {} : { quarantine_record: view.quarantineRecord }),\n  };"
+      },
+      {
+        "id": "O1states",
+        "path": "ts/src/cli/checkpoint-store.ts",
+        "lines": "79",
+        "text": "  readonly state: \"quarantined\" | \"available\" | \"missing\";"
+      },
+      {
+        "id": "O2",
+        "path": "ts/src/training/credit-basis.ts",
+        "lines": "288",
+        "text": "        error: { code: \"GP_TRAIN_REWARD_BASIS_INVALID\", record: id, state: \"missing\" },"
+      },
+      {
+        "id": "digestDomain",
+        "path": "ts/src/canonical/digest.ts",
+        "lines": "36-37",
+        "text": "export function domainPrefix(kind: DigestKind): string {\n  return `graphpolicy.${requireKind(kind)}.c1\\n`;"
+      }
+    ],
+    "labels": {
+      "decisions": [
+        "D-IDENT-1",
+        "D-IDENT-2",
+        "D-IDENT-3",
+        "D-STORE-1",
+        "D-STORE-2",
+        "D-EVAL-1",
+        "D-EVAL-2",
+        "D-EVAL-3",
+        "D-CANON-1",
+        "D-NAMES-1"
+      ],
+      "workstreams": [
+        "FCA-1",
+        "FCA-2",
+        "FCA-3",
+        "FCA-4",
+        "FCA-5",
+        "FCA-6",
+        "FCA-7"
+      ],
+      "rootCauses": [
+        "RC-EVAL",
+        "RC-STORE",
+        "RC-IDENT",
+        "RC-ERROR",
+        "RC-SKILL",
+        "RC-NAMES",
+        "RC-FIXTURE",
+        "RC-PERF",
+        "RC-PRESERVE"
+      ],
+      "findings": [
+        "F01",
+        "F02",
+        "F03",
+        "F04",
+        "F05",
+        "F06",
+        "F07",
+        "F08",
+        "F09",
+        "F10",
+        "F11",
+        "F12",
+        "F13"
+      ]
+    },
+    "digestDomains": [
+      "graphpolicy.c1",
+      "graphpolicy.checkpoint.c1",
+      "graphpolicy.journal.c1",
+      "graphpolicy.package.c1",
+      "graphpolicy.program.c1",
+      "graphpolicy.receipt.c1",
+      "graphpolicy.schema.c1",
+      "graphpolicy.snapshot.c1",
+      "graphpolicy.store.policy.c1"
+    ],
+    "shippedSchemas": [
+      "gp.rpc.error/v1",
+      "gp.rpc.reply/v1",
+      "graphpolicy.backend-cost-claim.v1",
+      "graphpolicy.backend.pin.v1",
+      "graphpolicy.behavior.v1",
+      "graphpolicy.benchmark-report.v1",
+      "graphpolicy.benchmark.dataset.v1",
+      "graphpolicy.benchmark.run-report.v1",
+      "graphpolicy.benchmark.suite.v1",
+      "graphpolicy.canary-acceptance.v1",
+      "graphpolicy.checkpoint.v1",
+      "graphpolicy.cli.v1",
+      "graphpolicy.composition.manifest.v1",
+      "graphpolicy.composition.v1",
+      "graphpolicy.conformance.matrix.v1",
+      "graphpolicy.data.v1",
+      "graphpolicy.error.v1",
+      "graphpolicy.errors.v1",
+      "graphpolicy.function.v1",
+      "graphpolicy.harness.noeffect.v1",
+      "graphpolicy.interop.chain.v1",
+      "graphpolicy.interop.embedding-port.v1",
+      "graphpolicy.journal.v1",
+      "graphpolicy.limits.v1",
+      "graphpolicy.numeric.binary32.v1",
+      "graphpolicy.optimizer-state.v1",
+      "graphpolicy.package.v1",
+      "graphpolicy.policy.distribution.v1",
+      "graphpolicy.policy.support-order.codepoint.v1",
+      "graphpolicy.project.v1",
+      "graphpolicy.receipt.decision.v1",
+      "graphpolicy.receipt.embedding.v1",
+      "graphpolicy.receipt.runtime.v1",
+      "graphpolicy.release-record.v1",
+      "graphpolicy.rpc.v1",
+      "graphpolicy.run-manifest.v1",
+      "graphpolicy.split-manifest.v1",
+      "graphpolicy.store.export-log.v1",
+      "graphpolicy.store.policy.v1",
+      "graphpolicy.suite.v1",
+      "graphpolicy.train-plan.v1",
+      "graphpolicy.training.mode.default-backend.v1",
+      "graphpolicy.training.mode.deterministic.v1",
+      "graphpolicy.training.profile.v1",
+      "graphpolicy.view.v1"
+    ],
+    "rulingSamples": [
+      "GP-REQ-015",
+      "GPR-1554",
+      "ADR-GP-002"
+    ]
+  },
+  "rows": [
+    {
+      "id": "A",
+      "label": "(a) docs census: any sentence citing GP-FCA-2026-10-21, a D-* or an FCA-* id carries the status literal and the GraphPolicyCLI sha it was read at",
+      "pins": [
+        {
+          "id": "A1",
+          "witness": {
+            "roots": [
+              {
+                "root": "docs",
+                "equalsListing": true,
+                "anchorRead": true
+              },
+              {
+                "root": "src",
+                "equalsListing": true,
+                "anchorRead": true
+              },
+              {
+                "root": ".agents",
+                "equalsListing": true,
+                "anchorRead": true
+              },
+              {
+                "root": "qa",
+                "equalsListing": true,
+                "anchorRead": true
+              },
+              {
+                "root": "test",
+                "equalsListing": true,
+                "anchorRead": true
+              },
+              {
+                "root": "examples",
+                "equalsListing": true,
+                "anchorRead": true
+              }
+            ],
+            "pages": {
+              "equalsListing": true,
+              "anchorRead": true
+            },
+            "judgedA": true,
+            "judgedB": true,
+            "exemptWalked": [
+              "test/workbench-gp-fca-open-decisions-census.test.ts",
+              "test/fixtures/gp-fca-open-decisions-roster.json"
+            ],
+            "symlinks": [],
+            "unreadable": []
+          }
+        },
+        {
+          "id": "A2",
+          "witness": {
+            "findings": []
+          }
+        },
+        {
+          "id": "A3",
+          "witness": {
+            "exemptions": [
+              {
+                "file": "test/workbench-gp-fca-open-decisions-census.test.ts",
+                "walked": true,
+                "aFindings": true,
+                "bFindings": true
+              },
+              {
+                "file": "test/fixtures/gp-fca-open-decisions-roster.json",
+                "walked": true,
+                "aFindings": true,
+                "bFindings": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "A4",
+          "witness": {
+            "planted": [
+              "docs/plant.md:1 N2: lacks-status+sha",
+              "src/plant.ts:1 N1: lacks-status+sha",
+              ".agents/skills/plant/SKILL.md:1 N3: lacks-status+sha",
+              "qa/plant.mjs:1 N4: lacks-status",
+              "test/plant.test.ts:1 N5: lacks-status+sha",
+              "examples/plant.md:1 N1+N2: lacks-status",
+              "PLANT.md:1 N2: lacks-sha"
+            ],
+            "quiet": [],
+            "plantedB": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "(b) no Pi fixture encodes a D-* alternative (e.g. an `identity_unavailable` field or a `missing` store state) as expected producer output before a GP-REQ/ADR id exists",
+      "pins": [
+        {
+          "id": "B1",
+          "witness": {
+            "unparsed": [],
+            "anchorMarked": true,
+            "judgedFloorMet": true
+          }
+        },
+        {
+          "id": "B2",
+          "witness": {
+            "findings": []
+          }
+        },
+        {
+          "id": "B3",
+          "witness": {
+            "planted": [
+              "docs/plant-binding.json#/result/binding_record K5: key binding_record",
+              "src/plant-theta.ts:1#/result/receipt/thetaWordsIdentity K4: key thetaWordsIdentity",
+              ".agents/skills/plant/fixture.json#/result/profile K7: value \"decision-grade\"",
+              "qa/plant-namespace.jsonl:2#/result/graph K2: value \"graphpolicy.snapshot.c2:0a1b\"",
+              "test/fixtures/plant-canon.json#/result/identity_unavailable K1: key identity_unavailable",
+              "test/fixtures/plant-descriptor.json#/result/identities/graph/identityDescriptor K2: key identityDescriptor",
+              "test/helpers/plant-serializer.ts:1#/result/byte_snapshot K3: key byte_snapshot",
+              "examples/plant-store.mjs:1#/result/store_state K6: state store_state=\"missing\""
+            ],
+            "quiet": [],
+            "plantedA": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "(c) a dated TRACEABILITY row citing the adopted GP ruling id is required before any census allowlist widens",
+      "pins": [
+        {
+          "id": "C1",
+          "witness": {
+            "allowlist": 0,
+            "refused": [],
+            "stale": [],
+            "traceability": {
+              "headerRead": true,
+              "tableRows": 75,
+              "datedRows": 0,
+              "rulingRows": 0
+            }
+          }
+        },
+        {
+          "id": "C2",
+          "witness": {
+            "rows": 5,
+            "readings": [
+              {
+                "ruling": "",
+                "refusal": "no-ruling"
+              },
+              {
+                "ruling": "FCA-2",
+                "refusal": "not-a-ruling-id"
+              },
+              {
+                "ruling": "D-STORE-2",
+                "refusal": "not-a-ruling-id"
+              },
+              {
+                "ruling": "RC-STORE",
+                "refusal": "not-a-ruling-id"
+              },
+              {
+                "ruling": "F07",
+                "refusal": "not-a-ruling-id"
+              },
+              {
+                "ruling": "GPR-1701",
+                "refusal": "no-traceability-row"
+              },
+              {
+                "ruling": "GPR-1700",
+                "refusal": null
+              },
+              {
+                "ruling": "ADR-GP-020",
+                "refusal": "undated-row"
+              },
+              {
+                "ruling": "GPR-1700 ",
+                "refusal": "not-a-ruling-id"
+              },
+              {
+                "ruling": "GP-REQ-040",
+                "refusal": "no-traceability-row"
+              },
+              {
+                "ruling": "GP-REQ-041",
+                "refusal": "undated-row"
+              }
+            ]
+          }
+        },
+        {
+          "id": "C3",
+          "witness": {
+            "dated": {
+              "a": [],
+              "b": [],
+              "refused": [],
+              "stale": []
+            },
+            "undated": {
+              "a": [
+                "docs/plant.md:1 N2: lacks-status+sha"
+              ],
+              "b": [
+                "test/fixtures/plant.json#/result/identity_unavailable K1: key identity_unavailable"
+              ],
+              "refused": [
+                "A docs/plant.md N2 GPR-1700: undated-row",
+                "B test/fixtures/plant.json K1 GPR-1700: undated-row"
+              ],
+              "stale": []
+            },
+            "elsewhere": {
+              "a": [
+                "docs/plant.md:1 N2: lacks-status+sha"
+              ],
+              "b": [
+                "test/fixtures/plant.json#/result/identity_unavailable K1: key identity_unavailable"
+              ],
+              "refused": [],
+              "stale": [
+                "A docs/other.md N2 GPR-1700: admits no finding",
+                "B test/fixtures/plant.json K7 GPR-1700: admits no finding"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "F",
+      "label": "the owner filing row of wb-gxd7.2 in the tracked bead export names exactly the clauses rows A-C cover, states each of their labels as its clause, and carries every decision, label prefix, example, ruling kind and constant the census reads",
+      "pins": [
+        {
+          "id": "F1",
+          "witness": {
+            "clauses": [
+              "a",
+              "b",
+              "c"
+            ],
+            "labelsEqual": [
+              "A",
+              "B",
+              "C"
+            ],
+            "decisions": [
+              "D-IDENT-1",
+              "D-IDENT-2",
+              "D-IDENT-3",
+              "D-STORE-1",
+              "D-STORE-2",
+              "D-EVAL-1",
+              "D-EVAL-2",
+              "D-EVAL-3",
+              "D-CANON-1",
+              "D-NAMES-1"
+            ],
+            "decisionsRead": [
+              "D-IDENT-1",
+              "D-IDENT-2",
+              "D-IDENT-3",
+              "D-STORE-1",
+              "D-STORE-2",
+              "D-EVAL-1",
+              "D-EVAL-2",
+              "D-EVAL-3",
+              "D-CANON-1",
+              "D-NAMES-1"
+            ],
+            "decisionWords": [
+              "IDENT",
+              "STORE",
+              "EVAL",
+              "CANON",
+              "NAMES"
+            ],
+            "accounting": {
+              "tokened": true,
+              "untokened": [
+                "D-EVAL-2",
+                "D-EVAL-3",
+                "D-NAMES-1"
+              ],
+              "overlap": []
+            },
+            "prefixes": [
+              {
+                "prefix": "F",
+                "read": [
+                  "N5"
+                ]
+              },
+              {
+                "prefix": "RC-",
+                "read": [
+                  "N4"
+                ]
+              },
+              {
+                "prefix": "FCA-",
+                "read": [
+                  "N3"
+                ]
+              }
+            ],
+            "clauseIds": {
+              "program": true,
+              "decisions": true,
+              "workstreams": true
+            },
+            "anchorWords": [
+              {
+                "word": "gp",
+                "anchors": true
+              },
+              {
+                "word": "GraphPolicyCLI",
+                "anchors": true
+              }
+            ],
+            "status": {
+              "quoted": true,
+              "head": true,
+              "tail": true
+            },
+            "citation": {
+              "path": true,
+              "line": "3",
+              "sha": true
+            },
+            "examples": {
+              "field": "identity_unavailable",
+              "fieldRead": [
+                "x.json#/result/identity_unavailable K1: key identity_unavailable"
+              ],
+              "state": "missing",
+              "stateRead": [
+                "x.json#/result/store_state K6: state store_state=\"missing\""
+              ]
+            },
+            "rulingKinds": [
+              "GP-REQ",
+              "ADR"
+            ],
+            "trace": {
+              "file": true,
+              "dated": true
+            },
+            "pins": [
+              "0107c72992f3",
+              "d75b68d1"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "M",
+      "label": "the sentence cutter, the families, the anchor, the status and sha readers, the finding format, the word splitter, the marker, the members, the observed shapes, the module reader and the ruling grammar judge their pinned inputs in order",
+      "pins": [
+        {
+          "id": "MS1",
+          "witness": {
+            "kind": "cut",
+            "outcome": [
+              "One names a.",
+              "Two names b!",
+              "Three?",
+              "Four;",
+              "five"
+            ]
+          }
+        },
+        {
+          "id": "MS2",
+          "witness": {
+            "kind": "cut",
+            "outcome": [
+              "para one",
+              "para two",
+              "| a | b |",
+              "| c | d |"
+            ]
+          }
+        },
+        {
+          "id": "MS3",
+          "witness": {
+            "kind": "cutMarkdown",
+            "outcome": [
+              "- one",
+              "- two",
+              "+ three",
+              "* four",
+              "1. five",
+              "2) six"
+            ]
+          }
+        },
+        {
+          "id": "MS4",
+          "witness": {
+            "kind": "cut",
+            "outcome": [
+              "The store gate\n * wraps here\n * and 02-contract-audit.md:3@0107c72992f3, D-IDENT-1/2/3 and e.g.x stay whole\n- in code a dash item joins"
+            ]
+          }
+        },
+        {
+          "id": "MN1",
+          "witness": {
+            "family": "N1",
+            "readings": [
+              {
+                "spelling": "GP-FCA-2026-10-21",
+                "bare": [
+                  "N1"
+                ],
+                "anchored": [
+                  "N1"
+                ]
+              },
+              {
+                "spelling": "GP-FCA",
+                "bare": [
+                  "N1"
+                ],
+                "anchored": [
+                  "N1"
+                ]
+              },
+              {
+                "spelling": "gp fca",
+                "bare": [
+                  "N1"
+                ],
+                "anchored": [
+                  "N1"
+                ]
+              },
+              {
+                "spelling": "GP_FCA_2026_10_21",
+                "bare": [
+                  "N1"
+                ],
+                "anchored": [
+                  "N1"
+                ]
+              },
+              {
+                "spelling": "feedback-contract-audit-2026-10-21",
+                "bare": [
+                  "N1"
+                ],
+                "anchored": [
+                  "N1"
+                ]
+              },
+              {
+                "spelling": "feedback contract audit",
+                "bare": [
+                  "N1"
+                ],
+                "anchored": [
+                  "N1"
+                ]
+              }
+            ],
+            "labels": 1,
+            "nearMisses": [
+              {
+                "spelling": "[GPC-FEEDBACK-CONTRACT-AUDIT-R2]",
+                "read": false
+              },
+              {
+                "spelling": "wb-gp-fca-x",
+                "read": false
+              },
+              {
+                "spelling": "GPFCAX",
+                "read": false
+              },
+              {
+                "spelling": "feedback and contract audit",
+                "read": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "MN2",
+          "witness": {
+            "family": "N2",
+            "readings": [
+              {
+                "spelling": "D-IDENT-1",
+                "bare": [
+                  "N2"
+                ],
+                "anchored": [
+                  "N2"
+                ]
+              },
+              {
+                "spelling": "D-STORE-2",
+                "bare": [
+                  "N2"
+                ],
+                "anchored": [
+                  "N2"
+                ]
+              },
+              {
+                "spelling": "D-EVAL-3",
+                "bare": [
+                  "N2"
+                ],
+                "anchored": [
+                  "N2"
+                ]
+              },
+              {
+                "spelling": "D-CANON-1",
+                "bare": [
+                  "N2"
+                ],
+                "anchored": [
+                  "N2"
+                ]
+              },
+              {
+                "spelling": "D-NAMES-1",
+                "bare": [
+                  "N2"
+                ],
+                "anchored": [
+                  "N2"
+                ]
+              },
+              {
+                "spelling": "D-EVAL",
+                "bare": [
+                  "N2"
+                ],
+                "anchored": [
+                  "N2"
+                ]
+              }
+            ],
+            "labels": 10,
+            "nearMisses": [
+              {
+                "spelling": "D_STORE_1",
+                "read": false
+              },
+              {
+                "spelling": "D IDENT 2",
+                "read": false
+              },
+              {
+                "spelling": "x-D-STORE-2",
+                "read": false
+              },
+              {
+                "spelling": "D-STORE-2x",
+                "read": false
+              },
+              {
+                "spelling": "D-STOREX",
+                "read": false
+              },
+              {
+                "spelling": "GC-D03",
+                "read": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "MN3",
+          "witness": {
+            "family": "N3",
+            "readings": [
+              {
+                "spelling": "FCA-1",
+                "bare": [
+                  "N3"
+                ],
+                "anchored": [
+                  "N3"
+                ]
+              },
+              {
+                "spelling": "FCA-7",
+                "bare": [
+                  "N3"
+                ],
+                "anchored": [
+                  "N3"
+                ]
+              }
+            ],
+            "labels": 7,
+            "nearMisses": [
+              {
+                "spelling": "FCA_3",
+                "read": false
+              },
+              {
+                "spelling": "FCA 6",
+                "read": false
+              },
+              {
+                "spelling": "FCA2",
+                "read": false
+              },
+              {
+                "spelling": "GP-FCA-2026",
+                "read": false
+              },
+              {
+                "spelling": "FCA-2x",
+                "read": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "MN4",
+          "witness": {
+            "family": "N4",
+            "readings": [
+              {
+                "spelling": "RC-IDENT",
+                "bare": [
+                  "N4"
+                ],
+                "anchored": [
+                  "N4"
+                ]
+              },
+              {
+                "spelling": "RC-STORE",
+                "bare": [
+                  "N4"
+                ],
+                "anchored": [
+                  "N4"
+                ]
+              },
+              {
+                "spelling": "RC-PRESERVE",
+                "bare": [
+                  "N4"
+                ],
+                "anchored": [
+                  "N4"
+                ]
+              }
+            ],
+            "labels": 9,
+            "nearMisses": [
+              {
+                "spelling": "RC_FAMILY",
+                "read": false
+              },
+              {
+                "spelling": "RC_PIN",
+                "read": false
+              },
+              {
+                "spelling": "RC DEVELOPER",
+                "read": false
+              },
+              {
+                "spelling": "RC-DEVELOPER",
+                "read": false
+              },
+              {
+                "spelling": "RC-IDENTITY",
+                "read": false
+              },
+              {
+                "spelling": "RC_EVAL",
+                "read": false
+              },
+              {
+                "spelling": "rc-ident-",
+                "read": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "MN5",
+          "witness": {
+            "family": "N5",
+            "readings": [
+              {
+                "spelling": "F01",
+                "bare": [],
+                "anchored": [
+                  "N5"
+                ]
+              },
+              {
+                "spelling": "F07",
+                "bare": [],
+                "anchored": [
+                  "N5"
+                ]
+              },
+              {
+                "spelling": "F13",
+                "bare": [],
+                "anchored": [
+                  "N5"
+                ]
+              }
+            ],
+            "labels": 13,
+            "nearMisses": [
+              {
+                "spelling": "F7",
+                "read": false
+              },
+              {
+                "spelling": "F123",
+                "read": false
+              },
+              {
+                "spelling": "xF07",
+                "read": false
+              },
+              {
+                "spelling": "F07x",
+                "read": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "MA",
+          "witness": {
+            "anchors": [
+              {
+                "word": "GraphPolicyCLI",
+                "read": [
+                  "N5"
+                ]
+              },
+              {
+                "word": "graphpolicy",
+                "read": [
+                  "N5"
+                ]
+              },
+              {
+                "word": "graph-policy",
+                "read": [
+                  "N5"
+                ]
+              },
+              {
+                "word": "graph policy",
+                "read": [
+                  "N5"
+                ]
+              },
+              {
+                "word": "Graph.Policy",
+                "read": [
+                  "N5"
+                ]
+              },
+              {
+                "word": "gp",
+                "read": [
+                  "N5"
+                ]
+              }
+            ],
+            "nearMisses": [
+              {
+                "word": "gpu",
+                "read": []
+              },
+              {
+                "word": "gps",
+                "read": []
+              },
+              {
+                "word": "graph",
+                "read": []
+              },
+              {
+                "word": "policy",
+                "read": []
+              },
+              {
+                "word": "pgp",
+                "read": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "MT",
+          "witness": {
+            "admitted": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "altered": [
+              [
+                "x.ts:1 N2: lacks-status"
+              ],
+              [
+                "x.ts:1 N2: lacks-status"
+              ],
+              [
+                "x.ts:1 N2: lacks-status"
+              ],
+              [
+                "x.ts:1 N2: lacks-status"
+              ],
+              [
+                "x.ts:1 N2: lacks-status"
+              ]
+            ],
+            "measured": true
+          }
+        },
+        {
+          "id": "MH",
+          "witness": {
+            "admitted": [
+              {
+                "token": "0107c72",
+                "findings": 0
+              },
+              {
+                "token": "0107c72992f3",
+                "findings": 0
+              },
+              {
+                "token": "0107c72992f35cf6832a37615a25c7df45747ebc",
+                "findings": 0
+              }
+            ],
+            "refused": [
+              {
+                "token": "0107c7",
+                "finding": "x.ts:1 N2: lacks-sha"
+              },
+              {
+                "token": "0107c72992f35cf6832a37615a25c7df45747ebc0",
+                "finding": "x.ts:1 N2: lacks-sha"
+              },
+              {
+                "token": "1234567",
+                "finding": "x.ts:1 N2: lacks-sha"
+              },
+              {
+                "token": "abcdefa",
+                "finding": "x.ts:1 N2: lacks-sha"
+              },
+              {
+                "token": "0107C72992F3",
+                "finding": "x.ts:1 N2: lacks-sha"
+              },
+              {
+                "token": "x0107c72992f3",
+                "finding": "x.ts:1 N2: lacks-sha"
+              },
+              {
+                "token": "graphpolicy.snapshot.c1:ab01ab01ab01ab01ab01ab01ab01ab01ab01ab01ab01ab01ab01ab01ab01ab01",
+                "finding": "x.ts:1 N2: lacks-sha"
+              }
+            ]
+          }
+        },
+        {
+          "id": "MF",
+          "witness": {
+            "markdown": [
+              "docs/x.md:2 N2: lacks-status+sha",
+              "docs/x.md:4 N3: lacks-status",
+              "docs/x.md:6 N5: lacks-status+sha"
+            ],
+            "code": [
+              "src/x.ts:2 N2: lacks-status+sha",
+              "src/x.ts:4 N3: lacks-status"
+            ]
+          }
+        },
+        {
+          "id": "MW",
+          "witness": {
+            "readings": [
+              {
+                "input": "identity_unavailable",
+                "words": [
+                  "identity",
+                  "unavailable"
+                ]
+              },
+              {
+                "input": "identityUnavailable",
+                "words": [
+                  "identity",
+                  "unavailable"
+                ]
+              },
+              {
+                "input": "IdentityUnavailable",
+                "words": [
+                  "identity",
+                  "unavailable"
+                ]
+              },
+              {
+                "input": "IDENTITY_UNAVAILABLE",
+                "words": [
+                  "identity",
+                  "unavailable"
+                ]
+              },
+              {
+                "input": "GP_CLI_IDENTITY_UNAVAILABLE",
+                "words": [
+                  "gp",
+                  "cli",
+                  "identity",
+                  "unavailable"
+                ]
+              },
+              {
+                "input": "identity-unavailable",
+                "words": [
+                  "identity",
+                  "unavailable"
+                ]
+              },
+              {
+                "input": "identity unavailable",
+                "words": [
+                  "identity",
+                  "unavailable"
+                ]
+              },
+              {
+                "input": "IDUnavailable",
+                "words": [
+                  "id",
+                  "unavailable"
+                ]
+              },
+              {
+                "input": "byteSnapshot",
+                "words": [
+                  "byte",
+                  "snapshot"
+                ]
+              },
+              {
+                "input": "Decision_Grade",
+                "words": [
+                  "decision",
+                  "grade"
+                ]
+              },
+              {
+                "input": "hashAlgorithm2",
+                "words": [
+                  "hash",
+                  "algorithm2"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "MM",
+          "witness": {
+            "marks": [
+              1,
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "nearMisses": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "quoted": [
+              0,
+              0,
+              0
+            ],
+            "nested": [
+              "/outer/inner/0/identity_unavailable"
+            ],
+            "shipped": true
+          }
+        },
+        {
+          "id": "MK",
+          "witness": {
+            "readings": [
+              {
+                "member": "K1",
+                "run": "identity unavailable",
+                "key": 1,
+                "value": 1,
+                "unmarked": 0
+              },
+              {
+                "member": "K2",
+                "run": "descriptor",
+                "key": 1,
+                "value": 1,
+                "unmarked": 0
+              },
+              {
+                "member": "K2",
+                "run": "hash algorithm",
+                "key": 1,
+                "value": 1,
+                "unmarked": 0
+              },
+              {
+                "member": "K2",
+                "run": "canonical profile",
+                "key": 1,
+                "value": 1,
+                "unmarked": 0
+              },
+              {
+                "member": "K3",
+                "run": "byte snapshot",
+                "key": 1,
+                "value": 1,
+                "unmarked": 0
+              },
+              {
+                "member": "K3",
+                "run": "host serializer",
+                "key": 1,
+                "value": 1,
+                "unmarked": 0
+              },
+              {
+                "member": "K4",
+                "run": "theta words",
+                "key": 1,
+                "value": 1,
+                "unmarked": 0
+              },
+              {
+                "member": "K4",
+                "run": "logical checkpoint",
+                "key": 1,
+                "value": 1,
+                "unmarked": 0
+              },
+              {
+                "member": "K5",
+                "run": "binding record",
+                "key": 1,
+                "value": 1,
+                "unmarked": 0
+              },
+              {
+                "member": "K5",
+                "run": "artifact address",
+                "key": 1,
+                "value": 1,
+                "unmarked": 0
+              },
+              {
+                "member": "K7",
+                "run": "lightweight",
+                "key": 1,
+                "value": 1,
+                "unmarked": 0
+              },
+              {
+                "member": "K7",
+                "run": "decision grade",
+                "key": 1,
+                "value": 1,
+                "unmarked": 0
+              }
+            ],
+            "namespaces": [
+              {
+                "value": "graphpolicy.snapshot.c2:0a1b",
+                "hits": 1
+              },
+              {
+                "value": "graphpolicy.c3",
+                "hits": 1
+              },
+              {
+                "value": "graphpolicy.checkpoint.c10:ff",
+                "hits": 1
+              },
+              {
+                "value": "graphpolicy.store.policy.c0",
+                "hits": 1
+              },
+              {
+                "value": "graphpolicy.identity.v1",
+                "hits": 1
+              },
+              {
+                "value": "graphpolicy.cli.v2",
+                "hits": 1
+              },
+              {
+                "value": "gp.rpc.reply/v2",
+                "hits": 1
+              }
+            ],
+            "shipped": 55,
+            "measured": [
+              {
+                "member": "K1",
+                "held": true
+              },
+              {
+                "member": "K2",
+                "held": true
+              },
+              {
+                "member": "K3",
+                "held": true
+              },
+              {
+                "member": "K4",
+                "held": true
+              },
+              {
+                "member": "K5",
+                "held": true
+              },
+              {
+                "member": "K6",
+                "held": true
+              },
+              {
+                "member": "K7",
+                "held": true
+              }
+            ],
+            "domains": {
+              "prefix": true,
+              "allC1": true,
+              "schemas": true
+            }
+          }
+        },
+        {
+          "id": "MO",
+          "witness": {
+            "observed": [
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "candidates": [
+              [
+                "x.json#/result/state K6: state state=\"missing\""
+              ],
+              [
+                "x.json#/result/state K6: state state=\"missing\""
+              ],
+              [
+                "x.json#/result/state K6: state state=\"verified\""
+              ],
+              [
+                "x.json#/error/state K6: state state=\"missing\""
+              ],
+              [
+                "x.json#/error/state K6: state state=\"missing\""
+              ]
+            ],
+            "keys": [
+              {
+                "key": "state",
+                "hits": 1
+              },
+              {
+                "key": "status",
+                "hits": 1
+              },
+              {
+                "key": "store_state",
+                "hits": 1
+              },
+              {
+                "key": "checkpointStatus",
+                "hits": 1
+              },
+              {
+                "key": "store",
+                "hits": 1
+              },
+              {
+                "key": "checkpoint",
+                "hits": 1
+              },
+              {
+                "key": "reason",
+                "hits": 0
+              },
+              {
+                "key": "states",
+                "hits": 0
+              }
+            ],
+            "words": [
+              {
+                "value": "missing",
+                "hits": 1
+              },
+              {
+                "value": "admissible-unbacked",
+                "hits": 1
+              },
+              {
+                "value": "Admissible_Unbacked",
+                "hits": 1
+              },
+              {
+                "value": "verified",
+                "hits": 1
+              },
+              {
+                "value": "eligible",
+                "hits": 1
+              },
+              {
+                "value": "quarantined",
+                "hits": 1
+              },
+              {
+                "value": "MISSING",
+                "hits": 1
+              },
+              {
+                "value": "available",
+                "hits": 0
+              },
+              {
+                "value": "missing reason",
+                "hits": 0
+              }
+            ]
+          }
+        },
+        {
+          "id": "MJ",
+          "witness": {
+            "modules": [
+              [
+                "m.ts:1#/result/identity_unavailable K1: key identity_unavailable"
+              ],
+              [
+                "m.ts:1#/0/identity_unavailable K1: key identity_unavailable"
+              ],
+              [
+                "m.ts:1#/identity_unavailable K1: key identity_unavailable"
+              ],
+              [
+                "m.ts:1#/identity_unavailable K1: key identity_unavailable"
+              ],
+              [
+                "m.ts:1#/identity_unavailable K1: key identity_unavailable"
+              ],
+              [
+                "m.ts:1#/identity_unavailable K1: key identity_unavailable"
+              ],
+              [
+                "m.ts:1#/identity_unavailable K1: key identity_unavailable"
+              ],
+              [
+                "m.ts:2#/identity_unavailable K1: key identity_unavailable"
+              ],
+              [
+                "m.ts:1#/result/inner/identity_unavailable K1: key identity_unavailable"
+              ],
+              [
+                "m.ts:1#/identity_unavailable K1: key identity_unavailable"
+              ],
+              [
+                "m.ts:1#/identity_unavailable K1: key identity_unavailable"
+              ],
+              [
+                "m.ts:1#/stdout/identity_unavailable K1: key identity_unavailable"
+              ]
+            ]
+          }
+        },
+        {
+          "id": "MR",
+          "witness": {
+            "admitted": [
+              {
+                "id": "GP-REQ-015",
+                "ruling": true
+              },
+              {
+                "id": "GPR-1554",
+                "ruling": true
+              },
+              {
+                "id": "ADR-GP-002",
+                "ruling": true
+              },
+              {
+                "id": "GP-REQ-001",
+                "ruling": true
+              },
+              {
+                "id": "GPR-1005",
+                "ruling": true
+              },
+              {
+                "id": "ADR-GP-012",
+                "ruling": true
+              }
+            ],
+            "refused": [
+              {
+                "id": "FCA-2",
+                "ruling": false
+              },
+              {
+                "id": "D-STORE-2",
+                "ruling": false
+              },
+              {
+                "id": "RC-STORE",
+                "ruling": false
+              },
+              {
+                "id": "F07",
+                "ruling": false
+              },
+              {
+                "id": "GPR-15",
+                "ruling": false
+              },
+              {
+                "id": "GP-REQ-15",
+                "ruling": false
+              },
+              {
+                "id": "ADR-2",
+                "ruling": false
+              },
+              {
+                "id": "gpr-1554",
+                "ruling": false
+              },
+              {
+                "id": "GP-REQ-0150",
+                "ruling": false
+              },
+              {
+                "id": "ADR-GP-02",
+                "ruling": false
+              },
+              {
+                "id": "IMPL-801",
+                "ruling": false
+              },
+              {
+                "id": "GPR-1554a",
+                "ruling": false
+              }
+            ],
+            "measured": {
+              "notAllocated": true,
+              "prefixes": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "R",
+      "label": "the named residuals R1-R21 stay pinned quiet",
+      "pins": [
+        {
+          "id": "R1",
+          "witness": {
+            "kind": "file",
+            "outcome": []
+          }
+        },
+        {
+          "id": "R2",
+          "witness": {
+            "kind": "file",
+            "outcome": []
+          }
+        },
+        {
+          "id": "R3",
+          "witness": {
+            "kind": "file",
+            "outcome": []
+          }
+        },
+        {
+          "id": "R4",
+          "witness": {
+            "kind": "file",
+            "outcome": []
+          }
+        },
+        {
+          "id": "R5",
+          "witness": {
+            "kind": "file",
+            "outcome": []
+          }
+        },
+        {
+          "id": "R6",
+          "witness": {
+            "kind": "file",
+            "outcome": []
+          }
+        },
+        {
+          "id": "R7",
+          "witness": {
+            "kind": "file",
+            "outcome": []
+          }
+        },
+        {
+          "id": "R8",
+          "witness": {
+            "kind": "file",
+            "outcome": []
+          }
+        },
+        {
+          "id": "R9",
+          "witness": {
+            "kind": "markdown",
+            "outcome": []
+          }
+        },
+        {
+          "id": "R10",
+          "witness": {
+            "kind": "file",
+            "outcome": []
+          }
+        },
+        {
+          "id": "R11",
+          "witness": {
+            "a": [],
+            "b": []
+          }
+        },
+        {
+          "id": "R12",
+          "witness": {
+            "kind": "json",
+            "outcome": []
+          }
+        },
+        {
+          "id": "R13",
+          "witness": {
+            "kind": "json",
+            "outcome": []
+          }
+        },
+        {
+          "id": "R14",
+          "witness": {
+            "kind": "module",
+            "outcome": []
+          }
+        },
+        {
+          "id": "R15",
+          "witness": {
+            "a": [],
+            "b": [],
+            "judgedB": []
+          }
+        },
+        {
+          "id": "R16",
+          "witness": {
+            "kind": "json",
+            "outcome": []
+          }
+        },
+        {
+          "id": "R17",
+          "witness": {
+            "kind": "json",
+            "outcome": []
+          }
+        },
+        {
+          "id": "R18",
+          "witness": {
+            "refusal": null
+          }
+        },
+        {
+          "id": "R19",
+          "witness": {
+            "kind": "json",
+            "outcome": []
+          }
+        },
+        {
+          "id": "R20",
+          "witness": {
+            "kind": "json",
+            "outcome": []
+          }
+        },
+        {
+          "id": "R21",
+          "witness": {
+            "kind": "module",
+            "outcome": []
+          }
+        }
+      ]
+    }
+  ]
+}
