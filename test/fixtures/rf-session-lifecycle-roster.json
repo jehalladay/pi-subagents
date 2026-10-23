@@ -1,0 +1,848 @@
+{
+ "provenance": "wb-hs2j.3 census roster (test/workbench-rf-session-lifecycle-census.test.ts). quote, citation and merged are the owner filing's (bead row wb-hs2j.3), re-read at ReactiveFiberCLI 6a251bf73af57c3a703caf6892dfe3015e06a481 with git show on 2026-10-23: 02-swarm-usage-and-command-grammar.md:42 is the quote verbatim; merged.path :72 is merged.heading and :73 is merged.line, which holds merged.quote; in merged.line <W1> <W2> stands for the two words before graph/definition basis, elided because wb-a9l2.5's landed whole-tree census (test/workbench-rf-federated-cut-claim-census.test.ts) forbids any test file to spell them joined. producer is MEASURED read-only on 2026-10-23 against the installed rf in a scratch jsonl workspace (rf init --backend jsonl): rfVersion is `rf --json --version` result.version, leafPaths its result.leaves paths in order and sessionLeaves its session.* rows (path, served); help holds the `rf context render --help`, `rf session open --help`, `rf session show --help`, `rf session close --help` and `rf session list --help` option lines whitespace-normalised; record is the result of `rf session open --json` (keys sorted, name as stated) and the status `rf session close` and `rf session show` stated after it; ticks are three measured tick forms, each argv with the scratch root, model and task replaced by placeholders (model and task fields hold the values used), openBefore and openAfter the `rf session list --status open --limit 500 --json` result.sessions counts around them, sessionIds each tick's result.session_id in order (preview: 5 --no-commit renders; sessionless: 2 committed renders without --session; pinned: 3 committed renders with --session <session>, the id `rf session open --json` minted, so its openBefore counts that open); closedRefusal.envelope is the stdout of a committed render with --session <the pinned id> after `rf session close` (exit commitExit), the scratch root rewritten to /fixture/rf-workspace, and the same render with --no-commit answered exit noCommitExit with code noCommitCode; zeroMint is the BEADS-2026-10-21.md:19 row of rfc-s24ro.7 at the program pin, journey the acceptance journey it names, presentAtPin and presentAtMain `git cat-file -e <sha>:<journey>` at programPin.sha and at mainPin.sha (origin/main of the clone, fetched 2026-10-23T02:45Z); duplicateNames is the BEADS-2026-10-21.md:90 row of rca-C055. Every witness is the expected outcome of its pin's case at this cut.",
+ "bead": "wb-hs2j.3",
+ "quote": "Render-without-session created open sessions per tick, reaching **95 open/0 closed** in the consumer evidence before it explicitly passed a session; a later shared workspace snapshot showed 306 open/0 closed over 836 renders. Proposed lifecycle: an explicit long-lived dashboard session, idempotent recovery and explicit close/expiry semantics. No automatic expiry exists by implication.",
+ "citation": "docs/programs/reactive-context-assembly-2026-10-18/02-swarm-usage-and-command-grammar.md:42@6a251bf73af5",
+ "merged": {
+  "id": "rca-session-exact-id-closed-not-resumable",
+  "citation": "README.md:73@6a251bf73af5",
+  "quote": "Closed sessions must not be treated as resumable. Do not turn session names into unique identifiers if runtime accepts duplicates.",
+  "path": "docs/programs/reactive-context-assembly-2026-10-18/README.md",
+  "heading": "### C6. session recover / handoff (P0)",
+  "line": "Input: workspace, optional session identity or receipt. Output: <W1> <W2> graph/definition basis and render receipt, validity, active/closed status, resumption options. Closed sessions must not be treated as resumable. Do not turn session names into unique identifiers if runtime accepts duplicates. For handoff, require explicit render ID rather than reconstructing it from model text."
+ },
+ "scan": {
+  "sessionWords": [
+   "session",
+   "sessions"
+  ],
+  "rfWords": [
+   "rf",
+   "rfs",
+   "reactivefiber"
+  ],
+  "expiryWords": [
+   "expire",
+   "expires",
+   "expired",
+   "expiring",
+   "expiry",
+   "expiries",
+   "expiration",
+   "ttl",
+   "ttls",
+   "timeout",
+   "timeouts",
+   "lapse",
+   "lapses",
+   "lapsed",
+   "reap",
+   "reaps",
+   "reaped",
+   "reaper",
+   "evict",
+   "evicts",
+   "evicted",
+   "eviction",
+   "autoclose",
+   "autocloses",
+   "autoclosed"
+  ],
+  "expiryPairs": [
+   "time out",
+   "times out",
+   "timed out",
+   "timing out",
+   "garbage collect",
+   "garbage collected",
+   "garbage collects"
+  ],
+  "autoWords": [
+   "auto",
+   "automatic",
+   "automatically"
+  ],
+  "endWords": [
+   "close",
+   "closes",
+   "closed",
+   "closing",
+   "end",
+   "ends",
+   "ended",
+   "drop",
+   "drops",
+   "dropped"
+  ],
+  "negators": [
+   "no",
+   "never",
+   "not",
+   "without",
+   "cannot",
+   "none",
+   "nor",
+   "t"
+  ],
+  "windows": {
+   "rf": 6,
+   "expiry": 8
+  },
+  "sentenceBreak": "[.!?](?=\\s)|[;{}]|\\n[ \\t]*\\n/",
+  "sessionVerbs": [
+   "open",
+   "show",
+   "list",
+   "close",
+   "recover",
+   "handoff",
+   "resume",
+   "attach"
+  ],
+  "sessionVerbText": "\\bsession\\.(?:open|show|list|close|recover|handoff|resume|attach)\\b|\\brf\\b[^\\n]{0,80}?\\bsession[\\s_-]+(?:open|show|list|close|recover|handoff|resume|attach)\\b/i",
+  "sessionFlagText": "--session\\b/",
+  "sessionFieldText": "--session\\b|\\bsession_id\\b|\\bsession\\.(?:open|show|list|close|recover|handoff|resume|attach)\\b|\\brfs_[0-9a-z]{4,}/i",
+  "launchers": [
+   "spawn",
+   "spawnSync",
+   "exec",
+   "execSync",
+   "execFile",
+   "execFileSync",
+   "fork"
+  ],
+  "childProcess": "^(?:node:)?child_process$/",
+  "skippedRoots": [
+   ".git",
+   ".beads",
+   "node_modules",
+   "dist",
+   "build",
+   "coverage",
+   ".forge"
+  ],
+  "exempt": [
+   "test/workbench-rf-session-lifecycle-census.test.ts",
+   "test/fixtures/rf-session-lifecycle-roster.json"
+  ],
+  "floors": {
+   "files": 700,
+   "srcModules": 100,
+   "closure": 5
+  },
+  "walkAnchors": [
+   "README.md:pi-subagents",
+   "src/workbench/providers/reactivefiber.ts:RF render refused",
+   "qa/workbench/receipts-index.mjs:docs/workbench/receipts",
+   "examples/workflows/compose.js:export",
+   "media/screenshot.png:PNG"
+  ],
+  "readerModules": [
+   "src/workbench/providers/reactivefiber.ts",
+   "src/workbench/reactivefiber-observer.ts"
+  ],
+  "fixtureRoot": "/fixture/rf-workspace",
+  "closedCode": "RF_SESSION_CLOSED"
+ },
+ "producer": {
+  "rfVersion": "0.1.832",
+  "model": "claude-opus-5",
+  "task": "Summarize workbench integration",
+  "leafPaths": [
+   "init",
+   "status",
+   "doctor",
+   "config.get",
+   "config.set",
+   "config.unset",
+   "config.list",
+   "config.explain",
+   "component.create",
+   "component.add",
+   "component.edit",
+   "component.validate",
+   "component.test",
+   "component.list",
+   "component.show",
+   "component.activate",
+   "component.deactivate",
+   "component.history",
+   "component.state.show",
+   "component.state.reset",
+   "optic.create",
+   "optic.validate",
+   "optic.test",
+   "optic.show",
+   "optic.history",
+   "optic.usages",
+   "optic.register",
+   "optic.list",
+   "graph.show",
+   "graph.validate",
+   "graph.preflight",
+   "graph.explain",
+   "graph.diff",
+   "graph.candidate.create",
+   "graph.candidate.authorize",
+   "graph.patch",
+   "graph.connect",
+   "graph.disconnect",
+   "graph.set-optic",
+   "graph.impact",
+   "graph.test",
+   "graph.publish",
+   "graph.history",
+   "graph.rollback",
+   "view.list",
+   "view.show",
+   "view.validate",
+   "state.get",
+   "state.set",
+   "state.unset",
+   "state.list",
+   "state.history",
+   "session.open",
+   "session.show",
+   "session.list",
+   "session.close",
+   "context.render",
+   "context.show",
+   "context.explain",
+   "context.plan",
+   "context.diff",
+   "context.history",
+   "context.replay",
+   "inference.run",
+   "operation.show",
+   "storage.status",
+   "storage.rebuild-indexes",
+   "storage.export",
+   "storage.import",
+   "storage.migrate",
+   "storage.compact",
+   "storage.cleanup",
+   "storage.local-servers",
+   "dolt",
+   "schema.show",
+   "schema.check",
+   "schema.migrate",
+   "completion",
+   "install-skill"
+  ],
+  "sessionLeaves": [
+   {
+    "path": "session.open",
+    "served": true
+   },
+   {
+    "path": "session.show",
+    "served": true
+   },
+   {
+    "path": "session.list",
+    "served": true
+   },
+   {
+    "path": "session.close",
+    "served": true
+   }
+  ],
+  "help": {
+   "renderSession": "--session ID render inside this session (omitted, a committed render creates a new session of its own and reports it as result.session_id; --no-commit persists none)",
+   "renderNoCommit": "--no-commit render without committing a record (ephemeral, render_id null); --output PATH is still written",
+   "openId": "--id ID open the session under this explicit id (omitted: a minted rfs_ id)",
+   "openName": "--name NAME the session name: a runtime identifier (lower-case [a-z0-9_-] words joined by '.', at most 128 characters; TRUST-SEC-A23), else exit 2 RF_INVALID_IDENTIFIER",
+   "showSession": "SESSION the session id",
+   "closeSession": "SESSION the session id",
+   "listStatus": "--status {open,closed,all} filter by session status"
+  },
+  "record": {
+   "keys": [
+    "actor",
+    "agent_id",
+    "closed_at",
+    "created_at",
+    "name",
+    "overrides",
+    "revision",
+    "session_id",
+    "status"
+   ],
+   "unnamedName": null,
+   "openStatus": "open",
+   "closedStatus": "closed"
+  },
+  "ticks": {
+   "preview": {
+    "argv": [
+     "--workspace",
+     "<workspace>",
+     "context",
+     "render",
+     "--model",
+     "<model>",
+     "--task",
+     "<task>",
+     "--no-commit",
+     "--no-input",
+     "--json"
+    ],
+    "openBefore": 0,
+    "openAfter": 0,
+    "sessionIds": [
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   },
+   "sessionless": {
+    "argv": [
+     "--workspace",
+     "<workspace>",
+     "context",
+     "render",
+     "--model",
+     "<model>",
+     "--task",
+     "<task>",
+     "--no-input",
+     "--json"
+    ],
+    "openBefore": 0,
+    "openAfter": 2,
+    "sessionIds": [
+     "rfs_6i6kjbey7vwjwkfpizkl53y6gm",
+     "rfs_z4aqvdi4qdiwuryc5rnboytsoa"
+    ]
+   },
+   "pinned": {
+    "argv": [
+     "--workspace",
+     "<workspace>",
+     "context",
+     "render",
+     "--session",
+     "<session>",
+     "--model",
+     "<model>",
+     "--task",
+     "<task>",
+     "--no-input",
+     "--json"
+    ],
+    "pinned": "rfs_57bmozjjw5glqyhc4xupfdjpe4",
+    "openBefore": 3,
+    "openAfter": 3,
+    "sessionIds": [
+     "rfs_57bmozjjw5glqyhc4xupfdjpe4",
+     "rfs_57bmozjjw5glqyhc4xupfdjpe4",
+     "rfs_57bmozjjw5glqyhc4xupfdjpe4"
+    ]
+   }
+  },
+  "zeroMint": {
+   "bead": "rfc-s24ro.7",
+   "beadsRow": "BEADS-2026-10-21.md:19",
+   "title": "[RCA] 100 committed renders under one --session mint zero sessions; a sessionless tick reports its own",
+   "journey": "tests/journeys/test_dashboard_session_tick.py",
+   "presentAtPin": false,
+   "presentAtMain": false
+  },
+  "duplicateNames": {
+   "id": "rca-C055",
+   "beadsRow": "BEADS-2026-10-21.md:90",
+   "proposition": "Session open refuses a duplicate --id naming the stored record; whether duplicate session NAMES are accepted was not determined."
+  },
+  "closedRefusal": {
+   "commitExit": 4,
+   "noCommitExit": 4,
+   "noCommitCode": "RF_SESSION_CLOSED",
+   "envelope": {
+    "schema": "reactive-fiber.cli/v1",
+    "ok": false,
+    "command": "context.render",
+    "operation_id": "rfo_xmi5h26obxlwit75fvnky53aju",
+    "workspace": {
+     "id": "rfw_nf3hcmxe3q7rprx33petbtjbtq",
+     "root": "/fixture/rf-workspace"
+    },
+    "transaction_id": null,
+    "result": null,
+    "diagnostics": [
+     {
+      "code": "RF_SESSION_CLOSED",
+      "severity": "error",
+      "message": "session 'rfs_57bmozjjw5glqyhc4xupfdjpe4' is closed (closed_at 2026-10-23T02:56:41.574616Z, revision 2); rf context render renders only an open session and persisted nothing",
+      "hint": "Open a session with `rf session open --json` and render with its id (or render inside another open session); the closed session's renders stay readable through `rf context history --session ID`.",
+      "source": "host",
+      "metadata": {
+       "session_id": "rfs_57bmozjjw5glqyhc4xupfdjpe4",
+       "closed_at": "2026-10-23T02:56:41.574616Z",
+       "current_revision": 2,
+       "retryable": false
+      }
+     }
+    ]
+   }
+  },
+  "programPin": {
+   "repo": "ReactiveFiberCLI",
+   "sha": "6a251bf73af57c3a703caf6892dfe3015e06a481"
+  },
+  "mainPin": {
+   "repo": "ReactiveFiberCLI",
+   "ref": "origin/main",
+   "sha": "444576c86976ecebc367fe968c6385622a7df6c4"
+  }
+ },
+ "residuals": [
+  "R-SPLIT",
+  "R-PARAPHRASE",
+  "R-NEGATED",
+  "R-ENCODED",
+  "R-OUTSIDE",
+  "R-COMPOSED",
+  "R-INDIRECT-LAUNCH",
+  "R-SESSION-ECHO",
+  "R-UNLABELED"
+ ],
+ "rows": [
+  {
+   "id": "A",
+   "label": "(a) a Pi loop of committed renders supplies one pinned session id and the open-session count stays constant across N ticks: absent today and gated - Pi's one rf launch spawns only the --no-commit preview, which passes no --session flag, the measured --no-commit ticks keep the open-session count constant, no committing rf capability is registered, and the zero-mint journey of rfc-s24ro.7 is unshipped",
+   "pins": [
+    {
+     "id": "A1",
+     "witness": {
+      "pin": "A1",
+      "srcFloorMet": true,
+      "rf": [
+       "src/workbench/providers/reactivefiber.ts:spawn"
+      ],
+      "composed": [
+       "src/workbench/hosts/local-detached.ts:spawn(process.execPath)"
+      ],
+      "unbound": [],
+      "controls": {
+       "named": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "aliased": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "namespace": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "defaultImport": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "requireDestructured": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "requireWhole": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "folded": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "absolutePath": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "otherBinary": {
+        "rf": 0,
+        "composed": 0,
+        "unbound": 0
+       },
+       "composedCommand": {
+        "rf": 0,
+        "composed": 1,
+        "unbound": 0
+       },
+       "unboundName": {
+        "rf": 0,
+        "composed": 0,
+        "unbound": 1
+       },
+       "indirect": {
+        "rf": 0,
+        "composed": 0,
+        "unbound": 0
+       },
+       "elementAccess": {
+        "rf": 0,
+        "composed": 0,
+        "unbound": 0
+       },
+       "requireCall": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       }
+      }
+     }
+    },
+    {
+     "id": "A2",
+     "witness": {
+      "pin": "A2",
+      "ticks": 6,
+      "spawns": 6,
+      "readings": 6,
+      "noCommit": 6,
+      "sessionWords": 0,
+      "commitWords": 0,
+      "sessions": [
+       null,
+       null,
+       null,
+       null,
+       null,
+       null
+      ],
+      "verbs": [
+       "context render",
+       "context render",
+       "context render",
+       "context render",
+       "context render",
+       "context render"
+      ],
+      "measuredArgv": [
+       "--workspace",
+       "<workspace>",
+       "context",
+       "render",
+       "--model",
+       "<model>",
+       "--task",
+       "<task>",
+       "--no-commit",
+       "--no-input",
+       "--json"
+      ],
+      "controls": {
+       "sessionEcho": "admitted"
+      }
+     }
+    },
+    {
+     "id": "A3",
+     "witness": {
+      "pin": "A3",
+      "native": [
+       {
+        "id": "reactivefiber.render.preview",
+        "effectClass": "read",
+        "contractSource": "rf@0.1.784:reactive-fiber.cli/v1 context.render --no-commit"
+       }
+      ],
+      "injected": [
+       {
+        "id": "reactivefiber.render.preview",
+        "effectClass": "read",
+        "contractSource": "rf@0.1.784:reactive-fiber.cli/v1 context.render --no-commit"
+       }
+      ],
+      "reconcile": [
+       "reactivefiber.render.preview"
+      ],
+      "committing": [],
+      "carrierNoCommit": true,
+      "controls": {
+       "unlabeled": 0
+      }
+     }
+    },
+    {
+     "id": "A4",
+     "witness": {
+      "pin": "A4",
+      "preview": {
+       "ticks": 5,
+       "openBefore": 0,
+       "openAfter": 0,
+       "minted": 0,
+       "distinctSessions": 0
+      },
+      "sessionless": {
+       "ticks": 2,
+       "openBefore": 0,
+       "openAfter": 2,
+       "minted": 2,
+       "distinctSessions": 2
+      },
+      "pinned": {
+       "ticks": 3,
+       "openBefore": 3,
+       "openAfter": 3,
+       "minted": 0,
+       "distinctSessions": 1
+      },
+      "pinnedReported": true,
+      "helpStatesMint": true,
+      "beadSaysUnshipped": true,
+      "contractShipped": false,
+      "gate": "rfc-s24ro.7"
+     }
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "label": "(b) no Pi code or doc assumes rf sessions expire automatically: no walked file states an rf session expiry, the rf reader closure holds no session state, and each exemption is load-bearing",
+   "pins": [
+    {
+     "id": "B1",
+     "witness": {
+      "pin": "B1",
+      "filesFloorMet": true,
+      "anchorsWalked": true,
+      "findings": [],
+      "symlinks": [],
+      "unreadable": [],
+      "controls": {
+       "plain": true,
+       "timesOut": true,
+       "camelIdentifier": true,
+       "acronymIdentifier": true,
+       "autoCloses": true,
+       "lapse": true,
+       "reaped": true,
+       "closedAutomatically": true,
+       "fieldTtl": true,
+       "never": false,
+       "noExpiry": false,
+       "claudeSession": false,
+       "renderDeadline": false,
+       "closeVerb": false,
+       "separate": false,
+       "split": false,
+       "paraphrase": false,
+       "negatedEarlier": false,
+       "utf16": false,
+       "escaped": false
+      },
+      "plants": {
+       "docs/expiry.md": true,
+       "src/ttl.ts": true,
+       "notes/never.md": false,
+       "notes/le.txt": false,
+       "notes/link.md": true,
+       "node_modules/pkg/notes.md": false,
+       ".beads/issues.jsonl": false,
+       "dist/notes.md": false
+      }
+     }
+    },
+    {
+     "id": "B2",
+     "witness": {
+      "pin": "B2",
+      "closureFloorMet": true,
+      "anchorsRead": true,
+      "unresolved": [],
+      "identifiers": [],
+      "literals": [],
+      "controls": {
+       "ttlIdentifier": 1,
+       "sessionVariable": 1,
+       "resultField": 1,
+       "flagLiteral": 1,
+       "fieldLiteral": 1,
+       "foldedField": 1,
+       "mintedId": 1,
+       "secretKeyLiteral": 0,
+       "regexLiteral": 0,
+       "deadline": 0,
+       "composedField": 0,
+       "templateFlag": 1
+      }
+     }
+    },
+    {
+     "id": "B3",
+     "witness": {
+      "pin": "B3",
+      "exempt": [
+       "test/workbench-rf-session-lifecycle-census.test.ts",
+       "test/fixtures/rf-session-lifecycle-roster.json"
+      ],
+      "exemptWalked": true,
+      "selfFindings": true,
+      "rosterFindings": true
+     }
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "label": "(c) recovery paths key on session_id, never a free-text name: Pi has no recovery path today - no src module or native descriptor spells an rf session verb or flag - and the measured producer serves no recover verb, addresses show and close by the session id and keeps the session name a separate field",
+   "pins": [
+    {
+     "id": "C1",
+     "witness": {
+      "pin": "C1",
+      "srcFloorMet": true,
+      "descriptorFloorMet": true,
+      "renderArgvSeen": true,
+      "argv": [],
+      "flags": [],
+      "literals": [],
+      "descriptorHits": [],
+      "composedArgv": 0,
+      "controls": {
+       "argvVerb": {
+        "hits": 1,
+        "composed": 0
+       },
+       "renderFlag": {
+        "hits": 2,
+        "composed": 0
+       },
+       "flagEquals": {
+        "hits": 1,
+        "composed": 0
+       },
+       "commandText": {
+        "hits": 1,
+        "composed": 0
+       },
+       "dottedLeaf": {
+        "hits": 1,
+        "composed": 0
+       },
+       "nameKeyed": {
+        "hits": 1,
+        "composed": 0
+       },
+       "bdProse": {
+        "hits": 0,
+        "composed": 0
+       },
+       "claudeField": {
+        "hits": 0,
+        "composed": 0
+       },
+       "previewArgv": {
+        "hits": 0,
+        "composed": 0
+       },
+       "composedArgv": {
+        "hits": 0,
+        "composed": 1
+       }
+      }
+     }
+    },
+    {
+     "id": "C2",
+     "witness": {
+      "pin": "C2",
+      "sessionLeaves": [
+       "session.open",
+       "session.show",
+       "session.list",
+       "session.close"
+      ],
+      "recoverLeaves": [],
+      "addressedById": true,
+      "nameSeparate": true,
+      "unnamedName": null,
+      "c6Proposed": true,
+      "duplicateNamesUndetermined": true,
+      "beadPinsIdOnly": true,
+      "recoverShipped": false
+     }
+    }
+   ]
+  },
+  {
+   "id": "D",
+   "label": "(d) recovery against a closed session surfaces closed status, never resumes it: the measured RF_SESSION_CLOSED refusal surfaces as itself in one spawn with no reading, the registered reading carries it verbatim, and the adapter projects a failure carrying no value",
+   "pins": [
+    {
+     "id": "D1",
+     "witness": {
+      "pin": "D1",
+      "refusal": {
+       "category": "unavailable",
+       "message": "RF render refused: RF_SESSION_CLOSED"
+      },
+      "valuesNamed": [],
+      "readings": 0,
+      "spawns": 1
+     }
+    },
+    {
+     "id": "D2",
+     "witness": {
+      "pin": "D2",
+      "code": "RF_SESSION_CLOSED",
+      "metadata": {
+       "session_id": "rfs_57bmozjjw5glqyhc4xupfdjpe4",
+       "closed_at": "2026-10-23T02:56:41.574616Z",
+       "current_revision": 2,
+       "retryable": false
+      },
+      "readingKeys": [
+       "contract",
+       "source",
+       "workspaceRoot"
+      ],
+      "contract": "reactivefiber.render.preview/v1",
+      "calls": 1,
+      "verbatim": true
+     }
+    },
+    {
+     "id": "D3",
+     "witness": {
+      "pin": "D3",
+      "snapshots": 1,
+      "statusTone": "failure",
+      "statusShowsCode": true,
+      "carriesValue": false,
+      "evidenceRefs": [
+       "rf-workspace:rfw_nf3hcmxe3q7rprx33petbtjbtq"
+      ],
+      "surfaced": []
+     }
+    }
+   ]
+  }
+ ],
+ "tests": [
+  "the judged set: the frozen shape, the out-of-file roster and the bead row agree",
+  "A1",
+  "A2",
+  "A3",
+  "A4",
+  "B1",
+  "B2",
+  "B3",
+  "C1",
+  "C2",
+  "D1",
+  "D2",
+  "D3",
+  "records: every registered test ran once in run mode in roster order, every pin reached its end, and every registered title reads quiet to the B1 judge"
+ ]
+}
