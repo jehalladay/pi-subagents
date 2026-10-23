@@ -15,9 +15,12 @@
  * Pi's rf readers today: the reactivefiber.render.preview provider (src/workbench/providers/reactivefiber.ts) spawns only
  * `rf --workspace W context render ... --no-commit --no-input --json`; it, its reader adapter (reactivefiber-observer.ts) and the
  * native evidence projection (native-evidence.ts) admit only context.render envelopes, and result.output.text is read only to
- * type-check it and to digest it (the adapter's rf-output:sha256:<hex> payload reference). No Pi module reads result.blocks,
- * result.components or any diff envelope. So the trigger has not fired, (a)-(c) hold by construction and (d) waits for rf. The
- * census pins that state over THE WALK (every module below WALK_ROOTS, parsed by the TypeScript compiler; comments are not read):
+ * type-check it and to digest it (the adapter's rf-output:sha256:<hex> payload reference). The one record-container read is the
+ * adapter's inclusion leg (wb-hs2j.1, landing 287): it binds result.blocks only to count it (Array.isArray, an every() row-shape
+ * test that reads no field, .length) beside result.necessity's include flags, so no block is attributed or resolved; no Pi module
+ * reads result.components or any diff envelope. So the trigger has not fired, (a)-(c) hold by construction and (d) waits for rf.
+ * The census pins that state over THE WALK (every module below WALK_ROOTS, parsed by the TypeScript compiler; comments are not
+ * read; the walk must equal node's own recursive listing of the roots):
  *  A, the trigger, absent today. A1 the launch census: exactly one call of a process launcher (LAUNCHERS) whose first argument
  *    reads the rf binary (folded, or the leading literal piece of a composed shell line), the provider's; in every argv-shaped
  *    array literal (one holding a folded "--" flag, or the argv literal of an rf launch) the element after "context" is "render"; no folded literal spells another context leaf of the measured
@@ -34,9 +37,15 @@
  *    moves only nativePayloadRef, and the evidence projection is identical across the two and carries no marker.
  *  C, acceptance (b), absent today. C1 no judged module spells an rf block or component record field (BLOCK_FIELDS, the
  *    snake_case fields of the measured context.show block record and the render result's block and component rows, minus the
- *    render result's own keys) as an identifier, nor as a whole word of a folded literal. C2 no READER reads a record container
- *    (blocks, components) by property access, literal element access or binding, and populating both containers with attributed
- *    records changes no projected snapshot and no evidence field.
+ *    render result's own keys) as an identifier, nor as a whole word of a folded literal. C2 (re-pinned at the R710 re-cut on trunk
+ *    edccd80, after wb-hs2j.1 landed its inclusion leg) the record containers (blocks, components) the READERS read by property
+ *    access, literal element access or binding are exactly the adapter's result.blocks binding, and every use of a read container
+ *    (a bound name is followed to each reference in its function) is a count (.length) or a row-shape check that reads no field
+ *    (Array.isArray, or an every() whose callback reads no property); an element access, find, map, loop, spread, pass-through,
+ *    alias or nested binding is a finding. Behaviour: populating both containers with attributed records changes no projection
+ *    and no evidence field, on a clean render and on one withholding a judged candidate (so the inclusion note carries no record
+ *    value either); one more block moves only the diagnostics (the inclusion note's count: the read is a count); and no planted
+ *    record value reaches any projected string.
  *  D, acceptance (c), absent today. D1 no judged module spells an rf diff result key (DIFF_KEYS, the snake_case keys of the
  *    measured context.diff result minus the render result's keys) as an identifier or a whole word of a folded literal. D2 no
  *    READER reads a one-word diff key (GENERIC_DIFF_KEYS) by property access, literal element access or binding, and a
@@ -46,7 +55,8 @@
  *    context show and no --detail option on context diff (context explain serves --block; context show serves --detail compact
  *    and full, the record level, not rfc-s24ro.4), the filing's "Shipped: no;" sentence and its two gating beads agree with the
  *    roster's BEADS rows, and the captured rf registry (test/fixtures/rf-version-leaves.json) serves context.show and context.diff,
- *    so Pi's absence is its own; a re-measure that ships either selector flips E1 red until (d) lands with it. E2 the rf tiers (the
+ *    so Pi's absence is its own; the roster's rf version, commit and context leaves are that capture's (the producer facts'
+ *    anchor outside this cut); a re-measure that ships either selector flips E1 red until (d) lands with it. E2 the rf tiers (the
  *    files vitest.rf.config.ts and vitest.rf-tsx.config.ts include, run by forge.toml's rf-preview and rf-preview-tsx) carry no
  *    literal naming a show or diff leaf, either gated selector, a scoped digest or a compact count (CLAIM_FAMILY).
  * MEASURED BY THE CUTTING SEAT (2026-10-23, read-only): rf 0.1.832 (`rf --json --version` result.version, commit 2618c211be0d, a
@@ -61,17 +71,23 @@
  * bead export (.beads/issues.jsonl, row wb-hs2j.2): each acceptance clause and the trigger sit verbatim in exactly one row label,
  * every row carries one of them, and its statement, quotes, citations, gating beads and "Shipped: no;" sentence equal the
  * roster's, so a row removed from every literal of this file and the roster still reds. Not claimed: a pin removed from ROWS, the
- * literal, IMPL and the roster together (the bead row anchors rows and clauses, not pins).
+ * literal, IMPL and the roster together (the bead row anchors rows and clauses, not pins); a case body that returns its roster
+ * witness through done() without measuring it (the records case proves each case returned through done(), not what it read); a
+ * record field or diff key dropped from the roster's producer key lists together with a plant of it (Pi captures no rf schema,
+ * so those key lists are roster-only measured facts; the version, commit and context leaves are held to the capture, E1); the walk
+ * and its listing hollowed together (both enumerations live in this file, so a directory both skip is not seen).
  * RECORDS: the last case walks this file's registered tests (vitest's task tree): each roster title once, in order, in run mode,
  * not inverted, ran; every pin's case reached its end (REACHED).
  * RESIDUALS (named families, each with pinned quiet rows in the controls): R-COMPOSED a launch binary, verb, field name or text key
  * composed at run time, or a flagless argv built apart from its launch (A1 composedVerb, composedBinary and argvApart, B1
- * computedKey, C1 composedField); R-ALIAS document text read through
- * an alias of the output object outside the READERS (B1 aliasOutsideReaders); R-GENERIC-KEY a record field or diff key whose rf
- * name is one common word (GENERIC_BLOCK_FIELDS, GENERIC_DIFF_KEYS), read outside the READERS (C1 genericField, C2
- * containerOutsideReaders, D1 genericKey, D2 genericOutsideReaders); R-RENAMED a renamed spelling of an rf field (C1 camelCase);
- * R-COMMENT a comment naming a leaf or a field (A1 comment, C1 comment, D1 comment); R-OUTSIDE a module outside WALK_ROOTS - test
- * helpers and fixtures plant rf envelopes - is not judged (C1 outsideRoots).
+ * computedKey, C1 composedField); R-ALIAS document text read through an alias of the output object outside the READERS (B1
+ * aliasOutsideReaders), or an rf launch through an aliased launcher with a flagless argv (A1 aliasedLauncher); R-GENERIC-KEY a
+ * record field or diff key whose rf name is one common word (GENERIC_BLOCK_FIELDS, GENERIC_DIFF_KEYS), read outside the READERS
+ * (C1 genericField, C2 containerOutsideReaders, D1 genericKey, D2 genericOutsideReaders); R-RENAMED a renamed spelling of an rf
+ * field (C1 camelCase); R-COMMENT a comment naming a leaf or a field (A1 comment, C1 comment, D1 comment); R-OUTSIDE a module
+ * outside WALK_ROOTS - test helpers and fixtures plant rf envelopes - is not judged (C1 outsideRoots); R-REFLECTIVE document text
+ * or a record container reached reflectively, never by a named read: Reflect.get with a key, JSON.stringify of the output object,
+ * Object.values or Object.entries of the result (B1 reflectGet and serializedOutput, C2 reflectiveRows).
  * Display paths added: none. Test-only: it spawns nothing and allocates no scratch; src, qa, examples, the two vitest tier configs,
  * forge.toml, the captured registry and the bead export are only read.
  */
@@ -87,7 +103,7 @@ import { REACTIVEFIBER_RENDER_PREVIEW_CONTRACT, registerNativeReactiveFiberRende
 import { type ReactiveFiberTopologyContext, reactivefiberTopology } from "../src/workbench/reactivefiber-observer.js";
 import rfConfig from "../vitest.rf.config.js";
 import rfTsxConfig from "../vitest.rf-tsx.config.js";
-import { fullShapeRf } from "./helpers/rf-render-fixture.js";
+import { fullShapeRf, rfFixtureDecision } from "./helpers/rf-render-fixture.js";
 
 type Json = null | boolean | number | string | Json[] | { [key: string]: Json };
 type JsonObject = { [key: string]: Json };
@@ -120,7 +136,7 @@ const SELECTOR_WORDS = /render|component|block|occurrence|instance|audience|cand
 const CLAIM_FAMILY = /\bcontext(?:\.|\s+)(?:show|diff)\b|--block\b|--detail\b|scoped[\s_-]*digest|compact[\s_-]*counts?/i;
 const TIER_CONFIGS = ["vitest.rf.config.ts", "vitest.rf-tsx.config.ts"];
 const TIER_COMMANDS = ["rf-preview", "rf-preview-tsx"];
-const RESIDUAL_FAMILIES = ["R-COMPOSED", "R-ALIAS", "R-GENERIC-KEY", "R-RENAMED", "R-COMMENT", "R-OUTSIDE"];
+const RESIDUAL_FAMILIES = ["R-COMPOSED", "R-ALIAS", "R-GENERIC-KEY", "R-RENAMED", "R-COMMENT", "R-OUTSIDE", "R-REFLECTIVE"];
 /** The fixture workspace every planted reading names. */
 const ROOT = "/fixture/rf-workspace";
 const HOST: ReactiveFiberTopologyContext = {
@@ -164,7 +180,7 @@ const ROWS: readonly Row[] = [
   {
     id: "C",
     label:
-      "(b) a Pi block read resolves (render_id, component_id, occurrence key) against structured block records, unknown component distinct from suppressed block: absent today - no module spells an rf block or component record field, the rf readers read neither record container, and populated records change no projection",
+      "(b) a Pi block read resolves (render_id, component_id, occurrence key) against structured block records, unknown component distinct from suppressed block: absent today - no module spells an rf block or component record field, the one record-container read in an rf reader is the adapter's count-only result.blocks binding, and attributed records change no projection",
     pins: ["C1", "C2"],
   },
   {
@@ -394,6 +410,17 @@ function walkRoots(): Walk {
   for (const root of WALK_ROOTS) visit(join(REPO, root));
   return { modules, symlinks, unreadable };
 }
+/** The judged modules by node's own recursive listing of each walk root (files only, no symlink followed), sorted: the walk's
+ * anchor outside walkRoots(), so a walk that skips a directory reds A1 even while the floors hold. */
+function listedModules(): string[] {
+  return WALK_ROOTS.flatMap(root =>
+    readdirSync(join(REPO, root), { recursive: true, withFileTypes: true })
+      .filter(entry => entry.isFile())
+      .map(entry => posix(relative(REPO, join(entry.parentPath, entry.name)))),
+  )
+    .filter(judgedPath)
+    .sort();
+}
 
 function scriptKindOf(path: string): ts.ScriptKind {
   const extension = extensionOf(path);
@@ -557,6 +584,79 @@ const wholeWordHits = (path: string, reading: ModuleReading, words: readonly str
 const keyHits = (path: string, reading: ModuleReading, keys: readonly string[]): string[] => reading.keyReads.filter(key => keys.includes(key)).map(key => `${path}: ${key}`);
 /** C2's and D2's judge: the named keys a READER reads; a module that is no rf reader is not judged (R-GENERIC-KEY). */
 const readerKeyFindings = (path: string, reading: ModuleReading, keys: readonly string[]): string[] => (isReader(reading) ? keyHits(path, reading, keys) : []);
+/** How a module uses a record container it reads (C2): "count" its .length; "check" a row-shape test that reads no field of a row
+ * (Array.isArray of it, or an every() whose one callback reads no property and binds no pattern); "other" anything else. */
+type ContainerUse = "count" | "check" | "other";
+const readsAField = (callback: ts.Node): boolean => {
+  let found = false;
+  const visit = (node: ts.Node): void => {
+    if (ts.isPropertyAccessExpression(node) || ts.isElementAccessExpression(node) || ts.isObjectBindingPattern(node) || ts.isArrayBindingPattern(node)) found = true;
+    else ts.forEachChild(node, visit);
+  };
+  ts.forEachChild(callback, visit);
+  return found;
+};
+const isArrayIsArray = (node: ts.Expression): boolean =>
+  ts.isPropertyAccessExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "Array" && node.name.text === "isArray";
+function containerUse(node: ts.Expression): ContainerUse {
+  let child: ts.Node = node;
+  let parent: ts.Node = node.parent;
+  while (ts.isParenthesizedExpression(parent) || ts.isNonNullExpression(parent)) {
+    child = parent;
+    parent = parent.parent;
+  }
+  if (ts.isPropertyAccessExpression(parent) && parent.expression === child) {
+    if (parent.name.text === "length") return "count";
+    const call = parent.parent;
+    const callback = ts.isCallExpression(call) && call.expression === parent && call.arguments.length === 1 ? call.arguments[0] : undefined;
+    const pure = callback !== undefined && (ts.isArrowFunction(callback) || ts.isFunctionExpression(callback)) && !readsAField(callback);
+    return parent.name.text === "every" && pure ? "check" : "other";
+  }
+  if (ts.isCallExpression(parent) && isArrayIsArray(parent.expression) && parent.arguments.length === 1 && parent.arguments[0] === child) return "check";
+  return "other";
+}
+/** True for an identifier that names a value here: not the declaration itself and not a property name or a binding's key. */
+function referenceOf(node: ts.Identifier, declared: ts.Identifier): boolean {
+  if (node === declared) return false;
+  const parent = node.parent;
+  if (ts.isPropertyAccessExpression(parent) && parent.name === node) return false;
+  if ((ts.isPropertyAssignment(parent) || ts.isPropertyDeclaration(parent) || ts.isPropertySignature(parent) || ts.isMethodDeclaration(parent)) && parent.name === node) return false;
+  return !(ts.isBindingElement(parent) && parent.propertyName === node);
+}
+/** C2's use judge for one module: `<path> <container> <use>` for each use of a record container it reads, in source order - a
+ * property or literal element access is used where it stands; a name bound by an object binding is followed to every reference of
+ * that name in the enclosing function (a nested pattern is "other"). */
+function containerUses(path: string, source: string): string[] {
+  const file = ts.createSourceFile(path, source, ts.ScriptTarget.Latest, true, scriptKindOf(path));
+  const uses: string[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isPropertyAccessExpression(node) && CONTAINERS.includes(node.name.text)) uses.push(`${path} ${node.name.text} ${containerUse(node)}`);
+    else if (ts.isElementAccessExpression(node)) {
+      const key = fold(node.argumentExpression);
+      if (key !== undefined && CONTAINERS.includes(key)) uses.push(`${path} ${key} ${containerUse(node)}`);
+    } else if (ts.isBindingElement(node) && ts.isObjectBindingPattern(node.parent)) {
+      const named = node.propertyName ?? node.name;
+      const key = ts.isIdentifier(named) || ts.isStringLiteral(named) ? named.text : undefined;
+      if (key !== undefined && CONTAINERS.includes(key)) {
+        const declared = node.name;
+        if (!ts.isIdentifier(declared)) uses.push(`${path} ${key} other`);
+        else {
+          let scope: ts.Node = node.parent;
+          while (!ts.isSourceFile(scope) && !ts.isFunctionLike(scope)) scope = scope.parent;
+          const collect = (child: ts.Node): void => {
+            if (ts.isIdentifier(child) && child.text === declared.text && referenceOf(child, declared)) uses.push(`${path} ${key} ${containerUse(child)}`);
+            ts.forEachChild(child, collect);
+          };
+          collect(scope);
+        }
+      }
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(file);
+  return uses;
+}
+const otherUses = (uses: readonly string[]): string[] => uses.filter(use => use.endsWith(" other"));
 
 interface TreeReading {
   readonly walk: Walk;
@@ -646,12 +746,14 @@ const IMPL: Readonly<Record<string, () => Json>> = {
   A1: () => {
     const tree = liveTree();
     const modulesFloorMet = floorsMet(tree);
+    const walkListed = JSON.stringify([...tree.walk.modules].sort()) === JSON.stringify(listedModules());
     const readings = [...tree.modules];
     const launches = readings.flatMap(([, reading]) => reading.launches);
     const followers = [...new Set(readings.flatMap(([, reading]) => reading.followers))].sort();
     const verbLiterals = readings.flatMap(([path, reading]) => reading.literals.filter(value => VERB_FAMILY.test(value)).map(value => `${path}: ${value.slice(0, 80)}`));
     expect(modulesFloorMet, `modules: src ${below(tree, "src")}, qa ${below(tree, "qa")}, examples ${below(tree, "examples")}`).toBe(true);
     expect({ symlinks: tree.walk.symlinks, unreadable: tree.walk.unreadable }, "the walk meets no symlink and no unreadable directory").toStrictEqual({ symlinks: [], unreadable: [] });
+    expect(walkListed, "the walk reads exactly the modules node's recursive listing of the walk roots holds").toBe(true);
     expect(launches, "rf launches in the judged modules: the provider's spawn alone").toEqual(["src/workbench/providers/reactivefiber.ts spawn"]);
     expect(followers, "the leaf after context in every argv-shaped array").toEqual(["render"]);
     expect(verbLiterals, "literals naming another context leaf of the measured rf").toEqual([]);
@@ -672,8 +774,9 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       composedBinary: of('spawn(binary, ["context", "render", "--json"]);\n').launches.length,
       prose: of('const note = "the context window is full";\n').literals.some(value => VERB_FAMILY.test(value)),
       comment: of("// rf context show RENDER --json\nexport {};\n").literals.length,
+      aliasedLauncher: of('const run = cp.spawnSync;\nrun("rf", ["context", "show", id]);\n').followers,
     };
-    return done("A1", { modulesFloorMet, launches, followers, verbLiterals, otherVerbs: [...VOCABULARY.otherVerbs], controls });
+    return done("A1", { modulesFloorMet, walkListed, launches, followers, verbLiterals, otherVerbs: [...VOCABULARY.otherVerbs], controls });
   },
   A2: () => {
     const tree = liveTree();
@@ -744,6 +847,8 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       messageOutsideReaders: other('const lines = message.text.split("\\n");\n'),
       aliasOutsideReaders: other("const o = result.output;\nconst parts = o.text.split(marker);\n"),
       computedKey: other('const field = "te" + suffix;\nconst parts = output[field].split(marker);\n'),
+      reflectGet: reader('const marks = String(Reflect.get(output, "text")).split(marker);\n'),
+      serializedOutput: reader("const marks = JSON.stringify(output).match(/<!-- block/g);\n"),
     };
     return done("B1", { readers: [...tree.readers], reads, outputReads, findings, controls });
   },
@@ -806,34 +911,105 @@ const IMPL: Readonly<Record<string, () => Json>> = {
   C2: () => {
     const tree = liveTree();
     const containerReads = [...tree.modules].flatMap(([path, reading]) => readerKeyFindings(path, reading, CONTAINERS));
-    const records = (result: JsonObject): void => {
-      result.blocks = [
-        { candidate_key: "demo.notes:notes::summary", component_id: "demo.notes", final_index: 0, token_cost: { kind: "estimated", tokens: 6 }, token_cost_kind: "estimated" },
-        { candidate_key: "demo.aside:aside::main", component_id: "demo.aside", final_index: 1, token_cost: { kind: "estimated", tokens: 4 }, token_cost_kind: "estimated" },
-      ];
-      result.components = [
-        { component_id: "demo.notes", component_instance_id: "notes", component_revision_id: `sha256:${"c".repeat(64)}`, source_unavailable: false, status: "rendered" },
-        { component_id: "demo.aside", component_instance_id: "aside", component_revision_id: `sha256:${"d".repeat(64)}`, source_unavailable: false, status: "suppressed" },
-      ];
+    const uses = tree.readers.flatMap(path => containerUses(path, readFileSync(join(REPO, path), "utf8")));
+    const useFindings = otherUses(uses);
+    const blockRow = (candidate: string, component: string, index: number, tokens: number): JsonObject => ({
+      candidate_key: candidate,
+      component_id: component,
+      final_index: index,
+      token_cost: { kind: "estimated", tokens },
+      token_cost_kind: "estimated",
+    });
+    const componentRow = (component: string, instance: string, revision: string, status: string): JsonObject => ({
+      component_id: component,
+      component_instance_id: instance,
+      component_revision_id: `sha256:${revision.repeat(64)}`,
+      source_unavailable: false,
+      status,
+    });
+    const attributed = [blockRow("demo.notes:notes::summary", "demo.notes", 0, 6), blockRow("demo.aside:aside::main", "demo.aside", 1, 4)];
+    const components = [componentRow("demo.notes", "notes", "c", "rendered"), componentRow("demo.aside", "aside", "d", "suppressed")];
+    const reattributed = [blockRow("demo.other:other::lead", "demo.other", 0, 9), blockRow("demo.third:third::tail", "demo.third", 1, 2)];
+    const recomponents = [componentRow("demo.other", "other", "e", "suppressed"), componentRow("demo.third", "third", "f", "rendered")];
+    const extra = blockRow("demo.more:more::extra", "demo.more", 2, 1);
+    /** A judged candidate the render withholds (include false), so the inclusion leg demotes and states its note. */
+    const withheldKey = "demo.withheld:withheld::main";
+    const records = (blocks: JsonObject[], rows: JsonObject[], withholds: boolean) => (result: JsonObject) => {
+      withText(MARKED_TEXT)(result);
+      result.blocks = blocks;
+      result.components = rows;
+      if (withholds) result.necessity = [rfFixtureDecision(), rfFixtureDecision(false, withheldKey)];
     };
     const bare = previewReading(withText(MARKED_TEXT));
-    const populated = previewReading(result => {
-      withText(MARKED_TEXT)(result);
-      records(result);
-    });
-    const projectionEqual = JSON.stringify(reactivefiberTopology(bare, HOST)) === JSON.stringify(reactivefiberTopology(populated, HOST));
-    const evidenceEqual = JSON.stringify(nativeEvidence("reactivefiber.render.preview", bare)) === JSON.stringify(nativeEvidence("reactivefiber.render.preview", populated));
-    expect(containerReads, "record containers read in an rf reader").toEqual([]);
+    const populated = previewReading(records(attributed, components, false));
+    const withheld = previewReading(records(attributed, components, true));
+    const rewithheld = previewReading(records(reattributed, recomponents, true));
+    const withheldMore = previewReading(records([...attributed, extra], components, true));
+    const project = (reading: JsonValue): string => JSON.stringify(reactivefiberTopology(reading, HOST));
+    const evidence = (reading: JsonValue): string => JSON.stringify(nativeEvidence("reactivefiber.render.preview", reading));
+    const projectionEqual = project(bare) === project(populated);
+    const evidenceEqual = evidence(bare) === evidence(populated);
+    const withheldProjectionEqual = project(withheld) === project(rewithheld);
+    const withheldEvidenceEqual = evidence(withheld) === evidence(rewithheld);
+    const countDelta = projectionDelta(reactivefiberTopology(withheld, HOST), reactivefiberTopology(withheldMore, HOST));
+    const planted = [
+      ...new Set([...attributed, ...reattributed, extra, ...components, ...recomponents].flatMap(row => Object.values(row)).filter((value): value is string => typeof value === "string" && value.startsWith("demo."))),
+      withheldKey,
+    ];
+    const surfaced = [bare, populated, withheld, rewithheld, withheldMore].map(reading => project(reading) + evidence(reading)).join("\n");
+    const recordTokens = planted.filter(token => surfaced.includes(token));
+    expect(containerReads, "record containers read in an rf reader: the adapter's result.blocks binding alone").toEqual(["src/workbench/reactivefiber-observer.ts: blocks"]);
+    expect(uses, "every use of a record container an rf reader reads (the non-vacuity anchor)").toEqual([
+      "src/workbench/reactivefiber-observer.ts blocks check",
+      "src/workbench/reactivefiber-observer.ts blocks check",
+      "src/workbench/reactivefiber-observer.ts blocks count",
+      "src/workbench/reactivefiber-observer.ts blocks count",
+      "src/workbench/reactivefiber-observer.ts blocks count",
+    ]);
+    expect(useFindings, "a record container read beyond its count and row shape in an rf reader").toEqual([]);
     expect({ projectionEqual, evidenceEqual }, "attributed records change no projection and no evidence field").toStrictEqual({ projectionEqual: true, evidenceEqual: true });
+    expect({ withheldProjectionEqual, withheldEvidenceEqual }, "on a render withholding a judged candidate, attributed records change neither").toStrictEqual({
+      withheldProjectionEqual: true,
+      withheldEvidenceEqual: true,
+    });
+    expect(countDelta, "one more block moves only the diagnostics: the inclusion leg reads a count").toEqual(["diagnostics"]);
+    expect(recordTokens, "planted record values in any projected string").toEqual([]);
     const reader = (body: string): number => readerKeyFindings("c.ts", readModule("c.ts", asReader(body)), CONTAINERS).length;
+    const others = (body: string): number => otherUses(containerUses("c.ts", asReader(body))).length;
+    const reflective = "const rows = Object.values(result).filter(Array.isArray).length;\n";
     const controls = {
       findBlock: reader("const block = result.blocks.find(row => row.final_index === 0);\n"),
       elementAccess: reader('const rows = source.result["components"];\n'),
       destructure: reader("const { blocks } = result;\n"),
       containerOutsideReaders: readerKeyFindings("c.ts", readModule("c.ts", "const rows = plan.blocks;\n"), CONTAINERS).length,
       constructionInReader: reader("const result = { blocks: [], components: [] };\n"),
+      countRead: others("const n = result.blocks.length;\n"),
+      shapeCheck: others("const { blocks } = result;\nif (!Array.isArray(blocks) || !blocks.every(item => isRow(item))) throw refused();\nconst n = blocks.length;\n"),
+      shapeCheckReadsField: others("const { blocks } = result;\nconst ok = blocks.every(item => item.content !== undefined);\n"),
+      findRow: others("const block = result.blocks.find(row => row.final_index === 0);\n"),
+      elementRead: others("const { blocks } = result;\nconst first = blocks[0];\n"),
+      mapRows: others("const ids = result.blocks.map(row => row.component_id);\n"),
+      loopRows: others("for (const block of result.blocks) use(block);\n"),
+      spreadRows: others("const rows = [...result.blocks];\n"),
+      passThrough: others("const { blocks } = result;\nsummarize(blocks);\n"),
+      aliasRows: others("const rows = result.blocks;\nconst n = rows.length;\n"),
+      nestedBinding: others("const { blocks: [first] } = result;\n"),
+      reflectiveRows: reader(reflective) + others(reflective),
     };
-    return done("C2", { containers: [...CONTAINERS], containerReads, projectionEqual, evidenceEqual, controls });
+    return done("C2", {
+      containers: [...CONTAINERS],
+      containerReads,
+      uses,
+      useFindings,
+      projectionEqual,
+      evidenceEqual,
+      withheldProjectionEqual,
+      withheldEvidenceEqual,
+      countDelta,
+      plantedTokens: planted.length,
+      recordTokens,
+      controls,
+    });
   },
   D1: () => {
     const tree = liveTree();
@@ -900,9 +1076,16 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     const rows = isObject(capture) && isObject(capture.envelope) && isObject(capture.envelope.result) && Array.isArray(capture.envelope.result.leaves) ? capture.envelope.result.leaves : [];
     const served = (leaf: string): boolean => rows.some((row: unknown) => isObject(row) && row.path === leaf && row.served === true);
     const capturedServed = { "context.show": served("context.show"), "context.diff": served("context.diff") };
+    const captured: { [key: string]: unknown } = isObject(capture) && isObject(capture.envelope) && isObject(capture.envelope.result) ? capture.envelope.result : {};
+    const capturedCommit = isObject(captured.provenance) ? captured.provenance.commit_id : undefined;
+    const capturedLeaves = rows.flatMap((row: unknown) => (isObject(row) && typeof row.path === "string" && row.path.startsWith(LEAF_PREFIX) && row.served === true ? [row.path] : []));
+    const producerCaptured =
+      JSON.stringify({ version: captured.version, commit: capturedCommit, leaves: capturedLeaves }) ===
+      JSON.stringify({ version: producer.rfVersion, commit: producer.rfCommit, leaves: producer.contextLeaves });
     expect({ beadSaysUnshipped, gatingNamed, gatingLine }, `the bead row ${BEAD} states the gating artifacts open and unshipped`).toStrictEqual({ beadSaysUnshipped: true, gatingNamed: true, gatingLine: true });
     expect(contractShipped, "a selector shipped: (d) is owed with this re-measure (wb-hs2j.2)").toBe(false);
     expect(capturedServed, "the captured rf registry serves the leaves Pi does not issue").toStrictEqual({ "context.show": true, "context.diff": true });
+    expect(producerCaptured, `the roster's rf version, commit and served context leaves are the captured registry's (${CAPTURE})`).toBe(true);
     return done("E1", {
       contractShipped,
       showBlockServed,
@@ -914,6 +1097,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       gatingLine,
       gatingTitles,
       capturedServed,
+      producerCaptured,
       pinIsCitationSha: ROSTER.citation.endsWith(`@${producer.programPin.sha.slice(0, 12)}`),
     });
   },
