@@ -1,0 +1,965 @@
+{
+ "bead": "wb-tz4r.6",
+ "quote": "An emitted reference is snapshot-bound and must be revalidated before use.",
+ "citation": "docs/programs/unified-decision-inference-2026-10-21/01-contracts.md:20@485f3615db1e",
+ "producer": {
+  "repo": "ReactiveInferenceSDK",
+  "pin": "485f3615db1e8703d6ce1093713fe595e46f42a0",
+  "probe": "075ac589d64d2718db8ec178ce7602705b64e9d4",
+  "files": [
+   {
+    "path": "docs/programs/unified-decision-inference-2026-10-21/01-contracts.md",
+    "blobAtPin": "a89810065d9120d1abdd3e80a02a20ae20580285",
+    "blobAtProbe": "a89810065d9120d1abdd3e80a02a20ae20580285",
+    "lines": [
+     {
+      "line": 7,
+      "text": "Named ordered immutable observations (JSON/media descriptors), named decision questions, recursively typed output contracts, and explicit execution policy. Output family: Boolean, choice, ranking, pointer, extractive/generated spans and recursively structured compositions. Abstain != False; partial/incomplete/refused/invalid/unsupported/stale are not silently coerced to a choice."
+     },
+     {
+      "line": 11,
+      "text": "The pure compiler validates identifiers, bounded state, digests, RFC 6901 pointer candidates, cardinality, candidate IDs, schema, modality, output bounds, score requirements, distinct axes for thinking, generated spans, extractive spans and read-only observations. Route only after hard capability eligibility and context budgeting. Unknown hard capability = reject. No unrequested summarization or weakening."
+     },
+     {
+      "line": 20,
+      "text": "Read-only observation is a strictly bounded injected port; no embedded agent orchestrator, no unrestricted tools. ReactiveAgentsSDK or host authorizes effects and observation sources. An emitted reference is snapshot-bound and must be revalidated before use. Inference never executes UI actions."
+     }
+    ]
+   },
+   {
+    "path": "docs/programs/unified-decision-inference-2026-10-21/02-implementation.md",
+    "blobAtPin": "05c09af36db8f9151cf45de182f7d0f3ca3a0387",
+    "blobAtProbe": "05c09af36db8f9151cf45de182f7d0f3ca3a0387",
+    "lines": [
+     {
+      "line": 7,
+      "text": "RI-DEC-03: deterministic candidate expansion (RFC 6901, wildcard input only), cardinality and size budgets, digests, redacted source provenance."
+     },
+     {
+      "line": 15,
+      "text": "RI-DEC-07: strict result validator, abstention, atomic/partial batch semantics, retry/cancellation, transient errors and snapshot freshness."
+     },
+     {
+      "line": 23,
+      "text": "Current implementation: RI-DEC-02/04/05 **initial restricted seed only**, with choice questions and pure preflight, NOT provider execution or advanced output support."
+     }
+    ]
+   },
+   {
+    "path": "docs/programs/unified-decision-inference-2026-10-21/03-conformance.md",
+    "blobAtPin": "2ed40f651d8a3c988a89e8ed53173259f54d9bc4",
+    "blobAtProbe": "2ed40f651d8a3c988a89e8ed53173259f54d9bc4",
+    "lines": [
+     {
+      "line": 14,
+      "text": "Booleans/abstention, rankings/ties/top_k, exact pointer revision/digest checks, Unicode byte/character extractive span offsets, recursively nested structured values, malformed provider tool output, lack of stream-tool semantics, native/generative parity for eligible finalizers, timeout and cancellation, failed atomic joint retry, partial independent result policy, full/partial/missing score provenance, multimodal and context budgets, prompt/template injection scope for declared read-only observations."
+     }
+    ]
+   },
+   {
+    "path": "src/reactive_inference/<ENGINE>/contracts.py",
+    "blobAtPin": "26f762bbe3f91d5111674ba022b5827442437e81",
+    "blobAtProbe": "bce216e75d7bf5f83d2052f7f98ff331fe3f4713",
+    "lines": [
+     {
+      "line": 59,
+      "text": "    snapshot_digest: str"
+     },
+     {
+      "line": 69,
+      "text": "                \"Snapshot digest must be 64 lowercase sha256 hex characters\","
+     },
+     {
+      "line": 70,
+      "text": "                design_intent=\"Native predictions and candidate selections must identify their conditioning snapshot.\","
+     }
+    ]
+   },
+   {
+    "path": "src/reactive_inference/<ENGINE>/preflight.py",
+    "blobAtPin": "8e779342ee25112c776763023278b58128c78d35",
+    "blobAtProbe": "63e23693d8c4cc5054359c96b7c1ad7e7e096237",
+    "lines": [
+     {
+      "line": 54,
+      "text": "    snapshot_digest: str"
+     },
+     {
+      "line": 103,
+      "text": "        snapshot_digest=request.snapshot_digest,"
+     }
+    ]
+   },
+   {
+    "path": "src/reactive_inference/<ENGINE>/__init__.py",
+    "blobAtPin": "c639bc14f4489ca8c51ff0f7408c2c4f70e89d18",
+    "blobAtProbe": "a37954633b2b526240b27f3cbe889f79b6029358",
+    "lines": []
+   }
+  ],
+  "exportsAtPin": [
+   "ChoiceQuestion",
+   "DecisionBatchMode",
+   "DecisionChoiceRequest",
+   "ChoiceBackendCapabilities",
+   "ChoiceExecutionPlan",
+   "ChoiceExecutionGroup",
+   "plan_choices"
+  ],
+  "exportsAtProbe": [
+   "ChoiceBackendCapabilities",
+   "ChoiceExecutionGroup",
+   "ChoiceExecutionPlan",
+   "ChoiceQuestion",
+   "DecisionBatchMode",
+   "DecisionChoiceRequest",
+   "plan_choices"
+  ],
+  "srcProbe": {
+   "pattern": "git grep -n -i -E 'pointer|extractive' <sha> -- src",
+   "rowsAtPin": 0,
+   "rowsAtProbe": 0
+  },
+  "digestRowsAtPin": [
+   "src/reactive_inference/<ENGINE>/contracts.py:59:    snapshot_digest: str",
+   "src/reactive_inference/<ENGINE>/contracts.py:65:        digest = self.snapshot_digest",
+   "src/reactive_inference/<ENGINE>/preflight.py:54:    snapshot_digest: str",
+   "src/reactive_inference/<ENGINE>/preflight.py:103:        snapshot_digest=request.snapshot_digest,"
+  ],
+  "digestRowsAtProbe": [
+   "src/reactive_inference/<ENGINE>/contracts.py:67:    snapshot_digest: str",
+   "src/reactive_inference/<ENGINE>/contracts.py:73:        digest = self.snapshot_digest",
+   "src/reactive_inference/<ENGINE>/preflight.py:58:    snapshot_digest: str",
+   "src/reactive_inference/<ENGINE>/preflight.py:108:        snapshot_digest=request.snapshot_digest,"
+  ]
+ },
+ "scan": {
+  "referenceWord": "pointer|deref|extractive|(?<![a-z])ptr(?![a-z])/",
+  "escapeTokens": [
+   "~0",
+   "~1"
+  ],
+  "escapeInPattern": "~0|~1|~\\[01\\]|~\\[10\\]/",
+  "moduleExtensions": [
+   ".ts",
+   ".mts",
+   ".cts",
+   ".tsx",
+   ".js",
+   ".mjs",
+   ".cjs",
+   ".jsx"
+  ],
+  "floors": {
+   "srcFiles": 105,
+   "srcModules": 105
+  },
+  "judgedSites": {
+   "src/ui/workflow-card.ts pointer": "the tool-title glyph of the workflow card (Unicode and ASCII glyph tables)",
+   "src/ui/workflow-dialog.ts pointer": "the selected-row glyph of the workflow dialog (Unicode and ASCII glyph tables)",
+   "src/ui/workflow-inspector.ts pointer": "the selected-row glyph of the inspector views (its mark table and two row builders)"
+  },
+  "flaggedControls": [
+   [
+    "escape-literals",
+    "const token = raw.replaceAll(\"~1\", \"/\").replaceAll(\"~0\", \"~\");"
+   ],
+   [
+    "escape-pattern",
+    "const token = raw.replace(/~1/g, \"/\").replace(/~0/g, \"~\");"
+   ],
+   [
+    "escape-class",
+    "const escaped = /~[01]/.test(raw);"
+   ],
+   [
+    "pointer-identifier",
+    "export function resolvePointer(document: unknown, path: string): unknown { return path; }"
+   ],
+   [
+    "deref-identifier",
+    "const dereferenced = read();"
+   ],
+   [
+    "extractive-identifier",
+    "const extractiveRange = [0, 4];"
+   ],
+   [
+    "ptr-identifier",
+    "const ptr = reference.path;"
+   ],
+   [
+    "pointer-literal",
+    "const kind = \"json-pointer\";"
+   ],
+   [
+    "pointer-specifier",
+    "import { get } from \"jsonpointer\";"
+   ]
+  ],
+  "quietControls": [
+   [
+    "approximate-count",
+    "const note = \"only ~10 run at any moment\";"
+   ],
+   [
+    "home-path",
+    "const home = \"~/.pi/agent\";"
+   ],
+   [
+    "tilde-alone",
+    "const tilde = \"~\";"
+   ],
+   [
+    "reference-word",
+    "const evidenceRef = node.evidenceRefs[0];"
+   ]
+  ],
+  "residualControls": {
+   "R-SPAN-WORD": "const part = body.slice(span.start, span.end);",
+   "R-NAIVE-WALK": "let node = document; for (const key of path.split(\"/\").slice(1)) node = node[key];",
+   "R-COMPOSED": "const escaped = \"~\" + \"1\";"
+  },
+  "nodeTypes": {
+   "reactivefiber": "context-preview",
+   "claude-agent-sdk": "session",
+   "furnace": "run",
+   "forge": "operation"
+  },
+  "riPackage": "reactive[-_./]?inference/i",
+  "resultName": "result|reference|pointer|span|envelope/i"
+ },
+ "fixture": {
+  "producerDigest": "c4f1a9e07b3d5268e19f0a7c4b2d6e8f31a5c7e9b0d2f4a6c8e1b3d5f7092a4c",
+  "movedDigest": "7e2b9d4f61a8c03e5b7d9f1a2c4e6b8d0f3a5c7e9b1d3f5a7c9e2b4d6f8a0c1e",
+  "snapshot": {
+   "observations": [
+    {
+     "name": "ticket",
+     "value": {
+      "title": "ref-target-title-1f7c",
+      "body": "triage ref-target-span-6a2e done"
+     }
+    },
+    {
+     "name": "paths",
+     "value": {
+      "src/a~b": "ref-target-escaped-9d41"
+     }
+    }
+   ]
+  },
+  "moved": {
+   "observations": [
+    {
+     "name": "ticket",
+     "value": {
+      "title": "moved-target-title-3b90",
+      "body": "triage moved-target-span-58c1 done"
+     }
+    },
+    {
+     "name": "paths",
+     "value": {
+      "src/a~b": "moved-target-escaped-27fd"
+     }
+    }
+   ]
+  },
+  "references": [
+   {
+    "id": "pointer",
+    "reference": {
+     "kind": "pointer",
+     "pointer": "/observations/0/value/title",
+     "snapshot_digest": "c4f1a9e07b3d5268e19f0a7c4b2d6e8f31a5c7e9b0d2f4a6c8e1b3d5f7092a4c"
+    },
+    "target": "ref-target-title-1f7c"
+   },
+   {
+    "id": "escaped-pointer",
+    "reference": {
+     "kind": "pointer",
+     "pointer": "/observations/1/value/src~1a~0b",
+     "snapshot_digest": "c4f1a9e07b3d5268e19f0a7c4b2d6e8f31a5c7e9b0d2f4a6c8e1b3d5f7092a4c"
+    },
+    "target": "ref-target-escaped-9d41"
+   },
+   {
+    "id": "extractive-span",
+    "reference": {
+     "kind": "extractive_span",
+     "pointer": "/observations/0/value/body",
+     "start": 7,
+     "end": 27,
+     "snapshot_digest": "c4f1a9e07b3d5268e19f0a7c4b2d6e8f31a5c7e9b0d2f4a6c8e1b3d5f7092a4c"
+    },
+    "target": "ref-target-span-6a2e"
+   }
+  ],
+  "bases": [
+   {
+    "id": "producer",
+    "digest": "c4f1a9e07b3d5268e19f0a7c4b2d6e8f31a5c7e9b0d2f4a6c8e1b3d5f7092a4c",
+    "document": "snapshot"
+   },
+   {
+    "id": "moved",
+    "digest": "7e2b9d4f61a8c03e5b7d9f1a2c4e6b8d0f3a5c7e9b1d3f5a7c9e2b4d6f8a0c1e",
+    "document": "moved"
+   },
+   {
+    "id": "case-folded",
+    "digest": "C4F1A9E07B3D5268E19F0A7C4B2D6E8F31A5C7E9B0D2F4A6C8E1B3D5F7092A4C",
+    "document": "moved"
+   },
+   {
+    "id": "short-id",
+    "digest": "c4f1a9e07b3d",
+    "document": "moved"
+   },
+   {
+    "id": "last-nibble",
+    "digest": "c4f1a9e07b3d5268e19f0a7c4b2d6e8f31a5c7e9b0d2f4a6c8e1b3d5f7092a4d",
+    "document": "moved"
+   }
+  ],
+  "staleBases": [
+   "moved",
+   "case-folded",
+   "short-id",
+   "last-nibble"
+  ],
+  "marks": [
+   "ref-target-",
+   "moved-target-"
+  ],
+  "resource": {
+   "tag": "ri.decision-result/constructed-0",
+   "schemaVersion": "ri-decision-envelope/constructed-0",
+   "twins": [
+    "bound",
+    "moved"
+   ]
+  },
+  "placements": [
+   {
+    "id": "top",
+    "path": [
+     "result",
+     "resources"
+    ]
+   },
+   {
+    "id": "block",
+    "path": [
+     "result",
+     "blocks",
+     "0",
+     "resources"
+    ]
+   }
+  ],
+  "rf": {
+   "root": "/fixture/rf-workspace",
+   "provider": "reactivefiber",
+   "grant": "reactivefiber:render",
+   "preview": "reactivefiber.render.preview",
+   "node": {
+    "provider": "reactivefiber",
+    "type": "context-preview",
+    "id": "rfo_aaaaaaaaaaaaaaaaaaaaaa",
+    "scope": "/fixture/rf-workspace"
+   }
+  }
+ },
+ "residuals": [
+  "R-SPAN-WORD",
+  "R-NAIVE-WALK",
+  "R-COMPOSED",
+  "R-REASON"
+ ],
+ "residualRows": {
+  "R-SPAN-WORD": "A1",
+  "R-NAIVE-WALK": "A1",
+  "R-COMPOSED": "A1",
+  "R-REASON": "C5"
+ },
+ "rows": [
+  {
+   "id": "A",
+   "label": "(c) today: no Pi surface dereferences a decision-emitted reference (census = 0 sites at this read); the trigger, no emitted references reach Pi today: no src module evaluates or names a pointer outside the judged glyph sites, the host-wired evidence store has no loader for any reference form under any provider, and the gating envelope is measured unshipped at the pin and at a later probe",
+   "pins": [
+    {
+     "id": "A1",
+     "witness": {
+      "floors": {
+       "srcFiles": true,
+       "srcModules": true
+      },
+      "symlinks": [],
+      "escapes": [],
+      "literals": [],
+      "identifiers": [
+       "src/ui/workflow-card.ts pointer",
+       "src/ui/workflow-dialog.ts pointer",
+       "src/ui/workflow-inspector.ts pointer"
+      ],
+      "packages": [],
+      "controls": {
+       "flagged": {
+        "escape-literals": true,
+        "escape-pattern": true,
+        "escape-class": true,
+        "pointer-identifier": true,
+        "deref-identifier": true,
+        "extractive-identifier": true,
+        "ptr-identifier": true,
+        "pointer-literal": true,
+        "pointer-specifier": true
+       },
+       "quiet": {
+        "approximate-count": 0,
+        "home-path": 0,
+        "tilde-alone": 0,
+        "reference-word": 0
+       }
+      },
+      "quiet": {
+       "R-SPAN-WORD": 0,
+       "R-NAIVE-WALK": 0,
+       "R-COMPOSED": 0
+      }
+     }
+    },
+    {
+     "id": "A2",
+     "witness": {
+      "nodes": [
+       "reactivefiber/context-preview",
+       "claude-agent-sdk/session",
+       "furnace/run",
+       "forge/operation"
+      ],
+      "forms": 9,
+      "requests": 36,
+      "entries": [
+       "{\"reason\":\"no-loader\",\"state\":\"unavailable\"}"
+      ],
+      "reads": {
+       "claude": 0,
+       "furnace": 0,
+       "registry": 0
+      },
+      "docs20": {
+       "anythingElse": true,
+       "rule": true,
+       "pointer": true
+      }
+     }
+    },
+    {
+     "id": "A3",
+     "witness": {
+      "held": {
+       "exportsMatch": true,
+       "noResultExport": true,
+       "noSrcRow": true,
+       "requestSideDigest": true,
+       "shippedNo": true,
+       "dec03": true,
+       "dec07": true,
+       "outputFamily": true
+      },
+      "exports": [
+       "ChoiceBackendCapabilities",
+       "ChoiceExecutionGroup",
+       "ChoiceExecutionPlan",
+       "ChoiceQuestion",
+       "DecisionBatchMode",
+       "DecisionChoiceRequest",
+       "plan_choices"
+      ],
+      "srcProbe": {
+       "pattern": "git grep -n -i -E 'pointer|extractive' <sha> -- src",
+       "rowsAtPin": 0,
+       "rowsAtProbe": 0
+      },
+      "digestRows": [
+       "src/reactive_inference/<ENGINE>/contracts.py:59:    snapshot_digest: str",
+       "src/reactive_inference/<ENGINE>/contracts.py:65:        digest = self.snapshot_digest",
+       "src/reactive_inference/<ENGINE>/preflight.py:54:    snapshot_digest: str",
+       "src/reactive_inference/<ENGINE>/preflight.py:103:        snapshot_digest=request.snapshot_digest,"
+      ],
+      "specifiers": [],
+      "packages": []
+     }
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "label": "(a) adoption fixture: an emitted reference carries the producer's snapshot digest; use against a basis with a different digest is refused as stale (typed), never dereferenced: armed on a test-side reference adoption through the real evidence store, beside today's rf seams, which carry such a reference byte for byte and dereference nothing",
+   "pins": [
+    {
+     "id": "B1",
+     "witness": {
+      "readings": [
+       {
+        "id": "pointer",
+        "kind": "pointer",
+        "digestForm": true,
+        "bound": true,
+        "resolves": "ref-target-title-1f7c",
+        "moved": "moved-target-title-3b90"
+       },
+       {
+        "id": "escaped-pointer",
+        "kind": "pointer",
+        "digestForm": true,
+        "bound": true,
+        "resolves": "ref-target-escaped-9d41",
+        "moved": "moved-target-escaped-27fd"
+       },
+       {
+        "id": "extractive-span",
+        "kind": "extractive_span",
+        "digestForm": true,
+        "bound": true,
+        "resolves": "ref-target-span-6a2e",
+        "moved": "moved-target-span-58"
+       }
+      ],
+      "escapedKey": {
+       "src/a~b": "ref-target-escaped-9d41"
+      },
+      "carrierClean": true,
+      "bases": [
+       {
+        "id": "producer",
+        "digest": "c4f1a9e07b3d5268e19f0a7c4b2d6e8f31a5c7e9b0d2f4a6c8e1b3d5f7092a4c",
+        "differs": false
+       },
+       {
+        "id": "moved",
+        "digest": "7e2b9d4f61a8c03e5b7d9f1a2c4e6b8d0f3a5c7e9b1d3f5a7c9e2b4d6f8a0c1e",
+        "differs": true
+       },
+       {
+        "id": "case-folded",
+        "digest": "C4F1A9E07B3D5268E19F0A7C4B2D6E8F31A5C7E9B0D2F4A6C8E1B3D5F7092A4C",
+        "differs": true
+       },
+       {
+        "id": "short-id",
+        "digest": "c4f1a9e07b3d",
+        "differs": true
+       },
+       {
+        "id": "last-nibble",
+        "digest": "c4f1a9e07b3d5268e19f0a7c4b2d6e8f31a5c7e9b0d2f4a6c8e1b3d5f7092a4d",
+        "differs": true
+       }
+      ]
+     }
+    },
+    {
+     "id": "B2",
+     "witness": {
+      "readings": [
+       {
+        "reference": "pointer",
+        "basis": "moved",
+        "entry": {
+         "state": "unavailable",
+         "reason": "transport",
+         "freshness": "stale"
+        },
+        "reads": 0
+       },
+       {
+        "reference": "escaped-pointer",
+        "basis": "moved",
+        "entry": {
+         "state": "unavailable",
+         "reason": "transport",
+         "freshness": "stale"
+        },
+        "reads": 0
+       },
+       {
+        "reference": "extractive-span",
+        "basis": "moved",
+        "entry": {
+         "state": "unavailable",
+         "reason": "transport",
+         "freshness": "stale"
+        },
+        "reads": 0
+       },
+       {
+        "reference": "pointer",
+        "basis": "case-folded",
+        "entry": {
+         "state": "unavailable",
+         "reason": "transport",
+         "freshness": "stale"
+        },
+        "reads": 0
+       },
+       {
+        "reference": "escaped-pointer",
+        "basis": "case-folded",
+        "entry": {
+         "state": "unavailable",
+         "reason": "transport",
+         "freshness": "stale"
+        },
+        "reads": 0
+       },
+       {
+        "reference": "extractive-span",
+        "basis": "case-folded",
+        "entry": {
+         "state": "unavailable",
+         "reason": "transport",
+         "freshness": "stale"
+        },
+        "reads": 0
+       },
+       {
+        "reference": "pointer",
+        "basis": "short-id",
+        "entry": {
+         "state": "unavailable",
+         "reason": "transport",
+         "freshness": "stale"
+        },
+        "reads": 0
+       },
+       {
+        "reference": "escaped-pointer",
+        "basis": "short-id",
+        "entry": {
+         "state": "unavailable",
+         "reason": "transport",
+         "freshness": "stale"
+        },
+        "reads": 0
+       },
+       {
+        "reference": "extractive-span",
+        "basis": "short-id",
+        "entry": {
+         "state": "unavailable",
+         "reason": "transport",
+         "freshness": "stale"
+        },
+        "reads": 0
+       },
+       {
+        "reference": "pointer",
+        "basis": "last-nibble",
+        "entry": {
+         "state": "unavailable",
+         "reason": "transport",
+         "freshness": "stale"
+        },
+        "reads": 0
+       },
+       {
+        "reference": "escaped-pointer",
+        "basis": "last-nibble",
+        "entry": {
+         "state": "unavailable",
+         "reason": "transport",
+         "freshness": "stale"
+        },
+        "reads": 0
+       },
+       {
+        "reference": "extractive-span",
+        "basis": "last-nibble",
+        "entry": {
+         "state": "unavailable",
+         "reason": "transport",
+         "freshness": "stale"
+        },
+        "reads": 0
+       }
+      ],
+      "violations": []
+     }
+    },
+    {
+     "id": "B3",
+     "witness": {
+      "readings": [
+       {
+        "reference": "pointer",
+        "basis": "producer",
+        "entry": {
+         "state": "loaded",
+         "kind": "ri.emitted-reference/constructed-0",
+         "freshness": "current",
+         "sourceBasis": "c4f1a9e07b3d5268e19f0a7c4b2d6e8f31a5c7e9b0d2f4a6c8e1b3d5f7092a4c",
+         "preview": [
+          "ref-target-title-1f7c"
+         ],
+         "truncated": false
+        },
+        "reads": 1
+       },
+       {
+        "reference": "escaped-pointer",
+        "basis": "producer",
+        "entry": {
+         "state": "loaded",
+         "kind": "ri.emitted-reference/constructed-0",
+         "freshness": "current",
+         "sourceBasis": "c4f1a9e07b3d5268e19f0a7c4b2d6e8f31a5c7e9b0d2f4a6c8e1b3d5f7092a4c",
+         "preview": [
+          "ref-target-escaped-9d41"
+         ],
+         "truncated": false
+        },
+        "reads": 1
+       },
+       {
+        "reference": "extractive-span",
+        "basis": "producer",
+        "entry": {
+         "state": "loaded",
+         "kind": "ri.emitted-reference/constructed-0",
+         "freshness": "current",
+         "sourceBasis": "c4f1a9e07b3d5268e19f0a7c4b2d6e8f31a5c7e9b0d2f4a6c8e1b3d5f7092a4c",
+         "preview": [
+          "ref-target-span-6a2e"
+         ],
+         "truncated": false
+        },
+        "reads": 1
+       }
+      ],
+      "violations": []
+     }
+    },
+    {
+     "id": "B4",
+     "witness": {
+      "carrierRefs": [
+       "rf-graph:sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+       "rf-workspace:rfw_aaaaaaaaaaaaaaaaaaaaaa",
+       "rf-bundle:sha256:2222222222222222222222222222222222222222222222222222222222222222",
+       "rf-cli:0.1.784"
+      ],
+      "carries": [
+       {
+        "seam": "rf-cli",
+        "placement": "top",
+        "twin": "bound",
+        "runs": 1,
+        "violations": []
+       },
+       {
+        "seam": "injected-fixture",
+        "placement": "top",
+        "twin": "bound",
+        "runs": 1,
+        "violations": []
+       },
+       {
+        "seam": "rf-cli",
+        "placement": "top",
+        "twin": "moved",
+        "runs": 1,
+        "violations": []
+       },
+       {
+        "seam": "injected-fixture",
+        "placement": "top",
+        "twin": "moved",
+        "runs": 1,
+        "violations": []
+       },
+       {
+        "seam": "rf-cli",
+        "placement": "block",
+        "twin": "bound",
+        "runs": 1,
+        "violations": []
+       },
+       {
+        "seam": "injected-fixture",
+        "placement": "block",
+        "twin": "bound",
+        "runs": 1,
+        "violations": []
+       },
+       {
+        "seam": "rf-cli",
+        "placement": "block",
+        "twin": "moved",
+        "runs": 1,
+        "violations": []
+       },
+       {
+        "seam": "injected-fixture",
+        "placement": "block",
+        "twin": "moved",
+        "runs": 1,
+        "violations": []
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "label": "(b) mutant: dereferencing without the digest comparison, or against the current snapshot when digests differ, fails: the judge refuses each such use and every other escape through the real evidence store, and the rf checker refuses every adapter mutant that dereferences, adopts or rewrites the reference",
+   "pins": [
+    {
+     "id": "C1",
+     "witness": {
+      "unchecked": [
+       "labelled-current:case-folded",
+       "labelled-current:last-nibble",
+       "labelled-current:moved",
+       "labelled-current:short-id",
+       "loaded:case-folded",
+       "loaded:last-nibble",
+       "loaded:moved",
+       "loaded:short-id",
+       "read:case-folded",
+       "read:last-nibble",
+       "read:moved",
+       "read:short-id"
+      ]
+     }
+    },
+    {
+     "id": "C2",
+     "witness": {
+      "rebound": [
+       "loaded:case-folded",
+       "loaded:last-nibble",
+       "loaded:moved",
+       "loaded:short-id",
+       "read:case-folded",
+       "read:last-nibble",
+       "read:moved",
+       "read:short-id"
+      ],
+      "lenient": [
+       "labelled-current:case-folded",
+       "labelled-current:last-nibble",
+       "labelled-current:short-id",
+       "loaded:case-folded",
+       "loaded:last-nibble",
+       "loaded:short-id",
+       "read:case-folded",
+       "read:last-nibble",
+       "read:short-id"
+      ]
+     }
+    },
+    {
+     "id": "C3",
+     "witness": {
+      "read-first": [
+       "read:case-folded",
+       "read:last-nibble",
+       "read:moved",
+       "read:short-id"
+      ],
+      "untyped": [
+       "untyped:case-folded",
+       "untyped:last-nibble",
+       "untyped:moved",
+       "untyped:short-id"
+      ],
+      "minted": [
+       "fresh-refused",
+       "read:case-folded",
+       "read:last-nibble",
+       "read:moved",
+       "read:short-id"
+      ]
+     }
+    },
+    {
+     "id": "C4",
+     "witness": {
+      "dereference-note": {
+       "bound": [
+        "moved:projection",
+        "surfaced:target"
+       ],
+       "moved": [
+        "moved:projection",
+        "surfaced:target"
+       ]
+      },
+      "digest-ref": {
+       "bound": [
+        "moved:projection",
+        "adopted:digest",
+        "refs"
+       ],
+       "moved": [
+        "moved:projection",
+        "adopted:digest",
+        "refs"
+       ]
+      },
+      "digest-basis": {
+       "bound": [
+        "moved:projection",
+        "adopted:digest"
+       ],
+       "moved": [
+        "moved:projection",
+        "adopted:digest"
+       ]
+      },
+      "rewritten-reading": {
+       "bound": [
+        "rewritten:reading"
+       ],
+       "moved": [
+        "rewritten:reading"
+       ]
+      }
+     }
+    },
+    {
+     "id": "C5",
+     "witness": {
+      "adoption": [],
+      "carrier": [],
+      "quiet": {
+       "R-REASON": []
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "tests": [
+  "the judged set: the frozen shape, the out-of-file roster and the bead row agree",
+  "A1",
+  "A2",
+  "A3",
+  "B1",
+  "B2",
+  "B3",
+  "B4",
+  "C1",
+  "C2",
+  "C3",
+  "C4",
+  "C5",
+  "records: every registered test ran once in run mode in roster order and every pin reached its end"
+ ]
+}
