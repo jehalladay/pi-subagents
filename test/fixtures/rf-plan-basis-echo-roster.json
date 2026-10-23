@@ -1,0 +1,1067 @@
+{
+  "bead": "wb-pfxo.10",
+  "rfVersion": "0.1.832",
+  "pin": "6a251bf73af5",
+  "schema": {
+    "path": "src/reactive_fiber_cli/schemas/cli/baseline/context.plan.json",
+    "sha256": "999638317d1adb0c3457b5e28a79b4ae2db6f16fc6e88a72484da578200bf658",
+    "summaryRequired": [
+      "rows",
+      "reuse",
+      "invalidated",
+      "non_reusable",
+      "refresh_required",
+      "evidence_complete"
+    ],
+    "summaryAdditionalProperties": false,
+    "predictionStrings": 0
+  },
+  "words": {
+    "known": [
+      "conservative",
+      "observed"
+    ],
+    "unknown": [
+      "speculative",
+      "snapshot_exact",
+      "Conservative"
+    ]
+  },
+  "planFields": {
+    "tokens": [
+      "non_reusable",
+      "refresh_required",
+      "evidence_complete",
+      "reuse_enabled",
+      "observed_instances",
+      "proof_version",
+      "completeness_forbids_reuse",
+      "producer_changed",
+      "graph_changed",
+      "nonReusable",
+      "refreshRequired",
+      "evidenceComplete",
+      "reuseEnabled",
+      "observedInstances",
+      "proofVersion",
+      "prediction"
+    ],
+    "exactWords": [
+      "reuse",
+      "invalidated"
+    ]
+  },
+  "fixtures": [
+    "planBefore",
+    "planAfter"
+  ],
+  "exits": {
+    "planBefore": 0,
+    "planAfter": 0
+  },
+  "measured": [
+    "rf init --backend jsonl --no-input --json -> 0",
+    "rf component create demo.banner|demo.plain|demo.notes|demo.moved --kind declarative --json -> 0 each",
+    "manifests demo.plain, demo.notes, demo.moved edited pure = false -> pure = true (demo.banner stays pure = false); each body one always text node",
+    "rf component add <manifest> --json -> 0 and rf component activate <id> --json -> 0, each component",
+    "graphs/context.toml: sources task, greeting (literal), motto (literal); fibers task->banner.task, greeting->plain.greeting, task->notes.notes, motto->moved.motto",
+    "rf graph validate --json -> 0 (valid, diagnostics [])",
+    "rf context render --model claude-opus-5 --task \"summarise the notes\" --json -> 0 (R1 rfr_7meob2hxfyvyvvls6uhs6s4bt4)",
+    "rf context plan R1 --json -> 0 (planBefore)",
+    "demo.moved body edited; rf component add + rf component activate demo.moved -> 0",
+    "rf context plan R1 --json -> 0 (planAfter)"
+  ],
+  "envelopes": {
+    "planBefore": {
+      "schema": "reactive-fiber.cli/v1",
+      "ok": true,
+      "command": "context.plan",
+      "operation_id": "rfo_ingpb7nlm4gjn7dgqzss7jclqy",
+      "workspace": {
+        "id": "rfw_miyfi6mbinzaxzppcp6tne3xey",
+        "root": "/fixture/rf-workspace"
+      },
+      "transaction_id": null,
+      "result": {
+        "render_id": "rfr_7meob2hxfyvyvvls6uhs6s4bt4",
+        "base": {
+          "render_id": "rfr_7meob2hxfyvyvvls6uhs6s4bt4",
+          "session_id": "rfs_x2z7mfec6nkmc6akrq3ehjamz4",
+          "agent_id": null,
+          "audience": "model",
+          "graph_revision_id": "sha256:3825a41ebac66ea78cfb82a50981ee249a8403133936a628dfad4520118af310",
+          "component_instances": [
+            "demo.banner:banner",
+            "demo.moved:moved",
+            "demo.notes:notes",
+            "demo.plain:plain"
+          ]
+        },
+        "current": {
+          "graph_revision_id": "sha256:3825a41ebac66ea78cfb82a50981ee249a8403133936a628dfad4520118af310",
+          "graph_path": "graphs/context.toml",
+          "graph_changed": false,
+          "reuse_enabled": true,
+          "observed_instances": [
+            "demo.banner:banner",
+            "demo.moved:moved",
+            "demo.notes:notes",
+            "demo.plain:plain"
+          ],
+          "unobserved": []
+        },
+        "plan": {
+          "proof_version": 1,
+          "reuse_enabled": true,
+          "rows": [
+            {
+              "component_instance_id": "demo.banner:banner",
+              "decision": "non_reusable",
+              "completeness": "opaque",
+              "causes": [
+                {
+                  "kind": "completeness_forbids_reuse",
+                  "key": null,
+                  "prior": null,
+                  "current": null
+                }
+              ],
+              "checked": []
+            },
+            {
+              "component_instance_id": "demo.moved:moved",
+              "decision": "refresh_required",
+              "completeness": "complete",
+              "causes": [
+                {
+                  "kind": "refresh_required",
+                  "key": {
+                    "kind": "source",
+                    "id": "motto"
+                  },
+                  "prior": "sha256:f264421307571b0fa2d35fcc69e901524394d013f8d573bcd1489a447d18274d",
+                  "current": null
+                }
+              ],
+              "checked": [
+                {
+                  "key": {
+                    "kind": "audience",
+                    "id": "audience"
+                  },
+                  "prior": "model",
+                  "current": "model"
+                },
+                {
+                  "key": {
+                    "kind": "graph",
+                    "id": "graph_revision_id"
+                  },
+                  "prior": "sha256:3825a41ebac66ea78cfb82a50981ee249a8403133936a628dfad4520118af310",
+                  "current": "sha256:3825a41ebac66ea78cfb82a50981ee249a8403133936a628dfad4520118af310"
+                },
+                {
+                  "key": {
+                    "kind": "props",
+                    "id": "props_digest"
+                  },
+                  "prior": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+                  "current": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+                },
+                {
+                  "key": {
+                    "kind": "state",
+                    "id": "input_state_digest"
+                  },
+                  "prior": null,
+                  "current": null
+                }
+              ]
+            },
+            {
+              "component_instance_id": "demo.notes:notes",
+              "decision": "refresh_required",
+              "completeness": "complete",
+              "causes": [
+                {
+                  "kind": "refresh_required",
+                  "key": {
+                    "kind": "source",
+                    "id": "task"
+                  },
+                  "prior": "sha256:3bbf9fe41136bb1a412ac98a6a9f1af30bc8df3a0916649b7a01525e397894c5",
+                  "current": null
+                }
+              ],
+              "checked": [
+                {
+                  "key": {
+                    "kind": "audience",
+                    "id": "audience"
+                  },
+                  "prior": "model",
+                  "current": "model"
+                },
+                {
+                  "key": {
+                    "kind": "graph",
+                    "id": "graph_revision_id"
+                  },
+                  "prior": "sha256:3825a41ebac66ea78cfb82a50981ee249a8403133936a628dfad4520118af310",
+                  "current": "sha256:3825a41ebac66ea78cfb82a50981ee249a8403133936a628dfad4520118af310"
+                },
+                {
+                  "key": {
+                    "kind": "props",
+                    "id": "props_digest"
+                  },
+                  "prior": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+                  "current": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+                },
+                {
+                  "key": {
+                    "kind": "state",
+                    "id": "input_state_digest"
+                  },
+                  "prior": null,
+                  "current": null
+                }
+              ]
+            },
+            {
+              "component_instance_id": "demo.plain:plain",
+              "decision": "refresh_required",
+              "completeness": "complete",
+              "causes": [
+                {
+                  "kind": "refresh_required",
+                  "key": {
+                    "kind": "source",
+                    "id": "greeting"
+                  },
+                  "prior": "sha256:5aa762ae383fbb727af3c7a36d4940a5b8c40a989452d2304fc958ff3f354e7a",
+                  "current": null
+                }
+              ],
+              "checked": [
+                {
+                  "key": {
+                    "kind": "audience",
+                    "id": "audience"
+                  },
+                  "prior": "model",
+                  "current": "model"
+                },
+                {
+                  "key": {
+                    "kind": "graph",
+                    "id": "graph_revision_id"
+                  },
+                  "prior": "sha256:3825a41ebac66ea78cfb82a50981ee249a8403133936a628dfad4520118af310",
+                  "current": "sha256:3825a41ebac66ea78cfb82a50981ee249a8403133936a628dfad4520118af310"
+                },
+                {
+                  "key": {
+                    "kind": "props",
+                    "id": "props_digest"
+                  },
+                  "prior": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+                  "current": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+                },
+                {
+                  "key": {
+                    "kind": "state",
+                    "id": "input_state_digest"
+                  },
+                  "prior": null,
+                  "current": null
+                }
+              ]
+            }
+          ]
+        },
+        "summary": {
+          "rows": 4,
+          "reuse": 0,
+          "invalidated": 0,
+          "non_reusable": 1,
+          "refresh_required": 3,
+          "evidence_complete": true
+        }
+      },
+      "diagnostics": []
+    },
+    "planAfter": {
+      "schema": "reactive-fiber.cli/v1",
+      "ok": true,
+      "command": "context.plan",
+      "operation_id": "rfo_4w6segwzkymr3ofgvs2hlxpvzy",
+      "workspace": {
+        "id": "rfw_miyfi6mbinzaxzppcp6tne3xey",
+        "root": "/fixture/rf-workspace"
+      },
+      "transaction_id": null,
+      "result": {
+        "render_id": "rfr_7meob2hxfyvyvvls6uhs6s4bt4",
+        "base": {
+          "render_id": "rfr_7meob2hxfyvyvvls6uhs6s4bt4",
+          "session_id": "rfs_x2z7mfec6nkmc6akrq3ehjamz4",
+          "agent_id": null,
+          "audience": "model",
+          "graph_revision_id": "sha256:3825a41ebac66ea78cfb82a50981ee249a8403133936a628dfad4520118af310",
+          "component_instances": [
+            "demo.banner:banner",
+            "demo.moved:moved",
+            "demo.notes:notes",
+            "demo.plain:plain"
+          ]
+        },
+        "current": {
+          "graph_revision_id": "sha256:3825a41ebac66ea78cfb82a50981ee249a8403133936a628dfad4520118af310",
+          "graph_path": "graphs/context.toml",
+          "graph_changed": false,
+          "reuse_enabled": true,
+          "observed_instances": [
+            "demo.banner:banner",
+            "demo.moved:moved",
+            "demo.notes:notes",
+            "demo.plain:plain"
+          ],
+          "unobserved": []
+        },
+        "plan": {
+          "proof_version": 1,
+          "reuse_enabled": true,
+          "rows": [
+            {
+              "component_instance_id": "demo.banner:banner",
+              "decision": "non_reusable",
+              "completeness": "opaque",
+              "causes": [
+                {
+                  "kind": "completeness_forbids_reuse",
+                  "key": null,
+                  "prior": null,
+                  "current": null
+                }
+              ],
+              "checked": []
+            },
+            {
+              "component_instance_id": "demo.moved:moved",
+              "decision": "invalidated",
+              "completeness": "complete",
+              "causes": [
+                {
+                  "kind": "producer_changed",
+                  "key": {
+                    "kind": "revision",
+                    "id": "component_revision_id"
+                  },
+                  "prior": "sha256:e26e1e7fb4afaa668065f1a362f6f1063f2a2893f6bdcc54cc76115ae3323d87",
+                  "current": "sha256:de5bc6ddb92aa07f3d61e054e75073122720084fa478ea9e763fee6999aeb533"
+                }
+              ],
+              "checked": []
+            },
+            {
+              "component_instance_id": "demo.notes:notes",
+              "decision": "refresh_required",
+              "completeness": "complete",
+              "causes": [
+                {
+                  "kind": "refresh_required",
+                  "key": {
+                    "kind": "source",
+                    "id": "task"
+                  },
+                  "prior": "sha256:3bbf9fe41136bb1a412ac98a6a9f1af30bc8df3a0916649b7a01525e397894c5",
+                  "current": null
+                }
+              ],
+              "checked": [
+                {
+                  "key": {
+                    "kind": "audience",
+                    "id": "audience"
+                  },
+                  "prior": "model",
+                  "current": "model"
+                },
+                {
+                  "key": {
+                    "kind": "graph",
+                    "id": "graph_revision_id"
+                  },
+                  "prior": "sha256:3825a41ebac66ea78cfb82a50981ee249a8403133936a628dfad4520118af310",
+                  "current": "sha256:3825a41ebac66ea78cfb82a50981ee249a8403133936a628dfad4520118af310"
+                },
+                {
+                  "key": {
+                    "kind": "props",
+                    "id": "props_digest"
+                  },
+                  "prior": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+                  "current": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+                },
+                {
+                  "key": {
+                    "kind": "state",
+                    "id": "input_state_digest"
+                  },
+                  "prior": null,
+                  "current": null
+                }
+              ]
+            },
+            {
+              "component_instance_id": "demo.plain:plain",
+              "decision": "refresh_required",
+              "completeness": "complete",
+              "causes": [
+                {
+                  "kind": "refresh_required",
+                  "key": {
+                    "kind": "source",
+                    "id": "greeting"
+                  },
+                  "prior": "sha256:5aa762ae383fbb727af3c7a36d4940a5b8c40a989452d2304fc958ff3f354e7a",
+                  "current": null
+                }
+              ],
+              "checked": [
+                {
+                  "key": {
+                    "kind": "audience",
+                    "id": "audience"
+                  },
+                  "prior": "model",
+                  "current": "model"
+                },
+                {
+                  "key": {
+                    "kind": "graph",
+                    "id": "graph_revision_id"
+                  },
+                  "prior": "sha256:3825a41ebac66ea78cfb82a50981ee249a8403133936a628dfad4520118af310",
+                  "current": "sha256:3825a41ebac66ea78cfb82a50981ee249a8403133936a628dfad4520118af310"
+                },
+                {
+                  "key": {
+                    "kind": "props",
+                    "id": "props_digest"
+                  },
+                  "prior": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+                  "current": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+                },
+                {
+                  "key": {
+                    "kind": "state",
+                    "id": "input_state_digest"
+                  },
+                  "prior": null,
+                  "current": null
+                }
+              ]
+            }
+          ]
+        },
+        "summary": {
+          "rows": 4,
+          "reuse": 0,
+          "invalidated": 1,
+          "non_reusable": 1,
+          "refresh_required": 2,
+          "evidence_complete": true
+        }
+      },
+      "diagnostics": []
+    }
+  },
+  "rows": [
+    {
+      "id": "A",
+      "label": "(a) fixture context.plan envelope without summary.prediction (the pin's shape): Pi surfaces no basis word",
+      "pins": [
+        {
+          "id": "A1",
+          "witness": {
+            "planBefore": {
+              "command": "context.plan",
+              "exit": 0,
+              "counts": {
+                "rows": 4,
+                "reuse": 0,
+                "invalidated": 0,
+                "non_reusable": 1,
+                "refresh_required": 3,
+                "evidence_complete": true
+              },
+              "decisions": [
+                "non_reusable",
+                "refresh_required",
+                "refresh_required",
+                "refresh_required"
+              ],
+              "missing": [],
+              "predictionKeys": [],
+              "basis": [],
+              "tallyAgrees": true
+            },
+            "planAfter": {
+              "command": "context.plan",
+              "exit": 0,
+              "counts": {
+                "rows": 4,
+                "reuse": 0,
+                "invalidated": 1,
+                "non_reusable": 1,
+                "refresh_required": 2,
+                "evidence_complete": true
+              },
+              "decisions": [
+                "non_reusable",
+                "invalidated",
+                "refresh_required",
+                "refresh_required"
+              ],
+              "missing": [],
+              "predictionKeys": [],
+              "basis": [],
+              "tallyAgrees": true
+            }
+          }
+        },
+        {
+          "id": "A2",
+          "witness": {
+            "planBefore": {
+              "category": "transport",
+              "message": "RF preview returned an unrecognized native envelope.",
+              "reading": false,
+              "spawns": 1,
+              "verb": [
+                "context",
+                "render"
+              ],
+              "basis": []
+            },
+            "planAfter": {
+              "category": "transport",
+              "message": "RF preview returned an unrecognized native envelope.",
+              "reading": false,
+              "spawns": 1,
+              "verb": [
+                "context",
+                "render"
+              ],
+              "basis": []
+            }
+          }
+        },
+        {
+          "id": "A3",
+          "witness": {
+            "planBefore": {
+              "verbatim": true,
+              "calls": 1,
+              "readingKeys": [
+                "contract",
+                "source",
+                "workspaceRoot"
+              ],
+              "piStrings": [
+                "reactivefiber.render.preview/v1",
+                "/fixture/rf-workspace"
+              ],
+              "piBasis": [],
+              "surfaced": null
+            },
+            "planAfter": {
+              "verbatim": true,
+              "calls": 1,
+              "readingKeys": [
+                "contract",
+                "source",
+                "workspaceRoot"
+              ],
+              "piStrings": [
+                "reactivefiber.render.preview/v1",
+                "/fixture/rf-workspace"
+              ],
+              "piBasis": [],
+              "surfaced": null
+            }
+          }
+        },
+        {
+          "id": "A4",
+          "witness": {
+            "planBefore": {
+              "category": "validation",
+              "message": "ReactiveFiber topology refused: source must be a reactive-fiber.cli/v1 context.render envelope.",
+              "basis": []
+            },
+            "planAfter": {
+              "category": "validation",
+              "message": "ReactiveFiber topology refused: source must be a reactive-fiber.cli/v1 context.render envelope.",
+              "basis": []
+            }
+          }
+        },
+        {
+          "id": "A5",
+          "witness": {
+            "catalogRead": true,
+            "native": [
+              "reactivefiber.render.preview"
+            ],
+            "injected": [
+              "reactivefiber.render.preview"
+            ],
+            "reconcile": [
+              "reactivefiber.render.preview"
+            ],
+            "planSpelling": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "(b) fixture with summary.prediction \"conservative\": Pi surfaces exactly 'conservative'; an unknown word is surfaced verbatim as unknown, never mapped to observed/conservative",
+      "pins": [
+        {
+          "id": "B1",
+          "witness": {
+            "base": "planAfter",
+            "variants": {
+              "conservative": {
+                "paths": [
+                  "result.summary.prediction"
+                ],
+                "prediction": "conservative",
+                "countsKept": true
+              },
+              "observed": {
+                "paths": [
+                  "result.summary.prediction"
+                ],
+                "prediction": "observed",
+                "countsKept": true
+              },
+              "speculative": {
+                "paths": [
+                  "result.summary.prediction"
+                ],
+                "prediction": "speculative",
+                "countsKept": true
+              },
+              "snapshot_exact": {
+                "paths": [
+                  "result.summary.prediction"
+                ],
+                "prediction": "snapshot_exact",
+                "countsKept": true
+              },
+              "Conservative": {
+                "paths": [
+                  "result.summary.prediction"
+                ],
+                "prediction": "Conservative",
+                "countsKept": true
+              }
+            },
+            "baseUntouched": true
+          }
+        },
+        {
+          "id": "B2",
+          "witness": {
+            "conservative": {
+              "verbatim": true,
+              "calls": 1,
+              "readingKeys": [
+                "contract",
+                "source",
+                "workspaceRoot"
+              ],
+              "piStrings": [
+                "reactivefiber.render.preview/v1",
+                "/fixture/rf-workspace"
+              ],
+              "piBasis": [],
+              "surfaced": "conservative"
+            },
+            "observed": {
+              "verbatim": true,
+              "calls": 1,
+              "readingKeys": [
+                "contract",
+                "source",
+                "workspaceRoot"
+              ],
+              "piStrings": [
+                "reactivefiber.render.preview/v1",
+                "/fixture/rf-workspace"
+              ],
+              "piBasis": [],
+              "surfaced": "observed"
+            }
+          }
+        },
+        {
+          "id": "B3",
+          "witness": {
+            "speculative": {
+              "verbatim": true,
+              "calls": 1,
+              "readingKeys": [
+                "contract",
+                "source",
+                "workspaceRoot"
+              ],
+              "piStrings": [
+                "reactivefiber.render.preview/v1",
+                "/fixture/rf-workspace"
+              ],
+              "piBasis": [],
+              "surfaced": "speculative",
+              "mapped": false
+            },
+            "snapshot_exact": {
+              "verbatim": true,
+              "calls": 1,
+              "readingKeys": [
+                "contract",
+                "source",
+                "workspaceRoot"
+              ],
+              "piStrings": [
+                "reactivefiber.render.preview/v1",
+                "/fixture/rf-workspace"
+              ],
+              "piBasis": [],
+              "surfaced": "snapshot_exact",
+              "mapped": false
+            },
+            "Conservative": {
+              "verbatim": true,
+              "calls": 1,
+              "readingKeys": [
+                "contract",
+                "source",
+                "workspaceRoot"
+              ],
+              "piStrings": [
+                "reactivefiber.render.preview/v1",
+                "/fixture/rf-workspace"
+              ],
+              "piBasis": [],
+              "surfaced": "Conservative",
+              "mapped": false
+            }
+          }
+        },
+        {
+          "id": "B4",
+          "witness": {
+            "conservative": {
+              "native": {
+                "category": "transport",
+                "message": "RF preview returned an unrecognized native envelope.",
+                "reading": false,
+                "spawns": 1,
+                "verb": [
+                  "context",
+                  "render"
+                ],
+                "basis": []
+              },
+              "adapter": {
+                "category": "validation",
+                "message": "ReactiveFiber topology refused: source must be a reactive-fiber.cli/v1 context.render envelope.",
+                "basis": []
+              }
+            },
+            "observed": {
+              "native": {
+                "category": "transport",
+                "message": "RF preview returned an unrecognized native envelope.",
+                "reading": false,
+                "spawns": 1,
+                "verb": [
+                  "context",
+                  "render"
+                ],
+                "basis": []
+              },
+              "adapter": {
+                "category": "validation",
+                "message": "ReactiveFiber topology refused: source must be a reactive-fiber.cli/v1 context.render envelope.",
+                "basis": []
+              }
+            },
+            "speculative": {
+              "native": {
+                "category": "transport",
+                "message": "RF preview returned an unrecognized native envelope.",
+                "reading": false,
+                "spawns": 1,
+                "verb": [
+                  "context",
+                  "render"
+                ],
+                "basis": []
+              },
+              "adapter": {
+                "category": "validation",
+                "message": "ReactiveFiber topology refused: source must be a reactive-fiber.cli/v1 context.render envelope.",
+                "basis": []
+              }
+            },
+            "snapshot_exact": {
+              "native": {
+                "category": "transport",
+                "message": "RF preview returned an unrecognized native envelope.",
+                "reading": false,
+                "spawns": 1,
+                "verb": [
+                  "context",
+                  "render"
+                ],
+                "basis": []
+              },
+              "adapter": {
+                "category": "validation",
+                "message": "ReactiveFiber topology refused: source must be a reactive-fiber.cli/v1 context.render envelope.",
+                "basis": []
+              }
+            },
+            "Conservative": {
+              "native": {
+                "category": "transport",
+                "message": "RF preview returned an unrecognized native envelope.",
+                "reading": false,
+                "spawns": 1,
+                "verb": [
+                  "context",
+                  "render"
+                ],
+                "basis": []
+              },
+              "adapter": {
+                "category": "validation",
+                "message": "ReactiveFiber topology refused: source must be a reactive-fiber.cli/v1 context.render envelope.",
+                "basis": []
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "(c) additive-key admission: Pi's hermetic plan fixture (if one exists) accepts the new key without failing closed-shape pins",
+      "pins": [
+        {
+          "id": "C1",
+          "witness": {
+            "planBefore": {
+              "closedOnMeasured": true,
+              "words": {
+                "conservative": {
+                  "open": true,
+                  "closedControl": false
+                },
+                "observed": {
+                  "open": true,
+                  "closedControl": false
+                },
+                "speculative": {
+                  "open": true,
+                  "closedControl": false
+                },
+                "snapshot_exact": {
+                  "open": true,
+                  "closedControl": false
+                },
+                "Conservative": {
+                  "open": true,
+                  "closedControl": false
+                }
+              }
+            },
+            "planAfter": {
+              "closedOnMeasured": true,
+              "words": {
+                "conservative": {
+                  "open": true,
+                  "closedControl": false
+                },
+                "observed": {
+                  "open": true,
+                  "closedControl": false
+                },
+                "speculative": {
+                  "open": true,
+                  "closedControl": false
+                },
+                "snapshot_exact": {
+                  "open": true,
+                  "closedControl": false
+                },
+                "Conservative": {
+                  "open": true,
+                  "closedControl": false
+                }
+              }
+            }
+          }
+        },
+        {
+          "id": "C2",
+          "witness": {
+            "floorMet": true,
+            "ownFound": [
+              true,
+              true
+            ],
+            "refusedBy": [],
+            "residuals": {
+              "R-INLINE-FIXTURE": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "D",
+      "label": "(d) no Pi source derives 'observed' or 'conservative' from row decisions or counts",
+      "pins": [
+        {
+          "id": "D1",
+          "witness": {
+            "floors": {
+              "modules": true,
+              "literals": true,
+              "identifiers": true,
+              "basisSites": true
+            },
+            "anchors": {
+              "attention": true,
+              "observer": true
+            },
+            "unparsed": [],
+            "planFields": [],
+            "derivations": []
+          }
+        },
+        {
+          "id": "D2",
+          "witness": {
+            "flagged": {
+              "countToWord": {
+                "derivations": 1,
+                "planFields": 1
+              },
+              "decisionToWord": {
+                "derivations": 1,
+                "planFields": 1
+              },
+              "camelCount": {
+                "derivations": 1,
+                "planFields": 1
+              },
+              "evidenceFlag": {
+                "derivations": 1,
+                "planFields": 1
+              },
+              "elementAccess": {
+                "derivations": 1,
+                "planFields": 1
+              },
+              "destructured": {
+                "derivations": 1,
+                "planFields": 1
+              },
+              "template": {
+                "derivations": 1,
+                "planFields": 1
+              },
+              "upperCase": {
+                "derivations": 1,
+                "planFields": 1
+              },
+              "instances": {
+                "derivations": 1,
+                "planFields": 1
+              },
+              "predictionFallback": {
+                "derivations": 1,
+                "planFields": 2
+              }
+            },
+            "quiet": {
+              "attentionConstant": {
+                "derivations": 0,
+                "planFields": 0
+              },
+              "observerStatus": {
+                "derivations": 0,
+                "planFields": 0
+              },
+              "echoVerbatim": {
+                "derivations": 0,
+                "planFields": 2
+              },
+              "countsVerbatim": {
+                "derivations": 0,
+                "planFields": 2
+              }
+            },
+            "residuals": {
+              "R-COMPOSED": {
+                "derivations": 0,
+                "planFields": 0
+              },
+              "R-COMPOSED-WORD": {
+                "derivations": 0,
+                "planFields": 1
+              },
+              "R-VOCABULARY": {
+                "derivations": 0,
+                "planFields": 1
+              },
+              "R-ROWS-ONLY": {
+                "derivations": 0,
+                "planFields": 0
+              },
+              "R-CROSS-MODULE": {
+                "derivations": 0,
+                "planFields": 0
+              }
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "tests": [
+    "the judged set: the frozen shape, the out-of-file roster and the cases agree",
+    "A1",
+    "A2",
+    "A3",
+    "A4",
+    "A5",
+    "B1",
+    "B2",
+    "B3",
+    "B4",
+    "C1",
+    "C2",
+    "D1",
+    "D2",
+    "registration: every case of this file is registered once, in roster order, in run mode, and ran before this one"
+  ]
+}
