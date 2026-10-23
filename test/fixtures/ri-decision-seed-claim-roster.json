@@ -1,0 +1,541 @@
+{
+  "comment": "wb-tz4r.8 (RI-UNIFIED-DECISION-INFERENCE-R8): the judged set of test/workbench-ri-decision-seed-claim-census.test.ts. Labels write the three alternatives of acceptance (c)'s grep as the placeholders <DE>, <NDB> and <DI>; this file never spells one (constants.needles holds the sha256 of each composed alternative). Every pin's witness is the census case's own return value, so a pin deleted, relabelled, swapped or removed from every literal of the census still reds against this file; tests lists the registered test titles in run order.",
+  "bead": "wb-tz4r.8",
+  "constants": {
+    "riPin": "485f3615db1e",
+    "riProbe": "9454d8ce1504",
+    "citation": "docs/programs/unified-decision-inference-2026-10-21/03-conformance.md:16@485f3615db1e",
+    "quote": "Mark unsupported/proposed capabilities accurately; do not claim runnable beyond actual acceptance.",
+    "needles": [
+      {
+        "placeholder": "<DE>",
+        "sha256": "bb1d5600e229324b489dce8de8dd834a5b2d11494c40ce17b0b65aebe44e9b42"
+      },
+      {
+        "placeholder": "<NDB>",
+        "sha256": "b503de985d54f88a96ad1af21353b468b7aa0288a1afa78a89791d44e5729c53"
+      },
+      {
+        "placeholder": "<DI>",
+        "sha256": "93b6fdee02e03bfa3fe96783eb6041820dfe0a3de51e66aca532bc38dc930b9a"
+      }
+    ],
+    "mentions": [
+      "M1:(?<!unified[\\s_.-]*)decision[\\s_.-]*inference",
+      "M2:decision[\\s_.-]*engine",
+      "M3:native[\\s_.-]*decision[\\s_.-]*backend",
+      "M4:\\bRI-DEC-\\d"
+    ],
+    "markers": [
+      "proposed",
+      "seed only",
+      "unshipped",
+      "not shipped",
+      "shipped: no",
+      "gated",
+      "unsupported",
+      "not supported",
+      "not runnable"
+    ],
+    "pin": "(?<![0-9a-z])485f3615db1e[0-9a-f]{0,28}(?![0-9a-z])",
+    "receiptCite": "(?<![\\w.-])(?:[\\w.-]+\\/)*receipts\\/([A-Za-z0-9][\\w.-]*\\.md)(?!\\w)",
+    "measurement": "`[^`\\n]+`|\\bcmd_[0-9a-f]{12}\\b",
+    "docDirs": [
+      "docs",
+      "new-feedback",
+      ".agents",
+      ".pi",
+      ".beads",
+      "examples",
+      "vendor"
+    ],
+    "docAnchors": [
+      "docs/workbench/feature-matrix.md:reactivefiber.render.preview",
+      "docs/workbench/06-capability-registry.md:Capability registry"
+    ],
+    "floors": {
+      "docs": 85,
+      "receipts": 40,
+      "exportRows": 600,
+      "src": 105,
+      "test": 500,
+      "qa": 60,
+      "docs/workbench": 60,
+      "echoReceipts": 3
+    },
+    "filingRows": [
+      "wb-tz4r.1",
+      "wb-tz4r.2",
+      "wb-tz4r.3",
+      "wb-tz4r.4",
+      "wb-tz4r.5",
+      "wb-tz4r.6",
+      "wb-tz4r.8"
+    ],
+    "scanRoots": [
+      "src",
+      "test",
+      "qa",
+      "docs/workbench"
+    ],
+    "echoKey": "reactive_inference",
+    "echoFixture": "test/helpers/rf-render-fixture.ts",
+    "version": "^\\d+(?:\\.\\d+){2,3}$"
+  },
+  "rows": [
+    {
+      "id": "A",
+      "label": "(a) census over docs/workbench (incl. feature-matrix.md, 06-capability-registry.md), receipts and beads: zero sentences claim RI <DI> runnable/supported; any mention carries 'proposed/seed-only' plus sha 485f3615db1e",
+      "pins": [
+        {
+          "id": "A1",
+          "witness": {
+            "docsFloorMet": true,
+            "receiptsFloorMet": true,
+            "anchorsRead": [
+              "docs/workbench/feature-matrix.md:true",
+              "docs/workbench/06-capability-registry.md:true"
+            ],
+            "rootDocsRead": [
+              "AGENTS.md",
+              "CHANGELOG.md",
+              "CONTRIBUTING.md",
+              "README.md",
+              "SECURITY.md"
+            ],
+            "exportFloorMet": true,
+            "unreadable": []
+          }
+        },
+        {
+          "id": "A2",
+          "witness": {
+            "mentions": 0,
+            "findings": []
+          }
+        },
+        {
+          "id": "A3",
+          "witness": {
+            "filingRowsJudged": [
+              "wb-tz4r.1",
+              "wb-tz4r.2",
+              "wb-tz4r.3",
+              "wb-tz4r.4",
+              "wb-tz4r.5",
+              "wb-tz4r.6",
+              "wb-tz4r.8"
+            ],
+            "findings": []
+          }
+        },
+        {
+          "id": "A4",
+          "witness": {
+            "descriptorsFloorMet": true,
+            "hits": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "(b) guard: a docs sentence naming <DI> without a measuring receipt behind it is RED (wb-2j3.2/R6 pattern)",
+      "pins": [
+        {
+          "id": "B1",
+          "witness": {
+            "mentionLines": 0,
+            "findings": []
+          }
+        },
+        {
+          "id": "B2",
+          "witness": {
+            "digest": "a49d6b5c24e788a9",
+            "outcome": [
+              "doc.md:1 M1: receipt-absent"
+            ]
+          }
+        },
+        {
+          "id": "B3",
+          "witness": {
+            "digest": "7caad19e543ed608",
+            "outcome": [
+              "doc.md:1 M1: receipt-missing"
+            ]
+          }
+        },
+        {
+          "id": "B4",
+          "witness": {
+            "receipt": "wb-c7ku.md",
+            "findings": [
+              "doc.md:1 M1: receipt-not-measuring"
+            ]
+          }
+        },
+        {
+          "id": "B5",
+          "witness": {
+            "digest": "5d6ea11bf133ca52",
+            "outcome": []
+          }
+        },
+        {
+          "id": "B6",
+          "witness": {
+            "digest": "d7de73be303e27a4",
+            "outcome": [
+              "doc.md:1 M2: receipt-not-measuring"
+            ]
+          }
+        },
+        {
+          "id": "B7",
+          "witness": {
+            "digest": "e2daa78e97653b36",
+            "outcome": [
+              "doc.md:1 M1: receipt-not-measuring"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "(c) pin: grep <DE>|<NDB>|<DI> over Pi src/test/qa/docs/workbench = 0 (0 at this read), the sdk_versions.reactive_inference distribution_version echo (test/helpers/rf-render-fixture.ts:63, receipts) counted as a version string, not a claim",
+      "pins": [
+        {
+          "id": "C1",
+          "witness": {
+            "floors": {
+              "src": true,
+              "test": true,
+              "qa": true,
+              "docs/workbench": true
+            },
+            "symlinks": [],
+            "sites": [],
+            "self": [
+              {
+                "path": "test/workbench-ri-decision-seed-claim-census.test.ts",
+                "walked": true,
+                "placeholders": [
+                  "<DE>",
+                  "<NDB>",
+                  "<DI>"
+                ]
+              },
+              {
+                "path": "test/fixtures/ri-decision-seed-claim-roster.json",
+                "walked": true,
+                "placeholders": [
+                  "<DE>",
+                  "<NDB>",
+                  "<DI>"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "C2",
+          "witness": {
+            "fixtureEchoFloorMet": true,
+            "receiptsWithEchoFloorMet": true,
+            "everyEchoAVersion": true,
+            "echoLineSites": [],
+            "keyRead": {
+              "needles": 0,
+              "mentions": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "F",
+      "label": "the owner filing row of wb-tz4r.8 in the tracked bead export states acceptance (a)-(c) as rows A-C's labels, spells exactly the three needles in its grep and carries the roster's quote, citation and pages",
+      "pins": [
+        {
+          "id": "F1",
+          "witness": {
+            "clauses": [
+              "(a) ",
+              "(b) ",
+              "(c) "
+            ],
+            "labelsEqual": [
+              "A",
+              "B",
+              "C"
+            ],
+            "grepIsNeedles": true,
+            "quote": true,
+            "citation": true,
+            "titleCites": true,
+            "pagesNamed": [
+              true,
+              true
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "M",
+      "label": "the mention, marker, pin, window, export, receipt-citation and echo matchers judge their pinned inputs in order",
+      "pins": [
+        {
+          "id": "MM1",
+          "witness": {
+            "digest": "c02773094f511e0e",
+            "outcome": [
+              "M1:1:unmarked",
+              "M1:2:unmarked",
+              "M1:3:unmarked",
+              "M1:4:unmarked",
+              "M1:5:unmarked"
+            ]
+          }
+        },
+        {
+          "id": "MM2",
+          "witness": {
+            "digest": "e31d534e882878c3",
+            "outcome": [
+              "M2:1:unmarked",
+              "M2:2:unmarked",
+              "M2:3:unmarked",
+              "M2:4:unmarked",
+              "M2:5:unmarked"
+            ]
+          }
+        },
+        {
+          "id": "MM3",
+          "witness": {
+            "digest": "435480f47cbbf2f6",
+            "outcome": [
+              "M3:1:unmarked",
+              "M3:2:unmarked",
+              "M3:3:unmarked"
+            ]
+          }
+        },
+        {
+          "id": "MM4",
+          "witness": {
+            "digest": "06c5f2951fb04e93",
+            "outcome": [
+              "M4:1:unpinned",
+              "M4:2:unmarked"
+            ]
+          }
+        },
+        {
+          "id": "MK1",
+          "witness": {
+            "digest": "7812da5a86cad3f7",
+            "outcome": [
+              "M1:1:admitted",
+              "M1:2:admitted",
+              "M1:3:admitted",
+              "M1:4:admitted",
+              "M1:5:admitted",
+              "M1:6:admitted",
+              "M1:7:admitted",
+              "M1:8:admitted",
+              "M1:9:admitted",
+              "M1:10:admitted",
+              "M1:11:unmarked"
+            ]
+          }
+        },
+        {
+          "id": "MP1",
+          "witness": {
+            "digest": "b41d31e93f1cb3f2",
+            "outcome": [
+              "M1:1:admitted",
+              "M1:2:admitted",
+              "M1:3:unpinned",
+              "M1:4:unpinned"
+            ]
+          }
+        },
+        {
+          "id": "MW1",
+          "witness": {
+            "digest": "8adcee17136b810d",
+            "outcome": [
+              "M1:1:unmarked",
+              "M1:3:admitted"
+            ]
+          }
+        },
+        {
+          "id": "MF1",
+          "witness": {
+            "digest": "ef814396c33e3e96",
+            "outcome": [
+              "wb-x.2 .notes: unmarked",
+              "wb-x.3 .description: unpinned",
+              "line 4 unreadable",
+              "judged:wb-x.1,wb-x.2,wb-x.3"
+            ]
+          }
+        },
+        {
+          "id": "MR1",
+          "witness": {
+            "digest": "dc0d33e387e5072b",
+            "outcome": [
+              "wb-a.md",
+              "wb-b.md",
+              "wb-c.md"
+            ]
+          }
+        },
+        {
+          "id": "MV1",
+          "witness": {
+            "digest": "262cee8858982a6e",
+            "outcome": [
+              "1:0.2.60.20261018120223",
+              "2:0.2.55",
+              "3:0.1.17"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "R",
+      "label": "the named residuals R-LINE, R-FIELD, R-PROGRAM, R-VOCABULARY, R-INTERRUPTED, R-CASE, R-COMPOSED, R-RECEIPT-TEXT and R-SCOPE stay pinned quiet",
+      "pins": [
+        {
+          "id": "R1",
+          "witness": {
+            "digest": "e776e89478791197",
+            "outcome": [
+              "M1:1:admitted"
+            ]
+          }
+        },
+        {
+          "id": "R2",
+          "witness": {
+            "digest": "ffc72176f6a24838",
+            "outcome": [
+              "judged:wb-x.5"
+            ]
+          }
+        },
+        {
+          "id": "R3",
+          "witness": {
+            "digest": "5b03f37c81b089c3",
+            "outcome": []
+          }
+        },
+        {
+          "id": "R4",
+          "witness": {
+            "digest": "651163e758b5ab3c",
+            "outcome": []
+          }
+        },
+        {
+          "id": "R5",
+          "witness": {
+            "digest": "e7c3b6b2cefa3a7e",
+            "outcome": []
+          }
+        },
+        {
+          "id": "R6",
+          "witness": {
+            "digest": "193e423ede58e307",
+            "outcome": [
+              "mentions:M1,M1,M1,M2,M3"
+            ]
+          }
+        },
+        {
+          "id": "R7",
+          "witness": {
+            "digest": "1d3f0677d94ffad8",
+            "outcome": []
+          }
+        },
+        {
+          "id": "R8",
+          "witness": {
+            "digest": "ae409b9b7f974bf4",
+            "outcome": []
+          }
+        },
+        {
+          "id": "R9",
+          "witness": {
+            "digest": "632568da38b7a442",
+            "outcome": [
+              "mentions:M2,M4"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "residuals": [
+    "R-LINE",
+    "R-FIELD",
+    "R-PROGRAM",
+    "R-VOCABULARY",
+    "R-INTERRUPTED",
+    "R-CASE",
+    "R-COMPOSED",
+    "R-RECEIPT-TEXT",
+    "R-SCOPE"
+  ],
+  "tests": [
+    "the judged set: the frozen shape, the out-of-file roster and the constants agree",
+    "A1",
+    "A2",
+    "A3",
+    "A4",
+    "B1",
+    "B2",
+    "B3",
+    "B4",
+    "B5",
+    "B6",
+    "B7",
+    "C1",
+    "C2",
+    "F1",
+    "MM1",
+    "MM2",
+    "MM3",
+    "MM4",
+    "MK1",
+    "MP1",
+    "MW1",
+    "MF1",
+    "MR1",
+    "MV1",
+    "R1",
+    "R2",
+    "R3",
+    "R4",
+    "R5",
+    "R6",
+    "R7",
+    "R8",
+    "R9",
+    "records: every registered test ran once in run mode in roster order, every pin reached its end, and no title spells a needle"
+  ]
+}
