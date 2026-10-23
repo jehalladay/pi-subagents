@@ -89,7 +89,7 @@
     {"table": "CONTROLS", "id": "N04", "test": "control N04 reuse without plan context (docs/workflows.md)", "findings": [], "input": "d3f269d64d6f140d286fd6980bc90f4aabbd0fa07612cbf67bc5f882db4f23aa"},
     {"table": "CONTROLS", "id": "N05", "test": "control N05 an O(1) read with no traversal (src/workbench/observation.ts)", "findings": [], "input": "af5880badf47a167cf25ee4e0b28b169169ae17b1416f1e39558bc63ed426a75"},
     {"table": "CONTROLS", "id": "N06", "test": "control N06 a section number before swarm (wb-973.4)", "findings": [], "input": "1372ba4d17229182bf3d2c10400898788675ed957628e8f37eb09930f451a9a1"},
-    {"table": "CONTROLS", "id": "N07", "test": "control N07 graph traversal beside bounds (docs/workbench/09)", "findings": [], "input": "85f00454ff1593364e4f443446d9b74bf82afd71b9ce64ab323b295c1243a840"},
+    {"table": "CONTROLS", "id": "N07", "test": "control N07 a reader line naming bounds with no complexity claim (docs/workbench/09)", "findings": [], "input": "85f00454ff1593364e4f443446d9b74bf82afd71b9ce64ab323b295c1243a840"},
     {"table": "CONTROLS", "id": "N08", "test": "control N08 a traversal bound error (src/workbench/hosts/local-detached.ts)", "findings": [], "input": "89b6c22d76b84e012c099f061a049545a02f8d2de655e7b5c4ad24cfacb90da7"},
     {"table": "CONTROLS", "id": "N09", "test": "control N09 longer and shorter claim ids", "findings": [], "input": "f436673aad656b3843113be06a7471b6262191a09e98c8b02e972f43d2327023"},
     {"table": "CONTROLS", "id": "N10", "test": "control N10 a synthetic-labelled reuse row", "findings": [], "input": "bcdd8140df2482c1ed084cc7f9c74e38bf3c0cc1b516463ac6526b32bb6394fb"},

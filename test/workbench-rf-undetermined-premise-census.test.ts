@@ -742,7 +742,7 @@ const ROWS: readonly Row[] = [
   { table: "CONTROLS", id: "N04", label: "reuse without plan context (docs/workflows.md)", files: doc("Reach for it to reuse something already saved, not to structure one script.\n"), expect: [] },
   { table: "CONTROLS", id: "N05", label: "an O(1) read with no traversal (src/workbench/observation.ts)", files: [{ path: "src/x.ts", text: "/** Copied ancestor aggregate of one observed node: an O(1) read, no traversal. */\n" }], expect: [] },
   { table: "CONTROLS", id: "N06", label: "a section number before swarm (wb-973.4)", files: doc("See decisions.md section 5 swarm-id workspace.\n"), expect: [] },
-  { table: "CONTROLS", id: "N07", label: "graph traversal beside bounds (docs/workbench/09)", files: doc("- HX: query coverage/bounds/query basis, and optional graph traversal of linked native refs.\n"), expect: [] },
+  { table: "CONTROLS", id: "N07", label: "a reader line naming bounds with no complexity claim (docs/workbench/09)", files: doc("- HX: query coverage/bounds/query basis, and optional graph traversal of linked native refs.\n"), expect: [] },
   { table: "CONTROLS", id: "N08", label: "a traversal bound error (src/workbench/hosts/local-detached.ts)", files: [{ path: "src/x.ts", text: 'throw new Error("Local provider directory tree exceeds traversal bound.");\n' }], expect: [] },
   { table: "CONTROLS", id: "N09", label: "longer and shorter claim ids", files: doc("small-a-C0705 and small-a-C082 hold.\n"), expect: [] },
   { table: "CONTROLS", id: "N10", label: "a synthetic-labelled reuse row", files: json({ rows: [{ decision: "reuse", label: "synthetic: alpha's row set to reuse on a copy of the measured plan" }] }), expect: [] },
