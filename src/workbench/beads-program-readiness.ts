@@ -14,10 +14,12 @@
  *   bead outside the program holds nothing; a `blocks` edge to an outside bead holds the child while that bead is open.
  * - No design doc is implementation: the host's landed-record witness satisfies only a premise the store types `decision`;
  *   any other premise is satisfied by its closure in the store alone.
- * - A gate reads ADOPT only from the gate bead's own appended notes, as exactly one line `ruled ADOPT` (EAT-R575: exactly one
- *   of `ruled ADOPT` / `ruled REJECT`; DEFER is the third verdict an epic rules). The title carries the question form
- *   `(ruled ADOPT or REJECT)` and is never read, nor are the description, status, labels or closure: no verdict line, or
- *   two, read `no-verdict`.
+ * - A gate reads its verdict from the gate bead's own text and nothing else: its title, description and notes (EAT-R575 puts
+ *   the ruling in the title or body; an appended ruling lands in the notes), never its status, labels or closure. Across the
+ *   three, the text must carry exactly one ruling marker: `ruled ADOPT` or `ruled REJECT` verbatim, starting a word and
+ *   ending where no letter, digit, `_` or `-` follows, and never the first member of an alternative (the question form
+ *   `(ruled ADOPT or REJECT)` asks, it does not answer). DEFER is no marker: `ruled DEFER` reads `no-verdict`, as do no
+ *   marker and two. This is the reference reading the program's bead-graph census holds every Pi gate reader to.
  * The module never spawns a process and never issues a store mutation.
  */
 import {type BeadsReadClient, type BeadsReadLimits, type BeadsShowCall, type BeadsShowResult, type BeadsWorkReading, readBeadsWork} from './beads-observer.js';
@@ -48,7 +50,7 @@ export interface BeadsProgramReadOptions {
   now: () => string;
   signal?: AbortSignal;
 }
-export type BeadsGateVerdict = 'ADOPT' | 'DEFER' | 'REJECT' | 'no-verdict' | typeof STORE_UNREACHABLE;
+export type BeadsGateVerdict = 'ADOPT' | 'REJECT' | 'no-verdict' | typeof STORE_UNREACHABLE;
 export interface BeadsProgramChild {
   id: string;
   /** The store's status of the child, or STORE_UNREACHABLE. */
@@ -72,11 +74,13 @@ const MAX_STDOUT_CHARS = 4_194_304;
 /** The bd id shape readBeadsWork admits. */
 const WORK_ID = /^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$/;
 const WORK_PACKAGE = /^wp:./;
-const VERDICT_LINES: ReadonlyMap<string, 'ADOPT' | 'DEFER' | 'REJECT'> = new Map([
-  ['ruled ADOPT', 'ADOPT'],
-  ['ruled DEFER', 'DEFER'],
-  ['ruled REJECT', 'REJECT'],
-]);
+/** The gate bead's text a verdict is read from: its title, its body and the notes an appended ruling lands in. */
+const TEXT_FIELDS = ['title', 'description', 'notes'] as const;
+/** What follows a marker that is the first member of an alternative: separators, then at most one joining word. */
+const SEPARATORS = "[\\s()\\[\\],;:/|'\"`]*";
+/** A ruling marker: `ruled ADOPT` or `ruled REJECT` at a word start, the verdict word ending where no letter, digit, `_` or
+ * `-` follows (ADOPTED and ADOPT-PROTOTYPE are not ADOPT), and not the first member of an alternative. */
+const MARKER = new RegExp(`(?<![\\w-])ruled (ADOPT|REJECT)(?![\\w-])(?!${SEPARATORS}(?:(?:or|and|nor)(?![\\w-])${SEPARATORS})?(?:ADOPT|REJECT|DEFER)(?![\\w-]))`, 'g');
 
 type JsonRecord = Record<string, unknown>;
 const isRecord = (value: unknown): value is JsonRecord => value !== null && typeof value === 'object' && !Array.isArray(value);
@@ -146,20 +150,21 @@ function dependentsOf(result: BeadsShowResult): Member[] {
     return {id: raw.id, dependencyType, issueType, labels: isStrings(labels) ? labels : []};
   });
 }
-/** The gate bead's own appended verdict: exactly one whole line among its notes, nothing else of the bead. */
+/** The gate bead's verdict: exactly one ruling marker across its title, description and notes; no other field is read. A
+ * text field that is present but not a string is a malformed reading of the store, never an empty one. */
 function verdictOf(result: BeadsShowResult, gate: string): Exclude<BeadsGateVerdict, typeof STORE_UNREACHABLE> {
   const parsed = parseJson(result, 'bd show');
   if (!Array.isArray(parsed) || parsed.length === 0) throw unavailable('bd show returned no issue array.');
   const first: unknown = parsed[0];
   if (!isRecord(first) || first.id !== gate) throw unavailable('bd show returned a different work id than requested.');
-  const {notes} = first;
-  if (notes === undefined || notes === null) return 'no-verdict';
-  if (typeof notes !== 'string') throw unavailable('Beads gate notes are not a string.');
-  const verdicts = notes.split('\n').flatMap((line) => {
-    const verdict = VERDICT_LINES.get(line.trim());
-    return verdict === undefined ? [] : [verdict];
+  const markers = TEXT_FIELDS.flatMap((field) => {
+    const text = first[field];
+    if (text === undefined || text === null) return [];
+    if (typeof text !== 'string') throw unavailable('Beads gate text is not a string.');
+    return [...text.matchAll(MARKER)].map((match) => match[1]);
   });
-  return verdicts.length === 1 && verdicts[0] !== undefined ? verdicts[0] : 'no-verdict';
+  const [only] = markers;
+  return markers.length === 1 && (only === 'ADOPT' || only === 'REJECT') ? only : 'no-verdict';
 }
 
 export async function readBeadsProgramReadiness(client: BeadsProgramClient, options: BeadsProgramReadOptions): Promise<BeadsProgramReadiness> {

@@ -8,14 +8,17 @@
  * (d) "with the store unreachable Pi reports 'unknown (store unreachable)', never the snapshot's 'open'".
  * The merged duplicates are carried as instances: PERF-F (epic rftsx-sbyih, the BEADS snapshot written 2026-10-21T11:10:38Z,
  * related edges never blockers) and the component-assembly program (epic rftsx-fin7f, TSX-IO-03b only on gate rftsx-pgob0's exact
- * ADOPT line).
+ * ADOPT marker).
  *
  * ANCHORS OUTSIDE THIS FILE. test/fixtures/beads-program-snapshots.json holds the three pinned rftsx bead maps byte-exact,
  * raw-deflated (a byte list, so the producer's prose never reads as Pi's own text to the censuses that walk the tree); the
  * judged set inflates each, holds its byte length, recomputes its git blob id, and each id equals
  * `git rev-parse 76bbbffd9d4a:<path>` in ReactiveFiberTSXSDK. Every
  * map's own "Ready at creation" line is the oracle a store modeled from that map must reproduce through the reader's seams.
- * The bead's acceptance text anchors the row labels, the row count and the sub-clauses the pins cover.
+ * The bead's acceptance text anchors the row labels, the row count and the sub-clauses the pins cover. The gate verdict forms
+ * state the landed reference reading (owner ruling R727 on this bead's respin): wb-4nut.4's readGateVerdict, which
+ * test/workbench-h2-bead-graph-census.test.ts holds this reader to under its rows A-D; wb-4nut.4's own filing in the tracked
+ * export anchors the marker words.
  *
  * THE MODELED STORE. The live rftsx store is unreachable from this repo (the ReactiveFiberTSXSDK clone carries no .beads at
  * HEAD, origin/main or 76bbbffd9d4a; the bead note records 76bbbffd9d4a:.beads/issues.jsonl ABSENT), so each case reads a store
@@ -300,9 +303,12 @@ async function category(promise: Promise<unknown>): Promise<string> {
 // ---------------------------------------------------------------------------------------------------------------------------
 // The gate verdict forms (a gated packet is not created at the pin: each map's gated table names it by key, so the key is its
 // stand-in id). Each form edits a CLOSED gate bead with no notes (EAT-R575: the ruling bead closes when ruled) and states the
-// verdict the reader must read; the gated child is ready exactly when that verdict is ADOPT.
+// verdict the reader must read: the landed MARKER reading - exactly one 'ruled ADOPT' or 'ruled REJECT' marker, verbatim at word
+// bounds and not the first member of an alternative, across the gate's title, description and notes; DEFER is no marker; no
+// marker or two read no-verdict. The gated child is ready exactly when that verdict is ADOPT. G08 is the named residual
+// R-NEGATED-PROSE: the reader parses no grammar, so a negated marker inside prose reads as the marker (pinned, not cured).
 
-type FormVerdict = 'ADOPT' | 'DEFER' | 'REJECT' | 'no-verdict';
+type FormVerdict = 'ADOPT' | 'REJECT' | 'no-verdict';
 interface GateForm {
   id: string;
   verdict: FormVerdict;
@@ -310,20 +316,29 @@ interface GateForm {
   apply: (gate: ModelBead) => Partial<ModelBead>;
 }
 const GATE_FORMS: readonly GateForm[] = [
-  {id: 'G01', verdict: 'no-verdict', why: 'no appended notes', apply: () => ({})},
-  {id: 'G02', verdict: 'ADOPT', why: 'one verdict line ruled ADOPT', apply: () => ({notes: 'ruled ADOPT'})},
-  {id: 'G03', verdict: 'DEFER', why: 'one verdict line ruled DEFER', apply: () => ({notes: 'ruled DEFER'})},
-  {id: 'G04', verdict: 'REJECT', why: 'one verdict line ruled REJECT', apply: () => ({notes: 'ruled REJECT'})},
+  {id: 'G01', verdict: 'no-verdict', why: 'no appended notes and no marker in the title', apply: () => ({})},
+  {id: 'G02', verdict: 'ADOPT', why: 'one marker ruled ADOPT in the notes', apply: () => ({notes: 'ruled ADOPT'})},
+  {id: 'G03', verdict: 'no-verdict', why: 'ruled DEFER is no verdict marker', apply: () => ({notes: 'ruled DEFER'})},
+  {id: 'G04', verdict: 'REJECT', why: 'one marker ruled REJECT in the notes', apply: () => ({notes: 'ruled REJECT'})},
   {id: 'G05', verdict: 'no-verdict', why: 'two ADOPT lines are two markers', apply: () => ({notes: 'ruled ADOPT\nruled ADOPT'})},
   {id: 'G06', verdict: 'no-verdict', why: 'an ADOPT and a REJECT line', apply: () => ({notes: 'ruled ADOPT\n\nruled REJECT'})},
-  {id: 'G07', verdict: 'no-verdict', why: "the gate's own title template copied into its notes", apply: (gate) => ({notes: `Full statement: ${gate.title}`})},
-  {id: 'G08', verdict: 'no-verdict', why: 'the marker inside prose', apply: () => ({notes: 'not yet ruled ADOPT'})},
+  {id: 'G07', verdict: 'no-verdict', why: "the gate's own title template copied into its notes: the question form is no marker", apply: (gate) => ({notes: `Full statement: ${gate.title}`})},
+  {id: 'G08', verdict: 'ADOPT', why: 'a marker inside prose reads, negated or not (residual R-NEGATED-PROSE)', apply: () => ({notes: 'not yet ruled ADOPT'})},
   {id: 'G09', verdict: 'no-verdict', why: 'the marker in another case', apply: () => ({notes: 'ruled adopt'})},
   {id: 'G10', verdict: 'no-verdict', why: "another program's verdict word (the rftsx-atcqf.42 pattern)", apply: () => ({notes: 'ruled ADOPT-PROTOTYPE'})},
-  {id: 'G11', verdict: 'no-verdict', why: 'the verdict in the title only', apply: (gate) => ({title: `${gate.title} - ruled ADOPT`})},
-  {id: 'G12', verdict: 'no-verdict', why: 'the verdict in the description only', apply: () => ({description: 'ruled ADOPT'})},
-  {id: 'G13', verdict: 'ADOPT', why: 'one verdict line among other notes, padded and CRLF-ended', apply: () => ({notes: 'Owner ruling recorded.\r\n  ruled ADOPT  \r\nAPI-PIN.md landed.'})},
-  {id: 'G14', verdict: 'no-verdict', why: 'the marker with trailing punctuation', apply: () => ({notes: 'ruled ADOPT.'})},
+  {id: 'G11', verdict: 'ADOPT', why: 'the marker in the title alone: the title is a text field', apply: (gate) => ({title: `${gate.title} - ruled ADOPT`})},
+  {id: 'G12', verdict: 'ADOPT', why: 'the marker in the description alone: the body is a text field', apply: () => ({description: 'ruled ADOPT'})},
+  {id: 'G13', verdict: 'ADOPT', why: 'one marker among other notes, padded and CRLF-ended', apply: () => ({notes: 'Owner ruling recorded.\r\n  ruled ADOPT  \r\nAPI-PIN.md landed.'})},
+  {id: 'G14', verdict: 'ADOPT', why: 'trailing punctuation ends the verdict word', apply: () => ({notes: 'ruled ADOPT.'})},
+  {id: 'G15', verdict: 'no-verdict', why: 'a ruled ADOPT line beside a REJECT marker inside prose: two markers', apply: () => ({notes: 'ruled ADOPT\nan earlier draft was ruled REJECT and withdrawn'})},
+  {id: 'G16', verdict: 'no-verdict', why: 'ADOPT in the notes and REJECT in the description: two markers across fields', apply: () => ({description: 'ruled REJECT', notes: 'ruled ADOPT'})},
+  {id: 'G17', verdict: 'no-verdict', why: 'ADOPT in the title and in the notes: two markers across fields', apply: (gate) => ({title: `${gate.title} - ruled ADOPT`, notes: 'ruled ADOPT'})},
+  {id: 'G18', verdict: 'ADOPT', why: 'a ruled ADOPT line beside a ruled DEFER line: DEFER is no marker', apply: () => ({notes: 'ruled ADOPT\nruled DEFER'})},
+  {id: 'G19', verdict: 'no-verdict', why: 'the alternation form in the notes is the question, not its answer', apply: () => ({notes: 'ruled ADOPT or REJECT'})},
+  {id: 'G20', verdict: 'no-verdict', why: 'a marker in a label: labels are never read', apply: (gate) => ({labels: [...gate.labels, 'ruled ADOPT']})},
+  {id: 'G21', verdict: 'no-verdict', why: 'an alternative joined by nor is no marker', apply: () => ({notes: 'neither ruled ADOPT nor REJECT yet'})},
+  {id: 'G22', verdict: 'no-verdict', why: 'an alternative joined by and is no marker', apply: () => ({notes: 'ruled ADOPT and REJECT'})},
+  {id: 'G23', verdict: 'no-verdict', why: 'the word ruled in another case', apply: () => ({notes: 'Ruled ADOPT'})},
 ];
 /** The H2 gated packet and the component-assembly one the merged TSX-CA-R5 duplicate names, each with its map's gate bead. */
 const GATED: readonly {map: ProgramMap; packet: string; label: string}[] = [
@@ -418,26 +433,27 @@ function pin(id: string, title: string, body: () => Promise<void> | void): void 
   REGISTERED.set(id, title);
   it(`${id}: ${title}`, body);
 }
-let notesRead: string | undefined;
-/** The bead's notes as the tracked export carries them, read once: only the lines naming the bead are parsed. */
-function beadNotes(): string {
-  if (notesRead !== undefined) return notesRead;
+const notesRead = new Map<string, string>();
+/** A bead's notes as the tracked export carries them, read once per bead: only the lines naming the bead are parsed. */
+function notesOf(bead: string): string {
+  const cached = notesRead.get(bead);
+  if (cached !== undefined) return cached;
   const text = readFileSync(join(REPO, '.beads', 'issues.jsonl'), 'utf8');
-  const key = `"id":"${BEAD}"`;
+  const key = `"id":"${bead}"`;
   for (let at = text.indexOf(key); at !== -1; at = text.indexOf(key, at + key.length)) {
     const end = text.indexOf('\n', at);
     const issue = JSON.parse(text.slice(text.lastIndexOf('\n', at) + 1, end === -1 ? undefined : end)) as {id?: unknown; notes?: unknown};
-    if (issue.id === BEAD && typeof issue.notes === 'string') {
-      notesRead = issue.notes;
-      return notesRead;
+    if (issue.id === bead && typeof issue.notes === 'string') {
+      notesRead.set(bead, issue.notes);
+      return issue.notes;
     }
   }
-  throw new Error(`.beads/issues.jsonl carries no notes for ${BEAD}`);
+  throw new Error(`.beads/issues.jsonl carries no notes for ${bead}`);
 }
 /** The owner filing: the notes through the merged-duplicates paragraph. Notes appended later (deliveries, gate verdicts) are
  * never an anchor, so a later note naming another bead cannot move the judged set. */
 function ownerFiling(): string {
-  const notes = beadNotes();
+  const notes = notesOf(BEAD);
   const merged = notes.indexOf('Cross-program duplicates merged here');
   if (merged === -1) throw new Error(`${BEAD} notes carry no merged-duplicates paragraph`);
   const end = notes.indexOf('\n\n', merged);
@@ -478,28 +494,45 @@ describe('wb-4nut.5 program dispatch readiness over the shared bead store (TSX-H
     expect(named.length).toBeGreaterThan(0);
     const mapped = new Set(MAPS.flatMap((map) => map.rows.map((row) => row.id)));
     expect(named.filter((id) => !mapped.has(id))).toEqual([]);
-    // The gate forms: frozen shape, and each verdict word the H2 epic row rules over has its own one-line control.
+    // The gate forms: frozen shape, and each verdict word the H2 epic row rules over has its own one-line control, reading itself
+    // when it is a marker word (wb-4nut.4's filing: 'ruled ADOPT'/'ruled REJECT') and no-verdict otherwise (DEFER).
     expect(GATE_FORMS.map((form) => `${form.id}:${form.verdict}`)).toEqual([
       'G01:no-verdict',
       'G02:ADOPT',
-      'G03:DEFER',
+      'G03:no-verdict',
       'G04:REJECT',
       'G05:no-verdict',
       'G06:no-verdict',
       'G07:no-verdict',
-      'G08:no-verdict',
+      'G08:ADOPT',
       'G09:no-verdict',
       'G10:no-verdict',
-      'G11:no-verdict',
-      'G12:no-verdict',
+      'G11:ADOPT',
+      'G12:ADOPT',
       'G13:ADOPT',
-      'G14:no-verdict',
+      'G14:ADOPT',
+      'G15:no-verdict',
+      'G16:no-verdict',
+      'G17:no-verdict',
+      'G18:ADOPT',
+      'G19:no-verdict',
+      'G20:no-verdict',
+      'G21:no-verdict',
+      'G22:no-verdict',
+      'G23:no-verdict',
     ]);
     const epicRow = H2.rows.find((row) => row.id === H2.epic);
     const vocabulary = /ruled \(([A-Z/]+)\)/.exec(snapshot('harness2-reactive-evolution-2026-10-20').text.split('\n')[(epicRow?.line ?? 0) - 1] ?? '')?.[1]?.split('/');
     expect(vocabulary).toEqual(['ADOPT', 'DEFER', 'REJECT']);
+    const markerWords = /exactly one of 'ruled ([A-Z]+)'\/'ruled ([A-Z]+)' in the bead's text/.exec(notesOf('wb-4nut.4'))?.slice(1, 3);
+    expect(markerWords).toEqual(['ADOPT', 'REJECT']);
     const blank: ModelBead = {id: 'rftsx-blank', title: 'blank gate', status: 'closed', issueType: 'decision', priority: 2, labels: [], related: [], blocks: []};
-    for (const word of vocabulary ?? []) expect(GATE_FORMS.filter((form) => form.verdict === word && form.apply(blank).notes === `ruled ${word}`).map((form) => form.id)).toHaveLength(1);
+    for (const word of vocabulary ?? []) {
+      const controls = GATE_FORMS.filter((form) => JSON.stringify(form.apply(blank)) === JSON.stringify({notes: `ruled ${word}`}));
+      expect(controls.map((form) => form.verdict)).toEqual([markerWords?.includes(word) ? word : 'no-verdict']);
+    }
+    // The gated packets A5 judges every form over, by map: H2's TSX-H2-01 and the merged TSX-CA-R5 duplicate's TSX-IO-03b.
+    expect(GATED.map((entry) => `${entry.map.epic} ${entry.packet} ${entry.label}`)).toEqual(['rftsx-bhmrd TSX-H2-01 wp:tsx-h2-01', 'rftsx-fin7f TSX-IO-03b wp:TSX-IO-03b']);
   });
 
   pin('A1', 'one open related premise inside the program leaves the child not ready (the PERF-F M2-M4 children wait on their M1/M2 premises)', async () => {
@@ -553,24 +586,28 @@ describe('wb-4nut.5 program dispatch readiness over the shared bead store (TSX-H
     witness('A4', [...perf.ready, ...assembly.ready].filter((id) => ['rftsx-qjxf1', 'rftsx-zblcp', 'rftsx-d46cz', 'rftsx-2w3pj', 'rftsx-o78c7'].includes(id)), []);
   });
 
-  pin('A5', 'a gated child is ready only when its gate bead appends exactly one verdict line ruled ADOPT (rftsx-rupqh for TSX-H2-01, rftsx-pgob0 for TSX-IO-03b)', async () => {
+  pin('A5', "a gated child is ready only when its gate bead's title, description and notes carry exactly one ruling marker and it is ruled ADOPT (rftsx-rupqh for TSX-H2-01, rftsx-pgob0 for TSX-IO-03b)", async () => {
     const failures: string[] = [];
+    let judged = 0;
     for (const {map, packet, label} of GATED) {
       for (const form of GATE_FORMS) {
         const {store, gate} = gatedStore(map, packet, label, form);
         const reading = await read(bd(store), programOf(map, {gates: {[packet]: gate}}));
         const entry = child(reading, packet);
+        judged += 1;
         const want = {ready: form.verdict === 'ADOPT', gate: {id: gate, verdict: form.verdict}};
         if (entry.ready !== want.ready || JSON.stringify(entry.gate) !== JSON.stringify(want.gate)) failures.push(`${map.epic} ${packet} ${form.id} (${form.why}): ${JSON.stringify({ready: entry.ready, gate: entry.gate})}`);
         if (reading.ready.includes(packet) !== want.ready) failures.push(`${map.epic} ${packet} ${form.id}: ready set disagrees`);
       }
     }
-    witness('A5', failures, []);
+    witness('A5', {judged, failures}, {judged: 46, failures: []});
   });
 
   pin('A6', 'a gate the store cannot return reads unknown (store unreachable) and its child is never ready', async () => {
     const {store, gate} = gatedStore(H2, 'TSX-H2-01', 'wp:tsx-h2-01', GATE_FORMS[1] as GateForm);
-    for (const fault of ['throw', missing(), {exit: 0, stdout: 'not json', stderr: ''}] as const) {
+    const gateFaults = ['throw', missing(), {exit: 0, stdout: 'not json', stderr: ''}] as const;
+    expect(gateFaults).toHaveLength(3);
+    for (const fault of gateFaults) {
       const reading = await read(bd(store, {show: new Map([[gate, fault]])}), programOf(H2, {gates: {'TSX-H2-01': gate}}));
       expect(child(reading, 'TSX-H2-01')).toMatchObject({ready: false, gate: {id: gate, verdict: STORE_UNREACHABLE}});
       expect(reading.ready).not.toContain('TSX-H2-01');
@@ -679,7 +716,7 @@ describe('wb-4nut.5 program dispatch readiness over the shared bead store (TSX-H
       expect(JSON.stringify(reading)).not.toContain('secret');
     }
     const absent = await read(bd(store), {epics: ['rftsx-sbyih']});
-    witness('D1', absent, {store: STORE_UNREACHABLE, ready: [], children: []});
+    witness('D1', {faults: faults.length, absent}, {faults: 4, absent: {store: STORE_UNREACHABLE, ready: [], children: []}});
   });
 
   pin('D2', "a child the store cannot return reads 'unknown (store unreachable)', is never ready, and never borrows the snapshot's 'open'", async () => {
@@ -763,6 +800,35 @@ describe('wb-4nut.5 reader hygiene', () => {
       expect(child(reading, 'rftsx-auqdi')).toMatchObject({status, ready: false, waitingOn: []});
       expect(reading.ready).toEqual(['rftsx-rupqh']);
     }
+  });
+
+  it('a gate whose title, description or notes is present and not a string reads unknown (store unreachable), never an empty text', async () => {
+    for (const field of ['title', 'description', 'notes'] as const) {
+      const {store, gate} = gatedStore(H2, 'TSX-H2-01', 'wp:tsx-h2-01', GATE_FORMS[1] as GateForm);
+      const inner = bd(store);
+      const client: BeadsProgramClient = {
+        dependents: inner.dependents,
+        async show(id, call) {
+          const result = await inner.show(id, call);
+          if (id !== gate) return result;
+          const [issue] = JSON.parse(result.stdout) as Record<string, unknown>[];
+          return {...result, stdout: JSON.stringify([{...issue, [field]: 7}])};
+        },
+      };
+      const reading = await read(client, programOf(H2, {gates: {'TSX-H2-01': gate}}));
+      expect(child(reading, 'TSX-H2-01')).toMatchObject({ready: false, gate: {id: gate, verdict: STORE_UNREACHABLE}});
+    }
+  });
+
+  it('a gate show that answers for another work id reads unknown (store unreachable)', async () => {
+    const {store, gate} = gatedStore(H2, 'TSX-H2-01', 'wp:tsx-h2-01', GATE_FORMS[1] as GateForm);
+    const inner = bd(store);
+    const client: BeadsProgramClient = {
+      dependents: inner.dependents,
+      show: (id, call) => inner.show(id === gate ? 'rftsx-auqdi' : id, call),
+    };
+    const reading = await read(client, programOf(H2, {gates: {'TSX-H2-01': gate}}));
+    expect(child(reading, 'TSX-H2-01')).toMatchObject({ready: false, gate: {id: gate, verdict: STORE_UNREACHABLE}});
   });
 
   it('the reading is plain structured-cloneable data', async () => {
