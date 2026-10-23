@@ -1,0 +1,509 @@
+{
+  "bead": "wb-if7q.5",
+  "quote": "Integrate a headless incremental llm-ui-inspired Markdown/code/JSON/CSV block parser. Preserve completed block identity and mutable provisional suffix. Parsed blocks become ordinary Reactive Fiber components; incomplete/invalid blocks never become authorized actions.",
+  "citation": "docs/programs/native-interfaces-and-portable-tsx-2026-10-21/02-implementation.md:19@76bbbffd9d4a",
+  "sdk": "@reactive-fiber/tsx",
+  "reference": "llm-ui",
+  "contentStates": [
+    "recognizing",
+    "provisional",
+    "complete",
+    "validated",
+    "invalid",
+    "aborted"
+  ],
+  "scan": {
+    "sdkFamily": "@reactive-fiber\\/tsx(?![\\w-])/i",
+    "referenceFamily": "(?<![\\w-])@?llm-ui(?![\\w-])/i",
+    "stateFamily": "\\b(?:recogni[sz]ing|provisional(?:ly)?)\\b/",
+    "blockFamily": "\\b(?:stream(?:ing|ed)? blocks?|blocks? streams?|blocks? pars(?:er|ers|ing)|pars(?:e|es|ed|ing) blocks?|parse status(?:es)?|content states?|provisional suffix(?:es)?)\\b/",
+    "claimFamily": "stream(?:ing)?[\\s_-]*blocks?|content[\\s_-]*states?|parse[\\s_-]*status|recogni[sz]ing|provisional|non[\\s_-]*validated|code[\\s_-]*fence|out[\\s_-]*of[\\s_-]*order|duplicate[\\s_-]*chunks?|late[\\s_-]*chunks?|stream[\\s_-]*sequence|source[\\s_-]*attribution|resource[\\s_-]*revisions?|admitted[\\s_-]*actions?/i",
+    "streamEntry": "stream|block|chunk|parse/i",
+    "manifest": "(?:^|\\/)(?:package(?:-lock)?\\.json|npm-shrinkwrap\\.json|deno\\.jsonc?|import[-_]map\\.json|[tj]sconfig[^/]*\\.json)$/i",
+    "moduleExtensions": [
+      ".ts",
+      ".mts",
+      ".cts",
+      ".tsx",
+      ".js",
+      ".mjs",
+      ".cjs",
+      ".jsx"
+    ],
+    "jsonExtensions": [
+      ".json"
+    ],
+    "skippedRoots": [
+      ".git",
+      ".beads",
+      "node_modules",
+      "dist",
+      "build",
+      "coverage",
+      ".forge"
+    ],
+    "exempt": [
+      "test/workbench-tsx-streaming-block-census.test.ts",
+      "test/fixtures/tsx-streaming-block-roster.json"
+    ],
+    "floors": {
+      "files": 700,
+      "modules": {
+        "src": 100,
+        "test": 380,
+        "qa": 55
+      },
+      "json": 40,
+      "manifests": 4
+    },
+    "walkAnchors": [
+      "README.md:pi-subagents",
+      "src/ui/conversation-viewer.ts:Markdown",
+      "qa/workbench/receipts-index.mjs:marked",
+      "package.json:@tintinweb/pi-subagents",
+      "media/screenshot.png:PNG"
+    ],
+    "nearestReaders": [
+      "src/ui/conversation-viewer.ts:identifier:Markdown",
+      "src/workbench/claude-host.ts:identifier:block",
+      "src/workbench/claude-transcript.ts:identifier:block",
+      "test/workbench-pi-streaming.test.ts:identifier:SDKMessage",
+      "qa/workbench/receipts-index.mjs:specifier:marked"
+    ],
+    "tierCommand": "rf-preview-tsx"
+  },
+  "producer": {
+    "rfVersion": "0.1.832",
+    "importMap": {
+      "@reactive-fiber/tsx": "npm:@reactive-fiber/tsx@0.1.649",
+      "@reactive-fiber/tsx/jsx-dev-runtime": "npm:@reactive-fiber/tsx@0.1.649/jsx-dev-runtime",
+      "@reactive-fiber/tsx/jsx-runtime": "npm:@reactive-fiber/tsx@0.1.649/jsx-runtime",
+      "@reactive-fiber/tsx/embedding": "npm:@reactive-fiber/tsx@0.1.649/embedding"
+    },
+    "distribution": {
+      "name": "@reactive-fiber/tsx",
+      "version": "0.1.649",
+      "source": "ReactiveFiberTSXSDK 5da03a7d49f42a9be7612d34f73d7d9ef950c52c"
+    },
+    "pins": [
+      {
+        "label": "program",
+        "repo": "ReactiveFiberTSXSDK",
+        "sha": "76bbbffd9d4a419f972d6fefc8b7f9dc524df8df",
+        "version": "0.1.668",
+        "packageJsonBlob": "a3cef7aa8938e343bc5d516dadf232d39ee5b729",
+        "exports": [
+          ".",
+          "./jsx-runtime",
+          "./jsx-dev-runtime",
+          "./testing",
+          "./embedding",
+          "./package.json"
+        ],
+        "dependencies": [],
+        "srcPythonFiles": 213,
+        "spelling": {
+          "recognizing": 0,
+          "reference": 0,
+          "streamingBlockNames": 0
+        },
+        "otherSense": {
+          "provisionalFiles": 28,
+          "blockParserSites": [
+            "python/src/reactive_fiber_tsx_host/fiber_carrier.py:16",
+            "src/outputs/context-document.ts:128",
+            "src/outputs/fiber-carrier.ts:13"
+          ]
+        },
+        "docSites": {
+          "states": [
+            "docs/programs/native-interfaces-and-portable-tsx-2026-10-21/03-streaming-and-inference.md:11"
+          ],
+          "reference": [
+            "docs/programs/native-interfaces-and-portable-tsx-2026-10-21/02-implementation.md:19",
+            "docs/programs/native-interfaces-and-portable-tsx-2026-10-21/03-streaming-and-inference.md:8"
+          ],
+          "workPackage": [
+            "docs/programs/native-interfaces-and-portable-tsx-2026-10-21/02-implementation.md:18"
+          ]
+        },
+        "blockExports": [
+          "Block",
+          "BlockProps",
+          "contextBlock",
+          "parseContextBlock",
+          "serializeContextBlock",
+          "ContextBlock",
+          "ContextBlockInit",
+          "explainBlock",
+          "BlockExplanation",
+          "BlockProducer"
+        ]
+      },
+      {
+        "label": "distribution",
+        "repo": "ReactiveFiberTSXSDK",
+        "sha": "5da03a7d49f42a9be7612d34f73d7d9ef950c52c",
+        "version": "0.1.649",
+        "packageJsonBlob": "05e6156f75bda44f5ead6a8f24e72ae34377fe5e",
+        "exports": [
+          ".",
+          "./jsx-runtime",
+          "./jsx-dev-runtime",
+          "./testing",
+          "./embedding",
+          "./package.json"
+        ],
+        "dependencies": [],
+        "srcPythonFiles": 211,
+        "spelling": {
+          "recognizing": 0,
+          "reference": 0,
+          "streamingBlockNames": 0
+        },
+        "otherSense": {
+          "provisionalFiles": 27,
+          "blockParserSites": [
+            "python/src/reactive_fiber_tsx_host/fiber_carrier.py:16",
+            "src/outputs/context-document.ts:128",
+            "src/outputs/fiber-carrier.ts:13"
+          ]
+        },
+        "docSites": {
+          "states": [],
+          "reference": [],
+          "workPackage": []
+        },
+        "blockExports": [
+          "Block",
+          "BlockProps",
+          "contextBlock",
+          "parseContextBlock",
+          "serializeContextBlock",
+          "ContextBlock",
+          "ContextBlockInit",
+          "explainBlock",
+          "BlockExplanation",
+          "BlockProducer"
+        ]
+      }
+    ]
+  },
+  "residuals": [
+    "R-COMPOSED",
+    "R-COMMON-STATE",
+    "R-PASSTHROUGH",
+    "R-RENAMED",
+    "R-LOOKALIKE",
+    "R-ENCODED",
+    "R-PROSE",
+    "R-OUTSIDE"
+  ],
+  "rows": [
+    {
+      "id": "A",
+      "label": "(trigger, absent today) If Pi ever consumes TSX streaming blocks: no judged module or JSON file spells a distinctive state word or a streaming-block name, the nearest block readers Pi has are reached and quiet, and each exemption is load-bearing",
+      "pins": [
+        {
+          "id": "A1",
+          "witness": {
+            "pin": "A1",
+            "floors": {
+              "files": true,
+              "src": true,
+              "test": true,
+              "qa": true,
+              "json": true
+            },
+            "anchorsWalked": true,
+            "spelledStates": [
+              "complete",
+              "validated",
+              "invalid",
+              "aborted"
+            ],
+            "distinctive": [
+              "recognizing",
+              "provisional"
+            ],
+            "familyCovers": true,
+            "modules": [],
+            "jsonFiles": [],
+            "controls": {
+              "stateLiteral": true,
+              "recognizingLiteral": true,
+              "britishSpelling": true,
+              "identifier": true,
+              "constantCase": true,
+              "objectKey": true,
+              "tokenTemplate": true,
+              "punctuated": true,
+              "folded": true,
+              "foldedTemplate": true,
+              "escaped": true,
+              "regex": true,
+              "adverb": true,
+              "jsonValue": true,
+              "jsonKey": true,
+              "jsonUnparsed": true,
+              "comment": false,
+              "proseLiteral": false,
+              "proseTemplate": false,
+              "jsonProse": false,
+              "spacedList": false,
+              "commonStates": false,
+              "jsonCommon": false,
+              "composed": false,
+              "joined": false,
+              "lookalike": false,
+              "invisible": false,
+              "rot13": false,
+              "nearMiss": false
+            },
+            "walkControls": {
+              "src/blocks.ts": true,
+              "test/fixtures/stream.json": true,
+              "nested/node_modules/pkg/index.js": true,
+              "notes/plan.md": false,
+              "notes/plan.txt": false,
+              "node_modules/pkg/index.js": false,
+              "dist/index.js": false,
+              ".beads/issues.jsonl": false,
+              ".forge/report.json": false,
+              "build/blocks.ts": false,
+              "coverage/blocks.ts": false,
+              "src/link.ts": true
+            }
+          }
+        },
+        {
+          "id": "A2",
+          "witness": {
+            "pin": "A2",
+            "modules": [],
+            "jsonFiles": [],
+            "controls": {
+              "typeName": true,
+              "parserFactory": true,
+              "parseStatus": true,
+              "contentState": true,
+              "snakeCase": true,
+              "suffix": true,
+              "importBinding": true,
+              "tokenLiteral": true,
+              "jsonKey": true,
+              "jsonValue": true,
+              "proseLiteral": false,
+              "claudeContentBlocks": false,
+              "beadsDependency": false,
+              "upstreamBlocker": false,
+              "separateWords": false,
+              "markdownComponent": false,
+              "passthrough": false,
+              "renamedBinding": false
+            }
+          }
+        },
+        {
+          "id": "A3",
+          "witness": {
+            "pin": "A3",
+            "readers": [
+              {
+                "path": "src/ui/conversation-viewer.ts",
+                "token": "Markdown",
+                "reached": true,
+                "judged": true,
+                "quiet": true
+              },
+              {
+                "path": "src/workbench/claude-host.ts",
+                "token": "block",
+                "reached": true,
+                "judged": true,
+                "quiet": true
+              },
+              {
+                "path": "src/workbench/claude-transcript.ts",
+                "token": "block",
+                "reached": true,
+                "judged": true,
+                "quiet": true
+              },
+              {
+                "path": "test/workbench-pi-streaming.test.ts",
+                "token": "SDKMessage",
+                "reached": true,
+                "judged": true,
+                "quiet": true
+              },
+              {
+                "path": "qa/workbench/receipts-index.mjs",
+                "token": "marked",
+                "reached": true,
+                "judged": true,
+                "quiet": true
+              }
+            ]
+          }
+        },
+        {
+          "id": "A4",
+          "witness": {
+            "pin": "A4",
+            "exempt": [
+              "test/workbench-tsx-streaming-block-census.test.ts",
+              "test/fixtures/tsx-streaming-block-roster.json"
+            ],
+            "exemptWalked": true,
+            "selfStates": true,
+            "selfBlocks": true,
+            "rosterStates": true,
+            "rosterBlocks": true,
+            "selfLoads": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "(a) absence pin: Pi has no streaming-block consumer at the pinned TSX version (0 importers of any block-parser type): no module loads the TSX SDK, whose pinned exports carry its only block parser, nor llm-ui, the parser's named reference, and no manifest names either",
+      "pins": [
+        {
+          "id": "B1",
+          "witness": {
+            "pin": "B1",
+            "specifierAnchor": true,
+            "sdkLoads": [],
+            "controls": {
+              "contextBlockParser": true,
+              "streamingSubpath": true,
+              "typeOnly": true,
+              "exportFrom": true,
+              "dynamicImport": true,
+              "require": true,
+              "requireResolve": true,
+              "importEquals": true,
+              "importType": true,
+              "npmSpecifier": true,
+              "jsrSpecifier": true,
+              "urlSpecifier": true,
+              "createdRequire": true,
+              "newUrl": true,
+              "foldedSpecifier": true,
+              "escapedSpecifier": true,
+              "jsxPragma": true,
+              "otherPackage": false,
+              "composedSpecifier": false,
+              "mentionOnly": false
+            }
+          }
+        },
+        {
+          "id": "B2",
+          "witness": {
+            "pin": "B2",
+            "referenceLoads": [],
+            "controls": {
+              "bare": true,
+              "react": true,
+              "markdown": true,
+              "requireCode": true,
+              "dynamicJson": true,
+              "typeCsv": true,
+              "npmSpecifier": true,
+              "urlSpecifier": true,
+              "versioned": true,
+              "scopedFork": true,
+              "folded": true,
+              "kit": false,
+              "prefixed": false,
+              "scopeLookalike": false,
+              "composedReference": false,
+              "renamedPackage": false,
+              "mentionOnly": false
+            }
+          }
+        },
+        {
+          "id": "B3",
+          "witness": {
+            "pin": "B3",
+            "manifestsFloorMet": true,
+            "manifestHits": [],
+            "controls": {
+              "sdkDependency": true,
+              "referenceDependency": true,
+              "referenceAlias": true,
+              "lockEntry": true,
+              "importMap": true,
+              "kitDependency": false,
+              "manifestPaths": [
+                "package.json",
+                "examples/app/package-lock.json",
+                "npm-shrinkwrap.json",
+                "deno.jsonc",
+                "import_map.json",
+                "tsconfig.base.json",
+                "jsconfig.json"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "(b) armed: a stream cut mid code fence or mid JSON string and duplicate, late or out-of-order chunks yield non-validated blocks, zero admitted actions and zero effects; a mutant admitting an action or firing an effect from any state but validated fails; (c) status words are echoed verbatim, an unknown word is non-validated (wb-973.10), and every surfaced provisional block carries a provisional marker with source attribution, stream sequence and resource revision: both gated - the measured parser is unshipped and the rf-tsx tier claims neither proof",
+      "pins": [
+        {
+          "id": "C1",
+          "witness": {
+            "pin": "C1",
+            "parserShipped": false,
+            "spelled": [],
+            "referenceDependencies": [],
+            "docsOnly": true,
+            "streamEntries": [],
+            "distributionPinned": true,
+            "sameBlockParser": true,
+            "beadSaysUnshipped": true
+          }
+        },
+        {
+          "id": "C2",
+          "witness": {
+            "pin": "C2",
+            "tierFiles": [
+              "test/workbench-native-rf-tsx-preview.test.ts"
+            ],
+            "command": true,
+            "rowsRegistered": true,
+            "claims": [],
+            "controls": {
+              "cutRow": true,
+              "stateRow": true,
+              "chunkLabel": true,
+              "fieldName": true,
+              "orderRow": true,
+              "previewRow": false
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "tests": [
+    "the judged set: the frozen shape, the out-of-file roster and the bead row agree",
+    "A1",
+    "A2",
+    "A3",
+    "A4",
+    "B1",
+    "B2",
+    "B3",
+    "C1",
+    "C2",
+    "records: every registered test ran once in run mode in roster order, every pin reached its end, and no title spells a judged family"
+  ]
+}
