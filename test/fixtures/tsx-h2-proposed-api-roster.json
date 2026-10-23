@@ -1,0 +1,1103 @@
+{
+ "bead": "wb-4nut.2",
+ "quote": "Do not assume that a type or documentation example is an existing runtime API.",
+ "citation": "docs/programs/harness2-reactive-evolution-2026-10-20/README.md:40@76bbbffd9d4a",
+ "constants": {
+  "bead": "wb-4nut.2",
+  "families": [
+   {
+    "id": "N1",
+    "name": "<H2_HOOK>",
+    "parts": [
+     "use",
+     "remote",
+     "resources?"
+    ]
+   },
+   {
+    "id": "N2",
+    "name": "ContextProjection",
+    "parts": [
+     "context",
+     "projections?"
+    ]
+   },
+   {
+    "id": "N3",
+    "name": "SnapshotObservation",
+    "parts": [
+     "snapshot",
+     "observations?"
+    ]
+   },
+   {
+    "id": "N4",
+    "name": "ImportBinding",
+    "parts": [
+     "import",
+     "bindings?"
+    ]
+   },
+   {
+    "id": "N5",
+    "name": "a public-port descriptor",
+    "parts": [
+     "public",
+     "ports?",
+     "descriptors?"
+    ]
+   },
+   {
+    "id": "N6",
+    "name": "capability snapshot",
+    "parts": [
+     "capabilit(?:y|ies)",
+     "snapshots?"
+    ]
+   },
+   {
+    "id": "N7",
+    "name": "federated adapter",
+    "parts": [
+     "federat(?:ed|ion)",
+     "(?:host)?",
+     "adapters?"
+    ]
+   }
+  ],
+  "markers": [
+   "proposed",
+   "illustrative",
+   "unshipped",
+   "not shipped",
+   "not installed",
+   "uninstalled",
+   "unavailable",
+   "not available",
+   "not served",
+   "gated"
+  ],
+  "sdkFamily": "^(?:reactive(?:components|inference|lenses|agents|query|fibertsxsdk)|fiberoptics|reactivesdks?)",
+  "sdkWord": "sdknative|^harness2",
+  "linkFamily": "^(?:federat|adapters?$|bridg|peers?$|peering|connect|reach|exchang)",
+  "descriptorLink": "^(?:federat|adapters?$|bridg|peers?$|peering)",
+  "docExtensions": [
+   ".md",
+   ".mdx",
+   ".markdown",
+   ".rst",
+   ".txt",
+   ".adoc"
+  ],
+  "moduleExtensions": [
+   ".ts",
+   ".mts",
+   ".cts",
+   ".tsx",
+   ".js",
+   ".mjs",
+   ".cjs",
+   ".jsx"
+  ],
+  "skippedRoots": [
+   ".git",
+   ".beads",
+   "node_modules",
+   "dist",
+   "build",
+   "coverage",
+   ".forge"
+  ],
+  "docFloors": {
+   ".": 5,
+   ".agents": 1,
+   ".pi": 1,
+   "docs": 71,
+   "examples": 1,
+   "new-feedback": 14,
+   "test": 26,
+   "vendor": 1
+  },
+  "docAnchors": [
+   "README.md:pi-subagents",
+   "docs/workbench/13-contracts-and-config.md:reactivefiber.render.preview",
+   "vendor/README.md:furnace",
+   "examples/agent-tool-description.md:agent"
+  ],
+  "moduleFloors": {
+   "src": 115,
+   "qa": 62,
+   "json": 1
+  },
+  "moduleAnchors": [
+   "src/workbench/providers/reactivefiber.ts:context",
+   "src/workbench/detached-observer.ts:observation"
+  ],
+  "workbenchFloor": 69,
+  "segmentsFloor": 70000,
+  "windowsFloor": 7000,
+  "sdkWindowsFloor": 3,
+  "adapterId": "reactivefiber.federated.host-adapter",
+  "adapterLeaf": "federat|adapter|peer|harness|bridge|remote|h2",
+  "spawners": [
+   "spawn",
+   "spawnSync",
+   "execFile",
+   "execFileSync",
+   "exec",
+   "execSync",
+   "fork"
+  ],
+  "rfSite": "src/workbench/providers/reactivefiber.ts#nativeReactiveFiberRender",
+  "residuals": [
+   "R-DOTTED",
+   "R-LOOKALIKE",
+   "R-ENCODED",
+   "R-PARAPHRASE",
+   "R-MARKER",
+   "R-COMPOSED",
+   "R-COMMENT",
+   "R-OUTSIDE"
+  ]
+ },
+ "producer": {
+  "installedRf": {
+   "command": "rf --json --version",
+   "version": "0.1.832",
+   "commit": "2618c211be0dbbb74ba10e965e2d3d1f0fb5903e",
+   "leaves": [
+    "init",
+    "status",
+    "doctor",
+    "config.get",
+    "config.set",
+    "config.unset",
+    "config.list",
+    "config.explain",
+    "component.create",
+    "component.add",
+    "component.edit",
+    "component.validate",
+    "component.test",
+    "component.list",
+    "component.show",
+    "component.activate",
+    "component.deactivate",
+    "component.history",
+    "component.state.show",
+    "component.state.reset",
+    "optic.create",
+    "optic.validate",
+    "optic.test",
+    "optic.show",
+    "optic.history",
+    "optic.usages",
+    "optic.register",
+    "optic.list",
+    "graph.show",
+    "graph.validate",
+    "graph.preflight",
+    "graph.explain",
+    "graph.diff",
+    "graph.candidate.create",
+    "graph.candidate.authorize",
+    "graph.patch",
+    "graph.connect",
+    "graph.disconnect",
+    "graph.set-optic",
+    "graph.impact",
+    "graph.test",
+    "graph.publish",
+    "graph.history",
+    "graph.rollback",
+    "view.list",
+    "view.show",
+    "view.validate",
+    "state.get",
+    "state.set",
+    "state.unset",
+    "state.list",
+    "state.history",
+    "session.open",
+    "session.show",
+    "session.list",
+    "session.close",
+    "context.render",
+    "context.show",
+    "context.explain",
+    "context.plan",
+    "context.diff",
+    "context.history",
+    "context.replay",
+    "inference.run",
+    "operation.show",
+    "storage.status",
+    "storage.rebuild-indexes",
+    "storage.export",
+    "storage.import",
+    "storage.migrate",
+    "storage.compact",
+    "storage.cleanup",
+    "storage.local-servers",
+    "dolt",
+    "schema.show",
+    "schema.check",
+    "schema.migrate",
+    "completion",
+    "install-skill"
+   ],
+   "unserved": [
+    "optic.test",
+    "optic.usages",
+    "optic.register",
+    "graph.impact",
+    "graph.publish",
+    "graph.history",
+    "graph.rollback"
+   ]
+  },
+  "rfSource": [
+   {
+    "sha": "978f6515c302f92d0567169315ac8a4bfea7f399",
+    "command": "git grep -il federated 978f6515c302f92d0567169315ac8a4bfea7f399 -- src",
+    "srcFiles": 560,
+    "federatedFiles": [],
+    "stemFiles": [
+     "src/reactive_fiber_cli/domain/federation_boundary.py",
+     "src/reactive_fiber_cli/ports/federation.py",
+     "src/reactive_fiber_cli/ports/storage.py"
+    ]
+   },
+   {
+    "sha": "6a251bf73af57c3a703caf6892dfe3015e06a481",
+    "command": "git grep -il federated 6a251bf73af57c3a703caf6892dfe3015e06a481 -- src",
+    "srcFiles": 560,
+    "federatedFiles": [],
+    "stemFiles": [
+     "src/reactive_fiber_cli/domain/federation_boundary.py",
+     "src/reactive_fiber_cli/ports/federation.py",
+     "src/reactive_fiber_cli/ports/storage.py"
+    ]
+   }
+  ],
+  "sites": [
+   {
+    "label": "rf-h2-01",
+    "repo": "ReactiveFiberCLI",
+    "sha": "978f6515c302f92d0567169315ac8a4bfea7f399",
+    "path": "docs/programs/harness2-federated-peer-2026-10-20/README.md",
+    "line": 33,
+    "blob": "1be8d2d21b91f3f750b959bd1057fd1ebbe7e79c",
+    "fragment": "| RFCLI-H2-01 | Implement optional host adapter translating canonical typed SDK export descriptor into existing workspace source registration | Installed consumer, negative fixture, source revision, exact refusal code and measured cost |"
+   },
+   {
+    "label": "rf-status",
+    "repo": "ReactiveFiberCLI",
+    "sha": "978f6515c302f92d0567169315ac8a4bfea7f399",
+    "path": "docs/programs/harness2-federated-peer-2026-10-20/README.md",
+    "line": 3,
+    "blob": "1be8d2d21b91f3f750b959bd1057fd1ebbe7e79c",
+    "fragment": "**Status:** proposed, independent host integration."
+   },
+   {
+    "label": "rf-release",
+    "repo": "ReactiveFiberCLI",
+    "sha": "978f6515c302f92d0567169315ac8a4bfea7f399",
+    "path": "docs/programs/harness2-federated-peer-2026-10-20/README.md",
+    "line": 51,
+    "blob": "1be8d2d21b91f3f750b959bd1057fd1ebbe7e79c",
+    "fragment": "Any missing implementation stays explicitly unshipped."
+   },
+   {
+    "label": "tsx-quote",
+    "repo": "ReactiveFiberTSXSDK",
+    "sha": "76bbbffd9d4a419f972d6fefc8b7f9dc524df8df",
+    "path": "docs/programs/harness2-reactive-evolution-2026-10-20/README.md",
+    "line": 40,
+    "blob": "32fff555591b99dfc806518b694c1faf50e83fb3",
+    "fragment": "Work packages are additions to existing package programs, not replacements; where a prerequisite is marked design-only, treat its dependency as a gate. Do not assume that a type or documentation example is an existing runtime API."
+   },
+   {
+    "label": "tsx-connection",
+    "repo": "ReactiveFiberTSXSDK",
+    "sha": "76bbbffd9d4a419f972d6fefc8b7f9dc524df8df",
+    "path": "docs/programs/harness2-reactive-evolution-2026-10-20/README.md",
+    "line": 52,
+    "blob": "32fff555591b99dfc806518b694c1faf50e83fb3",
+    "fragment": "RF-CLI may connect through a distinct, optional federated host adapter when one is shipped."
+   },
+   {
+    "label": "ri-connection",
+    "repo": "ReactiveInferenceSDK",
+    "sha": "485f3615db1e8703d6ce1093713fe595e46f42a0",
+    "path": "docs/programs/harness2-reactive-evolution-2026-10-20/README.md",
+    "line": 48,
+    "blob": "aae0e893dc2b4c2a21a31dad2e03d7bd3e43f8eb",
+    "fragment": "RF-CLI may connect through a distinct, optional federated host adapter when one is shipped."
+   },
+   {
+    "label": "rc-authority",
+    "repo": "ReactiveComponentsSDK",
+    "sha": "640a3b579a955f84388d7bacd385d13b232a3116",
+    "path": "docs/programs/harness2-reactive-evolution-2026-10-20/DEVELOPER.md",
+    "line": 55,
+    "blob": "0a3b0e432851e0bc77a0a9537aa00e272ba165d0",
+    "fragment": "Do not turn a proposed interface name into a public API or advertise this as a runnable quickstart until an installed end-to-end test proves it."
+   }
+  ]
+ },
+ "rows": [
+  {
+   "id": "A",
+   "label": "(a) docs census: no Pi doc names <H2_HOOK>, ContextProjection, SnapshotObservation, ImportBinding, a public-port descriptor, capability snapshot or federated adapter as available: every doc below the repository root is read through one fold that case, separators, markup, references, escapes, invisibles and mapped look-alikes cannot slip past, a name stands only beside a not-available marker, and no src or qa module or JSON file carries one as a runtime identifier or literal",
+   "pins": [
+    {
+     "id": "A1",
+     "witness": {
+      "pin": "A1",
+      "floors": {
+       ".": true,
+       ".agents": true,
+       ".pi": true,
+       "docs": true,
+       "examples": true,
+       "new-feedback": true,
+       "test": true,
+       "vendor": true
+      },
+      "anchorsRead": [
+       "README.md",
+       "docs/workbench/13-contracts-and-config.md",
+       "examples/agent-tool-description.md",
+       "vendor/README.md"
+      ],
+      "segmentsFloorMet": true,
+      "findings": [],
+      "admitted": [],
+      "planted": {
+       "findings": [
+        ".agents/skills/s.md:1 N7: named-as-available",
+        "README.md:2 N1: named-as-available",
+        "docs/workbench/x.md:1 N2: named-as-available",
+        "examples/a.md:1 N3: named-as-available",
+        "nested/node_modules/q/README.md:1 N2: named-as-available",
+        "new-feedback/f.md:1 N4: named-as-available",
+        "src/notes.txt:1 N4: named-as-available",
+        "test/fixtures/.pi/agents/b.md:1 N6: named-as-available",
+        "vendor/README.md:1 N5: named-as-available"
+       ],
+       "admitted": [
+        "docs/marked.md:1 N2"
+       ],
+       "symlinks": [
+        "docs/link.md"
+       ]
+      }
+     }
+    },
+    {
+     "id": "A2",
+     "witness": {
+      "pin": "A2",
+      "cases": [
+       {
+        "id": "acceptanceN1",
+        "digest": "6be335aa02efc185",
+        "outcome": [
+         "N1:available"
+        ]
+       },
+       {
+        "id": "acceptanceN2",
+        "digest": "000c2489036dd2de",
+        "outcome": [
+         "N2:available"
+        ]
+       },
+       {
+        "id": "acceptanceN3",
+        "digest": "e41840efe87ab53e",
+        "outcome": [
+         "N3:available"
+        ]
+       },
+       {
+        "id": "acceptanceN4",
+        "digest": "ca5e0595ffb333a1",
+        "outcome": [
+         "N4:available"
+        ]
+       },
+       {
+        "id": "acceptanceN5",
+        "digest": "ab0d9c6ea6d2d6f7",
+        "outcome": [
+         "N5:available"
+        ]
+       },
+       {
+        "id": "acceptanceN6",
+        "digest": "0f2e722511680d4a",
+        "outcome": [
+         "N6:available"
+        ]
+       },
+       {
+        "id": "acceptanceN7",
+        "digest": "453a4c26ecf365bf",
+        "outcome": [
+         "N7:available"
+        ]
+       },
+       {
+        "id": "snake",
+        "digest": "c15089e4ac3136f0",
+        "outcome": [
+         "N1:available",
+         "N2:available"
+        ]
+       },
+       {
+        "id": "kebab",
+        "digest": "e4e413e574d6af18",
+        "outcome": [
+         "N1:available",
+         "N3:available"
+        ]
+       },
+       {
+        "id": "spaced",
+        "digest": "a1ebf3f1b0299d9a",
+        "outcome": [
+         "N4:available",
+         "N5:available"
+        ]
+       },
+       {
+        "id": "upper",
+        "digest": "d3e63cce7dd7d633",
+        "outcome": [
+         "N6:available",
+         "N7:available"
+        ]
+       },
+       {
+        "id": "plural",
+        "digest": "af7f9922464549cc",
+        "outcome": [
+         "N2:available",
+         "N5:available",
+         "N6:available",
+         "N7:available"
+        ]
+       },
+       {
+        "id": "softBreak",
+        "digest": "1084c1977b9ca998",
+        "outcome": [
+         "N2:available"
+        ]
+       },
+       {
+        "id": "emphasis",
+        "digest": "0d0538bbf9e1698a",
+        "outcome": [
+         "N3:available",
+         "N4:available"
+        ]
+       },
+       {
+        "id": "invisible",
+        "digest": "088cc1a1e24139aa",
+        "outcome": [
+         "N2:available",
+         "N4:available"
+        ]
+       },
+       {
+        "id": "html",
+        "digest": "d89335f6a67afc92",
+        "outcome": [
+         "N4:available",
+         "N5:available"
+        ]
+       },
+       {
+        "id": "references",
+        "digest": "2e36bdf04e6c3dd9",
+        "outcome": [
+         "N2:available",
+         "N3:available",
+         "N6:available"
+        ]
+       },
+       {
+        "id": "escapes",
+        "digest": "f31c316fd9e6fa48",
+        "outcome": [
+         "N2:available",
+         "N4:available"
+        ]
+       },
+       {
+        "id": "marks",
+        "digest": "75ce725f1bba9818",
+        "outcome": [
+         "N2:available"
+        ]
+       },
+       {
+        "id": "compatibility",
+        "digest": "935954cb4c39b0a0",
+        "outcome": [
+         "N2:available"
+        ]
+       },
+       {
+        "id": "lookalike",
+        "digest": "dbeaaf4a4f87dc00",
+        "outcome": [
+         "N3:available"
+        ]
+       },
+       {
+        "id": "nonBreakingHyphen",
+        "digest": "acbe0e5d4a6e314c",
+        "outcome": [
+         "N5:available"
+        ]
+       },
+       {
+        "id": "genericType",
+        "digest": "ae95e4694eecfaaf",
+        "outcome": [
+         "N3:available"
+        ]
+       },
+       {
+        "id": "marked",
+        "digest": "4057903c2ade0c18",
+        "outcome": [
+         "N2:marked"
+        ]
+       },
+       {
+        "id": "markedNextLine",
+        "digest": "bacbeef3c434b42e",
+        "outcome": [
+         "N4:available"
+        ]
+       },
+       {
+        "id": "markedSameLine",
+        "digest": "d3017fa618579fac",
+        "outcome": [
+         "N6:marked",
+         "N7:marked"
+        ]
+       },
+       {
+        "id": "tableCells",
+        "digest": "97dbcb835414455a",
+        "outcome": []
+       },
+       {
+        "id": "dotted",
+        "digest": "fb968e588ec5d09d",
+        "outcome": []
+       },
+       {
+        "id": "slashed",
+        "digest": "5f8417a6e8db07ba",
+        "outcome": []
+       },
+       {
+        "id": "listed",
+        "digest": "c05b050f227ddf50",
+        "outcome": []
+       },
+       {
+        "id": "paragraphs",
+        "digest": "57b788b0eedcbb21",
+        "outcome": []
+       },
+       {
+        "id": "unmappedLookalike",
+        "digest": "b179134519f4ac6a",
+        "outcome": []
+       },
+       {
+        "id": "rot13",
+        "digest": "bf997bc57a06a2e9",
+        "outcome": []
+       },
+       {
+        "id": "base64",
+        "digest": "11d809c88eee86db",
+        "outcome": []
+       },
+       {
+        "id": "paraphrase",
+        "digest": "33aaff208c77ef60",
+        "outcome": []
+       },
+       {
+        "id": "markerAnywhere",
+        "digest": "baec7c83801b3c54",
+        "outcome": [
+         "N2:marked"
+        ]
+       }
+      ]
+     }
+    },
+    {
+     "id": "A3",
+     "witness": {
+      "pin": "A3",
+      "floors": {
+       "src": true,
+       "qa": true,
+       "json": true
+      },
+      "anchorsRead": [
+       "src/workbench/detached-observer.ts",
+       "src/workbench/providers/reactivefiber.ts"
+      ],
+      "names": [],
+      "jsonNames": [],
+      "controls": {
+       "typeName": true,
+       "camelIdentifier": true,
+       "importedName": true,
+       "hookCall": true,
+       "stringLiteral": true,
+       "template": true,
+       "jsxText": true,
+       "regex": true,
+       "jsonKey": true,
+       "jsonValue": true,
+       "propertyPath": false,
+       "composed": false,
+       "comment": false
+      },
+      "testModule": 0
+     }
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "label": "(b) no docs/workbench or capability-descriptor claim that rf reaches a Reactive SDK via a federated adapter: no docs/workbench sentence names a Reactive SDK beside a link word without a not-available marker, Pi's own reader adapters and program identifiers stay quiet, and no registered descriptor names an H2 name, a Reactive SDK or a federation link",
+   "pins": [
+    {
+     "id": "B1",
+     "witness": {
+      "pin": "B1",
+      "floorMet": true,
+      "sdkWindowsFloorMet": true,
+      "findings": [],
+      "admitted": [],
+      "planted": {
+       "findings": [
+        "docs/workbench/receipts/y.md:1: claim-unmarked",
+        "docs/workbench/x.md:1: claim-unmarked"
+       ],
+       "admitted": [
+        "docs/workbench/z.md:1"
+       ]
+      }
+     }
+    },
+    {
+     "id": "B2",
+     "witness": {
+      "pin": "B2",
+      "cases": [
+       {
+        "id": "sdkViaAdapter",
+        "digest": "6dd23474882909ca",
+        "outcome": [
+         "claim"
+        ]
+       },
+       {
+        "id": "sdksViaHostAdapter",
+        "digest": "59dc0f745f1eadba",
+        "outcome": [
+         "claim"
+        ]
+       },
+       {
+        "id": "sdkNative",
+        "digest": "5f518876bdc852fb",
+        "outcome": [
+         "claim"
+        ]
+       },
+       {
+        "id": "bridge",
+        "digest": "a8feaa9f5b143ed6",
+        "outcome": [
+         "claim"
+        ]
+       },
+       {
+        "id": "harness",
+        "digest": "0dfc88ed1d2733bc",
+        "outcome": [
+         "claim"
+        ]
+       },
+       {
+        "id": "hidden",
+        "digest": "36c91234a779fadf",
+        "outcome": [
+         "claim"
+        ]
+       },
+       {
+        "id": "sentences",
+        "digest": "c222dfa050289746",
+        "outcome": [
+         "claim"
+        ]
+       },
+       {
+        "id": "spacedSdk",
+        "digest": "72d5cb3a0340eb5a",
+        "outcome": [
+         "claim"
+        ]
+       },
+       {
+        "id": "claudeSdkNative",
+        "digest": "a29c91630a34beeb",
+        "outcome": []
+       },
+       {
+        "id": "disconnect",
+        "digest": "5ce8843c48bffeea",
+        "outcome": []
+       },
+       {
+        "id": "marked",
+        "digest": "7f60356ad847556b",
+        "outcome": [
+         "marked"
+        ]
+       },
+       {
+        "id": "piReader",
+        "digest": "087ceea8016d76db",
+        "outcome": []
+       },
+       {
+        "id": "programIds",
+        "digest": "a8aa8b6072e7db41",
+        "outcome": []
+       },
+       {
+        "id": "unlinkedSdk",
+        "digest": "17f1d32040533de0",
+        "outcome": []
+       },
+       {
+        "id": "tableCells",
+        "digest": "7d085935fbe799d9",
+        "outcome": []
+       },
+       {
+        "id": "unnamedPeer",
+        "digest": "7a1897b8578feb5f",
+        "outcome": []
+       },
+       {
+        "id": "markerAnywhere",
+        "digest": "9f258039214dab7f",
+        "outcome": [
+         "marked"
+        ]
+       }
+      ]
+     }
+    },
+    {
+     "id": "B3",
+     "witness": {
+      "pin": "B3",
+      "native": {
+       "count": 4,
+       "rfIds": [
+        "reactivefiber.render.preview"
+       ]
+      },
+      "injected": {
+       "count": 1,
+       "rfIds": [
+        "reactivefiber.render.preview"
+       ]
+      },
+      "hits": [],
+      "controls": {
+       "adapterClaim": [
+        "name",
+        "sdk",
+        "link",
+        "claim"
+       ],
+       "sdkOnly": [
+        "sdk"
+       ],
+       "peerOnly": [
+        "link"
+       ],
+       "name": [
+        "name"
+       ],
+       "preview": []
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "label": "(c) an adapter is read only from `rf --version --json` leaves[] served:true, absence mapped to typed 'unavailable' (wb-973.14 shape): Pi's RF surface stays the one rf CLI envelope spawn, an absent adapter capability is the registry's typed unavailable before any rf spawn, the exit-2 refusal is typed unavailable in one spawn, no src module reads leaves or served while the landed receipt rule arms that reading, and the installed rf serves no adapter leaf",
+   "pins": [
+    {
+     "id": "C1",
+     "witness": {
+      "pin": "C1",
+      "sites": [
+       "src/workbench/providers/reactivefiber.ts#nativeReactiveFiberRender"
+      ],
+      "arms": {
+       "legacy": {
+        "spawns": 1,
+        "verb": [
+         "context render"
+        ],
+        "tail": [
+         "--no-commit --no-input --json"
+        ],
+        "contract": "reactivefiber.render.preview/v1",
+        "schema": "reactive-fiber.cli/v1",
+        "keys": [
+         "contract",
+         "source",
+         "workspaceRoot"
+        ]
+       },
+       "view": {
+        "spawns": 1,
+        "verb": [
+         "context render"
+        ],
+        "tail": [
+         "--no-commit --no-input --json"
+        ],
+        "contract": "reactivefiber.render.preview/v1",
+        "schema": "reactive-fiber.cli/v1",
+        "keys": [
+         "contract",
+         "source",
+         "workspaceRoot"
+        ]
+       }
+      },
+      "controls": {
+       "versionProbe": 1,
+       "execFileSync": 1,
+       "shellString": 1,
+       "member": 1,
+       "absolute": 1,
+       "other": 0,
+       "aliased": 0
+      }
+     }
+    },
+    {
+     "id": "C2",
+     "witness": {
+      "pin": "C2",
+      "native": {
+       "category": "unavailable",
+       "message": "Unknown or unavailable capability: reactivefiber.federated.host-adapter."
+      },
+      "injected": {
+       "category": "unavailable",
+       "message": "Unknown or unavailable capability: reactivefiber.federated.host-adapter."
+      },
+      "listed": false,
+      "spawns": 0
+     }
+    },
+    {
+     "id": "C3",
+     "witness": {
+      "pin": "C3",
+      "mapped": {
+       "legacy": {
+        "result": {
+         "category": "unavailable",
+         "message": "RF render refused: RF_USAGE_NOT_IMPLEMENTED"
+        },
+        "spawns": 1
+       },
+       "view": {
+        "result": {
+         "category": "unavailable",
+         "message": "RF render refused: RF_USAGE_NOT_IMPLEMENTED"
+        },
+        "spawns": 1
+       }
+      },
+      "contradiction": {
+       "category": "transport",
+       "message": "RF preview returned an unrecognized or contradictory failure envelope."
+      }
+     }
+    },
+    {
+     "id": "C4",
+     "witness": {
+      "pin": "C4",
+      "reads": [],
+      "controls": {
+       "findServed": 2,
+       "destructured": 1,
+       "element": 1,
+       "hasOwn": 1,
+       "comment": 0,
+       "otherName": 0
+      },
+      "receiptRule": {
+       "label": "(b) a future federation leaf registration requires an `rf --json --version` capabilities receipt naming the served leaf",
+       "pins": [
+        "B1",
+        "B2",
+        "B3",
+        "B4",
+        "B5",
+        "B6"
+       ],
+       "versionCommands": [
+        "rf --json --version",
+        "rf --version --json"
+       ]
+      },
+      "mapping": {
+       "registered": 1,
+       "cases": [
+        "maps an exit-2 RF_USAGE_NOT_IMPLEMENTED refusal to a typed unavailable error in exactly one spawn",
+        "does not map the same refusal when the exit code contradicts it"
+       ]
+      }
+     }
+    },
+    {
+     "id": "C5",
+     "witness": {
+      "pin": "C5",
+      "command": "rf --json --version",
+      "version": "0.1.832",
+      "leaves": 79,
+      "served": 72,
+      "unserved": [
+       "optic.test",
+       "optic.usages",
+       "optic.register",
+       "graph.impact",
+       "graph.publish",
+       "graph.history",
+       "graph.rollback"
+      ],
+      "unservedListed": true,
+      "distinct": true,
+      "contextRender": true,
+      "adapterLeaves": []
+     }
+    }
+   ]
+  },
+  {
+   "id": "D",
+   "label": "(d) 0 rf src files mention 'federated' at 978f6515c302: measured there and at the admitted read sha 6a251bf73af5, beside the gating artifact RFCLI-H2-01 and every producer line the filing quotes, each measured at its pin",
+   "pins": [
+    {
+     "id": "D1",
+     "witness": {
+      "pin": "D1",
+      "stated": {
+       "count": 0,
+       "word": "federated",
+       "sha": "978f6515c302"
+      },
+      "measured": [
+       {
+        "sha": "978f6515c302",
+        "srcFiles": 560,
+        "federated": 0,
+        "stem": 3,
+        "stemSpellsWord": false,
+        "command": true
+       },
+       {
+        "sha": "6a251bf73af5",
+        "srcFiles": 560,
+        "federated": 0,
+        "stem": 3,
+        "stemSpellsWord": false,
+        "command": true
+       }
+      ]
+     }
+    },
+    {
+     "id": "D2",
+     "witness": {
+      "pin": "D2",
+      "contained": {
+       "gatingRow": true,
+       "status": true,
+       "released": true,
+       "quote": true,
+       "authority": true,
+       "tsxConnection": true,
+       "riConnection": true,
+       "shippedNo": true,
+       "milestone": true
+      },
+      "sites": [
+       "rf-h2-01 ReactiveFiberCLI@978f6515c302:docs/programs/harness2-federated-peer-2026-10-20/README.md:33 blob 1be8d2d21b91",
+       "rf-status ReactiveFiberCLI@978f6515c302:docs/programs/harness2-federated-peer-2026-10-20/README.md:3 blob 1be8d2d21b91",
+       "rf-release ReactiveFiberCLI@978f6515c302:docs/programs/harness2-federated-peer-2026-10-20/README.md:51 blob 1be8d2d21b91",
+       "tsx-quote ReactiveFiberTSXSDK@76bbbffd9d4a:docs/programs/harness2-reactive-evolution-2026-10-20/README.md:40 blob 32fff555591b",
+       "tsx-connection ReactiveFiberTSXSDK@76bbbffd9d4a:docs/programs/harness2-reactive-evolution-2026-10-20/README.md:52 blob 32fff555591b",
+       "ri-connection ReactiveInferenceSDK@485f3615db1e:docs/programs/harness2-reactive-evolution-2026-10-20/README.md:48 blob aae0e893dc2b",
+       "rc-authority ReactiveComponentsSDK@640a3b579a95:docs/programs/harness2-reactive-evolution-2026-10-20/DEVELOPER.md:55 blob 0a3b0e432851"
+      ]
+     }
+    }
+   ]
+  }
+ ],
+ "tests": [
+  "the judged set: the frozen shape, the out-of-file roster and the bead row agree",
+  "A1",
+  "A2",
+  "A3",
+  "B1",
+  "B2",
+  "B3",
+  "C1",
+  "C2",
+  "C3",
+  "C4",
+  "C5",
+  "D1",
+  "D2",
+  "records: every registered test ran once in run mode in roster order, every pin reached its end, and no title spells the hook"
+ ]
+}

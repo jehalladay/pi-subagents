@@ -1,0 +1,628 @@
+{
+  "bead": "wb-if7q.4",
+  "quote": "Wire-safe identity: session/owner, component mount ID/generation, action ID, bounded payload schema and relevant source revision. Executable callbacks are registered in a local runtime table and disposed with the mounted instance. Remote actions are admitted and reauthorized by their host; mere model selection of an action ID does not confer authority.",
+  "citation": "docs/programs/native-interfaces-and-portable-tsx-2026-10-21/01-runtime-contracts.md:21@76bbbffd9d4a",
+  "restrictions": "'No hidden serialization of executable callbacks.' (01-runtime-contracts.md:27); 'Do not serialize functions.' and 'executable action callbacks are host-local bindings, while cross-host actions are typed references' (README.md:22).",
+  "shipped": "Shipped: no - git grep InterfaceHost over src/ python/ at 76bbbffd9d4a: 0 files.",
+  "sdk": "@reactive-fiber/tsx",
+  "fixture": {
+    "session": "tsx-session-7f3a",
+    "owner": "local-operator:1000:s1",
+    "mount": {
+      "id": "mount-counter-1",
+      "generation": 3
+    },
+    "actionId": "counter.increment",
+    "payloadSchema": "counter.increment/payload@1",
+    "sourceRevision": "sha256:a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+    "payload": {
+      "by": 1
+    }
+  },
+  "scan": {
+    "sdkFamily": "@reactive-fiber\\/tsx(?![\\w-])/i",
+    "vocabulary": [
+      "action ref",
+      "action refs",
+      "action reference",
+      "action references",
+      "tsx action",
+      "tsx actions",
+      "interface host",
+      "interface hosts",
+      "interface evaluation",
+      "interface evaluations",
+      "surface capability",
+      "surface capabilities",
+      "component mount",
+      "component mounts",
+      "mount generation",
+      "mount generations"
+    ],
+    "specifier": "^[^\\s\"'`;(){}[\\]<>]+$/",
+    "jsxPragma": "@jsxImportSource\\s+([^\\s*]+)/g",
+    "manifest": "(?:^|\\/)(?:package(?:-lock)?\\.json|npm-shrinkwrap\\.json|deno\\.jsonc?|import[-_]map\\.json|[tj]sconfig[^/]*\\.json)$/i",
+    "moduleExtensions": [
+      ".ts",
+      ".mts",
+      ".cts",
+      ".tsx",
+      ".js",
+      ".mjs",
+      ".cjs",
+      ".jsx"
+    ],
+    "skippedRoots": [
+      ".git",
+      ".beads",
+      "node_modules",
+      "dist",
+      "build",
+      "coverage",
+      ".forge"
+    ],
+    "floors": {
+      "files": 760,
+      "modules": {
+        "src": 105,
+        "test": 400,
+        "qa": 55,
+        "examples": 5
+      },
+      "manifests": 4
+    },
+    "anchor": "src/workbench/control.ts:./capability-registry.js",
+    "identifierAnchor": "src/workbench/control.ts:isCoreMintedDecision",
+    "detachedHost": "src/workbench/hosts/local-detached.ts:registryFor",
+    "executorProviders": [
+      "furnace",
+      "claude-agent-sdk",
+      "forge",
+      "local-detached"
+    ],
+    "standIn": "tsx.action.invoke:tsx:action",
+    "standInSchema": {
+      "type": "object",
+      "required": [
+        "session",
+        "owner",
+        "mount",
+        "actionId",
+        "payloadSchema",
+        "sourceRevision",
+        "payload"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "session": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "owner": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "mount": {
+          "type": "object",
+          "required": [
+            "id",
+            "generation"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "generation": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "actionId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-z][a-z0-9.-]*$"
+        },
+        "payloadSchema": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "sourceRevision": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "payload": {
+          "type": "object",
+          "required": [
+            "by"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "by": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10
+            },
+            "label": {
+              "type": "string",
+              "maxLength": 64
+            }
+          }
+        }
+      }
+    },
+    "sentinel": "wbIf7q4EvaluatedSentinel",
+    "unsafeUnits": [
+      "bidiOverride",
+      "zeroWidth",
+      "escape",
+      "bell"
+    ]
+  },
+  "producer": {
+    "repo": "ReactiveFiberTSXSDK",
+    "sha": "76bbbffd9d4a419f972d6fefc8b7f9dc524df8df",
+    "packageName": "@reactive-fiber/tsx",
+    "packageVersion": "0.1.668",
+    "exports": [
+      ".",
+      "./jsx-runtime",
+      "./jsx-dev-runtime",
+      "./testing",
+      "./embedding",
+      "./package.json"
+    ],
+    "files": [
+      "dist",
+      "docs/security/redaction-defaults.json",
+      "LICENSE",
+      "README.md"
+    ],
+    "boundarySites": [
+      "docs/programs/native-interfaces-and-portable-tsx-2026-10-21/01-runtime-contracts.md:9",
+      "docs/programs/native-interfaces-and-portable-tsx-2026-10-21/01-runtime-contracts.md:11",
+      "docs/programs/native-interfaces-and-portable-tsx-2026-10-21/01-runtime-contracts.md:13",
+      "docs/programs/native-interfaces-and-portable-tsx-2026-10-21/02-implementation.md:13"
+    ],
+    "codeBoundaryFiles": 0,
+    "codeActionReferenceFiles": 0
+  },
+  "residuals": [
+    "R-COMPOSED",
+    "R-LOOKALIKE",
+    "R-UNNAMED",
+    "R-INERT-TEXT"
+  ],
+  "rows": [
+    {
+      "id": "A",
+      "label": "(trigger, absent today) If Pi ever hosts or relays TSX action references: (a) absence pin: a guard asserts no Pi capability consumes or dispatches a TSX action reference today (zero importers, no tsx-action capability entry) - no module or manifest loads the TSX SDK or a TSX action/host module, the registries Pi builds hold no tsx-action entry, and no src module names the vocabulary",
+      "pins": [
+        {
+          "id": "A1",
+          "witness": {
+            "pin": "A1",
+            "floorsMet": true,
+            "anchor": true,
+            "loads": [],
+            "manifestHits": [],
+            "symlinks": [],
+            "controls": {
+              "declaration": true,
+              "typeOnly": true,
+              "exportFrom": true,
+              "importType": true,
+              "importEquals": true,
+              "dynamicImport": true,
+              "require": true,
+              "requireResolve": true,
+              "createdRequire": true,
+              "newUrl": true,
+              "hostSubpath": true,
+              "uiSubpath": true,
+              "jsrSpecifier": true,
+              "urlSpecifier": true,
+              "foldedSpecifier": true,
+              "escapedSpecifier": true,
+              "tripleSlashTypes": true,
+              "tripleSlashPath": true,
+              "jsxPragma": true,
+              "localActionModule": true,
+              "localHostModule": true,
+              "localReferenceModule": true,
+              "otherPackage": false,
+              "mentionOnly": false,
+              "transactionModule": false,
+              "composedSpecifier": false
+            }
+          }
+        },
+        {
+          "id": "A2",
+          "witness": {
+            "pin": "A2",
+            "entries": [
+              "forge.gate.status@1.0.0 read [target] {forge:inspect}",
+              "hyperunix.find@1.0.0 read [kind,root] {hyperunix:read}",
+              "furnace.run.inspect@1.0.0 read [runId] {furnace:inspect}",
+              "reactivefiber.render.preview@1.0.0 read [] {reactivefiber:render}"
+            ],
+            "family": [],
+            "detachedCases": [
+              "forge",
+              "hyperunix",
+              "reactivefiber",
+              "furnace-observe"
+            ],
+            "tools": [
+              "capability_discover()",
+              "capability_contract(capabilityId,mode,capabilityVersion,ref)",
+              "capability_invoke(capabilityId,capabilityVersion,input)"
+            ],
+            "controls": {
+              "standInEntry": true,
+              "hostBoundaryEntry": true,
+              "mountSchemaEntry": true,
+              "sdkContractEntry": true,
+              "unnamedEntry": false
+            }
+          }
+        },
+        {
+          "id": "A3",
+          "witness": {
+            "pin": "A3",
+            "srcModules": true,
+            "anchor": true,
+            "spellings": [],
+            "controls": {
+              "typeName": true,
+              "fieldName": true,
+              "snakeField": true,
+              "boundaryType": true,
+              "evaluationType": true,
+              "capabilitiesType": true,
+              "toolName": true,
+              "kebabId": true,
+              "prose": true,
+              "template": true,
+              "mountGeneration": true,
+              "foldedName": true,
+              "escapedIdentifier": true,
+              "transactionRef": false,
+              "sourceRevision": false,
+              "composedName": false,
+              "lookalike": false,
+              "invisible": true,
+              "comment": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "(b) armed on landing: a fixture action reference selected by a model turn yields zero invocations until Pi's own admission (grant plus confirmed ownership, wb-69g.5 / wb-69g.1 decision core) decides and is recorded with provenance (wb-pjj) - workflow_control and workflow_execute refuse every rendering, only the admitted cell invokes, and the admitted decision is the core-minted one",
+      "pins": [
+        {
+          "id": "B1",
+          "witness": {
+            "pin": "B1",
+            "grants": [
+              "control:furnace.stop",
+              "control:claude-agent-sdk.interrupt",
+              "control:forge.cancel",
+              "control:local-detached.cancel",
+              "control:local-detached.shutdown",
+              "workbench:observe",
+              "observe:furnace.run.inspect"
+            ],
+            "executors": [
+              "furnace",
+              "claude-agent-sdk",
+              "forge",
+              "local-detached"
+            ],
+            "readings": {
+              "referenceAsTarget": "unknown-action invoked=false",
+              "mountAsTarget": "unknown-action invoked=false",
+              "mountUnderNativeProvider": "cross-scope invoked=false",
+              "actionIdOnObservedTarget": "unknown-action invoked=false",
+              "actionIdAsProvider": "unknown-action invoked=false",
+              "smuggledReference": "unknown-action invoked=false"
+            },
+            "calls": 0,
+            "events": 0
+          }
+        },
+        {
+          "id": "B2",
+          "witness": {
+            "pin": "B2",
+            "cells": [
+              "observer/none/unconfirmed: observer-only calls=0",
+              "observer/none/confirmed: observer-only calls=0",
+              "observer/causation/unconfirmed: observer-only calls=0",
+              "observer/causation/confirmed: observer-only calls=0",
+              "observer/reversed/unconfirmed: observer-only calls=0",
+              "observer/reversed/confirmed: observer-only calls=0",
+              "observer/confirmed/unconfirmed: observer-only calls=0",
+              "observer/confirmed/confirmed: observer-only calls=0",
+              "otherVerb/none/unconfirmed: missing-exact-grant calls=0",
+              "otherVerb/none/confirmed: missing-exact-grant calls=0",
+              "otherVerb/causation/unconfirmed: missing-exact-grant calls=0",
+              "otherVerb/causation/confirmed: missing-exact-grant calls=0",
+              "otherVerb/reversed/unconfirmed: missing-exact-grant calls=0",
+              "otherVerb/reversed/confirmed: missing-exact-grant calls=0",
+              "otherVerb/confirmed/unconfirmed: missing-exact-grant calls=0",
+              "otherVerb/confirmed/confirmed: missing-exact-grant calls=0",
+              "exact/none/unconfirmed: no-confirmed-ownership calls=0",
+              "exact/none/confirmed: no-confirmed-ownership calls=0",
+              "exact/causation/unconfirmed: no-confirmed-ownership calls=0",
+              "exact/causation/confirmed: no-confirmed-ownership calls=0",
+              "exact/reversed/unconfirmed: no-confirmed-ownership calls=0",
+              "exact/reversed/confirmed: no-confirmed-ownership calls=0",
+              "exact/confirmed/unconfirmed: operator-confirmation calls=0",
+              "exact/confirmed/confirmed: ok:settled calls=1"
+            ],
+            "invocations": {
+              "plain": 1,
+              "smuggled": 1
+            },
+            "divergent": []
+          }
+        },
+        {
+          "id": "B3",
+          "witness": {
+            "pin": "B3",
+            "minted": true,
+            "recordedBeforeCall": [
+              "control.requested:control-receipt:ctl_58f9b9d1ef2e83368e5699c83c811d79"
+            ],
+            "eventsAfter": [
+              "control.requested:control-receipt:ctl_58f9b9d1ef2e83368e5699c83c811d79",
+              "control.result:control-receipt:ctl_58f9b9d1ef2e83368e5699c83c811d79,native-ack:run_stop:ack,native-result:furnace-run:frn-run-r1:stopped"
+            ],
+            "receipt": {
+              "requestId": "ctl_58f9b9d1ef2e83368e5699c83c811d79",
+              "grant": "control:furnace.stop",
+              "policy": "exact-grant+confirmed-owner+operator-confirmed",
+              "policyIsCore": true,
+              "ownershipConfirmationRef": "frn-req-attempts-1",
+              "action": "stop",
+              "keys": [
+                "action",
+                "contractVersion",
+                "decidedAt",
+                "grant",
+                "invocationId",
+                "ownershipConfirmationRef",
+                "phase",
+                "policy",
+                "principal",
+                "requestId",
+                "requestedAt",
+                "scope",
+                "target"
+              ],
+              "carriesFixture": false
+            },
+            "request": {
+              "keys": [
+                "action",
+                "grants",
+                "invocationId",
+                "params",
+                "principal",
+                "requestedAt",
+                "scope",
+                "target"
+              ],
+              "params": {
+                "confirmed": true
+              },
+              "grants": [
+                "control:furnace.stop"
+              ]
+            },
+            "unmintedReason": "decision was not minted by the decision core",
+            "adapter": {
+              "genuine": "executed:settled calls=1",
+              "structuredCopy": "refused:decision was not minted by the decision core calls=0",
+              "jsonRoundTrip": "refused:decision was not minted by the decision core calls=0",
+              "handBuiltFixtureAction": "refused:decision was not minted by the decision core calls=0",
+              "reWrappedReceipt": "refused:This control permit already issued its native verb; a reissue needs a fresh decision. calls=0",
+              "genuineAgain": "refused:This control permit already issued its native verb; a reissue needs a fresh decision. calls=0"
+            },
+            "reauthorization": [
+              "ok:settled calls=1",
+              "observer-only calls=1",
+              "ok:settled calls=2"
+            ]
+          }
+        },
+        {
+          "id": "B4",
+          "witness": {
+            "pin": "B4",
+            "readings": {
+              "referenceAsDefinition": "malformed-request resolves=0 launches=0",
+              "actionIdAsScript": "source-unavailable resolves=1 launches=0",
+              "actionIdAsFunction": "unsupported-definition-kind resolves=0 launches=0",
+              "actionKind": "malformed-request resolves=0 launches=0",
+              "interfaceHostMode": "unknown-host-mode resolves=0 launches=0",
+              "schemaIdAsDigest": "non-digest-definition resolves=0 launches=0",
+              "savedScriptWithoutGrant": "missing-execute-grant resolves=0 launches=0",
+              "savedScriptAdmitted": "ok:launched resolves=1 launches=1"
+            },
+            "launches": 1,
+            "admittedLaunch": {
+              "keys": [
+                "admissionPolicy",
+                "grant",
+                "hostMode",
+                "input",
+                "invocationId",
+                "principal",
+                "scope",
+                "source",
+                "toolCallId"
+              ],
+              "input": {
+                "by": 1
+              },
+              "definition": {
+                "kind": "script",
+                "id": "counter-workflow",
+                "schemaVersion": "1",
+                "artifactDigest": "sha256:b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2b2"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "(c) a serialized function/callback or non-JSON payload is refused as malformed and never executed; identity fields surface only as bounded, sanitized strings - at the capability JSON boundary, under the bounded payload schema, and on the workflow_control and capability_invoke replies",
+      "pins": [
+        {
+          "id": "C1",
+          "witness": {
+            "pin": "C1",
+            "refusals": {
+              "function": "validation: Cannot pass function across the capability JSON boundary at invoke(tsx.action.invoke) input.",
+              "arrow": "validation: Cannot pass function across the capability JSON boundary at invoke(tsx.action.invoke) input.",
+              "asyncFunction": "validation: Cannot pass function across the capability JSON boundary at invoke(tsx.action.invoke) input.",
+              "generatorFunction": "validation: Cannot pass function across the capability JSON boundary at invoke(tsx.action.invoke) input.",
+              "boundFunction": "validation: Cannot pass function across the capability JSON boundary at invoke(tsx.action.invoke) input.",
+              "classValue": "validation: Cannot pass function across the capability JSON boundary at invoke(tsx.action.invoke) input.",
+              "toJsonCallback": "validation: Cannot pass function across the capability JSON boundary at invoke(tsx.action.invoke) input.",
+              "accessor": "validation: Accessor or hidden property at invoke(tsx.action.invoke) input.by.",
+              "symbol": "validation: Cannot pass symbol across the capability JSON boundary at invoke(tsx.action.invoke) input.",
+              "bigint": "validation: Cannot pass bigint across the capability JSON boundary at invoke(tsx.action.invoke) input.",
+              "undefinedValue": "validation: Cannot pass undefined across the capability JSON boundary at invoke(tsx.action.invoke) input.",
+              "notANumber": "validation: Cannot pass number across the capability JSON boundary at invoke(tsx.action.invoke) input.",
+              "infinity": "validation: Cannot pass number across the capability JSON boundary at invoke(tsx.action.invoke) input.",
+              "negativeInfinity": "validation: Cannot pass number across the capability JSON boundary at invoke(tsx.action.invoke) input.",
+              "date": "validation: Non-plain JSON object at invoke(tsx.action.invoke) input.",
+              "map": "validation: Non-plain JSON object at invoke(tsx.action.invoke) input.",
+              "set": "validation: Non-plain JSON object at invoke(tsx.action.invoke) input.",
+              "regexp": "validation: Non-plain JSON object at invoke(tsx.action.invoke) input.",
+              "typedArray": "validation: Non-plain JSON object at invoke(tsx.action.invoke) input.",
+              "promise": "validation: Non-plain JSON object at invoke(tsx.action.invoke) input.",
+              "cycle": "validation: Circular JSON payload at invoke(tsx.action.invoke) input.",
+              "sparseArray": "validation: Sparse array or extra array properties at invoke(tsx.action.invoke) input.",
+              "symbolKey": "validation: Symbol key at invoke(tsx.action.invoke) input.",
+              "prototypeKey": "validation: Prototype pollution key at invoke(tsx.action.invoke) input.__proto__."
+            },
+            "counts": {
+              "delivered": 0,
+              "callback": 0,
+              "toJson": 0,
+              "getter": 0
+            },
+            "contrast": {
+              "stringifyDropsCallback": true,
+              "stringifyRunsToJson": true
+            },
+            "clean": "returned",
+            "cleanDelivered": true
+          }
+        },
+        {
+          "id": "C2",
+          "witness": {
+            "pin": "C2",
+            "readings": {
+              "sourceAsCount": "rejected validation: Invalid input schema for capability tsx.action.invoke. isError=true",
+              "sourceAsPayloadField": "rejected validation: Invalid input schema for capability tsx.action.invoke. isError=true",
+              "sourceAsReferenceField": "rejected validation: Invalid input schema for capability tsx.action.invoke. isError=true",
+              "javascriptActionId": "rejected validation: Invalid input schema for capability tsx.action.invoke. isError=true",
+              "codeAsRevision": "rejected validation: Invalid input schema for capability tsx.action.invoke. isError=true",
+              "refusedDelivered": "0"
+            },
+            "inertLabel": {
+              "delivered": true,
+              "verbatim": true
+            },
+            "evaluated": false
+          }
+        },
+        {
+          "id": "C3",
+          "witness": {
+            "pin": "C3",
+            "malformed": {
+              "provider/bidiOverride": "malformed-request",
+              "provider/zeroWidth": "malformed-request",
+              "provider/escape": "malformed-request",
+              "provider/bell": "malformed-request",
+              "provider/overlong": "malformed-request",
+              "type/bidiOverride": "malformed-request",
+              "type/zeroWidth": "malformed-request",
+              "type/escape": "malformed-request",
+              "type/bell": "malformed-request",
+              "type/overlong": "malformed-request",
+              "id/bidiOverride": "malformed-request",
+              "id/zeroWidth": "malformed-request",
+              "id/escape": "malformed-request",
+              "id/bell": "malformed-request",
+              "id/overlong": "malformed-request",
+              "scope/bidiOverride": "malformed-request",
+              "scope/zeroWidth": "malformed-request",
+              "scope/escape": "malformed-request",
+              "scope/bell": "malformed-request",
+              "scope/overlong": "malformed-request"
+            },
+            "replies": 1,
+            "unsafeEchoes": 0,
+            "fieldEchoes": 0,
+            "calls": 0,
+            "verbatimTarget": true,
+            "receiptTarget": true,
+            "echo": {
+              "kind": "returned",
+              "unsafeLeaves": 0,
+              "sanitized": {
+                "session": "tsx-session-7f3a",
+                "owner": "local-operator:1000:s1",
+                "mount": {
+                  "id": "mount-counter-1",
+                  "generation": 3
+                },
+                "payloadSchema": "counter.increment/payload@1"
+              },
+              "verbatim": true,
+              "overlong": "rejected validation: Invalid input schema for capability tsx.action.invoke.",
+              "overlongDiagnosticBytes": 54,
+              "overlongDelivered": 0
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "tests": [
+    "the judged set: the frozen shape, the out-of-file roster and the bead row agree",
+    "A1",
+    "A2",
+    "A3",
+    "B1",
+    "B2",
+    "B3",
+    "B4",
+    "C1",
+    "C2",
+    "C3",
+    "records: every registered test ran once in run mode in roster order and every pin reached its end"
+  ]
+}
