@@ -1,0 +1,173 @@
+{
+  "bead": "wb-pfxo.3",
+  "pin": "6a251bf73af5",
+  "basis": "The out-of-file roster of test/workbench-rf-assembly-handoff-census.test.ts (standing rule 16): every judged row's id, label and pins, every pin's witness and the pinned constants, so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. Witnesses were measured by the cutting seat on trunk 051d37e; fixture identities appear by placeholder (<graph>, <bundle>, <operation>, <workspace>, <release>, <root>).",
+  "constants": {
+    "pinnedRoster": [
+      "reactivefiber.render.preview"
+    ],
+    "rosterSite": "src/workflow/reconcile.ts:67",
+    "programPin": "6a251bf73af5",
+    "receiptFields": [
+      "render_id",
+      "graph_revision_id",
+      "cli_version",
+      "sdk_versions",
+      "bundle_revision_id"
+    ],
+    "readerSet": {
+      "render_id": [
+        "src/workbench/providers/reactivefiber.ts",
+        "src/workbench/reactivefiber-observer.ts"
+      ],
+      "graph_revision_id": [
+        "src/workbench/native-evidence.ts",
+        "src/workbench/providers/reactivefiber.ts",
+        "src/workbench/reactivefiber-observer.ts"
+      ],
+      "cli_version": [
+        "src/workbench/native-evidence.ts",
+        "src/workbench/reactivefiber-observer.ts"
+      ],
+      "sdk_versions": [
+        "src/workbench/reactivefiber-observer.ts"
+      ],
+      "bundle_revision_id": [
+        "src/workbench/native-evidence.ts",
+        "src/workbench/providers/reactivefiber.ts",
+        "src/workbench/reactivefiber-observer.ts"
+      ]
+    },
+    "filingConstants": [
+      "README.md:33@6a251bf73af5",
+      "cli/registry.py",
+      "render_id",
+      "graph_revision_id",
+      "cli_version",
+      "sdk_versions",
+      "bundle_revision_id",
+      "result.document",
+      "assembly handoff",
+      "wb-2j3.2"
+    ],
+    "handoffWord": "hand[\\s_-]*off",
+    "families": [
+      {
+        "id": "H",
+        "source": "\\bassembly[\\s_.-]*hand[\\s_-]*offs?\\b|\\bhand[\\s_-]*offs?[\\s_-]+receipts?\\b|\\brf(?:'s)?[\\s_-]+hand[\\s_-]*offs?\\b|\\bcross[\\s_-]*(?:process|agent)[\\s_-]+hand[\\s_-]*offs?\\b"
+      },
+      {
+        "id": "L",
+        "source": "\\b(?:rf|reactive[\\s_-]*fiber|assembly|render|context)[\\s_-]+receipts?\\b"
+      }
+    ],
+    "markers": [
+      "proposed",
+      "illustrative",
+      "unshipped",
+      "not shipped",
+      "not installed",
+      "uninstalled",
+      "unavailable",
+      "not available",
+      "not served",
+      "gated",
+      "pi-assembled"
+    ]
+  },
+  "rows": [
+    {
+      "id": "T",
+      "label": "(trigger, absent today) Pi hands no rf assembly across processes or agents: no src identifier or literal spells a handoff, only the pinned reader modules spell an rf receipt field, the rf roster stays reactivefiber.render.preview only and every rf spawn is a --no-commit render",
+      "pins": [
+        {"id": "T1", "witness": {"srcFloorMet": true, "renderArgvSeen": true, "hits": []}},
+        {"id": "T2", "witness": {"srcFloorMet": true, "renderArgvSeen": true, "readerSet": {"render_id": ["src/workbench/providers/reactivefiber.ts", "src/workbench/reactivefiber-observer.ts"], "graph_revision_id": ["src/workbench/native-evidence.ts", "src/workbench/providers/reactivefiber.ts", "src/workbench/reactivefiber-observer.ts"], "cli_version": ["src/workbench/native-evidence.ts", "src/workbench/reactivefiber-observer.ts"], "sdk_versions": ["src/workbench/reactivefiber-observer.ts"], "bundle_revision_id": ["src/workbench/native-evidence.ts", "src/workbench/providers/reactivefiber.ts", "src/workbench/reactivefiber-observer.ts"]}}},
+        {"id": "T3", "witness": {"site": "src/workflow/reconcile.ts:67", "reactivefiber": ["reactivefiber.render.preview"], "native": [{"id": "reactivefiber.render.preview", "effectClass": "read"}], "injected": [{"id": "reactivefiber.render.preview", "effectClass": "read"}], "descriptorHandoff": []}},
+        {"id": "T4", "witness": {"legacy": [["--workspace", "<root>", "context", "render", "--model", "m", "--task", "t", "--no-commit", "--no-input", "--json"]], "view": [["--workspace", "<root>", "context", "render", "--view", "v", "--task-id", "t", "--model", "m", "--no-commit", "--no-input", "--json"]]}}
+      ]
+    },
+    {
+      "id": "A",
+      "label": "(a) any Pi cross-agent handoff of rf context carries render_id and graph_revision_id (plus bundle_revision_id when present) and zero bytes of rendered document or block content",
+      "pins": [
+        {"id": "A1", "witness": {"sourceRevision": "<graph>", "sourceVersion": "<bundle>", "identityRefs": ["rf-graph:<graph>", "rf-bundle:<bundle>"], "documentBytes": 0, "blockBytes": 0, "renderIds": 0}},
+        {"id": "A2", "witness": {"sourceRevision": "<graph>", "hasSourceVersion": false, "identityRefs": ["rf-graph:<graph>"], "bundleNamed": 0, "documentBytes": 0, "blockBytes": 0}},
+        {"id": "A3", "witness": {"withBundle": {"provider": "reactivefiber", "nativeId": "<operation>", "sourceBasis": "<bundle>", "producerRelease": "<release>"}, "withoutBundle": {"provider": "reactivefiber", "nativeId": "<operation>", "sourceBasis": "<graph>", "producerRelease": "<release>"}, "documentBytes": 0, "blockBytes": 0}},
+        {"id": "A4", "witness": {"renderId": null, "ephemeral": true, "transactionId": null, "spawns": 1}}
+      ]
+    },
+    {
+      "id": "B",
+      "label": "(b) fixture: the handoff builder given a committed render envelope emits no result.document / block content and no prompt text",
+      "pins": [
+        {"id": "B1", "witness": {"refusal": {"category": "transport", "message": "RF preview returned an unrecognized or contradictory envelope."}, "reading": null, "spawns": 1, "verb": ["context", "render"]}},
+        {"id": "B2", "witness": {"refusal": {"category": "validation", "message": "ReactiveFiber topology refused: source.transaction_id must be null: a noncommitted read opens no transaction."}}},
+        {"id": "B3", "witness": {"variants": [{"variant": "untransacted", "native": "RF preview returned an unrecognized or contradictory envelope.", "adapter": "ReactiveFiber topology refused: result.ephemeral must be true."}, {"variant": "id-beside-ephemeral", "native": "RF preview returned an unrecognized or contradictory envelope.", "adapter": "ReactiveFiber topology refused: result.render_id must be null: a committed render is not a preview."}, {"variant": "seq-beside-null-id", "native": "RF preview returned an unrecognized or contradictory envelope.", "adapter": "ReactiveFiber topology refused: result.commit_seq must be absent or null."}]}},
+        {"id": "B4", "witness": {"evidence": {"provider": "reactivefiber", "nativeId": "<operation>", "sourceBasis": "<bundle>", "producerRelease": "<release>"}, "renderIds": 0, "documentBytes": 0, "blockBytes": 0}}
+      ]
+    },
+    {
+      "id": "C",
+      "label": "(c) absent provenance fields (cli_version, sdk_versions) stay absent, no synthesized version or digest",
+      "pins": [
+        {"id": "C1", "witness": {"cliRefs": [], "engineRefs": [], "notes": [], "releaseNamed": 0, "digests": ["<bundle>", "sha256:8eb4d6c4b76c535b506d8ccd1ff76e5c4d5b09533ed455e699666ec1c78138e9", "<graph>"]}},
+        {"id": "C2", "witness": {"cliRefs": ["rf-cli:<release>"], "engineRefs": ["rf-engine:tsx_runtime:2.4.1:unknown", "rf-engine:tsx_sdk:0.3.2:unknown"], "notes": ["producer release from result.provenance.cli_version: rf@<release>", "TSX engine identity from result.provenance.sdk_versions: a foreign runtime executed component source"], "releaseNamed": 2}},
+        {"id": "C3", "witness": {"absent": {"provider": "reactivefiber", "nativeId": "<operation>", "sourceBasis": "<bundle>"}, "stated": {"provider": "reactivefiber", "nativeId": "<operation>", "sourceBasis": "<bundle>", "producerRelease": "<release>"}}},
+        {"id": "C4", "witness": {"nativeProvenanceKeys": ["created_at", "graph_revision_id", "necessity_policy_revision_id", "storage", "storage_backend", "workspace_schema_version"], "injectedProvenanceKeys": ["created_at", "graph_revision_id", "necessity_policy_revision_id", "storage", "storage_backend", "workspace_schema_version"], "nativeVerbatim": true, "injectedVerbatim": true}}
+      ]
+    },
+    {
+      "id": "D",
+      "label": "(d) until a shipped rf handoff receipt exists Pi labels any such artifact as Pi-assembled from envelope identifiers, never as an rf receipt",
+      "pins": [
+        {"id": "D1", "witness": {"srcFloorMet": true, "renderArgvSeen": true, "families": ["H", "L"], "hits": []}},
+        {"id": "D2", "witness": {"descriptorFloorMet": true, "hits": [], "rfCarriers": [true, true]}},
+        {"id": "D3", "witness": {"projections": 10, "receiptWords": 0, "kinds": ["reactivefiber.render.preview.snapshot"], "seamLabels": ["fixture seam (not a real render)", "noncommitted preview (rf-cli)", "refused"]}},
+        {"id": "D4", "witness": {"floorMet": true, "anchorRead": true, "markers": 11, "findings": []}}
+      ]
+    },
+    {
+      "id": "F",
+      "label": "the owner filing row of wb-pfxo.3 in the tracked bead export carries every pinned constant, names exactly the clauses rows A-D cover and states each of their labels as its clause",
+      "pins": [
+        {"id": "F1", "witness": {"clauses": ["a", "b", "c", "d"], "labelsEqual": ["A", "B", "C", "D"], "constantsQuoted": ["README.md:33@6a251bf73af5", "cli/registry.py", "render_id", "graph_revision_id", "cli_version", "sdk_versions", "bundle_revision_id", "result.document", "assembly handoff", "wb-2j3.2"]}}
+      ]
+    },
+    {
+      "id": "M",
+      "label": "the matchers rows T1, T2, D1 and D4 read judge their pinned inputs in order",
+      "pins": [
+        {"id": "MT1", "witness": {"digest": "30dd65bbd872cb5b", "outcome": ["control.ts: identifier buildHandoff"]}},
+        {"id": "MT2", "witness": {"digest": "959f7e4777320ba4", "outcome": ["control.ts: literal assembly handoff"]}},
+        {"id": "MT3", "witness": {"digest": "d7ba09e54065dabd", "outcome": ["control.ts: literal handoff"]}},
+        {"id": "MT4", "witness": {"digest": "2e9553a6743ffe20", "outcome": ["control.ts: template <expr> hand-off"]}},
+        {"id": "MT5", "witness": {"digest": "62ab93f34148615d", "outcome": ["control.ts: identifier hand_off"]}},
+        {"id": "MF1", "witness": {"digest": "4e00b525b75721eb", "outcome": ["field:render_id"]}},
+        {"id": "MF2", "witness": {"digest": "5200ff7815563a92", "outcome": ["field:graph_revision_id"]}},
+        {"id": "MF3", "witness": {"digest": "eff7bdb4a147a630", "outcome": ["field:bundle_revision_id", "field:cli_version"]}},
+        {"id": "MF4", "witness": {"digest": "70200cb67bf53aeb", "outcome": ["field:sdk_versions"]}},
+        {"id": "MD1", "witness": {"digest": "acf6eb6f67256f00", "outcome": ["H:shipped"]}},
+        {"id": "MD2", "witness": {"digest": "8ec1dd5f148004ef", "outcome": ["H:marked"]}},
+        {"id": "MD3", "witness": {"digest": "f70781a952e9b78d", "outcome": ["L:shipped"]}},
+        {"id": "MD4", "witness": {"digest": "56f7d9d49d23abae", "outcome": ["L:marked"]}},
+        {"id": "MD5", "witness": {"digest": "9353e607a9d3515f", "outcome": ["H:shipped", "L:shipped"]}},
+        {"id": "MD6", "witness": {"digest": "151c2c2c47aa26dc", "outcome": ["H:shipped"]}}
+      ]
+    },
+    {
+      "id": "R",
+      "label": "the named residuals R1-R9 stay pinned quiet",
+      "pins": [
+        {"id": "R1", "witness": {"status": "completed", "nodeRows": 1, "effectClass": "read", "textCarriesDocument": true, "textCarriesBlockContent": true, "textIsReading": true}},
+        {"id": "R2", "witness": {"status": "completed", "agentPrompts": 1, "promptCarriesDocument": true, "promptNamesReceipt": false}},
+        {"id": "R3", "witness": {"verbatim": true, "carriesRenderId": true, "carriesDocument": true, "carriesBlockContent": true}},
+        {"id": "R4", "witness": {"payloadRef": "rf-output:sha256:8eb4d6c4b76c535b506d8ccd1ff76e5c4d5b09533ed455e699666ec1c78138e9", "isTextSha256": true, "isOutputDigest": false}},
+        {"id": "R5", "witness": {"digest": "f07f271e738b4c4a", "outcome": []}},
+        {"id": "R6", "witness": {"digest": "737542494c208715", "outcome": []}},
+        {"id": "R7", "witness": {"digest": "b5b982f522501883", "outcome": ["H:marked"]}},
+        {"id": "R8", "witness": {"digest": "5292923f2fb36c36", "outcome": []}},
+        {"id": "R9", "witness": {"isError": false, "kind": "returned", "replyCarriesDocument": true, "replyCarriesBlockContent": true, "replyNamesReceipt": false}}
+      ]
+    }
+  ]
+}
