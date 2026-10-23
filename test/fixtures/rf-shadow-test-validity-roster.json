@@ -1,0 +1,365 @@
+{
+  "bead": "wb-hs2j.5",
+  "basis": "The out-of-file roster of test/workbench-rf-shadow-test-validity-census.test.ts (standing rule 16): every judged row's id, label and pins, every pin's witness, the scan constants, the residual families and the registered test titles, so a census edit that deletes, relabels, swaps or removes a member reds against this file. Producer facts read-only on 2026-10-23: at ReactiveFiberCLI 6a251bf73af57c3a703caf6892dfe3015e06a481, graphTestResultKeys is the required list of $defs.result in src/reactive_fiber_cli/schemas/cli/graph.test.schema.json (blob 8e95edd2c02e) and validationDigestDescription its validation_digest description; graphValidateResultKeys is the property list of $defs.result in graph.validate.schema.json (blob 1f7ac9bf6eaa). digests are the sha256 of JSON.stringify of: graphTestEnvelope, the producer fixture schemas/fixtures/graph.test/valid/ok_shadow.json (blob 7442508d4fcc) as parsed; graphValidateEnvelope, the installed rf 0.1.832 graph validate --json envelope over a scratch rf init --backend jsonl workspace holding one [[component]] row (instance notes, component demo.notes, created with rf component create --kind declarative) that no [[fiber]] row feeds, with operation_id, workspace id and root normalized to the graph.test fixture's; unfedRow, its one RF_COMPONENT_INSTANCE_UNFED row (identical in result.diagnostics, on the envelope and on the unscoped context render --no-commit envelope over the same workspace, and equal to application/graph.py:983-997 unfed_instance_warnings at the pin); emptyDocumentRow, the RF_RENDER_EMPTY_DOCUMENT row that render printed beside it; validationReceipt, result.validation of schemas/fixtures/graph.validate/valid/ok_candidate_validation.json (blob 3ff2448f1472).",
+  "quote": "A shadow test can have additional runtime findings, but cannot silently claim a superset of graph-validity evidence unless it either includes or references the core structural verdict.",
+  "citation": "docs/programs/reactive-context-assembly-2026-10-18/02-swarm-usage-and-command-grammar.md:56@6a251bf73af5",
+  "scan": {
+    "verbFamily": "\\bgraph[\\s._/-]*(?:test|validat)/i",
+    "validityWords": "\\bvalid(?:ity)?\\b|\\bstructural/i",
+    "graph": "graph",
+    "verbs": [
+      "test",
+      "validate"
+    ],
+    "moduleExtensions": [
+      ".ts",
+      ".mts",
+      ".cts",
+      ".tsx",
+      ".js",
+      ".mjs",
+      ".cjs",
+      ".jsx"
+    ],
+    "outsideRoots": [
+      ".git",
+      ".beads",
+      "node_modules",
+      "dist",
+      "build",
+      "coverage",
+      ".forge",
+      "docs",
+      "test",
+      "vendor",
+      "new-feedback",
+      "media"
+    ],
+    "rootConfig": "^(?:forge\\.toml|package(?:-lock)?\\.json|biome\\.json|tsconfig[\\w.-]*\\.json|vitest\\.[\\w.-]*\\.ts|\\.gitignore|\\.npmignore)$/",
+    "floors": {
+      "src": 100,
+      "qa": 55,
+      "examples": 5,
+      "rootConfig": 20
+    },
+    "walkAnchors": [
+      "src/workbench/providers/reactivefiber.ts:context.render",
+      "src/workbench/reactivefiber-observer.ts:context.render",
+      "src/workbench/native-evidence.ts:context.render",
+      "qa/workbench/receipts-index.mjs:docs/workbench/receipts",
+      "examples/workflows/compose.js:export",
+      "forge.toml:[build.commands]"
+    ],
+    "readers": [
+      "src/workbench/providers/reactivefiber.ts",
+      "src/workbench/reactivefiber-observer.ts",
+      "src/workbench/native-evidence.ts"
+    ],
+    "plants": [
+      "src/argv-test.ts:flagged",
+      "src/argv-validate.mts:flagged",
+      "src/dotted.ts:flagged",
+      "src/folded.ts:flagged",
+      "src/escaped.ts:flagged",
+      "src/identifier.ts:flagged",
+      "src/comment.ts:flagged",
+      "src/template.ts:flagged",
+      "qa/receipt.mjs:flagged",
+      "examples/flow.js:flagged",
+      "forge.toml:flagged",
+      "scripts/check.ts:flagged",
+      "src/composed.ts:R-COMPOSED",
+      "src/joined.ts:R-COMPOSED",
+      "src/encoded.ts:R-ENCODED",
+      "src/lookalike.ts:R-LOOKALIKE",
+      "src/invisible.ts:R-LOOKALIKE",
+      "docs/provisioning.md:R-OUTSIDE",
+      "test/needle.test.ts:R-OUTSIDE",
+      "vendor/pkg/index.js:R-OUTSIDE",
+      "README.md:R-OUTSIDE",
+      "node_modules/pkg/index.js:R-OUTSIDE",
+      "src/subgraph.ts:quiet",
+      "src/apart.ts:quiet"
+    ]
+  },
+  "producer": {
+    "programPin": "6a251bf73af57c3a703caf6892dfe3015e06a481",
+    "rfVersion": "0.1.832",
+    "graphTestResultKeys": [
+      "overlay",
+      "valid",
+      "checks",
+      "shadow",
+      "comparisons",
+      "published_head_unchanged",
+      "effects_authorized",
+      "validation_digest"
+    ],
+    "graphValidateResultKeys": [
+      "valid",
+      "runtime_compilable",
+      "compile_diagnostics",
+      "graph_revision_id",
+      "graph_path",
+      "fibers",
+      "components",
+      "diagnostics",
+      "overlay",
+      "impact",
+      "validation"
+    ],
+    "validationDigestDescription": "sha256: over the canonical JSON of this result without the digest itself -- the validation_digest a PublicationReceipt records (03-LOW-LEVEL-DESIGN line 6) and `rf graph publish` recomputes.",
+    "digests": {
+      "graphTestEnvelope": "sha256:ed00e83a9fa125c688b4ecabb3170d62eab5e453a6515810f6841c61146fe0bb",
+      "graphValidateEnvelope": "sha256:6b2b5dc34ebccf49e7c119625ddaec7fcbde9d97098dd0516e50ae2fc720bea8",
+      "unfedRow": "sha256:37ecd0bf7546ee94ed38a9b4871dd1e4180a8f06a39c8f1e03fb53f56d49092a",
+      "emptyDocumentRow": "sha256:69f4bf6814163588f8666e87f3e7ca682512a911026af9b9b03bd399d248ad9e",
+      "validationReceipt": "sha256:1a68aefdb3eab11ea533b1d7672744ed20be9e6389dcac1d89dbacfee7259598"
+    }
+  },
+  "residuals": [
+    "R-COMPOSED",
+    "R-ENCODED",
+    "R-LOOKALIKE",
+    "R-OUTSIDE"
+  ],
+  "rows": [
+    {
+      "id": "A",
+      "label": "(statement, absent today) no Pi surface shall accept graph test valid:true as structural graph validity without reading graph validate on the same overlay; (a) a Pi consumer of graph test output records it as a runtime shadow result distinct from structural validity, and any Pi gate requiring structural validity reads graph validate on the same overlay: no judged code or configuration file spells either verb and no registered descriptor names one, so no such consumer or gate exists today",
+      "pins": [
+        {
+          "id": "A1",
+          "witness": {
+            "floorsMet": true,
+            "anchorsRead": [
+              "src/workbench/providers/reactivefiber.ts",
+              "src/workbench/reactivefiber-observer.ts",
+              "src/workbench/native-evidence.ts",
+              "qa/workbench/receipts-index.mjs",
+              "examples/workflows/compose.js",
+              "forge.toml"
+            ],
+            "renderArgvReached": true,
+            "findings": [],
+            "controls": {
+              "src/argv-test.ts": true,
+              "src/argv-validate.mts": true,
+              "src/dotted.ts": true,
+              "src/folded.ts": true,
+              "src/escaped.ts": true,
+              "src/identifier.ts": true,
+              "src/comment.ts": true,
+              "src/template.ts": true,
+              "qa/receipt.mjs": true,
+              "examples/flow.js": true,
+              "forge.toml": true,
+              "scripts/check.ts": true,
+              "src/composed.ts": false,
+              "src/joined.ts": false,
+              "src/encoded.ts": false,
+              "src/lookalike.ts": false,
+              "src/invisible.ts": false,
+              "docs/provisioning.md": false,
+              "test/needle.test.ts": false,
+              "vendor/pkg/index.js": false,
+              "README.md": false,
+              "node_modules/pkg/index.js": false,
+              "src/subgraph.ts": false,
+              "src/apart.ts": false
+            }
+          }
+        },
+        {
+          "id": "A2",
+          "witness": {
+            "descriptorFloorMet": true,
+            "rfDescriptors": [
+              "reactivefiber.render.preview"
+            ],
+            "spelled": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "(b) a fixture pair (graph test valid:true, graph validate RF_COMPONENT_INSTANCE_UNFED) projects not-structurally-valid, never valid: the pair is the producer's, every Pi rf reader refuses each member before projecting anything, and the verdict fields upgrade nothing on an admitted render",
+      "pins": [
+        {
+          "id": "B1",
+          "witness": {
+            "facts": [
+              {
+                "verb": "graph test",
+                "fact": "valid:true",
+                "holds": true
+              },
+              {
+                "verb": "graph validate",
+                "fact": "RF_COMPONENT_INSTANCE_UNFED",
+                "holds": true
+              }
+            ],
+            "validateValid": true,
+            "validateRuntimeCompilable": true,
+            "validateResultCodes": [
+              "RF_COMPONENT_INSTANCE_UNFED"
+            ],
+            "validateEnvelopeCodes": [
+              "RF_COMPONENT_INSTANCE_UNFED"
+            ],
+            "testEnvelopeCodes": [],
+            "digests": {
+              "graphTestEnvelope": "sha256:ed00e83a9fa125c688b4ecabb3170d62eab5e453a6515810f6841c61146fe0bb",
+              "graphValidateEnvelope": "sha256:6b2b5dc34ebccf49e7c119625ddaec7fcbde9d97098dd0516e50ae2fc720bea8",
+              "unfedRow": "sha256:37ecd0bf7546ee94ed38a9b4871dd1e4180a8f06a39c8f1e03fb53f56d49092a",
+              "emptyDocumentRow": "sha256:69f4bf6814163588f8666e87f3e7ca682512a911026af9b9b03bd399d248ad9e",
+              "validationReceipt": "sha256:1a68aefdb3eab11ea533b1d7672744ed20be9e6389dcac1d89dbacfee7259598"
+            }
+          }
+        },
+        {
+          "id": "B2",
+          "witness": {
+            "members": {
+              "graph.test": {
+                "provider": {
+                  "error": {
+                    "category": "transport",
+                    "message": "RF preview returned an unrecognized native envelope."
+                  },
+                  "value": null,
+                  "spawns": 1,
+                  "argvIsRender": true
+                },
+                "observer": {
+                  "refused": "validation",
+                  "message": "ReactiveFiber topology refused: source must be a reactive-fiber.cli/v1 context.render envelope."
+                },
+                "evidence": {}
+              },
+              "graph.validate": {
+                "provider": {
+                  "error": {
+                    "category": "transport",
+                    "message": "RF preview returned an unrecognized native envelope."
+                  },
+                  "value": null,
+                  "spawns": 1,
+                  "argvIsRender": true
+                },
+                "observer": {
+                  "refused": "validation",
+                  "message": "ReactiveFiber topology refused: source must be a reactive-fiber.cli/v1 context.render envelope."
+                },
+                "evidence": {}
+              }
+            },
+            "admitted": {
+              "provider": {
+                "error": null,
+                "spawns": 1,
+                "sourceCommand": "context.render"
+              },
+              "observer": {
+                "coverage": "complete",
+                "statusTone": "success"
+              },
+              "evidenceKeys": [
+                "provider",
+                "nativeId",
+                "sourceBasis",
+                "producerRelease"
+              ]
+            }
+          }
+        },
+        {
+          "id": "B3",
+          "witness": {
+            "fields": [
+              "valid",
+              "validation",
+              "diagnostics"
+            ],
+            "readings": {
+              "clean": {
+                "observer": {
+                  "coverage": "complete",
+                  "statusTone": "success"
+                },
+                "projectionUnchanged": true,
+                "evidenceUnchanged": true,
+                "domainStatus": null,
+                "validityWords": false
+              },
+              "reportingErrors": {
+                "observer": {
+                  "coverage": "partial",
+                  "statusTone": "unknown"
+                },
+                "projectionUnchanged": true,
+                "evidenceUnchanged": true,
+                "domainStatus": null,
+                "validityWords": false
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "(c) when rfc-s24ro.1 ships, Pi carries result.validation / result.diagnostics verbatim including RF_COMPONENT_INSTANCE_UNFED: gated, graph test carries neither field at the pin, while the one envelope Pi admits already carries the producer's rows and those fields verbatim",
+      "pins": [
+        {
+          "id": "C1",
+          "witness": {
+            "gatedFields": [
+              "validation",
+              "diagnostics"
+            ],
+            "carried": [],
+            "selfDigest": true,
+            "contractShipped": false,
+            "leaves": {
+              "graph.test": "served_reachable",
+              "graph.validate": "served_reachable"
+            },
+            "captureVersion": "0.1.832",
+            "shipped": "Shipped: no (open bead)"
+          }
+        },
+        {
+          "id": "C2",
+          "witness": {
+            "error": null,
+            "spawns": 1,
+            "verbatim": true,
+            "carriedCodes": [
+              "RF_COMPONENT_INSTANCE_UNFED",
+              "RF_RENDER_EMPTY_DOCUMENT"
+            ],
+            "carriedFields": [
+              "validation",
+              "diagnostics"
+            ],
+            "unfedRow": "sha256:37ecd0bf7546ee94ed38a9b4871dd1e4180a8f06a39c8f1e03fb53f56d49092a"
+          }
+        }
+      ]
+    }
+  ],
+  "tests": [
+    "the judged set: the frozen shape, the out-of-file roster and the bead row agree",
+    "A1",
+    "A2",
+    "B1",
+    "B2",
+    "B3",
+    "C1",
+    "C2",
+    "records: every registered test ran once in run mode in roster order, every pin reached its end, and the pins' coverage meets the outside obligations"
+  ]
+}
