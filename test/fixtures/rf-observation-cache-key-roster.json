@@ -1,0 +1,1319 @@
+{
+ "bead": "wb-o4h0.1",
+ "families": [
+  "accepted commit",
+  "coverage",
+  "coverage digest",
+  "origin",
+  "provenance",
+  "revisions",
+  "sensitivity",
+  "status"
+ ],
+ "rows": [
+  {
+   "id": "A",
+   "clause": "a",
+   "label": "(a) equal-payload rf readings that differ in a read-visible field occupy distinct cache entries or, re-read under one identity, trigger invalidation; none is ever deduped",
+   "pins": [
+    {
+     "id": "A1",
+     "witness": {
+      "family": "status",
+      "variants": [
+       {
+        "id": "observation-row-status",
+        "payloadEqual": true,
+        "differs": [
+         "snapshot.coverage",
+         "snapshot.node",
+         "diagnostics"
+        ],
+        "distinct": {
+         "entries": 2,
+         "eachStored": true
+        },
+        "reRead": {
+         "refresh": "applied",
+         "revisionBumped": true,
+         "storedIsVariant": true,
+         "storeMoved": true,
+         "viewWarm": true,
+         "viewReused": false
+        }
+       },
+       {
+        "id": "error-diagnostic",
+        "payloadEqual": true,
+        "differs": [
+         "snapshot.coverage",
+         "snapshot.node",
+         "diagnostics"
+        ],
+        "distinct": {
+         "entries": 2,
+         "eachStored": true
+        },
+        "reRead": {
+         "refresh": "applied",
+         "revisionBumped": true,
+         "storedIsVariant": true,
+         "storeMoved": true,
+         "viewWarm": true,
+         "viewReused": false
+        }
+       },
+       {
+        "id": "summary-errors",
+        "payloadEqual": true,
+        "differs": [
+         "snapshot.coverage",
+         "snapshot.node",
+         "diagnostics"
+        ],
+        "distinct": {
+         "entries": 2,
+         "eachStored": true
+        },
+        "reRead": {
+         "refresh": "applied",
+         "revisionBumped": true,
+         "storedIsVariant": true,
+         "storeMoved": true,
+         "viewWarm": true,
+         "viewReused": false
+        }
+       },
+       {
+        "id": "view-contract-unsatisfied",
+        "payloadEqual": true,
+        "differs": [
+         "snapshot.coverage",
+         "snapshot.node",
+         "diagnostics"
+        ],
+        "distinct": {
+         "entries": 2,
+         "eachStored": true
+        },
+        "reRead": {
+         "refresh": "applied",
+         "revisionBumped": true,
+         "storedIsVariant": true,
+         "storeMoved": true,
+         "viewWarm": true,
+         "viewReused": false
+        }
+       }
+      ]
+     }
+    },
+    {
+     "id": "A2",
+     "witness": {
+      "family": "provenance",
+      "variants": [
+       {
+        "id": "producer-release",
+        "payloadEqual": true,
+        "differs": [
+         "snapshot.evidenceRefs",
+         "diagnostics",
+         "evidence"
+        ],
+        "distinct": {
+         "entries": 2,
+         "eachStored": true
+        },
+        "reRead": {
+         "refresh": "applied",
+         "revisionBumped": true,
+         "storedIsVariant": true,
+         "storeMoved": true,
+         "viewWarm": true,
+         "viewReused": false
+        }
+       },
+       {
+        "id": "engine-identity",
+        "payloadEqual": true,
+        "differs": [
+         "snapshot.evidenceRefs"
+        ],
+        "distinct": {
+         "entries": 2,
+         "eachStored": true
+        },
+        "reRead": {
+         "refresh": "applied",
+         "revisionBumped": true,
+         "storedIsVariant": true,
+         "storeMoved": true,
+         "viewWarm": true,
+         "viewReused": false
+        }
+       }
+      ]
+     }
+    },
+    {
+     "id": "A3",
+     "witness": {
+      "family": "coverage",
+      "variants": [
+       {
+        "id": "over-budget",
+        "payloadEqual": true,
+        "differs": [
+         "snapshot.coverage",
+         "snapshot.node",
+         "diagnostics"
+        ],
+        "distinct": {
+         "entries": 2,
+         "eachStored": true
+        },
+        "reRead": {
+         "refresh": "applied",
+         "revisionBumped": true,
+         "storedIsVariant": true,
+         "storeMoved": true,
+         "viewWarm": true,
+         "viewReused": false
+        }
+       },
+       {
+        "id": "replayed-row",
+        "payloadEqual": true,
+        "differs": [
+         "snapshot.coverage",
+         "snapshot.node",
+         "diagnostics"
+        ],
+        "distinct": {
+         "entries": 2,
+         "eachStored": true
+        },
+        "reRead": {
+         "refresh": "applied",
+         "revisionBumped": true,
+         "storedIsVariant": true,
+         "storeMoved": true,
+         "viewWarm": true,
+         "viewReused": false
+        }
+       }
+      ]
+     }
+    },
+    {
+     "id": "A4",
+     "witness": {
+      "family": "revisions",
+      "variants": [
+       {
+        "id": "graph-revision",
+        "payloadEqual": true,
+        "differs": [
+         "snapshot.evidenceRefs",
+         "snapshot.sourceRevision"
+        ],
+        "distinct": {
+         "entries": 2,
+         "eachStored": true
+        },
+        "reRead": {
+         "refresh": "applied",
+         "revisionBumped": true,
+         "storedIsVariant": true,
+         "storeMoved": true,
+         "viewWarm": true,
+         "viewReused": false
+        }
+       },
+       {
+        "id": "bundle-revision",
+        "payloadEqual": true,
+        "differs": [
+         "snapshot.evidenceRefs",
+         "snapshot.sourceVersion",
+         "evidence"
+        ],
+        "distinct": {
+         "entries": 2,
+         "eachStored": true
+        },
+        "reRead": {
+         "refresh": "applied",
+         "revisionBumped": true,
+         "storedIsVariant": true,
+         "storeMoved": true,
+         "viewWarm": true,
+         "viewReused": false
+        }
+       }
+      ]
+     }
+    },
+    {
+     "id": "A5",
+     "witness": {
+      "family": "origin",
+      "variants": [
+       {
+        "id": "workspace-id",
+        "payloadEqual": true,
+        "differs": [
+         "snapshot.evidenceRefs"
+        ],
+        "distinct": {
+         "entries": 2,
+         "eachStored": true
+        },
+        "reRead": {
+         "refresh": "applied",
+         "revisionBumped": true,
+         "storedIsVariant": true,
+         "storeMoved": true,
+         "viewWarm": true,
+         "viewReused": false
+        }
+       },
+       {
+        "id": "fixture-seam",
+        "payloadEqual": true,
+        "differs": [
+         "snapshot.coverage",
+         "snapshot.node",
+         "diagnostics"
+        ],
+        "distinct": {
+         "entries": 2,
+         "eachStored": true
+        },
+        "reRead": {
+         "refresh": "applied",
+         "revisionBumped": true,
+         "storedIsVariant": true,
+         "storeMoved": true,
+         "viewWarm": true,
+         "viewReused": false
+        }
+       }
+      ]
+     }
+    },
+    {
+     "id": "A6",
+     "witness": {
+      "family": "accepted commit",
+      "variants": [
+       {
+        "id": "render-id",
+        "refused": "validation: ReactiveFiber topology refused: result.render_id must be null: a committed render is not a preview."
+       },
+       {
+        "id": "commit-seq",
+        "refused": "validation: ReactiveFiber topology refused: result.commit_seq must be absent or null."
+       },
+       {
+        "id": "transaction-id",
+        "refused": "validation: ReactiveFiber topology refused: source.transaction_id must be null: a noncommitted read opens no transaction."
+       },
+       {
+        "id": "not-ephemeral",
+        "refused": "validation: ReactiveFiber topology refused: result.ephemeral must be true."
+       },
+       {
+        "id": "storage-write",
+        "refused": "validation: ReactiveFiber topology refused: result.work.storage_write_count must be 0: a preview writes nothing."
+       }
+      ]
+     }
+    },
+    {
+     "id": "A7",
+     "witness": {
+      "family": "sensitivity",
+      "variants": [
+       {
+        "id": "sensitivity-label",
+        "payloadEqual": true,
+        "differs": [],
+        "distinct": {
+         "entries": 2,
+         "eachStored": true
+        },
+        "reRead": {
+         "refresh": "applied",
+         "revisionBumped": true,
+         "storedIsVariant": true,
+         "storeMoved": false,
+         "viewWarm": true,
+         "viewReused": false
+        }
+       }
+      ]
+     }
+    },
+    {
+     "id": "A8",
+     "witness": {
+      "family": "coverage digest",
+      "variants": [
+       {
+        "id": "coverage-digest",
+        "payloadEqual": true,
+        "differs": [],
+        "distinct": {
+         "entries": 2,
+         "eachStored": true
+        },
+        "reRead": {
+         "refresh": "applied",
+         "revisionBumped": true,
+         "storedIsVariant": true,
+         "storeMoved": false,
+         "viewWarm": true,
+         "viewReused": false
+        }
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "clause": "b",
+   "label": "(b) a guard over Pi's rf adapters and observation planes finds no payload-only hash key over an rf observation, and its scans report every planted key shape",
+   "pins": [
+    {
+     "id": "B1",
+     "witness": {
+      "walked": true,
+      "consumers": [
+       "src/index.ts: registration",
+       "src/settings.ts: configuration",
+       "src/workbench/hosts/local-detached.ts: registration",
+       "src/workbench/latency.ts: projection consumer (node fields only)",
+       "src/workbench/native-evidence.ts: projection",
+       "src/workbench/native-modules.ts: registration",
+       "src/workbench/process-env.ts: spawn environment",
+       "src/workbench/providers/reactivefiber.ts: producer (reading = envelope verbatim)",
+       "src/workbench/reactivefiber-observer.ts: projection",
+       "src/workflow/reconcile.ts: reconcile read roster"
+      ]
+     }
+    },
+    {
+     "id": "B2",
+     "witness": {
+      "planes": 12,
+      "sites": [
+       "src/workbench/reactivefiber-observer.ts#previewSnapshot:createHash: payload reference: rf-output:sha256 of output.text, stored as nativePayloadRef, never a key",
+       "src/workbench/reconcile-decision.ts#decideReconcile:createHash#1: acknowledgement id: entry digest, determination, principal, cited receipt ids",
+       "src/workbench/reconcile-decision.ts#decideReconcile:createHash#2: override id: entry digest, cited acknowledgement, principal",
+       "src/workbench/reconcile-decision.ts#decideReconcile:identityDigest: acknowledgement resolved-value digest: an operator value, never a reading",
+       "src/workbench/reconcile-decision.ts#mintEvidenceReceipt:createHash: receipt id: contract, task, position, capability, input digest, result digest, observation instant",
+       "src/workbench/reconcile-decision.ts#mintEvidenceReceipt:identityDigest#1: receipt input digest: the capability input, never the reading",
+       "src/workbench/reconcile-decision.ts#mintEvidenceReceipt:identityDigest#2: receipt result digest: the whole reading, every field bound",
+       "src/workflow/journal.ts#journalKey:createHash: agent call key: prompt and call options, never a reading",
+       "src/workflow/journal.ts#nodeJournalKey:createHash: node call key: capability and input, never the reading",
+       "src/workflow/reconcile.ts#entryDigestOf:createHash: journal entry binding: position, key, outcome, capability, effect class, basis"
+      ]
+     }
+    },
+    {
+     "id": "B3",
+     "witness": {
+      "hits": [],
+      "reference": [
+       "src/workbench/reactivefiber-observer.ts#previewSnapshot:createHash(output.text)"
+      ],
+      "prefixFiles": [
+       "src/workbench/reactivefiber-observer.ts"
+      ]
+     }
+    },
+    {
+     "id": "B4",
+     "witness": {
+      "hits": [],
+      "mentionFiles": [
+       "src/workbench/detached-observer.ts",
+       "src/workbench/observation.ts",
+       "src/workbench/reactivefiber-observer.ts"
+      ]
+     }
+    },
+    {
+     "id": "B5",
+     "witness": [
+      {
+       "id": "hash-key",
+       "hashes": 1,
+       "keys": []
+      },
+      {
+       "id": "identity-digest",
+       "hashes": 1,
+       "keys": []
+      },
+      {
+       "id": "seen-has",
+       "hashes": 0,
+       "keys": [
+        "collection-key"
+       ]
+      },
+      {
+       "id": "equality-skip",
+       "hashes": 0,
+       "keys": [
+        "equality"
+       ]
+      },
+      {
+       "id": "index-key",
+       "hashes": 0,
+       "keys": [
+        "collection-key",
+        "compound-key"
+       ]
+      },
+      {
+       "id": "computed-name",
+       "hashes": 0,
+       "keys": [
+        "computed-name"
+       ]
+      },
+      {
+       "id": "reference-elsewhere",
+       "hashes": 1,
+       "keys": []
+      },
+      {
+       "id": "reference-site",
+       "hashes": 0,
+       "keys": []
+      },
+      {
+       "id": "presence-test",
+       "hashes": 0,
+       "keys": []
+      }
+     ]
+    },
+    {
+     "id": "B6",
+     "witness": {
+      "variants": [
+       {
+        "id": "observation-row-status",
+        "distinctResult": true,
+        "distinctReceipt": true
+       },
+       {
+        "id": "error-diagnostic",
+        "distinctResult": true,
+        "distinctReceipt": true
+       },
+       {
+        "id": "summary-errors",
+        "distinctResult": true,
+        "distinctReceipt": true
+       },
+       {
+        "id": "view-contract-unsatisfied",
+        "distinctResult": true,
+        "distinctReceipt": true
+       },
+       {
+        "id": "producer-release",
+        "distinctResult": true,
+        "distinctReceipt": true
+       },
+       {
+        "id": "engine-identity",
+        "distinctResult": true,
+        "distinctReceipt": true
+       },
+       {
+        "id": "over-budget",
+        "distinctResult": true,
+        "distinctReceipt": true
+       },
+       {
+        "id": "replayed-row",
+        "distinctResult": true,
+        "distinctReceipt": true
+       },
+       {
+        "id": "graph-revision",
+        "distinctResult": true,
+        "distinctReceipt": true
+       },
+       {
+        "id": "bundle-revision",
+        "distinctResult": true,
+        "distinctReceipt": true
+       },
+       {
+        "id": "workspace-id",
+        "distinctResult": true,
+        "distinctReceipt": true
+       },
+       {
+        "id": "sensitivity-label",
+        "distinctResult": true,
+        "distinctReceipt": true
+       },
+       {
+        "id": "coverage-digest",
+        "distinctResult": true,
+        "distinctReceipt": true
+       }
+      ],
+      "deterministic": true
+     }
+    },
+    {
+     "id": "B7",
+     "witness": {
+      "sameIdentityEntries": 1,
+      "storedPayload": "rf-output:sha256:7777777777777777777777777777777777777777777777777777777777777777",
+      "samePayloadEntries": 2
+     }
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "clause": "c",
+   "label": "(c) a census maps every rf envelope field to its projection; each omitted field carries a factorization justification and no downstream Pi operation reads it",
+   "pins": [
+    {
+     "id": "C1",
+     "witness": {
+      "rows": 93,
+      "byBase": {
+       "full": 64,
+       "failure": 6,
+       "diagnostic": 6,
+       "observed": 5,
+       "view": 6,
+       "engine": 6
+      },
+      "resultKeys": 24,
+      "rosterRfVersion": "0.1.784",
+      "envelopeKeys": [
+       "command",
+       "diagnostics",
+       "ok",
+       "operation_id",
+       "schema",
+       "transaction_id",
+       "workspace"
+      ],
+      "diagnosticKeys": [
+       "code",
+       "severity",
+       "message",
+       "hint",
+       "source",
+       "metadata"
+      ],
+      "engineEntries": [
+       "tsx_runtime",
+       "tsx_sdk"
+      ],
+      "workKeys": 6
+     }
+    },
+    {
+     "id": "C2",
+     "witness": [
+      {
+       "id": "full:operation_id",
+       "changed": [
+        "snapshot.node",
+        "snapshot.source",
+        "evidence"
+       ]
+      },
+      {
+       "id": "full:workspace.id",
+       "changed": [
+        "snapshot.evidenceRefs"
+       ]
+      },
+      {
+       "id": "full:result.output.text",
+       "changed": [
+        "snapshot.nativePayloadRef"
+       ]
+      },
+      {
+       "id": "full:result.budget.formula_terms.context_window",
+       "changed": [
+        "snapshot.node"
+       ]
+      },
+      {
+       "id": "full:result.budget.formula_terms.available_context_tokens",
+       "changed": [
+        "snapshot.node"
+       ]
+      },
+      {
+       "id": "full:result.diagnostics_summary.errors",
+       "changed": [
+        "snapshot.coverage",
+        "snapshot.node",
+        "diagnostics"
+       ]
+      },
+      {
+       "id": "full:result.diagnostics_summary.warnings",
+       "changed": [
+        "snapshot.node"
+       ]
+      },
+      {
+       "id": "full:result.provenance.graph_revision_id",
+       "changed": [
+        "snapshot.evidenceRefs",
+        "snapshot.sourceRevision"
+       ]
+      },
+      {
+       "id": "full:result.provenance.cli_version",
+       "changed": [
+        "snapshot.evidenceRefs",
+        "diagnostics",
+        "evidence"
+       ]
+      },
+      {
+       "id": "full:result.work.necessity_eval_count",
+       "changed": [
+        "snapshot.node"
+       ]
+      },
+      {
+       "id": "full:result.engine_metrics.tsx_worker_spawns",
+       "changed": [
+        "snapshot.evidenceRefs",
+        "diagnostics"
+       ]
+      },
+      {
+       "id": "full:result.bundle_revision_id",
+       "changed": [
+        "snapshot.evidenceRefs",
+        "snapshot.sourceVersion",
+        "evidence"
+       ]
+      },
+      {
+       "id": "full:result.observations",
+       "changed": [
+        "snapshot.coverage",
+        "snapshot.node",
+        "diagnostics"
+       ]
+      },
+      {
+       "id": "full:diagnostics",
+       "changed": [
+        "snapshot.coverage",
+        "snapshot.node",
+        "diagnostics"
+       ]
+      },
+      {
+       "id": "failure:diagnostics[].code",
+       "changed": [
+        "snapshot.node",
+        "diagnostics"
+       ]
+      },
+      {
+       "id": "diagnostic:diagnostics[].severity",
+       "changed": [
+        "snapshot.coverage",
+        "snapshot.node",
+        "diagnostics"
+       ]
+      },
+      {
+       "id": "observed:result.observations[].status",
+       "changed": [
+        "snapshot.coverage",
+        "snapshot.node",
+        "diagnostics"
+       ]
+      },
+      {
+       "id": "observed:result.observations[].freshness",
+       "changed": [
+        "snapshot.coverage",
+        "snapshot.node",
+        "diagnostics"
+       ]
+      },
+      {
+       "id": "observed:result.observations[].degraded",
+       "changed": [
+        "snapshot.coverage",
+        "snapshot.node",
+        "diagnostics"
+       ]
+      },
+      {
+       "id": "view:result.view_id",
+       "changed": [
+        "diagnostics"
+       ]
+      },
+      {
+       "id": "view:result.view_contract.satisfied",
+       "changed": [
+        "snapshot.coverage",
+        "snapshot.node",
+        "diagnostics"
+       ]
+      },
+      {
+       "id": "engine:result.provenance.sdk_versions.tsx_runtime.distribution_version",
+       "changed": [
+        "snapshot.evidenceRefs"
+       ]
+      },
+      {
+       "id": "engine:result.provenance.sdk_versions.tsx_runtime.contract_fingerprint",
+       "changed": [
+        "snapshot.evidenceRefs"
+       ]
+      },
+      {
+       "id": "engine:result.provenance.sdk_versions.tsx_sdk.distribution_version",
+       "changed": [
+        "snapshot.evidenceRefs"
+       ]
+      },
+      {
+       "id": "engine:result.provenance.sdk_versions.tsx_sdk.contract_fingerprint",
+       "changed": [
+        "snapshot.evidenceRefs"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "C3",
+     "witness": [
+      {
+       "id": "full:schema",
+       "refused": "validation: ReactiveFiber topology refused: source must be a reactive-fiber.cli/v1 context.render envelope."
+      },
+      {
+       "id": "full:ok",
+       "refused": "validation: ReactiveFiber topology refused: a failed envelope needs a primary RF_ error diagnostic."
+      },
+      {
+       "id": "full:command",
+       "refused": "validation: ReactiveFiber topology refused: source must be a reactive-fiber.cli/v1 context.render envelope."
+      },
+      {
+       "id": "full:workspace.root",
+       "refused": "validation: ReactiveFiber topology refused: source.workspace needs an rfw_ id and the reading workspace root."
+      },
+      {
+       "id": "full:transaction_id",
+       "refused": "validation: ReactiveFiber topology refused: source.transaction_id must be null: a noncommitted read opens no transaction."
+      },
+      {
+       "id": "full:result.diagnostics_summary.has_errors",
+       "refused": "validation: ReactiveFiber topology refused: result.diagnostics_summary flags contradict its counts."
+      },
+      {
+       "id": "full:result.diagnostics_summary.has_warnings",
+       "refused": "validation: ReactiveFiber topology refused: result.diagnostics_summary flags contradict its counts."
+      },
+      {
+       "id": "full:result.work.storage_write_count",
+       "refused": "validation: ReactiveFiber topology refused: result.work.storage_write_count must be 0: a preview writes nothing."
+      },
+      {
+       "id": "full:result.render_id",
+       "refused": "validation: ReactiveFiber topology refused: result.render_id must be null: a committed render is not a preview."
+      },
+      {
+       "id": "full:result.ephemeral",
+       "refused": "validation: ReactiveFiber topology refused: result.ephemeral must be true."
+      },
+      {
+       "id": "full:result.commit_seq",
+       "refused": "validation: ReactiveFiber topology refused: result.commit_seq must be absent or null."
+      },
+      {
+       "id": "failure:diagnostics[].severity",
+       "refused": "validation: ReactiveFiber topology refused: source.diagnostics holds a malformed rf diagnostic."
+      },
+      {
+       "id": "observed:result.observations[].replayed",
+       "refused": "validation: ReactiveFiber topology refused: a result.observations row is replayed exactly when its freshness is reused."
+      },
+      {
+       "id": "view:result.view_contract.view_id",
+       "refused": "validation: ReactiveFiber topology refused: result.view_contract must name the view the render was scoped to (result.view_id)."
+      },
+      {
+       "id": "view:result.view_contract.degraded",
+       "refused": "validation: ReactiveFiber topology refused: result.view_contract degraded must be the negation of satisfied."
+      },
+      {
+       "id": "view:result.view_contract.failures",
+       "refused": "validation: ReactiveFiber topology refused: result.view_contract satisfied contradicts its failures."
+      }
+     ]
+    },
+    {
+     "id": "C4",
+     "witness": {
+      "rows": [
+       {
+        "id": "full:result.output.size_bytes",
+        "why": "J-PAYLOAD-RESTATED",
+        "factors": true
+       },
+       {
+        "id": "full:result.output.digest",
+        "why": "J-PAYLOAD-RESTATED",
+        "factors": true
+       },
+       {
+        "id": "full:result.output.path",
+        "why": "J-PAYLOAD-RESTATED",
+        "factors": true
+       },
+       {
+        "id": "full:result.budget.schema",
+        "why": "J-BUDGET-AUX",
+        "factors": true
+       },
+       {
+        "id": "full:result.budget.requested_model_id",
+        "why": "J-BUDGET-AUX",
+        "factors": true
+       },
+       {
+        "id": "full:result.budget.resolved_model_id",
+        "why": "J-BUDGET-AUX",
+        "factors": true
+       },
+       {
+        "id": "full:result.budget.formula_terms.max_output_tokens",
+        "why": "J-BUDGET-AUX",
+        "factors": true
+       },
+       {
+        "id": "full:result.budget.formula_terms.output_reserve",
+        "why": "J-BUDGET-AUX",
+        "factors": true
+       },
+       {
+        "id": "full:result.budget.formula_terms.occupied_tokens",
+        "why": "J-BUDGET-AUX",
+        "factors": true
+       },
+       {
+        "id": "full:result.budget.formula_terms.overhead",
+        "why": "J-BUDGET-AUX",
+        "factors": true
+       },
+       {
+        "id": "full:result.budget.formula_terms.safety_margin",
+        "why": "J-BUDGET-AUX",
+        "factors": true
+       },
+       {
+        "id": "full:result.blocks",
+        "why": "J-STRUCTURE",
+        "factors": true
+       },
+       {
+        "id": "full:result.components",
+        "why": "J-STRUCTURE",
+        "factors": true
+       },
+       {
+        "id": "full:result.provenance.created_at",
+        "why": "J-PROVENANCE-AUX",
+        "factors": true
+       },
+       {
+        "id": "full:result.provenance.necessity_policy_revision_id",
+        "why": "J-POLICY-REVISION",
+        "factors": true
+       },
+       {
+        "id": "full:result.provenance.workspace_schema_version",
+        "why": "J-PROVENANCE-AUX",
+        "factors": true
+       },
+       {
+        "id": "full:result.provenance.storage_backend",
+        "why": "J-PROVENANCE-AUX",
+        "factors": true
+       },
+       {
+        "id": "full:result.provenance.sdk_versions.fiber_optics",
+        "why": "J-PROVENANCE-AUX",
+        "factors": true
+       },
+       {
+        "id": "full:result.provenance.sdk_versions.reactive_lenses",
+        "why": "J-PROVENANCE-AUX",
+        "factors": true
+       },
+       {
+        "id": "full:result.provenance.sdk_versions.reactive_components",
+        "why": "J-PROVENANCE-AUX",
+        "factors": true
+       },
+       {
+        "id": "full:result.provenance.sdk_versions.reactive_inference",
+        "why": "J-PROVENANCE-AUX",
+        "factors": true
+       },
+       {
+        "id": "full:result.provenance.sdk_versions.fiber_optics_wire_format",
+        "why": "J-PROVENANCE-AUX",
+        "factors": true
+       },
+       {
+        "id": "full:result.provenance.storage",
+        "why": "J-PROVENANCE-AUX",
+        "factors": true
+       },
+       {
+        "id": "full:result.work_metrics",
+        "why": "J-WORK-COUNTERS",
+        "factors": true
+       },
+       {
+        "id": "full:result.work.source_capture_count",
+        "why": "J-WORK-COUNTERS",
+        "factors": true
+       },
+       {
+        "id": "full:result.work.fiber_signal_count",
+        "why": "J-WORK-COUNTERS",
+        "factors": true
+       },
+       {
+        "id": "full:result.work.component_render_count",
+        "why": "J-WORK-COUNTERS",
+        "factors": true
+       },
+       {
+        "id": "full:result.work.lens_resolution_count",
+        "why": "J-WORK-COUNTERS",
+        "factors": true
+       },
+       {
+        "id": "full:result.engine_metrics.tsx_resource_rounds",
+        "why": "J-WORK-COUNTERS",
+        "factors": true
+       },
+       {
+        "id": "full:result.scope",
+        "why": "J-REQUEST-ECHO",
+        "factors": true
+       },
+       {
+        "id": "full:result.audience",
+        "why": "J-REQUEST-ECHO",
+        "factors": true
+       },
+       {
+        "id": "full:result.necessity",
+        "why": "J-STRUCTURE",
+        "factors": true
+       },
+       {
+        "id": "full:result.attempts",
+        "why": "J-WORK-COUNTERS",
+        "factors": true
+       },
+       {
+        "id": "full:result.superseded_transaction_ids",
+        "why": "J-STRUCTURE",
+        "factors": true
+       },
+       {
+        "id": "full:result.retry_work",
+        "why": "J-WORK-COUNTERS",
+        "factors": true
+       },
+       {
+        "id": "full:result.fiber_transaction_refs",
+        "why": "J-STRUCTURE",
+        "factors": true
+       },
+       {
+        "id": "full:result.session_id",
+        "why": "J-REQUEST-ECHO",
+        "factors": true
+       },
+       {
+        "id": "full:result.effects",
+        "why": "J-STRUCTURE",
+        "factors": true
+       },
+       {
+        "id": "full:result.plan",
+        "why": "J-STRUCTURE",
+        "factors": true
+       },
+       {
+        "id": "failure:diagnostics[].message",
+        "why": "J-DIAGNOSTIC-TEXT",
+        "factors": true
+       },
+       {
+        "id": "failure:diagnostics[].hint",
+        "why": "J-DIAGNOSTIC-TEXT",
+        "factors": true
+       },
+       {
+        "id": "failure:diagnostics[].source",
+        "why": "J-DIAGNOSTIC-TEXT",
+        "factors": true
+       },
+       {
+        "id": "failure:diagnostics[].metadata",
+        "why": "J-DIAGNOSTIC-TEXT",
+        "factors": true
+       },
+       {
+        "id": "diagnostic:diagnostics[].code",
+        "why": "J-DIAGNOSTIC-CODE",
+        "factors": true
+       },
+       {
+        "id": "diagnostic:diagnostics[].message",
+        "why": "J-DIAGNOSTIC-TEXT",
+        "factors": true
+       },
+       {
+        "id": "diagnostic:diagnostics[].hint",
+        "why": "J-DIAGNOSTIC-TEXT",
+        "factors": true
+       },
+       {
+        "id": "diagnostic:diagnostics[].source",
+        "why": "J-DIAGNOSTIC-TEXT",
+        "factors": true
+       },
+       {
+        "id": "diagnostic:diagnostics[].metadata",
+        "why": "J-DIAGNOSTIC-TEXT",
+        "factors": true
+       },
+       {
+        "id": "observed:result.observations[].binding_ref",
+        "why": "J-ROW-AUX",
+        "factors": true
+       },
+       {
+        "id": "view:result.view_contract.contract_digest",
+        "why": "J-VIEW-AUX",
+        "factors": true
+       },
+       {
+        "id": "engine:result.provenance.sdk_versions.tsx_runtime.note",
+        "why": "J-ENGINE-AUX",
+        "factors": true
+       },
+       {
+        "id": "engine:result.provenance.sdk_versions.tsx_sdk.note",
+        "why": "J-ENGINE-AUX",
+        "factors": true
+       }
+      ],
+      "downstreamLive": true
+     }
+    },
+    {
+     "id": "C5",
+     "witness": {
+      "J-BUDGET-AUX": 8,
+      "J-DIAGNOSTIC-CODE": 1,
+      "J-DIAGNOSTIC-TEXT": 8,
+      "J-ENGINE-AUX": 2,
+      "J-PAYLOAD-RESTATED": 3,
+      "J-POLICY-REVISION": 1,
+      "J-PROVENANCE-AUX": 9,
+      "J-REQUEST-ECHO": 3,
+      "J-ROW-AUX": 1,
+      "J-STRUCTURE": 7,
+      "J-VIEW-AUX": 1,
+      "J-WORK-COUNTERS": 8
+     }
+    }
+   ]
+  },
+  {
+   "id": "D",
+   "clause": "d",
+   "label": "(d) gated on ObserverContract/v1: no observer-contract carrier exists in src or in the captured rf result roster, so no declared projection is echoed yet",
+   "pins": [
+    {
+     "id": "D1",
+     "witness": {
+      "srcTokens": 0,
+      "rosterKeys": [],
+      "control": 2,
+      "observerContract": "workbench.reactivefiber-observation/v1"
+     }
+    }
+   ]
+  },
+  {
+   "id": "Q",
+   "clause": "residual",
+   "label": "the named residuals R-UNSHIPPED-FIELDS and R-ALIASED-PAYLOAD stay pinned quiet",
+   "pins": [
+    {
+     "id": "Q1",
+     "witness": {
+      "rosterKeys": [],
+      "projectionReadsThem": []
+     }
+    },
+    {
+     "id": "Q2",
+     "witness": {
+      "id": "aliased",
+      "hashes": 0,
+      "keys": []
+     }
+    }
+   ]
+  }
+ ],
+ "fields": [
+  "full:schema:fenced",
+  "full:ok:fenced",
+  "full:command:fenced",
+  "full:operation_id:projected",
+  "full:workspace.id:projected",
+  "full:workspace.root:fenced",
+  "full:transaction_id:fenced",
+  "full:result.output.text:projected",
+  "full:result.output.size_bytes:omitted:J-PAYLOAD-RESTATED",
+  "full:result.output.digest:omitted:J-PAYLOAD-RESTATED",
+  "full:result.output.path:omitted:J-PAYLOAD-RESTATED",
+  "full:result.budget.schema:omitted:J-BUDGET-AUX",
+  "full:result.budget.requested_model_id:omitted:J-BUDGET-AUX",
+  "full:result.budget.resolved_model_id:omitted:J-BUDGET-AUX",
+  "full:result.budget.formula_terms.context_window:projected",
+  "full:result.budget.formula_terms.max_output_tokens:omitted:J-BUDGET-AUX",
+  "full:result.budget.formula_terms.output_reserve:omitted:J-BUDGET-AUX",
+  "full:result.budget.formula_terms.occupied_tokens:omitted:J-BUDGET-AUX",
+  "full:result.budget.formula_terms.overhead:omitted:J-BUDGET-AUX",
+  "full:result.budget.formula_terms.safety_margin:omitted:J-BUDGET-AUX",
+  "full:result.budget.formula_terms.available_context_tokens:projected",
+  "full:result.diagnostics_summary.errors:projected",
+  "full:result.diagnostics_summary.warnings:projected",
+  "full:result.diagnostics_summary.has_errors:fenced",
+  "full:result.diagnostics_summary.has_warnings:fenced",
+  "full:result.blocks:omitted:J-STRUCTURE",
+  "full:result.components:omitted:J-STRUCTURE",
+  "full:result.provenance.created_at:omitted:J-PROVENANCE-AUX",
+  "full:result.provenance.graph_revision_id:projected",
+  "full:result.provenance.necessity_policy_revision_id:omitted:J-POLICY-REVISION",
+  "full:result.provenance.workspace_schema_version:omitted:J-PROVENANCE-AUX",
+  "full:result.provenance.cli_version:projected",
+  "full:result.provenance.storage_backend:omitted:J-PROVENANCE-AUX",
+  "full:result.provenance.sdk_versions.fiber_optics:omitted:J-PROVENANCE-AUX",
+  "full:result.provenance.sdk_versions.reactive_lenses:omitted:J-PROVENANCE-AUX",
+  "full:result.provenance.sdk_versions.reactive_components:omitted:J-PROVENANCE-AUX",
+  "full:result.provenance.sdk_versions.reactive_inference:omitted:J-PROVENANCE-AUX",
+  "full:result.provenance.sdk_versions.fiber_optics_wire_format:omitted:J-PROVENANCE-AUX",
+  "full:result.provenance.storage:omitted:J-PROVENANCE-AUX",
+  "full:result.work_metrics:omitted:J-WORK-COUNTERS",
+  "full:result.work.source_capture_count:omitted:J-WORK-COUNTERS",
+  "full:result.work.fiber_signal_count:omitted:J-WORK-COUNTERS",
+  "full:result.work.component_render_count:omitted:J-WORK-COUNTERS",
+  "full:result.work.lens_resolution_count:omitted:J-WORK-COUNTERS",
+  "full:result.work.necessity_eval_count:projected",
+  "full:result.work.storage_write_count:fenced",
+  "full:result.engine_metrics.tsx_worker_spawns:projected",
+  "full:result.engine_metrics.tsx_resource_rounds:omitted:J-WORK-COUNTERS",
+  "full:result.scope:omitted:J-REQUEST-ECHO",
+  "full:result.audience:omitted:J-REQUEST-ECHO",
+  "full:result.bundle_revision_id:projected",
+  "full:result.observations:projected",
+  "full:result.necessity:omitted:J-STRUCTURE",
+  "full:result.attempts:omitted:J-WORK-COUNTERS",
+  "full:result.superseded_transaction_ids:omitted:J-STRUCTURE",
+  "full:result.retry_work:omitted:J-WORK-COUNTERS",
+  "full:result.fiber_transaction_refs:omitted:J-STRUCTURE",
+  "full:result.render_id:fenced",
+  "full:result.ephemeral:fenced",
+  "full:result.commit_seq:fenced",
+  "full:result.session_id:omitted:J-REQUEST-ECHO",
+  "full:result.effects:omitted:J-STRUCTURE",
+  "full:result.plan:omitted:J-STRUCTURE",
+  "full:diagnostics:projected",
+  "failure:diagnostics[].code:projected",
+  "failure:diagnostics[].severity:fenced",
+  "failure:diagnostics[].message:omitted:J-DIAGNOSTIC-TEXT",
+  "failure:diagnostics[].hint:omitted:J-DIAGNOSTIC-TEXT",
+  "failure:diagnostics[].source:omitted:J-DIAGNOSTIC-TEXT",
+  "failure:diagnostics[].metadata:omitted:J-DIAGNOSTIC-TEXT",
+  "diagnostic:diagnostics[].code:omitted:J-DIAGNOSTIC-CODE",
+  "diagnostic:diagnostics[].severity:projected",
+  "diagnostic:diagnostics[].message:omitted:J-DIAGNOSTIC-TEXT",
+  "diagnostic:diagnostics[].hint:omitted:J-DIAGNOSTIC-TEXT",
+  "diagnostic:diagnostics[].source:omitted:J-DIAGNOSTIC-TEXT",
+  "diagnostic:diagnostics[].metadata:omitted:J-DIAGNOSTIC-TEXT",
+  "observed:result.observations[].status:projected",
+  "observed:result.observations[].freshness:projected",
+  "observed:result.observations[].replayed:fenced",
+  "observed:result.observations[].degraded:projected",
+  "observed:result.observations[].binding_ref:omitted:J-ROW-AUX",
+  "view:result.view_id:projected",
+  "view:result.view_contract.view_id:fenced",
+  "view:result.view_contract.satisfied:projected",
+  "view:result.view_contract.degraded:fenced",
+  "view:result.view_contract.failures:fenced",
+  "view:result.view_contract.contract_digest:omitted:J-VIEW-AUX",
+  "engine:result.provenance.sdk_versions.tsx_runtime.distribution_version:projected",
+  "engine:result.provenance.sdk_versions.tsx_runtime.contract_fingerprint:projected",
+  "engine:result.provenance.sdk_versions.tsx_runtime.note:omitted:J-ENGINE-AUX",
+  "engine:result.provenance.sdk_versions.tsx_sdk.distribution_version:projected",
+  "engine:result.provenance.sdk_versions.tsx_sdk.contract_fingerprint:projected",
+  "engine:result.provenance.sdk_versions.tsx_sdk.note:omitted:J-ENGINE-AUX"
+ ],
+ "justifications": {
+  "J-PAYLOAD-RESTATED": "rf's restatements of the context text (size, digest, path): Pi references the text by its own sha256 (nativePayloadRef) and no downstream Pi operation reads rf's restatement",
+  "J-BUDGET-AUX": "budget terms other than context_window and available_context_tokens: validated or unread; the status line states only available of window and over-budget coverage, and no cache, query or view reads the rest",
+  "J-STRUCTURE": "render structure inside the withheld context (blocks, components, necessity, effects, plan, transaction lists): Pi never surfaces the context body and the payload digest stands for it",
+  "J-WORK-COUNTERS": "execution counters other than necessity_eval_count and tsx_worker_spawns: validated where fenced, read by no cache, query or view",
+  "J-PROVENANCE-AUX": "auxiliary provenance (creation time, schema versions, storage, sibling SDK entries, wire format): ordering uses the host capture and observation instants, the version cohort the bundle or graph digest, the engine identity only the TSX entries",
+  "J-POLICY-REVISION": "the necessity policy revision is no Pi version cohort: the cohort is the bundle digest, else the graph digest (owner ruling G-A, wb-973.8), and equal-payload renders under two policies stay distinct cache entries by their operation ids",
+  "J-REQUEST-ECHO": "request echoes (audience, session id, a non-view scope): the host's own scope and invocation id key the cache and the viewport; no Pi operation reads rf's echo",
+  "J-DIAGNOSTIC-TEXT": "diagnostic message, hint, source and metadata: withheld from every surfaced string; status reads only severity (ok form) or the primary code (failure form)",
+  "J-DIAGNOSTIC-CODE": "a code in an ok envelope: only severity moves coverage; a code is surfaced only as a refusal's primary code",
+  "J-ROW-AUX": "observation-row fields beyond status, freshness, replayed and degraded: the demotion note carries only status words and counts",
+  "J-VIEW-AUX": "view-contract fields beyond view_id, satisfied, degraded and failures: the leg states only the failed-check count or the satisfied view id",
+  "J-ENGINE-AUX": "engine-entry fields beyond distribution_version and contract_fingerprint: never read (wb-693.3)"
+ }
+}
