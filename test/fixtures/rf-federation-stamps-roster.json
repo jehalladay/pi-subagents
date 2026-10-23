@@ -1,0 +1,1045 @@
+{
+  "provenance": "wb-o4h0.5 census roster. Quote, verbs, authority line and gating rows read at ReactiveFiberCLI 6a251bf73af5 (read-only git show of docs/programs/federated-workspaces-2026-10-18/04-cli-api.md:8-18 and :104-106, 03-protocol-and-storage.md:53, 08-adaptive-read-and-causal-admission.md:27, BEADS-2026-10-21.md:31/:34/:35). stamps is CONSTRUCTED from 04-cli-api.md:106 and FW-10c (BEADS:34) and rides a context.render preview as its one additive result key imported_source; no federation envelope is fabricated (RF-FEDERATED-WORKSPACES-R4, wb-o4h0.3 acceptance (b)); its field names are placeholders mapped to the bead's clause (a) terms by fieldTerms, and its values share none with test/helpers/rf-render-fixture.ts fullShapeRf. federationRefusal is a CONSTRUCTED workspace.read refusal (ok false; RF_FED_RESOURCE_UNAVAILABLE is a proposed code, 04-cli-api.md:104). unknownCommand is MEASURED: the stdout of `rf --json workspace read knowledge:view:architecture` at the installed rf 0.1.832 (exit 2), captured 2026-10-22 in a scratch directory. missingBlob and refusalIds are MEASURED: copied verbatim from test/fixtures/rf-replay-refusal-echo-roster.json envelopes.blob (rf 0.1.832, wb-a9l2.4). Every pin witness is the value its own case returned on trunk e8850da + this cut; reached is each pin's assertion count at its end.",
+  "bead": "wb-o4h0.5",
+  "rfVersion": "0.1.832",
+  "quotePin": "docs/programs/federated-workspaces-2026-10-18/04-cli-api.md:106@6a251bf73af5",
+  "stampsSource": "constructed",
+  "gatingArtifacts": [
+    "rfc-0txnl.20",
+    "rfc-0txnl.24",
+    "rfc-0txnl.25"
+  ],
+  "workspaceVerbs": [
+    "link",
+    "links",
+    "inspect",
+    "exports",
+    "read",
+    "subscribe",
+    "unlink",
+    "invoke"
+  ],
+  "recordVerbs": [
+    "history",
+    "explain",
+    "show",
+    "replay"
+  ],
+  "producedFields": [
+    "workspace_id",
+    "instance_id",
+    "resource_kind",
+    "resource_name",
+    "definition_revision",
+    "source_revision",
+    "source_digest"
+  ],
+  "acceptedFields": [
+    "accepted_snapshot_revision",
+    "accepted_snapshot_digest",
+    "local_accepted_commit_id"
+  ],
+  "fieldTerms": {
+    "workspace_id": "W/I",
+    "instance_id": "W/I",
+    "resource_kind": "resource/definition revision",
+    "resource_name": "resource/definition revision",
+    "definition_revision": "resource/definition revision",
+    "source_revision": "source revision/digest",
+    "source_digest": "source revision/digest",
+    "accepted_snapshot_revision": "accepted snapshot revision/digest",
+    "accepted_snapshot_digest": "accepted snapshot revision/digest",
+    "local_accepted_commit_id": "local accepted commit id"
+  },
+  "replayCode": "RF_REPLAY_SOURCE_SNAPSHOT_MISSING",
+  "replayExit": 8,
+  "stamps": {
+    "status": "READY",
+    "source_owner": {
+      "alias": "knowledge",
+      "locator": {
+        "kind": "local_path",
+        "path": "../workspace-b"
+      }
+    },
+    "origin": {
+      "workspace_id": "rfw_bbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "instance_id": "rfi_bbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "resource_kind": "view_output",
+      "resource_name": "architecture",
+      "definition_revision": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+      "source_revision": 41,
+      "source_digest": "sha256:5555555555555555555555555555555555555555555555555555555555555555"
+    },
+    "acceptance": {
+      "accepted_snapshot_revision": 19,
+      "accepted_snapshot_digest": "sha256:6666666666666666666666666666666666666666666666666666666666666666",
+      "local_accepted_commit_id": "rft_cccccccccccccccccccccccccc"
+    }
+  },
+  "unknownCommand": {
+    "schema": "reactive-fiber.cli/v1",
+    "ok": false,
+    "command": null,
+    "operation_id": "rfo_vis7or2chmito56meemoglkibu",
+    "workspace": null,
+    "transaction_id": null,
+    "result": null,
+    "diagnostics": [
+      {
+        "code": "RF_USAGE_UNKNOWN_COMMAND",
+        "severity": "error",
+        "message": "unknown command 'workspace'",
+        "hint": "Run `rf --help` for the command list.",
+        "source": "host",
+        "metadata": {
+          "command": "workspace",
+          "choices": [
+            "init",
+            "status",
+            "doctor",
+            "config",
+            "component",
+            "optic",
+            "graph",
+            "view",
+            "state",
+            "session",
+            "context",
+            "inference",
+            "operation",
+            "storage",
+            "dolt",
+            "schema",
+            "completion",
+            "install-skill"
+          ],
+          "suggestions": []
+        }
+      }
+    ]
+  },
+  "unknownExit": 2,
+  "federationRefusal": {
+    "schema": "reactive-fiber.cli/v1",
+    "ok": false,
+    "command": "workspace.read",
+    "operation_id": "rfo_fedrefusedqqqqqqqqqqqqqqqq",
+    "workspace": {
+      "id": "rfw_aaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "root": "/fixture/rf-workspace-a"
+    },
+    "transaction_id": null,
+    "result": null,
+    "diagnostics": [
+      {
+        "code": "RF_FED_RESOURCE_UNAVAILABLE",
+        "severity": "error",
+        "message": "the imported value is not available from its source owner",
+        "hint": null,
+        "source": "host",
+        "metadata": {}
+      }
+    ]
+  },
+  "missingBlob": {
+    "code": "RF_REPLAY_SOURCE_SNAPSHOT_MISSING",
+    "severity": "error",
+    "message": "the captured value of source fixture_notes (snapshot rfn_6dhw44rrhsbvhcp7ctntj7lcwa) is not retained as replay evidence",
+    "hint": "The captured value of a source this render read is not retained as evidence (SRC-STATE-A8 keeps the digest, not the value), so the render cannot be reproduced; replay never re-reads the live source in its place. Render again to produce fresh evidence.",
+    "source": "host",
+    "metadata": {
+      "source_id": "fixture_notes",
+      "snapshot_id": "rfn_6dhw44rrhsbvhcp7ctntj7lcwa"
+    }
+  },
+  "refusalIds": {
+    "operation_id": "rfo_rxpudy5cuqizxyktrbxawwk3ji",
+    "workspace_id": "rfw_t7dcyljy27327knroylyym7m2q"
+  },
+  "rows": [
+    {
+      "id": "A",
+      "label": "(trigger, absent today) When rf federation read/history envelopes ship (gated FW-04b-2/FW-10c, open): Pi reads none today - no src module or native descriptor spells an rf workspace verb, a committed-record verb or an RF_FED_ code, the rf roster stays reactivefiber.render.preview only, and both readers refuse rf's measured answer to an rf workspace verb and a committed render record",
+      "pins": [
+        {
+          "id": "A1",
+          "witness": {
+            "srcFloorMet": true,
+            "renderArgvSeen": true,
+            "argv": [],
+            "literals": [],
+            "descriptorHits": [],
+            "composedArgv": 1,
+            "controls": {
+              "argv": {
+                "hits": 1,
+                "composed": 0
+              },
+              "recordArgv": {
+                "hits": 1,
+                "composed": 0
+              },
+              "spaced": {
+                "hits": 1,
+                "composed": 0
+              },
+              "dotted": {
+                "hits": 1,
+                "composed": 0
+              },
+              "upper": {
+                "hits": 1,
+                "composed": 0
+              },
+              "recordDotted": {
+                "hits": 1,
+                "composed": 0
+              },
+              "template": {
+                "hits": 1,
+                "composed": 0
+              },
+              "code": {
+                "hits": 1,
+                "composed": 0
+              },
+              "colon": {
+                "hits": 1,
+                "composed": 0
+              },
+              "slash": {
+                "hits": 1,
+                "composed": 0
+              },
+              "camel": {
+                "hits": 1,
+                "composed": 0
+              },
+              "composedArgv": {
+                "hits": 0,
+                "composed": 1
+              },
+              "callComposed": {
+                "hits": 0,
+                "composed": 0
+              }
+            }
+          }
+        },
+        {
+          "id": "A2",
+          "witness": {
+            "native": [
+              "reactivefiber.render.preview"
+            ],
+            "injected": [
+              "reactivefiber.render.preview"
+            ],
+            "reconcile": [
+              "reactivefiber.render.preview"
+            ],
+            "seamCalls": [],
+            "controls": {
+              "byId": true,
+              "byPermission": true,
+              "byContract": true,
+              "untagged": false
+            }
+          }
+        },
+        {
+          "id": "A3",
+          "witness": {
+            "code": "RF_USAGE_UNKNOWN_COMMAND",
+            "exit": 2,
+            "choices": 18,
+            "workspaceChosen": false,
+            "readings": {
+              "measured": {
+                "refusal": {
+                  "category": "transport",
+                  "message": "RF preview returned an unrecognized native envelope."
+                },
+                "reading": false,
+                "spawns": 1,
+                "verb": [
+                  "context",
+                  "render"
+                ],
+                "control": {
+                  "category": "unavailable",
+                  "message": "RF render refused: RF_USAGE_UNKNOWN_COMMAND"
+                }
+              },
+              "federation": {
+                "refusal": {
+                  "category": "transport",
+                  "message": "RF preview returned an unrecognized native envelope."
+                },
+                "reading": false,
+                "spawns": 1,
+                "verb": [
+                  "context",
+                  "render"
+                ],
+                "control": {
+                  "category": "unavailable",
+                  "message": "RF render refused: RF_FED_RESOURCE_UNAVAILABLE"
+                }
+              }
+            },
+            "fetchesSeen": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "successes": []
+          }
+        },
+        {
+          "id": "A4",
+          "witness": {
+            "measured": {
+              "refusal": {
+                "category": "validation",
+                "message": "ReactiveFiber topology refused: source must be a reactive-fiber.cli/v1 context.render envelope."
+              }
+            },
+            "federation": {
+              "refusal": {
+                "category": "validation",
+                "message": "ReactiveFiber topology refused: source must be a reactive-fiber.cli/v1 context.render envelope."
+              }
+            }
+          }
+        },
+        {
+          "id": "A5",
+          "witness": {
+            "native": {
+              "category": "transport",
+              "message": "RF preview returned an unrecognized or contradictory envelope."
+            },
+            "reading": false,
+            "spawns": 1,
+            "fetches": 0,
+            "adapter": {
+              "category": "validation",
+              "message": "ReactiveFiber topology refused: source.transaction_id must be null: a noncommitted read opens no transaction."
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "(a) produced-at-B fields (W/I, resource/definition revision, source revision/digest) and accepted-into-A fields (accepted snapshot revision/digest, local accepted commit id) surface verbatim and separately",
+      "pins": [
+        {
+          "id": "B1",
+          "witness": {
+            "source": "constructed",
+            "carrier": "imported_source",
+            "stampKeys": [
+              "status",
+              "source_owner",
+              "origin",
+              "acceptance"
+            ],
+            "originKeys": [
+              "workspace_id",
+              "instance_id",
+              "resource_kind",
+              "resource_name",
+              "definition_revision",
+              "source_revision",
+              "source_digest"
+            ],
+            "acceptanceKeys": [
+              "accepted_snapshot_revision",
+              "accepted_snapshot_digest",
+              "local_accepted_commit_id"
+            ],
+            "producedTerms": [
+              "W/I",
+              "resource/definition revision",
+              "source revision/digest"
+            ],
+            "acceptedTerms": [
+              "accepted snapshot revision/digest",
+              "local accepted commit id"
+            ],
+            "mappedProduced": [
+              "W/I",
+              "resource/definition revision",
+              "source revision/digest"
+            ],
+            "mappedAccepted": [
+              "accepted snapshot revision/digest",
+              "local accepted commit id"
+            ],
+            "shared": [],
+            "collisions": []
+          }
+        },
+        {
+          "id": "B2",
+          "witness": {
+            "verbatim": {
+              "readingKeys": [
+                "contract",
+                "source",
+                "workspaceRoot"
+              ],
+              "contract": "reactivefiber.render.preview/v1",
+              "workspaceRoot": true,
+              "bytesEqual": true,
+              "spawns": 1,
+              "verb": [
+                "context",
+                "render"
+              ],
+              "fetches": 0
+            },
+            "origin": [
+              "origin.workspace_id=\"rfw_bbbbbbbbbbbbbbbbbbbbbbbbbb\"",
+              "origin.instance_id=\"rfi_bbbbbbbbbbbbbbbbbbbbbbbbbb\"",
+              "origin.resource_kind=\"view_output\"",
+              "origin.resource_name=\"architecture\"",
+              "origin.definition_revision=\"sha256:4444444444444444444444444444444444444444444444444444444444444444\"",
+              "origin.source_revision=41",
+              "origin.source_digest=\"sha256:5555555555555555555555555555555555555555555555555555555555555555\""
+            ],
+            "acceptance": [
+              "acceptance.accepted_snapshot_revision=19",
+              "acceptance.accepted_snapshot_digest=\"sha256:6666666666666666666666666666666666666666666666666666666666666666\"",
+              "acceptance.local_accepted_commit_id=\"rft_cccccccccccccccccccccccccc\""
+            ],
+            "status": "READY",
+            "sourceOwner": {
+              "alias": "knowledge",
+              "locator": {
+                "kind": "local_path",
+                "path": "../workspace-b"
+              }
+            }
+          }
+        },
+        {
+          "id": "B3",
+          "witness": {
+            "verbatim": {
+              "readingKeys": [
+                "contract",
+                "source",
+                "workspaceRoot"
+              ],
+              "contract": "reactivefiber.render.preview/v1",
+              "workspaceRoot": true,
+              "bytesEqual": true,
+              "spawns": 1,
+              "verb": [
+                "context",
+                "render"
+              ],
+              "fetches": 0
+            },
+            "resultKeys": [
+              "output",
+              "budget",
+              "diagnostics_summary",
+              "blocks",
+              "components",
+              "provenance",
+              "work_metrics",
+              "work",
+              "engine_metrics",
+              "scope",
+              "audience",
+              "bundle_revision_id",
+              "observations",
+              "necessity",
+              "attempts",
+              "superseded_transaction_ids",
+              "retry_work",
+              "fiber_transaction_refs",
+              "render_id",
+              "ephemeral",
+              "commit_seq",
+              "session_id",
+              "effects",
+              "plan",
+              "imported_source"
+            ],
+            "crossKeys": [],
+            "misplaced": [],
+            "placed": {
+              "origin.workspace_id": [
+                "source.result.imported_source.origin.workspace_id"
+              ],
+              "origin.instance_id": [
+                "source.result.imported_source.origin.instance_id"
+              ],
+              "origin.resource_kind": [
+                "source.result.imported_source.origin.resource_kind"
+              ],
+              "origin.resource_name": [
+                "source.result.imported_source.origin.resource_name"
+              ],
+              "origin.definition_revision": [
+                "source.result.imported_source.origin.definition_revision"
+              ],
+              "origin.source_revision": [
+                "source.result.imported_source.origin.source_revision"
+              ],
+              "origin.source_digest": [
+                "source.result.imported_source.origin.source_digest"
+              ],
+              "acceptance.accepted_snapshot_revision": [
+                "source.result.imported_source.acceptance.accepted_snapshot_revision"
+              ],
+              "acceptance.accepted_snapshot_digest": [
+                "source.result.imported_source.acceptance.accepted_snapshot_digest"
+              ],
+              "acceptance.local_accepted_commit_id": [
+                "source.result.imported_source.acceptance.local_accepted_commit_id"
+              ]
+            },
+            "projectedStamps": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "(b) a missing acceptance stamp surfaces absent, never filled from the B-side revision; no Pi path computes either stamp",
+      "pins": [
+        {
+          "id": "C1",
+          "witness": {
+            "variants": {
+              "group": {
+                "verbatim": {
+                  "readingKeys": [
+                    "contract",
+                    "source",
+                    "workspaceRoot"
+                  ],
+                  "contract": "reactivefiber.render.preview/v1",
+                  "workspaceRoot": true,
+                  "bytesEqual": true,
+                  "spawns": 1,
+                  "verb": [
+                    "context",
+                    "render"
+                  ],
+                  "fetches": 0
+                },
+                "acceptance": null,
+                "revisions": {
+                  "definition_revision": [
+                    "source.result.imported_source.origin.definition_revision"
+                  ],
+                  "source_revision": [
+                    "source.result.imported_source.origin.source_revision"
+                  ],
+                  "source_digest": [
+                    "source.result.imported_source.origin.source_digest"
+                  ]
+                },
+                "added": []
+              },
+              "commit": {
+                "verbatim": {
+                  "readingKeys": [
+                    "contract",
+                    "source",
+                    "workspaceRoot"
+                  ],
+                  "contract": "reactivefiber.render.preview/v1",
+                  "workspaceRoot": true,
+                  "bytesEqual": true,
+                  "spawns": 1,
+                  "verb": [
+                    "context",
+                    "render"
+                  ],
+                  "fetches": 0
+                },
+                "acceptance": [
+                  "accepted_snapshot_revision",
+                  "accepted_snapshot_digest"
+                ],
+                "revisions": {
+                  "definition_revision": [
+                    "source.result.imported_source.origin.definition_revision"
+                  ],
+                  "source_revision": [
+                    "source.result.imported_source.origin.source_revision"
+                  ],
+                  "source_digest": [
+                    "source.result.imported_source.origin.source_digest"
+                  ]
+                },
+                "added": []
+              }
+            }
+          }
+        },
+        {
+          "id": "C2",
+          "witness": {
+            "stated": {
+              "sourceRevision": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "sourceVersion": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+              "refs": [
+                "rf-graph:sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "rf-bundle:sha256:2222222222222222222222222222222222222222222222222222222222222222"
+              ]
+            },
+            "unstated": {
+              "sourceRevision": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "sourceVersion": "<absent>",
+              "refs": [
+                "rf-graph:sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              ]
+            },
+            "changedGraph": {
+              "sourceRevision": "sha256:9999999999999999999999999999999999999999999999999999999999999999",
+              "sourceVersion": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+              "refs": [
+                "rf-graph:sha256:9999999999999999999999999999999999999999999999999999999999999999",
+                "rf-bundle:sha256:2222222222222222222222222222222222222222222222222222222222222222"
+              ]
+            },
+            "graphAbsent": {
+              "category": "validation",
+              "message": "ReactiveFiber topology refused: result.provenance.graph_revision_id must be sha256:<64 lowercase hex>."
+            },
+            "graphMalformed": {
+              "category": "validation",
+              "message": "ReactiveFiber topology refused: result.provenance.graph_revision_id must be sha256:<64 lowercase hex>."
+            },
+            "withStamps": {
+              "sourceRevision": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "sourceVersion": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+              "refs": [
+                "rf-graph:sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "rf-bundle:sha256:2222222222222222222222222222222222222222222222222222222222222222"
+              ]
+            }
+          }
+        },
+        {
+          "id": "C3",
+          "witness": {
+            "roots": [
+              {
+                "root": "src",
+                "floor": 100,
+                "floorMet": true,
+                "anchorRead": true,
+                "hits": []
+              },
+              {
+                "root": "qa",
+                "floor": 50,
+                "floorMet": true,
+                "anchorRead": true,
+                "hits": []
+              }
+            ],
+            "closureModules": 7,
+            "digests": [
+              "src/workbench/reactivefiber-observer.ts: createHash(sha256).update(output.text)"
+            ],
+            "nativePayloadRef": "rf-output:sha256:ea7792a26f405e2ae9c6f49ca93bbe6076ceac0a1fc53d83426c7d7f2d9377e4",
+            "carriers": [
+              "nativePayloadRef"
+            ],
+            "controls": {
+              "snake": true,
+              "camel": true,
+              "prose": true,
+              "into": true,
+              "quietWord": false,
+              "graphDigest": [
+                "control.ts: createHash(sha256).update(graph)"
+              ],
+              "memberDigest": [
+                "control.ts: createHash(sha256).update(bundle)"
+              ],
+              "hmac": [
+                "control.ts: createHmac(sha256).update(revision)"
+              ],
+              "oneShot": [
+                "control.ts: hash(sha256)"
+              ],
+              "subtle": [
+                "control.ts: subtle"
+              ],
+              "handRolled": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "D",
+      "label": "(c) replay-with-missing-blob surfaces the typed producer code verbatim, not-replayable, never current",
+      "pins": [
+        {
+          "id": "D1",
+          "witness": {
+            "measuredEqual": true,
+            "idsEqual": true,
+            "code": "RF_REPLAY_SOURCE_SNAPSHOT_MISSING",
+            "refusal": {
+              "category": "unavailable",
+              "message": "RF render refused: RF_REPLAY_SOURCE_SNAPSHOT_MISSING"
+            },
+            "reading": false,
+            "spawns": 1,
+            "verb": [
+              "context",
+              "render"
+            ],
+            "fetches": 0
+          }
+        },
+        {
+          "id": "D2",
+          "witness": {
+            "rf-cli": {
+              "statusTone": "failure",
+              "coverage": "unknown",
+              "statusText": "refused \u00b7 RF_REPLAY_SOURCE_SNAPSHOT_MISSING",
+              "carried": [],
+              "evidenceRefs": [
+                "rf-workspace:rfw_t7dcyljy27327knroylyym7m2q"
+              ]
+            },
+            "injected-fixture": {
+              "statusTone": "failure",
+              "coverage": "unknown",
+              "statusText": "fixture seam (not a real render) \u00b7 refused \u00b7 RF_REPLAY_SOURCE_SNAPSHOT_MISSING",
+              "carried": [],
+              "evidenceRefs": [
+                "rf-workspace:rfw_t7dcyljy27327knroylyym7m2q"
+              ]
+            }
+          }
+        },
+        {
+          "id": "D3",
+          "witness": {
+            "fresh": {
+              "coverage": "complete",
+              "statusTone": "success",
+              "notes": [
+                "observations: 2 rows, 0 reused"
+              ]
+            },
+            "replayed": {
+              "coverage": "partial",
+              "statusTone": "unknown",
+              "notes": [
+                "observations: 2 rows, 2 reused: partial"
+              ]
+            },
+            "mixed": {
+              "coverage": "partial",
+              "statusTone": "unknown",
+              "notes": [
+                "observations: 2 rows, 1 reused: partial"
+              ]
+            },
+            "replayClaimedCurrent": {
+              "category": "validation",
+              "message": "ReactiveFiber topology refused: a result.observations row is replayed exactly when its freshness is reused."
+            },
+            "reusedNotReplayed": {
+              "category": "validation",
+              "message": "ReactiveFiber topology refused: a result.observations row is replayed exactly when its freshness is reused."
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "E",
+      "label": "(d) spy: zero owner/source reads during replay",
+      "pins": [
+        {
+          "id": "E1",
+          "witness": {
+            "tokens": [
+              "knowledge",
+              "../workspace-b",
+              "rfw_bbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "rfi_bbbbbbbbbbbbbbbbbbbbbbbbbb"
+            ],
+            "missingBlob": {
+              "refused": "unavailable",
+              "reading": false,
+              "spawns": 1,
+              "verb": [
+                "context",
+                "render"
+              ],
+              "noCommit": true,
+              "verbSpelled": false,
+              "namesOwner": [],
+              "fetches": 0
+            },
+            "replayedRows": {
+              "refused": null,
+              "reading": true,
+              "spawns": 1,
+              "verb": [
+                "context",
+                "render"
+              ],
+              "noCommit": true,
+              "verbSpelled": false,
+              "namesOwner": [],
+              "fetches": 0
+            }
+          }
+        },
+        {
+          "id": "E2",
+          "witness": {
+            "closureFloorMet": true,
+            "anchorsRead": true,
+            "modules": [
+              "src/workbench/capability-registry.ts",
+              "src/workbench/native-evidence.ts",
+              "src/workbench/observation.ts",
+              "src/workbench/process-env.ts",
+              "src/workbench/providers/reactivefiber.ts",
+              "src/workbench/reactivefiber-observer.ts",
+              "src/workbench/redaction.ts"
+            ],
+            "unresolved": [],
+            "externals": [
+              "node:child_process",
+              "node:crypto",
+              "typebox/value"
+            ],
+            "network": [],
+            "filesystem": [],
+            "composed": [],
+            "globals": [],
+            "escaped": [],
+            "launches": [
+              "rf"
+            ],
+            "controls": {
+              "http": {
+                "network": 1,
+                "filesystem": 0,
+                "composed": 0,
+                "globals": 0,
+                "escaped": 0,
+                "launches": []
+              },
+              "requireNet": {
+                "network": 1,
+                "filesystem": 0,
+                "composed": 0,
+                "globals": 0,
+                "escaped": 0,
+                "launches": []
+              },
+              "composedImport": {
+                "network": 0,
+                "filesystem": 0,
+                "composed": 1,
+                "globals": 0,
+                "escaped": 0,
+                "launches": []
+              },
+              "fs": {
+                "network": 0,
+                "filesystem": 1,
+                "composed": 0,
+                "globals": 0,
+                "escaped": 0,
+                "launches": []
+              },
+              "fsPromises": {
+                "network": 0,
+                "filesystem": 1,
+                "composed": 0,
+                "globals": 0,
+                "escaped": 0,
+                "launches": []
+              },
+              "fetch": {
+                "network": 0,
+                "filesystem": 0,
+                "composed": 0,
+                "globals": 1,
+                "escaped": 0,
+                "launches": []
+              },
+              "globalFetch": {
+                "network": 0,
+                "filesystem": 0,
+                "composed": 0,
+                "globals": 1,
+                "escaped": 0,
+                "launches": []
+              },
+              "elementFetch": {
+                "network": 0,
+                "filesystem": 0,
+                "composed": 0,
+                "globals": 1,
+                "escaped": 0,
+                "launches": []
+              },
+              "aliasFetch": {
+                "network": 0,
+                "filesystem": 0,
+                "composed": 0,
+                "globals": 1,
+                "escaped": 0,
+                "launches": []
+              },
+              "destructured": {
+                "network": 0,
+                "filesystem": 0,
+                "composed": 0,
+                "globals": 1,
+                "escaped": 0,
+                "launches": []
+              },
+              "socket": {
+                "network": 0,
+                "filesystem": 0,
+                "composed": 0,
+                "globals": 1,
+                "escaped": 0,
+                "launches": []
+              },
+              "namespaceLaunch": {
+                "network": 0,
+                "filesystem": 0,
+                "composed": 0,
+                "globals": 0,
+                "escaped": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "aliasLaunch": {
+                "network": 0,
+                "filesystem": 0,
+                "composed": 0,
+                "globals": 0,
+                "escaped": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "escapedLaunch": {
+                "network": 0,
+                "filesystem": 0,
+                "composed": 0,
+                "globals": 0,
+                "escaped": 1,
+                "launches": []
+              },
+              "composedLaunch": {
+                "network": 0,
+                "filesystem": 0,
+                "composed": 0,
+                "globals": 0,
+                "escaped": 0,
+                "launches": [
+                  "<composed>"
+                ]
+              },
+              "worker": {
+                "network": 0,
+                "filesystem": 0,
+                "composed": 0,
+                "globals": 0,
+                "escaped": 0,
+                "launches": [
+                  "<module node:worker_threads>"
+                ]
+              },
+              "loader": {
+                "network": 0,
+                "filesystem": 0,
+                "composed": 1,
+                "globals": 0,
+                "escaped": 0,
+                "launches": []
+              },
+              "dynamicCode": {
+                "network": 0,
+                "filesystem": 0,
+                "composed": 1,
+                "globals": 0,
+                "escaped": 0,
+                "launches": []
+              },
+              "hostAlias": {
+                "network": 0,
+                "filesystem": 0,
+                "composed": 0,
+                "globals": 0,
+                "escaped": 0,
+                "launches": []
+              }
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "tests": [
+    "the judged set: the frozen shape, the out-of-file roster, the bead export's acceptance clauses and the cases agree",
+    "A1",
+    "A2",
+    "A3",
+    "A4",
+    "A5",
+    "B1",
+    "B2",
+    "B3",
+    "C1",
+    "C2",
+    "C3",
+    "D1",
+    "D2",
+    "D3",
+    "E1",
+    "E2",
+    "the record: every registered test is in run mode and ran, and every pin reached its end with its pinned assertion count"
+  ],
+  "reached": [
+    "A1:5",
+    "A2:6",
+    "A3:16",
+    "A4:4",
+    "A5:7",
+    "B1:10",
+    "B2:12",
+    "B3:13",
+    "C1:24",
+    "C2:8",
+    "C3:13",
+    "D1:9",
+    "D2:10",
+    "D3:7",
+    "E1:12",
+    "E2:6"
+  ]
+}
