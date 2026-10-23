@@ -21,6 +21,26 @@ export const RF_FIXTURE_TEXT = 'context';
 /** The producer release the fixture states in result.provenance.cli_version: the pinned rf the roster mirrors (re-pinned from
  * 0.1.716 by wb-973.17, then from 0.1.768 by wb-c7ku). */
 export const RF_FIXTURE_RELEASE = '0.1.784';
+/** wb-hs2j.1 (RF-REACTIVE-CONTEXT-ASSEMBLY-R1): the one candidate the fixture's document includes, as rf states it twice: its row of
+ * result.blocks (context.render.schema.json :628-640 at ReactiveFiberCLI 6a251bf73af5: final_index, candidate_key, component_id,
+ * the priced token_cost and its token_cost_kind) and its judged result.necessity decision record (:907-936: the eight required
+ * keys, include true). Shapes read off the rf 0.1.709 dogfood capture docs/dogfood/ReactiveFiberCLI-2026-10-16/steps/
+ * 15-context-render.out at 6a251bf73af5 (its first block and decision), the render_id and optional keys left out. A render
+ * stating neither list, or no block, is not a complete document, so the clean fixtures carry this pair. */
+export const RF_FIXTURE_CANDIDATE_KEY = 'fixture.component:main::summary';
+export function rfFixtureBlock(): JsonObject {
+  return { final_index: 0, candidate_key: RF_FIXTURE_CANDIDATE_KEY, component_id: 'fixture.component', token_cost: { kind: 'estimated', tokens: 2 }, token_cost_kind: 'estimated' };
+}
+/** A judged decision record: included, the always floor (domain/necessity.py:242 ALWAYS_FLOOR); withheld, a task_conditional
+ * candidate no rule matched (:255 TASK_CONDITIONAL_NO_MATCH, the default_task_conditional withhold), never an always
+ * candidate, which rf refuses to withhold (integrations/components.py:3024-3026 at 6a251bf73af5). */
+export function rfFixtureDecision(include = true, candidateKey: string = RF_FIXTURE_CANDIDATE_KEY): JsonObject {
+  return {
+    candidate_key: candidateKey, necessity_class: include ? 'always' : 'task_conditional', include,
+    reason: include ? 'always_floor' : 'task_conditional_no_match',
+    judge_id: 'rf.necessity.default-host.v1', judge_kind: 'host_default', fallback_used: false, failure_mode: 'fail',
+  };
+}
 
 export function fullShapeWork(): JsonObject {
   return { source_capture_count: 0, fiber_signal_count: 0, component_render_count: 0, lens_resolution_count: 0, necessity_eval_count: 0, storage_write_count: 0 };
@@ -52,7 +72,7 @@ export function fullShapeRf(workspaceRoot: string): JsonObject {
         formula_terms: { context_window: 1000000, max_output_tokens: 16000, output_reserve: 8192, occupied_tokens: 0, overhead: 0, safety_margin: 2048, available_context_tokens: 989760 },
       },
       diagnostics_summary: { errors: 0, warnings: 0, has_errors: false, has_warnings: false },
-      blocks: [], components: [],
+      blocks: [rfFixtureBlock()], components: [],
       provenance: {
         created_at: '2026-10-17T15:47:30.870680Z', graph_revision_id: RF_FIXTURE_GRAPH_REVISION, necessity_policy_revision_id: digest('c'),
         workspace_schema_version: 'reactive-fiber.workspace/v1', cli_version: RF_FIXTURE_RELEASE, storage_backend: 'jsonl',
@@ -68,7 +88,7 @@ export function fullShapeRf(workspaceRoot: string): JsonObject {
       },
       work_metrics: fullShapeWorkMetrics(), work: fullShapeWork(),
       engine_metrics: { tsx_worker_spawns: 0, tsx_resource_rounds: 0 },
-      scope: null, audience: 'model', bundle_revision_id: digest('2'), observations: [], necessity: [], attempts: 1,
+      scope: null, audience: 'model', bundle_revision_id: digest('2'), observations: [], necessity: [rfFixtureDecision()], attempts: 1,
       superseded_transaction_ids: [], retry_work: fullShapeRetryWork(), fiber_transaction_refs: [],
       render_id: null, ephemeral: true, commit_seq: null, session_id: null, effects: [], plan: { operations: [], would_commit: false },
     },
