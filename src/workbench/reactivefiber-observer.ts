@@ -6,11 +6,12 @@
  * ObservationProjection.refresh and relate. This module never invokes rf, so it can never issue a history-creating verb; it only
  * reads an envelope the host already holds. Only the full noncommitted-preview shape (ok, ephemeral, render_id null, transaction_id
  * null, zero storage writes, a sha256 graph basis) can read as a render; an error summary, an exhausted budget, an observation
- * row that observed no value, was replayed from an earlier render or was degraded, or an unsatisfied --view contract is partial,
- * an RF_ failure stays a failure and anything malformed or contradictory is refused. The context text itself is never copied: it is
- * referenced by its sha256 digest, so no output, budget payload or diagnostic body reaches any surfaced string; of an observation
- * row only its status word and the row counts ever do, and of a view contract only its failed-check count and, when it is
- * satisfied, its view id.
+ * row that observed no value, was replayed from an earlier render or was degraded, an unsatisfied --view contract, or a render
+ * that states no inclusion records, includes no block or withholds a judged candidate (wb-hs2j.1: exit 0 is never document
+ * completeness) is partial, an RF_ failure stays a failure and anything malformed or contradictory is refused. The context text
+ * itself is never copied: it is referenced by its sha256 digest, so no output, budget payload or diagnostic body reaches any
+ * surfaced string; of an observation row only its status word and the row counts ever do, of a view contract only its
+ * failed-check count and, when it is satisfied, its view id, and of the inclusion records only their counts.
  */
 import {createHash} from 'node:crypto';
 import {CapabilityError, type JsonValue} from './capability-registry.js';
@@ -89,6 +90,8 @@ const UNLISTED = '…';
  * (context.render.schema.json :1029-1033 and :1199-1203 at ReactiveFiberCLI 8a8b83e4d), so a named id is plain ASCII. */
 const VIEW_ID = /^[a-z][a-z0-9_-]*(?:\.[a-z][a-z0-9_-]*)*$/;
 const MAX_VIEW_ID = 128;
+/** The two inclusion records a render carries (wb-hs2j.1): the final document's blocks and the per-candidate necessity decisions. */
+const INCLUSION_KEYS = ['blocks', 'necessity'] as const;
 
 type JsonRecord = {[key: string]: JsonValue};
 interface CheckedContext {
@@ -246,6 +249,41 @@ function viewContractLeg(result: JsonRecord): Demotion {
   return {demotes: true, note: `view contract: ${failures.length} failed ${failures.length === 1 ? 'check' : 'checks'}: partial`};
 }
 
+/** The inclusion leg (wb-hs2j.1, RF-REACTIVE-CONTEXT-ASSEMBLY-R1), beside the observation and view_contract legs: what the render
+ * states about which candidate blocks reached its document, which can only demote. An rf exit 0 is never document completeness
+ * (ReactiveFiberCLI docs/programs/reactive-context-assembly-2026-10-18/02-swarm-usage-and-command-grammar.md:36 at 6a251bf73af5:
+ * a render executed seven components while six candidate blocks were excluded under task-conditional necessity, and only context
+ * explain reported host_necessity:6). context explain reads a recorded render and a --no-commit preview records none (render_id
+ * null), and the render's own result.summary.counts_by_stage is unshipped (RFCLI rfc-s24ro.2, open), so the leg reads the two
+ * inclusion records the preview itself carries: result.blocks, the blocks of the final document (context.render.schema.json
+ * :628-640 at 6a251bf73af5), and result.necessity, one decision record per judged candidate with a boolean include (:907-936). A
+ * judged candidate decided include false is exactly the one explain counts at host_necessity (integrations/components.py:3015-3060
+ * _judged_outcome and domain/rendering.py:806-822 exclusion_stage_for at 6a251bf73af5). A render that does not state both lists
+ * has not been diagnosed and is partial; zero included blocks is never a complete document; one withheld candidate holds the
+ * preview at partial. A stated list of another shape is refused, never dropped. Of either list only its length and the count of
+ * include false rows reach a surfaced string: no candidate key, component id, reason, judge or token cost does. A diagnosed render
+ * with at least one block and no withheld candidate demotes nothing and adds no note, so a clean projection stays byte-identical
+ * to the one this reader made before the leg existed. Two stages stay uncounted until summary.counts_by_stage ships: a candidate
+ * dropped at host_visibility is never judged, so neither list states it, and telling a judged candidate the budget cut at
+ * sdk_assembly from an included one would need a candidate_key join across the two lists whose occurrence keys (rfc-s24ro.17)
+ * this reader does not pin, so it counts lengths only. */
+function inclusionLeg(result: JsonRecord): Demotion {
+  const stated = INCLUSION_KEYS.filter(key => Object.hasOwn(result, key));
+  if (stated.length < INCLUSION_KEYS.length) {
+    const missing = INCLUSION_KEYS.filter(key => !stated.includes(key)).map(key => `result.${key}`).join(' and ');
+    return {demotes: true, note: `inclusion not diagnosed: ${missing} absent: partial`};
+  }
+  const {blocks, necessity} = result;
+  if (!Array.isArray(blocks) || !blocks.every(item => record(item) !== undefined)) throw refused('result.blocks must be an array of block objects');
+  if (!Array.isArray(necessity) || !necessity.every(item => typeof record(item)?.include === 'boolean')) {
+    throw refused('result.necessity must be an array of decision records, each with a boolean include');
+  }
+  const withheld = necessity.filter(item => record(item)?.include === false).length;
+  const judged = `${necessity.length} judged ${necessity.length === 1 ? 'candidate' : 'candidates'}`;
+  const head = `inclusion: ${blocks.length} ${blocks.length === 1 ? 'block' : 'blocks'} included, ${withheld} of ${judged} withheld at host_necessity`;
+  return blocks.length === 0 || withheld > 0 ? {demotes: true, note: `${head}: partial`} : {demotes: false};
+}
+
 /** The host context, copied field by field after validation; scope, invocation and operation identities must already be displayable. */
 function checkedContext(context: ReactiveFiberTopologyContext): CheckedContext {
   if (!isObject(context)) throw refused('the host context must be an object');
@@ -350,6 +388,8 @@ function previewSnapshot(envelope: JsonRecord, diagnostics: readonly JsonRecord[
 
   // wb-973.2 (SCG-R2): the view_contract leg beside the observation leg; an unsatisfied contract can demote, never upgrade.
   const contractLeg = viewContractLeg(result);
+  // wb-hs2j.1 (RCA-R1): the inclusion leg; exit 0 is never document completeness, so an undiagnosed, empty or withheld render demotes.
+  const inclusion = inclusionLeg(result);
 
   const window = Number(formula.context_window);
   const available = formula.available_context_tokens;
@@ -359,11 +399,13 @@ function previewSnapshot(envelope: JsonRecord, diagnostics: readonly JsonRecord[
   const live = host.seam === 'rf-cli';
   const budget = overBudget ? `over budget by ${-available} (context window ${window} tokens)` : `${available} of ${window} context tokens available`;
   const statusText = `${SEAM_LABEL[host.seam]} · ${budget} · necessity evals ${work.necessity_eval_count} · ${counts.errors} errors, ${counts.warnings} warnings`;
-  const clean = live && !flagged && !overBudget && !observations.demotes && !contractLeg.demotes;
+  const clean = live && !flagged && !overBudget && !observations.demotes && !contractLeg.demotes && !inclusion.demotes;
   const notes = ['ephemeral noncommitted preview: render_id null, transaction_id null, 0 authoritative storage writes (envelope storage_write_count)', 'context text withheld: referenced by sha256 digest'];
   // The contract leg states its note when it demotes and its witness on a clean render alone, so a partial render is unchanged.
   if (contractLeg.demotes) notes.push(contractLeg.note);
   else if (clean && contractLeg.witness !== undefined) notes.push(contractLeg.witness);
+  // The inclusion leg states its note whenever it demotes, early so the diagnostics bound never drops it; a clean render adds none.
+  if (inclusion.demotes) notes.push(inclusion.note);
   if (!live) notes.push('fixture seam: not a real generated context');
   if (flagged) notes.push('render reported errors: partial, not a clean render');
   if (overBudget) notes.push('context exceeds the available budget: partial');
