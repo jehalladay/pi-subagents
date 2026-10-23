@@ -1,0 +1,433 @@
+{
+ "bead": "wb-csbt.3",
+ "pin": "76bbbffd9d4a",
+ "title": "[TSX-RESOURCE-EFFICIENCY-FRONTIER-R3] No Pi surface shall spawn or close TSX Deno workers, share DENO\u005fDIR or admit TSX starts; only RFCLI decides, and Pi's RF surface stays the rf CLI envelope - docs/programs/resource-efficiency-frontier-2026-10-17/02-INCREMENTAL-ASSEMBLY-AND-REUSE.md:21@76bbbffd9d4a",
+ "quote": "The SDK may expose immutable prepared module/artifact identity and request-local cost counters; only RFCLI decides when to spawn/close workers, share DENO\u005fDIR and admit starts.",
+ "citation": "docs/programs/resource-efficiency-frontier-2026-10-17/02-INCREMENTAL-ASSEMBLY-AND-REUSE.md:21@76bbbffd9d4a",
+ "pattern": "DENO\u005fDIR|deno (run|task)|@reactive\u002dfiber",
+ "scope": [
+  "src",
+  "test",
+  "package.json"
+ ],
+ "holders": [
+  "^test\\/[^/]+(?:-census\\.test|\\.census)\\.ts$",
+  "^test\\/fixtures\\/[^/]+-roster\\.json$"
+ ],
+ "family": [
+  "deno",
+  "tsx",
+  "worker",
+  "workers",
+  "pool",
+  "pools",
+  "resident",
+  "admission",
+  "admit",
+  "admits"
+ ],
+ "rows": [
+  {
+   "id": "A",
+   "label": "(a) git grep -n -E 'DENO\u005fDIR|deno (run|task)|@reactive\u002dfiber' -- src test package.json in Pi-subagents = 0 hits (0 at d75b68d)",
+   "pins": [
+    {
+     "id": "A1",
+     "witness": {
+      "hits": [],
+      "manifest": [
+       "package.json"
+      ],
+      "symlinks": [],
+      "srcFloor": true,
+      "controls": {
+       "src/dir-variable.ts": [
+        "dir-variable"
+       ],
+       "src/verb-run.ts": [
+        "deno-verb"
+       ],
+       "src/verb-task.ts": [
+        "deno-verb"
+       ],
+       "package.json": [
+        "sdk-scope"
+       ],
+       "src/quiet-case.ts": [],
+       "src/quiet-spacing.ts": [],
+       "src/quiet-composed.ts": [],
+       "qa/quiet-scope.mjs": "unwalked"
+      }
+     }
+    },
+    {
+     "id": "A2",
+     "witness": {
+      "outsideHolders": [],
+      "holderFloor": true,
+      "denoLaunches": [],
+      "launchFloor": true,
+      "symlinks": [],
+      "self": [
+       {
+        "file": "test/workbench-rf-tsx-worker-lifecycle-census.test.ts",
+        "walked": true,
+        "hits": 0
+       },
+       {
+        "file": "test/fixtures/rf-tsx-worker-lifecycle-roster.json",
+        "walked": true,
+        "hits": 0
+       }
+      ],
+      "testFloor": true,
+      "controls": {
+       "test/helpers/plant-helper.ts": "outside",
+       "test/plant.test.ts": "outside",
+       "test/fixtures/plant.json": "outside",
+       "test/workbench-plant-census.test.ts": "holder",
+       "test/workbench-plant.census.ts": "holder",
+       "test/fixtures/plant-roster.json": "holder",
+       "test/workbench-launch-census.test.ts": "quiet+deno-launch"
+      }
+     }
+    },
+    {
+     "id": "A3",
+     "witness": {
+      "ran": true,
+      "productHits": [],
+      "outsideHolders": []
+     }
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "label": "(b) the reactivefiber.render capability spawns only the rf argv - no deno executable, no worker pool (extends the wb-973.3 argv pin)",
+   "pins": [
+    {
+     "id": "B1",
+     "witness": {
+      "spellings": [],
+      "unresolved": [],
+      "providerLaunches": [
+       "src/workbench/providers/reactivefiber.ts spawn(\"rf\")"
+      ],
+      "providerBindings": [
+       "child"
+      ],
+      "providerKills": [
+       "child.kill(\"SIGTERM\")",
+       "child.kill(\"SIGKILL\")"
+      ],
+      "nonTs": [],
+      "launchFloor": true,
+      "controls": {
+       "literalCommand": {
+        "spellings": 1,
+        "launches": [
+         "literalCommand.ts spawn(\"deno\")"
+        ],
+        "unresolved": 0
+       },
+       "aliasedUnresolved": {
+        "spellings": 0,
+        "launches": [],
+        "unresolved": 1
+       },
+       "namespacePath": {
+        "spellings": 1,
+        "launches": [
+         "namespacePath.ts cp.execFileSync(\"/usr/local/bin/deno\")"
+        ],
+        "unresolved": 0
+       },
+       "identifierWord": {
+        "spellings": 1,
+        "launches": [],
+        "unresolved": 0
+       },
+       "denominated": {
+        "spellings": 0,
+        "launches": [],
+        "unresolved": 0
+       },
+       "composedCommand": {
+        "spellings": 0,
+        "launches": [],
+        "unresolved": 1
+       },
+       "composedUnbound": {
+        "spellings": 0,
+        "launches": [],
+        "unresolved": 0
+       },
+       "commentOnly": {
+        "spellings": 0,
+        "launches": [],
+        "unresolved": 0
+       },
+       "requireLaunch": {
+        "spellings": 1,
+        "launches": [],
+        "unresolved": 0
+       }
+      }
+     }
+    },
+    {
+     "id": "B2",
+     "witness": {
+      "arms": [
+       {
+        "required": [
+         "model",
+         "task"
+        ],
+        "properties": [
+         "model",
+         "task"
+        ]
+       },
+       {
+        "required": [
+         "view",
+         "taskId"
+        ],
+        "properties": [
+         "view",
+         "taskId",
+         "model"
+        ]
+       }
+      ],
+      "renders": [
+       {
+        "input": [
+         "model",
+         "task"
+        ],
+        "spawns": 1,
+        "executables": [
+         "rf"
+        ],
+        "onPath": true,
+        "argv": [
+         [
+          "--workspace",
+          "<root>",
+          "context",
+          "render",
+          "--model",
+          "model-fixture",
+          "--task",
+          "task-fixture",
+          "--no-commit",
+          "--no-input",
+          "--json"
+         ]
+        ],
+        "outcome": "returned"
+       },
+       {
+        "input": [
+         "view",
+         "taskId"
+        ],
+        "spawns": 1,
+        "executables": [
+         "rf"
+        ],
+        "onPath": true,
+        "argv": [
+         [
+          "--workspace",
+          "<root>",
+          "context",
+          "render",
+          "--view",
+          "census.view",
+          "--task-id",
+          "csbt3-fixture",
+          "--no-commit",
+          "--no-input",
+          "--json"
+         ]
+        ],
+        "outcome": "returned"
+       },
+       {
+        "input": [
+         "view",
+         "taskId",
+         "model"
+        ],
+        "spawns": 1,
+        "executables": [
+         "rf"
+        ],
+        "onPath": true,
+        "argv": [
+         [
+          "--workspace",
+          "<root>",
+          "context",
+          "render",
+          "--view",
+          "census.view",
+          "--task-id",
+          "csbt3-fixture",
+          "--model",
+          "model-fixture",
+          "--no-commit",
+          "--no-input",
+          "--json"
+         ]
+        ],
+        "outcome": "returned"
+       }
+      ]
+     }
+    },
+    {
+     "id": "B3",
+     "witness": {
+      "paths": [
+       {
+        "reply": "envelope",
+        "rfSpawns": 1,
+        "outcome": "returned",
+        "aliveAfter": 0
+       },
+       {
+        "reply": "refusal",
+        "rfSpawns": 1,
+        "outcome": "unavailable: RF render refused: RF_COMPONENT_RUNTIME_ABSENT",
+        "aliveAfter": 0
+       },
+       {
+        "reply": "malformed",
+        "rfSpawns": 1,
+        "outcome": "transport: RF preview returned malformed JSON.",
+        "aliveAfter": 0
+       },
+       {
+        "reply": "hang",
+        "rfSpawns": 1,
+        "outcome": "transport: RF preview cancelled.",
+        "aliveAfter": 0
+       }
+      ],
+      "denoExecutions": []
+     }
+    },
+    {
+     "id": "B4",
+     "witness": {
+      "sequential": {
+       "renders": 3,
+       "spawns": 3,
+       "distinctPids": 3,
+       "aliveAfter": 0
+      },
+      "concurrent": {
+       "renders": 3,
+       "spawns": 3,
+       "distinctPids": 3,
+       "aliveAfter": 0
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "label": "(c) no Pi setting or capability input names a Deno worker count, DENO\u005fDIR path or TSX admission policy, and Pi never configures a default resident worker (03-PROFILES-DECISIONS-AND-WORK-PACKAGES.md:37)",
+   "pins": [
+    {
+     "id": "C1",
+     "witness": {
+      "hits": [],
+      "sanitizeMatchesWorkbench": true,
+      "memberFloor": true,
+      "controls": [
+       "denoWorkerCount:true",
+       "tsxAdmissionPolicy:true",
+       "residentWorker:true",
+       "workerPool:true",
+       "DENO\u005fDIR:true",
+       "reactivefiberWorkspaceRoot:false",
+       "maxConcurrent:false",
+       "workspace:false"
+      ]
+     }
+    },
+    {
+     "id": "C2",
+     "witness": {
+      "survivors": [],
+      "refusals": [
+       "Unknown workbench setting: denoWorkerCount.",
+       "Unknown workbench setting: DENO\u005fDIR.",
+       "Unknown workbench setting: tsxAdmissionPolicy.",
+       "Unknown workbench setting: residentWorker."
+      ]
+     }
+    },
+    {
+     "id": "C3",
+     "witness": {
+      "familyNames": [],
+      "rfInputNames": [
+       "model",
+       "task",
+       "taskId",
+       "view"
+      ],
+      "descriptorFloor": true,
+      "controls": [
+       "nested:false",
+       "options:false",
+       "residentWorker:true",
+       "tsxAdmission:true",
+       "workspaceRoot:false"
+      ]
+     }
+    },
+    {
+     "id": "C4",
+     "witness": {
+      "set": [
+       "DENO\u005fDIR",
+       "DENO_INSTALL_ROOT",
+       "DENO_V8_FLAGS",
+       "DENO_NO_UPDATE_CHECK",
+       "RF_TSX_WORKER_COUNT",
+       "RF_TSX_RESIDENT_WORKER"
+      ],
+      "spawns": 3,
+      "reached": [],
+      "allowlistFamily": [],
+      "argvFamily": []
+     }
+    }
+   ]
+  }
+ ],
+ "tests": [
+  "the judged set: the frozen shape, the out-of-file roster, the owner's filing and the cases agree",
+  "A1",
+  "A2",
+  "A3",
+  "B1",
+  "B2",
+  "B3",
+  "B4",
+  "C1",
+  "C2",
+  "C3",
+  "C4",
+  "registration: every case of this file is registered once, in roster order, in run mode, and ran before this one"
+ ]
+}

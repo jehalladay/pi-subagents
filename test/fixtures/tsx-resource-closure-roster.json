@@ -1,0 +1,586 @@
+{
+  "bead": "wb-4nut.3",
+  "basis": "The out-of-file roster of test/workbench-tsx-resource-closure-census.test.ts (standing rule 16): every judged row's id, label and pins, every pin's witness, the scan constants, the fixture records and the residual families, so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. Producer facts read-only on the local ReactiveFiberTSXSDK checkout (no fetch) at 76bbbffd9d4a419f972d6fefc8b7f9dc524df8df, its origin/main at its last fetch: kinds and statuses = git show <sha>:src/resources/types.ts lines 40-47 and 75; resourceExports = every `export const|type|interface|function` declaration name of that file spelling Resource or RESOURCE, in file order; apiPin.matchesAtPin = git ls-tree -r --name-only <sha> | grep -i -E '(^|/)API-PIN\\.md$|harness2-api-pin' (none); queryViewSrcFiles = git grep -l QueryView <sha> -- src (none); citedBlob is docs/programs/harness2-reactive-evolution-2026-10-20/BEADS-2026-10-21.md, whose line 28 holds the quote. fixtures are constructed records in the producer's ResourceRequest and ResourceEntry shapes (types.ts:62-73 and :78-88); the out-of-closure ones carry the acceptance's kind query, kind QueryView and status UNKNOWN, the in-closure ones a kind and a status of the tuples.",
+  "quote": "RESOURCE_KINDS equals the six literals of src/resources/types.ts:40-47, RESOURCE_ENTRY_STATUSES equals its literals",
+  "citation": "docs/programs/harness2-reactive-evolution-2026-10-20/BEADS-2026-10-21.md:28@76bbbffd9d4a",
+  "scan": {
+    "producerKinds": [
+      "fiber.node",
+      "fiber.input",
+      "provider",
+      "lens",
+      "inference",
+      "capability"
+    ],
+    "producerStatuses": [
+      "ready",
+      "failed"
+    ],
+    "distinctiveKinds": [
+      "fiber.node",
+      "fiber.input"
+    ],
+    "resourceVocabulary": "RESOURCE_(?:KINDS|ENTRY_STATUSES|ENTRY_SOURCES|COUNTER_NAMES)|Resource(?:Kind|Request|Entry|Dependent|Counters|Snapshot)|[rR]esourceId/",
+    "sdkFamily": "@reactive-fiber\\/tsx(?![\\w-])/i",
+    "h2Family": "(?<![A-Za-z0-9])(?:TSX|RI|RC|RL|FO)[-_]?H2(?![A-Za-z0-9])|(?<![A-Za-z0-9])harness[-_]?2(?![0-9])/i",
+    "quotedKind": "[\"'`]fiber\\.(?:node|input)[\"'`]/",
+    "mirrorSuffixes": {
+      "kinds": [
+        "resourcekind",
+        "resourcekinds"
+      ],
+      "statuses": [
+        "resourceentrystatus",
+        "resourceentrystatuses",
+        "resourcestatus",
+        "resourcestatuses"
+      ]
+    },
+    "moduleExtensions": [
+      ".ts",
+      ".mts",
+      ".cts",
+      ".tsx",
+      ".js",
+      ".mjs",
+      ".cjs",
+      ".jsx"
+    ],
+    "skippedRoots": [
+      ".git",
+      ".beads",
+      "node_modules",
+      "dist",
+      "build",
+      "coverage",
+      ".forge"
+    ],
+    "judgedRoots": [
+      "src",
+      "qa",
+      "examples"
+    ],
+    "exempt": [
+      "test/workbench-tsx-resource-closure-census.test.ts"
+    ],
+    "floors": {
+      "files": 760,
+      "modules": {
+        "src": 100,
+        "test": 400,
+        "qa": 55,
+        "examples": 5
+      }
+    },
+    "anchorModule": "src/workbench/reactivefiber-observer.ts",
+    "anchors": {
+      "identifier": "reactivefiberTopology",
+      "literal": "tsx_resource_rounds",
+      "specifier": "node:crypto"
+    },
+    "carriers": [
+      "result.resources",
+      "result.provenance.resources",
+      "result.components"
+    ],
+    "closedCarriers": [
+      "result.engine_metrics",
+      "result.work"
+    ],
+    "needles": [
+      "UNKNOWN",
+      "QueryView",
+      "query"
+    ],
+    "controlWord": "zz-control",
+    "outOfClosure": [
+      "request-kind-query",
+      "request-kind-QueryView",
+      "entry-status-UNKNOWN"
+    ],
+    "inClosure": [
+      "request-kind-lens",
+      "entry-status-ready"
+    ]
+  },
+  "producer": {
+    "repo": "ReactiveFiberTSXSDK",
+    "sha": "76bbbffd9d4a419f972d6fefc8b7f9dc524df8df",
+    "typesBlob": "47b41d82af9d5eddea48364a7a26d4a70ab146ae",
+    "citedBlob": "80427fdf9c89958cce77f66cc3dfa481327400f7",
+    "kinds": {
+      "file": "src/resources/types.ts",
+      "lines": "40-47",
+      "values": [
+        "fiber.node",
+        "fiber.input",
+        "provider",
+        "lens",
+        "inference",
+        "capability"
+      ]
+    },
+    "statuses": {
+      "file": "src/resources/types.ts",
+      "lines": "75",
+      "values": [
+        "ready",
+        "failed"
+      ]
+    },
+    "resourceExports": [
+      "RESOURCE_KINDS",
+      "ResourceKind",
+      "ResourceDependent",
+      "ResourceRequest",
+      "RESOURCE_ENTRY_STATUSES",
+      "RESOURCE_ENTRY_SOURCES",
+      "ResourceEntry",
+      "RESOURCE_COUNTER_NAMES",
+      "ResourceCounters",
+      "ResourceSnapshotJson",
+      "ResourceSnapshotLike",
+      "assertResourceRequestJson",
+      "assertResourceEntryJson",
+      "assertResourceCountersJson",
+      "assertResourceSnapshotJson",
+      "parseResourceId",
+      "deriveResourceId",
+      "validateResourceRequest"
+    ],
+    "apiPin": {
+      "names": [
+        "API-PIN.md",
+        "tests/audit/harness2-api-pin.test.ts"
+      ],
+      "matchesAtPin": []
+    },
+    "queryViewSrcFiles": []
+  },
+  "fixtures": [
+    {
+      "id": "request-kind-query",
+      "record": {
+        "resourceId": "census-request-1",
+        "kind": "query",
+        "key": "peer.view",
+        "dependency": {
+          "kind": "provider",
+          "ref": "peer.provider"
+        },
+        "dependents": [
+          {
+            "componentStorageKey": "census.panel",
+            "hookIndex": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "request-kind-QueryView",
+      "record": {
+        "resourceId": "census-request-2",
+        "kind": "QueryView",
+        "key": "peer.view",
+        "dependency": {
+          "kind": "provider",
+          "ref": "peer.provider"
+        },
+        "dependents": [
+          {
+            "componentStorageKey": "census.panel",
+            "hookIndex": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "entry-status-UNKNOWN",
+      "record": {
+        "resourceId": "census-request-1",
+        "status": "UNKNOWN",
+        "version": "1",
+        "value": null,
+        "source": "live"
+      }
+    },
+    {
+      "id": "request-kind-lens",
+      "record": {
+        "resourceId": "census-request-3",
+        "kind": "lens",
+        "key": "peer.summary",
+        "dependency": {
+          "kind": "node",
+          "ref": "peer.node"
+        },
+        "dependents": [
+          {
+            "componentStorageKey": "census.panel",
+            "hookIndex": 2
+          }
+        ]
+      }
+    },
+    {
+      "id": "entry-status-ready",
+      "record": {
+        "resourceId": "census-request-3",
+        "status": "ready",
+        "version": "1",
+        "value": {
+          "summary": "census"
+        },
+        "source": "live"
+      }
+    }
+  ],
+  "residuals": [
+    "R-COMPOSED",
+    "R-ENCODED",
+    "R-GENERIC",
+    "R-DATA",
+    "R-OUTSIDE",
+    "R-UNNAMED"
+  ],
+  "rows": [
+    {
+      "id": "A",
+      "label": "(trigger, absent today) If Pi ever reads TSX-SDK resource records or an H2 versioned artifact: no product module names the producer's resource-record vocabulary, a distinctive kind or the TSX SDK as a load, none names an H2 work package or the harness2 program, and the gating API pin is measured absent at the cited sha",
+      "pins": [
+        {
+          "id": "A1",
+          "witness": {
+            "pin": "A1",
+            "floorsMet": true,
+            "anchors": {
+              "identifier": true,
+              "literal": true,
+              "specifier": true
+            },
+            "vocabularyCovers": true,
+            "findings": [],
+            "controls": {
+              "identifier": true,
+              "typeName": true,
+              "validatorName": true,
+              "fieldName": true,
+              "elementAccess": true,
+              "escapedIdentifier": true,
+              "folded": true,
+              "kindLiteral": true,
+              "escapedKind": true,
+              "sdkImport": true,
+              "sdkDynamic": true,
+              "sdkRequire": true,
+              "counterName": false,
+              "loaderName": false,
+              "commentOnly": false,
+              "composedJoin": false,
+              "composedSpecifier": false,
+              "rot13": false,
+              "plantedSrc": true,
+              "plantedQaText": true,
+              "plantedExamplesText": true,
+              "testRoot": false,
+              "distRoot": false,
+              "quietSrc": false
+            }
+          }
+        },
+        {
+          "id": "A2",
+          "witness": {
+            "pin": "A2",
+            "findings": [],
+            "controls": {
+              "tsxPackage": true,
+              "inferencePackage": true,
+              "componentsPackage": true,
+              "opticsPackage": true,
+              "lensesPackage": true,
+              "program": true,
+              "identifier": true,
+              "heading": false,
+              "harness": false,
+              "unnamedArtifact": false,
+              "plantedSrc": true,
+              "plantedQaText": true,
+              "testRoot": false
+            }
+          }
+        },
+        {
+          "id": "A3",
+          "witness": {
+            "pin": "A3",
+            "repo": "ReactiveFiberTSXSDK",
+            "sha": "76bbbffd9d4a419f972d6fefc8b7f9dc524df8df",
+            "apiPin": [
+              "API-PIN.md",
+              "tests/audit/harness2-api-pin.test.ts"
+            ],
+            "matchesAtPin": [],
+            "queryViewSrcFiles": [],
+            "namesApiPin": true,
+            "beadSaysAbsent": true,
+            "pinCited": true,
+            "apiPinShipped": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "(a) a Pi reader fed status 'UNKNOWN' or kind 'query'/'QueryView' refuses or reads not-observed, never mapping either to a Pi status word: the rf render path leaves such records unread in an open render object and refuses them in a closed one or bare, and its status-word reader reads UNKNOWN as any other not-observed word",
+      "pins": [
+        {
+          "id": "B1",
+          "witness": {
+            "pin": "B1",
+            "clean": {
+              "coverage": "complete",
+              "tone": "success",
+              "notes": []
+            },
+            "unread": {
+              "result.resources": {
+                "request-kind-query": true,
+                "request-kind-QueryView": true,
+                "entry-status-UNKNOWN": true
+              },
+              "result.provenance.resources": {
+                "request-kind-query": true,
+                "request-kind-QueryView": true,
+                "entry-status-UNKNOWN": true
+              },
+              "result.components": {
+                "request-kind-query": true,
+                "request-kind-QueryView": true,
+                "entry-status-UNKNOWN": true
+              }
+            },
+            "leaked": [],
+            "refused": {
+              "result.engine_metrics": "validation: ReactiveFiber topology refused: result.engine_metrics needs exactly the two non-negative integer counters tsx_worker_spawns and tsx_resource_rounds.",
+              "result.work": "validation: ReactiveFiber topology refused: result.work needs exactly the six non-negative integer counters."
+            },
+            "bare": {
+              "request-kind-query": "validation: ReactiveFiber topology refused: source must be the strict eight-key rf envelope.",
+              "request-kind-QueryView": "validation: ReactiveFiber topology refused: source must be the strict eight-key rf envelope.",
+              "entry-status-UNKNOWN": "validation: ReactiveFiber topology refused: source must be the strict eight-key rf envelope."
+            },
+            "native": {
+              "verbatim": true,
+              "unread": true,
+              "closed": "transport: RF preview returned an unrecognized or contradictory envelope.",
+              "bare": "transport: RF preview returned an unrecognized native envelope."
+            }
+          }
+        },
+        {
+          "id": "B2",
+          "witness": {
+            "pin": "B2",
+            "observed": {
+              "coverage": "complete",
+              "tone": "success",
+              "notes": [
+                "observations: 1 row, 0 reused"
+              ]
+            },
+            "unknown": {
+              "coverage": "partial",
+              "tone": "unknown",
+              "notes": [
+                "observations: 1 row, 1 not observed (UNKNOWN): partial"
+              ]
+            },
+            "generic": true,
+            "kindUnread": {
+              "observedQueryView": true,
+              "unknownQuery": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "(b) any Pi enum mirror equals exactly the six kinds and two statuses at the pinned sha; a seventh kind in a fixture is rejected: no walked module holds a mirror, the mirror judge admits only the verbatim tuples, and the producer closure the roster and the bead row measure rejects every out-of-closure fixture record",
+      "pins": [
+        {
+          "id": "C1",
+          "witness": {
+            "pin": "C1",
+            "modulesFloorMet": true,
+            "mirrors": [],
+            "selfVerdicts": [
+              "equal"
+            ],
+            "controls": {
+              "exactAsConst": [
+                "equal"
+              ],
+              "exactFrozen": [
+                "equal"
+              ],
+              "exactUnion": [
+                "equal"
+              ],
+              "exactEnum": [
+                "equal"
+              ],
+              "exactStatuses": [
+                "equal"
+              ],
+              "seventhQuery": [
+                "widened"
+              ],
+              "seventhQueryView": [
+                "widened"
+              ],
+              "anonymousSeventh": [
+                "widened"
+              ],
+              "statusUnknown": [
+                "widened"
+              ],
+              "statusUnionUnknown": [
+                "widened"
+              ],
+              "narrowed": [
+                "narrowed"
+              ],
+              "reordered": [
+                "reordered"
+              ],
+              "duplicated": [
+                "duplicated"
+              ],
+              "unresolved": [
+                "unresolved"
+              ],
+              "spreadUnresolved": [
+                "unresolved"
+              ],
+              "composedMirror": [],
+              "genericMirror": [],
+              "statusLiteralOnly": [],
+              "plantedSrc": [
+                "widened"
+              ],
+              "plantedTest": [
+                "equal"
+              ],
+              "distRoot": [],
+              "jsonData": []
+            }
+          }
+        },
+        {
+          "id": "C2",
+          "witness": {
+            "pin": "C2",
+            "tuples": {
+              "kinds": [
+                "fiber.node",
+                "fiber.input",
+                "provider",
+                "lens",
+                "inference",
+                "capability"
+              ],
+              "statuses": [
+                "ready",
+                "failed"
+              ]
+            },
+            "kindsLines": "40-47",
+            "statusesLines": "75",
+            "rosterAgrees": true,
+            "beadAgrees": true,
+            "linesAgree": true,
+            "fixtures": {
+              "request-kind-query": "rejected",
+              "request-kind-QueryView": "rejected",
+              "entry-status-UNKNOWN": "rejected",
+              "request-kind-lens": "admitted",
+              "entry-status-ready": "admitted"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "D",
+      "label": "(c) a major version above Pi's pin yields a typed refusal and no parse of the body; (d) an artifact with no version keeps the version absent in every Pi field (no default): measured on the versioned reader nearest the TSX records, the rf render envelope (reactive-fiber.cli/v1), at the observer and the native seam",
+      "pins": [
+        {
+          "id": "D1",
+          "witness": {
+            "pin": "D1",
+            "piPin": "reactive-fiber.cli/v1",
+            "observer": {
+              "v2MalformedBody": "validation: ReactiveFiber topology refused: source must be a reactive-fiber.cli/v1 context.render envelope.",
+              "v10MalformedBody": "validation: ReactiveFiber topology refused: source must be a reactive-fiber.cli/v1 context.render envelope.",
+              "v2CleanBody": "validation: ReactiveFiber topology refused: source must be a reactive-fiber.cli/v1 context.render envelope.",
+              "v1MalformedBody": "validation: ReactiveFiber topology refused: an ok envelope needs an object result."
+            },
+            "native": {
+              "v2MalformedBody": "transport: RF preview returned an unrecognized native envelope.",
+              "v1MalformedBody": "transport: RF preview returned an unrecognized or contradictory envelope."
+            }
+          }
+        },
+        {
+          "id": "D2",
+          "witness": {
+            "pin": "D2",
+            "cliVersion": {
+              "dropped": [
+                "rf-cli:0.1.784",
+                "producer release from result.provenance.cli_version: rf@0.1.784"
+              ],
+              "otherwiseIdentical": true
+            },
+            "bundle": {
+              "sourceVersionStated": true,
+              "sourceVersionUnstated": false,
+              "dropped": [
+                "rf-bundle:sha256:2222222222222222222222222222222222222222222222222222222222222222"
+              ],
+              "unstatedRefs": [],
+              "otherwiseIdentical": true
+            },
+            "engine": {
+              "versioned": [
+                "rf-engine:tsx_runtime:0.1.649:unknown"
+              ],
+              "unversioned": [],
+              "unversionedAsClean": true
+            },
+            "defaulted": [],
+            "native": {
+              "admitted": true,
+              "cliVersionMinted": false
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "tests": [
+    "the judged set: the frozen shape, the out-of-file roster and the bead row agree",
+    "A1",
+    "A2",
+    "A3",
+    "B1",
+    "B2",
+    "C1",
+    "C2",
+    "D1",
+    "D2",
+    "records: every registered test ran once in run mode in roster order and every pin reached its end"
+  ]
+}

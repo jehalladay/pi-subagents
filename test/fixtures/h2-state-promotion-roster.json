@@ -1,0 +1,766 @@
+{
+ "bead": "wb-4nut.10",
+ "producers": [
+  {
+   "repo": "FiberOpticsSDK",
+   "short": "FO",
+   "sha": "e803f66c5fb9e3650e263aa96dcaeac36af761e1",
+   "path": "docs/programs/harness2-reactive-evolution-2026-10-20/README.md",
+   "blob": "27fe98974f8fe2fb2b744ae5b39fdfc08bba9fcb",
+   "lines": {
+    "25": "2. Publication records preserve VALUE/ABSENT/PENDING/SUPPRESSED/FAILED and queued-versus-committed distinctions; failure/status/witness changes may invalidate consumers even with unchanged payload bytes.",
+    "27": "4. An optional bounded trace sink emits transaction, dependency, publication and invalidation identities, source epochs, dropped-event counts and causal parents without making execution dependent on DevTools.",
+    "35": "| FO-H2-02 | add remote-observation admission as an ordinary source transaction with replay witness and revocation semantics | source SHA, independently executed positive/negative fixture, receipt + measured overhead |",
+    "36": "| FO-H2-03 | expose bounded instrumentation hooks for graph/invalidation/publication events and incomplete sink diagnostics | source SHA, independently executed positive/negative fixture, receipt + measured overhead |",
+    "44": "1. Producer queues value but never flushes: importer cannot observe publication.",
+    "47": "4. An event sink drops events under pressure: DevTools sees INCOMPLETE but Fiber execution is unaffected."
+   }
+  },
+  {
+   "repo": "ReactiveFiberTSXSDK",
+   "short": "TSX",
+   "sha": "76bbbffd9d4a419f972d6fefc8b7f9dc524df8df",
+   "path": "docs/programs/harness2-reactive-evolution-2026-10-20/README.md",
+   "blob": "32fff555591b99dfc806518b694c1faf50e83fb3",
+   "lines": {
+    "37": "| TSX-H2-04 | Publish bounded render report for DevTools visual/source correlation and trace gaps | installed consumer + independent negative test + source SHA + cost receipt |",
+    "48": "5. Incomplete render attempt is not a committed publication."
+   }
+  },
+  {
+   "repo": "ReactiveInferenceSDK",
+   "short": "RI",
+   "sha": "485f3615db1e8703d6ce1093713fe595e46f42a0",
+   "path": "docs/programs/harness2-reactive-evolution-2026-10-20/README.md",
+   "blob": "aae0e893dc2b4c2a21a31dad2e03d7bd3e43f8eb",
+   "lines": {
+    "23": "4. Provider request/response receipts preserve explicit demand, attempted/accepted/cancelled/errored and actual completion states with recorded owner epoch; a timeout does not prove provider-side cancellation.",
+    "24": "5. Optional source-emitted usage traces feed DevTools; trace sink failure is not inference failure.",
+    "34": "| RI-H2-04 | Conformance across fake providers, unsupported metrics, errors, retries and cancellations | installed consumer + independent negative test + source SHA + cost receipt |",
+    "35": "| RI-H2-05 | Test trace-on/off overhead and source redaction | installed consumer + independent negative test + source SHA + cost receipt |",
+    "42": "2. Request timed out after provider admission => cancellation status remains uncertain."
+   }
+  },
+  {
+   "repo": "ReactiveLensesSDK",
+   "short": "RL",
+   "sha": "bfe1f4ac7fa097ef3883d97cda6ab70052849f55",
+   "path": "docs/programs/harness2-reactive-evolution-2026-10-20/README.md",
+   "blob": "314b1e9f38705e1bee3940f1e6b0b4e6baed8cc3",
+   "lines": {
+    "37": "| RL-H2-04 | emit bounded optional provenance/refresh trace events without storing secret source contents by default | source SHA, independently executed positive/negative fixture, receipt + measured overhead |"
+   }
+  }
+ ],
+ "constants": {
+  "publicationWords": [
+   "VALUE",
+   "ABSENT",
+   "PENDING",
+   "SUPPRESSED",
+   "FAILED"
+  ],
+  "nonTerminal": [
+   "ABSENT",
+   "PENDING",
+   "SUPPRESSED"
+  ],
+  "controlWord": "zz-control",
+  "reportCarriers": [
+   "result.render_report",
+   "result.provenance.render_report"
+  ],
+  "committedShapes": [
+   "transaction_id",
+   "result.render_id",
+   "result.commit_seq",
+   "result.ephemeral",
+   "result.work.storage_write_count"
+  ],
+  "requiredFlags": [
+   "transaction_id",
+   "result.render_id",
+   "result.ephemeral",
+   "result.work.storage_write_count"
+  ],
+  "optionalFlag": "result.commit_seq",
+  "effectful": [
+   "write",
+   "external",
+   "unknown"
+  ],
+  "deadlineMs": 25,
+  "outcomeKeys": [
+   "returned",
+   "validation",
+   "authorization",
+   "unavailable",
+   "transport",
+   "uncertain-effect"
+  ],
+  "h2Packages": [
+   "@reactive-fiber/tsx",
+   "FiberOpticsSDK",
+   "vibranium-reactive-inference",
+   "vibranium-reactive-lenses"
+  ],
+  "siblingEntries": [
+   "fiber_optics",
+   "reactive_lenses",
+   "reactive_inference"
+  ],
+  "recordTerms": [
+   "publication records?",
+   "publication states?",
+   "render reports?",
+   "render attempts?",
+   "committed publications?",
+   "sink diagnostics?",
+   "trace sinks?",
+   "usage traces?",
+   "refresh traces?",
+   "owner epochs?",
+   "provider admission",
+   "observation admission",
+   "dropped event counts?",
+   "queued versus committed",
+   "(?:fo|tsx|ri|rl) h2 0[0-9]"
+  ],
+  "stateWords": [
+   "SUPPRESSED",
+   "INCOMPLETE"
+  ],
+  "anchors": [
+   "src/workbench/reactivefiber-observer.ts",
+   "src/workbench/capability-registry.ts",
+   "src/workbench/telemetry.ts"
+  ],
+  "moduleFloor": 100
+ },
+ "residuals": [
+  "R-FOREIGN-VALUE",
+  "R-LISTED-FOUR",
+  "R-REFUSED-FLAG",
+  "R-OPTIONAL-COMMIT-SEQ",
+  "R-READ-TIMEOUT",
+  "R-COUNT-NOT-WORD",
+  "R-COMPOSED",
+  "R-GENERIC-WORD",
+  "R-COMMENT"
+ ],
+ "rows": [
+  {
+   "id": "A",
+   "label": "(a) queued value, no flush yields an importer view with no publication (ABSENT/PENDING), never VALUE; PENDING/SUPPRESSED never map to success",
+   "pins": [
+    {
+     "id": "A1",
+     "witness": {
+      "pin": "A1",
+      "clean": [
+       "complete",
+       "success"
+      ],
+      "readings": [
+       {
+        "word": "VALUE",
+        "coverage": "partial",
+        "tone": "unknown",
+        "note": "observations: 1 row, 1 not observed (VALUE): partial"
+       },
+       {
+        "word": "ABSENT",
+        "coverage": "partial",
+        "tone": "unknown",
+        "note": "observations: 1 row, 1 not observed (ABSENT): partial"
+       },
+       {
+        "word": "PENDING",
+        "coverage": "partial",
+        "tone": "unknown",
+        "note": "observations: 1 row, 1 not observed (PENDING): partial"
+       },
+       {
+        "word": "SUPPRESSED",
+        "coverage": "partial",
+        "tone": "unknown",
+        "note": "observations: 1 row, 1 not observed (SUPPRESSED): partial"
+       },
+       {
+        "word": "FAILED",
+        "coverage": "partial",
+        "tone": "unknown",
+        "note": "observations: 1 row, 1 not observed (FAILED): partial"
+       }
+      ]
+     }
+    },
+    {
+     "id": "A2",
+     "witness": {
+      "pin": "A2",
+      "notes": [
+       "observations: 5 rows, 5 not observed (ABSENT, PENDING, SUPPRESSED, FAILED): partial",
+       "observations: 5 rows, 5 not observed (VALUE, ABSENT, PENDING, SUPPRESSED, \u2026): partial"
+      ]
+     }
+    },
+    {
+     "id": "A3",
+     "witness": {
+      "pin": "A3",
+      "failures": {
+       "pi": [],
+       "promoting": [
+        "ABSENT: success tone",
+        "ABSENT: complete coverage",
+        "ABSENT: not carried verbatim",
+        "PENDING: success tone",
+        "PENDING: complete coverage",
+        "PENDING: not carried verbatim",
+        "SUPPRESSED: success tone",
+        "SUPPRESSED: complete coverage",
+        "SUPPRESSED: not carried verbatim"
+       ],
+       "minting": [
+        "ABSENT: not carried verbatim",
+        "ABSENT: read as VALUE",
+        "PENDING: not carried verbatim",
+        "PENDING: read as VALUE",
+        "SUPPRESSED: not carried verbatim",
+        "SUPPRESSED: read as VALUE"
+       ],
+       "collapsing": [
+        "VALUE: not carried verbatim",
+        "ABSENT: not carried verbatim",
+        "PENDING: not carried verbatim",
+        "SUPPRESSED: not carried verbatim",
+        "FAILED: not carried verbatim"
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "label": "(b) a render attempt with committed=false shows no committed output; a missing flag reads unknown",
+   "pins": [
+    {
+     "id": "B1",
+     "witness": {
+      "pin": "B1",
+      "kind": "reactivefiber.render.preview.snapshot",
+      "statusText": "noncommitted preview (rf-cli) \u00b7 989760 of 1000000 context tokens available \u00b7 necessity evals 0 \u00b7 0 errors, 0 warnings",
+      "preview": "ephemeral noncommitted preview: render_id null, transaction_id null, 0 authoritative storage writes (envelope storage_write_count)",
+      "claims": [],
+      "carried": [
+       "result.render_report:false",
+       "result.render_report:true",
+       "result.render_report:absent",
+       "result.provenance.render_report:false",
+       "result.provenance.render_report:true",
+       "result.provenance.render_report:absent"
+      ]
+     }
+    },
+    {
+     "id": "B2",
+     "witness": {
+      "pin": "B2",
+      "refusals": [
+       {
+        "shape": "transaction_id",
+        "refusal": {
+         "category": "validation",
+         "message": "ReactiveFiber topology refused: source.transaction_id must be null: a noncommitted read opens no transaction."
+        }
+       },
+       {
+        "shape": "result.render_id",
+        "refusal": {
+         "category": "validation",
+         "message": "ReactiveFiber topology refused: result.render_id must be null: a committed render is not a preview."
+        }
+       },
+       {
+        "shape": "result.commit_seq",
+        "refusal": {
+         "category": "validation",
+         "message": "ReactiveFiber topology refused: result.commit_seq must be absent or null."
+        }
+       },
+       {
+        "shape": "result.ephemeral",
+        "refusal": {
+         "category": "validation",
+         "message": "ReactiveFiber topology refused: result.ephemeral must be true."
+        }
+       },
+       {
+        "shape": "result.work.storage_write_count",
+        "refusal": {
+         "category": "validation",
+         "message": "ReactiveFiber topology refused: result.work.storage_write_count must be 0: a preview writes nothing."
+        }
+       }
+      ]
+     }
+    },
+    {
+     "id": "B3",
+     "witness": {
+      "pin": "B3",
+      "outcomes": [
+       {
+        "flag": "transaction_id",
+        "kind": "refused",
+        "message": "ReactiveFiber topology refused: source must be the strict eight-key rf envelope."
+       },
+       {
+        "flag": "result.render_id",
+        "kind": "refused",
+        "message": "ReactiveFiber topology refused: result.render_id must be null: a committed render is not a preview."
+       },
+       {
+        "flag": "result.ephemeral",
+        "kind": "refused",
+        "message": "ReactiveFiber topology refused: result.ephemeral must be true."
+       },
+       {
+        "flag": "result.work.storage_write_count",
+        "kind": "refused",
+        "message": "ReactiveFiber topology refused: result.work needs exactly the six non-negative integer counters."
+       },
+       {
+        "flag": "result.commit_seq",
+        "kind": "projected",
+        "clean": true
+       }
+      ],
+      "failures": {
+       "pi": [],
+       "defaulting": [
+        "transaction_id: a missing flag was read",
+        "result.render_id: a missing flag was read",
+        "result.ephemeral: a missing flag was read",
+        "result.work.storage_write_count: a missing flag was read"
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "label": "(c) admitted request then client timeout projects 'uncertain'/attempted, never 'cancelled'",
+   "pins": [
+    {
+     "id": "C1",
+     "witness": {
+      "pin": "C1",
+      "readings": [
+       {
+        "effectClass": "write",
+        "category": "uncertain-effect",
+        "message": "Capability fixture.effect has an uncertain external effect: Capability fixture.effect exceeded its deadline of 25ms.. Reconcile with the producer before retrying.",
+        "attempts": 1,
+        "providerSignalAborted": true,
+        "providerCompletedLate": true
+       },
+       {
+        "effectClass": "external",
+        "category": "uncertain-effect",
+        "message": "Capability fixture.effect has an uncertain external effect: Capability fixture.effect exceeded its deadline of 25ms.. Reconcile with the producer before retrying.",
+        "attempts": 1,
+        "providerSignalAborted": true,
+        "providerCompletedLate": true
+       },
+       {
+        "effectClass": "unknown",
+        "category": "uncertain-effect",
+        "message": "Capability fixture.effect has an uncertain external effect: Capability fixture.effect exceeded its deadline of 25ms.. Reconcile with the producer before retrying.",
+        "attempts": 1,
+        "providerSignalAborted": true,
+        "providerCompletedLate": true
+       }
+      ]
+     }
+    },
+    {
+     "id": "C2",
+     "witness": {
+      "pin": "C2",
+      "queued": {
+       "holder": {
+        "category": "uncertain-effect",
+        "message": "Capability fixture.effect has an uncertain external effect: Capability fixture.effect exceeded its deadline of 25ms.. Reconcile with the producer before retrying."
+       },
+       "queued": {
+        "category": "unavailable",
+        "message": "Capability fixture.effect admission exhausted: 1 in flight after 25ms."
+       },
+       "attempts": 1,
+       "admission": {
+        "maxInFlight": 1,
+        "inFlight": 1,
+        "peakInFlight": 1,
+        "admitted": 1,
+        "refused": 1,
+        "cancelledWhileQueued": 0
+       }
+      },
+      "read": {
+       "effectClass": "read",
+       "category": "transport",
+       "message": "Capability fixture.effect exceeded its deadline of 25ms.",
+       "attempts": 1,
+       "providerSignalAborted": true,
+       "providerCompletedLate": true
+      },
+      "aborted": {
+       "aborted": {
+        "category": "transport",
+        "message": "Capability fixture.effect was cancelled while waiting for admission."
+       },
+       "first": {
+        "category": "returned",
+        "message": "{\"released\":true}"
+       },
+       "attempts": 1
+      },
+      "tables": {
+       "claudeCancelledTerminals": [
+        "cancelled"
+       ],
+       "detachedCancel": {
+        "settledBy": "terminalConfirmed",
+        "whenTrue": "cancelled",
+        "whenFalse": "unknown"
+       },
+       "claudeUncertain": true
+      },
+      "outcomes": {
+       "keys": [
+        "returned",
+        "validation",
+        "authorization",
+        "unavailable",
+        "transport",
+        "uncertain-effect"
+       ],
+       "cancelled": {
+        "state": "unknown",
+        "reason": "invalid-supplied"
+       },
+       "uncertain": {
+        "state": "measured",
+        "value": {
+         "uncertain-effect": 1
+        },
+        "source": "supplied"
+       }
+      }
+     }
+    },
+    {
+     "id": "C3",
+     "witness": {
+      "pin": "C3",
+      "failures": {
+       "pi": [],
+       "cancelling": [
+        "write: transport, not uncertain-effect",
+        "write: reads cancelled",
+        "write: the deadline is not named",
+        "external: transport, not uncertain-effect",
+        "external: reads cancelled",
+        "external: the deadline is not named",
+        "unknown: transport, not uncertain-effect",
+        "unknown: reads cancelled",
+        "unknown: the deadline is not named"
+       ],
+       "refusing": [
+        "write: attempted 0 times",
+        "write: unavailable, not uncertain-effect",
+        "external: attempted 0 times",
+        "external: unavailable, not uncertain-effect",
+        "unknown: attempted 0 times",
+        "unknown: unavailable, not uncertain-effect"
+       ],
+       "succeeding": [
+        "write: returned, not uncertain-effect",
+        "write: the deadline is not named",
+        "external: returned, not uncertain-effect",
+        "external: the deadline is not named",
+        "unknown: returned, not uncertain-effect",
+        "unknown: the deadline is not named"
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "D",
+   "label": "(d) sink dropped > 0 yields coverage 'partial' with an INCOMPLETE note, execution/inference status unchanged",
+   "pins": [
+    {
+     "id": "D1",
+     "witness": {
+      "pin": "D1",
+      "results": [
+       "dropped-sink-error",
+       "emitted"
+      ],
+      "dropped": 1,
+      "threw": false,
+      "delivered": [
+       {
+        "keys": [
+         "contract",
+         "kind",
+         "report",
+         "droppedEvents"
+        ],
+        "droppedEvents": 1,
+        "reportAsBuilt": true
+       }
+      ],
+      "figures": {
+       "providerCallOutcomes": {
+        "state": "measured",
+        "value": {
+         "returned": 3,
+         "uncertain-effect": 1
+        },
+        "source": "supplied"
+       },
+       "uncertainEffects": {
+        "state": "measured",
+        "value": 1,
+        "source": "supplied"
+       },
+       "droppedObservations": {
+        "state": "measured",
+        "value": 0,
+        "source": "supplied"
+       }
+      },
+      "oversized": {
+       "results": [
+        "dropped-oversize",
+        "dropped-oversize"
+       ],
+       "dropped": 2,
+       "delivered": 0
+      }
+     }
+    },
+    {
+     "id": "D2",
+     "witness": {
+      "pin": "D2",
+      "failures": {
+       "pi": [],
+       "rethrowing": [
+        "the sink failure reached the caller",
+        "the failed delivery read nothing"
+       ],
+       "silent": [
+        "the next event counts no drop",
+        "the emitter counts 0 drops"
+       ],
+       "altering": [
+        "the delivered report differs from the report as built"
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "E",
+   "label": "Not P0: none of these records reach Pi today; gating guard.",
+   "pins": [
+    {
+     "id": "E1",
+     "witness": {
+      "pin": "E1",
+      "declared": [],
+      "installed": [],
+      "named": [],
+      "siblingEntries": 3,
+      "unread": true
+     }
+    },
+    {
+     "id": "E2",
+     "witness": {
+      "pin": "E2",
+      "aboveFloor": true,
+      "nonModules": [],
+      "hits": [],
+      "anchors": [
+       {
+        "file": "src/workbench/reactivefiber-observer.ts",
+        "scanned": true,
+        "hits": 0
+       },
+       {
+        "file": "src/workbench/capability-registry.ts",
+        "scanned": true,
+        "hits": 0
+       },
+       {
+        "file": "src/workbench/telemetry.ts",
+        "scanned": true,
+        "hits": 0
+       }
+      ]
+     }
+    },
+    {
+     "id": "E3",
+     "witness": {
+      "pin": "E3",
+      "flagged": [
+       {
+        "term": "publication records?",
+        "hits": [
+         "publication record"
+        ]
+       },
+       {
+        "term": "publication states?",
+        "hits": [
+         "publication State"
+        ]
+       },
+       {
+        "term": "render reports?",
+        "hits": [
+         "RENDER_REPORT"
+        ]
+       },
+       {
+        "term": "render attempts?",
+        "hits": [
+         "render Attempts"
+        ]
+       },
+       {
+        "term": "committed publications?",
+        "hits": [
+         "committed publication"
+        ]
+       },
+       {
+        "term": "sink diagnostics?",
+        "hits": [
+         "sink_diagnostics"
+        ]
+       },
+       {
+        "term": "trace sinks?",
+        "hits": [
+         "trace Sink"
+        ]
+       },
+       {
+        "term": "usage traces?",
+        "hits": [
+         "usage-trace"
+        ]
+       },
+       {
+        "term": "refresh traces?",
+        "hits": [
+         "refresh Trace"
+        ]
+       },
+       {
+        "term": "owner epochs?",
+        "hits": [
+         "owner_epoch"
+        ]
+       },
+       {
+        "term": "provider admission",
+        "hits": [
+         "provider Admission"
+        ]
+       },
+       {
+        "term": "observation admission",
+        "hits": [
+         "observation admission"
+        ]
+       },
+       {
+        "term": "dropped event counts?",
+        "hits": [
+         "dropped Event Count"
+        ]
+       },
+       {
+        "term": "queued versus committed",
+        "hits": [
+         "queued-versus-committed"
+        ]
+       },
+       {
+        "term": "(?:fo|tsx|ri|rl) h2 0[0-9]",
+        "hits": [
+         "FO-H2-02"
+        ]
+       },
+       {
+        "term": "SUPPRESSED",
+        "hits": [
+         "SUPPRESSED"
+        ]
+       },
+       {
+        "term": "INCOMPLETE",
+        "hits": [
+         "INCOMPLETE"
+        ]
+       }
+      ],
+      "quiet": [
+       0,
+       0,
+       0,
+       0,
+       0
+      ],
+      "residualRows": {
+       "R-COMPOSED": 0,
+       "R-GENERIC-WORD": 0,
+       "R-COMMENT": 0
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "tests": [
+  "the judged set: the frozen shape, the out-of-file roster, the cases and the filing's own notes agree",
+  "A1",
+  "A2",
+  "A3",
+  "B1",
+  "B2",
+  "B3",
+  "C1",
+  "C2",
+  "C3",
+  "D1",
+  "D2",
+  "E1",
+  "E2",
+  "E3",
+  "registration: every case of this file is registered once, in roster order, in run mode, and ran before this one"
+ ]
+}

@@ -1,0 +1,1102 @@
+{
+ "provenance": "wb-4nut.6 census roster, cut by ws-02 (run g10-work-s47) on trunk edccd80289349182284b65d296aee98742c11b34 (landing 287 hop). Producer facts: read-only git show and git cat-file -e at the pins named below (H2 rows verbatim; PERF-F rows as measured cells, each beside the sha256 of its verbatim row); pin witnesses: measured by test/workbench-h2-close-condition-census.test.ts on edccd80 plus the cut, each reviewed against the bead's acceptance before it was written here.",
+ "bead": "wb-4nut.6",
+ "programPin": "76bbbffd9d4a419f972d6fefc8b7f9dc524df8df",
+ "producer": {
+  "repository": "ReactiveFiberTSXSDK",
+  "pin": "76bbbffd9d4a419f972d6fefc8b7f9dc524df8df",
+  "measuredBy": "read-only git show and git cat-file -e at the pin in a local clone of ReactiveFiberTSXSDK; PERF-F rows ride as measured cells with the sha256 of each verbatim producer row",
+  "programs": {
+   "h2": {
+    "file": "docs/programs/harness2-reactive-evolution-2026-10-20/BEADS-2026-10-21.md",
+    "blob": "80427fdf9c89958cce77f66cc3dfa481327400f7",
+    "dispatchLine": 54,
+    "dispatch": "Bead machines take ready children in dependency order: a child is ready when every `related` premise of it inside this program has closed or is a ruling/ADR record whose text has landed, and when its gate (if any) reads ADOPT. A child closes only on its public acceptance: the forge leg or test file its `acceptance` field names runs green at one sha on a branch `bead/<id>/ws-NN`, and the landing carries `Bead: <id>` in its message. Epics close when every ungated child has closed and the gate ruling has recorded a verdict. Ruling rows (M0) are decision beads: they close when their ADR or ruling text lands, never by implication.",
+    "rows": [
+     {
+      "line": 19,
+      "milestone": "M0",
+      "text": "| rftsx-bhmrd | EPIC-H2 | [H2] TSX Context Candidates, Public-Port Hooks and Visual Identity Witnesses (docs/programs/harness2-reactive-evolution-2026-10-20/) | P2 | 30 | rftsx-9ofwd, rftsx-9q9l, rftsx-flynt, rftsx-koy9c.4 | Every ungated child closed on its public acceptance with the named gate green on main; the gated list ruled (ADOPT/DEFER/REJECT) in the family's ruling bead; one shared closing-gate receipt (full forge build on main)... | EAT-R565, EAT-R566, EAT-R567, EAT-R568, EAT-R569, EAT-R570, EAT-R571, EAT-R572, EAT-R573, EAT-R574, EAT-R575, EAT-R576, EAT-R577 | epic, program:harness2-reactive-evolution-2026-10-20, triage:2026-10-21, kind:epic |"
+     },
+     {
+      "line": 20,
+      "milestone": "M0",
+      "text": "| rftsx-7sy4c | RULING-R-05-FAMILIES-W2 | [RULING] R-05: requirement families for the w2 programs - ADAPT (adaptive + evidence-directed), TARGET (universal rendering), PERF existing (frontier), none for harness2 until TSX-H2-00 | P3 | 30 | EPIC-ADAPT, EPIC-EVID, EPIC-H2, EPIC-PERF-F, EPIC-TARGET | The bead body carries the ruling text and the claim ids; the application listed under 'How w2 applied it' is observable in the created graph (labels, parents, gated.json) by check_created.py. | N/A | program:adaptive-computation-and-control-2026-10-17, program:evidence-directed-computation-2026-10-18, program:universal-reactive-rendering, program:resource-efficiency-frontier-2026-10-17, program:harness2-reactive-evolution-2026-10-20, decision, kind:decision, triage:2026-10-21, ruling:r-05 |"
+     },
+     {
+      "line": 21,
+      "milestone": "M0",
+      "text": "| rftsx-8er6b | RULING-R-08-GATING-W2 | [RULING] R-08: gating for the w2 families - adaptive hooks beyond T0, universal WPs beyond TSX-UI-01 and harness2 WPs beyond TSX-H2-00 are not created until their ruling reads ADOPT | P2 | 30 | EPIC-ADAPT, EPIC-H2, EPIC-TARGET, TSX-ADAPT-ADR, TSX-H2-ADR, TSX-UI-ADOPT | The bead body carries the ruling text and the claim ids; the application listed under 'How w2 applied it' is observable in the created graph (labels, parents, gated.json) by check_created.py. | N/A | program:adaptive-computation-and-control-2026-10-17, program:universal-reactive-rendering, program:harness2-reactive-evolution-2026-10-20, decision, kind:decision, triage:2026-10-21, ruling:r-08 |"
+     },
+     {
+      "line": 22,
+      "milestone": "M0",
+      "text": "| rftsx-e9a5e | RULING-R-10-H2-SHAS | [RULING] R-10: harness2 was deposited as two commits with one subject (5cca9177e, db7558552) - both shas pinned on the epic, no rewrite of landed history | P3 | 30 | - | The bead body carries the ruling text and the claim ids; the application listed under 'How w2 applied it' is observable in the created graph (labels, parents, gated.json) by check_created.py. | N/A | program:harness2-reactive-evolution-2026-10-20, decision, kind:decision, triage:2026-10-21, ruling:r-10 |"
+     },
+     {
+      "line": 28,
+      "milestone": "M1",
+      "text": "| rftsx-auqdi | tsx-h2-00 | [H2] API pin: installed host/render resource symbols and their Python ContextBlock twins named at one sha | P1 | 120 | TSX-EVID-PIN | `mise exec -- pnpm exec vitest run --project audit tests/audit/harness2-api-pin.test.ts` passes: RESOURCE_KINDS equals the six literals of src/resources/types.ts:40-47, RESOURCE_ENTRY_STATUSES equals its literals, rea... | EAT-R565, EAT-R566, EAT-R567, EAT-R568, EAT-R569, EAT-R570 | program:harness2-reactive-evolution-2026-10-20, wp:tsx-h2-00, triage:2026-10-21, kind:audit |"
+     },
+     {
+      "line": 29,
+      "milestone": "M1",
+      "text": "| rftsx-rupqh | tsx-h2-adr | [H2-ADR] ADR: candidate and public-port work proceeds only after the API pin and the FED mapping (ruled ADOPT or REJECT) | P2 | 60 | TSX-ADAPT-ADR | Decision bead whose body records: (a) 'candidate' in H2 = a candidate-definition artifact distinct from the assembly candidate block (budget.ts:8,22; host-evaluation.ts:10); | EAT-R571, EAT-R572, EAT-R573, EAT-R574, EAT-R575, EAT-R576 | program:harness2-reactive-evolution-2026-10-20, wp:tsx-h2-adr, triage:2026-10-21, decision, kind:decision |"
+     }
+    ],
+    "gated": [
+     {
+      "line": 46,
+      "text": "| TSX-H2-01 | [H2] Versioned candidate-definition artifact/port schema with cross-runtime codec goldens | feature | P3 | 180 | TSX-H2-ADR (rftsx-rupqh) | R-08 |"
+     },
+     {
+      "line": 47,
+      "text": "| TSX-H2-02 | [H2] Public-port resource hook adapter lowers to readResource with no new network or cache path | feature | P3 | 180 | TSX-H2-ADR (rftsx-rupqh) | R-08 |"
+     },
+     {
+      "line": 48,
+      "text": "| TSX-H2-03 | [H2] Opt-in UI witness: explicit, revisioned Fiber public ref with renderer revision and source cut | feature | P3 | 180 | TSX-H2-ADR (rftsx-rupqh) | R-08 |"
+     },
+     {
+      "line": 49,
+      "text": "| TSX-H2-04 | [H2] Bounded render report additive fields for DevTools visual/source correlation and trace gaps | feature | P3 | 150 | TSX-H2-ADR (rftsx-rupqh) | R-08 |"
+     },
+     {
+      "line": 50,
+      "text": "| TSX-H2-05 | [H2] Negative battery: contexts, compaction, state migration and visual annotation refuse, never PASS | task | P3 | 180 | TSX-H2-ADR (rftsx-rupqh) | R-08 |"
+     }
+    ],
+    "adopted": [
+     {
+      "line": 35,
+      "text": "| rftsx-9ofwd | VC-06 Agent Inspection and Explainability: an agent diagnoses a real render from stable... | open | EPIC-H2 (rftsx-bhmrd) | a7 overlap |"
+     },
+     {
+      "line": 36,
+      "text": "| rftsx-9q9l | Implement the offline replay orchestrator: validate, resolve, restore, render | open | EPIC-H2 (rftsx-bhmrd) | adopted: H2-NEG-01 SDK side: offline replay renders with every live path blocked for the |"
+     },
+     {
+      "line": 37,
+      "text": "| rftsx-flynt | VC-07 Capture and Replay: a real host-backed render is captured as a bounded, redacted,... | open | EPIC-H2 (rftsx-bhmrd) | a7 overlap |"
+     },
+     {
+      "line": 38,
+      "text": "| rftsx-koy9c.4 | [CA-TS0d] Export evaluateHostRequest from ./embedding: golden, inventory rows and packe... | closed | EPIC-H2 (rftsx-bhmrd) | adopted: the 'installed consumer' exit leg for ./embedding (packed-import proof of evalua |"
+     }
+    ]
+   },
+   "perfF": {
+    "file": "docs/programs/resource-efficiency-frontier-2026-10-17/BEADS-2026-10-21.md",
+    "blob": "ce1bd3522cf58b89000a7eb42f05db2aaf3b0c2b",
+    "dispatchLine": 80,
+    "dispatch": "Bead machines take ready children in dependency order: a child is ready when every `related` premise of it inside this program has closed or is a ruling/ADR record whose text has landed, and when its gate (if any) reads ADOPT. A child closes only on its public acceptance: the forge leg or test file its `acceptance` field names runs green at one sha on a branch `bead/<id>/ws-NN`, and the landing carries `Bead: <id>` in its message. Epics close when every ungated child has closed and the gate ruling has recorded a verdict. Ruling rows (M0) are decision beads: they close when their ADR or ruling text lands, never by implication.",
+    "cells": [
+     {
+      "line": 19,
+      "milestone": "M0",
+      "id": "rftsx-sbyih",
+      "kind": "kind:epic",
+      "acceptance": "Every ungated child closed on its public acceptance with the named gate green on main; the gated list ruled (ADOPT/DEFER/REJECT) in the family's ruling bead; one shared closing-gate receipt (full forge build on main)...",
+      "rowSha256": "58fe36d65893a5aa75e8914bb2811cb614583edf87bdffad85638e06a7e3e931"
+     },
+     {
+      "line": 20,
+      "milestone": "M0",
+      "id": "rftsx-bge18",
+      "kind": "kind:decision",
+      "acceptance": "The bead body carries the ruling text and the claim ids; the application listed under 'How w2 applied it' is observable in the created graph (labels, parents, gated.json) by check_created.py.",
+      "rowSha256": "cb1127c4c6b40398186eca49d3a10866ce4832912122480a2484fd8ed0182721"
+     },
+     {
+      "line": 21,
+      "milestone": "M0",
+      "id": "rftsx-7sy4c",
+      "kind": "kind:decision",
+      "acceptance": "The bead body carries the ruling text and the claim ids; the application listed under 'How w2 applied it' is observable in the created graph (labels, parents, gated.json) by check_created.py.",
+      "rowSha256": "5f92f2170a3b3b242c1a6e03b3ef5599a9dac024dadb6777284448bfb90f0662"
+     },
+     {
+      "line": 27,
+      "milestone": "M1",
+      "id": "rftsx-m69sf",
+      "kind": "kind:probe",
+      "acceptance": "docs/perf/programs/perf-f-2026-10-17/workload-coverage.json + README.md exist;",
+      "rowSha256": "9d40edd4241486b896f11bd36863a7c4c3d9b6665ebdcfc0cd6d4ab043943a51"
+     },
+     {
+      "line": 28,
+      "milestone": "M1",
+      "id": "rftsx-abin9",
+      "kind": "kind:probe",
+      "rowSha256": "a75209ed2a679a1ff74e2eb6b70f114e9bfd1311995d3ecc1385307057aba8a1"
+     },
+     {
+      "line": 29,
+      "milestone": "M1",
+      "id": "rftsx-j83yd",
+      "kind": "kind:probe",
+      "acceptance": "`mise exec -- pnpm exec vitest run tests/unit/render/stage-marks.test.ts tests/unit/perf/output-path-sidecar.test.ts tests/audit/public-exports.test.ts` passes;",
+      "rowSha256": "79360a501b09ba8b33aff640c72aea3d5ea8211b65c6cc353aa3b3de4c876c26"
+     },
+     {
+      "line": 30,
+      "milestone": "M1",
+      "id": "rftsx-irbta",
+      "kind": "kind:docs",
+      "rowSha256": "0b4930ff6679fa0d72a96e2a796b477a8178b2106461ae0b37b3c5634f5482cc"
+     },
+     {
+      "line": 31,
+      "milestone": "M1",
+      "id": "rftsx-bh3x7",
+      "kind": "kind:docs",
+      "rowSha256": "c940903b0a1d962c8ca1b08a64bf3833223c45c88be3704ce5a04f83c6cff05f"
+     },
+     {
+      "line": 32,
+      "milestone": "M1",
+      "id": "rftsx-w9akc",
+      "kind": "kind:decision",
+      "acceptance": "ADR file lands with a registry row;",
+      "rowSha256": "896e607a023807ea02323232f88e19ac1a7df61807aedbab1821de72b332aa68"
+     },
+     {
+      "line": 38,
+      "milestone": "M2",
+      "id": "rftsx-qjxf1",
+      "kind": "kind:probe",
+      "acceptance": "`mise exec -- pnpm exec vitest run --project stress tests/stress/dogfood-perf-baseline.test.ts` passes with the new scenarios; the 12 original rows' GATING counters are unchanged versus db7558552 (python3 -I diff);",
+      "rowSha256": "a3c60b9caa38a672ea1357e247895e17784d5bae8ba4640e54f366ee4360e121"
+     },
+     {
+      "line": 39,
+      "milestone": "M2",
+      "id": "rftsx-zblcp",
+      "kind": "kind:docs",
+      "rowSha256": "6b3f7ca6258b1725a59f9805983f5a7854b207653b52e3ba6ffd47b12a177f50"
+     },
+     {
+      "line": 45,
+      "milestone": "M3",
+      "id": "rftsx-nwut7",
+      "kind": "kind:probe",
+      "rowSha256": "c560c20e5b37ec7035eb2b4b78064bddbd3d0ccd9491763719a58f07106824c0"
+     },
+     {
+      "line": 51,
+      "milestone": "M4",
+      "id": "rftsx-it5ry",
+      "kind": "kind:probe",
+      "acceptance": "`mise exec -- pnpm exec vitest run --project stress tests/stress/prepared-segments-oracle.test.ts` passes (canonical bytes equal on every corpus pair, grid cell and fast-check property);",
+      "rowSha256": "b52ed0e1ff91a177ff2e4ed4c4352ed919ab170c1d6ed31b2c9a46b007555ab0"
+     }
+    ],
+    "gatedCells": [
+     {
+      "line": 76,
+      "key": "TSX-PF-03",
+      "gates": "RULING-R-04-PERF-F (rftsx-bge18); TSX-PF-00c1 (rftsx-qjxf1); TSX-PF-01a (rftsx-j83yd); TSX-PF-02a (rftsx-it5ry)",
+      "rowSha256": "f02c8fe75bbe2b15c60b2783ba3f2d24d80bef604ae5f3c43070a0e06cab6803"
+     }
+    ],
+    "adoptedCells": [
+     {
+      "line": 57,
+      "id": "rftsx-atcqf",
+      "rowSha256": "42610e8d2f619a40212f8c4a9f13aed35cda783cb10896235b9de5fb74df4ef9"
+     },
+     {
+      "line": 58,
+      "id": "rftsx-atcqf.22",
+      "rowSha256": "18afe71a3ddc3b40274b2fef8ac5a1d4253c24a870cf03799ebb833c374b10e8"
+     },
+     {
+      "line": 59,
+      "id": "rftsx-atcqf.23",
+      "rowSha256": "42067ccfad6d2bad829bee6af22c760477371a2489e3699597061b0402010871"
+     },
+     {
+      "line": 60,
+      "id": "rftsx-atcqf.26",
+      "rowSha256": "dea1383f956d96ac7cb10829dbae6a8434506d380413574ebe39aeac5763501c"
+     },
+     {
+      "line": 61,
+      "id": "rftsx-atcqf.27",
+      "rowSha256": "81ac71519e7095eb11d51f2f023e9a9689c8fbf43f6aa8a98d1bff1eee4c47fd"
+     },
+     {
+      "line": 62,
+      "id": "rftsx-atcqf.36",
+      "rowSha256": "740f17ac0dd9c9d3a3fda576803bd25de85548b9c439295f94741b2fe1593529"
+     },
+     {
+      "line": 63,
+      "id": "rftsx-atcqf.40",
+      "rowSha256": "0048b6ebe21b0085ffb3d21d45234d5ef3baf6416e90d48122e33a7d6de67683"
+     },
+     {
+      "line": 64,
+      "id": "rftsx-atcqf.40",
+      "rowSha256": "85b1aae2522e67e4dd4afa21d9d950fe01da344e1e83f1abacdf55e702e8c44a"
+     },
+     {
+      "line": 65,
+      "id": "rftsx-atcqf.40",
+      "rowSha256": "ac73d25f73be4522c8332e768737b45e95e99adac537258863bebb65572ee572"
+     },
+     {
+      "line": 66,
+      "id": "rftsx-atcqf.42",
+      "rowSha256": "1b58711585e510a8f1346186ad62103bafed3d5108cfdc665e744b704b223416"
+     },
+     {
+      "line": 67,
+      "id": "rftsx-atcqf.8",
+      "rowSha256": "6f31e2b34d36187cb1e9c8d34f5c80884b9518bede6783d64435354ec18929b1"
+     },
+     {
+      "line": 68,
+      "id": "rftsx-koy9c",
+      "rowSha256": "a869f13a2199f50fed541a3ff03dbb326fb53ebba1c7c4a63a1b039ca03339e6"
+     }
+    ]
+   },
+   "componentAssembly": {
+    "file": "docs/programs/component-assembly-2026-10-18/BEADS-2026-10-21.md",
+    "blob": "cd19abd9e318a54f51415344d55269dda401c157",
+    "dispatchLine": 77,
+    "dispatch": "Bead machines take ready children in dependency order: a child is ready when every `related` premise of it inside this program has closed or is a ruling/ADR record whose text has landed, and when its gate (if any) reads ADOPT. A child closes only on its public acceptance: the forge leg or test file its `acceptance` field names runs green at one sha on a branch `bead/<id>/ws-NN`, and the landing carries `Bead: <id>` in its message. Epics close when every ungated child has closed and the gate ruling has recorded a verdict. Ruling rows (M0) are decision beads: they close when their ADR or ruling text lands, never by implication."
+   }
+  },
+  "statement": {
+   "line": 7,
+   "text": "Rulings that govern this map: R-05, R-08, R-10, r-05, r-08, r-10 (.planning/OWNER-RULINGS.md (section 2026-10-21T05:28:03Z, lines 1018-1032 of the swarm workspace copy)). Every premise is a `related` edge, never a blocker. A documented design is not an implementation: every child stays open until its public acceptance holds."
+  },
+  "leg": {
+   "path": "tests/audit/harness2-api-pin.test.ts",
+   "present": false,
+   "catFileExit": 128
+  },
+  "apiPin": {
+   "path": "docs/programs/harness2-reactive-evolution-2026-10-20/API-PIN.md",
+   "present": false,
+   "catFileExit": 128
+  }
+ },
+ "constants": {
+  "programShape": {
+   "h2": {
+    "epic": "rftsx-bhmrd",
+    "gates": [
+     "rftsx-rupqh"
+    ],
+    "beads": [
+     "rftsx-bhmrd:M0:epic",
+     "rftsx-7sy4c:M0:decision",
+     "rftsx-8er6b:M0:decision",
+     "rftsx-e9a5e:M0:decision",
+     "rftsx-auqdi:M1:child",
+     "rftsx-rupqh:M1:decision"
+    ],
+    "gated": [
+     "TSX-H2-01",
+     "TSX-H2-02",
+     "TSX-H2-03",
+     "TSX-H2-04",
+     "TSX-H2-05"
+    ],
+    "adopted": [
+     "rftsx-9ofwd",
+     "rftsx-9q9l",
+     "rftsx-flynt",
+     "rftsx-koy9c.4"
+    ]
+   },
+   "perfF": {
+    "epic": "rftsx-sbyih",
+    "gates": [
+     "rftsx-bge18",
+     "rftsx-qjxf1",
+     "rftsx-j83yd",
+     "rftsx-it5ry"
+    ],
+    "beads": [
+     "rftsx-sbyih:M0:epic",
+     "rftsx-bge18:M0:decision",
+     "rftsx-7sy4c:M0:decision",
+     "rftsx-m69sf:M1:child",
+     "rftsx-abin9:M1:child",
+     "rftsx-j83yd:M1:child",
+     "rftsx-irbta:M1:child",
+     "rftsx-bh3x7:M1:child",
+     "rftsx-w9akc:M1:decision",
+     "rftsx-qjxf1:M2:child",
+     "rftsx-zblcp:M2:child",
+     "rftsx-nwut7:M3:child",
+     "rftsx-it5ry:M4:child"
+    ],
+    "gated": [
+     "TSX-PF-03"
+    ],
+    "adopted": [
+     "rftsx-atcqf",
+     "rftsx-atcqf.22",
+     "rftsx-atcqf.23",
+     "rftsx-atcqf.26",
+     "rftsx-atcqf.27",
+     "rftsx-atcqf.36",
+     "rftsx-atcqf.40",
+     "rftsx-atcqf.42",
+     "rftsx-atcqf.8",
+     "rftsx-koy9c"
+    ]
+   }
+  },
+  "leg": "tests/audit/harness2-api-pin.test.ts",
+  "dispatchClauses": [
+   "A child closes only on its public acceptance: the forge leg or test file its `acceptance` field names runs green at one sha on a branch `bead/<id>/ws-NN`, and the landing carries `Bead: <id>` in its message.",
+   "Epics close when every ungated child has closed and the gate ruling has recorded a verdict.",
+   "Ruling rows (M0) are decision beads: they close when their ADR or ruling text lands, never by implication.",
+   "A documented design is not an implementation: every child stays open until its public acceptance holds."
+  ],
+  "carried": [
+   "rftsx-sbyih",
+   "TSX-PF-03",
+   "rftsx-bge18",
+   "rftsx-7sy4c",
+   "rftsx-w9akc",
+   "not machine/flywheel/<id>",
+   "never by implication"
+  ],
+  "closeWindow": 8,
+  "closingStatus": [
+   "closed",
+   "done"
+  ],
+  "instructionFiles": [
+   "AGENTS.md",
+   ".agents/skills/beads/SKILL.md",
+   ".beads/README.md"
+  ],
+  "scanRoots": [
+   {
+    "root": "src",
+    "floor": 100,
+    "anchorFile": "src/workbench/beads-observer.ts",
+    "anchorToken": "bd show"
+   },
+   {
+    "root": "qa",
+    "floor": 50,
+    "anchorFile": "qa/workbench/live-furnace-vc4-launch.mjs",
+    "anchorToken": "spawnSync('bd', ['init'"
+   },
+   {
+    "root": "examples",
+    "floor": 5,
+    "anchorFile": "examples/workflows/gated-fix.js",
+    "anchorToken": "gate"
+   },
+   {
+    "root": ".pi",
+    "floor": 1,
+    "anchorFile": ".pi/agents/auditor.md",
+    "anchorToken": "max_turns"
+   },
+   {
+    "root": ".codex",
+    "floor": 2,
+    "anchorFile": ".codex/hooks.json",
+    "anchorToken": "bd codex-hook"
+   },
+   {
+    "root": ".github",
+    "floor": 2,
+    "anchorFile": ".github/workflows/ci.yml",
+    "anchorToken": "setup-node"
+   }
+  ],
+  "residuals": {
+   "R-ARGV": [
+    "Q1"
+   ],
+   "R-COMPOSED": [
+    "Q2"
+   ],
+   "R-PARAPHRASE": [
+    "Q3"
+   ],
+   "R-INSTRUCTION": [
+    "Q4"
+   ],
+   "R-CONTROLLER": [
+    "Q5"
+   ],
+   "R-STORE": [
+    "Q6"
+   ],
+   "R-EVIDENCE": [
+    "Q7"
+   ],
+   "R-SCOPE": [
+    "Q8"
+   ],
+   "R-UNCARRIED": [
+    "Q9"
+   ]
+  },
+  "cases": [
+   "a:",
+   "a:rftsx-auqdi",
+   "a:",
+   "a:",
+   "a:",
+   "a:",
+   "a:",
+   "a:",
+   "a:",
+   "a:",
+   "a:",
+   "a:",
+   "a:",
+   "a:",
+   "a:",
+   "a:",
+   "a:rftsx-j83yd",
+   "a:",
+   "a:",
+   "b:rftsx-bhmrd",
+   "b:",
+   "b:",
+   "b:",
+   "b:",
+   "b:",
+   "b:",
+   "b:",
+   "b:rftsx-sbyih",
+   "b:",
+   "b:",
+   "c:rftsx-7sy4c",
+   "c:",
+   "c:",
+   "c:rftsx-rupqh",
+   "c:",
+   "c:rftsx-bge18",
+   "c:",
+   "c:"
+  ],
+  "mutants": [
+   "closeOnRedRun",
+   "closeOnAnyFile",
+   "closeOnSupersetRun",
+   "closeWithoutNamedSha",
+   "closeOnMachineBranch",
+   "closeOnForeignBranch",
+   "closeWithoutTrailer",
+   "closeOnAnyTrailer",
+   "closeOnDocsOnly",
+   "closeWithoutRun",
+   "legFromTitle",
+   "closeEpicWithOpenChild",
+   "closeEpicWithoutVerdict",
+   "verdictFromClosure",
+   "closeEpicWithoutReceipt",
+   "acceptLegReceipt",
+   "acceptReceiptOffMain",
+   "cascadeRulings",
+   "cascadeGated",
+   "cascadeAdopted",
+   "closeOnEmptyRuling",
+   "closeOnUnlandedRuling",
+   "closeByImplication",
+   "closeM0WithChildren"
+  ]
+ },
+ "tests": [
+  "the judged set: the frozen shape, the out-of-file roster, the producer rows, the bead's notes and the cases agree",
+  "A1",
+  "A2",
+  "A3",
+  "B1",
+  "B2",
+  "B3",
+  "C1",
+  "C2",
+  "Q1",
+  "Q2",
+  "Q3",
+  "Q4",
+  "Q5",
+  "Q6",
+  "Q7",
+  "Q8",
+  "Q9",
+  "the registered tests and the reached pins equal the roster, in order and both ways"
+ ],
+ "rows": [
+  {
+   "id": "A",
+   "label": "(a) child close refused without a green run of the acceptance-named leg at a named sha on bead/<id>/ws-NN, when the receipt names another file or the landing lacks `Bead: <id>` or carries the epic's/a ruling's id; a docs-only landing leaves it open",
+   "pins": [
+    {
+     "id": "A1",
+     "witness": {
+      "cases": [
+       {
+        "name": "a: the pinned graph states nothing and closes nothing",
+        "closes": []
+       },
+       {
+        "name": "a: complete evidence closes the child",
+        "closes": [
+         "rftsx-auqdi"
+        ]
+       },
+       {
+        "name": "a: a red run",
+        "closes": []
+       },
+       {
+        "name": "a: a landing and no run",
+        "closes": []
+       },
+       {
+        "name": "a: the receipt names another file",
+        "closes": []
+       },
+       {
+        "name": "a: the receipt names the leg beside another file",
+        "closes": []
+       },
+       {
+        "name": "a: no named sha",
+        "closes": []
+       },
+       {
+        "name": "a: a sha range",
+        "closes": []
+       },
+       {
+        "name": "a: branch machine/flywheel/<id>",
+        "closes": []
+       },
+       {
+        "name": "a: another bead's branch",
+        "closes": []
+       },
+       {
+        "name": "a: a branch without ws-NN",
+        "closes": []
+       },
+       {
+        "name": "a: the landing lacks the trailer",
+        "closes": []
+       },
+       {
+        "name": "a: the landing carries the epic's id",
+        "closes": []
+       },
+       {
+        "name": "a: the landing carries a ruling's id",
+        "closes": []
+       },
+       {
+        "name": "a: the landing carries its own id and the epic's",
+        "closes": []
+       },
+       {
+        "name": "a: a docs-only landing leaves it open",
+        "closes": []
+       },
+       {
+        "name": "a: PERF-F: complete evidence over the three-file leg closes rftsx-j83yd",
+        "closes": [
+         "rftsx-j83yd"
+        ]
+       },
+       {
+        "name": "a: PERF-F: a run of two of the three named files",
+        "closes": []
+       },
+       {
+        "name": "a: PERF-F: an acceptance naming no leg never closes",
+        "closes": []
+       }
+      ],
+      "mutants": {
+       "closeOnRedRun": 1,
+       "closeOnAnyFile": 3,
+       "closeOnSupersetRun": 1,
+       "closeWithoutNamedSha": 2,
+       "closeOnMachineBranch": 1,
+       "closeOnForeignBranch": 1,
+       "closeWithoutTrailer": 4,
+       "closeOnAnyTrailer": 3,
+       "closeOnDocsOnly": 1,
+       "closeWithoutRun": 1,
+       "legFromTitle": 2
+      }
+     }
+    },
+    {
+     "id": "A2",
+     "witness": {
+      "legs": {
+       "h2": {
+        "rftsx-auqdi": [
+         "tests/audit/harness2-api-pin.test.ts"
+        ],
+        "rftsx-rupqh": []
+       },
+       "perfF": {
+        "rftsx-m69sf": [],
+        "rftsx-j83yd": [
+         "tests/audit/public-exports.test.ts",
+         "tests/unit/perf/output-path-sidecar.test.ts",
+         "tests/unit/render/stage-marks.test.ts"
+        ],
+        "rftsx-w9akc": [],
+        "rftsx-qjxf1": [
+         "tests/stress/dogfood-perf-baseline.test.ts"
+        ],
+        "rftsx-it5ry": [
+         "tests/stress/prepared-segments-oracle.test.ts"
+        ]
+       }
+      },
+      "legless": [
+       "rftsx-m69sf"
+      ],
+      "leglessCloses": [],
+      "titled": [],
+      "pinned": {
+       "h2": [],
+       "perfF": []
+      },
+      "forgeLeg": [
+       "forge run census"
+      ],
+      "legPresentAtPin": false
+     }
+    },
+    {
+     "id": "A3",
+     "witness": {
+      "roots": [
+       {
+        "root": "src",
+        "floor": true,
+        "anchor": true
+       },
+       {
+        "root": "qa",
+        "floor": true,
+        "anchor": true
+       },
+       {
+        "root": "examples",
+        "floor": true,
+        "anchor": true
+       },
+       {
+        "root": ".pi",
+        "floor": true,
+        "anchor": true
+       },
+       {
+        "root": ".codex",
+        "floor": true,
+        "anchor": true
+       },
+       {
+        "root": ".github",
+        "floor": true,
+        "anchor": true
+       }
+      ],
+      "launched": [],
+      "bound": [],
+      "controls": {
+       "flagged": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+       ],
+       "quiet": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      "seam": [
+       "show"
+      ],
+      "exports": [
+       "BEADS_WORK_CONTRACT",
+       "projectBeadsWork",
+       "readBeadsWork"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "label": "(b) epic close refused while rftsx-auqdi is open, rftsx-rupqh has no verdict text or the receipt is missing, never closing a gated packet or ruling transitively",
+   "pins": [
+    {
+     "id": "B1",
+     "witness": {
+      "cases": [
+       {
+        "name": "b: every ungated child closed, the verdict recorded, a full build green on main: the epic closes",
+        "closes": [
+         "rftsx-bhmrd"
+        ]
+       },
+       {
+        "name": "b: rftsx-auqdi open",
+        "closes": []
+       },
+       {
+        "name": "b: rftsx-rupqh closed with no verdict text",
+        "closes": []
+       },
+       {
+        "name": "b: verdict text without a verdict",
+        "closes": []
+       },
+       {
+        "name": "b: the receipt is missing",
+        "closes": []
+       },
+       {
+        "name": "b: a leg receipt",
+        "closes": []
+       },
+       {
+        "name": "b: a receipt off main",
+        "closes": []
+       },
+       {
+        "name": "b: a red receipt",
+        "closes": []
+       },
+       {
+        "name": "b: PERF-F: the epic closes on its own condition",
+        "closes": [
+         "rftsx-sbyih"
+        ]
+       },
+       {
+        "name": "b: PERF-F: one child open",
+        "closes": []
+       },
+       {
+        "name": "b: PERF-F: a verdict on three of the four gate beads",
+        "closes": []
+       }
+      ],
+      "mutants": {
+       "closeEpicWithOpenChild": 2,
+       "closeEpicWithoutVerdict": 3,
+       "verdictFromClosure": 2,
+       "closeEpicWithoutReceipt": 4,
+       "acceptLegReceipt": 1,
+       "acceptReceiptOffMain": 1,
+       "cascadeRulings": 2,
+       "cascadeGated": 2,
+       "cascadeAdopted": 2
+      }
+     }
+    },
+    {
+     "id": "B2",
+     "witness": {
+      "programs": {
+       "h2": {
+        "closes": [
+         "rftsx-bhmrd"
+        ],
+        "rulingsOpen": [
+         "rftsx-7sy4c",
+         "rftsx-8er6b",
+         "rftsx-e9a5e"
+        ],
+        "gatedAreBeads": false,
+        "adoptedAreBeads": false
+       },
+       "perfF": {
+        "closes": [
+         "rftsx-sbyih"
+        ],
+        "rulingsOpen": [
+         "rftsx-bge18",
+         "rftsx-7sy4c"
+        ],
+        "gatedAreBeads": false,
+        "adoptedAreBeads": false
+       }
+      },
+      "cascades": {
+       "cascadeRulings": [
+        "b: every ungated child closed, the verdict recorded, a full build green on main: the epic closes: closes [rftsx-7sy4c, rftsx-8er6b, rftsx-bhmrd, rftsx-e9a5e]",
+        "b: PERF-F: the epic closes on its own condition: closes [rftsx-7sy4c, rftsx-bge18, rftsx-sbyih]"
+       ],
+       "cascadeGated": [
+        "b: every ungated child closed, the verdict recorded, a full build green on main: the epic closes: closes [TSX-H2-01, TSX-H2-02, TSX-H2-03, TSX-H2-04, TSX-H2-05, rftsx-bhmrd]",
+        "b: PERF-F: the epic closes on its own condition: closes [TSX-PF-03, rftsx-sbyih]"
+       ],
+       "cascadeAdopted": [
+        "b: every ungated child closed, the verdict recorded, a full build green on main: the epic closes: closes [rftsx-9ofwd, rftsx-9q9l, rftsx-bhmrd, rftsx-flynt, rftsx-koy9c.4]",
+        "b: PERF-F: the epic closes on its own condition: closes [rftsx-atcqf, rftsx-atcqf.22, rftsx-atcqf.23, rftsx-atcqf.26, rftsx-atcqf.27, rftsx-atcqf.36, rftsx-atcqf.40, rftsx-atcqf.42, rftsx-atcqf.8, rftsx-koy9c, rftsx-sbyih]"
+       ]
+      }
+     }
+    },
+    {
+     "id": "B3",
+     "witness": {
+      "bound": {},
+      "synthetic": {
+       "synthetic/honest": 0,
+       "synthetic/closeOnMachineBranch": 1
+      },
+      "cases": 38
+     }
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "label": "(c) decision-bead close refused without ruling/ADR text; closing every child closes no M0 bead",
+   "pins": [
+    {
+     "id": "C1",
+     "witness": {
+      "cases": [
+       {
+        "name": "c: a ruling row closes on its own landed ruling text",
+        "closes": [
+         "rftsx-7sy4c"
+        ]
+       },
+       {
+        "name": "c: ruling text not landed",
+        "closes": []
+       },
+       {
+        "name": "c: landed with no ruling text",
+        "closes": []
+       },
+       {
+        "name": "c: the ADR bead closes on its own landed ADR text",
+        "closes": [
+         "rftsx-rupqh"
+        ]
+       },
+       {
+        "name": "c: never by implication: every child closed",
+        "closes": []
+       },
+       {
+        "name": "c: PERF-F: rftsx-bge18 closes on its own landed ruling text",
+        "closes": [
+         "rftsx-bge18"
+        ]
+       },
+       {
+        "name": "c: PERF-F: rftsx-w9akc stays open while its ADR is unverified",
+        "closes": []
+       },
+       {
+        "name": "c: PERF-F: never by implication: every child closed",
+        "closes": []
+       }
+      ],
+      "mutants": {
+       "closeOnEmptyRuling": 1,
+       "closeOnUnlandedRuling": 2,
+       "closeByImplication": 2,
+       "closeM0WithChildren": 2
+      }
+     }
+    },
+    {
+     "id": "C2",
+     "witness": {
+      "programs": {
+       "h2": {
+        "m0": [
+         "rftsx-bhmrd",
+         "rftsx-7sy4c",
+         "rftsx-8er6b",
+         "rftsx-e9a5e"
+        ],
+        "afterChildren": [],
+        "onePass": [
+         "rftsx-auqdi",
+         "rftsx-rupqh"
+        ]
+       },
+       "perfF": {
+        "m0": [
+         "rftsx-sbyih",
+         "rftsx-bge18",
+         "rftsx-7sy4c"
+        ],
+        "afterChildren": [],
+        "onePass": [
+         "rftsx-it5ry",
+         "rftsx-j83yd",
+         "rftsx-qjxf1",
+         "rftsx-w9akc"
+        ]
+       }
+      },
+      "reader": {
+       "epic": {
+        "status": "open",
+        "tone": "waiting",
+        "relations": []
+       },
+       "child": {
+        "status": "closed",
+        "tone": "unknown",
+        "relations": [
+         "grouping rftsx-bhmrd -> rftsx-auqdi"
+        ]
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "Q",
+   "label": "residuals: each named family with its pinned quiet row",
+   "pins": [
+    {
+     "id": "Q1",
+     "witness": {
+      "held": 0,
+      "far": 0,
+      "edge": 1
+     }
+    },
+    {
+     "id": "Q2",
+     "witness": {
+      "joined": 0,
+      "added": 0
+     }
+    },
+    {
+     "id": "Q3",
+     "witness": {
+      "prose": 0,
+      "payload": 0
+     }
+    },
+    {
+     "id": "Q4",
+     "witness": {
+      "files": {
+       "AGENTS.md": {
+        "read": true,
+        "launches": true,
+        "namesRftsx": false
+       },
+       ".agents/skills/beads/SKILL.md": {
+        "read": true,
+        "launches": true,
+        "namesRftsx": false
+       },
+       ".beads/README.md": {
+        "read": true,
+        "launches": true,
+        "namesRftsx": false
+       }
+      },
+      "scanned": []
+     }
+    },
+    {
+     "id": "Q5",
+     "witness": {
+      "read": true,
+      "bdWords": 0,
+      "launches": []
+     }
+    },
+    {
+     "id": "Q6",
+     "witness": {
+      "bdArgv": [
+       [
+        "init",
+        "--non-interactive",
+        "--prefix",
+        "fx",
+        "--quiet"
+       ]
+      ],
+      "storeJoins": [
+       "embeddeddolt",
+       "formulas",
+       "formulas"
+      ],
+      "exportReaders": []
+     }
+    },
+    {
+     "id": "Q7",
+     "witness": {
+      "legPresentAtPin": false,
+      "closes": [
+       "rftsx-auqdi"
+      ]
+     }
+    },
+    {
+     "id": "Q8",
+     "witness": {
+      "scanned": [
+       "src",
+       "qa",
+       "examples",
+       ".pi",
+       ".codex",
+       ".github"
+      ],
+      "testSpells": true,
+      "exportSpells": true
+     }
+    },
+    {
+     "id": "Q9",
+     "witness": {
+      "uncarried": [
+       "perfF:rftsx-abin9",
+       "perfF:rftsx-irbta",
+       "perfF:rftsx-bh3x7",
+       "perfF:rftsx-zblcp",
+       "perfF:rftsx-nwut7"
+      ],
+      "closes": []
+     }
+    }
+   ]
+  }
+ ]
+}
