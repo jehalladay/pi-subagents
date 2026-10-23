@@ -1,0 +1,381 @@
+{
+  "comment": "wb-o4h0.3 (RF-FEDERATED-WORKSPACES-R4; the hk9l/5jha/1xvp.4 roster pattern): the OUT-OF-FILE anchor of test/workbench-rf-workspace-family-census.test.ts. rows: every judged row of test/helpers/rf-workspace-family.ts in census order (LEAVES, SOURCES, LAUNCHES, ENVELOPES) - table, id, label, the SHA-256 of each case as written (JSON of the case: its input and its expected reading) and the registered test. tests: every test the census file registers, in order. residuals: the named residual families and their pinned quiet rows. Written from the rows as measured at the cut; the census judges its tables, its registered tests (vitest task tree, run modes) and its residual families against this file at test time, in order and both ways. It is a literal authored in the same cut, not a source of truth: a hollow that also edits this file is not caught here.",
+  "rows": [
+    {
+      "table": "LEAVES",
+      "id": "SERVED-LINK",
+      "label": "a served workspace.link leaf flips the guard to re-triage",
+      "pins": [
+        "8fb19aa5afb5f8ce9b966a22edc89de9cf0df539b51c3cde7e5b970a719863f2",
+        "96fcd6358164a07058465c1b66b4011a5eb23b9838ffeb293fc5b5ea0470a673"
+      ],
+      "test": "LEAVES SERVED-LINK"
+    },
+    {
+      "table": "LEAVES",
+      "id": "SERVED-LINKS",
+      "label": "a served workspace.links leaf flips the guard to re-triage",
+      "pins": [
+        "51504916bc5540e6381b733d0bd12caef4fc8f32a6ccfe5ee45c3d9a464c4722",
+        "5cbffbc73769ef4b9d5d8b7c505d2255bfd602aa67eb5b6a954b14b8eca6262a"
+      ],
+      "test": "LEAVES SERVED-LINKS"
+    },
+    {
+      "table": "LEAVES",
+      "id": "SERVED-INSPECT",
+      "label": "a served workspace.inspect leaf flips the guard to re-triage",
+      "pins": [
+        "566dafc7117e278b9a59a033b1d15bf05ffa0e1c333deb730536056ed3a25426",
+        "270495cdb25c2fb95e5efcfa37670d4226e89fc773e948f068972eab490ea53d"
+      ],
+      "test": "LEAVES SERVED-INSPECT"
+    },
+    {
+      "table": "LEAVES",
+      "id": "SERVED-EXPORTS",
+      "label": "a served workspace.exports leaf flips the guard to re-triage",
+      "pins": [
+        "17f83777bb3bc9fa12004da473a72d92c40b10d8513681284c036a03b313c3d9",
+        "f10c2b679573fb3977d24d5c5c7a9ac8b7b8e29545abc012aceac6cb70cc7dc5"
+      ],
+      "test": "LEAVES SERVED-EXPORTS"
+    },
+    {
+      "table": "LEAVES",
+      "id": "SERVED-READ",
+      "label": "a served workspace.read leaf flips the guard to re-triage",
+      "pins": [
+        "57483bee0c1be3d4a023342ff8bf283afa74d223b0f4b943f8ce4990f9dbabbe",
+        "543008310f847fcdbb6adaf55e5c9577697b2e31e1e10ddf9a698f5a19b5e858"
+      ],
+      "test": "LEAVES SERVED-READ"
+    },
+    {
+      "table": "LEAVES",
+      "id": "SERVED-SUBSCRIBE",
+      "label": "a served workspace.subscribe leaf flips the guard to re-triage",
+      "pins": [
+        "8509f4d9148c463e34071e913ddfa6eef0de6a072d93fec7f57f83509f0369cf",
+        "02c0dc702d7f445224b451147d9431096e11a862bcadfc84954244099564cf12"
+      ],
+      "test": "LEAVES SERVED-SUBSCRIBE"
+    },
+    {
+      "table": "LEAVES",
+      "id": "SERVED-UNLINK",
+      "label": "a served workspace.unlink leaf flips the guard to re-triage",
+      "pins": [
+        "2a9135ef426cdccb07f094ddad05bd61fe050d9bbe8edb02764d85bc54c69541",
+        "7cf34559d55f78fd48a4cee20037c7e48b4f3fa7b5938937a2fe062719ca669c"
+      ],
+      "test": "LEAVES SERVED-UNLINK"
+    },
+    {
+      "table": "LEAVES",
+      "id": "SERVED-INVOKE",
+      "label": "a served workspace.invoke leaf flips the guard to re-triage",
+      "pins": [
+        "dfaa20f6fff988d513f55b522951045a150dab11e04ab2d25e78730aa187e193",
+        "2141ccbc68eb4cc2de9b35075177bc4f7eff0fdf11ef3279f9814575ed9cd53b"
+      ],
+      "test": "LEAVES SERVED-INVOKE"
+    },
+    {
+      "table": "LEAVES",
+      "id": "SERVED-OTHER-SPELLINGS",
+      "label": "a served family path outside the named eight, bare, space-separated or upper case also flips to re-triage",
+      "pins": [
+        "3aa4783ca49417315cfcb77afd17aab690a13a2074d998a911845defb9549cb9",
+        "f9f1db769de3ab889c85e74688490b424c338202dcc59218b403cb93d13460ec",
+        "2ddef3ef28b650c72b8ae3f4028c9a7320794439494989a8083ddcb96a0986b6",
+        "3329990ba10042c8da8404a520462f4ba9c626f45c16a2b2b5fe68d5f1316e6e"
+      ],
+      "test": "LEAVES SERVED-OTHER-SPELLINGS"
+    },
+    {
+      "table": "LEAVES",
+      "id": "PLANNED-STAYS-ABSENT",
+      "label": "a family leaf the registry lists but does not serve stays absent and is recorded as planned; availability is not read",
+      "pins": [
+        "bfe8b33eb4506944ebbdcc5bcc435ca1a6072225c07083eabb11ff92ef5124fd",
+        "7579e57bcebb76fa88151747dbd71a6c5089c2e60e6f705b819a6f16e95f391c",
+        "e1df24f71faa681ba0d2d49aaccf3e35ad6e588e550cae000f31eb2fab2962ab"
+      ],
+      "test": "LEAVES PLANNED-STAYS-ABSENT"
+    },
+    {
+      "table": "LEAVES",
+      "id": "CAPABILITIES-NOT-READ",
+      "label": "capabilities.leaves is never read: only result.leaves decides",
+      "pins": [
+        "b96d2f81d78f1a90ba4319bfd3ef911326191c033c4f2319647d0862bde9558f",
+        "e3591bb32f47264321544ef2c331d658faa879659c5a7423a1c3235b660ee818",
+        "d0597861bd033948948d4605b15ed334a2acbfaec023ac76dca5ab8828ee196a"
+      ],
+      "test": "LEAVES CAPABILITIES-NOT-READ"
+    },
+    {
+      "table": "LEAVES",
+      "id": "NOT-A-VERSION-ENVELOPE",
+      "label": "stdout that is not rf's ok version envelope reads unreadable, never absent",
+      "pins": [
+        "efeac557f1bad700bbf53e9be3a35fbe914a75dafbb17b3549d7055895df0e0d",
+        "fe107f5ed8a2605dc9878febd38bc2e5f25b73e89fb86f22c05f6fa6bb604878",
+        "b12bc3291f21923fadd81e252af03ff2e6f5ed5e21f699e6e4fda5ff5587e08d",
+        "56dc6ec1de14b08a8d211d9da6180e86a9217f39fbdff2541e51d84b248a144b",
+        "162f2593a3fd2da63858eeb6d1d6e1c974496c4eefbfc771b98b6242706ce9bd",
+        "8a734c402c74d6a3494c86ade971e2abcb45f7589dac21894f993658b4aeb789",
+        "3f54a72c9b6e6384f1a93202d8439e138c4f262ac975576458d3aff6f60b4173",
+        "e477d8188964f17fe0b32cedea021859765bbad6d59780a0f441c6a155fe0e1a"
+      ],
+      "test": "LEAVES NOT-A-VERSION-ENVELOPE"
+    },
+    {
+      "table": "LEAVES",
+      "id": "NO-READABLE-ROWS",
+      "label": "a registry without readable path/served rows reads unreadable, never absent",
+      "pins": [
+        "4003112ab7bee17dc9c0e424fd8ef9948cb9bf8ff112ba11481632cd268b5de1",
+        "5475a667e157655701ba7a12bc91c0f97afab0577b9fcfd1a923f00d7038c703",
+        "005d1db68df18ac782d04cb3123d4ebb44e40a8447328f2287254a580030d83b",
+        "bd656708fc140918edadeed8da3fa02608161c601e0cf5c5bd85d174ca756353",
+        "7b226e574df136fbe049ab0b65ffa2ffb703e7c47daba523484df35b39b53053",
+        "16363ff4403e4ecf32608750e3d10d2d322691f0d342bebac3138c7d24ab9dea"
+      ],
+      "test": "LEAVES NO-READABLE-ROWS"
+    },
+    {
+      "table": "LEAVES",
+      "id": "NO-FAMILY-ROW",
+      "label": "a registry whose rows name no family path reads absent, near names included",
+      "pins": [
+        "8f47f52592994a204e334367971a950bcadbf41b1474673bfbf0f159724b911a",
+        "7f8e60246208962665665612c84b0c8631c71f775927f179d6352215b9b34296"
+      ],
+      "test": "LEAVES NO-FAMILY-ROW"
+    },
+    {
+      "table": "SOURCES",
+      "id": "ARGV-ADJACENT",
+      "label": "an argv array or call argument list holding workspace then a family leaf is found",
+      "pins": [
+        "4cf189a635d262bdf3b90b3aeec20c932500c74df70f9d076858715f7eda33df",
+        "ad17081277c4008480578a71af5662935be43d678c777195ce5d68f2b5a9d488",
+        "993ea504408f2878c5730d478baa22d9378becd0030a70d3bdc1d561982612c3",
+        "ac6fc7cb37447725ebf8659929f411c9840e3108ca29483c5a217bb3828be006",
+        "931064f54db9e2a269d3868456d0782b4c41bf82b252eb92b49611deb3c6a335"
+      ],
+      "test": "SOURCES ARGV-ADJACENT"
+    },
+    {
+      "table": "SOURCES",
+      "id": "LITERAL-SPELLED",
+      "label": "a string or template literal spelling workspace then a family leaf is found",
+      "pins": [
+        "bf5bb0e5287353af327b43eb5a2a32ed7e924d1e97e674e3ca3ff22b00850478",
+        "ba8b52f9ed73008b9b6b7476ac8876d66abda603122eb9495320412f46cd16f2",
+        "2762ff719518a449e60437c74ab456acb9a9d2db2cedba3a3e3c0713a79e496b",
+        "83a4aca05bccec2ce33042212435b553b20a4ecaa066f2020e6c4d4c1bd2550a",
+        "9c8124c3db10073bf24d020ccd458578af15142c298a77297292e5b4c2ba3938",
+        "471effeb3d4af98cc3934f91b95da7edadbc2fd7f64a305b11d164b486a941c9"
+      ],
+      "test": "SOURCES LITERAL-SPELLED"
+    },
+    {
+      "table": "SOURCES",
+      "id": "CLEAN-SHAPES",
+      "label": "the preview argv, a non-family workspace word, comments and a leaf or workspace inside a longer word stay clean",
+      "pins": [
+        "d673edb03e87adf1040d9c322b18295a0f02f1388b5e67e31ede1635301d72cf",
+        "6331b289cb93b55e3b9d63d910d825ce3bbdcbd8f14941208ec3222b08c5af11",
+        "6520f514dd1d17f7a27402d062660925c098f5f776c62078a45a3b75163ccd88",
+        "d5662cd88a6d0bfb77340bf04512cd30f3b9a2879ad7214106eb2293724d3777",
+        "3f543a7c537d725be57fe0bb1a54332b52b7d3fb96c5c41e4145d6a969621ecc"
+      ],
+      "test": "SOURCES CLEAN-SHAPES"
+    },
+    {
+      "table": "SOURCES",
+      "id": "R-SEPARATED-LEAF",
+      "label": "residual quiet row: a leaf separated from workspace by another element, or held in a second array, is not read",
+      "pins": [
+        "1930fdb9684c6a748b6f37fb1d9d3e78fc17b44f2aaf757d15cfad5599a370b0",
+        "9d3625f1852255441e2dcf74e7279a38c953f0323972367ebe6a9a48a3aa62cc"
+      ],
+      "test": "SOURCES R-SEPARATED-LEAF"
+    },
+    {
+      "table": "SOURCES",
+      "id": "R-COMPUTED-LEAF",
+      "label": "residual quiet row: a leaf token or command built at run time is not read",
+      "pins": [
+        "823d0f701723adea765104e2670224f31f79e04e75a1a9068ca5f8525a064b11",
+        "cf2b167a38baafc4781ec3508d86360d3486a55fb5fe376f9b083872cf0ae10f",
+        "880948ece6d8baa5e1730d3d50edf77ca817db63c6ec69d20612149d9a0f1d2e"
+      ],
+      "test": "SOURCES R-COMPUTED-LEAF"
+    },
+    {
+      "table": "LAUNCHES",
+      "id": "DETACHED-FOUND",
+      "label": "an rf launch whose options literal sets detached: true is found",
+      "pins": [
+        "a3a02a17bf7413193883991270d57e37ed26c5687f831101556a90eaf6e90877",
+        "ba94ccbf1bdbc98c578e37a76b08060411be0b2fe92832aff89bae420b3e4ade",
+        "62b1932072ea86b1c47d24fa0a92aea86b6308f9bdf046ea91fd362f2fc2f993",
+        "eaad4250ea108cd5d5b1bc38cf1e81aa091d1082da3f82d04241fa2039cc409e",
+        "b0f0c3ac44a40f68be29154fb22516e111519b5cfcc5072b503731f994b006d0"
+      ],
+      "test": "LAUNCHES DETACHED-FOUND"
+    },
+    {
+      "table": "LAUNCHES",
+      "id": "UNREF-FOUND",
+      "label": "unref() on an rf child, chained or through the name a declaration or assignment binds, is found",
+      "pins": [
+        "3a1bdaa62138b714d6baae9b250c098cbd7d9007e8a50d10432b32abbce071b3",
+        "5c2b567f0924b778841178845a2cf9b244ff21d1c70ec3ae3dc4e5e3d49851b7",
+        "2584c7fcecae98e961ad64cf428c79bc6d06c0f02dd5f46fd8d50c2ef72fd5fc",
+        "4995eeb63dd85b3084d5ad2b1ba6858026c5346f294248793b31e4aaab2a4a54"
+      ],
+      "test": "LAUNCHES UNREF-FOUND"
+    },
+    {
+      "table": "LAUNCHES",
+      "id": "FOREGROUND-CLEAN",
+      "label": "a foreground rf launch, a timer unref and a non-rf detached launch stay clean",
+      "pins": [
+        "31663a9fe97a47185b2e73314ead5250bf58231b5d5d57948b410874a444aff5",
+        "b026c8c09956fdb80adc24d337c3c09164af68fc57757bfea465bca6df83cc26",
+        "8ec50ad199eeef5c869ae6bd58fcbe53dbe8e08da81a1973120a900d172aedb7",
+        "51a85fc668d2883cca61717421f3530a63b1652a8ba5aad6376205d84bde98bf"
+      ],
+      "test": "LAUNCHES FOREGROUND-CLEAN"
+    },
+    {
+      "table": "LAUNCHES",
+      "id": "R-INDIRECT-LAUNCH",
+      "label": "residual quiet row: options, child or binary reached through another name are not read",
+      "pins": [
+        "29b60f1eee2c1e7c1fc7f1d3287ea98d3f695385d2738cb5f39a7378d69aee97",
+        "41385bae19b77295e98a21fb81fbc96a01aa6a3e2984b39ea77d96a545cf414a",
+        "2dffef1af68785a3d2b3a6bfdf700a48999e0e4e353ea2418df512c10c6704fd",
+        "c7935db3cace183fa2711ed53c6cef0d5b612bf37f26f96a71df1af42fa23433"
+      ],
+      "test": "LAUNCHES R-INDIRECT-LAUNCH"
+    },
+    {
+      "table": "ENVELOPES",
+      "id": "MODULE-FABRICATION-FOUND",
+      "label": "a module object literal with ok true and a family command is found",
+      "pins": [
+        "d0a0951d8c36039db4b5e6c20acb528c6fa582e13570b2b0108ddef6cb332f35",
+        "4020a29aefcffbc087bec9239b341ad2abbf651d1429889f907b69e3bd055cc8",
+        "bcb742693a42f3a2971dbc81cc462f588bb7c03c2402f5996afd5ff067e50f35",
+        "fb13173b53e5d7e4b05b7607e66671da12ba7f1821e628f193e51b897e82b189"
+      ],
+      "test": "ENVELOPES MODULE-FABRICATION-FOUND"
+    },
+    {
+      "table": "ENVELOPES",
+      "id": "JSON-FABRICATION-FOUND",
+      "label": "a JSON object with ok true and a family command is found at any depth",
+      "pins": [
+        "94af7a1d33d04fbaa8abdbc0531f7db730467695379d6c20243a55784acfba81",
+        "e9dc024c6b49236115b051db8abf1962e9d454f6a0a556dd3d88a014159d7e23"
+      ],
+      "test": "ENVELOPES JSON-FABRICATION-FOUND"
+    },
+    {
+      "table": "ENVELOPES",
+      "id": "REFUSALS-AND-OTHERS-CLEAN",
+      "label": "a family refusal, a context render success and a version envelope listing a leaf are not fabrications",
+      "pins": [
+        "359c175abac411b7ccbdc073be3011141331f1232d1a0996b4c8085509883c67",
+        "fbf354c72e4ef7568926e201af304a3c5d3c142bd029f34cda40ee2d7839e066",
+        "3bdbb58cb9618fc9e04aab690c3f0217d931e88d60bd3b68691cd3ee0242a73c",
+        "b5c9d1c46b0abffadd5fdad3a4f859007041ff342e9cadf984beb40ff759484c",
+        "d4a5d6ce036c5e80160db9713f2c2d3e9fd3e5a2f4fe63490d08c722ceb437d9"
+      ],
+      "test": "ENVELOPES REFUSALS-AND-OTHERS-CLEAN"
+    },
+    {
+      "table": "ENVELOPES",
+      "id": "R-INDIRECT-ENVELOPE",
+      "label": "residual quiet row: a command or ok reached through a name, a spread or an expression is not read",
+      "pins": [
+        "4a180aa8b594127bd058bae1bf5eb567274cc486ceb8ea18e7d674072142f3e9",
+        "c01c4ea3de093e63acd8533ccf50c2566fa9cac4a05902647331ddb943a41847",
+        "c4272591527e34a0e931ccf36d60ae488200f8251c0e659dbcdcfcb550490d63"
+      ],
+      "test": "ENVELOPES R-INDIRECT-ENVELOPE"
+    },
+    {
+      "table": "ENVELOPES",
+      "id": "R-UNREAD-KIND",
+      "label": "residual quiet row: a Markdown or shell file is not read, even when it holds a fabrication a module scan would find",
+      "pins": [
+        "8bbfae342f2c140976b11ee355174a90d722a509e6189b29518960aebc0ce7aa",
+        "8b4ab42ba3361a918c43ccecfcd66dc98cc1c8a57e20d3995e64bc7ea3f2dede"
+      ],
+      "test": "ENVELOPES R-UNREAD-KIND"
+    }
+  ],
+  "tests": [
+    "LEAVES SERVED-LINK",
+    "LEAVES SERVED-LINKS",
+    "LEAVES SERVED-INSPECT",
+    "LEAVES SERVED-EXPORTS",
+    "LEAVES SERVED-READ",
+    "LEAVES SERVED-SUBSCRIBE",
+    "LEAVES SERVED-UNLINK",
+    "LEAVES SERVED-INVOKE",
+    "LEAVES SERVED-OTHER-SPELLINGS",
+    "LEAVES PLANNED-STAYS-ABSENT",
+    "LEAVES CAPABILITIES-NOT-READ",
+    "LEAVES NOT-A-VERSION-ENVELOPE",
+    "LEAVES NO-READABLE-ROWS",
+    "LEAVES NO-FAMILY-ROW",
+    "SOURCES ARGV-ADJACENT",
+    "SOURCES LITERAL-SPELLED",
+    "SOURCES CLEAN-SHAPES",
+    "SOURCES R-SEPARATED-LEAF",
+    "SOURCES R-COMPUTED-LEAF",
+    "LAUNCHES DETACHED-FOUND",
+    "LAUNCHES UNREF-FOUND",
+    "LAUNCHES FOREGROUND-CLEAN",
+    "LAUNCHES R-INDIRECT-LAUNCH",
+    "ENVELOPES MODULE-FABRICATION-FOUND",
+    "ENVELOPES JSON-FABRICATION-FOUND",
+    "ENVELOPES REFUSALS-AND-OTHERS-CLEAN",
+    "ENVELOPES R-INDIRECT-ENVELOPE",
+    "ENVELOPES R-UNREAD-KIND",
+    "live (a): the captured rf registry (test/fixtures/rf-version-leaves.json, rf 0.1.832) reads absent over all of its rows",
+    "live (b): no src file spells a family argv or literal; the walk is every regular file under src/ and reaches the preview's argv",
+    "live (b): no registered native capability descriptor names the family",
+    "live (b): no file under test/ or qa/ fabricates a family success envelope; the walk reads every .json and module file there",
+    "live (b): the rf wrapper maps an exit-2 pending-leaf refusal to typed unavailable and the captured unknown-leaf refusal to typed transport, each in one spawn naming no family leaf",
+    "live (c)/(d): no src rf launch sets detached: true and no rf child is unref'd; the walk reaches the preview's launch",
+    "live (c): the rf child of a settled read is gone: its pid answers ESRCH once the read settles",
+    "rule 16: every judged row is frozen at its measured shape",
+    "roster: the judged rows, the registered tests and the residual families equal test/fixtures/rf-workspace-family-roster.json, in order and both ways"
+  ],
+  "residuals": {
+    "R-COMPUTED-LEAF": [
+      "SOURCES R-COMPUTED-LEAF"
+    ],
+    "R-SEPARATED-LEAF": [
+      "SOURCES R-SEPARATED-LEAF"
+    ],
+    "R-INDIRECT-LAUNCH": [
+      "LAUNCHES R-INDIRECT-LAUNCH"
+    ],
+    "R-INDIRECT-ENVELOPE": [
+      "ENVELOPES R-INDIRECT-ENVELOPE"
+    ],
+    "R-UNREAD-KIND": [
+      "ENVELOPES R-UNREAD-KIND"
+    ]
+  }
+}

@@ -1,0 +1,797 @@
+{
+  "comment": "wb-o4h0.3 (RF-FEDERATED-WORKSPACES-R4 acceptance (a)): the installed rf registry as captured by `rf --json --version` on the cut's host, read by test/workbench-rf-workspace-family-census.test.ts through judgeFamilyLeaves (test/helpers/rf-workspace-family.ts). envelope is the captured stdout verbatim except result.provenance.source_root (a host install path), which is dropped. The live counterpart is the rf-preview tier row in test/workbench-native-rf-preview.test.ts, which reads the installed rf at run time; this capture never flips by itself. unknownLeafRefusal is the captured stdout and exit of `rf --json workspace link` on the same rf (each of the eight family leaves answered the same refusal when measured): the shape the census's mapping row feeds the rf wrapper verbatim.",
+  "source": "captured",
+  "command": "rf --json --version",
+  "capturedUtc": "2026-10-22T21:19:01Z",
+  "rfVersion": "0.1.832",
+  "rfCommit": "2618c211be0dbbb74ba10e965e2d3d1f0fb5903e",
+  "envelope": {
+    "schema": "reactive-fiber.cli/v1",
+    "ok": true,
+    "command": "version",
+    "operation_id": "rfo_ikjgmncuquhwk7gda2hpqu66gm",
+    "workspace": null,
+    "transaction_id": null,
+    "result": {
+      "version": "0.1.832",
+      "sdk_versions": {
+        "fiber_optics": "0.1.0.20261014202847",
+        "reactive_lenses": "0.1.1.20261018.6",
+        "reactive_components": "0.1.1.20261018121500",
+        "reactive_inference": "0.2.60.20261018120223"
+      },
+      "leaves": [
+        {
+          "path": "init",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": false,
+          "availability": "served_reachable",
+          "attach_required": false
+        },
+        {
+          "path": "status",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": false,
+          "availability": "served_reachable",
+          "attach_required": false
+        },
+        {
+          "path": "doctor",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": false,
+          "availability": "served_reachable",
+          "attach_required": false
+        },
+        {
+          "path": "config.get",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": false,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "config.set",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": true,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "config.unset",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": true,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "config.list",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": false,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "config.explain",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": false,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "component.create",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": true,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "component.add",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": true,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "component.edit",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": false,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "component.validate",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": false,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "component.test",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": false,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "component.list",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": false,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "component.show",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": false,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "component.activate",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": true,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "component.deactivate",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": true,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "component.history",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": true,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "component.state.show",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": true,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "component.state.reset",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": true,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "optic.create",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": true,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "optic.validate",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": false,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "optic.test",
+          "served": false,
+          "planned_slice": 17,
+          "reachable": false,
+          "store_required": false,
+          "availability": "refusing_slice",
+          "attach_required": true
+        },
+        {
+          "path": "optic.show",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": false,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "optic.history",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": true,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "optic.usages",
+          "served": false,
+          "planned_slice": 17,
+          "reachable": false,
+          "store_required": false,
+          "availability": "refusing_slice",
+          "attach_required": true
+        },
+        {
+          "path": "optic.register",
+          "served": false,
+          "planned_slice": 17,
+          "reachable": false,
+          "store_required": false,
+          "availability": "refusing_slice",
+          "attach_required": true
+        },
+        {
+          "path": "optic.list",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": false,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "graph.show",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": false,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "graph.validate",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": false,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "graph.preflight",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": true,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "graph.explain",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": false,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "graph.diff",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": true,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "graph.candidate.create",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": true,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "graph.candidate.authorize",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": true,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "graph.patch",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": true,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "graph.connect",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": true,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "graph.disconnect",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": true,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "graph.set-optic",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": true,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "graph.impact",
+          "served": false,
+          "planned_slice": 17,
+          "reachable": false,
+          "store_required": false,
+          "availability": "refusing_slice",
+          "attach_required": true
+        },
+        {
+          "path": "graph.test",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": true,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "graph.publish",
+          "served": false,
+          "planned_slice": 17,
+          "reachable": false,
+          "store_required": false,
+          "availability": "refusing_slice",
+          "attach_required": true
+        },
+        {
+          "path": "graph.history",
+          "served": false,
+          "planned_slice": 17,
+          "reachable": false,
+          "store_required": false,
+          "availability": "refusing_slice",
+          "attach_required": true
+        },
+        {
+          "path": "graph.rollback",
+          "served": false,
+          "planned_slice": 17,
+          "reachable": false,
+          "store_required": false,
+          "availability": "refusing_slice",
+          "attach_required": true
+        },
+        {
+          "path": "view.list",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": false,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "view.show",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": false,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "view.validate",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": false,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "state.get",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": true,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "state.set",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": true,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "state.unset",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": true,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "state.list",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": true,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "state.history",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": true,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "session.open",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": true,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "session.show",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": true,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "session.list",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": true,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "session.close",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": true,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "context.render",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": true,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "context.show",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": true,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "context.explain",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": true,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "context.plan",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": true,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "context.diff",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": true,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "context.history",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": true,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "context.replay",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": true,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "inference.run",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": true,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "operation.show",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": true,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "storage.status",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": true,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "storage.rebuild-indexes",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": true,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "storage.export",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": true,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "storage.import",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": true,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "storage.migrate",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": true,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "storage.compact",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": true,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "storage.cleanup",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": false,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "storage.local-servers",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": false,
+          "availability": "served_reachable",
+          "attach_required": false
+        },
+        {
+          "path": "dolt",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": false,
+          "availability": "served_reachable",
+          "attach_required": true
+        },
+        {
+          "path": "schema.show",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": false,
+          "availability": "served_reachable",
+          "attach_required": false
+        },
+        {
+          "path": "schema.check",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": false,
+          "availability": "served_reachable",
+          "attach_required": false
+        },
+        {
+          "path": "schema.migrate",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": true,
+          "availability": "served_reachable",
+          "attach_required": false
+        },
+        {
+          "path": "completion",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": false,
+          "availability": "served_reachable",
+          "attach_required": false
+        },
+        {
+          "path": "install-skill",
+          "served": true,
+          "planned_slice": null,
+          "reachable": true,
+          "store_required": false,
+          "availability": "served_reachable",
+          "attach_required": false
+        }
+      ],
+      "provenance": {
+        "distribution": "ReactiveFiberCLI",
+        "source_version": "0.1.832",
+        "dist_version": "0.1.832",
+        "mismatch": false,
+        "commit_id": "2618c211be0dbbb74ba10e965e2d3d1f0fb5903e"
+      }
+    },
+    "diagnostics": []
+  },
+  "unknownLeafRefusal": {
+    "argv": [
+      "--json",
+      "workspace",
+      "link"
+    ],
+    "exit": 2,
+    "capturedUtc": "2026-10-22T21:22:43Z",
+    "stdout": {
+      "schema": "reactive-fiber.cli/v1",
+      "ok": false,
+      "command": null,
+      "operation_id": "rfo_ngt7wydp345iw3lbgmybts4lb4",
+      "workspace": null,
+      "transaction_id": null,
+      "result": null,
+      "diagnostics": [
+        {
+          "code": "RF_USAGE_UNKNOWN_COMMAND",
+          "severity": "error",
+          "message": "unknown command 'workspace'",
+          "hint": "Run `rf --help` for the command list.",
+          "source": "host",
+          "metadata": {
+            "command": "workspace",
+            "choices": [
+              "init",
+              "status",
+              "doctor",
+              "config",
+              "component",
+              "optic",
+              "graph",
+              "view",
+              "state",
+              "session",
+              "context",
+              "inference",
+              "operation",
+              "storage",
+              "dolt",
+              "schema",
+              "completion",
+              "install-skill"
+            ],
+            "suggestions": []
+          }
+        }
+      ]
+    }
+  }
+}
