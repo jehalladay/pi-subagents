@@ -28,7 +28,7 @@
    "Abstain",
    "awaiting operator review"
   ],
-  "provisional": [
+  "tentative": [
    "partial",
    "incomplete",
    "stale"
@@ -375,7 +375,7 @@
    "lastAtSlot": true,
    "indexAtSlot": true,
    "defaultNote": true,
-   "provisionalPassThrough": true,
+   "tentativePassThrough": true,
    "sideIndex": true,
    "sideParaphrase": true,
    "sideBoolean": true,
@@ -989,7 +989,7 @@
   },
   {
    "id": "B",
-   "label": "(b) mutant: mapping abstain to False, or any listed state to a default/first candidate, fails: abstain read as False on a Boolean and a choice question, the first candidate for every listed word, and the last candidate, the index, a default note and the provisional candidate passed through all refused",
+   "label": "(b) mutant: mapping abstain to False, or any listed state to a default/first candidate, fails: abstain read as False on a Boolean and a choice question, the first candidate for every listed word, and the last candidate, the index, a default note and the tentative candidate passed through all refused",
    "pins": [
     {
      "id": "B1",
@@ -1206,7 +1206,7 @@
          "candidate:q.route"
         ]
        },
-       "provisionalPassThrough": {
+       "tentativePassThrough": {
         "abstain": [],
         "partial": [
          "candidate:q.route",

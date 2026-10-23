@@ -22,13 +22,13 @@
  *  A, acceptance (a). A1 the adoption fixtures: one CONSTRUCTED envelope per listed word in the clause's order (read from the bead
  *    row's braces), each valid under the shipped request contract's rules (a 64-lowercase-hex snapshot digest; a question with a
  *    nonblank id and text and at least two distinct nonblank candidates), one result carrying its word and no choice unless the word
- *    is provisional (partial, incomplete and stale carry the second candidate, the case a coercion would surface), beside a
+ *    is tentative (partial, incomplete and stale carry the second candidate, the case a coercion would surface), beside a
  *    Boolean-question abstain and a mixed tally; A2 the reference over each listed fixture carries the word verbatim at its echo path
  *    and nothing at its answer slot, the judge finds nothing, and each decided control carries its candidate at that slot (the
  *    positive control); A3 the judge refuses a relabeled word: upper case, Pi's own unknown word, the legacy past tense, the mark.
  *  B, acceptance (b). B1 abstain read as False (the slot set to false, the result made a decided false) is refused on the Boolean
  *    and the choice fixture; B2 the first candidate (at the slot, or the result made a decided first) is refused for every listed
- *    word; B3 every default spelling is refused - the last candidate, the index 0, a note naming the default, the provisional
+ *    word; B3 every default spelling is refused - the last candidate, the index 0, a note naming the default, the tentative
  *    candidate passed through - and the side-path spellings no decided answer travels are the R-SIDE-PATH quiet rows.
  *  C, acceptance (c). C1 the reference over one fixture per unknown word and over the tally (five undecided results of six) carries
  *    each listable word verbatim, the unlistable one as the mark only, the count, no candidate of an undecided question and no
@@ -170,7 +170,7 @@ const ROWS: readonly Row[] = [
   {
     id: "B",
     label:
-      "(b) mutant: mapping abstain to False, or any listed state to a default/first candidate, fails: abstain read as False on a Boolean and a choice question, the first candidate for every listed word, and the last candidate, the index, a default note and the provisional candidate passed through all refused",
+      "(b) mutant: mapping abstain to False, or any listed state to a default/first candidate, fails: abstain read as False on a Boolean and a choice question, the first candidate for every listed word, and the last candidate, the index, a default note and the tentative candidate passed through all refused",
     pins: ["B1", "B2", "B3"],
   },
   {
@@ -230,7 +230,7 @@ interface Roster {
   readonly citation: string;
   readonly trigger: string;
   readonly engine: { readonly parts: readonly string[]; readonly joiner: string };
-  readonly words: { readonly listed: readonly string[]; readonly decided: string; readonly unknown: readonly string[]; readonly provisional: readonly string[]; readonly probes: readonly string[] };
+  readonly words: { readonly listed: readonly string[]; readonly decided: string; readonly unknown: readonly string[]; readonly tentative: readonly string[]; readonly probes: readonly string[] };
   readonly fixtures: { readonly provenance: string; readonly listed: Readonly<Record<string, Envelope>>; readonly booleanAbstain: Envelope; readonly unknownTemplate: Envelope; readonly tally: Envelope };
   readonly scan: JsonObject;
   readonly producer: Producer;
@@ -324,7 +324,7 @@ function readRoster(): Roster {
       listed: strings(words.listed, "words.listed"),
       decided: text(words.decided, "words.decided"),
       unknown: strings(words.unknown, "words.unknown"),
-      provisional: strings(words.provisional, "words.provisional"),
+      tentative: strings(words.tentative, "words.tentative"),
       probes: strings(words.probes, "words.probes"),
     },
     fixtures: {
@@ -546,7 +546,7 @@ const MUTANTS: Readonly<Record<string, Projection>> = {
       const named = envelope.results.filter(result => isListed(result.state)).map(result => `defaulted to ${String(firstCandidate(questionOf(envelope, result)))}`);
       return { ...reading, notes: [...(Array.isArray(reading.notes) ? reading.notes : []), ...named] };
     }),
-  provisionalPassThrough: envelope =>
+  tentativePassThrough: envelope =>
     editEntries(envelope, (entry, result) => (isListed(result.state) && result.choice !== undefined ? { ...entry, choice: result.choice } : entry)),
   sideIndex: envelope => editEntries(envelope, (entry, result) => (isListed(result.state) ? { ...entry, suggestedIndex: 0 } : entry)),
   sideParaphrase: envelope => editEntries(envelope, (entry, result) => (isListed(result.state) ? { ...entry, hint: "the north route" } : entry)),
@@ -920,7 +920,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       const [result] = envelope.results;
       expect(envelope.results.length, `${word}: one result`).toBe(1);
       expect(result?.state, `${word}: the result carries its word`).toBe(word);
-      expect(result?.choice !== undefined, `${word}: a choice rides only a provisional word`).toBe(ROSTER.words.provisional.includes(word));
+      expect(result?.choice !== undefined, `${word}: a choice rides only a tentative word`).toBe(ROSTER.words.tentative.includes(word));
     }
     const [booleanResult] = ROSTER.fixtures.booleanAbstain.results;
     const tally = ROSTER.fixtures.tally;
@@ -979,12 +979,12 @@ const IMPL: Readonly<Record<string, () => Json>> = {
   },
   B3: () => {
     const fixtures = LISTED_FIXTURES();
-    const refusing = ["lastAtSlot", "indexAtSlot", "defaultNote", "provisionalPassThrough"];
+    const refusing = ["lastAtSlot", "indexAtSlot", "defaultNote", "tentativePassThrough"];
     const findings = mutantFindings(refusing, fixtures);
     const sides = mutantFindings(["sideIndex", "sideParaphrase"], fixtures);
     const sideBoolean = judge(mutant("sideBoolean"), ROSTER.fixtures.booleanAbstain);
-    const passedThrough = fixtures.filter(([, envelope]) => judge(mutant("provisionalPassThrough"), envelope).length > 0).map(([word]) => word);
-    expect(passedThrough, "the provisional candidate is refused exactly where the producer named one").toEqual([...ROSTER.words.provisional]);
+    const passedThrough = fixtures.filter(([, envelope]) => judge(mutant("tentativePassThrough"), envelope).length > 0).map(([word]) => word);
+    expect(passedThrough, "the tentative candidate is refused exactly where the producer named one").toEqual([...ROSTER.words.tentative]);
     return done("B3", { findings, residual: { sideIndex: sides.sideIndex ?? null, sideParaphrase: sides.sideParaphrase ?? null, sideBoolean } });
   },
   C1: () => {
