@@ -1,0 +1,622 @@
+{
+  "bead": "wb-hs2j.8",
+  "provenance": "wb-hs2j.8 census roster (test/workbench-rf-read-status-upgrade-census.test.ts). statement, quote, citation, mergedQuote, mergedCitation, authority and gating are the owner filing's (bead row wb-hs2j.8 in .beads/issues.jsonl: its Full statement line, its Source line and the Merged clause of that line, its Authority restrictions quote and its Gating artifacts line), re-read at ReactiveFiberCLI 6a251bf73af5 with git show on 2026-10-23. producer is MEASURED read-only on 2026-10-23: rfVersion and rfCommit are `rf --json --version` result.version and result.provenance.commit_id of the installed rf (2618c211be0d, a descendant of the program pin by git merge-base --is-ancestor: descendsFromPin); contextLeaves and assemblyLeaves are its result.leaves paths under context. and those starting assembly or naming coverage; fields are the property names holding 'replayab' in the packaged schemas/cli/context.show.schema.json, context.history.schema.json and storage.compact.schema.json, defsNames the $defs names holding it across those and context.replay.schema.json, classesShow and classesHistory the $defs.replayability_class enum of the two read schemas, replayOutcomes the context.replay success result outcome enum, schemaDigests each schema file's sha256, and fiveLabelInstalledFiles the count of .py/.json/.md/.txt/.toml files of the installed package spelling each label; program holds 02-swarm-usage-and-command-grammar.md:60 and :88, README.md:76 and :99 and BEADS-2026-10-21.md:61, :62 and :94 at the pin, verbatim. scan holds the census's walk constants, wording families (RegExp source/flags) and the vocabularies it derives from producer. rows hold every judged row and every pin's witness; tests the registered test titles in order.",
+  "statement": "[RF-REACTIVE-CONTEXT-ASSEMBLY-R9] No Pi surface shall upgrade an rf read-side status: a replayability classification is presented as claimed, never replay-verified - only an executed document_exact outcome is byte-exact (gated: five-label replay classifier, rfc-kxtb5.17 + rfc-02alo open, unshipped) - and coverage-unknown stays distinct from no-results, an empty assembly coverage output is never proof that no context was needed (gated: assembly coverage, README C7, design only) - pin docs/programs/reactive-context-assembly-2026-10-18/02-swarm-usage-and-command-grammar.md:88@6a251bf73af5",
+  "quote": "A read command that returns a status must distinguish `replayability claimed` from `replay verified`, and `coverage unknown` from `no results`.",
+  "citation": "docs/programs/reactive-context-assembly-2026-10-18/02-swarm-usage-and-command-grammar.md:88@6a251bf73af5",
+  "mergedQuote": "Requires typed requirements and a source completeness certificate; an empty output never proves no context needed.",
+  "mergedCitation": "README.md:76@6a251bf73af5",
+  "authority": "Only the first is byte-exact.",
+  "gating": "Gating artifacts: five-label replay classifier + replay build matrix - rfc-kxtb5.17 and defect rfc-02alo, open at BEADS-2026-10-21.md:61-62 (02:60: `replayable_exact` on read, `RF_INTERNAL` 16/16 on replay); assembly coverage (README C7, P2) over ReactiveQuerySDK, 'Currently design only' (README.md:99; rca-C069 BEADS:94). Shipped: no for both.",
+  "producer": {
+    "rfVersion": "0.1.832",
+    "rfCommit": "2618c211be0dbbb74ba10e965e2d3d1f0fb5903e",
+    "descendsFromPin": true,
+    "programPin": {
+      "repo": "ReactiveFiberCLI",
+      "sha": "6a251bf73af57c3a703caf6892dfe3015e06a481"
+    },
+    "contextLeaves": [
+      "context.render",
+      "context.show",
+      "context.explain",
+      "context.plan",
+      "context.diff",
+      "context.history",
+      "context.replay"
+    ],
+    "assemblyLeaves": [],
+    "fields": {
+      "context.show": [
+        "replayability",
+        "replayability_overlay",
+        "replayability_reasons",
+        "replayability_revision"
+      ],
+      "context.history": [
+        "replayability",
+        "replayability_reasons"
+      ],
+      "storage.compact": [
+        "replayability_changes"
+      ]
+    },
+    "defsNames": [
+      "replayability_change",
+      "replayability_class",
+      "replayability_reason"
+    ],
+    "classesShow": [
+      "replayable_exact",
+      "replayable_with_captured_external_inputs",
+      "replayable_with_declared_variance",
+      "not_replayable"
+    ],
+    "classesHistory": [
+      "replayable_exact",
+      "replayable_with_captured_external_inputs",
+      "replayable_with_declared_variance",
+      "not_replayable"
+    ],
+    "replayOutcomes": [
+      "reproduced",
+      "reproduced_with_declared_variance"
+    ],
+    "schemaDigests": {
+      "context.show": "c256b4ec0e37a630532d649cb2f4370a6605c5b8ab3377c512b2aa84c0897962",
+      "context.history": "c413b017a30b6e8e2d6f879700376bead1f64e346fdaa6ceb34f1e63fd884250",
+      "context.replay": "469b238489368bfbb9038ed9eeecfb166d468565235d89f1153adccc350818d6",
+      "storage.compact": "707401f1d3bc5440ace10ce707eab3142adf236164e9cbcf76b4892bf58bc96d"
+    },
+    "fiveLabelInstalledFiles": {
+      "document_exact": 0,
+      "observer_equivalent": 0,
+      "recompute_required": 0,
+      "unsupported_build": 0,
+      "missing_evidence": 0
+    },
+    "program": {
+      "02": {
+        "60": "Recent private renders at version 0.1.768 replayed, while eight historical shared-store renders produced by 0.1.583 showed `replayable_exact` on read and then `RF_INTERNAL` in 16/16 replay attempts. An exact replay classifier needs serializer/interpreter/runtime compatibility, not just retained blob availability. Offer multiple labeled outcomes: `document_exact`, `observer_equivalent`, `recompute_required`, `unsupported_build`, `missing_evidence`. Only the first is byte-exact.",
+        "88": "A JSON success envelope must make inclusion counts, materialized outputs, a transaction/commit status and version basis easy to find. Cross-verb duplicate metadata may be additive during a compatibility window but must not silently remove old paths. A read command that returns a status must distinguish `replayability claimed` from `replay verified`, and `coverage unknown` from `no results`."
+      },
+      "README": {
+        "76": "Input: task, consumer requirements, observed source scopes and component outputs. Output: coverage evidence distinguishing complete, incomplete, unknown, suppressed, failed and nonrequired. Requires typed requirements and a source completeness certificate; an empty output never proves no context needed. ReactiveQuerySDK may own evidence algebra; host owns task/consumer report.",
+        "99": "Currently design only. Prospective home for positive/negative query subscriptions, scope completeness witnesses, retractions and incremental materializations. Host integrates its pure results; it does not assume an operational package."
+      },
+      "BEADS": {
+        "61": "| `rfc-kxtb5.17` | open | REPLAY-BUILD-MATRIX (rca-C026/C029, dropped RCA-M1-RB): frozen 0.1.583/0.1.709 stores read and replay typed, never 70 | open P2 fcs W14-a; the exact matrix the program asks for |",
+        "62": "| `rfc-02alo` | open | the RF_INTERNAL ReplayComparisonInvariantError defect on 0.1.583 records (rca-C029) | open P2 defect bead; its fix is what flips rca-C029 |",
+        "94": "| `rca-C069` | ReactiveQuerySDK and ReactiveFiberDevTools are design only with no operational package. | the named new-feedback family exists in git ls-tree 740c1a817 new-feedback/ (one file per family grep); kind stays SOURCE_REPORT, not re-measured / one seat lineage per family (OrchestrationEngineer dogfood slot / SwarmDash seat); counted once |"
+      }
+    }
+  },
+  "scan": {
+    "walkRoots": [
+      "src",
+      "qa",
+      "examples"
+    ],
+    "docRoot": "docs",
+    "moduleExtensions": [
+      ".ts",
+      ".mts",
+      ".cts",
+      ".tsx",
+      ".js",
+      ".mjs",
+      ".cjs",
+      ".jsx"
+    ],
+    "floors": {
+      "src": 100,
+      "qa": 55,
+      "examples": 5,
+      "docs": 60
+    },
+    "anchor": {
+      "path": "src/workbench/providers/reactivefiber.ts",
+      "token": "context.render"
+    },
+    "assemblySubverbs": [
+      "prepare",
+      "inspect",
+      "publish",
+      "coverage"
+    ],
+    "emptyPageLine": "No source observations for this invocation; no graph or timeline is inferred.",
+    "coverageUnknown": "coverage unknown",
+    "families": {
+      "assemblyVerb": "\\bassembly(?:\\s+|\\.)(?:prepare|inspect|publish|coverage)\\b/i",
+      "verifiedReplay": "\\breplay(?:ability)?[\\s_-]*(?:is\\s+|was\\s+)?verified\\b|\\bverified[\\s_-]*replay|\\breplay[\\s_-]*verification\\b/i",
+      "verifiedReplayIdentifier": "^(?:replay_?verified|verified_?replay|replay_?verification)$/i",
+      "byteExact": "\\bbyte[\\s_-]*exact\\b|\\bbytewise[\\s_-]+exact\\b/i",
+      "noContext": "\\bno\\s+(?:more\\s+|further\\s+|additional\\s+)?context\\s+(?:is\\s+|was\\s+)?(?:needed|required|necessary)\\b|\\bcontext\\s+(?:is\\s+|was\\s+)?(?:not\\s+|un)(?:needed|required|necessary)\\b|\\bneeds?\\s+no\\s+(?:more\\s+)?context\\b|\\bnothing\\s+(?:more\\s+|else\\s+)?(?:is\\s+|was\\s+)?(?:needed|required)\\b|\\bno[\\s_-]+context[\\s_-]+needed\\b/i",
+      "verification": "\\bverif(?:y|ied|ication)\\b|\\bbyte[\\s_-]*exact\\b|\\breproduced\\b|\\bdocument_exact\\b/i"
+    },
+    "vocabulary": {
+      "readFields": [
+        "replayability",
+        "replayability_changes",
+        "replayability_overlay",
+        "replayability_reasons",
+        "replayability_revision"
+      ],
+      "classes": [
+        "replayable_exact",
+        "replayable_with_captured_external_inputs",
+        "replayable_with_declared_variance",
+        "not_replayable"
+      ],
+      "outcomes": [
+        "reproduced_with_declared_variance"
+      ],
+      "genericOutcomes": [
+        "reproduced"
+      ],
+      "spellings": [
+        "replayability",
+        "replayability_changes",
+        "replayability_overlay",
+        "replayability_reasons",
+        "replayability_revision",
+        "replayability_change",
+        "replayability_class",
+        "replayability_reason",
+        "replayable_exact",
+        "replayable_with_captured_external_inputs",
+        "replayable_with_declared_variance",
+        "not_replayable",
+        "reproduced_with_declared_variance",
+        "replayabilityChanges",
+        "replayabilityOverlay",
+        "replayabilityReasons",
+        "replayabilityRevision",
+        "replayabilityChange",
+        "replayabilityClass",
+        "replayabilityReason",
+        "replayableExact",
+        "replayableWithCapturedExternalInputs",
+        "replayableWithDeclaredVariance",
+        "notReplayable",
+        "reproducedWithDeclaredVariance"
+      ],
+      "fiveLabels": [
+        "document_exact",
+        "observer_equivalent",
+        "recompute_required",
+        "unsupported_build",
+        "missing_evidence"
+      ],
+      "fiveLabelSpellings": [
+        "document_exact",
+        "observer_equivalent",
+        "recompute_required",
+        "unsupported_build",
+        "missing_evidence",
+        "documentExact",
+        "observerEquivalent",
+        "recomputeRequired",
+        "unsupportedBuild",
+        "missingEvidence"
+      ]
+    }
+  },
+  "residuals": [
+    "R-COMPOSED",
+    "R-COMMENT",
+    "R-GENERIC-WORD",
+    "R-LABEL-UNRENDERED",
+    "R-ROWS-SILENT",
+    "R-OUTSIDE"
+  ],
+  "rows": [
+    {
+      "id": "A",
+      "label": "(trigger, absent today) Pi reads no replay or coverage fields today: no module of src, qa or examples spells an rf read-side replay field, a replayability class, a replay outcome or an rf assembly verb, and every Pi rf reader refuses the producer's show, history and replay status envelopes",
+      "pins": [
+        {
+          "id": "A1",
+          "witness": {
+            "pin": "A1",
+            "floorsMet": true,
+            "anchorRead": true,
+            "hits": {
+              "vocabulary": [],
+              "assembly": []
+            },
+            "controls": {
+              "property": 1,
+              "binding": 1,
+              "camelCase": 1,
+              "classLiteral": 1,
+              "elementAccess": 1,
+              "outcome": 1,
+              "assemblyArgv": 1,
+              "assemblyDotted": 1,
+              "journalWord": 0,
+              "genericOutcome": 0,
+              "composed": 0,
+              "comment": 0
+            }
+          }
+        },
+        {
+          "id": "A2",
+          "witness": {
+            "pin": "A2",
+            "envelopes": {
+              "show": {
+                "command": "context.show",
+                "adapter": {
+                  "category": "validation",
+                  "message": "ReactiveFiber topology refused: source must be a reactive-fiber.cli/v1 context.render envelope."
+                },
+                "evidenceKeys": [],
+                "native": {
+                  "refusal": {
+                    "category": "transport",
+                    "message": "RF preview returned an unrecognized native envelope."
+                  },
+                  "spawns": 1
+                }
+              },
+              "history": {
+                "command": "context.history",
+                "adapter": {
+                  "category": "validation",
+                  "message": "ReactiveFiber topology refused: source must be a reactive-fiber.cli/v1 context.render envelope."
+                },
+                "evidenceKeys": [],
+                "native": {
+                  "refusal": {
+                    "category": "transport",
+                    "message": "RF preview returned an unrecognized native envelope."
+                  },
+                  "spawns": 1
+                }
+              },
+              "replay": {
+                "command": "context.replay",
+                "adapter": {
+                  "category": "validation",
+                  "message": "ReactiveFiber topology refused: source must be a reactive-fiber.cli/v1 context.render envelope."
+                },
+                "evidenceKeys": [],
+                "native": {
+                  "refusal": {
+                    "category": "transport",
+                    "message": "RF preview returned an unrecognized native envelope."
+                  },
+                  "spawns": 1
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "(a) Pi projections of show/history replay fields render the producer's label as claimed, never verified, absent an executed replay receipt (a replayable_exact read then a failed replay is claimed true / verified false): a claim rides the readings verbatim, never changes a projection or states a domainStatus, no module states a verified replay, and the replayed observation flag only demotes",
+      "pins": [
+        {
+          "id": "B1",
+          "witness": {
+            "pin": "B1",
+            "classes": [
+              "replayable_exact",
+              "replayable_with_captured_external_inputs",
+              "replayable_with_declared_variance",
+              "not_replayable"
+            ],
+            "injected": {
+              "replayable_exact": {
+                "bytes": true,
+                "shown": true,
+                "echoed": "replayable_exact",
+                "calls": 1
+              },
+              "replayable_with_captured_external_inputs": {
+                "bytes": true,
+                "shown": true,
+                "echoed": "replayable_with_captured_external_inputs",
+                "calls": 1
+              },
+              "replayable_with_declared_variance": {
+                "bytes": true,
+                "shown": true,
+                "echoed": "replayable_with_declared_variance",
+                "calls": 1
+              },
+              "not_replayable": {
+                "bytes": true,
+                "shown": true,
+                "echoed": "not_replayable",
+                "calls": 1
+              }
+            },
+            "native": {
+              "label": "replayable_exact",
+              "bytes": true,
+              "spawns": 1
+            }
+          }
+        },
+        {
+          "id": "B2",
+          "witness": {
+            "pin": "B2",
+            "projections": {
+              "clean": {
+                "coverage": "complete",
+                "tone": "success",
+                "identical": [
+                  true,
+                  true,
+                  true,
+                  true
+                ]
+              },
+              "demoted": {
+                "coverage": "partial",
+                "tone": "unknown",
+                "identical": [
+                  true,
+                  true,
+                  true,
+                  true
+                ]
+              }
+            },
+            "evidenceIdentical": [
+              true,
+              true,
+              true,
+              true
+            ],
+            "domainStatusStated": false,
+            "verificationWords": [],
+            "sequence": {
+              "coverage": "unknown",
+              "tone": "failure",
+              "carriesValue": false,
+              "domainStatusStated": false,
+              "verificationWords": []
+            }
+          }
+        },
+        {
+          "id": "B3",
+          "witness": {
+            "pin": "B3",
+            "floorsMet": true,
+            "hits": [],
+            "controls": {
+              "spaced": 1,
+              "dashed": 1,
+              "reversed": 1,
+              "claimVerified": 1,
+              "identifier": 1,
+              "snakeKey": 1,
+              "posture": 0
+            }
+          }
+        },
+        {
+          "id": "B4",
+          "witness": {
+            "pin": "B4",
+            "replayed": {
+              "coverage": "partial",
+              "tone": "unknown",
+              "note": "observations: 2 rows, 2 reused: partial"
+            },
+            "fresh": {
+              "coverage": "complete",
+              "tone": "success"
+            },
+            "verificationWords": [],
+            "evidenceIdentical": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "(b) when the five labels ship, Pi carries the label verbatim and treats only document_exact as byte-exact: the five-label classifier is unshipped at the measured rf, no Pi module or doc spells a label or states byte-exactness, and a label-carrying preview rides verbatim and projects as a label-free one",
+      "pins": [
+        {
+          "id": "C1",
+          "witness": {
+            "pin": "C1",
+            "classes": [
+              "replayable_exact",
+              "replayable_with_captured_external_inputs",
+              "replayable_with_declared_variance",
+              "not_replayable"
+            ],
+            "fiveLabels": [
+              "document_exact",
+              "observer_equivalent",
+              "recompute_required",
+              "unsupported_build",
+              "missing_evidence"
+            ],
+            "disjoint": true,
+            "installed": [
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "byteExact": "document_exact",
+            "gating": [
+              {
+                "line": 61,
+                "id": "rfc-kxtb5.17",
+                "status": "open"
+              },
+              {
+                "line": 62,
+                "id": "rfc-02alo",
+                "status": "open"
+              }
+            ],
+            "shipped": "Shipped: no for both.",
+            "captureVersion": "0.1.832",
+            "descendsFromPin": true
+          }
+        },
+        {
+          "id": "C2",
+          "witness": {
+            "pin": "C2",
+            "floorsMet": true,
+            "labelHits": [],
+            "byteExactHits": [],
+            "carried": {
+              "document_exact": {
+                "verbatim": true,
+                "projection": true,
+                "evidence": true
+              },
+              "observer_equivalent": {
+                "verbatim": true,
+                "projection": true,
+                "evidence": true
+              },
+              "recompute_required": {
+                "verbatim": true,
+                "projection": true,
+                "evidence": true
+              },
+              "unsupported_build": {
+                "verbatim": true,
+                "projection": true,
+                "evidence": true
+              },
+              "missing_evidence": {
+                "verbatim": true,
+                "projection": true,
+                "evidence": true
+              }
+            },
+            "controls": {
+              "labelLiteral": 1,
+              "labelCamel": 1,
+              "byteExact": 1,
+              "byteSpaced": 1,
+              "exactBytes": 0,
+              "docsText": 1
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "D",
+      "label": "(c) a Pi coverage consumer renders empty results as no-results-observed-under-scope, never no-context-needed, absent a completeness certificate: assembly coverage is unshipped and design only, and no module, projection or inspector line states that no context was needed",
+      "pins": [
+        {
+          "id": "D1",
+          "witness": {
+            "pin": "D1",
+            "captureVersion": "0.1.832",
+            "leafFloorMet": true,
+            "assemblyLeaves": [],
+            "coverageLeaves": [],
+            "designOnly": true,
+            "mergedQuoteAt": "README.md:76@6a251bf73af5"
+          }
+        },
+        {
+          "id": "D2",
+          "witness": {
+            "pin": "D2",
+            "floorsMet": true,
+            "staticHits": [],
+            "controls": {
+              "spaced": 1,
+              "notRequired": 1,
+              "needsNone": 1,
+              "nothing": 1,
+              "snake": 1,
+              "scopedNoResults": 0,
+              "window": 0
+            },
+            "projected": [],
+            "inspected": [],
+            "emptyPageLine": "No source observations for this invocation; no graph or timeline is inferred."
+          }
+        }
+      ]
+    },
+    {
+      "id": "E",
+      "label": "(d) coverage unknown and no results map to distinct Pi statuses: a refused render reads coverage unknown in a failure tone, an empty-results render reads neither, and the inspector keeps coverage unknown apart from its no-results line",
+      "pins": [
+        {
+          "id": "E1",
+          "witness": {
+            "pin": "E1",
+            "vocabulary": [
+              "complete",
+              "partial",
+              "unknown"
+            ],
+            "refused": {
+              "coverage": "unknown",
+              "tone": "failure"
+            },
+            "empty": {
+              "coverageUnknown": false,
+              "toneFailure": false
+            },
+            "distinct": {
+              "coverage": true,
+              "tone": true,
+              "statusText": true
+            },
+            "rowsSilent": true
+          }
+        },
+        {
+          "id": "E2",
+          "witness": {
+            "pin": "E2",
+            "refused": {
+              "coverageUnknown": true,
+              "emptyPage": false
+            },
+            "noResults": {
+              "coverageUnknown": false,
+              "emptyPage": true
+            },
+            "emptyRender": {
+              "coverageUnknown": false,
+              "emptyPage": false
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "tests": [
+    "the judged set: the frozen shape, the out-of-file roster and the bead row agree",
+    "A1",
+    "A2",
+    "B1",
+    "B2",
+    "B3",
+    "B4",
+    "C1",
+    "C2",
+    "D1",
+    "D2",
+    "E1",
+    "E2",
+    "records: every registered test ran once in run mode in roster order and every pin reached its end"
+  ]
+}
