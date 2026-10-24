@@ -1,5 +1,5 @@
 {
-  "provenance": "wb-pfxo.5 census roster (test/workbench-rf-replay-outcome-echo-census.test.ts). envelopes.measured is MEASURED: the stdout of `rf context replay RENDER --json` (exit 0) from the installed rf 0.1.832 on 2026-10-23 over a render committed in a scratch workspace (`rf init`, then `rf context render --model m --task t --context-window 200000 --max-output 64000`), only the scratch workspace root rewritten to /fixture/rf-workspace. envelopes.deniedEffects, envelopes.variance, envelopes.mismatch and envelopes.trustDenied are the producer's own valid fixtures at ReactiveFiberCLI 6a251bf73af5 (read-only git show of schemas/fixtures/context.replay/valid/ok_reproduced.json, ok_reproduced_with_declared_variance.json, failure_mismatch_exit_11.json and failure_trust_denied_exit_5.json), byte-for-byte in content. fragments.incomplete is CONSTRUCTED from those fixtures' values (render_id and versions of ok_reproduced; the revision, component and policy digest of failure_trust_denied_exit_5) under the fragment schema's TRUST-SEC-A52 rule, with trust reason codes from the producer's domain/trust.py TRUST_REASON_CODES (deny_unapproved, no_matching_rule); no producer fixture carries a replay status. Every envelope validates against the installed context.replay.schema.json and the fragment against schemas/cli/context/replay-result.json (ajv 2020-12, 0 errors; both schemas byte-identical between the installed 0.1.832 and the pin); the fragment without its trust_denied reason is refused, and the envelope schema refuses the fragment as the result of an ok envelope and of a failure envelope. outcomes, statuses: the fragment enums at replay-result.json :30-33 and :121-122. rows: the judged set, each pin's witness measured by its own case.",
+  "provenance": "wb-pfxo.5 census roster (test/workbench-rf-replay-outcome-echo-census.test.ts). envelopes.measured is MEASURED: the stdout of `rf context replay RENDER --json` (exit 0) from the installed rf 0.1.832 on 2026-10-23 over a render committed in a scratch workspace (`rf init`, then `rf context render --model m --task t --context-window 200000 --max-output 64000`), only the scratch workspace root rewritten to /fixture/rf-workspace. envelopes.deniedEffects, envelopes.variance, envelopes.mismatch and envelopes.trustDenied are the producer's own valid fixtures at ReactiveFiberCLI 6a251bf73af5 (read-only git show of schemas/fixtures/context.replay/valid/ok_reproduced.json, ok_reproduced_with_declared_variance.json, failure_mismatch_exit_11.json and failure_trust_denied_exit_5.json), byte-for-byte in content. fragments.incomplete is CONSTRUCTED from those fixtures' values (render_id and versions of ok_reproduced; the revision, component and policy digest of failure_trust_denied_exit_5) under the fragment schema's TRUST-SEC-A52 rule, with trust reason codes from the producer's domain/trust.py TRUST_REASON_CODES (deny_unapproved, no_matching_rule); no producer fixture carries a replay status. Every envelope validates against the installed context.replay.schema.json and the fragment against schemas/cli/context/replay-result.json (ajv 2020-12, 0 errors; both schemas byte-identical between the installed 0.1.832 and the pin); the fragment without its trust_denied reason is refused, and the envelope schema refuses the fragment as the result of an ok envelope and of a failure envelope. outcomes, statuses: the fragment enums at replay-result.json :30-33 and :121-122. rows: the judged set, each pin's witness measured by its own case. wb-hmre (2026-10-24, the pfxo.5 gate's F1 and F2 follow-up): the A1, B3 and D1 witnesses gain the git-index walk fields (every file the index tracks under each root is walked; A1 reads every tracked src .ts module), B3 gains the copula controls of <CLAIM-R>, Q4 pins the thirteen PARAPHRASES members of R-PARAPHRASE beside the arms their plain spellings meet, and Q5 pins the U+2011 dash-homoglyph member of R-INTERRUPTED; nothing here is re-measured from rf.",
   "rfVersion": "0.1.832",
   "pin": "6a251bf73af5",
   "outcomes": [
@@ -427,6 +427,11 @@
           "witness": {
             "srcFloorMet": true,
             "anchorRead": true,
+            "srcAnchorTracked": true,
+            "srcUnwalked": [],
+            "moduleAnchor": true,
+            "moduleTracked": true,
+            "unreadModules": [],
             "descriptorsRead": true,
             "spelling": [],
             "descriptorHits": [],
@@ -631,6 +636,8 @@
                 "floor": 100,
                 "floorMet": true,
                 "anchorRead": true,
+                "anchorTracked": true,
+                "unwalked": [],
                 "hits": []
               },
               {
@@ -638,6 +645,8 @@
                 "floor": 50,
                 "floorMet": true,
                 "anchorRead": true,
+                "anchorTracked": true,
+                "unwalked": [],
                 "hits": []
               },
               {
@@ -645,6 +654,8 @@
                 "floor": 50,
                 "floorMet": true,
                 "anchorRead": true,
+                "anchorTracked": true,
+                "unwalked": [],
                 "hits": []
               },
               {
@@ -652,6 +663,8 @@
                 "floor": 10,
                 "floorMet": true,
                 "anchorRead": true,
+                "anchorTracked": true,
+                "unwalked": [],
                 "hits": []
               }
             ],
@@ -676,6 +689,18 @@
               ],
               "equalThenReexecution": [
                 "CLAIM-R equal, then reexecution"
+              ],
+              "copulaIsIdentical": [
+                "CLAIM-R reexecution, then equal"
+              ],
+              "copulaIsEqual": [
+                "CLAIM-R reexecution, then equal"
+              ],
+              "copulaWasEqual": [
+                "CLAIM-R reexecution, then equal"
+              ],
+              "copulaSentence": [
+                "CLAIM-R reexecution, then equal"
               ],
               "snakeJoined": [
                 "CLAIM-E effect, then redo"
@@ -819,6 +844,8 @@
                 "root": "src",
                 "floorMet": true,
                 "anchorRead": true,
+                "anchorTracked": true,
+                "unwalked": [],
                 "statements": 0,
                 "violations": []
               },
@@ -826,6 +853,8 @@
                 "root": "docs",
                 "floorMet": true,
                 "anchorRead": true,
+                "anchorTracked": true,
+                "unwalked": [],
                 "statements": 0,
                 "violations": []
               },
@@ -833,6 +862,8 @@
                 "root": "qa",
                 "floorMet": true,
                 "anchorRead": true,
+                "anchorTracked": true,
+                "unwalked": [],
                 "statements": 0,
                 "violations": []
               },
@@ -840,6 +871,8 @@
                 "root": "front matter (root *.md, examples/)",
                 "floorMet": true,
                 "anchorRead": true,
+                "anchorTracked": true,
+                "unwalked": [],
                 "statements": 0,
                 "violations": []
               }
@@ -1008,7 +1041,112 @@
         {
           "id": "Q4",
           "witness": {
-            "reworded": [],
+            "members": [
+              {
+                "member": "synonym: happened again",
+                "variant": "the side effects happened again",
+                "caught": [],
+                "plain": [
+                  "CLAIM-E effect, then redo"
+                ]
+              },
+              {
+                "member": "synonym: ran a second time",
+                "variant": "every effect ran a second time",
+                "caught": [],
+                "plain": [
+                  "CLAIM-E effect, then redo"
+                ]
+              },
+              {
+                "member": "inflection: equals",
+                "variant": "re-execution equals",
+                "caught": [],
+                "plain": [
+                  "CLAIM-R reexecution, then equal"
+                ]
+              },
+              {
+                "member": "inflection: plural",
+                "variant": "re-executions equal",
+                "caught": [],
+                "plain": [
+                  "CLAIM-R reexecution, then equal"
+                ]
+              },
+              {
+                "member": "linking: under",
+                "variant": "equal under re-execution",
+                "caught": [],
+                "plain": [
+                  "CLAIM-R equal, then reexecution"
+                ]
+              },
+              {
+                "member": "linking: on",
+                "variant": "equality on re-execution",
+                "caught": [],
+                "plain": [
+                  "CLAIM-R equal, then reexecution"
+                ]
+              },
+              {
+                "member": "auxiliary: have been",
+                "variant": "effects have been reproduced",
+                "caught": [],
+                "plain": [
+                  "CLAIM-E effect, then redo"
+                ]
+              },
+              {
+                "member": "auxiliary: being",
+                "variant": "effects being reproduced",
+                "caught": [],
+                "plain": [
+                  "CLAIM-E effect, then redo"
+                ]
+              },
+              {
+                "member": "inflection: reproduce",
+                "variant": "effects reproduce",
+                "caught": [],
+                "plain": [
+                  "CLAIM-E effect, then redo"
+                ]
+              },
+              {
+                "member": "inflection: reproducing",
+                "variant": "reproducing the effects",
+                "caught": [],
+                "plain": [
+                  "CLAIM-E redo, then effect"
+                ]
+              },
+              {
+                "member": "synonym: match",
+                "variant": "the external effects match",
+                "caught": [],
+                "plain": [
+                  "CLAIM-E external effect, then equal"
+                ]
+              },
+              {
+                "member": "synonym: stay",
+                "variant": "external effects stay identical",
+                "caught": [],
+                "plain": [
+                  "CLAIM-E external effect, then equal"
+                ]
+              },
+              {
+                "member": "linking: with",
+                "variant": "equality with external effects",
+                "caught": [],
+                "plain": [
+                  "CLAIM-E equal, then external effect"
+                ]
+              }
+            ],
             "digestReworded": false
           }
         },
@@ -1017,7 +1155,9 @@
           "witness": {
             "zeroWidth": [],
             "homoglyph": [],
-            "plainCaught": true
+            "dashHomoglyph": [],
+            "plainCaught": true,
+            "plainDashCaught": true
           }
         },
         {

@@ -27,12 +27,17 @@
  *  A, acceptance (c). A1 every input arm the SERVED native descriptor admits (registerNativeProviders; the rf descriptors selected
  *    by their reactivefiber:render permission, never by an id prefix; inputSchema oneOf {model, task} and {view, taskId}, the view
  *    arm with and without its optional model) spawns exactly one argv against a stand-in rf, each `context render ... --no-commit`
- *    and none naming replay; A2 the rf launch sites of src: every call or construction whose first argument is a literal (or a
- *    module-local const bound to one) naming the rf program, whatever its callee or binding, is exactly the provider's spawn (a src
- *    floor), with controls for bare, aliased, namespace, method, template, path and const launchers; A3 no string or template
- *    literal of any src module spells an rf replay verb, no array literal or argument list has "context" before "replay" (a flag
- *    between them, a module-local const resolved), and no literal of an rf launch module (the modules A2 finds) spells the word
- *    replay at all, so a push, a concat or a const composing the verb from a literal reds too.
+ *    and none naming replay; A2 the rf launch sites of src: every call or construction whose first argument reads as a literal
+ *    naming the rf program, whatever its callee or binding, is exactly the provider's spawn (a src floor). The literal is the
+ *    argument itself or a module-local const bound to one, through parentheses and type assertions, either operand of ?? or ||,
+ *    either branch of a conditional, or the leading literal piece of a concatenation or template (literal and const spans
+ *    folded); it names rf whole (a bare name or a path) or as the first word of a shell-command line after any NAME=value
+ *    assignments (wb-bstx F1: `execSync("rf --json status")`). Controls: bare, aliased, namespace, method, template, path and
+ *    const launchers, the shell line (plain, concatenated, templated, env-prefixed), the fallback, the conditional and the
+ *    asserted program; A3 no string or template literal of any src module spells an rf replay verb (a template read with its
+ *    literal and const spans folded in), no array literal or argument list has "context" before "replay" (a flag between them,
+ *    a module-local const resolved), and no literal of an rf launch module (the modules A2 finds) spells the word replay at
+ *    all, so a push, a concat or a const composing the verb from a literal reds too.
  *  B, acceptance (a). B1 the measured refusal: command context.replay, ok false, result null, one error diagnostic
  *    RF_REPLAY_RECONSTRUCTION_UNAVAILABLE whose metadata is exactly {source_id}, and the measured exit 8 riding the roster; B2 the
  *    native typed refusal of a render refusing with it is CapabilityError unavailable "RF render refused: <code>", in one spawn of
@@ -45,11 +50,14 @@
  *    projection is unchanged when the diagnostic's metadata, message and hint are replaced by sentinels; B5 a stand-in rf that
  *    refuses the first spawn and would answer any later spawn with a full-shape live render still yields the refusal, no reading,
  *    exactly one spawn and fetch 0: neither a fresh render nor an owner fetch stands in for the replay result; B6 the static port
- *    census of the reader closure (the reader modules' transitive src imports): no network global as an identifier (a property name
- *    included) or an exact string literal, no network module as an exact string literal (a static, dynamic or required specifier,
- *    or a concatenation that keeps the module name whole), and child_process launchers, however bound (named, aliased, namespace,
- *    default, required,
- *    dynamically imported or import-equals; a module-local const program resolved), reach only "rf".
+ *    census of the reader closure (the reader modules' transitive src imports, its edges the static import and export
+ *    declarations, dynamic import() and require() calls and import-equals - a module-local const specifier resolved - while an
+ *    import() or require() whose specifier no literal spells is refused, wb-bstx F2; a scratch reader whose lazy import reaches
+ *    a fetching module and whose computed import is refused is walked end to end): no network global as an identifier (a
+ *    property name included) or an exact string literal, no network module as an exact string literal (a static, dynamic or
+ *    required specifier, or a concatenation that keeps the module name whole), and child_process launchers, however bound
+ *    (named, aliased, namespace, default, required, dynamically imported or import-equals; a module-local const program
+ *    resolved), reach only "rf".
  *  C, acceptance (b). C1 the native reader refuses the measured replay output (context.replay, ok true, outcome reproduced) as an
  *    unrecognized envelope in one spawn, no reading, fetch 0; C2 the reader adapter refuses a reading carrying it, so nothing is
  *    projected; C3 the registered reading of a deep copy of it equals a FRESH roster read byte for byte - its render_id, outcome,
@@ -57,7 +65,9 @@
  *    contract and workspaceRoot; C4 a live render whose one observation row was replayed (freshness reused) projects partial with
  *    tone unknown and a note naming the reused count, never complete or success, while the same render with the row captured at
  *    render projects complete, and no display string of either (titles, status texts, evidence references, notes) carries a
- *    freshness label (FRESH_LABELS); C5 no string or template literal of the reader modules spells a freshness label; C6 the quiet
+ *    freshness label (FRESH_LABELS: the fresh and current families, latest, newest, live, up to date or to the minute, real
+ *    time, the now phrases and most recent - wb-bstx F3 added newest, as of now and their kin); C5 no string or template
+ *    literal of the reader modules spells a freshness label (a template read with its literal and const spans folded in); C6 the quiet
  *    row of R-NODE-FRESHNESS: Pi's real ObservationProjection applies both C4 snapshots and holds each node at the freshness of the
  *    provider connection (observation.ts:718), the same for both, with the reused render's completeness partial.
  * NOT CLAIMED (the armed half, gated): a replay reader that labels replay output historical, names its federation receipt and
@@ -66,10 +76,19 @@
  * and root, the operation id and the refusal's source_id (B3, B4, C3).
  * RESIDUALS (named, each with a pinned quiet row): R-WITHHELD the native typed refusal and the adapter's projection carry the code
  * and withhold source_id with the producer's message and hint (quiet rows B2 and B4: no value named, sentinel invariance), so the
- * source_id rides only the registered reading (B3); R-COMPOSED a program name, verb, port name or label assembled at runtime from
- * parts - a call, a concatenation or a template that splits the word across literals, a property read, an import, a re-export or a
- * wrapper - is invisible to A2, A3, B6 and C5 (each one's `composed` control stays 0); R-UNLISTED a port outside the listed network globals, network modules and
- * child_process launchers (a worker, a native addon, process.binding) is not read by B6 (its `unlisted` control stays quiet);
+ * source_id rides only the registered reading (B3); R-COMPOSED a program name, verb, port name or label that no literal of its
+ * module spells - built by a call (a join, a wrapper's return value), split across a concatenation, split by a template's
+ * non-literal expression, read from a property, or bound by an import from another module (a re-export included) - is
+ * invisible to A2, A3, B6 and C5, and each scan pins one quiet control per member, each staying 0 (A2 and A3: `composed` the
+ * call, composedConcat, composedTemplate, composedProperty, composedImport; B6 and C5: `composed` the concatenation,
+ * composedCall, composedTemplate, composedProperty, composedImport); R-WRAPPED an rf launch whose program is a wrapper (a
+ * shell's -c line, env) or a later command of a shell line (`cd /w && rf ...`) is not an A2 site, so its module is no A3 launch
+ * module (A3's verb scan still reads its literals; quiet controls wrappedShell, wrappedEnv and chained stay 0); R-UNLISTED a
+ * port outside the listed network globals, network modules and child_process launchers (a worker, a native addon,
+ * process.binding) is not read by B6 (its `unlisted`, `worker` and `addon` controls stay quiet); R-LOADER an edge loaded through
+ * a runtime-bound loader (a createRequire result, module.require) is neither followed nor refused by B6 (its edge controls
+ * aliasedLoader and moduleRequire stay followed [] and refused 0); R-VOCABULARY a freshness claim worded outside FRESH_LABELS (a synonym the
+ * list does not hold, such as "just rendered") is seen by neither C4 nor C5 (C5's `outside` control stays 0);
  * R-NODE-FRESHNESS the workbench projection gives every refreshed node its freshness from the provider connection state, never
  * from rf's row freshness, and the inspector displays it (src/ui/workflow-inspector.ts), so a live render holding a reused row
  * reaches the projection at the same freshness as a clean one, its reuse carried by completeness partial and the adapter's note
@@ -83,7 +102,7 @@
  * echo census) and wb-973.9 (the replayed-row demotion); the surfaces they share with this bead are re-measured here against this
  * bead's own fixture, never imported.
  *
- * Display paths added: none. Test-only: the stand-in rf lives in makeScratch scratch; src is only read.
+ * Display paths added: none. Test-only: the stand-in rf and the B6 walk plant live in makeScratch scratch; src is only read.
  */
 import { chmodSync, type Dirent, existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
@@ -128,10 +147,15 @@ const REPLAY_COMMAND = "context.replay";
 const REPLAY_VERB = /\bcontext[\s._-]+replay\b/i;
 /** The replay word itself: an argv word, or a literal anywhere in an rf launch module (A3). */
 const REPLAY_WORD = /\breplay\b/i;
-/** The freshness labels no Pi surface may give rf output (acceptance (b): "no fresh/current label"). */
-const FRESH_LABELS = /\b(?:fresh|current|currently|latest|live|up[\s_-]?to[\s_-]?date|real[\s_-]?time)\b/i;
+/** The freshness labels no Pi surface may give rf output (acceptance (b): "no fresh/current label"): the fresh and current
+ * families, latest and newest, live, up to date or to the minute, real time, the now phrases (as of, right and just now) and most
+ * recent. A claim worded outside the list is R-VOCABULARY. */
+const FRESH_LABELS =
+  /\b(?:fresh(?:er|est|ly)?|current|currently|latest|newest|live|up[\s_-]?to[\s_-]?date|up[\s_-]?to[\s_-]?the[\s_-]?(?:minute|moment|second)|real[\s_-]?time|as[\s_-]+of[\s_-]+now|(?:right|just)[\s_-]+now|most[\s_-]+recent(?:ly)?)\b/i;
 /** The program an rf launch names: "rf" itself, or a path ending in it. */
 const RF_PROGRAM = /(?:^|[\\/])rf(?:\.exe|\.cmd)?$/;
+/** A leading NAME=value environment assignment of a shell-command line; A2 reads the program after any of them. */
+const ENV_ASSIGNMENT = /^[A-Za-z_][A-Za-z0-9_]*=/;
 /** The ports a network contact would need; none may appear in the reader closure (B6). */
 const NETWORK_GLOBALS = ["fetch", "WebSocket", "EventSource", "XMLHttpRequest"];
 const NETWORK_MODULE = /^(?:node:)?(?:net|http|https|http2|dns|tls|dgram)$|^(?:undici|ws)$/;
@@ -362,6 +386,43 @@ function literalOf(node: ts.Node | undefined, bindings: ReadonlyMap<string, stri
   if (ts.isIdentifier(node)) return bindings.get(node.text) ?? null;
   return null;
 }
+/** A template's text with each literal (or module-local const) span folded in. An unreadable span ends the text when `gap` is null
+ * (A2 reads a template's leading text only) and reads as `gap` otherwise (A3 and C5 read on past it). */
+function templateText(node: ts.TemplateExpression, bindings: ReadonlyMap<string, string>, gap: string | null): string {
+  let text = node.head.text;
+  for (const span of node.templateSpans) {
+    const piece = literalOf(span.expression, bindings) ?? gap;
+    if (piece === null) return text;
+    text += piece + span.literal.text;
+  }
+  return text;
+}
+/** Every literal text an rf launch argument can read as (A2): the argument itself or a module-local const bound to one, through
+ * parentheses, a type assertion or a non-null mark, either operand of ?? and ||, either branch of a conditional, the leftmost
+ * literal piece of a concatenation and a template's leading text, so a shell line composed after its first word
+ * (`"rf context show " + id`) still names its program. */
+function launchTextsOf(node: ts.Expression | undefined, bindings: ReadonlyMap<string, string>): string[] {
+  if (node === undefined) return [];
+  const literal = literalOf(node, bindings);
+  if (literal !== null) return [literal];
+  if (ts.isParenthesizedExpression(node) || ts.isAsExpression(node) || ts.isSatisfiesExpression(node) || ts.isTypeAssertionExpression(node) || ts.isNonNullExpression(node)) {
+    return launchTextsOf(node.expression, bindings);
+  }
+  if (ts.isConditionalExpression(node)) return [...launchTextsOf(node.whenTrue, bindings), ...launchTextsOf(node.whenFalse, bindings)];
+  if (ts.isBinaryExpression(node)) {
+    const operator = node.operatorToken.kind;
+    if (operator === ts.SyntaxKind.QuestionQuestionToken || operator === ts.SyntaxKind.BarBarToken) return [...launchTextsOf(node.left, bindings), ...launchTextsOf(node.right, bindings)];
+    if (operator === ts.SyntaxKind.PlusToken) return launchTextsOf(node.left, bindings);
+  }
+  if (ts.isTemplateExpression(node)) return [templateText(node, bindings, null)];
+  return [];
+}
+/** The programs a launch text can name: the text whole (a bare name or a path) and its first word read as a shell-command line,
+ * after any leading NAME=value assignments. */
+function programsOf(text: string): string[] {
+  const first = text.trim().split(/\s+/).find(word => !ENV_ASSIGNMENT.test(word));
+  return first === undefined ? [text] : [text, first];
+}
 
 const oldPath = process.env.PATH;
 const scratches: string[] = [];
@@ -511,16 +572,16 @@ function armsOf(schema: unknown): string[][] {
   return schema.oneOf.map((arm: unknown) => (isObject(arm) && Array.isArray(arm.required) ? arm.required.map(String) : []));
 }
 
-/** One module's rf launch sites: every call or construction whose first argument is a literal, or a const bound to one, naming the
- * rf program. */
+/** One module's rf launch sites: every call or construction whose first argument reads as a literal (launchTextsOf) naming the rf
+ * program whole or as the first word of a shell-command line (programsOf). */
 function rfLaunchSites(fileName: string, text: string): string[] {
   const source = sourceOf(fileName, text);
   const bindings = constStrings(source);
   const sites: string[] = [];
   const visit = (node: ts.Node): void => {
     if (ts.isCallExpression(node) || ts.isNewExpression(node)) {
-      const program = literalOf(node.arguments?.[0], bindings);
-      if (program !== null && RF_PROGRAM.test(program)) sites.push(`${fileName}: ${node.expression.getText(source)}`);
+      const programs = launchTextsOf(node.arguments?.[0], bindings).flatMap(programsOf);
+      if (programs.some(program => RF_PROGRAM.test(program))) sites.push(`${fileName}: ${node.expression.getText(source)}`);
     }
     ts.forEachChild(node, visit);
   };
@@ -561,7 +622,7 @@ function scanReplay(fileName: string, text: string, launchModule: boolean): Repl
     }
     if (ts.isTemplateExpression(node)) {
       const parts = [node.head.text, ...node.templateSpans.map(span => span.literal.text)];
-      if (REPLAY_VERB.test(parts.join(" "))) literals.push(`${fileName}: ${parts.join("<expr>")}`);
+      if (REPLAY_VERB.test(parts.join(" ")) || REPLAY_VERB.test(templateText(node, bindings, " "))) literals.push(`${fileName}: ${parts.join("<expr>")}`);
       if (launchModule && parts.some(part => REPLAY_WORD.test(part))) words.push(`${fileName}: ${parts.join("<expr>")}`);
     }
     ts.forEachChild(node, visit);
@@ -575,24 +636,31 @@ interface PortScan {
   readonly modules: string[];
   readonly launches: string[];
   readonly local: string[];
+  readonly opaque: string[];
+}
+/** True for a module load spelled as a call: `import(...)` or `require(...)`. */
+function isLoader(call: ts.CallExpression): boolean {
+  return call.expression.kind === ts.SyntaxKind.ImportKeyword || (ts.isIdentifier(call.expression) && call.expression.text === "require");
 }
 /** True for `require("node:child_process")` and `[await] import("node:child_process")`. */
 function loadsChildProcess(node: ts.Expression): boolean {
   const call = ts.isAwaitExpression(node) ? node.expression : node;
   if (!ts.isCallExpression(call)) return false;
   const first = call.arguments[0];
-  const loader = call.expression.kind === ts.SyntaxKind.ImportKeyword || (ts.isIdentifier(call.expression) && call.expression.text === "require");
-  return loader && first !== undefined && ts.isStringLiteralLike(first) && CHILD_PROCESS.test(first.text);
+  return isLoader(call) && first !== undefined && ts.isStringLiteralLike(first) && CHILD_PROCESS.test(first.text);
 }
 /** One module's ports: every identifier (a property name included) or exact string literal naming a network global, every exact
  * string literal naming a network module, the program of every child_process launcher call however the launcher is bound (named,
- * aliased, namespace, default or required; "<composed>" when the program is not a literal), and its relative import specifiers. */
+ * aliased, namespace, default or required; "<composed>" when the program is not a literal), its relative edges (static import
+ * and export declarations, import() and require() calls whose specifier is a literal or a module-local const, import-equals) and
+ * its opaque loads (an import() or require() whose specifier no literal spells; B6 refuses them). */
 function scanPorts(fileName: string, text: string): PortScan {
   const source = sourceOf(fileName, text);
   const names: string[] = [];
   const modules: string[] = [];
   const launches: string[] = [];
   const local: string[] = [];
+  const opaque: string[] = [];
   const bound = new Map<string, string>();
   const spaces = new Set<string>();
   const bindings = constStrings(source);
@@ -637,44 +705,55 @@ function scanPorts(fileName: string, text: string): PortScan {
       if (node.text.startsWith(".") && (ts.isImportDeclaration(node.parent) || ts.isExportDeclaration(node.parent))) local.push(node.text);
     }
     if (ts.isCallExpression(node) && launcherOf(node.expression) !== undefined) launches.push(literalOf(node.arguments[0], bindings) ?? "<composed>");
+    if (ts.isImportEqualsDeclaration(node) && ts.isExternalModuleReference(node.moduleReference) && ts.isStringLiteralLike(node.moduleReference.expression) &&
+      node.moduleReference.expression.text.startsWith(".")) local.push(node.moduleReference.expression.text);
+    if (ts.isCallExpression(node) && isLoader(node)) {
+      const specifier = literalOf(node.arguments[0], bindings);
+      if (specifier === null) opaque.push(`${fileName}: ${node.getText(source)}`);
+      else if (specifier.startsWith(".")) local.push(specifier);
+    }
     ts.forEachChild(node, visit);
   };
   visit(source);
-  return { names, modules, launches, local };
+  return { names, modules, launches, local, opaque };
 }
 
-/** The reader modules' transitive src import closure, each module's ports merged. */
-function readerClosure(): { modules: string[]; unresolved: string[]; ports: PortScan } {
+/** The transitive import closure of `entries` below `root` (by default the reader modules of this repository's src), each module's
+ * ports and opaque loads merged. */
+function readerClosure(root: string = REPO, entries: readonly string[] = READER_MODULES): { modules: string[]; unresolved: string[]; ports: PortScan } {
   const seen = new Set<string>();
   const unresolved: string[] = [];
-  const merged: PortScan = { names: [], modules: [], launches: [], local: [] };
-  const queue = READER_MODULES.map(module => join(REPO, module));
+  const merged: PortScan = { names: [], modules: [], launches: [], local: [], opaque: [] };
+  const queue = entries.map(module => join(root, module));
   while (queue.length > 0) {
     const file = queue.shift();
     if (file === undefined || seen.has(file)) continue;
     seen.add(file);
-    const scan = scanPorts(relative(REPO, file), textOf(file));
+    const scan = scanPorts(relative(root, file), textOf(file));
     merged.names.push(...scan.names);
     merged.modules.push(...scan.modules);
     merged.launches.push(...scan.launches);
+    merged.opaque.push(...scan.opaque);
     for (const specifier of scan.local) {
       const target = join(dirname(file), specifier.replace(/\.js$/, ".ts"));
       if (existsSync(target)) queue.push(target);
-      else unresolved.push(`${relative(REPO, file)}: ${specifier}`);
+      else unresolved.push(`${relative(root, file)}: ${specifier}`);
     }
   }
-  return { modules: [...seen].map(file => relative(REPO, file)).sort(), unresolved, ports: merged };
+  return { modules: [...seen].map(file => relative(root, file)).sort(), unresolved, ports: merged };
 }
 
-/** One module's freshness labels: a string or template literal spelling one. */
+/** One module's freshness labels: a string or template literal spelling one (a template read with its literal and const spans
+ * folded in). */
 function scanLabels(fileName: string, text: string): string[] {
   const source = sourceOf(fileName, text);
+  const bindings = constStrings(source);
   const hits: string[] = [];
   const visit = (node: ts.Node): void => {
     if (ts.isStringLiteralLike(node) && FRESH_LABELS.test(node.text)) hits.push(`${fileName}: ${node.text}`);
     if (ts.isTemplateExpression(node)) {
       const parts = [node.head.text, ...node.templateSpans.map(span => span.literal.text)];
-      if (parts.some(part => FRESH_LABELS.test(part))) hits.push(`${fileName}: ${parts.join("<expr>")}`);
+      if (parts.some(part => FRESH_LABELS.test(part)) || FRESH_LABELS.test(templateText(node, bindings, " "))) hits.push(`${fileName}: ${parts.join("<expr>")}`);
     }
     ts.forEachChild(node, visit);
   };
@@ -725,6 +804,24 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       path: control('execFileSync("/usr/local/bin/rf", []);'),
       constProgram: control('const program = "rf"; spawn(program, []);'),
       composed: control('const program = ["r", "f"].join(""); spawn(program, []);'),
+      // wb-bstx F1: a shell-command line names its program first (after any NAME=value assignments), and the literal-visible
+      // readings of an argument (a fallback, a conditional, an asserted literal) name it too.
+      shell: control('execSync("rf --json status");'),
+      shellConcat: control('exec("rf context show " + id);'),
+      shellTemplate: control(["execSync(`rf --workspace $", "{root} --json status`);"].join("")),
+      shellEnv: control('execSync("RF_HOME=/w rf --json status");'),
+      fallback: control('spawn(process.env.RF_BIN ?? "rf", []);'),
+      conditional: control('spawn(windows ? "rf.exe" : "rf", []);'),
+      asserted: control('spawn(("rf" as string), []);'),
+      // R-WRAPPED quiet rows: rf behind a wrapper program or after another shell command is no A2 site.
+      wrappedShell: control('spawn("sh", ["-c", "rf --json status"]);'),
+      wrappedEnv: control('spawn("env", ["rf", "--json", "status"]);'),
+      chained: control('execSync("cd /w && rf --json status");'),
+      // R-COMPOSED quiet rows, one per member (`composed` above is the call member).
+      composedConcat: control('spawn("r" + "f", []);'),
+      composedTemplate: control(["spawn(`r$", "{suffix}`, []);"].join("")),
+      composedProperty: control("spawn(BINARIES.rf, []);"),
+      composedImport: control('import { RF_BIN } from "./process-env.js"; spawn(RF_BIN, []);'),
     };
     return { srcFloorMet, sites, controls };
   },
@@ -756,6 +853,14 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       constArgv: control('const VERB = "replay"; export const ARGV = ["context", VERB];', false),
       flagBetween: control('spawn("rf", ["context", "--no-input", "replay", id]);', false),
       composed: control('const verb = ["re", "play"].join(""); spawn("rf", ["context", verb]);', true),
+      // A template's literal and const spans are folded in before the verb test.
+      literalSpan: control(["const cmd = `rf context $", '{"replay"} rfr_x --json`;'].join(""), false),
+      constSpan: control(['const VERB = "replay"; const cmd = `rf context $', "{VERB} --json`;"].join(""), false),
+      // R-COMPOSED quiet rows, one per member (`composed` above is the call member), each in an rf launch module.
+      composedConcat: control('spawn("rf", ["context", "re" + "play"]);', true),
+      composedTemplate: control(["const cmd = `rf context re$", "{gap}play`;"].join(""), true),
+      composedProperty: control('spawn("rf", ["context", VERBS.replay]);', true),
+      composedImport: control('import { VERB } from "./process-env.js"; spawn("rf", ["context", VERB]);', true),
     };
     return { srcFloorMet, launchModules, renderArgvSeen, argv, literals, words, controls };
   },
@@ -831,7 +936,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     expect(closureFloorMet, `closure modules: ${modules.join(", ")}`).toBe(true);
     expect(anchorsRead).toBe(true);
     expect(unresolved).toEqual([]);
-    expect({ names: ports.names, modules: ports.modules, launches }).toStrictEqual({ names: [], modules: [], launches: ["rf"] });
+    expect({ names: ports.names, modules: ports.modules, launches, opaque: ports.opaque }).toStrictEqual({ names: [], modules: [], launches: ["rf"], opaque: [] });
     const control = (text: string): JsonValue => {
       const scan = scanPorts("control.ts", text);
       return { names: scan.names.length, modules: scan.modules.length, launches: scan.launches };
@@ -852,8 +957,43 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       dynamicLauncher: control('const cp = await import("node:child_process"); cp.execFile("curl", []);'),
       composed: control('await globalThis["fe" + "tch"](producer);'),
       unlisted: control('process.binding("tcp_wrap");'),
+      // R-COMPOSED quiet rows, one per member (`composed` above is the concatenation member).
+      composedCall: control('await globalThis[["fe", "tch"].join("")](producer);'),
+      composedTemplate: control(["await globalThis[`fe$", "{suffix}`](producer);"].join("")),
+      composedProperty: control("await globalThis[config.port](producer);"),
+      composedImport: control('import { PORT } from "./process-env.js"; await globalThis[PORT](producer);'),
+      // R-UNLISTED quiet rows: a worker and a native addon.
+      worker: control('import { Worker } from "node:worker_threads"; new Worker(source, { eval: true });'),
+      addon: control('const addon = require("./native.node");'),
     };
-    return { closureFloorMet, anchorsRead, unresolved, names: ports.names, modules: ports.modules, launches, controls };
+    // wb-bstx F2: the closure's edges. A literal or module-local const specifier is followed, an unreadable one refused; a
+    // runtime-bound loader is R-LOADER (aliasedLoader and moduleRequire stay followed [] and refused 0).
+    const edge = (text: string): JsonValue => {
+      const scan = scanPorts("control.ts", text);
+      return { followed: scan.local, refused: scan.opaque.length };
+    };
+    const edges = {
+      staticImport: edge('import { x } from "./static.js";'),
+      dynamicImport: edge('const lazy = await import("./lazy.js");'),
+      required: edge('const lazy = require("./lazy.js");'),
+      importEquals: edge('import lazy = require("./lazy.js");'),
+      constSpecifier: edge('const target = "./lazy.js"; const lazy = await import(target);'),
+      computed: edge("const lazy = await import(target);"),
+      concatenated: edge('const lazy = await import("./la" + "zy.js");'),
+      templated: edge(["const lazy = await import(`./$", "{name}.js`);"].join("")),
+      aliasedLoader: edge('const load = createRequire(import.meta.url); const lazy = load("./lazy.js");'),
+      moduleRequire: edge('const lazy = module.require("./lazy.js");'),
+    };
+    // F2 end to end: a scratch reader whose lazy import reaches a fetching module is walked and its port read, and its computed
+    // import is refused through the walk's merge.
+    const plant = makeScratch("rf-replay-history-closure-");
+    scratches.push(plant);
+    writeFileSync(join(plant, "reader.ts"), 'export const load = () => import("./lazy.js");\nexport const pick = (name: string) => import(name);\n');
+    writeFileSync(join(plant, "lazy.ts"), "export const ping = (url: string) => fetch(url);\n");
+    const planted = readerClosure(plant, ["reader.ts"]);
+    const walk = { modules: planted.modules, unresolved: planted.unresolved, names: planted.ports.names, opaque: planted.ports.opaque };
+    expect(walk).toStrictEqual({ modules: ["lazy.ts", "reader.ts"], unresolved: [], names: ["lazy.ts: fetch"], opaque: ["reader.ts: import(name)"] });
+    return { closureFloorMet, anchorsRead, unresolved, names: ports.names, modules: ports.modules, launches, controls, opaque: ports.opaque, edges, walk };
   },
   C1: async () => {
     const outcome = await nativeOutcome(json(REPLAY), 0);
@@ -918,6 +1058,21 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       hyphenated: control('const label = "up-to-date";'),
       cased: control('const label = "Latest";'),
       composed: control('const label = "fre" + "sh";'),
+      // wb-bstx F3: the widened vocabulary, and a template's literal span folded in.
+      newest: control('const label = "newest";'),
+      asOfNow: control('const label = "as of now";'),
+      freshly: control('const label = "freshly rendered";'),
+      mostRecent: control('const label = "most recent";'),
+      rightNow: control('const label = "right now";'),
+      toTheMinute: control('const label = "up to the minute";'),
+      foldedSpan: control(["const label = `as of $", '{"now"}`;'].join("")),
+      // R-VOCABULARY quiet row: a freshness claim worded outside FRESH_LABELS.
+      outside: control('const label = "just rendered";'),
+      // R-COMPOSED quiet rows, one per member (`composed` above is the concatenation member).
+      composedCall: control('const label = ["fre", "sh"].join("");'),
+      composedTemplate: control(["const label = `fre$", "{suffix}sh`;"].join("")),
+      composedProperty: control("const label = LABELS.current;"),
+      composedImport: control('import { LABEL } from "./labels.js"; const label = LABEL;'),
     };
     return { anchorsRead, hits, controls };
   },

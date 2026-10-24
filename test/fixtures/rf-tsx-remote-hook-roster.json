@@ -1,5 +1,5 @@
 {
-  "provenance": "wb-o4h0.4 census roster (test/workbench-rf-tsx-remote-hook-census.test.ts). quote and citation are the owner filing's (bead row wb-o4h0.4, ReactiveFiberCLI docs/programs/federated-workspaces-2026-10-18/04-cli-api.md:91@6a251bf73af5, re-read at the pin with git show, 2026-10-22). producer is MEASURED read-only on 2026-10-22: rfVersion is `rf --json --version` result.version of the installed rf; importMap is its packaged reactive_fiber_cli/integrations/tsx/import-map.json verbatim; distribution is its runtime-lock.json distribution (name, version, source) plus the files field of package.json at that source; shippedHooks are the use* names src/index.ts exports at ReactiveFiberTSXSDK 5da03a7d49f42a9be7612d34f73d7d9ef950c52c, in file order; admittedResourceKinds and refusedResourceKinds are $defs.resource_kind and $defs.refused_resource_kind of the packaged schemas/tsx/worker-protocol.v1.schema.json; each hookSites list is `git grep -n -i -E 'use[_.-]*remote[_.-]*resources?' <sha>` at that repository's pin (path:line); in the sdkPin page name, <W>-<R> stands for its two words (workspace, then resource) joined by a hyphen, elided because wb-a9l2.2's landed whole-tree census (test/workbench-rf-federated-source-kind-census.test.ts) forbids any test file to spell them joined. Every witness is the expected outcome of its pin's case at this cut.",
+  "provenance": "wb-o4h0.4 census roster (test/workbench-rf-tsx-remote-hook-census.test.ts). quote and citation are the owner filing's (bead row wb-o4h0.4, ReactiveFiberCLI docs/programs/federated-workspaces-2026-10-18/04-cli-api.md:91@6a251bf73af5, re-read at the pin with git show, 2026-10-22). producer is MEASURED read-only on 2026-10-22: rfVersion is `rf --json --version` result.version of the installed rf; importMap is its packaged reactive_fiber_cli/integrations/tsx/import-map.json verbatim; distribution is its runtime-lock.json distribution (name, version, source) plus the files field of package.json at that source; shippedHooks are the use* names src/index.ts exports at ReactiveFiberTSXSDK 5da03a7d49f42a9be7612d34f73d7d9ef950c52c, in file order; admittedResourceKinds and refusedResourceKinds are $defs.resource_kind and $defs.refused_resource_kind of the packaged schemas/tsx/worker-protocol.v1.schema.json; each hookSites list is `git grep -n -i -E 'use[_.-]*remote[_.-]*resources?' <sha>` at that repository's pin (path:line); in the sdkPin page name, <W>-<R> stands for its two words (workspace, then resource) joined by a hyphen, elided because wb-a9l2.2's landed whole-tree census (test/workbench-rf-federated-source-kind-census.test.ts) forbids any test file to spell them joined. Every witness is the expected outcome of its pin's case at this cut. wb-ucav (the R694 follow-up of landing 271, gate finding F1 with riders F2-F5) extends the A2, B2, C1 and C2 witnesses, the scan constants and the residual families; the producer facts are not re-measured.",
   "bead": "wb-o4h0.4",
   "quote": "They are sugar for typed imported resources, not a second hidden fetch/cache engine. The component's read-set and render report must include the imported dependency and resolved revision; no network activity during pure component render.",
   "citation": "docs/programs/federated-workspaces-2026-10-18/04-cli-api.md:91@6a251bf73af5",
@@ -55,14 +55,39 @@
       "media/screenshot.png:PNG"
     ],
     "oracle": "test/workbench-unsafe-display-oracle.test.ts",
-    "tierCommand": "rf-preview-tsx"
+    "tierCommand": "rf-preview-tsx",
+    "specifierShape": "^[^\\s\"'`;(){}[\\]<>]+$/",
+    "jsdocExtensions": [
+      ".js",
+      ".mjs",
+      ".cjs",
+      ".jsx"
+    ],
+    "rowRegistrars": [
+      "it",
+      "test"
+    ],
+    "suiteRegistrars": [
+      "describe",
+      "suite"
+    ],
+    "tableFactories": [
+      "each",
+      "for"
+    ],
+    "apiFactories": [
+      "extend",
+      "scoped"
+    ],
+    "shippedOtherwise": "\\bshipped:(?!\\s*no\\b)\\s*\\S*/gi"
   },
   "residuals": [
     "R-COMPOSED",
     "R-ENCODED",
     "R-LOOKALIKE",
     "R-PROSE",
-    "R-OUTSIDE"
+    "R-OUTSIDE",
+    "R-HELPER"
   ],
   "producer": {
     "rfVersion": "0.1.832",
@@ -128,7 +153,7 @@
   "rows": [
     {
       "id": "A",
-      "label": "(trigger, absent today) If Pi ever authors TSX components over federated imports: no TSX or JSX module exists in the walked tree, no module or manifest names the TSX SDK, and every TSX module text Pi plants (the unsafe-display oracle's among them) sits in a module B judges",
+      "label": "(trigger, absent today) If Pi ever authors TSX components over federated imports: no TSX or JSX module exists in the walked tree, no module loads the TSX SDK and no manifest names it, and every TSX module text Pi plants (the unsafe-display oracle's among them) sits in a module B judges",
       "pins": [
         {
           "id": "A1",
@@ -183,6 +208,26 @@
               "otherPackage": false,
               "composedSpecifier": false,
               "mentionOnly": false,
+              "callArgument": true,
+              "applyArray": true,
+              "reflectApply": true,
+              "spreadArgument": true,
+              "arrayArgument": true,
+              "typesDirective": true,
+              "pathDirective": true,
+              "amdDirective": true,
+              "jsdocImportType": true,
+              "jsdocImportTag": true,
+              "jsdocInTs": false,
+              "lineComment": false,
+              "plantedSource": false,
+              "boundSpecifier": false,
+              "callbackSpecifier": false,
+              "fieldSpecifier": false,
+              "chosenSpecifier": false,
+              "logicalSpecifier": false,
+              "assertedSpecifier": true,
+              "sequencedSpecifier": true,
               "manifestDependency": true,
               "manifestAlias": true,
               "manifestPaths": [
@@ -255,7 +300,7 @@
             "bytes": [],
             "symlinks": [],
             "unreadable": [],
-            "walkedPlants": 12,
+            "walkedPlants": 13,
             "controls": {
               "fixtures/remote/component.tsx": true,
               "fixtures/workspace.json": true,
@@ -264,6 +309,7 @@
               "notes/url.txt": true,
               "fixtures/le.txt": true,
               "fixtures/be.txt": true,
+              "fixtures/odd-le.txt": true,
               "fixtures/use-remote-resource/index.ts": true,
               "test/fixtures/build/hook.ts": true,
               "fixtures/link.txt": true,
@@ -310,7 +356,11 @@
             "shippedHooks": 12,
             "remoteKinds": [],
             "sdkMapped": true,
-            "beadSaysUnshipped": true
+            "beadSaysUnshipped": true,
+            "shippedOtherwise": [],
+            "controls": {
+              "appendedShippedYes": 1
+            }
           }
         },
         {
@@ -325,7 +375,142 @@
               "success row: an ephemeral TSX-era preview with a worker spawn and engine identity",
               "runtime-absent row: with no deno on PATH the capability refuses as typed unavailable RF_COMPONENT_RUNTIME_ABSENT"
             ],
-            "claims": []
+            "unaccounted": [],
+            "claims": [],
+            "controls": {
+              "bareIt": {
+                "rows": 1,
+                "unaccounted": 0
+              },
+              "bareTest": {
+                "rows": 1,
+                "unaccounted": 0
+              },
+              "concurrent": {
+                "rows": 1,
+                "unaccounted": 0
+              },
+              "focused": {
+                "rows": 1,
+                "unaccounted": 0
+              },
+              "skipped": {
+                "rows": 1,
+                "unaccounted": 0
+              },
+              "todo": {
+                "rows": 1,
+                "unaccounted": 0
+              },
+              "fails": {
+                "rows": 1,
+                "unaccounted": 0
+              },
+              "chainedModifiers": {
+                "rows": 1,
+                "unaccounted": 0
+              },
+              "elementModifier": {
+                "rows": 1,
+                "unaccounted": 0
+              },
+              "condition": {
+                "rows": 1,
+                "unaccounted": 0
+              },
+              "renamedImport": {
+                "rows": 1,
+                "unaccounted": 0
+              },
+              "namespaceImport": {
+                "rows": 1,
+                "unaccounted": 0
+              },
+              "nestedSuites": {
+                "rows": 1,
+                "unaccounted": 0
+              },
+              "table": {
+                "rows": 0,
+                "unaccounted": 1
+              },
+              "forTable": {
+                "rows": 0,
+                "unaccounted": 1
+              },
+              "tableSuite": {
+                "rows": 0,
+                "unaccounted": 1
+              },
+              "extendApi": {
+                "rows": 0,
+                "unaccounted": 1
+              },
+              "extendCalled": {
+                "rows": 0,
+                "unaccounted": 1
+              },
+              "alias": {
+                "rows": 0,
+                "unaccounted": 1
+              },
+              "registrarArgument": {
+                "rows": 0,
+                "unaccounted": 1
+              },
+              "loop": {
+                "rows": 0,
+                "unaccounted": 1
+              },
+              "branch": {
+                "rows": 0,
+                "unaccounted": 1
+              },
+              "helperFunction": {
+                "rows": 0,
+                "unaccounted": 1
+              },
+              "callbackRows": {
+                "rows": 0,
+                "unaccounted": 1
+              },
+              "suiteInLoop": {
+                "rows": 0,
+                "unaccounted": 1
+              },
+              "callOfResult": {
+                "rows": 0,
+                "unaccounted": 1
+              },
+              "computedMember": {
+                "rows": 0,
+                "unaccounted": 1
+              },
+              "namespaceWhole": {
+                "rows": 0,
+                "unaccounted": 1
+              },
+              "computedTitle": {
+                "rows": 1,
+                "unaccounted": 0
+              },
+              "otherMember": {
+                "rows": 0,
+                "unaccounted": 0
+              },
+              "helperModule": {
+                "rows": 0,
+                "unaccounted": 0
+              },
+              "helperRegistrar": {
+                "rows": 0,
+                "unaccounted": 0
+              },
+              "dynamicBinding": {
+                "rows": 0,
+                "unaccounted": 0
+              }
+            }
           }
         }
       ]

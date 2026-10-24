@@ -4,6 +4,7 @@
  * captured `gp --help`/`hello` roster, never SKILL.md prose, so a missing fixture or binary is 'prerequisite-missing',
  * never 'not implemented'; vendor only generated or `gp sample` receipt fixtures that `gp inspect decision --json`
  * accepts" - GraphPolicyCLI docs/programs/feedback-contract-audit-2026-10-21/04-verification-playbook.md:37@0107c72992f3
+ * (program status at 0107c72992f3: "Proposed audit obligations and candidate resolutions, NOT accepted GraphPolicyCLI semantics")
  * ("`gp --version` is known to print a stale command shortlist and is not a revision ID."); merged pins 04:104, 04:109,
  * 03-developer-workplan.md:7 and :67; authority 01-finding-inventory.md:49 ("Never conflate the installed command with
  * source HEAD."). The four acceptance clauses (ACCEPTANCE, quoted verbatim from the bead) map one table each:

@@ -53,12 +53,13 @@
  *  M, the matchers rows A to E read: M1-M6 the spellings each must catch and the ones it must pass; Q1-Q6 the pinned quiet rows.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal, and the whole judged set - every row's id,
  * label and pins, every pin's witness, the decision enum, the summary keys, the citations and the registered test titles - is
- * held to the out-of-file roster, whose measured envelopes anchor the enum and the instance outside this file. A pin deleted,
- * relabelled, swapped for another passing case, or removed from every literal here at once still reds against the roster, and
- * the enum removed from every literal here still reds against the measured summary keys. Not claimed: an edit of this file and
- * the roster together.
- * RESIDUALS (named, each with a pinned quiet row): R-HOMOGLYPH a decision spelled with a look-alike letter is not caught (Q1);
- * R-PARAPHRASE an equation reworded without a plan term or an executed term is not caught (Q2); R-SPLIT-SENTENCE an equation
+ * held to the out-of-file roster (every pin's reached assertion count included, wb-nrbk F2), whose measured envelopes anchor the
+ * enum and the instance outside this file. A pin deleted, relabelled, swapped for another passing case, or removed from every
+ * literal here at once still reds against the roster, and the enum removed from every literal here still reds against the
+ * measured summary keys. Not claimed: an edit of this file and the roster together.
+ * RESIDUALS (named, each with a pinned quiet row): R-HOMOGLYPH a decision spelled with a look-alike letter, or split by a
+ * separator outside SEP (a middle dot), is not caught (Q1); R-PARAPHRASE an equation reworded without a plan term or an executed
+ * term is not caught, a plan named in the possessive of a producer other than rf included (Q2); R-SPLIT-SENTENCE an equation
  * split across two sentences escapes D1 and is caught by D2 alone (Q3); R-COMPOSED-ARGV a plan argv built from non-literal parts
  * is invisible to A1 (Q4); R-ENGLISH-DECISIONS 'reuse' and 'invalidated' are ordinary words that src spells today, so E2/E3 read
  * only the two distinctive decisions while C6 keeps the reader modules free of every decision token (Q5); R-SCOPE test/,
@@ -68,10 +69,25 @@
  * the executor's component reuse is echoed by no Pi surface today (quiet row C4).
  * SCOPE: the enum, the keys and the shapes are producer facts at the installed rf; Pi vendors no rf schema, so a producer-side
  * change is seen only when a fixture re-measure re-reads them. No plan reader is added or faked here.
+ * wb-nrbk (R694 follow-up of landing 282, the wb-pfxo.6 gate of record cmd_0147bba4ef1b on machine gate cmd_c8d00658b980; F1
+ * leads, F2, F3 and F5 ride): WALK ANCHORS (F1) - every judged walk (A1 the src .ts modules; E2 and E3 every file below src/
+ * and qa/; D1 and D2 the docs/workbench markdown pages) records the files it actually read, and that list must equal git's own
+ * listing of the same root (gitListed: tracked and untracked files, ignored ones included, as a filesystem walk sees them), so
+ * a walk that drops a directory or a page reds although it stays above its floor (the gate's G3 src/workflow 101/115, G4 src/ui
+ * 104/115, G5 feature-matrix.md 67/68); the floors stay, as the guard against an empty or misdirected listing. REACHED (F2) - each pin
+ * records `${pin}:${assertionCalls}` after its witness comparison, and the registration case holds that record, and every
+ * measured witness a second time, to the roster (the federation-stamps pattern), so a case that returns before its assertions
+ * (G1) or returns its witness as a constant (G2) reds. SEPARATORS AND POSSESSIVES (F3) - SEP and GAP read the dash look-alikes
+ * of "-" (DASHES) and every possessive reads an ASCII, U+2019 or U+02BC apostrophe (POSSESSIVE), and PLAN_TERM names rf's own
+ * plan in the possessive, so the gate's S7 (a U+2011 separator) and S18 (a bare rf's plan beside an executed term) are caught
+ * (M1, M3, M4, M5, M6); what still escapes is named in R-HOMOGLYPH and R-PARAPHRASE with pinned quiet members (Q1, Q2). COUNTS
+ * (F5) - the root comments state the counts measured at base cbe3588. Not claimed: a coordinated edit of a walk and its git
+ * anchor in this file.
  *
  * Display paths added: none. Test-only: the stand-in rf lives in makeScratch scratch; src, qa and docs are only read.
  */
-import { chmodSync, type Dirent, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { execFileSync } from "node:child_process";
+import { chmodSync, type Dirent, lstatSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
@@ -121,10 +137,17 @@ const READER_MODULES = ["src/workbench/providers/reactivefiber.ts", "src/workben
 /** The commit-shape fields a committed render carries and a preview negates (providers/reactivefiber.ts isPreviewEnvelope). */
 const COMMIT_FIELDS = ["transaction_id", "result.render_id", "result.ephemeral", "result.commit_seq", "result.work.storage_write_count"];
 
-/** The separator class between the words of a spelling: whitespace, "_", ".", "-", a backslash escape, emphasis or code marks. */
-const SEP = "[\\s_.\\\\*`~-]*";
+/** The dash look-alikes of "-" (wb-nrbk F3, the gate's S7): U+2010-U+2015 hyphens and dashes, U+2212 minus sign, U+FE58 small em
+ * dash, U+FE63 small hyphen-minus and U+FF0D fullwidth hyphen-minus, built from their code points so none sits raw in this file. */
+const DASHES = [0x2010, 0x2011, 0x2012, 0x2013, 0x2014, 0x2015, 0x2212, 0xfe58, 0xfe63, 0xff0d].map(code => String.fromCodePoint(code)).join("");
+/** The separator class between the words of a spelling: whitespace, "_", ".", "-" or a dash look-alike, a backslash escape,
+ * emphasis or code marks. */
+const SEP = `[\\s_.\\\\*\`~${DASHES}-]*`;
 /** One or more separators: the gap between two whole words. */
-const GAP = "[\\s_.\\\\*`~-]+";
+const GAP = `[\\s_.\\\\*\`~${DASHES}-]+`;
+/** A possessive 's in any apostrophe spelling (wb-nrbk F3, the gate's S18): ASCII, U+2019 right single quotation mark and U+02BC
+ * modifier letter apostrophe. */
+const POSSESSIVE = `(?:['${String.fromCodePoint(0x2019, 0x02bc)}]s)`;
 /** (a) a claim that an instance was refreshed, reused, recomputed, re-rendered or served from a cache. */
 const CLAIM = new RegExp(
   `\\b(?:re${SEP}fresh(?:ed|es|ing)?|re${SEP}us(?:e|ed|es|ing)|re${SEP}comput(?:e|ed|es|ing)|re${SEP}render(?:ed|s|ing)?|cache${SEP}hits?|served${GAP}from${GAP}(?:the${GAP})?cache)\\b`,
@@ -138,13 +161,14 @@ const DECISION_TOKEN = /(?<![A-Za-z0-9_])(?:reuse|invalidated|non_reusable|refre
 const DECISION_FAMILY = `refresh${SEP}required|non${SEP}reusable`;
 /** An rf plan verb in an argv-free literal: context plan, context.plan, context-plan. */
 const PLAN_VERB = /\bcontext[\s._-]+plan\b/i;
-/** (c) an rf plan term in docs: the verb, a plan row or decision, a planner, a prediction of reuse, a distinctive decision. */
+/** (c) an rf plan term in docs: the verb, rf's plan (in the possessive too), a plan row or decision, a planner, a prediction of
+ * reuse, a distinctive decision. */
 const PLAN_TERM = new RegExp(
   [
     `\\bcontext${SEP}plan\\b`,
-    `\\brf${GAP}plan\\b`,
-    `\\bplan(?:'s|s)?${GAP}(?:rows?|decisions?|predictions?|forecasts?|verdicts?|words?|outcomes?)\\b`,
-    `\\bplanners?(?:'s)?\\b`,
+    `\\b(?:rf|reactive${SEP}fiber)${POSSESSIVE}?${GAP}plan\\b`,
+    `\\bplan(?:${POSSESSIVE}|s)?${GAP}(?:rows?|decisions?|predictions?|forecasts?|verdicts?|words?|outcomes?)\\b`,
+    `\\bplanners?${POSSESSIVE}?\\b`,
     `\\b(?:predict|forecast)\\w*${GAP}(?:\\w+${GAP}){0,2}re${SEP}us\\w*`,
     `\\bre${SEP}us\\w*${GAP}(?:predictions?|forecasts?|plans?)\\b`,
     DECISION_FAMILY,
@@ -158,7 +182,7 @@ const EXECUTED_TERM = new RegExp(
     `\\b(?:reused|rendered|invalidated)${SEP}component${SEP}count\\b`,
     `\\bcomponent${SEP}render${SEP}count\\b`,
     `\\bobservation${SEP}(?:reused|executed)${SEP}count\\b`,
-    `\\b(?:executor|execution|executed|render(?:s|ed|er|ers|ing)?|component|observation|freshness)(?:'s)?${GAP}(?:\\w+${GAP}){0,2}(?:re${SEP}us(?:e|ed|es|ing)|re${SEP}comput\\w*|re${SEP}render\\w*)\\b`,
+    `\\b(?:executor|execution|executed|render(?:s|ed|er|ers|ing)?|component|observation|freshness)${POSSESSIVE}?${GAP}(?:\\w+${GAP}){0,2}(?:re${SEP}us(?:e|ed|es|ing)|re${SEP}comput\\w*|re${SEP}render\\w*)\\b`,
     `\\bre${SEP}us(?:e|ed|es|ing)${GAP}(?:\\w+${GAP}){0,2}(?:components?|instances?|outputs?|observations?)\\b`,
     `\\bcache${SEP}hits?\\b`,
     `\\bserved${GAP}from${GAP}(?:the${GAP})?cache\\b`,
@@ -240,6 +264,8 @@ interface Roster {
   readonly envelopes: { readonly plan: PlanEnvelope; readonly committed: JsonObject; readonly preview: JsonObject };
   readonly rows: readonly RosterRow[];
   readonly tests: readonly string[];
+  /** Every pin's `${pin}:${assertionCalls}` at the end of its case, in row order (wb-nrbk F2). */
+  readonly reached: readonly string[];
 }
 
 function isObject(value: unknown): value is { [key: string]: unknown } {
@@ -310,6 +336,7 @@ function readRoster(): Roster {
     },
     rows,
     tests: strings(raw.tests, "tests"),
+    reached: strings(raw.reached, "reached"),
   };
 }
 
@@ -398,6 +425,25 @@ function textOf(path: string): string {
     return "";
   }
 }
+/** Every regular file git sees below a root - tracked or untracked, ignored ones included, so it lists what a filesystem walk
+ * sees - as sorted repository-relative paths ending in `extension`: the walk anchor outside this census (wb-nrbk F1). A path git
+ * still indexes but the checkout no longer holds is no file a walk can read, so it is left out. */
+function gitListed(root: string, extension: string): string[] {
+  const listing = execFileSync("git", ["ls-files", "-z", "--cached", "--others", "--", root], { cwd: REPO, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
+  const isFile = (path: string): boolean => {
+    try {
+      return lstatSync(join(REPO, path)).isFile();
+    } catch {
+      return false;
+    }
+  };
+  return [...new Set(listing.split("\0"))].filter(path => path !== "" && path.endsWith(extension) && isFile(path)).sort();
+}
+/** A walk's reading, sorted, holds exactly git's listing. */
+function sameList(read: readonly string[], listed: readonly string[]): boolean {
+  const sorted = [...read].sort();
+  return sorted.length === listed.length && sorted.every((path, index) => path === listed[index]);
+}
 
 interface LiteralScan {
   /** Every string literal's cooked value and every template's literal parts joined by "<expr>". */
@@ -443,24 +489,29 @@ interface ScanRoot {
   readonly anchorFile: string;
   readonly anchorToken: string;
 }
-/** The roots E2 and E3 read; each floor sits below the count measured at base e877d48 (src 115 .ts modules, qa 67 files), so an
- * emptied or misdirected walk reds and an additive change does not. */
+/** The roots E2 and E3 read; each floor sits below the count measured at base e877d48 and again at base cbe3588 (src 115 files,
+ * all .ts modules; qa 67 files), so an emptied or misdirected walk reds and an additive change does not; a walk that drops part
+ * of a root reds against gitListed (wb-nrbk F1). */
 const CODE_ROOTS: readonly ScanRoot[] = [
   { root: "src", floor: 100, anchorFile: "src/workbench/providers/reactivefiber.ts", anchorToken: "context.render" },
   { root: "qa", floor: 50, anchorFile: "qa/workbench/receipts-index.mjs", anchorToken: "docs/workbench/receipts" },
 ];
-/** The docs root D reads: 68 markdown files at base e877d48 (floor 60); its anchor carries an executed-reuse term, so the
- * EXECUTED_TERM half of D1 is live on today's docs (non-vacuity), and the sentence floor sits below the measured 5366 units. */
+/** The docs root D reads: 68 markdown files at base e877d48 and 69 at base cbe3588 (floor 60); its anchor carries an
+ * executed-reuse term, so the EXECUTED_TERM half of D1 is live on today's docs (non-vacuity), and the sentence floor sits below
+ * the raw units measured at base cbe3588, 5414 (wb-nrbk F5: the landed comment said 5366, the gate of record measured 5313 at
+ * its base); a walk that drops a page reds against gitListed (wb-nrbk F1). */
 const DOCS_ROOT = { root: "docs/workbench", floor: 60, sentenceFloor: 4000, anchorFile: "docs/workbench/receipts/wb-c7ku.md", anchorToken: "reused_component_count" };
 
 /** A code root's distinctive-decision spellings: raw text and cooked literals of every file, with its floor and anchor read. */
-function codeSpellings(scan: ScanRoot): { files: number; floorMet: boolean; anchorRead: boolean; producer: string[]; respelled: string[] } {
+function codeSpellings(scan: ScanRoot): { files: number; floorMet: boolean; anchorRead: boolean; read: string[]; producer: string[]; respelled: string[] } {
   const files = filesBelow(join(REPO, scan.root));
+  const read: string[] = [];
   const producer: string[] = [];
   const respelled: string[] = [];
   for (const file of files) {
     const text = textOf(file);
     const name = relative(REPO, file);
+    read.push(name);
     const views = [text, ...scanLiterals(name, text).literals];
     const found = views.map(familySpellings);
     if (found.some(entry => entry.producer.length > 0)) producer.push(name);
@@ -469,20 +520,25 @@ function codeSpellings(scan: ScanRoot): { files: number; floorMet: boolean; anch
   }
   const anchor = join(REPO, scan.anchorFile);
   return {
-    files: files.length, floorMet: files.length >= scan.floor, anchorRead: files.includes(anchor) && textOf(anchor).includes(scan.anchorToken), producer, respelled,
+    files: files.length, floorMet: files.length >= scan.floor, anchorRead: files.includes(anchor) && textOf(anchor).includes(scan.anchorToken), read, producer, respelled,
   };
 }
 
 /** Every sentence of docs/workbench in both views, with its file, after the floor and the anchor are read. */
-function docsSentences(): { floorMet: boolean; sentenceFloorMet: boolean; anchorRead: boolean; executedSentences: boolean; sentences: { file: string; view: string; sentence: string }[] } {
+function docsSentences(): { floorMet: boolean; sentenceFloorMet: boolean; anchorRead: boolean; executedSentences: boolean; read: string[]; sentences: { file: string; view: string; sentence: string }[] } {
   const files = filesBelow(join(REPO, DOCS_ROOT.root)).filter(file => file.endsWith(".md"));
-  const sentences = files.flatMap(file => sentencesOf(textOf(file)).map(entry => ({ file: relative(REPO, file), ...entry })));
+  const read: string[] = [];
+  const sentences = files.flatMap(file => {
+    const name = relative(REPO, file);
+    read.push(name);
+    return sentencesOf(textOf(file)).map(entry => ({ file: name, ...entry }));
+  });
   const anchor = join(REPO, DOCS_ROOT.anchorFile);
   const anchorRead = files.includes(anchor) && textOf(anchor).includes(DOCS_ROOT.anchorToken);
   const raw = sentences.filter(entry => entry.view === "raw");
   return {
     floorMet: files.length >= DOCS_ROOT.floor, sentenceFloorMet: raw.length >= DOCS_ROOT.sentenceFloor, anchorRead,
-    executedSentences: sentences.some(entry => entry.file === DOCS_ROOT.anchorFile && EXECUTED_TERM.test(entry.sentence)), sentences,
+    executedSentences: sentences.some(entry => entry.file === DOCS_ROOT.anchorFile && EXECUTED_TERM.test(entry.sentence)), read, sentences,
   };
 }
 
@@ -655,22 +711,35 @@ function spellingVerdicts(test: (text: string) => boolean, spellings: readonly S
 }
 const ZERO_WIDTH = String.fromCodePoint(0x200b);
 const CYRILLIC_I = String.fromCodePoint(0x0456);
+/** The separator and apostrophe look-alikes the wb-nrbk F3 spellings use (the gate's S7 separator, S18's typographic form). */
+const NB_HYPHEN = String.fromCodePoint(0x2011);
+const EN_DASH = String.fromCodePoint(0x2013);
+const RIGHT_QUOTE = String.fromCodePoint(0x2019);
+const MIDDLE_DOT = String.fromCodePoint(0x00b7);
 
 /** Each pin's case: it asserts its own outcome and returns the witness the roster holds for it. */
 const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   A1: async () => {
     const files = filesBelow(join(REPO, "src")).filter(file => file.endsWith(".ts"));
-    const found = files.map(file => scanLiterals(relative(REPO, file), textOf(file)));
+    const read: string[] = [];
+    const found = files.map(file => {
+      const name = relative(REPO, file);
+      read.push(name);
+      return scanLiterals(name, textOf(file));
+    });
     const argv = found.flatMap(result => result.argv);
     const literals = found.flatMap(result => result.literals).filter(text => PLAN_VERB.test(text));
     const renderArgvSeen = found.reduce((sum, result) => sum + result.renderArgv, 0) >= 1;
     const { ids, texts } = await nativeDescriptors();
     const descriptorHits = ids.filter((id, index) => PLAN_VERB.test(texts[index] ?? "") || /(?:^|[._-])plan(?:$|[._-])/i.test(id));
     const srcFloorMet = files.length >= 100;
+    const listed = gitListed("src", ".ts");
+    const walkAgreesWithGit = sameList(read, listed);
     expect(srcFloorMet, `src modules walked: ${files.length}`).toBe(true);
+    expect([...read].sort(), "the A1 walk read exactly git's own listing of src/**/*.ts (wb-nrbk F1)").toStrictEqual(listed);
     expect(renderArgvSeen).toBe(true);
     expect({ argv, literals, descriptorHits }, "an rf plan reader is a new cut: this census binds it").toStrictEqual({ argv: [], literals: [], descriptorHits: [] });
-    return { srcFloorMet, renderArgvSeen, argv, literals, descriptorHits };
+    return { srcFloorMet, walkAgreesWithGit, renderArgvSeen, argv, literals, descriptorHits };
   },
   A2: async () => {
     const injected = new CapabilityRegistry();
@@ -837,20 +906,28 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   },
   D1: async () => {
     const docs = docsSentences();
+    const listed = gitListed(DOCS_ROOT.root, ".md");
+    const walkAgreesWithGit = sameList(docs.read, listed);
     const hits = docs.sentences.filter(entry => equates(entry.sentence)).map(entry => `${entry.file} (${entry.view}): ${entry.sentence.slice(0, 160)}`);
     expect(docs.floorMet && docs.sentenceFloorMet && docs.anchorRead && docs.executedSentences).toBe(true);
+    expect([...docs.read].sort(), "the D walk read exactly git's own listing of docs/workbench/**/*.md (wb-nrbk F1)").toStrictEqual(listed);
     expect(hits).toEqual([]);
-    return { floorMet: docs.floorMet, sentenceFloorMet: docs.sentenceFloorMet, anchorRead: docs.anchorRead, executedSentences: docs.executedSentences, hits };
+    return {
+      floorMet: docs.floorMet, sentenceFloorMet: docs.sentenceFloorMet, anchorRead: docs.anchorRead, executedSentences: docs.executedSentences, walkAgreesWithGit, hits,
+    };
   },
   D2: async () => {
     const docs = docsSentences();
+    const listed = gitListed(DOCS_ROOT.root, ".md");
+    const walkAgreesWithGit = sameList(docs.read, listed);
     const allowed = new Set(ROSTER.docsPlanSentences);
     const named = docs.sentences.filter(entry => PLAN_TERM.test(entry.sentence));
     const hits = [...new Set(named.filter(entry => !allowed.has(entry.sentence)).map(entry => `${entry.file}: ${entry.sentence.slice(0, 160)}`))];
     expect(docs.floorMet && docs.sentenceFloorMet && docs.anchorRead).toBe(true);
+    expect([...docs.read].sort(), "the D walk read exactly git's own listing of docs/workbench/**/*.md (wb-nrbk F1)").toStrictEqual(listed);
     expect(ROSTER.docsPlanSentences).toEqual([]);
     expect(hits).toEqual([]);
-    return { floorMet: docs.floorMet, allowed: [...allowed], hits };
+    return { floorMet: docs.floorMet, walkAgreesWithGit, allowed: [...allowed], hits };
   },
   E1: async () => {
     const summaryDecisions = Object.keys(objectOf(objectOf(PLAN.result, "plan result").summary, "plan summary")).filter(key => key !== "rows" && key !== "evidence_complete");
@@ -867,19 +944,25 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   E2: async () => {
     const roots = CODE_ROOTS.map(scan => {
       const found = codeSpellings(scan);
+      const listed = gitListed(scan.root, "");
+      const walkAgreesWithGit = sameList(found.read, listed);
       expect(found.floorMet, `${scan.root}: ${found.files} files walked, floor ${scan.floor}`).toBe(true);
+      expect([...found.read].sort(), `${scan.root}: the walk read exactly git's own listing of ${scan.root}/** (wb-nrbk F1)`).toStrictEqual(listed);
       expect(found.anchorRead, `${scan.root}: the anchor ${scan.anchorFile} was not read with ${scan.anchorToken}`).toBe(true);
       expect(found.respelled, `respelled plan decisions under ${scan.root}`).toEqual([]);
-      return { root: scan.root, floorMet: found.floorMet, anchorRead: found.anchorRead, respelled: found.respelled };
+      return { root: scan.root, floorMet: found.floorMet, walkAgreesWithGit, anchorRead: found.anchorRead, respelled: found.respelled };
     });
     return { roots };
   },
   E3: async () => {
     const roots = CODE_ROOTS.map(scan => {
       const found = codeSpellings(scan);
+      const listed = gitListed(scan.root, "");
+      const walkAgreesWithGit = sameList(found.read, listed);
       expect(found.floorMet && found.anchorRead).toBe(true);
+      expect([...found.read].sort(), `${scan.root}: the walk read exactly git's own listing of ${scan.root}/** (wb-nrbk F1)`).toStrictEqual(listed);
       expect(found.producer, `files spelling ${DISTINCTIVE.join(" or ")} under ${scan.root}: a plan reader is a new cut this census binds`).toEqual([]);
-      return { root: scan.root, producer: found.producer };
+      return { root: scan.root, walkAgreesWithGit, producer: found.producer };
     });
     return { distinctive: DISTINCTIVE, roots };
   },
@@ -887,6 +970,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     spellingVerdicts(text => CLAIM.test(text), [
       { text: "the render reused pc1:pc1", hit: true },
       { text: "the instance was re-used", hit: true },
+      { text: `the instance was re${NB_HYPHEN}used`, hit: true },
       { text: "rf recomputed the component", hit: true },
       { text: "the block was refreshed", hit: true },
       { text: "the component was re-rendered", hit: true },
@@ -911,7 +995,10 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       { text: "invalidated_component_count", hit: false },
     ]),
   M3: async () => {
-    const respellings = ["refresh required", "refresh-required", "Refresh_Required", "REFRESH_REQUIRED", "refreshRequired", "non-reusable", "non reusable", "nonreusable", "NON_REUSABLE", "nonReusable"];
+    const respellings = [
+      "refresh required", "refresh-required", "Refresh_Required", "REFRESH_REQUIRED", "refreshRequired", "non-reusable", "non reusable", "nonreusable", "NON_REUSABLE", "nonReusable",
+      `refresh${NB_HYPHEN}required`, `non${EN_DASH}reusable`,
+    ];
     const verdicts = respellings.map(text => ({ text, respelled: familySpellings(text).respelled.length === 1 }));
     const producer = DISTINCTIVE.map(text => ({ text, producer: familySpellings(text).producer.length === 1, respelled: familySpellings(text).respelled.length }));
     const cooked = scanLiterals("control.ts", 'const a = "refresh\\u005frequired"; const b = `non\\x5freusable`;').literals.map(text => familySpellings(text).producer.length);
@@ -936,6 +1023,10 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       { text: "The row is refresh<!-- x -->_required.", hit: true },
       { text: "The row is refresh&#95;required.", hit: true },
       { text: `The row is refresh${ZERO_WIDTH}_required.`, hit: true },
+      { text: `The row is refresh${NB_HYPHEN}required.`, hit: true },
+      { text: "rf's plan named the row.", hit: true },
+      { text: `rf${RIGHT_QUOTE}s plan named the row.`, hit: true },
+      { text: "The ReactiveFiber plan named the row.", hit: true },
       { text: "The implementation plan lists the beads.", hit: false },
       { text: "It contradicts its M2.3 prediction.", hit: false },
       { text: "Disposable cache-plane writes may occur.", hit: false },
@@ -951,6 +1042,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       { text: "The executor recomputed it.", hit: true },
       { text: "A cache hit.", hit: true },
       { text: "Served from the cache.", hit: true },
+      { text: `The executor${RIGHT_QUOTE}s output was reused.`, hit: true },
       { text: "A resume reuses the transcript.", hit: false },
       { text: "Disposable cache-plane writes may occur.", hit: false },
     ]),
@@ -960,20 +1052,32 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       { text: "rf context plan reports the reused_component_count.", hit: true },
       { text: "A non-reusable row means the executor recomputed the component.", hit: true },
       { text: "The context.plan reuse decision is the render's reuse.", hit: true },
+      { text: "rf's plan matched what the executor reused.", hit: true },
       { text: "The plan row said refresh_required.", hit: false },
       { text: "The executor reused the component.", hit: false },
     ]),
   Q1: async () => {
-    const homoglyph = `The row is refresh_requ${CYRILLIC_I}red.`;
-    const spelled = familySpellings(normalized(homoglyph));
-    const verdict = { planTerm: sentencesOf(homoglyph).some(entry => PLAN_TERM.test(entry.sentence)), family: spelled.producer.length + spelled.respelled.length };
-    expect(verdict, "R-HOMOGLYPH: a look-alike letter still hides the decision; a matcher that now catches it re-reads this residual").toStrictEqual({ planTerm: false, family: 0 });
+    const read = (text: string): { planTerm: boolean; family: number } => {
+      const spelled = familySpellings(normalized(text));
+      return { planTerm: sentencesOf(text).some(entry => PLAN_TERM.test(entry.sentence)), family: spelled.producer.length + spelled.respelled.length };
+    };
+    const verdict = { letter: read(`The row is refresh_requ${CYRILLIC_I}red.`), separator: read(`The row is refresh${MIDDLE_DOT}required.`) };
+    expect(verdict, "R-HOMOGLYPH: a look-alike letter or a separator outside SEP still hides the decision; a matcher that now catches either re-reads this residual").toStrictEqual({
+      letter: { planTerm: false, family: 0 }, separator: { planTerm: false, family: 0 },
+    });
     return verdict;
   },
   Q2: async () => {
-    const paraphrase = "What rf expected would need a fresh read, the render then took from its own store.";
-    const verdict = { d1: sentencesOf(paraphrase).some(entry => equates(entry.sentence)), d2: sentencesOf(paraphrase).some(entry => PLAN_TERM.test(entry.sentence)) };
-    expect(verdict, "R-PARAPHRASE: a reworded equation names neither term").toStrictEqual({ d1: false, d2: false });
+    const read = (text: string): { d1: boolean; d2: boolean } => ({
+      d1: sentencesOf(text).some(entry => equates(entry.sentence)), d2: sentencesOf(text).some(entry => PLAN_TERM.test(entry.sentence)),
+    });
+    const verdict = {
+      reworded: read("What rf expected would need a fresh read, the render then took from its own store."),
+      otherPossessor: read("The producer's plan matched what the executor reused."),
+    };
+    expect(verdict, "R-PARAPHRASE: a reworded equation, or a plan in another producer's possessive, names no plan term").toStrictEqual({
+      reworded: { d1: false, d2: false }, otherPossessor: { d1: false, d2: false },
+    });
     return verdict;
   },
   Q3: async () => {
@@ -1017,6 +1121,12 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   },
 };
 
+/** Each pin's witness as its case returned it; the registration case compares the whole set against the roster a second time. */
+const MEASURED: Record<string, JsonValue> = {};
+/** Each pin's assertion count when its case reached its end (its witness comparison included), in run order: `${pin}:${count}`
+ * (wb-nrbk F2, the federation-stamps REACHED pattern). */
+const REACHED: string[] = [];
+
 describe("wb-pfxo.6 rf plan prediction census (RF-COMPOSITIONAL-ASSEMBLY-R7, posture leg)", () => {
   it("the judged set: the frozen shape, the out-of-file roster and the cases agree", () => {
     expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:4", "B:3", "C:6", "D:2", "E:3", "M:12"]);
@@ -1036,13 +1146,15 @@ describe("wb-pfxo.6 rf plan prediction census (RF-COMPOSITIONAL-ASSEMBLY-R7, pos
           const impl = IMPL[pin];
           expect(impl, `no case for ${pin}`).toBeTypeOf("function");
           const witness = impl === undefined ? null : await impl();
+          MEASURED[pin] = witness;
           expect(witness).toStrictEqual(rosterWitness(pin));
+          REACHED.push(`${pin}:${expect.getState().assertionCalls}`);
         });
       }
     });
   }
 
-  it("registration: every test of this file is registered once, in roster order, in run mode, not inverted, and ran", ({ task }) => {
+  it("registration: every test of this file is registered once, in roster order, in run mode, not inverted, and ran; every pin reached its end with its pinned assertion count", ({ task }) => {
     const walked: { readonly name: string; readonly mode: string; readonly fails: boolean; readonly state: string | undefined; readonly self: boolean }[] = [];
     const walk = (tasks: typeof task.file.tasks): void => {
       for (const child of tasks) {
@@ -1059,5 +1171,8 @@ describe("wb-pfxo.6 rf plan prediction census (RF-COMPOSITIONAL-ASSEMBLY-R7, pos
     const ran = (state: string | undefined): boolean => state === "pass" || state === "fail";
     const read = (entry: (typeof walked)[number]): string => `${entry.name} | ${entry.mode}${entry.fails ? "+fails" : ""} | ${ran(entry.state) ? "ran" : (entry.state ?? "no result")}`;
     expect(walked.filter((entry, index) => index !== here && (entry.mode !== "run" || entry.fails || !ran(entry.state))).map(read), "every other test is in run mode, not inverted, and ran before this case").toEqual([]);
+    const rosterWitnesses = Object.fromEntries(ROSTER.rows.flatMap(entry => entry.pins.map(pin => [pin.id, pin.witness])));
+    expect(MEASURED, "every pin's witness, compared against the roster a second time").toStrictEqual(rosterWitnesses);
+    expect(REACHED, "every pin reached its end, in row order, with its pinned assertion count (wb-nrbk F2)").toEqual([...ROSTER.reached]);
   });
 });
