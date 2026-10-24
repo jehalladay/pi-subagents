@@ -3,7 +3,7 @@
   "producer": "ReactiveFiberCLI",
   "pin": "6a251bf73af57c3a703caf6892dfe3015e06a481",
   "path": "src/reactive_fiber_cli/domain/federation_boundary.py",
-  "basis": "The hermetic fixture and out-of-file roster of test/workbench-rf-owner-resource-census.test.ts (standing rule 16). excerpt is federation_boundary.py lines 38-45 at the pin, verbatim (blob c5616e36ac765bba5201f757f4ad8c3101dde24d; regenerate with: git -C <ReactiveFiberCLI> show 6a251bf73af5:src/reactive_fiber_cli/domain/federation_boundary.py | sed -n '38,45p'; sha256 over the newline-terminated lines 43f444702fe99a368b9daba185c4529dd61405b075366a1ad19fb0d1d862911c); fields are the seven names those lines declare, in rf's order. records holds the NEG-01 pair (program README.md:43: one local alias, two records that differ in backend_instance_id alone, built as rf's own tests/unit/test_federation_boundary.py:124-127 builds its foreign-instance record) and the converse pair (two aliases, one record); every value is a fake that rf's grammars admit (ids.py:114, :134, :160 bounded by :167; versions.py:314-315). gatingArtifacts are the consumer surface's (harness2-federated-peer-2026-10-20/BEADS-2026-10-21.md:30 via the bead: fw-b rfc-0txnl.17 and rfc-0txnl.25, the FW-06 ADR rfc-0txnl.3). rows holds every judged row's id, label and pins, each pin with the witness its case measures. <FO_DESCRIPTOR> stands for the descriptor h2fp-C020 claimed and the program refuted; it is never spelled in the scanned roots.",
+  "basis": "The hermetic fixture and out-of-file roster of test/workbench-rf-owner-resource-census.test.ts (standing rule 16). excerpt is federation_boundary.py lines 38-45 at the pin, verbatim (blob c5616e36ac765bba5201f757f4ad8c3101dde24d; regenerate with: git -C <ReactiveFiberCLI> show 6a251bf73af5:src/reactive_fiber_cli/domain/federation_boundary.py | sed -n '38,45p'; sha256 over the newline-terminated lines 43f444702fe99a368b9daba185c4529dd61405b075366a1ad19fb0d1d862911c); fields are the seven names those lines declare, in rf's order. records holds the NEG-01 pair (program README.md:43: one local alias, two records that differ in backend_instance_id alone, built as rf's own tests/unit/test_federation_boundary.py:124-127 builds its foreign-instance record) the converse pair (two aliases, one record) and perField (wb-a09z: one record per field, differing from neg01[0] in that field alone); every value is a fake that rf's grammars admit (ids.py:114, :134, :160 bounded by :167; versions.py:314-315). gatingArtifacts are the consumer surface's (harness2-federated-peer-2026-10-20/BEADS-2026-10-21.md:30 via the bead: fw-b rfc-0txnl.17 and rfc-0txnl.25, the FW-06 ADR rfc-0txnl.3). rows holds every judged row's id, label and pins, each pin with the witness its case measures. <FO_DESCRIPTOR> stands for the descriptor h2fp-C020 claimed and the program refuted; it is never spelled in the scanned roots.",
   "excerpt": [
     "class OwnerResource:",
     "    workspace_id: str",
@@ -24,36 +24,47 @@
     "sameRecord": [
       {"alias": "peer.notes", "resource": {"workspace_id": "rfw_aaaaaaaaaaaaaaaaaaaaaaaaaa", "backend_instance_id": "rfi_bbbbbbbbbbbbbbbbbbbbbbbbbb", "resource_name": "public.notes", "public_port": "value", "definition_digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111", "schema_digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222", "contract_digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333"}},
       {"alias": "notes.mirror", "resource": {"workspace_id": "rfw_aaaaaaaaaaaaaaaaaaaaaaaaaa", "backend_instance_id": "rfi_bbbbbbbbbbbbbbbbbbbbbbbbbb", "resource_name": "public.notes", "public_port": "value", "definition_digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111", "schema_digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222", "contract_digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333"}}
+    ],
+    "perField": [
+      {"alias": "peer.notes", "resource": {"workspace_id": "rfw_dddddddddddddddddddddddddd", "backend_instance_id": "rfi_bbbbbbbbbbbbbbbbbbbbbbbbbb", "resource_name": "public.notes", "public_port": "value", "definition_digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111", "schema_digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222", "contract_digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333"}},
+      {"alias": "peer.notes", "resource": {"workspace_id": "rfw_aaaaaaaaaaaaaaaaaaaaaaaaaa", "backend_instance_id": "rfi_dddddddddddddddddddddddddd", "resource_name": "public.notes", "public_port": "value", "definition_digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111", "schema_digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222", "contract_digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333"}},
+      {"alias": "peer.notes", "resource": {"workspace_id": "rfw_aaaaaaaaaaaaaaaaaaaaaaaaaa", "backend_instance_id": "rfi_bbbbbbbbbbbbbbbbbbbbbbbbbb", "resource_name": "public.other", "public_port": "value", "definition_digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111", "schema_digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222", "contract_digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333"}},
+      {"alias": "peer.notes", "resource": {"workspace_id": "rfw_aaaaaaaaaaaaaaaaaaaaaaaaaa", "backend_instance_id": "rfi_bbbbbbbbbbbbbbbbbbbbbbbbbb", "resource_name": "public.notes", "public_port": "other", "definition_digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111", "schema_digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222", "contract_digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333"}},
+      {"alias": "peer.notes", "resource": {"workspace_id": "rfw_aaaaaaaaaaaaaaaaaaaaaaaaaa", "backend_instance_id": "rfi_bbbbbbbbbbbbbbbbbbbbbbbbbb", "resource_name": "public.notes", "public_port": "value", "definition_digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444", "schema_digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222", "contract_digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333"}},
+      {"alias": "peer.notes", "resource": {"workspace_id": "rfw_aaaaaaaaaaaaaaaaaaaaaaaaaa", "backend_instance_id": "rfi_bbbbbbbbbbbbbbbbbbbbbbbbbb", "resource_name": "public.notes", "public_port": "value", "definition_digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111", "schema_digest": "sha256:5555555555555555555555555555555555555555555555555555555555555555", "contract_digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333"}},
+      {"alias": "peer.notes", "resource": {"workspace_id": "rfw_aaaaaaaaaaaaaaaaaaaaaaaaaa", "backend_instance_id": "rfi_bbbbbbbbbbbbbbbbbbbbbbbbbb", "resource_name": "public.notes", "public_port": "value", "definition_digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111", "schema_digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222", "contract_digest": "sha256:6666666666666666666666666666666666666666666666666666666666666666"}}
     ]
   },
   "rows": [
     {
       "id": "A",
-      "label": "(a) a hermetic fixture pins rf's seven OwnerResource field names and order against federation_boundary.py:39-45 (rename/drop/add fails)",
+      "label": "(a) a hermetic fixture pins rf's seven OwnerResource field names and order against federation_boundary.py:39-45 (rename/drop/add fails), and each field's grammar refuses its near misses",
       "pins": [
         {"id": "A1", "witness": {"lines": 8, "classLine": "class OwnerResource:", "sha256": "43f444702fe99a368b9daba185c4529dd61405b075366a1ad19fb0d1d862911c", "names": ["workspace_id", "backend_instance_id", "resource_name", "public_port", "definition_digest", "schema_digest", "contract_digest"]}},
         {"id": "A2", "witness": {"fields": ["workspace_id", "backend_instance_id", "resource_name", "public_port", "definition_digest", "schema_digest", "contract_digest"]}},
         {"id": "A3", "witness": {"verbatim": true, "rename": false, "drop": false, "add": false, "reorder": false}},
-        {"id": "A4", "witness": {"records": 4, "keyOrder": true, "outside": [], "grammars": {"workspace_id": "^rfw_[a-z2-7]{26}$", "backend_instance_id": "^rfi_[a-z2-7]{26}$", "resource_name": "^[a-z][a-z0-9_-]*(\\.[a-z][a-z0-9_-]*)*$", "public_port": "^[a-z][a-z0-9_-]*(\\.[a-z][a-z0-9_-]*)*$", "definition_digest": "^sha256:[0-9a-f]{64}$", "schema_digest": "^sha256:[0-9a-f]{64}$", "contract_digest": "^sha256:[0-9a-f]{64}$"}}}
+        {"id": "A4", "witness": {"records": 11, "keyOrder": true, "outside": [], "grammars": {"workspace_id": "^rfw_[a-z2-7]{26}$", "backend_instance_id": "^rfi_[a-z2-7]{26}$", "resource_name": "^[a-z][a-z0-9_-]*(\\.[a-z][a-z0-9_-]*)*$", "public_port": "^[a-z][a-z0-9_-]*(\\.[a-z][a-z0-9_-]*)*$", "definition_digest": "^sha256:[0-9a-f]{64}$", "schema_digest": "^sha256:[0-9a-f]{64}$", "contract_digest": "^sha256:[0-9a-f]{64}$"}}},
+        {"id": "A5", "witness": {"admitted": ["workspace/at-26", "backend/at-26", "resource/at-max", "resource/dotted", "port/at-max", "definition/at-64"], "refused": ["workspace/short", "workspace/long", "workspace/prefix", "workspace/upper", "workspace/alphabet", "backend/short", "backend/prefix", "backend/alphabet", "resource/over-max", "resource/digit-first", "resource/empty-segment", "resource/upper", "port/over-max", "definition/short", "schema/algorithm", "contract/upper-hex"]}}
       ]
     },
     {
       "id": "B",
-      "label": "(b) 0 Pi strings label an rf federation row as a FiberOptics <FO_DESCRIPTOR> descriptor (h2fp-C020 REFUTED): src, test, docs and qa text and every served native descriptor",
+      "label": "(b) 0 Pi strings label an rf federation row as a FiberOptics <FO_DESCRIPTOR> descriptor (h2fp-C020 REFUTED): src, test, docs, qa, every other top-level entry of the repo and every served native descriptor",
       "pins": [
-        {"id": "B1", "witness": {"root": "src", "floor": 100, "anchorFile": "workflow/reconcile.ts", "anchorToken": "RECONCILE_EVIDENCE_READS", "floorMet": true, "anchorRead": true, "hits": []}},
-        {"id": "B2", "witness": {"root": "test", "floor": 400, "anchorFile": "helpers/rf-render-fixture.ts", "anchorToken": "RF_FIXTURE_RELEASE", "floorMet": true, "anchorRead": true, "hits": []}},
-        {"id": "B3", "witness": {"root": "docs", "floor": 50, "anchorFile": "workbench/13-contracts-and-config.md", "anchorToken": "reactivefiber.render.preview", "floorMet": true, "anchorRead": true, "hits": []}},
-        {"id": "B4", "witness": {"root": "qa", "floor": 50, "anchorFile": "workbench/receipts-index.mjs", "anchorToken": "docs/workbench/receipts", "floorMet": true, "anchorRead": true, "hits": []}},
-        {"id": "B5", "witness": {"descriptorFloorMet": true, "hits": []}}
+        {"id": "B1", "witness": {"pin": "B1", "family": "019263b5ad484158", "root": "src", "floor": 100, "anchorFile": "workflow/reconcile.ts", "anchorToken": "RECONCILE_EVIDENCE_READS", "floorMet": true, "anchorRead": true, "links": [], "hits": []}},
+        {"id": "B2", "witness": {"pin": "B2", "family": "019263b5ad484158", "root": "test", "floor": 400, "anchorFile": "helpers/rf-render-fixture.ts", "anchorToken": "RF_FIXTURE_RELEASE", "floorMet": true, "anchorRead": true, "links": [], "hits": []}},
+        {"id": "B3", "witness": {"pin": "B3", "family": "019263b5ad484158", "root": "docs", "floor": 50, "anchorFile": "workbench/13-contracts-and-config.md", "anchorToken": "reactivefiber.render.preview", "floorMet": true, "anchorRead": true, "links": [], "hits": []}},
+        {"id": "B4", "witness": {"pin": "B4", "family": "019263b5ad484158", "root": "qa", "floor": 50, "anchorFile": "workbench/receipts-index.mjs", "anchorToken": "docs/workbench/receipts", "floorMet": true, "anchorRead": true, "links": [], "hits": []}},
+        {"id": "B5", "witness": {"pin": "B5", "family": "019263b5ad484158", "descriptorFloorMet": true, "hits": []}},
+        {"id": "B6", "witness": {"pin": "B6", "family": "019263b5ad484158", "excluded": [".git", "node_modules", ".beads/issues.jsonl", ".beads/interactions.jsonl"], "floor": {"entries": 25, "files": 55}, "floorMet": true, "anchorsRead": true, "links": [], "hits": []}}
       ]
     },
     {
       "id": "C",
-      "label": "(c) fixture rows with equal local alias and distinct backend_instance_id project as two identities (NEG-01), a key on alias alone fails",
+      "label": "(c) fixture rows with equal local alias and distinct backend_instance_id project as two identities (NEG-01), a key on alias alone fails, and rf's whole record splits on each of its seven fields",
       "pins": [
-        {"id": "C1", "witness": {"neg01": {"records": 2, "aliases": ["peer.notes"], "differingFields": ["backend_instance_id"]}, "sameRecord": {"records": 2, "aliases": ["peer.notes", "notes.mirror"], "differingFields": []}}},
-        {"id": "C2", "witness": {"neg01": 2, "sameRecord": 1}},
+        {"id": "C1", "witness": {"neg01": {"records": 2, "aliases": ["peer.notes"], "differingFields": ["backend_instance_id"]}, "sameRecord": {"records": 2, "aliases": ["peer.notes", "notes.mirror"], "differingFields": []}, "perField": ["workspace_id", "backend_instance_id", "resource_name", "public_port", "definition_digest", "schema_digest", "contract_digest"]}},
+        {"id": "C2", "witness": {"neg01": 2, "sameRecord": 1, "splitBy": ["workspace_id", "backend_instance_id", "resource_name", "public_port", "definition_digest", "schema_digest", "contract_digest"]}},
         {"id": "C3", "witness": {"counts": {"alias": [1, 2], "resourceName": [1, 1], "withoutBackendInstanceId": [1, 1], "digestsOnly": [1, 1], "aliasAndRecord": [2, 2]}, "holding": []}}
       ]
     },
@@ -61,13 +72,13 @@
       "id": "D",
       "label": "(d) until the surface ships (rfc-0txnl.17, rfc-0txnl.25, FW-06 ADR rfc-0txnl.3), 0 hits for backend_instance_id in Pi src, served native descriptors included",
       "pins": [
-        {"id": "D1", "witness": {"root": "src", "floor": 100, "anchorFile": "workflow/reconcile.ts", "anchorToken": "RECONCILE_EVIDENCE_READS", "floorMet": true, "anchorRead": true, "hits": []}},
-        {"id": "D2", "witness": {"descriptorFloorMet": true, "hits": []}}
+        {"id": "D1", "witness": {"pin": "D1", "family": "9d7859ee83709d14", "root": "src", "floor": 100, "anchorFile": "workflow/reconcile.ts", "anchorToken": "RECONCILE_EVIDENCE_READS", "floorMet": true, "anchorRead": true, "links": [], "hits": []}},
+        {"id": "D2", "witness": {"pin": "D2", "family": "9d7859ee83709d14", "descriptorFloorMet": true, "hits": []}}
       ]
     },
     {
       "id": "MB",
-      "label": "row B's matcher catches every separator and case spelling of <FO_DESCRIPTOR>, and its named residuals stay pinned quiet",
+      "label": "row B's matcher catches each separator of its class and each case form of <FO_DESCRIPTOR>, and its named residuals stay pinned quiet",
       "pins": [
         {"id": "MB1", "witness": {"digest": "23e97fd018cab32f", "hit": true}},
         {"id": "MB2", "witness": {"digest": "d7307e90277bb64a", "hit": true}},
@@ -77,15 +88,22 @@
         {"id": "MB6", "witness": {"digest": "d05f5e21db01b521", "hit": true}},
         {"id": "MB7", "witness": {"digest": "296e64f5d386c7a4", "hit": true}},
         {"id": "MB8", "witness": {"digest": "f83e4095cd98c8eb", "hit": true}},
+        {"id": "MB9", "witness": {"digest": "7845404533166488", "hit": true}},
+        {"id": "MB10", "witness": {"digest": "cf20bbacbb471c0a", "hit": true}},
+        {"id": "MB11", "witness": {"digest": "db9dd93748f50bd6", "hit": true}},
+        {"id": "MB12", "witness": {"digest": "746cf41c6cbf827a", "hit": true}},
+        {"id": "MB13", "witness": {"digest": "c9df191735633d5d", "hit": true}},
+        {"id": "MB14", "witness": {"digest": "946cae990558da23", "hit": true}},
         {"id": "QB1", "witness": {"digest": "d33fe059fc7fa6e7", "hit": false}},
         {"id": "QB2", "witness": {"digest": "437c3cd922304868", "hit": false}},
         {"id": "QB3", "witness": {"digest": "6df2f3c7ae4d379c", "hit": false}},
-        {"id": "QB4", "witness": {"digest": "54c890f703552556", "hit": false}}
+        {"id": "QB4", "witness": {"digest": "54c890f703552556", "hit": false}},
+        {"id": "QB5", "witness": {"digest": "380465ff310d81e5", "hit": false}}
       ]
     },
     {
       "id": "MD",
-      "label": "row D's matcher catches every separator and case spelling of backend_instance_id, and its named residuals stay pinned quiet",
+      "label": "row D's matcher catches each separator of its class and each case form of backend_instance_id, and its named residuals stay pinned quiet",
       "pins": [
         {"id": "MD1", "witness": {"digest": "d95ccb5b86cb2079", "hit": true}},
         {"id": "MD2", "witness": {"digest": "66b101a9d69377ed", "hit": true}},
@@ -93,10 +111,31 @@
         {"id": "MD4", "witness": {"digest": "cee736aae470992a", "hit": true}},
         {"id": "MD5", "witness": {"digest": "288e620a43134928", "hit": true}},
         {"id": "MD6", "witness": {"digest": "57e2742d31349ac7", "hit": true}},
+        {"id": "MD7", "witness": {"digest": "bfe86e36eb0db16f", "hit": true}},
+        {"id": "MD8", "witness": {"digest": "b4f98f99f12b5e7d", "hit": true}},
         {"id": "QD1", "witness": {"digest": "0968534a6426f525", "hit": false}},
         {"id": "QD2", "witness": {"digest": "b8174a557ef38fc0", "hit": false}},
         {"id": "QD3", "witness": {"digest": "0c63678b8d21152b", "hit": false}},
-        {"id": "QD4", "witness": {"digest": "5d54a2f29ff00a5a", "hit": false}}
+        {"id": "QD4", "witness": {"digest": "5d54a2f29ff00a5a", "hit": false}},
+        {"id": "QD5", "witness": {"digest": "25b44280cc74fbbf", "hit": false}}
+      ]
+    },
+    {
+      "id": "P",
+      "label": "the scan primitives rows B and D compose read file content and served JSON text, refuse symbolic links and read NUL-bearing files, each shown by a must-hit control",
+      "pins": [
+        {"id": "P1", "witness": {"family": "9d7859ee83709d14", "reportsCensus": true, "reportsRoster": true}},
+        {"id": "P2", "witness": {"descriptorFloorMet": true, "everyTextRead": true}},
+        {"id": "P3", "witness": {"files": ["a.ts"], "links": ["zz-link", "d/inner"]}},
+        {"id": "P4", "witness": {"utf16le": true, "utf16be": true, "utf32le": true, "utf8DecodingAlone": false}}
+      ]
+    },
+    {
+      "id": "X",
+      "label": "the bead export holds every pin that alone judges an ACCEPTANCE part, and R-COORDINATED stays pinned quiet",
+      "pins": [
+        {"id": "X1", "witness": {"pin": "C3", "gaps": ["(c) a key on alias alone fails: no pin"]}},
+        {"id": "X2", "witness": {"pin": "B3", "gaps": []}}
       ]
     }
   ]
