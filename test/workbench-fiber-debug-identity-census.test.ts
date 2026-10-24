@@ -1,0 +1,943 @@
+/**
+ * wb-4nut.1 (TSX-HARNESS2-REACTIVE-EVOLUTION-R1, program-triage-2026-10-22), the Fiber debug identity census. Statement (bead
+ * title, verbatim to its citation): "No Pi surface, including hosted Claude agents doing visual debugging, shall upgrade a UI/React
+ * Fiber debug ID or screenshot into a FiberOptics component/port identity without an explicit, revisioned, traceable witness
+ * (gated TSX-H2-03 UI-element-to-Fiber public ref witness: unshipped, itself gated on the TSX-H2-ADR ADOPT verdict; the
+ * never-upgrade posture is pinnable today)" (ReactiveFiberTSXSDK docs/programs/harness2-reactive-evolution-2026-10-20/
+ * README.md:26@76bbbffd9d4a). Acceptance (owner filing, verbatim; the labels of rows A to C quote it): "(a) fixture: evidence
+ * carrying a React debug id and no witness yields a Pi relation of at most 'possibly-related', never a Fiber identity edge; (b) a
+ * witness-less mapping claim in a Pi projection or hosted-agent report is refused; (c) docs census: no Pi doc describes
+ * screenshot/debug-id to Fiber mapping as available."
+ *
+ * MEASURED (read-only git show by the cutting seat, 2026-10-23; every producer fact rides the roster with its blob id): the program
+ * (README.md:26 and :47, DEVELOPER.md:50 H2-NEG-04) holds that a UI/React Fiber debugging ID is not FiberOptics identity and that a
+ * screenshot or debug ID without an explicit witness cannot be upgraded to a direct Fiber mapping; the witness is TSX-H2-03's
+ * "UI element->Fiber public ref witness, renderer revision and source-cut binding" (README.md:36), a gated work package not created
+ * until TSX-H2-ADR (rftsx-rupqh) records ADOPT (BEADS-2026-10-21.md:48). At the pin the producer's src/ and python/ spell no debug
+ * id, screenshot, UI element, public ref or mapping token (git grep, 0 rows each): no witness ships. FiberOptics names a component
+ * a NodeRef ([*bundle, "nodes", name]) and a port a PortRef ([*bundle, "inputs"|"outputs", name]) (FiberOpticsSDK
+ * src/fiber_optics/refs.py@e803f66c5fb9); FIBER_NODE and FIBER_PORT below are ids of those forms.
+ *
+ * Pi's relation vocabulary is ObservationProjection's: relate() states only dependency, causation, ownership, grouping and
+ * hypothesis, and ownership only with a native confirmation from the owner's own provider. Pi's "possibly-related" is hypothesis:
+ * the topology slice reads it as inferred-hypothesis, the one non-authoritative class, and a hypothesis-only neighbourhood as an
+ * incomplete trace. No kind or class is an identity. The census pins that against the acceptance:
+ *  A, the fixture, (a). A1 visual-debug evidence through every admission path a projection has - a React DevTools fiber id event
+ *    whose correlation ids and evidence refs name the FiberOptics component and port, a screenshot snapshot, a React ref whose id
+ *    equals the component's, and a hosted Claude agent's visual-debugging sample through the session adapter - beside the component
+ *    and port snapshots: every input is applied, the equal-id ref stays a node of its own, no edge touches a visual or FiberOptics
+ *    node, the projection's only edges are the agent adapter's, both FiberOptics slices read no observed relations, and the agent's
+ *    read (workflow_observe) counts none for them while the evidence rides verbatim as evidence refs. A2 the ceiling: relate()
+ *    accepts exactly the five kinds, the slice maps them one to one onto TOPOLOGY_RELATION_CLASSES with only inferred-hypothesis
+ *    non-authoritative, the agent's read counts the same five, and a producer-stated hypothesis from the debug ref to the component
+ *    reads inferred-hypothesis, non-authoritative, hypothesis-only. A3 the trigger: no src or qa file spells the mapping VOCABULARY
+ *    (folded; ReactiveFiber's own spellings removed first), with floors, anchors and controls; a module spelling it must be bound in
+ *    MAPPING_READERS and every binding must name such a module (empty both ways today).
+ *  B, the refusal, (b). B1 relate() refuses every identity spelling a mapping claim would state ("Unknown relationship kind.") and the
+ *    ownership form without the owner's own confirmation, each with no effect. B2 a reader serving the claim as a stored row: the
+ *    slice reads it as an unknown-relation-kind reference, never an edge, and the agent's read counts nothing and flags partial. B3 the
+ *    hosted-agent report: the session adapter states only its fixed ownership, causation and grouping edges for a visual-debugging
+ *    sample whose label and tool names carry the claim, a report member riding the sample is read nowhere, and src's relate() call
+ *    sites are exactly the three ownership adapters (src/index.ts, which ingests the hosted agents' nodes, relates nothing). B4 the
+ *    witness rule, armed (witnessViolations) for the first mapping reader: the honest reader passes every claim, and reading
+ *    identity from a debug id, a screenshot, id equality, an agent report or a partial witness fails, as do synthesizing the
+ *    revision, dropping or rewriting the witness, and ignoring a witness that names another target. B5 every bound reader meets B4
+ *    (none bound; the same loop over synthetic bindings is the non-vacuity control).
+ *  C, the docs census, (c). C1 every markdown file outside test/ (the root docs, .agents, .beads, .pi, docs, examples, new-feedback,
+ *    vendor) read in block units (a paragraph, list item, table row, heading or fence line with its continuation lines): no unit
+ *    couples the visual family (screenshot, React debug id, devtools, UI element) with a Fiber word (FiberOptics, Fiber ref or
+ *    identity; rf's own ReactiveFiber spellings excluded), with floors, every named root and file read, and anchors on both families.
+ *    C2 the judge's controls.
+ *  Q, the residuals' pinned quiet rows (RESIDUALS).
+ * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; the whole judged set - every row's id, label and
+ * pins, every pin's witness, the constants, the vocabularies and the residual families and every registered test title - is held to
+ * the out-of-file roster, whose producer facts anchor the constants outside this file, and the labels of rows A to C are held to the
+ * bead's own acceptance text in its owner filing, the first paragraph of its notes in the tracker export (.beads/issues.jsonl). No
+ * case reads the whole notes: the lane appends a note after every cut and every gate and a ledger hop exports each one, so every
+ * reading of the export goes through the owner filing, which the append-only notes keep byte-stable (Q6 holds its own reading to an
+ * appended note). The last case reads the vitest task tree (every registered test, in roster order, in run mode, ran before it) and
+ * the set of pins that reached their witness. Not claimed: an edit of this file and the roster together - the bead text anchors
+ * only the labels of rows A to C.
+ * RESIDUALS (named, each with its pinned quiet row): R-VOCABULARY a mapping reader reading only generic keys spells no vocabulary
+ * token (Q1); R-PARAPHRASE a doc claim worded outside one family (no visual word, or no Fiber word) is not a coupled unit (Q2);
+ * R-COMPOSED a token assembled from three or more parts at runtime is invisible to A3 (two-part joins are read: Q3); R-INTERRUPTED a
+ * homoglyph letter, or two invisible splits, hides a token from A3 and C1 (Q4); R-UNIT a claim whose visual and Fiber words sit in
+ * two block units (a heading and its paragraph, two list items) is not judged by C1 (Q5); R-SCOPE test/ and the tracker export lie
+ * outside every scanned root, and both spell the vocabulary (Q6, reading the export through the owner filing alone); R-STATED-EDGE
+ * relate() asks a witness only of ownership, so a producer-stated dependency, causation or grouping edge from a debug ref to a
+ * FiberOptics ref is admitted on its source alone and read authoritative - not an identity edge (no identity class exists), and no
+ * Pi producer states one (B3) (Q7); R-FOREIGN-READER graph-view validates no kind, so a reader other than the session projection
+ * serving the claim row would draw an edge of class identity; src hands graph-view, the slice and the agent's read only the session
+ * projection, whose one writer refuses the kind (B1) (Q8).
+ * SCOPE: C1's judge reads no negation or tense: a unit stating the prohibition reds too (OVER-READ, disclosed: no Pi doc couples the
+ * families today, and a page that must will re-measure this census). The producer facts are measured at the pin; Pi vendors no
+ * producer file, so a producer change is seen only when the roster is re-measured. The FiberOptics, React DevTools and screenshot
+ * refs are this census's stand-in producers (no Pi producer states them); the witness of B4 is constructed from TSX-H2-03's three
+ * named parts, since the producer ships none. No mapping reader is added or faked here: a reader's own cut binds itself in
+ * MAPPING_READERS and meets B4.
+ *
+ * Display paths added: none. Test-only: src, docs, qa and .beads are only read; nothing is written.
+ */
+import { type Dirent, readdirSync, readFileSync } from "node:fs";
+import { dirname, join, relative } from "node:path";
+import { fileURLToPath } from "node:url";
+import { describe, expect, it } from "vitest";
+import type { JsonValue } from "../src/workbench/capability-registry.js";
+import { type ClaudeProjectionTopology, projectClaudeTopology } from "../src/workbench/claude-topology.js";
+import { buildGraphView } from "../src/workbench/graph-view.js";
+import {
+  type NativeRef,
+  ObservationProjection,
+  type ObservationScope,
+  type Relation,
+  type RelationKind,
+  type RelationPage,
+} from "../src/workbench/observation.js";
+import { type ObserveReader, observeInvocation } from "../src/workbench/observe-query.js";
+import { type LinkedTopology, selectLinkedTopology, TOPOLOGY_RELATION_CLASSES } from "../src/workbench/topology-slice.js";
+import type { ClaudeNativeObservation } from "../src/workflow/progress.js";
+
+const HERE = dirname(fileURLToPath(import.meta.url));
+const REPO = join(HERE, "..");
+const ROSTER_PATH = join(HERE, "fixtures", "fiber-debug-identity-roster.json");
+const BEAD = "wb-4nut.1";
+/** ReactiveFiberTSXSDK at the program-triage pin (the bead's citation). */
+const PROGRAM_PIN = "76bbbffd9d4a419f972d6fefc8b7f9dc524df8df";
+
+interface Row {
+  readonly id: string;
+  readonly label: string;
+  readonly pins: readonly string[];
+}
+/** The judged rows; their shape is pinned below and held to the roster and, for A to C, to the bead's acceptance text. */
+const ROWS: readonly Row[] = [
+  {
+    id: "A",
+    label: "(a) fixture: evidence carrying a React debug id and no witness yields a Pi relation of at most 'possibly-related', never a Fiber identity edge",
+    pins: ["A1", "A2", "A3"],
+  },
+  {
+    id: "B",
+    label: "(b) a witness-less mapping claim in a Pi projection or hosted-agent report is refused",
+    pins: ["B1", "B2", "B3", "B4", "B5"],
+  },
+  {
+    id: "C",
+    label: "(c) docs census: no Pi doc describes screenshot/debug-id to Fiber mapping as available",
+    pins: ["C1", "C2"],
+  },
+  {
+    id: "Q",
+    label: "residuals: each named family with its pinned quiet row",
+    pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8"],
+  },
+];
+
+const SCOPE: ObservationScope = { workspace: "/fixture/visual-debug", principal: "operator" };
+const INVOCATION = "wf_visual_debug";
+const AT = "2026-10-23T08:00:00.000Z";
+/** A FiberOptics component (NodeRef form) and port (PortRef form, outputs direction); no Pi producer states either. */
+const FIBER_NODE: NativeRef = { provider: "fiber-optics", type: "node", id: "app.checkout.nodes.Button" };
+const FIBER_PORT: NativeRef = { provider: "fiber-optics", type: "port", id: "app.checkout.outputs.clicked" };
+/** The visual-debug evidence: a React DevTools fiber id, a screenshot, and a React ref whose id equals the component's. */
+const DEBUG_REF: NativeRef = { provider: "react-devtools", type: "fiber", id: "42" };
+const SCREENSHOT_REF: NativeRef = { provider: "visual-debug", type: "screenshot", id: "checkout-button.png" };
+const EQUAL_REF: NativeRef = { provider: "react-devtools", type: "fiber", id: FIBER_NODE.id };
+/** The relation kinds relate() states (observation.ts RelationKind); A2 probes them, the roster holds them. */
+const RELATION_KINDS: readonly RelationKind[] = ["dependency", "causation", "ownership", "grouping", "hypothesis"];
+/** Kind spellings a mapping claim would state; the projection must refuse each (B1). */
+const IDENTITY_CLAIMS: readonly string[] = ["identity", "same-as", "sameAs", "maps-to", "fiber-identity", "alias", "equivalent", "mapping"];
+const UNKNOWN_KIND = "Unknown relationship kind.";
+const UNCONFIRMED = "Ownership requires explicit native owner confirmation reference.";
+/** A3's mapping vocabulary, folded: React debug identities and internals, screenshots and devtools, FiberOptics and its refs, and
+ * TSX-H2-03's witness parts (UI element, public ref, mapping token). */
+const VOCABULARY: readonly string[] = [
+  "debugid", "debuggingid", "reactfiber", "reactinternalinstance", "debugsource", "debugowner", "devtools", "screenshot",
+  "screencapture", "screengrab", "fiberoptics", "fiberref", "fiberidentity", "fibermapping", "uielement", "publicref", "mappingtoken",
+];
+/** C1's visual family, folded: a screenshot, a React debug identity or internal, devtools, a UI or DOM element. */
+const VISUAL: readonly string[] = [
+  "screenshot", "screencapture", "screengrab", "debugid", "debuggingid", "reactfiber", "reactinternalinstance", "debugsource",
+  "debugowner", "devtools", "uielement", "domelement",
+];
+/** The markdown roots C1 must read, each by at least one file, and the root documents it must read by name. */
+const DOC_ROOTS: readonly string[] = ["(root)", ".agents", ".beads", ".pi", "docs", "examples", "new-feedback", "vendor"];
+const DOC_FILES: readonly string[] = [
+  "AGENTS.md", "CHANGELOG.md", "CONTRIBUTING.md", "README.md", "SECURITY.md", ".agents/skills/beads/SKILL.md", ".beads/README.md",
+  ".pi/agents/auditor.md", "examples/agent-tool-description.md", "vendor/README.md",
+];
+const RESIDUALS: Readonly<Record<string, readonly string[]>> = {
+  "R-VOCABULARY": ["Q1"],
+  "R-PARAPHRASE": ["Q2"],
+  "R-COMPOSED": ["Q3"],
+  "R-INTERRUPTED": ["Q4"],
+  "R-UNIT": ["Q5"],
+  "R-SCOPE": ["Q6"],
+  "R-STATED-EDGE": ["Q7"],
+  "R-FOREIGN-READER": ["Q8"],
+};
+
+interface RosterPin {
+  readonly id: string;
+  readonly witness: JsonValue;
+}
+interface RosterRow {
+  readonly id: string;
+  readonly label: string;
+  readonly pins: readonly RosterPin[];
+}
+interface Roster {
+  readonly bead: string;
+  readonly programPin: string;
+  readonly producer: { [key: string]: JsonValue };
+  readonly constants: { [key: string]: JsonValue };
+  readonly tests: readonly string[];
+  readonly rows: readonly RosterRow[];
+}
+
+function isObject(value: unknown): value is { [key: string]: unknown } {
+  return value !== null && typeof value === "object" && !Array.isArray(value);
+}
+function json(value: unknown): JsonValue {
+  return JSON.parse(JSON.stringify(value)) as JsonValue;
+}
+function strings(value: unknown, field: string): string[] {
+  if (!Array.isArray(value) || !value.every(item => typeof item === "string")) throw new Error(`${field} must be a string list`);
+  return value;
+}
+function objectOf(value: unknown, field: string): { [key: string]: JsonValue } {
+  if (!isObject(value)) throw new Error(`${field} must be an object`);
+  return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, json(item)]));
+}
+
+/** Parses the roster, refusing any field of the wrong shape by name, so no case can read a malformed roster. */
+function readRoster(): Roster {
+  const raw: unknown = JSON.parse(readFileSync(ROSTER_PATH, "utf8"));
+  if (!isObject(raw) || !Array.isArray(raw.rows) || typeof raw.bead !== "string" || typeof raw.programPin !== "string") {
+    throw new Error("roster must be an object with bead, programPin and rows");
+  }
+  const rows = raw.rows.map((row: unknown, index: number): RosterRow => {
+    if (!isObject(row) || typeof row.id !== "string" || typeof row.label !== "string" || !Array.isArray(row.pins)) {
+      throw new Error(`roster rows[${index}] needs an id, a label and a pins list`);
+    }
+    const pins = row.pins.map((pin: unknown, at: number): RosterPin => {
+      if (!isObject(pin) || typeof pin.id !== "string" || !Object.hasOwn(pin, "witness")) throw new Error(`roster rows[${index}].pins[${at}] needs an id and a witness`);
+      return { id: pin.id, witness: json(pin.witness) };
+    });
+    return { id: row.id, label: row.label, pins };
+  });
+  return {
+    bead: raw.bead,
+    programPin: raw.programPin,
+    producer: objectOf(raw.producer, "roster producer"),
+    constants: objectOf(raw.constants, "roster constants"),
+    tests: strings(raw.tests, "roster tests"),
+    rows,
+  };
+}
+
+const ROSTER = readRoster();
+
+function rosterWitness(pin: string): JsonValue {
+  const found = ROSTER.rows.flatMap(row => row.pins).find(entry => entry.id === pin);
+  if (found === undefined) throw new Error(`the roster holds no pin ${pin}`);
+  return found.witness;
+}
+function producerPart(name: string): { [key: string]: JsonValue } {
+  return objectOf(ROSTER.producer[name], `roster producer.${name}`);
+}
+
+/** Every string a JSON value holds, keys included. */
+function keysAndStrings(value: unknown): string[] {
+  if (typeof value === "string") return [value];
+  if (Array.isArray(value)) return value.flatMap(keysAndStrings);
+  if (isObject(value)) return Object.entries(value).flatMap(([key, item]) => [key, ...keysAndStrings(item)]);
+  return [];
+}
+function textOf(path: string): string {
+  try {
+    return readFileSync(path, "utf8");
+  } catch {
+    return "";
+  }
+}
+const byName = (left: Dirent, right: Dirent): number => (left.name < right.name ? -1 : left.name > right.name ? 1 : 0);
+/** Every regular file below a root (symlinks are not followed); a path that vanishes mid-walk holds nothing tracked. */
+function filesBelow(directory: string): string[] {
+  let entries: Dirent[];
+  try {
+    entries = readdirSync(directory, { withFileTypes: true });
+  } catch {
+    return [];
+  }
+  const files: string[] = [];
+  for (const entry of entries.sort(byName)) {
+    const path = join(directory, entry.name);
+    if (entry.isDirectory()) files.push(...filesBelow(path));
+    else if (entry.isFile()) files.push(path);
+  }
+  return files;
+}
+/** Top-level directories C1 never enters: dependencies, git, the test tree (R-SCOPE) and build or report output. */
+const DOC_SKIP: ReadonlySet<string> = new Set(["node_modules", ".git", "test", "dist", ".forge", "coverage"]);
+/** Every markdown file of the repository outside DOC_SKIP, repo-relative and sorted; node_modules is skipped at every depth. */
+function markdownFiles(directory: string = REPO): string[] {
+  let entries: Dirent[];
+  try {
+    entries = readdirSync(directory, { withFileTypes: true });
+  } catch {
+    return [];
+  }
+  const files: string[] = [];
+  for (const entry of entries.sort(byName)) {
+    const path = join(directory, entry.name);
+    if (entry.isDirectory()) {
+      if (entry.name === "node_modules" || (directory === REPO && DOC_SKIP.has(entry.name))) continue;
+      files.push(...markdownFiles(path));
+    } else if (entry.isFile() && entry.name.endsWith(".md")) files.push(relative(REPO, path));
+  }
+  return files;
+}
+const rootOf = (file: string): string => (file.includes("/") ? file.slice(0, file.indexOf("/")) : "(root)");
+
+/** The words a text spells, folded (lowercased; "_", "-" and "$" dropped, so snake, kebab, camel and constant forms agree). */
+function wordsOf(text: string): string[] {
+  return (text.match(/[A-Za-z0-9_$-]+/g) ?? []).map(word => word.toLowerCase().replace(/[_$-]/g, ""));
+}
+/** A folded word without ReactiveFiber's own spellings, so rf's name never reads as Fiber vocabulary. */
+const unRf = (word: string): string => word.replace(/reactivefiber/g, "");
+/** The tokens a text spells inside one folded word, or across two adjacent words ("debug id", "Fiber Optics"), sorted. */
+function tokensIn(text: string, tokens: readonly string[]): string[] {
+  const words = wordsOf(text).map(unRf);
+  const found = new Set<string>();
+  words.forEach((word, index) => {
+    const pair = word + (words[index + 1] ?? "");
+    for (const token of tokens) if (word.includes(token) || pair.startsWith(token)) found.add(token);
+  });
+  return [...found].sort();
+}
+const vocabularyIn = (text: string): string[] => tokensIn(text, VOCABULARY);
+/** C1's Fiber family: a word spelling fiber once ReactiveFiber's spellings and React's own Fiber are removed, unless it is the
+ * second word of "Reactive Fiber" (rf's name) or "React Fiber" (React's tree, the visual family). */
+function fiberWordsIn(text: string): string[] {
+  const words = wordsOf(text);
+  return words.filter((word, index) => {
+    const previous = words[index - 1] ?? "";
+    if ((word === "fiber" || word === "fibers") && (previous === "reactive" || previous === "react")) return false;
+    return unRf(word).replace(/reactfiber/g, "").includes("fiber");
+  });
+}
+/** A block element starts a unit: a list item, heading, table row, quote, fence or HTML line; other lines continue the unit. */
+const BLOCK_START = /^\s*(?:[-*+]\s|\d+[.)]\s|#{1,6}\s|\||>|```|<)/;
+/** A text's units: each paragraph, list item, table row, heading or fence line with its continuation lines, joined. */
+function unitsOf(text: string): string[] {
+  const units: string[] = [];
+  let current = "";
+  for (const line of text.split("\n")) {
+    const trimmed = line.trim();
+    if (trimmed.length === 0 || BLOCK_START.test(line) || current.length === 0) {
+      if (current.length > 0) units.push(current);
+      current = trimmed;
+    } else current = `${current} ${trimmed}`;
+  }
+  if (current.length > 0) units.push(current);
+  return units;
+}
+const isVisual = (unit: string): boolean => tokensIn(unit, VISUAL).length > 0;
+const isFiber = (unit: string): boolean => fiberWordsIn(unit).length > 0;
+/** The units that couple a visual-family word with a Fiber word: C1's claim judge. */
+function claimUnitsIn(text: string): string[] {
+  return unitsOf(text).filter(unit => isVisual(unit) && isFiber(unit));
+}
+/** Words joined at runtime, so a composed control never sits on one source line. */
+function compose(...words: string[]): string {
+  return words.join(" ");
+}
+
+interface ScanRoot {
+  readonly root: string;
+  readonly floor: number;
+  readonly anchorFile: string;
+  readonly anchorToken: string;
+}
+/** The surfaces A3 reads; each floor sits below the count measured at base 9357bf4 (src 115, qa 62 files). The anchors are the
+ * nearest relation and rf readers: they spell ReactiveFiber, relation and witness words and none of the vocabulary. */
+const SCAN_ROOTS: readonly ScanRoot[] = [
+  { root: "src", floor: 100, anchorFile: "src/workbench/reactivefiber-observer.ts", anchorToken: "reactivefiberTopology" },
+  { root: "qa", floor: 50, anchorFile: "qa/workbench/receipts-index.mjs", anchorToken: "docs/workbench/receipts" },
+];
+
+/** A mapping reader reads a claim that a UI/debug ref is a FiberOptics component or port. */
+interface MappingWitness {
+  readonly publicRef: string;
+  readonly rendererRevision: string;
+  readonly sourceCut: string;
+}
+interface MappingClaim {
+  readonly name: string;
+  readonly basis: "debug-id" | "screenshot" | "id-equality" | "agent-report" | "witness";
+  readonly from: NativeRef;
+  readonly to: NativeRef;
+  readonly witness?: Partial<MappingWitness>;
+}
+type MappingReading = { readonly relation: "identity"; readonly witness?: MappingWitness } | { readonly relation: "possibly-related" | "none" };
+type MappingReader = (claim: MappingClaim) => MappingReading;
+interface MappingBinding {
+  readonly module: string;
+  readonly read: MappingReader;
+}
+/** The Pi mapping readers: a module A3 finds spelling the vocabulary must be bound here, every binding must name such a module,
+ * and every bound reader meets B4's witness rule (B5). Empty today: Pi has no reader of UI or debug identities. */
+const MAPPING_READERS: readonly MappingBinding[] = [];
+
+const AGENT_TOOL: NativeRef = { provider: "claude-agent-sdk", type: "tool-use", id: "toolu_inspect_42" };
+const FULL_WITNESS: MappingWitness = { publicRef: FIBER_NODE.id, rendererRevision: "renderer@r12", sourceCut: "cut-7f3a" };
+const PORT_WITNESS: MappingWitness = { publicRef: FIBER_PORT.id, rendererRevision: "renderer@r12", sourceCut: "cut-7f3a" };
+/** B4's claims: four witness-less bases, three partial witnesses, one naming another target and two complete witnesses. */
+const CLAIMS: readonly MappingClaim[] = [
+  { name: "debugId", basis: "debug-id", from: DEBUG_REF, to: FIBER_NODE },
+  { name: "screenshot", basis: "screenshot", from: SCREENSHOT_REF, to: FIBER_NODE },
+  { name: "idEquality", basis: "id-equality", from: EQUAL_REF, to: FIBER_NODE },
+  { name: "agentReport", basis: "agent-report", from: AGENT_TOOL, to: FIBER_PORT },
+  { name: "noRevision", basis: "witness", from: DEBUG_REF, to: FIBER_NODE, witness: { publicRef: FIBER_NODE.id, sourceCut: "cut-7f3a" } },
+  { name: "noCut", basis: "witness", from: DEBUG_REF, to: FIBER_NODE, witness: { publicRef: FIBER_NODE.id, rendererRevision: "renderer@r12" } },
+  { name: "noRef", basis: "witness", from: DEBUG_REF, to: FIBER_NODE, witness: { rendererRevision: "renderer@r12", sourceCut: "cut-7f3a" } },
+  { name: "otherTarget", basis: "witness", from: DEBUG_REF, to: FIBER_NODE, witness: { ...FULL_WITNESS, publicRef: "app.checkout.nodes.Banner" } },
+  { name: "witnessed", basis: "witness", from: DEBUG_REF, to: FIBER_NODE, witness: FULL_WITNESS },
+  { name: "witnessedPort", basis: "witness", from: SCREENSHOT_REF, to: FIBER_PORT, witness: PORT_WITNESS },
+];
+/** A complete witness: all three parts stated by the producer, and the public ref naming the claim's own target. */
+function completeWitness(claim: MappingClaim): MappingWitness | undefined {
+  const witness = claim.witness;
+  if (witness === undefined) return undefined;
+  const { publicRef, rendererRevision, sourceCut } = witness;
+  if (!publicRef || !rendererRevision || !sourceCut || publicRef !== claim.to.id) return undefined;
+  return { publicRef, rendererRevision, sourceCut };
+}
+/** The armed witness rule: identity only on a complete witness, carried verbatim; anything less reads at most possibly-related. */
+function witnessViolations(read: MappingReader): string[] {
+  return CLAIMS.flatMap(claim => {
+    const reading = read(claim);
+    if (reading.relation !== "identity") return reading.relation === "possibly-related" || reading.relation === "none" ? [] : [`${claim.name}: unknown relation`];
+    const complete = completeWitness(claim);
+    if (complete === undefined) return [`${claim.name}: identity without a complete witness`];
+    return JSON.stringify(reading.witness) === JSON.stringify(complete) ? [] : [`${claim.name}: witness not carried verbatim`];
+  });
+}
+const possibly: MappingReading = { relation: "possibly-related" };
+const honest: MappingReader = claim => {
+  const complete = completeWitness(claim);
+  return complete === undefined ? possibly : { relation: "identity", witness: complete };
+};
+const upgradeOn = (basis: MappingClaim["basis"]): MappingReader => claim => (claim.basis === basis ? { relation: "identity", witness: FULL_WITNESS } : honest(claim));
+/** Each mutant names the upgrade the statement forbids; B4 holds every one to at least one violation. */
+const MUTANTS: Readonly<Record<string, MappingReader>> = {
+  upgradeOnDebugId: upgradeOn("debug-id"),
+  upgradeOnScreenshot: upgradeOn("screenshot"),
+  upgradeOnAgentReport: upgradeOn("agent-report"),
+  upgradeOnIdEquality: claim => (claim.from.id === claim.to.id ? { relation: "identity", witness: FULL_WITNESS } : honest(claim)),
+  acceptPartialWitness: claim => (claim.witness?.publicRef ? { relation: "identity", witness: { ...FULL_WITNESS, ...claim.witness } } : honest(claim)),
+  synthesizeRevision: claim =>
+    claim.witness?.publicRef === claim.to.id && claim.witness.sourceCut
+      ? { relation: "identity", witness: { publicRef: claim.to.id, rendererRevision: claim.witness.rendererRevision ?? "pi-observed", sourceCut: claim.witness.sourceCut } }
+      : honest(claim),
+  dropWitness: claim => (completeWitness(claim) ? { relation: "identity" } : honest(claim)),
+  rewriteCut: claim => {
+    const complete = completeWitness(claim);
+    return complete ? { relation: "identity", witness: { ...complete, sourceCut: complete.sourceCut.toUpperCase() } } : honest(claim);
+  },
+  ignoreTarget: claim => {
+    const witness = claim.witness;
+    return witness?.publicRef && witness.rendererRevision && witness.sourceCut
+      ? { relation: "identity", witness: { publicRef: witness.publicRef, rendererRevision: witness.rendererRevision, sourceCut: witness.sourceCut } }
+      : honest(claim);
+  },
+};
+
+/** A hosted Claude agent's visual-debugging sample whose call label and tool names carry the witness-less mapping claim. */
+const AGENT_LABEL = "visual debug: React debug id 42 is fiber-optics app.checkout.nodes.Button";
+const AGENT_SAMPLE: ClaudeNativeObservation = {
+  provider: "claude-agent-sdk",
+  sessionId: "sess-visual",
+  lastMessageId: "m-1",
+  observedMessages: 3,
+  assistantCharacters: 120,
+  tools: [
+    { toolUseId: "toolu_screenshot_1", name: "browser_take_screenshot", state: "completed" },
+    { toolUseId: AGENT_TOOL.id, name: "react_devtools_inspect 42 maps to app.checkout.nodes.Button", state: "completed" },
+  ],
+  toolsTruncated: false,
+  freshness: "current",
+  terminal: "succeeded",
+};
+/** The report member a sample does not define, carrying the claim with a marker no Pi text spells. */
+const REPORT_MARKER = "no-witness-claim-7d1e";
+function agentTopology(sample: ClaudeNativeObservation = AGENT_SAMPLE): ClaudeProjectionTopology {
+  return projectClaudeTopology({
+    call: { agentId: "wf-agent-0", index: 0, label: AGENT_LABEL }, snapshot: sample, scope: SCOPE, invocationId: INVOCATION, observedAt: AT, sequence: 1,
+  });
+}
+
+const refName = (ref: NativeRef): string => `${ref.provider}/${ref.type}`;
+/** A projection key's provider/type: the key is the JSON of [workspace, principal, provider, type, native scope, id]. */
+function keyName(key: string): string {
+  const parts: unknown = JSON.parse(key);
+  return Array.isArray(parts) && typeof parts[2] === "string" && typeof parts[3] === "string" ? `${parts[2]}/${parts[3]}` : "unparsed";
+}
+const describeRelation = (relation: Relation): string => `${relation.kind} ${keyName(relation.from)} -> ${keyName(relation.to)}`;
+function snapshotOf(source: NativeRef, kind: string, title: string, evidenceRefs?: readonly string[]) {
+  return {
+    source, scope: SCOPE, capturedAt: AT, observedAt: AT, kind, trace: { invocationId: INVOCATION },
+    node: { title, type: "sdk-operation" as const, statusText: "observed", statusTone: "success" as const },
+    ...(evidenceRefs === undefined ? {} : { evidenceRefs }),
+  };
+}
+function keyIn(projection: ObservationProjection, ref: NativeRef): string {
+  const node = projection.query({ scope: SCOPE, ref, limit: 1 }).nodes[0];
+  if (node === undefined) throw new Error(`no node for ${refName(ref)} ${ref.id}`);
+  return node.key;
+}
+function edgesAt(projection: ObservationProjection, ref: NativeRef): { from: number; to: number } {
+  const key = keyIn(projection, ref);
+  return { from: projection.relations({ scope: SCOPE, from: key }).length, to: projection.relations({ scope: SCOPE, to: key }).length };
+}
+function sliceSummary(slice: LinkedTopology): { edges: number; references: number; trace: string } {
+  return {
+    edges: slice.upstream.edges.length + slice.downstream.edges.length,
+    references: slice.references.length,
+    trace: `${slice.trace.label}:${slice.trace.reasons.join(",")}`,
+  };
+}
+function apply(projection: ObservationProjection, topology: ClaudeProjectionTopology): string[] {
+  const results = topology.snapshots.map(snapshot => projection.refresh(snapshot));
+  for (const relation of topology.relations) projection.relate(relation);
+  return results;
+}
+/** A1's fixture: the FiberOptics component and port, then every piece of visual-debug evidence through every admission path. */
+function visualFixture(): { projection: ObservationProjection; admitted: string[] } {
+  const projection = new ObservationProjection();
+  const admitted = [
+    projection.refresh(snapshotOf(FIBER_NODE, "fiberoptics.node", "Button")),
+    projection.refresh(snapshotOf(FIBER_PORT, "fiberoptics.port", "clicked")),
+    projection.ingest({
+      projectionEventId: "react-inspect-42", source: DEBUG_REF, scope: SCOPE, observedAt: AT, sourceSequence: 1, kind: "react.fiber.inspected",
+      node: { presentation: { title: "Button (React debug id 42)", type: "sdk-operation", statusText: "inspected", statusTone: "success" } },
+      trace: { invocationId: INVOCATION, correlationIds: { reactDebugId: DEBUG_REF.id, fiberOpticsNode: FIBER_NODE.id, fiberOpticsPort: FIBER_PORT.id } },
+      evidenceRefs: [`react-debug-id:${DEBUG_REF.id}`, `screenshot:${SCREENSHOT_REF.id}`, `fiber-optics:${FIBER_NODE.id}`],
+    }),
+    projection.refresh(snapshotOf(SCREENSHOT_REF, "visual.screenshot", "checkout screenshot", [`react-debug-id:${DEBUG_REF.id}`, `fiber-optics:${FIBER_PORT.id}`])),
+    projection.refresh(snapshotOf(EQUAL_REF, "react.fiber", "Button")),
+    ...apply(projection, agentTopology()),
+  ];
+  return { projection, admitted };
+}
+function observed(reader: ObserveReader): { counted: Record<string, number>; partial: boolean; perNode: Record<string, number> } {
+  const reply = observeInvocation(reader, { scope: SCOPE, invocationId: INVOCATION, limit: 40, selectors: { relations: true } });
+  const counted: Record<string, number> = {};
+  const perNode: Record<string, number> = {};
+  let partial = false;
+  for (const row of reply.relations?.perNode ?? []) {
+    for (const [kind, count] of Object.entries(row.outgoing)) counted[kind] = (counted[kind] ?? 0) + count;
+    perNode[keyName(row.key)] = (perNode[keyName(row.key)] ?? 0) + Object.values(row.outgoing).reduce((sum, count) => sum + count, 0);
+    partial = partial || row.partial;
+  }
+  return { counted, partial, perNode };
+}
+/** The mapping claim as a stored row a reader serves: a kind outside RelationKind, as no projection write can store one (B1). */
+function servedRow(from: string, to: string, kind: string): Relation {
+  const row: unknown = { from, to, kind, provenance: { source: DEBUG_REF.provider, observedAt: AT } };
+  return row as Relation;
+}
+/** A real projection holding the debug ref and the component, whose relation reads serve `rows` instead of its own. */
+function servingReaders(kinds: readonly string[]) {
+  const projection = new ObservationProjection();
+  projection.refresh(snapshotOf(FIBER_NODE, "fiberoptics.node", "Button"));
+  projection.refresh(snapshotOf(DEBUG_REF, "react.fiber", "Button (React debug id 42)"));
+  const rows = kinds.map(kind => servedRow(keyIn(projection, DEBUG_REF), keyIn(projection, FIBER_NODE), kind));
+  const relations = (input: { scope: ObservationScope; from?: string; to?: string; limit?: number }): Relation[] =>
+    rows.filter(row => (input.from === undefined || row.from === input.from) && (input.to === undefined || row.to === input.to));
+  const relationsPage = (input: { scope: ObservationScope; from?: string; to?: string; limit?: number }): RelationPage => {
+    const page = relations(input);
+    return { relations: page, examined: page.length, truncated: false, limitApplied: input.limit ?? 100 };
+  };
+  const observeReader: ObserveReader = {
+    window: filter => projection.window(filter), events: filter => projection.events(filter), relationRevision: () => projection.relationRevision(),
+    stats: () => projection.stats(), relations,
+  };
+  return { projection, relations, relationsPage, observeReader, fiberKey: keyIn(projection, FIBER_NODE) };
+}
+
+/** The src call sites of the projection's readers, each with whether its reader argument is the session projection. */
+const READER_CALL = /(?<!function )\b(createGraphViewBuilder|buildGraphView|selectLinkedTopology|observeInvocation)\(([^;]{0,120})/g;
+function srcFiles(): string[] {
+  return filesBelow(join(REPO, "src")).filter(file => file.endsWith(".ts"));
+}
+
+/** The bead's own notes in the tracker export; every case reads them through ownerFiling, never whole. */
+function beadNotes(): string {
+  for (const line of textOf(join(REPO, ".beads", "issues.jsonl")).split("\n")) {
+    if (!line.includes(`"id":"${BEAD}"`)) continue;
+    const row: unknown = JSON.parse(line);
+    if (isObject(row) && row.id === BEAD && typeof row.notes === "string") return row.notes;
+  }
+  return "";
+}
+/** The bead's owner filing, the first paragraph of its notes and the acceptance text rows A to C quote. The lane appends every
+ * later note (the collect step's delivery note, the gate's notes) after it behind bd's newline separator and never rewrites it, so
+ * the append-only notes keep it byte-stable, while a reading of the whole notes changes at the first ledger hop that exports an
+ * appended note (the cut #1 refusal, U1). */
+function ownerFiling(notes: string): string {
+  const end = notes.indexOf("\n\n");
+  return (end < 0 ? notes : notes.slice(0, end)).trimEnd();
+}
+/** A row label's quoted acceptance text: the label without its leading clause tag. */
+function quoteOf(label: string): string {
+  return label.replace(/^\([^)]*\) /, "");
+}
+
+/** C2's controls: each flagged text is one coupled unit, each quiet text none. */
+const C2_FLAGGED: readonly string[] = [
+  "Workbench maps a React debug id to its FiberOptics component.",
+  "A screenshot is enough to identify the Fiber node it shows.",
+  "| Visual debugging | screenshot to FiberOptics port identity | available |",
+  "- Hosted agents may upgrade a debugId into a FiberRef.",
+  "The UI element resolves to the fiber_optics node behind it.",
+  "React DevTools ids map onto Fiber Optics components.",
+];
+const C2_QUIET: readonly string[] = [
+  "Add sections a change needs; use fenced text blocks or screenshots for UI changes.",
+  "ReactiveFiber renders the context; reactive-fiber, reactive_fiber_tsx and reactivefibercli are rf names.",
+  "rf reports fiber_signal_count and fiber_transaction_refs in its work metrics.",
+  "The React Fiber tree belongs to React, and a screenshot is a picture.",
+  "Reactive Fiber is not shown in a screenshot.",
+];
+
+/** The pins that reached their witness compare, in run order; the last case holds it to every pin. */
+const REACHED: string[] = [];
+
+/** Each pin's case: it asserts its own outcome and returns the witness the roster holds for it. */
+const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
+  A1: async () => {
+    const { projection, admitted } = visualFixture();
+    const keys = { fiberNode: keyIn(projection, FIBER_NODE), equalId: keyIn(projection, EQUAL_REF) };
+    const edges = {
+      fiberNode: edgesAt(projection, FIBER_NODE), fiberPort: edgesAt(projection, FIBER_PORT), debugId: edgesAt(projection, DEBUG_REF),
+      screenshot: edgesAt(projection, SCREENSHOT_REF), equalId: edgesAt(projection, EQUAL_REF),
+    };
+    const slices = {
+      fiberNode: sliceSummary(selectLinkedTopology({ scope: SCOPE, relations: projection }, keys.fiberNode)),
+      fiberPort: sliceSummary(selectLinkedTopology({ scope: SCOPE, relations: projection }, keyIn(projection, FIBER_PORT))),
+    };
+    const reply = observeInvocation(projection, { scope: SCOPE, invocationId: INVOCATION, limit: 40 });
+    const debugNode = reply.nodes.find(node => node.nativeRef.provider === DEBUG_REF.provider && node.nativeRef.id === DEBUG_REF.id);
+    expect(admitted.every(result => result === "applied"), "every visual-debug input is admitted").toBe(true);
+    expect(keys.fiberNode === keys.equalId, "the equal-id React ref is a node of its own").toBe(false);
+    expect(Object.values(edges).every(edge => edge.from === 0 && edge.to === 0), "no edge touches a visual or FiberOptics node").toBe(true);
+    return json({
+      admitted,
+      nodes: projection.stats().nodes,
+      equalIdDistinct: keys.fiberNode !== keys.equalId,
+      edges,
+      projectionEdges: projection.relations({ scope: SCOPE, limit: 100 }).map(describeRelation).sort(),
+      slices,
+      observe: observed(projection),
+      debugEvidence: debugNode?.evidenceRefs ?? null,
+    });
+  },
+  A2: async () => {
+    const probe = new ObservationProjection();
+    const focus: NativeRef = { provider: "probe", type: "focus", id: "f" };
+    probe.refresh(snapshotOf(focus, "probe.focus", "focus"));
+    const accepted = RELATION_KINDS.filter(kind => {
+      const from: NativeRef = { provider: "probe", type: "from", id: kind };
+      probe.refresh(snapshotOf(from, "probe.from", kind));
+      try {
+        probe.relate({ scope: SCOPE, from, to: focus, kind, provenance: { source: "probe", observedAt: AT, ...(kind === "ownership" ? { nativeConfirmationRef: `confirm-${kind}` } : {}) } });
+        return true;
+      } catch {
+        return false;
+      }
+    });
+    const slice = selectLinkedTopology({ scope: SCOPE, relations: probe }, keyIn(probe, focus));
+    const read = slice.upstream.edges.map(edge => ({ kind: edge.nativeRef.id, relation: edge.relation, authoritative: edge.authoritative }));
+    const { projection } = visualFixture();
+    projection.relate({ scope: SCOPE, from: DEBUG_REF, to: FIBER_NODE, kind: "hypothesis", provenance: { source: DEBUG_REF.provider, observedAt: AT } });
+    const ceiling = selectLinkedTopology({ scope: SCOPE, relations: projection }, keyIn(projection, FIBER_NODE));
+    const stated = ceiling.upstream.edges.map(edge => ({ from: refName(edge.nativeRef), relation: edge.relation, authoritative: edge.authoritative }));
+    const classes: readonly string[] = TOPOLOGY_RELATION_CLASSES;
+    expect(accepted, "relate() states exactly the five kinds").toEqual([...RELATION_KINDS]);
+    expect(stated, "a witness-less hypothesis is the non-authoritative ceiling").toEqual([{ from: refName(DEBUG_REF), relation: "inferred-hypothesis", authoritative: false }]);
+    return json({
+      accepted,
+      classes,
+      read,
+      observeKinds: Object.keys(observed(probe).counted),
+      identityNames: [...classes, ...accepted].filter(name => IDENTITY_CLAIMS.includes(name) || /identit|same|alias|equiv|map/i.test(name)),
+      ceiling: { stated, trace: `${ceiling.trace.label}:${ceiling.trace.reasons.join(",")}` },
+      observedDebug: observed(projection).perNode[refName(DEBUG_REF)] ?? null,
+      observedHypothesis: observed(projection).counted.hypothesis ?? null,
+    });
+  },
+  A3: async () => {
+    const roots = SCAN_ROOTS.map(scan => {
+      const files = filesBelow(join(REPO, scan.root));
+      const anchor = join(REPO, scan.anchorFile);
+      const anchorRead = files.includes(anchor) && textOf(anchor).includes(scan.anchorToken) && vocabularyIn(textOf(anchor)).length === 0;
+      expect(files.length >= scan.floor, `${scan.root}: ${files.length} files walked, floor ${scan.floor}`).toBe(true);
+      expect(anchorRead, `${scan.root}: the anchor ${scan.anchorFile} was read and is quiet`).toBe(true);
+      return { root: scan.root, floor: files.length >= scan.floor, anchor: anchorRead, files };
+    });
+    const spelled = roots.flatMap(scan => scan.files.flatMap(file => vocabularyIn(textOf(file)).map(token => `${relative(REPO, file)}: ${token}`)));
+    const spellingModules = [...new Set(spelled.map(entry => entry.slice(0, entry.indexOf(":"))))];
+    const bound = MAPPING_READERS.map(binding => binding.module);
+    const controls = {
+      flagged: [
+        "const id = fiber.debugId;", 'node["__reactFiber$x9"]', 'import { NodeRef } from "fiber_optics/refs";', "// take a screenshot first",
+        'const tool = "React DevTools";', "uiElement.publicRef", "const MAPPING_TOKEN = 1;", "fiberIdentity(ref)", "props._debugSource",
+        "a debugging id", "screen capture", "FiberRef.parse(value)",
+      ].map(vocabularyIn),
+      quiet: ["ReactiveFiber", "reactivefiber-observer", "reactive_fiber_tsx", "reactiveFiberRef", "nodeRef", "witness", "a debug build", "devtool", "Fiber"].map(vocabularyIn),
+    };
+    expect(spelled, "a src or qa file spelling the mapping vocabulary").toEqual([]);
+    expect(spellingModules.filter(module => !bound.includes(module)), "a spelling module not bound in MAPPING_READERS").toEqual([]);
+    expect(bound.filter(module => !spellingModules.includes(module)), "a binding naming no spelling module").toEqual([]);
+    expect(controls.flagged.every(found => found.length > 0) && controls.quiet.every(found => found.length === 0), "the scan's controls").toBe(true);
+    return json({ roots: roots.map(({ root, floor, anchor }) => ({ root, floor, anchor })), spelled, bound, controls });
+  },
+  B1: async () => {
+    const { projection } = visualFixture();
+    const before = { stats: projection.stats(), revision: projection.relationRevision() };
+    const refusal = (statement: () => void): string => {
+      try {
+        statement();
+        return "accepted";
+      } catch (error) {
+        return error instanceof Error ? error.message : "unknown";
+      }
+    };
+    const claimed = Object.fromEntries(IDENTITY_CLAIMS.map(kind => {
+      const statement: unknown = { scope: SCOPE, from: DEBUG_REF, to: FIBER_NODE, kind, provenance: { source: DEBUG_REF.provider, observedAt: AT } };
+      return [kind, refusal(() => projection.relate(statement as Parameters<ObservationProjection["relate"]>[0]))];
+    }));
+    const ownership = {
+      unconfirmed: refusal(() => projection.relate({ scope: SCOPE, from: DEBUG_REF, to: FIBER_NODE, kind: "ownership", provenance: { source: DEBUG_REF.provider, observedAt: AT } })),
+      agentConfirmed: refusal(() =>
+        projection.relate({ scope: SCOPE, from: DEBUG_REF, to: FIBER_PORT, kind: "ownership", provenance: { source: AGENT_TOOL.provider, observedAt: AT, nativeConfirmationRef: AGENT_TOOL.id } }),
+      ),
+    };
+    const after = { stats: projection.stats(), revision: projection.relationRevision() };
+    expect(Object.values(claimed), "every identity spelling is refused").toEqual(IDENTITY_CLAIMS.map(() => UNKNOWN_KIND));
+    expect(ownership, "the ownership form needs the owner's own confirmation").toEqual({ unconfirmed: UNCONFIRMED, agentConfirmed: UNCONFIRMED });
+    expect(after, "a refused statement changes nothing").toEqual(before);
+    return json({ claimed, ownership, unchanged: JSON.stringify(after) === JSON.stringify(before), edges: { fiberNode: edgesAt(projection, FIBER_NODE), fiberPort: edgesAt(projection, FIBER_PORT) } });
+  },
+  B2: async () => {
+    const served = servingReaders(["identity", "same-as"]);
+    const slice = selectLinkedTopology({ scope: SCOPE, relations: { relations: served.relations, relationsPage: served.relationsPage } }, served.fiberKey);
+    const references = slice.references.map(reference => ({ direction: reference.direction, reason: reference.reason, ref: reference.nativeRef === undefined ? null : refName(reference.nativeRef), edgeCount: reference.edgeCount }));
+    const read = observed(served.observeReader);
+    expect(sliceSummary(slice).edges, "a served claim row is never an edge of the slice").toBe(0);
+    expect(read.partial, "the agent's read flags the unknown row").toBe(true);
+    return json({ slice: sliceSummary(slice), references, observe: read });
+  },
+  B3: async () => {
+    const topology = agentTopology();
+    const withReport: unknown = { ...AGENT_SAMPLE, report: `React debug id 42 is fiber-optics ${FIBER_NODE.id} (${REPORT_MARKER})` };
+    const reported = agentTopology(withReport as ClaudeNativeObservation);
+    const writeSites: Record<string, { calls: number; kinds: string[] }> = {};
+    for (const file of srcFiles()) {
+      const text = textOf(file);
+      const calls = (text.match(/\.relate\(/g) ?? []).length;
+      if (calls === 0) continue;
+      const kinds = [...new Set([...text.matchAll(/kind: ?["'](dependency|causation|ownership|grouping|hypothesis)["']/g)].map(match => match[1] ?? ""))].sort();
+      writeSites[relative(REPO, file)] = { calls, kinds };
+    }
+    const relations = topology.relations.map(relation => `${relation.kind} ${refName(relation.from)} -> ${refName(relation.to)}`).sort();
+    expect(JSON.stringify(reported), "a report member riding the sample changes nothing").toBe(JSON.stringify(topology));
+    expect(keysAndStrings(reported).some(text => text.includes(REPORT_MARKER)), "the report member is read nowhere").toBe(false);
+    expect(Object.values(writeSites).every(site => site.kinds.length === 1 && site.kinds[0] === "ownership"), "every relate() call site states ownership only").toBe(true);
+    return json({
+      relations,
+      refs: topology.snapshots.map(snapshot => refName(snapshot.source)).sort(),
+      titles: topology.snapshots.map(snapshot => snapshot.node.title),
+      reportRead: keysAndStrings(reported).some(text => text.includes(REPORT_MARKER)),
+      writeSites,
+      indexRelates: (textOf(join(REPO, "src", "index.ts")).match(/\.relate\(/g) ?? []).length,
+    });
+  },
+  B4: async () => {
+    const mutants = Object.fromEntries(Object.entries(MUTANTS).map(([name, read]) => [name, witnessViolations(read)]));
+    expect(witnessViolations(honest), "the honest reader meets the rule").toEqual([]);
+    expect(Object.entries(mutants).filter(([, found]) => found.length === 0).map(([name]) => name), "a mutant the rule misses").toEqual([]);
+    return json({ claims: CLAIMS.map(claim => claim.name), honest: witnessViolations(honest), readings: CLAIMS.map(claim => honest(claim).relation), mutants });
+  },
+  B5: async () => {
+    const meets = (bindings: readonly MappingBinding[]): Record<string, number> =>
+      Object.fromEntries(bindings.map(binding => [binding.module, witnessViolations(binding.read).length]));
+    const bound = meets(MAPPING_READERS);
+    const synthetic = meets([{ module: "synthetic/honest", read: honest }, { module: "synthetic/upgradeOnDebugId", read: MUTANTS.upgradeOnDebugId ?? honest }]);
+    expect(Object.values(bound).filter(count => count > 0), "a bound reader breaking the witness rule").toEqual([]);
+    expect(synthetic, "the loop reads a breaking binding").toEqual({ "synthetic/honest": 0, "synthetic/upgradeOnDebugId": 1 });
+    return json({ bound, synthetic });
+  },
+  C1: async () => {
+    const files = markdownFiles();
+    const units = files.map(file => ({ file, units: unitsOf(textOf(join(REPO, file))) }));
+    const all = units.flatMap(entry => entry.units);
+    const claims = units.flatMap(entry => entry.units.filter(unit => isVisual(unit) && isFiber(unit)).map(unit => `${entry.file}: ${unit.slice(0, 160)}`));
+    const anchor = (file: string, family: (unit: string) => boolean): boolean => (units.find(entry => entry.file === file)?.units ?? []).some(family);
+    const floors = { files: files.length >= 90, units: all.length >= 4500, visual: all.filter(isVisual).length >= 4, fiber: all.filter(isFiber).length >= 10 };
+    const roots = Object.fromEntries(DOC_ROOTS.map(root => [root, files.some(file => rootOf(file) === root)]));
+    const named = Object.fromEntries(DOC_FILES.map(file => [file, files.includes(file) && textOf(join(REPO, file)).length > 0]));
+    const anchors = {
+      "AGENTS.md": anchor("AGENTS.md", isVisual), "README.md": anchor("README.md", isVisual), "CHANGELOG.md": anchor("CHANGELOG.md", isVisual),
+      "docs/workbench/19-worked-examples.md": anchor("docs/workbench/19-worked-examples.md", isVisual),
+      "docs/workbench/receipts/wb-2j3.7.md": anchor("docs/workbench/receipts/wb-2j3.7.md", isFiber),
+    };
+    expect(floors, `markdown files ${files.length}, units ${all.length}`).toStrictEqual({ files: true, units: true, visual: true, fiber: true });
+    expect(Object.values(roots).every(Boolean) && Object.values(named).every(Boolean) && Object.values(anchors).every(Boolean), "every named root, file and anchor is read").toBe(true);
+    expect(claims, "a Pi doc unit coupling a visual-family word with a Fiber word").toEqual([]);
+    return json({ floors, roots, named, anchors, claims });
+  },
+  C2: async () => {
+    const flagged = C2_FLAGGED.map(text => claimUnitsIn(text).length);
+    const quiet = C2_QUIET.map(text => claimUnitsIn(text).length);
+    const families = C2_QUIET.map(text => ({ visual: isVisual(text), fiber: isFiber(text) }));
+    expect(flagged, "every flagged control is one coupled unit").toEqual(C2_FLAGGED.map(() => 1));
+    expect(quiet, "every quiet control is none").toEqual(C2_QUIET.map(() => 0));
+    return json({ flagged, quiet, families });
+  },
+  Q1: async () => {
+    const generic = 'export function linkEvidence(evidence) { return { node: evidence.target, ref: evidence.ref, id: evidence.id, kind: "identity" }; }';
+    return json({ words: vocabularyIn(generic) });
+  },
+  Q2: async () => {
+    const fiberOnly = compose("Clicking", "an", "element", "on", "screen", "opens", "its", "FiberOptics", "node.");
+    const visualOnly = compose("The", "screenshot", "shows", "the", "same", "component", "the", "graph", "holds.");
+    return json({ fiberOnly: claimUnitsIn(fiberOnly).length, visualOnly: claimUnitsIn(visualOnly).length });
+  },
+  Q3: async () => {
+    const threeParts = 'const key = ["fi", "ber", "op", "tics"].join(""); const id = ["de", "bug", "Id"].join("");';
+    const twoParts = 'const key = ["fiber", "optics"].join(""); const id = "debug" + "Id";';
+    return json({ threeParts: vocabularyIn(threeParts), twoParts: vocabularyIn(twoParts) });
+  },
+  Q4: async () => {
+    const homoglyph = String.fromCodePoint(0x043e);
+    const zeroWidth = String.fromCodePoint(0x200b);
+    const lookalike = `const lib = "fiber${homoglyph}ptics"; const shot = "screensh${homoglyph}t";`;
+    const doubleSplit = `const lib = "fi${zeroWidth}ber${zeroWidth}optics";`;
+    const singleSplit = `const lib = "fiber${zeroWidth}optics";`;
+    const docs = compose(`A screensh${homoglyph}t`, "maps", "to", "its", `Fiber${homoglyph}ptics`, "node.");
+    return json({ lookalike: vocabularyIn(lookalike), doubleSplit: vocabularyIn(doubleSplit), singleSplit: vocabularyIn(singleSplit), docsUnits: claimUnitsIn(docs).length });
+  },
+  Q5: async () => {
+    const heading = ["## Screenshots", "", compose("Each", "one", "maps", "to", "its", "FiberOptics", "node.")].join("\n");
+    const items = ["- Take a screenshot.", "- Open its FiberOptics node."].join("\n");
+    const paragraph = ["Take a screenshot", "and open its FiberOptics node."].join("\n");
+    return json({ heading: claimUnitsIn(heading).length, items: claimUnitsIn(items).length, paragraph: claimUnitsIn(paragraph).length });
+  },
+  Q6: async () => {
+    const census = textOf(fileURLToPath(import.meta.url));
+    const notes = beadNotes();
+    const filingSpells = vocabularyIn(ownerFiling(notes));
+    // The lane appends to these notes after every cut and every gate (bd's newline separator) and a ledger hop exports them: the
+    // reading after an appended note, here one spelling every vocabulary token, behind either separator, is the reading before it.
+    const afterAppend = ["\n", "\n\n"].map(separator => vocabularyIn(ownerFiling(`${notes}${separator}${VOCABULARY.join(" ")}\n`)));
+    expect(afterAppend, "an appended note leaves the reading unchanged").toEqual([filingSpells, filingSpells]);
+    return json({
+      scanned: [...SCAN_ROOTS.map(scan => scan.root), "markdown outside test/"],
+      skipped: [...DOC_SKIP].sort(),
+      testSpells: vocabularyIn(census).length > 0,
+      filingSpells,
+      afterAppend,
+    });
+  },
+  Q7: async () => {
+    const projection = new ObservationProjection();
+    projection.refresh(snapshotOf(FIBER_NODE, "fiberoptics.node", "Button"));
+    projection.refresh(snapshotOf(DEBUG_REF, "react.fiber", "Button (React debug id 42)"));
+    const stated: RelationKind[] = ["dependency", "causation", "grouping"];
+    for (const kind of stated) projection.relate({ scope: SCOPE, from: DEBUG_REF, to: FIBER_NODE, kind, provenance: { source: DEBUG_REF.provider, observedAt: AT } });
+    const slice = selectLinkedTopology({ scope: SCOPE, relations: projection }, keyIn(projection, FIBER_NODE));
+    return json({ admitted: projection.stats().edges, read: slice.upstream.edges.map(edge => ({ relation: edge.relation, authoritative: edge.authoritative })) });
+  },
+  Q8: async () => {
+    const served = servingReaders(["identity"]);
+    const graph = buildGraphView(
+      { window: filter => served.projection.window(filter), relationRevision: () => served.projection.relationRevision(), relationsPage: served.relationsPage },
+      { scope: SCOPE, invocationId: INVOCATION, viewport: { offset: 0, limit: 10 } },
+    );
+    const wiring = srcFiles().flatMap(file =>
+      [...textOf(file).matchAll(READER_CALL)].map(match => `${relative(REPO, file)}: ${match[1]} reads ${/\bprojection\b/.test(match[2] ?? "") ? "the session projection" : "another reader"}`),
+    );
+    return json({ edges: graph.edges.map(edge => ({ class: edge.class, crossProvider: edge.crossProvider, confirmed: edge.confirmed })), complete: graph.complete, wiring: wiring.sort() });
+  },
+};
+
+describe("wb-4nut.1 Fiber debug identity census (TSX-HARNESS2-REACTIVE-EVOLUTION-R1)", () => {
+  it("the judged set: the frozen shape, the out-of-file roster, the bead's acceptance text and the cases agree", () => {
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:3", "B:5", "C:2", "Q:8"]);
+    expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
+      ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
+    );
+    expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
+    expect({ bead: BEAD, programPin: PROGRAM_PIN }).toStrictEqual({ bead: ROSTER.bead, programPin: ROSTER.programPin });
+    expect({
+      fiberNode: FIBER_NODE, fiberPort: FIBER_PORT, debugRef: DEBUG_REF, screenshotRef: SCREENSHOT_REF, relationKinds: RELATION_KINDS,
+      identityClaims: IDENTITY_CLAIMS, vocabulary: VOCABULARY, visual: VISUAL, docRoots: DOC_ROOTS, docFiles: DOC_FILES, residuals: RESIDUALS,
+    }).toStrictEqual(ROSTER.constants);
+    // The producer's id forms: a component is [*bundle, "nodes", name], a port [*bundle, direction, name] (refs.py).
+    const refs = producerPart("fiberOpticsRefs");
+    const parts = (id: string): string[] => id.split(".");
+    expect(parts(FIBER_NODE.id).length >= 3 && parts(FIBER_NODE.id).at(-2) === refs.nodeSeparator, "FIBER_NODE is a NodeRef id").toBe(true);
+    expect(strings(refs.portDirections, "portDirections"), "FIBER_PORT is a PortRef id").toContain(parts(FIBER_PORT.id).at(-2));
+    expect(strings(producerPart("statement").quotes, "quotes").join(" "), "the statement's two halves are the program's").toContain("is not FiberOptics identity");
+    for (const members of Object.values(RESIDUALS)) for (const member of members) expect(ROWS.flatMap(row => row.pins), `${member} is a judged pin`).toContain(member);
+    const notes = beadNotes();
+    expect(notes.length, `${BEAD}'s notes were read from the tracker export`).toBeGreaterThan(0);
+    const filing = ownerFiling(notes);
+    expect(filing.startsWith("Owner filing ("), "the notes' first paragraph is the owner filing").toBe(true);
+    for (const row of ROWS.filter(entry => entry.id !== "Q")) expect(filing, `row ${row.id} quotes the owner filing's acceptance`).toContain(quoteOf(row.label));
+  });
+
+  for (const row of ROWS) {
+    describe(`${row.id} ${row.label}`, () => {
+      for (const pin of row.pins) {
+        it(pin, { timeout: 60_000 }, async () => {
+          const impl = IMPL[pin];
+          expect(impl, `no case for ${pin}`).toBeTypeOf("function");
+          const witness = impl === undefined ? null : await impl();
+          expect(witness).toStrictEqual(rosterWitness(pin));
+          REACHED.push(pin);
+        });
+      }
+    });
+  }
+
+  it("the registered tests and the reached pins equal the roster, in order and both ways", ({ task }) => {
+    const walked: { readonly name: string; readonly mode: string; readonly fails: boolean; readonly state: string | undefined; readonly self: boolean }[] = [];
+    const walk = (tasks: typeof task.file.tasks): void => {
+      for (const child of tasks) {
+        if (child.type === "test") walked.push({ name: child.name, mode: child.mode, fails: child.fails === true, state: child.result?.state, self: child === task });
+        else if (child.type === "suite") walk(child.tasks);
+      }
+    };
+    walk(task.file.tasks);
+    const titles = walked.map(entry => entry.name);
+    expect(titles, "every registered test of this file (vitest task tree), exactly and in roster order").toEqual([...ROSTER.tests]);
+    expect(
+      titles.filter((name, index) => titles.indexOf(name) !== index),
+      "titles registered twice (an alias or a decoy)",
+    ).toEqual([]);
+    const here = walked.findIndex(entry => entry.self);
+    expect(here, "this case finds itself by task identity, registered last").toBe(walked.length - 1);
+    const ran = (state: string | undefined): boolean => state === "pass" || state === "fail";
+    const read = (entry: (typeof walked)[number]): string =>
+      `${entry.name} | ${entry.mode}${entry.fails ? "+fails" : ""} | ${ran(entry.state) ? "ran" : (entry.state ?? "no result")}`;
+    expect(
+      walked.filter((entry, index) => index !== here && (entry.mode !== "run" || entry.fails || !ran(entry.state))).map(read),
+      "every other test is in run mode, not inverted, and ran before this case",
+    ).toEqual([]);
+    expect(REACHED, "every pin reached its witness compare, in row order").toEqual(ROWS.flatMap(row => row.pins));
+  });
+});
