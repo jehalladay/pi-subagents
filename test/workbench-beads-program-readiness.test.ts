@@ -36,11 +36,12 @@ import {dirname, join} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {inflateRawSync} from 'node:zlib';
 import {describe, expect, it} from 'vitest';
-import type {BeadsShowCall, BeadsShowResult} from '../src/workbench/beads-observer.js';
+import {type BeadsShowCall, type BeadsShowResult, readBeadsWork} from '../src/workbench/beads-observer.js';
 import {
   type BeadsProgram,
   type BeadsProgramClient,
   type BeadsProgramReadiness,
+  type BeadsProgramWorkReader,
   readBeadsProgramReadiness,
   STORE_UNREACHABLE,
 } from '../src/workbench/beads-program-readiness.js';
@@ -281,8 +282,22 @@ function bd(store: Store, faults: {dependents?: Fault; show?: ReadonlyMap<string
 const SCOPE: ObservationScope = {workspace: '/fixture/rftsx-store', principal: 'operator'};
 const LIMITS = {maxDependencies: 16, maxTitleChars: 120, timeoutMs: 5000};
 const NOW = (): string => '2026-10-23T09:00:00.000Z';
-const read = (client: BeadsProgramClient, program: BeadsProgram, extra: {scope?: ObservationScope; signal?: AbortSignal; limits?: typeof LIMITS} = {}): Promise<BeadsProgramReadiness> =>
-  readBeadsProgramReadiness(client, {program, workspaceRoot: SCOPE.workspace, scope: extra.scope ?? SCOPE, limits: extra.limits ?? LIMITS, now: NOW, ...(extra.signal ? {signal: extra.signal} : {})});
+/** The host's binding of the work reader is wb-752.6's readBeadsWork: the module imports no Beads reader (the landed wb-kku9.3
+ * claim re-check census holds that reader's importers under src, qa and examples to an empty set), so the host passes it in. */
+const read = (
+  client: BeadsProgramClient,
+  program: BeadsProgram,
+  extra: {scope?: ObservationScope; signal?: AbortSignal; limits?: typeof LIMITS; readWork?: BeadsProgramWorkReader} = {},
+): Promise<BeadsProgramReadiness> =>
+  readBeadsProgramReadiness(client, {
+    program,
+    workspaceRoot: SCOPE.workspace,
+    scope: extra.scope ?? SCOPE,
+    limits: extra.limits ?? LIMITS,
+    now: NOW,
+    readWork: extra.readWork ?? readBeadsWork,
+    ...(extra.signal ? {signal: extra.signal} : {}),
+  });
 const programOf = (map: ProgramMap, extra: Partial<BeadsProgram> = {}): BeadsProgram => ({epics: [map.epic], landedRecords: landedRulings(map), ...extra});
 const sorted = (ids: readonly string[]): string[] => [...ids].sort();
 const child = (reading: BeadsProgramReadiness, id: string) => {
@@ -735,7 +750,8 @@ describe('wb-4nut.5 program dispatch readiness over the shared bead store (TSX-H
       .replace(/\/\*[\s\S]*?\*\//g, '')
       .replace(/^\s*\/\/.*$/gm, '');
     const specifiers = [...source.matchAll(/^import .* from '([^']+)';$/gm)].map((match) => match[1]);
-    witness('D3', specifiers, ['./beads-observer.js', './capability-registry.js', './observation.js']);
+    // No Beads reader is imported in any form: the work reader arrives injected (the wb-kku9.3 claim re-check census contract).
+    witness('D3', specifiers, ['./capability-registry.js', './observation.js']);
     for (const banned of [/node:/, /readFile|readdir|existsSync/, /BEADS-|\.md\b/, /child_process|spawn|exec\(/, /\bbd ready\b/]) expect(source).not.toMatch(banned);
     // The seams the reader drives: dependents once per epic, show once per child; no other call.
     const client = bd(modelStore([H2]));
@@ -829,6 +845,43 @@ describe('wb-4nut.5 reader hygiene', () => {
     };
     const reading = await read(client, programOf(H2, {gates: {'TSX-H2-01': gate}}));
     expect(child(reading, 'TSX-H2-01')).toMatchObject({ready: false, gate: {id: gate, verdict: STORE_UNREACHABLE}});
+  });
+
+  it('reads each child only through the injected work reader: once per child, over the same seam and a host-bound request, and that reading decides', async () => {
+    const client = bd(modelStore([H2]));
+    const requests: string[] = [];
+    const recording: BeadsProgramWorkReader = (seam, request) => {
+      requests.push([seam === client, request.workId, request.workspaceRoot, request.scope.workspace, request.limits.timeoutMs, request.now()].join(' '));
+      return readBeadsWork(seam, request);
+    };
+    const reading = await read(client, programOf(H2), {readWork: recording});
+    expect(sorted(reading.ready)).toEqual(sorted(H2.ready.ids));
+    expect(requests).toEqual(['rftsx-auqdi', 'rftsx-rupqh'].map((id) => ['true', id, SCOPE.workspace, SCOPE.workspace, 5000, NOW()].join(' ')));
+    // The injected reading alone decides: a reader that reads rftsx-auqdi in progress leaves it unready.
+    const inProgress: BeadsProgramWorkReader = async (seam, request) => {
+      const work = await readBeadsWork(seam, request);
+      return request.workId === 'rftsx-auqdi' ? {...work, work: {...work.work, status: 'in_progress'}} : work;
+    };
+    const held = await read(bd(modelStore([H2])), programOf(H2), {readWork: inProgress});
+    expect(child(held, 'rftsx-auqdi')).toMatchObject({status: 'in_progress', ready: false});
+    expect(held.ready).toEqual(['rftsx-rupqh']);
+  });
+
+  it('a work reading that names another id or another workspace reads unknown (store unreachable), never that reading', async () => {
+    const lies: readonly BeadsProgramWorkReader[] = [
+      // Asked for rftsx-auqdi, the reader returns the reading of rftsx-rupqh (open, nothing to wait on).
+      (seam, request) => readBeadsWork(seam, request.workId === 'rftsx-auqdi' ? {...request, workId: 'rftsx-rupqh'} : request),
+      // Asked for rftsx-auqdi, the reader returns its reading stamped with another store's workspace.
+      async (seam, request) => {
+        const work = await readBeadsWork(seam, request);
+        return request.workId === 'rftsx-auqdi' ? {...work, source: {...work.source, workspaceRoot: '/elsewhere'}} : work;
+      },
+    ];
+    for (const lie of lies) {
+      const reading = await read(bd(modelStore([H2])), programOf(H2), {readWork: lie});
+      expect(child(reading, 'rftsx-auqdi')).toEqual({id: 'rftsx-auqdi', status: STORE_UNREACHABLE, ready: false, waitingOn: [], partial: false});
+      expect(reading.ready).toEqual(['rftsx-rupqh']);
+    }
   });
 
   it('the reading is plain structured-cloneable data', async () => {

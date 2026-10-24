@@ -3,11 +3,17 @@
  * A program bead protocol (the producer's docs/programs/<program>/BEADS-2026-10-21.md, Dispatch, at 76bbbffd9d4a): "a child is
  * ready when every `related` premise of it inside this program has closed or is a ruling/ADR record whose text has landed, and
  * when its gate (if any) reads ADOPT". This reader holds that rule to the shared bead store and nothing else.
- * - Ids, statuses and edges arrive only through the injected seams: `bd show <id> --json`, read by readBeadsWork, and the bd
- *   dependents listing of an epic (dep list <epic> --direction=up --json), because the bd 1.1.0-rc.1 show envelope of an epic
- *   lists no dependents. A program's bead map file is a reader snapshot and is never an input: a store this reader cannot read
- *   reports STORE_UNREACHABLE, never a snapshot status. The ready listing is never the source: it reads blockers, and a
- *   premise is `related`.
+ * - Ids, statuses and edges arrive only through injected seams: the issue read of one id (the native show verb with --json),
+ *   which the host-bound work reader parses for each child, and the dependents listing of an epic (dep list <epic>
+ *   --direction=up --json), because the 1.1.0-rc.1 issue envelope of an epic lists no dependents. A program's bead map file is
+ *   a reader snapshot and is never an input: a store this reader cannot read reports STORE_UNREACHABLE, never a snapshot
+ *   status. The ready listing is never the source: it reads blockers, and a premise is `related`.
+ * - The work reader is injected, never imported: the host binds wb-752.6's reader (readBeadsWork) as `readWork`, and this
+ *   module hands it the same issue-read seam and a host-bound request for each child, so the readiness facts stay that
+ *   reader's own. The claim re-check census (wb-kku9.3) holds that reader's importers under src, qa and examples to an empty
+ *   set and the native read verbs to the reader's own text, so a host that binds it is the importer that census judges. A
+ *   reading that names another id or another workspace is a malformed reading of the store: its child reads
+ *   STORE_UNREACHABLE.
  * - The program's beads are its epics and their dependents. A child is a parent-child dependent of an epic carrying a `wp:`
  *   work-package label; a ruling row is a decision record, never a dispatched child. Only an open child is taken.
  * - Premises are `related` edges, never blockers: a `blocks` edge between two program beads is refused; a `related` edge to a
@@ -22,18 +28,54 @@
  *   marker and two. This is the reference reading the program's bead-graph census holds every Pi gate reader to.
  * The module never spawns a process and never issues a store mutation.
  */
-import {type BeadsReadClient, type BeadsReadLimits, type BeadsShowCall, type BeadsShowResult, type BeadsWorkReading, readBeadsWork} from './beads-observer.js';
 import {CapabilityError} from './capability-registry.js';
 import type {ObservationScope} from './observation.js';
 
 /** What the reader reports for a program, child or gate the store could not return: never a snapshot status. */
 export const STORE_UNREACHABLE = 'unknown (store unreachable)';
 
-/** The injected seams, both run with cwd = workspace root: `bd show <id> --json`, and the bd dependents listing of an id
- * (dep list <id> --direction=up --json). */
-export interface BeadsProgramClient extends BeadsReadClient {
-  dependents(id: string, call: BeadsShowCall): Promise<BeadsShowResult>;
+/** One seam call: run with cwd = the workspace root, bounded by timeoutMs. */
+export interface BeadsProgramCall {
+  cwd: string;
+  timeoutMs: number;
+  signal?: AbortSignal;
 }
+/** One seam answer: the native exit code and output; producerVersion only when the seam measured it. */
+export interface BeadsProgramAnswer {
+  exit: number;
+  stdout: string;
+  stderr: string;
+  producerVersion?: string;
+}
+/** The injected seams, both run with cwd = workspace root: the issue read of one id (the native show verb with --json, the
+ * seam wb-752.6's reader takes), and the dependents listing of an id (dep list <id> --direction=up --json). */
+export interface BeadsProgramClient {
+  show(id: string, call: BeadsProgramCall): Promise<BeadsProgramAnswer>;
+  dependents(id: string, call: BeadsProgramCall): Promise<BeadsProgramAnswer>;
+}
+export interface BeadsProgramLimits {
+  maxDependencies: number;
+  maxTitleChars: number;
+  timeoutMs: number;
+}
+/** What the work reader is asked for one child: the child's id under the reader's own host binding. */
+export interface BeadsProgramWorkRequest {
+  workId: string;
+  workspaceRoot: string;
+  scope: ObservationScope;
+  limits: BeadsProgramLimits;
+  now: () => string;
+  signal?: AbortSignal;
+}
+/** The fields of a work reading this module judges; wb-752.6's reading carries them. */
+export interface BeadsProgramWorkReading {
+  source: {workId: string; workspaceRoot: string};
+  completeness: 'complete' | 'partial';
+  work: {status: string};
+  dependencies: {items: readonly {id: string; dependencyType: string; status: string}[]};
+}
+/** The work reader the host binds: wb-752.6's readBeadsWork, over the issue-read seam this module hands it. */
+export type BeadsProgramWorkReader = (client: BeadsProgramClient, request: BeadsProgramWorkRequest) => Promise<BeadsProgramWorkReading>;
 export interface BeadsProgram {
   /** Every program epic the rule spans: one map's epic, or several programs' epics read together. */
   epics: readonly string[];
@@ -46,8 +88,10 @@ export interface BeadsProgramReadOptions {
   program: BeadsProgram;
   workspaceRoot: string;
   scope: ObservationScope;
-  limits: BeadsReadLimits;
+  limits: BeadsProgramLimits;
   now: () => string;
+  /** The host-bound work reader (wb-752.6's readBeadsWork): every child's status and edges come from its reading alone. */
+  readWork: BeadsProgramWorkReader;
   signal?: AbortSignal;
 }
 export type BeadsGateVerdict = 'ADOPT' | 'REJECT' | 'no-verdict' | typeof STORE_UNREACHABLE;
@@ -71,7 +115,7 @@ export interface BeadsProgramReadiness {
 }
 
 const MAX_STDOUT_CHARS = 4_194_304;
-/** The bd id shape readBeadsWork admits. */
+/** The Beads id shape wb-752.6's reader admits. */
 const WORK_ID = /^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$/;
 const WORK_PACKAGE = /^wp:./;
 /** The gate bead's text a verdict is read from: its title, its body and the notes an appended ruling lands in. */
@@ -117,19 +161,19 @@ function validate(options: BeadsProgramReadOptions): {epics: string[]; gates: Ma
 }
 
 /** One seam call: an untrusted native failure surfaces no message, stack or argv; an abort is transport on either side. */
-async function seam(signal: AbortSignal | undefined, call: () => Promise<BeadsShowResult>): Promise<BeadsShowResult> {
+async function seam(signal: AbortSignal | undefined, call: () => Promise<BeadsProgramAnswer>): Promise<BeadsProgramAnswer> {
   if (signal?.aborted) throw aborted();
-  let result: BeadsShowResult;
+  let result: BeadsProgramAnswer;
   try {
     result = await call();
   } catch {
-    throw signal?.aborted ? aborted() : unavailable('bd could not be run.');
+    throw signal?.aborted ? aborted() : unavailable('The Beads seam could not be run.');
   }
   if (signal?.aborted) throw aborted();
   return result;
 }
 /** Every message is constant text: no seam value (exit code, output, stderr) reaches a diagnostic. */
-function parseJson(result: BeadsShowResult, verb: string): unknown {
+function parseJson(result: BeadsProgramAnswer, verb: string): unknown {
   if (result.exit !== 0) throw unavailable(`${verb} exited nonzero.`);
   if (typeof result.stdout !== 'string' || result.stdout.length > MAX_STDOUT_CHARS) throw unavailable(`${verb} output is missing or exceeds the read bound.`);
   try {
@@ -139,24 +183,24 @@ function parseJson(result: BeadsShowResult, verb: string): unknown {
   }
 }
 /** The dependents listing (dep list <epic> --direction=up --json): a flat record array, `[]` when the epic has none. */
-function dependentsOf(result: BeadsShowResult): Member[] {
-  const parsed = parseJson(result, 'bd dependents listing');
-  if (!Array.isArray(parsed)) throw unavailable('bd dependents listing returned no record array.');
+function dependentsOf(result: BeadsProgramAnswer): Member[] {
+  const parsed = parseJson(result, 'Beads dependents listing');
+  if (!Array.isArray(parsed)) throw unavailable('Beads dependents listing returned no record array.');
   return parsed.map((raw: unknown): Member => {
-    if (!isRecord(raw) || typeof raw.id !== 'string' || !WORK_ID.test(raw.id)) throw unavailable('bd dependents listing record names no work id.');
+    if (!isRecord(raw) || typeof raw.id !== 'string' || !WORK_ID.test(raw.id)) throw unavailable('Beads dependents listing record names no work id.');
     const {dependency_type: dependencyType, issue_type: issueType, labels} = raw;
-    if (typeof dependencyType !== 'string' || typeof issueType !== 'string') throw unavailable('bd dependents listing record lacks its types.');
-    if (labels !== undefined && labels !== null && !isStrings(labels)) throw unavailable('bd dependents listing record labels are not strings.');
+    if (typeof dependencyType !== 'string' || typeof issueType !== 'string') throw unavailable('Beads dependents listing record lacks its types.');
+    if (labels !== undefined && labels !== null && !isStrings(labels)) throw unavailable('Beads dependents listing record labels are not strings.');
     return {id: raw.id, dependencyType, issueType, labels: isStrings(labels) ? labels : []};
   });
 }
 /** The gate bead's verdict: exactly one ruling marker across its title, description and notes; no other field is read. A
  * text field that is present but not a string is a malformed reading of the store, never an empty one. */
-function verdictOf(result: BeadsShowResult, gate: string): Exclude<BeadsGateVerdict, typeof STORE_UNREACHABLE> {
-  const parsed = parseJson(result, 'bd show');
-  if (!Array.isArray(parsed) || parsed.length === 0) throw unavailable('bd show returned no issue array.');
+function verdictOf(result: BeadsProgramAnswer, gate: string): Exclude<BeadsGateVerdict, typeof STORE_UNREACHABLE> {
+  const parsed = parseJson(result, 'Beads gate read');
+  if (!Array.isArray(parsed) || parsed.length === 0) throw unavailable('Beads gate read returned no issue array.');
   const first: unknown = parsed[0];
-  if (!isRecord(first) || first.id !== gate) throw unavailable('bd show returned a different work id than requested.');
+  if (!isRecord(first) || first.id !== gate) throw unavailable('Beads gate read returned a different work id than requested.');
   const markers = TEXT_FIELDS.flatMap((field) => {
     const text = first[field];
     if (text === undefined || text === null) return [];
@@ -169,8 +213,8 @@ function verdictOf(result: BeadsShowResult, gate: string): Exclude<BeadsGateVerd
 
 export async function readBeadsProgramReadiness(client: BeadsProgramClient, options: BeadsProgramReadOptions): Promise<BeadsProgramReadiness> {
   const {epics, gates, landed} = validate(options);
-  const {workspaceRoot, scope, limits, now, signal} = options;
-  const call = (): BeadsShowCall => ({cwd: workspaceRoot, timeoutMs: limits.timeoutMs, ...(signal ? {signal} : {})});
+  const {workspaceRoot, scope, limits, now, readWork, signal} = options;
+  const call = (): BeadsProgramCall => ({cwd: workspaceRoot, timeoutMs: limits.timeoutMs, ...(signal ? {signal} : {})});
 
   const program = new Set<string>(epics);
   const decisions = new Set<string>();
@@ -202,9 +246,10 @@ export async function readBeadsProgramReadiness(client: BeadsProgramClient, opti
   };
   const children: BeadsProgramChild[] = [];
   for (const id of childIds) {
-    let reading: BeadsWorkReading;
+    let reading: BeadsProgramWorkReading;
     try {
-      reading = await readBeadsWork(client, {workId: id, workspaceRoot, scope, limits, now, ...(signal ? {signal} : {})});
+      reading = await readWork(client, {workId: id, workspaceRoot, scope, limits, now, ...(signal ? {signal} : {})});
+      if (reading.source.workId !== id || reading.source.workspaceRoot !== workspaceRoot) throw unavailable('Beads work reading names another work id or workspace.');
     } catch (error) {
       if (!unreachable(error)) throw error;
       children.push({id, status: STORE_UNREACHABLE, ready: false, waitingOn: [], partial: false});

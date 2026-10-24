@@ -805,7 +805,8 @@ function programClient(store: readonly StoreBead[]): { readonly client: BeadsPro
   });
   return { client, accessed };
 }
-/** readBeadsProgramReadiness over a modeled store, host-bound to a fixture workspace. */
+/** readBeadsProgramReadiness over a modeled store, host-bound to a fixture workspace; the host binds readBeadsWork as its work
+ * reader (the module imports no Beads reader: the wb-kku9.3 claim re-check census holds that reader's importers empty). */
 async function readProgram(client: BeadsProgramClient, gates: Readonly<Record<string, string>>): Promise<BeadsProgramReadiness> {
   const workspaceRoot = "/fixture/rftsx";
   return readBeadsProgramReadiness(client, {
@@ -814,6 +815,7 @@ async function readProgram(client: BeadsProgramClient, gates: Readonly<Record<st
     scope: { workspace: workspaceRoot, principal: "census" },
     limits: { maxDependencies: 16, maxTitleChars: 200, timeoutMs: 5000 },
     now: () => "2026-10-23T00:00:00.000Z",
+    readWork: readBeadsWork,
   });
 }
 /** A gated packet under the epic, as R-08 would create it: a parent-child edge to the epic and its wp label. */
