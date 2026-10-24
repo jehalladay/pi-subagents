@@ -1,0 +1,666 @@
+{
+  "bead": "wb-6ps1.1",
+  "pin": "3ce473386133",
+  "base": "d75b68d10a1a",
+  "title": "[FORGE-TRAINING\u0057ORKS-R1] If Pi ever consumes a Training\u0057orks policy \u0070roposal or model \u0073core about Forge reuse, replay or test selection (gated: Forge F2 opt-in export, not implemented), no Pi surface shall treat the proposal as replacing Forge admission or its final verification: the gate verdict Pi echoes comes only from a native forge receipt ... docs/programs/training\u0077orks-2026-10-18/README.md:19@3ce473386133",
+  "statement": "[FORGE-TRAINING\u0057ORKS-R1] If Pi ever consumes a Training\u0057orks policy \u0070roposal or model \u0073core about Forge reuse, replay or test selection (gated: Forge F2 opt-in export, not implemented), no Pi surface shall treat the proposal as replacing Forge admission or its final verification: the gate verdict Pi echoes comes only from a native forge receipt, and the proposal or score remains a labelled 'proposal'/'estimate' facet that never overrides, softens or outranks a native gate FAIL. docs/programs/training\u0077orks-2026-10-18/README.md:19@3ce473386133",
+  "quote": "F4 Policy \u0070roposals may rank plans but cannot replace Forge admission or its final verification.",
+  "citation": "docs/programs/training\u0077orks-2026-10-18/README.md:19@3ce473386133",
+  "token": "score",
+  "shipped": "no",
+  "needles": [
+    "Training\u0057orks",
+    "policy-\u0070roposal",
+    "model-\u0073core"
+  ],
+  "scopes": [
+    "src",
+    "test",
+    "docs/workbench"
+  ],
+  "readers": [
+    "forge-observer.ts",
+    "forge-operation-observer.ts",
+    "providers/forge.ts"
+  ],
+  "proposals": [
+    "reuse",
+    "skip tests"
+  ],
+  "facets": [
+    "proposal",
+    "estimate"
+  ],
+  "subjects": [
+    "reuse",
+    "replay",
+    "test selection"
+  ],
+  "holders": [
+    "^test\\/[^/]+(?:-census\\.test|\\.census)\\.ts$",
+    "^test\\/fixtures\\/[^/]+-roster\\.json$"
+  ],
+  "plantKeys": 27,
+  "rows": [
+    {
+      "id": "A",
+      "label": "(a) census at d75b68d10a1a: 0 Training\u0057orks/policy-\u0070roposal/model-\u0073core identifiers in src, test, docs/workbench and 0 'score' tokens in forge-observer.ts, forge-operation-observer.ts, providers/forge.ts",
+      "pins": [
+        {
+          "id": "A1",
+          "quote": "census at d75b68d10a1a: 0 Training\u0057orks/policy-\u0070roposal/model-\u0073core identifiers in src",
+          "witness": {
+            "scope": "src",
+            "fileFloor": true,
+            "trackedFloor": true,
+            "trackedUnwalked": [],
+            "symlinks": [],
+            "wordless": [],
+            "moduleFloor": true,
+            "hits": [],
+            "literal": {
+              "ran": true,
+              "files": []
+            },
+            "controls": {
+              "src/camel.ts": "hit:N1 raw,N1 token",
+              "src/joined.ts": "hit:N1 raw,N1 token",
+              "src/snake-plural.ts": "hit:N3 raw,N3 token",
+              "src/kebab-comment.ts": "hit:N2 raw",
+              "src/escaped-literal.ts": "hit:N1 token",
+              "src/escaped-identifier.ts": "hit:N3 token",
+              "src/zero-width.ts": "hit:N1 raw",
+              "src/fullwidth.ts": "hit:N1 raw",
+              "src/concatenated.ts": "hit:N1 raw",
+              "src/multiline.ts": "hit:N2 raw",
+              "src/quiet-split.ts": "quiet",
+              "src/quiet-lookalike.ts": "quiet",
+              "src/quiet-charcode.ts": "quiet",
+              "src/quiet-regex.ts": "quiet",
+              "src/quiet-phrase.ts": "quiet",
+              "src/training-\u0077orks-reader.ts": "hit:N1 path",
+              "src/precision.ts": "quiet",
+              "qa/quiet-scope.mjs": "unwalked"
+            }
+          }
+        },
+        {
+          "id": "A2",
+          "quote": "test",
+          "witness": {
+            "scope": "test",
+            "fileFloor": true,
+            "trackedFloor": true,
+            "trackedUnwalked": [],
+            "symlinks": [],
+            "wordless": [],
+            "moduleFloor": true,
+            "outsideHolders": [],
+            "self": [
+              {
+                "file": "test/workbench-forge-proposal-admission-census.test.ts",
+                "walked": true,
+                "hits": 0
+              },
+              {
+                "file": "test/fixtures/forge-proposal-admission-roster.json",
+                "walked": true,
+                "hits": 0
+              }
+            ],
+            "literal": {
+              "ran": true,
+              "outsideHolders": []
+            },
+            "controls": {
+              "test/helpers/plant-helper.ts": "outside:N2 raw,N2 token",
+              "test/plant.test.ts": "outside:N3 raw",
+              "test/fixtures/plant.json": "outside:N1 raw",
+              "test/helpers/plant-escaped.ts": "outside:N1 token",
+              "test/workbench-plant-census.test.ts": "holder:N1 raw",
+              "test/workbench-plant.census.ts": "holder:N3 raw",
+              "test/fixtures/plant-roster.json": "holder:N2 raw"
+            }
+          }
+        },
+        {
+          "id": "A3",
+          "quote": "docs/workbench",
+          "witness": {
+            "scope": "docs/workbench",
+            "fileFloor": true,
+            "trackedFloor": true,
+            "trackedUnwalked": [],
+            "symlinks": [],
+            "wordless": [],
+            "hits": [],
+            "literal": {
+              "ran": true,
+              "files": []
+            },
+            "controls": {
+              "docs/workbench/emphasis.md": "hit:N1 raw",
+              "docs/workbench/link.md": "hit:N2 raw",
+              "docs/workbench/code.md": "hit:N3 raw",
+              "docs/workbench/comment.md": "hit:N1 raw",
+              "docs/workbench/table.md": "hit:N3 raw",
+              "docs/workbench/quiet-entity.md": "quiet",
+              "docs/workbench/quiet-phrase.md": "quiet",
+              "docs/workbench/quiet-utf16.md": "quiet",
+              "docs/quiet-outside.md": "unwalked"
+            }
+          }
+        },
+        {
+          "id": "A4",
+          "quote": "and 0 'score' tokens in forge-observer.ts",
+          "witness": {
+            "file": "src/workbench/forge-observer.ts",
+            "token": "score",
+            "reached": true,
+            "hits": [],
+            "literal": {
+              "ran": true,
+              "lines": []
+            },
+            "exportFloor": true,
+            "exportsSeenRaw": true,
+            "controls": {
+              "bare": "hit:raw,token",
+              "capital": "hit:raw",
+              "camel": "hit:raw,token",
+              "plural": "hit:raw,token",
+              "upper": "hit:raw,token",
+              "inflected": "hit:raw",
+              "escapedLiteral": "hit:token",
+              "escapedIdentifier": "hit:token",
+              "underscore": "quiet",
+              "minted": "quiet",
+              "compound": "quiet",
+              "composed": "quiet",
+              "regexEscape": "quiet"
+            }
+          }
+        },
+        {
+          "id": "A5",
+          "quote": "forge-operation-observer.ts",
+          "witness": {
+            "file": "src/workbench/forge-operation-observer.ts",
+            "token": "score",
+            "reached": true,
+            "hits": [],
+            "literal": {
+              "ran": true,
+              "lines": []
+            },
+            "exportFloor": true,
+            "exportsSeenRaw": true
+          }
+        },
+        {
+          "id": "A6",
+          "quote": "providers/forge.ts",
+          "witness": {
+            "file": "src/workbench/providers/forge.ts",
+            "token": "score",
+            "reached": true,
+            "hits": [],
+            "literal": {
+              "ran": true,
+              "lines": []
+            },
+            "exportFloor": true,
+            "exportsSeenRaw": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "(b) when shipped: a fixture proposal 'reuse'/'skip tests' or a high model \u0073core with no forge gate receipt projects a 'proposal'/'estimate' facet only - no PASS, coverage never 'complete', statusTone never 'success'",
+      "pins": [
+        {
+          "id": "B1",
+          "quote": "when shipped",
+          "witness": {
+            "dependency": "file:vendor/forge-sdk-0.1.0.tgz",
+            "installed": "@forge/sdk@0.1.0",
+            "pinsInstalled": true,
+            "fileFloor": true,
+            "symlinks": [],
+            "wordless": [],
+            "needleHits": [],
+            "facetHits": [],
+            "shipped": "no"
+          }
+        },
+        {
+          "id": "B2",
+          "quote": "a fixture proposal 'reuse'/'skip tests'",
+          "witness": {
+            "bases": [
+              "history",
+              "authority-absent",
+              "empty",
+              "read-failed",
+              "declared-verdict"
+            ],
+            "positions": [
+              "source",
+              "envelope",
+              "data",
+              "package",
+              "state",
+              "basis",
+              "all"
+            ],
+            "variants": [
+              "string:reuse",
+              "object:reuse",
+              "string:skip tests",
+              "object:skip tests"
+            ],
+            "plantKeys": 27,
+            "cases": 140,
+            "planted": 128,
+            "vacuous": 12,
+            "overwrites": 0,
+            "divergent": [],
+            "echoInexact": [],
+            "driven": [
+              "forgeGateTopology",
+              "nativeEvidence",
+              "readForgeOperationEvidence",
+              "registerForgeGateStatus"
+            ],
+            "controls": {
+              "plantedKeyConsumer": "caught",
+              "unplantedKeyConsumer": "quiet",
+              "nativeTwin": "divergent"
+            }
+          }
+        },
+        {
+          "id": "B3",
+          "quote": "or a high model \u0073core with no forge gate receipt",
+          "witness": {
+            "bases": [
+              "history",
+              "authority-absent",
+              "empty",
+              "read-failed",
+              "declared-verdict"
+            ],
+            "positions": [
+              "source",
+              "envelope",
+              "data",
+              "package",
+              "state",
+              "basis",
+              "all"
+            ],
+            "variants": [
+              "number:0.99",
+              "number:1",
+              "number:100",
+              "string:0.99",
+              "object:0.99"
+            ],
+            "plantKeys": 27,
+            "cases": 175,
+            "planted": 160,
+            "vacuous": 15,
+            "overwrites": 0,
+            "divergent": [],
+            "echoInexact": [],
+            "driven": [
+              "forgeGateTopology",
+              "nativeEvidence",
+              "readForgeOperationEvidence",
+              "registerForgeGateStatus"
+            ],
+            "controls": {
+              "plantedKeyConsumer": "caught",
+              "unplantedKeyConsumer": "quiet",
+              "nativeTwin": "divergent"
+            }
+          }
+        },
+        {
+          "id": "B4",
+          "quote": "projects a 'proposal'/'estimate' facet only",
+          "witness": {
+            "facets": [
+              "proposal",
+              "estimate"
+            ],
+            "markers": 31,
+            "readings": 495,
+            "reached": [],
+            "baselineMarkers": [],
+            "rawEcho": "carried",
+            "driven": [
+              "decodeForgeOperationFrame",
+              "decodeForgeOperationTerminal",
+              "forgeGateStepTopology",
+              "forgeGateTopology",
+              "forgeOperationStartedSnapshot",
+              "nativeEvidence",
+              "observeForgeGateRun",
+              "readForgeOperationEvidence",
+              "registerForgeGateStatus"
+            ]
+          }
+        },
+        {
+          "id": "B5",
+          "quote": "no PASS, coverage never 'complete', statusTone never 'success'",
+          "witness": {
+            "readings": 396,
+            "success": [],
+            "complete": [
+              "empty topology 0 x36"
+            ],
+            "passed": [],
+            "unplanted": {
+              "success": [],
+              "complete": [
+                "empty topology 0"
+              ],
+              "passed": []
+            },
+            "receipt": {
+              "tone": "success",
+              "coverage": "complete",
+              "qualifier": "current gate passed"
+            },
+            "driven": [
+              "decodeForgeOperationFrame",
+              "decodeForgeOperationTerminal",
+              "forgeGateStepTopology",
+              "forgeGateTopology",
+              "forgeOperationStartedSnapshot",
+              "nativeEvidence",
+              "observeForgeGateRun",
+              "readForgeOperationEvidence",
+              "registerForgeGateStatus"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "(c) when shipped: a proposal or high score beside a native gate FAIL leaves statusTone 'failure' with the score only in its own labelled facet",
+      "pins": [
+        {
+          "id": "C1",
+          "quote": "when shipped",
+          "witness": {
+            "interfaces": [
+              "src/workbench/observation.ts:Presentation",
+              "src/workbench/observation.ts:ObservationEvent",
+              "src/workbench/observation.ts:NativeSnapshot",
+              "src/workbench/observation.ts:ObservedNode",
+              "src/workbench/forge-observer.ts:ForgeGateTopology",
+              "src/workbench/forge-evidence.ts:ForgeOperationEvidence",
+              "src/workbench/forge-operation-observer.ts:ForgeOperationStart",
+              "src/workbench/forge-operation-observer.ts:ForgeGateStep",
+              "src/workbench/forge-operation-observer.ts:ForgeOperationTerminal"
+            ],
+            "memberFloor": true,
+            "facetMembers": [],
+            "controls": [
+              "estimate:true",
+              "proposalLabel:true",
+              "facets:true",
+              "needle:true",
+              "statusText:false",
+              "workspace:false",
+              "scoreboard:false"
+            ]
+          }
+        },
+        {
+          "id": "C2",
+          "quote": "a proposal or high score beside a native gate FAIL leaves statusTone 'failure'",
+          "witness": {
+            "gate": {
+              "bases": [
+                "current-failure",
+                "current-error",
+                "mixed"
+              ],
+              "cases": 189,
+              "planted": 189,
+              "divergent": [],
+              "echoInexact": []
+            },
+            "operation": {
+              "entries": [
+                "step-failed",
+                "reply-error",
+                "reply-usage-error"
+              ],
+              "cases": 45,
+              "planted": 45,
+              "divergent": []
+            },
+            "observed": {
+              "variants": 9,
+              "divergent": [],
+              "tones": [
+                "failure",
+                "failure"
+              ]
+            },
+            "failTone": "failure",
+            "failQualifier": "current gate failed",
+            "lost": [],
+            "driven": [
+              "decodeForgeOperationFrame",
+              "decodeForgeOperationTerminal",
+              "forgeGateStepTopology",
+              "forgeGateTopology",
+              "forgeOperationTerminalSnapshot",
+              "nativeEvidence",
+              "observeForgeGateRun",
+              "readForgeOperationEvidence",
+              "registerForgeGateStatus"
+            ]
+          }
+        },
+        {
+          "id": "C3",
+          "quote": "with the score only in its own labelled facet",
+          "witness": {
+            "readings": 243,
+            "reached": [],
+            "quoted": [
+              "current-failure: failure",
+              "current-error: error",
+              "mixed: failure"
+            ],
+            "driven": [
+              "decodeForgeOperationFrame",
+              "decodeForgeOperationTerminal",
+              "forgeGateStepTopology",
+              "forgeGateTopology",
+              "forgeOperationTerminalSnapshot",
+              "nativeEvidence",
+              "observeForgeGateRun",
+              "readForgeOperationEvidence",
+              "registerForgeGateStatus"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "D",
+      "label": "(d) a score or proposal with no native receipt never yields a verdict word",
+      "pins": [
+        {
+          "id": "D1",
+          "quote": "a score or proposal with no native receipt",
+          "witness": {
+            "gate": {
+              "bases": [
+                "no-packages",
+                "other-method"
+              ],
+              "cases": 126,
+              "planted": 99,
+              "divergent": [],
+              "echoInexact": []
+            },
+            "operation": {
+              "entries": [
+                "started",
+                "step-started",
+                "step-unfinished-outcome",
+                "reply-open",
+                "reply-other-operation"
+              ],
+              "cases": 99,
+              "planted": 99,
+              "divergent": []
+            },
+            "observed": {
+              "variants": 9,
+              "divergent": [],
+              "settled": "settled",
+              "tones": [
+                "active",
+                "unknown"
+              ]
+            },
+            "nullReply": null,
+            "reasonControls": [
+              "forgeGateTopology:reference-builder:false",
+              "forgeGateTopology:launches-forge:false",
+              "registerForgeGateStatus:launches-forge:false"
+            ],
+            "receipts": {
+              "step": "success",
+              "terminal": "success"
+            },
+            "exports": {
+              "forge-observer.ts": [
+                "forgeGateTopology"
+              ],
+              "forge-operation-observer.ts": [
+                "forgeOperationRef",
+                "forgeGateStepRef",
+                "forgeStepConfirmationRef",
+                "forgeOperationStartedSnapshot",
+                "forgeGateStepTopology",
+                "forgeOperationTerminalSnapshot",
+                "decodeForgeOperationFrame",
+                "decodeForgeOperationTerminal",
+                "observeForgeGateRun"
+              ],
+              "providers/forge.ts": [
+                "registerForgeGateStatus",
+                "registerNativeForgeGateStatus",
+                "openForgeOperationConnection",
+                "readForgeGateStatus"
+              ]
+            },
+            "driven": [
+              "decodeForgeOperationFrame",
+              "decodeForgeOperationTerminal",
+              "forgeGateStepTopology",
+              "forgeGateTopology",
+              "forgeOperationStartedSnapshot",
+              "forgeOperationTerminalSnapshot",
+              "nativeEvidence",
+              "observeForgeGateRun",
+              "readForgeOperationEvidence",
+              "registerForgeGateStatus"
+            ],
+            "notDriven": [
+              "forgeOperationRef:reference-builder",
+              "forgeGateStepRef:reference-builder",
+              "forgeStepConfirmationRef:reference-builder",
+              "registerNativeForgeGateStatus:launches-forge",
+              "openForgeOperationConnection:launches-forge",
+              "readForgeGateStatus:launches-forge"
+            ],
+            "uncovered": []
+          }
+        },
+        {
+          "id": "D2",
+          "quote": "never yields a verdict word",
+          "witness": {
+            "vocabulary": {
+              "tones": [
+                "failure",
+                "success"
+              ],
+              "qualifiers": [
+                "current gate failed",
+                "current gate passed"
+              ]
+            },
+            "readings": 495,
+            "hits": [],
+            "nativeQuote": "success",
+            "driven": [
+              "decodeForgeOperationFrame",
+              "decodeForgeOperationTerminal",
+              "forgeGateStepTopology",
+              "forgeGateTopology",
+              "forgeOperationStartedSnapshot",
+              "nativeEvidence",
+              "observeForgeGateRun",
+              "readForgeOperationEvidence",
+              "registerForgeGateStatus"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "tests": [
+    "the judged set: the frozen shape, the out-of-file roster, the owner's filing and the cases agree",
+    "A1",
+    "A2",
+    "A3",
+    "A4",
+    "A5",
+    "A6",
+    "B1",
+    "B2",
+    "B3",
+    "B4",
+    "B5",
+    "C1",
+    "C2",
+    "C3",
+    "D1",
+    "D2",
+    "the record: every case registered once in roster order, in run mode, ran, measured and reached its witness"
+  ],
+  "reached": [
+    "A1:3",
+    "A2:3",
+    "A3:3",
+    "A4:3",
+    "A5:3",
+    "A6:3",
+    "B1:3",
+    "B2:3",
+    "B3:3",
+    "B4:3",
+    "B5:3",
+    "C1:3",
+    "C2:3",
+    "C3:3",
+    "D1:3",
+    "D2:3"
+  ]
+}
