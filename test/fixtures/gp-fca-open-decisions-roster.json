@@ -8,6 +8,16 @@
       "test/workbench-gp-fca-open-decisions-census.test.ts",
       "test/fixtures/gp-fca-open-decisions-roster.json"
     ],
+    "siblingRosters": [
+      {
+        "file": "test/fixtures/gp-identity-roster.json",
+        "bead": "wb-gxd7.1"
+      },
+      {
+        "file": "test/fixtures/gp-kind-label-roster.json",
+        "bead": "wb-gxd7.4"
+      }
+    ],
     "traceFile": "docs/workbench/TRACEABILITY.md",
     "scanRoots": [
       {
@@ -655,6 +665,35 @@
             ],
             "quiet": [],
             "plantedB": []
+          }
+        },
+        {
+          "id": "A5",
+          "witness": {
+            "siblings": [
+              {
+                "file": "test/fixtures/gp-identity-roster.json",
+                "bead": "wb-gxd7.1",
+                "walked": true,
+                "readByA": false,
+                "readByB": true,
+                "loadBearing": true,
+                "sibling": true,
+                "sameProgram": true,
+                "verbatimFiling": true
+              },
+              {
+                "file": "test/fixtures/gp-kind-label-roster.json",
+                "bead": "wb-gxd7.4",
+                "walked": true,
+                "readByA": false,
+                "readByB": true,
+                "loadBearing": true,
+                "sibling": true,
+                "sameProgram": true,
+                "verbatimFiling": true
+              }
+            ]
           }
         }
       ]
@@ -1987,7 +2026,7 @@
     },
     {
       "id": "R",
-      "label": "the named residuals R1-R21 stay pinned quiet",
+      "label": "the named residuals R1-R22 stay pinned quiet",
       "pins": [
         {
           "id": "R1",
@@ -2134,6 +2173,17 @@
           "witness": {
             "kind": "module",
             "outcome": []
+          }
+        },
+        {
+          "id": "R22",
+          "witness": {
+            "a": [
+              "test/fixtures/gp-twin-roster.json:1 N2: lacks-status+sha"
+            ],
+            "b": [
+              "test/fixtures/gp-identity-roster.json#/reply/result/store_state K6: state store_state=\"missing\""
+            ]
           }
         }
       ]

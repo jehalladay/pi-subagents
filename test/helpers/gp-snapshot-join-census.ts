@@ -1,7 +1,8 @@
 /**
  * wb-gxd7.3 (GPC-FEEDBACK-CONTRACT-AUDIT-R3): the tables, the src scan, the reference join, the outcome judge and the recipe
  * drives behind test/workbench-gp-snapshot-join-census.test.ts. The rule, as the bead states it from GraphPolicyCLI
- * docs/programs/feedback-contract-audit-2026-10-21/02-contract-audit.md:26@0107c72992f3: when Pi compares or joins its
+ * docs/programs/feedback-contract-audit-2026-10-21/02-contract-audit.md:26@0107c72992f3 (program status at 0107c72992f3:
+ * "Proposed audit obligations and candidate resolutions, NOT accepted GraphPolicyCLI semantics"): when Pi compares or joins its
  * exported snapshot against gp's `receipt.input_snapshot` or `graph_digest`, "it shall hash exactly the bytes it presented —
  * compact `JSON.stringify(graph)` for RPC, the file bytes for CLI — and shall never substitute `identities.graph` or
  * `canonical_digest` for that join key".

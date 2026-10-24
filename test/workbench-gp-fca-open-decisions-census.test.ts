@@ -38,8 +38,12 @@
  * READINGS
  * - SCANNED: every regular file below docs/, src/, .agents/ (Pi's installed skills), qa/, test/ and examples/, and the
  *   repository root's .md pages, read as UTF-8; a symlink is refused, never followed. This file and its roster are EXEMPT:
- *   walked, never judged (row A3). The walk is held to an INDEPENDENT LISTING (node's recursive readdirSync over the same
- *   roots, a different code path): the walked set equals the listed set exactly, and the judged sets equal the listing minus
+ *   walked, never judged (row A3). The out-of-file rosters of two LANDED SIBLINGS (SIBLING_ROSTERS, row A5) are exempt from
+ *   row A only and stay judged by row B: test/fixtures/gp-identity-roster.json (wb-gxd7.1) and
+ *   test/fixtures/gp-kind-label-roster.json (wb-gxd7.4) hold the program's lines and their own filings verbatim, and each
+ *   sibling census holds those fields to its own bead row, so a citing sentence inside them cannot carry the status literal
+ *   without ceasing to be verbatim (residual R22). The walk is held to an INDEPENDENT LISTING (node's recursive readdirSync
+ *   over the same roots, a different code path): the walked set equals the listed set exactly, and the judged sets equal the listing minus
  *   the exemptions, counted at run time (no count floor, no frozen count).
  * - (a) SENTENCE: a file's text cut at a run of white space after ".", "!", "?" or ";", at a blank line and before a line
  *   opening a table row ("|"); a .md file is also cut before a line opening a list item. A code comment's wrapped lines stay
@@ -86,7 +90,9 @@
  *  A, acceptance (a). A1 the walk (exact sets against the independent listing, per-root anchors, the root pages, no symlink,
  *    nothing unreadable); A2 the live census returns no finding; A3 each exemption is load-bearing (this file under rows A and
  *    B, the roster under row A); A4 the acceptance's mutants - one citing plant per scanned root and the root pages, each read
- *    exactly, each marked twin quiet.
+ *    exactly, each marked twin quiet; A5 each landed sibling roster is walked, read by row B and not by row A, load-bearing for
+ *    row A, and anchored outside this file and the roster: its own bead and statement fields equal that sibling's row in the
+ *    tracked bead export, a child of this bead's parent there whose filing cites the same program directory at the same sha.
  *  B, acceptance (b). B1 the live read (every JSON file parses, the landed gp stand-ins of test/helpers/gp-fallback-census.ts
  *    read as gp documents); B2 the live census returns no finding; B3 one plant per member across file kinds, each read
  *    exactly, each unmarked or observed twin quiet.
@@ -133,12 +139,15 @@
  *   R-RULING-UNVERIFIED a well-formed ruling id with a dated row is admitted without reading gp's requirements system; R19
  *   R-OBSERVED-SHAPE-BREADTH an observed shape admits its states wherever an object carries exactly its keys; R20
  *   R-FUSED-WORDS a member's word run fused into one word (identityunavailable) in row B; R21 R-TYPE-DECLARATION a member
- *   spelled in a type, an interface or another declaration rather than a literal value (row B reads literals only).
+ *   spelled in a type, an interface or another declaration rather than a literal value (row B reads literals only); R22
+ *   R-SIBLING-ROSTER a citing sentence inside a landed sibling roster of row A5 is not judged by row A (row B still reads it).
  * SCOPE: the vocabularies are this cut's reading of the filing and the program at the pin (another program's RC- label
  * spelled with one of the nine words would read as this program's); the producer facts are measured at
  * the pin and not re-read here (the census is hermetic), so a gp change is seen only when a cut re-measures the roster. The
  * allowlist of (c) is this census's (rows A and B share it). A later census that needs these labels as needles adds its own
- * file to EXEMPT in its cut, beside an A3-style reading, or carries the status literal and a sha in each citing sentence.
+ * file to EXEMPT in its cut, beside an A3-style reading, or carries the status literal and a sha in each citing sentence; a
+ * landed sibling whose out-of-file roster holds the program's lines and its own filing verbatim enters SIBLING_ROSTERS beside
+ * an A5 reading (row A only).
  *
  * Display paths added: none. Test-only: the scanned trees, the plants and the TRACEABILITY stand-ins live in makeScratch
  * scratch; src, docs, qa, the skills and the bead export are only read.
@@ -162,6 +171,17 @@ const BEAD_EXPORT = ".beads/issues.jsonl";
 const TRACE_FILE = "docs/workbench/TRACEABILITY.md";
 const BEAD = "wb-gxd7.2";
 const EXEMPT: readonly string[] = [SELF, ROSTER_FILE];
+interface SiblingRoster {
+  readonly file: string;
+  readonly bead: string;
+}
+/** Row A5: the out-of-file rosters of the landed siblings that hold the program's lines and their own filings verbatim; row A
+ * reads neither (residual R22), row B reads both. */
+const SIBLING_ROSTERS: readonly SiblingRoster[] = [
+  { file: "test/fixtures/gp-identity-roster.json", bead: "wb-gxd7.1" },
+  { file: "test/fixtures/gp-kind-label-roster.json", bead: "wb-gxd7.4" },
+];
+const SIBLING_FILES: readonly string[] = SIBLING_ROSTERS.map(entry => entry.file);
 
 /** The producer pin and the Pi sha the filing read its 0-hit count at (owner filing). */
 const PIN = "0107c72992f3";
@@ -322,7 +342,7 @@ const ROWS: readonly Row[] = [
   {
     id: "A",
     label: "(a) docs census: any sentence citing GP-FCA-2026-10-21, a D-* or an FCA-* id carries the status literal and the GraphPolicyCLI sha it was read at",
-    pins: ["A1", "A2", "A3", "A4"],
+    pins: ["A1", "A2", "A3", "A4", "A5"],
   },
   {
     id: "B",
@@ -346,8 +366,8 @@ const ROWS: readonly Row[] = [
   },
   {
     id: "R",
-    label: "the named residuals R1-R21 stay pinned quiet",
-    pins: ["R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10", "R11", "R12", "R13", "R14", "R15", "R16", "R17", "R18", "R19", "R20", "R21"],
+    label: "the named residuals R1-R22 stay pinned quiet",
+    pins: ["R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10", "R11", "R12", "R13", "R14", "R15", "R16", "R17", "R18", "R19", "R20", "R21", "R22"],
   },
 ];
 const FIRST_TITLE = "the judged set: the frozen shape, the out-of-file roster and the cases agree";
@@ -455,6 +475,7 @@ function constants(): Json {
     pin: PIN,
     filingRead: FILING_READ,
     exempt: [...EXEMPT],
+    siblingRosters: SIBLING_ROSTERS.map(({ file, bead }) => ({ file, bead })),
     traceFile: TRACE_FILE,
     scanRoots: SCAN_ROOTS.map(({ root, anchor, token }) => ({ root, anchor, token })),
     pageAnchor: { ...PAGE_ANCHOR },
@@ -924,15 +945,17 @@ function censusOf(root: string, allowlist: readonly AllowEntry[] = ALLOWLIST): T
     if (entry.isSymbolicLink()) symlinks.push(entry.name);
     else if (entry.isFile()) pages.push(entry.name);
   }
-  const judgedA = [...walked, ...pages].filter(file => !EXEMPT.includes(file));
-  const judgedB = judgedA.filter(file => isJsonFile(file) || isModule(file));
+  const judged = [...walked, ...pages].filter(file => !EXEMPT.includes(file));
+  const judgedA = judged.filter(file => !SIBLING_FILES.includes(file));
+  const judgedB = judged.filter(file => isJsonFile(file) || isModule(file));
+  const readA = new Set(judgedA);
   const readB = new Set(judgedB);
   const unparsed: string[] = [];
   const findings: Finding[] = [];
   const marked: string[] = [];
-  for (const file of judgedA) {
+  for (const file of judged) {
     const text = textOf(join(root, file));
-    for (const citation of citationsOf(file, text)) findings.push({ row: "A", path: file, members: citation.families, text: citationText(file, citation) });
+    if (readA.has(file)) for (const citation of citationsOf(file, text)) findings.push({ row: "A", path: file, members: citation.families, text: citationText(file, citation) });
     if (!readB.has(file)) continue;
     const read = isJsonFile(file) ? readJson(file, text, unparsed) : readModule(file, text);
     for (const hit of read.hits) findings.push({ row: "B", path: file, members: [/ (K\d+): /.exec(hit)?.[1] ?? ""], text: hit });
@@ -1017,6 +1040,33 @@ function between(text: string, start: string, end: string): string {
   if (from < 0) return "";
   const to = text.indexOf(end, from + start.length);
   return to < 0 ? "" : text.slice(from + start.length, to);
+}
+
+/** An export row's full statement (the notes' "Full statement ...: " line), or "". */
+function filingStatement(row: { [key: string]: unknown }): string {
+  const notes = typeof row.notes === "string" ? row.notes : "";
+  return /^Full statement[^:]*: (.*)$/m.exec(notes)?.[1] ?? "";
+}
+/** An export row's parent: the target of its one parent-child dependency, or "". */
+function parentOf(row: { [key: string]: unknown }): string {
+  const dependencies: unknown[] = Array.isArray(row.dependencies) ? (row.dependencies as unknown[]) : [];
+  const parents = dependencies.filter(isObject).filter(dependency => dependency.type === "parent-child");
+  const target = parents.length === 1 ? parents[0]?.depends_on_id : undefined;
+  return typeof target === "string" ? target : "";
+}
+/** The program directory and sha a filing statement closes on ("docs/programs/<dir>/<file>:<line>@<sha>"), or "". */
+function programOf(statement: string): string {
+  const cited = /\s(docs\/programs\/[^/\s]+\/)\S*@([0-9a-f]{7,40})$/.exec(statement);
+  return cited === null ? "" : `${cited[1] ?? ""}@${cited[2] ?? ""}`;
+}
+/** A JSON text's top-level object, or undefined when it does not parse to one. */
+function parsedObject(text: string): { [key: string]: unknown } | undefined {
+  try {
+    const value: unknown = JSON.parse(text);
+    return isObject(value) ? value : undefined;
+  } catch {
+    return undefined;
+  }
 }
 
 const cp = (...codes: number[]): string => String.fromCodePoint(...codes);
@@ -1179,7 +1229,7 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     const reading = {
       roots,
       pages: { equalsListing: sameSet(census.pages, census.listedPages), anchorRead: census.pages.includes(PAGE_ANCHOR.file) && textOf(join(REPO, PAGE_ANCHOR.file)).includes(PAGE_ANCHOR.token) },
-      judgedA: sameSet(census.judgedA, listed.filter(file => !EXEMPT.includes(file))),
+      judgedA: sameSet(census.judgedA, listed.filter(file => !EXEMPT.includes(file) && !SIBLING_FILES.includes(file))),
       judgedB: sameSet(census.judgedB, listed.filter(file => !EXEMPT.includes(file) && (isJsonFile(file) || isModule(file)))),
       exemptWalked: exemptPresent,
       symlinks: census.symlinks,
@@ -1221,6 +1271,32 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     const reading = { planted: planted.a, quiet: twins.a, plantedB: planted.b };
     expect(reading).toStrictEqual({ planted: CITING.map(([, , , finding]) => finding), quiet: [], plantedB: [] });
     return reading;
+  },
+  A5: async () => {
+    const census = liveCensus();
+    const own = exportRow(BEAD);
+    const program = programOf(filingStatement(own));
+    const siblings = SIBLING_ROSTERS.map(({ file, bead }) => {
+      const text = textOf(join(REPO, file));
+      const row = exportRow(bead);
+      const statement = filingStatement(row);
+      const roster = parsedObject(text);
+      return {
+        file,
+        bead,
+        walked: census.walked.includes(file),
+        readByA: census.judgedA.includes(file),
+        readByB: census.judgedB.includes(file),
+        loadBearing: aFindings(file, text).length > 0,
+        sibling: bead !== BEAD && parentOf(row) !== "" && parentOf(row) === parentOf(own),
+        sameProgram: program !== "" && programOf(statement) === program,
+        verbatimFiling: statement !== "" && roster?.bead === bead && roster?.statement === statement,
+      };
+    });
+    expect(siblings, "each landed sibling roster: walked, read by row B only, load-bearing, anchored in the bead export").toStrictEqual(
+      SIBLING_ROSTERS.map(({ file, bead }) => ({ file, bead, walked: true, readByA: false, readByB: true, loadBearing: true, sibling: true, sameProgram: true, verbatimFiling: true })),
+    );
+    return { siblings };
   },
   B1: async () => {
     const census = liveCensus();
@@ -1676,6 +1752,20 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     expect(refusal).toBeNull();
     return { refusal };
   },
+  R22: async () => {
+    const claim = "Pi reads D-STORE-2 as the gp store contract.";
+    const reply = { schema: "graphpolicy.cli.v1", ok: true, result: { store_state: "missing" } };
+    const twin = "test/fixtures/gp-twin-roster.json";
+    const files: Record<string, string> = Object.fromEntries(SIBLING_FILES.map((file, index) => [file, JSON.stringify(index === 0 ? { note: claim, reply } : { note: claim })]));
+    files[twin] = JSON.stringify({ note: claim });
+    const tree = treeCensus("gp-fca-sibling-", files);
+    const reading = { a: tree.a, b: tree.b };
+    expect(reading, "row A skips exactly the sibling rosters; row B still reads them").toStrictEqual({
+      a: [`${twin}:1 N2: lacks-status+sha`],
+      b: [`${SIBLING_FILES[0] ?? ""}#/reply/result/store_state K6: state store_state="missing"`],
+    });
+    return reading;
+  },
   ...Object.fromEntries(
     CASES.map(entry => [
       entry.pin,
@@ -1696,7 +1786,7 @@ const expectedTitles = (): string[] => [FIRST_TITLE, ...ROWS.flatMap(row => row.
 
 describe("wb-gxd7.2 GP-FCA open-decisions posture census (GPC-FEEDBACK-CONTRACT-AUDIT-R2)", () => {
   it(FIRST_TITLE, ({ task }) => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:4", "B:3", "C:3", "F:1", "M:19", "R:21"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:5", "B:3", "C:3", "F:1", "M:19", "R:22"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })));
     expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
     expect(constants()).toStrictEqual(ROSTER.constants);
